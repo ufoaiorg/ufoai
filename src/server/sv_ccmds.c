@@ -36,22 +36,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void SV_SetMaster_f (void)
 {
+	struct net_stream *s;
 	if (sv_maxclients->integer == 1)
 		return;
 
 	/* make sure the server is listed public */
 	Cvar_Set("public", "1");
 
-	/* do the first slot for all servers */
-	if (!NET_StringToAdr(masterserver_ip->string, &master_adr))
-		Com_Printf("SV_SetMaster_f: Bad Master IP");
+	Com_Printf("Master server at [%s]:%s - sending a ping\n", masterserver_ip->string, masterserver_port->string);
 
-	if (master_adr.port == 0)
-		master_adr.port = (unsigned)BigShort(masterserver_port->integer);
+	s = connect_to_host(masterserver_ip->string, masterserver_port->string);
+	NET_OOB_Printf(s, "ping\n");
+	stream_finished(s);
 
-	Com_Printf("Master server at %s - sending a ping\n", NET_AdrToString(master_adr));
-
-	Netchan_OutOfBandPrint(NS_SERVER, master_adr, "ping");
 	if (!dedicated->integer)
 		return;
 
@@ -219,8 +216,9 @@ static void SV_Status_f (void)
 {
 	int i, j, l;
 	client_t *cl;
-	char *s;
+	const char *s;
 	int ping;
+	char buf[256];
 
 	if (!svs.clients) {
 		Com_Printf("No server running.\n");
@@ -228,8 +226,8 @@ static void SV_Status_f (void)
 	}
 	Com_Printf("map              : %s\n", sv.name);
 
-	Com_Printf("num ping name            lastmsg address               qport\n");
-	Com_Printf("--- ---- --------------- ------- --------------------- ------\n");
+	Com_Printf("num ping name            lastmsg address              \n");
+	Com_Printf("--- ---- --------------- ------- ---------------------\n");
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
 		if (!cl->state)
 			continue;
@@ -251,13 +249,11 @@ static void SV_Status_f (void)
 
 		Com_Printf("%7i ", svs.realtime - cl->lastmessage);
 
-		s = NET_AdrToString(cl->netchan.remote_address);
+		s = stream_peer_name(cl->stream, buf, sizeof(buf));
 		Com_Printf("%s", s);
 		l = 22 - strlen(s);
 		for (j = 0; j < l; j++)
 			Com_Printf(" ");
-
-		Com_Printf("%5i", cl->netchan.qport);
 
 		Com_Printf("\n");
 	}
@@ -372,9 +368,6 @@ static void SV_ServerRecordRecord_f (void)
 		return;
 	}
 
-	/* setup a buffer to catch all multicasts */
-	SZ_Init(&svs.demo_multicast, svs.demo_multicast_buf, sizeof(svs.demo_multicast_buf));
-
 	/* write a single giant fake message with all the startup info */
 	SZ_Init(&buf, buf_data, sizeof(buf_data));
 
@@ -435,7 +428,7 @@ static void SV_KillServer_f (void)
 	if (!svs.initialized)
 		return;
 	SV_Shutdown("Server was killed.\n", qfalse);
-	NET_Config(qfalse);			/* close network sockets */
+	stop_server();
 }
 
 /**

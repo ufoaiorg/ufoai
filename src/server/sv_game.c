@@ -29,12 +29,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "server.h"
 
 game_export_t *ge;
+static qboolean pfe_pending = qfalse;
+static int pfe_mask = 0;
+static struct dbuffer *pfe_msg = NULL;
+struct dbuffer *sv_msg = NULL;
 
-/**
- * @brief Sends the contents of the mutlicast buffer to a single client
- * @note This message will be send reliable
- */
-static void PF_Unicast (player_t * player)
+static void PF_Unicast (player_t * player, struct dbuffer *msg)
 {
 	client_t *client;
 
@@ -47,13 +47,12 @@ static void PF_Unicast (player_t * player)
 	client = svs.clients + player->num;
 
 	if (client->state <= cs_spawning) {
-		Com_Printf("PF_Unicast: GAME ERROR: Attempted to write '%s' to disconnected client, ignored.\n", sv.multicast.data);
+		Com_Printf("PF_Unicast: GAME ERROR: Attempted to write to disconnected client, ignored.\n");
 		return;
 	}
 
-	SZ_Write(&client->netchan.message, sv.multicast.data, sv.multicast.cursize);
-
-	SZ_Clear(&sv.multicast);
+	NET_WriteMsg(client->stream, msg);
+	free_dbuffer(msg);
 }
 
 /**
@@ -110,9 +109,9 @@ static void PF_cprintf (player_t * player, int level, const char *fmt, ...)
  */
 static void PF_centerprintf (player_t * player, const char *fmt, ...)
 {
-	char msg[1024];
 	va_list argptr;
 	int n;
+	struct dbuffer *msg;
 
 	if (!player)
 		return;
@@ -121,15 +120,14 @@ static void PF_centerprintf (player_t * player, const char *fmt, ...)
 	if (n < 0 || n >= ge->max_players)
 		return;
 
+	msg = new_dbuffer();
+	NET_WriteByte(msg, svc_centerprint);
 	va_start(argptr, fmt);
-	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
+	NET_VPrintf(msg, fmt, argptr);
 	va_end(argptr);
 
-	msg[sizeof(msg)-1] = 0;
-
-	MSG_WriteByte(&sv.multicast, svc_centerprint);
-	MSG_WriteString(&sv.multicast, msg);
-	PF_Unicast(player);
+	PF_Unicast(player, msg);
+	free_dbuffer(msg);
 }
 
 
@@ -203,67 +201,45 @@ static void PF_Configstring (int index, const char *val)
 	}
 
 	if (sv.state != ss_loading) {	/* send the update to everyone */
-		SZ_Clear(&sv.multicast);
-		MSG_WriteByte(&sv.multicast, svc_configstring);
-		MSG_WriteShort(&sv.multicast, index);
-		MSG_WriteString(&sv.multicast, val);
+		struct dbuffer *msg = new_dbuffer();
+		NET_WriteByte(msg, svc_configstring);
+		NET_WriteShort(msg, index);
+		NET_WriteString(msg, val);
 
-		SV_Multicast(~0);
+		SV_Multicast(~0, msg);
 	}
 }
 
 /**
  * @brief
  */
-static void PF_WriteChar (int c)
+static void PF_WriteChar (char c)
 {
-	MSG_WriteChar(&sv.multicast, c);
+	NET_WriteChar(pfe_msg, c);
 }
 
 /**
  * @brief
  */
-#ifdef DEBUG
-static void PF_WriteByte (int c, const char* file, int line)
+static void PF_WriteByte (unsigned char c)
 {
-	MSG_WriteByteDebug(&sv.multicast, c, file, line);
+	NET_WriteByte(pfe_msg, c);
 }
-#else
-static void PF_WriteByte (int c)
-{
-	MSG_WriteByte(&sv.multicast, c);
-}
-#endif
 
 /**
  * @brief
  */
-#ifdef DEBUG
-static void PF_WriteShort (int c, const char* file, int line)
-{
-	MSG_WriteShortDebug(&sv.multicast, c, file, line);
-}
-#else
 static void PF_WriteShort (int c)
 {
-	MSG_WriteShort(&sv.multicast, c);
+	NET_WriteShort(pfe_msg, c);
 }
-#endif
 
 /**
  * @brief
  */
 static void PF_WriteLong (int c)
 {
-	MSG_WriteLong(&sv.multicast, c);
-}
-
-/**
- * @brief
- */
-static void PF_WriteFloat (float f)
-{
-	MSG_WriteFloat(&sv.multicast, f);
+	NET_WriteLong(pfe_msg, c);
 }
 
 /**
@@ -271,7 +247,7 @@ static void PF_WriteFloat (float f)
  */
 static void PF_WriteString (const char *s)
 {
-	MSG_WriteString(&sv.multicast, s);
+	NET_WriteString(pfe_msg, s);
 }
 
 /**
@@ -279,7 +255,7 @@ static void PF_WriteString (const char *s)
  */
 static void PF_WritePos (vec3_t pos)
 {
-	MSG_WritePos(&sv.multicast, pos);
+	NET_WritePos(pfe_msg, pos);
 }
 
 /**
@@ -287,7 +263,7 @@ static void PF_WritePos (vec3_t pos)
  */
 static void PF_WriteGPos (pos3_t pos)
 {
-	MSG_WriteGPos(&sv.multicast, pos);
+	NET_WriteGPos(pfe_msg, pos);
 }
 
 /**
@@ -295,7 +271,7 @@ static void PF_WriteGPos (pos3_t pos)
  */
 static void PF_WriteDir (vec3_t dir)
 {
-	MSG_WriteDir(&sv.multicast, dir);
+	NET_WriteDir(pfe_msg, dir);
 }
 
 /**
@@ -303,44 +279,15 @@ static void PF_WriteDir (vec3_t dir)
  */
 static void PF_WriteAngle (float f)
 {
-	MSG_WriteAngle(&sv.multicast, f);
+	NET_WriteAngle(pfe_msg, f);
 }
 
 static void PF_WriteFormat (const char *format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
-	MSG_V_WriteFormat(&sv.multicast, format, ap);
+	NET_V_WriteFormat(pfe_msg, format, ap);
 	va_end(ap);
-}
-
-static byte *pf_save;
-/**
- * @brief
- */
-static void PF_WriteNewSave (int c)
-{
-#ifdef PARANOID
-	if (c < SHRT_MIN || c > USHRT_MAX)
-		Com_Printf("MSG_WriteShort: range error %i.\n", c);
-#endif
-
-	pf_save = sv.multicast.data + sv.multicast.cursize;
-	MSG_WriteShort(&sv.multicast, c);
-}
-
-/**
- * @brief
- */
-static void PF_WriteToSave (int c)
-{
-#ifdef PARANOID
-	if (c < SHRT_MIN || c > USHRT_MAX)
-		Com_Printf("MSG_WriteShort: range error %i.\n", c);
-#endif
-
-	pf_save[0] = c & UCHAR_MAX; /* a hack, see MSG_WriteShort */
- 	pf_save[1] = (c >> 8) & UCHAR_MAX;
 }
 
 /**
@@ -348,7 +295,7 @@ static void PF_WriteToSave (int c)
  */
 static int PF_ReadChar (void)
 {
-	return MSG_ReadChar(&net_message);
+	return NET_ReadChar(sv_msg);
 }
 
 /**
@@ -356,7 +303,7 @@ static int PF_ReadChar (void)
  */
 static int PF_ReadByte (void)
 {
-	return MSG_ReadByte(&net_message);
+	return NET_ReadByte(sv_msg);
 }
 
 /**
@@ -364,7 +311,7 @@ static int PF_ReadByte (void)
  */
 static int PF_ReadShort (void)
 {
-	return MSG_ReadShort(&net_message);
+	return NET_ReadShort(sv_msg);
 }
 
 /**
@@ -372,15 +319,7 @@ static int PF_ReadShort (void)
  */
 static int PF_ReadLong (void)
 {
-	return MSG_ReadLong(&net_message);
-}
-
-/**
- * @brief
- */
-static float PF_ReadFloat (void)
-{
-	return MSG_ReadFloat(&net_message);
+	return NET_ReadLong(sv_msg);
 }
 
 /**
@@ -388,7 +327,7 @@ static float PF_ReadFloat (void)
  */
 static char *PF_ReadString (void)
 {
-	return MSG_ReadString(&net_message);
+	return NET_ReadString(sv_msg);
 }
 
 /**
@@ -396,7 +335,7 @@ static char *PF_ReadString (void)
  */
 static void PF_ReadPos (vec3_t pos)
 {
-	MSG_ReadPos(&net_message, pos);
+	NET_ReadPos(sv_msg, pos);
 }
 
 /**
@@ -404,7 +343,7 @@ static void PF_ReadPos (vec3_t pos)
  */
 static void PF_ReadGPos (pos3_t pos)
 {
-	MSG_ReadGPos(&net_message, pos);
+	NET_ReadGPos(sv_msg, pos);
 }
 
 /**
@@ -412,7 +351,7 @@ static void PF_ReadGPos (pos3_t pos)
  */
 static void PF_ReadDir (vec3_t vector)
 {
-	MSG_ReadDir(&net_message, vector);
+	NET_ReadDir(sv_msg, vector);
 }
 
 /**
@@ -420,7 +359,7 @@ static void PF_ReadDir (vec3_t vector)
  */
 static float PF_ReadAngle (void)
 {
-	return MSG_ReadAngle(&net_message);
+	return NET_ReadAngle(sv_msg);
 }
 
 /**
@@ -428,12 +367,12 @@ static float PF_ReadAngle (void)
  */
 static void PF_ReadData (void *buffer, int size)
 {
-	MSG_ReadData(&net_message, buffer, size);
+	NET_ReadData(sv_msg, buffer, size);
 }
 
 /**
  * @brief
- * @sa MSG_V_ReadFormat
+ * @sa NET_V_ReadFormat
  */
 static void PF_ReadFormat (const char *format, ...)
 {
@@ -443,12 +382,9 @@ static void PF_ReadFormat (const char *format, ...)
 	if (!*format)	/* PA_NULL */
 		return;
 	va_start(ap, format);
-	MSG_V_ReadFormat(&net_message, format, ap);
+	NET_V_ReadFormat(sv_msg, format, ap);
 	va_end(ap);
 }
-
-static qboolean pfe_pending = qfalse;
-static int pfe_mask = 0;
 
 /**
  * @brief
@@ -458,10 +394,10 @@ static void PF_EndEvents (void)
 	if (!pfe_pending)
 		return;
 
-	MSG_WriteByte(&sv.multicast, EV_NULL);
-	SV_Multicast(pfe_mask);
-/*	SV_SendClientMessages(); */
+	NET_WriteByte(pfe_msg, EV_NULL);
+	SV_Multicast(pfe_mask, pfe_msg);
 	pfe_pending = qfalse;
+	pfe_msg = NULL;
 }
 
 /**
@@ -469,20 +405,18 @@ static void PF_EndEvents (void)
  */
 static void PF_AddEvent (int mask, int eType)
 {
-	if (!pfe_pending || mask != pfe_mask) {
-		/* the target clients have changed or nothing is pending */
-		if (pfe_pending)
-			/* finish the last event chain */
-			PF_EndEvents();
+	/* finish the last event */
+	if (pfe_pending)
+		PF_EndEvents();
 
-		/* start the new event */
-		pfe_pending = qtrue;
-		pfe_mask = mask;
-		MSG_WriteByte(&sv.multicast, svc_event);
-	}
+	/* start the new event */
+	pfe_pending = qtrue;
+	pfe_mask = mask;
+	pfe_msg = new_dbuffer();
+	NET_WriteByte(pfe_msg, svc_event);
 
 	/* write header */
-	MSG_WriteByte(&sv.multicast, eType);
+	NET_WriteByte(pfe_msg, eType);
 }
 
 /**
@@ -551,8 +485,6 @@ void SV_InitGameProgs (void)
 		SV_ShutdownGameProgs();
 
 	/* load a new game dll */
-	import.multicast = SV_Multicast;
-	import.unicast = PF_Unicast;
 	import.bprintf = SV_BroadcastPrintf;
 	import.dprintf = PF_dprintf;
 	import.cprintf = PF_cprintf;
@@ -590,16 +522,12 @@ void SV_InitGameProgs (void)
 	import.WriteByte = PF_WriteByte;
 	import.WriteShort = PF_WriteShort;
 	import.WriteLong = PF_WriteLong;
-	import.WriteFloat = PF_WriteFloat;
 	import.WriteString = PF_WriteString;
 	import.WritePos = PF_WritePos;
 	import.WriteGPos = PF_WriteGPos;
 	import.WriteDir = PF_WriteDir;
 	import.WriteAngle = PF_WriteAngle;
 	import.WriteFormat = PF_WriteFormat;
-
-	import.WriteNewSave = PF_WriteNewSave;
-	import.WriteToSave = PF_WriteToSave;
 
 	import.EndEvents = PF_EndEvents;
 	import.AddEvent = PF_AddEvent;
@@ -608,7 +536,6 @@ void SV_InitGameProgs (void)
 	import.ReadByte = PF_ReadByte;
 	import.ReadShort = PF_ReadShort;
 	import.ReadLong = PF_ReadLong;
-	import.ReadFloat = PF_ReadFloat;
 	import.ReadString = PF_ReadString;
 	import.ReadPos = PF_ReadPos;
 	import.ReadGPos = PF_ReadGPos;

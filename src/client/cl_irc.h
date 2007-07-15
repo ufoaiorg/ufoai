@@ -243,10 +243,9 @@ typedef struct irc_server_msg_s {
 	char trailing[IRC_SEND_BUF_SIZE];
 } irc_server_msg_t;
 
-static qboolean Irc_Net_Connect(const char *host, unsigned short port);
+static qboolean Irc_Net_Connect(const char *host, const char *port);
 static qboolean Irc_Net_Disconnect(void);
 
 static qboolean Irc_Net_Send(const char *msg, size_t msg_len);
-static qboolean Irc_Net_Receive(char *buf, size_t buf_len, int *recvd);
 
 #endif

@@ -135,7 +135,7 @@ static void LM_Delete (lm_t * lm)
 /**
  * @brief Callback for EV_DOOR_CLOSE event
  */
-void LM_DoorClose (sizebuf_t * sb)
+void LM_DoorClose (struct dbuffer *msg)
 {
 	lm_t *lm;
 	le_t *le;
@@ -143,19 +143,19 @@ void LM_DoorClose (sizebuf_t * sb)
 	vec3_t pos;
 	vec3_t newOrigin;
 
-	entNum = MSG_ReadShort(sb);
+	entNum = NET_ReadShort(msg);
 	le = LE_Get(entNum);
-	lmNum = MSG_ReadShort(sb);
+	lmNum = NET_ReadShort(msg);
 	lm = LM_Find(lmNum);
 	if (!lm || !le) {
-		MSG_ReadPos(sb, pos);
+		NET_ReadPos(msg, pos);
 		Com_Printf("Can't close the door - lm for mapNum %i not found or le (%i) not found\n", lmNum, entNum);
 		return;
 	} else {
 		Com_Printf("Close the door\n");
 	}
 	le->contents = CONTENTS_SOLID;
-	MSG_ReadPos(sb, pos);
+	NET_ReadPos(msg, pos);
 	VectorSubtract(pos, lm->origin, newOrigin);
 	VectorCopy(newOrigin, lm->origin);
 }
@@ -163,7 +163,7 @@ void LM_DoorClose (sizebuf_t * sb)
 /**
  * @brief Callback for EV_DOOR_OPEN event
  */
-void LM_DoorOpen (sizebuf_t * sb)
+void LM_DoorOpen (struct dbuffer *msg)
 {
 	lm_t *lm;
 	le_t *le;
@@ -171,12 +171,12 @@ void LM_DoorOpen (sizebuf_t * sb)
 	vec3_t pos;
 	vec3_t newOrigin;
 
-	entNum = MSG_ReadShort(sb);
+	entNum = NET_ReadShort(msg);
 	le = LE_Get(entNum);
-	lmNum = MSG_ReadShort(sb);
+	lmNum = NET_ReadShort(msg);
 	lm = LM_Find(lmNum);
 	if (!lm || !le) {
-		MSG_ReadPos(sb, pos);
+		NET_ReadPos(msg, pos);
 		Com_Printf("Can't open the door - lm for mapNum %i not found or le (%i) not found\n", lmNum, entNum);
 		return;
 	} else {
@@ -186,7 +186,7 @@ void LM_DoorOpen (sizebuf_t * sb)
 	/* NOTE: this is no func_door_rotating */
 	le->contents = 0;
 	/* FIXME: lm->origin is wrong here */
-	MSG_ReadPos(sb, pos);
+	NET_ReadPos(msg, pos);
 	VectorSubtract(pos, lm->origin, newOrigin);
 	VectorCopy(newOrigin, lm->origin);
 	/*Print3Vector(lm->origin);*/
@@ -195,11 +195,11 @@ void LM_DoorOpen (sizebuf_t * sb)
 /**
  * @brief
  */
-void LM_Perish (sizebuf_t * sb)
+void LM_Perish (struct dbuffer *msg)
 {
 	lm_t *lm;
 
-	lm = LM_Find(MSG_ReadShort(sb));
+	lm = LM_Find(NET_ReadShort(msg));
 	if (!lm)
 		return;
 
@@ -211,18 +211,18 @@ void LM_Perish (sizebuf_t * sb)
  * @brief
  * @note e.g. func_breakable or func_door with health
  */
-void LM_Explode (sizebuf_t * sb)
+void LM_Explode (struct dbuffer *msg)
 {
 	lm_t *lm;
 	le_t *le;
 
-	lm = LM_Find(MSG_ReadShort(sb));
+	lm = LM_Find(NET_ReadShort(msg));
 	if (!lm)
 		return;
 
 	/* now remove also the le to allow the tracing code to skip this le */
 	/* func_breakable and func_door e.g. */
-	le = LE_Get(MSG_ReadShort(sb));
+	le = LE_Get(NET_ReadShort(msg));
 	if (le)
 		le->inuse = qfalse;
 	else
@@ -452,7 +452,7 @@ static void LET_PathMove (le_t * le)
 			if (floor)
 				FLOOR(le) = FLOOR(floor);
 
-			blockEvents = qfalse;
+			CL_UnblockEvents();
 			le->think = LET_StartIdle;
 			le->think(le);
 			return;

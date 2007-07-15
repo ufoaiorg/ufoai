@@ -71,11 +71,11 @@ static const objDef_t* G_GetObjectForFiredef (fireDef_t* fd)
 		od = &gi.csi->ods[i];
 		/* For each weapon-entry in the object ... */
 		for (j = 0; j < od->numWeapons; j++) {
-       		/* For each fire-definition in the weapon entry  ... */
-       		for (k = 0; k < od->numFiredefs[j]; k++) {
-               	csiFD = &od->fd[j][k];
-        		if (csiFD == fd)
-        			return od;
+			/* For each fire-definition in the weapon entry  ... */
+			for (k = 0; k < od->numFiredefs[j]; k++) {
+				csiFD = &od->fd[j][k];
+				if (csiFD == fd)
+					return od;
 			}
 		}
 	}

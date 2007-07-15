@@ -58,7 +58,9 @@ CLIENT_SRCS = \
 	qcommon/md5.c \
 	qcommon/mem.c \
 	qcommon/msg.c \
-	qcommon/net_chan.c \
+	qcommon/net.c \
+	qcommon/netpack.c \
+	qcommon/dbuffer.c \
 	qcommon/scripts.c \
 	\
 	server/sv_ccmds.c \
@@ -71,13 +73,6 @@ CLIENT_SRCS = \
 	\
 	game/q_shared.c \
 	game/inv_shared.c
-
-ifeq ($(HAVE_IPV6),1)
-	# FIXME: flags!
-	NET_UDP=net_udp6
-else
-	NET_UDP=net_udp
-endif
 
 ifeq ($(HAVE_OPENAL),1)
 	CLIENT_SRCS+= \
@@ -92,8 +87,7 @@ ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux-gnu),)
 		ports/linux/sys_linux.c \
 		ports/unix/sys_console.c \
 		ports/unix/sys_unix.c \
-		ports/unix/glob.c \
-		ports/unix/$(NET_UDP).c
+		ports/unix/glob.c
 
 	ifeq ($(HAVE_OPENAL),1)
 		CLIENT_SRCS+= \
@@ -110,7 +104,6 @@ ifeq ($(TARGET_OS),mingw32)
 		ports/win32/in_win.c \
 		ports/win32/conproc.c  \
 		ports/win32/sys_win.c \
-		ports/win32/net_wins.c \
 		ports/win32/ufo.rc
 	CLIENT_CD=ports/win32/cd_win.c
 
@@ -128,7 +121,6 @@ ifeq ($(TARGET_OS),darwin)
 		ports/unix/glob.c \
 		ports/unix/sys_console.c \
 		ports/unix/sys_unix.c \
-		ports/unix/$(NET_UDP).c \
 		ports/macosx/q_shosx.c \
 		ports/macosx/qal_osx.c
 
@@ -146,8 +138,7 @@ ifeq ($(TARGET_OS),solaris)
 		ports/solaris/sys_solaris.c \
 		ports/unix/sys_console.c \
 		ports/unix/sys_unix.c \
-		ports/unix/glob.c \
-		ports/unix/$(NET_UDP).c
+		ports/unix/glob.c
 	ifeq ($(HAVE_OPENAL),1)
 		CLIENT_SRCS+=\
 			ports/linux/qal_linux.c

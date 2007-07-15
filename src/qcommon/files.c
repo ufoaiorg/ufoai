@@ -246,7 +246,7 @@ static int FS_FOpenFileSingle (const char *filename, qFILE * file)
 			if (!file->f)
 				continue;
 
-			Com_DPrintf("FindFile: %s\n", netpath);
+			/*Com_DPrintf("FindFile: %s\n", netpath);*/
 			return FS_FileLength(file);
 		}
 	}

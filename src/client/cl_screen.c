@@ -49,7 +49,6 @@ static cvar_t *scr_consize;
 static cvar_t *scr_centertime;
 static cvar_t *scr_showpause;
 
-static cvar_t *scr_netgraph;
 static cvar_t *scr_timegraph;
 static cvar_t *scr_debuggraph;
 static cvar_t *scr_graphheight;
@@ -68,22 +67,6 @@ static void SCR_DrawString(int x, int y, const char *string, qboolean bitmapFont
 BAR GRAPHS
 ===============================================================================
 */
-
-/**
- * @brief A new packet was just parsed
- */
-void CL_AddNetgraph (void)
-{
-	int i;
-
-	/* if using the debuggraph for something else, don't */
-	/* add the net lines */
-	if (scr_debuggraph->integer || scr_timegraph->integer)
-		return;
-
-	for (i = 0; i < cls.netchan.dropped; i++)
-		SCR_DebugGraph(30, 0x40);
-}
 
 /** @brief Graph color and value */
 typedef struct {
@@ -120,8 +103,6 @@ static void SCR_DrawDebugGraph (void)
 	static int fps;
 	struct tm *now;
 	time_t tnow;
-	char timebuf[32], temp_map[32];
-	int time_clock, map_time = 0, time_map, hour, mins, secs;
 
 	tnow = time((time_t *) 0);
 	now = localtime(&tnow);
@@ -159,23 +140,6 @@ static void SCR_DrawDebugGraph (void)
 	if (cls.realtime - lasttime > 50) {
 		lasttime = cls.realtime;
 		fps = (cls.frametime) ? 1 / cls.frametime : 0;
-	}
-
-	if (scr_netgraph->integer == 3) {
-		time_clock = strftime(timebuf, 32, "Time: %H:%M", now);
-		time_map = cl.time / 1000;
-		hour = time_map / 3600;
-		mins = (time_map % 3600) / 60;
-		secs = time_map % 60;
-
-		if (hour > 0)
-			Com_sprintf(temp_map, sizeof(temp_map), "Map:  %i:%02i:%02i", hour, mins, secs);
-		else
-			Com_sprintf(temp_map, sizeof(temp_map), "Map:  %i:%02i", mins, secs);
-
-		SCR_DrawString(x + 5, y + con_fontHeight->integer, va("FPS:  %3i", fps), qtrue);
-		SCR_DrawString(x + 5, y + con_fontHeight->integer * 2, va(timebuf, time_clock), qtrue);
-		SCR_DrawString(x + 5, y + con_fontHeight->integer * 3, va(temp_map, map_time), qtrue);
 	}
 }
 
@@ -309,7 +273,6 @@ void SCR_Init (void)
 	scr_showpause = Cvar_Get("scr_showpause", "1", 0, "Show pause image when server is in paused mode"
 		" set to 0 to deactivate it, useful for screenshots");
 	scr_centertime = Cvar_Get("scr_centertime", "2.5", 0, NULL);
-	scr_netgraph = Cvar_Get("netgraph", "0", 0, "Draw the netgraph");
 	scr_timegraph = Cvar_Get("timegraph", "0", 0, NULL);
 	scr_debuggraph = Cvar_Get("debuggraph", "0", 0, NULL);
 	scr_graphheight = Cvar_Get("graphheight", "32", 0, NULL);
@@ -326,17 +289,6 @@ void SCR_Init (void)
 	scr_initialized = qtrue;
 }
 
-
-/**
- * @brief Draws a net-connection-problems icon
- */
-static void SCR_DrawNet (void)
-{
-	if (cls.netchan.outgoing_sequence - cls.netchan.incoming_acknowledged < CMD_BACKUP - 1)
-		return;
-
-	re.DrawPic(scr_vrect.x + 64, scr_vrect.y, "net");
-}
 
 /**
  * @brief
@@ -768,7 +720,6 @@ void SCR_UpdateScreen (void)
 				/* draw the menus on top of the render view (for hud and so on) */
 				MN_DrawMenus();
 
-				SCR_DrawNet();
 				SCR_CheckDrawCenterString();
 			}
 
@@ -780,7 +731,7 @@ void SCR_UpdateScreen (void)
 			if (scr_timegraph->integer)
 				SCR_DebugGraph(cls.frametime * 300, 0);
 
-			if (scr_debuggraph->integer || scr_timegraph->integer || scr_netgraph->integer)
+			if (scr_debuggraph->integer || scr_timegraph->integer)
 				SCR_DrawDebugGraph();
 
 			SCR_DrawConsole();

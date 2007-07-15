@@ -38,6 +38,22 @@ sv_client and sv_player will be valid.
 ============================================================
 */
 
+static void stufftext(client_t *client, const char *fmt, ...) __attribute__((format(printf,2,3)));
+
+static void stufftext (client_t *client, const char *fmt, ...)
+{
+	va_list ap;
+	struct dbuffer *msg = new_dbuffer();
+
+	NET_WriteByte(msg, svc_stufftext);
+
+	va_start(ap, fmt);
+	NET_VPrintf(msg, fmt, ap);
+	va_end(ap);
+
+	NET_WriteMsg(client->stream, msg);
+}
+
 /**
  * @brief
  */
@@ -68,8 +84,7 @@ static void SV_New_f (void)
 	if (sv_client->state != cs_connected) {
 		if (sv_client->state == cs_spawning) {
 			/* client typed 'reconnect/new' while connecting. */
-			MSG_WriteByte(&sv_client->netchan.message, svc_stufftext);
-			MSG_WriteString(&sv_client->netchan.message, "\ndisconnect\nreconnect\n");
+			stufftext(sv_client, "\ndisconnect\nreconnect\n");
 			SV_DropClient(sv_client);
 		} else
 			Com_DPrintf("WARNING: Illegal 'new' from %s, client state %d. This shouldn't happen...\n", sv_client->name, sv_client->state);
@@ -85,35 +100,36 @@ static void SV_New_f (void)
 	/* client state to prevent multiple new from causing high cpu / overflows. */
 	sv_client->state = cs_spawning;
 
-	/* fix for old clients that don't respond to stufftext due to pending cmd buffer */
-	MSG_WriteByte(&sv_client->netchan.message, svc_stufftext);
-	MSG_WriteString(&sv_client->netchan.message, "\n");
-
 	/* serverdata needs to go over for all types of servers */
 	/* to make sure the protocol is right, and to set the gamedir */
 	gamedir = Cvar_VariableString("fs_gamedir");
-
-	/* send the serverdata */
-	MSG_WriteByte(&sv_client->netchan.message, svc_serverdata);
-	MSG_WriteLong(&sv_client->netchan.message, PROTOCOL_VERSION);
-	MSG_WriteLong(&sv_client->netchan.message, svs.spawncount);
-	MSG_WriteByte(&sv_client->netchan.message, sv.attractloop);
-	MSG_WriteString(&sv_client->netchan.message, gamedir);
 
 	if (sv.state == ss_pic)
 		playernum = -1;
 	else
 		playernum = sv_client - svs.clients;
-	MSG_WriteShort(&sv_client->netchan.message, playernum);
 
-	/* send full levelname */
-	MSG_WriteString(&sv_client->netchan.message, sv.configstrings[CS_NAME]);
+	/* send the serverdata */
+        {
+          struct dbuffer *msg = new_dbuffer();
+          NET_WriteByte(msg, svc_serverdata);
+          NET_WriteLong(msg, PROTOCOL_VERSION);
+          NET_WriteLong(msg, svs.spawncount);
+          NET_WriteByte(msg, sv.attractloop);
+          NET_WriteString(msg, gamedir);
+
+          NET_WriteShort(msg, playernum);
+
+          /* send full levelname */
+          NET_WriteString(msg, sv.configstrings[CS_NAME]);
+
+          NET_WriteMsg(sv_client->stream, msg);
+        }
 
 	/* game server */
 	if (sv.state == ss_game) {
 		/* begin fetching configstrings */
-		MSG_WriteByte(&sv_client->netchan.message, svc_stufftext);
-		MSG_WriteString(&sv_client->netchan.message, va("cmd configstrings %i 0\n", svs.spawncount));
+		stufftext(sv_client, "cmd configstrings %i 0\n", svs.spawncount);
 	}
 }
 
@@ -122,7 +138,8 @@ static void SV_New_f (void)
  */
 static void SV_Configstrings_f (void)
 {
-	int start;
+	int i;
+        int start;
 
 	Com_DPrintf("Configstrings() from %s\n", sv_client->name);
 
@@ -142,24 +159,18 @@ static void SV_Configstrings_f (void)
 	if (start < 0)
 		start = 0; /* catch negative offsets */
 
-	/* write a packet full of data */
-	while (sv_client->netchan.message.cursize < MAX_MSGLEN / 2 && start < MAX_CONFIGSTRINGS) {
-		if (sv.configstrings[start][0]) {
-			MSG_WriteByte(&sv_client->netchan.message, svc_configstring);
-			MSG_WriteShort(&sv_client->netchan.message, start);
-			MSG_WriteString(&sv_client->netchan.message, sv.configstrings[start]);
-		}
-		start++;
-	}
+        for (i = start; i < MAX_CONFIGSTRINGS; i++) {
+          if (sv.configstrings[i][0]) {
+            struct dbuffer *msg = new_dbuffer();
+            Com_DPrintf("sending configstring %d: %s\n", i, sv.configstrings[i]);
+            NET_WriteByte(msg, svc_configstring);
+            NET_WriteShort(msg, i);
+            NET_WriteString(msg, sv.configstrings[i]);
+            NET_WriteMsg(sv_client->stream, msg);
+          }
+        }
 
-	/* send next command */
-	if (start == MAX_CONFIGSTRINGS) {
-		MSG_WriteByte(&sv_client->netchan.message, svc_stufftext);
-		MSG_WriteString(&sv_client->netchan.message, va("precache %i\n", svs.spawncount));
-	} else {
-		MSG_WriteByte(&sv_client->netchan.message, svc_stufftext);
-		MSG_WriteString(&sv_client->netchan.message, va("cmd configstrings %i %i\n", svs.spawncount, start));
-	}
+        stufftext(sv_client, "precache %i\n", svs.spawncount);
 }
 
 /**
@@ -374,10 +385,8 @@ static void SV_ExecuteUserCommand (char *s)
 /**
  * @brief The current net_message is parsed for the given client
  */
-void SV_ExecuteClientMessage (client_t * cl)
+void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 {
-	int c = -2;
-	int action = -1;
 	char *s;
 
 	/* only allow one move command */
@@ -386,20 +395,12 @@ void SV_ExecuteClientMessage (client_t * cl)
 	sv_client = cl;
 	sv_player = sv_client->player;
 
-	while (1) {
-		if (net_message.readcount > net_message.cursize) {
-			Com_Printf("SV_ExecuteClientMessage: badread, %d > %d (player: %s - last action: %i [%i]\n", net_message.readcount, net_message.cursize, ge->ClientGetName(sv_player->num), c, action);
-			/*SV_DropClient(cl);*/ /* @todo mattn: check this */
-			return;
-		}
+        if (cmd == -1)
+          return;
 
-		c = MSG_ReadByte(&net_message);
-		if (c == -1)
-			break;
-
-		switch (c) {
+        switch (cmd) {
 		default:
-			Com_Printf("SV_ExecuteClientMessage: unknown command char '%d'\n", c);
+			Com_Printf("SV_ExecuteClientMessage: unknown command char '%d'\n", cmd);
 			SV_DropClient(cl);
 			return;
 
@@ -407,13 +408,15 @@ void SV_ExecuteClientMessage (client_t * cl)
 			break;
 
 		case clc_userinfo:
-			Q_strncpyz(cl->userinfo, MSG_ReadString(&net_message), sizeof(cl->userinfo));
+			Q_strncpyz(cl->userinfo, NET_ReadString(msg), sizeof(cl->userinfo));
+                        Com_Printf("userinfo from client: %s\n", cl->userinfo);
 			SV_UserinfoChanged(cl);
 			break;
 
 		case clc_stringcmd:
-			s = MSG_ReadString(&net_message);
+			s = NET_ReadString(msg);
 
+                        Com_Printf("stringcmd from client: %s\n", s);
 			/* malicious users may try using too many string commands */
 			if (++stringCmdCount < MAX_STRINGCMDS)
 				SV_ExecuteUserCommand(s);
@@ -424,19 +427,24 @@ void SV_ExecuteClientMessage (client_t * cl)
 
 		case clc_action:
 			/* client actions are handled by the game module */
-			action = ge->ClientAction(sv_player);
+                        sv_msg = msg;
+                        ge->ClientAction(sv_player);
+                        sv_msg = NULL;
 			break;
 
 		case clc_endround:
 			/* player wants to end round */
+                        sv_msg = msg;
 			ge->ClientEndRound(sv_player, NOISY);
+                        sv_msg = NULL;
 			break;
 
 		case clc_teaminfo:
 			/* player sends team info */
 			/* actors spawn accordingly */
-			ge->ClientTeamInfo(sv_player);
+                        sv_msg = msg;
+                        ge->ClientTeamInfo(sv_player);
+                        sv_msg = NULL;
 			break;
-		}
 	}
 }

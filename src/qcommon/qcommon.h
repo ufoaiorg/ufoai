@@ -139,7 +139,7 @@ void Irc_Init(void);
 void Irc_Shutdown(void);
 
 /* client side */
-void Irc_Logic_Frame(int frame);
+void Irc_Logic_Frame(int now, void *data);
 void Irc_Input_KeyEvent(int key);
 void Irc_Input_Deactivate(void);
 void Irc_Input_Activate(void);
@@ -180,7 +180,8 @@ enum svc_ops_e {
 	svc_spawnbaseline,
 	svc_centerprint,			/**< [string] to put in center of the screen */
 	svc_playerinfo,				/**< variable */
-	svc_event					/**< ... */
+	svc_event,					/**< ... */
+        svc_oob = 0xff
 };
 
 /*============================================== */
@@ -195,7 +196,8 @@ enum clc_ops_e {
 	clc_teaminfo,
 	clc_action,
 	clc_userinfo,				/**< [[userinfo string] */
-	clc_stringcmd				/**< [string] message */
+	clc_stringcmd,				/**< [string] message */
+        clc_oob = 0xff
 };
 
 
@@ -217,13 +219,15 @@ enum clc_ops_e {
 
 #include "cvar.h"
 
-#include "net_chan.h"
-
 #include "cmodel.h"
 
 #include "filesys.h"
 
 #include "scripts.h"
+
+#include "net.h"
+
+#include "netpack.h"
 
 typedef enum actor_sounds_s {
 	SOUND_DEATH,
@@ -269,15 +273,12 @@ char *Com_MD5File(const char *fn, int length);
 extern cvar_t *developer;
 extern cvar_t *dedicated;
 extern cvar_t *host_speeds;
-extern cvar_t *log_stats;
 extern cvar_t *sv_maxclients;
 extern cvar_t *sv_reaction_leftover;
 extern cvar_t *sv_shot_origin;
 extern cvar_t *cl_maxfps;
 extern cvar_t *teamnum;
 extern cvar_t *gametype;
-
-extern FILE *log_stats_file;
 
 /* host_speeds times */
 extern int time_before_game;
@@ -313,7 +314,7 @@ extern int numGTs;
 
 qboolean Qcommon_LocaleSet(void);
 void Qcommon_Init(int argc, const char **argv);
-float Qcommon_Frame(int msec);
+void Qcommon_Frame(void);
 void Qcommon_Shutdown(void);
 qboolean Qcommon_ServerActive(void);
 void Com_SetGameType(void);
@@ -323,6 +324,12 @@ extern const vec3_t bytedirs[NUMVERTEXNORMALS];
 
 /** this is in the client code, but can be used for debugging from server */
 void SCR_DebugGraph(float value, int color);
+
+/* Event timing */
+
+typedef void event_func(int now, void *data);
+void Schedule_Event(int when, event_func *func, void *data);
+void Schedule_Timer(cvar_t *interval, event_func *func, void *data);
 
 /*
 ==============================================================
@@ -360,8 +367,6 @@ void Sys_Minimize(void);
 void Sys_DisableTray(void);
 void Sys_EnableTray(void);
 
-void Sys_ShowIP(void);
-
 /*
 ==============================================================
 CLIENT / SERVER SYSTEMS
@@ -371,7 +376,8 @@ CLIENT / SERVER SYSTEMS
 void CL_Init(void);
 void CL_Drop(void);
 void CL_Shutdown(void);
-int CL_Frame(int msec);
+void CL_Frame(int now, void *);
+void CL_SlowFrame(int now, void *);
 void CL_ParseClientData(const char *type, const char *name, const char **text);
 void Con_Print(const char *text);
 void SCR_BeginLoadingPlaque(void);
@@ -382,7 +388,7 @@ void SV_Init(void);
 void SV_Clear(void);
 void SV_Shutdown(const char *finalmsg, qboolean reconnect);
 void SV_ShutdownWhenEmpty(void);
-void SV_Frame(int msec);
+void SV_Frame(int now, void *);
 qboolean SV_RenderTrace(vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end);
 
 #endif							/* QCOMMON_DEFINED */

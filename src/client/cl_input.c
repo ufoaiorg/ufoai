@@ -971,7 +971,7 @@ static void CL_CameraMoveRemote (void)
 			VectorMA(cl.cam.speed, -frac, routeDelta, cl.cam.speed);
 			VectorNormalize2(cl.cam.speed, delta);
 			if (DotProduct(delta, routeDelta) < 0.05) {
-				blockEvents = qfalse;
+				CL_UnblockEvents();
 				cameraRoute = qfalse;
 			}
 		} else
@@ -1086,7 +1086,7 @@ void CL_CameraRoute (pos3_t from, pos3_t target)
 
 	VectorClear(cl.cam.speed);
 	cameraRoute = qtrue;
-	blockEvents = qtrue;
+	CL_BlockEvents();
 }
 
 #define ROTATE_SPEED	0.5

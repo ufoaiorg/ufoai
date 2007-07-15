@@ -43,9 +43,8 @@ void CL_Shutdown (void)
 {
 }
 
-int CL_Frame (int msec)
+void CL_Frame (int now, void *data)
 {
-	return msec;
 }
 
 void CL_ParseClientData (const char *type, const char *name, const char **text)

@@ -287,7 +287,7 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 
 	default:	/* pass all unhandled messages to DefWindowProc */
 		return DefWindowProc(hWnd, uMsg, wParam, lParam);
-    }
+	}
 
 	/* return 0 if handled message, 1 if not */
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -324,7 +324,7 @@ const vidmode_t vid_modes[] =
 	{ 1280,  854, 13 }, /* Apple TiBook */
 	{ 640,  400, 14 }, /* generic 16:10 widescreen*/
 	{ 800,  500, 15 }, /* as found modern */
-	{ 1024,  640, 16 }, /* notebooks    */
+	{ 1024,  640, 16 }, /* notebooks */
 	{ 1280,  800, 17 },
 	{ 1680, 1050, 18 },
 	{ 1920, 1200, 19 },

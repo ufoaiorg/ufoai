@@ -30,32 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /*
 =============================================================================
-Com_Printf redirection
-=============================================================================
-*/
-
-char sv_outputbuf[SV_OUTPUTBUF_LENGTH]; /**< redirect buffer */
-
-/**
- * @brief
- * @sa Com_BeginRedirect
- */
-void SV_FlushRedirect (int sv_redirected, char *outputbuf)
-{
-	if (sv_redirected == RD_PACKET)
-		Netchan_OutOfBandPrint(NS_SERVER, net_from, "print\n%s", outputbuf);
-#if 0
-	} else if (sv_redirected == RD_CLIENT) {
-		MSG_WriteByte(&sv_client->netchan.message, svc_print);
-		MSG_WriteByte(&sv_client->netchan.message, PRINT_HIGH);
-		MSG_WriteString(&sv_client->netchan.message, outputbuf);
-	}
-#endif
-}
-
-
-/*
-=============================================================================
 EVENT MESSAGES
 =============================================================================
 */
@@ -67,20 +41,20 @@ EVENT MESSAGES
 void SV_ClientPrintf (client_t * cl, int level, const char *fmt, ...)
 {
 	va_list argptr;
-	char string[1024];
+        struct dbuffer *msg;
 
 	if (level < cl->messagelevel)
 		return;
 
+        msg = new_dbuffer();
+        NET_WriteByte(msg, svc_print);
+        NET_WriteByte(msg, level);
+
 	va_start(argptr, fmt);
-	Q_vsnprintf(string, sizeof(string), fmt, argptr);
+	NET_VPrintf(msg, fmt, argptr);
 	va_end(argptr);
 
-	string[sizeof(string)-1] = 0;
-
-	MSG_WriteByte(&cl->netchan.message, svc_print);
-	MSG_WriteByte(&cl->netchan.message, level);
-	MSG_WriteString(&cl->netchan.message, string);
+        NET_WriteMsg(cl->stream, msg);
 }
 
 /**
@@ -89,23 +63,29 @@ void SV_ClientPrintf (client_t * cl, int level, const char *fmt, ...)
 void SV_BroadcastPrintf (int level, const char *fmt, ...)
 {
 	va_list argptr;
-	char string[2048];
+        struct dbuffer *msg;
 	client_t *cl;
-	int i;
+        int i;
+
+        msg = new_dbuffer();
+        NET_WriteByte(msg, svc_print);
+        NET_WriteByte(msg, level);
 
 	va_start(argptr, fmt);
-	Q_vsnprintf(string, sizeof(string), fmt, argptr);
+	NET_VPrintf(msg, fmt, argptr);
 	va_end(argptr);
-
-	string[sizeof(string)-1] = 0;
 
 	/* echo to console */
 	if (dedicated->integer) {
 		char copy[1024];
 
+                va_start(argptr, fmt);
+                Q_vsnprintf(copy, sizeof(copy), fmt, argptr);
+                va_end(argptr);
+
 		/* mask off high bits */
-		for (i = 0; i < 1023 && string[i]; i++)
-			copy[i] = string[i] & 127;
+		for (i = 0; i < 1023 && copy[i]; i++)
+			copy[i] = copy[i] & 127;
 		copy[i] = 0;
 		Com_Printf("%s", copy);
 	}
@@ -115,10 +95,10 @@ void SV_BroadcastPrintf (int level, const char *fmt, ...)
 			continue;
 		if (cl->state < cs_connected)
 			continue;
-		MSG_WriteByte(&cl->netchan.message, svc_print);
-		MSG_WriteByte(&cl->netchan.message, level);
-		MSG_WriteString(&cl->netchan.message, string);
+                NET_WriteConstMsg(cl->stream, msg);
 	}
+
+        free_dbuffer(msg);
 }
 
 /**
@@ -127,29 +107,36 @@ void SV_BroadcastPrintf (int level, const char *fmt, ...)
 void SV_BroadcastCommand (const char *fmt, ...)
 {
 	va_list argptr;
-	char string[1024];
+        struct dbuffer *msg;
 
 	if (!sv.state)
 		return;
+
+        msg = new_dbuffer();
+        NET_WriteByte(msg, svc_stufftext);
+
 	va_start(argptr, fmt);
-	Q_vsnprintf(string, sizeof(string), fmt, argptr);
+	NET_VPrintf(msg, fmt, argptr);
 	va_end(argptr);
 
-	string[sizeof(string)-1] = 0;
-
-	MSG_WriteByte(&sv.multicast, svc_stufftext);
 #ifdef DEBUG
-	Com_DPrintf("broadcast%s\n", string);
+        {
+          char string[1024];
+          va_start(argptr, fmt);
+          Q_vsnprintf(string, sizeof(string), fmt, argptr);
+          va_end(argptr);
+          string[sizeof(string)-1] = 0;
+          Com_DPrintf("broadcast%s\n", string);
+        }
 #endif
-	MSG_WriteString(&sv.multicast, string);
-	SV_Multicast(~0);
+	SV_Multicast(~0, msg);
 }
 
 
 /**
- * @brief Sends the contents of sv.multicast to a subset of the clients,then clears sv.multicast.
+ * @brief Sends the contents of msg to a subset of the clients,then frees msg
  */
-void SV_Multicast (int mask)
+void SV_Multicast (int mask, struct dbuffer *msg)
 {
 	client_t *c;
 	int j;
@@ -161,22 +148,11 @@ void SV_Multicast (int mask)
 		if (!(mask & (1 << j)))
 			continue;
 
-		/* get next reliable buffer, if needed */
-		if (c->addMsg == c->curMsg || c->reliable[c->addMsg].cursize + sv.multicast.cursize > MAX_MSGLEN - 100) {
-			c->addMsg = (c->addMsg + 1) % RELIABLEBUFFERS;
-			if (c->addMsg == c->curMsg) {
-				/* client overflowed */
-				c->netchan.message.overflowed = qtrue;
-				continue;
-			}
-			SZ_Clear(&c->reliable[c->addMsg]);
-		}
-
 		/* write the message */
-		SZ_Write(&c->reliable[c->addMsg], sv.multicast.data, sv.multicast.cursize);
+                NET_WriteConstMsg(c->stream, msg);
 	}
 
-	SZ_Clear(&sv.multicast);
+        free_dbuffer(msg);
 }
 
 
@@ -186,40 +162,6 @@ FRAME UPDATES
 ===============================================================================
 */
 
-/**
- * @brief
- */
-void SV_SendClientMessages (void)
-{
-	int i;
-	client_t *c;
-
-	/* send a message to each connected client */
-	for (i = 0, c = svs.clients; i < sv_maxclients->integer; i++, c++) {
-		if (!c->state)
-			continue;
-		/* if the reliable message overflowed, */
-		/* drop the client */
-		if (c->netchan.message.overflowed) {
-			SZ_Clear(&c->netchan.message);
-			SZ_Clear(&c->datagram);
-			SV_BroadcastPrintf(PRINT_HIGH, "%s overflowed\n", c->name);
-			SV_DropClient(c);
-		}
-
-		/* just update reliable if needed */
-		if (c->netchan.message.cursize || (c->curMsg != c->addMsg && !c->netchan.message.cursize)
-			|| curtime - c->netchan.last_sent > 1000) {
-/*			Com_Printf("send %i %i\n", c->netchan.message.cursize, c->netchan.reliable_length); */
-			if (c->curMsg != c->addMsg && !c->netchan.message.cursize) {
-				/* copy the next reliable message */
-				c->curMsg = (c->curMsg + 1) % RELIABLEBUFFERS;
-				SZ_Write(&c->netchan.message, c->reliable[c->curMsg].data, c->reliable[c->curMsg].cursize);
-			}
-			Netchan_Transmit(&c->netchan, 0, NULL);
-		}
-	}
-}
 
 /**
  * @brief Each entity can have eight independant sound sources, like voice, weapon, feet, etc.
@@ -244,6 +186,7 @@ void SV_BreakSound (vec3_t origin, edict_t *entity, int channel, edictMaterial_t
 	int i;
 	int ent;
 	vec3_t origin_v;
+        struct dbuffer *msg;
 
 	if (volume < 0 || volume > 1.0)
 		Com_Error(ERR_FATAL, "SV_BreakSound: volume = %f", volume);
@@ -291,22 +234,24 @@ void SV_BreakSound (vec3_t origin, edict_t *entity, int channel, edictMaterial_t
 		}
 	}
 
-	MSG_WriteByte(&sv.multicast, svc_breaksound);
-	MSG_WriteByte(&sv.multicast, flags);
-	MSG_WriteByte(&sv.multicast, material);
+        msg = new_dbuffer();
+
+	NET_WriteByte(msg, svc_breaksound);
+	NET_WriteByte(msg, flags);
+	NET_WriteByte(msg, material);
 
 	if (flags & SND_VOLUME)
-		MSG_WriteByte(&sv.multicast, volume*255);
+		NET_WriteByte(msg, volume*255);
 	if (flags & SND_ATTENUATION)
-		MSG_WriteByte(&sv.multicast, attenuation*64);
+		NET_WriteByte(msg, attenuation*64);
 	if (flags & SND_OFFSET)
-		MSG_WriteByte(&sv.multicast, timeofs*1000);
+		NET_WriteByte(msg, timeofs*1000);
 
 	if (flags & SND_ENT)
-		MSG_WriteShort(&sv.multicast, sendchan);
+		NET_WriteShort(msg, sendchan);
 
 	if (flags & SND_POS)
-		MSG_WritePos(&sv.multicast, origin);
+		NET_WritePos(msg, origin);
 
-	SV_Multicast(~0);
+	SV_Multicast(~0, msg);
 }

@@ -1044,8 +1044,8 @@ static void CL_BaseRansacked (base_t *base)
 		AIR_DeleteAircraft(&base->aircraft[ac]);
 
 	/* @todo: Maybe reset research in progress. ... needs playbalance
-	 *       need another value in technology_t to remember researched
-	 *       time from other bases?
+	 * need another value in technology_t to remember researched
+	 * time from other bases?
 	 * @todo: Destroy (or better: just damage) some random buildings. */
 
 	Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Your base: %s has been ransacked! All employees killed and all equipment destroyed."), base->name);

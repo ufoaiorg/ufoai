@@ -259,24 +259,24 @@ void GLimp_AppActivate( qboolean active )
  */
 static Cursor CreateNullCursor(Display *display, Window root)
 {
-    Pixmap cursormask;
-    XGCValues xgc;
-    GC gc;
-    XColor dummycolour;
-    Cursor cursor;
+	Pixmap cursormask;
+	XGCValues xgc;
+	GC gc;
+	XColor dummycolour;
+	Cursor cursor;
 
-    cursormask = XCreatePixmap(display, root, 1, 1, 1/*depth*/);
-    xgc.function = GXclear;
-    gc =  XCreateGC(display, cursormask, GCFunction, &xgc);
-    XFillRectangle(display, cursormask, gc, 0, 0, 1, 1);
-    dummycolour.pixel = 0;
-    dummycolour.red = 0;
-    dummycolour.flags = 04;
-    cursor = XCreatePixmapCursor(display, cursormask, cursormask,
-          &dummycolour,&dummycolour, 0,0);
-    XFreePixmap(display,cursormask);
-    XFreeGC(display,gc);
-    return cursor;
+	cursormask = XCreatePixmap(display, root, 1, 1, 1/*depth*/);
+	xgc.function = GXclear;
+	gc =  XCreateGC(display, cursormask, GCFunction, &xgc);
+	XFillRectangle(display, cursormask, gc, 0, 0, 1, 1);
+	dummycolour.pixel = 0;
+	dummycolour.red = 0;
+	dummycolour.flags = 04;
+	cursor = XCreatePixmapCursor(display, cursormask, cursormask,
+		&dummycolour,&dummycolour, 0,0);
+	XFreePixmap(display,cursormask);
+	XFreeGC(display,gc);
+	return cursor;
 }
 
 /**
@@ -305,9 +305,8 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 				getenv("DISPLAY"));
 		else
 			Sys_Error("VID: Could not open local display\n");
-	}
-	else
-	    fprintf(stderr, "VID: Opened display %s\n", getenv("DISPLAY"));
+	} else
+		fprintf(stderr, "VID: Opened display %s\n", getenv("DISPLAY"));
 
 	XAutoRepeatOff(x_disp);
 
@@ -326,18 +325,15 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 	}
 
 	/* pick a visual- warn if more than one was available */
-	x_visinfo = glXChooseVisual(x_disp, DefaultScreen( x_disp ),
-				     StudlyRGBattributes);
+	x_visinfo = glXChooseVisual(x_disp, DefaultScreen(x_disp), StudlyRGBattributes);
 	if (!x_visinfo) {
 		fprintf(stderr, "Using non studly RGB attributes\n");
-		x_visinfo = glXChooseVisual(x_disp, DefaultScreen( x_disp ),
-					     RGBattributes);
+		x_visinfo = glXChooseVisual(x_disp, DefaultScreen(x_disp), RGBattributes);
 		if (!x_visinfo)
 			Sys_Error("No matching visual available!\n");
 	}
 
-	ri.Con_Printf(PRINT_ALL, "Using visualid 0x%x:\n",
-		   (int)(x_visinfo->visualid));
+	ri.Con_Printf(PRINT_ALL, "Using visualid 0x%x:\n", (int)(x_visinfo->visualid));
 #if 0
 	if (verbose) {
 		printf("Using visualid %d:\n", (int)(x_visinfo->visualid));
@@ -433,7 +429,7 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 			XConfigureWindow(x_disp, x_win,
 					CWX | CWY | CWWidth | CWHeight | CWStackMode,
 					&changes);
-	    }
+		}
 	}
 
 	/* map the window */
@@ -450,7 +446,7 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 	}
 	/* now safe to draw */
 
-        gl_cx = glXCreateContext(x_disp, x_visinfo, 0, True);
+	gl_cx = glXCreateContext(x_disp, x_visinfo, 0, True);
 	if (!glXMakeCurrent(x_disp, x_win, gl_cx))
 		Sys_Error("Can't make window current to context\n");
 

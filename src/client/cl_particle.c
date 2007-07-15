@@ -924,20 +924,20 @@ void CL_ParticleFree (ptl_t *p)
  * @param[in] sb sizebuf that holds the network transfer
  * @sa CL_ParticleSpawn
  */
-void CL_ParticleSpawnFromSizeBuf (sizebuf_t* sb)
+void CL_ParticleSpawnFromSizeBuf (struct dbuffer *msg)
 {
 	char *particle;
 	int levelflags, i;
 	pos3_t originPos;
 	vec3_t origin;
 
-	levelflags = MSG_ReadShort(sb);
-	MSG_ReadGPos(sb, originPos);
+	levelflags = NET_ReadShort(msg);
+	NET_ReadGPos(msg, originPos);
 	for (i = 0; i < 3; i++)
 		origin[i] = (float)originPos[i];
 
-	MSG_ReadByte(sb); /* for stringlength */
-	particle = MSG_ReadString(sb);
+	NET_ReadByte(msg); /* for stringlength */
+	particle = NET_ReadString(msg);
 
 	if (particle && Q_strcmp(particle, "null")) {
 		CL_ParticleSpawn(particle, levelflags, origin, NULL, NULL);

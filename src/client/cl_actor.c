@@ -95,10 +95,12 @@ static int weaponButtonState[BT_NUM_TYPES];
 void MSG_Write_PA (player_action_t player_action, int num, ...)
 {
 	va_list ap;
+	struct dbuffer *msg = new_dbuffer();
 	va_start(ap, num);
-	MSG_WriteFormat(&cls.netchan.message, "bbs", clc_action, player_action, num);
-	MSG_V_WriteFormat(&cls.netchan.message, pa_format[player_action], ap);
+	NET_WriteFormat(msg, "bbs", clc_action, player_action, num);
+	NET_V_WriteFormat(msg, pa_format[player_action], ap);
 	va_end(ap);
+	NET_WriteMsg(cls.stream, msg);
 }
 
 /*
@@ -2106,7 +2108,7 @@ void CL_ActorReload (int hand)
  * @brief The client changed something in his hand-containers. This function updates the reactionfire info.
  * @param[in] sb
  */
-void CL_InvCheckHands (sizebuf_t * sb)
+void CL_InvCheckHands (struct dbuffer *msg)
 {
 	int entnum;
 	le_t *le;
@@ -2118,7 +2120,7 @@ void CL_InvCheckHands (sizebuf_t * sb)
 	objDef_t *ammo = NULL;
 	int weap_fd_idx = -1;
 
-	MSG_ReadFormat(sb, ev_format[EV_INV_HANDS_CHANGED], &entnum, &hand);
+	NET_ReadFormat(msg, ev_format[EV_INV_HANDS_CHANGED], &entnum, &hand);
 
 	if ((entnum < 0) || (hand < 0)) {
 		Com_Printf("CL_InvCheckHands: entnum or hand not sent/received correctly.\n");
@@ -2165,12 +2167,12 @@ void CL_InvCheckHands (sizebuf_t * sb)
  * @brief Moves actor.
  * @param[in] sb
  */
-void CL_ActorDoMove (sizebuf_t * sb)
+void CL_ActorDoMove (struct dbuffer *msg)
 {
 	le_t *le;
 
 	/* get le */
-	le = LE_Get(MSG_ReadShort(sb));
+	le = LE_Get(NET_ReadShort(msg));
 	if (!le || (le->type != ET_ACTOR && le->type != ET_UGV)) {
 		Com_Printf("Can't move, LE doesn't exist or is not an actor\n");
 		return;
@@ -2182,7 +2184,7 @@ void CL_ActorDoMove (sizebuf_t * sb)
 	}
 
 	/* get length */
-	MSG_ReadFormat(sb, ev_format[EV_ACTOR_MOVE], &le->pathLength, le->path);
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_MOVE], &le->pathLength, le->path);
 
 	/* activate PathMove function */
 	FLOOR(le) = NULL;
@@ -2195,7 +2197,7 @@ void CL_ActorDoMove (sizebuf_t * sb)
 		le->speed = 50;
 	else
 		le->speed = 100;
-	blockEvents = qtrue;
+	CL_BlockEvents();
 }
 
 
@@ -2238,12 +2240,12 @@ void CL_ActorTurnMouse (void)
  * @brief Turns actor.
  * @param[in] sb
  */
-void CL_ActorDoTurn (sizebuf_t *sb)
+void CL_ActorDoTurn (struct dbuffer *msg)
 {
 	le_t *le;
 	int entnum, dir;
 
-	MSG_ReadFormat(sb, ev_format[EV_ACTOR_TURN], &entnum, &dir);
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_TURN], &entnum, &dir);
 
 	/* get le */
 	le = LE_Get(entnum);
@@ -2373,7 +2375,7 @@ static qboolean firstShot = qfalse;
  * @sa CL_ActorShootHidden
  * @todo Improve detection of left- or right animation.
  */
-void CL_ActorDoShoot (sizebuf_t * sb)
+void CL_ActorDoShoot (struct dbuffer *msg)
 {
 	fireDef_t *fd;
 	le_t *le;
@@ -2383,7 +2385,7 @@ void CL_ActorDoShoot (sizebuf_t * sb)
 	int weap_fds_idx, fd_idx;
 
 	/* read data */
-	MSG_ReadFormat(sb, ev_format[EV_ACTOR_SHOOT], &number, &obj_idx, &weap_fds_idx, &fd_idx, &flags, &muzzle, &impact, &normal);
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT], &number, &obj_idx, &weap_fds_idx, &fd_idx, &flags, &muzzle, &impact, &normal);
 
 	/* get le */
 	le = LE_Get(number);
@@ -2449,14 +2451,14 @@ void CL_ActorDoShoot (sizebuf_t * sb)
  * @brief Shoot with weapon but don't bother with animations - actor is hidden.
  * @sa CL_ActorShoot
  */
-void CL_ActorShootHidden (sizebuf_t *sb)
+void CL_ActorShootHidden (struct dbuffer *msg)
 {
 	fireDef_t	*fd;
 	int first;
 	int obj_idx;
 	int weap_fds_idx, fd_idx;
 
-	MSG_ReadFormat(sb, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &obj_idx, &weap_fds_idx, &fd_idx);
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &obj_idx, &weap_fds_idx, &fd_idx);
 
 	/* get the fire def */
 #ifdef DEBUG
@@ -2484,7 +2486,7 @@ void CL_ActorShootHidden (sizebuf_t *sb)
  * @brief Throw item with actor.
  * @param[in] sb
  */
-void CL_ActorDoThrow (sizebuf_t * sb)
+void CL_ActorDoThrow (struct dbuffer *msg)
 {
 	fireDef_t *fd;
 	vec3_t muzzle, v0;
@@ -2494,7 +2496,7 @@ void CL_ActorDoThrow (sizebuf_t * sb)
 	int weap_fds_idx, fd_idx;
 
 	/* read data */
-	MSG_ReadFormat(sb, ev_format[EV_ACTOR_THROW], &dtime, &obj_idx, &weap_fds_idx, &fd_idx, &flags, &muzzle, &v0);
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_THROW], &dtime, &obj_idx, &weap_fds_idx, &fd_idx, &flags, &muzzle, &v0);
 
 	/* get the fire def */
 #ifdef DEBUG
@@ -2521,7 +2523,7 @@ void CL_ActorDoThrow (sizebuf_t * sb)
  * @sa CL_ActorDoShoot
  * @todo Improve detection of left- or right animation.
  */
-void CL_ActorStartShoot (sizebuf_t * sb)
+void CL_ActorStartShoot (struct dbuffer *msg)
 {
 	fireDef_t *fd;
 	le_t *le;
@@ -2530,7 +2532,7 @@ void CL_ActorStartShoot (sizebuf_t * sb)
 	int obj_idx;
 	int weap_fds_idx,fd_idx;
 
-	MSG_ReadFormat(sb, ev_format[EV_ACTOR_START_SHOOT], &number, &obj_idx, &weap_fds_idx, &fd_idx, &from, &target);
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_START_SHOOT], &number, &obj_idx, &weap_fds_idx, &fd_idx, &from, &target);
 
 #ifdef DEBUG
 	GET_FIREDEFDEBUG(obj_idx, weap_fds_idx, fd_idx)
@@ -2584,7 +2586,7 @@ void CL_ActorStartShoot (sizebuf_t * sb)
  * @brief Kills actor.
  * @param[in] sb
  */
-void CL_ActorDie (sizebuf_t * sb)
+void CL_ActorDie (struct dbuffer *msg)
 {
 	le_t *le;
 	int number, state;
@@ -2592,7 +2594,7 @@ void CL_ActorDie (sizebuf_t * sb)
 	int teamDescID = -1;
 	char tmpbuf[128];
 
-	MSG_ReadFormat(sb, ev_format[EV_ACTOR_DIE], &number, &state);
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_DIE], &number, &state);
 
 	/* get le */
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
@@ -2824,6 +2826,7 @@ ROUND MANAGEMENT
  */
 void CL_NextRound_f (void)
 {
+	struct dbuffer *msg;
 	/* can't end round if we are not in battlescape */
 	if (!CL_OnBattlescape())
 		return;
@@ -2833,7 +2836,9 @@ void CL_NextRound_f (void)
 		return;
 
 	/* send endround */
-	MSG_WriteByte(&cls.netchan.message, clc_endround);
+	msg = new_dbuffer();
+	NET_WriteByte(msg, clc_endround);
+	NET_WriteMsg(cls.stream, msg);
 
 	/* change back to remote view */
 	if (camera_mode == CAMERA_MODE_FIRSTPERSON)
@@ -2844,7 +2849,7 @@ void CL_NextRound_f (void)
  * @brief Performs end-of-turn processing.
  * @param[in] sb
  */
-void CL_DoEndRound (sizebuf_t * sb)
+void CL_DoEndRound (struct dbuffer *msg)
 {
 	int actor_idx;
 
@@ -2856,7 +2861,7 @@ void CL_DoEndRound (sizebuf_t * sb)
 
 	/* change active player */
 	Com_Printf("Team %i ended round", cl.actTeam);
-	cl.actTeam = MSG_ReadByte(sb);
+	cl.actTeam = NET_ReadByte(msg);
 	Com_Printf(", team %i's round started!\n", cl.actTeam);
 
 	/* hud changes */

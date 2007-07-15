@@ -214,9 +214,7 @@ typedef struct client_static_s {
 	char servername[MAX_OSPATH];	/**< name of server from original connect */
 	float connect_time;			/**< for connection retransmits */
 
-	int ufoPort;				/* a 16 bit value that allows ufo servers */
-								/* to work around address translating routers */
-	netchan_t netchan;
+	struct net_stream *stream;
 	int serverProtocol;			/**< in case we are doing some kind of version hack */
 
 	int challenge;				/**< from the server to use for connecting */
@@ -327,6 +325,9 @@ extern cvar_t *mn_lastsave;
 extern cvar_t *snd_ref;
 extern cvar_t *confirm_actions;
 extern cvar_t *mn_inputlength;
+extern cvar_t *log_stats;
+
+extern FILE* log_stats_file;
 
 /** limit the input for cvar editing (base name, save slots and so on) */
 #define MAX_CVAR_EDITING_LENGTH 256 /* MAXCMDLINE */
@@ -344,8 +345,6 @@ typedef struct {
 extern cdlight_t cl_dlights[MAX_DLIGHTS];
 
 /*============================================================================= */
-
-extern netadr_t net_from;
 
 void CL_AddNetgraph(void);
 
@@ -624,10 +623,10 @@ void LET_StartIdle(le_t * le);
 void LET_Appear(le_t * le);
 void LET_StartPathMove(le_t * le);
 
-void LM_Perish(sizebuf_t * sb);
-void LM_Explode(sizebuf_t * sb);
-void LM_DoorOpen(sizebuf_t * sb);
-void LM_DoorClose(sizebuf_t * sb);
+void LM_Perish(struct dbuffer *msg);
+void LM_Explode(struct dbuffer *msg);
+void LM_DoorOpen(struct dbuffer *msg);
+void LM_DoorClose(struct dbuffer *msg);
 
 void LM_AddToScene(void);
 void LE_AddToScene(void);
@@ -640,7 +639,7 @@ trace_t CL_Trace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, le_t * pass
 lm_t *CL_AddLocalModel(const char *model, const char *particle, vec3_t origin, vec3_t angles, int num, int levelflags);
 void CL_AddMapParticle(const char *particle, vec3_t origin, vec2_t wait, const char *info, int levelflags);
 void CL_ParticleCheckRounds(void);
-void CL_ParticleSpawnFromSizeBuf (sizebuf_t* sb);
+void CL_ParticleSpawnFromSizeBuf (struct dbuffer *msg);
 void CL_ParticleFree(ptl_t *p);
 
 /* cl_actor.c */
@@ -711,24 +710,24 @@ void CL_RemoveActorFromTeamList(le_t * le);
 void CL_ActorSelectMouse(void);
 void CL_ActorReload(int hand);
 void CL_ActorTurnMouse(void);
-void CL_ActorDoTurn(sizebuf_t * sb);
+void CL_ActorDoTurn(struct dbuffer *msg);
 void CL_ActorStandCrouch_f(void);
 void CL_ActorToggleReaction_f(void);
 void CL_ActorStartMove(le_t * le, pos3_t to);
 void CL_ActorShoot(le_t * le, pos3_t at);
-void CL_InvCheckHands(sizebuf_t * sb);
-void CL_ActorDoMove(sizebuf_t * sb);
-void CL_ActorDoShoot(sizebuf_t * sb);
-void CL_ActorShootHidden(sizebuf_t *sb);
-void CL_ActorDoThrow(sizebuf_t * sb);
-void CL_ActorStartShoot(sizebuf_t * sb);
-void CL_ActorDie(sizebuf_t * sb);
+void CL_InvCheckHands(struct dbuffer *msg);
+void CL_ActorDoMove(struct dbuffer *msg);
+void CL_ActorDoShoot(struct dbuffer *msg);
+void CL_ActorShootHidden(struct dbuffer *msg);
+void CL_ActorDoThrow(struct dbuffer *msg);
+void CL_ActorStartShoot(struct dbuffer *msg);
+void CL_ActorDie(struct dbuffer *msg);
 void CL_PlayActorSound(int category, int gender, actorSound_t soundType);
 
 void CL_ActorActionMouse(void);
 
 void CL_NextRound_f(void);
-void CL_DoEndRound(sizebuf_t * sb);
+void CL_DoEndRound(struct dbuffer * msg);
 
 void CL_ResetMouseLastPos(void);
 void CL_ResetActorMoveLength(void);
@@ -749,12 +748,13 @@ void CL_ActorTargetAlign_f(void);
 void CL_SendItem(sizebuf_t * buf, item_t item, int container, int x, int y, qboolean save);
 void CL_SendInventory(sizebuf_t * buf, inventory_t * i, qboolean save);
 void CL_ReceiveItem(sizebuf_t * buf, item_t * item, int * container, int * x, int * y, qboolean save);
+void CL_NetReceiveItem(struct dbuffer * buf, item_t * item, int * container, int * x, int * y, qboolean save);
 void CL_ReceiveInventory(sizebuf_t * buf, inventory_t * i, qboolean save);
 void CL_ResetTeams(void);
-void CL_ParseResults(sizebuf_t * buf);
-void CL_SendCurTeamInfo(sizebuf_t * buf, character_t ** team, int num);
+void CL_ParseResults(struct dbuffer *msg);
+void CL_SendCurTeamInfo(struct dbuffer * buf, character_t ** team, int num);
 void CL_AddCarriedToEq(equipDef_t * equip);
-void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter);
+void CL_ParseCharacterData(struct dbuffer *msg, qboolean updateCharacter);
 qboolean CL_SoldierInAircraft(int employee_idx, int aircraft_idx);
 void CL_RemoveSoldierFromAircraft(int employee_idx, int aircraft_idx, int base_idx);
 void CL_RemoveSoldiersFromAircraft(int aircraft_idx, int base_idx);
@@ -938,11 +938,11 @@ extern int numPtls;
 /* cl_parse.c */
 extern const char *ev_format[128];
 extern qboolean blockEvents;
+void CL_BlockEvents(void);
+void CL_UnblockEvents(void);
 
 void CL_SetLastMoving(le_t *le);
-void CL_ParseServerMessage(void);
-void CL_InitEvents(void);
-void CL_Events(void);
+void CL_ParseServerMessage(int cmd, struct dbuffer *msg);
 qboolean CL_CheckOrDownloadFile(const char *filename);
 
 /* cl_view.c */

@@ -55,11 +55,11 @@ static int SV_FindIndex (const char *name, int start, int max, qboolean create)
 	Q_strncpyz(sv.configstrings[start + i], name, sizeof(sv.configstrings[i]));
 
 	if (sv.state != ss_loading) {	/* send the update to everyone */
-		SZ_Clear(&sv.multicast);
-		MSG_WriteByte(&sv.multicast, svc_configstring);
-		MSG_WriteShort(&sv.multicast, start + i);
-		MSG_WriteString(&sv.multicast, name);
-		SV_Multicast(~0);
+                struct dbuffer *msg = new_dbuffer();
+		NET_WriteByte(msg, svc_configstring);
+		NET_WriteShort(msg, start + i);
+		NET_WriteString(msg, name);
+		SV_Multicast(~0, msg);
 	}
 
 	return i;
@@ -892,8 +892,6 @@ static void SV_SpawnServer (const char *server, const char *param, server_state_
 	/* save name for levels that don't set message */
 	Q_strncpyz(sv.configstrings[CS_NAME], server, MAX_TOKEN_CHARS);
 
-	SZ_Init(&sv.multicast, sv.multicast_buf, sizeof(sv.multicast_buf));
-
 	Q_strncpyz(sv.name, server, sizeof(sv.name));
 	if (param)
 		Q_strncpyz(sv.assembly, param, sizeof(sv.assembly));
@@ -907,8 +905,6 @@ static void SV_SpawnServer (const char *server, const char *param, server_state_
 			svs.clients[i].state = cs_connected;
 		svs.clients[i].lastframe = -1;
 	}
-
-	sv.time = 1000;
 
 	switch (serverstate) {
 	case ss_game:
@@ -981,7 +977,6 @@ static void SV_SpawnServer (const char *server, const char *param, server_state_
 static void SV_InitGame (void)
 {
 /*	edict_t	*ent; */
-	char masterserver[32];
 
 	if (svs.initialized) {
 		/* cause any connected clients to reconnect */
@@ -1006,12 +1001,13 @@ static void SV_InitGame (void)
 	svs.clients = Mem_PoolAlloc(sizeof(client_t) * sv_maxclients->integer, sv_genericPool, 0);
 
 	/* init network stuff */
-	NET_Config((sv_maxclients->integer > 1));
+        if (sv_maxclients->integer > 1)
+          start_server(NULL, Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->string, &SV_ReadPacket);
+        else
+          start_server(NULL, NULL, &SV_ReadPacket);
 
 	/* heartbeats will always be sent to the ufo master */
 	svs.last_heartbeat = -99999;	/* send immediately */
-	Com_sprintf(masterserver, sizeof(masterserver), "%s:%s", Cvar_VariableString("masterserver_ip"), Cvar_VariableString("masterserver_port"));
-	NET_StringToAdr(masterserver, &master_adr);
 
 	/* init game */
 	SV_InitGameProgs();
@@ -1071,7 +1067,6 @@ void SV_Map (qboolean attractloop, const char *levelstring, const char *assembly
 	} else {
 		SCR_BeginLoadingPlaque();	/* for local system */
 		SV_BroadcastCommand("changing\n");
-		SV_SendClientMessages();
 		SV_SpawnServer(levelstring, assembly, ss_game, attractloop);
 		Cbuf_CopyToDefer();
 	}

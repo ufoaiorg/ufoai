@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
+FILE *log_stats_file;
+
 cvar_t *masterserver_ip;
 cvar_t *masterserver_port;
 
@@ -90,6 +92,7 @@ cvar_t *cl_start_buildings;
 cvar_t *confirm_actions;
 
 cvar_t *cl_precache;
+cvar_t *log_stats;
 
 /* userinfo */
 cvar_t *info_password;
@@ -140,18 +143,22 @@ struct memPool_s *vid_modelPool;	/**< modeldata - wiped with every new map */
 void Cmd_ForwardToServer (void)
 {
 	const char *cmd = Cmd_Argv(0);
+	struct dbuffer *msg;
 
 	if (cls.state <= ca_connected || *cmd == '-' || *cmd == '+') {
 		Com_Printf("Unknown command \"%s\"\n", cmd);
 		return;
 	}
 
-	MSG_WriteByte(&cls.netchan.message, clc_stringcmd);
-	SZ_Print(&cls.netchan.message, cmd);
+	msg = new_dbuffer();
+	NET_WriteByte(msg, clc_stringcmd);
+	dbuffer_add(msg, cmd, strlen(cmd));
 	if (Cmd_Argc() > 1) {
-		SZ_Print(&cls.netchan.message, " ");
-		SZ_Print(&cls.netchan.message, Cmd_Args());
+		dbuffer_add(msg, " ", 1);
+		dbuffer_add(msg, Cmd_Args(), strlen(Cmd_Args()));
 	}
+	dbuffer_add(msg, "", 1);
+	NET_WriteMsg(cls.stream, msg);
 }
 
 /**
@@ -187,8 +194,11 @@ static void CL_ForwardToServer_f (void)
 
 	/* don't forward the first argument */
 	if (Cmd_Argc() > 1) {
-		MSG_WriteByte(&cls.netchan.message, clc_stringcmd);
-		SZ_Print(&cls.netchan.message, Cmd_Args());
+		struct dbuffer *msg;
+		msg = new_dbuffer();
+		NET_WriteByte(msg, clc_stringcmd);
+		dbuffer_add(msg, Cmd_Args(), strlen(Cmd_Args()) + 1);
+		NET_WriteMsg(cls.stream, msg);
 	}
 }
 
@@ -301,29 +311,24 @@ void CL_Drop (void)
 	}
 }
 
-
 /**
- * @brief We have gotten a challenge from the server, so try and connect.
+ * @brief
  */
-static void CL_SendConnectPacket (void)
+static void CL_Connect (void)
 {
-	netadr_t adr;
-	int port;
-
-	if (!NET_StringToAdr(cls.servername, &adr)) {
-		Com_Printf("Bad server address: %s\n", cls.servername);
-		cls.connect_time = 0;
-		return;
-	}
-	if (adr.port == 0)
-		adr.port = htons(PORT_SERVER);
-
-	port = Cvar_VariableInteger("qport");
 	userinfo_modified = qfalse;
 
-	cls.ufoPort = port;
+	free_stream(cls.stream);
 
-	Netchan_OutOfBandPrint(NS_CLIENT, adr, "connect %i %i %i \"%s\"\n", PROTOCOL_VERSION, port, cls.challenge, Cvar_Userinfo());
+	if (cls.servername[0]) {
+		cvar_t *port = Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL);
+		cls.stream = connect_to_host(cls.servername, port->string);
+	} else
+		cls.stream = connect_to_loopback();
+
+	NET_OOB_Printf(cls.stream, "connect %i \"%s\"\n", PROTOCOL_VERSION, Cvar_Userinfo());
+
+	cls.connect_time = cls.realtime;
 }
 
 /**
@@ -331,17 +336,14 @@ static void CL_SendConnectPacket (void)
  */
 static void CL_CheckForResend (void)
 {
-	netadr_t adr;
-
 	/* if the local server is running and we aren't */
 	/* then connect */
 	if (cls.state == ca_disconnected && Com_ServerState()) {
 		cls.state = ca_connecting;
-		Q_strncpyz(cls.servername, "localhost", sizeof(cls.servername));
-		/* we don't need a challenge on the localhost */
-		CL_SendConnectPacket();
+		cls.servername[0] = '\0';
+		CL_Connect();
+		userinfo_modified = qfalse;
 		return;
-/*		cls.connect_time = -99999;	// CL_CheckForResend() will fire immediately */
 	}
 
 	/* resend if we haven't gotten a reply yet */
@@ -351,19 +353,8 @@ static void CL_CheckForResend (void)
 	if (cls.realtime - cls.connect_time < 3000)
 		return;
 
-	if (!NET_StringToAdr(cls.servername, &adr)) {
-		Com_Printf("Bad server address: %s\n", cls.servername);
-		cls.state = ca_disconnected;
-		return;
-	}
-	if (adr.port == 0)
-		adr.port = htons(PORT_SERVER);
-
-	cls.connect_time = cls.realtime;	/* for retransmit requests */
-
-	Com_Printf("Connecting to %s...\n", cls.servername);
-
-	Netchan_OutOfBandPrint(NS_CLIENT, adr, "getchallenge\n");
+	Com_Printf("Connecting to %s...\n", cls.servername ? cls.servername : "internal server");
+	CL_Connect();
 }
 
 /**
@@ -393,9 +384,6 @@ static void CL_Connect_f (void)
 
 	server = Cmd_Argv(1);
 
-	/* allow remote */
-	NET_Config(qtrue);
-
 	/* FIXME: why a second time? */
 	CL_Disconnect();
 
@@ -405,12 +393,15 @@ static void CL_Connect_f (void)
 /*	RS_MarkResearchedAll(); */
 
 	Q_strncpyz(cls.servername, server, sizeof(cls.servername));
+
+	CL_Connect();
+
 	/* CL_CheckForResend() will fire immediately */
 	Cvar_Set("mn_main", "multiplayerInGame");
 	cls.connect_time = -99999;
 }
 
-
+#if 0
 /**
  * @brief
  *
@@ -439,9 +430,6 @@ static void CL_Rcon_f (void)
 	message[3] = (char) 255;
 	message[4] = 0;
 
-	/* allow remote */
-	NET_Config(qtrue);
-
 	Q_strcat(message, "rcon ", sizeof(message));
 
 	Q_strcat(message, rcon_client_password->string, sizeof(message));
@@ -469,7 +457,7 @@ static void CL_Rcon_f (void)
 
 	NET_SendPacket(NS_CLIENT, strlen(message) + 1, message, to);
 }
-
+#endif
 
 /**
  * @brief
@@ -482,7 +470,6 @@ void CL_ClearState (void)
 
 	S_StopAllSounds();
 	CL_ClearEffects();
-	CL_InitEvents();
 
 	/* wipe the entire cl structure */
 	mapZone = cl.refdef.mapZone;
@@ -495,8 +482,6 @@ void CL_ClearState (void)
 	numLMs = 0;
 	numMPs = 0;
 	numPtls = 0;
-
-	SZ_Clear(&cls.netchan.message);
 }
 
 /**
@@ -510,7 +495,7 @@ void CL_ClearState (void)
  */
 void CL_Disconnect (void)
 {
-	byte disconnect[32];
+	struct dbuffer *msg;
 
 	/* If playing a cinematic, stop it */
 	CIN_StopCinematic();
@@ -531,9 +516,12 @@ void CL_Disconnect (void)
 	cls.connect_time = 0;
 
 	/* send a disconnect message to the server */
-	disconnect[0] = clc_stringcmd;
-	Q_strncpyz((char*)disconnect + 1, "disconnect", sizeof(disconnect));
-	Netchan_Transmit(&cls.netchan, strlen((char*)disconnect), disconnect);
+	msg = new_dbuffer();
+	NET_WriteByte(msg, clc_stringcmd);
+	NET_WriteString(msg, "disconnect");
+	NET_WriteMsg(cls.stream, msg);
+	stream_finished(cls.stream);
+	cls.stream = NULL;
 
 	CL_ClearState();
 
@@ -628,9 +616,12 @@ static void CL_Reconnect_f (void)
 {
 	S_StopAllSounds();
 	if (cls.state == ca_connected) {
+		struct dbuffer *msg;
 		Com_Printf("reconnecting...\n");
-		MSG_WriteByte(&cls.netchan.message, clc_stringcmd);
-		MSG_WriteString(&cls.netchan.message, "new");
+		msg = new_dbuffer();
+		NET_WriteByte(msg, clc_stringcmd);
+		NET_WriteString(msg, "new");
+		NET_WriteMsg(cls.stream, msg);
 		return;
 	}
 
@@ -643,12 +634,13 @@ static void CL_Reconnect_f (void)
 
 		cls.state = ca_connecting;
 		Com_Printf("reconnecting...\n");
+		CL_Connect();
 	}
 }
 
-typedef struct serverList_s
-{
-	netadr_t adr;
+typedef struct serverList_s {
+	char *node;
+	char *service;
 	qboolean pinged;
 	char hostname[16];
 	char mapname[16];
@@ -666,14 +658,72 @@ static int serverListLength = 0;
 static int serverListPos = 0;
 static serverList_t serverList[MAX_SERVERLIST];
 
+static void process_ping_reply (serverList_t *server, char *msg)
+{
+	if (PROTOCOL_VERSION != atoi(Info_ValueForKey(msg, "protocol"))) {
+		Com_DPrintf("process_ping_reply: Protocol mismatch\n");
+		return;
+	}
+	if (Q_strcmp(UFO_VERSION, Info_ValueForKey(msg, "version"))) {
+		Com_DPrintf("process_ping_reply: Version mismatch\n");
+	}
+
+	if (server->pinged)
+		return;
+
+	server->pinged = qtrue;
+	Q_strncpyz(server->hostname, Info_ValueForKey(msg, "hostname"),
+		sizeof(server->hostname));
+	Q_strncpyz(server->version, Info_ValueForKey(msg, "version"),
+		sizeof(server->version));
+	Q_strncpyz(server->mapname, Info_ValueForKey(msg, "mapname"),
+		sizeof(server->mapname));
+	Q_strncpyz(server->gametype, Info_ValueForKey(msg, "gametype"),
+		sizeof(server->gametype));
+	server->dedicated = atoi(Info_ValueForKey(msg, "dedicated"));
+	server->clients = atoi(Info_ValueForKey(msg, "clients"));
+	server->maxclients = atoi(Info_ValueForKey(msg, "maxclients"));
+}
+
+static void ping_callback (struct net_stream *s)
+{
+	struct dbuffer *buf = NET_ReadMsg(s);
+	serverList_t *server = stream_data(s);
+	int cmd = NET_ReadByte(buf);
+	char *str = NET_ReadStringLine(buf);
+	char string[MAX_INFO_STRING];
+
+	if (cmd == clc_oob && Q_strncmp(str, "info", 4) == 0) {
+		str = NET_ReadString(buf);
+		if (str)
+		process_ping_reply(server, str);
+	}
+
+	menuText[TEXT_LIST] = serverText;
+	Com_sprintf(string, sizeof(string), "%s\t\t\t%s\t\t\t%s\t(%s)\t%i/%i\n",
+		server->hostname,
+		server->mapname,
+		server->gametype,
+		server->version,
+		server->clients,
+		server->maxclients);
+	server->serverListPos = serverListPos;
+	serverListPos++;
+	Q_strcat(serverText, string, sizeof(serverText));
+	free_stream(s);
+}
+
 /**
  * @brief Pings all servers in serverList
  * @sa CL_AddServerToList
  */
-static void CL_PingServer (netadr_t* adr)
+static void CL_PingServer (serverList_t *server)
 {
-	Com_DPrintf ("pinging %s...\n", NET_AdrToString(*adr));
-	Netchan_OutOfBandPrint (NS_CLIENT, *adr, va("info %i", PROTOCOL_VERSION));
+	struct net_stream *s = connect_to_host(server->node, server->service);
+	Com_DPrintf ("pinging [%s]:%s...\n", server->node, server->service);
+	NET_OOB_Printf(s, "info %i", PROTOCOL_VERSION);
+	set_stream_data(s, server);
+	stream_callback(s, &ping_callback);
 }
 
 /**
@@ -686,7 +736,7 @@ static void CL_PrintServerList_f (void)
 	Com_Printf("%i servers on the list\n", serverListLength);
 
 	for (i = 0; i < serverListLength; i++) {
-		Com_Printf("%02i: %s (pinged: %i)\n", i, NET_AdrToString(serverList[i].adr), serverList[i].pinged);
+		Com_Printf("%02i: [%s]:%s (pinged: %i)\n", i, serverList[i].node, serverList[i].service, serverList[i].pinged);
 	}
 }
 
@@ -701,121 +751,16 @@ typedef enum {
  * @return false if it is no valid address or server already exists
  * @sa CL_ParseStatusMessage
  */
-static int CL_AddServerToList (netadr_t* adr, char *msg)
+static void CL_AddServerToList (const char *node, const char *service)
 {
-	int i;
-
-	/* check whether the port was set */
-	if (!adr || !adr->port)
-		return -1;
-
-	/* check some server data */
-	if (msg) {
-		if (PROTOCOL_VERSION != atoi(Info_ValueForKey(msg, "protocol"))) {
-			Com_DPrintf("CL_AddServerToList: Protocol mismatch\n");
-			return -1;
-		}
-		if (Q_strcmp(UFO_VERSION, Info_ValueForKey(msg, "version"))) {
-			Com_DPrintf("CL_AddServerToList: Version mismatch\n");
-			/*return -1;*/
-		}
-		/* hide full servers */
-		switch (mn_serverlist->integer) {
-		case SERVERLIST_SHOWALL:
-			break;
-		case SERVERLIST_HIDEFULL:
-			if (atoi(Info_ValueForKey(msg, "maxclients")) <= atoi(Info_ValueForKey(msg, "clients"))) {
-				Com_DPrintf("CL_AddServerToList: Server is full - hide from list\n");
-				return -1;
-			}
-			break;
-		case SERVERLIST_HIDEEMPTY:
-			if (!atoi(Info_ValueForKey(msg, "clients"))) {
-				Com_DPrintf("CL_AddServerToList: Server is empty - hide from list\n");
-				return -1;
-			}
-			break;
-		}
-	}
-
-	for (i = 0; i < serverListLength; i++) {
-		if (NET_CompareAdr(*adr, serverList[i].adr)) {
-			/* mark this server as pinged */
-			if (msg) {
-				if (!serverList[i].pinged) {
-					serverList[i].pinged = qtrue;
-					Q_strncpyz(serverList[i].hostname,
-						Info_ValueForKey(msg, "hostname"),
-						sizeof(serverList[i].hostname));
-					Q_strncpyz(serverList[i].version,
-						Info_ValueForKey(msg, "version"),
-						sizeof(serverList[i].version));
-					Q_strncpyz(serverList[i].mapname,
-						Info_ValueForKey(msg, "mapname"),
-						sizeof(serverList[i].mapname));
-					Q_strncpyz(serverList[i].gametype,
-						Info_ValueForKey(msg, "gametype"),
-						sizeof(serverList[i].gametype));
-					serverList[i].dedicated = atoi(Info_ValueForKey(msg, "dedicated"));
-					serverList[i].clients = atoi(Info_ValueForKey(msg, "clients"));
-					serverList[i].maxclients = atoi(Info_ValueForKey(msg, "maxclients"));
-					/* first time response - add it to the list */
-					return i;
-				}
-				/* we don't want to ping again - because msg is already the response */
-				return -1;
-			} else
-				/* already on the list */
-				return -1;
-		}
-	}
-
-	if (msg)
-		Com_DPrintf("Warning: a response for a server that was not on the list before (normal for broadcast scans)\n");
-
-	memset(&(serverList[serverListLength]), 0, sizeof(serverList_t));
-	serverList[serverListLength].adr = *adr;
-	/* increase the number of servers in the list now */
-	CL_PingServer(adr);
-	serverListLength++;
-
-	return -1;
-}
-
-/**
- * @brief Handle the short reply from a ping
- * @sa CL_PingServers_f
- * @sa SVC_Info
- */
-static void CL_ParseStatusMessage (void)
-{
-	int serverID = -1;
-	char *s = MSG_ReadString(&net_message);
-	char string[MAX_INFO_STRING];
-
-	Com_DPrintf("CL_ParseStatusMessage: %s\n", s);
-
-	/* do this even if the list is empty
-	 * or there are too many servers on the list */
-	menuText[TEXT_LIST] = serverText;
-
 	if (serverListLength >= MAX_SERVERLIST)
 		return;
 
-	/* update the server string */
-	serverID = CL_AddServerToList(&net_from, s);
-	if (serverID != -1) {
-		Com_sprintf(string, sizeof(string), "%s\t\t\t%s\t\t\t%s\t(%s)\t%i/%i\n",
-			serverList[serverID].hostname,
-			serverList[serverID].mapname,
-			serverList[serverID].gametype,
-			serverList[serverID].version,
-			serverList[serverID].clients,
-			serverList[serverID].maxclients);
-		serverList[serverID].serverListPos = serverListPos;
-		serverListPos++;
-		Q_strcat(serverText, string, sizeof(serverText));
-	}
+	memset(&(serverList[serverListLength]), 0, sizeof(serverList_t));
+	serverList[serverListLength].node = strdup(node);
+	serverList[serverListLength].service = strdup(service);
+	CL_PingServer(&serverList[serverListLength]);
+	serverListLength++;
 }
 
 /**
@@ -824,15 +769,7 @@ static void CL_ParseStatusMessage (void)
 static void CL_WaitInit_f (void)
 {
 	static qboolean reconnect = qfalse;
-	netadr_t adr;
 	char buf[32];
-
-	if (!NET_StringToAdr(cls.servername, &adr)) {
-		Com_Printf("CL_WaitInit_f: Invalid servername '%s'\n", cls.servername);
-		return;
-	}
-	if (!adr.port)
-		adr.port = htons(PORT_SERVER);
 
 	/* the server knows this already */
 	if (!Com_ServerState()) {
@@ -863,9 +800,9 @@ static void CL_WaitInit_f (void)
  * @sa SV_TeamInfoString
  * @sa CL_SelectTeam_Init_f
  */
-static void CL_ParseTeamInfoMessage (void)
+static void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 {
-	char *s = MSG_ReadString(&net_message);
+	char *s = NET_ReadString(msg);
 	char *var = NULL;
 	char *value = NULL;
 	int cnt = 0, n;
@@ -943,13 +880,13 @@ static char userInfoText[MAX_MESSAGE_TEXT];
  * This function fills the network browser server information with text
  * @sa Netchan_OutOfBandPrint
  */
-static void CL_ParseServerInfoMessage (void)
+static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 {
-	char *s = MSG_ReadString(&net_message);
 	const char *value = NULL;
 	const char *users;
 	int team;
 	const char *token;
+	char buf[256];
 
 	if (!s)
 		return;
@@ -968,7 +905,7 @@ static void CL_ParseServerInfoMessage (void)
 		Cvar_Set("mn_mappic", "maps/shots/na.jpg");
 		Cvar_Set("mn_server_need_password", "0"); /* string */
 
-		Com_sprintf(serverInfoText, sizeof(serverInfoText), _("IP\t%s\n\n"), NET_AdrToString(net_from));
+		Com_sprintf(serverInfoText, sizeof(serverInfoText), _("IP\t%s\n\n"), stream_peer_name(stream, buf, sizeof(buf)));
 		value = Info_ValueForKey(s, "mapname");
 		Cvar_Set("mapname", value);
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Map:\t%s\n"), value);
@@ -1013,9 +950,30 @@ static void CL_ParseServerInfoMessage (void)
 			Com_sprintf(userInfoText, sizeof(userInfoText), "%s\t%i\n", token, team);
 		} while (1);
 		menuText[TEXT_LIST] = userInfoText;
+		Cvar_Set("mn_server_ip", stream_peer_name(stream, buf, sizeof(buf)));
 		MN_PushMenu("serverinfo");
 	} else
 		Com_Printf("%c%s", 1, s);
+}
+
+static void status_callback (struct net_stream *s)
+{
+	struct dbuffer *buf = NET_ReadMsg(s);
+
+	if (!buf)
+		return;
+
+	{
+		int cmd = NET_ReadByte(buf);
+		char *str = NET_ReadStringLine(buf);
+
+		if (cmd == clc_oob && Q_strncmp(str, "print", 5) == 0) {
+			str = NET_ReadString(buf);
+			if (str)
+				CL_ParseServerInfoMessage(s, str);
+		}
+	}
+	free_stream(s);
 }
 
 /**
@@ -1023,40 +981,42 @@ static void CL_ParseServerInfoMessage (void)
  * @sa Netchan_OutOfBandPrint
  * @sa CL_ConnectionlessPacket
  */
-static void CL_ParseMasterServerResponse (void)
+static void CL_ParseMasterServerResponse (struct dbuffer *buf)
 {
-	byte* buffptr;
-	byte* buffend;
 	byte ip[4];
 	unsigned short port;
-	netadr_t adr;
-	char adrstring[MAX_VAR];
+	char node[MAX_VAR];
+	char service[MAX_VAR];
 
-	buffptr = net_message.data + 12;
-	buffend = buffptr + net_message.cursize;
-
-	while (buffptr+1 < buffend) {
+	while (dbuffer_len(buf) >= 6) {
 		/* parse the ip */
-		ip[0] = *buffptr++;
-		ip[1] = *buffptr++;
-		ip[2] = *buffptr++;
-		ip[3] = *buffptr++;
+		dbuffer_extract(buf, (char *)ip, sizeof(ip));
 
 		/* parse out port */
-		port = (*buffptr++)<<8;
-		port += *buffptr++;
-		Com_sprintf(adrstring, sizeof(adrstring), "%d.%d.%d.%d:%d", ip[0], ip[1], ip[2], ip[3], port);
-		if (!NET_StringToAdr(adrstring, &adr)) {
-			Com_Printf("Invalid masterserver response '%s'\n", adrstring);
-			break;
-		}
-		if (!adr.port)
-			break;
-		Com_DPrintf("server: %s\n", adrstring);
-		CL_AddServerToList(&adr, NULL);
+		port = NET_ReadByte(buf) << 8;
+		port += NET_ReadByte(buf);
+		Com_sprintf(node, sizeof(node), "%d.%d.%d.%d", ip[0], ip[1], ip[2], ip[3]);
+		Com_sprintf(service, sizeof(service), "%d", port);
+		Com_DPrintf("server: [%s]:%s\n", node, service);
+		CL_AddServerToList(node, service);
 	}
 	/* end of stream */
-	net_message.readcount = net_message.cursize;
+}
+
+static void masterserver_callback (struct net_stream *s)
+{
+	struct dbuffer *buf = NET_ReadMsg(s);
+
+	if (buf) {
+		int cmd = NET_ReadByte(buf);
+		char *str = NET_ReadStringLine(buf);
+
+		if (cmd == clc_oob && Q_strncmp(str, "servers", 7) == 0) {
+			CL_ParseMasterServerResponse(buf);
+		}
+
+		free_stream(s);
+	}
 }
 
 /**
@@ -1096,7 +1056,6 @@ static void CL_BookmarkAdd_f (void)
 	int i;
 	const char *bookmark = NULL;
 	const char *newBookmark = NULL;
-	netadr_t adr;
 
 	if (Cmd_Argc() < 2) {
 		newBookmark = Cvar_VariableString("mn_server_ip");
@@ -1107,14 +1066,9 @@ static void CL_BookmarkAdd_f (void)
 	} else
 		newBookmark = Cmd_Argv(1);
 
-	if (!NET_StringToAdr(newBookmark, &adr)) {
-		Com_Printf("CL_BookmarkAdd_f: Invalid address %s\n", newBookmark);
-		return;
-	}
-
 	for (i = 0; i < 16; i++) {
 		bookmark = Cvar_VariableString(va("adr%i", i));
-		if (!bookmark || !NET_StringToAdr(bookmark, &adr)) {
+		if (!bookmark) {
 			Cvar_Set(va("adr%i", i), newBookmark);
 			return;
 		}
@@ -1131,7 +1085,6 @@ static void CL_BookmarkListClick_f (void)
 {
 	int num;
 	const char *bookmark = NULL;
-	netadr_t adr;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("usage: bookmarks_click <num>\n");
@@ -1141,15 +1094,9 @@ static void CL_BookmarkListClick_f (void)
 	bookmark = Cvar_VariableString(va("adr%i", num));
 
 	if (bookmark) {
-		if (!NET_StringToAdr(bookmark, &adr)) {
-			Com_Printf("Bad address: %s\n", bookmark);
-			return;
-		}
-		if (adr.port == 0)
-			adr.port = htons(PORT_SERVER);
-
 		Cvar_Set("mn_server_ip", bookmark);
-		Netchan_OutOfBandPrint(NS_CLIENT, adr, "status %i", PROTOCOL_VERSION);
+		/* XXX: I don't think this feature does anything sensible right now, fix it later */
+		/* Netchan_OutOfBandPrint(NS_CLIENT, adr, "status %i", PROTOCOL_VERSION); */
 	}
 }
 
@@ -1158,26 +1105,13 @@ static void CL_BookmarkListClick_f (void)
  */
 static void CL_ServerInfo_f (void)
 {
-	char ip[MAX_VAR];
-	netadr_t adr;
-
-	if (Cmd_Argc() < 2) {
-		Com_DPrintf("usage: server_info <ip>\n");
-		Q_strncpyz(ip, Cvar_VariableString("mn_server_ip"), sizeof(ip));
-		Com_Printf("ip: %s\n", ip);
-	} else {
-		Q_strncpyz(ip, Cmd_Argv(1), sizeof(ip));
-		Cvar_Set("mn_server_ip", ip);
-	}
-	if (!NET_StringToAdr(ip, &adr)) {
-		Com_Printf("Bad address: %s\n", ip);
-		return;
-	}
-
-	if (adr.port == 0)
-		adr.port = htons(PORT_SERVER);
-
-	Netchan_OutOfBandPrint(NS_CLIENT, adr, "status %i", PROTOCOL_VERSION);
+	struct net_stream *s;
+	if (Cmd_Argc() < 2)
+		s = connect_to_host(Cvar_VariableString("mn_server_ip"), va("%d", PORT_SERVER));
+	else
+		s = connect_to_host(Cmd_Argv(1), va("%d", PORT_SERVER));
+	NET_OOB_Printf(s, "status %i", PROTOCOL_VERSION);
+	stream_callback(s, &status_callback);
 }
 
 /**
@@ -1199,8 +1133,9 @@ static void CL_ServerListClick_f (void)
 		for (i = 0; i < serverListLength; i++)
 			if (serverList[i].pinged && serverList[i].serverListPos == num) {
 				/* found the server - grab the infos for this server */
-				Netchan_OutOfBandPrint(NS_CLIENT, serverList[i].adr, "status %i", PROTOCOL_VERSION);
-				Cvar_Set("mn_server_ip", NET_AdrToString(serverList[i].adr));
+				/* XXX: I don't think this feature does anything sensible right now, fix it later */
+				/*Netchan_OutOfBandPrint(NS_CLIENT, serverList[i].adr, "status %i", PROTOCOL_VERSION);*/
+				Cvar_Set("mn_server_ip", serverList[i].node);
 				return;
 			}
 }
@@ -1211,19 +1146,10 @@ static void CL_ServerListClick_f (void)
  */
 static void CL_SelectTeam_Init_f (void)
 {
-	netadr_t adr;
-
 	/* reset menu text */
 	menuText[TEXT_STANDARD] = NULL;
 
-	if (!NET_StringToAdr(cls.servername, &adr)) {
-		Com_Printf("CL_SelectTeam_Init_f: Invalid servername '%s'\n", cls.servername);
-		return;
-	}
-	if (!adr.port)
-		adr.port = htons(PORT_SERVER);
-
-	Netchan_OutOfBandPrint(NS_CLIENT, adr, "teaminfo %i", PROTOCOL_VERSION);
+	NET_OOB_Printf(cls.stream, "teaminfo %i", PROTOCOL_VERSION);
 	menuText[TEXT_STANDARD] = _("Select a free team or your coop team");
 }
 
@@ -1242,7 +1168,6 @@ static int lastServerQuery = 0;
  */
 static void CL_PingServers_f (void)
 {
-	netadr_t adr;
 	int i;
 	char name[6];
 	const char *adrstring;
@@ -1254,43 +1179,30 @@ static void CL_PingServers_f (void)
 		serverListPos = 0;
 		serverListLength = 0;
 		serversAlreadyQueried = qfalse;
+		for (i = 0; i < MAX_SERVERLIST; i++) {
+			free(serverList[i].node);
+			free(serverList[i].service);
+		}
 		memset(serverList, 0, sizeof(serverList_t) * MAX_SERVERLIST);
 	}
 
 /*	menuText[TEXT_STANDARD] = NULL;*/
 	menuText[TEXT_LIST] = serverText;
 
-	NET_Config(qtrue);			/* allow remote */
-
-	/* send a broadcast packet */
-	Com_DPrintf("pinging broadcast...\n");
-
-	if (!noudp->integer) {
-		adr.type = NA_BROADCAST;
-		adr.port = htons(PORT_SERVER);
-		Netchan_OutOfBandPrint(NS_CLIENT, adr, "info %i", PROTOCOL_VERSION);
-	}
-
-	if (!noipx->integer) {
-		adr.type = NA_BROADCAST_IPX;
-		adr.port = htons(PORT_SERVER);
-		Netchan_OutOfBandPrint(NS_CLIENT, adr, "info %i", PROTOCOL_VERSION);
-	}
-
 	for (i = 0; i < 16; i++) {
+		char service[256];
+		const char *p;
 		Com_sprintf(name, sizeof(name), "adr%i", i);
 		adrstring = Cvar_VariableString(name);
 		if (!adrstring || !adrstring[0])
 			continue;
 
-		if (!NET_StringToAdr(adrstring, &adr)) {
-			Com_Printf("Bad address: %s\n", adrstring);
-			continue;
-		}
-
-		if (!adr.port)
-			adr.port = htons(PORT_SERVER);
-		CL_AddServerToList(&adr, NULL);
+		p = strrchr(adrstring, ':');
+		if (p)
+			Q_strncpyz(service, p + 1, sizeof(service));
+		else
+			Com_sprintf(service, sizeof(service), "%d", PORT_SERVER);
+		CL_AddServerToList(adrstring, service);
 	}
 
 	/* don't query the masterservers with every call */
@@ -1306,14 +1218,9 @@ static void CL_PingServers_f (void)
 	/* query master server? */
 	/* @todo: Cache this to save bandwidth */
 	if (!noudp->value && (Cmd_Argc() == 2 || Q_strcmp(Cmd_Argv(1), "local"))) {
-		adr.port = htons(masterserver_port->integer);
-		if (NET_StringToAdr(masterserver_ip->string, &adr)) {
-			if (!adr.port)
-				adr.port = htons(masterserver_port->integer);
-			adr.type = NA_IP;
-			Com_DPrintf("Send master server query request to '%s:%s'\n", masterserver_ip->string, masterserver_port->string);
-			Netchan_OutOfBandPrint (NS_CLIENT, adr, "getservers");
-		}
+		struct net_stream *s = connect_to_host(masterserver_ip->string, masterserver_port->string);
+		NET_OOB_Printf(s, "getservers 0\n");
+		stream_callback(s, &masterserver_callback);
 	}
 }
 
@@ -1323,33 +1230,29 @@ static void CL_PingServers_f (void)
  * @sa CL_ReadPackets
  * @sa CL_Frame
  */
-static void CL_ConnectionlessPacket (void)
+static void CL_ConnectionlessPacket (struct dbuffer *msg)
 {
 	char *s;
 	const char *c;
 	int i;
 
-	MSG_BeginReading(&net_message);
-	MSG_ReadLong(&net_message);	/* skip the -1 */
-
-	s = MSG_ReadStringLine(&net_message);
+	s = NET_ReadStringLine(msg);
 
 	Cmd_TokenizeString(s, qfalse);
 
 	c = Cmd_Argv(0);
 
-	Com_DPrintf("%s: %s\n", NET_AdrToString(net_from), c);
+	Com_DPrintf("server OOB: %s\n", Cmd_Args());
 
 	/* server connection */
 	if (!Q_strncmp(c, "client_connect", 13)) {
-		const char *p, *buff;
-		buff = NET_AdrToString(cls.netchan.remote_address);
+		const char *p;
 		for (i = 1; i < Cmd_Argc(); i++) {
 			p = Cmd_Argv(i);
 			if (!Q_strncmp(p, "dlserver=", 9)) {
 #ifdef HAVE_CURL
 				p += 9;
-				Com_sprintf(cls.downloadReferer, sizeof(cls.downloadReferer), "ufo://%s", buff);
+				Com_sprintf(cls.downloadReferer, sizeof(cls.downloadReferer), "ufo://%s", cls.servername);
 				CL_SetHTTPServer(p);
 				if (cls.downloadServer[0])
 					Com_Printf("HTTP downloading enabled, URL: %s\n", cls.downloadServer);
@@ -1362,86 +1265,47 @@ static void CL_ConnectionlessPacket (void)
 			Com_Printf("Dup connect received. Ignored.\n");
 			return;
 		}
-		Netchan_Setup(NS_CLIENT, &cls.netchan, net_from, cls.ufoPort);
-		MSG_WriteByte(&cls.netchan.message, clc_stringcmd);
-		MSG_WriteString(&cls.netchan.message, "new");
+		msg = new_dbuffer();
+		NET_WriteByte(msg, clc_stringcmd);
+		NET_WriteString(msg, "new");
+		NET_WriteMsg(cls.stream, msg);
 		cls.state = ca_connected;
-		return;
-	}
-
-	/* server responding to a status broadcast */
-	if (!Q_strncmp(c, "info", 4)) {
-		CL_ParseStatusMessage();
 		return;
 	}
 
 	/* remote command from gui front end */
 	if (!Q_strncmp(c, "cmd", 3)) {
-		if (!NET_IsLocalAddress(net_from)) {
+		if (!stream_is_loopback(cls.stream)) {
 			Com_Printf("Command packet from remote host. Ignored.\n");
 			return;
 		}
 		Sys_AppActivate();
-		s = MSG_ReadString(&net_message);
+		s = NET_ReadString(msg);
 		Cbuf_AddText(s);
 		Cbuf_AddText("\n");
 		return;
 	}
 
-	/* print command from somewhere */
-	if (!Q_strncmp(c, "print", 5)) {
-		CL_ParseServerInfoMessage();
-		return;
-	}
-
 	/* teaminfo command */
 	if (!Q_strncmp(c, "teaminfo", 8)) {
-		CL_ParseTeamInfoMessage();
+		CL_ParseTeamInfoMessage(msg);
 		return;
 	}
 
-	/* ping from somewhere */
+	/* ping from server */
 	if (!Q_strncmp(c, "ping", 4)) {
-		Netchan_OutOfBandPrint(NS_CLIENT, net_from, "ack");
-		return;
-	}
-
-	/* serverlist from masterserver */
-	if (!Q_strncmp(c, "servers", 7)) {
-		CL_ParseMasterServerResponse();
-		return;
-	}
-
-	/* challenge from the server we are connecting to */
-	if (!Q_strncmp(c, "challenge", 9)) {
-		if (cls.state != ca_connecting) {
-			Com_Printf("Dup challenge received.  Ignored.\n");
-			return;
-		}
-		cls.challenge = atoi(Cmd_Argv(1));
-		CL_SendConnectPacket();
+		NET_OOB_Printf(cls.stream, "ack");
 		return;
 	}
 
 	/* echo request from server */
 	if (!Q_strncmp(c, "echo", 4)) {
-		Netchan_OutOfBandPrint(NS_CLIENT, net_from, "%s", Cmd_Argv(1));
+		NET_OOB_Printf(cls.stream, "%s", Cmd_Argv(1));
 		return;
 	}
 
 	Com_Printf("Unknown command.\n");
 }
-
-#if 0
-/**
- * @brief A vain attempt to help bad TCP stacks that cause problems when they overflow
- */
-void CL_DumpPackets (void)
-{
-	while (NET_GetPacket(NS_CLIENT, &net_from, &net_message))
-		Com_Printf("dumnping a packet\n");
-}
-#endif
 
 /**
  * @brief
@@ -1451,48 +1315,15 @@ void CL_DumpPackets (void)
  */
 static void CL_ReadPackets (void)
 {
-	int j;
-	while ((j = NET_GetPacket(NS_CLIENT, &net_from, &net_message)) != 0) {
-		/* icmp ignore cvar */
-		if (j == -2)
-			continue;
-		/* remote command packet */
-		if (*(int *) net_message.data == -1) {
-			CL_ConnectionlessPacket();
-			continue;
-		}
-
-		/* dump it if not connected */
-		if (cls.state == ca_disconnected || cls.state == ca_connecting)
-			continue;
-
-		if (net_message.cursize < 8) {
-			Com_Printf("%s: Runt packet\n", NET_AdrToString(net_from));
-			continue;
-		}
-
-		/* packet from server */
-		if (!NET_CompareAdr(net_from, cls.netchan.remote_address)) {
-			Com_DPrintf("%s:sequenced packet without connection\n", NET_AdrToString(net_from));
-			continue;
-		}
-		/* wasn't accepted for some reason */
-		if (!Netchan_Process(&cls.netchan, &net_message))
-			continue;
-		CL_ParseServerMessage();
+	struct dbuffer *msg;
+	while ((msg = NET_ReadMsg(cls.stream))) {
+		int cmd = NET_ReadByte(msg);
+		if (cmd == clc_oob)
+			CL_ConnectionlessPacket(msg);
+		else
+			CL_ParseServerMessage(cmd, msg);
+		free_dbuffer(msg);
 	}
-
-	/* check timeout */
-	if (cls.state >= ca_connected && cls.realtime - cls.netchan.last_received > cl_timeout->value * 1000) {
-		/* timeoutcount saves debugger */
-		if (++cl.timeoutcount > 5) {
-			MN_Popup(_("Network error"), _("Connection timed out - server is no longer reachable"));
-			Com_Printf("\nServer connection timed out.\n");
-			CL_Disconnect();
-			return;
-		}
-	} else
-		cl.timeoutcount = 0;
 }
 
 
@@ -1617,12 +1448,18 @@ static void CL_SpawnSoldiers_f (void)
 			Com_DPrintf("CL_SpawnSoldiers_f: Error - B_GetNumOnTeam returned value smaller than zero - %i\n", amount);
 		} else {
 			/* send team info */
-			CL_SendCurTeamInfo(&cls.netchan.message, baseCurrent->curTeam, amount);
+			struct dbuffer *msg = new_dbuffer();
+			CL_SendCurTeamInfo(msg, baseCurrent->curTeam, amount);
+			NET_WriteMsg(cls.stream, msg);
 		}
 	}
 
-	MSG_WriteByte(&cls.netchan.message, clc_stringcmd);
-	MSG_WriteString(&cls.netchan.message, va("spawn %i\n", spawnCountFromServer));
+	{
+		struct dbuffer *msg = new_dbuffer();
+		NET_WriteByte(msg, clc_stringcmd);
+		NET_WriteString(msg, va("spawn %i\n", spawnCountFromServer));
+		NET_WriteMsg(cls.stream, msg);
+	}
 
 	soldiersSpawned = qtrue;
 
@@ -1700,11 +1537,15 @@ void CL_RequestNextDownload (void)
 	soldiersSpawned = qfalse;
 	spawnCountFromServer = atoi(Cmd_Argv(1));
 
-	/* send begin */
-	/* this will activate the render process (see client state ca_active) */
-	MSG_WriteByte(&cls.netchan.message, clc_stringcmd);
-	/* see CL_StartGame */
-	MSG_WriteString(&cls.netchan.message, va("begin %i\n", spawnCountFromServer));
+	{
+		struct dbuffer *msg = new_dbuffer();
+		/* send begin */
+		/* this will activate the render process (see client state ca_active) */
+		NET_WriteByte(msg, clc_stringcmd);
+		/* see CL_StartGame */
+		NET_WriteString(msg, va("begin %i\n", spawnCountFromServer));
+		NET_WriteMsg(cls.stream, msg);
+	}
 
 	/* for singleplayer the soldiers get spawned here */
 	if (ccs.singleplayer || !baseCurrent)
@@ -1966,15 +1807,6 @@ void CL_ReadSinglePlayerData (void)
 }
 
 /**
- * @brief Prints current ip to game console
- * @sa Sys_ShowIP
- */
-static void CL_ShowIP_f (void)
-{
-	Sys_ShowIP();
-}
-
-/**
  * @brief Writes key bindings and archived cvars to config.cfg
  */
 static void CL_WriteConfiguration (void)
@@ -2114,7 +1946,10 @@ static void CL_InitLocal (void)
 {
 	int i;
 
+	memset(serverList, 0, sizeof(serverList_t) * MAX_SERVERLIST);
+
 	cls.state = ca_disconnected;
+	cls.stream = NULL;
 	cls.realtime = Sys_Milliseconds();
 
 	Com_InitInventory(invList);
@@ -2232,6 +2067,9 @@ static void CL_InitLocal (void)
 	masterserver_ip = Cvar_Get("masterserver_ip", "195.136.48.62", CVAR_ARCHIVE, "IP address of UFO:AI masterserver (Sponsored by NineX)");
 	masterserver_port = Cvar_Get("masterserver_port", "27900", CVAR_ARCHIVE, "Port of UFO:AI masterserver");
 
+	log_stats = Cvar_Get("log_stats", "0", 0, NULL);
+
+
 #ifdef HAVE_CURL
 	cl_http_proxy = Cvar_Get("cl_http_proxy", "", 0, NULL);
 	cl_http_filelists = Cvar_Get("cl_http_filelists", "1", 0, NULL);
@@ -2247,7 +2085,6 @@ static void CL_InitLocal (void)
 
 	Cmd_AddCommand("saveconfig", CL_WriteConfiguration, "Save the configuration");
 
-	Cmd_AddCommand("showip", CL_ShowIP_f, "Command to show your ip");
 	Cmd_AddCommand("targetalign", CL_ActorTargetAlign_f, _("Target your shot to the ground"));
 
 	/* text id is servers in menu_multiplayer.ufo */
@@ -2269,7 +2106,7 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("connect", CL_Connect_f, "Connect to given ip");
 	Cmd_AddCommand("reconnect", CL_Reconnect_f, "Reconnect to last server");
 
-	Cmd_AddCommand("rcon", CL_Rcon_f, "Execute a rcon command - see rcon_password");
+	/*Cmd_AddCommand("rcon", CL_Rcon_f, "Execute a rcon command - see rcon_password");*/
 
 #ifdef ACTIVATE_PACKET_COMMAND
 	/* this is dangerous to leave in */
@@ -2323,13 +2160,12 @@ static void CL_SendCmd (void)
 	/* send a userinfo update if needed */
 	if (cls.state >= ca_connected) {
 		if (userinfo_modified) {
+			struct dbuffer *msg = new_dbuffer();
+			NET_WriteByte(msg, clc_userinfo);
+			NET_WriteString(msg, Cvar_Userinfo());
+			NET_WriteMsg(cls.stream, msg);
 			userinfo_modified = qfalse;
-			MSG_WriteByte(&cls.netchan.message, clc_userinfo);
-			MSG_WriteString(&cls.netchan.message, Cvar_Userinfo());
 		}
-
-		if (cls.netchan.message.cursize || curtime - cls.netchan.last_sent > 1000)
-			Netchan_Transmit(&cls.netchan, 0, NULL);
 	}
 }
 
@@ -2447,13 +2283,29 @@ static void CL_CvarCheck (void)
  * @brief
  * @sa Qcommon_Frame
  */
-int CL_Frame (int msec)
+void CL_Frame (int now, void *data)
 {
-	static int refreshDelta = 0;
 	static int lasttimecalled = 0;
-	static int miscDelta = 1000;
-	qboolean miscFrame = qtrue;
-	qboolean refreshFrame = qtrue;
+	static int last_frame = 0;
+	int delta;
+
+	if (log_stats->modified) {
+		log_stats->modified = qfalse;
+		if (log_stats->integer) {
+			if (log_stats_file) {
+				fclose(log_stats_file);
+				log_stats_file = NULL;
+			}
+			log_stats_file = fopen("stats.log", "w");
+			if (log_stats_file)
+				fprintf(log_stats_file, "entities,dlights,parts,frame time\n");
+		} else {
+			if (log_stats_file) {
+				fclose(log_stats_file);
+				log_stats_file = NULL;
+			}
+		}
+	}
 
 	if (sv_maxclients->modified) {
 		if (sv_maxclients->integer > 1 && ccs.singleplayer) {
@@ -2466,42 +2318,30 @@ int CL_Frame (int msec)
 		sv_maxclients->modified = qfalse;
 	}
 
-	refreshDelta += msec;
-	miscDelta += msec;
-
 	/* decide the simulation time */
-	cls.frametime = refreshDelta / 1000.0;
+	delta = now - last_frame;
+	if (last_frame)
+		cls.frametime = delta / 1000.0;
+	else
+		cls.frametime = 0;
 	cls.realtime = curtime;
-	cl.time += refreshDelta;
+	cl.time = now;
+	last_frame = now;
 	if (!blockEvents)
-		cl.eventTime += refreshDelta;
+		cl.eventTime += delta;
 
 	/* frame rate calculation */
-	if (!(cls.framecount % NUM_DELTA_FRAMES)) {
-		cls.framerate = NUM_DELTA_FRAMES * 1000.0 / (cls.framedelta + refreshDelta);
+	cls.framedelta += delta;
+	if (0 == (cls.framecount % NUM_DELTA_FRAMES)) {
+		cls.framerate = NUM_DELTA_FRAMES * 1000.0 / cls.framedelta;
 		cls.framedelta = 0;
-	} else
-		cls.framedelta += refreshDelta;
+	}
 
+#if 0
 	/* don't extrapolate too far ahead */
 	if (cls.frametime > (1.0 / 5))
 		cls.frametime = (1.0 / 5);
-
-	/* if in the debugger last frame, don't timeout */
-	if (msec > 5000)
-		cls.netchan.last_received = Sys_Milliseconds();
-
-	if (!cl_timedemo->integer && !cls.playingCinematic) {
-		/* don't flood packets out while connecting */
-		if (cls.state == ca_connected && refreshDelta < 100)
-			return msec;
-		/* framerate is too high */
-		if (refreshDelta < 1000.0 / cl_maxfps->value)
-			refreshFrame = qfalse;
-		/* stuff we don't have to do every frame (10FPS) */
-		if (miscDelta < 100)
-			miscFrame = qfalse;
-	}
+#endif
 
 #ifdef HAVE_CURL
 	if (cls.state == ca_connected) {
@@ -2519,58 +2359,37 @@ int CL_Frame (int msec)
 	/* update camera position */
 	CL_CameraMove();
 
-	if (refreshFrame) {
-		refreshDelta = 0;
-		if (miscFrame) {
-			miscDelta = 0;
-			/* let the mouse activate or deactivate */
-			IN_Frame();
+	/* avi recording needs to move out to its own timer */
+#if 0
+	/* if recording an avi, lock to a fixed fps */
+	if (CL_VideoRecording() && refreshDelta < 1000.0 / cl_aviFrameRate->value) {
+		/* save the current screen */
+		if (cls.state == ca_active || cl_aviForceDemo->integer)
+			CL_TakeVideoFrame();
+	}
+#endif
+	/* end the rounds when no soldier is alive */
+	CL_RunMapParticles();
+	CL_ParticleRun();
 
-			CL_CvarCheck();
+	/* update the screen */
+	SCR_UpdateScreen();
 
-			/* allow rendering DLL change */
-			VID_CheckChanges();
-			if (!cl.refresh_prepped && cls.state == ca_active)
-				CL_PrepRefresh();
+	/* update audio */
+	S_Update(cl.refdef.vieworg, cl.cam.axis[0], cl.cam.axis[1], cl.cam.axis[2]);
 
-			CL_ActorUpdateCVars();
-		}
+	CDAudio_Update();
 
-		/* if recording an avi, lock to a fixed fps */
-		if (CL_VideoRecording() && refreshDelta < 1000.0 / cl_aviFrameRate->value) {
-			/* save the current screen */
-			if (cls.state == ca_active || cl_aviForceDemo->integer)
-				CL_TakeVideoFrame();
-		}
-		/* end the rounds when no soldier is alive */
-		CL_RunMapParticles();
-		CL_ParticleRun();
+	/* advance local effects for next frame */
+	CL_RunLightStyles();
+	SCR_RunConsole();
 
-		/* update the screen */
-		if (host_speeds->value)
-			time_before_ref = Sys_Milliseconds();
-		SCR_UpdateScreen();
-		if (host_speeds->value)
-			time_after_ref = Sys_Milliseconds();
-
-		/* update audio */
-		S_Update(cl.refdef.vieworg, cl.cam.axis[0], cl.cam.axis[1], cl.cam.axis[2]);
-
-		CDAudio_Update();
-
-		/* advance local effects for next frame */
-		CL_RunLightStyles();
-		SCR_RunConsole();
-
-		/* advance cinematic and console for next frame */
-		if (cls.playingCinematic) {
-			CIN_RunCinematic();
-			msec = 0;
-		}
+	/* advance cinematic and console for next frame */
+	if (cls.playingCinematic) {
+		CIN_RunCinematic();
 	}
 
-	/* event and LE updates */
-	CL_Events();
+	/* LE updates */
 	LE_Think();
 
 	/* send a new command message to the server */
@@ -2593,8 +2412,25 @@ int CL_Frame (int msec)
 			}
 		}
 	}
+}
 
-	return msec;
+/**
+ * @brief
+ * @sa CL_Frame
+ */
+void CL_SlowFrame (int now, void *data)
+{
+	/* let the mouse activate or deactivate */
+	IN_Frame();
+
+	CL_CvarCheck();
+
+	/* allow rendering DLL change */
+	VID_CheckChanges();
+	if (!cl.refresh_prepped && cls.state == ca_active)
+		CL_PrepRefresh();
+
+	CL_ActorUpdateCVars();
 }
 
 /**
@@ -2628,9 +2464,6 @@ void CL_Init (void)
 #endif
 
 	V_Init();
-
-	net_message.data = net_message_buffer;
-	net_message.maxsize = sizeof(net_message_buffer);
 
 	SCR_Init();
 	cls.loadingPercent = 0.0f;

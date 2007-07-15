@@ -41,17 +41,12 @@ static const char *com_argv[MAX_NUM_ARGVS + 1];
 
 jmp_buf abortframe;				/* an ERR_DROP occured, exit the entire frame */
 
-FILE *log_stats_file;
-
 cvar_t *s_sleep;
 cvar_t *s_language;
-cvar_t *host_speeds;
-cvar_t *log_stats;
 cvar_t *developer;
 cvar_t *timescale;
 cvar_t *fixedtime;
 cvar_t *logfile_active;			/* 1 = buffer log, 2 = flush after each print */
-cvar_t *showtrace;
 cvar_t *dedicated;
 cvar_t *cl_maxfps;
 cvar_t *teamnum;
@@ -60,18 +55,41 @@ static FILE *logfile;
 
 static int server_state;
 
-/* host_speeds times */
-int time_before_game;
-int time_after_game;
-int time_before_ref;
-int time_after_ref;
-
 struct memPool_s *com_aliasSysPool;
 struct memPool_s *com_cmdSysPool;
 struct memPool_s *com_cmodelSysPool;
 struct memPool_s *com_cvarSysPool;
 struct memPool_s *com_fileSysPool;
 struct memPool_s *com_genericPool;
+
+struct event {
+  int when;
+  event_func *func;
+  void *data;
+  struct event *next;
+};
+
+static struct event *event_queue = NULL;
+
+#define TIMER_CHECK_INTERVAL 100
+#define TIMER_CHECK_LAG 3
+#define TIMER_LATENESS_HIGH 200
+#define TIMER_LATENESS_LOW 50
+#define TIMER_LATENESS_HISTORY 32
+
+struct timer {
+  cvar_t *min_freq;
+  int interval;
+  int recent_lateness[TIMER_LATENESS_HISTORY];
+  int next_lateness;
+  int total_lateness;
+  int next_check;
+  int checks_high;
+  int checks_low;
+
+  event_func *func;
+  void *data;
+};
 
 /*
 ============================================================================
@@ -231,6 +249,8 @@ void Com_Error (int code, const char *fmt, ...)
 		CL_Shutdown();
 	}
 
+	wait_for_net(0);
+
 	if (logfile) {
 		fclose(logfile);
 		logfile = NULL;
@@ -266,6 +286,7 @@ void Com_Quit (void)
 #else
 	Cvar_WriteVariables(va("%s/config.cfg", FS_Gamedir()));
 #endif
+	wait_for_net(0);
 	if (logfile) {
 		fclose(logfile);
 		logfile = NULL;
@@ -697,6 +718,11 @@ static qboolean Com_CvarCheckMaxFPS (cvar_t *cvar)
 	return Cvar_AssertValue(cvar, 10, 1000, qtrue);
 }
 
+static void
+Cbuf_Execute_timer (int now, void *data) {
+  Cbuf_Execute();
+}
+
 /**
  * @brief Init function
  *
@@ -770,13 +796,10 @@ void Qcommon_Init (int argc, const char **argv)
 #endif
 
 	s_sleep = Cvar_Get("s_sleep", "1", CVAR_ARCHIVE, "Use the sleep function to redruce cpu usage");
-	host_speeds = Cvar_Get("host_speeds", "0", 0, NULL);
-	log_stats = Cvar_Get("log_stats", "0", 0, NULL);
 	developer = Cvar_Get("developer", "0", 0, "Activate developer output to logfile and gameconsole");
 	timescale = Cvar_Get("timescale", "1", 0, NULL);
 	fixedtime = Cvar_Get("fixedtime", "0", 0, NULL);
 	logfile_active = Cvar_Get("logfile", "1", 0, "0 = deacticate logfile, 1 = write normal logfile, 2 = flush on every new line");
-	showtrace = Cvar_Get("showtrace", "0", 0, NULL);
 	gametype = Cvar_Get("gametype", "1on1", CVAR_ARCHIVE | CVAR_SERVERINFO, "Sets the multiplayer gametype - see gametypelist command for a list of all gametypes");
 #ifdef DEDICATED_ONLY
 	dedicated = Cvar_Get("dedicated", "1", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
@@ -800,8 +823,7 @@ void Qcommon_Init (int argc, const char **argv)
 	Mem_Init();
 	Sys_Init();
 
-	NET_Init();
-	Netchan_Init();
+	init_net();
 
 	SV_Init();
 
@@ -859,7 +881,137 @@ void Qcommon_Init (int argc, const char **argv)
 	/* Touch memory */
 	Mem_TouchGlobal();
 
+#ifndef DEDICATED_ONLY
+	if (!dedicated->integer) {
+		Schedule_Timer(cl_maxfps, &CL_Frame, NULL);
+		Schedule_Timer(Cvar_Get("cl_slowfreq", "10", 0, NULL), &CL_SlowFrame, NULL);
+	}
+#endif
+
+	Schedule_Timer(Cvar_Get("sv_freq", "10", 0, NULL), &SV_Frame, NULL);
+
+	/* XXX: These next two lines want to be removed */
+
+#ifndef DEDICATED_ONLY
+	/* Temporary hack: IRC logic shouldn't poll a timer like this */
+	Schedule_Timer(Cvar_Get("irc_freq", "10", 0, NULL), &Irc_Logic_Frame, NULL);
+#endif
+
+	/* Horrible hack: cbuf system wants rethinking */
+	Schedule_Timer(Cvar_Get("cbuf_freq", "10", 0, NULL), &Cbuf_Execute_timer, NULL);
+
 	Com_Printf("====== UFO Initialized ======\n\n");
+}
+
+/**
+ * @brief
+ */
+static void tick_timer (int now, void *data)
+{
+	struct timer *timer = data;
+	int old_interval = timer->interval;
+
+	/* Compute and store the lateness, updating the total */
+	int lateness = Sys_Milliseconds() - now;
+	timer->total_lateness -= timer->recent_lateness[timer->next_lateness];
+	timer->recent_lateness[timer->next_lateness] = lateness;
+	timer->total_lateness += lateness;
+	timer->next_lateness++;
+	timer->next_lateness %= TIMER_LATENESS_HISTORY;
+
+	/* Is it time to check the mean yet? */
+	timer->next_check--;
+	if (timer->next_check <= 0) {
+		int mean = timer->total_lateness / TIMER_LATENESS_HISTORY;
+
+		/* We use a saturating counter to damp the adjustment */
+
+		/* When we stay above the high water mark, increase the interval */
+		if (mean > TIMER_LATENESS_HIGH)
+		timer->checks_high = min(TIMER_CHECK_LAG, timer->checks_high + 1);
+		else
+		timer->checks_high = max(0, timer->checks_high - 1);
+
+		if (timer->checks_high > TIMER_CHECK_LAG)
+		timer->interval += 2;
+
+		/* When we stay below the low water mark, decrease the interval */
+		if (mean < TIMER_LATENESS_LOW)
+		timer->checks_low = min(TIMER_CHECK_LAG, timer->checks_high + 1);
+		else
+		timer->checks_low = max(0, timer->checks_low - 1);
+
+		if (timer->checks_low > TIMER_CHECK_LAG)
+		timer->interval -= 1;
+
+		/* Note that we slow the timer more quickly than we speed it up,
+		so it should tend to settle down in the vicinity of the low
+		water mark */
+
+		timer->next_check = TIMER_CHECK_INTERVAL;
+	}
+
+	timer->interval = max(timer->interval, 1000 / timer->min_freq->integer);
+
+	if (timer->interval != old_interval)
+		Com_DPrintf("Adjusted timer on %s to interval %d\n", timer->min_freq->name, timer->interval);
+
+	timer->func(now, timer->data);
+
+	/* We correct for the lateness of this frame. We do not correct for
+		the time consumed by this frame - that's billed to the lateness
+		of future frames (so that the automagic slowdown can work) */
+	Schedule_Event(now + lateness + timer->interval, &tick_timer, timer);
+}
+
+/**
+ * @brief
+ */
+void Schedule_Timer (cvar_t *freq, event_func *func, void *data)
+{
+	struct timer *timer = malloc(sizeof(*timer));
+	int i;
+	timer->min_freq = freq;
+	timer->interval = 1000 / freq->integer;
+	timer->next_lateness = 0;
+	timer->total_lateness = 0;
+	timer->next_check = TIMER_CHECK_INTERVAL;
+	timer->checks_high = 0;
+	timer->checks_low = 0;
+	timer->func = func;
+	timer->data = data;
+	for (i = 0; i < TIMER_LATENESS_HISTORY; i++)
+		timer->recent_lateness[i] = 0;
+
+	Schedule_Event(Sys_Milliseconds() + timer->interval, &tick_timer, timer);
+}
+
+/**
+ * @brief
+ */
+void Schedule_Event (int when, event_func *func, void *data)
+{
+	struct event *event = malloc(sizeof(*event));
+	event->when = when;
+	event->func = func;
+	event->data = data;
+
+	if (!event_queue || event_queue->when > when) {
+		event->next = event_queue;
+		event_queue = event;
+	} else {
+		struct event *e = event_queue;
+		while (e->next && e->next->when <= when)
+		e = e->next;
+		event->next = e->next;
+		e->next = event;
+	}
+
+#if DEBUG
+	for (event = event_queue; event && event->next; event = event->next)
+		if (event->when > event->next->when)
+			abort();
+#endif
 }
 
 /**
@@ -869,143 +1021,61 @@ void Qcommon_Init (int argc, const char **argv)
  * @sa Qcommon_Shutdown
  * @sa SV_Frame
  * @sa CL_Frame
- * @param[in] msec Passed milliseconds since last frame
  */
-float Qcommon_Frame (int msec)
+void Qcommon_Frame (void)
 {
-	char *s;
-	int wait;
-	/* static to fix some warnings in relation to setjmp */
-	static int time_before = 0, time_between = 0, time_after = 0;
-	static int sv_timer = 0, cl_timer = 0;
+	int time_to_next;
 
 	/* an ERR_DROP was thrown */
 	if (setjmp(abortframe))
-		return 1.0;
+		return;
 
-	/* if there is some time remaining from last frame, reset the timers */
-	if (cl_timer > 0)
-		cl_timer = 0;
-	if (sv_timer > 0)
-		sv_timer = 0;
+	/* While the next event is due... */
+	while (event_queue && Sys_Milliseconds() >= event_queue->when) {
+		struct event *event = event_queue;
 
-	/* accumulate the new frametime into the timers */
-	cl_timer += msec;
-	sv_timer += msec;
+		/* Remove the event from the queue */
+		event_queue = event->next;
 
-	if (timescale->value > 5.0)
-		Cvar_SetValue("timescale", 5.0);
-	else if (timescale->value < 0.2)
-		Cvar_SetValue("timescale", 0.2);
-
-	if (dedicated->integer) {
-		cl_timer = 0;
-		wait = -sv_timer;
-	} else if (!sv.active) {
-		sv_timer = 0;
-		wait = -cl_timer;
-	} else
-		wait = -max(cl_timer, sv_timer);
-	wait = min(wait, 100);
-
-	if (wait >= 1 && s_sleep->integer) {
-		if (COM_CheckParm("-paranoid"))
-			Com_DPrintf("Sys_Sleep for %i ms\n", wait);
-		Sys_Sleep(wait);
-		return timescale->value;
-	}
-
-	if (gametype->modified) {
-		Com_SetGameType();
-		gametype->modified = qfalse;
-	}
-
-	if (log_stats->modified) {
-		log_stats->modified = qfalse;
-		if (log_stats->integer) {
-			if (log_stats_file) {
-				fclose(log_stats_file);
-				log_stats_file = NULL;
-			}
-			log_stats_file = fopen("stats.log", "w");
-			if (log_stats_file)
-				fprintf(log_stats_file, "entities,dlights,parts,frame time\n");
-		} else {
-			if (log_stats_file) {
-				fclose(log_stats_file);
-				log_stats_file = NULL;
-			}
+		if (setjmp(abortframe)) {
+			free(event);
+			return;
 		}
+
+		/* Dispatch the event */
+		event->func(event->when, event->data);
+
+		if (setjmp(abortframe))
+			return;
+
+		free(event);
 	}
 
-	if (showtrace->integer) {
-		extern int c_traces, c_brush_traces;
-		extern int c_pointcontents;
-
-		Com_Printf("%4i traces  %4i points\n", c_traces, c_pointcontents);
-		c_traces = 0;
-		c_brush_traces = 0;
-		c_pointcontents = 0;
-	}
-
-	Cbuf_Execute();
-
+	/* Now we spend time_to_next milliseconds working on whatever
+	 * IO is ready (but always try at least once, to make sure IO
+	 * doesn't stall) */
 	do {
-		s = Sys_ConsoleInput();
-		if (s)
-			Cbuf_AddText(va("%s\n", s));
-	} while (s);
+		char *s;
 
-	if (host_speeds->integer)
-		time_before = Sys_Milliseconds();
+		/* XXX: This shouldn't exist */
+		do {
+			s = Sys_ConsoleInput();
+			if (s)
+				Cbuf_AddText(va("%s\n", s));
+		} while (s);
 
-	/* run a server frame every 100ms (10fps) */
-	if (sv_timer > 0) {
-		int frametime = 100;
-		SV_Frame(frametime);
-		sv_timer -= frametime;
-	}
-
-#if 0
-	/* currently not used - set dedicated cvar to CVAR_LATCH and remove CVAR_NOSET to use this */
-#ifndef DEDICATED_ONLY
-	if (dedicated->modified) {
-		dedicated->modified = qfalse;
-		if (dedicated->integer) {
-			CL_Shutdown();
+		/* XXX: This should be somewhere else */
+		if (gametype->modified) {
+			Com_SetGameType();
+			gametype->modified = qfalse;
 		}
-	}
-#endif
-#endif
 
-	if (host_speeds->integer)
-		time_between = Sys_Milliseconds();
+		time_to_next = event_queue ? (event_queue->when - Sys_Milliseconds()) : 1000;
+		if (time_to_next < 0)
+			time_to_next = 0;
 
-	/* run client frames according to cl_maxfps */
-	if (cl_timer > 0) {
-		int frametime = max(cl_timer, 1000 / cl_maxfps->integer);
-		frametime = min(frametime, 1000);
-#ifndef DEDICATED_ONLY
-		Irc_Logic_Frame(cl_timer);
-#endif
-		cl_timer -= CL_Frame(frametime);
-	}
-
-	if (host_speeds->integer) {
-		int all, sv, gm, cl, rf;
-
-		time_after = Sys_Milliseconds();
-		all = time_after - time_before;
-		sv = time_between - time_before;
-		cl = time_after - time_between;
-		gm = time_after_game - time_before_game;
-		rf = time_after_ref - time_before_ref;
-		sv -= gm;
-		cl -= rf;
-		Com_Printf("all:%3i sv:%3i game:%3i cl:%3i ref:%3i cltimer:%3i svtimer:%3i \n", all, sv, gm, cl, rf, cl_timer, sv_timer);
-	}
-
-	return timescale->value;
+		wait_for_net(time_to_next);
+	} while (time_to_next > 0);
 }
 
 /**

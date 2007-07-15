@@ -170,24 +170,12 @@ typedef struct {
 	const char *(*FS_Gamedir) (void);
 
 	/* network messaging (writing) */
-	void (*multicast) (int mask);
-	void (*unicast) (player_t * player);
-	void (*WriteChar) (int c);
+        void (*WriteChar) (char c);
 
-#ifdef DEBUG
-	void (*WriteByte) (int c, const char* file, int line);
-#else
-	void (*WriteByte) (int c);
-#endif
-
-#ifdef DEBUG
-	void (*WriteShort) (int c, const char* file, int line);
-#else
+	void (*WriteByte) (unsigned char c);
 	void (*WriteShort) (int c);
-#endif
 
 	void (*WriteLong) (int c);
-	void (*WriteFloat) (float f);
 	void (*WriteString) (const char *s);
 	void (*WritePos) (vec3_t pos);	/**< some fractional bits */
 	void (*WriteGPos) (pos3_t pos);
@@ -195,11 +183,8 @@ typedef struct {
 	void (*WriteAngle) (float f);
 	void (*WriteFormat) (const char *format, ...);
 
-	void (*WriteNewSave) (int c);
-	void (*WriteToSave) (int c);
-
 	void (*EndEvents) (void);
-	void (*AddEvent) (int mask, int eType);
+        void (*AddEvent) (int mask, int eType);
 
 	/* network messaging (reading) */
 	/* only use after a call from one of these functions: */
@@ -210,7 +195,6 @@ typedef struct {
 	int (*ReadByte) (void);
 	int (*ReadShort) (void);
 	int (*ReadLong) (void);
-	float (*ReadFloat) (void);
 	char *(*ReadString) (void);
 	void (*ReadPos) (vec3_t pos);
 	void (*ReadGPos) (pos3_t pos);
@@ -264,7 +248,7 @@ typedef struct {
 	void (*ClientDisconnect) (player_t * client);
 	void (*ClientCommand) (player_t * client);
 
-	int (*ClientAction) (player_t * client);
+        int (*ClientAction) (player_t * client);
 	void (*ClientEndRound) (player_t * client, qboolean quiet);
 	void (*ClientTeamInfo) (player_t * client);
 	int (*ClientGetTeamNum) (player_t * client);

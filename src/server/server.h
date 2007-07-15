@@ -54,7 +54,6 @@ typedef struct {
 
 	qboolean attractloop;		/**< running cinematics and demos for the local system only */
 
-	unsigned time;				/**< always sv.framenum * 100 msec */
 	int framenum;
 
 	char name[MAX_QPATH];		/**< map name, or cinematic name */
@@ -62,11 +61,6 @@ typedef struct {
 	struct cBspModel_s *models[MAX_MODELS];
 
 	char configstrings[MAX_CONFIGSTRINGS][MAX_TOKEN_CHARS];
-
-	/** the multicast buffer is used to send a message to a set of clients
-	 * it is only used to marshall data until SV_Multicast is called */
-	sizebuf_t multicast;
-	byte multicast_buf[MAX_MSGLEN];
 
 	/** demo server information */
 	qFILE demofile;
@@ -109,24 +103,14 @@ typedef struct client_s {
 	char name[32];				/**< extracted from userinfo, high bits masked */
 	int messagelevel;			/**< for filtering printed messages */
 
-	/**
-	 * The datagram is written to by sound calls, prints, temp ents, etc.
-	 * It can be harmlessly overflowed.
-	 */
-	sizebuf_t datagram;
-	byte datagram_buf[MAX_MSGLEN];
-
 	int lastmessage;			/**< sv.framenum when packet was last received */
 	int lastconnect;
 
-	int challenge;				/**< challenge of this user, randomly generated */
-
 	int curMsg;
 	int addMsg;
-	sizebuf_t reliable[RELIABLEBUFFERS];
-	byte reliable_buf[RELIABLEBUFFERS * MAX_MSGLEN];
 
-	netchan_t netchan;
+        char peername[256];
+	struct net_stream *stream;
 } client_t;
 
 /**
@@ -138,19 +122,6 @@ typedef struct client_s {
  */
 
 /*============================================================================= */
-
-/**
- * MAX_CHALLENGES is made large to prevent a denial
- * of service attack that could cycle all of them
- * out before legitimate users connected
- */
-#define	MAX_CHALLENGES	1024
-
-typedef struct {
-	netadr_t adr;
-	int challenge;
-	int time;
-} challenge_t;
 
 
 typedef struct {
@@ -165,12 +136,8 @@ typedef struct {
 
 	int last_heartbeat;
 
-	challenge_t challenges[MAX_CHALLENGES];	/**< to prevent invalid IPs from connecting */
-
 	/** serverrecord values */
 	qFILE demofile;
-	sizebuf_t demo_multicast;
-	byte demo_multicast_buf[MAX_MSGLEN];
 } server_static_t;
 
 /**
@@ -187,11 +154,7 @@ extern int mapcycleCount;		/**< number of maps in the cycle */
 
 /*============================================================================= */
 
-extern netadr_t net_from;
-
 /*extern	sizebuf_t	net_message; */
-
-extern netadr_t master_adr;	/**< address of the master server */
 
 extern server_static_t svs;		/**< persistant server info */
 extern server_t sv;				/**< local server */
@@ -204,6 +167,7 @@ extern cvar_t *sv_downloadserver;
 
 extern client_t *sv_client;
 extern player_t *sv_player;
+extern struct dbuffer *sv_msg;
 
 /*=========================================================== */
 
@@ -226,7 +190,10 @@ void Master_Packet(void);
 
 void SV_NextMapcycle(void);
 void SV_MapcycleClear(void);
+
 void SV_MapcycleAdd(const char* mapName, const char* gameType);
+
+void SV_ReadPacket(struct net_stream *s);
 
 /* sv_init.c */
 void SV_Map(qboolean attractloop, const char *levelstring, const char *assembly);
@@ -234,23 +201,16 @@ void SV_Map(qboolean attractloop, const char *levelstring, const char *assembly)
 /* sv_send.c */
 typedef enum { RD_NONE, RD_CLIENT, RD_PACKET } redirect_t;
 
-#define	SV_OUTPUTBUF_LENGTH	(MAX_MSGLEN - 16)
-
-extern char sv_outputbuf[SV_OUTPUTBUF_LENGTH];
-
-void SV_FlushRedirect(int sv_redirected, char *outputbuf);
-
 void SV_DemoCompleted(void);
-void SV_SendClientMessages(void);
 
-void SV_Multicast(int mask);
+void SV_Multicast(int mask, struct dbuffer *msg);
 void SV_BreakSound(vec3_t origin, edict_t * entity, int channel, edictMaterial_t material);
 void SV_ClientPrintf(client_t * cl, int level, const char *fmt, ...) __attribute__((format(printf,3,4)));
 void SV_BroadcastPrintf(int level, const char *fmt, ...) __attribute__((format(printf,2,3)));
 void SV_BroadcastCommand(const char *fmt, ...) __attribute__((format(printf,1,2)));
 
 /* sv_user.c */
-void SV_ExecuteClientMessage(client_t * cl);
+void SV_ExecuteClientMessage(client_t * cl, int cmd, struct dbuffer *msg);
 int SV_CountPlayers(void);
 
 /* sv_ccmds.c */

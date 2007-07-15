@@ -98,6 +98,35 @@ void CL_SendInventory (sizebuf_t *buf, inventory_t *i, qboolean save)
 			CL_SendItem(buf, ic->item, j, ic->x, ic->y, save);
 }
 
+static void CL_NetSendItem (struct dbuffer *buf, item_t item, int container, int x, int y, qboolean save)
+{
+	assert(item.t != NONE);
+/*	Com_Printf("Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n", csi.ods[item.t].id, container, item.t, item.a, item.m, x, y);*/
+	if (save) {
+		NET_WriteFormat(buf, "bbbb", item.a, container, x, y);
+		NET_WriteRawString(buf, csi.ods[item.t].id);
+		if (item.a > NONE_AMMO)
+			NET_WriteRawString(buf, csi.ods[item.m].id);
+		NET_WriteByte(buf, 0);
+	} else
+		NET_WriteFormat(buf, "bbbbbb", item.t, item.a, item.m, container, x, y);
+}
+
+static void CL_NetSendInventory (struct dbuffer *buf, inventory_t *i, qboolean save)
+{
+	int j, nr = 0;
+	invList_t *ic;
+
+	for (j = 0; j < csi.numIDs; j++)
+		for (ic = i->c[j]; ic; ic = ic->next)
+			nr++;
+
+	NET_WriteShort(buf, nr * 6);
+	for (j = 0; j < csi.numIDs; j++)
+		for (ic = i->c[j]; ic; ic = ic->next)
+			CL_NetSendItem(buf, ic->item, j, ic->x, ic->y, save);
+}
+
 /**
  * @brief
  * @sa CL_SendItem
@@ -123,6 +152,27 @@ void CL_ReceiveItem (sizebuf_t *buf, item_t *item, int *container, int *x, int *
 	} else
 		/* network */
 		MSG_ReadFormat(buf, "bbbbbb", &item->t, &item->a, &item->m, container, x, y);
+}
+
+void CL_NetReceiveItem (struct dbuffer *buf, item_t *item, int *container, int *x, int *y, qboolean save)
+{
+	const char *itemID;
+
+	/* reset */
+	item->t = item->m = NONE;
+	item->a = NONE_AMMO;
+
+	if (save) {
+		NET_ReadFormat(buf, "bbbb", &item->a, container, x, y);
+		itemID = NET_ReadString(buf);
+		item->t = INVSH_GetItemByID(itemID);
+		if (item->a > NONE_AMMO) {
+			itemID = NET_ReadString(buf);
+			item->m = INVSH_GetItemByID(itemID);
+		}
+	} else
+		/* network */
+		NET_ReadFormat(buf, "bbbbbb", &item->t, &item->a, &item->m, container, x, y);
 }
 
 /**
@@ -1722,7 +1772,7 @@ static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
  * @sa CL_SaveTeamInfo
  * @note Called in cl_main.c CL_Precache_f to send the team info to server
  */
-void CL_SendCurTeamInfo (sizebuf_t * buf, character_t ** team, int num)
+void CL_SendCurTeamInfo (struct dbuffer * buf, character_t ** team, int num)
 {
 	character_t *chr;
 	int i, j;
@@ -1731,45 +1781,45 @@ void CL_SendCurTeamInfo (sizebuf_t * buf, character_t ** team, int num)
 	CL_CleanTempInventory(baseCurrent);
 
 	/* header */
-	MSG_WriteByte(buf, clc_teaminfo);
-	MSG_WriteByte(buf, num);
+	NET_WriteByte(buf, clc_teaminfo);
+	NET_WriteByte(buf, num);
 
 	for (i = 0; i < num; i++) {
 		chr = team[i];
 		/* send the fieldSize ACTOR_SIZE_* */
-		MSG_WriteByte(buf, chr->fieldSize);
+		NET_WriteByte(buf, chr->fieldSize);
 
 		/* unique character number */
-		MSG_WriteShort(buf, chr->ucn);
+		NET_WriteShort(buf, chr->ucn);
 
 		/* name */
-		MSG_WriteString(buf, chr->name);
+		NET_WriteString(buf, chr->name);
 
 		/* model */
-		MSG_WriteString(buf, chr->path);
-		MSG_WriteString(buf, chr->body);
-		MSG_WriteString(buf, chr->head);
-		MSG_WriteByte(buf, chr->skin);
+		NET_WriteString(buf, chr->path);
+		NET_WriteString(buf, chr->body);
+		NET_WriteString(buf, chr->head);
+		NET_WriteByte(buf, chr->skin);
 
-		MSG_WriteShort(buf, chr->HP);
-		MSG_WriteShort(buf, chr->maxHP);
-		MSG_WriteByte(buf, chr->category);
-		MSG_WriteByte(buf, chr->gender);
-		MSG_WriteByte(buf, chr->STUN);
-		MSG_WriteByte(buf, chr->AP);
-		MSG_WriteByte(buf, chr->morale);
+		NET_WriteShort(buf, chr->HP);
+		NET_WriteShort(buf, chr->maxHP);
+		NET_WriteByte(buf, chr->category);
+		NET_WriteByte(buf, chr->gender);
+		NET_WriteByte(buf, chr->STUN);
+		NET_WriteByte(buf, chr->AP);
+		NET_WriteByte(buf, chr->morale);
 
 		/* even new attributes */
 		for (j = 0; j < SKILL_NUM_TYPES; j++)
-			MSG_WriteByte(buf, chr->skills[j]);
+			NET_WriteByte(buf, chr->skills[j]);
 
 		/* scores */
 		for (j = 0; j < KILLED_NUM_TYPES; j++)
-			MSG_WriteShort(buf, chr->kills[j]);
-		MSG_WriteShort(buf, chr->assigned_missions);
+			NET_WriteShort(buf, chr->kills[j]);
+		NET_WriteShort(buf, chr->assigned_missions);
 
 		/* inventory */
-		CL_SendInventory(buf, chr->inv, qfalse);
+		CL_NetSendInventory(buf, chr->inv, qfalse);
 	}
 }
 
@@ -1804,7 +1854,7 @@ typedef struct updateCharacter_s {
  * @sa E_Save
  * @note you also have to update the pascal string size in G_EndGame if you change the buffer here
  */
-void CL_ParseCharacterData (sizebuf_t *buf, qboolean updateCharacter)
+void CL_ParseCharacterData (struct dbuffer *msg, qboolean updateCharacter)
 {
 	static updateCharacter_t updateCharacterArray[MAX_WHOLETEAM];
 	static int num = 0;
@@ -1858,34 +1908,34 @@ void CL_ParseCharacterData (sizebuf_t *buf, qboolean updateCharacter)
 		 * *2 => for shorts
 		 * +16 => STUN, AP and chrScore_t
 		 */
-		num = MSG_ReadShort(buf) / ((KILLED_NUM_TYPES + 2) * 2 + 16);
+		num = NET_ReadShort(msg) / ((KILLED_NUM_TYPES + 2) * 2 + 16);
 		if (num > MAX_EMPLOYEES)
 			Sys_Error("CL_ParseCharacterData: num exceeded MAX_WHOLETEAM\n");
 		else if (num < 0)
-			Sys_Error("CL_ParseCharacterData: MSG_ReadShort error (%i)\n", num);
+			Sys_Error("CL_ParseCharacterData: NET_ReadShort error (%i)\n", num);
 		for (i = 0; i < num; i++) {
-			updateCharacterArray[i].ucn = MSG_ReadShort(buf);
-			updateCharacterArray[i].HP = MSG_ReadShort(buf);
-			updateCharacterArray[i].STUN = MSG_ReadByte(buf);
-			updateCharacterArray[i].AP = MSG_ReadByte(buf);
-			updateCharacterArray[i].morale = MSG_ReadByte(buf);
+			updateCharacterArray[i].ucn = NET_ReadShort(msg);
+			updateCharacterArray[i].HP = NET_ReadShort(msg);
+			updateCharacterArray[i].STUN = NET_ReadByte(msg);
+			updateCharacterArray[i].AP = NET_ReadByte(msg);
+			updateCharacterArray[i].morale = NET_ReadByte(msg);
 
 			for (j = 0; j < KILLED_NUM_TYPES; j++)
-				updateCharacterArray[i].kills[j] = MSG_ReadShort(buf);
+				updateCharacterArray[i].kills[j] = NET_ReadShort(msg);
 
-			updateCharacterArray[i].alienskilled = MSG_ReadByte(buf);
-			updateCharacterArray[i].aliensstunned = MSG_ReadByte(buf);
-			updateCharacterArray[i].civilianskilled = MSG_ReadByte(buf);
-			updateCharacterArray[i].civiliansstunned = MSG_ReadByte(buf);
-			updateCharacterArray[i].teamkilled = MSG_ReadByte(buf);
-			updateCharacterArray[i].teamstunned = MSG_ReadByte(buf);
-			updateCharacterArray[i].closekills = MSG_ReadByte(buf);
-			updateCharacterArray[i].heavykills = MSG_ReadByte(buf);
-			updateCharacterArray[i].assaultkills = MSG_ReadByte(buf);
-			updateCharacterArray[i].sniperkills = MSG_ReadByte(buf);
-			updateCharacterArray[i].explosivekills = MSG_ReadByte(buf);
-			updateCharacterArray[i].accuracystat = MSG_ReadByte(buf);
-			updateCharacterArray[i].powerstat = MSG_ReadByte(buf);
+			updateCharacterArray[i].alienskilled = NET_ReadByte(msg);
+			updateCharacterArray[i].aliensstunned = NET_ReadByte(msg);
+			updateCharacterArray[i].civilianskilled = NET_ReadByte(msg);
+			updateCharacterArray[i].civiliansstunned = NET_ReadByte(msg);
+			updateCharacterArray[i].teamkilled = NET_ReadByte(msg);
+			updateCharacterArray[i].teamstunned = NET_ReadByte(msg);
+			updateCharacterArray[i].closekills = NET_ReadByte(msg);
+			updateCharacterArray[i].heavykills = NET_ReadByte(msg);
+			updateCharacterArray[i].assaultkills = NET_ReadByte(msg);
+			updateCharacterArray[i].sniperkills = NET_ReadByte(msg);
+			updateCharacterArray[i].explosivekills = NET_ReadByte(msg);
+			updateCharacterArray[i].accuracystat = NET_ReadByte(msg);
+			updateCharacterArray[i].powerstat = NET_ReadByte(msg);
 		}
 	}
 }
@@ -1896,7 +1946,7 @@ void CL_ParseCharacterData (sizebuf_t *buf, qboolean updateCharacter)
  * @sa G_EndGame
  * @sa CL_GameResults_f
  */
-void CL_ParseResults (sizebuf_t * buf)
+void CL_ParseResults (struct dbuffer *msg)
 {
 	static char resultText[MAX_SMALLMENUTEXTLEN];
 	int num_spawned[MAX_TEAMS];
@@ -1910,36 +1960,39 @@ void CL_ParseResults (sizebuf_t * buf)
 	int civilian_surviviurs, civilian_killed, civilian_stunned;
 
 	/* get number of teams */
-	num = MSG_ReadByte(buf);
+	num = NET_ReadByte(msg);
 	if (num > MAX_TEAMS)
 		Sys_Error("Too many teams in result message\n");
 
 	Com_DPrintf("Receiving results with %i teams.\n", num);
 
 	/* get winning team */
-	winner = MSG_ReadByte(buf);
+	winner = NET_ReadByte(msg);
 	we = cls.team;
 
-	MSG_ReadShort(buf); /* size */
+	if (we > num)
+		Sys_Error("Team number %d too high (only %d teams)\n", we, num);
+
+	NET_ReadShort(msg); /* size */
 	/* get spawn and alive count */
 	for (i = 0; i < num; i++) {
-		num_spawned[i] = MSG_ReadByte(buf);
-		num_alive[i] = MSG_ReadByte(buf);
+		num_spawned[i] = NET_ReadByte(msg);
+		num_alive[i] = NET_ReadByte(msg);
 	}
 
-	MSG_ReadShort(buf); /* size */
+	NET_ReadShort(msg); /* size */
 	/* get kills */
 	for (i = 0; i < num; i++)
 		for (j = 0; j < num; j++)
-			num_kills[i][j] = MSG_ReadByte(buf);
+			num_kills[i][j] = NET_ReadByte(msg);
 
-	MSG_ReadShort(buf); /* size */
+	NET_ReadShort(msg); /* size */
 	/* get stuns */
 	for (i = 0; i < num; i++)
 		for (j = 0; j < num; j++)
-			num_stuns[i][j] = MSG_ReadByte(buf);
+			num_stuns[i][j] = NET_ReadByte(msg);
 
-	CL_ParseCharacterData(buf, qfalse);
+	CL_ParseCharacterData(msg, qfalse);
 
 	/* init result text */
 	menuText[TEXT_STANDARD] = resultText;

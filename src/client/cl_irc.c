@@ -57,7 +57,7 @@ static int inputLengthBackup;
 
 static qboolean irc_connected = qfalse;
 
-static irc_socket_t irc_socket = -1;
+static struct net_stream *irc_stream = NULL;
 
 static const qboolean IRC_INVISIBLE = qtrue;
 static const char IRC_QUIT_MSG[] = "ufoai.sf.net";
@@ -147,7 +147,7 @@ static irc_bucket_t irc_bucket;
  * @brief
  * @sa Irc_Proto_Disconnect
  */
-static qboolean Irc_Proto_Connect (const char *host, unsigned short port)
+static qboolean Irc_Proto_Connect (const char *host, const char *port)
 {
 	const qboolean status = Irc_Net_Connect(host, port);
 	if (!status) {
@@ -409,10 +409,10 @@ static qboolean Irc_Proto_PollServerMsg (irc_server_msg_t *msg, qboolean *msg_co
 	int recvd;
 	*msg_complete = qfalse;
 	/* recv packet */
-	if (Irc_Net_Receive(last, sizeof(buf) - (last - buf) - 1, &recvd)) {
-		/* receive failed */
+	recvd = stream_dequeue(irc_stream, last, sizeof(buf) - (last - buf) - 1);
+	if (recvd == 0)
 		return qtrue;
-	} else {
+	{
 		/* terminate buf string */
 		const char * const begin = buf;
 		last += recvd;
@@ -1297,7 +1297,7 @@ static void Irc_Logic_ReadMessages (void)
 /**
  * @brief
  */
-static void Irc_Logic_Connect (const char *server, unsigned short port)
+static void Irc_Logic_Connect (const char *server, const char *port)
 {
 	if (!Irc_Proto_Connect(server, port)) {
 		/* connected to server, send NICK and USER commands */
@@ -1334,13 +1334,13 @@ static void Irc_Logic_Disconnect (const char *reason)
  * @sa Irc_Logic_ReadMessages
  * @sa Irc_Logic_SendMessages
  */
-void Irc_Logic_Frame (int frame)
+void Irc_Logic_Frame (int now, void *data)
 {
-	if (irc_connected && frame > 0) {
+	if (irc_connected && now > 0) {
 		if (irc_channel->modified) {
 			/* FIXME: do this without disconnect, connect */
 			Irc_Logic_Disconnect("Switched to another channel");
-			Irc_Logic_Connect(irc_server->string, irc_port->integer);
+			Irc_Logic_Connect(irc_server->string, irc_port->string);
 			Cbuf_AddText(va("irc_join %s\n", irc_channel->string));
 		}
 		Irc_Logic_SendMessages();
@@ -1415,62 +1415,12 @@ Network functions
 /**
  * @brief
  */
-static qboolean Irc_Net_Connect (const char *host, unsigned short port)
+static qboolean Irc_Net_Connect (const char *host, const char *port)
 {
-	int status;
-	qboolean failed = qtrue;
-
-	irc_socket = socket(PF_INET, SOCK_STREAM, 0);
-	if (irc_socket >= 0) {
-		struct sockaddr_in addr;
-		struct hostent *he;
-		memset(&addr, 0, sizeof(addr));
-		he = gethostbyname(host);		/* DNS lookup */
-		if (he) {
-			/* convert host entry to sockaddr_in */
-			addr.sin_port = htons(port);
-			addr.sin_addr.s_addr = ((struct in_addr*) he->h_addr)->s_addr;
-			addr.sin_family = AF_INET;
-			Com_Printf("Irc_Net_Connect: IP: %s\n", NET_SocketToString(&addr));
-			status = connect(irc_socket, (const struct sockaddr*) &addr, sizeof(addr));
-			if (!status) {
-				/* connection successful */
-				failed = qfalse;
-				Com_Printf("Irc_Net_Connect: Connection successful\n");
-			} else {
-				Com_Printf("Irc_Net_Connect: Connection refused\n");
-#ifdef _WIN32
-				closesocket(irc_socket);
-#else
-				close(irc_socket);
-#endif
-			}
-		} else {
-			Com_Printf("Irc_Net_Connect: Unknown host\n");
-#ifdef _WIN32
-			closesocket(irc_socket);
-#else
-			close(irc_socket);
-#endif
-		}
-	} else
-		Com_Printf("Irc_Net_Connect: Could not create socket\n");
-
-	if (!failed) {
-		int status;
-#ifdef _WIN32
-		unsigned long one = 1;
-		status = ioctlsocket(irc_socket, FIONBIO, &one);
-#else
-		status = fcntl(irc_socket, F_SETFL, O_NONBLOCK) == -1;
-#endif
-		if (status) {
-			Com_Printf("Irc_Net_Connect: Could not set non-blocking socket mode\n");
-			failed = qtrue;
-		}
-	}
-
-	return failed;
+	if (irc_stream)
+		free_stream(irc_stream);
+	irc_stream = connect_to_host(host, port);
+	return irc_stream ? qtrue : qfalse;
 }
 
 /**
@@ -1478,11 +1428,8 @@ static qboolean Irc_Net_Connect (const char *host, unsigned short port)
  */
 static qboolean Irc_Net_Disconnect (void)
 {
-#ifdef _WIN32
-	return closesocket(irc_socket) < 0;
-#else
-	return close(irc_socket) == 0;
-#endif
+	free_stream(irc_stream);
+	return qtrue;
 }
 
 /**
@@ -1490,38 +1437,9 @@ static qboolean Irc_Net_Disconnect (void)
  */
 static qboolean Irc_Net_Send (const char *msg, size_t msg_len)
 {
-	int sent;
 	assert(msg);
-	sent = send(irc_socket, msg, (int) msg_len, 0);
-	if (sent >= 0)
-		return qfalse;
-	else {
-		Com_Printf("Irc_Net_Send: send failed\n");
-		return qtrue;
-	}
-}
-
-/**
- * @brief
- */
-static qboolean Irc_Net_Receive (char *buf, size_t buf_len, int *recvd)
-{
-	assert(buf);
-	assert(recvd);
-	*recvd = recv(irc_socket, buf, (int) buf_len, 0);
-#ifdef _WIN32
-	if (*recvd < 0 && WSAGetLastError() == WSAEWOULDBLOCK)
-		*recvd = 0;
-#else
-	if (*recvd < 0 && errno == EAGAIN)
-		*recvd = 0;
-#endif
-	if (*recvd >= 0)
-		return qfalse;
-	else {
-		Com_Printf("Irc_Net_Receive: recv failed\n");
-		return qtrue;
-	}
+	stream_enqueue(irc_stream, msg, msg_len);
+	return qtrue;
 }
 
 /*
@@ -1550,7 +1468,7 @@ static void Irc_Connect_f (void)
 			if (argc >= 3)
 				Cvar_Set("irc_port", Cmd_Argv(2));
 			Com_Printf("Connect to %s:%s\n", irc_server->string, irc_port->string);
-			Irc_Logic_Connect(irc_server->string, irc_port->integer);
+			Irc_Logic_Connect(irc_server->string, irc_port->string);
 			if (argc >= 4)
 				Cbuf_AddText(va("irc_join %s\n", Cmd_Argv(3)));
 		} else
@@ -1609,7 +1527,7 @@ static void Irc_Client_Part_f (void)
 /**
  * @brief Send a message from menu or commandline
  * @note This function uses the irc_send_buffer cvar to handle the menu input for irc messages
- *       See menu_irc.ufo for more information
+ * See menu_irc.ufo for more information
  */
 static void Irc_Client_Msg_f (void)
 {

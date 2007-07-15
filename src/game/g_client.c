@@ -32,7 +32,26 @@ int turnTeam;	/* Defined in g_local.h Stores level.activeTeam while G_CanReactio
 
 int reactionFiremode[MAX_EDICTS][RF_MAX]; /* Defined in g_local.h See there for full info. */
 
-static qboolean sentAppearPerishEvent;
+#define MAX_DVTAB 32
+static byte steps_buffer[MAX_DVTAB];
+static int steps = 0;
+static int steps_num;
+static int steps_mask;
+
+/* This is a crude hack to keep it working for now. Rewrite this properly later */
+void
+flush_steps(void) {
+  int i;
+  if (steps > 0) {
+    gi.AddEvent(steps_mask, EV_ACTOR_MOVE);
+    gi.WriteShort(steps_num);
+    gi.WriteShort(steps);
+    for (i = 0; i < steps; i++)
+      gi.WriteByte(steps_buffer[i]);
+  }
+
+  steps = 0;
+}
 
 /**
  * @brief Generates the player mask
@@ -217,7 +236,7 @@ void G_AppearPerishEvent (int player_mask, int appear, edict_t * check)
 {
 	int maxMorale;
 
-	sentAppearPerishEvent = qtrue;
+        flush_steps();
 
 	if (appear) {
 		/* appear */
@@ -1201,7 +1220,6 @@ static qboolean G_CheckMoveBlock (pos3_t from, int dv)
 	return qfalse;
 }
 
-#define MAX_DVTAB 32
 /**
  * @brief
  * @sa CL_ActorStartMove
@@ -1211,7 +1229,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	edict_t *ent;
 	int length, status, initTU;
 	byte dvtab[MAX_DVTAB];
-	byte dv, numdv, steps;
+	byte dv, numdv;
 	pos3_t pos;
 	float div, tu;
 
@@ -1249,15 +1267,16 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 			/* everything ok, found valid route */
 			/* create movement related events */
 			steps = 0;
-			sentAppearPerishEvent = qfalse;
+                        steps_num = num;
+                        steps_mask = G_VisToPM(ent->visflags);
 
 			FLOOR(ent) = NULL;
 
 			/* BEWARE: do not print anything (even with DPrintf)
 			   in functions called in this loop
-			   without setting 'steps = 0' afterwards;
+			   without calling flush_steps() afterwards;
 			   also do not send events except G_AppearPerishEvent
-			   without manually setting 'steps = 0' */
+			   without manually calling flush_steps() */
 			while (numdv > 0) {
 				/* get next dv */
 				numdv--;
@@ -1265,6 +1284,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				/* turn around first */
 				status = G_DoTurn(ent, dvtab[numdv]);
 				if (status) {
+                                        flush_steps();
 					/* send the turn */
 					gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_TURN);
 					gi.WriteShort(ent->number);
@@ -1272,10 +1292,6 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				}
 				if (stop && (status & VIS_STOP))
 					break;
-				if (status || sentAppearPerishEvent) {
-					steps = 0;
-					sentAppearPerishEvent = qfalse;
-				}
 
 				/* check for "blockers" */
 				if (G_CheckMoveBlock(ent->pos, dvtab[numdv]))
@@ -1296,17 +1312,8 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				/* link it at new position */
 				gi.linkentity(ent);
 
-				/* write move header if not yet done */
-				if (!steps) {
-					gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_MOVE);
-					gi.WriteShort(num);
-					gi.WriteNewSave(0);
-				}
-
 				/* write step */
-				steps++;
-				gi.WriteByte(dvtab[numdv]);
-				gi.WriteToSave(steps);
+                                steps_buffer[steps++] = dvtab[numdv];
 
 				/* check if player appears/perishes, seen from other teams */
 				G_CheckVis(ent, qtrue);
@@ -1321,8 +1328,6 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				if (G_ReactToMove(ent, qtrue)) {
 					if (G_ReactToMove(ent, qfalse))
 						status |= VIS_STOP;
-					steps = 0;
-					sentAppearPerishEvent = qfalse;
 					/* @todo Let the camera center on the attacker if he's visible
 					 * if he's invisible let the target turn in the shooting direction
 					 * of the attacker (G_Turn) - also let all team members now
@@ -1336,17 +1341,16 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				ent->TU = max(0, initTU);
 
 				/* check for death */
-				if (ent->state & STATE_DEAD)
+				if (ent->state & STATE_DEAD) {
+                                        flush_steps();
 					return;
+                                }
 
 				if (stop && (status & VIS_STOP))
 					break;
-
-				if (sentAppearPerishEvent) {
-					steps = 0;
-					sentAppearPerishEvent = qfalse;
-				}
 			}
+
+                        flush_steps();
 
 			/* submit the TUs / round down */
 			ent->TU = max(0, initTU - (int) tu);
