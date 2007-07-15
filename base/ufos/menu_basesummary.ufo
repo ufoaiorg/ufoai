@@ -367,7 +367,7 @@ menu basesummary
 	string txt_basesummary_researchcurrent1
 	{
 		string "*cvar mn_basesummary_researchcurrent1"
-		pos "50 565
+		pos "50 565"
 		color "0 .78 0 1"
 	}
 
