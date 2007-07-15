@@ -31,7 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # define FD_SETSIZE (MAX_STREAMS + 1)
 # include <winsock2.h>
 # include <ws2tcpip.h>
-# define EINPROGRESS WSAEINPROGRESS
 #else
 # define INVALID_SOCKET (-1)
 # include <sys/select.h>
@@ -125,11 +124,8 @@ static struct net_stream *new_stream (int index)
 /**
  * @brief
  */
-static const char *estr (void)
+static const char *estr_n (int code)
 {
-	int		code;
-
-	code = WSAGetLastError();
 	switch (code) {
 	case WSAEINTR: return "WSAEINTR";
 	case WSAEBADF: return "WSAEBADF";
@@ -179,11 +175,20 @@ static const char *estr (void)
 	default: return "NO ERROR";
 	}
 }
-#else
+
 /**
  * @brief
  */
-static const char *estr(void)
+static const char *estr (void)
+{
+	return estr_n(WSAGetLastError());
+}
+#else
+#define estr_n strerror
+/**
+ * @brief
+ */
+static const char *estr (void)
 {
 	return strerror(errno);
 }
@@ -440,14 +445,22 @@ static struct net_stream *do_connect (const char *node, const char *service, con
 		return NULL;
 	}
 
-	if (connect(sock, addr->ai_addr, addr->ai_addrlen) != 0 && errno != EINPROGRESS) {
-		Com_Printf("Failed to start connection to %s:%s: %s\n", node, service, estr());
+	if (connect(sock, addr->ai_addr, addr->ai_addrlen) != 0) {
 #ifdef _WIN32
-		closesocket(sock);
+		int err = WSAGetLastError();
+		if (err != WSAEWOULDBLOCK) {
+			Com_Printf("Failed to start connection to %s:%s: %s\n", node, service, estr_n(err));
+			closesocket(sock);
+			return NULL;
+		}
 #else
-		close(sock);
+		int err = errno;
+		if (err != EINPROGRESS) {
+			Com_Printf("Failed to start connection to %s:%s: %s\n", node, service, estr_n(err));
+			close(sock);
+			return NULL;
+		}
 #endif
-		return NULL;
 	}
 
 	s = new_stream(i);
