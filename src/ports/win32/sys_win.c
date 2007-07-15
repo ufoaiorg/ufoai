@@ -901,10 +901,6 @@ static void Sys_SetAffinity (void)
  */
 int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	MSG			msg;
-	int			time, oldtime, newtime;
-	float		timescale;
-
 	/* previous instances do not exist in Win32 */
 	if (hPrevInstance)
 		return 0;
@@ -917,38 +913,12 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	FixWorkingDirectory();
 
 	Qcommon_Init(argc, argv);
-	timescale = 1.0;
-	oldtime = Sys_Milliseconds();
 
 	Sys_SetAffinity();	/* only use one processor */
 
-	srand(oldtime);
-
 	/* main window message loop */
-	while (1) {
-		/* if at a full screen console, don't update unless needed */
-		if (Minimized)
-			Sys_Sleep(1);
-
-		while (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) {
-			if (!GetMessage(&msg, NULL, 0, 0))
-				Com_Quit();
-			sys_msg_time = msg.time;
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
-
-		do {
-			newtime = Sys_Milliseconds();
-			time = timescale * (newtime - oldtime);
-		} while (time < 1);
-
-#ifndef __MINGW32__
-		_controlfp(_PC_24, _MCW_PC);
-#endif
-		timescale = Qcommon_Frame(time);
-		oldtime = newtime;
-	}
+	while(1)
+		Qcommon_Frame();
 
 	/* never gets here */
 	return FALSE;

@@ -28,22 +28,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_STREAMS 63
 
 #ifdef _WIN32
-#define FD_SETSIZE (MAX_STREAMS + 1)
-#include <winsock.h>
+# define FD_SETSIZE (MAX_STREAMS + 1)
+# include <winsock2.h>
+# include <ws2tcpip.h>
+# define EINPROGRESS WSAEINPROGRESS
 #else
-#define INVALID_SOCKET (-1)
-#endif
-#include <sys/select.h>
-#include <sys/types.h>
+# define INVALID_SOCKET (-1)
+# include <sys/select.h>
+# include <sys/types.h>
+# include <sys/socket.h>
+# include <netdb.h>
+# include <arpa/inet.h>
+# include <netinet/in.h>
+#endif /* WIN32 */
 #include <sys/time.h>
 #include <unistd.h>
 #include <errno.h>
 #include <string.h>
 #include <fcntl.h>
-#include <sys/socket.h>
-#include <netdb.h>
-#include <arpa/inet.h>
-#include <netinet/in.h>
+
 
 struct net_stream {
 	void *data;
@@ -644,6 +647,28 @@ void stream_finished (struct net_stream *s)
 	if (stream_length(s) == 0)
 		close_stream(s);
 }
+
+#ifdef _WIN32
+const char *inet_ntop (int af, const void *src, char *dst, socklen_t cnt)
+{
+	if (af == AF_INET) {
+		struct sockaddr_in in;
+		memset(&in, 0, sizeof(in));
+		in.sin_family = AF_INET;
+		memcpy(&in.sin_addr, src, sizeof(struct in_addr));
+		getnameinfo((struct sockaddr *)&in, sizeof(struct sockaddr_in), dst, cnt, NULL, 0, NI_NUMERICHOST);
+		return dst;
+	} else if (af == AF_INET6) {
+		struct sockaddr_in6 in;
+		memset(&in, 0, sizeof(in));
+		in.sin6_family = AF_INET6;
+		memcpy(&in.sin6_addr, src, sizeof(struct in_addr6));
+		getnameinfo((struct sockaddr *)&in, sizeof(struct sockaddr_in6), dst, cnt, NULL, 0, NI_NUMERICHOST);
+		return dst;
+	}
+	return NULL;
+}
+#endif
 
 /**
  * @brief
