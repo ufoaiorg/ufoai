@@ -31,6 +31,98 @@ SPRITE MODELS
 ==============================================================================
 */
 
+
+/**
+ * @brief
+ */
+void R_DrawSpriteModel (entity_t * e)
+{
+	float alpha = 1.0F;
+	vec3_t point;
+	dsprframe_t *frame;
+	float *up, *right;
+	dsprite_t *psprite;
+
+	/* don't even bother culling, because it's just a single */
+	/* polygon without a surface cache */
+	assert(currentmodel->type == mod_sprite);
+	psprite = (dsprite_t *) currentmodel->alias.extraData;
+
+#if 0
+	if (e->frame < 0 || e->frame >= psprite->numframes) {
+		ri.Con_Printf(PRINT_ALL, "no such sprite frame %i\n", e->frame);
+		e->frame = 0;
+	}
+#endif
+	e->as.frame %= psprite->numframes;
+
+	frame = &psprite->frames[e->as.frame];
+
+#if 0
+	if (psprite->type == SPR_ORIENTED) {	/* bullet marks on walls */
+		vec3_t v_forward, v_right, v_up;
+
+		AngleVectors(currententity->angles, v_forward, v_right, v_up);
+		up = v_up;
+		right = v_right;
+	} else
+#endif
+	{							/* normal sprite */
+		up = vup;
+		right = vright;
+	}
+
+	if (e->flags & RF_TRANSLUCENT)
+		alpha = e->alpha;
+
+	if (alpha != 1.0F)
+		GLSTATE_ENABLE_BLEND
+
+	qglColor4f(1, 1, 1, alpha);
+
+	GL_Bind(currentmodel->alias.skins_img[e->as.frame]->texnum);
+
+	GL_TexEnv(GL_MODULATE);
+
+	if (alpha == 1.0) {
+		GLSTATE_ENABLE_ALPHATEST
+	} else {
+		GLSTATE_DISABLE_ALPHATEST
+	}
+
+	qglBegin(GL_QUADS);
+
+	qglTexCoord2f(0, 1);
+	VectorMA(e->origin, -frame->origin_y, up, point);
+	VectorMA(point, -frame->origin_x, right, point);
+	qglVertex3fv(point);
+
+	qglTexCoord2f(0, 0);
+	VectorMA(e->origin, frame->height - frame->origin_y, up, point);
+	VectorMA(point, -frame->origin_x, right, point);
+	qglVertex3fv(point);
+
+	qglTexCoord2f(1, 0);
+	VectorMA(e->origin, frame->height - frame->origin_y, up, point);
+	VectorMA(point, frame->width - frame->origin_x, right, point);
+	qglVertex3fv(point);
+
+	qglTexCoord2f(1, 1);
+	VectorMA(e->origin, -frame->origin_y, up, point);
+	VectorMA(point, frame->width - frame->origin_x, right, point);
+	qglVertex3fv(point);
+
+	qglEnd();
+
+	GLSTATE_DISABLE_ALPHATEST
+	GL_TexEnv(GL_REPLACE);
+
+	if (alpha != 1.0F)
+		GLSTATE_DISABLE_BLEND
+
+	qglColor4f(1, 1, 1, 1);
+}
+
 /**
  * @brief
  */

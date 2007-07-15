@@ -226,143 +226,6 @@ void R_RotateForEntity (entity_t * e)
 }
 
 
-/*
-=============================================================
-SPRITE MODELS
-=============================================================
-*/
-
-
-/**
- * @brief
- */
-static void R_DrawSpriteModel (entity_t * e)
-{
-	float alpha = 1.0F;
-	vec3_t point;
-	dsprframe_t *frame;
-	float *up, *right;
-	dsprite_t *psprite;
-
-	/* don't even bother culling, because it's just a single */
-	/* polygon without a surface cache */
-	assert(currentmodel->type == mod_sprite);
-	psprite = (dsprite_t *) currentmodel->alias.extraData;
-
-#if 0
-	if (e->frame < 0 || e->frame >= psprite->numframes) {
-		ri.Con_Printf(PRINT_ALL, "no such sprite frame %i\n", e->frame);
-		e->frame = 0;
-	}
-#endif
-	e->as.frame %= psprite->numframes;
-
-	frame = &psprite->frames[e->as.frame];
-
-#if 0
-	if (psprite->type == SPR_ORIENTED) {	/* bullet marks on walls */
-		vec3_t v_forward, v_right, v_up;
-
-		AngleVectors(currententity->angles, v_forward, v_right, v_up);
-		up = v_up;
-		right = v_right;
-	} else
-#endif
-	{							/* normal sprite */
-		up = vup;
-		right = vright;
-	}
-
-	if (e->flags & RF_TRANSLUCENT)
-		alpha = e->alpha;
-
-	if (alpha != 1.0F)
-		GLSTATE_ENABLE_BLEND
-
-	qglColor4f(1, 1, 1, alpha);
-
-	GL_Bind(currentmodel->alias.skins_img[e->as.frame]->texnum);
-
-	GL_TexEnv(GL_MODULATE);
-
-	if (alpha == 1.0) {
-		GLSTATE_ENABLE_ALPHATEST
-	} else {
-		GLSTATE_DISABLE_ALPHATEST
-	}
-
-	qglBegin(GL_QUADS);
-
-	qglTexCoord2f(0, 1);
-	VectorMA(e->origin, -frame->origin_y, up, point);
-	VectorMA(point, -frame->origin_x, right, point);
-	qglVertex3fv(point);
-
-	qglTexCoord2f(0, 0);
-	VectorMA(e->origin, frame->height - frame->origin_y, up, point);
-	VectorMA(point, -frame->origin_x, right, point);
-	qglVertex3fv(point);
-
-	qglTexCoord2f(1, 0);
-	VectorMA(e->origin, frame->height - frame->origin_y, up, point);
-	VectorMA(point, frame->width - frame->origin_x, right, point);
-	qglVertex3fv(point);
-
-	qglTexCoord2f(1, 1);
-	VectorMA(e->origin, -frame->origin_y, up, point);
-	VectorMA(point, frame->width - frame->origin_x, right, point);
-	qglVertex3fv(point);
-
-	qglEnd();
-
-	GLSTATE_DISABLE_ALPHATEST
-	GL_TexEnv(GL_REPLACE);
-
-	if (alpha != 1.0F)
-		GLSTATE_DISABLE_BLEND
-
-	qglColor4f(1, 1, 1, 1);
-}
-
-
-/**
- * @brief
- */
-static void R_DrawNullModel (void)
-{
-	vec3_t shadelight;
-	int i;
-
-	R_LightPoint(currententity->origin, shadelight);
-
-	qglPushMatrix();
-
-	qglMultMatrixf(trafo[currententity - r_newrefdef.entities].matrix);
-
-	qglDisable(GL_TEXTURE_2D);
-
-	qglBegin(GL_TRIANGLE_FAN);
-	qglVertex3f(0, 0, -16);
-	for (i = 0; i <= 4; i++) {
-		qglColor3f(0.2 + 0.6 * (i % 2), 0.0, 0.2 + 0.6 * (i % 2));
-		qglVertex3f(16 * cos(i * M_PI / 2), 16 * sin(i * M_PI / 2), 0);
-	}
-	qglEnd();
-
-	qglBegin(GL_TRIANGLE_FAN);
-	qglVertex3f(0, 0, 16);
-	for (i = 4; i >= 0; i--) {
-		qglColor3f(0.2 + 0.6 * (i % 2), 0.0, 0.2 + 0.6 * (i % 2));
-		qglVertex3f(16 * cos(i * M_PI / 2), 16 * sin(i * M_PI / 2), 0);
-	}
-	qglEnd();
-
-	qglColor3f(1, 1, 1);
-	qglPopMatrix();
-	qglEnable(GL_TEXTURE_2D);
-}
-
-
 /**
  * @brief
  */
@@ -407,7 +270,7 @@ void R_InterpolateTransform (animState_t * as, int numframes, float *tag, float 
 /**
  * @brief
  */
-static float *R_CalcTransform(entity_t * e)
+static float *R_CalcTransform (entity_t * e)
 {
 	vec3_t angles;
 	transform_t *t;
@@ -497,7 +360,7 @@ static float *R_CalcTransform(entity_t * e)
 /**
  * @brief
  */
-static void R_TransformEntitiesOnList(void)
+static void R_TransformEntitiesOnList (void)
 {
 	int i;
 
@@ -541,7 +404,7 @@ static void R_DrawEntitiesOnList (void)
 		else {
 			currentmodel = currententity->model;
 			if (!currentmodel) {
-				R_DrawNullModel();
+				Mod_DrawNullModel();
 				continue;
 			}
 			switch (currentmodel->type) {
@@ -582,9 +445,8 @@ static void R_DrawEntitiesOnList (void)
 			R_DrawBox(currententity);
 		else {
 			currentmodel = currententity->model;
-
 			if (!currentmodel) {
-				R_DrawNullModel();
+				Mod_DrawNullModel();
 				continue;
 			}
 			switch (currentmodel->type) {

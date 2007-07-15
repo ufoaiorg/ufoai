@@ -355,6 +355,44 @@ void Mod_DrawModelBBox (vec4_t bbox[8], entity_t *e)
 	qglEnable(GL_CULL_FACE);
 }
 
+
+/**
+ * @brief Fallback if entity doesn't have any valid model
+ */
+void Mod_DrawNullModel (void)
+{
+	vec3_t shadelight;
+	int i;
+
+	R_LightPoint(currententity->origin, shadelight);
+
+	qglPushMatrix();
+
+	qglMultMatrixf(trafo[currententity - r_newrefdef.entities].matrix);
+
+	qglDisable(GL_TEXTURE_2D);
+
+	qglBegin(GL_TRIANGLE_FAN);
+	qglVertex3f(0, 0, -16);
+	for (i = 0; i <= 4; i++) {
+		qglColor3f(0.2 + 0.6 * (i % 2), 0.0, 0.2 + 0.6 * (i % 2));
+		qglVertex3f(16 * cos(i * M_PI / 2), 16 * sin(i * M_PI / 2), 0);
+	}
+	qglEnd();
+
+	qglBegin(GL_TRIANGLE_FAN);
+	qglVertex3f(0, 0, 16);
+	for (i = 4; i >= 0; i--) {
+		qglColor3f(0.2 + 0.6 * (i % 2), 0.0, 0.2 + 0.6 * (i % 2));
+		qglVertex3f(16 * cos(i * M_PI / 2), 16 * sin(i * M_PI / 2), 0);
+	}
+	qglEnd();
+
+	qglColor3f(1, 1, 1);
+	qglPopMatrix();
+	qglEnable(GL_TEXTURE_2D);
+}
+
 /**
  * @brief Frees the model pool
  */

@@ -115,6 +115,7 @@ typedef struct entity_s {
 
 	/*
 	 ** wanted by MD3
+	 ** FIXME: Put this into the animState_t, too
 	 */
 
 	int frame;
