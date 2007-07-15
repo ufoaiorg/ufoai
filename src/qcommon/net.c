@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # define FD_SETSIZE (MAX_STREAMS + 1)
 # include <winsock2.h>
 # include <ws2tcpip.h>
+# define gai_strerrorA estr_n
 #else
 # define INVALID_SOCKET (-1)
 # include <sys/select.h>
@@ -488,7 +489,11 @@ struct net_stream *connect_to_host (const char *node, const char *service)
 	int index;
 
 	memset(&hints, 0, sizeof(hints));
+#ifdef _WIN32
+	hints.ai_flags = AI_NUMERICHOST;
+#else
 	hints.ai_flags = AI_NUMERICHOST | AI_ADDRCONFIG | AI_NUMERICSERV;
+#endif
 	hints.ai_socktype = SOCK_STREAM;
 
 	rc = getaddrinfo(node, service, &hints, &res);
@@ -750,8 +755,11 @@ static int do_start_server (const struct addrinfo *addr)
 #endif
 		return INVALID_SOCKET;
 	}
-
+#ifdef _WIN32
+	if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (char *) &t, sizeof(t)) != 0) {
+#else
 	if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &t, sizeof(t)) != 0) {
+#endif
 		Com_Printf("Failed to set SO_REUSEADDR on socket: %s\n", estr());
 #ifdef _WIN32
 		closesocket(sock);
@@ -806,7 +814,11 @@ qboolean start_server (const char *node, const char *service, stream_callback_fu
 		int rc;
 
 		memset(&hints, 0, sizeof(hints));
+#ifdef _WIN32
+		hints.ai_flags = AI_NUMERICHOST | AI_PASSIVE;
+#else
 		hints.ai_flags = AI_NUMERICHOST | AI_ADDRCONFIG | AI_NUMERICSERV | AI_PASSIVE;
+#endif
 		hints.ai_socktype = SOCK_STREAM;
 
 		rc = getaddrinfo(node, service, &hints, &res);
