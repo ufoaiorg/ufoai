@@ -20,7 +20,10 @@
 struct dbuffer;
 #else
 #define DBUFFER_H
+
+#ifdef HAVE_CONFIG_H
 #include "../../config.h"
+#endif
 
 #include <sys/types.h>
 

@@ -21,7 +21,11 @@
  * in a queue. It does not provide random access; characters may be
  * inserted only at the end and removed only from the beginning.
  */
+
+#ifdef HAVE_CONFIG_H
 #include "../../config.h"
+#endif
+
 #include "dbuffer.h"
 
 #include <string.h>
