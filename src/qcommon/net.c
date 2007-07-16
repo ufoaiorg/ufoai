@@ -698,7 +698,7 @@ const char * stream_peer_name (struct net_stream *s, char *dst, int len)
 	else if (stream_is_loopback(s))
 		return "loopback connection";
 	else {
-		char buf[s->addrlen];
+		char buf[64];
 		void *src;
 		socklen_t addrlen = s->addrlen;
 		if (getpeername(s->socket, (struct sockaddr *)buf, &addrlen) != 0)
