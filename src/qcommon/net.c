@@ -40,9 +40,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # include <netdb.h>
 # include <arpa/inet.h>
 # include <netinet/in.h>
+# include <sys/time.h>
+# include <unistd.h>
 #endif /* WIN32 */
-#include <sys/time.h>
-#include <unistd.h>
 #include <errno.h>
 #include <string.h>
 #include <fcntl.h>
