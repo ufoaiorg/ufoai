@@ -546,20 +546,14 @@ menu althud
 
 	confunc selpla { *bt_primaryleft    image althud/buttons_althud1a }
 	confunc selpra { *bt_primaryright   image althud/buttons_althud1a }
-//	confunc selsla { *bt_secondaryleft  image althud/buttons_althud1a }
-//	confunc selsra { *bt_secondaryright image althud/buttons_althud1a }
 
 	confunc deselpla { *bt_primaryleft     image althud/buttons_althud1 }
 	confunc deselpra { *bt_primaryright    image althud/buttons_althud1 }
-//	confunc deselsla { *bt_secondaryleft   image althud/buttons_althud1 }
-//	confunc deselsra { *bt_secondaryright  image althud/buttons_althud1 }
 	confunc deselrla { *bt_reloadleft      image althud/buttons_althud1 }
 	confunc deselrra { *bt_reloadright     image althud/buttons_althud1 }
 
 	confunc displa { *bt_primaryleft     image althud/buttons_althud1g }
 	confunc dispra { *bt_primaryright    image althud/buttons_althud1g }
-//	confunc dissla { *bt_secondaryleft   image althud/buttons_althud1g }
-//	confunc dissra { *bt_secondaryright  image althud/buttons_althud1g }
 	confunc disrla { *bt_reloadleft      image althud/buttons_althud1g }
 	confunc disrra { *bt_reloadright     image althud/buttons_althud1g }
 
@@ -578,7 +572,7 @@ menu althud
 
 	pic bt_primaryright
 	{
-		tooltip	"_Primary fire mode"
+		tooltip	"_Use Item"
 		image	althud/buttons_althud1
 		pos		"871 497"
 		texl	"0 74"
@@ -586,21 +580,9 @@ menu althud
 		mousefx	true
 		click { cmd "list_firemodes r;" }
 	}
-	/*
-	pic bt_secondaryright
-	{
-		tooltip	"_Secondary fire mode"
-		image	althud/buttons_althud1
-		pos		"900 497"
-		texl	"27 74"
-		texh	"52 107"
-		mousefx	true
-		click { cmd "list_firemodes r;" }
-	}
-	*/
 	pic bt_primaryleft
 	{
-		tooltip	"_Primary fire mode"
+		tooltip	"_Use Item"
 		image	althud/buttons_althud1
 		pos		"871 497"
 		texl	"0 74"
@@ -608,18 +590,6 @@ menu althud
 		mousefx	true
 		click { cmd "list_firemodes l;" }
 	}
-	/*
-	pic bt_secondaryleft
-	{
-		tooltip	"_Secondary fire mode"
-		image	althud/buttons_althud1
-		pos		"900 497"
-		texl	"27 74"
-		texh	"52 107"
-		mousefx	true
-		click { cmd "list_firemodes l;" }
-	}
-	*/
 
 	confunc startreactionmanya
 	{
@@ -751,9 +721,6 @@ menu althud
 		*bt_primaryleft  invis true
 		*bt_reloadright invis false
 		*bt_reloadleft  invis true
-/*		*bt_secondaryright invis false
-		*bt_secondaryleft  invis true
-*/
 	}
 	func show_leftweapon
 	{
@@ -763,9 +730,6 @@ menu althud
 		*bt_primaryleft  invis false
 		*bt_reloadright invis true
 		*bt_reloadleft  invis false
-/*		*bt_secondaryright invis true
-		*bt_secondaryleft  invis false
-*/
 	}
 
 	pic teamnum_dec

@@ -75,19 +75,26 @@ static int lastTU; /* keeps track of selActor->TU */
 static const char *shoot_type_strings[BT_NUM_TYPES] = {
 	"pr\n",
 	"reaction\n",
-	"sr\n",
-	"\n",
 	"pl\n",
-	"\n",
-	"sl\n",
-	"\n",
 	"rr\n",
 	"rl\n",
 	"stand\n",
 	"crouch\n"
 };
 
-static int weaponButtonState[BT_NUM_TYPES];
+/**
+ * @brief Defines the various states of a button.
+ * @note Not all buttons do have all of these states (e.g. "unusable" is not very common).
+ * @todo What does -1 mean here? it is used quite a bit
+ */
+typedef enum {
+	BT_STATE_DISABLE,
+	BT_STATE_DESELECT,	/* Normal display */
+	BT_STATE_HIGHLIGHT,	/* Normal + highlight */
+	BT_STATE_UNUSABLE	/* Normal + red (activated but unuseable aka "impossible") */
+} weaponButtonState_t;
+
+static weaponButtonState_t weaponButtonState[BT_NUM_TYPES];
 
 /**
  * @brief Writes player action with its data
@@ -371,7 +378,7 @@ static void ClearHighlights (void)
 	int i;
 
 	for (i = 0; i < BT_NUM_TYPES; i++)
-		if (weaponButtonState[i] == 2) {
+		if (weaponButtonState[i] == BT_STATE_HIGHLIGHT) {
 			weaponButtonState[i] = -1;
 			return;
 		}
@@ -393,7 +400,7 @@ static void HighlightWeaponButton (int button)
 	Q_strncpyz(cbufText, "sel", MAX_VAR);
 	Q_strcat(cbufText, shoot_type_strings[button], MAX_VAR);
 	Cbuf_AddText(cbufText);
-	weaponButtonState[button] = 2;
+	weaponButtonState[button] = BT_STATE_HIGHLIGHT;
 }
 #endif
 
@@ -406,25 +413,31 @@ void CL_ResetWeaponButtons (void)
 }
 
 /**
- * @brief Sets the display for a single weapon/reload HUD button
+ * @brief Sets the display for a single weapon/reload HUD button.
  */
-static void SetWeaponButton (int button, int state)
+static void SetWeaponButton (int button, cl_reaction_firemode_type_t state)
 {
 	char cbufText[MAX_VAR];
-	int currentState = weaponButtonState[button];
+	cl_reaction_firemode_type_t currentState = weaponButtonState[button];
 
 	assert(button < BT_NUM_TYPES);
 
-	/* don't reset it already in current state or if highlighted,
-	 * as HighlightWeaponButton deals with the highlighted state */
-	if (currentState == state || currentState == 2)
+	/* No "switch" statement possible here for some non-obvious reason (gcc doesn't like constant ints here) :-/ */
+	if ((state == currentState)
+	||  (state == BT_STATE_HIGHLIGHT)) {
+		/* Don't reset if it already is in current state or if highlighted,
+		 * as HighlightWeaponButton deals with the highlighted state. */
 		return;
-
-	if (state == 1)
+	} else if (state == BT_STATE_DESELECT) {
 		Q_strncpyz(cbufText, "desel", sizeof(cbufText));
-	else
+	
+	} else if (state == BT_STATE_DISABLE) {
 		Q_strncpyz(cbufText, "dis", sizeof(cbufText));
+	} else {
+		Q_strncpyz(cbufText, "dis", sizeof(cbufText));
+	}
 
+	/* Connect confunc strings to the ones as defined in "menu nohud". */
 	Q_strcat(cbufText, shoot_type_strings[button], sizeof(cbufText));
 
 	Cbuf_AddText(cbufText);
@@ -667,16 +680,18 @@ static qboolean CL_DisplayImpossibleReaction (le_t *actor)
 		return qfalse;
 
 	if (actor != selActor) {
-		Com_DPrintf("CL_DisplayImpossibleReaction: Something went wront, given actor does not equal the currently selectd actor!\n");
+		Com_DPrintf("CL_DisplayImpossibleReaction: Something went wront, given actor does not equal the currently selected actor!\n");
 		return qfalse;
 	}
 
 	/* Display 'impossible" (red) reaction buttons */
 	switch (CL_GetReactionState(actor)) {
 	case R_FIRE_ONCE:
+		weaponButtonState[BT_REACTION] = BT_STATE_UNUSABLE;	/* Set but not used anywhere (yet) */
 		Cbuf_AddText("startreactiononce_impos\n");
 		break;
 	case R_FIRE_MANY:
+		weaponButtonState[BT_REACTION] = BT_STATE_UNUSABLE;	/* Set but not used anywhere (yet) */
 		Cbuf_AddText("startreactionmany_impos\n");
 		break;
 	default:
@@ -1104,24 +1119,24 @@ static void CL_RefreshWeaponButtons (int time)
 	if (selActor->state & STATE_CROUCHED) {
 		weaponButtonState[BT_STAND] = -1;
 		if (time < TU_CROUCH)
-			SetWeaponButton(BT_CROUCH, qfalse);
+			SetWeaponButton(BT_CROUCH, BT_STATE_DISABLE);
 		else
-			SetWeaponButton(BT_CROUCH, qtrue);
+			SetWeaponButton(BT_CROUCH, BT_STATE_DESELECT);
 	} else {
 		weaponButtonState[BT_CROUCH] = -1;
 		if (time < TU_CROUCH)
-			SetWeaponButton(BT_STAND, qfalse);
+			SetWeaponButton(BT_STAND, BT_STATE_DISABLE);
 		else
-			SetWeaponButton(BT_STAND, qtrue);
+			SetWeaponButton(BT_STAND, BT_STATE_DESELECT);
 	}
 
 	/* reaction-fire button */
 	if (CL_GetReactionState(selActor) == R_FIRE_OFF) {
 		if ((time >= TU_REACTION_SINGLE)
 		&& (CL_WeaponWithReaction(selActor, 'r') || CL_WeaponWithReaction(selActor, 'l')))
-			SetWeaponButton(BT_RIGHT_PRIMARY_REACTION, qtrue);
+			SetWeaponButton(BT_REACTION, BT_STATE_DESELECT);
 		else
-			SetWeaponButton(BT_RIGHT_PRIMARY_REACTION, qfalse);
+			SetWeaponButton(BT_REACTION, BT_STATE_DISABLE);
 
 	}
 
@@ -1129,16 +1144,16 @@ static void CL_RefreshWeaponButtons (int time)
 	if (!weaponr || weaponr->item.m == NONE
 		 || !csi.ods[weaponr->item.t].reload
 		 || time < CL_CalcReloadTime(weaponr->item.t))
-		SetWeaponButton(BT_RIGHT_RELOAD, qfalse);
+		SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DISABLE);
 	else
-		SetWeaponButton(BT_RIGHT_RELOAD, qtrue);
+		SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DESELECT);
 
 	if (!weaponl || weaponl->item.m == NONE
 		 || !csi.ods[weaponl->item.t].reload
 		 || time < CL_CalcReloadTime(weaponl->item.t))
-		SetWeaponButton(BT_LEFT_RELOAD, qfalse);
+		SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DISABLE);
 	else
-		SetWeaponButton(BT_LEFT_RELOAD, qtrue);
+		SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DESELECT);
 
 	/* Weapon firing buttons. */
 	if (weaponr) {
@@ -1177,11 +1192,11 @@ static void CL_RefreshWeaponButtons (int time)
 				}
 		}
 		if (time < minweaponrtime)
-			SetWeaponButton(BT_RIGHT_PRIMARY, qfalse);
+			SetWeaponButton(BT_RIGHT_FIRE, BT_STATE_DISABLE);
 		else
-			SetWeaponButton(BT_RIGHT_PRIMARY, qtrue);
+			SetWeaponButton(BT_RIGHT_FIRE, BT_STATE_DESELECT);
 	} else {
-		SetWeaponButton(BT_RIGHT_PRIMARY, qfalse);
+		SetWeaponButton(BT_RIGHT_FIRE, BT_STATE_DISABLE);
 	}
 
 	if (weaponl) {
@@ -1220,11 +1235,11 @@ static void CL_RefreshWeaponButtons (int time)
 				}
 		}
 		if (time < minweaponltime)
-			SetWeaponButton(BT_LEFT_PRIMARY, qfalse);
+			SetWeaponButton(BT_LEFT_FIRE, BT_STATE_DISABLE);
 		else
-			SetWeaponButton(BT_LEFT_PRIMARY, qtrue);
+			SetWeaponButton(BT_LEFT_FIRE, BT_STATE_DESELECT);
 	} else {
-		SetWeaponButton(BT_LEFT_PRIMARY, qfalse);
+		SetWeaponButton(BT_LEFT_FIRE, BT_STATE_DISABLE);
 	}
 }
 
@@ -1506,7 +1521,7 @@ void CL_ActorUpdateCVars (void)
 					Cbuf_AddText("startreactiononce\n");
 					break;
 				case R_FIRE_OFF: /* let RefreshWeaponButtons work it out */
-					weaponButtonState[BT_RIGHT_PRIMARY_REACTION] = -1;
+					weaponButtonState[BT_REACTION] = -1;
 					break;
 				}
 			}
@@ -3774,4 +3789,3 @@ void CL_PlayActorSound (int category, int gender, actorSound_t soundType)
 		Com_Printf("CL_PlayActorSound()... could not start sound for category: %i gender: %i soundType: %i\n",
 		category, gender, soundType);
 }
-

@@ -394,20 +394,14 @@ menu hud
 
 	confunc selpls { *bt_pfire_left   image hud/buttons1a }
 	confunc selprs { *bt_pfire_right  image hud/buttons1a }
-	confunc selsls { *bt_sfire_left   image hud/buttons1a }
-	confunc selsrs { *bt_sfire_right  image hud/buttons1a }
 
 	confunc deselpls { *bt_pfire_left   image hud/buttons1 }
 	confunc deselprs { *bt_pfire_right  image hud/buttons1 }
-	confunc deselsls { *bt_sfire_left   image hud/buttons1 }
-	confunc deselsrs { *bt_sfire_right  image hud/buttons1 }
 	confunc deselrls { *bt_reload_left  image hud/buttons2 }
 	confunc deselrrs { *bt_reload_right image hud/buttons2 }
 
 	confunc displs { *bt_pfire_left   image hud/buttons1g }
 	confunc disprs { *bt_pfire_right  image hud/buttons1g }
-	confunc dissls { *bt_sfire_left   image hud/buttons1g }
-	confunc dissrs { *bt_sfire_right  image hud/buttons1g }
 	confunc disrls { *bt_reload_left  image hud/buttons2g }
 	confunc disrrs { *bt_reload_right image hud/buttons2g }
 
@@ -423,7 +417,7 @@ menu hud
 
 	pic bt_pfire_left
 	{
-		tooltip	"_Primary fire mode"
+		tooltip	"_Use Item"
 		mousefx true
 		pos		"776 650"
 		texl	"0 76"
@@ -431,29 +425,9 @@ menu hud
 		click	{ cmd "list_firemodes l;" }
 	}
 
-	pic bt_sfire_right
-	{
-		tooltip	"_Secondary fire mode"
-		mousefx true
-		pos		"174 708"
-		texl	"77 76"
-		texh	"152 128"
-		click	{ cmd "list_firemodes r;" }
-	}
-
-	pic bt_sfire_left
-	{
-		tooltip	"_Secondary fire mode"
-		mousefx true
-		pos		"776 708"
-		texl	"77 76"
-		texh	"152 128"
-		click	{ cmd "list_firemodes l;" }
-	}
-
 	pic bt_reload_left
 	{
-		tooltip	"_Reload weapon"
+		tooltip	"_Use Item"
 		image	hud/buttons2
 		mousefx true
 		pos		"857 720"

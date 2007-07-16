@@ -29,20 +29,14 @@ menu nohud
 	
 	confunc selpl { cmd selpls;selpla; }
 	confunc selpr { cmd selprs;selpra; }
-	confunc selsl { cmd selsls;selsla; }
-	confunc selsr { cmd selsrs;selsra; }
 
 	confunc deselpl { cmd deselpls;deselpla; }
 	confunc deselpr { cmd deselprs;deselpra; }
-	confunc deselsl { cmd deselsls;deselsla; }
-	confunc deselsr { cmd deselsrs;deselsra; }
 	confunc deselrl { cmd deselrls;deselrla; }
 	confunc deselrr { cmd deselrrs;deselrra; }
 
 	confunc displ { cmd displs;displa; }
 	confunc dispr { cmd disprs;dispra; }
-	confunc dissl { cmd dissls;dissla; }
-	confunc dissr { cmd dissrs;dissra; }
 	confunc disrl { cmd disrls;disrla; }
 	confunc disrr { cmd disrrs;disrra; }
 	
