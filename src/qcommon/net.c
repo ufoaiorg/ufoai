@@ -314,7 +314,14 @@ void wait_for_net (int timeout)
 
 	tv.tv_sec = timeout / 1000;
 	tv.tv_usec = 1000 * (timeout % 1000);
-	ready = select(maxfd, &read_fds_out, &write_fds_out, NULL, &tv);
+#ifdef _WIN32
+    if (read_fds_out.fd_count == 0) {
+        Sleep(timeout);
+        ready = 0;
+    } else
+#endif
+        ready = select(maxfd, &read_fds_out, &write_fds_out, NULL, &tv);
+
 	if (ready == -1)
 		Sys_Error("select failed: %s\n", estr());
 
