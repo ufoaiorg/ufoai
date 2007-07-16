@@ -1068,7 +1068,7 @@ static void CL_BookmarkAdd_f (void)
 
 	for (i = 0; i < 16; i++) {
 		bookmark = Cvar_VariableString(va("adr%i", i));
-		if (!bookmark) {
+		if (!*bookmark) {
 			Cvar_Set(va("adr%i", i), newBookmark);
 			return;
 		}
