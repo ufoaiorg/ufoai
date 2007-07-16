@@ -1002,12 +1002,12 @@ void Schedule_Event (int when, event_func *func, void *data)
 	} else {
 		struct event *e = event_queue;
 		while (e->next && e->next->when <= when)
-		e = e->next;
+			e = e->next;
 		event->next = e->next;
 		e->next = event;
 	}
 
-#if DEBUG
+#ifdef DEBUG
 	for (event = event_queue; event && event->next; event = event->next)
 		if (event->when > event->next->when)
 			abort();
