@@ -1138,8 +1138,7 @@ static void CL_RefreshWeaponButtons (int time)
 			SetWeaponButton(BT_REACTION, BT_STATE_DISABLE);
 
 	} else {
-		if ((time >= TU_REACTION_SINGLE)
-		&& (CL_WeaponWithReaction(selActor, 'r') || CL_WeaponWithReaction(selActor, 'l'))) {
+		if ((CL_WeaponWithReaction(selActor, 'r') || CL_WeaponWithReaction(selActor, 'l'))) {
 			CL_DisplayPossibleReaction(selActor);
 		} else {
 			CL_DisplayImpossibleReaction(selActor);
