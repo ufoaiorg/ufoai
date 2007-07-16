@@ -430,7 +430,6 @@ static void SetWeaponButton (int button, cl_reaction_firemode_type_t state)
 		return;
 	} else if (state == BT_STATE_DESELECT) {
 		Q_strncpyz(cbufText, "desel", sizeof(cbufText));
-	
 	} else if (state == BT_STATE_DISABLE) {
 		Q_strncpyz(cbufText, "dis", sizeof(cbufText));
 	} else {
@@ -1138,6 +1137,13 @@ static void CL_RefreshWeaponButtons (int time)
 		else
 			SetWeaponButton(BT_REACTION, BT_STATE_DISABLE);
 
+	} else {
+		if ((time >= TU_REACTION_SINGLE)
+		&& (CL_WeaponWithReaction(selActor, 'r') || CL_WeaponWithReaction(selActor, 'l'))) {
+			CL_DisplayPossibleReaction(selActor);
+		} else {
+			CL_DisplayImpossibleReaction(selActor);
+		}
 	}
 
 	/* reload buttons */
