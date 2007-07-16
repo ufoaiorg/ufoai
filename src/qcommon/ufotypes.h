@@ -63,7 +63,17 @@ typedef unsigned __int64 uint64_t;
 #define UINT32_MAX _UI32_MAX
 #define UINT64_MAX _UI64_MAX
 
+/* Windows defines the equivalent SSIZE_T in the platform SDK
+ * as the signed equivalent of size_t which is defined as long
+ * on WIN32 and long long/__int64 on WIN64
+ */
+#if defined (_WIN64)
+# define ssize_t __int64
+#elif defined (_WIN32)
+# define ssize_t long
 #endif
+
+#endif /* _MSC_VER */
 
 typedef float float32_t;
 typedef double double64_t;
