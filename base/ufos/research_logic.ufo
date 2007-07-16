@@ -32,7 +32,7 @@ tech rs_fighter_AND_particle
 	name	"LOGIC:Fighter AND 1beamweapon"
 	require_AND
 	{
-		item craft_weapon_particle_beam 1
+		item craft_weapon_particle 1
 		tech rs_craft_ufo_fighter
 	}
 }
