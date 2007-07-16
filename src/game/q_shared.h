@@ -85,12 +85,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # ifndef snprintf
 #  define snprintf _snprintf
 # endif
+# define EXPORT __cdecl
+# define IMPORT __cdecl
 #else
 # ifndef stricmp
 #  define stricmp strcasecmp
 # endif
 # include <unistd.h>
 # include <dirent.h>
+# define EXPORT
+# define IMPORT
 #endif
 
 #if defined __STDC_VERSION__

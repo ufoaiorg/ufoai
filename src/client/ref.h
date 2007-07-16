@@ -281,10 +281,10 @@ typedef struct {
 	int api_version;
 
 	/* called when the library is loaded */
-	qboolean(*Init) (HINSTANCE hinstance, WNDPROC wndproc);
+	qboolean(EXPORT *Init) (HINSTANCE hinstance, WNDPROC wndproc);
 
 	/* called before the library is unloaded */
-	void (*Shutdown) (void);
+	void (EXPORT *Shutdown) (void);
 
 	/* All data that will be used in a level should be */
 	/* registered before rendering any frames to prevent disk hits, */
@@ -299,96 +299,96 @@ typedef struct {
 	/* are flood filled to eliminate mip map edge errors, and pics have */
 	/* an implicit "pics/" prepended to the name. (a pic name that starts with a */
 	/* slash will not use the "pics/" prefix or the ".pcx" postfix) */
-	void (*BeginLoading) (const char *tiles, const char *pos);
-	struct model_s *(*RegisterModel) (const char *name);
-	struct image_s *(*RegisterSkin) (const char *name);
+	void (EXPORT *BeginLoading) (const char *tiles, const char *pos);
+	struct model_s *(EXPORT *RegisterModel) (const char *name);
+	struct image_s *(EXPORT *RegisterSkin) (const char *name);
 
-	struct image_s *(*RegisterPic) (const char *name);
-	void (*EndLoading) (void);
+	struct image_s *(EXPORT *RegisterPic) (const char *name);
+	void (EXPORT *EndLoading) (void);
 
-	void (*RenderFrame) (refdef_t * fd);
-	void (*SetRefDef) (refdef_t * fd);
+	void (EXPORT *RenderFrame) (refdef_t * fd);
+	void (EXPORT *SetRefDef) (refdef_t * fd);
 
-	void (*DrawPtls) (void);
-	void (*DrawModelDirect) (modelInfo_t * mi, modelInfo_t * pmi, const char *tag);
-	void (*DrawGetPicSize) (int *w, int *h, const char *name);	/* will return 0 0 if not found */
-	void (*DrawPic) (int x, int y, const char *name);
-	void (*DrawNormPic) (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, const char *name);
-	void (*DrawChar) (int x, int y, int c);
-	void (*FontRegister) (const char *name, int size, const char *path, const char *style);
-	void (*FontLength) (const char *font, const char *c, int *width, int *height);
-	int (*FontDrawString) (const char *font, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine);
-	void (*DrawTileClear) (int x, int y, int w, int h, const char *name);
-	void (*DrawFill) (int x, int y, int w, int h, int align, const vec4_t color);
-	void (*DrawColor) (const float *rgba);
-	void (*DrawFadeScreen) (void);
-	void (*DrawDayAndNight) (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map);
-	void (*DrawLineStrip) (int points, int *verts);
-	void (*DrawLineLoop) (int points, int *verts);
-	void (*DrawPolygon) (int points, int *verts);
-	void (*DrawCircle) (vec3_t mid, float radius, const vec4_t color, int thickness);
-	void (*Draw3DGlobe) (int x, int y, int w, int h, float p, vec3_t rotate, float zoom, const char *map);
-	void (*Draw3DMapMarkers) (vec3_t angles, float zoom, vec3_t position, const char *image);
-	void (*DrawImagePixelData) (const char *name, byte *frame, int width, int height);
+	void (EXPORT *DrawPtls) (void);
+	void (EXPORT *DrawModelDirect) (modelInfo_t * mi, modelInfo_t * pmi, const char *tag);
+	void (EXPORT *DrawGetPicSize) (int *w, int *h, const char *name);	/* will return 0 0 if not found */
+	void (EXPORT *DrawPic) (int x, int y, const char *name);
+	void (EXPORT *DrawNormPic) (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, const char *name);
+	void (EXPORT *DrawChar) (int x, int y, int c);
+	void (EXPORT *FontRegister) (const char *name, int size, const char *path, const char *style);
+	void (EXPORT *FontLength) (const char *font, const char *c, int *width, int *height);
+	int (EXPORT *FontDrawString) (const char *font, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine);
+	void (EXPORT *DrawTileClear) (int x, int y, int w, int h, const char *name);
+	void (EXPORT *DrawFill) (int x, int y, int w, int h, int align, const vec4_t color);
+	void (EXPORT *DrawColor) (const float *rgba);
+	void (EXPORT *DrawFadeScreen) (void);
+	void (EXPORT *DrawDayAndNight) (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map);
+	void (EXPORT *DrawLineStrip) (int points, int *verts);
+	void (EXPORT *DrawLineLoop) (int points, int *verts);
+	void (EXPORT *DrawPolygon) (int points, int *verts);
+	void (EXPORT *DrawCircle) (vec3_t mid, float radius, const vec4_t color, int thickness);
+	void (EXPORT *Draw3DGlobe) (int x, int y, int w, int h, float p, vec3_t rotate, float zoom, const char *map);
+	void (EXPORT *Draw3DMapMarkers) (vec3_t angles, float zoom, vec3_t position, const char *image);
+	void (EXPORT *DrawImagePixelData) (const char *name, byte *frame, int width, int height);
 
-	void (*AnimAppend) (animState_t * as, struct model_s * mod, const char *name);
-	void (*AnimChange) (animState_t * as, struct model_s * mod, const char *name);
-	void (*AnimRun) (animState_t * as, struct model_s * mod, int msec);
-	char *(*AnimGetName) (animState_t * as, struct model_s * mod);
+	void (EXPORT *AnimAppend) (animState_t * as, struct model_s * mod, const char *name);
+	void (EXPORT *AnimChange) (animState_t * as, struct model_s * mod, const char *name);
+	void (EXPORT *AnimRun) (animState_t * as, struct model_s * mod, int msec);
+	char *(EXPORT *AnimGetName) (animState_t * as, struct model_s * mod);
 
-	void (*LoadTGA) (const char *name, byte ** pic, int *width, int *height);
+	void (EXPORT *LoadTGA) (const char *name, byte ** pic, int *width, int *height);
 
 	/* video mode and refresh state management entry points */
-	void (*BeginFrame) (float camera_separation);
-	void (*EndFrame) (void);
-	void (*AppActivate) (qboolean activate);
-	void (*TakeVideoFrame) (int h, int w, byte * captureBuffer, byte * encodeBuffer, qboolean motionJpeg);
+	void (EXPORT *BeginFrame) (float camera_separation);
+	void (EXPORT *EndFrame) (void);
+	void (EXPORT *AppActivate) (qboolean activate);
+	void (EXPORT *TakeVideoFrame) (int h, int w, byte * captureBuffer, byte * encodeBuffer, qboolean motionJpeg);
 } refexport_t;
 
 /* these are the functions imported by the refresh module */
 typedef struct {
-	void (*Sys_Error) (int err_level, const char *str, ...) __attribute__((noreturn, format(printf, 2, 3)));
+	void (IMPORT *Sys_Error) (int err_level, const char *str, ...) __attribute__((noreturn, format(printf, 2, 3)));
 
-	void (*Cmd_AddCommand) (const char *name, void (*cmd) (void), const char *desc);
-	void (*Cmd_RemoveCommand) (const char *name);
-	int (*Cmd_Argc) (void);
-	const char *(*Cmd_Argv) (int i);
-	void (*Cmd_ExecuteText) (int exec_when, const char *text);
+	void (IMPORT *Cmd_AddCommand) (const char *name, void (*cmd) (void), const char *desc);
+	void (IMPORT *Cmd_RemoveCommand) (const char *name);
+	int (IMPORT *Cmd_Argc) (void);
+	const char *(IMPORT *Cmd_Argv) (int i);
+	void (IMPORT *Cmd_ExecuteText) (int exec_when, const char *text);
 
-	void (*Con_Printf) (int print_level, const char *str, ...) __attribute__((format(printf, 2, 3)));
+	void (IMPORT *Con_Printf) (int print_level, const char *str, ...) __attribute__((format(printf, 2, 3)));
 
 	/* files will be memory mapped read only */
 	/* the returned buffer may be part of a larger pak file, */
 	/* or a discrete file from anywhere in the quake search path */
 	/* a -1 return means the file does not exist */
 	/* NULL can be passed for buf to just determine existance */
-	int (*FS_WriteFile) (const void *buffer, size_t len, const char *filename);
-	int (*FS_LoadFile) (const char *name, void **buf);
-	void (*FS_FreeFile) (void *buf);
-	void (*FS_CreatePath) (const char *name);
-	int (*FS_CheckFile) (const char *name);
-	char **(*FS_ListFiles) (const char *findname, int *numfiles, unsigned musthave, unsigned canthave);
+	int (IMPORT *FS_WriteFile) (const void *buffer, size_t len, const char *filename);
+	int (IMPORT *FS_LoadFile) (const char *name, void **buf);
+	void (IMPORT *FS_FreeFile) (void *buf);
+	void (IMPORT *FS_CreatePath) (const char *name);
+	int (IMPORT *FS_CheckFile) (const char *name);
+	char **(IMPORT *FS_ListFiles) (const char *findname, int *numfiles, unsigned musthave, unsigned canthave);
 	/* gamedir will be the current directory that generated */
 	/* files should be stored to, ie: "f:\quake\id1" */
-	const char *(*FS_Gamedir) (void);
+	const char *(IMPORT *FS_Gamedir) (void);
 
 	/* will return the size and the path for each font */
-	void (*CL_GetFontData) (const char *name, int *size, const char *path);
-	qboolean (*RenderTrace) (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end);
+	void (IMPORT *CL_GetFontData) (const char *name, int *size, const char *path);
+	qboolean (IMPORT *RenderTrace) (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end);
 
-	cvar_t *(*Cvar_Get) (const char *name, const char *value, int flags, const char* desc);
-	cvar_t *(*Cvar_Set) (const char *name, const char *value);
-	void (*Cvar_SetValue) (const char *name, float value);
-	cvar_t *(*Cvar_ForceSet) (const char *name, const char *value);
+	cvar_t *(IMPORT *Cvar_Get) (const char *name, const char *value, int flags, const char* desc);
+	cvar_t *(IMPORT *Cvar_Set) (const char *name, const char *value);
+	void (IMPORT *Cvar_SetValue) (const char *name, float value);
+	cvar_t *(IMPORT *Cvar_ForceSet) (const char *name, const char *value);
 
-	qboolean(*Vid_GetModeInfo) (int *width, int *height, int mode);
-	void (*Vid_NewWindow) (int width, int height);
-	void (*CL_WriteAVIVideoFrame) (const byte * buffer, size_t size);
+	qboolean(IMPORT *Vid_GetModeInfo) (int *width, int *height, int mode);
+	void (IMPORT *Vid_NewWindow) (int width, int height);
+	void (IMPORT *CL_WriteAVIVideoFrame) (const byte * buffer, size_t size);
 
 	/* managed memory allocation */
-	void *(*TagMalloc) (struct memPool_s **pool, int size, int tag);
-	void (*TagFree) (void *block);
-	void (*FreeTags) (struct memPool_s **pool, int tag);
+	void *(IMPORT *TagMalloc) (struct memPool_s **pool, int size, int tag);
+	void (IMPORT *TagFree) (void *block);
+	void (IMPORT *FreeTags) (struct memPool_s **pool, int tag);
 
 	struct memPool_s **genericPool;
 	struct memPool_s **imagePool;
@@ -398,7 +398,7 @@ typedef struct {
 
 #ifndef REF_HARD_LINKED
 /* this is the only function actually exported at the linker level */
-typedef refexport_t (*GetRefAPI_t)(refimport_t );
+typedef refexport_t (EXPORT *GetRefAPI_t)(refimport_t);
 #else
 refexport_t GetRefAPI(refimport_t rimp);
 #endif

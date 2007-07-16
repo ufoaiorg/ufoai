@@ -113,29 +113,29 @@ typedef struct {
 	/* special messages */
 
 	/* sends message to all entities */
-	void (*bprintf) (int printlevel, const char *fmt, ...) __attribute__((format(printf, 2, 3)));
-	void (*dprintf) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
+	void (IMPORT *bprintf) (int printlevel, const char *fmt, ...) __attribute__((format(printf, 2, 3)));
+	void (IMPORT *dprintf) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
 	/** sends message to only one entity */
-	void (*cprintf) (player_t * player, int printlevel, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
+	void (IMPORT *cprintf) (player_t * player, int printlevel, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
 	/** sends message to one entity and displays message on center of the screen */
-	void (*centerprintf) (player_t * player, const char *fmt, ...) __attribute__((format(printf, 2, 3)));
-	void (*break_sound) (vec3_t origin, edict_t *ent, int channel, edictMaterial_t material);
+	void (IMPORT *centerprintf) (player_t * player, const char *fmt, ...) __attribute__((format(printf, 2, 3)));
+	void (IMPORT *break_sound) (vec3_t origin, edict_t *ent, int channel, edictMaterial_t material);
 
 	/* config strings hold all the index strings, the lightstyles, */
 	/* and misc data like the cdtrack. */
 	/* All of the current configstrings are sent to clients when */
 	/* they connect, and changes are sent to all connected clients. */
-	void (*configstring) (int num, const char *string);
+	void (IMPORT *configstring) (int num, const char *string);
 
-	void (*error) (const char *fmt, ...) __attribute__((noreturn, format(printf, 1, 2)));
+	void (IMPORT *error) (const char *fmt, ...) __attribute__((noreturn, format(printf, 1, 2)));
 
 	/** the *index functions create configstrings and some internal server state */
-	int (*modelindex) (const char *name);
+	int (IMPORT *modelindex) (const char *name);
 	/** during spawning is caches the sound, after that it simply returns the index which refers to that sound */
-	int (*soundindex) (const char *name);
-	int (*imageindex) (const char *name);
+	int (IMPORT *soundindex) (const char *name);
+	int (IMPORT *imageindex) (const char *name);
 
-	void (*setmodel) (edict_t * ent, const char *name);
+	void (IMPORT *setmodel) (edict_t * ent, const char *name);
 
 	/** @brief collision detection
 	 * @note traces a box from start to end, ignoring entities passent, stoping if it hits an object of type specified
@@ -148,84 +148,84 @@ typedef struct {
 	 * plane - surface normal at hitpoisee
 	 * ent - entity hit by trace
 	 */
-	trace_t (*trace) (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, edict_t * passent, int contentmask);
+	trace_t (IMPORT *trace) (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, edict_t * passent, int contentmask);
 	/** links entity into the world - so that it is sent to the client and used for
 	 * collision detection, etc. Must be relinked if its size, position or solidarity changes */
-	void (*linkentity) (edict_t * ent);
-	void (*unlinkentity) (edict_t * ent);	/* call before removing an interactive edict */
+	void (IMPORT *linkentity) (edict_t * ent);
+	void (IMPORT *unlinkentity) (edict_t * ent);	/* call before removing an interactive edict */
 
-	int (*TestLine) (vec3_t start, vec3_t stop);
-	float (*GrenadeTarget) (vec3_t from, vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0);
+	int (IMPORT *TestLine) (vec3_t start, vec3_t stop);
+	float (IMPORT *GrenadeTarget) (vec3_t from, vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0);
 
-	void (*MoveCalc) (struct routing_s * map, pos3_t from, int distance, byte ** fb_list, int fb_length);
-	void (*MoveStore) (struct routing_s * map);
-	int (*MoveLength) (struct routing_s * map, pos3_t to, qboolean stored);
-	int (*MoveNext) (struct routing_s * map, pos3_t from);
-	int (*GridHeight) (struct routing_s * map, pos3_t pos);
-	int (*GridFall) (struct routing_s * map, pos3_t pos);
-	void (*GridPosToVec) (struct routing_s * map, pos3_t pos, vec3_t vec);
-	void (*GridRecalcRouting) (struct routing_s * map, const char *name, const char **list);
+	void (IMPORT *MoveCalc) (struct routing_s * map, pos3_t from, int distance, byte ** fb_list, int fb_length);
+	void (IMPORT *MoveStore) (struct routing_s * map);
+	int (IMPORT *MoveLength) (struct routing_s * map, pos3_t to, qboolean stored);
+	int (IMPORT *MoveNext) (struct routing_s * map, pos3_t from);
+	int (IMPORT *GridHeight) (struct routing_s * map, pos3_t pos);
+	int (IMPORT *GridFall) (struct routing_s * map, pos3_t pos);
+	void (IMPORT *GridPosToVec) (struct routing_s * map, pos3_t pos, vec3_t vec);
+	void (IMPORT *GridRecalcRouting) (struct routing_s * map, const char *name, const char **list);
 
 	/* filesystem functions */
-	const char *(*FS_Gamedir) (void);
+	const char *(IMPORT *FS_Gamedir) (void);
 
 	/* network messaging (writing) */
-        void (*WriteChar) (char c);
+	void (IMPORT *WriteChar) (char c);
 
-	void (*WriteByte) (unsigned char c);
-	void (*WriteShort) (int c);
+	void (IMPORT *WriteByte) (unsigned char c);
+	void (IMPORT *WriteShort) (int c);
 
-	void (*WriteLong) (int c);
-	void (*WriteString) (const char *s);
-	void (*WritePos) (vec3_t pos);	/**< some fractional bits */
-	void (*WriteGPos) (pos3_t pos);
-	void (*WriteDir) (vec3_t pos);	/**< single byte encoded, very coarse */
-	void (*WriteAngle) (float f);
-	void (*WriteFormat) (const char *format, ...);
+	void (IMPORT *WriteLong) (int c);
+	void (IMPORT *WriteString) (const char *s);
+	void (IMPORT *WritePos) (vec3_t pos);	/**< some fractional bits */
+	void (IMPORT *WriteGPos) (pos3_t pos);
+	void (IMPORT *WriteDir) (vec3_t pos);	/**< single byte encoded, very coarse */
+	void (IMPORT *WriteAngle) (float f);
+	void (IMPORT *WriteFormat) (const char *format, ...);
 
-	void (*EndEvents) (void);
-        void (*AddEvent) (int mask, int eType);
+	void (IMPORT *EndEvents) (void);
+	void (IMPORT *AddEvent) (int mask, int eType);
 
 	/* network messaging (reading) */
 	/* only use after a call from one of these functions: */
 	/* ClientAction */
 	/* (more to come?) */
 
-	int (*ReadChar) (void);
-	int (*ReadByte) (void);
-	int (*ReadShort) (void);
-	int (*ReadLong) (void);
-	char *(*ReadString) (void);
-	void (*ReadPos) (vec3_t pos);
-	void (*ReadGPos) (pos3_t pos);
-	void (*ReadDir) (vec3_t vector);
-	float (*ReadAngle) (void);
-	void (*ReadData) (void *buffer, int size);
-	void (*ReadFormat) (const char *format, ...);
+	int (IMPORT *ReadChar) (void);
+	int (IMPORT *ReadByte) (void);
+	int (IMPORT *ReadShort) (void);
+	int (IMPORT *ReadLong) (void);
+	char *(IMPORT *ReadString) (void);
+	void (IMPORT *ReadPos) (vec3_t pos);
+	void (IMPORT *ReadGPos) (pos3_t pos);
+	void (IMPORT *ReadDir) (vec3_t vector);
+	float (IMPORT *ReadAngle) (void);
+	void (IMPORT *ReadData) (void *buffer, int size);
+	void (IMPORT *ReadFormat) (const char *format, ...);
 
 	/* misc functions */
-	int (*GetModelAndName) (const char *team, character_t *chr);
+	int (IMPORT *GetModelAndName) (const char *team, character_t *chr);
 
 	/* managed memory allocation */
-	void *(*TagMalloc) (int size, int tag);
-	void (*TagFree) (void *block);
-	void (*FreeTags) (int tag);
+	void *(IMPORT *TagMalloc) (int size, int tag);
+	void (IMPORT *TagFree) (void *block);
+	void (IMPORT *FreeTags) (int tag);
 
 	/* console variable interaction */
-	cvar_t *(*cvar) (const char *var_name, const char *value, int flags, const char* desc);
-	cvar_t *(*cvar_set) (const char *var_name, const char *value);
-	cvar_t *(*cvar_forceset) (const char *var_name, const char *value);
-	const char *(*cvar_string) (const char *var_name);
+	cvar_t *(IMPORT *cvar) (const char *var_name, const char *value, int flags, const char* desc);
+	cvar_t *(IMPORT *cvar_set) (const char *var_name, const char *value);
+	cvar_t *(IMPORT *cvar_forceset) (const char *var_name, const char *value);
+	const char *(IMPORT *cvar_string) (const char *var_name);
 
 	/* ClientCommand and ServerCommand parameter access */
-	int (*argc) (void);
-	const char *(*argv) (int n);
-	const char *(*args) (void);		/* concatenation of all argv >= 1 */
+	int (IMPORT *argc) (void);
+	const char *(IMPORT *argv) (int n);
+	const char *(IMPORT *args) (void);		/* concatenation of all argv >= 1 */
 
 	/* add commands to the server console as if they were typed in */
 	/* for map changing, etc */
-	void (*AddCommandString) (const char *text);
-	void (*DebugGraph) (float value, int color);
+	void (IMPORT *AddCommandString) (const char *text);
+	void (IMPORT *DebugGraph) (float value, int color);
 } game_import_t;
 
 /** @brief functions exported by the game subsystem */
@@ -235,34 +235,34 @@ typedef struct {
 	/** the init function will only be called when a game starts,
 	 * not each time a level is loaded.  Persistant data for clients
 	 * and the server can be allocated in init */
-	void (*Init) (void);
-	void (*Shutdown) (void);
+	void (EXPORT *Init) (void);
+	void (EXPORT *Shutdown) (void);
 
 	/* each new level entered will cause a call to SpawnEntities */
-	void (*SpawnEntities) (const char *mapname, const char *entstring);
+	void (EXPORT *SpawnEntities) (const char *mapname, const char *entstring);
 
-	qboolean(*ClientConnect) (player_t * client, char *userinfo);
-	void (*ClientBegin) (player_t * client);
-	qboolean(*ClientSpawn) (player_t * client);
-	void (*ClientUserinfoChanged) (player_t * client, char *userinfo);
-	void (*ClientDisconnect) (player_t * client);
-	void (*ClientCommand) (player_t * client);
+	qboolean(EXPORT *ClientConnect) (player_t * client, char *userinfo);
+	void (EXPORT *ClientBegin) (player_t * client);
+	qboolean(EXPORT *ClientSpawn) (player_t * client);
+	void (EXPORT *ClientUserinfoChanged) (player_t * client, char *userinfo);
+	void (EXPORT *ClientDisconnect) (player_t * client);
+	void (EXPORT *ClientCommand) (player_t * client);
 
-        int (*ClientAction) (player_t * client);
-	void (*ClientEndRound) (player_t * client, qboolean quiet);
-	void (*ClientTeamInfo) (player_t * client);
-	int (*ClientGetTeamNum) (player_t * client);
-	int (*ClientGetTeamNumPref) (player_t * client);
+	int (EXPORT *ClientAction) (player_t * client);
+	void (EXPORT *ClientEndRound) (player_t * client, qboolean quiet);
+	void (EXPORT *ClientTeamInfo) (player_t * client);
+	int (EXPORT *ClientGetTeamNum) (player_t * client);
+	int (EXPORT *ClientGetTeamNumPref) (player_t * client);
 
-	const char* (*ClientGetName) (int pnum);
+	const char* (EXPORT *ClientGetName) (int pnum);
 
-	qboolean (*RunFrame) (void);
+	qboolean (EXPORT *RunFrame) (void);
 
 	/** ServerCommand will be called when an "sv <command>" command is issued on the
 	 * server console.
 	 * The game can issue gi.argc() / gi.argv() commands to get the rest
 	 * of the parameters */
-	void (*ServerCommand) (void);
+	void (EXPORT *ServerCommand) (void);
 
 	/* global variables shared between game and server */
 
