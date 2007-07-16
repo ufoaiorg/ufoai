@@ -55,7 +55,7 @@ static int SV_FindIndex (const char *name, int start, int max, qboolean create)
 	Q_strncpyz(sv.configstrings[start + i], name, sizeof(sv.configstrings[i]));
 
 	if (sv.state != ss_loading) {	/* send the update to everyone */
-                struct dbuffer *msg = new_dbuffer();
+		struct dbuffer *msg = new_dbuffer();
 		NET_WriteByte(msg, svc_configstring);
 		NET_WriteShort(msg, start + i);
 		NET_WriteString(msg, name);
@@ -1001,10 +1001,10 @@ static void SV_InitGame (void)
 	svs.clients = Mem_PoolAlloc(sizeof(client_t) * sv_maxclients->integer, sv_genericPool, 0);
 
 	/* init network stuff */
-        if (sv_maxclients->integer > 1)
-          start_server(NULL, Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->string, &SV_ReadPacket);
-        else
-          start_server(NULL, NULL, &SV_ReadPacket);
+	if (sv_maxclients->integer > 1)
+		start_server(NULL, Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->string, &SV_ReadPacket);
+	else
+		start_server(NULL, NULL, &SV_ReadPacket);
 
 	/* heartbeats will always be sent to the ufo master */
 	svs.last_heartbeat = -99999;	/* send immediately */

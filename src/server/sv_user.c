@@ -110,21 +110,21 @@ static void SV_New_f (void)
 		playernum = sv_client - svs.clients;
 
 	/* send the serverdata */
-        {
-          struct dbuffer *msg = new_dbuffer();
-          NET_WriteByte(msg, svc_serverdata);
-          NET_WriteLong(msg, PROTOCOL_VERSION);
-          NET_WriteLong(msg, svs.spawncount);
-          NET_WriteByte(msg, sv.attractloop);
-          NET_WriteString(msg, gamedir);
+	{
+		struct dbuffer *msg = new_dbuffer();
+		NET_WriteByte(msg, svc_serverdata);
+		NET_WriteLong(msg, PROTOCOL_VERSION);
+		NET_WriteLong(msg, svs.spawncount);
+		NET_WriteByte(msg, sv.attractloop);
+		NET_WriteString(msg, gamedir);
 
-          NET_WriteShort(msg, playernum);
+		NET_WriteShort(msg, playernum);
 
-          /* send full levelname */
-          NET_WriteString(msg, sv.configstrings[CS_NAME]);
+		/* send full levelname */
+		NET_WriteString(msg, sv.configstrings[CS_NAME]);
 
-          NET_WriteMsg(sv_client->stream, msg);
-        }
+		NET_WriteMsg(sv_client->stream, msg);
+	}
 
 	/* game server */
 	if (sv.state == ss_game) {
@@ -139,7 +139,7 @@ static void SV_New_f (void)
 static void SV_Configstrings_f (void)
 {
 	int i;
-        int start;
+	int start;
 
 	Com_DPrintf("Configstrings() from %s\n", sv_client->name);
 
@@ -159,18 +159,18 @@ static void SV_Configstrings_f (void)
 	if (start < 0)
 		start = 0; /* catch negative offsets */
 
-        for (i = start; i < MAX_CONFIGSTRINGS; i++) {
-          if (sv.configstrings[i][0]) {
-            struct dbuffer *msg = new_dbuffer();
-            Com_DPrintf("sending configstring %d: %s\n", i, sv.configstrings[i]);
-            NET_WriteByte(msg, svc_configstring);
-            NET_WriteShort(msg, i);
-            NET_WriteString(msg, sv.configstrings[i]);
-            NET_WriteMsg(sv_client->stream, msg);
-          }
-        }
+	for (i = start; i < MAX_CONFIGSTRINGS; i++) {
+		if (sv.configstrings[i][0]) {
+			struct dbuffer *msg = new_dbuffer();
+			Com_DPrintf("sending configstring %d: %s\n", i, sv.configstrings[i]);
+			NET_WriteByte(msg, svc_configstring);
+			NET_WriteShort(msg, i);
+			NET_WriteString(msg, sv.configstrings[i]);
+			NET_WriteMsg(sv_client->stream, msg);
+		}
+	}
 
-        stufftext(sv_client, "precache %i\n", svs.spawncount);
+	stufftext(sv_client, "precache %i\n", svs.spawncount);
 }
 
 /**
@@ -395,56 +395,56 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 	sv_client = cl;
 	sv_player = sv_client->player;
 
-        if (cmd == -1)
-          return;
+	if (cmd == -1)
+		return;
 
-        switch (cmd) {
-		default:
-			Com_Printf("SV_ExecuteClientMessage: unknown command char '%d'\n", cmd);
-			SV_DropClient(cl);
-			return;
+	switch (cmd) {
+	default:
+		Com_Printf("SV_ExecuteClientMessage: unknown command char '%d'\n", cmd);
+		SV_DropClient(cl);
+		return;
 
-		case clc_nop:
-			break;
+	case clc_nop:
+		break;
 
-		case clc_userinfo:
-			Q_strncpyz(cl->userinfo, NET_ReadString(msg), sizeof(cl->userinfo));
-                        Com_Printf("userinfo from client: %s\n", cl->userinfo);
-			SV_UserinfoChanged(cl);
-			break;
+	case clc_userinfo:
+		Q_strncpyz(cl->userinfo, NET_ReadString(msg), sizeof(cl->userinfo));
+		Com_Printf("userinfo from client: %s\n", cl->userinfo);
+		SV_UserinfoChanged(cl);
+		break;
 
-		case clc_stringcmd:
-			s = NET_ReadString(msg);
+	case clc_stringcmd:
+		s = NET_ReadString(msg);
 
-                        Com_Printf("stringcmd from client: %s\n", s);
-			/* malicious users may try using too many string commands */
-			if (++stringCmdCount < MAX_STRINGCMDS)
-				SV_ExecuteUserCommand(s);
+		Com_Printf("stringcmd from client: %s\n", s);
+		/* malicious users may try using too many string commands */
+		if (++stringCmdCount < MAX_STRINGCMDS)
+			SV_ExecuteUserCommand(s);
 
-			if (cl->state == cs_zombie)
-				return;			/* disconnect command */
-			break;
+		if (cl->state == cs_zombie)
+			return;			/* disconnect command */
+		break;
 
-		case clc_action:
-			/* client actions are handled by the game module */
-                        sv_msg = msg;
-                        ge->ClientAction(sv_player);
-                        sv_msg = NULL;
-			break;
+	case clc_action:
+		/* client actions are handled by the game module */
+		sv_msg = msg;
+		ge->ClientAction(sv_player);
+		sv_msg = NULL;
+		break;
 
-		case clc_endround:
-			/* player wants to end round */
-                        sv_msg = msg;
-			ge->ClientEndRound(sv_player, NOISY);
-                        sv_msg = NULL;
-			break;
+	case clc_endround:
+		/* player wants to end round */
+		sv_msg = msg;
+		ge->ClientEndRound(sv_player, NOISY);
+		sv_msg = NULL;
+		break;
 
-		case clc_teaminfo:
-			/* player sends team info */
-			/* actors spawn accordingly */
-                        sv_msg = msg;
-                        ge->ClientTeamInfo(sv_player);
-                        sv_msg = NULL;
-			break;
+	case clc_teaminfo:
+		/* player sends team info */
+		/* actors spawn accordingly */
+		sv_msg = msg;
+		ge->ClientTeamInfo(sv_player);
+		sv_msg = NULL;
+		break;
 	}
 }

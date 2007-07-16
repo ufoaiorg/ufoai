@@ -75,9 +75,9 @@ struct memPool_s *sv_genericPool;
 void SV_DropClient (client_t * drop)
 {
 	/* add the disconnect */
-        struct dbuffer *msg = new_dbuffer();
+	struct dbuffer *msg = new_dbuffer();
 	NET_WriteByte(msg, svc_disconnect);
-        NET_WriteMsg(drop->stream, msg);
+	NET_WriteMsg(drop->stream, msg);
 
 	if (drop->state == cs_spawned || drop->state == cs_spawning) {
 		/* call the prog function for removing a client */
@@ -85,8 +85,8 @@ void SV_DropClient (client_t * drop)
 		ge->ClientDisconnect(drop->player);
 	}
 
-        stream_finished(drop->stream);
-        drop->stream = NULL;
+	stream_finished(drop->stream);
+	drop->stream = NULL;
 
 	drop->player->inuse = qfalse;
 	drop->state = cs_zombie;	/* become free in a few seconds */
@@ -114,38 +114,38 @@ CONNECTIONLESS COMMANDS
  */
 static void SVC_TeamInfo (struct net_stream *s)
 {
-  char player[1024];
-  int i;
-  client_t *cl;
-  struct dbuffer *msg = new_dbuffer();
-  NET_WriteByte(msg, clc_oob);
-  NET_WriteRawString(msg, "teaminfo\n");
+	char player[1024];
+	int i;
+	client_t *cl;
+	struct dbuffer *msg = new_dbuffer();
+	NET_WriteByte(msg, clc_oob);
+	NET_WriteRawString(msg, "teaminfo\n");
 
-  NET_WriteRawString(msg, Cvar_VariableString("sv_teamplay"));
-  NET_WriteRawString(msg, "\n");
-  NET_WriteRawString(msg, Cvar_VariableString("sv_maxteams"));
-  NET_WriteRawString(msg, "\n");
-  NET_WriteRawString(msg, Cvar_VariableString("maxplayers"));
-  NET_WriteRawString(msg, "\n");
-  for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
-    if (cl->state == cs_connected || cl->state == cs_spawned || cl->state == cs_spawning) {
-      Com_DPrintf("SV_TeamInfoString: connected client: %i %s\n", i, cl->name);
-      /* show players that already have a team with their teamnum */
-      if (ge->ClientGetTeamNum(cl->player))
-        Com_sprintf(player, sizeof(player), "%i\t\"%s\"\n", ge->ClientGetTeamNum(cl->player), cl->name);
-      else if (ge->ClientGetTeamNumPref(cl->player))
-        Com_sprintf(player, sizeof(player), "%i\t\"%s\"\n", ge->ClientGetTeamNumPref(cl->player), cl->name);
-      else
-        Com_sprintf(player, sizeof(player), "-\t\"%s\"\n", cl->name);
-      NET_WriteRawString(msg, player);
-    } else {
-      Com_DPrintf("SV_TeamInfoString: unconnected client: %i %s\n", i, cl->name);
-    }
-  }
+	NET_WriteRawString(msg, Cvar_VariableString("sv_teamplay"));
+	NET_WriteRawString(msg, "\n");
+	NET_WriteRawString(msg, Cvar_VariableString("sv_maxteams"));
+	NET_WriteRawString(msg, "\n");
+	NET_WriteRawString(msg, Cvar_VariableString("maxplayers"));
+	NET_WriteRawString(msg, "\n");
+	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
+		if (cl->state == cs_connected || cl->state == cs_spawned || cl->state == cs_spawning) {
+			Com_DPrintf("SV_TeamInfoString: connected client: %i %s\n", i, cl->name);
+			/* show players that already have a team with their teamnum */
+			if (ge->ClientGetTeamNum(cl->player))
+				Com_sprintf(player, sizeof(player), "%i\t\"%s\"\n", ge->ClientGetTeamNum(cl->player), cl->name);
+			else if (ge->ClientGetTeamNumPref(cl->player))
+				Com_sprintf(player, sizeof(player), "%i\t\"%s\"\n", ge->ClientGetTeamNumPref(cl->player), cl->name);
+			else
+				Com_sprintf(player, sizeof(player), "-\t\"%s\"\n", cl->name);
+			NET_WriteRawString(msg, player);
+		} else {
+			Com_DPrintf("SV_TeamInfoString: unconnected client: %i %s\n", i, cl->name);
+		}
+	}
 
-  NET_WriteByte(msg, 0);
+	NET_WriteByte(msg, 0);
 
-  NET_WriteMsg(s, msg);
+	NET_WriteMsg(s, msg);
 }
 
 /**
@@ -157,22 +157,22 @@ static void SVC_Status (struct net_stream *s)
 	char player[1024];
 	int i;
 	client_t *cl;
-        struct dbuffer *msg = new_dbuffer();
-        NET_WriteByte(msg, clc_oob);
-        NET_WriteRawString(msg, "print\n");
+	struct dbuffer *msg = new_dbuffer();
+	NET_WriteByte(msg, clc_oob);
+	NET_WriteRawString(msg, "print\n");
 
 	NET_WriteRawString(msg, Cvar_Serverinfo());
-        NET_WriteRawString(msg, "\n");
+	NET_WriteRawString(msg, "\n");
 
 	for (i = 0; i < sv_maxclients->integer; i++) {
 		cl = &svs.clients[i];
 		if (cl->state == cs_connected || cl->state == cs_spawning || cl->state == cs_spawned) {
 			Com_sprintf(player, sizeof(player), "%i %i \"%s\"\n", ge->ClientGetTeamNum(cl->player), cl->ping, cl->name);
-                        NET_WriteRawString(msg, player);
+			NET_WriteRawString(msg, player);
 		}
 	}
 
-        NET_WriteMsg(s, msg);
+	NET_WriteMsg(s, msg);
 }
 
 /**
@@ -216,7 +216,7 @@ static void SVC_Info (struct net_stream *s)
 		Info_SetValueForKey(infostring, "version", UFO_VERSION);
 	}
 
-        NET_OOB_Printf(s, "info\n%s", infostring);
+	NET_OOB_Printf(s, "info\n%s", infostring);
 }
 
 
@@ -240,7 +240,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	version = atoi(Cmd_Argv(1));
 	if (version != PROTOCOL_VERSION) {
 		NET_OOB_Printf(stream, "print\nServer is version %s.\n", UFO_VERSION);
-		Com_DPrintf("    rejected connect from version %i\n", version);
+		Com_DPrintf("rejected connect from version %i\n", version);
 		return;
 	}
 
@@ -312,7 +312,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	}
 
 	/* @todo: Check if the teamnum preference has already reached maxsoldiers */
-	/*       and reject connection if so */
+	/* and reject connection if so */
 
 	gotnewcl:
 	/* build a new connection */
@@ -512,24 +512,23 @@ static void SV_GiveMsec (void)
 void
 SV_ReadPacket(struct net_stream *s)
 {
-  client_t *cl = stream_data(s);
-  struct dbuffer *msg;
-  while ((msg = NET_ReadMsg(s))) {
-    int cmd = NET_ReadByte(msg);
+	client_t *cl = stream_data(s);
+	struct dbuffer *msg;
 
-    if (cmd == clc_oob)
-      SV_ConnectionlessPacket(s, msg);
-    else if (cl) {
-      if (cl->state != cs_zombie)
-        cl->lastmessage = svs.realtime;
+	while ((msg = NET_ReadMsg(s))) {
+		int cmd = NET_ReadByte(msg);
 
-      SV_ExecuteClientMessage(cl, cmd, msg);
-    }
-    else
-      free_stream(s);
+		if (cmd == clc_oob)
+			SV_ConnectionlessPacket(s, msg);
+		else if (cl) {
+			if (cl->state != cs_zombie)
+				cl->lastmessage = svs.realtime;
+			SV_ExecuteClientMessage(cl, cmd, msg);
+		} else
+			free_stream(s);
 
-    free_dbuffer(msg);
-  }
+		free_dbuffer(msg);
+	}
 }
 
 /**
@@ -837,7 +836,7 @@ void SV_Frame (int now, void *data)
 #define	HEARTBEAT_SECONDS	300
 void Master_Heartbeat (void)
 {
-        struct net_stream *s;
+	struct net_stream *s;
 
 	if (!dedicated || !dedicated->integer)
 		return;		/* only dedicated servers send heartbeats */
@@ -855,11 +854,11 @@ void Master_Heartbeat (void)
 	svs.last_heartbeat = svs.realtime;
 
 	/* send to master */
-        s = connect_to_host(masterserver_ip->string, masterserver_port->string);
-        if (s) {
-          NET_OOB_Printf(s, "heartbeat\n");
-          stream_finished(s);
-        }
+	s = connect_to_host(masterserver_ip->string, masterserver_port->string);
+	if (s) {
+		NET_OOB_Printf(s, "heartbeat\n");
+		stream_finished(s);
+	}
 }
 
 /**
@@ -867,7 +866,7 @@ void Master_Heartbeat (void)
  */
 void Master_Shutdown (void)
 {
-        struct net_stream *s;
+	struct net_stream *s;
 
 	/* pgm post3.19 change, cvar pointer not validated before dereferencing */
 	if (!dedicated || !dedicated->integer)
@@ -878,11 +877,11 @@ void Master_Shutdown (void)
 		return;					/* a private dedicated game */
 
 	/* send to master */
-        s = connect_to_host(masterserver_ip->string, masterserver_port->string);
-        if (s) {
-          NET_OOB_Printf(s, "shutdown\n");
-          stream_finished(s);
-        }
+	s = connect_to_host(masterserver_ip->string, masterserver_port->string);
+	if (s) {
+		NET_OOB_Printf(s, "shutdown\n");
+		stream_finished(s);
+	}
 }
 
 /*============================================================================ */
@@ -962,7 +961,7 @@ static void SV_FinalMessage (const char *message, qboolean reconnect)
 {
 	int i;
 	client_t *cl;
-        struct dbuffer *msg = new_dbuffer();
+	struct dbuffer *msg = new_dbuffer();
 
 	NET_WriteByte(msg, svc_print);
 	NET_WriteByte(msg, PRINT_HIGH);
@@ -984,7 +983,7 @@ static void SV_FinalMessage (const char *message, qboolean reconnect)
 		if (cl->state >= cs_connected)
 			NET_WriteConstMsg(cl->stream, msg);
 
-        free_dbuffer(msg);
+	free_dbuffer(msg);
 }
 
 /**

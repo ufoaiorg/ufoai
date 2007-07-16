@@ -109,7 +109,7 @@ typedef struct client_s {
 	int curMsg;
 	int addMsg;
 
-        char peername[256];
+	char peername[256];
 	struct net_stream *stream;
 } client_t;
 

@@ -41,20 +41,20 @@ EVENT MESSAGES
 void SV_ClientPrintf (client_t * cl, int level, const char *fmt, ...)
 {
 	va_list argptr;
-        struct dbuffer *msg;
+	struct dbuffer *msg;
 
 	if (level < cl->messagelevel)
 		return;
 
-        msg = new_dbuffer();
-        NET_WriteByte(msg, svc_print);
-        NET_WriteByte(msg, level);
+	msg = new_dbuffer();
+	NET_WriteByte(msg, svc_print);
+	NET_WriteByte(msg, level);
 
 	va_start(argptr, fmt);
 	NET_VPrintf(msg, fmt, argptr);
 	va_end(argptr);
 
-        NET_WriteMsg(cl->stream, msg);
+	NET_WriteMsg(cl->stream, msg);
 }
 
 /**
@@ -63,13 +63,13 @@ void SV_ClientPrintf (client_t * cl, int level, const char *fmt, ...)
 void SV_BroadcastPrintf (int level, const char *fmt, ...)
 {
 	va_list argptr;
-        struct dbuffer *msg;
+	struct dbuffer *msg;
 	client_t *cl;
-        int i;
+	int i;
 
-        msg = new_dbuffer();
-        NET_WriteByte(msg, svc_print);
-        NET_WriteByte(msg, level);
+	msg = new_dbuffer();
+	NET_WriteByte(msg, svc_print);
+	NET_WriteByte(msg, level);
 
 	va_start(argptr, fmt);
 	NET_VPrintf(msg, fmt, argptr);
@@ -79,9 +79,9 @@ void SV_BroadcastPrintf (int level, const char *fmt, ...)
 	if (dedicated->integer) {
 		char copy[1024];
 
-                va_start(argptr, fmt);
-                Q_vsnprintf(copy, sizeof(copy), fmt, argptr);
-                va_end(argptr);
+		va_start(argptr, fmt);
+		Q_vsnprintf(copy, sizeof(copy), fmt, argptr);
+		va_end(argptr);
 
 		/* mask off high bits */
 		for (i = 0; i < 1023 && copy[i]; i++)
@@ -95,10 +95,10 @@ void SV_BroadcastPrintf (int level, const char *fmt, ...)
 			continue;
 		if (cl->state < cs_connected)
 			continue;
-                NET_WriteConstMsg(cl->stream, msg);
+		NET_WriteConstMsg(cl->stream, msg);
 	}
 
-        free_dbuffer(msg);
+	free_dbuffer(msg);
 }
 
 /**
@@ -107,27 +107,27 @@ void SV_BroadcastPrintf (int level, const char *fmt, ...)
 void SV_BroadcastCommand (const char *fmt, ...)
 {
 	va_list argptr;
-        struct dbuffer *msg;
+	struct dbuffer *msg;
 
 	if (!sv.state)
 		return;
 
-        msg = new_dbuffer();
-        NET_WriteByte(msg, svc_stufftext);
+	msg = new_dbuffer();
+	NET_WriteByte(msg, svc_stufftext);
 
 	va_start(argptr, fmt);
 	NET_VPrintf(msg, fmt, argptr);
 	va_end(argptr);
 
 #ifdef DEBUG
-        {
-          char string[1024];
-          va_start(argptr, fmt);
-          Q_vsnprintf(string, sizeof(string), fmt, argptr);
-          va_end(argptr);
-          string[sizeof(string)-1] = 0;
-          Com_DPrintf("broadcast%s\n", string);
-        }
+	{
+		char string[1024];
+		va_start(argptr, fmt);
+		Q_vsnprintf(string, sizeof(string), fmt, argptr);
+		va_end(argptr);
+		string[sizeof(string) - 1] = 0;
+		Com_DPrintf("broadcast%s\n", string);
+	}
 #endif
 	SV_Multicast(~0, msg);
 }
@@ -149,10 +149,10 @@ void SV_Multicast (int mask, struct dbuffer *msg)
 			continue;
 
 		/* write the message */
-                NET_WriteConstMsg(c->stream, msg);
+		NET_WriteConstMsg(c->stream, msg);
 	}
 
-        free_dbuffer(msg);
+	free_dbuffer(msg);
 }
 
 
@@ -228,7 +228,7 @@ void SV_BreakSound (vec3_t origin, edict_t *entity, int channel, edictMaterial_t
 		origin = origin_v;
 		if (entity->solid == SOLID_BSP){
 			for (i = 0; i < 3; i++)
-				origin_v[i] = entity->origin[i] + 0.5 *(entity->mins[i] + entity->maxs[i]);
+				origin_v[i] = entity->origin[i] + 0.5 * (entity->mins[i] + entity->maxs[i]);
 		} else {
 			VectorCopy(entity->origin, origin_v);
 		}
