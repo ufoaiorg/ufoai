@@ -956,7 +956,8 @@ static void tick_timer (int now, void *data)
 	if (timer->interval != old_interval)
 		Com_DPrintf("Adjusted timer on %s to interval %d\n", timer->min_freq->name, timer->interval);
 
-	timer->func(now, timer->data);
+	if (setjmp(abortframe) == 0)
+		timer->func(now, timer->data);
 
 	/* We correct for the lateness of this frame. We do not correct for
 		the time consumed by this frame - that's billed to the lateness
