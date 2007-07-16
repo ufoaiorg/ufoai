@@ -861,6 +861,7 @@ void stop_server (void)
 	server_func = qfalse;
 	server_running = qfalse;
 	if (server_socket != INVALID_SOCKET) {
+		FD_CLR(server_socket, &read_fds);
 #ifdef _WIN32
 		closesocket(server_socket);
 #else
