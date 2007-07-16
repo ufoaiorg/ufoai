@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-07-10 13:44+0200\n"
-"PO-Revision-Date: 2007-07-13 13:55+0100\n"
+"PO-Revision-Date: 2007-07-16 11:50+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,22 +15,22 @@ msgstr ""
 #: ../base/maps/frozend.ump:245
 #: ../base/maps/frozenn.ump:211
 msgid "Snow"
-msgstr ""
+msgstr "Śnieg"
 
 #: ../base/maps/frozend.ump:261
 #: ../base/maps/frozenn.ump:227
 msgid "Alien landing - Snow"
-msgstr ""
+msgstr "Lądowanie Obcych - Śnieg"
 
 #: ../base/maps/frozend.ump:278
 #: ../base/maps/frozenn.ump:244
 msgid "Industrial"
-msgstr ""
+msgstr "Strefa przemysłowa"
 
 #: ../base/maps/frozend.ump:296
 #: ../base/maps/frozenn.ump:263
 msgid "Alien landing - Industrial"
-msgstr ""
+msgstr "Lądowanie Obcych - strefa przemysłowa"
 
 #: ../base/maps/frozend.ump:316
 #: ../base/maps/frozenn.ump:283
@@ -137,13 +137,13 @@ msgstr "Żniwiarz U"
 #: ../base/ufos/research.ufo:2980
 #: ../base/ufos/research.ufo:2987
 msgid "UFO - Carrier"
-msgstr ""
+msgstr "UFO - Tranportowiec"
 
 #: ../base/ufos/aircraftmanagement.ufo:308
 #: ../base/ufos/otheritems.ufo:76
 #: ../base/ufos/research.ufo:2927
 msgid "UFO - Supply"
-msgstr ""
+msgstr "UFO - Zaopatrzeniowiec"
 
 #: ../base/ufos/aircraftmanagement.ufo:309
 msgid "Supply U"
@@ -622,7 +622,7 @@ msgstr "NA"
 
 #: ../base/ufos/menu_aircraft.ufo:106
 msgid "Aircraft away"
-msgstr ""
+msgstr "Pojazd poza bazą"
 
 #: ../base/ufos/menu_aircraft.ufo:118
 msgid "Buy or sell aircraft"
@@ -729,7 +729,7 @@ msgstr "Usuń wyposażenie ze slotu"
 #: ../base/ufos/menu_aircraft.ufo:608
 #: ../base/ufos/menu_aircraft.ufo:629
 msgid "Select this zone"
-msgstr ""
+msgstr "Wybierz tą strefę"
 
 #: ../base/ufos/menu_aircraft.ufo:649
 msgid "Current item in slot"
@@ -1022,7 +1022,7 @@ msgstr "Kup nowy pojazd"
 
 #: ../base/ufos/menu_bases.ufo:143
 msgid "Build at least one Hangar"
-msgstr ""
+msgstr "Zbuduj przynajmniej jeden hangar"
 
 #: ../base/ufos/menu_bases.ufo:151
 #: ../base/ufos/menu_geoscape.ufo:828
@@ -1039,7 +1039,7 @@ msgstr "Kup/sprzedaj"
 
 #: ../base/ufos/menu_bases.ufo:179
 msgid "Build at least one Storage"
-msgstr ""
+msgstr "Zbuduj przynajmniej jeden magazyn"
 
 #: ../base/ufos/menu_bases.ufo:187
 msgid "Buy/Sell Equipment"
@@ -1091,11 +1091,11 @@ msgstr "Zatrudnij"
 
 #: ../base/ufos/menu_bases.ufo:323
 msgid "Build at least one Living Quarter"
-msgstr ""
+msgstr "Zbuduj przynajmniej jedne kwatery"
 
 #: ../base/ufos/menu_bases.ufo:341
 msgid "Deal with Aliens in Alien Containment"
-msgstr ""
+msgstr "Zarządzaj Obcymi w kwarantannie"
 
 #: ../base/ufos/menu_bases.ufo:357
 msgid "Build at least one Alien Containment"
@@ -1107,11 +1107,11 @@ msgstr "Kwarantanna"
 
 #: ../base/ufos/menu_bases.ufo:375
 msgid "Medical and Surgery operations"
-msgstr ""
+msgstr "Działania medyczne i chirurgiczne"
 
 #: ../base/ufos/menu_bases.ufo:391
 msgid "Build at least one Hospital"
-msgstr ""
+msgstr "Zbuduj szpital"
 
 #: ../base/ufos/menu_bases.ufo:421
 #: ../base/ufos/menu_geoscape.ufo:109
@@ -2132,17 +2132,17 @@ msgstr "Język:"
 
 #: ../base/ufos/menu_main.ufo:397
 msgid "Tip of the day"
-msgstr ""
+msgstr "Porada dnia"
 
 #: ../base/ufos/menu_main.ufo:411
 #: ../base/ufos/menu_options.ufo:814
 msgid "Show tip of the day"
-msgstr ""
+msgstr "Pokazuj porady"
 
 #: ../base/ufos/menu_main.ufo:430
 #: ../base/ufos/menu_main.ufo:443
 msgid "Next"
-msgstr ""
+msgstr "Następna"
 
 #: ../base/ufos/menu_multiplayer.ufo:63
 msgid "Join"
@@ -2519,7 +2519,7 @@ msgstr "Multiteksturing:"
 
 #: ../base/ufos/menu_options.ufo:292
 msgid "Weather effects:"
-msgstr ""
+msgstr "Efekty pogodowe:"
 
 #: ../base/ufos/menu_options.ufo:304
 msgid "Gamma:"
@@ -2590,19 +2590,19 @@ msgstr "Ustawienia gry"
 
 #: ../base/ufos/menu_options.ufo:682
 msgid "Camera Scroll:"
-msgstr ""
+msgstr "Przesuwanie kamery:"
 
 #: ../base/ufos/menu_options.ufo:708
 msgid "Camera Rotation:"
-msgstr ""
+msgstr "Obrót kamery:"
 
 #: ../base/ufos/menu_options.ufo:734
 msgid "Precache images and models:"
-msgstr ""
+msgstr "Załaduj modele i obrazki do pamięci podręcznej:"
 
 #: ../base/ufos/menu_options.ufo:742
 msgid "Precache images and models (faster menus)"
-msgstr ""
+msgstr "Załaduj do pamięci podręcznej (szybsze działanie menu)"
 
 #: ../base/ufos/menu_options.ufo:750
 msgid "Tooltips:"
@@ -2614,7 +2614,7 @@ msgstr "Aktywuje podpowiedzi"
 
 #: ../base/ufos/menu_options.ufo:766
 msgid "Centre view:"
-msgstr ""
+msgstr "Centruj widok:"
 
 #: ../base/ufos/menu_options.ufo:774
 msgid "Centring at soldier selecting, shooting and appearing"
@@ -8276,7 +8276,7 @@ msgstr "Werner Hoehrer (hoehrer)"
 
 #: ../base/ufos/seq_credits.ufo:177
 msgid "Lead Story Developer"
-msgstr ""
+msgstr "Główny twórca fabuły"
 
 #: ../base/ufos/seq_credits.ufo:183
 msgid "Ryan A. Span. (Winter)"
@@ -8284,7 +8284,7 @@ msgstr "Ryan A. Span. (Winter)"
 
 #: ../base/ufos/seq_credits.ufo:200
 msgid "Story Developer"
-msgstr ""
+msgstr "Twórca fabuły"
 
 #: ../base/ufos/seq_credits.ufo:206
 msgid "Bas Fournier (BTAxis)"
@@ -8380,7 +8380,7 @@ msgstr "Ninex"
 
 #: ../base/ufos/seq_credits.ufo:438
 msgid "Our Host"
-msgstr ""
+msgstr "Nasz gospodarz"
 
 #: ../base/ufos/seq_credits.ufo:446
 msgid "Additional Thanks To"
@@ -8508,7 +8508,7 @@ msgstr ""
 
 #: ../base/ufos/seq_tutorials.ufo:35
 msgid "Some notes about the gameplay"
-msgstr ""
+msgstr "Kilka uwag na temat gry"
 
 #: ../base/ufos/seq_tutorials.ufo:44
 msgid "Click to exit"
@@ -8656,23 +8656,23 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:8
 msgid "Always make sure that you have enough TUs left to hide after you shoot."
-msgstr ""
+msgstr "Upewnij się, że masz wystarczająco duzo punktów ruchu (TU) aby ukryć się po oddaniu strzału."
 
 #: ../base/ufos/tips.ufo:9
 msgid "When using Reaction Fire, remember that you can set which fire mode to use by enabling the corresponding check box on the fire mode panel."
-msgstr ""
+msgstr "Pamiętaj, że gdy używasz ognia automatycznego, możesz ustawić jego tryb przy pomocy odpowiedniego pola wyboru."
 
 #: ../base/ufos/tips.ufo:10
 msgid "Remember to give your soldiers a varying array of weapons, you never know when a certain weapon may come in handy."
-msgstr ""
+msgstr "Pamiętaj o wyposażeniu żołnierzy w różnorodny zestaw broni. Nigdy nie wiadomo, która z nich okaże się najbardziej przydatna."
 
 #: ../base/ufos/tips.ufo:11
 msgid "Don't forget to equip your soldiers with enough ammo."
-msgstr ""
+msgstr "Nie zapomnij przydzielić żołnierzom wystarczającej ilości amunicji."
 
 #: ../base/ufos/tips.ufo:12
 msgid "Don't forget to equip your soldiers with armor."
-msgstr ""
+msgstr "Wyposaż żołnierzy w pancerze."
 
 #: ../base/ufos/tips.ufo:13
 msgid "You can use a flashbang to deactivate your opponents Reaction Fire mode or to take of all his remaining TUs for his next round."
@@ -8680,7 +8680,7 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:14
 msgid "In multiplayer, you can chat by pressing [k] (to all) or [l] (team members only), or by pressing the chat buttons on the HUD."
-msgstr ""
+msgstr "Podczas gry sieciowej możesz rozmawiać używając klawisza [k] (ze wszystkimi) lub [l] (z własną drużyną) bądź poprzez skorzystanie z odpowiedniego przycisku."
 
 #: ../base/ufos/tips.ufo:15
 msgid "To make a soldier look into a certain direction (i.e. to turn him/her) place the cursor and press the right mouse button or the [Ctrl] key. This will cost you TUs."
@@ -8688,11 +8688,11 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:16
 msgid "Be sure to hire as many scientists as you can. The faster you know your enemy the easier he is to defeat."
-msgstr ""
+msgstr "Staraj się zatrudniać jak najwięcej naukowców. Im szybciej poznasz swojego wroga, tym łatwiej będzie go pokonać."
 
 #: ../base/ufos/tips.ufo:17
 msgid "Be sure to hire as many engineers as you can. The faster your production lines, the sooner you can get access to better equipment and resupplies."
-msgstr ""
+msgstr "Produkujesz tym szybciej im więcej techników przydzielisz do zadania. Zatrudniaj jak najwięcej techników."
 
 #: ../base/ufos/tips.ufo:18
 msgid "Be sure to visit our website, http://ufoai.net/ and drop by our community channel. You can do so by going to the Multiplayer menu and clicking on the Lobby button."
@@ -8700,11 +8700,11 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:19
 msgid "Remember that you need an active Command Centre in order to launch interceptors."
-msgstr ""
+msgstr "Pamiętaj, że do wysłania pojazdów powietrznych potrzebujesz działającego Centrum Dowodzenia."
 
 #: ../base/ufos/tips.ufo:20
 msgid "Never pass up an opportunity to capture a live alien, even one you have already researched."
-msgstr ""
+msgstr "Nie rezygnuj z możliwości złapania żywego Obcego - nawet jeżeli należy on do przebadanego już gatunku."
 
 #: ../base/ufos/tips.ufo:21
 msgid "Watch your back! Your soldiers can only see enemies in an arc in front of them."
@@ -8740,7 +8740,7 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:29
 msgid "Plasma grenades do the most damage, but frag can be useful, as they can be thrown slightly further."
-msgstr ""
+msgstr "Granaty plazmowe zadają najwięcej obrażeń, podczas gdy odłamkowe mogą zostać rzucone na większą odległość."
 
 #: ../base/ufos/tips.ufo:30
 msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shot."
@@ -10264,15 +10264,15 @@ msgstr "Pomniejsz"
 
 #: client/cl_input.c:736
 msgid "Left mouse button click (menu)"
-msgstr ""
+msgstr "Lewy przycisk myszy (menu)"
 
 #: client/cl_input.c:738
 msgid "Middle mouse button click (menu)"
-msgstr ""
+msgstr "Środkowy przycisk myszy (menu)"
 
 #: client/cl_input.c:740
 msgid "Right mouse button click (menu)"
-msgstr ""
+msgstr "Prawy przycisk myszy (menu)"
 
 #: client/cl_input.c:742
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
@@ -10358,7 +10358,7 @@ msgstr[1] "Sprzedano %i obiektów."
 #: client/cl_inventory.c:568
 #, c-format
 msgid "Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."
-msgstr ""
+msgstr "Baza %s nie posiada Magazynu Antymaterii. %i jednostek antymaterii zostało usunięte."
 
 #: client/cl_main.c:384
 #: client/cl_main.c:1074
