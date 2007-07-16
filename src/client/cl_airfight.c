@@ -120,7 +120,7 @@ static int AIRFIGHT_ChooseWeapon (aircraft_t *shooter, aircraft_t *target)
 	distance0 = distance;
 
 	assert(shooter);
-	assert(target);	
+	assert(target);
 
 	distance = CP_GetDistance(shooter->pos, target->pos);
 
@@ -133,7 +133,7 @@ static int AIRFIGHT_ChooseWeapon (aircraft_t *shooter, aircraft_t *target)
 		/* check if there is still ammo in this weapon */
 		if (shooter->weapons[slotIdx].ammoIdx < 0 || shooter->weapons[i].ammoLeft <= 0)
 			continue;
-		
+
 		if (slotIdx == -2)
 			slotIdx = -1;
 
@@ -141,7 +141,7 @@ static int AIRFIGHT_ChooseWeapon (aircraft_t *shooter, aircraft_t *target)
 		/* check if the target is within range of this weapon */
 		if (distance > aircraftItems[ammoIdx].stats[AIR_STATS_WRANGE])
 			continue;
-		
+
 		/* check if weapon is reloaded */
 		if (shooter->weapons[i].delayNextShot > 0)
 			continue;
@@ -171,7 +171,6 @@ static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target,
 	int idx;
 	float probability = 0.0f;
 
-#ifdef DEBUG
 	idx = shooter->weapons[slotIdx].itemIdx;
 	if (idx < 0) {
 		Com_Printf("AIRFIGHT_ProbabilityToHit: no weapon assigned to attacking aircraft\n");
@@ -183,11 +182,10 @@ static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target,
 		Com_Printf("AIRFIGHT_ProbabilityToHit: no ammo in weapon of attacking aircraft\n");
 		return probability;
 	}
-#endif
 
 	/* Take Base probability from the ammo of the attacking aircraft */
 	probability = aircraftItems[idx].stats[AIR_STATS_ACCURACY];
-	Com_DPrintf("Base probablity: %f\n", probability);
+	Com_DPrintf("AIRFIGHT_ProbabilityToHit: Base probablity: %f\n", probability);
 
 	/* Modify this probability by items of the attacking aircraft (stats is in percent) */
 	probability *= shooter->stats[AIR_STATS_ACCURACY] / 100.0f;
@@ -195,7 +193,7 @@ static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target,
 	/* Modify this probability by items of the aimed aircraft (stats is in percent) */
 	probability /= shooter->stats[AIR_STATS_ECM] / 100.0f;
 
-	Com_DPrintf("Probability to hit: %f\n", probability);
+	Com_DPrintf("AIRFIGHT_ProbabilityToHit: Probability to hit: %f\n", probability);
 	return probability;
 }
 
