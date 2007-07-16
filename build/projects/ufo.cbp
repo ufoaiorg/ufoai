@@ -36,6 +36,7 @@
 					<Add library="SDL" />
 					<Add library="SDL_ttf" />
 					<Add library="z" />
+					<Add library="ws2_32" />
 					<Add directory="C:\Dev-Cpp\lib" />
 				</Linker>
 			</Target>
@@ -73,6 +74,7 @@
 					<Add library="SDL" />
 					<Add library="SDL_ttf" />
 					<Add library="z" />
+					<Add library="ws2_32" />
 					<Add directory="C:\Dev-Cpp\lib" />
 				</Linker>
 			</Target>
@@ -377,11 +379,6 @@
 			<Option target="windows_debug" />
 		</Unit>
 		<Unit filename="..\..\src\ports\win32\libintl.h">
-			<Option target="windows" />
-			<Option target="windows_debug" />
-		</Unit>
-		<Unit filename="..\..\src\ports\win32\net_wins.c">
-			<Option compilerVar="CC" />
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>

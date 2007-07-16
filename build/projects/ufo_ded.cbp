@@ -26,6 +26,7 @@
 					<Add library="gdi32" />
 					<Add library="gmon" />
 					<Add library="z" />
+					<Add library="ws2_32" />
 				</Linker>
 			</Target>
 			<Target title="windows_debug">
@@ -52,6 +53,7 @@
 					<Add library="gdi32" />
 					<Add library="gmon" />
 					<Add library="z" />
+					<Add library="ws2_32" />
 				</Linker>
 			</Target>
 			<Target title="linux">
