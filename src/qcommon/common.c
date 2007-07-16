@@ -1030,8 +1030,8 @@ void Qcommon_Frame (void)
 	if (setjmp(abortframe))
 		return;
 
-	/* While the next event is due... */
-	while (event_queue && Sys_Milliseconds() >= event_queue->when) {
+	/* If the next event is due... */
+	if (event_queue && Sys_Milliseconds() >= event_queue->when) {
 		struct event *event = event_queue;
 
 		/* Remove the event from the queue */
