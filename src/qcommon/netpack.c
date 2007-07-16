@@ -289,7 +289,7 @@ int NET_ReadLong (struct dbuffer *buf)
 	if (dbuffer_extract(buf, (char *)&v, 4) < 4)
 		return -1;
 
-	return LittleShort(v);
+	return LittleLong(v);
 }
 
 /**
