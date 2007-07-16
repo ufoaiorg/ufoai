@@ -374,6 +374,7 @@ class MD2:
 		mesh = Blender.Mesh.New()
 		mesh.getFromObject(self.object.name)
 		mesh.transform(self.object.getMatrix())
+		mesh.transform(Blender.Mathutils.RotationMatrix(90, 4, 'z')) # Hoehrer: rotate 90 degrees
 		
 		if min == None:
 			min = [mesh.verts[0].co[0],
@@ -397,6 +398,7 @@ class MD2:
 		mesh = Blender.Mesh.New()
 		mesh.getFromObject(self.object.name)
 		mesh.transform(self.object.getMatrix())
+		mesh.transform(Blender.Mathutils.RotationMatrix(90, 4, 'z')) # Hoehrer: rotate 90 degrees
 		
 		bin = struct.pack('<6f16s',
 		                  self.object.getSize()[0]*(max[0]-min[0])/255.,
