@@ -103,7 +103,6 @@ typedef struct client_s {
 	char name[32];				/**< extracted from userinfo, high bits masked */
 	int messagelevel;			/**< for filtering printed messages */
 
-	int lastmessage;			/**< sv.framenum when packet was last received */
 	int lastconnect;
 
 	int curMsg;

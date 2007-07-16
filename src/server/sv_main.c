@@ -350,7 +350,6 @@ static void SVC_DirectConnect (struct net_stream *stream)
 
 	newcl->state = cs_connected;
 
-	newcl->lastmessage = svs.realtime;	/* don't timeout */
 	newcl->lastconnect = svs.realtime;
 	Q_strncpyz(newcl->peername, peername, sizeof(newcl->peername));
 	newcl->stream = stream;
@@ -521,50 +520,11 @@ SV_ReadPacket(struct net_stream *s)
 		if (cmd == clc_oob)
 			SV_ConnectionlessPacket(s, msg);
 		else if (cl) {
-			if (cl->state != cs_zombie)
-				cl->lastmessage = svs.realtime;
 			SV_ExecuteClientMessage(cl, cmd, msg);
 		} else
 			free_stream(s);
 
 		free_dbuffer(msg);
-	}
-}
-
-/**
- * @brief If a packet has not been received from a client for timeout->value
- * seconds, drop the conneciton.  Server frames are used instead of
- * realtime to avoid dropping the local client while debugging.
- *
- * When a client is normally dropped, the client_t goes into a zombie state
- * for a few seconds to make sure any final reliable message gets resent
- * if necessary
- */
-static void SV_CheckTimeouts (void)
-{
-	int i;
-	client_t *cl;
-	int droppoint;
-	int zombiepoint;
-
-	droppoint = svs.realtime - 1000 * timeout->integer;
-	zombiepoint = svs.realtime - 1000 * zombietime->integer;
-
-	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
-		/* message times may be wrong across a changelevel */
-		if (cl->lastmessage > svs.realtime)
-			cl->lastmessage = svs.realtime;
-
-		if (cl->state == cs_zombie && cl->lastmessage < zombiepoint) {
-			cl->state = cs_free;	/* can now be reused */
-			continue;
-		}
-		if ((cl->state == cs_connected || cl->state == cs_spawning || cl->state == cs_spawned)
-			&& cl->lastmessage < droppoint) {
-			SV_BroadcastPrintf(PRINT_HIGH, "%s timed out\n", cl->name);
-			SV_DropClient(cl);
-			cl->state = cs_free;	/* don't bother with zombie state */
-		}
 	}
 }
 
@@ -804,9 +764,6 @@ void SV_Frame (int now, void *data)
 
 	/* keep the random time dependent */
 	rand();
-
-	/* check timeouts */
-	SV_CheckTimeouts();
 
 	/* update ping based on the last known frame from all clients */
 	SV_CalcPings();

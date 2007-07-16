@@ -204,7 +204,6 @@ static void SV_Kick_f (void)
 	/* SV_BroadcastPrintf message */
 	SV_ClientPrintf(sv_client, PRINT_HIGH, "You were kicked from the game\n");
 	SV_DropClient(sv_client);
-	sv_client->lastmessage = svs.realtime;	/* min case there is a funny zombie */
 }
 
 
@@ -226,8 +225,8 @@ static void SV_Status_f (void)
 	}
 	Com_Printf("map              : %s\n", sv.name);
 
-	Com_Printf("num ping name            lastmsg address              \n");
-	Com_Printf("--- ---- --------------- ------- ---------------------\n");
+	Com_Printf("num ping name            address              \n");
+	Com_Printf("--- ---- --------------- ---------------------\n");
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
 		if (!cl->state)
 			continue;
@@ -246,8 +245,6 @@ static void SV_Status_f (void)
 		l = 16 - strlen(cl->name);
 		for (j = 0; j < l; j++)
 			Com_Printf(" ");
-
-		Com_Printf("%7i ", svs.realtime - cl->lastmessage);
 
 		s = stream_peer_name(cl->stream, buf, sizeof(buf));
 		Com_Printf("%s", s);
