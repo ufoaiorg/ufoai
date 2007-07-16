@@ -186,7 +186,7 @@ void SV_BreakSound (vec3_t origin, edict_t *entity, int channel, edictMaterial_t
 	int i;
 	int ent;
 	vec3_t origin_v;
-        struct dbuffer *msg;
+	struct dbuffer *msg;
 
 	if (volume < 0 || volume > 1.0)
 		Com_Error(ERR_FATAL, "SV_BreakSound: volume = %f", volume);
@@ -234,18 +234,18 @@ void SV_BreakSound (vec3_t origin, edict_t *entity, int channel, edictMaterial_t
 		}
 	}
 
-        msg = new_dbuffer();
+	msg = new_dbuffer();
 
 	NET_WriteByte(msg, svc_breaksound);
 	NET_WriteByte(msg, flags);
 	NET_WriteByte(msg, material);
 
 	if (flags & SND_VOLUME)
-		NET_WriteByte(msg, volume*255);
+		NET_WriteByte(msg, volume * 255);
 	if (flags & SND_ATTENUATION)
-		NET_WriteByte(msg, attenuation*64);
+		NET_WriteByte(msg, attenuation * 64);
 	if (flags & SND_OFFSET)
-		NET_WriteByte(msg, timeofs*1000);
+		NET_WriteByte(msg, timeofs * 1000);
 
 	if (flags & SND_ENT)
 		NET_WriteShort(msg, sendchan);
