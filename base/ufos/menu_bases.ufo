@@ -92,6 +92,7 @@ menu bases
 		pos	"755 120"
 		texl	"0 64"
 		texh	"230 128"
+		in
 	}
 	string txt_building
 	{
@@ -145,6 +146,7 @@ menu bases
 		pos	"755 180"
 		texl	"0 64"
 		texh	"230 128"
+		in
 	}
 	string txt_aircraft
 	{
@@ -181,6 +183,7 @@ menu bases
 		pos	"755 240"
 		texl	"0 64"
 		texh	"230 128"
+		in
 	}
 	string txt_buysell
 	{
@@ -252,6 +255,7 @@ menu bases
 		pos	"755 360"
 		texl	"0 64"
 		texh	"230 128"
+		in
 	}
 	string txt_research
 	{
@@ -325,6 +329,7 @@ menu bases
 		pos	"755 480"
 		texl	"0 64"
 		texh	"230 128"
+		in
 	}
 	string txt_hire
 	{
@@ -359,6 +364,7 @@ menu bases
 		pos	"755 540"
 		texl	"0 64"
 		texh	"230 128"
+		in
 	}
 	string txt_containment
 	{
@@ -393,6 +399,7 @@ menu bases
 		pos	"755 600"
 		texl	"0 64"
 		texh	"230 128"
+		in
 	}
 	string txt_hospital
 	{
