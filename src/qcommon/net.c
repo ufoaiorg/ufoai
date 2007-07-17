@@ -47,6 +47,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <string.h>
 #include <fcntl.h>
 
+/**
+ * AI_ADDRCONFIG, AI_ALL, and AI_V4MAPPED are available since glibc 2.3.3.
+ * AI_NUMERICSERV is available since glibc 2.3.4.
+ */
+#ifndef AI_NUMERICSERV
+#define AI_NUMERICSERV 0
+#endif
+#ifndef AI_ADDRCONFIG
+#define AI_ADDRCONFIG 0
+#endif
 
 struct net_stream {
 	void *data;
@@ -496,11 +506,7 @@ struct net_stream *connect_to_host (const char *node, const char *service)
 	int index;
 
 	memset(&hints, 0, sizeof(hints));
-#ifdef _WIN32
-	hints.ai_flags = AI_NUMERICHOST;
-#else
 	hints.ai_flags = AI_NUMERICHOST | AI_ADDRCONFIG | AI_NUMERICSERV;
-#endif
 	hints.ai_socktype = SOCK_STREAM;
 
 	rc = getaddrinfo(node, service, &hints, &res);
