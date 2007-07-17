@@ -241,9 +241,8 @@ void FixWorkingDirectory (char **argv)
  *
  * Inits the the program and calls Qcommon in an infinite loop.
  * FIXME: While this works, infinite loops are bad; one should not rely on exit() call; the program should be designed to fall through the bottom.
- * FIXME: Why is there a sleep statement?
  */
-int main (int argc, char **argv)
+int main (int argc, const char **argv)
 {
 	/* create Autorelease Pool, to avoid Error Messages under MacOSX */
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
