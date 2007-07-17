@@ -247,8 +247,6 @@ int main (int argc, char **argv)
 {
 	/* create Autorelease Pool, to avoid Error Messages under MacOSX */
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	int time, oldtime, newtime;
-	float timescale = 1.0;
 
 	InitCocoa();
 
@@ -264,15 +262,8 @@ int main (int argc, char **argv)
 		fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY);
 	}
 
-	newtime = Sys_Milliseconds();
-
-	for (;;) {
-		/* find time spent rendering last frame */
-		oldtime = newtime;
-		newtime = Sys_Milliseconds();
-		time = timescale * (newtime - oldtime);
-		timescale = Qcommon_Frame(time);
-	}
+	while (1)
+		Qcommon_Frame();
 
 	/* Free the Release Pool resources */
 	[pool release];

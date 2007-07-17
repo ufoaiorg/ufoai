@@ -116,9 +116,6 @@ char *Sys_GetClipboardData (void)
  */
 int main (int argc, const char **argv)
 {
-	int time, oldtime, newtime;
-	float timescale = 1.0;
-
 	/* go back to real user for config loads */
 	saved_euid = geteuid();
 	seteuid(getuid());
@@ -126,21 +123,9 @@ int main (int argc, const char **argv)
 	Sys_ConsoleInputInit();
 	Qcommon_Init(argc, argv);
 
-/*	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY); */
+	while (1)
+		Qcommon_Frame();
 
-	nostdout = Cvar_Get("nostdout", "0", 0, NULL);
-	if (!nostdout->integer) {
-/*		fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY); */
-	}
-
-	newtime = Sys_Milliseconds();
-	for (;;) {
-		/* find time spent rendering last frame */
-		oldtime = newtime;
-		newtime = Sys_Milliseconds();
-		time = timescale * (newtime - oldtime);
-		timescale = Qcommon_Frame(time);
-	}
 	return 0;
 }
 
