@@ -30,7 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <float.h>
 #include <direct.h>
 #include <io.h>
-#include <process.h>
 
 #if _MSC_VER >= 1300 /* >= MSVC 7.0 */
 #include <dbghelp.h>
@@ -39,13 +38,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # endif
 #endif
 
-
-#define MINIMUM_WIN_MEMORY	0x0a00000
-#define MAXIMUM_WIN_MEMORY	0x1000000
-
-HMODULE hSh32 = NULL;
-FARPROC procShell_NotifyIcon = NULL;
-NOTIFYICONDATA pNdata;
+static HMODULE hSh32 = NULL;
+static FARPROC procShell_NotifyIcon = NULL;
+static NOTIFYICONDATA pNdata;
 
 qboolean s_win95, s_winxp, s_vista;
 
