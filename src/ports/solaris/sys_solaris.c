@@ -116,7 +116,7 @@ char *Sys_GetClipboardData (void)
 /**
  * @brief
  */
-int main (int argc, char **argv)
+int main (int argc, const char **argv)
 {
 	Qcommon_Init(argc, argv);
 

@@ -136,9 +136,8 @@ void main (int argc, const char **argv)
 {
 	Qcommon_Init(argc, argv);
 
-	while (1) {
-		Qcommon_Frame(0.1);
-	}
+	while (1)
+		Qcommon_Frame();
 }
 
 
