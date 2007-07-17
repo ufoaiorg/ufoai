@@ -223,9 +223,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\qcommon\net.h" />
-		<Unit filename="..\..\src\qcommon\net_chan.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\qcommon\net_chan.h">
 			<Option compile="1" />
 			<Option link="1" />
