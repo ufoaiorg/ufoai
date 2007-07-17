@@ -3,6 +3,9 @@
 /* OpenGL header path */
 #undef GL_H_WITHOUT_GL_DIR
 
+/* AI_NUMERICSERV not found in netdb.h */
+#undef HAVE_AI_NUMERICSERV
+
 /* Define to 1 if you have the <alsa/asoundlib.h> header file. */
 #undef HAVE_ALSA_ASOUNDLIB_H
 
@@ -59,6 +62,9 @@
 
 /* Define to 1 if you have the <libintl.h> header file. */
 #undef HAVE_LIBINTL_H
+
+/* Define to 1 if you have the `ws2_32' library (-lws2_32). */
+#undef HAVE_LIBWS2_32
 
 /* Define to 1 if you have the <linux/soundcard.h> header file. */
 #undef HAVE_LINUX_SOUNDCARD_H
@@ -125,6 +131,9 @@
 
 /* Define to 1 if you have the <windows.h> header file. */
 #undef HAVE_WINDOWS_H
+
+/* Define to 1 if you have the <winsock2.h> header file. */
+#undef HAVE_WINSOCK2_H
 
 /* Define to 1 if you have the <X11/extensions/xf86dga1.h> header file. */
 #undef HAVE_X11_EXTENSIONS_XF86DGA1_H

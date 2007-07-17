@@ -301,6 +301,17 @@ fi
 AC_SUBST([WINDRES],$WINDRES)
 
 #---------------------------------------------------------------------------------------------
+# CHECK winsock2
+#---------------------------------------------------------------------------------------------
+
+if test $TARGET_OS = "mingw32"
+then
+	AC_MSG_RESULT([Mingw32 - Trying to use Winsock2 (WS2_32)])
+	AC_CHECK_HEADERS([winsock2.h])
+	AC_CHECK_LIB(ws2_32, main, , AC_MSG_ERROR([Winsock2 is needed for a Win32 mingw build.]))
+fi
+
+#---------------------------------------------------------------------------------------------
 # macos linker flags
 #---------------------------------------------------------------------------------------------
 if test $TARGET_OS = "darwin"
@@ -317,6 +328,15 @@ then
 #		AC_MSG_NOTICE([added fink lib and include dir])
 #	fi
 fi
+
+#---------------------------------------------------------------------------------------------
+# CHECK AI_NUMERICSERV
+#---------------------------------------------------------------------------------------------
+
+AC_CHECK_DECL(AI_NUMERICSERV,
+	[AC_DEFINE(HAVE_AI_NUMERICSERV,1,[AI_NUMERICSERV found in netdb.h])],
+	[AC_DEFINE(HAVE_AI_NUMERICSERV,0,[AI_NUMERICSERV not found in netdb.h])],
+	[#include <netdb.h>])
 
 #---------------------------------------------------------------------------------------------
 # CHECK LIBTOOL
