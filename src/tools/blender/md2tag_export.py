@@ -125,7 +125,7 @@ def get_euler(loc, X,Y,Z):
 	objX = objX * matZ
 	objY = objY * matZ
 	objZ = objZ * matZ
-	print objX, objY,objZ
+	#print objX, objY,objZ
 
 	# Get rotation of the Y axis.
 	rotY = getAng3pt3d(axisX ,zero, (objX.x, 0.0, objX.z) )
@@ -674,6 +674,7 @@ def load_md2_tags(filename):
 			Blender.Window.DrawProgressBar(progress, "Calculating Frame "+str(frame_counter)+" | "+tag_name.name)
 			#set blender to the correct frame (so the objects' data will be set in this frame)
 			Blender.Set("curframe", frame_counter+1)
+			#Blender.Set("curframe", frame_counter) # use this if imported emties do not match up with imported md2 files
 
 			# Set object position.
 			object.setLocation(tag_frames[frame_counter].Row1[0], tag_frames[frame_counter].Row1[1], tag_frames[frame_counter].Row1[2])
