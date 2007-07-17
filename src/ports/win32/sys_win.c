@@ -53,7 +53,6 @@ qboolean s_win95, s_winxp, s_vista;
 
 qboolean ActiveApp;
 qboolean Minimized;
-static qboolean	oldconsole = qfalse;
 
 static HANDLE hinput, houtput;
 
@@ -188,9 +187,6 @@ rebox:;
 	if (qwclsemaphore)
 		CloseHandle(qwclsemaphore);
 
-	/* shut down QHOST hooks if necessary */
-	DeinitConProc();
-
 	ExitProcess(0xDEAD);
 }
 
@@ -204,14 +200,9 @@ void Sys_Quit (void)
 	CL_Shutdown();
 	Qcommon_Shutdown();
 	CloseHandle(qwclsemaphore);
-	if (dedicated && dedicated->value && oldconsole)
-		FreeConsole();
 
 	if (procShell_NotifyIcon)
 		procShell_NotifyIcon(NIM_DELETE, &pNdata);
-
-	/* shut down QHOST hooks if necessary */
-	DeinitConProc();
 
 	/* exit(0) */
 	ExitProcess(0);
@@ -501,45 +492,32 @@ void Sys_Init (void)
 	Cvar_Get("sys_os", "win", CVAR_SERVERINFO, NULL);
 
 	if (dedicated->integer) {
-		oldconsole = Cvar_VariableInteger("oldconsole");
-		if (oldconsole) {
-			if (!AllocConsole()) {
-				WinError();
-				Sys_Error("Couldn't create dedicated server console");
-			}
-			hinput = GetStdHandle(STD_INPUT_HANDLE);
-			houtput = GetStdHandle(STD_OUTPUT_HANDLE);
+		HICON hIcon;
+		hwnd_Server = CreateDialog(global_hInstance, MAKEINTRESOURCE(IDD_SERVER_GUI), NULL, (DLGPROC)ServerWindowProc);
 
-			/* let QHOST hook in */
-			InitConProc(argc, argv);
-		} else {
-			HICON hIcon;
-			hwnd_Server = CreateDialog(global_hInstance, MAKEINTRESOURCE(IDD_SERVER_GUI), NULL, (DLGPROC)ServerWindowProc);
-
-			if (!hwnd_Server) {
-				WinError();
-				Sys_Error("Couldn't create dedicated server window. GetLastError() = %d", (int)GetLastError());
-			}
-
-			SendDlgItemMessage(hwnd_Server, IDC_CONSOLE, EM_SETREADONLY, TRUE, 0);
-
-			SZ_Init(&console_buffer, console_buff, sizeof(console_buff));
-			console_buffer.allowoverflow = qtrue;
-
-			hIcon = (HICON)LoadImage(global_hInstance,
-				MAKEINTRESOURCE(IDI_ICON2),
-				IMAGE_ICON,
-				GetSystemMetrics(SM_CXSMICON),
-				GetSystemMetrics(SM_CYSMICON),
-				0);
-
-			if (hIcon)
-				SendMessage(hwnd_Server, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
-
-			UpdateWindow(hwnd_Server);
-			SetForegroundWindow(hwnd_Server);
-			SetFocus(GetDlgItem (hwnd_Server, IDC_COMMAND));
+		if (!hwnd_Server) {
+			WinError();
+			Sys_Error("Couldn't create dedicated server window. GetLastError() = %d", (int)GetLastError());
 		}
+
+		SendDlgItemMessage(hwnd_Server, IDC_CONSOLE, EM_SETREADONLY, TRUE, 0);
+
+		SZ_Init(&console_buffer, console_buff, sizeof(console_buff));
+		console_buffer.allowoverflow = qtrue;
+
+		hIcon = (HICON)LoadImage(global_hInstance,
+			MAKEINTRESOURCE(IDI_ICON2),
+			IMAGE_ICON,
+			GetSystemMetrics(SM_CXSMICON),
+			GetSystemMetrics(SM_CYSMICON),
+			0);
+
+		if (hIcon)
+			SendMessage(hwnd_Server, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
+
+		UpdateWindow(hwnd_Server);
+		SetForegroundWindow(hwnd_Server);
+		SetFocus(GetDlgItem (hwnd_Server, IDC_COMMAND));
 	}
 }
 
@@ -552,62 +530,6 @@ static int	console_textlen;
  */
 char *Sys_ConsoleInput (void)
 {
-	INPUT_RECORD	recs[1024];
-	int		ch;
-    DWORD	numread, numevents, dummy;
-
-	if (!dedicated || !dedicated->integer || !oldconsole)
-		return NULL;
-
-	for (;;) {
-		if (!GetNumberOfConsoleInputEvents(hinput, &numevents))
-			Sys_Error("Error getting # of console events");
-
-		if (numevents <= 0)
-			break;
-
-		if (!ReadConsoleInput(hinput, recs, 1, &numread))
-			Sys_Error("Error reading console input");
-
-		if (numread != 1)
-			Sys_Error("Couldn't read console input");
-
-		if (recs[0].EventType == KEY_EVENT) {
-			if (!recs[0].Event.KeyEvent.bKeyDown) {
-				ch = recs[0].Event.KeyEvent.uChar.AsciiChar;
-
-				switch (ch) {
-				case '\r':
-					WriteFile(houtput, "\r\n", 2, &dummy, NULL);
-
-					if (console_textlen) {
-						console_text[console_textlen] = 0;
-						console_textlen = 0;
-						return console_text;
-					}
-					break;
-
-				case '\b':
-					if (console_textlen) {
-						console_textlen--;
-						WriteFile(houtput, "\b \b", 3, &dummy, NULL);
-					}
-					break;
-
-				default:
-					if (ch >= ' ') {
-						if (console_textlen < sizeof(console_text)-2) {
-							WriteFile(houtput, &ch, 1, &dummy, NULL);
-							console_text[console_textlen] = ch;
-							console_textlen++;
-						}
-					}
-					break;
-				}
-			}
-		}
-	}
-
 	return NULL;
 }
 
@@ -662,47 +584,31 @@ void Sys_ConsoleOutput (const char *string)
 	if (!dedicated || !dedicated->integer)
 		return;
 
-	if (oldconsole) {
-		if (console_textlen) {
-			text[0] = '\r';
-			memset(&text[1], ' ', console_textlen);
-			text[console_textlen+1] = '\r';
-			text[console_textlen+2] = 0;
-			WriteFile(houtput, text, console_textlen+2, &dummy, NULL);
+	p = string;
+	s = text;
+
+	while (p[0]) {
+		if (p[0] == '\n') {
+			*s++ = '\r';
 		}
 
-		WriteFile(houtput, string, strlen(string), &dummy, NULL);
+		/* r1: strip high bits here */
+		*s = (p[0]) & SCHAR_MAX;
 
-		if (console_textlen)
-			WriteFile(houtput, console_text, console_textlen, &dummy, NULL);
-	} else {
-		p = string;
-		s = text;
+		if (s[0] >= 32 || s[0] == '\n' || s[0] == '\t')
+			s++;
 
-		while (p[0]) {
-			if (p[0] == '\n') {
-				*s++ = '\r';
-			}
+		p++;
 
-			/* r1: strip high bits here */
-			*s = (p[0]) & SCHAR_MAX;
-
-			if (s[0] >= 32 || s[0] == '\n' || s[0] == '\t')
-				s++;
-
-			p++;
-
-			if ((s - text) >= sizeof(text) - 2) {
-				*s++ = '\n';
-				break;
-			}
+		if ((s - text) >= sizeof(text) - 2) {
+			*s++ = '\n';
+			break;
 		}
-		s[0] = '\0';
-
-		SZ_Print(&console_buffer, text);
-
-		Sys_UpdateConsoleBuffer();
 	}
+	s[0] = '\0';
+
+	SZ_Print(&console_buffer, text);
+	Sys_UpdateConsoleBuffer();
 }
 
 

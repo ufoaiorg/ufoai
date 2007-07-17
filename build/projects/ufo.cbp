@@ -364,15 +364,6 @@
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
-		<Unit filename="..\..\src\ports\win32\conproc.c">
-			<Option compilerVar="CC" />
-			<Option target="windows" />
-			<Option target="windows_debug" />
-		</Unit>
-		<Unit filename="..\..\src\ports\win32\conproc.h">
-			<Option target="windows" />
-			<Option target="windows_debug" />
-		</Unit>
 		<Unit filename="..\..\src\ports\win32\in_win.c">
 			<Option compilerVar="CC" />
 			<Option target="windows" />

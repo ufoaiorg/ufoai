@@ -143,11 +143,6 @@
 			<Option target="linux" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="..\..\src\ports\win32\conproc.c">
-			<Option compilerVar="CC" />
-			<Option target="windows" />
-			<Option target="windows_debug" />
-		</Unit>
 		<Unit filename="..\..\src\ports\win32\q_shwin.c">
 			<Option compilerVar="CC" />
 			<Option target="windows" />

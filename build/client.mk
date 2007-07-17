@@ -102,7 +102,6 @@ ifeq ($(TARGET_OS),mingw32)
 		ports/win32/q_shwin.c \
 		ports/win32/vid_dll.c \
 		ports/win32/in_win.c \
-		ports/win32/conproc.c  \
 		ports/win32/sys_win.c \
 		ports/win32/ufo.rc
 	CLIENT_CD=ports/win32/cd_win.c
