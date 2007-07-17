@@ -79,6 +79,7 @@ building building_entrance
 	name		"_Entrance"
 	image		base/entrance
 	fixcosts	10000
+	type		entrance
 	build_time	1
 	varcosts	0
 	map_name	"entrance"

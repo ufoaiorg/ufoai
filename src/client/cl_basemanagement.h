@@ -87,7 +87,8 @@ typedef enum {
 	B_UFO_SMALL_HANGAR,	/**< this building is a small UFO hangar */
 	B_POWER,		/**< this building is power plant */
 	B_COMMAND,		/**< this building is command centre */
-	B_ANTIMATTER		/**< this building is antimatter storage */
+	B_ANTIMATTER,		/**< this building is antimatter storage */
+	B_ENTRANCE		/**< this building is an entrance */
 } buildingType_t;
 
 /** @brief All possible capacities in base. */

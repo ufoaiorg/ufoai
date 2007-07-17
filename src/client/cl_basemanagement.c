@@ -307,6 +307,10 @@ static void B_BuildingDestroy_f (void)
 
 	b1 = baseCurrent->buildingCurrent;
 
+	/* Don't allow to destroy an entrance. */
+	if (b1->buildingType == B_ENTRANCE)
+		return;
+
 	if (baseCurrent->map[(int)b1->pos[0]][(int)b1->pos[1]] != BASE_FREESLOT) {
 		if (b1->needs) {
 #if 0
@@ -1341,6 +1345,8 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 					building->buildingType = B_COMMAND;
 				} else if (!Q_strncmp(token, "amstorage", MAX_VAR)) {
 					building->buildingType = B_ANTIMATTER;
+				} else if (!Q_strncmp(token, "entrance", MAX_VAR)) {
+					building->buildingType = B_ENTRANCE;
 				}
 /*			} else if (!Q_strncmp(token, "max_employees", MAX_VAR)) {
 				token = COM_EParse(text, errhead, name);
