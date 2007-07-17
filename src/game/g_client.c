@@ -1342,7 +1342,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 
 				/* check for death */
 				if (ent->state & STATE_DEAD) {
-                                        flush_steps();
+                                        steps = 0;
 					return;
                                 }
 
