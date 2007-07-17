@@ -258,6 +258,7 @@ echo " LIBCURL"
 echo "========================================"
 version="7.16.2"
 download http://curl.haxx.se/download/libcurl-$version-win32-nossl.zip
+#FIXME convert into tar.gz
 any2deb mingw32-libcurl-dev $version libcurl-mingw32-$version.tar.gz /usr/i586-mingw32msvc >> /dev/null
 if [ "$dont_install" -ne "1" ]
 then
