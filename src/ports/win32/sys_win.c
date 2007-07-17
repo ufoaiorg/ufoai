@@ -30,8 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <float.h>
 #include <direct.h>
 #include <io.h>
-#include <conio.h>
-#include "conproc.h"
 #include <process.h>
 
 #if _MSC_VER >= 1300 /* >= MSVC 7.0 */
@@ -53,8 +51,6 @@ qboolean s_win95, s_winxp, s_vista;
 
 qboolean ActiveApp;
 qboolean Minimized;
-
-static HANDLE hinput, houtput;
 
 uint32_t sys_msg_time;
 uint32_t sys_frame_time;
@@ -521,10 +517,6 @@ void Sys_Init (void)
 	}
 }
 
-
-static char	console_text[256];
-static int	console_textlen;
-
 /**
  * @brief
  */
@@ -576,7 +568,6 @@ void Sys_UpdateConsoleBuffer (void)
  */
 void Sys_ConsoleOutput (const char *string)
 {
-	DWORD	dummy;
 	char text[2048];
 	const char *p;
 	char *s;
