@@ -219,7 +219,7 @@ echo "========================================"
 echo " LIBOGG"
 echo "========================================"
 version="1.1.3"
-download http://oss.netfarm.it/mplayer/pkgs/common/ libogg-mingw32-$version.tar.gz
+download http://oss.netfarm.it/mplayer/pkgs/ libogg-mingw32-$version.tar.gz
 any2deb mingw32-libogg-dev $version libogg-mingw32-$version.tar.gz /usr/i586-mingw32msvc >> /dev/null
 if [ "$dont_install" -ne "1" ]
 then
@@ -238,7 +238,7 @@ echo "========================================"
 echo " LIBVORBIS"
 echo "========================================"
 version="1.1.2"
-download http://oss.netfarm.it/mplayer/pkgs/common/ libvorbis-mingw32-$version.tar.gz
+download http://oss.netfarm.it/mplayer/pkgs/ libvorbis-mingw32-$version.tar.gz
 any2deb mingw32-libvorbis-dev $version libvorbis-mingw32-$version.tar.gz /usr/i586-mingw32msvc >> /dev/null
 if [ "$dont_install" -ne "1" ]
 then
