@@ -609,6 +609,8 @@ int UP_GetUnreadMails (void)
 		}
 		m = m->next;
 	}
+	
+	Cvar_Set("mn_upunreadmail", va("%i", gd.numUnreadMails));
 	return gd.numUnreadMails;
 }
 

@@ -190,10 +190,23 @@ menu map
 	// FIXME: another icon
 	pic bt_mailclient
 	{
+		if "mn_upunreadmail != 0"
 		tooltip	"_INBOX"
 		image	menu/mailclient
 		texl	"0 0"
 		texh	"32 32"
+		pos		"300 32"
+		mousefx true
+		click	{ cmd "mn_push ufopedia_mail" }
+	}
+
+	pic bt_mailclient_nomail
+	{
+		if "mn_upunreadmail == 0"
+		tooltip	"_INBOX"
+		image	menu/mailclient
+		texl	"32 0"
+		texh	"64 32"
 		pos		"300 32"
 		mousefx true
 		click	{ cmd "mn_push ufopedia_mail" }
