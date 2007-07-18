@@ -1437,28 +1437,43 @@ void AIM_AircraftEquipmenuInit_f (void)
 
 	/* Fill the texts of each zone */
 	/* First slot: item currently assigned */
-	if (slot->itemIdx < 0)
-		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _("No item assigned"));
+	if (slot->itemIdx < 0) {
+		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _("No item assigned.\n"));
+		Q_strcat(smallbuffer1, _("This slot is for"), sizeof(smallbuffer1));
+		Q_strcat(smallbuffer1, " ", sizeof(smallbuffer1));
+		switch (slot->size) {
+		case ITEM_LIGHT:
+			Q_strcat(smallbuffer1, _("Light"), sizeof(smallbuffer1));
+			break;
+		case ITEM_MEDIUM:
+			Q_strcat(smallbuffer1, _("Medium or smaller"), sizeof(smallbuffer1));
+			break;
+		case ITEM_HEAVY:
+			Q_strcat(smallbuffer1, _("Heavy or smaller"), sizeof(smallbuffer1));
+			break;
+		}
+		Q_strcat(smallbuffer1, " items.", sizeof(smallbuffer1));
+	}
 	else {
 		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _(gd.technologies[aircraftItems[slot->itemIdx].tech_idx].name));
 		Q_strcat(smallbuffer1, "\n", sizeof(smallbuffer1));
 		if (!slot->installationTime)
-			Q_strcat(smallbuffer1, _("This item is functional\n"), sizeof(smallbuffer1));
+			Q_strcat(smallbuffer1, _("This item is functional.\n"), sizeof(smallbuffer1));
 		else if (slot->installationTime > 0)
-			Q_strcat(smallbuffer1, va(_("This item will be installed in %i hours\n"),slot->installationTime), sizeof(smallbuffer1));
+			Q_strcat(smallbuffer1, va(_("This item will be installed in %i hours.\n"),slot->installationTime), sizeof(smallbuffer1));
 		else
-			Q_strcat(smallbuffer1, va(_("This item will be removed in %i hours\n"),-slot->installationTime), sizeof(smallbuffer1));
+			Q_strcat(smallbuffer1, va(_("This item will be removed in %i hours.\n"),-slot->installationTime), sizeof(smallbuffer1));
 	}
 	menuText[TEXT_AIREQUIP_1] = smallbuffer1;
 
 	/* Second slot: next item to install when the first one will be removed */
 	if (slot->itemIdx > -1 && slot->installationTime < 0) {
 		if (slot->nextItemIdx < 0)
-			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _("No item assigned"));
+			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _("No item assigned."));
 		else {
 			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _(gd.technologies[aircraftItems[slot->nextItemIdx].tech_idx].name));
 			Q_strcat(smallbuffer2, "\n", sizeof(smallbuffer2));
-			Q_strcat(smallbuffer2, va(_("This item will be operational in %i hours\n"), aircraftItems[slot->nextItemIdx].installationTime - slot->installationTime), sizeof(smallbuffer2));
+			Q_strcat(smallbuffer2, va(_("This item will be operational in %i hours.\n"), aircraftItems[slot->nextItemIdx].installationTime - slot->installationTime), sizeof(smallbuffer2));
 		}
 	} else
 		*smallbuffer2 = '\0';
@@ -1467,7 +1482,7 @@ void AIM_AircraftEquipmenuInit_f (void)
 	/* Third slot: ammo slot (only used for weapons) */
 	if ((airequipID == AC_ITEM_WEAPON || airequipID == AC_ITEM_AMMO) && slot->itemIdx > -1) {
 		if (slot->ammoIdx < 0)
-			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _("No ammo assigned to this weapon"));
+			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _("No ammo assigned to this weapon."));
 		else
 			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _(gd.technologies[aircraftItems[slot->ammoIdx].tech_idx].name));
 	} else

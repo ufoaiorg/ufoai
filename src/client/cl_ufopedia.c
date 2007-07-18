@@ -509,16 +509,16 @@ void UP_AircraftItemDescription (int idx)
 		*itemText = '\0';
 
 		if (item->type == AC_ITEM_WEAPON) {
-			Q_strcat(itemText, va(_("Weight:\t")), sizeof(itemText));
+			Q_strcat(itemText, _("Weight:\t"), sizeof(itemText));
 			switch (item->itemWeight) {
 			case ITEM_LIGHT:
-				Q_strcat(itemText, va(_("Light\n")), sizeof(itemText));
+				Q_strcat(itemText, _("Light\n"), sizeof(itemText));
 				break;
 			case ITEM_MEDIUM:
-				Q_strcat(itemText, va(_("Medium\n")), sizeof(itemText));
+				Q_strcat(itemText, _("Medium\n"), sizeof(itemText));
 				break;
 			case ITEM_HEAVY:
-				Q_strcat(itemText, va(_("Heavy\n")), sizeof(itemText));
+				Q_strcat(itemText, _("Heavy\n"), sizeof(itemText));
 				break;
 			}
 		}
