@@ -1439,20 +1439,7 @@ void AIM_AircraftEquipmenuInit_f (void)
 	/* First slot: item currently assigned */
 	if (slot->itemIdx < 0) {
 		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _("No item assigned.\n"));
-		Q_strcat(smallbuffer1, _("This slot is for"), sizeof(smallbuffer1));
-		Q_strcat(smallbuffer1, " ", sizeof(smallbuffer1));
-		switch (slot->size) {
-		case ITEM_LIGHT:
-			Q_strcat(smallbuffer1, _("Light"), sizeof(smallbuffer1));
-			break;
-		case ITEM_MEDIUM:
-			Q_strcat(smallbuffer1, _("Medium or smaller"), sizeof(smallbuffer1));
-			break;
-		case ITEM_HEAVY:
-			Q_strcat(smallbuffer1, _("Heavy or smaller"), sizeof(smallbuffer1));
-			break;
-		}
-		Q_strcat(smallbuffer1, " items.", sizeof(smallbuffer1));
+		Q_strcat(smallbuffer1, va(_("This slot is for %s or smaller items."), AII_WeightToName(slot->size)), sizeof(smallbuffer1));
 	}
 	else {
 		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _(gd.technologies[aircraftItems[slot->itemIdx].tech_idx].name));
@@ -2417,6 +2404,29 @@ void AIR_ListAircraftSamples_f (void)
 	}
 }
 #endif
+
+/**
+ * @brief Translate a weight int to a translated string
+ *
+ * @sa itemWeight_t
+ */
+char* AII_WeightToName (itemWeight_t weight)
+{
+	switch (weight) {
+	case ITEM_LIGHT:
+		return _("Light");
+		break;
+	case ITEM_MEDIUM:
+		return _("Medium");
+		break;
+	case ITEM_HEAVY:
+		return _("Heavy");
+		break;
+	default:
+		return _("Unknown weight");
+		break;
+	}
+}
 
 /**
  * @brief Reload the weapon of an aircraft

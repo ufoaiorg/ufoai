@@ -508,20 +508,8 @@ void UP_AircraftItemDescription (int idx)
 	if (RS_IsResearched_idx(item->tech_idx)) {
 		*itemText = '\0';
 
-		if (item->type == AC_ITEM_WEAPON) {
-			Q_strcat(itemText, _("Weight:\t"), sizeof(itemText));
-			switch (item->itemWeight) {
-			case ITEM_LIGHT:
-				Q_strcat(itemText, _("Light\n"), sizeof(itemText));
-				break;
-			case ITEM_MEDIUM:
-				Q_strcat(itemText, _("Medium\n"), sizeof(itemText));
-				break;
-			case ITEM_HEAVY:
-				Q_strcat(itemText, _("Heavy\n"), sizeof(itemText));
-				break;
-			}
-		}
+		if (item->type == AC_ITEM_WEAPON)
+			Q_strcat(itemText, va(_("Weight:\t%s\n"), AII_WeightToName(item->itemWeight)), sizeof(itemText));
 
 		if (item->type == AC_ITEM_AMMO) {
 			/* We display the characteristics of this ammo */

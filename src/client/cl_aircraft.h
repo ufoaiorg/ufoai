@@ -286,4 +286,6 @@ extern void AIR_AircraftsUfoDisappear(const aircraft_t *const ufo);
 void AIR_UpdateHangarCapForAll(int base_idx);
 extern qboolean AIR_AircraftAllowed(void);
 
+char* AII_WeightToName(itemWeight_t weight);
+
 #endif
