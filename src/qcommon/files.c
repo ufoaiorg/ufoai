@@ -1122,6 +1122,76 @@ void FS_BuildFileList (const char *fileList)
 	*fl = 0;
 }
 
+/**
+ * @brief Returns the buffer of a file
+ * @param[in] files If NULL, reset the filelist
+ * If not NULL it may be something like ufos\*.ufo (slash) to get a list
+ * of all ufo files in base/ufos. Calling FS_GetFileData("ufos\*.ufo");
+ * until it returns NULL is sufficient to get on buffer after another.
+ * @note You don't have to free the file buffer on the calling side.
+ * This is done in this function, too
+ */
+const char *FS_GetFileData (const char *files)
+{
+	listBlock_t *block;
+	static char *fileList;
+	static char *buffer = NULL;
+
+	if (!files) {
+		fileList = NULL;
+		return NULL;
+	}
+
+	/* free the old file */
+	if (buffer) {
+		FS_FreeFile(buffer);
+		buffer = NULL;
+	}
+
+	for (block = fs_blocklist; block; block = block->next)
+		if (!Q_strncmp(files, block->path, MAX_QPATH))
+			break;
+
+	if (!block) {
+		/* didn't find any valid file list */
+		fileList = NULL;
+		FS_BuildFileList(files);
+		for (block = fs_blocklist; block; block = block->next)
+			if (!Q_strncmp(files, block->path, MAX_QPATH))
+				break;
+		if (!block) {
+			/* still no filelist */
+			Com_Printf("FS_GetFileData: Could not create filelist for %s\n", files);
+			return NULL;
+		}
+	}
+
+	/* list start */
+	if (!fileList)
+		fileList = block->files;
+
+	if (*fileList) {
+		char filename[MAX_QPATH];
+
+		/* load a new file */
+		Q_strncpyz(filename, block->path, sizeof(filename));
+		strcpy(strrchr(filename, '/') + 1, fileList);
+
+		FS_LoadFile(filename, (void **) &buffer);
+		/* search a new file */
+		fileList += strlen(fileList) + 1;
+		return buffer;
+	}
+
+	/* free the old file */
+	if (buffer) {
+		FS_FreeFile(buffer);
+		fileList = buffer = NULL;
+	}
+
+	/* finished */
+	return NULL;
+}
 
 /**
  * @brief
@@ -1145,19 +1215,15 @@ void FS_SkipBlock (const char **text)
 /**
  * @brief
  */
-static char lastList[MAX_QPATH] = "";
-listBlock_t *lBlock;
-char *lFile = NULL;
-char *lBuffer = NULL;
-
-static char headerType[32];
-static char headerName[32];
-
-/**
- * @brief
- */
 char *FS_NextScriptHeader (const char *files, const char **name, const char **text)
 {
+	static char lastList[MAX_QPATH] = "";
+	static listBlock_t *lBlock;
+	static char *lFile = NULL;
+	static char *lBuffer = NULL;
+
+	static char headerType[32];
+	static char headerName[32];
 	listBlock_t *block;
 	const char *token;
 
@@ -1242,10 +1308,10 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 }
 
 /* global vars for maplisting */
-char *maps[MAX_MAPS];
-int numInstalledMaps = -1;
-static qboolean mapsInstalledInit = qfalse;
-int mapInstalledIndex = 0;
+char *fs_maps[MAX_MAPS];
+int fs_numInstalledMaps = -1;
+static qboolean fs_mapsInstalledInit = qfalse;
+int fs_mapInstalledIndex = 0;
 
 /**
  * @brief
@@ -1264,16 +1330,16 @@ void FS_GetMaps (qboolean reset)
 	pack_t *pak;
 
 	/* force a reread */
-	if (!reset && mapsInstalledInit)
+	if (!reset && fs_mapsInstalledInit)
 		return;
-	else if (mapsInstalledInit) {
-		Com_DPrintf("Free old list with %i entries\n", numInstalledMaps);
-		for (i = 0; i < numInstalledMaps; i++)
-			Mem_Free(maps[i]);
+	else if (fs_mapsInstalledInit) {
+		Com_DPrintf("Free old list with %i entries\n", fs_numInstalledMaps);
+		for (i = 0; i < fs_numInstalledMaps; i++)
+			Mem_Free(fs_maps[i]);
 	}
 
-	mapInstalledIndex = 0;
-	numInstalledMaps = -1;
+	fs_mapInstalledIndex = 0;
+	fs_numInstalledMaps = -1;
 
 	/* search through the path, one element at a time */
 	for (search = fs_searchpaths; search; search = search->next) {
@@ -1286,7 +1352,7 @@ void FS_GetMaps (qboolean reset)
 				baseMapName = strchr(pak->files[i].name, '/');
 				if (baseMapName) {
 					/* FIXME: paths are normalized here? */
-					baseMapName = strchr(baseMapName+1, '/');
+					baseMapName = strchr(baseMapName + 1, '/');
 					/* ugly hack - only show the maps in base/maps - not in base/maps/b and so on */
 					if (baseMapName)
 						continue;
@@ -1294,12 +1360,12 @@ void FS_GetMaps (qboolean reset)
 					continue;
 
 				if (strstr(pak->files[i].name, ".bsp")) {
-					if (numInstalledMaps+1 >= MAX_MAPS) {
+					if (fs_numInstalledMaps + 1 >= MAX_MAPS) {
 						Com_Printf("FS_GetMaps: Max maps limit hit\n");
 						break;
 					}
-					maps[numInstalledMaps + 1] = (char *)Mem_PoolAlloc(MAX_QPATH * sizeof(char), com_fileSysPool, 0);
-					if (maps[numInstalledMaps + 1] == NULL) {
+					fs_maps[fs_numInstalledMaps + 1] = (char *)Mem_PoolAlloc(MAX_QPATH * sizeof(char), com_fileSysPool, 0);
+					if (fs_maps[fs_numInstalledMaps + 1] == NULL) {
 						Com_Printf("Could not allocate memory in FS_GetMaps\n");
 						continue;
 					}
@@ -1307,8 +1373,8 @@ void FS_GetMaps (qboolean reset)
 					FS_NormPath(findname);
 					baseMapName = COM_SkipPath(findname);
 					COM_StripExtension(baseMapName, filename);
-					Q_strncpyz(maps[numInstalledMaps + 1], filename, MAX_QPATH);
-					numInstalledMaps++;
+					Q_strncpyz(fs_maps[fs_numInstalledMaps + 1], filename, MAX_QPATH);
+					fs_numInstalledMaps++;
 				}
 			}
 		} else {
@@ -1322,18 +1388,18 @@ void FS_GetMaps (qboolean reset)
 					COM_StripExtension(baseMapName, filename);
 					status = CheckBSPFile(filename);
 					if (!status) {
-						if (numInstalledMaps+1 >= MAX_MAPS) {
+						if (fs_numInstalledMaps + 1 >= MAX_MAPS) {
 							Com_Printf("FS_GetMaps: Max maps limit hit\n");
 							break;
 						}
-						maps[numInstalledMaps+1] = (char *) Mem_PoolAlloc(MAX_QPATH * sizeof(char), com_fileSysPool, 0);
-						if (maps[numInstalledMaps + 1] == NULL) {
+						fs_maps[fs_numInstalledMaps + 1] = (char *) Mem_PoolAlloc(MAX_QPATH * sizeof(char), com_fileSysPool, 0);
+						if (fs_maps[fs_numInstalledMaps + 1] == NULL) {
 							Com_Printf("Could not allocate memory in FS_GetMaps\n");
 							Mem_Free(dirnames[i]);
 							continue;
 						}
-						Q_strncpyz(maps[numInstalledMaps+1], filename, MAX_QPATH);
-						numInstalledMaps++;
+						Q_strncpyz(fs_maps[fs_numInstalledMaps + 1], filename, MAX_QPATH);
+						fs_numInstalledMaps++;
 					} else
 						Com_Printf("invalid mapstatus: %i (%s)\n", status, dirnames[i]);
 					Mem_Free(dirnames[i]);
@@ -1343,7 +1409,7 @@ void FS_GetMaps (qboolean reset)
 		}
 	}
 
-	mapsInstalledInit = qtrue;
+	fs_mapsInstalledInit = qtrue;
 }
 
 /**
@@ -1462,9 +1528,9 @@ void FS_Shutdown (void)
 	const cmdList_t *commands;
 
 	/* free malloc'ed space for maplist */
-	if (mapsInstalledInit) {
-		for (i = 0; i <= numInstalledMaps; i++)
-			Mem_Free(maps[i]);
+	if (fs_mapsInstalledInit) {
+		for (i = 0; i <= fs_numInstalledMaps; i++)
+			Mem_Free(fs_maps[i]);
 	}
 
 	/* free everything */

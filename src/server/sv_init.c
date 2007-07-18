@@ -868,7 +868,7 @@ static void SV_SpawnServer (const char *server, const char *param, server_state_
 {
 	int i;
 	unsigned checksum = 0;
-	const char *map, *pos;
+	const char *map, *pos, *buf;
 
 	if (attractloop)
 		Cvar_Set("paused", "0");
@@ -933,11 +933,13 @@ static void SV_SpawnServer (const char *server, const char *param, server_state_
 		break;
 	}
 
-	Com_DPrintf("checksum for this map: %u\n", checksum);
+	Com_Printf("checksum for this map: %u\n", checksum);
 	Com_sprintf(sv.configstrings[CS_MAPCHECKSUM], sizeof(sv.configstrings[CS_MAPCHECKSUM]), "%i", checksum);
 
-	checksum = 0;	/* @todo */
-	Com_DPrintf("ufo script checksum %u\n", checksum);
+	checksum = 0;
+	while ((buf = FS_GetFileData("ufos/*.ufo")) != NULL)
+		checksum += Com_BlockChecksum(buf, strlen(buf));
+	Com_Printf("ufo script checksum %u\n", checksum);
 	Com_sprintf(sv.configstrings[CS_UFOCHECKSUM], sizeof(sv.configstrings[CS_UFOCHECKSUM]), "%i", checksum);
 
 	Com_sprintf(sv.configstrings[CS_VERSION], sizeof(sv.configstrings[CS_VERSION]), UFO_VERSION);

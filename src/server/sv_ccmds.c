@@ -458,18 +458,18 @@ static int SV_CompleteMapCommand (const char *partial, const char **match)
 
 	len = strlen(partial);
 	if (!len) {
-		for (i = 0; i <= numInstalledMaps; i++)
-			Com_Printf("%s\n", maps[i]);
-		return numInstalledMaps;
+		for (i = 0; i <= fs_numInstalledMaps; i++)
+			Com_Printf("%s\n", fs_maps[i]);
+		return fs_numInstalledMaps;
 	}
 
 	localMatch[matches] = NULL;
 
 	/* search all matches and fill the localMatch array */
-	for (i = 0; i <= numInstalledMaps; i++)
-		if (!Q_strncmp(partial, maps[i], len)) {
-			Com_Printf("%s\n", maps[i]);
-			localMatch[matches++] = maps[i];
+	for (i = 0; i <= fs_numInstalledMaps; i++)
+		if (!Q_strncmp(partial, fs_maps[i], len)) {
+			Com_Printf("%s\n", fs_maps[i]);
+			localMatch[matches++] = fs_maps[i];
 		}
 
 	/* no matches or exactly one match */
@@ -521,9 +521,9 @@ static void SV_ListMaps_f (void)
 
 	FS_GetMaps(qtrue);
 
-	for (i = 0; i <= numInstalledMaps; i++)
-		Com_Printf("%s\n", maps[i]);
-	Com_Printf("-----\n %i installed maps\n", numInstalledMaps+1);
+	for (i = 0; i <= fs_numInstalledMaps; i++)
+		Com_Printf("%s\n", fs_maps[i]);
+	Com_Printf("-----\n %i installed maps\n", fs_numInstalledMaps + 1);
 }
 
 /**

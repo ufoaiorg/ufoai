@@ -1126,7 +1126,7 @@ static unsigned CM_AddMapTile (char *name, int sX, int sY, int sZ)
 	if (!buf)
 		Com_Error(ERR_DROP, "Couldn't load %s", filename);
 
-	checksum = LittleLong(Com_BlockChecksum(buf, length));
+	checksum = Com_BlockChecksum(buf, length);
 
 	header = *(dheader_t *) buf;
 	for (i = 0; i < sizeof(dheader_t) / 4; i++)
@@ -1175,6 +1175,7 @@ static unsigned CM_AddMapTile (char *name, int sX, int sY, int sZ)
 /**
  * @brief Loads in the map and all submodels
  * @sa CM_AddMapTile
+ * @note Make sure that mapchecksum was set to 0 before you call this function
  */
 void CM_LoadMap (const char *tiles, const char *pos, unsigned *mapchecksum)
 {
@@ -1185,6 +1186,9 @@ void CM_LoadMap (const char *tiles, const char *pos, unsigned *mapchecksum)
 	int i;
 
 	Mem_FreePool(com_cmodelSysPool);
+
+	assert(mapchecksum);
+	assert(*mapchecksum == 0);
 
 	/* init */
 	c_pointcontents = c_traces = c_brush_traces = numInline = numTiles = 0;
@@ -1223,9 +1227,7 @@ void CM_LoadMap (const char *tiles, const char *pos, unsigned *mapchecksum)
 					Com_Error(ERR_DROP, "CM_LoadMap: invalid positions\n");
 				sh[i] = atoi(token);
 			}
-			/* random maps doesn't have a checksum atm */
-			*mapchecksum = 0;
-			CM_AddMapTile(name, sh[0], sh[1], 0);
+			*mapchecksum += CM_AddMapTile(name, sh[0], sh[1], 0);
 		} else {
 			/* load only a single tile, if no positions are specified */
 			*mapchecksum = CM_AddMapTile(name, 0, 0, 0);

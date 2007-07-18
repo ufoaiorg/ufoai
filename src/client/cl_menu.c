@@ -4332,30 +4332,30 @@ static void MN_MapInfo (void)
 	Cvar_Set("mn_mappic3", "maps/shots/na.jpg");
 
 	/* check whether there are maps */
-	if (numInstalledMaps == -1)
+	if (fs_numInstalledMaps == -1)
 		return;
 
 	/* remove the day and night char */
-	Q_strncpyz(normalizedName, maps[mapInstalledIndex], sizeof(normalizedName));
+	Q_strncpyz(normalizedName, fs_maps[fs_mapInstalledIndex], sizeof(normalizedName));
 	length = strlen(normalizedName);
 	if (normalizedName[length - 1] == 'n' || normalizedName[length - 1] == 'd') {
 		normalizedName[length - 1] = '\0';
 		normalized = qtrue;
 	}
 
-	Cvar_ForceSet("mapname", maps[mapInstalledIndex]);
-	if (FS_CheckFile(va("pics/maps/shots/%s.jpg", maps[mapInstalledIndex])) != -1) {
-		Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", maps[mapInstalledIndex]));
+	Cvar_ForceSet("mapname", fs_maps[fs_mapInstalledIndex]);
+	if (FS_CheckFile(va("pics/maps/shots/%s.jpg", fs_maps[fs_mapInstalledIndex])) != -1) {
+		Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", fs_maps[fs_mapInstalledIndex]));
 		found = qtrue;
 	}
 
-	if (FS_CheckFile(va("pics/maps/shots/%s_2.jpg", maps[mapInstalledIndex])) != -1) {
-		Cvar_Set("mn_mappic2", va("maps/shots/%s_2.jpg", maps[mapInstalledIndex]));
+	if (FS_CheckFile(va("pics/maps/shots/%s_2.jpg", fs_maps[fs_mapInstalledIndex])) != -1) {
+		Cvar_Set("mn_mappic2", va("maps/shots/%s_2.jpg", fs_maps[fs_mapInstalledIndex]));
 		found = qtrue;
 	}
 
-	if (FS_CheckFile(va("pics/maps/shots/%s_3.jpg", maps[mapInstalledIndex])) != -1) {
-		Cvar_Set("mn_mappic3", va("maps/shots/%s_3.jpg", maps[mapInstalledIndex]));
+	if (FS_CheckFile(va("pics/maps/shots/%s_3.jpg", fs_maps[fs_mapInstalledIndex])) != -1) {
+		Cvar_Set("mn_mappic3", va("maps/shots/%s_3.jpg", fs_maps[fs_mapInstalledIndex]));
 		found = qtrue;
 	}
 
@@ -4393,10 +4393,10 @@ static void MN_GetMaps_f (void)
  */
 static void MN_NextMap_f (void)
 {
-	if (mapInstalledIndex < numInstalledMaps)
-		mapInstalledIndex++;
+	if (fs_mapInstalledIndex < fs_numInstalledMaps)
+		fs_mapInstalledIndex++;
 	else
-		mapInstalledIndex = 0;
+		fs_mapInstalledIndex = 0;
 	MN_MapInfo();
 }
 
@@ -4405,10 +4405,10 @@ static void MN_NextMap_f (void)
  */
 static void MN_PrevMap_f (void)
 {
-	if (mapInstalledIndex > 0)
-		mapInstalledIndex--;
+	if (fs_mapInstalledIndex > 0)
+		fs_mapInstalledIndex--;
 	else
-		mapInstalledIndex = numInstalledMaps;
+		fs_mapInstalledIndex = fs_numInstalledMaps;
 	MN_MapInfo();
 }
 

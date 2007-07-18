@@ -35,9 +35,9 @@ FILESYSTEM
 ==============================================================
 */
 #define MAX_MAPS 400
-extern char *maps[MAX_MAPS];
-extern int numInstalledMaps;
-extern int mapInstalledIndex;
+extern char *fs_maps[MAX_MAPS];
+extern int fs_numInstalledMaps;
+extern int fs_mapInstalledIndex;
 
 typedef struct qFILE_s {
 	void *z; /* in case of the file being a zip archive */
@@ -132,6 +132,8 @@ void FS_CreatePath(const char *path);
 
 /* Make sure we have this available */
 char **FS_ListFiles(const char *findname, int *numfiles, unsigned musthave, unsigned canthave);
+
+const char *FS_GetFileData(const char *files);
 
 /**
  * @brief cleanup function
