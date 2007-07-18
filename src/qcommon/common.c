@@ -883,12 +883,13 @@ void Qcommon_Init (int argc, const char **argv)
 
 #ifndef DEDICATED_ONLY
 	if (!dedicated->integer) {
+		Schedule_Timer(Cvar_Get("cl_cinfreq", "30", CVAR_NOSET, NULL), &CIN_RunCinematic, NULL);
 		Schedule_Timer(cl_maxfps, &CL_Frame, NULL);
 		Schedule_Timer(Cvar_Get("cl_slowfreq", "10", 0, NULL), &CL_SlowFrame, NULL);
 	}
 #endif
 
-	Schedule_Timer(Cvar_Get("sv_freq", "10", 0, NULL), &SV_Frame, NULL);
+	Schedule_Timer(Cvar_Get("sv_freq", "10", CVAR_NOSET, NULL), &SV_Frame, NULL);
 
 	/* XXX: These next two lines want to be removed */
 

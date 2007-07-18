@@ -528,7 +528,7 @@ static qboolean CIN_DecodeChunk (void)
  * @brief
  * @sa CL_Frame
  */
-void CIN_RunCinematic (void)
+void CIN_RunCinematic (int now, void *data)
 {
 	int frame;
 
@@ -634,9 +634,6 @@ void CIN_PlayCinematic (const char *name)
 
 	/* Force console off */
 	Con_Close();
-
-	/* Run the first frame */
-	CIN_RunCinematic();
 }
 
 /**

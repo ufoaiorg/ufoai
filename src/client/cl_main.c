@@ -2384,11 +2384,6 @@ void CL_Frame (int now, void *data)
 	CL_RunLightStyles();
 	SCR_RunConsole();
 
-	/* advance cinematic and console for next frame */
-	if (cls.playingCinematic) {
-		CIN_RunCinematic();
-	}
-
 	/* LE updates */
 	LE_Think();
 
