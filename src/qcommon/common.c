@@ -929,21 +929,21 @@ static void tick_timer (int now, void *data)
 
 		/* When we stay above the high water mark, increase the interval */
 		if (mean > TIMER_LATENESS_HIGH)
-		timer->checks_high = min(TIMER_CHECK_LAG, timer->checks_high + 1);
+			timer->checks_high = min(TIMER_CHECK_LAG, timer->checks_high + 1);
 		else
-		timer->checks_high = max(0, timer->checks_high - 1);
+			timer->checks_high = max(0, timer->checks_high - 1);
 
 		if (timer->checks_high > TIMER_CHECK_LAG)
-		timer->interval += 2;
+			timer->interval += 2;
 
 		/* When we stay below the low water mark, decrease the interval */
 		if (mean < TIMER_LATENESS_LOW)
-		timer->checks_low = min(TIMER_CHECK_LAG, timer->checks_high + 1);
+			timer->checks_low = min(TIMER_CHECK_LAG, timer->checks_high + 1);
 		else
-		timer->checks_low = max(0, timer->checks_low - 1);
+			timer->checks_low = max(0, timer->checks_low - 1);
 
 		if (timer->checks_low > TIMER_CHECK_LAG)
-		timer->interval -= 1;
+			timer->interval -= 1;
 
 		/* Note that we slow the timer more quickly than we speed it up,
 		so it should tend to settle down in the vicinity of the low
