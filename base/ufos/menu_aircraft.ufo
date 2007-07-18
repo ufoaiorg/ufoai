@@ -640,28 +640,28 @@ menu aircraft_equip
 	string airequip_header1
 	{
 		string	"_Current item in slot"
-		pos		"649 50"
+		pos		"545 50"
 		font	f_small
 		color	"0 .78 0 1"
-		align	cc
+		align	cl
 	}
 
 	string airequip_header2
 	{
 		string	"_Item to install after removal"
-		pos		"649 185"
+		pos		"545 185"
 		font	f_small
 		color	"0 .78 0 1"
-		align	cc
+		align	cl
 	}
 
 	string airequip_header3
 	{
 		string	"_Ammo fitting this weapon"
-		pos		"649 320"
+		pos		"545 320"
 		font	f_small
 		color	"0 .78 0 1"
-		align	cc
+		align	cl
 	}
 
 	pic airequip_slot0
