@@ -2953,26 +2953,44 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteShort(sb, aircraft->time);
 			MSG_WriteShort(sb, aircraft->point);
 			/* save weapon slots */
-			cnt = AII_GetSlotItems(AC_ITEM_WEAPON, aircraft);
-			MSG_WriteByte(sb, cnt);
-			for (l = 0; l < MAX_AIRCRAFTSLOT; l++) {
+			MSG_WriteByte(sb, aircraft->maxWeapons);
+			for (l = 0; l < aircraft->maxWeapons; l++) {
 				if (aircraft->weapons[l].itemIdx >= 0) {
 					MSG_WriteString(sb, aircraftItems[aircraft->weapons[l].itemIdx].id);
+					MSG_WriteShort(sb, aircraft->weapons[l].ammoLeft);
+					MSG_WriteShort(sb, aircraft->weapons[l].delayNextShot);
+					MSG_WriteShort(sb, aircraft->weapons[l].installationTime);
 					/* if there is no ammo MSG_WriteString will write an empty string */
 					MSG_WriteString(sb, aircraftItems[aircraft->weapons[l].ammoIdx].id);
+				} else {
+					MSG_WriteString(sb, "skip");
+					MSG_WriteShort(sb, 0);
+					MSG_WriteShort(sb, 0);
+					MSG_WriteShort(sb, 0);
+					/* if there is no ammo MSG_WriteString will write an empty string */
+					MSG_WriteString(sb, "skip");
 				}
 			}
 			/* save shield slots - currently only one */
 			cnt = AII_GetSlotItems(AC_ITEM_SHIELD, aircraft);
-			MSG_WriteByte(sb, cnt);
-			if (cnt)
+			MSG_WriteByte(sb, 1);
+			if (aircraft->shield.itemIdx >= 0) {
 				MSG_WriteString(sb, aircraftItems[aircraft->shield.itemIdx].id);
+				MSG_WriteShort(sb, aircraft->shield.installationTime);
+			} else {
+				MSG_WriteString(sb, "skip");
+				MSG_WriteShort(sb, 0);
+			}
 			/* save electronics slots */
-			cnt = AII_GetSlotItems(AC_ITEM_ELECTRONICS, aircraft);
-			MSG_WriteByte(sb, cnt);
-			for (l = 0; l < MAX_AIRCRAFTSLOT; l++) {
-				if (aircraft->electronics[l].itemIdx >= 0)
+			MSG_WriteByte(sb, aircraft->maxElectronics);
+			for (l = 0; l < aircraft->maxElectronics; l++) {
+				if (aircraft->electronics[l].itemIdx >= 0) {
 					MSG_WriteString(sb, aircraftItems[aircraft->electronics[l].itemIdx].id);
+					MSG_WriteShort(sb, aircraft->electronics[l].installationTime);
+				} else {
+					MSG_WriteString(sb, "skip");
+					MSG_WriteShort(sb, 0);
+				}
 			}
 			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++)
 				MSG_WriteShort(sb, aircraft->teamIdxs[l]);
@@ -3146,11 +3164,25 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			/* read weapon slot */
 			amount = MSG_ReadByte(sb);
 			for (l = 0; l < amount; l++) {
-				tech = RS_GetTechByProvided(MSG_ReadString(sb));
-				if (tech)
-					AII_AddItemToSlot(tech, aircraft->weapons);
-				/* TODO: check for loaded ammo */
-				MSG_ReadString(sb);
+				/* check that there are enough slots in this aircraft */
+				if (l < aircraft->maxWeapons) {
+					tech = RS_GetTechByProvided(MSG_ReadString(sb));
+					if (tech)
+						AII_AddItemToSlot(tech, aircraft->weapons + l);
+					aircraft->weapons[l].ammoLeft = MSG_ReadShort(sb);
+					aircraft->weapons[l].delayNextShot = MSG_ReadShort(sb);
+					aircraft->weapons[l].installationTime = MSG_ReadShort(sb);
+					tech = RS_GetTechByProvided(MSG_ReadString(sb));
+					if (tech)
+						aircraft->weapons[l].ammoIdx = AII_GetAircraftItemByID(tech->provides);
+				} else {
+					/* just in case there are less slots in new game that in saved one */
+					MSG_ReadString(sb);
+					MSG_ReadShort(sb);
+					MSG_ReadShort(sb);
+					MSG_ReadShort(sb);
+					MSG_ReadString(sb);
+				}
 			}
 			/* check for shield slot */
 			/* there is only one shield - but who knows - breaking the savegames if this changes
@@ -3160,13 +3192,21 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 				tech = RS_GetTechByProvided(MSG_ReadString(sb));
 				if (tech)
 					AII_AddItemToSlot(tech, &aircraft->shield);
+				aircraft->shield.installationTime = MSG_ReadShort(sb);
 			}
 			/* read electronics slot */
 			amount = MSG_ReadByte(sb);
 			for (l = 0; l < amount; l++) {
-				tech = RS_GetTechByProvided(MSG_ReadString(sb));
-				if (tech)
-					AII_AddItemToSlot(tech, aircraft->electronics);
+				/* check that there are enough slots in this aircraft */
+				if (l < aircraft->maxElectronics) {
+					tech = RS_GetTechByProvided(MSG_ReadString(sb));
+					if (tech)
+						AII_AddItemToSlot(tech, aircraft->electronics + l);
+					aircraft->electronics[l].installationTime = MSG_ReadShort(sb);
+				} else {
+					MSG_ReadString(sb);
+					MSG_ReadShort(sb);
+				}
 			}
 			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++)
 				aircraft->teamIdxs[l] = MSG_ReadShort(sb);
