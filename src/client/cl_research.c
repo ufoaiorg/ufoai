@@ -2329,6 +2329,17 @@ qboolean RS_ScriptSanityCheck (void)
 				Com_Printf("...... technology '%s' doesn't provide anything\n", t->id);
 			}
 		}
+
+		if (t->produceTime == 0)
+			Com_Printf("...... technology '%s' has zero (0) produceTime, is this on purpose?\n", t->id);
+		
+		if ((t->type != RS_LOGIC)
+		&&  ((!t->description.text[0]) || (t->description.text[0][0] == '_'))) {
+			if (!t->description.text[0])
+				Com_Printf("...... technology '%s' has a strange 'description' value '%s'.\n", t->id, t->description.text[0]);
+			else
+				Com_Printf("...... technology '%s' has no 'description' value.\n", t->id);
+		}
 	}
 
 	if (!error)
