@@ -141,11 +141,16 @@ qboolean Com_CheckToInventory (const inventory_t * const i, const int item, cons
 			return qfalse;
 	}
 
-	/* single item containers, e.g. hands, extension or headgear */
+	/* Single item containers, e.g. hands, extension or headgear. */
 	if (CSI->ids[container].single) {
-		/* there is already an item */
-		if (i->c[container])
+		if (i->c[container]) {
+			/* There is already an item. */
 			return qfalse;
+		} else {
+			/* Looks good - we are returning because we can ignore shape here. */
+			/** @todo Check shape and rotate model to fit inside anyway. (e.g. monomolecular blade) */
+			return qtrue;
+		}
 	}
 
 	/* check bounds */
