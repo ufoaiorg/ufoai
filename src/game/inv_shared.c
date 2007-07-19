@@ -440,8 +440,8 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 
 		if (ic && INV_LoadableInWeapon(&CSI->ods[cacheItem.t], ic->item.t)) {
 			/* @todo (or do this in two places in cl_menu.c):
-			if ( !RS_ItemIsResearched(CSI->ods[ic->item.t].id)
-				 || !RS_ItemIsResearched(CSI->ods[cacheItem.t].id) ) {
+			if (!RS_ItemIsResearched(CSI->ods[ic->item.t].id)
+				 || !RS_ItemIsResearched(CSI->ods[cacheItem.t].id)) {
 				return IA_NORELOAD;
 			} */
 			if (ic->item.a >= CSI->ods[ic->item.t].ammo

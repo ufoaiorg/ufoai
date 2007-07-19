@@ -35,9 +35,9 @@ void E_Reset(void);
 /* @todo: */
 /* MAX_EMPLOYEES_IN_BUILDING should be redefined by a config variable that is lab/workshop/quarters-specific */
 /* e.g.: */
-/* if ( !maxEmployeesInQuarter ) maxEmployeesInQuarter = MAX_EMPLOYEES_IN_BUILDING; */
-/* if ( !maxEmployeesWorkersInLab ) maxEmployeesWorkersInLab = MAX_EMPLOYEES_IN_BUILDING; */
-/* if ( !maxEmployeesInWorkshop ) maxEmployeesInWorkshop = MAX_EMPLOYEES_IN_BUILDING; */
+/* if (!maxEmployeesInQuarter) maxEmployeesInQuarter = MAX_EMPLOYEES_IN_BUILDING; */
+/* if (!maxEmployeesWorkersInLab) maxEmployeesWorkersInLab = MAX_EMPLOYEES_IN_BUILDING; */
+/* if (!maxEmployeesInWorkshop) maxEmployeesInWorkshop = MAX_EMPLOYEES_IN_BUILDING; */
 
 /** The definition of an employee */
 typedef struct employee_s {

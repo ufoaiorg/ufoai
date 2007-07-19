@@ -329,7 +329,7 @@ void CL_Sequence2D (void)
 
 			/* outside the screen? */
 			/* FIXME: We need this check - but this does not work */
-			/*if ( s2d->pos[1] >= VID_NORM_HEIGHT || s2d->pos[0] >= VID_NORM_WIDTH )
+			/*if (s2d->pos[1] >= VID_NORM_HEIGHT || s2d->pos[0] >= VID_NORM_WIDTH)
 				continue;*/
 
 			/* render */

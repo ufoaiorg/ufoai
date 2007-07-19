@@ -693,7 +693,7 @@ static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd,
 							floor = G_SpawnFloor(drop);
 
 							for (actor = g_edicts; actor < &g_edicts[globals.num_edicts]; actor++)
-								if ( actor->inuse
+								if (actor->inuse
 									 && (actor->type == ET_ACTOR || actor->type == ET_UGV)
 									 && VectorCompare(drop, actor->pos) )
 									FLOOR(actor) = FLOOR(floor);
@@ -935,7 +935,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 				floor = G_SpawnFloor(drop);
 
 				for (actor = g_edicts; actor < &g_edicts[globals.num_edicts]; actor++)
-					if ( actor->inuse
+					if (actor->inuse
 						 && (actor->type == ET_ACTOR || actor->type == ET_UGV)
 						 && VectorCompare(drop, actor->pos) )
 						FLOOR(actor) = FLOOR(floor);

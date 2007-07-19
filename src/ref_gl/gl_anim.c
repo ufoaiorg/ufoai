@@ -145,8 +145,8 @@ void Anim_Change (animState_t * as, model_t * mod, const char *name)
 		as->list[as->ladd] = anim - mod->alias.animdata;
 	} else {
 		/* don't change to same animation */
-/*		if ( anim == mod->animdata + as->list[as->lcur] ) */
-/*			return; */
+/*		if (anim == mod->animdata + as->list[as->lcur])
+			return; */
 
 		/* next animation */
 		as->ladd = LNEXT(as->lcur);

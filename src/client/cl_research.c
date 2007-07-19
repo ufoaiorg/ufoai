@@ -1780,7 +1780,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 						} else {
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
 						}
-					} else if ( (!Q_strncmp(token, "alien_dead", MAX_VAR)) ||  (!Q_strncmp(token, "alien", MAX_VAR)) ) { /* Does this only check the beginning of the string? */
+					} else if ((!Q_strncmp(token, "alien_dead", MAX_VAR)) || (!Q_strncmp(token, "alien", MAX_VAR))) { /* Does this only check the beginning of the string? */
 						/* Defines what live or dead aliens need to be collected for this item to be researchable. */
 						if (required_temp->numLinks < MAX_TECHLINKS) {
 							/* Set requirement-type. */

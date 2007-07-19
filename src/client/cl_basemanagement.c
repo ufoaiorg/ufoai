@@ -699,8 +699,8 @@ void B_SetUpBase (base_t* base)
 				Cbuf_AddText(va("%s %i;", building->onConstruct, base->idx));
 			}
 			/*
-			   if ( building->moreThanOne
-			   && building->howManyOfThisType < BASE_SIZE*BASE_SIZE )
+			   if (building->moreThanOne
+			   && building->howManyOfThisType < BASE_SIZE*BASE_SIZE)
 			   building->howManyOfThisType++;
 			 */
 
@@ -1925,8 +1925,8 @@ static void CL_SwapSkills (character_t *team[], int num)
 								+ (HOLSTER(cp2) && csi.ods[HOLSTER(cp2)->item.t].reload
 								   && skill == csi.ods[HOLSTER(cp2)->item.m].fd[weaponh_fd_idx][fmode2].weaponSkill);
 
-							if ( no1 > no2 /* more use of this skill */
-								 || (no1 && no1 == no2) ) { /* or earlier on list */
+							if (no1 > no2 /* more use of this skill */
+								 || (no1 && no1 == no2)) { /* or earlier on list */
 								tmp1 = cp1->skills[skill];
 								tmp2 = cp2->skills[skill];
 								cp1->skills[skill] = MAX(tmp1, tmp2);

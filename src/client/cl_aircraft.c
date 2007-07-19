@@ -311,8 +311,8 @@ char *AIR_AircraftStatusToName (aircraft_t * aircraft)
 	assert(aircraft);
 
 	/* display special status if base-attack affects aircraft */
-	if ( aircraft->homebase->baseStatus == BASE_UNDER_ATTACK &&
-		AIR_IsAircraftInBase(aircraft) )
+	if (aircraft->homebase->baseStatus == BASE_UNDER_ATTACK &&
+		AIR_IsAircraftInBase(aircraft))
 		return _("ON RED ALERT");
 
 	switch (aircraft->status) {

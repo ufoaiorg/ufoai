@@ -1788,7 +1788,7 @@ qboolean G_ClientCanReload (player_t *player, int entnum, shoot_types_t st)
 
 	for (container = 0; container < gi.csi->numIDs; container++)
 		for (ic = ent->i.c[container]; ic; ic = ic->next)
-			if ( INV_LoadableInWeapon(&gi.csi->ods[ic->item.t], weapon) )
+			if (INV_LoadableInWeapon(&gi.csi->ods[ic->item.t], weapon))
 				return qtrue;
 	return qfalse;
 }

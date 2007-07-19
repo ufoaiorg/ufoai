@@ -399,7 +399,7 @@ float vectoyaw (vec3_t vec)
 {
 	float yaw;
 
-	if ( /*vec[YAW] == 0 && */ vec[PITCH] == 0) {
+	if (/*vec[YAW] == 0 && */ vec[PITCH] == 0) {
 		yaw = 0;
 		if (vec[YAW] > 0)
 			yaw = 90;

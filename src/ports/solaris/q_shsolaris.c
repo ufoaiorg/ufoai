@@ -83,10 +83,10 @@ static qboolean CompareAttributes(const char *path, char *name,
 	if (stat(fn, &st) == -1)
 		return qfalse; /* shouldn't happen */
 
-	if ( ( st.st_mode & S_IFDIR ) && ( canthave & SFF_SUBDIR ) )
+	if ((st.st_mode & S_IFDIR) && (canthave & SFF_SUBDIR))
 		return qfalse;
 
-	if ( ( musthave & SFF_SUBDIR ) && !( st.st_mode & S_IFDIR ) )
+	if ((musthave & SFF_SUBDIR) && !(st.st_mode & S_IFDIR))
 		return qfalse;
 
 	return qtrue;

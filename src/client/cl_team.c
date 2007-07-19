@@ -726,7 +726,6 @@ static void CL_GenerateEquipment_f (void)
 	assert((baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase));
 
 	/* Popup if no soldiers are assigned to the current aircraft. */
-	/* if ( !baseCurrent->numHired) { */
 	if (!baseCurrent->teamNum[baseCurrent->aircraftCurrent]) {
 		MN_PopMenu(qfalse);
 		return;

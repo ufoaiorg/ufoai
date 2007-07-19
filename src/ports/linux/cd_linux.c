@@ -72,10 +72,10 @@ static void CDAudio_Eject (void)
 		return; /* no cd init'd */
 
 #if defined(__FreeBSD__) || defined(__NetBSD__)
-	if ( ioctl(cdfile, CDIOCEJECT) == -1 )
+	if (ioctl(cdfile, CDIOCEJECT) == -1)
 		Com_DPrintf("ioctl cdioeject failed\n");
 #else
-	if ( ioctl(cdfile, CDROMEJECT) == -1 )
+	if (ioctl(cdfile, CDROMEJECT) == -1)
 		Com_DPrintf("ioctl cdromeject failed\n");
 #endif
 }
@@ -89,10 +89,10 @@ static void CDAudio_CloseDoor (void)
 		return; /* no cd init'd */
 
 #if defined(__FreeBSD__) || defined(__NetBSD__)
-	if ( ioctl(cdfile, CDIOCCLOSE) == -1 )
+	if (ioctl(cdfile, CDIOCCLOSE) == -1)
 		Com_DPrintf("ioctl cdiocclose failed\n");
 #else
-	if ( ioctl(cdfile, CDROMCLOSETRAY) == -1 )
+	if (ioctl(cdfile, CDROMCLOSETRAY) == -1)
 		Com_DPrintf("ioctl cdromclosetray failed\n");
 #endif
 }
@@ -112,11 +112,11 @@ static int CDAudio_GetAudioDiskInfo (void)
 	cdValid = qfalse;
 
 #if defined(__FreeBSD__) || defined(__NetBSD__)
-	if ( ioctl(cdfile, CDIOREADTOCHEADER, &tochdr) == -1 ) {
+	if (ioctl(cdfile, CDIOREADTOCHEADER, &tochdr) == -1) {
 		Com_DPrintf("ioctl cdioreadtocheader failed\n");
 #endif
 #ifdef __linux__
-	if ( ioctl(cdfile, CDROMREADTOCHDR, &tochdr) == -1 ) {
+	if (ioctl(cdfile, CDROMREADTOCHDR, &tochdr) == -1) {
 		Com_DPrintf("ioctl cdromreadtochdr failed\n");
 #endif
 		return -1;
@@ -182,7 +182,7 @@ void CDAudio_Play (int track, qboolean looping)
 	/* don't try to play a non-audio track */
 	entry.starting_track = track;
 	entry.address_format = CD_MSF_FORMAT;
-	if ( ioctl(cdfile, CDIOREADTOCENTRYS, &entry) == -1 ) {
+	if (ioctl(cdfile, CDIOREADTOCENTRYS, &entry) == -1) {
 		Com_DPrintf("ioctl cdromreadtocentry failed\n");
 		return;
 	}
@@ -192,7 +192,7 @@ void CDAudio_Play (int track, qboolean looping)
 	/* don't try to play a non-audio track */
 	entry.cdte_track = track;
 	entry.cdte_format = CDROM_MSF;
-	if ( ioctl(cdfile, CDROMREADTOCENTRY, &entry) == -1 ) {
+	if (ioctl(cdfile, CDROMREADTOCENTRY, &entry) == -1) {
 		Com_DPrintf("ioctl cdromreadtocentry failed\n");
 		return;
 	}
@@ -221,10 +221,10 @@ void CDAudio_Play (int track, qboolean looping)
 #endif
 
 #if defined(__FreeBSD__) || defined(__NetBSD__)
-	if ( ioctl(cdfile, CDIOCPLAYTRACKS, &ti) == -1 ) {
+	if (ioctl(cdfile, CDIOCPLAYTRACKS, &ti) == -1) {
 #endif
 #if defined(__linux__)
-	if ( ioctl(cdfile, CDROMPLAYTRKIND, &ti) == -1 ) {
+	if (ioctl(cdfile, CDROMPLAYTRKIND, &ti) == -1) {
 #endif
 		Com_DPrintf("ioctl cdromplaytrkind failed\n");
 		return;
@@ -363,11 +363,11 @@ void CDAudio_Stop (void)
 		return;
 
 #if defined(__FreeBSD__) || defined(__NetBSD__)
-	if ( ioctl(cdfile, CDIOCSTOP) == -1 )
+	if (ioctl(cdfile, CDIOCSTOP) == -1)
 		Com_DPrintf("ioctl cdiocstop failed (%d)\n", errno);
 #endif
 #if defined(__linux__)
-	if ( ioctl(cdfile, CDROMSTOP) == -1 )
+	if (ioctl(cdfile, CDROMSTOP) == -1)
 #endif
 		Com_DPrintf("ioctl cdromstop failed (%d)\n", errno);
 
@@ -387,11 +387,11 @@ static void CDAudio_Pause (void)
 		return;
 
 #if defined(__FreeBSD__) || defined(__NetBSD__)
-	if ( ioctl(cdfile, CDIOCPAUSE) == -1 )
+	if (ioctl(cdfile, CDIOCPAUSE) == -1)
 		Com_DPrintf("ioctl cdiocpause failed\n");
 #endif
 #if defined(__linux__)
-	if ( ioctl(cdfile, CDROMPAUSE) == -1 )
+	if (ioctl(cdfile, CDROMPAUSE) == -1)
 		Com_DPrintf("ioctl cdrompause failed\n");
 #endif
 
@@ -414,11 +414,11 @@ static void CDAudio_Resume (void)
 		return;
 
 #if defined(__FreeBSD__) || defined(__NetBSD__)
-	if ( ioctl(cdfile, CDIOCRESUME) == -1 )
+	if (ioctl(cdfile, CDIOCRESUME) == -1)
 		Com_DPrintf("ioctl cdiocresume failed\n");
 #endif
 #if defined(__linux__)
-	if ( ioctl(cdfile, CDROMRESUME) == -1 )
+	if (ioctl(cdfile, CDROMRESUME) == -1)
 		Com_DPrintf("ioctl cdromresume failed\n");
 #endif
 	playing = qtrue;
@@ -567,7 +567,7 @@ void CDAudio_Update (void)
 		subchnl.data_len = sizeof(data);
 		subchnl.track = playTrack;
 		subchnl.data = &data;
-		if (ioctl(cdfile, CDIOCREADSUBCHANNEL, &subchnl) == -1 ) {
+		if (ioctl(cdfile, CDIOCREADSUBCHANNEL, &subchnl) == -1) {
 			Com_DPrintf("ioctl cdiocreadsubchannel failed\n");
 			playing = qfalse;
 			return;
@@ -581,7 +581,7 @@ void CDAudio_Update (void)
 #endif
 #if defined(__linux__)
 		subchnl.cdsc_format = CDROM_MSF;
-		if (ioctl(cdfile, CDROMSUBCHNL, &subchnl) == -1 ) {
+		if (ioctl(cdfile, CDROMSUBCHNL, &subchnl) == -1) {
 			Com_DPrintf("ioctl cdromsubchnl failed\n");
 			playing = qfalse;
 			return;
