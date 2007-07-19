@@ -2258,7 +2258,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 		} else {
 			if (!Q_strcmp(token, "shield")) {
 				COM_EParse(text, errhead, name);
-				return;
+				continue;
 			}
 			/* check for some standard values */
 			for (vp = aircraft_vals; vp->string; vp++)
