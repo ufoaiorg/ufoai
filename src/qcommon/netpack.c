@@ -547,7 +547,7 @@ void NET_ReadFormat (struct dbuffer *buf, const char *format, ...)
 }
 
 /**
- * @brief
+ * @brief Out of band print
  */
 void NET_OOB_Printf (struct net_stream *s, const char *format, ...)
 {

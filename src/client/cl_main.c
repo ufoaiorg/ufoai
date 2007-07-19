@@ -720,7 +720,7 @@ static void ping_callback (struct net_stream *s)
 static void CL_PingServer (serverList_t *server)
 {
 	struct net_stream *s = connect_to_host(server->node, server->service);
-	Com_DPrintf ("pinging [%s]:%s...\n", server->node, server->service);
+	Com_DPrintf("pinging [%s]:%s...\n", server->node, server->service);
 	NET_OOB_Printf(s, "info %i", PROTOCOL_VERSION);
 	set_stream_data(s, server);
 	stream_callback(s, &ping_callback);
