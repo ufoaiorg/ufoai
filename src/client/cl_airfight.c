@@ -73,6 +73,7 @@ static qboolean AIRFIGHT_AddProjectile (int idx, aircraft_t *attacker, aircraft_
 	projectile = &gd.projectiles[gd.numProjectiles];
 
 	projectile->aircraftItemsIdx = idx;
+	projectile->attackingAircraft = attacker;
 	projectile->idx = gd.numProjectiles;
 	VectorSet(projectile->pos, attacker->pos[0], attacker->pos[1], 0);
 	VectorSet(projectile->idleTarget, 0, 0, 0);
@@ -131,7 +132,7 @@ static int AIRFIGHT_ChooseWeapon (aircraft_t *shooter, aircraft_t *target)
 			continue;
 
 		/* check if there is still ammo in this weapon */
-		if (shooter->weapons[slotIdx].ammoIdx < 0 || shooter->weapons[i].ammoLeft <= 0)
+		if (shooter->weapons[i].ammoIdx < 0 || shooter->weapons[i].ammoLeft <= 0)
 			continue;
 
 		if (slotIdx == -2)
@@ -263,12 +264,15 @@ static void AIRFIGHT_RemoveProjectileAimingAircraft (aircraft_t * aircraft)
 
 /**
  * @brief Actions to execute when a fight is done.
- * @param[in] aircraft The aircraft which was destroyed (alien or phalanx).
+ * @param[in] shooter Pointer to the aircraft that fired the projectile.
+ * @param[in] aircraft Pointer to the aircraft which was destroyed (alien or phalanx).
  * @param[in] battleStatus qtrue if PHALANX won, qfalse if UFO won.
  * @note Some of these mission values are redone (and not reloaded) in CP_Load
+ * @note shooter may be NULL
+ * @sa UFO_DestroyAllUFOsOnGeoscape_f
  * @sa CP_Load
  */
-void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalanxWon)
+void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, qboolean phalanxWon)
 {
 	mission_t* ms = NULL;
 	actMis_t* mis = NULL;
@@ -341,7 +345,9 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalanxWon)
 		/* now remove the ufo from geoscape */
 		UFO_RemoveUfoFromGeoscape(aircraft);
 		/* and send our aircraft back to base */
-		AIR_AircraftReturnToBase(aircraft);
+		/* @todo check that the aircraft that launched the projectile hasn't been destroyed by another aircraft */
+		if (shooter)
+			AIR_AircraftReturnToBase(shooter);
 	} else {
 		/* Destroy the aircraft and everything onboard */
 		AIR_DestroyAircraft(aircraft);
@@ -410,7 +416,7 @@ static void AIRFIGHT_ProjectileHits (aircraftProjectile_t *projectile)
 	if (damage > 0) {
 		target->stats[AIR_STATS_DAMAGE] -= damage;
 		if (target->stats[AIR_STATS_DAMAGE] <= 0)
-			AIRFIGHT_ActionsAfterAirfight(projectile->aimedAircraft, target->type == AIRCRAFT_UFO);
+			AIRFIGHT_ActionsAfterAirfight(projectile->attackingAircraft, projectile->aimedAircraft, target->type == AIRCRAFT_UFO);
 	}
 }
 

@@ -206,8 +206,7 @@ typedef struct aircraft_s {
 	int numUpgrades;
 
 	struct actMis_s* mission;	/**< The mission the aircraft is moving to */
-	int ufo;				/**< Ufo's id the aircraft is purchasing (gd.ufos + id) */
-	struct aircraft_s *target;		/**< Target of the aircraft */
+	struct aircraft_s *target;		/**< Target of the aircraft (ufo or phalanx) */
 	radar_t	radar;			/**< Radar to track ufos */
 	int stats[AIR_STATS_MAX];	/**< aircraft parameters for speed, damage and so on */
 

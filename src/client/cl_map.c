@@ -1134,7 +1134,7 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 					MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow, qtrue);
 
 					/* Draw a circle around ufo purchased by selected aircraft */
-					if (aircraft->status == AIR_UFO && MAP_3DMapToScreen(node, (gd.ufos + aircraft->ufo)->pos, &x, &y, NULL))
+					if (aircraft->status == AIR_UFO && MAP_3DMapToScreen(node, aircraft->target->pos, &x, &y, NULL))
 						MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow, qtrue);
 				}
 
@@ -1263,7 +1263,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 					re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
 
 					/* Draw ufo purchased by selected aircraft */
-					if (aircraft->status == AIR_UFO && MAP_MapToScreen(node, (gd.ufos + aircraft->ufo)->pos, &x, &y))
+					if (aircraft->status == AIR_UFO && MAP_MapToScreen(node, aircraft->target->pos, &x, &y))
 						re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
 				}
 

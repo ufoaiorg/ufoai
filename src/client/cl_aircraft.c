@@ -594,7 +594,8 @@ void AIR_AircraftReturnToBase (aircraft_t *aircraft)
 	base_t *base;
 
 	if (aircraft && aircraft->status != AIR_HOME) {
-		base = (base_t *) aircraft->homebase;
+		base = aircraft->homebase;
+		assert(base);
 		Com_DPrintf("return '%s' (%i) to base ('%s').\n", aircraft->name, aircraft->idx, base->name);
 		MAP_MapCalcLine(aircraft->pos, base->pos, &aircraft->route);
 		aircraft->status = AIR_RETURNING;
@@ -1023,15 +1024,12 @@ void CL_CampaignRunAircraft (int dt)
 
 				/* Aircraft purchasing ufo */
 				if (aircraft->status == AIR_UFO) {
-					aircraft_t* ufo = NULL;
-
-					ufo = gd.ufos + aircraft->ufo;
 #if 0
 					/* Display airfight sequence */
 					Cbuf_ExecuteText(EXEC_NOW, "seq_start airfight");
 #endif
 					/* Solve the fight */
-					AIRFIGHT_ExecuteActions(aircraft, ufo);
+					AIRFIGHT_ExecuteActions(aircraft, aircraft->target);
 				}
 
 				/* Update delay to launch next projectile */
@@ -2593,10 +2591,10 @@ void AIR_AircraftsNotifyUfoRemoved (const aircraft_t *const ufo)
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1;
 			aircraft >= base->aircraft; aircraft--)
 			if (aircraft->status == AIR_UFO) {
-				if (ufo - gd.ufos == aircraft->ufo)
+				if (ufo == aircraft->target)
 					AIR_AircraftReturnToBase(aircraft);
-				else if (ufo - gd.ufos < aircraft->ufo)
-					aircraft->ufo--;
+				else if (ufo < aircraft->target)
+					aircraft->target--;
 			}
 }
 
@@ -2614,7 +2612,7 @@ void AIR_AircraftsUfoDisappear (const aircraft_t *const ufo)
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1;
 			aircraft >= base->aircraft; aircraft--)
 			if (aircraft->status == AIR_UFO)
-				if (ufo - gd.ufos == aircraft->ufo)
+				if (ufo == aircraft->target)
 					AIR_AircraftReturnToBase(aircraft);
 }
 
@@ -2647,7 +2645,7 @@ void AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
 	aircraft->status = AIR_UFO;
 	aircraft->time = 0;
 	aircraft->point = 0;
-	aircraft->ufo = num;
+	aircraft->target = ufo;
 }
 
 /**

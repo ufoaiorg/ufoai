@@ -33,6 +33,7 @@ typedef struct aircraftProjectile_s {
 	vec3_t pos;				/**< position of the projectile (latitude and longitude) */
 	vec3_t idleTarget;		/**< target of the projectile
 							 ** used only if the projectile will miss its target (that is if aimedAircraft is NULL) */
+	aircraft_t * attackingAircraft;	/**< Aircraft which shooted the projectile */
 	aircraft_t * aimedAircraft;	/**< target of the projectile/
 							 	 ** used only if the projectile will touch its target (otherwise it's NULL) */
 	int time;				/**< time since the projectile has been launched */
@@ -40,7 +41,7 @@ typedef struct aircraftProjectile_s {
 } aircraftProjectile_t;
 
 extern void AIRFIGHT_ExecuteActions(aircraft_t* air, aircraft_t* ufo);
-extern void AIRFIGHT_ActionsAfterAirfight(aircraft_t* aircraft, qboolean phalanxWon);
+extern void AIRFIGHT_ActionsAfterAirfight(aircraft_t* shooter, aircraft_t* aircraft, qboolean phalanxWon);
 extern void AIRFIGHT_CampaignRunProjectiles(int dt);
 
 #endif /* CLIENT_CL_AIRFIGHT_H */

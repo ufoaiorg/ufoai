@@ -472,7 +472,7 @@ static void UFO_DestroyAllUFOsOnGeoscape_f (void)
 	}
 
 	for (i = 0; i < gd.numUfos; i++)
-		AIRFIGHT_ActionsAfterAirfight(&gd.ufos[i], qtrue);
+		AIRFIGHT_ActionsAfterAirfight(NULL, &gd.ufos[i], qtrue);
 }
 #endif
 
