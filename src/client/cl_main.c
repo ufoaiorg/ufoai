@@ -1768,6 +1768,38 @@ static void CL_ParseScriptSecond (const char *type, const char *name, const char
 		AIR_ParseAircraft(name, text, qtrue);
 }
 
+/** @brief struct that holds the sanity check data */
+typedef struct {
+	qboolean (*check)(void);	/**< function pointer to check function */
+	const char* name;			/**< name of the subsystem to check */
+} sanity_functions_t;
+
+/** @brief Data for sanity check of parsed script data */
+static const sanity_functions_t sanity_functions[] = {
+	{B_ScriptSanityCheck, "buildings"},
+	{RS_ScriptSanityCheck, "tech"},
+
+	{NULL, NULL}
+};
+
+/**
+ * @brief Check the parsed script values for errors after parsing every script file
+ * @sa CL_ReadSinglePlayerData
+ */
+static void CL_ScriptSanityCheck (void)
+{
+	qboolean status;
+	const sanity_functions_t *s;
+
+	Com_Printf("Sanity check for script data\n");
+	s = sanity_functions;
+	while (s->check) {
+		status = s->check();
+		Com_Printf("...%s %s\n", s->name, (status ? "ok" : "failed"));
+		s++;
+	}
+}
+
 /**
  * @brief Read the data into gd for singleplayer campaigns
  * @sa SAV_GameLoad
@@ -1804,6 +1836,9 @@ void CL_ReadSinglePlayerData (void)
 	Com_Printf("...ranks: %i\n", gd.numRanks);
 	Com_Printf("...nations: %i\n", gd.numNations);
 	Com_Printf("\n");
+
+	/* now check the parsed values for errors that are not catched at parsing stage */
+	CL_ScriptSanityCheck();
 }
 
 /**

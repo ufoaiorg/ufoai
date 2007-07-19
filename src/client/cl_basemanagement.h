@@ -291,12 +291,6 @@ aircraft_t *B_GetAircraftFromBaseByIndex(base_t* base, int index);
 void B_ReviveSoldiersInBase(base_t* base); /* @todo */
 
 int B_GetAvailableQuarterSpace(const base_t* const base);
-#if 0
-/*
-@10042007 Zenerka - not needed/used anymore.
-*/
-int B_GetAvailableLabSpace(const base_t* const base);
-#endif
 int B_GetEmployeeCount(const base_t* const base);
 
 qboolean B_CheckBuildingTypeStatus(const base_t* const base, buildingType_t type, buildingStatus_t status, int *cnt);
@@ -306,5 +300,7 @@ void CL_DropshipReturned(base_t* base, aircraft_t* aircraft);
 
 void B_UpdateBaseCapacities(baseCapacities_t cap, base_t *base);
 qboolean B_UpdateStorageAndCapacity(base_t* base, int objIDX, int amount, qboolean reset);
+
+qboolean B_ScriptSanityCheck(void);
 
 #endif /* CLIENT_CL_BASEMANGEMENT_H */

@@ -2302,3 +2302,29 @@ qboolean RS_ResearchAllowed (void)
 		return qfalse;
 	}
 }
+
+/**
+ * @brief Checks the parsed tech data for errors
+ * @return false if there are errors - true otherwise
+ */
+qboolean RS_ScriptSanityCheck (void)
+{
+	int i, error = 0;
+	technology_t *t;
+
+	for (i = 0, t = gd.technologies; i < gd.numTechnologies; i++, t++) {
+		if (!t->name) {
+			error++;
+			Com_Printf("...... technology '%s' has no name\n", t->id);
+		}
+		if (!t->provides) {
+			error++;
+			Com_Printf("...... technology '%s' doesn't provide anything\n", t->id);
+		}
+	}
+
+	if (!error)
+		return qtrue;
+	else
+		return qfalse;
+}
