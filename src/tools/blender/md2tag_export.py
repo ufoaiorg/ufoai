@@ -8,7 +8,7 @@ Tooltip: 'Export to Quake2 tag file format for UFO:AI (.tag).'
 """
 
 __author__ = 'Werner Hoehrer'
-__version__ = '0.0.6'
+__version__ = '0.0.7'
 __url__ = ["UFO: Alien Invasion, http://ufoai.sourceforge.net",
      "Support forum, http://ufoai.ninex.info/phpBB2/index.php", "blender", "ufoai"]
 __email__ = ["Werner Hoehrer, bill_spam2:yahoo*de", "scripts"]
@@ -72,12 +72,12 @@ def asciiz (s):
 # Apply a matrix to a vert and return a tuple.
 #	http://en.wikibooks.org/wiki/Blender_3D:_Blending_Into_Python/Cookbook#Apply_Matrix
 ######################################################
-def apply_transform(verts, matrix):
-	x, y, z = verts
-	return\
-	x*matrix[0][0] + y*matrix[1][0] + z*matrix[2][0] + matrix[3][0],\
-	x*matrix[0][1] + y*matrix[1][1] + z*matrix[2][1] + matrix[3][1],\
-	x*matrix[0][2] + y*matrix[1][2] + z*matrix[2][2] + matrix[3][2]
+#def apply_transform(verts, matrix):
+#	x, y, z = verts
+#	return\
+#	x*matrix[0][0] + y*matrix[1][0] + z*matrix[2][0] + matrix[3][0],\
+#	x*matrix[0][1] + y*matrix[1][1] + z*matrix[2][1] + matrix[3][1],\
+#	x*matrix[0][2] + y*matrix[1][2] + z*matrix[2][2] + matrix[3][2]
 
 ######################################################
 # Get Angle between 3 points
@@ -289,10 +289,10 @@ class md2_tag:
 	def save(self, file):
 		# Prepare temp data for export with transformed axes.
 		temp_data=(
-		-self.origin[1], self.origin[0], self.origin[2],
 		-self.axis3[1], self.axis3[0], self.axis3[2],
 		-self.axis2[1], self.axis2[0], self.axis2[2],
-		-self.axis1[1], self.axis1[0], self.axis1[2]
+		-self.axis1[1], self.axis1[0], self.axis1[2],
+		-self.origin[1], self.origin[0], self.origin[2]
 		)
 
 		# Apply scale to tempdata if it was set in the dialog.
@@ -509,10 +509,13 @@ def fill_md2_tags(md2_tags, object):
 		print tag_frames[frame_counter].origin[0], " ",tag_frames[frame_counter].origin[1]," ",tag_frames[frame_counter].origin[2]
 		# Calculate local axes ... starting from 'loc' (see http://wiki.blenderpython.org/index.php/Python_Cookbook#Apply_Matrix)
 		# The scale of the empty is ignored right now.
-		matrix=object.getMatrix()
-		tag_frames[frame_counter].axis1 = apply_transform((1.0,0.0,0.0), matrix) #calculate point (loc + local-X * 1 )
-		tag_frames[frame_counter].axis2 = apply_transform((0.0,1.0,0.0), matrix) #calculate point (loc + local-Y * 1 )
-		tag_frames[frame_counter].axis3 = apply_transform((0.0,0.0,1.0), matrix) #calculate point (loc + local-Z * 1 )
+		matrix = object.getMatrix()
+		#tag_frames[frame_counter].axis1 = apply_transform((1.0,0.0,0.0), matrix) #calculate point (loc + local-X * 1 )
+		#tag_frames[frame_counter].axis2 = apply_transform((0.0,1.0,0.0), matrix) #calculate point (loc + local-Y * 1 )
+		#tag_frames[frame_counter].axis3 = apply_transform((0.0,0.0,1.0), matrix) #calculate point (loc + local-Z * 1 )
+		tag_frames[frame_counter].axis1 = (matrix[0][0], matrix[0][1], matrix[0][2])
+		tag_frames[frame_counter].axis2 = (matrix[1][0], matrix[1][1], matrix[1][2])
+		tag_frames[frame_counter].axis3 = (matrix[2][0], matrix[2][1], matrix[2][2])
 		frame_counter += 1
 
 	# Restore curframe from before the calculation.
