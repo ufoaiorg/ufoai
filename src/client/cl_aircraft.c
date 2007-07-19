@@ -2971,3 +2971,18 @@ qboolean AIR_AircraftAllowed (void)
 		return qfalse;
 	}
 }
+
+/**
+ * @brief Checks the parsed buildings for errors
+ * @return false if there are errors - true otherwise
+ */
+qboolean AIR_ScriptSanityCheck (void)
+{
+	int error = 0;
+	/* @todo: Implement me */
+
+	if (!error)
+		return qtrue;
+	else
+		return qfalse;
+}

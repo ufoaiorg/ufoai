@@ -95,7 +95,7 @@ typedef struct aircraftItem_s {
 	char *weapon;		/**< if this is ammo there must be a weapon */
 	float stats[AIR_STATS_MAX];	/**< All coefficient that can affect aircraft->stats */
 	itemWeight_t itemWeight;	/**< The weight of the item (which must be smaller that slot size) */
-	float weaponDamage;			/**< The base damage inflicted by an ammo */	
+	float weaponDamage;			/**< The base damage inflicted by an ammo */
 	float weaponSpeed;			/**< The speed of the projectile on geoscape */
 	float weaponDelay;			/**< The minimum delay between 2 shots */
 	int ammo;					/**< The total number of ammo that can be fired */
@@ -285,6 +285,7 @@ extern void AIR_AircraftsNotifyUfoRemoved(const aircraft_t *const ufo);
 extern void AIR_AircraftsUfoDisappear(const aircraft_t *const ufo);
 void AIR_UpdateHangarCapForAll(int base_idx);
 extern qboolean AIR_AircraftAllowed(void);
+qboolean AIR_ScriptSanityCheck(void);
 
 char* AII_WeightToName(itemWeight_t weight);
 

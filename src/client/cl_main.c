@@ -1778,6 +1778,7 @@ typedef struct {
 static const sanity_functions_t sanity_functions[] = {
 	{B_ScriptSanityCheck, "buildings"},
 	{RS_ScriptSanityCheck, "tech"},
+	{AIR_ScriptSanityCheck, "aircraft"},
 
 	{NULL, NULL}
 };
