@@ -350,7 +350,6 @@ aircraft craft_ufo_condor
 	scale_equip	"0.9 0.9 0.9"
 	slot {
 		type		weapon
-		position	nose_center
 		size		light
 		contains	rs_craft_weapon_sparrowhawk
 		ammo		rs_craft_ammo_sparrowhawk
@@ -385,29 +384,24 @@ aircraft craft_ufo_scout
 	scale_equip	"0.9 0.9 0.9"
 	slot {
 		type		weapon
-		position	nose_center
 		size		light
 		contains	rs_craft_weapon_sparrowhawk
 		ammo		rs_craft_ammo_sparrowhawk
 	}
 	slot {
 		type		weapon
-		position	wing_left
 		size		medium
 	}
 	slot {
 		type		weapon
-		position	wing_right
 		size		medium
 	}
 	slot {
 		type		electronics
-		position	wing_left
 		contains	rs_craft_el_fuelpod
 	}
 	slot {
 		type		electronics
-		position	wing_right
 	}
 }
 
@@ -440,7 +434,6 @@ aircraft craft_ufo_fighter
 	scale_equip	"1.1 1.1 1.1"
 	slot {
 		type		weapon
-		position	nose_center
 		size		light
 		contains	rs_craft_weapon_sparrowhawk
 		ammo		rs_craft_ammo_sparrowhawk

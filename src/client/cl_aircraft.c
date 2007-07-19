@@ -2948,7 +2948,8 @@ qboolean AIR_AircraftAllowed (void)
  */
 qboolean AIR_ScriptSanityCheck (void)
 {
-	int i, error = 0;
+	int i, j, k, error = 0;
+	int var;
 	aircraft_t* a;
 
 	for (i = 0, a = aircraft_samples; i < numAircraft_samples; i++, a++) {
@@ -2959,6 +2960,33 @@ qboolean AIR_ScriptSanityCheck (void)
 		if (!a->shortname) {
 			error++;
 			Com_Printf("...... aircraft '%s' has no shortname\n", a->id);
+		}
+
+		/* check that every weapons fits slot */
+		for (j = 0; j < a->maxWeapons - 1; j++)
+			if (a->weapons[j].itemIdx > -1 && aircraftItems[a->weapons[j].itemIdx].itemWeight > a->weapons[j].size) {
+				error++;
+				Com_Printf("...... aircraft '%s' has an item (%s) too heavy for its slot\n", a->id, aircraftItems[a->weapons[j].itemIdx].id);
+			}
+
+		/* check that every slots has a different location for PHALANX aircraft (not needed for UFOs) */
+		if (a->type != AIRCRAFT_UFO) {
+			for (j = 0; j < a->maxWeapons - 1; j++) {
+				var = a->weapons[j].pos;
+				for (k = j + 1; k < a->maxWeapons; k++)
+					if (var == a->weapons[k].pos) {
+						error++;
+						Com_Printf("...... aircraft '%s' has 2 weapons slots at the same location\n", a->id);
+					}
+			}
+			for (j = 0; j < a->maxElectronics - 1; j++) {
+				var = a->electronics[j].pos;
+				for (k = j + 1; k < a->maxElectronics; k++)
+					if (var == a->electronics[k].pos) {
+						error++;
+						Com_Printf("...... aircraft '%s' has 2 electronics slots at the same location\n", a->id);
+					}
+			}
 		}
 	}
 

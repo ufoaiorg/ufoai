@@ -74,7 +74,8 @@ typedef enum {
 	AIR_STATS_MAX
 } aircraftParams_t;
 
-/** @brief different weight for aircraft items */
+/** @brief different weight for aircraft items
+ * @note values must go from the lightest to the heaviest item */
 typedef enum {
 	ITEM_LIGHT,
 	ITEM_MEDIUM,
@@ -188,10 +189,10 @@ typedef struct aircraft_s {
 	int teamIdxs[MAX_ACTIVETEAM];	/**< array of team members on board employee idx*/
 
 	aircraftSlot_t weapons[MAX_AIRCRAFTSLOT];	/**< Weapons assigned to aircraft */
-	int maxWeapons;
-	aircraftSlot_t shield;			/**< Armour assigned to aircraft (1 maximum ?) */
+	int maxWeapons;					/**< Total number of weapon slots aboard this aircraft */
+	aircraftSlot_t shield;			/**< Armour assigned to aircraft (1 maximum) */
 	aircraftSlot_t electronics[MAX_AIRCRAFTSLOT];		/**< Electronics assigned to aircraft */
-	int maxElectronics;
+	int maxElectronics;				/**< Total number of electronics slots aboard this aircraft */
 
 	mapline_t route;
 	struct base_s *homebase;				/**< Pointer to homebase for faster access. See also idxBase */
