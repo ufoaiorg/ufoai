@@ -96,7 +96,7 @@ inventory equip
 // Headgear slot (WIP)
 inventory headgear
 {
-	shape	"0 0 2 2"
+	shape	"0 0 2 1"
 	single	true
 	headgear	true
 	in		1
