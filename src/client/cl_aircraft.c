@@ -2533,6 +2533,10 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 	if (aircraft->fuel > aircraft->stats[AIR_STATS_FUELSIZE])
 		aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
 
+	/* check that speed of the aircraft is positive */
+	if (aircraft->stats[AIR_STATS_SPEED] < 1 )
+		aircraft->stats[AIR_STATS_SPEED] = 1;
+
 	/* Update aircraft state if needed */
 	if (aircraft->status == AIR_HOME && aircraft->fuel < aircraft->stats[AIR_STATS_FUELSIZE])
 		aircraft->status = AIR_REFUEL;

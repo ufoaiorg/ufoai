@@ -507,8 +507,6 @@ craftitem craft_weapon_sparrowhawk
 	weight		light
 	installationTime	2
 	price		12321
-
-	speed		-10
 }
 
 craftitem craft_ammo_sparrowhawk
@@ -534,7 +532,7 @@ craftitem craft_weapon_tr20
 	installationTime	2
 	price		19998
 
-	speed		-14
+	speed		.9
 }
 
 craftitem craft_ammo_tr20
@@ -561,7 +559,7 @@ craftitem craft_weapon_particle_beam
 	price		25252
 
 	wdamage		35
-	speed		0.75
+	speed		0.8
 	wrange		70
 }
 
@@ -594,7 +592,7 @@ craftitem craft_shield_polymer
 	price		16000
 
 	shield		+5
-	speed		0.95
+	speed		0.9
 }
 
 craftitem craft_shield_plating
