@@ -829,7 +829,7 @@ menu mp_bookmarks
 		pos	"500 70"
 		out	{ *string_serverbrowser color "0 0.5 0 1" *button_serverbrowser image menu/multi_buttons3 }
 		in	{ *string_serverbrowser color "1 1 1 1" *button_serverbrowser image menu/multi_buttons3a }
-		click	{ cmd "mn_pop esc; mn_push multiplayer;pingservers;" }
+		click	{ cmd "mn_escpop 1;mn_pop esc;mn_push multiplayer;pingservers;mn_escpop 3;" }
 	}
 	pic button_bookmarks
 	{
