@@ -992,7 +992,7 @@ void CL_CampaignRunAircraft (int dt)
 							aircraft->status = AIR_DROP;
 							/* set baseCurrent information so the
 							 * correct team goes to the mission */
-							baseCurrent = (base_t*)aircraft->homebase;
+							baseCurrent = aircraft->homebase;
 							assert(i == aircraft->idxInBase); /* Just in case the index is out of sync. */
 							baseCurrent->aircraftCurrent = aircraft->idxInBase;
 							MAP_SelectMission(aircraft->mission);
@@ -1002,7 +1002,7 @@ void CL_CampaignRunAircraft (int dt)
 							break;
 						case AIR_RETURNING:
 							/* aircraft enter in  homebase */
-							CL_DropshipReturned((base_t*)aircraft->homebase, aircraft);
+							CL_DropshipReturned(aircraft->homebase, aircraft);
 							aircraft->status = AIR_REFUEL;
 							break;
 						case AIR_TRANSPORT:
@@ -2767,9 +2767,6 @@ void AIR_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft, int employee_
 qboolean AIR_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx)
 {
 	int i;
-#if defined (DEBUG) || defined (PARANOID)
-	base_t* base;
-#endif
 
 	if (aircraft == NULL) {
 		Com_DPrintf("AIR_IsInAircraftTeam: No aircraft given\n");
@@ -2777,16 +2774,15 @@ qboolean AIR_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx)
 	}
 #ifdef PARANOID
 	else {
-		base = aircraft->homebase;
-		Com_DPrintf("AIR_IsInAircraftTeam: aircraft: '%s' (base: '%s')\n", aircraft->name, base->name);
+		if (aircraft->homebase)
+			Com_DPrintf("AIR_IsInAircraftTeam: aircraft: '%s' (base: '%s')\n", aircraft->name, aircraft->homebase->name);
 	}
 #endif
 
 	for (i = 0; i < aircraft->size; i++)
 		if (aircraft->teamIdxs[i] == employee_idx) {
 #ifdef DEBUG
-			base = (base_t*)(aircraft->homebase);
-			Com_DPrintf("AIR_IsInAircraftTeam: found idx '%d' (homebase: '%s' - baseCurrent: '%s') \n", employee_idx, base ? base->name : "", baseCurrent ? baseCurrent->name : "");
+			Com_DPrintf("AIR_IsInAircraftTeam: found idx '%d' (homebase: '%s' - baseCurrent: '%s') \n", employee_idx, aircraft->homebase ? aircraft->homebase->name : "", baseCurrent ? baseCurrent->name : "");
 #endif
 			return qtrue;
 		}

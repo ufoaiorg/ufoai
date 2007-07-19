@@ -1279,7 +1279,7 @@ void CL_RemoveSoldierFromAircraft (int employee_idx, int aircraft_idx, int base_
 
 	aircraft = AIR_AircraftGetFromIdx(aircraft_idx);
 
-	assert(base == (base_t *) aircraft->homebase);
+	assert(base == aircraft->homebase);
 
 	Com_DPrintf("CL_RemoveSoldierFromAircraft: base: %i - aircraftID: %i - aircraft_idx: %i\n", base->idx, aircraft->idx, aircraft_idx);
 

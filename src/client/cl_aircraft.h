@@ -194,8 +194,8 @@ typedef struct aircraft_s {
 	int maxElectronics;
 
 	mapline_t route;
-	void *homebase;				/**< Pointer to homebase for faster access. See also idxBase. */
-	void *transferBase;			/**< Pointer to the base we are transfering equipment to */
+	struct base_s *homebase;				/**< Pointer to homebase for faster access. See also idxBase */
+	struct base_s *transferBase;			/**< Pointer to the base we are transfering equipment to */
 	aliensTmp_t aliencargo[MAX_CARGO];	/**< Cargo of aliens. */
 	int alientypes;				/**< How many types of aliens we collected. */
 	itemsTmp_t itemcargo[MAX_CARGO];	/**< Cargo of items. */

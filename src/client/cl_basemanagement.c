@@ -2897,7 +2897,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 qboolean B_Save (sizebuf_t* sb, void* data)
 {
 	int i, k, l, cnt;
-	base_t *b, *transferBase;
+	base_t *b;
 	aircraft_t *aircraft;
 	building_t *building;
 
@@ -2947,8 +2947,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteShort(sb, aircraft->idx);
 			MSG_WriteByte(sb, aircraft->status);
 			MSG_WriteLong(sb, aircraft->fuel);
-			transferBase = (base_t*)aircraft->transferBase;
-			MSG_WriteShort(sb, transferBase ? transferBase->idx : -1);
+			MSG_WriteShort(sb, aircraft->transferBase ? aircraft->transferBase->idx : -1);
 			MSG_WritePos(sb, aircraft->pos);
 			MSG_WriteShort(sb, aircraft->time);
 			MSG_WriteShort(sb, aircraft->point);
