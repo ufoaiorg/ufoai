@@ -138,7 +138,7 @@ static qboolean CL_LanguageTest (const char *localeID)
 	Com_DPrintf("Sys_TestLanguage()... using mo files from %s\n", languagePath);
 	Q_strcat(languagePath, localeID, sizeof(languagePath));
 	Q_strcat(languagePath, "/LC_MESSAGES/ufoai.mo", sizeof(languagePath));
-	
+
 #ifdef _WIN32
 	if ((Q_putenv("LANGUAGE", localeID) == 0) && FS_FileExists(languagePath)) {
 		Com_DPrintf("CL_LanguageTest()... locale %s found.\n", localeID);
@@ -146,7 +146,7 @@ static qboolean CL_LanguageTest (const char *localeID)
 	} else {
 		Com_DPrintf("CL_LanguageTest()... locale %s not found.\n", localeID);
 		return qfalse;
-	}		
+	}
 #else
 	for (i = 0, language = languageList; i < languageCount; language = language->next, i++) {
 		if (!Q_strcmp(localeID, language->localeID))
@@ -207,7 +207,7 @@ void CL_LanguageInit (void)
 		else {
 			/* Setting to en will always work in every windows. */
 			Q_strncpyz(deflang, "en", MAX_VAR);
-		}	
+		}
 #else
 		/* Calling with NULL param should return current system settings. */
 		Q_strncpyz(deflang, setlocale(LC_MESSAGES, NULL), MAX_VAR);
@@ -215,7 +215,7 @@ void CL_LanguageInit (void)
 			Q_strncpyz(deflang, "C", MAX_VAR);
 #endif
 	}
-	
+
 	Com_DPrintf("CL_LanguageInit()... deflang: %s\n", deflang);
 
 	menu = MN_GetMenu("options_game");
@@ -225,12 +225,11 @@ void CL_LanguageInit (void)
 	if (!languageOptions)
 		Sys_Error("Could not find node select_language in menu options_game\n");
 	for (i = 0, language = languageList; i < languageCount; language = language->next, i++) {
-		/* No language option available only for DEBUG. */
-		if (Q_strncmp(language->localeID, "none", 4) == 0) {
 #ifndef DEBUG
+		/* No language option available only for DEBUG. */
+		if (!Q_strncmp(language->localeID, "none", 4))
 			continue;
 #endif
-		}
 		/* Test the locale first, add to list if setting given locale possible. */
 		if (CL_LanguageTest(language->localeID) || (Q_strncmp(language->localeID, "none", 4) == 0)) {
 			selectBoxOption = MN_AddSelectboxOption(languageOptions);
@@ -241,6 +240,7 @@ void CL_LanguageInit (void)
 		}
 	}
 
+
 	menu = MN_GetMenu("checkcvars");
 	if (!menu)
 		Sys_Error("Could not find menu checkcvars\n");
@@ -248,12 +248,11 @@ void CL_LanguageInit (void)
 	if (!languageOptions)
 		Sys_Error("Could not find node select_language in menu checkcvars\n");
 	for (i = 0, language = languageList; i < languageCount; language = language->next, i++) {
-		/* No language option available only for DEBUG. */
-		if (Q_strncmp(language->localeID, "none", 4) == 0) {
 #ifndef DEBUG
+		/* No language option available only for DEBUG. */
+		if (!Q_strncmp(language->localeID, "none", 4))
 			continue;
 #endif
-		}			
 		/* Test the locale first, add to list if setting given locale possible. */
 		if (CL_LanguageTest(language->localeID) || (Q_strncmp(language->localeID, "none", 4) == 0)) {
 			selectBoxOption = MN_AddSelectboxOption(languageOptions);
@@ -304,14 +303,14 @@ qboolean CL_LanguageTryToSet (const char *localeID)
 	}
 	do {
 		Cvar_Set("s_language", mapping->localeMapping);
-#if _WIN32
+#ifdef _WIN32
 		Com_Printf("CL_LanguageTryToSet: %s\n", mapping->localeMapping);
 		Q_putenv("LANGUAGE", mapping->localeMapping);
 		Cvar_Set("s_language", language->localeID);
 		s_language->modified = qfalse;
 		return qtrue;
 #else
-		if(setlocale(LC_MESSAGES, mapping->localeMapping)) {
+		if (setlocale(LC_MESSAGES, mapping->localeMapping)) {
 			Cvar_Set("s_language", language->localeID);
 			s_language->modified = qfalse;
 			return qtrue;
