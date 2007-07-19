@@ -370,7 +370,7 @@ void TR_TransferEnd (transferlist_t *transfer)
 			   Second step: use fuel/range limits when calculating this. */
 		} else {
 			/* @todo: stuff about changing homebase for aircraft. */
-			/* This includes an update of ac->idxBase, ac->idxInBase, ac->homebase, base->numAircraft base->aircraft[] and a lot more. */
+			/* This includes an update of ac->idxInBase, ac->homebase, base->numAircraft base->aircraft[] and a lot more. */
 			MN_AddNewMessage(_("Transport mission"),
 			_("Transport mission ended, aircraft assigned to new base."), qfalse, MSG_TRANSFERFINISHED, NULL);
 		}

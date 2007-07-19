@@ -1251,19 +1251,17 @@ qboolean CL_SoldierAwayFromBase (employee_t *employee)
  * @brief Removes a soldier from an aircraft.
  * @param[in] employee_idx The index of the soldier in the global list.
  * @param[in] aircraft_idx The global index of aircraft. Use -1 to remove the soldier from any aircraft.
- * @param[in] base_idx The index of base where employee is hired.
+ * @param[in] base Pointer to the base where employee is hired.
  */
-void CL_RemoveSoldierFromAircraft (int employee_idx, int aircraft_idx, int base_idx)
+void CL_RemoveSoldierFromAircraft (int employee_idx, int aircraft_idx, base_t *base)
 {
 	aircraft_t *aircraft;
-	base_t *base;
 	int i;
 
 	if (employee_idx < 0)
 		return;
 
-	base = &gd.bases[base_idx];
-	assert (base);
+	assert(base);
 
 	if (aircraft_idx < 0) {
 		/* Search if he is in _any_ aircraft and set the aircraft_idx if found.. */
@@ -1291,20 +1289,17 @@ void CL_RemoveSoldierFromAircraft (int employee_idx, int aircraft_idx, int base_
 /**
  * @brief Removes all soldiers from an aircraft.
  * @param[in] aircraft_idx The global index of aircraft.
- * @param[in] base_idx The index of the base the aircraft is located in.
+ * @param[in] base Pointer to the homebase of the aircraft.
  */
-void CL_RemoveSoldiersFromAircraft (int aircraft_idx, int base_idx)
+void CL_RemoveSoldiersFromAircraft (int aircraft_idx, base_t *base)
 {
 	int i = 0;
-	base_t *base = NULL;
 	aircraft_t* aircraft;
 
-	if (base_idx < 0)
+	if (!base)
 		return;
 
 	aircraft = AIR_AircraftGetFromIdx(aircraft_idx);
-	base = &gd.bases[base_idx];
-	assert (base);
 
 	if (aircraft->idxInBase < 0 || aircraft->idxInBase >= base->numAircraftInBase)
 		return;
@@ -1312,7 +1307,7 @@ void CL_RemoveSoldiersFromAircraft (int aircraft_idx, int base_idx)
 	/* Counting backwards because teamNum[aircraft->idx] is changed in CL_RemoveSoldierFromAircraft */
 	for (i = base->teamNum[aircraft->idxInBase]-1; i >= 0; i--) {
 		/* use global aircraft index here */
-		CL_RemoveSoldierFromAircraft(i, aircraft_idx, base_idx);
+		CL_RemoveSoldierFromAircraft(i, aircraft_idx, base);
 	}
 }
 
@@ -1425,7 +1420,7 @@ static void CL_AssignSoldier_f (void)
 		/* Remove soldier from aircraft/team. */
 		Cbuf_AddText(va("listdel%i\n", num));
 		/* use the global aircraft index here */
-		CL_RemoveSoldierFromAircraft(employee->idx, aircraft->idx, baseCurrent->idx);
+		CL_RemoveSoldierFromAircraft(employee->idx, aircraft->idx, baseCurrent);
 		Cbuf_AddText(va("listholdsnoequip%i\n", num));
 	} else {
 		Com_DPrintf("CL_AssignSoldier_f: assigning\n");

@@ -319,7 +319,7 @@ char *AIR_AircraftStatusToName (aircraft_t * aircraft)
 	assert(aircraft);
 
 	/* display special status if base-attack affects aircraft */
-	if ( gd.bases[aircraft->idxBase].baseStatus == BASE_UNDER_ATTACK &&
+	if ( aircraft->homebase->baseStatus == BASE_UNDER_ATTACK &&
 		AIR_IsAircraftInBase(aircraft) )
 		return _("ON RED ALERT");
 
@@ -828,7 +828,7 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 		return;
 	}
 
-	base = &gd.bases[aircraft->idxBase];
+	base = aircraft->homebase;
 
 	if (!base) {
 		Com_DPrintf("AIR_DeleteAircraft: No homebase found for aircraft.\n");
@@ -837,7 +837,7 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 	}
 
 	/* Remove all soldiers from the aircraft (the employees are still hired after this). */
-	CL_RemoveSoldiersFromAircraft(aircraft->idx, aircraft->idxBase);
+	CL_RemoveSoldiersFromAircraft(aircraft->idx, base);
 
 	for (i = aircraft->idx; i < gd.numAircraft-1; i++) {
 		/* Decrease the global index of aircrafts that have a higher index than the deleted one. */
@@ -1787,7 +1787,7 @@ qboolean AIR_SendAircraftToMission (aircraft_t* aircraft, actMis_t* mission)
 
 	/* if mission is a base-attack and aircraft already in base, launch
 	 * mission immediately */
-	if (gd.bases[aircraft->idxBase].baseStatus == BASE_UNDER_ATTACK &&
+	if (aircraft->homebase->baseStatus == BASE_UNDER_ATTACK &&
 		AIR_IsAircraftInBase(aircraft)) {
 		aircraft->mission = mission;
 		mission->def->active = qtrue;

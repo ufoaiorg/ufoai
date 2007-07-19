@@ -739,6 +739,7 @@ void CL_ActorTargetAlign_f(void);
 #define MAX_WHOLETEAM	32
 /* if you increase this, you also have to change the aircraft buy/sell menu scripts */
 #define NUM_TEAMSKINS	4
+struct base_s;
 
 void CL_SendItem(sizebuf_t * buf, item_t item, int container, int x, int y, qboolean save);
 void CL_SendInventory(sizebuf_t * buf, inventory_t * i, qboolean save);
@@ -751,8 +752,8 @@ void CL_SendCurTeamInfo(struct dbuffer * buf, character_t ** team, int num);
 void CL_AddCarriedToEq(equipDef_t * equip);
 void CL_ParseCharacterData(struct dbuffer *msg, qboolean updateCharacter);
 qboolean CL_SoldierInAircraft(int employee_idx, int aircraft_idx);
-void CL_RemoveSoldierFromAircraft(int employee_idx, int aircraft_idx, int base_idx);
-void CL_RemoveSoldiersFromAircraft(int aircraft_idx, int base_idx);
+void CL_RemoveSoldierFromAircraft(int employee_idx, int aircraft_idx, struct base_s *base);
+void CL_RemoveSoldiersFromAircraft(int aircraft_idx, struct base_s *base);
 
 /* cl_radar.c */
 #define MAX_UFOONGEOSCAPE	8

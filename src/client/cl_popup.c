@@ -241,7 +241,7 @@ void CL_DisplayPopupAircraft (const aircraft_t* aircraft)
 
 	/* Set static datas in popup_aircraft */
 	popupAircraft.itemsAction[popupAircraft.nbItems++] = POPUP_AIRCRAFT_ACTION_BACKTOBASE;
-	Q_strcat(popupAircraft.text_popup, va(_("Back to base\t%s\n"), gd.bases[aircraft->idxBase].name), POPUP_AIRCARFT_MAX_TEXT);
+	Q_strcat(popupAircraft.text_popup, va(_("Back to base\t%s\n"), aircraft->homebase->name), POPUP_AIRCARFT_MAX_TEXT);
 	popupAircraft.itemsAction[popupAircraft.nbItems++] = POPUP_AIRCRAFT_ACTION_STOP;
 	Q_strcat(popupAircraft.text_popup, _("Stop\n"), POPUP_AIRCARFT_MAX_TEXT);
 
@@ -445,7 +445,7 @@ static void CL_PopupInterceptRClick_f (void)
 		return;
 
 	/* Display aircraft menu */
-	baseCurrent = gd.bases + aircraft->idxBase;
+	baseCurrent = aircraft->homebase;
 	baseCurrent->aircraftCurrent = aircraft->idxInBase;
 	AIR_AircraftSelect(aircraft);
 	MAP_ResetAction();
