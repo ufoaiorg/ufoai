@@ -196,19 +196,25 @@ void CL_LanguageInit (void)
 	selectBoxOptions_t* selectBoxOption;
 	language_t* language;
 	char deflang[MAX_VAR];
+
+	if (*s_language->string) {
+		Com_Printf("CL_LanguageInit()... language settings are stored in configuration: %s\n", s_language->string);
+		Q_strncpyz(deflang, s_language->string, MAX_VAR);
+	} else {
 #ifdef _WIN32
-	if (getenv("LANGUAGE"))
-		Q_strncpyz(deflang, getenv("LANGUAGE"), MAX_VAR);
-	else {
-		/* Setting to en will always work in every windows. */
-		Q_strncpyz(deflang, "en", MAX_VAR);
-	}	
+		if (getenv("LANGUAGE"))
+			Q_strncpyz(deflang, getenv("LANGUAGE"), MAX_VAR);
+		else {
+			/* Setting to en will always work in every windows. */
+			Q_strncpyz(deflang, "en", MAX_VAR);
+		}	
 #else
-	/* Calling with NULL param should return current system settings. */
-	Q_strncpyz(deflang, setlocale(LC_MESSAGES, NULL), MAX_VAR);
-	if (!deflang)
-		Q_strncpyz(deflang, "C", MAX_VAR);
+		/* Calling with NULL param should return current system settings. */
+		Q_strncpyz(deflang, setlocale(LC_MESSAGES, NULL), MAX_VAR);
+		if (!deflang)
+			Q_strncpyz(deflang, "C", MAX_VAR);
 #endif
+	}
 	
 	Com_DPrintf("CL_LanguageInit()... deflang: %s\n", deflang);
 

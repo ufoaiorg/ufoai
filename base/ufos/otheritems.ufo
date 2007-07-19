@@ -8,6 +8,7 @@ item antimatter
 	type		dummy
 	buytype		dummy
 	weapon		false
+	notonmarket	true
 }
 
 item brapparatus
@@ -38,6 +39,7 @@ item craft_ufo_scout
 	name	"_UFO - Scout"
 	weapon	false
 	model	objects/alien/disassembled/ufo_scout
+	notonmarket	true
 }
 
 item craft_ufo_fighter
@@ -46,6 +48,7 @@ item craft_ufo_fighter
 	name	"_UFO - Fighter"
 	weapon	false
 	model	objects/alien/disassembled/ufo_fighter
+	notonmarket	true
 }
 
 item craft_ufo_harvester
@@ -54,6 +57,7 @@ item craft_ufo_harvester
 	name	"_UFO - Harvester"
 	weapon	false
 	model	objects/alien/disassembled/ufo_harvester
+	notonmarket	true
 }
 
 item craft_ufo_condor
@@ -61,6 +65,7 @@ item craft_ufo_condor
 	buytype dummy
 	name	"_UFO - Condor"
 	weapon false
+	notonmarket	true
 }
 
 item craft_ufo_carrier
@@ -68,6 +73,7 @@ item craft_ufo_carrier
 	buytype dummy
 	name	"_UFO - Carrier"
 	weapon false
+	notonmarket	true
 }
 
 item craft_ufo_supply
@@ -75,4 +81,5 @@ item craft_ufo_supply
 	buytype dummy
 	name	"_UFO - Supply"
 	weapon false
+	notonmarket	true
 }

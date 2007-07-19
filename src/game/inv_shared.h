@@ -128,6 +128,7 @@ typedef struct objDef_s {
 	int size;		/**< Size of an item, used in storage capacities. */
 	int buytype;		/**< In which category of the buy menu is this item listed.
 						 * see equipment_buytypes_t */
+	qboolean notonmarket;		/**< True if this item should not be available on market. */
 
 	/* Weapon specific */
 	int ammo;			/**< How much can we load into this weapon at once. */

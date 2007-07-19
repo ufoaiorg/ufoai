@@ -3689,7 +3689,7 @@ tech rs_item_alienmaterials
         }
         provides        alienmaterials
         time            0
-        producetime     80
+        producetime     -1
 }
 
 //========================
