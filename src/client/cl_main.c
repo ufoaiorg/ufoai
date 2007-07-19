@@ -1787,7 +1787,7 @@ static const sanity_functions_t sanity_functions[] = {
  * @brief Check the parsed script values for errors after parsing every script file
  * @sa CL_ReadSinglePlayerData
  */
-static void CL_ScriptSanityCheck (void)
+void CL_ScriptSanityCheck (void)
 {
 	qboolean status;
 	const sanity_functions_t *s;
@@ -1837,9 +1837,6 @@ void CL_ReadSinglePlayerData (void)
 	Com_Printf("...ranks: %i\n", gd.numRanks);
 	Com_Printf("...nations: %i\n", gd.numNations);
 	Com_Printf("\n");
-
-	/* now check the parsed values for errors that are not catched at parsing stage */
-	CL_ScriptSanityCheck();
 }
 
 /**
@@ -2235,7 +2232,7 @@ static void CL_SendCommand (void)
  * @brief Translate the difficulty int to a translated string
  * @param difficulty the difficulty integer value
  */
-char* CL_ToDifficultyName (int difficulty)
+const char* CL_ToDifficultyName (int difficulty)
 {
 	switch (difficulty) {
 	case -4:

@@ -2024,8 +2024,8 @@ static const value_t aircraft_standard_vals[] = {
 
 /** @brief Valid aircraft definition values from script files. */
 static const value_t aircraft_vals[] = {
-	{"name", V_TRANSLATION_STRING, offsetof(aircraft_t, name), 0},
-	{"shortname", V_TRANSLATION_STRING, offsetof(aircraft_t, shortname), 0},
+	{"name", V_TRANSLATION2_STRING, offsetof(aircraft_t, name), 0},
+	{"shortname", V_TRANSLATION2_STRING, offsetof(aircraft_t, shortname), 0},
 	{"size", V_INT, offsetof(aircraft_t, size), MEMBER_SIZEOF(aircraft_t, size)},
 	{"weight", V_INT, offsetof(aircraft_t, weight), MEMBER_SIZEOF(aircraft_t, weight)},
 	{"angles", V_VECTOR, offsetof(aircraft_t, angles), MEMBER_SIZEOF(aircraft_t, angles)},
@@ -2978,8 +2978,19 @@ qboolean AIR_AircraftAllowed (void)
  */
 qboolean AIR_ScriptSanityCheck (void)
 {
-	int error = 0;
-	/* @todo: Implement me */
+	int i, error = 0;
+	aircraft_t* a;
+
+	for (i = 0, a = aircraft_samples; i < numAircraft_samples; i++, a++) {
+		if (!a->name) {
+			error++;
+			Com_Printf("...... aircraft '%s' has no name\n", a->id);
+		}
+		if (!a->shortname) {
+			error++;
+			Com_Printf("...... aircraft '%s' has no shortname\n", a->id);
+		}
+	}
 
 	if (!error)
 		return qtrue;

@@ -3745,6 +3745,9 @@ void CL_GameInit (qboolean load)
 	/* Init popup and map/geoscape */
 	CL_PopupInit();
 	MAP_GameInit();
+
+	/* now check the parsed values for errors that are not catched at parsing stage */
+	CL_ScriptSanityCheck();
 }
 
 /**

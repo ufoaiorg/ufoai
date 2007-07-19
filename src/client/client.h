@@ -454,7 +454,8 @@ void S_ModifySndRef_f(void);
 void CL_ParseMedalsAndRanks(const char *name, const char **text, byte parserank);
 void CL_ParseUGVs(const char *name, const char **text);
 void CL_UpdateCharacterSkills(character_t *chr);	/* cl_team.c */
-char* CL_ToDifficultyName(int difficulty);
+const char* CL_ToDifficultyName(int difficulty);
+void CL_ScriptSanityCheck(void);
 
 void SCR_DrawPrecacheScreen(qboolean string);
 

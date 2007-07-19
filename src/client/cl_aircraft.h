@@ -159,9 +159,9 @@ typedef enum {
 typedef struct aircraft_s {
 	int idx;					/**< Global index of this aircraft. See also gd.numAircraft. @todo: is this updated when one aircraft is lost (it is checked agains gd.numAircraft sometimes)? We do not really have a global list of acs do we? */
 	int idx_sample;				/**< self-link in aircraft_sample list */
-	char *id;			/**< internal id from script file */
-	char name[MAX_VAR];			/**< translateable name */
-	char shortname[MAX_VAR];		/**< translateable shortname */
+	char *id;				/**< internal id from script file */
+	char *name;				/**< translateable name */
+	char *shortname;		/**< translateable shortname */
 	char *image;			/**< image on geoscape */
 	aircraftType_t type;
 	ufoType_t ufotype;			/**< type of UFO (if craft is not UFO - not used) */
