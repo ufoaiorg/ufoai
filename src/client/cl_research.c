@@ -2330,9 +2330,20 @@ qboolean RS_ScriptSanityCheck (void)
 			}
 		}
 
-		if (t->produceTime == 0)
-			Com_Printf("...... technology '%s' has zero (0) produceTime, is this on purpose?\n", t->id);
-		
+		if (t->produceTime == 0) {
+			switch (t->type) {
+			case RS_TECH:
+			case RS_NEWS:
+			case RS_LOGIC:
+			case RS_BUILDING:
+			case RS_ALIEN:
+				break;
+			default:
+				/* error++; TODO: Crafts still give errors - are there any definitions missing? */
+				Com_Printf("...... technology '%s' has zero (0) produceTime, is this on purpose?\n", t->id);
+			}
+		}
+
 		if ((t->type != RS_LOGIC)
 		&&  ((!t->description.text[0]) || (t->description.text[0][0] == '_'))) {
 			if (!t->description.text[0])
