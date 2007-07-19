@@ -2318,8 +2318,16 @@ qboolean RS_ScriptSanityCheck (void)
 			Com_Printf("...... technology '%s' has no name\n", t->id);
 		}
 		if (!t->provides) {
-			error++;
-			Com_Printf("...... technology '%s' doesn't provide anything\n", t->id);
+			switch (t->type) {
+			case RS_TECH:
+			case RS_NEWS:
+			case RS_LOGIC:
+			case RS_ALIEN:
+				break;
+			default:
+				error++;
+				Com_Printf("...... technology '%s' doesn't provide anything\n", t->id);
+			}
 		}
 	}
 
