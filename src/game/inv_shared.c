@@ -40,7 +40,7 @@ static item_t cacheItem = {NONE,NONE,NONE}; /* to crash as soon as possible */
  * @sa InitGame
  * @sa Com_ParseScripts
  */
-void Com_InitCSI(csi_t * import)
+void Com_InitCSI (csi_t * import)
 {
 	CSI = import;
 }
@@ -54,7 +54,7 @@ void Com_InitCSI(csi_t * import)
  * @sa CL_ResetSinglePlayerData
  * @sa CL_InitLocal
  */
-void Com_InitInventory(invList_t * invList)
+void Com_InitInventory (invList_t * invList)
 {
 	invList_t *last;
 	int i;
@@ -85,7 +85,7 @@ static int cache_Com_CheckToInventory = 0;
  * @todo Move to INV_shared.c
  * @sa
  */
-qboolean Com_CheckToInventory(const inventory_t * const i, const int item, const int container, int x, int y)
+qboolean Com_CheckToInventory (const inventory_t * const i, const int item, const int container, int x, int y)
 {
 	invList_t *ic;
 	static int mask[16];
@@ -108,11 +108,11 @@ qboolean Com_CheckToInventory(const inventory_t * const i, const int item, const
 		if (!CSI->ids[container].armor && !CSI->ids[container].all) {
 			return qfalse;
 		}
-	} else if (!Q_strncmp(CSI->ods[item].type, "extension", MAX_VAR)) {
+	} else if (CSI->ods[item].extension) {
 		if (!CSI->ids[container].extension && !CSI->ids[container].all) {
 			return qfalse;
 		}
-	} else if (!Q_strncmp(CSI->ods[item].type, "headgear", MAX_VAR)) {
+	} else if (CSI->ods[item].headgear) {
 		if (!CSI->ids[container].headgear && !CSI->ids[container].all) {
 			return qfalse;
 		}
@@ -132,15 +132,16 @@ qboolean Com_CheckToInventory(const inventory_t * const i, const int item, const
 	}
 
 	/* left hand is busy if right wields twohanded */
-	if (container == CSI->idLeft && i->c[CSI->idRight]
-		 && CSI->ods[i->c[CSI->idRight]->item.t].holdtwohanded)
-		return qfalse;
+	if (container == CSI->idLeft) {
+		if (i->c[CSI->idRight] && CSI->ods[i->c[CSI->idRight]->item.t].holdtwohanded)
+			return qfalse;
 
-	/* can't put an item that is 'firetwohanded' into the left hand */
-	if (container == CSI->idLeft && CSI->ods[item].firetwohanded)
-		return qfalse;
+		/* can't put an item that is 'firetwohanded' into the left hand */
+		if (CSI->ods[item].firetwohanded)
+			return qfalse;
+	}
 
-	/* single item containers, e.g. hands */
+	/* single item containers, e.g. hands, extension or headgear */
 	if (CSI->ids[container].single) {
 		/* there is already an item */
 		if (i->c[container])
@@ -180,7 +181,7 @@ qboolean Com_CheckToInventory(const inventory_t * const i, const int item, const
  * @param[in] y
  * @todo Move to INV_shared.c
  */
-invList_t *Com_SearchInInventory(const inventory_t* const i, int container, int x, int y)
+invList_t *Com_SearchInInventory (const inventory_t* const i, int container, int x, int y)
 {
 	invList_t *ic;
 
@@ -207,7 +208,7 @@ invList_t *Com_SearchInInventory(const inventory_t* const i, int container, int 
  * @param[in] y
  * @todo Move to INV_shared.c
  */
-invList_t *Com_AddToInventory(inventory_t * const i, item_t item, int container, int x, int y)
+invList_t *Com_AddToInventory (inventory_t * const i, item_t item, int container, int x, int y)
 {
 	invList_t *ic;
 
@@ -360,8 +361,6 @@ int Com_MoveInInventory (inventory_t* const i, int from, int fx, int fy, int to,
  * @return IA_RELOAD when reloading
  * @return IA_ARMOR when placing an armour on the actor
  * @return IA_MOVE when just moving an item
- * @todo Move to INV_shared.c
- * @sa
  */
 int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp, qboolean ignore_type)
 {
@@ -419,7 +418,8 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 	/* move item back to source location and break */
 	/* same for non extension items when moved to an extension slot */
 	if ((CSI->ids[to].armor && Q_strcmp(CSI->ods[cacheItem.t].type, "armor"))
-	 || (CSI->ids[to].extension && Q_strcmp(CSI->ods[cacheItem.t].type, "extension"))) {
+	 || (CSI->ids[to].extension && !CSI->ods[cacheItem.t].extension)
+	 || (CSI->ids[to].headgear && !CSI->ods[cacheItem.t].headgear)) {
 		Com_AddToInventory(i, cacheItem, from, fx, fy);
 		return IA_NONE;
 	}

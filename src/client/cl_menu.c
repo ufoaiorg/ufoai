@@ -717,7 +717,7 @@ static void MN_InvDrawFree (inventory_t * inv, menuNode_t * node)
 		} else
 #endif
 
-		/* if  single container (hands) */
+		/* if single container (hands, extension, headgear) */
 		if (csi.ids[container].single) {
 			/* if container is free or the dragged-item is in it */
 			if (node->mousefx == dragFrom || Com_CheckToInventory(inv, item, container, 0, 0))
@@ -2092,7 +2092,8 @@ void MN_DrawMenus (void)
 		for (node = menu->firstNode; node; node = node->next) {
 			if (!node->invis && ((node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL] /* 0 are images, models and strings e.g. */
 					|| node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASEMAP || node->type == MN_MAP)
-					|| node->type == MN_CHECKBOX || node->type == MN_SELECTBOX || (node->type == MN_ZONE && node->bgcolor[3]))) {
+					|| node->type == MN_CHECKBOX || node->type == MN_SELECTBOX
+					|| ((node->type == MN_ZONE || node->type == MN_CONTAINER) && node->bgcolor[3]))) {
 				/* if construct */
 				if (*node->depends.var) {
 					/* menuIfCondition_t */

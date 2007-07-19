@@ -107,7 +107,7 @@ typedef struct objDef_s {
 	char id[MAX_VAR];	/**< short identifier */
 	char model[MAX_VAR];	/**< model name - relative to game dir */
 	char image[MAX_VAR];	/**< object image file - relative to game dir */
-	char type[MAX_VAR];	/**< melee, rifle, ammo */
+	char type[MAX_VAR];	/**< melee, rifle, ammo, armor */
 	char extends_item[MAX_VAR];
 	int shape;			/**< the shape in our inventory */
 
@@ -121,8 +121,8 @@ typedef struct objDef_s {
 				 		 * Influences model-animations and which hands are blocked int he inventory screen.*/
 	qboolean firetwohanded;	/**< The soldier needs both hands to fire this object.
 						  * Influences model-animations. */
-	qboolean extension;		/**< Boolean: Is an extension. */
-	qboolean headgear;		/**< Boolean: Is a headgear. */
+	qboolean extension;		/**< Boolean: Is an extension. (may not be headgear, too) */
+	qboolean headgear;		/**< Boolean: Is a headgear. (may not be extension, too) */
 	qboolean thrown;		/**< This item is thrown. */
 	int price;		/**< the price for this item */
 	int size;		/**< Size of an item, used in storage capacities. */
@@ -432,7 +432,7 @@ typedef enum {
 	|| ((((type2) == BUY_WEAP_PRI) || ((type2) == BUY_WEAP_SEC)) && ((type1) == BUY_MULTI_AMMO)) \
 	|| ((type1) == (type2)) ) \
 	) /**< Check if the 2 buytypes (type1 and type2) are compatible) */
-	
+
 #endif /* GAME_INV_SHARED_H */
 
 
