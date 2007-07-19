@@ -276,19 +276,11 @@ void AIM_AircraftStart_f (void)
  */
 void AIR_AircraftInit (void)
 {
-	aircraft_t *air_samp;
 	int i = 0;
 	technology_t *tech = NULL;
 	aircraftItem_t *aircraftitem = NULL;
 
 	Com_Printf("Initializing aircrafts and aircraft-items ...\n");
-
-	for (i = 0; i < numAircraft_samples; i++) {
-		air_samp = &aircraft_samples[i];
-
-		air_samp->homebase = &gd.bases[air_samp->idxBase]; /* @todo: looks like a nonsense */
-		air_samp->teamSize = &gd.bases[air_samp->idxBase].teamNum[air_samp->idxInBase];
-	}
 
 	/* Link technologies for craftitems. */
 	for (i = 0; i < gd.numAircraftItems; i++) {
@@ -772,8 +764,6 @@ void AIR_NewAircraft (base_t *base, const char *name)
 		AII_UpdateAircraftStats(aircraft);
 		/* give him some fuel */
 		aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
-		/* for saving and loading a base */
-		aircraft->idxBase = base->idx;
 		/* this is the aircraft array id in current base */
 		/* NOTE: when we send the aircraft to another base this has to be changed, too */
 		aircraft->idxInBase = base->numAircraftInBase;

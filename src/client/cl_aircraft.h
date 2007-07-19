@@ -183,7 +183,6 @@ typedef struct aircraft_s {
 	int point;
 	int time;
 	int idxInBase;				/**< Index in base. See also base_t->numAircraftInBase. */
-	int idxBase;				/**< Index of base. Used to restore homebase from savegame. See also "homebase" below.*/
 	/* pointer to base->numOnTeam[AIRCRAFT_ID] */
 	int *teamSize;				/**< how many soldiers on board */
 	int teamIdxs[MAX_ACTIVETEAM];	/**< array of team members on board employee idx*/
@@ -195,7 +194,7 @@ typedef struct aircraft_s {
 	int maxElectronics;				/**< Total number of electronics slots aboard this aircraft */
 
 	mapline_t route;
-	struct base_s *homebase;				/**< Pointer to homebase for faster access. See also idxBase */
+	struct base_s *homebase;				/**< Pointer to homebase for faster access. */
 	struct base_s *transferBase;			/**< Pointer to the base we are transfering equipment to */
 	aliensTmp_t aliencargo[MAX_CARGO];	/**< Cargo of aliens. */
 	int alientypes;				/**< How many types of aliens we collected. */

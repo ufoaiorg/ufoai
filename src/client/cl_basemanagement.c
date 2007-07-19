@@ -3146,8 +3146,6 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			aircraft = &b->aircraft[k];
 			aircraft->idx = MSG_ReadShort(sb);
 			aircraft->homebase = b;
-			/* for saving and loading a base */
-			aircraft->idxBase = b->idx;
 			/* this is the aircraft array id in current base */
 			aircraft->idxInBase = k;
 			/* link the teamSize pointer in */
