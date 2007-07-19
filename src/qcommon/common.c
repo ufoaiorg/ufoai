@@ -564,9 +564,6 @@ qboolean Qcommon_LocaleSet (void)
 {
 	char *locale;
 
-	s_language = Cvar_Get("s_language", "", CVAR_ARCHIVE, NULL);
-	s_language->modified = qfalse;
-
 #ifdef _WIN32
 	Q_putenv("LANG", s_language->string);
 	Q_putenv("LANGUAGE", s_language->string);
@@ -709,6 +706,7 @@ static void Com_DebugHelp_f (void)
 }
 #endif
 
+#ifndef DEDICATED_ONLY
 /**
  * @brief Watches that the cvar cl_maxfps is never getting lower than 10
  */
@@ -717,10 +715,14 @@ static qboolean Com_CvarCheckMaxFPS (cvar_t *cvar)
 	/* don't allow setting maxfps too low (or game could stop responding) */
 	return Cvar_AssertValue(cvar, 10, 1000, qtrue);
 }
+#endif
 
-static void
-Cbuf_Execute_timer (int now, void *data) {
-  Cbuf_Execute();
+/**
+ * @brief
+ */
+static void Cbuf_Execute_timer (int now, void *data)
+{
+	Cbuf_Execute();
 }
 
 /**
@@ -808,9 +810,12 @@ void Qcommon_Init (int argc, const char **argv)
 
 	/* set this to false for client - otherwise Qcommon_Frame would set the initial values to multiplayer */
 	gametype->modified = qfalse;
-#endif
+
+	s_language = Cvar_Get("s_language", "", CVAR_ARCHIVE, "Game language");
+	s_language->modified = qfalse;
 	cl_maxfps = Cvar_Get("cl_maxfps", "90", 0, NULL);
 	Cvar_SetCheckFunction("cl_maxfps", Com_CvarCheckMaxFPS);
+#endif
 	teamnum = Cvar_Get("teamnum", "1", CVAR_ARCHIVE, "Multiplayer team num");
 
 	s = va("UFO: Alien Invasion %s %s %s %s", UFO_VERSION, CPUSTRING, __DATE__, BUILDSTRING);
