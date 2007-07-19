@@ -2,22 +2,22 @@
 
 """
 Name: 'MD2 tags (.tag)'
-Blender: 242
+Blender: 244
 Group: 'Export'
 Tooltip: 'Export to Quake2 tag file format for UFO:AI (.tag).'
 """
 
 __author__ = 'Werner Hoehrer'
-__version__ = '0.0.5'
+__version__ = '0.0.6'
 __url__ = ["UFO: Alien Invasion, http://ufoai.sourceforge.net",
-     "Support forum, http://ufoai.ninex.info/phpBB2/index.php", "blender", "elysiun"]
+     "Support forum, http://ufoai.ninex.info/phpBB2/index.php", "blender", "ufoai"]
 __email__ = ["Werner Hoehrer, bill_spam2:yahoo*de", "scripts"]
 __bpydoc__ = """\
 This script exports a Quake 2 tag file as used in UFO:AI (MD2 TAG).
 
 This file format equals the _parts_ of the MD3 format used for animated tags, but nothing more. i.e tagnames+positions
 
- Base code taken from the md2 exporter by Bob Holcomb. Many thanks.
+Base code taken from the md2 exporter by Bob Holcomb. Many thanks.
 """
 
 # ***** BEGIN GPL LICENSE BLOCK *****
@@ -85,7 +85,6 @@ def apply_transform(verts, matrix):
 #	http://en.wikibooks.org/wiki/Blender_3D:_Blending_Into_Python/Cookbook#Get_Angle_between_3_points
 #	Uses Blender.Mathutils.AngleBetweenVecs and Blender.Mathutils.Vector
 ######################################################
-
 def getAng3pt3d(avec, bvec, cvec):
 	avec, bvec, cvec = Vector(avec), Vector(bvec), Vector(cvec)
 
@@ -100,57 +99,20 @@ def getAng3pt3d(avec, bvec, cvec):
 		return 0
 
 ######################################################
-# Get the rotation values (euler tuple) from a location and the axes-information
-# Uses Blender.Mathutils.Vector
+# Convert the three axes and the location into a transform-matrix. (dunno why the location is used at all?)
+#
+# Md3 tag matrix transform code (see also load_md2_tags) is balantly stolen from blender md3 importer :)
+# Many thanks to PhaethonH, Bob Holcomb, Robert (Tr3B) Beckebans and further (www.gametutorials.com) DigiBen! and PhaethonH
 ######################################################
-def get_euler(loc, X,Y,Z):
-	loc = Vector(loc)
-	X = Vector(X)
-	Y = Vector(Y)
-	Z = Vector(Z)
+def MatrixSetupTransform(forward, left, up, origin):
+	return [
+		[forward[0],	forward[1],	forward[2],	origin[0]],
+		[left[0],	left[1],	left[2],	origin[1]],
+		[up[0],	up[1],	up[2],	origin[2]],
+		[0.0,	0.0,		0.0,		1.0]
+	]
 
-	zero  = Vector(0.0, 0.0, 0.0)
-	axisX = Vector(1.0, 0.0, 0.0)
-	axisY = Vector(0.0, 1.0, 0.0)
-	axisZ = Vector(0.0, 0.0, 1.0)
-
-	objX = (X-loc).normalize()
-	objY = (Y-loc).normalize()
-	objZ = (Z-loc).normalize()
-
-	# Get rotation of the Z axis.
-	rotZ = -getAng3pt3d(axisY ,zero,  (objY.x, objY.y, 0.0))
-	# Apply the  Z rotation to the points.
-	matZ = RotationMatrix(-rotZ, 4, 'z')
-	objX = objX * matZ
-	objY = objY * matZ
-	objZ = objZ * matZ
-	#print objX, objY,objZ
-
-	# Get rotation of the Y axis.
-	rotY = getAng3pt3d(axisX ,zero, (objX.x, 0.0, objX.z) )
-	# Apply the  Y rotation to the points.
-	matY = RotationMatrix(-rotY, 4, 'y')
-	objX = objX * matY
-	objY = objY * matY
-	objZ = objZ * matY
-
-	# Get rotation of the X axis.
-	rotX = -getAng3pt3d(axisZ ,zero,  (0.0, objZ.y, objZ.z))
-	# Apply the  X rotation to the points.
-	matX = RotationMatrix(-rotX, 4, 'x')
-	objX = objX * matX
-	objY = objY * matX
-	objZ = objZ * matX
-
-	euler=Mathutils.Euler(
-		math.radians(rotX),
-		math.radians(rotY),
-		math.radians(rotZ)
-		)
-
-	return euler
-
+	
 
 ######################################################
 # Additional functions used by Ex- and Importer
@@ -300,37 +262,47 @@ class md2_tag:
 	# => blender(x,y,z) = md2file(y,-x,z)
 	####################################
 	global g_scale
-	Row1	= []
-	Row2	= []
-	Row3	= []
-	Row4	= []
+	axis1	= []
+	axis2	= []
+	axis3	= []
+	origin	= []
 
 	binary_format="<12f"	#little-endian (<), 12 floats (12f)	| See http://docs.python.org/lib/module-struct.html for more info.
+	
 
 	def __init__(self):
-		Row1	= Mathutils.Vector(0.0, 0.0, 0.0)
-		Row2	= Mathutils.Vector(0.0, 0.0, 0.0)
-		Row3	= Mathutils.Vector(0.0, 0.0, 0.0)
-		Row4	= Mathutils.Vector(0.0, 0.0, 0.0)
+		origin	= Mathutils.Vector(0.0, 0.0, 0.0)
+		axis1	= Mathutils.Vector(0.0, 0.0, 0.0)
+		axis2	= Mathutils.Vector(0.0, 0.0, 0.0)
+		axis3	= Mathutils.Vector(0.0, 0.0, 0.0)
+
 	def getSize(self):
 		return struct.calcsize(self.binary_format)
+
+	# Function + general data-structure stolen from https://intranet.dcc.ufba.br/svn/indigente/trunk/scripts/md3_top.py
+	# Kudos to Bob Holcomb and Damien McGinnes
+	def foo(self, vet):
+		for i in xrange(0,3):
+			vet[i] = float(vet[i])
+		return vet
+
 	def save(self, file):
 		# Prepare temp data for export with transformed axes.
 		temp_data=(
-		-self.Row4[1], self.Row4[0], self.Row4[2],
-		-self.Row3[1], self.Row3[0], self.Row3[2],
-		-self.Row2[1], self.Row2[0], self.Row2[2],
-		-self.Row1[1], self.Row1[0], self.Row1[2]
+		-self.origin[1], self.origin[0], self.origin[2],
+		-self.axis3[1], self.axis3[0], self.axis3[2],
+		-self.axis2[1], self.axis2[0], self.axis2[2],
+		-self.axis1[1], self.axis1[0], self.axis1[2]
 		)
 
 		# Apply scale to tempdata if it was set in the dialog.
 		if (g_scale.val != 1.0):
-			temp_data=(
-			temp_data[0]*g_scale.val, temp_data[1]*g_scale.val, temp_data[2]*g_scale.val,
-			temp_data[3]*g_scale.val, temp_data[4]*g_scale.val, temp_data[5]*g_scale.val,
-			temp_data[6]*g_scale.val, temp_data[7]*g_scale.val, temp_data[8]*g_scale.val,
-			temp_data[9]*g_scale.val, temp_data[10]*g_scale.val, temp_data[11]*g_scale.val
-			)
+			temp_data[9:12] = [
+				temp_data[9] * g_scale.val,
+				temp_data[10] * g_scale.val,
+				temp_data[11] * g_scale.val
+				]
+			# TODO: scaling of axes needed as well?
 
 		# Prepare serialised data for writing.
 		data=struct.pack(self.binary_format,
@@ -347,57 +319,56 @@ class md2_tag:
 		temp_data = file.read(self.getSize())
 
 		# De-serialize the data.
-		data=struct.unpack(self.binary_format, temp_data)
+		data = struct.unpack(self.binary_format, temp_data)
 
-		# Set the internal data-struct to the data from the file.
-		#self.Row1 = (data[0], data[1], data[2])
-		#self.Row2 = (data[3], data[4], data[5])
-		#self.Row3 = (data[6], data[7], data[8])
-		#self.Row4 = (data[9], data[10], data[11])
-		self.Row4 = (data[0], data[1], data[2])
-		self.Row3 = (data[3], data[4], data[5])
-		self.Row2 = (data[6], data[7], data[8])
-		self.Row1 = (data[9], data[10], data[11])
-
+		# Parse data from file into pythin md2 structure
+		self.axis1	= (data[0], data[1], data[2])
+		self.axis2	= (data[3], data[4], data[5])
+		self.axis3	= (data[6], data[7], data[8])
+		self.origin	= (data[9], data[10], data[11])
+		
 		# Convert the orientation of the axes to the blender format.
-		self.Row1 = (self.Row1[1], -self.Row1[0], self.Row1[2])
-		self.Row2 = (self.Row2[1], -self.Row2[0], self.Row2[2])
-		self.Row3 = (self.Row3[1], -self.Row3[0], self.Row3[2])
-		self.Row4 = (self.Row4[1], -self.Row4[0], self.Row4[2])
+		self.origin = (self.origin[1], -self.origin[0], self.origin[2])
+		self.axis1 = (self.axis1[1], -self.axis1[0], self.axis1[2])
+		self.axis2 = (self.axis2[1], -self.axis2[0], self.axis2[2])
+		self.axis3 = (self.axis3[1], -self.axis3[0], self.axis3[2])
 
 		# Apply scale to imported data if it was set in the dialog.
 		if (g_scale.val != 1.0):
-			self.Row1 = ( self.Row1[0]* g_scale.val, self.Row1[1]* g_scale.val, self.Row1[2]* g_scale.val)
-			self.Row2 = ( self.Row2[0]* g_scale.val, self.Row2[1]* g_scale.val, self.Row2[2]* g_scale.val)
-			self.Row3 = ( self.Row3[0]* g_scale.val, self.Row3[1]* g_scale.val, self.Row3[2]* g_scale.val)
-			self.Row4 = ( self.Row4[0]* g_scale.val, self.Row4[1]* g_scale.val, self.Row4[2]* g_scale.val)
+			self.origin = (
+				self.origin[0] * g_scale.val,
+				self.origin[1] * g_scale.val,
+				self.origin[2] * g_scale.val
+				)
+			# TODO: scaling of axes needed as well?
+
 		return self
 
 	def dump(self):
 		print "MD2 Point Structure"
-		print "Row1: ", self.Row1[0], " ",self.Row1[1] , " ",self.Row1[2]
-		print "Row2: ", self.Row2[0], " ",self.Row2[1] , " ",self.Row2[2]
-		print "Row3: ", self.Row3[0], " ",self.Row3[1] , " ",self.Row3[2]
-		print "Row4: ", self.Row4[0], " ",self.Row4[1] , " ",self.Row4[2]
+		print "origin: ", self.origin[0], " ",self.origin[1] , " ",self.origin[2]
+		print "axis1:  ", self.axis1[0], " ",self.axis1[1] , " ",self.axis1[2]
+		print "axis2:  ", self.axis2[0], " ",self.axis2[1] , " ",self.axis2[2]
+		print "axis3:  ", self.axis3[0], " ",self.axis3[1] , " ",self.axis3[2]
 		print ""
 
 
 class md2_tags_obj:
 	#Header Structure
-	ident=0			#int 0	This is used to identify the file
-	version=0		#int 1	The version number of the file (Must be 1)
-	num_tags=0		#int 2	The number of skins associated with the model
-	num_frames=0		#int 3	The number of animation frames
+	ident = 0		#int 0	This is used to identify the file
+	version = 0		#int 1	The version number of the file (Must be 1)
+	num_tags = 0		#int 2	The number of skins associated with the model
+	num_frames = 0		#int 3	The number of animation frames
 
-	offset_names=0		#int 4	The offset in the file for the name data
-	offset_tags=0		#int 5	The offset in the file for the tags data
-	offset_end=0		#int 6	The end of the file offset
-	offset_extract_end=0	#int 7	???
-	binary_format="<8i" 	#little-endian (<), 8 integers (8i)
+	offset_names = 0	#int 4	The offset in the file for the name data
+	offset_tags = 0		#int 5	The offset in the file for the tags data
+	offset_end = 0		#int 6	The end of the file offset
+	offset_extract_end = 0	#int 7	???
+	binary_format = "<8i" 	#little-endian (<), 8 integers (8i)
 
 	#md2 tag data objects
-	names=[]
-	tags=[] # (consists of a number of frames)
+	names = []
+	tags = [] # (consists of a number of frames)
 
 	"""
 	"tags" example:
@@ -409,27 +380,27 @@ class md2_tags_obj:
 	"""
 
 	def __init__ (self):
-		self.names=[]
-		self.tags=[]
+		self.names = []
+		self.tags = []
 	def getSize(self):
 		return struct.calcsize(self.binary_format)
 	def save(self, file):
 		temp_data=[0]*8
-		temp_data[0]=self.ident
-		temp_data[1]=self.version
-		temp_data[2]=self.num_tags
-		temp_data[3]=self.num_frames
-		temp_data[4]=self.offset_names
-		temp_data[5]=self.offset_tags
-		temp_data[6]=self.offset_end
-		temp_data[7]=self.offset_extract_end
+		temp_data[0] = self.ident
+		temp_data[1] = self.version
+		temp_data[2] = self.num_tags
+		temp_data[3] = self.num_frames
+		temp_data[4] = self.offset_names
+		temp_data[5] = self.offset_tags
+		temp_data[6] = self.offset_end
+		temp_data[7] = self.offset_extract_end
 		data=struct.pack(self.binary_format, temp_data[0],temp_data[1],temp_data[2],temp_data[3],temp_data[4],temp_data[5],temp_data[6],temp_data[7])
 		file.write(data)
 
 		#write the names data
 		for name in self.names:
 			name.save(file)
-		tag_count=0
+		tag_count = 0
 		for tag_frames in self.tags:
 			tag_count+=1
 			frame_count=0
@@ -441,7 +412,8 @@ class md2_tags_obj:
 			print "  Frames saved: ", frame_count, "(",self.num_frames, ")"
 	def load(self, file):
 		temp_data = file.read(self.getSize())
-		data=struct.unpack(self.binary_format, temp_data)
+		#print "TEST", temp_data# DEBUG
+		data = struct.unpack(self.binary_format, temp_data)
 
 		self.ident = data[0]
 		self.version = data[1]
@@ -450,12 +422,14 @@ class md2_tags_obj:
 			print "Not a valid MD2 TAG file"
 			Exit()
 
-		self.num_tags = data[2]
-		self.num_frames = data[3]
-		self.offset_names = data[4]
-		self.offset_tags = temp_data[5]
-		self.offset_end = temp_data[6]
-		self.offset_extract_end = data[7]
+		self.num_tags		= data[2]
+		self.num_frames		= data[3]
+		self.offset_names	= data[4]
+		#self.offset_tags	= temp_data[5]	# TODO: why was temp_data used here?
+		#self.offset_end	= temp_data[6]	# TODO: why was temp_data used here?
+		self.offset_tags	= data[5]
+		self.offset_end		= data[6]
+		self.offset_extract_end	= data[7]
 
 		self.dump()
 
@@ -469,10 +443,15 @@ class md2_tags_obj:
 			frames = []
 			for frame_counter in range(0,self.num_frames):
 				temp_tag = md2_tag()
-				frames.append(temp_tag.load(file))
+				temp_tag.load(file)
+				#if (frame_counter < 10): #DEBUG
+				frames.append(temp_tag)
 			self.tags.append(frames)
-			print " Reading of ", frame_counter, " frames finished."
-		print "Reading of ", tag_counter, " framelists finished."
+			#for frame_counter in range(0,10):	#DEBUG
+			#	self.tags[tag_counter][frame_counter].dump()	#DEBUG
+
+			print " Reading of ", frame_counter+1, " frames finished."
+		print "Reading of ", tag_counter+1, " framelists finished."
 		return self
 	def dump (self):
 		print "Header Information"
@@ -526,14 +505,14 @@ def fill_md2_tags(md2_tags, object):
 		Blender.Set("curframe", current_frame)
 
 		# Set first coordiantes to the location of the empty.
-		tag_frames[frame_counter].Row1 = object.getLocation()
-		print tag_frames[frame_counter].Row1[0], " ",tag_frames[frame_counter].Row1[1]," ",tag_frames[frame_counter].Row1[2]
+		tag_frames[frame_counter].origin = object.getLocation()
+		print tag_frames[frame_counter].origin[0], " ",tag_frames[frame_counter].origin[1]," ",tag_frames[frame_counter].origin[2]
 		# Calculate local axes ... starting from 'loc' (see http://wiki.blenderpython.org/index.php/Python_Cookbook#Apply_Matrix)
 		# The scale of the empty is ignored right now.
 		matrix=object.getMatrix()
-		tag_frames[frame_counter].Row2 = apply_transform((1.0,0.0,0.0), matrix) #calculate point (loc + local-X * 1 )
-		tag_frames[frame_counter].Row3 = apply_transform((0.0,1.0,0.0), matrix) #calculate point (loc + local-Y * 1 )
-		tag_frames[frame_counter].Row4 = apply_transform((0.0,0.0,1.0), matrix) #calculate point (loc + local-Z * 1 )
+		tag_frames[frame_counter].axis1 = apply_transform((1.0,0.0,0.0), matrix) #calculate point (loc + local-X * 1 )
+		tag_frames[frame_counter].axis2 = apply_transform((0.0,1.0,0.0), matrix) #calculate point (loc + local-Y * 1 )
+		tag_frames[frame_counter].axis3 = apply_transform((0.0,0.0,1.0), matrix) #calculate point (loc + local-Z * 1 )
 		frame_counter += 1
 
 	# Restore curframe from before the calculation.
@@ -660,37 +639,39 @@ def load_md2_tags(filename):
 		tag_frames = md2_tags.tags[tag]
 
 		# Create object.
-		object = Object.New('Empty')
-		object.setName(tag_name.name)
-
+		blender_tag = Object.New('Empty')
+		blender_tag.setName(tag_name.name+"_test")
+		
 		# Activate name-visibility for this object.
-		object.setDrawMode(object.getDrawMode() | 8)   # 8="drawname"
+		blender_tag.setDrawMode(blender_tag.getDrawMode() | 8)   # 8="drawname"
 
 		# Link Object to current Scene
-		scene.link(object)
+		scene.link(blender_tag)
 
 		for frame_counter in range(0,md2_tags.num_frames):
-			progress+=progressIncrement
+		#for frame_counter in range(0,10): #DEBUG
+			progress += progressIncrement
 			Blender.Window.DrawProgressBar(progress, "Calculating Frame "+str(frame_counter)+" | "+tag_name.name)
 			#set blender to the correct frame (so the objects' data will be set in this frame)
 			Blender.Set("curframe", frame_counter+1)
 			#Blender.Set("curframe", frame_counter) # use this if imported emties do not match up with imported md2 files
 
+			# Note: Quake3 uses left-hand geometry
+			origin	= tag_frames[frame_counter].origin
+			forward	= tag_frames[frame_counter].axis1
+			left	= tag_frames[frame_counter].axis2
+			up	= tag_frames[frame_counter].axis3
+
+			transform = MatrixSetupTransform(forward, left, up, origin)
+			##print transform #DEBUG
+			transform2 = Blender.Mathutils.Matrix(transform[0], transform[1], transform[2], transform[3])
+			blender_tag.setMatrix(transform2)
+
 			# Set object position.
-			object.setLocation(tag_frames[frame_counter].Row1[0], tag_frames[frame_counter].Row1[1], tag_frames[frame_counter].Row1[2])
-
-			# Set object rotation,
-			euler_rotation=get_euler(
-				tag_frames[frame_counter].Row1,
-				tag_frames[frame_counter].Row2,
-				tag_frames[frame_counter].Row3,
-				tag_frames[frame_counter].Row4)
-			object.setEuler( euler_rotation[0], euler_rotation[1], euler_rotation[2])
-
-			# (TODO: set object size?)
+			blender_tag.setLocation(origin[0], origin[1], origin[2])
 
 			# Insert keyframe for current frame&object.
-			object.insertIpoKey(LOCROTSIZE)
+			blender_tag.insertIpoKey(LOCROTSIZE)
 
 	Blender.Window.DrawProgressBar(1.0, "MD2 TAG Import")
 	
