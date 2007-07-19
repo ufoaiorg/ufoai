@@ -163,6 +163,7 @@ typedef struct aircraft_s {
 	char *name;				/**< translateable name */
 	char *shortname;		/**< translateable shortname */
 	char *image;			/**< image on geoscape */
+	char *model;
 	aircraftType_t type;
 	ufoType_t ufotype;			/**< type of UFO (if craft is not UFO - not used) */
 	int status;				/**< see aircraftStatus_t */
@@ -185,11 +186,6 @@ typedef struct aircraft_s {
 	/* pointer to base->numOnTeam[AIRCRAFT_ID] */
 	int *teamSize;				/**< how many soldiers on board */
 	int teamIdxs[MAX_ACTIVETEAM];	/**< array of team members on board employee idx*/
-
-	char *model;
-	/* NOTE: these pointers needs reinit after loading a saved game */
-	/*@todo remove me */
-	char shield_string[MAX_VAR];	/**< Name of the shield equipping aircraft */
 
 	aircraftSlot_t weapons[MAX_AIRCRAFTSLOT];	/**< Weapons assigned to aircraft */
 	int maxWeapons;

@@ -2014,14 +2014,6 @@ static const value_t aircraft_param_vals[] = {
 	{NULL, 0, 0, 0}
 };
 
-/** @brief These values will be linked into the aircaft when assignAircraftItems is true */
-static const value_t aircraft_standard_vals[] = {
-	/* will be linked in for single player games */
-	{"shield", V_STRING, offsetof(aircraft_t, shield_string), 0},
-
-	{NULL, 0, 0, 0}
-};
-
 /** @brief Valid aircraft definition values from script files. */
 static const value_t aircraft_vals[] = {
 	{"name", V_TRANSLATION2_STRING, offsetof(aircraft_t, name), 0},
@@ -2062,7 +2054,6 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 	const value_t *vp;
 	const char *token;
 	int i;
-	qboolean ignoreForNow = qfalse;
 	technology_t *tech;
 	aircraftItemType_t itemType = MAX_ACITEMS;
 
@@ -2265,20 +2256,6 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 				} while (*text); /* dummy condition */
 			}
 		} else {
-			/* write into cl_genericPool - this data is only parsed once */
-			ignoreForNow = qfalse;
-			/* these values are parsed in a later stage and ignored for now */
-			for (vp = aircraft_standard_vals; vp->string; vp++)
-				if (!Q_strcmp(token, vp->string)) {
-					token = COM_EParse(text, errhead, name);
-					if (!*text)
-						return;
-					ignoreForNow = qtrue;
-					break;
-				}
-			if (ignoreForNow)
-				continue;
-
 			/* check for some standard values */
 			for (vp = aircraft_vals; vp->string; vp++)
 				if (!Q_strcmp(token, vp->string)) {
@@ -2395,9 +2372,6 @@ void AIR_ListAircraftSamples_f (void)
 			Com_Printf("..%s: %s\n", vp->string, Com_ValueToStr(air_samp, vp->type, vp->ofs));
 		}
 		for (vp = aircraft_param_vals; vp->string; vp++) {
-			Com_Printf("..%s: %s\n", vp->string, Com_ValueToStr(air_samp, vp->type, vp->ofs));
-		}
-		for (vp = aircraft_standard_vals; vp->string; vp++) {
 			Com_Printf("..%s: %s\n", vp->string, Com_ValueToStr(air_samp, vp->type, vp->ofs));
 		}
 	}
