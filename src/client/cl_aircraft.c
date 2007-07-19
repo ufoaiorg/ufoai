@@ -306,7 +306,7 @@ void AIR_AircraftInit (void)
  * @note Called in: CL_AircraftList_f(), AIR_ListAircraft_f(), AIR_AircraftSelect(),
  * @note MAP_DrawMap(), CL_DisplayPopupIntercept()
  */
-char *AIR_AircraftStatusToName (aircraft_t * aircraft)
+const char *AIR_AircraftStatusToName (aircraft_t * aircraft)
 {
 	assert(aircraft);
 
@@ -2377,7 +2377,7 @@ void AIR_ListAircraftSamples_f (void)
  *
  * @sa itemWeight_t
  */
-char* AII_WeightToName (itemWeight_t weight)
+const char* AII_WeightToName (itemWeight_t weight)
 {
 	switch (weight) {
 	case ITEM_LIGHT:

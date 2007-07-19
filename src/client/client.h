@@ -909,9 +909,6 @@ void MN_AddChatMessage(const char *text);
 missionResults_t missionresults;	/**< Mission results pointer used for Menu Won. */
 
 #include "cl_menu.h"
-
-void CL_SpawnSoldiers(void);
-
 void B_DrawBase(menuNode_t * node);
 
 /* cl_particle.c */
@@ -923,13 +920,10 @@ int CL_ParseParticle(const char *name, const char **text);
 void CL_InitParticles(void);
 ptl_t *CL_ParticleSpawn(const char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a);
 void PE_RenderParticles(void);
-
 extern ptlArt_t ptlArt[MAX_PTL_ART];
 extern ptl_t ptl[MAX_PTLS];
-
 extern int numPtlArt;
 extern int numPtls;
-
 
 /* cl_parse.c */
 extern const char *ev_format[128];
@@ -971,7 +965,7 @@ void CL_ParseSequence(const char *name, const char **text);
 cdlight_t *CL_AllocDlight(int key);
 void CL_AddParticles(void);
 
-
+/* x86.c */
 #if USE_X86_ASM
 void x86_TimerStart(void);
 void x86_TimerStop(void);
@@ -982,44 +976,44 @@ unsigned long *x86_TimerGetHistogram(void);
 /* cl_map.c */
 #define GLOBE_ROTATE -90
 #define MAX_PROJECTILESONGEOSCAPE 16
-extern nation_t* MAP_GetNation(const vec2_t pos);
-extern qboolean MAP_MapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y);
-extern qboolean MAP_3DMapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y, int *z);
-extern qboolean MAP_Draw3DMarkerIfVisible(const menuNode_t* node, const vec2_t pos, float angle, const char *model, qboolean globe);
-extern void MAP_MapDrawEquidistantPoints(const menuNode_t* node, vec2_t center, const float angle, const vec4_t color, qboolean globe);
-extern float MAP_AngleOfPath(const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector, qboolean qtrue);
-extern void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line);
-extern void MAP_DrawMap(const menuNode_t* node, qboolean map3D);
-extern void MAP_CenterOnPoint(void);
-extern void MAP_MapClick(const menuNode_t * node, int x, int y, qboolean globe);
-extern void MAP_ResetAction(void);
-extern void MAP_SelectAircraft(aircraft_t* aircraft);
-extern void MAP_SelectMission(actMis_t* mission);
-extern void MAP_NotifyMissionRemoved(const actMis_t* mission);
-extern void MAP_NotifyUfoRemoved(const aircraft_t* ufo);
-extern void MAP_NotifyUfoDisappear(const aircraft_t* ufo);
-extern void MAP_GameInit(void);
-extern const char* MAP_GetZoneType(byte* color);
+nation_t* MAP_GetNation(const vec2_t pos);
+qboolean MAP_MapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y);
+qboolean MAP_3DMapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y, int *z);
+qboolean MAP_Draw3DMarkerIfVisible(const menuNode_t* node, const vec2_t pos, float angle, const char *model, qboolean globe);
+void MAP_MapDrawEquidistantPoints(const menuNode_t* node, vec2_t center, const float angle, const vec4_t color, qboolean globe);
+float MAP_AngleOfPath(const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector, qboolean qtrue);
+void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line);
+void MAP_DrawMap(const menuNode_t* node, qboolean map3D);
+void MAP_CenterOnPoint(void);
+void MAP_MapClick(const menuNode_t * node, int x, int y, qboolean globe);
+void MAP_ResetAction(void);
+void MAP_SelectAircraft(aircraft_t* aircraft);
+void MAP_SelectMission(actMis_t* mission);
+void MAP_NotifyMissionRemoved(const actMis_t* mission);
+void MAP_NotifyUfoRemoved(const aircraft_t* ufo);
+void MAP_NotifyUfoDisappear(const aircraft_t* ufo);
+void MAP_GameInit(void);
+const char* MAP_GetZoneType(byte* color);
 
 /* cl_ufo.c */
-extern ufoType_t UFO_ShortNameToID(const char *token);
-extern const char* UFO_TypeToShortName(ufoType_t type);
-extern const char* UFO_TypeToName(ufoType_t type);
-extern void UFO_FleePhalanxAircraft(aircraft_t *ufo, vec2_t v);
-extern void UFO_CampaignRunUfos(int dt);
-extern void UFO_CampaignCheckEvents(void);
-extern void UFO_Reset(void);
-extern void UFO_RemoveUfoFromGeoscape(aircraft_t* ufo);
-extern void UFO_PrepareRecovery(base_t *base);
-extern void UFO_Recovery(void);
+ufoType_t UFO_ShortNameToID(const char *token);
+const char* UFO_TypeToShortName(ufoType_t type);
+const char* UFO_TypeToName(ufoType_t type);
+void UFO_FleePhalanxAircraft(aircraft_t *ufo, vec2_t v);
+void UFO_CampaignRunUfos(int dt);
+void UFO_CampaignCheckEvents(void);
+void UFO_Reset(void);
+void UFO_RemoveUfoFromGeoscape(aircraft_t* ufo);
+void UFO_PrepareRecovery(base_t *base);
+void UFO_Recovery(void);
 
 /* cl_popup.c */
-extern void CL_PopupInit(void);
-extern void CL_PopupNotifyMissionRemoved(const actMis_t* mission);
-extern void CL_PopupNotifyUfoRemoved(const aircraft_t* ufo);
-extern void CL_PopupNotifyUfoDisappeared(const aircraft_t* ufo);
-extern void CL_DisplayPopupAircraft(const aircraft_t* aircraft);
-extern void CL_DisplayPopupIntercept(struct actMis_s* mission, aircraft_t* ufo);
+void CL_PopupInit(void);
+void CL_PopupNotifyMissionRemoved(const actMis_t* mission);
+void CL_PopupNotifyUfoRemoved(const aircraft_t* ufo);
+void CL_PopupNotifyUfoDisappeared(const aircraft_t* ufo);
+void CL_DisplayPopupAircraft(const aircraft_t* aircraft);
+void CL_DisplayPopupIntercept(struct actMis_s* mission, aircraft_t* ufo);
 
 /* cl_keys.c */
 extern char *keybindings[K_KEY_SIZE];

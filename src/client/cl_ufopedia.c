@@ -142,7 +142,7 @@ static void UP_ChangeDisplay (int newDisplay)
  * The weaponSkills were defined in q_shared.h at abilityskills_t
  * @sa abilityskills_t
  */
-static char* CL_WeaponSkillToName (int weaponSkill)
+static const char* CL_WeaponSkillToName (int weaponSkill)
 {
 	switch (weaponSkill) {
 	case SKILL_CLOSE:
@@ -172,7 +172,7 @@ static char* CL_WeaponSkillToName (int weaponSkill)
  * The aircraft stats were defined in cl_aircraft.h
  * @sa aircraftParams_t
  */
-static char* CL_AircraftStatToName (int stat)
+static const char* CL_AircraftStatToName (int stat)
 {
 	switch (stat) {
 	case AIR_STATS_RANGE:
@@ -612,7 +612,7 @@ int UP_GetUnreadMails (void)
 		}
 		m = m->next;
 	}
-	
+
 	Cvar_Set("mn_upunreadmail", va("%i", gd.numUnreadMails));
 	return gd.numUnreadMails;
 }

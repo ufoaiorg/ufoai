@@ -244,7 +244,7 @@ extern void AIM_AircraftEquipzoneSelect_f(void);
 extern void AIM_AircraftEquipAddItem_f(void);
 extern void AIM_AircraftEquipDeleteItem_f(void);
 void AIM_AircraftEquipmenuClick_f(void);
-char *AIR_AircraftStatusToName(aircraft_t *aircraft);
+const char *AIR_AircraftStatusToName(aircraft_t *aircraft);
 qboolean AIR_IsAircraftInBase(aircraft_t *aircraft);
 void AIR_AircraftInit(void);
 void AIR_AircraftSelect(aircraft_t *aircraft);
@@ -283,6 +283,6 @@ void AIR_UpdateHangarCapForAll(int base_idx);
 extern qboolean AIR_AircraftAllowed(void);
 qboolean AIR_ScriptSanityCheck(void);
 
-char* AII_WeightToName(itemWeight_t weight);
+const char* AII_WeightToName(itemWeight_t weight);
 
 #endif
