@@ -1663,7 +1663,7 @@ void AIM_AircraftEquipDeleteItem_f (void)
 	/* select the slot we are changing */
 	/* update the new item to slot */
 	if (num == 1) {
-		/* if the item has been installed since less than 1 hour, you don't time to remove it */
+		/* if the item has been installed since less than 1 hour, you don't need time to remove it */
 		if (slot->installationTime < aircraftItems[slot->itemIdx].installationTime)
 			slot->installationTime = -aircraftItems[slot->itemIdx].installationTime;
 		else
@@ -2139,7 +2139,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 				Com_DPrintf("use shield %s for aircraft %s\n", token, air_samp->id);
 				tech = RS_GetTechByID(token);
 				if (tech)
-					AII_AddItemToSlot(tech, &(air_samp->shield));
+					air_samp->shield.itemIdx = AII_GetAircraftItemByID(tech->provides);
 			} else if (!Q_strncmp(token, "slot", 4)) {
 				token = COM_EParse(text, errhead, name);
 				if (!*text || *token != '{') {
