@@ -893,8 +893,7 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 /**
  * @brief Removes an aircraft from its base and the game.
  * @param[in] aircraft Pointer to aircraft that should be removed.
- * @note The assigned soldiers (if any) are removed from game.
- * @note If you want to do something different (kill, fire, etc...) do it before calling this function.
+ * @note aircraft and assigned soldiers (if any) are removed from game.
  * @todo Return status of deletion for better error handling.
  */
 void AIR_DestroyAircraft (aircraft_t *aircraft)
