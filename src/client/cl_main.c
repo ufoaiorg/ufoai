@@ -1508,6 +1508,7 @@ void CL_RequestNextDownload (void)
 {
 	unsigned map_checksum = 0;
 	unsigned ufoScript_checksum = 0;
+	const char *buf;
 
 	if (cls.state != ca_connected)
 		return;
@@ -1532,6 +1533,9 @@ void CL_RequestNextDownload (void)
 
 		/* activate the map loading screen for multiplayer, too */
 		SCR_BeginLoadingPlaque();
+
+		while ((buf = FS_GetFileData("ufos/*.ufo")) != NULL)
+			ufoScript_checksum += LittleLong(Com_BlockChecksum(buf, strlen(buf)));
 
 		CM_LoadMap(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS], &map_checksum);
 		if (!*cl.configstrings[CS_VERSION] || !*cl.configstrings[CS_MAPCHECKSUM] || !*cl.configstrings[CS_UFOCHECKSUM]) {
