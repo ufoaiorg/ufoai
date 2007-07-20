@@ -1563,8 +1563,8 @@ int Com_ShapeUsage (uint32_t shape)
 {
  	int bit_counter = 0;
 	int i;
-	
-	for (i = 0; i < SHAPE_SMALL_MAX_HEIGHT*SHAPE_SMALL_MAX_WIDTH; i++)
+
+	for (i = 0; i < SHAPE_SMALL_MAX_HEIGHT * SHAPE_SMALL_MAX_WIDTH; i++)
 		if (shape & (1 << i))
 			bit_counter++;
 
