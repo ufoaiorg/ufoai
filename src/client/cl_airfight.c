@@ -486,6 +486,10 @@ static void AIRFIGHT_ProjectileHits (aircraftProjectile_t *projectile)
 	target = projectile->aimedAircraft;
 	assert(target);
 
+	/* if the aircraft is not on geoscape anymore, do nothing (returned to base) */
+	if (AIR_IsAircraftInBase(target))
+		return;
+
 	/* base damage is given by the ammo */
 	damage = aircraftItems[projectile->aircraftItemsIdx].weaponDamage;
 
