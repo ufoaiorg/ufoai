@@ -232,9 +232,12 @@ static void B_BaseInit_f (void)
 
 	baseCurrent = &gd.bases[baseID];
 
+#if 0
+	I don't think these Cvar are used anymore -- Kracken 200707
 	Cvar_SetValue("mn_medics_in_base", E_CountHired(baseCurrent, EMPL_MEDIC));
 	Cvar_SetValue("mn_soldiers_in_base", E_CountHired(baseCurrent, EMPL_SOLDIER));
 	Cvar_SetValue("mn_scientists_in_base", E_CountHired(baseCurrent, EMPL_SCIENTIST));
+#endif
 
 	Cvar_Set("mn_credits", va(_("%i c"), ccs.credits));
 
