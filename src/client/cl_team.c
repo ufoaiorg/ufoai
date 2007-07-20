@@ -68,7 +68,7 @@ void CL_SendItem (sizebuf_t *buf, item_t item, int container, int x, int y, qboo
 	assert(item.t != NONE);
 /*	Com_Printf("Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n", csi.ods[item.t].id, container, item.t, item.a, item.m, x, y);*/
 	if (save) {
-		MSG_WriteFormat(buf, "bbbb", item.a, container, x, y);
+		MSG_WriteFormat(buf, "bbbbb", item.a, container, x, y, item.rotated);
 		MSG_WriteString(buf, csi.ods[item.t].id);
 		if (item.a > NONE_AMMO)
 			MSG_WriteString(buf, csi.ods[item.m].id);
@@ -142,7 +142,7 @@ void CL_ReceiveItem (sizebuf_t *buf, item_t *item, int *container, int *x, int *
 	item->a = NONE_AMMO;
 
 	if (save) {
-		MSG_ReadFormat(buf, "bbbb", &item->a, container, x, y);
+		MSG_ReadFormat(buf, "bbbbb", &item->a, container, x, y, &item->rotated);
 		itemID = MSG_ReadString(buf);
 		item->t = INVSH_GetItemByID(itemID);
 		if (item->a > NONE_AMMO) {
