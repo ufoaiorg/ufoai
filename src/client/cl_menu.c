@@ -1850,10 +1850,7 @@ void MN_DrawItem (vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t 
 			C_UNIT * sx, C_UNIT * sy, 0, 0, 0, 0, ALIGN_CC, qtrue, od->image);
 	} else if (od->model[0]) {
 		if (item.rotated) {
-			/** @todo This is non-working code/data yet. */
-			angles[0] = 100;
-			angles[1] = 10;
-			angles[2] = 10;
+			angles[0] = angles[0] - 90;
 		}
 		/* draw model, if there is no image */
 		mi.name = od->model;

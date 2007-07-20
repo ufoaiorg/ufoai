@@ -447,7 +447,11 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 	}
 
 	/* check if the target is a blocked inv-armor and source!=dest */
-	checkedTo = Com_CheckToInventory(i, cacheItem.t, to, tx, ty);
+	if (CSI->ids[to].single)
+		checkedTo = Com_CheckToInventory(i, cacheItem.t, to, 0, 0);
+	else
+		checkedTo = Com_CheckToInventory(i, cacheItem.t, to, tx, ty);
+
 	if (CSI->ids[to].armor && from != to && !checkedTo) {
 		item_t cacheItem2;
 
@@ -522,6 +526,17 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 	/* successful */
 	if (TU)
 		*TU -= time;
+
+	if (checkedTo == 2) {
+		/* Set rotated tag */
+		/** @todo remove this again when moving out of a container. */
+		Com_DPrintf("Com_MoveInInventoryIgnore: setting rotate tag.\n");
+		cacheItem.rotated = 1;
+	} else if (cacheItem.rotated) {
+		/* Remove rotated tag */
+		Com_DPrintf("Com_MoveInInventoryIgnore: removing rotate tag.\n");
+		cacheItem.rotated = 0;
+	}
 
 	Com_RemoveFromInventory(i, from, fx, fy);
 	ic = Com_AddToInventory(i, cacheItem, to, tx, ty);
@@ -621,7 +636,7 @@ void Com_FindSpace (const inventory_t* const inv, item_t *item, const int contai
 				if (checkedTo == 2) {
 					/* Set rotated tag */
 					/** @todo remove this again when moving out of a container. */
-					Com_Printf("Com_FindSpace: setting rotate tag (%s: %s in %s)\n", CSI->ods[item->t].type, CSI->ods[item->t].id, CSI->ids[container].name);
+					Com_DPrintf("Com_FindSpace: setting rotate tag (%s: %s in %s)\n", CSI->ods[item->t].type, CSI->ods[item->t].id, CSI->ids[container].name);
 					item->rotated = 1;
 				}
 				cache_Com_CheckToInventory = 0;
@@ -1652,7 +1667,7 @@ uint32_t Com_ShapeRotate (uint32_t shape)
 		}
 	}
 
-#ifdef DEBUG
+#if 0
 	Com_Printf("\n");
 	Com_Printf("<normal>\n");
 	Com_ShapePrint(shape);
