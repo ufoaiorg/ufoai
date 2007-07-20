@@ -97,6 +97,14 @@ typedef struct fireDef_s {
 } fireDef_t;
 
 /**
+ * @brief The max width and height of an item-shape
+ * @note these values depend on the the usage of an uint32_t that has 32 bits and a width of 8bit => 4 rows
+ * @sa SHAPE_BIG_MAX_HEIGHT
+ */
+#define SHAPE_SMALL_MAX_WIDTH 8
+#define SHAPE_SMALL_MAX_HEIGHT 4
+
+/**
  * @brief Defines all attributes of obejcts used in the inventory.
  * @todo Document the various (and mostly not obvious) varables here. The documentation in the .ufo file(s) might be a good starting point.
  * @note See also http://ufoai.ninex.info/wiki/index.php/UFO-Scripts/weapon_%2A.ufo
@@ -168,10 +176,10 @@ typedef struct objDef_s {
  * @brief defines the max height of an inventory container
  * @note the max width is 32 - because uint32_t has 32 bits and we are
  * using a bitmask for the x values
+ * @sa SHAPE_SMALL_MAX_WIDTH
+ * @sa SHAPE_SMALL_MAX_HEIGHT
  */
 #define SHAPE_BIG_MAX_HEIGHT 16
-#define SHAPE_SMALL_MAX_HEIGHT 4
-#define SHAPE_SMALL_MAX_WIDTH 8
 
 /** @brief inventory definition for our menus */
 typedef struct invDef_s {

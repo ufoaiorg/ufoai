@@ -164,13 +164,13 @@ qboolean Com_CheckToInventory (const inventory_t * const i, const int item, cons
 
 		/* add other items to mask */
 		for (ic = i->c[container]; ic; ic = ic->next)
-			for (j = 0; j < 4 && ic->y + j < SHAPE_BIG_MAX_HEIGHT; j++)
-				mask[ic->y + j] |= ((CSI->ods[ic->item.t].shape >> (j * 8)) & 0xFF) << ic->x;
+			for (j = 0; j < SHAPE_SMALL_MAX_HEIGHT && ic->y + j < SHAPE_BIG_MAX_HEIGHT; j++)
+				mask[ic->y + j] |= ((CSI->ods[ic->item.t].shape >> (j * SHAPE_SMALL_MAX_WIDTH)) & 0xFF) << ic->x;
 	}
 
 	/* test for collisions with newly generated mask */
-	for (j = 0; j < 4; j++)
-		if ((((CSI->ods[item].shape >> (j * 8)) & 0xFF) << x) & mask[y + j])
+	for (j = 0; j < SHAPE_SMALL_MAX_HEIGHT; j++)
+		if ((((CSI->ods[item].shape >> (j * SHAPE_SMALL_MAX_WIDTH)) & 0xFF) << x) & mask[y + j])
 			return qfalse;
 
 	/* everything ok */
@@ -196,7 +196,9 @@ invList_t *Com_SearchInInventory (const inventory_t* const i, int container, int
 
 	/* more than one item - search for a suitable place in this container */
 	for (ic = i->c[container]; ic; ic = ic->next)
-		if (x >= ic->x && y >= ic->y && x < ic->x + 8 && y < ic->y + 4 && ((CSI->ods[ic->item.t].shape >> (x - ic->x) >> (y - ic->y) * 8)) & 1)
+		if (x >= ic->x && y >= ic->y
+		&& x < ic->x + SHAPE_SMALL_MAX_WIDTH && y < ic->y + SHAPE_SMALL_MAX_HEIGHT
+		&& ((CSI->ods[ic->item.t].shape >> (x - ic->x) >> (y - ic->y) * SHAPE_SMALL_MAX_WIDTH)) & 1)
 			return ic;
 
 	/* found nothing */
@@ -599,7 +601,7 @@ void Com_FindSpace (const inventory_t* const inv, const int item, const int cont
 	assert(!cache_Com_CheckToInventory);
 
 	for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++)
-		for (x = 0; x < 32; x++)
+		for (x = 0; x < 32; x++) /**< 32 because the shape is uint32_t => only 32 bits allowed */
 			if (Com_CheckToInventory(inv, item, container, x, y)) {
 				cache_Com_CheckToInventory = 0;
 				*px = x;

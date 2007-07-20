@@ -305,15 +305,13 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		if (strstr(strstr(strstr(token, " "), " "), " ") == NULL)
 			Sys_Error("Com_ParseValue: Illegal shape small statement '%s'\n", token);
 		sscanf(token, "%i %i %i %i", &x, &y, &w, &h);
-		if (w > SHAPE_SMALL_MAX_WIDTH)
-			Sys_Error("Com_ParseValue: illegal shape statement - max w value is %i\n", SHAPE_SMALL_MAX_WIDTH);
-		if (h > SHAPE_SMALL_MAX_HEIGHT || y + h > SHAPE_SMALL_MAX_HEIGHT)
-			Sys_Error("Com_ParseValue: illegal shape statement - max h value is %i\n", SHAPE_SMALL_MAX_HEIGHT);
-		if (x + w > SHAPE_SMALL_MAX_WIDTH || x > SHAPE_SMALL_MAX_WIDTH || w > SHAPE_SMALL_MAX_WIDTH)
+		if (h > SHAPE_BIG_MAX_HEIGHT)
+			Sys_Error("Com_ParseValue: illegal shape statement - max h value is %i\n", SHAPE_BIG_MAX_HEIGHT);
+		if (x + w > 32 || x > 32 || w > 32) /* check bounds - 32 because the shape is uint32_t => only 32 bits allowed */
 			Sys_Error("Com_ParseValue: illegal shape statement - max x and w values are 32 ('%s')\n", token);
 		for (h += y; y < h; y++)
-			*(uint32_t *) b |= ((1 << w) - 1) << x << (y * 8);
-		return ALIGN(4);
+			*(uint32_t *) b |= ((1 << w) - 1) << x << (y * SHAPE_SMALL_MAX_WIDTH);
+		return ALIGN(SHAPE_SMALL_MAX_HEIGHT);
 
 	case V_SHAPE_BIG:
 		if (strstr(strstr(strstr(token, " "), " "), " ") == NULL)
@@ -321,12 +319,12 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		sscanf(token, "%i %i %i %i", &x, &y, &w, &h);
 		if (y > SHAPE_BIG_MAX_HEIGHT || h > SHAPE_BIG_MAX_HEIGHT || y + h > SHAPE_BIG_MAX_HEIGHT)
 			Sys_Error("Com_ParseValue: Illegal shape big statement, max height is %i\n", SHAPE_BIG_MAX_HEIGHT);
-		if (x + w > 32 || x > 32 || w > 32)
+		if (x + w > 32 || x > 32 || w > 32)  /* check bounds - 32 because the shape is uint32_t => only 32 bits allowed */
 			Sys_Error("Com_ParseValue: illegal shape statement - max x and w values are 32 ('%s')\n", token);
 		w = ((1 << w) - 1) << x;
 		for (h += y; y < h; y++)
 			((uint32_t *) b)[y] |= w;
-		return ALIGN(SHAPE_BIG_MAX_HEIGHT * 4);
+		return ALIGN(SHAPE_BIG_MAX_HEIGHT * SHAPE_SMALL_MAX_HEIGHT);
 
 	case V_DMGTYPE:
 		for (w = 0; w < csi.numDTs; w++)
@@ -497,7 +495,7 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 
 	case V_SHAPE_SMALL:
 		*(int *) b = *(const int *) set;
-		return ALIGN(4);
+		return ALIGN(SHAPE_SMALL_MAX_HEIGHT);
 
 	case V_SHAPE_BIG:
 		memcpy(b, set, 64);
@@ -999,13 +997,13 @@ static void Com_ParseItem (const char *name, const char **text)
 	} while (*text);
 
 	/* get size */
-	for (i = 7; i >= 0; i--)
+	for (i = SHAPE_SMALL_MAX_WIDTH - 1; i >= 0; i--)
 		if (od->shape & (0x01010101 << i))
 			break;
 	od->sx = i + 1;
 
-	for (i = 3; i >= 0; i--)
-		if (od->shape & (0xFF << (i * 8)))
+	for (i = SHAPE_SMALL_MAX_HEIGHT - 1; i >= 0; i--)
+		if (od->shape & (0xFF << (i * SHAPE_SMALL_MAX_WIDTH)))
 			break;
 	od->sy = i + 1;
 }
