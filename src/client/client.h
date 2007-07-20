@@ -68,6 +68,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define RIGHT(e) ((e)->i.c[csi.idRight])
 #define LEFT(e)  ((e)->i.c[csi.idLeft])
 #define FLOOR(e) ((e)->i.c[csi.idFloor])
+#define HEADGEAR(e) ((e)->i.c[csi.idHeadgear])
+#define EXTENSION(e) ((e)->i.c[csi.idExtension])
 
 typedef struct {
 	char name[MAX_QPATH];
@@ -708,6 +710,7 @@ void CL_ActorTurnMouse(void);
 void CL_ActorDoTurn(struct dbuffer *msg);
 void CL_ActorStandCrouch_f(void);
 void CL_ActorToggleReaction_f(void);
+void CL_ActorUseHeadgear_f(void);
 void CL_ActorStartMove(le_t * le, pos3_t to);
 void CL_ActorShoot(le_t * le, pos3_t at);
 void CL_InvCheckHands(struct dbuffer *msg);

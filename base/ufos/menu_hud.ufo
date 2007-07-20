@@ -449,7 +449,7 @@ menu hud
 		pos		"180 720"
 		texl	"64 0"
 		texh	"128 37"
-		click	{ cmd toggleheadgear; }
+		click	{ cmd useheadgear; }
 	}
 
 	pic bt_reload_right

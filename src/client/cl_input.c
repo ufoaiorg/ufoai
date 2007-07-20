@@ -747,6 +747,7 @@ void CL_InitInput (void)
 	Cmd_AddCommand("-turn", CL_TurnUp_f, NULL);
 	Cmd_AddCommand("standcrouch", CL_ActorStandCrouch_f, _("Toggle stand/crounch"));
 	Cmd_AddCommand("togglereaction", CL_ActorToggleReaction_f, _("Toggle reaction fire"));
+	Cmd_AddCommand("useheadgear", CL_ActorUseHeadgear_f, _("Toggle the headgear"));
 	Cmd_AddCommand("nextalien", CL_NextAlien_f, _("Toogle to next alien"));
 
 	Cmd_AddCommand("list_firemodes", CL_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");

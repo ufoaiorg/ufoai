@@ -2320,6 +2320,30 @@ void CL_ActorStun (void)
 #endif
 
 /**
+ * @brief Toggles the headgear for the current selected player
+ */
+void CL_ActorUseHeadgear_f (void)
+{
+	invList_t* headgear;
+
+	if (mouseSpace != MS_WORLD)
+		return;
+
+	if (!CL_CheckAction())
+		return;
+
+	headgear = HEADGEAR(selActor);
+	if (!headgear)
+		return;
+
+	Cbuf_AddText("deselheadgear;");
+	Cbuf_AddText("selheadgear;");
+
+	/* @todo: 'fire' the headgear */
+	/*MSG_Write_PA(PA_SHOOT, selActor->entnum, at, type, cl.cfiremode, mousePosTargettingAlign);*/
+}
+
+/**
  * @brief Toggles reaction fire between the states off/single/multi.
  * @note RF mode will change as follows (Current mode -> resulting mode after click)
  * 	off	-> single
@@ -2332,7 +2356,7 @@ void CL_ActorToggleReaction_f (void)
 	int state = 0;
 	int actor_idx = -1;
 
-	if (!CL_CheckAction() || !selActor)
+	if (!CL_CheckAction())
 		return;
 
 	actor_idx = CL_GetActorNumber(selActor);
