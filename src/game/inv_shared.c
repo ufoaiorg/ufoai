@@ -1519,6 +1519,41 @@ int Com_GetDefaultReactionFire (objDef_t *ammo, int weapon_fds_idx)
 	return -1; /* -1 = undef firemode. Default for objects without a reaction-firemode */
 }
 
+/**
+ * @brief Will merge the second shape (=itemshape) into the first one (=big container shape) on the position x/y.
+ * @param[in] shape Pointer to 'uint32_t shape[SHAPE_BIG_MAX_HEIGHT]'
+ * @param[in] itemshape
+ * @param[in] x
+ * @param[in] y
+ */
+void Com_MergeShapes (uint32_t *shape, uint32_t itemshape, int x, int y)
+{
+	int i;
+
+	for (i = 0; (i < SHAPE_SMALL_MAX_HEIGHT) && (y + i < SHAPE_BIG_MAX_HEIGHT); i++)
+		shape[y + i] |= ((itemshape >> i * SHAPE_SMALL_MAX_WIDTH) & 0xFF) << x;
+}
+
+/**
+ * @brief Checks the shape if there is a 1-bit on the position x/y.
+ * @param[in] shape Pointer to 'uint32_t shape[SHAPE_BIG_MAX_HEIGHT]'
+ * @param[in] x
+ * @param[in] y
+ */
+qboolean Com_CheckShape (const uint32_t *shape, int x, int y)
+{
+	const uint32_t row = shape[y];
+	int position = pow(2, x);
+
+	if (y > SHAPE_BIG_MAX_HEIGHT)
+		return qfalse;
+
+	if ((row & position) == 0)
+		return qfalse;
+	else
+		return qtrue;
+}
+
 #if 0
 /** README
  * @todo Draft functions for future auto-rotate feature (shape + model)
@@ -1534,7 +1569,7 @@ int Com_GetDefaultReactionFire (objDef_t *ammo, int weapon_fds_idx)
  * @param[in] y The y (height) position of the bit to set.
  * @return The new shape.
  */
-uint32_t INV_ShapeSetBit (uint32_t shape, int x, int y)
+uint32_t Com_ShapeSetBit (uint32_t shape, int x, int y)
 {
 	shape |= 0x01 << (x * SHAPE_SMALL_MAX_WIDTH + y);
 	return shape;
@@ -1547,7 +1582,7 @@ uint32_t INV_ShapeSetBit (uint32_t shape, int x, int y)
  * @param[in] shape The shape to rotate.
  * @return The new shape.
  */
-uint32_t INV_ShapeRotate (uint32_t shape)
+uint32_t Com_ShapeRotate (uint32_t shape)
 {
 	int h, w;
 	uint32_t shape_new = 0;
@@ -1559,7 +1594,7 @@ uint32_t INV_ShapeRotate (uint32_t shape)
 		row &= 0xFF;		/* Mask out trailing rows */
 		for (w = SHAPE_SMALL_MAX_WIDTH - 1; w >= 0; w--) {
 			if (row && (0x01 << w)) { /* Bit number 'w' in this row set? */
-				shape_new = INV_ShapeSetBit(shape_new, h, h_new); /* "h" is the new width here. */
+				shape_new = Com_ShapeSetBit(shape_new, h, h_new); /* "h" is the new width here. */
 				h_new++;	/* Count row */
 			}
 		}
@@ -1572,7 +1607,7 @@ uint32_t INV_ShapeRotate (uint32_t shape)
  * @brief Prints the shape.
  * @note Only works for V_SHAPE_SMALL!
  */
-void INV_ShapePrint (uint32_t shape)
+void Com_ShapePrint (uint32_t shape)
 {
 	int h, w;
 	int row;

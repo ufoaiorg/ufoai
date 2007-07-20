@@ -630,41 +630,6 @@ static void MN_StartServer_f (void)
 }
 
 /**
- * @brief Will merge the second shape (=itemshape) into the first one on the position x/y
- * @param[in] shape Pointer to 'uint32_t shape[SHAPE_BIG_MAX_HEIGHT]'
- * @param[in] itemshape
- * @param[in] x
- * @param[in] y
- */
-static void Com_MergeShapes (uint32_t *shape, uint32_t itemshape, int x, int y)
-{
-	int i;
-
-	for (i = 0; (i < SHAPE_SMALL_MAX_HEIGHT) && (y + i < SHAPE_BIG_MAX_HEIGHT); i++)
-		shape[y + i] |= ((itemshape >> i * SHAPE_SMALL_MAX_WIDTH) & 0xFF) << x;
-}
-
-/**
- * @brief Checks the shape if there is a 1-bit on the position x/y.
- * @param[in] shape
- * @param[in] x
- * @param[in] y
- */
-static qboolean Com_CheckShape (const uint32_t *shape, int x, int y)
-{
-	const uint32_t row = shape[y];
-	int position = pow(2, x);
-
-	if (y > SHAPE_BIG_MAX_HEIGHT)
-		return qfalse;
-
-	if ((row & position) == 0)
-		return qfalse;
-	else
-		return qtrue;
-}
-
-/**
  * @brief Draws the rectangle in a 'free' style on position posx/posy (pixel) in the size sizex/sizey (pixel)
  */
 static void MN_DrawDisabled (menuNode_t* node)

@@ -100,21 +100,9 @@ typedef struct fireDef_s {
  * @brief The max width and height of an item-shape
  * @note these values depend on the the usage of an uint32_t that has 32 bits and a width of 8bit => 4 rows
  * @sa SHAPE_BIG_MAX_HEIGHT
- * @sa SHAPE_BIG_MAX_WIDTH
  */
 #define SHAPE_SMALL_MAX_WIDTH 8
 #define SHAPE_SMALL_MAX_HEIGHT 4
-
-/**
- * @brief defines the max height of an inventory container
- * @note the max width is 32 - because uint32_t has 32 bits and we are
- * using a bitmask for the x values
- * @sa SHAPE_SMALL_MAX_WIDTH
- * @sa SHAPE_SMALL_MAX_HEIGHT
- */
-#define SHAPE_BIG_MAX_HEIGHT 16
-/** @brief 32 bit mask */
-#define SHAPE_BIG_MAX_WIDTH 32
 
 /**
  * @brief Defines all attributes of obejcts used in the inventory.
@@ -183,6 +171,15 @@ typedef struct objDef_s {
 } objDef_t;
 
 #define MAX_INVDEFS     16
+
+/**
+ * @brief defines the max height of an inventory container
+ * @note the max width is 32 - because uint32_t has 32 bits and we are
+ * using a bitmask for the x values
+ * @sa SHAPE_SMALL_MAX_WIDTH
+ * @sa SHAPE_SMALL_MAX_HEIGHT
+ */
+#define SHAPE_BIG_MAX_HEIGHT 16
 
 /** @brief inventory definition for our menus */
 typedef struct invDef_s {
@@ -427,6 +424,9 @@ int INVSH_GetItemByID(const char *id);
 qboolean INV_LoadableInWeapon(objDef_t *od, int weapon_idx);
 int INV_FiredefsIDXForWeapon(objDef_t *od, int weapon_idx);
 int Com_GetDefaultReactionFire(objDef_t *ammo, int weapon_fds_idx);
+
+void Com_MergeShapes(uint32_t *shape, uint32_t itemshape, int x, int y);
+qboolean Com_CheckShape(const uint32_t *shape, int x, int y);
 
 /** @brief Buytype categories in the various equipment screens (buy/sell, equip, etc...)
  ** Do not mess with the order (especially BUY_AIRCRAFT and BUY_MULTI_AMMO is/will be used for max-check in normal equipment screens)
