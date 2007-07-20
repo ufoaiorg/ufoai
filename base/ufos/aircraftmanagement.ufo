@@ -122,8 +122,8 @@ aircraft craft_inter_stiletto
 		type		weapon
 		position	nose_center
 		size		light
-		contains	rs_craft_weapon_sparrowhawk
-		ammo		rs_craft_ammo_sparrowhawk
+		contains	rs_craft_weapon_shiva
+		ammo		rs_craft_ammo_shiva_1
 	}
 	slot {
 		type		weapon

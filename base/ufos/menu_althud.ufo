@@ -1072,6 +1072,7 @@ menu althud
 		size	"275 50"
 		format	"20 100"
 		color	"0 1 0 1"
+		height	"2"
 	}
 
 	// ==================

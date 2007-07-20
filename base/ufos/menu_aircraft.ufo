@@ -312,6 +312,7 @@ menu aircraft
 		size	"510 200"
 		format	"20 120"
 		num	11
+		height	"10"
 	}
 
 	func init
@@ -427,6 +428,7 @@ menu aircraft_equip
 		size	"530 150"
 		format	"20 0"
 //		bgcolor	"1 1 1 0.5"
+		height	"7"
 	}
 
 	string airequip_item_name
@@ -593,6 +595,7 @@ menu aircraft_equip
 		format	"16 0"
 //		bgcolor	"1 1 1 0.5"
 		num 39
+		height	"2"
 	}
 
 	pic airequip_zone_select2
@@ -614,6 +617,7 @@ menu aircraft_equip
 		format	"16 0"
 //		bgcolor	"1 1 1 0.5"
 		num 40
+		height	"2"
 	}
 
 	pic airequip_zone_select3
@@ -635,6 +639,7 @@ menu aircraft_equip
 		format	"16 0"
 //		bgcolor	"1 1 1 0.5"
 		num 41
+		height	"2"
 	}
 
 	string airequip_header1

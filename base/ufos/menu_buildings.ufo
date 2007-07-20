@@ -120,6 +120,7 @@ menu buildings
 		format	"20 700"
 		mousefx	true
 		num	3
+		height	"31"
 		click {  }
 		rclick { cmd "buildinginfo_click" }
 	}
@@ -131,6 +132,7 @@ menu buildings
 		mousefx false
 		format	"20 140"
 		num	4
+		height	"11"
 	}
 
 //	pic bt_ufopedia
