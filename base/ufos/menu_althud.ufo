@@ -574,7 +574,7 @@ menu althud
 	{
 		tooltip	"_Use Item"
 		image	althud/buttons_althud1
-		pos		"871 497"
+		pos		"870 497"
 		texl	"0 74"
 		texh	"25 107"
 		mousefx	true
@@ -584,7 +584,7 @@ menu althud
 	{
 		tooltip	"_Use Item"
 		image	althud/buttons_althud1
-		pos		"871 497"
+		pos		"870 497"
 		texl	"0 74"
 		texh	"25 107"
 		mousefx	true
@@ -626,9 +626,19 @@ menu althud
 		key "*binding togglereaction"
 		image	althud/buttons_althud1
 		mousefx true
-		pos		"929 497"
+		pos		"900 497"
 		texl	"81 37"
 		texh	"106 70"
+		click	{ cmd togglereaction; }
+	}
+
+	pic bt_use_headgear
+	{
+		image	althud/buttons_althud1
+		mousefx true
+		pos		"930 497"
+		texl	"108 37"
+		texh	"134 70"
 		click	{ cmd togglereaction; }
 	}
 
