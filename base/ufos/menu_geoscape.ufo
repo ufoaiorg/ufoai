@@ -179,7 +179,7 @@ menu map
 		pos		"34 652"
 		size	"320 80"
 		format	"18 0"
-		height	"5"
+		height	"4"
 		wheel
 	}
 

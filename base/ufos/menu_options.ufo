@@ -617,7 +617,7 @@ menu options_keys
 	{
 		size	"460 580"
 		pos	"480 110"
-		height	30
+		height	"29"
 		num	1
 		wheel
 		format	"20 0"

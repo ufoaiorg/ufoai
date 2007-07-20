@@ -301,7 +301,7 @@ menu employees
 
 	text employee_list
 	{
-		height	"19"
+		height	"18"
 		format	"38 100"
 		color	"0 .78 0 1"
 		mousefx	true
@@ -538,6 +538,7 @@ menu employees
 		size	"366 80"
 		format	"20 260"
 		num	18
+		height	"4"
 	}
 
 	// ==================

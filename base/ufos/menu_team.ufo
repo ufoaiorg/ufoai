@@ -1356,6 +1356,7 @@ menu equipment
 		size	"326 200"
 		format	"20 0"
 		texh	"17 153"
+		height	"11"
 	}
 	pic weapon_dec
 	{

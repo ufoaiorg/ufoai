@@ -74,6 +74,7 @@ menu tutorials
 		format	"20 0"
 		size	"260 390"
 		num	1
+		height	"19"
 		click	{ }
 	}
 	func init

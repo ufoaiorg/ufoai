@@ -1121,6 +1121,7 @@ menu research
 		format	"22 0"
 		color	"0 .78 0 1"
 		num	6
+		height	"8"
 		click
 		mousefx	true
 		color	"1 1 1 1"

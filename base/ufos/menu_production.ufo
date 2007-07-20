@@ -217,7 +217,8 @@ menu production
 		size	"30 670"
 //		bgcolor "1 1 1 0.5"
 		format	"22 0"
-		num 20
+		num	20
+		height	"30"
 		mousefx true
 	}
 
@@ -320,6 +321,7 @@ menu production
 		size	"366 80"
 		format	"20 260"
 		num 17
+		height	"4"
 	}
 
 	// ==================

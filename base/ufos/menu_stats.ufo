@@ -72,6 +72,7 @@ menu stats
 		bgcolor	"0.5 0.5 0.5 0.2"
 		format  "22 170"
 		num		"22"
+		height	"6"
 	}
 
 	string base_string
@@ -88,6 +89,7 @@ menu stats
 		bgcolor	"0.5 0.5 0.5 0.2"
 		format  "22 170"
 		num		"23"
+		height	"6"
 	}
 
 	string empl_string
@@ -104,6 +106,7 @@ menu stats
 		bgcolor	"0.5 0.5 0.5 0.2"
 		format  "22 170"
 		num		"25"
+		height	"6"
 	}
 
 	string costs_string
@@ -120,6 +123,7 @@ menu stats
 		bgcolor	"0.5 0.5 0.5 0.2"
 		format  "22 340"
 		num		"26"
+		height	"18"
 	}
 
 	string nations_string
@@ -136,6 +140,7 @@ menu stats
 		size	"470 240"
 		format  "22 360"
 		num		"24"
+		height	"10"
 	}
 
 	func init

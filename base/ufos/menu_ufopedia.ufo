@@ -188,7 +188,7 @@ menu ufopedia
 	{
 		if "mn_up_mail == 0"
 		pos		"50 80"
-		size	"660 390"
+		size	"660 504"
 		num		2
 		format	"24 0"
 		click rclick wheel
@@ -200,7 +200,7 @@ menu ufopedia
 	{
 		if "mn_up_mail == 1"
 		pos		"50 208"
-		size	"660 262"
+		size	"660 264"
 		num		2
 		format	"24 0"
 		click rclick wheel
@@ -215,6 +215,7 @@ menu ufopedia
 		size	"660 134"
 		num		32
 		format	"24 0"
+		height	"5"
 		font	"f_small_bold"
 //		bgcolor " 0.5 1 0.5 0.3"
 	}
@@ -242,8 +243,7 @@ menu ufopedia
 		format	"20 0"
 //		bgcolor	" 1 0.5 0.5 0.3"
 		wheel
-// FIXME:
-//		height x
+		height	"10"
 	}
 
 /*
@@ -290,6 +290,7 @@ menu ufopedia
 		size	"354 246"
 		format	"20 0"
 		num	1
+		height	"12"
 		click
 		mousefx true
 //		bgcolor "0.5 0.5 0.5 0.3"
