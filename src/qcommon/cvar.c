@@ -362,7 +362,7 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const 
 
 	if (flags & (CVAR_USERINFO | CVAR_SERVERINFO))
 		if (!Cvar_InfoValidate(var_value)) {
-			Com_Printf("invalid info cvar value\n");
+			Com_Printf("invalid info cvar value '%s' of cvar '%s'\n", var_value, var_name);
 			return NULL;
 		}
 
