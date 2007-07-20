@@ -674,22 +674,17 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	CL_UpdateHireVar(aircraft);
 
 	Cvar_SetValue("mn_equipsoldierstate", CL_EquipSoldierState(aircraft));
-#if 0
-	I don't think this Cvar is used anymore -- Kracken 200707
-	Cvar_SetValue("mn_scientists_in_base", E_CountHired(baseCurrent, EMPL_SCIENTIST));
-#endif
 	Cvar_Set("mn_aircraftstatus", AIR_AircraftStatusToName(aircraft));
 	Cvar_Set("mn_aircraftinbase", AIR_IsAircraftInBase(aircraft) ? "1" : "0");
 	Cvar_Set("mn_aircraftname", va("%s (%i/%i)", aircraft->name, (aircraftID + 1), baseCurrent->numAircraftInBase));
 	Cvar_Set("mn_aircraft_model", aircraft->model);
-	idx = aircraft->weapons[0].itemIdx;
+
 #if 0
+	idx = aircraft->weapons[0].itemIdx;
 	I don't think this Cvar is used anymore.
 	Should be replaced by mn_aircraft_item_model in airequip menu when we will have models -- Kracken 200707
-	Cvar_Set("mn_aircraft_weapon", idx > -1 ? gd.technologies[aircraftItems[idx].tech_idx].name : "");
 	Cvar_Set("mn_aircraft_weapon_img", idx > -1 ? gd.technologies[aircraftItems[idx].tech_idx].image_top : "menu/airequip_no_weapon");
 	idx = aircraft->shield.itemIdx;
-	Cvar_Set("mn_aircraft_shield", idx > -1 ? gd.technologies[aircraftItems[idx].tech_idx].name : "");
 	Cvar_Set("mn_aircraft_shield_img", idx > -1 ? gd.technologies[aircraftItems[idx].tech_idx].image_top : "menu/airequip_no_shield");
 	idx = aircraft->electronics[0].itemIdx;
 	Cvar_Set("mn_aircraft_item_img", idx > -1 ? gd.technologies[aircraftItems[idx].tech_idx].image_top : "menu/airequip_no_item");
