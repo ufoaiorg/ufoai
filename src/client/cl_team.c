@@ -73,7 +73,7 @@ void CL_SendItem (sizebuf_t *buf, item_t item, int container, int x, int y, qboo
 		if (item.a > NONE_AMMO)
 			MSG_WriteString(buf, csi.ods[item.m].id);
 	} else
-		MSG_WriteFormat(buf, "bbbbbb", item.t, item.a, item.m, container, x, y);
+		MSG_WriteFormat(buf, "bbbbbbb", item.t, item.a, item.m, container, x, y, item.rotated);
 }
 
 /**
@@ -151,7 +151,7 @@ void CL_ReceiveItem (sizebuf_t *buf, item_t *item, int *container, int *x, int *
 		}
 	} else
 		/* network */
-		MSG_ReadFormat(buf, "bbbbbb", &item->t, &item->a, &item->m, container, x, y);
+		MSG_ReadFormat(buf, "bbbbbbb", &item->t, &item->a, &item->m, container, x, y, &item->rotated);
 }
 
 void CL_NetReceiveItem (struct dbuffer *buf, item_t *item, int *container, int *x, int *y, qboolean save)
