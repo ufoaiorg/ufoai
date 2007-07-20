@@ -967,7 +967,8 @@ static struct datagram_socket *do_new_datagram_socket (const struct addrinfo *ad
 	FD_SET(sock, &read_fds);
 
 	s = malloc(sizeof(*s));
-	s->family = addr->ai_family;
+	/*s->family = addr->ai_family;*/
+	s->family = AF_INET; /* FIXME: AF_INET6 has no broadcast support */
 	s->addrlen = addr->ai_addrlen;
 	s->socket = sock;
 	s->index = index;
