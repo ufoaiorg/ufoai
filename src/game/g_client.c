@@ -122,7 +122,7 @@ void G_SendStats (edict_t * ent)
 static void G_WriteItem (item_t item, int container, int x, int y)
 {
 	assert(item.t != NONE);
-	gi.WriteFormat("bbbbbb", item.t, item.a, item.m, container, x, y);
+	gi.WriteFormat("bbbbbbb", item.t, item.a, item.m, container, x, y, item.rotated);
 }
 
 /**
@@ -132,7 +132,7 @@ static void G_WriteItem (item_t item, int container, int x, int y)
  */
 static void G_ReadItem (item_t * item, int * container, int * x, int * y)
 {
-	gi.ReadFormat("bbbbbb", &item->t, &item->a, &item->m, container, x, y);
+	gi.ReadFormat("bbbbbbb", &item->t, &item->a, &item->m, container, x, y, &item->rotated);
 }
 
 

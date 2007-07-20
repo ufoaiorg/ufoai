@@ -92,7 +92,7 @@ void CL_SendInventory (sizebuf_t *buf, inventory_t *i, qboolean save)
 			nr++;
 
 	Com_DPrintf("CL_SendInventory: Send %i items\n", nr);
-	MSG_WriteShort(buf, nr * 6);
+	MSG_WriteShort(buf, nr * 7);
 	for (j = 0; j < csi.numIDs; j++)
 		for (ic = i->c[j]; ic; ic = ic->next)
 			CL_SendItem(buf, ic->item, j, ic->x, ic->y, save);
@@ -103,13 +103,13 @@ static void CL_NetSendItem (struct dbuffer *buf, item_t item, int container, int
 	assert(item.t != NONE);
 /*	Com_Printf("Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n", csi.ods[item.t].id, container, item.t, item.a, item.m, x, y);*/
 	if (save) {
-		NET_WriteFormat(buf, "bbbb", item.a, container, x, y);
+		NET_WriteFormat(buf, "bbbbb", item.a, container, x, y, item.rotated);
 		NET_WriteRawString(buf, csi.ods[item.t].id);
 		if (item.a > NONE_AMMO)
 			NET_WriteRawString(buf, csi.ods[item.m].id);
 		NET_WriteByte(buf, 0);
 	} else
-		NET_WriteFormat(buf, "bbbbbb", item.t, item.a, item.m, container, x, y);
+		NET_WriteFormat(buf, "bbbbbbb", item.t, item.a, item.m, container, x, y, item.rotated);
 }
 
 static void CL_NetSendInventory (struct dbuffer *buf, inventory_t *i, qboolean save)
@@ -163,7 +163,7 @@ void CL_NetReceiveItem (struct dbuffer *buf, item_t *item, int *container, int *
 	item->a = NONE_AMMO;
 
 	if (save) {
-		NET_ReadFormat(buf, "bbbb", &item->a, container, x, y);
+		NET_ReadFormat(buf, "bbbbb", &item->a, container, x, y, &item->rotated);
 		itemID = NET_ReadString(buf);
 		item->t = INVSH_GetItemByID(itemID);
 		if (item->a > NONE_AMMO) {
@@ -172,7 +172,7 @@ void CL_NetReceiveItem (struct dbuffer *buf, item_t *item, int *container, int *
 		}
 	} else
 		/* network */
-		NET_ReadFormat(buf, "bbbbbb", &item->t, &item->a, &item->m, container, x, y);
+		NET_ReadFormat(buf, "bbbbbbb", &item->t, &item->a, &item->m, container, x, y, &item->rotated);
 }
 
 /**
@@ -186,7 +186,7 @@ void CL_ReceiveInventory (sizebuf_t *buf, inventory_t *i, qboolean save)
 {
 	item_t item;
 	int container, x, y;
-	int nr = MSG_ReadShort(buf) / 6;
+	int nr = MSG_ReadShort(buf) / 7;
 
 	Com_DPrintf("CL_ReceiveInventory: Read %i items\n", nr);
 	for (; nr-- > 0;) {
