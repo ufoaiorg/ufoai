@@ -1098,6 +1098,7 @@ void Key_Event (int key, qboolean down, unsigned time)
 		return;	/* other systems only care about key down events */
 
 #ifndef _WIN32
+	/* for windows this is done by ToAsciiEx */
 	if (shift_down)
 		key = keyshift[key];
 #endif /* _WIN32 */
