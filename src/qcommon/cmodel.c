@@ -1126,7 +1126,7 @@ static unsigned CM_AddMapTile (char *name, int sX, int sY, int sZ)
 	if (!buf)
 		Com_Error(ERR_DROP, "Couldn't load %s", filename);
 
-	checksum = Com_BlockChecksum(buf, length);
+	checksum = LittleLong(Com_BlockChecksum(buf, length));
 
 	header = *(dheader_t *) buf;
 	for (i = 0; i < sizeof(dheader_t) / 4; i++)

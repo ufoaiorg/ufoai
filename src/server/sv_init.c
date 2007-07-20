@@ -938,7 +938,7 @@ static void SV_SpawnServer (const char *server, const char *param, server_state_
 
 	checksum = 0;
 	while ((buf = FS_GetFileData("ufos/*.ufo")) != NULL)
-		checksum += Com_BlockChecksum(buf, strlen(buf));
+		checksum += LittleLong(Com_BlockChecksum(buf, strlen(buf)));
 	Com_Printf("ufo script checksum %u\n", checksum);
 	Com_sprintf(sv.configstrings[CS_UFOCHECKSUM], sizeof(sv.configstrings[CS_UFOCHECKSUM]), "%i", checksum);
 
