@@ -4890,3 +4890,35 @@ qboolean MS_Load (sizebuf_t* sb, void* data)
 	}
 	return qtrue;
 }
+
+/**
+ * @brief Checks the parsed menus for errors
+ * @return false if there are errors - true otherwise
+ */
+qboolean MN_ScriptSanityCheck (void)
+{
+	int i, error = 0;
+	menuNode_t* node;
+
+	for (i = 0, node = menuNodes; i < numNodes; i++, node++) {
+		switch (node->type) {
+		case MN_TEXT:
+			if (!node->height) {
+				Com_Printf("MN_ParseNodeBody: node '%s' (menu: %s) has no height value but is a text node\n", node->name, node->menu->name);
+				error++;
+			} else if (node->height != (int)(node->size[1] / node->texh[0])) {
+				Com_Printf("MN_ParseNodeBody: height value (%i) of node '%s' (menu: %s) differs from size (%.0f) and format (%.0f) values\n",
+					node->height, node->name, node->menu->name, node->size[1], node->texh[0]);
+				error++;
+			}
+			break;
+		default:
+			break;
+		}
+	}
+
+	if (!error)
+		return qtrue;
+	else
+		return qfalse;
+}

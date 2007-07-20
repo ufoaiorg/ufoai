@@ -129,7 +129,7 @@ typedef struct menuNode_s {
 	int padding;				/**< padding for this node - default 3 - see bgcolor */
 	qboolean invis, blend;
 	int mousefx;
-	int horizontalScroll;		/**< if text is too long, the text is horizontally scrolled */
+	int horizontalScroll;		/**< if text is too long, the text is horizontally scrolled, @todo implement me */
 	int textScroll;				/**< textfields - current scroll position */
 	int textLines;				/**< How many lines there are (set by MN_DrawMenus)*/
 	int timeOut;				/**< ms value until invis is set (see cl.time) */
@@ -266,6 +266,7 @@ void MN_PopMenu(qboolean all);
 menu_t* MN_ActiveMenu(void);
 void MN_Popup(const char *title, const char *text);
 void MN_ParseTutorials(const char *title, const char **text);
+qboolean MN_ScriptSanityCheck(void);
 
 selectBoxOptions_t* MN_AddSelectboxOption(menuNode_t *node);
 
