@@ -640,8 +640,8 @@ static void Com_MergeShapes (uint32_t *shape, int itemshape, int x, int y)
 {
 	int i;
 
-	for (i = 0; (i < 4) && (y + i < SHAPE_BIG_MAX_HEIGHT); i++)
-		shape[y + i] |= ((itemshape >> i * 8) & 0xFF) << x;
+	for (i = 0; (i < SHAPE_SMALL_MAX_HEIGHT) && (y + i < SHAPE_BIG_MAX_HEIGHT); i++)
+		shape[y + i] |= ((itemshape >> i * SHAPE_SMALL_MAX_WIDTH) & 0xFF) << x;
 }
 
 /**
@@ -727,7 +727,7 @@ static void MN_InvDrawFree (inventory_t * inv, menuNode_t * node)
 		} else {
 			memset(free, 0, sizeof(free));
 			for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
-				for (x = 0; x < 32; x++) {
+				for (x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {
 					/* Check if the current position is useable (topleft of the item) */
 					if (Com_CheckToInventory(inv, item, container, x, y)) {
 						itemshape = csi.ods[dragItem.t].shape;
@@ -1137,7 +1137,7 @@ static void MN_Drag (const menuNode_t* const node, int x, int y)
 						/* @todo: Check this stuff for BUY_MULTI_AMMO .. this is probably broken now.*/
 						menuInventory->c[csi.idEquip] = baseCurrent->equipByBuyType.c[et];
 						Com_FindSpace(menuInventory, i->item.t, csi.idEquip, &px, &py);
-						if (px >= 32 && py >= 16) {
+						if (px >= SHAPE_BIG_MAX_WIDTH && py >= SHAPE_BIG_MAX_HEIGHT) {
 							menuInventory->c[csi.idEquip] = baseCurrent->equipByBuyType.c[baseCurrent->equipType];
 							return;
 						}

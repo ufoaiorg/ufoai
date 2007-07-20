@@ -153,8 +153,8 @@ qboolean Com_CheckToInventory (const inventory_t * const i, const int item, cons
 		}
 	}
 
-	/* check bounds - 32 because the shape is uint32_t => only 32 bits allowed */
-	if (x < 0 || y < 0 || x >= 32 || y >= SHAPE_BIG_MAX_HEIGHT)
+	/* check bounds */
+	if (x < 0 || y < 0 || x >= SHAPE_BIG_MAX_WIDTH || y >= SHAPE_BIG_MAX_HEIGHT)
 		return qfalse;
 
 	if (!cache_Com_CheckToInventory) {
@@ -601,7 +601,7 @@ void Com_FindSpace (const inventory_t* const inv, const int item, const int cont
 	assert(!cache_Com_CheckToInventory);
 
 	for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++)
-		for (x = 0; x < 32; x++) /**< 32 because the shape is uint32_t => only 32 bits allowed */
+		for (x = 0; x < SHAPE_BIG_MAX_WIDTH; x++)
 			if (Com_CheckToInventory(inv, item, container, x, y)) {
 				cache_Com_CheckToInventory = 0;
 				*px = x;
