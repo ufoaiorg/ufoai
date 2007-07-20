@@ -652,7 +652,7 @@ static void Com_MergeShapes (uint32_t *shape, uint32_t itemshape, int x, int y)
  */
 static qboolean Com_CheckShape (const uint32_t *shape, int x, int y)
 {
-	const int row = shape[y];
+	const uint32_t row = shape[y];
 	int position = pow(2, x);
 
 	if (y > SHAPE_BIG_MAX_HEIGHT)
@@ -887,7 +887,7 @@ static void MN_FindContainer (menuNode_t* const node)
 
 	/* start on the lower row of the shape mask */
 	for (i = SHAPE_BIG_MAX_HEIGHT - 1; i >= 0; i--)
-		if (id->shape[i] & 0xFFFFFFFF)
+		if (id->shape[i] & ~0x0)
 			break;
 	node->size[1] = C_UNIT * (i + 1) + 0.01;
 }
