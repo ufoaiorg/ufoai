@@ -1516,3 +1516,81 @@ int Com_GetDefaultReactionFire (objDef_t *ammo, int weapon_fds_idx)
 
 	return -1; /* -1 = undef firemode. Default for objects without a reaction-firemode */
 }
+
+#if 0
+/** README
+ * @todo Draft functions for future auto-rotate feature (shape + model)
+ * @todo Check bit operations that are used below and test the INV_ShapeRotate function.
+ */
+
+/**
+ * @brief Sets one bit in a shape to true/1
+ * @note Only works for V_SHAPE_SMALL!
+ * If the bit is already set the shape is not changed.
+ * @param[in] shape The shape to modify. (8x8 bits?)
+ * @param[in] x The x (width) position of the bit to set.
+ * @param[in] y The y (height) position of the bit to set.
+ * @return The new shape.
+ */
+int INV_ShapeSetBit (int shape, int x, int y)
+{
+	shape |= 0x01 << (x*8 + y);
+	return shape;
+}
+
+
+/**
+ * @brief Rotates a shape definition 90° to the left (CCW)
+ * @note Only works for V_SHAPE_SMALL!
+ * @param[in] shape The shape to rotate.
+ * @return The new shape.
+ */
+int INV_ShapeRotate (int shape)
+{
+	int h, w;
+	int shape_new = 0;
+	int h_new = 0;	/**< Counts the new height-rows */
+	int row;
+
+	for (h = 0; h <= 7; h++) {
+		row = (shape >> (h*8)); /* Shift the mask to the right to remove leading rows */
+		row &= 0xFF;		/* Mask out trailing rows */
+		for (w = 7; w >= 0; w--) {
+			if (row && (0x01 << w)) { /* Bit number 'w' in this row set? */
+				shape_new = INV_ShapeSetBit(shape_new, h, h_new); /* "h" is the new width here. */
+				h_new++;	/* Count row */
+			}
+		}
+	}
+
+	return shape_new;
+}
+
+/**
+ * @brief Prints the shape.
+ * @note Only works for V_SHAPE_SMALL!
+ */
+void INV_ShapePrint (int shape)
+{
+	int h,w;
+	int row;
+
+	for (h = 0; h <= 7; h++) {
+		row = (shape >> (h*8)); /* Shift the mask to the right to remove leading rows */
+		row &= 0xFF;		/* Mask out trailing rows */
+		Com_Printf("|");
+		if (row) {
+			for (w = 0; w <= 7; w++) {
+				if (row && (0x01 << w)) { /* Bit number 'w' in this row set? */
+					Com_Printf("#");
+				} else {
+					Com_Printf(".");
+				}
+			}
+		} else {
+			break;
+		}
+		Com_Printf("|\n");
+	}
+}
+#endif
