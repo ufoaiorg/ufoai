@@ -436,6 +436,22 @@ menu hud
 		click	{ cmd reloadleft }
 	}
 
+	confunc selheadgear { cmd "hud_selheadgear;althud_selheadgear;" }
+	confunc deselheadgear { cmd "hud_deselheadgear;althud_deselheadgear;" }
+
+	confunc hud_selheadgear { *hud_bt_use_headgear image hud/buttons2 }
+	confunc hud_deselheadgear { *hud_bt_use_headgear image hud/buttons2g }
+
+	pic hud_bt_use_headgear
+	{
+		image	hud/buttons2
+		mousefx true
+		pos		"180 720"
+		texl	"64 0"
+		texh	"128 37"
+		click	{ cmd toggleheadgear; }
+	}
+
 	pic bt_reload_right
 	{
 		tooltip	"_Reload weapon"
