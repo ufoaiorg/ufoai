@@ -26,6 +26,79 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
+int numBullets = 0;			/**< Number of bunch of bullets on geoscape */
+vec2_t bulletPos[MAX_BULLETS_ON_GEOSCAPE][BULLETS_PER_SHOT];	/**< Position of every bullets on geoscape */
+
+/**
+ * @brief Create bullets on geoscape.
+ * @param[in] projectile Pointer to the projectile corresponding to this bullet.
+ */
+static void AIRFIGHT_CreateBullets (aircraftProjectile_t *projectile)
+{
+	int i;
+
+	if (numBullets >= MAX_BULLETS_ON_GEOSCAPE) {
+		Com_Printf("AIRFIGHT_CreateBullets: array bulletPos is full, no more bullets can be added on geoscape\n");
+		return;
+	}
+
+	projectile->bulletIdx = numBullets;
+
+	for (i = 0; i < BULLETS_PER_SHOT; i++) {
+		bulletPos[numBullets][i][0] = projectile->pos[0] + (frand() - 0.5f) * 2;
+		bulletPos[numBullets][i][1] = projectile->pos[1] + (frand() - 0.5f) * 2;
+	}
+
+	numBullets++;
+}
+
+/**
+ * @brief Destroy bullets on geoscape.
+ * @param[in] projectile Pointer to the projectile corresponding to this bullet.
+ */
+static void AIRFIGHT_DestroyBullets (aircraftProjectile_t *projectile)
+{
+	int i, k;
+
+	if (projectile->bulletIdx < 0)
+		return;
+
+	for (k = projectile->bulletIdx; k < numBullets - 1; k++) {
+		for (i = 0; i < BULLETS_PER_SHOT; i++) {
+			bulletPos[k][i][0] = bulletPos[k + 1][i][0];
+			bulletPos[k][i][1] = bulletPos[k + 1][i][1];
+		}
+	}
+
+	for (k = 0; k < gd.numProjectiles; k++) {
+		if (gd.projectiles[k].bulletIdx > projectile->bulletIdx)
+			gd.projectiles[k].bulletIdx--;
+	}
+
+	numBullets--;
+}
+
+/**
+ * @brief Run bullets on geoscape.
+ * @param[in] projectile Pointer to the projectile corresponding to this bullet.
+ * @param[in] ortogonalVector vector perpendicular to the movement of the projectile.
+ * @param[in] movement how much each bullet should move toward its target.
+ */
+static void AIRFIGHT_RunBullets (aircraftProjectile_t *projectile, vec3_t ortogonalVector, float movement)
+{
+	int i;
+	vec3_t startPoint, finalPoint;
+
+	if (projectile->bulletIdx < 0)
+		return;
+
+	for (i = 0; i < BULLETS_PER_SHOT; i++) {
+		PolarToVec(bulletPos[projectile->bulletIdx][i], startPoint);
+		RotatePointAroundVector(finalPoint, ortogonalVector, startPoint, movement);
+		VecToPolar(finalPoint, bulletPos[projectile->bulletIdx][i]);
+	}
+}
+
 /**
  * @brief Remove a projectile from gd.projectiles
  * @param[in] idx of the projectile to remove in array gd.projectiles[]
@@ -40,6 +113,8 @@ static qboolean AIRFIGHT_RemoveProjectile (int idx)
 		return qfalse;
 	}
 #endif
+
+	AIRFIGHT_DestroyBullets(gd.projectiles + idx);
 
 	for (i = idx; i < gd.numProjectiles; i++) {
 		gd.projectiles[i] = gd.projectiles[i+1];
@@ -80,6 +155,11 @@ static qboolean AIRFIGHT_AddProjectile (int idx, aircraft_t *attacker, aircraft_
 	projectile->aimedAircraft = target;
 	projectile->time = 0;
 	projectile->angle = 0.0f;
+	projectile->bulletIdx = -1;
+
+	/* @todo; imporve this test */
+	if (!Q_strncmp(aircraftItems[attacker->weapons[slotIdx].itemIdx].id, "craft_weapon_shiva", MAX_VAR))
+		AIRFIGHT_CreateBullets(projectile);
 
 	attacker->weapons[slotIdx].ammoLeft -= 1;
 	gd.numProjectiles++;
@@ -455,7 +535,11 @@ void AIRFIGHT_CampaignRunProjectiles (int dt)
 			PolarToVec(projectile->pos, startPoint);
 			RotatePointAroundVector(finalPoint, ortogonalVector, startPoint, movement);
 			VecToPolar(finalPoint, projectile->pos);
+			/* Update position of bullets if needed */
+			AIRFIGHT_RunBullets(projectile, ortogonalVector, movement);
 		}
 	}
 }
+
+
 

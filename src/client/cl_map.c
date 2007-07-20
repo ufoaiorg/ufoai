@@ -1044,6 +1044,35 @@ static void MAP_SmoothTranslate (void)
 	}
 }
 
+#define BULLET_SIZE	1
+/**
+ * @brief Draws on bunch of bullets on the geoscape map
+ * @param[in] node Pointer to the node in which you want to draw the bullets.
+ * @param[in] bulletIdx idx of the bullet in bulletPos array.
+ * @param[in] globe qtrue if this is the 3D geoscape, qfalse else.
+ * @sa MAP_DrawMap
+ */
+static void MAP_DrawBullets (const menuNode_t* node, int bulletIdx, qboolean globe)
+{
+	int k;
+	int x, y, z;
+	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
+	qboolean draw;
+
+	for (k = 0; k < BULLETS_PER_SHOT; k++) {
+		draw = qfalse;
+		if (!globe) {
+			if (MAP_MapToScreen(node, bulletPos[bulletIdx][k], &x, &y))
+				draw = qtrue;
+		} else {
+			if (MAP_3DMapToScreen(node, bulletPos[bulletIdx][k], &x, &y, &z))
+				draw = qtrue;
+		}
+		if (draw)
+		re.DrawFill(x, y, BULLET_SIZE, BULLET_SIZE, ALIGN_CC, yellow);
+	}
+}
+
 #define SELECT_CIRCLE_RADIUS	6
 /**
  * @brief
@@ -1088,6 +1117,14 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 		}
 		/* Draw mission model (this must be after drawing 'selected circle' so that the model looks above it)*/
 		MAP_Draw3DMarkerIfVisible(node, ms->realPos, angle, "mission", qtrue);
+	}
+
+	/* draws projectiles */
+	for (projectile = gd.projectiles + gd.numProjectiles - 1; projectile >= gd.projectiles; projectile --) {
+		if (projectile->bulletIdx > -1)
+			MAP_DrawBullets (node, projectile->bulletIdx, qtrue);
+		else
+			MAP_Draw3DMarkerIfVisible(node, projectile->pos, projectile->angle, "missile", qtrue);
 	}
 
 	/* draw base pics */
@@ -1159,11 +1196,6 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 		MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, qtrue);
 	}
 
-	/* draws projectiles */
-	for (projectile = gd.projectiles + gd.numProjectiles - 1; projectile >= gd.projectiles; projectile --) {
-		MAP_Draw3DMarkerIfVisible(node, projectile->pos, projectile->angle, "missile", qtrue);
-	}
-
 	/* FIXME */
 	/* use the latitude and longitude values from nation border definition to draw a polygon */
 	for (i = 0; i < gd.numNations; i++) {
@@ -1219,6 +1251,15 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 				Cvar_Set("mn_mapdaytime", CL_MapIsNight(ms->realPos) ? _("Night") : _("Day"));
 			}
 		}
+
+
+	/* draws projectiles */
+	for (projectile = gd.projectiles + gd.numProjectiles - 1; projectile >= gd.projectiles; projectile --) {
+		if (projectile->bulletIdx > -1)
+			MAP_DrawBullets (node, projectile->bulletIdx, qfalse);
+		else
+			MAP_Draw3DMarkerIfVisible(node, projectile->pos, projectile->angle, "missile", qfalse);
+	}
 
 	/* draw bases pics */
 	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
@@ -1286,11 +1327,6 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "circle");
 		angle = MAP_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL, qfalse);
 		MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, qfalse);
-	}
-
-	/* draws projectiles */
-	for (projectile = gd.projectiles + gd.numProjectiles - 1; projectile >= gd.projectiles; projectile --) {
-		MAP_Draw3DMarkerIfVisible(node, projectile->pos, projectile->angle, "missile", qfalse);
 	}
 
 	/* FIXME */
