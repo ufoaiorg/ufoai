@@ -1534,7 +1534,7 @@ int Com_GetDefaultReactionFire (objDef_t *ammo, int weapon_fds_idx)
  */
 uint32_t INV_ShapeSetBit (uint32_t shape, int x, int y)
 {
-	shape |= 0x01 << (x * 8 + y);
+	shape |= 0x01 << (x * SHAPE_SMALL_MAX_WIDTH + y);
 	return shape;
 }
 
