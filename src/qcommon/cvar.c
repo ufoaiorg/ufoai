@@ -417,7 +417,7 @@ static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean forc
 
 	if (var->flags & (CVAR_USERINFO | CVAR_SERVERINFO))
 		if (!Cvar_InfoValidate(value)) {
-			Com_Printf("invalid info cvar value\n");
+			Com_Printf("invalid info cvar value '%s' of cvar '%s'\n", value, var_name);
 			return var;
 		}
 
