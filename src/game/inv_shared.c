@@ -1558,8 +1558,10 @@ qboolean Com_CheckShape (const uint32_t *shape, int x, int y)
 	const uint32_t row = shape[y];
 	int position = pow(2, x);
 
-	if (y > SHAPE_BIG_MAX_HEIGHT)
+	if (y >= SHAPE_BIG_MAX_HEIGHT || x >= SHAPE_BIG_MAX_WIDTH || x < 0 || y < 0 ) {
+		Com_Printf("Com_CheckShape: Bad x or y value: (x=%i, y=%i)\n", x,y);
 		return qfalse;
+	}
 
 	if ((row & position) == 0)
 		return qfalse;
@@ -1589,14 +1591,19 @@ int Com_ShapeUsage (uint32_t shape)
  * @brief Sets one bit in a shape to true/1
  * @note Only works for V_SHAPE_SMALL!
  * If the bit is already set the shape is not changed.
- * @param[in] shape The shape to modify. (8x8 bits?)
+ * @param[in] shape The shape to modify. (8x4)
  * @param[in] x The x (width) position of the bit to set.
  * @param[in] y The y (height) position of the bit to set.
  * @return The new shape.
  */
 uint32_t Com_ShapeSetBit (uint32_t shape, int x, int y)
 {
-	shape |= 0x01 << (x * SHAPE_SMALL_MAX_WIDTH + y);
+	if (x >= SHAPE_SMALL_MAX_WIDTH || y >= SHAPE_SMALL_MAX_HEIGHT || x < 0 || y < 0) {
+		Com_Printf("Com_ShapeSetBit: Bad x or y value: (x=%i, y=%i)\n", x,y);
+		return shape;
+	}
+
+	shape |= 0x01 << (y * SHAPE_SMALL_MAX_WIDTH + x);
 	return shape;
 }
 
@@ -1613,21 +1620,29 @@ uint32_t Com_ShapeRotate (uint32_t shape)
 	uint32_t shape_new = 0;
 	int h_new = 0;	/**< Counts the new height-rows */
 	int row;
+	qboolean new_row_started = qfalse;
 
 	for (h = 0; h < SHAPE_SMALL_MAX_HEIGHT; h++) {
 		row = (shape >> (h * SHAPE_SMALL_MAX_WIDTH)); /* Shift the mask to the right to remove leading rows */
 		row &= 0xFF;		/* Mask out trailing rows */
-		for (w = SHAPE_SMALL_MAX_WIDTH - 1; w >= 0; w--) {
+		new_row_started = qfalse;
+
+		for (w = 0; w < SHAPE_SMALL_MAX_WIDTH; w++) {
 			if (row & (0x01 << w)) { /* Bit number 'w' in this row set? */
+				Com_Printf("Com_ShapeRotate: w=%i, h=%i, h_new=%i\n", w,h,h_new);
 				if (w >= SHAPE_SMALL_MAX_HEIGHT) {
 					/* Object can't be rotated (code-wise), it is longer than SHAPE_SMALL_MAX_HEIGHT allows. */
 					return shape;
 				}					
-				shape_new = Com_ShapeSetBit(shape_new, h, h_new); /* "h" is the new width here. */
-				h_new++;	/* Count row */
+				shape_new = Com_ShapeSetBit(shape_new, h_new, w); /* "h" is the new width here. */
+				if (!new_row_started) {
+					h_new++;	/* Count row */
+					new_row_started = qtrue;
+				}
 			}
 		}
 	}
+
 #ifdef DEBUG
 	Com_Printf("\n");
 	Com_Printf("<normal>\n");
