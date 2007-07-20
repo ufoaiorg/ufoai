@@ -39,11 +39,7 @@ KEYBOARD CONTROL
 ============================================================
 */
 
-#define NEWKBCODE
-
-#ifdef NEWKBCODE
-HKL		kbLayout;
-#endif /* NEWKBCODE */
+HKL kbLayout;
 
 /**
  * @brief Map from windows to ufo keynums
@@ -69,7 +65,6 @@ int IN_MapKey (int wParam, int lParam)
 		0,			0,			0,			0,			0,			0,			0,			0		// 7
 	};
 	int		modified;
-#ifdef NEWKBCODE
 	int		scanCode;
 	byte	kbState[256];
 	byte	result[4];
@@ -191,7 +186,6 @@ int IN_MapKey (int wParam, int lParam)
 	default:
 		break;
 	}
-#endif /* NEWKBCODE */
 
 	/* old stuff */
 	modified = (lParam >> 16) & 255;
@@ -232,7 +226,6 @@ int IN_MapKey (int wParam, int lParam)
 		}
 	}
 
-#ifdef NEWKBCODE
 	/* get the VK_ keyboard state */
 	if (!GetKeyboardState(kbState))
 		return modified;
@@ -243,9 +236,6 @@ int IN_MapKey (int wParam, int lParam)
 		return modified;
 
 	return result[0];
-#else
-	return modified;
-#endif /* NEWKBCODE */
 }
 
 
@@ -426,9 +416,7 @@ void IN_Init (void)
 	in_mouse = Cvar_Get("in_mouse", "1", CVAR_ARCHIVE, NULL);
 
 	IN_StartupMouse();
-#ifdef NEWKBCODE
 	kbLayout = GetKeyboardLayout(0);
-#endif /* NEWKBCODE */
 }
 
 /**

@@ -1097,8 +1097,10 @@ void Key_Event (int key, qboolean down, unsigned time)
 	if (!down)
 		return;	/* other systems only care about key down events */
 
+#ifndef _WIN32
 	if (shift_down)
 		key = keyshift[key];
+#endif /* _WIN32 */
 
 	switch (cls.key_dest) {
 	case key_input:
