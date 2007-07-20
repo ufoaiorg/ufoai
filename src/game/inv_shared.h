@@ -101,6 +101,8 @@ typedef struct fireDef_s {
  * @note these values depend on the the usage of an uint32_t that has 32 bits and a width of 8bit => 4 rows
  * @sa SHAPE_BIG_MAX_HEIGHT
  * @sa SHAPE_BIG_MAX_WIDTH
+ * @note This is also used for bit shifting, so please don't change this until
+ * you REALLY know what you are doing
  */
 #define SHAPE_SMALL_MAX_WIDTH 8
 #define SHAPE_SMALL_MAX_HEIGHT 4
@@ -111,6 +113,8 @@ typedef struct fireDef_s {
  * using a bitmask for the x values
  * @sa SHAPE_SMALL_MAX_WIDTH
  * @sa SHAPE_SMALL_MAX_HEIGHT
+ * @note This is also used for bit shifting, so please don't change this until
+ * you REALLY know what you are doing
  */
 #define SHAPE_BIG_MAX_HEIGHT 16
 /** @brief 32 bit mask */
