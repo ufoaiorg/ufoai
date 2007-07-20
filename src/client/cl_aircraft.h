@@ -62,7 +62,6 @@ typedef enum {
  * @note AIR_STATS_WRANGE must be the last parameter (see AII_UpdateAircraftStats)
  */
 typedef enum {
-	AIR_STATS_RANGE,	/**< Aircraft range. */
 	AIR_STATS_SPEED,	/**< Aircraft speed. */
 	AIR_STATS_SHIELD,	/**< Aircraft shield. */
 	AIR_STATS_ECM,		/**< Aircraft electronic warfare level. */

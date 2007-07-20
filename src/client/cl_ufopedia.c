@@ -175,9 +175,6 @@ static const char* CL_WeaponSkillToName (int weaponSkill)
 static const char* CL_AircraftStatToName (int stat)
 {
 	switch (stat) {
-	case AIR_STATS_RANGE:
-		return _("Range");
-		break;
 	case AIR_STATS_SPEED:
 		return _("Speed");
 		break;

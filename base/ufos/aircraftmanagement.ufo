@@ -10,14 +10,13 @@
 //	weapon		- only for type: ammo, defines which weapon uses this ammo
 //
 // aircraft parameters which can get influenced by craft equipement:
-//	range - the range of the aircraft, which tells how far aircraft can fly
 //	speed - the speed of the aircraft, which tells how fast the aircraft is
 //	shield - the parameter of aircraft shield, which tells aircraft's protection
 //	ecm - the parameter of electronic level at aircraft, the bigger, the lower possibility to hit by enemy  (in percent)
 //	damage - the parameter of aircraft hit points, which tells how much damage aircraft can suffer
 //	accuracy - the parameter of accuracy, the bigger, the bigger possibility to hit an enemy (in percent)
 //	fuelsize - maximum capacity of fuel tank
-//	wrange - not defined here for aircrafts (see aircraft items below)
+//	wrange - not defined here for aircrafts (see aircraft items below) - will be set ingame to the biggest wrange of weapons aboard
 //
 // aircraft slot parameters can be the following :
 //	type - the type of item this slot can contain (weapon or electronics)
@@ -57,7 +56,6 @@ aircraft craft_drop_firebird
 {
 	param {
 		speed		10
-		range		0
 		shield		0
 		ecm			100
 		damage		50
@@ -100,8 +98,6 @@ aircraft craft_inter_stiletto
 {
 	param {
 		speed		30
-		range		0
-		wrange		0
 		shield		0
 		ecm		100
 		damage		30
@@ -154,8 +150,6 @@ aircraft craft_inter_saracen
 {
 	param {
 		speed		30
-		range		0
-		wrange		0
 		shield		0
 		ecm		100
 		damage		40
@@ -201,9 +195,7 @@ aircraft craft_inter_stingray
 {
 	param {
 		speed		45
-		range		0
-		wrange		0
-		shield		0
+		shield		3
 		ecm		100
 		damage		70
 		accuracy	110
@@ -235,9 +227,7 @@ aircraft craft_ufo_harvester
 {
 	param {
 		speed		25
-		range		0
-		wrange		0
-		shield		0
+		shield		3
 		ecm		100
 		damage		40
 		accuracy	80
@@ -268,8 +258,6 @@ aircraft craft_ufo_carrier
 {
 	param {
 		speed		25
-		range		0
-		wrange		0
 		shield		0
 		ecm		100
 		damage		60
@@ -297,9 +285,7 @@ aircraft craft_ufo_supply
 {
 	param {
 		speed		25
-		range		0
-		wrange		0
-		shield		0
+		shield		5
 		ecm		100
 		damage		50
 		accuracy	70
@@ -326,8 +312,6 @@ aircraft craft_ufo_condor
 {
 	param {
 		speed		25
-		range		0
-		wrange		0
 		shield		0
 		ecm			100
 		damage		40
@@ -360,8 +344,6 @@ aircraft craft_ufo_scout
 {
 	param {
 		speed		25
-		range		0
-		wrange		0
 		shield		0
 		ecm		100
 		damage		30
@@ -409,8 +391,6 @@ aircraft craft_ufo_fighter
 {
 	param {
 		speed		18
-		range		0
-		wrange		0
 		shield		0
 		ecm		100
 		damage		80
