@@ -309,7 +309,7 @@ menu aircraft
 	text aircraftinfo
 	{
 		pos		"480 540"
-		size	"300 200"
+		size	"510 200"
 		format	"20 120"
 		num	11
 	}

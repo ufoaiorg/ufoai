@@ -693,11 +693,11 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%i\n"), aircraft->stats[AIR_STATS_SPEED]);
 	Q_strcat(aircraftInfo, va(_("Fuel:\t%i/%i\n"), aircraft->fuel / 1000, aircraft->stats[AIR_STATS_FUELSIZE] / 1000), sizeof(aircraftInfo));
 	idx = aircraft->weapons[0].itemIdx;
-	Q_strcat(aircraftInfo, va(_("Weapon:\t%s\n"), idx > -1 ? _(gd.technologies[aircraftItems[idx].tech_idx].name) : _("None")), sizeof(aircraftInfo));
+	Q_strcat(aircraftInfo, va(_("Weapons:\t%i on %i\n"), AII_GetSlotItems(AC_ITEM_WEAPON, aircraft), aircraft->maxWeapons), sizeof(aircraftInfo));
 	idx = aircraft->shield.itemIdx;
-	Q_strcat(aircraftInfo, va(_("Shield:\t%s\n"), idx > -1 ? _(gd.technologies[aircraftItems[idx].tech_idx].name) : _("None")), sizeof(aircraftInfo));
+	Q_strcat(aircraftInfo, va(_("Shields:\t%i on 1\n"), AII_GetSlotItems(AC_ITEM_SHIELD, aircraft)), sizeof(aircraftInfo));
 	idx = aircraft->electronics[0].itemIdx;
-	Q_strcat(aircraftInfo, va(_("Equipment:\t%s"), idx > -1 ? _(gd.technologies[aircraftItems[idx].tech_idx].name) : _("None")), sizeof(aircraftInfo));
+	Q_strcat(aircraftInfo, va(_("Electronics:\t%i on %i"), AII_GetSlotItems(AC_ITEM_ELECTRONICS, aircraft), aircraft->maxElectronics), sizeof(aircraftInfo));
 	menuText[TEXT_AIRCRAFT_INFO] = aircraftInfo;
 }
 
