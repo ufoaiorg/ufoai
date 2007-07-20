@@ -793,7 +793,9 @@ static void Sys_SetAffinity (void)
  */
 int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+#if 0
 	MSG msg;
+#endif
 
 	/* previous instances do not exist in Win32 */
 	if (hPrevInstance)
