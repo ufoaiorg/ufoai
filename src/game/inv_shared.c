@@ -1552,10 +1552,10 @@ uint32_t INV_ShapeRotate (uint32_t shape)
 	int h_new = 0;	/**< Counts the new height-rows */
 	int row;
 
-	for (h = 0; h <= 7; h++) {
-		row = (shape >> (h * 8)); /* Shift the mask to the right to remove leading rows */
+	for (h = 0; h < SHAPE_SMALL_MAX_HEIGHT; h++) {
+		row = (shape >> (h * SHAPE_SMALL_MAX_WIDTH)); /* Shift the mask to the right to remove leading rows */
 		row &= 0xFF;		/* Mask out trailing rows */
-		for (w = 7; w >= 0; w--) {
+		for (w = SHAPE_SMALL_MAX_WIDTH - 1; w >= 0; w--) {
 			if (row && (0x01 << w)) { /* Bit number 'w' in this row set? */
 				shape_new = INV_ShapeSetBit(shape_new, h, h_new); /* "h" is the new width here. */
 				h_new++;	/* Count row */
@@ -1575,12 +1575,12 @@ void INV_ShapePrint (uint32_t shape)
 	int h, w;
 	int row;
 
-	for (h = 0; h <= 7; h++) {
-		row = (shape >> (h * 8)); /* Shift the mask to the right to remove leading rows */
+	for (h = 0; h < SHAPE_SMALL_MAX_HEIGHT; h++) {
+		row = (shape >> (h * SHAPE_SMALL_MAX_WIDTH)); /* Shift the mask to the right to remove leading rows */
 		row &= 0xFF;		/* Mask out trailing rows */
 		Com_Printf("|");
 		if (row) {
-			for (w = 0; w <= 7; w++) {
+			for (w = 0; w < SHAPE_SMALL_MAX_WIDTH; w++) {
 				if (row && (0x01 << w)) { /* Bit number 'w' in this row set? */
 					Com_Printf("#");
 				} else {

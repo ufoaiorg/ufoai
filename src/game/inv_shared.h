@@ -170,6 +170,8 @@ typedef struct objDef_s {
  * using a bitmask for the x values
  */
 #define SHAPE_BIG_MAX_HEIGHT 16
+#define SHAPE_SMALL_MAX_HEIGHT 4
+#define SHAPE_SMALL_MAX_WIDTH 8
 
 /** @brief inventory definition for our menus */
 typedef struct invDef_s {

@@ -305,9 +305,11 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		if (strstr(strstr(strstr(token, " "), " "), " ") == NULL)
 			Sys_Error("Com_ParseValue: Illegal shape small statement '%s'\n", token);
 		sscanf(token, "%i %i %i %i", &x, &y, &w, &h);
-		if (h > SHAPE_BIG_MAX_HEIGHT)
-			Sys_Error("Com_ParseValue: illegal shape statement - max h value is %i\n", SHAPE_BIG_MAX_HEIGHT);
-		if (x + w > 32 || x > 32 || w > 32)
+		if (w > SHAPE_SMALL_MAX_WIDTH)
+			Sys_Error("Com_ParseValue: illegal shape statement - max w value is %i\n", SHAPE_SMALL_MAX_WIDTH);
+		if (h > SHAPE_SMALL_MAX_HEIGHT || y + h > SHAPE_SMALL_MAX_HEIGHT)
+			Sys_Error("Com_ParseValue: illegal shape statement - max h value is %i\n", SHAPE_SMALL_MAX_HEIGHT);
+		if (x + w > SHAPE_SMALL_MAX_WIDTH || x > SHAPE_SMALL_MAX_WIDTH || w > SHAPE_SMALL_MAX_WIDTH)
 			Sys_Error("Com_ParseValue: illegal shape statement - max x and w values are 32 ('%s')\n", token);
 		for (h += y; y < h; y++)
 			*(uint32_t *) b |= ((1 << w) - 1) << x << (y * 8);
