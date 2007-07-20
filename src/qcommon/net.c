@@ -423,7 +423,7 @@ void wait_for_net (int timeout)
 
 				/* Finished streams are closed when their outbound queues empty */
 				if (s->finished)
-				close_stream(s);
+					close_stream(s);
 
 				continue;
 			}
