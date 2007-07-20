@@ -1570,6 +1570,22 @@ qboolean Com_CheckShape (const uint32_t *shape, int x, int y)
 }
 
 /**
+ * @brief Checks the shape if there is a 1-bit on the position x/y.
+ * @param[in] shape The shape to check in. (8x4)
+ * @param[in] x
+ * @param[in] y
+ */
+qboolean Com_CheckShapeSmall (uint32_t shape, int x, int y)
+{
+	if (y >= SHAPE_BIG_MAX_HEIGHT || x >= SHAPE_BIG_MAX_WIDTH || x < 0 || y < 0 ) {
+		Com_Printf("Com_CheckShapeSmall: Bad x or y value: (x=%i, y=%i)\n", x,y);
+		return qfalse;
+	}
+	
+	return shape & (0x01 << (y * SHAPE_SMALL_MAX_WIDTH + x));
+}
+
+/**
  * @brief Counts the used bits in a shape (item shape).
  * @param[in] shape The shape to count the bits in.
  * @return Number of bits.
@@ -1618,27 +1634,20 @@ uint32_t Com_ShapeRotate (uint32_t shape)
 {
 	int h, w;
 	uint32_t shape_new = 0;
-	int h_new = 0;	/**< Counts the new height-rows */
-	int row;
-	qboolean new_row_started = qfalse;
+	int max_width = -1;
 
-	for (h = 0; h < SHAPE_SMALL_MAX_HEIGHT; h++) {
-		row = (shape >> (h * SHAPE_SMALL_MAX_WIDTH)); /* Shift the mask to the right to remove leading rows */
-		row &= 0xFF;		/* Mask out trailing rows */
-		new_row_started = qfalse;
-
-		for (w = 0; w < SHAPE_SMALL_MAX_WIDTH; w++) {
-			if (row & (0x01 << w)) { /* Bit number 'w' in this row set? */
-				Com_Printf("Com_ShapeRotate: w=%i, h=%i, h_new=%i\n", w,h,h_new);
+	for (w = SHAPE_SMALL_MAX_WIDTH -1; w >= 0; w--) {
+		for (h = 0; h < SHAPE_SMALL_MAX_HEIGHT; h++) {
+			if (Com_CheckShapeSmall(shape, w, h)) {
 				if (w >= SHAPE_SMALL_MAX_HEIGHT) {
 					/* Object can't be rotated (code-wise), it is longer than SHAPE_SMALL_MAX_HEIGHT allows. */
 					return shape;
-				}					
-				shape_new = Com_ShapeSetBit(shape_new, h_new, w); /* "h" is the new width here. */
-				if (!new_row_started) {
-					h_new++;	/* Count row */
-					new_row_started = qtrue;
 				}
+
+				if (max_width < 0)
+					max_width = w;
+
+				shape_new = Com_ShapeSetBit(shape_new, h, max_width-w);
 			}
 		}
 	}
