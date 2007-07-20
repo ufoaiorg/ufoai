@@ -121,7 +121,7 @@ static void CL_NetSendInventory (struct dbuffer *buf, inventory_t *i, qboolean s
 		for (ic = i->c[j]; ic; ic = ic->next)
 			nr++;
 
-	NET_WriteShort(buf, nr * 6);
+	NET_WriteShort(buf, nr * 7);
 	for (j = 0; j < csi.numIDs; j++)
 		for (ic = i->c[j]; ic; ic = ic->next)
 			CL_NetSendItem(buf, ic->item, j, ic->x, ic->y, save);
