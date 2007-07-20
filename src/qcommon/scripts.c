@@ -305,10 +305,10 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		if (strstr(strstr(strstr(token, " "), " "), " ") == NULL)
 			Sys_Error("Com_ParseValue: Illegal shape small statement '%s'\n", token);
 		sscanf(token, "%i %i %i %i", &x, &y, &w, &h);
-		if (h > SHAPE_BIG_MAX_HEIGHT)
-			Sys_Error("Com_ParseValue: illegal shape statement - max h value is %i\n", SHAPE_BIG_MAX_HEIGHT);
-		if (x + w > 32 || x > 32 || w > 32) /* check bounds - 32 because the shape is uint32_t => only 32 bits allowed */
-			Sys_Error("Com_ParseValue: illegal shape statement - max x and w values are 32 ('%s')\n", token);
+		if (y + h > SHAPE_SMALL_MAX_HEIGHT || y > SHAPE_SMALL_MAX_HEIGHT || h > SHAPE_SMALL_MAX_HEIGHT)
+			Sys_Error("Com_ParseValue: illegal shape statement - max h value is %i\n", SHAPE_SMALL_MAX_HEIGHT);
+		if (x + w > SHAPE_SMALL_MAX_WIDTH || x > SHAPE_SMALL_MAX_WIDTH || w > SHAPE_SMALL_MAX_WIDTH)
+			Sys_Error("Com_ParseValue: illegal shape statement - max x and w values are %i ('%s')\n", SHAPE_SMALL_MAX_WIDTH, token);
 		for (h += y; y < h; y++)
 			*(uint32_t *) b |= ((1 << w) - 1) << x << (y * SHAPE_SMALL_MAX_WIDTH);
 		return ALIGN(SHAPE_SMALL_MAX_HEIGHT);
@@ -317,10 +317,10 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		if (strstr(strstr(strstr(token, " "), " "), " ") == NULL)
 			Sys_Error("Com_ParseValue: Illegal shape big statement '%s'\n", token);
 		sscanf(token, "%i %i %i %i", &x, &y, &w, &h);
-		if (y > SHAPE_BIG_MAX_HEIGHT || h > SHAPE_BIG_MAX_HEIGHT || y + h > SHAPE_BIG_MAX_HEIGHT)
+		if (y + h > SHAPE_BIG_MAX_HEIGHT || y > SHAPE_BIG_MAX_HEIGHT || h > SHAPE_BIG_MAX_HEIGHT)
 			Sys_Error("Com_ParseValue: Illegal shape big statement, max height is %i\n", SHAPE_BIG_MAX_HEIGHT);
-		if (x + w > 32 || x > 32 || w > 32)  /* check bounds - 32 because the shape is uint32_t => only 32 bits allowed */
-			Sys_Error("Com_ParseValue: illegal shape statement - max x and w values are 32 ('%s')\n", token);
+		if (x + w > SHAPE_BIG_MAX_WIDTH || x > SHAPE_BIG_MAX_WIDTH || w > SHAPE_BIG_MAX_WIDTH)  /* check bounds - 32 because the shape is uint32_t => only 32 bits allowed */
+			Sys_Error("Com_ParseValue: illegal shape statement - max x and w values are %i ('%s')\n", SHAPE_BIG_MAX_WIDTH, token);
 		w = ((1 << w) - 1) << x;
 		for (h += y; y < h; y++)
 			((uint32_t *) b)[y] |= w;

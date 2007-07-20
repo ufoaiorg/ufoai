@@ -636,7 +636,7 @@ static void MN_StartServer_f (void)
  * @param[in] x
  * @param[in] y
  */
-static void Com_MergeShapes (uint32_t *shape, int itemshape, int x, int y)
+static void Com_MergeShapes (uint32_t *shape, uint32_t itemshape, int x, int y)
 {
 	int i;
 
@@ -701,7 +701,7 @@ static void MN_InvDrawFree (inventory_t * inv, menuNode_t * node)
 	/* get the 'type' of the dragged item */
 	int item = dragItem.t;
 	int container = node->mousefx;
-	int itemshape;
+	uint32_t itemshape;
 
 	qboolean showTUs = qtrue;
 
