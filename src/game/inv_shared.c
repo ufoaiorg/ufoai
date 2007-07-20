@@ -1558,6 +1558,7 @@ qboolean Com_CheckShape (const uint32_t *shape, int x, int y)
  * @brief Counts the used bits in a shape (item shape).
  * @param[in] shape The shape to count the bits in.
  * @return Number of bits.
+ * @note Used to calculate the real field usage in the inventory
  */
 int Com_ShapeUsage (uint32_t shape)
 {
