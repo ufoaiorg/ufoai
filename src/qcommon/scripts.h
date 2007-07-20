@@ -76,8 +76,8 @@ typedef enum {
 	V_BLEND = 15,
 	V_STYLE,
 	V_FADE,
-	V_SHAPE_SMALL,
-	V_SHAPE_BIG,
+	V_SHAPE_SMALL,				/**< space a weapon allocates in the inventory shapes, w, h */
+	V_SHAPE_BIG,				/**< inventory shape, x, y, w, h */
 	V_DMGTYPE = 20,
 	V_DATE,
 	V_IF,
