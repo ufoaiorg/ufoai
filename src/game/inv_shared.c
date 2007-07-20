@@ -1540,7 +1540,7 @@ int INV_ShapeSetBit (int shape, int x, int y)
 
 
 /**
- * @brief Rotates a shape definition 90° to the left (CCW)
+ * @brief Rotates a shape definition 90 degree to the left (CCW)
  * @note Only works for V_SHAPE_SMALL!
  * @param[in] shape The shape to rotate.
  * @return The new shape.
