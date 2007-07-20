@@ -31,7 +31,7 @@ static int globalCampaignID = -1;
 
 static csi_t *CSI;
 static invList_t *invUnused;
-static item_t cacheItem = {NONE,NONE,NONE}; /* to crash as soon as possible */
+static item_t cacheItem = {NONE,NONE,NONE, 0}; /* to crash as soon as possible */
 
 /**
  * @brief
@@ -484,7 +484,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 					*TU -= time;
 				if (ic->item.a >= CSI->ods[ic->item.t].ammo) {
 					/* exchange ammo */
-					item_t item = {NONE_AMMO, NONE, ic->item.m};
+					item_t item = {NONE_AMMO, NONE, ic->item.m, 0};
 
 					Com_AddToInventory(i, item, from, fx, fy);
 
@@ -751,7 +751,7 @@ CHARACTER GENERATION AND HANDLING
 static int Com_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, const int equip[MAX_OBJDEFS], int missed_primary, const char *name)
 {
 	int ammo = -1; /* this variable is never used before being set */
-	item_t item = {NONE_AMMO, NONE, NONE};
+	item_t item = {NONE_AMMO, NONE, NONE, 0};
 	int i, max_price, prev_price;
 	objDef_t obj;
 	qboolean allowLeft;
@@ -846,7 +846,7 @@ static int Com_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, cons
 			assert(num >= 0);
 			/* pack some more ammo */
 			while (num--) {
-				item_t mun = {NONE_AMMO, NONE, NONE};
+				item_t mun = {NONE_AMMO, NONE, NONE, 0};
 
 				mun.t = ammo;
 				/* ammo to backpack; belt is for knives and grenades */
@@ -1057,7 +1057,7 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const
 			}
 			if (max_price) {
 				if (equip[weapon] >= 40 * frand()) {
-					item_t item = {NONE_AMMO, NONE, NONE};
+					item_t item = {NONE_AMMO, NONE, NONE, 0};
 
 					item.t = weapon;
 					if (Com_TryAddToInventory(inv, item, CSI->idArmor)) {
