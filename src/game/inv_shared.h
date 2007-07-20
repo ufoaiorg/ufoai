@@ -434,6 +434,7 @@ int Com_GetDefaultReactionFire(objDef_t *ammo, int weapon_fds_idx);
 
 void Com_MergeShapes(uint32_t *shape, uint32_t itemshape, int x, int y);
 qboolean Com_CheckShape(const uint32_t *shape, int x, int y);
+int Com_ShapeUsage(uint32_t shape);
 
 /** @brief Buytype categories in the various equipment screens (buy/sell, equip, etc...)
  ** Do not mess with the order (especially BUY_AIRCRAFT and BUY_MULTI_AMMO is/will be used for max-check in normal equipment screens)

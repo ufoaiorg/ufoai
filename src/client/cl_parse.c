@@ -1001,13 +1001,11 @@ static void CL_ActorStateChange (struct dbuffer *msg)
  */
 static int CL_BiggestItem (invList_t *ic)
 {
-	uint32_t shape;
-	int size, max, maxSize;
+	int size, max;
+	int maxSize = 0;
 
-	maxSize = 0;
 	for (max = ic->item.t; ic; ic = ic->next) {
-		shape = csi.ods[ic->item.t].shape;
-		size = (shape >> 24 & 0xF) * (shape >> 28 & 0xF);
+		size = Com_ShapeUsage(csi.ods[ic->item.t].shape);
 		if (size > maxSize) {
 			max = ic->item.t;
 			maxSize = size;
