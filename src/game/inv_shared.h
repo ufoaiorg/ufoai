@@ -204,6 +204,7 @@ typedef struct item_s {
 	int a;	/**< number of ammo rounds left - see NONE_AMMO */
 	int m;	/**< unique index of ammo type on csi->ods - see NONE */
 	int t;	/**< unique index of weapon in csi.ods array - see NONE */
+	int rotated; /**< If the item is curerntly displayed rotated (1) or not (0) */
 } item_t;
 
 /** @brief container/inventory list (linked list) with items */
@@ -410,7 +411,7 @@ char *Com_CharGetHead(character_t* const chr) __attribute__((nonnull));
 
 void Com_InitCSI(csi_t * import) __attribute__((nonnull));
 void Com_InitInventory(invList_t * invChain) __attribute__((nonnull));
-qboolean Com_CheckToInventory(const inventory_t* const i, const int item, const int container, int x, int y) __attribute__((nonnull(1)));
+int Com_CheckToInventory(const inventory_t* const i, const int item, const int container, int x, int y);
 invList_t *Com_SearchInInventory(const inventory_t* const i, int container, int x, int y) __attribute__((nonnull(1)));
 invList_t *Com_AddToInventory(inventory_t* const i, item_t item, int container, int x, int y) __attribute__((nonnull(1)));
 qboolean Com_RemoveFromInventory(inventory_t* const i, int container, int x, int y) __attribute__((nonnull(1)));
@@ -419,7 +420,7 @@ int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, 
 int Com_MoveInInventoryIgnore(inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp, qboolean ignore_type) __attribute__((nonnull(1)));
 void Com_EmptyContainer(inventory_t* const i, const int container) __attribute__((nonnull(1)));
 void Com_DestroyInventory(inventory_t* const i) __attribute__((nonnull(1)));
-void Com_FindSpace(const inventory_t* const inv, const int item, const int container, int * const px, int * const py) __attribute__((nonnull(1)));
+void Com_FindSpace(const inventory_t* const inv, item_t *item, const int container, int * const px, int * const py) __attribute__((nonnull(1)));
 int Com_TryAddToInventory(inventory_t* const inv, item_t item, int container) __attribute__((nonnull(1)));
 int Com_TryAddToBuyType(inventory_t* const inv, item_t item, int container) __attribute__((nonnull(1)));
 void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], const char *name, character_t* chr) __attribute__((nonnull(1)));
@@ -435,6 +436,10 @@ int Com_GetDefaultReactionFire(objDef_t *ammo, int weapon_fds_idx);
 void Com_MergeShapes(uint32_t *shape, uint32_t itemshape, int x, int y);
 qboolean Com_CheckShape(const uint32_t *shape, int x, int y);
 int Com_ShapeUsage(uint32_t shape);
+uint32_t Com_ShapeRotate(uint32_t shape);
+#ifdef DEBUG
+void Com_ShapePrint(uint32_t shape);
+#endif
 
 /** @brief Buytype categories in the various equipment screens (buy/sell, equip, etc...)
  ** Do not mess with the order (especially BUY_AIRCRAFT and BUY_MULTI_AMMO is/will be used for max-check in normal equipment screens)

@@ -1101,7 +1101,7 @@ static void MN_Drag (const menuNode_t* const node, int x, int y)
 					if (!BUYTYPE_MATCH(et,baseCurrent->equipType)) {
 						/* @todo: Check this stuff for BUY_MULTI_AMMO .. this is probably broken now.*/
 						menuInventory->c[csi.idEquip] = baseCurrent->equipByBuyType.c[et];
-						Com_FindSpace(menuInventory, i->item.t, csi.idEquip, &px, &py);
+						Com_FindSpace(menuInventory, &i->item, csi.idEquip, &px, &py);
 						if (px >= SHAPE_BIG_MAX_WIDTH && py >= SHAPE_BIG_MAX_HEIGHT) {
 							menuInventory->c[csi.idEquip] = baseCurrent->equipByBuyType.c[baseCurrent->equipType];
 							return;
@@ -1849,6 +1849,12 @@ void MN_DrawItem (vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t 
 			org[1] + C_UNIT / 2.0 * sy + C_UNIT * y,
 			C_UNIT * sx, C_UNIT * sy, 0, 0, 0, 0, ALIGN_CC, qtrue, od->image);
 	} else if (od->model[0]) {
+		if (item.rotated) {
+			/** @todo This is non-working code/data yet. */
+			angles[0] = 100;
+			angles[1] = 10;
+			angles[2] = 10;
+		}
 		/* draw model, if there is no image */
 		mi.name = od->model;
 		mi.origin = origin;

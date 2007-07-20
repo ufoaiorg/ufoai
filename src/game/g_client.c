@@ -844,7 +844,7 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 
 		ic = Com_SearchInInventory(&ent->i, from, fx, fy);
 		if (ic)
-			Com_FindSpace(&ent->i, ic->item.t, to, &tx, &ty);
+			Com_FindSpace(&ent->i, &ic->item, to, &tx, &ty);
 	}
 	if (tx == NONE) {
 /*		assert(ty == NONE); */
@@ -1066,7 +1066,7 @@ static void G_InventoryToFloor (edict_t * ent)
 			   unless you want an endless loop. ;) */
 			next = ic->next;
 			/* find the coordinates for the current item on floor */
-			Com_FindSpace(&floor->i, ic->item.t, gi.csi->idFloor, &x, &y);
+			Com_FindSpace(&floor->i, &ic->item, gi.csi->idFloor, &x, &y);
 			if (x == NONE) {
 				assert(y == NONE);
 				/* Run out of space on the floor or the item is armor
@@ -1088,7 +1088,7 @@ static void G_InventoryToFloor (edict_t * ent)
 						gi.WriteShort(floorAdjacent->number);
 						floorAdjacent->visflags = 0;
 					}
-					Com_FindSpace(&floorAdjacent->i, ic->item.t, gi.csi->idFloor, &x, &y);
+					Com_FindSpace(&floorAdjacent->i, &ic->item, gi.csi->idFloor, &x, &y);
 					if (x != NONE) {
 						ic->x = x;
 						ic->y = y;
