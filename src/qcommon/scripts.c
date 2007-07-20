@@ -306,17 +306,19 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			Sys_Error("Com_ParseValue: Illegal shape small statement '%s'\n", token);
 		sscanf(token, "%i %i %i %i", &x, &y, &w, &h);
 		for (h += y; y < h; y++)
-			*(int *) b |= ((1 << w) - 1) << x << (y * 8);
+			*(uint32_t *) b |= ((1 << w) - 1) << x << (y * 8);
 		return ALIGN(4);
 
 	case V_SHAPE_BIG:
 		if (strstr(strstr(strstr(token, " "), " "), " ") == NULL)
 			Sys_Error("Com_ParseValue: Illegal shape big statement '%s'\n", token);
 		sscanf(token, "%i %i %i %i", &x, &y, &w, &h);
+		if (y > SHAPE_BIG_MAX_HEIGHT)
+			y = SHAPE_BIG_MAX_HEIGHT;
 		w = ((1 << w) - 1) << x;
 		for (h += y; y < h; y++)
-			((int *) b)[y] |= w;
-		return ALIGN(64);
+			((uint32_t *) b)[y] |= w;
+		return ALIGN(SHAPE_BIG_MAX_HEIGHT * 4);
 
 	case V_DMGTYPE:
 		for (w = 0; w < csi.numDTs; w++)

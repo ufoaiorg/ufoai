@@ -1001,7 +1001,8 @@ static void CL_ActorStateChange (struct dbuffer *msg)
  */
 static int CL_BiggestItem (invList_t *ic)
 {
-	int shape, size, max, maxSize;
+	uint32_t shape;
+	int size, max, maxSize;
 
 	maxSize = 0;
 	for (max = ic->item.t; ic; ic = ic->next) {

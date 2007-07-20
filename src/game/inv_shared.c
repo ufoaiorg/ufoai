@@ -80,15 +80,15 @@ static int cache_Com_CheckToInventory = 0;
  * @param[in] i
  * @param[in] item
  * @param[in] container
- * @param[in] x
- * @param[in] y
+ * @param[in] x The x value in the container (1 << x in the shape bitmask)
+ * @param[in] y The x value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
  * @todo Move to INV_shared.c
  * @sa
  */
 qboolean Com_CheckToInventory (const inventory_t * const i, const int item, const int container, int x, int y)
 {
 	invList_t *ic;
-	static int mask[16];
+	static uint32_t mask[SHAPE_BIG_MAX_HEIGHT];
 	int j;
 
 	assert(i);
@@ -153,18 +153,18 @@ qboolean Com_CheckToInventory (const inventory_t * const i, const int item, cons
 		}
 	}
 
-	/* check bounds */
-	if (x < 0 || y < 0 || x >= 32 || y >= 16)
+	/* check bounds - 32 because the shape is uint32_t => only 32 bits allowed */
+	if (x < 0 || y < 0 || x >= 32 || y >= SHAPE_BIG_MAX_HEIGHT)
 		return qfalse;
 
 	if (!cache_Com_CheckToInventory) {
 		/* extract shape info */
-		for (j = 0; j < 16; j++)
+		for (j = 0; j < SHAPE_BIG_MAX_HEIGHT; j++)
 			mask[j] = ~CSI->ids[container].shape[j];
 
 		/* add other items to mask */
 		for (ic = i->c[container]; ic; ic = ic->next)
-			for (j = 0; j < 4 && ic->y + j < 16; j++)
+			for (j = 0; j < 4 && ic->y + j < SHAPE_BIG_MAX_HEIGHT; j++)
 				mask[ic->y + j] |= ((CSI->ods[ic->item.t].shape >> (j * 8)) & 0xFF) << ic->x;
 	}
 
@@ -598,7 +598,7 @@ void Com_FindSpace (const inventory_t* const inv, const int item, const int cont
 	assert(inv);
 	assert(!cache_Com_CheckToInventory);
 
-	for (y = 0; y < 16; y++)
+	for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++)
 		for (x = 0; x < 32; x++)
 			if (Com_CheckToInventory(inv, item, container, x, y)) {
 				cache_Com_CheckToInventory = 0;
@@ -1532,9 +1532,9 @@ int Com_GetDefaultReactionFire (objDef_t *ammo, int weapon_fds_idx)
  * @param[in] y The y (height) position of the bit to set.
  * @return The new shape.
  */
-int INV_ShapeSetBit (int shape, int x, int y)
+uint32_t INV_ShapeSetBit (uint32_t shape, int x, int y)
 {
-	shape |= 0x01 << (x*8 + y);
+	shape |= 0x01 << (x * 8 + y);
 	return shape;
 }
 
@@ -1545,15 +1545,15 @@ int INV_ShapeSetBit (int shape, int x, int y)
  * @param[in] shape The shape to rotate.
  * @return The new shape.
  */
-int INV_ShapeRotate (int shape)
+uint32_t INV_ShapeRotate (uint32_t shape)
 {
 	int h, w;
-	int shape_new = 0;
+	uint32_t shape_new = 0;
 	int h_new = 0;	/**< Counts the new height-rows */
 	int row;
 
 	for (h = 0; h <= 7; h++) {
-		row = (shape >> (h*8)); /* Shift the mask to the right to remove leading rows */
+		row = (shape >> (h * 8)); /* Shift the mask to the right to remove leading rows */
 		row &= 0xFF;		/* Mask out trailing rows */
 		for (w = 7; w >= 0; w--) {
 			if (row && (0x01 << w)) { /* Bit number 'w' in this row set? */
@@ -1570,13 +1570,13 @@ int INV_ShapeRotate (int shape)
  * @brief Prints the shape.
  * @note Only works for V_SHAPE_SMALL!
  */
-void INV_ShapePrint (int shape)
+void INV_ShapePrint (uint32_t shape)
 {
-	int h,w;
+	int h, w;
 	int row;
 
 	for (h = 0; h <= 7; h++) {
-		row = (shape >> (h*8)); /* Shift the mask to the right to remove leading rows */
+		row = (shape >> (h * 8)); /* Shift the mask to the right to remove leading rows */
 		row &= 0xFF;		/* Mask out trailing rows */
 		Com_Printf("|");
 		if (row) {

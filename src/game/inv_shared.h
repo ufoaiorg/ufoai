@@ -49,7 +49,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define GET_FIREDEF(obj_idx,weap_fds_idx,fd_idx) \
 	(&csi.ods[obj_idx & (MAX_OBJDEFS-1)].fd[weap_fds_idx & (MAX_WEAPONS_PER_OBJDEF-1)][fd_idx & (MAX_FIREDEFS_PER_WEAPON-1)])
 
-/** this is a fire definition for our weapons/ammo */
+/** @brief this is a fire definition for our weapons/ammo */
 typedef struct fireDef_s {
 	char name[MAX_VAR];			/**< script id */
 	char projectile[MAX_VAR];	/**< projectile particle */
@@ -109,7 +109,7 @@ typedef struct objDef_s {
 	char image[MAX_VAR];	/**< object image file - relative to game dir */
 	char type[MAX_VAR];	/**< melee, rifle, ammo, armor */
 	char extends_item[MAX_VAR];
-	int shape;			/**< the shape in our inventory */
+	uint32_t shape;			/**< the shape in our inventory */
 
 	byte sx, sy;		/**< Size in x and y direction. */
 	float scale;		/**< scale value for images? and models */
@@ -164,32 +164,39 @@ typedef struct objDef_s {
 
 #define MAX_INVDEFS     16
 
-/** inventory definition for our menus */
+/**
+ * @brief defines the max height of an inventory container
+ * @note the max width is 32 - because uint32_t has 32 bits and we are
+ * using a bitmask for the x values
+ */
+#define SHAPE_BIG_MAX_HEIGHT 16
+
+/** @brief inventory definition for our menus */
 typedef struct invDef_s {
 	char name[MAX_VAR];	/**< id from script files */
 	qboolean single, armor, all, temp, extension, headgear;	/**< type of this container or inventory */
-	int shape[16];	/**< the inventory form/shape */
+	uint32_t shape[SHAPE_BIG_MAX_HEIGHT];	/**< the inventory form/shape */
 	int in, out;	/**< TU costs */
 } invDef_t;
 
 #define MAX_CONTAINERS  MAX_INVDEFS
 #define MAX_INVLIST     1024
 
-/** item definition */
+/** @brief item definition */
 typedef struct item_s {
 	int a;	/**< number of ammo rounds left - see NONE_AMMO */
 	int m;	/**< unique index of ammo type on csi->ods - see NONE */
 	int t;	/**< unique index of weapon in csi.ods array - see NONE */
 } item_t;
 
-/** container/inventory list (linked list) with items */
+/** @brief container/inventory list (linked list) with items */
 typedef struct invList_s {
 	item_t item;	/**< which item */
 	int x, y;		/**< position of the item */
 	struct invList_s *next;		/**< next entry in this list */
 } invList_t;
 
-/** inventory defintion with all its containers */
+/** @brief inventory defintion with all its containers */
 typedef struct inventory_s {
 	invList_t *c[MAX_CONTAINERS];
 } inventory_t;

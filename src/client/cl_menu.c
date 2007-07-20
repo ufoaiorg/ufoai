@@ -631,16 +631,16 @@ static void MN_StartServer_f (void)
 
 /**
  * @brief Will merge the second shape (=itemshape) into the first one on the position x/y
- * @param[in] shape Pointer to 'int shape[16]'
+ * @param[in] shape Pointer to 'uint32_t shape[SHAPE_BIG_MAX_HEIGHT]'
  * @param[in] itemshape
  * @param[in] x
  * @param[in] y
  */
-static void Com_MergeShapes (int* const shape, int itemshape, int x, int y)
+static void Com_MergeShapes (uint32_t *shape, int itemshape, int x, int y)
 {
 	int i;
 
-	for (i = 0; (i < 4) && (y + i < 16); i++)
+	for (i = 0; (i < 4) && (y + i < SHAPE_BIG_MAX_HEIGHT); i++)
 		shape[y + i] |= ((itemshape >> i * 8) & 0xFF) << x;
 }
 
@@ -649,12 +649,14 @@ static void Com_MergeShapes (int* const shape, int itemshape, int x, int y)
  * @param[in] shape
  * @param[in] x
  * @param[in] y
- * @note Make sure, that y is not bigger than 15
  */
-static qboolean Com_CheckShape (int shape[16], int x, int y)
+static qboolean Com_CheckShape (const uint32_t *shape, int x, int y)
 {
-	int row = shape[y];
+	const int row = shape[y];
 	int position = pow(2, x);
+
+	if (y > SHAPE_BIG_MAX_HEIGHT)
+		return qfalse;
 
 	if ((row & position) == 0)
 		return qfalse;
@@ -704,7 +706,7 @@ static void MN_InvDrawFree (inventory_t * inv, menuNode_t * node)
 	qboolean showTUs = qtrue;
 
 	/* The shape of the free positions. */
-	int free[16];
+	uint32_t free[SHAPE_BIG_MAX_HEIGHT];
 	int x, y;
 
 	/* Draw only in dragging-mode and not for the equip-floor */
@@ -724,7 +726,7 @@ static void MN_InvDrawFree (inventory_t * inv, menuNode_t * node)
 				MN_DrawFree(container, node, node->pos[0], node->pos[1], node->size[0], node->size[1], qtrue);
 		} else {
 			memset(free, 0, sizeof(free));
-			for (y = 0; y < 16; y++) {
+			for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
 				for (x = 0; x < 32; x++) {
 					/* Check if the current position is useable (topleft of the item) */
 					if (Com_CheckToInventory(inv, item, container, x, y)) {
@@ -873,16 +875,18 @@ static void MN_FindContainer (menuNode_t* const node)
 	else
 		node->mousefx = id - csi.ids;
 
+	/* start on the last bit of the shape mask */
 	for (i = 31; i >= 0; i--) {
-		for (j = 0; j < 16; j++)
+		for (j = 0; j < SHAPE_BIG_MAX_HEIGHT; j++)
 			if (id->shape[j] & (1 << i))
 				break;
-		if (j < 16)
+		if (j < SHAPE_BIG_MAX_HEIGHT)
 			break;
 	}
 	node->size[0] = C_UNIT * (i + 1) + 0.01;
 
-	for (i = 15; i >= 0; i--)
+	/* start on the lower row of the shape mask */
+	for (i = SHAPE_BIG_MAX_HEIGHT - 1; i >= 0; i--)
 		if (id->shape[i] & 0xFFFFFFFF)
 			break;
 	node->size[1] = C_UNIT * (i + 1) + 0.01;
