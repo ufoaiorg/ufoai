@@ -22,10 +22,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+/* This file should fully support ipv6 and any other protocol that is
+ * compatible with the getaddrinfo interface, with the exception of
+ * broadcast_datagram() which must be amended for each protocol (and
+ * currently supports only ipv4)
+ */
+
 #include "qcommon.h"
 #include "dbuffer.h"
 
-#define MAX_STREAMS 63
+#define MAX_STREAMS 56
+#define MAX_DATAGRAM_SOCKETS 7
 
 #ifdef _WIN32
 # ifdef __MINGW32__
@@ -80,10 +87,28 @@ struct net_stream {
 	struct net_stream *loopback_peer;
 };
 
+struct datagram {
+	int len;
+	char *msg;
+	char *addr;
+	struct datagram *next;
+};
+
+struct datagram_socket {
+	int socket;
+	int index;
+	int family;
+	int addrlen;
+	struct datagram *queue;
+	struct datagram **queue_tail;
+	datagram_callback_func *func;
+};
+
 static fd_set read_fds;
 static fd_set write_fds;
 static int maxfd;
 static struct net_stream *streams[MAX_STREAMS];
+static struct datagram_socket *datagram_sockets[MAX_DATAGRAM_SOCKETS];
 
 static qboolean loopback_ready = qfalse;
 static qboolean server_running = qfalse;
@@ -103,6 +128,21 @@ static int find_free_stream (void)
 		int pos = (i + start) % MAX_STREAMS;
 		if (streams[pos] == NULL) {
 			start = (pos + 1) % MAX_STREAMS;
+			return pos;
+		}
+	}
+	return -1;
+}
+
+static int find_free_datagram_socket (void)
+{
+	static int start = 0;
+	int i;
+
+	for (i = 0; i < MAX_DATAGRAM_SOCKETS; i++) {
+		int pos = (i + start) % MAX_DATAGRAM_SOCKETS;
+		if (datagram_sockets[pos] == NULL) {
+			start = (pos + 1) % MAX_DATAGRAM_SOCKETS;
 			return pos;
 		}
 	}
@@ -197,6 +237,11 @@ static const char *estr (void)
 {
 	return estr_n(WSAGetLastError());
 }
+
+static void close_socket (int socket)
+{
+	closesocket(socket);
+}
 #else
 #define estr_n strerror
 /**
@@ -205,6 +250,11 @@ static const char *estr (void)
 static const char *estr (void)
 {
 	return strerror(errno);
+}
+
+static void close_socket (int socket)
+{
+	close(socket);
 }
 #endif
 
@@ -227,6 +277,8 @@ void init_net (void)
 
 	for (i = 0; i < MAX_STREAMS; i++)
 		streams[i] = NULL;
+	for (i = 0; i < MAX_DATAGRAM_SOCKETS; i++)
+		datagram_sockets[i] = NULL;
 }
 
 /**
@@ -240,11 +292,7 @@ static void close_stream (struct net_stream *s)
 	if (s->socket != INVALID_SOCKET) {
 		FD_CLR(s->socket, &read_fds);
 		FD_CLR(s->socket, &write_fds);
-#ifdef _WIN32
-		closesocket(s->socket);
-#else
-		close(s->socket);
-#endif
+		close_socket(s->socket);
 		s->socket = INVALID_SOCKET;
 	}
 	if (s->index >= 0)
@@ -283,11 +331,7 @@ static void do_accept (int sock)
 	struct net_stream *s;
 	if (index == -1) {
 		Com_Printf("Too many streams open, rejecting inbound connection\n");
-#ifdef _WIN32
-		closesocket(sock);
-#else
-		close(sock);
-#endif
+		close_socket(sock);
 		return;
 	}
 
@@ -341,7 +385,7 @@ void wait_for_net (int timeout)
 	if (ready == 0 && !loopback_ready)
 		return;
 
-	if (server_running && server_socket != INVALID_SOCKET && FD_ISSET(server_socket, &read_fds_out)) {
+	if (server_socket != INVALID_SOCKET && FD_ISSET(server_socket, &read_fds_out)) {
 		int client_socket = accept(server_socket, NULL, 0);
 		if (client_socket == INVALID_SOCKET) {
 			if (errno != EAGAIN)
@@ -393,7 +437,7 @@ void wait_for_net (int timeout)
 				continue;
 			}
 
-			Com_Printf("wrote %d bytes to stream %d (%s)\n", len, i, stream_peer_name(s, buf, sizeof(buf)));
+			Com_Printf("wrote %d bytes to stream %d (%s)\n", len, i, stream_peer_name(s, buf, sizeof(buf), qfalse));
 
 			dbuffer_remove(s->outbound, len);
 		}
@@ -410,7 +454,7 @@ void wait_for_net (int timeout)
 				if (s->inbound) {
 					dbuffer_add(s->inbound, buf, len);
 
-					Com_Printf("read %d bytes from stream %d (%s)\n", len, i, stream_peer_name(s, buf, sizeof(buf)));
+					Com_Printf("read %d bytes from stream %d (%s)\n", len, i, stream_peer_name(s, buf, sizeof(buf), qfalse));
 
 					/* Note that s is potentially invalid after the callback returns */
 					if (s->func)
@@ -419,6 +463,42 @@ void wait_for_net (int timeout)
 					continue;
 				}
 			}
+		}
+	}
+
+	for (i = 0; i < MAX_DATAGRAM_SOCKETS; i++) {
+		struct datagram_socket *s = datagram_sockets[i];
+
+		if (!s)
+			continue;
+
+		if (FD_ISSET(s->socket, &write_fds_out)) {
+			if (s->queue) {
+				struct datagram *dgram = s->queue;
+				int len = sendto(s->socket, dgram->msg, dgram->len, 0, (struct sockaddr *)dgram->addr, s->addrlen);
+				if (len == -1)
+					Com_Printf("sendto on socket %d failed: %s\n", s->socket, estr());
+				/* Regardless of whether it worked, we don't retry datagrams */
+				s->queue = dgram->next;
+				free(dgram->msg);
+				free(dgram->addr);
+				free(dgram);
+				if (!s->queue)
+					s->queue_tail = &s->queue;
+			} else {
+				FD_CLR(s->socket, &write_fds);
+			}
+		}
+
+		if (FD_ISSET(s->socket, &read_fds_out)) {
+			char buf[256];
+			char addrbuf[256];
+			socklen_t addrlen = sizeof(addrbuf);
+			int len = recvfrom(s->socket, buf, sizeof(buf), 0, (struct sockaddr *)addrbuf, &addrlen);
+			if (len == -1)
+				Com_Printf("recvfrom on socket %d failed: %s\n", s->socket, estr());
+			else
+				s->func(s, buf, len, (struct sockaddr *)addrbuf);
 		}
 	}
 
@@ -458,11 +538,7 @@ static struct net_stream *do_connect (const char *node, const char *service, con
 	}
 
 	if (!set_non_blocking(sock)) {
-#ifdef _WIN32
-		closesocket(sock);
-#else
-		close(sock);
-#endif
+		close_socket(sock);
 		return NULL;
 	}
 
@@ -682,54 +758,44 @@ void stream_finished (struct net_stream *s)
 		close_stream(s);
 }
 
-#ifdef _WIN32
-const char *inet_ntop (int af, const void *src, char *dst, socklen_t cnt)
-{
-	if (af == AF_INET) {
-		struct sockaddr_in in;
-		memset(&in, 0, sizeof(in));
-		in.sin_family = AF_INET;
-		memcpy(&in.sin_addr, src, sizeof(struct in_addr));
-		getnameinfo((struct sockaddr *)&in, sizeof(struct sockaddr_in), dst, cnt, NULL, 0, NI_NUMERICHOST);
-		return dst;
-	} else if (af == AF_INET6) {
-		struct sockaddr_in6 in;
-		memset(&in, 0, sizeof(in));
-		in.sin6_family = AF_INET6;
-		memcpy(&in.sin6_addr, src, sizeof(struct in_addr6));
-		getnameinfo((struct sockaddr *)&in, sizeof(struct sockaddr_in6), dst, cnt, NULL, 0, NI_NUMERICHOST);
-		return dst;
-	}
-	return NULL;
-}
-#endif
+/* Any code which calls this function with ip_hack set to true is
+ * considered broken - it should not make assumptions about the format
+ * of the result, and this function is only really intended for
+ * displaying data to the user
+ */
 
 /**
  * @brief
  */
-const char * stream_peer_name (struct net_stream *s, char *dst, int len)
+const char * stream_peer_name (struct net_stream *s, char *dst, int len, qboolean ip_hack)
 {
 	if (!s)
 		return "(null)";
 	else if (stream_is_loopback(s))
 		return "loopback connection";
 	else {
-		char buf[64];
-		void *src;
+		char buf[128];
+		char node[64];
+		char service[64];
+		int rc;
 		socklen_t addrlen = s->addrlen;
 		if (getpeername(s->socket, (struct sockaddr *)buf, &addrlen) != 0)
 			return "(error)";
-		switch (s->family) {
-		case AF_INET:
-			src = &((struct sockaddr_in *)buf)->sin_addr;
-			break;
-		case AF_INET6:
-			src = &((struct sockaddr_in6 *)buf)->sin6_addr;
-			break;
-		default:
-			return "(unknown address family)";
+
+		rc = getnameinfo((struct sockaddr *)buf, addrlen, node, sizeof(node), service, sizeof(service),
+				NI_NUMERICHOST | NI_NUMERICSERV);
+		if (rc != 0) {
+			Com_Printf("Failed to convert sockaddr to string: %s\n", gai_strerror(rc));
+			return "(error)";
 		}
-		return inet_ntop(s->family, src, dst, len);
+		if (ip_hack)
+			Com_sprintf(dst, len, "%s", node);
+		else {
+			node[sizeof(node) - 1] = '\0';
+			service[sizeof(service) - 1] = '\0';
+			Com_sprintf(dst, len, "[%s]:%s", node, service);
+		}
+		return dst;
 	}
 }
 
@@ -758,50 +824,36 @@ static int do_start_server (const struct addrinfo *addr)
 {
 	int sock = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
 	int t = 1;
+
 	if (sock == INVALID_SOCKET) {
 		Com_Printf("Failed to create socket: %s\n", estr());
 		return INVALID_SOCKET;
 	}
 
 	if (!set_non_blocking(sock)) {
-#ifdef _WIN32
-		closesocket(sock);
-#else
-		close(sock);
-#endif
+		close_socket(sock);
 		return INVALID_SOCKET;
 	}
+
 #ifdef _WIN32
 	if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (char *) &t, sizeof(t)) != 0) {
 #else
 	if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &t, sizeof(t)) != 0) {
 #endif
 		Com_Printf("Failed to set SO_REUSEADDR on socket: %s\n", estr());
-#ifdef _WIN32
-		closesocket(sock);
-#else
-		close(sock);
-#endif
+		close_socket(sock);
 		return INVALID_SOCKET;
 	}
 
 	if (bind(sock, addr->ai_addr, addr->ai_addrlen) != 0) {
 		Com_Printf("Failed to bind socket: %s\n", estr());
-#ifdef _WIN32
-		closesocket(sock);
-#else
-		close(sock);
-#endif
+		close_socket(sock);
 		return INVALID_SOCKET;
 	}
 
 	if (listen(sock, SOMAXCONN) != 0) {
 		Com_Printf("Failed to listen on socket: %s\n", estr());
-#ifdef _WIN32
-		closesocket(sock);
-#else
-		close(sock);
-#endif
+		close_socket(sock);
 		return INVALID_SOCKET;
 	}
 
@@ -812,7 +864,6 @@ static int do_start_server (const struct addrinfo *addr)
 
 	return sock;
 }
-
 
 /**
  * @brief
@@ -830,11 +881,7 @@ qboolean start_server (const char *node, const char *service, stream_callback_fu
 		int rc;
 
 		memset(&hints, 0, sizeof(hints));
-#ifdef _WIN32
-		hints.ai_flags = AI_NUMERICHOST | AI_PASSIVE;
-#else
 		hints.ai_flags = AI_NUMERICHOST | AI_ADDRCONFIG | AI_NUMERICSERV | AI_PASSIVE;
-#endif
 		hints.ai_socktype = SOCK_STREAM;
 
 		rc = getaddrinfo(node, service, &hints, &res);
@@ -867,15 +914,162 @@ qboolean start_server (const char *node, const char *service, stream_callback_fu
  */
 void stop_server (void)
 {
-	server_func = qfalse;
 	server_running = qfalse;
+	server_func = NULL;
 	if (server_socket != INVALID_SOCKET) {
 		FD_CLR(server_socket, &read_fds);
-#ifdef _WIN32
-		closesocket(server_socket);
-#else
-		close(server_socket);
-#endif
+		close_socket(server_socket);
 	}
 	server_socket = INVALID_SOCKET;
+}
+
+static struct datagram_socket *do_new_datagram_socket (const struct addrinfo *addr)
+{
+	struct datagram_socket *s;
+	int sock = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
+	int t = 1;
+	int index = find_free_datagram_socket();
+
+	if (index == -1) {
+		Com_Printf("Too many datagram sockets open\n");
+		return NULL;
+	}
+
+	if (sock == INVALID_SOCKET) {
+		Com_Printf("Failed to create socket: %s\n", estr());
+		return NULL;
+	}
+
+	if (!set_non_blocking(sock)) {
+		close_socket(sock);
+		return NULL;
+	}
+
+	if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (char *) &t, sizeof(t)) != 0) {
+		Com_Printf("Failed to set SO_REUSEADDR on socket: %s\n", estr());
+		close_socket(sock);
+		return NULL;
+	}
+
+	if (setsockopt(sock, SOL_SOCKET, SO_BROADCAST, (char *) &t, sizeof(t)) != 0) {
+		Com_Printf("Failed to set SO_BROADCAST on socket: %s\n", estr());
+		close_socket(sock);
+		return NULL;
+	}
+
+	if (bind(sock, addr->ai_addr, addr->ai_addrlen) != 0) {
+		Com_Printf("Failed to bind socket: %s\n", estr());
+		close_socket(sock);
+		return NULL;
+	}
+
+	maxfd = max(sock + 1, maxfd);
+	FD_SET(sock, &read_fds);
+
+	s = malloc(sizeof(*s));
+	s->family = addr->ai_family;
+	s->addrlen = addr->ai_addrlen;
+	s->socket = sock;
+	s->index = index;
+	s->queue = NULL;
+	s->queue_tail = &s->queue;
+	s->func = NULL;
+	datagram_sockets[index] = s;
+
+	return s;
+}
+
+struct datagram_socket *new_datagram_socket (const char *node, const char *service, datagram_callback_func *func)
+{
+	struct datagram_socket *s;
+	struct addrinfo *res;
+	struct addrinfo hints;
+	int rc;
+
+	if (!service || !func)
+		return NULL;
+
+	memset(&hints, 0, sizeof(hints));
+	hints.ai_flags = AI_NUMERICHOST | AI_ADDRCONFIG | AI_NUMERICSERV | AI_PASSIVE;
+	hints.ai_socktype = SOCK_DGRAM;
+
+	rc = getaddrinfo(node, service, &hints, &res);
+
+	if (rc != 0) {
+		Com_Printf("Failed to resolve host %s:%s: %s\n", node ? node : "*", service, gai_strerror(rc));
+		return qfalse;
+	}
+
+	s = do_new_datagram_socket(res);
+	if (s)
+		s->func = func;
+
+	freeaddrinfo(res);
+	return s;
+}
+
+void send_datagram (struct datagram_socket *s, const char *buf, int len, struct sockaddr *to)
+{
+	struct datagram *dgram;
+	if (!s || len <= 0 || !buf || !to)
+		return;
+
+	dgram = malloc(sizeof(*dgram));
+	dgram->msg = malloc(len);
+	dgram->addr = malloc(s->addrlen);
+	memcpy(dgram->msg, buf, len);
+	memcpy(dgram->addr, to, len);
+	dgram->len = len;
+	dgram->next = NULL;
+
+	*s->queue_tail = dgram;
+	s->queue_tail = &dgram->next;
+
+	FD_SET(s->socket, &write_fds);
+}
+
+void broadcast_datagram (struct datagram_socket *s, const char *buf, int len, int port)
+{
+	if (s->family == AF_INET) {
+		struct sockaddr_in addr;
+		addr.sin_family = AF_INET;
+		addr.sin_port = htons(port);
+		addr.sin_addr.s_addr = INADDR_BROADCAST;
+		send_datagram(s, buf, len, (struct sockaddr *)&addr);
+	} else {
+		Sys_Error("Broadcast unsupported on address family %d\n", s->family);
+	}
+}
+
+void close_datagram_socket (struct datagram_socket *s)
+{
+	if (!s)
+		return;
+
+	FD_CLR(s->socket, &read_fds);
+	FD_CLR(s->socket, &write_fds);
+	close_socket(s->socket);
+
+	while (s->queue) {
+		struct datagram *dgram = s->queue;
+		s->queue = dgram->next;
+		free(dgram->msg);
+		free(dgram->addr);
+		free(dgram);
+	}
+
+	datagram_sockets[s->index] = NULL;
+	free(s);
+}
+
+void sockaddr_to_strings (struct datagram_socket *s, struct sockaddr *addr, char *node, size_t nodelen, char *service, size_t servicelen)
+{
+	int rc = getnameinfo(addr, s->addrlen, node, nodelen, service, servicelen,
+			NI_NUMERICHOST | NI_NUMERICSERV | NI_DGRAM);
+	if (rc != 0) {
+		Com_Printf("Failed to convert sockaddr to string: %s\n", gai_strerror(rc));
+		Q_strncpyz(node, "(error)", nodelen);
+		Q_strncpyz(service, "(error)", servicelen);
+	}
+	return;
 }

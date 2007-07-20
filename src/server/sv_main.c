@@ -233,7 +233,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	int playernum;
 	int version;
 	char buf[256];
-	const char *peername = stream_peer_name(stream, buf, sizeof(buf));
+	const char *peername = stream_peer_name(stream, buf, sizeof(buf), qtrue);
 
 	Com_DPrintf("SVC_DirectConnect ()\n");
 
@@ -436,7 +436,7 @@ static void SV_ConnectionlessPacket (struct net_stream *stream, struct dbuffer *
 		SVC_RemoteCommand();
 #endif
 	else
-		Com_Printf("bad connectionless packet from %s:\n%s\n", stream_peer_name(stream, buf, sizeof(buf)), s);
+		Com_Printf("bad connectionless packet from %s:\n%s\n", stream_peer_name(stream, buf, sizeof(buf), qfalse), s);
 }
 
 
@@ -960,6 +960,8 @@ void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 {
 	client_t *cl;
 	int i;
+	close_datagram_socket(svs.datagram_socket);
+	svs.datagram_socket = NULL;
 	stop_server();
 
 	if (svs.clients) {

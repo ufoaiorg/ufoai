@@ -216,6 +216,7 @@ typedef struct client_static_s {
 	char servername[MAX_OSPATH];	/**< name of server from original connect */
 	float connect_time;			/**< for connection retransmits */
 
+	struct datagram_socket *datagram_socket;
 	struct net_stream *stream;
 	int serverProtocol;			/**< in case we are doing some kind of version hack */
 

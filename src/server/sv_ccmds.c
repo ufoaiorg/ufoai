@@ -246,7 +246,7 @@ static void SV_Status_f (void)
 		for (j = 0; j < l; j++)
 			Com_Printf(" ");
 
-		s = stream_peer_name(cl->stream, buf, sizeof(buf));
+		s = stream_peer_name(cl->stream, buf, sizeof(buf), qfalse);
 		Com_Printf("%s", s);
 		l = 22 - strlen(s);
 		for (j = 0; j < l; j++)
@@ -425,6 +425,8 @@ static void SV_KillServer_f (void)
 	if (!svs.initialized)
 		return;
 	SV_Shutdown("Server was killed.\n", qfalse);
+	close_datagram_socket(svs.datagram_socket);
+	svs.datagram_socket = NULL;
 	stop_server();
 }
 

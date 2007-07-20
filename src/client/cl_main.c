@@ -315,6 +315,9 @@ static void CL_Connect (void)
 {
 	userinfo_modified = qfalse;
 
+	close_datagram_socket(cls.datagram_socket);
+	cls.datagram_socket = NULL;
+
 	free_stream(cls.stream);
 
 	if (cls.servername[0]) {
@@ -750,8 +753,14 @@ typedef enum {
  */
 static void CL_AddServerToList (const char *node, const char *service)
 {
+	int i;
+
 	if (serverListLength >= MAX_SERVERLIST)
 		return;
+
+	for (i = 0; i < serverListLength; i++)
+		if (strcmp(serverList[i].node, node) == 0 && strcmp(serverList[i].service, service) == 0)
+			return;
 
 	memset(&(serverList[serverListLength]), 0, sizeof(serverList_t));
 	serverList[serverListLength].node = strdup(node);
@@ -902,7 +911,7 @@ static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 		Cvar_Set("mn_mappic", "maps/shots/na.jpg");
 		Cvar_Set("mn_server_need_password", "0"); /* string */
 
-		Com_sprintf(serverInfoText, sizeof(serverInfoText), _("IP\t%s\n\n"), stream_peer_name(stream, buf, sizeof(buf)));
+		Com_sprintf(serverInfoText, sizeof(serverInfoText), _("IP\t%s\n\n"), stream_peer_name(stream, buf, sizeof(buf), qtrue));
 		value = Info_ValueForKey(s, "mapname");
 		Cvar_Set("mapname", value);
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Map:\t%s\n"), value);
@@ -947,7 +956,7 @@ static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 			Com_sprintf(userInfoText, sizeof(userInfoText), "%s\t%i\n", token, team);
 		} while (1);
 		menuText[TEXT_LIST] = userInfoText;
-		Cvar_Set("mn_server_ip", stream_peer_name(stream, buf, sizeof(buf)));
+		Cvar_Set("mn_server_ip", stream_peer_name(stream, buf, sizeof(buf), qtrue));
 		MN_PushMenu("serverinfo");
 	} else
 		Com_Printf("%c%s", 1, s);
@@ -1013,6 +1022,20 @@ static void masterserver_callback (struct net_stream *s)
 		}
 
 		free_stream(s);
+	}
+}
+
+/**
+ * @brief
+ */
+static void discovery_callback (struct datagram_socket *s, const char *buf, int len, struct sockaddr *from)
+{
+	const char match[] = "discovered";
+	if (len == sizeof(match) && memcmp(buf, match, len) == 0) {
+		char node[MAX_VAR];
+		char service[MAX_VAR];
+		sockaddr_to_strings(s, from, node, sizeof(node), service, sizeof(service));
+		CL_AddServerToList(node, service);
 	}
 }
 
@@ -1185,6 +1208,14 @@ static void CL_PingServers_f (void)
 
 /*	menuText[TEXT_STANDARD] = NULL;*/
 	menuText[TEXT_LIST] = serverText;
+
+	if (!cls.datagram_socket)
+		cls.datagram_socket = new_datagram_socket(NULL, va("%d", PORT_CLIENT), &discovery_callback);
+
+	if (cls.datagram_socket) {
+		char buf[] = "discover";
+		broadcast_datagram(cls.datagram_socket, buf, sizeof(buf), PORT_SERVER);
+	}
 
 	for (i = 0; i < 16; i++) {
 		char service[256];

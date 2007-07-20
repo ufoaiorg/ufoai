@@ -974,6 +974,18 @@ static void SV_SpawnServer (const char *server, const char *param, server_state_
 }
 
 /**
+ * @brief
+ */
+static void discovery_callback (struct datagram_socket *s, const char *buf, int len, struct sockaddr *from)
+{
+	const char match[] = "discover";
+	if (len == sizeof(match) && memcmp(buf, match, len) == 0) {
+		const char msg[] = "discovered";
+		send_datagram(s, msg, sizeof(msg), from);
+	}
+}
+
+/**
  * @brief A brand new game has been started
  */
 static void SV_InitGame (void)
@@ -1003,9 +1015,10 @@ static void SV_InitGame (void)
 	svs.clients = Mem_PoolAlloc(sizeof(client_t) * sv_maxclients->integer, sv_genericPool, 0);
 
 	/* init network stuff */
-	if (sv_maxclients->integer > 1)
+	if (sv_maxclients->integer > 1) {
 		start_server(NULL, Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->string, &SV_ReadPacket);
-	else
+		svs.datagram_socket = new_datagram_socket(NULL, Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->string, &discovery_callback);
+	} else
 		start_server(NULL, NULL, &SV_ReadPacket);
 
 	/* heartbeats will always be sent to the ufo master */

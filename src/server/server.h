@@ -127,6 +127,8 @@ typedef struct {
 	qboolean initialized;		/**< sv_init has completed */
 	int realtime;				/**< always increasing, no clamping, etc */
 
+	struct datagram_socket *datagram_socket;
+
 	char mapcmd[MAX_TOKEN_CHARS];	/**< ie: *intro.cin+base  */
 
 	int spawncount;				/**< incremented each server start - used to check late spawns */

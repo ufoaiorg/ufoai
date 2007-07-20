@@ -26,10 +26,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define QCOMMON_NET_H
 
 struct net_stream;
+struct datagram_socket;
+struct sockaddr;
 typedef void stream_callback_func(struct net_stream *s);
+typedef void datagram_callback_func(struct datagram_socket *s, const char *buf, int len, struct sockaddr *from);
 
 qboolean start_server(const char *node, const char *service, stream_callback_func *func);
 void stop_server(void);
+
+struct datagram_socket *new_datagram_socket(const char *node, const char *service, datagram_callback_func *datagram_func);
+void send_datagram(struct datagram_socket *s, const char *buf, int len, struct sockaddr *to);
+void broadcast_datagram(struct datagram_socket *s, const char *buf, int len, int port);
+void close_datagram_socket(struct datagram_socket *s);
+void sockaddr_to_strings(struct datagram_socket *s, struct sockaddr *addr, char *node, size_t nodelen, char *service, size_t servicelen);
 
 void init_net(void);
 void wait_for_net(int timeout);
@@ -42,7 +51,7 @@ int stream_peek(struct net_stream *s, char *data, int len);
 int stream_dequeue(struct net_stream *s, char *data, int len);
 void *stream_data(struct net_stream *s);
 void set_stream_data(struct net_stream *s, void *data);
-const char *stream_peer_name(struct net_stream *s, char *dst, int len);
+const char *stream_peer_name(struct net_stream *s, char *dst, int len, qboolean ip_hack);
 qboolean stream_is_loopback(struct net_stream *s);
 
 /* Call free_stream to dump the whole thing right now */
