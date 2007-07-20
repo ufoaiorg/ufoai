@@ -100,9 +100,21 @@ typedef struct fireDef_s {
  * @brief The max width and height of an item-shape
  * @note these values depend on the the usage of an uint32_t that has 32 bits and a width of 8bit => 4 rows
  * @sa SHAPE_BIG_MAX_HEIGHT
+ * @sa SHAPE_BIG_MAX_WIDTH
  */
 #define SHAPE_SMALL_MAX_WIDTH 8
 #define SHAPE_SMALL_MAX_HEIGHT 4
+
+/**
+ * @brief defines the max height of an inventory container
+ * @note the max width is 32 - because uint32_t has 32 bits and we are
+ * using a bitmask for the x values
+ * @sa SHAPE_SMALL_MAX_WIDTH
+ * @sa SHAPE_SMALL_MAX_HEIGHT
+ */
+#define SHAPE_BIG_MAX_HEIGHT 16
+/** @brief 32 bit mask */
+#define SHAPE_BIG_MAX_WIDTH 32
 
 /**
  * @brief Defines all attributes of obejcts used in the inventory.
@@ -171,15 +183,6 @@ typedef struct objDef_s {
 } objDef_t;
 
 #define MAX_INVDEFS     16
-
-/**
- * @brief defines the max height of an inventory container
- * @note the max width is 32 - because uint32_t has 32 bits and we are
- * using a bitmask for the x values
- * @sa SHAPE_SMALL_MAX_WIDTH
- * @sa SHAPE_SMALL_MAX_HEIGHT
- */
-#define SHAPE_BIG_MAX_HEIGHT 16
 
 /** @brief inventory definition for our menus */
 typedef struct invDef_s {
