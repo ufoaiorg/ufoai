@@ -499,7 +499,7 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 
 	case V_SHAPE_BIG:
 		memcpy(b, set, 64);
-		return ALIGN(64);
+		return ALIGN(SHAPE_BIG_MAX_HEIGHT * 4);
 
 	case V_DMGTYPE:
 		*b = *(const byte *) set;
