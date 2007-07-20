@@ -639,7 +639,7 @@ menu althud
 		pos		"930 497"
 		texl	"108 37"
 		texh	"134 70"
-		click	{ cmd togglereaction; }
+		click	{ cmd toggleheadgear; }
 	}
 
 	pic bt_reloadright
