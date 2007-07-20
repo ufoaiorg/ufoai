@@ -8,8 +8,8 @@
 		<Build>
 			<Target title="windows">
 				<Option platforms="Windows;" />
-				<Option output="..\..\ufo_ded.exe" prefix_auto="1" extension_auto="1" />
-				<Option object_output=".objs\ufo_ded" />
+				<Option output="../../ufo_ded" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs/ufo_ded" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -31,8 +31,8 @@
 			</Target>
 			<Target title="windows_debug">
 				<Option platforms="Windows;" />
-				<Option output="..\..\ufo_ded.exe" prefix_auto="1" extension_auto="1" />
-				<Option object_output=".objs\ufo_ded" />
+				<Option output="../../ufo_ded" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs/ufo_ded" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -58,8 +58,8 @@
 			</Target>
 			<Target title="linux">
 				<Option platforms="Unix;" />
-				<Option output="..\..\ufo_ded.exe" prefix_auto="1" extension_auto="1" />
-				<Option object_output=".objs\ufo_ded" />
+				<Option output="../../ufo_ded" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs/ufo_ded" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Linker>
@@ -68,18 +68,21 @@
 				</Linker>
 			</Target>
 			<Target title="macosx">
-				<Option platforms="Unix;" />
-				<Option output="..\..\ufo_ded.exe" prefix_auto="1" extension_auto="1" />
-				<Option object_output=".objs\ufo_ded" />
+				<Option platforms="Mac;" />
+				<Option output="../../ufo_ded" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs/ufo_ded" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add directory="\sw\include" />
+					<Add directory="/sw/include" />
 				</Compiler>
 				<Linker>
+					<Add option="-framework IOKit" />
+					<Add option="-framework,Cocoa" />
+					<Add option="-framework foundation" />
 					<Add library="z" />
 					<Add library="dl" />
-					<Add directory="\sw\lib" />
+					<Add directory="/sw/lib" />
 				</Linker>
 			</Target>
 		</Build>
@@ -88,179 +91,180 @@
 			<Add option="-DDEDICATED_ONLY" />
 		</Compiler>
 		<Linker>
-			<Add directory="C:\Dev-Cpp\lib" />
+			<Add directory="C:/Dev-Cpp/lib" />
 		</Linker>
 		<Unit filename="ufo_ded.ico">
 			<Option compile="1" />
 			<Option link="1" />
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="..\..\src\game\inv_shared.c">
+		<Unit filename="../../src/game/inv_shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\game\inv_shared.h" />
-		<Unit filename="..\..\src\game\q_shared.c">
+		<Unit filename="../../src/game/inv_shared.h" />
+		<Unit filename="../../src/game/q_shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\ports\linux\q_shlinux.c">
-			<Option compilerVar="CC" />
-			<Option target="linux" />
-		</Unit>
-		<Unit filename="..\..\src\ports\linux\sys_linux.c">
+		<Unit filename="../../src/ports/linux/q_shlinux.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 		</Unit>
-		<Unit filename="..\..\src\ports\macosx\q_shosx.c">
+		<Unit filename="../../src/ports/linux/sys_linux.c">
+			<Option compilerVar="CC" />
+			<Option target="linux" />
+		</Unit>
+		<Unit filename="../../src/ports/macosx/q_shosx.c">
 			<Option compilerVar="CC" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="..\..\src\ports\macosx\sys_osx.m">
+		<Unit filename="../../src/ports/macosx/sys_osx.m">
 			<Option compile="1" />
 			<Option link="1" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="..\..\src\ports\null\cd_null.c">
+		<Unit filename="../../src/ports/null/cd_null.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\ports\null\cl_null.c">
+		<Unit filename="../../src/ports/null/cl_null.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\ports\unix\glob.c">
+		<Unit filename="../../src/ports/unix/glob.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="..\..\src\ports\unix\glob.h">
+		<Unit filename="../../src/ports/unix/glob.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="..\..\src\ports\unix\sys_console.c">
+		<Unit filename="../../src/ports/unix/sys_console.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="..\..\src\ports\unix\sys_unix.c">
+		<Unit filename="../../src/ports/unix/sys_unix.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="..\..\src\ports\win32\q_shwin.c">
+		<Unit filename="../../src/ports/win32/q_shwin.c">
 			<Option compilerVar="CC" />
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
-		<Unit filename="..\..\src\ports\win32\sys_win.c">
+		<Unit filename="../../src/ports/win32/sys_win.c">
 			<Option compilerVar="CC" />
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
-		<Unit filename="..\..\src\ports\win32\ufo.rc">
+		<Unit filename="../../src/ports/win32/ufo.rc">
 			<Option compilerVar="WINDRES" />
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
-		<Unit filename="..\..\src\qcommon\cmd.c">
+		<Unit filename="../../src/qcommon/cmd.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\qcommon\cmd.h">
+		<Unit filename="../../src/qcommon/cmd.h">
 			<Option compile="1" />
 			<Option link="1" />
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="..\..\src\qcommon\cmodel.c">
+		<Unit filename="../../src/qcommon/cmodel.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\qcommon\cmodel.h">
+		<Unit filename="../../src/qcommon/cmodel.h">
 			<Option compile="1" />
 			<Option link="1" />
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="..\..\src\qcommon\common.c">
+		<Unit filename="../../src/qcommon/common.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\qcommon\common.h">
+		<Unit filename="../../src/qcommon/common.h">
 			<Option compile="1" />
 			<Option link="1" />
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="..\..\src\qcommon\cvar.c">
+		<Unit filename="../../src/qcommon/cvar.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\qcommon\cvar.h">
+		<Unit filename="../../src/qcommon/cvar.h">
 			<Option compile="1" />
 			<Option link="1" />
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="..\..\src\qcommon\dbuffer.c">
+		<Unit filename="../../src/qcommon/dbuffer.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\qcommon\dbuffer.h" />
-		<Unit filename="..\..\src\qcommon\files.c">
+		<Unit filename="../../src/qcommon/dbuffer.h" />
+		<Unit filename="../../src/qcommon/files.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\qcommon\ioapi.c">
+		<Unit filename="../../src/qcommon/ioapi.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\qcommon\ioapi.h">
+		<Unit filename="../../src/qcommon/ioapi.h">
 			<Option compile="1" />
 			<Option link="1" />
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="..\..\src\qcommon\md4.c">
+		<Unit filename="../../src/qcommon/md4.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\qcommon\mem.c">
+		<Unit filename="../../src/qcommon/mem.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\qcommon\msg.c">
+		<Unit filename="../../src/qcommon/msg.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\qcommon\net.c">
+		<Unit filename="../../src/qcommon/net.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\qcommon\net.h" />
-		<Unit filename="..\..\src\qcommon\net_chan.h">
+		<Unit filename="../../src/qcommon/net.h" />
+		<Unit filename="../../src/qcommon/net_chan.h">
 			<Option compile="1" />
 			<Option link="1" />
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="..\..\src\qcommon\netpack.c">
+		<Unit filename="../../src/qcommon/netpack.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\qcommon\netpack.h" />
-		<Unit filename="..\..\src\qcommon\scripts.c">
+		<Unit filename="../../src/qcommon/netpack.h" />
+		<Unit filename="../../src/qcommon/scripts.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\qcommon\unzip.c">
+		<Unit filename="../../src/qcommon/unzip.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\qcommon\unzip.h">
+		<Unit filename="../../src/qcommon/unzip.h">
 			<Option compile="1" />
 			<Option link="1" />
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="..\..\src\server\sv_ccmds.c">
+		<Unit filename="../../src/server/sv_ccmds.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\server\sv_game.c">
+		<Unit filename="../../src/server/sv_game.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\server\sv_init.c">
+		<Unit filename="../../src/server/sv_init.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\server\sv_main.c">
+		<Unit filename="../../src/server/sv_main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\server\sv_send.c">
+		<Unit filename="../../src/server/sv_send.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\server\sv_user.c">
+		<Unit filename="../../src/server/sv_user.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\server\sv_world.c">
+		<Unit filename="../../src/server/sv_world.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>
 			<code_completion />
+			<envvars />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
