@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_AIRFIGHT_H
 #define CLIENT_CL_AIRFIGHT_H
 
-#define MAX_BULLETS_ON_GEOSCAPE	16
+#define MAX_BULLETS_ON_GEOSCAPE	32
 #define BULLETS_PER_SHOT	16
 
 extern int numBullets;			/**< Number of bunch of bullets on geoscape */
