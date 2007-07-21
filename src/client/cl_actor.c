@@ -2336,11 +2336,12 @@ void CL_ActorUseHeadgear_f (void)
 	if (!headgear)
 		return;
 
+	/* @todo: If not enough TUs left deactivate the icon */
+	/* @todo: move to better place - doesn't belong here */
 	Cbuf_AddText("deselheadgear;");
 	Cbuf_AddText("selheadgear;");
 
-	/* @todo: 'fire' the headgear */
-	/*MSG_Write_PA(PA_SHOOT, selActor->entnum, at, type, cl.cfiremode, mousePosTargettingAlign);*/
+	CL_ActorShoot(selActor, selActor->pos);
 }
 
 /**

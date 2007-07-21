@@ -1534,6 +1534,7 @@ void CL_RequestNextDownload (void)
 
 		while ((buf = FS_GetFileData("ufos/*.ufo")) != NULL)
 			ufoScript_checksum += LittleLong(Com_BlockChecksum(buf, strlen(buf)));
+		FS_GetFileData(NULL);
 
 		CM_LoadMap(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS], &map_checksum);
 		if (!*cl.configstrings[CS_VERSION] || !*cl.configstrings[CS_MAPCHECKSUM] || !*cl.configstrings[CS_UFOCHECKSUM]) {
@@ -1549,10 +1550,7 @@ void CL_RequestNextDownload (void)
 			return;
 		/* checksum doesn't match with the one the server gave us via configstring */
 		} else if (atoi(cl.configstrings[CS_UFOCHECKSUM]) && ufoScript_checksum != atoi(cl.configstrings[CS_UFOCHECKSUM])) {
-			MN_Popup(_("Error"), _("You are using modified ufo script files - you won't be able to connect to the server"));
-			Com_Error(ERR_DISCONNECT, "You are using modified ufo script files - you won't be able to connect to the server: %u != '%s'\n",
-				ufoScript_checksum, cl.configstrings[CS_UFOCHECKSUM]);
-			return;
+			Com_Printf("You are using modified ufo script files - might produce problems");
 		} else if (Q_strncmp(UFO_VERSION, cl.configstrings[CS_VERSION], sizeof(UFO_VERSION))) {
 			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the servers (%s)"), UFO_VERSION, cl.configstrings[CS_VERSION]);
 			MN_Popup(_("Error"), popupText);
