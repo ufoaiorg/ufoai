@@ -632,8 +632,8 @@ menu althud
 		click	{ cmd togglereaction; }
 	}
 
-	confunc althud_selheadgear { *althud_bt_use_headgear image althud/buttons_althud1g }
 	confunc althud_deselheadgear { *althud_bt_use_headgear image althud/buttons_althud1g }
+	confunc althud_disheadgear { *althud_bt_use_headgear image althud/buttons_althud1g }
 
 	pic althud_bt_use_headgear
 	{

@@ -436,11 +436,11 @@ menu hud
 		click	{ cmd reloadleft }
 	}
 
-	confunc selheadgear { cmd "hud_selheadgear;althud_selheadgear;" }
 	confunc deselheadgear { cmd "hud_deselheadgear;althud_deselheadgear;" }
+	confunc disheadgear { cmd "hud_disheadgear;althud_disheadgear;" }
 
-	confunc hud_selheadgear { *hud_bt_use_headgear image hud/buttons2 }
-	confunc hud_deselheadgear { *hud_bt_use_headgear image hud/buttons2g }
+	confunc hud_deselheadgear { *hud_bt_use_headgear image hud/buttons2 }
+	confunc hud_disheadgear { *hud_bt_use_headgear image hud/buttons2g }
 
 	pic hud_bt_use_headgear
 	{
