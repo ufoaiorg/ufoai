@@ -4874,7 +4874,8 @@ qboolean MN_ScriptSanityCheck (void)
 			if (!node->height) {
 				Com_Printf("MN_ParseNodeBody: node '%s' (menu: %s) has no height value but is a text node\n", node->name, node->menu->name);
 				error++;
-			} else if (node->height != (int)(node->size[1] / node->texh[0])) {
+			} else if (node->height != (int)(node->size[1] / node->texh[0]) && node->texh[0]) {
+				/* if node->texh[0] == 0, the height of the font is used */
 				Com_Printf("MN_ParseNodeBody: height value (%i) of node '%s' (menu: %s) differs from size (%.0f) and format (%.0f) values\n",
 					node->height, node->name, node->menu->name, node->size[1], node->texh[0]);
 				error++;

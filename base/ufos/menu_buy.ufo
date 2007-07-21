@@ -64,6 +64,7 @@ menu buy
 		align	ur
 		num		"35"
 		height	"28"
+		size	"40 700"
 		format	"25 0"
 		pos		"370 40"
 	}
@@ -74,6 +75,7 @@ menu buy
 		align	ur
 		num		"36"
 		height	"28"
+		size	"40 700"
 		format	"25 0"
 		pos		"446 40"
 	}
@@ -84,6 +86,7 @@ menu buy
 		align	ur
 		num		"37"
 		height	"28"
+		size	"80 700"
 		format	"25 0"
 		pos		"542 40"
 	}
@@ -1335,9 +1338,9 @@ menu buy
 	text description
 	{
 		pos		"620 347"
-		size	"336 155"
-		format	"20 0"
-		texh	"15 168"
+		size	"336 150"
+		height	"10"
+		format	"15 168"
 		font	"f_verysmall"
 	}
 
@@ -1601,6 +1604,7 @@ menu buyaircraft
 		align	ur
 		num		"35"
 		height	"28"
+		size	"40 700"
 		format	"25 0"
 		pos		"370 40"
 	}
@@ -1611,6 +1615,7 @@ menu buyaircraft
 		align	ur
 		num		"36"
 		height	"28"
+		size	"40 700"
 		format	"25 0"
 		pos		"446 40"
 	}
@@ -1621,6 +1626,7 @@ menu buyaircraft
 		align	ur
 		num		"37"
 		height	"28"
+		size	"80 700"
 		format	"25 0"
 		pos		"542 40"
 	}

@@ -857,9 +857,9 @@ menu popup_aircraft
 
 	text popup_aircraft_action
 	{
-		pos             "290 340"
-		size    "420 100"
-		format  "20 150"
+		pos		"290 340"
+		size	"420 100"
+		format	"20 150"
 		num	7
 		mousefx true
 		click { }
@@ -910,8 +910,10 @@ menu popup
 
 	text title
 	{
-		pos	"440 280"
+		pos		"440 280"
 		align	uc
+		size	"446 20"
+		height	"1"
 		num	7
 	}
 
