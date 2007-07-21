@@ -50,7 +50,7 @@ void RADAR_DrawCoverage (const menuNode_t* node, const radar_t* radar, vec2_t po
 void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, vec2_t pos, qboolean globe)
 {
 	int x, y;
-	int i, z;
+	int i;
 	const vec4_t color = {0, 1, 0, 1};
 	int pts[4];
 
@@ -64,16 +64,10 @@ void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, vec2_t pos, 
 	re.DrawColor(color);
 
 	/* Draw lines from radar to ufos sensored */
-	if (globe)
-		MAP_3DMapToScreen(node, pos, &x, &y, NULL);
-	else
-		MAP_MapToScreen(node, pos, &x, &y);
+	MAP_AllMapToScreen(node, pos, &x, &y, NULL);
 	Vector2Set(pts, x, y);
 	for (i = radar->numUfos - 1; i >= 0; i--)
-		if (!globe && MAP_MapToScreen(node, (gd.ufos + radar->ufos[i])->pos, &x, &y)) {
-			Vector2Set(pts + 2, x, y);
-			re.DrawLineStrip(2, pts);
-		} else if (globe && MAP_3DMapToScreen(node, (gd.ufos + radar->ufos[i])->pos, &x, &y, &z)) {
+		if (MAP_AllMapToScreen(node, (gd.ufos + radar->ufos[i])->pos, &x, &y, NULL)) {
 			Vector2Set(pts + 2, x, y);
 			re.DrawLineStrip(2, pts); /* FIXME */
 		}

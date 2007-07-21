@@ -982,8 +982,7 @@ unsigned long *x86_TimerGetHistogram(void);
 #define GLOBE_ROTATE -90
 #define MAX_PROJECTILESONGEOSCAPE 16
 nation_t* MAP_GetNation(const vec2_t pos);
-qboolean MAP_MapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y);
-qboolean MAP_3DMapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y, int *z);
+qboolean MAP_AllMapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y, int *z);
 qboolean MAP_Draw3DMarkerIfVisible(const menuNode_t* node, const vec2_t pos, float angle, const char *model, qboolean globe);
 void MAP_MapDrawEquidistantPoints(const menuNode_t* node, vec2_t center, const float angle, const vec4_t color, qboolean globe);
 float MAP_AngleOfPath(const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector, qboolean qtrue);

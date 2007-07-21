@@ -344,17 +344,10 @@ static qboolean MAP_IsMapPositionSelected (const menuNode_t* node, vec2_t pos, i
 {
 	int msx, msy;
 
-	if (!globe) {
-		if (MAP_MapToScreen(node, pos, &msx, &msy))
-			if (x >= msx - MN_MAP_DIST_SELECTION && x <= msx + MN_MAP_DIST_SELECTION
-			 && y >= msy - MN_MAP_DIST_SELECTION && y <= msy + MN_MAP_DIST_SELECTION)
-				return qtrue;
-	} else {
-		if (MAP_3DMapToScreen(node, pos, &msx, &msy, NULL))
-			if (x >= msx - MN_MAP_DIST_SELECTION && x <= msx + MN_MAP_DIST_SELECTION
-			 && y >= msy - MN_MAP_DIST_SELECTION && y <= msy + MN_MAP_DIST_SELECTION)
-				return qtrue;
-	}
+	if (MAP_AllMapToScreen(node, pos, &msx, &msy, NULL))
+		if (x >= msx - MN_MAP_DIST_SELECTION && x <= msx + MN_MAP_DIST_SELECTION
+		 && y >= msy - MN_MAP_DIST_SELECTION && y <= msy + MN_MAP_DIST_SELECTION)
+			return qtrue;
 
 	return qfalse;
 }
@@ -371,7 +364,7 @@ static qboolean MAP_IsMapPositionSelected (const menuNode_t* node, vec2_t pos, i
  * @return qtrue if the point is visible, qfalse else (if it's outside the node or on the wrong side of earth).
  * @note In the function, we do the opposite of MAP3D_ScreenToMap
  */
-qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, int *y, int *z)
+static qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, int *y, int *z)
 {
 	vec2_t mid;
 	vec3_t v, v1, rotationAxis;
@@ -411,6 +404,64 @@ qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, in
 }
 
 /**
+ * @brief Transform a 2D position on the map to screen coordinates.
+ * @param[in] node Menu node
+ * @param[in] pos Position on the map described by longitude and latitude
+ * @param[out] x X coordinate on the screen
+ * @param[out] y Y coordinate on the screen
+ * @returns qtrue if the screen position is within the boundaries of the menu
+ * node. Otherwise returns qfalse.
+ * @sa MAP_3DMapToScreen
+ */
+static qboolean MAP_MapToScreen (const menuNode_t* node, const vec2_t pos,
+		int *x, int *y)
+{
+	float sx;
+
+	/* get "raw" position */
+	sx = pos[0] / 360 + ccs.center[0] - 0.5;
+
+	/* shift it on screen */
+	if (sx < -0.5)
+		sx += 1.0;
+	else if (sx > +0.5)
+		sx -= 1.0;
+
+	*x = node->pos[0] + 0.5 * node->size[0] - sx * node->size[0] * ccs.zoom;
+	*y = node->pos[1] + 0.5 * node->size[1] -
+		(pos[1] / 180 + ccs.center[1] - 0.5) * node->size[1] * ccs.zoom;
+
+	if (*x < node->pos[0] &&
+			*y < node->pos[1] &&
+			*x > node->pos[0] + node->size[0] &&
+			*y > node->pos[1] + node->size[1])
+		return qfalse;
+	return qtrue;
+}
+
+/**
+ * @brief Call either MAP_MapToScreen or MAP_3DMapToScreen depending on the geoscape you're using.
+ * @param[in] node Menu node
+ * @param[in] pos Position on the map described by longitude and latitude
+ * @param[out] x Pointer to the X coordinate on the screen
+ * @param[out] y Pointer to the Y coordinate on the screen
+ * @param[out] z Pointer to the Z coordinate on the screen (may be NULL if not needed)
+ * @returns qtrue if pos corresponds to a point which is visible on the screen. Otherwise returns qfalse.
+ * @sa MAP_MapToScreen
+ * @sa MAP_3DMapToScreen
+ */
+qboolean MAP_AllMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, int *y, int *z)
+{
+	if (cl_3dmap->integer)
+		return MAP_3DMapToScreen(node, pos, x, y, z);
+	else {
+		if (z)
+			*z = 10;
+		return MAP_MapToScreen (node, pos, x, y);
+	}
+}
+
+/**
  * @brief Draws a 3D marker on geoscape if the player can see it.
  * @param[in] node Menu node.
  * @param[in] pos Longitude and latitude of the marker to draw.
@@ -427,12 +478,7 @@ qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, fl
 	const float radius = GLOBE_RADIUS;
 	qboolean test;
 
-	if (globe)
-		test = MAP_3DMapToScreen(node, pos, &x, &y, &z);
-	else {
-		test = MAP_MapToScreen(node, pos, &x, &y);
-		z = 10;
-	}
+	test = MAP_AllMapToScreen(node, pos, &x, &y, &z);
 
 	if (test) {
 		/* Set position of the model on the screen */
@@ -463,42 +509,6 @@ qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, fl
 		return qtrue;
 	}
 	return qfalse;
-}
-
-/**
- * @brief Transform a 2D position on the map to screen coordinates.
- * @param[in] node Menu node
- * @param[in] pos Position on the map described by longitude and latitude
- * @param[out] x X coordinate on the screen
- * @param[out] y Y coordinate on the screen
- * @returns qtrue if the screen position is within the boundaries of the menu
- * node. Otherwise returns qfalse.
- * @sa MAP_3DMapToScreen
- */
-qboolean MAP_MapToScreen (const menuNode_t* node, const vec2_t pos,
-		int *x, int *y)
-{
-	float sx;
-
-	/* get "raw" position */
-	sx = pos[0] / 360 + ccs.center[0] - 0.5;
-
-	/* shift it on screen */
-	if (sx < -0.5)
-		sx += 1.0;
-	else if (sx > +0.5)
-		sx -= 1.0;
-
-	*x = node->pos[0] + 0.5 * node->size[0] - sx * node->size[0] * ccs.zoom;
-	*y = node->pos[1] + 0.5 * node->size[1] -
-		(pos[1] / 180 + ccs.center[1] - 0.5) * node->size[1] * ccs.zoom;
-
-	if (*x < node->pos[0] &&
-			*y < node->pos[1] &&
-			*x > node->pos[0] + node->size[0] &&
-			*y > node->pos[1] + node->size[1])
-		return qfalse;
-	return qtrue;
 }
 
 /**
@@ -739,7 +749,7 @@ static void MAP_3DMapDrawLine (const menuNode_t* node, const mapline_t* line)
  */
 void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center, const float angle, const vec4_t color, qboolean globe)
 {
-	int i, xCircle, yCircle, zCircle;
+	int i, xCircle, yCircle;
 	int pts[CIRCLE_DRAW_POINTS * 2 + 2];
 	vec2_t posCircle;
 	qboolean draw, oldDraw = qfalse;
@@ -761,18 +771,12 @@ void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center, const 
 		RotatePointAroundVector(currentPoint, centerPos, initialVector, i * 360 / CIRCLE_DRAW_POINTS);
 		VecToPolar(currentPoint, posCircle);
 		draw = qfalse;
-		if (!globe) {
-			if (MAP_MapToScreen(node, posCircle, &xCircle, &yCircle)) {
-				draw = qtrue;
-				/* if we switch from left to right side of the screen (or the opposite), end this path */
-				if (numPoints != 0 && abs(pts[(numPoints -1) * 2] - xCircle) > 512)
-					oldDraw = qfalse;
-			}
+		if (MAP_AllMapToScreen(node, posCircle, &xCircle, &yCircle, NULL)) {
+			draw = qtrue;
+			if (!globe && numPoints != 0 && abs(pts[(numPoints -1) * 2] - xCircle) > 512)
+				oldDraw = qfalse;
 		}
-		else {
-			if (MAP_3DMapToScreen(node, posCircle, &xCircle, &yCircle, &zCircle))
-				draw = qtrue;
-		}
+
 		/* if moving from a point of the screen to a distant one, draw the path we already calculated, and begin a new path
 		 * (to avoid unwanted lines) */
 		if (draw != oldDraw && i != 0) {
@@ -1049,190 +1053,40 @@ static void MAP_SmoothTranslate (void)
  * @brief Draws on bunch of bullets on the geoscape map
  * @param[in] node Pointer to the node in which you want to draw the bullets.
  * @param[in] bulletIdx idx of the bullet in bulletPos array.
- * @param[in] globe qtrue if this is the 3D geoscape, qfalse else.
  * @sa MAP_DrawMap
  */
-static void MAP_DrawBullets (const menuNode_t* node, int bulletIdx, qboolean globe)
+static void MAP_DrawBullets (const menuNode_t* node, int bulletIdx)
 {
 	int k;
-	int x, y, z;
+	int x, y;
 	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
-	qboolean draw;
 
 	for (k = 0; k < BULLETS_PER_SHOT; k++) {
-		draw = qfalse;
-		if (!globe) {
-			if (MAP_MapToScreen(node, bulletPos[bulletIdx][k], &x, &y))
-				draw = qtrue;
-		} else {
-			if (MAP_3DMapToScreen(node, bulletPos[bulletIdx][k], &x, &y, &z))
-				draw = qtrue;
-		}
-		if (draw)
-		re.DrawFill(x, y, BULLET_SIZE, BULLET_SIZE, ALIGN_CC, yellow);
+		if (MAP_AllMapToScreen(node, bulletPos[bulletIdx][k], &x, &y, NULL))
+			re.DrawFill(x, y, BULLET_SIZE, BULLET_SIZE, ALIGN_CC, yellow);
 	}
 }
 
 #define SELECT_CIRCLE_RADIUS	6
-/**
- * @brief
- */
-static void MAP_Draw3DMapMarkers (const menuNode_t * node)
-{
-	aircraft_t *aircraft;
-	actMis_t *ms = NULL;
-	aircraftProjectile_t *projectile;
-	int i, j;
-	base_t* base;
-	int borders[MAX_NATION_BORDERS * 2];	/**< GL_LINE_LOOP coordinates for nation borders */
-	int x, y, z;
-	float angle = 0.0f;
-	const vec2_t northPole = {0.0f, 90.0f};
-	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
-#if 0
-	vec2_t pos = {0, 0};
-
-	if (MAP_3DMapToScreen(node, pos, &x, &y, &z))
-		re.FontDrawString("f_verysmall", 0, x, y, x, y, node->size[0], 0, 0, "0, 0", 0, 0, NULL, qfalse);
-	pos[0] = 90; pos[1] = 90;
-	if (MAP_3DMapToScreen(node, pos, &x, &y, &z))
-		re.FontDrawString("f_verysmall", 0, x, y, x, y, node->size[0], 0, 0, "90, 90", 0, 0, NULL, qfalse);
-	pos[0] = 90; pos[1] = 180;
-	if (MAP_3DMapToScreen(node, pos, &x, &y, &z))
-		re.FontDrawString("f_verysmall", 0, x, y, x, y, node->size[0], 0, 0, "90, 180", 0, 0, NULL, qfalse);
-#endif
-
-	/* draw mission pics */
-	Cvar_Set("mn_mapdaytime", "");
-	for (i = 0; i < ccs.numMissions; i++) {
-		ms = &ccs.mission[i];
-		angle = MAP_AngleOfPath(ms->realPos, northPole, NULL, NULL, qtrue);
-		if (!MAP_3DMapToScreen(node, ms->realPos, &x, &y, NULL))
-			continue;
-
-		if (ms == selMis) {
-			if (!selMis->def->active)
-				MAP_MapDrawEquidistantPoints (node,  ms->realPos, SELECT_CIRCLE_RADIUS, yellow, qtrue);
-			Cvar_Set("mn_mapdaytime", CL_MapIsNight(ms->realPos) ? _("Night") : _("Day"));
-		}
-		/* Draw mission model (this must be after drawing 'selected circle' so that the model looks above it)*/
-		MAP_Draw3DMarkerIfVisible(node, ms->realPos, angle, "mission", qtrue);
-	}
-
-	/* draws projectiles */
-	for (projectile = gd.projectiles + gd.numProjectiles - 1; projectile >= gd.projectiles; projectile --) {
-		if (projectile->bulletIdx > -1)
-			MAP_DrawBullets (node, projectile->bulletIdx, qtrue);
-		else
-			MAP_Draw3DMarkerIfVisible(node, projectile->pos, projectile->angle, "missile", qtrue);
-	}
-
-	/* draw base pics */
-	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
-		if (!base->founded)
-			continue;
-
-		angle = MAP_AngleOfPath(base->pos, northPole, NULL, NULL, qtrue);
-
-		/* Draw base radar info */
-		RADAR_DrawInMap(node, &(base->radar), base->pos, qtrue);
-
-		/* Draw base */
-		if (base->baseStatus == BASE_UNDER_ATTACK)
-			MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "baseattack", qtrue);
-		else
-			MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "base", qtrue);
-
-		/* draw aircraft */
-		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++)
-			if (aircraft->status > AIR_HOME) {
-
-				/* Draw aircraft radar */
-				RADAR_DrawInMap(node, &(aircraft->radar), aircraft->pos, qtrue);
-
-				/* Draw aircraft route */
-				if (aircraft->status >= AIR_TRANSIT) {
-					mapline_t path;
-
-					path.numPoints = aircraft->route.numPoints - aircraft->point;
-					/* @todo : check why path.numPoints can be sometime equal to -1 */
-					if (path.numPoints > 1) {
-						memcpy(path.point, aircraft->pos, sizeof(vec2_t));
-							memcpy(path.point + 1, aircraft->route.point + aircraft->point + 1, (path.numPoints - 1) * sizeof(vec2_t));
-						MAP_3DMapDrawLine(node, &path);
-					}
-					angle = MAP_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL, qtrue);
-				} else {
-					angle = MAP_AngleOfPath(aircraft->pos, northPole, aircraft->direction, NULL, qtrue);
-				}
-
-				/* Draw a circle around selected aircraft */
-				if (aircraft == selectedAircraft) {
-					MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow, qtrue);
-
-					/* Draw a circle around ufo purchased by selected aircraft */
-					if (aircraft->status == AIR_UFO && MAP_3DMapToScreen(node, aircraft->target->pos, &x, &y, NULL))
-						MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow, qtrue);
-				}
-
-				/* Draw aircraft (this must be after drawing 'selected circle' so that the aircraft looks above it)*/
-				MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, qtrue);
-			}
-	}
-
-	/* draws ufos */
-	for (aircraft = gd.ufos + gd.numUfos - 1; aircraft >= gd.ufos; aircraft --) {
-#ifdef DEBUG
-		/* in debug mode you execute set showufos 1 to see the ufos on geoscape */
-		if (Cvar_VariableInteger("debug_showufos")) {
-			MAP_3DMapDrawLine(node, &(aircraft->route)); /* Draw ufo route */
-		} else
-#endif
-		if (!aircraft->visible || !MAP_3DMapToScreen(node, aircraft->pos, &x, &y, NULL))
-			continue;
-		if (aircraft == selectedUfo)
-			MAP_MapDrawEquidistantPoints (node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow, qtrue);
-		angle = MAP_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL, qtrue);
-		MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, qtrue);
-	}
-
-	/* FIXME */
-	/* use the latitude and longitude values from nation border definition to draw a polygon */
-	for (i = 0; i < gd.numNations; i++) {
-		/* font color for nations */
-		re.DrawColor(gd.nations[i].color);
-		if (gd.nations[i].numBorders) {
-			for (j = 0; j < gd.nations[i].numBorders; j++) {
-				/* FIXME: doesn't work for z positions */
-				MAP_3DMapToScreen(node, gd.nations[i].borders[j], &x, &y, &z);
-				borders[j * 2] = x;
-				borders[j * 2 + 1] = y;
-/*				borders[j * 2 + 2] = z;*/
-			}
-			re.DrawPolygon(gd.nations[i].numBorders, borders);
-			re.DrawColor(NULL);
-			re.DrawLineLoop(gd.nations[i].numBorders, borders);
-		}
-	}
-
-	re.DrawColor(NULL);
-}
 
 /**
- * @brief Draws all ufos, aircraft, bases and so on to the geoscape map
+ * @brief Draws all ufos, aircraft, bases and so on to the geoscape map (2D and 3D)
+ * @param[in] node The menu node which will be used for drawing markers.
+ * @param[in] globe qtrue if this is the 3D geoscape, qfalse else.
  * @sa MAP_DrawMap
  */
-static void MAP_DrawMapMarkers (const menuNode_t* node)
+static void MAP_DrawMapMarkers (const menuNode_t* node, qboolean globe)
 {
 	aircraft_t *aircraft;
 	actMis_t *ms;
 	aircraftProjectile_t *projectile;
 	int x, y, i, j;
-	float angle = 0.0f;
 	base_t* base;
 	const char* font = NULL;
 	int borders[MAX_NATION_BORDERS * 2];	/**< GL_LINE_LOOP coordinates for nation borders */
 	const vec2_t northPole = {0.0f, 90.0f};
+	float angle = 0.0f;
+	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
 
 	assert(node);
 
@@ -1244,44 +1098,65 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	/* draw mission pics */
 	Cvar_Set("mn_mapdaytime", "");
 	for (ms = ccs.mission + ccs.numMissions - 1; ms >= ccs.mission; ms--)
-		if (MAP_MapToScreen(node, ms->realPos, &x, &y)) {
-			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "cross");
+		if (MAP_AllMapToScreen(node, ms->realPos, &x, &y, NULL)) {
 			if (ms == selMis) {
-				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, selMis->def->active ? "circleactive" : "circle");
 				Cvar_Set("mn_mapdaytime", CL_MapIsNight(ms->realPos) ? _("Night") : _("Day"));
-			}
-		}
 
+				/* Draw circle around the mission */
+				if (globe) {
+					if (!selMis->def->active)
+						MAP_MapDrawEquidistantPoints(node,  ms->realPos, SELECT_CIRCLE_RADIUS, yellow, globe);
+				} else
+					re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, selMis->def->active ? "circleactive" : "circle");
+			}
+
+			/* Draw mission model (this must be after drawing 'selected circle' so that the model looks above it)*/
+			if (globe) {
+				angle = MAP_AngleOfPath(ms->realPos, northPole, NULL, NULL, globe);
+				MAP_Draw3DMarkerIfVisible(node, ms->realPos, angle, "mission", globe);
+			} else
+				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "cross");
+		}
 
 	/* draws projectiles */
 	for (projectile = gd.projectiles + gd.numProjectiles - 1; projectile >= gd.projectiles; projectile --) {
 		if (projectile->bulletIdx > -1)
-			MAP_DrawBullets (node, projectile->bulletIdx, qfalse);
+			MAP_DrawBullets (node, projectile->bulletIdx);
 		else
-			MAP_Draw3DMarkerIfVisible(node, projectile->pos, projectile->angle, "missile", qfalse);
+			MAP_Draw3DMarkerIfVisible(node, projectile->pos, projectile->angle, "missile", globe);
 	}
 
-	/* draw bases pics */
+	/* draw bases */
 	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
-		if (!base->founded || !MAP_MapToScreen(node, base->pos, &x, &y))
+		if (!base->founded)
 			continue;
 
 		/* Draw base radar info */
-		RADAR_DrawInMap(node, &(base->radar), base->pos, qfalse);
+		RADAR_DrawInMap(node, &(base->radar), base->pos, globe);
 
 		/* Draw base */
-		if (base->baseStatus == BASE_UNDER_ATTACK)
-			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "baseattack");
-		else
-			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "base");
+		if (globe) {
+			angle = MAP_AngleOfPath(base->pos, northPole, NULL, NULL, globe);
+			if (base->baseStatus == BASE_UNDER_ATTACK)
+				MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "baseattack", globe);
+			else
+				MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "base", globe);
+		} else if (MAP_MapToScreen(node, base->pos, &x, &y)){
+			if (base->baseStatus == BASE_UNDER_ATTACK)
+				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "baseattack");
+			else
+				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "base");
+		}
 
+		/* what is that ? */
 		re.FontDrawString(font, ALIGN_UL, x, y+10, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], base->name, 0, 0, NULL, qfalse);
+
 		/* draw aircrafts of base */
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--)
-			if (aircraft->status > AIR_HOME && MAP_MapToScreen(node, aircraft->pos, &x, &y)) {
+			if (aircraft->status > AIR_HOME) {
 
 				/* Draw aircraft radar */
-				RADAR_DrawInMap(node, &(aircraft->radar), aircraft->pos, qfalse);
+				RADAR_DrawInMap(node, &(aircraft->radar), aircraft->pos, globe);
 
 				/* Draw aircraft route */
 				if (aircraft->status >= AIR_TRANSIT) {
@@ -1292,24 +1167,34 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 					if (path.numPoints > 1) {
 						memcpy(path.point, aircraft->pos, sizeof(vec2_t));
 							memcpy(path.point + 1, aircraft->route.point + aircraft->point + 1, (path.numPoints - 1) * sizeof(vec2_t));
-						MAP_MapDrawLine(node, &path);
+						if (globe)
+							MAP_3DMapDrawLine(node, &path);
+						else
+							MAP_MapDrawLine(node, &path);
 					}
-					angle = MAP_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL, qfalse);
+					angle = MAP_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL, globe);
 				} else {
-					angle = MAP_AngleOfPath(aircraft->pos, northPole, aircraft->direction, NULL, qfalse);
+					angle = MAP_AngleOfPath(aircraft->pos, northPole, aircraft->direction, NULL, globe);
 				}
 
-				/* Draw selected aircraft */
+				/* Draw a circle around selected aircraft */
 				if (aircraft == selectedAircraft) {
-					re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
-
-					/* Draw ufo purchased by selected aircraft */
-					if (aircraft->status == AIR_UFO && MAP_MapToScreen(node, aircraft->target->pos, &x, &y))
+					if (globe)
+						MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow, qtrue);
+					else
 						re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
+
+					/* Draw a circle around ufo purchased by selected aircraft */
+					if (aircraft->status == AIR_UFO && MAP_AllMapToScreen(node, aircraft->target->pos, &x, &y, NULL)) {
+						if (globe)
+							MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow, qtrue);
+						else
+							re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
+					}
 				}
 
 				/* Draw aircraft (this must be after drawing 'selected circle' so that the aircraft looks above it)*/
-				MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, qfalse);
+				MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, globe);
 			}
 	}
 
@@ -1318,15 +1203,23 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 #ifdef DEBUG
 		/* in debug mode you execute set showufos 1 to see the ufos on geoscape */
 		if (Cvar_VariableInteger("debug_showufos")) {
-			MAP_MapDrawLine(node, &(aircraft->route)); /* Draw ufo route */
+			/* Draw ufo route */
+			if (globe)
+				MAP_3DMapDrawLine(node, &(aircraft->route));
+			else
+				MAP_MapDrawLine(node, &(aircraft->route));
 		} else
 #endif
-		if (!aircraft->visible || !MAP_MapToScreen(node, aircraft->pos, &x, &y))
+		if (!aircraft->visible || !MAP_AllMapToScreen(node, aircraft->pos, &x, &y, NULL))
 			continue;
-		if (aircraft == selectedUfo)
-			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "circle");
-		angle = MAP_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL, qfalse);
-		MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, qfalse);
+		if (aircraft == selectedUfo) {
+			if (globe)
+				MAP_MapDrawEquidistantPoints (node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow, qtrue);
+			else
+				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "circle");
+		}
+		angle = MAP_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL, globe);
+		MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, globe);
 	}
 
 	/* FIXME */
@@ -1335,7 +1228,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		if (gd.nations[i].numBorders) {
 			for (j = 0; j < gd.nations[i].numBorders; j++) {
 				/* FIXME: doesn't work for scrolling the map */
-				MAP_MapToScreen(node, gd.nations[i].borders[j], &x, &y);
+				MAP_AllMapToScreen(node, gd.nations[i].borders[j], &x, &y, NULL);
 				borders[j * 2] = x;
 				borders[j * 2 + 1] = y;
 			}
@@ -1345,8 +1238,8 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	}
 
 	for (i = 0; i < gd.numNations; i++) {
-		MAP_MapToScreen(node, gd.nations[i].pos, &x, &y);
-		re.FontDrawString("f_verysmall", ALIGN_UC, x , y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], gd.nations[i].name, 0, 0, NULL, qfalse);
+		if (MAP_AllMapToScreen(node, gd.nations[i].pos, &x, &y, NULL))
+			re.FontDrawString("f_verysmall", ALIGN_UC, x , y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], gd.nations[i].name, 0, 0, NULL, qfalse);
 	}
 }
 
@@ -1358,7 +1251,6 @@ static menuNode_t* geobackground = NULL;
  * @param[in] node The map menu node
  * @param[in] map3D Draw the map as flat map or as globe?
  * @sa MAP_DrawMapMarkers
- * @sa MAP_Draw3DMapMarkers
  */
 void MAP_DrawMap (const menuNode_t* node, qboolean map3D)
 {
@@ -1378,16 +1270,14 @@ void MAP_DrawMap (const menuNode_t* node, qboolean map3D)
 			MAP3D_SmoothRotate();
 		re.Draw3DGlobe(node->pos[0], node->pos[1], node->size[0], node->size[1],
 			(float) (ccs.date.sec / (24 * 3600.0f)) * 2 * M_PI - M_PI, ccs.angles, ccs.zoom / 10, curCampaign->map);
-
-		MAP_Draw3DMapMarkers(node);
 	} else {
 		if (smoothRotation)
 			MAP_SmoothTranslate();
 		q = (ccs.date.day % 365 + (float) (ccs.date.sec / (3600 * 6)) / 4) * 2 * M_PI / 365 - M_PI;
 		re.DrawDayAndNight(node->pos[0], node->pos[1], node->size[0], node->size[1], (float) ccs.date.sec / (3600 * 24), q,
 			ccs.center[0], ccs.center[1], 0.5 / ccs.zoom, curCampaign->map);
-		MAP_DrawMapMarkers(node);
 	}
+	MAP_DrawMapMarkers(node, map3D);
 
 	/* display text */
 	menuText[TEXT_STANDARD] = NULL;
