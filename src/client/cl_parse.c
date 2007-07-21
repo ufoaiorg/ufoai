@@ -797,7 +797,28 @@ static void CL_ActorDoStartMove (struct dbuffer *msg)
 	CL_SetLastMoving(LE_Get(entnum));
 }
 
+/**
+ * @brief draw a simple 'spotted' line from a spotter to the spotted
+ */
+void CL_DrawLineOfSight (le_t *watcher, le_t *target)
+{
+	ptl_t *ptl = NULL;
+	vec3_t eyes;
 
+	if (!watcher || !target)
+		return;
+
+	/* start is the watchers origin */
+	VectorCopy(watcher->origin, eyes);
+	if (watcher->state & STATE_CROUCHED)
+		eyes[2] += EYE_HT_CROUCH;
+	else
+		eyes[2] += EYE_HT_STAND;
+		ptl = CL_ParticleSpawn("fadeTracer", 0, eyes, target->origin, NULL);
+
+	if (target->team == TEAM_CIVILIAN)
+		VectorSet(ptl->color, 0.2, 0.2, 1);
+}
 /**
  * @brief
  * @sa CL_AddActorToTeamList
@@ -869,17 +890,7 @@ static void CL_ActorAppear (struct dbuffer *msg)
 		/* draw line of sight */
 		if (le->team != cls.team) {
 			if (cl.actTeam == cls.team && lastMoving) {
-				ptl_t *ptl;
-				vec3_t eyes;
-				/* start is the last moving actor's origin */
-				VectorCopy(lastMoving->origin, eyes);
-				if (lastMoving->state & STATE_CROUCHED)
-					eyes[2] += EYE_HT_CROUCH;
-				else
-					eyes[2] += EYE_HT_STAND;
-				ptl = CL_ParticleSpawn("fadeTracer", 0, eyes, le->origin, NULL);
-				if (le->team == TEAM_CIVILIAN)
-					VectorSet(ptl->color, 0.2, 0.2, 1);
+				CL_DrawLineOfSight(lastMoving, le);
 			}
 
 			/* message */
