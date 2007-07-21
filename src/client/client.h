@@ -745,11 +745,9 @@ void CL_ActorTargetAlign_f(void);
 #define NUM_TEAMSKINS	4
 struct base_s;
 
-void CL_SendItem(sizebuf_t * buf, item_t item, int container, int x, int y, qboolean save);
-void CL_SendInventory(sizebuf_t * buf, inventory_t * i, qboolean save);
-void CL_ReceiveItem(sizebuf_t * buf, item_t * item, int * container, int * x, int * y, qboolean save);
-void CL_NetReceiveItem(struct dbuffer * buf, item_t * item, int * container, int * x, int * y, qboolean save);
-void CL_ReceiveInventory(sizebuf_t * buf, inventory_t * i, qboolean save);
+void CL_SaveInventory(sizebuf_t * buf, inventory_t * i);
+void CL_NetReceiveItem(struct dbuffer * buf, item_t * item, int * container, int * x, int * y);
+void CL_LoadInventory(sizebuf_t * buf, inventory_t * i);
 void CL_ResetTeams(void);
 void CL_ParseResults(struct dbuffer *msg);
 void CL_SendCurTeamInfo(struct dbuffer * buf, character_t ** team, int num);

@@ -1074,10 +1074,10 @@ static void CL_InvAdd (struct dbuffer *msg)
 
 	le = LE_Get(number);
 	if (!le) {
-		nr = NET_ReadShort(msg) / 6;
+		nr = NET_ReadShort(msg) / INV_INVENTORY_BYTES;
 		Com_Printf("InvAdd: message ignored... LE %i not found\n", number);
 		for (; nr-- > 0;) {
-			CL_NetReceiveItem(msg, &item, &container, &x, &y, qfalse);
+			CL_NetReceiveItem(msg, &item, &container, &x, &y);
 			Com_Printf("InvAdd: ignoring:\n");
 			Com_PrintItemDescription(item.t);
 		}
@@ -1086,11 +1086,10 @@ static void CL_InvAdd (struct dbuffer *msg)
 	if (!le->inuse)
 		Com_DPrintf("InvAdd: warning... LE found but not in-use\n");
 
-	nr = NET_ReadShort(msg) / 6;
+	nr = NET_ReadShort(msg) / INV_INVENTORY_BYTES;
 
 	for (; nr-- > 0;) {
-		CL_NetReceiveItem(msg, &item, &container, &x, &y, qfalse);
-
+		CL_NetReceiveItem(msg, &item, &container, &x, &y);
 		Com_AddToInventory(&le->i, item, container, x, y);
 
 		if (container == csi.idRight)

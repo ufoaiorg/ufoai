@@ -116,8 +116,7 @@ void G_SendStats (edict_t * ent)
 
 /**
  * @brief Write an item to the network buffer
- * @sa CL_ReceiveItem
- * @sa CL_SendItem
+ * @sa CL_NetReceiveItem
  */
 static void G_WriteItem (item_t item, int container, int x, int y)
 {
@@ -127,8 +126,7 @@ static void G_WriteItem (item_t item, int container, int x, int y)
 
 /**
  * @brief Read item from the network buffer
- * @sa CL_ReceiveItem
- * @sa CL_SendItem
+ * @sa CL_NetReceiveItem
  */
 static void G_ReadItem (item_t * item, int * container, int * x, int * y)
 {
@@ -214,7 +212,7 @@ void G_SendInventory (int player_mask, edict_t * ent)
 	gi.WriteShort(ent->number);
 
 	/* size of inventory */
-	gi.WriteShort(nr * 6);
+	gi.WriteShort(nr * INV_INVENTORY_BYTES);
 	for (j = 0; j < gi.csi->numIDs; j++)
 		for (ic = ent->i.c[j]; ic; ic = ic->next) {
 			/* send a single item */
@@ -2232,7 +2230,7 @@ void G_ClientTeamInfo (player_t * player)
 
 			/* inventory */
 			{
-				int nr = gi.ReadShort() / 6;
+				int nr = gi.ReadShort() / INV_INVENTORY_BYTES;
 
 				for (; nr-- > 0;) {
 					G_ReadItem(&item, &container, &x, &y);

@@ -466,6 +466,9 @@ typedef enum {
 	|| ((type1) == (type2)) ) \
 	) /**< Check if the 2 buytypes (type1 and type2) are compatible) */
 
+/** @brief Number of bytes that is read and written via inventory transfer functions */
+#define INV_INVENTORY_BYTES 7
+
 #endif /* GAME_INV_SHARED_H */
 
 

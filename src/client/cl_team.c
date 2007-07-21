@@ -56,33 +56,26 @@ char* CL_GetTeamSkinName (int id)
 	return NULL; /* never reached */
 }
 
-
 /**
  * @brief
- * @sa CL_ReceiveItem
- * @sa G_WriteItem
- * @sa G_ReadItem
+ * @sa CL_LoadItem
  */
-void CL_SendItem (sizebuf_t *buf, item_t item, int container, int x, int y, qboolean save)
+static void CL_SaveItem (sizebuf_t *buf, item_t item, int container, int x, int y)
 {
 	assert(item.t != NONE);
 /*	Com_Printf("Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n", csi.ods[item.t].id, container, item.t, item.a, item.m, x, y);*/
-	if (save) {
-		MSG_WriteFormat(buf, "bbbbb", item.a, container, x, y, item.rotated);
-		MSG_WriteString(buf, csi.ods[item.t].id);
-		if (item.a > NONE_AMMO)
-			MSG_WriteString(buf, csi.ods[item.m].id);
-	} else
-		MSG_WriteFormat(buf, "bbbbbbb", item.t, item.a, item.m, container, x, y, item.rotated);
+	MSG_WriteFormat(buf, "bbbbb", item.a, container, x, y, item.rotated);
+	MSG_WriteString(buf, csi.ods[item.t].id);
+	if (item.a > NONE_AMMO)
+		MSG_WriteString(buf, csi.ods[item.m].id);
 }
 
 /**
  * @brief
- * @sa CL_SendItem
- * @sa CL_ReceiveInventory
- * @sa G_SendInventory
+ * @sa CL_SaveItem
+ * @sa CL_LoadInventory
  */
-void CL_SendInventory (sizebuf_t *buf, inventory_t *i, qboolean save)
+void CL_SaveInventory (sizebuf_t *buf, inventory_t *i)
 {
 	int j, nr = 0;
 	invList_t *ic;
@@ -91,49 +84,18 @@ void CL_SendInventory (sizebuf_t *buf, inventory_t *i, qboolean save)
 		for (ic = i->c[j]; ic; ic = ic->next)
 			nr++;
 
-	Com_DPrintf("CL_SendInventory: Send %i items\n", nr);
-	MSG_WriteShort(buf, nr * 7);
+	Com_DPrintf("CL_SaveInventory: Send %i items\n", nr);
+	MSG_WriteShort(buf, nr * INV_INVENTORY_BYTES);
 	for (j = 0; j < csi.numIDs; j++)
 		for (ic = i->c[j]; ic; ic = ic->next)
-			CL_SendItem(buf, ic->item, j, ic->x, ic->y, save);
-}
-
-static void CL_NetSendItem (struct dbuffer *buf, item_t item, int container, int x, int y, qboolean save)
-{
-	assert(item.t != NONE);
-/*	Com_Printf("Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n", csi.ods[item.t].id, container, item.t, item.a, item.m, x, y);*/
-	if (save) {
-		NET_WriteFormat(buf, "bbbbb", item.a, container, x, y, item.rotated);
-		NET_WriteRawString(buf, csi.ods[item.t].id);
-		if (item.a > NONE_AMMO)
-			NET_WriteRawString(buf, csi.ods[item.m].id);
-		NET_WriteByte(buf, 0);
-	} else
-		NET_WriteFormat(buf, "bbbbbbb", item.t, item.a, item.m, container, x, y, item.rotated);
-}
-
-static void CL_NetSendInventory (struct dbuffer *buf, inventory_t *i, qboolean save)
-{
-	int j, nr = 0;
-	invList_t *ic;
-
-	for (j = 0; j < csi.numIDs; j++)
-		for (ic = i->c[j]; ic; ic = ic->next)
-			nr++;
-
-	NET_WriteShort(buf, nr * 7);
-	for (j = 0; j < csi.numIDs; j++)
-		for (ic = i->c[j]; ic; ic = ic->next)
-			CL_NetSendItem(buf, ic->item, j, ic->x, ic->y, save);
+			CL_SaveItem(buf, ic->item, j, ic->x, ic->y);
 }
 
 /**
  * @brief
- * @sa CL_SendItem
- * @sa G_WriteItem
- * @sa G_ReadItem
+ * @sa CL_SaveItem
  */
-void CL_ReceiveItem (sizebuf_t *buf, item_t *item, int *container, int *x, int *y, qboolean save)
+static void CL_LoadItem (sizebuf_t *buf, item_t *item, int *container, int *x, int *y)
 {
 	const char *itemID;
 
@@ -141,60 +103,78 @@ void CL_ReceiveItem (sizebuf_t *buf, item_t *item, int *container, int *x, int *
 	item->t = item->m = NONE;
 	item->a = NONE_AMMO;
 
-	if (save) {
-		MSG_ReadFormat(buf, "bbbbb", &item->a, container, x, y, &item->rotated);
+	MSG_ReadFormat(buf, "bbbbb", &item->a, container, x, y, &item->rotated);
+	itemID = MSG_ReadString(buf);
+	item->t = INVSH_GetItemByID(itemID);
+	if (item->a > NONE_AMMO) {
 		itemID = MSG_ReadString(buf);
-		item->t = INVSH_GetItemByID(itemID);
-		if (item->a > NONE_AMMO) {
-			itemID = MSG_ReadString(buf);
-			item->m = INVSH_GetItemByID(itemID);
-		}
-	} else
-		/* network */
-		MSG_ReadFormat(buf, "bbbbbbb", &item->t, &item->a, &item->m, container, x, y, &item->rotated);
-}
-
-void CL_NetReceiveItem (struct dbuffer *buf, item_t *item, int *container, int *x, int *y, qboolean save)
-{
-	const char *itemID;
-
-	/* reset */
-	item->t = item->m = NONE;
-	item->a = NONE_AMMO;
-
-	if (save) {
-		NET_ReadFormat(buf, "bbbbb", &item->a, container, x, y, &item->rotated);
-		itemID = NET_ReadString(buf);
-		item->t = INVSH_GetItemByID(itemID);
-		if (item->a > NONE_AMMO) {
-			itemID = NET_ReadString(buf);
-			item->m = INVSH_GetItemByID(itemID);
-		}
-	} else
-		/* network */
-		NET_ReadFormat(buf, "bbbbbbb", &item->t, &item->a, &item->m, container, x, y, &item->rotated);
+		item->m = INVSH_GetItemByID(itemID);
+	}
 }
 
 /**
  * @brief
- * @sa CL_SendInventory
- * @sa CL_ReceiveItem
+ * @sa CL_SaveInventory
+ * @sa CL_LoadItem
  * @sa Com_AddToInventory
- * @sa G_SendInventory
  */
-void CL_ReceiveInventory (sizebuf_t *buf, inventory_t *i, qboolean save)
+void CL_LoadInventory (sizebuf_t *buf, inventory_t *i)
 {
 	item_t item;
 	int container, x, y;
-	int nr = MSG_ReadShort(buf) / 7;
+	int nr = MSG_ReadShort(buf) / INV_INVENTORY_BYTES;
 
-	Com_DPrintf("CL_ReceiveInventory: Read %i items\n", nr);
+	Com_DPrintf("CL_LoadInventory: Read %i items\n", nr);
 	for (; nr-- > 0;) {
-		CL_ReceiveItem(buf, &item, &container, &x, &y, save);
+		CL_LoadItem(buf, &item, &container, &x, &y);
 		Com_AddToInventory(i, item, container, x, y);
 	}
 }
 
+/**
+ * @brief
+ * @sa G_WriteItem
+ * @sa G_ReadItem
+ */
+static void CL_NetSendItem (struct dbuffer *buf, item_t item, int container, int x, int y)
+{
+	assert(item.t != NONE);
+/*	Com_Printf("Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n", csi.ods[item.t].id, container, item.t, item.a, item.m, x, y);*/
+	NET_WriteFormat(buf, "bbbbbbb", item.t, item.a, item.m, container, x, y, item.rotated);
+}
+
+/**
+ * @brief
+ * @sa G_SendInventory
+ */
+static void CL_NetSendInventory (struct dbuffer *buf, inventory_t *i)
+{
+	int j, nr = 0;
+	invList_t *ic;
+
+	for (j = 0; j < csi.numIDs; j++)
+		for (ic = i->c[j]; ic; ic = ic->next)
+			nr++;
+
+	NET_WriteShort(buf, nr * INV_INVENTORY_BYTES);
+	for (j = 0; j < csi.numIDs; j++)
+		for (ic = i->c[j]; ic; ic = ic->next)
+			CL_NetSendItem(buf, ic->item, j, ic->x, ic->y);
+}
+
+/**
+ * @brief
+ * @sa G_WriteItem
+ * @sa G_ReadItem
+ */
+void CL_NetReceiveItem (struct dbuffer *buf, item_t *item, int *container, int *x, int *y)
+{
+	/* reset */
+	item->t = item->m = NONE;
+	item->a = NONE_AMMO;
+
+	NET_ReadFormat(buf, "bbbbbbb", &item->t, &item->a, &item->m, container, x, y, &item->rotated);
+}
 
 /**
  * @brief Test the names in team_*.ufo
@@ -1548,7 +1528,7 @@ static void CL_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr, int
 
 	/* inventory */
 	Com_DestroyInventory(chr->inv);
-	CL_ReceiveInventory(sb, chr->inv, qtrue);
+	CL_LoadInventory(sb, chr->inv);
 }
 
 /**
@@ -1756,7 +1736,7 @@ static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
 		MSG_WriteShort(buf, chr->assigned_missions);
 
 		/* inventory */
-		CL_SendInventory(buf, chr->inv, qtrue);
+		CL_SaveInventory(buf, chr->inv);
 	}
 }
 
@@ -1813,7 +1793,7 @@ void CL_SendCurTeamInfo (struct dbuffer * buf, character_t ** team, int num)
 		NET_WriteShort(buf, chr->assigned_missions);
 
 		/* inventory */
-		CL_NetSendInventory(buf, chr->inv, qfalse);
+		CL_NetSendInventory(buf, chr->inv);
 	}
 }
 
