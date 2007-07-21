@@ -2384,7 +2384,6 @@ void CL_ActorUseHeadgear_f (void)
 	invList_t* headgear;
 	int tmp_mouseSpace= mouseSpace;
 	
-	tmp_mouseSpace = mouseSpace;
 	mouseSpace = MS_WORLD;
 
 	if (!CL_CheckAction())
