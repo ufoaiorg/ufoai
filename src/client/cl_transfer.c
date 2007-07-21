@@ -30,10 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @brief Current selected base for transfer. */
 static base_t *transferBase = NULL;
 
-/** @brief Current selected aircraft. */
-/* @todo REMOVE ME */
-static aircraft_t *transferAircraft = NULL;
-
 /** @brief Current transfer type (item, employee, alien, aircraft). */
 static int transferType = -1;
 
@@ -296,7 +292,6 @@ void TR_EmptyTransferCargo (transferlist_t *transfer)
 /**
  * @brief Shows available bases in transfer menu.
  * @param[in] *aircraft Pointer to aircraft used in transfer.
- * @todo FIXME, transferAircraft
  */
 void TR_TransferAircraftMenu (aircraft_t* aircraft)
 {
@@ -304,7 +299,6 @@ void TR_TransferAircraftMenu (aircraft_t* aircraft)
 	static char transferBaseSelectPopup[512];
 
 	transferBaseSelectPopup[0] = '\0';
-	transferAircraft = aircraft;
 
 	for (i = 0; i < gd.numBases; i++) {
 		if (!gd.bases[i].founded)
@@ -511,19 +505,6 @@ static void TR_TransferListSelect_f (void)
 }
 
 /**
- * @brief Display current selected aircraft info in transfer menu
- * @sa TR_TransferAircraftListClick_f
- * @todo REMOVEME
- */
-static void TR_TransferDisplayAircraftInfo (void)
-{
-	if (!transferAircraft)
-		return;
-
-	/* @todo */
-}
-
-/**
  * @brief Callback for aircraft list click.
  * @todo REMOVEME
  */
@@ -553,10 +534,10 @@ static void TR_TransferAircraftListClick_f (void)
 	if (j < 0)
 		return;
 
+#if 0
 	transferAircraft = aircraft;
 	Cvar_Set("mn_trans_aircraft_name", transferAircraft->shortname);
-
-	TR_TransferDisplayAircraftInfo();
+#endif
 }
 
 /**
@@ -769,7 +750,6 @@ void TR_TransferCheck (void)
  * @brief Transfer menu init function.
  * @note Command to call this: trans_init
  * @note Should be called whenever the Transfer menu gets active.
- * @todo FIXME, transferAircraft
  */
 static void TR_Init_f (void)
 {
@@ -782,7 +762,6 @@ static void TR_Init_f (void)
 	if (!baseCurrent)
 		return;
 
-	transferAircraft = NULL;
 	transferBase = NULL;
 
 	baseList[0] = '\0';
@@ -806,16 +785,13 @@ static void TR_Init_f (void)
 	for (i = 0; i < baseCurrent->numAircraftInBase; i++) {
 		aircraft = &baseCurrent->aircraft[i];
 		if (aircraft->status == AIR_HOME) {
-			/* First suitable aircraft will be default selection. */
-			if (!transferAircraft)
-				transferAircraft = aircraft;
 			Q_strcat(aircraftList, aircraft->shortname, sizeof(aircraftList));
 			Q_strcat(aircraftList, "\n", sizeof(aircraftList));
 		}
 	}
 
 	/* Fill up the nodes in case of lack of aircraft (none at all or none suitable). */
-	if (!aircraft || !transferAircraft) {
+	if (!aircraft) {
 		Q_strcat(aircraftList, _("None"), sizeof(aircraftList));
 		Cvar_Set("mn_trans_aircraft_name", _("None"));
 	}
@@ -828,8 +804,10 @@ static void TR_Init_f (void)
 
 	/* Set up cvars used to display transferAircraft and transferBase. */
 	/* FIXME: Translate the shortname? */
+#if 0
 	if (transferAircraft)
 		Cvar_Set("mn_trans_aircraft_name", transferAircraft->shortname);
+#endif
 	if (transferBase)
 		Cvar_Set("mn_trans_base_name", transferBase->name);
 
