@@ -2101,9 +2101,13 @@ void CL_ActorShoot (le_t * le, pos3_t at)
 	/* @todo: Is there a better way to do this?
 	 * This type value will travel until it is checked in at least g_combat.c:G_GetShotFromType.
 	 */
-	type = IS_MODE_FIRE_RIGHT(cl.cmode)
-			? ST_RIGHT
-			: ST_LEFT;
+	if (IS_MODE_FIRE_RIGHT(cl.cmode)) {
+		type = ST_RIGHT;
+	} else if (IS_MODE_FIRE_LEFT(cl.cmode)) {
+		type = ST_LEFT;
+	} else if (IS_MODE_FIRE_HEADGEAR(cl.cmode)) {
+		type = ST_HEADGEAR;
+	}
 	MSG_Write_PA(PA_SHOOT, le->entnum, at, type, cl.cfiremode, mousePosTargettingAlign);
 }
 
@@ -2389,6 +2393,8 @@ void CL_ActorUseHeadgear_f (void)
 	if (!headgear)
 		return;
 
+	cl.cmode = M_FIRE_HEADGEAR;
+	cl.cfiremode = 0; /** @todo make this a variable somewhere? */
 	CL_ActorShoot(selActor, selActor->pos);
 }
 

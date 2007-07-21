@@ -816,7 +816,7 @@ typedef enum {
 	ST_RIGHT_REACTION,
 	ST_LEFT,
 	ST_LEFT_REACTION,
-
+	ST_HEADGEAR,
 	ST_NUM_SHOOT_TYPES,
 
 	/* 20060905 LordHavoc: added reload types */
@@ -828,6 +828,7 @@ typedef enum {
 #define IS_SHOT(x)          ((x) == ST_RIGHT || (x) == ST_LEFT)
 #define IS_SHOT_LEFT(x)     ((x) == ST_LEFT || (x) == ST_LEFT_REACTION)
 #define IS_SHOT_RIGHT(x)    ((x) == ST_RIGHT || (x) == ST_RIGHT_REACTION)
+#define IS_SHOT_HEADGEAR(x)    ((x) == ST_HEADGEAR)
 
 /* shoot flags */
 #define SF_IMPACT           1

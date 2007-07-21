@@ -59,6 +59,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define RIGHT(e) (e->i.c[gi.csi->idRight])
 #define LEFT(e)  (e->i.c[gi.csi->idLeft])
 #define EXTENSION(e)  (e->i.c[gi.csi->idExtension])
+#define HEADGEAR(e)  (e->i.c[gi.csi->idHeadgear])
 #define FLOOR(e) (e->i.c[gi.csi->idFloor])
 
 /* Actor visiblitly constants */

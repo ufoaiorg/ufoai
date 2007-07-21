@@ -996,7 +996,12 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t 
 	if (type >= ST_NUM_SHOOT_TYPES)
 		gi.error("G_GetShotFromType: unknown shoot type %i.\n", type);
 
-	if (IS_SHOT_RIGHT(type)) {
+	if (IS_SHOT_HEADGEAR(type)) {
+		if (!HEADGEAR(ent))
+			return qfalse;
+		*weapon = &HEADGEAR(ent)->item;
+		*container = gi.csi->idHeadgear;
+	}else if (IS_SHOT_RIGHT(type)) {
 		if (!RIGHT(ent))
 			return qfalse;
 		*weapon = &RIGHT(ent)->item;
