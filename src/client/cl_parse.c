@@ -1537,12 +1537,12 @@ void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
 			break;
 		}
 		Com_DPrintf("svc_print(%d): %s\n", i, s);
-					Com_Printf("%s", s);
+		Com_Printf("%s", s);
 		break;
 
 	case svc_centerprint:
 		s = NET_ReadString(msg);
-					Com_DPrintf("svc_centerprint: %s\n", s);
+		Com_DPrintf("svc_centerprint: %s\n", s);
 		SCR_CenterPrint(s);
 		break;
 

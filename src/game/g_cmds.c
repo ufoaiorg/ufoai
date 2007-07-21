@@ -91,13 +91,16 @@ static qboolean G_CheckFlood (player_t *player)
 /**
  * @brief
  */
-static void Cmd_Say_f (player_t *player, qboolean arg0, qboolean team)
+static void G_Say (player_t *player, qboolean arg0, qboolean team)
 {
 	int j;
-	const char *p;
+	const char *p, *token;
 	char text[2048];
 
 	if (gi.argc() < 2 && !arg0)
+		return;
+
+	if (G_CheckFlood(player))
 		return;
 
 	if (!team)
@@ -112,12 +115,9 @@ static void Cmd_Say_f (player_t *player, qboolean arg0, qboolean team)
 	} else {
 		p = gi.args();
 
-		if (*p == '"')
-			p++;
+		token = COM_Parse(&p);
 
-		Q_strcat(text, p, sizeof(text));
-		if (text[strlen(text)] == '"')
-			text[strlen(text)] = 0;
+		Q_strcat(text, token, sizeof(text));
 	}
 
 	/* don't let text be too long for malicious reasons */
@@ -125,9 +125,6 @@ static void Cmd_Say_f (player_t *player, qboolean arg0, qboolean team)
 		text[150] = 0;
 
 	Q_strcat(text, "\n", sizeof(text));
-
-	if (G_CheckFlood(player))
-		return;
 
 	if (dedicated->integer)
 		gi.cprintf(NULL, PRINT_CHAT, "%s", text);
@@ -205,9 +202,9 @@ void G_ClientCommand (player_t * player)
 	else if (Q_stricmp(cmd, "playerlist") == 0)
 		Cmd_PlayerList_f(player);
 	else if (Q_stricmp(cmd, "say") == 0)
-		Cmd_Say_f(player, qfalse, qfalse);
+		G_Say(player, qfalse, qfalse);
 	else if (Q_stricmp(cmd, "say_team") == 0)
-		Cmd_Say_f(player, qfalse, qtrue);
+		G_Say(player, qfalse, qtrue);
 #ifdef DEBUG
 	else if (Q_stricmp(cmd, "actorinvlist") == 0)
 		Cmd_InvList(player);
@@ -218,5 +215,5 @@ void G_ClientCommand (player_t * player)
 #endif
 	else
 		/* anything that doesn't match a command will be a chat */
-		Cmd_Say_f(player, qtrue, qfalse);
+		G_Say(player, qtrue, qfalse);
 }
