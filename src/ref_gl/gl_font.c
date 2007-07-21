@@ -523,7 +523,7 @@ int Font_DrawString (const char *fontID, int align, int x, int y, int absX, int 
 	qboolean skipline = qfalse;
 
 	fy = y;
-	texh0 = lineHeight * vid.ry;
+	texh0 = lineHeight;
 
 	/* get the font */
 	f = Font_GetFont(fontID);
@@ -577,7 +577,7 @@ int Font_DrawString (const char *fontID, int align, int x, int y, int absX, int 
 
 		/* TTF does not like empty strings... */
 		if (!strlen(buffer))
-			return returnHeight / vid.ry;
+			return returnHeight;
 
 		pos = Font_GetLineWrap(f, buffer, maxWidth - (x - absX), &w, &h);
 		fh = h;
@@ -645,7 +645,7 @@ int Font_DrawString (const char *fontID, int align, int x, int y, int absX, int 
 		x = locX;
 	} while (buffer);
 
-	return returnHeight / vid.ry;
+	return returnHeight;
 }
 
 /**
