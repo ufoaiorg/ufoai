@@ -1115,8 +1115,7 @@ static void CL_BookmarkListClick_f (void)
 
 	if (bookmark) {
 		Cvar_Set("mn_server_ip", bookmark);
-		/* XXX: I don't think this feature does anything sensible right now, fix it later */
-		/* Netchan_OutOfBandPrint(NS_CLIENT, adr, "status %i", PROTOCOL_VERSION); */
+		Cbuf_AddText("server_info;");
 	}
 }
 
@@ -1153,9 +1152,8 @@ static void CL_ServerListClick_f (void)
 		for (i = 0; i < serverListLength; i++)
 			if (serverList[i].pinged && serverList[i].serverListPos == num) {
 				/* found the server - grab the infos for this server */
-				/* XXX: I don't think this feature does anything sensible right now, fix it later */
-				/*Netchan_OutOfBandPrint(NS_CLIENT, serverList[i].adr, "status %i", PROTOCOL_VERSION);*/
 				Cvar_Set("mn_server_ip", serverList[i].node);
+				Cbuf_AddText("server_info;");
 				return;
 			}
 }

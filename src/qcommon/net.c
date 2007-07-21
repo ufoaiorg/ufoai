@@ -967,8 +967,7 @@ static struct datagram_socket *do_new_datagram_socket (const struct addrinfo *ad
 	FD_SET(sock, &read_fds);
 
 	s = malloc(sizeof(*s));
-	/*s->family = addr->ai_family;*/
-	s->family = AF_INET; /* FIXME: AF_INET6 has no broadcast support */
+	s->family = addr->ai_family;
 	s->addrlen = addr->ai_addrlen;
 	s->socket = sock;
 	s->index = index;
@@ -1032,6 +1031,13 @@ void send_datagram (struct datagram_socket *s, const char *buf, int len, struct 
 void broadcast_datagram (struct datagram_socket *s, const char *buf, int len, int port)
 {
 	if (s->family == AF_INET) {
+		struct sockaddr_in addr;
+		addr.sin_family = AF_INET;
+		addr.sin_port = htons(port);
+		addr.sin_addr.s_addr = INADDR_BROADCAST;
+		send_datagram(s, buf, len, (struct sockaddr *)&addr);
+	} else if (s->family == AF_INET6) {
+		/* @todo: I'm not sure whether this is the correct approach - but it works */
 		struct sockaddr_in addr;
 		addr.sin_family = AF_INET;
 		addr.sin_port = htons(port);
