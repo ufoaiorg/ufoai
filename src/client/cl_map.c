@@ -498,10 +498,10 @@ qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, fl
 			angles[2] = + asin((v[0] * sintheta - v[1] * costheta) / radius) * todeg;
 
 			/* Set zoom */
-			zoom = 0.5f + ccs.zoom * (float) z / radius / 3.0f;
+			zoom = 0.2f + ccs.zoom * (float) z / radius / 6.0f;
 		} else {
 			VectorSet(angles, theta, 180, 0);
-			zoom = 0.3f + ccs.zoom / 2.0f;
+			zoom = 0.2f + ccs.zoom / 6.0f;
 		}
 
 		/* Draw */
@@ -956,7 +956,7 @@ static void MAP_GetGeoscapeAngle (float *Vector, qboolean globe)
 	}
 }
 
-#define ZOOM_LIMIT	2.0f
+#define ZOOM_LIMIT	2.5f
 /**
  * @brief Switch to next model on 2D and 3D geoscape.
  * @note Set @c smoothRotation to @c qtrue to allow a smooth rotation in MAP_DrawMap.
@@ -1005,16 +1005,20 @@ void MAP_CenterOnPoint (void)
 static void MAP3D_SmoothRotate (void)
 {
 	vec3_t diff;
-	float length;
+	float length, diff_zoom;
+
+	diff_zoom = ZOOM_LIMIT - ccs.zoom;
 
 	VectorSubtract(finalGlobeAngle, ccs.angles, diff);
 	length = VectorLength(diff);
 	if (length < SMOOTHING_STEP) {
 		VectorCopy(finalGlobeAngle, ccs.angles);
 		smoothRotation = qfalse;
+		ccs.zoom = ZOOM_LIMIT;
 	} else {
 		VectorScale(diff, SMOOTHING_STEP / length, diff);
 		VectorAdd(ccs.angles, diff, ccs.angles);
+		ccs.zoom = ccs.zoom + SMOOTHING_STEP * diff_zoom / length;
 	}
 }
 
@@ -1067,7 +1071,7 @@ static void MAP_DrawBullets (const menuNode_t* node, int bulletIdx)
 	}
 }
 
-#define SELECT_CIRCLE_RADIUS	6
+#define SELECT_CIRCLE_RADIUS	1.5f + 3.0f / ccs.zoom
 
 /**
  * @brief Draws all ufos, aircraft, bases and so on to the geoscape map (2D and 3D)
@@ -1112,7 +1116,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node, qboolean globe)
 
 			/* Draw mission model (this must be after drawing 'selected circle' so that the model looks above it)*/
 			if (globe) {
-				angle = MAP_AngleOfPath(ms->realPos, northPole, NULL, NULL, globe);
+				angle = MAP_AngleOfPath(ms->realPos, northPole, NULL, NULL, globe) + 90.0f;
 				MAP_Draw3DMarkerIfVisible(node, ms->realPos, angle, "mission", globe);
 			} else
 				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "cross");
@@ -1136,7 +1140,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node, qboolean globe)
 
 		/* Draw base */
 		if (globe) {
-			angle = MAP_AngleOfPath(base->pos, northPole, NULL, NULL, globe);
+			angle = MAP_AngleOfPath(base->pos, northPole, NULL, NULL, globe) + 90.0f;
 			if (base->baseStatus == BASE_UNDER_ATTACK)
 				MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "baseattack", globe);
 			else
