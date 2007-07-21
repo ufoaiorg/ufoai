@@ -53,7 +53,6 @@ qboolean TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase)
 {
 	assert (od && srcbase && destbase);
 
-	destbase->capacities[CAP_ITEMS].max, destbase->capacities[CAP_ITEMS].cur);
 	/* Does the destination base has enough space in storage? */
 	if (destbase->capacities[CAP_ITEMS].max - destbase->capacities[CAP_ITEMS].cur < od->size) {
 		MN_Popup(_("Not enough space"), _("Destination base does not have enough\nStorage space to store this item.\n"));
@@ -76,7 +75,6 @@ qboolean TR_CheckAlien (int alienidx, base_t *srcbase, base_t *destbase)
 {
 	assert (srcbase && destbase);
 
-	destbase->capacities[CAP_ALIENS].max, destbase->capacities[CAP_ALIENS].cur);
 	/* Does the destination base has enough space in alien containment? */
 	if (destbase->capacities[CAP_ALIENS].max - destbase->capacities[CAP_ALIENS].cur < 1) {
 		MN_Popup(_("Not enough space"), _("Destination base does not have enough space\nin Alien Containment.\n"));
