@@ -338,10 +338,8 @@ void TR_TransferEnd (transferlist_t *transfer)
 	assert(destination);
 
 	TR_EmptyTransferCargo (transfer);
-	/* FIXME: why this segfaults?
-	Com_sprintf(message, sizeof(message), _("Transport mission ended, unloading cargo in base %s"), transfer->destBase);
+	Com_sprintf(message, sizeof(message), _("Transport mission ended, unloading cargo in base %s"), &gd.bases[transfer->destBase].name);
 	MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
-	*/
 }
 
 /**
@@ -394,10 +392,8 @@ static void TR_TransferStart_f (void)
 			transfer->alienAmount[i][1] = trAliensTmp[i][1];
 	}
 
-	/* FIXME: why this segfaults?
-	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to base %s"), transfer->destBase);
+	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to base %s"), &gd.bases[transfer->destBase].name);
 	MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
-	*/
 	Cbuf_AddText("mn_pop\n");
 }
 
