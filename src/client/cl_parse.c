@@ -965,7 +965,7 @@ static void CL_ActorStateChange (struct dbuffer *msg)
 
 	le = LE_Get(number);
 	if (!le || (le->type != ET_ACTOR && le->type != ET_UGV)) {
-		Com_Printf("StateChange message ignored... LE not found or not an actor\n");
+		Com_Printf("StateChange message ignored... LE not found or not an actor (number: %i, state: %i)\n", number, state);
 		return;
 	}
 

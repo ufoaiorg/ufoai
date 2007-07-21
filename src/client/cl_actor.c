@@ -2255,11 +2255,13 @@ void CL_InvCheckHands (struct dbuffer *msg)
 void CL_ActorDoMove (struct dbuffer *msg)
 {
 	le_t *le;
+	int number;
 
+	number = NET_ReadShort(msg);
 	/* get le */
-	le = LE_Get(NET_ReadShort(msg));
+	le = LE_Get(number);
 	if (!le || (le->type != ET_ACTOR && le->type != ET_UGV)) {
-		Com_Printf("Can't move, LE doesn't exist or is not an actor\n");
+		Com_Printf("Can't move, LE doesn't exist or is not an actor (number: %i)\n", number);
 		return;
 	}
 
