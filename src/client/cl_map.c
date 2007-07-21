@@ -1269,7 +1269,8 @@ void MAP_DrawMap (const menuNode_t* node, qboolean map3D)
 	if (map3D || cl_3dmap->integer) {
 		if (!geobackground)
 			geobackground = MN_GetNodeFromCurrentMenu("geobackground");
-		/* @todo change texh, texl of geobackground with zoomlevel */
+		Vector2Set(geobackground->texl, 511 - 512 / ccs.zoom, 387 - 384 / ccs.zoom);
+		Vector2Set(geobackground->texh, 512 + 512 / ccs.zoom, 387 + 384 / ccs.zoom);
 		if (smoothRotation)
 			MAP3D_SmoothRotate();
 		re.Draw3DGlobe(node->pos[0], node->pos[1], node->size[0], node->size[1],
