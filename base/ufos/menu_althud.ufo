@@ -643,7 +643,7 @@ menu althud
 		pos		"930 497"
 		texl	"108 37"
 		texh	"134 70"
-		click	{ cmd useheadgear; }
+		click	{ cmd "useheadgear;" }
 	}
 
 	pic bt_reloadright
