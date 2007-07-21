@@ -119,7 +119,6 @@ static void TR_TransferSelect_f (void)
 	int type;
 	int i, cnt = 0;
 	char str[128];
-	transferlist_t *transferidx = NULL;
 
 	if (!transferBase)
 		return;
@@ -297,7 +296,7 @@ void TR_EmptyTransferCargo (transferlist_t *transfer)
 		for (i = 0; i < numTeamDesc; i++) {
 			if (transfer->alienAmount[i][0] > 0)
 				destination->alienscont[i].amount_alive += transfer->alienAmount[i][0];
-			if (transfer->alienAmount[i][1] > 0) {
+			if (transfer->alienAmount[i][1] > 0)
 				destination->alienscont[i].amount_dead += transfer->alienAmount[i][1];
 		}
 	}
