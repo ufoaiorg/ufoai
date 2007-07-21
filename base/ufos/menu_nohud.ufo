@@ -52,6 +52,9 @@ menu nohud
 	confunc deselreaction { cmd deselreactions;deselreactiona; }
 	confunc disreaction { cmd disreactions;disreactiona; }
 
+	confunc deselheadgear { cmd "hud_deselheadgear;althud_deselheadgear;" }
+	confunc disheadgear { cmd "hud_disheadgear;althud_disheadgear;" }
+
 	confunc startround { cmd startrounds;startrounda; }
 	confunc endround { cmd endrounds;endrounda; }
 }
