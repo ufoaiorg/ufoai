@@ -104,7 +104,7 @@ typedef enum {
 	M_MOVE,		/**< We are currently in move-mode (destination selection). */
 	M_FIRE_R,	/**< We are currently in fire-mode for the right weapon (target selection). */
 	M_FIRE_L,	/**< We are currently in fire-mode for the left weapon (target selection). */
-	M_FIRE_HEADGEAR, /**<We'll fire hedgear item shortly. */
+	M_FIRE_HEADGEAR, /**< We'll fire headgear item shortly. */
 	M_PEND_MOVE,	/**< A move target has been selected, we are waiting for player-confirmation. */
 	M_PEND_FIRE_R,	/**< A fire target (right weapon) has been selected, we are waiting for player-confirmation. */
 	M_PEND_FIRE_L	/**< A fire target (left weapon) has been selected, we are waiting for player-confirmation. */

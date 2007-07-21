@@ -80,7 +80,7 @@ void AL_FillInContainment (int baseidx)
 /**
  * @brief Type of alien to its name.
  * @param[in] type
- * @return name
+ * @return name (untranslated)
  */
 const char *AL_AlienTypeToName (int teamDescIdx)
 {
