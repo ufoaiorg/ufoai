@@ -50,6 +50,15 @@ menu inventory
 		size "160 25"
 	}
 
+	string s_headgear
+	{
+		pos "444 172"
+		align uc
+		string	"_Headgear"
+		color "0 0.6 0 1"
+		size "160 25"
+	}
+
 	string s_holster
 	{
 		pos "676 341"
@@ -95,7 +104,7 @@ menu inventory
 	container backpack	{ pos "613 155" }
 	container belt		{ pos "310 372" }
 	container holster	{ pos "639 369" }
-	container headgear	{ pos "289 54" }
+	container headgear	{ pos "419 203" }
 
 	// ==================
 	// model

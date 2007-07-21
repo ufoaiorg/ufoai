@@ -905,25 +905,6 @@ menu team
 		color	"0.5 0.5 0.5 1"
 	}
 
-/*	model aircraft_top
-	{
-		md2		"*cvar mn_aircraft_model_top"
-		origin	"690 640 0"
-		angles	"-20 -40 120"
-		scale	"1.1 1.1 1.1"
-		color	"0.5 0.5 0.5 1"
-	}
-
-	model aircraft_glass
-	{
-		md2		"*cvar mn_aircraft_model_glass"
-		origin	"690 640 0"
-		angles	"-20 -40 120"
-		scale	"1.1 1.1 1.1"
-		color	"0.5 0.5 0.5 1"
-	}
-*/
-
 	string team_members
 	{
 		string	"_Team Members:"
@@ -1021,6 +1002,15 @@ menu equipment
 		pos "610 76"
 		align uc
 		string	"_Extension"
+		color "0 0.6 0 1"
+		size "160 25"
+	}
+
+	string s_headgear
+	{
+		pos "700 76"
+		align uc
+		string	"_Headgear"
 		color "0 0.6 0 1"
 		size "160 25"
 	}
@@ -1697,7 +1687,7 @@ menu equipment
 	container belt		{ pos "569 273" }
 	container holster	{ pos "898 270" }
 	container equip	{ pos "397 370" }
-	container headgear	{ pos "548 54" }
+	container headgear	{ pos "678 104" }
 
 	// ==================
 	// additional stuff
