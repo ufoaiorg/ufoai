@@ -912,6 +912,8 @@ static void CL_Select_f (void)
 		mode = SELECT_MODE_EQUIP;
 	else if (!Q_strcmp(command, "team"))
 		mode = SELECT_MODE_TEAM;
+	else
+		return;
 
 	switch (mode) {
 	case SELECT_MODE_SOLDIER:

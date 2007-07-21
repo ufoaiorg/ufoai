@@ -2113,7 +2113,9 @@ void CL_ActorShoot (le_t * le, pos3_t at)
 		type = ST_LEFT;
 	} else if (IS_MODE_FIRE_HEADGEAR(cl.cmode)) {
 		type = ST_HEADGEAR;
-	}
+	} else
+		return;
+
 	MSG_Write_PA(PA_SHOOT, le->entnum, at, type, cl.cfiremode, mousePosTargettingAlign);
 }
 

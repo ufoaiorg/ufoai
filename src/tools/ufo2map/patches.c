@@ -38,7 +38,7 @@ TEXTURE LIGHT VALUES
  */
 void CalcTextureReflectivity (void)
 {
-	int i, j, k, texels, texel;
+	int i, j, k, texels = 0, texel;
 
 	byte *palette = NULL;
 	char path[1024];

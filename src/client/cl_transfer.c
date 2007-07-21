@@ -341,7 +341,7 @@ void TR_TransferEnd (transferlist_t *transfer)
 static void TR_TransferStart_f (void)
 {
 	int i;
-	transferlist_t *transfer;
+	transferlist_t *transfer = NULL;
 	char message[256];
 
 	if (transferType < 0) {
@@ -363,6 +363,9 @@ static void TR_TransferStart_f (void)
 			break;
 		}
  	}
+
+	if (!transfer)
+		return;
 
 	/* Initialize transfer. */
 	transfer->event.day = ccs.date.day + 1;	/* @todo: instead of +1 day calculate distance */
