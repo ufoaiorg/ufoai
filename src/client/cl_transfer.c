@@ -42,6 +42,9 @@ static int trItemsTmp[MAX_OBJDEFS];
 /** @brief Current alien cargo. [0] alive [1] dead */
 static int trAliensTmp[MAX_TEAMDEFS][2];
 
+/** @brief Current personel cargo. */
+static int trEmployeesTmp[MAX_EMPL][MAX_EMPLOYEES];
+
 /**
  * @brief Checks condition for item transfer.
  * @param[in] *od Pointer to object definition.
@@ -91,20 +94,18 @@ qboolean TR_CheckAlien (int alienidx, base_t *srcbase, base_t *destbase)
  */
 static void TR_CargoList (void)
 {
-	int i, cnt = 0;
+	int i, cnt = 0, empltype;
+	int trempl[MAX_EMPL];
+	employee_t *employee;
 	static char cargoList[1024];
 	char str[128];
 
 	cargoList[0] = '\0';
 	memset(&cargo, 0, sizeof(cargo));
 
-#if 0
-	if (!transferAircraft) {
-		/* Needed to clear cargo list. */
-		menuText[TEXT_CARGO_LIST] = cargoList;
-		return;
-	}
-#endif
+	menuText[TEXT_CARGO_LIST] = cargoList;
+	for (i = 0; i < MAX_EMPL; i++)
+		trempl[i] = 0;
 
 	if (!baseCurrent)
 		return;
@@ -112,7 +113,7 @@ static void TR_CargoList (void)
 	/* Show items. */
 	for (i = 0; i < csi.numODs; i++) {
 		if (trItemsTmp[i] > 0) {
-			Com_sprintf(str, sizeof(str), _("%s (%i on board)\n"),
+			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)\n"),
 			csi.ods[i].name, trItemsTmp[i]);
 			Q_strcat(cargoList, str, sizeof(cargoList));
 			cargo[cnt].type = 1;
@@ -120,12 +121,38 @@ static void TR_CargoList (void)
 			cnt++;
 		}
 	}
+
 	/* Show employees. */
-	/*    @todo     */
+	for (empltype = 0; empltype < MAX_EMPL; empltype++) {
+		for (i = 0; i < gd.numEmployees[empltype]; i++) {
+			if (trEmployeesTmp[empltype][i] > -1) {
+				if (empltype == EMPL_SOLDIER) {
+					employee = &gd.employees[empltype][i];		
+					Com_sprintf(str, sizeof(str), _("Soldier %s %s\n"), gd.ranks[employee->chr.rank].shortname, employee->chr.name);
+					Q_strcat(cargoList, str, sizeof(cargoList));
+					cargo[cnt].type = 2;
+					cargo[cnt].itemidx = employee->idx;
+					cnt++;
+				}
+				trempl[empltype]++;
+			}
+		}	
+	}
+	for (empltype = 0; empltype < MAX_EMPL; empltype++) {
+		if (empltype == EMPL_SOLDIER)
+			continue;
+		if (trempl[empltype] > 0) {
+			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)\n"), E_GetEmployeeString(empltype), trempl[empltype]);
+			Q_strcat(cargoList, str, sizeof(cargoList));
+			cargo[cnt].type = 2;
+			cnt++;
+		}		
+	}
+
 	/* Show aliens. */
 	for (i = 0; i < numTeamDesc; i++) {
 		if (trAliensTmp[i][1] > 0) {
-			Com_sprintf(str, sizeof(str), _("Corpse of %s (%i on board)\n"),
+			Com_sprintf(str, sizeof(str), _("Corpse of %s (%i for transfer)\n"),
 			_(AL_AlienTypeToName(i)), trAliensTmp[i][1]);
 			Q_strcat(cargoList, str, sizeof(cargoList));
 			cargo[cnt].type = 3;
@@ -135,7 +162,7 @@ static void TR_CargoList (void)
 	}
 	for (i = 0; i < numTeamDesc; i++) {
 		if (trAliensTmp[i][0]) {
-			Com_sprintf(str, sizeof(str), _("%s (%i on board)\n"),
+			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)\n"),
 			_(AL_AlienTypeToName(i)), trAliensTmp[i][0]);
 			Q_strcat(cargoList, str, sizeof(cargoList));
 			cargo[cnt].type = 4;
@@ -156,8 +183,10 @@ static void TR_CargoList (void)
 static void TR_TransferSelect_f (void)
 {
 	static char transferList[1024];
-	int type;
-	int i, cnt = 0;
+	int type, empltype;
+	int numempl[MAX_EMPL], trempl[MAX_EMPL];
+	int i, j, cnt = 0;
+	employee_t* employee = NULL;
 	char str[128];
 
 	if (!transferBase)
@@ -170,6 +199,15 @@ static void TR_TransferSelect_f (void)
 
 	transferList[0] = '\0';
 
+	/* Reset and fill temp employees arrays. */
+	for (i = 0; i < MAX_EMPL; i++) {
+		trempl[i] = numempl[i] = 0;
+		for (j = 0; j < MAX_EMPLOYEES; j++) {
+			if (trEmployeesTmp[i][j] > -1)
+				trempl[i]++;
+		}
+	}
+
 	switch (type) { /**< 0 - items, 1 - employees, 2 - aliens, 3 - aircrafts */
 	case 0:		/**< items */
 		/* @todo: check building status here as well as limits. */
@@ -177,7 +215,7 @@ static void TR_TransferSelect_f (void)
 			for (i = 0; i < csi.numODs; i++)
 				if (baseCurrent->storage.num[i]) {
 					if (trItemsTmp[i] > 0)
-						Com_sprintf(str, sizeof(str), _("%s (%i on board, %i left)\n"), csi.ods[i].name, trItemsTmp[i], baseCurrent->storage.num[i]);
+						Com_sprintf(str, sizeof(str), _("%s (%i for transfer, %i left)\n"), csi.ods[i].name, trItemsTmp[i], baseCurrent->storage.num[i]);
 					else
 						Com_sprintf(str, sizeof(str), _("%s (%i available)\n"), csi.ods[i].name, baseCurrent->storage.num[i]);
 					Q_strcat(transferList, str, sizeof(transferList));
@@ -192,9 +230,37 @@ static void TR_TransferSelect_f (void)
 		break;
 	case 1:		/**< humans */
 		/* @todo: check building status here as well as limits. */
-		if (transferBase->hasQuarters)
-			Q_strcat(transferList, "@todo: employees", sizeof(transferList));
-		else
+		if (transferBase->hasQuarters) {
+			for (empltype = 0; empltype < MAX_EMPL; empltype++) {
+				for (i = 0; i < gd.numEmployees[empltype]; i++) {
+					employee = &gd.employees[empltype][i];
+					if (!E_IsInBase(employee, baseCurrent))
+						continue;
+					if (trEmployeesTmp[empltype][i] > -1)	/* Already on transfer list. */
+							continue;
+					if (empltype == EMPL_SOLDIER) {
+						Com_sprintf(str, sizeof(str), _("Soldier %s %s\n"), gd.ranks[employee->chr.rank].shortname, employee->chr.name);
+						Q_strcat(transferList, str, sizeof(transferList));
+						cnt++;
+					}
+					numempl[empltype]++;
+				}
+			}
+			for (i = 0; i < MAX_EMPL; i++) {
+				if (i == EMPL_SOLDIER)
+					continue;
+				if ((trempl[i] > 0) && (numempl[i] > 0))
+					Com_sprintf(str, sizeof(str), _("%s (%i for transfer, %i left)\n"), E_GetEmployeeString(i), trempl[i], numempl[i]);
+				else if (numempl[i] > 0)
+					Com_sprintf(str, sizeof(str), _("%s (%i available)\n"), E_GetEmployeeString(i), numempl[i]);
+				if (numempl[i] > 0) {	
+					Q_strcat(transferList, str, sizeof(transferList));
+					cnt++;
+				}
+			}
+			if (!cnt)
+				Q_strncpyz(transferList, _("Living Quarters empty.\n"), sizeof(transferList));
+		} else
 			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have quarters"), sizeof(transferList));
 		break;
 	case 2:		/**< aliens */
@@ -203,7 +269,7 @@ static void TR_TransferSelect_f (void)
 			for (i = 0; i < numTeamDesc; i++) {
 				if (baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_dead > 0) {
 					if (trAliensTmp[i][1] > 0)
-						Com_sprintf(str, sizeof(str), _("Corpse of %s (%i on board, %i left)\n"),
+						Com_sprintf(str, sizeof(str), _("Corpse of %s (%i for transfer, %i left)\n"),
 						_(AL_AlienTypeToName(i)), trAliensTmp[i][1],
 						baseCurrent->alienscont[i].amount_dead);
 					else
@@ -214,7 +280,7 @@ static void TR_TransferSelect_f (void)
 				}
 				if (baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_alive > 0) {
 					if (trAliensTmp[i][0] > 0)
-						Com_sprintf(str, sizeof(str), _("Alive %s (%i on board, %i left)\n"),
+						Com_sprintf(str, sizeof(str), _("Alive %s (%i for transfer, %i left)\n"),
 						_(AL_AlienTypeToName(i)), trAliensTmp[i][0],
 						baseCurrent->alienscont[i].amount_alive);
 					else
@@ -277,6 +343,7 @@ static void TR_TransferListClear_f (void)
 	/* Clear temporary cargo arrays. */
 	memset(trItemsTmp, 0, sizeof(trItemsTmp));
 	memset(trAliensTmp, 0, sizeof(trAliensTmp));
+	memset(trEmployeesTmp, 0, sizeof(trEmployeesTmp));
 	/* Update cargo list and items list. */
 	TR_CargoList();
  	TR_TransferSelect_f();
@@ -429,6 +496,7 @@ static void TR_TransferStart_f (void)
 	/* Clear temporary cargo arrays. */
 	memset(trItemsTmp, 0, sizeof(trItemsTmp));
 	memset(trAliensTmp, 0, sizeof(trAliensTmp));
+	memset(trEmployeesTmp, 0, sizeof(trEmployeesTmp));
 
 	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to base %s"), gd.bases[transfer->destBase].name);
 	MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
@@ -442,8 +510,10 @@ static void TR_TransferStart_f (void)
  */
 static void TR_TransferListSelect_f (void)
 {
-	int num, cnt = 0, i;
+	int num, cnt = 0, i, empltype;
 	objDef_t *od;
+	employee_t* employee;
+	qboolean added = qfalse;
 
 	if (Cmd_Argc() < 2)
 		return;
@@ -498,7 +568,39 @@ static void TR_TransferListSelect_f (void)
 			return;
 		}
 #endif
-		/* @todo: employees here. */
+		for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
+			employee = &gd.employees[EMPL_SOLDIER][i];
+			if (!E_IsInBase(employee, baseCurrent))
+				continue;
+			if (trEmployeesTmp[EMPL_SOLDIER][i] > -1)
+				continue;
+			if (cnt == num) {
+				trEmployeesTmp[EMPL_SOLDIER][employee->idx] = employee->idx;
+				added = qtrue;
+				break;
+			}
+			cnt++;
+		}
+		if (added) /* We already added a soldier, so break. */
+			break;
+		for (empltype = 0; empltype < MAX_EMPL; empltype++) {
+			if (empltype == EMPL_SOLDIER)
+				continue;
+			if (E_CountHired(baseCurrent, empltype) < 1)
+				continue;
+			if (cnt == num) {
+				for (i = 0; i < gd.numEmployees[empltype]; i++) {
+					employee = &gd.employees[empltype][i];
+					if (!E_IsInBase(employee, baseCurrent))
+							continue;
+					if (trEmployeesTmp[empltype][employee->idx] > -1)	/* Already on transfer list. */
+						continue;
+					trEmployeesTmp[empltype][employee->idx] = employee->idx;
+					break;
+				}
+			}
+			cnt++;
+		}
 		break;
 	case 2:		/**< aliens */
 #if 0
@@ -704,7 +806,8 @@ static void TR_TransferBaseSelect_f (void)
  */
 static void TR_CargoListSelect_f (void)
 {
-	int num, cnt = 0, entries = 0, i;
+	int num, cnt = 0, entries = 0, i, j;
+	qboolean removed = qfalse;
 
 	if (Cmd_Argc() < 2)
 		return;
@@ -728,7 +831,43 @@ static void TR_CargoListSelect_f (void)
 		}
 		break;
 	case 2:		/**< employees */
-		/*   @todo    */
+		for (i = 0; i < MAX_CARGO; i++) {
+			/* Count previous types on the list. */
+			if (cargo[i].type == 1)
+				entries++;
+		}
+		/* Start increasing cnt from the amount of previous entries. */
+		cnt = entries;
+		for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
+			if (trEmployeesTmp[EMPL_SOLDIER][i] > -1) {
+				if (cnt == num) {
+					trEmployeesTmp[EMPL_SOLDIER][i] = -1;
+					removed = qtrue;
+					break;
+				}
+				cnt++;
+			}
+		}
+		if (removed)	/* We already removed soldier, break here. */
+			break;
+		Com_Printf("cnt: %i, num: %i\n", cnt, num);
+		for (i = 0; i < MAX_EMPL; i++) {
+			if ((E_CountHired(baseCurrent, i) < 1) || (i == EMPL_SOLDIER))
+				continue;
+			if (cnt == num) {
+				for (j = 0; j < gd.numEmployees[i]; j++) {
+					if (trEmployeesTmp[i][j] > -1) {
+						trEmployeesTmp[i][j] = -1;
+						removed = qtrue;
+						break;
+					} else
+						continue;
+				}
+			}
+			if (removed)	/* We already removed employee, break here. */
+				break;
+			cnt++;
+		}
 		break;
 	case 3:		/**< alien bodies */
 		for (i = 0; i < MAX_CARGO; i++) {
@@ -811,7 +950,7 @@ static void TR_Init_f (void)
 {
 	static char baseList[1024];
 	static char aircraftList[1024];
-	int i;
+	int i, j;
 	base_t* base = NULL;
 	aircraft_t* aircraft = NULL;
 
@@ -832,6 +971,12 @@ static void TR_Init_f (void)
 			continue;
 		Q_strcat(baseList, base->name, sizeof(baseList));
 		Q_strcat(baseList, "\n", sizeof(baseList));
+	}
+
+	/* Clear employees temp array. */
+	for (i = 0; i < MAX_EMPL; i++) {
+		for (j = 0; j < MAX_EMPLOYEES; j++)
+			trEmployeesTmp[i][j] = -1;
 	}
 
 	/* Select first available item. */
