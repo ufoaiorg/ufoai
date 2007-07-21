@@ -142,15 +142,11 @@ int Com_CheckToInventory (const inventory_t * const i, const int item, const int
 		if (!CSI->ids[container].armor && !CSI->ids[container].all) {
 			return 0;
 		}
-	} else if (CSI->ods[item].extension) {
-		if (!CSI->ids[container].extension && !CSI->ids[container].all) {
-			return 0;
-		}
+	} else if (!CSI->ods[item].extension && CSI->ids[container].extension) {
+		return 0;
 	} else if (!CSI->ods[item].headgear && CSI->ids[container].headgear) {
 		return 0;
 	} else if (CSI->ids[container].armor) {
-		return 0;
-	} else if (CSI->ids[container].extension) {
 		return 0;
 	}
 
