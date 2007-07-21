@@ -1134,7 +1134,7 @@ static void CL_RefreshWeaponButtons (int time)
 		else
 			SetWeaponButton(BT_STAND, BT_STATE_DESELECT);
 	}
-	
+
 	/* headgear button (nearly the same code as for weapon firing buttons below). */
 	/** @todo Make a generic function out of this? */
 	if (headgear) {
@@ -1426,7 +1426,13 @@ void CL_ActorUpdateCVars (void)
 			Cvar_Set("mn_lweapon", csi.ods[LEFT(selActor)->item.t].model);
 
 		/* get weapon */
-		selWeapon = IS_MODE_FIRE_LEFT(cl.cmode) ? LEFT(selActor) : RIGHT(selActor);
+		if (IS_MODE_FIRE_HEADGEAR(cl.cmode)) {
+			selWeapon = HEADGEAR(selActor);
+		} else if (IS_MODE_FIRE_LEFT(cl.cmode)) {
+			selWeapon = LEFT(selActor);
+		} else {
+			selWeapon = RIGHT(selActor);
+		}
 
 		if (!selWeapon && RIGHT(selActor) && csi.ods[RIGHT(selActor)->item.t].holdtwohanded)
 			selWeapon = RIGHT(selActor);
@@ -2383,7 +2389,7 @@ void CL_ActorUseHeadgear_f (void)
 {
 	invList_t* headgear;
 	int tmp_mouseSpace= mouseSpace;
-	
+
 	mouseSpace = MS_WORLD;
 
 	if (!CL_CheckAction())
@@ -2396,7 +2402,7 @@ void CL_ActorUseHeadgear_f (void)
 	cl.cmode = M_FIRE_HEADGEAR;
 	cl.cfiremode = 0; /** @todo make this a variable somewhere? */
 	CL_ActorShoot(selActor, selActor->pos);
-	
+
 	mouseSpace = tmp_mouseSpace;
 }
 
@@ -2545,6 +2551,10 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 		re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
 		re.AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
 	}
+
+	/** @todo I'm not sure this is supposed to be _here_ but I could not find a better place yet. */
+	if (IS_MODE_FIRE_HEADGEAR(cl.cmode))
+		cl.cmode = M_MOVE;
 }
 
 
