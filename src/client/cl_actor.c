@@ -2208,12 +2208,12 @@ void CL_InvCheckHands (struct dbuffer *msg)
 	NET_ReadFormat(msg, ev_format[EV_INV_HANDS_CHANGED], &entnum, &hand);
 
 	if ((entnum < 0) || (hand < 0)) {
-		Com_Printf("CL_InvCheckHands: entnum or hand not sent/received correctly.\n");
+		Com_Printf("CL_InvCheckHands: entnum or hand not sent/received correctly. (number: %i)\n", entnum);
 	}
 
 	le = LE_Get(entnum);
 	if (!le) {
-		Com_Printf("CL_InvCheckHands: LE doesn't exist.\n");
+		Com_Printf("CL_InvCheckHands: LE doesn't exist. (number: %i)\n", entnum);
 		return;
 	}
 
@@ -2337,7 +2337,7 @@ void CL_ActorDoTurn (struct dbuffer *msg)
 	/* get le */
 	le = LE_Get(entnum);
 	if (!le || (le->type != ET_ACTOR && le->type != ET_UGV)) {
-		Com_Printf("Can't turn, LE doesn't exist or is not an actor\n");
+		Com_Printf("Can't turn, LE doesn't exist or is not an actor (number: %i)\n", entnum);
 		return;
 	}
 
