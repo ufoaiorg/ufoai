@@ -959,14 +959,14 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 			/* Tell the client to add the item to the container. */
 			gi.AddEvent(G_VisToPM(floor->visflags), EV_INV_ADD);
 			gi.WriteShort(floor->number);
-			gi.WriteShort(6);
+			gi.WriteShort(INV_INVENTORY_BYTES);
 			G_WriteItem(item, to, tx, ty);
 		}
 	} else {
 		/* Tell the client to add the item to the container. */
 		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_ADD);
 		gi.WriteShort(num);
-		gi.WriteShort(6);
+		gi.WriteShort(INV_INVENTORY_BYTES);
 		G_WriteItem(item, to, tx, ty);
 	}
 
@@ -996,7 +996,7 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 		if (to == gi.csi->idRight || to == gi.csi->idLeft) {
 			gi.AddEvent(mask, EV_INV_ADD);
 			gi.WriteShort(num);
-			gi.WriteShort(6);
+			gi.WriteShort(INV_INVENTORY_BYTES);
 			G_WriteItem(item, to, tx, ty);
 		}
 	}
