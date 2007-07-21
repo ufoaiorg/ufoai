@@ -2392,6 +2392,9 @@ void CL_ActorUseHeadgear_f (void)
 	invList_t* headgear;
 	int tmp_mouseSpace= mouseSpace;
 
+	/* this can be executed by a click on a hud button
+	 * but we need MS_WORLD mouse space to let the shooting
+	 * function work */
 	mouseSpace = MS_WORLD;
 
 	if (!CL_CheckAction())
@@ -2406,6 +2409,7 @@ void CL_ActorUseHeadgear_f (void)
 	CL_ActorShoot(selActor, selActor->pos);
 	cl.cmode = M_MOVE;
 
+	/* restore old mouse space */
 	mouseSpace = tmp_mouseSpace;
 }
 
