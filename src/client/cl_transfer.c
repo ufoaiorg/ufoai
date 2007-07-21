@@ -213,42 +213,33 @@ static void TR_TransferSelect_f (void)
 }
 
 /**
- * @brief Unload everything from aircraft storage back to base storage.
- * @note This is being taken as a normal transfer mission, but we are
- * @note just unloading the cargo in homebase, without doing anything.
- * @todo FIXME transferidx
+ * @brief Unload everything from transfer cargo back to base.
+ * @note This is being executed by pressing Unload button in menu.
  */
-static void TR_TransferEmptyAircraftStorage_f (void)
+static void TR_TransferListClear_f (void)
 {
-#if 0
-	transferlist_t *transferidx = NULL;
-#endif
+	int i;
 
 	if (!baseCurrent)
 		return;
-#if 0
-	transferidx = &gd.alltransfers[transferAircraft->idx];
 
-	/* We can't unload if we are not in our homebase. */
-	if (transferAircraft->status != AIR_HOME) {
-		MN_Popup(_("Notice"), _("Can't unload while not at a base"));
-		return;
+	for (i = 0; i < csi.numODs; i++) {	/* Return items. */
+		if (trItemsTmp[i] > 0)
+			B_UpdateStorageAndCapacity (baseCurrent, i, trItemsTmp[i], qfalse);
+ 	}
+	for (i = 0; i < numTeamDesc; i++) {	/* Return aliens. */
+		if (trAliensTmp[i][0] > 0)
+			baseCurrent->alienscont[i].amount_alive += trAliensTmp[i][0];
+		if (trAliensTmp[i][1] > 0)
+			baseCurrent->alienscont[i].amount_dead += trAliensTmp[i][1];
 	}
 
-	/* Change destination in transferidx to current base. */
-	transferidx->destBase = baseCurrent->idx;
-	/* To pass the sanity check in TR_TransferEnd(). */
-	transferAircraft->status = AIR_TRANSPORT;
-	/* Now unload the cargo. */
-	TR_TransferEnd(transferAircraft);
-	transferAircraft->status = AIR_HOME;
-
-	/* clear the command buffer
-	 * needed to erase all TR_TransferListSelect_f
-	 * paramaters */
-	Cmd_BufClear(); /* That should not be necessary - we are emptying gd.alltransfers[idx] in TR_EmptyTransferCargo */
-	TR_TransferSelect_f();
-#endif
+	/* Clear temporary cargo arrays. */
+	memset(trItemsTmp, 0, sizeof(trItemsTmp));
+	memset(trAliensTmp, 0, sizeof(trAliensTmp));
+	/* Update cargo list and items list. */
+	TR_CargoList();
+ 	TR_TransferSelect_f();
 }
 
 /**
@@ -392,6 +383,10 @@ static void TR_TransferStart_f (void)
 			transfer->alienAmount[i][1] = trAliensTmp[i][1];
 	}
 
+	/* Clear temporary cargo arrays. */
+	memset(trItemsTmp, 0, sizeof(trItemsTmp));
+	memset(trAliensTmp, 0, sizeof(trAliensTmp));
+
 	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to base %s"), gd.bases[transfer->destBase].name);
 	MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
 	Cbuf_AddText("mn_pop\n");
@@ -437,8 +432,7 @@ static void TR_TransferListSelect_f (void)
 			if (baseCurrent->storage.num[i]) {
 				if (cnt == num) {
 					trItemsTmp[i]++;
-					/* Remove it from base storage. */
-					baseCurrent->storage.num[i]--;
+					B_UpdateStorageAndCapacity (baseCurrent, i, -1, qfalse);
 					break;
 				}
 				cnt++;
@@ -850,7 +844,7 @@ void TR_Reset (void)
 	Cmd_AddCommand("trans_init", TR_Init_f, "Init function for Transfer menu");
 	Cmd_AddCommand("trans_start", TR_TransferStart_f, "Starts the tranfer");
 	Cmd_AddCommand("trans_select", TR_TransferSelect_f, "Switch between transfer types (employees, techs, items)");
-	Cmd_AddCommand("trans_emptyairstorage", TR_TransferEmptyAircraftStorage_f, "Unload everything from aircraft storage back to base storage");
+	Cmd_AddCommand("trans_emptyairstorage", TR_TransferListClear_f, "Unload everything from transfer cargo back to base");
 	Cmd_AddCommand("trans_baselist_click", TR_TransferBaseSelectPopup_f, "Callback for transfer base list popup");
 	Cmd_AddCommand("trans_bases_click", TR_TransferBaseSelect_f, "Callback for base list node click");
 	Cmd_AddCommand("trans_list_click", TR_TransferListSelect_f, "Callback for transfer list node click");
