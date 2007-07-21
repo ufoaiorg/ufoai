@@ -1001,7 +1001,7 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t 
 			return qfalse;
 		*weapon = &HEADGEAR(ent)->item;
 		*container = gi.csi->idHeadgear;
-	}else if (IS_SHOT_RIGHT(type)) {
+	} else if (IS_SHOT_RIGHT(type)) {
 		if (!RIGHT(ent))
 			return qfalse;
 		*weapon = &RIGHT(ent)->item;
