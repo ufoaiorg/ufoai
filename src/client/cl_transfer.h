@@ -38,6 +38,7 @@ typedef enum {
 typedef struct transferlist_s {
 	transferType_t type;		/**< Type of transfer to determine what to do with load/unload. */
 	int itemAmount[MAX_OBJDEFS];	/**< Amount of given item [csi.ods[idx]]. */
+	int alienAmount[MAX_TEAMDEFS][2];	/**< Alien cargo, [0] alive, [1] dead. */
 	int alienLiveAmount[MAX_CARGO];	/**< Alive alien amount of given alien [aliensCont_t->idx]. */
 	int alienBodyAmount[MAX_CARGO];	/**< Alien body amount of given alien [aliensCont_t->idx]. */
 	int employees[MAX_EMPLOYEES];	/**< Employee index. */

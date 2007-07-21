@@ -43,69 +43,65 @@ static transferCargo_t cargo[MAX_CARGO];
 /** @brief Current item cargo. */
 static int trItemsTmp[MAX_OBJDEFS];
 
+/** @brief Current alien cargo. [0] alive [1] dead */
+static int trAliensTmp[MAX_TEAMDEFS][2];
+
 /**
  * @brief Display cargo list.
- * @todo FIXME transferAircraft
  */
 static void TR_CargoList (void)
 {
 	int i, cnt = 0;
 	static char cargoList[1024];
-	transferlist_t *transferidx = NULL;
 	char str[128];
 
 	cargoList[0] = '\0';
 	memset(&cargo, 0, sizeof(cargo));
 
+#if 0
 	if (!transferAircraft) {
 		/* Needed to clear cargo list. */
 		menuText[TEXT_CARGO_LIST] = cargoList;
 		return;
 	}
+#endif
 
 	if (!baseCurrent)
 		return;
 
-	/* Check the transfer index in gd.alltransfers array. */
-	transferidx = &gd.alltransfers[transferAircraft->idx];
-
-	if (transferidx->type == TR_STUFF) {
-		/* Show items. */
-		for (i = 0; i < csi.numODs; i++) {
-			if (transferidx->itemAmount[i] > 0) {
-				Com_sprintf(str, sizeof(str), _("%s (%i on board)\n"),
-				csi.ods[i].name, transferidx->itemAmount[i]);
-				Q_strcat(cargoList, str, sizeof(cargoList));
-				cargo[cnt].type = 1;
-				cargo[cnt].itemidx = i;
-				cnt++;
-			}
+	/* Show items. */
+	for (i = 0; i < csi.numODs; i++) {
+		if (trItemsTmp[i] > 0) {
+			Com_sprintf(str, sizeof(str), _("%s (%i on board)\n"),
+			csi.ods[i].name, trItemsTmp[i]);
+			Q_strcat(cargoList, str, sizeof(cargoList));
+			cargo[cnt].type = 1;
+			cargo[cnt].itemidx = i;
+			cnt++;
 		}
-		/* Show employees. */
-		/*    @todo     */
-		/* Show aliens. */
-		for (i = 0; i < numTeamDesc; i++) {
-			if (transferidx->alienBodyAmount[i] > 0) {
-				Com_sprintf(str, sizeof(str), _("Corpse of %s (%i on board)\n"),
-				_(AL_AlienTypeToName(i)), transferidx->alienBodyAmount[i]);
-				Q_strcat(cargoList, str, sizeof(cargoList));
-				cargo[cnt].type = 3;
-				cargo[cnt].itemidx = i;
-				cnt++;
-			}
+	}
+	/* Show employees. */
+	/*    @todo     */
+	/* Show aliens. */
+	for (i = 0; i < numTeamDesc; i++) {
+		if (trAliensTmp[i][1] > 0) {
+			Com_sprintf(str, sizeof(str), _("Corpse of %s (%i on board)\n"),
+			_(AL_AlienTypeToName(i)), trAliensTmp[i][1]);
+			Q_strcat(cargoList, str, sizeof(cargoList));
+			cargo[cnt].type = 3;
+			cargo[cnt].itemidx = i;
+			cnt++;
 		}
-		for (i = 0; i < numTeamDesc; i++) {
-			if (transferidx->alienLiveAmount[i] > 0) {
-				Com_sprintf(str, sizeof(str), _("%s (%i on board)\n"),
-				_(AL_AlienTypeToName(i)), transferidx->alienLiveAmount[i]);
-				Q_strcat(cargoList, str, sizeof(cargoList));
-				cargo[cnt].type = 4;
-				cargo[cnt].itemidx = i;
-				cnt++;
-			}
+	}
+	for (i = 0; i < numTeamDesc; i++) {
+		if (trAliensTmp[i][0]) {
+			Com_sprintf(str, sizeof(str), _("%s (%i on board)\n"),
+			_(AL_AlienTypeToName(i)), trAliensTmp[i][0]);
+			Q_strcat(cargoList, str, sizeof(cargoList));
+			cargo[cnt].type = 4;
+			cargo[cnt].itemidx = i;
+			cnt++;
 		}
-	} else {
-		/* @todo: show aircraft info here. */
 	}
 
 	menuText[TEXT_CARGO_LIST] = cargoList;
@@ -116,7 +112,6 @@ static void TR_CargoList (void)
  * @note Filling the transfer list with proper stuff (items/employees/aliens/aircrafts) is being done here.
  * @sa TR_TransferStart_f
  * @sa TR_TransferInit_f
- * @todo: FIXME, transferidx, transferAircraft
  */
 static void TR_TransferSelect_f (void)
 {
@@ -134,12 +129,6 @@ static void TR_TransferSelect_f (void)
 	else
 		type = atoi(Cmd_Argv(1));
 
-	if (transferAircraft)
-		transferidx = &gd.alltransfers[transferAircraft->idx];
-
-	if (transferidx)
-		transferidx->destBase = transferBase->idx;
-
 	transferList[0] = '\0';
 
 	switch (type) { /**< 0 - items, 1 - employees, 2 - aliens, 3 - aircrafts */
@@ -148,8 +137,8 @@ static void TR_TransferSelect_f (void)
 		if (transferBase->hasStorage) {
 			for (i = 0; i < csi.numODs; i++)
 				if (baseCurrent->storage.num[i]) {
-					if (transferidx && (transferidx->itemAmount[i] > 0))
-						Com_sprintf(str, sizeof(str), _("%s (%i on board, %i left)\n"), csi.ods[i].name, transferidx->itemAmount[i], baseCurrent->storage.num[i]);
+					if (trItemsTmp[i] > 0)
+						Com_sprintf(str, sizeof(str), _("%s (%i on board, %i left)\n"), csi.ods[i].name, trItemsTmp[i], baseCurrent->storage.num[i]);
 					else
 						Com_sprintf(str, sizeof(str), _("%s (%i available)\n"), csi.ods[i].name, baseCurrent->storage.num[i]);
 					Q_strcat(transferList, str, sizeof(transferList));
@@ -174,9 +163,9 @@ static void TR_TransferSelect_f (void)
 		if (transferBase->hasAlienCont) {
 			for (i = 0; i < numTeamDesc; i++) {
 				if (baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_dead > 0) {
-					if (transferidx && (transferidx->alienBodyAmount[i] > 0))
+					if (trAliensTmp[i][1] > 0)
 						Com_sprintf(str, sizeof(str), _("Corpse of %s (%i on board, %i left)\n"),
-						_(AL_AlienTypeToName(i)), transferidx->alienBodyAmount[i],
+						_(AL_AlienTypeToName(i)), trAliensTmp[i][1],
 						baseCurrent->alienscont[i].amount_dead);
 					else
 						Com_sprintf(str, sizeof(str), _("Corpse of %s (%i available)\n"),
@@ -185,9 +174,9 @@ static void TR_TransferSelect_f (void)
 					cnt++;
 				}
 				if (baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_alive > 0) {
-					if (transferidx && (transferidx->alienLiveAmount[i] > 0))
+					if (trAliensTmp[i][0] > 0)
 						Com_sprintf(str, sizeof(str), _("Alive %s (%i on board, %i left)\n"),
-						_(AL_AlienTypeToName(i)), transferidx->alienLiveAmount[i],
+						_(AL_AlienTypeToName(i)), trAliensTmp[i][0],
 						baseCurrent->alienscont[i].amount_alive);
 					else
 						Com_sprintf(str, sizeof(str), _("Alive %s (%i available)\n"),
@@ -228,16 +217,13 @@ static void TR_TransferSelect_f (void)
  * @brief Unload everything from aircraft storage back to base storage.
  * @note This is being taken as a normal transfer mission, but we are
  * @note just unloading the cargo in homebase, without doing anything.
- * @todo FIXME transferidx, transferAircraft
+ * @todo FIXME transferidx
  */
 static void TR_TransferEmptyAircraftStorage_f (void)
 {
 #if 0
 	transferlist_t *transferidx = NULL;
 #endif
-
-	if (!transferAircraft)
-		return;
 
 	if (!baseCurrent)
 		return;
@@ -281,14 +267,6 @@ void TR_EmptyTransferCargo (transferlist_t *transfer)
 	destination = &gd.bases[transfer->destBase];
 	assert (destination);
 
-	if (transfer->type != TR_STUFF) {
-#ifdef DEBUG
-		/* should never happen */
-		Com_Printf("TR_EmptyTransferCargo()... called with transferidx->type != TR_STUFF\n");
-#endif
-		return;
-	}
-
 	/* Unload items. @todo: check building status and limits. */
 	if (!destination->hasStorage) {
 		/* @todo: destroy items in transfercargo and inform an user. */
@@ -317,10 +295,10 @@ void TR_EmptyTransferCargo (transferlist_t *transfer)
 		/* @todo: destroy aliens in transfercargo and inform an user. */
 	} else {
 		for (i = 0; i < numTeamDesc; i++) {
-			if (transfer->alienLiveAmount[i] > 0)
-				destination->alienscont[i].amount_alive += transfer->alienLiveAmount[i];
-			if (transfer->alienBodyAmount[i] > 0)
-				destination->alienscont[i].amount_dead += transfer->alienBodyAmount[i];
+			if (transfer->alienAmount[i][0] > 0)
+				destination->alienscont[i].amount_alive += transfer->alienAmount[i][0];
+			if (transfer->alienAmount[i][1] > 0) {
+				destination->alienscont[i].amount_dead += transfer->alienAmount[i][1];
 		}
 	}
 }
@@ -354,27 +332,17 @@ void TR_TransferAircraftMenu (aircraft_t* aircraft)
 void TR_TransferEnd (transferlist_t *transfer)
 {
 	base_t* destination = NULL;
+	char message[256];
 
 	assert (transfer);
 	destination = &gd.bases[transfer->destBase];
 	assert(destination);
 
-	/* If we are transfering stuff - unload it here. */
-	if (transfer->type == TR_STUFF) {
-		TR_EmptyTransferCargo (transfer);
-	} else {
-		/* Otherwise this is an aircraft transfer. */
-		/* @todo: check hangar status and limits. */
-		if (!destination->hasHangar) {
-			/* @todo: First step: change transferidx->destination to other base.
-			   Second step: use fuel/range limits when calculating this. */
-		} else {
-			/* @todo: stuff about changing homebase for aircraft. */
-			/* This includes an update of ac->idxInBase, ac->homebase, base->numAircraft base->aircraft[] and a lot more. */
-			MN_AddNewMessage(_("Transport mission"),
-			_("Transport mission ended, aircraft assigned to new base."), qfalse, MSG_TRANSFERFINISHED, NULL);
-		}
-	}
+	TR_EmptyTransferCargo (transfer);
+	/* FIXME: why this segfaults?
+	Com_sprintf(message, sizeof(message), _("Transport mission ended, unloading cargo in base %s"), transfer->destBase);
+	MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
+	*/
 }
 
 /**
@@ -386,6 +354,7 @@ static void TR_TransferStart_f (void)
 {
 	int i;
 	transferlist_t *transfer;
+	char message[256];
 
 	if (transferType < 0) {
 		Com_Printf("TR_TransferStart_f: transferType is wrong!\n");
@@ -413,29 +382,34 @@ static void TR_TransferStart_f (void)
 	transfer->destBase = transferBase->idx; /* Destination base index. */
 	transfer->type = transferType; /* Type of transfer. */
 	transfer->active = qtrue;
-	for (i = 0; i < csi.numODs; i++) {
+	for (i = 0; i < csi.numODs; i++) {		/* Items. */
 		if (trItemsTmp[i] > 0)
 			transfer->itemAmount[i] = trItemsTmp[i];
 	}
-
-	/* @todo, only if transfering items */
-	for (i = 0; i < MAX_OBJDEFS; i++) {
-		if (transfer->itemAmount[i] > 0)
-			Com_DPrintf("TR_TransferStart_f()... amount %i of %s\n", transfer->itemAmount[i], csi.ods[i].id);
+	for (i = 0; i < numTeamDesc; i++) {		/* Aliens. */
+		if (!teamDesc[i].alien)
+			continue;
+		if (trAliensTmp[i][0] > 0)
+			transfer->alienAmount[i][0] = trAliensTmp[i][0];
+		if (trAliensTmp[i][1] > 0)
+			transfer->alienAmount[i][1] = trAliensTmp[i][1];
 	}
-	/* @todo MN_AddNewMessage() and push the menu here */
+
+	/* FIXME: why this segfaults?
+	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to base %s"), transfer->destBase);
+	MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
+	*/
+	Cbuf_AddText("mn_pop\n");
 }
 
 /**
  * @brief Adds a thing to transfercargo by left mouseclick.
  * @sa TR_TransferSelect_f
  * @sa TR_TransferInit_f
- * @todo FIXME, transferidx
  */
 static void TR_TransferListSelect_f (void)
 {
 	int num, cnt = 0, i;
-	transferlist_t *transferidx = NULL;
 
 	if (Cmd_Argc() < 2)
 		return;
@@ -448,22 +422,13 @@ static void TR_TransferListSelect_f (void)
 		return;
 	}
 
-	if (!transferAircraft) {
-		MN_Popup(_("No aircraft selected"), _("Please select the aircraft to use from the list"));
-		return;
-	}
-
-	/* Prepare the transfer in gd.alltransfers array. */
-	transferidx = &gd.alltransfers[transferAircraft->idx];
-	if (transferidx)
-		transferidx->destBase = transferBase->idx;
-
 	num = atoi(Cmd_Argv(1));
 
 	switch (transferType) {
 	case -1:	/**< No list was inited before you call this. */
 		return;
 	case 0:		/**< items */
+#if 0
 		if (!transferidx->type) {
 			transferidx->type = TR_STUFF;
 		} else if (transferidx->type != TR_STUFF) {
@@ -472,12 +437,11 @@ static void TR_TransferListSelect_f (void)
 			_("You are transferring aircraft. You cannot use this aircraft to transfer things or employees."));
 			return;
 		}
+#endif
 		for (i = 0; i < csi.numODs; i++)
 			if (baseCurrent->storage.num[i]) {
 				if (cnt == num) {
-					/* @todo: Check space in transportship. */
-					transferidx->itemAmount[i]++;
-					trItemsTmp[i]++;	/* only this is used in new way */
+					trItemsTmp[i]++;
 					/* Remove it from base storage. */
 					baseCurrent->storage.num[i]--;
 					break;
@@ -486,6 +450,7 @@ static void TR_TransferListSelect_f (void)
 			}
 		break;
 	case 1:		/**< employees */
+#if 0
 		if (!transferidx->type) {
 			transferidx->type = TR_STUFF;
 		} else if (transferidx->type != TR_STUFF) {
@@ -494,9 +459,11 @@ static void TR_TransferListSelect_f (void)
 			_("You are transferring aircraft. You cannot use this aircraft to transfer things or employees."));
 			return;
 		}
+#endif
 		/* @todo: employees here. */
 		break;
 	case 2:		/**< aliens */
+#if 0
 		if (!transferidx->type) {
 			transferidx->type = TR_STUFF;
 		} else if (transferidx->type != TR_STUFF) {
@@ -505,11 +472,11 @@ static void TR_TransferListSelect_f (void)
 			_("You are transferring aircraft. You cannot use this aircraft to transfer things or employees."));
 			return;
 		}
+#endif
 		for (i = 0; i < numTeamDesc; i++) {
 			if (baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_dead > 0) {
 				if (cnt == num) {
-					/* @todo: Check space in transportship. */
-					transferidx->alienBodyAmount[i]++;
+					trAliensTmp[i][1]++;
 					/* Remove the corpse from Alien Containment. */
 					baseCurrent->alienscont[i].amount_dead--;
 					break;
@@ -518,8 +485,7 @@ static void TR_TransferListSelect_f (void)
 			}
 			if (baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_alive > 0) {
 				if (cnt == num) {
-					/* @todo: Check space in transportship. */
-					transferidx->alienLiveAmount[i]++;
+					trAliensTmp[i][0]++;
 					/* Remove an alien from Alien Containment. */
 					baseCurrent->alienscont[i].amount_alive--;
 					break;
@@ -529,6 +495,7 @@ static void TR_TransferListSelect_f (void)
 		}
 		break;
 	case 3:		/**< aircrafts */
+#if 0
 		if (!transferidx->type) {
 			transferidx->type = TR_AIRCRAFT;
 		} else if (transferidx->type != TR_AIRCRAFT) {
@@ -537,6 +504,7 @@ static void TR_TransferListSelect_f (void)
 			_("You are transferring stuff. You cannot use this aircraft to transfer itself."));
 			return;
 		}
+#endif
 		/* @todo: aircrafts here. */
 		break;
 	default:
@@ -704,12 +672,10 @@ static void TR_TransferBaseSelect_f (void)
 
 /**
  * @brief Removes single item from cargolist by click.
- * @todo FIXME, transferidx, transferAircraft
  */
 static void TR_CargoListSelect_f (void)
 {
 	int num, cnt = 0, entries = 0, i;
-	transferlist_t *transferidx = NULL;
 
 	if (Cmd_Argc() < 2)
 		return;
@@ -717,20 +683,14 @@ static void TR_CargoListSelect_f (void)
 	if (!baseCurrent)
 		return;
 
-	if (!transferAircraft)
-		return;
-
-	/* Check the transfer index in gd.alltransfers array. */
-	transferidx = &gd.alltransfers[transferAircraft->idx];
-
 	num = atoi(Cmd_Argv(1));
 
 	switch (cargo[num].type) {
 	case 1:		/**< items */
 		for (i = 0; i < csi.numODs; i++) {
-			if (transferidx->itemAmount[i] > 0) {
+			if (trItemsTmp[i] > 0) {
 				if (cnt == num) {
-					transferidx->itemAmount[i]--;
+					trItemsTmp[i]--;
 					baseCurrent->storage.num[i]++;
 					break;
 				}
@@ -750,9 +710,9 @@ static void TR_CargoListSelect_f (void)
 		/* Start increasing cnt from the amount of previous entries. */
 		cnt = entries;
 		for (i = 0; i < numTeamDesc; i++) {
-			if (transferidx->alienBodyAmount[i] > 0) {
+			if (trAliensTmp[i][1] > 0) {
 				if (cnt == num) {
-					transferidx->alienBodyAmount[i]--;
+					trAliensTmp[i][1]--;
 					baseCurrent->alienscont[i].amount_dead++;
 					break;
 				}
@@ -769,9 +729,9 @@ static void TR_CargoListSelect_f (void)
 		/* Start increasing cnt from the amount of previous entries. */
 		cnt = entries;
 		for (i = 0; i < numTeamDesc; i++) {
-			if (transferidx->alienLiveAmount[i] > 0) {
+			if (trAliensTmp[i][0] > 0) {
 				if (cnt == num) {
-					transferidx->alienLiveAmount[i]--;
+					trAliensTmp[i][0]--;
 					baseCurrent->alienscont[i].amount_alive--;
 					break;
 				}
