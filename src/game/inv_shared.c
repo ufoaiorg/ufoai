@@ -365,7 +365,7 @@ int Com_MoveInInventory (inventory_t* const i, int from, int fx, int fy, int to,
 
 /**
  * @brief Conditions for moving items between containers.
- * @param[in] i 
+ * @param[in] i
  * @param[in] from source container
  * @param[in] fx x for source container
  * @param[in] fy y for source container
@@ -1590,13 +1590,13 @@ qboolean Com_CheckShape (const uint32_t *shape, int x, int y)
  * @param[in] x
  * @param[in] y
  */
-qboolean Com_CheckShapeSmall (uint32_t shape, int x, int y)
+static qboolean Com_CheckShapeSmall (uint32_t shape, int x, int y)
 {
 	if (y >= SHAPE_BIG_MAX_HEIGHT || x >= SHAPE_BIG_MAX_WIDTH || x < 0 || y < 0 ) {
 		Com_Printf("Com_CheckShapeSmall: Bad x or y value: (x=%i, y=%i)\n", x,y);
 		return qfalse;
 	}
-	
+
 	return shape & (0x01 << (y * SHAPE_SMALL_MAX_WIDTH + x));
 }
 
@@ -1627,7 +1627,7 @@ int Com_ShapeUsage (uint32_t shape)
  * @param[in] y The y (height) position of the bit to set.
  * @return The new shape.
  */
-uint32_t Com_ShapeSetBit (uint32_t shape, int x, int y)
+static uint32_t Com_ShapeSetBit (uint32_t shape, int x, int y)
 {
 	if (x >= SHAPE_SMALL_MAX_WIDTH || y >= SHAPE_SMALL_MAX_HEIGHT || x < 0 || y < 0) {
 		Com_Printf("Com_ShapeSetBit: Bad x or y value: (x=%i, y=%i)\n", x,y);

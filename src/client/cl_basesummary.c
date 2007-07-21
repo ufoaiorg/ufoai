@@ -26,7 +26,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
-int BaseSummary_AircraftCount (aircraftType_t aircraftType)
+/**
+ * @brief
+ */
+static int BaseSummary_AircraftCount (aircraftType_t aircraftType)
 {
 	int i, count = 0;
 	for (i = 0; i < baseCurrent->numAircraftInBase - 1; i++) {
@@ -37,7 +40,10 @@ int BaseSummary_AircraftCount (aircraftType_t aircraftType)
 	return count;
 }
 
-void BaseSummary_BuildingConstruction (const char* cvarNameBase)
+/**
+ * @brief
+ */
+static void BaseSummary_BuildingConstruction (const char* cvarNameBase)
 {
 	int i, cvarIndex, daysLeft;
 	char buffer[128], cvarName[128];
@@ -73,7 +79,10 @@ void BaseSummary_BuildingConstruction (const char* cvarNameBase)
 	}
 }
 
-void BaseSummary_BuildingCount (const char* cvarName, const char* desc, int buildingTypeIdx)
+/**
+ * @brief
+ */
+static void BaseSummary_BuildingCount (const char* cvarName, const char* desc, int buildingTypeIdx)
 {
 	char buffer[128];
 
@@ -83,7 +92,10 @@ void BaseSummary_BuildingCount (const char* cvarName, const char* desc, int buil
 	Cvar_Set(cvarName, buffer);
 }
 
-void BaseSummary_BuildingUsage (const char* cvarName, const char* desc,baseCapacities_t baseCapacity, int buildingTypeIdx)
+/**
+ * @brief
+ */
+static void BaseSummary_BuildingUsage (const char* cvarName, const char* desc,baseCapacities_t baseCapacity, int buildingTypeIdx)
 {
 	char buffer[128];
 
@@ -95,12 +107,18 @@ void BaseSummary_BuildingUsage (const char* cvarName, const char* desc,baseCapac
 	Cvar_Set(cvarName, buffer);
 }
 
-int BaseSummary_EmployeeCount (employeeType_t employeeType)
+/**
+ * @brief
+ */
+static int BaseSummary_EmployeeCount (employeeType_t employeeType)
 {
 	return E_CountHired(baseCurrent,employeeType);
 }
 
-int BaseSummary_EmployeeTotal()
+/**
+ * @brief
+ */
+static int BaseSummary_EmployeeTotal (void)
 {
 	int cnt = 0;
 	employeeType_t type;
@@ -111,7 +129,10 @@ int BaseSummary_EmployeeTotal()
 	return cnt;
 }
 
-void BaseSummary_ProductionCurrent (char* cvarName)
+/**
+ * @brief
+ */
+static void BaseSummary_ProductionCurrent (const char* cvarName)
 {
 	production_queue_t queue;
 	production_t production;
@@ -134,7 +155,10 @@ void BaseSummary_ProductionCurrent (char* cvarName)
 	}
 }
 
-void BaseSummary_ResearchCurrent (const char* cvarNameBase)
+/**
+ * @brief
+ */
+static void BaseSummary_ResearchCurrent (const char* cvarNameBase)
 {
 	int i,cvarIndex;
 	char buffer[128], cvarName[128];
@@ -376,7 +400,7 @@ static void BaseSummary_Init (void)
  * @brief Defines commands and cvars for the base statistics menu(s).
  * @sa MN_ResetMenus
  */
-extern void BaseSummary_Reset (void)
+void BaseSummary_Reset (void)
 {
 	/* add commands */
 	Cmd_AddCommand("basesummary_init", BaseSummary_Init, "Init function for Base Statistics menu");

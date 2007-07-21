@@ -1880,6 +1880,7 @@ void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
 	G_CheckVisTeam(ent->team, NULL, qfalse);
 }
 
+#ifdef DEBUG
 /**
  * @brief This function does not add statistical values. Because there is no attacker.
  * The same counts for morale states - they are not affected.
@@ -1909,8 +1910,7 @@ void G_KillTeam (void)
 	/* check for win conditions */
 	G_CheckEndGame();
 }
-
-
+#endif
 
 /**
  * @brief The client sent us a message that he did something. We now execute the related fucntion(s) adn notify him if neccessary.

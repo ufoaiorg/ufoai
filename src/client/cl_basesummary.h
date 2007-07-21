@@ -29,10 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define BASESUMMARY_MAX_CVARS_CONSTRUCTION 3
 #define BASESUMMARY_MAX_CVARS_RESEARCH 5
 
-int BaseSummary_AircraftCount(aircraftType_t aircraftType);
-void BaseSummary_BuildingUsage(const char* cvarName, const char* desc, baseCapacities_t baseCapacity, int buildingTypeIdx);
-int BaseSummary_EmployeeCount(employeeType_t employeeType);
-void BaseSummary_ResearchCurrent(const char* cvarName);
 
 /**
  * Menu functions
