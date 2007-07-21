@@ -637,6 +637,7 @@ menu althud
 
 	pic althud_bt_use_headgear
 	{
+		tooltip	"_Use headgear"
 		image	althud/buttons_althud1
 		mousefx true
 		pos		"930 497"

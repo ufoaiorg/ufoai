@@ -441,6 +441,7 @@ menu hud
 
 	pic hud_bt_use_headgear
 	{
+		tooltip	"_Use headgear"
 		image	hud/buttons2
 		mousefx true
 		pos		"180 720"
