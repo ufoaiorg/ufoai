@@ -2382,9 +2382,10 @@ void CL_ActorStun (void)
 void CL_ActorUseHeadgear_f (void)
 {
 	invList_t* headgear;
-
-	if (mouseSpace != MS_WORLD)
-		return;
+	int tmp_mouseSpace= mouseSpace;
+	
+	tmp_mouseSpace = mouseSpace;
+	mouseSpace = MS_WORLD;
 
 	if (!CL_CheckAction())
 		return;
@@ -2396,6 +2397,8 @@ void CL_ActorUseHeadgear_f (void)
 	cl.cmode = M_FIRE_HEADGEAR;
 	cl.cfiremode = 0; /** @todo make this a variable somewhere? */
 	CL_ActorShoot(selActor, selActor->pos);
+	
+	mouseSpace = tmp_mouseSpace;
 }
 
 /**
