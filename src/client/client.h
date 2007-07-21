@@ -672,6 +672,7 @@ typedef enum {
 	BT_LEFT_RELOAD,
 	BT_STAND,
 	BT_CROUCH,
+	BT_HEADGEAR,
 	BT_NUM_TYPES
 } button_types_t;
 

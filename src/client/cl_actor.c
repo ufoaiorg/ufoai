@@ -79,7 +79,8 @@ static const char *shoot_type_strings[BT_NUM_TYPES] = {
 	"rr\n",
 	"rl\n",
 	"stand\n",
-	"crouch\n"
+	"crouch\n",
+	"headgear\n"
 };
 
 /**
@@ -88,9 +89,9 @@ static const char *shoot_type_strings[BT_NUM_TYPES] = {
  * @todo What does -1 mean here? it is used quite a bit
  */
 typedef enum {
-	BT_STATE_DISABLE,
-	BT_STATE_DESELECT,	/* Normal display */
-	BT_STATE_HIGHLIGHT,	/* Normal + highlight */
+	BT_STATE_DISABLE,		/* 'Disabled' display (grey) */
+	BT_STATE_DESELECT,	/* Normal display (blue) */
+	BT_STATE_HIGHLIGHT,	/* Normal + highlight (blue + glow)*/
 	BT_STATE_UNUSABLE	/* Normal + red (activated but unuseable aka "impossible") */
 } weaponButtonState_t;
 
@@ -1099,9 +1100,13 @@ void CL_FireWeapon_f (void)
  */
 static void CL_RefreshWeaponButtons (int time)
 {
-	invList_t *weaponr, *weaponl = NULL;
+	invList_t *weaponr = NULL;
+	invList_t *weaponl = NULL;
+	invList_t *headgear = NULL;
 	int minweaponrtime = 100, minweaponltime = 100;
+	int minheadgeartime = 100;
 	int weaponr_fds_idx = -1, weaponl_fds_idx = -1;
+	int headgear_fds_idx = -1;
 	qboolean isammo = qfalse;
 	int i;
 
@@ -1109,6 +1114,7 @@ static void CL_RefreshWeaponButtons (int time)
 		return;
 
 	weaponr = RIGHT(selActor);
+	headgear = HEADGEAR(selActor);
 
 	/* check for two-handed weapon - if not, also define weaponl */
 	if (!weaponr || !csi.ods[weaponr->item.t].holdtwohanded)
@@ -1127,6 +1133,52 @@ static void CL_RefreshWeaponButtons (int time)
 			SetWeaponButton(BT_STAND, BT_STATE_DISABLE);
 		else
 			SetWeaponButton(BT_STAND, BT_STATE_DESELECT);
+	}
+	
+	/* headgear button (nearly the same code as for weapon firing buttons below). */
+	/** @todo Make a generic function out of this? */
+	if (headgear) {
+		assert(headgear->item.t != NONE);
+		/* Check whether this item use ammo. */
+		if (headgear->item.m == NONE) {
+			/* This item does not use ammo, check for existing firedefs in this item. */
+			if (csi.ods[headgear->item.t].numWeapons > 0) {
+				/* Get firedef from the weapon entry instead. */
+				headgear_fds_idx = INV_FiredefsIDXForWeapon(&csi.ods[headgear->item.t], headgear->item.t);
+			} else {
+				headgear_fds_idx = -1;
+			}
+			isammo = qfalse;
+		} else {
+			/* This item uses ammo, get the firedefs from ammo. */
+			headgear_fds_idx = INV_FiredefsIDXForWeapon(&csi.ods[headgear->item.m], headgear->item.t);
+			isammo = qtrue;
+		}
+		if (isammo) {
+			/* Search for the smallest TU needed to shoot. */
+			if (headgear_fds_idx != -1)
+				for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
+					if (!csi.ods[headgear->item.m].fd[headgear_fds_idx][i].time)
+						continue;
+					if (csi.ods[headgear->item.m].fd[headgear_fds_idx][i].time < minheadgeartime)
+					minheadgeartime = csi.ods[headgear->item.m].fd[headgear_fds_idx][i].time;
+				}
+		} else {
+			if (headgear_fds_idx != -1)
+				for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
+					if (!csi.ods[headgear->item.t].fd[headgear_fds_idx][i].time)
+						continue;
+					if (csi.ods[headgear->item.t].fd[headgear_fds_idx][i].time < minheadgeartime)
+						minheadgeartime = csi.ods[headgear->item.t].fd[headgear_fds_idx][i].time;
+				}
+		}
+		if (time < minheadgeartime) {
+			SetWeaponButton(BT_HEADGEAR, BT_STATE_DISABLE);
+		} else {
+			SetWeaponButton(BT_HEADGEAR, BT_STATE_DESELECT);
+		}
+	} else {
+		SetWeaponButton(BT_HEADGEAR, BT_STATE_DISABLE);
 	}
 
 	/* reaction-fire button */
@@ -1160,7 +1212,8 @@ static void CL_RefreshWeaponButtons (int time)
 	else
 		SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DESELECT);
 
-	/* Weapon firing buttons. */
+	/* Weapon firing buttons. (nearly the same code as for headgear buttons above).*/
+	/** @todo Make a generic function out of this? */
 	if (weaponr) {
 		assert(weaponr->item.t != NONE);
 		/* Check whether this item use ammo. */
@@ -2335,11 +2388,6 @@ void CL_ActorUseHeadgear_f (void)
 	headgear = HEADGEAR(selActor);
 	if (!headgear)
 		return;
-
-	/* @todo: If not enough TUs left deactivate the icon */
-	/* @todo: move to better place - doesn't belong here */
-	Cbuf_AddText("deselheadgear;");
-	Cbuf_AddText("selheadgear;");
 
 	CL_ActorShoot(selActor, selActor->pos);
 }
