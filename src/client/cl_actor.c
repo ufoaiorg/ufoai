@@ -2541,7 +2541,10 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 
 	/* Animate - we have to check if it is right or left weapon usage. */
 	/* @todo: FIXME the left/right info for actors in the enemy team/turn has to come from somewhere. */
-	if (RIGHT(le) && IS_MODE_FIRE_RIGHT(cl.cmode)) {
+	if (HEADGEAR(le) && IS_MODE_FIRE_HEADGEAR(cl.cmode)) {
+		cl.cmode = M_MOVE; /**< @todo I'm not sure this is supposed to be _here_ but I could not find a better place yet. */
+		return; /* No animation for this */
+	} else if (RIGHT(le) && IS_MODE_FIRE_RIGHT(cl.cmode)) {
 		re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
 		re.AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
 	} else if (LEFT(le) && IS_MODE_FIRE_LEFT(cl.cmode)) {
@@ -2553,10 +2556,6 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 		re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
 		re.AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
 	}
-
-	/** @todo I'm not sure this is supposed to be _here_ but I could not find a better place yet. */
-	if (IS_MODE_FIRE_HEADGEAR(cl.cmode))
-		cl.cmode = M_MOVE;
 }
 
 
