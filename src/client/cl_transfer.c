@@ -43,6 +43,52 @@ static int trItemsTmp[MAX_OBJDEFS];
 static int trAliensTmp[MAX_TEAMDEFS][2];
 
 /**
+ * @brief Checks condition for item transfer.
+ * @param[in] *od Pointer to object definition.
+ * @param[in] *srcbase Pointer to current base.
+ * @param[in] *destbase Pointer to destination base.
+ * @return qtrue if transfer of this item is possible.
+ */
+qboolean TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase)
+{
+	assert (od && srcbase && destbase);
+
+	destbase->capacities[CAP_ITEMS].max, destbase->capacities[CAP_ITEMS].cur);
+	/* Does the destination base has enough space in storage? */
+	if (destbase->capacities[CAP_ITEMS].max - destbase->capacities[CAP_ITEMS].cur < od->size) {
+		MN_Popup(_("Not enough space"), _("Destination base does not have enough\nStorage space to store this item.\n"));
+		return qfalse;
+	}
+	/* Is the item under research at this moment? */
+	/* @todo: implement me */
+
+	return qtrue;
+}
+
+/**
+ * @brief Checks condition for alive alien transfer.
+ * @param[in] alienidx Index of an alien type.
+ * @param[in] *srcbase Pointer to current base.
+ * @param[in] *destbase Pointer to destination base.
+ * @return qtrue if transfer of this type of alien is possible.
+ */
+qboolean TR_CheckAlien (int alienidx, base_t *srcbase, base_t *destbase)
+{
+	assert (srcbase && destbase);
+
+	destbase->capacities[CAP_ALIENS].max, destbase->capacities[CAP_ALIENS].cur);
+	/* Does the destination base has enough space in alien containment? */
+	if (destbase->capacities[CAP_ALIENS].max - destbase->capacities[CAP_ALIENS].cur < 1) {
+		MN_Popup(_("Not enough space"), _("Destination base does not have enough space\nin Alien Containment.\n"));
+		return qfalse;
+	}
+	/* Is the alien under research at this moment? */
+	/* @todo: implement me */
+
+	return qtrue;
+}
+
+/**
  * @brief Display cargo list.
  */
 static void TR_CargoList (void)
@@ -281,8 +327,10 @@ void TR_EmptyTransferCargo (transferlist_t *transfer)
 		/* @todo: destroy aliens in transfercargo and inform an user. */
 	} else {
 		for (i = 0; i < numTeamDesc; i++) {
-			if (transfer->alienAmount[i][0] > 0)
+			if (transfer->alienAmount[i][0] > 0) {
 				destination->alienscont[i].amount_alive += transfer->alienAmount[i][0];
+				destination->capacities[CAP_ALIENS].cur += transfer->alienAmount[i][0];
+			}
 			if (transfer->alienAmount[i][1] > 0)
 				destination->alienscont[i].amount_dead += transfer->alienAmount[i][1];
 		}
@@ -397,6 +445,7 @@ static void TR_TransferStart_f (void)
 static void TR_TransferListSelect_f (void)
 {
 	int num, cnt = 0, i;
+	objDef_t *od;
 
 	if (Cmd_Argc() < 2)
 		return;
@@ -425,15 +474,20 @@ static void TR_TransferListSelect_f (void)
 			return;
 		}
 #endif
-		for (i = 0; i < csi.numODs; i++)
+		for (i = 0; i < csi.numODs; i++) {
 			if (baseCurrent->storage.num[i]) {
 				if (cnt == num) {
-					trItemsTmp[i]++;
-					B_UpdateStorageAndCapacity (baseCurrent, i, -1, qfalse);
-					break;
+					od = &csi.ods[i];
+					if (TR_CheckItem(od, baseCurrent, transferBase)) {
+						trItemsTmp[i]++;
+						B_UpdateStorageAndCapacity (baseCurrent, i, -1, qfalse);
+						break;
+					} else
+						return;
 				}
 				cnt++;
 			}
+		}
 		break;
 	case 1:		/**< employees */
 #if 0
@@ -471,10 +525,14 @@ static void TR_TransferListSelect_f (void)
 			}
 			if (baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_alive > 0) {
 				if (cnt == num) {
-					trAliensTmp[i][0]++;
-					/* Remove an alien from Alien Containment. */
-					baseCurrent->alienscont[i].amount_alive--;
-					break;
+					if (TR_CheckAlien(i, baseCurrent, transferBase)) {
+						trAliensTmp[i][0]++;
+						/* Remove an alien from Alien Containment. */
+						baseCurrent->alienscont[i].amount_alive--;
+						baseCurrent->capacities[CAP_ALIENS].cur--;
+						break;
+					} else
+						return;
 				}
 				cnt++;
 			}
