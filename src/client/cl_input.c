@@ -673,8 +673,6 @@ static void CL_NextAlien_f (void)
 	le_t *le;
 	int i;
 
-	CL_DrawSpottedLines();
-	
 	if (camera_mode == CAMERA_MODE_FIRSTPERSON)
 		CL_CameraModeChange(CAMERA_MODE_REMOTE);
 	if (lastAlien >= numLEs)
