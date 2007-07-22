@@ -424,11 +424,23 @@ menu aircraft_equip
 
 	text airequip_selected_description
 	{
-		pos	"474 600"
-		size	"530 150"
+		pos	"474 630"
+		size	"400 120"
 		format	"20 0"
 //		bgcolor	"1 1 1 0.5"
-		height	"7"
+		height	"6"
+	}
+
+	model mdl_top
+	{
+		md2		"*cvar mn_upmodel_top"
+		angles	"0 0 120"
+		color	"0.5 0.5 0.5 1"
+		origin	"600 545 0"
+		pos		"500 500"
+		size	"200 200"
+		mousefx	true
+		click
 	}
 
 	string airequip_item_name

@@ -490,6 +490,7 @@ void UP_AircraftItemDescription (int idx)
 	item = &aircraftItems[idx];
 	Cvar_Set("mn_itemname", _(gd.technologies[item->tech_idx].name));
 	Cvar_Set("mn_item", item->id);
+	Cvar_Set("mn_upmodel_top", gd.technologies[item->tech_idx].mdl_top);
 	Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
 	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
 	Cvar_Set("mn_researchedlinkname", "");
