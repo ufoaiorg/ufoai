@@ -784,7 +784,7 @@ void CL_InitInput (void)
 	Cmd_AddCommand("togglereaction", CL_ActorToggleReaction_f, _("Toggle reaction fire"));
 	Cmd_AddCommand("useheadgear", CL_ActorUseHeadgear_f, _("Toggle the headgear"));
 	Cmd_AddCommand("nextalien", CL_NextAlien_f, _("Toogle to next alien"));
-	Cmd_AddCommand("drawspottetlines", CL_DrawSpottedLines_f, _("Draw a line to each alien visible to the current actor."));
+	Cmd_AddCommand("drawspottedlines", CL_DrawSpottedLines_f, _("Draw a line to each alien visible to the current actor."));
 
 	Cmd_AddCommand("list_firemodes", CL_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
 	Cmd_AddCommand("fireweap", CL_FireWeapon_f, "Start aiming the weapon.");
