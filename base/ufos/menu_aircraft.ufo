@@ -465,7 +465,7 @@ menu aircraft_equip
 
 	pic airequip_button_shields
 	{
-		tooltip	"_Shields"
+		tooltip	"_Armour"
 		mousefx	true
 		pos		"164 710"
 		image	menu/button_blue
@@ -475,7 +475,7 @@ menu aircraft_equip
 	}
 	string airequip_button_shields_str
 	{
-		string "_Shields"
+		string "_Armour"
 		pos		"228 736"
 		align	cc
 	}
