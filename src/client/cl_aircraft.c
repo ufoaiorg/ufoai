@@ -1165,7 +1165,7 @@ static aircraftSlot_t *AII_InitialiseAircraftSlot (aircraft_t *aircraft)
  * @note airequipSelectedSlot concerns only weapons and electronics
  * @sa aircraft Pointer to the aircraft
  */
-static void AIM_CheckairequipSelectedSlot (aircraft_t *aircraft)
+static void AIM_CheckAirequipSelectedSlot (aircraft_t *aircraft)
 {
 	switch (airequipID) {
 	case AC_ITEM_AMMO:
@@ -1188,7 +1188,7 @@ static void AIM_CheckairequipSelectedSlot (aircraft_t *aircraft)
  * @brief Check that airequipSelectedZone is available
  * @sa aircraft Pointer to the aircraft
  */
-static void AIM_CheckairequipSelectedZone (aircraft_t *aircraft, aircraftSlot_t *slot)
+static void AIM_CheckAirequipSelectedZone (aircraft_t *aircraft, aircraftSlot_t *slot)
 {
 	/* You can choose an ammo only if a weapon has already been selected */
 	if (airequipID == AC_ITEM_AMMO && slot->itemIdx < 0) {
@@ -1409,13 +1409,13 @@ void AIM_AircraftEquipmenuInit_f (void)
 	rotateAngles = aircraft->angles;
 
 	/* Check that airequipSelectedSlot corresponds to an existing slot for this aircraft */
-	AIM_CheckairequipSelectedSlot(aircraft);
+	AIM_CheckAirequipSelectedSlot(aircraft);
 
 	/* Initialise slot */
 	slot = AII_InitialiseAircraftSlot(aircraft);
 
 	/* Check that the selected zone is OK */
-	AIM_CheckairequipSelectedZone(aircraft, slot);
+	AIM_CheckAirequipSelectedZone(aircraft, slot);
 
 	/* Fill the list of item you can equip your aircraft with */
 	AIM_UpdateAircraftItemList();
@@ -1429,8 +1429,7 @@ void AIM_AircraftEquipmenuInit_f (void)
 	if (slot->itemIdx < 0) {
 		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _("No item assigned.\n"));
 		Q_strcat(smallbuffer1, va(_("This slot is for %s or smaller items."), AII_WeightToName(slot->size)), sizeof(smallbuffer1));
-	}
-	else {
+	} else {
 		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _(gd.technologies[aircraftItems[slot->itemIdx].tech_idx].name));
 		Q_strcat(smallbuffer1, "\n", sizeof(smallbuffer1));
 		if (!slot->installationTime)
@@ -1564,7 +1563,7 @@ void AIM_AircraftEquipzoneSelect_f (void)
 	slot = AII_InitialiseAircraftSlot(aircraft);
 
 	/* Check that the selected zone is OK */
-	AIM_CheckairequipSelectedZone(aircraft, slot);
+	AIM_CheckAirequipSelectedZone(aircraft, slot);
 
 	/* Draw selected zone */
 	AIM_DrawSelectedZone(aircraft);
