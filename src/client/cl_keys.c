@@ -537,8 +537,6 @@ static void Key_Message (int key)
 
 		if (msg_mode != MSG_IRC)
 			Key_SetDest(key_game);
-		else
-			Com_Printf("bla\n");
 		msg_bufferlen = 0;
 		msg_buffer[0] = 0;
 		return;
