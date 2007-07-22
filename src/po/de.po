@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-07-22 19:33+0200\n"
-"PO-Revision-Date: 2007-07-22 19:38+0100\n"
+"PO-Revision-Date: 2007-07-22 21:06+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -9127,7 +9127,6 @@ msgid "With multiplayer teams, make sure your best soldiers are at the top of th
 msgstr ""
 
 #: ../base/ufos/tips.ufo:8
-#, fuzzy
 msgid "Always make sure that you have enough Time Units (TUs) left to hide after you shoot."
 msgstr "Stelle immer sicher, dass du noch genug Zeiteinheiten übrig hast um nach einem Schuss wieder in Deckung zu gehen."
 
@@ -11840,7 +11839,6 @@ msgstr ""
 #: client/cl_transfer.c:69
 #: client/cl_transfer.c:91
 #: client/cl_transfer.c:121
-#, fuzzy
 msgid "Not enough space"
 msgstr "Nicht genügend Lagerkapazität"
 
@@ -11869,11 +11867,10 @@ msgid "Soldier in aircraft"
 msgstr "Flugzeug auswählen"
 
 #: client/cl_transfer.c:121
-#, fuzzy
 msgid ""
 "Destination base does not have enough space\n"
 "in Alien Containment.\n"
-msgstr "Nicht genügend Kapazität in der Quarantänestation. Einige Außerirdische wurden getötet."
+msgstr "Nicht genügend Kapazität in der Quarantänestation. Einige Außerirdische wurden getötet.\n"
 
 #: client/cl_transfer.c:154
 #: client/cl_transfer.c:183
