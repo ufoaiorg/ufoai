@@ -2037,7 +2037,9 @@ static void INV_GetItemTooltip (item_t item, char *tooltiptext, size_t string_ma
 					Q_strcat(tooltiptext, va(" [Ammo: %i]", item.a), string_maxlength);
 				}
 			} else {
-				/** @todo Search for used ammo and display name + ammo count */
+				/* Search for used ammo and display name + ammo count */
+				Q_strcat(tooltiptext, va(" [%s loaded;", csi.ods[item.m].name), string_maxlength);
+				Q_strcat(tooltiptext, va(" Ammo: %i]",  item.a), string_maxlength);
 			}
 		} else if (csi.ods[item.t].numWeapons) {
 			/* If it's ammo get the weapon names it can be used in */
