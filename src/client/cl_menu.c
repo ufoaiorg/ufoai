@@ -2036,6 +2036,7 @@ void MN_DrawMenus (void)
 	menuModel_t *menuModel = NULL, *menuModelParent = NULL;
 	int width, height;
 	const char* cond;
+	invList_t *itemHover = NULL;
 
 	/* render every menu on top of a menu with a render node */
 	pp = 0;
@@ -2513,14 +2514,10 @@ void MN_DrawMenus (void)
 							MN_InvDrawFree(menuInventory, node);
 
 						/* Draw tooltip for weapon or ammo */
-						if (mouseSpace != MS_DRAG && node->state == 1 && cl_show_tooltips->integer) {
-							invList_t *ic1;
-							int px = (int) (mx - node->pos[0]) / C_UNIT;
-							int py = (int) (my - node->pos[1]) / C_UNIT;
-							/* Find out where the mouse are */
-							ic1 = Com_SearchInInventory(menuInventory, node->mousefx, px, py);
-							if (ic1)
-								MN_DrawTooltip("f_small", csi.ods[ic1->item.t].name, mx, my, 40);
+						if (mouseSpace != MS_DRAG && node->state && cl_show_tooltips->integer) {
+							/* Find out where the mouse is */
+							itemHover = Com_SearchInInventory(menuInventory,
+								node->mousefx, (mx - node->pos[0]) / C_UNIT, (my - node->pos[1]) / C_UNIT);
 						}
 					}
 					break;
@@ -2808,6 +2805,12 @@ void MN_DrawMenus (void)
 			menu->hoverNode = NULL;
 		}
 	}
+
+	/* we are hovering an item and also want to display it
+	 * make sure that we draw this on top of every other node */
+	if (itemHover)
+		MN_DrawTooltip("f_small", csi.ods[itemHover->item.t].name, mx, my, 40);
+
 	re.DrawColor(NULL);
 }
 
