@@ -927,7 +927,7 @@ void CL_ParticleFree (ptl_t *p)
 void CL_ParticleSpawnFromSizeBuf (struct dbuffer *msg)
 {
 	char *particle;
-	int levelflags, i;
+	int levelflags, i, length;
 	pos3_t originPos;
 	vec3_t origin;
 
@@ -936,8 +936,10 @@ void CL_ParticleSpawnFromSizeBuf (struct dbuffer *msg)
 	for (i = 0; i < 3; i++)
 		origin[i] = (float)originPos[i];
 
-	NET_ReadByte(msg); /* for stringlength */
+	length = NET_ReadShort(msg); /* for stringlength */
 	particle = NET_ReadString(msg);
+	if (length != (int)strlen(particle))
+		Com_Printf("CL_ParticleSpawnFromSizeBuf: Wrong transmitted particle name or length: %i\n", length);
 
 	if (particle && Q_strcmp(particle, "null")) {
 		CL_ParticleSpawn(particle, levelflags, origin, NULL, NULL);
