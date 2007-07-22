@@ -620,7 +620,7 @@ static void CL_LeftClickDown_f (void)
 /**
  * @brief Draws a line to each alien the selected 'watcher' can see.
  */
-static void CL_DrawSpottedLines (void)
+static void CL_DrawSpottedLines_f (void)
 {
 	le_t *watcher; /** @todo make this a parameter for use in other fucntions? */
 	le_t *le = NULL;
@@ -673,6 +673,8 @@ static void CL_NextAlien_f (void)
 	le_t *le;
 	int i;
 
+	CL_DrawSpottedLines();
+	
 	if (camera_mode == CAMERA_MODE_FIRSTPERSON)
 		CL_CameraModeChange(CAMERA_MODE_REMOTE);
 	if (lastAlien >= numLEs)
@@ -784,6 +786,7 @@ void CL_InitInput (void)
 	Cmd_AddCommand("togglereaction", CL_ActorToggleReaction_f, _("Toggle reaction fire"));
 	Cmd_AddCommand("useheadgear", CL_ActorUseHeadgear_f, _("Toggle the headgear"));
 	Cmd_AddCommand("nextalien", CL_NextAlien_f, _("Toogle to next alien"));
+	Cmd_AddCommand("drawspottetlines", CL_DrawSpottedLines_f, _("Draw a line to each alien visible to the current actor."));
 
 	Cmd_AddCommand("list_firemodes", CL_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
 	Cmd_AddCommand("fireweap", CL_FireWeapon_f, "Start aiming the weapon.");
