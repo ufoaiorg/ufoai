@@ -686,7 +686,7 @@ menu aircraft_equip
 		pos		"38 38"
 		size	"60 60"
 		origin	"68 68 0"
-		color	"0.5 0.5 0.5 1"
+//		color	"0.5 0.5 0.5 1"
 	}
 
 	pic airequip_slot1
@@ -706,7 +706,7 @@ menu aircraft_equip
 		pos		"196 38"
 		size	"60 60"
 		origin	"226 68 0"
-		color	"0.5 0.5 0.5 1"
+//		color	"0.5 0.5 0.5 1"
 	}
 
 	pic airequip_slot2
@@ -726,7 +726,7 @@ menu aircraft_equip
 		pos		"353 38"
 		size	"60 60"
 		origin	"383 68 0"
-		color	"0.5 0.5 0.5 1"
+//		color	"0.5 0.5 0.5 1"
 	}
 
 	pic airequip_slot3
@@ -746,7 +746,7 @@ menu aircraft_equip
 		pos		"38 301"
 		size	"60 60"
 		origin	"68 331 0"
-		color	"0.5 0.5 0.5 1"
+//		color	"0.5 0.5 0.5 1"
 	}
 
 	pic airequip_slot4
@@ -766,7 +766,7 @@ menu aircraft_equip
 		pos		"353 301"
 		size	"60 60"
 		origin	"383 331 0"
-		color	"0.5 0.5 0.5 1"
+//		color	"0.5 0.5 0.5 1"
 	}
 
 	pic airequip_slot5
@@ -786,7 +786,7 @@ menu aircraft_equip
 		pos		"38 564"
 		size	"60 60"
 		origin	"68 594 0"
-		color	"0.5 0.5 0.5 1"
+//		color	"0.5 0.5 0.5 1"
 	}
 
 	pic airequip_slot6
@@ -806,7 +806,7 @@ menu aircraft_equip
 		pos		"196 564"
 		size	"60 60"
 		origin	"226 594 0"
-		color	"0.5 0.5 0.5 1"
+//		color	"0.5 0.5 0.5 1"
 	}
 
 	pic airequip_slot7
@@ -826,7 +826,7 @@ menu aircraft_equip
 		pos		"353 564"
 		size	"60 60"
 		origin	"383 594 0"
-		color	"0.5 0.5 0.5 1"
+//		color	"0.5 0.5 0.5 1"
 	}
 
 	pic airequip_button_leave
