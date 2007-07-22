@@ -796,10 +796,15 @@ static void CL_EntEdict (struct dbuffer *msg)
  */
 static void CL_EndRoundAnnounce (struct dbuffer * msg)
 {
-	int playerNum;
-	char playerName[MAX_VAR];
+	int playerNum, length;
+	const char *playerName;
 
-	NET_ReadFormat(msg, ev_format[EV_ENDROUNDANNOUNCE], &playerNum, playerName);
+	playerNum = NET_ReadByte(msg);
+	length = NET_ReadShort(msg); /* for stringlength */
+	playerName = NET_ReadString(msg);
+	if (length != (int)strlen(playerName))
+		Com_Printf("CL_EndRoundAnnounce: wrong transmitted playername length: %i (or string)\n", length);
+
 	Com_Printf("%s ended his round\n", playerName);
 }
 
