@@ -66,9 +66,9 @@ static void BaseSummary_BuildingConstruction (const char* cvarNameBase)
 
 		if (building.buildingStatus == B_STATUS_UNDER_CONSTRUCTION || daysLeft > 0) {
 			if (daysLeft > 1)
-				Com_sprintf(buffer, sizeof(buffer), "%s - %i days\n", building.name,daysLeft);
+				Com_sprintf(buffer, sizeof(buffer), _("%s - %i days\n"), building.name, daysLeft);
 			else
-				Com_sprintf(buffer, sizeof(buffer), "%s - %i day\n", building.name,daysLeft);
+				Com_sprintf(buffer, sizeof(buffer), _("%s - %i day\n"), building.name, daysLeft);
 
 			Com_sprintf(cvarName, sizeof(cvarName), "%s%d", cvarNameBase, cvarIndex++);
 			Cvar_Set(cvarName, buffer);
@@ -148,7 +148,7 @@ static void BaseSummary_ProductionCurrent (const char* cvarName)
 
 		objDef = csi.ods[production.objID];
 
-		Com_sprintf(buffer, sizeof(buffer), "%s:  Qty: %d, Time Left: %d hours, Workers: %d",
+		Com_sprintf(buffer, sizeof(buffer), _("%s:  Qty: %d, Time Left: %d hours, Workers: %d"),
 			objDef.name, production.amount, production.timeLeft, production.workers);
 
 		Cvar_Set("mn_basesummary_productioncurrent", buffer);
@@ -179,10 +179,10 @@ static void BaseSummary_ResearchCurrent (const char* cvarNameBase)
 		if (tech.base_idx == baseCurrent->idx && (tech.statusResearch == RS_RUNNING ||
 			tech.statusResearch == RS_PAUSED)) {
 			if (tech.scientists != 1) {
-				Com_sprintf(buffer, sizeof(buffer), "%s - %1.2f%% (%d scientists)\n",
+				Com_sprintf(buffer, sizeof(buffer), _("%s - %1.2f%% (%d scientists)\n"),
 					tech.name, (1 - tech.time / tech.overalltime) * 100, tech.scientists);
 			} else {
-				Com_sprintf(buffer, sizeof(buffer), "%s - %1.2f%% (%d scientist)\n",
+				Com_sprintf(buffer, sizeof(buffer), _("%s - %1.2f%% (%d scientist)\n"),
 					tech.name, (1 - tech.time / tech.overalltime) * 100, tech.scientists);
 			}
 
