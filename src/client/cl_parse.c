@@ -814,7 +814,8 @@ void CL_DrawLineOfSight (le_t *watcher, le_t *target)
 		eyes[2] += EYE_HT_CROUCH;
 	else
 		eyes[2] += EYE_HT_STAND;
-		ptl = CL_ParticleSpawn("fadeTracer", 0, eyes, target->origin, NULL);
+
+	ptl = CL_ParticleSpawn("fadeTracer", 0, eyes, target->origin, NULL);
 
 	if (target->team == TEAM_CIVILIAN)
 		VectorSet(ptl->color, 0.2, 0.2, 1);

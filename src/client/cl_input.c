@@ -617,7 +617,6 @@ static void CL_LeftClickDown_f (void)
 	}
 }
 
-#if 0
 /**
  * @brief Draws a line to each alien the selected 'watcher' can see.
  */
@@ -626,6 +625,8 @@ static void CL_DrawSpottedLines (void)
 	le_t *watcher; /** @todo make this a parameter for use in other fucntions? */
 	le_t *le = NULL;
 	int i;
+	trace_t tr;
+	vec3_t from, at;
 
 	if (!selActor)
 		return;
@@ -635,22 +636,22 @@ static void CL_DrawSpottedLines (void)
 	if (camera_mode == CAMERA_MODE_FIRSTPERSON)
 		CL_CameraModeChange(CAMERA_MODE_REMOTE);
 
-	for (i=0; i < numLEs; i++) {
+	for (i = 0; i < numLEs; i++) {
 		le = &LEs[i];
-		if (le->inuse
-		&& (le->type == ET_ACTOR || le->type == ET_UGV)
-		&& !(le->state & STATE_DEAD)
-		&& le->team != cls.team
-		&& le->team != TEAM_CIVILIAN) {
-			/** @todo DAMN isn't there a similar function like G_Vis but for the client? */
-			if (G_Vis(watcher->team , watcher, le, 0)) { /** @todo: What's this 'flags'/'perish' stuff in the last parameter of G_Vis? */
-				/* draw line from watcher to le */
-				CL_DrawLineOfSight(watcher, le);
-			}
+		if (le->inuse && (le->type == ET_ACTOR || le->type == ET_UGV)
+		 && !(le->state & STATE_DEAD) && le->team != cls.team
+		 && le->team != TEAM_CIVILIAN) {
+			Grid_PosToVec(&clMap, selActor->pos, from);
+			Grid_PosToVec(&clMap, le->pos, at);
+			tr = CL_Trace(from, at, vec3_origin, vec3_origin, selActor, le, MASK_SOLID);
+			/* trace didn't reach the target - something was hit before */
+			if (tr.fraction < 1.0)
+				continue;
+			/* draw line from watcher to le */
+			CL_DrawLineOfSight(watcher, le);
 		}
 	}
 }
-#endif
 
 /**
  * @brief Left mouse button is freed in menu
