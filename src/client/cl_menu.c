@@ -281,7 +281,7 @@ static tutorial_t tutorials[MAX_TUTORIALS];
 static void MN_GetMaps_f(void);
 static void MN_NextMap_f(void);
 static void MN_PrevMap_f(void);
-static int MN_DrawTooltip(const char *font, const char *string, int x, int y, int maxWidth);
+static int MN_DrawTooltip(const char *font, const char *string, int x, int y, int maxWidth, int maxHeight);
 static void CL_ShowMessagesOnStack_f(void);
 static void MN_TimestampedText(char *text, message_t *message, size_t textsize);
 
@@ -1897,7 +1897,7 @@ void MN_DrawItem (vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t 
 /**
  * @brief Generic tooltip function
  */
-static int MN_DrawTooltip (const char *font, const char *string, int x, int y, int maxWidth)
+static int MN_DrawTooltip (const char *font, const char *string, int x, int y, int maxWidth, int maxHeight)
 {
 	int height = 0, width = 0;
 
@@ -1915,7 +1915,7 @@ static int MN_DrawTooltip (const char *font, const char *string, int x, int y, i
 		x -= (maxWidth + 10);
 	re.DrawFill(x - 1, y - 1, maxWidth + 4, height, 0, tooltipBG);
 	re.DrawColor(tooltipColor);
-	re.FontDrawString(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, 0, height, string, 0, 0, NULL, qfalse);
+	re.FontDrawString(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, maxHeight, height, string, 0, 0, NULL, qfalse);
 	re.DrawColor(NULL);
 	return width;
 }
@@ -1939,13 +1939,13 @@ static void MN_Tooltip (menu_t *menu, menuNode_t *node, int x, int y)
 		if (*tooltip == '_')
 			tooltip++;
 
-		width = MN_DrawTooltip("f_small", _(MN_GetReferenceString(menu, node->data[MN_DATA_NODE_TOOLTIP])), x, y, width);
+		width = MN_DrawTooltip("f_small", _(MN_GetReferenceString(menu, node->data[MN_DATA_NODE_TOOLTIP])), x, y, width, 0);
 		y += 20;
 	}
 	if (node->key[0]) {
 		if (node->key[0] == '*')
 			Com_sprintf(node->key, sizeof(node->key), _("Key: %s"), MN_GetReferenceString(menu, node->key));
-		MN_DrawTooltip("f_verysmall", node->key, x, y, width);
+		MN_DrawTooltip("f_verysmall", node->key, x, y, width,0);
 	}
 }
 
@@ -2846,7 +2846,7 @@ void MN_DrawMenus (void)
 					menu->hoverNode = node;
 
 				if (mn_debugmenu->integer) {
-					MN_DrawTooltip("f_small", node->name, node->pos[0], node->pos[1], node->size[1]);
+					MN_DrawTooltip("f_small", node->name, node->pos[0], node->pos[1], node->size[1], 0);
 /*					re.FontDrawString("f_verysmall", ALIGN_UL, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], 0, node->texh[0], node->name, 0, 0, NULL, qfalse);*/
 				}
 			}	/* if */
@@ -2863,7 +2863,7 @@ void MN_DrawMenus (void)
 	if (itemHover) {
 		/* Get name and ifo about item */
 		INV_GetItemTooltip(itemHover->item, tooltiptext, sizeof(tooltiptext));
-		MN_DrawTooltip("f_small", tooltiptext, mx, my, 40);
+		MN_DrawTooltip("f_small", tooltiptext, mx, my, 40, 0);
 	}
 
 	re.DrawColor(NULL);
