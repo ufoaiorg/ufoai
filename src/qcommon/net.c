@@ -447,7 +447,7 @@ void wait_for_net (int timeout)
 			int len = recv(s->socket, buf, sizeof(buf), 0);
 			if (len <= 0) {
 				if (len == -1)
-				Com_Printf("read on socket %d failed: %s\n", s->socket, estr());
+					Com_Printf("read on socket %d failed: %s\n", s->socket, estr());
 				close_stream(s);
 				continue;
 			} else {
