@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_ASSEMBLIES	16
 #define MAX_COMP	32
+#define ANTIMATTER_SIZE 10
 /**
  * @brief The definition of a "components" entry (i.e. an assembly of several items) parsed from a ufo-file.
  * @sa INV_ParseComponents

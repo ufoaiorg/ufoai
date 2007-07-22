@@ -56,8 +56,16 @@ qboolean TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase)
 {
 	assert (od && srcbase && destbase);
 
+	/* Is this antimatter and destination base has enough space in Antimatter Storage? */
+	if (!Q_strncmp(od->id, "antimatter", 10)) {
+		if (destbase->capacities[CAP_ANTIMATTER].max - destbase->capacities[CAP_ANTIMATTER].cur < ANTIMATTER_SIZE) {
+			MN_Popup(_("Not enough space"), _("Destination base does not have enough\nAntimatter Storage space to store more antimatter.\n"));
+			return qfalse;
+		}
+	}
+
 	/* Does the destination base has enough space in storage? */
-	if (destbase->capacities[CAP_ITEMS].max - destbase->capacities[CAP_ITEMS].cur < od->size) {
+	if ((destbase->capacities[CAP_ITEMS].max - destbase->capacities[CAP_ITEMS].cur < od->size) && Q_strncmp(od->id, "antimatter", 10)) {
 		MN_Popup(_("Not enough space"), _("Destination base does not have enough\nStorage space to store this item.\n"));
 		return qfalse;
 	}
@@ -255,7 +263,7 @@ static void TR_TransferSelect_f (void)
 				Q_strncpyz(transferList, _("Storage is empty.\n"), sizeof(transferList));
 		} else {
 			/* @todo: print proper info if base has storage but not operational or limits are not sufficient. */
-			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have a storage building."), sizeof(transferList));
+			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have a Storage."), sizeof(transferList));
 		}
 		break;
 	case 1:		/**< humans */
@@ -291,7 +299,7 @@ static void TR_TransferSelect_f (void)
 			if (!cnt)
 				Q_strncpyz(transferList, _("Living Quarters empty.\n"), sizeof(transferList));
 		} else
-			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have quarters"), sizeof(transferList));
+			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have Living Quarters."), sizeof(transferList));
 		break;
 	case 2:		/**< aliens */
 		/* @todo: check building status here as well as limits. */
@@ -324,7 +332,7 @@ static void TR_TransferSelect_f (void)
 				Q_strncpyz(transferList, _("Alien Containment is empty.\n"), sizeof(transferList));
 		} else {
 			/* @todo: print proper info if base has AC but not operational or limits are not sufficient. */
-			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have an alien containment"), sizeof(transferList));
+			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have an Alien Containment."), sizeof(transferList));
 		}
 		break;
 	case 3:			/**< aircrafts */
@@ -333,7 +341,7 @@ static void TR_TransferSelect_f (void)
 			Q_strcat(transferList, "@todo: aircrafts", sizeof(transferList));
 		} else {
 			/* @todo: print proper info if base has hangar but not operational or limits are not sufficient. */
-			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have hangar"), sizeof(transferList));
+			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have any hangar."), sizeof(transferList));
 		}
 		break;
 	default:
@@ -360,8 +368,12 @@ static void TR_TransferListClear_f (void)
 		return;
 
 	for (i = 0; i < csi.numODs; i++) {	/* Return items. */
-		if (trItemsTmp[i] > 0)
-			B_UpdateStorageAndCapacity (baseCurrent, i, trItemsTmp[i], qfalse);
+		if (trItemsTmp[i] > 0) {
+			if (!Q_strncmp(csi.ods[i].id, "antimatter", 10))
+				INV_ManageAntimatter(baseCurrent, trItemsTmp[i], qtrue);
+			else
+				B_UpdateStorageAndCapacity(baseCurrent, i, trItemsTmp[i], qfalse);
+		}
  	}
 	for (i = 0; i < numTeamDesc; i++) {	/* Return aliens. */
 		if (trAliensTmp[i][0] > 0)
@@ -403,8 +415,12 @@ void TR_EmptyTransferCargo (transferlist_t *transfer)
 			/* @todo: destroy items in transfercargo and inform an user. */
 		} else {
 			for (i = 0; i < csi.numODs; i++) {
-				if (transfer->itemAmount[i] > 0)
-					B_UpdateStorageAndCapacity(destination, i, transfer->itemAmount[i], qfalse);
+				if (transfer->itemAmount[i] > 0) {
+					if (!Q_strncmp(csi.ods[i].id, "antimatter", 10))
+						INV_ManageAntimatter(destination, transfer->itemAmount[i], qtrue);
+					else
+						B_UpdateStorageAndCapacity(destination, i, transfer->itemAmount[i], qfalse);
+				}
 			}
 		}
 	}
@@ -613,7 +629,10 @@ static void TR_TransferListSelect_f (void)
 					od = &csi.ods[i];
 					if (TR_CheckItem(od, baseCurrent, transferBase)) {
 						trItemsTmp[i]++;
-						B_UpdateStorageAndCapacity (baseCurrent, i, -1, qfalse);
+						if (!Q_strncmp(od->id, "antimatter", 10))
+							INV_ManageAntimatter(baseCurrent, 1, qfalse);
+						else
+							B_UpdateStorageAndCapacity(baseCurrent, i, -1, qfalse);
 						break;
 					} else
 						return;
@@ -840,25 +859,26 @@ static void TR_TransferBaseSelect_f (void)
 	Com_sprintf(baseInfo, sizeof(baseInfo), "%s\n\n", base->name);
 
 	if (base->hasStorage) {
-		/* @todo: Check building status and whether it is free */
-		Q_strcat(baseInfo, _("You can transfer equipment - this base has a storage building\n"), sizeof(baseInfo));
-		/*Com_sprintf(str, sizeof(str), _(""), base->);*/
+		Q_strcat(baseInfo, _("You can transfer equipment - this base has a Storage.\n"), sizeof(baseInfo));
 	} else {
-		Q_strcat(baseInfo, _("No storage building in this base\n"), sizeof(baseInfo));
+		Q_strcat(baseInfo, _("No Storage in this base.\n"), sizeof(baseInfo));
 	}
 	if (base->hasQuarters) {
-		/* @todo: Check building status and whether it is free */
-		Q_strcat(baseInfo, _("You can transfer employees - this base has quarters\n"), sizeof(baseInfo));
-		/*Com_sprintf(str, sizeof(str), _(""), base->);*/
+		Q_strcat(baseInfo, _("You can transfer employees - this base has Living Quarters.\n"), sizeof(baseInfo));
 	} else {
-		Q_strcat(baseInfo, _("No quarters in this base\n"), sizeof(baseInfo));
+		Q_strcat(baseInfo, _("No Living Quarters in this base.\n"), sizeof(baseInfo));
 	}
 	if (base->hasAlienCont) {
-		/* @todo: Check building status and whether it is free */
-		Q_strcat(baseInfo, _("You can transfer aliens - this base has alien containment\n"), sizeof(baseInfo));
+		Q_strcat(baseInfo, _("You can transfer Aliens - this base has an Alien Containment.\n"), sizeof(baseInfo));
 	} else {
-		Q_strcat(baseInfo, _("No alien containment in this base\n"), sizeof(baseInfo));
+		Q_strcat(baseInfo, _("No Alien Containment in this base.\n"), sizeof(baseInfo));
 	}
+	if (base->hasAmStorage) {
+		Q_strcat(baseInfo, _("You can transfer antimatter - this base has an Antimatter Storage.\n"), sizeof(baseInfo));
+	} else {
+		Q_strcat(baseInfo, _("No Antimatter Storage in this base,\n"), sizeof(baseInfo));
+	}
+
 	/* @todo: check hangar (for aircraft transfer) */
 
 	menuText[TEXT_BASE_INFO] = baseInfo;

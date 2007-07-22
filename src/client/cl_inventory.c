@@ -33,7 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static equipDef_t eTempEq;		/**< Used to count ammo in magazines. */
 static int eTempCredits;		/**< Used to count temporary credits for item selling. */
-static int ANTIMATTER_SIZE = 10;	/**< Size of one Antimatter unit. */
 
 /**
  * @brief Count and collect ammo from gun magazine.
