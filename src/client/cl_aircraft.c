@@ -183,7 +183,7 @@ void AIR_ListAircraft_f (void)
 					Com_Printf("...weapon slot %i is empty\n", k);
 			}
 			if (aircraft->shield.itemIdx > -1) {
-				Com_Printf("...shield slot contains %s", aircraftItems[aircraft->shield.itemIdx].id);
+				Com_Printf("...armour slot contains %s", aircraftItems[aircraft->shield.itemIdx].id);
 				if (!aircraft->shield.installationTime)
 						Com_Printf(" (functional)\n");
 					else if (aircraft->shield.installationTime > 0)
@@ -191,7 +191,7 @@ void AIR_ListAircraft_f (void)
 					else
 						Com_Printf(" (%i hours before removing is finished)\n",aircraft->shield.installationTime);
 			} else
-				Com_Printf("...shield slot is empty\n");
+				Com_Printf("...armour slot is empty\n");
 			for (k = 0; k < aircraft->maxElectronics; k++) {
 				if (aircraft->electronics[k].itemIdx > -1) {
 					Com_Printf("...electronics slot %i contains %s", k, aircraftItems[aircraft->electronics[k].itemIdx].id);
@@ -697,7 +697,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	idx = aircraft->weapons[0].itemIdx;
 	Q_strcat(aircraftInfo, va(_("Weapons:\t%i on %i\n"), AII_GetSlotItems(AC_ITEM_WEAPON, aircraft), aircraft->maxWeapons), sizeof(aircraftInfo));
 	idx = aircraft->shield.itemIdx;
-	Q_strcat(aircraftInfo, va(_("Shields:\t%i on 1\n"), AII_GetSlotItems(AC_ITEM_SHIELD, aircraft)), sizeof(aircraftInfo));
+	Q_strcat(aircraftInfo, va(_("Armours:\t%i on 1\n"), AII_GetSlotItems(AC_ITEM_SHIELD, aircraft)), sizeof(aircraftInfo));
 	idx = aircraft->electronics[0].itemIdx;
 	Q_strcat(aircraftInfo, va(_("Electronics:\t%i on %i"), AII_GetSlotItems(AC_ITEM_ELECTRONICS, aircraft), aircraft->maxElectronics), sizeof(aircraftInfo));
 	menuText[TEXT_AIRCRAFT_INFO] = aircraftInfo;

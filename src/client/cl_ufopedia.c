@@ -179,7 +179,7 @@ static const char* CL_AircraftStatToName (int stat)
 		return _("Speed");
 		break;
 	case AIR_STATS_SHIELD:
-		return _("Shield");
+		return _("Armour");
 		break;
 	case AIR_STATS_ECM:
 		return _("ECM");
@@ -556,7 +556,7 @@ void UP_AircraftDescription (technology_t* t)
 			idx = aircraft->weapons[0].itemIdx;
 			Q_strcat(upBuffer, va(_("Weapon:\t%s\n"), idx >= 0 ? _(gd.technologies[aircraftItems[idx].tech_idx].name) : _("None") ), sizeof(upBuffer));
 			idx = aircraft->shield.itemIdx;
-			Q_strcat(upBuffer, va(_("Shield:\t%s\n"), idx >= 0 ? _(gd.technologies[aircraftItems[idx].tech_idx].name) : _("None") ), sizeof(upBuffer));
+			Q_strcat(upBuffer, va(_("Armour:\t%s\n"), idx >= 0 ? _(gd.technologies[aircraftItems[idx].tech_idx].name) : _("None") ), sizeof(upBuffer));
 			idx = aircraft->electronics[0].itemIdx;
 			Q_strcat(upBuffer, va(_("Equipment:\t%s\n"), idx >= 0 ? _(gd.technologies[aircraftItems[idx].tech_idx].name) : _("None") ), sizeof(upBuffer));
 		}
