@@ -65,10 +65,8 @@ static void BaseSummary_BuildingConstruction (const char* cvarNameBase)
 		daysLeft = building.timeStart+building.buildTime-ccs.date.day;
 
 		if (building.buildingStatus == B_STATUS_UNDER_CONSTRUCTION || daysLeft > 0) {
-			if (daysLeft > 1)
-				Com_sprintf(buffer, sizeof(buffer), _("%s - %i days\n"), building.name, daysLeft);
-			else
-				Com_sprintf(buffer, sizeof(buffer), _("%s - %i day\n"), building.name, daysLeft);
+			Com_sprintf(buffer, sizeof(buffer), _("%s - %i %s\n"),
+				building.name, daysLeft, ngettext("day", "days", daysLeft));
 
 			Com_sprintf(cvarName, sizeof(cvarName), "%s%d", cvarNameBase, cvarIndex++);
 			Cvar_Set(cvarName, buffer);
@@ -178,13 +176,9 @@ static void BaseSummary_ResearchCurrent (const char* cvarNameBase)
 		tech = gd.technologies[i];
 		if (tech.base_idx == baseCurrent->idx && (tech.statusResearch == RS_RUNNING ||
 			tech.statusResearch == RS_PAUSED)) {
-			if (tech.scientists != 1) {
-				Com_sprintf(buffer, sizeof(buffer), _("%s - %1.2f%% (%d scientists)\n"),
-					tech.name, (1 - tech.time / tech.overalltime) * 100, tech.scientists);
-			} else {
-				Com_sprintf(buffer, sizeof(buffer), _("%s - %1.2f%% (%d scientist)\n"),
-					tech.name, (1 - tech.time / tech.overalltime) * 100, tech.scientists);
-			}
+			Com_sprintf(buffer, sizeof(buffer), _("%s - %1.2f%% (%d %s)\n"),
+				tech.name, (1 - tech.time / tech.overalltime) * 100,
+				tech.scientists, ngettext("scientist", "scientists", tech.scientists));
 
 			Com_sprintf(cvarName, sizeof(cvarName), "%s%d", cvarNameBase, cvarIndex++);
 			Cvar_Set(cvarName, buffer);
