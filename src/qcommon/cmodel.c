@@ -117,7 +117,34 @@ typedef struct {
 	cBspHead_t cheads[MAX_MAP_NODES];
 } mapTile_t;
 
-/** @brief Pathfinding routing structure */
+/**
+ * @brief Pathfinding routing structure
+ * @note
+ *
+ * ROUTE
+ * 	Information stored in "route" (comment strongly WIP!)
+ *
+ * 	connections (see Grid_MoveCheck)
+ * 	mask				description
+ * 	0x10	0001 0000	connection to +x	(height ignored?)
+ * 	0x20	0010 0000	connection to -x	(height ignored?)
+ * 	0x40	0100 0000	connection to +y	(height ignored?)
+ * 	0x80	1000 0000	connection to -y	(height ignored?)
+ * 
+ * 	See "h = map->route[z][y][x] & 0x0F;" and "if (map->route[az][ay][ax] & 0x0F) > h)" in CM_TestConnection
+ * 	0x0F	0000 1111	some height info? 
+ *
+ * FALL
+ * 	Information about how much you'll fall down?
+ *
+ * STEP
+ *
+ * AREA
+ *
+ * AREASTORED
+ *
+ * @todo Some speaking macros for this would be nice :)
+ */
 typedef struct routing_s {
 	byte route[HEIGHT][WIDTH][WIDTH];
 	byte fall[WIDTH][WIDTH];
