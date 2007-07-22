@@ -823,10 +823,10 @@ void RW_IN_Commands (void)
 
 	for (i = 0; i < 3; i++) {
 		if ((mouse_buttonstate & (1<<i)) && !(mouse_oldbuttonstate & (1<<i)))
-			in_state->Key_Event_fp (K_MOUSE1 + i, qtrue);
+			in_state->Key_Event_fp(K_MOUSE1 + i, qtrue);
 
 		if (!(mouse_buttonstate & (1<<i)) && (mouse_oldbuttonstate & (1<<i)))
-			in_state->Key_Event_fp (K_MOUSE1 + i, qfalse);
+			in_state->Key_Event_fp(K_MOUSE1 + i, qfalse);
 	}
 	mouse_oldbuttonstate = mouse_buttonstate;
 }
