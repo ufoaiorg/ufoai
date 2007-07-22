@@ -2477,7 +2477,13 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, int z
 
 /**
  * @brief
- * @param
+ * @param[in|out] map Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] x Current x location in the map.
+ * @param[in] y Current y location in the map.
+ * @param[in] z Current z location in the map.
+ * @param[in] dv
+ * @param[in] h
+ * @param[in] ol
  * @sa Grid_CheckForbidden
  */
 static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, int h, int ol)
@@ -2529,8 +2535,12 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
 
 /**
  * @brief
- * @param
- * @sa Grid_MoveMark
+ * @param[in|out] map Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] xl
+ * @param[in] yl
+ * @param[in] xh
+ * @param[in] xh 
+  * @sa Grid_MoveMark
  */
 static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, int yh)
 {
@@ -2558,8 +2568,8 @@ static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, i
 
 /**
  * @brief
- * @param[in] map Pointer to client or server side routing table (clMap, svMap)
- * @param[in] from The position to start the calculation from
+ * @param[in|out] map Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] from The position to start the calculation from.
  * @param[in] size The size of thing to calc the move for (e.g. size=2 means 2x2).
  * The plan is to have the 'origin' in 2x2 units in the upper-left (towards the lower coordinates) corner of the 2x2 square.
  * @param[in] distance
