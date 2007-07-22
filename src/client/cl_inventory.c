@@ -90,7 +90,7 @@ static void INV_CarriedItems (le_t *soldier)
 
 	for (container = 0; container < csi.numIDs; container++) {
 		if (csi.ids[container].temp) /* Items collected as ET_ITEM in INV_CollectingItems(). */
-			break;
+			break;	/* FIXME: why is this no continue? */
 		for (item = soldier->i.c[container]; item; item = item->next) {
 			/* Fake item. */
 			assert(item->item.t != NONE);
