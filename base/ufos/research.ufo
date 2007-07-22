@@ -3439,7 +3439,7 @@ tech rs_craft_weapon_shiva
 	time		0
 	producetime	1111
 
-	mdl_top		"aircraft/shiva/shiva"
+	mdl_top		"aircraft/craft_weapon_shiva/shiva"
 }
 
 tech rs_craft_ammo_shiva_1
@@ -3538,6 +3538,7 @@ tech rs_craft_weapon_tr20
 	time		0
 	producetime	1810
 
+	mdl_top		"aircraft/craft_weapon_tr20/tr20"
 	image_top	"techs/craft_weapon_tr20"
 }
 
@@ -3562,15 +3563,6 @@ tech rs_craft_ammo_tr20
 	image_top	"techs/craft_ammo_tr20"
 }
 
-// that entry is to be removed as soon as craftitem-related
-// code is ready :> -Zenerka 25.01.2007
-item craft_weapon_particle
-{
-	buytype dummy
-	// dummy package to that we can link
-	weapon false
-}
-
 tech rs_craft_weapon_particle
 {
 	type		craftitem
@@ -3583,8 +3575,7 @@ tech rs_craft_weapon_particle
 		default "_craft_weapon_particle_beam_txt"
 	}
 
-	// FIXME use craftitem craft_weapon_particle_beam
-	provides	craft_weapon_particle
+	provides	craft_weapon_particle_beam
 
 	mail_pre
 	{
@@ -3611,6 +3602,7 @@ tech rs_craft_weapon_particle
 	time		100
 	producetime	2233
 
+	mdl_top		"aircraft/craft_weapon_particle/pbw"
 	image_top	"techs/craft_weapon_particle"
 }
 
