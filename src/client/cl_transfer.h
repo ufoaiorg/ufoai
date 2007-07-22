@@ -37,14 +37,19 @@ typedef enum {
 /** @brief Transfer informations (they are being saved in gd.alltransfers[MAX_AIRCRAFT]. */
 typedef struct transferlist_s {
 	transferType_t type;		/**< Type of transfer to determine what to do with load/unload. */
-	int itemAmount[MAX_OBJDEFS];	/**< Amount of given item [csi.ods[idx]]. */
-	int alienAmount[MAX_TEAMDEFS][2];	/**< Alien cargo, [0] alive, [1] dead. */
+	int itemAmount[MAX_OBJDEFS];			/**< Amount of given item [csi.ods[idx]]. */
+	int alienAmount[MAX_TEAMDEFS][2];		/**< Alien cargo, [0] alive, [1] dead. */
+	int employeesArray[MAX_EMPL][MAX_EMPLOYEES];	/**< Array of indexes of personel transfering. */
 	int alienLiveAmount[MAX_CARGO];	/**< Alive alien amount of given alien [aliensCont_t->idx]. */
 	int alienBodyAmount[MAX_CARGO];	/**< Alien body amount of given alien [aliensCont_t->idx]. */
 	int employees[MAX_EMPLOYEES];	/**< Employee index. */
-	int destBase;			/**< Index of destination base. */
-	date_t event;			/**< When the transfer finish process should start. */
-	qboolean active;		/**< True if this transfer is under processing. */
+	int destBase;					/**< Index of destination base. */
+	int srcBase;					/**< Intex of source base. */
+	date_t event;					/**< When the transfer finish process should start. */
+	qboolean active;				/**< True if this transfer is under processing. */
+	qboolean hasItems;				/**< Transfer of items. */
+	qboolean hasEmployees;				/**< Transfer of employees. */
+	qboolean hasAliens;				/**< Transfer of Aliens. */
 } transferlist_t;
 
 /** @brief Array of current cargo onboard. */
@@ -58,6 +63,7 @@ void TR_TransferEnd(transferlist_t *transfer);
 void TR_EmptyTransferCargo(transferlist_t *transfer);
 void TR_TransferCheck(void);
 qboolean TR_CheckItem(objDef_t *od, base_t *srcbase, base_t *destbase);
+qboolean TR_CheckEmployee(employee_t *employee, base_t *srcbase, base_t *destbase);
 qboolean TR_CheckAlien(int alienidx, base_t *srcbase, base_t *destbase);
 
 void TR_Reset(void);

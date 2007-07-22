@@ -68,6 +68,36 @@ qboolean TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase)
 }
 
 /**
+ * @brief Checks condition for employee transfer.
+ * @param[in] *employee Pointer to employee for transfer.
+ * @param[in] *srcbase Pointer to current base.
+ * @param[in] *destbase Pointer to destination base.
+ * @return qtrue if transfer of this type of alien is possible.
+ */
+qboolean TR_CheckEmployee (employee_t *employee, base_t *srcbase, base_t *destbase)
+{
+	assert (employee && srcbase && destbase);
+
+	/* Does the destination base has enough space in living quarters? */
+	if (destbase->capacities[CAP_EMPLOYEES].max - destbase->capacities[CAP_EMPLOYEES].cur < 1) {
+		MN_Popup(_("Not enough space"), _("Destination base does not have enough space\nin Living Quarters.\n"));
+		return qfalse;
+	}
+
+	/* @todo: check capacities also with current personel on transferlist. */
+
+	/* Is this a soldier assigned to aircraft? */
+	if ((employee->type == EMPL_SOLDIER) && CL_SoldierInAircraft(employee->idx, -1)) {
+		Com_sprintf(popupText, sizeof(popupText), _("%s %s is assigned to aircraft and cannot be\ntransfered to another base.\n"),
+		gd.ranks[employee->chr.rank].shortname, employee->chr.name);
+		MN_Popup(_("Soldier in aircraft"), popupText);
+		return qfalse;
+	}
+
+	return qtrue;
+}
+
+/**
  * @brief Checks condition for alive alien transfer.
  * @param[in] alienidx Index of an alien type.
  * @param[in] *srcbase Pointer to current base.
@@ -343,7 +373,7 @@ static void TR_TransferListClear_f (void)
 	/* Clear temporary cargo arrays. */
 	memset(trItemsTmp, 0, sizeof(trItemsTmp));
 	memset(trAliensTmp, 0, sizeof(trAliensTmp));
-	memset(trEmployeesTmp, 0, sizeof(trEmployeesTmp));
+	memset(trEmployeesTmp, -1, sizeof(trEmployeesTmp));
 	/* Update cargo list and items list. */
 	TR_CargoList();
  	TR_TransferSelect_f();
@@ -357,47 +387,59 @@ static void TR_TransferListClear_f (void)
  */
 void TR_EmptyTransferCargo (transferlist_t *transfer)
 {
-	int i;
+	int i, j;
 	base_t *destination = NULL;
+	base_t *source = NULL;
+	employee_t *employee;
 
 	assert (transfer);
 	destination = &gd.bases[transfer->destBase];
-	assert (destination);
+	source = &gd.bases[transfer->srcBase];
+	assert (destination && source);
 
 	/* Unload items. @todo: check building status and limits. */
-	if (!destination->hasStorage) {
-		/* @todo: destroy items in transfercargo and inform an user. */
-	} else {
-		for (i = 0; i < csi.numODs; i++) {
-			if (transfer->itemAmount[i] > 0)
-				B_UpdateStorageAndCapacity(destination, i, transfer->itemAmount[i], qfalse);
+	if (transfer->hasItems) {
+		if (!destination->hasStorage) {
+			/* @todo: destroy items in transfercargo and inform an user. */
+		} else {
+			for (i = 0; i < csi.numODs; i++) {
+				if (transfer->itemAmount[i] > 0)
+					B_UpdateStorageAndCapacity(destination, i, transfer->itemAmount[i], qfalse);
+			}
 		}
 	}
+
 	/* Unload personel. @todo: check building status and limits. */
-	if (!destination->hasQuarters) {
-		/* @todo: what will we do here in such case? */
-	} else {
-		/* @todo: add a personel to destinationbase. */
-		/* @todo: unhire personel in transfercargo and destroy it's inventory. */
-		/**
-		* first unhire this employee (this will also unlink the inventory from current base
-		* and remove him from any buildings he is currently assigned to) and then hire him
-		* again in the new base
-		*/
-		/*E_UnhireEmployee(homebase, ...)*/
-		/*E_HireEmployee(b, ...)*/
-	}
-	/* Unload aliens. @todo: check building status and limits. */
-	if (!destination->hasAlienCont) {
-		/* @todo: destroy aliens in transfercargo and inform an user. */
-	} else {
-		for (i = 0; i < numTeamDesc; i++) {
-			if (transfer->alienAmount[i][0] > 0) {
-				destination->alienscont[i].amount_alive += transfer->alienAmount[i][0];
-				destination->capacities[CAP_ALIENS].cur += transfer->alienAmount[i][0];
+	if (transfer->hasEmployees) {
+		if (!destination->hasQuarters) {
+			/* @todo: what will we do here in such case? */
+		} else {
+			for (i = 0; i < MAX_EMPL; i++) {		/* Employees. */
+				for (j = 0; j < gd.numEmployees[i]; j++) {
+					if (transfer->employeesArray[i][j] > -1) {
+						employee = &gd.employees[i][j];
+						employee->baseIDHired = transfer->srcBase;	/* Restore back the original baseid. */
+						E_UnhireEmployee (source, i, employee->idx);
+						E_HireEmployee (destination, i, employee->idx);
+					}
+				}
 			}
-			if (transfer->alienAmount[i][1] > 0)
-				destination->alienscont[i].amount_dead += transfer->alienAmount[i][1];
+		}
+	}
+
+	/* Unload aliens. @todo: check building status and limits. */
+	if (transfer->hasAliens) {
+		if (!destination->hasAlienCont) {
+			/* @todo: destroy aliens in transfercargo and inform an user. */
+		} else {
+			for (i = 0; i < numTeamDesc; i++) {
+				if (transfer->alienAmount[i][0] > 0) {
+					destination->alienscont[i].amount_alive += transfer->alienAmount[i][0];
+					destination->capacities[CAP_ALIENS].cur += transfer->alienAmount[i][0];
+				}
+				if (transfer->alienAmount[i][1] > 0)
+					destination->alienscont[i].amount_dead += transfer->alienAmount[i][1];
+			}
 		}
 	}
 }
@@ -447,7 +489,8 @@ void TR_TransferEnd (transferlist_t *transfer)
  */
 static void TR_TransferStart_f (void)
 {
-	int i;
+	int i, j;
+	employee_t *employee;
 	transferlist_t *transfer = NULL;
 	char message[256];
 
@@ -456,7 +499,7 @@ static void TR_TransferStart_f (void)
  		return;
  	}
 
-	if (!transferBase) {
+	if (!transferBase || !baseCurrent) {
 		Com_Printf("TR_TransferStart_f: No base selected!\n");
 		return;
 	}
@@ -466,6 +509,7 @@ static void TR_TransferStart_f (void)
 		if (!gd.alltransfers[i].active) {
 			/* Make sure it is empty here. */
 			memset(&gd.alltransfers[i], 0, sizeof(gd.alltransfers[i]));
+			memset (&gd.alltransfers[i].employeesArray, -1, sizeof(gd.alltransfers[i].employeesArray));
 			transfer = &gd.alltransfers[i];
 			break;
 		}
@@ -478,25 +522,46 @@ static void TR_TransferStart_f (void)
 	transfer->event.day = ccs.date.day + 1;	/* @todo: instead of +1 day calculate distance */
 	transfer->event.sec = ccs.date.sec;
 	transfer->destBase = transferBase->idx; /* Destination base index. */
-	transfer->type = transferType; /* Type of transfer. */
+	transfer->srcBase = baseCurrent->idx;	/* Source base index. */
 	transfer->active = qtrue;
 	for (i = 0; i < csi.numODs; i++) {		/* Items. */
-		if (trItemsTmp[i] > 0)
+		if (trItemsTmp[i] > 0) {
+			transfer->hasItems = qtrue;
 			transfer->itemAmount[i] = trItemsTmp[i];
+		}
+	}
+	/* Note that personel remains hired in source base during the transfer, that is
+	   it takes Living Quarters capacity, etc, but it cannot be used anywhere. */
+	for (i = 0; i < MAX_EMPL; i++) {		/* Employees. */
+		for (j = 0; j < gd.numEmployees[i]; j++) {
+			if (trEmployeesTmp[i][j] > -1) {
+				transfer->hasEmployees = qtrue;
+				employee = &gd.employees[i][j];
+				E_RemoveEmployeeFromBuilding(employee);		/* Remove from building. */
+				Com_DestroyInventory(&employee->inv);		/* Remove inventory. */
+				HOS_RemoveFromList(employee, baseCurrent);	/* Remove from hospital. */
+				transfer->employeesArray[i][j] = trEmployeesTmp[i][j];
+				employee->baseIDHired = 42;	/* Hack to take them as hired but not in any base. */
+			}
+		}
 	}
 	for (i = 0; i < numTeamDesc; i++) {		/* Aliens. */
 		if (!teamDesc[i].alien)
 			continue;
-		if (trAliensTmp[i][0] > 0)
+		if (trAliensTmp[i][0] > 0) {
+			transfer->hasAliens = qtrue;
 			transfer->alienAmount[i][0] = trAliensTmp[i][0];
-		if (trAliensTmp[i][1] > 0)
+		}
+		if (trAliensTmp[i][1] > 0) {
+			transfer->hasAliens = qtrue;
 			transfer->alienAmount[i][1] = trAliensTmp[i][1];
+		}
 	}
 
 	/* Clear temporary cargo arrays. */
 	memset(trItemsTmp, 0, sizeof(trItemsTmp));
 	memset(trAliensTmp, 0, sizeof(trAliensTmp));
-	memset(trEmployeesTmp, 0, sizeof(trEmployeesTmp));
+	memset(trEmployeesTmp, -1, sizeof(trEmployeesTmp));
 
 	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to base %s"), gd.bases[transfer->destBase].name);
 	MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
@@ -575,9 +640,12 @@ static void TR_TransferListSelect_f (void)
 			if (trEmployeesTmp[EMPL_SOLDIER][i] > -1)
 				continue;
 			if (cnt == num) {
-				trEmployeesTmp[EMPL_SOLDIER][employee->idx] = employee->idx;
-				added = qtrue;
-				break;
+				if (TR_CheckEmployee(employee, baseCurrent, transferBase)) {
+					trEmployeesTmp[EMPL_SOLDIER][employee->idx] = employee->idx;
+					added = qtrue;
+					break;
+				} else
+					return;
 			}
 			cnt++;
 		}
@@ -595,8 +663,11 @@ static void TR_TransferListSelect_f (void)
 							continue;
 					if (trEmployeesTmp[empltype][employee->idx] > -1)	/* Already on transfer list. */
 						continue;
-					trEmployeesTmp[empltype][employee->idx] = employee->idx;
-					break;
+					if (TR_CheckEmployee(employee, baseCurrent, transferBase)) {
+						trEmployeesTmp[empltype][employee->idx] = employee->idx;
+						break;
+					} else
+						return;
 				}
 			}
 			cnt++;
@@ -932,6 +1003,8 @@ void TR_TransferCheck (void)
 				/* Destination base was destroyed meanwhile. */
 				/* Transfer is lost, send proper message to the user.*/
 				/* @todo: prepare MN_AddNewMessage() here */
+
+				/* @todo: what if source base is lost? we won't be able to unhire transfered personel. */
 			} else {
 				TR_TransferEnd(transfer);
 			}
