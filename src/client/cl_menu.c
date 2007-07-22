@@ -2837,6 +2837,7 @@ menu_t* MN_ActiveMenu (void)
 /**
  * @brief Push a menu onto the menu stack
  * @param[in] name Name of the menu to push onto menu stack
+ * @param[in] delete
  * @return pointer to menu_t
  */
 static menu_t* MN_PushMenuDelete (const char *name, qboolean delete)
@@ -2859,7 +2860,10 @@ static menu_t* MN_PushMenuDelete (const char *name, qboolean delete)
 			if (menus[i].initNode)
 				MN_ExecuteActions(&menus[i], menus[i].initNode->click);
 
+			if (cls.key_dest == key_input && msg_mode == MSG_MENU)
+				Key_Event(K_ENTER, qtrue, Sys_Milliseconds());
 			Key_SetDest(key_game);
+
 			for (node = menus[i].firstNode; node; node = node->next) {
 				/* if there is a timeout value set, init the menu with current
 				 * client time */
@@ -2881,9 +2885,6 @@ static menu_t* MN_PushMenuDelete (const char *name, qboolean delete)
  */
 menu_t* MN_PushMenu (const char *name)
 {
-	/* make sure that we end all input buffers */
-	if (msg_mode == MSG_MENU)
-		Cbuf_AddText("msgmenu !\n");
 	return MN_PushMenuDelete(name, qtrue);
 }
 
@@ -2936,8 +2937,8 @@ static void MN_PushCopyMenu_f (void)
 void MN_PopMenu (qboolean all)
 {
 	/* make sure that we end all input buffers */
-	if (msg_mode == MSG_MENU || msg_mode == MSG_IRC)
-		Cbuf_AddText("msgmenu !\n");
+	if (cls.key_dest == key_input && msg_mode == MSG_MENU)
+		Key_Event(K_ENTER, qtrue, Sys_Milliseconds());
 
 	if (all)
 		while (menuStackPos > 0) {
