@@ -457,7 +457,7 @@ qboolean MAP_AllMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, i
 	else {
 		if (z)
 			*z = 10;
-		return MAP_MapToScreen (node, pos, x, y);
+		return MAP_MapToScreen(node, pos, x, y);
 	}
 }
 
@@ -773,7 +773,7 @@ void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center, const 
 		draw = qfalse;
 		if (MAP_AllMapToScreen(node, posCircle, &xCircle, &yCircle, NULL)) {
 			draw = qtrue;
-			if (!globe && numPoints != 0 && abs(pts[(numPoints -1) * 2] - xCircle) > 512)
+			if (!globe && numPoints != 0 && abs(pts[(numPoints - 1) * 2] - xCircle) > 512)
 				oldDraw = qfalse;
 		}
 
@@ -838,8 +838,7 @@ float MAP_AngleOfPath (const vec3_t start, const vec2_t end, vec3_t direction, v
 			VectorSubtract(tangentVector, direction, v);
 			if (VectorLength(v) < dist) {
 				VectorCopy(direction, tangentVector);
-			}
-			else {
+			} else {
 				VectorCopy(tangentVector, direction);
 			}
 		}
@@ -1153,7 +1152,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node, qboolean globe)
 		}
 
 		if (MAP_AllMapToScreen(node, base->pos, &x, &y, NULL))
-			re.FontDrawString(font, ALIGN_UL, x, y+10, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], base->name, 0, 0, NULL, qfalse);
+			re.FontDrawString(font, ALIGN_UL, x, y + 10, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], base->name, 0, 0, NULL, qfalse);
 
 		/* draw aircrafts of base */
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--)
@@ -1218,7 +1217,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node, qboolean globe)
 			continue;
 		if (aircraft == selectedUfo) {
 			if (globe)
-				MAP_MapDrawEquidistantPoints (node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow, qtrue);
+				MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow, qtrue);
 			else
 				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "circle");
 		}
