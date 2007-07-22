@@ -1239,6 +1239,18 @@ static void AIM_DrawAircraftSlots (aircraft_t *aircraft)
 {
 	menuNode_t *node;
 	int i, j;
+	aircraftSlot_t *slot;
+	int max; 
+
+	/* initialise models Cvar */
+	Cvar_Set("mn_aircraft_item_model_slot0", "");
+	Cvar_Set("mn_aircraft_item_model_slot1", "");
+	Cvar_Set("mn_aircraft_item_model_slot2", "");
+	Cvar_Set("mn_aircraft_item_model_slot3", "");
+	Cvar_Set("mn_aircraft_item_model_slot4", "");
+	Cvar_Set("mn_aircraft_item_model_slot5", "");
+	Cvar_Set("mn_aircraft_item_model_slot6", "");
+	Cvar_Set("mn_aircraft_item_model_slot7", "");
 
 	node = MN_GetNodeFromCurrentMenu("airequip_slot0");
 	for (i = 0; node && i < AIR_POSITIONS_MAX; node = node->next) {
@@ -1249,37 +1261,58 @@ static void AIM_DrawAircraftSlots (aircraft_t *aircraft)
 			switch (airequipID) {
 			case AC_ITEM_AMMO:
 			case AC_ITEM_WEAPON:
-				for (j = 0; j < aircraft->maxWeapons; j++) {
-					/* check if one of the aircraft slots is at this position */
-					if (aircraft->weapons[j].pos == i) {
-						MN_UnHideNode(node);
-						/* draw in white if this is the selected slot */
-						if (j == airequipSelectedSlot) {
-							Vector2Set(node->texl, 64, 0);
-							Vector2Set(node->texh, 128, 64);
-						} else {
-							Vector2Set(node->texl, 0, 0);
-							Vector2Set(node->texh, 64, 64);
-						}
-					}
-				}
+				max = aircraft->maxWeapons;
+				slot = aircraft->weapons;
 				break;
 			case AC_ITEM_ELECTRONICS:
-				for (j = 0; j < aircraft->maxElectronics; j++) {
-					if (aircraft->electronics[j].pos == i) {
-						MN_UnHideNode(node);
-						/* draw in white if this is the selected slot */
-						if (j == airequipSelectedSlot) {
-							Vector2Set(node->texl, 64, 0);
-							Vector2Set(node->texh, 128, 64);
-						} else {
-							Vector2Set(node->texl, 0, 0);
-							Vector2Set(node->texh, 64, 64);
-						}
-					}
-				}
+				max = aircraft->maxElectronics;
+				slot = aircraft->electronics;
 				break;
 			/* do nothing for shield: there is only one slot */
+			default:
+				continue;
+			}
+			for (j = 0; j < max; j++, slot++) {
+				/* check if one of the aircraft slots is at this position */
+				if (slot->pos == i) {
+					MN_UnHideNode(node);
+					/* draw in white if this is the selected slot */
+					if (j == airequipSelectedSlot) {
+					Vector2Set(node->texl, 64, 0);
+						Vector2Set(node->texh, 128, 64);
+					} else {
+						Vector2Set(node->texl, 0, 0);
+						Vector2Set(node->texh, 64, 64);
+					}
+					switch (i) {
+					case 0:
+						Cvar_Set("mn_aircraft_item_model_slot0", gd.technologies[aircraftItems[slot->itemIdx].tech_idx].mdl_top);
+						break;
+					case 1:
+						Cvar_Set("mn_aircraft_item_model_slot1", gd.technologies[aircraftItems[slot->itemIdx].tech_idx].mdl_top);
+						break;
+					case 2:
+						Cvar_Set("mn_aircraft_item_model_slot2", gd.technologies[aircraftItems[slot->itemIdx].tech_idx].mdl_top);
+						break;
+					case 3:
+						Cvar_Set("mn_aircraft_item_model_slot3", gd.technologies[aircraftItems[slot->itemIdx].tech_idx].mdl_top);
+						break;
+					case 4:
+						Cvar_Set("mn_aircraft_item_model_slot4", gd.technologies[aircraftItems[slot->itemIdx].tech_idx].mdl_top);
+						break;
+					case 5:
+						Cvar_Set("mn_aircraft_item_model_slot5", gd.technologies[aircraftItems[slot->itemIdx].tech_idx].mdl_top);
+						break;
+					case 6:
+						Cvar_Set("mn_aircraft_item_model_slot6", gd.technologies[aircraftItems[slot->itemIdx].tech_idx].mdl_top);
+						break;
+					case 7:
+						Cvar_Set("mn_aircraft_item_model_slot7", gd.technologies[aircraftItems[slot->itemIdx].tech_idx].mdl_top);
+						break;
+					default:
+						Com_Printf("Unknown location for slot position %i\n", i);
+					}
+				}
 			}
 			i++;
 		}
