@@ -2517,6 +2517,24 @@ tech rs_building_entrance
 	time	0
 }
 
+tech rs_building_missile
+{
+	type	building
+	description {
+		default "_b_missile_txt"
+	}
+	// pre_description	"_b_missile_pre_txt"
+	up_chapter	buildings
+
+	require_AND
+	{
+		tech rs_building_entrance
+	}
+
+	provides	building_missile
+	time	0
+}
+
 tech rs_building_large_hangar
 {
 	type	building

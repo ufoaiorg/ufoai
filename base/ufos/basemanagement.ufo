@@ -90,6 +90,21 @@ building building_entrance
 	visible		false
 }
 
+building building_missile
+{
+	name		"_Missile Battery"
+	image		base/missile
+	fixcosts	36000
+	depends		building_entrance // storage base needs just entrance
+	type		missile
+	build_time	4
+	varcosts	200
+	map_name	"missile"
+	pedia		rs_building_missile
+	more_than_one	true
+	onclick		"building_open"
+}
+
 building building_storage
 {
 	name		"_Storage"

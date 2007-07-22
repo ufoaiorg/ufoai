@@ -45,6 +45,7 @@ researched rslist_human
 	rs_skill_sniper
 	rs_skill_explosive
 	rs_building_entrance
+	rs_building_missile
 	rs_building_storage
 	rs_building_powerplant
 	rs_building_quarters

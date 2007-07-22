@@ -402,6 +402,10 @@ static void B_BuildingDestroy_f (void)
 		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
 			baseCurrent->hasAmStorage = qfalse;
 		break;
+	case B_MISSILE:
+		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
+			baseCurrent->hasMissile = qfalse;
+		break;
 	case B_MISC:
 		break;
 	default:
@@ -625,6 +629,10 @@ static void B_UpdateBaseBuildingStatus (building_t* building, base_t* base, buil
 	case B_ANTIMATTER:
 		if ((building->buildingStatus == B_STATUS_WORKING) && (base->hasPower))
 			base->hasAmStorage = qtrue;
+		break;
+	case B_MISSILE:
+		if ((building->buildingStatus == B_STATUS_WORKING) && (base->hasPower))
+			base->hasMissile = qtrue;
 		break;
 	default:
 		break;
@@ -1343,6 +1351,8 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 					building->buildingType = B_ANTIMATTER;
 				} else if (!Q_strncmp(token, "entrance", MAX_VAR)) {
 					building->buildingType = B_ENTRANCE;
+				} else if (!Q_strncmp(token, "missile", MAX_VAR)) {
+					building->buildingType = B_MISSILE;
 				}
 /*			} else if (!Q_strncmp(token, "max_employees", MAX_VAR)) {
 				token = COM_EParse(text, errhead, name);
@@ -2907,6 +2917,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 		MSG_WriteByte(sb, b->hasHangar);
 		MSG_WriteByte(sb, b->hasLab);
 		MSG_WriteByte(sb, b->hasHospital);
+		MSG_WriteByte(sb, b->hasMissile);
 		MSG_WriteByte(sb, b->hasAlienCont);
 		MSG_WriteByte(sb, b->hasStorage);
 		MSG_WriteByte(sb, b->hasQuarters);
@@ -3103,6 +3114,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		b->hasHangar = MSG_ReadByte(sb);
 		b->hasLab = MSG_ReadByte(sb);
 		b->hasHospital = MSG_ReadByte(sb);
+		b->hasMissile = MSG_ReadByte(sb);
 		b->hasAlienCont = MSG_ReadByte(sb);
 		b->hasStorage = MSG_ReadByte(sb);
 		b->hasQuarters = MSG_ReadByte(sb);
