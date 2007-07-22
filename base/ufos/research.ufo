@@ -3225,6 +3225,7 @@ tech rs_alien_taman_autopsy
 	time	1500
 
 	image_top	techs/taman_autopsy
+	mdl_top		alien_taman
 }
 
 // SHEVAAR
