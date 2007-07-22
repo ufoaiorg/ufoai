@@ -2377,7 +2377,13 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 	level.nextEndRound = level.framenum + 20;
 
 	/* check if all team members are ready (even ai players) */
-	player->ready = qtrue;
+	if (!player->ready) {
+		player->ready = qtrue;
+		gi.AddEvent(PM_ALL, EV_ENDROUNDANNOUNCE);
+		gi.WriteByte(player->num);
+		gi.WriteShort((int)strlen(player->pers.netname));
+		gi.WriteString(player->pers.netname);
+	}
 	for (i = 0, p = game.players; i < game.maxplayers * 2; i++, p++)
 		if (p->inuse && p->pers.team == level.activeTeam
 			&& !p->ready && G_PlayerSoldiersCount(p) > 0)

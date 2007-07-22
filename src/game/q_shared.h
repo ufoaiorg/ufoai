@@ -732,6 +732,8 @@ typedef enum {
 	EV_RESET,
 	EV_START,
 	EV_ENDROUND,	/**< ends the current team's round CL_DoEndRound */
+	EV_ENDROUNDANNOUNCE,
+
 	EV_RESULTS,
 	EV_CENTERVIEW = 5,
 

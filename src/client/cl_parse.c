@@ -79,6 +79,7 @@ const char *ev_format[] =
 	"bb",				/* EV_RESET */
 	"b",				/* EV_START */
 	"b",				/* EV_ENDROUND */
+	"b*",				/* EV_ENDROUNDANNOUNCE */
 
 	"bb****",			/* EV_RESULTS */
 	"g",				/* EV_CENTERVIEW */
@@ -121,6 +122,8 @@ static const char *ev_names[] =
 	"EV_RESET",
 	"EV_START",
 	"EV_ENDROUND",
+	"EV_ENDROUNDANNOUNCE",
+
 	"EV_RESULTS",
 	"EV_CENTERVIEW",
 
@@ -169,6 +172,7 @@ static void CL_InvAdd(struct dbuffer *msg);
 static void CL_InvDel(struct dbuffer *msg);
 static void CL_InvAmmo(struct dbuffer *msg);
 static void CL_InvReload(struct dbuffer *msg);
+static void CL_EndRoundAnnounce(struct dbuffer * msg);
 
 static void (*ev_func[])( struct dbuffer *msg ) =
 {
@@ -176,6 +180,8 @@ static void (*ev_func[])( struct dbuffer *msg ) =
 	CL_Reset,		/* EV_RESET */
 	CL_StartGame,	/* EV_START */
 	CL_DoEndRound,
+	CL_EndRoundAnnounce,
+
 	CL_ParseResults,
 	CL_CenterView,
 
@@ -773,6 +779,21 @@ static void CL_EntEdict (struct dbuffer *msg)
 	le->contents = CONTENTS_SOLID;
 }
 
+/**
+ * @brief Announces that a player ends his round
+ * @param[in] msg
+ * @sa CL_DoEndRound
+ * @note event EV_ENDROUNDANNOUNCE
+ * @todo Build into hud
+ */
+static void CL_EndRoundAnnounce (struct dbuffer * msg)
+{
+	int playerNum;
+	char playerName[MAX_VAR];
+
+	NET_ReadFormat(msg, ev_format[EV_ENDROUNDANNOUNCE], &playerNum, playerName);
+	Com_Printf("%s ended his round\n", playerName);
+}
 
 static le_t	*lastMoving;
 
