@@ -1923,6 +1923,7 @@ int fb_length;
  * @todo This probably belongs in the core logic.
  * This is used for pathfinding.
  * It is a list of where the selected unit can not move to because others are standing there already.
+ * @todo add support for 2x2 units See "size" in MoveCalc
  */
 static void CL_BuildForbiddenList (void)
 {
@@ -1990,7 +1991,7 @@ void CL_ConditionalMoveCalc (struct routing_s *map, le_t *le, int distance)
 {
 	if (selActor && selActor == le) {
 		CL_BuildForbiddenList();
-		Grid_MoveCalc(map, le->pos, distance, fb_list, fb_length);
+		Grid_MoveCalc(map, le->pos, (le->type == ET_UGV)?2:1, distance, fb_list, fb_length);
 		CL_ResetActorMoveLength();
 	}
 }

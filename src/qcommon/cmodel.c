@@ -2559,13 +2559,16 @@ static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, i
  * @brief
  * @param[in] map Pointer to client or server side routing table (clMap, svMap)
  * @param[in] from The position to start the calculation from
+ * @param[in] size The size of thing to calc the move for (e.g. size=2 means 2x2).
+ * The plan is to have the 'origin' in 2x2 units in the upper-left (towards the lower coordinates) corner of the 2x2 square.
  * @param[in] distance
  * @param[in] fb_list Forbidden list (entities are standing at those points)
  * @param[in] fb_length Length of forbidden list
  * @sa Grid_MoveMarkRoute
  * @sa G_MoveCalc
+ * @todo size is unused right now - this needs to change (2x2 units)
  */
-void Grid_MoveCalc (struct routing_s *map, pos3_t from, int distance, byte ** fb_list, int fb_length)
+void Grid_MoveCalc (struct routing_s *map, pos3_t from, int size, int distance, byte ** fb_list, int fb_length)
 {
 	int xl, xh, yl, yh;
 	int i;

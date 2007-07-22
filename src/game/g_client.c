@@ -1151,6 +1151,10 @@ int fb_length;
  * This list is checked everytime an actor wants to walk there.
  * @sa G_MoveCalc
  * @sa cl_actor.c:CL_BuildForbiddenList <- shares quite some code
+ * @todo This probably belongs in the core logic.
+ * This is used for pathfinding.
+ * It is a list of where the selected unit can not move to because others are standing there already.
+ * @todo add support for 2x2 units See "size" in MoveCalc
  */
 static void G_BuildForbiddenList (int team)
 {
@@ -1185,10 +1189,10 @@ static void G_BuildForbiddenList (int team)
  * @param[in] distance The distance to calculate the move for.
  * @sa G_BuildForbiddenList
  */
-void G_MoveCalc (int team, pos3_t from, int distance)
+void G_MoveCalc (int team, pos3_t from, int size, int distance)
 {
 	G_BuildForbiddenList(team);
-	gi.MoveCalc(gi.map, from, distance, fb_list, fb_length);
+	gi.MoveCalc(gi.map, from, size, distance, fb_list, fb_length);
 }
 
 
@@ -1238,7 +1242,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 		return;
 
 	/* calculate move table */
-	G_MoveCalc(visTeam, ent->pos, MAX_ROUTE);
+	G_MoveCalc(visTeam, ent->pos, (ent->type == ET_UGV)?2:1, MAX_ROUTE);
 	length = gi.MoveLength(gi.map, to, qfalse);
 
 	/* length of ROUTING_NOT_REACHABLE means not reachable */

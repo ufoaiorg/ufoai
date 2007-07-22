@@ -61,7 +61,7 @@ GRID ORIENTED MOVEMENT AND SCANNING
 extern struct routing_s svMap, clMap;
 
 void Grid_RecalcRouting(struct routing_s *map, const char *name, const char **list);
-void Grid_MoveCalc(struct routing_s *map, pos3_t from, int distance, byte ** fb_list, int fb_length);
+void Grid_MoveCalc(struct routing_s *map, pos3_t from, int size, int distance, byte ** fb_list, int fb_length);
 void Grid_MoveStore(struct routing_s *map);
 int Grid_MoveLength(struct routing_s *map, pos3_t to, qboolean stored);
 int Grid_MoveNext(struct routing_s *map, pos3_t from);

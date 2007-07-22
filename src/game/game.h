@@ -157,7 +157,7 @@ typedef struct {
 	int (IMPORT *TestLine) (vec3_t start, vec3_t stop);
 	float (IMPORT *GrenadeTarget) (vec3_t from, vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0);
 
-	void (IMPORT *MoveCalc) (struct routing_s * map, pos3_t from, int distance, byte ** fb_list, int fb_length);
+	void (IMPORT *MoveCalc) (struct routing_s * map, pos3_t from, int size, int distance, byte ** fb_list, int fb_length);
 	void (IMPORT *MoveStore) (struct routing_s * map);
 	int (IMPORT *MoveLength) (struct routing_s * map, pos3_t to, qboolean stored);
 	int (IMPORT *MoveNext) (struct routing_s * map, pos3_t from);

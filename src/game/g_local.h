@@ -323,7 +323,7 @@ void G_ClientReload(player_t *player, int entnum, shoot_types_t st, qboolean qui
 qboolean G_ClientCanReload(player_t *player, int entnum, shoot_types_t st);
 void G_ClientGetWeaponFromInventory(player_t *player, int entnum, qboolean quiet);
 void G_ClientMove(player_t * player, int team, int num, pos3_t to, qboolean stop, qboolean quiet);
-void G_MoveCalc(int team, pos3_t from, int distance);
+void G_MoveCalc(int team, pos3_t from, int size, int distance);
 void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int to, int tx, int ty, qboolean checkaction, qboolean quiet);
 
 qboolean G_FrustumVis(edict_t * from, vec3_t point);
