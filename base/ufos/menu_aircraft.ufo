@@ -465,7 +465,7 @@ menu aircraft_equip
 
 	pic airequip_button_shields
 	{
-		tooltip	"_Armour"
+		tooltip	"_Shields"
 		mousefx	true
 		pos		"164 710"
 		image	menu/button_blue
@@ -475,7 +475,7 @@ menu aircraft_equip
 	}
 	string airequip_button_shields_str
 	{
-		string "_Armour"
+		string "_Shields"
 		pos		"228 736"
 		align	cc
 	}
@@ -680,6 +680,15 @@ menu aircraft_equip
 		click	{ cmd "airequip_slot_select 0;" }
 	}
 
+	model airequip_model_slot0
+	{
+		md2		"*cvar mn_aircraft_item_model_slot0"
+		pos		"38 38"
+		size	"60 60"
+		origin	"68 68 0"
+		color	"0.5 0.5 0.5 1"
+	}
+
 	pic airequip_slot1
 	{
 		tooltip	"_Select this slot"
@@ -689,6 +698,15 @@ menu aircraft_equip
 		texl	"0 0"
 		texh	"64 64"
 		click	{ cmd "airequip_slot_select 1;" }
+	}
+
+	model airequip_model_slot1
+	{
+		md2		"*cvar mn_aircraft_item_model_slot1"
+		pos		"196 38"
+		size	"60 60"
+		origin	"226 68 0"
+		color	"0.5 0.5 0.5 1"
 	}
 
 	pic airequip_slot2
@@ -702,6 +720,15 @@ menu aircraft_equip
 		click	{ cmd "airequip_slot_select 2;" }
 	}
 
+	model airequip_model_slot2
+	{
+		md2	"*cvar mn_aircraft_item_model_slot2"
+		pos		"353 38"
+		size	"60 60"
+		origin	"383 68 0"
+		color	"0.5 0.5 0.5 1"
+	}
+
 	pic airequip_slot3
 	{
 		tooltip	"_Select this slot"
@@ -711,6 +738,15 @@ menu aircraft_equip
 		texl	"0 0"
 		texh	"64 64"
 		click	{ cmd "airequip_slot_select 3;" }
+	}
+
+	model airequip_model_slot3
+	{
+		md2		"*cvar mn_aircraft_item_model_slot3"
+		pos		"38 301"
+		size	"60 60"
+		origin	"68 331 0"
+		color	"0.5 0.5 0.5 1"
 	}
 
 	pic airequip_slot4
@@ -724,6 +760,15 @@ menu aircraft_equip
 		click	{ cmd "airequip_slot_select 4;" }
 	}
 
+	model airequip_model_slot4
+	{
+		md2		"*cvar mn_aircraft_item_model_slot4"
+		pos		"353 301"
+		size	"60 60"
+		origin	"383 331 0"
+		color	"0.5 0.5 0.5 1"
+	}
+
 	pic airequip_slot5
 	{
 		tooltip	"_Select this slot"
@@ -733,6 +778,15 @@ menu aircraft_equip
 		texl	"0 0"
 		texh	"64 64"
 		click	{ cmd "airequip_slot_select 5;" }
+	}
+
+	model airequip_model_slot5
+	{
+		md2		"*cvar mn_aircraft_item_model_slot5"
+		pos		"38 564"
+		size	"60 60"
+		origin	"68 594 0"
+		color	"0.5 0.5 0.5 1"
 	}
 
 	pic airequip_slot6
@@ -746,6 +800,15 @@ menu aircraft_equip
 		click	{ cmd "airequip_slot_select 6;" }
 	}
 
+	model airequip_model_slot6
+	{
+		md2		"*cvar mn_aircraft_item_model_slot6"
+		pos		"196 564"
+		size	"60 60"
+		origin	"226 594 0"
+		color	"0.5 0.5 0.5 1"
+	}
+
 	pic airequip_slot7
 	{
 		tooltip	"_Select this slot"
@@ -755,6 +818,15 @@ menu aircraft_equip
 		texl	"0 0"
 		texh	"64 64"
 		click	{ cmd "airequip_slot_select 7;" }
+	}
+
+	model airequip_model_slot7
+	{
+		md2		"*cvar mn_aircraft_item_model_slot7"
+		pos		"353 564"
+		size	"60 60"
+		origin	"383 594 0"
+		color	"0.5 0.5 0.5 1"
 	}
 
 	pic airequip_button_leave
@@ -785,5 +857,12 @@ menu aircraft_equip
 	{
 		airequip_weapons
 		airequip_zone1
+	}
+	func close
+	{
+		cmd "del mn_aircraft_item_model_slot0;del mn_aircraft_item_model_slot1;"
+		cmd "del mn_aircraft_item_model_slot2;del mn_aircraft_item_model_slot3;"
+		cmd "del mn_aircraft_item_model_slot4;del mn_aircraft_item_model_slot5;"
+		cmd "del mn_aircraft_item_model_slot6;del mn_aircraft_item_model_slot7;"
 	}
 }
