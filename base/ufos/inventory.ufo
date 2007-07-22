@@ -19,6 +19,16 @@ inventory extension
 	out		0
 }
 
+// Headgear slot
+inventory headgear
+{
+	shape	"0 0 2 1"
+	single	true
+	headgear	true
+	in		1
+	out		0
+}
+
 // Right hand
 inventory right
 {
@@ -73,6 +83,8 @@ inventory armor
 	out		200
 }
 
+// Make sure that the temp containers are the last ones
+
 // Battlescape floor
 inventory floor
 {
@@ -91,15 +103,5 @@ inventory equip
 	shape	"0 13 20 2"
 	temp	true
 	all		true
-}
-
-// Headgear slot (WIP)
-inventory headgear
-{
-	shape	"0 0 2 1"
-	single	true
-	headgear	true
-	in		1
-	out		0
 }
 
