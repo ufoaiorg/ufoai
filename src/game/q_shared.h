@@ -726,6 +726,9 @@ ELEMENTS COMMUNICATED ACROSS THE NET
 /**
  * @brief Possible event values
  * @sa cl_parse.c for event bindings
+ * @sa ev_func
+ * @sa ev_names
+ * @sa ev_format
  */
 typedef enum {
 	EV_NULL = 0,
@@ -735,7 +738,7 @@ typedef enum {
 	EV_ENDROUNDANNOUNCE,
 
 	EV_RESULTS,
-	EV_CENTERVIEW = 5,
+	EV_CENTERVIEW,
 
 	EV_ENT_APPEAR,
 	EV_ENT_PERISH,	/**< empty container or destroy inventory - set le inuse to qfalse
@@ -743,24 +746,24 @@ typedef enum {
 	EV_ENT_EDICT,
 
 	EV_ACTOR_APPEAR,
-	EV_ACTOR_START_MOVE = 10,
+	EV_ACTOR_START_MOVE,
 	EV_ACTOR_TURN,			/**< turn an actor around */
 	EV_ACTOR_MOVE,
 	EV_ACTOR_START_SHOOT,
 	EV_ACTOR_SHOOT,
-	EV_ACTOR_SHOOT_HIDDEN = 15,
+	EV_ACTOR_SHOOT_HIDDEN,
 	EV_ACTOR_THROW,
 	EV_ACTOR_DIE,
 	EV_ACTOR_STATS,
 	EV_ACTOR_STATECHANGE,	/**< set an actor to crounched or reaction fire */
 
-	EV_INV_ADD = 20,
+	EV_INV_ADD,
 	EV_INV_DEL,
 	EV_INV_AMMO,
 	EV_INV_RELOAD,
 	EV_INV_HANDS_CHANGED,
 
-	EV_MODEL_PERISH = 25,
+	EV_MODEL_PERISH,
 	EV_MODEL_EXPLODE,
 
 	EV_SPAWN_PARTICLE,

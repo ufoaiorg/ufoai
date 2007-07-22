@@ -60,19 +60,23 @@ static const char *svc_strings[UCHAR_MAX+1] =
 
 /*============================================================================= */
 
-/* id	| type		| length (bytes) */
-/*====================================== */
-/* c	| char		| 1 */
-/* b	| byte		| 1 */
-/* s	| short		| 2 */
-/* l	| long		| 4 */
-/* p	| pos		| 6 */
-/* g	| gpos		| 3 */
-/* d	| dir		| 1 */
-/* a	| angle		| 1 */
-/* !	| do not read the next id | 1 */
-/* *	| pascal string type - SIZE+DATA, SIZE can be read from va_arg
-		| 2 + sizeof(DATA) */
+/**
+ * id	| type		| length (bytes)
+ *======================================
+ * c	| char		| 1
+ * b	| byte		| 1
+ * s	| short		| 2
+ * l	| long		| 4
+ * p	| pos		| 6
+ * g	| gpos		| 3
+ * d	| dir		| 1
+ * a	| angle		| 1
+ * !	| do not read the next id | 1
+ * *	| pascal string type - SIZE+DATA, SIZE can be read from va_arg
+		| 2 + sizeof(DATA)
+ * @sa ev_names
+ * @sa ev_func
+ */
 const char *ev_format[] =
 {
 	"",					/* EV_NULL */
@@ -116,6 +120,10 @@ const char *ev_format[] =
 	"ssp"				/* EV_DOOR_CLOSE */
 };
 
+/**
+ * @sa ev_format
+ * @sa ev_func
+ */
 static const char *ev_names[] =
 {
 	"EV_NULL",
