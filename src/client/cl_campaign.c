@@ -268,7 +268,7 @@ qboolean CL_MapIsNight (vec2_t pos)
 	/* convert current day to angle (-pi on 1st january, pi on 31 december) */
 	q = (ccs.date.day + p) * 2 * M_PI / DAYS_PER_YEAR_AVG - M_PI;
 	p = (0.5 + pos[0] / 360 - p) * 2 * M_PI - q;
-	a = sin(pos[1] * torad);
+	a = -sin(pos[1] * torad);
 	root = sqrt(1.0 - a * a);
 	x = sin(p) * root * sin(q) - (a * SIN_ALPHA + cos(p) * root * COS_ALPHA) * cos(q);
 	return (x > 0);

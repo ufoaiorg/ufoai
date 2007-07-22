@@ -919,12 +919,13 @@ void Draw_3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char *
 /**
  * @brief responsible for drawing the 3d globe on geoscape
  */
-void Draw_3DGlobe (int x, int y, int w, int h, float p, vec3_t rotate, float zoom, const char *map)
+void Draw_3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, float zoom, const char *map)
 {
 	/* globe scaling */
 	float fullscale = zoom / 4.0f;
 	vec4_t lightPos = {0.0f, 0.0f, 0.0f, 0.0f};
 	vec4_t lightColor = {1.0f, 1.0f, 1.0f, 1.0f};
+	float a;
 
 	image_t* gl = NULL;
 	float nx, ny, nw, nh;
@@ -997,8 +998,9 @@ void Draw_3DGlobe (int x, int y, int w, int h, float p, vec3_t rotate, float zoo
 	qglCullFace(GL_BACK);
 
 	/* add the light */
-	lightPos[0] = cos(p);
-	lightPos[1] = -sin(p);
+	a = cos(q) * SIN_ALPHA;
+	VectorSet(lightPos, cos(p) * sqrt(0.5f * (1 - a * a)), -sin(p) * sqrt(0.5f * (1 - a * a)), a);
+	
 	qglLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 	qglLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor);
 	qglLightfv(GL_LIGHT0, GL_AMBIENT, lightColor);

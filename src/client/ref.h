@@ -327,7 +327,7 @@ typedef struct {
 	void (EXPORT *DrawLineLoop) (int points, int *verts);
 	void (EXPORT *DrawPolygon) (int points, int *verts);
 	void (EXPORT *DrawCircle) (vec3_t mid, float radius, const vec4_t color, int thickness);
-	void (EXPORT *Draw3DGlobe) (int x, int y, int w, int h, float p, vec3_t rotate, float zoom, const char *map);
+	void (EXPORT *Draw3DGlobe) (int x, int y, int w, int h, float p, float q, vec3_t rotate, float zoom, const char *map);
 	void (EXPORT *Draw3DMapMarkers) (vec3_t angles, float zoom, vec3_t position, const char *image);
 	void (EXPORT *DrawImagePixelData) (const char *name, byte *frame, int width, int height);
 

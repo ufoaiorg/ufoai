@@ -1273,8 +1273,9 @@ void MAP_DrawMap (const menuNode_t* node, qboolean map3D)
 		Vector2Set(geobackground->texh, 512 + 512 / ccs.zoom, 387 + 384 / ccs.zoom);
 		if (smoothRotation)
 			MAP3D_SmoothRotate();
+		q = (ccs.date.day % 365 + (float) (ccs.date.sec / (3600 * 24))) * 2 * M_PI / 365;
 		re.Draw3DGlobe(node->pos[0], node->pos[1], node->size[0], node->size[1],
-			(float) (ccs.date.sec / (24 * 3600.0f)) * 2 * M_PI - M_PI, ccs.angles, ccs.zoom / 10, curCampaign->map);
+			(float) (ccs.date.sec / (24 * 3600.0f)) * 2 * M_PI - 0.5f * M_PI, q, ccs.angles, ccs.zoom / 10, curCampaign->map);
 	} else {
 		if (smoothRotation)
 			MAP_SmoothTranslate();
