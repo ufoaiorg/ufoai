@@ -2012,6 +2012,27 @@ const char *MN_GetFont (const menu_t *m, const menuNode_t *const n)
 }
 
 /**
+ * @brief Generate tooltip text for an item.
+ * @param[in] item The item we want to generate the tooltip text for.
+ * @param[in|out] tooltiptext Pointer to a string the information should be written into.
+ * @param[in] Max. string size of tooltiptext.
+ * @todo Display used ammo
+ * @todo Display weapon names it can be used in.
+ */
+static void INV_GetItemTooltip (item_t item, char *tooltiptext, size_t string_maxlength)
+{
+	Q_strncpyz(tooltiptext, csi.ods[item.t].name, string_maxlength);
+
+	/* Only display further info if item.t is researched */
+	/*Q_strcat(tooltiptext, "\n", string_maxlength);*/
+	
+	/** @todo Get used ammo-info (if it's a weapon) */
+	
+	/** @todo Get weapon names it can be used in (if it's ammo). */
+}
+
+
+/**
  * @brief Draws the menu stack
  * @sa SCR_UpdateScreen
  */
@@ -2037,6 +2058,7 @@ void MN_DrawMenus (void)
 	int width, height;
 	const char* cond;
 	invList_t *itemHover = NULL;
+	char tooltiptext[MAX_VAR] = "";
 
 	/* render every menu on top of a menu with a render node */
 	pp = 0;
@@ -2513,7 +2535,7 @@ void MN_DrawMenus (void)
 						if (node->mousefx != csi.idEquip)
 							MN_InvDrawFree(menuInventory, node);
 
-						/* Draw tooltip for weapon or ammo */
+						/* Draw tooltip for weapon or ammo */ 
 						if (mouseSpace != MS_DRAG && node->state && cl_show_tooltips->integer) {
 							/* Find out where the mouse is */
 							itemHover = Com_SearchInInventory(menuInventory,
@@ -2808,12 +2830,14 @@ void MN_DrawMenus (void)
 
 	/* we are hovering an item and also want to display it
 	 * make sure that we draw this on top of every other node */
-	if (itemHover)
-		MN_DrawTooltip("f_small", csi.ods[itemHover->item.t].name, mx, my, 40);
+	if (itemHover) {
+		/* Get name and ifo about item */
+		INV_GetItemTooltip(itemHover->item, tooltiptext, sizeof(tooltiptext));
+		MN_DrawTooltip("f_small", tooltiptext, mx, my, 40);
+	}
 
 	re.DrawColor(NULL);
 }
-
 
 /*
 ==============================================================
