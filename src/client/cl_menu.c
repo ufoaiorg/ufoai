@@ -2511,6 +2511,17 @@ void MN_DrawMenus (void)
 						/* draw free space if dragging - but not for idEquip */
 						if (node->mousefx != csi.idEquip)
 							MN_InvDrawFree(menuInventory, node);
+
+						/* Draw tooltip for weapon or ammo */
+						if (mouseSpace != MS_DRAG && node->state == 1 && cl_show_tooltips->integer) {
+							invList_t *ic1;
+							int px = (int) (mx - node->pos[0]) / C_UNIT;
+							int py = (int) (my - node->pos[1]) / C_UNIT;
+							/* Find out where the mouse are */
+							ic1 = Com_SearchInInventory(menuInventory, node->mousefx, px, py);
+							if (ic1)
+								MN_DrawTooltip("f_small", csi.ods[ic1->item.t].name, mx, my, 40);
+						}
 					}
 					break;
 
