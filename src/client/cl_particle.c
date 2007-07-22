@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 
-static mp_t MPs[MAX_MAPPARTICLES];
+static mapParticle_t MPs[MAX_MAPPARTICLES];
 int numMPs;
 
 #define RADR(x)		((x < 0) ? (byte*)p-x : (byte*)pcmdData+x)
@@ -218,7 +218,7 @@ static void CL_ParticleRun2 (ptl_t *p);
  */
 void CL_AddMapParticle (const char *ptl, vec3_t origin, vec2_t wait, const char *info, int levelflags)
 {
-	mp_t *mp;
+	mapParticle_t *mp;
 
 	mp = &MPs[numMPs];
 
@@ -1196,7 +1196,7 @@ static void CL_ParseMapParticle (ptl_t * ptl, const char *es, qboolean afterward
  */
 void CL_RunMapParticles (void)
 {
-	mp_t *mp;
+	mapParticle_t *mp;
 	ptl_t *ptl;
 	int i;
 

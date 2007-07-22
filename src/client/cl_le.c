@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 
-lm_t LMs[MAX_LOCALMODELS];
+localModel_t LMs[MAX_LOCALMODELS];
 int numLMs;
 
 
@@ -45,7 +45,7 @@ static const char *lmList[MAX_LOCALMODELS + 1];
  */
 static void LM_GenerateList (void)
 {
-	lm_t *lm;
+	localModel_t *lm;
 	int i, l;
 
 	l = 0;
@@ -61,7 +61,7 @@ static void LM_GenerateList (void)
  */
 void LM_AddToScene (void)
 {
-	lm_t *lm;
+	localModel_t *lm;
 	entity_t ent;
 	int i;
 
@@ -103,7 +103,7 @@ void LM_AddToScene (void)
 /**
  * @brief
  */
-static lm_t *LM_Find (int num)
+static localModel_t *LM_Find (int num)
 {
 	int i;
 
@@ -118,13 +118,13 @@ static lm_t *LM_Find (int num)
 /**
  * @brief
  */
-static void LM_Delete (lm_t * lm)
+static void LM_Delete (localModel_t * lm)
 {
-	lm_t backup;
+	localModel_t backup;
 
 	backup = *lm;
 	numLMs--;
-	memcpy(lm, lm + 1, (numLMs - (lm - LMs)) * sizeof(lm_t));
+	memcpy(lm, lm + 1, (numLMs - (lm - LMs)) * sizeof(localModel_t));
 
 	LM_GenerateList();
 	Grid_RecalcRouting(&clMap, backup.name, lmList);
@@ -137,7 +137,7 @@ static void LM_Delete (lm_t * lm)
  */
 void LM_DoorClose (struct dbuffer *msg)
 {
-	lm_t *lm;
+	localModel_t *lm;
 	le_t *le;
 	int lmNum, entNum;
 	vec3_t pos;
@@ -165,7 +165,7 @@ void LM_DoorClose (struct dbuffer *msg)
  */
 void LM_DoorOpen (struct dbuffer *msg)
 {
-	lm_t *lm;
+	localModel_t *lm;
 	le_t *le;
 	int lmNum, entNum;
 	vec3_t pos;
@@ -197,7 +197,7 @@ void LM_DoorOpen (struct dbuffer *msg)
  */
 void LM_Perish (struct dbuffer *msg)
 {
-	lm_t *lm;
+	localModel_t *lm;
 
 	lm = LM_Find(NET_ReadShort(msg));
 	if (!lm)
@@ -213,7 +213,7 @@ void LM_Perish (struct dbuffer *msg)
  */
 void LM_Explode (struct dbuffer *msg)
 {
-	lm_t *lm;
+	localModel_t *lm;
 	le_t *le;
 
 	lm = LM_Find(NET_ReadShort(msg));
@@ -248,7 +248,7 @@ void LM_Explode (struct dbuffer *msg)
  */
 void CL_RegisterLocalModels (void)
 {
-	lm_t *lm;
+	localModel_t *lm;
 	vec3_t sunDir, sunOrigin;
 	int i;
 
@@ -274,16 +274,16 @@ void CL_RegisterLocalModels (void)
  * @brief
  * @sa CL_ParseEntitystring
  */
-lm_t *CL_AddLocalModel (const char *model, const char *particle, vec3_t origin, vec3_t angles, int num, int levelflags)
+localModel_t *CL_AddLocalModel (const char *model, const char *particle, vec3_t origin, vec3_t angles, int num, int levelflags)
 {
-	lm_t *lm;
+	localModel_t *lm;
 
 	lm = &LMs[numLMs++];
 
 	if (numLMs >= MAX_LOCALMODELS)
 		Sys_Error("Too many local models\n");
 
-	memset(lm, 0, sizeof(lm_t));
+	memset(lm, 0, sizeof(localModel_t));
 	Q_strncpyz(lm->name, model, sizeof(lm->name));
 	Q_strncpyz(lm->particle, particle, sizeof(lm->particle));
 	VectorCopy(origin, lm->origin);

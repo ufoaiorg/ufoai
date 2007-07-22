@@ -308,7 +308,7 @@ static void CL_ParseEntitystring (const char *es)
 			VectorNormalize2(color, newlight->color);
 			newlight->intensity = light;
 		} else if (!Q_strcmp(classname, "misc_model")) {
-			lm_t *lm;
+			localModel_t *lm;
 
 			if (!model[0]) {
 				Com_Printf("misc_model without \"model\" specified\n");
