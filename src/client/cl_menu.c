@@ -2017,18 +2017,46 @@ const char *MN_GetFont (const menu_t *m, const menuNode_t *const n)
  * @param[in|out] tooltiptext Pointer to a string the information should be written into.
  * @param[in] Max. string size of tooltiptext.
  * @todo Display used ammo
- * @todo Display weapon names it can be used in.
  */
 static void INV_GetItemTooltip (item_t item, char *tooltiptext, size_t string_maxlength)
 {
+	int i;
+	int weapon_idx;
+	int ammo_counter;
+
 	Q_strncpyz(tooltiptext, csi.ods[item.t].name, string_maxlength);
 
 	/* Only display further info if item.t is researched */
-	/*Q_strcat(tooltiptext, "\n", string_maxlength);*/
-	
-	/** @todo Get used ammo-info (if it's a weapon) */
-	
-	/** @todo Get weapon names it can be used in (if it's ammo). */
+	if (RS_ItemIsResearched(csi.ods[item.t].id)) {
+
+		if (csi.ods[item.t].weapon) {
+			/* Get info about used ammo (if there is any) */
+			if (item.t == item.m) {
+				/* Item has no ammo but might have shot-count */
+				if (item.a) {
+					Q_strcat(tooltiptext, va(" [Ammo: %i]", item.a), string_maxlength);
+				}
+			} else {
+				/** @todo Search for used ammo and display name + ammo count */
+			}
+		} else if (csi.ods[item.t].numWeapons) {
+			/* If it's ammo get the weapon names it can be used in */
+			ammo_counter = 0;
+			Q_strcat(tooltiptext, "  [Useable in:", string_maxlength);
+			for (i=0; i < csi.ods[item.t].numWeapons; i++) {
+				weapon_idx = csi.ods[item.t].weap_idx[i];
+				if (RS_ItemIsResearched(csi.ods[weapon_idx].id)) {
+					if (ammo_counter == 0) {
+						Q_strcat(tooltiptext, va(" %s", csi.ods[weapon_idx].name), string_maxlength);
+					} else {
+						Q_strcat(tooltiptext, va(", %s", csi.ods[weapon_idx].name), string_maxlength);
+					}
+					ammo_counter++;
+				}
+			}
+			Q_strcat(tooltiptext, "]", string_maxlength);
+		}
+	}
 }
 
 
