@@ -135,9 +135,15 @@ typedef struct {
  * 	0x0F	0000 1111	some height info? 
  *
  * FALL
- * 	Information about how much you'll fall down?
+ * 	Information about how much you'll fall down from x,y position?
+ *	I THINK as long as a bit is set you will fall down ...
+ *	See "while (map->fall[ny][nx] & (1 << z)) z--;" in Grid_MoveMark
  *
  * STEP
+ *	
+ *	0000 0000
+ *	Each bit SEEMS (!) to represent an info about one height (z) level (at position x,y)
+ *	Access with "step[y][x] & (1 << z)"
  *
  * AREA
  *
