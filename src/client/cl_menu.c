@@ -2023,7 +2023,6 @@ static void INV_GetItemTooltip (item_t item, char *tooltiptext, size_t string_ma
 {
 	int i;
 	int weapon_idx;
-	int ammo_counter;
 
 	Q_strncpyz(tooltiptext, va("%s\n", csi.ods[item.t].name), string_maxlength);
 	/* Only display further info if item.t is researched */
@@ -2033,29 +2032,22 @@ static void INV_GetItemTooltip (item_t item, char *tooltiptext, size_t string_ma
 			if (item.t == item.m) {
 				/* Item has no ammo but might have shot-count */
 				if (item.a) {
-					Q_strcat(tooltiptext, va(_(" [Ammo: %i]\n"), item.a), string_maxlength);
+					Q_strcat(tooltiptext, va(_("Ammo: %i\n"), item.a), string_maxlength);
 				}
-			} else {
+			} else if (item.m != NONE) {
 				/* Search for used ammo and display name + ammo count */
-				Q_strcat(tooltiptext, va(_(" [%s loaded;"), csi.ods[item.m].name), string_maxlength);
-				Q_strcat(tooltiptext, va(_(" Ammo: %i]\n"),  item.a), string_maxlength);
+				Q_strcat(tooltiptext, va(_("%s loaded\n"), csi.ods[item.m].name), string_maxlength);
+				Q_strcat(tooltiptext, va(_("Ammo: %i\n"),  item.a), string_maxlength);
 			}
 		} else if (csi.ods[item.t].numWeapons) {
 			/* If it's ammo get the weapon names it can be used in */
-			ammo_counter = 0;
-			Q_strcat(tooltiptext, _("  [Useable in:"), string_maxlength);
+			Q_strcat(tooltiptext, _("Useable in:\n"), string_maxlength);
 			for (i = 0; i < csi.ods[item.t].numWeapons; i++) {
 				weapon_idx = csi.ods[item.t].weap_idx[i];
 				if (RS_ItemIsResearched(csi.ods[weapon_idx].id)) {
-					if (ammo_counter == 0) {
-						Q_strcat(tooltiptext, va(" %s", csi.ods[weapon_idx].name), string_maxlength);
-					} else {
-						Q_strcat(tooltiptext, va(", %s", csi.ods[weapon_idx].name), string_maxlength);
-					}
-					ammo_counter++;
+					Q_strcat(tooltiptext, va("* %s\n", csi.ods[weapon_idx].name), string_maxlength);
 				}
 			}
-			Q_strcat(tooltiptext, "]\n", string_maxlength);
 		}
 	}
 }
@@ -2875,7 +2867,7 @@ void MN_DrawMenus (void)
 			if (itemHover) {
 				char tooltiptext[MAX_VAR] = "";
 				int x = mx, y = my;
-				const int itemToolTipWidth = 200;
+				const int itemToolTipWidth = 250;
 				const int itemToolTipHeight = 80;
 				/* Get name and ifo about item */
 				INV_GetItemTooltip(itemHover->item, tooltiptext, sizeof(tooltiptext));
