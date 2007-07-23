@@ -2724,6 +2724,18 @@ void B_UpdateBaseData (void)
 				MN_AddNewMessage(_("Building finished"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 			}
 		}
+
+		/* Repair base buildings */
+		if (gd.bases[i].batteryDamage <= MAX_BATTERY_DAMAGE) {
+			gd.bases[i].batteryDamage += 20;
+			if (gd.bases[i].batteryDamage > MAX_BATTERY_DAMAGE)
+				gd.bases[i].batteryDamage = MAX_BATTERY_DAMAGE;
+		}
+		if (gd.bases[i].baseDamage <= MAX_BASE_DAMAGE) {
+			gd.bases[i].baseDamage += 20;
+			if (gd.bases[i].baseDamage > MAX_BASE_DAMAGE)
+				gd.bases[i].baseDamage = MAX_BASE_DAMAGE;
+		}
 	}
 }
 
