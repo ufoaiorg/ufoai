@@ -2589,6 +2589,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
 {
 	int nx, ny, sh, l;
 	int dx, dy;
+	pos3_t dummy;
 
 	/* range check */
 	l = dv > 3 ? ol + 3 : ol + 2;
@@ -2620,9 +2621,10 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
 	sh = R_STEP(map, x, y, z) ? sh_big : sh_low;
 	z += (h + sh) / 0x10;
 
-	/** @todo check if there isn't a (z >= 0 && ...) missing here? */
-	while (R_FALL(map, nx, ny, z))
-		z--;
+	dummy[0] = nx;
+	dummy[1] = ny;
+	dummy[2] = z;
+	z = Grid_Fall(map, dummy);
 
 	/* can it be better than ever? */
 	if (map->area[z][ny][nx] < l)
@@ -2765,7 +2767,7 @@ int Grid_MoveLength (struct routing_s *map, pos3_t to, qboolean stored)
 
 /**
  * @brief
- * @param[in] map Routing data
+ * @param[in] map Pointer to client or server side routing table (clMap, svMap)
  * @param[in] pos
  * @param[in] sz
  * @param[in] l
@@ -2776,6 +2778,7 @@ static int Grid_MoveCheck (struct routing_s *map, pos3_t pos, int sz, int l)
 	int x, y, sh;
 	int dv, dx, dy;
 	int z;
+	pos3_t dummy;
 
 	for (dv = 0; dv < DIRECTIONS; dv++) {
 		dx = -dvecs[dv][0];
@@ -2818,9 +2821,10 @@ static int Grid_MoveCheck (struct routing_s *map, pos3_t pos, int sz, int l)
 		sh = R_STEP(map, x, y, z) ? sh_big : sh_low;
 		z += (R_HEIGHT(map,x,y,z) + sh) / 0x10;
 
-		/** @todo check if there isn't a (z >= 0 && ...) missing here? */
-		while (R_FALL(map, pos[0], pos[1], z))
-			z--;
+		dummy[0] = pos[0];
+		dummy[1] = pos[1];
+		dummy[2] = z;
+		z = Grid_Fall(map, dummy);
 
 		/*  Com_Printf("pos: (%i %i %i) (x,y,z): (%i %i %i)\n", pos[0], pos[1], pos[2], x, y, z); */
 
@@ -2836,7 +2840,7 @@ static int Grid_MoveCheck (struct routing_s *map, pos3_t pos, int sz, int l)
 
 /**
  * @brief The next stored move direction
- * @param[in] map Routing data
+ * @param[in] map Pointer to client or server side routing table (clMap, svMap)
  * @param[in] from
  * @sa Grid_MoveCheck
  */
@@ -2891,9 +2895,10 @@ int Grid_Height (struct routing_s *map, pos3_t pos)
 
 
 /**
- * @brief
- * @param
- * @sa
+ * @brief Calculated the new height level when something falls down from a certain position.
+ * @param[in] map Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] pos Position in the map to start the fall (starting height is the z-value in this position)
+ * @return New z (height) value.
  */
 int Grid_Fall (struct routing_s *map, pos3_t pos)
 {
