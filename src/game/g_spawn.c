@@ -39,7 +39,7 @@ static void SP_alien_start(edict_t * ent);
 static void SP_civilian_start(edict_t * ent);
 static void SP_func_breakable(edict_t * ent);
 static void SP_worldspawn(edict_t * ent);
-static void SP_ugv_start(edict_t * ent);
+static void SP_2x2_start(edict_t * ent);
 static void SP_civilian_target(edict_t * ent);
 static void SP_misc_mission(edict_t * ent);
 static void SP_misc_mission_aliens(edict_t * ent);
@@ -62,7 +62,7 @@ static const spawn_t spawns[] = {
 	{"info_alien_start", SP_alien_start},
 	{"info_civilian_start", SP_civilian_start},
 	{"info_civilian_target", SP_civilian_target},
-	{"info_ugv_start", SP_ugv_start},
+	{"info_ugv_start", SP_2x2_start},
 	{"func_breakable", SP_func_breakable},
 	{"func_door", SP_func_door},
 
@@ -385,15 +385,15 @@ static void G_ActorSpawn (edict_t * ent)
 }
 
 /**
- * @brief Spawn an singleplayer UGV
+ * @brief Spawn an singleplayer 2x2 unit
  */
-static void G_UGVSpawn (edict_t * ent)
+static void G_ACTOR2x2Spawn (edict_t * ent)
 {
 	/* set properties */
-	level.num_ugvspawnpoints[ent->team]++;
+	level.num_2x2spawnpoints[ent->team]++;
 	ent->classname = "ugv";
-	ent->type = ET_UGVSPAWN;
-	ent->fieldSize = ACTOR_SIZE_UGV;
+	ent->type = ET_ACTOR2x2SPAWN;
+	ent->fieldSize = ACTOR_SIZE_2x2;
 
 	/* fall to ground */
 	if (ent->pos[2] >= HEIGHT)
@@ -451,11 +451,11 @@ static void SP_human_start (edict_t * ent)
 
 /**
  * @brief QUAKED info_ugv_start (1 1 0) (-32 -32 -24) (32 32 32)
- * Starting point for a ugv.
+ * Starting point for a 2x2 unit.
  */
-static void SP_ugv_start (edict_t * ent)
+static void SP_2x2_start (edict_t * ent)
 {
-	/* no ugv in multiplayer */
+	/* no 2x2 unit in multiplayer */
 	if (sv_maxclients->integer > 1) {
 		G_FreeEdict(ent);
 		return;
@@ -469,8 +469,8 @@ static void SP_ugv_start (edict_t * ent)
 	VectorSet(ent->maxs, PLAYER_WIDTH * 2, PLAYER_WIDTH * 2, PLAYER_STAND);
 	VectorSet(ent->mins, -(PLAYER_WIDTH * 2), -(PLAYER_WIDTH * 2), PLAYER_MIN);
 
-	/* spawn singleplayer ugv */
-	G_UGVSpawn(ent);
+	/* spawn singleplayer 2x2 unit */
+	G_ACTOR2x2Spawn(ent);
 }
 
 /**
@@ -688,7 +688,7 @@ static void Touch_DoorTrigger (edict_t *self)
 		if (!e->inuse)
 			continue;
 		/* only actors can activate a touch trigger */
-		if (e->type != ET_ACTOR && e->type != ET_UGV)
+		if (e->type != ET_ACTOR && e->type != ET_ACTOR2x2)
 			continue;
 		/* FIXME: if a spawnpoint is too close to this door, the EV_RESET was not send */
 		if (VectorDist(e->origin, self->owner->absmin) < UNIT_SIZE) {

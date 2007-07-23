@@ -284,7 +284,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 			guete += GUETE_CLOSE_IN - move < 0 ? 0 : GUETE_CLOSE_IN - move;
 
 			/* search hiding spot */
-			G_MoveCalc(0, to, (ent->type == ET_UGV)?2:1, HIDE_DIST);
+			G_MoveCalc(0, to, (ent->type == ET_ACTOR2x2)?2:1, HIDE_DIST);
 			ent->pos[2] = to[2];
 			minX = to[0] - HIDE_DIST > 0 ? to[0] - HIDE_DIST : 0;
 			minY = to[1] - HIDE_DIST > 0 ? to[1] - HIDE_DIST : 0;
@@ -409,7 +409,7 @@ static ai_action_t AI_PrepBestAction (player_t * player, edict_t * ent)
 	float guete, best;
 
 	/* calculate move table */
-	G_MoveCalc(0, ent->pos, (ent->type == ET_UGV)?2:1, MAX_ROUTE); 
+	G_MoveCalc(0, ent->pos, (ent->type == ET_ACTOR2x2)?2:1, MAX_ROUTE); 
 	gi.MoveStore(gi.map);
 
 	/* set borders */

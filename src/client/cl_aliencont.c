@@ -129,7 +129,7 @@ void AL_CollectingAliens (void)
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
 		if (!le->inuse)
 			continue;
-		if ((le->type == ET_ACTOR || le->type == ET_UGV) && le->team == TEAM_ALIEN) {
+		if ((le->type == ET_ACTOR || le->type == ET_ACTOR2x2) && le->team == TEAM_ALIEN) {
 			if (le->teamDesc)
 				/* -1: see Com_GetModelAndName */
 				teamDescID = le->teamDesc - 1;

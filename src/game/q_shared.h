@@ -782,8 +782,8 @@ typedef enum {
 	ET_ITEM,
 	ET_BREAKABLE,
 	ET_DOOR,
-	ET_UGVSPAWN,
-	ET_UGV,
+	ET_ACTOR2x2SPAWN,
+	ET_ACTOR2x2,
 	ET_CIVILIANTARGET,
 	ET_MISSION
 } entity_type_t;
@@ -912,7 +912,7 @@ typedef enum {
 /* NOTE: this only allows quadratic units */
 typedef enum {
 	ACTOR_SIZE_NORMAL = 1,
-	ACTOR_SIZE_UGV
+	ACTOR_SIZE_2x2 = 2
 } actorSizeEnum_t;
 
 /** @brief Types of actor sounds being issued by CL_PlayActorSound(). */

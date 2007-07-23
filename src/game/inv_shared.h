@@ -372,7 +372,7 @@ typedef struct character_s {
 	/* *------------------** */
 	/* *------------------** */
 
-	int fieldSize;              /**< ACTOR_SIZE_* */
+	byte fieldSize;              /**< ACTOR_SIZE_* */
 	inventory_t *inv;
 
 	/** Backlink to employee-struct. */

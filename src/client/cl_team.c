@@ -234,7 +234,7 @@ static void CL_GiveName_f (void)
 }
 
 /**
- * @brief Generates the skills and inventory for a character and for a UGV
+ * @brief Generates the skills and inventory for a character and for a 2x2 unit
  *
  * @todo: Generate UGV
  * @sa CL_ResetCharacters
@@ -319,7 +319,7 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 		/* Create attributes. */
 		Com_CharGenAbilitySkills(chr, teamValue);
 		/* Get model and name. */
-		chr->fieldSize = ACTOR_SIZE_UGV;
+		chr->fieldSize = ACTOR_SIZE_2x2;
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_ugv", team);
 		chr->skin = Com_GetModelAndName(teamDefName, chr);
 		break;
@@ -1210,7 +1210,7 @@ qboolean CL_SoldierAwayFromBase (employee_t *employee)
 		return qfalse;
 
 	/* for now only soldiers can be assigned to aircrafts */
-	/* @todo add pilots and UGVs */
+	/* @todo add pilots and 2x2 units */
 	if (employee->type != EMPL_SOLDIER)
 		return qfalse;
 
@@ -2249,7 +2249,7 @@ static const value_t ugvValues[] = {
 };
 
 /**
- * @brief Parse UGVs
+ * @brief Parse 2x2 units (e.g. UGVs)
  * @sa CL_ParseClientData
  */
 void CL_ParseUGVs (const char *name, const char **text)

@@ -1918,12 +1918,12 @@ int fb_length;
 
 /**
  * @brief Builds a list of locations that cannot be moved to.
+ * @sa G_MoveCalc
  * @sa g_client:G_BuildForbiddenList <- shares quite some code
  *
  * @todo This probably belongs in the core logic.
  * This is used for pathfinding.
  * It is a list of where the selected unit can not move to because others are standing there already.
- * @todo add support for 2x2 units See "size" in MoveCalc
  */
 static void CL_BuildForbiddenList (void)
 {
@@ -1935,9 +1935,16 @@ static void CL_BuildForbiddenList (void)
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
 		if (!le->inuse || le->invis)
 			continue;
-		/* dead ugv will stop walking, too */
-		if ((!(le->state & STATE_DEAD) && le->type == ET_ACTOR) || le->type == ET_UGV)
-			fb_list[fb_length++] = le->pos;
+
+		/* Dead ugv will stop walking, too. */
+		/**
+		 * @todo Just a note for the future.
+		 * If we get any ugv that does not block the map when dead this si the place to look.
+		 */
+		if ((!(le->state & STATE_DEAD) && le->type == ET_ACTOR) || le->type == ET_ACTOR2x2) {
+			fb_list[fb_length++].size = &le->fieldSize;
+			fb_list[fb_length++].pos = le->pos;
+		}
 	}
 
 #ifdef PARANOID
@@ -1967,7 +1974,7 @@ void CL_DisplayBlockedPaths_f (void)
 			continue;
 
 		if (!(le->state & STATE_DEAD)
-		&& (le->type == ET_ACTOR || le->type == ET_UGV)) {
+		&& (le->type == ET_ACTOR || le->type == ET_ACTOR2x2)) {
 			/* draw blocking cursor at le->pos */
 			Grid_PosToVec(&clMap, le->pos, s);
 			ptl = CL_ParticleSpawn("cross", 0, s, NULL, NULL);
@@ -1991,7 +1998,7 @@ void CL_ConditionalMoveCalc (struct routing_s *map, le_t *le, int distance)
 {
 	if (selActor && selActor == le) {
 		CL_BuildForbiddenList();
-		Grid_MoveCalc(map, le->pos, (le->type == ET_UGV)?2:1, distance, fb_list, fb_length);
+		Grid_MoveCalc(map, le->pos, le->fieldSize, distance, fb_list, fb_length);
 		CL_ResetActorMoveLength();
 	}
 }
@@ -2261,7 +2268,7 @@ void CL_ActorDoMove (struct dbuffer *msg)
 	number = NET_ReadShort(msg);
 	/* get le */
 	le = LE_Get(number);
-	if (!le || (le->type != ET_ACTOR && le->type != ET_UGV)) {
+	if (!le || (le->type != ET_ACTOR && le->type != ET_ACTOR2x2)) {
 		Com_Printf("Can't move, LE doesn't exist or is not an actor (number: %i)\n", number);
 		return;
 	}
@@ -2337,7 +2344,7 @@ void CL_ActorDoTurn (struct dbuffer *msg)
 
 	/* get le */
 	le = LE_Get(entnum);
-	if (!le || (le->type != ET_ACTOR && le->type != ET_UGV)) {
+	if (!le || (le->type != ET_ACTOR && le->type != ET_ACTOR2x2)) {
 		Com_Printf("Can't turn, LE doesn't exist or is not an actor (number: %i)\n", entnum);
 		return;
 	}
@@ -2360,7 +2367,7 @@ void CL_ActorStandCrouch_f (void)
 	if (!CL_CheckAction())
 		return;
 
-	if (selActor->fieldSize == ACTOR_SIZE_UGV)
+	if (selActor->fieldSize == ACTOR_SIZE_2x2)
 		return;
 	/* send a request to toggle crouch to the server */
 	MSG_Write_PA(PA_STATE, selActor->entnum, STATE_CROUCHED);
@@ -2533,7 +2540,7 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 		return;
 	}
 
-	if (le->type != ET_ACTOR && le->type != ET_UGV) {
+	if (le->type != ET_ACTOR && le->type != ET_ACTOR2x2) {
 		Com_Printf("Can't shoot, LE is not an actor\n");
 		return;
 	}
@@ -2672,7 +2679,7 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 		/* it's OK, the actor not visible */
 		return;
 
-	if (le->type != ET_ACTOR && le->type != ET_UGV) {
+	if (le->type != ET_ACTOR && le->type != ET_ACTOR2x2) {
 		Com_Printf("Can't start shoot, LE not an actor\n");
 		return;
 	}
@@ -2723,7 +2730,7 @@ void CL_ActorDie (struct dbuffer *msg)
 	if (le->entnum != number) {
 		Com_DPrintf("CL_ActorDie: Can't kill, LE doesn't exist\n");
 		return;
-	} else if (le->type != ET_UGV && le->type != ET_ACTOR) {
+	} else if (le->type != ET_ACTOR2x2 && le->type != ET_ACTOR) {
 		Com_Printf("CL_ActorDie: Can't kill, LE is not an actor\n");
 		return;
 	} else if (le->state & STATE_DEAD) {
@@ -3144,7 +3151,7 @@ void CL_ActorMouseTrace (void)
 	/* search for an actor on this field */
 	mouseActor = NULL;
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
-		if (le->inuse && !(le->state & STATE_DEAD) && (le->type == ET_ACTOR || le->type == ET_UGV) && VectorCompare(le->pos, mousePos)) {
+		if (le->inuse && !(le->state & STATE_DEAD) && (le->type == ET_ACTOR || le->type == ET_ACTOR2x2) && VectorCompare(le->pos, mousePos)) {
 			mouseActor = le;
 			break;
 		}
@@ -3294,7 +3301,7 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 
 	/* add actor special effects */
 	ent->flags |= RF_SHADOW;
-	le->fieldSize = ACTOR_SIZE_UGV;
+	le->fieldSize = ACTOR_SIZE_2x2;
 
 	if (!(le->state & STATE_DEAD)) {
 		if (le->selected)
@@ -3550,7 +3557,7 @@ static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
 
 	/* search for an actor at target */
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
-		if (le->inuse && !(le->state & STATE_DEAD) && (le->type == ET_ACTOR || le->type == ET_UGV) && VectorCompare(le->pos, toPos)) {
+		if (le->inuse && !(le->state & STATE_DEAD) && (le->type == ET_ACTOR || le->type == ET_ACTOR2x2) && VectorCompare(le->pos, toPos)) {
 			target = le;
 			break;
 		}
@@ -3618,7 +3625,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 
 	/* search for an actor at target */
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
-		if (le->inuse && !(le->state & STATE_DEAD) && (le->type == ET_ACTOR || le->type == ET_UGV) && VectorCompare(le->pos, toPos)) {
+		if (le->inuse && !(le->state & STATE_DEAD) && (le->type == ET_ACTOR || le->type == ET_ACTOR2x2) && VectorCompare(le->pos, toPos)) {
 			target = le;
 			break;
 		}

@@ -558,7 +558,7 @@ typedef struct le_s {
 	char *ref1, *ref2;
 	inventory_t i;
 	int left, right, extension;
-	int fieldSize;				/**< ACTOR_SIZE_* */
+	byte fieldSize;				/**< ACTOR_SIZE_* */
 	int teamDesc;
 	int category; 	/**< nameCategory_t index */
 	int gender;

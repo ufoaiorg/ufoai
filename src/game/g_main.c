@@ -439,7 +439,7 @@ void G_EndGame (int team)
 	if (team == TEAM_ALIEN) {
 		level.num_alive[TEAM_PHALANX] = 0;
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-			if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV)
+			if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)
 				 && !(ent->state & STATE_DEAD) && ent->team == TEAM_PHALANX) {
 				ent->state = STATE_DEAD;
 				ent->HP = 0;
@@ -457,7 +457,7 @@ void G_EndGame (int team)
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
 		if (ent->inuse) {
 			G_AppearPerishEvent(~G_VisToPM(ent->visflags), 1, ent);
-			if (ent->type == ET_ACTOR || ent->type == ET_UGV)
+			if (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)
 				G_SendInventory(~G_TeamToPM(ent->team), ent);
 		}
 
@@ -488,7 +488,7 @@ void G_EndGame (int team)
 
 	/* how many actors */
 	for (j = 0, i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
-		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV)
+		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)
 			 && ent->team == TEAM_PHALANX)
 			j++;
 
@@ -502,7 +502,7 @@ void G_EndGame (int team)
 
 	if (j) {
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
-			if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV)
+			if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)
 				 && ent->team == TEAM_PHALANX) {
 				Com_DPrintf("Sending results for actor %i.\n", i);
 				G_SendCharacterData(ent);

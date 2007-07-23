@@ -718,7 +718,7 @@ static void CL_EntPerish (struct dbuffer *msg)
 	}
 
 	/* decrease the count of spotted aliens */
-	if ((le->type == ET_ACTOR || le->type == ET_UGV) && !(le->state & STATE_DEAD) && le->team != cls.team && le->team != TEAM_CIVILIAN)
+	if ((le->type == ET_ACTOR || le->type == ET_ACTOR2x2) && !(le->state & STATE_DEAD) && le->team != cls.team && le->team != TEAM_CIVILIAN)
 		cl.numAliensSpotted--;
 
 	switch (le->type) {
@@ -728,14 +728,14 @@ static void CL_EntPerish (struct dbuffer *msg)
 		/* search owners (there can be many, some of them dead) */
 		for (i = 0, actor = LEs; i < numLEs; i++, actor++)
 			if (actor->inuse
-				 && (actor->type == ET_ACTOR || actor->type == ET_UGV)
+				 && (actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
 				 && VectorCompare(actor->pos, le->pos)) {
 				Com_DPrintf("CL_EntPerish: le of type ET_ITEM hidden\n");
 				FLOOR(actor) = NULL;
 			}
 		break;
 	case ET_ACTOR:
-	case ET_UGV:
+	case ET_ACTOR2x2:
 		Com_DestroyInventory(&le->i);
 		break;
 	case ET_BREAKABLE:
@@ -893,7 +893,7 @@ static void CL_ActorAppear (struct dbuffer *msg)
 		le->type = ET_ACTOR;
 	} else {
 		le->addFunc = CL_AddUGV;
-		le->type = ET_UGV;
+		le->type = ET_ACTOR2x2;
 	}
 	le->modelnum1 = modelnum1;
 	le->modelnum2 = modelnum2;
@@ -974,7 +974,7 @@ static void CL_ActorStats (struct dbuffer *msg)
 	number = NET_ReadShort(msg);
 	le = LE_Get(number);
 
-	if (!le || (le->type != ET_ACTOR && le->type != ET_UGV)) {
+	if (!le || (le->type != ET_ACTOR && le->type != ET_ACTOR2x2)) {
 		Com_Printf("Stats message ignored... LE not found or not an actor\n");
 		return;
 	}
@@ -1010,7 +1010,7 @@ static void CL_ActorStateChange (struct dbuffer *msg)
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_STATECHANGE], &number, &state);
 
 	le = LE_Get(number);
-	if (!le || (le->type != ET_ACTOR && le->type != ET_UGV)) {
+	if (!le || (le->type != ET_ACTOR && le->type != ET_ACTOR2x2)) {
 		Com_Printf("StateChange message ignored... LE not found or not an actor (number: %i, state: %i)\n", number, state);
 		return;
 	}
@@ -1075,7 +1075,7 @@ static void CL_PlaceItem (le_t *le)
 	/* search owners (there can be many, some of them dead) */
 	for (i = 0, actor = LEs; i < numLEs; i++, actor++)
 		if (actor->inuse
-			 && (actor->type == ET_ACTOR || actor->type == ET_UGV)
+			 && (actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
 			 && VectorCompare(actor->pos, le->pos) ) {
 #if PARANOID
 			Com_DPrintf("CL_PlaceItem: shared container: '%p'\n", FLOOR(le));
@@ -1148,7 +1148,7 @@ static void CL_InvAdd (struct dbuffer *msg)
 
 	switch (le->type) {
 	case ET_ACTOR:
-	case ET_UGV:
+	case ET_ACTOR2x2:
 		le->think = LET_StartIdle;
 		break;
 	case ET_ITEM:
@@ -1187,7 +1187,7 @@ static void CL_InvDel (struct dbuffer *msg)
 
 	switch (le->type) {
 	case ET_ACTOR:
-	case ET_UGV:
+	case ET_ACTOR2x2:
 		le->think = LET_StartIdle;
 		break;
 	case ET_ITEM:

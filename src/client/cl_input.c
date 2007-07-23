@@ -638,7 +638,7 @@ static void CL_DrawSpottedLines_f (void)
 
 	for (i = 0; i < numLEs; i++) {
 		le = &LEs[i];
-		if (le->inuse && (le->type == ET_ACTOR || le->type == ET_UGV)
+		if (le->inuse && (le->type == ET_ACTOR || le->type == ET_ACTOR2x2)
 		 && !(le->state & STATE_DEAD) && le->team != cls.team
 		 && le->team != TEAM_CIVILIAN) {
 			Grid_PosToVec(&clMap, selActor->pos, from);
@@ -682,7 +682,7 @@ static void CL_NextAlien_f (void)
 		if (++i >= numLEs)
 			i = 0;
 		le = &LEs[i];
-		if (le->inuse && (le->type == ET_ACTOR || le->type == ET_UGV) && !(le->state & STATE_DEAD) && le->team != cls.team && le->team != TEAM_CIVILIAN) {
+		if (le->inuse && (le->type == ET_ACTOR || le->type == ET_ACTOR2x2) && !(le->state & STATE_DEAD) && le->team != cls.team && le->team != TEAM_CIVILIAN) {
 			lastAlien = i;
 			V_CenterView(le->pos);
 			return;

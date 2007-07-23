@@ -105,7 +105,7 @@ typedef struct {
 	byte num_alive[MAX_TEAMS];
 	byte num_spawned[MAX_TEAMS];
 	byte num_spawnpoints[MAX_TEAMS];
-	byte num_ugvspawnpoints[MAX_TEAMS];
+	byte num_2x2spawnpoints[MAX_TEAMS];
 	byte num_kills[MAX_TEAMS][MAX_TEAMS];
 	byte num_stuns[MAX_TEAMS][MAX_TEAMS];
 } level_locals_t;
@@ -567,7 +567,7 @@ struct edict_s {
 	int count;		/* general purpose 'amount' variable - set via mapeditor often */
 	int sounds;		/* type of sounds to play - e.g. doors */
 	int dmg;		/* damage done by entity */
-	int fieldSize;	/* ACTOR_SIZE_* */
+	byte fieldSize;	/* ACTOR_SIZE_* */
 
 	/* function to call when used */
 	void (*use) (edict_t * self, edict_t * other, edict_t * activator);

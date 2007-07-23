@@ -144,7 +144,7 @@ static void G_SendPlayerStats (player_t * player)
 	int i;
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) && ent->team == player->pers.team)
+		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2) && ent->team == player->pers.team)
 			G_SendStats(ent);
 }
 
@@ -159,7 +159,7 @@ void G_GiveTimeUnits (int team)
 	int i;
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && !(ent->state & STATE_DEAD) && (ent->type == ET_ACTOR || ent->type == ET_UGV) && ent->team == team) {
+		if (ent->inuse && !(ent->state & STATE_DEAD) && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2) && ent->team == team) {
 			ent->state &= ~STATE_DAZED;
 			ent->TU = GET_TU(ent->chr.skills[ABILITY_SPEED]);
 			G_SendStats(ent);
@@ -240,7 +240,7 @@ void G_AppearPerishEvent (int player_mask, int appear, edict_t * check)
 		/* appear */
 		switch (check->type) {
 		case ET_ACTOR:
-		case ET_UGV:
+		case ET_ACTOR2x2:
 			/* parsed in CL_ActorAppear */
 			gi.AddEvent(player_mask, EV_ACTOR_APPEAR);
 			gi.WriteShort(check->number);
@@ -291,7 +291,7 @@ void G_AppearPerishEvent (int player_mask, int appear, edict_t * check)
 			G_SendInventory(player_mask, check);
 			break;
 		}
-	} else if (check->type == ET_ACTOR || check->type == ET_UGV || check->type == ET_ITEM) {
+	} else if (check->type == ET_ACTOR || check->type == ET_ACTOR2x2 || check->type == ET_ITEM) {
 		/* disappear */
 		gi.AddEvent(player_mask, EV_ENT_PERISH);
 		gi.WriteShort(check->number);
@@ -416,8 +416,8 @@ float G_Vis (int team, edict_t * from, edict_t * check, int flags)
 	if (!from->inuse || !check->inuse)
 		return ACTOR_VIS_0;
 
-	/* only actors and ugvs can see anything */
-	if ((from->type != ET_ACTOR && from->type != ET_UGV) || (from->state & STATE_DEAD))
+	/* only actors and 2x2 units can see anything */
+	if ((from->type != ET_ACTOR && from->type != ET_ACTOR2x2) || (from->state & STATE_DEAD))
 		return ACTOR_VIS_0;
 
 	/* living team members are always visible */
@@ -454,7 +454,7 @@ float G_Vis (int team, edict_t * from, edict_t * check, int flags)
 	/* line trace check */
 	switch (check->type) {
 	case ET_ACTOR:
-	case ET_UGV:
+	case ET_ACTOR2x2:
 		return G_ActorVis(eye, check, qfalse);
 	case ET_ITEM:
 		return !G_LineVis(eye, check->origin);
@@ -544,7 +544,7 @@ int G_CheckVisTeam (int team, edict_t * check, qboolean perish)
 
 				if (vis & VIS_YES) {
 					status |= VIS_APPEAR;
-					if ((check->type == ET_ACTOR || check->type == ET_UGV)
+					if ((check->type == ET_ACTOR || check->type == ET_ACTOR2x2)
 					 && !(check->state & STATE_DEAD) && check->team != TEAM_CIVILIAN)
 						status |= VIS_STOP;
 				} else
@@ -679,7 +679,7 @@ qboolean G_ActionCheck (player_t * player, edict_t * ent, int TU, qboolean quiet
 		return qfalse;
 	}
 
-	if (ent->type != ET_ACTOR && ent->type != ET_UGV) {
+	if (ent->type != ET_ACTOR && ent->type != ET_ACTOR2x2) {
 		gi.cprintf(player, msglevel, _("Can't perform action - not an actor!\n"));
 		return qfalse;
 	}
@@ -1154,7 +1154,6 @@ int fb_length;
  * @todo This probably belongs in the core logic.
  * This is used for pathfinding.
  * It is a list of where the selected unit can not move to because others are standing there already.
- * @todo add support for 2x2 units See "size" in MoveCalc
  */
 static void G_BuildForbiddenList (int team)
 {
@@ -1173,9 +1172,16 @@ static void G_BuildForbiddenList (int team)
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
 		if (!ent->inuse)
 			continue;
-		/* dead ugv will stop walking, too */
-		if (((ent->type == ET_ACTOR && !(ent->state & STATE_DEAD)) || ent->type == ET_UGV) && (ent->visflags & vis_mask))
+		
+		/* Dead 2x2 unit will stop walking, too. */
+		/**
+		 * @todo Just a note for the future.
+		 * If we get any  that does not block the map when dead this si the place to look.
+		 */
+		if (((ent->type == ET_ACTOR && !(ent->state & STATE_DEAD)) || ent->type == ET_ACTOR2x2) && (ent->visflags & vis_mask)) {
+			fb_list[fb_length++] = &ent->fieldSize;
 			fb_list[fb_length++] = ent->pos;
+		}
 	}
 
 	if (fb_length > MAX_EDICTS)
@@ -1215,7 +1221,7 @@ static qboolean G_CheckMoveBlock (pos3_t from, int dv)
 
 	/* search for blocker */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) && !(ent->state & STATE_DEAD) && VectorCompare(pos, ent->pos))
+		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2) && !(ent->state & STATE_DEAD) && VectorCompare(pos, ent->pos))
 			return qtrue;
 
 	/* nothing found */
@@ -1242,7 +1248,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 		return;
 
 	/* calculate move table */
-	G_MoveCalc(visTeam, ent->pos, (ent->type == ET_UGV)?2:1, MAX_ROUTE);
+	G_MoveCalc(visTeam, ent->pos, ent->fieldSize, MAX_ROUTE);
 	length = gi.MoveLength(gi.map, to, qfalse);
 
 	/* length of ROUTING_NOT_REACHABLE means not reachable */
@@ -1649,7 +1655,7 @@ static void G_MoraleBehaviour (int team, qboolean quiet)
 	qboolean sanity;
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		/* this only applies to ET_ACTOR but not to ET_UGV */
+		/* this only applies to ET_ACTOR but not to ET_ACTOR2x2 */
 		if (ent->inuse && ent->type == ET_ACTOR && ent->team == team && !(ent->state & STATE_DEAD)) {
 			/* civilians have a 1:1 chance to randomly run away in multiplayer */
 			if (sv_maxclients->integer >= 2 && level.activeTeam == TEAM_CIVILIAN && 0.5 > frand())
@@ -1903,7 +1909,7 @@ void G_KillTeam (void)
 	Com_DPrintf("G_KillTeam: kill team %i\n", teamToKill);
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) && !(ent->state & STATE_DEAD)) {
+		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2) && !(ent->state & STATE_DEAD)) {
 			if (teamToKill >= 0 && ent->team != teamToKill)
 				continue;
 
@@ -2173,7 +2179,7 @@ void G_ClientTeamInfo (player_t * player)
 
 	/* find actors */
 	for (j = 0, ent = g_edicts; j < globals.num_edicts; j++, ent++)
-		if ((ent->type == ET_ACTORSPAWN || ent->type == ET_UGVSPAWN)
+		if ((ent->type == ET_ACTORSPAWN || ent->type == ET_ACTOR2x2SPAWN)
 			&& player->pers.team == ent->team)
 			break;
 
@@ -2190,8 +2196,8 @@ void G_ClientTeamInfo (player_t * player)
 			case ACTOR_SIZE_NORMAL:
 				ent->type = ET_ACTOR;
 				break;
-			case ACTOR_SIZE_UGV:
-				ent->type = ET_UGV;
+			case ACTOR_SIZE_2x2:
+				ent->type = ET_ACTOR2x2;
 				ent->morale = 100;
 				break;
 			default:
@@ -2286,7 +2292,7 @@ void G_ClientTeamInfo (player_t * player)
 
 		/* find actors */
 		for (; j < globals.num_edicts; j++, ent++)
-			if ((ent->type == ET_ACTORSPAWN || ent->type == ET_UGVSPAWN)
+			if ((ent->type == ET_ACTORSPAWN || ent->type == ET_ACTOR2x2SPAWN)
 			&& player->pers.team == ent->team)
 				break;
 	}
@@ -2302,7 +2308,7 @@ static int G_PlayerSoldiersCount (player_t* player)
 	edict_t *ent;
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && !(ent->state & STATE_DEAD) && (ent->type == ET_ACTOR || ent->type == ET_UGV) && ent->pnum == player->num)
+		if (ent->inuse && !(ent->state & STATE_DEAD) && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2) && ent->pnum == player->num)
 			cnt++;
 
 	return cnt;
@@ -2488,7 +2494,7 @@ static void G_SendVisibleEdicts (void)
 	edict_t *ent;
 	qboolean end = qfalse;
 
-	/* make every edict visible thats not an actor or an ugv */
+	/* make every edict visible thats not an actor or a 2x2 unit */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++) {
 		/* don't add actors here */
 		if (!ent->inuse)
@@ -2584,7 +2590,7 @@ qboolean G_ClientSpawn (player_t * player)
 	/* set initial state to reaction fire activated for the other team */
 	if (sv_maxclients->integer > 1 && level.activeTeam != player->pers.team)
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-			if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV))
+			if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2))
 				G_ClientStateChange(player, i, STATE_REACTION_ONCE, qfalse);
 
 	G_SendPlayerStats(player);
@@ -2600,7 +2606,7 @@ qboolean G_ClientSpawn (player_t * player)
 
 	if (sv_maxclients->integer > 1 && level.activeTeam != player->pers.team)
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-			if (ent->inuse && ent->team == player->pers.team && (ent->type == ET_ACTOR || ent->type == ET_UGV)) {
+			if (ent->inuse && ent->team == player->pers.team && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)) {
 				gi.AddEvent(player->pers.team, EV_ACTOR_STATECHANGE);
 				gi.WriteShort(ent->number);
 				gi.WriteShort(ent->state);

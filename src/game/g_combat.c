@@ -56,7 +56,7 @@ static qboolean G_TeamPointVis (int team, vec3_t point)
 
 	/* test if point is visible from team */
 	for (i = 0, from = g_edicts; i < globals.num_edicts; i++, from++)
-		if (from->inuse && (from->type == ET_ACTOR || from->type == ET_UGV) && !(from->state & STATE_DEAD) && from->team == team && G_FrustumVis(from, point)) {
+		if (from->inuse && (from->type == ET_ACTOR || from->type == ET_ACTOR2x2) && !(from->state & STATE_DEAD) && from->team == team && G_FrustumVis(from, point)) {
 			/* get viewers eye height */
 			VectorCopy(from->origin, eye);
 			if (from->state & (STATE_CROUCHED | STATE_PANIC))
@@ -88,7 +88,7 @@ static void G_Morale (int type, edict_t * victim, edict_t * attacker, int param)
 	float mod;
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		/* this only applies to ET_ACTOR but not ET_UGV */
+		/* this only applies to ET_ACTOR but not ET_ACTOR2x2 */
 		if (ent->inuse && ent->type == ET_ACTOR && !(ent->state & STATE_DEAD) && ent->team != TEAM_CIVILIAN) {
 			switch (type) {
 			case ML_WOUND:
@@ -159,7 +159,7 @@ void G_ResetReactionFire (int team)
 	int i;
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && !(ent->state & STATE_DEAD) && (ent->type == ET_ACTOR || ent->type == ET_UGV) && ent->team == team) {
+		if (ent->inuse && !(ent->state & STATE_DEAD) && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2) && ent->team == team) {
 			reactionTUs[ent->number][REACT_FIRED] = 0;	/* reset 'RF used' flag */
 			if (ent->state & STATE_REACTION) {
 				if ((ent->state & STATE_REACTION_ONCE) && (ent->TU >= TU_REACTION_SINGLE)) {
@@ -212,7 +212,7 @@ static void G_UpdateShotMock (shot_mock_t *mock, edict_t *shooter, edict_t *stru
 			mock->civilian += 1;
 		else if (struck->team == shooter->team)
 			mock->friend += 1;
-		else if (struck->type == ET_ACTOR || struck->type == ET_UGV)
+		else if (struck->type == ET_ACTOR || struck->type == ET_ACTOR2x2)
 			mock->enemy += 1;
 		else
 			return;
@@ -298,7 +298,7 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 
 	assert(ent);
 	assert(ent->type == ET_ACTOR
-			|| ent->type == ET_UGV
+			|| ent->type == ET_ACTOR2x2
 			|| ent->type == ET_BREAKABLE
 			|| ent->type == ET_DOOR);
 
@@ -465,7 +465,7 @@ void G_StunTeam (void)
 	gi.dprintf("G_StunTeam: stun team %i\n", teamToKill);
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) && !(ent->state & STATE_DEAD)) {
+		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2) && !(ent->state & STATE_DEAD)) {
 			if (teamToKill >= 0 && ent->team != teamToKill)
 				continue;
 
@@ -511,7 +511,7 @@ static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_m
 		if (shock && !G_FrustumVis(ent, impact))
 			continue;
 
-		if (check->type == ET_ACTOR || check->type == ET_UGV)
+		if (check->type == ET_ACTOR || check->type == ET_ACTOR2x2)
 			VectorCopy(check->origin, center);
 		else if (check->type == ET_BREAKABLE || check->type == ET_DOOR) {
 			VectorAdd(check->absmin, check->absmax, center);
@@ -526,7 +526,7 @@ static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_m
 			continue;
 
 		/* FIXME: don't make aliens in back visible */
-		if (fd->irgoggles && (check->type == ET_ACTOR || check->type == ET_UGV)) {
+		if (fd->irgoggles && (check->type == ET_ACTOR || check->type == ET_ACTOR2x2)) {
 			if (G_FrustumVis(ent, check->origin)) {
 				if (!mock) {
 					G_AppearPerishEvent(~G_VisToPM(check->visflags), 1, check);
@@ -537,7 +537,7 @@ static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_m
 		}
 
 		/* check for walls */
-		if ((check->type == ET_ACTOR || check->type == ET_UGV) && !G_ActorVis(impact, check, qfalse))
+		if ((check->type == ET_ACTOR || check->type == ET_ACTOR2x2) && !G_ActorVis(impact, check, qfalse))
 			continue;
 
 		/* do damage */
@@ -652,7 +652,7 @@ static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd,
 				/* enough bouncing around */
 				(VectorLength(curV) < GRENADE_STOPSPEED || time > 4.0 || bounce > fd->bounce
 				 /* or we have sensors that tell us enemy is near */
-				 || (!fd->delay && tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV))) {
+				 || (!fd->delay && tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_ACTOR2x2))) {
 
 				if (!mock) {
 					/* explode */
@@ -661,7 +661,7 @@ static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd,
 					gi.WriteShort(fd->obj_idx);
 					gi.WriteByte(fd->weap_fds_idx);
 					gi.WriteByte(fd->fd_idx);
-					if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV))
+					if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_ACTOR2x2))
 						gi.WriteByte(flags | SF_BODY);
 					else
 						gi.WriteByte(flags | SF_IMPACT);
@@ -694,7 +694,7 @@ static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd,
 
 							for (actor = g_edicts; actor < &g_edicts[globals.num_edicts]; actor++)
 								if (actor->inuse
-									 && (actor->type == ET_ACTOR || actor->type == ET_UGV)
+									 && (actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
 									 && VectorCompare(drop, actor->pos) )
 									FLOOR(actor) = FLOOR(floor);
 						} else {
@@ -831,7 +831,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 
 		/* set flags when trace hit something */
 		if (tr.fraction < 1.0) {
-			if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV)
+			if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_ACTOR2x2)
 				/* check if we differenciate between body and wall */
 				&& !fd->delay)
 				flags |= SF_BODY;
@@ -849,7 +849,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 				mask |= 1 << i;
 
 		/* victims see shots */
-		if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV))
+		if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_ACTOR2x2))
 			mask |= 1 << tr.ent->team;
 #endif
 
@@ -893,7 +893,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 		}
 
 		/* do damage if the trace hit an entity */
-		if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV || tr.ent->type == ET_BREAKABLE)) {
+		if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_ACTOR2x2 || tr.ent->type == ET_BREAKABLE)) {
 			G_Damage(tr.ent, fd, damage, ent, mock);
 			break;
 		}
@@ -936,7 +936,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 
 				for (actor = g_edicts; actor < &g_edicts[globals.num_edicts]; actor++)
 					if (actor->inuse
-						 && (actor->type == ET_ACTOR || actor->type == ET_UGV)
+						 && (actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
 						 && VectorCompare(drop, actor->pos) )
 						FLOOR(actor) = FLOOR(floor);
 			} else {
@@ -1287,7 +1287,7 @@ static qboolean G_CanReactionFire (edict_t *ent, edict_t *target, char *reason)
 	}
 
 	/* check ent is a suitable shooter */
-	if (!ent->inuse || (ent->type != ET_ACTOR && ent->type != ET_UGV) || (ent->state & STATE_DEAD)) {
+	if (!ent->inuse || (ent->type != ET_ACTOR && ent->type != ET_ACTOR2x2) || (ent->state & STATE_DEAD)) {
 #ifdef DEBUG_REACTION
 		if (reason)
 			Com_sprintf(reason, sizeof(reason), "Shooter is not ent, is non-actor or is dead");

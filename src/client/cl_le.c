@@ -761,7 +761,7 @@ void LE_Cleanup (void)
 	for (i = numLEs - 1, le = &LEs[numLEs - 1]; i >= 0; i--, le--) {
 		switch (le->type) {
 		case ET_ACTOR:
-		case ET_UGV:
+		case ET_ACTOR2x2:
 			inv = le->i;
 			Com_DestroyInventory(&inv);
 			break;

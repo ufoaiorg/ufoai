@@ -178,7 +178,7 @@ void Cmd_InvList (player_t *player)
 
 	Com_Printf("Print inventory for '%s'\n", player->pers.netname);
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) && ent->team == player->pers.team) {
+		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2) && ent->team == player->pers.team) {
 			Com_Printf("actor: '%s'\n", ent->chr.name);
 			INV_PrintToConsole(&ent->i);
 		}

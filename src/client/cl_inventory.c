@@ -208,7 +208,7 @@ void INV_CollectingItems (int won)
 			}
 			break;
 		case ET_ACTOR:
-		case ET_UGV:
+		case ET_ACTOR2x2:
 			/* First of all collect armours of dead or stunned actors (if won). */
 			if (won) {
 				/* (le->state & STATE_DEAD) includes STATE_STUN */
