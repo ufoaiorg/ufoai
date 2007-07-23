@@ -2659,7 +2659,7 @@ static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, i
 					/* reset test flags */
 					tfList[z][y][x] = 0;
 					l = map->area[z][y][x];
-					h = map->route[z][y][x] & 0xF;
+					h = R_HEIGHT(map, x, y, z);
 
 					/* check for end */
 					if (l + 3 >= MAX_MOVELENGTH)
@@ -2800,20 +2800,23 @@ static int Grid_MoveCheck (struct routing_s *map, pos3_t pos, int sz, int l)
 			continue;
 
 		/* connection checks */
-		if (dx > 0 && !(map->route[z][y][x] & 0x10))
+		if (dx > 0 && !R_CONN_PX(map, x, y, z))
 			continue;
-		if (dx < 0 && !(map->route[z][y][x] & 0x20))
+		if (dx < 0 && !R_CONN_NX(map, x, y, z))
 			continue;
-		if (dy > 0 && !(map->route[z][y][x] & 0x40))
+		if (dy > 0 && !R_CONN_PY(map, x, y, z))
 			continue;
-		if (dy < 0 && !(map->route[z][y][x] & 0x80))
+		if (dy < 0 && !R_CONN_NY(map, x, y, z))
 			continue;
-		if (dv > 3 && !((map->route[z][y + dy][x] & (dx > 0 ? 0x10 : 0x20)) && (map->route[z][y][x + dx] & (dy > 0 ? 0x40 : 0x80))))
+		if (dv > 3 &&
+			!( (dx > 0 ? R_CONN_PX(map, x,    y+dy, z) : R_CONN_NX(map, x,    y+dy, z))
+			&& (dy > 0 ? R_CONN_PY(map, x+dx, y,    z) : R_CONN_NY(map, x+dx, y,    z)))
+			)
 			continue;
 
 		/* height checks */
 		sh = R_STEP(map, x, y, z) ? sh_big : sh_low;
-		z += ((map->route[z][y][x] & 0xF) + sh) / 0x10;
+		z += (R_HEIGHT(map,x,y,z) + sh) / 0x10;
 
 		/** @todo check if there isn't a (z >= 0 && ...) missing here? */
 		while (R_FALL(map, pos[0], pos[1], z))
