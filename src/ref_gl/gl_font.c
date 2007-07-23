@@ -34,6 +34,7 @@ static fontCache_t *hash[MAX_FONT_CACHE];
 
 static font_t fonts[MAX_FONTS];
 
+static char *Font_GetLineWrap(font_t * f, char *buffer, int maxWidth, int *width, int *height);
 
 /* holds the gettext string */
 static char buf[BUF_SIZE];
@@ -127,7 +128,7 @@ static font_t *Font_GetFont (const char *name)
  * @brief
  * @sa Font_GetFont
  */
-void Font_Length (const char *font, const char *c, int *width, int *height)
+void Font_Length (const char *font, char *c, int *width, int *height)
 {
 	font_t *f = NULL;
 
@@ -141,7 +142,7 @@ void Font_Length (const char *font, const char *c, int *width, int *height)
 	f = Font_GetFont(font);
 	if (!f)
 		return;
-	TTF_SizeUTF8(f->font, c, width, height);
+	Font_GetLineWrap(f, c, VID_NORM_WIDTH, width, height);
 }
 
 /**

@@ -316,7 +316,7 @@ typedef struct {
 	void (EXPORT *DrawNormPic) (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, const char *name);
 	void (EXPORT *DrawChar) (int x, int y, int c);
 	void (EXPORT *FontRegister) (const char *name, int size, const char *path, const char *style);
-	void (EXPORT *FontLength) (const char *font, const char *c, int *width, int *height);
+	void (EXPORT *FontLength) (const char *font, char *c, int *width, int *height);
 	int (EXPORT *FontDrawString) (const char *font, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine);
 	void (EXPORT *DrawTileClear) (int x, int y, int w, int h, const char *name);
 	void (EXPORT *DrawFill) (int x, int y, int w, int h, int align, const vec4_t color);

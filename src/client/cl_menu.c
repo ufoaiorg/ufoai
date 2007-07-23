@@ -281,7 +281,7 @@ static tutorial_t tutorials[MAX_TUTORIALS];
 static void MN_GetMaps_f(void);
 static void MN_NextMap_f(void);
 static void MN_PrevMap_f(void);
-static int MN_DrawTooltip(const char *font, const char *string, int x, int y, int maxWidth, int maxHeight);
+static int MN_DrawTooltip(const char *font, char *string, int x, int y, int maxWidth, int maxHeight);
 static void CL_ShowMessagesOnStack_f(void);
 static void MN_TimestampedText(char *text, message_t *message, size_t textsize);
 
@@ -1897,9 +1897,10 @@ void MN_DrawItem (vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t 
 /**
  * @brief Generic tooltip function
  */
-static int MN_DrawTooltip (const char *font, const char *string, int x, int y, int maxWidth, int maxHeight)
+static int MN_DrawTooltip (const char *font, char *string, int x, int y, int maxWidth, int maxHeight)
 {
 	int height = 0, width = 0;
+	int lines = 5;
 
 	re.FontLength(font, string, &width, &height);
 	if (!width)
@@ -1915,7 +1916,7 @@ static int MN_DrawTooltip (const char *font, const char *string, int x, int y, i
 		x -= (maxWidth + 10);
 	re.DrawFill(x - 1, y - 1, maxWidth + 4, height, 0, tooltipBG);
 	re.DrawColor(tooltipColor);
-	re.FontDrawString(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, maxHeight, height, string, 0, 0, NULL, qfalse);
+	re.FontDrawString(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, maxHeight, height, string, lines, 0, NULL, qfalse);
 	re.DrawColor(NULL);
 	return width;
 }
@@ -2024,28 +2025,26 @@ static void INV_GetItemTooltip (item_t item, char *tooltiptext, size_t string_ma
 	int weapon_idx;
 	int ammo_counter;
 
-	Q_strncpyz(tooltiptext, csi.ods[item.t].name, string_maxlength);
-
+	Q_strncpyz(tooltiptext, va("%s\n", csi.ods[item.t].name), string_maxlength);
 	/* Only display further info if item.t is researched */
 	if (RS_ItemIsResearched(csi.ods[item.t].id)) {
-
 		if (csi.ods[item.t].weapon) {
 			/* Get info about used ammo (if there is any) */
 			if (item.t == item.m) {
 				/* Item has no ammo but might have shot-count */
 				if (item.a) {
-					Q_strcat(tooltiptext, va(" [Ammo: %i]", item.a), string_maxlength);
+					Q_strcat(tooltiptext, va(_(" [Ammo: %i]\n"), item.a), string_maxlength);
 				}
 			} else {
 				/* Search for used ammo and display name + ammo count */
-				Q_strcat(tooltiptext, va(" [%s loaded;", csi.ods[item.m].name), string_maxlength);
-				Q_strcat(tooltiptext, va(" Ammo: %i]",  item.a), string_maxlength);
+				Q_strcat(tooltiptext, va(_(" [%s loaded;"), csi.ods[item.m].name), string_maxlength);
+				Q_strcat(tooltiptext, va(_(" Ammo: %i]\n"),  item.a), string_maxlength);
 			}
 		} else if (csi.ods[item.t].numWeapons) {
 			/* If it's ammo get the weapon names it can be used in */
 			ammo_counter = 0;
-			Q_strcat(tooltiptext, "  [Useable in:", string_maxlength);
-			for (i=0; i < csi.ods[item.t].numWeapons; i++) {
+			Q_strcat(tooltiptext, _("  [Useable in:"), string_maxlength);
+			for (i = 0; i < csi.ods[item.t].numWeapons; i++) {
 				weapon_idx = csi.ods[item.t].weap_idx[i];
 				if (RS_ItemIsResearched(csi.ods[weapon_idx].id)) {
 					if (ammo_counter == 0) {
@@ -2056,11 +2055,112 @@ static void INV_GetItemTooltip (item_t item, char *tooltiptext, size_t string_ma
 					ammo_counter++;
 				}
 			}
-			Q_strcat(tooltiptext, "]", string_maxlength);
+			Q_strcat(tooltiptext, "]\n", string_maxlength);
 		}
 	}
 }
 
+/**
+ * @brief Handles line breaks and drawing for MN_TEXT menu nodes
+ * @sa MN_DrawMenus
+ * @param[in] text Text to draw
+ * @param[in] font Font string to use
+ * @param[in] node The current menu node
+ * @param[in] x The fixed x position every new line starts
+ * @param[in] y The fixed y position the text node starts
+ * @todo Implment scrollbars
+ * @todo The node pointer can be NULL
+ */
+static void MN_DrawTextNode (const char *text, const char* font, menuNode_t* node, const int x, const int y, const int width, const int height)
+{
+	char textCopy[MAX_MENUTEXTLEN];
+	int lineHeight = 0;
+	char newFont[MAX_VAR];
+	const char* oldFont = NULL;
+	char *cur, *tab, *end;
+	int x1, y1; /* variable x and y position */
+
+	Q_strncpyz(textCopy, text, MAX_MENUTEXTLEN);
+	cur = textCopy;
+	y1 = y;
+	/*Com_Printf("\n\n\nnode->textLines: %i \n", node->textLines);*/
+	if (node)
+		node->textLines = 0; /* these are lines only in one-line texts! */
+	/* but it's easy to fix, just change FontDrawString
+		so that it returns a pair, #lines and height
+		and add that to variable line; the only other file
+		using FontDrawString result is client/cl_sequence.c
+		and there just ignore #lines */
+	do {
+		/* new line starts from node x position */
+		x1 = x;
+		if (oldFont) {
+			font = oldFont;
+			oldFont = NULL;
+		}
+
+		if (cur[0] == '^') {
+			switch (toupper(cur[1])) {
+			case 'B':
+				Com_sprintf(newFont, sizeof(newFont), "%s_bold", font);
+				oldFont = font;
+				font = newFont;
+				cur += 2; /* don't print the format string */
+				break;
+			}
+		}
+
+		/* get the position of the next newline - otherwise end will be null */
+		end = strchr(cur, '\n');
+		if (end)
+			/* set the \n to \0 to draw only this part (before the \n) with our font renderer */
+			/* let end point to the next char after the \n (or \0 now) */
+			*end++ = '\0';
+
+		/* hightlight if mousefx is true */
+		/* FIXME: what about multiline text that should be highlighted completly? */
+		if (node && node->mousefx && node->textLines + 1 == node->state)
+			re.DrawColor(node->color);
+
+		/* we assume all the tabs fit on a single line */
+		do {
+			tab = strchr(cur, '\t');
+			/* if this string does not contain any tabstops break this do while ... */
+			if (!tab)
+				break;
+			/* ... otherwise set the \t to \0 and increase the tab pointer to the next char */
+			/* after the tab (needed for the next loop in this (the inner) do while) */
+			*tab++ = '\0';
+			/* now check whether we should draw this string */
+			/*Com_Printf("tab - first part - node->textLines: %i \n", node->textLines);*/
+			if (node)
+				node->textLines++;
+			re.FontDrawString(font, node->align, x1, y1, x, y, width, height, node->texh[0], cur, node->height, node->textScroll, &node->textLines, qfalse);
+			if (node)
+				node->textLines--;
+			/* increase the x value as given via menu definition format string */
+			/* or use 1/3 of the node size (width) */
+			if (!node || !node->texh[1])
+				x1 += (width / 3);
+			else
+				x1 += node->texh[1];
+			/* now set cur to the first char after the \t */
+			cur = tab;
+		} while (1);
+
+		/*Com_Printf("until newline - node->textLines: %i\n", node->textLines);*/
+		/* the conditional expression at the end is a hack to draw "/n/n" as a blank line */
+		lineHeight = re.FontDrawString(font, node->align, x1, y1, x, y, width, height, node->texh[0], (*cur ? cur : " "), node->height, node->textScroll, &node->textLines, qtrue);
+		if (lineHeight > 0)
+			y1 += lineHeight;
+
+		if (node && node->mousefx)
+			re.DrawColor(node->color); /* why is this repeated? */
+
+		/* now set cur to the next char after the \n (see above) */
+		cur = end;
+	} while (cur);
+}
 
 /**
  * @brief Draws the menu stack
@@ -2081,14 +2181,13 @@ void MN_DrawMenus (void)
 	item_t item = {1, NONE, NONE, 0}; /* 1 so it's not reddish; fake item anyway */
 	vec4_t color;
 	int mouseOver = 0;
-	char *cur, *tab, *end;
-	int y, x, i;
+	int y, i;
 	message_t *message;
 	menuModel_t *menuModel = NULL, *menuModelParent = NULL;
 	int width, height;
 	const char* cond;
 	invList_t *itemHover = NULL;
-	char tooltiptext[MAX_VAR] = "";
+	char *tab, *end;
 
 	/* render every menu on top of a menu with a render node */
 	pp = 0;
@@ -2372,90 +2471,8 @@ void MN_DrawMenus (void)
 
 				case MN_TEXT:
 					if (menuText[node->num]) {
-						char textCopy[MAX_MENUTEXTLEN];
-						int lineHeight = 0;
-						char newFont[MAX_VAR];
-						const char* oldFont = NULL;
-
 						font = MN_GetFont(menu, node);
-
-						Q_strncpyz(textCopy, menuText[node->num], MAX_MENUTEXTLEN);
-						cur = textCopy;
-						y = node->pos[1];
-						/*Com_Printf("\n\n\nnode->textLines: %i \n", node->textLines);*/
-						node->textLines = 0; /* these are lines only in one-line texts! */
-						/* but it's easy to fix, just change FontDrawString
-							so that it returns a pair, #lines and height
-							and add that to variable line; the only other file
-							using FontDrawString result is client/cl_sequence.c
-							and there just ignore #lines */
-						do {
-							/* new line starts from node x position */
-							x = node->pos[0];
-							if (oldFont) {
-								font = oldFont;
-								oldFont = NULL;
-							}
-
-							if (cur[0] == '^') {
-								switch (toupper(cur[1])) {
-								case 'B':
-									Com_sprintf(newFont, sizeof(newFont), "%s_bold", font);
-									oldFont = font;
-									font = newFont;
-									cur += 2; /* don't print the format string */
-									break;
-								}
-							}
-
-							/* get the position of the next newline - otherwise end will be null */
-							end = strchr(cur, '\n');
-							if (end)
-								/* set the \n to \0 to draw only this part (before the \n) with our font renderer */
-								/* let end point to the next char after the \n (or \0 now) */
-								*end++ = '\0';
-
-							/* hightlight if mousefx is true */
-							/* FIXME: what about multiline text that should be highlighted completly? */
-							if (node->mousefx && node->textLines + 1 == mouseOver)
-								re.DrawColor(color);
-
-							/* we assume all the tabs fit on a single line */
-							do {
-								tab = strchr(cur, '\t');
-								/* if this string does not contain any tabstops break this do while ... */
-								if (!tab)
-									break;
-								/* ... otherwise set the \t to \0 and increase the tab pointer to the next char */
-								/* after the tab (needed for the next loop in this (the inner) do while) */
-								*tab++ = '\0';
-								/* now check whether we should draw this string */
-								/*Com_Printf("tab - first part - node->textLines: %i \n", node->textLines);*/
-								node->textLines++;
-								re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], cur, node->height, node->textScroll, &node->textLines, qfalse);
-								node->textLines--;
-								/* increase the x value as given via menu definition format string */
-								/* or use 1/3 of the node size (width) */
-								if (!node->texh[1])
-									x += (node->size[0] / 3);
-								else
-									x += node->texh[1];
-								/* now set cur to the first char after the \t */
-								cur = tab;
-							} while (1);
-
-							/*Com_Printf("until newline - node->textLines: %i\n", node->textLines);*/
-							/* the conditional expression at the end is a hack to draw "/n/n" as a blank line */
-							lineHeight = re.FontDrawString(font, node->align, x, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], (*cur ? cur : " "), node->height, node->textScroll, &node->textLines, qtrue);
-							if (lineHeight > 0)
-								y += lineHeight;
-
-							if (node->mousefx)
-								re.DrawColor(node->color); /* why is this repeated? */
-
-							/* now set cur to the next char after the \n (see above) */
-							cur = end;
-						} while (cur);
+						MN_DrawTextNode(menuText[node->num], font, node, node->pos[0], node->pos[1], node->size[0], node->size[1]);
 					} else if (node->num == TEXT_MESSAGESYSTEM) {
 						if (node->data[MN_DATA_ANIM_OR_FONT])
 							font = MN_GetReferenceString(menu, node->data[MN_DATA_ANIM_OR_FONT]);
@@ -2565,7 +2582,7 @@ void MN_DrawMenus (void)
 						if (node->mousefx != csi.idEquip)
 							MN_InvDrawFree(menuInventory, node);
 
-						/* Draw tooltip for weapon or ammo */ 
+						/* Draw tooltip for weapon or ammo */
 						if (mouseSpace != MS_DRAG && node->state && cl_show_tooltips->integer) {
 							/* Find out where the mouse is */
 							itemHover = Com_SearchInInventory(menuInventory,
@@ -2853,17 +2870,29 @@ void MN_DrawMenus (void)
 
 		}	/* for */
 		if (sp == menuStackPos && menu->hoverNode && cl_show_tooltips->integer) {
-			MN_Tooltip(menu, menu->hoverNode, mx, my);
-			menu->hoverNode = NULL;
+			/* we are hovering an item and also want to display it
+	 		 * make sure that we draw this on top of every other node */
+			if (itemHover) {
+				char tooltiptext[MAX_VAR] = "";
+				int x = mx, y = my;
+				const int itemToolTipWidth = 200;
+				const int itemToolTipHeight = 80;
+				/* Get name and ifo about item */
+				INV_GetItemTooltip(itemHover->item, tooltiptext, sizeof(tooltiptext));
+#if 1
+				if (x + itemToolTipWidth > VID_NORM_WIDTH)
+					x = VID_NORM_WIDTH - itemToolTipWidth;
+				if (y + itemToolTipHeight > VID_NORM_HEIGHT)
+					y = VID_NORM_HEIGHT - itemToolTipHeight;
+				MN_DrawTextNode(tooltiptext, "f_small", menu->hoverNode, x, y, itemToolTipWidth, itemToolTipHeight);
+#else
+				MN_DrawTooltip("f_small", tooltiptext, x, y, itemToolTipWidth, itemToolTipHeight);
+#endif
+			} else {
+				MN_Tooltip(menu, menu->hoverNode, mx, my);
+				menu->hoverNode = NULL;
+			}
 		}
-	}
-
-	/* we are hovering an item and also want to display it
-	 * make sure that we draw this on top of every other node */
-	if (itemHover) {
-		/* Get name and ifo about item */
-		INV_GetItemTooltip(itemHover->item, tooltiptext, sizeof(tooltiptext));
-		MN_DrawTooltip("f_small", tooltiptext, mx, my, 40, 0);
 	}
 
 	re.DrawColor(NULL);
