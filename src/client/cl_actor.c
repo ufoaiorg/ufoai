@@ -172,8 +172,8 @@ void CL_CharacterCvars (character_t *chr)
 	assert(chr);
 
 	Cvar_ForceSet("mn_name", chr->name);
-	Cvar_ForceSet("mn_body", Com_CharGetBody(chr));
-	Cvar_ForceSet("mn_head", Com_CharGetHead(chr));
+	Cvar_ForceSet("mn_body", CHRSH_CharGetBody(chr));
+	Cvar_ForceSet("mn_head", CHRSH_CharGetHead(chr));
 	Cvar_ForceSet("mn_skin", va("%i", chr->skin));
 	Cvar_ForceSet("mn_skinname", CL_GetTeamSkinName(chr->skin));
 
@@ -235,8 +235,8 @@ void CL_UGVCvars (character_t *chr)
 	assert(chr);
 
 	Cvar_ForceSet("mn_name", chr->name);
-	Cvar_ForceSet("mn_body", Com_CharGetBody(chr));
-	Cvar_ForceSet("mn_head", Com_CharGetHead(chr));
+	Cvar_ForceSet("mn_body", CHRSH_CharGetBody(chr));
+	Cvar_ForceSet("mn_head", CHRSH_CharGetHead(chr));
 	Cvar_ForceSet("mn_skin", va("%i", chr->skin));
 	Cvar_ForceSet("mn_skinname", CL_GetTeamSkinName(chr->skin));
 

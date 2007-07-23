@@ -398,17 +398,23 @@ typedef enum {
 
 #define MAX_CAMPAIGNS	16
 
-/* min and max values for all teams can be defined via campaign script */
+/* ================================ */
+/*  CHARACTER GENERATING FUNCTIONS  */
+/* ================================ */
+
+/* These are min and max values for all teams can be defined via campaign script. */
 extern int CHRSH_skillValues[MAX_CAMPAIGNS][MAX_TEAMS][MAX_EMPL][2];
 extern int CHRSH_abilityValues[MAX_CAMPAIGNS][MAX_TEAMS][MAX_EMPL][2];
 
-void CHRSH_SetGlobalCampaignID (int campaignID);
+void CHRSH_SetGlobalCampaignID(int campaignID);
 int Com_StringToTeamNum(const char* teamString) __attribute__((nonnull));
 void CHRSH_CharGenAbilitySkills(character_t * chr, int team) __attribute__((nonnull));
-char *Com_CharGetBody(character_t* const chr) __attribute__((nonnull));
-char *Com_CharGetHead(character_t* const chr) __attribute__((nonnull));
+char *CHRSH_CharGetBody(character_t* const chr) __attribute__((nonnull));
+char *CHRSH_CharGetHead(character_t* const chr) __attribute__((nonnull));
 
-/* =========================================================== */
+/* ================================ */
+/*  INVENTORY MANAGEMENT FUNCTIONS  */
+/* ================================ */
 
 void INVSH_InitCSI(csi_t * import) __attribute__((nonnull));
 void INVSH_InitInventory(invList_t * invChain) __attribute__((nonnull));
@@ -430,6 +436,11 @@ void INV_PrintToConsole(inventory_t* const i);
 void INVSH_PrintItemDescription(int i);
 int INVSH_GetItemByID(const char *id);
 qboolean INVSH_LoadableInWeapon(objDef_t *od, int weapon_idx);
+
+/* =============================== */
+/*  FIREMODE MANAGEMENT FUNCTIONS  */
+/* =============================== */
+
 int FIRESH_FiredefsIDXForWeapon(objDef_t *od, int weapon_idx);
 int FIRESH_GetDefaultReactionFire(objDef_t *ammo, int weapon_fds_idx);
 

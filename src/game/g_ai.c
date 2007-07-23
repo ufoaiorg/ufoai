@@ -682,8 +682,8 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 
 			/* set model */
 			ent->chr.inv = &ent->i;
-			ent->body = gi.modelindex(Com_CharGetBody(&ent->chr));
-			ent->head = gi.modelindex(Com_CharGetHead(&ent->chr));
+			ent->body = gi.modelindex(CHRSH_CharGetBody(&ent->chr));
+			ent->head = gi.modelindex(CHRSH_CharGetHead(&ent->chr));
 			ent->skin = ent->chr.skin;
 		} else {
 			CHRSH_CharGenAbilitySkills(&ent->chr, team);
@@ -697,8 +697,8 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 			ent->chr.skin = gi.GetModelAndName(gi.cvar_string("ai_civilian"), &ent->chr);
 			ent->chr.inv = &ent->i;
 			/* FIXME: Maybe we have civilians with armor, too - police and so on */
-			ent->body = gi.modelindex(Com_CharGetBody(&ent->chr));
-			ent->head = gi.modelindex(Com_CharGetHead(&ent->chr));
+			ent->body = gi.modelindex(CHRSH_CharGetBody(&ent->chr));
+			ent->head = gi.modelindex(CHRSH_CharGetHead(&ent->chr));
 			ent->skin = ent->chr.skin;
 			ent->type = ET_ACTOR;
 			ent->pnum = player->num;

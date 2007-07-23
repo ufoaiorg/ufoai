@@ -2255,8 +2255,8 @@ void G_ClientTeamInfo (player_t * player)
 
 			/* set models */
 			ent->chr.inv = &ent->i;
-			ent->body = gi.modelindex(Com_CharGetBody(&ent->chr));
-			ent->head = gi.modelindex(Com_CharGetHead(&ent->chr));
+			ent->body = gi.modelindex(CHRSH_CharGetBody(&ent->chr));
+			ent->head = gi.modelindex(CHRSH_CharGetHead(&ent->chr));
 			ent->skin = ent->chr.skin;
 
 			/* set initial vital statistics */

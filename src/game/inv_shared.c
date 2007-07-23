@@ -1294,15 +1294,15 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, int team)
 
 }
 
-/** @brief Used in Com_CharGetHead and Com_CharGetBody to generate the model path */
+/** @brief Used in CHRSH_CharGetHead and CHRSH_CharGetBody to generate the model path */
 static char returnModel[MAX_VAR];
 
 /**
  * @brief Returns the body model for the soldiers for armored and non armored soldiers
  * @param chr Pointer to character struct
- * @sa Com_CharGetBody
+ * @sa CHRSH_CharGetBody
  */
-char *Com_CharGetBody (character_t * const chr)
+char *CHRSH_CharGetBody (character_t * const chr)
 {
 	char id[MAX_VAR];
 	char *underline;
@@ -1322,7 +1322,7 @@ char *Com_CharGetBody (character_t * const chr)
 	/* models of UGVs don't change - because they are already armored */
 	if (chr->inv->c[CSI->idArmor] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
 		assert(!Q_strcmp(CSI->ods[chr->inv->c[CSI->idArmor]->item.t].type, "armor"));
-/*		Com_Printf("Com_CharGetBody: Use '%s' as armor\n", CSI->ods[chr->inv->c[CSI->idArmor]->item.t].id);*/
+/*		Com_Printf("CHRSH_CharGetBody: Use '%s' as armor\n", CSI->ods[chr->inv->c[CSI->idArmor]->item.t].id);*/
 
 		/* check for the underline */
 		Q_strncpyz(id, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].id, sizeof(id));
@@ -1339,9 +1339,9 @@ char *Com_CharGetBody (character_t * const chr)
 /**
  * @brief Returns the head model for the soldiers for armored and non armored soldiers
  * @param chr Pointer to character struct
- * @sa Com_CharGetBody
+ * @sa CHRSH_CharGetBody
  */
-char *Com_CharGetHead (character_t * const chr)
+char *CHRSH_CharGetHead (character_t * const chr)
 {
 	char id[MAX_VAR];
 	char *underline;
@@ -1361,7 +1361,7 @@ char *Com_CharGetHead (character_t * const chr)
 	/* models of UGVs don't change - because they are already armored */
 	if (chr->inv->c[CSI->idArmor] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
 		assert(!Q_strcmp(CSI->ods[chr->inv->c[CSI->idArmor]->item.t].type, "armor"));
-/*		Com_Printf("Com_CharGetHead: Use '%s' as armor\n", CSI->ods[chr->inv->c[CSI->idArmor]->item.t].id);*/
+/*		Com_Printf("CHRSH_CharGetHead: Use '%s' as armor\n", CSI->ods[chr->inv->c[CSI->idArmor]->item.t].id);*/
 
 		/* check for the underline */
 		Q_strncpyz(id, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].id, sizeof(id));
