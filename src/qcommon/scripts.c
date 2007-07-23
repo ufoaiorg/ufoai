@@ -1366,7 +1366,7 @@ const char* Com_GetActorSound (int category, int gender, actorSound_t soundType)
 /**
  * @brief Assign 3D models and names to a character.
  * @param[in] team What team the character is on.
- * @param[in,out] chr The character that should get the paths to the differenbt models/skins.
+ * @param[in,out] chr The character that should get the paths to the different models/skins.
  * @sa Com_GiveName
  * @sa Com_GiveModel
  */
