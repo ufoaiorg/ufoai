@@ -1969,7 +1969,7 @@ void CL_DisplayBlockedPaths_f (void)
 		if (!(le->state & STATE_DEAD)
 		&& (le->type == ET_ACTOR || le->type == ET_UGV)) {
 			/* draw blocking cursor at le->pos */
-			Grid_PosToVec(&clMap,  le->pos, s);
+			Grid_PosToVec(&clMap, le->pos, s);
 			ptl = CL_ParticleSpawn("cross", 0, s, NULL, NULL);
 			ptl->rounds = 2;
 			ptl->roundsCnt = 2;

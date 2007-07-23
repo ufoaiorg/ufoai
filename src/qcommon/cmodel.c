@@ -130,9 +130,9 @@ typedef struct {
  * 	0x20	0010 0000	connection to -x	(height ignored?)
  * 	0x40	0100 0000	connection to +y	(height ignored?)
  * 	0x80	1000 0000	connection to -y	(height ignored?)
- * 
+ *
  * 	See "h = map->route[z][y][x] & 0x0F;" and "if (map->route[az][ay][ax] & 0x0F) > h)" in CM_TestConnection
- * 	0x0F	0000 1111	some height info? 
+ * 	0x0F	0000 1111	some height info?
  *
  * FALL
  * 	Information about how much you'll fall down from x,y position?
@@ -140,7 +140,7 @@ typedef struct {
  *	See "while (map->fall[ny][nx] & (1 << z)) z--;" in Grid_MoveMark
  *
  * STEP
- *	
+ *
  *	0000 0000
  *	Each bit SEEMS (!) to represent an info about one height (z) level (at position x,y)
  *	Access with "step[y][x] & (1 << z)"
@@ -2572,8 +2572,8 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
  * @param[in] xl
  * @param[in] yl
  * @param[in] xh
- * @param[in] xh 
-  * @sa Grid_MoveMark
+ * @param[in] xh
+ * @sa Grid_MoveMark
  */
 static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, int yh)
 {
