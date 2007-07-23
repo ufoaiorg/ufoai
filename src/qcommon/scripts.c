@@ -1405,6 +1405,9 @@ int Com_GetModelAndName (const char *team, character_t * chr)
 		Com_DPrintf("Com_GetModelAndName: Warning - this team (%s) could not be handled via aliencont code - no tech pointer will be available\n", team);
 #endif
 
+	/* FIXME: units with more than one unit */
+	chr->fieldSize = ACTOR_SIZE_NORMAL;
+
 	/* get the models */
 	while (retry--) {
 		gender = rand() % NAME_LAST;

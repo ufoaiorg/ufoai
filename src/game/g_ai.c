@@ -655,8 +655,6 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 		/* spawn */
 		level.num_spawned[team]++;
 		level.num_alive[team]++;
-		/* FIXME: Aliens with more than one unit */
-		ent->chr.fieldSize = ACTOR_SIZE_NORMAL;
 		if (team != TEAM_CIVILIAN) {
 			ent->chr.skin = gi.GetModelAndName(gi.cvar_string("ai_alien"), &ent->chr);
 
