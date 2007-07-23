@@ -2494,7 +2494,7 @@ int CM_TestLineDM (vec3_t start, vec3_t stop, vec3_t end)
  * @param[in] z Field in z direction
  * @param[in] actor_size Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @sa Grid_MoveMark
- * @return qtrue if one can walk there (i.e. the field [and attached fields for e.g. 2x2 units] is/are blocked by entries in the forbidden list) otherwise false.
+ * @return qtrue if one can't walk there (i.e. the field [and attached fields for e.g. 2x2 units] is/are blocked by entries in the forbidden list) otherwise false.
  */
 static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, int z, int actor_size)
 {
@@ -2561,7 +2561,7 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, int z
  * @param[in] x Current x location in the map.
  * @param[in] y Current y location in the map.
  * @param[in] z Current z location in the map.
- * @param[in] dv
+ * @param[in] dv todo: "Direction vector"? (see dvecs[DIRECTIONS])
  * @param[in] h
  * @param[in] ol
  * @sa Grid_CheckForbidden
