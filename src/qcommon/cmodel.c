@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define GRENADE_ALPHAFAC	0.7
 #define GRENADE_MINALPHA	M_PI/6
 #define GRENADE_MAXALPHA	M_PI*7/16
+#define QUANT		4
 
 /* 1/32 epsilon to keep floating point happy */
 #define	DIST_EPSILON	(0.03125)
@@ -151,7 +152,6 @@ typedef struct {
  *
  * AREASTORED
  *
- * @todo Some speaking macros for this would be nice :)
  */
 typedef struct routing_s {
 	byte route[HEIGHT][WIDTH][WIDTH];
@@ -165,6 +165,23 @@ typedef struct routing_s {
 	byte **fblist;	/**< pointer to forbidden list (entities are standing here) */
 	int fblength;	/**< length of forbidden list (amount of entries) */
 } routing_t;
+
+/**
+ * @brief Some macros to access routing_t values as described above.
+ * @note P/N = positive/negative; X/Y =direction
+ */
+/* route */
+#define R_CONN_PX(map,x,y,z) ((map)->route[(z)][(y)][(x)] & 0x10)
+#define R_CONN_NX(map,x,y,z) ((map)->route[(z)][(y)][(x)] & 0x20)
+#define R_CONN_PY(map,x,y,z) ((map)->route[(z)][(y)][(x)] & 0x40)
+#define R_CONN_NY(map,x,y,z) ((map)->route[(z)][(y)][(x)] & 0x80)
+#define R_HEIGHT(map,x,y,z)  ((map)->route[(z)][(y)][(x)] & 0x0F)
+
+/* step */
+#define R_STEP(map,x,y,z) ((map)->step[(y)][(x)] & (1 << (z)))
+
+/* fall */
+#define R_FALL(map,x,y,z) ((map)->fall[(y)][(x)] & (1 << (z)))
 
 /* extern */
 int c_pointcontents;
@@ -768,8 +785,8 @@ static qboolean CM_TestConnection (routing_t * map, int x, int y, int z, unsigne
 		return qfalse;
 
 	/* get step height and trace vectors */
-	sh = (map->step[y][x] & (1 << z)) ? sh_big : sh_low;
-	h = map->route[z][y][x] & 0x0F;
+	sh = R_STEP(map, x, y, z) ? sh_big : sh_low;
+	h = R_HEIGHT(map, x, y, z);
 	VectorSet(pos, x, y, z);
 	PosToVec(pos, start);
 	start[2] += h * 4;
@@ -779,7 +796,7 @@ static qboolean CM_TestConnection (routing_t * map, int x, int y, int z, unsigne
 	ax = x + dvecs[dir][0];
 	ay = y + dvecs[dir][1];
 	az = z + (h + sh) / 0x10;
-	h = ((map->route[z][y][x] & 0x0F) + sh) % 0x10;
+	h = (R_HEIGHT(map, x, y, z) + sh) % 0x10;
 
 	/* assume blocked */
 	map->route[z][y][x] &= ~((0x10 << dir) & UCHAR_MAX);
@@ -789,7 +806,7 @@ static qboolean CM_TestConnection (routing_t * map, int x, int y, int z, unsigne
 		return qfalse;
 
 	/* test height */
-	if ((map->route[az][ay][ax] & 0x0F) > h)
+	if (R_HEIGHT(map, ax, ay, az) > h)
 		return qfalse;
 
 	/* center check */
@@ -2584,22 +2601,28 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
 		return;
 
 	/* connection checks */
-	if (dx > 0 && !(map->route[z][y][x] & 0x10))
+	if (dx > 0 && !R_CONN_PX(map, x, y, z))
 		return;
-	if (dx < 0 && !(map->route[z][y][x] & 0x20))
+	if (dx < 0 && !R_CONN_NX(map, x, y, z))
 		return;
-	if (dy > 0 && !(map->route[z][y][x] & 0x40))
+	if (dy > 0 && !R_CONN_PY(map, x, y, z))
 		return;
-	if (dy < 0 && !(map->route[z][y][x] & 0x80))
+	if (dy < 0 && !R_CONN_NY(map, x, y, z))
 		return;
-	if (dv > 3 && !((map->route[z][y + dy][x] & (dx > 0 ? 0x10 : 0x20)) && (map->route[z][y][x + dx] & (dy > 0 ? 0x40 : 0x80))
-	  && !Grid_CheckForbidden(map, x, y + dy, z, ACTOR_SIZE_NORMAL) && !Grid_CheckForbidden(map, x + dx, y, z, ACTOR_SIZE_NORMAL)))
+	if (dv > 3 &&	/** @todo what is check there? (direction vector whatsit?) */
+		!( (dx > 0 ? R_CONN_PX(map, x,    y+dy, z) : R_CONN_NX(map, x,    y+dy, z))
+		&& (dy > 0 ? R_CONN_PY(map, x+dx, y,    z) : R_CONN_NY(map, x+dx, y,    z))
+		&& !Grid_CheckForbidden(map, x,    y+dy, z, ACTOR_SIZE_NORMAL)
+		&& !Grid_CheckForbidden(map, x+dx, y,    z, ACTOR_SIZE_NORMAL))
+		)
 		return;
 
 	/* height checks */
-	sh = (map->step[y][x] & (1 << z)) ? sh_big : sh_low;
+	sh = R_STEP(map, x, y, z) ? sh_big : sh_low;
 	z += (h + sh) / 0x10;
-	while (map->fall[ny][nx] & (1 << z))
+
+	/** @todo check if there isn't a (z >= 0 && ...) missing here? */
+	while (R_FALL(map, nx, ny, z))
 		z--;
 
 	/* can it be better than ever? */
@@ -2790,9 +2813,11 @@ static int Grid_MoveCheck (struct routing_s *map, pos3_t pos, int sz, int l)
 			continue;
 
 		/* height checks */
-		sh = (map->step[y][x] & (1 << z)) ? sh_big : sh_low;
+		sh = R_STEP(map, x, y, z) ? sh_big : sh_low;
 		z += ((map->route[z][y][x] & 0xF) + sh) / 0x10;
-		while (map->fall[pos[1]][pos[0]] & (1 << z))
+
+		/** @todo check if there isn't a (z >= 0 && ...) missing here? */
+		while (R_FALL(map, pos[0], pos[1], z))
 			z--;
 
 		/*  Com_Printf("pos: (%i %i %i) (x,y,z): (%i %i %i)\n", pos[0], pos[1], pos[2], x, y, z); */
@@ -2859,8 +2884,7 @@ int Grid_Height (struct routing_s *map, pos3_t pos)
 		Sys_DebugBreak();
 #endif
 	}
-
-	return (map->route[pos[2]][pos[1]][pos[0]] & 0x0F) * QUANT;
+	return R_HEIGHT(map, pos[0], pos[1], pos[2]) * QUANT;
 }
 
 
@@ -2888,7 +2912,7 @@ int Grid_Fall (struct routing_s *map, pos3_t pos)
 	if (z == 0)
 		return 0;
 
-	while (z >= 0 && map->fall[pos[1]][pos[0]] & (1 << z))
+	while (z >= 0 && R_FALL(map, pos[0], pos[1], z))
 		z--;
 
 	return z;
