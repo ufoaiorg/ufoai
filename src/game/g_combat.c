@@ -1181,7 +1181,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 				gi.WriteShort(num);
 				gi.WriteByte(container);
 				assert(gi.csi->ids[container].single);
-				Com_EmptyContainer(&ent->i, container);
+				INVSH_EmptyContainer(&ent->i, container);
 			}
 			/* x and y value */
 			gi.WriteByte(0);

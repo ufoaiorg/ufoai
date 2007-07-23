@@ -723,7 +723,7 @@ static void CL_EntPerish (struct dbuffer *msg)
 
 	switch (le->type) {
 	case ET_ITEM:
-		Com_EmptyContainer(&le->i, csi.idFloor);
+		INVSH_EmptyContainer(&le->i, csi.idFloor);
 
 		/* search owners (there can be many, some of them dead) */
 		for (i = 0, actor = LEs; i < numLEs; i++, actor++)
@@ -736,7 +736,7 @@ static void CL_EntPerish (struct dbuffer *msg)
 		break;
 	case ET_ACTOR:
 	case ET_ACTOR2x2:
-		Com_DestroyInventory(&le->i);
+		INVSH_DestroyInventory(&le->i);
 		break;
 	case ET_BREAKABLE:
 	case ET_DOOR:

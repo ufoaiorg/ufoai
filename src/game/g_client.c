@@ -783,7 +783,7 @@ static void G_PrintFloorToConsole (pos3_t pos)
 	edict_t *floor = G_GetFloorItemsFromPos(pos);
 	Com_DPrintf("G_PrintFloorToConsole: Printing containers from floor at %i,%i,%i.\n", pos[0], pos[1], pos[2]);
 	if (floor) {
-		INV_PrintToConsole(&floor->i);
+		INVSH_PrintContainerToConsole(&floor->i);
 	} else {
 		Com_DPrintf("G_PrintFloorToConsole: No Floor items found.\n");
 	}

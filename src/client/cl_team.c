@@ -260,7 +260,7 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 
 	/* link inventory */
 	chr->inv = &employee->inv;
-	Com_DestroyInventory(chr->inv);
+	INVSH_DestroyInventory(chr->inv);
 
 	/* get ucn */
 	chr->ucn = gd.nextUCN++;
@@ -351,7 +351,7 @@ void CL_ResetCharacters (base_t* const base)
 		chr = E_GetHiredCharacter(base, EMPL_SOLDIER, i);
 		if (!chr)
 			continue;
-		Com_DestroyInventory(chr->inv);
+		INVSH_DestroyInventory(chr->inv);
 	}
 
 	/* reset hire info */
@@ -680,7 +680,7 @@ void CL_CleanTempInventory (base_t* base)
 	if (!base)
 		return;
 
-	Com_DestroyInventory(&base->equipByBuyType);
+	INVSH_DestroyInventory(&base->equipByBuyType);
 	for (i = 0; i < MAX_EMPLOYEES; i++)
 		for (k = 0; k < csi.numIDs; k++)
 			if (csi.ids[k].temp)
@@ -1262,7 +1262,7 @@ void CL_RemoveSoldierFromAircraft (int employee_idx, int aircraft_idx, base_t *b
 
 	Com_DPrintf("CL_RemoveSoldierFromAircraft: base: %i - aircraftID: %i - aircraft_idx: %i\n", base->idx, aircraft->idx, aircraft_idx);
 
-	Com_DestroyInventory(&gd.employees[EMPL_SOLDIER][employee_idx].inv);
+	INVSH_DestroyInventory(&gd.employees[EMPL_SOLDIER][employee_idx].inv);
 	AIR_RemoveFromAircraftTeam(aircraft, employee_idx);
 	baseCurrent->teamNum[aircraft->idxInBase]--;
 }
@@ -1529,7 +1529,7 @@ static void CL_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr, int
 	chr->assigned_missions = MSG_ReadShort(sb);
 
 	/* inventory */
-	Com_DestroyInventory(chr->inv);
+	INVSH_DestroyInventory(chr->inv);
 	CL_LoadInventory(sb, chr->inv);
 }
 

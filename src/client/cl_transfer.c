@@ -564,7 +564,7 @@ static void TR_TransferStart_f (void)
 				transfer->hasEmployees = qtrue;
 				employee = &gd.employees[i][j];
 				E_RemoveEmployeeFromBuilding(employee);		/* Remove from building. */
-				Com_DestroyInventory(&employee->inv);		/* Remove inventory. */
+				INVSH_DestroyInventory(&employee->inv);		/* Remove inventory. */
 				HOS_RemoveFromList(employee, baseCurrent);	/* Remove from hospital. */
 				transfer->employeesArray[i][j] = trEmployeesTmp[i][j];
 				employee->baseIDHired = 42;	/* Hack to take them as hired but not in any base. */

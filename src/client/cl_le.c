@@ -763,10 +763,10 @@ void LE_Cleanup (void)
 		case ET_ACTOR:
 		case ET_ACTOR2x2:
 			inv = le->i;
-			Com_DestroyInventory(&inv);
+			INVSH_DestroyInventory(&inv);
 			break;
 		case ET_ITEM:
-			Com_EmptyContainer(&le->i, csi.idFloor);
+			INVSH_EmptyContainer(&le->i, csi.idFloor);
 			break;
 		default:
 			break;

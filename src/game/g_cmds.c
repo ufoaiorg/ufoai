@@ -180,7 +180,7 @@ void Cmd_InvList (player_t *player)
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2) && ent->team == player->pers.team) {
 			Com_Printf("actor: '%s'\n", ent->chr.name);
-			INV_PrintToConsole(&ent->i);
+			INVSH_PrintContainerToConsole(&ent->i);
 		}
 }
 #endif

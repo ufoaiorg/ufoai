@@ -554,16 +554,16 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
  * @brief
  * @param[in] i
  * @param[in] container
- * @sa Com_DestroyInventory
+ * @sa INVSH_DestroyInventory
  */
-void Com_EmptyContainer (inventory_t* const i, const int container)
+void INVSH_EmptyContainer (inventory_t* const i, const int container)
 {
 	invList_t *ic, *old;
 
 #ifdef DEBUG
 	int cnt = 0;
 	if (CSI->ids[container].temp)
-		Com_DPrintf("Com_EmptyContainer: Emptying temp container %s.\n", CSI->ids[container].name);
+		Com_DPrintf("INVSH_EmptyContainer: Emptying temp container %s.\n", CSI->ids[container].name);
 #endif
 
 	assert(i);
@@ -581,7 +581,7 @@ void Com_EmptyContainer (inventory_t* const i, const int container)
 		invUnused = old;
 #ifdef DEBUG
 		if (cnt >= MAX_INVLIST) {
-			Com_Printf("Error: There are more than the allowed entries in container %s (cnt:%i, MAX_INVLIST:%i) (Com_EmptyContainer)\n", CSI->ids[container].name, cnt,
+			Com_Printf("Error: There are more than the allowed entries in container %s (cnt:%i, MAX_INVLIST:%i) (INVSH_EmptyContainer)\n", CSI->ids[container].name, cnt,
 					   MAX_INVLIST);
 			break;
 		}
@@ -593,10 +593,10 @@ void Com_EmptyContainer (inventory_t* const i, const int container)
 
 /**
  * @brief
- * @param i The invetory which should be erased
- * @sa Com_EmptyContainer
+ * @param i The invetory which should be erased.
+ * @sa INVSH_EmptyContainer
  */
-void Com_DestroyInventory (inventory_t* const i)
+void INVSH_DestroyInventory (inventory_t* const i)
 {
 	int k;
 
@@ -607,7 +607,7 @@ void Com_DestroyInventory (inventory_t* const i)
 		if (CSI->ids[k].temp)
 			i->c[k] = NULL;
 		else
-			Com_EmptyContainer(i, k);
+			INVSH_EmptyContainer(i, k);
 }
 
 /**
@@ -704,10 +704,10 @@ int Com_TryAddToBuyType (inventory_t* const inv, item_t item, int container)
 }
 
 /**
- * @brief Debug function to print the inventory items for a given inventory_t pointer
- * @param[in] i The inventory you want to see on the game console
+ * @brief Debug function to print the inventory items for a given inventory_t pointer.
+ * @param[in] i The inventory you want to see on the game console.
  */
-void INV_PrintToConsole (inventory_t* const i)
+void INVSH_PrintContainerToConsole (inventory_t* const i)
 {
 	int container;
 	invList_t *ic;
