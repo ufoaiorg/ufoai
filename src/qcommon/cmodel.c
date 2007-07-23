@@ -2527,9 +2527,7 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, int z
 		poslen = 0;
 
 		/* The list is pos3_t + byte  - so the first 3 byte are the position values. */
-		poslist[0][0] = (*p)[0];
-		poslist[0][1] = (*p)[1];
-		poslist[0][2] = (*p)[2];
+		VectorSet(poslist[0], (*p)[0], (*p)[1], (*p)[2]);
 
 		switch (actor_size) {
 			case 0:
@@ -2537,9 +2535,9 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, int z
 				poslen = 1;
 				break;
 			case ACTOR_SIZE_2x2:
-				poslist[1][0] = poslist[0][0] + 1; poslist[1][1] = poslist[0][1];     poslist[0][2] = poslist[0][2];
-				poslist[2][0] = poslist[0][0];     poslist[2][1] = poslist[0][1] + 1; poslist[1][2] = poslist[0][2];
-				poslist[3][0] = poslist[0][0] + 1; poslist[3][1] = poslist[0][1] + 1; poslist[2][2] = poslist[0][2];
+				VectorSet(poslist[1], poslist[0][0] + 1, poslist[0][1],     poslist[0][2]);
+				VectorSet(poslist[2], poslist[0][0],     poslist[0][1] + 1, poslist[0][2]);
+				VectorSet(poslist[3], poslist[0][0] + 1, poslist[0][1] + 1, poslist[0][2]);
 				poslen = 4;
 				break;
 			default:
@@ -2621,9 +2619,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
 	sh = R_STEP(map, x, y, z) ? sh_big : sh_low;
 	z += (h + sh) / 0x10;
 
-	dummy[0] = nx;
-	dummy[1] = ny;
-	dummy[2] = z;
+	VectorSet(dummy, nx, ny, z);
 	z = Grid_Fall(map, dummy);
 
 	/* can it be better than ever? */
@@ -2821,9 +2817,7 @@ static int Grid_MoveCheck (struct routing_s *map, pos3_t pos, int sz, int l)
 		sh = R_STEP(map, x, y, z) ? sh_big : sh_low;
 		z += (R_HEIGHT(map,x,y,z) + sh) / 0x10;
 
-		dummy[0] = pos[0];
-		dummy[1] = pos[1];
-		dummy[2] = z;
+		VectorSet(dummy, pos[0], pos[1], z);
 		z = Grid_Fall(map, dummy);
 
 		/*  Com_Printf("pos: (%i %i %i) (x,y,z): (%i %i %i)\n", pos[0], pos[1], pos[2], x, y, z); */
