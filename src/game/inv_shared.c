@@ -1088,10 +1088,10 @@ int CHRSH_abilityValues[MAX_CAMPAIGNS][MAX_TEAMS][MAX_EMPL][2];
 
 /**
  * @brief Fills the min and max values for abilities for the given character
- * @param[in] chr For which character - needed to check empl_type
- * @param[in] team TEAM_ALIEN, TEAM_CIVILIAN, ...
- * @param[in] minAbility Pointer to minAbility int value to use for this character
- * @param[in] maxAbility Pointer to maxAbility int value to use for this character
+ * @param[in] *chr Pointer to the character, needed for chr->empl_type.
+ * @param[in] team Index of team (TEAM_ALIEN, TEAM_CIVILIAN, ...).
+ * @param[in] minAbility Pointer to minAbility int value to use for this character.
+ * @param[in] maxAbility Pointer to maxAbility int value to use for this character.
  * @sa CHRSH_CharGenAbilitySkills
  */
 static void CHRSH_GetAbility (character_t *chr, int team, int *minAbility, int *maxAbility, int campaignID)
@@ -1141,10 +1141,10 @@ static void CHRSH_GetAbility (character_t *chr, int team, int *minAbility, int *
 
 /**
  * @brief Fills the min and max values for skill for the given character
- * @param[in] chr For which character - needed to check empl_type
- * @param[in] team TEAM_ALIEN, TEAM_CIVILIAN, ...
- * @param[in] minSkill Pointer to minSkill int value to use for this character
- * @param[in] maxSkill Pointer to maxSkill int value to use for this character
+ * @param[in] *chr Pointer to the character, needed for chr->empl_type.
+ * @param[in] team Index of team (TEAM_ALIEN, TEAM_CIVILIAN, ...).
+ * @param[in] minSkill Pointer to minSkill int value to use for this character.
+ * @param[in] maxSkill Pointer to maxSkill int value to use for this character.
  * @sa CHRSH_CharGenAbilitySkills
  */
 static void CHRSH_GetSkill (character_t *chr, int team, int *minSkill, int *maxSkill, int campaignID)
@@ -1193,9 +1193,10 @@ static void CHRSH_GetSkill (character_t *chr, int team, int *minSkill, int *maxS
 }
 
 /**
- * @brief Sets the current active campaign id (see curCampaign pointer)
- * @note used to access the right values from CHRSH_skillValues and CHRSH_abilityValues
+ * @brief Sets the current active campaign id (see curCampaign pointer).
+ * @note Used to access the right values from CHRSH_skillValues and CHRSH_abilityValues.
  * @sa CL_GameInit
+ * @todo not CL_GameInit anymore, document me
  */
 void CHRSH_SetGlobalCampaignID (int campaignID)
 {
@@ -1211,14 +1212,9 @@ void CHRSH_SetGlobalCampaignID (int campaignID)
 #define TRAINING_SCALAR	3
 
 /**
- * @brief Generate a skill and ability set for any character.
- *
- * Character stats are intended to be based on definitions in campaign.ufo,
- * resulting in more difficult campaigns yielding stronger aliens (and more feeble
- * soldiers.) Skills (CLOSE, HEAVY, ASSAULT, SNIPER, EXPLOSIVE) are further
- * influenced by the characters natural abilities (POWER, SPEED, ACCURACY, MIND)
- * @param[in] chr
- * @param[in] team
+ * @brief Generates a skill and ability set for any character.
+ * @param[in] *chr Pointer to the character, for which we generate skills and abilities.
+ * @param[in] team Index of team (TEAM_ALIEN, TEAM_CIVILIAN, ...).
  * @sa CHRSH_GetAbility
  * @sa CHRSH_GetSkill
  * @sa CHRSH_SetGlobalCampaignID
@@ -1228,6 +1224,11 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, int team)
 	int i, skillWindow, abilityWindow, training, ability1, ability2;
 	float windowScalar;
 	int minAbility = 0, maxAbility = 0, minSkill = 0, maxSkill = 0;
+
+	/* Note that character stats are intended to be based on definitions in campaign.ufo,  */
+	/* resulting in more difficult campaigns yielding stronger aliens (and more feeble     */
+	/* soldiers.) Skills (CLOSE, HEAVY, ASSAULT, SNIPER, EXPLOSIVE) are further influenced */
+	/* by the characters natural abilities (POWER, SPEED, ACCURACY, MIND).                 */
 
 	assert(chr);
 
@@ -1294,8 +1295,8 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, int team)
 
 }
 
-/** @brief Used in CHRSH_CharGetHead and CHRSH_CharGetBody to generate the model path */
-static char returnModel[MAX_VAR];
+/** @brief Used in CHRSH_CharGetHead and CHRSH_CharGetBody to generate the model path. */
+static char CHRSH_returnModel[MAX_VAR];
 
 /**
  * @brief Returns the body model for the soldiers for armored and non armored soldiers
@@ -1330,10 +1331,10 @@ char *CHRSH_CharGetBody (character_t * const chr)
 		if (underline)
 			*underline = '\0';
 
-		Com_sprintf(returnModel, sizeof(returnModel), "%s%s/%s", chr->path, id, chr->body);
+		Com_sprintf(CHRSH_returnModel, sizeof(CHRSH_returnModel), "%s%s/%s", chr->path, id, chr->body);
 	} else
-		Com_sprintf(returnModel, sizeof(returnModel), "%s/%s", chr->path, chr->body);
-	return returnModel;
+		Com_sprintf(CHRSH_returnModel, sizeof(CHRSH_returnModel), "%s/%s", chr->path, chr->body);
+	return CHRSH_returnModel;
 }
 
 /**
@@ -1369,10 +1370,10 @@ char *CHRSH_CharGetHead (character_t * const chr)
 		if (underline)
 			*underline = '\0';
 
-		Com_sprintf(returnModel, sizeof(returnModel), "%s%s/%s", chr->path, id, chr->head);
+		Com_sprintf(CHRSH_returnModel, sizeof(CHRSH_returnModel), "%s%s/%s", chr->path, id, chr->head);
 	} else
-		Com_sprintf(returnModel, sizeof(returnModel), "%s/%s", chr->path, chr->head);
-	return returnModel;
+		Com_sprintf(CHRSH_returnModel, sizeof(CHRSH_returnModel), "%s/%s", chr->path, chr->head);
+	return CHRSH_returnModel;
 }
 
 /**
