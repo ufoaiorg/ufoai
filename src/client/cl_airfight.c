@@ -126,81 +126,53 @@ static qboolean AIRFIGHT_RemoveProjectile (int idx)
 
 /**
  * @brief Add a projectile in gd.projectiles
- * @param[in] idx of the ammo to add in array aircraftItems[]
+ * @param[in] attackingBaseIdx idx of the attacking base in gd.bases[]. -1 is the attacker is an aircraft.
  * @param[in] attacker Pointer to the attacking aircraft
+ * @param[in] aimedBaseIdx idx of the aimed base (-1 if the target is an aircraft)
  * @param[in] target Pointer to the target aircraft
- * @param[in] slotIdx idx of the slot to use.
+ * @param[in] weaponSlot Pointer to the weapon slot that fires the projectile.
  * @note we already checked in AIRFIGHT_ChooseWeapon that the weapon has still ammo
  */
-static qboolean AIRFIGHT_AddProjectile (int idx, aircraft_t *attacker, aircraft_t *target, int slotIdx)
+static qboolean AIRFIGHT_AddProjectile (int attackingBaseIdx, aircraft_t *attacker, int aimedBaseIdx, aircraft_t *target, aircraftSlot_t *weaponSlot)
 {
 	aircraftProjectile_t *projectile;
-
-	assert(attacker);
-	assert(target);
 
 	if (gd.numProjectiles >= MAX_PROJECTILESONGEOSCAPE) {
 		Com_Printf("Too many projectiles on map\n");
 		return qfalse;
 	}
 
-	assert(target);
-
 	projectile = &gd.projectiles[gd.numProjectiles];
 
-	projectile->aircraftItemsIdx = idx;
-	projectile->attackingAircraft = attacker;
 	projectile->idx = gd.numProjectiles;
-	VectorSet(projectile->pos, attacker->pos[0], attacker->pos[1], 0);
-	VectorSet(projectile->idleTarget, 0, 0, 0);
-	projectile->aimedAircraft = target;
+	projectile->aircraftItemsIdx = weaponSlot->ammoIdx;
+	if (attackingBaseIdx == -1) {
+		assert(attacker);
+		projectile->attackingAircraft = attacker;
+		VectorSet(projectile->pos, attacker->pos[0], attacker->pos[1], 0);
+	} else {
+		projectile->attackingAircraft = NULL;
+		VectorSet(projectile->pos, gd.bases[attackingBaseIdx].pos[0], gd.bases[attackingBaseIdx].pos[1], 0);
+	}
+	if (aimedBaseIdx == -1) {
+		assert(target);
+		projectile->aimedAircraft = target;
+		projectile->aimedBaseIdx = -1;
+		VectorSet(projectile->idleTarget, 0, 0, 0);
+	} else {
+		projectile->aimedAircraft = NULL;
+		projectile->aimedBaseIdx = aimedBaseIdx;
+		VectorSet(projectile->idleTarget, gd.bases[aimedBaseIdx].pos[0], gd.bases[aimedBaseIdx].pos[1], 0);
+	}
 	projectile->time = 0;
 	projectile->angle = 0.0f;
 	projectile->bulletIdx = -1;
 
 	/* @todo; imporve this test */
-	if (!Q_strncmp(aircraftItems[attacker->weapons[slotIdx].itemIdx].id, "craft_weapon_shiva", MAX_VAR))
+	if (!Q_strncmp(aircraftItems[weaponSlot->itemIdx].id, "craft_weapon_shiva", MAX_VAR))
 		AIRFIGHT_CreateBullets(projectile);
 
-	attacker->weapons[slotIdx].ammoLeft -= 1;
-	gd.numProjectiles++;
-
-	return qtrue;
-}
-
-/**
- * @brief Add a projectile in gd.projectiles
- * @param[in] idx of the ammo to add in array aircraftItems[]
- * @param[in] base Pointer to the base which fires the the ammo
- * @param[in] target Pointer to the target aircraft
- * @param[in] slotIdx idx of the slot to use.
- */
-static qboolean AIRFIGHT_AddBaseProjectile (int idx, base_t *base, aircraft_t *target, int slotIdx) {
-	aircraftProjectile_t *projectile;
-
-	assert(target);
-
-	if (gd.numProjectiles >= MAX_PROJECTILESONGEOSCAPE) {
-		Com_Printf("Too many projectiles on map\n");
-		return qfalse;
-	}
-
-	assert(target);
-
-	projectile = &gd.projectiles[gd.numProjectiles];
-
-	projectile->aircraftItemsIdx = idx;
-	projectile->attackingAircraft = NULL;
-	projectile->idx = gd.numProjectiles;
-	VectorSet(projectile->pos, base->pos[0], base->pos[1], 0);
-	VectorSet(projectile->idleTarget, 0, 0, 0);
-	projectile->aimedAircraft = target;
-	projectile->time = 0;
-	projectile->angle = 0.0f;
-	projectile->bulletIdx = -1;
-
-
-	base->batteries[slotIdx].ammoLeft -= 1;
+	weaponSlot->ammoLeft -= 1;
 	gd.numProjectiles++;
 
 	return qtrue;
@@ -219,10 +191,11 @@ static void AIRFIGHT_MissTarget (int idx)
 	assert(projectile);
 
 	oldTarget = projectile->aimedAircraft;
-	assert(oldTarget);
-
-	VectorSet(projectile->idleTarget, oldTarget->pos[0] + 10 * frand() - 5, oldTarget->pos[1] + 10 * frand() - 5, 0);
-	projectile->aimedAircraft = NULL;
+	if (oldTarget) {
+		VectorSet(projectile->idleTarget, oldTarget->pos[0] + 10 * frand() - 5, oldTarget->pos[1] + 10 * frand() - 5, 0);
+		projectile->aimedAircraft = NULL;
+	} else
+		VectorSet(projectile->idleTarget, projectile->idleTarget[0] + 10 * frand() - 5, projectile->idleTarget[1] + 10 * frand() - 5, 0);
 }
 
 /**
@@ -278,7 +251,7 @@ static int AIRFIGHT_ChooseWeapon (aircraftSlot_t *slot, int maxSlot, vec3_t pos,
 /**
  * @brief Calculate the probability to hit the ennemy.
  * @param[in] shooter Pointer to the attacking aircraft (may be NULL if a base fires the projectile).
- * @param[in] target Pointer to the aimed aircraft.
+ * @param[in] target Pointer to the aimed aircraft (may be NULL if a target is a base).
  * @param[in] slot Slot containing the weapon firing.
  * @return Probability to hit the target (0 when you don't have a chance, 1 (or more) when you're sure to hit).
  * @note that modifiers due to electronics, weapons, and shield are already taken into account in AII_UpdateAircraftStats
@@ -314,7 +287,8 @@ static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target,
 		probability *= shooter->stats[AIR_STATS_ACCURACY] / 100.0f;
 
 	/* Modify this probability by items of the aimed aircraft (stats is in percent) */
-	probability /= target->stats[AIR_STATS_ECM] / 100.0f;
+	if (target)
+		probability /= target->stats[AIR_STATS_ECM] / 100.0f;
 
 	Com_DPrintf("AIRFIGHT_ProbabilityToHit: Probability to hit: %f\n", probability);
 	return probability;
@@ -333,16 +307,20 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 
 	/* some asserts */
 	assert(shooter);
-	assert(target);
 
-	/* Check if the attacking aircraft can shoot */
-	slotIdx = AIRFIGHT_ChooseWeapon(shooter->weapons, shooter->maxWeapons, shooter->pos, target->pos);
+	if (shooter->baseTargetIdx == -1) {
+		assert(target);
+	
+		/* Check if the attacking aircraft can shoot */
+		slotIdx = AIRFIGHT_ChooseWeapon(shooter->weapons, shooter->maxWeapons, shooter->pos, target->pos);
+	} else
+		slotIdx = AIRFIGHT_ChooseWeapon(shooter->weapons, shooter->maxWeapons, shooter->pos, gd.bases[shooter->baseTargetIdx].pos);
 
 	if (slotIdx > -1) {
 		ammoIdx = shooter->weapons[slotIdx].ammoIdx;
 
 		/* shoot */
-		if (AIRFIGHT_AddProjectile(ammoIdx, shooter, target, slotIdx)) {
+		if (AIRFIGHT_AddProjectile(-1, shooter, shooter->baseTargetIdx, target, shooter->weapons + slotIdx)) {
 			shooter->weapons[slotIdx].delayNextShot = aircraftItems[ammoIdx].weaponDelay;
 			/* will we miss the target ? */
 			probability = frand();
@@ -351,15 +329,22 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 		}
 	} else if (slotIdx > -2) {
 		/* no ammo to fire atm (too far or reloading), pursue target */
-		if (shooter->type == AIRCRAFT_UFO)
-			AIR_SendUfoPurchasingAircraft(shooter, target);
-		else
+		if (shooter->type == AIRCRAFT_UFO) {
+			if (shooter->baseTargetIdx == -1)
+				AIR_SendUfoPurchasingAircraft(shooter, target);
+			else
+				/* ufo is attacking a base */
+				return;
+		} else
 			AIR_SendAircraftPurchasingUfo(shooter, target);
 	} else {
 		/* no ammo left, or no weapon, you should flee ! */
-		if (shooter->type == AIRCRAFT_UFO)
-			UFO_FleePhalanxAircraft(shooter, target->pos);
-		else
+		if (shooter->type == AIRCRAFT_UFO) {
+			if (shooter->baseTargetIdx == -1)
+				UFO_FleePhalanxAircraft(shooter, target->pos);
+			else if (gd.bases[shooter->baseTargetIdx].hasMissile || gd.bases[shooter->baseTargetIdx].hasLaser)
+				UFO_FleePhalanxAircraft(shooter, gd.bases[shooter->baseTargetIdx].pos);
+		} else
 			AIR_AircraftReturnToBase(shooter);
 	}
 }
@@ -376,7 +361,7 @@ extern void AIRFIGHT_BaseShootUFO (aircraft_t *target) {
 	for (base = gd.bases; base < (gd.bases + gd.numBases); base++) {
 		slotIdx = AIRFIGHT_ChooseWeapon(base->batteries, base->maxBatteries, base->pos, target->pos);
 		if (slotIdx > -1)
-			if (AIRFIGHT_AddBaseProjectile(base->batteries[slotIdx].ammoIdx, base, target, slotIdx)) {
+			if (AIRFIGHT_AddProjectile(base->idx, NULL, -1, target, base->batteries + slotIdx)) {
 				base->batteries[slotIdx].delayNextShot = aircraftItems[base->batteries[slotIdx].ammoIdx].weaponDelay;
 				/* will we miss the target ? */
 				if (frand() > AIRFIGHT_ProbabilityToHit(NULL, target, base->batteries + slotIdx))
@@ -568,6 +553,39 @@ static void AIRFIGHT_ProjectileHits (aircraftProjectile_t *projectile)
 }
 
 /**
+ * @brief Solve the result of one projectile hitting a base.
+ * @param[in] projectile Pointer to the projectile.
+ */
+static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
+{
+	base_t *base;
+	int damage = 0;
+
+	assert(projectile);
+	base = gd.bases + projectile->aimedBaseIdx;
+	assert(base);
+
+	/* base damage is given by the ammo */
+	damage = aircraftItems[projectile->aircraftItemsIdx].weaponDamage;
+
+	/* damages are divided between defense system and base. */
+	damage = frand() * damage;
+	base->batteryDamage -= damage;
+	base->baseDamage -= aircraftItems[projectile->aircraftItemsIdx].weaponDamage - damage;
+
+	/* @todo implement me */
+	if (base->batteryDamage <= 0) {
+		Com_Printf("projectile destroyed turret\n");
+		base->batteryDamage = MAX_BATTERY_DAMAGE;
+	}
+
+	if (base->baseDamage <= 0) {
+		Com_Printf("projectile destroyed a building\n");
+		base->baseDamage = MAX_BASE_DAMAGE;
+	}
+}
+
+/**
  * @brief Update values of projectiles.
  * @param[in] dt Time elapsed since last call of this function.
  */
@@ -595,9 +613,11 @@ void AIRFIGHT_CampaignRunProjectiles (int dt)
 		/* Check if the projectile reached its destination (aircraft or idle point) */
 		if (AIRFIGHT_ProjectileReachedTarget(projectile, movement)) {
 			/* check if it got the ennemy */
-			if (projectile->aimedAircraft) {
+			if (projectile->aimedBaseIdx > -1)
+				AIRFIGHT_ProjectileHitsBase(projectile);
+			else if (projectile->aimedAircraft)
 				AIRFIGHT_ProjectileHits(projectile);
-			}
+
 			/* remove the missile from gd.projectiles[] */
 			AIRFIGHT_RemoveProjectile(idx);
 		} else {

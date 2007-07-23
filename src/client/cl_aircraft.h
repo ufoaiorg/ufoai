@@ -204,6 +204,7 @@ typedef struct aircraft_s {
 	int numUpgrades;
 
 	struct actMis_s* mission;	/**< The mission the aircraft is moving to */
+	int baseTargetIdx;		/**< Target of the aircraft. -1 if the target is an aircraft */
 	struct aircraft_s *target;		/**< Target of the aircraft (ufo or phalanx) */
 	radar_t	radar;			/**< Radar to track ufos */
 	int stats[AIR_STATS_MAX];	/**< aircraft parameters for speed, damage and so on */
@@ -275,6 +276,7 @@ void AIR_AircraftReturnToBase(aircraft_t *aircraft);
 qboolean AIR_SendAircraftToMission(aircraft_t* aircraft, struct actMis_s* mission);
 void AIR_SendAircraftPurchasingUfo(aircraft_t* aircraft, aircraft_t* ufo);
 void AIR_SendUfoPurchasingAircraft(aircraft_t* ufo, aircraft_t* aircraft);
+void AIR_SendUfoPurchasingBase(aircraft_t* ufo, struct base_s *base);
 void AIR_AircraftsNotifyUfoRemoved(const aircraft_t *const ufo);
 void AIR_AircraftsUfoDisappear(const aircraft_t *const ufo);
 void AIR_UpdateHangarCapForAll(int base_idx);

@@ -2094,6 +2094,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 		air_samp->idx_sample = numAircraft_samples;
 		air_samp->id = Mem_PoolStrDup(name, cl_genericPool, CL_TAG_NONE);
 		air_samp->status = AIR_HOME;
+		air_samp->baseTargetIdx = -1;
 		AII_InitialiseAircraftSlots(air_samp);
 
 		/* TODO: document why do we have two values for this */
@@ -2690,6 +2691,24 @@ void AIR_SendUfoPurchasingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 	ufo->time = 0;
 	ufo->point = 0;
 	ufo->target = aircraft;
+}
+
+/**
+ * @brief Make the specified UFO attack a base.
+ * @param[in] *ufo Pointer to the UFO.
+ * @param[in] *base Pointer to the target base.
+ */
+void AIR_SendUfoPurchasingBase (aircraft_t* ufo, base_t* base)
+{
+	assert(ufo);
+	assert(base);
+
+	MAP_MapCalcLine(ufo->pos, base->pos, &(ufo->route));
+	ufo->baseTargetIdx = base->idx;
+	ufo->status = AIR_UFO;
+	ufo->time = 0;
+	ufo->point = 0;
+	ufo->target = NULL;
 }
 
 /*============================================

@@ -30,6 +30,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_BUILDINGS		256
 #define MAX_BASES		8
 
+#define MAX_BATTERY_DAMAGE	50
+#define MAX_BASE_DAMAGE		100
+#define MAX_BASE_SLOT		4
+
 /** @todo take the values from scriptfile */
 #define BASEMAP_SIZE_X		778.0
 #define BASEMAP_SIZE_Y		672.0
@@ -249,7 +253,10 @@ typedef struct base_s {
 	int hospitalMissionListCount;			/**< Counter for hospitalMissionList. */
 
 	int maxBatteries;
-	aircraftSlot_t batteries[MAX_AIRCRAFTSLOT];	/**< Missile batteries assigned to base. */
+	aircraftSlot_t batteries[MAX_BASE_SLOT];	/**< Missile batteries assigned to base. */
+	
+	int batteryDamage;			/**< Hit points of defense system */
+	int baseDamage;			/**< Hit points of base */
 
 	int buildingToBuild;	/**< needed if there is another buildingpart to build (link to gd.buildingTypes) */
 

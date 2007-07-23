@@ -165,14 +165,18 @@ void UFO_CampaignRunUfos (int dt)
 		if (ufo->fuel <= 0)
 			ufo->fuel = ufo->stats[AIR_STATS_FUELSIZE];
 
-		/* check if the UFO can fight a PHALANX aircraft */
+		/* check if the UFO can fight a PHALANX aircraft or a base */
 		if (ufo->visible && ufo->status != AIR_FLEEING) {
-			if (ufo->target && ufo->target->status > AIR_HOME) {
+			if (ufo->baseTargetIdx > -1) {
+				AIRFIGHT_ExecuteActions(ufo, NULL);
+			} else if (ufo->target && ufo->target->status > AIR_HOME) {
 				AIRFIGHT_ExecuteActions(ufo, ufo->target);
 			} else {
 				ufo->target = NULL;
 				ufo->status = AIR_TRANSIT;
 				for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
+					if (base->hasMissile || base->hasLaser)
+						AIR_SendUfoPurchasingBase(ufo, base);
 					for (phalanxAircraft = base->aircraft + base->numAircraftInBase - 1; phalanxAircraft >= base->aircraft; phalanxAircraft--) {
 						/* check that aircraft is flying */
 						if (phalanxAircraft->status > AIR_HOME)

@@ -764,6 +764,10 @@ void B_SetUpBase (base_t* base)
 	/* Set up default buy/sell factors for this base. */
 	base->sellfactor = 5;
 	base->buyfactor = 1;
+
+	/* intialise hit points */
+	base->batteryDamage = MAX_BATTERY_DAMAGE;
+	base->baseDamage = MAX_BASE_DAMAGE;
 }
 
 /**

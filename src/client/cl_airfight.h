@@ -40,8 +40,10 @@ typedef struct aircraftProjectile_s {
 	vec3_t idleTarget;		/**< target of the projectile
 							 ** used only if the projectile will miss its target (that is if aimedAircraft is NULL) */
 	aircraft_t * attackingAircraft;	/**< Aircraft which shooted the projectile */
+	int aimedBaseIdx;		/**< idx of aimed base in gd.bases[]. -1 is the target is an aircraft */
 	aircraft_t * aimedAircraft;	/**< target of the projectile/
-							 	 ** used only if the projectile will touch its target (otherwise it's NULL) */
+							 	 ** used only if the projectile will touch its target (otherwise it's NULL)
+									and if aimedBaseIdx != -1 */
 	int time;				/**< time since the projectile has been launched */
 	float angle;			/**< angle of the missile on the geoscape */
 	int bulletIdx;			/**< idx of the bullet in bulletPos array (only used if the weapon fires bullets) */
