@@ -586,6 +586,9 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 		base->baseDamage = MAX_BASE_DAMAGE;
 		rnd = frand() * gd.numBuildings[base->idx];
 		B_BuildingDestroy(base, &gd.buildings[base->idx][rnd]);
+		/* Add message to message-system. */
+		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("You've lost a base facility (%s)."), _(gd.buildings[base->idx][rnd].name));
+		MN_AddNewMessage(_("Base facility destroyed"), messageBuffer, qfalse, MSG_BASEATTACK, NULL);
 	}
 }
 
