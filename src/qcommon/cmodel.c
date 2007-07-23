@@ -30,7 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define GRENADE_ALPHAFAC	0.7
 #define GRENADE_MINALPHA	M_PI/6
 #define GRENADE_MAXALPHA	M_PI*7/16
-#define QUANT		4
 
 /* 1/32 epsilon to keep floating point happy */
 #define	DIST_EPSILON	(0.03125)
