@@ -60,7 +60,7 @@ typedef struct transferCargo_s {
 
 void TR_TransferAircraftMenu(aircraft_t* aircraft);
 void TR_TransferEnd(transferlist_t *transfer);
-void TR_EmptyTransferCargo(transferlist_t *transfer);
+void TR_EmptyTransferCargo(transferlist_t *transfer, qboolean success);
 void TR_TransferCheck(void);
 qboolean TR_CheckItem(objDef_t *od, base_t *srcbase, base_t *destbase);
 qboolean TR_CheckEmployee(employee_t *employee, base_t *srcbase, base_t *destbase);

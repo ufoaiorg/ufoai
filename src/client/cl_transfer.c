@@ -385,12 +385,12 @@ static void TR_TransferListClear_f (void)
 }
 
 /**
- * @brief Unload transfer cargo when finishing the transfer.
+ * @brief Unloads transfer cargo when finishing the transfer or destroys it when no buildings/base.
  * @param[in] *transfer Pointer to transfer in gd.alltransfers.
- * @note This should be called only for unloading stuff, not TR_AIRCRAFT.
+ * @param[in] success True if the transfer reaches dest base, false if the base got destroyed.
  * @sa TR_TransferEnd
  */
-void TR_EmptyTransferCargo (transferlist_t *transfer)
+void TR_EmptyTransferCargo (transferlist_t *transfer, qboolean success)
 {
 	int i, j;
 	base_t *destination = NULL;
@@ -399,11 +399,14 @@ void TR_EmptyTransferCargo (transferlist_t *transfer)
 	char message[256];
 
 	assert (transfer);
-	destination = &gd.bases[transfer->destBase];
+	if (success) {
+		destination = &gd.bases[transfer->destBase];
+		assert (destination);
+	}
 	source = &gd.bases[transfer->srcBase];
-	assert (destination && source);
+	assert (source);
 
-	if (transfer->hasItems) {	/* Items. */
+	if (transfer->hasItems && success) {	/* Items. */
 		if (!destination->hasStorage) {
 			Com_sprintf(message, sizeof(message), _("Base %s does not have Storage, items are removed!"), destination->name);
 			MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
@@ -421,9 +424,11 @@ void TR_EmptyTransferCargo (transferlist_t *transfer)
 	}
 
 	if (transfer->hasEmployees) {	/* Employees. */
-		if (!destination->hasQuarters) {	/* Employees will be unhired. */
-			Com_sprintf(message, sizeof(message), _("Base %s does not have Living Quarters, employees got unhired!"), destination->name);
-			MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
+		if (!destination->hasQuarters || !success) {	/* Employees will be unhired. */
+			if (success) {
+				Com_sprintf(message, sizeof(message), _("Base %s does not have Living Quarters, employees got unhired!"), destination->name);
+				MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
+			}
 			for (i = 0; i < MAX_EMPL; i++) {
 				for (j = 0; j < gd.numEmployees[i]; j++) {
 					if (transfer->employeesArray[i][j] > -1) {
@@ -447,7 +452,7 @@ void TR_EmptyTransferCargo (transferlist_t *transfer)
 		}
 	}
 
-	if (transfer->hasAliens) {	/* Aliens. */
+	if (transfer->hasAliens && success) {	/* Aliens. */
 		if (!destination->hasAlienCont) {
 			Com_sprintf(message, sizeof(message), _("Base %s does not have Alien Containment, Aliens are removed!"), destination->name);
 			MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
@@ -498,7 +503,7 @@ void TR_TransferEnd (transferlist_t *transfer)
 	destination = &gd.bases[transfer->destBase];
 	assert(destination);
 
-	TR_EmptyTransferCargo (transfer);
+	TR_EmptyTransferCargo(transfer, qtrue);
 	Com_sprintf(message, sizeof(message), _("Transport mission ended, unloading cargo in base %s"), gd.bases[transfer->destBase].name);
 	MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
 }
@@ -974,15 +979,15 @@ void TR_TransferCheck (void)
 	int i;
 	base_t *base;
 	transferlist_t *transfer;
+	char message[256];
 
 	for (i = 0; i < MAX_TRANSFERS; i++) {
 		transfer = &gd.alltransfers[i];
 		if (transfer->event.day == ccs.date.day) {	/* @todo make it checking hour also, not only day */
 			base = &gd.bases[transfer->destBase];
 			if (!base->founded) {
-				/* Destination base was destroyed meanwhile. */
-				/* Transfer is lost, send proper message to the user.*/
-				/* @todo: prepare MN_AddNewMessage() here */
+				TR_EmptyTransferCargo(transfer, qfalse);
+				MN_AddNewMessage(_("Transport mission"), _("The destination base no longer exists! Transfer cargo are lost, personel got unhired."), qfalse, MSG_TRANSFERFINISHED, NULL);
 
 				/* @todo: what if source base is lost? we won't be able to unhire transfered personel. */
 			} else {
