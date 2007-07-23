@@ -144,7 +144,7 @@ typedef struct {
  *	0000 0000
  *	Access with "step[y][x] & (1 << z)"
  *	Guess:
- *		Each bit if set to 1 if a unit can step on it (e.g. ground or chair) or it's 0 if there is a wall or similar (i.e. it's blocked).
+ *		Each bit if set to 0 if a unit can step on it (e.g. ground or chair) or it's 1 if there is a wall or similar (i.e. it's blocked).
  *		Search for "sh = (map->step[y][x] & (1 << z)) ? sh_big : sh_low;" and similar.
  *		"sh" seems to mean "step height"
  *
