@@ -907,6 +907,8 @@ typedef enum {
 #define CS_GENERAL			(CS_PLAYERNAMES+MAX_CLIENTS)
 #define MAX_CONFIGSTRINGS	(CS_GENERAL+MAX_GENERAL)
 
+#define MAX_FORBIDDENLIST (MAX_EDICTS * 2)
+
 /* g_spawn.c */
 
 /* NOTE: this only allows quadratic units */

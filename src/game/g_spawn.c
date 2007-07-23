@@ -387,7 +387,7 @@ static void G_ActorSpawn (edict_t * ent)
 /**
  * @brief Spawn an singleplayer 2x2 unit
  */
-static void G_ACTOR2x2Spawn (edict_t * ent)
+static void G_Actor2x2Spawn (edict_t * ent)
 {
 	/* set properties */
 	level.num_2x2spawnpoints[ent->team]++;
@@ -470,7 +470,7 @@ static void SP_2x2_start (edict_t * ent)
 	VectorSet(ent->mins, -(PLAYER_WIDTH * 2), -(PLAYER_WIDTH * 2), PLAYER_MIN);
 
 	/* spawn singleplayer 2x2 unit */
-	G_ACTOR2x2Spawn(ent);
+	G_Actor2x2Spawn(ent);
 }
 
 /**

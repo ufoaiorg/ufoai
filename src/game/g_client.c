@@ -1140,7 +1140,7 @@ static void G_InventoryToFloor (edict_t * ent)
 }
 
 
-byte *fb_list[MAX_EDICTS];
+byte *fb_list[MAX_FORBIDDENLIST];
 int fb_length;
 
 /**
@@ -1172,19 +1172,18 @@ static void G_BuildForbiddenList (int team)
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
 		if (!ent->inuse)
 			continue;
-		
 		/* Dead 2x2 unit will stop walking, too. */
 		/**
 		 * @todo Just a note for the future.
 		 * If we get any  that does not block the map when dead this si the place to look.
 		 */
 		if (((ent->type == ET_ACTOR && !(ent->state & STATE_DEAD)) || ent->type == ET_ACTOR2x2) && (ent->visflags & vis_mask)) {
-			fb_list[fb_length++] = &ent->fieldSize;
 			fb_list[fb_length++] = ent->pos;
+			fb_list[fb_length++] = (byte*)&ent->fieldSize;
 		}
 	}
 
-	if (fb_length > MAX_EDICTS)
+	if (fb_length > MAX_FORBIDDENLIST)
 		gi.error("G_BuildForbiddenList: list too long\n");
 }
 

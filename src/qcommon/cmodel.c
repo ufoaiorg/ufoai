@@ -207,7 +207,7 @@ static qboolean trace_ispoint;			/* optimized case */
 static tnode_t *tnode_p;
 static byte stf;
 static byte tfList[HEIGHT][WIDTH][WIDTH];
-static byte tf;
+static byte tf; /**< test flag */
 
 static void CM_MakeTnodes(void);
 static void CM_InitBoxHull(void);
@@ -2500,10 +2500,29 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, int z
 {
 	byte **p;
 	int i;
+	byte *size;
 
-	for (i = 0, p = map->fblist; i < map->fblength; i++, p++)
-		if (x == (*p)[0] && y == (*p)[1] && z == (*p)[2])
-			return qtrue;
+	for (i = 0, p = map->fblist; i < map->fblength / 2; i++, p += 2) {
+		if (x == (*p)[0] && y == (*p)[1] && z == (*p)[2]) {
+			size = *(p + 1); /* the list is pos3_t + byte  - so the fourth byte is the size */
+			switch (*size) {
+			case 0:
+			case ACTOR_SIZE_NORMAL:
+				return qtrue;
+			case ACTOR_SIZE_2x2:
+				if (Grid_CheckForbidden(map, x - 1, y, z))
+					return qtrue;
+				if (Grid_CheckForbidden(map, x - 1, y - 1, z))
+					return qtrue;
+				if (Grid_CheckForbidden(map, x, y - 1, z))
+					return qtrue;
+				break;
+			default:
+				Com_Printf("Grid_CheckForbidden: unknown size: %i\n", (int)*size);
+				return qfalse;
+			}
+		}
+	}
 	return qfalse;
 }
 

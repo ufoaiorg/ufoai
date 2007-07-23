@@ -558,7 +558,7 @@ typedef struct le_s {
 	char *ref1, *ref2;
 	inventory_t i;
 	int left, right, extension;
-	byte fieldSize;				/**< ACTOR_SIZE_* */
+	int fieldSize;				/**< ACTOR_SIZE_* */
 	int teamDesc;
 	int category; 	/**< nameCategory_t index */
 	int gender;
@@ -682,7 +682,7 @@ extern le_t *selActor;
 extern int actorMoveLength;
 extern invList_t invList[MAX_INVLIST];
 
-extern byte *fb_list[MAX_EDICTS];
+extern byte *fb_list[MAX_FORBIDDENLIST];
 extern int fb_length;
 
 void MSG_Write_PA(player_action_t player_action, int num, ...);

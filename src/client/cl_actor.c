@@ -1905,13 +1905,13 @@ ACTOR MOVEMENT AND SHOOTING
 
 /**
  * @brief A list of locations that cannot be moved to.
- *
+ * @note Pointer to le->pos or edict->pos followed by le->fieldSize or edict->fieldSize
  * @see CL_BuildForbiddenList
  */
-byte *fb_list[MAX_EDICTS];
+byte *fb_list[MAX_FORBIDDENLIST];
 /**
  * @brief Current length of fb_list.
- *
+ * @note all byte pointers in the fb_list list (pos + fieldSize)
  * @see fb_list
  */
 int fb_length;
@@ -1935,20 +1935,19 @@ static void CL_BuildForbiddenList (void)
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
 		if (!le->inuse || le->invis)
 			continue;
-
 		/* Dead ugv will stop walking, too. */
 		/**
-		 * @todo Just a note for the future.
-		 * If we get any ugv that does not block the map when dead this si the place to look.
+		 * @note Just a note for the future.
+		 * If we get any ugv that does not block the map when dead this is the place to look.
 		 */
 		if ((!(le->state & STATE_DEAD) && le->type == ET_ACTOR) || le->type == ET_ACTOR2x2) {
-			fb_list[fb_length++].size = &le->fieldSize;
-			fb_list[fb_length++].pos = le->pos;
+			fb_list[fb_length++] = le->pos;
+			fb_list[fb_length++] = (byte*)&le->fieldSize;
 		}
 	}
 
 #ifdef PARANOID
-	if (fb_length > MAX_EDICTS)
+	if (fb_length > MAX_FORBIDDENLIST)
 		Com_Error(ERR_DROP, "CL_BuildForbiddenList: list too long");
 #endif
 }

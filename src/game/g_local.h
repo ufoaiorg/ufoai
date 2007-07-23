@@ -567,7 +567,7 @@ struct edict_s {
 	int count;		/* general purpose 'amount' variable - set via mapeditor often */
 	int sounds;		/* type of sounds to play - e.g. doors */
 	int dmg;		/* damage done by entity */
-	byte fieldSize;	/* ACTOR_SIZE_* */
+	int fieldSize;	/* ACTOR_SIZE_* */
 
 	/* function to call when used */
 	void (*use) (edict_t * self, edict_t * other, edict_t * activator);
