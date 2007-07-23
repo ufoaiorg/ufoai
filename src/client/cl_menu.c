@@ -1268,7 +1268,7 @@ static void MN_BaseMapClick (menuNode_t * node, int x, int y)
 					/* Click on building : display its properties in the building menu */
 					MN_PushMenu("buildings");
 					baseCurrent->buildingCurrent = entry;
-					B_BuildingStatus();
+					B_BuildingStatus(baseCurrent, baseCurrent->buildingCurrent);
 				}
 #else
 				else

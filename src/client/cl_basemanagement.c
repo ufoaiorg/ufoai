@@ -444,8 +444,6 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 		Cbuf_AddText(va("%s %i;", building->onDestroy, base->idx));
 	}
 
-	B_ResetBuildingCurrent();
-	B_BuildingStatus();
 	B_BaseInit_f();
 
 	/* Update capacities - but don't update all */
@@ -474,6 +472,8 @@ static void B_BuildingDestroy_f (void)
 	b1 = baseCurrent->buildingCurrent;
 
 	B_BuildingDestroy(baseCurrent, baseCurrent->buildingCurrent);
+
+	B_ResetBuildingCurrent();
 }
 
 /**
@@ -497,26 +497,23 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
  * the building status
  * @note also script command function binding for 'building_status'
  */
-void B_BuildingStatus (void)
+void B_BuildingStatus (base_t* base, building_t* building)
 {
 	int daysLeft;
-	int NumberOfBuildings = 0;
+	int numberOfBuildings = 0;
 
-	/*maybe someone call this command before the buildings are parsed?? */
-	if (!baseCurrent || !baseCurrent->buildingCurrent) {
-		Com_DPrintf("B_BuildingStatus: No Base or no Building set\n");
-		return;
-	}
+	assert(building);
+	assert(base);
 
-	daysLeft = baseCurrent->buildingCurrent->timeStart + baseCurrent->buildingCurrent->buildTime - ccs.date.day;
+	daysLeft = building->timeStart + building->buildTime - ccs.date.day;
 
 	Cvar_Set("mn_building_status", _("Not set"));
 
-	switch (baseCurrent->buildingCurrent->buildingStatus) {
+	switch (building->buildingStatus) {
 	case B_STATUS_NOT_SET:
-		NumberOfBuildings = B_GetNumberOfBuildingsInBaseByTypeIDX(baseCurrent->idx, baseCurrent->buildingCurrent->type_idx);
-		if (NumberOfBuildings)
-			Cvar_Set("mn_building_status", va(_("Already %i in base"), NumberOfBuildings));
+		numberOfBuildings = B_GetNumberOfBuildingsInBaseByTypeIDX(base->idx, building->type_idx);
+		if (numberOfBuildings)
+			Cvar_Set("mn_building_status", va(_("Already %i in base"), numberOfBuildings));
 		break;
 	case B_STATUS_UNDER_CONSTRUCTION:
 		Cvar_Set("mn_building_status", "");
@@ -533,6 +530,19 @@ void B_BuildingStatus (void)
 	default:
 		break;
 	}
+}
+
+/**
+ * @brief Console callback for B_BuildingStatus
+ * @sa B_BuildingStatus
+ */
+static void B_BuildingStatus_f (void)
+{
+	/* maybe someone called this command before the buildings are parsed?? */
+	if (!baseCurrent || !baseCurrent->buildingCurrent)
+		return;
+
+	B_BuildingStatus(baseCurrent, baseCurrent->buildingCurrent);
 }
 
 /**
@@ -872,7 +882,7 @@ static void B_NewBuilding (void)
 	if (baseCurrent->buildingCurrent->buildingStatus < B_STATUS_UNDER_CONSTRUCTION)
 		/* credits are updated in the construct function */
 		if (B_ConstructBuilding()) {
-			B_BuildingStatus();
+			B_BuildingStatus(baseCurrent, baseCurrent->buildingCurrent);
 			Com_DPrintf("B_NewBuilding: buildingCurrent->buildingStatus = %i\n", baseCurrent->buildingCurrent->buildingStatus);
 		}
 }
@@ -1029,7 +1039,7 @@ static void B_DrawBuilding (void)
 
 	building = baseCurrent->buildingCurrent;
 
-	B_BuildingStatus();
+	B_BuildingStatus(baseCurrent, building);
 
 	Com_sprintf(buildingText, sizeof(buildingText), "%s\n", _(building->name));
 
@@ -2656,7 +2666,7 @@ void B_ResetBaseManagement (void)
 	Cmd_AddCommand("base_assemble_rand", B_AssembleRandomBase_f, NULL);
 	Cmd_AddCommand("building_open", B_BuildingOpen_f, NULL);
 	Cmd_AddCommand("building_init", B_BuildingInit, NULL);
-	Cmd_AddCommand("building_status", B_BuildingStatus, NULL);
+	Cmd_AddCommand("building_status", B_BuildingStatus_f, NULL);
 	Cmd_AddCommand("building_destroy", B_BuildingDestroy_f, "Function to destroy a buliding (select via right click in baseview first)");
 	Cmd_AddCommand("buildinginfo_click", B_BuildingInfoClick_f, NULL);
 	Cmd_AddCommand("buildings_click", B_BuildingClick_f, NULL);

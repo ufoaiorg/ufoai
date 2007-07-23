@@ -294,7 +294,7 @@ void B_SetBuildingByClick(int row, int col);
 void B_ResetBaseManagement(void);
 void B_ClearBase(base_t *const base);
 void B_NewBases(void);
-void B_BuildingStatus(void);
+void B_BuildingStatus(base_t* base, building_t* building);
 
 building_t *B_GetFreeBuildingType(buildingType_t type);
 int B_GetNumberOfBuildingsInBaseByTypeIDX(int base_idx, int type_idx);
