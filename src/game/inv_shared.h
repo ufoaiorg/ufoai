@@ -409,8 +409,8 @@ char *Com_CharGetHead(character_t* const chr) __attribute__((nonnull));
 
 /* =========================================================== */
 
-void Com_InitCSI(csi_t * import) __attribute__((nonnull));
-void Com_InitInventory(invList_t * invChain) __attribute__((nonnull));
+void INVSH_InitCSI(csi_t * import) __attribute__((nonnull));
+void INVSH_InitInventory(invList_t * invChain) __attribute__((nonnull));
 int Com_CheckToInventory(const inventory_t* const i, const int item, const int container, int x, int y);
 invList_t *Com_SearchInInventory(const inventory_t* const i, int container, int x, int y) __attribute__((nonnull(1)));
 invList_t *Com_AddToInventory(inventory_t* const i, item_t item, int container, int x, int y) __attribute__((nonnull(1)));

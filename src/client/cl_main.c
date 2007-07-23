@@ -2014,7 +2014,7 @@ static void CL_InitLocal (void)
 	cls.stream = NULL;
 	cls.realtime = Sys_Milliseconds();
 
-	Com_InitInventory(invList);
+	INVSH_InitInventory(invList);
 	Con_CheckResize();
 	CL_InitInput();
 

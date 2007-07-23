@@ -237,8 +237,8 @@ static void InitGame (void)
 	globals.max_players = game.maxplayers;
 
 	/* init csi and inventory */
-	Com_InitCSI(gi.csi);
-	Com_InitInventory(invChain);
+	INVSH_InitCSI(gi.csi);
+	INVSH_InitInventory(invChain);
 
 	logstatsfile = NULL;
 	if (logstats->integer)

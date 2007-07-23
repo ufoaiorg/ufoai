@@ -40,7 +40,7 @@ static item_t cacheItem = {NONE,NONE,NONE, 0}; /* to crash as soon as possible *
  * @sa InitGame
  * @sa Com_ParseScripts
  */
-void Com_InitCSI (csi_t * import)
+void INVSH_InitCSI (csi_t * import)
 {
 	CSI = import;
 }
@@ -53,7 +53,7 @@ void Com_InitCSI (csi_t * import)
  * @sa CL_ResetSinglePlayerData
  * @sa CL_InitLocal
  */
-void Com_InitInventory (invList_t * invList)
+void INVSH_InitInventory (invList_t * invList)
 {
 	invList_t *last;
 	int i;
@@ -741,7 +741,7 @@ CHARACTER GENERATION AND HANDLING
  * @param[in] name The name of the equipment for debug messages
  * @sa INVSH_LoadableInWeapon
  */
-static int Com_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, const int equip[MAX_OBJDEFS], int missed_primary, const char *name)
+static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, const int equip[MAX_OBJDEFS], int missed_primary, const char *name)
 {
 	int ammo = -1; /* this variable is never used before being set */
 	item_t item = {NONE_AMMO, NONE, NONE, 0};
@@ -753,7 +753,7 @@ static int Com_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, cons
 
 #ifdef PARANOID
 	if (weapon < 0) {
-		Com_Printf("Error in Com_PackAmmoAndWeapon - weapon is %i\n", weapon);
+		Com_Printf("Error in INVSH_PackAmmoAndWeapon - weapon is %i\n", weapon);
 	}
 #endif
 
@@ -770,7 +770,7 @@ static int Com_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, cons
 			/* The weapon provides its own ammo (i.e. it is charged or loaded in the base.) */
 			item.a = CSI->ods[weapon].ammo;
 			item.m = weapon;
-			Com_DPrintf("Com_PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s'.\n", CSI->ods[weapon].id, name);
+			Com_DPrintf("INVSH_PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s'.\n", CSI->ods[weapon].id, name);
 		} else {
 			max_price = 0;
 			/* find some suitable ammo for the weapon */
@@ -783,7 +783,7 @@ static int Com_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, cons
 				}
 
 			if (ammo < 0) {
-				Com_DPrintf("Com_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", CSI->ods[weapon].id, name);
+				Com_DPrintf("INVSH_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", CSI->ods[weapon].id, name);
 				return 0;
 			}
 			/* load ammo */
@@ -793,7 +793,7 @@ static int Com_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, cons
 	}
 
 	if (item.m == NONE) {
-		Com_Printf("Com_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", CSI->ods[weapon].id, name);
+		Com_Printf("INVSH_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", CSI->ods[weapon].id, name);
 		return 0;
 	}
 
@@ -903,7 +903,7 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const
 				if (equip[weapon] >= (28 - PROB_COMPENSATION) * frand()) {
 					/* not decrementing equip[weapon]
 					* so that we get more possible squads */
-					has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
+					has_weapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
 					if (has_weapon) {
 						int ammo;
 
@@ -956,13 +956,13 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const
 				}
 				if (!(max_price == (primary ? 0 : INT_MAX))) {
 					if (equip[weapon] >= 40 * frand()) {
-						has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, missed_primary, name);
+						has_weapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, missed_primary, name);
 						if (has_weapon) {
 							/* try to get the second akimbo pistol */
 							if (primary == 2
 								&& !CSI->ods[weapon].firetwohanded
 								&& frand() < AKIMBO_CHANCE) {
-								Com_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
+								INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
 							}
 							/* enough sidearms */
 							max_price = primary ? 0 : INT_MAX;
@@ -997,7 +997,7 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const
 
 					num = equip[weapon] / 40 + (equip[weapon] % 40 >= 40 * frand());
 					while (num--)
-						has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
+						has_weapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
 				}
 			} while (max_price);
 		} while (repeat--); /* gives more if no serious weapons */
@@ -1016,7 +1016,7 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const
 				}
 			}
 			if (max_price)
-				has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
+				has_weapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
 		}
 		/* if still no weapon, something is broken, or no blades in equip */
 		if (!has_weapon)
@@ -1435,7 +1435,7 @@ int INVSH_GetItemByID (const char *id)
  * @param[in] od The object definition of the ammo.
  * @param[in] weapon_idx The index of the weapon (in the inventory) to check the item with.
  * @return qboolean Returns qtrue if the item can be used in the given weapon, otherwise qfalse.
- * @sa Com_PackAmmoAndWeapon
+ * @sa INVSH_PackAmmoAndWeapon
  */
 qboolean INVSH_LoadableInWeapon (objDef_t *od, int weapon_idx)
 {

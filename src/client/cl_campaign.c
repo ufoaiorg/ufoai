@@ -3949,7 +3949,7 @@ static void CP_CampaignsClick_f (void)
 
 /**
  * @brief Will clear most of the parsed singleplayer data
- * @sa Com_InitInventory
+ * @sa INVSH_InitInventory
  * @sa CL_ReadSinglePlayerData
  */
 void CL_ResetSinglePlayerData (void)
@@ -3969,7 +3969,7 @@ void CL_ResetSinglePlayerData (void)
 	 * was maybe already called */
 	RS_ResetHash();
 	E_ResetEmployees();
-	Com_InitInventory(invList);
+	INVSH_InitInventory(invList);
 	/* Count Alien team definitions. */
 	for (i = 0; i < numTeamDesc; i++) {
 		if (teamDesc[i].alien)
