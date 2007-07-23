@@ -79,7 +79,7 @@
 //		Consider that this value doesn't reflect _real_ time, but it will depend on the number of scientists working on the item.
 //		If time is 0 the item can be produced at the same time all the "require_X" items are finished.
 //		[Default] 0
-//	produceTime
+//	producetime
 //		Time the production of one item takes. This value is similar to time, incuding the "it is not 'real time'" argument (see there for more!)
 //		0 [Default] The items are produced in (nearly) no time.
 //		-1 Will prevent the item to be produced. (Only needed if the thing 'provides' something and this thing is not meant for production.)
