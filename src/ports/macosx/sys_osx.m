@@ -24,7 +24,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include <unistd.h>
-#include <signal.h>
 #include <stdlib.h>
 #include <limits.h>
 #include <sys/time.h>
@@ -260,7 +259,7 @@ int main (int argc, const char **argv)
 	if (!nostdout->integer) {
 		fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY);
 	}
-    signal(SIGPIPE, SIG_IGN);
+
 	while (1)
 		Qcommon_Frame();
 

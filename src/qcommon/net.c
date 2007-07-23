@@ -47,6 +47,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # include <sys/select.h>
 # include <sys/types.h>
 # include <sys/socket.h>
+# include <signal.h>
 # include <netdb.h>
 # include <arpa/inet.h>
 # include <netinet/in.h>
@@ -279,6 +280,12 @@ void init_net (void)
 		streams[i] = NULL;
 	for (i = 0; i < MAX_DATAGRAM_SOCKETS; i++)
 		datagram_sockets[i] = NULL;
+
+#ifdef _WIN32
+
+#else
+	signal(SIGPIPE, SIG_IGN);
+#endif
 }
 
 /**
