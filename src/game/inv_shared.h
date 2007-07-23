@@ -342,50 +342,51 @@ typedef struct chrScore_s {
 /** @brief Describes a character with all its attributes */
 typedef struct character_s {
 	int ucn;
-	char name[MAX_VAR];
-	char path[MAX_VAR];
-	char body[MAX_VAR];
-	char head[MAX_VAR];
-	int skin;
+	char name[MAX_VAR];			/**< Character name (as in: soldier name). */
+	char path[MAX_VAR];			/**< @todo: document me. */
+	char body[MAX_VAR];			/**< @todo: document me. */
+	char head[MAX_VAR];			/**< @todo: document me. */
+	int skin;				/**< Index of skin. */
 
-	/** new abilities and skills: */
-	int skills[SKILL_NUM_TYPES];
+	int skills[SKILL_NUM_TYPES];		/**< Array of skills and abilities. */
 
-	/* health points, stun points, armor points and morale points */
-	int HP, STUN, AP, morale;
-	int maxHP;	/**< to be restored in hospital */
+	int HP;					/**< Health points (current ones). */
+	int maxHP;				/**< Maximum health points (as in: 100% == fully healed). */
+	int STUN, AP, morale;			/**< @todo: document me. */
 
-	/** score */
-	chrScore_t chrscore;
+	chrScore_t chrscore;			/**< Array of scores. */
 
-	int kills[KILLED_NUM_TYPES];
+	int kills[KILLED_NUM_TYPES];		/**< Array of kills (@todo: integrate me with chrScore_t chrscore). */
+	int assigned_missions;			/**< Assigned missions (@todo: integrate me with chrScore_t chrscore). */
+
+	int rank;				/**< Index of rank (in gd.ranks). */
+
+	int fieldSize;				/**< ACTOR_SIZE_* */
+
+	inventory_t *inv;			/**< Inventory definition. */
+
+	int empl_idx;				/**< Backlink to employee-struct - global employee index. */
+	int empl_type;				/**< Employee type. */
+
+	qboolean armor;				/**< Able to use armour. */
+	qboolean weapons;			/**< Able to use weapons. */
+
+	int teamDesc;				/**< Index in teamDesc array. */
+	int category;				/**< nameCategory index in nameCat. */
+	int gender;				/**< Gender index. */
+
+/* @todo: remove me, if this is not needed. */
 /*  int     destroyed_objects; */
 /*  int     hit_ratio; */
 /*  int     inflicted_damage; */
 /*  int     damage_taken; */
-	int assigned_missions;
 /*  int     crossed_distance; */
 	/* date     joined_edc; */
 	/* date     died; */
-	int rank; /* index in gd.ranks */
-	/* @todo: */
-	/* *------------------** */
-	/* *------------------** */
-
-	int fieldSize;              /**< ACTOR_SIZE_* */
-	inventory_t *inv;
-
-	/** Backlink to employee-struct. */
-	int empl_idx;
-	int empl_type;
-
-	qboolean armor, weapons; /**< able to use weapons/armor */
-	int teamDesc;	/**< id in teamDesc array */
-	int category; 	/**< nameCategory id in nameCat */
-	int gender;	/**< the gender of this character */
 } character_t;
 
-/** @brief The types of employees */
+/** @brief The types of employees. */
+/** @note If you will change order, make sure personel transfering still works. */
 typedef enum {
 	EMPL_SOLDIER,
 	EMPL_SCIENTIST,
