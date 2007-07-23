@@ -2492,34 +2492,62 @@ int CM_TestLineDM (vec3_t start, vec3_t stop, vec3_t end)
  * @param[in] x Field in x direction
  * @param[in] y Field in y direction
  * @param[in] z Field in z direction
+ * @param[in] actor_size Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @sa Grid_MoveMark
- * @return qtrue if the field is in the forbidden list and one can't walk there, otehrwise qfalse.
- * @todo Extend to support 2x2 units such as UGVs. See also Grid_MoveCalc.
+ * @return qtrue if one can walk there (i.e. the field [and attached fields for e.g. 2x2 units] is/are blocked by entries in the forbidden list) otherwise false.
  */
-static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, int z)
+static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, int z, int actor_size)
 {
 	byte **p;
-	int i;
-	byte *size;
+	int i, j;
+	byte *forbidden_size;
+
+	pos3_t poslist[4];
+	int poslen = 0;
 
 	for (i = 0, p = map->fblist; i < map->fblength / 2; i++, p += 2) {
-		if (x == (*p)[0] && y == (*p)[1] && z == (*p)[2]) {
-			size = *(p + 1); /* the list is pos3_t + byte  - so the fourth byte is the size */
-			switch (*size) {
+		poslen = 0;
+
+		/* The list is pos3_t + byte  - so the first 3 byte are the position values. */
+		poslist[0][0] = (*p)[0];
+		poslist[0][1] = (*p)[1];
+		poslist[0][2] = (*p)[2];
+
+		switch (actor_size) {
 			case 0:
 			case ACTOR_SIZE_NORMAL:
-				return qtrue;
+				poslen = 1;
+				break;
 			case ACTOR_SIZE_2x2:
-				if (Grid_CheckForbidden(map, x - 1, y, z))
-					return qtrue;
-				if (Grid_CheckForbidden(map, x - 1, y - 1, z))
-					return qtrue;
-				if (Grid_CheckForbidden(map, x, y - 1, z))
-					return qtrue;
+				poslist[1][0] = poslist[0][0] + 1; poslist[1][1] = poslist[0][1];     poslist[0][2] = poslist[0][2];
+				poslist[2][0] = poslist[0][0];     poslist[2][1] = poslist[0][1] + 1; poslist[1][2] = poslist[0][2];
+				poslist[3][0] = poslist[0][0] + 1; poslist[3][1] = poslist[0][1] + 1; poslist[2][2] = poslist[0][2];
+				poslen = 4;
 				break;
 			default:
-				Com_Printf("Grid_CheckForbidden: unknown size: %i\n", (int)*size);
+				Com_Printf("Grid_CheckForbidden: unknown actor-size: %i\n", actor_size);
 				return qfalse;
+		}
+
+		forbidden_size = *(p + 1); /**< The list is pos3_t + byte  - so the fourth byte is the size. */
+		for (j = 0; j < poslen; j++) {
+			if (x == poslist[j][0] && y == poslist[j][1] && z == poslist[j][2]) {
+				switch (*forbidden_size) {
+				case 0:
+				case ACTOR_SIZE_NORMAL:
+					return qtrue;
+				case ACTOR_SIZE_2x2:
+					if (Grid_CheckForbidden(map, x + 1, y, z, ACTOR_SIZE_NORMAL))
+						return qtrue;
+					if (Grid_CheckForbidden(map, x, y + 1, z, ACTOR_SIZE_NORMAL))
+						return qtrue;
+					if (Grid_CheckForbidden(map, x + 1, y + 1, z, ACTOR_SIZE_NORMAL))
+						return qtrue;
+					break;
+				default:
+					Com_Printf("Grid_CheckForbidden: unknown forbidden-size: %i\n", (int)*forbidden_size);
+					return qfalse;
+				}
 			}
 		}
 	}
@@ -2537,6 +2565,7 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, int z
  * @param[in] h
  * @param[in] ol
  * @sa Grid_CheckForbidden
+ * @todo add checks for actor size (2x2)
  */
 static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, int h, int ol)
 {
@@ -2562,7 +2591,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
 	if (dy < 0 && !(map->route[z][y][x] & 0x80))
 		return;
 	if (dv > 3 && !((map->route[z][y + dy][x] & (dx > 0 ? 0x10 : 0x20)) && (map->route[z][y][x + dx] & (dy > 0 ? 0x40 : 0x80))
-	  && !Grid_CheckForbidden(map, x, y + dy, z) && !Grid_CheckForbidden(map, x + dx, y, z)))
+	  && !Grid_CheckForbidden(map, x, y + dy, z, ACTOR_SIZE_NORMAL) && !Grid_CheckForbidden(map, x + dx, y, z, ACTOR_SIZE_NORMAL)))
 		return;
 
 	/* height checks */
@@ -2576,7 +2605,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
 		return;
 
 	/* test for forbidden areas */
-	if (Grid_CheckForbidden(map, nx, ny, z))
+	if (Grid_CheckForbidden(map, nx, ny, z, ACTOR_SIZE_NORMAL))
 		return;
 
 	/* store move */
