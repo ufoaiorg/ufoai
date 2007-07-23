@@ -1240,7 +1240,7 @@ static void AIM_DrawAircraftSlots (aircraft_t *aircraft)
 	menuNode_t *node;
 	int i, j;
 	aircraftSlot_t *slot;
-	int max; 
+	int max;
 
 	/* initialise models Cvar */
 	Cvar_Set("mn_aircraft_item_model_slot0", "");
@@ -1834,7 +1834,7 @@ qboolean AIR_SendAircraftToMission (aircraft_t* aircraft, actMis_t* mission)
  * @note Only values which shoudln't be iniatized to 0 are done here (others are done by memset)
  * @param[in] slot Pointer to the slot to initialize.
  */
-extern void AII_InitialiseSlot (aircraftSlot_t *slot, int aircraftIdx)
+void AII_InitialiseSlot (aircraftSlot_t *slot, int aircraftIdx)
 {
 	slot->aircraftIdx = aircraftIdx;
 	slot->itemIdx = -1;
