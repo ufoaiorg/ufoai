@@ -1754,7 +1754,7 @@ void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean qu
 			/* to retrieve the ammo from them than the one */
 			/* we've already found. */
 			for (ic = ent->i.c[container]; ic; ic = ic->next)
-				if (INV_LoadableInWeapon(&gi.csi->ods[ic->item.t], weapon)) {
+				if (INVSH_LoadableInWeapon(&gi.csi->ods[ic->item.t], weapon)) {
 					x = ic->x;
 					y = ic->y;
 					tu = gi.csi->ids[container].out;
@@ -1798,7 +1798,7 @@ qboolean G_ClientCanReload (player_t *player, int entnum, shoot_types_t st)
 
 	for (container = 0; container < gi.csi->numIDs; container++)
 		for (ic = ent->i.c[container]; ic; ic = ic->next)
-			if (INV_LoadableInWeapon(&gi.csi->ods[ic->item.t], weapon))
+			if (INVSH_LoadableInWeapon(&gi.csi->ods[ic->item.t], weapon))
 				return qtrue;
 	return qfalse;
 }

@@ -357,7 +357,7 @@ void INV_EnableAutosell (technology_t *tech)
 	if ((tech->type == RS_WEAPON) && (csi.ods[i].reload)) {
 		for (j = 0; j < csi.numODs; j++) {
 			/* Find all suitable ammos for this weapon. */
-			if (INV_LoadableInWeapon(&csi.ods[j], i)) {
+			if (INVSH_LoadableInWeapon(&csi.ods[j], i)) {
 				ammotech = RS_GetTechByProvided(csi.ods[j].id);
 				/* If the ammo is not produceable, don't enable autosell. */
 				if (ammotech && (ammotech->produceTime < 0))

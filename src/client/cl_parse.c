@@ -1125,7 +1125,7 @@ static void CL_InvAdd (struct dbuffer *msg)
 		for (; nr-- > 0;) {
 			CL_NetReceiveItem(msg, &item, &container, &x, &y);
 			Com_Printf("InvAdd: ignoring:\n");
-			Com_PrintItemDescription(item.t);
+			INVSH_PrintItemDescription(item.t);
 		}
 		return;
 	}

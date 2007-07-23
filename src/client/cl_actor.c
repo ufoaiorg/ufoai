@@ -356,7 +356,7 @@ static int CL_CalcReloadTime (int weapon_id)
 	for (container = 0; container < csi.numIDs; container++) {
 		if (csi.ids[container].out < tu) {
 			for (ic = selActor->i.c[container]; ic; ic = ic->next)
-				if (INV_LoadableInWeapon(&csi.ods[ic->item.t], weapon_id)) {
+				if (INVSH_LoadableInWeapon(&csi.ods[ic->item.t], weapon_id)) {
 					tu = csi.ids[container].out;
 					break;
 				}
@@ -2178,7 +2178,7 @@ void CL_ActorReload (int hand)
 			/* to retrieve the ammo from them than the one */
 			/* we've already found. */
 			for (ic = inv->c[container]; ic; ic = ic->next)
-				if (INV_LoadableInWeapon(&csi.ods[ic->item.t], weapon)
+				if (INVSH_LoadableInWeapon(&csi.ods[ic->item.t], weapon)
 				 && RS_ItemIsResearched(csi.ods[ic->item.t].id)) {
 					x = ic->x;
 					y = ic->y;

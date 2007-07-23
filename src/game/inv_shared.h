@@ -426,10 +426,10 @@ int Com_TryAddToBuyType(inventory_t* const inv, item_t item, int container) __at
 void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], const char *name, character_t* chr) __attribute__((nonnull(1)));
 void INV_PrintToConsole(inventory_t* const i);
 
-void Com_PrintItemDescription(int i);
+void INVSH_PrintItemDescription(int i);
 void Com_InventoryList_f(void);
 int INVSH_GetItemByID(const char *id);
-qboolean INV_LoadableInWeapon(objDef_t *od, int weapon_idx);
+qboolean INVSH_LoadableInWeapon(objDef_t *od, int weapon_idx);
 int FIRESH_FiredefsIDXForWeapon(objDef_t *od, int weapon_idx);
 int FIRESH_GetDefaultReactionFire(objDef_t *ammo, int weapon_fds_idx);
 

@@ -458,7 +458,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 	} else if (!checkedTo) {
 		ic = Com_SearchInInventory(i, to, tx, ty);
 
-		if (ic && INV_LoadableInWeapon(&CSI->ods[cacheItem.t], ic->item.t)) {
+		if (ic && INVSH_LoadableInWeapon(&CSI->ods[cacheItem.t], ic->item.t)) {
 			/* @todo (or do this in two places in cl_menu.c):
 			if (!RS_ItemIsResearched(CSI->ods[ic->item.t].id)
 				 || !RS_ItemIsResearched(CSI->ods[cacheItem.t].id)) {
@@ -739,7 +739,7 @@ CHARACTER GENERATION AND HANDLING
  * @param[in] weapon The weapon type index in gi.csi->ods
  * @param[in] equip The equipment that shows how many clips to pack
  * @param[in] name The name of the equipment for debug messages
- * @sa INV_LoadableInWeapon
+ * @sa INVSH_LoadableInWeapon
  */
 static int Com_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, const int equip[MAX_OBJDEFS], int missed_primary, const char *name)
 {
@@ -776,7 +776,7 @@ static int Com_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, cons
 			/* find some suitable ammo for the weapon */
 			for (i = CSI->numODs - 1; i >= 0; i--)
 				if (equip[i]
-				&& INV_LoadableInWeapon(&CSI->ods[i], weapon)
+				&& INVSH_LoadableInWeapon(&CSI->ods[i], weapon)
 				&& (CSI->ods[i].price > max_price) ) {
 					ammo = i;
 					max_price = CSI->ods[i].price;
@@ -817,7 +817,7 @@ static int Com_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, cons
 		max_price = 0;
 		for (i = 0; i < CSI->numODs; i++) {
 			obj = CSI->ods[i];
-			if (equip[i] && INV_LoadableInWeapon(&obj, weapon)) {
+			if (equip[i] && INVSH_LoadableInWeapon(&obj, weapon)) {
 				if (obj.price > max_price && obj.price < prev_price) {
 					max_price = obj.price;
 					ammo = i;
@@ -910,7 +910,7 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const
 						/* find the first possible ammo to check damage type */
 						for (ammo = 0; ammo < CSI->numODs; ammo++)
 							if (equip[ammo]
-							&& INV_LoadableInWeapon(&CSI->ods[ammo], weapon))
+							&& INVSH_LoadableInWeapon(&CSI->ods[ammo], weapon))
 								break;
 						if (ammo < CSI->numODs) {
 							primary =
@@ -1378,7 +1378,7 @@ char *Com_CharGetHead (character_t * const chr)
  * @brief Prints a description of an object
  * @param[in] index of object in CSI
  */
-void Com_PrintItemDescription (int i)
+void INVSH_PrintItemDescription (int i)
 {
 	objDef_t *ods_temp;
 
@@ -1410,7 +1410,7 @@ void Com_InventoryList_f (void)
 	int i;
 
 	for (i = 0; i < CSI->numODs; i++)
-		Com_PrintItemDescription(i);
+		INVSH_PrintItemDescription(i);
 }
 #endif /* DEBUG */
 
@@ -1449,10 +1449,9 @@ int INVSH_GetItemByID (const char *id)
  * @param[in] od The object definition of the ammo.
  * @param[in] weapon_idx The index of the weapon (in the inventory) to check the item with.
  * @return qboolean Returns qtrue if the item can be used in the given weapon, otherwise qfalse.
- * @note Formerly named INV_AmmoUsableInWeapon.
  * @sa Com_PackAmmoAndWeapon
  */
-qboolean INV_LoadableInWeapon (objDef_t *od, int weapon_idx)
+qboolean INVSH_LoadableInWeapon (objDef_t *od, int weapon_idx)
 {
 	int i;
 	qboolean usable = qfalse;
@@ -1460,7 +1459,7 @@ qboolean INV_LoadableInWeapon (objDef_t *od, int weapon_idx)
 	for (i = 0; i < od->numWeapons; i++) {
 #ifdef DEBUG
 		if (od->weap_idx[i] < 0) {
-			Com_DPrintf("INV_LoadableInWeapon: negative weap_idx entry (%s) found in item '%s'.\n", od->weap_id[i], od->id );
+			Com_DPrintf("INVSH_LoadableInWeapon: negative weap_idx entry (%s) found in item '%s'.\n", od->weap_id[i], od->id );
 			break;
 		}
 #endif
@@ -1470,14 +1469,14 @@ qboolean INV_LoadableInWeapon (objDef_t *od, int weapon_idx)
 		}
 	}
 #if 0
-	Com_DPrintf("INV_LoadableInWeapon: item '%s' usable/unusable (%i) in weapon '%s'.\n", od->id, usable, CSI->ods[weapon_idx].id );
+	Com_DPrintf("INVSH_LoadableInWeapon: item '%s' usable/unusable (%i) in weapon '%s'.\n", od->id, usable, CSI->ods[weapon_idx].id );
 #endif
 	return usable;
 }
 
 /* =============================== */
 
-/*  FIREMODE MANAGEMENT FUNCTIONS
+/*  FIREMODE MANAGEMENT FUNCTIONS  */
 
 /* =============================== */
 
