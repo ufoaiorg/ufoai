@@ -129,6 +129,7 @@ static qboolean AIRFIGHT_RemoveProjectile (int idx)
  * @param[in] idx of the ammo to add in array aircraftItems[]
  * @param[in] attacker Pointer to the attacking aircraft
  * @param[in] target Pointer to the target aircraft
+ * @param[in] slotIdx idx of the slot to use.
  * @note we already checked in AIRFIGHT_ChooseWeapon that the weapon has still ammo
  */
 static qboolean AIRFIGHT_AddProjectile (int idx, aircraft_t *attacker, aircraft_t *target, int slotIdx)
@@ -168,6 +169,44 @@ static qboolean AIRFIGHT_AddProjectile (int idx, aircraft_t *attacker, aircraft_
 }
 
 /**
+ * @brief Add a projectile in gd.projectiles
+ * @param[in] idx of the ammo to add in array aircraftItems[]
+ * @param[in] base Pointer to the base which fires the the ammo
+ * @param[in] target Pointer to the target aircraft
+ * @param[in] slotIdx idx of the slot to use.
+ */
+static qboolean AIRFIGHT_AddBaseProjectile (int idx, base_t *base, aircraft_t *target, int slotIdx) {
+	aircraftProjectile_t *projectile;
+
+	assert(target);
+
+	if (gd.numProjectiles >= MAX_PROJECTILESONGEOSCAPE) {
+		Com_Printf("Too many projectiles on map\n");
+		return qfalse;
+	}
+
+	assert(target);
+
+	projectile = &gd.projectiles[gd.numProjectiles];
+
+	projectile->aircraftItemsIdx = idx;
+	projectile->attackingAircraft = NULL;
+	projectile->idx = gd.numProjectiles;
+	VectorSet(projectile->pos, base->pos[0], base->pos[1], 0);
+	VectorSet(projectile->idleTarget, 0, 0, 0);
+	projectile->aimedAircraft = target;
+	projectile->time = 0;
+	projectile->angle = 0.0f;
+	projectile->bulletIdx = -1;
+
+
+	base->batteries[slotIdx].ammoLeft -= 1;
+	gd.numProjectiles++;
+
+	return qtrue;
+}
+
+/**
  * @brief Change destination of projectile to an idle point of the map, close to its former target.
  * @param[in] idx idx of the projectile to update in gd.projectiles[].
  */
@@ -188,11 +227,13 @@ static void AIRFIGHT_MissTarget (int idx)
 
 /**
  * @brief Choose the weapon an attacking aircraft will use to fire on a target.
- * @param[in] shooter Pointer to the attacking aircraft.
- * @param[in] target Pointer to the aimed aircraft.
+ * @param[in] slot Pointer to the first weapon slot of attacking base or aircraft.
+ * @param[in] maxSlot maximum number of weapon slots in attacking base or aircraft.
+ * @param[in] pos position of attacking base or aircraft.
+ * @param[in] targetpos Pointer to the aimed aircraft.
  * @return indice of the slot to use (in array weapons[]), -1 if no weapon to use atm, -2 if no weapon to use at all (no ammo left).
  */
-static int AIRFIGHT_ChooseWeapon (aircraft_t *shooter, aircraft_t *target)
+static int AIRFIGHT_ChooseWeapon (aircraftSlot_t *slot, int maxSlot, vec3_t pos, vec3_t targetPos)
 {
 	int slotIdx = -2;
 	int i, ammoIdx;
@@ -200,31 +241,30 @@ static int AIRFIGHT_ChooseWeapon (aircraft_t *shooter, aircraft_t *target)
 
 	distance0 = distance;
 
-	assert(shooter);
-	assert(target);
+	assert(slot);
 
-	distance = CP_GetDistance(shooter->pos, target->pos);
+	distance = CP_GetDistance(pos, targetPos);
 
 	/* We choose the usable weapon with the smaller range */
-	for (i = 0; i < MAX_AIRCRAFTSLOT; i++) {
+	for (i = 0; i < maxSlot; i++) {
 		/* check if there is a functional weapon in this slot */
-		if (shooter->weapons[i].itemIdx < 0 || shooter->weapons[i].installationTime != 0)
+		if (slot[i].itemIdx < 0 || slot[i].installationTime != 0)
 			continue;
 
 		/* check if there is still ammo in this weapon */
-		if (shooter->weapons[i].ammoIdx < 0 || shooter->weapons[i].ammoLeft <= 0)
+		if (slot[i].ammoIdx < 0 || slot[i].ammoLeft <= 0)
 			continue;
 
 		if (slotIdx == -2)
 			slotIdx = -1;
 
-		ammoIdx = shooter->weapons[i].ammoIdx;
+		ammoIdx = slot[i].ammoIdx;
 		/* check if the target is within range of this weapon */
 		if (distance > aircraftItems[ammoIdx].stats[AIR_STATS_WRANGE])
 			continue;
 
 		/* check if weapon is reloaded */
-		if (shooter->weapons[i].delayNextShot > 0)
+		if (slot[i].delayNextShot > 0)
 			continue;
 
 		if (distance < distance0) {
@@ -237,8 +277,9 @@ static int AIRFIGHT_ChooseWeapon (aircraft_t *shooter, aircraft_t *target)
 
 /**
  * @brief Calculate the probability to hit the ennemy.
- * @param[in] shooter Pointer to the attacking aircraft.
+ * @param[in] shooter Pointer to the attacking aircraft (may be NULL if a base fires the projectile).
  * @param[in] target Pointer to the aimed aircraft.
+ * @param[in] slot Slot containing the weapon firing.
  * @return Probability to hit the target (0 when you don't have a chance, 1 (or more) when you're sure to hit).
  * @note that modifiers due to electronics, weapons, and shield are already taken into account in AII_UpdateAircraftStats
  * @sa AII_UpdateAircraftStats
@@ -247,18 +288,18 @@ static int AIRFIGHT_ChooseWeapon (aircraft_t *shooter, aircraft_t *target)
  * @pre slotIdx must have a weapon installed, with ammo available (see AIRFIGHT_ChooseWeapon)
  * @todo This probability should also depend on the pilot skills, when they will be implemented.
  */
-static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target, int slotIdx)
+static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target, aircraftSlot_t *slot)
 {
 	int idx;
 	float probability = 0.0f;
 
-	idx = shooter->weapons[slotIdx].itemIdx;
+	idx = slot->itemIdx;
 	if (idx < 0) {
 		Com_Printf("AIRFIGHT_ProbabilityToHit: no weapon assigned to attacking aircraft\n");
 		return probability;
 	}
 
-	idx = shooter->weapons[slotIdx].ammoIdx;
+	idx = slot->ammoIdx;
 	if (idx < 0) {
 		Com_Printf("AIRFIGHT_ProbabilityToHit: no ammo in weapon of attacking aircraft\n");
 		return probability;
@@ -269,10 +310,11 @@ static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target,
 	Com_DPrintf("AIRFIGHT_ProbabilityToHit: Base probablity: %f\n", probability);
 
 	/* Modify this probability by items of the attacking aircraft (stats is in percent) */
-	probability *= shooter->stats[AIR_STATS_ACCURACY] / 100.0f;
+	if (shooter)
+		probability *= shooter->stats[AIR_STATS_ACCURACY] / 100.0f;
 
 	/* Modify this probability by items of the aimed aircraft (stats is in percent) */
-	probability /= shooter->stats[AIR_STATS_ECM] / 100.0f;
+	probability /= target->stats[AIR_STATS_ECM] / 100.0f;
 
 	Com_DPrintf("AIRFIGHT_ProbabilityToHit: Probability to hit: %f\n", probability);
 	return probability;
@@ -294,7 +336,7 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 	assert(target);
 
 	/* Check if the attacking aircraft can shoot */
-	slotIdx = AIRFIGHT_ChooseWeapon(shooter, target);
+	slotIdx = AIRFIGHT_ChooseWeapon(shooter->weapons, shooter->maxWeapons, shooter->pos, target->pos);
 
 	if (slotIdx > -1) {
 		ammoIdx = shooter->weapons[slotIdx].ammoIdx;
@@ -304,7 +346,7 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 			shooter->weapons[slotIdx].delayNextShot = aircraftItems[ammoIdx].weaponDelay;
 			/* will we miss the target ? */
 			probability = frand();
-			if (probability > AIRFIGHT_ProbabilityToHit(shooter, target, slotIdx))
+			if (probability > AIRFIGHT_ProbabilityToHit(shooter, target, shooter->weapons + slotIdx))
 				AIRFIGHT_MissTarget(gd.numProjectiles - 1);
 		}
 	} else if (slotIdx > -2) {
@@ -319,6 +361,27 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 			UFO_FleePhalanxAircraft(shooter, target->pos);
 		else
 			AIR_AircraftReturnToBase(shooter);
+	}
+}
+
+/**
+ * @brief Check if a base can fire on an aircraft.
+ * @note should be used against ufos.
+ * @param[in] target Pointer to the aircraft that could be attacked.
+ */
+extern void AIRFIGHT_BaseShootUFO (aircraft_t *target) {
+	base_t*		base;
+	int slotIdx;
+
+	for (base = gd.bases; base < (gd.bases + gd.numBases); base++) {
+		slotIdx = AIRFIGHT_ChooseWeapon(base->batteries, base->maxBatteries, base->pos, target->pos);
+		if (slotIdx > -1)
+			if (AIRFIGHT_AddBaseProjectile(base->batteries[slotIdx].ammoIdx, base, target, slotIdx)) {
+				base->batteries[slotIdx].delayNextShot = aircraftItems[base->batteries[slotIdx].ammoIdx].weaponDelay;
+				/* will we miss the target ? */
+				if (frand() > AIRFIGHT_ProbabilityToHit(NULL, target, base->batteries + slotIdx))
+					AIRFIGHT_MissTarget(gd.numProjectiles - 1);
+			}
 	}
 }
 
@@ -515,6 +578,16 @@ void AIRFIGHT_CampaignRunProjectiles (int dt)
 	float angle;
 	float movement;
 	vec3_t ortogonalVector, finalPoint, startPoint;
+	base_t*		base;
+
+	/* update delay next shot of bases */
+	/* @todo: this is probably not the best place for this update, but I don't know where to put it -- Kracken 230707 */
+	for (base = gd.bases; base < (gd.bases + gd.numBases); base++) {
+		for (idx = 0; idx < base->maxBatteries; idx++) {
+			if (base->batteries[idx].delayNextShot > 0)
+				base->batteries[idx].delayNextShot -= dt;
+		}
+	}
 
 	for (idx = 0, projectile = gd.projectiles; idx < gd.numProjectiles; projectile++, idx++) {
 		projectile->time += dt;

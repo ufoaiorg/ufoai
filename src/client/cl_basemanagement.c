@@ -224,6 +224,41 @@ void B_SetSensor_f (void)
 }
 
 /**
+ * @brief Adds a missile battery to base.
+ * @todo Implement me (atm, only first slot can be used, with sparrowhawk)
+ */
+void B_AddBattery_f (void) {
+	int idx;
+
+	AII_InitialiseSlot(baseCurrent->batteries, baseCurrent->idx);
+
+	baseCurrent->batteries[0].aircraftIdx = baseCurrent->idx;
+
+	baseCurrent->maxBatteries = 1;
+
+	/* already functional */
+	baseCurrent->batteries[0].installationTime = 0;
+
+	/* add a weapon */
+	idx = AII_GetAircraftItemByID("craft_weapon_sparrowhawk");
+	baseCurrent->batteries[0].itemIdx = idx;
+
+	/* add an ammo */
+	idx = AII_GetAircraftItemByID("craft_ammo_sparrowhawk");
+	baseCurrent->batteries[0].ammoIdx = idx;
+
+	/* all type of items are OK for now */
+	baseCurrent->batteries[0].size = ITEM_HEAVY;
+
+	/* slots has a lot of ammo for now */
+	baseCurrent->batteries[0].ammoLeft = 9999;
+
+	/* slots can fire up to now */
+	baseCurrent->batteries[0].delayNextShot = 0;
+
+}
+
+/**
  * @brief Initialises base.
  */
 static void B_BaseInit_f (void)

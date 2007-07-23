@@ -50,5 +50,6 @@ typedef struct aircraftProjectile_s {
 extern void AIRFIGHT_ExecuteActions(aircraft_t* air, aircraft_t* ufo);
 extern void AIRFIGHT_ActionsAfterAirfight(aircraft_t* shooter, aircraft_t* aircraft, qboolean phalanxWon);
 extern void AIRFIGHT_CampaignRunProjectiles(int dt);
+extern void AIRFIGHT_BaseShootUFO(aircraft_t *target);
 
 #endif /* CLIENT_CL_AIRFIGHT_H */

@@ -3669,6 +3669,7 @@ static const cmdList_t game_commands[] = {
 	{"game_timefast", CL_GameTimeFast, NULL},
 	{"inc_sensor", B_SetSensor_f, "Increase the radar range"},
 	{"dec_sensor", B_SetSensor_f, "Decrease the radar range"},
+	{"add_battery", B_AddBattery_f, "Add a new battery to base"},
 	{"mn_mapaction_reset", MAP_ResetAction, NULL},
 	{"nationlist", CL_NationList_f, "List all nations on the game console"},
 	{"mission", CL_StartMission_f, NULL},

@@ -102,6 +102,7 @@ building building_missile
 	map_name	"missile"
 	pedia		rs_building_missile
 	more_than_one	true
+	onconstruct	"add_battery"
 	onclick		"building_open"
 }
 

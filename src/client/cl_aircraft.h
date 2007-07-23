@@ -260,6 +260,7 @@ qboolean AIR_IsInAircraftTeam(aircraft_t *aircraft,int idx);
 void CL_CampaignRunAircraft(int dt);
 aircraft_t *AIR_GetAircraft(const char *name);
 extern aircraft_t* AIR_AircraftGetFromIdx(int idx);
+extern void AII_InitialiseSlot(aircraftSlot_t *slot, int aircraftIdx);
 extern int AII_GetAircraftItemByID(const char *id);
 extern void CP_GetRandomPosForAircraft(float *pos);
 extern qboolean AIR_AircraftMakeMove(int dt, aircraft_t* aircraft);

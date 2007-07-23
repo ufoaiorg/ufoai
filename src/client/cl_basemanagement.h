@@ -246,6 +246,9 @@ typedef struct base_s {
 	int hospitalMissionList[MAX_EMPLOYEES];		/**< Hospital list of soldiers being healed but moved to the mission. */
 	int hospitalMissionListCount;			/**< Counter for hospitalMissionList. */
 
+	int maxBatteries;
+	aircraftSlot_t batteries[MAX_AIRCRAFTSLOT];	/**< Missile batteries assigned to base. */ 
+
 	int buildingToBuild;	/**< needed if there is another buildingpart to build (link to gd.buildingTypes) */
 
 	struct building_s *buildingCurrent; /**< needn't be saved */
@@ -255,6 +258,7 @@ typedef struct base_s {
 extern base_t *baseCurrent;
 
 void B_SetSensor_f(void);
+void B_AddBattery_f(void);
 
 void B_UpdateBaseData(void);
 base_t *B_GetBase(int id);

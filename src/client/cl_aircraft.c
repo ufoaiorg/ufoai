@@ -1834,7 +1834,7 @@ qboolean AIR_SendAircraftToMission (aircraft_t* aircraft, actMis_t* mission)
  * @note Only values which shoudln't be iniatized to 0 are done here (others are done by memset)
  * @param[in] slot Pointer to the slot to initialize.
  */
-static void AII_InitialiseSlot (aircraftSlot_t *slot, int aircraftIdx)
+extern void AII_InitialiseSlot (aircraftSlot_t *slot, int aircraftIdx)
 {
 	slot->aircraftIdx = aircraftIdx;
 	slot->itemIdx = -1;
