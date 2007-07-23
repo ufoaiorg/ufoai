@@ -2703,6 +2703,7 @@ int B_GetCount (void)
  * @brief Updates base data
  * @sa CL_CampaignRun
  * @note called every "day"
+ * @sa AIRFIGHT_ProjectileHitsBase
  */
 void B_UpdateBaseData (void)
 {

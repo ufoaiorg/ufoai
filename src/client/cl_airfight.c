@@ -555,6 +555,7 @@ static void AIRFIGHT_ProjectileHits (aircraftProjectile_t *projectile)
 /**
  * @brief Solve the result of one projectile hitting a base.
  * @param[in] projectile Pointer to the projectile.
+ * @sa B_UpdateBaseData
  */
 static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 {
