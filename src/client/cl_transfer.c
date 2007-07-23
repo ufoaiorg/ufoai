@@ -1051,6 +1051,19 @@ static void TR_Init_f (void)
 }
 
 /**
+ * @brief Closes Transfer Menu and resets temp arrays.
+ */
+static void TR_TransferClose_f (void)
+{
+	/* Clear temporary cargo arrays. */
+	memset(trItemsTmp, 0, sizeof(trItemsTmp));
+	memset(trAliensTmp, 0, sizeof(trAliensTmp));
+	memset(trEmployeesTmp, -1, sizeof(trEmployeesTmp));
+
+	Cbuf_AddText("mn_pop\n");
+}
+
+/**
  * @brief Defines commands and cvars for the Transfer menu(s).
  * @sa MN_ResetMenus
  */
@@ -1066,6 +1079,7 @@ void TR_Reset (void)
 	Cmd_AddCommand("trans_list_click", TR_TransferListSelect_f, "Callback for transfer list node click");
 	Cmd_AddCommand("trans_aircraft_click", TR_TransferAircraftListClick_f, "Callback for aircraft list node click");
 	Cmd_AddCommand("trans_cargolist_click", TR_CargoListSelect_f, "Callback for cargo list node click");
+	Cmd_AddCommand("trans_close", TR_TransferClose_f, "Callback for closing Transfer Menu");
 }
 
 

@@ -354,7 +354,7 @@ menu transfer
 		pos	"940 725"
 		texl	"0 0"
 		texh	"64 37"
-		click	{ cmd mn_pop }
+		click	{ cmd "trans_close;" }
 	}
 
 	// ==================
