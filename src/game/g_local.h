@@ -295,7 +295,7 @@ void G_RecalcRouting(edict_t * ent);
 
 #define MORALE_RANDOM( mod )	( (mod) * (1.0 + 0.3*crand()) )
 
-void flush_steps(void);
+void G_FlushSteps(void);
 
 qboolean G_ActionCheck(player_t * player, edict_t * ent, int TU, qboolean quiet);
 void G_SendStats(edict_t * ent);

@@ -1547,7 +1547,7 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 		/* if just pretending then this is far enough */
 		return qtrue;
 
-        flush_steps();
+	G_FlushSteps();
 
 	/* Change active team for this shot only. */
 	team = level.activeTeam;

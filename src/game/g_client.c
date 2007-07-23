@@ -38,19 +38,22 @@ static int steps = 0;
 static int steps_num;
 static int steps_mask;
 
-/* This is a crude hack to keep it working for now. Rewrite this properly later */
-void
-flush_steps(void) {
-  int i;
-  if (steps > 0) {
-    gi.AddEvent(steps_mask, EV_ACTOR_MOVE);
-    gi.WriteShort(steps_num);
-    gi.WriteShort(steps);
-    for (i = 0; i < steps; i++)
-      gi.WriteByte(steps_buffer[i]);
-  }
+/**
+ * @brief
+ * @note This is a crude hack to keep it working for now. Rewrite this properly later
+ */
+void G_FlushSteps (void)
+{
+	int i;
+	if (steps > 0) {
+		gi.AddEvent(steps_mask, EV_ACTOR_MOVE);
+		gi.WriteShort(steps_num);
+		gi.WriteShort(steps);
+		for (i = 0; i < steps; i++)
+			gi.WriteByte(steps_buffer[i]);
+	}
 
-  steps = 0;
+	steps = 0;
 }
 
 /**
@@ -234,7 +237,7 @@ void G_AppearPerishEvent (int player_mask, int appear, edict_t * check)
 {
 	int maxMorale;
 
-        flush_steps();
+	G_FlushSteps();
 
 	if (appear) {
 		/* appear */
@@ -1274,16 +1277,16 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 			/* everything ok, found valid route */
 			/* create movement related events */
 			steps = 0;
-                        steps_num = num;
-                        steps_mask = G_VisToPM(ent->visflags);
+			steps_num = num;
+			steps_mask = G_VisToPM(ent->visflags);
 
 			FLOOR(ent) = NULL;
 
 			/* BEWARE: do not print anything (even with DPrintf)
-			   in functions called in this loop
-			   without calling flush_steps() afterwards;
-			   also do not send events except G_AppearPerishEvent
-			   without manually calling flush_steps() */
+			 * in functions called in this loop
+			 * without calling G_FlushSteps() afterwards;
+			 * also do not send events except G_AppearPerishEvent
+			 * without manually calling G_FlushSteps() */
 			while (numdv > 0) {
 				/* get next dv */
 				numdv--;
@@ -1291,7 +1294,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				/* turn around first */
 				status = G_DoTurn(ent, dvtab[numdv]);
 				if (status) {
-                                        flush_steps();
+					G_FlushSteps();
 					/* send the turn */
 					gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_TURN);
 					gi.WriteShort(ent->number);
@@ -1320,7 +1323,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				gi.linkentity(ent);
 
 				/* write step */
-                                steps_buffer[steps++] = dvtab[numdv];
+				steps_buffer[steps++] = dvtab[numdv];
 
 				/* check if player appears/perishes, seen from other teams */
 				G_CheckVis(ent, qtrue);
@@ -1349,15 +1352,15 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 
 				/* check for death */
 				if (ent->state & STATE_DEAD) {
-                                        steps = 0;
+					steps = 0;
 					return;
-                                }
+				}
 
 				if (stop && (status & VIS_STOP))
 					break;
 			}
 
-                        flush_steps();
+			G_FlushSteps();
 
 			/* submit the TUs / round down */
 			ent->TU = max(0, initTU - (int) tu);
