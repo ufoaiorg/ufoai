@@ -979,7 +979,6 @@ void TR_TransferCheck (void)
 	int i;
 	base_t *base;
 	transferlist_t *transfer;
-	char message[256];
 
 	for (i = 0; i < MAX_TRANSFERS; i++) {
 		transfer = &gd.alltransfers[i];
