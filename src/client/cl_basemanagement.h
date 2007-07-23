@@ -254,7 +254,7 @@ typedef struct base_s {
 
 	int maxBatteries;
 	aircraftSlot_t batteries[MAX_BASE_SLOT];	/**< Missile batteries assigned to base. */
-	
+
 	int batteryDamage;			/**< Hit points of defense system */
 	int baseDamage;			/**< Hit points of base */
 
@@ -310,7 +310,8 @@ int B_GetEmployeeCount(const base_t* const base);
 
 qboolean B_CheckBuildingTypeStatus(const base_t* const base, buildingType_t type, buildingStatus_t status, int *cnt);
 
-void B_BuildingDestroy(building_t* building, base_t* base);
+void B_MarkBuildingDestroy(base_t* base, building_t* building);
+qboolean B_BuildingDestroy(base_t* base, building_t* building);
 void CL_DropshipReturned(base_t* base, aircraft_t* aircraft);
 
 void B_UpdateBaseCapacities(baseCapacities_t cap, base_t *base);

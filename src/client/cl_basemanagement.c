@@ -227,7 +227,8 @@ void B_SetSensor_f (void)
  * @brief Adds a missile battery to base.
  * @todo Implement me (atm, only first slot can be used, with sparrowhawk)
  */
-void B_AddBattery_f (void) {
+void B_AddBattery_f (void)
+{
 	int idx;
 
 	AII_InitialiseSlot(baseCurrent->batteries, baseCurrent->idx);
@@ -321,141 +322,126 @@ static void B_BaseInit_f (void)
 }
 
 /**
- * @brief We are doing the real destroy of a buliding here
- * @sa B_BuildingDestroy
- * @sa B_NewBuilding
+ * @brief Removes a building from the given base
+ * @param[in] base Base to remove the building in
+ * @param[in] building The building to remove
+ * @note Also updates capacities and sets the has* values in base_t
+ * @sa B_BuildingDestroy_f
  */
-static void B_BuildingDestroy_f (void)
+qboolean B_BuildingDestroy (base_t* base, building_t* building)
 {
-	building_t *b1 = NULL;
-#if 0
-	building_t *b2 = NULL;
-#endif
 	baseCapacities_t cap = MAX_CAP; /* init but don't set to first value of enum */
 
-	if (!baseCurrent || !baseCurrent->buildingCurrent)
-		return;
-
-	b1 = baseCurrent->buildingCurrent;
-
 	/* Don't allow to destroy an entrance. */
-	if (b1->buildingType == B_ENTRANCE)
-		return;
+	if (building->buildingType == B_ENTRANCE)
+		return qfalse;
 
-	if (baseCurrent->map[(int)b1->pos[0]][(int)b1->pos[1]] != BASE_FREESLOT) {
-		if (b1->needs) {
-#if 0
-			b2 = B_GetBuildingType(b1->needs);
-			assert(b2);
-#endif
+	if (base->map[(int)building->pos[0]][(int)building->pos[1]] != BASE_FREESLOT) {
+		if (building->needs) {
 			/* "Child" building is always right to the "parent" building". */
-			baseCurrent->map[(int)b1->pos[0]][((int)b1->pos[1])+1] = BASE_FREESLOT;
+			base->map[(int)building->pos[0]][((int)building->pos[1])+1] = BASE_FREESLOT;
 		}
 
-		baseCurrent->map[(int)b1->pos[0]][(int)b1->pos[1]] = BASE_FREESLOT;
+		base->map[(int)building->pos[0]][(int)building->pos[1]] = BASE_FREESLOT;
 	}
-	b1->buildingStatus = B_STATUS_NOT_SET;
-#if 0
-	if (b2)
-		b2->buildingStatus = B_STATUS_NOT_SET;
-#endif
+	building->buildingStatus = B_STATUS_NOT_SET;
 
 #if 0 /* this would be a clean approach - but we have to fix all the linkage */
-	gd.numBuildings[baseCurrent->idx]--;
+	gd.numBuildings[base->idx]--;
 
-	if (b1->idx == gd.numBuildings[baseCurrent->idx]) {
-	memset(b1, 0, sizeof(building_t));
+	if (building->idx == gd.numBuildings[base->idx]) {
+		memset(b1, 0, sizeof(building_t));
 	} else {
-		for (i = b1->idx; i < gd.numBuildings[baseCurrent->idx]; i++) {
-			Com_Printf("Move building %i to pos %i (%i)\n", i+1, i, gd.numBuildings[baseCurrent->idx]);
-			memmove(&gd.buildings[baseCurrent->idx][i], &gd.buildings[baseCurrent->idx][i+1], sizeof(building_t));
-			gd.buildings[baseCurrent->idx][i].idx = i;
+		for (i = b1->idx; i < gd.numBuildings[base->idx]; i++) {
+			Com_Printf("Move building %i to pos %i (%i)\n", i+1, i, gd.numBuildings[base->idx]);
+			memmove(&gd.buildings[base->idx][i], &gd.buildings[base->idx][i+1], sizeof(building_t));
+			gd.buildings[base->idx][i].idx = i;
 		}
 	}
 #endif
 
-	switch (b1->buildingType) {
+	switch (building->buildingType) {
 	case B_WORKSHOP:
 		cap = CAP_WORKSPACE;
-		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
-			baseCurrent->hasWorkshop = qfalse;
+		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType))
+			base->hasWorkshop = qfalse;
 		break;
 	case B_STORAGE:
 		cap = CAP_ITEMS;
-		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
-			baseCurrent->hasStorage = qfalse;
+		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType))
+			base->hasStorage = qfalse;
 		break;
 	case B_ALIEN_CONTAINMENT:
 		cap = CAP_ALIENS;
-		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
-			baseCurrent->hasAlienCont = qfalse;
+		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType))
+			base->hasAlienCont = qfalse;
 		break;
 	case B_LAB:
 		cap = CAP_LABSPACE;
-		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
-			baseCurrent->hasLab = qfalse;
+		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType))
+			base->hasLab = qfalse;
 		break;
 	case B_HOSPITAL:
 		cap = CAP_HOSPSPACE;
-		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
-			baseCurrent->hasHospital = qfalse;
+		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType))
+			base->hasHospital = qfalse;
 		break;
 	case B_HANGAR: /* the Dropship Hangar */
 		cap = CAP_AIRCRAFTS_BIG;
-		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
-			baseCurrent->hasHangar = qfalse;
+		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType))
+			base->hasHangar = qfalse;
 		break;
 	case B_QUARTERS:
 		cap = CAP_EMPLOYEES;
-		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
-			baseCurrent->hasQuarters = qfalse;
+		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType))
+			base->hasQuarters = qfalse;
 		break;
 	case B_SMALL_HANGAR:
 		cap = CAP_AIRCRAFTS_SMALL;
-		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
-			baseCurrent->hasHangarSmall = qfalse;
+		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType))
+			base->hasHangarSmall = qfalse;
 		break;
 	case B_UFO_HANGAR:
 	case B_UFO_SMALL_HANGAR:
 		cap = CAP_UFOHANGARS;
-		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_UFO_HANGAR))
-			baseCurrent->hasUFOHangar = qfalse;
-		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_UFO_SMALL_HANGAR))
-			baseCurrent->hasUFOHangarSmall = qfalse;
+		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, B_UFO_HANGAR))
+			base->hasUFOHangar = qfalse;
+		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, B_UFO_SMALL_HANGAR))
+			base->hasUFOHangarSmall = qfalse;
 		break;
 	case B_POWER:
-		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
-			baseCurrent->hasPower = qfalse;
-		B_UpdateStatusWithPower(baseCurrent);
+		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType))
+			base->hasPower = qfalse;
+		B_UpdateStatusWithPower(base);
 		break;
 	case B_COMMAND:
-		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
-			baseCurrent->hasCommand = qfalse;
+		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType))
+			base->hasCommand = qfalse;
 		break;
 	case B_ANTIMATTER:
 		cap = CAP_ANTIMATTER;
-		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
-			baseCurrent->hasAmStorage = qfalse;
+		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType))
+			base->hasAmStorage = qfalse;
 		break;
 	case B_DEFENSE_MISSILE:
-		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
-			baseCurrent->hasMissile = qfalse;
+		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType))
+			base->hasMissile = qfalse;
 		break;
 	case B_DEFENSE_LASER:
-		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
-			baseCurrent->hasLaser = qfalse;
+		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType))
+			base->hasLaser = qfalse;
 		break;
 	case B_MISC:
 		break;
 	default:
-		Com_Printf("B_BuildingDestroy_f: Unknown building type: %i.\n", b1->buildingType);
+		Com_Printf("B_BuildingDestroy: Unknown building type: %i.\n", building->buildingType);
 		break;
 	}
 
 	/* call ondestroy trigger */
-	if (*b1->onDestroy) {
-		Com_DPrintf("B_BuildingDestroy: %s %i;\n", baseCurrent->buildingCurrent->onDestroy, baseCurrent->idx);
-		Cbuf_AddText(va("%s %i;", baseCurrent->buildingCurrent->onDestroy, baseCurrent->idx));
+	if (*building->onDestroy) {
+		Com_DPrintf("B_BuildingDestroy: %s %i;\n", building->onDestroy, base->idx);
+		Cbuf_AddText(va("%s %i;", building->onDestroy, base->idx));
 	}
 
 	B_ResetBuildingCurrent();
@@ -464,19 +450,37 @@ static void B_BuildingDestroy_f (void)
 
 	/* Update capacities - but don't update all */
 	if (cap != MAX_CAP)
-		B_UpdateBaseCapacities(cap, baseCurrent);
+		B_UpdateBaseCapacities(cap, base);
 
 	/* Update production times in queue if we destroyed B_WORKSHOP. */
-	if (b1->buildingType == B_WORKSHOP) {
-		PR_UpdateProductionTime(baseCurrent->idx);
+	if (building->buildingType == B_WORKSHOP) {
+		PR_UpdateProductionTime(base->idx);
 	}
+	return qtrue;
+}
+
+/**
+ * @brief We are doing the real destroy of a buliding here
+ * @sa B_BuildingDestroy
+ * @sa B_NewBuilding
+ */
+static void B_BuildingDestroy_f (void)
+{
+	building_t *b1 = NULL;
+
+	if (!baseCurrent || !baseCurrent->buildingCurrent)
+		return;
+
+	b1 = baseCurrent->buildingCurrent;
+
+	B_BuildingDestroy(baseCurrent, baseCurrent->buildingCurrent);
 }
 
 /**
  * @brief Mark a building for destruction - you only have to confirm it now
  * @note Also calls the ondestroy trigger
  */
-void B_BuildingDestroy (building_t* building, base_t* base)
+void B_MarkBuildingDestroy (base_t* base, building_t* building)
 {
 	assert(base);
 	assert(building);
@@ -811,7 +815,7 @@ static qboolean B_CheckCredits (int costs)
 
 /**
  * @brief Builds new building.
- * @sa B_BuildingDestroy
+ * @sa B_MarkBuildingDestroy
  * @sa B_CheckCredits
  * @sa CL_UpdateCredits
  * @return qboolean
@@ -856,7 +860,7 @@ static qboolean B_ConstructBuilding (void)
 
 /**
  * @brief Build new building.
- * @sa B_BuildingDestroy
+ * @sa B_MarkBuildingDestroy
  * @sa B_ConstructBuilding
  */
 static void B_NewBuilding (void)

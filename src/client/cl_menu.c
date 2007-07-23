@@ -1296,7 +1296,7 @@ static void MN_BaseMapRightClick (menuNode_t * node, int x, int y)
 				entry = B_GetBuildingByIdx(baseCurrent, baseCurrent->map[row][col]);
 				if (!entry)
 					Sys_Error("MN_BaseMapClick: no entry at %i:%i\n", x, y);
-				B_BuildingDestroy(entry, baseCurrent);
+				B_MarkBuildingDestroy(baseCurrent, entry);
 				return;
 			}
 }
