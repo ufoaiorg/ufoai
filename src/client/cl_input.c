@@ -641,9 +641,21 @@ static void CL_DrawSpottedLines_f (void)
 		if (le->inuse && (le->type == ET_ACTOR || le->type == ET_ACTOR2x2)
 		 && !(le->state & STATE_DEAD) && le->team != cls.team
 		 && le->team != TEAM_CIVILIAN) {
-			Grid_PosToVec(&clMap, selActor->pos, from);
-			Grid_PosToVec(&clMap, le->pos, at);
-			tr = CL_Trace(from, at, vec3_origin, vec3_origin, selActor, le, MASK_SOLID);
+			VectorCopy(selActor->origin, from);
+			VectorCopy(le->origin, at);
+			/* actor eye height */
+			if (selActor->state & STATE_CROUCHED)
+				from[2] += EYE_HT_CROUCH;
+			else
+				from[2] += EYE_HT_STAND;
+			/* target height */
+			if (le->state & STATE_CROUCHED)
+				at[2] += EYE_HT_CROUCH; /* FIXME: */
+			else
+				at[2] += UNIT_HEIGHT; /* full unit */
+			/* FIXME: check the facing of the actor: selActor->dir
+			 * maybe doing more than one trace to different target heights */
+			tr = CL_Trace(from, at, vec3_origin, vec3_origin, selActor, NULL, MASK_SOLID);
 			/* trace didn't reach the target - something was hit before */
 			if (tr.fraction < 1.0)
 				continue;
