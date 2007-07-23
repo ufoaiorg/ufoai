@@ -805,7 +805,6 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 	int i = 0;
 	base_t *base = NULL;
 	aircraft_t *aircraft_temp = NULL;
-	transferlist_t *transferlist_temp = NULL;
 	int previous_aircraftCurrent = baseCurrent->aircraftCurrent;
 
 	if (!aircraft) {
@@ -841,10 +840,6 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 			/* For some reason there was no aircraft found for this index. */
 			Com_DPrintf("AIR_DeleteAircraft: No aircraft found for this global index: %i\n", i);
 		}
-
-		/* Update transfer list (i.e. remove the one for the deleted aircraft). */
-		transferlist_temp = &gd.alltransfers[i];
-		memcpy(transferlist_temp, &gd.alltransfers[i+1], sizeof(transferlist_t));
 	}
 
 	gd.numAircraft--;	/**< Decrease the global number of aircraft. */
