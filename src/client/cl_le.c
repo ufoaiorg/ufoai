@@ -786,8 +786,8 @@ typedef struct {
 	vec3_t mins2, maxs2;		/**< size when clipping against mosnters */
 	float *start, *end;
 	trace_t trace;
-	le_t *passle, *passle2;
-	int contentmask;
+	le_t *passle, *passle2;		/**< ignore these for clipping */
+	int contentmask;			/**< search these in your trace - see MASK_* */
 } moveclip_t;
 
 
@@ -883,6 +883,13 @@ static void CL_TraceBounds (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, 
  * @note Passedict and edicts owned by passedict are explicitly not checked.
  * @sa CL_TraceBounds
  * @sa CL_ClipMoveToLEs
+ * @param[in] start Start vector to start the trace from
+ * @param[in] end End vector to stop the trace at
+ * @param[in] mins Bounding box used for tracing
+ * @param[in] maxs Bounding box used for tracing
+ * @param[in] passle Ignore this local entity in the trace (might be NULL)
+ * @param[in] passle2 Ignore this local entity in the trace (might be NULL)
+ * @param[in] contentmask Searched content the trace should watch for
  */
 trace_t CL_Trace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, le_t * passle, le_t * passle2, int contentmask)
 {
