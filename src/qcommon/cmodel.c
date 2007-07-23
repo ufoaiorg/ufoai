@@ -142,8 +142,11 @@ typedef struct {
  * STEP
  *
  *	0000 0000
- *	Each bit SEEMS (!) to represent an info about one height (z) level (at position x,y)
  *	Access with "step[y][x] & (1 << z)"
+ *	Guess:
+ *		Each bit if set to 1 if a unit can step on it (e.g. ground or chair) or it's 0 if there is a wall or similar (i.e. it's blocked).
+ *		Search for "sh = (map->step[y][x] & (1 << z)) ? sh_big : sh_low;" and similar.
+ *		"sh" seems to mean "step height"
  *
  * AREA
  *
