@@ -28,21 +28,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_TRANSFERS	16
 
-/** @brief Determine transfer type. */
-typedef enum {
-	TR_STUFF,			/**< Cargo transfer, items, aliens or personel. */
-	TR_AIRCRAFT			/**< Transfer of aircraft. */
-} transferType_t;
-
 /** @brief Transfer informations (they are being saved in gd.alltransfers[MAX_AIRCRAFT]. */
 typedef struct transferlist_s {
-	transferType_t type;		/**< Type of transfer to determine what to do with load/unload. */
 	int itemAmount[MAX_OBJDEFS];			/**< Amount of given item [csi.ods[idx]]. */
 	int alienAmount[MAX_TEAMDEFS][2];		/**< Alien cargo, [0] alive, [1] dead. */
 	int employeesArray[MAX_EMPL][MAX_EMPLOYEES];	/**< Array of indexes of personel transfering. */
-	int alienLiveAmount[MAX_CARGO];	/**< Alive alien amount of given alien [aliensCont_t->idx]. */
-	int alienBodyAmount[MAX_CARGO];	/**< Alien body amount of given alien [aliensCont_t->idx]. */
-	int employees[MAX_EMPLOYEES];	/**< Employee index. */
 	int destBase;					/**< Index of destination base. */
 	int srcBase;					/**< Intex of source base. */
 	date_t event;					/**< When the transfer finish process should start. */

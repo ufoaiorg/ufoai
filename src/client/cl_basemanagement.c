@@ -3002,7 +3002,6 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteShort(sb, aircraft->idx);
 			MSG_WriteByte(sb, aircraft->status);
 			MSG_WriteLong(sb, aircraft->fuel);
-			MSG_WriteShort(sb, aircraft->transferBase ? aircraft->transferBase->idx : -1);
 			MSG_WritePos(sb, aircraft->pos);
 			MSG_WriteShort(sb, aircraft->time);
 			MSG_WriteShort(sb, aircraft->point);
@@ -3069,17 +3068,6 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 					MSG_WriteString(sb, csi.ods[aircraft->itemcargo[l].idx].id);
 					MSG_WriteShort(sb, aircraft->itemcargo[l].amount);
 				}
-			} else if (aircraft->status == AIR_TRANSPORT) {
-				MSG_WriteByte(sb, gd.alltransfers[aircraft->idx].type);
-				MSG_WriteByte(sb, gd.alltransfers[aircraft->idx].destBase);
-				for (l = 0; l < presaveArray[PRE_NUMODS]; l++)
-					MSG_WriteShort(sb, gd.alltransfers[aircraft->idx].itemAmount[l]);
-				for (l = 0; l < presaveArray[PRE_MCARGO]; l++)
-					MSG_WriteShort(sb, gd.alltransfers[aircraft->idx].alienLiveAmount[l]);
-				for (l = 0; l < presaveArray[PRE_MCARGO]; l++)
-					MSG_WriteShort(sb, gd.alltransfers[aircraft->idx].alienBodyAmount[l]);
-				for (l = 0; l < presaveArray[PRE_MAXEMP]; l++)
-					MSG_WriteShort(sb, gd.alltransfers[aircraft->idx].employees[l]);
 			}
 			MSG_WritePos(sb, aircraft->direction);
 			for (l = 0; l < presaveArray[PRE_AIRSTA]; l++)
@@ -3145,7 +3133,6 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 	aircraft_t *aircraft;
 	building_t *building;
 	technology_t *tech;
-	int maxCargo = (*(int*)data >= 2) ? MAX_CARGO : 256; /* old value */
 	byte *color;
 
 	gd.numAircraft = MSG_ReadShort(sb);
@@ -3209,9 +3196,6 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			aircraft->teamSize = &b->teamNum[k];
 			aircraft->status = MSG_ReadByte(sb);
 			aircraft->fuel = MSG_ReadLong(sb);
-			l = MSG_ReadShort(sb);
-			if (l >= 0)
-				aircraft->transferBase = &gd.bases[l];
 			MSG_ReadPos(sb, aircraft->pos);
 			aircraft->time = MSG_ReadShort(sb);
 			aircraft->point = MSG_ReadShort(sb);
@@ -3292,29 +3276,6 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 						aircraft->itemcargo[l].amount = MSG_ReadShort(sb);
 					}
 				}
-			} else if (aircraft->status == AIR_TRANSPORT) {
-				/* FIXME no point in fixing transfer save currently, because it will change
-				   in the nearest future */
-				gd.alltransfers[aircraft->idx].type = MSG_ReadByte(sb);
-				gd.alltransfers[aircraft->idx].destBase = MSG_ReadByte(sb);
-				for (l = 0; l < presaveArray[PRE_NUMODS]; l++)
-					gd.alltransfers[aircraft->idx].itemAmount[l] = MSG_ReadShort(sb);
-				/* we changed MAX_CARGO in 2.2 from 256 to 32 */
-				/* FIXME: MAX_CARGO && maxCargo -> presaveArray[PRE_MCARGO] */
-				for (l = 0; l < maxCargo; l++) {
-					if (l >= MAX_CARGO)
-						MSG_ReadShort(sb);
-					else
-						gd.alltransfers[aircraft->idx].alienLiveAmount[l] = MSG_ReadShort(sb);
-				}
-				for (l = 0; l < maxCargo; l++) {
-					if (l >= MAX_CARGO)
-						MSG_ReadShort(sb);
-					else
-						gd.alltransfers[aircraft->idx].alienBodyAmount[l] = MSG_ReadShort(sb);
-				}
-				for (l = 0; l < presaveArray[PRE_MAXEMP]; l++)
-					gd.alltransfers[aircraft->idx].employees[l] = MSG_ReadShort(sb);
 			}
 			MSG_ReadPos(sb, aircraft->direction);
 			for (l = 0; l < presaveArray[PRE_AIRSTA]; l++)

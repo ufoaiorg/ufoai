@@ -193,8 +193,7 @@ typedef struct aircraft_s {
 	int maxElectronics;				/**< Total number of electronics slots aboard this aircraft */
 
 	mapline_t route;
-	struct base_s *homebase;				/**< Pointer to homebase for faster access. */
-	struct base_s *transferBase;			/**< Pointer to the base we are transfering equipment to */
+	struct base_s *homebase;		/**< Pointer to homebase for faster access. */
 	aliensTmp_t aliencargo[MAX_CARGO];	/**< Cargo of aliens. */
 	int alientypes;				/**< How many types of aliens we collected. */
 	itemsTmp_t itemcargo[MAX_CARGO];	/**< Cargo of items. */
