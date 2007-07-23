@@ -28,8 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_TRANSFERS	16
 
-/** @brief Transfer informations (they are being saved in gd.alltransfers[MAX_AIRCRAFT]. */
-typedef struct transferlist_s {
+/** @brief Transfer informations (they are being stored in gd.alltransfers[MAX_TRANSFERS]. */
+typedef struct transfer_s {
 	int itemAmount[MAX_OBJDEFS];			/**< Amount of given item [csi.ods[idx]]. */
 	int alienAmount[MAX_TEAMDEFS][2];		/**< Alien cargo, [0] alive, [1] dead. */
 	int employeesArray[MAX_EMPL][MAX_EMPLOYEES];	/**< Array of indexes of personel transfering. */
@@ -40,7 +40,7 @@ typedef struct transferlist_s {
 	qboolean hasItems;				/**< Transfer of items. */
 	qboolean hasEmployees;				/**< Transfer of employees. */
 	qboolean hasAliens;				/**< Transfer of Aliens. */
-} transferlist_t;
+} transfer_t;
 
 /** @brief Array of current cargo onboard. */
 typedef struct transferCargo_s {
@@ -49,8 +49,8 @@ typedef struct transferCargo_s {
 } transferCargo_t;
 
 void TR_TransferAircraftMenu(aircraft_t* aircraft);
-void TR_TransferEnd(transferlist_t *transfer);
-void TR_EmptyTransferCargo(transferlist_t *transfer, qboolean success);
+void TR_TransferEnd(transfer_t *transfer);
+void TR_EmptyTransferCargo(transfer_t *transfer, qboolean success);
 void TR_TransferCheck(void);
 qboolean TR_CheckItem(objDef_t *od, base_t *srcbase, base_t *destbase);
 qboolean TR_CheckEmployee(employee_t *employee, base_t *srcbase, base_t *destbase);

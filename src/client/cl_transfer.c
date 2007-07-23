@@ -390,7 +390,7 @@ static void TR_TransferListClear_f (void)
  * @param[in] success True if the transfer reaches dest base, false if the base got destroyed.
  * @sa TR_TransferEnd
  */
-void TR_EmptyTransferCargo (transferlist_t *transfer, qboolean success)
+void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 {
 	int i, j;
 	base_t *destination = NULL;
@@ -494,7 +494,7 @@ void TR_TransferAircraftMenu (aircraft_t* aircraft)
  * @brief Ends the transfer.
  * @param[in] *transfer Pointer to transfer in gd.alltransfers
  */
-void TR_TransferEnd (transferlist_t *transfer)
+void TR_TransferEnd (transfer_t *transfer)
 {
 	base_t* destination = NULL;
 	char message[256];
@@ -517,7 +517,7 @@ static void TR_TransferStart_f (void)
 {
 	int i, j;
 	employee_t *employee;
-	transferlist_t *transfer = NULL;
+	transfer_t *transfer = NULL;
 	char message[256];
 
 	if (transferType < 0) {
@@ -978,7 +978,7 @@ void TR_TransferCheck (void)
 {
 	int i;
 	base_t *base;
-	transferlist_t *transfer;
+	transfer_t *transfer;
 
 	for (i = 0; i < MAX_TRANSFERS; i++) {
 		transfer = &gd.alltransfers[i];
@@ -1077,6 +1077,74 @@ static void TR_TransferClose_f (void)
 	memset(trEmployeesTmp, -1, sizeof(trEmployeesTmp));
 
 	Cbuf_AddText("mn_pop\n");
+}
+
+/**
+ * @brief Save callback for savegames
+ * @sa TR_Load
+ * @sa SAV_GameSave
+ */
+qboolean TR_Save (sizebuf_t* sb, void* data)
+{
+	int i, j, k;
+	transfer_t *transfer;
+	
+	for (i = 0; i < presaveArray[PRE_MAXTRA]; i++) {
+		transfer = &gd.alltransfers[i];
+		for (j = 0; j < presaveArray[PRE_MAXOBJ]; j++)
+			MSG_WriteByte(sb, transfer->itemAmount[j]);
+		for (j = 0; j < presaveArray[PRE_NUMALI]; j++) {
+			MSG_WriteByte(sb, transfer->alienAmount[j][0]);
+			MSG_WriteByte(sb, transfer->alienAmount[j][1]);
+		}
+		for (j = 0; j < presaveArray[PRE_EMPTYP]; j++) {
+			for (k = 0; k < presaveArray[PRE_MAXEMP]; k++)
+				MSG_WriteShort(sb, transfer->employeesArray[j][k]);
+		}
+		MSG_WriteByte(sb, transfer->destBase);
+		MSG_WriteByte(sb, transfer->srcBase);
+		MSG_WriteByte(sb, transfer->active);
+		MSG_WriteByte(sb, transfer->hasItems);
+		MSG_WriteByte(sb, transfer->hasEmployees);
+		MSG_WriteByte(sb, transfer->hasAliens);
+		MSG_WriteLong(sb, transfer->event.day);
+		MSG_WriteLong(sb, transfer->event.sec);		
+	}
+	return qtrue;
+}
+
+/**
+ * @brief Load callback for savegames
+ * @sa TR_Save
+ * @sa SAV_GameLoad
+ */
+qboolean TR_Load (sizebuf_t* sb, void* data)
+{
+	int i, j, k;
+	transfer_t *transfer;
+	
+	for (i = 0; i < presaveArray[PRE_MAXTRA]; i++) {
+		transfer = &gd.alltransfers[i];
+		for (j = 0; j < presaveArray[PRE_MAXOBJ]; j++)
+			transfer->itemAmount[j] = MSG_ReadByte(sb);
+		for (j = 0; j < presaveArray[PRE_NUMALI]; j++) {
+			transfer->alienAmount[j][0] = MSG_ReadByte(sb);
+			transfer->alienAmount[j][1] = MSG_ReadByte(sb);
+		}
+		for (j = 0; j < presaveArray[PRE_EMPTYP]; j++) {
+			for (k = 0; k < presaveArray[PRE_MAXEMP]; k++)
+				transfer->employeesArray[j][k] = MSG_ReadShort(sb);
+		}
+		transfer->destBase = MSG_ReadByte(sb);
+		transfer->srcBase = MSG_ReadByte(sb);
+		transfer->active = MSG_ReadByte(sb);
+		transfer->hasItems = MSG_ReadByte(sb);
+		transfer->hasEmployees = MSG_ReadByte(sb);
+		transfer->hasAliens = MSG_ReadByte(sb);
+		transfer->event.day = MSG_ReadLong(sb);
+		transfer->event.sec = MSG_ReadLong(sb);
+	}
+	return qtrue;
 }
 
 /**

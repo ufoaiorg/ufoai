@@ -407,6 +407,8 @@ typedef enum {
 	PRE_NUMALI,	/* gd.numAliensTD */
 	PRE_NUMUFO,	/* gd.numUfos */
 	PRE_MAXREC,	/* #define MAX_RECOVERIES */
+	PRE_MAXTRA, /* #define MAX_TRANSFERS */
+	PRE_MAXOBJ, /* #define MAX_OBJDEFS */
 
 	PRE_MAX
 } presaveType_t;

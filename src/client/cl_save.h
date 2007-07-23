@@ -30,10 +30,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * HISTORY
- * version id   | game version
- * ===========================
- *          1   | 2.1.1
- *          2   | 2.2
+ * version id   | game version | compatible with trunk
+ * ===================================================
+ *          1   | 2.1.1        | no
+ *          2   | 2.2          | yes
  */
 #define SAVE_FILE_VERSION 2
 /* MAX_GAMESAVESIZE has room for 3MB for dynamic data, eg geoscape messages */
@@ -86,5 +86,7 @@ qboolean STATS_Save(sizebuf_t* sb, void* data);
 qboolean STATS_Load(sizebuf_t* sb, void* data);
 qboolean NA_Save(sizebuf_t* sb, void* data);
 qboolean NA_Load(sizebuf_t* sb, void* data);
+qboolean TR_Save(sizebuf_t* sb, void* data);
+qboolean TR_Load(sizebuf_t* sb, void* data);
 
 #endif /* CLIENT_CL_SAVE_H */

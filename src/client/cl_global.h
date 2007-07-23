@@ -135,7 +135,7 @@ typedef struct globalData_s
 	int numProjectiles;
 
 	/* All transfers. */
-	transferlist_t alltransfers[MAX_TRANSFERS];
+	transfer_t alltransfers[MAX_TRANSFERS];
 
 	/* UFO recoveries. */
 	ufoRecoveries_t recoveries[MAX_RECOVERIES];

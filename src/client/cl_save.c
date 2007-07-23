@@ -61,6 +61,8 @@ static qboolean SAV_PresaveArraySave (sizebuf_t* sb, void* data)
 	presaveArray[PRE_NUMALI] = gd.numAliensTD;	/* gd.numAliensTD */
 	presaveArray[PRE_NUMUFO] = gd.numUfos;		/* gd.numUfos */
 	presaveArray[PRE_MAXREC] = MAX_RECOVERIES;	/* #define MAX_RECOVERIES */
+	presaveArray[PRE_MAXTRA] = MAX_TRANSFERS;	/* #define MAX_TRANSFERS */
+	presaveArray[PRE_MAXOBJ] = MAX_OBJDEFS;		/* #define MAX_OBJDEFS */
 
 	MSG_WriteByte(sb, PRE_MAX);
 	for (i = 0; i < PRE_MAX; i++) {
@@ -522,6 +524,7 @@ void SAV_Init (void)
 	static saveSubsystems_t ms_subsystem = {"messagesystem", MS_Save, MS_Load, 0x9};
 	static saveSubsystems_t stats_subsystem = {"stats", STATS_Save, STATS_Load, 0xA};
 	static saveSubsystems_t na_subsystem = {"nations", NA_Save, NA_Load, 0xB};
+	static saveSubsystems_t trans_subsystem = {"transfer", TR_Save, TR_Load, 0xC};
 
 	saveSubsystemsAmount = 0;
 	memset(&saveSubsystems, 0, sizeof(saveSubsystems));
@@ -541,6 +544,7 @@ void SAV_Init (void)
 	SAV_AddSubsystem(&ms_subsystem);
 	SAV_AddSubsystem(&stats_subsystem);
 	SAV_AddSubsystem(&na_subsystem);
+	SAV_AddSubsystem(&trans_subsystem);
 
 	Cmd_AddCommand("game_save", SAV_GameSave_f, "Saves to a given filename");
 	Cmd_AddCommand("game_load", SAV_GameLoad_f, "Loads a given filename");
