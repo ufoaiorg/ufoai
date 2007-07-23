@@ -41,6 +41,18 @@ vec4_t vec4_origin = { 0, 0, 0, 0 };
 
 #define RT2	0.707107
 
+/* DIRECTIONS
+ *  straight
+ * 0 = x+1, y
+ * 1 = x-1, y
+ * 2 = x  , y+1
+ * 3 = x  , y-1
+ *  diagonal
+ * 4 = x+1, y+1
+ * 5 = x-1, y-1
+ * 6 = x-1, y+1
+ * 7 = x+1, y-1
+ */
 const int dvecs[DIRECTIONS][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1} };
 const float dvecsn[DIRECTIONS][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {RT2, RT2}, {-RT2, -RT2}, {-RT2, RT2}, {RT2, -RT2} };
 /* if you change dangle[DIRECTIONS], you must also change function AngleToDV */

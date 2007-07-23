@@ -2577,7 +2577,7 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, int z
  * @param[in] x Current x location in the map.
  * @param[in] y Current y location in the map.
  * @param[in] z Current z location in the map.
- * @param[in] dv todo: "Direction vector"? (see dvecs[DIRECTIONS])
+ * @param[in] dv Direction vector index (see DIRECTIONS and dvecs)
  * @param[in] h
  * @param[in] ol
  * @sa Grid_CheckForbidden
@@ -2590,7 +2590,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
 	pos3_t dummy;
 
 	/* range check */
-	l = dv > 3 ? ol + 3 : ol + 2;
+	l = dv > 3 ? ol + 3 : ol + 2;	/** @todo If direction vector index is set to a diagonal offset then do what? */
 	dx = dvecs[dv][0];
 	dy = dvecs[dv][1];
 	nx = x + dx;
@@ -2607,7 +2607,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
 		return;
 	if (dy < 0 && !R_CONN_NY(map, x, y, z))
 		return;
-	if (dv > 3 &&	/** @todo what is check there? (direction vector whatsit?) */
+	if (dv > 3 &&	/** @todo If direction vector index is set to a diagonal offset then do what? */
 		!( (dx > 0 ? R_CONN_PX(map, x,    y+dy, z) : R_CONN_NX(map, x,    y+dy, z))
 		&& (dy > 0 ? R_CONN_PY(map, x+dx, y,    z) : R_CONN_NY(map, x+dx, y,    z))
 		&& !Grid_CheckForbidden(map, x,    y+dy, z, ACTOR_SIZE_NORMAL)
@@ -2639,10 +2639,10 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
 /**
  * @brief
  * @param[in|out] map Pointer to client or server side routing table (clMap, svMap)
- * @param[in] xl
- * @param[in] yl
- * @param[in] xh
- * @param[in] xh
+ * @param[in] xl Lower x limit?
+ * @param[in] yl Lower y limit?
+ * @param[in] xh Higher/upper x limit?
+ * @param[in] yh Higher/upper y limit?
  * @sa Grid_MoveMark
  */
 static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, int yh)

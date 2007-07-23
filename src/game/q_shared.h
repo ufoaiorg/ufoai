@@ -268,7 +268,11 @@ typedef uint8_t byte;
 #define CENTER_LAT  0.0
 #define SIZE_LAT    2.0
 
-#define DIRECTIONS 8 /**< Number of angles from a position (2-dimensional) @sa AngleToDV. */
+#define DIRECTIONS 8	/**<
+			 * @brief Number of angles from a position (2-dimensional)
+			 * @sa dvecs (in q_shared.c) for a description of its use.
+			 * @sa AngleToDV.
+			 */
 
 extern const int dvecs[DIRECTIONS][2];
 extern const float dvecsn[DIRECTIONS][2];
