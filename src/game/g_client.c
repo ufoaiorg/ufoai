@@ -793,15 +793,15 @@ static void G_PrintFloorToConsole (pos3_t pos)
 /**
  * @brief Moves an item inside an inventory. Floors are handled special.
  * @input[in] player The player the edict/soldier belongs to.
- * @input[in] num The edict number of the selected/used edict/soldier.
- * @input[in] from The container (-id) the item should be moved from.
- * @input[in] fx
- * @input[in] fy
- * @input[in] to The container (-id) the item should be moved to.
- * @input[in] tx
- * @input[in] ty
- * @input[in] checkaction Set this to qtrue if you want to check for TUs, otherwise qfalse.
- * @input[in] quiet Set this to qfalse to prevent message-flooding.
+ * @param[in] num The edict number of the selected/used edict/soldier.
+ * @param[in] from The container (-id) the item should be moved from.
+ * @param[in] fx
+ * @param[in] fy
+ * @param[in] to The container (-id) the item should be moved to.
+ * @param[in] tx
+ * @param[in] ty
+ * @param[in] checkaction Set this to qtrue if you want to check for TUs, otherwise qfalse.
+ * @param[in] quiet Set this to qfalse to prevent message-flooding.
  * @sa event PA_INVMOVE
  * @sa AI_ActorThink
  */
@@ -1804,7 +1804,9 @@ qboolean G_ClientCanReload (player_t *player, int entnum, shoot_types_t st)
 }
 
 /**
- * @brief Retrieve weapon from backpack for actor
+ * @brief Retrieve or collect weapon from any linked container for the actor
+ * @note This function will also collect items from floor containers when the actor
+ * is standing on a given point.
  * @sa AI_ActorThink
  */
 void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quiet)
@@ -1816,6 +1818,9 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 	int container, bestContainer;
 
 	ent = g_edicts + entnum;
+	/* e.g. bloodspiders are not allowed to carry or collect weapons */
+	if (!ent->chr.weapons)
+		return;
 
 	/* search for weapons and select the one that is available easily */
 	x = 0;
@@ -1826,10 +1831,10 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 
 	for (container = 0; container < gi.csi->numIDs; container++) {
 		if (gi.csi->ids[container].out < tu) {
-			/* Once we've found at least one clip, there's no point */
-			/* searching other containers if it would take longer */
-			/* to retrieve the ammo from them than the one */
-			/* we've already found. */
+			/* Once we've found at least one clip, there's no point
+			 * searching other containers if it would take longer
+			 * to retrieve the ammo from them than the one
+			 * we've already found. */
 			for (ic = ent->i.c[container]; ic; ic = ic->next)
 				if (gi.csi->ods[ic->item.t].weapon && (ic->item.a > 0 || !gi.csi->ods[ic->item.t].reload)) {
 					x = ic->x;

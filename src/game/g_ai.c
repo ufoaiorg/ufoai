@@ -32,7 +32,10 @@ typedef struct {
 } ai_action_t;
 
 /**
- * @brief
+ * @brief Check whether friendly units are in the line of fire when shooting
+ * @param[in] ent AI that is trying to shoot
+ * @param[in] target Shoot to this location
+ * @param[in] spread
  */
 static qboolean AI_CheckFF (edict_t * ent, vec3_t target, float spread)
 {
@@ -177,7 +180,6 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 		if (weap_fds_idx == -1)
 			continue;
 		/* FIXME: timed firedefs that bounce around should not be thrown/shooten about the hole distance */
-		/* @todo: is this how it should work? i just added this additional loop but don't know anything about the function */
 		for (fd_idx = 0; fd_idx < od->numFiredefs[weap_fds_idx]; fd_idx++) {
 			fd = &od->fd[weap_fds_idx][fd_idx];
 
@@ -539,7 +541,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 	}
 
 	/* if both hands are empty, attempt to get a weapon out of backpack if TUs permit */
-	if (!LEFT(ent) && !RIGHT(ent)) {
+	if (ent->chr.weapons && !LEFT(ent) && !RIGHT(ent)) {
 		G_ClientGetWeaponFromInventory(player, ent->number, QUIET);
 		if (LEFT(ent) || RIGHT(ent))
 			Com_DPrintf("AI_ActorThink: Got weapon from inventory\n");
