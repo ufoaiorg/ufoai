@@ -427,7 +427,6 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], const 
 void INV_PrintToConsole(inventory_t* const i);
 
 void INVSH_PrintItemDescription(int i);
-void Com_InventoryList_f(void);
 int INVSH_GetItemByID(const char *id);
 qboolean INVSH_LoadableInWeapon(objDef_t *od, int weapon_idx);
 int FIRESH_FiredefsIDXForWeapon(objDef_t *od, int weapon_idx);

@@ -1400,20 +1400,6 @@ void INVSH_PrintItemDescription (int i)
 	Com_Printf("\n");
 }
 
-#ifdef DEBUG
-/**
- * @brief Lists all object definitions
- * @todo Why is this here - and not in a client only function
- */
-void Com_InventoryList_f (void)
-{
-	int i;
-
-	for (i = 0; i < CSI->numODs; i++)
-		INVSH_PrintItemDescription(i);
-}
-#endif /* DEBUG */
-
 /**
  * @brief Returns the index of this item in the inventory.
  * @todo This function should be located in a inventory-related file.

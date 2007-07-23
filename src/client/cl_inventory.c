@@ -597,3 +597,16 @@ void INV_ManageAntimatter (base_t *base, int amount, qboolean add)
 	}
 }
 
+#ifdef DEBUG
+/**
+ * @brief Lists all object definitions.
+ */
+void INV_InventoryList_f (void)
+{
+	int i;
+
+	for (i = 0; i < csi.numODs; i++)
+		INVSH_PrintItemDescription(i);
+}
+#endif
+
