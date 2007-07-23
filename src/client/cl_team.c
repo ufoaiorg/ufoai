@@ -282,7 +282,7 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 	case EMPL_SOLDIER:
 		chr->rank = CL_GetRank("rifleman");
 		/* Create attributes. */
-		Com_CharGenAbilitySkills(chr, teamValue);
+		CHRSH_CharGenAbilitySkills(chr, teamValue);
 		/* Get model and name. */
 		chr->fieldSize = ACTOR_SIZE_NORMAL;
 		chr->skin = Com_GetModelAndName(team, chr);
@@ -290,7 +290,7 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 	case EMPL_SCIENTIST:
 		chr->rank = CL_GetRank("scientist");
 		/* Create attributes. */
-		Com_CharGenAbilitySkills(chr, teamValue);
+		CHRSH_CharGenAbilitySkills(chr, teamValue);
 		/* Get model and name. */
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_scientist", team);
 		chr->fieldSize = ACTOR_SIZE_NORMAL;
@@ -299,7 +299,7 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 	case EMPL_MEDIC:
 		chr->rank = CL_GetRank("medic");
 		/* Create attributes. */
-		Com_CharGenAbilitySkills(chr, teamValue);
+		CHRSH_CharGenAbilitySkills(chr, teamValue);
 		/* Get model and name. */
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_medic", team);
 		chr->fieldSize = ACTOR_SIZE_NORMAL;
@@ -308,7 +308,7 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 	case EMPL_WORKER:
 		chr->rank = CL_GetRank("worker");
 		/* Create attributes. */
-		Com_CharGenAbilitySkills(chr, teamValue);
+		CHRSH_CharGenAbilitySkills(chr, teamValue);
 		/* Get model and name. */
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_worker", team);
 		chr->fieldSize = ACTOR_SIZE_NORMAL;
@@ -317,7 +317,7 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 	case EMPL_ROBOT:
 		chr->rank = CL_GetRank("ugv");
 		/* Create attributes. */
-		Com_CharGenAbilitySkills(chr, teamValue);
+		CHRSH_CharGenAbilitySkills(chr, teamValue);
 		/* Get model and name. */
 		chr->fieldSize = ACTOR_SIZE_2x2;
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_ugv", team);

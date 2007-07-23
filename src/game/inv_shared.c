@@ -3,6 +3,7 @@
  * @brief Common object-, inventory-, container- and firemode-related functions.
  * @note Shared inventory functions prefix: INVSH_
  * @note Shared firemode management functions prefix: FIRESH_
+ * @note Shared character generating functions prefix: CHRSH_
  */
 
 /*
@@ -723,12 +724,6 @@ void INV_PrintToConsole (inventory_t* const i)
 	}
 }
 
-/*
-==============================================================================
-CHARACTER GENERATION AND HANDLING
-==============================================================================
-*/
-
 #define AKIMBO_CHANCE		0.3
 #define WEAPONLESS_BONUS	0.4
 #define PROB_COMPENSATION   3.0
@@ -1063,6 +1058,12 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const
 	} while (!has_armor && repeat--);
 }
 
+/* ================================ */
+
+/*  CHARACTER GENERATING FUNCTIONS  */
+
+/* ================================ */
+
 /**
  * @brief Translate the team string to the team int value
  * @sa TEAM_ALIEN, TEAM_CIVILIAN, TEAM_PHALANX
@@ -1082,8 +1083,8 @@ int Com_StringToTeamNum (const char* teamString)
 }
 
 /* min and max values for all teams can be defined via campaign script */
-int skillValues[MAX_CAMPAIGNS][MAX_TEAMS][MAX_EMPL][2];
-int abilityValues[MAX_CAMPAIGNS][MAX_TEAMS][MAX_EMPL][2];
+int CHRSH_skillValues[MAX_CAMPAIGNS][MAX_TEAMS][MAX_EMPL][2];
+int CHRSH_abilityValues[MAX_CAMPAIGNS][MAX_TEAMS][MAX_EMPL][2];
 
 /**
  * @brief Fills the min and max values for abilities for the given character
@@ -1091,9 +1092,9 @@ int abilityValues[MAX_CAMPAIGNS][MAX_TEAMS][MAX_EMPL][2];
  * @param[in] team TEAM_ALIEN, TEAM_CIVILIAN, ...
  * @param[in] minAbility Pointer to minAbility int value to use for this character
  * @param[in] maxAbility Pointer to maxAbility int value to use for this character
- * @sa Com_CharGenAbilitySkills
+ * @sa CHRSH_CharGenAbilitySkills
  */
-static void Com_GetAbility (character_t *chr, int team, int *minAbility, int *maxAbility, int campaignID)
+static void CHRSH_GetAbility (character_t *chr, int team, int *minAbility, int *maxAbility, int campaignID)
 {
 	*minAbility = *maxAbility = 0;
 	/* some default values */
@@ -1119,7 +1120,7 @@ static void Com_GetAbility (character_t *chr, int team, int *minAbility, int *ma
 		*maxAbility = 80;
 		break;
 	default:
-		Sys_Error("Com_GetAbility: Unknown employee type: %i\n", chr->empl_type);
+		Sys_Error("CHRSH_GetAbility: Unknown employee type: %i\n", chr->empl_type);
 	}
 	if (team == TEAM_ALIEN) {
 		*minAbility = 0;
@@ -1129,12 +1130,12 @@ static void Com_GetAbility (character_t *chr, int team, int *minAbility, int *ma
 		*maxAbility = 20;
 	}
 	/* we always need both values - min and max - otherwise it was already a Sys_Error at parsing time */
-	if (campaignID >= 0 && abilityValues[campaignID][team][chr->empl_type][0] >= 0) {
-		*minAbility = abilityValues[campaignID][team][chr->empl_type][0];
-		*maxAbility = abilityValues[campaignID][team][chr->empl_type][1];
+	if (campaignID >= 0 && CHRSH_abilityValues[campaignID][team][chr->empl_type][0] >= 0) {
+		*minAbility = CHRSH_abilityValues[campaignID][team][chr->empl_type][0];
+		*maxAbility = CHRSH_abilityValues[campaignID][team][chr->empl_type][1];
 	}
 #ifdef PARANOID
-	Com_DPrintf("Com_GetAbility: use minAbility %i and maxAbility %i for team %i and empl_type %i\n", *minAbility, *maxAbility, team, chr->empl_type);
+	Com_DPrintf("CHRSH_GetAbility: use minAbility %i and maxAbility %i for team %i and empl_type %i\n", *minAbility, *maxAbility, team, chr->empl_type);
 #endif
 }
 
@@ -1144,9 +1145,9 @@ static void Com_GetAbility (character_t *chr, int team, int *minAbility, int *ma
  * @param[in] team TEAM_ALIEN, TEAM_CIVILIAN, ...
  * @param[in] minSkill Pointer to minSkill int value to use for this character
  * @param[in] maxSkill Pointer to maxSkill int value to use for this character
- * @sa Com_CharGenAbilitySkills
+ * @sa CHRSH_CharGenAbilitySkills
  */
-static void Com_GetSkill (character_t *chr, int team, int *minSkill, int *maxSkill, int campaignID)
+static void CHRSH_GetSkill (character_t *chr, int team, int *minSkill, int *maxSkill, int campaignID)
 {
 	*minSkill = *maxSkill = 0;
 	/* some default values */
@@ -1172,7 +1173,7 @@ static void Com_GetSkill (character_t *chr, int team, int *minSkill, int *maxSki
 		*maxSkill = 80;
 		break;
 	default:
-		Sys_Error("Com_GetSkill: Unknown employee type: %i\n", chr->empl_type);
+		Sys_Error("CHRSH_GetSkill: Unknown employee type: %i\n", chr->empl_type);
 	}
 	if (team == TEAM_ALIEN) {
 		*minSkill = 0;
@@ -1182,21 +1183,21 @@ static void Com_GetSkill (character_t *chr, int team, int *minSkill, int *maxSki
 		*maxSkill = 20;
 	}
 	/* we always need both values - min and max - otherwise it was already a Sys_Error at parsing time */
-	if (campaignID >= 0 && skillValues[campaignID][team][chr->empl_type][0] >= 0) {
-		*minSkill = skillValues[campaignID][team][chr->empl_type][0];
-		*maxSkill = skillValues[campaignID][team][chr->empl_type][1];
+	if (campaignID >= 0 && CHRSH_skillValues[campaignID][team][chr->empl_type][0] >= 0) {
+		*minSkill = CHRSH_skillValues[campaignID][team][chr->empl_type][0];
+		*maxSkill = CHRSH_skillValues[campaignID][team][chr->empl_type][1];
 	}
 #ifdef PARANOID
-	Com_DPrintf("Com_GetSkill: use minSkill %i and maxSkill %i for team %i and empl_type %i\n", *minSkill, *maxSkill, team, chr->empl_type);
+	Com_DPrintf("CHRSH_GetSkill: use minSkill %i and maxSkill %i for team %i and empl_type %i\n", *minSkill, *maxSkill, team, chr->empl_type);
 #endif
 }
 
 /**
  * @brief Sets the current active campaign id (see curCampaign pointer)
- * @note used to access the right values from skillValues and abilityValues
+ * @note used to access the right values from CHRSH_skillValues and CHRSH_abilityValues
  * @sa CL_GameInit
  */
-void Com_SetGlobalCampaignID (int campaignID)
+void CHRSH_SetGlobalCampaignID (int campaignID)
 {
 	globalCampaignID = campaignID;
 }
@@ -1218,11 +1219,11 @@ void Com_SetGlobalCampaignID (int campaignID)
  * influenced by the characters natural abilities (POWER, SPEED, ACCURACY, MIND)
  * @param[in] chr
  * @param[in] team
- * @sa Com_GetAbility
- * @sa Com_GetSkill
- * @sa Com_SetGlobalCampaignID
+ * @sa CHRSH_GetAbility
+ * @sa CHRSH_GetSkill
+ * @sa CHRSH_SetGlobalCampaignID
  */
-void Com_CharGenAbilitySkills (character_t * chr, int team)
+void CHRSH_CharGenAbilitySkills (character_t * chr, int team)
 {
 	int i, skillWindow, abilityWindow, training, ability1, ability2;
 	float windowScalar;
@@ -1234,8 +1235,8 @@ void Com_CharGenAbilitySkills (character_t * chr, int team)
 	 * Build the acceptable ranges for skills / abilities for this character on this team
 	 * as appropriate for this campaign
 	 */
-	Com_GetAbility(chr, team, &minAbility, &maxAbility, globalCampaignID);
-	Com_GetSkill(chr, team, &minSkill, &maxSkill, globalCampaignID);
+	CHRSH_GetAbility(chr, team, &minAbility, &maxAbility, globalCampaignID);
+	CHRSH_GetSkill(chr, team, &minSkill, &maxSkill, globalCampaignID);
 
 	/* Abilities -- random within the range */
 	abilityWindow = maxAbility - minAbility;

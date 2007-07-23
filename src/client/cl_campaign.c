@@ -1738,7 +1738,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	CL_GameInit(qtrue);
 
 	/* character creation needs the campaign id */
-	Com_SetGlobalCampaignID(curCampaign->idx);
+	CHRSH_SetGlobalCampaignID(curCampaign->idx);
 
 	Com_sprintf(val, sizeof(val), "%i", curCampaign->difficulty);
 	Cvar_ForceSet("difficulty", val);
@@ -3308,7 +3308,7 @@ static void CL_ParseCharacterValues (const char *name, const char **text, int ca
 					Sys_Error("CL_ParseCharacterValues: invalid skill entry for team %i\n", team);
 				if (!isdigit(*token))
 					Sys_Error("CL_ParseCharacterValues: invalid skill entry for team %i\n", team);
-				skillValues[campaignID][team][empl_type][i] = atoi(token);
+				CHRSH_skillValues[campaignID][team][empl_type][i] = atoi(token);
 			}
 		} else if (!Q_strcmp(token, "ability")) {
 			for (i = 0; i < 2; i++) {
@@ -3317,7 +3317,7 @@ static void CL_ParseCharacterValues (const char *name, const char **text, int ca
 					Sys_Error("CL_ParseCharacterValues: invalid ability entry for team %i\n", team);
 				if (!isdigit(*token))
 					Sys_Error("CL_ParseCharacterValues: invalid skill entry for team %i\n", team);
-				abilityValues[campaignID][team][empl_type][i] = atoi(token);
+				CHRSH_abilityValues[campaignID][team][empl_type][i] = atoi(token);
 			}
 		}
 	} while (*text);
@@ -3381,8 +3381,8 @@ void CL_ParseCampaign (const char *name, const char **text)
 	cp->idx = numCampaigns-1;
 	Q_strncpyz(cp->id, name, sizeof(cp->id));
 
-	memset(skillValues[cp->idx], -1, sizeof(skillValues[cp->idx]));
-	memset(abilityValues[cp->idx], -1, sizeof(abilityValues[cp->idx]));
+	memset(CHRSH_skillValues[cp->idx], -1, sizeof(CHRSH_skillValues[cp->idx]));
+	memset(CHRSH_abilityValues[cp->idx], -1, sizeof(CHRSH_abilityValues[cp->idx]));
 
 	/* some default values */
 	Q_strncpyz(cp->team, "human", sizeof(cp->team));
@@ -3838,7 +3838,7 @@ static void CL_GameNew_f (void)
 
 	/* Moved out from CL_GameInit to happen before B_NewBases() is called.
 	 * character creation needs the campaign id */
-	Com_SetGlobalCampaignID(curCampaign->idx);
+	CHRSH_SetGlobalCampaignID(curCampaign->idx);
 
 	B_NewBases();
 	PR_ProductionInit();

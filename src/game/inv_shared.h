@@ -398,12 +398,12 @@ typedef enum {
 #define MAX_CAMPAIGNS	16
 
 /* min and max values for all teams can be defined via campaign script */
-extern int skillValues[MAX_CAMPAIGNS][MAX_TEAMS][MAX_EMPL][2];
-extern int abilityValues[MAX_CAMPAIGNS][MAX_TEAMS][MAX_EMPL][2];
+extern int CHRSH_skillValues[MAX_CAMPAIGNS][MAX_TEAMS][MAX_EMPL][2];
+extern int CHRSH_abilityValues[MAX_CAMPAIGNS][MAX_TEAMS][MAX_EMPL][2];
 
-void Com_SetGlobalCampaignID (int campaignID);
+void CHRSH_SetGlobalCampaignID (int campaignID);
 int Com_StringToTeamNum(const char* teamString) __attribute__((nonnull));
-void Com_CharGenAbilitySkills(character_t * chr, int team) __attribute__((nonnull));
+void CHRSH_CharGenAbilitySkills(character_t * chr, int team) __attribute__((nonnull));
 char *Com_CharGetBody(character_t* const chr) __attribute__((nonnull));
 char *Com_CharGetHead(character_t* const chr) __attribute__((nonnull));
 
