@@ -396,16 +396,18 @@ void TR_EmptyTransferCargo (transferlist_t *transfer)
 	base_t *destination = NULL;
 	base_t *source = NULL;
 	employee_t *employee;
+	char message[256];
 
 	assert (transfer);
 	destination = &gd.bases[transfer->destBase];
 	source = &gd.bases[transfer->srcBase];
 	assert (destination && source);
 
-	/* Unload items. @todo: check building status and limits. */
-	if (transfer->hasItems) {
+	if (transfer->hasItems) {	/* Items. */
 		if (!destination->hasStorage) {
-			/* @todo: destroy items in transfercargo and inform an user. */
+			Com_sprintf(message, sizeof(message), _("Base %s does not have Storage, items are removed!"), destination->name);
+			MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
+			/* Items cargo is not unloaded, will be destroyed in TR_TransferCheck(). */
 		} else {
 			for (i = 0; i < csi.numODs; i++) {
 				if (transfer->itemAmount[i] > 0) {
@@ -418,12 +420,21 @@ void TR_EmptyTransferCargo (transferlist_t *transfer)
 		}
 	}
 
-	/* Unload personel. @todo: check building status and limits. */
-	if (transfer->hasEmployees) {
-		if (!destination->hasQuarters) {
-			/* @todo: what will we do here in such case? */
+	if (transfer->hasEmployees) {	/* Employees. */
+		if (!destination->hasQuarters) {	/* Employees will be unhired. */
+			Com_sprintf(message, sizeof(message), _("Base %s does not have Living Quarters, employees got unhired!"), destination->name);
+			MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
+			for (i = 0; i < MAX_EMPL; i++) {
+				for (j = 0; j < gd.numEmployees[i]; j++) {
+					if (transfer->employeesArray[i][j] > -1) {
+						employee = &gd.employees[i][j];
+						employee->baseIDHired = transfer->srcBase;	/* Restore back the original baseid. */
+						E_UnhireEmployee (source, i, employee->idx);
+					}
+				}
+			}
 		} else {
-			for (i = 0; i < MAX_EMPL; i++) {		/* Employees. */
+			for (i = 0; i < MAX_EMPL; i++) {
 				for (j = 0; j < gd.numEmployees[i]; j++) {
 					if (transfer->employeesArray[i][j] > -1) {
 						employee = &gd.employees[i][j];
@@ -436,10 +447,11 @@ void TR_EmptyTransferCargo (transferlist_t *transfer)
 		}
 	}
 
-	/* Unload aliens. @todo: check building status and limits. */
-	if (transfer->hasAliens) {
+	if (transfer->hasAliens) {	/* Aliens. */
 		if (!destination->hasAlienCont) {
-			/* @todo: destroy aliens in transfercargo and inform an user. */
+			Com_sprintf(message, sizeof(message), _("Base %s does not have Alien Containment, Aliens are removed!"), destination->name);
+			MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
+			/* Aliens cargo is not unloaded, will be destroyed in TR_TransferCheck(). */
 		} else {
 			for (i = 0; i < numTeamDesc; i++) {
 				if (transfer->alienAmount[i][0] > 0) {
