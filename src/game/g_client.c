@@ -2391,10 +2391,14 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 	/* check if all team members are ready (even ai players) */
 	if (!player->ready) {
 		player->ready = qtrue;
-		gi.AddEvent(PM_ALL, EV_ENDROUNDANNOUNCE);
-		gi.WriteByte(player->num);
-		gi.WriteShort((int)strlen(player->pers.netname));
-		gi.WriteString(player->pers.netname);
+		/* don't send this for alien and civilian teams */
+		if (player->pers.team != TEAM_CIVILIAN
+		 && player->pers.team != TEAM_ALIEN) {
+			gi.AddEvent(PM_ALL, EV_ENDROUNDANNOUNCE);
+			gi.WriteByte(player->num);
+			gi.WriteShort((int)strlen(player->pers.netname));
+			gi.WriteString(player->pers.netname);
+		}
 	}
 	for (i = 0, p = game.players; i < game.maxplayers * 2; i++, p++)
 		if (p->inuse && p->pers.team == level.activeTeam
