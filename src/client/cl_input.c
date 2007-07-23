@@ -446,7 +446,7 @@ static invList_t* CL_GetLeftHandWeapon (le_t *actor)
 
 	if (!weapon || weapon->item.m == NONE) {
 		weapon = RIGHT(selActor);
-		if (!csi.ods[weapon->item.t].holdtwohanded)
+		if (!csi.ods[weapon->item.t].holdTwoHanded)
 			weapon = NULL;
 	}
 

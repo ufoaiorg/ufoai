@@ -313,7 +313,7 @@ static void BS_BuyType_f (void)
 			Cbuf_AddText(va("buy_autoselld%i\n", j));
 		/* get item list */
 		for (i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-			if (od->notonmarket)
+			if (od->notOnMarket)
 				continue;
 			tech = (technology_t *) od->tech;
 			/* Check whether the proper buytype, storage in current base and market. */

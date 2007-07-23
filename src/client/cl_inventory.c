@@ -95,7 +95,7 @@ static void INV_CarriedItems (le_t *soldier)
 			assert(item->item.t != NONE);
 			/* Twohanded weapons and container is left hand container. */
 			/* FIXME: */
-			/* assert(container == csi.idLeft && csi.ods[item->item.t].holdtwohanded); */
+			/* assert(container == csi.idLeft && csi.ods[item->item.t].holdTwoHanded); */
 
 			ccs.eMission.num[item->item.t]++;
 			tech = csi.ods[item->item.t].tech;

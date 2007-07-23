@@ -2559,12 +2559,12 @@ void MN_DrawMenus (void)
 							/* single item container (special case for left hand) */
 							if (node->mousefx == csi.idLeft && !menuInventory->c[csi.idLeft]) {
 								color[3] = 0.5;
-								if (menuInventory->c[csi.idRight] && csi.ods[menuInventory->c[csi.idRight]->item.t].holdtwohanded)
+								if (menuInventory->c[csi.idRight] && csi.ods[menuInventory->c[csi.idRight]->item.t].holdTwoHanded)
 									MN_DrawItem(node->pos, menuInventory->c[csi.idRight]->item, node->size[0] / C_UNIT,
 												node->size[1] / C_UNIT, 0, 0, scale, color);
 							} else if (menuInventory->c[node->mousefx]) {
 								if (node->mousefx == csi.idRight &&
-										csi.ods[menuInventory->c[csi.idRight]->item.t].firetwohanded &&
+										csi.ods[menuInventory->c[csi.idRight]->item.t].fireTwoHanded &&
 										menuInventory->c[csi.idLeft]) {
 									color[0] = color[1] = color[2] = color[3] = 0.5;
 									MN_DrawDisabled(node);

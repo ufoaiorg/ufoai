@@ -688,8 +688,8 @@ static const value_t od_vals[] = {
 	{"scale", V_FLOAT, offsetof(objDef_t, scale), MEMBER_SIZEOF(objDef_t, scale)},
 	{"center", V_VECTOR, offsetof(objDef_t, center), MEMBER_SIZEOF(objDef_t, center)},
 	{"weapon", V_BOOL, offsetof(objDef_t, weapon), MEMBER_SIZEOF(objDef_t, weapon)},
-	{"holdtwohanded", V_BOOL, offsetof(objDef_t, holdtwohanded), MEMBER_SIZEOF(objDef_t, holdtwohanded)},
-	{"firetwohanded", V_BOOL, offsetof(objDef_t, firetwohanded), MEMBER_SIZEOF(objDef_t, firetwohanded)},
+	{"holdtwohanded", V_BOOL, offsetof(objDef_t, holdTwoHanded), MEMBER_SIZEOF(objDef_t, holdTwoHanded)},
+	{"firetwohanded", V_BOOL, offsetof(objDef_t, fireTwoHanded), MEMBER_SIZEOF(objDef_t, fireTwoHanded)},
 	{"extends_item", V_STRING, offsetof(objDef_t, extends_item), 0},
 	{"extension", V_BOOL, offsetof(objDef_t, extension), MEMBER_SIZEOF(objDef_t, extension)},
 	{"headgear", V_BOOL, offsetof(objDef_t, headgear), MEMBER_SIZEOF(objDef_t, headgear)},
@@ -702,7 +702,7 @@ static const value_t od_vals[] = {
 	{"price", V_INT, offsetof(objDef_t, price), MEMBER_SIZEOF(objDef_t, price)},
 	{"buytype", V_INT, offsetof(objDef_t, buytype), MEMBER_SIZEOF(objDef_t, buytype)},	/** Not parsed automatically anymore, this enrty is just there for overview. */
 	{"useable", V_INT, offsetof(objDef_t, useable), MEMBER_SIZEOF(objDef_t, useable)},
-	{"notonmarket", V_BOOL, offsetof(objDef_t, notonmarket), MEMBER_SIZEOF(objDef_t, notonmarket)},
+	{"notonmarket", V_BOOL, offsetof(objDef_t, notOnMarket), MEMBER_SIZEOF(objDef_t, notOnMarket)},
 	{NULL, V_NULL, 0, 0}
 };
 

@@ -1086,7 +1086,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 	}
 
 	/* check that we're not firing a twohanded weapon with one hand! */
-	if (gi.csi->ods[weapon->t].firetwohanded &&	LEFT(ent)) {
+	if (gi.csi->ods[weapon->t].fireTwoHanded &&	LEFT(ent)) {
 		if (!quiet)
 			gi.cprintf(player, PRINT_HIGH, _("Can't perform action - weapon cannot be fired one handed!\n"));
 		return qfalse;

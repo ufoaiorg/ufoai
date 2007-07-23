@@ -1117,7 +1117,7 @@ static void CL_RefreshWeaponButtons (int time)
 	headgear = HEADGEAR(selActor);
 
 	/* check for two-handed weapon - if not, also define weaponl */
-	if (!weaponr || !csi.ods[weaponr->item.t].holdtwohanded)
+	if (!weaponr || !csi.ods[weaponr->item.t].holdTwoHanded)
 		weaponl = LEFT(selActor);
 
 	/* crouch/stand button */
@@ -1333,8 +1333,8 @@ qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
 			CL_DisplayHudMessage(_("Can't perform action:\nout of ammo.\n"), 2000);
 			return qfalse;
 		}
-		/* Cannot shoot because weapon is firetwohanded, yet both hands handle items. */
-		if (csi.ods[weapon->item.t].firetwohanded && LEFT(selActor)) {
+		/* Cannot shoot because weapon is fireTwoHanded, yet both hands handle items. */
+		if (csi.ods[weapon->item.t].fireTwoHanded && LEFT(selActor)) {
 			CL_DisplayHudMessage(_("This weapon cannot be fired\none handed.\n"), 2000);
 			return qfalse;
 		}
@@ -1434,7 +1434,7 @@ void CL_ActorUpdateCVars (void)
 			selWeapon = RIGHT(selActor);
 		}
 
-		if (!selWeapon && RIGHT(selActor) && csi.ods[RIGHT(selActor)->item.t].holdtwohanded)
+		if (!selWeapon && RIGHT(selActor) && csi.ods[RIGHT(selActor)->item.t].holdTwoHanded)
 			selWeapon = RIGHT(selActor);
 
 		if (selWeapon) {
@@ -1569,7 +1569,7 @@ void CL_ActorUpdateCVars (void)
 		}
 
 		if (!LEFT(selActor) && RIGHT(selActor)
-			&& csi.ods[RIGHT(selActor)->item.t].holdtwohanded)
+			&& csi.ods[RIGHT(selActor)->item.t].holdTwoHanded)
 			Cvar_Set("mn_ammoleft", Cvar_VariableString("mn_ammoright"));
 
 		/* change stand-crouch & reaction button state */
@@ -2154,7 +2154,7 @@ void CL_ActorReload (int hand)
 	if (inv->c[hand]) {
 		weapon = inv->c[hand]->item.t;
 	} else if (hand == csi.idLeft
-			   && csi.ods[inv->c[csi.idRight]->item.t].holdtwohanded) {
+			   && csi.ods[inv->c[csi.idRight]->item.t].holdTwoHanded) {
 		/* Check for two-handed weapon */
 		hand = csi.idRight;
 		weapon = inv->c[hand]->item.t;

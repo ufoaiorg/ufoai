@@ -1735,7 +1735,7 @@ void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean qu
 	if (ent->i.c[hand]) {
 		weapon = ent->i.c[hand]->item.t;
 	} else if (hand == gi.csi->idLeft
-			&& gi.csi->ods[ent->i.c[gi.csi->idRight]->item.t].holdtwohanded) {
+			&& gi.csi->ods[ent->i.c[gi.csi->idRight]->item.t].holdTwoHanded) {
 		/* Check for two-handed weapon */
 		hand = gi.csi->idRight;
 		weapon = ent->i.c[hand]->item.t;
@@ -1789,7 +1789,7 @@ qboolean G_ClientCanReload (player_t *player, int entnum, shoot_types_t st)
 	if (ent->i.c[hand]) {
 		weapon = ent->i.c[hand]->item.t;
 	} else if (hand == gi.csi->idLeft
-			   && gi.csi->ods[ent->i.c[gi.csi->idRight]->item.t].holdtwohanded) {
+			   && gi.csi->ods[ent->i.c[gi.csi->idRight]->item.t].holdTwoHanded) {
 		/* Check for two-handed weapon */
 		hand = gi.csi->idRight;
 		weapon = ent->i.c[hand]->item.t;

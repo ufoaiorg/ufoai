@@ -141,9 +141,9 @@ typedef struct objDef_s {
 	char category;		/**<  The animation index for the character with the weapon.
 						 * Don't confuse this with buytype. */
 	qboolean weapon;		/**< This item is a weapon or ammo. */
-	qboolean holdtwohanded;	/**< The soldier needs both hands to hold this object.
+	qboolean holdTwoHanded;	/**< The soldier needs both hands to hold this object.
 				 		 * Influences model-animations and which hands are blocked int he inventory screen.*/
-	qboolean firetwohanded;	/**< The soldier needs both hands to fire this object.
+	qboolean fireTwoHanded;	/**< The soldier needs both hands to fire this object.
 						  * Influences model-animations. */
 	qboolean extension;		/**< Boolean: Is an extension. (may not be headgear, too) */
 	qboolean headgear;		/**< Boolean: Is a headgear. (may not be extension, too) */
@@ -152,7 +152,7 @@ typedef struct objDef_s {
 	int size;		/**< Size of an item, used in storage capacities. */
 	int buytype;		/**< In which category of the buy menu is this item listed.
 						 * see equipment_buytypes_t */
-	qboolean notonmarket;		/**< True if this item should not be available on market. */
+	qboolean notOnMarket;		/**< True if this item should not be available on market. */
 
 	/* Weapon specific */
 	int ammo;			/**< How much can we load into this weapon at once. */
@@ -191,7 +191,13 @@ typedef struct objDef_s {
 /** @brief inventory definition for our menus */
 typedef struct invDef_s {
 	char name[MAX_VAR];	/**< id from script files */
-	qboolean single, armor, all, temp, extension, headgear;	/**< type of this container or inventory */
+	/** type of this container or inventory */
+	qboolean single;	/**< just a single item can be stored in this container */
+	qboolean armor;	/**< only armour can be stored in this container */
+	qboolean extension;	/**< only extension items can be stored in this container */
+	qboolean headgear;	/**< only headgear items can be stored in this container */
+	qboolean all;	/**< every item type can be stored in this container */
+	qboolean temp;	/**< this is only a pointer to another inventory definitions */
 	uint32_t shape[SHAPE_BIG_MAX_HEIGHT];	/**< the inventory form/shape */
 	int in, out;	/**< TU costs */
 } invDef_t;

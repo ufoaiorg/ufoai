@@ -157,7 +157,7 @@ int Com_CheckToInventory (const inventory_t * const i, const int item, const int
 	}
 
 	/* twohanded item */
-	if (CSI->ods[item].holdtwohanded) {
+	if (CSI->ods[item].holdTwoHanded) {
 		if ((container == CSI->idRight && i->c[CSI->idLeft])
 			 || container == CSI->idLeft)
 			return 0;
@@ -165,11 +165,11 @@ int Com_CheckToInventory (const inventory_t * const i, const int item, const int
 
 	/* left hand is busy if right wields twohanded */
 	if (container == CSI->idLeft) {
-		if (i->c[CSI->idRight] && CSI->ods[i->c[CSI->idRight]->item.t].holdtwohanded)
+		if (i->c[CSI->idRight] && CSI->ods[i->c[CSI->idRight]->item.t].holdTwoHanded)
 			return 0;
 
-		/* can't put an item that is 'firetwohanded' into the left hand */
-		if (CSI->ods[item].firetwohanded)
+		/* can't put an item that is 'fireTwoHanded' into the left hand */
+		if (CSI->ods[item].fireTwoHanded)
 			return 0;
 	}
 
@@ -429,7 +429,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 
 	/* if weapon is twohanded and is moved from hand to hand do nothing. */
 	/* twohanded weapon are only in CSI->idRight */
-	if (CSI->ods[cacheItem.t].firetwohanded && to == CSI->idLeft && from == CSI->idRight) {
+	if (CSI->ods[cacheItem.t].fireTwoHanded && to == CSI->idLeft && from == CSI->idRight) {
 		Com_AddToInventory(i, cacheItem, from, fx, fy);
 		return IA_NONE;
 	}
@@ -509,16 +509,16 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 		return IA_NONE;
 	}
 
-	/* twohanded exception - only CSI->idRight is allowed for firetwohanded weapons */
-	if (CSI->ods[cacheItem.t].firetwohanded && to == CSI->idLeft) {
+	/* twohanded exception - only CSI->idRight is allowed for fireTwoHanded weapons */
+	if (CSI->ods[cacheItem.t].fireTwoHanded && to == CSI->idLeft) {
 #ifdef DEBUG
-		Com_DPrintf("Com_MoveInInventory - don't move the item to CSI->idLeft it's firetwohanded\n");
+		Com_DPrintf("Com_MoveInInventory - don't move the item to CSI->idLeft it's fireTwoHanded\n");
 #endif
 		to = CSI->idRight;
 	}
 #ifdef PARANOID
-	else if (CSI->ods[cacheItem.t].firetwohanded)
-		Com_DPrintf("Com_MoveInInventory: move firetwohanded item to container: %s\n", CSI->ids[to].name);
+	else if (CSI->ods[cacheItem.t].fireTwoHanded)
+		Com_DPrintf("Com_MoveInInventory: move fireTwoHanded item to container: %s\n", CSI->ids[to].name);
 #endif
 
 	/* successful */
@@ -551,10 +551,13 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 }
 
 /**
- * @brief
- * @param[in] i
- * @param[in] container
+ * @brief Clear the linked list of a container - remove all items from this container
+ * @param[in] i The inventory where the container is located
+ * @param[in] container The container id which should be cleared
  * @sa INVSH_DestroyInventory
+ * @note This should only be called for temp containers if the container is really a temp container
+ * e.g. the container of a dropped weapon in tactical mission (ET_ITEM)
+ * in every other case just set the pointer to NULL for a temp container like idEquip or idFloor
  */
 void INVSH_EmptyContainer (inventory_t* const i, const int container)
 {
@@ -581,8 +584,8 @@ void INVSH_EmptyContainer (inventory_t* const i, const int container)
 		invUnused = old;
 #ifdef DEBUG
 		if (cnt >= MAX_INVLIST) {
-			Com_Printf("Error: There are more than the allowed entries in container %s (cnt:%i, MAX_INVLIST:%i) (INVSH_EmptyContainer)\n", CSI->ids[container].name, cnt,
-					   MAX_INVLIST);
+			Com_Printf("Error: There are more than the allowed entries in container %s (cnt:%i, MAX_INVLIST:%i) (INVSH_EmptyContainer)\n",
+				CSI->ids[container].name, cnt, MAX_INVLIST);
 			break;
 		}
 		cnt++;
@@ -593,7 +596,7 @@ void INVSH_EmptyContainer (inventory_t* const i, const int container)
 
 /**
  * @brief
- * @param i The invetory which should be erased.
+ * @param[in] i The invetory which should be erased.
  * @sa INVSH_EmptyContainer
  */
 void INVSH_DestroyInventory (inventory_t* const i)
@@ -760,7 +763,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, co
 	item.t = weapon;
 
 	/* are we going to allow trying the left hand */
-	allowLeft = !(inv->c[CSI->idRight] && CSI->ods[inv->c[CSI->idRight]->item.t].firetwohanded);
+	allowLeft = !(inv->c[CSI->idRight] && CSI->ods[inv->c[CSI->idRight]->item.t].fireTwoHanded);
 
 	if (!CSI->ods[weapon].reload) {
 		item.m = item.t; /* no ammo needed, so fire definitions are in t */
@@ -883,7 +886,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], con
 			max_price = 0;
 			for (i = lastPos; i >= 0; i--) {
 				obj = CSI->ods[i];
-				if (equip[i] && obj.weapon && BUY_PRI(obj.buytype) && obj.firetwohanded) {
+				if (equip[i] && obj.weapon && BUY_PRI(obj.buytype) && obj.fireTwoHanded) {
 					if (frand() < 0.15) { /* small chance to pick any weapon */
 						weapon = i;
 						max_price = obj.price;
@@ -959,7 +962,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], con
 						if (has_weapon) {
 							/* try to get the second akimbo pistol */
 							if (primary == 2
-								&& !CSI->ods[weapon].firetwohanded
+								&& !CSI->ods[weapon].fireTwoHanded
 								&& frand() < AKIMBO_CHANCE) {
 								INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
 							}
@@ -1397,9 +1400,8 @@ void INVSH_PrintItemDescription (int i)
 	Com_Printf("... type          -> %s\n", ods_temp->type);
 	Com_Printf("... category      -> %i\n", ods_temp->category);
 	Com_Printf("... weapon        -> %i\n", ods_temp->weapon);
-	Com_Printf("... holdtwohanded -> %i\n", ods_temp->holdtwohanded);
-	Com_Printf("... firetwohanded -> %i\n", ods_temp->firetwohanded);
-	Com_Printf("... twohanded     -> %i\n", ods_temp->holdtwohanded);
+	Com_Printf("... holdtwohanded -> %i\n", ods_temp->holdTwoHanded);
+	Com_Printf("... firetwohanded -> %i\n", ods_temp->fireTwoHanded);
 	Com_Printf("... thrown        -> %i\n", ods_temp->thrown);
 	Com_Printf("... usable for weapon (if type is ammo):\n");
 	for (i = 0; i < ods_temp->numWeapons; i++) {
