@@ -89,7 +89,8 @@ typedef enum {
 	B_COMMAND,		/**< this building is command centre */
 	B_ANTIMATTER,		/**< this building is antimatter storage */
 	B_ENTRANCE,		/**< this building is an entrance */
-	B_MISSILE		/**< this building is a missile rack */
+	B_DEFENSE_MISSILE,		/**< this building is a missile rack */
+	B_DEFENSE_LASER
 } buildingType_t;
 
 /** @brief All possible capacities in base. */
@@ -197,7 +198,8 @@ typedef struct base_s {
 	qboolean hasPower;		/**< B_POWER (Power Plant) */
 	qboolean hasCommand;		/**< B_COMMAND (Command Centre) */
 	qboolean hasAmStorage;		/**< B_ANTIMATTER (Antimatter Storage) */
-	qboolean hasMissile;		/**< B_MISSILE (Missile Battery) */
+	qboolean hasMissile;		/**< B_DEFENSE_MISSILE (Missile Battery) */
+	qboolean hasLaser;			/**< B_DEFENSE_LASER (Laser defense) */
 
 	/** this is here to allocate the needed memory for the buildinglist */
 	char allBuildingsList[MAX_LIST_CHAR];
@@ -247,7 +249,7 @@ typedef struct base_s {
 	int hospitalMissionListCount;			/**< Counter for hospitalMissionList. */
 
 	int maxBatteries;
-	aircraftSlot_t batteries[MAX_AIRCRAFTSLOT];	/**< Missile batteries assigned to base. */ 
+	aircraftSlot_t batteries[MAX_AIRCRAFTSLOT];	/**< Missile batteries assigned to base. */
 
 	int buildingToBuild;	/**< needed if there is another buildingpart to build (link to gd.buildingTypes) */
 

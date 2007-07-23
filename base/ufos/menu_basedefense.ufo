@@ -1,0 +1,67 @@
+// ==================
+// BASE DEFENSE MENU
+// ==================
+menu basedefense
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis false
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic back_ul
+	{
+		image	menu/basedefense_ul
+		pos		"0 0"
+	}
+
+	pic back_ur
+	{
+		image	menu/basedefense_ur
+		pos		"512 0"
+	}
+
+	pic back_ll
+	{
+		image	menu/basedefense_ll
+		pos		"0 512"
+	}
+
+	pic back_lr
+	{
+		image	menu/basedefense_lr
+		pos		"512 512"
+	}
+
+
+
+	// ==================
+	// additional stuff
+	// ==================
+
+	pic button_leave
+	{
+		tooltip	"_Done"
+		image	hud/buttons2
+		mousefx	true
+		pos		"940 720"
+		texl	"0 0"
+		texh	"64 37"
+		click	{ cmd "mn_pop"  }
+	}
+
+	func init
+	{
+	}
+
+	func close
+	{
+	}
+}
