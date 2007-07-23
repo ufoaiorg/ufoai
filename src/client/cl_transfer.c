@@ -213,7 +213,7 @@ static void TR_CargoList (void)
 }
 
 /**
- * @brief Add one item to transferlist.
+ * @brief Fills the items-in-base list with stuff available for transfer.
  * @note Filling the transfer list with proper stuff (items/employees/aliens/aircrafts) is being done here.
  * @sa TR_TransferStart_f
  * @sa TR_TransferInit_f
@@ -248,7 +248,6 @@ static void TR_TransferSelect_f (void)
 
 	switch (type) { /**< 0 - items, 1 - employees, 2 - aliens, 3 - aircrafts */
 	case 0:		/**< items */
-		/* @todo: check building status here as well as limits. */
 		if (transferBase->hasStorage) {
 			for (i = 0; i < csi.numODs; i++)
 				if (baseCurrent->storage.num[i]) {
@@ -262,12 +261,10 @@ static void TR_TransferSelect_f (void)
 			if (!cnt)
 				Q_strncpyz(transferList, _("Storage is empty.\n"), sizeof(transferList));
 		} else {
-			/* @todo: print proper info if base has storage but not operational or limits are not sufficient. */
 			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have a Storage."), sizeof(transferList));
 		}
 		break;
 	case 1:		/**< humans */
-		/* @todo: check building status here as well as limits. */
 		if (transferBase->hasQuarters) {
 			for (empltype = 0; empltype < MAX_EMPL; empltype++) {
 				for (i = 0; i < gd.numEmployees[empltype]; i++) {
@@ -302,7 +299,6 @@ static void TR_TransferSelect_f (void)
 			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have Living Quarters."), sizeof(transferList));
 		break;
 	case 2:		/**< aliens */
-		/* @todo: check building status here as well as limits. */
 		if (transferBase->hasAlienCont) {
 			for (i = 0; i < numTeamDesc; i++) {
 				if (baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_dead > 0) {
@@ -331,16 +327,13 @@ static void TR_TransferSelect_f (void)
 			if (!cnt)
 				Q_strncpyz(transferList, _("Alien Containment is empty.\n"), sizeof(transferList));
 		} else {
-			/* @todo: print proper info if base has AC but not operational or limits are not sufficient. */
 			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have an Alien Containment."), sizeof(transferList));
 		}
 		break;
 	case 3:			/**< aircrafts */
-		/* @todo: check building status here as well as limits. */
 		if (transferBase->hasHangar) {
 			Q_strcat(transferList, "@todo: aircrafts", sizeof(transferList));
 		} else {
-			/* @todo: print proper info if base has hangar but not operational or limits are not sufficient. */
 			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have any hangar."), sizeof(transferList));
 		}
 		break;
@@ -613,16 +606,6 @@ static void TR_TransferListSelect_f (void)
 	case -1:	/**< No list was inited before you call this. */
 		return;
 	case 0:		/**< items */
-#if 0
-		if (!transferidx->type) {
-			transferidx->type = TR_STUFF;
-		} else if (transferidx->type != TR_STUFF) {
-			/* @todo: Allow to transfer both aircraft transporter with cargo onboard? */
-			MN_Popup(_("Notice"),
-			_("You are transferring aircraft. You cannot use this aircraft to transfer things or employees."));
-			return;
-		}
-#endif
 		for (i = 0; i < csi.numODs; i++) {
 			if (baseCurrent->storage.num[i]) {
 				if (cnt == num) {
@@ -642,16 +625,6 @@ static void TR_TransferListSelect_f (void)
 		}
 		break;
 	case 1:		/**< employees */
-#if 0
-		if (!transferidx->type) {
-			transferidx->type = TR_STUFF;
-		} else if (transferidx->type != TR_STUFF) {
-			/* @todo: Allow to transfer both aircraft transporter with cargo onboard? */
-			MN_Popup(_("Notice"),
-			_("You are transferring aircraft. You cannot use this aircraft to transfer things or employees."));
-			return;
-		}
-#endif
 		for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
 			employee = &gd.employees[EMPL_SOLDIER][i];
 			if (!E_IsInBase(employee, baseCurrent))
@@ -693,16 +666,6 @@ static void TR_TransferListSelect_f (void)
 		}
 		break;
 	case 2:		/**< aliens */
-#if 0
-		if (!transferidx->type) {
-			transferidx->type = TR_STUFF;
-		} else if (transferidx->type != TR_STUFF) {
-			/* @todo: Allow to transfer both aircraft transporter with cargo onboard? */
-			MN_Popup(_("Notice"),
-			_("You are transferring aircraft. You cannot use this aircraft to transfer things or employees."));
-			return;
-		}
-#endif
 		for (i = 0; i < numTeamDesc; i++) {
 			if (baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_dead > 0) {
 				if (cnt == num) {
@@ -729,16 +692,6 @@ static void TR_TransferListSelect_f (void)
 		}
 		break;
 	case 3:		/**< aircrafts */
-#if 0
-		if (!transferidx->type) {
-			transferidx->type = TR_AIRCRAFT;
-		} else if (transferidx->type != TR_AIRCRAFT) {
-			/* @todo: Allow to transfer both aircraft transporter with cargo onboard? */
-			MN_Popup(_("Notice"),
-			_("You are transferring stuff. You cannot use this aircraft to transfer itself."));
-			return;
-		}
-#endif
 		/* @todo: aircrafts here. */
 		break;
 	default:
@@ -781,11 +734,6 @@ static void TR_TransferAircraftListClick_f (void)
 
 	if (j < 0)
 		return;
-
-#if 0
-	transferAircraft = aircraft;
-	Cvar_Set("mn_trans_aircraft_name", transferAircraft->shortname);
-#endif
 }
 
 /**
@@ -876,7 +824,7 @@ static void TR_TransferBaseSelect_f (void)
 	if (base->hasAmStorage) {
 		Q_strcat(baseInfo, _("You can transfer antimatter - this base has an Antimatter Storage.\n"), sizeof(baseInfo));
 	} else {
-		Q_strcat(baseInfo, _("No Antimatter Storage in this base,\n"), sizeof(baseInfo));
+		Q_strcat(baseInfo, _("No Antimatter Storage in this base.\n"), sizeof(baseInfo));
 	}
 
 	/* @todo: check hangar (for aircraft transfer) */
@@ -1030,6 +978,7 @@ void TR_TransferCheck (void)
 			}
 			/* Reset this transfer. */
 			memset(&gd.alltransfers[i], 0, sizeof(gd.alltransfers[i]));
+			return;
 		}
 	}
 }
@@ -1090,18 +1039,10 @@ static void TR_Init_f (void)
 		Cvar_Set("mn_trans_aircraft_name", _("None"));
 	}
 
-	/* @todo: check the transfercargo at selected aircraft and fill up the list. */
-
 	/* Select first available base. */
-	/* @todo: if the selected aircraft has it's cargo, select destination base instead. */
 	TR_TransferBaseSelect_f();
 
-	/* Set up cvars used to display transferAircraft and transferBase. */
-	/* FIXME: Translate the shortname? */
-#if 0
-	if (transferAircraft)
-		Cvar_Set("mn_trans_aircraft_name", transferAircraft->shortname);
-#endif
+	/* Set up cvar used to display transferBase. */
 	if (transferBase)
 		Cvar_Set("mn_trans_base_name", transferBase->name);
 
