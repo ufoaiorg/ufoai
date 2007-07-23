@@ -3771,9 +3771,6 @@ campaign_t* CL_GetCampaign (const char* name)
 	return campaign;
 }
 
-/* called by CL_GameNew_f */
-static void CL_CampaignRunMarket(void);
-
 /**
  * @brief Starts a new single-player game
  * @sa CL_GameInit
