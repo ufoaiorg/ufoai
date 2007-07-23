@@ -2138,7 +2138,7 @@ static void B_PackInitialEquipment_f (void)
 			chr = baseCurrent->curTeam[i];
 			/* pack equipment */
 			Com_DPrintf("B_PackInitialEquipment_f: Packing initial equipment for %s.\n", chr->name);
-			Com_EquipActor(chr->inv, ed->num, name, chr);
+			INVSH_EquipActor(chr->inv, ed->num, name, chr);
 			Com_DPrintf("B_PackInitialEquipment_f: armor: %i, weapons: %i\n", chr->armor, chr->weapons);
 		}
 		CL_AddCarriedToEq(&baseCurrent->storage);

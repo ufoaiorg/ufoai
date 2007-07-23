@@ -678,7 +678,7 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 			ent->STUN = 0;
 
 			/* pack equipment */
-			Com_EquipActor(&ent->i, ed->num, name, &ent->chr);
+			INVSH_EquipActor(&ent->i, ed->num, name, &ent->chr);
 
 			/* set model */
 			ent->chr.inv = &ent->i;

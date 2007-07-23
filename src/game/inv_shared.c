@@ -1,7 +1,7 @@
 /**
  * @file inv_shared.c
  * @brief Common object-, inventory-, container- and firemode-related functions.
- * @note Shared inventory functions prefix: INVSH_
+ * @note Shared inventory management functions prefix: INVSH_
  * @note Shared firemode management functions prefix: FIRESH_
  * @note Shared character generating functions prefix: CHRSH_
  */
@@ -28,15 +28,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "inv_shared.h"
 
-/* this is used to access the skill and ability arrays for the current campaign */
-static int globalCampaignID = -1;
+/* ================================ */
+
+/*  INVENTORY MANAGEMENT FUNCTIONS  */
+
+/* ================================ */
 
 static csi_t *CSI;
 static invList_t *invUnused;
 static item_t cacheItem = {NONE,NONE,NONE, 0}; /* to crash as soon as possible */
 
 /**
- * @brief
+ * @brief Initializes csi_t *CSI pointer.
  * @param[in] import
  * @sa InitGame
  * @sa Com_ParseScripts
@@ -74,6 +77,7 @@ void INVSH_InitInventory (invList_t * invList)
 }
 
 static int cache_Com_CheckToInventory = 0;
+
 /**
  * @brief Checks if an item-shape can be put into a container at a certain position... ignores any 'special' types.
  * @param[in] i
@@ -861,7 +865,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, co
  * Beware: if two weapons in the same category have the same price,
  * only one will be considered for inventory.
  */
-void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const char *name, character_t* chr)
+void INVSH_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const char *name, character_t* chr)
 {
 	int weapon = -1; /* this variable is never used before being set */
 	int i, max_price, prev_price;
@@ -999,7 +1003,7 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const
 
 		/* if no weapon at all, bad guys will always find a blade to wield */
 		if (!has_weapon) {
-			Com_DPrintf("Com_EquipActor: no weapon picked in equipment '%s', defaulting to the most expensive secondary weapon without reload.\n", name);
+			Com_DPrintf("INVSH_EquipActor: no weapon picked in equipment '%s', defaulting to the most expensive secondary weapon without reload.\n", name);
 			max_price = 0;
 			for (i = 0; i < CSI->numODs; i++) {
 				obj = CSI->ods[i];
@@ -1015,17 +1019,17 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const
 		}
 		/* if still no weapon, something is broken, or no blades in equip */
 		if (!has_weapon)
-			Com_DPrintf("Com_EquipActor: cannot add any weapon; no secondary weapon without reload detected for equipment '%s'.\n", name);
+			Com_DPrintf("INVSH_EquipActor: cannot add any weapon; no secondary weapon without reload detected for equipment '%s'.\n", name);
 
 		/* armor; especially for those without primary weapons */
 		repeat = (float) missed_primary * (1 + frand() * PROB_COMPENSATION) / 40.0;
 	} else {
-		Com_DPrintf("Com_EquipActor: character '%s' may not carry weapons\n", chr->name);
+		Com_DPrintf("INVSH_EquipActor: character '%s' may not carry weapons\n", chr->name);
 		return;
 	}
 
 	if (!chr->armor) {
-		Com_DPrintf("Com_EquipActor: character '%s' may not carry armor\n", chr->name);
+		Com_DPrintf("INVSH_EquipActor: character '%s' may not carry armor\n", chr->name);
 		return;
 	}
 
@@ -1191,6 +1195,9 @@ static void CHRSH_GetSkill (character_t *chr, int team, int *minSkill, int *maxS
 	Com_DPrintf("CHRSH_GetSkill: use minSkill %i and maxSkill %i for team %i and empl_type %i\n", *minSkill, *maxSkill, team, chr->empl_type);
 #endif
 }
+
+/* this is used to access the skill and ability arrays for the current campaign */
+static int globalCampaignID = -1;
 
 /**
  * @brief Sets the current active campaign id (see curCampaign pointer).
