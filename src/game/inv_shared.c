@@ -1,7 +1,8 @@
 /**
  * @file inv_shared.c
  * @brief Common object-, inventory-, container- and firemode-related functions.
- * @note Functions prefix: INVSH_
+ * @note Shared inventory functions prefix: INVSH_
+ * @note Shared firemode management functions prefix: FIRESH_
  */
 
 /*
@@ -1474,6 +1475,12 @@ qboolean INV_LoadableInWeapon (objDef_t *od, int weapon_idx)
 	return usable;
 }
 
+/* =============================== */
+
+/*  FIREMODE MANAGEMENT FUNCTIONS
+
+/* =============================== */
+
 /**
  * @brief Returns the index of the array that has the firedefinitions for a given weapon (-index)
  * @param[in] od The object definition of the item.
@@ -1481,17 +1488,17 @@ qboolean INV_LoadableInWeapon (objDef_t *od, int weapon_idx)
  * @return int Returns the index in the fd array. -1 if the weapon-idx was not found. 0 (equals the default firemode) if an invalid or unknown weapon idx was given.
  * @note the return value of -1 is in most cases a fatal error (except the scripts are not parsed while e.g. maptesting)
  */
-int INV_FiredefsIDXForWeapon (objDef_t *od, int weapon_idx)
+int FIRESH_FiredefsIDXForWeapon (objDef_t *od, int weapon_idx)
 {
 	int i;
 
 	if (!od) {
-		Com_DPrintf("INV_FiredefsIDXForWeapon: object definition is NULL.\n");
+		Com_DPrintf("FIRESH_FiredefsIDXForWeapon: object definition is NULL.\n");
 		return -1;
 	}
 
 	if (weapon_idx == NONE) {
-		Com_DPrintf("INV_FiredefsIDXForWeapon: bad weapon_idx (NONE) in item '%s' - using default weapon/firemodes.\n", od->id);
+		Com_DPrintf("FIRESH_FiredefsIDXForWeapon: bad weapon_idx (NONE) in item '%s' - using default weapon/firemodes.\n", od->id);
 		/* FIXME: this won't work if there is no weapon_idx, don't it? - should be -1 here, too */
 		return 0;
 	}
@@ -1503,7 +1510,7 @@ int INV_FiredefsIDXForWeapon (objDef_t *od, int weapon_idx)
 
 	/* No firedef index found for this weapon/ammo. */
 #ifdef DEBUG
-	Com_DPrintf("INV_FiredefsIDXForWeapon: No firedef index found for weapon. od:%s weap_idx:%i).\n", od->id, weapon_idx);
+	Com_DPrintf("FIRESH_FiredefsIDXForWeapon: No firedef index found for weapon. od:%s weap_idx:%i).\n", od->id, weapon_idx);
 #endif
 	return -1;
 }
@@ -1514,20 +1521,20 @@ int INV_FiredefsIDXForWeapon (objDef_t *od, int weapon_idx)
  * @param[in] weapon_fds_idx The index in objDef[x]
  * @return Default reaction-firemode index in objDef->fd[][x]. -1 if an error occurs or no firedefs exist.
  */
-int Com_GetDefaultReactionFire (objDef_t *ammo, int weapon_fds_idx)
+int FIRESH_GetDefaultReactionFire (objDef_t *ammo, int weapon_fds_idx)
 {
 	int fd_idx;
 	if (weapon_fds_idx >= MAX_WEAPONS_PER_OBJDEF) {
-		Com_Printf("Com_GetDefaultReactionFire: bad weapon_fds_idx (%i) Maximum is %i.\n", weapon_fds_idx, MAX_WEAPONS_PER_OBJDEF-1);
+		Com_Printf("FIRESH_GetDefaultReactionFire: bad weapon_fds_idx (%i) Maximum is %i.\n", weapon_fds_idx, MAX_WEAPONS_PER_OBJDEF-1);
 		return -1;
 	}
 	if (weapon_fds_idx < 0) {
-		Com_Printf("Com_GetDefaultReactionFire: Negative weapon_fds_idx given.\n");
+		Com_Printf("FIRESH_GetDefaultReactionFire: Negative weapon_fds_idx given.\n");
 		return -1;
 	}
 
 	if (ammo->numFiredefs[weapon_fds_idx] == 0) {
-		Com_Printf("Com_GetDefaultReactionFire: Probably not an ammo-object: %s\n", ammo->id);
+		Com_Printf("FIRESH_GetDefaultReactionFire: Probably not an ammo-object: %s\n", ammo->id);
 		return -1;
 	}
 

@@ -605,7 +605,7 @@ static void CL_GetWeaponAndAmmo (le_t *actor, char hand, objDef_t **weapon, objD
 	else
 		*ammo = &csi.ods[invlist_weapon->item.m];
 
-	*weap_fd_idx = INV_FiredefsIDXForWeapon(*ammo, invlist_weapon->item.t);
+	*weap_fd_idx = FIRESH_FiredefsIDXForWeapon(*ammo, invlist_weapon->item.t);
 }
 
 /**
@@ -750,7 +750,7 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 
 	if (active_firemode < 0) {
 		/* Set default reaction firemode for this hand (active_firemode=-1) */
-		i = Com_GetDefaultReactionFire(ammo, weap_fd_idx);
+		i = FIRESH_GetDefaultReactionFire(ammo, weap_fd_idx);
 
 		if (i >= 0) {
 			Com_DPrintf("CL_UpdateReactionFiremodes: DEBUG i>=0\n");
@@ -1144,14 +1144,14 @@ static void CL_RefreshWeaponButtons (int time)
 			/* This item does not use ammo, check for existing firedefs in this item. */
 			if (csi.ods[headgear->item.t].numWeapons > 0) {
 				/* Get firedef from the weapon entry instead. */
-				headgear_fds_idx = INV_FiredefsIDXForWeapon(&csi.ods[headgear->item.t], headgear->item.t);
+				headgear_fds_idx = FIRESH_FiredefsIDXForWeapon(&csi.ods[headgear->item.t], headgear->item.t);
 			} else {
 				headgear_fds_idx = -1;
 			}
 			isammo = qfalse;
 		} else {
 			/* This item uses ammo, get the firedefs from ammo. */
-			headgear_fds_idx = INV_FiredefsIDXForWeapon(&csi.ods[headgear->item.m], headgear->item.t);
+			headgear_fds_idx = FIRESH_FiredefsIDXForWeapon(&csi.ods[headgear->item.m], headgear->item.t);
 			isammo = qtrue;
 		}
 		if (isammo) {
@@ -1221,14 +1221,14 @@ static void CL_RefreshWeaponButtons (int time)
 			/* This item does not use ammo, check for existing firedefs in this item. */
 			if (csi.ods[weaponr->item.t].numWeapons > 0) {
 				/* Get firedef from the weapon entry instead. */
-				weaponr_fds_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponr->item.t], weaponr->item.t);
+				weaponr_fds_idx = FIRESH_FiredefsIDXForWeapon(&csi.ods[weaponr->item.t], weaponr->item.t);
 			} else {
 				weaponr_fds_idx = -1;
 			}
 			isammo = qfalse;
 		} else {
 			/* This item uses ammo, get the firedefs from ammo. */
-			weaponr_fds_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponr->item.m], weaponr->item.t);
+			weaponr_fds_idx = FIRESH_FiredefsIDXForWeapon(&csi.ods[weaponr->item.m], weaponr->item.t);
 			isammo = qtrue;
 		}
 		if (isammo) {
@@ -1264,14 +1264,14 @@ static void CL_RefreshWeaponButtons (int time)
 			/* This item does not use ammo, check for existing firedefs in this item. */
 			if (csi.ods[weaponl->item.t].numWeapons > 0) {
 				/* Get firedef from the weapon entry instead. */
-				weaponl_fds_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponl->item.t], weaponl->item.t);
+				weaponl_fds_idx = FIRESH_FiredefsIDXForWeapon(&csi.ods[weaponl->item.t], weaponl->item.t);
 			} else {
 				weaponl_fds_idx = -1;
 			}
 			isammo = qfalse;
 		} else {
 			/* This item uses ammo, get the firedefs from ammo. */
-			weaponl_fds_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponl->item.m], weaponl->item.t);
+			weaponl_fds_idx = FIRESH_FiredefsIDXForWeapon(&csi.ods[weaponl->item.m], weaponl->item.t);
 			isammo = qtrue;
 		}
 		if (isammo) {
@@ -1445,7 +1445,7 @@ void CL_ActorUpdateCVars (void)
 #ifdef PARANOID
 				GET_FIREDEFDEBUG(
 					selWeapon->item.m,
-					INV_FiredefsIDXForWeapon(
+					FIRESH_FiredefsIDXForWeapon(
 						&csi.ods[selWeapon->item.m],
 						selWeapon->item.t),
 					cl.cfiremode);
@@ -1457,7 +1457,7 @@ void CL_ActorUpdateCVars (void)
 						/* Get firedef from the weapon entry instead. */
 						selFD = GET_FIREDEF(
 							selWeapon->item.t,
-							INV_FiredefsIDXForWeapon(
+							FIRESH_FiredefsIDXForWeapon(
 								&csi.ods[selWeapon->item.t],
 								selWeapon->item.t),
 							cl.cfiremode);
@@ -1469,7 +1469,7 @@ void CL_ActorUpdateCVars (void)
 					/* This item uses ammo, get the firedefs from ammo. */
 					old = GET_FIREDEF(
 						selWeapon->item.m,
-						INV_FiredefsIDXForWeapon(
+						FIRESH_FiredefsIDXForWeapon(
 							&csi.ods[selWeapon->item.m],
 							selWeapon->item.t),
 						cl.cfiremode);

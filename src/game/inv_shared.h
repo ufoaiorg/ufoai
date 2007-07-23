@@ -1,6 +1,6 @@
 /**
  * @file inv_shared.h
- * @brief Common object-, inventory-, container- and firemode-related functions headers.
+ * @brief common object-, inventory-, container- and firemode-related functions headers.
  */
 
 /*
@@ -169,7 +169,7 @@ typedef struct objDef_s {
 	/* Firemodes (per weapon) */
 	char weap_id[MAX_WEAPONS_PER_OBJDEF][MAX_VAR];	/**< List of weapon ids as parsed from the ufo file "weapon_mod <id>" */
 	int weap_idx[MAX_WEAPONS_PER_OBJDEF];			/**< List of weapon-object indices. The index of the weapon in csi.ods[xxx].
-												 ** You can get the correct index for this array from e.g. fireDef_t.weap_fds_idx. or with INV_FiredefsIDXForWeapon. */
+												 ** You can get the correct index for this array from e.g. fireDef_t.weap_fds_idx. or with FIRESH_FiredefsIDXForWeapon. */
 	fireDef_t fd[MAX_WEAPONS_PER_OBJDEF][MAX_FIREDEFS_PER_WEAPON];	/**< List of firemodes per weapon (the ammo can be used in). */
 	int numFiredefs[MAX_WEAPONS_PER_OBJDEF];	/**< Number of firemodes per weapon. (How many of the firemodes-per-weapons list is used.)
 												 ** Maximum value for fireDef_t.fd_idx and it't <= MAX_FIREDEFS_PER_WEAPON */
@@ -430,8 +430,8 @@ void Com_PrintItemDescription(int i);
 void Com_InventoryList_f(void);
 int INVSH_GetItemByID(const char *id);
 qboolean INV_LoadableInWeapon(objDef_t *od, int weapon_idx);
-int INV_FiredefsIDXForWeapon(objDef_t *od, int weapon_idx);
-int Com_GetDefaultReactionFire(objDef_t *ammo, int weapon_fds_idx);
+int FIRESH_FiredefsIDXForWeapon(objDef_t *od, int weapon_idx);
+int FIRESH_GetDefaultReactionFire(objDef_t *ammo, int weapon_fds_idx);
 
 void Com_MergeShapes(uint32_t *shape, uint32_t itemshape, int x, int y);
 qboolean Com_CheckShape(const uint32_t *shape, int x, int y);

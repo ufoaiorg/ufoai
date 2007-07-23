@@ -1018,7 +1018,7 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t 
 		if (&gi.csi->ods[(*weapon)->t].numWeapons > 0) {
 			/* Get firedef from the weapon entry instead */
 			gi.dprintf("od->numWeapons: %i\n", gi.csi->ods[(*weapon)->t].numWeapons);
-			weapon_fd_idx = INV_FiredefsIDXForWeapon(&gi.csi->ods[(*weapon)->t], (*weapon)->t);
+			weapon_fd_idx = FIRESH_FiredefsIDXForWeapon(&gi.csi->ods[(*weapon)->t], (*weapon)->t);
 			gi.dprintf("weapon_fd_idx: %i (%s), firemode: %i\n", weapon_fd_idx, gi.csi->ods[(*weapon)->t].name, firemode);
 			assert(weapon_fd_idx >= 0);
 			/* fd = od[weapon_fd_idx][firemodeidx] */
@@ -1029,7 +1029,7 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t 
 		}
 	} else {
 		/* Get firedef from the ammo entry. */
-		weapon_fd_idx = INV_FiredefsIDXForWeapon(&gi.csi->ods[(*weapon)->m], (*weapon)->t);
+		weapon_fd_idx = FIRESH_FiredefsIDXForWeapon(&gi.csi->ods[(*weapon)->m], (*weapon)->t);
 		assert(weapon_fd_idx >= 0);
 		/* fd = od[weapon_fd_idx][firemodeidx] */
 		*fd = &gi.csi->ods[(*weapon)->m].fd[weapon_fd_idx][firemode];
@@ -1371,7 +1371,7 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, i
 	if (RIGHT(ent) && (RIGHT(ent)->item.m != NONE)
 	 && gi.csi->ods[RIGHT(ent)->item.t].weapon
 	 && (!gi.csi->ods[RIGHT(ent)->item.t].reload || RIGHT(ent)->item.a > 0) ) {
-		weapon_fd_idx = INV_FiredefsIDXForWeapon(&gi.csi->ods[RIGHT(ent)->item.m], RIGHT(ent)->item.t);
+		weapon_fd_idx = FIRESH_FiredefsIDXForWeapon(&gi.csi->ods[RIGHT(ent)->item.m], RIGHT(ent)->item.t);
 		assert(weapon_fd_idx >= 0);
 
 		if (reactionFiremode[ent->number][RF_HAND] == 0
@@ -1395,7 +1395,7 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, i
 	if (LEFT(ent) && (LEFT(ent)->item.m != NONE)
 	 && gi.csi->ods[LEFT(ent)->item.t].weapon
 	 && (!gi.csi->ods[LEFT(ent)->item.t].reload || LEFT(ent)->item.a > 0) ) {
-		weapon_fd_idx = INV_FiredefsIDXForWeapon(&gi.csi->ods[LEFT(ent)->item.m], LEFT(ent)->item.t);
+		weapon_fd_idx = FIRESH_FiredefsIDXForWeapon(&gi.csi->ods[LEFT(ent)->item.m], LEFT(ent)->item.t);
 		assert(weapon_fd_idx >= 0);
 
 		if (reactionFiremode[ent->number][RF_HAND] == 1

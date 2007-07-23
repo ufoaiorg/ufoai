@@ -171,7 +171,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 		if (!od || weap_idx == NONE)
 			continue;
 
-		weap_fds_idx = INV_FiredefsIDXForWeapon(od, weap_idx);
+		weap_fds_idx = FIRESH_FiredefsIDXForWeapon(od, weap_idx);
 		/* if od was not null and weap_idx was not NONE - then we have a problem here
 		 * maybe this is only a maptest and thus no scripts parsed */
 		if (weap_fds_idx == -1)

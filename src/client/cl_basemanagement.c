@@ -1936,9 +1936,9 @@ static void CL_SwapSkills (character_t *team[], int num)
 				weaponr_fd_idx = -1;
 				weaponh_fd_idx = -1;
 				if (RIGHT(cp1) && RIGHT(cp1)->item.m != NONE && RIGHT(cp1)->item.t != NONE)
-					weaponr_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[RIGHT(cp1)->item.m], RIGHT(cp1)->item.t);
+					weaponr_fd_idx = FIRESH_FiredefsIDXForWeapon(&csi.ods[RIGHT(cp1)->item.m], RIGHT(cp1)->item.t);
 				if (HOLSTER(cp1) && HOLSTER(cp1)->item.m != NONE && HOLSTER(cp1)->item.t != NONE)
-					weaponh_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[HOLSTER(cp1)->item.m], HOLSTER(cp1)->item.t);
+					weaponh_fd_idx = FIRESH_FiredefsIDXForWeapon(&csi.ods[HOLSTER(cp1)->item.m], HOLSTER(cp1)->item.t);
 				/* disregard left hand, or dual-wielding guys are too good */
 
 				if (weaponr_fd_idx < 0 || weaponh_fd_idx < 0) {
@@ -1958,9 +1958,9 @@ static void CL_SwapSkills (character_t *team[], int num)
 						weaponh_fd_idx = -1;
 
 						if (RIGHT(cp2) && RIGHT(cp2)->item.m != NONE && RIGHT(cp2)->item.t != NONE)
-							weaponr_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[RIGHT(cp2)->item.m], RIGHT(cp2)->item.t);
+							weaponr_fd_idx = FIRESH_FiredefsIDXForWeapon(&csi.ods[RIGHT(cp2)->item.m], RIGHT(cp2)->item.t);
 						if (HOLSTER(cp2) && HOLSTER(cp2)->item.m != NONE && HOLSTER(cp2)->item.t != NONE)
-							weaponh_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[HOLSTER(cp2)->item.m], HOLSTER(cp2)->item.t);
+							weaponh_fd_idx = FIRESH_FiredefsIDXForWeapon(&csi.ods[HOLSTER(cp2)->item.m], HOLSTER(cp2)->item.t);
 
 						if (weaponr_fd_idx < 0 || weaponh_fd_idx < 0) {
 							/* @todo: Is there a better way to check for this case? */
