@@ -385,10 +385,6 @@ SOURCE=..\..\src\qcommon\unzip.c
 
 SOURCE=..\..\src\ports\win32\vid_dll.c
 # End Source File
-# Begin Source File
-
-SOURCE=..\..\src\client\x86.c
-# End Source File
 # End Group
 # Begin Group "Header Files"
 

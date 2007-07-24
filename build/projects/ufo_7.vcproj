@@ -489,9 +489,6 @@
 			<File
 				RelativePath="ports\win32\vid_dll.c">
 			</File>
-			<File
-				RelativePath="client\x86.c">
-			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"

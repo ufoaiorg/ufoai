@@ -211,19 +211,11 @@ void EmitWaterPolys (mBspSurface_t * fa)
 			os = v[3];
 			ot = v[4];
 
-#if !USE_X86_ASM
 			s = os + r_turbsin[(int) ((ot * 0.125 + r_newrefdef.time) * TURBSCALE) & 255];
-#else
-			s = os + r_turbsin[Q_ftol(((ot * 0.125 + rdt) * TURBSCALE)) & 255];
-#endif
 			s += scroll;
 			s *= (1.0 / 64);
 
-#if !USE_X86_ASM
 			t = ot + r_turbsin[(int) ((os * 0.125 + rdt) * TURBSCALE) & 255];
-#else
-			t = ot + r_turbsin[Q_ftol(((os * 0.125 + rdt) * TURBSCALE)) & 255];
-#endif
 			t *= (1.0 / 64);
 
 			qglTexCoord2f(s, t);

@@ -57,12 +57,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 #endif /* _MSC_VER */
 
-#ifdef LCC_WIN32
-# ifndef C_ONLY
-#  define C_ONLY
-# endif
-#endif
-
 #ifdef HAVE_CONFIG_H
 # include "../../config.h"
 #endif
@@ -144,18 +138,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* to support the gnuc __attribute__ command */
 #if defined __ICC || !defined __GNUC__
 #  define __attribute__(x)  /*NOTHING*/
-#endif
-
-#if (defined _M_IX86 || defined __i386__ || defined(__ia64__)) && !defined C_ONLY && !defined __sun__ && !defined _MSC_VER
-#define USE_X86_ASM   1
-#else
-#define USE_X86_ASM   0
-#endif
-
-#if defined _M_ALPHA && !defined C_ONLY
-#define idaxp   1
-#else
-#define idaxp   0
 #endif
 
 #ifndef byte
@@ -316,11 +298,7 @@ extern vec4_t vec4_origin;
 qboolean Q_IsPowerOfTwo(int i);
 
 /* microsoft's fabs seems to be ungodly slow... */
-#if defined _M_IX86 && !defined C_ONLY
-extern long Q_ftol(float f);
-#else
-#define Q_ftol( f ) ( long ) (f)
-#endif
+#define Q_ftol(f) (long) (f)
 
 typedef union {
 	float f[3];

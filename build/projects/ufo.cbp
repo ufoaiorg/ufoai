@@ -302,9 +302,6 @@
 		</Unit>
 		<Unit filename="../../src/client/snd_wave.h" />
 		<Unit filename="../../src/client/vid.h" />
-		<Unit filename="../../src/client/x86.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="../../src/game/game.h" />
 		<Unit filename="../../src/game/inv_shared.c">
 			<Option compilerVar="CC" />

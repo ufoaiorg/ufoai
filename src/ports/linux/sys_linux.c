@@ -227,9 +227,6 @@ static void Sys_Backtrace (int sig, siginfo_t *siginfo, void *secret)
  */
 void Sys_Init (void)
 {
-#if USE_X86_ASM
-/*	Sys_SetFPCW(); */
-#endif
 #ifdef __linux__
 # ifndef __x86_64__
 	struct sigaction sa;

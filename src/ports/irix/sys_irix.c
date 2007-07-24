@@ -57,9 +57,6 @@ uid_t saved_euid;
 void Sys_Init (void)
 {
 	Cvar_Get("sys_os", "irix", CVAR_SERVERINFO, NULL);
-#if USE_X86_ASM
-/*	Sys_SetFPCW(); */
-#endif
 }
 
 void Sys_Error (const char *error, ...)

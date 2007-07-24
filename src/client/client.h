@@ -973,14 +973,6 @@ void CL_ParseSequence(const char *name, const char **text);
 cdlight_t *CL_AllocDlight(int key);
 void CL_AddParticles(void);
 
-/* x86.c */
-#if USE_X86_ASM
-void x86_TimerStart(void);
-void x86_TimerStop(void);
-void x86_TimerInit(unsigned long smallest, unsigned longest);
-unsigned long *x86_TimerGetHistogram(void);
-#endif /* USE_X86_ASM */
-
 /* cl_map.c */
 #define GLOBE_ROTATE -90
 #define MAX_PROJECTILESONGEOSCAPE 16
