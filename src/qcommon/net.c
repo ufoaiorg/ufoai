@@ -44,6 +44,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # define gai_strerrorA estr_n
 #else
 # define INVALID_SOCKET (-1)
+typedef int SOCKET;
 # include <sys/select.h>
 # include <sys/types.h>
 # include <sys/socket.h>
@@ -538,7 +539,7 @@ static qboolean set_non_blocking (int socket)
 static struct net_stream *do_connect (const char *node, const char *service, const struct addrinfo *addr, int i)
 {
 	struct net_stream *s;
-	int sock = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
+	SOCKET sock = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
 	if (sock == INVALID_SOCKET) {
 		Com_Printf("Failed to create socket: %s\n", estr());
 		return NULL;
@@ -829,7 +830,7 @@ qboolean stream_is_loopback (struct net_stream *s)
  */
 static int do_start_server (const struct addrinfo *addr)
 {
-	int sock = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
+	SOCKET sock = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
 	int t = 1;
 
 	if (sock == INVALID_SOCKET) {
@@ -933,7 +934,7 @@ void stop_server (void)
 static struct datagram_socket *do_new_datagram_socket (const struct addrinfo *addr)
 {
 	struct datagram_socket *s;
-	int sock = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
+	SOCKET sock = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
 	int t = 1;
 	int index = find_free_datagram_socket();
 
