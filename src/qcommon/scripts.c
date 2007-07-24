@@ -1897,11 +1897,8 @@ TERRAIN PARSERS
 ==============================================================================
 */
 
-#define MAX_TERRAINTYPES 1024
 #define TERRAIN_HASH_SIZE 64
-static terrainType_t terrainTypes[MAX_TERRAINTYPES];
-static terrainType_t *terrainTypesHash[MAX_TERRAINTYPES];
-static int numTerrainTypes = 0;
+static terrainType_t *terrainTypesHash[TERRAIN_HASH_SIZE];
 
 static const value_t terrainTypeValues[] = {
 	{"footstepsound", V_STRING, offsetof(terrainType_t, footStepSound), 0},
@@ -1920,6 +1917,7 @@ const terrainType_t* Com_GetTerrainType (const char *textureName)
 	unsigned hash;
 	terrainType_t *t;
 
+	assert(textureName);
 	hash = Com_HashKey(textureName, TERRAIN_HASH_SIZE);
 	for (t = terrainTypesHash[hash]; t; t = t->hash_next) {
 		if (!Q_strcmp(textureName, t->texture))
@@ -1938,25 +1936,12 @@ static void Com_ParseTerrain (const char *name, const char **text)
 {
 	const char *errhead = "Com_ParseTerrain: unexpected end of file (terrain ";
 	const char *token;
-	int i;
 	terrainType_t *t;
 	const value_t *v;
 	unsigned hash;
 
 	/* check for additions to existing name categories */
-	for (i = 0, t = terrainTypes; i < numTerrainTypes; i++, t++)
-		if (!Q_strcmp(t->texture, name))
-			break;
-
-	/* reset new category */
-	if (i == numTerrainTypes) {
-		if (numTerrainTypes < MAX_TERRAINTYPES) {
-			memset(t, 0, sizeof(terrainType_t));
-		} else {
-			Com_Printf("Too many terrain definitions, '%s' ignored.\n", name);
-			return;
-		}
-	} else {
+	if (Com_GetTerrainType(name) != NULL) {
 		Com_Printf("Terrain definition with same name already parsed: '%s'\n", name);
 		return;
 	}
@@ -1968,10 +1953,10 @@ static void Com_ParseTerrain (const char *name, const char **text)
 		return;
 	}
 
+	t = Mem_PoolAlloc(sizeof(terrainType_t), com_genericPool, 0);
 	t->texture = Mem_PoolStrDup(name, com_genericPool, 0);
-	numTerrainTypes++;
 	hash = Com_HashKey(name, TERRAIN_HASH_SIZE);
-	/* link in */
+	/* link in terrainTypesHash[hash] should be NULL on the first run */
 	t->hash_next = terrainTypesHash[hash];
 	terrainTypesHash[hash] = t;
 
