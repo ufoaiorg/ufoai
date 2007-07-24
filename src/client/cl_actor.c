@@ -2256,8 +2256,50 @@ void CL_InvCheckHands (struct dbuffer *msg)
 }
 
 /**
+ * @brief Plays the actor footsteps for hidden actors that are close.
+ * @param[in] msg
+ * @note EV_ACTOR_MOVE_HIDDEN
+ */
+void CL_ActorMoveHidden (struct dbuffer *msg)
+{
+	le_t *le;
+	int number;
+
+	number = NET_ReadShort(msg);
+	/* get le */
+	le = LE_Get(number);
+	if (!le || (le->type != ET_HIDDEN && le->type != ET_ACTOR && le->type != ET_ACTOR2x2)) {
+		Com_Printf("Can't move (hidden), LE doesn't exist or is not an actor (number: %i)\n", number);
+		return;
+	}
+
+	if (le->state & STATE_DEAD) {
+		Com_Printf("Can't move, actor dead\n");
+		return;
+	}
+
+	/*Com_Printf("CL_ActorMoveHidden: number: %i (team: %i)\n", number, le->team);*/
+	/* get length */
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_MOVE], &le->pathLength, le->path);
+
+	/* activate PathMove function */
+	le->think = LET_StartPathMove;
+	le->pathPos = 0;
+	le->startTime = cl.time;
+	le->endTime = cl.time;
+	/* FIXME: speed should somehow depend on strength of character */
+	if (le->state & STATE_CROUCHED)
+		le->speed = 50;
+	else
+		le->speed = 100;
+	le->think = LET_PathMoveHidden;
+	le->think(le);
+}
+
+/**
  * @brief Moves actor.
  * @param[in] msg
+ * @note EV_ACTOR_MOVE
  */
 void CL_ActorDoMove (struct dbuffer *msg)
 {

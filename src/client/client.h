@@ -629,6 +629,7 @@ void LE_AddGrenade(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t v0, int dt);
 void LET_StartIdle(le_t * le);
 void LET_Appear(le_t * le);
 void LET_StartPathMove(le_t * le);
+void LET_PathMoveHidden(le_t * le);
 
 void LM_Perish(struct dbuffer *msg);
 void LM_Explode(struct dbuffer *msg);
@@ -721,6 +722,7 @@ void CL_ActorStartMove(le_t * le, pos3_t to);
 void CL_ActorShoot(le_t * le, pos3_t at);
 void CL_InvCheckHands(struct dbuffer *msg);
 void CL_ActorDoMove(struct dbuffer *msg);
+void CL_ActorMoveHidden(struct dbuffer *msg);
 void CL_ActorDoShoot(struct dbuffer *msg);
 void CL_ActorShootHidden(struct dbuffer *msg);
 void CL_ActorDoThrow(struct dbuffer *msg);

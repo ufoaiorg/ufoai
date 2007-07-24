@@ -35,8 +35,7 @@ int reactionFiremode[MAX_EDICTS][RF_MAX]; /* Defined in g_local.h See there for 
 #define MAX_DVTAB 32
 static byte steps_buffer[MAX_DVTAB];
 static int steps = 0;
-static int steps_num;
-static int steps_mask;
+static edict_t *steps_edict = NULL;
 
 /**
  * @brief
@@ -44,15 +43,24 @@ static int steps_mask;
  */
 void G_FlushSteps (void)
 {
-	int i;
-	if (steps > 0) {
+	int i, steps_mask;
+
+	if (steps > 0 && steps_edict) {
+		steps_mask = G_VisToPM(steps_edict->visflags);
 		gi.AddEvent(steps_mask, EV_ACTOR_MOVE);
-		gi.WriteShort(steps_num);
+		gi.WriteShort(steps_edict->number);
+		gi.WriteShort(steps);
+		for (i = 0; i < steps; i++)
+			gi.WriteByte(steps_buffer[i]);
+
+		gi.AddEvent(~steps_mask, EV_ACTOR_MOVE_HIDDEN);
+		gi.WriteShort(steps_edict->number);
 		gi.WriteShort(steps);
 		for (i = 0; i < steps; i++)
 			gi.WriteByte(steps_buffer[i]);
 	}
 
+	steps_edict = NULL;
 	steps = 0;
 }
 
@@ -500,6 +508,43 @@ int G_TestVis (int team, edict_t * check, int flags)
 	return old;
 }
 
+/**
+ * @brief This function sends all the actors to the client that are not visible
+ * initially - this is needed because an actor can e.g. produce sounds that are
+ * send over the net
+ * @note Call this for the first G_CheckVis call for every new actor or player
+ * @sa G_CheckVis
+ */
+void G_SendInvisible (int team)
+{
+	int i, vis;
+	edict_t* ent;
+
+	if (level.num_alive[team]) {
+		/* check visibility */
+		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
+			if (ent->inuse) {
+				/* check if he's visible */
+				vis = G_TestVis(team, ent, qfalse);
+
+				/* not visible for this team - so add the le only */
+				if (!(vis & VIS_YES)) {
+					/* parsed in CL_ActorAppear */
+					gi.AddEvent(G_TeamToPM(team), EV_ACTOR_ADD);
+					gi.WriteShort(ent->number);
+					gi.WriteByte(ent->team);
+					gi.WriteByte(ent->chr.teamDesc);
+					gi.WriteByte(ent->chr.category);
+					gi.WriteByte(ent->chr.gender);
+					gi.WriteByte(ent->pnum);
+					gi.WriteGPos(ent->pos);
+					gi.WriteShort(ent->state & STATE_PUBLIC);
+					gi.WriteByte(ent->fieldSize);
+				}
+			}
+		}
+	}
+}
 
 /**
  * @brief Checks whether an edict appear/perishes for a specific team - also
@@ -523,9 +568,7 @@ int G_TestVis (int team, edict_t * check, int flags)
 int G_CheckVisTeam (int team, edict_t * check, qboolean perish)
 {
 	int vis, i, end;
-	int status;
-
-	status = 0;
+	int status = 0;
 
 	/* decide whether to check all entities or a specific one */
 	if (!check) {
@@ -1291,8 +1334,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 			/* everything ok, found valid route */
 			/* create movement related events */
 			steps = 0;
-			steps_num = num;
-			steps_mask = G_VisToPM(ent->visflags);
+			steps_edict = ent;
 
 			FLOOR(ent) = NULL;
 
@@ -1337,6 +1379,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				gi.linkentity(ent);
 
 				/* write step */
+				assert(steps < MAX_DVTAB);
 				steps_buffer[steps++] = dvtab[numdv];
 
 				/* check if player appears/perishes, seen from other teams */
@@ -2513,7 +2556,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
  * @brief
  * @sa CL_EntEdict
  */
-static void G_SendVisibleEdicts (void)
+static void G_SendVisibleEdicts (int team)
 {
 	int i;
 	edict_t *ent;
@@ -2525,7 +2568,7 @@ static void G_SendVisibleEdicts (void)
 		if (!ent->inuse)
 			continue;
 		if (ent->type == ET_BREAKABLE || ent->type == ET_DOOR) {
-			gi.AddEvent(~G_VisToPM(ent->visflags), EV_ENT_EDICT);
+			gi.AddEvent(G_TeamToPM(team), EV_ENT_EDICT);
 			gi.WriteShort(ent->type);
 			gi.WriteShort(ent->number);
 			gi.WriteShort(ent->modelindex);
@@ -2610,18 +2653,20 @@ qboolean G_ClientSpawn (player_t * player)
 
 	/* show visible actors and submit stats */
 	G_ClearVisFlags(player->pers.team);
+	G_SendInvisible(player->pers.team);
 	G_CheckVis(NULL, qfalse);
 
 	/* set initial state to reaction fire activated for the other team */
-	if (sv_maxclients->integer > 1 && level.activeTeam != player->pers.team)
+	if (sv_maxclients->integer > 1 && level.activeTeam != player->pers.team) {
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 			if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2))
 				G_ClientStateChange(player, i, STATE_REACTION_ONCE, qfalse);
+	}
 
 	G_SendPlayerStats(player);
 
 	/* send things like doors and breakables */
-	G_SendVisibleEdicts();
+	G_SendVisibleEdicts(player->pers.team);
 
 	/* give time units */
 	G_GiveTimeUnits(player->pers.team);

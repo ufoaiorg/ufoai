@@ -93,9 +93,11 @@ const char *ev_format[] =
 	"sss",				/* EV_ENT_EDICT */
 
 	"!sbbbbbgbbbssbsbbbs",	/* EV_ACTOR_APPEAR; beware of the '!' */
+	"!sbbbbbgsb",		/* EV_ACTOR_ADD; beware of the '!' */
 	"s",				/* EV_ACTOR_START_MOVE */
 	"sb",				/* EV_ACTOR_TURN */
 	"!s*",				/* EV_ACTOR_MOVE; beware of the '!' */
+	"!s*",				/* EV_ACTOR_MOVE_HIDDEN; beware of the '!' */
 
 	"ssbbgg",			/* EV_ACTOR_START_SHOOT */
 	"ssbbbppb",			/* EV_ACTOR_SHOOT; the last 'b' cannot be 'd' */
@@ -140,9 +142,11 @@ static const char *ev_names[] =
 	"EV_ENT_EDICT",
 
 	"EV_ACTOR_APPEAR",
+	"EV_ACTOR_ADD",
 	"EV_ACTOR_START_MOVE",
 	"EV_ACTOR_TURN",
 	"EV_ACTOR_MOVE",
+	"EV_ACTOR_MOVE_HIDDEN",
 	"EV_ACTOR_START_SHOOT",
 	"EV_ACTOR_SHOOT",
 	"EV_ACTOR_SHOOT_HIDDEN",
@@ -174,6 +178,7 @@ static void CL_EntPerish(struct dbuffer *msg);
 static void CL_EntEdict(struct dbuffer *msg);
 static void CL_ActorDoStartMove(struct dbuffer *msg);
 static void CL_ActorAppear(struct dbuffer *msg);
+static void CL_ActorAdd(struct dbuffer *msg);
 static void CL_ActorStats(struct dbuffer *msg);
 static void CL_ActorStateChange(struct dbuffer *msg);
 static void CL_InvAdd(struct dbuffer *msg);
@@ -198,9 +203,11 @@ static void (*ev_func[])( struct dbuffer *msg ) =
 	CL_EntEdict,
 
 	CL_ActorAppear,
+	CL_ActorAdd,
 	CL_ActorDoStartMove,
 	CL_ActorDoTurn,
 	CL_ActorDoMove,
+	CL_ActorMoveHidden,
 	CL_ActorStartShoot,
 	CL_ActorDoShoot,
 	CL_ActorShootHidden,
@@ -854,10 +861,47 @@ void CL_DrawLineOfSight (le_t *watcher, le_t *target)
 	if (target->team == TEAM_CIVILIAN)
 		VectorSet(ptl->color, 0.2, 0.2, 1);
 }
+
+/**
+ * @brief Adds an actor to the list of le's
+ * @sa CL_ActorAppear
+ * @note Actor is invisible until CL_ActorAppear (EV_ACTOR_APPEAR) was triggered
+ * @note EV_ACTOR_ADD
+ */
+static void CL_ActorAdd (struct dbuffer *msg)
+{
+	le_t *le;
+	int entnum;
+
+	/* check if the actor is already visible */
+	entnum = NET_ReadShort(msg);
+	le = LE_Get(entnum);
+	if (le) {
+		Com_Printf("CL_ActorAdd: Actor with number %i already exists\n", entnum);
+		return;
+	}
+	le = LE_Add(entnum);
+
+	/* get the info */
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_ADD],
+				&le->team, &le->teamDesc, &le->category,
+				&le->gender, &le->pnum, &le->pos,
+				&le->state, &le->fieldSize);
+
+	/*Com_Printf("CL_ActorAdd: Add number: %i\n", entnum);*/
+
+	le->type = ET_HIDDEN;
+
+	Grid_PosToVec(&clMap, le->pos, le->origin);
+	le->invis = qtrue;
+}
+
 /**
  * @brief
  * @sa CL_AddActorToTeamList
  * @sa G_AppearPerishEvent
+ * @sa CL_ActorAdd
+ * @note EV_ACTOR_APPEAR
  */
 static void CL_ActorAppear (struct dbuffer *msg)
 {
@@ -879,6 +923,8 @@ static void CL_ActorAppear (struct dbuffer *msg)
 		le->inuse = qtrue;
 		newActor = qfalse;
 	}
+	/* maybe added via CL_ActorAdd before */
+	le->invis = qfalse;
 
 	/* get the info */
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_APPEAR],

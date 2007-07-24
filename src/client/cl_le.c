@@ -441,6 +441,67 @@ static void CL_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
 }
 
 /**
+ * @brief Move the actor along the path to the given location but don't show him
+ * @note Think function
+ * @sa CL_ActorMoveHidden
+ * @sa LET_PathMove
+ */
+void LET_PathMoveHidden (le_t * le)
+{
+	byte dv;
+	float frac;
+	vec3_t start, dest, delta;
+
+	/* check for start */
+	if (cl.time <= le->startTime)
+		return;
+
+	/* move ahead */
+	while (cl.time > le->endTime) {
+		VectorCopy(le->pos, le->oldPos);
+
+		if (le->pathPos < le->pathLength) {
+			trace_t trace;
+			vec3_t from, to;
+
+			/* next part */
+			dv = le->path[le->pathPos++];
+			PosAddDV(le->pos, dv);
+
+			/* prepare trace vectors */
+			PosToVec(le->pos, from);
+			VectorCopy(from, to);
+			/* between these two we should really hit the ground */
+			from[2] += UNIT_HEIGHT;
+			to[2] -= UNIT_HEIGHT;
+
+			trace = CL_Trace(from, to, vec3_origin, vec3_origin, NULL, NULL, MASK_SOLID);
+			if (trace.surface)
+				CL_PlaySoundFileAndParticleForSurface(le, trace.surface->name);
+
+			le->dir = dv & (DIRECTIONS-1);
+			le->angles[YAW] = dangle[le->dir];
+			le->startTime = le->endTime;
+			/* check for straight movement or diagonal movement */
+			le->endTime += ((dv & (DIRECTIONS-1)) > 3 ? UNIT_SIZE * 1.41 : UNIT_SIZE) * 1000 / le->speed;
+		} else {
+			le->think = NULL;
+			return;
+		}
+	}
+
+	/* interpolate the position */
+	Grid_PosToVec(&clMap, le->pos, le->origin);
+	Grid_PosToVec(&clMap, le->oldPos, start);
+	Grid_PosToVec(&clMap, le->pos, dest);
+	VectorSubtract(dest, start, delta);
+
+	frac = (float) (cl.time - le->startTime) / (float) (le->endTime - le->startTime);
+
+	VectorMA(start, frac, delta, le->origin);
+}
+
+/**
  * @brief Move the actor along the path to the given location
  * @note Think function
  * @sa CL_ActorDoMove
