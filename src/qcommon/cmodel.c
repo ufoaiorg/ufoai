@@ -2547,19 +2547,19 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, int z
 		VectorSet(poslist[0], (*p)[0], (*p)[1], (*p)[2]);
 
 		switch (actor_size) {
-			case 0:
-			case ACTOR_SIZE_NORMAL:
-				poslen = 1;
-				break;
-			case ACTOR_SIZE_2x2:
-				VectorSet(poslist[1], poslist[0][0] + 1, poslist[0][1],     poslist[0][2]);
-				VectorSet(poslist[2], poslist[0][0],     poslist[0][1] + 1, poslist[0][2]);
-				VectorSet(poslist[3], poslist[0][0] + 1, poslist[0][1] + 1, poslist[0][2]);
-				poslen = 4;
-				break;
-			default:
-				Com_Printf("Grid_CheckForbidden: unknown actor-size: %i\n", actor_size);
-				return qfalse;
+		case 0:
+		case ACTOR_SIZE_NORMAL:
+			poslen = 1;
+			break;
+		case ACTOR_SIZE_2x2:
+			VectorSet(poslist[1], poslist[0][0] + 1, poslist[0][1],     poslist[0][2]);
+			VectorSet(poslist[2], poslist[0][0],     poslist[0][1] + 1, poslist[0][2]);
+			VectorSet(poslist[3], poslist[0][0] + 1, poslist[0][1] + 1, poslist[0][2]);
+			poslen = 4;
+			break;
+		default:
+			Com_Printf("Grid_CheckForbidden: unknown actor-size: %i\n", actor_size);
+			return qfalse;
 		}
 
 		forbidden_size = *(p + 1); /**< The list is pos3_t + byte  - so the fourth byte is the size. */
@@ -2595,18 +2595,23 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, int z
  * @param[in] y Current y location in the map.
  * @param[in] z Current z location in the map.
  * @param[in] dv Direction vector index (see DIRECTIONS and dvecs)
- * @param[in] h
- * @param[in] ol (Guess: the "old length" i.e. the TUs used so far)
+ * @param[in] h	(The R_HEIGHT value for x,y,z)
+ * @param[in] ol (It's also the R_AREA value for x,y,z) (Guess: the "old length" i.e. the TUs used so far)
+ * @param[in] actor_size Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @sa Grid_CheckForbidden
- * @todo Add checks for actor size (2x2).
+ * @todo Add diagonal-move checks for actor size (2x2).
+ * @todo Add height/fall checks for actor size (2x2).
  */
-static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, int h, int ol)
+static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, int h, int ol, int actor_size)
 {
 	int nx, ny, sh, l;
 	int dx, dy;
 	pos3_t dummy;
+	
+	pos3_t poslist_n[4];
+	pos3_t poslist[4];
 
-	l = dv > 3	/**< If direction vector index is set to a diagonal offset then do add 3 TUs. Add 2 for straight directions.? */
+	l = dv > 3	/**< Add TUs to old length/TUs depending on straight or diagonal move. */
 		? ol + AREA_TU_DIAGONAL
 		: ol + AREA_TU_STRAIGHT;
 
@@ -2615,34 +2620,88 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
 	nx = x + dx;		/**< "new" x value = starting x value + difference from shoosen direction */
 	ny = y + dy;		/**< "new" y value = starting y value + difference from shoosen direction */
 
-	/* Range check of new values. */
-	if (nx < 0 || nx >= WIDTH || ny < 0 || ny >= WIDTH)
-		return;
 
 	/* Connection checks  (Guess: Abort if any of the 'straight' directions are not connected to the original position.) */
 	/** @todo But why is it also checked for (dv > 3) directions? Might be a coding-trick; if so it's not really easy to read -> better way?. */
-	if (dx > 0 && !R_CONN_PX(map, x, y, z))
-		return;
-	if (dx < 0 && !R_CONN_NX(map, x, y, z))
-		return;
-	if (dy > 0 && !R_CONN_PY(map, x, y, z))
-		return;
-	if (dy < 0 && !R_CONN_NY(map, x, y, z))
-		return;
+	/** @todo I think this and the next few lines need to be adapted to support 2x2 units. */
+	switch (actor_size) {
+	case 0:
+	case ACTOR_SIZE_NORMAL:
+		/* Range check of new values (1x1) */
+		if (nx < 0 || nx >= WIDTH || ny < 0 || ny >= WIDTH)
+			return;
+	
+		/* Connection checks for 1x1 actor. */
+		/* We need to check the 4 surrounding "straight" fields (the 4 diagonal ones are skipped here) */
+		if (dx > 0 && !R_CONN_PX(map, x, y, z))
+			return;
+		if (dx < 0 && !R_CONN_NX(map, x, y, z))
+			return;
+		if (dy > 0 && !R_CONN_PY(map, x, y, z))
+			return;
+		if (dy < 0 && !R_CONN_NY(map, x, y, z))
+			return;
+		break;
+		
+		/* Check diagonal connection */
+		/* If direction vector index is set to a diagonal offset check if we can move there throiugh connected "straight" squares. */
+		if (dv > 3 &&
+			!( (dx > 0 ? R_CONN_PX(map, x,    y+dy, z) : R_CONN_NX(map, x,    y+dy, z))
+			&& (dy > 0 ? R_CONN_PY(map, x+dx, y,    z) : R_CONN_NY(map, x+dx, y,    z))
+			&& !Grid_CheckForbidden(map, x,    y+dy, z, ACTOR_SIZE_NORMAL)
+			&& !Grid_CheckForbidden(map, x+dx, y,    z, ACTOR_SIZE_NORMAL)))
+			return;
+		break;
+	case ACTOR_SIZE_2x2:
+		/* Range check of new values (2x2) */
+		VectorSet(poslist_n[0], nx, ny, z);
+		VectorSet(poslist_n[1], poslist_n[0][0] + 1, poslist_n[0][1],     poslist_n[0][2]);
+		VectorSet(poslist_n[2], poslist_n[0][0],     poslist_n[0][1] + 1, poslist_n[0][2]);
+		VectorSet(poslist_n[3], poslist_n[0][0] + 1, poslist_n[0][1] + 1, poslist_n[0][2]);
+	
+		if (poslist_n[0][0] < 0 || poslist_n[0][0] >= WIDTH || poslist_n[0][1] < 0 || poslist_n[0][1] >= WIDTH	
+		||  poslist_n[1][0] < 0 || poslist_n[1][0] >= WIDTH || poslist_n[1][1] < 0 || poslist_n[1][1] >= WIDTH	
+		||  poslist_n[2][0] < 0 || poslist_n[2][0] >= WIDTH || poslist_n[2][1] < 0 || poslist_n[2][1] >= WIDTH	
+		||  poslist_n[3][0] < 0 || poslist_n[3][0] >= WIDTH || poslist_n[3][1] < 0 || poslist_n[3][1] >= WIDTH)
+			return;
 
-	/** @todo still connection checks? */
-	if (dv > 3 &&	/** @todo If direction vector index is set to a diagonal offset then do what? */
-		!( (dx > 0 ? R_CONN_PX(map, x,    y+dy, z) : R_CONN_NX(map, x,    y+dy, z))
-		&& (dy > 0 ? R_CONN_PY(map, x+dx, y,    z) : R_CONN_NY(map, x+dx, y,    z))
-		&& !Grid_CheckForbidden(map, x,    y+dy, z, ACTOR_SIZE_NORMAL)
-		&& !Grid_CheckForbidden(map, x+dx, y,    z, ACTOR_SIZE_NORMAL))
-		)
+		/* Connection checks for actor (2x2) */
+		/* We need to check the 8 surrounding "straight" fields (2 in each direction; the 4 diagonal ones are skipped here) */
+		VectorSet(poslist[0], x, y, z);							/* has NX and NY */
+		VectorSet(poslist[1], poslist[0][0] + 1, poslist[0][1],     poslist[0][2]);	/* has PX and NY */
+		VectorSet(poslist[2], poslist[0][0],     poslist[0][1] + 1, poslist[0][2]);	/* has NX and PY */
+		VectorSet(poslist[3], poslist[0][0] + 1, poslist[0][1] + 1, poslist[0][2]);	/* has PX and PY */
+		
+		if (dx > 0 && !(R_CONN_PX(map, poslist[1][0], poslist[1][1], poslist[1][2]) || R_CONN_PX(map, poslist[3][0], poslist[3][1], poslist[3][2])))
+			return;
+		if (dx < 0 && !(R_CONN_NX(map, poslist[0][0], poslist[0][1], poslist[0][2]) || R_CONN_NX(map, poslist[2][0], poslist[2][1], poslist[2][2])))
+			return;
+		if (dy > 0 && !(R_CONN_PY(map, poslist[2][0], poslist[2][1], poslist[2][2]) || R_CONN_PY(map, poslist[3][0], poslist[3][1], poslist[3][2])))
+			return;
+		if (dy < 0 && !(R_CONN_NY(map, poslist[0][0], poslist[0][1], poslist[0][2]) || R_CONN_NY(map, poslist[1][0], poslist[1][1], poslist[1][2])))
+			return;
+
+#if 0		
+		/** @todo Check diagonal connection for a 2x2 unit.
+		 * Currently this is not needed becasue we skip it in Grid_MoveMarkRoute :)
+		 */
+		if (dv > 3 &&
+			!( (dx > 0 ? R_CONN_PX(map, x,    y+dy, z) : R_CONN_NX(map, x,    y+dy, z))
+			&& (dy > 0 ? R_CONN_PY(map, x+dx, y,    z) : R_CONN_NY(map, x+dx, y,    z))
+			&& !Grid_CheckForbidden(map, x,    y+dy, z, ACTOR_SIZE_NORMAL)
+			&& !Grid_CheckForbidden(map, x+dx, y,    z, ACTOR_SIZE_NORMAL)))
+			return;
+#endif
+		break;
+	default:
+		Com_Printf("Grid_MoveMark: unknown actor-size: %i\n", actor_size);
 		return;
+	}
+	
 
 	/* Height checks. */
-	/**
-	 * @todo I think this and the next few lines need to be adapted to support 2x2 units
-	 * I think this mainly because this is the only palce aside from Grid_CheckForbidden where there are things calculated for path-finding.
+	/** @todo I think this and the next few lines need to be adapted to support 2x2 units.
+	 * If we ever encounter 2x2 units falling through tiny holes this might be the reason :)
 	 */
 	sh = R_STEP(map, x, y, z) ? sh_big : sh_low;
 	z += (h + sh) / 0x10;
@@ -2655,7 +2714,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
 		return;
 
 	/* Test for forbidden (by other entities) areas. */
-	if (Grid_CheckForbidden(map, nx, ny, z, ACTOR_SIZE_NORMAL))
+	if (Grid_CheckForbidden(map, nx, ny, z, actor_size))
 		return;
 
 	/* Store move. */
@@ -2671,9 +2730,10 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
  * @param[in] yl (Guess: Lower y limit?)
  * @param[in] xh (Guess: Higher/upper x limit?)
  * @param[in] yh (Guess: Higher/upper y limit?)
+ * @param[in] actor_size Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @sa Grid_MoveMark
  */
-static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, int yh)
+static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, int yh, int actor_size)
 {
 	int x, y, z, h;
 	int dv, l;
@@ -2691,8 +2751,12 @@ static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, i
 						continue;
 
 					/* test the next connections */
-					for (dv = 0; dv < DIRECTIONS; dv++)
-						Grid_MoveMark(map, x, y, z, dv, h, l);
+					for (dv = 0; dv < DIRECTIONS; dv++) {
+						if ((actor_size != ACTOR_SIZE_NORMAL) && (dv > 3))
+							/* Ignore diagonal move for 2x2 and other units */
+							break;
+						Grid_MoveMark(map, x, y, z, dv, h, l, actor_size);
+					}
 				}
 }
 
@@ -2700,7 +2764,7 @@ static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, i
  * @brief
  * @param[in|out] map Pointer to client or server side routing table (clMap, svMap)
  * @param[in] from The position to start the calculation from.
- * @param[in] size The size of thing to calc the move for (e.g. size=2 means 2x2).
+ * @param[in] actor_size The size of thing to calc the move for (e.g. size=2 means 2x2).
  * The plan is to have the 'origin' in 2x2 units in the upper-left (towards the lower coordinates) corner of the 2x2 square.
  * @param[in] distance (Guess: the maximal distance [i.e. sqaures in all directions] to calculate move-information for.)
  * @param[in] fb_list Forbidden list (entities are standing at those points)
@@ -2708,9 +2772,8 @@ static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, i
  * @sa Grid_MoveMarkRoute
  * @sa G_MoveCalc (g_client.c)
  * @sa CL_ConditionalMoveCalc (cl_actor.c)
- * @todo "size" is unused right now - this needs to change (2x2 units).
  */
-void Grid_MoveCalc (struct routing_s *map, pos3_t from, int size, int distance, byte ** fb_list, int fb_length)
+void Grid_MoveCalc (struct routing_s *map, pos3_t from, int actor_size, int distance, byte ** fb_list, int fb_length)
 {
 	int xl, xh, yl, yh;	/* Guess: _h_igh/upper and _l_ow end of the exptending rectangle - see below. */
 	int i;			/* Distance counter */
@@ -2749,7 +2812,7 @@ void Grid_MoveCalc (struct routing_s *map, pos3_t from, int size, int distance, 
 		if (yh < WIDTH - 1)
 			yh++;
 
-		Grid_MoveMarkRoute(map, xl, yl, xh, yh);
+		Grid_MoveMarkRoute(map, xl, yl, xh, yh, actor_size);
 
 		/* swap test flag */
 		stf = tf;	/* (Guess: buffer value?) */
