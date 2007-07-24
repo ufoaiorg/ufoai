@@ -1239,7 +1239,7 @@ static void AIM_DrawAircraftSlots (aircraft_t *aircraft)
 
 	/* initialise models Cvar */
 	for (i = 0; i < 8; i++)
-		Cvar_Set(va("mn_aircraft_item_model_slot%i", j), "");
+		Cvar_Set(va("mn_aircraft_item_model_slot%i", i), "");
 
 	node = MN_GetNodeFromCurrentMenu("airequip_slot0");
 	for (i = 0; node && i < AIR_POSITIONS_MAX; node = node->next) {
