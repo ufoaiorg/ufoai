@@ -2968,7 +2968,7 @@ tech rs_craft_ufo_supply
 	// FIXME
 	require_AND
 	{
-		tech rs_craft_ufo_fighter
+		tech rs_craft_ufo_scout
 		item craft_ufo_supply 1
 	}
 
