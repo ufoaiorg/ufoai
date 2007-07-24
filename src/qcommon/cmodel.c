@@ -42,7 +42,7 @@ typedef struct {
 
 typedef struct {
 	cBspPlane_t *plane;
-	mapsurface_t *surface;
+	cBspSurface_t *surface;
 } cBspBrushSide_t;
 
 typedef struct {
@@ -80,7 +80,7 @@ typedef struct {
 	cBspBrushSide_t *brushsides;
 
 	int numtexinfo;
-	mapsurface_t *surfaces;
+	cBspSurface_t *surfaces;
 
 	int numplanes;
 	cBspPlane_t *planes; /* numplanes + 12 for box hull */
@@ -200,7 +200,7 @@ vec3_t map_min, map_max;
 struct routing_s svMap, clMap;
 
 /* static */
-static mapsurface_t nullsurface;
+static cBspSurface_t nullsurface;
 static mapTile_t mapTiles[MAX_MAPTILES];
 static int numTiles = 0;
 static mapTile_t *curTile;
@@ -312,7 +312,7 @@ static void CMod_LoadSubmodels (lump_t * l)
 static void CMod_LoadSurfaces (lump_t * l)
 {
 	texinfo_t *in;
-	mapsurface_t *out;
+	cBspSurface_t *out;
 	int i, count;
 
 	if (!l)
@@ -335,10 +335,9 @@ static void CMod_LoadSurfaces (lump_t * l)
 	curTile->numtexinfo = count;
 
 	for (i = 0; i < count; i++, in++, out++) {
-		Q_strncpyz(out->c.name, in->texture, sizeof(out->c.name));
-		Q_strncpyz(out->rname, in->texture, sizeof(out->rname));
-		out->c.flags = LittleLong(in->flags);
-		out->c.value = LittleLong(in->value);
+		Q_strncpyz(out->name, in->texture, sizeof(out->name));
+		out->flags = LittleLong(in->flags);
+		out->value = LittleLong(in->value);
 	}
 }
 
@@ -1737,7 +1736,7 @@ static void CM_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, t
 				enterfrac = 0;
 			trace->fraction = enterfrac;
 			trace->plane = *clipplane;
-			trace->surface = &(leadside->surface->c);
+			trace->surface = leadside->surface;
 			trace->contents = brush->contents;
 		}
 	}
@@ -2007,7 +2006,7 @@ static trace_t CM_BoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, 
 	/* fill in a default trace */
 	memset(&trace_trace, 0, sizeof(trace_trace));
 	trace_trace.fraction = 1;
-	trace_trace.surface = &(nullsurface.c);
+	trace_trace.surface = &(nullsurface);
 
 	if (!curTile->numnodes)		/* map not loaded */
 		return trace_trace;
@@ -2607,7 +2606,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
 	int nx, ny, sh, l;
 	int dx, dy;
 	pos3_t dummy;
-	
+
 	int poslist_n[4][3];  /* 3*int needed for range-check because pos3_t does not support negative values and has a smaller range. */
 	pos3_t poslist[4];
 
@@ -2630,7 +2629,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
 		/* Range check of new values (1x1) */
 		if (nx < 0 || nx >= WIDTH || ny < 0 || ny >= WIDTH)
 			return;
-	
+
 		/* Connection checks for 1x1 actor. */
 		/* We need to check the 4 surrounding "straight" fields (the 4 diagonal ones are skipped here) */
 		if (dx > 0 && !R_CONN_PX(map, x, y, z))
@@ -2642,7 +2641,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
 		if (dy < 0 && !R_CONN_NY(map, x, y, z))
 			return;
 		break;
-		
+
 		/* Check diagonal connection */
 		/* If direction vector index is set to a diagonal offset check if we can move there throiugh connected "straight" squares. */
 		if (dv > 3 &&
@@ -2658,10 +2657,10 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
 		VectorSet(poslist_n[1], poslist_n[0][0] + 1, poslist_n[0][1],     poslist_n[0][2]);
 		VectorSet(poslist_n[2], poslist_n[0][0],     poslist_n[0][1] + 1, poslist_n[0][2]);
 		VectorSet(poslist_n[3], poslist_n[0][0] + 1, poslist_n[0][1] + 1, poslist_n[0][2]);
-	
-		if (poslist_n[0][0] < 0 || poslist_n[0][0] >= WIDTH || poslist_n[0][1] < 0 || poslist_n[0][1] >= WIDTH	
-		||  poslist_n[1][0] < 0 || poslist_n[1][0] >= WIDTH || poslist_n[1][1] < 0 || poslist_n[1][1] >= WIDTH	
-		||  poslist_n[2][0] < 0 || poslist_n[2][0] >= WIDTH || poslist_n[2][1] < 0 || poslist_n[2][1] >= WIDTH	
+
+		if (poslist_n[0][0] < 0 || poslist_n[0][0] >= WIDTH || poslist_n[0][1] < 0 || poslist_n[0][1] >= WIDTH
+		||  poslist_n[1][0] < 0 || poslist_n[1][0] >= WIDTH || poslist_n[1][1] < 0 || poslist_n[1][1] >= WIDTH
+		||  poslist_n[2][0] < 0 || poslist_n[2][0] >= WIDTH || poslist_n[2][1] < 0 || poslist_n[2][1] >= WIDTH
 		||  poslist_n[3][0] < 0 || poslist_n[3][0] >= WIDTH || poslist_n[3][1] < 0 || poslist_n[3][1] >= WIDTH)
 			return;
 
@@ -2671,7 +2670,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
 		VectorSet(poslist[1], poslist[0][0] + 1, poslist[0][1],     poslist[0][2]);	/* has PX and NY */
 		VectorSet(poslist[2], poslist[0][0],     poslist[0][1] + 1, poslist[0][2]);	/* has NX and PY */
 		VectorSet(poslist[3], poslist[0][0] + 1, poslist[0][1] + 1, poslist[0][2]);	/* has PX and PY */
-		
+
 		if (dx > 0 && !(R_CONN_PX(map, poslist[1][0], poslist[1][1], poslist[1][2]) || R_CONN_PX(map, poslist[3][0], poslist[3][1], poslist[3][2])))
 			return;
 		if (dx < 0 && !(R_CONN_NX(map, poslist[0][0], poslist[0][1], poslist[0][2]) || R_CONN_NX(map, poslist[2][0], poslist[2][1], poslist[2][2])))
@@ -2681,7 +2680,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
 		if (dy < 0 && !(R_CONN_NY(map, poslist[0][0], poslist[0][1], poslist[0][2]) || R_CONN_NY(map, poslist[1][0], poslist[1][1], poslist[1][2])))
 			return;
 
-#if 0		
+#if 0
 		/** @todo Check diagonal connection for a 2x2 unit.
 		 * Currently this is not needed becasue we skip it in Grid_MoveMarkRoute :)
 		 */
@@ -2697,7 +2696,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
 		Com_Printf("Grid_MoveMark: unknown actor-size: %i\n", actor_size);
 		return;
 	}
-	
+
 
 	/* Height checks. */
 	/** @todo I think this and the next few lines need to be adapted to support 2x2 units.

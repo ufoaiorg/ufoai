@@ -466,8 +466,8 @@ static void LET_PathMove (le_t * le)
 				actorMoveLength -= tuCost;
 #if 0
 			/* prepare trace vectors */
-			VectorCopy(le->origin, from);
-			VectorCopy(le->origin, to);
+			PosToVec(le->pos, from);
+			VectorCopy(from, to);
 			/* between these two we should really hit the ground */
 			from[2] += UNIT_HEIGHT;
 			to[2] -= UNIT_HEIGHT;

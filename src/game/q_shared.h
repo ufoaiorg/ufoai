@@ -600,15 +600,10 @@ typedef struct cBspModel_s {
 } cBspModel_t;
 
 typedef struct cBspSurface_s {
-	char name[16];	/**< not used except in loading CMod_LoadSurfaces */
+	char name[MAX_QPATH];	/**< not used except in loading CMod_LoadSurfaces */
 	int flags;	/**< not used except in loading CMod_LoadSurfaces */
 	int value;	/**< not used except in loading CMod_LoadSurfaces */
 } cBspSurface_t;
-
-typedef struct mapsurface_s {   /* used internally due to name len probs //ZOID */
-	cBspSurface_t c;
-	char rname[32];
-} mapsurface_t;
 
 /** a trace is returned when a box is swept through the world */
 typedef struct {
