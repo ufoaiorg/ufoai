@@ -187,6 +187,8 @@ typedef struct routing_s {
 /* area */
 #define R_AREA(map,x,y,z) ((map)->area[(z)][(y)][(x)])
 #define R_SAREA(map,x,y,z) ((map)->areaStored[(z)][(y)][(x)])
+#define AREA_TU_STRAIGHT 2
+#define AREA_TU_DIAGONAL 3
 
 /* extern */
 int c_pointcontents;
@@ -2594,9 +2596,9 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, int z
  * @param[in] z Current z location in the map.
  * @param[in] dv Direction vector index (see DIRECTIONS and dvecs)
  * @param[in] h
- * @param[in] ol
+ * @param[in] ol (Guess: the "old length" i.e. the TUs used so far)
  * @sa Grid_CheckForbidden
- * @todo add checks for actor size (2x2)
+ * @todo Add checks for actor size (2x2).
  */
 static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, int h, int ol)
 {
@@ -2604,16 +2606,21 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
 	int dx, dy;
 	pos3_t dummy;
 
-	/* range check */
-	l = dv > 3 ? ol + 3 : ol + 2;	/** @todo If direction vector index is set to a diagonal offset then do what? */
-	dx = dvecs[dv][0];
-	dy = dvecs[dv][1];
-	nx = x + dx;
-	ny = y + dy;
+	l = dv > 3	/**< If direction vector index is set to a diagonal offset then do add 3 TUs. Add 2 for straight directions.? */
+		? ol + AREA_TU_DIAGONAL
+		: ol + AREA_TU_STRAIGHT;
+
+	dx = dvecs[dv][0];	/**< Get the difference value for x for this direction */
+	dy = dvecs[dv][1];	/**< Get the difference value for y for this direction */
+	nx = x + dx;		/**< "new" x value = starting x value + difference from shoosen direction */
+	ny = y + dy;		/**< "new" y value = starting y value + difference from shoosen direction */
+
+	/* Range check of new values. */
 	if (nx < 0 || nx >= WIDTH || ny < 0 || ny >= WIDTH)
 		return;
 
-	/* connection checks */
+	/* Connection checks  (Guess: Abort if any of the 'straight' directions are not connected to the original position.) */
+	/** @todo But why is it also checked for (dv > 3) directions? Might be a coding-trick; if so it's not really easy to read -> better way?. */
 	if (dx > 0 && !R_CONN_PX(map, x, y, z))
 		return;
 	if (dx < 0 && !R_CONN_NX(map, x, y, z))
@@ -2622,6 +2629,8 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
 		return;
 	if (dy < 0 && !R_CONN_NY(map, x, y, z))
 		return;
+
+	/** @todo still connection checks? */
 	if (dv > 3 &&	/** @todo If direction vector index is set to a diagonal offset then do what? */
 		!( (dx > 0 ? R_CONN_PX(map, x,    y+dy, z) : R_CONN_NX(map, x,    y+dy, z))
 		&& (dy > 0 ? R_CONN_PY(map, x+dx, y,    z) : R_CONN_NY(map, x+dx, y,    z))
@@ -2630,22 +2639,26 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
 		)
 		return;
 
-	/* height checks */
+	/* Height checks. */
+	/**
+	 * @todo I think this and the next few lines need to be adapted to support 2x2 units
+	 * I think this mainly because this is the only palce aside from Grid_CheckForbidden where there are things calculated for path-finding.
+	 */
 	sh = R_STEP(map, x, y, z) ? sh_big : sh_low;
 	z += (h + sh) / 0x10;
 
 	VectorSet(dummy, nx, ny, z);
 	z = Grid_Fall(map, dummy);
 
-	/* can it be better than ever? */
+	/* Can it be better than ever? */
 	if (R_AREA(map, nx, ny, z) < l)
 		return;
 
-	/* test for forbidden areas */
+	/* Test for forbidden (by other entities) areas. */
 	if (Grid_CheckForbidden(map, nx, ny, z, ACTOR_SIZE_NORMAL))
 		return;
 
-	/* store move */
+	/* Store move. */
 	R_AREA(map, nx, ny, z) = l;	/**< Store TUs for this square. */
 	tfList[z][ny][nx] = stf;
 }
@@ -2674,7 +2687,7 @@ static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, i
 					h = R_HEIGHT(map, x, y, z);
 
 					/* check for end */
-					if (l + 3 >= MAX_MOVELENGTH)
+					if (l + AREA_TU_DIAGONAL >= MAX_MOVELENGTH)
 						continue;
 
 					/* test the next connections */
@@ -2719,7 +2732,7 @@ void Grid_MoveCalc (struct routing_s *map, pos3_t from, int size, int distance, 
 	tf = 1;
 	stf = 2;
 	R_AREA(map, xl, yl, from[2]) = 0;	/**< This position does not need any TUs to move there. */
-	tfList[from[2]][yl][xl] = 1;	/* (Guess: check this field in any case - because it's now the same value as "tf") */
+	tfList[from[2]][yl][xl] = 1;	/* (Guess: check this field in any case - because it's now the same value as "tf" @todo 2x2 support needed?) */
 
 	for (i = 0; i < distance; i++) {
 		/* Go on checking */
@@ -2814,7 +2827,7 @@ static int Grid_MoveCheck (struct routing_s *map, pos3_t pos, int sz, int l)
 		y = pos[1] - dy;
 		z = sz;
 
-		if (R_AREA(map, x, y, z) != (l - 2) - (dv > 3))
+		if (R_AREA(map, x, y, z) != (l - AREA_TU_STRAIGHT) - (dv > 3))
 			continue;
 
 		/* connection checks */
@@ -2861,7 +2874,7 @@ int Grid_MoveNext (struct routing_s *map, pos3_t from)
 {
 	int l, x, y, z, dv;
 
-	l = R_AREA(map, from[0], from[1], from[2]); /**< Get TUs for this square */ 
+	l = R_AREA(map, from[0], from[1], from[2]); /**< Get TUs for this square */
 
 	/* finished */
 	if (!l) {
