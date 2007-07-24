@@ -1982,7 +1982,10 @@ static void Com_ParseTerrain (const char *name, const char **text)
 					Sys_Error("Unknown type for terrain parsing (%i)\n", v->type);
 					break;
 				}
+				break;
 			}
+		if (!v->string)
+			Com_Printf("Unknown token '%s' in terrain parsing\n", token);
 	} while (*text);
 }
 
