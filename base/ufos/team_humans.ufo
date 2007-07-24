@@ -1711,3 +1711,14 @@ team human_ugv
 	ugv_phoenix
 	}
 }
+
+
+teamdesc human
+{
+	size 1
+}
+
+teamdesc human_ugv
+{
+	size 2
+}

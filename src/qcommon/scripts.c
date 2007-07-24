@@ -1405,8 +1405,7 @@ int Com_GetModelAndName (const char *team, character_t * chr)
 		Com_DPrintf("Com_GetModelAndName: Warning - this team (%s) could not be handled via aliencont code - no tech pointer will be available\n", team);
 #endif
 
-	/* FIXME: units with more than one unit */
-	chr->fieldSize = ACTOR_SIZE_NORMAL;
+	chr->fieldSize = ACTOR_SIZE_NORMAL; /* Default value is 1x1 */
 
 	/* get the models */
 	while (retry--) {
@@ -1424,6 +1423,7 @@ int Com_GetModelAndName (const char *team, character_t * chr)
 				/* make these values available to the game lib */
 				chr->weapons = teamDesc[i].weapons;
 				chr->armor = teamDesc[i].armor;
+				chr->fieldSize = teamDesc[i].size;
 			}
 
 #ifdef DEBUG
@@ -1750,6 +1750,7 @@ static const value_t teamDescValues[] = {
 	{"alien", V_BOOL, offsetof(teamDesc_t, alien), MEMBER_SIZEOF(teamDesc_t, alien)}, /**< is this an alien? */
 	{"armor", V_BOOL, offsetof(teamDesc_t, armor), MEMBER_SIZEOF(teamDesc_t, armor)}, /**< are these team members able to wear armor? */
 	{"weapons", V_BOOL, offsetof(teamDesc_t, weapons), MEMBER_SIZEOF(teamDesc_t, weapons)}, /**< are these team members able to use weapons? */
+	{"size", V_INT, offsetof(teamDesc_t, size), MEMBER_SIZEOF(teamDesc_t, weapons)}, /**< What size is this unit on the field (1=1x1 or 2=2x2)? */
 	{NULL, 0, 0, 0}
 };
 

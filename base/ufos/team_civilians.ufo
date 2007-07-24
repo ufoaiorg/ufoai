@@ -204,3 +204,8 @@ team civilian
 	human_scientist
 	}
 }
+
+teamdesc civilian
+{
+	size 1
+}

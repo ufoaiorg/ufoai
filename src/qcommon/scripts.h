@@ -185,9 +185,10 @@ typedef enum {
 typedef struct teamDesc_s {
 	char id[MAX_VAR];
 	qboolean alien;			/**< is this an alien teamdesc definition */
-	qboolean armor, weapons; /**< able to use weapons/armor */
+	qboolean armor, weapons;	/**< able to use weapons/armor */
 	char name[MAX_VAR];
-	char tech[MAX_VAR]; /**< tech id from research.ufo */
+	char tech[MAX_VAR];	/**< tech id from research.ufo */
+	int size;		 /**< What size is this unit on the field (1=1x1 or 2=2x2)? */
 } teamDesc_t;
 
 extern teamDesc_t teamDesc[MAX_TEAMDEFS];

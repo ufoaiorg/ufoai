@@ -258,6 +258,7 @@ teamdesc ortnok
 	name "_Ortnok"
 	tech rs_alien_ortnok_autopsy
 	alien	true
+	size 1
 }
 
 teamdesc taman
@@ -265,6 +266,7 @@ teamdesc taman
 	name "_Taman"
 	tech "rs_alien_taman_autopsy"
 	alien	true
+	size 1
 }
 
 teamdesc shevaar
@@ -273,6 +275,7 @@ teamdesc shevaar
 	tech "rs_alien_shevaar_autopsy"
 	alien	true
 	armor false
+	size 1
 }
 
 teamdesc bloodspider
@@ -282,6 +285,7 @@ teamdesc bloodspider
 	alien true
 	armor false
 	weapons false
+	size 1
 }
 
 // I am commenting this since this team seems to have three
@@ -294,12 +298,14 @@ teamdesc bloodspider
 //	name "_Hovernet"
 //	tech "rs_alien_hovernet_autopsy"
 //	alien	true
+//	size 2
 //}
 //teamdesc cyborg_ortnok
 //{
 //	name "_Cyborg Ortnok"
 //	tech "rs_alien_cyborg_ortnok_autopsy"
 //	alien	true
+//	size 1
 //}
 
 names bloodspider
