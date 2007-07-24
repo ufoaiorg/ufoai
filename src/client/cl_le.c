@@ -418,18 +418,23 @@ static void CL_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
 	sfx_t *sfx;
 	int entchannel = 0;
 	const terrainType_t *t;
+	vec3_t origin;
 
 	t = Com_GetTerrainType(textureName);
 	if (!t)
 		return;
+
+	/* origin might not be up-to-date here - but pos should be */
+	PosToVec(le->pos, origin);
+
 	/* @todo use the Grid_Fall method to ensure, that the particle is
 	 * drawn at the ground (if needed - maybe the origin is already ground aligned)*/
 	if (t->particle)
-		CL_ParticleSpawn(t->particle, 0, le->origin, NULL, NULL);
+		CL_ParticleSpawn(t->particle, 0, origin, NULL, NULL);
 	if (t->footStepSound) {
 		sfx = S_RegisterSound(t->footStepSound);
 		if (sfx)
-			S_StartSound(le->origin, le->entnum, entchannel, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
+			S_StartSound(origin, le->entnum, entchannel, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
 	}
 }
 
