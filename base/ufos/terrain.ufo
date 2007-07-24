@@ -4,7 +4,7 @@
 
 // normal grass
 terrain tex_nature/grass001 {
-	footstepsound "misc/footstep_grass"
+	footstepsound "footsteps/step_1"
 }
 
 // gravel street
@@ -29,6 +29,7 @@ terrain tex_material/wood01 {
 
 // wooden stairs
 terrain tex_material/wood002 {
+	footstepsound "footsteps/squeak_2"
 }
 
 // straw
@@ -49,11 +50,6 @@ terrain tex_nature/potatoes {
 
 // roof with tile
 terrain tex_buildings/roof003 {
-}
-
-terrain tex_nature/desert {
-	footstepsound "misc/footstep_desert"
-	particle "desert_dust"
 }
 
 */
