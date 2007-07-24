@@ -204,7 +204,7 @@ typedef struct terrainType_s {
 	struct terrainType_s *hash_next;	/**< next entry in the hash list */
 } terrainType_t;
 
-terrainType_t* Com_GetTerrainType(const char *textureName);
+const terrainType_t* Com_GetTerrainType(const char *textureName);
 
 char *Com_GiveName(int gender, const char *category);
 char *Com_GiveModel(int type, int gender, const char *category);

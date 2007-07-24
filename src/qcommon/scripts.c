@@ -1911,10 +1911,11 @@ static const value_t terrainTypeValues[] = {
 };
 
 /**
- * @brief
- * @todo Use a hash here
+ * @brief Searches the terrain defintion if given
+ * @param[in] textureName The terrain definition id from script files
+ * which is the texture name relative to base/textures
  */
-terrainType_t* Com_GetTerrainType (const char *textureName)
+const terrainType_t* Com_GetTerrainType (const char *textureName)
 {
 	unsigned hash;
 	terrainType_t *t;

@@ -417,7 +417,7 @@ static void CL_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
 {
 	sfx_t *sfx;
 	int entchannel = 0;
-	terrainType_t *t;
+	const terrainType_t *t;
 
 	t = Com_GetTerrainType(textureName);
 	if (!t)
