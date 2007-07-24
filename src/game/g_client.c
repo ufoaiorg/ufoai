@@ -334,7 +334,6 @@ qboolean G_FrustumVis (edict_t * from, vec3_t point)
 static qboolean G_LineVis (vec3_t from, vec3_t to)
 {
 #if 0 /* this version is more accurate the other version is much faster */
-	/* FIXME: this version is not working with func_breakable */
 	trace_t tr;
 	tr = gi.trace(from, NULL, NULL, to, NULL, MASK_SOLID);
 	return (tr.fraction >= 1.0);

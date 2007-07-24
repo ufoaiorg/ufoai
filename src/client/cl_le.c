@@ -407,8 +407,9 @@ void LET_StartIdle (le_t * le)
 
 
 /**
- * @brief
+ * @brief Move the actor along the path to the given location
  * @note Think function
+ * @sa CL_ActorDoMove
  */
 static void LET_PathMove (le_t * le)
 {
@@ -435,10 +436,11 @@ static void LET_PathMove (le_t * le)
 			le->TU -= tuCost;
 			if (le == selActor)
 				actorMoveLength -= tuCost;
-			le->dir = dv & 7;
+			le->dir = dv & (DIRECTIONS-1);
 			le->angles[YAW] = dangle[le->dir];
 			le->startTime = le->endTime;
-			le->endTime += ((dv & 7) > 3 ? UNIT_SIZE * 1.41 : UNIT_SIZE) * 1000 / le->speed;
+			/* check for straight movement or diagonal movement */
+			le->endTime += ((dv & (DIRECTIONS-1)) > 3 ? UNIT_SIZE * 1.41 : UNIT_SIZE) * 1000 / le->speed;
 			if (le->team == cls.team && le == selActor && cl_worldlevel->integer == le->oldPos[2] && le->pos[2] != le->oldPos[2]) {
 				Cvar_SetValue("cl_worldlevel", le->pos[2]);
 			}
