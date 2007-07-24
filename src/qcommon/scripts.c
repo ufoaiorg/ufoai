@@ -1956,6 +1956,9 @@ static void Com_ParseTerrain (const char *name, const char **text)
 			Com_Printf("Too many terrain definitions, '%s' ignored.\n", name);
 			return;
 		}
+	} else {
+		Com_Printf("Terrain definition with same name already parsed: '%s'\n", name);
+		return;
 	}
 
 	/* get name list body body */
