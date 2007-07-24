@@ -406,7 +406,6 @@ void LET_StartIdle (le_t * le)
 	le->think = NULL;
 }
 
-#if 0
 /**
  * @brief Plays step sounds and draw particles for different terrain types
  * @param[in] le The local entity to play the sound and draw the particle for
@@ -417,18 +416,23 @@ void LET_StartIdle (le_t * le)
 static void CL_PlaySoundFileAndParticleForSurface (le_t* le, const char *textureName)
 {
 	sfx_t *sfx;
-	static const char *sound = "FIXME";
 	int entchannel = 0;
+	terrainType_t *t;
 
+	t = Com_GetTerrainType(textureName);
+	if (!t)
+		return;
 	/* use the Grid_Fall method to ensure, that the particle is
 	 * drawn at the ground (if needed - maybe the origin is already ground aligned)*/
 	Com_Printf("texture: %s\n", textureName);
-	CL_ParticleSpawn("dust", 0, le->origin, NULL, NULL);
-	sfx = S_RegisterSound(sound);
-	if (sfx)
-		S_StartSound(le->origin, le->entnum, entchannel, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
+	if (t->particle)
+		CL_ParticleSpawn(t->particle, 0, le->origin, NULL, NULL);
+	if (t->footStepSound) {
+		sfx = S_RegisterSound(t->footStepSound);
+		if (sfx)
+			S_StartSound(le->origin, le->entnum, entchannel, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
+	}
 }
-#endif
 
 /**
  * @brief Move the actor along the path to the given location
@@ -451,10 +455,9 @@ static void LET_PathMove (le_t * le)
 		VectorCopy(le->pos, le->oldPos);
 
 		if (le->pathPos < le->pathLength) {
-#if 0
 			trace_t trace;
 			vec3_t from, to;
-#endif
+
 			/* next part */
 			dv = le->path[le->pathPos++];
 			PosAddDV(le->pos, dv);
@@ -464,7 +467,7 @@ static void LET_PathMove (le_t * le)
 			le->TU -= tuCost;
 			if (le == selActor)
 				actorMoveLength -= tuCost;
-#if 0
+
 			/* prepare trace vectors */
 			PosToVec(le->pos, from);
 			VectorCopy(from, to);
@@ -475,7 +478,7 @@ static void LET_PathMove (le_t * le)
 			trace = CL_Trace(from, to, vec3_origin, vec3_origin, NULL, NULL, MASK_SOLID);
 			if (trace.surface)
 				CL_PlaySoundFileAndParticleForSurface(le, trace.surface->name);
-#endif
+
 			le->dir = dv & (DIRECTIONS-1);
 			le->angles[YAW] = dangle[le->dir];
 			le->startTime = le->endTime;

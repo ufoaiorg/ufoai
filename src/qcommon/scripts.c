@@ -1180,7 +1180,6 @@ const char *name_strings[NAME_NUM_TYPES] = {
 	"male_lastname"
 };
 
-
 /**
  * @brief
  */
@@ -1562,7 +1561,6 @@ static void Com_ParseNames (const char *name, const char **text)
 		Sys_Error("Com_ParseNames: '%s' has no neutral lastname category\n", nc->title);
 }
 
-
 /**
  * @brief Parses "actors" definition from team_* ufo script files
  * @sa Com_ParseNames
@@ -1895,6 +1893,101 @@ static void Com_ParseTeam (const char *name, const char **text)
 
 /*
 ==============================================================================
+TERRAIN PARSERS
+==============================================================================
+*/
+
+#define MAX_TERRAINTYPES 1024
+static terrainType_t terrainTypes[MAX_TERRAINTYPES];
+static int numTerrainTypes = 0;
+
+static const value_t terrainTypeValues[] = {
+	{"footstepsound", V_STRING, offsetof(terrainType_t, footStepSound), 0},
+	{"particle", V_STRING, offsetof(terrainType_t, particle), 0},
+
+	{NULL, 0, 0, 0}
+};
+
+/**
+ * @brief
+ * @todo Use a hash here
+ */
+terrainType_t* Com_GetTerrainType (const char *textureName)
+{
+	int i;
+	for (i = 0; i < numTerrainTypes; i++) {
+		if (!Q_strcmp(terrainTypes[i].texture, textureName))
+			return &terrainTypes[i];
+	}
+	return NULL;
+}
+
+/**
+ * @brief Parses "terrain" definition from script files
+ * @note Terrain definitions are used for footstep sounds and terrain particles
+ * @sa Com_ParseScripts
+ */
+static void Com_ParseTerrain (const char *name, const char **text)
+{
+	const char *errhead = "Com_ParseTerrain: unexpected end of file (terrain ";
+	const char *token;
+	int i;
+	terrainType_t *t;
+	const value_t *v;
+
+	/* check for additions to existing name categories */
+	for (i = 0, t = terrainTypes; i < numTerrainTypes; i++, t++)
+		if (!Q_strcmp(t->texture, name))
+			break;
+
+	/* reset new category */
+	if (i == numTerrainTypes) {
+		if (numTerrainTypes < MAX_TERRAINTYPES) {
+			memset(t, 0, sizeof(terrainType_t));
+		} else {
+			Com_Printf("Too many terrain definitions, '%s' ignored.\n", name);
+			return;
+		}
+	}
+
+	/* get name list body body */
+	token = COM_Parse(text);
+	if (!*text || *token != '{') {
+		Com_Printf("Com_ParseTerrain: terrain def \"%s\" without body ignored\n", name);
+		return;
+	}
+
+	t->texture = Mem_PoolStrDup(name, com_genericPool, 0);
+	numTerrainTypes++;
+
+	do {
+		/* get the name type */
+		token = COM_EParse(text, errhead, name);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+
+		for (v = terrainTypeValues; v->string; v++)
+			if (!Q_strncmp(token, v->string, sizeof(v->string))) {
+				/* found a definition */
+				token = COM_EParse(text, errhead, name);
+				if (!*text)
+					return;
+				switch (v->type) {
+				case V_STRING:
+					Mem_PoolStrDupTo(token, (char**) ((char*)t + (int)v->ofs), com_genericPool, 0);
+					break;
+				default:
+					Sys_Error("Unknown type for terrain parsing (%i)\n", v->type);
+					break;
+				}
+			}
+	} while (*text);
+}
+
+/*
+==============================================================================
 GAMETYPE INTERPRETER
 ==============================================================================
 */
@@ -2168,6 +2261,8 @@ void Com_ParseScripts (void)
 			Com_ParseActorSounds(name, &text);
 		else if (!Q_strncmp(type, "actors", 6))
 			Com_ParseActors(name, &text);
+		else if (!Q_strncmp(type, "terrain", 7))
+			Com_ParseTerrain(name, &text);
 		else if (!dedicated->integer)
 			CL_ParseClientData(type, name, &text);
 	}

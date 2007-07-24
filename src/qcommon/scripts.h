@@ -196,6 +196,15 @@ extern int numTeamDesc;
 
 extern const char *name_strings[NAME_NUM_TYPES];
 
+/** @brief Different terrain definitions for footsteps and particles */
+typedef struct terrainType_s {
+	const char *texture;			/**< script id is the texture name/path */
+	const char *footStepSound;		/**< sound to play when walking on this terrain type */
+	const char *particle;			/**< particle to spawn when walking on this type of terrain */
+} terrainType_t;
+
+terrainType_t* Com_GetTerrainType(const char *textureName);
+
 char *Com_GiveName(int gender, const char *category);
 char *Com_GiveModel(int type, int gender, const char *category);
 int Com_GetModelAndName(const char *team, character_t * chr);
