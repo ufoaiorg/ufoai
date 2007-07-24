@@ -1,0 +1,14 @@
+// Put footsteps and particles for different terrain into this file
+
+/*
+
+terrain tex_nature/gras {
+	footstepsound "misc/footstep_grass"
+}
+
+terrain tex_nature/desert {
+	footstepsound "misc/footstep_desert"
+	particle "desert_dust"
+}
+
+*/
