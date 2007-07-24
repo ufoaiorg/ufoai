@@ -119,7 +119,7 @@ void Anim_Change (animState_t * as, model_t * mod, const char *name)
 #endif
 
 	if (!mod || mod->type != mod_alias_md2) {
-		ri.Con_Printf(PRINT_ALL, "Anim_Change: No md2 model - can't set animation (model: %s)\n", mod->name);
+		ri.Con_Printf(PRINT_ALL, "Anim_Change: No md2 model - can't set animation (%s) (model: %s)\n", name, mod->name);
 		return;
 	}
 
