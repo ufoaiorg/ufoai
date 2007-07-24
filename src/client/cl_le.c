@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "client.h"
+#include "snd_loc.h"
 
 localModel_t LMs[MAX_LOCALMODELS];
 int numLMs;
@@ -405,6 +406,29 @@ void LET_StartIdle (le_t * le)
 	le->think = NULL;
 }
 
+#if 0
+/**
+ * @brief Plays step sounds and draw particles for different terrain types
+ * @param[in] le The local entity to play the sound and draw the particle for
+ * @param[in] textureName The name of the texture the actor is standing on
+ * @todo Finish the implementation - e.g. do the mapping of texture => (particle, sound)
+ * this should be done in a ufo script file - maybe we can also use shaders.ufo for this
+ */
+static void CL_PlaySoundFileAndParticleForSurface (le_t* le, const char *textureName)
+{
+	sfx_t *sfx;
+	static const char *sound = "FIXME";
+	int entchannel = 0;
+
+	/* use the Grid_Fall method to ensure, that the particle is
+	 * drawn at the ground (if needed - maybe the origin is already ground aligned)*/
+	Com_Printf("texture: %s\n", textureName);
+	CL_ParticleSpawn("dust", 0, le->origin, NULL, NULL);
+	sfx = S_RegisterSound(sound);
+	if (sfx)
+		S_StartSound(le->origin, le->entnum, entchannel, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
+}
+#endif
 
 /**
  * @brief Move the actor along the path to the given location
@@ -427,6 +451,10 @@ static void LET_PathMove (le_t * le)
 		VectorCopy(le->pos, le->oldPos);
 
 		if (le->pathPos < le->pathLength) {
+#if 0
+			trace_t trace;
+			vec3_t from, to;
+#endif
 			/* next part */
 			dv = le->path[le->pathPos++];
 			PosAddDV(le->pos, dv);
@@ -436,6 +464,18 @@ static void LET_PathMove (le_t * le)
 			le->TU -= tuCost;
 			if (le == selActor)
 				actorMoveLength -= tuCost;
+#if 0
+			/* prepare trace vectors */
+			VectorCopy(le->origin, from);
+			VectorCopy(le->origin, to);
+			/* between these two we should really hit the ground */
+			from[2] += UNIT_HEIGHT;
+			to[2] -= UNIT_HEIGHT;
+
+			trace = CL_Trace(from, to, vec3_origin, vec3_origin, NULL, NULL, MASK_SOLID);
+			if (trace.surface)
+				CL_PlaySoundFileAndParticleForSurface(le, trace.surface->name);
+#endif
 			le->dir = dv & (DIRECTIONS-1);
 			le->angles[YAW] = dangle[le->dir];
 			le->startTime = le->endTime;
