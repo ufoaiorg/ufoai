@@ -291,7 +291,7 @@ aircraft craft_ufo_supply
 		accuracy	70
 		fuelsize	100000
 	}
-	name		"_UFO - Supply"
+	name		"_UFO - Supply Ship"
 	shortname	"_Supply U"
 	type		ufo
 	ufotype		ufo_supply

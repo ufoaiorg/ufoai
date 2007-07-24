@@ -2942,7 +2942,7 @@ tech rs_craft_ufo_fighter
 tech rs_craft_ufo_supply
 {
 	type	tech
-	name	"_UFO - Supply"
+	name	"_UFO - Supply Ship"
 	description {
 		default "_ufo_supply_txt"
 	}
@@ -2955,14 +2955,14 @@ tech rs_craft_ufo_supply
 	{
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
-		subject	"_UFO - Big"
+		subject	"_UFO - Supply Ship"
 	}
 
 	mail
 	{
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
-		subject	"_UFO - Big"
+		subject	"_UFO - Supply Ship"
 	}
 
 	// FIXME

@@ -79,7 +79,7 @@ item craft_ufo_carrier
 item craft_ufo_supply
 {
 	buytype dummy
-	name	"_UFO - Supply"
+	name	"_UFO - Supply Ship"
 	weapon false
 	notonmarket	true
 }
