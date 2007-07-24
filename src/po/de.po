@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-07-22 19:33+0200\n"
-"PO-Revision-Date: 2007-07-22 21:06+0100\n"
+"PO-Revision-Date: 2007-07-24 08:44+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1279,9 +1279,8 @@ msgid "Facilities  (used/available)"
 msgstr "Lebendige %s (%i verfügbar)\n"
 
 #: ../base/ufos/menu_basesummary.ufo:312
-#, fuzzy
 msgid "Construction"
-msgstr "Konstruktion abgeschlossen"
+msgstr "Konstruktion"
 
 #: ../base/ufos/menu_basesummary.ufo:401
 #, fuzzy
@@ -2804,7 +2803,7 @@ msgstr "Nein"
 
 #: ../base/ufos/menu_options.ufo:973
 msgid "Only for moving"
-msgstr ""
+msgstr "Nur Bewegungen"
 
 #: ../base/ufos/menu_production.ufo:69
 msgid "Productionlimit:"
@@ -3746,8 +3745,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:3601
 #: ../base/ufos/research.ufo:3608
 msgid "mail_from_paul_navarre"
-msgstr ""
-"Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches Operationskommando"
+msgstr "Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/research.ufo:129
 #: ../base/ufos/research.ufo:136
@@ -3839,8 +3837,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:3609
 #: ../base/ufos/research.ufo:3761
 msgid "mail_to_base_commander"
-msgstr ""
-"Basiskommandeur, PHALANX, Atlantisches Operationskommando"
+msgstr "Basiskommandeur, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/research.ufo:152
 #: ../base/ufos/research.ufo:188
@@ -3951,8 +3948,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:3274
 #: ../base/ufos/research.ufo:3760
 msgid "mail_from_dr_connor"
-msgstr ""
-"Dr. Connor, F&E: Abteilung Biologie & Eindämmung, PHALANX, Atlantisches Operationskommando"
+msgstr "Dr. Connor, F&E: Abteilung Biologie & Eindämmung, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/research.ufo:242
 #: ../base/ufos/research.ufo:278
@@ -4138,8 +4134,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:374
 #: ../base/ufos/research.ufo:381
 msgid "mail_from_col_falkland"
-msgstr ""
-"Col. Ingrid Falkland, Abteilung für Aufklärung, PHALANX, Atlantisches Operationskommando"
+msgstr "Col. Ingrid Falkland, Abteilung für Aufklärung, PHALANX, Atlantisches Operationskommando"
 
 #: ../base/ufos/research.ufo:402
 msgid "assault_txt"
@@ -8976,93 +8971,75 @@ msgstr "Endlich: Die Attacke auf die Alien Basis"
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr ""
-"Wir schreiben das Jahr 2084. Die Erde, die nie der ruhigste Ort war, erfreut sich einer Zeit des relativen Friedens. Die gewaltätigen Anfänge des 21. Jahrhunderts gehören der Vergangenheit an; ferne Erinnerungen, aber nicht so weit weg, als dass sie in Vergessenheit geraten sind. Für die meisten Menschen ist der zweite Kalte Krieg ein dunkler Schatten der Vergangenheit, so wie die Weltkriege es für die Kinder des späten 20. Jahrhunderts waren."
+msgstr "Wir schreiben das Jahr 2084. Die Erde, die nie der ruhigste Ort war, erfreut sich einer Zeit des relativen Friedens. Die gewaltätigen Anfänge des 21. Jahrhunderts gehören der Vergangenheit an; ferne Erinnerungen, aber nicht so weit weg, als dass sie in Vergessenheit geraten sind. Für die meisten Menschen ist der zweite Kalte Krieg ein dunkler Schatten der Vergangenheit, so wie die Weltkriege es für die Kinder des späten 20. Jahrhunderts waren."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr ""
-"Konflikte wurden gegen Ende des Jahrhunderts seltener, nachdem Hochtechnologie und das allgemeine Gesundheitswesen für die dritte Welt verfügbar wurden. Sogar die Feuer des Terrorismus sind als Folge des zweiten Kalten Krieges abgekühlt, mit den Schrecken und Unmenschlichkeiten immer noch frisch im Gedächtnis der Menschen, von den alten Vereinigten Staaten bis hin zum verwüsteten indischen Subkontinent. Klassenkämpfe haben sich auf das politische Schlachtfeld verlagert, da nun jedem Land eine gerechte Vertretung in der UN garantiert ist und der globale Lebensstandard auch in den entlegensten Teilen der Welt zunimmt. Länder haben sich gefestigt, sich um eine umstrukturierte UN stabilisiert, welche erfolgreich die Regierungen der Welt kontrolliert. Verteilte Grüppchen kleinerer Länder, zuerst verängstigt durch die starken Machtblöcke um China und die Europäische Union, haben sich in mächtigen politischen Lagern zusammengeschlossen -- um dann herauszufinden, dass es keine Nachbarn gibt, die man sicher bekämpfen könnte. Zum ersten Mal in der Geschichte der Menschheit gibt es Recht und Ordnung auf mehr als einem dreiviertel der Erde."
+msgstr "Konflikte wurden gegen Ende des Jahrhunderts seltener, nachdem Hochtechnologie und das allgemeine Gesundheitswesen für die dritte Welt verfügbar wurden. Sogar die Feuer des Terrorismus sind als Folge des zweiten Kalten Krieges abgekühlt, mit den Schrecken und Unmenschlichkeiten immer noch frisch im Gedächtnis der Menschen, von den alten Vereinigten Staaten bis hin zum verwüsteten indischen Subkontinent. Klassenkämpfe haben sich auf das politische Schlachtfeld verlagert, da nun jedem Land eine gerechte Vertretung in der UN garantiert ist und der globale Lebensstandard auch in den entlegensten Teilen der Welt zunimmt. Länder haben sich gefestigt, sich um eine umstrukturierte UN stabilisiert, welche erfolgreich die Regierungen der Welt kontrolliert. Verteilte Grüppchen kleinerer Länder, zuerst verängstigt durch die starken Machtblöcke um China und die Europäische Union, haben sich in mächtigen politischen Lagern zusammengeschlossen -- um dann herauszufinden, dass es keine Nachbarn gibt, die man sicher bekämpfen könnte. Zum ersten Mal in der Geschichte der Menschheit gibt es Recht und Ordnung auf mehr als einem dreiviertel der Erde."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr ""
-"Für viele Menschen scheint es, als würde alles gut laufen."
+msgstr "Für viele Menschen scheint es, als würde alles gut laufen."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr ""
-"Der erste Angriff traf die Stadt Mumbai am 3. März 2084. Sechs kleine UFOs erschienen aus dem Nirgendwo, stürzten unentdeckt von den riesigen Radaranlagen um Mumbai herum aus der Erdumlaufbahn herunter und landeten in der wohl bevölkerungsreichsten Stadt der Welt. Es gab keine Warnung, keine Erklärung. Zwanzigtausend unschuldige Zivilisten und drei Bataillone Elitesoldaten wurden innerhalb von zwölf Stunden brutal massakriert, bevor eine große Zahl Commonwealth Soldaten es schaffte, den Alienvormarsch aufzuhalten. Dann, so plötzlich wie sie erschienen, zogen sie sich zu ihren Schiffen zurück und verschwanden wieder in der Erdumlaufbahn. Der einzige Beweis für ihr Dasein waren die verwüsteten Straßen Mumbais."
+msgstr "Der erste Angriff traf die Stadt Mumbai am 3. März 2084. Sechs kleine UFOs erschienen aus dem Nirgendwo, stürzten unentdeckt von den riesigen Radaranlagen um Mumbai herum aus der Erdumlaufbahn herunter und landeten in der wohl bevölkerungsreichsten Stadt der Welt. Es gab keine Warnung, keine Erklärung. Zwanzigtausend unschuldige Zivilisten und drei Bataillone Elitesoldaten wurden innerhalb von zwölf Stunden brutal massakriert, bevor eine große Zahl Commonwealth Soldaten es schaffte, den Alienvormarsch aufzuhalten. Dann, so plötzlich wie sie erschienen, zogen sie sich zu ihren Schiffen zurück und verschwanden wieder in der Erdumlaufbahn. Der einzige Beweis für ihr Dasein waren die verwüsteten Straßen Mumbais."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr ""
-"Eine Notfallversammlung der UN ergab keine schlüssige Richtung. Die Einfälle der Aliens häuften sich, größer und grausamer als vorher, diesmal in Bonn, Johannesburg und Bangkok. Einige Nationen versuchten es mit Diplomatie und schickten Nachrichten in tausend verschiedenen Sprachen an die Aliens, die das Land verwüsteten. Ihre Worte wurden ignoriert. Innerhalb weniger Stunden waren diese drei Städte jedes Lebens beraubt. Der Angriff war schon vorbei, als die verschiedenen Truppen die Erlaubnis zum Zurückschlagen bekamen. Die Aliens ließen nichts zurück außer Beton und Blut. Alle UFOs verschwanden, ohne Spuren zu hinterlassen -- aber niemand zweifelte, dass sie zurückkehren werden."
+msgstr "Eine Notfallversammlung der UN ergab keine schlüssige Richtung. Die Einfälle der Aliens häuften sich, größer und grausamer als vorher, diesmal in Bonn, Johannesburg und Bangkok. Einige Nationen versuchten es mit Diplomatie und schickten Nachrichten in tausend verschiedenen Sprachen an die Aliens, die das Land verwüsteten. Ihre Worte wurden ignoriert. Innerhalb weniger Stunden waren diese drei Städte jedes Lebens beraubt. Der Angriff war schon vorbei, als die verschiedenen Truppen die Erlaubnis zum Zurückschlagen bekamen. Die Aliens ließen nichts zurück außer Beton und Blut. Alle UFOs verschwanden, ohne Spuren zu hinterlassen -- aber niemand zweifelte, dass sie zurückkehren werden."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr ""
-"87 Stunden nach dem Angriff auf Mumbai erklärte die Erde den Aliens den Krieg. Für 2 Wochen versuchten die Armeen der Menschen, die Alienangriffe abzuwehren. Sie erzielten sehr wenig Erfolge."
+msgstr "87 Stunden nach dem Angriff auf Mumbai erklärte die Erde den Aliens den Krieg. Für 2 Wochen versuchten die Armeen der Menschen, die Alienangriffe abzuwehren. Sie erzielten sehr wenig Erfolge."
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr ""
-"Mit dem letzten Ausweg in der Hand trat die UN in Aktion. Uralte Ausrüstung wurde entstaubt, einiges älter als ein Jahrhundert, und die lange nicht mehr bestehende Anti-Alien Behörde der früheren Vereinigten Staaten -- PHALANX -- entstand unter dem Banner der UN neu. Ihre Pflicht ist es, die Alienbedrohung zu bekämpfen und das Überleben der Menschheit unter allen Umständen zu sichern."
+msgstr "Mit dem letzten Ausweg in der Hand trat die UN in Aktion. Uralte Ausrüstung wurde entstaubt, einiges älter als ein Jahrhundert, und die lange nicht mehr bestehende Anti-Alien Behörde der früheren Vereinigten Staaten -- PHALANX -- entstand unter dem Banner der UN neu. Ihre Pflicht ist es, die Alienbedrohung zu bekämpfen und das Überleben der Menschheit unter allen Umständen zu sichern."
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr ""
-"Finanziert durch alle acht politischen Mächte und durch das Rekrutieren der besten Soldaten aller Armeen, ist PHALANX das Beste der Besten. Diese Soldaten sind die erste und einzige Verteidigungslinie der Erde. Diese darf nicht fallen; denn wenn sie es tut, hat die Menschheit keine Chance mehr."
+msgstr "Finanziert durch alle acht politischen Mächte und durch das Rekrutieren der besten Soldaten aller Armeen, ist PHALANX das Beste der Besten. Diese Soldaten sind die erste und einzige Verteidigungslinie der Erde. Diese darf nicht fallen; denn wenn sie es tut, hat die Menschheit keine Chance mehr."
 
 #: ../base/ufos/seq_intro.ufo:100
 msgid "prolog_sentence1"
-msgstr ""
-"An: Basiskommando, PHALANX, Kommando Atlantische Operationen"
+msgstr "An: Basiskommando, PHALANX, Kommando Atlantische Operationen"
 
 #: ../base/ufos/seq_intro.ufo:110
 msgid "prolog_sentence2"
-msgstr ""
-"Von: SecGen. Mahouf Serra, Vereinte Nationen, New York City"
+msgstr "Von: SecGen. Mahouf Serra, Vereinte Nationen, New York City"
 
 #: ../base/ufos/seq_intro.ufo:119
 msgid "prolog_sentence3"
-msgstr ""
-"Datum: 21 März 2084"
+msgstr "Datum: 21 März 2084"
 
 #: ../base/ufos/seq_intro.ufo:128
 msgid "prolog_sentence4"
-msgstr ""
-"Betreff: Viel Glück!"
+msgstr "Betreff: Viel Glück!"
 
 #: ../base/ufos/seq_intro.ufo:137
 msgid "prolog_sentence5"
-msgstr ""
-"Willkommen Kommander. Sie haben das Kommando über PHALANX erhalten. Ihre Mission: Beschützen sie die Bewohner dieses Planeten und stoppen sie die Alienbedrohung mit allen Mitteln. Wie Sie das bewerkstelligen ist Ihnen überlassen - aber bedenken Sie: Scheitern ist keine Option."
+msgstr "Willkommen Kommander. Sie haben das Kommando über PHALANX erhalten. Ihre Mission: Beschützen sie die Bewohner dieses Planeten und stoppen sie die Alienbedrohung mit allen Mitteln. Wie Sie das bewerkstelligen ist Ihnen überlassen - aber bedenken Sie: Scheitern ist keine Option."
 
 #: ../base/ufos/seq_intro.ufo:146
 msgid "prolog_sentence6"
-msgstr ""
-"Ihr erster Auftrag lautet ein Hauptquartier einzurichten. Die UN hat Zugang zu allen Militärbasen der Welt. Wählen Sie die geographische Position sorgfältig, sie könnte großen Einfluss auf den Erfolg oder Misserfolg des PHALANX Projektes haben."
+msgstr "Ihr erster Auftrag lautet ein Hauptquartier einzurichten. Die UN hat Zugang zu allen Militärbasen der Welt. Wählen Sie die geographische Position sorgfältig, sie könnte großen Einfluss auf den Erfolg oder Misserfolg des PHALANX Projektes haben."
 
 #: ../base/ufos/seq_intro.ufo:155
 msgid "prolog_sentence7"
-msgstr ""
-"Eine kürzlich erstellte Analyse der Angriffe auf Mumbai und Bonn ergab, dass sich UFO Sichtungen und Alienaktivität auf dichtbesiedelsten Gebiete der Erde konzentrieren, einschließlich Nord- und Südamerika, Europa, Ostasien, Süd- und Mittelafrika sowie Australien. Sie sollten in Erwägung ziehen Ihre Einzugsgebiete diesbezgl. zu wählen."
+msgstr "Eine kürzlich erstellte Analyse der Angriffe auf Mumbai und Bonn ergab, dass sich UFO Sichtungen und Alienaktivität auf dichtbesiedelsten Gebiete der Erde konzentrieren, einschließlich Nord- und Südamerika, Europa, Ostasien, Süd- und Mittelafrika sowie Australien. Sie sollten in Erwägung ziehen Ihre Einzugsgebiete diesbezgl. zu wählen."
 
 #: ../base/ufos/seq_intro.ufo:164
 msgid "prolog_sentence8"
-msgstr ""
-"Haben Sie erstmal Ihre erste Basis errichtet, müssen Sie Ihre Soldaten vorbereiten. Die Rekruten die für PHALANX abgestellt wurden, müssen einem Einsatzschiff zugeteilt und für den Kampf ausgerüstet werden."
+msgstr "Haben Sie erstmal Ihre erste Basis errichtet, müssen Sie Ihre Soldaten vorbereiten. Die Rekruten die für PHALANX abgestellt wurden, müssen einem Einsatzschiff zugeteilt und für den Kampf ausgerüstet werden."
 
 #: ../base/ufos/seq_intro.ufo:173
 msgid "prolog_sentence9"
-msgstr ""
-"Vergessen Sie nicht gut auf die Soldaten aufzupassen - ein lebender Soldat kann mehr Aliens töten als ein toter Soldat. Der Rest von uns zählt auf sie - und betet für ihren Erfolg."
+msgstr "Vergessen Sie nicht gut auf die Soldaten aufzupassen - ein lebender Soldat kann mehr Aliens töten als ein toter Soldat. Der Rest von uns zählt auf sie - und betet für ihren Erfolg."
 
 #: ../base/ufos/seq_intro.ufo:182
 msgid "prolog_sentence10"
-msgstr ""
-"Das ist erstmal alles Herr Kommandant, viel Glück und viel Erfolg."
+msgstr "Das ist erstmal alles Herr Kommandant, viel Glück und viel Erfolg."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"
@@ -9370,7 +9347,7 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:46
 msgid "Build an alien containment to be able to imprison alive aliens."
-msgstr ""
+msgstr "Baue eine Quartänestation um lebendige Aliens gefangen zu halten."
 
 #: ../base/ufos/weapons.ufo:6
 msgid "Medikit"
@@ -10163,17 +10140,17 @@ msgstr "Treibstoff:\t%i/%i\n"
 #: client/cl_aircraft.c:698
 #, fuzzy, c-format
 msgid "Weapons:\t%i on %i\n"
-msgstr "Bewaffnung:\t%s\n"
+msgstr "Bewaffnung:\t%i on %i\n"
 
 #: client/cl_aircraft.c:700
 #, fuzzy, c-format
 msgid "Armours:\t%i on 1\n"
-msgstr "Munition:\t%i\n"
+msgstr "Munition:\t%i on 1\n"
 
 #: client/cl_aircraft.c:702
-#, c-format
+#, fuzzy, c-format
 msgid "Electronics:\t%i on %i"
-msgstr ""
+msgstr "Electronik:\t%i on %i"
 
 #: client/cl_aircraft.c:779
 #, c-format
@@ -11923,7 +11900,7 @@ msgstr "Mehr Glück beim nächsten Mal"
 msgid ""
 "Destination base does not have enough\n"
 "Antimatter Storage space to store more antimatter.\n"
-msgstr ""
+msgstr "Zielbasis hat nicht genug Platz für diese Antimaterie in den Anitmaterielagern.\n"
 
 #: client/cl_transfer.c:62
 #: client/cl_transfer.c:69
@@ -11936,25 +11913,24 @@ msgstr "Nicht genügend Lagerkapazität"
 msgid ""
 "Destination base does not have enough\n"
 "Storage space to store this item.\n"
-msgstr ""
+msgstr "Zielbasis hat nicht genug Platz in den Lagern und diesen Gegenstand aufzunehmen.\n"
 
 #: client/cl_transfer.c:91
 msgid ""
 "Destination base does not have enough space\n"
 "in Living Quarters.\n"
-msgstr ""
+msgstr "Zielbasis hat nicht genug Platz in den Quartieren.\n"
 
 #: client/cl_transfer.c:99
 #, c-format
 msgid ""
 "%s %s is assigned to aircraft and cannot be\n"
 "transfered to another base.\n"
-msgstr ""
+msgstr "%s %s ist einem Flugzeug zugewiesen und kann daher nicht in eine andere Basis transferiert werden.\n"
 
 #: client/cl_transfer.c:101
-#, fuzzy
 msgid "Soldier in aircraft"
-msgstr "Flugzeug auswählen"
+msgstr "Soldat ist noch im Flugzeug"
 
 #: client/cl_transfer.c:121
 msgid ""
@@ -12041,9 +12017,9 @@ msgid "Transfer is not possible - the base doesn't have any hangar."
 msgstr "Transfer nicht möglich - Basis hat keinen Hangar."
 
 #: client/cl_transfer.c:497
-#, fuzzy, c-format
+#, c-format
 msgid "Transport mission ended, unloading cargo in base %s"
-msgstr "Transportmission beendet - kehre zur Heimatbasis zurück"
+msgstr "Transportmission beendet - entlade in Basis %s."
 
 #: client/cl_transfer.c:498
 #: client/cl_transfer.c:583
@@ -12051,9 +12027,9 @@ msgid "Transport mission"
 msgstr "Transportmission"
 
 #: client/cl_transfer.c:582
-#, fuzzy, c-format
+#, c-format
 msgid "Transport mission started, cargo is being transported to base %s"
-msgstr "Transportmission beendet - Flugzeug bleibt in der Basis"
+msgstr "Transportmission gestartet - Ladung wird zur Basis %s transportiert."
 
 #: client/cl_transfer.c:606
 msgid "No target base selected"
@@ -12339,7 +12315,7 @@ msgstr "Bewaffnung:\t%s\n"
 #: client/cl_ufopedia.c:560
 #, fuzzy, c-format
 msgid "Armour:\t%s\n"
-msgstr "Rüstung"
+msgstr "Rüstung:\t%s\n"
 
 #: client/cl_ufopedia.c:562
 #, c-format
