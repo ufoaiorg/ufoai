@@ -118,10 +118,10 @@ typedef struct {
 
 /**
  * @brief Pathfinding routing structure
- * @note
+ * @note Comments strongly WIP!
  *
  * ROUTE
- * 	Information stored in "route" (comment strongly WIP!)
+ * 	Information stored in "route"
  *
  * 	connections (see Grid_MoveCheck)
  * 	mask				description
@@ -2674,17 +2674,18 @@ static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, i
  * @param[in] from The position to start the calculation from.
  * @param[in] size The size of thing to calc the move for (e.g. size=2 means 2x2).
  * The plan is to have the 'origin' in 2x2 units in the upper-left (towards the lower coordinates) corner of the 2x2 square.
- * @param[in] distance
+ * @param[in] distance (Guess: the maximal distance [i.e. sqaures in all directions] to calculate move-information for.)
  * @param[in] fb_list Forbidden list (entities are standing at those points)
  * @param[in] fb_length Length of forbidden list
  * @sa Grid_MoveMarkRoute
- * @sa G_MoveCalc
- * @todo size is unused right now - this needs to change (2x2 units)
+ * @sa G_MoveCalc (g_client.c)
+ * @sa CL_ConditionalMoveCalc (cl_actor.c)
+ * @todo "size" is unused right now - this needs to change (2x2 units).
  */
 void Grid_MoveCalc (struct routing_s *map, pos3_t from, int size, int distance, byte ** fb_list, int fb_length)
 {
-	int xl, xh, yl, yh;
-	int i;
+	int xl, xh, yl, yh;	/* Guess: _h_igh/upper and _l_ow end of the exptending rectangle - see below. */
+	int i;			/* Distance counter */
 
 	/* reset move data */
 	/* ROUTING_NOT_REACHABLE means, not reachable */
@@ -2693,8 +2694,8 @@ void Grid_MoveCalc (struct routing_s *map, pos3_t from, int size, int distance, 
 	map->fblist = fb_list;
 	map->fblength = fb_length;
 
-	xl = xh = from[0];
-	yl = yh = from[1];
+	xl = xh = from[0];	/**< Guess: set minimum and maximum x value to start value? See Grid_MoveMarkRoute. */
+	yl = yh = from[1];	/**< Guess: set minimum and maximum y value to start value? See Grid_MoveMarkRoute. */
 
 	if (distance > MAX_ROUTE)
 		distance = MAX_ROUTE;
@@ -2702,11 +2703,17 @@ void Grid_MoveCalc (struct routing_s *map, pos3_t from, int size, int distance, 
 	/* first step */
 	tf = 1;
 	stf = 2;
-	map->area[from[2]][yl][xl] = 0;
-	tfList[from[2]][yl][xl] = 1;
+	map->area[from[2]][yl][xl] = 0;	/**< Guess: set this position to "accessable"?
+					 * If so we need to set all 4 squares fo a 2x2 unit.
+					 */
+	tfList[from[2]][yl][xl] = 1;	/* ??? */
 
 	for (i = 0; i < distance; i++) {
-		/* go on checking */
+		/* Go on checking */
+		/**
+		 * Guess: extend the rectangle/area to check around the starting location (e.g. 1x1 will become 3x3 - unless it reaches a border)
+		 * If that is the case we need to set xl, xh, yl and yh differently for 2x2 units.
+		 */
 		if (xl > 0)
 			xl--;
 		if (yl > 0)
@@ -2719,8 +2726,8 @@ void Grid_MoveCalc (struct routing_s *map, pos3_t from, int size, int distance, 
 		Grid_MoveMarkRoute(map, xl, yl, xh, yh);
 
 		/* swap test flag */
-		stf = tf;
-		tf ^= 3;
+		stf = tf;	/* ??? */
+		tf ^= 3;	/* ??? */
 	}
 }
 
