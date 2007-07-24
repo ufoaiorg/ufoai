@@ -63,10 +63,10 @@ struct memPool_s *com_fileSysPool;
 struct memPool_s *com_genericPool;
 
 struct event {
-  int when;
-  event_func *func;
-  void *data;
-  struct event *next;
+	int when;
+	event_func *func;
+	void *data;
+	struct event *next;
 };
 
 static struct event *event_queue = NULL;
@@ -78,17 +78,17 @@ static struct event *event_queue = NULL;
 #define TIMER_LATENESS_HISTORY 32
 
 struct timer {
-  cvar_t *min_freq;
-  int interval;
-  int recent_lateness[TIMER_LATENESS_HISTORY];
-  int next_lateness;
-  int total_lateness;
-  int next_check;
-  int checks_high;
-  int checks_low;
+	cvar_t *min_freq;
+	int interval;
+	int recent_lateness[TIMER_LATENESS_HISTORY];
+	int next_lateness;
+	int total_lateness;
+	int next_check;
+	int checks_high;
+	int checks_low;
 
-  event_func *func;
-  void *data;
+	event_func *func;
+	void *data;
 };
 
 /*
