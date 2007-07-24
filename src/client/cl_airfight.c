@@ -1,6 +1,8 @@
 /**
  * @file cl_airfight.c
  * @brief Airfight related stuff.
+ * @todo Somehow i need to know which alien race was in the ufo we shoot down
+ * I need this info for spawning the crash site (maybe even how many aliens)
  */
 
 /*
@@ -210,7 +212,7 @@ static int AIRFIGHT_ChooseWeapon (aircraftSlot_t *slot, int maxSlot, vec3_t pos,
 {
 	int slotIdx = -2;
 	int i, ammoIdx;
-	float distance0, distance=99999.9f;
+	float distance0, distance = 99999.9f;
 
 	distance0 = distance;
 
