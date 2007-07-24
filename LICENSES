@@ -2,6 +2,28 @@ filename | license | author | source
 base/maps/africa04d.map | GPL version 2 | 'SparX' Beyeler
 base/maps/africa04n.map | GPL version 2 | 'SparX' Beyeler
 base/maps/apartments01d.map | GPL version 2
+base/maps/b/aliencont.map | GPL version 2 | Martin Gerhardy
+base/maps/b/antimatter.map | GPL version 2 | Martin Gerhardy
+base/maps/b/base_empty.map | GPL version 2 | Martin Gerhardy
+base/maps/b/commando.map | GPL version 2 | 'SparX' Beyeler
+base/maps/b/drop.map | GPL version 2 | 'SparX' Beyeler
+base/maps/b/drop_b.map | GPL version 2 | 'SparX' Beyeler
+base/maps/b/drop_iso.map | GPL version 2 | 'SparX' Beyeler
+base/maps/b/empty.map | GPL version 2 | Martin Gerhardy
+base/maps/b/entrance.map | GPL version 2 | 'SparX' Beyeler
+base/maps/b/hospital.map | GPL version 2 | Martin Gerhardy
+base/maps/b/intercept.map | GPL version 2 | 'SparX' Beyeler
+base/maps/b/lab.map | GPL version 2 | 'SparX' Beyeler
+base/maps/b/missile.map | GPL version 2 | Martin Gerhardy
+base/maps/b/powerplant.map | GPL version 2 | Martin Gerhardy
+base/maps/b/quarters.map | GPL version 2 | 'SparX' Beyeler
+base/maps/b/radar.map | GPL version 2 | Martin Gerhardy
+base/maps/b/storage.map | GPL version 2 | 'SparX' Beyeler
+base/maps/b/teamroom.map | GPL version 2 | Martin Gerhardy
+base/maps/b/ufohangar.map | GPL version 2 | Martin Gerhardy
+base/maps/b/ufohangar_b.map | GPL version 2 | Martin Gerhardy
+base/maps/b/ufohangar_l.map | GPL version 2 | Martin Gerhardy
+base/maps/b/workshop.map | GPL version 2 | Martin Gerhardy
 base/maps/bridge01d.map | GPL version 2 | Martin Gerhardy
 base/maps/bridge01n.map | GPL version 2 | Martin Gerhardy
 base/maps/bunker01d.map | GPL version 2
