@@ -2608,7 +2608,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
 	int dx, dy;
 	pos3_t dummy;
 	
-	pos3_t poslist_n[4];
+	int poslist_n[4][3];  /* 3*int needed for range-check because pos3_t does not support negative values and has a smaller range. */
 	pos3_t poslist[4];
 
 	l = dv > 3	/**< Add TUs to old length/TUs depending on straight or diagonal move. */
