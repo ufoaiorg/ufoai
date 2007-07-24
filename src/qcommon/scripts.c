@@ -1898,7 +1898,9 @@ TERRAIN PARSERS
 */
 
 #define MAX_TERRAINTYPES 1024
+#define TERRAIN_HASH_SIZE 64
 static terrainType_t terrainTypes[MAX_TERRAINTYPES];
+static terrainType_t *terrainTypesHash[MAX_TERRAINTYPES];
 static int numTerrainTypes = 0;
 
 static const value_t terrainTypeValues[] = {
@@ -1914,11 +1916,15 @@ static const value_t terrainTypeValues[] = {
  */
 terrainType_t* Com_GetTerrainType (const char *textureName)
 {
-	int i;
-	for (i = 0; i < numTerrainTypes; i++) {
-		if (!Q_strcmp(terrainTypes[i].texture, textureName))
-			return &terrainTypes[i];
+	unsigned hash;
+	terrainType_t *t;
+
+	hash = Com_HashKey(textureName, TERRAIN_HASH_SIZE);
+	for (t = terrainTypesHash[hash]; t; t = t->hash_next) {
+		if (!Q_strcmp(textureName, t->texture))
+			return t;
 	}
+
 	return NULL;
 }
 
@@ -1934,6 +1940,7 @@ static void Com_ParseTerrain (const char *name, const char **text)
 	int i;
 	terrainType_t *t;
 	const value_t *v;
+	unsigned hash;
 
 	/* check for additions to existing name categories */
 	for (i = 0, t = terrainTypes; i < numTerrainTypes; i++, t++)
@@ -1959,6 +1966,10 @@ static void Com_ParseTerrain (const char *name, const char **text)
 
 	t->texture = Mem_PoolStrDup(name, com_genericPool, 0);
 	numTerrainTypes++;
+	hash = Com_HashKey(name, TERRAIN_HASH_SIZE);
+	/* link in */
+	t->hash_next = terrainTypesHash[hash];
+	terrainTypesHash[hash] = t;
 
 	do {
 		/* get the name type */

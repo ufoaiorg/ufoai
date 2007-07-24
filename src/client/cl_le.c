@@ -422,9 +422,8 @@ static void CL_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
 	t = Com_GetTerrainType(textureName);
 	if (!t)
 		return;
-	/* use the Grid_Fall method to ensure, that the particle is
+	/* @todo use the Grid_Fall method to ensure, that the particle is
 	 * drawn at the ground (if needed - maybe the origin is already ground aligned)*/
-	Com_Printf("texture: %s\n", textureName);
 	if (t->particle)
 		CL_ParticleSpawn(t->particle, 0, le->origin, NULL, NULL);
 	if (t->footStepSound) {
