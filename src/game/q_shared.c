@@ -555,7 +555,7 @@ float AngleNormalize180 (float angle)
 /**
  * @brief
  */
-int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cBspPlane_s *p)
+inline int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cBspPlane_s *p)
 {
 	float dist1, dist2;
 	int sides;

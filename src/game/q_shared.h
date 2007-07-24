@@ -381,22 +381,6 @@ float AngleNormalize180(float angle);
 
 float LerpAngle(float a1, float a2, float frac);
 
-#define BOX_ON_PLANE_SIDE(emins, emaxs, p)  \
-    (((p)->type < 3)?                       \
-    (                                       \
-        ((p)->dist <= (emins)[(p)->type])?  \
-            1                               \
-        :                                   \
-        (                                   \
-            ((p)->dist >= (emaxs)[(p)->type])?\
-                2                           \
-            :                               \
-                3                           \
-        )                                   \
-    )                                       \
-    :                                       \
-        BoxOnPlaneSide( (emins), (emaxs), (p)))
-
 void ProjectPointOnPlane(vec3_t dst, const vec3_t p, const vec3_t normal);
 void PerpendicularVector(vec3_t dst, const vec3_t src);
 void RotatePointAroundVector(vec3_t dst, const vec3_t dir, const vec3_t point, float degrees);
