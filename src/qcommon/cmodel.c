@@ -2736,8 +2736,8 @@ void Grid_MoveCalc (struct routing_s *map, pos3_t from, int size, int distance, 
 		Grid_MoveMarkRoute(map, xl, yl, xh, yh);
 
 		/* swap test flag */
-		stf = tf;	/* ??? */
-		tf ^= 3;	/* ??? */
+		stf = tf;	/* (Guess: buffer value?) */
+		tf ^= 3;	/* Swap value from 1 to 2 or vice versa */
 	}
 }
 
