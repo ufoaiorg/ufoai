@@ -242,11 +242,16 @@ actors hovernet
 
 // ==================
 // TEAM DESCRIPTIONS
-// combat_notes			-	Will be unlocked after a battle against this enemy
-// autopsy				-	Research of the alien corpse/remains.
-// xenobiology			-	Research on the live alien.
-// interrogation		-	Information gathered from the captured live alie
-// interrogation_com	-	Information gathered from captured live alien commander.
+// weapons	Team may carry and use weapons
+// armor	Team may carry armour
+// alien	Team is an alien team
+// tech		Tech id to link
+// name		Translateable team name
+// ==================
+// Things to come:
+// footsteps	Append this the the footstep sound of the terrain to get
+//				the team specific footsteps
+// size			Actorsize
 // ==================
 teamdesc ortnok
 {
