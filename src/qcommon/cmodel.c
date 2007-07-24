@@ -223,9 +223,19 @@ static trace_t trace_trace;
 static int trace_contents;
 static qboolean trace_ispoint;			/* optimized case */
 static tnode_t *tnode_p;
-static byte stf;
+
+/**
+ * @note (WIP)
+ * An entry in tfList[][][] can have 3 values 0 (00b), 1 (01b) and 2 (10b)
+ * Neither "tf" nor "stf" (stf depends on "tf" value) will be set to anything else than 1 (01b) or 2 (10b).
+ * If an x,y,z entry in "tfList" (or rather in hte "routing_t") is calculated for pathfinding the tfList vlaue is set to 0.
+ * These 0-entries will never be checked again because tf (which they are checked against) can never become 0.
+ *
+ * @todo Find out why there even is a 1 _and_ a 2 for tf and stf.
+ */
 static byte tfList[HEIGHT][WIDTH][WIDTH];
-static byte tf; /**< test flag */
+static byte tf;		/**< test flag */
+static byte stf;	/**< (guess: swapped test flag?) */
 
 static void CM_MakeTnodes(void);
 static void CM_InitBoxHull(void);
@@ -2638,10 +2648,10 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
 /**
  * @brief
  * @param[in|out] map Pointer to client or server side routing table (clMap, svMap)
- * @param[in] xl Lower x limit?
- * @param[in] yl Lower y limit?
- * @param[in] xh Higher/upper x limit?
- * @param[in] yh Higher/upper y limit?
+ * @param[in] xl (Guess: Lower x limit?)
+ * @param[in] yl (Guess: Lower y limit?)
+ * @param[in] xh (Guess: Higher/upper x limit?)
+ * @param[in] yh (Guess: Higher/upper y limit?)
  * @sa Grid_MoveMark
  */
 static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, int yh)
@@ -2706,7 +2716,7 @@ void Grid_MoveCalc (struct routing_s *map, pos3_t from, int size, int distance, 
 	map->area[from[2]][yl][xl] = 0;	/**< Guess: set this position to "accessable"?
 					 * If so we need to set all 4 squares fo a 2x2 unit.
 					 */
-	tfList[from[2]][yl][xl] = 1;	/* ??? */
+	tfList[from[2]][yl][xl] = 1;	/* (Guess: check this field in any case - because it's now the same value as "tf") */
 
 	for (i = 0; i < distance; i++) {
 		/* Go on checking */
