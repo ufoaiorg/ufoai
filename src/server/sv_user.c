@@ -84,6 +84,7 @@ static void SV_New_f (void)
 	if (sv_client->state != cs_connected) {
 		if (sv_client->state == cs_spawning) {
 			/* client typed 'reconnect/new' while connecting. */
+			Com_Printf("SV_New_f: client typed 'reconnect/new' while connecting\n");
 			stufftext(sv_client, "\ndisconnect\nreconnect\n");
 			SV_DropClient(sv_client);
 		} else
