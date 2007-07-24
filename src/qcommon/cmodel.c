@@ -148,8 +148,10 @@ typedef struct {
  *		"sh" seems to mean "step height"
  *
  * AREA
+ *	The needed TUs to walk to a given position. (See Grid_MoveLength)
  *
  * AREASTORED
+ * 	The stored mask (the cached move) of the routing data. (See Grid_MoveLength)
  *
  */
 typedef struct routing_s {
@@ -181,6 +183,10 @@ typedef struct routing_s {
 
 /* fall */
 #define R_FALL(map,x,y,z) ((map)->fall[(y)][(x)] & (1 << (z)))
+
+/* area */
+#define R_AREA(map,x,y,z) ((map)->area[(z)][(y)][(x)])
+#define R_SAREA(map,x,y,z) ((map)->areaStored[(z)][(y)][(x)])
 
 /* extern */
 int c_pointcontents;
@@ -2632,7 +2638,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
 	z = Grid_Fall(map, dummy);
 
 	/* can it be better than ever? */
-	if (map->area[z][ny][nx] < l)
+	if (R_AREA(map, nx, ny, z) < l)
 		return;
 
 	/* test for forbidden areas */
@@ -2640,7 +2646,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
 		return;
 
 	/* store move */
-	map->area[z][ny][nx] = l;
+	R_AREA(map, nx, ny, z) = l;	/**< Store TUs for this square. */
 	tfList[z][ny][nx] = stf;
 }
 
@@ -2663,9 +2669,8 @@ static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, i
 		for (y = yl; y <= yh; y++)
 			for (x = xl; x <= xh; x++)
 				if (tfList[z][y][x] == tf) {
-					/* reset test flags */
-					tfList[z][y][x] = 0;
-					l = map->area[z][y][x];
+					tfList[z][y][x] = 0;	/* Reset test flags (Guess: Never test again?) */
+					l = R_AREA(map, x, y, z);	/**< Get TUs for this square. */
 					h = R_HEIGHT(map, x, y, z);
 
 					/* check for end */
@@ -2713,9 +2718,7 @@ void Grid_MoveCalc (struct routing_s *map, pos3_t from, int size, int distance, 
 	/* first step */
 	tf = 1;
 	stf = 2;
-	map->area[from[2]][yl][xl] = 0;	/**< Guess: set this position to "accessable"?
-					 * If so we need to set all 4 squares fo a 2x2 unit.
-					 */
+	R_AREA(map, xl, yl, from[2]) = 0;	/**< This position does not need any TUs to move there. */
 	tfList[from[2]][yl][xl] = 1;	/* (Guess: check this field in any case - because it's now the same value as "tf") */
 
 	for (i = 0; i < distance; i++) {
@@ -2771,9 +2774,9 @@ int Grid_MoveLength (struct routing_s *map, pos3_t to, qboolean stored)
 #endif
 
 	if (!stored)
-		return map->area[to[2]][to[1]][to[0]];
+		return R_AREA(map, to[0], to[1], to[2]);
 	else
-		return map->areaStored[to[2]][to[1]][to[0]];
+		return R_SAREA(map, to[0], to[1], to[2]);
 }
 
 
@@ -2811,7 +2814,7 @@ static int Grid_MoveCheck (struct routing_s *map, pos3_t pos, int sz, int l)
 		y = pos[1] - dy;
 		z = sz;
 
-		if (map->area[z][y][x] != (l - 2) - (dv > 3))
+		if (R_AREA(map, x, y, z) != (l - 2) - (dv > 3))
 			continue;
 
 		/* connection checks */
@@ -2858,7 +2861,7 @@ int Grid_MoveNext (struct routing_s *map, pos3_t from)
 {
 	int l, x, y, z, dv;
 
-	l = map->area[from[2]][from[1]][from[0]];
+	l = R_AREA(map, from[0], from[1], from[2]); /**< Get TUs for this square */ 
 
 	/* finished */
 	if (!l) {
