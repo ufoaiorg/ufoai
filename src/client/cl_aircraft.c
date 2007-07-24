@@ -1267,7 +1267,7 @@ static void AIM_DrawAircraftSlots (aircraft_t *aircraft)
 					MN_UnHideNode(node);
 					/* draw in white if this is the selected slot */
 					if (j == airequipSelectedSlot) {
-					Vector2Set(node->texl, 64, 0);
+						Vector2Set(node->texl, 64, 0);
 						Vector2Set(node->texh, 128, 64);
 					} else {
 						Vector2Set(node->texl, 0, 0);
