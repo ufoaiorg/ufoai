@@ -410,8 +410,7 @@ void LET_StartIdle (le_t * le)
  * @brief Plays step sounds and draw particles for different terrain types
  * @param[in] le The local entity to play the sound and draw the particle for
  * @param[in] textureName The name of the texture the actor is standing on
- * @todo Finish the implementation - e.g. do the mapping of texture => (particle, sound)
- * this should be done in a ufo script file - maybe we can also use shaders.ufo for this
+ * @sa LET_PathMove
  */
 static void CL_PlaySoundFileAndParticleForSurface (le_t* le, const char *textureName)
 {
@@ -429,8 +428,11 @@ static void CL_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
 
 	/* @todo use the Grid_Fall method to ensure, that the particle is
 	 * drawn at the ground (if needed - maybe the origin is already ground aligned)*/
-	if (t->particle)
-		CL_ParticleSpawn(t->particle, 0, origin, NULL, NULL);
+	if (t->particle) {
+		/* check whether actor is visibile */
+		if (le->invis != qfalse)
+			CL_ParticleSpawn(t->particle, 0, origin, NULL, NULL);
+	}
 	if (t->footStepSound) {
 		sfx = S_RegisterSound(t->footStepSound);
 		if (sfx)
