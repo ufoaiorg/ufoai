@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-07-22 19:33+0200\n"
-"PO-Revision-Date: 2007-07-23 10:00+0100\n"
+"PO-Revision-Date: 2007-07-24 10:43+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -3721,8 +3721,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:3601
 #: ../base/ufos/research.ufo:3608
 msgid "mail_from_paul_navarre"
-msgstr ""
-"mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr "mjr Paul Navarre, JBR: Dział Inżynieryjny, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/research.ufo:129
 #: ../base/ufos/research.ufo:136
@@ -3814,8 +3813,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:3609
 #: ../base/ufos/research.ufo:3761
 msgid "mail_to_base_commander"
-msgstr ""
-"Dowódca Bazy, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr "Dowódca Bazy, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/research.ufo:152
 #: ../base/ufos/research.ufo:188
@@ -3928,8 +3926,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:3274
 #: ../base/ufos/research.ufo:3760
 msgid "mail_from_dr_connor"
-msgstr ""
-"Dr Connor, JBR: Dział Biotechnologii, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr "Dr Connor, JBR: Dział Biotechnologii, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/research.ufo:242
 #: ../base/ufos/research.ufo:278
@@ -4087,8 +4084,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:374
 #: ../base/ufos/research.ufo:381
 msgid "mail_from_col_falkland"
-msgstr ""
-"płk Ingrid Falkland, Wywiad Wojskowy, PHALANX, Dowództwo Operacji Atlantyckich"
+msgstr "płk Ingrid Falkland, Wywiad Wojskowy, PHALANX, Dowództwo Operacji Atlantyckich"
 
 #: ../base/ufos/research.ufo:402
 msgid "assault_txt"
@@ -8745,11 +8741,11 @@ msgstr "Pilnuj pleców! Podczas gry widzisz tylko zdarzenia w polu widzenia Twoi
 
 #: ../base/ufos/tips.ufo:22
 msgid "Build a workshop and UFO hangars to be able to disassemble UFOs."
-msgstr ""
+msgstr "Warsztat i hangary UFO są niezbędne do demontażu pojazdów UFO."
 
 #: ../base/ufos/tips.ufo:23
 msgid "You can zoom the geoscape by holding down [Ctrl] and moving the mouse up or down."
-msgstr ""
+msgstr "Widok planety może być powiększony poprzez przyciśnięcie [Ctrl] i poruszanie kursorem myszy w górę (lub w dół - pomniejszony)."
 
 #: ../base/ufos/tips.ufo:24
 msgid "You can make soldiers crouch to better protect them from enemy fire. But remember that crouching and standing up cost Time Units (TUs), and moving while crouched costs more TUs than walking normally."
@@ -8761,7 +8757,7 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:26
 msgid "Use [c] to toggle crouching. Crouching makes some weapons considerably more precise. It also makes your soldier a smaller target."
-msgstr ""
+msgstr "Aby przyklęknąć wciśnij [c]. Przyklęknięcie zwiększa celność i zmniejsza szanse na bycie trafionym przez ogień przeciwnika."
 
 #: ../base/ufos/tips.ufo:27
 msgid "If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
@@ -8785,7 +8781,7 @@ msgstr "Granaty plazmowe zadają najwięcej obrażeń, podczas gdy odłamkowe mo
 
 #: ../base/ufos/tips.ufo:32
 msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
-msgstr ""
+msgstr "Klawiszem [x] można się przełączać między różnymi trybami ognia automatycznego (pojedynczy, wielokrotny, wyłączony)."
 
 #: ../base/ufos/tips.ufo:33
 msgid "Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your round, so that they can't be killed with one grenade."
@@ -9913,7 +9909,7 @@ msgstr ""
 #: client/cl_basesummary.c:179
 #, c-format
 msgid "%s - %1.2f%% (%d %s)\n"
-msgstr ""
+msgstr "%s - %1.2f%% (%d %s)\n"
 
 #: client/cl_basesummary.c:181
 #: client/cl_campaign.c:1268
@@ -11417,12 +11413,16 @@ msgid ""
 "Destination base does not have enough\n"
 "Storage space to store this item.\n"
 msgstr ""
+"Baza docelowa nie posiada wystarczającej\n"
+"ilości miejsca w Magazynie.\n"
 
 #: client/cl_transfer.c:91
 msgid ""
 "Destination base does not have enough space\n"
 "in Living Quarters.\n"
 msgstr ""
+"Baza docelowa nie posiada wystarczającej\n"
+"ilości miejsca w Kwaterach.\n"
 
 #: client/cl_transfer.c:99
 #, c-format
@@ -11430,6 +11430,8 @@ msgid ""
 "%s %s is assigned to aircraft and cannot be\n"
 "transfered to another base.\n"
 msgstr ""
+"%s %s jest przydzielony do pojazdu\n"
+"i nie może być transferowany do innej bazy.\n"
 
 #: client/cl_transfer.c:101
 msgid "Soldier in aircraft"
