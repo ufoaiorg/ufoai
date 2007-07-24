@@ -1238,14 +1238,8 @@ static void AIM_DrawAircraftSlots (aircraft_t *aircraft)
 	int max;
 
 	/* initialise models Cvar */
-	Cvar_Set("mn_aircraft_item_model_slot0", "");
-	Cvar_Set("mn_aircraft_item_model_slot1", "");
-	Cvar_Set("mn_aircraft_item_model_slot2", "");
-	Cvar_Set("mn_aircraft_item_model_slot3", "");
-	Cvar_Set("mn_aircraft_item_model_slot4", "");
-	Cvar_Set("mn_aircraft_item_model_slot5", "");
-	Cvar_Set("mn_aircraft_item_model_slot6", "");
-	Cvar_Set("mn_aircraft_item_model_slot7", "");
+	for (i = 0; i < 8; i++)
+		Cvar_Set(va("mn_aircraft_item_model_slot%i", j), "");
 
 	node = MN_GetNodeFromCurrentMenu("airequip_slot0");
 	for (i = 0; node && i < AIR_POSITIONS_MAX; node = node->next) {
@@ -1279,34 +1273,7 @@ static void AIM_DrawAircraftSlots (aircraft_t *aircraft)
 						Vector2Set(node->texl, 0, 0);
 						Vector2Set(node->texh, 64, 64);
 					}
-					switch (i) {
-					case 0:
-						Cvar_Set("mn_aircraft_item_model_slot0", gd.technologies[aircraftItems[slot->itemIdx].tech_idx].mdl_top);
-						break;
-					case 1:
-						Cvar_Set("mn_aircraft_item_model_slot1", gd.technologies[aircraftItems[slot->itemIdx].tech_idx].mdl_top);
-						break;
-					case 2:
-						Cvar_Set("mn_aircraft_item_model_slot2", gd.technologies[aircraftItems[slot->itemIdx].tech_idx].mdl_top);
-						break;
-					case 3:
-						Cvar_Set("mn_aircraft_item_model_slot3", gd.technologies[aircraftItems[slot->itemIdx].tech_idx].mdl_top);
-						break;
-					case 4:
-						Cvar_Set("mn_aircraft_item_model_slot4", gd.technologies[aircraftItems[slot->itemIdx].tech_idx].mdl_top);
-						break;
-					case 5:
-						Cvar_Set("mn_aircraft_item_model_slot5", gd.technologies[aircraftItems[slot->itemIdx].tech_idx].mdl_top);
-						break;
-					case 6:
-						Cvar_Set("mn_aircraft_item_model_slot6", gd.technologies[aircraftItems[slot->itemIdx].tech_idx].mdl_top);
-						break;
-					case 7:
-						Cvar_Set("mn_aircraft_item_model_slot7", gd.technologies[aircraftItems[slot->itemIdx].tech_idx].mdl_top);
-						break;
-					default:
-						Com_Printf("Unknown location for slot position %i\n", i);
-					}
+					Cvar_Set(va("mn_aircraft_item_model_slot%i", i), gd.technologies[aircraftItems[slot->itemIdx].tech_idx].mdl_top);
 				}
 			}
 			i++;
