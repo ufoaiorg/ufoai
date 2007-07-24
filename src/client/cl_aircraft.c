@@ -1590,6 +1590,7 @@ void AIM_AircraftEquipzoneSelect_f (void)
 		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 		assert(aircraft);
 	}
+	/* FIXME: aircraft might not be set here - but used below */
 
 	/* ammos are only available for weapons */
 	switch (airequipID) {
