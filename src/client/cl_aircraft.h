@@ -222,6 +222,8 @@ extern aircraft_t aircraft_samples[MAX_AIRCRAFT]; /**< available aircraft types 
 extern int numAircraft_samples;
 extern int numAircraftItems;			/**< number of available aircrafts items in game. */
 extern aircraftItem_t aircraftItems[MAX_AIRCRAFTITEMS];	/**< Available aicraft items. */
+extern int airequipSelectedZone;		/**< Selected zone in equip menu */
+extern int airequipSelectedSlot;			/**< Selected slot in equip menu */
 
 /* script functions */
 

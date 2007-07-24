@@ -2,6 +2,7 @@
  * @file cl_basemanagement.c
  * @brief Handles everything that is located in or accessed trough a base.
  * @note Basemanagement functions prefix: B_
+ * @note Base defense functions prefix: BDEF_
  *
  * See "base/ufos/basemanagement.ufo", "base/ufos/menu_bases.ufo" and "base/ufos/menu_buildings.ufo" for the underlying content.
  * @todo New game does not reset basemangagement
@@ -221,42 +222,6 @@ void B_SetSensor_f (void)
 		RADAR_ChangeRange(&(base->radar), amount);	/* inc_sensor */
 	else if (!Q_strncmp(Cmd_Argv(0), "dec", 3))
 		RADAR_ChangeRange(&(base->radar), -amount);	/* dec_sensor */
-}
-
-/**
- * @brief Adds a missile battery to base.
- * @todo Implement me (atm, only first slot can be used, with sparrowhawk)
- */
-void B_AddBattery_f (void)
-{
-	int idx;
-
-	AII_InitialiseSlot(baseCurrent->batteries, baseCurrent->idx);
-
-	baseCurrent->batteries[0].aircraftIdx = baseCurrent->idx;
-
-	baseCurrent->maxBatteries = 1;
-
-	/* already functional */
-	baseCurrent->batteries[0].installationTime = 0;
-
-	/* add a weapon */
-	idx = AII_GetAircraftItemByID("craft_weapon_sparrowhawk");
-	baseCurrent->batteries[0].itemIdx = idx;
-
-	/* add an ammo */
-	idx = AII_GetAircraftItemByID("craft_ammo_sparrowhawk");
-	baseCurrent->batteries[0].ammoIdx = idx;
-
-	/* all type of items are OK for now */
-	baseCurrent->batteries[0].size = ITEM_HEAVY;
-
-	/* slots has a lot of ammo for now */
-	baseCurrent->batteries[0].ammoLeft = 9999;
-
-	/* slots can fire up to now */
-	baseCurrent->batteries[0].delayNextShot = 0;
-
 }
 
 /**
@@ -3460,4 +3425,82 @@ qboolean B_ScriptSanityCheck (void)
 		return qtrue;
 	else
 		return qfalse;
+}
+
+/**
+ * @brief Adds a missile battery to base.
+ * @todo Implement me (atm, only first slot can be used, with sparrowhawk)
+ */
+void BDEF_AddBattery_f (void)
+{
+	int idx;
+
+	AII_InitialiseSlot(baseCurrent->batteries, baseCurrent->idx);
+
+	baseCurrent->batteries[0].aircraftIdx = baseCurrent->idx;
+
+	baseCurrent->maxBatteries = 1;
+
+	/* already functional */
+	baseCurrent->batteries[0].installationTime = 0;
+
+	/* add a weapon */
+	idx = AII_GetAircraftItemByID("craft_weapon_sparrowhawk");
+	baseCurrent->batteries[0].itemIdx = idx;
+
+	/* add an ammo */
+	idx = AII_GetAircraftItemByID("craft_ammo_sparrowhawk");
+	baseCurrent->batteries[0].ammoIdx = idx;
+
+	/* all type of items are OK for now */
+	baseCurrent->batteries[0].size = ITEM_HEAVY;
+
+	/* slots has a lot of ammo for now */
+	baseCurrent->batteries[0].ammoLeft = 9999;
+
+	/* slots can fire up to now */
+	baseCurrent->batteries[0].delayNextShot = 0;
+
+}
+
+/**
+ * @brief Script command to init the base defense menu.
+ */
+void BDEF_Init_f (void)
+{
+	static char defBuffer[1024];
+	aircraftItem_t *item;
+	int i;
+
+	if(!baseCurrent)
+		return;	
+
+	/* Delete list */
+	defBuffer[0] = '\0';
+
+	if (baseCurrent->maxBatteries == 0)
+		Q_strcat(defBuffer, _("No defense of this type in this base\n"), sizeof(defBuffer));
+	else {
+		for (i = 0; i < baseCurrent->maxBatteries; i++) {
+			if (baseCurrent->batteries[i].itemIdx == -1)
+				Q_strcat(defBuffer, va(_("Slot %i:\tempty\n"), i), sizeof(defBuffer));
+			else {
+				item = aircraftItems + baseCurrent->batteries[i].itemIdx;
+				Q_strcat(defBuffer, va(_("Slot %i:\t%s\n"), i, gd.technologies[item->tech_idx].name), sizeof(defBuffer));
+			}
+		}
+	}
+
+	menuText[TEXT_BASEDEFENSE_LIST] = defBuffer;
+}
+
+/**
+ * @brief Click function for base defense menu list.
+ * @sa AIM_AircraftEquipmenuInit_f
+ */
+static void BDEF_ListClick_f (void)
+{
+	if (Cmd_Argc() < 2)
+		return;
+	airequipSelectedSlot = atoi(Cmd_Argv(1));
 }

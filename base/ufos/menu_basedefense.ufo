@@ -40,7 +40,291 @@ menu basedefense
 		pos		"512 512"
 	}
 
+	// ==================
+	// buttons
+	// ==================
 
+	confunc basedef_reset
+	{
+		*basedef_button_weapons_str		color "1 1 1 0.6"
+		*basedef_button_shields_str		color "1 1 1 0.6"
+		*basedef_button_items_str			color "1 1 1 0.6"
+		*basedef_header3					invis true
+	}
+	confunc basedef_weapons		{ cmd "basedef_init 0;" basedef_reset *basedef_button_weapons_str	color "1 1 1 1" *basedef_header3 invis false }
+	confunc basedef_shields	{ cmd "basedef_init 1;" basedef_reset *basedef_button_shields_str	color "1 1 1 1" }
+	confunc basedef_items		{ cmd "basedef_init 2;" basedef_reset *basedef_button_items_str color "1 1 1 1" }
+
+	confunc	basedef_zone1	{ cmd "basedef_zone_select 1;basedef_init;" }
+	confunc	basedef_zone2	{ cmd "basedef_zone_select 2;basedef_init;" }
+	confunc	basedef_zone3	{ cmd "basedef_zone_select 3;basedef_init 3;" }
+
+	text basedef_slot_list
+	{
+		pos	"34 30"
+		size	"400 600"
+//		bgcolor	"1 1 1 0.5"
+		format	"22 0"
+		wheel
+		height	"27"
+		num 42
+		mousefx	true
+		click
+	}
+
+	string basedef_available
+	{
+		string	"_Available defense:"
+		pos		"880 441"
+		font	f_big
+		align	uc
+	}
+
+	text basedef_selected_description
+	{
+		pos	"474 630"
+		size	"400 120"
+		format	"20 0"
+//		bgcolor	"1 1 1 0.5"
+		height	"6"
+	}
+
+	model mdl_top
+	{
+		md2		"*cvar mn_upmodel_top"
+		angles	"0 0 120"
+		color	"0.5 0.5 0.5 1"
+		origin	"600 545 0"
+		pos		"500 500"
+		size	"200 200"
+		mousefx	true
+		click
+	}
+
+	string basedef_item_name
+	{
+		string	"*cvar mn_itemname"
+		pos		"594 475"
+		align	uc
+	}
+
+	string basedef_description
+	{
+		string	"_Selected defense:"
+		pos		"594 441"
+		font	f_big
+		align	uc
+	}
+
+	pic basedef_button_weapons
+	{
+		tooltip	"_Choose missile battery"
+		mousefx	true
+		pos		"40 710"
+		image	menu/button_blue
+		texl	"0 0"
+		texh	"128 52"
+		click	{ basedef_weapons }
+	}
+	string basedef_button_weapons_str
+	{
+		string "_Missile"
+		pos		"114 736"
+		align	cc
+	}
+
+	pic basedef_button_items
+	{
+		tooltip	"_Choose laser battery"
+		mousefx	true
+		pos		"288 710"
+		image	menu/button_blue
+		texl	"0 0"
+		texh	"128 52"
+		click	{ basedef_items }
+	}
+	string basedef_button_items_str
+	{
+		string "_Laser"
+		pos		"352 736"
+		align	cc
+	}
+
+	text basedef_list
+	{
+		pos	"756 480"
+		size	"252 300"
+//		bgcolor	"1 1 1 0.5"
+		format	"20 0"
+		wheel
+		height	"15"
+		num 1
+		mousefx	true
+		click
+	}
+
+	// ==================
+	// Zones
+	// ==================
+
+	pic basedef_button_add1
+	{
+		tooltip	"_Install selected defense system"
+		mousefx	true
+		pos		"467 40"
+		image	menu/button_aircraft_menu
+		texl	"0 0"
+		texh	"36 32"
+		click { cmd "basedef_add_item 1;" }
+	}
+
+	pic basedef_button_remove1
+	{
+		tooltip	"_Remove this defense system"
+		mousefx	true
+		pos		"467 75"
+		image	menu/button_aircraft_menu
+		texl	"37 0"
+		texh	"73 32"
+		click { cmd "basedef_del_item 1;" }
+	}
+
+	pic basedef_button_add2
+	{
+		tooltip	"_Install selected defense system"
+		mousefx	true
+		pos		"467 174"
+		image	menu/button_aircraft_menu
+		texl	"0 0"
+		texh	"36 32"
+		click { cmd "basedef_add_item 2;" }
+	}
+
+	pic basedef_button_remove2
+	{
+		tooltip	"_Remove this defense system"
+		mousefx	true
+		pos		"467 209"
+		image	menu/button_aircraft_menu
+		texl	"37 0"
+		texh	"73 32"
+		click { cmd "basedef_del_item 2;" }
+	}
+
+	pic basedef_button_add3
+	{
+		tooltip	"_Equip this defense system with selected ammo"
+		mousefx	true
+		pos		"467 308"
+		image	menu/button_aircraft_menu
+		texl	"0 0"
+		texh	"36 32"
+		click { cmd "basedef_add_item 3;" }
+	}
+
+	pic basedef_button_remove3
+	{
+		tooltip	"_Remove ammo from this defense system"
+		mousefx	true
+		pos		"467 343"
+		image	menu/button_aircraft_menu
+		texl	"37 0"
+		texh	"73 32"
+		click { cmd "basedef_del_item 3;" }
+	}
+
+	pic basedef_zone_select1
+	{
+		invis false
+		tooltip	"_Choose defense system to build"
+		mousefx	true
+		pos		"534 30"
+		image	menu/button_big_menu
+		texl	"0 0"
+		texh	"458 82"
+		click	{ basedef_zone1 }
+	}
+
+	text basedef_text_zone1
+	{
+		pos	"546 70"
+		size	"430 35"
+		format	"16 0"
+//		bgcolor	"1 1 1 0.5"
+		num 39
+		height	"2"
+	}
+
+	pic basedef_zone_select2
+	{
+		invis false
+		tooltip	"_Choose defense system to build after removing current one"
+		mousefx	true
+		pos		"534 164"
+		image	menu/button_big_menu
+		texl	"0 0"
+		texh	"458 82"
+		click	{ basedef_zone2 }
+	}
+
+	text basedef_text_zone2
+	{
+		pos	"546 204"
+		size	"430 35"
+		format	"16 0"
+//		bgcolor	"1 1 1 0.5"
+		num 40
+		height	"2"
+	}
+
+	pic basedef_zone_select3
+	{
+		invis false
+		tooltip	"_Change ammo in the defense system"
+		mousefx	true
+		pos		"534 300"
+		image	menu/button_big_menu
+		texl	"0 0"
+		texh	"458 82"
+		click	{ basedef_zone3 }
+	}
+
+	text basedef_text_zone3
+	{
+		pos	"546 339"
+		size	"430 35"
+		format	"16 0"
+//		bgcolor	"1 1 1 0.5"
+		num 41
+		height	"2"
+	}
+
+	string basedef_header1
+	{
+		string	"_Current defense system"
+		pos		"545 50"
+		font	f_small
+		color	"0 .78 0 1"
+		align	cl
+	}
+
+	string basedef_header2
+	{
+		string	"_System to install after removal"
+		pos		"545 185"
+		font	f_small
+		color	"0 .78 0 1"
+		align	cl
+	}
+
+	string basedef_header3
+	{
+		string	"_Ammo to use with installed system"
+		pos		"545 320"
+		font	f_small
+		color	"0 .78 0 1"
+		align	cl
+	}
 
 	// ==================
 	// additional stuff
@@ -59,6 +343,7 @@ menu basedefense
 
 	func init
 	{
+		cmd basedef_init
 	}
 
 	func close

@@ -34,8 +34,8 @@ int numAircraft_samples = 0; /* @todo: should be reset to 0 each time scripts ar
 static int airequipID = -1;				/**< FIXME: document me. */
 static qboolean noparams = qfalse;			/**< FIXME: document me. */
 aircraftItem_t aircraftItems[MAX_AIRCRAFTITEMS];	/**< Available aicraft items. */
-static int airequipSelectedZone = 0;		/**< Selected zone in equip menu */
-static int airequipSelectedSlot = 0;			/**< Selected slot in equip menu */
+int airequipSelectedZone = 0;		/**< Selected zone in equip menu */
+int airequipSelectedSlot = 0;			/**< Selected slot in equip menu */
 static technology_t *airequipSelectedTechnology = NULL;		/**< Selected technolgy in equip menu */
 
 #define AIRCRAFT_RADAR_RANGE	20			/* FIXME: const */

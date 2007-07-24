@@ -267,7 +267,6 @@ typedef struct base_s {
 extern base_t *baseCurrent;
 
 void B_SetSensor_f(void);
-void B_AddBattery_f(void);
 
 void B_UpdateBaseData(void);
 base_t *B_GetBase(int id);
@@ -283,6 +282,10 @@ void B_BaseResetStatus(base_t* const base);
 building_t *B_GetBuildingByIdx(base_t* base, int idx);
 /*building_t *B_GetBuildingInBase(base_t* base, char* buildingID);*/
 building_t *B_GetBuildingType(const char *buildingName);
+
+/** Base defense functions. */
+void BDEF_AddBattery_f(void);
+void BDEF_Init_f(void);
 
 /** Coordinates to place the new base at (long, lat) */
 extern vec3_t newBasePos;

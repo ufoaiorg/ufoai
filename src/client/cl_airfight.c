@@ -584,7 +584,6 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 
 	if (base->baseDamage <= 0) {
 		int rnd;
-		Com_Printf("projectile destroyed a building\n");
 		base->baseDamage = MAX_BASE_DAMAGE;
 		rnd = frand() * gd.numBuildings[base->idx];
 		/* Add message to message-system. */
