@@ -228,7 +228,7 @@ static tnode_t *tnode_p;
  * @note (WIP)
  * An entry in tfList[][][] can have 3 values 0 (00b), 1 (01b) and 2 (10b)
  * Neither "tf" nor "stf" (stf depends on "tf" value) will be set to anything else than 1 (01b) or 2 (10b).
- * If an x,y,z entry in "tfList" (or rather in hte "routing_t") is calculated for pathfinding the tfList vlaue is set to 0.
+ * If an x,y,z entry in "tfList" (or rather in the "routing_t") is calculated for pathfinding the tfList value is set to 0.
  * These 0-entries will never be checked again because tf (which they are checked against) can never become 0.
  *
  * @todo Find out why there even is a 1 _and_ a 2 for tf and stf.
