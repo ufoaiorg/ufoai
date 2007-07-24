@@ -579,4 +579,34 @@ craftitem craft_shield_plating
 	speed		0.8
 }
 
+// *********************************
+// BASE WEAPONS
+// *********************************
+
+craftitem base_weapon_tr20
+{
+	type		base_missile
+	tech		rs_craft_weapon_tr20
+	weight		medium
+	installationTime	2
+	price		19998
+
+	speed		.9
+}
+
+craftitem base_ammo_tr20
+{
+	type		base_ammo_missile
+	tech		rs_craft_ammo_tr20
+	weapon		craft_weapon_tr20
+	price		310
+
+	ammo		12
+	wdamage		28
+	accuracy	0.4
+	wrange		20
+	wspeed		20
+	delay		40
+}
+
 

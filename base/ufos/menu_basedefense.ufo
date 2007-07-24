@@ -46,22 +46,20 @@ menu basedefense
 
 	confunc basedef_reset
 	{
-		*basedef_button_weapons_str		color "1 1 1 0.6"
-		*basedef_button_shields_str		color "1 1 1 0.6"
-		*basedef_button_items_str			color "1 1 1 0.6"
+		*basedef_button_missile_str		color "1 1 1 0.6"
+		*basedef_button_laser_str		color "1 1 1 0.6"
 		*basedef_header3					invis true
 	}
-	confunc basedef_weapons		{ cmd "basedef_init 0;" basedef_reset *basedef_button_weapons_str	color "1 1 1 1" *basedef_header3 invis false }
-	confunc basedef_shields	{ cmd "basedef_init 1;" basedef_reset *basedef_button_shields_str	color "1 1 1 1" }
-	confunc basedef_items		{ cmd "basedef_init 2;" basedef_reset *basedef_button_items_str color "1 1 1 1" }
+	confunc basedef_missile		{ cmd "basedef_init 0;" basedef_reset *basedef_button_missile_str	color "1 1 1 1" *basedef_header3 invis false }
+	confunc basedef_laser	{ cmd "basedef_init 1;" basedef_reset *basedef_button_laser_str	color "1 1 1 1" }
 
-	confunc	basedef_zone1	{ cmd "basedef_zone_select 1;basedef_init;" }
-	confunc	basedef_zone2	{ cmd "basedef_zone_select 2;basedef_init;" }
-	confunc	basedef_zone3	{ cmd "basedef_zone_select 3;basedef_init 3;" }
+	confunc	basedef_zone1	{ cmd "airequip_zone_select 1;basedef_init;" }
+	confunc	basedef_zone2	{ cmd "airequip_zone_select 2;basedef_init;" }
+	confunc	basedef_zone3	{ cmd "airequip_zone_select 3;basedef_init 2;" }
 
 	text basedef_slot_list
 	{
-		pos	"34 30"
+		pos	"40 30"
 		size	"400 600"
 //		bgcolor	"1 1 1 0.5"
 		format	"22 0"
@@ -70,6 +68,16 @@ menu basedefense
 		num 42
 		mousefx	true
 		click
+	}
+
+	pic basedef_selected_slot
+	{
+		tooltip	"_Your are changing this defense system"
+		mousefx	true
+		pos		"25 30"
+		image	menu/buttons_small
+		texl	"23 16"
+		texh	"31 32"
 	}
 
 	string basedef_available
@@ -116,41 +124,46 @@ menu basedefense
 		align	uc
 	}
 
-	pic basedef_button_weapons
+	pic basedef_button_missile
 	{
 		tooltip	"_Choose missile battery"
+		invis	true
 		mousefx	true
-		pos		"40 710"
+		pos		"50 710"
 		image	menu/button_blue
 		texl	"0 0"
 		texh	"128 52"
-		click	{ basedef_weapons }
+		click	{ basedef_missile }
 	}
-	string basedef_button_weapons_str
+	string basedef_button_missile_str
 	{
 		string "_Missile"
+		invis	true
 		pos		"114 736"
 		align	cc
 	}
 
-	pic basedef_button_items
+	pic basedef_button_laser
 	{
 		tooltip	"_Choose laser battery"
+		invis	true
 		mousefx	true
 		pos		"288 710"
 		image	menu/button_blue
 		texl	"0 0"
 		texh	"128 52"
-		click	{ basedef_items }
+		click	{ basedef_laser }
 	}
-	string basedef_button_items_str
+
+	string basedef_button_laser_str
 	{
 		string "_Laser"
+		invis	true
 		pos		"352 736"
 		align	cc
 	}
 
-	text basedef_list
+	text airequip_list
 	{
 		pos	"756 480"
 		size	"252 300"
@@ -175,7 +188,7 @@ menu basedefense
 		image	menu/button_aircraft_menu
 		texl	"0 0"
 		texh	"36 32"
-		click { cmd "basedef_add_item 1;" }
+		click { cmd "airequip_add_item 1;" }
 	}
 
 	pic basedef_button_remove1
@@ -186,7 +199,7 @@ menu basedefense
 		image	menu/button_aircraft_menu
 		texl	"37 0"
 		texh	"73 32"
-		click { cmd "basedef_del_item 1;" }
+		click { cmd "airequip_del_item 1;" }
 	}
 
 	pic basedef_button_add2
@@ -197,7 +210,7 @@ menu basedefense
 		image	menu/button_aircraft_menu
 		texl	"0 0"
 		texh	"36 32"
-		click { cmd "basedef_add_item 2;" }
+		click { cmd "airequip_add_item 2;" }
 	}
 
 	pic basedef_button_remove2
@@ -208,7 +221,7 @@ menu basedefense
 		image	menu/button_aircraft_menu
 		texl	"37 0"
 		texh	"73 32"
-		click { cmd "basedef_del_item 2;" }
+		click { cmd "airequip_del_item 2;" }
 	}
 
 	pic basedef_button_add3
@@ -219,7 +232,7 @@ menu basedefense
 		image	menu/button_aircraft_menu
 		texl	"0 0"
 		texh	"36 32"
-		click { cmd "basedef_add_item 3;" }
+		click { cmd "airequip_add_item 3;" }
 	}
 
 	pic basedef_button_remove3
@@ -230,10 +243,10 @@ menu basedefense
 		image	menu/button_aircraft_menu
 		texl	"37 0"
 		texh	"73 32"
-		click { cmd "basedef_del_item 3;" }
+		click { cmd "airequip_del_item 3;" }
 	}
 
-	pic basedef_zone_select1
+	pic airequip_zone_select1
 	{
 		invis false
 		tooltip	"_Choose defense system to build"
@@ -255,7 +268,7 @@ menu basedefense
 		height	"2"
 	}
 
-	pic basedef_zone_select2
+	pic airequip_zone_select2
 	{
 		invis false
 		tooltip	"_Choose defense system to build after removing current one"
@@ -277,7 +290,7 @@ menu basedefense
 		height	"2"
 	}
 
-	pic basedef_zone_select3
+	pic airequip_zone_select3
 	{
 		invis false
 		tooltip	"_Change ammo in the defense system"
@@ -343,7 +356,7 @@ menu basedefense
 
 	func init
 	{
-		cmd basedef_init
+		cmd "basedef_missile;airequip_zone_select 1;"
 	}
 
 	func close

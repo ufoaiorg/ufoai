@@ -254,6 +254,8 @@ typedef struct base_s {
 
 	int maxBatteries;
 	aircraftSlot_t batteries[MAX_BASE_SLOT];	/**< Missile batteries assigned to base. */
+	int maxLasers;
+	aircraftSlot_t lasers[MAX_BASE_SLOT];		/**< Laser batteries assigned to base. */
 
 	int batteryDamage;			/**< Hit points of defense system */
 	int baseDamage;			/**< Hit points of base */
@@ -285,7 +287,10 @@ building_t *B_GetBuildingType(const char *buildingName);
 
 /** Base defense functions. */
 void BDEF_AddBattery_f(void);
+void BDEF_InitialiseBaseSlots(base_t *base);
 void BDEF_Init_f(void);
+void BDEF_ListClick_f(void);
+aircraftSlot_t *BDEF_SelectBaseSlot(base_t *base);
 
 /** Coordinates to place the new base at (long, lat) */
 extern vec3_t newBasePos;

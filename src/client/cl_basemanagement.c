@@ -747,6 +747,7 @@ void B_SetUpBase (base_t* base)
 	/* intialise hit points */
 	base->batteryDamage = MAX_BATTERY_DAMAGE;
 	base->baseDamage = MAX_BASE_DAMAGE;
+	BDEF_InitialiseBaseSlots(base);
 }
 
 /**
@@ -3433,34 +3434,24 @@ qboolean B_ScriptSanityCheck (void)
  */
 void BDEF_AddBattery_f (void)
 {
-	int idx;
-
-	AII_InitialiseSlot(baseCurrent->batteries, baseCurrent->idx);
-
-	baseCurrent->batteries[0].aircraftIdx = baseCurrent->idx;
-
-	baseCurrent->maxBatteries = 1;
-
-	/* already functional */
-	baseCurrent->batteries[0].installationTime = 0;
-
-	/* add a weapon */
-	idx = AII_GetAircraftItemByID("craft_weapon_sparrowhawk");
-	baseCurrent->batteries[0].itemIdx = idx;
-
-	/* add an ammo */
-	idx = AII_GetAircraftItemByID("craft_ammo_sparrowhawk");
-	baseCurrent->batteries[0].ammoIdx = idx;
-
-	/* all type of items are OK for now */
-	baseCurrent->batteries[0].size = ITEM_HEAVY;
-
 	/* slots has a lot of ammo for now */
-	baseCurrent->batteries[0].ammoLeft = 9999;
+	baseCurrent->batteries[baseCurrent->maxBatteries].ammoLeft = 9999;
 
-	/* slots can fire up to now */
-	baseCurrent->batteries[0].delayNextShot = 0;
+	baseCurrent->maxBatteries++;
+}
 
+/**
+ * @brief Initialise all values of base slot defense.
+ * @param[in] base Pointer to the base which needs initalisation of its slots.
+ */
+extern void BDEF_InitialiseBaseSlots (base_t *base)
+{
+	int i;
+
+	for (i = 0; i < MAX_BASE_SLOT; i++) {
+		AII_InitialiseSlot(base->batteries + i, base->idx);
+		AII_InitialiseSlot(base->lasers + i, base->idx);
+	}
 }
 
 /**
@@ -3469,11 +3460,69 @@ void BDEF_AddBattery_f (void)
 void BDEF_Init_f (void)
 {
 	static char defBuffer[1024];
+	static char smallbuffer1[128];
+	static char smallbuffer2[128];
+	static char smallbuffer3[128];
 	aircraftItem_t *item;
+	aircraftSlot_t *slot;
 	int i;
+	int type;
+	menuNode_t *node;
 
 	if(!baseCurrent)
 		return;	
+
+	if (Cmd_Argc() != 2 || noparams) {
+		if (airequipID == -1) {
+			Com_Printf("Usage: basedef_init <num>\n");
+			return;
+		}
+	} else {
+		type = atoi(Cmd_Argv(1));
+		switch (type) {
+		case 0:
+			/* missiles */
+			airequipID = AC_ITEM_BASE_MISSILE;
+			break;
+		case 1:
+			/* lasers */
+			airequipID = AC_ITEM_BASE_LASER;
+			break;
+		case 2:
+			/* ammo */
+			if (airequipID == AC_ITEM_BASE_MISSILE)
+				airequipID = AC_ITEM_AMMO_MISSILE;
+			else if (airequipID == AC_ITEM_BASE_LASER)
+				airequipID = AC_ITEM_AMMO_LASER;
+			break;
+		default:
+			Com_Printf("BDEF_Init_f: Unvalid type %i.\n", type);
+			return;
+		}
+	}
+
+	/* Check if we can change to laser or missile */
+	if (baseCurrent->maxBatteries > 0) {
+		node = MN_GetNodeFromCurrentMenu("basedef_button_missile");
+		MN_UnHideNode(node);
+		node = MN_GetNodeFromCurrentMenu("basedef_button_missile_str");
+		MN_UnHideNode(node);
+	}
+	if (baseCurrent->maxLasers > 0) {
+		node = MN_GetNodeFromCurrentMenu("basedef_button_laser");
+		MN_UnHideNode(node);
+		node = MN_GetNodeFromCurrentMenu("basedef_button_laser_str");
+		MN_UnHideNode(node);
+	}
+
+	/* Select slot */
+	slot = BDEF_SelectBaseSlot(baseCurrent);
+
+	/* Check that the selected zone is OK */
+	AIM_CheckAirequipSelectedZone(slot);
+
+	/* Fill the list of item you can equip your aircraft with */
+	AIM_UpdateAircraftItemList();
 
 	/* Delete list */
 	defBuffer[0] = '\0';
@@ -3490,17 +3539,107 @@ void BDEF_Init_f (void)
 			}
 		}
 	}
-
 	menuText[TEXT_BASEDEFENSE_LIST] = defBuffer;
+
+	/* Fill the texts of each zone */
+	/* First slot: item currently assigned */
+	if (slot->itemIdx < 0) {
+		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _("No defense system assigned.\n"));
+		/* Weight are not used for base defense atm
+		Q_strcat(smallbuffer1, va(_("This slot is for %s or smaller items."), AII_WeightToName(slot->size)), sizeof(smallbuffer1)); */
+	} else {
+		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _(gd.technologies[aircraftItems[slot->itemIdx].tech_idx].name));
+		Q_strcat(smallbuffer1, "\n", sizeof(smallbuffer1));
+		if (!slot->installationTime)
+			Q_strcat(smallbuffer1, _("This defense system is functional.\n"), sizeof(smallbuffer1));
+		else if (slot->installationTime > 0)
+			Q_strcat(smallbuffer1, va(_("This defense system will be installed in %i hours.\n"),slot->installationTime), sizeof(smallbuffer1));
+		else
+			Q_strcat(smallbuffer1, va(_("This defense system will be removed in %i hours.\n"),-slot->installationTime), sizeof(smallbuffer1));
+	}
+	menuText[TEXT_AIREQUIP_1] = smallbuffer1;
+
+	/* Second slot: next item to install when the first one will be removed */
+	if (slot->itemIdx > -1 && slot->installationTime < 0) {
+		if (slot->nextItemIdx < 0)
+			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _("No defense system assigned."));
+		else {
+			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _(gd.technologies[aircraftItems[slot->nextItemIdx].tech_idx].name));
+			Q_strcat(smallbuffer2, "\n", sizeof(smallbuffer2));
+			Q_strcat(smallbuffer2, va(_("This defense system will be operational in %i hours.\n"), aircraftItems[slot->nextItemIdx].installationTime - slot->installationTime), sizeof(smallbuffer2));
+		}
+	} else
+		*smallbuffer2 = '\0';
+	menuText[TEXT_AIREQUIP_2] = smallbuffer2;
+
+	/* Third slot: ammo slot (only used for weapons) */
+	if ((airequipID < AC_ITEM_WEAPON || airequipID > AC_ITEM_AMMO) && slot->itemIdx > -1) {
+		if (slot->ammoIdx < 0)
+			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _("No ammo assigned to this defense system."));
+		else
+			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _(gd.technologies[aircraftItems[slot->ammoIdx].tech_idx].name));
+	} else
+		*smallbuffer3 = '\0';
+	menuText[TEXT_AIREQUIP_3] = smallbuffer3;
+
+	/* Draw selected zone */
+	AIM_DrawSelectedZone();
+
+	noparams = qfalse;
 }
 
 /**
  * @brief Click function for base defense menu list.
  * @sa AIM_AircraftEquipmenuInit_f
  */
-static void BDEF_ListClick_f (void)
+void BDEF_ListClick_f (void)
 {
+	int num, height;
+	menuNode_t *node;
+
 	if (Cmd_Argc() < 2)
 		return;
-	airequipSelectedSlot = atoi(Cmd_Argv(1));
+	num = atoi(Cmd_Argv(1));
+
+	if (num < baseCurrent->maxBatteries)
+		airequipSelectedSlot = num;
+
+	/* draw an arrow in front of the selected base defense */
+	node = MN_GetNodeFromCurrentMenu("basedef_slot_list");
+	height = node->texh[0];
+	node = MN_GetNodeFromCurrentMenu("basedef_selected_slot");
+	Vector2Set(node->pos, 25, 30 + height * airequipSelectedSlot);
+
+	noparams = qtrue;
+	BDEF_Init_f();
+}
+
+/**
+ * @brief Returns a pointer to the selected slot.
+ * @param[in] base Pointer to the aircraft
+ * @return Pointer to the slot corresponding to airequipID
+ */
+aircraftSlot_t *BDEF_SelectBaseSlot (base_t *base)
+{
+	aircraftSlot_t *slot;
+
+	switch (airequipID) {
+	case AC_ITEM_AMMO_MISSILE:
+	case AC_ITEM_BASE_MISSILE:
+		if (airequipSelectedSlot >= base->maxBatteries)
+			airequipSelectedSlot = 0;
+		slot = base->batteries + airequipSelectedSlot;
+		break;
+	case AC_ITEM_AMMO_LASER:
+	case AC_ITEM_BASE_LASER:
+		if (airequipSelectedSlot < base->maxLasers)
+			airequipSelectedSlot = 0;
+		slot = base->lasers + airequipSelectedSlot;
+		break;
+	default:
+		Com_Printf("BDEF_SelectBaseSlot: Unknown airequipID: %i\n", airequipID);
+		return NULL;
+	}
+
+	return slot;
 }

@@ -46,11 +46,21 @@ typedef enum {
 } aircraftType_t;
 
 /** @brief All different types of craft items. */
+/** @note must begin with weapons and end with ammos */
 typedef enum {
+	/* weapons */
+	AC_ITEM_BASE_MISSILE,
+	AC_ITEM_BASE_LASER,
 	AC_ITEM_WEAPON,
-	AC_ITEM_AMMO,
+
+	/* misc */
 	AC_ITEM_SHIELD,
 	AC_ITEM_ELECTRONICS,
+
+	/* ammos */
+	AC_ITEM_AMMO,			/* aircraft ammos */
+	AC_ITEM_AMMO_MISSILE,	/* base ammos */
+	AC_ITEM_AMMO_LASER,		/* base ammos */
 
 	MAX_ACITEMS
 } aircraftItemType_t;
@@ -224,6 +234,13 @@ extern int numAircraftItems;			/**< number of available aircrafts items in game.
 extern aircraftItem_t aircraftItems[MAX_AIRCRAFTITEMS];	/**< Available aicraft items. */
 extern int airequipSelectedZone;		/**< Selected zone in equip menu */
 extern int airequipSelectedSlot;			/**< Selected slot in equip menu */
+extern int airequipID;					/**< value of aircraftItemType_t that defines what item we are installing. */
+extern qboolean noparams;			/**< true if AIM_AircraftEquipmenuInit_f or BDEF_Init_f don't need paramters */
+
+/* @todo change my place */
+extern void AIM_DrawSelectedZone();
+extern void AIM_CheckAirequipSelectedZone(aircraftSlot_t *slot);
+extern void AIM_UpdateAircraftItemList();
 
 /* script functions */
 

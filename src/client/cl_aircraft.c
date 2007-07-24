@@ -31,8 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 aircraft_t aircraft_samples[MAX_AIRCRAFT];		/**< Available aircraft types. */
 int numAircraft_samples = 0; /* @todo: should be reset to 0 each time scripts are read anew; also aircraft_samples memory should be freed at that time, or old memory used for new records */
-static int airequipID = -1;				/**< FIXME: document me. */
-static qboolean noparams = qfalse;			/**< FIXME: document me. */
+int airequipID = -1;					/**< value of aircraftItemType_t that defines what item we are installing. */
+qboolean noparams = qfalse;			/**< true if AIM_AircraftEquipmenuInit_f or BDEF_Init_f don't need paramters */
 aircraftItem_t aircraftItems[MAX_AIRCRAFTITEMS];	/**< Available aicraft items. */
 int airequipSelectedZone = 0;		/**< Selected zone in equip menu */
 int airequipSelectedSlot = 0;			/**< Selected slot in equip menu */
@@ -1131,7 +1131,7 @@ int AII_GetAircraftItemByID (const char *id)
  * @param[in] aircraft Pointer to the aircraft
  * @return Pointer to the slot corresponding to airequipID
  */
-static aircraftSlot_t *AII_InitialiseAircraftSlot (aircraft_t *aircraft)
+static aircraftSlot_t *AII_SelectAircraftSlot (aircraft_t *aircraft)
 {
 	aircraftSlot_t *slot;
 
@@ -1147,7 +1147,7 @@ static aircraftSlot_t *AII_InitialiseAircraftSlot (aircraft_t *aircraft)
 		slot = aircraft->weapons + airequipSelectedSlot;
 		break;
 	default:
-		Com_Printf("AII_InitialiseAircraftSlot: Unknown airequipID: %i\n", airequipID);
+		Com_Printf("AII_SelectAircraftSlot: Unknown airequipID: %i\n", airequipID);
 		return NULL;
 	}
 
@@ -1181,29 +1181,51 @@ static void AIM_CheckAirequipSelectedSlot (aircraft_t *aircraft)
 
 /**
  * @brief Check that airequipSelectedZone is available
- * @sa aircraft Pointer to the aircraft
+ * @sa slot Pointer to the slot
  */
-static void AIM_CheckAirequipSelectedZone (aircraft_t *aircraft, aircraftSlot_t *slot)
+extern void AIM_CheckAirequipSelectedZone (aircraftSlot_t *slot)
 {
 	/* You can choose an ammo only if a weapon has already been selected */
-	if (airequipID == AC_ITEM_AMMO && slot->itemIdx < 0) {
+	if (airequipID >= AC_ITEM_AMMO && slot->itemIdx < 0) {
 		airequipSelectedZone = 1;
-		airequipID = AC_ITEM_WEAPON;
+		switch (airequipID) {
+		case AC_ITEM_AMMO:
+			airequipID = AC_ITEM_WEAPON;
+			break;
+		case AC_ITEM_AMMO_MISSILE:
+			airequipID = AC_ITEM_BASE_MISSILE;
+			break;
+		case AC_ITEM_AMMO_LASER:
+			airequipID = AC_ITEM_BASE_LASER;
+			break;
+		default:
+			Com_Printf("AIM_CheckAirequipSelectedZone: aircraftItemType_t must end with ammos !!!\n");
+			return;
+		}
 	}
 
 	/* You can select an item to install after removing only if you're removing an item */
 	if (airequipSelectedZone == 2 && (slot->installationTime >= 0 || slot->itemIdx < 0)) {
 		airequipSelectedZone = 1;
-		if (airequipID == AC_ITEM_AMMO)
+		switch (airequipID) {
+		case AC_ITEM_AMMO:
 			airequipID = AC_ITEM_WEAPON;
+			break;
+		case AC_ITEM_BASE_MISSILE:
+			airequipID = AC_ITEM_AMMO_MISSILE;
+			break;
+		case AC_ITEM_AMMO_LASER:
+			airequipID = AC_ITEM_BASE_LASER;
+			break;
+		/* no default */
+		}
 	}
 }
 
 /**
  * @brief Highlight selected zone
- * @return[out] aircraft Pointer to the aircraft
- */
-static void AIM_DrawSelectedZone (aircraft_t *aircraft)
+  */
+extern void AIM_DrawSelectedZone (void)
 {
 	menuNode_t *node;
 
@@ -1290,16 +1312,24 @@ static qboolean AIM_SelectableAircraftItem (aircraft_t *aircraft, technology_t *
 {
 	int idx;
 	aircraftSlot_t *slot;
+	menu_t *activeMenu = NULL;
+	qboolean aircraftMenu;
 
-	/* Initialise slot */
-	slot = AII_InitialiseAircraftSlot(aircraft);
+	/* select menu */
+	activeMenu = MN_ActiveMenu();
+	aircraftMenu = !Q_strncmp(activeMenu->name, "aircraft_equip", 14);
+
+	if (aircraftMenu)
+		slot = AII_SelectAircraftSlot(aircraft);
+	else
+		slot = BDEF_SelectBaseSlot(baseCurrent);
 
 	/* item is researched */
 	if (!RS_IsResearched_ptr(tech))
 		return qfalse;
 
 	/* you can choose an ammo only if it fits the weapons installed in this slot */
-	if (airequipID == AC_ITEM_AMMO) {
+	if (airequipID >= AC_ITEM_AMMO) {
 		idx = slot->itemIdx;
 		if (Q_strncmp(aircraftItems[AII_GetAircraftItemByID(tech->provides)].weapon, aircraftItems[idx].id, MAX_VAR))
 			return qfalse;
@@ -1315,11 +1345,12 @@ static qboolean AIM_SelectableAircraftItem (aircraft_t *aircraft, technology_t *
 /**
  * @brief Update the list of item you can choose
  */
-static void AIM_UpdateAircraftItemList (void)
+extern void AIM_UpdateAircraftItemList (void)
 {
 	static char buffer[1024];
 	technology_t **list;
 	aircraft_t *aircraft;
+	int i;
 
 	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 
@@ -1332,20 +1363,25 @@ static void AIM_UpdateAircraftItemList (void)
 	list = AII_GetCraftitemTechsByType(airequipID, qtrue);
 
 	/* Copy only those which are researched to buffer */
+	i = 0;
 	while (*list) {
 		if (AIM_SelectableAircraftItem(aircraft, *list))
 			Q_strcat(buffer, va("%s\n", _((*list)->name)), sizeof(buffer));
 		list++;
+		i++;
 	}
 
 	/* copy buffer to menuText to display it on screen */
 	menuText[TEXT_LIST] = buffer;
+
+	/* if there is at least one element, select the first one */
+	if (i)
+		Cbuf_AddText("airequip_list_click 0\n");
 }
 
 /**
  * @brief Fills the weapon and shield list of the aircraft equip menu
- * @sa CL_AircraftEquipmenuMenuWeaponsClick_f
- * @sa CL_AircraftEquipmenuMenuShieldsClick_f
+ * @sa AIM_AircraftEquipmenuClick_f
  */
 void AIM_AircraftEquipmenuInit_f (void)
 {
@@ -1406,11 +1442,11 @@ void AIM_AircraftEquipmenuInit_f (void)
 	/* Check that airequipSelectedSlot corresponds to an existing slot for this aircraft */
 	AIM_CheckAirequipSelectedSlot(aircraft);
 
-	/* Initialise slot */
-	slot = AII_InitialiseAircraftSlot(aircraft);
+	/* Select slot */
+	slot = AII_SelectAircraftSlot(aircraft);
 
 	/* Check that the selected zone is OK */
-	AIM_CheckAirequipSelectedZone(aircraft, slot);
+	AIM_CheckAirequipSelectedZone(slot);
 
 	/* Fill the list of item you can equip your aircraft with */
 	AIM_UpdateAircraftItemList();
@@ -1463,11 +1499,12 @@ void AIM_AircraftEquipmenuInit_f (void)
 	AIM_DrawAircraftSlots(aircraft);
 
 	/* Draw selected zone */
-	AIM_DrawSelectedZone(aircraft);
+	AIM_DrawSelectedZone();
 }
 
 /**
  * @brief Select the current slot you want to assign the item to.
+ * @note This function is only for aircraft and not far bases.
  */
 void AIM_AircraftEquipSlotSelect_f (void)
 {
@@ -1526,26 +1563,58 @@ void AIM_AircraftEquipzoneSelect_f (void)
 	int num;
 	aircraft_t *aircraft;
 	aircraftSlot_t *slot;
+	menu_t *activeMenu = NULL;
+	qboolean aircraftMenu;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: airequip_zone_select <arg>\n");
 		return;
 	}
 
+	/* select menu */
+	activeMenu = MN_ActiveMenu();
+	aircraftMenu = !Q_strncmp(activeMenu->name, "aircraft_equip", 14);
+
 	num = atoi(Cmd_Argv(1));
-	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
-	assert(aircraft);
+
+	if (aircraftMenu) {
+		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+		assert(aircraft);
+	}
 
 	/* ammos are only available for weapons */
-	if (airequipID == AC_ITEM_WEAPON) {
+	switch (airequipID) {
+	case AC_ITEM_WEAPON:
 		if (num == 3) {
 			if (aircraft->weapons[airequipSelectedSlot].itemIdx > -1)
 				airequipID = AC_ITEM_AMMO;
 		}
-	} else if (airequipID == AC_ITEM_AMMO) {
+		break;
+	case AC_ITEM_BASE_MISSILE:
+		if (num == 3) {
+			if (aircraft->weapons[airequipSelectedSlot].itemIdx > -1)
+				airequipID = AC_ITEM_AMMO_MISSILE;
+		}
+		break;
+	case AC_ITEM_BASE_LASER:
+		if (num == 3) {
+			if (aircraft->weapons[airequipSelectedSlot].itemIdx > -1)
+				airequipID = AC_ITEM_AMMO_LASER;
+		}
+		break;
+	case AC_ITEM_AMMO:
 		if (num != 3)
 			airequipID = AC_ITEM_WEAPON;
-	} else {
+		break;
+	case AC_ITEM_AMMO_MISSILE:
+		if (num != 3)
+			airequipID = AC_ITEM_BASE_MISSILE;
+		break;
+	case AC_ITEM_AMMO_LASER:
+		if (num != 3)
+			airequipID = AC_ITEM_BASE_LASER;
+		break;
+	default :
 		if (num == 3)
 			return;
 	}
@@ -1554,40 +1623,61 @@ void AIM_AircraftEquipzoneSelect_f (void)
 	/* Fill the list of item you can equip your aircraft with */
 	AIM_UpdateAircraftItemList();
 
-	/* Select slot */
-	slot = AII_InitialiseAircraftSlot(aircraft);
+	if (aircraftMenu) {
+		/* Select slot */
+		slot = AII_SelectAircraftSlot(aircraft);
 
-	/* Check that the selected zone is OK */
-	AIM_CheckAirequipSelectedZone(aircraft, slot);
+		/* Check that the selected zone is OK */
+		AIM_CheckAirequipSelectedZone(slot);
+
+	} else {
+		/* Select slot */
+		slot = BDEF_SelectBaseSlot(baseCurrent);
+
+		/* Check that the selected zone is OK */
+		AIM_CheckAirequipSelectedZone(slot);
+	}
 
 	/* Draw selected zone */
-	AIM_DrawSelectedZone(aircraft);
+	AIM_DrawSelectedZone();
 }
 
 /**
  * @brief Add selected item to current zone.
+ * @note May be called from airequip menu of basedefense menu
  */
 void AIM_AircraftEquipAddItem_f (void)
 {
 	int num;
 	aircraftSlot_t *slot;
 	aircraft_t *aircraft;
+	menu_t *activeMenu = NULL;
+	qboolean aircraftMenu;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: airequip_add_item <arg>\n");
 		return;
 	}
 
+	num = atoi(Cmd_Argv(1));
+
+	/* select menu */
+	activeMenu = MN_ActiveMenu();
+	aircraftMenu = !Q_strncmp(activeMenu->name, "aircraft_equip", 14);
+
 	/* proceed only if an item has been selected */
 	if (!airequipSelectedTechnology)
 		return;
 
-	num = atoi(Cmd_Argv(1));
-
-	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
-	assert(aircraft);
-
-	slot = AII_InitialiseAircraftSlot(aircraft);
+	/* check in which menu we are */
+	if (aircraftMenu) {
+		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+		assert(aircraft);
+		slot = AII_SelectAircraftSlot(aircraft);
+	} else {
+		slot = BDEF_SelectBaseSlot(baseCurrent);
+		aircraft = NULL;
+	}
 
 	/* the clicked button doesn't correspond to the selected zone */
 	if (num != airequipSelectedZone)
@@ -1605,14 +1695,19 @@ void AIM_AircraftEquipAddItem_f (void)
 	}
 	else if (num == 2)
 		slot->nextItemIdx = AII_GetAircraftItemByID(airequipSelectedTechnology->provides);
-	else if (airequipID == AC_ITEM_AMMO)
+	else if (airequipID >= AC_ITEM_AMMO)
 		slot->ammoIdx = AII_GetAircraftItemByID(airequipSelectedTechnology->provides);
 
-	/* Update the values of aircraft stats (just in case an item has an installationTime of 0) */
-	AII_UpdateAircraftStats(aircraft);
+	if (aircraftMenu) {
+		/* Update the values of aircraft stats (just in case an item has an installationTime of 0) */
+		AII_UpdateAircraftStats(aircraft);
 
-	noparams = qtrue; /* used for AIM_AircraftEquipmenuInit_f */
-	AIM_AircraftEquipmenuInit_f();
+		noparams = qtrue; /* used for AIM_AircraftEquipmenuInit_f */
+		AIM_AircraftEquipmenuInit_f();
+	} else {
+		noparams = qtrue; /* used for BDEF_Init_f */
+		BDEF_Init_f();
+	}
 }
 
 /**
@@ -1623,25 +1718,27 @@ void AIM_AircraftEquipDeleteItem_f (void)
 	int num;
 	aircraftSlot_t *slot;
 	aircraft_t *aircraft;
+	menu_t *activeMenu = NULL;
+	qboolean aircraftMenu;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: airequip_del_item <arg>\n");
 		return;
 	}
-
 	num = atoi(Cmd_Argv(1));
 
-	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+	/* select menu */
+	activeMenu = MN_ActiveMenu();
+	aircraftMenu = !Q_strncmp(activeMenu->name, "aircraft_equip", 14);
 
-	slot = AII_InitialiseAircraftSlot(aircraft);
-
-	/* there's no item in zone 1: you can't use zone 2 */
-	if (num == 2 && slot->itemIdx < 0)
-		return;
-
-	/* ammos are only available for weapons */
-	if (num == 3 && airequipID != AC_ITEM_WEAPON)
-		return;
+	/* check in which menu we are */
+	if (aircraftMenu) {
+		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+		slot = AII_SelectAircraftSlot(aircraft);
+	} else {
+		slot = BDEF_SelectBaseSlot(baseCurrent);
+		aircraft = NULL;
+	}
 
 	/* select the slot we are changing */
 	/* update the new item to slot */
@@ -1651,16 +1748,22 @@ void AIM_AircraftEquipDeleteItem_f (void)
 			slot->installationTime = -aircraftItems[slot->itemIdx].installationTime;
 		else
 			slot->itemIdx = -1;
+		slot->ammoIdx = -1;
 	} else if (num == 2)
 		slot->nextItemIdx = -1;
-	else if (airequipID == AC_ITEM_WEAPON)
+	else if (airequipID >= AC_ITEM_AMMO)
 		slot->ammoIdx = -1;
 
-	/* Update the values of aircraft stats */
-	AII_UpdateAircraftStats(aircraft);
+	if (aircraftMenu) {
+		/* Update the values of aircraft stats */
+		AII_UpdateAircraftStats(aircraft);
 
-	noparams = qtrue; /* used for AIM_AircraftEquipmenuInit_f */
-	AIM_AircraftEquipmenuInit_f();
+		noparams = qtrue; /* used for AIM_AircraftEquipmenuInit_f */
+		AIM_AircraftEquipmenuInit_f();
+	} else {
+		noparams = qtrue; /* used for BDEF_Init_f */
+		BDEF_Init_f();
+	}
 }
 
 /**
@@ -1672,6 +1775,8 @@ void AIM_AircraftEquipmenuClick_f (void)
 	aircraft_t *aircraft;
 	int num;
 	technology_t **list;
+	menu_t *activeMenu = NULL;
+	qboolean aircraftMenu;
 
 	if (baseCurrent->aircraftCurrent < 0 || airequipID == -1)
 		return;
@@ -1684,9 +1789,16 @@ void AIM_AircraftEquipmenuClick_f (void)
 	/* Which entry in the list? */
 	num = atoi(Cmd_Argv(1));
 
-	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+	/* select menu */
+	activeMenu = MN_ActiveMenu();
+	aircraftMenu = !Q_strncmp(activeMenu->name, "aircraft_equip", 14);
 
-	assert(aircraft);
+	/* check in which menu we are */
+	if (aircraftMenu) {
+		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+		assert(aircraft);
+	} else
+		aircraft = NULL;
 
 	/* build the list of all aircraft items of type airequipID - null terminated */
 	list = AII_GetCraftitemTechsByType(airequipID, qtrue);
@@ -1793,15 +1905,15 @@ qboolean AIR_SendAircraftToMission (aircraft_t* aircraft, actMis_t* mission)
 
 /**
  * @brief Initialise values of one slot of an aircraft common to all types of items.
- * @note Only values which shoudln't be iniatized to 0 are done here (others are done by memset)
  * @param[in] slot Pointer to the slot to initialize.
  */
 void AII_InitialiseSlot (aircraftSlot_t *slot, int aircraftIdx)
 {
+	memset(slot, 0, sizeof(slot)); /* all values to 0 */
 	slot->aircraftIdx = aircraftIdx;
 	slot->itemIdx = -1;
 	slot->ammoIdx = -1;
-	slot->size = ITEM_LIGHT;
+	slot->size = ITEM_HEAVY;
 	slot->nextItemIdx = -1;
 }
 
@@ -1820,6 +1932,21 @@ static void AII_InitialiseAircraftSlots (aircraft_t *aircraft)
 	}
 	AII_InitialiseSlot(&aircraft->shield, aircraft->idx);
 }
+
+/**
+ * @brief List of valid strings for slot types
+ * @note slot names are the same as the item types (and must be in the same order)
+ */
+static const char *air_slot_type_strings[MAX_ACITEMS] = {
+	"base_missile",
+	"base_laser",
+	"weapon",
+	"shield",
+	"electronics",
+	"ammo",
+	"base_ammo_missile",
+	"base_ammo_laser"
+};
 
 /** @brief Valid aircraft items (craftitem) definition values from script files. */
 static const value_t aircraftitems_vals[] = {
@@ -1899,15 +2026,13 @@ void AII_ParseAircraftItem (const char *name, const char **text)
 				return;
 
 			/* Check which type it is and store the correct one.*/
-			if (!Q_strncmp(token, "weapon", MAX_VAR))
-				airItem->type = AC_ITEM_WEAPON;
-			else if (!Q_strncmp(token, "ammo", MAX_VAR))
-				airItem->type = AC_ITEM_AMMO;
-			else if (!Q_strncmp(token, "shield", MAX_VAR))
-				airItem->type = AC_ITEM_SHIELD;
-			else if (!Q_strncmp(token, "electronics", MAX_VAR))
-				airItem->type = AC_ITEM_ELECTRONICS;
-			else
+			for (i = 0; i < MAX_ACITEMS; i++) {
+				if (!Q_strcmp(token, air_slot_type_strings[i])) {
+					airItem->type = i;
+					break;
+				}
+			}
+			if (i == MAX_ACITEMS)
 				Com_Printf("AII_ParseAircraftItem: \"%s\" unknown craftitem type: \"%s\" - ignored.\n", name, token);
 		} else if (!Q_strncmp(token, "weight", MAX_VAR)) {
 			/* Craftitem type definition. */
@@ -1950,17 +2075,6 @@ void AII_ParseAircraftItem (const char *name, const char **text)
 		}
 	} while (*text);
 }
-
-/**
- * @brief List of valid strings for slot types
- * @note slot names are the same as the item types (and must be in the same order)
- */
-static const char *air_slot_type_strings[MAX_ACITEMS] = {
-	"weapon",
-	"ammo",
-	"shield",
-	"electronics"
-};
 
 /**
  * @brief List of valid strings for itemPos_t

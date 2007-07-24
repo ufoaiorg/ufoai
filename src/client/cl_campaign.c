@@ -3676,6 +3676,7 @@ static const cmdList_t game_commands[] = {
 	{"center_geoscape", MAP_CenterOnPoint, NULL},
 	{"add_battery", BDEF_AddBattery_f, "Add a new battery to base"},
 	{"basedef_init", BDEF_Init_f, "Inits base defense menu"},
+	{"basedef_slot_list_click", BDEF_ListClick_f, "Inits base defense menu"},
 #ifdef DEBUG
 	{"debug_aircraftlist", AIR_ListAircraft_f, "Debug function to list all aircraft in all bases"},
 	{"debug_fullcredits", CL_DebugFullCredits_f, "Debug function to give the player full credits"},
