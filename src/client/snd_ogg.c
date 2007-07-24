@@ -534,7 +534,7 @@ sfxcache_t *S_OGG_LoadSFX (sfx_t *s)
 	char *buffer;
 	int bitstream, bytes_read, bytes_read_total, len, samples;
 
-	Com_Printf("loading %s.ogg\n", s->name);
+	Com_DPrintf("loading %s.ogg\n", s->name);
 
 	len = FS_FOpenFile(va("sound/%s.ogg", s->name), &file);
 	if (!file.f && !file.z)
@@ -618,7 +618,8 @@ sfxcache_t *S_OGG_LoadSFX (sfx_t *s)
 
 	if (dma.speed != vi->rate) {
 		S_ResampleSfx(s, sc->speed, sc->width, (byte*)buffer);
-		Mem_Free(buffer);
+		if ((void *)buffer != sc->data)
+			Mem_Free(buffer);
 	}
 
 	return sc;
