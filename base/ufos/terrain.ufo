@@ -1,7 +1,5 @@
 // Put footsteps and particles for different terrain into this file
 
-/*
-
 // normal grass
 terrain tex_nature/grass001 {
 	footstepsound "footsteps/step_1"
@@ -51,5 +49,3 @@ terrain tex_nature/potatoes {
 // roof with tile
 terrain tex_buildings/roof003 {
 }
-
-*/
