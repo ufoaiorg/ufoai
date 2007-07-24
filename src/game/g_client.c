@@ -658,9 +658,10 @@ static int G_DoTurn (edict_t * ent, byte toDV)
 
 /**
  * @brief Checks whether the the requested action is possible
- * @param[in] quiet Don't print the console message if quiet is true
  * @param[in] player Which player (human player) is trying to do the action
- * @param[in] ent And which of his soldiers (or entities) he is trying to do
+ * @param[in] ent Which of his units is trying to do the action.
+ * @param[in] TU The time units to check against the ones ent has.
+ * @param[in] quiet Don't print the console message if quiet is true.
  * the action with
  * @todo: Integrate into hud - don't use cprintf
  */
@@ -1206,32 +1207,46 @@ void G_MoveCalc (int team, pos3_t from, int size, int distance)
 /**
  * @brief Check whether there is already an edict on the field where the actor
  * is trying to get with the next move
- * @param[in] dv direction to walk to
+ * @param[in] dv Direction to walk to. See the "dvecs" array and DIRECTIONS for more info.
  * @param[in] from starting point to walk from
+ * @return qtrue if there is something blocking this direction.
+ * @return qfalse if moving into this direction is ok.
+ *
+ * @todo Add support for 2x2 units. See Grid_CheckForbidden for an example on how to do that.
+ * @todo But maybe this check isn't even needed anymore? Shouldn't Grid_CheckForbidden have prevented this?
  */
 static qboolean G_CheckMoveBlock (pos3_t from, int dv)
 {
-	edict_t *ent;
+	edict_t *ent = NULL;
 	pos3_t pos;
 	int i;
 
-	/* get target position */
+	/* Get target position. */
 	VectorCopy(from, pos);
-	/* check the next field in the given direction */
+
+	/* Calculate the field in the given direction. */
 	PosAddDV(pos, dv);
 
-	/* search for blocker */
+	/* Search for blocker. */
+	/** @todo 2x2 support needed? */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2) && !(ent->state & STATE_DEAD) && VectorCompare(pos, ent->pos))
 			return qtrue;
 
-	/* nothing found */
+	/* Nothing blocked - moving to this direction should be ok. */
 	return qfalse;
 }
 
 /**
- * @brief
+ * @brief @todo: writeme
+ * @param[in] player
+ * @param[in] visTeam
+ * @param[in] num
+ * @param[in] to
+ * @param[in] stop
+ * @param[in] quiet Don't print the console message (G_ActionCheck) if quiet is true.
  * @sa CL_ActorStartMove
+ * @todo 2x2 units?
  */
 void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean stop, qboolean quiet)
 {
