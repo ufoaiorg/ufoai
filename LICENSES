@@ -1,4 +1,98 @@
 filename | license | author | source
+base/maps/africa04d.map | GPL version 2 | 'SparX' Beyeler
+base/maps/africa04n.map | GPL version 2 | 'SparX' Beyeler
+base/maps/apartments01d.map | GPL version 2
+base/maps/bridge01d.map | GPL version 2 | Martin Gerhardy
+base/maps/bridge01n.map | GPL version 2 | Martin Gerhardy
+base/maps/bunker01d.map | GPL version 2
+base/maps/bunker01n.map | GPL version 2
+base/maps/city04d.map | GPL version 2 | 'SparX' Beyeler
+base/maps/city04n.map | GPL version 2 | 'SparX' Beyeler
+base/maps/colon04.map | GPL version 2 | 'SparX' Beyeler
+base/maps/colon_city04d.map | GPL version 2 | Martin Gerhardy
+base/maps/condor04.map | GPL version 2 | 'SparX' Beyeler
+base/maps/condor_crash04d.map | GPL version 2 | Martin Gerhardy
+base/maps/const05d.map | GPL version 2 | 'SparX' Beyeler
+base/maps/const05n.map | GPL version 2 | 'SparX' Beyeler
+base/maps/dam01d.map | GPL version 2 | Martin Gerhardy
+base/maps/dam01n.map | GPL version 2 | Martin Gerhardy
+base/maps/druglord07d.map | GPL version 2 | Martin Gerhardy
+base/maps/estate01d.map | GPL version 2 | Martin Gerhardy
+base/maps/estate01n.map | GPL version 2 | Martin Gerhardy
+base/maps/excavation06d.map | GPL version 2 | Martin Gerhardy
+base/maps/excavation06n.map | GPL version 2 | Martin Gerhardy
+base/maps/farm08d.map | GPL version 2 | 'SparX' Beyeler
+base/maps/farm08n.map | GPL version 2 | 'SparX' Beyeler
+base/maps/gasstation05d.map | GPL version 2 | 'SparX' Beyeler
+base/maps/gasstation05n.map | GPL version 2 | 'SparX' Beyeler
+base/maps/harbor07d.map | GPL version 2 | 'SparX' Beyeler
+base/maps/harbor07n.map | GPL version 2 | 'SparX' Beyeler
+base/maps/harvester05.map | GPL version 2
+base/maps/harvestercrash04d.map | GPL version 2 | 'SparX' Beyeler
+base/maps/harvestercrash04n.map | GPL version 2 | 'SparX' Beyeler
+base/maps/industrial06d.map | GPL version 2 | Martin Gerhardy
+base/maps/industrial06n.map | GPL version 2 | Martin Gerhardy
+base/maps/italy05d.map | GPL version 2 | 'SparX' Beyeler
+base/maps/italy05n.map | GPL version 2 | 'SparX' Beyeler
+base/maps/japan06d.map | GPL version 2
+base/maps/japan06n.map | GPL version 2
+base/maps/lake02d.map | GPL version 2 | 'SparX' Beyeler, Martin Gerhardy
+base/maps/lake02n.map | GPL version 2 | 'SparX' Beyeler, Martin Gerhardy
+base/maps/lake03d.map | GPL version 2 | 'SparX' Beyeler
+base/maps/lake03n.map | GPL version 2 | 'SparX' Beyeler
+base/maps/mart05d.map | GPL version 2 | Drew Babkirk (Druterium)
+base/maps/mart05n.map | GPL version 2 | Drew Babkirk (Druterium)
+base/maps/mine01d.map | GPL version 2
+base/maps/mine01n.map | GPL version 2
+base/maps/mine_crash05d.map | GPL version 2 | 'SparX' Beyeler
+base/maps/mine_crash05n.map | GPL version 2 | 'SparX' Beyeler
+base/maps/office06d.map | GPL version 2 | Martin Gerhardy
+base/maps/office06n.map | GPL version 2 | Martin Gerhardy
+base/maps/oriental05d.map | GPL version 2 | Martin Gerhardy
+base/maps/oriental05n.map | GPL version 2 | Martin Gerhardy
+base/maps/oriental06d.map | GPL version 2 | 'SparX' Beyeler
+base/maps/oriental06n.map | GPL version 2 | 'SparX' Beyeler
+base/maps/pdi08d.map | GPL version 2 | 'SparX' Beyeler
+base/maps/pdi08n.map | GPL version 2 | 'SparX' Beyeler
+base/maps/pipes_const01d.map | GPL version 2 | Martin Gerhardy
+base/maps/powerplant01d.map | GPL version 2
+base/maps/prefab_drop_firebird.map | GPL version 2
+base/maps/prefab_household.map | GPL version 2
+base/maps/prefab_inter_saracen.map | GPL version 2
+base/maps/prefab_inter_stiletto.map | GPL version 2
+base/maps/prefab_machines.map | GPL version 2
+base/maps/prefab_misc.map | GPL version 2
+base/maps/prefab_office.map | GPL version 2
+base/maps/prefab_pipes.map | GPL version 2
+base/maps/prefab_shop.map | GPL version 2
+base/maps/prefab_terrain.map | GPL version 2
+base/maps/prefab_ufo_big.map | GPL version 2
+base/maps/prefab_ufo_fighter.map | GPL version 2
+base/maps/prefab_ufo_scout.map | GPL version 2
+base/maps/prefab_ufo_supply.map | GPL version 2
+base/maps/prefab_vegetation.map | GPL version 2
+base/maps/rivertown01d.map | GPL version 2 | Martin Gerhardy
+base/maps/rocketsilo06n.map | GPL version 2 | Martin Gerhardy
+base/maps/spedition06d.map | GPL version 2 | Martin Gerhardy
+base/maps/spedition06n.map | GPL version 2 | Martin Gerhardy
+base/maps/stadium06d.map | GPL version 2 | 'SparX' Beyeler
+base/maps/stadium06n.map | GPL version 2 | 'SparX' Beyeler
+base/maps/subconlab01n.map | GPL version 2
+base/maps/subway07d.map | GPL version 2 | 'SparX' Beyeler
+base/maps/subway07n.map | GPL version 2 | 'SparX' Beyeler
+base/maps/terrain02d.map | GPL version 2 | Martin Gerhardy
+base/maps/terrain08d.map | GPL version 2
+base/maps/terrain08n.map | GPL version 2
+base/maps/test_particles.map | GPL version 2
+base/maps/test_waypoints.map | GPL version 2
+base/maps/tower06d.map | GPL version 2 | 'SparX' Beyeler
+base/maps/tower06n.map | GPL version 2 | 'SparX' Beyeler
+base/maps/transport06d.map | GPL version 2
+base/maps/transport06n.map | GPL version 2
+base/maps/tutorial01.map | GPL version 2
+base/maps/tutorial02.map | GPL version 2
+base/maps/village07d.map | GPL version 2 | 'SparX' Beyeler
+base/maps/village07n.map | GPL version 2 | 'SparX' Beyeler
 base/music/AlexFightmare.ogg |  | Alex Parker
 base/music/AlexForest.ogg |  | Alex Parker
 base/music/AlexSullencity.ogg |  | Alex Parker
