@@ -200,6 +200,32 @@ base/maps/oriental05d.map | GPL version 2 | Martin Gerhardy
 base/maps/oriental05n.map | GPL version 2 | Martin Gerhardy
 base/maps/oriental06d.map | GPL version 2 | 'SparX' Beyeler
 base/maps/oriental06n.map | GPL version 2 | 'SparX' Beyeler
+base/maps/orientald/or_drop.map | GPL version 2
+base/maps/orientald/or_h01.map | GPL version 2
+base/maps/orientald/or_h02.map | GPL version 2
+base/maps/orientald/or_h03.map | GPL version 2
+base/maps/orientald/or_h04.map | GPL version 2
+base/maps/orientald/or_h05.map | GPL version 2
+base/maps/orientald/or_h06.map | GPL version 2
+base/maps/orientald/or_h07.map | GPL version 2
+base/maps/orientald/or_h08.map | GPL version 2
+base/maps/orientald/or_h09.map | GPL version 2
+base/maps/orientald/or_h10.map | GPL version 2
+base/maps/orientald/or_h11.map | GPL version 2
+base/maps/orientald/or_h12.map | GPL version 2
+base/maps/orientaln/or_drop.map | GPL version 2
+base/maps/orientaln/or_h01.map | GPL version 2
+base/maps/orientaln/or_h02.map | GPL version 2
+base/maps/orientaln/or_h03.map | GPL version 2
+base/maps/orientaln/or_h04.map | GPL version 2
+base/maps/orientaln/or_h05.map | GPL version 2
+base/maps/orientaln/or_h06.map | GPL version 2
+base/maps/orientaln/or_h07.map | GPL version 2
+base/maps/orientaln/or_h08.map | GPL version 2
+base/maps/orientaln/or_h09.map | GPL version 2
+base/maps/orientaln/or_h10.map | GPL version 2
+base/maps/orientaln/or_h11.map | GPL version 2
+base/maps/orientaln/or_h12.map | GPL version 2
 base/maps/pdi08d.map | GPL version 2 | 'SparX' Beyeler
 base/maps/pdi08n.map | GPL version 2 | 'SparX' Beyeler
 base/maps/pipes_const01d.map | GPL version 2 | Martin Gerhardy
