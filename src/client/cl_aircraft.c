@@ -478,7 +478,8 @@ void AIM_PrevAircraft_f (void)
 }
 
 /**
-* @brief Update the installation delay of one slot of a given aircraft.
+* @brief Update the installation delay of one slot.
+* @param[in] aircraft Pointer to the aircraft (NULL if a base is updated)
 * @param[in] slot Pointer to the slot to update
 */
 static void AII_UpdateOneInstallationDelay (aircraft_t *aircraft, aircraftSlot_t *slot)
@@ -493,7 +494,8 @@ static void AII_UpdateOneInstallationDelay (aircraft_t *aircraft, aircraftSlot_t
 		if (slot->installationTime <= 0) {
 			slot->installationTime = 0;
 			/* Update stats values */
-			AII_UpdateAircraftStats(aircraft);
+			if (aircraft)
+				AII_UpdateAircraftStats(aircraft);
 		}
 	} else if (slot->installationTime < 0) {
 		/* the item is being removed */
@@ -528,7 +530,14 @@ void AII_UpdateInstallationDelay (void)
 	for (j = 0, base = gd.bases; j < gd.numBases; j++, base++) {
 		if (!base->founded)
 			continue;
-		/* Run each aircraft */
+
+		/* Update base */
+		for (k = 0; k < base->maxBatteries; k++)
+			AII_UpdateOneInstallationDelay(NULL, base->batteries + k);
+		for (k = 0; k < base->maxLasers; k++)
+			AII_UpdateOneInstallationDelay(NULL, base->lasers + k);
+
+		/* Update each aircraft */
 		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++)
 			if (aircraft->homebase) {
 				if (AIR_IsAircraftInBase(aircraft)) {
