@@ -499,6 +499,7 @@ static void LET_PathMove (le_t * le)
 
 			CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
 
+			/* link any floor container into the actor temp floor container */
 			floor = LE_Find(ET_ITEM, le->pos);
 			if (floor)
 				FLOOR(le) = FLOOR(floor);
