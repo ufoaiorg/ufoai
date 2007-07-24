@@ -1,7 +1,7 @@
 [Project]
 FileName=ufo_ded.dev
 Name=ufoded
-UnitCount=34
+UnitCount=33
 Type=0
 Ver=1
 ObjFiles=
@@ -248,16 +248,6 @@ ProductVersion=
 AutoIncBuildNr=0
 
 [Unit21]
-FileName=..\..\src\ports\win32\conproc.c
-CompileCpp=0
-Folder=Source Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit22]
 FileName=..\..\src\ports\win32\q_shwin.c
 CompileCpp=0
 Folder=Source Files
@@ -267,7 +257,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit23]
+[Unit22]
 FileName=..\..\src\ports\win32\ufo.rc
 CompileCpp=0
 Folder=Ressource Files
@@ -277,7 +267,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit24]
+[Unit23]
 FileName=..\..\src\server\server.h
 CompileCpp=0
 Folder=Header Files
@@ -287,8 +277,18 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit25]
+[Unit24]
 FileName=..\..\src\qcommon\md5.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit25]
+FileName=..\..\src\qcommon\msg.c
 Folder=Source Files
 Compile=1
 Link=1
@@ -298,16 +298,6 @@ BuildCmd=
 CompileCpp=0
 
 [Unit26]
-FileName=..\..\src\qcommon\msg.c
-CompileCpp=0
-Folder=Source Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit27]
 FileName=..\..\src\qcommon\mem.c
 CompileCpp=0
 Folder=Source Files
@@ -317,7 +307,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit28]
+[Unit27]
 FileName=..\..\src\game\inv_shared.c
 CompileCpp=0
 Folder=Source Files
@@ -327,7 +317,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit29]
+[Unit28]
 FileName=..\..\src\qcommon\dbuffer.c
 CompileCpp=0
 Folder=Source Files
@@ -337,7 +327,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit30]
+[Unit29]
 FileName=..\..\src\qcommon\dbuffer.h
 CompileCpp=0
 Folder=Header Files
@@ -347,7 +337,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit31]
+[Unit30]
 FileName=..\..\src\qcommon\net.c
 CompileCpp=0
 Folder=Source Files
@@ -357,7 +347,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit32]
+[Unit31]
 FileName=..\..\src\qcommon\net.h
 CompileCpp=0
 Folder=Header Files
@@ -367,10 +357,20 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit33]
+[Unit32]
 FileName=..\..\src\qcommon\netpack.c
 CompileCpp=0
 Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit33]
+FileName=..\..\src\qcommon\netpack.h
+CompileCpp=0
+Folder=Header Files
 Compile=1
 Link=1
 Priority=1000
