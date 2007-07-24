@@ -686,7 +686,7 @@ mission qatar
 }
 
 // Switzerland
-//FIXME: artifact: craft_ufo_supply (name needed)
+//artifact: craft_ufo_fighter
 mission terrain
 {
 	location	"_Altdorf"
@@ -702,8 +702,7 @@ mission terrain
 	civteam		european
 	nation		"europa"
 	onlose		""
-	onwin		""
-//	onwin		"cp_uforecovery 5;" FIXME
+	onwin		"cp_uforecovery 1;"
 	storyrelated	true
 }
 
