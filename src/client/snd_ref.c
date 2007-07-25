@@ -756,8 +756,15 @@ Start a sound effect
 
 /**
  * @brief Validates the parms and ques the sound up
- * if pos is NULL, the sound will be dynamically sourced from the entity
- * Entchannel 0 will never override a playing sound
+ * @param[in] origin if is NULL, the sound will be dynamically sourced from the entity
+ * @param[in] entnum The entity the sound is played for
+ * @param[in] entchannel Use different channels to play different type of sounds at the
+ * same time or override currently running channels. Entchannel 0 will never override
+ * a playing sound
+ * @param[in] sfx The sound to play
+ * @param[in] fvol The volume of the sound
+ * @param[in] attenuation the reduction in amplitude and intensity of a signal
+ * @param[in] timeofs
  */
 void S_StartSound (vec3_t origin, int entnum, int entchannel, sfx_t * sfx, float fvol, float attenuation, float timeofs)
 {
@@ -838,7 +845,7 @@ void S_StartLocalSound (const char *sound)
 		Com_Printf("S_StartLocalSound: can't cache %s\n", sound);
 		return;
 	}
-	S_StartSound(NULL, cl.pnum, 0, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
+	S_StartSound(NULL, cl.pnum, SOUND_CHANNEL_OVERRIDE, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
 }
 
 
@@ -1231,7 +1238,7 @@ static void S_Play_f (void)
 
 	while (i < Cmd_Argc()) {
 		sfx = S_RegisterSound(Cmd_Argv(i));
-		S_StartSound(NULL, cl.pnum, 0, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
+		S_StartSound(NULL, cl.pnum, SOUND_CHANNEL_OVERRIDE, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
 		i++;
 	}
 }

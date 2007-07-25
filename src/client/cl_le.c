@@ -417,7 +417,7 @@ void LET_StartIdle (le_t * le)
 static void CL_PlaySoundFileAndParticleForSurface (le_t* le, const char *textureName)
 {
 	sfx_t *sfx;
-	int entchannel = 0;
+	int entchannel = SOUND_CHANNEL_ACTOR;
 	const terrainType_t *t;
 	vec3_t origin;
 

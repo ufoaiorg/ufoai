@@ -31,6 +31,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 struct sfx_s;
 
+enum {
+	SOUND_CHANNEL_OVERRIDE,	/**< entchannel 0 is always overwritten */
+	SOUND_CHANNEL_WEAPON,	/**< shooting sound */
+	SOUND_CHANNEL_ACTOR		/**< actor die sound, footsteps */
+};
+
 typedef struct snd_stream_s
 {
 	qFILE file;
