@@ -2571,23 +2571,29 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, byte 
 
 		forbidden_size = *(p + 1); /**< The list is pos3_t + byte  - so the fourth byte is the size. */
 		for (j = 0; j < poslen; j++) {
-			if (x == poslist[j][0] && y == poslist[j][1] && z == poslist[j][2]) {
-				switch (*forbidden_size) {
-				case 0:
-				case ACTOR_SIZE_NORMAL:
+			switch (*forbidden_size) {
+			case 0:
+			case ACTOR_SIZE_NORMAL:
+				/* Check square against actor (poslist) */
+				if (x == poslist[j][0] && y == poslist[j][1] && z == poslist[j][2]) {
 					return qtrue;
-				case ACTOR_SIZE_2x2:
-					if (Grid_CheckForbidden(map, x + 1, y, z, ACTOR_SIZE_NORMAL))
-						return qtrue;
-					if (Grid_CheckForbidden(map, x, y + 1, z, ACTOR_SIZE_NORMAL))
-						return qtrue;
-					if (Grid_CheckForbidden(map, x + 1, y + 1, z, ACTOR_SIZE_NORMAL))
-						return qtrue;
-					break;
-				default:
-					Com_Printf("Grid_CheckForbidden: unknown forbidden-size: %i\n", (int)*forbidden_size);
-					return qfalse;
 				}
+				break;
+			case ACTOR_SIZE_2x2:
+				/* Check origin-square against actor (poslist) and all attached forbidden squares (e.g. if it's a 2x2 unit) as well. */
+				if (x == poslist[j][0] && y == poslist[j][1] && z == poslist[j][2]) {
+					return qtrue;
+				} else if (Grid_CheckForbidden(map, x + 1, y,     z, ACTOR_SIZE_NORMAL)) {
+					return qtrue;
+				} else if (Grid_CheckForbidden(map, x,     y + 1, z, ACTOR_SIZE_NORMAL)) {
+					return qtrue;
+				} else if (Grid_CheckForbidden(map, x + 1, y + 1, z, ACTOR_SIZE_NORMAL)) {
+					return qtrue;
+				}
+				break;
+			default:
+				Com_Printf("Grid_CheckForbidden: unknown forbidden-size: %i\n", (int)*forbidden_size);
+				return qfalse;
 			}
 		}
 	}
