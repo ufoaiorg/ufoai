@@ -725,7 +725,7 @@ void CL_ActorShootHidden(struct dbuffer *msg);
 void CL_ActorDoThrow(struct dbuffer *msg);
 void CL_ActorStartShoot(struct dbuffer *msg);
 void CL_ActorDie(struct dbuffer *msg);
-void CL_PlayActorSound(int category, int gender, actorSound_t soundType);
+void CL_PlayActorSound(le_t* le, actorSound_t soundType);
 
 void CL_ActorActionMouse(void);
 

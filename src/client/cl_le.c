@@ -620,8 +620,10 @@ static void LET_Projectile (le_t * le)
 			le->ptl = CL_ParticleSpawn(le->ref1, 0, impact, bytedirs[le->state], NULL);
 			VecToAngles(bytedirs[le->state], le->ptl->angles);
 		}
-		if (le->ref2 && le->ref2[0])
+		if (le->ref2 && le->ref2[0]) {
+			/* FIXME: use S_StartSound */
 			S_StartLocalSound(le->ref2);
+		}
 	}
 }
 
@@ -667,11 +669,13 @@ void LE_AddProjectile (fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, 
 			ptl = NULL;
 			if (flags & SF_BODY) {
 				if (fd->hitBodySound[0])
+					/* FIXME: use S_StartSound */
 					S_StartLocalSound(fd->hitBodySound);
 				if (fd->hitBody[0])
 					ptl = CL_ParticleSpawn(fd->hitBody, 0, impact, bytedirs[normal], NULL);
 			} else {
 				if (fd->impactSound[0])
+					/* FIXME: use S_StartSound */
 					S_StartLocalSound(fd->impactSound);
 				if (fd->impact[0])
 					ptl = CL_ParticleSpawn(fd->impact, 0, impact, bytedirs[normal], NULL);

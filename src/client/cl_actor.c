@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 #include "client.h"
 #include "cl_global.h"
+#include "snd_loc.h"
 
 /* public */
 le_t *selActor;
@@ -2573,6 +2574,7 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	/* start the sound */
 	if ((!fd->soundOnce || firstShot) && fd->fireSound[0]
 		&& !(flags & SF_BOUNCED))
+		/* FIXME: use S_StartSound */
 		S_StartLocalSound(fd->fireSound);
 	firstShot = qfalse;
 
@@ -2639,6 +2641,7 @@ void CL_ActorShootHidden (struct dbuffer *msg)
 
 	/* start the sound; @todo: is check for SF_BOUNCED needed? */
 	if (((first && fd->soundOnce) || (!first && !fd->soundOnce)) && fd->fireSound[0])
+		/* FIXME: use S_StartSound */
 		S_StartLocalSound(fd->fireSound);
 
 #if 0
@@ -2681,6 +2684,7 @@ void CL_ActorDoThrow (struct dbuffer *msg)
 	/* start the sound */
 	if ((!fd->soundOnce || firstShot) && fd->fireSound[0]
 		&& !(flags & SF_BOUNCED))
+		/* FIXME: use S_StartSound */
 		S_StartLocalSound(fd->fireSound);
 	firstShot = qfalse;
 }
@@ -2867,7 +2871,7 @@ void CL_ActorDie (struct dbuffer *msg)
 	}
 
 	Com_DPrintf("CL_ActorDie()... category: %i, gender: %i\n", le->category, le->gender);
-	CL_PlayActorSound(le->category, le->gender, SND_DEATH);
+	CL_PlayActorSound(le, SND_DEATH);
 
 	VectorCopy(player_dead_maxs, le->maxs);
 	CL_RemoveActorFromTeamList(le);
@@ -3933,16 +3937,21 @@ void CL_AddTargeting (void)
  * @param[in] gender
  * @param[in] soundType Type of action (among actorSound_t) for which we need a sound.
  */
-void CL_PlayActorSound (int category, int gender, actorSound_t soundType)
+void CL_PlayActorSound (le_t* le, actorSound_t soundType)
 {
 	const char *actorSound;
+	int gender = le->gender;
+	int category = le->category;
+	sfx_t* sfx;
 
 	actorSound = Com_GetActorSound(category, gender, soundType);
 
 	Com_DPrintf("CL_PlayActorSound()... actorSound: %s\n", actorSound);
-	if (actorSound)
-		S_StartLocalSound(actorSound);
-	else
+	if (actorSound) {
+		sfx = S_RegisterSound(actorSound);
+		if (sfx)
+			S_StartSound(NULL, le->entnum, SOUND_CHANNEL_ACTOR, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
+	} else
 		Com_Printf("CL_PlayActorSound()... could not start sound for category: %i gender: %i soundType: %i\n",
 		category, gender, soundType);
 }
