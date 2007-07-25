@@ -356,7 +356,9 @@ menu basedefense
 
 	func init
 	{
-		cmd "basedef_missile;airequip_zone_select 1;"
+		cmd "basedef_init 0;"
+		cmd basedef_reset *basedef_button_missile_str	color "1 1 1 1" *basedef_header3 invis false
+		cmd "airequip_zone_select 1;"
 	}
 
 	func close
