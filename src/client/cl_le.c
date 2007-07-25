@@ -391,7 +391,8 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
 
 
 /**
- * @brief
+ * @brief Change the animation of an actor to the idle animation (which can be
+ * panic, dead or stand)
  * @note Think function
  */
 void LET_StartIdle (le_t * le)
@@ -403,6 +404,7 @@ void LET_StartIdle (le_t * le)
 	else
 		re.AnimChange(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
 
+	/* keep this animation until something happens */
 	le->think = NULL;
 }
 
@@ -451,6 +453,8 @@ void LET_PathMoveHidden (le_t * le)
 	byte dv;
 	float frac;
 	vec3_t start, dest, delta;
+	trace_t trace;
+	vec3_t from, to;
 
 	/* check for start */
 	if (cl.time <= le->startTime)
@@ -461,9 +465,6 @@ void LET_PathMoveHidden (le_t * le)
 		VectorCopy(le->pos, le->oldPos);
 
 		if (le->pathPos < le->pathLength) {
-			trace_t trace;
-			vec3_t from, to;
-
 			/* next part */
 			dv = le->path[le->pathPos++];
 			PosAddDV(le->pos, dv);
@@ -512,6 +513,8 @@ static void LET_PathMove (le_t * le)
 	float frac;
 	int tuCost = 0;
 	vec3_t start, dest, delta;
+	trace_t trace;
+	vec3_t from, to;
 
 	/* check for start */
 	if (cl.time <= le->startTime)
@@ -522,9 +525,6 @@ static void LET_PathMove (le_t * le)
 		VectorCopy(le->pos, le->oldPos);
 
 		if (le->pathPos < le->pathLength) {
-			trace_t trace;
-			vec3_t from, to;
-
 			/* next part */
 			dv = le->path[le->pathPos++];
 			PosAddDV(le->pos, dv);
@@ -551,9 +551,14 @@ static void LET_PathMove (le_t * le)
 			le->startTime = le->endTime;
 			/* check for straight movement or diagonal movement */
 			le->endTime += ((dv & (DIRECTIONS-1)) > 3 ? UNIT_SIZE * 1.41 : UNIT_SIZE) * 1000 / le->speed;
-			if (le->team == cls.team && le == selActor && cl_worldlevel->integer == le->oldPos[2] && le->pos[2] != le->oldPos[2]) {
+#if 0
+			/* follow the actor's z-level */
+			if (le->team == cls.team && le == selActor
+			 && cl_worldlevel->integer == le->oldPos[2]
+			 && le->pos[2] != le->oldPos[2]) {
 				Cvar_SetValue("cl_worldlevel", le->pos[2]);
 			}
+#endif
 		} else {
 			/* end of move */
 			le_t *floor;
@@ -567,7 +572,7 @@ static void LET_PathMove (le_t * le)
 
 			CL_UnblockEvents();
 			le->think = LET_StartIdle;
-			le->think(le);
+			/* maybe there are some other EV_ACTOR_MOVE events following */
 			return;
 		}
 	}
@@ -589,7 +594,10 @@ static void LET_PathMove (le_t * le)
  */
 void LET_StartPathMove (le_t * le)
 {
-	re.AnimChange(&le->as, le->model1, LE_GetAnim("walk", le->right, le->left, le->state));
+	const char *anim = re.AnimGetName(&le->as, le->model1);
+	/* initial animation or animation change */
+	if (!anim || (anim && Q_strncmp(anim, "walk", 4)))
+		re.AnimChange(&le->as, le->model1, LE_GetAnim("walk", le->right, le->left, le->state));
 
 	le->think = LET_PathMove;
 	le->think(le);
