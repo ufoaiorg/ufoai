@@ -174,11 +174,21 @@ typedef uint8_t byte;
 #define NONE		0xFF
 #define NONE_AMMO	0
 
+/* Battlescape map dimensions (WIDTH*WIDTH*HEIGHT) */
 #define WIDTH       256         /* absolute max */
 #define HEIGHT      8           /* 15 max */
 
+/* Move/Routing values */
 #define MAX_ROUTE       31
 #define MAX_MOVELENGTH  60
+
+/* Timeunits for the various actions. */
+#define TU_CROUCH	1	/**< Time units for crouching and standing up */
+#define TU_TURN		1	/**< Time units for turning (no matter how far). */
+#define TU_REACTION_SINGLE	7	/**< Time units used to activate single RF. */
+#define TU_REACTION_MULTI	14	/**< Time units used to activate multi-RF. */
+#define TU_MOVE_STRAIGHT 2	/**< Time units used to move straight to the next field/square. */
+#define TU_MOVE_DIAGONAL 3	/**< Time units used to move to a diagonal field/square. */
 
 /* angle indexes */
 #define PITCH               0   /* up / down */

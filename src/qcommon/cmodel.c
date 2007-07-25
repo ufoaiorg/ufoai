@@ -187,8 +187,6 @@ typedef struct routing_s {
 /* area */
 #define R_AREA(map,x,y,z) ((map)->area[(z)][(y)][(x)])
 #define R_SAREA(map,x,y,z) ((map)->areaStored[(z)][(y)][(x)])
-#define AREA_TU_STRAIGHT 2
-#define AREA_TU_DIAGONAL 3
 
 /* extern */
 int c_pointcontents;
@@ -2618,7 +2616,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dv, 
 	pos3_t dummy;
 	byte l;
 
-	int poslist_n[4][3];  /* 3*int needed for range-check because pos3_t does not support negative values and has a smaller range. */
+	int poslist_n[4][2];  /* 2*int needed for range-check because pos3_t does not support negative values and has a smaller range. */
 	pos3_t poslist[4];
 
 #ifdef PARANOID
@@ -2629,8 +2627,8 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dv, 
 #endif
 
 	l = dv > 3	/**< Add TUs to old length/TUs depending on straight or diagonal move. */
-		? ol + AREA_TU_DIAGONAL
-		: ol + AREA_TU_STRAIGHT;
+		? ol + TU_MOVE_DIAGONAL
+		: ol + TU_MOVE_STRAIGHT;
 
 	dx = dvecs[dv][0];	/**< Get the difference value for x for this direction */
 	dy = dvecs[dv][1];	/**< Get the difference value for y for this direction */
@@ -2660,7 +2658,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dv, 
 			return;
 
 		/* Check diagonal connection */
-		/* If direction vector index is set to a diagonal offset check if we can move there throiugh connected "straight" squares. */
+		/* If direction vector index is set to a diagonal offset check if we can move there through connected "straight" squares. */
 		if (dv > 3 &&
 			!( (dx > 0 ? R_CONN_PX(map, x,    y+dy, z) : R_CONN_NX(map, x,    y+dy, z))
 			&& (dy > 0 ? R_CONN_PY(map, x+dx, y,    z) : R_CONN_NY(map, x+dx, y,    z))
@@ -2670,10 +2668,10 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dv, 
 		break;
 	case ACTOR_SIZE_2x2:
 		/* Range check of new values (2x2) */
-		VectorSet(poslist_n[0], nx, ny, z);
-		VectorSet(poslist_n[1], poslist_n[0][0] + 1, poslist_n[0][1],     poslist_n[0][2]);
-		VectorSet(poslist_n[2], poslist_n[0][0],     poslist_n[0][1] + 1, poslist_n[0][2]);
-		VectorSet(poslist_n[3], poslist_n[0][0] + 1, poslist_n[0][1] + 1, poslist_n[0][2]);
+		Vector2Set(poslist_n[0], nx, ny);
+		Vector2Set(poslist_n[1], poslist_n[0][0] + 1, poslist_n[0][1]);
+		Vector2Set(poslist_n[2], poslist_n[0][0],     poslist_n[0][1] + 1);
+		Vector2Set(poslist_n[3], poslist_n[0][0] + 1, poslist_n[0][1] + 1);
 
 		if (poslist_n[0][0] < 0 || poslist_n[0][0] >= WIDTH || poslist_n[0][1] < 0 || poslist_n[0][1] >= WIDTH
 		||  poslist_n[1][0] < 0 || poslist_n[1][0] >= WIDTH || poslist_n[1][1] < 0 || poslist_n[1][1] >= WIDTH
@@ -2683,18 +2681,18 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dv, 
 
 		/* Connection checks for actor (2x2) */
 		/* We need to check the 8 surrounding "straight" fields (2 in each direction; the 4 diagonal ones are skipped here) */
-		VectorSet(poslist[0], x, y, z);							/* has NX and NY */
-		VectorSet(poslist[1], poslist[0][0] + 1, poslist[0][1],     poslist[0][2]);	/* has PX and NY */
-		VectorSet(poslist[2], poslist[0][0],     poslist[0][1] + 1, poslist[0][2]);	/* has NX and PY */
-		VectorSet(poslist[3], poslist[0][0] + 1, poslist[0][1] + 1, poslist[0][2]);	/* has PX and PY */
+		VectorSet(poslist[0], x, y, z);					/* has NX and NY */
+		VectorSet(poslist[1], poslist[0][0] + 1, poslist[0][1],     z);	/* has PX and NY */
+		VectorSet(poslist[2], poslist[0][0],     poslist[0][1] + 1, z);	/* has NX and PY */
+		VectorSet(poslist[3], poslist[0][0] + 1, poslist[0][1] + 1, z);	/* has PX and PY */
 
-		if (dx > 0 && !(R_CONN_PX(map, poslist[1][0], poslist[1][1], poslist[1][2]) || R_CONN_PX(map, poslist[3][0], poslist[3][1], poslist[3][2])))
+		if (dx > 0 && !(R_CONN_PX(map, poslist[1][0], poslist[1][1], z) || R_CONN_PX(map, poslist[3][0], poslist[3][1], z)))
 			return;
-		if (dx < 0 && !(R_CONN_NX(map, poslist[0][0], poslist[0][1], poslist[0][2]) || R_CONN_NX(map, poslist[2][0], poslist[2][1], poslist[2][2])))
+		if (dx < 0 && !(R_CONN_NX(map, poslist[0][0], poslist[0][1], z) || R_CONN_NX(map, poslist[2][0], poslist[2][1], z)))
 			return;
-		if (dy > 0 && !(R_CONN_PY(map, poslist[2][0], poslist[2][1], poslist[2][2]) || R_CONN_PY(map, poslist[3][0], poslist[3][1], poslist[3][2])))
+		if (dy > 0 && !(R_CONN_PY(map, poslist[2][0], poslist[2][1], z) || R_CONN_PY(map, poslist[3][0], poslist[3][1], z)))
 			return;
-		if (dy < 0 && !(R_CONN_NY(map, poslist[0][0], poslist[0][1], poslist[0][2]) || R_CONN_NY(map, poslist[1][0], poslist[1][1], poslist[1][2])))
+		if (dy < 0 && !(R_CONN_NY(map, poslist[0][0], poslist[0][1], z) || R_CONN_NY(map, poslist[1][0], poslist[1][1], z)))
 			return;
 
 #if 0
@@ -2764,7 +2762,7 @@ static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, i
 					h = R_HEIGHT(map, x, y, z);
 
 					/* check for end */
-					if (l + AREA_TU_DIAGONAL >= MAX_MOVELENGTH)
+					if (l + TU_MOVE_DIAGONAL >= MAX_MOVELENGTH)
 						continue;
 
 					/* test the next connections */
@@ -2916,7 +2914,7 @@ static byte Grid_MoveCheck (struct routing_s *map, pos3_t pos, byte sz, int l)
 		y = pos[1] - dy;
 		z = sz;
 
-		if (R_AREA(map, x, y, z) != (l - AREA_TU_STRAIGHT) - (dv > 3))
+		if (R_AREA(map, x, y, z) != (l - TU_MOVE_STRAIGHT) - (dv > 3))
 			continue;
 
 		/* connection checks */

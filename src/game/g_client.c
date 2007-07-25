@@ -1364,7 +1364,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 					break;
 
 				/* decrease TUs */
-				div = ((dvtab[numdv] & (DIRECTIONS - 1)) < 4) ? 2 : 3;
+				div = ((dvtab[numdv] & (DIRECTIONS - 1)) < 4) ? TU_MOVE_STRAIGHT : TU_MOVE_DIAGONAL;
 				if (ent->state & STATE_CROUCHED)
 					div *= 1.5;
 				if ((int) (tu + div) > ent->TU)
