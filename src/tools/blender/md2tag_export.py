@@ -8,7 +8,7 @@ Tooltip: 'Export to Quake2 tag file format for UFO:AI (.tag).'
 """
 
 __author__ = 'Werner Hoehrer'
-__version__ = '0.0.8'
+__version__ = '0.0.9'
 __url__ = ["UFO: Alien Invasion, http://ufoai.sourceforge.net",
      "Support forum, http://ufoai.ninex.info/phpBB2/index.php", "blender", "ufoai"]
 __email__ = ["Werner Hoehrer, bill_spam2:yahoo*de", "scripts"]
@@ -289,9 +289,9 @@ class md2_tag:
 	def save(self, file):
 		# Prepare temp data for export with transformed axes.
 		temp_data=(
-		-self.axis1[1], self.axis1[0], self.axis1[2],
-		-self.axis2[1], self.axis2[0], self.axis2[2],
-		-self.axis3[1], self.axis3[0], self.axis3[2],
+		self.axis1[0], self.axis1[1], self.axis1[2],
+		self.axis2[0], self.axis2[1], self.axis2[2],
+		self.axis3[0], self.axis3[1], self.axis3[2],
 		-self.origin[1], self.origin[0], self.origin[2]
 		)
 
@@ -329,9 +329,9 @@ class md2_tag:
 		
 		# Convert the orientation of the axes to the blender format.
 		self.origin = (self.origin[1], -self.origin[0], self.origin[2])
-		self.axis1 = (self.axis1[1], -self.axis1[0], self.axis1[2])
-		self.axis2 = (self.axis2[1], -self.axis2[0], self.axis2[2])
-		self.axis3 = (self.axis3[1], -self.axis3[0], self.axis3[2])
+		#self.axis1 = (self.axis1[1], -self.axis1[0], self.axis1[2])
+		#self.axis2 = (self.axis2[1], -self.axis2[0], self.axis2[2])
+		#self.axis3 = (self.axis3[1], -self.axis3[0], self.axis3[2])
 
 		# Apply scale to imported data if it was set in the dialog.
 		if (g_scale.val != 1.0):
@@ -640,7 +640,7 @@ def load_md2_tags(filename):
 
 		# Create object.
 		blender_tag = Object.New('Empty')
-		blender_tag.setName(tag_name.name+"_test")
+		blender_tag.setName(tag_name.name)
 		
 		# Activate name-visibility for this object.
 		blender_tag.setDrawMode(blender_tag.getDrawMode() | 8)   # 8="drawname"
