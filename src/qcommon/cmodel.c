@@ -2640,7 +2640,6 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
 			return;
 		if (dy < 0 && !R_CONN_NY(map, x, y, z))
 			return;
-		break;
 
 		/* Check diagonal connection */
 		/* If direction vector index is set to a diagonal offset check if we can move there throiugh connected "straight" squares. */
