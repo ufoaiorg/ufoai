@@ -3015,6 +3015,7 @@ byte Grid_Height (struct routing_s *map, pos3_t pos)
  * @param[in] pos Position in the map to start the fall (starting height is the z-value in this position)
  * @return New z (height) value.
  * @return 0xFF if an error occured.
+ * @todo add checks for 2x2 units (they can't fall though 1x1 holes after all :))
  */
 byte Grid_Fall (struct routing_s *map, pos3_t pos)
 {
