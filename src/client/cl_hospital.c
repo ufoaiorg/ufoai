@@ -460,7 +460,7 @@ static void HOS_EmployeeInit_f (void)
 	*employeeDesc = '\0';
 
 	c = &currentEmployeeInHospital->chr;
-
+	assert(c);
 	CL_CharacterCvars(c);
 
 	Cvar_SetValue("mn_hp", c->HP);

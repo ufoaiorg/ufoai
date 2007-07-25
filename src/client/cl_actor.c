@@ -1799,6 +1799,7 @@ qboolean CL_ActorSelect (le_t * le)
 			Cvar_ForceSet("cl_selected", va("%i", i));
 			if (le->fieldSize == ACTOR_SIZE_NORMAL) {
 				selChr = baseCurrent->curTeam[i];
+				assert(selChr);
 				CL_CharacterCvars(selChr);
 			} else {
 				selChr = baseCurrent->curTeam[i];
