@@ -838,7 +838,7 @@ void S_StartLocalSound (const char *sound)
 		Com_Printf("S_StartLocalSound: can't cache %s\n", sound);
 		return;
 	}
-	S_StartSound(NULL, cl.pnum, 0, sfx, 1, 1, 0);
+	S_StartSound(NULL, cl.pnum, 0, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
 }
 
 
@@ -1223,22 +1223,16 @@ console functions
 
 /**
  * @brief
+ * @todo Allow ogg, too
  */
 static void S_Play_f (void)
 {
-	int i;
-	char name[256];
+	int i = 1;
 	sfx_t *sfx;
 
-	i = 1;
 	while (i < Cmd_Argc()) {
-		if (!strrchr(Cmd_Argv(i), '.')) {
-			Q_strncpyz(name, Cmd_Argv(i), sizeof(name));
-			Q_strcat(name, ".wav", sizeof(name));
-		} else
-			Q_strncpyz(name, Cmd_Argv(i), sizeof(name));
-		sfx = S_RegisterSound(name);
-		S_StartSound(NULL, cl.pnum, 0, sfx, 1.0, 1.0, 0);
+		sfx = S_RegisterSound(Cmd_Argv(i));
+		S_StartSound(NULL, cl.pnum, 0, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
 		i++;
 	}
 }
