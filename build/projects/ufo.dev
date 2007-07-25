@@ -54,7 +54,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit2]
@@ -64,7 +64,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit3]
@@ -74,7 +74,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit4]
@@ -84,7 +84,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit5]
@@ -94,7 +94,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit6]
@@ -104,7 +104,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit7]
@@ -114,7 +114,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit8]
@@ -124,7 +124,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit9]
@@ -134,7 +134,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit10]
@@ -144,7 +144,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit11]
@@ -154,7 +154,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit12]
@@ -164,7 +164,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit13]
@@ -174,7 +174,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit14]
@@ -184,7 +184,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit15]
@@ -194,7 +194,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit16]
@@ -204,7 +204,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit17]
@@ -214,7 +214,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit18]
@@ -224,7 +224,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit19]
@@ -234,7 +234,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit20]
@@ -244,7 +244,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit21]
@@ -254,7 +254,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit22]
@@ -264,7 +264,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit23]
@@ -274,7 +274,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit24]
@@ -284,7 +284,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit25]
@@ -294,7 +294,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit26]
@@ -304,7 +304,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit27]
@@ -314,7 +314,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit28]
@@ -324,7 +324,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit29]
@@ -334,7 +334,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit30]
@@ -344,7 +344,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit31]
@@ -354,7 +354,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit32]
@@ -364,7 +364,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit33]
@@ -374,7 +374,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit34]
@@ -384,7 +384,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit35]
@@ -394,7 +394,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit36]
@@ -404,7 +404,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit37]
@@ -414,7 +414,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit38]
@@ -424,7 +424,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit39]
@@ -434,7 +434,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit40]
@@ -444,7 +444,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit41]
@@ -454,7 +454,7 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit42]
@@ -464,7 +464,7 @@ Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit43]
@@ -474,7 +474,7 @@ Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit44]
@@ -484,7 +484,7 @@ Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit45]
@@ -494,7 +494,7 @@ Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit46]
@@ -504,7 +504,7 @@ Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit47]
@@ -514,7 +514,7 @@ Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit48]
@@ -524,7 +524,7 @@ Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit49]
@@ -534,7 +534,7 @@ Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit50]
@@ -544,7 +544,7 @@ Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit51]
@@ -554,7 +554,7 @@ Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit52]
@@ -564,7 +564,7 @@ Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit53]
@@ -574,7 +574,7 @@ Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit54]
@@ -584,7 +584,7 @@ Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit55]
@@ -594,7 +594,7 @@ Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit56]
@@ -604,7 +604,7 @@ Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit57]
@@ -614,7 +614,7 @@ Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit58]
@@ -624,7 +624,7 @@ Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit59]
@@ -634,7 +634,7 @@ Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit60]
@@ -644,7 +644,7 @@ Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit61]
@@ -654,7 +654,7 @@ Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit62]
@@ -664,8 +664,8 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_shader.c -o cl_shader.o $(CFLAGS)
+OverrideBuildCmd=
+BuildCmd=
 
 [Unit63]
 FileName=..\..\src\client\cl_market.c
@@ -674,8 +674,8 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_market.c -o cl_market.o $(CFLAGS)
+OverrideBuildCmd=
+BuildCmd=
 
 [Unit64]
 FileName=..\..\src\client\cl_market.h
@@ -684,7 +684,7 @@ Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit65]
@@ -694,8 +694,8 @@ Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_aircraft.c -o cl_aircraft.o $(CFLAGS)
+OverrideBuildCmd=
+BuildCmd=
 
 [Unit66]
 FileName=..\..\src\client\cl_aircraft.h
@@ -704,7 +704,7 @@ Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit67]
@@ -714,7 +714,7 @@ Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit68]
@@ -724,7 +724,7 @@ Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit69]
@@ -734,7 +734,7 @@ Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit70]
@@ -744,7 +744,7 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit71]
@@ -754,7 +754,7 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit72]
@@ -764,7 +764,7 @@ Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit73]
@@ -774,7 +774,7 @@ Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit74]
@@ -784,7 +784,7 @@ Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit75]
@@ -794,7 +794,7 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit76]
@@ -804,8 +804,8 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_map.c -o cl_map.o $(CFLAGS)
+OverrideBuildCmd=
+BuildCmd=
 
 [Unit77]
 FileName=..\..\src\client\cl_produce.c
@@ -814,8 +814,8 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_produce.c -o cl_produce.o $(CFLAGS)
+OverrideBuildCmd=
+BuildCmd=
 
 [Unit78]
 FileName=..\..\src\client\cl_popup.c
@@ -823,8 +823,8 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_popup.c -o cl_popup.o $(CFLAGS)
+OverrideBuildCmd=
+BuildCmd=
 CompileCpp=0
 
 [Unit79]
@@ -834,8 +834,8 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_ufo.c -o cl_ufo.o $(CFLAGS)
+OverrideBuildCmd=
+BuildCmd=
 
 [Unit80]
 FileName=..\..\src\client\cl_radar.c
@@ -844,8 +844,8 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_radar.c -o cl_radar.o $(CFLAGS)
+OverrideBuildCmd=
+BuildCmd=
 
 [Unit81]
 FileName=..\..\src\client\cl_employee.h
@@ -854,7 +854,7 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit82]
@@ -864,8 +864,8 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_employee.c -o cl_employee.o $(CFLAGS)
+OverrideBuildCmd=
+BuildCmd=
 
 [Unit83]
 FileName=..\..\src\qcommon\unzip.c
@@ -874,8 +874,8 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c unzip.c -o unzip.o $(CFLAGS)
+OverrideBuildCmd=
+BuildCmd=
 
 [Unit84]
 FileName=..\..\src\qcommon\unzip.h
@@ -884,7 +884,7 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit85]
@@ -894,7 +894,7 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit86]
@@ -904,8 +904,8 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_hospital.c -o cl_hospital.o $(CFLAGS)
+OverrideBuildCmd=
+BuildCmd=
 
 [Unit87]
 FileName=..\..\src\client\snd_openal.h
@@ -914,7 +914,7 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit88]
@@ -924,7 +924,7 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit89]
@@ -934,7 +934,7 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit90]
@@ -944,8 +944,8 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_event.c -o ufo/cl_event.o $(CFLAGS)
+OverrideBuildCmd=
+BuildCmd=
 
 [Unit91]
 FileName=..\..\src\client\cl_event.h
@@ -954,7 +954,7 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit92]
@@ -964,8 +964,8 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c irc.c -o irc.o $(CFLAGS)
+OverrideBuildCmd=
+BuildCmd=
 
 [Unit93]
 FileName=..\..\src\client\cl_irc.h
@@ -974,7 +974,7 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit94]
@@ -984,8 +984,8 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c snd_openal.c -o snd_openal.o $(CFLAGS)
+OverrideBuildCmd=
+BuildCmd=
 
 [Unit95]
 FileName=..\..\src\client\qal.c
@@ -994,8 +994,8 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c qal.c -o qal.o $(CFLAGS)
+OverrideBuildCmd=
+BuildCmd=
 
 [Unit96]
 FileName=..\..\src\client\cl_aliencont.c
@@ -1004,8 +1004,8 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_aliencont.c -o cl_aliencont.o $(CFLAGS)
+OverrideBuildCmd=
+BuildCmd=
 
 [Unit97]
 FileName=..\..\src\client\cl_aliencont.h
@@ -1014,7 +1014,7 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit98]
@@ -1024,7 +1024,7 @@ Folder=Resource Files
 Compile=1
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit99]
@@ -1034,8 +1034,8 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c md5.c -o ufo/md5.o $(CFLAGS)
+OverrideBuildCmd=
+BuildCmd=
 
 [Unit100]
 FileName=..\..\src\client\cl_campaign.h
@@ -1044,7 +1044,7 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit101]
@@ -1054,7 +1054,7 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit102]
@@ -1064,8 +1064,8 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_transfer.c -o ufo/cl_transfer.o $(CFLAGS)
+OverrideBuildCmd=
+BuildCmd=
 
 [Unit103]
 FileName=..\..\src\client\cl_transfer.h
@@ -1074,7 +1074,7 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit104]
@@ -1084,7 +1084,7 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit105]
@@ -1094,7 +1094,7 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit106]
@@ -1103,8 +1103,8 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_save.c -o ufo/cl_save.o $(CFLAGS)
+OverrideBuildCmd=
+BuildCmd=
 CompileCpp=0
 
 [Unit107]
@@ -1114,7 +1114,7 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit108]
@@ -1124,8 +1124,8 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_inventory.c -o ufo/cl_inventory.o $(CFLAGS)
+OverrideBuildCmd=
+BuildCmd=
 
 [Unit109]
 FileName=..\..\src\client\cl_console.h
@@ -1134,7 +1134,7 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit110]
@@ -1144,8 +1144,8 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c msg.c -o ufo/msg.o $(CFLAGS)
+OverrideBuildCmd=
+BuildCmd=
 
 [Unit111]
 FileName=..\..\src\client\cl_http.h
@@ -1154,7 +1154,7 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit112]
@@ -1164,8 +1164,8 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_http.c -o ufo/cl_http.o $(CFLAGS)
+OverrideBuildCmd=
+BuildCmd=
 
 [Unit113]
 FileName=..\..\src\client\cl_vid.c
@@ -1174,8 +1174,8 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_vid.c -o ufo/cl_vid.o $(CFLAGS)
+OverrideBuildCmd=
+BuildCmd=
 
 [Unit114]
 FileName=..\..\src\client\cl_airfight.c
@@ -1184,8 +1184,8 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_airfight.c -o ufo/cl_airfight.o $(CFLAGS)
+OverrideBuildCmd=
+BuildCmd=
 
 [Unit115]
 FileName=..\..\src\qcommon\mem.c
@@ -1194,8 +1194,8 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c mem.c -o ufo/mem.o $(CFLAGS)
+OverrideBuildCmd=
+BuildCmd=
 
 [Unit116]
 FileName=..\..\src\client\cl_cinematic.c
@@ -1204,7 +1204,7 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit117]
@@ -1214,7 +1214,7 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit118]
@@ -1224,7 +1224,7 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit119]
@@ -1234,7 +1234,7 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit120]
@@ -1244,7 +1244,7 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit121]
@@ -1254,7 +1254,7 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit122]
@@ -1264,7 +1264,7 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit123]
@@ -1274,7 +1274,7 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit124]
@@ -1284,7 +1284,7 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit125]
@@ -1294,17 +1294,17 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit126]
 FileName=..\..\src\client\cl_basesummary.c
 CompileCpp=0
 Folder=Source Files
-Compile=0
-Link=0
+Compile=1
+Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit127]
@@ -1314,7 +1314,7 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit128]
@@ -1324,7 +1324,7 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit129]
@@ -1334,7 +1334,7 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit130]
@@ -1344,7 +1344,7 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit131]
@@ -1354,7 +1354,7 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit132]
@@ -1364,7 +1364,7 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit133]
@@ -1374,7 +1374,7 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit134]
@@ -1384,7 +1384,7 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=0
+OverrideBuildCmd=
 BuildCmd=
 
 [Unit135]
@@ -1394,6 +1394,6 @@ Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_mapfightequip.c -o cl_mapfightequip.o $(CFLAGS)
+OverrideBuildCmd=
+BuildCmd=
 
