@@ -1153,7 +1153,7 @@ qboolean CL_OpenAVIForWriting (const char *fileName)
 	memset(&afd, 0, sizeof(aviFileData_t));
 
 	/* Don't start if a framerate has not been chosen */
-	if (cl_aviFrameRate->value <= 0) {
+	if (cl_aviFrameRate->integer <= 0) {
 		Com_Printf("cl_aviFrameRate must be >= 1\n");
 		return qfalse;
 	}

@@ -88,12 +88,11 @@ cvar_t *cl_start_buildings;
 /** @brief Confirm actions in tactical mode - valid values are 0, 1 and 2 */
 cvar_t *confirm_actions;
 
-cvar_t *cl_precache;
+static cvar_t *cl_precache;
 cvar_t *log_stats;
 
 /* userinfo */
-cvar_t *info_password;
-cvar_t *info_spectator;
+static cvar_t *info_password;
 cvar_t *name;
 cvar_t *team;
 cvar_t *equip;
@@ -2114,7 +2113,6 @@ static void CL_InitLocal (void)
 
 	/* userinfo */
 	info_password = Cvar_Get("password", "", CVAR_USERINFO, NULL);
-	info_spectator = Cvar_Get("spectator", "0", CVAR_USERINFO, NULL);
 	name = Cvar_Get("name", "", CVAR_USERINFO | CVAR_ARCHIVE, "Playername");
 	snd_ref = Cvar_Get("snd_ref", "sdl", CVAR_ARCHIVE, "Sound renderer");
 	team = Cvar_Get("team", "human", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
