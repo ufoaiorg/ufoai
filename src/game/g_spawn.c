@@ -368,8 +368,7 @@ static void G_ActorSpawn (edict_t * ent)
 		ent->pos[2] = HEIGHT - 1;
 
 	ent->pos[2] = gi.GridFall(gi.map, ent->pos);
-
-	if (ent->pos[2]  >= HEIGHT)
+	if (ent->pos[2] >= HEIGHT)
 		Com_Printf("G_ActorSpawn: Warning: z level is out of bounds: %i\n", ent->pos[2]);
 
 	gi.GridPosToVec(gi.map, ent->pos, ent->origin);
@@ -399,6 +398,8 @@ static void G_Actor2x2Spawn (edict_t * ent)
 	if (ent->pos[2] >= HEIGHT)
 		ent->pos[2] = HEIGHT - 1;
 	ent->pos[2] = gi.GridFall(gi.map, ent->pos);
+	if (ent->pos[2] >= HEIGHT)
+		Com_Printf("G_Actor2x2Spawn: Warning: z level is out of bounds: %i\n", ent->pos[2]);
 	gi.GridPosToVec(gi.map, ent->pos, ent->origin);
 
 	/* link it for collision detection */
