@@ -1903,6 +1903,8 @@ static terrainType_t *terrainTypesHash[TERRAIN_HASH_SIZE];
 static const value_t terrainTypeValues[] = {
 	{"footstepsound", V_STRING, offsetof(terrainType_t, footStepSound), 0},
 	{"particle", V_STRING, offsetof(terrainType_t, particle), 0},
+	{"footstepvolume", V_FLOAT, offsetof(terrainType_t, footStepVolume), 0},
+	{"footstepattenuation", V_FLOAT, offsetof(terrainType_t, footStepAttenuation), 0},
 
 	{NULL, 0, 0, 0}
 };
@@ -1959,6 +1961,8 @@ static void Com_ParseTerrain (const char *name, const char **text)
 	/* link in terrainTypesHash[hash] should be NULL on the first run */
 	t->hash_next = terrainTypesHash[hash];
 	terrainTypesHash[hash] = t;
+	t->footStepVolume = DEFAULT_SOUND_PACKET_VOLUME;
+	t->footStepAttenuation = DEFAULT_SOUND_PACKET_ATTENUATION;
 
 	do {
 		/* get the name type */
@@ -1979,7 +1983,7 @@ static void Com_ParseTerrain (const char *name, const char **text)
 					Mem_PoolStrDupTo(token, (char**) ((char*)t + (int)v->ofs), com_genericPool, 0);
 					break;
 				default:
-					Sys_Error("Unknown type for terrain parsing (%i)\n", v->type);
+					Com_ParseValue(t, token, v->type, v->ofs, v->size);
 					break;
 				}
 				break;

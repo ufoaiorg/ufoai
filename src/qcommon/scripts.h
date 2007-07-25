@@ -201,6 +201,8 @@ typedef struct terrainType_s {
 	const char *texture;			/**< script id is the texture name/path */
 	const char *footStepSound;		/**< sound to play when walking on this terrain type */
 	const char *particle;			/**< particle to spawn when walking on this type of terrain */
+	float footStepVolume;			/**< footstep sound volume */
+	float footStepAttenuation;		/**< reduction in amplitude and intensity of a sound */
 	struct terrainType_s *hash_next;	/**< next entry in the hash list */
 } terrainType_t;
 

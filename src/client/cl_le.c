@@ -438,7 +438,7 @@ static void CL_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
 	if (t->footStepSound) {
 		sfx = S_RegisterSound(t->footStepSound);
 		if (sfx)
-			S_StartSound(origin, le->entnum, entchannel, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
+			S_StartSound(origin, le->entnum, entchannel, sfx, t->footStepVolume, t->footStepAttenuation, 0);
 	}
 }
 
