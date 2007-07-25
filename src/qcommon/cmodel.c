@@ -2642,7 +2642,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
 			return;
 
 		/* Check diagonal connection */
-		/* If direction vector index is set to a diagonal offset check if we can move there through connected "straight" squares. */
+		/* If direction vector index is set to a diagonal offset check if we can move there throiugh connected "straight" squares. */
 		if (dv > 3 &&
 			!( (dx > 0 ? R_CONN_PX(map, x,    y+dy, z) : R_CONN_NX(map, x,    y+dy, z))
 			&& (dy > 0 ? R_CONN_PY(map, x+dx, y,    z) : R_CONN_NY(map, x+dx, y,    z))
@@ -2988,27 +2988,28 @@ int Grid_Height (struct routing_s *map, pos3_t pos)
  * @param[in] map Pointer to client or server side routing table (clMap, svMap)
  * @param[in] pos Position in the map to start the fall (starting height is the z-value in this position)
  * @return New z (height) value.
+ * @return 0xFF if an error occured.
  */
-int Grid_Fall (struct routing_s *map, pos3_t pos)
+byte Grid_Fall (struct routing_s *map, pos3_t pos)
 {
-	int z = pos[2];
+	byte z = pos[2];
 
 	/* is z off-map? */
-	if (z >= HEIGHT)
-		return -1;
+	if (z >= HEIGHT) {
+		Com_DPrintf("Grid_Fall: z (height) out of bounds): z=%i max=%i\n", z, HEIGHT);
+		return 0xFF;
+	}
 
-/*	Com_Printf("%i:%i:%i\n", pos[0], pos[1], pos[2]);*/
+/*	Com_Printf("%i:%i:%i\n", pos[0], pos[1], pos[2]); DEBUG */
 
 	/**
-	 * This fixes a problem with height positions set to 255 in Grid_Height and Grid_PosToVec (->floating soldiers/aliens).
-	 * I hope it does not break other things - I could not find any yet, but just in case there is this note ;)
-	 * This could be done in the while loop as well, but I do not know the code well enough to decide if that works.
-	 * --Hoehrer 2007-05-15
+	 * This fixes a problem with height positions
+	 * set to 255 in Grid_Height and Grid_PosToVec (->floating soldiers/aliens)
 	 */
 	if (z == 0)
 		return 0;
 
-	while (z >= 0 && R_FALL(map, pos[0], pos[1], z))
+	while (z > 0 && R_FALL(map, pos[0], pos[1], z))
 		z--;
 
 	return z;
