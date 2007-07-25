@@ -96,8 +96,8 @@ const char *ev_format[] =
 	"!sbbbbbgsb",		/* EV_ACTOR_ADD; beware of the '!' */
 	"s",				/* EV_ACTOR_START_MOVE */
 	"sb",				/* EV_ACTOR_TURN */
-	"!s*",				/* EV_ACTOR_MOVE; beware of the '!' */
-	"!s*",				/* EV_ACTOR_MOVE_HIDDEN; beware of the '!' */
+	"!sb",				/* EV_ACTOR_MOVE */
+	"!sb",				/* EV_ACTOR_MOVE_HIDDEN */
 
 	"ssbbgg",			/* EV_ACTOR_START_SHOOT */
 	"ssbbbppb",			/* EV_ACTOR_SHOOT; the last 'b' cannot be 'd' */
