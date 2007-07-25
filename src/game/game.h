@@ -159,9 +159,9 @@ typedef struct {
 
 	void (IMPORT *MoveCalc) (struct routing_s * map, pos3_t from, int size, int distance, byte ** fb_list, int fb_length);
 	void (IMPORT *MoveStore) (struct routing_s * map);
-	int (IMPORT *MoveLength) (struct routing_s * map, pos3_t to, qboolean stored);
-	int (IMPORT *MoveNext) (struct routing_s * map, pos3_t from);
-	int (IMPORT *GridHeight) (struct routing_s * map, pos3_t pos);
+	byte (IMPORT *MoveLength) (struct routing_s * map, pos3_t to, qboolean stored);
+	byte (IMPORT *MoveNext) (struct routing_s * map, pos3_t from);
+	byte (IMPORT *GridHeight) (struct routing_s * map, pos3_t pos);
 	byte (IMPORT *GridFall) (struct routing_s * map, pos3_t pos);
 	void (IMPORT *GridPosToVec) (struct routing_s * map, pos3_t pos, vec3_t vec);
 	void (IMPORT *GridRecalcRouting) (struct routing_s * map, const char *name, const char **list);

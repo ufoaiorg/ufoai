@@ -1294,9 +1294,9 @@ static qboolean G_CheckMoveBlock (pos3_t from, int dv)
 void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean stop, qboolean quiet)
 {
 	edict_t *ent;
-	int length, status, initTU;
+	int status, initTU;
 	byte dvtab[MAX_DVTAB];
-	byte dv, numdv;
+	byte dv, numdv, length;
 	pos3_t pos;
 	float div, tu;
 

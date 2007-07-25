@@ -273,7 +273,7 @@ static void CMod_LoadSubmodels (lump_t * l)
 
 	in = (void *) (cmod_base + l->fileofs);
 	if (l->filelen % sizeof(dmodel_t))
-		Com_Error(ERR_DROP, "CMod_LoadSubmodels: funny lump size (%i => "UFO_SIZE_T"", l->filelen, sizeof(dmodel_t));
+		Com_Error(ERR_DROP, "CMod_LoadSubmodels: funny lump size (%i => "UFO_SIZE_T, l->filelen, sizeof(dmodel_t));
 	count = l->filelen / sizeof(dmodel_t);
 	Com_Printf("%c...submodels: %i\n", 1, count);
 
@@ -785,16 +785,17 @@ static int CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end)
  * @param[in] dir
  * @param[in] fill
  */
-static qboolean CM_TestConnection (routing_t * map, int x, int y, int z, unsigned int dir, qboolean fill)
+static qboolean CM_TestConnection (routing_t * map, int x, int y, byte z, unsigned int dir, qboolean fill)
 {
 	vec3_t start, end;
 	pos3_t pos;
-	int h, sh, ax, ay, az;
+	int h, sh, ax, ay;
+	byte az;
 
 	assert(map);
 	assert((x >= 0) && (x < WIDTH));
 	assert((y >= 0) && (y < WIDTH));
-	assert((z >= 0) && (z < HEIGHT));
+	assert(z < HEIGHT);
 
 	/* totally blocked unit */
 	if ((fill && (filled[y][x] & (1 << z))) || (map->fall[y][x] == ROUTING_NOT_REACHABLE))
@@ -813,6 +814,8 @@ static qboolean CM_TestConnection (routing_t * map, int x, int y, int z, unsigne
 	ay = y + dvecs[dir][1];
 	az = z + (h + sh) / 0x10;
 	h = (R_HEIGHT(map, x, y, z) + sh) % 0x10;
+
+	assert(az < HEIGHT);	/* Well, it just has to be, doesn't it? :) */
 
 	/* assume blocked */
 	map->route[z][y][x] &= ~((0x10 << dir) & UCHAR_MAX);
@@ -848,7 +851,7 @@ static qboolean CM_TestConnection (routing_t * map, int x, int y, int z, unsigne
  * @param[in] z
  * @sa Grid_RecalcRouting
  */
-static void CM_CheckUnit (routing_t * map, int x, int y, int z)
+static void CM_CheckUnit (routing_t * map, int x, int y, byte z)
 {
 	vec3_t start, end;
 	vec3_t tend, tvs, tve;
@@ -859,7 +862,7 @@ static void CM_CheckUnit (routing_t * map, int x, int y, int z)
 	assert(map);
 	assert((x >= 0) && (x < WIDTH));
 	assert((y >= 0) && (y < WIDTH));
-	assert((z >= 0) && (z < HEIGHT));
+	assert(z < HEIGHT);
 
 	/* reset flags */
 	filled[y][x] &= ~(1 << z);
@@ -2530,7 +2533,7 @@ int CM_TestLineDM (vec3_t start, vec3_t stop, vec3_t end)
  * @sa Grid_MoveMark
  * @return qtrue if one can't walk there (i.e. the field [and attached fields for e.g. 2x2 units] is/are blocked by entries in the forbidden list) otherwise false.
  */
-static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, int z, int actor_size)
+static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, byte z, int actor_size)
 {
 	byte **p;
 	int i, j;
@@ -2538,6 +2541,13 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, int z
 
 	pos3_t poslist[4];
 	int poslen = 0;
+
+#ifdef PARANOID
+	if (z >= HEIGHT) {
+		Com_DPrintf("Grid_CheckForbidden: WARNING z = %i(>= HEIGHT %i)\n", z, HEIGHT);
+		return;
+	}
+#endif
 
 	for (i = 0, p = map->fblist; i < map->fblength / 2; i++, p += 2) {
 		poslen = 0;
@@ -2601,14 +2611,22 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, int z
  * @todo Add diagonal-move checks for actor size (2x2).
  * @todo Add height/fall checks for actor size (2x2).
  */
-static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, int h, int ol, int actor_size)
+static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dv, int h, int ol, int actor_size)
 {
-	int nx, ny, sh, l;
+	int nx, ny, sh;
 	int dx, dy;
 	pos3_t dummy;
+	byte l;
 
 	int poslist_n[4][3];  /* 3*int needed for range-check because pos3_t does not support negative values and has a smaller range. */
 	pos3_t poslist[4];
+
+#ifdef PARANOID
+	if (z >= HEIGHT) {
+		Com_DPrintf("Grid_MoveMark: WARNING z = %i(>= HEIGHT %i)\n", z, HEIGHT);
+		return;
+	}
+#endif
 
 	l = dv > 3	/**< Add TUs to old length/TUs depending on straight or diagonal move. */
 		? ol + AREA_TU_DIAGONAL
@@ -2733,8 +2751,9 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, i
  */
 static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, int yh, int actor_size)
 {
-	int x, y, z, h;
-	int dv, l;
+	int x, y;
+	int dv;
+	byte l, z, h;
 
 	for (z = 0; z < HEIGHT; z++)
 		for (y = yl; y <= yh; y++)
@@ -2751,8 +2770,8 @@ static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, i
 					/* test the next connections */
 					for (dv = 0; dv < DIRECTIONS; dv++) {
 						if ((actor_size != 0)
-						&&  (actor_size != ACTOR_SIZE_NORMAL)
-						&&  (dv > 3))
+						 && (actor_size != ACTOR_SIZE_NORMAL)
+						 && (dv > 3))
 							/* Ignore diagonal move for 2x2 and other units */
 							break;
 						Grid_MoveMark(map, x, y, z, dv, h, l, actor_size);
@@ -2840,7 +2859,7 @@ void Grid_MoveStore (struct routing_s *map)
  * @return ROUTING_NOT_REACHABLE if the move isn't possible
  * @return length of move otherwise (TUs)
  */
-int Grid_MoveLength (struct routing_s *map, pos3_t to, qboolean stored)
+byte Grid_MoveLength (struct routing_s *map, pos3_t to, qboolean stored)
 {
 #ifdef PARANOID
 	if (to[2] >= HEIGHT) {
@@ -2864,12 +2883,19 @@ int Grid_MoveLength (struct routing_s *map, pos3_t to, qboolean stored)
  * @param[in] l
  * @sa Grid_MoveNext
  */
-static int Grid_MoveCheck (struct routing_s *map, pos3_t pos, int sz, int l)
+static byte Grid_MoveCheck (struct routing_s *map, pos3_t pos, byte sz, int l)
 {
 	int x, y, sh;
 	int dv, dx, dy;
-	int z;
+	byte z;
 	pos3_t dummy;
+
+#ifdef PARANOID
+	if (sz >= HEIGHT) {
+		Com_DPrintf("Grid_MoveCheck: WARNING sz = %i(>= HEIGHT %i)\n", sz, HEIGHT);
+		return 0xFF;
+	}
+#endif
 
 	for (dv = 0; dv < DIRECTIONS; dv++) {
 		dx = -dvecs[dv][0];
@@ -2910,7 +2936,7 @@ static int Grid_MoveCheck (struct routing_s *map, pos3_t pos, int sz, int l)
 
 		/* height checks */
 		sh = R_STEP(map, x, y, z) ? sh_big : sh_low;
-		z += (R_HEIGHT(map,x,y,z) + sh) / 0x10;
+		z += (R_HEIGHT(map, x, y, z) + sh) / 0x10;
 
 		VectorSet(dummy, pos[0], pos[1], z);
 		z = Grid_Fall(map, dummy);
@@ -2931,11 +2957,13 @@ static int Grid_MoveCheck (struct routing_s *map, pos3_t pos, int sz, int l)
  * @brief The next stored move direction
  * @param[in] map Pointer to client or server side routing table (clMap, svMap)
  * @param[in] from
+ * @return (Guess: a direction index (see dvecs and DIRECTIONS))
  * @sa Grid_MoveCheck
  */
-int Grid_MoveNext (struct routing_s *map, pos3_t from)
+byte Grid_MoveNext (struct routing_s *map, pos3_t from)
 {
-	int l, x, y, z, dv;
+	int x, y, dv;
+	byte l, z;
 
 	l = R_AREA(map, from[0], from[1], from[2]); /**< Get TUs for this square */
 
@@ -2969,7 +2997,7 @@ int Grid_MoveNext (struct routing_s *map, pos3_t from)
  * @param
  * @sa
  */
-int Grid_Height (struct routing_s *map, pos3_t pos)
+byte Grid_Height (struct routing_s *map, pos3_t pos)
 {
 	/* max 8 levels */
 	if (pos[2] >= HEIGHT) {
@@ -3041,7 +3069,8 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **l
 {
 	cBspModel_t *model;
 	pos3_t min, max;
-	int x, y, z;
+	int x, y;
+	byte z;
 	unsigned int i;
 
 	/* get inline model, if it is one */
