@@ -148,7 +148,20 @@ menu_model civ_female
 	model	"models/civilians/female/body03.md2"
 	need	"civ_female_head"
 }
-
+// ================== Tanks ======================
+menu_model triax_turret
+{
+	model	"models/soldiers/ugv_triax/triax_wheels_turret.md2"
+	tag	"tag_head"
+	parent	"triax"
+	scale	"1.0 1.0 1.0"
+}
+menu_model triax
+{
+	model	"models/soldiers/ugv_triax/triax_wheels.md2"
+	need	"triax_turret"
+//	anim	"stand2"
+}
 // ============== Dropship =========================
 menu_model drop_firebird_glass
 {
