@@ -479,47 +479,54 @@ static void CIN_DecodeSoundStereo (const byte *data)
  */
 static qboolean CIN_DecodeChunk (void)
 {
-	if (cin.offset >= cin.size)
-		return qfalse;	/* Finished */
+	int frame;
 
-	/* Parse the chunk header */
-	cin.chunk.id = cin.header[0] | (cin.header[1] << 8);
-	cin.chunk.size = cin.header[2] | (cin.header[3] << 8) | (cin.header[4] << 16) | (cin.header[5] << 24);
-	cin.chunk.flags = cin.header[6] | (cin.header[7] << 8);
+	frame = cin.currentFrame;
 
-	cin.chunk.id = LittleShort(cin.chunk.id);
-	cin.chunk.size = LittleLong(cin.chunk.size);
-	cin.chunk.flags = LittleShort(cin.chunk.flags);
+	do {
+		if (cin.offset >= cin.size)
+			return qfalse;	/* Finished */
 
-	if (cin.chunk.id == ROQ_IDENT || cin.chunk.size > ROQ_MAX_CHUNK_SIZE) {
-		Com_Printf("Invalid chunk\n");
-		return qfalse;	/* Invalid chunk */
-	}
+		/* Parse the chunk header */
+		cin.chunk.id = cin.header[0] | (cin.header[1] << 8);
+		cin.chunk.size = cin.header[2] | (cin.header[3] << 8) | (cin.header[4] << 16) | (cin.header[5] << 24);
+		cin.chunk.flags = cin.header[6] | (cin.header[7] << 8);
 
-	/* Read the chunk data and the next chunk header */
-	FS_Read(cin.data, cin.chunk.size + ROQ_CHUNK_HEADER_SIZE, &cin.file);
-	cin.offset += cin.chunk.size + ROQ_CHUNK_HEADER_SIZE;
+		cin.chunk.id = LittleShort(cin.chunk.id);
+		cin.chunk.size = LittleLong(cin.chunk.size);
+		cin.chunk.flags = LittleShort(cin.chunk.flags);
 
-	cin.header = cin.data + cin.chunk.size;
+		if (cin.chunk.id == ROQ_IDENT || cin.chunk.size > ROQ_MAX_CHUNK_SIZE) {
+			Com_Printf("Invalid chunk\n");
+			return qfalse;	/* Invalid chunk */
+		}
 
-	/* Decode the chunk data */
-	switch (cin.chunk.id) {
-	case ROQ_QUAD_INFO:
-		CIN_DecodeInfo(cin.data);
-		break;
-	case ROQ_QUAD_CODEBOOK:
-		CIN_DecodeCodeBook(cin.data);
-		break;
-	case ROQ_QUAD_VQ:
-		CIN_DecodeVideo(cin.data);
-		break;
-	case ROQ_SOUND_MONO:
-		CIN_DecodeSoundMono(cin.data);
-		break;
-	case ROQ_SOUND_STEREO:
-		CIN_DecodeSoundStereo(cin.data);
-		break;
-	}
+		/* Read the chunk data and the next chunk header */
+		FS_Read(cin.data, cin.chunk.size + ROQ_CHUNK_HEADER_SIZE, &cin.file);
+		cin.offset += cin.chunk.size + ROQ_CHUNK_HEADER_SIZE;
+
+		cin.header = cin.data + cin.chunk.size;
+
+		/* Decode the chunk data */
+		switch (cin.chunk.id) {
+		case ROQ_QUAD_INFO:
+			CIN_DecodeInfo(cin.data);
+			break;
+		case ROQ_QUAD_CODEBOOK:
+			CIN_DecodeCodeBook(cin.data);
+			break;
+		case ROQ_QUAD_VQ:
+			CIN_DecodeVideo(cin.data);
+			break;
+		case ROQ_SOUND_MONO:
+			CIN_DecodeSoundMono(cin.data);
+			break;
+		case ROQ_SOUND_STEREO:
+			CIN_DecodeSoundStereo(cin.data);
+			break;
+		}
+	/* loop until we finally got a new frame */
+	} while (frame == cin.currentFrame && cls.playingCinematic);
 
 	return qtrue;
 }
@@ -530,19 +537,8 @@ static qboolean CIN_DecodeChunk (void)
  */
 void CIN_RunCinematic (int now, void *data)
 {
-	int frame;
-
 	if (!cls.playingCinematic)
 		return;			/* Not playing */
-
-	/* Check if a new frame is needed */
-	frame = (cls.realtime - cin.frameTime) * cin.frameRate / 1000;
-	if (frame <= cin.currentFrame)
-		return;
-
-	/* Never drop too many frames in a row */
-	if (frame > cin.currentFrame + 1)
-		cin.frameTime = cls.realtime - (cin.currentFrame * 1000 / cin.frameRate);
 
 	/* Decode chunks until the desired frame is reached */
 	if (CIN_DecodeChunk())
@@ -613,7 +609,7 @@ void CIN_PlayCinematic (const char *name)
 
 	cin.frameWidth = 0;
 	cin.frameHeight = 0;
-	cin.frameTime = cls.realtime;
+	cin.frameTime = Sys_Milliseconds();
 	cin.frameRate = (chunk.flags != 0) ? chunk.flags : 30;
 	if (cin.frameBuffer[0]) {
 		Mem_Free(cin.frameBuffer[0]);
