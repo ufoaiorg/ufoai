@@ -2750,7 +2750,9 @@ static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, i
 
 					/* test the next connections */
 					for (dv = 0; dv < DIRECTIONS; dv++) {
-						if ((actor_size != ACTOR_SIZE_NORMAL) && (dv > 3))
+						if ((actor_size != 0)
+						&&  (actor_size != ACTOR_SIZE_NORMAL)
+						&&  (dv > 3))
 							/* Ignore diagonal move for 2x2 and other units */
 							break;
 						Grid_MoveMark(map, x, y, z, dv, h, l, actor_size);
