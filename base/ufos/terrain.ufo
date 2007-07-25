@@ -15,6 +15,7 @@ terrain tex_nature/jungle002 {
 
 // messy grass with flowers
 terrain exterior/ext_grnd01 {
+	footstepsound "footsteps/step_2"
 }
 
 // ==========================
@@ -23,6 +24,7 @@ terrain exterior/ext_grnd01 {
 
 // bed of potatoes
 terrain tex_nature/potatoes {
+	footstepsound "footsteps/flesh3"
 }
 
 // straw
@@ -35,10 +37,12 @@ terrain tex_misc/straw {
 
 // metal doors
 terrain tex_doors/door001 {
+	footstepsound "footsteps/mech4"
 }
 
 // metal doors
 terrain tex_doors/door007 {
+	footstepsound "footsteps/mech4"
 }
 
 // ==========================
@@ -87,18 +91,22 @@ terrain tex_buildings/concrete007 {
 
 // stone ruins
 terrain tex_buildings/floor_se01 {
+	footstepsound "footsteps/stone2"
 }
 
 // concrete floor
 terrain tex_buildings/wall003 {
+	footstepsound "footsteps/stone1"
 }
 
 // big stone tiles
 terrain exterior/ext_conc02 {
+	footstepsound "footsteps/stone1"
 }
 
 // concrete floor
 terrain tex_buildings/floor003 {
+	footstepsound "footsteps/stone1"
 }
 
 // ==========================
@@ -147,14 +155,17 @@ terrain tex_nature/desert004 {
 
 // dirty sand on the floor
 terrain tex_nature/dirt_se01 {
+	footstepsound "footsteps/softrug1"
 }
 
 // dirt ground
 terrain tex_nature/dirt001 {
+	footstepsound "footsteps/softrug2"
 }
 
 // dirt ground
 terrain tex_nature/dirt002 {
+	footstepsound "footsteps/softrug2"
 }
 
 // ==========================
@@ -188,6 +199,7 @@ terrain tex_material/wood002 {
 
 // metal stairs
 terrain interior/int_met02 {
+	footstepsound "footsteps/metal2"
 }
 
 // ==========================
@@ -220,9 +232,11 @@ terrain interior/int_tile13 {
 
 // PCV-type floor
 terrain tex_buildings/floor016 {
+	footstepsound "footsteps/step_3"
 }
 
 // PCV-type floor
 terrain tex_buildings/floor017 {
+	footstepsound "footsteps/step_3"
 }
 
