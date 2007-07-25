@@ -580,6 +580,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\client\cl_mapfightequip.c"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\client\cl_market.c"
 				>
 			</File>

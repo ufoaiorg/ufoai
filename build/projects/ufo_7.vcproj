@@ -361,6 +361,9 @@
 				RelativePath=".\client\cl_map.c">
 			</File>
 			<File
+				RelativePath=".\client\cl_mapfightequip.c">
+			</File>
+			<File
 				RelativePath="client\cl_market.c">
 			</File>
 			<File

@@ -831,6 +831,9 @@ void CDAudio_RandomPlay(void);
 /* cl_basesummary.c */
 #include "cl_basesummary.h"
 
+/* cl_mapfightequip.c */
+#include "cl_mapfightequip.h"
+
 /* MISC */
 /* @todo: needs to be sorted (e.g what file is it defined?) */
 #define MAX_TEAMDATASIZE	32768

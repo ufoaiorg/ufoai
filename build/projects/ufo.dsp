@@ -7,19 +7,19 @@
 CFG=ufo - Win32 Release
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "ufo.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "ufo.mak" CFG="ufo - Win32 Release"
-!MESSAGE 
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
+!MESSAGE
 !MESSAGE "ufo - Win32 Release" (based on "Win32 (x86) Application")
 !MESSAGE "ufo - Win32 Debug" (based on "Win32 (x86) Application")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -84,7 +84,7 @@ LINK32=link.exe
 # ADD LINK32 winmm.lib wsock32.lib gdi32.lib kernel32.lib user32.lib msvcrt.lib libc.lib /nologo /subsystem:windows /map /debug /machine:I386 /nodefaultlib /out:"..\..\ufo.exe"
 # SUBTRACT LINK32 /pdb:none
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
@@ -184,6 +184,10 @@ SOURCE=..\..\src\client\cl_main.c
 # Begin Source File
 
 SOURCE=..\..\src\client\cl_map.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_mapfightequip.c
 # End Source File
 # Begin Source File
 
@@ -672,7 +676,7 @@ SOURCE=..\..\src\ports\win32\ufo.rc
 # ADD RSC /l 0x407 /fo".\ufo.res" /i "\Development\ufoai\trunk\src\ports\win32" /d "DEBUG"
 # SUBTRACT RSC /d "_DEBUG"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File

@@ -219,6 +219,9 @@
 		<Unit filename="../../src/client/cl_map.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/client/cl_mapfightequip.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/client/cl_market.c">
 			<Option compilerVar="CC" />
 		</Unit>
