@@ -1803,6 +1803,7 @@ qboolean CL_ActorSelect (le_t * le)
 				CL_CharacterCvars(selChr);
 			} else {
 				selChr = baseCurrent->curTeam[i];
+				assert(selChr);
 				CL_UGVCvars(selChr);
 			}
 

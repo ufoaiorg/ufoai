@@ -976,6 +976,7 @@ static void CL_Select_f (void)
 
 	Com_DPrintf("CL_Select_f: Command: '%s' - num: %i\n", command, num);
 
+	assert(chr);
 	/* set info cvars */
 	/* FIXME: This isn't true ACTOR_SIZE_NORMAL has nothing to do with ugvs anymore - old code */
 	if (chr->fieldSize == ACTOR_SIZE_NORMAL)
