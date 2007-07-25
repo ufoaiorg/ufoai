@@ -632,6 +632,30 @@ particle crawlTracer
 	}
 }
 
+particle actor_friend
+{
+	init
+	{
+		image  sfx/friend
+		blend  blend
+		style  facing
+		size   "24 24"
+		life   0.0001
+	}
+}
+
+particle actor_foe
+{
+	init
+	{
+		image  sfx/foe
+		blend  blend
+		style  facing
+		size   "24 24"
+		life   0.0001
+	}
+}
+
 particle cross
 {
 	init
