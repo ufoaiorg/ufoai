@@ -129,10 +129,10 @@ typedef struct objDef_s {
 	/* Common */
 	char name[MAX_VAR];			/**< Item name taken from scriptfile. */
 	char id[MAX_VAR];			/**< Identifier of the item being item definition in scriptfile. */
-	char model[MAX_VAR];			/**< Model name - relative to game dir. */
-	char image[MAX_VAR];			/**< Object image file - relative to game dir. */
+	char model[MAX_VAR];		/**< Model name - relative to game dir. */
+	char image[MAX_VAR];		/**< Object image file - relative to game dir. */
 	char type[MAX_VAR];			/**< melee, rifle, ammo, armor @todo: clarify how this is being used */
-	char extends_item[MAX_VAR];		/**< @todo: document me */
+	char extends_item[MAX_VAR];	/**< @todo: document me */
 	uint32_t shape;				/**< The shape in inventory. */
 
 	byte sx, sy;				/**< Size in x and y direction. */
@@ -140,36 +140,36 @@ typedef struct objDef_s {
 	vec3_t center;				/**< origin for models @todo: fixme - array of scales. */
 	char category;				/**< The animation index for the character with the weapon. @todo: rename me to more obvious name. */
 	qboolean weapon;			/**< This item is a weapon or ammo. */
-	qboolean holdTwoHanded;			/**< The soldier needs both hands to hold this object. */
-	qboolean fireTwoHanded;			/**< The soldier needs both hands to fire using object. */
+	qboolean holdTwoHanded;		/**< The soldier needs both hands to hold this object. */
+	qboolean fireTwoHanded;		/**< The soldier needs both hands to fire using object. */
 	qboolean extension;			/**< This is an extension. (may not be headgear, too). */
 	qboolean headgear;			/**< This is a headgear. (may not be extension, too). */
 	qboolean thrown;			/**< This item can be thrown. */
 
 	int price;				/**< Price for this item. */
 	int size;				/**< Size of an item, used in storage capacities. */
-	int buytype;				/**< Category of the item - used in menus (see equipment_buytypes_t). */
-	qboolean notOnMarket;			/**< True if this item should not be available on market. */
+	int buytype;			/**< Category of the item - used in menus (see equipment_buytypes_t). */
+	qboolean notOnMarket;	/**< True if this item should not be available on market. */
 
 	/* Weapon specific. */
 	int ammo;				/**< How much can we load into this weapon at once. @todo: what is this? isn't it ammo-only specific which defines amount of bullets in clip? */
-	int reload;				/**< Time units (TUs) for reloading the weapon.
-	qboolean oneshot;			     This weapon contains its own ammo (it is loaded in the base). */
-						/**< int ammo defines the amount of ammo used in oneshoot weapons.
-	qboolean deplete;			     This weapon useless after all ("oneshot") ammo is used up. */
-						/**< If true this item will not be collected on mission-end. (see INV_CollectinItems). */
+	int reload;				/**< Time units (TUs) for reloading the weapon. */
+	qboolean oneshot;		/**< This weapon contains its own ammo (it is loaded in the base).
+								ammo defines the amount of ammo used in oneshoot weapons. */
+	qboolean deplete;		/**< This weapon useless after all ("oneshot") ammo is used up.
+								If true this item will not be collected on mission-end. (see INV_CollectinItems). */
 
-	int useable;				/**< Defines which team can use this item: 0 - human, 1 - alien.
-						     Used in checking the right team when filling the containers with available armours. */
+	int useable;			/**< Defines which team can use this item: 0 - human, 1 - alien.
+								Used in checking the right team when filling the containers with available armours. */
 
 	int ammo_idx[MAX_AMMOS_PER_OBJDEF];	/**< List of ammo-object indices. The index of the ammo in csi.ods[xxx]. */
-	int numAmmos;				/**< Number of ammos this weapon can be used with, which is <= MAX_AMMOS_PER_OBJDEF. */
+	int numAmmos;			/**< Number of ammos this weapon can be used with, which is <= MAX_AMMOS_PER_OBJDEF. */
 
 	/* Firemodes (per weapon). */
 	char weap_id[MAX_WEAPONS_PER_OBJDEF][MAX_VAR];	/**< List of weapon ids as parsed from the ufo file "weapon_mod <id>". */
 	int weap_idx[MAX_WEAPONS_PER_OBJDEF];		/**< List of weapon-object indices. The index of the weapon in csi.ods[xxx].
-							     Correct index for this array can be get from fireDef_t.weap_fds_idx. or
-							     FIRESH_FiredefsIDXForWeapon. */
+								Correct index for this array can be get from fireDef_t.weap_fds_idx. or
+								FIRESH_FiredefsIDXForWeapon. */
 	fireDef_t fd[MAX_WEAPONS_PER_OBJDEF][MAX_FIREDEFS_PER_WEAPON];	/**< List of firemodes per weapon (the ammo can be used in). */
 	int numFiredefs[MAX_WEAPONS_PER_OBJDEF];	/**< Number of firemodes per weapon.
 							     Maximum value for fireDef_t.fd_idx <= MAX_FIREDEFS_PER_WEAPON. */
