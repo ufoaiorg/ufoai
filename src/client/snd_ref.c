@@ -1311,7 +1311,7 @@ void S_ResampleSfx (sfx_t * sfx, int inrate, int inwidth, byte * data)
 		sc->loopstart = (int)(sc->loopstart / stepscale);
 
 	sc->speed = dma.speed;
-	if (snd_loadas8bit->value)
+	if (snd_loadas8bit->integer)
 		sc->width = 1;
 	else
 		sc->width = inwidth;
