@@ -2601,7 +2601,7 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, byte 
  * @param[in] x Current x location in the map.
  * @param[in] y Current y location in the map.
  * @param[in] z Current z location in the map.
- * @param[in] dv Direction vector index (see DIRECTIONS and dvecs)
+ * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
  * @param[in] h	(The R_HEIGHT value for x,y,z)
  * @param[in] ol (It's also the R_AREA value for x,y,z) (Guess: the "old length" i.e. the TUs used so far)
  * @param[in] actor_size Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
@@ -2609,7 +2609,7 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, byte 
  * @todo Add diagonal-move checks for actor size (2x2).
  * @todo Add height/fall checks for actor size (2x2).
  */
-static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dv, int h, int ol, int actor_size)
+static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dir, int h, int ol, int actor_size)
 {
 	int nx, ny, sh;
 	int dx, dy;
@@ -2626,18 +2626,18 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dv, 
 	}
 #endif
 
-	l = dv > 3	/**< Add TUs to old length/TUs depending on straight or diagonal move. */
+	l = dir > 3	/**< Add TUs to old length/TUs depending on straight or diagonal move. */
 		? ol + TU_MOVE_DIAGONAL
 		: ol + TU_MOVE_STRAIGHT;
 
-	dx = dvecs[dv][0];	/**< Get the difference value for x for this direction */
-	dy = dvecs[dv][1];	/**< Get the difference value for y for this direction */
+	dx = dvecs[dir][0];	/**< Get the difference value for x for this direction. (can be pos or neg) */
+	dy = dvecs[dir][1];	/**< Get the difference value for y for this direction. (can be pos or neg) */
 	nx = x + dx;		/**< "new" x value = starting x value + difference from shoosen direction */
 	ny = y + dy;		/**< "new" y value = starting y value + difference from shoosen direction */
 
 
 	/* Connection checks  (Guess: Abort if any of the 'straight' directions are not connected to the original position.) */
-	/** @todo But why is it also checked for (dv > 3) directions? Might be a coding-trick; if so it's not really easy to read -> better way?. */
+	/** @todo But why is it also checked for (dir > 3) directions? Might be a coding-trick; if so it's not really easy to read -> better way?. */
 	/** @todo I think this and the next few lines need to be adapted to support 2x2 units. */
 	switch (actor_size) {
 	case 0:
@@ -2659,7 +2659,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dv, 
 
 		/* Check diagonal connection */
 		/* If direction vector index is set to a diagonal offset check if we can move there through connected "straight" squares. */
-		if (dv > 3 &&
+		if (dir > 3 &&
 			!( (dx > 0 ? R_CONN_PX(map, x,    y+dy, z) : R_CONN_NX(map, x,    y+dy, z))
 			&& (dy > 0 ? R_CONN_PY(map, x+dx, y,    z) : R_CONN_NY(map, x+dx, y,    z))
 			&& !Grid_CheckForbidden(map, x,    y+dy, z, ACTOR_SIZE_NORMAL)
@@ -2699,7 +2699,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dv, 
 		/** @todo Check diagonal connection for a 2x2 unit.
 		 * Currently this is not needed becasue we skip it in Grid_MoveMarkRoute :)
 		 */
-		if (dv > 3 &&
+		if (dir > 3 &&
 			!( (dx > 0 ? R_CONN_PX(map, x,    y+dy, z) : R_CONN_NX(map, x,    y+dy, z))
 			&& (dy > 0 ? R_CONN_PY(map, x+dx, y,    z) : R_CONN_NY(map, x+dx, y,    z))
 			&& !Grid_CheckForbidden(map, x,    y+dy, z, ACTOR_SIZE_NORMAL)
@@ -2750,7 +2750,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dv, 
 static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, int yh, int actor_size)
 {
 	int x, y;
-	int dv;
+	int dir;	/**< Direction vector index */
 	byte l, z, h;
 
 	for (z = 0; z < HEIGHT; z++)
@@ -2766,13 +2766,13 @@ static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, i
 						continue;
 
 					/* test the next connections */
-					for (dv = 0; dv < DIRECTIONS; dv++) {
+					for (dir = 0; dir < DIRECTIONS; dir++) {
 						if ((actor_size != 0)
 						 && (actor_size != ACTOR_SIZE_NORMAL)
-						 && (dv > 3))
+						 && (dir > 3))
 							/* Ignore diagonal move for 2x2 and other units */
 							break;
-						Grid_MoveMark(map, x, y, z, dv, h, l, actor_size);
+						Grid_MoveMark(map, x, y, z, dir, h, l, actor_size);
 					}
 				}
 }
@@ -2880,11 +2880,13 @@ byte Grid_MoveLength (struct routing_s *map, pos3_t to, qboolean stored)
  * @param[in] sz
  * @param[in] l
  * @sa Grid_MoveNext
+ * @todo add 2x2 unit support
  */
 static byte Grid_MoveCheck (struct routing_s *map, pos3_t pos, byte sz, int l)
 {
 	int x, y, sh;
-	int dv, dx, dy;
+	int dir; /**< Direction vector index */
+	int dx, dy;
 	byte z;
 	pos3_t dummy;
 
@@ -2895,9 +2897,9 @@ static byte Grid_MoveCheck (struct routing_s *map, pos3_t pos, byte sz, int l)
 	}
 #endif
 
-	for (dv = 0; dv < DIRECTIONS; dv++) {
-		dx = -dvecs[dv][0];
-		dy = -dvecs[dv][1];
+	for (dir = 0; dir < DIRECTIONS; dir++) {
+		dx = -dvecs[dir][0];
+		dy = -dvecs[dir][1];
 
 		/* range check */
 		if (dx > 0 && pos[0] >= WIDTH - 1)
@@ -2914,7 +2916,8 @@ static byte Grid_MoveCheck (struct routing_s *map, pos3_t pos, byte sz, int l)
 		y = pos[1] - dy;
 		z = sz;
 
-		if (R_AREA(map, x, y, z) != (l - TU_MOVE_STRAIGHT) - (dv > 3))
+		/** @todo: What exactly is checked here? Exact description wanted/needed. */
+		if (R_AREA(map, x, y, z) != (l - TU_MOVE_STRAIGHT) - (dir > 3))
 			continue;
 
 		/* connection checks */
@@ -2926,7 +2929,7 @@ static byte Grid_MoveCheck (struct routing_s *map, pos3_t pos, byte sz, int l)
 			continue;
 		if (dy < 0 && !R_CONN_NY(map, x, y, z))
 			continue;
-		if (dv > 3 &&
+		if (dir > 3 &&
 			!( (dx > 0 ? R_CONN_PX(map, x,    y+dy, z) : R_CONN_NX(map, x,    y+dy, z))
 			&& (dy > 0 ? R_CONN_PY(map, x+dx, y,    z) : R_CONN_NY(map, x+dx, y,    z)))
 			)
@@ -2944,10 +2947,10 @@ static byte Grid_MoveCheck (struct routing_s *map, pos3_t pos, byte sz, int l)
 		if (pos[2] == z)
 			break;				/* found it! */
 
-		/* not found... try next dv */
+		/* not found... try next dir */
 	}
 
-	return dv;
+	return dir;
 }
 
 
