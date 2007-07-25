@@ -921,7 +921,10 @@ static void CL_ActorAppear (struct dbuffer *msg)
 	} else {
 /*		Com_Printf("Actor appearing already visible... overwriting the old one\n"); */
 		le->inuse = qtrue;
-		newActor = qfalse;
+		if (le->type == ET_HIDDEN)
+			newActor = qtrue;
+		else
+			newActor = qfalse;
 	}
 	/* maybe added via CL_ActorAdd before */
 	le->invis = qfalse;
