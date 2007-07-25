@@ -1589,26 +1589,30 @@ void AIM_AircraftEquipzoneSelect_f (void)
 	if (aircraftMenu) {
 		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 		assert(aircraft);
+		/* Select slot */
+		slot = AII_SelectAircraftSlot(aircraft);
+	} else {
+		/* Select slot */
+		slot = BDEF_SelectBaseSlot(baseCurrent);
 	}
-	/* FIXME: aircraft might not be set here - but used below */
 
 	/* ammos are only available for weapons */
 	switch (airequipID) {
 	case AC_ITEM_WEAPON:
 		if (num == 3) {
-			if (aircraft->weapons[airequipSelectedSlot].itemIdx > -1)
+			if (slot->itemIdx > -1)
 				airequipID = AC_ITEM_AMMO;
 		}
 		break;
 	case AC_ITEM_BASE_MISSILE:
 		if (num == 3) {
-			if (aircraft->weapons[airequipSelectedSlot].itemIdx > -1)
+			if (slot->itemIdx > -1)
 				airequipID = AC_ITEM_AMMO_MISSILE;
 		}
 		break;
 	case AC_ITEM_BASE_LASER:
 		if (num == 3) {
-			if (aircraft->weapons[airequipSelectedSlot].itemIdx > -1)
+			if (slot->itemIdx > -1)
 				airequipID = AC_ITEM_AMMO_LASER;
 		}
 		break;
@@ -1625,6 +1629,7 @@ void AIM_AircraftEquipzoneSelect_f (void)
 			airequipID = AC_ITEM_BASE_LASER;
 		break;
 	default :
+		/* zone 3 is not available for electronics and shields */
 		if (num == 3)
 			return;
 	}
@@ -1633,20 +1638,8 @@ void AIM_AircraftEquipzoneSelect_f (void)
 	/* Fill the list of item you can equip your aircraft with */
 	AIM_UpdateAircraftItemList();
 
-	if (aircraftMenu) {
-		/* Select slot */
-		slot = AII_SelectAircraftSlot(aircraft);
-
-		/* Check that the selected zone is OK */
-		AIM_CheckAirequipSelectedZone(slot);
-
-	} else {
-		/* Select slot */
-		slot = BDEF_SelectBaseSlot(baseCurrent);
-
-		/* Check that the selected zone is OK */
-		AIM_CheckAirequipSelectedZone(slot);
-	}
+	/* Check that the selected zone is OK */
+	AIM_CheckAirequipSelectedZone(slot);
 
 	/* Draw selected zone */
 	AIM_DrawSelectedZone();
