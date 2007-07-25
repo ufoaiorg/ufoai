@@ -1223,7 +1223,6 @@ console functions
 
 /**
  * @brief
- * @todo Allow ogg, too
  */
 static void S_Play_f (void)
 {
