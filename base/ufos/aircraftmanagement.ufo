@@ -604,9 +604,9 @@ craftitem base_ammo_tr20
 	ammo		12
 	wdamage		28
 	accuracy	0.4
-	wrange		20
-	wspeed		20
-	delay		40
+	wrange		30
+	wspeed		200
+	delay		500
 }
 
 

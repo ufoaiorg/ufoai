@@ -287,6 +287,8 @@ building_t *B_GetBuildingType(const char *buildingName);
 
 /** Base defense functions. */
 void BDEF_AddBattery_f(void);
+void BDEF_RemoveBattery(base_t *base, int type, int idx);
+void BDEF_RemoveBattery_f(void);
 void BDEF_InitialiseBaseSlots(base_t *base);
 void BDEF_Init_f(void);
 void BDEF_ListClick_f(void);

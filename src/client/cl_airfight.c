@@ -578,11 +578,26 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 
 	/* @todo implement me */
 	if (base->batteryDamage <= 0) {
-		Com_Printf("projectile destroyed turret\n");
+		int rnd;
+		/* projectile destroyed turret */
 		base->batteryDamage = MAX_BATTERY_DAMAGE;
+		/* Add message to message-system. */
+		Com_Printf("You've lost a base defense system.\n");
+		/* FIXME the building should also be destroyed */
+		rnd = rand() % 2;
+		if (base->maxBatteries <= 0 && base->maxLasers <= 0) {
+			rnd = -1;
+		} else if (rnd == 0 && base->maxBatteries <= 0)
+			rnd = 1;
+		else if (rnd == 1 && base->maxLasers <= 0)
+			rnd = 0;
+	
+		if (rnd >= 0)
+			BDEF_RemoveBattery (base, rnd, -1);
 	}
 
 	if (base->baseDamage <= 0) {
+		/* projectile destroyed a building */
 		int rnd;
 		base->baseDamage = MAX_BASE_DAMAGE;
 		rnd = frand() * gd.numBuildings[base->idx];

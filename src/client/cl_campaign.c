@@ -3675,6 +3675,7 @@ static const cmdList_t game_commands[] = {
 	{"addeventmail", CL_EventAddMail_f, "Add a new mail (event trigger) - e.g. after a mission"},
 	{"center_geoscape", MAP_CenterOnPoint, NULL},
 	{"add_battery", BDEF_AddBattery_f, "Add a new battery to base"},
+	{"remove_battery", BDEF_RemoveBattery_f, "Remove a battery from base"},
 	{"basedef_init", BDEF_Init_f, "Inits base defense menu"},
 	{"basedef_slot_list_click", BDEF_ListClick_f, "Inits base defense menu"},
 #ifdef DEBUG

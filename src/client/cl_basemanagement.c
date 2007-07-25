@@ -2422,6 +2422,8 @@ static void B_BaseList_f (void)
 		Com_Printf("Base title %s\n", base->name);
 		Com_Printf("Base founded %i\n", base->founded);
 		Com_Printf("Base numAircraftInBase %i\n", base->numAircraftInBase);
+		Com_Printf("Base numMissileBattery %i\n", base->maxBatteries);
+		Com_Printf("Base numLaserBattery %i\n", base->maxLasers);
 		Com_Printf("Base sensorWidth %i\n", base->radar.range);
 		Com_Printf("Base numSensoredAircraft %i\n", base->radar.numUfos);
 		Com_Printf("Base aircraft %i\n", base->numAircraftInBase);
@@ -3429,15 +3431,113 @@ qboolean B_ScriptSanityCheck (void)
 }
 
 /**
- * @brief Adds a missile battery to base.
- * @todo Implement me (atm, only first slot can be used, with sparrowhawk)
+ * @brief Adds a defense system to base.
+ * @param[in] type 0 if the battery is missile, 1 if the battery is laser
+ */
+static void BDEF_AddBattery (int type)
+{
+
+	switch (type) {
+	case 0:
+		if (baseCurrent->maxBatteries >= MAX_BASE_SLOT) {
+			Com_Printf("BDEF_AddBattery_f: too many missile batteries in base\n");
+			return;
+		}
+		/* slots has a lot of ammo for now */
+		/* FIXME: ammo should be taken in base storage when buying base defense ammos will be implemented */
+		baseCurrent->batteries[baseCurrent->maxBatteries].ammoLeft = 9999;
+
+		baseCurrent->maxBatteries++;
+		break;
+	case 1:
+		if (baseCurrent->maxLasers >= MAX_BASE_SLOT) {
+			Com_Printf("BDEF_AddBattery_f: too many laser batteries in base\n");
+			return;
+		}
+		/* slots has a lot of ammo for now */
+		/* FIXME: ammo should be taken in base storage when buying base defense ammos will be implemented */
+		baseCurrent->batteries[baseCurrent->maxBatteries].ammoLeft = 9999;
+
+		baseCurrent->maxBatteries++;
+		break;
+	default:
+		Com_Printf("BDEF_AddBattery_f: unknown type of base defense system.\n");
+	}
+}
+
+/**
+ * @brief Adds a defense system to base.
  */
 void BDEF_AddBattery_f (void)
 {
-	/* slots has a lot of ammo for now */
-	baseCurrent->batteries[baseCurrent->maxBatteries].ammoLeft = 9999;
+	int num;
 
-	baseCurrent->maxBatteries++;
+
+	if (Cmd_Argc() < 2)
+		num = rand() % 2;
+	else
+		num = atoi(Cmd_Argv(1));
+
+	BDEF_AddBattery(num);
+}
+
+/**
+ * @brief Remove a base defense sytem from base.
+ * @param[in] type 0 if the battery is missile, 1 if the battery is laser
+ * @param[in] idx idx of the battery to destroy (-1 if this is random)
+ */
+extern void BDEF_RemoveBattery (base_t *base, int type, int idx)
+{
+	if (!base)
+		base = baseCurrent;
+
+	switch (type) {
+	case 0:
+		if (idx < 0)
+			idx = rand() % base->maxBatteries;
+		if (idx < baseCurrent->maxBatteries - 1)
+			memmove(baseCurrent->batteries + idx, baseCurrent->batteries + idx + 1, sizeof(aircraftSlot_t) * (baseCurrent->maxBatteries - idx - 1));
+		base->maxBatteries--;
+		/* just for security */
+		AII_InitialiseSlot(base->batteries + base->maxBatteries, base->idx);
+		break;
+	case 1:
+		if (idx < 0)
+			idx = rand() % base->maxLasers;
+		if (idx < baseCurrent->maxLasers - 1)
+			memmove(baseCurrent->lasers + idx, baseCurrent->lasers + idx + 1, sizeof(aircraftSlot_t) * (baseCurrent->maxLasers - idx - 1));
+		base->maxLasers--;
+		/* just for security */
+		AII_InitialiseSlot(base->lasers + base->maxLasers, base->idx);
+		break;
+	default:
+		Com_Printf("BDEF_RemoveBattery_f: unknown type of base defense system.\n");
+	}
+}
+
+/**
+ * @brief Remove a defense system from base.
+ */
+void BDEF_RemoveBattery_f (void)
+{
+	int num;
+
+	assert(baseCurrent);
+
+	if (Cmd_Argc() < 2)
+		num = rand() % 2;
+	else
+		num = atoi(Cmd_Argv(1));
+
+	if (baseCurrent->maxBatteries <= 0 && baseCurrent->maxLasers <= 0) {
+		Com_Printf("No base defense to destroy\n");
+		return;
+	} else if (num == 0 && baseCurrent->maxBatteries <= 0)
+		num = 1;
+	else if (num == 1 && baseCurrent->maxLasers <= 0)
+		num = 0;
+
+	BDEF_RemoveBattery(baseCurrent, num, -1);
 }
 
 /**
