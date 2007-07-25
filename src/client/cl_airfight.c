@@ -576,7 +576,6 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 	base->batteryDamage -= damage;
 	base->baseDamage -= aircraftItems[projectile->aircraftItemsIdx].weaponDamage - damage;
 
-	/* @todo implement me */
 	if (base->batteryDamage <= 0) {
 		int rnd;
 		/* projectile destroyed turret */

@@ -285,15 +285,6 @@ building_t *B_GetBuildingByIdx(base_t* base, int idx);
 /*building_t *B_GetBuildingInBase(base_t* base, char* buildingID);*/
 building_t *B_GetBuildingType(const char *buildingName);
 
-/** Base defense functions. */
-void BDEF_AddBattery_f(void);
-void BDEF_RemoveBattery(base_t *base, int type, int idx);
-void BDEF_RemoveBattery_f(void);
-void BDEF_InitialiseBaseSlots(base_t *base);
-void BDEF_Init_f(void);
-void BDEF_ListClick_f(void);
-aircraftSlot_t *BDEF_SelectBaseSlot(base_t *base);
-
 /** Coordinates to place the new base at (long, lat) */
 extern vec3_t newBasePos;
 

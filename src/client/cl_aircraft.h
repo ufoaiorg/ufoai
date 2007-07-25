@@ -226,21 +226,10 @@ typedef struct aircraft_s {
 @todo: for later, this is used quite a lot in the code.
 #define AIRCRAFTCURRENT_IS_SANE(base) (((base)->aircraftCurrent >= 0) && ((base)->aircraftCurrent < (base)->numAircraftInBase))
 */
-
-
 extern aircraft_t aircraft_samples[MAX_AIRCRAFT]; /**< available aircraft types */
 extern int numAircraft_samples;
 extern int numAircraftItems;			/**< number of available aircrafts items in game. */
 extern aircraftItem_t aircraftItems[MAX_AIRCRAFTITEMS];	/**< Available aicraft items. */
-extern int airequipSelectedZone;		/**< Selected zone in equip menu */
-extern int airequipSelectedSlot;			/**< Selected slot in equip menu */
-extern int airequipID;					/**< value of aircraftItemType_t that defines what item we are installing. */
-extern qboolean noparams;			/**< true if AIM_AircraftEquipmenuInit_f or BDEF_Init_f don't need paramters */
-
-/* @todo change my place */
-extern void AIM_DrawSelectedZone();
-extern void AIM_CheckAirequipSelectedZone(aircraftSlot_t *slot);
-extern void AIM_UpdateAircraftItemList();
 
 /* script functions */
 
@@ -255,12 +244,7 @@ void AIM_ResetAircraftCvars_f (void);
 void AIM_NextAircraft_f(void);
 void AIM_PrevAircraft_f(void);
 void AIR_AircraftReturnToBase_f(void);
-void AIM_AircraftEquipmenuInit_f(void);
-extern void AIM_AircraftEquipSlotSelect_f(void);
-extern void AIM_AircraftEquipzoneSelect_f(void);
-extern void AIM_AircraftEquipAddItem_f(void);
-extern void AIM_AircraftEquipDeleteItem_f(void);
-void AIM_AircraftEquipmenuClick_f(void);
+
 const char *AIR_AircraftStatusToName(aircraft_t *aircraft);
 qboolean AIR_IsAircraftInBase(aircraft_t *aircraft);
 void AIR_AircraftInit(void);
@@ -279,17 +263,12 @@ qboolean AIR_IsInAircraftTeam(aircraft_t *aircraft,int idx);
 void CL_CampaignRunAircraft(int dt);
 aircraft_t *AIR_GetAircraft(const char *name);
 aircraft_t* AIR_AircraftGetFromIdx(int idx);
-void AII_InitialiseSlot(aircraftSlot_t *slot, int aircraftIdx);
 int AII_GetAircraftItemByID(const char *id);
 void CP_GetRandomPosForAircraft(float *pos);
 qboolean AIR_AircraftMakeMove(int dt, aircraft_t* aircraft);
 void AIR_ParseAircraft(const char *name, const char **text, qboolean assignAircraftItems);
 void AII_ParseAircraftItem(const char *name, const char **text);
-void AII_UpdateInstallationDelay(void);
 void AII_ReloadWeapon(aircraft_t *aircraft);
-qboolean AII_AddItemToSlot(technology_t *tech, aircraftSlot_t *slot);
-void AII_UpdateAircraftStats(aircraft_t *aircraft);
-int AII_GetSlotItems(aircraftItemType_t type, aircraft_t *aircraft);
 qboolean AIR_AircraftHasEnoughFuel(aircraft_t *aircraft, const vec2_t destination);
 void AIR_AircraftReturnToBase(aircraft_t *aircraft);
 qboolean AIR_SendAircraftToMission(aircraft_t* aircraft, struct actMis_s* mission);
@@ -301,7 +280,5 @@ void AIR_AircraftsUfoDisappear(const aircraft_t *const ufo);
 void AIR_UpdateHangarCapForAll(int base_idx);
 qboolean AIR_AircraftAllowed(void);
 qboolean AIR_ScriptSanityCheck(void);
-
-const char* AII_WeightToName(itemWeight_t weight);
 
 #endif
