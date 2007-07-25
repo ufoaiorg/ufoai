@@ -243,6 +243,10 @@ static void SV_SpawnAllPending (void)
 		if (cl && cl->state == cs_spawning) {
 			if (ge->ClientSpawn(cl->player))
 				cl->state = cs_spawned;
+			else
+				/* false means, that there are not all players - so cycling to
+				 * the end here is not needed */
+				return;
 		}
 	}
 }

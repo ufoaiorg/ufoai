@@ -2651,7 +2651,7 @@ qboolean G_ClientSpawn (player_t * player)
 	gi.WriteByte(player->pers.team);
 	gi.WriteByte(level.activeTeam);
 
-	/* show visible actors and submit stats */
+	/* show visible actors and add invisible actor */
 	G_ClearVisFlags(player->pers.team);
 	G_SendInvisible(player->pers.team);
 	G_CheckVis(NULL, qfalse);
@@ -2659,10 +2659,13 @@ qboolean G_ClientSpawn (player_t * player)
 	/* set initial state to reaction fire activated for the other team */
 	if (sv_maxclients->integer > 1 && level.activeTeam != player->pers.team) {
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-			if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2))
+			if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)) {
+				/* FIXME: What if the current firedef wouldn't allow to use rf */
 				G_ClientStateChange(player, i, STATE_REACTION_ONCE, qfalse);
+			}
 	}
 
+	/* submit stats */
 	G_SendPlayerStats(player);
 
 	/* send things like doors and breakables */
