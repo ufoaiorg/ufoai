@@ -118,10 +118,6 @@ terrain tex_buildings/floor_se02 {
 }
 
 // terracotta floor
-terrain tex_buildings/floor015 {
-}
-
-// terracotta floor
 terrain tex_buildings/floor021 {
 }
 
