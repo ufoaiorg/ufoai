@@ -652,16 +652,18 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 	aircraft->idx, base->teamNum[aircraft->idx]);
 
 	for (container = 0; container < csi.numIDs; container++) {
-		for (p = 0; p < base->teamNum[aircraft->idx]; p++) {
-			cp = base->curTeam[p];
-			assert(cp);
-			for (ic = cp->inv->c[container]; ic; ic = next) {
-				next = ic->next;
-				if (ed->num[ic->item.t] > 0) {
-					ic->item = CL_AddWeaponAmmo(ed, ic->item);
-				} else {
-					/* Drop ammo used for reloading and sold carried weapons. */
-					Com_RemoveFromInventory(cp->inv, container, ic->x, ic->y);
+		for (p = 0; p < aircraft->size; p++) {
+			if (aircraft->teamIdxs[p] != -1) {
+				cp = &gd.employees[aircraft->teamTypes[p]][aircraft->teamIdxs[p]].chr;
+				assert(cp);
+				for (ic = cp->inv->c[container]; ic; ic = next) {
+					next = ic->next;
+					if (ed->num[ic->item.t] > 0) {
+						ic->item = CL_AddWeaponAmmo(ed, ic->item);
+					} else {
+						/* Drop ammo used for reloading and sold carried weapons. */
+						Com_RemoveFromInventory(cp->inv, container, ic->x, ic->y);
+					}
 				}
 			}
 		}
