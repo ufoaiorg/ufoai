@@ -2046,6 +2046,7 @@ static void CL_InitLocal (void)
 
 	cl_precache = Cvar_Get("cl_precache", "1", CVAR_ARCHIVE, "Precache models and menus at startup");
 
+	cl_avifreq = Cvar_Get("cl_avifreq", "25", 0, "AVI recording - see video command");
 	cl_aviForceDemo = Cvar_Get("cl_aviForceDemo", "1", CVAR_ARCHIVE, "AVI recording - record even if no game is loaded");
 	cl_aviMotionJpeg = Cvar_Get("cl_aviMotionJpeg", "1", CVAR_ARCHIVE, "AVI recording - see video command");
 
