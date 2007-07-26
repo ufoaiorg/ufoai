@@ -470,6 +470,7 @@ void CL_PrepRefresh (void)
 	/* the renderer can now free unneeded stuff */
 	re.EndLoading();
 
+	/* waiting for EV_START */
 	Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages), _("Awaiting game start"));
 	SCR_UpdateScreen();
 	cl.refresh_prepped = qtrue;
