@@ -2,6 +2,7 @@
  * @file snd_openal.c
  * @brief Sound functions for openAL
  * @note To activate openAL in UFO:AI you have to set the snd_openal cvar to 1
+ * @todo fix music not restarting, fix sound effects
  */
 
 /*
@@ -197,58 +198,9 @@ qboolean SND_OAL_Init (char* device)
 	return qtrue;
 }
 
-/**
- * @brief
- * @sa SND_OAL_LoadSound
- */
-static qboolean SND_OAL_LoadFile (sfx_t* sfx, ALboolean loop)
-{
-	sfxcache_t *sc;
-
-	sc = S_LoadSound(sfx);
-	if (sc) {
-		qalGenBuffers(1, &sfx->bufferNum);
-		qalBufferData(sfx->bufferNum, sc->stereo, sc->data, sc->length, sc->speed);
-		qalSourceQueueBuffers(sfx->source, 1, &sfx->bufferNum);
-	} else
-		return qfalse;
-
-	/* Generate a single source, attach the buffer to it and start playing. */
-	qalGenSources(1, &sfx->source);
-	qalSourcei(sfx->source, AL_BUFFER, sfx->bufferNum);
-
-	/* Normally nothing should go wrong above, but one never knows... */
-	SND_OAL_Error();
-	return qtrue;
-}
-
-/**
- * @brief Loads a sound via openAL
- * @sa SND_OAL_LoadFile
- */
-qboolean SND_OAL_LoadSound (sfx_t* sfx, qboolean looping)
-{
-	if (!sfx)
-		return qfalse;
-
-	/* load our sound */
-	if (!SND_OAL_LoadFile(sfx, looping)) {
-		Com_Printf("SND_OAL_LoadSound: %s\n", sfx->name);
-		return qfalse;
-	}
-
-	/* set the pitch */
-	qalSourcef(sfx->source, AL_PITCH, 1.0f);
-	/* set the gain */
-	qalSourcef(sfx->source, AL_GAIN, 1.0f);
-	if (looping) {
-		/* set looping to true */
-		qalSourcei(sfx->source, AL_LOOPING, AL_TRUE);
-	} else
-		qalSourcei(sfx->source, AL_LOOPING, AL_FALSE);
-
-	return qtrue;
-}
+/*=====================================================
+ * OGG streaming
+ *=====================================================*/
 
 /**
  * @brief
@@ -398,6 +350,10 @@ void SND_OAL_StopStream (music_t* music)
 	SND_OAL_Error();
 }
 
+/*=====================================================
+ * Sound effects
+ *=====================================================*/
+
 /**
  * @brief Updates the listeners position
  */
@@ -406,6 +362,59 @@ void SND_OAL_UpdateListeners (vec3_t listener_origin)
 	qalListenerfv(AL_POSITION, listener_origin);
 /*	qalListenerfv(AL_VELOCITY, listenerVel);
 	qalListenerfv(AL_ORIENTATION, listenerOri);*/
+}
+
+/**
+ * @brief
+ * @sa SND_OAL_LoadSound
+ */
+static qboolean SND_OAL_LoadFile (sfx_t* sfx, ALboolean loop)
+{
+	sfxcache_t *sc;
+
+	sc = S_LoadSound(sfx);
+	if (sc) {
+		qalGenBuffers(1, &sfx->bufferNum);
+		qalBufferData(sfx->bufferNum, sc->stereo, sc->data, sc->length, sc->speed);
+		qalSourceQueueBuffers(sfx->source, 1, &sfx->bufferNum);
+	} else
+		return qfalse;
+
+	/* Generate a single source, attach the buffer to it and start playing. */
+	qalGenSources(1, &sfx->source);
+	qalSourcei(sfx->source, AL_BUFFER, sfx->bufferNum);
+
+	/* Normally nothing should go wrong above, but one never knows... */
+	SND_OAL_Error();
+	return qtrue;
+}
+
+/**
+ * @brief Loads a sound via openAL
+ * @sa SND_OAL_LoadFile
+ */
+qboolean SND_OAL_LoadSound (sfx_t* sfx, qboolean looping)
+{
+	if (!sfx)
+		return qfalse;
+
+	/* load our sound */
+	if (!SND_OAL_LoadFile(sfx, looping)) {
+		Com_Printf("SND_OAL_LoadSound: %s\n", sfx->name);
+		return qfalse;
+	}
+
+	/* set the pitch */
+	qalSourcef(sfx->source, AL_PITCH, 1.0f);
+	/* set the gain */
+	qalSourcef(sfx->source, AL_GAIN, 1.0f);
+	if (looping) {
+		/* set looping to true */
+		qalSourcei(sfx->source, AL_LOOPING, AL_TRUE);
+	} else
+		qalSourcei(sfx->source, AL_LOOPING, AL_FALSE);
+
+	return qtrue;
 }
 
 /**
