@@ -1495,8 +1495,10 @@ void CL_RequestNextDownload (void)
 	unsigned ufoScript_checksum = 0;
 	const char *buf;
 
-	if (cls.state != ca_connected)
+	if (cls.state != ca_connected) {
+		Com_Printf("CL_RequestNextDownload: Not connected (%i)\n", cls.state);
 		return;
+	}
 
 	/* for singleplayer game this is already loaded in our local server */
 	/* and if we are the server we don't have to reload the map here, too */
