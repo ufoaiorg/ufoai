@@ -34,18 +34,27 @@ static unsigned int alSampleSet;
 /* extern in system implementation */
 oalState_t	oalState;
 
+static unsigned int snd_openal_numChannels;
+
+ALuint sourceNames[MAX_CHANNELS + 1];
+
 /* currently playing music? */
 static qboolean openal_playing = qfalse;
 
 static cvar_t *snd_openal_volume;
 static cvar_t *snd_openal_device;
+static cvar_t *snd_openal_channels;
+
+#define SND_OAL_STREAMING_NUMBUFFERS 4
+ALuint streamingBuffers[SND_OAL_STREAMING_NUMBUFFERS];
 
 /**
  * @brief Shutdown function
  */
 void SND_OAL_Shutdown (void)
 {
-
+	qalDeleteSources(snd_openal_numChannels + 1, sourceNames);
+	snd_openal_numChannels = 0;
 }
 
 /**
@@ -80,6 +89,70 @@ void SND_OAL_BeginPainting (void)
 
 }
 
+/**
+ * @brief Picks a free openAL channel
+ */
+static ALint SND_OAL_PickChannel (void)
+{
+	ALint i;
+	ALint sourceState;
+
+	for (i = 0; i < snd_openal_numChannels; i++) {
+		qalGetSourcei(sourceNames[i], AL_SOURCE_STATE, &sourceState);
+
+		/* The source already out of processing.*/
+		if (sourceState == AL_STOPPED || sourceState == AL_INITIAL) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+/**
+ * @brief
+ */
+void SND_OAL_StartSound (ALuint bufferNum)
+{
+	if (snd_openal_numChannels && bufferNum) {
+		/* pick a channel and start the sound effect */
+		ALint sourceNum = SND_OAL_PickChannel();
+		if (sourceNum != -1) {
+			qalSourcef(sourceNum, AL_PITCH, 1);
+			qalSource3f(sourceNum, AL_DIRECTION, 0, 0, 0);
+			qalSourcef(sourceNum, AL_REFERENCE_DISTANCE, 0);
+			qalSourcef(sourceNum, AL_ROLLOFF_FACTOR, 0);
+			qalSource3f(sourceNum, AL_POSITION, 0, 0, 0);
+			qalSource3f(sourceNum, AL_VELOCITY, 0, 0, 0);
+			qalSourcei(sourceNum, AL_BUFFER, bufferNum);
+			qalSourcei(sourceNum, AL_SOURCE_RELATIVE, AL_TRUE);
+			qalSourcei(sourceNum, AL_LOOPING, AL_FALSE);
+			qalSourcef(sourceNum, AL_GAIN, 0.47);
+			qalSourcePlay(sourceNum);
+		}
+	}
+}
+
+/**
+ * @brief
+ */
+static void SND_OAL_AllocateChannels (void)
+{
+	if (qalGenSources) {
+		/* +1 more channel for streaming */
+		snd_openal_numChannels = MAX_CHANNELS + 1;
+		while (snd_openal_numChannels > MIN_CHANNELS) {
+			qalGenSources(snd_openal_numChannels, sourceNames);
+			snd_openal_numChannels--;
+			if (qalGetError() == AL_NO_ERROR) {
+				Com_Printf("..%i mix channels allocated.\n", snd_openal_numChannels);
+				Com_Printf("..streaming channel allocated.\n");
+				return;
+			}
+		}
+		Com_Printf("..not enough mix channels!\n");
+	}
+	snd_openal_numChannels = 0;
+}
 
 /**
  * @brief Init function that should be called after system implementation QAL_Init was called
@@ -119,8 +192,13 @@ qboolean SND_OAL_Init (char* device)
 	/* clear error code */
 	qalGetError();
 
+	SND_OAL_AllocateChannels();
+
+	qalGenBuffers(SND_OAL_STREAMING_NUMBUFFERS, streamingBuffers);
+
 	snd_openal_device = Cvar_Get("snd_openal_device", "", CVAR_ARCHIVE, "Device for openAL");
 	snd_openal_volume = Cvar_Get("snd_openal_volume", "", CVAR_ARCHIVE, "Volume for openAL");
+	snd_openal_channels = Cvar_Get("snd_openal_channels", "4", CVAR_ARCHIVE, "openAL channels");
 
 	return qtrue;
 }
@@ -224,11 +302,14 @@ void SND_OAL_PlaySound (void)
  */
 void SND_OAL_StopSound (void)
 {
-	if (!openal_active)
-		return;
+	int i;
 
-	if (openal_playing)
-		qalSourceStop(alSource);
+	/* stop all the channels */
+	qalSourceStopv(snd_openal_numChannels, sourceNames);
+
+	/* mark all channels as free */
+	for (i = 0; i < snd_openal_numChannels; i++)
+		qalSourcei(sourceNames[i], AL_BUFFER, AL_NONE);
 }
 
 /**

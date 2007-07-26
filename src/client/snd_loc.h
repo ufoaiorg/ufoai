@@ -138,7 +138,8 @@ SYSTEM SPECIFIC FUNCTIONS
 ====================================================================
 */
 
-#define	MAX_CHANNELS			32
+#define MAX_CHANNELS			32
+#define MIN_CHANNELS			4
 extern channel_t channels[MAX_CHANNELS];
 
 extern int paintedtime;
