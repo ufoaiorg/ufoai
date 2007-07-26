@@ -269,7 +269,7 @@ void S_Init (void)
 
 	snd_init = Cvar_Get("snd_init", "1", CVAR_ARCHIVE, "Should the sound renderer get initialized");
 
-	if (!snd_init->value) {
+	if (!snd_init->integer) {
 		Com_Printf("not initializing.\n");
 		return;
 	}
@@ -353,7 +353,7 @@ void S_Init (void)
 	Com_Printf("sound sampling rate: %i\n", dma.speed);
 
 	/* FIXME: Error checking/wrong place here */
-	if (snd_openal->value) {
+	if (snd_openal->integer) {
 #ifdef HAVE_OPENAL
 		/* bindings */
 		QAL_Init();
@@ -716,7 +716,7 @@ void S_IssuePlaysound (playsound_t * ps)
 	channel_t *ch;
 	sfxcache_t *sc = NULL;
 
-	if (snd_show->value)
+	if (snd_show->integer)
 		Com_Printf("Issue %i\n", ps->begin);
 	/* pick a channel to play on */
 	ch = S_PickChannel(ps->entnum, ps->entchannel);
@@ -1071,7 +1071,7 @@ void S_Update (vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 	channel_t *combine;
 
 	/* maybe the sound system is not meant to be initalized */
-	if (!snd_init->value)
+	if (!snd_init->integer)
 		return;
 
 	/* did we switch the sound renderer */
@@ -1129,7 +1129,7 @@ void S_Update (vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 	/*S_AddLoopSounds(); */
 
 	/* debugging output */
-	if (snd_show->value) {
+	if (snd_show->integer) {
 		total = 0;
 		ch = channels;
 		for (i = 0; i < MAX_CHANNELS; i++, ch++)
@@ -1204,7 +1204,7 @@ void S_Update_ (void)
 	}
 
 	/* mix ahead of current position */
-	endtime = soundtime + snd_mixahead->value * dma.speed;
+	endtime = soundtime + snd_mixahead->integer * dma.speed;
 	/*endtime = (soundtime + 4096) & ~4095; */
 
 	/* mix to an even submission block size */

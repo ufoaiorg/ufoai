@@ -37,7 +37,7 @@ typedef struct music_s {
 	char newFilename[MAX_QPATH]; /**< after fading out ovFile play newFilename */
 	char ovBuf[4096]; /**< ogg vorbis buffer */
 	int ovSection; /**< number of the current logical bitstream */
-	float fading; /**< current volumn - if le zero play newFilename */
+	float fading; /**< current volume - if le zero play newFilename */
 	char ovPlaying[MAX_QPATH]; /**< currently playing ogg tracks basename */
 	int rate;
 	unsigned format;
