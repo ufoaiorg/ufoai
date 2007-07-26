@@ -501,11 +501,13 @@ void CL_Disconnect (void)
 	cls.connect_time = 0;
 
 	/* send a disconnect message to the server */
-	msg = new_dbuffer();
-	NET_WriteByte(msg, clc_stringcmd);
-	NET_WriteString(msg, "disconnect");
-	NET_WriteMsg(cls.stream, msg);
-	stream_finished(cls.stream);
+	if (!Com_ServerState()) {
+		msg = new_dbuffer();
+		NET_WriteByte(msg, clc_stringcmd);
+		NET_WriteString(msg, "disconnect");
+		NET_WriteMsg(cls.stream, msg);
+		stream_finished(cls.stream);
+	}
 	cls.stream = NULL;
 
 	CL_ClearState();
