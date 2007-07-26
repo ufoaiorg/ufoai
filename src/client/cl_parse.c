@@ -612,8 +612,10 @@ static void CL_Reset (struct dbuffer *msg)
 
 
 /**
- * @brief
+ * @brief Activates the map render screen (ca_active)
+ * @sa SCR_EndLoadingPlaque
  * @sa G_ClientBegin
+ * @note EV_START
  */
 static void CL_StartGame (struct dbuffer *msg)
 {
