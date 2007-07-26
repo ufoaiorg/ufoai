@@ -78,14 +78,14 @@ void AL_FillInContainment (int baseidx)
 }
 
 /**
- * @brief Type of alien to its name.
- * @param[in] type
- * @return name (untranslated)
+ * @brief Index of alien race to its name.
+ * @param[in] teamDescIdx Index of alien race in teamDesc array.
+ * @return name (untranslated) or NULL if no definition found.
  */
 const char *AL_AlienTypeToName (int teamDescIdx)
 {
 	if (teamDescIdx < 0 || teamDescIdx >= numTeamDesc)
-		return "";
+		return NULL;
 	return teamDesc[teamDescIdx].name;
 }
 
@@ -293,29 +293,28 @@ void AL_AddAliens (int baseidx, int airidx)
 
 /**
  * @brief Removes alien(s) from Alien Containment.
- * @param[in] alientype
- * @param[in] amount of alientype to be removed
- * @param[in] type of action
+ * @param[in] *base Pointer to the base where we will remove aliens.
+ * @param[in] *name Name of alien race.
+ * @param[in] amount Amount of aliens to be removed.
+ * @param[in] action Type of action (see alienCalcType_t).
  * @sa AC_KillAll_f
  * @sa AC_KillOne_f
- * @note Call with name AL_UNKNOWN when no matters what type to remove.
+ * @note Call with NULL name when no matters what type to remove.
  * @todo integrate this with research system
  */
-void AL_RemoveAliens (const char *name, int amount, alienCalcType_t action)
+void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_t action)
 {
 	int j, toremove;
 	int maxamount = 0; /* amount (of alive type), which is max in Containment) */
 	int maxidx = 0;
 	aliensCont_t *containment = NULL;
 
-	if (!baseCurrent)
-		return;
-
+	assert (base);
 	containment = baseCurrent->alienscont;
 
 	switch (action) {
 	case AL_RESEARCH:
-		if (Q_strncmp("AL_UNKNOWN", name, MAX_VAR) == 0) {
+		if (!name) {
 			/* Search for the type of alien, which has max amount
 			   in Alien Containment, then remove (amount). */
 			while (amount > 0) {
@@ -351,7 +350,7 @@ void AL_RemoveAliens (const char *name, int amount, alienCalcType_t action)
 		}
 		break;
 	case AL_KILL:
-		/* We ignore 1st and 2nd parameter of AL_RemoveAliens() here. */
+		/* We ignore 2nd and 3rd parameter of AL_RemoveAliens() here. */
 		for (j = 0; j < numTeamDesc; j++) {
 			if (!teamDesc[j].alien)
 				continue;
@@ -362,7 +361,7 @@ void AL_RemoveAliens (const char *name, int amount, alienCalcType_t action)
 		}
 		break;
 	case AL_KILLONE:
-		/* We ignore 2nd parameter of AL_RemoveAliens() here. */
+		/* We ignore 3rd parameter of AL_RemoveAliens() here. */
 		for (j = 0; j < numTeamDesc; j++) {
 			if (!teamDesc[j].alien)
 				continue;
@@ -381,7 +380,7 @@ void AL_RemoveAliens (const char *name, int amount, alienCalcType_t action)
 		break;
 	}
 	/* Set the amount of currently stored in capacities. */
-	baseCurrent->capacities[CAP_ALIENS].cur = AL_CountInBase();
+	base->capacities[CAP_ALIENS].cur = AL_CountInBase();
 	return;
 }
 
@@ -764,7 +763,7 @@ static void AC_KillAll_f (void)
 	if (!aliens)
 		return;
 
-	AL_RemoveAliens(NULL, 0, AL_KILL);
+	AL_RemoveAliens(baseCurrent, NULL, 0, AL_KILL);
 
 	/* Reinit menu to display proper values. */
 	AC_SelectAlien_f();
@@ -814,7 +813,7 @@ static void AC_KillOne_f (void)
 	} else
 		return;
 
-	AL_RemoveAliens(containment[num].alientype, 1, AL_KILLONE);
+	AL_RemoveAliens(baseCurrent, containment[num].alientype, 1, AL_KILLONE);
 	/* Reinit menu to display proper values. */
 	AC_SelectAlien_f();
 	Cbuf_AddText("aliencont_init\n");

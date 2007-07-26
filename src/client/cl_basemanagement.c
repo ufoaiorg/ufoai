@@ -419,6 +419,16 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	if (building->buildingType == B_WORKSHOP) {
 		PR_UpdateProductionTime(base->idx);
 	}
+	/* Remove aliens if needed. */
+	if (building->buildingType == B_ALIEN_CONTAINMENT) {
+		if (!base->hasAlienCont) {	/* Just clean containment. */
+			AL_FillInContainment(base->idx);
+		} else {	/* Check capacities and remove needed amount. */
+			if (base->capacities[CAP_ALIENS].cur - base->capacities[CAP_ALIENS].max > 0)
+				AL_RemoveAliens(base, NULL, (base->capacities[CAP_ALIENS].cur - base->capacities[CAP_ALIENS].max), AL_RESEARCH);
+		}
+	}
+
 	return qtrue;
 }
 

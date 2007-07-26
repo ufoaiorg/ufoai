@@ -29,15 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_CARGO		32
 #define MAX_ALIENCONT_CAP	32
 
-/** types of aliens */
-typedef enum {
-	AL_ORTNOK,
-	AL_TAMAN,
-	AL_SHEVAAR,
-	AL_BLOODSPIDER,
-	AL_UNKNOWN	/**< dummy, to get all */
-} alienType_t;
-
 /** specializations of aliens */
 /*@todo: this is not used anywhere yet */
 typedef enum {
@@ -78,7 +69,7 @@ void AL_FillInContainment(int baseidx);
 const char *AL_AlienTypeToName(int teamDescIdx);
 void AL_CollectingAliens(void);
 void AL_AddAliens(int baseidx, int airidx);
-void AL_RemoveAliens(const char *name, int amount, alienCalcType_t action);
+void AL_RemoveAliens(struct base_s *base, const char *name, int amount, alienCalcType_t action);
 int AL_GetAlienIdx(const char *id);
 int AL_GetAlienAmount(int idx, requirementType_t reqtype);
 
