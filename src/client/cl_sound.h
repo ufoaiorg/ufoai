@@ -62,9 +62,6 @@ void S_BeginRegistration(void);
 struct sfx_s *S_RegisterSound(const char *sample);
 void S_EndRegistration(void);
 
-/* the sound code makes callbacks to the client for entity position */
-/* information, so entities can be dynamically re-spatialized */
-void CL_GetEntitySoundOrigin(int ent, vec3_t org);
 
 #ifdef HAVE_OPENAL
 	#ifndef DEDICATED_ONLY
