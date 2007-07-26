@@ -245,7 +245,7 @@ qboolean S_OGG_Open (const char *filename)
 			Com_DPrintf("S_OGG_Open: Already playing %s\n", filename);
 			return qtrue;
 		} else {
-			if (snd_fadingenable->value) {
+			if (snd_fadingenable->integer) {
 				Q_strncpyz(music.newFilename, filename, sizeof(music.newFilename));
 				return qtrue;
 			} else
@@ -337,7 +337,7 @@ int S_OGG_Read (void)
 		music.fading -= snd_fadingspeed->value;
 
 #ifdef HAVE_OPENAL
-	SND_OAL_Stream(music.ovPlaying);
+	SND_OAL_Stream(&music);
 #endif
 
 	/* end of file? */

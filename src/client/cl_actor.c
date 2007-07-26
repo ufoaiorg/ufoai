@@ -2573,9 +2573,10 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 
 	/* start the sound */
 	if ((!fd->soundOnce || firstShot) && fd->fireSound[0]
-		&& !(flags & SF_BOUNCED))
-		/* FIXME: use S_StartSound */
-		S_StartLocalSound(fd->fireSound);
+		&& !(flags & SF_BOUNCED)) {
+		sfx_t *sfx = S_RegisterSound(fd->fireSound);
+		S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_ACTOR, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
+	}
 	firstShot = qfalse;
 
 	if (fd->irgoggles)
@@ -3949,9 +3950,8 @@ void CL_PlayActorSound (le_t* le, actorSound_t soundType)
 	Com_DPrintf("CL_PlayActorSound()... actorSound: %s\n", actorSound);
 	if (actorSound) {
 		sfx = S_RegisterSound(actorSound);
-		if (sfx)
-			S_StartSound(NULL, le->entnum, SOUND_CHANNEL_ACTOR, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
+		S_StartSound(NULL, le->entnum, SOUND_CHANNEL_ACTOR, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
 	} else
 		Com_Printf("CL_PlayActorSound()... could not start sound for category: %i gender: %i soundType: %i\n",
-		category, gender, soundType);
+			category, gender, soundType);
 }

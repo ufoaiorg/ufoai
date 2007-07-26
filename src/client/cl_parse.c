@@ -555,7 +555,6 @@ static void CL_ParseStartBreakSoundPacket (struct dbuffer *msg)
 	}
 
 	sfx = S_RegisterSound(sound);
-
 	S_StartSound(pos, ent, channel, sfx, volume, attenuation, ofs);
 }
 

@@ -50,22 +50,6 @@ qboolean QAL_Init (void)
 		}
 	}
 
-	if ((oalState.hInstALUT = dlopen(AL_DRIVER_ALUT, RTLD_LAZY|RTLD_GLOBAL)) == 0) {
-		/* try path given via cvar */
-		if (strlen(s_libdir->string))
-			Q_strncpyz(libPath, s_libdir->string, sizeof(libPath));
-		else
-			strcpy(libPath, ".");
-
-		Q_strcat(libPath, "/", sizeof(libPath));
-		Q_strcat(libPath, AL_DRIVER_ALUT, sizeof(libPath));
-
-		if ((oalState.hInstOpenAL = dlopen(libPath, RTLD_LAZY)) == 0) {
-			Com_Printf("%s\n", dlerror());
-			return qfalse;
-		}
-	}
-
 	if (QAL_Link()) {
 		openal_active = qtrue;
 		return qtrue;

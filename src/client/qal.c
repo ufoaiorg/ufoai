@@ -102,23 +102,6 @@ ALvoid			(ALAPIENTRY * qalSourceStop)(ALuint source);
 ALvoid			(ALAPIENTRY * qalSourceStopv)(ALsizei n, ALuint *sources);
 ALvoid			(ALAPIENTRY * qalSourceUnqueueBuffers)(ALuint source, ALsizei n, ALuint *buffers);
 
-/* alut */
-ALboolean		(ALAPIENTRY * qalutInit)(int *argcp, char **argv);
-ALboolean		(ALAPIENTRY * qalutInitWithoutContext)(int *argcp, char **argv);
-ALboolean		(ALAPIENTRY * qalutExit)(void);
-ALenum			(ALAPIENTRY * qalutGetError)(void);
-const char *	(ALAPIENTRY * qalutGetErrorString)(ALenum error);
-ALuint			(ALAPIENTRY * qalutCreateBufferFromFile)(const char *fileName);
-ALuint			(ALAPIENTRY * qalutCreateBufferFromFileImage)(const ALvoid *data, ALsizei length);
-ALvoid *		(ALAPIENTRY * qalutLoadMemoryFromFile)(const char *fileName, ALenum *format, ALsizei *size, ALfloat *frequency);
-ALvoid *		(ALAPIENTRY * qalutLoadMemoryFromFileImage)(const ALvoid *data, ALsizei length, ALenum *format, ALsizei *size, ALfloat *frequency);
-const char *	(ALAPIENTRY * qalutGetMIMETypes)(ALenum loader);
-ALuint			(ALAPIENTRY * qalutCreateBufferHelloWorld)(void);
-ALuint			(ALAPIENTRY * qalutCreateBufferWaveform)(ALenum waveshape, ALfloat frequency, ALfloat phase, ALfloat duration);
-ALint			(ALAPIENTRY * qalutGetMajorVersion)(void);
-ALint			(ALAPIENTRY * qalutGetMinorVersion)(void);
-ALboolean		(ALAPIENTRY * qalutSleep)(ALfloat duration);
-
 static qboolean alinit_fail = qfalse;
 
 /**
@@ -129,22 +112,6 @@ static void *GPAT (char *str)
 	void *rv;
 
 	rv = GPA(str);
-	if (!rv) {
-		Com_Printf("Can't load symbol %s\n", str);
-		alinit_fail = qtrue;
-		return NULL;
-	}
-	return rv;
-}
-
-/**
- * @brief Loads symbols from alut lib
- */
-static void *GPAT2 (char *str)
-{
-	void *rv;
-
-	rv = GPA2(str);
 	if (!rv) {
 		Com_Printf("Can't load symbol %s\n", str);
 		alinit_fail = qtrue;
@@ -235,23 +202,6 @@ void QAL_Unlink (void)
 	qalSourceStop				= NULL;
 	qalSourceStopv				= NULL;
 	qalSourceUnqueueBuffers		= NULL;
-
-	/* alut */
-	qalutInit						= NULL;
-	qalutInitWithoutContext			= NULL;
-	qalutExit						= NULL;
-	qalutGetError					= NULL;
-	qalutGetErrorString				= NULL;
-	qalutCreateBufferFromFile		= NULL;
-	qalutCreateBufferFromFileImage	= NULL;
-	qalutLoadMemoryFromFile			= NULL;
-	qalutLoadMemoryFromFileImage	= NULL;
-	qalutGetMIMETypes				= NULL;
-	qalutCreateBufferHelloWorld		= NULL;
-	qalutCreateBufferWaveform		= NULL;
-	qalutGetMajorVersion			= NULL;
-	qalutGetMinorVersion			= NULL;
-	qalutSleep						= NULL;
 }
 
 /**
@@ -335,23 +285,6 @@ qboolean QAL_Link(void)
 	qalSourceStop				= GPAT("alSourceStop");
 	qalSourceStopv				= GPAT("alSourceStopv");
 	qalSourceUnqueueBuffers		= GPAT("alSourceUnqueueBuffers");
-
-	/* alut */
-	qalutInit						= GPAT2("alutInit");
-	qalutInitWithoutContext			= GPAT2("alutInitWithoutContext");
-	qalutExit						= GPAT2("alutExit");
-	qalutGetError					= GPAT2("alutGetError");
-	qalutGetErrorString				= GPAT2("alutGetErrorString");
-	qalutCreateBufferFromFile		= GPAT2("alutCreateBufferFromFile");
-	qalutCreateBufferFromFileImage	= GPAT2("alutCreateBufferFromFileImage");
-	qalutLoadMemoryFromFile			= GPAT2("alutLoadMemoryFromFile");
-	qalutLoadMemoryFromFileImage	= GPAT2("alutLoadMemoryFromFileImage");
-	qalutGetMIMETypes				= GPAT2("alutGetMIMETypes");
-	qalutCreateBufferHelloWorld		= GPAT2("alutCreateBufferHelloWorld");
-	qalutCreateBufferWaveform		= GPAT2("alutCreateBufferWaveform");
-	qalutGetMajorVersion			= GPAT2("alutGetMajorVersion");
-	qalutGetMinorVersion			= GPAT2("alutGetMinorVersion");
-	qalutSleep						= GPAT2("alutSleep");
 
 	if (alinit_fail) {
 		QAL_Shutdown();

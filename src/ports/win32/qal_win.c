@@ -47,11 +47,6 @@ qboolean QAL_Init (void)
 		return qfalse;
 	}
 
-	if ((oalState.hInstALUT = LoadLibrary(AL_DRIVER_ALUT)) == NULL) {
-		Com_Printf("ALUT loading failed\n");
-		return qfalse;
-	}
-
 	if (!QAL_Link())
 		return qfalse;
 

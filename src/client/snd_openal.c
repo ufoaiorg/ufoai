@@ -36,10 +36,9 @@ oalState_t	oalState;
 
 /* currently playing music? */
 static qboolean openal_playing = qfalse;
-static qboolean openal_alut = qfalse;
 
-cvar_t *snd_openal_volume;
-cvar_t *snd_openal_device;
+static cvar_t *snd_openal_volume;
+static cvar_t *snd_openal_device;
 
 /**
  * @brief Init function that should be called after system implementation QAL_Init was called
@@ -66,7 +65,7 @@ qboolean SND_OAL_Init (char* device)
 	Com_Printf("..version: \"%s\"\n", qalGetString(AL_VERSION));
 	Com_Printf("..vendor: \"%s\"\n", qalGetString(AL_VENDOR));
 	Com_Printf("..renderer: \"%s\"\n", qalGetString(AL_RENDERER));
-	Com_Printf("..device: \"%s\"\n", qalcGetString (oalState.device, ALC_DEFAULT_DEVICE_SPECIFIER));
+	Com_Printf("..device: \"%s\"\n", qalcGetString(oalState.device, ALC_DEFAULT_DEVICE_SPECIFIER));
 	Com_Printf("..extensions: %s\n", qalcGetString(oalState.device, ALC_EXTENSIONS));
 
 	if ((oalState.context = qalcCreateContext(oalState.device, NULL)) == NULL) {
@@ -82,12 +81,6 @@ qboolean SND_OAL_Init (char* device)
 	snd_openal_device = Cvar_Get("snd_openal_device", "", CVAR_ARCHIVE, "Device for openAL");
 	snd_openal_volume = Cvar_Get("snd_openal_volume", "", CVAR_ARCHIVE, "Volume for openAL");
 
-	if (qalutInit(0, NULL))
-		openal_alut = qtrue;
-	else
-		Com_Printf("OpenAL utils init failed\n");
-
-
 	return qtrue;
 }
 
@@ -95,26 +88,17 @@ qboolean SND_OAL_Init (char* device)
  * @brief
  * @sa SND_OAL_LoadSound
  */
-static qboolean SND_OAL_LoadFile (char* filename, ALboolean loop)
+static qboolean SND_OAL_LoadFile (sfx_t* sfx, ALboolean loop)
 {
 	ALuint buffer;
 	ALenum error;
-	char* fullpath;
+	sfxcache_t *sc;
 
-	fullpath = filename;
-
-	if (S_OGG_Open(filename)) {
+	sc = S_LoadSound(sfx);
+	if (sc) {
 		qalGenBuffers(1, &buffer);
-		qalBufferData(buffer, music.format, music.ovBuf, sizeof(music.ovBuf), music.rate);
+		qalBufferData(buffer, sc->stereo, sc->data, sc->length, sc->speed);
 		qalSourceQueueBuffers(alSource, 1, &buffer);
-	} else if (qalutCreateBufferFromFile) {
-		/* Create an AL buffer from the given sound file. */
-		buffer = qalutCreateBufferFromFile(fullpath);
-		if (buffer == AL_NONE) {
-			error = qalutGetError();
-			Com_Printf("Error loading file: '%s' reason: '%s'\n", filename, qalutGetErrorString(error));
-			return qfalse;
-		}
 	} else
 		return qfalse;
 
@@ -123,11 +107,7 @@ static qboolean SND_OAL_LoadFile (char* filename, ALboolean loop)
 	qalSourcei(alSource, AL_BUFFER, buffer);
 
 	/* Normally nothing should go wrong above, but one never knows... */
-	error = qalGetError();
-	if (error != ALUT_ERROR_NO_ERROR) {
-		Com_Printf("%s\n", qalGetString (error));
-		return qfalse;
-	}
+	error = qalGetError(); /* FIXME */
 	return qtrue;
 }
 
@@ -135,11 +115,14 @@ static qboolean SND_OAL_LoadFile (char* filename, ALboolean loop)
  * @brief Loads a sound via openAL
  * @sa SND_OAL_LoadFile
  */
-qboolean SND_OAL_LoadSound (char* filename, qboolean looping)
+qboolean SND_OAL_LoadSound (sfx_t* sfx, qboolean looping)
 {
+	if (!sfx)
+		return qfalse;
+
 	/* load our sound */
-	if (!SND_OAL_LoadFile(filename, looping)) {
-		Com_Printf("SND_OAL_LoadSound: %s\n", filename);
+	if (!SND_OAL_LoadFile(sfx, looping)) {
+		Com_Printf("SND_OAL_LoadSound: %s\n", sfx->name);
 		return qfalse;
 	}
 
@@ -160,13 +143,10 @@ qboolean SND_OAL_LoadSound (char* filename, qboolean looping)
  * @brief
  * @param[in] filename
  */
-qboolean SND_OAL_Stream (char* filename)
+qboolean SND_OAL_Stream (const music_t* music)
 {
 	if (!openal_active)
 		return qfalse;
-
-	if (!openal_playing)
-		SND_OAL_LoadSound(filename, qtrue);
 
 	if (!openal_playing)
 		return qfalse;
@@ -218,8 +198,8 @@ void SND_OAL_DestroySound (void)
 	if (!openal_active)
 		return;
 
-	qalDeleteSources(1,&alSource);
-	qalDeleteBuffers(1,&alSampleSet);
+	qalDeleteSources(1, &alSource);
+	qalDeleteBuffers(1, &alSampleSet);
 }
 
 #endif /* HAVE_OPENAL */

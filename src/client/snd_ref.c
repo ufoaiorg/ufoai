@@ -358,8 +358,11 @@ void S_Init (void)
 		/* bindings */
 		QAL_Init();
 		/* client side init */
-		SND_OAL_Init(NULL);
+		if (!SND_OAL_Init(NULL)) {
+			Cvar_SetValue("snd_openal", 0);
+		}
 #else
+		Cvar_SetValue("snd_openal", 0);
 		Com_Printf("No OpenAL support compiled into this binary\n");
 #endif
 	}
@@ -762,6 +765,7 @@ Start a sound effect
  * @param[in] fvol The volume of the sound
  * @param[in] attenuation the reduction in amplitude and intensity of a signal
  * @param[in] timeofs
+ * @sa S_StartLocalSound
  */
 void S_StartSound (vec3_t origin, int entnum, int entchannel, sfx_t * sfx, float fvol, float attenuation, float timeofs)
 {
@@ -827,6 +831,7 @@ void S_StartSound (vec3_t origin, int entnum, int entchannel, sfx_t * sfx, float
 
 /**
  * @brief
+ * @sa S_StartSound
  */
 void S_StartLocalSound (const char *sound)
 {
@@ -1348,7 +1353,8 @@ void S_ResampleSfx (sfx_t * sfx, int inrate, int inwidth, byte * data)
 
 /**
  * @brief
- * @sa S_L
+ * @sa S_OGG_LoadSFX
+ * @sa S_Wave_LoadSFX
  */
 sfxcache_t *S_LoadSound (sfx_t *s)
 {

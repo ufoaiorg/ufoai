@@ -437,8 +437,7 @@ static void CL_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
 	}
 	if (t->footStepSound) {
 		sfx = S_RegisterSound(t->footStepSound);
-		if (sfx)
-			S_StartSound(origin, le->entnum, entchannel, sfx, t->footStepVolume, t->footStepAttenuation, 0);
+		S_StartSound(origin, le->entnum, entchannel, sfx, t->footStepVolume, t->footStepAttenuation, 0);
 	}
 }
 
@@ -621,8 +620,8 @@ static void LET_Projectile (le_t * le)
 			VecToAngles(bytedirs[le->state], le->ptl->angles);
 		}
 		if (le->ref2 && le->ref2[0]) {
-			/* FIXME: use S_StartSound */
-			S_StartLocalSound(le->ref2);
+			sfx_t *sfx = S_RegisterSound(le->ref2);
+			S_StartSound(NULL, le->entnum, SOUND_CHANNEL_OVERRIDE, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
 		}
 	}
 }
@@ -661,6 +660,7 @@ void LE_AddProjectile (fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, 
 	if (!fd->speed) {
 		/* infinite speed projectile */
 		ptl_t *ptl;
+		sfx_t *sfx;
 
 		le->inuse = qfalse;
 		le->ptl->size[0] = dist;
@@ -668,15 +668,17 @@ void LE_AddProjectile (fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, 
 		if (flags & (SF_IMPACT | SF_BODY) || (fd->splrad && !fd->bounce)) {
 			ptl = NULL;
 			if (flags & SF_BODY) {
-				if (fd->hitBodySound[0])
-					/* FIXME: use S_StartSound */
-					S_StartLocalSound(fd->hitBodySound);
+				if (fd->hitBodySound[0]) {
+					sfx = S_RegisterSound(fd->hitBodySound);
+					S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_ACTOR, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
+				}
 				if (fd->hitBody[0])
 					ptl = CL_ParticleSpawn(fd->hitBody, 0, impact, bytedirs[normal], NULL);
 			} else {
-				if (fd->impactSound[0])
-					/* FIXME: use S_StartSound */
-					S_StartLocalSound(fd->impactSound);
+				if (fd->impactSound[0]) {
+					sfx = S_RegisterSound(fd->impactSound);
+					S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_ACTOR, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
+				}
 				if (fd->impact[0])
 					ptl = CL_ParticleSpawn(fd->impact, 0, impact, bytedirs[normal], NULL);
 			}
