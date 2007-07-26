@@ -196,8 +196,10 @@ static void AIRFIGHT_MissTarget (int idx)
 	if (oldTarget) {
 		VectorSet(projectile->idleTarget, oldTarget->pos[0] + 10 * frand() - 5, oldTarget->pos[1] + 10 * frand() - 5, 0);
 		projectile->aimedAircraft = NULL;
-	} else
+	} else {
 		VectorSet(projectile->idleTarget, projectile->idleTarget[0] + 10 * frand() - 5, projectile->idleTarget[1] + 10 * frand() - 5, 0);
+		projectile->aimedBaseIdx = -1;
+	}
 }
 
 /**
