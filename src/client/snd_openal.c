@@ -252,6 +252,106 @@ qboolean SND_OAL_LoadSound (sfx_t* sfx, qboolean looping)
 
 /**
  * @brief
+ * @sa SND_OAL_Stream
+ */
+static qboolean SND_OAL_ReadOGG (music_t* music, ALuint buffer)
+{
+	char pcm[OAL_OGG_BUFFER_SIZE];
+	int  size = 0, result;
+
+	while (size < OAL_OGG_BUFFER_SIZE) {
+		result = ov_read(&music->ovFile, pcm + size, OAL_OGG_BUFFER_SIZE - size, 0, 2, 1, &music->ovSection);
+
+		if (result > 0)
+			size += result;
+		else {
+			if (result < 0)
+				return qfalse;
+			else {
+				if (snd_music_loop->integer)
+					ov_raw_seek(&music->ovFile, 0);
+				else
+					S_OGG_Stop();
+				break;
+			}
+		}
+	}
+
+	if (size == 0)
+		return qfalse;
+
+	qalBufferData(buffer, music->format, pcm, size, music->ovInfo->rate);
+	SND_OAL_Error();
+
+	return qtrue;
+}
+
+/**
+ * @brief
+ */
+static qboolean SND_OAL_StreamPlaying (music_t *music)
+{
+	ALenum state;
+	qalGetSourcei(music->source, AL_SOURCE_STATE, &state);
+	return (state == AL_PLAYING);
+}
+
+/**
+ * @brief Stream the background music via openAL
+ * @param[in] music
+ * @sa S_OGG_Stop
+ */
+static qboolean SND_OAL_StreamPlayback (music_t* music)
+{
+	if (SND_OAL_StreamPlaying(music))
+		return qtrue;
+
+	if(!SND_OAL_ReadOGG(music, music->buffers[0]))
+		return qfalse;
+
+	if(!SND_OAL_ReadOGG(music, music->buffers[1]))
+		return qfalse;
+
+	qalSourceQueueBuffers(music->source, 2, music->buffers);
+	qalSourcePlay(music->source);
+
+	return qtrue;
+}
+
+/**
+ * @brief Stream the background music via openAL
+ * @param[in] music
+ * @sa S_OGG_Stop
+ */
+qboolean SND_OAL_Stream (music_t* music)
+{
+	int processed;
+	qboolean active = qtrue;
+
+	qalGetSourcei(music->source, AL_BUFFERS_PROCESSED, &processed);
+
+	while (processed--) {
+		ALuint buffer;
+
+		qalSourceUnqueueBuffers(music->source, 1, &buffer);
+		SND_OAL_Error();
+
+		active = SND_OAL_ReadOGG(music, buffer);
+
+		qalSourceQueueBuffers(music->source, 1, &buffer);
+		SND_OAL_Error();
+	}
+
+	if (active && SND_OAL_StreamPlaying(music))
+		SND_OAL_StreamPlayback(music);
+
+	return active;
+}
+
+
+/**
+ * @brief
+ * @sa SND_OAL_Stream
  */
 void SND_OAL_StartStream (music_t* music)
 {
@@ -271,44 +371,8 @@ void SND_OAL_StartStream (music_t* music)
 	qalSourcef(music->source, AL_ROLLOFF_FACTOR, 0.0);
 	qalSourcei(music->source, AL_SOURCE_RELATIVE, AL_TRUE);
 	SND_OAL_Error();
-}
 
-/**
- * @brief Stream the background music via openAL
- * @param[in] music
- * @sa S_OGG_Stop
- */
-qboolean SND_OAL_Stream (music_t* music, int size)
-{
-	ALenum state;
-	int processed;
-
-    if (!openal_active || size <= 0)
-		return qfalse;
-
-	qalGetSourcei(music->source, AL_SOURCE_STATE, &state);
-
-	if (state != AL_PLAYING) {
-		alGetSourcei(music->source, AL_BUFFERS_PROCESSED, &processed);
-
-		while (processed--) {
-			ALuint buffer;
-
-			qalSourceUnqueueBuffers(music->source, 1, &buffer);
-			SND_OAL_Error();
-
-			qalBufferData(buffer, music->format, music->ovBuf, sizeof(music->ovBuf), music->ovInfo->rate);
-			SND_OAL_Error();
-
-			qalSourceQueueBuffers(music->source, 1, &buffer);
-			SND_OAL_Error();
-		}
-		qalSourceQueueBuffers(music->source, 2, music->buffers);
-		SND_OAL_Error();
-		qalSourcePlay(music->source);
-		SND_OAL_Error();
-	}
-	return qtrue;
+	SND_OAL_StreamPlayback(music);
 }
 
 /**

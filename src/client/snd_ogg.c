@@ -334,12 +334,7 @@ int S_OGG_Read (void)
 		res = 0;
 	}
 
-#ifdef HAVE_OPENAL
-	if (snd_openal->integer) {
-		SND_OAL_Stream(&music, res);
-	} else
-#endif
-		S_RawSamples(res >> 2, music.ovInfo->rate, 2, 2, (byte *) music.ovBuf, music.fading);
+	S_RawSamples(res >> 2, music.ovInfo->rate, 2, 2, (byte *) music.ovBuf, music.fading);
 
 	if (*music.newFilename)
 		music.fading -= snd_fadingspeed->value;

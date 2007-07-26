@@ -1234,8 +1234,11 @@ void S_Update (vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 	if (!snd_openal->integer) {
 		while (music.ovPlaying[0] && paintedtime + MAX_RAW_SAMPLES - 2048 > s_rawend)
 			S_OGG_Read();
-	} else if (music.ovPlaying[0])
-		S_OGG_Read();
+	} else {
+#ifdef HAVE_OPENAL
+		SND_OAL_Stream(&music);
+#endif
+	}
 }
 
 /*

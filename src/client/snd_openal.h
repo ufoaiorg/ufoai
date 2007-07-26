@@ -30,6 +30,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "snd_loc.h"
 
+#define OAL_OGG_BUFFER_SIZE (4096 * 4)
+
+
 extern cvar_t* snd_openal;
 
 qboolean SND_OAL_Init(char* device);
@@ -39,7 +42,7 @@ void SND_OAL_UpdateListeners(vec3_t listener_origin);
 void SND_OAL_StopSound(void);
 void SND_OAL_DestroySound(void);
 void SND_OAL_StartStream(music_t* music);
-qboolean SND_OAL_Stream(music_t* music, int size);
+qboolean SND_OAL_Stream(music_t* music);
 void SND_OAL_Shutdown(void);
 
 #endif /* SND_OPENAL_H */
