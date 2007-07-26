@@ -8097,7 +8097,7 @@ else
 	{ echo "$as_me:$LINENO: Without OpenAL" >&5
 echo "$as_me: Without OpenAL" >&6;}
 fi
-CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+#CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check for libogg
@@ -10052,7 +10052,7 @@ else
 	{ echo "$as_me:$LINENO: Without GLX" >&5
 echo "$as_me: Without GLX" >&6;}
 fi
-REF_GLX_LIBS="$REF_GLX_LIBS $LIBS"
+#REF_GLX_LIBS="$REF_GLX_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check for opengl headers

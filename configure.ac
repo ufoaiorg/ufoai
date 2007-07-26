@@ -518,7 +518,7 @@ then
 else
 	AC_MSG_NOTICE([Without OpenAL])
 fi
-CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+#CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check for libogg
@@ -783,7 +783,7 @@ then
 else
 	AC_MSG_NOTICE([Without GLX])
 fi
-REF_GLX_LIBS="$REF_GLX_LIBS $LIBS"
+#REF_GLX_LIBS="$REF_GLX_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check for opengl headers
