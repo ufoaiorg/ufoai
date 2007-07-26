@@ -35,9 +35,6 @@ static unsigned int snd_openal_numChannels;
 
 ALuint sourceNames[MAX_CHANNELS + 1];
 
-/* currently playing music? */
-static qboolean openal_playing = qfalse;
-
 static cvar_t *snd_openal_volume;
 static cvar_t *snd_openal_device;
 static cvar_t *snd_openal_channels;
@@ -256,11 +253,8 @@ qboolean SND_OAL_LoadSound (sfx_t* sfx, qboolean looping)
 /**
  * @brief
  */
-static qboolean SND_OAL_PrepareStream (music_t* music)
+void SND_OAL_StartStream (music_t* music)
 {
-	if (openal_playing || !music->ovInfo)
-		return qfalse;
-
 	if (music->ovInfo->channels == 1)
 		music->format = AL_FORMAT_MONO16;
 	else
@@ -277,9 +271,6 @@ static qboolean SND_OAL_PrepareStream (music_t* music)
 	qalSourcef(music->source, AL_ROLLOFF_FACTOR, 0.0);
 	qalSourcei(music->source, AL_SOURCE_RELATIVE, AL_TRUE);
 	SND_OAL_Error();
-
-	openal_playing = qtrue;
-	return qtrue;
 }
 
 /**
@@ -287,33 +278,33 @@ static qboolean SND_OAL_PrepareStream (music_t* music)
  * @param[in] music
  * @sa S_OGG_Stop
  */
-qboolean SND_OAL_Stream (music_t* music)
+qboolean SND_OAL_Stream (music_t* music, int size)
 {
-	if (!openal_active)
+	ALenum state;
+	int processed;
+
+    if (!openal_active || size <= 0)
 		return qfalse;
 
-	if (openal_playing) {
-		qalBufferData(music->buffers[0], music->format, music->ovBuf, sizeof(music->ovBuf), music->ovInfo->rate);
-		SND_OAL_Error();
-		qalBufferData(music->buffers[1], music->format, music->ovBuf, sizeof(music->ovBuf), music->ovInfo->rate);
-		SND_OAL_Error();
-	} else {
-		/* no longer playing */
-		if (!music->ovInfo) {
-			openal_playing = qfalse;
-			qalSourceStop(music->source);
-			SND_OAL_Error();
-			qalDeleteSources(1, &music->source);
-			SND_OAL_Error();
-			qalDeleteBuffers(2, music->buffers);
-			SND_OAL_Error();
-			return qfalse;
-		} else if (!SND_OAL_PrepareStream(music)) {
-			return qfalse;
-		}
+	qalGetSourcei(music->source, AL_SOURCE_STATE, &state);
 
-		/*qalSourceQueueBuffers(music->source, 2, music->buffers);*/
-		qalSourcei(music->source, AL_BUFFER, music->buffers[0]);
+	if (state != AL_PLAYING) {
+		alGetSourcei(music->source, AL_BUFFERS_PROCESSED, &processed);
+
+		while (processed--) {
+			ALuint buffer;
+
+			qalSourceUnqueueBuffers(music->source, 1, &buffer);
+			SND_OAL_Error();
+
+			qalBufferData(buffer, music->format, music->ovBuf, sizeof(music->ovBuf), music->ovInfo->rate);
+			SND_OAL_Error();
+
+			qalSourceQueueBuffers(music->source, 1, &buffer);
+			SND_OAL_Error();
+		}
+		qalSourceQueueBuffers(music->source, 2, music->buffers);
+		SND_OAL_Error();
 		qalSourcePlay(music->source);
 		SND_OAL_Error();
 	}

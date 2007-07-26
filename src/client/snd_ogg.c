@@ -276,6 +276,9 @@ qboolean S_OGG_Open (const char *filename)
 	Com_Printf("Playing '%s'\n", filename);
 	Q_strncpyz(music.ovPlaying, filename, sizeof(music.ovPlaying));
 	music.ovSection = 0;
+#ifdef HAVE_OPENAL
+	SND_OAL_StartStream(&music);
+#endif
 	return qtrue;
 }
 
@@ -333,7 +336,7 @@ int S_OGG_Read (void)
 
 #ifdef HAVE_OPENAL
 	if (snd_openal->integer) {
-		SND_OAL_Stream(&music);
+		SND_OAL_Stream(&music, res);
 	} else
 #endif
 		S_RawSamples(res >> 2, music.ovInfo->rate, 2, 2, (byte *) music.ovBuf, music.fading);

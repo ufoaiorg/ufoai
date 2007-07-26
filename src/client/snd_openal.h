@@ -38,7 +38,8 @@ void SND_OAL_PlaySound(sfx_t *sfx, vec3_t origin);
 void SND_OAL_UpdateListeners(vec3_t listener_origin);
 void SND_OAL_StopSound(void);
 void SND_OAL_DestroySound(void);
-qboolean SND_OAL_Stream(music_t* music);
+void SND_OAL_StartStream(music_t* music);
+qboolean SND_OAL_Stream(music_t* music, int size);
 void SND_OAL_Shutdown(void);
 
 #endif /* SND_OPENAL_H */
