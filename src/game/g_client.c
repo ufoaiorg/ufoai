@@ -2184,9 +2184,10 @@ static void G_ClientTeamAssign (player_t * player)
 }
 
 /**
- * @brief
+ * @brief The client lets the server spawn the actors for a given player by sending their information (models, inventory, etc..) over the network.
+ * @param[in] player The player to spawn the actos for.
  * @sa CL_SendTeamInfo
- * @todo: Check size (fieldSize here)
+ * @sa globals.ClientTeamInfo
  */
 void G_ClientTeamInfo (player_t * player)
 {
@@ -2197,17 +2198,20 @@ void G_ClientTeamInfo (player_t * player)
 
 	/* find a team */
 	G_GetTeam(player);
-	length = gi.ReadByte();
 
-	/* find actors */
+	length = gi.ReadByte();	/* Get the length of data that the clients sent. */
+
+	/* Find valid actor spawn fields for this player. */
 	for (j = 0, ent = g_edicts; j < globals.num_edicts; j++, ent++)
 		if ((ent->type == ET_ACTORSPAWN || ent->type == ET_ACTOR2x2SPAWN)
 			&& player->pers.team == ent->team)
 			break;
 
 	for (i = 0; i < length; i++) {
+		/* Search for a spawn point for each entry the client sent */
+
 		if (j < globals.num_edicts && i < maxsoldiersperplayer->integer) {
-			/* here the actors actually spawn */
+			/* Here the client tells the server the information for the spawned actor(s). */
 			level.num_alive[ent->team]++;
 			level.num_spawned[ent->team]++;
 			ent->pnum = player->num;
@@ -2312,7 +2316,7 @@ void G_ClientTeamInfo (player_t * player)
 				gi.ReadByte(); /* inventory */
 		}
 
-		/* find actors */
+		/* Find valid actor spawn fields for this player. */
 		for (; j < globals.num_edicts; j++, ent++)
 			if ((ent->type == ET_ACTORSPAWN || ent->type == ET_ACTOR2x2SPAWN)
 			&& player->pers.team == ent->team)
