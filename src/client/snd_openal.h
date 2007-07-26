@@ -36,5 +36,11 @@ void SND_OAL_PlaySound(void);
 void SND_OAL_StopSound(void);
 void SND_OAL_DestroySound(void);
 qboolean SND_OAL_Stream(const music_t* music);
+void SND_OAL_Shutdown(void);
+
+void SND_OAL_Painting(void);
+void SND_OAL_Submit(void);
+int SND_OAL_GetDMAPos(void);
+void SND_OAL_BeginPainting(void);
 
 #endif /* SND_OPENAL_H */

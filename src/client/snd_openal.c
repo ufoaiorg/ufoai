@@ -41,6 +41,47 @@ static cvar_t *snd_openal_volume;
 static cvar_t *snd_openal_device;
 
 /**
+ * @brief Shutdown function
+ */
+void SND_OAL_Shutdown (void)
+{
+
+}
+
+/**
+ * @brief
+ */
+void SND_OAL_Painting (void)
+{
+
+}
+
+/**
+ * @brief
+ */
+void SND_OAL_Submit (void)
+{
+
+}
+
+/**
+ * @brief
+ */
+int SND_OAL_GetDMAPos (void)
+{
+	return 0;
+}
+
+/**
+ * @brief
+ */
+void SND_OAL_BeginPainting (void)
+{
+
+}
+
+
+/**
  * @brief Init function that should be called after system implementation QAL_Init was called
  * @sa QAL_Init
  */

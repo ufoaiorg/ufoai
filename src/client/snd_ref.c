@@ -280,17 +280,32 @@ void S_Init (void)
 	snd_mixahead = Cvar_Get("snd_mixahead", "0.2", CVAR_ARCHIVE, NULL);
 	snd_show = Cvar_Get("snd_show", "0", 0, NULL);
 	snd_testsound = Cvar_Get("snd_testsound", "0", 0, NULL);
+	/* @todo: make openal the default when it is working (i.e. change 0 below to a 1) */
+	snd_openal = Cvar_Get("snd_openal", "0", CVAR_ARCHIVE, "use OpenAL");
+	snd_ref = Cvar_Get("snd_ref", "sdl", CVAR_ARCHIVE, "Sound renderer libary name - default is sdl");
+	/* don't restart right again */
+	snd_ref->modified = qfalse;
 
 	S_OGG_Init();
 
-	{
-		char lib[MAX_OSPATH];
 
-		/* @todo: make openal the default when it is working (i.e. change 0 below to a 1) */
-		snd_openal = Cvar_Get("snd_openal", "0", CVAR_ARCHIVE, "use OpenAL");
-		snd_ref = Cvar_Get("snd_ref", "sdl", CVAR_ARCHIVE, "Sound renderer libary name - default is sdl");
-		/* don't restart right again */
-		snd_ref->modified = qfalse;
+	/* FIXME: Error checking/wrong place here */
+	if (snd_openal->integer) {
+#ifdef HAVE_OPENAL
+		/* bindings */
+		QAL_Init();
+		/* client side init */
+		if (!SND_OAL_Init(NULL)) {
+			Cvar_SetValue("snd_openal", 0);
+		}
+#else
+		Cvar_SetValue("snd_openal", 0);
+		Com_Printf("No OpenAL support compiled into this binary\n");
+#endif
+	}
+
+	if (!snd_openal->integer) {
+		char lib[MAX_OSPATH];
 
 		Com_Printf("Loading snd_%s sound driver\n", snd_ref->string);
 		Com_sprintf(lib, sizeof(lib), "snd_%s", snd_ref->string);
@@ -314,28 +329,28 @@ void S_Init (void)
 			Com_Error(ERR_FATAL, "Sys_GetProcAddress failed loading SND_Activate\n");
 
 		snd_ref_active = qtrue;
-	}
 
-	si.dma = &dma;
-	si.bits = Cvar_Get("snd_bits", "16", CVAR_ARCHIVE, "Sound bits");
-	si.channels = Cvar_Get("snd_channels", "2", CVAR_ARCHIVE, "Sound channels");
-	si.device = Cvar_Get("snd_device", "default", CVAR_ARCHIVE, "Default sound device");
-	si.khz = snd_khz;
-	si.Cvar_Get = Cvar_Get;
-	si.Cvar_Set = Cvar_Set;
-	si.Com_Printf = Com_Printf;
-	si.Com_DPrintf = Com_DPrintf;
-	si.S_PaintChannels = S_PaintChannels;
-	si.paintedtime = &paintedtime;
+		si.dma = &dma;
+		si.bits = Cvar_Get("snd_bits", "16", CVAR_ARCHIVE, "Sound bits");
+		si.channels = Cvar_Get("snd_channels", "2", CVAR_ARCHIVE, "Sound channels");
+		si.device = Cvar_Get("snd_device", "default", CVAR_ARCHIVE, "Default sound device");
+		si.khz = snd_khz;
+		si.Cvar_Get = Cvar_Get;
+		si.Cvar_Set = Cvar_Set;
+		si.Com_Printf = Com_Printf;
+		si.Com_DPrintf = Com_DPrintf;
+		si.S_PaintChannels = S_PaintChannels;
+		si.paintedtime = &paintedtime;
 #ifdef _WIN32
-	si.cl_hwnd = cl_hwnd;
+		si.cl_hwnd = cl_hwnd;
 #endif
 
-	if (!SND_Init(&si)) {
-		Com_Printf("SND_Init failed\n");
-		S_FreeLibs();
-		sound_started = 0;
-		return;
+		if (!SND_Init(&si)) {
+			Com_Printf("SND_Init failed\n");
+			S_FreeLibs();
+			sound_started = 0;
+			return;
+		}
 	}
 
 	for (commands = r_commands; commands->name; commands++)
@@ -351,21 +366,6 @@ void S_Init (void)
 	paintedtime = 0;
 
 	Com_Printf("sound sampling rate: %i\n", dma.speed);
-
-	/* FIXME: Error checking/wrong place here */
-	if (snd_openal->integer) {
-#ifdef HAVE_OPENAL
-		/* bindings */
-		QAL_Init();
-		/* client side init */
-		if (!SND_OAL_Init(NULL)) {
-			Cvar_SetValue("snd_openal", 0);
-		}
-#else
-		Cvar_SetValue("snd_openal", 0);
-		Com_Printf("No OpenAL support compiled into this binary\n");
-#endif
-	}
 
 	S_StopAllSounds();
 
@@ -399,7 +399,10 @@ void S_Shutdown (void)
 	if (!sound_started)
 		return;
 
-	SND_Shutdown();
+	if (snd_openal->integer) {
+		SND_OAL_Shutdown();
+	} else
+		SND_Shutdown();
 	S_OGG_Stop();
 	S_OGG_Shutdown();
 
@@ -868,10 +871,18 @@ void S_ClearBuffer (void)
 	else
 		clear = 0;
 
-	SND_BeginPainting();
+	if (snd_openal->integer) {
+		SND_OAL_Painting();
+	} else
+		SND_BeginPainting();
+
 	if (dma.buffer)
 		memset(dma.buffer, clear, dma.samples * dma.samplebits / 8);
-	SND_Submit();
+
+	if (snd_openal->integer) {
+		SND_OAL_Submit();
+	} else
+		SND_Submit();
 }
 
 /**
@@ -1167,7 +1178,10 @@ static void GetSoundtime (void)
 
 	/* it is possible to miscount buffers if it has wrapped twice between */
 	/* calls to S_Update.  Oh well. */
-	samplepos = SND_GetDMAPos();
+	if (snd_openal->integer) {
+		samplepos = SND_OAL_GetDMAPos();
+	} else
+		samplepos = SND_GetDMAPos();
 
 	if (samplepos < oldsamplepos) {
 		buffers++;				/* buffer wrapped */
@@ -1194,7 +1208,10 @@ void S_Update_ (void)
 	if (!sound_started)
 		return;
 
-	SND_BeginPainting();
+	if (snd_openal->integer) {
+		SND_OAL_BeginPainting();
+	} else
+		SND_BeginPainting();
 
 	if (!dma.buffer)
 		return;
@@ -1221,7 +1238,10 @@ void S_Update_ (void)
 
 	S_PaintChannels(endtime);
 
-	SND_Submit();
+	if (snd_openal->integer) {
+		SND_OAL_Submit();
+	} else
+		SND_Submit();
 }
 
 /*
