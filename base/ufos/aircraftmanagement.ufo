@@ -588,7 +588,7 @@ craftitem base_weapon_tr20
 	type		base_missile
 	tech		rs_craft_weapon_tr20
 	weight		medium
-	installationTime	2
+	installationTime	48
 	price		19998
 
 	speed		.9

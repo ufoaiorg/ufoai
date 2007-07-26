@@ -97,7 +97,7 @@ building building_missile
 	fixcosts	36000
 	depends		building_entrance // storage base needs just entrance
 	type		missile
-	build_time	4
+	build_time	1
 	varcosts	200
 	map_name	"missile"
 	pedia		rs_building_missile
