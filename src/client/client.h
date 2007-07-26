@@ -269,7 +269,6 @@ extern cvar_t *cl_isometric;
 extern cvar_t *cl_stereo_separation;
 extern cvar_t *cl_stereo;
 extern cvar_t *cl_aviForceDemo;
-extern cvar_t *cl_aviFrameRate;
 extern cvar_t *cl_aviMotionJpeg;
 extern cvar_t *cl_particleWeather;
 extern cvar_t *cl_markactors;

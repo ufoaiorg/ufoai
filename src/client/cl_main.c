@@ -51,8 +51,8 @@ cvar_t *cl_show_tooltips;
 cvar_t *cl_show_cursor_tooltips;
 
 cvar_t *cl_aviForceDemo;
-cvar_t *cl_aviFrameRate;
 cvar_t *cl_aviMotionJpeg;
+cvar_t *cl_avifreq;
 
 cvar_t *cl_particleWeather;
 
@@ -2052,7 +2052,6 @@ static void CL_InitLocal (void)
 	cl_precache = Cvar_Get("cl_precache", "1", CVAR_ARCHIVE, "Precache models and menus at startup");
 
 	cl_aviForceDemo = Cvar_Get("cl_aviForceDemo", "1", CVAR_ARCHIVE, "AVI recording - record even if no game is loaded");
-	cl_aviFrameRate = Cvar_Get("cl_aviFrameRate", "25", CVAR_ARCHIVE, "AVI recording - see video command");
 	cl_aviMotionJpeg = Cvar_Get("cl_aviMotionJpeg", "1", CVAR_ARCHIVE, "AVI recording - see video command");
 
 	cl_particleWeather = Cvar_Get("cl_particleweather", "0", CVAR_ARCHIVE | CVAR_LATCH, "Switch the weather particles on or off");
@@ -2323,6 +2322,18 @@ static void CL_CvarCheck (void)
 		Cvar_Set("mn_glmodestr", _("Custom"));
 }
 
+/**
+ * @brief Timer function for avi recording
+ */
+void CL_AVIRecord (int now, void *data)
+{
+	/* if recording an avi, lock to a fixed fps */
+	if (CL_VideoRecording()) {
+		/* save the current screen */
+		if (cls.state == ca_active || cl_aviForceDemo->integer)
+			CL_TakeVideoFrame();
+	}
+}
 
 #define NUM_DELTA_FRAMES	20
 /**
@@ -2383,12 +2394,6 @@ void CL_Frame (int now, void *data)
 		cls.framedelta = 0;
 	}
 
-#if 0
-	/* don't extrapolate too far ahead */
-	if (cls.frametime > (1.0 / 5))
-		cls.frametime = (1.0 / 5);
-#endif
-
 #ifdef HAVE_CURL
 	if (cls.state == ca_connected) {
 		/* we run full speed when connecting */
@@ -2405,15 +2410,6 @@ void CL_Frame (int now, void *data)
 	/* update camera position */
 	CL_CameraMove();
 
-	/* avi recording needs to move out to its own timer */
-#if 0
-	/* if recording an avi, lock to a fixed fps */
-	if (CL_VideoRecording() && refreshDelta < 1000.0 / cl_aviFrameRate->value) {
-		/* save the current screen */
-		if (cls.state == ca_active || cl_aviForceDemo->integer)
-			CL_TakeVideoFrame();
-	}
-#endif
 	/* end the rounds when no soldier is alive */
 	CL_RunMapParticles();
 	CL_ParticleRun();

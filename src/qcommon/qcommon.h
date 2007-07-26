@@ -275,6 +275,7 @@ extern cvar_t *sv_maxclients;
 extern cvar_t *sv_reaction_leftover;
 extern cvar_t *sv_shot_origin;
 extern cvar_t *cl_maxfps;
+extern cvar_t *cl_avifreq;
 extern cvar_t *teamnum;
 extern cvar_t *gametype;
 
@@ -375,6 +376,7 @@ void CL_Init(void);
 void CL_Drop(void);
 void CL_Shutdown(void);
 void CL_Frame(int now, void *);
+void CL_AVIRecord(int now, void *);
 void CL_SlowFrame(int now, void *);
 void CL_ParseClientData(const char *type, const char *name, const char **text);
 void CIN_RunCinematic(int now, void *data);

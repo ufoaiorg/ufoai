@@ -1153,8 +1153,8 @@ qboolean CL_OpenAVIForWriting (const char *fileName)
 	memset(&afd, 0, sizeof(aviFileData_t));
 
 	/* Don't start if a framerate has not been chosen */
-	if (cl_aviFrameRate->integer <= 0) {
-		Com_Printf("cl_aviFrameRate must be >= 1\n");
+	if (cl_avifreq->integer <= 0) {
+		Com_Printf("cl_avifreq must be >= 1\n");
 		return qfalse;
 	}
 
@@ -1173,7 +1173,7 @@ qboolean CL_OpenAVIForWriting (const char *fileName)
 
 	Com_sprintf(afd.fileName, MAX_QPATH, fileName);
 
-	afd.frameRate = cl_aviFrameRate->integer;
+	afd.frameRate = cl_avifreq->integer;
 	afd.framePeriod = (int) (1000000.0f / afd.frameRate);
 	afd.width = viddef.width;
 	afd.height = viddef.height;
@@ -1203,7 +1203,7 @@ qboolean CL_OpenAVIForWriting (const char *fileName)
 		while ((afd.a.rate % suggestRate) && suggestRate >= 1)
 			suggestRate--;
 
-		Com_Printf("WARNING: cl_aviFrameRate is not a divisor of the audio rate, suggest %d\n", suggestRate);
+		Com_Printf("WARNING: cl_avifreq is not a divisor of the audio rate, suggest %d\n", suggestRate);
 	}
 
 	if (!Cvar_VariableInteger("snd_init")) {
