@@ -41,12 +41,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_event.h"
 #include "cl_menu.h"
 #include "cl_save.h"
-#ifdef HAVE_OPENAL
-	#ifndef DEDICATED_ONLY
-		#include "qal.h"
-		#include "snd_openal.h"
-	#endif
-#endif
 
 #ifndef _MSC_VER
 #include <zlib.h>

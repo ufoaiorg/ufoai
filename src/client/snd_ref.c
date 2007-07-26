@@ -1187,6 +1187,10 @@ void S_Update (vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 	VectorCopy(forward, listener_forward);
 	VectorCopy(right, listener_right);
 	VectorCopy(up, listener_up);
+#ifdef HAVE_OPENAL
+	if (snd_openal->integer)
+		SND_OAL_UpdateListeners(listener_origin);
+#endif
 
 	combine = NULL;
 

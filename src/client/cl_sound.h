@@ -65,4 +65,11 @@ void S_EndRegistration(void);
 /* information, so entities can be dynamically re-spatialized */
 void CL_GetEntitySoundOrigin(int ent, vec3_t org);
 
+#ifdef HAVE_OPENAL
+	#ifndef DEDICATED_ONLY
+		#include "qal.h"
+		#include "snd_openal.h"
+	#endif
+#endif
+
 #endif /* CLIENT_SOUND_H */

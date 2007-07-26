@@ -34,7 +34,8 @@ extern cvar_t* snd_openal;
 
 qboolean SND_OAL_Init(char* device);
 qboolean SND_OAL_LoadSound(sfx_t *sfx, qboolean looping);
-void SND_OAL_PlaySound(void);
+void SND_OAL_PlaySound(sfx_t *sfx, vec3_t origin);
+void SND_OAL_UpdateListeners(vec3_t listener_origin);
 void SND_OAL_StopSound(void);
 void SND_OAL_DestroySound(void);
 qboolean SND_OAL_Stream(music_t* music);

@@ -42,9 +42,6 @@ static cvar_t *snd_openal_volume;
 static cvar_t *snd_openal_device;
 static cvar_t *snd_openal_channels;
 
-#define SND_OAL_STREAMING_NUMBUFFERS 4
-ALuint streamingBuffers[SND_OAL_STREAMING_NUMBUFFERS];
-
 #define SND_OAL_Error() SND_OAL_ErrorPrint(__FILE__, __LINE__)
 
 /**
@@ -53,26 +50,26 @@ ALuint streamingBuffers[SND_OAL_STREAMING_NUMBUFFERS];
 static void SND_OAL_ErrorPrint (const char* file, const int line)
 {
 	int err = qalGetError();
-	if (err == ALC_NO_ERROR)
+	if (err == AL_NO_ERROR)
 		return;
 
 	Com_Printf("OpenAL error was raised at %s:%i) ", file, line);
 
 	switch (err) {
-	case ALC_INVALID_DEVICE:
-		Com_Printf("ALC_INVALID_DEVICE");
+	case AL_INVALID_NAME:
+		Com_Printf("AL_INVALID_NAME");
 		break;
-	case ALC_INVALID_CONTEXT:
-		Com_Printf("ALC_INVALID_CONTEXT");
+	case AL_INVALID_ENUM:
+		Com_Printf("AL_INVALID_ENUM");
 		break;
-	case ALC_INVALID_ENUM:
-		Com_Printf("ALC_INVALID_ENUM");
-		break;
-	case ALC_INVALID_VALUE:
+	case AL_INVALID_VALUE:
 		Com_Printf("ALC_INVALID_VALUE");
 		break;
-	case ALC_OUT_OF_MEMORY:
-		Com_Printf("ALC_OUT_OF_MEMORY");
+	case AL_INVALID_OPERATION:
+		Com_Printf("AL_INVALID_OPERATION");
+		break;
+	case AL_OUT_OF_MEMORY:
+		Com_Printf("AL_OUT_OF_MEMORY");
 		break;
 	default:
 		Com_Printf("%i", err);
@@ -196,8 +193,6 @@ qboolean SND_OAL_Init (char* device)
 
 	SND_OAL_AllocateChannels();
 
-	qalGenBuffers(SND_OAL_STREAMING_NUMBUFFERS, streamingBuffers);
-
 	snd_openal_device = Cvar_Get("snd_openal_device", "", CVAR_ARCHIVE, "Device for openAL");
 	snd_openal_volume = Cvar_Get("snd_openal_volume", "", CVAR_ARCHIVE, "Volume for openAL");
 	snd_openal_channels = Cvar_Get("snd_openal_channels", "4", CVAR_ARCHIVE, "openAL channels");
@@ -317,7 +312,8 @@ qboolean SND_OAL_Stream (music_t* music)
 			return qfalse;
 		}
 
-	/*	qalSourceQueueBuffers(music->source, 2, music->buffers);*/
+		/*qalSourceQueueBuffers(music->source, 2, music->buffers);*/
+		qalSourcei(music->source, AL_BUFFER, music->buffers[0]);
 		qalSourcePlay(music->source);
 		SND_OAL_Error();
 	}
@@ -325,14 +321,27 @@ qboolean SND_OAL_Stream (music_t* music)
 }
 
 /**
+ * @brief Updates the listeners position
+ */
+void SND_OAL_UpdateListeners (vec3_t listener_origin)
+{
+	qalListenerfv(AL_POSITION, listener_origin);
+/*	qalListenerfv(AL_VELOCITY, listenerVel);
+	qalListenerfv(AL_ORIENTATION, listenerOri);*/
+}
+
+/**
  * @brief
  */
-void SND_OAL_PlaySound (void)
+void SND_OAL_PlaySound (sfx_t* sfx, vec3_t origin)
 {
 	if (!openal_active)
 		return;
 
-/*	qalSourcePlay(sfx->source);*/
+	qalSourcefv(sfx->source, AL_POSITION, origin);
+	/*qalSourcefv(sfx->source, AL_VELOCITY, sourceVel);
+	qalSourcefv(sfx->source, AL_DIRECTION, sourceOri);*/
+	qalSourcePlay(sfx->source);
 }
 
 /**
