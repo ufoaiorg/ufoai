@@ -155,15 +155,15 @@ typedef enum {
 } imagetype_t;
 
 typedef struct image_s {
-	char name[MAX_QPATH];       /* game path, including extension, must be first */
+	char name[MAX_QPATH];				/**< game path, including extension, must be first */
 	imagetype_t type;
-	int width, height;          /* source image dimensions */
-	int upload_width, upload_height;    /* dimensions after power of two and picmip */
-	int registration_sequence;  /* 0 = free */
-	struct mBspSurface_s *texturechain;    /* for sort-by-texture world drawing */
-	GLuint texnum;                 /* gl texture binding */
+	int width, height;					/**< source image dimensions */
+	int upload_width, upload_height;	/**< dimensions after power of two and picmip */
+	int registration_sequence;			/**< 0 = free */
+	struct mBspSurface_s *texturechain;	/**< for sort-by-texture world drawing */
+	GLuint texnum;						/**< gl texture binding */
 	qboolean has_alpha;
-	shader_t *shader;           /* pointer to shader from refdef_t */
+	shader_t *shader;					/**< pointer to shader from refdef_t */
 } image_t;
 
 #define TEXNUM_LIGHTMAPS    1024
@@ -246,18 +246,16 @@ extern int spherelist;	/**< the gl list of the 3d globe */
 
 extern image_t *shadow;	/**< draw this when actor is alive */
 extern image_t *blood; /**< draw this when actor is dead */
-
 extern image_t *r_notexture;
 extern image_t *r_particletexture;
+extern image_t *DaN;
+
 extern entity_t *currententity;
 extern model_t *currentmodel;
 extern int r_framecount;
 extern cBspPlane_t frustum[4];
 extern int c_brush_polys, c_alias_polys;
-
 extern int gl_filter_min, gl_filter_max;
-
-extern image_t *DaN;
 
 /* view origin */
 extern vec3_t vup;
@@ -542,7 +540,7 @@ typedef struct {
 	qboolean blend;
 	qboolean alpha_test;
 	qboolean fog_coord;
-
+	qboolean multitexture;
 	qboolean stencil_wrap;
 	qboolean anisotropic;
 	qboolean lod_bias;

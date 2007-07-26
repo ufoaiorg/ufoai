@@ -550,7 +550,6 @@ void S_EndRegistration (void)
 				Com_PageInMemory((byte *) sfx->cache, size);
 			}
 		}
-
 	}
 
 	/* load everything in */
@@ -570,16 +569,14 @@ void S_EndRegistration (void)
 static channel_t *S_PickChannel (int entnum, int entchannel)
 {
 	int ch_idx;
-	int first_to_die;
-	int life_left;
+	int first_to_die = -1;
+	int life_left = 0x7fffffff;
 	channel_t *ch;
 
 	if (entchannel < 0)
 		Com_Error(ERR_DROP, "S_PickChannel: entchannel < 0");
 
 	/* Check for replacement sound, or find the best one to replace */
-	first_to_die = -1;
-	life_left = 0x7fffffff;
 	for (ch_idx = 0; ch_idx < MAX_CHANNELS; ch_idx++) {
 		if (entchannel != 0		/* channel 0 never overrides */
 			&& channels[ch_idx].entnum == entnum && channels[ch_idx].entchannel == entchannel) {	/* always override sound from same entity */

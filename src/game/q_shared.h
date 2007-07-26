@@ -592,7 +592,6 @@ COLLISION DETECTION
 
 /**
  * @brief plane_t structure
- * @note !!! if this is changed, it must be changed in asm code too !!!
  */
 typedef struct cBspPlane_s {
 	vec3_t normal;

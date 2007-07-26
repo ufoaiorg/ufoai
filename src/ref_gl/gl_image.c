@@ -84,6 +84,11 @@ void GL_EnableMultitexture (qboolean enable)
 	if (!qglSelectTextureSGIS && !qglActiveTextureARB)
 		return;
 
+	if (enable == gl_state.multitexture)
+		return;
+
+	gl_state.multitexture = enable;
+
 	if (enable) {
 		GL_SelectTexture(gl_texture1);
 		qglEnable(GL_TEXTURE_2D);
@@ -675,20 +680,20 @@ void WritePNG (FILE *f, byte *buffer, int width, int height)
 
 	info_ptr = png_create_info_struct(png_ptr);
 	if (!info_ptr) {
-		png_destroy_write_struct (&png_ptr, (png_infopp)NULL);
+		png_destroy_write_struct(&png_ptr, (png_infopp)NULL);
 		Com_Printf("WritePNG: LibPNG Error!\n");
 		return;
 	}
 
-	png_init_io (png_ptr, f);
+	png_init_io(png_ptr, f);
 
-	png_set_IHDR (png_ptr, info_ptr, width, height, 8, PNG_COLOR_TYPE_RGB,
+	png_set_IHDR(png_ptr, info_ptr, width, height, 8, PNG_COLOR_TYPE_RGB,
 				PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
 
-	png_set_compression_level (png_ptr, Z_DEFAULT_COMPRESSION);
-	png_set_compression_mem_level (png_ptr, 9);
+	png_set_compression_level(png_ptr, Z_DEFAULT_COMPRESSION);
+	png_set_compression_mem_level(png_ptr, 9);
 
-	png_write_info (png_ptr, info_ptr);
+	png_write_info(png_ptr, info_ptr);
 
 	row_pointers = ri.TagMalloc(ri.imagePool, height * sizeof(png_bytep), 0);
 	for (i = 0; i < height; i++)
@@ -2238,7 +2243,6 @@ int Draw_GetPalette (void)
 
 	return 0;
 }
-
 
 /**
  * @brief
