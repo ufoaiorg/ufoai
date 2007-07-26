@@ -41,10 +41,6 @@ cvar_t *cl_stereo;
 cvar_t *rcon_client_password;
 cvar_t *rcon_address;
 
-cvar_t *cl_timeout;
-
-cvar_t *cl_markactors;
-
 cvar_t *cl_fps;
 cvar_t *cl_shownet;
 cvar_t *cl_show_tooltips;
@@ -2047,7 +2043,6 @@ static void CL_InitLocal (void)
 	cl_mapzoommin = Cvar_Get("cl_mapzoommin", "1.0", CVAR_ARCHIVE, "Minimum geoscape zooming value");
 
 	sensitivity = Cvar_Get("sensitivity", "2", CVAR_ARCHIVE, NULL);
-	cl_markactors = Cvar_Get("cl_markactors", "1", CVAR_ARCHIVE, NULL);
 
 	cl_precache = Cvar_Get("cl_precache", "1", CVAR_ARCHIVE, "Precache models and menus at startup");
 
@@ -2058,7 +2053,6 @@ static void CL_InitLocal (void)
 
 	cl_fps = Cvar_Get("cl_fps", "0", CVAR_ARCHIVE, "Show frames per second");
 	cl_shownet = Cvar_Get("cl_shownet", "0", CVAR_ARCHIVE, NULL);
-	cl_timeout = Cvar_Get("cl_timeout", "120", 0, NULL);
 
 	rcon_client_password = Cvar_Get("rcon_password", "", 0, "Remote console password");
 	rcon_address = Cvar_Get("rcon_address", "", 0, "Remote console address - set this if you aren't connected to a server");

@@ -3285,7 +3285,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 	if (!(le->state & STATE_DEAD)) {
 		if (le->selected)
 			ent->flags |= RF_SELECTED;
-		if (cl_markactors->value && le->team == cls.team) {
+		if (le->team == cls.team) {
 			if (le->pnum == cl.pnum)
 				ent->flags |= RF_MEMBER;
 			if (le->pnum != cl.pnum)
@@ -3356,7 +3356,7 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 	if (!(le->state & STATE_DEAD)) {
 		if (le->selected)
 			ent->flags |= RF_SELECTED;
-		if (cl_markactors->value && le->team == cls.team) {
+		if (le->team == cls.team) {
 			if (le->pnum == cl.pnum)
 				ent->flags |= RF_MEMBER;
 			if (le->pnum != cl.pnum)

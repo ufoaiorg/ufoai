@@ -334,8 +334,6 @@ cvar_t *cl_camzoommin;
 cvar_t *cl_mapzoommax;
 cvar_t *cl_mapzoommin;
 
-cvar_t *cl_anglespeedkey;
-
 #define MIN_CAMROT_SPEED	50
 #define MIN_CAMROT_ACCEL	50
 #define MAX_CAMROT_SPEED	1000
