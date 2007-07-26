@@ -35,7 +35,7 @@ cvar_t *zombietime;				/* seconds to sink messages after disconnect */
 
 cvar_t *rcon_password;			/* password for remote server commands */
 
-cvar_t *sv_downloadserver;
+static cvar_t *sv_downloadserver;
 
 cvar_t *sv_maxclients = NULL;
 cvar_t *sv_showclamp;
@@ -44,17 +44,17 @@ cvar_t *maxsoldiers;
 cvar_t *maxsoldiersperplayer;
 
 cvar_t *hostname;
-cvar_t *public_server;			/* should heartbeats be sent */
+cvar_t *public_server;			/**< should heartbeats be sent */
 
-cvar_t *sv_reconnect_limit;		/* minimum seconds between connect messages */
+static cvar_t *sv_reconnect_limit;		/**< minimum seconds between connect messages */
 
 cvar_t *masterserver_ip;
 cvar_t *masterserver_port;
 
 void Master_Shutdown(void);
 
-static qboolean abandon = qfalse;		/* shutdown server when all clients disconnect and don't accept new connections */
-static qboolean killserver = qfalse;	/* will initiate shutdown once abandon is set */
+static qboolean abandon = qfalse;		/**< shutdown server when all clients disconnect and don't accept new connections */
+static qboolean killserver = qfalse;	/**< will initiate shutdown once abandon is set */
 
 mapcycle_t *mapcycleList;
 int mapcycleCount;
@@ -765,6 +765,7 @@ void SV_Frame (int now, void *data)
 	/* send a heartbeat to the master if needed */
 	Master_Heartbeat();
 
+	/* server is empty - so shutdown */
 	if (abandon && killserver) {
 		abandon = qfalse;
 		killserver = qfalse;
@@ -900,7 +901,8 @@ void SV_Init (void)
  * @brief Used by SV_Shutdown to send a final message to all
  * connected clients before the server goes down.
  * @sa SV_Shutdown
-*/
+ * @todo Find out why this isn't send
+ */
 static void SV_FinalMessage (const char *message, qboolean reconnect)
 {
 	int i;
@@ -926,6 +928,9 @@ static void SV_FinalMessage (const char *message, qboolean reconnect)
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
 		if (cl->state >= cs_connected)
 			NET_WriteConstMsg(cl->stream, msg);
+
+	/* make sure the commands are send */
+	wait_for_net(0);
 
 	free_dbuffer(msg);
 }
@@ -954,6 +959,7 @@ void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 	if (svs.clients) {
 		SV_FinalMessage(finalmsg, reconnect);
 
+		/* and now finish the client streams */
 		for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
 			if (cl && cl->stream) {
 				stream_finished(cl->stream);

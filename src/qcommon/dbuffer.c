@@ -39,8 +39,7 @@
 #define DBUFFER_FREE_THRESHOLD 1000
 #endif
 
-struct dbuffer_element
-{
+struct dbuffer_element {
 	struct dbuffer_element *next;
 	char data[DBUFFER_ELEMENT_SIZE];
 	size_t space, len;
