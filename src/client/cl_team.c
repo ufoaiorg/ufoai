@@ -687,9 +687,11 @@ void CL_CleanTempInventory (base_t* base)
 	INVSH_DestroyInventory(&base->equipByBuyType);
 	for (i = 0; i < MAX_EMPLOYEES; i++)
 		for (k = 0; k < csi.numIDs; k++)
-			if (csi.ids[k].temp)
+			if (csi.ids[k].temp) {
 				/* idFloor and idEquip are temp */
 				gd.employees[EMPL_SOLDIER][i].inv.c[k] = NULL;
+				gd.employees[EMPL_ROBOT][i].inv.c[k] = NULL;
+			}
 }
 
 /**
