@@ -195,7 +195,8 @@ void UFO_CampaignRunUfos (int dt)
 				ufo->status = AIR_TRANSIT;
 				for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
 					/* check if the ufo can attack a base (if it's not too far) */
-					if ((base->hasMissile || base->hasLaser) && (CP_GetDistance(ufo->pos, base->pos) < 60.0f)) {
+					/* ufo can see a base only if it can fire back */
+					if (AII_BaseCanShoot(base) && (CP_GetDistance(ufo->pos, base->pos) < 60.0f)) {
 						AIR_SendUfoPurchasingBase(ufo, base);
 						continue;
 					}

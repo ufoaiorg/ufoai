@@ -46,6 +46,7 @@ extern void AII_InitialiseSlot(aircraftSlot_t *slot, int aircraftIdx);
 extern void AII_UpdateAircraftStats(aircraft_t *aircraft);
 extern int AII_GetSlotItems(aircraftItemType_t type, aircraft_t *aircraft);
 extern int AII_AircraftCanShoot(aircraft_t *aircraft);
+extern int AII_BaseCanShoot(base_t *base);
 
 const char* AII_WeightToName(itemWeight_t weight);
 

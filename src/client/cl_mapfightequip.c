@@ -1379,6 +1379,28 @@ extern int AII_AircraftCanShoot (aircraft_t *aircraft)
 }
 
 /**
+* @brief Check if the base has weapon and ammo
+* @param[in] base Pointer to the base you want to check (may not be NULL)
+* @return qtrue if the base can shoot, qflase else
+*/
+extern int AII_BaseCanShoot (base_t *base)
+{
+	int i;
+
+	assert(base);
+
+	for (i = 0; i < base->maxBatteries; i++)
+		if (base->batteries[i].itemIdx >= 0 && base->batteries[i].ammoIdx >= 0 && base->batteries[i].ammoLeft > 0)
+			return qtrue;
+
+	for (i = 0; i < base->maxLasers; i++)
+		if (base->lasers[i].itemIdx >= 0 && base->lasers[i].ammoIdx >= 0 && base->lasers[i].ammoLeft > 0)
+			return qtrue;
+
+	return qfalse;
+}
+
+/**
  * @brief Translate a weight int to a translated string
  *
  * @sa itemWeight_t
