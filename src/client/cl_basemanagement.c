@@ -2992,6 +2992,42 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 		MSG_WriteShort(sb, gd.numBuildings[i]);
 		MSG_WriteByte(sb, b->condition);
 		MSG_WriteByte(sb, b->baseStatus);
+		MSG_WriteByte(sb, b->maxBatteries);
+		for (l = 0; l < b->maxBatteries; l++) {
+			if (b->batteries[l].itemIdx >= 0) {
+				MSG_WriteString(sb, aircraftItems[b->batteries[l].itemIdx].id);
+				MSG_WriteShort(sb, b->batteries[l].ammoLeft);
+				MSG_WriteShort(sb, b->batteries[l].delayNextShot);
+				MSG_WriteShort(sb, b->batteries[l].installationTime);
+				/* if there is no ammo MSG_WriteString will write an empty string */
+				MSG_WriteString(sb, aircraftItems[b->batteries[l].ammoIdx].id);
+			} else {
+				MSG_WriteString(sb, "skip");
+				MSG_WriteShort(sb, 0);
+				MSG_WriteShort(sb, 0);
+				MSG_WriteShort(sb, 0);
+				/* if there is no ammo MSG_WriteString will write an empty string */
+				MSG_WriteString(sb, "skip");
+			}
+		}
+		MSG_WriteByte(sb, b->maxLasers);
+		for (l = 0; l < b->maxLasers; l++) {
+			if (b->lasers[l].itemIdx >= 0) {
+				MSG_WriteString(sb, aircraftItems[b->lasers[l].itemIdx].id);
+				MSG_WriteShort(sb, b->lasers[l].ammoLeft);
+				MSG_WriteShort(sb, b->lasers[l].delayNextShot);
+				MSG_WriteShort(sb, b->lasers[l].installationTime);
+				/* if there is no ammo MSG_WriteString will write an empty string */
+				MSG_WriteString(sb, aircraftItems[b->lasers[l].ammoIdx].id);
+			} else {
+				MSG_WriteString(sb, "skip");
+				MSG_WriteShort(sb, 0);
+				MSG_WriteShort(sb, 0);
+				MSG_WriteShort(sb, 0);
+				/* if there is no ammo MSG_WriteString will write an empty string */
+				MSG_WriteString(sb, "skip");
+			}
+		}
 
 		MSG_WriteShort(sb, b->aircraftCurrent); /* might be -1 */
 		MSG_WriteByte(sb, b->numAircraftInBase);
@@ -3179,6 +3215,34 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		gd.numBuildings[i] = MSG_ReadShort(sb);
 		b->condition = MSG_ReadByte(sb);
 		b->baseStatus = MSG_ReadByte(sb);
+		BDEF_InitialiseBaseSlots(b);
+		/* read missile battery slots */
+		b->maxBatteries = MSG_ReadByte(sb);
+		for (l = 0; l < b->maxBatteries; l++) {
+			tech = RS_GetTechByProvided(MSG_ReadString(sb));
+			if (tech)
+				AII_AddItemToSlot(tech, b->batteries + l);
+			b->batteries[l].ammoLeft = MSG_ReadShort(sb);
+			b->batteries[l].delayNextShot = MSG_ReadShort(sb);
+			b->batteries[l].installationTime = MSG_ReadShort(sb);
+			tech = RS_GetTechByProvided(MSG_ReadString(sb));
+			if (tech)
+				b->batteries[l].ammoIdx = AII_GetAircraftItemByID(tech->provides);
+		}
+		/* read laser battery slots */
+		b->maxLasers = MSG_ReadByte(sb);
+		for (l = 0; l < b->maxLasers; l++) {
+			tech = RS_GetTechByProvided(MSG_ReadString(sb));
+			if (tech)
+				AII_AddItemToSlot(tech, b->lasers + l);
+			b->lasers[l].ammoLeft = MSG_ReadShort(sb);
+			b->lasers[l].delayNextShot = MSG_ReadShort(sb);
+			b->lasers[l].installationTime = MSG_ReadShort(sb);
+			tech = RS_GetTechByProvided(MSG_ReadString(sb));
+			if (tech)
+				b->lasers[l].ammoIdx = AII_GetAircraftItemByID(tech->provides);
+		}
+
 		b->aircraftCurrent = MSG_ReadShort(sb);
 		b->numAircraftInBase = MSG_ReadByte(sb);
 		for (k = 0; k < b->numAircraftInBase; k++) {
