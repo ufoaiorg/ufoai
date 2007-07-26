@@ -569,7 +569,7 @@ void NET_OOB_Printf (struct net_stream *s, const char *format, ...)
 }
 
 /**
- * @brief
+ * @brief Enqueue the buffer in the net stream for ONE client
  * @note Frees the msg buffer
  * @sa NET_WriteConstMsg
  */
@@ -589,7 +589,7 @@ void NET_WriteMsg (struct net_stream *s, struct dbuffer *buf)
 }
 
 /**
- * @brief Enquee the buffer in the net stream
+ * @brief Enqueue the buffer in the net stream for MULTIPLE clients
  * @note Same as NET_WriteMsg but deesn't free the buffer, use this if you send
  * the same buffer to more than one connected clients
  * @note Make sure that you free the msg buffer after you called this
