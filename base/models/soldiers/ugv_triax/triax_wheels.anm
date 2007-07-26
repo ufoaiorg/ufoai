@@ -9,64 +9,64 @@ death3				0	0	1
 dead3				0	0	1
 
 stand0				0	0	1
-walk0				0	0	1
-cstand0				0	0	1
-cwalk0				0	0	1
+walk0				1	21	20
+//cstand0				0	0	1
+//cwalk0				0	0	1
 
 stand1				0	0	1
-walk1				0	0	1
-cstand1				0	0	1
-cwalk1				0	0	1
+walk1				1	21	20
+//cstand1				0	0	1
+//cwalk1				0	0	1
 
-move_rifle			0	0	1
+move_rifle			1	21	20
 shoot_rifle			0	0	1
-cmove_rifle			0	0	1
-cshoot_rifle		0	0	1
+//cmove_rifle			0	0	1
+//cshoot_rifle		0	0	1
 
-move_biggun			0	0	1
+move_biggun			1	21	20
 shoot_biggun		0	0	1
-cmove_biggun		0	0	1
-cshoot_biggun		0	0	1
+//cmove_biggun		0	0	1
+//cshoot_biggun		0	0	1
 
-move_melee			0	0	1
+move_melee			1	21	20
 shoot_melee			0	0	1
-cmove_melee			0	0	1
-cshoot_melee		0	0	1
+//cmove_melee			0	0	1
+//cshoot_melee		0	0	1
 
 stand2				0	0	1
-walk2				0	0	1
-cstand2				0	0	1
-cwalk2				0	0	1
+walk2				1	21	20
+//cstand2				0	0	1
+//cwalk2				0	0	1
 
-move_pistol			0	0	1
+move_pistol			1	21	20
 shoot_pistol		0	0	1
-cmove_pistol		0	0	1
-cshoot_pistol		0	0	1
+//cmove_pistol		0	0	1
+//cshoot_pistol		0	0	1
 
-move_pistol_d		0	0	1
+move_pistol_d		1	21	20
 shoot_pistol_d		0	0	1
-cmove_pistol_d		0	0	1
-cshoot_pistol_d		0	0	1
+//cmove_pistol_d		0	0	1
+//cshoot_pistol_d		0	0	1
 
-move_grenade		0	0	1
+move_grenade		1	21	20
 shoot_grenade		0	0	1
-cmove_grenade		0	0	1
-cshoot_grenade		0	0	1
+//cmove_grenade		0	0	1
+//cshoot_grenade		0	0	1
 
-move_item			0	0	1
+move_item			1	21	20
 shoot_item			0	0	1
-cmove_item			0	0	1
-cshoot_item			0	0	1
+//cmove_item			0	0	1
+//cshoot_item			0	0	1
 
 stand3				0	0	1
-walk3				0	0	1
-cstand3				0	0	1
-cwalk3				0	0	1
+walk3				1	21	20
+//cstand3				0	0	1
+//cwalk3				0	0	1
 
-move_rpg			0	0	1
+move_rpg			1	21	20
 shoot_rpg			0	0	1
-cmove_rpg			0	0	1
-cshoot_rpg			0	0	1
+//cmove_rpg			0	0	1
+//cshoot_rpg			0	0	1
 
 stand_menu			0	0	1
 panic0				0	0	1
