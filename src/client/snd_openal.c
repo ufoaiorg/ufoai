@@ -63,7 +63,7 @@ static void SND_OAL_ErrorPrint (const char* file, const int line)
 		Com_Printf("AL_INVALID_ENUM");
 		break;
 	case AL_INVALID_VALUE:
-		Com_Printf("ALC_INVALID_VALUE");
+		Com_Printf("AL_INVALID_VALUE");
 		break;
 	case AL_INVALID_OPERATION:
 		Com_Printf("AL_INVALID_OPERATION");
