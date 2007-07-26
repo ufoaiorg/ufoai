@@ -337,7 +337,7 @@ const char* SCR_SetLoadingBackground (const char *mapString)
 	const char *mapname;
 	size_t len;
 
-	if (!mapString)
+	if (!mapString || Com_ServerState())
 		mapname = Cvar_VariableString("mapname");
 	else {
 		mapname = mapString;
