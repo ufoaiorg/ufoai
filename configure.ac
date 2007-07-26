@@ -514,12 +514,6 @@ then
 			AC_MSG_WARN([couldn't find OpenAL library!])
 			AC_SUBST([HAVE_OPENAL], 0)
 		fi
-		AC_SEARCH_LIBS([alutLoadWAVFile],[alut])
-		if test "$ac_cv_search_alutLoadWAVFile" = "no"
-		then
-			AC_MSG_WARN([couldn't find OpenAL utility library!])
-			AC_SUBST([HAVE_OPENAL], 0)
-		fi
 	fi
 else
 	AC_MSG_NOTICE([Without OpenAL])
