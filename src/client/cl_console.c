@@ -66,11 +66,6 @@ static void Key_ClearTyping (void)
  */
 void Con_ToggleConsole_f (void)
 {
-	if (cl.attractloop) {
-		Cbuf_AddText("killserver\n");
-		return;
-	}
-
 	Key_ClearTyping();
 	Con_ClearNotify();
 

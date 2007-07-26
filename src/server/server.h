@@ -39,9 +39,7 @@ extern struct memPool_s *sv_genericPool;
 typedef enum {
 	ss_dead,					/**< no map loaded */
 	ss_loading,					/**< spawning level edicts */
-	ss_game,					/**< actively running */
-	ss_demo,					/**< running a demo server */
-	ss_pic
+	ss_game						/**< actively running */
 } server_state_t;
 
 /** some qc commands are only valid before the server has finished
@@ -52,8 +50,6 @@ typedef struct {
 
 	qboolean active;			/**< false if only a net client */
 
-	qboolean attractloop;		/**< running cinematics and demos for the local system only */
-
 	int framenum;
 
 	char name[MAX_QPATH];		/**< map name, or cinematic name */
@@ -61,10 +57,6 @@ typedef struct {
 	struct cBspModel_s *models[MAX_MODELS];
 
 	char configstrings[MAX_CONFIGSTRINGS][MAX_TOKEN_CHARS];
-
-	/** demo server information */
-	qFILE demofile;
-	qboolean timedemo;			/**< don't time sync */
 } server_t;
 
 #define EDICT_NUM(n) ((edict_t *)((byte *)ge->edicts + ge->edict_size * (n)))
@@ -136,9 +128,6 @@ typedef struct {
 	client_t *clients;			/**< [maxclients->value]; */
 
 	int last_heartbeat;
-
-	/** serverrecord values */
-	qFILE demofile;
 } server_static_t;
 
 /**
@@ -191,18 +180,15 @@ void Master_Packet(void);
 
 void SV_NextMapcycle(void);
 void SV_MapcycleClear(void);
-
 void SV_MapcycleAdd(const char* mapName, const char* gameType);
 
 void SV_ReadPacket(struct net_stream *s);
 
 /* sv_init.c */
-void SV_Map(qboolean attractloop, const char *levelstring, const char *assembly);
+void SV_Map(const char *levelstring, const char *assembly);
 
 /* sv_send.c */
 typedef enum { RD_NONE, RD_CLIENT, RD_PACKET } redirect_t;
-
-void SV_DemoCompleted(void);
 
 void SV_Multicast(int mask, struct dbuffer *msg);
 void SV_BreakSound(vec3_t origin, edict_t * entity, int channel, edictMaterial_t material);
@@ -217,10 +203,6 @@ int SV_CountPlayers(void);
 /* sv_ccmds.c */
 void SV_ReadLevelFile(void);
 void SV_SetMaster_f(void);
-
-/* sv_ents.c */
-void SV_WriteFrameToClient(client_t * client, sizebuf_t * msg);
-void SV_BuildClientFrame(client_t * client);
 
 /* sv_game.c */
 extern game_export_t *ge;

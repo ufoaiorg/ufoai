@@ -864,20 +864,15 @@ static const char* SV_GetMapTitle (const char* const mapname)
  * @sa CM_LoadMap
  * @sa Com_SetServerState
  */
-static void SV_SpawnServer (const char *server, const char *param, server_state_t serverstate, qboolean attractloop)
+static void SV_SpawnServer (const char *server, const char *param, server_state_t serverstate)
 {
 	int i;
 	unsigned checksum = 0;
 	const char *map, *pos, *buf;
 
-	if (attractloop)
-		Cvar_Set("paused", "0");
-
 	Com_Printf("------- Server Initialization -------\n");
 
 	Com_DPrintf("SpawnServer: %s\n", server);
-	if (sv.demofile.f)
-		fclose(sv.demofile.f);
 
 	svs.spawncount++;
 	/* any partially connected client will be restarted */
@@ -887,7 +882,6 @@ static void SV_SpawnServer (const char *server, const char *param, server_state_
 	/* wipe the entire per-level structure */
 	memset(&sv, 0, sizeof(sv));
 	svs.realtime = 0;
-	sv.attractloop = attractloop;
 
 	/* save name for levels that don't set message */
 	Q_strncpyz(sv.configstrings[CS_NAME], server, MAX_TOKEN_CHARS);
@@ -1044,15 +1038,12 @@ static void SV_InitGame (void)
  * map tram.pcx#jail_e3
  * @sa SV_SpawnServer
  * @sa SV_Map_f
- * @sa SV_Demo_f
  */
-void SV_Map (qboolean attractloop, const char *levelstring, const char *assembly)
+void SV_Map (const char *levelstring, const char *assembly)
 {
 	char level[MAX_QPATH];
 	char *ch;
 	int l;
-
-	sv.attractloop = attractloop;
 
 	if (sv.state == ss_dead)
 		SV_InitGame();			/* the game is just starting */
@@ -1072,20 +1063,10 @@ void SV_Map (qboolean attractloop, const char *levelstring, const char *assembly
 		Q_strncpyz(level, level + 1, sizeof(level));
 
 	l = strlen(level);
-	if (l > 4 && !Q_strcmp(level + l - 4, ".dm")) {
-		SCR_BeginLoadingPlaque();	/* for local system */
-		SV_BroadcastCommand("changing\n");
-		SV_SpawnServer(level, NULL, ss_demo, attractloop);
-	} else if (l > 4 && !Q_strcmp(level + l - 4, ".pcx")) {
-		SCR_BeginLoadingPlaque();	/* for local system */
-		SV_BroadcastCommand("changing\n");
-		SV_SpawnServer(level, NULL, ss_pic, attractloop);
-	} else {
-		SCR_BeginLoadingPlaque();	/* for local system */
-		SV_BroadcastCommand("changing\n");
-		SV_SpawnServer(levelstring, assembly, ss_game, attractloop);
-		Cbuf_CopyToDefer();
-	}
+	SCR_BeginLoadingPlaque();	/* for local system */
+	SV_BroadcastCommand("changing\n");
+	SV_SpawnServer(levelstring, assembly, ss_game);
+	Cbuf_CopyToDefer();
 
 	SV_BroadcastCommand("reconnect\n");
 }

@@ -591,12 +591,6 @@ void V_RenderView (float stereo_separation)
 	if (!cl.refresh_prepped)
 		return;
 
-	if (cl_timedemo->value) {
-		if (!cl.timedemo_start)
-			cl.timedemo_start = Sys_Milliseconds();
-		cl.timedemo_frames++;
-	}
-
 	V_ClearScene();
 
 	if (cls.state == ca_sequence) {

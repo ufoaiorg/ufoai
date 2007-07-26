@@ -30,8 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 client_t *sv_client;			/* current client */
 
-cvar_t *sv_timedemo;
-
 cvar_t *timeout;				/* seconds without any message */
 cvar_t *zombietime;				/* seconds to sink messages after disconnect */
 
@@ -268,15 +266,6 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	/* force the IP key/value pair so the game can filter based on ip */
 	Info_SetValueForKey(userinfo, "ip", peername);
 
-	/* attractloop servers are ONLY for local clients */
-	if (sv.attractloop) {
-		if (!stream_is_loopback(stream)) {
-			Com_Printf("Remote connect in attract loop.  Ignored.\n");
-			NET_OOB_Printf(stream, "print\nConnection refused.\n");
-			return;
-		}
-	}
-
 	newcl = &temp;
 	memset(newcl, 0, sizeof(client_t));
 
@@ -357,7 +346,6 @@ static void SVC_DirectConnect (struct net_stream *stream)
 }
 
 #if 0
-
 /**
  * @brief Checks whether the remote connection is allowed (rcon_password must be
  * set on the server) - and verify the user given password with the cvar value.
@@ -893,7 +881,6 @@ void SV_Init (void)
 	zombietime = Cvar_Get("zombietime", "2", 0, "Timeout for zombies (in sec)");
 	sv_showclamp = Cvar_Get("showclamp", "0", 0, NULL);
 	sv_downloadserver = Cvar_Get("sv_downloadserver", "", CVAR_ARCHIVE, "URL to a location where clients can download game content over HTTP");
-	sv_timedemo = Cvar_Get("timedemo", "0", 0, NULL);
 	sv_enablemorale = Cvar_Get("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale changes in multiplayer");
 	maxsoldiers = Cvar_Get("maxsoldiers", "4", CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers per team (see maxsoldiersperplayer and sv_teamplay)");
 	maxsoldiersperplayer = Cvar_Get("maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers each player can controll (see maxsoldiers and sv_teamplay)");
@@ -978,16 +965,13 @@ void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 	SV_ShutdownGameProgs();
 
 	/* free current level */
-	if (sv.demofile.f)
-		fclose(sv.demofile.f);
 	memset(&sv, 0, sizeof(sv));
 	Com_SetServerState(sv.state);
 
 	/* free server static data */
 	if (svs.clients)
 		Mem_Free(svs.clients);
-	if (svs.demofile.f)
-		fclose(svs.demofile.f);
+
 	memset(&svs, 0, sizeof(svs));
 
 	/* maybe we shut down before we init - e.g. in case of an error */

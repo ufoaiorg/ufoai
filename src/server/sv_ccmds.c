@@ -105,39 +105,28 @@ static qboolean SV_SetPlayer (void)
 }
 
 /**
- * @brief Puts the server in demo mode on a specific map/cinematic
- */
-static void SV_Demo_f (void)
-{
-	SV_Map(qtrue, va("%s.dm", Cmd_Argv(1)), NULL);
-}
-
-/**
  * @brief Checks wether a map exists
  */
 static qboolean SV_CheckMap (const char *map, const char *assembly)
 {
-	char	expanded[MAX_QPATH];
+	char expanded[MAX_QPATH];
 
 	/* base attacks starts with . and random maps with + */
-	/* also check the . to determine whether a pcx or demo should be loaded */
-	if (!strstr(map, ".")) {
-		if (map[0] == '+') {
-			Com_sprintf(expanded, sizeof(expanded), "maps/%s.ump", map+1);
+	if (map[0] == '+') {
+		Com_sprintf(expanded, sizeof(expanded), "maps/%s.ump", map+1);
 
-			/* check for ump file */
-			if (FS_CheckFile(expanded) < 0) {
-				Com_Printf("Can't find %s\n", expanded);
-				return qfalse;
-			}
-		} else if (!assembly) {
-			Com_sprintf(expanded, sizeof(expanded), "maps/%s.bsp", map);
+		/* check for ump file */
+		if (FS_CheckFile(expanded) < 0) {
+			Com_Printf("Can't find %s\n", expanded);
+			return qfalse;
+		}
+	} else if (!assembly) {
+		Com_sprintf(expanded, sizeof(expanded), "maps/%s.bsp", map);
 
-			/* check for bsp file */
-			if (FS_CheckFile(expanded) < 0) {
-				Com_Printf("Can't find %s\n", expanded);
-				return qfalse;
-			}
+		/* check for bsp file */
+		if (FS_CheckFile(expanded) < 0) {
+			Com_Printf("Can't find %s\n", expanded);
+			return qfalse;
 		}
 	}
 	return qtrue;
@@ -163,7 +152,7 @@ static void SV_Map_f (void)
 		Cvar_SetValue("sv_ai", 0);
 	}
 
-	/* if not a pcx, demo, or cinematic, check to make sure the level exists */
+	/* check to make sure the level exists */
 	map = Cmd_Argv(1);
 	/* random maps uses position strings */
 	if (Cmd_Argc() == 3) {
@@ -175,7 +164,7 @@ static void SV_Map_f (void)
 		return;
 
 	sv.state = ss_dead;		/* don't save current level when changing */
-	SV_Map(qfalse, map, assembly);
+	SV_Map(map, assembly);
 
 	/* archive server state */
 	Q_strncpyz(svs.mapcmd, map, sizeof(svs.mapcmd));
@@ -324,98 +313,6 @@ static void SV_DumpUser_f (void)
 	Com_Printf("--------\n");
 	Info_Print(sv_client->userinfo);
 }
-
-
-/**
- * @brief Begins server demo recording.  Every entity and every message will be
- * recorded, but no playerinfo will be stored. Primarily for demo merging.
- * @sa SV_ServerRecordStop_f
- */
-static void SV_ServerRecordRecord_f (void)
-{
-	char name[MAX_OSPATH];
-	byte buf_data[32768];
-	sizebuf_t buf;
-	int len;
-	int i;
-
-	if (Cmd_Argc() != 2) {
-		Com_Printf("serverrecord <demoname>\n");
-		return;
-	}
-
-	if (svs.demofile.f) {
-		Com_Printf("Already recording. Use serverstop to stop the record.\n");
-		return;
-	}
-
-	if (sv.state != ss_game) {
-		Com_Printf("You must be in a level to record.\n");
-		return;
-	}
-
-	/* open the demo file */
-	Com_sprintf(name, sizeof(name), "%s/demos/%s.dm", FS_Gamedir(), Cmd_Argv(1));
-
-	Com_Printf("recording to %s.\n", name);
-	FS_CreatePath(name);
-	svs.demofile.f = fopen(name, "wb");
-	if (!svs.demofile.f) {
-		Com_Printf("ERROR: couldn't open.\n");
-		return;
-	}
-
-	/* write a single giant fake message with all the startup info */
-	SZ_Init(&buf, buf_data, sizeof(buf_data));
-
-	/* serverdata needs to go over for all types of servers */
-	/* to make sure the protocol is right, and to set the gamedir */
-
-	/* send the serverdata */
-	MSG_WriteByte(&buf, svc_serverdata);
-	MSG_WriteLong(&buf, PROTOCOL_VERSION);
-	MSG_WriteLong(&buf, svs.spawncount);
-	/* 2 means server demo */
-	MSG_WriteByte(&buf, 2);		/* demos are always attract loops */
-	MSG_WriteString(&buf, Cvar_VariableString("fs_gamedir"));
-	MSG_WriteShort(&buf, -1);
-	/* send full levelname */
-	MSG_WriteString(&buf, sv.configstrings[CS_NAME]);
-
-	for (i = 0; i < MAX_CONFIGSTRINGS; i++)
-		if (sv.configstrings[i][0]) {
-			MSG_WriteByte(&buf, svc_configstring);
-			MSG_WriteShort(&buf, i);
-			MSG_WriteString(&buf, sv.configstrings[i]);
-		}
-
-	/* write it to the demo file */
-	Com_DPrintf("signon message length: %i\n", buf.cursize);
-	len = LittleLong(buf.cursize);
-	if (fwrite(&len, 4, 1, svs.demofile.f) != 1)
-		Com_Printf("Error writing demofile\n");
-	if (fwrite(buf.data, buf.cursize, 1, svs.demofile.f) != 1)
-		Com_Printf("Error writing demofile\n");
-
-	/* the rest of the demo file will be individual frames */
-}
-
-
-/**
- * @brief Ends server demo recording
- * @sa SV_ServerRecordRecord_f
- */
-static void SV_ServerRecordStop_f (void)
-{
-	if (!svs.demofile.f) {
-		Com_Printf("Not doing a serverrecord. Use serverrecord to start one.\n");
-		return;
-	}
-	fclose(svs.demofile.f);
-	svs.demofile.f = NULL;
-	Com_Printf("Recording completed.\n");
-}
-
 
 /**
  * @brief Kick everyone off, possibly in preparation for a new game
@@ -718,7 +615,6 @@ void SV_InitOperatorCommands (void)
 	Cmd_AddParamCompleteFunction("map", SV_CompleteMapCommand);
 	Cmd_AddCommand("devmap", SV_Map_f, "Quit client and load the new map - deactivate the ai");
 	Cmd_AddParamCompleteFunction("devmap", SV_CompleteMapCommand);
-	Cmd_AddCommand("demo", SV_Demo_f, "Start a demo server");
 	Cmd_AddCommand("maplist", SV_ListMaps_f, "List of all available maps");
 
 	Cmd_AddCommand("setmaster", SV_SetMaster_f, "Send ping command to masterserver (see cvars: masterserver_ip and masterserver_port)");
@@ -733,9 +629,6 @@ void SV_InitOperatorCommands (void)
 #ifdef DEDICATED_ONLY
 	Cmd_AddCommand("say", SV_ConSay_f, "Broadcasts server messages to all connected players");
 #endif
-
-	Cmd_AddCommand("serverrecord", SV_ServerRecordRecord_f, "Starts a server record session");
-	Cmd_AddCommand("serverstop", SV_ServerRecordStop_f, "Stops the server record session");
 
 	Cmd_AddCommand("killserver", SV_KillServer_f, "Shuts the server down - and disconnect all clients");
 

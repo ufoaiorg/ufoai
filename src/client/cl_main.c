@@ -50,8 +50,6 @@ cvar_t *cl_shownet;
 cvar_t *cl_show_tooltips;
 cvar_t *cl_show_cursor_tooltips;
 
-cvar_t *cl_timedemo;
-
 cvar_t *cl_aviForceDemo;
 cvar_t *cl_aviFrameRate;
 cvar_t *cl_aviMotionJpeg;
@@ -501,14 +499,6 @@ void CL_Disconnect (void)
 
 	if (cls.state == ca_disconnected)
 		return;
-
-	if (cl_timedemo && cl_timedemo->integer) {
-		int time;
-
-		time = Sys_Milliseconds() - cl.timedemo_start;
-		if (time > 0)
-			Com_Printf("%i frames, %3.1f seconds: %3.1f fps\n", cl.timedemo_frames, time / 1000.0, cl.timedemo_frames * 1000.0 / time);
-	}
 
 	VectorClear(cl.refdef.blend);
 
@@ -2070,7 +2060,6 @@ static void CL_InitLocal (void)
 	cl_fps = Cvar_Get("cl_fps", "0", CVAR_ARCHIVE, "Show frames per second");
 	cl_shownet = Cvar_Get("cl_shownet", "0", CVAR_ARCHIVE, NULL);
 	cl_timeout = Cvar_Get("cl_timeout", "120", 0, NULL);
-	cl_timedemo = Cvar_Get("timedemo", "0", 0, NULL);
 
 	rcon_client_password = Cvar_Get("rcon_password", "", 0, "Remote console password");
 	rcon_address = Cvar_Get("rcon_address", "", 0, "Remote console address - set this if you aren't connected to a server");

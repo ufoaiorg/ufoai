@@ -358,7 +358,6 @@ static void CL_ParseServerData (struct dbuffer *msg)
 		Com_Error(ERR_DROP, "Server returned version %i, not %i", i, PROTOCOL_VERSION);
 
 	cl.servercount = NET_ReadLong(msg);
-	cl.attractloop = NET_ReadByte(msg);
 
 	/* game directory */
 	str = NET_ReadString(msg);
@@ -374,8 +373,8 @@ static void CL_ParseServerData (struct dbuffer *msg)
 	/* get the full level name */
 	str = NET_ReadString(msg);
 
-	Com_DPrintf("serverdata: count %d, attractloop %d, gamedir %s, pnum %d, level %s\n",
-		cl.servercount, cl.attractloop, cl.gamedir, cl.pnum, str);
+	Com_DPrintf("serverdata: count %d, gamedir %s, pnum %d, level %s\n",
+		cl.servercount, cl.gamedir, cl.pnum, str);
 
 	if (cl.pnum >= 0) {
 		/* seperate the printfs so the server message can have a color */
@@ -1571,28 +1570,11 @@ void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
 	char		*s;
 	int			i;
 
-#if 0
-	/* if recording demos, copy the message out */
-	if (cl_shownet->integer == 1)
-		Com_Printf("%i ", dbuffer_len(msg));
-	else if (cl_shownet->integer >= 2)
-		Com_Printf("------------------\n");
-#endif
-
 	/* parse the message */
 	if (cmd == -1)
 		return;
 
-#if 0
-	if (cl_shownet->integer >= 2) {
-		if (!svc_strings[cmd])
-			Com_Printf("%3i:BAD CMD %i\n", net_message.readcount-1,cmd);
-		else
-			CL_ShowNet(svc_strings[cmd]);
-	}
-#endif
-
-		/* other commands */
+	/* commands */
 	switch (cmd) {
 	case svc_nop:
 /*		Com_Printf("svc_nop\n"); */

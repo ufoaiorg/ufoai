@@ -115,11 +115,6 @@ typedef enum {
  * @sa client_static_t
  */
 typedef struct client_state_s {
-	int timeoutcount;
-
-	int timedemo_frames;
-	int timedemo_start;
-
 	qboolean refresh_prepped;	/**< false if on new level or new ref dll */
 	qboolean sound_prepped;		/**< ambient sounds can start */
 	qboolean force_refdef;		/**< vid has changed, so we can't use a paused refdef */
@@ -147,7 +142,6 @@ typedef struct client_state_s {
 	int numAliensSpotted;
 
 	/** server state information */
-	qboolean attractloop;		/**< running the attract loop, any key will menu */
 	int servercount;			/**< server identification for prespawns */
 	char gamedir[MAX_QPATH];
 	int pnum;
@@ -217,11 +211,6 @@ typedef struct client_static_s {
 	int serverProtocol;			/**< in case we are doing some kind of version hack */
 
 	int challenge;				/**< from the server to use for connecting */
-
-	/* demo recording info must be here, so it isn't cleared on level change */
-	qboolean demorecording;
-	qboolean demowaiting;		/**< don't record until a non-delta message is received */
-	qFILE demofile;
 
 	/** needs to be here, because server can be shutdown, before we see the ending screen */
 	int team;
@@ -304,7 +293,6 @@ extern cvar_t *cl_show_tooltips;
 extern cvar_t *cl_show_cursor_tooltips;
 extern cvar_t *sensitivity;
 extern cvar_t *cl_logevents;
-extern cvar_t *cl_timedemo;
 extern cvar_t *cl_centerview;
 extern cvar_t *cl_worldlevel;
 extern cvar_t *cl_selected;

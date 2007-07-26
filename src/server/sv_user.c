@@ -55,19 +55,6 @@ static void stufftext (client_t *client, const char *fmt, ...)
 }
 
 /**
- * @brief
- */
-static void SV_BeginDemoserver (void)
-{
-	char name[MAX_OSPATH];
-
-	Com_sprintf(name, sizeof(name), "demos/%s", sv.name);
-	FS_FOpenFile(name, &sv.demofile);
-	if (!sv.demofile.f)
-		Com_Error(ERR_DROP, "Couldn't open %s\n", name);
-}
-
-/**
  * @brief Sends the first message from the server to a connected client.
  * This will be sent on the initial connection and upon each server load.
  * Client reads via CL_ParseServerData in cl_parse.c
@@ -76,8 +63,6 @@ static void SV_New_f (void)
 {
 	const char *gamedir;
 	int playernum;
-
-/*	edict_t		*ent; */
 
 	Com_DPrintf("New() from %s\n", sv_client->name);
 
@@ -92,23 +77,13 @@ static void SV_New_f (void)
 		return;
 	}
 
-	/* demo servers just dump the file message */
-	if (sv.state == ss_demo) {
-		SV_BeginDemoserver();
-		return;
-	}
-
 	/* client state to prevent multiple new from causing high cpu / overflows. */
 	sv_client->state = cs_spawning;
 
 	/* serverdata needs to go over for all types of servers */
 	/* to make sure the protocol is right, and to set the gamedir */
 	gamedir = Cvar_VariableString("fs_gamedir");
-
-	if (sv.state == ss_pic)
-		playernum = -1;
-	else
-		playernum = sv_client - svs.clients;
+	playernum = sv_client - svs.clients;
 
 	/* send the serverdata */
 	{
@@ -116,7 +91,6 @@ static void SV_New_f (void)
 		NET_WriteByte(msg, svc_serverdata);
 		NET_WriteLong(msg, PROTOCOL_VERSION);
 		NET_WriteLong(msg, svs.spawncount);
-		NET_WriteByte(msg, sv.attractloop);
 		NET_WriteString(msg, gamedir);
 
 		NET_WriteShort(msg, playernum);
