@@ -1361,6 +1361,24 @@ int AII_GetSlotItems (aircraftItemType_t type, aircraft_t *aircraft)
 }
 
 /**
+* @brief Check if the aircraft has weapon and ammo
+* @param[in] aircraft The aircraft to count the items for (may not be NULL)
+* @return qtrue if the aircraft can fight, qflase else
+*/
+extern int AII_AircraftCanShoot (aircraft_t *aircraft)
+{
+	int i;
+
+	assert(aircraft);
+
+	for (i = 0; i < aircraft->maxWeapons; i++)
+		if (aircraft->weapons[i].itemIdx >= 0 && aircraft->weapons[i].ammoIdx >= 0 && aircraft->weapons[i].ammoLeft > 0)
+			return qtrue;
+
+	return qfalse;
+}
+
+/**
  * @brief Translate a weight int to a translated string
  *
  * @sa itemWeight_t

@@ -49,6 +49,7 @@ typedef struct aircraftProjectile_s {
 	int bulletIdx;			/**< idx of the bullet in bulletPos array (only used if the weapon fires bullets) */
 } aircraftProjectile_t;
 
+extern int AIRFIGHT_ChooseWeapon(aircraftSlot_t *slot, int maxSlot, vec3_t pos, vec3_t targetPos);
 extern void AIRFIGHT_ExecuteActions(aircraft_t* air, aircraft_t* ufo);
 extern void AIRFIGHT_ActionsAfterAirfight(aircraft_t* shooter, aircraft_t* aircraft, qboolean phalanxWon);
 extern void AIRFIGHT_CampaignRunProjectiles(int dt);

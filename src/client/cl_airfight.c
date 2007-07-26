@@ -208,7 +208,7 @@ static void AIRFIGHT_MissTarget (int idx)
  * @param[in] targetpos Pointer to the aimed aircraft.
  * @return indice of the slot to use (in array weapons[]), -1 if no weapon to use atm, -2 if no weapon to use at all (no ammo left).
  */
-static int AIRFIGHT_ChooseWeapon (aircraftSlot_t *slot, int maxSlot, vec3_t pos, vec3_t targetPos)
+extern int AIRFIGHT_ChooseWeapon (aircraftSlot_t *slot, int maxSlot, vec3_t pos, vec3_t targetPos)
 {
 	int slotIdx = -2;
 	int i, ammoIdx;
@@ -344,7 +344,7 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 		if (shooter->type == AIRCRAFT_UFO) {
 			if (shooter->baseTargetIdx == -1)
 				UFO_FleePhalanxAircraft(shooter, target->pos);
-			else if (gd.bases[shooter->baseTargetIdx].hasMissile || gd.bases[shooter->baseTargetIdx].hasLaser)
+			else
 				UFO_FleePhalanxAircraft(shooter, gd.bases[shooter->baseTargetIdx].pos);
 		} else
 			AIR_AircraftReturnToBase(shooter);
