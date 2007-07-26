@@ -904,8 +904,8 @@ static void E_EmployeeHire_f (void)
 		plus = employeeListNode->textScroll;
 	}
 
-	/* Some sanity checks. */
-	if (employeeCategory >= MAX_EMPL && employeeCategory < EMPL_SOLDIER)
+	/* Some sanity checks (is employeeCategory valid?). */
+	if (employeeCategory < EMPL_SOLDIER || employeeCategory >= MAX_EMPL)
 		return;
 
 	if (num + plus >= employeesInCurrentList || num - minus < 0)
