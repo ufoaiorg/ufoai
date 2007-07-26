@@ -282,9 +282,6 @@ void S_Init (void)
 	/* @todo: make openal the default when it is working (i.e. change 0 below to a 1) */
 	snd_openal = Cvar_Get("snd_openal", "0", CVAR_ARCHIVE, "use OpenAL");
 	snd_ref = Cvar_Get("snd_ref", "sdl", CVAR_ARCHIVE, "Sound renderer libary name - default is sdl");
-	/* don't restart right again */
-	snd_ref->modified = qfalse;
-	snd_openal->modified = qfalse;
 
 	S_OGG_Init();
 
@@ -298,10 +295,13 @@ void S_Init (void)
 		}
 #else
 		Cvar_SetValue("snd_openal", 0);
-		snd_openal->modified = qfalse;
 		Com_Printf("No OpenAL support compiled into this binary\n");
 #endif
 	}
+
+	/* don't restart right again */
+	snd_ref->modified = qfalse;
+	snd_openal->modified = qfalse;
 
 	if (!snd_openal->integer) {
 		char lib[MAX_OSPATH];
