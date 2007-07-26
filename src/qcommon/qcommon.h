@@ -181,7 +181,7 @@ enum svc_ops_e {
 	svc_centerprint,			/**< [string] to put in center of the screen */
 	svc_playerinfo,				/**< variable */
 	svc_event,					/**< ... */
-        svc_oob = 0xff
+	svc_oob = 0xff
 };
 
 /*============================================== */
