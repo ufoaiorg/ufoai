@@ -563,6 +563,7 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 {
 	base_t *base;
 	int damage = 0;
+	int i;
 
 	assert(projectile);
 	base = gd.bases + projectile->aimedBaseIdx;
@@ -578,21 +579,35 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 
 	if (base->batteryDamage <= 0) {
 		int rnd;
-		/* projectile destroyed turret */
+		/* projectile destroyed a base defense system */
 		base->batteryDamage = MAX_BATTERY_DAMAGE;
-		/* Add message to message-system. */
-		Com_Printf("You've lost a base defense system.\n");
-		/* FIXME the building should also be destroyed */
 		rnd = rand() % 2;
-		if (base->maxBatteries <= 0 && base->maxLasers <= 0) {
+		if (base->maxBatteries + base->maxLasers <= 0) {
 			rnd = -1;
 		} else if (rnd == 0 && base->maxBatteries <= 0)
 			rnd = 1;
 		else if (rnd == 1 && base->maxLasers <= 0)
 			rnd = 0;
 	
-		if (rnd >= 0)
-			BDEF_RemoveBattery (base, rnd, -1);
+		if (rnd == 0) {
+			/* Add message to message-system. */
+			MN_AddNewMessage(_("Base facility destroyed"), _("You've lost a missile battery system."), qfalse, MSG_CRASHSITE, NULL);
+			for (i = 0; i < gd.numBuildings[base->idx]; i++) {
+				if (gd.buildings[base->idx][i].buildingType == B_DEFENSE_MISSILE) {
+					B_BuildingDestroy(base, &gd.buildings[base->idx][i]);
+					break;
+				}
+			}
+		} else if (rnd == 1) {
+			/* Add message to message-system. */
+			MN_AddNewMessage(_("Base facility destroyed"), _("You've lost a laser battery system."), qfalse, MSG_CRASHSITE, NULL);
+			for (i = 0; i < gd.numBuildings[base->idx]; i++) {
+				if (gd.buildings[base->idx][i].buildingType == B_DEFENSE_LASER) {
+					B_BuildingDestroy(base, &gd.buildings[base->idx][i]);
+					break;
+				}
+			}
+		}
 	}
 
 	if (base->baseDamage <= 0) {
