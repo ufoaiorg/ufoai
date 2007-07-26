@@ -570,6 +570,8 @@ void NET_OOB_Printf (struct net_stream *s, const char *format, ...)
 
 /**
  * @brief
+ * @note Frees the msg buffer
+ * @sa NET_WriteConstMsg
  */
 void NET_WriteMsg (struct net_stream *s, struct dbuffer *buf)
 {
@@ -585,6 +587,8 @@ void NET_WriteMsg (struct net_stream *s, struct dbuffer *buf)
 
 /**
  * @brief
+ * @note Make sure that you free the msg buffer after you called this
+ * @sa NET_WriteMsg
  */
 void NET_WriteConstMsg (struct net_stream *s, const struct dbuffer *buf)
 {

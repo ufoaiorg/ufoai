@@ -141,6 +141,7 @@ static void SV_Configstrings_f (void)
 			NET_WriteByte(msg, svc_configstring);
 			NET_WriteShort(msg, i);
 			NET_WriteString(msg, sv.configstrings[i]);
+			/* enqueue and free msg */
 			NET_WriteMsg(sv_client->stream, msg);
 		}
 	}
