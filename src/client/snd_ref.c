@@ -284,6 +284,7 @@ void S_Init (void)
 	snd_ref = Cvar_Get("snd_ref", "sdl", CVAR_ARCHIVE, "Sound renderer libary name - default is sdl");
 	/* don't restart right again */
 	snd_ref->modified = qfalse;
+	snd_openal->modified = qfalse;
 
 	S_OGG_Init();
 
@@ -396,7 +397,7 @@ void S_Shutdown (void)
 		return;
 
 #ifdef HAVE_OPENAL
-	if (snd_openal->integer) {
+	if (!SND_Shutdown || snd_openal->integer) {
 		SND_OAL_Shutdown();
 	} else
 #endif
@@ -1156,8 +1157,9 @@ void S_Update (vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 		return;
 
 	/* did we switch the sound renderer */
-	if (snd_ref->modified) {
+	if (snd_ref->modified || snd_openal->modified) {
 		snd_ref->modified = qfalse;
+		snd_openal->modified = qfalse;
 		CL_Snd_Restart_f();
 	}
 
@@ -1234,7 +1236,7 @@ void S_Update (vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 	if (!snd_openal->integer) {
 		while (music.ovPlaying[0] && paintedtime + MAX_RAW_SAMPLES - 2048 > s_rawend)
 			S_OGG_Read();
-	} else {
+	} else if (music.ovPlaying[0]) {
 #ifdef HAVE_OPENAL
 		SND_OAL_Stream(&music);
 #endif

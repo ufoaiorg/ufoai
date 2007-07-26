@@ -278,7 +278,8 @@ qboolean S_OGG_Open (const char *filename)
 	Q_strncpyz(music.ovPlaying, checkFilename, sizeof(music.ovPlaying));
 	music.ovSection = 0;
 #ifdef HAVE_OPENAL
-	SND_OAL_StartStream(&music);
+	if (snd_openal->integer)
+		SND_OAL_StartStream(&music);
 #endif
 	return qtrue;
 }
