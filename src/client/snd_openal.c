@@ -28,9 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "snd_openal.h"
 
-static unsigned int alSource;
-static unsigned int alSampleSet;
-
 /* extern in system implementation */
 oalState_t	oalState;
 
@@ -48,6 +45,41 @@ static cvar_t *snd_openal_channels;
 #define SND_OAL_STREAMING_NUMBUFFERS 4
 ALuint streamingBuffers[SND_OAL_STREAMING_NUMBUFFERS];
 
+#define SND_OAL_Error() SND_OAL_ErrorPrint(__FILE__, __LINE__)
+
+/**
+ * @brief Checks for OpenAL errors
+ */
+static void SND_OAL_ErrorPrint (const char* file, const int line)
+{
+	int err = qalGetError();
+	if (err == ALC_NO_ERROR)
+		return;
+
+	Com_Printf("OpenAL error was raised at %s:%i) ", file, line);
+
+	switch (err) {
+	case ALC_INVALID_DEVICE:
+		Com_Printf("ALC_INVALID_DEVICE");
+		break;
+	case ALC_INVALID_CONTEXT:
+		Com_Printf("ALC_INVALID_CONTEXT");
+		break;
+	case ALC_INVALID_ENUM:
+		Com_Printf("ALC_INVALID_ENUM");
+		break;
+	case ALC_INVALID_VALUE:
+		Com_Printf("ALC_INVALID_VALUE");
+		break;
+	case ALC_OUT_OF_MEMORY:
+		Com_Printf("ALC_OUT_OF_MEMORY");
+		break;
+	default:
+		Com_Printf("%i", err);
+	};
+	Com_Printf("\n");
+}
+
 /**
  * @brief Shutdown function
  */
@@ -55,38 +87,6 @@ void SND_OAL_Shutdown (void)
 {
 	qalDeleteSources(snd_openal_numChannels + 1, sourceNames);
 	snd_openal_numChannels = 0;
-}
-
-/**
- * @brief
- */
-void SND_OAL_Painting (void)
-{
-
-}
-
-/**
- * @brief
- */
-void SND_OAL_Submit (void)
-{
-
-}
-
-/**
- * @brief
- */
-int SND_OAL_GetDMAPos (void)
-{
-	return 0;
-}
-
-/**
- * @brief
- */
-void SND_OAL_BeginPainting (void)
-{
-
 }
 
 /**
@@ -147,7 +147,8 @@ static void SND_OAL_AllocateChannels (void)
 				Com_Printf("..%i mix channels allocated.\n", snd_openal_numChannels);
 				Com_Printf("..streaming channel allocated.\n");
 				return;
-			}
+			} else
+				SND_OAL_Error();
 		}
 		Com_Printf("..not enough mix channels!\n");
 	}
@@ -169,6 +170,7 @@ qboolean SND_OAL_Init (char* device)
 		oalState.device = qalcOpenDevice((ALubyte*)device);
 	else
 		oalState.device = qalcOpenDevice(NULL);
+	SND_OAL_Error();
 
 	if (!oalState.device) {
 		Com_Printf("Error: OpenAL device (%s) could not be opened\n", device);
@@ -190,7 +192,7 @@ qboolean SND_OAL_Init (char* device)
 
 	qalcMakeContextCurrent(oalState.context);
 	/* clear error code */
-	qalGetError();
+	SND_OAL_Error();
 
 	SND_OAL_AllocateChannels();
 
@@ -209,24 +211,22 @@ qboolean SND_OAL_Init (char* device)
  */
 static qboolean SND_OAL_LoadFile (sfx_t* sfx, ALboolean loop)
 {
-	ALuint buffer;
-	ALenum error;
 	sfxcache_t *sc;
 
 	sc = S_LoadSound(sfx);
 	if (sc) {
-		qalGenBuffers(1, &buffer);
-		qalBufferData(buffer, sc->stereo, sc->data, sc->length, sc->speed);
-		qalSourceQueueBuffers(alSource, 1, &buffer);
+		qalGenBuffers(1, &sfx->bufferNum);
+		qalBufferData(sfx->bufferNum, sc->stereo, sc->data, sc->length, sc->speed);
+		qalSourceQueueBuffers(sfx->source, 1, &sfx->bufferNum);
 	} else
 		return qfalse;
 
 	/* Generate a single source, attach the buffer to it and start playing. */
-	qalGenSources(1, &alSource);
-	qalSourcei(alSource, AL_BUFFER, buffer);
+	qalGenSources(1, &sfx->source);
+	qalSourcei(sfx->source, AL_BUFFER, sfx->bufferNum);
 
 	/* Normally nothing should go wrong above, but one never knows... */
-	error = qalGetError(); /* FIXME */
+	SND_OAL_Error();
 	return qtrue;
 }
 
@@ -246,43 +246,81 @@ qboolean SND_OAL_LoadSound (sfx_t* sfx, qboolean looping)
 	}
 
 	/* set the pitch */
-	qalSourcef(alSource, AL_PITCH, 1.0f);
+	qalSourcef(sfx->source, AL_PITCH, 1.0f);
 	/* set the gain */
-	qalSourcef(alSource, AL_GAIN, 1.0f);
+	qalSourcef(sfx->source, AL_GAIN, 1.0f);
 	if (looping) {
 		/* set looping to true */
-		qalSourcei(alSource, AL_LOOPING, AL_TRUE);
+		qalSourcei(sfx->source, AL_LOOPING, AL_TRUE);
 	} else
-		qalSourcei(alSource, AL_LOOPING, AL_FALSE);
+		qalSourcei(sfx->source, AL_LOOPING, AL_FALSE);
 
 	return qtrue;
 }
 
 /**
  * @brief
- * @param[in] filename
  */
-qboolean SND_OAL_Stream (const music_t* music)
+static qboolean SND_OAL_PrepareStream (music_t* music)
+{
+	if (openal_playing || !music->ovInfo)
+		return qfalse;
+
+	if (music->ovInfo->channels == 1)
+		music->format = AL_FORMAT_MONO16;
+	else
+		music->format = AL_FORMAT_STEREO16;
+
+	qalGenBuffers(2, music->buffers);
+	SND_OAL_Error();
+	qalGenSources(1, &music->source);
+	SND_OAL_Error();
+
+	qalSourcefv(music->source, AL_POSITION, vec3_origin);
+	qalSourcefv(music->source, AL_VELOCITY, vec3_origin);
+	qalSourcefv(music->source, AL_DIRECTION, vec3_origin);
+	qalSourcef(music->source, AL_ROLLOFF_FACTOR, 0.0);
+	qalSourcei(music->source, AL_SOURCE_RELATIVE, AL_TRUE);
+	SND_OAL_Error();
+
+	openal_playing = qtrue;
+	return qtrue;
+}
+
+/**
+ * @brief Stream the background music via openAL
+ * @param[in] music
+ * @sa S_OGG_Stop
+ */
+qboolean SND_OAL_Stream (music_t* music)
 {
 	if (!openal_active)
 		return qfalse;
 
-	if (!openal_playing)
-		return qfalse;
+	if (openal_playing) {
+		qalBufferData(music->buffers[0], music->format, music->ovBuf, sizeof(music->ovBuf), music->ovInfo->rate);
+		SND_OAL_Error();
+		qalBufferData(music->buffers[1], music->format, music->ovBuf, sizeof(music->ovBuf), music->ovInfo->rate);
+		SND_OAL_Error();
+	} else {
+		/* no longer playing */
+		if (!music->ovInfo) {
+			openal_playing = qfalse;
+			qalSourceStop(music->source);
+			SND_OAL_Error();
+			qalDeleteSources(1, &music->source);
+			SND_OAL_Error();
+			qalDeleteBuffers(2, music->buffers);
+			SND_OAL_Error();
+			return qfalse;
+		} else if (!SND_OAL_PrepareStream(music)) {
+			return qfalse;
+		}
 
-/*	qalGenBuffers(1, &buffer);
-	qalBufferData(buffer, s_bgTrack.format, data, size, s_bgTrack.rate);
-	qalSourceQueueBuffers(alSource, 1, &buffer);*/
-
-	qalSourcei(alSource, AL_BUFFER, 0);
-	qalSourcei(alSource, AL_SOURCE_RELATIVE, AL_TRUE);
-	qalSourcefv(alSource, AL_POSITION, vec3_origin);
-	qalSourcefv(alSource, AL_VELOCITY, vec3_origin);
-	qalSourcef(alSource, AL_REFERENCE_DISTANCE, 1.0);
-	qalSourcef(alSource, AL_MAX_DISTANCE, 1.0);
-	qalSourcef(alSource, AL_ROLLOFF_FACTOR, 0.0);
-
-	qalSourcePlay(alSource);
+	/*	qalSourceQueueBuffers(music->source, 2, music->buffers);*/
+		qalSourcePlay(music->source);
+		SND_OAL_Error();
+	}
 	return qtrue;
 }
 
@@ -294,7 +332,7 @@ void SND_OAL_PlaySound (void)
 	if (!openal_active)
 		return;
 
-	qalSourcePlay(alSource);
+/*	qalSourcePlay(sfx->source);*/
 }
 
 /**
@@ -306,10 +344,13 @@ void SND_OAL_StopSound (void)
 
 	/* stop all the channels */
 	qalSourceStopv(snd_openal_numChannels, sourceNames);
+	SND_OAL_Error();
 
 	/* mark all channels as free */
-	for (i = 0; i < snd_openal_numChannels; i++)
+	for (i = 0; i < snd_openal_numChannels; i++) {
 		qalSourcei(sourceNames[i], AL_BUFFER, AL_NONE);
+		SND_OAL_Error();
+	}
 }
 
 /**
@@ -319,9 +360,6 @@ void SND_OAL_DestroySound (void)
 {
 	if (!openal_active)
 		return;
-
-	qalDeleteSources(1, &alSource);
-	qalDeleteBuffers(1, &alSampleSet);
 }
 
 #endif /* HAVE_OPENAL */

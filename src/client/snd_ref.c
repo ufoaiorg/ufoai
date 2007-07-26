@@ -40,7 +40,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static void S_Play_f(void);
 static void S_SoundList_f(void);
-void S_Update_(void);
 void S_StopAllSounds(void);
 
 channel_t* s_streamingChannel;
@@ -288,8 +287,6 @@ void S_Init (void)
 
 	S_OGG_Init();
 
-
-	/* FIXME: Error checking/wrong place here */
 	if (snd_openal->integer) {
 #ifdef HAVE_OPENAL
 		/* bindings */
@@ -351,12 +348,11 @@ void S_Init (void)
 			sound_started = 0;
 			return;
 		}
+		S_InitScaletable();
 	}
 
 	for (commands = r_commands; commands->name; commands++)
 		Cmd_AddCommand(commands->name, commands->function, commands->description);
-
-	S_InitScaletable();
 
 	sound_started = 1;
 	num_sfx = 0;
@@ -399,9 +395,11 @@ void S_Shutdown (void)
 	if (!sound_started)
 		return;
 
+#ifdef HAVE_OPENAL
 	if (snd_openal->integer) {
 		SND_OAL_Shutdown();
 	} else
+#endif
 		SND_Shutdown();
 	S_OGG_Stop();
 	S_OGG_Shutdown();
@@ -739,7 +737,8 @@ void S_IssuePlaysound (playsound_t * ps)
 	VectorCopy(ps->origin, ch->origin);
 	ch->fixed_origin = ps->fixed_origin;
 
-	S_Spatialize(ch);
+	if (!snd_openal->integer)
+		S_Spatialize(ch);
 
 	ch->pos = 0;
 	sc = S_LoadSound(ch->sfx);
@@ -871,17 +870,13 @@ void S_ClearBuffer (void)
 	else
 		clear = 0;
 
-	if (snd_openal->integer) {
-		SND_OAL_Painting();
-	} else
+	if (!snd_openal->integer)
 		SND_BeginPainting();
 
 	if (dma.buffer)
 		memset(dma.buffer, clear, dma.samples * dma.samplebits / 8);
 
-	if (snd_openal->integer) {
-		SND_OAL_Submit();
-	} else
+	if (!snd_openal->integer)
 		SND_Submit();
 }
 
@@ -1077,6 +1072,76 @@ void S_RawSamples (int samples, int rate, int width, int channels, byte * data, 
 }
 
 /**
+ * @brief
+ */
+static void GetSoundtime (void)
+{
+	int samplepos;
+	static int buffers;
+	static int oldsamplepos;
+	int fullsamples;
+
+	fullsamples = dma.samples / dma.channels;
+
+	/* it is possible to miscount buffers if it has wrapped twice between */
+	/* calls to S_Update.  Oh well. */
+	samplepos = SND_GetDMAPos();
+
+	if (samplepos < oldsamplepos) {
+		buffers++;				/* buffer wrapped */
+
+		if (paintedtime > 0x40000000) {	/* time to chop things off to avoid 32 bit limits */
+			buffers = 0;
+			paintedtime = fullsamples;
+			S_StopAllSounds();
+		}
+	}
+	oldsamplepos = samplepos;
+
+	soundtime = buffers * fullsamples + samplepos / dma.channels;
+}
+
+/**
+ * @brief Mix some sound
+ * @note Not called for OpenAL
+ */
+static void S_UpdateMixer (void)
+{
+	unsigned int samps, endtime;
+
+	if (!sound_started)
+		return;
+
+	SND_BeginPainting();
+
+	if (!dma.buffer)
+		return;
+
+	/* Updates DMA time */
+	GetSoundtime();
+
+	/* check to make sure that we haven't overshot */
+	if (paintedtime < soundtime) {
+		Com_DPrintf("S_UpdateMixer: overflow\n");
+		paintedtime = soundtime;
+	}
+
+	/* mix ahead of current position */
+	endtime = soundtime + snd_mixahead->integer * dma.speed;
+	/*endtime = (soundtime + 4096) & ~4095; */
+
+	/* mix to an even submission block size */
+	endtime = (endtime + dma.submission_chunk - 1)
+		& ~(dma.submission_chunk - 1);
+	samps = dma.samples >> (dma.channels - 1);
+	if (endtime - soundtime > samps)
+		endtime = soundtime + samps;
+
+	S_PaintChannels(endtime);
+	SND_Submit();
+}
+
+/**
  * @brief Called once each time through the main loop
  */
 void S_Update (vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
@@ -1109,7 +1174,7 @@ void S_Update (vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 	}*/
 
 	/* rebuild scale tables if volume is modified */
-	if (snd_volume->modified)
+	if (snd_volume->modified && !snd_openal->integer)
 		S_InitScaletable();
 
 	/* re-sync music.fading if music volume modified */
@@ -1134,7 +1199,8 @@ void S_Update (vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 			memset(ch, 0, sizeof(*ch));
 			continue;
 		}
-		S_Spatialize(ch);		/* respatialize channel */
+		if (!snd_openal->integer)
+			S_Spatialize(ch);		/* respatialize channel */
 		if (!ch->leftvol && !ch->rightvol) {
 			memset(ch, 0, sizeof(*ch));
 			continue;
@@ -1158,90 +1224,14 @@ void S_Update (vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 	}
 
 	/* mix some sound */
-	S_Update_();
+	if (!snd_openal->integer)
+		S_UpdateMixer();
 
-	while (music.ovPlaying[0] && paintedtime + MAX_RAW_SAMPLES - 2048 > s_rawend)
+	if (!snd_openal->integer) {
+		while (music.ovPlaying[0] && paintedtime + MAX_RAW_SAMPLES - 2048 > s_rawend)
+			S_OGG_Read();
+	} else if (music.ovPlaying[0])
 		S_OGG_Read();
-}
-
-/**
- * @brief
- */
-static void GetSoundtime (void)
-{
-	int samplepos;
-	static int buffers;
-	static int oldsamplepos;
-	int fullsamples;
-
-	fullsamples = dma.samples / dma.channels;
-
-	/* it is possible to miscount buffers if it has wrapped twice between */
-	/* calls to S_Update.  Oh well. */
-	if (snd_openal->integer) {
-		samplepos = SND_OAL_GetDMAPos();
-	} else
-		samplepos = SND_GetDMAPos();
-
-	if (samplepos < oldsamplepos) {
-		buffers++;				/* buffer wrapped */
-
-		if (paintedtime > 0x40000000) {	/* time to chop things off to avoid 32 bit limits */
-			buffers = 0;
-			paintedtime = fullsamples;
-			S_StopAllSounds();
-		}
-	}
-	oldsamplepos = samplepos;
-
-	soundtime = buffers * fullsamples + samplepos / dma.channels;
-}
-
-
-/**
- * @brief
- */
-void S_Update_ (void)
-{
-	unsigned int samps, endtime;
-
-	if (!sound_started)
-		return;
-
-	if (snd_openal->integer) {
-		SND_OAL_BeginPainting();
-	} else
-		SND_BeginPainting();
-
-	if (!dma.buffer)
-		return;
-
-	/* Updates DMA time */
-	GetSoundtime();
-
-	/* check to make sure that we haven't overshot */
-	if (paintedtime < soundtime) {
-		Com_DPrintf("S_Update_ : overflow\n");
-		paintedtime = soundtime;
-	}
-
-	/* mix ahead of current position */
-	endtime = soundtime + snd_mixahead->integer * dma.speed;
-	/*endtime = (soundtime + 4096) & ~4095; */
-
-	/* mix to an even submission block size */
-	endtime = (endtime + dma.submission_chunk - 1)
-		& ~(dma.submission_chunk - 1);
-	samps = dma.samples >> (dma.channels - 1);
-	if (endtime - soundtime > samps)
-		endtime = soundtime + samps;
-
-	S_PaintChannels(endtime);
-
-	if (snd_openal->integer) {
-		SND_OAL_Submit();
-	} else
-		SND_Submit();
 }
 
 /*

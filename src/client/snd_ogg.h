@@ -33,14 +33,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 
 typedef struct music_s {
-	OggVorbis_File ovFile; /**< currently playing ogg vorbis file */
-	char newFilename[MAX_QPATH]; /**< after fading out ovFile play newFilename */
-	char ovBuf[4096]; /**< ogg vorbis buffer */
-	int ovSection; /**< number of the current logical bitstream */
-	float fading; /**< current volume - if le zero play newFilename */
-	char ovPlaying[MAX_QPATH]; /**< currently playing ogg tracks basename */
-	int rate;
+	OggVorbis_File ovFile;			/**< currently playing ogg vorbis file */
+	vorbis_info* ovInfo;			/**< vorbis info struct */
+	char newFilename[MAX_QPATH];	/**< after fading out ovFile play newFilename */
+	char ovBuf[4096];				/**< ogg vorbis buffer */
+	int ovSection;					/**< number of the current logical bitstream */
+	float fading;					/**< current volume - if le zero play newFilename */
+	char ovPlaying[MAX_QPATH];		/**< currently playing ogg tracks basename */
 	unsigned format;
+#ifdef HAVE_OPENAL
+	unsigned int buffers[2];				/**< front and back buffers */
+	unsigned int source;					/**< audio source */
+#endif
 } music_t;
 
 extern music_t music;

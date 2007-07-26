@@ -214,12 +214,11 @@ static const ov_callbacks S_OGG_Callbacks = {
 qboolean S_OGG_Open (const char *filename)
 {
 	int length;
-	vorbis_info *vi;
 	char *checkFilename = NULL;
 
 	assert(filename);
 
-	if (snd_music_volume->value <= 0)
+	if (snd_music_volume->value <= 0.)
 		return qfalse;
 
 	if (!stream) {
@@ -234,11 +233,6 @@ qboolean S_OGG_Open (const char *filename)
 	if (checkFilename)
 		*checkFilename = '\0';
 
-	/* FIXME */
-	music.rate = 44100;
-#ifdef HAVE_OPENAL
-	music.format = AL_FORMAT_STEREO16;
-#endif
 	/* check running music */
 	if (music.ovPlaying[0]) {
 		if (!Q_strcmp(music.ovPlaying, filename)) {
@@ -271,14 +265,15 @@ qboolean S_OGG_Open (const char *filename)
 		return qfalse;
 	}
 
-	vi = ov_info(&music.ovFile, -1);
-	if ((vi->channels != 1) && (vi->channels != 2)) {
-		Com_Printf("%s has an unsupported number of channels: %i\n", filename, vi->channels);
+	music.ovInfo = ov_info(&music.ovFile, -1);
+	assert(music.ovInfo);
+	if ((music.ovInfo->channels != 1) && (music.ovInfo->channels != 2)) {
+		Com_Printf("%s has an unsupported number of channels: %i\n", filename, music.ovInfo->channels);
 		FS_FCloseFile(&stream->file);
 		return qfalse;
 	}
 
-/*	Com_Printf("Playing '%s'\n", filename); */
+	Com_Printf("Playing '%s'\n", filename);
 	Q_strncpyz(music.ovPlaying, filename, sizeof(music.ovPlaying));
 	music.ovSection = 0;
 	return qtrue;
@@ -296,8 +291,10 @@ void S_OGG_Stop (void)
 		return;
 
 	music.ovPlaying[0] = 0;
+	/* reset fading value */
 	music.fading = snd_music_volume->value;
 	ov_clear(&music.ovFile);
+	music.ovInfo = NULL;
 
 	FS_FCloseFile(&stream->file);
 }
@@ -322,6 +319,7 @@ int S_OGG_Read (void)
 		return 0;
 	}
 
+	assert(music.ovInfo);
 	/* read and resample */
 	/* this read function will use our callbacks to be even able to read from zip files */
 	res = ov_read(&music.ovFile, music.ovBuf, sizeof(music.ovBuf), 0, 2, 1, &music.ovSection);
@@ -332,13 +330,16 @@ int S_OGG_Read (void)
 		Com_Printf("S_OGG_Read: invalid stream section was supplied to libvorbisfile, or the requested link is corrupt\n");
 		res = 0;
 	}
-	S_RawSamples(res >> 2, music.rate, 2, 2, (byte *) music.ovBuf, music.fading);
-	if (*music.newFilename)
-		music.fading -= snd_fadingspeed->value;
 
 #ifdef HAVE_OPENAL
-	SND_OAL_Stream(&music);
+	if (snd_openal->integer) {
+		SND_OAL_Stream(&music);
+	} else
 #endif
+		S_RawSamples(res >> 2, music.ovInfo->rate, 2, 2, (byte *) music.ovBuf, music.fading);
+
+	if (*music.newFilename)
+		music.fading -= snd_fadingspeed->value;
 
 	/* end of file? */
 	if (!res) {
@@ -391,7 +392,7 @@ void S_OGG_Info (void)
 		Com_Printf("\nogg infos:\n");
 		Com_Printf("...currently playing: %s\n", music.ovPlaying);
 		for (i = 0; i < ov_streams(&music.ovFile); i++) {
-			vi = ov_info(&music.ovFile,i);
+			vi = music.ovInfo;
 			Com_Printf("...logical bitstream section %d information:\n", i + 1);
 			Com_Printf("......%ldHz %d channels bitrate %ldkbps serial number=%ld\n",
 				vi->rate, vi->channels, ov_bitrate(&music.ovFile,i)/1000, ov_serialnumber(&music.ovFile, i));
@@ -528,7 +529,6 @@ void S_OGG_List_f (void)
 sfxcache_t *S_OGG_LoadSFX (sfx_t *s)
 {
 	OggVorbis_File vorbisFile;
-	vorbis_info *vi;
 	qFILE file;
 	sfxcache_t *sc;
 	char *buffer;
@@ -572,26 +572,27 @@ sfxcache_t *S_OGG_LoadSFX (sfx_t *s)
 		return NULL;
 	}
 
-	vi = ov_info(&vorbisFile, -1);
-	if (vi->channels != 1 && vi->channels != 2) {
-		Com_Printf("Error unsupported .ogg file (unsupported number of channels: %i): %s\n", vi->channels, s->name);
+	music.ovInfo = ov_info(&vorbisFile, -1);
+	assert(music.ovInfo);
+	if (music.ovInfo->channels != 1 && music.ovInfo->channels != 2) {
+		Com_Printf("Error unsupported .ogg file (unsupported number of channels: %i): %s\n", music.ovInfo->channels, s->name);
 		ov_clear(&vorbisFile); /* Does FS_FCloseFile */
 		Mem_Free(s->stream);
 		return NULL;
 	}
 
 	samples = (int)ov_pcm_total(&vorbisFile, -1);
-	len = (int) ((double) samples * (double) dma.speed / (double) vi->rate);
-	len = len * 2 * vi->channels;
+	len = (int) ((double) samples * (double) dma.speed / (double) music.ovInfo->rate);
+	len = len * 2 * music.ovInfo->channels;
 
 	sc = s->cache = Mem_PoolAlloc(len + sizeof(sfxcache_t), cl_soundSysPool, 0);
 	sc->length = samples;
 	sc->loopstart = -1;
-	sc->speed = vi->rate;
+	sc->speed = music.ovInfo->rate;
 	sc->width = 2;
 
-	if (dma.speed != vi->rate) {
-		len = samples * 2 * vi->channels;
+	if (dma.speed != music.ovInfo->rate) {
+		len = samples * 2 * music.ovInfo->channels;
 		buffer = Mem_PoolAlloc(len, cl_soundSysPool, 0);
 	} else {
 		buffer = (char *)sc->data;
@@ -616,7 +617,7 @@ sfxcache_t *S_OGG_LoadSFX (sfx_t *s)
 		return NULL;
 	}
 
-	if (dma.speed != vi->rate) {
+	if (dma.speed != music.ovInfo->rate) {
 		S_ResampleSfx(s, sc->speed, sc->width, (byte*)buffer);
 		if ((void *)buffer != sc->data)
 			Mem_Free(buffer);

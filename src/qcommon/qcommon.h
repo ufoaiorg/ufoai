@@ -197,7 +197,7 @@ enum clc_ops_e {
 	clc_action,
 	clc_userinfo,				/**< [[userinfo string] */
 	clc_stringcmd,				/**< [string] message */
-        clc_oob = 0xff
+	clc_oob = 0xff
 };
 
 
