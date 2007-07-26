@@ -491,7 +491,7 @@ void G_SendInvisible (int team)
 	if (level.num_alive[team]) {
 		/* check visibility */
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
-			if (ent->inuse) {
+			if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)) {
 				/* check if he's visible */
 				vis = G_TestVis(team, ent, qfalse);
 

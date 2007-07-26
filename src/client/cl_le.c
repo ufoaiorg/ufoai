@@ -901,6 +901,22 @@ void LE_Cleanup (void)
 	}
 }
 
+#ifdef DEBUG
+/**
+ * @brief Shows a list of current know local entities with type and status
+ */
+void LE_List_f (void)
+{
+	int i;
+	le_t *le;
+
+	Com_Printf("number | entnum | type | inuse | invis | pnum | team\n");
+	for (i = 0, le = LEs; i < numLEs; i++, le++) {
+		Com_Printf("#%5i | #%5i | %4i | %5i | %5i | %4i | %4i\n",
+			i, le->entnum, le->type, le->inuse, le->invis, le->pnum, le->team);
+	}
+}
+#endif
 
 /*===========================================================================
  LE Tracing

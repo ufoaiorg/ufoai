@@ -680,6 +680,7 @@ void CL_SelectReactionFiremode_f(void);
 
 #ifdef DEBUG
 void CL_DisplayBlockedPaths_f(void);
+void LE_List_f(void);
 #endif
 void CL_ConditionalMoveCalc(struct routing_s *map, le_t *le, int distance);
 qboolean CL_ActorSelect(le_t * le);
