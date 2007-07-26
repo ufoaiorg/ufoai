@@ -1707,7 +1707,7 @@ actors ugv_phoenix
 {
 	neutral
 	{
-		soldiers/ugv_phoenix phoenix phoenix 0
+		soldiers/ugv_phoenix phoenix phoenix_turret 0
 	}
 }
 
