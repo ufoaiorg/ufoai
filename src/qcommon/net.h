@@ -31,8 +31,8 @@ struct sockaddr;
 typedef void stream_callback_func(struct net_stream *s);
 typedef void datagram_callback_func(struct datagram_socket *s, const char *buf, int len, struct sockaddr *from);
 
-qboolean start_server(const char *node, const char *service, stream_callback_func *func);
-void stop_server(void);
+qboolean SV_Start(const char *node, const char *service, stream_callback_func *func);
+void SV_Stop(void);
 
 struct datagram_socket *new_datagram_socket(const char *node, const char *service, datagram_callback_func *datagram_func);
 void send_datagram(struct datagram_socket *s, const char *buf, int len, struct sockaddr *to);

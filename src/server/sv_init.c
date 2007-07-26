@@ -985,8 +985,6 @@ static void discovery_callback (struct datagram_socket *s, const char *buf, int 
  */
 static void SV_InitGame (void)
 {
-/*	edict_t	*ent; */
-
 	if (svs.initialized) {
 		/* cause any connected clients to reconnect */
 		SV_Shutdown("Server restarted\n", qtrue);
@@ -1003,18 +1001,15 @@ static void SV_InitGame (void)
 	Cvar_GetLatchedVars();
 
 	svs.initialized = qtrue;
-
-/*	Cvar_FullSet("maxclients", "8", CVAR_SERVERINFO | CVAR_LATCH); */
-
 	svs.spawncount = rand();
 	svs.clients = Mem_PoolAlloc(sizeof(client_t) * sv_maxclients->integer, sv_genericPool, 0);
 
 	/* init network stuff */
 	if (sv_maxclients->integer > 1) {
-		start_server(NULL, Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->string, &SV_ReadPacket);
+		SV_Start(NULL, Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->string, &SV_ReadPacket);
 		svs.datagram_socket = new_datagram_socket(NULL, Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->string, &discovery_callback);
 	} else
-		start_server(NULL, NULL, &SV_ReadPacket);
+		SV_Start(NULL, NULL, &SV_ReadPacket);
 
 	/* heartbeats will always be sent to the ufo master */
 	svs.last_heartbeat = -99999;	/* send immediately */
@@ -1045,8 +1040,7 @@ void SV_Map (const char *levelstring, const char *assembly)
 	char *ch;
 	int l;
 
-	if (sv.state == ss_dead)
-		SV_InitGame();			/* the game is just starting */
+	SV_InitGame();			/* the game is just starting */
 
 	Q_strncpyz(level, levelstring, sizeof(level));
 

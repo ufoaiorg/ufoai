@@ -949,7 +949,7 @@ void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 	int i;
 	close_datagram_socket(svs.datagram_socket);
 	svs.datagram_socket = NULL;
-	stop_server();
+	SV_Stop();
 
 	if (svs.clients) {
 		SV_FinalMessage(finalmsg, reconnect);

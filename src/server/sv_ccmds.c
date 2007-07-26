@@ -163,7 +163,6 @@ static void SV_Map_f (void)
 	if (!SV_CheckMap(map, assembly))
 		return;
 
-	sv.state = ss_dead;		/* don't save current level when changing */
 	SV_Map(map, assembly);
 
 	/* archive server state */
@@ -324,7 +323,7 @@ static void SV_KillServer_f (void)
 	SV_Shutdown("Server was killed.\n", qfalse);
 	close_datagram_socket(svs.datagram_socket);
 	svs.datagram_socket = NULL;
-	stop_server();
+	SV_Stop();
 }
 
 /**

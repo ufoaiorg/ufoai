@@ -30,14 +30,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../qcommon/ufotypes.h"
 
-void SV_Init(void)
+void SV_Init (void)
 {
 }
 
-void SV_Shutdown(const char *finalmsg, qboolean reconnect)
+void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 {
 }
 
-void SV_Frame(int time)
+void SV_Frame (int time)
 {
 }

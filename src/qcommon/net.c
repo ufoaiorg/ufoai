@@ -876,12 +876,12 @@ static int do_start_server (const struct addrinfo *addr)
 /**
  * @brief
  */
-qboolean start_server (const char *node, const char *service, stream_callback_func *func)
+qboolean SV_Start (const char *node, const char *service, stream_callback_func *func)
 {
 	if (!func)
 		return qfalse;
 
-	stop_server();
+	SV_Stop();
 
 	if (service) {
 		struct addrinfo *res;
@@ -920,7 +920,7 @@ qboolean start_server (const char *node, const char *service, stream_callback_fu
 /**
  * @brief
  */
-void stop_server (void)
+void SV_Stop (void)
 {
 	server_running = qfalse;
 	server_func = NULL;
