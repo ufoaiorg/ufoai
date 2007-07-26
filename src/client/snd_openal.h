@@ -32,9 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define OAL_OGG_BUFFER_SIZE (4096 * 4)
 
-
-extern cvar_t* snd_openal;
-
 qboolean SND_OAL_Init(char* device);
 qboolean SND_OAL_LoadSound(sfx_t *sfx, qboolean looping);
 void SND_OAL_PlaySound(sfx_t *sfx, vec3_t origin);

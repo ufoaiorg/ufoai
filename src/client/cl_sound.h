@@ -37,12 +37,13 @@ enum {
 	SOUND_CHANNEL_ACTOR		/**< actor die sound, footsteps */
 };
 
-typedef struct snd_stream_s
-{
+typedef struct snd_stream_s {
 	qFILE file;
 	int length;
 	int pos;
 } snd_stream_t;
+
+extern cvar_t* snd_openal;
 
 void S_Init(void);
 void S_Shutdown(void);
