@@ -298,6 +298,7 @@ void S_Init (void)
 		}
 #else
 		Cvar_SetValue("snd_openal", 0);
+		snd_openal->modified = qfalse;
 		Com_Printf("No OpenAL support compiled into this binary\n");
 #endif
 	}
