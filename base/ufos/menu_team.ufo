@@ -928,7 +928,7 @@ menu team
 		pos		"880 720"
 		texl	"0 0"
 		texh	"64 37"
-		click	{ cmd "team_toggle_list"  }
+		click	{ cmd "team_toggle_list;"  }
 	}
 
 	pic bt_go
