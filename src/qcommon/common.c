@@ -249,6 +249,7 @@ void Com_Error (int code, const char *fmt, ...)
 		CL_Shutdown();
 	}
 
+	/* send an receive net messages a last time */
 	wait_for_net(0);
 
 	if (logfile) {
@@ -286,6 +287,7 @@ void Com_Quit (void)
 #else
 	Cvar_WriteVariables(va("%s/config.cfg", FS_Gamedir()));
 #endif
+	/* send an receive net messages a last time */
 	wait_for_net(0);
 	if (logfile) {
 		fclose(logfile);
