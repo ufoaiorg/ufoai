@@ -348,10 +348,10 @@ qboolean SND_OAL_Stream (music_t* music)
 	return active;
 }
 
-
 /**
  * @brief
  * @sa SND_OAL_Stream
+ * @sa SND_OAL_StopStream
  */
 void SND_OAL_StartStream (music_t* music)
 {
@@ -373,6 +373,29 @@ void SND_OAL_StartStream (music_t* music)
 	SND_OAL_Error();
 
 	SND_OAL_StreamPlayback(music);
+}
+
+/**
+ * @brief
+ * @sa SND_OAL_StartStream
+ */
+void SND_OAL_StopStream (music_t* music)
+{
+	int queued;
+
+	qalSourceStop(music->source);
+	alGetSourcei(music->source, AL_BUFFERS_QUEUED, &queued);
+
+	while (queued--) {
+		ALuint buffer;
+		qalSourceUnqueueBuffers(music->source, 1, &buffer);
+		SND_OAL_Error();
+	}
+
+	qalDeleteSources(1, &music->source);
+	SND_OAL_Error();
+	qalDeleteBuffers(2, music->buffers);
+	SND_OAL_Error();
 }
 
 /**

@@ -214,7 +214,8 @@ static const ov_callbacks S_OGG_Callbacks = {
 qboolean S_OGG_Open (const char *filename)
 {
 	int length;
-	char *checkFilename = NULL;
+	char checkFilename[MAX_QPATH];
+	char *extension;
 
 	assert(filename);
 
@@ -229,18 +230,19 @@ qboolean S_OGG_Open (const char *filename)
 	}
 
 	/* strip extension */
-	checkFilename = strstr(filename, ".ogg");
-	if (checkFilename)
-		*checkFilename = '\0';
+	Q_strncpyz(checkFilename, filename, sizeof(checkFilename));
+	extension = strstr(checkFilename, ".ogg");
+	if (extension)
+		*extension = '\0';
 
 	/* check running music */
 	if (music.ovPlaying[0]) {
-		if (!Q_strcmp(music.ovPlaying, filename)) {
-			Com_DPrintf("S_OGG_Open: Already playing %s\n", filename);
+		if (!Q_strcmp(music.ovPlaying, checkFilename)) {
+			Com_DPrintf("S_OGG_Open: Already playing %s\n", checkFilename);
 			return qtrue;
 		} else {
-			if (snd_fadingenable->integer) {
-				Q_strncpyz(music.newFilename, filename, sizeof(music.newFilename));
+			if (!snd_openal->integer && snd_fadingenable->integer) {
+				Q_strncpyz(music.newFilename, checkFilename, sizeof(music.newFilename));
 				return qtrue;
 			} else
 				S_OGG_Stop();
@@ -250,9 +252,9 @@ qboolean S_OGG_Open (const char *filename)
 	music.fading = snd_music_volume->value;
 
 	/* find file */
-	length = FS_FOpenFile(va("music/%s.ogg", filename), &stream->file);
+	length = FS_FOpenFile(va("music/%s.ogg", checkFilename), &stream->file);
 	if (!stream->file.f && !stream->file.z) {
-		Com_Printf("Couldn't open 'music/%s.ogg'\n", filename);
+		Com_Printf("Couldn't open 'music/%s.ogg'\n", checkFilename);
 		return qfalse;
 	}
 
@@ -260,7 +262,7 @@ qboolean S_OGG_Open (const char *filename)
 
 	/* open ogg vorbis file */
 	if (ov_open_callbacks(stream, &music.ovFile, NULL, 0, S_OGG_Callbacks) != 0) {
-		Com_Printf("'music/%s.ogg' isn't a valid ogg vorbis file (error %i)\n", filename, errno);
+		Com_Printf("'music/%s.ogg' isn't a valid ogg vorbis file (error %i)\n", checkFilename, errno);
 		FS_FCloseFile(&stream->file);
 		return qfalse;
 	}
@@ -268,13 +270,12 @@ qboolean S_OGG_Open (const char *filename)
 	music.ovInfo = ov_info(&music.ovFile, -1);
 	assert(music.ovInfo);
 	if ((music.ovInfo->channels != 1) && (music.ovInfo->channels != 2)) {
-		Com_Printf("%s has an unsupported number of channels: %i\n", filename, music.ovInfo->channels);
+		Com_Printf("%s has an unsupported number of channels: %i\n", checkFilename, music.ovInfo->channels);
 		FS_FCloseFile(&stream->file);
 		return qfalse;
 	}
 
-	Com_Printf("Playing '%s'\n", filename);
-	Q_strncpyz(music.ovPlaying, filename, sizeof(music.ovPlaying));
+	Q_strncpyz(music.ovPlaying, checkFilename, sizeof(music.ovPlaying));
 	music.ovSection = 0;
 #ifdef HAVE_OPENAL
 	SND_OAL_StartStream(&music);
@@ -293,12 +294,15 @@ void S_OGG_Stop (void)
 	if (!stream)
 		return;
 
+#ifdef HAVE_OPENAL
+	SND_OAL_StopStream(&music);
+#endif
+
 	music.ovPlaying[0] = 0;
 	/* reset fading value */
 	music.fading = snd_music_volume->value;
 	ov_clear(&music.ovFile);
 	music.ovInfo = NULL;
-
 	FS_FCloseFile(&stream->file);
 }
 

@@ -42,6 +42,7 @@ void SND_OAL_UpdateListeners(vec3_t listener_origin);
 void SND_OAL_StopSound(void);
 void SND_OAL_DestroySound(void);
 void SND_OAL_StartStream(music_t* music);
+void SND_OAL_StopStream(music_t* music);
 qboolean SND_OAL_Stream(music_t* music);
 void SND_OAL_Shutdown(void);
 
