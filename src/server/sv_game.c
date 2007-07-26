@@ -52,7 +52,6 @@ static void PF_Unicast (player_t * player, struct dbuffer *msg)
 	}
 
 	NET_WriteMsg(client->stream, msg);
-	free_dbuffer(msg);
 }
 
 /**
