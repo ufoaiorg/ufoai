@@ -1252,7 +1252,7 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, int team)
 	/* Abilities -- random within the range */
 	abilityWindow = maxAbility - minAbility;
 	for (i = 0; i < ABILITY_NUM_TYPES; i++) {
-		chr->skills[i] = (frand() * abilityWindow) + minAbility;
+		chr->skills[i] = (frand() * abilityWindow) + minAbility;	/* Reminder: In case if abilityWindow==0 the ability will get set to minAbility. */
 	}
 
 	/* Skills -- random within the range then scaled (or not) based on natural ability */
@@ -1260,7 +1260,7 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, int team)
 	for (i = ABILITY_NUM_TYPES; i < SKILL_NUM_TYPES; i++) {
 
 		/* training is the base for where they fall within the range. */
-		training = (frand() * skillWindow) + minSkill;
+		training = (frand() * skillWindow) + minSkill;	/* Reminder: In case if skillWindow==0 the skill will get set to minSkill. */
 
 		if (TRAINING_SCALAR > 0) {
 			switch (i) {
@@ -1290,11 +1290,13 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, int team)
 			}
 
 			/* scale the abilitiy window to the skill window. */
-			windowScalar = skillWindow / abilityWindow;
-
-			/* scale the ability numbers to their place in the skill range. */
-			ability1 = ((ability1 - minAbility) * windowScalar) + minSkill;
-			ability2 = ((ability2 - minAbility) * windowScalar) + minSkill;
+			if (abilityWindow > 0 && skillWindow > 0) {
+				windowScalar = skillWindow / abilityWindow;
+				
+				/* scale the ability numbers to their place in the skill range. */
+				ability1 = ((ability1 - minAbility) * windowScalar) + minSkill;
+				ability2 = ((ability2 - minAbility) * windowScalar) + minSkill;
+			}
 
 			/* influence the skills, for better or worse, based on the character's natural ability. */
 			chr->skills[i] = ((TRAINING_SCALAR * training) + ability1 + ability2) / (TRAINING_SCALAR + 2);

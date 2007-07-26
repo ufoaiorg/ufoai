@@ -2278,12 +2278,13 @@ static void CL_GameGo (void)
 	Cvar_Set("map_dropship", aircraft->id);
 
 	/* retrieve the correct team */
-	for (i = 0, p = 0; i < cl_numnames->integer; i++)
-		if (CL_SoldierInAircraft(i, aircraft->idx)) {
+	for (i = 0, p = 0; i < aircraft->size; i++) {
+		if (aircraft->teamIdxs[i] != -1) {
 			assert(p < MAX_ACTIVETEAM);
-			baseCurrent->curTeam[p] = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
+			baseCurrent->curTeam[p] = E_GetHiredCharacter(baseCurrent, aircraft->teamTypes[i], aircraft->teamIdxs[i]);
 			p++;
 		}
+	}
 
 	/* manage inventory */
 	ccs.eMission = baseCurrent->storage; /* copied, including arrays inside! */
@@ -2512,8 +2513,9 @@ static void CL_UpdateCharacterStats (int won)
 
 	Com_DPrintf("CL_UpdateCharacterStats: baseCurrent: %s\n", baseCurrent->name);
 
+	/** @todo What about UGVs/Tanks? */
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
-		if (CL_SoldierInAircraft(i, gd.interceptAircraft) ) {
+		if (CL_SoldierInAircraft(i, EMPL_SOLDIER, gd.interceptAircraft) ) {
 			Com_DPrintf("CL_UpdateCharacterStats: searching for soldier: %i\n", i);
 			chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, -(idx+1));
 			assert(chr);
@@ -2706,7 +2708,7 @@ static void CL_GameResults_f (void)
 	/* Backward loop because gd.numEmployees[EMPL_SOLDIER] is decremented by E_DeleteEmployee */
 	for (i = gd.numEmployees[EMPL_SOLDIER] - 1; i >= 0; i--) {
 		/* if employee is marked as dead */
-		if (CL_SoldierInAircraft(i, gd.interceptAircraft))	/* DEBUG? */
+		if (CL_SoldierInAircraft(i, EMPL_SOLDIER, gd.interceptAircraft))	/* DEBUG? */
 			numberofsoldiers++;
 
 		Com_DPrintf("CL_GameResults_f - try to get player %i \n", i);

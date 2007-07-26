@@ -384,12 +384,12 @@ employee_t* E_GetHiredEmployee (const base_t* const base, employeeType_t type, i
  * @brief Return a given character pointer of a hired employee in the given base of a given type
  * @param[in] base Which base the employee should be hired in
  * @param[in] type Which employee type do we search
- * @param[in] idx Which employee id (in global employee array)
+ * @param[in] employee_idx Which employee idx (index in global employee array)
  * @return character_t pointer or NULL
  */
-character_t* E_GetHiredCharacter (const base_t* const base, employeeType_t type, int idx)
+character_t* E_GetHiredCharacter (const base_t* const base, employeeType_t type, int employee_idx)
 {
-	employee_t* employee = E_GetHiredEmployee(base, type, idx);	 /* Parameter sanity is checked here. */
+	employee_t* employee = E_GetHiredEmployee(base, type, employee_idx);	 /* Parameter sanity is checked here. */
 	if (employee)
 		return &(employee->chr);
 
@@ -533,8 +533,8 @@ qboolean E_UnhireEmployee (base_t* base, employeeType_t type, int idx)
 		switch (employee->type) {
 		case EMPL_SOLDIER:
 			/* Remove soldier from aircraft/team if he was assigned to one. */
-			if (CL_SoldierInAircraft(employee->idx, -1)) {
-				CL_RemoveSoldierFromAircraft(employee->idx, -1, base);
+			if (CL_SoldierInAircraft(employee->idx, employee->type, -1)) {
+				CL_RemoveSoldierFromAircraft(employee->idx, employee->type, -1, base);
 			}
 			break;
 		case EMPL_WORKER:
@@ -686,9 +686,9 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 	if (found) {
 		gd.numEmployees[type]--;
 
-		if (type == EMPL_SOLDIER) {
-			for (i = 0; i < gd.numAircraft; i++)
-				AIR_DecreaseAircraftTeamIdxGreaterThan(AIR_AircraftGetFromIdx(i),idx);
+		if (type == EMPL_SOLDIER || type == EMPL_ROBOT) {
+ 			for (i = 0; i < gd.numAircraft; i++)
+				AIR_DecreaseAircraftTeamIdxGreaterThan(AIR_AircraftGetFromIdx(i),idx, EMPL_SOLDIER);
 		}
 	} else {
 		Com_DPrintf("E_DeleteEmployee: Employee wasn't in the global list.\n");

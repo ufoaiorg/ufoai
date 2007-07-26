@@ -920,6 +920,16 @@ menu team
 	// ==================
 	// additional stuff
 	// ==================
+	pic bt_switch_list
+	{
+		tooltip	"_Toggle between assignment of soldiers and heavy equipment"
+		image	hud/buttons2
+		mousefx	true
+		pos		"880 720"
+		texl	"0 0"
+		texh	"64 37"
+		click	{ cmd "team_toggle_list"  }
+	}
 
 	pic bt_go
 	{

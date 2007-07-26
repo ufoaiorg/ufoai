@@ -214,7 +214,7 @@ void AIR_ListAircraft_f (void)
 			for (k = 0; k < aircraft->size; k++)
 				if (aircraft->teamIdxs[k] != -1) {
 					Com_Printf("......idx (in global array): %i\n", aircraft->teamIdxs[k]);
-					chr = E_GetHiredCharacter(base, EMPL_SOLDIER, aircraft->teamIdxs[k]);
+					chr = E_GetHiredCharacter(base, aircraft->teamTypes[k] , aircraft->teamIdxs[k]);
 					if (chr)
 						Com_Printf(".........name: %s\n", chr->name);
 					else
@@ -596,7 +596,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	baseCurrent->aircraftCurrent = aircraftID;
 
 	assert(aircraft);
-	CL_UpdateHireVar(aircraft);
+	CL_UpdateHireVar(aircraft, EMPL_SOLDIER);
 
 	Cvar_SetValue("mn_equipsoldierstate", CL_EquipSoldierState(aircraft));
 	Cvar_Set("mn_aircraftstatus", AIR_AircraftStatusToName(aircraft));
@@ -816,10 +816,11 @@ void AIR_DestroyAircraft (aircraft_t *aircraft)
 
 	for (i = 0; i < aircraft->size; i++) {
 		if (aircraft->teamIdxs[i] > -1) {
-			employee = &(gd.employees[EMPL_SOLDIER][aircraft->teamIdxs[i]]);
+			employee = &(gd.employees[aircraft->teamTypes[i]][aircraft->teamIdxs[i]]);
 			assert(employee);
-			E_DeleteEmployee(employee, EMPL_SOLDIER);
+			E_DeleteEmployee(employee, aircraft->teamTypes[i]);
 			aircraft->teamIdxs[i] = -1;
+			aircraft->teamTypes[i] = MAX_EMPL;
 		}
 	}
 
@@ -1804,15 +1805,18 @@ Aircraft functions related to team handling.
 void AIR_ResetAircraftTeam (aircraft_t *aircraft)
 {
 	memset(aircraft->teamIdxs, -1, aircraft->size * sizeof(int));
+	memset(aircraft->teamTypes, MAX_EMPL, aircraft->size * sizeof(employeeType_t));
 }
 
 /**
  * @brief Adds given employee to given aircraft.
  * @param[in] *aircraft Pointer to an aircraft, to which we will add employee.
  * @param[in] employee_idx Index of an employee in global array (?)
- * FIXME: is this responsible for adding soldiers to a team in dropship?
+ * @todo FIXME: is this responsible for adding soldiers to a team in dropship?
+ * 	ANSWER: yes it seems to be.
+ * @todo  do we need to update *aircraft->teamSize here as well?
  */
-void AIR_AddToAircraftTeam (aircraft_t *aircraft, int employee_idx)
+void AIR_AddToAircraftTeam (aircraft_t *aircraft, int employee_idx, employeeType_t employeeType)
 {
 	int i;
 
@@ -1821,9 +1825,12 @@ void AIR_AddToAircraftTeam (aircraft_t *aircraft, int employee_idx)
 		return;
 	}
 	if (*(aircraft->teamSize) < aircraft->size) {
+		/* Search for unused place in aircraft and fill it with  employee-data. */
+		/** @todo  do we need to update *aircraft->teamSize here as well? */
 		for (i = 0; i < aircraft->size; i++)
 			if (aircraft->teamIdxs[i] == -1) {
 				aircraft->teamIdxs[i] = employee_idx;
+				aircraft->teamTypes[i] = employeeType;
 				Com_DPrintf("AIR_AddToAircraftTeam: added idx '%d'\n", employee_idx);
 				break;
 			}
@@ -1838,17 +1845,22 @@ void AIR_AddToAircraftTeam (aircraft_t *aircraft, int employee_idx)
  * @brief Removes given employee to given aircraft.
  * @param[in] *aircraft Pointer to an aircraft, from which we will remove employee.
  * @param[in] employee_idx Index of an employee in global array (?)
- * FIXME: is this responsible for removing soldiers from a team in dropship?
+ * @todo FIXME: is this responsible for removing soldiers from a team in dropship?
+ * 	ANSWER: yes it seems to be.
+ * @todo  do we need to update *aircraft->teamSize here as well?
  */
-void AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, int employee_idx)
+void AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, int employee_idx, employeeType_t employeeType)
 {
 	int i;
 
 	assert(aircraft);
 
 	for (i = 0; i < aircraft->size; i++)
-		if (aircraft->teamIdxs[i] == employee_idx)	{
+		/* Search for this exact employee in the aircraft and make his place "unused". */
+		/** @todo  do we need to update *aircraft->teamSize here as well? */
+		if (aircraft->teamIdxs[i] == employee_idx && aircraft->teamTypes[i] == employeeType)	{
 			aircraft->teamIdxs[i] = -1;
+			aircraft->teamTypes[i] = MAX_EMPL;
 			Com_DPrintf("AIR_RemoveFromAircraftTeam: removed idx '%d' \n", employee_idx);
 			return;
 		}
@@ -1864,7 +1876,7 @@ void AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, int employee_idx)
  * @param[in] employee_idx deleted employee idx
  * @sa E_DeleteEmployee
  */
-void AIR_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft, int employee_idx)
+void AIR_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft, int employee_idx, employeeType_t employeeType)
 {
 	int i;
 
@@ -1872,7 +1884,7 @@ void AIR_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft, int employee_
 		return;
 
 	for (i = 0; i < aircraft->size; i++)
-		if (aircraft->teamIdxs[i] > employee_idx) {
+		if (aircraft->teamIdxs[i] > employee_idx && aircraft->teamTypes[i] == employeeType) {
 			aircraft->teamIdxs[i]--;
 			Com_DPrintf("AIR_DecreaseAircraftTeamIdxGreaterThan: decreased idx '%d' \n", aircraft->teamIdxs[i]+1);
 		}
@@ -1884,7 +1896,7 @@ void AIR_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft, int employee_
  * @param[in] employee_idx Employee index in global array.
  * @return qtrue if an employee with given index is assigned to given aircraft.
  */
-qboolean AIR_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx)
+qboolean AIR_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx, employeeType_t employeeType)
 {
 	int i;
 
@@ -1892,6 +1904,12 @@ qboolean AIR_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx)
 		Com_DPrintf("AIR_IsInAircraftTeam: No aircraft given\n");
 		return qfalse;
 	}
+	
+	if (employee_idx < 0 || employee_idx > gd.numEmployees[employeeType]) {
+		Com_Printf("AIR_IsInAircraftTeam: No valid employee_idx given %i\n", employee_idx);
+		return qfalse;
+	}
+
 #ifdef PARANOID
 	else {
 		if (aircraft->homebase)
@@ -1899,13 +1917,16 @@ qboolean AIR_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx)
 	}
 #endif
 
-	for (i = 0; i < aircraft->size; i++)
-		if (aircraft->teamIdxs[i] == employee_idx) {
+
+	for (i = 0; i < aircraft->size; i++) {	
+		if (aircraft->teamIdxs[i] == employee_idx && aircraft->teamTypes[i] == employeeType) {
+			/** @note This also skips the -1 entries in teamIdxs. */
 #ifdef DEBUG
 			Com_DPrintf("AIR_IsInAircraftTeam: found idx '%d' (homebase: '%s' - baseCurrent: '%s') \n", employee_idx, aircraft->homebase ? aircraft->homebase->name : "", baseCurrent ? baseCurrent->name : "");
 #endif
 			return qtrue;
 		}
+	}
 	Com_DPrintf("AIR_IsInAircraftTeam:not found idx '%d' \n", employee_idx);
 	return qfalse;
 }
@@ -2034,7 +2055,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			if (!employee)
 				Sys_Error("AIR_Load()... Could not get employee %i\n", i);
 
-			if (CL_SoldierInAircraft(employee->idx, aircraft->idx)) {
+			if (CL_SoldierInAircraft(employee->idx, employee->type, aircraft->idx)) {
 				base->curTeam[p] = &employee->chr;
 				p++;
 			}

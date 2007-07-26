@@ -194,7 +194,8 @@ typedef struct aircraft_s {
 	int idxInBase;				/**< Index in base. See also base_t->numAircraftInBase. */
 	/* pointer to base->numOnTeam[AIRCRAFT_ID] */
 	int *teamSize;				/**< how many soldiers on board */
-	int teamIdxs[MAX_ACTIVETEAM];	/**< array of team members on board employee idx*/
+	int teamIdxs[MAX_ACTIVETEAM];	/**< array of team members on board (global employee idx) */
+	employeeType_t teamTypes[MAX_ACTIVETEAM];	/**< array of team member types on board (employee type) */
 
 	aircraftSlot_t weapons[MAX_AIRCRAFTSLOT];	/**< Weapons assigned to aircraft */
 	int maxWeapons;					/**< Total number of weapon slots aboard this aircraft */
@@ -255,10 +256,10 @@ void AIR_DeleteAircraft(aircraft_t *aircraft);
 void AIR_DestroyAircraft(aircraft_t *aircraft);
 
 void AIR_ResetAircraftTeam(aircraft_t *aircraft);
-void AIR_AddToAircraftTeam(aircraft_t *aircraft,int idx);
-void AIR_RemoveFromAircraftTeam(aircraft_t *aircraft,int idx);
-void AIR_DecreaseAircraftTeamIdxGreaterThan(aircraft_t *aircraft,int idx);
-qboolean AIR_IsInAircraftTeam(aircraft_t *aircraft,int idx);
+void AIR_AddToAircraftTeam(aircraft_t *aircraft, int employee_idx, employeeType_t employeeType);
+void AIR_RemoveFromAircraftTeam(aircraft_t *aircraft, int employee_idx, employeeType_t employeeType);
+void AIR_DecreaseAircraftTeamIdxGreaterThan(aircraft_t *aircraft, int employee_idx, employeeType_t employeeType);
+qboolean AIR_IsInAircraftTeam(aircraft_t *aircraft, int employee_idx, employeeType_t employeeType);
 
 void CL_CampaignRunAircraft(int dt);
 aircraft_t *AIR_GetAircraft(const char *name);

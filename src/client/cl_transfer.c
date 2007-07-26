@@ -95,7 +95,7 @@ qboolean TR_CheckEmployee (employee_t *employee, base_t *srcbase, base_t *destba
 	/* @todo: check capacities also with current personel on transferlist. */
 
 	/* Is this a soldier assigned to aircraft? */
-	if ((employee->type == EMPL_SOLDIER) && CL_SoldierInAircraft(employee->idx, -1)) {
+	if ((employee->type == EMPL_SOLDIER) && CL_SoldierInAircraft(employee->idx, employee->type, -1)) {
 		Com_sprintf(popupText, sizeof(popupText), _("%s %s is assigned to aircraft and cannot be\ntransfered to another base.\n"),
 		gd.ranks[employee->chr.rank].shortname, employee->chr.name);
 		MN_Popup(_("Soldier in aircraft"), popupText);

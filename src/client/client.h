@@ -737,8 +737,8 @@ void CL_ParseResults(struct dbuffer *msg);
 void CL_SendCurTeamInfo(struct dbuffer * buf, character_t ** team, int num);
 void CL_AddCarriedToEq(equipDef_t * equip);
 void CL_ParseCharacterData(struct dbuffer *msg, qboolean updateCharacter);
-qboolean CL_SoldierInAircraft(int employee_idx, int aircraft_idx);
-void CL_RemoveSoldierFromAircraft(int employee_idx, int aircraft_idx, struct base_s *base);
+qboolean CL_SoldierInAircraft(int employee_idx, employeeType_t employeeType, int aircraft_idx);
+void CL_RemoveSoldierFromAircraft(int employee_idx, employeeType_t employeeType, int aircraft_idx, struct base_s *base);
 void CL_RemoveSoldiersFromAircraft(int aircraft_idx, struct base_s *base);
 
 /* cl_radar.c */
@@ -818,7 +818,7 @@ void CDAudio_RandomPlay(void);
 /* cl_team.c: CL_UpdateHireVar(), CL_ReloadAndRemoveCarried() */
 /* cl_team.c should have own header file afterall 24042007 Zenerka */
 qboolean CL_SoldierAwayFromBase(employee_t *soldier);
-void CL_UpdateHireVar(aircraft_t *aircraft);
+void CL_UpdateHireVar(aircraft_t *aircraft, employeeType_t employeeType);
 void CL_ReloadAndRemoveCarried(aircraft_t *aircraft, equipDef_t * equip);
 void CL_CleanTempInventory(base_t* base);
 
