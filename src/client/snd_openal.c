@@ -336,7 +336,7 @@ void SND_OAL_StopStream (music_t* music)
 	int queued;
 
 	qalSourceStop(music->source);
-	alGetSourcei(music->source, AL_BUFFERS_QUEUED, &queued);
+	qalGetSourcei(music->source, AL_BUFFERS_QUEUED, &queued);
 
 	while (queued--) {
 		ALuint buffer;
