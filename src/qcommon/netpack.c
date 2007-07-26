@@ -578,15 +578,20 @@ void NET_WriteMsg (struct net_stream *s, struct dbuffer *buf)
 	char tmp[4096];
 	int len = LittleLong(dbuffer_len(buf));
 	stream_enqueue(s, (char *)&len, 4);
+
 	while (dbuffer_len(buf)) {
 		int len = dbuffer_extract(buf, tmp, sizeof(tmp));
 		stream_enqueue(s, tmp, len);
 	}
+
+	/* and now free the buffer */
 	free_dbuffer(buf);
 }
 
 /**
- * @brief
+ * @brief Enquee the buffer in the net stream
+ * @note Same as NET_WriteMsg but deesn't free the buffer, use this if you send
+ * the same buffer to more than one connected clients
  * @note Make sure that you free the msg buffer after you called this
  * @sa NET_WriteMsg
  */
