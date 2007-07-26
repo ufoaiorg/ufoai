@@ -170,7 +170,7 @@ static qboolean AIRFIGHT_AddProjectile (int attackingBaseIdx, aircraft_t *attack
 	projectile->angle = 0.0f;
 	projectile->bulletIdx = -1;
 
-	/* @todo; imporve this test */
+	/* @todo; improve this test */
 	if (!Q_strncmp(aircraftItems[weaponSlot->itemIdx].id, "craft_weapon_shiva", MAX_VAR))
 		AIRFIGHT_CreateBullets(projectile);
 
@@ -210,7 +210,7 @@ static void AIRFIGHT_MissTarget (int idx)
  * @param[in] targetpos Pointer to the aimed aircraft.
  * @return indice of the slot to use (in array weapons[]), -1 if no weapon to use atm, -2 if no weapon to use at all (no ammo left).
  */
-extern int AIRFIGHT_ChooseWeapon (aircraftSlot_t *slot, int maxSlot, vec3_t pos, vec3_t targetPos)
+int AIRFIGHT_ChooseWeapon (aircraftSlot_t *slot, int maxSlot, vec3_t pos, vec3_t targetPos)
 {
 	int slotIdx = -2;
 	int i, ammoIdx;
@@ -358,7 +358,7 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
  * @note should be used against ufos.
  * @param[in] target Pointer to the aircraft that could be attacked.
  */
-extern void AIRFIGHT_BaseShootUFO (aircraft_t *target) {
+void AIRFIGHT_BaseShootUFO (aircraft_t *target) {
 	base_t*		base;
 	int slotIdx;
 
@@ -482,6 +482,8 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 			AIR_AircraftReturnToBase(shooter);
 	} else {
 		/* Destroy the aircraft and everything onboard */
+		/* FIXME: also remove the assigned items in the slots - like weapons, armours and so on
+		 * also make sure that the capacties are updates */
 		AIR_DestroyAircraft(aircraft);
 
 		/* change destination of other projectiles aiming aircraft */
@@ -590,7 +592,7 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 			rnd = 1;
 		else if (rnd == 1 && base->maxLasers <= 0)
 			rnd = 0;
-	
+
 		if (rnd == 0) {
 			/* Add message to message-system. */
 			MN_AddNewMessage(_("Base facility destroyed"), _("You've lost a missile battery system."), qfalse, MSG_CRASHSITE, NULL);
