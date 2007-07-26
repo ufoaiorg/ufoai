@@ -321,9 +321,6 @@ static void SV_KillServer_f (void)
 	if (!svs.initialized)
 		return;
 	SV_Shutdown("Server was killed.\n", qfalse);
-	close_datagram_socket(svs.datagram_socket);
-	svs.datagram_socket = NULL;
-	SV_Stop();
 }
 
 /**

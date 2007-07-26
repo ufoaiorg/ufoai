@@ -952,9 +952,6 @@ void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 {
 	client_t *cl;
 	int i;
-	close_datagram_socket(svs.datagram_socket);
-	svs.datagram_socket = NULL;
-	SV_Stop();
 
 	if (svs.clients) {
 		SV_FinalMessage(finalmsg, reconnect);
@@ -969,6 +966,10 @@ void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 
 	Master_Shutdown();
 	SV_ShutdownGameProgs();
+
+	close_datagram_socket(svs.datagram_socket);
+	svs.datagram_socket = NULL;
+	SV_Stop();
 
 	/* free current level */
 	memset(&sv, 0, sizeof(sv));
