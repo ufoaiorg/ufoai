@@ -127,7 +127,7 @@ static void UFO_SetUfoRandomDest (aircraft_t* ufo)
  * @brief Set new route to UFO so that it can flee
  * @todo Make aircraft flee in the direction opposite of v rather than choosing a random direction
  */
-extern void UFO_FleePhalanxAircraft (aircraft_t *ufo, vec2_t v)
+void UFO_FleePhalanxAircraft (aircraft_t *ufo, vec2_t v)
 {
 	vec2_t pos;
 	vec3_t initialVector, rotationAxis, dest;
@@ -144,6 +144,28 @@ extern void UFO_FleePhalanxAircraft (aircraft_t *ufo, vec2_t v)
 	MAP_MapCalcLine(ufo->pos, pos, &(ufo->route));
 	ufo->target = NULL;
 	ufo->status = AIR_FLEEING;
+}
+
+/**
+ * @brief Check if a UFO is the target of a base
+ * @param[in] num idx of the ufos in gd.ufos[]
+ * @param[in] base Pointer to the base
+ */
+static qboolean UFO_IsTargetOfBase (int num, base_t *base)
+{
+	int i;
+
+	for (i = 0; i < base->maxBatteries; i++) {
+		if (base->targetMissileIdx[i] == num)
+			return qtrue;
+	}
+
+	for (i = 0; i < base->maxLasers; i++) {
+		if (base->targetLaserIdx[i] == num)
+			return qtrue;
+	}
+
+	return qfalse;
 }
 
 /**
@@ -195,8 +217,8 @@ void UFO_CampaignRunUfos (int dt)
 				ufo->status = AIR_TRANSIT;
 				for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
 					/* check if the ufo can attack a base (if it's not too far) */
-					/* ufo can see a base only if it can fire back */
-					if (AII_BaseCanShoot(base) && (CP_GetDistance(ufo->pos, base->pos) < 60.0f)) {
+					/* ufo can see a base only if it shoots on it */
+					if (UFO_IsTargetOfBase(ufo - gd.ufos, base) && (CP_GetDistance(ufo->pos, base->pos) < 60.0f)) {
 						AIR_SendUfoPurchasingBase(ufo, base);
 						continue;
 					}
