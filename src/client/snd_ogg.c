@@ -345,7 +345,7 @@ int S_OGG_Read (void)
 	case OV_EBADLINK:
 		Com_Printf("S_OGG_Read: invalid stream section was supplied to libvorbisfile, or the requested link is corrupt\n");
 		res = 0;
-  break;
+		break;
 	}
 
 	S_RawSamples(res >> 2, music.ovInfo->rate, 2, 2, (byte *) music.ovBuf, music.fading);
