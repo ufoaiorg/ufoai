@@ -286,7 +286,6 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 		/* Create attributes. */
 		CHRSH_CharGenAbilitySkills(chr, teamValue);
 		/* Get model and name. */
-		chr->fieldSize = ACTOR_SIZE_NORMAL;
 		chr->skin = Com_GetModelAndName(team, chr);
 		break;
 	case EMPL_SCIENTIST:
@@ -295,7 +294,6 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 		CHRSH_CharGenAbilitySkills(chr, teamValue);
 		/* Get model and name. */
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_scientist", team);
-		chr->fieldSize = ACTOR_SIZE_NORMAL;
 		chr->skin = Com_GetModelAndName(teamDefName, chr);
 		break;
 	case EMPL_MEDIC:
@@ -304,7 +302,6 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 		CHRSH_CharGenAbilitySkills(chr, teamValue);
 		/* Get model and name. */
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_medic", team);
-		chr->fieldSize = ACTOR_SIZE_NORMAL;
 		chr->skin = Com_GetModelAndName(teamDefName, chr);
 		break;
 	case EMPL_WORKER:
@@ -313,7 +310,6 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 		CHRSH_CharGenAbilitySkills(chr, teamValue);
 		/* Get model and name. */
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_worker", team);
-		chr->fieldSize = ACTOR_SIZE_NORMAL;
 		chr->skin = Com_GetModelAndName(teamDefName, chr);
 		break;
 	case EMPL_ROBOT:
@@ -321,7 +317,6 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 		/* Create attributes. */
 		CHRSH_CharGenAbilitySkills(chr, teamValue);
 		/* Get model and name. */
-		chr->fieldSize = ACTOR_SIZE_2x2;
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_ugv", team);
 		chr->skin = Com_GetModelAndName(teamDefName, chr);
 		break;
