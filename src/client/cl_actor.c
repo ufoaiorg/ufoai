@@ -2417,6 +2417,7 @@ void CL_ActorStandCrouch_f (void)
 		return;
 
 	if (selActor->fieldSize == ACTOR_SIZE_2x2)
+		/** @todo future thoughs: maybe define this in team_*.ufo files instead? */
 		return;
 	/* send a request to toggle crouch to the server */
 	MSG_Write_PA(PA_STATE, selActor->entnum, STATE_CROUCHED);
@@ -3096,6 +3097,8 @@ void CL_ActorMouseTrace (void)
 	vec3_t mapNormal, P3, P2minusP1, P3minusP1;
 	vec3_t pA, pB, pC;
 	pos3_t testPos;
+	pos3_t actor2x2[3];
+
 	le_t *le;
 
 	/* get cursor position as a -1 to +1 range for projection */
@@ -3204,9 +3207,28 @@ void CL_ActorMouseTrace (void)
 	/* search for an actor on this field */
 	mouseActor = NULL;
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
-		if (le->inuse && !(le->state & STATE_DEAD) && (le->type == ET_ACTOR || le->type == ET_ACTOR2x2) && VectorCompare(le->pos, mousePos)) {
-			mouseActor = le;
-			break;
+		
+		if (le->inuse && !(le->state & STATE_DEAD) && (le->type == ET_ACTOR || le->type == ET_ACTOR2x2))
+			switch (le->fieldSize) {
+			case ACTOR_SIZE_NORMAL:
+				if (VectorCompare(le->pos, mousePos)) {
+					mouseActor = le;
+				}
+				break;
+			case ACTOR_SIZE_2x2:
+				VectorSet(actor2x2[0], le->pos[0]+1, le->pos[1], le->pos[2]);
+				VectorSet(actor2x2[1], le->pos[0], le->pos[1]+1, le->pos[2]);
+				VectorSet(actor2x2[2], le->pos[0]+1, le->pos[1]+1, le->pos[2]);
+				if (VectorCompare(le->pos, mousePos)
+				|| VectorCompare(actor2x2[0], mousePos)
+				|| VectorCompare(actor2x2[1], mousePos)
+				|| VectorCompare(actor2x2[2], mousePos)) {
+					mouseActor = le;
+				}
+				break;
+			default:
+				Com_Error(ERR_DROP, "Grid_MoveCalc: unknown actor-size: %i\n", le->fieldSize);
+				break;
 		}
 
 	/* calculate move length */

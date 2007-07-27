@@ -2917,6 +2917,7 @@ static byte Grid_MoveCheck (struct routing_s *map, pos3_t pos, byte sz, int l)
 #endif
 
 	for (dir = 0; dir < DIRECTIONS; dir++) {
+		/** @todo Why do we use the negative values here? */
 		dx = -dvecs[dir][0];
 		dy = -dvecs[dir][1];
 
