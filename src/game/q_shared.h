@@ -553,8 +553,8 @@ COLLISION DETECTION
 /* lower bits are stronger, and will eat weaker brushes completely */
 #define CONTENTS_SOLID          1   /**< an eye is never valid in a solid */
 #define CONTENTS_WINDOW         2   /**< translucent, but not watery */
+#define CONTENTS_BURN           8   /**< will keep burning when flamed */
 #define CONTENTS_WATER          32
-#define CONTENTS_MIST           64
 
 /* remaining contents are non-visible, and don't eat brushes */
 
@@ -580,9 +580,9 @@ COLLISION DETECTION
 
 /* content masks */
 #define MASK_ALL                (-1)
-#define MASK_SOLID              (CONTENTS_SOLID|CONTENTS_WINDOW)
-#define MASK_SHOT               (CONTENTS_SOLID|CONTENTS_ACTOR|CONTENTS_WEAPONCLIP|CONTENTS_WINDOW|CONTENTS_DEADACTOR)
-#define MASK_VISIBILILITY       (CONTENTS_SOLID|CONTENTS_WATER)
+#define MASK_SOLID              (CONTENTS_SOLID|CONTENTS_WINDOW|CONTENTS_BURN)
+#define MASK_SHOT               (CONTENTS_SOLID|CONTENTS_ACTOR|CONTENTS_WEAPONCLIP|CONTENTS_WINDOW|CONTENTS_DEADACTOR|CONTENTS_BURN)
+#define MASK_VISIBILILITY       (CONTENTS_SOLID|CONTENTS_WATER|CONTENTS_BURN)
 
 
 /* FIXME: eliminate AREA_ distinction? */
