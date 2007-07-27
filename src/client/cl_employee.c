@@ -633,7 +633,6 @@ employee_t* E_CreateEmployee (employeeType_t type)
 		break;
 	case EMPL_ROBOT:
 		CL_GenerateCharacter(employee, Cvar_VariableString("team"), type);
-		assert(employee->chr.fieldSize == ACTOR_SIZE_2x2);
 		break;
 	default:
 		break;
