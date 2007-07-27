@@ -1978,7 +1978,12 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 		MSG_WritePos(sb, gd.ufos[i].direction);
 		for (j = 0; j < presaveArray[PRE_AIRSTA]; j++)
 			MSG_WriteLong(sb, gd.ufos[i].stats[j]);
+		/* Save target of the ufo */
 		MSG_WriteShort(sb, gd.ufos[i].baseTargetIdx);
+		if (gd.ufos[i].target)
+			MSG_WriteShort(sb, gd.ufos[i].target->idx);
+		else
+			MSG_WriteShort(sb, -1);
 
 		/* save weapon slots */
 		MSG_WriteByte(sb, gd.ufos[i].maxWeapons);
@@ -2074,6 +2079,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			for (j = 0; j < presaveArray[PRE_AIRSTA]; j++)
 				MSG_ReadLong(sb);
 			MSG_ReadShort(sb);			/* baseTargetIdx */
+			MSG_ReadByte(sb);			/* target->idx */
 			/* read slots */
 			tmp_int = MSG_ReadByte(sb);
 			for (j = 0; j < tmp_int; j++) {
@@ -2113,6 +2119,11 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			for (j = 0; j < presaveArray[PRE_AIRSTA]; j++)
 				ufo->stats[i] = MSG_ReadLong(sb);
 			ufo->baseTargetIdx = MSG_ReadShort(sb);
+			tmp_int = MSG_ReadShort(sb);
+			if (tmp_int == -1)
+				ufo->target = NULL;
+			else
+				ufo->target = AIR_AircraftGetFromIdx(MSG_ReadShort(sb));
 			/* read weapon slot */
 			tmp_int = MSG_ReadByte(sb);
 			for (j = 0; j < tmp_int; j++) {

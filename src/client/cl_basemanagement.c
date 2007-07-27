@@ -3064,6 +3064,11 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WritePos(sb, aircraft->pos);
 			MSG_WriteShort(sb, aircraft->time);
 			MSG_WriteShort(sb, aircraft->point);
+			/* Save target of the ufo */
+			if (aircraft->target)
+				MSG_WriteShort(sb, aircraft->target - gd.ufos);
+			else
+				MSG_WriteShort(sb, -1);
 			/* save weapon slots */
 			MSG_WriteByte(sb, aircraft->maxWeapons);
 			for (l = 0; l < aircraft->maxWeapons; l++) {
@@ -3291,6 +3296,12 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			MSG_ReadPos(sb, aircraft->pos);
 			aircraft->time = MSG_ReadShort(sb);
 			aircraft->point = MSG_ReadShort(sb);
+			/* load aircraft target */
+			amount = MSG_ReadShort(sb);
+			if (amount == -1)
+				aircraft->target = NULL;
+			else
+				aircraft->target = gd.ufos + amount;
 			/* read weapon slot */
 			amount = MSG_ReadByte(sb);
 			for (l = 0; l < amount; l++) {
