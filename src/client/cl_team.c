@@ -1198,9 +1198,14 @@ static void CL_ToggleTeamList_f (void)
 		display_heavy_equipment_list = qfalse;
 		Cbuf_AddText("toggle_show_heavybutton\n");
 	} else {
-		Com_DPrintf("Changing to heavy equipment (tank) list.\n");
-		display_heavy_equipment_list = qtrue;
-		Cbuf_AddText("toggle_show_soldiersbutton\n");
+		if (gd.numEmployees[EMPL_ROBOT] > 0) {
+			Com_DPrintf("Changing to heavy equipment (tank) list.\n");
+			display_heavy_equipment_list = qtrue;
+			Cbuf_AddText("toggle_show_soldiersbutton\n");
+		} else {
+			/* Nothing to display/assign - staying in soldier-list. */
+			Com_DPrintf("No heavy equipment available.\n");
+		}
 	}
 	CL_MarkTeam_f();
 	Cbuf_AddText("team_select 0\n");
