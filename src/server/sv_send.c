@@ -76,7 +76,7 @@ void SV_BroadcastPrintf (int level, const char *fmt, ...)
 	va_end(argptr);
 
 	/* echo to console */
-	if (dedicated->integer) {
+	if (sv_dedicated->integer) {
 		char copy[1024];
 
 		va_start(argptr, fmt);

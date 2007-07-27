@@ -627,11 +627,11 @@ typedef struct serverList_s {
 	char *node;
 	char *service;
 	qboolean pinged;
-	char hostname[16];
+	char sv_hostname[16];
 	char mapname[16];
 	char version[8];
 	char gametype[8];
-	qboolean dedicated;
+	qboolean sv_dedicated;
 	int sv_maxclients;
 	int clients;
 	int serverListPos;
@@ -657,16 +657,16 @@ static void process_ping_reply (serverList_t *server, char *msg)
 		return;
 
 	server->pinged = qtrue;
-	Q_strncpyz(server->hostname, Info_ValueForKey(msg, "hostname"),
-		sizeof(server->hostname));
+	Q_strncpyz(server->sv_hostname, Info_ValueForKey(msg, "sv_hostname"),
+		sizeof(server->sv_hostname));
 	Q_strncpyz(server->version, Info_ValueForKey(msg, "version"),
 		sizeof(server->version));
 	Q_strncpyz(server->mapname, Info_ValueForKey(msg, "mapname"),
 		sizeof(server->mapname));
 	Q_strncpyz(server->gametype, Info_ValueForKey(msg, "gametype"),
 		sizeof(server->gametype));
-	server->dedicated = atoi(Info_ValueForKey(msg, "dedicated"));
 	server->clients = atoi(Info_ValueForKey(msg, "clients"));
+	server->sv_dedicated = atoi(Info_ValueForKey(msg, "sv_dedicated"));
 	server->sv_maxclients = atoi(Info_ValueForKey(msg, "sv_maxclients"));
 }
 
@@ -686,7 +686,7 @@ static void ping_callback (struct net_stream *s)
 
 	menuText[TEXT_LIST] = serverText;
 	Com_sprintf(string, sizeof(string), "%s\t\t\t%s\t\t\t%s\t(%s)\t%i/%i\n",
-		server->hostname,
+		server->sv_hostname,
 		server->mapname,
 		server->gametype,
 		server->version,
@@ -883,7 +883,7 @@ static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 		return;
 
 	/* check for server status response message */
-	value = Info_ValueForKey(s, "dedicated");
+	value = Info_ValueForKey(s, "sv_dedicated");
 	if (*value) {
 		Com_DPrintf("%s\n", s); /* status string */
 		/* server info cvars and users are seperated via newline */
@@ -910,11 +910,11 @@ static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 			if (FS_CheckFile(filename) != -1)
 				Cvar_Set("mn_mappic", filename);
 		}
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Servername:\t%s\n"), Info_ValueForKey(s, "hostname"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Servername:\t%s\n"), Info_ValueForKey(s, "sv_hostname"));
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Moralestates:\t%s\n"), Info_ValueForKey(s, "sv_enablemorale"));
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Gametype:\t%s\n"), Info_ValueForKey(s, "gametype"));
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Gameversion:\t%s\n"), Info_ValueForKey(s, "ver"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Dedicated server:\t%s\n"), Info_ValueForKey(s, "dedicated"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Dedicated server:\t%s\n"), Info_ValueForKey(s, "sv_dedicated"));
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Operating system:\t%s\n"), Info_ValueForKey(s, "sys_os"));
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Network protocol:\t%s\n"), Info_ValueForKey(s, "protocol"));
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Roundtime:\t%s\n"), Info_ValueForKey(s, "sv_roundtimelimit"));
@@ -931,10 +931,6 @@ static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 			if (!users)
 				break;
 			team = atoi(token);
-			/* skip null ping */
-			COM_Parse(&users);
-			if (!users)
-				break;
 			token = COM_Parse(&users);
 			if (!users)
 				break;
@@ -2473,7 +2469,7 @@ void CL_SlowFrame (int now, void *data)
  */
 void CL_Init (void)
 {
-	if (dedicated->value)
+	if (sv_dedicated->integer)
 		return;					/* nothing running on the client */
 
 	cl_localPool = Mem_CreatePool("Client: Local (per game)");

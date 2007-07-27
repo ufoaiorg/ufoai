@@ -49,7 +49,7 @@ void SV_SetMaster_f (void)
 	NET_OOB_Printf(s, "ping\n");
 	stream_finished(s);
 
-	if (!dedicated->integer)
+	if (!sv_dedicated->integer)
 		return;
 
 	svs.last_heartbeat = -9999999;
@@ -164,9 +164,6 @@ static void SV_Map_f (void)
 		return;
 
 	SV_Map(map, assembly);
-
-	/* archive server state */
-	Q_strncpyz(svs.mapcmd, map, sizeof(svs.mapcmd));
 }
 
 /**
@@ -204,7 +201,6 @@ static void SV_Status_f (void)
 	int i, j, l;
 	client_t *cl;
 	const char *s;
-	int ping;
 	char buf[256];
 
 	if (!svs.clients) {
@@ -213,21 +209,21 @@ static void SV_Status_f (void)
 	}
 	Com_Printf("map              : %s\n", sv.name);
 
-	Com_Printf("num ping name            address              \n");
-	Com_Printf("--- ---- --------------- ---------------------\n");
+	Com_Printf("num status  name            address              \n");
+	Com_Printf("--- ------- --------------- ---------------------\n");
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
 		if (!cl->state)
 			continue;
 		Com_Printf("%3i ", i);
 
-		if (cl->state == cs_connected || cl->state == cs_spawning)
-			Com_Printf("CNCT ");
+		if (cl->state == cs_connected)
+			Com_Printf("CONNECT ");
 		else if (cl->state == cs_zombie)
-			Com_Printf("ZMBI ");
-		else {
-			ping = cl->ping < 9999 ? cl->ping : 9999;
-			Com_Printf("%4i ", ping);
-		}
+			Com_Printf("ZOMBIE  ");
+		else if (cl->state == cs_spawning)
+			Com_Printf("SPAWNIN ");
+		else
+			Com_Printf("%7i ", cl->state);
 
 		Com_Printf("%s", cl->name);
 		l = 16 - strlen(cl->name);

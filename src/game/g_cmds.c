@@ -126,7 +126,7 @@ static void G_Say (player_t *player, qboolean arg0, qboolean team)
 
 	Q_strcat(text, "\n", sizeof(text));
 
-	if (dedicated->integer)
+	if (sv_dedicated->integer)
 		gi.cprintf(NULL, PRINT_CHAT, "%s", text);
 
 	for (j = 0; j < game.sv_maxplayersperteam; j++) {

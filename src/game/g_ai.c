@@ -739,7 +739,6 @@ player_t *AI_CreatePlayer (int team)
 			memset(p, 0, sizeof(player_t));
 			p->inuse = qtrue;
 			p->num = p - game.players;
-			p->ping = 0;
 			p->pers.team = team;
 			p->pers.ai = qtrue;
 			if (team == TEAM_CIVILIAN)

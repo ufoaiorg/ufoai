@@ -606,7 +606,7 @@ static void MN_StartServer_f (void)
 		return;
 	}
 
-	if (dedicated->integer > 0)
+	if (sv_dedicated->integer > 0)
 		Com_DPrintf("Dedicated server needs no team\n");
 	else if (!B_GetNumOnTeam()) {
 		Com_Printf("MN_StartServer_f: Multiplayer team not loaded, please choose your team now.\n");

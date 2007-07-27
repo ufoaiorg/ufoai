@@ -43,8 +43,8 @@ cvar_t *sv_enablemorale;
 cvar_t *sv_maxsoldiersperteam;
 cvar_t *sv_maxsoldiersperplayer;
 
-cvar_t *hostname;
-cvar_t *public_server;			/**< should heartbeats be sent */
+cvar_t *sv_hostname;
+cvar_t *sv_public;			/**< should heartbeats be sent */
 
 static cvar_t *sv_reconnect_limit;		/**< minimum seconds between connect messages */
 
@@ -165,7 +165,7 @@ static void SVC_Status (struct net_stream *s)
 	for (i = 0; i < sv_maxclients->integer; i++) {
 		cl = &svs.clients[i];
 		if (cl->state == cs_connected || cl->state == cs_spawning || cl->state == cs_spawned) {
-			Com_sprintf(player, sizeof(player), "%i %i \"%s\"\n", ge->ClientGetTeamNum(cl->player), cl->ping, cl->name);
+			Com_sprintf(player, sizeof(player), "%i \"%s\"\n", ge->ClientGetTeamNum(cl->player), cl->name);
 			NET_WriteRawString(msg, player);
 		}
 	}
@@ -195,7 +195,7 @@ static void SVC_Info (struct net_stream *s)
 	version = atoi(Cmd_Argv(1));
 
 	if (version != PROTOCOL_VERSION)
-		Com_sprintf(string, sizeof(string), "%s: wrong version (client: %i, host: %i)\n", hostname->string, version, PROTOCOL_VERSION);
+		Com_sprintf(string, sizeof(string), "%s: wrong version (client: %i, host: %i)\n", sv_hostname->string, version, PROTOCOL_VERSION);
 	else {
 		count = 0;
 		for (i = 0; i < sv_maxclients->integer; i++)
@@ -205,8 +205,8 @@ static void SVC_Info (struct net_stream *s)
 		infostring[0] = '\0';
 
 		Info_SetValueForKey(infostring, "protocol", va("%i", PROTOCOL_VERSION));
-		Info_SetValueForKey(infostring, "hostname", hostname->string);
-		Info_SetValueForKey(infostring, "dedicated", dedicated->string);
+		Info_SetValueForKey(infostring, "sv_hostname", sv_hostname->string);
+		Info_SetValueForKey(infostring, "sv_dedicated", sv_dedicated->string);
 		Info_SetValueForKey(infostring, "gametype", gametype->string);
 		Info_SetValueForKey(infostring, "mapname", sv.name);
 		Info_SetValueForKey(infostring, "clients", va("%i", count));
@@ -427,77 +427,10 @@ static void SV_ConnectionlessPacket (struct net_stream *stream, struct dbuffer *
 		Com_Printf("bad connectionless packet from %s:\n%s\n", stream_peer_name(stream, buf, sizeof(buf), qfalse), s);
 }
 
-
-/*============================================================================ */
-
 /**
- * @brief Updates the cl->ping variables
+ * @brief
  */
-static void SV_CalcPings (void)
-{
-	int i, j;
-	client_t *cl;
-	int total, count;
-
-	for (i = 0; i < sv_maxclients->integer; i++) {
-		cl = &svs.clients[i];
-		if (cl->state != cs_spawned)
-			continue;
-
-#if 0
-		if (cl->lastframe > 0)
-			cl->frame_latency[sv.framenum & (LATENCY_COUNTS - 1)] = sv.framenum - cl->lastframe + 1;
-		else
-			cl->frame_latency[sv.framenum & (LATENCY_COUNTS - 1)] = 0;
-#endif
-
-		total = 0;
-		count = 0;
-		for (j = 0; j < LATENCY_COUNTS; j++) {
-			if (cl->frame_latency[j] > 0) {
-				count++;
-				total += cl->frame_latency[j];
-			}
-		}
-		if (!count)
-			cl->ping = 0;
-		else
-#if 0
-			cl->ping = total * 100 / count - 100; /* div by zero! */
-#else
-			cl->ping = total / count;
-#endif
-
-		/* let the game dll know about the ping */
-		cl->player->ping = cl->ping;
-	}
-}
-
-
-/**
- * @brief Every few frames, gives all clients an allotment of milliseconds
- * for their command moves.  If they exceed it, assume cheating.
- */
-static void SV_GiveMsec (void)
-{
-	int i;
-	client_t *cl;
-
-	if (sv.framenum & 15)
-		return;
-
-	for (i = 0; i < sv_maxclients->integer; i++) {
-		cl = &svs.clients[i];
-		if (cl->state == cs_free)
-			continue;
-
-		cl->commandMsec = 1800;	/* 1600 + some slop */
-	}
-}
-
-
-void
-SV_ReadPacket(struct net_stream *s)
+void SV_ReadPacket (struct net_stream *s)
 {
 	client_t *cl = stream_data(s);
 	struct dbuffer *msg;
@@ -753,12 +686,6 @@ void SV_Frame (int now, void *data)
 	/* keep the random time dependent */
 	rand();
 
-	/* update ping based on the last known frame from all clients */
-	SV_CalcPings();
-
-	/* give the clients some timeslices */
-	SV_GiveMsec();
-
 	/* let everything in the world think and move */
 	SV_RunGameFrame();
 
@@ -784,10 +711,10 @@ void Master_Heartbeat (void)
 {
 	struct net_stream *s;
 
-	if (!dedicated || !dedicated->integer)
+	if (!sv_dedicated || !sv_dedicated->integer)
 		return;		/* only dedicated servers send heartbeats */
 
-	if (!public_server || !public_server->integer)
+	if (!sv_public || !sv_public->integer)
 		return;		/* a private dedicated game */
 
 	/* check for time wraparound */
@@ -815,11 +742,11 @@ void Master_Shutdown (void)
 	struct net_stream *s;
 
 	/* pgm post3.19 change, cvar pointer not validated before dereferencing */
-	if (!dedicated || !dedicated->integer)
+	if (!sv_dedicated || !sv_dedicated->integer)
 		return;					/* only dedicated servers send heartbeats */
 
 	/* pgm post3.19 change, cvar pointer not validated before dereferencing */
-	if (!public_server || !public_server->integer)
+	if (!sv_public || !sv_public->integer)
 		return;					/* a private dedicated game */
 
 	/* send to master */
@@ -877,7 +804,7 @@ void SV_Init (void)
 	masterserver_port = Cvar_Get("masterserver_port", "27900", CVAR_ARCHIVE, "Port of UFO:AI masterserver");
 	/* this cvar will become a latched cvar when you start the server */
 	sv_maxclients = Cvar_Get("sv_maxclients", "1", CVAR_SERVERINFO, "Max. connected clients");
-	hostname = Cvar_Get("hostname", _("noname"), CVAR_SERVERINFO | CVAR_ARCHIVE, "The name of the server that is displayed in the serverlist");
+	sv_hostname = Cvar_Get("sv_hostname", _("noname"), CVAR_SERVERINFO | CVAR_ARCHIVE, "The name of the server that is displayed in the serverlist");
 	timeout = Cvar_Get("timeout", "125", 0, "Timeout in seconds");
 	zombietime = Cvar_Get("zombietime", "2", 0, "Timeout for zombies (in sec)");
 	sv_showclamp = Cvar_Get("showclamp", "0", 0, NULL);
@@ -886,10 +813,10 @@ void SV_Init (void)
 	sv_maxsoldiersperteam = Cvar_Get("sv_maxsoldiersperteam", "4", CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers per team (see sv_maxsoldiersperplayer and sv_teamplay)");
 	sv_maxsoldiersperplayer = Cvar_Get("sv_maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers each player can controll (see maxsoldiers and sv_teamplay)");
 
-	public_server = Cvar_Get("public", "1", 0, "Should heartbeats be send to the masterserver");
+	sv_public = Cvar_Get("sv_public", "1", 0, "Should heartbeats be send to the masterserver");
 	sv_reconnect_limit = Cvar_Get("sv_reconnect_limit", "3", CVAR_ARCHIVE, "Minimum seconds between connect messages");
 
-	if (dedicated->integer)
+	if (sv_dedicated->integer)
 		Cvar_Set("sv_maxclients", "8");
 
 	sv_maxclients->modified = qfalse;

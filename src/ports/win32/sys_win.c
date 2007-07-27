@@ -482,7 +482,7 @@ void Sys_Init (void)
 
 	Cvar_Get("sys_os", "win", CVAR_SERVERINFO, NULL);
 
-	if (dedicated->integer) {
+	if (sv_dedicated->integer) {
 		HICON hIcon;
 		hwnd_Server = CreateDialog(global_hInstance, MAKEINTRESOURCE(IDD_SERVER_GUI), NULL, (DLGPROC)ServerWindowProc);
 
@@ -567,7 +567,7 @@ void Sys_ConsoleOutput (const char *string)
 	const char *p;
 	char *s;
 
-	if (!dedicated || !dedicated->integer)
+	if (!sv_dedicated || !sv_dedicated->integer)
 		return;
 
 	p = string;

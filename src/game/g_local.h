@@ -159,7 +159,7 @@ extern edict_t *g_edicts;
 extern cvar_t *sv_maxentities;
 extern cvar_t *password;
 extern cvar_t *sv_needpass;
-extern cvar_t *dedicated;
+extern cvar_t *sv_dedicated;
 
 extern cvar_t *logstats;
 extern FILE *logstatsfile;

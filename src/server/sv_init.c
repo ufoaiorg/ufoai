@@ -74,23 +74,6 @@ int SV_ModelIndex (const char *name)
 	return SV_FindIndex(name, CS_MODELS, MAX_MODELS, qtrue);
 }
 
-/**
- * @brief
- */
-int SV_SoundIndex (const char *name)
-{
-	return SV_FindIndex(name, CS_SOUNDS, MAX_SOUNDS, qtrue);
-}
-
-/**
- * @brief
- */
-int SV_ImageIndex (const char *name)
-{
-	return SV_FindIndex(name, CS_IMAGES, MAX_IMAGES, qtrue);
-}
-
-
 /*
  * ================
  * MAP ASSEMBLY
@@ -1017,7 +1000,7 @@ static void SV_InitGame (void)
 	/* init game */
 	SV_InitGameProgs();
 
-	if (sv_maxclients->integer != 1 && (dedicated->integer || public_server->integer))
+	if (sv_maxclients->integer != 1 && (sv_dedicated->integer || sv_public->integer))
 		SV_SetMaster_f();
 }
 

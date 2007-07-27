@@ -269,7 +269,7 @@ void Com_SetServerState(int state);
 char *Com_MD5File(const char *fn, int length);
 
 extern cvar_t *developer;
-extern cvar_t *dedicated;
+extern cvar_t *sv_dedicated;
 extern cvar_t *host_speeds;
 extern cvar_t *sv_maxclients;
 extern cvar_t *sv_reaction_leftover;

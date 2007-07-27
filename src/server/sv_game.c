@@ -507,8 +507,6 @@ void SV_InitGameProgs (void)
 	import.GridRecalcRouting = Grid_RecalcRouting;
 
 	import.modelindex = SV_ModelIndex;
-	import.soundindex = SV_SoundIndex;
-	import.imageindex = SV_ImageIndex;
 
 	import.setmodel = PF_SetModel;
 

@@ -131,9 +131,6 @@ typedef struct {
 
 	/** the *index functions create configstrings and some internal server state */
 	int (IMPORT *modelindex) (const char *name);
-	/** during spawning is caches the sound, after that it simply returns the index which refers to that sound */
-	int (IMPORT *soundindex) (const char *name);
-	int (IMPORT *imageindex) (const char *name);
 
 	void (IMPORT *setmodel) (edict_t * ent, const char *name);
 

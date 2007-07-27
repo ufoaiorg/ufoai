@@ -47,7 +47,7 @@ cvar_t *developer;
 cvar_t *timescale;
 cvar_t *fixedtime;
 cvar_t *logfile_active;			/* 1 = buffer log, 2 = flush after each print */
-cvar_t *dedicated;
+cvar_t *sv_dedicated;
 cvar_t *cl_maxfps;
 cvar_t *teamnum;
 cvar_t *gametype;
@@ -612,11 +612,11 @@ void Com_SetGameType (void)
 	for (i = 0; i < numGTs; i++) {
 		gt = &gts[i];
 		if (!Q_strncmp(gt->id, gametype->string, MAX_VAR)) {
-			if (dedicated->integer)
+			if (sv_dedicated->integer)
 				Com_Printf("set gametype to: %s\n", gt->id);
 			for (j = 0, list = gt->cvars; j < gt->num_cvars; j++, list++) {
 				Cvar_Set(list->name, list->value);
-				if (dedicated->integer)
+				if (sv_dedicated->integer)
 					Com_Printf("  %s = %s\n", list->name, list->value);
 			}
 			/*Com_Printf("Make sure to restart the map if you switched during a game\n");*/
@@ -806,9 +806,9 @@ void Qcommon_Init (int argc, const char **argv)
 	logfile_active = Cvar_Get("logfile", "1", 0, "0 = deacticate logfile, 1 = write normal logfile, 2 = flush on every new line");
 	gametype = Cvar_Get("gametype", "1on1", CVAR_ARCHIVE | CVAR_SERVERINFO, "Sets the multiplayer gametype - see gametypelist command for a list of all gametypes");
 #ifdef DEDICATED_ONLY
-	dedicated = Cvar_Get("dedicated", "1", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
+	sv_dedicated = Cvar_Get("sv_dedicated", "1", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
 #else
-	dedicated = Cvar_Get("dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
+	sv_dedicated = Cvar_Get("sv_dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
 
 	/* set this to false for client - otherwise Qcommon_Frame would set the initial values to multiplayer */
 	gametype->modified = qfalse;
@@ -824,7 +824,7 @@ void Qcommon_Init (int argc, const char **argv)
 	Cvar_Get("version", s, CVAR_NOSET, "Full version string");
 	Cvar_Get("ver", UFO_VERSION, CVAR_SERVERINFO | CVAR_NOSET, "Version number");
 
-	if (dedicated->integer)
+	if (sv_dedicated->integer)
 		Cmd_AddCommand("quit", Com_Quit, NULL);
 
 	Mem_Init();
@@ -862,7 +862,7 @@ void Qcommon_Init (int argc, const char **argv)
 
 	Com_ParseScripts();
 
-	if (!dedicated->integer)
+	if (!sv_dedicated->integer)
 		Cbuf_AddText("init\n");
 	else
 		Cbuf_AddText("dedicated_start\n");
@@ -889,7 +889,7 @@ void Qcommon_Init (int argc, const char **argv)
 	Mem_TouchGlobal();
 
 #ifndef DEDICATED_ONLY
-	if (!dedicated->integer) {
+	if (!sv_dedicated->integer) {
 		Schedule_Timer(Cvar_Get("cl_cinfreq", "30", CVAR_NOSET, NULL), &CIN_RunCinematic, NULL);
 		Schedule_Timer(cl_avifreq, &CL_AVIRecord, NULL);
 		Schedule_Timer(cl_maxfps, &CL_Frame, NULL);

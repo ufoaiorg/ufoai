@@ -717,7 +717,7 @@ void FS_SetGamedir (const char *dir)
 	}
 
 	/* flush all data, so it will be forced to reload */
-	if (dedicated && !dedicated->integer)
+	if (sv_dedicated && !sv_dedicated->integer)
 		Cbuf_AddText("vid_restart\nsnd_restart\n");
 
 	if (!Q_strncmp(dir, BASEDIRNAME, strlen(BASEDIRNAME)) || (*dir == 0)) {

@@ -47,7 +47,7 @@ cvar_t *sv_maxsoldiersperplayer;
 cvar_t *sv_enablemorale;
 cvar_t *sv_roundtimelimit;
 cvar_t *sv_maxentities;
-cvar_t *dedicated;
+cvar_t *sv_dedicated;
 cvar_t *developer;
 
 cvar_t *logstats;
@@ -130,7 +130,7 @@ static void InitGame (void)
 	gi.dprintf("==== InitGame ====\n");
 
 	/* noset vars */
-	dedicated = gi.cvar("dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
+	sv_dedicated = gi.cvar("sv_dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
 
 	/* latched vars */
 	sv_cheats = gi.cvar("cheats", "0", CVAR_SERVERINFO | CVAR_LATCH, "Activate cheats (see cheatcvars)");

@@ -67,8 +67,8 @@ typedef struct {
 
 typedef enum {
 	cs_free,					/**< can be reused for a new connection */
-	cs_zombie,					/**< client has been disconnected, but don't reuse */
-								/**< connection for a couple seconds */
+	cs_zombie,					/**< client has been disconnected, but don't reuse
+								 * connection for a couple seconds */
 	cs_connected,				/**< has been assigned to a client_t, but not in game yet */
 	cs_spawning,				/**< received new, not begin yet */
 	cs_spawned					/**< client is fully in game */
@@ -80,26 +80,12 @@ typedef enum {
 
 typedef struct client_s {
 	client_state_t state;
-
 	int lastframe;				/**< for delta compression */
-
-	int commandMsec;			/**< every seconds this is reset, if user
-								 * commands exhaust it, assume time cheating */
-
-	int frame_latency[LATENCY_COUNTS];
-	int ping;
-
 	char userinfo[MAX_INFO_STRING];
-
 	player_t *player;			/**< game client structure */
 	char name[32];				/**< extracted from userinfo, high bits masked */
 	int messagelevel;			/**< for filtering printed messages */
-
 	int lastconnect;
-
-	int curMsg;
-	int addMsg;
-
 	char peername[256];
 	struct net_stream *stream;
 } client_t;
@@ -118,15 +104,9 @@ typedef struct client_s {
 typedef struct {
 	qboolean initialized;		/**< sv_init has completed */
 	int realtime;				/**< always increasing, no clamping, etc */
-
 	struct datagram_socket *datagram_socket;
-
-	char mapcmd[MAX_TOKEN_CHARS];	/**< ie: *intro.cin+base  */
-
 	int spawncount;				/**< incremented each server start - used to check late spawns */
-
 	client_t *clients;			/**< [sv_maxclients->value]; */
-
 	int last_heartbeat;
 } server_static_t;
 
@@ -149,7 +129,7 @@ extern int mapcycleCount;		/**< number of maps in the cycle */
 extern server_static_t svs;		/**< persistant server info */
 extern server_t sv;				/**< local server */
 
-extern cvar_t *public_server;			/**< should heartbeats be sent */
+extern cvar_t *sv_public;			/**< should heartbeats be sent */
 extern cvar_t *masterserver_ip;
 extern cvar_t *masterserver_port;
 
@@ -163,14 +143,9 @@ extern struct dbuffer *sv_msg;
 void SV_DropClient(client_t *drop);
 
 int SV_ModelIndex(const char *name);
-int SV_SoundIndex(const char *name);
-int SV_ImageIndex(const char *name);
-
-void SV_WriteClientdataToMessage(client_t * client, sizebuf_t *msg);
 
 void SV_InitOperatorCommands(void);
 
-void SV_SendServerinfo(client_t *client);
 void SV_UserinfoChanged(client_t *cl);
 
 void Master_Heartbeat(void);
@@ -199,7 +174,6 @@ void SV_ExecuteClientMessage(client_t * cl, int cmd, struct dbuffer *msg);
 int SV_CountPlayers(void);
 
 /* sv_ccmds.c */
-void SV_ReadLevelFile(void);
 void SV_SetMaster_f(void);
 
 /* sv_game.c */

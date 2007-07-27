@@ -2270,7 +2270,7 @@ void Com_ParseScripts (void)
 			Com_ParseActors(name, &text);
 		else if (!Q_strncmp(type, "terrain", 7))
 			Com_ParseTerrain(name, &text);
-		else if (!dedicated->integer)
+		else if (!sv_dedicated->integer)
 			CL_ParseClientData(type, name, &text);
 	}
 
