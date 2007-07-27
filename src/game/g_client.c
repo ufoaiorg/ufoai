@@ -2262,7 +2262,6 @@ void G_ClientTeamInfo (player_t * player)
 			/* Receive fieldsize and get matching spawnpoint. */
 			dummyFieldSize = gi.ReadByte();
 			switch (dummyFieldSize) {
-			case 0:
 			case ACTOR_SIZE_NORMAL:
 				/* Find valid actor spawn fields for this player. */
 				ent = G_ClientGetFreeSpawnPoint(player, ET_ACTORSPAWN);

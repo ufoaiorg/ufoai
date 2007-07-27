@@ -921,7 +921,6 @@ static void CL_ActorAppear (struct dbuffer *msg)
 				&le->maxTU, &le->maxMorale, &le->maxHP);
 
 	switch (le->fieldSize) {
-	case 0:
 	case ACTOR_SIZE_NORMAL:
 		le->addFunc = CL_AddActor;
 		le->type = ET_ACTOR;

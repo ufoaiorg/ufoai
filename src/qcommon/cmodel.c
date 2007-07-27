@@ -2560,7 +2560,6 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, byte 
 		switch (actor_size) {
 		case -1: /* recursion */
 			size = ACTOR_SIZE_NORMAL;
-		case 0:
 		case ACTOR_SIZE_NORMAL:
 			poslen = 1;
 			break;
@@ -2577,7 +2576,6 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, byte 
 
 		for (j = 0; j < poslen; j++) {
 			switch (size) {
-			case 0:
 			case ACTOR_SIZE_NORMAL:
 				/* Check square against actor (poslist) */
 				if (x == poslist[j][0] && y == poslist[j][1] && z == poslist[j][2]) {
@@ -2651,7 +2649,6 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dir,
 	/** @todo But why is it also checked for (dir > 3) directions? Might be a coding-trick; if so it's not really easy to read -> better way?. */
 	/** @todo I think this and the next few lines need to be adapted to support 2x2 units. */
 	switch (actor_size) {
-	case 0:
 	case ACTOR_SIZE_NORMAL:
 		/* Range check of new values (1x1) */
 		if (nx < 0 || nx >= WIDTH || ny < 0 || ny >= WIDTH)
