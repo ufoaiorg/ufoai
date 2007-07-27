@@ -365,6 +365,7 @@ typedef struct {
 /** lower bits are stronger, and will eat weaker brushes completely */
 #define CONTENTS_SOLID			1	/**< an eye is never valid in a solid */
 #define CONTENTS_WINDOW			2	/**< translucent, but not watery */
+#define CONTENTS_BURN			8   /**< will keep burning when flamed */
 #define CONTENTS_WATER			32
 #define LAST_VISIBLE_CONTENTS	128
 
