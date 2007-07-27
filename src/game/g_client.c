@@ -2272,7 +2272,6 @@ void G_ClientTeamInfo (player_t * player)
 					continue;
 				}
 				ent->type = ET_ACTOR;
-				ent->fieldSize = ACTOR_SIZE_NORMAL;
 				break;
 			case ACTOR_SIZE_2x2:
 				/* Find valid actor spawn fields for this player. */
@@ -2284,7 +2283,6 @@ void G_ClientTeamInfo (player_t * player)
 				}
 				ent->type = ET_ACTOR2x2;
 				ent->morale = 100;
-				ent->fieldSize = ACTOR_SIZE_2x2;
 				break;
 			default:
 				gi.dprintf("G_ClientTeamInfo: unknown fieldSize for edict (%i)\n", dummyFieldSize);
@@ -2296,12 +2294,10 @@ void G_ClientTeamInfo (player_t * player)
 			level.num_spawned[ent->team]++;
 			ent->pnum = player->num;
 
-			Com_DPrintf("Team %i - player: %i\n", ent->team, player->num);
-
 			ent->chr.fieldSize = dummyFieldSize;
 			ent->fieldSize = ent->chr.fieldSize;
 
-			Com_DPrintf("Team %i - size: %i\n", ent->team, ent->fieldSize);
+			Com_DPrintf("Player: %i - team %i - size: %i\n", player->num, ent->team, ent->fieldSize);
 
 			gi.linkentity(ent);
 
