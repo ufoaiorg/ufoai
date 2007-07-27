@@ -341,7 +341,7 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
 {
 	char *mod;
 	qboolean akimbo;
-	char category;
+	char animationIndex;
 	const char *type;
 
 	if (!anim)
@@ -356,7 +356,7 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
 	/* determine relevant data */
 	akimbo = qfalse;
 	if (right == NONE) {
-		category = '0';
+		animationIndex = '0';
 		if (left == NONE)
 			type = "item";
 		else {
@@ -366,7 +366,7 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
 			type = csi.ods[left].type;
 		}
 	} else {
-		category = csi.ods[right].category;
+		animationIndex = csi.ods[right].animationIndex;
 		type = csi.ods[right].type;
 		if (left != NONE && !Q_strncmp(csi.ods[right].type, "pistol", 6) && !Q_strncmp(csi.ods[left].type, "pistol", 6))
 			akimbo = qtrue;
@@ -375,7 +375,7 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
 	if (!Q_strncmp(anim, "stand", 5) || !Q_strncmp(anim, "walk", 4)) {
 		Q_strncpyz(mod, anim, MAX_VAR);
 		mod += strlen(anim);
-		*mod++ = category;
+		*mod++ = animationIndex;
 		*mod++ = 0;
 	} else {
 		Q_strncpyz(mod, anim, MAX_VAR);

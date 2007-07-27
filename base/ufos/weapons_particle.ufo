@@ -7,7 +7,7 @@ item pbeampistol
 	model		weapons/pbeampistol/pbeampistol
 	weapon		true
 	type		pistol
-	category	2
+	animationindex	2
 	holdtwohanded	false
 	firetwohanded	false
 	shape		"0 0 2 2"
@@ -25,7 +25,7 @@ item pbeampistol_ammo
 	name		"_Pistol Particle Accelerator"
 	model		weapons/pbeampistol/pbeampistol_clip
 	type		ammo
-	category	0
+	animationindex	0
 	shape		"0 0 1 1"
 	center		"0 0 0"
 	scale		0.97
@@ -35,7 +35,7 @@ item pbeampistol_ammo
 
 	weapon_mod pbeampistol
 	{
-		firedef 
+		firedef
 		{
 			name	"_Snap Shot"
 			skill	close
@@ -54,7 +54,7 @@ item pbeampistol_ammo
 			dmgtype particlebeam
 			reaction	true
 		}
-		firedef 
+		firedef
 		{
 			name	"_Rapid Shots"
 			skill	close
@@ -86,7 +86,7 @@ item pbeamcannon
 	model		weapons/pbeamcannon/pbeamcannon
 	weapon		true
 	type		rifle
-	category	1
+	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
 	shape		"0 0 5 2"
@@ -104,7 +104,7 @@ item pbeamcannon_ammo
 	name		"_Cannon Particle Accelerator"
 	model		weapons/pbeamcannon/pbeamcannon_clip
 	type		ammo
-	category	0
+	animationindex	0
 	shape		"0 0 2 1"
 	center		"0 0 -0.2"
 	scale		1.0
@@ -114,7 +114,7 @@ item pbeamcannon_ammo
 
 	weapon_mod pbeamcannon
 	{
-		firedef 
+		firedef
 		{
 			name	"_Charged Blast"
 			skill	explosive
@@ -168,7 +168,7 @@ item pbeamrifle
 	model		weapons/pbeamrifle/pbeamrifle
 	weapon		true
 	type		rifle
-	category	1
+	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
 	shape		"0 0 5 2"
@@ -186,7 +186,7 @@ item pbeamrifle_ammo
 	name		"_Rifle Particle Accelerator"
 	model		weapons/pbeamrifle/pbeamrifle_clip
 	type		ammo
-	category	0
+	animationindex	0
 	shape		"0 0 1 1"
 	center		"0 0 -0.3"
 	scale		1.1
@@ -196,7 +196,7 @@ item pbeamrifle_ammo
 
 	weapon_mod pbeamrifle
 	{
-		firedef 
+		firedef
 		{
 			name	"_Aimed Shot"
 			skill	sniper
@@ -216,7 +216,7 @@ item pbeamrifle_ammo
 			dmgtype particlebeam
 			reaction	true
 		}
-		firedef 
+		firedef
 		{
 			name	"_Snap Shot"
 			skill	close

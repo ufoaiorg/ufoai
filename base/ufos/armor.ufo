@@ -2,7 +2,7 @@
 /*	steelblade is here for the combat knife
 	monomolecularblade is here for the kerrblade (and similar)
 	it ensures that the superior tech blades are much better against armour
-	and keeps the kerrblade scary 
+	and keeps the kerrblade scary
 */
 damagetypes standard
 {
@@ -25,7 +25,6 @@ item light
 	image		armor/light
 	model		soldiers/malelight/body
 	type		armor
-	category	3
 	shape		"0 0 3 4"
 	center		"0 0 -5"
 	scale		0.7
@@ -38,7 +37,7 @@ item light
 	{
 		normal	20
 		steelblade	80
-		monomolecularblade	10 
+		monomolecularblade	10
 		blast	40
 		fire	5
 		shock	5
@@ -51,7 +50,7 @@ item light
 	{
 		normal	3
 		steelblade	90
-		monomolecularblade	10 
+		monomolecularblade	10
 		blast	5
 		fire	2
 		shock	8
@@ -69,7 +68,6 @@ item medium
 	image		armor/medium
 	model		soldiers/malemedium/body
 	type		armor
-	category	3
 	shape		"0 0 3 4"
 	center		"0 0 -5"
 	scale		0.7
@@ -82,7 +80,7 @@ item medium
 	{
 		normal	35
 		steelblade	90
-		monomolecularblade	20 
+		monomolecularblade	20
 		blast	55
 		fire	20
 		shock	20
@@ -95,7 +93,7 @@ item medium
 	{
 		normal	6
 		steelblade	95
-		monomolecularblade	15 
+		monomolecularblade	15
 		blast	10
 		fire	10
 		shock	10
@@ -112,7 +110,6 @@ item medium
 //	image		armor/heavy
 //	model		soldiers/maleheavy/body
 //	type		armor
-//	category	3
 //	shape		"0 0 3 4"
 //	center		"0 0 -5"
 //	scale		0.7
@@ -123,7 +120,7 @@ item medium
 //	{
 //		normal	50
 //		steelblade	100
-//		monomolecularblade	40 
+//		monomolecularblade	40
 //		blast	70
 //		fire	75
 //		shock	35
@@ -136,7 +133,7 @@ item medium
 //	{
 //		normal	18
 //		steelblade	100
-//		monomolecularblade	40 
+//		monomolecularblade	40
 //		blast	30
 //		fire	30
 //		shock	30
@@ -154,7 +151,6 @@ item light_alien
 	image		armor/taman_light
 	model		aliens/tamanlight/body01
 	type		armor
-	category	3
 	shape		"0 0 3 4"
 	center		"0 0 -5"
 	scale		0.7
@@ -198,7 +194,6 @@ item medium_alien
 	image		armor/taman_medium
 	model		aliens/tamanmedium/body01
 	type		armor
-	category	3
 	shape		"0 0 3 4"
 	center		"0 0 -5"
 	scale		0.7

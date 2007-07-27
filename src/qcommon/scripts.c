@@ -683,7 +683,7 @@ static const value_t od_vals[] = {
 	{"model", V_STRING, offsetof(objDef_t, model), 0},
 	{"image", V_STRING, offsetof(objDef_t, image), 0},
 	{"type", V_STRING, offsetof(objDef_t, type), 0},
-	{"category", V_CHAR, offsetof(objDef_t, category), MEMBER_SIZEOF(objDef_t, category)},
+	{"animationindex", V_CHAR, offsetof(objDef_t, animationIndex), MEMBER_SIZEOF(objDef_t, animationIndex)},
 	{"shape", V_SHAPE_SMALL, offsetof(objDef_t, shape), MEMBER_SIZEOF(objDef_t, shape)},
 	{"scale", V_FLOAT, offsetof(objDef_t, scale), MEMBER_SIZEOF(objDef_t, scale)},
 	{"center", V_VECTOR, offsetof(objDef_t, center), MEMBER_SIZEOF(objDef_t, center)},

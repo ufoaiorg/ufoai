@@ -7,7 +7,7 @@ item plaspistol
 	model		weapons/plaspistol/plaspistol
 	weapon		true
 	type		pistol
-	category	2
+	animationindex	2
 	holdtwohanded	false
 	firetwohanded	true
 	shape		"0 0 3 2"
@@ -25,7 +25,7 @@ item plaspistol_ammo
 	name		"_Plasma Pistol Charger"
 	model		weapons/plaspistol/plaspistol_clip
 	type		ammo
-	category	0
+	animationindex	0
 	shape		"0 0 1 1"
 	center		"0 0 -0.2"
 	scale		1.1
@@ -35,7 +35,7 @@ item plaspistol_ammo
 
 	weapon_mod plaspistol
 	{
-		firedef 
+		firedef
 		{
 			name	"_Ball"
 			skill 	close
@@ -55,7 +55,7 @@ item plaspistol_ammo
 			dmgtype plasma
 			reaction	true
 		}
-		firedef 
+		firedef
 		{
 			name	"_Burst"
 			skill 	close
@@ -75,7 +75,7 @@ item plaspistol_ammo
 			dmgtype plasma
 			reaction	true
 		}
-		firedef 
+		firedef
 		{
 			name	"_Spray"
 			skill 	close
@@ -108,7 +108,7 @@ item plasrifle
 	model		weapons/plasrifle/plasrifle
 	weapon		true
 	type		biggun
-	category	1
+	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
 	shape		"0 0 5 2"
@@ -126,7 +126,7 @@ item plasrifle_ammo
 	name		"_Plasma Rifle Charger"
 	model		weapons/plasrifle/plasrifle_clip
 	type		ammo
-	category	0
+	animationindex	0
 	shape		"0 0 2 1"
 	center		"0 0 -0.1"
 	scale		1.25
@@ -136,7 +136,7 @@ item plasrifle_ammo
 
 	weapon_mod plasrifle
 	{
-		firedef 
+		firedef
 		{
 			name	"_Ball"
 			skill 	assault
@@ -156,7 +156,7 @@ item plasrifle_ammo
 			dmgtype plasma
 			reaction	true
 		}
-		firedef 
+		firedef
 		{
 			name	"_Burst"
 			skill 	assault
@@ -210,7 +210,7 @@ item plasblaster
 	model		weapons/plasblaster/plasblaster
 	weapon		true
 	type		biggun
-	category	1
+	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
 	shape		"0 0 5 2"
@@ -228,7 +228,7 @@ item plasblaster_ammo
 	name		"_Plasma Blaster Charge"
 	model		weapons/plasblaster/plasblaster_clip
 	type		ammo
-	category	0
+	animationindex	0
 	shape		"0 0 1 1"
 	center		"0 0 0"
 	scale		1.4
@@ -238,7 +238,7 @@ item plasblaster_ammo
 
 	weapon_mod plasblaster
 	{
-		firedef 
+		firedef
 		{
 			name	"_Ball"
 			skill 	heavy

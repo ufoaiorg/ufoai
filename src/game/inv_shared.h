@@ -138,7 +138,7 @@ typedef struct objDef_s {
 	byte sx, sy;			/**< Size in x and y direction. */
 	float scale;			/**< scale value for images? and models @todo: fixme - array of scales. */
 	vec3_t center;			/**< origin for models @todo: fixme - array of scales. */
-	char category;			/**< The animation index for the character with the weapon. @todo: rename me to more obvious name. */
+	char animationIndex;	/**< The animation index for the character with the weapon. */
 	qboolean weapon;		/**< This item is a weapon or ammo. */
 	qboolean holdTwoHanded;		/**< The soldier needs both hands to hold this object. */
 	qboolean fireTwoHanded;		/**< The soldier needs both hands to fire using object. */

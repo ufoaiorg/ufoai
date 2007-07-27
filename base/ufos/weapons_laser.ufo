@@ -7,7 +7,7 @@ item laserpistol
 	model		weapons/laserpistol/laserpistol
 	weapon		true
 	type		pistol
-	category	2
+	animationindex	2
 	holdtwohanded	false
 	firetwohanded	false
 	shape		"0 0 3 2"
@@ -29,7 +29,7 @@ item laserrifle
 	model		weapons/laserrifle/laserrifle
 	weapon		true
 	type		rifle
-	category	1
+	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
 	shape		"0 0 5 2"
@@ -52,7 +52,7 @@ item heavylaser
 	model		weapons/laserheavy/laserheavy
 	weapon		true
 	type		biggun
-	category	3
+	animationindex	3
 	holdtwohanded	false
 	firetwohanded	true
 	shape		"0 0 5 2"
@@ -70,7 +70,7 @@ item laserrifle_ammo
 	name		"_D-F Cartridge"
 	model		weapons/laserrifle/laserrifle_clip
 	type		ammo
-	category	0
+	animationindex	0
 	shape		"0 0 1 2"
 	center		"0 0 0"
 	scale		1.8
@@ -81,7 +81,7 @@ item laserrifle_ammo
 
 	weapon_mod laserpistol	// weap_fds_idx=0
 	{
-		firedef 
+		firedef
 		{
 			name	"_Short Wave"
 			skill 	close
@@ -123,7 +123,7 @@ item laserrifle_ammo
 
 	weapon_mod laserrifle	// weap_fds_idx=1
 	{
-		firedef 
+		firedef
 		{
 			name	"_Short Wave"
 			skill 	assault
@@ -165,7 +165,7 @@ item laserrifle_ammo
 
 	weapon_mod heavylaser	// weap_fds_idx=2
 	{
-		firedef 
+		firedef
 		{
 			name	"_Short Wave"
 			skill	heavy

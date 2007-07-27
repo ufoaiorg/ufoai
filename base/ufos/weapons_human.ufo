@@ -7,7 +7,7 @@ item assault
 	model		weapons/assault/assault
 	weapon		true
 	type		rifle
-	category	1
+	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
 	shape		"0 0 5 2"
@@ -25,7 +25,7 @@ item assault_ammo
 	name		"_Assault Rifle Magazine"
 	model		weapons/assault/assault_clip
 	type		ammo
-	category	0
+	animationindex	0
 	shape		"0 0 1 2"
 	center		"0 0 0"
 	scale		1.25
@@ -113,7 +113,7 @@ item chaingun
 	model		weapons/chaingun/chaingun
 	weapon		true
 	type		biggun
-	category	1
+	animationindex	1
 	holdtwohanded	true
 	firetwohanded	true
 	shape		"0 0 5 2"
@@ -130,7 +130,7 @@ item chaingun_ammo
 	name		"_Minigun Magazine"
 	model		weapons/chaingun/chaingun_ammo
 	type		ammo
-	category	0
+	animationindex	0
 	shape		"0 0 4 2"
 	center		"-3 -6 0"
 	scale		1.6
@@ -211,7 +211,7 @@ item machinegun
 	model		weapons/machinegun/machinegun
 	weapon		true
 	type		rifle
-	category	1
+	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
 	shape		"0 0 5 2"
@@ -229,7 +229,7 @@ item machinegun_ammo
 	name		"_Machine Gun Magazine"
 	model		weapons/machinegun/machinegun_clip
 	type		ammo
-	category	0
+	animationindex	0
 	shape		"0 0 1 2"
 	center		"0 0 0"
 	scale		1.25
@@ -313,7 +313,7 @@ item sniper
 	model		weapons/sniper/sniper
 	weapon		true
 	type		rifle
-	category	1
+	animationindex	1
 	holdtwohanded	false
 	firetwohanded 	true
 	shape		"0 0 5 2"
@@ -331,7 +331,7 @@ item sniper_ammo
 	name		"_Sniper Rifle Magazine"
 	model		weapons/sniper/sniper_clip
 	type		ammo
-	category	0
+	animationindex	0
 	shape		"0 0 1 2"
 	center		"0 0 0"
 	scale		1.15
@@ -412,7 +412,7 @@ item pistol
 	model		weapons/pistol/pistol
 	weapon		true
 	type		pistol
-	category	2
+	animationindex	2
 	holdtwohanded	false
 	firetwohanded 	false
 	shape		"0 0 2 2"
@@ -430,7 +430,7 @@ item pistol_ammo
 	name		"_7.62mm Pistol Magazine"
 	model		weapons/pistol/pistol_clip
 	type		ammo
-	category	0
+	animationindex	0
 	shape		"0 0 1 1"
 	center		"0 0 -0.21"
 	scale		1.57
@@ -511,7 +511,7 @@ item pistol2
 	model		weapons/pistol2/pistol2
 	weapon		true
 	type		pistol
-	category	2
+	animationindex	2
 	holdtwohanded	false
 	firetwohanded 	false
 	shape		"0 0 2 2"
@@ -529,7 +529,7 @@ item pistol2_ammo
 	name		"_4.2mm MP Magazine"
 	model		weapons/pistol2/pistol2_clip
 	type		ammo
-	category	0
+	animationindex	0
 	shape		"0 0 1 2"
 	center		"0 0 -0.21"
 	scale		2.5
@@ -611,7 +611,7 @@ item smg
 	model		weapons/smg/smg
 	weapon		true
 	type		pistol
-	category	2
+	animationindex	2
 	holdtwohanded	false
 	firetwohanded 	true
 	shape		"0 0 3 2"
@@ -629,7 +629,7 @@ item smg_ammo
 	name		"_SMG Magazine"
 	model		weapons/smg/smg_clip
 	type		ammo
-	category	0
+	animationindex	0
 	shape		"0 0 1 2"
 	center		"0 0 0"
 	scale		1.4
@@ -711,7 +711,7 @@ item shotgun2
 	model		weapons/shotgun2/shotgun
 	weapon		true
 	type		rifle
-	category	1
+	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
 	shape		"0 0 4 2"
@@ -732,7 +732,7 @@ item shotgun2
 //	name		"_Flechette Shells"
 //	model		weapons/shotgun/shotgun_clip
 //	type		ammo
-//	category	0
+//	animationindex	0
 //	shape		"0 0 1 1"
 //	center		"0 0 0"
 //	scale		1.5
@@ -787,7 +787,7 @@ item shotgun2_slug_ammo
 	name		"_Saboted Slugs"
 	model		weapons/shotgun2/shotgun_clip
 	type		ammo
-	category	0
+	animationindex	0
 	shape		"0 0 1 2"
 	center		"0 0 0"
 	scale		2.0
@@ -875,7 +875,7 @@ item shotgun
 	model		weapons/shotgun/shotgun
 	weapon		true
 	type		biggun
-	category	1
+	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
 	shape		"0 0 4 2"
@@ -893,7 +893,7 @@ item shotgun_ammo
 	name		"_Flechette Shells"
 	model		weapons/shotgun/shotgun_clip
 	type		ammo
-	category	0
+	animationindex	0
 	shape		"0 0 1 1"
 	center		"0 0 0"
 	scale		1.5
@@ -959,7 +959,7 @@ item shotgun_micro
 	model		weapons/shotgunmicro/shotgunmicro
 	weapon		true
 	type		biggun
-	category	1
+	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
 	shape		"0 0 3 2"
@@ -977,7 +977,7 @@ item shotgun_micro_ammo
 	name		"_Flechette Shells"
 	model		weapons/shotgunmicro/shotgunmicro_clip
 	type		ammo
-	category	0
+	animationindex	0
 	shape		"0 0 1 2"
 	center		"0 0 0"
 	scale		2.0
@@ -1112,7 +1112,7 @@ item flamer
 	model		weapons/flamer/flamer
 	weapon		true
 	type		biggun
-	category	1
+	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
 	shape		"0 0 5 2"
@@ -1130,7 +1130,7 @@ item flamer_ammo
 	name		"_C90 Canister"
 	model		weapons/flamer/flamer_ammo
 	type		ammo
-	category	0
+	animationindex	0
 	shape		"0 0 2 1"
 	center		"0 0 0"
 	scale		1.1
@@ -1216,7 +1216,7 @@ item rpg
 	model		weapons/rpg/rpg
 	weapon		true
 	type		rpg
-	category	3
+	animationindex	3
 	holdtwohanded	true
 	firetwohanded	true
 	shape		"0 0 5 1"
@@ -1235,7 +1235,7 @@ item rpg_ammo
 	name		"_HE Rocket"
 	model		weapons/rpg/rpg_ammo
 	type		ammo
-	category	0
+	animationindex	0
 	shape		"0 0 1 2"
 	center		"0 0 0"
 	scale		1.1
@@ -1275,7 +1275,7 @@ item rpg_incendiary_ammo
 	name		"_IC Rocket"
 	model		weapons/rpg/rpg_inc_ammo
 	type		ammo
-	category	0
+	animationindex	0
 	shape		"0 0 1 2"
 	center		"0 0 0"
 	scale		1.1
@@ -1316,7 +1316,7 @@ item rpg_particle_ammo
 	name	"_Particle-Beam Rocket"
 	model	weapons/rpg/rpg_particle_ammo
 	type	ammo
-	category	0
+	animationindex	0
 	shape	"0 0 1 2"
 	center	"0 0 0"
 	scale	1.1
@@ -1360,7 +1360,7 @@ item grenl
 	model		weapons/grenl/grenl
 	weapon		true
 	type		biggun
-	category	1
+	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
 	shape		"0 0 5 2"
@@ -1378,7 +1378,7 @@ item grenl_ammo
 	name		"_25mm HIT Grenades"
 	model		weapons/grenl/grenl_clip
 	type		ammo
-	category	0
+	animationindex	0
 	shape		"0 0 1 1"
 	center		"0 0 0"
 	scale		0.7
@@ -1554,7 +1554,7 @@ item grenl_incendiary_ammo
 	name		"_25mm IC Grenades"
 	model		weapons/grenl/grenl_ic_clip
 	type		ammo
-	category	0
+	animationindex	0
 	shape		"0 0 1 1"
 	center		"0 0 0"
 	scale		0.7
@@ -1730,7 +1730,7 @@ item grenl_fle_ammo
 	name		"_25mm Flechette Grenades"
 	model		weapons/grenl/grenl_flechette_clip
 	type		ammo
-	category	0
+	animationindex	0
 	shape		"0 0 1 1"
 	center		"0 0 0"
 	scale		0.7
@@ -1785,7 +1785,7 @@ item grenl_plasma_ammo
 	name		"_25mm PB Grenades"
 	model		weapons/grenl/grenl_plasma_clip
 	type		ammo
-	category	0
+	animationindex	0
 	shape		"0 0 1 1"
 	center		"0 0 0"
 	scale		0.7
@@ -1965,7 +1965,7 @@ item bolterrifle
 	model           weapons/bolterrifle/bolterrifle
 	weapon          true
 	type            biggun
-	category        3
+	animationindex        3
 	holdtwohanded   false
 	firetwohanded	true
 	shape           "0 0 5 2"
@@ -1983,7 +1983,7 @@ item bolterrifle_ammo
 	name            "_Bolter Rifle Magazine"
 	model           weapons/bolterrifle/bolterrifle_clip
 	type            ammo
-	category        0
+	animationindex        0
 	shape           "0 0 3 1"
 	center          "0 0 0"
 	scale           1.2

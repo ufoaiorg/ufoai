@@ -1292,7 +1292,7 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, int team)
 			/* scale the abilitiy window to the skill window. */
 			if (abilityWindow > 0 && skillWindow > 0) {
 				windowScalar = skillWindow / abilityWindow;
-				
+
 				/* scale the ability numbers to their place in the skill range. */
 				ability1 = ((ability1 - minAbility) * windowScalar) + minSkill;
 				ability2 = ((ability2 - minAbility) * windowScalar) + minSkill;
@@ -1400,7 +1400,7 @@ void INVSH_PrintItemDescription (int i)
 	Com_Printf("Item: %i %s\n", i, ods_temp->id);
 	Com_Printf("... name          -> %s\n", ods_temp->name);
 	Com_Printf("... type          -> %s\n", ods_temp->type);
-	Com_Printf("... category      -> %i\n", ods_temp->category);
+	Com_Printf("... category      -> %i\n", ods_temp->animationIndex);
 	Com_Printf("... weapon        -> %i\n", ods_temp->weapon);
 	Com_Printf("... holdtwohanded -> %i\n", ods_temp->holdTwoHanded);
 	Com_Printf("... firetwohanded -> %i\n", ods_temp->fireTwoHanded);
