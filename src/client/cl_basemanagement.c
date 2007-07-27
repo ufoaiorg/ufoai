@@ -2787,9 +2787,16 @@ base_t *B_GetBase (int base_idx)
  */
 int B_GetNumOnTeam (void)
 {
-	if (!baseCurrent || baseCurrent->aircraftCurrent < 0)
-		return 0;
-	return baseCurrent->teamNum[baseCurrent->aircraftCurrent];
+       aircraft_t* aircraft = NULL;
+
+       if (!baseCurrent || baseCurrent->aircraftCurrent < 0)
+               return 0;
+
+       aircraft = B_GetAircraftFromBaseByIndex (baseCurrent, baseCurrent->aircraftCurrent);
+       if (!aircraft)
+               return 0;
+
+       return *(aircraft->teamSize);
 }
 
 /**
