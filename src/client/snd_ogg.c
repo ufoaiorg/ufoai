@@ -278,8 +278,8 @@ qboolean S_OGG_Open (const char *filename)
 		FS_FCloseFile(&stream->file);
 		return qfalse;
 	}
-	if (!music.ovInfo->rate)
-		music.ovInfo->rate = 44100;
+	/* FIXME otherwise is crashss */
+	music.ovInfo->rate = 44100;
 
 	Q_strncpyz(music.ovPlaying, checkFilename, sizeof(music.ovPlaying));
 	music.ovSection = 0;
@@ -337,12 +337,15 @@ int S_OGG_Read (void)
 	/* read and resample */
 	/* this read function will use our callbacks to be even able to read from zip files */
 	res = ov_read(&music.ovFile, music.ovBuf, sizeof(music.ovBuf), 0, 2, 1, &music.ovSection);
-	if (res == OV_HOLE) {
+	switch (res) {
+	case OV_HOLE:
 		Com_Printf("S_OGG_Read: interruption in the data (one of: garbage between pages, loss of sync followed by recapture, or a corrupt page)\n");
 		res = 0;
-	} else if (res == OV_EBADLINK) {
+		break;
+	case OV_EBADLINK:
 		Com_Printf("S_OGG_Read: invalid stream section was supplied to libvorbisfile, or the requested link is corrupt\n");
 		res = 0;
+  break;
 	}
 
 	S_RawSamples(res >> 2, music.ovInfo->rate, 2, 2, (byte *) music.ovBuf, music.fading);
@@ -582,13 +585,19 @@ sfxcache_t *S_OGG_LoadSFX (sfx_t *s)
 	}
 
 	music.ovInfo = ov_info(&vorbisFile, -1);
-	assert(music.ovInfo);
+	if (!music.ovInfo) {
+		Com_Printf("%s: The specified bitstream does not exist or the file has been initialized improperly.\n", s->name);
+		FS_FCloseFile(&stream->file);
+		return qfalse;
+	}
 	if (music.ovInfo->channels != 1 && music.ovInfo->channels != 2) {
 		Com_Printf("Error unsupported .ogg file (unsupported number of channels: %i): %s\n", music.ovInfo->channels, s->name);
 		ov_clear(&vorbisFile); /* Does FS_FCloseFile */
 		Mem_Free(s->stream);
 		return NULL;
 	}
+	/* FIXME otherwise is crashss */
+	music.ovInfo->rate = 44100;
 
 	samples = (int)ov_pcm_total(&vorbisFile, -1);
 	len = (int) ((double) samples * (double) dma.speed / (double) music.ovInfo->rate);
