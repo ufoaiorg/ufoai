@@ -933,7 +933,7 @@ menu team
 	pic bt_switch_list
 	{
 		tooltip	"_Assign heavy equipment"
-		pos	"880 720"
+		pos	"874 720"
 		image	menu/buttons_team
 		texl	"0 0"
 		texh	"64 37"
