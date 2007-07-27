@@ -2528,6 +2528,8 @@ int CM_TestLineDM (vec3_t start, vec3_t stop, vec3_t end)
  * @param[in] y Field in y direction
  * @param[in] z Field in z direction
  * @param[in] actor_size Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
+ * @note actor_size must be -1 on recursion - otherwise the actorsize of the forbidden list would case
+ * an endless loop (and later a segfault) here
  * @sa Grid_MoveMark
  * @return qtrue if one can't walk there (i.e. the field [and attached fields for e.g. 2x2 units] is/are blocked by entries in the forbidden list) otherwise false.
  */
@@ -2536,6 +2538,7 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, byte 
 	byte **p;
 	int i, j;
 	byte *forbidden_size;
+	int size;
 
 	pos3_t poslist[4];
 	int poslen = 0;
@@ -2552,8 +2555,11 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, byte 
 
 		/* The list is pos3_t + byte  - so the first 3 byte are the position values. */
 		VectorSet(poslist[0], (*p)[0], (*p)[1], (*p)[2]);
-
+		forbidden_size = *(p + 1); /**< The list is pos3_t + byte  - so the fourth byte is the size. */
+		size = *forbidden_size;
 		switch (actor_size) {
+		case -1: /* recursion */
+			size = ACTOR_SIZE_NORMAL;
 		case 0:
 		case ACTOR_SIZE_NORMAL:
 			poslen = 1;
@@ -2569,9 +2575,8 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, byte 
 			return qfalse;
 		}
 
-		forbidden_size = *(p + 1); /**< The list is pos3_t + byte  - so the fourth byte is the size. */
 		for (j = 0; j < poslen; j++) {
-			switch (*forbidden_size) {
+			switch (size) {
 			case 0:
 			case ACTOR_SIZE_NORMAL:
 				/* Check square against actor (poslist) */
@@ -2583,11 +2588,11 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, byte 
 				/* Check origin-square against actor (poslist) and all attached forbidden squares (e.g. if it's a 2x2 unit) as well. */
 				if (x == poslist[j][0] && y == poslist[j][1] && z == poslist[j][2]) {
 					return qtrue;
-				} else if (Grid_CheckForbidden(map, x + 1, y,     z, ACTOR_SIZE_NORMAL)) {
+				} else if (Grid_CheckForbidden(map, x + 1, y,     z, -1)) {
 					return qtrue;
-				} else if (Grid_CheckForbidden(map, x,     y + 1, z, ACTOR_SIZE_NORMAL)) {
+				} else if (Grid_CheckForbidden(map, x,     y + 1, z, -1)) {
 					return qtrue;
-				} else if (Grid_CheckForbidden(map, x + 1, y + 1, z, ACTOR_SIZE_NORMAL)) {
+				} else if (Grid_CheckForbidden(map, x + 1, y + 1, z, -1)) {
 					return qtrue;
 				}
 				break;
