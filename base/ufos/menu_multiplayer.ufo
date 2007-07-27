@@ -937,7 +937,7 @@ menu mp_create_server
 	checkbox public_value
 	{
 		image	"menu/checkbox"
-		cvar	"*cvar public"
+		cvar	"*cvar sv_public"
 		pos	"840 120"
 		align	ur
 	}
@@ -1256,11 +1256,11 @@ menu mp_create_server
 		image	menu/save_slot
 		pos	"500 470"
 		mousefx	true
-		click	{ cmd "msgmenu ?hostname" *txt_hostname color "1 1 1 1" *txt_hostname mousefx true }
+		click	{ cmd "msgmenu ?sv_hostname" *txt_hostname color "1 1 1 1" *txt_hostname mousefx true }
 	}
 	string txt_hostname
 	{
-		string	"*cvar hostname"
+		string	"*cvar sv_hostname"
 		pos	"510 475"
 		color	"0 .78 0 1"
 	}
