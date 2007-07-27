@@ -2184,8 +2184,33 @@ static void G_ClientTeamAssign (player_t * player)
 }
 
 /**
+ * @brief Find valid actor spawn fields for this player.
+ * @param[in] player The player to spawn the actors for.
+ * @param[in] type The type of spawn-point so search for (ET_ACTORSPAWN or ET_ACTOR2x2SPAWN)
+ * @return A pointer to a found spawn point or NULL if nothing was found or on error.
+ */
+static edict_t *G_ClientGetFreeSpawnPoint(player_t * player, int spawnType)
+{
+	int i;
+	edict_t *ent;
+	
+	/* Abort for non-spawnpoints */
+	assert(spawnType != ET_ACTORSPAWN && spawnType != ET_ACTOR2x2SPAWN);
+	
+	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+		if ((ent->type == spawnType)
+		 && (player->pers.team == ent->team))
+		/** @todo how do we check if this spawn point isn't used already? */
+			return ent;
+
+	return NULL;
+}
+
+
+
+/**
  * @brief The client lets the server spawn the actors for a given player by sending their information (models, inventory, etc..) over the network.
- * @param[in] player The player to spawn the actos for.
+ * @param[in] player The player to spawn the actors for.
  * @sa CL_SendTeamInfo
  * @sa globals.ClientTeamInfo
  */
@@ -2195,41 +2220,56 @@ void G_ClientTeamInfo (player_t * player)
 	int i, j, k, length;
 	int container, x, y;
 	item_t item;
+	int dummyFieldSize = 0;
 
 	/* find a team */
 	G_GetTeam(player);
 
 	length = gi.ReadByte();	/* Get the length of data that the clients sent. */
 
-	/* Find valid actor spawn fields for this player. */
-	for (j = 0, ent = g_edicts; j < globals.num_edicts; j++, ent++)
-		if ((ent->type == ET_ACTORSPAWN || ent->type == ET_ACTOR2x2SPAWN)
-			&& player->pers.team == ent->team)
-			break;
-
 	for (i = 0; i < length; i++) {
 		/* Search for a spawn point for each entry the client sent */
 
-		if (j < globals.num_edicts && i < maxsoldiersperplayer->integer) {
+		if (i < maxsoldiersperplayer->integer) {
 			/* Here the client tells the server the information for the spawned actor(s). */
-			level.num_alive[ent->team]++;
-			level.num_spawned[ent->team]++;
-			ent->pnum = player->num;
-			Com_DPrintf("Team %i - player: %i\n", ent->team, player->num);
-			ent->chr.fieldSize = gi.ReadByte();
-			ent->fieldSize = ent->chr.fieldSize;
-			switch (ent->fieldSize) {
+
+			/* Receive fieldsize and get matching spawnpoint. */
+			dummyFieldSize = gi.ReadByte();
+			switch (dummyFieldSize) {
+			case 0:
 			case ACTOR_SIZE_NORMAL:
+				/* Find valid actor spawn fields for this player. */
+				ent = G_ClientGetFreeSpawnPoint(player, ET_ACTORSPAWN);
+				if (!ent) {
+					gi.dprintf("G_ClientTeamInfo: Could not spawn actor because no useable spawn-point is avaialble (%i)\n", dummyFieldSize);
+				}
 				ent->type = ET_ACTOR;
 				break;
 			case ACTOR_SIZE_2x2:
+				/* Find valid actor spawn fields for this player. */
+				ent = G_ClientGetFreeSpawnPoint(player, ET_ACTOR2x2SPAWN);
+				if (!ent) {
+					gi.dprintf("G_ClientTeamInfo: Could not spawn actor because no useable spawn-point is avaialble (%i)\n", dummyFieldSize);
+				}
 				ent->type = ET_ACTOR2x2;
 				ent->morale = 100;
 				break;
 			default:
-				gi.dprintf("G_ClientTeamInfo: unknown edict fieldSize (%i)\n", ent->fieldSize);
+				gi.dprintf("G_ClientTeamInfo: unknown fieldSize for edict (%i)\n", dummyFieldSize);
 				break;
 			}
+
+			level.num_alive[ent->team]++;
+			level.num_spawned[ent->team]++;
+			ent->pnum = player->num;
+
+			Com_DPrintf("Team %i - player: %i\n", ent->team, player->num);
+
+			ent->chr.fieldSize = dummyFieldSize;
+			ent->fieldSize = ent->chr.fieldSize;
+			
+			Com_DPrintf("Team %i - size: %i\n", ent->team, ent->fieldSize);
+
 			gi.linkentity(ent);
 
 			/* model */
@@ -2315,12 +2355,6 @@ void G_ClientTeamInfo (player_t * player)
 			for (k = 0; k < j; k++)
 				gi.ReadByte(); /* inventory */
 		}
-
-		/* Find valid actor spawn fields for this player. */
-		for (; j < globals.num_edicts; j++, ent++)
-			if ((ent->type == ET_ACTORSPAWN || ent->type == ET_ACTOR2x2SPAWN)
-			&& player->pers.team == ent->team)
-				break;
 	}
 	G_ClientTeamAssign(player);
 }
