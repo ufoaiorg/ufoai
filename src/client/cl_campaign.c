@@ -4430,6 +4430,16 @@ static void CP_TryAgain_f (void)
 }
 
 /**
+ * @brief Returns "homebase" of the mission.
+ * @note see struct client_static_s
+ */
+base_t *CP_GetMissionBase (void)
+{
+	assert (cls.missionaircraft && cls.missionaircraft->homebase);
+	return cls.missionaircraft->homebase;
+}
+
+/**
  * @brief
  */
 void CL_ResetCampaign (void)

@@ -358,4 +358,6 @@ void CL_GameExit(void);
 extern qboolean AIR_SendAircraftToMission(aircraft_t * aircraft, actMis_t * mission);
 extern void AIR_AircraftsNotifyMissionRemoved(const actMis_t * mission);
 
+extern base_t *CP_GetMissionBase(void);
+
 #endif /* CLIENT_CL_CAMPAIGN_H */

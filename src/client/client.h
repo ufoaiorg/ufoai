@@ -214,6 +214,7 @@ typedef struct client_static_s {
 
 	/** needs to be here, because server can be shutdown, before we see the ending screen */
 	int team;
+	struct aircraft_s *missionaircraft;	/**< aircraft pointer for mission handling */
 
 	float loadingPercent;
 	qboolean loadingMessage;
