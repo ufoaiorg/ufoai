@@ -1030,7 +1030,7 @@ void CL_UpdateHireVar (aircraft_t *aircraft, employeeType_t employeeType)
 	/* Uncomment this Com_Printf here for better output in case of problems. */
 	/* Com_Printf("CL_UpdateHireVar()... aircraft idx: %i, homebase: %s\n", aircraft->idx, base->name); */
 
-	/* update curTeam list */
+	/* update curTeam list (this is the one that is currently displayed) */
 	for (i = 0, p = 0; i < hired_in_base; i++) {
 		employee = E_GetHiredEmployee(base, employeeType, -(i+1));
 		if (!employee)
@@ -1041,7 +1041,7 @@ void CL_UpdateHireVar (aircraft_t *aircraft, employeeType_t employeeType)
 			p++;
 		}
 	}
-	
+
 	/** @todo WARNING temp-disabled because this warning is useless when updating EMPL_ROBOT stuff :(
 	 * I think checking against aircraft->teamIdxs (and *(aircraft->teamSize)) might be better here
 	if (p != base->teamNum[aircraft->idxInBase])
@@ -1053,6 +1053,13 @@ void CL_UpdateHireVar (aircraft_t *aircraft, employeeType_t employeeType)
 	*/
 	for (; p < MAX_ACTIVETEAM; p++)
 		base->curTeam[p] = NULL;
+
+	/* Update real team-count in aircraft*/
+	for (i = 0, p = 0; i < aircraft->size; i++) {
+		if (aircraft->teamIdxs[i] != -1)
+			p++;
+	}
+	*(aircraft->teamSize) = p;
 }
 
 /**
@@ -1313,7 +1320,6 @@ void CL_RemoveSoldierFromAircraft (int employee_idx, employeeType_t employeeType
 
 	INVSH_DestroyInventory(&gd.employees[employeeType][employee_idx].inv);
 	AIR_RemoveFromAircraftTeam(aircraft, employee_idx, employeeType);
-	baseCurrent->teamNum[aircraft->idxInBase]--;
 }
 
 /**
@@ -1331,13 +1337,19 @@ void CL_RemoveSoldiersFromAircraft (int aircraft_idx, base_t *base)
 
 	aircraft = AIR_AircraftGetFromIdx(aircraft_idx);
 
-	if (aircraft->idxInBase < 0 || aircraft->idxInBase >= base->numAircraftInBase)
+	if (!aircraft || aircraft->idxInBase < 0 || aircraft->idxInBase >= base->numAircraftInBase)
 		return;
 
-	/* Counting backwards because teamNum[aircraft->idx] is changed in CL_RemoveSoldierFromAircraft */
-	for (i = base->teamNum[aircraft->idxInBase]-1; i > 0; i--) {
-		/* use global aircraft index here */
-		CL_RemoveSoldierFromAircraft(baseCurrent->curTeam[i]->empl_idx, baseCurrent->curTeam[i]->empl_type, aircraft_idx, base); 
+	/* Counting backwards because aircraft->teamIdxs and teamTypes are changed in CL_RemoveSoldierFromAircraft */
+	for (i = aircraft->size; i > 0; i--) {
+		if (aircraft->teamIdxs[i] != -1) {
+			/* use global aircraft index here */
+			CL_RemoveSoldierFromAircraft(aircraft->teamIdxs[i], aircraft->teamTypes[i], aircraft_idx, base);
+		}
+	}
+
+	if (*(aircraft->teamSize) > 0) {
+		Com_DPrintf("CL_RemoveSoldiersFromAircraft: there went something wrong with soldier-removing (more exactly the counting) from aircraft.\n");
 	}
 }
 
@@ -1347,14 +1359,16 @@ void CL_RemoveSoldiersFromAircraft (int aircraft_idx, base_t *base)
  * @param[in] aircraft_idx The index of aircraft in the base.
  * @return returns true if a soldier could be assigned to the aircraft.
  */
-static qboolean CL_AssignSoldierToAircraft (int employee_idx, employeeType_t employeeType, int aircraft_idx)
+static qboolean CL_AssignSoldierToAircraft (int employee_idx, employeeType_t employeeType, aircraft_t *aircraft)
 {
-	aircraft_t *aircraft = NULL;
-	if (employee_idx < 0 || aircraft_idx < 0)
+	if (employee_idx < 0 || !aircraft)
 		return qfalse;
 
-	if (baseCurrent->teamNum[aircraft_idx] < MAX_ACTIVETEAM) {
-		aircraft = &baseCurrent->aircraft[aircraft_idx];
+
+	if (aircraft->idxInBase < 0)
+		return qfalse;
+
+	if (*(aircraft->teamSize) < MAX_ACTIVETEAM) {
 		/* Check whether the soldier is already on another aircraft */
 		Com_DPrintf("CL_AssignSoldierToAircraft: attempting to find idx '%d'\n", employee_idx);
 
@@ -1364,10 +1378,9 @@ static qboolean CL_AssignSoldierToAircraft (int employee_idx, employeeType_t emp
 		}
 
 		/* Assign the soldier to the aircraft. */
-		if (aircraft->size > baseCurrent->teamNum[aircraft_idx]) {
+		if (*(aircraft->teamSize) < aircraft->size) {
 			Com_DPrintf("CL_AssignSoldierToAircraft: attemting to add idx '%d' \n",employee_idx);
 			AIR_AddToAircraftTeam(aircraft, employee_idx, employeeType);
-			baseCurrent->teamNum[aircraft_idx]++;
 			return qtrue;
 		}
 #ifdef DEBUG
@@ -1459,7 +1472,7 @@ static void CL_AssignSoldier_f (void)
 	} else {
 		Com_DPrintf("CL_AssignSoldier_f: assigning\n");
 		/* Assign soldier to aircraft/team if aircraft is not full */
-		if (CL_AssignSoldierToAircraft(employee->idx, employee->type, aircraft->idxInBase))
+		if (CL_AssignSoldierToAircraft(employee->idx, employee->type, aircraft))
 			Cbuf_AddText(va("listadd%i\n", num));
 	}
 	/* Select the desired one anyways. */

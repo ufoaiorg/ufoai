@@ -779,6 +779,9 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 
 		/* Update number of team members for each aircraft.*/
 		base->teamNum[i] = base->teamNum[i+1];
+		/* Fix teamSize pointer */
+		/** @todo is this correct? */
+		aircraft_temp->teamSize = &base->teamNum[i+1];
 
 		/* Update index of aircraftCurrent in base if it is affected by the index-change. */
 		if (i == previous_aircraftCurrent)
@@ -1830,7 +1833,6 @@ void AIR_ResetAircraftTeam (aircraft_t *aircraft)
  * @param[in] employee_idx Index of an employee in global array (?)
  * @todo FIXME: is this responsible for adding soldiers to a team in dropship?
  * 	ANSWER: yes it seems to be.
- * @todo  do we need to update *aircraft->teamSize here as well?
  */
 void AIR_AddToAircraftTeam (aircraft_t *aircraft, int employee_idx, employeeType_t employeeType)
 {
@@ -1848,6 +1850,7 @@ void AIR_AddToAircraftTeam (aircraft_t *aircraft, int employee_idx, employeeType
 				aircraft->teamIdxs[i] = employee_idx;
 				aircraft->teamTypes[i] = employeeType;
 				Com_DPrintf("AIR_AddToAircraftTeam: added idx '%d'\n", employee_idx);
+				*(aircraft->teamSize)++;
 				break;
 			}
 		if (i >= aircraft->size)
@@ -1871,15 +1874,17 @@ void AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, int employee_idx, employe
 
 	assert(aircraft);
 
-	for (i = 0; i < aircraft->size; i++)
+	for (i = 0; i < aircraft->size; i++) {
 		/* Search for this exact employee in the aircraft and make his place "unused". */
 		/** @todo  do we need to update *aircraft->teamSize here as well? */
 		if (aircraft->teamIdxs[i] == employee_idx && aircraft->teamTypes[i] == employeeType)	{
 			aircraft->teamIdxs[i] = -1;
 			aircraft->teamTypes[i] = MAX_EMPL;
 			Com_DPrintf("AIR_RemoveFromAircraftTeam: removed idx '%d' \n", employee_idx);
+			*(aircraft->teamSize)--;
 			return;
 		}
+	}
 	Com_Printf("AIR_RemoveFromAircraftTeam: error: idx '%d' not on aircraft %i (base: %i) in base %i\n", employee_idx, aircraft->idx, aircraft->idxInBase, baseCurrent->idx);
 }
 

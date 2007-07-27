@@ -2281,6 +2281,7 @@ static void CL_GameGo (void)
 	/* retrieve the correct team */
 	for (i = 0, p = 0; i < aircraft->size; i++) {
 		if (aircraft->teamIdxs[i] != -1) {
+			Com_DPrintf("CL_GameGo: team-member - idx:%i size:%i\n", aircraft->teamIdxs[i], aircraft->teamTypes[i]);
 			assert(p < MAX_ACTIVETEAM);
 			baseCurrent->curTeam[p] = E_GetHiredCharacter(baseCurrent, aircraft->teamTypes[i], aircraft->teamIdxs[i]);
 			p++;
