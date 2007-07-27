@@ -225,6 +225,8 @@ typedef struct base_s {
 
 	baseStatus_t baseStatus; /**< the current base status */
 
+	qboolean isDiscovered;	/** qtrue if the base has been discovered by aliens */
+
 	int teamNum[MAX_AIRCRAFT];		/**< Number of soldiers assigned to a specific aircraft. */
 
 	radar_t	radar;	/**< the onconstruct value of the buliding building_radar increases the sensor width */

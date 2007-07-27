@@ -754,6 +754,9 @@ void B_SetUpBase (base_t* base)
 	base->sellfactor = 5;
 	base->buyfactor = 1;
 
+	/* a new base is not discovered (yet) */
+	base->isDiscovered = qfalse;
+
 	/* intialise hit points */
 	base->batteryDamage = MAX_BATTERY_DAMAGE;
 	base->baseDamage = MAX_BASE_DAMAGE;
@@ -3002,6 +3005,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 		MSG_WriteShort(sb, gd.numBuildings[i]);
 		MSG_WriteByte(sb, b->condition);
 		MSG_WriteByte(sb, b->baseStatus);
+		MSG_WriteByte(sb, b->isDiscovered);
 		MSG_WriteByte(sb, b->maxBatteries);
 		for (l = 0; l < b->maxBatteries; l++) {
 			if (b->batteries[l].itemIdx >= 0) {
@@ -3229,6 +3233,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		gd.numBuildings[i] = MSG_ReadShort(sb);
 		b->condition = MSG_ReadByte(sb);
 		b->baseStatus = MSG_ReadByte(sb);
+		b->isDiscovered = MSG_ReadByte(sb);
 		BDEF_InitialiseBaseSlots(b);
 		/* read missile battery slots */
 		b->maxBatteries = MSG_ReadByte(sb);

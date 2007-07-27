@@ -729,7 +729,7 @@ static void AIRFIGHT_BaseShoot (base_t *base, aircraftSlot_t *slot, int maxSlot,
 
 	for (i = 0; i < maxSlot; i++) {
 		/* check if we are allowed to fire with this weapon */
-		if (targetIdx[i] == -2)
+		if (targetIdx[i] == -2 || slot[i].installationTime > 0)
 			continue;
 
 		/* if weapon is reloading, can't shoot */

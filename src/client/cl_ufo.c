@@ -150,22 +150,66 @@ void UFO_FleePhalanxAircraft (aircraft_t *ufo, vec2_t v)
  * @brief Check if a UFO is the target of a base
  * @param[in] num idx of the ufos in gd.ufos[]
  * @param[in] base Pointer to the base
+ * @return 0 if ufo is not a target, 1 if target of a missile, 2 if target of a laser
  */
-static qboolean UFO_IsTargetOfBase (int num, base_t *base)
+static int UFO_IsTargetOfBase (int num, base_t *base)
 {
 	int i;
 
 	for (i = 0; i < base->maxBatteries; i++) {
 		if (base->targetMissileIdx[i] == num)
-			return qtrue;
+			return 1;
 	}
 
 	for (i = 0; i < base->maxLasers; i++) {
 		if (base->targetLaserIdx[i] == num)
-			return qtrue;
+			return 2;
 	}
 
-	return qfalse;
+	return 0;
+}
+
+/**
+ * @brief Check if a UFO found a new base
+ * @param[in] ufo Pointer to the aircraft_t
+ * @param[in] dt Elapsed time since last check
+ */
+static void UFO_FoundNewBase (aircraft_t *ufo, int dt)
+{
+	base_t* base;
+	int test;
+	float baseProbability;
+	float distance;
+
+	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
+		/* if base has already been discovered, skip */
+		if (base->isDiscovered == qtrue)
+			continue;
+
+		/* ufo can't find base if it's too far */
+		distance = CP_GetDistance(ufo->pos, base->pos);
+		if (distance > 60.0f)
+			continue;
+
+		test = UFO_IsTargetOfBase(ufo - gd.ufos, base);
+		if (test == 1)
+			baseProbability = 0.001f;
+		else if (test == 2)
+			baseProbability = 0.0001f;
+		else
+			baseProbability = 0.00001f;
+
+		/* decrease probability if the ufo is far from base */
+		if (distance > 10.0f)
+		baseProbability /= 5.0f;
+
+		baseProbability *= dt;
+
+		if (frand() < baseProbability) {
+			base->isDiscovered = qtrue;
+			Com_DPrintf("Base '%s' has been discoverd by UFO\n", base->name);
+		}
+	}
 }
 
 /**
@@ -181,6 +225,9 @@ void UFO_CampaignRunUfos (int dt)
 
 	/* now the ufos are flying around, too */
 	for (ufo = gd.ufos + gd.numUfos - 1; ufo >= gd.ufos; ufo--) {
+		/* Check if the UFO found a new base */
+		UFO_FoundNewBase(ufo, dt);
+
 		if (AIR_AircraftMakeMove(dt, ufo) && ufo->status != AIR_UFO) {
 			/* check if a fleeing UFO is still in danger */
 			if (ufo->status == AIR_FLEEING && !ufo->visible)
@@ -218,7 +265,7 @@ void UFO_CampaignRunUfos (int dt)
 				for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
 					/* check if the ufo can attack a base (if it's not too far) */
 					/* ufo can see a base only if it shoots on it */
-					if (UFO_IsTargetOfBase(ufo - gd.ufos, base) && (CP_GetDistance(ufo->pos, base->pos) < 60.0f)) {
+					if (base->isDiscovered && (CP_GetDistance(ufo->pos, base->pos) < 60.0f)) {
 						AIR_SendUfoPurchasingBase(ufo, base);
 						continue;
 					}
