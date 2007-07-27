@@ -2313,7 +2313,7 @@ static const value_t ugvValues[] = {
 	{"weapon", V_STRING, offsetof(ugv_t, weapon), 0},
 	{"armour", V_STRING, offsetof(ugv_t, armour), 0},
 	{"size", V_INT, offsetof(ugv_t, size), MEMBER_SIZEOF(ugv_t, size)},
-	{"actors", V_STRING, offsetof(ugv_t, actors), MEMBER_SIZEOF(ugv_t, actors)},
+	{"actors", V_STRING, offsetof(ugv_t, actors), 0},
 
 	{NULL, 0, 0, 0}
 };
