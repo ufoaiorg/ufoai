@@ -220,9 +220,6 @@ typedef struct base_s {
 	int posX[BASE_SIZE][BASE_SIZE];	/**< the x coordinates for the basemap (see map[BASE_SIZE][BASE_SIZE]) */
 	int posY[BASE_SIZE][BASE_SIZE];	/**< the y coordinates for the basemap (see map[BASE_SIZE][BASE_SIZE]) */
 
-	int condition; /**< base condition
-			@todo: implement this */
-
 	baseStatus_t baseStatus; /**< the current base status */
 
 	qboolean isDiscovered;	/** qtrue if the base has been discovered by aliens */

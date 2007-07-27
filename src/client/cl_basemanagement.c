@@ -2961,7 +2961,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
  */
 qboolean B_Save (sizebuf_t* sb, void* data)
 {
-	int i, k, l, cnt;
+	int i, k, l;
 	base_t *b;
 	aircraft_t *aircraft;
 	building_t *building;
@@ -3003,7 +3003,6 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_Write2Pos(sb, building->pos);
 		}
 		MSG_WriteShort(sb, gd.numBuildings[i]);
-		MSG_WriteByte(sb, b->condition);
 		MSG_WriteByte(sb, b->baseStatus);
 		MSG_WriteByte(sb, b->isDiscovered);
 		MSG_WriteByte(sb, b->maxBatteries);
@@ -3078,7 +3077,6 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 				}
 			}
 			/* save shield slots - currently only one */
-			cnt = AII_GetSlotItems(AC_ITEM_SHIELD, aircraft);
 			MSG_WriteByte(sb, 1);
 			if (aircraft->shield.itemIdx >= 0) {
 				MSG_WriteString(sb, aircraftItems[aircraft->shield.itemIdx].id);
@@ -3231,7 +3229,6 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			MSG_Read2Pos(sb, building->pos);
 		}
 		gd.numBuildings[i] = MSG_ReadShort(sb);
-		b->condition = MSG_ReadByte(sb);
 		b->baseStatus = MSG_ReadByte(sb);
 		b->isDiscovered = MSG_ReadByte(sb);
 		BDEF_InitialiseBaseSlots(b);

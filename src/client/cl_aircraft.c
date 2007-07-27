@@ -1973,6 +1973,47 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 		MSG_WritePos(sb, gd.ufos[i].direction);
 		for (j = 0; j < presaveArray[PRE_AIRSTA]; j++)
 			MSG_WriteLong(sb, gd.ufos[i].stats[j]);
+		MSG_WriteShort(sb, gd.ufos[i].baseTargetIdx);
+
+		/* save weapon slots */
+		MSG_WriteByte(sb, gd.ufos[i].maxWeapons);
+		for (j = 0; j < gd.ufos[i].maxWeapons; j++) {
+			if (gd.ufos[i].weapons[j].itemIdx >= 0) {
+				MSG_WriteString(sb, aircraftItems[gd.ufos[i].weapons[j].itemIdx].id);
+				MSG_WriteShort(sb, gd.ufos[i].weapons[j].ammoLeft);
+				MSG_WriteShort(sb, gd.ufos[i].weapons[j].delayNextShot);
+				MSG_WriteShort(sb, gd.ufos[i].weapons[j].installationTime);
+				/* if there is no ammo MSG_WriteString will write an empty string */
+				MSG_WriteString(sb, aircraftItems[gd.ufos[i].weapons[j].ammoIdx].id);
+			} else {
+				MSG_WriteString(sb, "skip");
+				MSG_WriteShort(sb, 0);
+				MSG_WriteShort(sb, 0);
+				MSG_WriteShort(sb, 0);
+				/* if there is no ammo MSG_WriteString will write an empty string */
+				MSG_WriteString(sb, "skip");
+			}
+		}
+		/* save shield slots - currently only one */
+		MSG_WriteByte(sb, 1);
+		if (gd.ufos[i].shield.itemIdx >= 0) {
+			MSG_WriteString(sb, aircraftItems[gd.ufos[i].shield.itemIdx].id);
+			MSG_WriteShort(sb, gd.ufos[i].shield.installationTime);
+		} else {
+			MSG_WriteString(sb, "skip");
+			MSG_WriteShort(sb, 0);
+		}
+		/* save electronics slots */
+		MSG_WriteByte(sb, gd.ufos[i].maxElectronics);
+		for (j = 0; j < gd.ufos[i].maxElectronics; j++) {
+			if (gd.ufos[i].electronics[j].itemIdx >= 0) {
+				MSG_WriteString(sb, aircraftItems[gd.ufos[i].electronics[j].itemIdx].id);
+				MSG_WriteShort(sb, gd.ufos[i].electronics[j].installationTime);
+			} else {
+				MSG_WriteString(sb, "skip");
+				MSG_WriteShort(sb, 0);
+			}
+		}
 		/* @todo more? */
 	}
 
@@ -2005,6 +2046,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 	vec3_t tmp_vec3t;
 	vec2_t tmp_vec2t;
 	int tmp_int;
+	technology_t *tech;
 
 	/* load the amount of ufos on geoscape */
 	gd.numUfos = presaveArray[PRE_NUMUFO];
@@ -2026,6 +2068,29 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			MSG_ReadPos(sb, tmp_vec3t);		/* direction */
 			for (j = 0; j < presaveArray[PRE_AIRSTA]; j++)
 				MSG_ReadLong(sb);
+			MSG_ReadShort(sb);			/* baseTargetIdx */
+			/* read slots */
+			tmp_int = MSG_ReadByte(sb);
+			for (j = 0; j < tmp_int; j++) {
+				MSG_ReadString(sb);
+				MSG_ReadShort(sb);
+				MSG_ReadShort(sb);
+				MSG_ReadShort(sb);
+				MSG_ReadString(sb);
+			}
+			tmp_int = MSG_ReadByte(sb);
+			if (tmp_int) {
+				MSG_ReadString(sb);
+				MSG_ReadShort(sb);
+			}
+			tmp_int = MSG_ReadByte(sb);
+			for (j = 0; j < tmp_int; j++) {
+				MSG_ReadString(sb);
+				MSG_ReadShort(sb);
+				MSG_ReadShort(sb);
+				MSG_ReadShort(sb);
+				MSG_ReadString(sb);
+			}
 		} else {
 			memcpy(&gd.ufos[i], ufo, sizeof(aircraft_t));
 			ufo = &gd.ufos[i];
@@ -2042,6 +2107,54 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			MSG_ReadPos(sb, ufo->direction);
 			for (j = 0; j < presaveArray[PRE_AIRSTA]; j++)
 				ufo->stats[i] = MSG_ReadLong(sb);
+			ufo->baseTargetIdx = MSG_ReadShort(sb);
+			/* read weapon slot */
+			tmp_int = MSG_ReadByte(sb);
+			for (j = 0; j < tmp_int; j++) {
+				/* check that there are enough slots in this aircraft */
+				if (j < ufo->maxWeapons) {
+					tech = RS_GetTechByProvided(MSG_ReadString(sb));
+					if (tech)
+						AII_AddItemToSlot(tech, ufo->weapons + j);
+					ufo->weapons[j].ammoLeft = MSG_ReadShort(sb);
+					ufo->weapons[j].delayNextShot = MSG_ReadShort(sb);
+					ufo->weapons[j].installationTime = MSG_ReadShort(sb);
+					tech = RS_GetTechByProvided(MSG_ReadString(sb));
+					if (tech)
+						ufo->weapons[j].ammoIdx = AII_GetAircraftItemByID(tech->provides);
+				} else {
+					/* just in case there are less slots in new game that in saved one */
+					MSG_ReadString(sb);
+					MSG_ReadShort(sb);
+					MSG_ReadShort(sb);
+					MSG_ReadShort(sb);
+					MSG_ReadString(sb);
+				}
+			}
+			/* check for shield slot */
+			/* there is only one shield - but who knows - breaking the savegames if this changes
+				 * isn't worth it */
+			tmp_int = MSG_ReadByte(sb);
+			if (tmp_int) {
+				tech = RS_GetTechByProvided(MSG_ReadString(sb));
+				if (tech)
+					AII_AddItemToSlot(tech, &ufo->shield);
+				ufo->shield.installationTime = MSG_ReadShort(sb);
+			}
+			/* read electronics slot */
+			tmp_int = MSG_ReadByte(sb);
+			for (j = 0; j < tmp_int; j++) {
+				/* check that there are enough slots in this aircraft */
+				if (j < ufo->maxElectronics) {
+					tech = RS_GetTechByProvided(MSG_ReadString(sb));
+					if (tech)
+						AII_AddItemToSlot(tech, ufo->electronics + j);
+					ufo->electronics[j].installationTime = MSG_ReadShort(sb);
+				} else {
+					MSG_ReadString(sb);
+					MSG_ReadShort(sb);
+				}
+			}
 		}
 		/* @todo more? */
 	}
