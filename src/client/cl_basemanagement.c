@@ -2796,7 +2796,7 @@ int B_GetNumOnTeam (void)
        if (!aircraft)
                return 0;
 
-       return *(aircraft->teamSize);
+       return *aircraft->teamSize;
 }
 
 /**

@@ -744,7 +744,7 @@ static void CL_GenerateEquipment_f (void)
 				break;*/
 		}
 	/** @todo WARNING temp-disabled because this warning is useless when updating EMPL_ROBOT stuff :(
-	 * I think checking against aircraft->teamIdxs (and *(aircraft->teamSize)) might be better here
+	 * I think checking against aircraft->teamIdxs (and *aircraft->teamSize) might be better here
 	if (p != baseCurrent->teamNum[baseCurrent->aircraftCurrent])
 		Sys_Error("CL_GenerateEquipment_f: numEmployees: %i, teamNum[%i]: %i, p: %i\n",
 			gd.numEmployees[EMPL_SOLDIER],
@@ -1024,7 +1024,7 @@ void CL_UpdateHireVar (aircraft_t *aircraft, employeeType_t employeeType)
 	base = aircraft->homebase;
 	assert(base);
 
-	Cvar_Set("mn_hired", va(_("%i of %i"), *(aircraft->teamSize), aircraft->size));
+	Cvar_Set("mn_hired", va(_("%i of %i"), *aircraft->teamSize, aircraft->size));
 	hired_in_base = E_CountHired(base, employeeType);
 
 	/* Uncomment this Com_Printf here for better output in case of problems. */
@@ -1043,7 +1043,7 @@ void CL_UpdateHireVar (aircraft_t *aircraft, employeeType_t employeeType)
 	}
 
 	/** @todo WARNING temp-disabled because this warning is useless when updating EMPL_ROBOT stuff :(
-	 * I think checking against aircraft->teamIdxs (and *(aircraft->teamSize)) might be better here
+	 * I think checking against aircraft->teamIdxs (and *aircraft->teamSize) might be better here
 	if (p != base->teamNum[aircraft->idxInBase])
 		Sys_Error("CL_UpdateHireVar: SoldiersInBase: %i, teamNum[%i]: %i, p: %i\n",
 				hired_in_base,
@@ -1348,7 +1348,7 @@ void CL_RemoveSoldiersFromAircraft (int aircraft_idx, base_t *base)
 		}
 	}
 
-	if (*(aircraft->teamSize) > 0) {
+	if (*aircraft->teamSize > 0) {
 		Com_DPrintf("CL_RemoveSoldiersFromAircraft: there went something wrong with soldier-removing (more exactly the counting) from aircraft.\n");
 	}
 }
@@ -1368,7 +1368,7 @@ static qboolean CL_AssignSoldierToAircraft (int employee_idx, employeeType_t emp
 	if (aircraft->idxInBase < 0)
 		return qfalse;
 
-	if (*(aircraft->teamSize) < MAX_ACTIVETEAM) {
+	if (*aircraft->teamSize < MAX_ACTIVETEAM) {
 		/* Check whether the soldier is already on another aircraft */
 		Com_DPrintf("CL_AssignSoldierToAircraft: attempting to find idx '%d'\n", employee_idx);
 
@@ -1378,8 +1378,8 @@ static qboolean CL_AssignSoldierToAircraft (int employee_idx, employeeType_t emp
 		}
 
 		/* Assign the soldier to the aircraft. */
-		if (*(aircraft->teamSize) < aircraft->size) {
-			Com_DPrintf("CL_AssignSoldierToAircraft: attemting to add idx '%d' \n",employee_idx);
+		if (*aircraft->teamSize < aircraft->size) {
+			Com_DPrintf("CL_AssignSoldierToAircraft: attempting to add idx '%d' \n",employee_idx);
 			AIR_AddToAircraftTeam(aircraft, employee_idx, employeeType);
 			return qtrue;
 		}

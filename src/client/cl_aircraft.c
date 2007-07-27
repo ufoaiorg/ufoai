@@ -1041,7 +1041,7 @@ qboolean AIR_SendAircraftToMission (aircraft_t* aircraft, actMis_t* mission)
 	if (!aircraft || !mission)
 		return qfalse;
 
-	if (!*(aircraft->teamSize)) {
+	if (!*aircraft->teamSize) {
 		MN_Popup(_("Notice"), _("Assign a team to aircraft"));
 		return qfalse;
 	}
@@ -1842,7 +1842,7 @@ void AIR_AddToAircraftTeam (aircraft_t *aircraft, int employee_idx, employeeType
 		Com_DPrintf("AIR_AddToAircraftTeam: null aircraft \n");
 		return;
 	}
-	if (*(aircraft->teamSize) < aircraft->size) {
+	if (*aircraft->teamSize < aircraft->size) {
 		/* Search for unused place in aircraft and fill it with  employee-data. */
 		/** @todo  do we need to update *aircraft->teamSize here as well? */
 		for (i = 0; i < aircraft->size; i++)
