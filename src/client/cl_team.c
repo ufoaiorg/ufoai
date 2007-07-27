@@ -1055,11 +1055,13 @@ void CL_UpdateHireVar (aircraft_t *aircraft, employeeType_t employeeType)
 		base->curTeam[p] = NULL;
 
 	/* Update real team-count in aircraft*/
+	/** @todo not needed anymore?
 	for (i = 0, p = 0; i < aircraft->size; i++) {
 		if (aircraft->teamIdxs[i] != -1)
 			p++;
 	}
 	*(aircraft->teamSize) = p;
+	*/
 }
 
 /**
