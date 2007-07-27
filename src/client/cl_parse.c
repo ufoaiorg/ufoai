@@ -342,8 +342,6 @@ static void CL_ParseServerData (struct dbuffer *msg)
 
 	/* parse protocol version number */
 	i = NET_ReadLong(msg);
-	cls.serverProtocol = i;
-
 	/* compare versions */
 	if (i != PROTOCOL_VERSION)
 		Com_Error(ERR_DROP, "Server returned version %i, not %i", i, PROTOCOL_VERSION);
@@ -611,7 +609,7 @@ static void CL_StartGame (struct dbuffer *msg)
 	VectorSet(cl.cam.angles, 60.0, 60.0, 0.0);
 	VectorSet(cl.cam.omega, 0.0, 0.0, 0.0);
 	cl.cam.zoom = 1.25;
-	CalcFovX();
+	V_CalcFovX();
 	camera_mode = CAMERA_MODE_REMOTE;
 
 	SCR_SetLoadingBackground(NULL);

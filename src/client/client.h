@@ -182,19 +182,16 @@ typedef struct client_static_s {
 	keydest_t key_dest;
 	keydest_t key_dest_old;
 
-	int framecount;
+	int framecount;				/**< increased with every CL_Frame call */
 	int realtime;				/**< always increasing, no clamping, etc */
 	float frametime;			/**< seconds since last frame */
 
-	int framedelta;
 	float framerate;
 
 	/* screen rendering information */
 	float disable_screen;		/* showing loading plaque between levels */
 	/* or changing rendering dlls */
 	/* if time gets > 30 seconds ahead, break it */
-	int disable_servercount;	/* when we receive a frame and cl.servercount */
-	/* > cls.disable_servercount, clear disable_screen */
 
 	/* connection information */
 	char servername[MAX_OSPATH];	/**< name of server from original connect */
@@ -202,7 +199,6 @@ typedef struct client_static_s {
 
 	struct datagram_socket *datagram_socket;
 	struct net_stream *stream;
-	int serverProtocol;			/**< in case we are doing some kind of version hack */
 
 	int challenge;				/**< from the server to use for connecting */
 
@@ -311,22 +307,6 @@ extern FILE* log_stats_file;
 /** limit the input for cvar editing (base name, save slots and so on) */
 #define MAX_CVAR_EDITING_LENGTH 256 /* MAXCMDLINE */
 
-typedef struct {
-	int key;					/**< so entities can reuse same entry */
-	vec3_t color;
-	vec3_t origin;
-	float radius;
-	float die;					/**< stop lighting after this time */
-	float decay;				/**< drop this each second */
-	float minlight;				/**< don't add when contributing less */
-} cdlight_t;
-
-extern cdlight_t cl_dlights[MAX_DLIGHTS];
-
-/*============================================================================= */
-
-void CL_AddNetgraph(void);
-
 /*
 =================================================
 shader stuff
@@ -431,7 +411,6 @@ void CL_RequestNextDownload(void);
 void CL_StartSingleplayer(qboolean singleplayer);
 void CL_GetChallengePacket(void);
 void CL_Snd_Restart_f(void);
-void S_ModifySndRef_f(void);
 void CL_ParseMedalsAndRanks(const char *name, const char **text, byte parserank);
 void CL_ParseUGVs(const char *name, const char **text);
 void CL_UpdateCharacterSkills(character_t *chr);	/* cl_team.c */
@@ -935,7 +914,7 @@ void V_AddLight(vec3_t org, float intensity, float r, float g, float b);
 void V_AddLightStyle(int style, float r, float g, float b);
 entity_t *V_GetEntity(void);
 void V_CenterView(pos3_t pos);
-void CalcFovX(void);
+void V_CalcFovX(void);
 
 /* cl_sequence.c */
 void CL_SequenceRender(void);
@@ -945,10 +924,6 @@ void CL_SequenceStart_f(void);
 void CL_SequenceEnd_f(void);
 void CL_ResetSequences(void);
 void CL_ParseSequence(const char *name, const char **text);
-
-/* cl_fx.c */
-cdlight_t *CL_AllocDlight(int key);
-void CL_AddParticles(void);
 
 /* cl_map.c */
 #define GLOBE_ROTATE -90
@@ -990,14 +965,5 @@ void CL_PopupNotifyUfoRemoved(const aircraft_t* ufo);
 void CL_PopupNotifyUfoDisappeared(const aircraft_t* ufo);
 void CL_DisplayPopupAircraft(const aircraft_t* aircraft);
 void CL_DisplayPopupIntercept(struct actMis_s* mission, aircraft_t* ufo);
-
-/* cl_keys.c */
-extern char *keybindings[K_KEY_SIZE];
-
-/* cl_vid.c */
-void VID_Error(int err_level, const char *fmt, ...) __attribute__((noreturn));
-void VID_Printf(int print_level, const char *fmt, ...);
-qboolean VID_GetModeInfo(int *width, int *height, int mode);
-void Sys_Vid_Init(void);
 
 #endif /* CLIENT_CLIENT_H */

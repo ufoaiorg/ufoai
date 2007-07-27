@@ -54,7 +54,7 @@ void S_StartSound(vec3_t origin, int entnum, int entchannel, struct sfx_s *sfx, 
 void S_StartLocalSound(const char *s);
 
 void S_RawSamples(int samples, int rate, int width, int channels, byte * data, float volume);
-
+void S_ModifySndRef_f(void);
 void S_StopAllSounds(void);
 void S_Update(vec3_t origin, vec3_t v_forward, vec3_t v_right, vec3_t v_up);
 

@@ -281,9 +281,8 @@ void CL_StartSingleplayer (qboolean singleplayer)
  */
 void CL_Drop (void)
 {
-	/* drop loading plaque unless this is the initial game start */
-	if (cls.disable_servercount != -1)
-		SCR_EndLoadingPlaque();	/* get rid of loading plaque */
+	/* drop loading plaque */
+	SCR_EndLoadingPlaque();
 
 	if (cls.state == ca_uninitialized || cls.state == ca_disconnected)
 		return;
@@ -467,7 +466,7 @@ void CL_ClearState (void)
 	memset(&cl, 0, sizeof(cl));
 	cl.refdef.mapZone = mapZone;
 	cl.cam.zoom = 1.0;
-	CalcFovX();
+	V_CalcFovX();
 
 	numLEs = 0;
 	numLMs = 0;
@@ -2327,7 +2326,6 @@ void CL_AVIRecord (int now, void *data)
 	}
 }
 
-#define NUM_DELTA_FRAMES	20
 /**
  * @brief
  * @sa Qcommon_Frame
@@ -2380,11 +2378,8 @@ void CL_Frame (int now, void *data)
 		cl.eventTime += delta;
 
 	/* frame rate calculation */
-	cls.framedelta += delta;
-	if (0 == (cls.framecount % NUM_DELTA_FRAMES)) {
-		cls.framerate = NUM_DELTA_FRAMES * 1000.0 / cls.framedelta;
-		cls.framedelta = 0;
-	}
+	if (delta)
+		cls.framerate = 1000.0 / delta;
 
 #ifdef HAVE_CURL
 	if (cls.state == ca_connected) {

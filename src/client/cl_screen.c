@@ -553,7 +553,6 @@ void SCR_BeginLoadingPlaque (void)
 
 	SCR_UpdateScreen();
 	cls.disable_screen = Sys_Milliseconds();
-	cls.disable_servercount = cl.servercount;
 }
 
 /**

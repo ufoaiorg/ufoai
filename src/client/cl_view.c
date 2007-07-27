@@ -38,7 +38,6 @@ int map_maxlevel_base = 0;
 sun_t map_sun;
 
 /* static vars */
-static cvar_t *cl_drawgrid;
 static cvar_t *cl_stats;
 
 static int r_numdlights;
@@ -467,10 +466,10 @@ void CL_PrepRefresh (void)
  * Should generally be called after any changes are made to the zoom level (via cl.cam.zoom)
  * @sa
  */
-void CalcFovX (void)
+void V_CalcFovX (void)
 {
-	if (cl_isometric->value) {
-		float zoom =  3.6*(cl.cam.zoom - cl_camzoommin->value) + 0.3*cl_camzoommin->value;
+	if (cl_isometric->integer) {
+		float zoom =  3.6 * (cl.cam.zoom - cl_camzoommin->value) + 0.3 * cl_camzoommin->value;
 		cl.refdef.fov_x = max(min(FOV / zoom, 140.0), 1.0);
 	} else {
 		cl.refdef.fov_x = max(min(FOV / cl.cam.zoom, 95.0), 55.0);
@@ -510,24 +509,6 @@ static void CL_CalcRefdef (void)
 	cl.refdef.height = scr_vrect.height;
 	cl.refdef.time = cl.time * 0.001;
 	cl.refdef.areabits = 0;
-}
-
-/**
- * @brief Function to draw the grid and the forbidden places
- *
- * @todo: Implement and extend this function
- */
-static void CL_DrawGrid (void)
-{
-	int i;
-
-	/* only in 3d view */
-	if (!CL_OnBattlescape())
-		return;
-
-	Com_DPrintf("CL_DrawGrid: %i\n", fb_length);
-	for (i = 0; i < fb_length; i++) {
-	}
 }
 
 /**
@@ -610,8 +591,6 @@ void V_RenderView (float stereo_separation)
 		Com_Printf("ent:%i  lt:%i\n", r_numentities, r_numdlights);
 	if (log_stats->integer && (log_stats_file != 0))
 		fprintf(log_stats_file, "%i,%i,", r_numentities, r_numdlights);
-	if (cl_drawgrid->integer)
-		CL_DrawGrid();
 
 	if (cls.state == ca_sequence)
 		CL_Sequence2D();
@@ -652,8 +631,6 @@ void V_Init (void)
 	Cmd_AddCommand("shaderlist", CL_ShaderList_f, NULL);
 
 	cursor = Cvar_Get("cursor", "1", CVAR_ARCHIVE, "Which cursor should be shown - 0-9");
-
-	cl_drawgrid = Cvar_Get("drawgrid", "0", 0, NULL);
 
 	cl_stats = Cvar_Get("cl_stats", "0", 0, NULL);
 }

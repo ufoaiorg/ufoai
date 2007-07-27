@@ -184,7 +184,7 @@ static void CL_SequenceCamera (void)
 	/* fudge to get isometric and perspective modes looking similar */
 	if (cl_isometric->integer)
 		cl.cam.zoom /= 1.35;
-	CalcFovX();
+	V_CalcFovX();
 }
 
 

@@ -350,7 +350,7 @@ static void PE_SetCamera (void)
 	if (cl_isometric->integer)
 		cl.cam.zoom /= 1.35;
 
-	CalcFovX();
+	V_CalcFovX();
 }
 
 /**

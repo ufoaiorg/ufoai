@@ -289,7 +289,7 @@ void CL_CameraModeChange (camera_mode_t new_camera_mode)
 		VectorCopy(save_camorg, cl.cam.camorg);
 		VectorCopy(save_camangles, cl.cam.angles);
 		cl.cam.zoom = save_camzoom;
-		CalcFovX();
+		V_CalcFovX();
 		Cvar_SetValue("cl_worldlevel", save_level);
 	} else if (!cl_isometric->integer) {
 		Com_Printf("Changed camera mode to first-person.\n");
@@ -400,7 +400,7 @@ static void CL_ZoomInQuant_f (void)
 
 		/* ensure zoom doesnt exceed either MAX_ZOOM or cl_camzoommax */
 		cl.cam.zoom = min(min(MAX_ZOOM, cl_camzoommax->value), cl.cam.zoom);
-		CalcFovX();
+		V_CalcFovX();
 	}
 }
 
@@ -431,7 +431,7 @@ static void CL_ZoomOutQuant_f (void)
 
 		/* ensure zoom isnt less than either MIN_ZOOM or cl_camzoommin */
 		cl.cam.zoom = max(max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
-		CalcFovX();
+		V_CalcFovX();
 	}
 }
 
@@ -1079,7 +1079,7 @@ static void CL_CameraMoveRemote (void)
 		/* ensure zoom isnt less than either MIN_ZOOM or cl_camzoommin */
 		cl.cam.zoom = max(max(MIN_ZOOM, cl_camzoommin->value), cl.cam.zoom);
 	}
-	CalcFovX();
+	V_CalcFovX();
 
 	/* calc new camera reference and new camera real origin */
 	VectorMA(cl.cam.reforg, cls.frametime, cl.cam.speed, cl.cam.reforg);

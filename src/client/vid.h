@@ -88,4 +88,9 @@ void VID_MemFree(void *ptr);
 
 #define VID_NUM_MODES (sizeof(vid_modes) / sizeof(vidmode_t))
 
+void VID_Error(int err_level, const char *fmt, ...) __attribute__((noreturn));
+void VID_Printf(int print_level, const char *fmt, ...);
+qboolean VID_GetModeInfo(int *width, int *height, int mode);
+void Sys_Vid_Init(void);
+
 #endif /* CLIENT_VID_H */
