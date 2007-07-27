@@ -544,7 +544,7 @@ static void SCR_DrawConsole (void)
 void SCR_BeginLoadingPlaque (void)
 {
 	S_StopAllSounds();
-	cl.sound_prepped = qfalse;	/* don't play ambients */
+
 	CDAudio_Stop();
 	if (developer->integer)
 		return;

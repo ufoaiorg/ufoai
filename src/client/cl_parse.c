@@ -303,15 +303,6 @@ void CL_RegisterSounds (void)
 
 	S_BeginRegistration();
 
-	/* load game sounds */
-	for (i = 1; i < MAX_SOUNDS; i++) {
-		if (!cl.configstrings[CS_SOUNDS+i][0])
-			break;
-		cl.sound_precache[i] = S_RegisterSound(cl.configstrings[CS_SOUNDS+i]);
-		/* pump message loop */
-		Sys_SendKeyEvents();
-	}
-
 	/* load weapon sounds */
 	for (i = 0; i < csi.numODs; i++) { /* i = obj */
 		for (j = 0; j < csi.ods[i].numWeapons; j++) {	/* j = weapon-entry per obj */
@@ -454,12 +445,6 @@ static void CL_ParseConfigString (struct dbuffer *msg)
 			else
 				cl.model_clip[i-CS_MODELS] = NULL;
 		}
-	} else if (i >= CS_SOUNDS && i < CS_SOUNDS+MAX_MODELS) {
-		if (cl.refresh_prepped)
-			cl.sound_precache[i-CS_SOUNDS] = S_RegisterSound(cl.configstrings[i]);
-	} else if (i >= CS_IMAGES && i < CS_IMAGES + MAX_MODELS) {
-		if (cl.refresh_prepped)
-			cl.image_precache[i-CS_IMAGES] = re.RegisterPic(cl.configstrings[i]);
 	} else if (i >= CS_PLAYERNAMES && i < CS_PLAYERNAMES + MAX_CLIENTS) {
 		CL_ParseClientinfo(i-CS_PLAYERNAMES);
 	}

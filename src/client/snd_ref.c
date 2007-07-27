@@ -77,7 +77,7 @@ int paintedtime;				/* sample PAIRS */
 /* than could actually be referenced during gameplay, */
 /* because we don't want to free anything until we are */
 /* sure we won't need it. */
-#define		MAX_SFX		(MAX_SOUNDS*2)
+#define		MAX_SFX		512
 static sfx_t known_sfx[MAX_SFX];
 static int num_sfx;
 
@@ -915,93 +915,6 @@ void S_StopAllSounds (void)
 	/* restart music */
 	S_OGG_Start();
 }
-
-/**
- * @brief Entities with a ->sound field will generated looped sounds
- * that are automatically started, stopped, and merged together
- * as the entities are sent to the client
- */
-#if 0
-void S_AddLoopSounds (void)
-{
-	int i, j;
-	int sounds[MAX_EDICTS];
-	int left, right, left_total, right_total;
-	channel_t *ch;
-	sfx_t *sfx;
-	sfxcache_t *sc;
-	int num;
-	entity_state_t *ent;
-
-	if (cls.state != ca_active)
-		return;
-
-	if (!cl.sound_prepped)
-		return;
-
-	for (i = 0; i < cl.frame.num_entities; i++) {
-		num = (cl.frame.parse_entities + i) & (MAX_PARSE_ENTITIES - 1);
-		ent = &cl_parse_entities[num];
-		sounds[i] = ent->sound;
-	}
-
-	for (i = 0; i < cl.frame.num_entities; i++) {
-		if (!sounds[i])
-			continue;
-
-		sfx = cl.sound_precache[sounds[i]];
-		if (!sfx)
-			continue;			/* bad sound effect */
-		sc = sfx->cache;
-		if (!sc)
-			continue;
-
-		num = (cl.frame.parse_entities + i) & (MAX_PARSE_ENTITIES - 1);
-		ent = &cl_parse_entities[num];
-
-		/* find the total contribution of all sounds of this type */
-		S_SpatializeOrigin(ent->origin, 255.0, SOUND_LOOPATTENUATE, &left_total, &right_total);
-		for (j = i + 1; j < cl.frame.num_entities; j++) {
-			if (sounds[j] != sounds[i])
-				continue;
-			sounds[j] = 0;		/* don't check this again later */
-
-			num = (cl.frame.parse_entities + j) & (MAX_PARSE_ENTITIES - 1);
-			ent = &cl_parse_entities[num];
-
-			S_SpatializeOrigin(ent->origin, 255.0, SOUND_LOOPATTENUATE, &left, &right);
-			left_total += left;
-			right_total += right;
-		}
-
-		if (left_total == 0 && right_total == 0)
-			continue;			/* not audible */
-
-		/* allocate a channel */
-		ch = S_PickChannel(0, 0);
-		if (!ch)
-			return;
-
-		if (left_total > 255)
-			left_total = 255;
-		if (right_total > 255)
-			right_total = 255;
-		ch->leftvol = left_total;
-		ch->rightvol = right_total;
-		ch->autosound = qtrue;	/* remove next frame */
-		ch->sfx = sfx;
-		/* sometimes, the sc->length argument can become 0, and in that
-		 * case we get a SIGFPE in the next modulo.  The workaround checks
-		 * for this situation and sets the pos and end to zero if true */
-		if (sc->length == 0) {
-			ch->pos = ch->end = 0;
-		} else {
-			ch->pos = paintedtime % sc->length;
-			ch->end = paintedtime + sc->length - ch->pos;
-		}
-	}
-}
-#endif /* 0 */
 
 /**
  * @brief Cinematic streaming and voice over network

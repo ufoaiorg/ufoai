@@ -116,10 +116,7 @@ typedef enum {
  */
 typedef struct client_state_s {
 	qboolean refresh_prepped;	/**< false if on new level or new ref dll */
-	qboolean sound_prepped;		/**< ambient sounds can start */
 	qboolean force_refdef;		/**< vid has changed, so we can't use a paused refdef */
-
-	int parse_entities;			/**< index (not anded off) into cl_parse_entities[] */
 
 	int time;					/**< this is the time value that the client
 								 * is rendering at.  always <= cls.realtime */
@@ -153,9 +150,6 @@ typedef struct client_state_s {
 	struct model_s *model_draw[MAX_MODELS];
 	struct cBspModel_s *model_clip[MAX_MODELS];
 	struct model_s *model_weapons[MAX_OBJDEFS];
-
-	struct sfx_s *sound_precache[MAX_SOUNDS];
-	struct image_s *image_precache[MAX_IMAGES];
 
 	clientinfo_t clientinfo[MAX_CLIENTS]; /* client info of all connected clients */
 } client_state_t;
