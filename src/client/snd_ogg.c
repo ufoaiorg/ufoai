@@ -268,7 +268,11 @@ qboolean S_OGG_Open (const char *filename)
 	}
 
 	music.ovInfo = ov_info(&music.ovFile, -1);
-	assert(music.ovInfo);
+	if (!music.ovInfo) {
+		Com_Printf("%s: The specified bitstream does not exist or the file has been initialized improperly.\n", checkFilename);
+		FS_FCloseFile(&stream->file);
+		return qfalse;
+	}
 	if ((music.ovInfo->channels != 1) && (music.ovInfo->channels != 2)) {
 		Com_Printf("%s has an unsupported number of channels: %i\n", checkFilename, music.ovInfo->channels);
 		FS_FCloseFile(&stream->file);
