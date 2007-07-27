@@ -257,8 +257,6 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 
 	chr = &employee->chr;
 	memset(chr, 0, sizeof(character_t));
-	/* default values for human characters */
-	chr->weapons = chr->armor = qtrue;
 
 	/* link inventory */
 	chr->inv = &employee->inv;

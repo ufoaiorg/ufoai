@@ -1404,7 +1404,9 @@ int Com_GetModelAndName (const char *team, character_t * chr)
 		Com_DPrintf("Com_GetModelAndName: Warning - this team (%s) could not be handled via aliencont code - no tech pointer will be available\n", team);
 #endif
 
+	/* default values for human characters */
 	chr->fieldSize = ACTOR_SIZE_NORMAL; /* Default value is 1x1 */
+	chr->weapons = chr->armor = qtrue;
 
 	/* get the models */
 	while (retry--) {
