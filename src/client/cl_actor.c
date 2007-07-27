@@ -1798,14 +1798,17 @@ qboolean CL_ActorSelect (le_t * le)
 		if (cl.teamList[i] == le) {
 			/* console commands, update cvars */
 			Cvar_ForceSet("cl_selected", va("%i", i));
-			if (le->fieldSize == ACTOR_SIZE_NORMAL) {
-				selChr = baseCurrent->curTeam[i];
-				assert(selChr);
+			selChr = baseCurrent->curTeam[i];
+			assert(selChr);
+			switch (le->fieldSize) {
+			case ACTOR_SIZE_NORMAL:
 				CL_CharacterCvars(selChr);
-			} else {
-				selChr = baseCurrent->curTeam[i];
-				assert(selChr);
+				break;
+			case ACTOR_SIZE_2x2:
 				CL_UGVCvars(selChr);
+				break;
+			default:
+				Com_Error(ERR_DROP, "CL_ActorSelect: Unknown fieldsize\n");
 			}
 
 			/* Forcing the hud-display to refresh it's dsiplayed stuff */
