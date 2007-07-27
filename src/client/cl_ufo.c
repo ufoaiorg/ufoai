@@ -32,6 +32,8 @@ static void UFO_RemoveUfoFromGeoscape_f(void);
 extern void UFO_CampaignCheckEvents(void);
 extern void UFO_Reset(void);
 
+const float max_detecting_range = 60.0f; /**< range to detect and fire at phalanx aircrafts */
+
 typedef struct ufoTypeList_s {
 	const char *id;		/**< script id string */
 	const char *name;	/**< these values are already taken from script file
@@ -188,7 +190,7 @@ static void UFO_FoundNewBase (aircraft_t *ufo, int dt)
 
 		/* ufo can't find base if it's too far */
 		distance = CP_GetDistance(ufo->pos, base->pos);
-		if (distance > 60.0f)
+		if (distance > max_detecting_range)
 			continue;
 
 		test = UFO_IsTargetOfBase(ufo - gd.ufos, base);
@@ -213,15 +215,52 @@ static void UFO_FoundNewBase (aircraft_t *ufo, int dt)
 }
 
 /**
+ * @brief Check if the ufo can shoot at something
+ */
+void UFO_SearchTarget (aircraft_t *ufo)
+{
+	base_t* base;
+	aircraft_t* phalanxAircraft;
+
+	if (ufo->status != AIR_FLEEING) {
+		/* check if the ufo is already attacking a base */
+		if (ufo->baseTargetIdx > -1) {
+			AIRFIGHT_ExecuteActions(ufo, NULL);
+		/* check if the ufo is already attacking an aircraft */
+		} else if (ufo->target) {
+			/* check if the target flee in a base */
+			if (ufo->target->status > AIR_HOME)
+				AIRFIGHT_ExecuteActions(ufo, ufo->target);
+			else
+				ufo->target = NULL;
+		} else {
+			ufo->status = AIR_TRANSIT;
+			for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
+				/* check if the ufo can attack a base (if it's not too far) */
+				if (base->isDiscovered && (CP_GetDistance(ufo->pos, base->pos) < max_detecting_range)) {
+					AIR_SendUfoPurchasingBase(ufo, base);
+					continue;
+				}
+
+				/* check if the ufo can attack an aircraft */
+				for (phalanxAircraft = base->aircraft + base->numAircraftInBase - 1; phalanxAircraft >= base->aircraft; phalanxAircraft--) {
+					/* check that aircraft is flying */
+					if (phalanxAircraft->status > AIR_HOME && CP_GetDistance(ufo->pos, phalanxAircraft->pos) < max_detecting_range)  {
+						AIR_SendUfoPurchasingAircraft(ufo, phalanxAircraft);
+					}
+				}
+			}
+		}
+	}
+}
+
+/**
  * @brief Make the UFOs run
  */
 void UFO_CampaignRunUfos (int dt)
 {
 	aircraft_t*	ufo;
-	base_t* base;
-	aircraft_t* phalanxAircraft;
 	int k;
-	qboolean test = qtrue;
 
 	/* now the ufos are flying around, too */
 	for (ufo = gd.ufos + gd.numUfos - 1; ufo >= gd.ufos; ufo--) {
@@ -232,54 +271,15 @@ void UFO_CampaignRunUfos (int dt)
 			/* check if a fleeing UFO is still in danger */
 			if (ufo->status == AIR_FLEEING && !ufo->visible)
 				ufo->status = AIR_TRANSIT;
-			/* check if a ufo can find a base to attack */
-			else if (frand() < 0.1f && AII_AircraftCanShoot(ufo)) {
-				for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
-					/* check if the base is not too far */
-					if (CP_GetDistance(ufo->pos, base->pos) < 40.0f) {
-						AIR_SendUfoPurchasingBase(ufo, base);
-						test = qfalse;
-						continue;
-					}
-			}
 
-			if (test)
-				UFO_SetUfoRandomDest(ufo);
+			UFO_SetUfoRandomDest(ufo);
 		}
+
+		UFO_SearchTarget(ufo);
 
 		/* @todo: Crash */
 		if (ufo->fuel <= 0)
 			ufo->fuel = ufo->stats[AIR_STATS_FUELSIZE];
-
-		/* check if the UFO can fight a PHALANX aircraft or a base */
-		if (ufo->visible && ufo->status != AIR_FLEEING) {
-			/* check if the ufo is already attacking a base */
-			if (ufo->baseTargetIdx > -1) {
-				AIRFIGHT_ExecuteActions(ufo, NULL);
-			/* check if the ufo is already attacking an aircraft */
-			} else if (ufo->target && ufo->target->status > AIR_HOME) {
-				AIRFIGHT_ExecuteActions(ufo, ufo->target);
-			} else {
-				ufo->target = NULL;
-				ufo->status = AIR_TRANSIT;
-				for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
-					/* check if the ufo can attack a base (if it's not too far) */
-					/* ufo can see a base only if it shoots on it */
-					if (base->isDiscovered && (CP_GetDistance(ufo->pos, base->pos) < 60.0f)) {
-						AIR_SendUfoPurchasingBase(ufo, base);
-						continue;
-					}
-
-					/* check if the ufo can attack an aircraft */
-					for (phalanxAircraft = base->aircraft + base->numAircraftInBase - 1; phalanxAircraft >= base->aircraft; phalanxAircraft--) {
-						/* check that aircraft is flying */
-						if (phalanxAircraft->status > AIR_HOME)  {
-							AIR_SendUfoPurchasingAircraft(ufo, phalanxAircraft);
-						}
-					}
-				}
-			}
-		}
 
 		/* Update delay to launch next projectile */
 		for (k = 0; k < ufo->maxWeapons; k++) {
