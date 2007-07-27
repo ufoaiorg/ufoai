@@ -283,46 +283,37 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 		chr->rank = CL_GetRank("rifleman");
 		/* Create attributes. */
 		CHRSH_CharGenAbilitySkills(chr, teamValue);
-		/* Get model and name. */
-		chr->skin = Com_GetModelAndName(team, chr);
+		Q_strncpyz(teamDefName, team, sizeof(teamDefName));
 		break;
 	case EMPL_SCIENTIST:
 		chr->rank = CL_GetRank("scientist");
 		/* Create attributes. */
 		CHRSH_CharGenAbilitySkills(chr, teamValue);
-		/* Get model and name. */
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_scientist", team);
-		chr->skin = Com_GetModelAndName(teamDefName, chr);
 		break;
 	case EMPL_MEDIC:
 		chr->rank = CL_GetRank("medic");
 		/* Create attributes. */
 		CHRSH_CharGenAbilitySkills(chr, teamValue);
-		/* Get model and name. */
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_medic", team);
-		chr->skin = Com_GetModelAndName(teamDefName, chr);
 		break;
 	case EMPL_WORKER:
 		chr->rank = CL_GetRank("worker");
 		/* Create attributes. */
 		CHRSH_CharGenAbilitySkills(chr, teamValue);
-		/* Get model and name. */
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_worker", team);
-		chr->skin = Com_GetModelAndName(teamDefName, chr);
 		break;
 	case EMPL_ROBOT:
 		chr->rank = CL_GetRank("ugv");
 		/* Create attributes. */
 		CHRSH_CharGenAbilitySkills(chr, teamValue);
-		/* Get model and name. */
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_ugv", team);
-		chr->skin = Com_GetModelAndName(teamDefName, chr);
 		break;
 	default:
 		Sys_Error("Unknown employee type\n");
 		break;
 	}
-
+	chr->skin = Com_GetCharacterValues(teamDefName, chr);
 	chr->HP = GET_HP(chr->skills[ABILITY_POWER]);
 	chr->maxHP = chr->HP;
 	chr->morale = GET_MORALE(chr->skills[ABILITY_MIND]);

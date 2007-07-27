@@ -541,7 +541,7 @@ void SV_InitGameProgs (void)
 	import.ReadData = PF_ReadData;
 	import.ReadFormat = PF_ReadFormat;
 
-	import.GetModelAndName = Com_GetModelAndName;
+	import.GetCharacterValues = Com_GetCharacterValues;
 
 	import.TagMalloc = GI_TagAlloc;
 	import.TagFree = GI_MemFree;

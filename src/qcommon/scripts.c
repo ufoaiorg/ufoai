@@ -1253,7 +1253,7 @@ NAME AND TEAM DEFINITION INTERPRETER
  * @brief
  * @param[in] gender 1 (female) or 2 (male)
  * @param[in] category country strings like: spanish_italian, german, russian and so on
- * @sa Com_GetModelAndName
+ * @sa Com_GetCharacterValues
  */
 char *Com_GiveName (int gender, const char *category)
 {
@@ -1299,7 +1299,7 @@ char *Com_GiveName (int gender, const char *category)
  * @param[in] type MODEL_PATH, MODEL_BODY, MODEL_HEAD, MODEL_SKIN (path, body, head, skin - see team_*.ufo)
  * @param[in] gender 1 (female) or 2 (male)
  * @param[in] category country strings like: spanish_italian, german, russian and so on
- * @sa Com_GetModelAndName
+ * @sa Com_GetCharacterValues
  */
 char *Com_GiveModel (int type, int gender, const char *category)
 {
@@ -1363,13 +1363,13 @@ const char* Com_GetActorSound (int category, int gender, actorSound_t soundType)
 }
 
 /**
- * @brief Assign 3D models and names to a character.
+ * @brief Assign character values, 3D models and names to a character.
  * @param[in] team What team the character is on.
  * @param[in,out] chr The character that should get the paths to the different models/skins.
  * @sa Com_GiveName
  * @sa Com_GiveModel
  */
-int Com_GetModelAndName (const char *team, character_t * chr)
+int Com_GetCharacterValues (const char *team, character_t * chr)
 {
 	teamDef_t *td;
 	char *str;
@@ -1384,7 +1384,7 @@ int Com_GetModelAndName (const char *team, character_t * chr)
 	if (i < numTeamDefs)
 		td = &teamDef[i];
 	else {
-		Com_DPrintf("Com_GetModelAndName: could not find team '%s' in team definitions - searching name definitions now\n", team);
+		Com_DPrintf("Com_GetCharacterValues: could not find team '%s' in team definitions - searching name definitions now\n", team);
 		/* search in name categories, if it isn't a team definition */
 		td = NULL;
 		for (i = 0; i < numNameCats; i++)
@@ -1394,14 +1394,14 @@ int Com_GetModelAndName (const char *team, character_t * chr)
 			/* use default team */
 			td = &teamDef[0];
 			assert(td);
-			Com_DPrintf("Com_GetModelAndName: could not find team '%s' in name definitions - using the first team definition now: '%s'\n", team, td->title);
+			Com_DPrintf("Com_GetCharacterValues: could not find team '%s' in name definitions - using the first team definition now: '%s'\n", team, td->title);
 		} else
 			category = i;
 	}
 
 #ifdef DEBUG
 	if (!td)
-		Com_DPrintf("Com_GetModelAndName: Warning - this team (%s) could not be handled via aliencont code - no tech pointer will be available\n", team);
+		Com_DPrintf("Com_GetCharacterValues: Warning - this team (%s) could not be handled via aliencont code - no tech pointer will be available\n", team);
 #endif
 
 	/* default values for human characters */
@@ -1429,7 +1429,7 @@ int Com_GetModelAndName (const char *team, character_t * chr)
 
 #ifdef DEBUG
 		if (i == numTeamDesc)
-			Com_DPrintf("Com_GetModelAndName: Warning - could not find a valid teamdesc for team '%s'\n", nameCat[category].title);
+			Com_DPrintf("Com_GetCharacterValues: Warning - could not find a valid teamdesc for team '%s'\n", nameCat[category].title);
 #endif
 
 		/* get name */

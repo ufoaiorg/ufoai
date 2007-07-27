@@ -210,7 +210,7 @@ const terrainType_t* Com_GetTerrainType(const char *textureName);
 
 char *Com_GiveName(int gender, const char *category);
 char *Com_GiveModel(int type, int gender, const char *category);
-int Com_GetModelAndName(const char *team, character_t * chr);
+int Com_GetCharacterValues(const char *team, character_t * chr);
 const char* Com_GetActorSound(int category, int gender, actorSound_t soundType);
 
 void Com_AddObjectLinks(void);

@@ -122,7 +122,7 @@ void AL_CollectingAliens (base_t *base)
 			continue;
 		if ((le->type == ET_ACTOR || le->type == ET_ACTOR2x2) && le->team == TEAM_ALIEN) {
 			if (le->teamDesc)
-				/* -1: see Com_GetModelAndName */
+				/* -1: see Com_GetCharacterValues */
 				teamDescID = le->teamDesc - 1;
 			else {
 				Com_Printf("AL_CollectingAliens: Can't collect alien with no teamDescID\n");

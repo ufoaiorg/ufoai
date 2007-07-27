@@ -656,7 +656,7 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 		level.num_spawned[team]++;
 		level.num_alive[team]++;
 		if (team != TEAM_CIVILIAN) {
-			ent->chr.skin = gi.GetModelAndName(gi.cvar_string("ai_alien"), &ent->chr);
+			ent->chr.skin = gi.GetCharacterValues(gi.cvar_string("ai_alien"), &ent->chr);
 
 			ent->type = ET_ACTOR;
 			ent->pnum = player->num;
@@ -694,7 +694,7 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 			ent->AP = 100;
 			ent->STUN = 0;
 
-			ent->chr.skin = gi.GetModelAndName(gi.cvar_string("ai_civilian"), &ent->chr);
+			ent->chr.skin = gi.GetCharacterValues(gi.cvar_string("ai_civilian"), &ent->chr);
 			ent->chr.inv = &ent->i;
 			/* FIXME: Maybe we have civilians with armor, too - police and so on */
 			ent->body = gi.modelindex(CHRSH_CharGetBody(&ent->chr));
