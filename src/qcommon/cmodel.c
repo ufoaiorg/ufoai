@@ -2703,7 +2703,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dir,
 
 #if 0
 		/** @todo Check diagonal connection for a 2x2 unit.
-		 * Currently this is not needed becasue we skip it in Grid_MoveMarkRoute :)
+		 * Currently this is not needed because we skip it in Grid_MoveMarkRoute :)
 		 */
 		if (dir > 3 &&
 			!( (dx > 0 ? R_CONN_PX(map, x,    y+dy, z) : R_CONN_NX(map, x,    y+dy, z))
