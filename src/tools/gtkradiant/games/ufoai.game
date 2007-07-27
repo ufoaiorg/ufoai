@@ -39,6 +39,7 @@
   cont1="solid"
   cont2="window"
   cont4="fireaffected"
+  cont6="water"
   cont9="level1"
   cont10="level2"
   cont11="level3"

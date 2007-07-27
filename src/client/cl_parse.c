@@ -100,8 +100,8 @@ const char *ev_format[] =
 	"!sb",				/* EV_ACTOR_MOVE_HIDDEN */
 
 	"ssbbgg",			/* EV_ACTOR_START_SHOOT */
-	"ssbbbppb",			/* EV_ACTOR_SHOOT; the last 'b' cannot be 'd' */
-	"bsbb",				/* EV_ACTOR_SHOOT_HIDDEN */
+	"ssbbbbppb",		/* EV_ACTOR_SHOOT; the last 'b' cannot be 'd' */
+	"bsbbbp",			/* EV_ACTOR_SHOOT_HIDDEN */
 	"ssbbbpp",			/* EV_ACTOR_THROW */
 
 	"ss",				/* EV_ACTOR_DIE */
@@ -1456,8 +1456,10 @@ static void CL_ParseEvent (struct dbuffer *msg)
 				int first;
 				int obj_idx;
 				int weap_fds_idx, fd_idx;
+				int surfaceFlags;
+				vec3_t impact;
 
-				NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &obj_idx, &weap_fds_idx, &fd_idx);
+				NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &obj_idx, &weap_fds_idx, &fd_idx, &surfaceFlags, &impact);
 
 				if (first) {
 					nextTime += 500;
@@ -1487,10 +1489,11 @@ static void CL_ParseEvent (struct dbuffer *msg)
 				int flags, dummy;
 				int obj_idx;
 				int weap_fds_idx, fd_idx;
-				vec3_t	muzzle, impact;
+				vec3_t muzzle, impact;
+				int surfaceFlags;
 
 				/* read data */
-				NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT], &dummy, &obj_idx, &weap_fds_idx, &fd_idx, &flags, &muzzle, &impact, &dummy);
+				NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT], &dummy, &obj_idx, &weap_fds_idx, &fd_idx, &flags, &surfaceFlags, &muzzle, &impact, &dummy);
 
 #ifdef DEBUG
 				GET_FIREDEFDEBUG(obj_idx, weap_fds_idx, fd_idx)

@@ -772,7 +772,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 	int damage;	/* The damage to be dealt to the target. */
 	byte flags;	/* ?? @todo */
 	int throughWall; /* shoot through x walls */
-/*	int i; */
+	int i;
 
 	/* Calc direction of the shot. */
 	gi.GridPosToVec(gi.map, at, impact);	/* Get the position of the targetted grid-cell. ('impact' is used only temporary here)*/
@@ -811,7 +811,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 	flags = 0;
 	damage = fd->damage[0];
 	VectorCopy(cur_loc, tracefrom);
-	for (;;) {
+	for (i = 0;; i++) {
 		/* Calc 'impact' vector that is located at the end of the range
 		   defined by the fireDef_t. This is not really the impact location,
 		   but rather the 'endofrange' location, see below for another use.*/
@@ -844,9 +844,9 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 #if 0
 		/* please debug, currently it causes double sounds */
 		/* calculate additional visibility */
-		for (i = 0; i < MAX_TEAMS; i++)
-			if (G_TeamPointVis(i, impact))
-				mask |= 1 << i;
+		for (k = 0; k < MAX_TEAMS; k++)
+			if (G_TeamPointVis(k, impact))
+				mask |= 1 << k;
 
 		/* victims see shots */
 		if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_ACTOR2x2))
@@ -861,6 +861,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 			gi.WriteByte(fd->weap_fds_idx);
 			gi.WriteByte(fd->fd_idx);
 			gi.WriteByte(flags);
+			gi.WriteByte(tr.contents);
 			gi.WritePos(tracefrom);
 			gi.WritePos(impact);
 			gi.WriteDir(tr.plane.normal);
@@ -871,6 +872,8 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 			gi.WriteShort(fd->obj_idx);
 			gi.WriteByte(fd->weap_fds_idx);
 			gi.WriteByte(fd->fd_idx);
+			gi.WriteByte(tr.contents);
+			gi.WritePos(impact);
 		}
 
 		if (tr.fraction < 1.0 && !fd->bounce) {
@@ -1163,6 +1166,8 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 		gi.WriteShort(fd->obj_idx);
 		gi.WriteByte(fd->weap_fds_idx);
 		gi.WriteByte(fd->fd_idx);
+		gi.WriteByte(0); /* FIXME: */
+		gi.WriteGPos(at);
 
 		/* ammo... */
 		if (fd->ammo) {

@@ -2557,9 +2557,10 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	int flags, normal, number;
 	int obj_idx;
 	int weap_fds_idx, fd_idx;
+	int surfaceFlags; /* content flags for the hit brush */
 
 	/* read data */
-	NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT], &number, &obj_idx, &weap_fds_idx, &fd_idx, &flags, &muzzle, &impact, &normal);
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT], &number, &obj_idx, &weap_fds_idx, &fd_idx, &flags, &surfaceFlags, &muzzle, &impact, &normal);
 
 	/* get le */
 	le = LE_Get(number);
@@ -2574,6 +2575,11 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	 * should become invisible if out of actor view */
 	/* add effect le */
 	LE_AddProjectile(fd, flags, muzzle, impact, normal);
+	if (firstShot && fd->dmgtype == csi.damFire) {
+		if (surfaceFlags & CONTENTS_BURN) {
+			CL_ParticleSpawn("fire", 0, impact, NULL, NULL);
+		}
+	}
 
 	/* start the sound */
 	if ((!fd->soundOnce || firstShot) && fd->fireSound[0]
@@ -2635,14 +2641,21 @@ void CL_ActorShootHidden (struct dbuffer *msg)
 	int first;
 	int obj_idx;
 	int weap_fds_idx, fd_idx;
+	int surfaceFlags;
+	vec3_t impact;
 
-	NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &obj_idx, &weap_fds_idx, &fd_idx);
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &obj_idx, &weap_fds_idx, &fd_idx, &surfaceFlags, &impact);
 
 	/* get the fire def */
 #ifdef DEBUG
 	GET_FIREDEFDEBUG(obj_idx, weap_fds_idx, fd_idx)
 #endif
 	fd = GET_FIREDEF(obj_idx, weap_fds_idx, fd_idx);
+	if (firstShot && fd->dmgtype == csi.damFire) {
+		if (surfaceFlags & CONTENTS_BURN) {
+			CL_ParticleSpawn("fire", 0, impact, NULL, NULL);
+		}
+	}
 
 	/* start the sound; @todo: is check for SF_BOUNCED needed? */
 	if (((first && fd->soundOnce) || (!first && !fd->soundOnce)) && fd->fireSound[0])
@@ -2710,7 +2723,7 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 	pos3_t from, target;
 	int number;
 	int obj_idx;
-	int weap_fds_idx,fd_idx;
+	int weap_fds_idx, fd_idx;
 
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_START_SHOOT], &number, &obj_idx, &weap_fds_idx, &fd_idx, &from, &target);
 
