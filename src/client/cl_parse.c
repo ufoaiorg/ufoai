@@ -920,7 +920,8 @@ static void CL_ActorAppear (struct dbuffer *msg)
 				&le->state, &le->fieldSize,
 				&le->maxTU, &le->maxMorale, &le->maxHP);
 
-	if (le->fieldSize == ACTOR_SIZE_NORMAL) {
+	if (le->fieldSize == 0
+	||  le->fieldSize == ACTOR_SIZE_NORMAL) {
 		le->addFunc = CL_AddActor;
 		le->type = ET_ACTOR;
 	} else {
