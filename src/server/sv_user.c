@@ -58,6 +58,8 @@ static void stufftext (client_t *client, const char *fmt, ...)
  * @brief Sends the first message from the server to a connected client.
  * This will be sent on the initial connection and upon each server load.
  * Client reads via CL_ParseServerData in cl_parse.c
+ * @sa CL_Reconnect_f
+ * @sa CL_ConnectionlessPacket
  */
 static void SV_New_f (void)
 {
