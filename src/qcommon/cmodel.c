@@ -242,6 +242,8 @@ static tnode_t *tnode_p;
 static byte tfList[HEIGHT][WIDTH][WIDTH];
 static byte tf;		/**< test flag */
 static byte stf;	/**< (guess: swapped test flag?) */
+static pos3_t exclude_from_forbiddenlist;
+
 
 static void CM_MakeTnodes(void);
 static void CM_InitBoxHull(void);
@@ -2537,6 +2539,12 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, byte 
 	byte *forbidden_size;
 
 	for (i = 0, p = map->fblist; i < map->fblength / 2; i++, p += 2) {
+		/* Skip initial position. */
+		if (VectorCompare((*p), exclude_from_forbiddenlist)) {
+			/* Com_DPrintf("Grid_CheckForbidden: skipping %i|%i|%i\n", (*p)[0], (*p)[1], (*p)[2]); */
+			continue;
+		}
+
 		forbidden_size = *(p + 1);
 		switch (*forbidden_size) {
 		case ACTOR_SIZE_NORMAL:
@@ -2698,11 +2706,11 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dir,
 			return;
 		break;
 	case ACTOR_SIZE_2x2:
-		if (Grid_CheckForbidden(map, nx, ny, z)
-#if 0 /** @todo why is this not working dammit? */
-		|| Grid_CheckForbidden(map, nx+1, ny, z)
-		|| Grid_CheckForbidden(map, nx, ny+1, z)
-		|| Grid_CheckForbidden(map, nx+1, ny+1, z)
+		if (Grid_CheckForbidden(map, poslist_n[0][0], poslist_n[0][1], z)
+#if 1 /** @todo why is this not working dammit? */
+		|| Grid_CheckForbidden(map, poslist_n[1][0], poslist_n[1][1], z)
+		|| Grid_CheckForbidden(map, poslist_n[2][0], poslist_n[2][1], z)
+		|| Grid_CheckForbidden(map, poslist_n[3][0], poslist_n[3][1], z)
 #endif
 		)
 			return;
@@ -2781,6 +2789,8 @@ void Grid_MoveCalc (struct routing_s *map, pos3_t from, int actor_size, int dist
 	map->fblist = fb_list;
 	map->fblength = fb_length;
 
+	VectorCopy(from, exclude_from_forbiddenlist); /**< Prepare exclusion of starting-location (i.e. tzhis should be ent-pos or le-pos) in Grid_CheckForbidden */
+	
 	xl = xh = from[0];	/**< Guess: set minimum and maximum x value to start value? See Grid_MoveMarkRoute. */
 	yl = yh = from[1];	/**< Guess: set minimum and maximum y value to start value? See Grid_MoveMarkRoute. */
 
