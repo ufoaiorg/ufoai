@@ -910,10 +910,10 @@ void LE_List_f (void)
 	int i;
 	le_t *le;
 
-	Com_Printf("number | entnum | type | inuse | invis | pnum | team\n");
+	Com_Printf("number | entnum | type | inuse | invis | pnum | team | size\n");
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
-		Com_Printf("#%5i | #%5i | %4i | %5i | %5i | %4i | %4i\n",
-			i, le->entnum, le->type, le->inuse, le->invis, le->pnum, le->team);
+		Com_Printf("#%5i | #%5i | %4i | %5i | %5i | %4i | %4i | %4i\n",
+			i, le->entnum, le->type, le->inuse, le->invis, le->pnum, le->team, le->fieldSize);
 	}
 }
 #endif
