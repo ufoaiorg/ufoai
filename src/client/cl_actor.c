@@ -3272,7 +3272,6 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 
 	add.tagent = V_GetEntity() + 1;
 	add.tagname = "tag_head";
-	le->fieldSize = ACTOR_SIZE_NORMAL;
 
 	V_AddEntity(&add);
 
