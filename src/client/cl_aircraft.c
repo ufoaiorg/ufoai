@@ -1850,7 +1850,7 @@ void AIR_AddToAircraftTeam (aircraft_t *aircraft, int employee_idx, employeeType
 				aircraft->teamIdxs[i] = employee_idx;
 				aircraft->teamTypes[i] = employeeType;
 				Com_DPrintf("AIR_AddToAircraftTeam: added idx '%d'\n", employee_idx);
-				*(aircraft->teamSize)++;
+				(*aircraft->teamSize)++;
 				break;
 			}
 		if (i >= aircraft->size)
@@ -1881,7 +1881,7 @@ void AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, int employee_idx, employe
 			aircraft->teamIdxs[i] = -1;
 			aircraft->teamTypes[i] = MAX_EMPL;
 			Com_DPrintf("AIR_RemoveFromAircraftTeam: removed idx '%d' \n", employee_idx);
-			*(aircraft->teamSize)--;
+			(*aircraft->teamSize)--;
 			return;
 		}
 	}
@@ -1925,7 +1925,7 @@ qboolean AIR_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx, employeeT
 		Com_DPrintf("AIR_IsInAircraftTeam: No aircraft given\n");
 		return qfalse;
 	}
-	
+
 	if (employee_idx < 0 || employee_idx > gd.numEmployees[employeeType]) {
 		Com_Printf("AIR_IsInAircraftTeam: No valid employee_idx given %i\n", employee_idx);
 		return qfalse;
@@ -1939,7 +1939,7 @@ qboolean AIR_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx, employeeT
 #endif
 
 
-	for (i = 0; i < aircraft->size; i++) {	
+	for (i = 0; i < aircraft->size; i++) {
 		if (aircraft->teamIdxs[i] == employee_idx && aircraft->teamTypes[i] == employeeType) {
 			/** @note This also skips the -1 entries in teamIdxs. */
 #ifdef DEBUG
