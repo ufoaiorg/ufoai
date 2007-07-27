@@ -1196,9 +1196,11 @@ static void CL_ToggleTeamList_f (void)
 	if (display_heavy_equipment_list) {
 		Com_DPrintf("Changing to soldier-list.\n");
 		display_heavy_equipment_list = qfalse;
+		Cbuf_AddText("toggle_show_heavybutton\n");
 	} else {
 		Com_DPrintf("Changing to heavy equipment (tank) list.\n");
 		display_heavy_equipment_list = qtrue;
+		Cbuf_AddText("toggle_show_soldiersbutton\n");
 	}
 	CL_MarkTeam_f();
 	Cbuf_AddText("team_select 0\n");

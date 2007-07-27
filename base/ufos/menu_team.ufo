@@ -920,14 +920,24 @@ menu team
 	// ==================
 	// additional stuff
 	// ==================
+	confunc toggle_show_heavybutton {
+		*bt_switch_list tooltip	"_Assign heavy equipment"
+		*bt_switch_list texl	"0 0"
+		*bt_switch_list texh	"64 37"
+	}
+	confunc toggle_show_soldiersbutton {
+		*bt_switch_list tooltip	"_Assign soldiers"
+		*bt_switch_list texl	"0 38"
+		*bt_switch_list texh	"64 75"
+	}
 	pic bt_switch_list
 	{
-		tooltip	"_Toggle between assignment of soldiers and heavy equipment"
-		image	hud/buttons2
-		mousefx	true
-		pos		"880 720"
+		tooltip	"_Assign heavy equipment"
+		pos	"880 720"
+		image	menu/buttons_team
 		texl	"0 0"
 		texh	"64 37"
+		mousefx	true
 		click	{ cmd "team_toggle_list;"  }
 	}
 
