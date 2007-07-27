@@ -1,19 +1,32 @@
-// size:
-// 0: normal actor (1x1) (unsupported for ugv)
-// 1: ugv size (2x2)
+// ========================================================
+// List of heavy equipment
+// ========================================================
+// tu <num>
+//	num is the number of time units
+// armour
+//	writeme (used yet?)
+// size <>
+// 	0: normal actor (1x1)
+// 	1: ugv size (2x2)
+// actors <id>
+//	id as defined for "actors" in team_humans.ufo
+//	todo: Used to get models + skins among other things.
+// ========================================================
 
 ugv ugv_triax
 {
-	tu "24"
+	tu	24
 	weapon	triax_weapon
-	armor	medium
-	size	1
+	armour	medium
+	size	1	// 2x2
+	actors	ugv_triax
 }
 
 ugv ugv_phoenix
 {
-	tu "20"
+	tu	20
 	weapon	phoenix_weapon
-	armor	medium
-	size	1
+	armour	medium
+	size	1	// 2x2
+	actors	ugv_phoenix
 }

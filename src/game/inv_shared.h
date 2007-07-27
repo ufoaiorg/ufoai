@@ -303,9 +303,10 @@ typedef enum {
 typedef struct ugv_s {
 	char id[MAX_VAR];
 	char weapon[MAX_VAR];
-	char armor[MAX_VAR];
+	char armour[MAX_VAR];
 	int size;
 	int tu;
+	char actors[MAX_VAR];
 } ugv_t;
 
 #define MAX_RANKS           32
