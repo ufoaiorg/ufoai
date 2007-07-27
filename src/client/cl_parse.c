@@ -920,13 +920,18 @@ static void CL_ActorAppear (struct dbuffer *msg)
 				&le->state, &le->fieldSize,
 				&le->maxTU, &le->maxMorale, &le->maxHP);
 
-	if (le->fieldSize == 0
-	||  le->fieldSize == ACTOR_SIZE_NORMAL) {
+	switch (le->fieldSize) {
+	case 0:
+	case ACTOR_SIZE_NORMAL:
 		le->addFunc = CL_AddActor;
 		le->type = ET_ACTOR;
-	} else {
+		break;
+	case ACTOR_SIZE_2x2:
 		le->addFunc = CL_AddUGV;
 		le->type = ET_ACTOR2x2;
+		break;
+	default:
+		Com_Error(ERR_DROP, "Unknown fieldSize for le in CL_ActorAppear (EV_ACTOR_APPEAR)\n");
 	}
 	le->modelnum1 = modelnum1;
 	le->modelnum2 = modelnum2;

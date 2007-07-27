@@ -2202,18 +2202,48 @@ static edict_t *G_ClientGetFreeSpawnPoint(player_t * player, int spawnType)
 	return NULL;
 }
 
+/**
+ * @brief Call this if you want to skip some actor netchannel data
+ * @note The fieldsize is not skipped
+ * @sa G_ClientTeamInfo
+ */
+static inline void G_ClientSkipActorInfo (void)
+{
+	int k, j;
 
+	gi.ReadShort(); /* ucn */
+	for (k = 0; k < 4; k++)
+		gi.ReadString(); /* name, path, body, head */
+	gi.ReadByte(); /* skin */
+	gi.ReadShort(); /* HP */
+	gi.ReadShort(); /* maxHP */
+	gi.ReadByte(); /* category */
+	gi.ReadByte(); /* gender */
+	gi.ReadByte(); /* STUN */
+	gi.ReadByte(); /* AP */
+	gi.ReadByte(); /* morale */
+	for (k = 0; k < SKILL_NUM_TYPES; k++)
+		gi.ReadByte(); /* skills */
+	for (k = 0; k < KILLED_NUM_TYPES; k++)
+		gi.ReadShort(); /* kills */
+	gi.ReadShort(); /* assigned missions */
+	j = gi.ReadShort();
+	/* @todo: skip j bytes instead of reading and ignoring */
+	for (k = 0; k < j; k++)
+		gi.ReadByte(); /* inventory */
+}
 
 /**
  * @brief The client lets the server spawn the actors for a given player by sending their information (models, inventory, etc..) over the network.
  * @param[in] player The player to spawn the actors for.
- * @sa CL_SendTeamInfo
+ * @sa CL_SendCurTeamInfo
  * @sa globals.ClientTeamInfo
+ * @sa clc_teaminfo
  */
 void G_ClientTeamInfo (player_t * player)
 {
 	edict_t *ent;
-	int i, j, k, length;
+	int i, k, length;
 	int container, x, y;
 	item_t item;
 	int dummyFieldSize = 0;
@@ -2238,21 +2268,28 @@ void G_ClientTeamInfo (player_t * player)
 				ent = G_ClientGetFreeSpawnPoint(player, ET_ACTORSPAWN);
 				if (!ent) {
 					gi.dprintf("G_ClientTeamInfo: Could not spawn actor because no useable spawn-point is avaialble (%i)\n", dummyFieldSize);
+					G_ClientSkipActorInfo();
+					continue;
 				}
 				ent->type = ET_ACTOR;
+				ent->fieldSize = ACTOR_SIZE_NORMAL;
 				break;
 			case ACTOR_SIZE_2x2:
 				/* Find valid actor spawn fields for this player. */
 				ent = G_ClientGetFreeSpawnPoint(player, ET_ACTOR2x2SPAWN);
 				if (!ent) {
 					gi.dprintf("G_ClientTeamInfo: Could not spawn actor because no useable spawn-point is avaialble (%i)\n", dummyFieldSize);
+					G_ClientSkipActorInfo();
+					continue;
 				}
 				ent->type = ET_ACTOR2x2;
 				ent->morale = 100;
+				ent->fieldSize = ACTOR_SIZE_2x2;
 				break;
 			default:
 				gi.dprintf("G_ClientTeamInfo: unknown fieldSize for edict (%i)\n", dummyFieldSize);
-				break;
+				G_ClientSkipActorInfo();
+				continue;
 			}
 
 			level.num_alive[ent->team]++;
@@ -2330,26 +2367,7 @@ void G_ClientTeamInfo (player_t * player)
 		} else {
 			/* just do nothing with the info */
 			gi.ReadByte(); /* fieldSize */
-			gi.ReadShort(); /* ucn */
-			for (k = 0; k < 4; k++)
-				gi.ReadString(); /* name, path, body, head */
-			gi.ReadByte(); /* skin */
-			gi.ReadShort(); /* HP */
-			gi.ReadShort(); /* maxHP */
-			gi.ReadByte(); /* category */
-			gi.ReadByte(); /* gender */
-			gi.ReadByte(); /* STUN */
-			gi.ReadByte(); /* AP */
-			gi.ReadByte(); /* morale */
-			for (k = 0; k < SKILL_NUM_TYPES; k++)
-				gi.ReadByte(); /* skills */
-			for (k = 0; k < KILLED_NUM_TYPES; k++)
-				gi.ReadShort(); /* kills */
-			gi.ReadShort(); /* assigned missions */
-			j = gi.ReadShort();
-			/* @todo: skip j bytes instead of reading and ignoring */
-			for (k = 0; k < j; k++)
-				gi.ReadByte(); /* inventory */
+			G_ClientSkipActorInfo();
 		}
 	}
 	G_ClientTeamAssign(player);
