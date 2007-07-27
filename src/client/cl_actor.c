@@ -3351,7 +3351,6 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 
 	/* add actor special effects */
 	ent->flags |= RF_SHADOW;
-	le->fieldSize = ACTOR_SIZE_2x2;
 
 	if (!(le->state & STATE_DEAD)) {
 		if (le->selected)
