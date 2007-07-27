@@ -2284,9 +2284,7 @@ void G_ClientTeamInfo (player_t * player)
 				ent->morale = 100;
 				break;
 			default:
-				gi.dprintf("G_ClientTeamInfo: unknown fieldSize for edict (%i)\n", dummyFieldSize);
-				G_ClientSkipActorInfo();
-				continue;
+				gi.error("G_ClientTeamInfo: unknown fieldSize for edict (%i)\n", dummyFieldSize);
 			}
 
 			level.num_alive[ent->team]++;

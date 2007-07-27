@@ -2570,8 +2570,7 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, byte 
 			poslen = 4;
 			break;
 		default:
-			Com_Printf("Grid_CheckForbidden: unknown actor-size: %i\n", actor_size);
-			return qfalse;
+			Com_Error(ERR_DROP, "Grid_CheckForbidden: unknown actor-size: %i\n", actor_size);
 		}
 
 		for (j = 0; j < poslen; j++) {
@@ -2595,8 +2594,7 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, byte 
 				}
 				break;
 			default:
-				Com_Printf("Grid_CheckForbidden: unknown forbidden-size: %i\n", (int)*forbidden_size);
-				return qfalse;
+				Com_Error(ERR_DROP, "Grid_CheckForbidden: unknown forbidden-size: %i\n", (int)*forbidden_size);
 			}
 		}
 	}
@@ -2716,10 +2714,8 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dir,
 #endif
 		break;
 	default:
-		Com_Printf("Grid_MoveMark: unknown actor-size: %i\n", actor_size);
-		return;
+		Com_Error(ERR_DROP, "Grid_MoveMark: unknown actor-size: %i\n", actor_size);
 	}
-
 
 	/* Height checks. */
 	/** @todo I think this and the next few lines need to be adapted to support 2x2 units.
