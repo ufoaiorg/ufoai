@@ -2771,8 +2771,7 @@ static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, i
 
 					/* test the next connections */
 					for (dir = 0; dir < DIRECTIONS; dir++) {
-						if ((actor_size != 0)
-						 && (actor_size != ACTOR_SIZE_NORMAL)
+						if ((actor_size == ACTOR_SIZE_2x2)
 						 && (dir > 3))
 							/* Ignore diagonal move for 2x2 and other units */
 							break;
@@ -2816,7 +2815,23 @@ void Grid_MoveCalc (struct routing_s *map, pos3_t from, int actor_size, int dist
 	tf = 1;
 	stf = 2;
 	R_AREA(map, xl, yl, from[2]) = 0;	/**< This position does not need any TUs to move there. */
-	tfList[from[2]][yl][xl] = 1;	/* (Guess: check this field in any case - because it's now the same value as "tf" @todo 2x2 support needed?) */
+	switch (actor_size) {
+		case ACTOR_SIZE_NORMAL:
+			tfList[from[2]][yl][xl] = 1;	/* (Guess: check this field in any case - because it's now the same value as "tf") */
+			break;
+		case ACTOR_SIZE_2x2:
+			tfList[from[2]][yl][xl] = 1;
+#if 1
+			/**  @todo 2x2 support really needed? */
+			tfList[from[2]][yl+1][xl] = 1;
+			tfList[from[2]][yl][xl+1] = 1;
+			tfList[from[2]][yl+1][xl+1] = 1;
+#endif
+			break;
+		default:
+			Com_Error(ERR_DROP, "Grid_MoveCalc: unknown actor-size: %i\n", actor_size);
+			break;
+	}
 
 	for (i = 0; i < distance; i++) {
 		/* Go on checking */
