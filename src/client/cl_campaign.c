@@ -3700,12 +3700,10 @@ void CL_GameExit (void)
 {
 	const cmdList_t *commands;
 
-#if 0
 	if (Com_ServerState())
-		SV_Shutdown(NULL, qfalse);
+		SV_Shutdown("Game exit", qfalse);
 	else
-#endif
-		Cmd_ExecuteString("disconnect\n");
+		CL_Disconnect();
 	Cvar_Set("mn_main", "main");
 	Cvar_Set("mn_active", "");
 
