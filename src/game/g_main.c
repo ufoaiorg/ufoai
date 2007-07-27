@@ -149,6 +149,7 @@ static void InitGame (void)
 	sv_enablemorale = gi.cvar("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale behaviour for actors");
 	sv_roundtimelimit = gi.cvar("sv_roundtimelimit", "0", CVAR_SERVERINFO, "Timelimit for multiplayer rounds");
 	sv_roundtimelimit->modified = qfalse;
+	sv_maxentities = gi.cvar("sv_maxentities", "1024", CVAR_LATCH, NULL);
 
 	sv_maxteams = gi.cvar("sv_maxteams", "2", CVAR_SERVERINFO, "How many teams for current running map");
 	sv_maxteams->modified = qfalse;
