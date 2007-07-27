@@ -1056,7 +1056,7 @@ menu mp_create_server
 	}
 	string maxperplayer_value
 	{
-		string	"*cvar maxsoldiers"
+		string	"*cvar sv_maxsoldiersperteam"
 		pos	"840 220"
 		align	ur
 	}
@@ -1067,7 +1067,7 @@ menu mp_create_server
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
-		click	{ cmd "mn_modify maxsoldiers -1 1 8;" }
+		click	{ cmd "mn_modify sv_maxsoldiersperteam -1 1 8;" }
 	}
 	pic maxperplayer_inc
 	{
@@ -1076,7 +1076,7 @@ menu mp_create_server
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
-		click	{ cmd "mn_modify maxsoldiers +1 1 8;" }
+		click	{ cmd "mn_modify sv_maxsoldiersperteam +1 1 8;" }
 	}
 
 	// =====================
@@ -1090,7 +1090,7 @@ menu mp_create_server
 	}
 	string maxsoldierperplayer_value
 	{
-		string	"*cvar maxsoldiersperplayer"
+		string	"*cvar sv_maxsoldiersperplayer"
 		pos	"840 240"
 		align	ur
 	}
@@ -1101,7 +1101,7 @@ menu mp_create_server
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
-		click	{ cmd "mn_modify maxsoldiersperplayer -1 1 8;" }
+		click	{ cmd "mn_modify sv_maxsoldiersperplayer -1 1 8;" }
 	}
 	pic maxsoldierperplayer_inc
 	{
@@ -1110,7 +1110,7 @@ menu mp_create_server
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
-		click	{ cmd "mn_modify maxsoldiersperplayer +1 1 8;" }
+		click	{ cmd "mn_modify sv_maxsoldiersperplayer +1 1 8;" }
 	}
 
 	// ===================
@@ -1124,7 +1124,7 @@ menu mp_create_server
 	}
 	string server_maxplayerperteam_value
 	{
-		string	"*cvar maxplayers"
+		string	"*cvar sv_maxplayersperteam"
 		pos	"840 260"
 		align	ur
 	}
@@ -1135,7 +1135,7 @@ menu mp_create_server
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
-		click	{ cmd "mn_modify maxplayers -1 1 8;" }
+		click	{ cmd "mn_modify sv_maxplayersperteam -1 1 8;" }
 	}
 	pic server_maxplayerperteam_inc
 	{
@@ -1144,7 +1144,7 @@ menu mp_create_server
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
-		click	{ cmd "mn_modify maxplayers +1 1 8;" }
+		click	{ cmd "mn_modify sv_maxplayersperteam +1 1 8;" }
 	}
 
 	// ===================
@@ -1369,7 +1369,7 @@ menu mp_create_server
 	func init
 	{
 		cmd	"mn_escpop 5;"
-		cmd "killserver; set maxplayers 8; set sv_roundtimelimit 0"
+		cmd "killserver; set sv_maxplayersperteam 8; set sv_roundtimelimit 0"
 		cmd "gametype 2on2; gametype 1on1"
 		cmd "getmaps"
 		cmd "mn_modify ai_autojoin -1 0 1"
@@ -1719,13 +1719,13 @@ gametype 1on1
 	name "_1on1"
 	{
 		sv_teamplay 0
-		maxclients 2
-		maxsoldiersperplayer 8
-		maxsoldiers 8
+		sv_maxclients 2
+		sv_maxsoldiersperplayer 8
+		sv_maxsoldiersperteam 8
 		ai_numactors 0
 		sv_ai 0
 		ai_autojoin 0
-//		maxplayers 1
+//		sv_maxplayersperteam 1
 	}
 }
 gametype 1on1on1
@@ -1733,13 +1733,13 @@ gametype 1on1on1
 	name "_1on1on1"
 	{
 		sv_teamplay 0
-		maxclients 3
-		maxsoldiersperplayer 8
-		maxsoldiers 8
+		sv_maxclients 3
+		sv_maxsoldiersperplayer 8
+		sv_maxsoldiersperteam 8
 		ai_numactors 0
 		sv_ai 0
 		ai_autojoin 0
-//		maxplayers 1
+//		sv_maxplayersperteam 1
 	}
 }
 gametype 2on2
@@ -1747,13 +1747,13 @@ gametype 2on2
 	name "_2on2"
 	{
 		sv_teamplay 1
-		maxclients 4
-		maxsoldiersperplayer 4
-		maxsoldiers 8
+		sv_maxclients 4
+		sv_maxsoldiersperplayer 4
+		sv_maxsoldiersperteam 8
 		ai_numactors 0
 		sv_ai 0
 		ai_autojoin 0
-//		maxplayers 2
+//		sv_maxplayersperteam 2
 	}
 }
 gametype 2on2on2
@@ -1761,13 +1761,13 @@ gametype 2on2on2
 	name "_2on2on2"
 	{
 		sv_teamplay 1
-		maxclients 6
-		maxsoldiersperplayer 4
-		maxsoldiers 8
+		sv_maxclients 6
+		sv_maxsoldiersperplayer 4
+		sv_maxsoldiersperteam 8
 		ai_numactors 0
 		sv_ai 0
 		ai_autojoin 0
-//		maxplayers 2
+//		sv_maxplayersperteam 2
 	}
 }
 gametype 3on3
@@ -1775,13 +1775,13 @@ gametype 3on3
 	name "_3on3"
 	{
 		sv_teamplay 1
-		maxclients 6
-		maxsoldiersperplayer 2
-		maxsoldiers 6
+		sv_maxclients 6
+		sv_maxsoldiersperplayer 2
+		sv_maxsoldiersperteam 6
 		ai_numactors 0
 		sv_ai 0
 		ai_autojoin 0
-//		maxplayers 3
+//		sv_maxplayersperteam 3
 	}
 }
 gametype 3on3on3
@@ -1789,13 +1789,13 @@ gametype 3on3on3
 	name "_3on3on3"
 	{
 		sv_teamplay 1
-		maxclients 9
-		maxsoldiersperplayer 2
-		maxsoldiers 6
+		sv_maxclients 9
+		sv_maxsoldiersperplayer 2
+		sv_maxsoldiersperteam 6
 		ai_numactors 0
 		sv_ai 0
 		ai_autojoin 0
-//		maxplayers 3
+//		sv_maxplayersperteam 3
 	}
 }
 gametype 4on4
@@ -1803,13 +1803,13 @@ gametype 4on4
 	name "_4on4"
 	{
 		sv_teamplay 1
-		maxclients 8
-		maxsoldiersperplayer 2
-		maxsoldiers 8
+		sv_maxclients 8
+		sv_maxsoldiersperplayer 2
+		sv_maxsoldiersperteam 8
 		ai_numactors 0
 		sv_ai 0
 		ai_autojoin 0
-		maxplayers 4
+//		sv_maxplayersperteam 4
 	}
 }
 gametype 4on4on4
@@ -1817,13 +1817,13 @@ gametype 4on4on4
 	name "_4on4on4"
 	{
 		sv_teamplay 1
-		maxclients 12
-		maxsoldiersperplayer 2
-		maxsoldiers 8
+		sv_maxclients 12
+		sv_maxsoldiersperplayer 2
+		sv_maxsoldiersperteam 8
 		ai_numactors 0
 		sv_ai 0
 		ai_autojoin 0
-//		maxplayers 4
+//		sv_maxplayersperteam 4
 	}
 }
 gametype coop2
@@ -1831,13 +1831,13 @@ gametype coop2
 	name "_Coop 2 players"
 	{
 		sv_teamplay 1
-		maxclients 2
-		maxsoldiersperplayer 4
-		maxsoldiers 8
+		sv_maxclients 2
+		sv_maxsoldiersperplayer 4
+		sv_maxsoldiersperteam 8
 		ai_numactors 8
 		sv_ai 1
 		ai_autojoin 0
-//		maxplayers 2
+//		sv_maxplayersperteam 2
 	}
 }
 gametype coop3
@@ -1845,13 +1845,13 @@ gametype coop3
 	name "_Coop 3 players"
 	{
 		sv_teamplay 1
-		maxclients 3
-		maxsoldiersperplayer 2
-		maxsoldiers 6
+		sv_maxclients 3
+		sv_maxsoldiersperplayer 2
+		sv_maxsoldiersperteam 6
 		ai_numactors 6
 		sv_ai 1
 		ai_autojoin 0
-//		maxplayers 3
+//		sv_maxplayersperteam 3
 	}
 }
 gametype coop4
@@ -1859,12 +1859,12 @@ gametype coop4
 	name "_Coop 4 players"
 	{
 		sv_teamplay 1
-		maxclients 4
-		maxsoldiersperplayer 2
-		maxsoldiers 8
+		sv_maxclients 4
+		sv_maxsoldiersperplayer 2
+		sv_maxsoldiersperteam 8
 		ai_numactors 8
 		sv_ai 1
 		ai_autojoin 0
-//		maxplayers 4
+//		sv_maxplayersperteam 4
 	}
 }

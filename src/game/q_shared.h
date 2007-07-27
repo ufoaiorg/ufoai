@@ -862,7 +862,7 @@ typedef enum {
 #define CS_MAPTITLE			1		/**< display map title string - translated client side */
 #define CS_MAXCLIENTS		2
 #define CS_MAPCHECKSUM		3		/**< for catching cheater maps */
-#define CS_MAXSOLDIERS		4		/**< max soldiers per team */
+#define CS_MAXSOLDIERSPERTEAM	4	/**< max soldiers per team */
 #define CS_MAXSOLDIERSPERPLAYER	5	/**< max soldiers per player when in teamplay mode */
 #define CS_ENABLEMORALE		6		/**< enable the morale states in multiplayer */
 #define CS_MAXTEAMS			7		/**< how many multiplayer teams for this map */

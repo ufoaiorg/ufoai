@@ -212,33 +212,33 @@ void CL_StartSingleplayer (qboolean singleplayer)
 		if (Qcommon_ServerActive()) {
 			/* shutdown server */
 			SV_Shutdown("Server was killed.\n", qfalse);
-		}
-		if (cls.state >= ca_connecting) {
+		} else if (cls.state >= ca_connecting) {
 			Com_Printf("Disconnect from current server\n");
 			CL_Disconnect();
 		}
-		Cvar_ForceSet("maxclients", "1");
+		Cvar_ForceSet("sv_maxclients", "1");
 
-		/* reset maxsoldiersperplayer and maxsoldiers(perteam) to default values */
+		/* reset sv_maxsoldiersperplayer and sv_maxsoldiersperteam to default values */
 		/* FIXME: these should probably default to something bigger */
-		if (Cvar_VariableInteger("maxsoldiers") != 4)
-			Cvar_SetValue("maxsoldiers", 4);
-		if (Cvar_VariableInteger("maxsoldiersperplayer") != 8)
-			Cvar_SetValue("maxsoldiersperplayer", 8);
+		if (Cvar_VariableInteger("sv_maxsoldiersperteam") != 4)
+			Cvar_SetValue("sv_maxsoldiersperteam", 4);
+		if (Cvar_VariableInteger("sv_maxsoldiersperplayer") != 8)
+			Cvar_SetValue("sv_maxsoldiersperplayer", 8);
 
 		/* this is needed to let 'soldier_select 0' do
 		   the right thing while we are on geoscape */
 		sv_maxclients->modified = qtrue;
 	} else {
 		const char *max_s, *max_spp;
-		max_s = Cvar_VariableStringOld("maxsoldiers");
-		max_spp = Cvar_VariableStringOld("maxsoldiersperplayer");
+		max_s = Cvar_VariableStringOld("sv_maxsoldiersperteam");
+		max_spp = Cvar_VariableStringOld("sv_maxsoldiersperplayer");
 
-		/* restore old maxsoldiersperplayer and maxsoldiers cvars if values were previously set */
+		/* restore old sv_maxsoldiersperplayer and sv_maxsoldiersperteam
+		 * cvars if values were previously set */
 		if (strlen(max_s))
-			Cvar_Set("maxsoldiers", max_s);
+			Cvar_Set("sv_maxsoldiersperteam", max_s);
 		if (strlen(max_spp))
-			Cvar_Set("maxsoldiersperplayer", max_spp);
+			Cvar_Set("sv_maxsoldiersperplayer", max_spp);
 
 		ccs.singleplayer = qfalse;
 		curCampaign = NULL;
@@ -352,8 +352,6 @@ static void CL_CheckForResend (void)
 
 /**
  * @brief
- *
- * FIXME: Spectator needs no team
  */
 static void CL_Connect_f (void)
 {
@@ -634,7 +632,7 @@ typedef struct serverList_s {
 	char version[8];
 	char gametype[8];
 	qboolean dedicated;
-	int maxclients;
+	int sv_maxclients;
 	int clients;
 	int serverListPos;
 } serverList_t;
@@ -669,7 +667,7 @@ static void process_ping_reply (serverList_t *server, char *msg)
 		sizeof(server->gametype));
 	server->dedicated = atoi(Info_ValueForKey(msg, "dedicated"));
 	server->clients = atoi(Info_ValueForKey(msg, "clients"));
-	server->maxclients = atoi(Info_ValueForKey(msg, "maxclients"));
+	server->sv_maxclients = atoi(Info_ValueForKey(msg, "sv_maxclients"));
 }
 
 static void ping_callback (struct net_stream *s)
@@ -693,7 +691,7 @@ static void ping_callback (struct net_stream *s)
 		server->gametype,
 		server->version,
 		server->clients,
-		server->maxclients);
+		server->sv_maxclients);
 	server->serverListPos = serverListPos;
 	serverListPos++;
 	Q_strcat(serverText, string, sizeof(serverText));
@@ -921,12 +919,12 @@ static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Network protocol:\t%s\n"), Info_ValueForKey(s, "protocol"));
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Roundtime:\t%s\n"), Info_ValueForKey(s, "sv_roundtimelimit"));
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Teamplay:\t%s\n"), Info_ValueForKey(s, "sv_teamplay"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. players per team:\t%s\n"), Info_ValueForKey(s, "maxplayers"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. players per team:\t%s\n"), Info_ValueForKey(s, "sv_maxplayersperteam"));
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. teams allowed in this map:\t%s\n"), Info_ValueForKey(s, "sv_maxteams"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. clients:\t%s\n"), Info_ValueForKey(s, "maxclients"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. soldiers per player:\t%s\n"), Info_ValueForKey(s, "maxsoldiersperplayer"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. soldiers per team:\t%s\n"), Info_ValueForKey(s, "maxsoldiers"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Password protected:\t%s\n"), Info_ValueForKey(s, "needpass"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. clients:\t%s\n"), Info_ValueForKey(s, "sv_maxclients"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. soldiers per player:\t%s\n"), Info_ValueForKey(s, "sv_maxsoldiersperplayer"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. soldiers per team:\t%s\n"), Info_ValueForKey(s, "sv_maxsoldiersperteam"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Password protected:\t%s\n"), Info_ValueForKey(s, "sv_needpass"));
 		menuText[TEXT_STANDARD] = serverInfoText;
 		do {
 			token = COM_Parse(&users);
@@ -1027,10 +1025,9 @@ static void discovery_callback (struct datagram_socket *s, const char *buf, int 
 }
 
 /**
- * @brief
- *
- * called via server_connect
- * FIXME: Spectator needs no team
+ * @brief Command callback when you click the connect button from
+ * the multiplayer menu
+ * @note called via server_connect
  */
 static void CL_ServerConnect_f (void)
 {
@@ -1365,7 +1362,6 @@ void CL_Snd_Restart_f (void)
 /**
  * @brief Increase or decrease the teamnum
  * @sa CL_SelectTeam_Init_f
- * @todo: If no team is free - change to spectator
  */
 static void CL_TeamNum_f (void)
 {
@@ -2107,7 +2103,7 @@ static void CL_InitLocal (void)
 	teamnum = Cvar_Get("teamnum", "1", CVAR_USERINFO | CVAR_ARCHIVE, "Teamnum for multiplayer teamplay games");
 	campaign = Cvar_Get("campaign", "main", 0, "Which is the current selected campaign id");
 	msg = Cvar_Get("msg", "1", CVAR_USERINFO | CVAR_ARCHIVE, "Sets the message level for server messages the client receives");
-	sv_maxclients = Cvar_Get("maxclients", "1", CVAR_SERVERINFO, "If maxclients is 1 we are in singleplayer - otherwise we are mutliplayer mode (see sv_teamplay)");
+	sv_maxclients = Cvar_Get("sv_maxclients", "1", CVAR_SERVERINFO, "If sv_maxclients is 1 we are in singleplayer - otherwise we are mutliplayer mode (see sv_teamplay)");
 
 	masterserver_ip = Cvar_Get("masterserver_ip", "195.136.48.62", CVAR_ARCHIVE, "IP address of UFO:AI masterserver (Sponsored by NineX)");
 	masterserver_port = Cvar_Get("masterserver_port", "27900", CVAR_ARCHIVE, "Port of UFO:AI masterserver");

@@ -41,7 +41,7 @@ static void PF_Unicast (player_t * player, struct dbuffer *msg)
 	if (!player || !player->inuse)
 		return;
 
-	if (player->num < 0 || player->num >= ge->max_players)
+	if (player->num < 0 || player->num >= ge->maxplayersperteam)
 		return;
 
 	client = svs.clients + player->num;
@@ -86,7 +86,7 @@ static void PF_cprintf (player_t * player, int level, const char *fmt, ...)
 	n = 0;
 	if (player) {
 		n = player->num;
-		if (n < 0 || n >= ge->max_players)
+		if (n < 0 || n >= ge->maxplayersperteam)
 			return;
 	}
 
@@ -116,7 +116,7 @@ static void PF_centerprintf (player_t * player, const char *fmt, ...)
 		return;
 
 	n = player->num;
-	if (n < 0 || n >= ge->max_players)
+	if (n < 0 || n >= ge->maxplayersperteam)
 		return;
 
 	msg = new_dbuffer();

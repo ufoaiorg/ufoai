@@ -45,7 +45,7 @@ int G_TeamToPM (int team)
 	player_mask = 0;
 
 	/* don't handle the ai players, here */
-	for (i = 0, player = game.players; i < game.maxplayers; i++, player++)
+	for (i = 0, player = game.players; i < game.sv_maxplayersperteam; i++, player++)
 		if (player->inuse && team == player->pers.team)
 			player_mask |= (1 << i);
 
@@ -64,7 +64,7 @@ int G_VisToPM (int vis_mask)
 	player_mask = 0;
 
 	/* don't handle the ai players, here */
-	for (i = 0, player = game.players; i < game.maxplayers; i++, player++)
+	for (i = 0, player = game.players; i < game.sv_maxplayersperteam; i++, player++)
 		if (player->inuse && (vis_mask & (1 << player->pers.team)))
 			player_mask |= (1 << i);
 
@@ -2021,8 +2021,8 @@ static void G_GetTeam (player_t * player)
 	int playersInGame = 0;
 
 	/* number of currently connected players (no ai players) */
-	for (j = 0, p = game.players; j < game.maxplayers; j++, p++)
-		if (p->inuse && !p->pers.spectator)
+	for (j = 0, p = game.players; j < game.sv_maxplayersperteam; j++, p++)
+		if (p->inuse)
 			playersInGame++;
 
 	/* player has already a team */
@@ -2054,10 +2054,7 @@ static void G_GetTeam (player_t * player)
 	/* find a team */
 	if (sv_maxclients->integer == 1)
 		player->pers.team = TEAM_PHALANX;
-	else if (atoi(Info_ValueForKey(player->pers.userinfo, "spectator"))) {
-		/* @todo: spectators get in a game menu to select the team */
-		player->pers.spectator = qtrue;
-	} else if (sv_teamplay->integer) {
+	else if (sv_teamplay->integer) {
 		/* set the team specified in the userinfo */
 		gi.dprintf("Get a team for teamplay for %s\n", player->pers.netname);
 		i = atoi(Info_ValueForKey(player->pers.userinfo, "teamnum"));
@@ -2079,7 +2076,7 @@ static void G_GetTeam (player_t * player)
 				/* check if team is in use (only human controlled players) */
 				/* FIXME: If someone left the game and rejoins he should get his "old" team back */
 				/*        maybe we could identify such a situation */
-				for (j = 0, p = game.players; j < game.maxplayers; j++, p++)
+				for (j = 0, p = game.players; j < game.sv_maxplayersperteam; j++, p++)
 					if (p->inuse && p->pers.team == i) {
 						Com_DPrintf("Team %i is already in use\n", i);
 						/* team already in use */
@@ -2094,7 +2091,7 @@ static void G_GetTeam (player_t * player)
 		/* set the team */
 		if (i < MAX_TEAMS) {
 			/* remove ai player */
-			for (j = 0, p = game.players + game.maxplayers; j < game.maxplayers; j++, p++)
+			for (j = 0, p = game.players + game.sv_maxplayersperteam; j < game.sv_maxplayersperteam; j++, p++)
 				if (p->inuse && p->pers.team == i) {
 					gi.bprintf(PRINT_HIGH, "Removing ai player...");
 					p->inuse = qfalse;
@@ -2103,9 +2100,8 @@ static void G_GetTeam (player_t * player)
 			Com_DPrintf("Assigning %s to Team %i\n", player->pers.netname, i);
 			player->pers.team = i;
 		} else {
-			/* @todo: disconnect the player or convert to spectator */
-			player->pers.spectator = qtrue;
-			player->pers.team = -1;
+			Com_Printf("No free team - disconnecting '%s'\n", player->pers.netname);
+			G_ClientDisconnect(player);
 		}
 	}
 }
@@ -2146,8 +2142,8 @@ static void G_ClientTeamAssign (player_t * player)
 		return;
 
 	/* count number of currently connected unique teams and players (human controlled players only) */
-	for (i = 0, p = game.players; i < game.maxplayers; i++, p++) {
-		if (p->inuse && !p->pers.spectator && p->pers.team > 0) {
+	for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++) {
+		if (p->inuse && p->pers.team > 0) {
 			playerCount++;
 			for (j = 0; j < teamCount; j++) {
 				if (p->pers.team == knownTeams[j])
@@ -2166,8 +2162,8 @@ static void G_ClientTeamAssign (player_t * player)
 		G_PrintStats(va("Starting new game: %s", level.mapname));
 		level.activeTeam = knownTeams[(int)(frand() * (teamCount - 1) + 0.5)];
 		turnTeam = level.activeTeam;
-		for (i = 0, p = game.players; i < game.maxplayers; i++, p++) {
-			if (p->inuse && !p->pers.spectator) {
+		for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++) {
+			if (p->inuse) {
 				if (p->pers.team == level.activeTeam) {
 					Q_strcat(buffer, p->pers.netname, sizeof(buffer));
 					Q_strcat(buffer, " ", sizeof(buffer));
@@ -2194,10 +2190,10 @@ static edict_t *G_ClientGetFreeSpawnPoint(player_t * player, int spawnType)
 {
 	int i;
 	edict_t *ent;
-	
+
 	/* Abort for non-spawnpoints */
 	assert(spawnType != ET_ACTORSPAWN && spawnType != ET_ACTOR2x2SPAWN);
-	
+
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		if ((ent->type == spawnType)
 		 && (player->pers.team == ent->team))
@@ -2230,7 +2226,7 @@ void G_ClientTeamInfo (player_t * player)
 	for (i = 0; i < length; i++) {
 		/* Search for a spawn point for each entry the client sent */
 
-		if (i < maxsoldiersperplayer->integer) {
+		if (i < sv_maxsoldiersperplayer->integer) {
 			/* Here the client tells the server the information for the spawned actor(s). */
 
 			/* Receive fieldsize and get matching spawnpoint. */
@@ -2267,7 +2263,7 @@ void G_ClientTeamInfo (player_t * player)
 
 			ent->chr.fieldSize = dummyFieldSize;
 			ent->fieldSize = ent->chr.fieldSize;
-			
+
 			Com_DPrintf("Team %i - size: %i\n", ent->team, ent->fieldSize);
 
 			gi.linkentity(ent);
@@ -2418,7 +2414,7 @@ void G_ForceEndRound (void)
 	gi.bprintf(PRINT_HUD, _("Current active team hit the max round time\n"));
 
 	/* set all team members to ready (only human players) */
-	for (i = 0, p = game.players; i < game.maxplayers; i++, p++)
+	for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++)
 		if (p->inuse && p->pers.team == level.activeTeam) {
 			G_ClientEndRound(p, NOISY);
 			level.nextEndRound = level.framenum;
@@ -2458,7 +2454,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 			gi.WriteString(player->pers.netname);
 		}
 	}
-	for (i = 0, p = game.players; i < game.maxplayers * 2; i++, p++)
+	for (i = 0, p = game.players; i < game.sv_maxplayersperteam * 2; i++, p++)
 		if (p->inuse && p->pers.team == level.activeTeam
 			&& !p->ready && G_PlayerSoldiersCount(p) > 0)
 			return;
@@ -2506,7 +2502,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 		}
 
 		/* search corresponding player (even ai players) */
-		for (i = 0, p = game.players; i < game.maxplayers * 2; i++, p++)
+		for (i = 0, p = game.players; i < game.sv_maxplayersperteam * 2; i++, p++)
 			if (p->inuse && p->pers.team == nextTeam) {
 				/* found next player */
 				level.activeTeam = nextTeam;
@@ -2543,7 +2539,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 	gi.EndEvents();
 
 	/* reset ready flag (even ai players) */
-	for (i = 0, p = game.players; i < game.maxplayers * 2; i++, p++)
+	for (i = 0, p = game.players; i < game.sv_maxplayersperteam * 2; i++, p++)
 		if (p->inuse && p->pers.team == level.activeTeam)
 			p->ready = qfalse;
 }
@@ -2599,7 +2595,7 @@ void G_ClientBegin (player_t* player)
 	level.numplayers++;
 	gi.configstring(CS_PLAYERCOUNT, va("%i", level.numplayers));
 
-	/*Com_Printf("G_ClientBegin: player: %i - pnum: %i , game.maxplayers: %i	\n", P_MASK(player), player->num, game.maxplayers);*/
+	/*Com_Printf("G_ClientBegin: player: %i - pnum: %i , game.sv_maxplayersperteam: %i	\n", P_MASK(player), player->num, game.sv_maxplayersperteam);*/
 	/* spawn camera (starts client rendering) */
 	gi.AddEvent(P_MASK(player), EV_START | INSTANTLY);
 	gi.WriteByte(sv_teamplay->integer);
@@ -2702,13 +2698,6 @@ void G_ClientUserinfoChanged (player_t * player, char *userinfo)
 	/* set name */
 	s = Info_ValueForKey(userinfo, "name");
 	Q_strncpyz(player->pers.netname, s, sizeof(player->pers.netname));
-
-	/* set spectator */
-	s = Info_ValueForKey(userinfo, "spectator");
-	if (*s == '1')
-		player->pers.spectator = qtrue;
-	else
-		player->pers.spectator = qfalse;
 
 	Q_strncpyz(player->pers.userinfo, userinfo, sizeof(player->pers.userinfo));
 

@@ -125,7 +125,7 @@ typedef struct {
 
 	int spawncount;				/**< incremented each server start - used to check late spawns */
 
-	client_t *clients;			/**< [maxclients->value]; */
+	client_t *clients;			/**< [sv_maxclients->value]; */
 
 	int last_heartbeat;
 } server_static_t;

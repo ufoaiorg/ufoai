@@ -608,7 +608,6 @@ static void MN_StartServer_f (void)
 
 	if (dedicated->integer > 0)
 		Com_DPrintf("Dedicated server needs no team\n");
-	/* FIXME: Spectator */
 	else if (!B_GetNumOnTeam()) {
 		Com_Printf("MN_StartServer_f: Multiplayer team not loaded, please choose your team now.\n");
 		Cbuf_ExecuteText(EXEC_NOW, "assign_initial 1");
@@ -617,8 +616,8 @@ static void MN_StartServer_f (void)
 		Com_DPrintf("There are %i members on team\n", B_GetNumOnTeam());
 
 	if (Cvar_VariableInteger("sv_teamplay")
-		&& Cvar_VariableValue("maxsoldiersperplayer") > Cvar_VariableValue("maxsoldiers")) {
-		MN_Popup(_("Settings doesn't make sense"), _("Set playersoldiers lower than teamsoldiers"));
+		&& Cvar_VariableValue("sv_maxsoldiersperplayer") > Cvar_VariableValue("sv_maxsoldiersperteam")) {
+		MN_Popup(_("Settings doesn't make sense"), _("Set soldiers per player lower than soldiers per team"));
 		return;
 	}
 

@@ -997,7 +997,7 @@ static void SV_InitGame (void)
 	/* allow next change after map change or restart */
 	sv_maxclients->flags |= CVAR_LATCH;
 
-	/* get any latched variable changes (maxclients, etc) */
+	/* get any latched variable changes (sv_maxclients, etc) */
 	Cvar_GetLatchedVars();
 
 	svs.initialized = qtrue;

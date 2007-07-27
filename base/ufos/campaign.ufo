@@ -225,7 +225,7 @@ campaign main
 		debt_interest 0.005;
 	}
 	researched rslist_human
-//	ugvs	2
+	ugvs	2
 	equipment	campaign_player
 	market		campaign_market
 	credits		1060200

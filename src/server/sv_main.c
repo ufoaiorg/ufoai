@@ -40,8 +40,8 @@ static cvar_t *sv_downloadserver;
 cvar_t *sv_maxclients = NULL;
 cvar_t *sv_showclamp;
 cvar_t *sv_enablemorale;
-cvar_t *maxsoldiers;
-cvar_t *maxsoldiersperplayer;
+cvar_t *sv_maxsoldiersperteam;
+cvar_t *sv_maxsoldiersperplayer;
 
 cvar_t *hostname;
 cvar_t *public_server;			/**< should heartbeats be sent */
@@ -123,7 +123,7 @@ static void SVC_TeamInfo (struct net_stream *s)
 	NET_WriteRawString(msg, "\n");
 	NET_WriteRawString(msg, Cvar_VariableString("sv_maxteams"));
 	NET_WriteRawString(msg, "\n");
-	NET_WriteRawString(msg, Cvar_VariableString("maxplayers"));
+	NET_WriteRawString(msg, Cvar_VariableString("sv_maxplayersperteam"));
 	NET_WriteRawString(msg, "\n");
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
 		if (cl->state == cs_connected || cl->state == cs_spawned || cl->state == cs_spawning) {
@@ -210,7 +210,7 @@ static void SVC_Info (struct net_stream *s)
 		Info_SetValueForKey(infostring, "gametype", gametype->string);
 		Info_SetValueForKey(infostring, "mapname", sv.name);
 		Info_SetValueForKey(infostring, "clients", va("%i", count));
-		Info_SetValueForKey(infostring, "maxclients", sv_maxclients->string);
+		Info_SetValueForKey(infostring, "sv_maxclients", sv_maxclients->string);
 		Info_SetValueForKey(infostring, "version", UFO_VERSION);
 	}
 
@@ -876,21 +876,21 @@ void SV_Init (void)
 	masterserver_ip = Cvar_Get("masterserver_ip", "195.136.48.62", CVAR_ARCHIVE, "IP address of UFO:AI masterserver (Sponsored by NineX)");
 	masterserver_port = Cvar_Get("masterserver_port", "27900", CVAR_ARCHIVE, "Port of UFO:AI masterserver");
 	/* this cvar will become a latched cvar when you start the server */
-	sv_maxclients = Cvar_Get("maxclients", "1", CVAR_SERVERINFO, "Max. connected clients");
+	sv_maxclients = Cvar_Get("sv_maxclients", "1", CVAR_SERVERINFO, "Max. connected clients");
 	hostname = Cvar_Get("hostname", _("noname"), CVAR_SERVERINFO | CVAR_ARCHIVE, "The name of the server that is displayed in the serverlist");
 	timeout = Cvar_Get("timeout", "125", 0, "Timeout in seconds");
 	zombietime = Cvar_Get("zombietime", "2", 0, "Timeout for zombies (in sec)");
 	sv_showclamp = Cvar_Get("showclamp", "0", 0, NULL);
 	sv_downloadserver = Cvar_Get("sv_downloadserver", "", CVAR_ARCHIVE, "URL to a location where clients can download game content over HTTP");
 	sv_enablemorale = Cvar_Get("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale changes in multiplayer");
-	maxsoldiers = Cvar_Get("maxsoldiers", "4", CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers per team (see maxsoldiersperplayer and sv_teamplay)");
-	maxsoldiersperplayer = Cvar_Get("maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers each player can controll (see maxsoldiers and sv_teamplay)");
+	sv_maxsoldiersperteam = Cvar_Get("sv_maxsoldiersperteam", "4", CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers per team (see sv_maxsoldiersperplayer and sv_teamplay)");
+	sv_maxsoldiersperplayer = Cvar_Get("sv_maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers each player can controll (see maxsoldiers and sv_teamplay)");
 
 	public_server = Cvar_Get("public", "1", 0, "Should heartbeats be send to the masterserver");
 	sv_reconnect_limit = Cvar_Get("sv_reconnect_limit", "3", CVAR_ARCHIVE, "Minimum seconds between connect messages");
 
 	if (dedicated->integer)
-		Cvar_Set("maxclients", "8");
+		Cvar_Set("sv_maxclients", "8");
 
 	sv_maxclients->modified = qfalse;
 

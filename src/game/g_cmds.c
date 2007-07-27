@@ -41,7 +41,7 @@ static void Cmd_Players_f (player_t * player)
 	/* print information */
 	large[0] = 0;
 
-	for (i = 0; i < game.maxplayers; i++) {
+	for (i = 0; i < game.sv_maxplayersperteam; i++) {
 		if (!game.players[i].pers.team)
 			continue;
 
@@ -129,7 +129,7 @@ static void G_Say (player_t *player, qboolean arg0, qboolean team)
 	if (dedicated->integer)
 		gi.cprintf(NULL, PRINT_CHAT, "%s", text);
 
-	for (j = 0; j < game.maxplayers; j++) {
+	for (j = 0; j < game.sv_maxplayersperteam; j++) {
 		if (!game.players[j].inuse)
 			continue;
 		if (team && game.players[j].pers.team != player->pers.team)
@@ -151,7 +151,7 @@ static void Cmd_PlayerList_f (player_t * player)
 	/* team, ping, name */
 	*text = 0;
 	/* list all human controlled players here */
-	for (i = 0, e2 = game.players; i < game.maxplayers; i++, e2++) {
+	for (i = 0, e2 = game.players; i < game.sv_maxplayersperteam; i++, e2++) {
 		if (!e2->inuse)
 			continue;
 

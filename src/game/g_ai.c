@@ -582,7 +582,7 @@ void AI_Run (void)
 		return;
 
 	/* set players to ai players and cycle over all of them */
-	for (i = 0, player = game.players + game.maxplayers; i < game.maxplayers; i++, player++)
+	for (i = 0, player = game.players + game.sv_maxplayersperteam; i < game.sv_maxplayersperteam; i++, player++)
 		if (player->inuse && player->pers.ai && level.activeTeam == player->pers.team) {
 			/* find next actor to handle */
 			if (!player->pers.last)
@@ -734,7 +734,7 @@ player_t *AI_CreatePlayer (int team)
 	}
 
 	/* set players to ai players and cycle over all of them */
-	for (i = 0, p = game.players + game.maxplayers; i < game.maxplayers; i++, p++)
+	for (i = 0, p = game.players + game.sv_maxplayersperteam; i < game.sv_maxplayersperteam; i++, p++)
 		if (!p->inuse) {
 			memset(p, 0, sizeof(player_t));
 			p->inuse = qtrue;

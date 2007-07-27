@@ -52,7 +52,7 @@ static void SVCmd_Test_f (void)
  * writeip
  * Dumps "addip <ip>" commands to listip.cfg so it can be executed at a later date.  The filter lists are not saved and restored by default, because I beleive it would cause too much confusion.
  *
- * filterban <0 or 1>
+ * sv_filterban <0 or 1>
  * If 1 (the default), then ip addresses matching the current list will be prohibited from entering the game.  This is the default setting.
  * If 0, then only addresses matching the list will be allowed.  This lets you easily set up a private game, or a game that only allows players from your local network.
  */
@@ -135,9 +135,9 @@ qboolean SV_FilterPacket (const char *from)
 
 	for (i = 0; i < numipfilters; i++)
 		if ((in & ipfilters[i].mask) == ipfilters[i].compare)
-			return filterban->integer;
+			return sv_filterban->integer;
 
-	return !filterban->integer;
+	return !sv_filterban->integer;
 }
 
 
@@ -232,7 +232,7 @@ static void SVCmd_WriteIP_f (void)
 		return;
 	}
 
-	fprintf(f, "set filterban %d\n", filterban->integer);
+	fprintf(f, "set sv_filterban %d\n", sv_filterban->integer);
 
 	for (i = 0; i < numipfilters; i++) {
 		*(unsigned *) b = ipfilters[i].compare;
@@ -311,7 +311,7 @@ static void SVCmd_ActorInvList_f (void)
 	int i;
 
 	/* show inventory off all players around - include even the ai players */
-	for (i = 0, player = game.players; i < game.maxplayers * 2; i++, player++) {
+	for (i = 0, player = game.players; i < game.sv_maxplayersperteam * 2; i++, player++) {
 		if (!player->inuse)
 			continue;
 		Cmd_InvList(player);
@@ -336,8 +336,8 @@ static void SVCmd_StartGame_f (void)
 		return;
 
 	/* count number of currently connected unique teams and players (only human controlled players) */
-	for (i = 0, p = game.players; i < game.maxplayers; i++, p++) {
-		if (p->inuse && !p->pers.spectator && p->pers.team > 0) {
+	for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++) {
+		if (p->inuse && p->pers.team > 0) {
 			playerCount++;
 			for (j = 0; j < teamCount; j++) {
 				if (p->pers.team == knownTeams[j])
@@ -353,8 +353,8 @@ static void SVCmd_StartGame_f (void)
 	level.activeTeam = knownTeams[(int)(frand() * (teamCount - 1) + 0.5)];
 	turnTeam = level.activeTeam;
 	/* spawn the player (only human controlled players) */
-	for (i = 0, p = game.players; i < game.maxplayers; i++, p++) {
-		if (!p->inuse || p->pers.spectator)
+	for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++) {
+		if (!p->inuse)
 			continue;
 		G_ClientSpawn(p);
 		if (p->pers.team == level.activeTeam) {

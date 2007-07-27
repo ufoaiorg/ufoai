@@ -103,7 +103,7 @@ const char* G_GetWeaponNameForFiredef (fireDef_t* fd)
  */
 const char* G_GetPlayerName (int pnum)
 {
-	if (pnum >= game.maxplayers)
+	if (pnum >= game.sv_maxplayersperteam)
 		return "";
 	else
 		return game.players[pnum].pers.netname;
@@ -459,7 +459,7 @@ edict_t *G_Spawn (void)
 			return e;
 		}
 
-	if (i == game.maxentities)
+	if (i == game.sv_maxentities)
 		gi.error("G_Spawn: no free edicts");
 
 	globals.num_edicts++;

@@ -45,7 +45,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_SPOT_DIST	4096 /* 768 */
 
-#define P_MASK(p)		(p->num < game.maxplayers ? 1<<(p->num) : 0)
+#define P_MASK(p)		(p->num < game.sv_maxplayersperteam ? 1<<(p->num) : 0)
 #define PM_ALL			0xFFFFFFFF
 
 /* server is running at 10 fps */
@@ -75,8 +75,8 @@ typedef struct {
 	player_t *players;			/* [maxplayers] */
 
 	/* store latched cvars here that we want to get at often */
-	int maxplayers;
-	int maxentities;
+	int sv_maxplayersperteam;
+	int sv_maxentities;
 } game_locals_t;
 
 /* this structure is cleared as each map is entered */
@@ -156,16 +156,15 @@ extern edict_t *g_edicts;
 #define random()	((rand () & 0x7fff) / ((float)0x7fff))
 #define crandom()	(2.0 * (random() - 0.5))
 
-extern cvar_t *maxentities;
+extern cvar_t *sv_maxentities;
 extern cvar_t *password;
-extern cvar_t *spectator_password;
-extern cvar_t *needpass;
+extern cvar_t *sv_needpass;
 extern cvar_t *dedicated;
 
 extern cvar_t *logstats;
 extern FILE *logstatsfile;
 
-extern cvar_t *filterban;
+extern cvar_t *sv_filterban;
 
 extern cvar_t *sv_gravity;
 extern cvar_t *sv_maxvelocity;
@@ -174,12 +173,11 @@ extern cvar_t *sv_cheats;
 extern cvar_t *sv_maxclients;
 extern cvar_t *sv_reaction_leftover;
 extern cvar_t *sv_shot_origin;
-extern cvar_t *maxplayers;
-extern cvar_t *maxsoldiers;
-extern cvar_t *maxsoldiersperplayer;
+extern cvar_t *sv_maxplayersperteam;
+extern cvar_t *sv_maxsoldiersperteam;
+extern cvar_t *sv_maxsoldiersperplayer;
 extern cvar_t *sv_enablemorale;
 extern cvar_t *sv_roundtimelimit;
-extern cvar_t *maxspectators;
 
 extern cvar_t *sv_maxteams;
 
@@ -436,7 +434,6 @@ typedef struct {
 	/** the number of the team for this player
 	 * 0 is reserved for civilians and critters */
 	int team;
-	qboolean spectator;			/**< client is a spectator */
 	qboolean ai;				/**< client controlled by ai */
 
 	/** ai specific data */

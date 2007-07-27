@@ -3788,7 +3788,7 @@ static void CL_GameNew_f (void)
 
 	Cvar_Set("mn_main", "singleplayerInGame");
 	Cvar_Set("mn_active", "map");
-	Cvar_SetValue("maxclients", 1.0f);
+	Cvar_SetValue("sv_maxclients", 1.0f);
 
 	/* exit running game */
 	if (curCampaign)

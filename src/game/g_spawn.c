@@ -292,7 +292,7 @@ void SpawnEntities (const char *mapname, const char *entities)
 	gi.FreeTags(TAG_LEVEL);
 
 	memset(&level, 0, sizeof(level));
-	memset(g_edicts, 0, game.maxentities * sizeof(edict_t));
+	memset(g_edicts, 0, game.sv_maxentities * sizeof(edict_t));
 
 	Q_strncpyz(level.mapname, mapname, sizeof(level.mapname));
 
@@ -422,8 +422,9 @@ static void SP_player_start (edict_t * ent)
 		return;
 	}
 
+	/* FIXME: Wrong place here */
 	/* maybe there are already the max soldiers allowed per team connected */
-	if (maxsoldiers->integer > level.num_spawnpoints[ent->team]) {
+	if (sv_maxsoldiersperteam->integer > level.num_spawnpoints[ent->team]) {
 		ent->STUN = 0;
 		ent->HP = MAX_HP;
 		ent->AP = 100;
@@ -865,8 +866,8 @@ static void SP_worldspawn (edict_t * ent)
 
 	/* only used in multi player */
 	if (sv_maxclients->integer >= 2) {
-		gi.configstring(CS_MAXSOLDIERS, va("%i", maxsoldiers->integer));
-		gi.configstring(CS_MAXSOLDIERSPERPLAYER, va("%i", maxsoldiersperplayer->integer));
+		gi.configstring(CS_MAXSOLDIERSPERTEAM, va("%i", sv_maxsoldiersperteam->integer));
+		gi.configstring(CS_MAXSOLDIERSPERPLAYER, va("%i", sv_maxsoldiersperplayer->integer));
 		gi.configstring(CS_ENABLEMORALE, va("%i", sv_enablemorale->integer));
 		gi.configstring(CS_MAXTEAMS, va("%i", st.maxteams));
 		gi.cvar_set("sv_maxteams", va("%i", st.maxteams));

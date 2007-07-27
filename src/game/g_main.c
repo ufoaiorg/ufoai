@@ -40,22 +40,20 @@ game_export_t globals;
 edict_t *g_edicts;
 
 cvar_t *password;
-cvar_t *spectator_password;
-cvar_t *needpass;
-cvar_t *maxplayers;
-cvar_t *maxsoldiers;
-cvar_t *maxsoldiersperplayer;
+cvar_t *sv_needpass;
+cvar_t *sv_maxplayersperteam;
+cvar_t *sv_maxsoldiersperteam;
+cvar_t *sv_maxsoldiersperplayer;
 cvar_t *sv_enablemorale;
 cvar_t *sv_roundtimelimit;
-cvar_t *maxspectators;
-cvar_t *maxentities;
+cvar_t *sv_maxentities;
 cvar_t *dedicated;
 cvar_t *developer;
 
 cvar_t *logstats;
 FILE *logstatsfile;
 
-cvar_t *filterban;
+cvar_t *sv_filterban;
 
 cvar_t *sv_gravity;
 
@@ -142,30 +140,27 @@ static void InitGame (void)
 	logstats = gi.cvar("logstats", "1", CVAR_ARCHIVE, "Server logfile output for kills");
 
 	/* max. players per team (original quake) */
-	maxplayers = gi.cvar("maxplayers", "8", CVAR_SERVERINFO | CVAR_LATCH, "How many players (humans) may a team have");
+	sv_maxplayersperteam = gi.cvar("sv_maxplayersperteam", "8", CVAR_SERVERINFO | CVAR_LATCH, "How many players (humans) may a team have");
 	/* max. soldiers per team */
-	maxsoldiers = gi.cvar("maxsoldiers", "4", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "How many soldiers may one team have");
+	sv_maxsoldiersperteam = gi.cvar("sv_maxsoldiersperteam", "4", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "How many soldiers may one team have");
 	/* max soldiers per player */
-	maxsoldiersperplayer = gi.cvar("maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "How many soldiers one player is able to control in a given team");
+	sv_maxsoldiersperplayer = gi.cvar("sv_maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "How many soldiers one player is able to control in a given team");
 	/* enable moralestates in multiplayer */
 	sv_enablemorale = gi.cvar("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale behaviour for actors");
 	sv_roundtimelimit = gi.cvar("sv_roundtimelimit", "0", CVAR_SERVERINFO, "Timelimit for multiplayer rounds");
 	sv_roundtimelimit->modified = qfalse;
-	maxspectators = gi.cvar("maxspectators", "8", CVAR_SERVERINFO | CVAR_LATCH, NULL);
-	maxentities = gi.cvar("maxentities", "1024", CVAR_LATCH, NULL);
 
 	sv_maxteams = gi.cvar("sv_maxteams", "2", CVAR_SERVERINFO, "How many teams for current running map");
 	sv_maxteams->modified = qfalse;
 
 	/* change anytime vars */
 	password = gi.cvar("password", "", CVAR_USERINFO, NULL);
-	spectator_password = gi.cvar("spectator_password", "", CVAR_USERINFO, NULL);
-	needpass = gi.cvar("needpass", "0", CVAR_SERVERINFO, NULL);
-	filterban = gi.cvar("filterban", "1", 0, NULL);
+	sv_needpass = gi.cvar("sv_needpass", "0", CVAR_SERVERINFO, NULL);
+	sv_filterban = gi.cvar("sv_filterban", "1", 0, NULL);
 	sv_ai = gi.cvar("sv_ai", "1", 0, NULL);
-	sv_teamplay = gi.cvar("sv_teamplay", "0", CVAR_ARCHIVE | CVAR_LATCH | CVAR_SERVERINFO, "Is teamplay activated? see maxclients, maxplayers, maxsoldiers and maxsoldiersperplayer");
+	sv_teamplay = gi.cvar("sv_teamplay", "0", CVAR_ARCHIVE | CVAR_LATCH | CVAR_SERVERINFO, "Is teamplay activated? see sv_maxclients, sv_maxplayersperteam, sv_maxsoldiersperteam and sv_maxsoldiersperplayer");
 	/* how many connected clients */
-	sv_maxclients = gi.cvar("maxclients", "1", CVAR_SERVERINFO, "If maxclients is 1 we are in singleplayer - otherwise we are mutliplayer mode (see sv_teamplay)");
+	sv_maxclients = gi.cvar("sv_maxclients", "1", CVAR_SERVERINFO, "If sv_maxclients is 1 we are in singleplayer - otherwise we are mutliplayer mode (see sv_teamplay)");
 	/* reaction leftover is 0 for acceptance testing; should default to 13 */
 	sv_reaction_leftover = gi.cvar("sv_reaction_leftover", "0", CVAR_LATCH, "Minimum TU left over by reaction fire");
 	sv_shot_origin = gi.cvar("sv_shot_origin", "8", 0, "Assumed distance of muzzle from model");
@@ -220,21 +215,22 @@ static void InitGame (void)
 
 	difficulty = gi.cvar("difficulty", "0", CVAR_NOSET, "Difficulty level");
 
-	game.maxentities = maxentities->value;
-	game.maxplayers = maxplayers->value;
+	game.sv_maxentities = sv_maxentities->integer;
+	/* FIXME: */
+	game.sv_maxplayersperteam = sv_maxplayersperteam->integer;
 
 	/* initialize all entities for this game */
-	g_edicts = gi.TagMalloc(game.maxentities * sizeof(g_edicts[0]), TAG_GAME);
+	g_edicts = gi.TagMalloc(game.sv_maxentities * sizeof(g_edicts[0]), TAG_GAME);
 	globals.edicts = g_edicts;
-	globals.max_edicts = game.maxentities;
-	globals.num_edicts = game.maxplayers;
+	globals.max_edicts = game.sv_maxentities;
+	globals.num_edicts = game.sv_maxplayersperteam;
 
 	/* initialize all players for this game */
-	/* game.maxplayers for human controlled players */
-	/* + game.maxplayer for ai */
-	game.players = gi.TagMalloc(game.maxplayers * 2 * sizeof(game.players[0]), TAG_GAME);
+	/* game.sv_maxplayersperteam for human controlled players
+	 * + game.sv_maxplayer for ai */
+	game.players = gi.TagMalloc(game.sv_maxplayersperteam * 2 * sizeof(game.players[0]), TAG_GAME);
 	globals.players = game.players;
-	globals.max_players = game.maxplayers;
+	globals.maxplayersperteam = game.sv_maxplayersperteam;
 
 	/* init csi and inventory */
 	INVSH_InitCSI(gi.csi);
@@ -353,23 +349,21 @@ void Com_DPrintf (const char *msg, ...)
 
 
 /**
- * @brief If password or spectator_password has changed, update needpass as needed
+ * @brief If password or has changed, update sv_needpass as needed
  */
 static void CheckNeedPass (void)
 {
 	int need;
 
-	if (password->modified || spectator_password->modified) {
-		password->modified = spectator_password->modified = qfalse;
+	if (password->modified) {
+		password->modified = qfalse;
 
 		need = 0;
 
 		if (*password->string && Q_stricmp(password->string, "none"))
-			need |= 1;
-		if (*spectator_password->string && Q_stricmp(spectator_password->string, "none"))
-			need |= 2;
+			need = 1;
 
-		gi.cvar_set("needpass", va("%d", need));
+		gi.cvar_set("sv_needpass", va("%d", need));
 	}
 }
 

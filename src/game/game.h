@@ -277,7 +277,7 @@ typedef struct {
 
 	struct player_s *players;
 	int player_size;
-	int max_players;
+	int maxplayersperteam;
 } game_export_t;
 
 typedef game_export_t *(*GetGameApi_t) (game_import_t * import);
