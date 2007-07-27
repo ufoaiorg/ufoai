@@ -65,10 +65,10 @@ typedef struct aliensTmp_s {
  * Collecting aliens functions.
  */
 
-void AL_FillInContainment(int baseidx);
+void AL_FillInContainment(struct base_s *base);
 const char *AL_AlienTypeToName(int teamDescIdx);
-void AL_CollectingAliens(void);
-void AL_AddAliens(int baseidx, int airidx);
+void AL_CollectingAliens(struct base_s *base);
+void AL_AddAliens(struct aircraft_s *aircraft);
 void AL_RemoveAliens(struct base_s *base, const char *name, int amount, alienCalcType_t action);
 int AL_GetAlienIdx(const char *id);
 int AL_GetAlienAmount(int idx, requirementType_t reqtype);

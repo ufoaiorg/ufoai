@@ -2104,9 +2104,9 @@ void CL_ParseResults (struct dbuffer *msg)
 	} else {
 		/* the mission was in singleplayer */
 		/* loot the battlefield */
-		INV_CollectingItems(winner == we);	/**< Collect items from the battlefield. */
+		INV_CollectingItems(winner == we);		/**< Collect items from the battlefield. */
 		if (winner == we)
-			AL_CollectingAliens();		/**< Collect aliens from the battlefield. */
+			AL_CollectingAliens(baseCurrent);	/**< Collect aliens from the battlefield. */
 
 		/* clear unused LE inventories */
 		LE_Cleanup();

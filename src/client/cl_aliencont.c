@@ -39,19 +39,16 @@ static aliensCont_t* aliencontCurrent;		/**< Current selected Alien Containment.
 
 /**
  * @brief Prepares Alien Containment - names, states, and zeroed amount.
- * @param[in] Index of base with AC.
+ * @param[in] *base Pointer to the base with AC.
  * @sa B_BuildBase
  * @sa AL_AddAliens
  */
-void AL_FillInContainment (int baseidx)
+void AL_FillInContainment (base_t *base)
 {
 	int i, j;
-	base_t *base = NULL;
 	aliensCont_t *containment = NULL;
 
-	base = &gd.bases[baseidx];
 	assert (base);
-
 	containment = base->alienscont;
 
 	for (i = 0; i < numTeamDesc; i++) {
@@ -91,27 +88,21 @@ const char *AL_AlienTypeToName (int teamDescIdx)
 
 /**
  * @brief Collecting stunned aliens and alien bodies after the mission.
+ * @param[in] *base Pointer to the base being default destination for the cargo.
+ * @todo Campaign aircraft as param here.
  * @sa CL_ParseResults
  */
-void AL_CollectingAliens (void)
+void AL_CollectingAliens (base_t *base)
 {
 	int i, j;
 	int teamDescID = -1;
-
 	le_t *le = NULL;
 	aliensTmp_t *cargo = NULL;
 	aircraft_t *aircraft = NULL;
 
-	if (!baseCurrent) {
-#ifdef DEBUG
-		/* should never happen */
-		Com_Printf("AL_CollectingAliens()... No base selected!\n");
-#endif
-		return;
-	}
-
-	if ((baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase)) {
-		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+	assert (base);
+	if ((base->aircraftCurrent >= 0) && (base->aircraftCurrent < base->numAircraftInBase)) {
+		aircraft = &base->aircraft[base->aircraftCurrent];
 	} else {
 #ifdef DEBUG
 		/* should never happen */
@@ -186,23 +177,22 @@ void AL_CollectingAliens (void)
 
 /**
  * @brief Puts alien cargo into Alien Containment.
- * @param[in] baseidx Index of base in gd.bases[].
- * @param[in] airidx Global aircraft index.
+ * @param[in] *aircraft Aircraft transporting cargo to homebase.
  * @sa CL_DropshipReturned
  * @sa AL_FillInContainment
  */
-void AL_AddAliens (int baseidx, int airidx)
+void AL_AddAliens (aircraft_t *aircraft)
 {
 	int i, j, k, albridx;
 	base_t *tobase;
 	aliensTmp_t *cargo;
-	aircraft_t *aircraft;
 	qboolean messageAlreadySet = qfalse;
 	qboolean alienBreathing = qfalse;
 	technology_t *tech;
 	qboolean limit = qfalse;
 
-	tobase = &gd.bases[baseidx];
+	assert (aircraft);
+	tobase = aircraft->homebase;
 	assert(tobase);
 
 	if (!tobase->hasAlienCont) {
@@ -210,8 +200,6 @@ void AL_AddAliens (int baseidx, int airidx)
 		return;
 	}
 
-	aircraft = AIR_AircraftGetFromIdx(airidx);
-	assert(aircraft);
 	cargo = aircraft->aliencargo;
 
 	alienBreathing = RS_IsResearched_idx(RS_GetTechIdxByName("rs_alien_breathing"));

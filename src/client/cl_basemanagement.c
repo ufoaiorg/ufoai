@@ -422,7 +422,7 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	/* Remove aliens if needed. */
 	if (building->buildingType == B_ALIEN_CONTAINMENT) {
 		if (!base->hasAlienCont) {	/* Just clean containment. */
-			AL_FillInContainment(base->idx);
+			AL_FillInContainment(base);
 		} else {	/* Check capacities and remove needed amount. */
 			if (base->capacities[CAP_ALIENS].cur - base->capacities[CAP_ALIENS].max > 0)
 				AL_RemoveAliens(base, NULL, (base->capacities[CAP_ALIENS].cur - base->capacities[CAP_ALIENS].max), AL_RESEARCH);
@@ -2167,7 +2167,7 @@ static void B_BuildBase_f (void)
 				Com_sprintf(messageBuffer, sizeof(messageBuffer), _("A new base has been built: %s"), mn_base_title->string);
 			MN_AddNewMessage(_("Base built"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 			Radar_Initialise(&(baseCurrent->radar), 0);
-			AL_FillInContainment(baseCurrent->idx);
+			AL_FillInContainment(baseCurrent);
 
 			/* initial base equipment */
 			if (gd.numBases == 1) {
@@ -2819,10 +2819,10 @@ void CL_DropshipReturned (base_t* base, aircraft_t* aircraft)
 	/* Don't call cargo functions if aircraft is not a transporter. */
 	if (aircraft->type != AIRCRAFT_TRANSPORTER)
 		return;
-	AL_AddAliens(base->idx, aircraft->idx);		/**< Add aliens to Alien Containment. */
-	AL_CountAll();					/**< Count all alive aliens. */
-	INV_SellOrAddItems(aircraft);			/**< Sell collected items or add them to storage. */
-	RS_MarkResearchable(qfalse);			/**< Mark new technologies researchable. */
+	AL_AddAliens(aircraft);			/**< Add aliens to Alien Containment. */
+	AL_CountAll();				/**< Count all alive aliens. */
+	INV_SellOrAddItems(aircraft);		/**< Sell collected items or add them to storage. */
+	RS_MarkResearchable(qfalse);		/**< Mark new technologies researchable. */
 
 	/* Now empty alien/item cargo just in case. */
 	memset(aircraft->aliencargo, 0, sizeof(aircraft->aliencargo));
@@ -3381,7 +3381,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		b->radar.range = MSG_ReadShort(sb);
 
 		/* Alien Containment. */
-		AL_FillInContainment(b->idx);	/* Fill Alien Containment with default values. */
+		AL_FillInContainment(b);	/* Fill Alien Containment with default values. */
 		for (k = 0; k < presaveArray[PRE_NUMALI]; k++) {
 			s = MSG_ReadString(sb);
 			for (l = 0; l < numTeamDesc; l++) {
