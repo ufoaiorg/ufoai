@@ -1024,9 +1024,6 @@ static void S_UpdateMixer (void)
 {
 	unsigned int samps, endtime;
 
-	if (!sound_started)
-		return;
-
 	SND_BeginPainting();
 
 	if (!dma.buffer)
@@ -1081,14 +1078,6 @@ void S_Update (vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 	if (!sound_started)
 		return;
 
-	/* if the loading plaque is up, clear everything */
-	/* out to make sure we aren't looping a dirty */
-	/* dma buffer while loading */
-/*	if (cls.disable_screen) {
-		S_ClearBuffer ();
-		return;
-	}*/
-
 	/* rebuild scale tables if volume is modified */
 	if (snd_volume->modified && !snd_openal->integer)
 		S_InitScaletable();
@@ -1119,16 +1108,15 @@ void S_Update (vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 			memset(ch, 0, sizeof(*ch));
 			continue;
 		}
+#ifdef HAVE_OPENAL
 		if (!snd_openal->integer)
+#endif
 			S_Spatialize(ch);		/* respatialize channel */
 		if (!ch->leftvol && !ch->rightvol) {
 			memset(ch, 0, sizeof(*ch));
 			continue;
 		}
 	}
-
-	/* add loopsounds */
-	/*S_AddLoopSounds(); */
 
 	/* debugging output */
 	if (snd_show->integer) {
@@ -1144,7 +1132,9 @@ void S_Update (vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 	}
 
 	/* mix some sound */
+#ifdef HAVE_OPENAL
 	if (!snd_openal->integer)
+#endif
 		S_UpdateMixer();
 
 	if (!snd_openal->integer) {

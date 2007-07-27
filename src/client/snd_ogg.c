@@ -274,6 +274,8 @@ qboolean S_OGG_Open (const char *filename)
 		FS_FCloseFile(&stream->file);
 		return qfalse;
 	}
+	if (!music.ovInfo->rate)
+		music.ovInfo->rate = 44100;
 
 	Q_strncpyz(music.ovPlaying, checkFilename, sizeof(music.ovPlaying));
 	music.ovSection = 0;

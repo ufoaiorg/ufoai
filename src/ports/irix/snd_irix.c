@@ -49,8 +49,8 @@ long long sgisnd_lastframewritten = 0;
  */
 qboolean SND_Init (struct sndinfo *s)
 {
-	ALconfig	ac = NULL;
-	ALpv	pvbuf[2];
+	ALconfig ac = NULL;
+	ALpv pvbuf[2];
 
 	si = s;
 
@@ -106,9 +106,9 @@ qboolean SND_Init (struct sndinfo *s)
 	alSetSampFmt(ac, AL_SAMPFMT_TWOSCOMP);
 	alSetQueueSize(ac, QSND_BUFFER_FRAMES);
 	if (si->dma->samplebits == 8)
-		alSetWidth( ac, AL_SAMPLE_8 );
+		alSetWidth(ac, AL_SAMPLE_8);
 	else
-		alSetWidth( ac, AL_SAMPLE_16 );
+		alSetWidth(ac, AL_SAMPLE_16);
 
 	sgisnd_aport = alOpenPort("UFO", "w", ac);
 	if (!sgisnd_aport)
@@ -132,7 +132,7 @@ qboolean SND_Init (struct sndinfo *s)
 
 	si->dma->samplepos = 0;
 
-	alFreeConfig( ac );
+	alFreeConfig(ac);
 	return qtrue;
 }
 
@@ -152,7 +152,7 @@ int SND_GetDMAPos (void)
 	sgisnd_startframe -= (long long)((ustFuture - ustNow) * sgisnd_frames_per_ns);
 	sgisnd_startframe += 100;
 	/*printf("frame %ld pos %d\n", frame, UST_TO_BUFFPOS(sgisnd_startframe)); */
-	return(UST_TO_BUFFPOS( sgisnd_startframe));
+	return (UST_TO_BUFFPOS(sgisnd_startframe));
 }
 
 /**
@@ -161,7 +161,7 @@ int SND_GetDMAPos (void)
 void SND_Shutdown (void)
 {
 	if (sgisnd_aport)
-		alClosePort( sgisnd_aport );
+		alClosePort(sgisnd_aport);
 	sgisnd_aport = NULL;
 	return;
 }
@@ -179,7 +179,7 @@ void SND_Submit (void)
 	if (!sgisnd_aport)
 		return;
 
-	nFillable = alGetFillable( sgisnd_aport );
+	nFillable = alGetFillable(sgisnd_aport);
 	nFilled = QSND_BUFFER_FRAMES - nFillable;
 
 	nFrames = si->dma->samples >> (si->dma->channels - 1);
@@ -190,14 +190,14 @@ void SND_Submit (void)
 	if (nFrames <= QSND_SKID)
 		return;
 
-	nPos = UST_TO_BUFFPOS( sgisnd_startframe );
+	nPos = UST_TO_BUFFPOS(sgisnd_startframe);
 
 	/* dump re-written contents of the buffer */
 	if (sgisnd_lastframewritten > sgisnd_startframe) {
-		alDiscardFrames( sgisnd_aport, sgisnd_lastframewritten - sgisnd_startframe );
+		alDiscardFrames(sgisnd_aport, sgisnd_lastframewritten - sgisnd_startframe);
 	} else if ((int)(sgisnd_startframe - sgisnd_lastframewritten) >= QSND_BUFFER_FRAMES) {
 		/* blow away everything if we've underflowed */
-		alDiscardFrames( sgisnd_aport, QSND_BUFFER_FRAMES );
+		alDiscardFrames(sgisnd_aport, QSND_BUFFER_FRAMES);
 	}
 
 	/* don't block */
@@ -209,11 +209,11 @@ void SND_Submit (void)
 	if (nPos + nFrames * si->dma->channels > QSND_BUFFER_SIZE) {
 		int nFramesAtEnd = (QSND_BUFFER_SIZE - nPos) >> (si->dma->channels - 1);
 
-		alWriteFrames( sgisnd_aport, &dma_buffer[nPos], nFramesAtEnd );
+		alWriteFrames(sgisnd_aport, &dma_buffer[nPos], nFramesAtEnd);
 		nPos = 0;
 		nFramesLeft -= nFramesAtEnd;
 	}
-	alWriteFrames( sgisnd_aport, &dma_buffer[nPos], nFramesLeft );
+	alWriteFrames(sgisnd_aport, &dma_buffer[nPos], nFramesLeft);
 
 	sgisnd_lastframewritten = sgisnd_startframe + nFrames;
 }
