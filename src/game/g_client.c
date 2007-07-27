@@ -2192,7 +2192,7 @@ static edict_t *G_ClientGetFreeSpawnPoint(player_t * player, int spawnType)
 	edict_t *ent;
 
 	/* Abort for non-spawnpoints */
-	assert(spawnType != ET_ACTORSPAWN && spawnType != ET_ACTOR2x2SPAWN);
+	assert(spawnType == ET_ACTORSPAWN || spawnType == ET_ACTOR2x2SPAWN);
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		if ((ent->type == spawnType)
