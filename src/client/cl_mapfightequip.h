@@ -27,26 +27,26 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_CL_MAPFIGHTEQUIP_H
 
 /** Base defense functions. */
-extern void BDEF_AddBattery_f(void);
-extern void BDEF_RemoveBattery(base_t *base, int type, int idx);
-extern void BDEF_RemoveBattery_f(void);
-extern void BDEF_InitialiseBaseSlots(base_t *base);
-extern void BDEF_Init_f(void);
-extern void BDEF_ListClick_f(void);
+void BDEF_AddBattery_f(void);
+void BDEF_RemoveBattery(base_t *base, int type, int idx);
+void BDEF_RemoveBattery_f(void);
+void BDEF_InitialiseBaseSlots(base_t *base);
+void BDEF_Init_f(void);
+void BDEF_ListClick_f(void);
 
-extern void AII_UpdateInstallationDelay(void);
-extern void AIM_AircraftEquipmenuInit_f(void);
-extern void AIM_AircraftEquipSlotSelect_f(void);
-extern void AIM_AircraftEquipzoneSelect_f(void);
-extern qboolean AII_AddItemToSlot(technology_t *tech, aircraftSlot_t *slot);
-extern void AIM_AircraftEquipAddItem_f(void);
-extern void AIM_AircraftEquipDeleteItem_f(void);
-extern void AIM_AircraftEquipmenuClick_f(void);
-extern void AII_InitialiseSlot(aircraftSlot_t *slot, int aircraftIdx);
-extern void AII_UpdateAircraftStats(aircraft_t *aircraft);
-extern int AII_GetSlotItems(aircraftItemType_t type, aircraft_t *aircraft);
-extern int AII_AircraftCanShoot(aircraft_t *aircraft);
-extern int AII_BaseCanShoot(base_t *base);
+void AII_UpdateInstallationDelay(void);
+void AIM_AircraftEquipmenuInit_f(void);
+void AIM_AircraftEquipSlotSelect_f(void);
+void AIM_AircraftEquipzoneSelect_f(void);
+qboolean AII_AddItemToSlot(technology_t *tech, aircraftSlot_t *slot);
+void AIM_AircraftEquipAddItem_f(void);
+void AIM_AircraftEquipDeleteItem_f(void);
+void AIM_AircraftEquipmenuClick_f(void);
+void AII_InitialiseSlot(aircraftSlot_t *slot, int aircraftIdx);
+void AII_UpdateAircraftStats(aircraft_t *aircraft);
+int AII_GetSlotItems(aircraftItemType_t type, aircraft_t *aircraft);
+int AII_AircraftCanShoot(aircraft_t *aircraft);
+int AII_BaseCanShoot(base_t *base);
 
 const char* AII_WeightToName(itemWeight_t weight);
 

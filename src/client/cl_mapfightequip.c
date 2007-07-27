@@ -388,7 +388,7 @@ void BDEF_AddBattery_f (void)
  * @param[in] type 0 if the battery is missile, 1 if the battery is laser
  * @param[in] idx idx of the battery to destroy (-1 if this is random)
  */
-extern void BDEF_RemoveBattery (base_t *base, int type, int idx)
+void BDEF_RemoveBattery (base_t *base, int type, int idx)
 {
 	if (!base)
 		base = baseCurrent;
@@ -446,13 +446,15 @@ void BDEF_RemoveBattery_f (void)
  * @brief Initialise all values of base slot defense.
  * @param[in] base Pointer to the base which needs initalisation of its slots.
  */
-extern void BDEF_InitialiseBaseSlots (base_t *base)
+void BDEF_InitialiseBaseSlots (base_t *base)
 {
 	int i;
 
 	for (i = 0; i < MAX_BASE_SLOT; i++) {
 		AII_InitialiseSlot(base->batteries + i, base->idx);
 		AII_InitialiseSlot(base->lasers + i, base->idx);
+		base->targetMissileIdx[i] = -1;
+		base->targetLaserIdx[i] = -1;
 	}
 }
 
@@ -1037,7 +1039,7 @@ void AIM_AircraftEquipzoneSelect_f (void)
  * @brief Add an item to an aircraft slot
  * @todo Check that the item has a weight small enough to fit the slot.
  */
-extern qboolean AII_AddItemToSlot (technology_t *tech, aircraftSlot_t *slot)
+qboolean AII_AddItemToSlot (technology_t *tech, aircraftSlot_t *slot)
 {
 	assert(slot);
 	assert(tech);
@@ -1365,7 +1367,7 @@ int AII_GetSlotItems (aircraftItemType_t type, aircraft_t *aircraft)
 * @param[in] aircraft The aircraft to count the items for (may not be NULL)
 * @return qtrue if the aircraft can fight, qflase else
 */
-extern int AII_AircraftCanShoot (aircraft_t *aircraft)
+int AII_AircraftCanShoot (aircraft_t *aircraft)
 {
 	int i;
 
@@ -1383,7 +1385,7 @@ extern int AII_AircraftCanShoot (aircraft_t *aircraft)
 * @param[in] base Pointer to the base you want to check (may not be NULL)
 * @return qtrue if the base can shoot, qflase else
 */
-extern int AII_BaseCanShoot (base_t *base)
+int AII_BaseCanShoot (base_t *base)
 {
 	int i;
 

@@ -1479,6 +1479,7 @@ void CL_CampaignRun (void)
 		/* check for campaign events */
 		CL_CampaignRunAircraft(dt);
 		UFO_CampaignRunUfos(dt);
+		AIRFIGHT_CampaignRunBaseDefense(dt);
 		CL_CampaignCheckEvents();
 		AIRFIGHT_CampaignRunProjectiles(dt);
 

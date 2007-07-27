@@ -254,8 +254,10 @@ typedef struct base_s {
 
 	int maxBatteries;
 	aircraftSlot_t batteries[MAX_BASE_SLOT];	/**< Missile batteries assigned to base. */
+	int targetMissileIdx[MAX_BASE_SLOT];		/**< aimed target for missile battery */
 	int maxLasers;
 	aircraftSlot_t lasers[MAX_BASE_SLOT];		/**< Laser batteries assigned to base. */
+	int targetLaserIdx[MAX_BASE_SLOT];			/**< aimed target for laser battery */
 
 	int batteryDamage;			/**< Hit points of defense system */
 	int baseDamage;			/**< Hit points of base */

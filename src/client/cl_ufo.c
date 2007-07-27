@@ -217,10 +217,6 @@ void UFO_CampaignRunUfos (int dt)
 			if (ufo->weapons[k].delayNextShot > 0)
 				ufo->weapons[k].delayNextShot -= dt;
 		}
-
-		/* Check if the UFO is within range of a base */
-		if (ufo->visible)
-			AIRFIGHT_BaseShootUFO(ufo);
 	}
 }
 

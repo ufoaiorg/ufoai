@@ -1696,9 +1696,25 @@ void AIR_AircraftsNotifyUfoRemoved (const aircraft_t *const ufo)
 {
 	base_t*		base;
 	aircraft_t*	aircraft;
+	int i, num;
 
-	/* Aircrafts currently purchasing the specified ufo will be redirect to base */
+	num = ufo - gd.ufos;
 	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
+		/* Base currently targeting the specified ufo loose their target */
+		for (i = 0; i < base->maxBatteries; i++) {
+			if (base->targetMissileIdx[i] == num)
+				base->targetMissileIdx[i] = -1;
+			else if (base->targetMissileIdx[i] > num)
+				base->targetMissileIdx[i]--;
+		}
+		for (i = 0; i < base->maxLasers; i++) {
+			if (base->targetLaserIdx[i] == num)
+				base->targetLaserIdx[i] = -1;
+			else if (base->targetLaserIdx[i] > num)
+				base->targetLaserIdx[i]--;
+		}
+
+		/* Aircrafts currently purchasing the specified ufo will be redirect to base */
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1;
 			aircraft >= base->aircraft; aircraft--)
 			if (aircraft->status == AIR_UFO) {

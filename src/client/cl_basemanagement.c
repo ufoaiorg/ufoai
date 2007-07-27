@@ -3019,6 +3019,8 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 				/* if there is no ammo MSG_WriteString will write an empty string */
 				MSG_WriteString(sb, "skip");
 			}
+			/* save target of this weapon */
+			MSG_WriteShort(sb, b->targetMissileIdx[l]);
 		}
 		MSG_WriteByte(sb, b->maxLasers);
 		for (l = 0; l < b->maxLasers; l++) {
@@ -3037,6 +3039,8 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 				/* if there is no ammo MSG_WriteString will write an empty string */
 				MSG_WriteString(sb, "skip");
 			}
+			/* save target of this weapon */
+			MSG_WriteShort(sb, b->targetLaserIdx[l]);
 		}
 
 		MSG_WriteShort(sb, b->aircraftCurrent); /* might be -1 */
@@ -3238,6 +3242,8 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			tech = RS_GetTechByProvided(MSG_ReadString(sb));
 			if (tech)
 				b->batteries[l].ammoIdx = AII_GetAircraftItemByID(tech->provides);
+			/* read target of this weapon */
+			b->targetMissileIdx[l] = MSG_ReadShort(sb);
 		}
 		/* read laser battery slots */
 		b->maxLasers = MSG_ReadByte(sb);
@@ -3251,6 +3257,8 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			tech = RS_GetTechByProvided(MSG_ReadString(sb));
 			if (tech)
 				b->lasers[l].ammoIdx = AII_GetAircraftItemByID(tech->provides);
+			/* read target of this weapon */
+			b->targetLaserIdx[l] = MSG_ReadShort(sb);
 		}
 
 		b->aircraftCurrent = MSG_ReadShort(sb);
