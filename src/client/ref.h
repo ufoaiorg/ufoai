@@ -225,8 +225,6 @@ typedef struct {
 	int rdflags;				/**< RDF_NOWORLDMODEL, etc */
 	int worldlevel;
 
-	byte *areabits;				/**< if not NULL, only areas with set bits will be drawn */
-
 	lightstyle_t *lightstyles;	/**< [MAX_LIGHTSTYLES] */
 
 	int num_entities;

@@ -481,12 +481,12 @@ void V_CalcFovX (void)
  * @param
  * @sa
  */
-static void CalcFovY (float width, float height)
+static void V_CalcFovY (float width, float height)
 {
 	float x;
 
-	x = width / tan(cl.refdef.fov_x / 360 * M_PI);
-	cl.refdef.fov_y = atan(height / x) * 360 / M_PI;
+	x = width / tan(cl.refdef.fov_x / 360.0 * M_PI);
+	cl.refdef.fov_y = atan(height / x) * 360.0 / M_PI;
 }
 
 /**
@@ -499,16 +499,15 @@ static void CL_CalcRefdef (void)
 	VectorCopy(cl.cam.camorg, cl.refdef.vieworg);
 	VectorCopy(cl.cam.angles, cl.refdef.viewangles);
 
-	VectorSet(cl.refdef.blend, 0.0, 0.0, 0.0);
+	VectorClear(cl.refdef.blend);
 
 	/* set dependant variables */
-	CalcFovY(scr_vrect.width, scr_vrect.height);
+	V_CalcFovY(scr_vrect.width, scr_vrect.height);
 	cl.refdef.x = scr_vrect.x;
 	cl.refdef.y = scr_vrect.y;
 	cl.refdef.width = scr_vrect.width;
 	cl.refdef.height = scr_vrect.height;
 	cl.refdef.time = cl.time * 0.001;
-	cl.refdef.areabits = 0;
 }
 
 /**
