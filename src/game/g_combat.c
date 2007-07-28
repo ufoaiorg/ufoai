@@ -875,7 +875,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 			if (i == 0 && fd->dmgtype == gi.csi->damFire && tr.contents & CONTENTS_BURN) {
 				/* sent particle to all players */
 				gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
-				gi.WriteShort(0);/* TODO: Get surface flags (level flags) */
+				gi.WriteShort(tr.contents >> 8);
 				gi.WritePos(impact);
 				gi.WriteShort(4);
 				gi.WriteString("fire");

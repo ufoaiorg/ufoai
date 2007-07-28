@@ -35,20 +35,6 @@ int numMPs;
 #define PTL_ONLY_ONE_TYPE		(1<<31)
 #define V_UNTYPED   0x7FFF
 
-typedef struct ptlCmd_s {
-	byte cmd;
-	byte type;
-	int ref;
-} ptlCmd_t;
-
-typedef struct ptlDef_s {
-	char name[MAX_VAR];
-	ptlCmd_t *init, *run, *think, *round, *physics;
-} ptlDef_t;
-
-
-/* =========================================================== */
-
 /** @brief particle functions enums - see pf_strings and pf_values */
 typedef enum pf_s {
 	PF_INIT,
@@ -943,6 +929,7 @@ void CL_ParticleSpawnFromSizeBuf (struct dbuffer *msg)
 		le = LE_Add(0);
 		if (!le)
 			return;
+		le->inuse = qtrue;
 		le->ptl = CL_ParticleSpawn(particle, levelflags, origin, NULL, NULL);
 		le->autohide = qtrue;
 		le->think = LET_ProjectileAutoHide;

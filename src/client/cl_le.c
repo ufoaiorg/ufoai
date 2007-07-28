@@ -616,6 +616,9 @@ void LET_ProjectileAutoHide (le_t *le)
 
 	assert(le->ptl);
 
+	/* default is to show the particle */
+	le->ptl->invis = qfalse;
+
 	/* check whether any of our actors can see this le */
 	for (i = 0, actors = LEs; i < numLEs; i++, actors++) {
 		if (!actors->inuse || actors->invis || le->team != cls.team)
@@ -623,8 +626,9 @@ void LET_ProjectileAutoHide (le_t *le)
 		if (actors->type == ET_ACTOR || actors->type == ET_ACTOR2x2) {
 			/* at least one of our actors can see this */
 			if (FrustomVis(actors->origin, actors->dir, le->origin)
-			 && CM_TestLine(le->origin, actors->origin))
+			 && CM_TestLine(le->origin, actors->origin)) {
 				return;
+			}
 		}
 	}
 	/* hide the particle */

@@ -165,6 +165,18 @@ typedef struct {
 	float *color;
 } modelInfo_t;
 
+
+typedef struct ptlCmd_s {
+	byte cmd;
+	byte type;
+	int ref;
+} ptlCmd_t;
+
+typedef struct ptlDef_s {
+	char name[MAX_VAR];
+	ptlCmd_t *init, *run, *think, *round, *physics;
+} ptlDef_t;
+
 typedef struct ptl_s {
 	/* used by ref */
 	qboolean inuse;			/**< particle active? */
@@ -188,7 +200,7 @@ typedef struct ptl_s {
 	struct ptl_s* parent;   /**< pointer to parent */
 
 	/* private */
-	struct ptlDef_s *ctrl;
+	ptlDef_t *ctrl;
 	int startTime;
 	int frame, endFrame;
 	float fps, lastFrame;
