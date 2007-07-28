@@ -287,8 +287,8 @@ static void CL_ParseEntitystring (const char *es)
 			map_maxlevel = maxlevel;
 			VectorCopy(map_dropship_coord, dropship_coord);
 
-			if (!ccs.singleplayer && (teamnum->value > maxmultiplayerteams
-									|| teamnum->value <= TEAM_CIVILIAN)) {
+			if (!ccs.singleplayer && (teamnum->integer > maxmultiplayerteams
+									|| teamnum->integer <= TEAM_CIVILIAN)) {
 				Com_Printf("The selected team is not useable. "
 					"The map doesn't support %i teams but only %i teams\n",
 					teamnum->integer, maxmultiplayerteams);
