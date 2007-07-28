@@ -1285,6 +1285,9 @@ menu mp_create_server
 		string	"*cvar mapname"
 		pos	"510 535"
 		color	"0 .78 0 1"
+		whup	{ cmd "mn_prevmap;" }
+		whdown	{ cmd "mn_nextmap;" }
+		size "256 32"
 	}
 	pic prev_map
 	{
@@ -1293,6 +1296,8 @@ menu mp_create_server
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
+		whup	{ cmd "mn_prevmap;" }
+		whdown	{ cmd "mn_nextmap;" }
 		click	{ cmd "mn_prevmap" }
 	}
 	pic next_map
@@ -1302,6 +1307,8 @@ menu mp_create_server
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
+		whup	{ cmd "mn_prevmap;" }
+		whdown	{ cmd "mn_nextmap;" }
 		click	{ cmd "mn_nextmap;" }
 	}
 	pic mappic
@@ -1310,6 +1317,8 @@ menu mp_create_server
 		pos	"800 330"
 		texl	"0 0"
 		texh	"128 96"
+		whup	{ cmd "mn_prevmap;" }
+		whdown	{ cmd "mn_nextmap;" }
 		click	{ cmd "mn_nextmap" }
 		rclick	{ cmd "mn_prevmap" }
 	}
@@ -1319,6 +1328,8 @@ menu mp_create_server
 		pos	"800 430"
 		texl	"0 0"
 		texh	"128 96"
+		whup	{ cmd "mn_prevmap;" }
+		whdown	{ cmd "mn_nextmap;" }
 		click	{ cmd "mn_nextmap" }
 		rclick	{ cmd "mn_prevmap" }
 	}
@@ -1328,6 +1339,8 @@ menu mp_create_server
 		pos	"800 530"
 		texl	"0 0"
 		texh	"128 96"
+		whup	{ cmd "mn_prevmap;" }
+		whdown	{ cmd "mn_nextmap;" }
 		click	{ cmd "mn_nextmap" }
 		rclick	{ cmd "mn_prevmap" }
 	}
