@@ -3904,9 +3904,9 @@ static void CP_GetCampaigns_f (void)
 	for (i = 0; i < numCampaigns; i++)
 		if (!Q_strncmp("main", campaigns[i].id, MAX_VAR)) {
 			Cbuf_ExecuteText(EXEC_NOW, va("campaignlist_click %i", i));
-			break;
+			return;
 		}
-
+	Cbuf_ExecuteText(EXEC_NOW, "campaignlist_click 0");
 }
 
 /**
