@@ -445,11 +445,9 @@ static void CL_PopupInterceptRClick_f (void)
 		return;
 
 	/* Display aircraft menu */
-	baseCurrent = aircraft->homebase;
-	baseCurrent->aircraftCurrent = aircraft->idxInBase;
 	AIR_AircraftSelect(aircraft);
 	MAP_ResetAction();
-	Cbuf_ExecuteText(EXEC_NOW, va("mn_select_base %i", baseCurrent->idx));
+	Cbuf_ExecuteText(EXEC_NOW, va("mn_select_base %i", aircraft->homebase->idx));
 	MN_PushMenu("aircraft");
 }
 
