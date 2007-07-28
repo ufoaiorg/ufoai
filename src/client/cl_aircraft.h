@@ -153,7 +153,11 @@ typedef struct itemsTmp_s {
 	int amount;		/**< Amount of collected items of this idx. */
 } itemsTmp_t;
 
-/** @brief All different types of UFOs. */
+/**
+ * @brief All different types of UFOs.
+ * @note If you change the order, you have to change the ids in the scriptfiles, too
+ * @sa cp_uforecovery <id>
+ */
 typedef enum {
 	UFO_SCOUT,
 	UFO_FIGHTER,
