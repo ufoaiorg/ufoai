@@ -407,7 +407,7 @@ menu mp_team
 
 	func init
 	{
-		cmd	"mn_escpop 5;set mn_slot 0;team_comments;set team human;"
+		cmd	"mn_escpop 5;set mn_slot 0;mp_env;team_comments;set team human;"
 		teamslot0
 	}
 }

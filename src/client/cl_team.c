@@ -32,6 +32,21 @@ static int CL_GetRank(const char* rankID);
 static void CL_SaveTeamInfo(sizebuf_t * buf, int baseID, int num);
 
 /**
+ * @brief Prepares environment for multiplayer.
+ * @note Ugly hack which sets proper values of global variables.
+ * @note Should be removed as soon as mp won't use base and aircraft
+ * @note and mp team handling functions won't use baseCurrent
+ */
+static void CL_MultiplayerEnvironment_f (void)
+{
+	base_t *base = &gd.bases[0];
+	
+	baseCurrent = base;
+	cls.missionaircraft = AIR_AircraftGetFromIdx(0);
+	baseCurrent->aircraftCurrent = cls.missionaircraft->idxInBase;
+}
+
+/**
  * @brief Translate the skin id to skin name
  * @param[in] id The id of the skin
  * @return Translated skin name
@@ -1608,6 +1623,8 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 		return;
 	}
 
+	CL_MultiplayerEnvironment_f();
+
 	/* read data */
 	SZ_Init(&sb, buf, MAX_TEAMDATASIZE);
 	sb.cursize = fread(buf, 1, MAX_TEAMDATASIZE, f);
@@ -1730,6 +1747,7 @@ void CL_ResetTeams (void)
 	Cmd_AddCommand("saveteamslot", CL_SaveTeamMultiplayerSlot_f, "Save a multiplayer team slot - see cvar mn_slot");
 	Cmd_AddCommand("loadteamslot", CL_LoadTeamMultiplayerSlot_f, "Load a multiplayer team slot - see cvar mn_slot");
 	Cmd_AddCommand("team_toggle_list", CL_ToggleTeamList_f, "Changes between assignment-list for soldiers and heavy equipment (e.g. Tanks)");
+	Cmd_AddCommand("mp_env", CL_MultiplayerEnvironment_f, "Prepares environment for multiplayer");
 #ifdef DEBUG
 	Cmd_AddCommand("teamlist", CL_TeamListDebug_f, "Debug function to show all hired and assigned teammembers");
 #endif
