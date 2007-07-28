@@ -755,7 +755,7 @@ static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd,
  * @param[in] z_align This value may change the target z height
  */
 static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at,
-	int mask, item_t * weapon, shot_mock_t *mock, int z_align)
+	int mask, item_t * weapon, shot_mock_t *mock, int z_align, int i)
 {
 	vec3_t dir;	/* Direction from the location of the gun muzzle ("from") to the target ("at") */
 	vec3_t angles;	/* ?? @todo The random dir-modifier ?? */
@@ -772,7 +772,6 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 	int damage;	/* The damage to be dealt to the target. */
 	byte flags;	/* ?? @todo */
 	int throughWall; /* shoot through x walls */
-	int i;
 
 	/* Calc direction of the shot. */
 	gi.GridPosToVec(gi.map, at, impact);	/* Get the position of the targetted grid-cell. ('impact' is used only temporary here)*/
@@ -811,7 +810,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 	flags = 0;
 	damage = fd->damage[0];
 	VectorCopy(cur_loc, tracefrom);
-	for (i = 0;; i++) {
+	for (;;) {
 		/* Calc 'impact' vector that is located at the end of the range
 		   defined by the fireDef_t. This is not really the impact location,
 		   but rather the 'endofrange' location, see below for another use.*/
@@ -1206,7 +1205,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 		if (fd->gravity)
 			G_ShootGrenade(player, ent, fd, shotOrigin, at, mask, weapon, mock, z_align);
 		else
-			G_ShootSingle(ent, fd, shotOrigin, at, mask, weapon, mock, z_align);
+			G_ShootSingle(ent, fd, shotOrigin, at, mask, weapon, mock, z_align, i);
 
 	if (!mock) {
 		/* send TUs if ent still alive */
