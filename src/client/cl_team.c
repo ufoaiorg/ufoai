@@ -1502,8 +1502,10 @@ static qboolean CL_SaveTeamMultiplayer (const char *filename)
 	/* store aircraft soldier content for multi-player */
 	MSG_WriteByte(&sb, aircraft->size);
 	for (i = 0; i < aircraft->size; i++) {
-		if (aircraft->teamIdxs[i] >= 0)
+		if (aircraft->teamIdxs[i] >= 0) {
 			MSG_WriteByte(&sb, aircraft->teamIdxs[i]);
+			MSG_WriteByte(&sb, aircraft->teamTypes[i]);
+		}
 	}
 
 	/* store equipment in baseCurrent so soldiers can be properly equipped */
@@ -1643,9 +1645,11 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	Com_DPrintf("Multiplayer aircraft IDX = %i\n", aircraft->idx);
 	aircraft->size = MSG_ReadByte(&sb);
 	for (i = 0; i < aircraft->size; i++) {
-		if (i < gd.bases[0].teamNum[0])
+		if (i < gd.bases[0].teamNum[0]) {
 			aircraft->teamIdxs[i] = MSG_ReadByte(&sb);
-		else
+			aircraft->teamTypes[i] = MSG_ReadByte(&sb);
+			gd.bases[0].curTeam[i] = &gd.employees[aircraft->teamTypes[i]][aircraft->teamIdxs[i]].chr;
+		} else
 			aircraft->teamIdxs[i] = -1;
 	}
 
@@ -1725,8 +1729,8 @@ void CL_ResetTeams (void)
 	Cmd_AddCommand("equip_select", CL_Select_f, NULL);
 	Cmd_AddCommand("soldier_select", CL_Select_f, _("Select a soldier from list"));
 	Cmd_AddCommand("nextsoldier", CL_NextSoldier_f, _("Toggle to next soldier"));
-	Cmd_AddCommand("saveteamslot", CL_SaveTeamMultiplayerSlot_f, NULL);
-	Cmd_AddCommand("loadteamslot", CL_LoadTeamMultiplayerSlot_f, NULL);
+	Cmd_AddCommand("saveteamslot", CL_SaveTeamMultiplayerSlot_f, "Save a multiplayer team slot - see cvar mn_slot");
+	Cmd_AddCommand("loadteamslot", CL_LoadTeamMultiplayerSlot_f, "Load a multiplayer team slot - see cvar mn_slot");
 	Cmd_AddCommand("team_toggle_list", CL_ToggleTeamList_f, "Changes between assignment-list for soldiers and heavy equipment (e.g. Tanks)");
 #ifdef DEBUG
 	Cmd_AddCommand("teamlist", CL_TeamListDebug_f, "Debug function to show all hired and assigned teammembers");
@@ -1815,6 +1819,7 @@ void CL_SendCurTeamInfo (struct dbuffer * buf, character_t ** team, int num)
 
 	for (i = 0; i < num; i++) {
 		chr = team[i];
+		assert(chr);
 		/* send the fieldSize ACTOR_SIZE_* */
 		NET_WriteByte(buf, chr->fieldSize);
 
