@@ -275,7 +275,7 @@ void B_UpdateBaseData(void);
 base_t *B_GetBase(int id);
 void B_UpdateStatusWithPower(base_t *base);
 int B_CheckBuildingConstruction(building_t *b, int baseID);
-int B_GetNumOnTeam(void);
+int B_GetNumOnTeam(aircraft_t *aircraft);
 building_t *B_GetLab(int base_id);
 void B_ClearBuilding(building_t *building);
 void B_ParseBuildings(const char *name, const char **text, qboolean link);

@@ -207,6 +207,8 @@ static void CL_Quit_f (void)
 void CL_StartSingleplayer (qboolean singleplayer)
 {
 	const char *type, *name, *text;
+	base_t *base;
+	
 	if (singleplayer) {
 		ccs.singleplayer = qtrue;
 		if (Qcommon_ServerActive()) {
@@ -243,14 +245,14 @@ void CL_StartSingleplayer (qboolean singleplayer)
 		ccs.singleplayer = qfalse;
 		curCampaign = NULL;
 		selMis = NULL;
-		baseCurrent = &gd.bases[0];
-		B_ClearBase(&gd.bases[0]);
+		base = &gd.bases[0];
+		B_ClearBase(base);
 		RS_ResetHash();
 		gd.numBases = 1;
 		gd.numAircraft = 0;
 
 		/* now add a dropship where we can place our soldiers in */
-		AIR_NewAircraft(baseCurrent, "craft_drop_firebird");
+		AIR_NewAircraft(base, "craft_drop_firebird");
 
 		Com_Printf("Changing to Multiplayer\n");
 		/* no campaign equipment but for multiplayer */
@@ -355,13 +357,16 @@ static void CL_CheckForResend (void)
 static void CL_Connect_f (void)
 {
 	const char *server;
+	aircraft_t *aircraft;
+	
+	aircraft = AIR_AircraftGetFromIdx(0);
 
 	if (Cmd_Argc() != 2) {
 		Com_Printf("usage: connect <server>\n");
 		return;
 	}
 
-	if (!B_GetNumOnTeam()) {
+	if (!B_GetNumOnTeam(aircraft)) {
 		MN_Popup(_("Error"), _("Assemble a team first"));
 		return;
 	}
@@ -1027,9 +1032,12 @@ static void discovery_callback (struct datagram_socket *s, const char *buf, int 
 static void CL_ServerConnect_f (void)
 {
 	const char *ip = Cvar_VariableString("mn_server_ip");
+	aircraft_t *aircraft;
+	
+	aircraft = AIR_AircraftGetFromIdx(0);
 
 	/* @todo: if we are in multiplayer auto generate a team */
-	if (!B_GetNumOnTeam()) {
+	if (!B_GetNumOnTeam(aircraft)) {
 		MN_Popup(_("Error"), _("Assemble a team first"));
 		return;
 	}
@@ -1423,8 +1431,11 @@ static void CL_SpawnSoldiers_f (void)
 {
 	int n = teamnum->integer;
 	int amount = 0;
+	base_t *base = NULL;
+	
+	base = CP_GetMissionBase();
 
-	if (!ccs.singleplayer && baseCurrent && !teamData.parsed) {
+	if (!ccs.singleplayer && base && !teamData.parsed) {
 		Com_Printf("CL_SpawnSoldiers_f: teaminfo unparsed\n");
 		return;
 	}
@@ -1434,7 +1445,7 @@ static void CL_SpawnSoldiers_f (void)
 		return;
 	}
 
-	if (!ccs.singleplayer && baseCurrent) {
+	if (!ccs.singleplayer && base) {
 		/* we are already connected and in this list */
 		if (n <= TEAM_CIVILIAN || teamData.maxplayersperteam < teamData.teamCount[n]) {
 			menuText[TEXT_STANDARD] = _("Invalid or full team");
@@ -1446,14 +1457,14 @@ static void CL_SpawnSoldiers_f (void)
 	}
 
 	/* maybe we start the map directly from commandline for testing */
-	if (baseCurrent) {
-		amount = B_GetNumOnTeam();
+	if (base) {
+		amount = B_GetNumOnTeam(cls.missionaircraft);
 		if (amount <= 0) {
 			Com_DPrintf("CL_SpawnSoldiers_f: Error - B_GetNumOnTeam returned value smaller than zero - %i\n", amount);
 		} else {
 			/* send team info */
 			struct dbuffer *msg = new_dbuffer();
-			CL_SendCurTeamInfo(msg, baseCurrent->curTeam, amount);
+			CL_SendCurTeamInfo(msg, base->curTeam, amount);
 			NET_WriteMsg(cls.stream, msg);
 		}
 	}

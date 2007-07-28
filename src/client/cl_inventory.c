@@ -45,16 +45,6 @@ static void INV_CollectingAmmo (invList_t *magazine, aircraft_t *aircraft)
 	int i;
 	itemsTmp_t *cargo = NULL;
 
-	if (!aircraft) {
-#ifdef DEBUG
-		/* should never happen */
-		Com_Printf("INV_CollectingAmmo()... no aircraft!\n");
-#endif
-		return;
-	} else {
-		cargo = aircraft->itemcargo;
-	}
-
 	/* Let's add remaining ammo to market. */
 	eTempEq.num_loose[magazine->item.m] += magazine->item.a;
 	if (eTempEq.num_loose[magazine->item.m] >= csi.ods[magazine->item.t].ammo) {
@@ -136,24 +126,9 @@ void INV_CollectingItems (int won)
 	le_t *le;
 	invList_t *item;
 	itemsTmp_t *cargo;
-	aircraft_t *aircraft;
+	aircraft_t *aircraft = NULL;
 
-	if (!baseCurrent) {
-#ifdef DEBUG
-		/* should never happen */
-		Com_Printf("INV_CollectingItems()... no base selected!\n");
-#endif
-		return;
-	}
-	if ((baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase)) {
-		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
-	} else {
-#ifdef DEBUG
-		/* should never happen */
-		Com_Printf("INV_CollectingItems()... no aircraft selected!\n");
-#endif
-		return;
-	}
+	aircraft = cls.missionaircraft;
 
 	/* Make sure itemcargo is empty. */
 	memset(aircraft->itemcargo, 0, sizeof(aircraft->itemcargo));

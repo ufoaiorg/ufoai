@@ -1387,19 +1387,17 @@ static void CL_TeamListDebug_f (void)
 	int i, cnt;
 	character_t *team;
 	employee_t *employee;
+	base_t *base = NULL;
+	
+	base = CP_GetMissionBase();
 
-	if (!baseCurrent) {
+	if (!base) {
 		Com_Printf("Build and select a base first\n");
 		return;
 	}
 
-	if (!baseCurrent->aircraftCurrent < 0) {
-		Com_Printf("Select an aircraft\n");
-		return;
-	}
-
-	cnt = B_GetNumOnTeam();
-	team = baseCurrent->curTeam[baseCurrent->aircraftCurrent];
+	cnt = B_GetNumOnTeam(cls.missionaircraft);
+	team = base->curTeam[cls.missionaircraft->idxInBase];
 
 	Com_Printf("%i members in the current team", cnt);
 	for (i = 0; i < cnt; i++) {
@@ -1992,6 +1990,7 @@ void CL_ParseResults (struct dbuffer *msg)
 	int our_surviviurs, our_killed, our_stunned;
 	int thier_surviviurs, thier_killed, thier_stunned;
 	int civilian_surviviurs, civilian_killed, civilian_stunned;
+	base_t *base = NULL;
 
 	/* get number of teams */
 	num = NET_ReadByte(msg);
@@ -2026,6 +2025,7 @@ void CL_ParseResults (struct dbuffer *msg)
 		for (j = 0; j < num; j++)
 			num_stuns[i][j] = NET_ReadByte(msg);
 
+	base = CP_GetMissionBase();
 	CL_ParseCharacterData(msg, qfalse);
 
 	/* init result text */
@@ -2115,9 +2115,9 @@ void CL_ParseResults (struct dbuffer *msg)
 	} else {
 		/* the mission was in singleplayer */
 		/* loot the battlefield */
-		INV_CollectingItems(winner == we);		/**< Collect items from the battlefield. */
+		INV_CollectingItems(winner == we);				/**< Collect items from the battlefield. */
 		if (winner == we)
-			AL_CollectingAliens(baseCurrent);	/**< Collect aliens from the battlefield. */
+			AL_CollectingAliens(cls.missionaircraft);	/**< Collect aliens from the battlefield. */
 
 		/* clear unused LE inventories */
 		LE_Cleanup();
@@ -2151,8 +2151,8 @@ void CL_ParseResults (struct dbuffer *msg)
 	if (ccs.singleplayer) {
 		/* Make sure that at this point we are able to 'Try Again' a mission. */
 		Cvar_SetValue("mission_tryagain", 0);
-		if (selMis && baseCurrent)
-			CP_ExecuteMissionTrigger(selMis->def, winner == we, baseCurrent);
+		if (selMis && base)
+			CP_ExecuteMissionTrigger(selMis->def, winner == we, base);
 		else
 			Com_Printf("CL_ParseResults: Error - no mission triggers, because selMis or baseCurrent are not valid\n");
 

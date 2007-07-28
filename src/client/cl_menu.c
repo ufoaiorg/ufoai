@@ -601,19 +601,23 @@ static void MN_PrevGametype_f (void)
  */
 static void MN_StartServer_f (void)
 {
+	aircraft_t *aircraft;
+	
 	if (Cmd_Argc() <= 1) {
 		Com_Printf("Usage: mn_startserver <name>\n");
 		return;
 	}
 
+	aircraft = AIR_AircraftGetFromIdx(0);
+	
 	if (sv_dedicated->integer > 0)
 		Com_DPrintf("Dedicated server needs no team\n");
-	else if (!B_GetNumOnTeam()) {
+	else if (!B_GetNumOnTeam(aircraft)) {
 		Com_Printf("MN_StartServer_f: Multiplayer team not loaded, please choose your team now.\n");
 		Cbuf_ExecuteText(EXEC_NOW, "assign_initial 1");
 		return;
 	} else
-		Com_DPrintf("There are %i members on team\n", B_GetNumOnTeam());
+		Com_DPrintf("There are %i members on team\n", B_GetNumOnTeam(aircraft));
 
 	if (Cvar_VariableInteger("sv_teamplay")
 		&& Cvar_VariableValue("sv_maxsoldiersperplayer") > Cvar_VariableValue("sv_maxsoldiersperteam")) {

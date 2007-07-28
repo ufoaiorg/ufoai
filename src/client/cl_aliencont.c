@@ -88,28 +88,15 @@ const char *AL_AlienTypeToName (int teamDescIdx)
 
 /**
  * @brief Collecting stunned aliens and alien bodies after the mission.
- * @param[in] *base Pointer to the base being default destination for the cargo.
- * @todo Campaign aircraft as param here.
+ * @param[in] *aircraft Pointer to the aircraft with cargo.
  * @sa CL_ParseResults
  */
-void AL_CollectingAliens (base_t *base)
+void AL_CollectingAliens (aircraft_t *aircraft)
 {
 	int i, j;
 	int teamDescID = -1;
 	le_t *le = NULL;
 	aliensTmp_t *cargo = NULL;
-	aircraft_t *aircraft = NULL;
-
-	assert (base);
-	if ((base->aircraftCurrent >= 0) && (base->aircraftCurrent < base->numAircraftInBase)) {
-		aircraft = &base->aircraft[base->aircraftCurrent];
-	} else {
-#ifdef DEBUG
-		/* should never happen */
-		Com_Printf("AL_CollectingAliens()... No aircraft selected!\n");
-#endif
-		return;
-	}
 
 	/* Make sure dropship aliencargo is empty. */
 	memset(aircraft->aliencargo,0,sizeof(aircraft->aliencargo));

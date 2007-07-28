@@ -907,13 +907,18 @@ void CL_CampaignRunAircraft (int dt)
 							/* Aircraft reach its mission */
 							aircraft->mission->def->active = qtrue;
 							aircraft->status = AIR_DROP;
+							cls.missionaircraft = aircraft;
+#if 0
 							/* set baseCurrent information so the
 							 * correct team goes to the mission */
 							baseCurrent = aircraft->homebase;
 							assert(i == aircraft->idxInBase); /* Just in case the index is out of sync. */
 							baseCurrent->aircraftCurrent = aircraft->idxInBase;
-							MAP_SelectMission(aircraft->mission);
+							MAP_SelectMission(aircraft->mission);				
 							gd.interceptAircraft = aircraft->idx;
+#endif
+							MAP_SelectMission(cls.missionaircraft->mission);
+							gd.interceptAircraft = cls.missionaircraft->idx;
 							Com_DPrintf("gd.interceptAircraft: %i\n", gd.interceptAircraft);
 							MN_PushMenu("popup_intercept_ready");
 							break;

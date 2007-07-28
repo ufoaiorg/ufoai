@@ -2228,17 +2228,16 @@ static void CL_GameGo (void)
 {
 	mission_t *mis;
 	aircraft_t *aircraft;
+	base_t *base = NULL;
 	int i, p;
 
-	if (!curCampaign || gd.interceptAircraft < 0 || gd.interceptAircraft >= gd.numAircraft) {
+	if (!curCampaign) {
 		Com_DPrintf("curCampaign: %p, selMis: %p, interceptAircraft: %i\n", (void*)curCampaign, (void*)selMis, gd.interceptAircraft);
 		return;
 	}
 
-	aircraft = AIR_AircraftGetFromIdx(gd.interceptAircraft);
-	/* update mission-status (active?) for the selected aircraft */
-	/* Check what this was supposed to do ? */
-	/* CL_CheckAircraft(aircraft); */
+	aircraft = cls.missionaircraft;
+	base = CP_GetMissionBase();
 
 	if (!selMis)
 		selMis = aircraft->mission;
@@ -2250,16 +2249,13 @@ static void CL_GameGo (void)
 
 	mis = selMis->def;
 	map_maxlevel_base = 0;
-	baseCurrent = aircraft->homebase;
-	assert(baseCurrent && mis && aircraft);
+	assert(mis && aircraft);
 
 	/* Before we start, we should clear the missionresults array. */
 	memset(&missionresults, 0, sizeof(missionresults));
 
-	/* set current aircraft of current base */
-	baseCurrent->aircraftCurrent = aircraft->idxInBase;
-
-	if (!ccs.singleplayer && B_GetNumOnTeam() == 0) {
+	/* FIXME: IMO all of this to be removed, we never get here. */
+	if (!ccs.singleplayer && B_GetNumOnTeam(aircraft) == 0) {
 		/* multiplayer; but we never reach this far! */
 		MN_Popup(_("Note"), _("Assemble or load a team"));
 		return;
@@ -2283,14 +2279,14 @@ static void CL_GameGo (void)
 		if (aircraft->teamIdxs[i] != -1) {
 			Com_DPrintf("CL_GameGo: team-member - idx:%i size:%i\n", aircraft->teamIdxs[i], aircraft->teamTypes[i]);
 			assert(p < MAX_ACTIVETEAM);
-			baseCurrent->curTeam[p] = E_GetHiredCharacter(baseCurrent, aircraft->teamTypes[i], aircraft->teamIdxs[i]);
+			base->curTeam[p] = E_GetHiredCharacter(base, aircraft->teamTypes[i], aircraft->teamIdxs[i]);
 			p++;
 		}
 	}
 
 	/* manage inventory */
-	ccs.eMission = baseCurrent->storage; /* copied, including arrays inside! */
-	CL_CleanTempInventory(baseCurrent);
+	ccs.eMission = base->storage; /* copied, including arrays inside! */
+	CL_CleanTempInventory(base);
 	CL_ReloadAndRemoveCarried(aircraft, &ccs.eMission);
 	/* remove inventory of any old temporary LEs */
 	LE_Cleanup();

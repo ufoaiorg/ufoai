@@ -2783,10 +2783,13 @@ base_t *B_GetBase (int base_idx)
 }
 
 /**
- * @brief Counts the number of soldiers in a current aircraft/team.
+ * @brief Counts the number of soldiers in given aircraft.
+ * @param[in] *aircraft Pointer to the aircraft, for which we calculate amount of soldiers.
+ * @return Amount of soldiers.
  */
-int B_GetNumOnTeam (void)
+int B_GetNumOnTeam (aircraft_t *aircraft)
 {
+#if 0
        aircraft_t* aircraft = NULL;
 
        if (!baseCurrent || baseCurrent->aircraftCurrent < 0)
@@ -2795,7 +2798,7 @@ int B_GetNumOnTeam (void)
        aircraft = B_GetAircraftFromBaseByIndex (baseCurrent, baseCurrent->aircraftCurrent);
        if (!aircraft)
                return 0;
-
+#endif
        return *aircraft->teamSize;
 }
 
