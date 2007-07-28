@@ -398,6 +398,10 @@ menu althud
 		anim	"*cvar mn_anim"
 		origin	"948 180 0"
 		angles	"0 80 90"
+		// FIXME - use pos and size for autoscaling - doesn't work with tags atm
+//		pos		"884 80"
+//		size	"120 260"
+//		bgcolor	"1 1 1 0.5"
 		scale	"4 4 4"
 		color	"0.5 0.5 0.5 1"
 	}
@@ -430,65 +434,89 @@ menu althud
 	model head0
 	{
 		md2		"*cvar mn_head0"
-		origin	"875 717 0"
+		origin	"880 710 0"
 		angles	"15 60 100"
-		scale	"7 7 7"
+//		scale	"7 7 7"
+		pos		"854 672"
+		size	"50 78"
+		bgcolor	"1 1 1 0.5"
 		color	"0.5 0.5 0.5 1"
 	}
 	model head1
 	{
 		md2		"*cvar mn_head1"
-		origin	"795 717 0"
+		origin	"800 710 0"
 		angles	"15 60 100"
-		scale	"7 7 7"
+//		scale	"7 7 7"
+		pos		"774 672"
+		size	"50 78"
+//		bgcolor	"1 1 1 0.5"
 		color	"0.5 0.5 0.5 1"
 	}
 	model head2
 	{
 		md2		"*cvar mn_head2"
-		origin	"715 717 0"
+		origin	"720 710 0"
 		angles	"15 60 100"
-		scale	"7 7 7"
+//		scale	"7 7 7"
+		pos		"694 672"
+		size	"50 78"
+//		bgcolor	"1 1 1 0.5"
 		color	"0.5 0.5 0.5 1"
 	}
 	model head3
 	{
 		md2		"*cvar mn_head3"
-		origin	"635 717 0"
+		origin	"640 710 0"
 		angles	"15 60 100"
-		scale	"7 7 7"
+//		scale	"7 7 7"
+		pos		"614 672"
+		size	"50 78"
+//		bgcolor	"1 1 1 0.5"
 		color	"0.5 0.5 0.5 1"
 	}
 	model head4
 	{
 		md2		"*cvar mn_head4"
-		origin	"555 717 0"
+		origin	"560 710 0"
 		angles	"15 60 100"
-		scale	"7 7 7"
+//		scale	"7 7 7"
+		pos		"534 672"
+		size	"50 78"
+//		bgcolor	"1 1 1 0.5"
 		color	"0.5 0.5 0.5 1"
 	}
 	model head5
 	{
 		md2		"*cvar mn_head5"
-		origin	"475 717 0"
+		origin	"480 710 0"
 		angles	"15 60 100"
-		scale	"7 7 7"
+//		scale	"7 7 7"
+		pos		"454 672"
+		size	"50 78"
+//		bgcolor	"1 1 1 0.5"
 		color	"0.5 0.5 0.5 1"
 	}
 	model head6
 	{
 		md2		"*cvar mn_head6"
-		origin	"395 717 0"
+		origin	"400 710 0"
 		angles	"15 60 100"
-		scale	"7 7 7"
+//		scale	"7 7 7"
+		pos		"374 672"
+		size	"50 78"
+//		bgcolor	"1 1 1 0.5"
 		color	"0.5 0.5 0.5 1"
 	}
 	model head7
 	{
 		md2		"*cvar mn_head7"
-		origin	"315 717 0"
+		origin	"320 710 0"
 		angles	"15 60 100"
-		scale	"7 7 7"
+//		scale	"7 7 7"
+		pos		"294 672"
+		size	"50 78"
+//		bgcolor	"1 1 1 0.5"
 		color	"0.5 0.5 0.5 1"
 	}
 

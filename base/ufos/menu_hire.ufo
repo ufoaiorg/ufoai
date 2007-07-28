@@ -353,6 +353,10 @@ menu employees
 		anim	"stand2"
 		origin	"580 215 0"
 		angles	"0 70 90"
+		// FIXME - use pos and size for autoscaling - doesn't work with tags atm
+//		pos		"480 100"
+//		size	"190 300"
+//		bgcolor	"1 1 1 0.5"
 		scale	"6.7 6.7 6.7"
 		color	"0.5 0.5 0.5 1"
 	}

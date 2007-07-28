@@ -737,9 +737,12 @@ menu hud
 	{
 		md2		"*cvar mn_head"
 		skin	"*cvar mn_skin"
-		origin	"50 78 0"
+		origin	"56 54 0"
 		angles	"0 60 90"
-		scale	"8 8 8"
+//		scale	"8 8 8"
+		size	"74 66"
+		pos		"20 20"
+//		bgcolor	"1 1 1 0.5"
 		color	"0.5 0.5 0.5 1"
 	}
 
