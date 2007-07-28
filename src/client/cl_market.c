@@ -338,10 +338,16 @@ static void BS_BuyType_f (void)
 	}
 	/* aircraft */
 	else if (buyCategory == BUY_AIRCRAFT) {
-		/* we can't buy aircraft without a hangar */
+		/* We cannot buy aircraft if there is no power in our base. */
+		if (!baseCurrent->hasPower) {
+			Cbuf_ExecuteText(EXEC_NOW, "mn_pop\n");
+			MN_Popup(_("Note"), _("No power supplies in this base.\nHangars are not functional."));		
+			return;
+		}
+		/* We cannot buy aircraft without any hangar. */
 		if (!baseCurrent->hasHangar && !baseCurrent->hasHangarSmall) {
 			MN_PopMenu(qfalse);
-			MN_Popup(_("Note"), _("Build a hangar first"));
+			MN_Popup(_("Note"), _("Build a hangar first."));
 			return;
 		}
 		for (i = 0, j = 0, air_samp = aircraft_samples; i < numAircraft_samples; i++, air_samp++) {
