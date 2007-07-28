@@ -127,7 +127,7 @@ menu multiplayer
 
 	func init
 	{
-		cmd "mn_escpop 5;mn_push mp_serverbrowser;maxclients 2;"
+		cmd "mn_escpop 5;mn_push mp_serverbrowser;sv_maxclients 2;"
 	}
 }
 
@@ -1022,7 +1022,7 @@ menu mp_create_server
 	}
 	string maxclients_value
 	{
-		string	"*cvar maxclients"
+		string	"*cvar sv_maxclients"
 		pos	"840 200"
 		align	ur
 	}
@@ -1033,7 +1033,7 @@ menu mp_create_server
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
-		click	{ cmd "mn_modify maxclients -1 2 16;" }
+		click	{ cmd "mn_modify sv_maxclients -1 2 16;" }
 	}
 	pic maxclients_inc
 	{
@@ -1042,7 +1042,7 @@ menu mp_create_server
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
-		click	{ cmd "mn_modify maxclients +1 2 16;" }
+		click	{ cmd "mn_modify sv_maxclients +1 2 16;" }
 	}
 
 	// ===================
@@ -1115,7 +1115,7 @@ menu mp_create_server
 
 	// ===================
 	// MAX PLAYER PER TEAM
-	// max is half of maxclients
+	// max is half of sv_maxclients
 	// ===================
 	string server_maxplayerperteam_str
 	{

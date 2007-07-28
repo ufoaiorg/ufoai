@@ -587,7 +587,7 @@ menu hud
 	// ==================
 	pic bar_chat
 	{
-		if	"maxclients >= 2"
+		if	"sv_maxclients >= 2"
 		image	hud/bar_chat
 		pos		"1024 64"
 		align	"ur"
@@ -653,7 +653,7 @@ menu hud
 
 	pic button_chat
 	{
-		if	"maxclients >= 2"
+		if	"sv_maxclients >= 2"
 		tooltip	"_Chat messages"
 		image	menu/event_log
 		texl	"0 0"
