@@ -2556,8 +2556,7 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	vec3_t muzzle, impact;
 	int flags, normal, number;
 	int obj_idx;
-	int weap_fds_idx, fd_idx;
-	int surfaceFlags; /* content flags for the hit brush */
+	int weap_fds_idx, fd_idx, surfaceFlags;
 
 	/* read data */
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT], &number, &obj_idx, &weap_fds_idx, &fd_idx, &flags, &surfaceFlags, &muzzle, &impact, &normal);
@@ -2571,15 +2570,8 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 #endif
 	fd = GET_FIREDEF(obj_idx, weap_fds_idx, fd_idx);
 
-	/* @todo/FIXME: e.g. smoke grenades or particles that stay longer than a few seconds
-	 * should become invisible if out of actor view */
 	/* add effect le */
-	LE_AddProjectile(fd, flags, muzzle, impact, normal);
-	if (firstShot && fd->dmgtype == csi.damFire) {
-		if (surfaceFlags & CONTENTS_BURN) {
-			CL_ParticleSpawn("fire", 0, impact, NULL, NULL);
-		}
-	}
+	LE_AddProjectile(fd, flags, muzzle, impact, normal, qtrue);
 
 	/* start the sound */
 	if ((!fd->soundOnce || firstShot) && fd->fireSound[0]
@@ -2641,35 +2633,21 @@ void CL_ActorShootHidden (struct dbuffer *msg)
 	int first;
 	int obj_idx;
 	int weap_fds_idx, fd_idx;
-	int surfaceFlags;
-	vec3_t impact;
 
-	NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &obj_idx, &weap_fds_idx, &fd_idx, &surfaceFlags, &impact);
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &obj_idx, &weap_fds_idx, &fd_idx);
 
 	/* get the fire def */
 #ifdef DEBUG
 	GET_FIREDEFDEBUG(obj_idx, weap_fds_idx, fd_idx)
 #endif
 	fd = GET_FIREDEF(obj_idx, weap_fds_idx, fd_idx);
-	if (firstShot && fd->dmgtype == csi.damFire) {
-		if (surfaceFlags & CONTENTS_BURN) {
-			CL_ParticleSpawn("fire", 0, impact, NULL, NULL);
-		}
-	}
 
 	/* start the sound; @todo: is check for SF_BOUNCED needed? */
 	if (((first && fd->soundOnce) || (!first && !fd->soundOnce)) && fd->fireSound[0])
 		/* FIXME: use S_StartSound */
 		S_StartLocalSound(fd->fireSound);
 
-#if 0
-	/* @todo/FIXME: e.g. smoke grenades or particles that stay longer than a few seconds should also spawn
-	 * an invisible particles (until it becomes visible) */
-	/* add effect le */
-	LE_AddProjectile(fd, flags, muzzle, impact, normal);
-#endif
-
-	/* if the shooting becomes visibile, don't repeat sounds! */
+	/* if the shooting becomes visible, don't repeat sounds! */
 	firstShot = qfalse;
 }
 
@@ -3220,7 +3198,7 @@ void CL_ActorMouseTrace (void)
 	/* search for an actor on this field */
 	mouseActor = NULL;
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
-		
+
 		if (le->inuse && !(le->state & STATE_DEAD) && (le->type == ET_ACTOR || le->type == ET_ACTOR2x2))
 			switch (le->fieldSize) {
 			case ACTOR_SIZE_NORMAL:

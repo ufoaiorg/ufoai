@@ -842,16 +842,16 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 		}
 
 #if 0
-		/* please debug, currently it causes double sounds */
+		/* @todo: please debug, currently it causes double sounds */
 		/* calculate additional visibility */
 		for (k = 0; k < MAX_TEAMS; k++)
 			if (G_TeamPointVis(k, impact))
 				mask |= 1 << k;
+#endif
 
 		/* victims see shots */
 		if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_ACTOR2x2))
 			mask |= 1 << tr.ent->team;
-#endif
 
 		if (!mock) {
 			/* send shot */
@@ -872,8 +872,15 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 			gi.WriteShort(fd->obj_idx);
 			gi.WriteByte(fd->weap_fds_idx);
 			gi.WriteByte(fd->fd_idx);
-			gi.WriteByte(tr.contents);
-			gi.WritePos(impact);
+
+			if (i == 0 && fd->dmgtype == gi.csi->damFire && tr.contents & CONTENTS_BURN) {
+				/* sent particle to all players */
+				gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
+				gi.WriteShort(0);/* TODO: Get surface flags (level flags) */
+				gi.WritePos(impact);
+				gi.WriteShort(4);
+				gi.WriteString("fire");
+			}
 		}
 
 		if (tr.fraction < 1.0 && !fd->bounce) {
@@ -912,7 +919,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 		VectorAdd(temp, dir, dir);
 		VectorAdd(temp, dir, dir);
 		flags |= SF_BOUNCED;
-	};
+	}
 
 	if (!mock) {
 		/* spawn the knife on the floor */
@@ -1166,8 +1173,6 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 		gi.WriteShort(fd->obj_idx);
 		gi.WriteByte(fd->weap_fds_idx);
 		gi.WriteByte(fd->fd_idx);
-		gi.WriteByte(0); /* FIXME: */
-		gi.WriteGPos(at);
 
 		/* ammo... */
 		if (fd->ammo) {

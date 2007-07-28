@@ -602,6 +602,31 @@ void LET_StartPathMove (le_t * le)
 	le->think(le);
 }
 
+/**
+ * @brief Autohides a projectile particle if no actor of your team can see it
+ * @note Think function
+ * @sa LET_Projectile
+ */
+void LET_ProjectileAutoHide (le_t *le)
+{
+	int i;
+	le_t *actors;
+
+	assert(le->ptl);
+
+	/* check whether any of our actors can see this le */
+	for (i = 0, actors = LEs; i < numLEs; i++, actors++) {
+		if (!actors->inuse || actors->invis || le->team != cls.team)
+			continue;
+		if (actors->type == ET_ACTOR || actors->type == ET_ACTOR2x2) {
+			/* at least one of our actors can see this */
+			if (CM_TestLine(le->origin, actors->origin))
+				return;
+		}
+	}
+	/* hide the particle */
+	le->ptl->invis = qtrue;
+}
 
 /**
  * @brief
@@ -611,6 +636,7 @@ static void LET_Projectile (le_t * le)
 {
 	if (cl.time >= le->endTime) {
 		CL_ParticleFree(le->ptl);
+		/* don't run the think function again */
 		le->inuse = qfalse;
 		if (le->ref1 && le->ref1[0]) {
 			vec3_t impact;
@@ -623,6 +649,11 @@ static void LET_Projectile (le_t * le)
 			sfx_t *sfx = S_RegisterSound(le->ref2);
 			S_StartSound(NULL, le->entnum, SOUND_CHANNEL_OVERRIDE, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
 		}
+	} else {
+		if (!le->autohide)
+			return;
+
+		LET_ProjectileAutoHide(le);
 	}
 }
 
@@ -633,7 +664,7 @@ static void LET_Projectile (le_t * le)
 /**
  * @brief
  */
-void LE_AddProjectile (fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, int normal)
+void LE_AddProjectile (fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, int normal, qboolean autohide)
 {
 	le_t *le;
 	vec3_t delta;
@@ -642,7 +673,7 @@ void LE_AddProjectile (fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, 
 	/* add le */
 	le = LE_Add(0);
 	le->invis = qtrue;
-
+	le->autohide = autohide;
 	/* bind particle */
 	le->ptl = CL_ParticleSpawn(fd->projectile, 0, muzzle, NULL, NULL);
 	if (!le->ptl) {
