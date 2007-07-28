@@ -45,6 +45,8 @@ static void INV_CollectingAmmo (invList_t *magazine, aircraft_t *aircraft)
 	int i;
 	itemsTmp_t *cargo = NULL;
 
+	cargo = aircraft->itemcargo;
+
 	/* Let's add remaining ammo to market. */
 	eTempEq.num_loose[magazine->item.m] += magazine->item.a;
 	if (eTempEq.num_loose[magazine->item.m] >= csi.ods[magazine->item.t].ammo) {
