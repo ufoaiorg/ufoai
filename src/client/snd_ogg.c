@@ -278,8 +278,11 @@ qboolean S_OGG_Open (const char *filename)
 		FS_FCloseFile(&stream->file);
 		return qfalse;
 	}
-	/* FIXME otherwise is crashss */
-	music.ovInfo->rate = 44100;
+	if (music.ovInfo->rate != 44100) {
+		Com_Printf("Error unsupported .ogg file (unsupported rate: %ldHz): %s\n", music.ovInfo->rate, checkFilename);
+		FS_FCloseFile(&stream->file);
+		return qfalse;
+	}
 
 	Q_strncpyz(music.ovPlaying, checkFilename, sizeof(music.ovPlaying));
 	music.ovSection = 0;
@@ -348,7 +351,7 @@ int S_OGG_Read (void)
 		break;
 	}
 
-	S_RawSamples(res >> 2, music.ovInfo->rate, 2, 2, (byte *) music.ovBuf, music.fading);
+	S_RawSamples(res >> 2, 44100, 2, 2, (byte *) music.ovBuf, music.fading);
 
 	if (*music.newFilename)
 		music.fading -= snd_fadingspeed->value;
@@ -587,7 +590,8 @@ sfxcache_t *S_OGG_LoadSFX (sfx_t *s)
 	music.ovInfo = ov_info(&vorbisFile, -1);
 	if (!music.ovInfo) {
 		Com_Printf("%s: The specified bitstream does not exist or the file has been initialized improperly.\n", s->name);
-		FS_FCloseFile(&stream->file);
+		ov_clear(&vorbisFile); /* Does FS_FCloseFile */
+		Mem_Free(s->stream);
 		return qfalse;
 	}
 	if (music.ovInfo->channels != 1 && music.ovInfo->channels != 2) {
@@ -596,8 +600,12 @@ sfxcache_t *S_OGG_LoadSFX (sfx_t *s)
 		Mem_Free(s->stream);
 		return NULL;
 	}
-	/* FIXME otherwise is crashss */
-	music.ovInfo->rate = 44100;
+	if (music.ovInfo->rate != 44100) {
+		Com_Printf("Error unsupported .ogg file (unsupported rate: %ldHz): %s\n", music.ovInfo->rate, s->name);
+		ov_clear(&vorbisFile); /* Does FS_FCloseFile */
+		Mem_Free(s->stream);
+		return NULL;
+	}
 
 	samples = (int)ov_pcm_total(&vorbisFile, -1);
 	len = (int) ((double) samples * (double) dma.speed / (double) music.ovInfo->rate);
@@ -606,7 +614,7 @@ sfxcache_t *S_OGG_LoadSFX (sfx_t *s)
 	sc = s->cache = Mem_PoolAlloc(len + sizeof(sfxcache_t), cl_soundSysPool, 0);
 	sc->length = samples;
 	sc->loopstart = -1;
-	sc->speed = music.ovInfo->rate;
+	sc->speed = 44100;
 	sc->width = 2;
 
 	if (dma.speed != music.ovInfo->rate) {
@@ -618,10 +626,7 @@ sfxcache_t *S_OGG_LoadSFX (sfx_t *s)
 
 	bytes_read_total = 0;
 	do {
-		if (Q_IsBigEndian())
-			bytes_read = ov_read(&vorbisFile, buffer + bytes_read_total, len - bytes_read_total, 1, 2, 1, &bitstream);
-		else
-			bytes_read = ov_read(&vorbisFile, buffer + bytes_read_total, len - bytes_read_total, 0, 2, 1, &bitstream);
+		bytes_read = ov_read(&vorbisFile, buffer + bytes_read_total, len - bytes_read_total, 0, 2, 1, &bitstream);
 		bytes_read_total += bytes_read;
 	} while (bytes_read > 0 && bytes_read_total < len);
 	ov_clear(&vorbisFile); /* Does FS_FCloseFile */
