@@ -389,6 +389,8 @@ float AngleNormalize180(float angle);
 
 float LerpAngle(float a1, float a2, float frac);
 
+qboolean FrustomVis(vec3_t origin, int dir, vec3_t point);
+
 void ProjectPointOnPlane(vec3_t dst, const vec3_t p, const vec3_t normal);
 void PerpendicularVector(vec3_t dst, const vec3_t src);
 void RotatePointAroundVector(vec3_t dst, const vec3_t dir, const vec3_t point, float degrees);

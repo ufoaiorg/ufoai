@@ -221,6 +221,31 @@ void AngleVectors (vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
 }
 
 /**
+ * @brief Checks whether a point is visible from a given position
+ * @param[in] origin Origin to test from
+ * @param[in] dir Direction to test into
+ * @param[in] point This is the point we want to check the visibility for
+ */
+inline qboolean FrustomVis (vec3_t origin, int dir, vec3_t point)
+{
+	/* view frustum check */
+	vec3_t delta;
+	byte dv;
+
+	delta[0] = point[0] - origin[0];
+	delta[1] = point[1] - origin[1];
+	delta[2] = 0;
+	VectorNormalize(delta);
+	dv = dir & (DIRECTIONS-1);
+
+	/* test 120 frustum (cos 60 = 0.5) */
+	if ((delta[0] * dvecsn[dv][0] + delta[1] * dvecsn[dv][1]) < 0.5)
+		return qfalse;
+	else
+		return qtrue;
+}
+
+/**
  * @brief Projects a point on a plane passing through the origin
  * @param[in] point Coordinates of the point to project
  * @param[in] normal The normal vector of the plane

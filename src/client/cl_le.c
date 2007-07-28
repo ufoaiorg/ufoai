@@ -606,6 +606,8 @@ void LET_StartPathMove (le_t * le)
  * @brief Autohides a projectile particle if no actor of your team can see it
  * @note Think function
  * @sa LET_Projectile
+ * @sa CM_TestLine
+ * @sa FrustomVis
  */
 void LET_ProjectileAutoHide (le_t *le)
 {
@@ -620,7 +622,8 @@ void LET_ProjectileAutoHide (le_t *le)
 			continue;
 		if (actors->type == ET_ACTOR || actors->type == ET_ACTOR2x2) {
 			/* at least one of our actors can see this */
-			if (CM_TestLine(le->origin, actors->origin))
+			if (FrustomVis(actors->origin, actors->dir, le->origin)
+			 && CM_TestLine(le->origin, actors->origin))
 				return;
 		}
 	}
