@@ -439,7 +439,7 @@ menu althud
 //		scale	"7 7 7"
 		pos		"854 672"
 		size	"50 78"
-		bgcolor	"1 1 1 0.5"
+//		bgcolor	"1 1 1 0.5"
 		color	"0.5 0.5 0.5 1"
 	}
 	model head1
