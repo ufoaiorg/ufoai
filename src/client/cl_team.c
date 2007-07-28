@@ -1622,6 +1622,7 @@ static void CL_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr, int
  * @brief Load a multiplayer team
  * @sa CL_LoadTeamMultiplayer
  * @sa CL_SaveTeamMultiplayer
+ * @todo only EMPL_SOLDIERs are saved and loaded
  */
 static void CL_LoadTeamMultiplayer (const char *filename)
 {
@@ -1699,6 +1700,7 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 		}
 	}
 
+#if 0
 	for (i = 0, p = 0; i < num; i++)
 		if (CL_SoldierInAircraft(i, EMPL_SOLDIER, 0))
 			gd.bases[0].curTeam[p++] = E_GetHiredCharacter(&gd.bases[0], EMPL_SOLDIER, i);
@@ -1709,6 +1711,7 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 
 	for (;p < MAX_ACTIVETEAM; p++)
 		gd.bases[0].curTeam[p] = NULL;
+#endif
 }
 
 /**
