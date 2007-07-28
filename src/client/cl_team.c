@@ -485,34 +485,52 @@ static void CL_MultiplayerTeamSlotComments_f (void)
 }
 
 /**
- * @brief
+ * @brief Move all the equipment carried by the team on the aircraft into the given equipment
+ * @param[in] aircraft The craft with the tream (and thus equipment) onboard
+ * @param[out] ed The equipment definition which will receive all teh stuff from the aircraft-team.
  */
-void CL_AddCarriedToEq (equipDef_t * ed)
+void CL_AddCarriedToEq (aircraft_t *aircraft, equipDef_t * ed)
 {
+	character_t *chr;
 	invList_t *ic, *next;
 	int p, container;
 
-	assert(baseCurrent);
-	assert((baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase));
+	if (!aircraft) {
+		Com_Printf("CL_AddCarriedToEq: Warning: Called with no aicraft (and thus no carried equipment to add).\n");
+		return;
+	}
+	if (!ed) {
+		Com_Printf("CL_AddCarriedToEq: Warning: Called with no equipment definition at add stuff to.\n");
+		return;
+	}
+
+	if (*aircraft->teamSize <= 0) {
+		Com_DPrintf("CL_AddCarriedToEq: No team to remove equipment from.\n");
+		return;
+	}
 
 	for (container = 0; container < csi.numIDs; container++) {
-		for (p = 0; p < baseCurrent->teamNum[baseCurrent->aircraftCurrent]; p++) {
-			for (ic = baseCurrent->curTeam[p]->inv->c[container];
-				 ic; ic = next) {
-				item_t item = ic->item;
-				int type = item.t;
-
-				next = ic->next;
-				ed->num[type]++;
-				if (item.a) {
-					assert(csi.ods[type].reload);
-					assert(item.m != NONE);
-					ed->num_loose[item.m] += item.a;
-					/* Accumulate loose ammo into clips */
-					if (ed->num_loose[item.m] >= csi.ods[type].ammo) {
-						ed->num_loose[item.m] -= csi.ods[type].ammo;
-						ed->num[item.m]++;
+		for (p= 0; p < aircraft->size; p++) {
+			if (aircraft->teamIdxs[p] != -1) { 
+				chr = &gd.employees[aircraft->teamTypes[p]][aircraft->teamIdxs[p]].chr;
+				ic = chr->inv->c[container];
+				while (ic) {
+					item_t item = ic->item;
+					int type = item.t;
+					
+					next = ic->next;
+					ed->num[type]++;
+					if (item.a) {
+						assert(csi.ods[type].reload);
+						assert(item.m != NONE);
+						ed->num_loose[item.m] += item.a;
+						/* Accumulate loose ammo into clips */
+						if (ed->num_loose[item.m] >= csi.ods[type].ammo) {
+							ed->num_loose[item.m] -= csi.ods[type].ammo;
+							ed->num[item.m]++;
+						}
 					}
+					ic = next;
 				}
 			}
 		}

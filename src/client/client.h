@@ -696,24 +696,12 @@ qboolean CL_AddUGV(le_t * le, entity_t * ent);
 void CL_AddTargeting(void);
 void CL_ActorTargetAlign_f(void);
 
-/* cl_team.c */
+/* cl_team.c (first stuff SEE BELOW) */
 #define MAX_ACTIVETEAM	8
 #define MAX_WHOLETEAM	32
 /* if you increase this, you also have to change the aircraft buy/sell menu scripts */
 #define NUM_TEAMSKINS	4
 struct base_s;
-
-void CL_SaveInventory(sizebuf_t * buf, inventory_t * i);
-void CL_NetReceiveItem(struct dbuffer * buf, item_t * item, int * container, int * x, int * y);
-void CL_LoadInventory(sizebuf_t * buf, inventory_t * i);
-void CL_ResetTeams(void);
-void CL_ParseResults(struct dbuffer *msg);
-void CL_SendCurTeamInfo(struct dbuffer * buf, character_t ** team, int num);
-void CL_AddCarriedToEq(equipDef_t * equip);
-void CL_ParseCharacterData(struct dbuffer *msg, qboolean updateCharacter);
-qboolean CL_SoldierInAircraft(int employee_idx, employeeType_t employeeType, int aircraft_idx);
-void CL_RemoveSoldierFromAircraft(int employee_idx, employeeType_t employeeType, int aircraft_idx, struct base_s *base);
-void CL_RemoveSoldiersFromAircraft(int aircraft_idx, struct base_s *base);
 
 /* cl_radar.c */
 #define MAX_UFOONGEOSCAPE	8
@@ -760,6 +748,19 @@ void CDAudio_RandomPlay(void);
 /* cl_aircraft.c */
 #include "cl_aircraft.h"
 
+/* cl_team.c again SEE ABOVE */
+void CL_SaveInventory(sizebuf_t * buf, inventory_t * i);
+void CL_NetReceiveItem(struct dbuffer * buf, item_t * item, int * container, int * x, int * y);
+void CL_LoadInventory(sizebuf_t * buf, inventory_t * i);
+void CL_ResetTeams(void);
+void CL_ParseResults(struct dbuffer *msg);
+void CL_SendCurTeamInfo(struct dbuffer * buf, character_t ** team, int num);
+void CL_AddCarriedToEq(aircraft_t *aircraft, equipDef_t * equip);
+void CL_ParseCharacterData(struct dbuffer *msg, qboolean updateCharacter);
+qboolean CL_SoldierInAircraft(int employee_idx, employeeType_t employeeType, int aircraft_idx);
+void CL_RemoveSoldierFromAircraft(int employee_idx, employeeType_t employeeType, int aircraft_idx, struct base_s *base);
+void CL_RemoveSoldiersFromAircraft(int aircraft_idx, struct base_s *base);
+	
 /* cl_airfight.c */
 #include "cl_airfight.h"
 

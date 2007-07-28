@@ -2096,6 +2096,9 @@ static void B_PackInitialEquipment_f (void)
 	equipDef_t *ed;
 	character_t *chr;
 	invList_t *ic, *next;
+	base_t *base = baseCurrent;
+	int aircraft_idxInBase;
+	aircraft_t *aircraft = NULL;
 	const char *name = curCampaign ? cl_initial_equipment->string : Cvar_VariableString("equip");
 
 	/* check syntax */
@@ -2104,29 +2107,32 @@ static void B_PackInitialEquipment_f (void)
 		return;
 	}
 
-	if (!baseCurrent)
+	if (!base)
 		return;
+	aircraft_idxInBase = base->aircraftCurrent;
 
 	for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
 		if (!Q_strncmp(name, ed->name, MAX_VAR))
 			break;
+
 	if (i == csi.numEDs) {
 		Com_DPrintf("B_PackInitialEquipment_f: Initial Phalanx equipment %s not found.\n", name);
-	} else if ((baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase)) {
-		for (i = 0; i < baseCurrent->teamNum[baseCurrent->aircraftCurrent]; i++) {
-			chr = baseCurrent->curTeam[i];
+	} else if ((aircraft_idxInBase >= 0) && (aircraft_idxInBase < base->numAircraftInBase)) {
+		aircraft = &base->aircraft[base->aircraftCurrent];
+		for (i = 0; i < base->teamNum[aircraft_idxInBase]; i++) {
+			chr = base->curTeam[i];
 			/* pack equipment */
 			Com_DPrintf("B_PackInitialEquipment_f: Packing initial equipment for %s.\n", chr->name);
 			INVSH_EquipActor(chr->inv, ed->num, name, chr);
 			Com_DPrintf("B_PackInitialEquipment_f: armor: %i, weapons: %i\n", chr->armor, chr->weapons);
 		}
-		CL_AddCarriedToEq(&baseCurrent->storage);
-		CL_SwapSkills(baseCurrent->curTeam, baseCurrent->teamNum[baseCurrent->aircraftCurrent]);
+		CL_AddCarriedToEq(aircraft, &base->storage);
+		CL_SwapSkills(base->curTeam, base->teamNum[aircraft_idxInBase]);
 
 		/* pay for the initial equipment */
 		for (container = 0; container < csi.numIDs; container++) {
-			for (p = 0; p < baseCurrent->teamNum[baseCurrent->aircraftCurrent]; p++) {
-				for (ic = baseCurrent->curTeam[p]->inv->c[container]; ic; ic = next) {
+			for (p = 0; p < base->teamNum[aircraft_idxInBase]; p++) {
+				for (ic = base->curTeam[p]->inv->c[container]; ic; ic = next) {
 					item_t item = ic->item;
 					price += csi.ods[item.t].price;
 					Com_DPrintf("B_PackInitialEquipment_f()... adding price for %s, price: %i\n", csi.ods[item.t].id, price);
