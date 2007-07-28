@@ -2032,6 +2032,41 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 		/* @todo more? */
 	}
 
+	/* Save projectiles. */
+	MSG_WriteByte(sb, gd.numProjectiles);
+	for (i = 0; i < gd.numProjectiles; i++) {
+		MSG_WriteString(sb, aircraftItems[gd.projectiles[i].aircraftItemsIdx].id);
+		MSG_WritePos(sb, gd.projectiles[i].pos);
+		MSG_WritePos(sb, gd.projectiles[i].idleTarget);
+		if (gd.projectiles[i].attackingAircraft) {
+			MSG_WriteByte(sb, gd.projectiles[i].attackingAircraft->type == AIRCRAFT_UFO);
+			if (gd.projectiles[i].attackingAircraft->type == AIRCRAFT_UFO)
+				MSG_WriteShort(sb, gd.projectiles[i].attackingAircraft - gd.ufos);
+			else
+				MSG_WriteShort(sb, gd.projectiles[i].attackingAircraft->idx);
+		} else
+			MSG_WriteByte(sb, 2);
+		MSG_WriteShort(sb, gd.projectiles[i].aimedBaseIdx);
+		if (gd.projectiles[i].aimedAircraft) {
+			MSG_WriteByte(sb, gd.projectiles[i].aimedAircraft->type == AIRCRAFT_UFO);
+			if (gd.projectiles[i].aimedAircraft->type == AIRCRAFT_UFO)
+				MSG_WriteShort(sb, gd.projectiles[i].aimedAircraft - gd.ufos);
+			else
+				MSG_WriteShort(sb, gd.projectiles[i].aimedAircraft->idx);
+		} else
+			MSG_WriteByte(sb, 2);
+		MSG_WriteShort(sb, gd.projectiles[i].time);
+		MSG_WriteFloat(sb, gd.projectiles[i].angle);
+		MSG_WriteByte(sb, gd.projectiles[i].bulletIdx);
+	}
+
+	/* Save bullets. */
+	MSG_WriteByte(sb, numBullets);
+	for (i = 0; i < numBullets; i++) {
+		for (j = 0; j < BULLETS_PER_SHOT; j++)
+			MSG_Write2Pos(sb, bulletPos[i][j]);
+	}
+
 	/* Save recoveries. */
 	for (i = 0; i < presaveArray[PRE_MAXREC]; i++) {
 		MSG_WriteByte(sb, gd.recoveries[i].active);
@@ -2178,6 +2213,48 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			}
 		}
 		/* @todo more? */
+	}
+
+	/* Load projectiles. */
+	gd.numProjectiles = MSG_ReadByte(sb);
+	if (gd.numProjectiles > MAX_PROJECTILESONGEOSCAPE)
+		Sys_Error("AIR_Load()... Too many projectiles on map (%i)\n", gd.numProjectiles);
+	for (i = 0; i < gd.numProjectiles; i++) {
+		tech = RS_GetTechByProvided(MSG_ReadString(sb));
+		if (tech) {
+			gd.projectiles[i].aircraftItemsIdx = AII_GetAircraftItemByID(tech->provides);
+			gd.projectiles[i].idx = i;
+			MSG_ReadPos(sb, gd.projectiles[i].pos);
+			MSG_ReadPos(sb, gd.projectiles[i].idleTarget);
+			tmp_int = MSG_ReadByte(sb);
+			if (tmp_int == 2)
+				gd.projectiles[i].attackingAircraft = NULL;
+			else if (tmp_int == 1)
+				gd.projectiles[i].attackingAircraft = gd.ufos + MSG_ReadShort(sb);
+			else
+				gd.projectiles[i].attackingAircraft = AIR_AircraftGetFromIdx(MSG_ReadShort(sb));
+			gd.projectiles[i].aimedBaseIdx = MSG_ReadShort(sb);
+			tmp_int = MSG_ReadByte(sb);
+			if (tmp_int == 2)
+				gd.projectiles[i].aimedAircraft = NULL;
+			else if (tmp_int == 1)
+				gd.projectiles[i].aimedAircraft = gd.ufos + MSG_ReadShort(sb);
+			else
+				gd.projectiles[i].aimedAircraft = AIR_AircraftGetFromIdx(MSG_ReadShort(sb));
+			gd.projectiles[i].time = MSG_ReadShort(sb);
+			gd.projectiles[i].angle = MSG_ReadFloat(sb);
+			gd.projectiles[i].bulletIdx = MSG_ReadByte(sb);
+		} else
+			Sys_Error("AIR_Load()... Could not get technology of projectile %i\n", i);
+	}
+
+	/* Load bullets. */
+	numBullets = MSG_ReadByte(sb);
+	if (numBullets > MAX_BULLETS_ON_GEOSCAPE)
+		Sys_Error("AIR_Load()... Too many bullets on map (%i)\n", numBullets);
+	for (i = 0; i < numBullets; i++) {
+		for (j = 0; j < BULLETS_PER_SHOT; j++)
+			MSG_Read2Pos(sb, bulletPos[i][j]);
 	}
 
 	/* Load recoveries. */
