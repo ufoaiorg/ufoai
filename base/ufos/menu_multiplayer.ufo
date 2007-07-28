@@ -1298,7 +1298,7 @@ menu mp_create_server
 		mousefx	true
 		whup	{ cmd "mn_prevmap;" }
 		whdown	{ cmd "mn_nextmap;" }
-		click	{ cmd "mn_prevmap" }
+		click	{ cmd "mn_prevmap;" }
 	}
 	pic next_map
 	{
@@ -1319,8 +1319,8 @@ menu mp_create_server
 		texh	"128 96"
 		whup	{ cmd "mn_prevmap;" }
 		whdown	{ cmd "mn_nextmap;" }
-		click	{ cmd "mn_nextmap" }
-		rclick	{ cmd "mn_prevmap" }
+		click	{ cmd "mn_nextmap;" }
+		rclick	{ cmd "mn_prevmap;" }
 	}
 	pic mappic2
 	{
@@ -1330,8 +1330,8 @@ menu mp_create_server
 		texh	"128 96"
 		whup	{ cmd "mn_prevmap;" }
 		whdown	{ cmd "mn_nextmap;" }
-		click	{ cmd "mn_nextmap" }
-		rclick	{ cmd "mn_prevmap" }
+		click	{ cmd "mn_nextmap;" }
+		rclick	{ cmd "mn_prevmap;" }
 	}
 	pic mappic3
 	{
@@ -1341,8 +1341,8 @@ menu mp_create_server
 		texh	"128 96"
 		whup	{ cmd "mn_prevmap;" }
 		whdown	{ cmd "mn_nextmap;" }
-		click	{ cmd "mn_nextmap" }
-		rclick	{ cmd "mn_prevmap" }
+		click	{ cmd "mn_nextmap;" }
+		rclick	{ cmd "mn_prevmap;" }
 	}
 
 	// ====================
