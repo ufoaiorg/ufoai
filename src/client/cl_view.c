@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "client.h"
+#include "cl_global.h"
 
 /* global vars */
 cvar_t *cursor;
@@ -368,6 +369,13 @@ void CL_PrepRefresh (void)
 	int i, max;
 	char name[37];
 	char *str;
+
+	/* Prepare environment. This is needed hack to allow /devmap and /map usage.
+	   When an user has base built and calls /devmap or /map, cls.missionaircraft has to be set. */
+	if (!cls.missionaircraft) {
+		cls.missionaircraft = AIR_AircraftGetFromIdx(0);
+		cls.missionaircraft->homebase = &gd.bases[0];
+	}
 
 	/* this is needed to get shaders/image filters in game */
 	/* the renderer needs to know them before the textures get loaded */
