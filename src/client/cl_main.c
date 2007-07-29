@@ -652,7 +652,7 @@ static serverList_t serverList[MAX_SERVERLIST];
  * @brief
  * @sa CL_PingServerCallback
  */
-static void CL_ProcessPingReply (serverList_t *server, char *msg)
+static void CL_ProcessPingReply (serverList_t *server, const char *msg)
 {
 	if (PROTOCOL_VERSION != atoi(Info_ValueForKey(msg, "protocol"))) {
 		Com_DPrintf("CL_ProcessPingReply: Protocol mismatch\n");
@@ -696,23 +696,19 @@ static void CL_PingServerCallback (struct net_stream *s)
 			return;
 		CL_ProcessPingReply(server, str);
 	} else
-		Com_Printf("CL_PingServerCallback: %s\n", str);
+		return;
 
-	if (*server->sv_hostname) {
-		menuText[TEXT_LIST] = serverText;
-		Com_sprintf(string, sizeof(string), "%s\t\t\t%s\t\t\t%s\t(%s)\t%i/%i\n",
-			server->sv_hostname,
-			server->mapname,
-			server->gametype,
-			server->version,
-			server->clients,
-			server->sv_maxclients);
-		server->serverListPos = serverListPos;
-		serverListPos++;
-		Q_strcat(serverText, string, sizeof(serverText));
-	} else {
-		Com_Printf("No valid ping response\n");
-	}
+	menuText[TEXT_LIST] = serverText;
+	Com_sprintf(string, sizeof(string), "%s\t\t\t%s\t\t\t%s\t(%s)\t%i/%i\n",
+		server->sv_hostname,
+		server->mapname,
+		server->gametype,
+		server->version,
+		server->clients,
+		server->sv_maxclients);
+	server->serverListPos = serverListPos;
+	serverListPos++;
+	Q_strcat(serverText, string, sizeof(serverText));
 	free_stream(s);
 }
 
