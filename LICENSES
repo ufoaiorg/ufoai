@@ -378,6 +378,52 @@ base/models/animals/crocodile/croc.jpg | GPL version 2.0 | Sitters Electronics
 base/models/animals/crocodile/croc.md2 | GPL version 2.0 | Sitters Electronics
 base/models/animals/crocodile/croc.obj | GPL version 2.0 | Sitters Electronics
 base/models/animals/crocodile/croc.tga | GPL version 2.0 | Sitters Electronics
+base/models/weapons/bolterrifle/bolterrifle.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/bolterrifle/bolterrifle.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/bolterrifle/bolterrifle_clip.blend | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/bolterrifle/bolterrifle_clip.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/bolterrifle/bolterrifle_clip.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/bolterrifle/bolterrifle_clip.xcf | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/bolterrifle/bolterrifle_v2_UVW.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/grenl/clip.3DS | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/grenl/clip.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/grenl/clip.max | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/grenl/clip.xcf | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/grenl/clip_UVW.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/grenl/grenl.3DS | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/grenl/grenl.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/grenl/grenl.max | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/grenl/grenl.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/grenl/grenl_UVW.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/grenl/grenl_clip.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/grenl/grenl_clip2.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/grenl/grenl_flechette_clip.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/grenl/grenl_flechette_clip.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/grenl/grenl_ic_clip.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/grenl/grenl_ic_clip.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/grenl/grenl_plasma_clip.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/grenl/grenl_plasma_clip.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/pbeampistol/clip.3DS | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/pbeampistol/clip.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/pbeampistol/clip.max | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/pbeampistol/clip_UVW.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/pbeampistol/pbeampistol.3DS | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/pbeampistol/pbeampistol.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/pbeampistol/pbeampistol.max | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/pbeampistol/pbeampistol.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/pbeampistol/pbeampistol_UVW.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/pbeampistol/pbeampistol_clip.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/plasblaster/clip.3DS | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/plasblaster/clip.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/plasblaster/clip.max | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/plasblaster/clip_UVW.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/plasblaster/plasblaster.3DS | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/plasblaster/plasblaster.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/plasblaster/plasblaster.max | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/plasblaster/plasblaster.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/plasblaster/plasblaster_clip.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/plasblaster/plasblaster_v2.max | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/plasblaster/plasblaster_v2UVW.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/music/AlexFightmare.ogg | GPL | Alex Parker
 base/music/AlexForest.ogg | GPL | Alex Parker
 base/music/AlexSullencity.ogg | GPL | Alex Parker
