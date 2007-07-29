@@ -4,7 +4,7 @@ Name=snd_wapi
 Ver=1
 IsCpp=0
 Type=3
-Compiler=-D__GNUWIN32__ -D_M_IX86=500 -Wall -DWIN32 -DDEBUG -D_WINDOWS -DDEVCPP -DC_ONLY_@@_
+Compiler=-D__GNUWIN32__ -D_M_IX86=500 -Wall -DWIN32 -DDEBUG -D_WINDOWS -DDEVCPP
 CppCompiler=_@@_
 Includes=
 Linker=-lkernel32 -luser32 -lwinmm_@@_--export-all-symbols_@@__@@_

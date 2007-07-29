@@ -18,7 +18,6 @@
 					<Add option="-D__GNUWIN32__" />
 					<Add option="-D_M_IX86=500" />
 					<Add option="-DDEVCPP" />
-					<Add option="-DC_ONLY" />
 					<Add option="-DHAVE_SHADERS" />
 					<Add option="-DDONT_TYPEDEF_INT32" />
 				</Compiler>
@@ -49,9 +48,8 @@
 					<Add option="-D__GNUWIN32__" />
 					<Add option="-D_M_IX86=500" />
 					<Add option="-DDEVCPP" />
-					<Add option="-DC_ONLY" />
-					<Add option="-DHAVE_SHADERS" />
 					<Add option="-DDONT_TYPEDEF_INT32" />
+					<Add option="-DHAVE_SHADERS" />
 					<Add option="-DDEBUG" />
 				</Compiler>
 				<Linker>

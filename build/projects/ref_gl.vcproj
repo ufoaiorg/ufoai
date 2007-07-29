@@ -501,14 +501,6 @@
 			<File
 				RelativePath="..\..\src\ref_gl\gl_anim.c"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						PreprocessorDefinitions="C_ONLY "
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\src\ref_gl\gl_arb_shader.c"

@@ -16,7 +16,6 @@
 					<Add option="-D__GNUWIN32__" />
 					<Add option="-D_M_IX86=500" />
 					<Add option="-DDEVCPP" />
-					<Add option="-DC_ONLY" />
 				</Compiler>
 				<Linker>
 					<Add library="winmm" />
@@ -41,7 +40,6 @@
 					<Add option="-D__GNUWIN32__" />
 					<Add option="-D_M_IX86=500" />
 					<Add option="-DDEVCPP" />
-					<Add option="-DC_ONLY" />
 					<Add option="-DDEBUG" />
 				</Compiler>
 				<Linker>

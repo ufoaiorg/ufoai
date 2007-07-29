@@ -22,12 +22,7 @@
 			<Add option="-DWIN_ERROR" />
 			<Add option="-DDEBUG" />
 			<Add option="-DDEVCPP" />
-			<Add option="-DC_ONLY" />
-			<Add directory="D:\Programme\Dev-Cpp\include" />
 		</Compiler>
-		<Linker>
-			<Add directory="C:\Dev-Cpp\lib" />
-		</Linker>
 		<Unit filename="..\..\qcommon\md4.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
