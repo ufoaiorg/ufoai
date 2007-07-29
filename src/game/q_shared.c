@@ -1731,11 +1731,11 @@ const char *Info_ValueForKey (const char *s, const char *key)
 	char *o;
 
 	valueindex ^= 1;
-	if (*s == '\\')
+	if (*s == '\\' && *s != '\n')
 		s++;
 	while (1) {
 		o = pkey;
-		while (*s != '\\') {
+		while (*s != '\\' && *s != '\n') {
 			if (!*s)
 				return "";
 			*o++ = *s++;
@@ -1745,7 +1745,7 @@ const char *Info_ValueForKey (const char *s, const char *key)
 
 		o = value[valueindex];
 
-		while (*s != '\\' && *s)
+		while (*s != '\\' && *s != '\n' && *s)
 			*o++ = *s++;
 		*o = 0;
 
