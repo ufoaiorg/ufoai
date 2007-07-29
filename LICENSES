@@ -585,6 +585,10 @@ base/models/soldiers/malepower/malepower.blend | Creative Commons Attribution-Sh
 base/models/soldiers/malepower/malepower.tga | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
 base/models/soldiers/malepower/malepower.xcf | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer) | malepower.tga texture by David Dallaston (PikkaBird)
 base/models/soldiers/malepower/old/powersuitmale.wings | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Ryan Span (Winter)
+base/models/weapons/binocs/binocs.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/weapons/binocs/binocs.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/weapons/binocs/ir_device_07_unwrapped_2.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/weapons/binocs/ir_device_08_baked_6.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/bolterrifle/bolterrifle.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/weapons/bolterrifle/bolterrifle.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/weapons/bolterrifle/bolterrifle_clip.blend | GPL version 2 | Lukas "rastaman_bey" Beyeler
@@ -596,6 +600,10 @@ base/models/weapons/chaingun/chaingun.jpg | Creative Commons License 3.0 Attribu
 base/models/weapons/chaingun/chaingun.md2 | Creative Commons License 3.0 Attribution + Sharealike | Nathan : INC (Kaeau)
 base/models/weapons/chaingun/chaingun_ammo.jpg | Creative Commons License 3.0 Attribution + Sharealike | Nathan : INC (Kaeau)
 base/models/weapons/chaingun/chaingun_ammo.md2 | Creative Commons License 3.0 Attribution + Sharealike | Nathan : INC (Kaeau)
+base/models/weapons/electrolaser/electrolaser.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/weapons/electrolaser/electrolaser.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/weapons/electrolaser/electrolaser.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/weapons/electrolaser/electrolaser.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/grenl/clip.3DS | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/weapons/grenl/clip.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/weapons/grenl/clip.max | GPL version 2 | Lukas "rastaman_bey" Beyeler
