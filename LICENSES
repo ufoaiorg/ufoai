@@ -468,11 +468,12 @@ base/models/aliens/tamanmedium/head01.jpg | GPL version 2 | Lukas "rastaman_bey"
 base/models/aliens/tamanmedium/head01.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/tamanmedium/head1.max | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/tamanmedium/head1_UVW.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
-base/models/animals/crocodile/croc.3ds | GPL version 2.0 | Sitters Electronics
-base/models/animals/crocodile/croc.jpg | GPL version 2.0 | Sitters Electronics
-base/models/animals/crocodile/croc.md2 | GPL version 2.0 | Sitters Electronics
-base/models/animals/crocodile/croc.obj | GPL version 2.0 | Sitters Electronics
-base/models/animals/crocodile/croc.tga | GPL version 2.0 | Sitters Electronics
+base/models/animals/crocodile/Readme.txt | GPL | Willem "Sitters"
+base/models/animals/crocodile/croc.3ds | GPL | Willem "Sitters"
+base/models/animals/crocodile/croc.jpg | GPL | Willem "Sitters"
+base/models/animals/crocodile/croc.md2 | GPL | Willem "Sitters"
+base/models/animals/crocodile/croc.obj | GPL | Willem "Sitters"
+base/models/animals/crocodile/croc.tga | GPL | Willem "Sitters"
 base/models/animals/rat/rat.jpg | GPL | Willen "sitters"
 base/models/animals/rat/rat.md2 | GPL | Willen "sitters"
 base/models/animals/rat/rat.mtl | GPL | Willen "sitters"
@@ -482,17 +483,49 @@ base/models/objects/base/minicrane/minicrane.jpg | Creative Commons Attribution-
 base/models/objects/base/minicrane/minicrane.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/base/minicrane/minicrane.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/base/minicrane/minicrane_UVW.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/boat/canoe.md2 | GPL | Willem "Sitters"
+base/models/objects/boat/canoe.tga | GPL | Willem "Sitters"
 base/models/objects/cars/4x4/4x4.jpg |  | Olivier "Kracken" Alloschery
 base/models/objects/cars/4x4/4x4.md2 |  | Olivier "Kracken" Alloschery
 base/models/objects/cars/4x4/4x4.xcf |  | Olivier "Kracken" Alloschery
 base/models/objects/cars/4x4/4x4_avecailes.blend |  | Olivier "Kracken" Alloschery
 base/models/objects/cars/4x4/4x4_t.md2 |  | Olivier "Kracken" Alloschery
 base/models/objects/cars/4x4/cars_tires.jpg |  | Olivier "Kracken" Alloschery
+base/models/objects/cars/car4/Readme.txt | GPL | Willem "Sitters"
+base/models/objects/cars/car4/car.md2 | GPL | Willem "Sitters"
+base/models/objects/cars/car4/car.png | GPL | Willem "Sitters"
+base/models/objects/cars/car4/car.tga | GPL | Willem "Sitters"
+base/models/objects/cars/carcrashed/car1.md2 | GPL | Willem "Sitters"
+base/models/objects/cars/carcrashed/car1.tga | GPL | Willem "Sitters"
+base/models/objects/cars/carcrashed/car2.md2 | GPL | Willem "Sitters"
+base/models/objects/cars/carcrashed/car2.tga | GPL | Willem "Sitters"
+base/models/objects/cars/hummer/Readme.txt | GPL | Willem "Sitters"
+base/models/objects/cars/hummer/hummer.md2 | GPL | Willem "Sitters"
+base/models/objects/cars/hummer/hummer.tga | GPL | Willem "Sitters"
+base/models/objects/cars/hummer/hummer_bright.tga | GPL | Willem "Sitters"
+base/models/objects/cars/policecar/Readme.txt | GPL | Willem "Sitters"
+base/models/objects/cars/policecar/policecar.md2 | GPL | Willem "Sitters"
+base/models/objects/cars/policecar/policecar.tga | GPL | Willem "Sitters"
+base/models/objects/cars/transporter/transporter.md2 | GPL | Willem "Sitters"
+base/models/objects/cars/transporter/transporter.tga | GPL | Willem "Sitters"
+base/models/objects/cars/van3/Readme.txt | GPL | Willem "Sitters"
+base/models/objects/cars/van3/van.md2 | GPL | Willem "Sitters"
+base/models/objects/cars/van3/van.obj | GPL | Willem "Sitters"
+base/models/objects/cars/van3/van.tga | GPL | Willem "Sitters"
 base/models/objects/city/arch/arch.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/arch/arch.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/bench/bench.tga | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
 base/models/objects/city/bench/bench_l.md2 | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
 base/models/objects/city/bench/bench_s.md2 | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
+base/models/objects/city/fountain/Readme.txt | GPL | Willem "Sitters"
+base/models/objects/city/fountain/fountain1.md2 | GPL | Willem "Sitters"
+base/models/objects/city/fountain/fountain1.tga | GPL | Willem "Sitters"
+base/models/objects/city/fountain/fountain2.md2 | GPL | Willem "Sitters"
+base/models/objects/city/fountain/fountain2.tga | GPL | Willem "Sitters"
+base/models/objects/city/lantern/lantern.md2 | GPL | Willem "Sitters"
+base/models/objects/city/lantern/lantern.png | GPL | Willem "Sitters"
+base/models/objects/city/mailbox/mailbox.md2 | GPL | Willem "Sitters"
+base/models/objects/city/mailbox/mailbox.png | GPL | Willem "Sitters"
 base/models/objects/city/parkbench/parkbench.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/parkbench/parkbench.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/parkbench/parkbench.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
@@ -501,16 +534,49 @@ base/models/objects/city/parktable/parktable.blend | Creative Commons Attributio
 base/models/objects/city/parktable/parktable.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/parktable/parktable.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/parktable/parktable.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/city/statues/dragon.md2 | GPL | Willem "Sitters"
+base/models/objects/city/statues/statue.md2 | GPL | Willem "Sitters"
+base/models/objects/city/statues/statue.png | GPL | Willem "Sitters"
+base/models/objects/city/statues/woman.md2 | GPL | Willem "Sitters"
+base/models/objects/city/trafficlights/Readme.txt | GPL | Willem "Sitters"
+base/models/objects/city/trafficlights/trafficlight.tga | GPL | Willem "Sitters"
+base/models/objects/city/trafficlights/trafficlight1.md2 | GPL | Willem "Sitters"
+base/models/objects/city/trafficlights/trafficlight2.md2 | GPL | Willem "Sitters"
+base/models/objects/city/trafficlights/trafficlight3.md2 | GPL | Willem "Sitters"
+base/models/objects/city/trafficsign/sign.md2 | GPL | Willem "Sitters"
+base/models/objects/city/trafficsign/sign1.png | GPL | Willem "Sitters"
+base/models/objects/city/trafficsign/sign2.md2 | GPL | Willem "Sitters"
+base/models/objects/city/trafficsign/sign2.png | GPL | Willem "Sitters"
+base/models/objects/city/trafficsign/sign2_1.png | GPL | Willem "Sitters"
+base/models/objects/city/trafficsign/sign3.png | GPL | Willem "Sitters"
+base/models/objects/city/trafficsign/sign4.png | GPL | Willem "Sitters"
 base/models/objects/city/watertower/watertower.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/watertower/watertower.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/watertower/watertower.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/watertower/watertower.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/watertower/watertower1.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/watertower/watertower2.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/construct/container/Readme.txt | GPL | Willem "Sitters"
+base/models/objects/construct/container/container.md2 | GPL | Willem "Sitters"
+base/models/objects/construct/container/container.tga | GPL | Willem "Sitters"
+base/models/objects/construct/excavator/Readme.txt | GPL | Willem "Sitters"
+base/models/objects/construct/excavator/excavator.tga | GPL | Willem "Sitters"
+base/models/objects/construct/excavator/excavator_b.md2 | GPL | Willem "Sitters"
+base/models/objects/construct/excavator/excavator_t.md2 | GPL | Willem "Sitters"
+base/models/objects/construct/generator/Readme.txt | GPL | Willem "Sitters"
+base/models/objects/construct/generator/generator.md2 | GPL | Willem "Sitters"
+base/models/objects/construct/generator/generator.tga | GPL | Willem "Sitters"
+base/models/objects/construct/mixer/Readme.txt | GPL | Willem "Sitters"
+base/models/objects/construct/mixer/mixer.md2 | GPL | Willem "Sitters"
+base/models/objects/construct/mixer/mixer.tga | GPL | Willem "Sitters"
+base/models/objects/furniture/campbed/campbed.md2 | GPL | Willem "Sitters"
+base/models/objects/furniture/campbed/campbed.tga | GPL | Willem "Sitters"
 base/models/objects/furniture/coffeemaker/coffeemaker.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/coffeemaker/coffeemaker.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/coffeemaker/coffeemaker.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/coffeemaker/coffeemaker.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/comptable/comptable.md2 | GPL | Willem "Sitters"
+base/models/objects/furniture/comptable/comptable.png | GPL | Willem "Sitters"
 base/models/objects/furniture/curtains/curtain.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/curtains/curtain_long.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/curtains/curtains.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
@@ -549,6 +615,8 @@ base/models/objects/furniture/fireext2/fireext2.blend | Creative Commons Attribu
 base/models/objects/furniture/fireext2/fireext2.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/fireext2/fireext2.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/fireext2/fireext2.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/furniture/fireext3/fireext3.md2 | GPL | Willem "Sitters"
+base/models/objects/furniture/fireext3/fireext3.png | GPL | Willem "Sitters"
 base/models/objects/furniture/fireplace/fireplace.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/fireplace/fireplace.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/fireplace/fireplace.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
@@ -564,6 +632,14 @@ base/models/objects/furniture/radiator/radiator.blend | Creative Commons Attribu
 base/models/objects/furniture/radiator/radiator.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/radiator/radiator.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/radiator/radiator.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/objects/gascylinder/gascylinder.md2 | GPL | Willem "Sitters"
+base/models/objects/gascylinder/gascylinder.png | GPL | Willem "Sitters"
+base/models/objects/hovercraft/Readme.txt | GPL | Willem "Sitters"
+base/models/objects/hovercraft/hover_down.md2 | GPL | Willem "Sitters"
+base/models/objects/hovercraft/hover_down.obj | GPL | Willem "Sitters"
+base/models/objects/hovercraft/hover_up.md2 | GPL | Willem "Sitters"
+base/models/objects/hovercraft/hover_up.obj | GPL | Willem "Sitters"
+base/models/objects/hovercraft/hovercraft.tga | GPL | Willem "Sitters"
 base/models/objects/industrial/lamp/lamp.blend | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
 base/models/objects/industrial/lamp/lamp.md2 | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
 base/models/objects/industrial/lamp/lamp.tga | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
@@ -572,17 +648,71 @@ base/models/objects/industrial/valve/valve.md2 | Creative Commons License 3.0 At
 base/models/objects/industrial/valve/valve.tga | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
 base/models/objects/rubbish/gravel/gravel.md2 | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
 base/models/objects/rubbish/gravel/gravel.tga | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
+base/models/objects/snowman/Readme.txt | GPL | Willem "Sitters"
+base/models/objects/snowman/snowman.jpg | GPL | Willem "Sitters"
+base/models/objects/snowman/snowman.md2 | GPL | Willem "Sitters"
+base/models/objects/snowman/snowman.obj | GPL | Willem "Sitters"
+base/models/objects/tanker/small_pipes.md2 | GPL | Willem "Sitters"
+base/models/objects/tanker/tanker.jpg | GPL | Willem "Sitters"
+base/models/objects/tanker/tanker.tga | GPL | Willem "Sitters"
+base/models/objects/tanker/tanker_a.md2 | GPL | Willem "Sitters"
+base/models/objects/tanker/tanker_a.mtl | GPL | Willem "Sitters"
+base/models/objects/tanker/tanker_a.obj | GPL | Willem "Sitters"
+base/models/objects/tanker/tanker_b.md2 | GPL | Willem "Sitters"
+base/models/objects/tanker/tanker_b.mtl | GPL | Willem "Sitters"
+base/models/objects/tanker/tanker_b.obj | GPL | Willem "Sitters"
+base/models/objects/tanker/tanker_complete.obj | GPL | Willem "Sitters"
+base/models/objects/trucks/truck/Readme.txt | GPL | Willem "Sitters"
+base/models/objects/trucks/truck/cement_trailer.jpg | GPL | Willem "Sitters"
+base/models/objects/trucks/truck/cement_trailer.md2 | GPL | Willem "Sitters"
+base/models/objects/trucks/truck/container.jpg | GPL | Willem "Sitters"
+base/models/objects/trucks/truck/container.md2 | GPL | Willem "Sitters"
+base/models/objects/trucks/truck/container_trailer.md2 | GPL | Willem "Sitters"
+base/models/objects/trucks/truck/trailer.jpg | GPL | Willem "Sitters"
+base/models/objects/trucks/truck/trailer.md2 | GPL | Willem "Sitters"
+base/models/objects/trucks/truck/trailer_old.jpg | GPL | Willem "Sitters"
+base/models/objects/trucks/truck/trees.jpg | GPL | Willem "Sitters"
+base/models/objects/trucks/truck/trees.md2 | GPL | Willem "Sitters"
+base/models/objects/trucks/truck/truck.jpg | GPL | Willem "Sitters"
+base/models/objects/trucks/truck/truck.md2 | GPL | Willem "Sitters"
+base/models/objects/trucks/truck/truck_old.jpg | GPL | Willem "Sitters"
+base/models/objects/trucks/truck2/Readme.txt | GPL | Willem "Sitters"
+base/models/objects/trucks/truck2/armyback.tga | GPL | Willem "Sitters"
+base/models/objects/trucks/truck2/armyfront.tga | GPL | Willem "Sitters"
+base/models/objects/trucks/truck2/armyload.tga | GPL | Willem "Sitters"
+base/models/objects/trucks/truck2/fuel.md2 | GPL | Willem "Sitters"
+base/models/objects/trucks/truck2/load.md2 | GPL | Willem "Sitters"
+base/models/objects/trucks/truck2/truck.md2 | GPL | Willem "Sitters"
+base/models/objects/trucks/watertruck/Readme.txt | GPL | Willem "Sitters"
+base/models/objects/trucks/watertruck/watertruck.md2 | GPL | Willem "Sitters"
+base/models/objects/trucks/watertruck/watertruck.tga | GPL | Willem "Sitters"
+base/models/objects/vegi/banana/Readme.txt | GPL | Willem "Sitters"
+base/models/objects/vegi/banana/banana.md2 | GPL | Willem "Sitters"
+base/models/objects/vegi/banana/banana.tga | GPL | Willem "Sitters"
 base/models/objects/vegi/buxus/buxus.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/vegi/buxus/buxus.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/vegi/buxus/buxus.png |  | Original by  Jerzy Opiola, transparency by Werner Höhrer (hoehrer) | photo by Jerzy Opiola http://commons.wikimedia.org/wiki/Image:Buxus_sempervirens_2.jpg
+base/models/objects/vegi/fern/Readme.txt | GPL | Willem "Sitters"
+base/models/objects/vegi/fern/fern.md2 | GPL | Willem "Sitters"
+base/models/objects/vegi/fern/fern.tga | GPL | Willem "Sitters"
+base/models/objects/vegi/fir/Readme.txt | GPL | Willem "Sitters"
+base/models/objects/vegi/fir/fir.md2 | GPL | Willem "Sitters"
+base/models/objects/vegi/fir/fir.tga | GPL | Willem "Sitters"
 base/models/objects/vegi/palm_v1/palm_v1.md2 | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
 base/models/objects/vegi/palm_v1/palm_v1.tga | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
 base/models/objects/vegi/palm_v2/palm_v2.md2 | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
 base/models/objects/vegi/palm_v2/palm_v2.tga | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
 base/models/objects/vegi/palm_v3/palm_v3.md2 | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
 base/models/objects/vegi/palm_v3/palm_v3.tga | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
+base/models/objects/vegi/plant/Readme.txt | GPL | Willem "Sitters"
+base/models/objects/vegi/plant/plant.md2 | GPL | Willem "Sitters"
+base/models/objects/vegi/plant/plant.tga | GPL | Willem "Sitters"
+base/models/objects/vegi/plant/plant2.md2 | GPL | Willem "Sitters"
+base/models/objects/vegi/plant/plant2.tga | GPL | Willem "Sitters"
 base/models/objects/vegi/plant_v1/plant_v1.md2 | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
 base/models/objects/vegi/plant_v1/plant_v1.tga | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
+base/models/objects/vegi/tree03/tree03.md2 | GPL | Willem "Sitters"
+base/models/objects/vegi/tree03/tree03.png | GPL | Willem "Sitters"
 base/models/objects/vehicles/bicycle/Readme.txt | GPL | Willem "Sitters"
 base/models/objects/vehicles/bicycle/bicycle.md2 | GPL | Willem "Sitters"
 base/models/objects/vehicles/bicycle/bicycle.tga | GPL | Willem "Sitters"
