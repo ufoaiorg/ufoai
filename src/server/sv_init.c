@@ -953,8 +953,9 @@ static void SV_SpawnServer (const char *server, const char *param, server_state_
 
 /**
  * @brief
+ * @sa CL_ServerListDiscoveryCallback
  */
-static void discovery_callback (struct datagram_socket *s, const char *buf, int len, struct sockaddr *from)
+static void SV_DiscoveryCallback (struct datagram_socket *s, const char *buf, int len, struct sockaddr *from)
 {
 	const char match[] = "discover";
 	if (len == sizeof(match) && memcmp(buf, match, len) == 0) {
@@ -990,7 +991,7 @@ static void SV_InitGame (void)
 	/* init network stuff */
 	if (sv_maxclients->integer > 1) {
 		SV_Start(NULL, Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->string, &SV_ReadPacket);
-		svs.datagram_socket = new_datagram_socket(NULL, Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->string, &discovery_callback);
+		svs.datagram_socket = new_datagram_socket(NULL, Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->string, &SV_DiscoveryCallback);
 	} else
 		SV_Start(NULL, NULL, &SV_ReadPacket);
 

@@ -1021,8 +1021,9 @@ static void masterserver_callback (struct net_stream *s)
 
 /**
  * @brief
+ * @sa SV_DiscoveryCallback
  */
-static void discovery_callback (struct datagram_socket *s, const char *buf, int len, struct sockaddr *from)
+static void CL_ServerListDiscoveryCallback (struct datagram_socket *s, const char *buf, int len, struct sockaddr *from)
 {
 	const char match[] = "discovered";
 	if (len == sizeof(match) && memcmp(buf, match, len) == 0) {
@@ -1205,8 +1206,9 @@ static void CL_PingServers_f (void)
 	menuText[TEXT_LIST] = serverText;
 
 	if (!cls.datagram_socket)
-		cls.datagram_socket = new_datagram_socket(NULL, va("%d", PORT_CLIENT), &discovery_callback);
+		cls.datagram_socket = new_datagram_socket(NULL, va("%d", PORT_CLIENT), &CL_ServerListDiscoveryCallback);
 
+	/* broadcast search for all the servers int the local network */
 	if (cls.datagram_socket) {
 		char buf[] = "discover";
 		broadcast_datagram(cls.datagram_socket, buf, sizeof(buf), PORT_SERVER);
