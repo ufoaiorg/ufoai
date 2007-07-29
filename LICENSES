@@ -622,24 +622,24 @@ base/sound/footsteps/stone4.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sa
 base/sound/footsteps/water_in.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/water_out.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/water_under.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/weapons/assaultrifle.wav |  | Alex Parker
-base/sound/weapons/bolter2.wav |  | Alex Parker
-base/sound/weapons/boltercannonade.wav |  | Alex Parker
-base/sound/weapons/deepexplosion.wav |  | Alex Parker
-base/sound/weapons/fireexplosion.wav |  | Alex Parker
-base/sound/weapons/grenade.wav |  | Alex Parker
-base/sound/weapons/kerrblade_swip.wav |  | Alex Parker
-base/sound/weapons/knife.wav |  | Alex Parker
-base/sound/weapons/machinegun.wav |  | Alex Parker
-base/sound/weapons/machinepistol.wav |  | Alex Parker
-base/sound/weapons/medikit.wav |  | Alex Parker
-base/sound/weapons/microshotgun2.wav |  | Alex Parker
-base/sound/weapons/pistol2.wav |  | Alex Parker
-base/sound/weapons/plasmablade.wav |  | Alex Parker
-base/sound/weapons/riotshotgun.wav |  | Alex Parker
-base/sound/weapons/smg2.wav |  | Alex Parker
-base/sound/weapons/smokeexplosion.wav |  | Alex Parker
-base/sound/weapons/sniperrifle.wav |  | Alex Parker
+base/sound/weapons/assaultrifle.wav | GPL | Alex Parker
+base/sound/weapons/bolter2.wav | GPL | Alex Parker
+base/sound/weapons/boltercannonade.wav | GPL | Alex Parker
+base/sound/weapons/deepexplosion.wav | GPL | Alex Parker
+base/sound/weapons/fireexplosion.wav | GPL | Alex Parker
+base/sound/weapons/grenade.wav | GPL | Alex Parker
+base/sound/weapons/kerrblade_swip.wav | GPL | Alex Parker
+base/sound/weapons/knife.wav | GPL | Alex Parker
+base/sound/weapons/machinegun.wav | GPL | Alex Parker
+base/sound/weapons/machinepistol.wav | GPL | Alex Parker
+base/sound/weapons/medikit.wav | GPL | Alex Parker
+base/sound/weapons/microshotgun2.wav | GPL | Alex Parker
+base/sound/weapons/pistol2.wav | GPL | Alex Parker
+base/sound/weapons/plasmablade.wav | GPL | Alex Parker
+base/sound/weapons/riotshotgun.wav | GPL | Alex Parker
+base/sound/weapons/smg2.wav | GPL | Alex Parker
+base/sound/weapons/smokeexplosion.wav | GPL | Alex Parker
+base/sound/weapons/sniperrifle.wav | GPL | Alex Parker
 base/textures/tex_carpets/carpet001.tga |  | iks83 (http://sourceforge.net/users/iks83)
 base/textures/tex_carpets/carpet002.tga |  | iks83 (http://sourceforge.net/users/iks83)
 base/textures/tex_carpets/carpet003.tga |  | iks83 (http://sourceforge.net/users/iks83)
