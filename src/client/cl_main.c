@@ -208,7 +208,7 @@ void CL_StartSingleplayer (qboolean singleplayer)
 {
 	const char *type, *name, *text;
 	base_t *base;
-	
+
 	if (singleplayer) {
 		ccs.singleplayer = qtrue;
 		if (Qcommon_ServerActive()) {
@@ -358,7 +358,7 @@ static void CL_Connect_f (void)
 {
 	const char *server;
 	aircraft_t *aircraft;
-	
+
 	aircraft = AIR_AircraftGetFromIdx(0);
 
 	if (Cmd_Argc() != 2) {
@@ -705,6 +705,7 @@ static void ping_callback (struct net_stream *s)
 /**
  * @brief Pings all servers in serverList
  * @sa CL_AddServerToList
+ * @sa CL_ParseServerInfoMessage
  */
 static void CL_PingServer (serverList_t *server)
 {
@@ -791,7 +792,7 @@ static void CL_WaitInit_f (void)
  * @brief Team selection text
  *
  * This function fills the multiplayer_selectteam menu with content
- * @sa Netchan_OutOfBandPrint
+ * @sa NET_OOB_Printf
  * @sa SV_TeamInfoString
  * @sa CL_SelectTeam_Init_f
  */
@@ -871,9 +872,11 @@ static char serverInfoText[MAX_MESSAGE_TEXT];
 static char userInfoText[MAX_MESSAGE_TEXT];
 /**
  * @brief Serverbrowser text
- *
- * This function fills the network browser server information with text
- * @sa Netchan_OutOfBandPrint
+ * @sa CL_PingServer
+ * @sa CL_PingServers_f
+ * @note This function fills the network browser server information with text
+ * @sa NET_OOB_Printf
+ * @sa CL_ServerInfoCallback
  */
 static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 {
@@ -930,6 +933,7 @@ static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. soldiers per team:\t%s\n"), Info_ValueForKey(s, "sv_maxsoldiersperteam"));
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Password protected:\t%s\n"), Info_ValueForKey(s, "sv_needpass"));
 		menuText[TEXT_STANDARD] = serverInfoText;
+		userInfoText[0] = '\0';
 		do {
 			token = COM_Parse(&users);
 			if (!users)
@@ -938,7 +942,7 @@ static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 			token = COM_Parse(&users);
 			if (!users)
 				break;
-			Com_sprintf(userInfoText, sizeof(userInfoText), "%s\t%i\n", token, team);
+			Com_sprintf(userInfoText + strlen(userInfoText), sizeof(userInfoText) - strlen(userInfoText), "%s\t%i\n", token, team);
 		} while (1);
 		menuText[TEXT_LIST] = userInfoText;
 		Cvar_Set("mn_server_ip", stream_peer_name(stream, buf, sizeof(buf), qtrue));
@@ -947,7 +951,12 @@ static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 		Com_Printf("%c%s", 1, s);
 }
 
-static void status_callback (struct net_stream *s)
+/**
+ * @brief
+ * @sa CL_ServerInfo_f
+ * @sa CL_ParseServerInfoMessage
+ */
+static void CL_ServerInfoCallback (struct net_stream *s)
 {
 	struct dbuffer *buf = NET_ReadMsg(s);
 
@@ -969,7 +978,7 @@ static void status_callback (struct net_stream *s)
 
 /**
  * @brief Masterserver server list
- * @sa Netchan_OutOfBandPrint
+ * @sa NET_OOB_Printf
  * @sa CL_ConnectionlessPacket
  */
 static void CL_ParseMasterServerResponse (struct dbuffer *buf)
@@ -1033,7 +1042,7 @@ static void CL_ServerConnect_f (void)
 {
 	const char *ip = Cvar_VariableString("mn_server_ip");
 	aircraft_t *aircraft;
-	
+
 	aircraft = AIR_AircraftGetFromIdx(0);
 
 	/* @todo: if we are in multiplayer auto generate a team */
@@ -1108,6 +1117,7 @@ static void CL_BookmarkListClick_f (void)
 
 /**
  * @brief
+ * @sa CL_ServerInfoCallback
  */
 static void CL_ServerInfo_f (void)
 {
@@ -1117,7 +1127,7 @@ static void CL_ServerInfo_f (void)
 	else
 		s = connect_to_host(Cmd_Argv(1), va("%d", PORT_SERVER));
 	NET_OOB_Printf(s, "status %i", PROTOCOL_VERSION);
-	stream_callback(s, &status_callback);
+	stream_callback(s, &CL_ServerInfoCallback);
 }
 
 /**
@@ -1168,7 +1178,7 @@ static int lastServerQuery = 0;
 
 /**
  * @brief The first function called when entering the multiplayer menu, then CL_Frame takes over
- * @sa CL_ParseStatusMessage
+ * @sa CL_ParseServerInfoMessage
  * @note Use a parameter for pingservers to update the current serverlist
  */
 static void CL_PingServers_f (void)
@@ -1432,7 +1442,7 @@ static void CL_SpawnSoldiers_f (void)
 	int n = teamnum->integer;
 	int amount = 0;
 	base_t *base = NULL;
-	
+
 	base = CP_GetMissionBase();
 
 	if (!ccs.singleplayer && base && !teamData.parsed) {
