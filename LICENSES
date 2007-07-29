@@ -373,6 +373,11 @@ base/maps/villagen/vil_s12.map | GPL version 2
 base/maps/villagen/vil_s13.map | GPL version 2
 base/maps/villagen/vil_s14.map | GPL version 2
 base/maps/villagen/vil_s15.map | GPL version 2
+base/models/aliens/bloodspider/bloodspider.blend |  | Werner "hoehrer" Höhrer
+base/models/aliens/bloodspider/bloodspider.jpg |  | Jake "ProtoArmor" Gustafson
+base/models/aliens/bloodspider/bloodspider.md2 |  | Werner "hoehrer" Höhrer
+base/models/aliens/bloodspider/bloodspider.tag |  | Werner "hoehrer" Höhrer
+base/models/aliens/bloodspider/head.md2 |  | Werner "hoehrer" Höhrer
 base/models/aliens/ortnok/body01.anm | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/ortnok/body01.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/ortnok/body01.tag | GPL version 2 | Lukas "rastaman_bey" Beyeler
