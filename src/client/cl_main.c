@@ -319,10 +319,11 @@ static void CL_Connect (void)
 		cls.stream = connect_to_host(cls.servername, port->string);
 	} else
 		cls.stream = connect_to_loopback();
-
-	NET_OOB_Printf(cls.stream, "connect %i \"%s\"\n", PROTOCOL_VERSION, Cvar_Userinfo());
-
-	cls.connect_time = cls.realtime;
+	if (cls.stream) {
+		NET_OOB_Printf(cls.stream, "connect %i \"%s\"\n", PROTOCOL_VERSION, Cvar_Userinfo());
+		cls.connect_time = cls.realtime;
+	} else
+		Com_Printf("Could not connect\n");
 }
 
 /**
@@ -647,14 +648,18 @@ static int serverListLength = 0;
 static int serverListPos = 0;
 static serverList_t serverList[MAX_SERVERLIST];
 
-static void process_ping_reply (serverList_t *server, char *msg)
+/**
+ * @brief
+ * @sa CL_PingServerCallback
+ */
+static void CL_ProcessPingReply (serverList_t *server, char *msg)
 {
 	if (PROTOCOL_VERSION != atoi(Info_ValueForKey(msg, "protocol"))) {
-		Com_DPrintf("process_ping_reply: Protocol mismatch\n");
+		Com_DPrintf("CL_ProcessPingReply: Protocol mismatch\n");
 		return;
 	}
 	if (Q_strcmp(UFO_VERSION, Info_ValueForKey(msg, "version"))) {
-		Com_DPrintf("process_ping_reply: Version mismatch\n");
+		Com_DPrintf("CL_ProcessPingReply: Version mismatch\n");
 	}
 
 	if (server->pinged)
@@ -674,7 +679,10 @@ static void process_ping_reply (serverList_t *server, char *msg)
 	server->sv_maxclients = atoi(Info_ValueForKey(msg, "sv_maxclients"));
 }
 
-static void ping_callback (struct net_stream *s)
+/**
+ * @brief CL_PingServer
+ */
+static void CL_PingServerCallback (struct net_stream *s)
 {
 	struct dbuffer *buf = NET_ReadMsg(s);
 	serverList_t *server = stream_data(s);
@@ -684,21 +692,27 @@ static void ping_callback (struct net_stream *s)
 
 	if (cmd == clc_oob && Q_strncmp(str, "info", 4) == 0) {
 		str = NET_ReadString(buf);
-		if (str)
-		process_ping_reply(server, str);
-	}
+		if (!str)
+			return;
+		CL_ProcessPingReply(server, str);
+	} else
+		Com_Printf("CL_PingServerCallback: %s\n", str);
 
-	menuText[TEXT_LIST] = serverText;
-	Com_sprintf(string, sizeof(string), "%s\t\t\t%s\t\t\t%s\t(%s)\t%i/%i\n",
-		server->sv_hostname,
-		server->mapname,
-		server->gametype,
-		server->version,
-		server->clients,
-		server->sv_maxclients);
-	server->serverListPos = serverListPos;
-	serverListPos++;
-	Q_strcat(serverText, string, sizeof(serverText));
+	if (*server->sv_hostname) {
+		menuText[TEXT_LIST] = serverText;
+		Com_sprintf(string, sizeof(string), "%s\t\t\t%s\t\t\t%s\t(%s)\t%i/%i\n",
+			server->sv_hostname,
+			server->mapname,
+			server->gametype,
+			server->version,
+			server->clients,
+			server->sv_maxclients);
+		server->serverListPos = serverListPos;
+		serverListPos++;
+		Q_strcat(serverText, string, sizeof(serverText));
+	} else {
+		Com_Printf("No valid ping response\n");
+	}
 	free_stream(s);
 }
 
@@ -710,10 +724,14 @@ static void ping_callback (struct net_stream *s)
 static void CL_PingServer (serverList_t *server)
 {
 	struct net_stream *s = connect_to_host(server->node, server->service);
-	Com_DPrintf("pinging [%s]:%s...\n", server->node, server->service);
-	NET_OOB_Printf(s, "info %i", PROTOCOL_VERSION);
-	set_stream_data(s, server);
-	stream_callback(s, &ping_callback);
+	if (s) {
+		Com_DPrintf("pinging [%s]:%s...\n", server->node, server->service);
+		NET_OOB_Printf(s, "info %i", PROTOCOL_VERSION);
+		set_stream_data(s, server);
+		stream_callback(s, &CL_PingServerCallback);
+	} else {
+		Com_Printf("pinging failed [%s]:%s...\n", server->node, server->service);
+	}
 }
 
 /**
@@ -1003,7 +1021,11 @@ static void CL_ParseMasterServerResponse (struct dbuffer *buf)
 	/* end of stream */
 }
 
-static void masterserver_callback (struct net_stream *s)
+/**
+ * @brief
+ * @sa CL_PingServers_f
+ */
+static void CL_MasterserverCallback (struct net_stream *s)
 {
 	struct dbuffer *buf = NET_ReadMsg(s);
 
@@ -1127,8 +1149,11 @@ static void CL_ServerInfo_f (void)
 		s = connect_to_host(Cvar_VariableString("mn_server_ip"), va("%d", PORT_SERVER));
 	else
 		s = connect_to_host(Cmd_Argv(1), va("%d", PORT_SERVER));
-	NET_OOB_Printf(s, "status %i", PROTOCOL_VERSION);
-	stream_callback(s, &CL_ServerInfoCallback);
+	if (s) {
+		NET_OOB_Printf(s, "status %i", PROTOCOL_VERSION);
+		stream_callback(s, &CL_ServerInfoCallback);
+	} else
+		Com_Printf("Could not connect to host\n");
 }
 
 /**
@@ -1244,8 +1269,12 @@ static void CL_PingServers_f (void)
 	/* @todo: Cache this to save bandwidth */
 	if (Cmd_Argc() == 2 || Q_strcmp(Cmd_Argv(1), "local")) {
 		struct net_stream *s = connect_to_host(masterserver_ip->string, masterserver_port->string);
-		NET_OOB_Printf(s, "getservers 0\n");
-		stream_callback(s, &masterserver_callback);
+		if (s) {
+			Com_Printf("Query masterserver\n");
+			NET_OOB_Printf(s, "getservers 0\n");
+			stream_callback(s, &CL_MasterserverCallback);
+		} else
+			Com_Printf("Could not connect to masterserver\n");
 	}
 }
 

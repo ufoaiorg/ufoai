@@ -46,8 +46,10 @@ void SV_SetMaster_f (void)
 	Com_Printf("Master server at [%s]:%s - sending a ping\n", masterserver_ip->string, masterserver_port->string);
 
 	s = connect_to_host(masterserver_ip->string, masterserver_port->string);
-	NET_OOB_Printf(s, "ping\n");
-	stream_finished(s);
+	if (s) {
+		NET_OOB_Printf(s, "ping\n");
+		stream_finished(s);
+	}
 
 	if (!sv_dedicated->integer)
 		return;
