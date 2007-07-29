@@ -622,6 +622,10 @@ base/models/weapons/grenl/grenl_ic_clip.jpg | GPL version 2 | Lukas "rastaman_be
 base/models/weapons/grenl/grenl_ic_clip.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/weapons/grenl/grenl_plasma_clip.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/weapons/grenl/grenl_plasma_clip.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/irgoggles/irgoggles.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/weapons/irgoggles/irgoggles.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/weapons/irgoggles/irgoggles.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/weapons/irgoggles/irgoggles.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/pbeampistol/clip.3DS | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/weapons/pbeampistol/clip.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/weapons/pbeampistol/clip.max | GPL version 2 | Lukas "rastaman_bey" Beyeler
@@ -649,6 +653,14 @@ base/models/weapons/shotgun2/shotgun2.blend | Creative Commons License 3.0 Attri
 base/models/weapons/shotgun2/shotgun_clip.blend | Creative Commons License 3.0 Attribution + Sharealike | Nathan : INC (Kaeau)
 base/models/weapons/shotgun2/shotgun_clip.jpg | Creative Commons License 3.0 Attribution + Sharealike | Nathan : INC (Kaeau)
 base/models/weapons/shotgun2/shotgun_clip.md2 | Creative Commons License 3.0 Attribution + Sharealike | Nathan : INC (Kaeau)
+base/models/weapons/shotgunmicro/shotgunmicro.blend | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some fixed by Werner Höhrer (hoehrer)
+base/models/weapons/shotgunmicro/shotgunmicro.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/weapons/shotgunmicro/shotgunmicro.md2 | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some fixed by Werner Höhrer (hoehrer)
+base/models/weapons/shotgunmicro/shotgunmicro.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/weapons/shotgunmicro/shotgunmicro_UVW.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/weapons/shotgunmicro/shotgunmicro_clip.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/weapons/shotgunmicro/shotgunmicro_clip.md2 | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some fixed by Werner Höhrer (hoehrer)
+base/models/weapons/shotgunmicro/shotgunmicro_clip.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/music/AlexFightmare.ogg | GPL | Alex Parker
 base/music/AlexForest.ogg | Creative Commons Sampling Plus 1.0 License | Alex Parker | contains sounds sourced from thefreesoundproject.com and released under the creative commons sampling plus license (1.0).   These sounds and their authors are:   Odayam sounds (night time).wav - "genghis attenborough"   winter woods junkyard.wav - "offthesky (www.offthesky.com)"
 base/music/AlexSullencity.ogg | Creative Commons Sampling Plus 1.0 License | Alex Parker | background sounds taken from The Free Sound Project, under the Creative Commons Sampling Plus License 1.0; contributors:   RHumphries: 2523_RHumphries_rbh_thunder_storm.wav   Acutescream: 24716_acutescream_file0084edit_LANightAlarm.wav
