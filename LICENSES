@@ -519,8 +519,8 @@ base/models/weapons/plasblaster/plasblaster_clip.md2 | GPL version 2 | Lukas "ra
 base/models/weapons/plasblaster/plasblaster_v2.max | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/weapons/plasblaster/plasblaster_v2UVW.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/music/AlexFightmare.ogg | GPL | Alex Parker
-base/music/AlexForest.ogg | GPL | Alex Parker
-base/music/AlexSullencity.ogg | GPL | Alex Parker
+base/music/AlexForest.ogg | Creative Commons Sampling Plus 1.0 License | Alex Parker | contains sounds sourced from thefreesoundproject.com and released under the creative commons sampling plus license (1.0).   These sounds and their authors are:   Odayam sounds (night time).wav - "genghis attenborough"   winter woods junkyard.wav - "offthesky (www.offthesky.com)"
+base/music/AlexSullencity.ogg | Creative Commons Sampling Plus 1.0 License | Alex Parker | background sounds taken from The Free Sound Project, under the Creative Commons Sampling Plus License 1.0; contributors:   RHumphries: 2523_RHumphries_rbh_thunder_storm.wav   Acutescream: 24716_acutescream_file0084edit_LANightAlarm.wav
 base/music/David01.ogg | Creative Commons Attribution-Noncommercial-Share Alike 3.0 United States License | David Reeves (Destructavator)
 base/music/PsymongN1.ogg | GPL | Simon Green (Psymong)
 base/music/PsymongN2.ogg | GPL | Simon Green (Psymong)
