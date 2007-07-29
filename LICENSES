@@ -640,6 +640,8 @@ base/sound/weapons/riotshotgun.wav | GPL | Alex Parker
 base/sound/weapons/smg2.wav | GPL | Alex Parker
 base/sound/weapons/smokeexplosion.wav | GPL | Alex Parker
 base/sound/weapons/sniperrifle.wav | GPL | Alex Parker
+base/textures/tex_buildings/leadglasswindow.jpg | Creative Commons Attribution Non Commercial | Andy Buckle
+base/textures/tex_buildings/stainedglass1.jpg | Creative Commons Attribution 2.5 | Andy Buckle | http://ccphotos.taboca.com/images/gegall-churches/Religious_Stained_Glass/index.html
 base/textures/tex_carpets/carpet001.tga |  | iks83 (http://sourceforge.net/users/iks83)
 base/textures/tex_carpets/carpet002.tga |  | iks83 (http://sourceforge.net/users/iks83)
 base/textures/tex_carpets/carpet003.tga |  | iks83 (http://sourceforge.net/users/iks83)
@@ -801,6 +803,7 @@ base/textures/tex_carpets/carpet158.tga |  | iks83 (http://sourceforge.net/users
 base/textures/tex_carpets/carpet159.tga |  | iks83 (http://sourceforge.net/users/iks83)
 base/textures/tex_carpets/carpet160.tga |  | iks83 (http://sourceforge.net/users/iks83)
 base/textures/tex_effects/exhaust.tga | This work is licensed under a Creative Commons Attribution-Share Alike 3.0 License | Werner Höhrer (hoehrer)
+base/textures/tex_furniture/tablecloth.jpg | Creative Commons Attribution Non Commercial | Andy Buckle
 base/textures/tex_pics/redld01.jpg | This work is licensed under a Creative Commons Attribution-Share Alike 3.0 License | Werner Höhrer (hoehrer)
 base/textures/tex_pics/redld02.jpg | This work is licensed under a Creative Commons Attribution-Share Alike 3.0 License | Werner Höhrer (hoehrer)
 base/textures/tex_pics/redld03.jpg | This work is licensed under a Creative Commons Attribution-Share Alike 3.0 License | Werner Höhrer (hoehrer)
