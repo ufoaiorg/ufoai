@@ -583,6 +583,32 @@ base/models/objects/vegi/palm_v3/palm_v3.md2 | Creative Commons License 3.0 Attr
 base/models/objects/vegi/palm_v3/palm_v3.tga | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
 base/models/objects/vegi/plant_v1/plant_v1.md2 | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
 base/models/objects/vegi/plant_v1/plant_v1.tga | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
+base/models/objects/vehicles/bicycle/Readme.txt | GPL | Willem "Sitters"
+base/models/objects/vehicles/bicycle/bicycle.md2 | GPL | Willem "Sitters"
+base/models/objects/vehicles/bicycle/bicycle.tga | GPL | Willem "Sitters"
+base/models/objects/vehicles/forktruck/Readme.txt | GPL | Willem "Sitters"
+base/models/objects/vehicles/forktruck/barrel1.md2 | GPL | Willem "Sitters"
+base/models/objects/vehicles/forktruck/barrel2.md2 | GPL | Willem "Sitters"
+base/models/objects/vehicles/forktruck/box.md2 | GPL | Willem "Sitters"
+base/models/objects/vehicles/forktruck/forktruck.md2 | GPL | Willem "Sitters"
+base/models/objects/vehicles/forktruck/forktruck.tga | GPL | Willem "Sitters"
+base/models/objects/vehicles/forktruck/forktruck1.md2 | GPL | Willem "Sitters"
+base/models/objects/vehicles/forktruck/forktruck2.md2 | GPL | Willem "Sitters"
+base/models/objects/vehicles/forktruck/palette.md2 | GPL | Willem "Sitters"
+base/models/objects/vehicles/forktruck/palette.tga | GPL | Willem "Sitters"
+base/models/objects/vehicles/forktruck/palsingle.md2 | GPL | Willem "Sitters"
+base/models/objects/vehicles/forktruck/pipes.md2 | GPL | Willem "Sitters"
+base/models/objects/vehicles/forktruck/rounds.md2 | GPL | Willem "Sitters"
+base/models/objects/vehicles/motorbike/motorbike.md2 | GPL | Willem "Sitters"
+base/models/objects/vehicles/motorbike/motorbike.obj | GPL | Willem "Sitters"
+base/models/objects/vehicles/motorbike/motorbike.tga | GPL | Willem "Sitters"
+base/models/objects/vehicles/motorbike/motorbike2.tga | GPL | Willem "Sitters"
+base/models/objects/vehicles/tractor/Readme.txt | GPL | Willem "Sitters"
+base/models/objects/vehicles/tractor/tractor.jpg | GPL | Willem "Sitters"
+base/models/objects/vehicles/tractor/tractor.md2 | GPL | Willem "Sitters"
+base/models/objects/vehicles/tractor/tractor.tga | GPL | Willem "Sitters"
+base/models/objects/vehicles/tractor/tractor1.jpg | GPL | Willem "Sitters"
+base/models/objects/vehicles/tractor/tractor1.tga | GPL | Willem "Sitters"
 base/models/soldiers/femalepower/femalepower.tga | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird)
 base/models/soldiers/femalepower/old/powersuitfemale.wings | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Ryan Span (Winter)
 base/models/soldiers/malepower/malepower.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer) | powersuitmale by David Dallaston (PikkaBird) - some modifications by Ryan Span (Winter)
