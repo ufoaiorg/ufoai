@@ -2643,9 +2643,9 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dir,
 	case ACTOR_SIZE_2x2:
 		/* Range check of new values (2x2) */
 		Vector2Set(poslist_n[0], nx, ny);
-		Vector2Set(poslist_n[1], poslist_n[0][0] + 1, poslist_n[0][1]);
-		Vector2Set(poslist_n[2], poslist_n[0][0],     poslist_n[0][1] + 1);
-		Vector2Set(poslist_n[3], poslist_n[0][0] + 1, poslist_n[0][1] + 1);
+		Vector2Set(poslist_n[1], nx + 1, ny);
+		Vector2Set(poslist_n[2], nx,     ny + 1);
+		Vector2Set(poslist_n[3], nx + 1, ny + 1);
 
 		if (poslist_n[0][0] < 0 || poslist_n[0][0] >= WIDTH || poslist_n[0][1] < 0 || poslist_n[0][1] >= WIDTH
 		||  poslist_n[1][0] < 0 || poslist_n[1][0] >= WIDTH || poslist_n[1][1] < 0 || poslist_n[1][1] >= WIDTH
@@ -2656,29 +2656,76 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dir,
 		/* Connection checks for actor (2x2) */
 		/* We need to check the 8 surrounding "straight" fields (2 in each direction; the 4 diagonal ones are skipped here) */
 		VectorSet(poslist[0], x, y, z);					/* has NX and NY */
-		VectorSet(poslist[1], poslist[0][0] + 1, poslist[0][1],     z);	/* has PX and NY */
-		VectorSet(poslist[2], poslist[0][0],     poslist[0][1] + 1, z);	/* has NX and PY */
-		VectorSet(poslist[3], poslist[0][0] + 1, poslist[0][1] + 1, z);	/* has PX and PY */
+		VectorSet(poslist[1], x + 1, y,     z);	/* has PX and NY */
+		VectorSet(poslist[2], x,     y + 1, z);	/* has NX and PY */
+		VectorSet(poslist[3], x + 1, y + 1, z);	/* has PX and PY */
 
-		if (dx > 0 && !(R_CONN_PX(map, poslist[1][0], poslist[1][1], z) || R_CONN_PX(map, poslist[3][0], poslist[3][1], z)))
-			return;
-		if (dx < 0 && !(R_CONN_NX(map, poslist[0][0], poslist[0][1], z) || R_CONN_NX(map, poslist[2][0], poslist[2][1], z)))
-			return;
-		if (dy > 0 && !(R_CONN_PY(map, poslist[2][0], poslist[2][1], z) || R_CONN_PY(map, poslist[3][0], poslist[3][1], z)))
-			return;
-		if (dy < 0 && !(R_CONN_NY(map, poslist[0][0], poslist[0][1], z) || R_CONN_NY(map, poslist[1][0], poslist[1][1], z)))
-			return;
-
-#if 0
+		if (dy == 0) {
+			/* Straight movement along the x axis */
+			if (dx > 0 && !(R_CONN_PX(map, poslist[1][0], poslist[1][1], z) || R_CONN_PX(map, poslist[3][0], poslist[3][1], z)))
+				return;
+			if (dx < 0 && !(R_CONN_NX(map, poslist[0][0], poslist[0][1], z) || R_CONN_NX(map, poslist[2][0], poslist[2][1], z)))
+				return;
+		}
+		if (dx == 0) {
+			/* Straight movement along the y axis */
+			if (dy > 0 && !(R_CONN_PY(map, poslist[2][0], poslist[2][1], z) || R_CONN_PY(map, poslist[3][0], poslist[3][1], z)))
+				return;
+			if (dy < 0 && !(R_CONN_NY(map, poslist[0][0], poslist[0][1], z) || R_CONN_NY(map, poslist[1][0], poslist[1][1], z)))
+				return;
+		}
+		
+#if 1
 		/** @todo Check diagonal connection for a 2x2 unit.
 		 * Currently this is not needed because we skip it in Grid_MoveMarkRoute :)
 		 */
-		if (dir > 3 &&
-			!( (dx > 0 ? R_CONN_PX(map, x,    y+dy, z) : R_CONN_NX(map, x,    y+dy, z))
-			&& (dy > 0 ? R_CONN_PY(map, x+dx, y,    z) : R_CONN_NY(map, x+dx, y,    z))
-			&& !Grid_CheckForbidden(map, x,    y+dy, z)
-			&& !Grid_CheckForbidden(map, x+dx, y,    z)))
-			return;
+		if (dir > 3) {
+			/*
+			 * Diagonal movement
+			 * Check the 3 new squares if they are connected (for the choosen direction).
+			 * The last two checks (..CONN_..) are for the "corner" square,
+			 * I'm not sure if the second one of them is needed,
+			 * but I've included it anyway to be sure.
+			 */
+			if (dx > 0 && dy > 0) {
+				/* Movement x+ y+ -> we check connections starting from poslist[3] (x+, y+) */
+				if (
+				!( R_CONN_PY(map, poslist[3][0], poslist[3][1], poslist[3][2])
+				&& R_CONN_PX(map, poslist[3][0], poslist[3][1], poslist[3][2])
+				&& R_CONN_PY(map, poslist[3][0]+1, poslist[3][1], poslist[3][2])
+				&& R_CONN_PX(map, poslist[3][0], poslist[3][1]+1, poslist[3][2])))
+					return;
+			}
+			if (dx > 0 && dy < 0) {
+				/* Movement x+ y- -> we check connections starting from poslist[1] (x+, y) */
+				if (
+				!( R_CONN_NY(map, poslist[1][0], poslist[1][1], poslist[1][2])
+				&& R_CONN_PX(map, poslist[1][0], poslist[1][1], poslist[1][2])
+				&& R_CONN_NY(map, poslist[1][0]+1, poslist[1][1], poslist[1][2])
+				&& R_CONN_PX(map, poslist[1][0], poslist[1][1]-1, poslist[1][2])))
+					return;
+			}
+			if (dx < 0 && dy < 0) {
+				/* Movement x- y- -> we check connections starting from poslist[0] (x, y) */
+				if (
+				!( R_CONN_NY(map, poslist[0][0], poslist[0][1], poslist[0][2])
+				&& R_CONN_NX(map, poslist[0][0], poslist[0][1], poslist[0][2])
+				&& R_CONN_NY(map, poslist[0][0]-1, poslist[0][1], poslist[0][2])
+				&& R_CONN_NX(map, poslist[0][0], poslist[0][1]-1, poslist[0][2])))
+					return;
+			}
+			if (dx < 0 && dy > 0) {
+				/* Movement x- y+ -> we check connections starting from poslist[2] (x, y+) */
+				if (
+				!( R_CONN_PY(map, poslist[2][0], poslist[2][1], poslist[2][2])
+				&& R_CONN_NX(map, poslist[2][0], poslist[2][1], poslist[2][2])
+				&& R_CONN_PY(map, poslist[2][0]-1, poslist[2][1], poslist[2][2])
+				&& R_CONN_NX(map, poslist[2][0], poslist[2][1]+1, poslist[2][2])))
+					return;
+			}
+			/* No checkforbidden tests needed here because all 3 affected fields
+			 * are checked later on anyway. */
+		}
 #endif
 		break;
 	default:
@@ -2707,12 +2754,9 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dir,
 		break;
 	case ACTOR_SIZE_2x2:
 		if (Grid_CheckForbidden(map, poslist_n[0][0], poslist_n[0][1], z)
-#if 1 /** @todo why is this not working dammit? */
 		|| Grid_CheckForbidden(map, poslist_n[1][0], poslist_n[1][1], z)
 		|| Grid_CheckForbidden(map, poslist_n[2][0], poslist_n[2][1], z)
-		|| Grid_CheckForbidden(map, poslist_n[3][0], poslist_n[3][1], z)
-#endif
-		)
+		|| Grid_CheckForbidden(map, poslist_n[3][0], poslist_n[3][1], z))
 			return;
 		break;
 	default:
@@ -2755,10 +2799,12 @@ static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, i
 
 					/* test the next connections */
 					for (dir = 0; dir < DIRECTIONS; dir++) {
+#if 0
 						if ((actor_size == ACTOR_SIZE_2x2)
 						 && (dir > 3))
 							/* Ignore diagonal move for 2x2 and other units */
 							break;
+#endif
 						Grid_MoveMark(map, x, y, z, dir, h, l, actor_size);
 					}
 				}
