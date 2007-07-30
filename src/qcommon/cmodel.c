@@ -189,8 +189,7 @@ typedef struct routing_s {
 #define R_SAREA(map,x,y,z) ((map)->areaStored[(z)][(y)][(x)])
 
 /* extern */
-int c_pointcontents;
-int c_traces, c_brush_traces;
+static int c_traces, c_brush_traces;
 char map_entitystring[MAX_MAP_ENTSTRING];
 vec3_t map_min, map_max;
 
@@ -1262,7 +1261,7 @@ void CM_LoadMap (const char *tiles, const char *pos, unsigned *mapchecksum)
 	assert(*mapchecksum == 0);
 
 	/* init */
-	c_pointcontents = c_traces = c_brush_traces = numInline = numTiles = 0;
+	c_traces = c_brush_traces = numInline = numTiles = 0;
 	map_entitystring[0] = base[0] = 0;
 
 	/* ROUTING_NOT_REACHABLE means, not reachable */
@@ -1465,52 +1464,6 @@ int CM_HeadnodeForBox (int tile, vec3_t mins, vec3_t maxs)
 	return curTile->box_headnode;
 }
 
-#if 0
-/**
- * @brief
- * @param[in] p
- * @param[in] num
- */
-static int CM_PointLeafnum_r (vec3_t p, int num)
-{
-	float d;
-	cBspNode_t *node;
-	cBspPlane_t *plane;
-
-	while (num >= 0) {
-		node = curTile->nodes + num;
-		plane = node->plane;
-
-		if (plane->type < 3)
-			d = p[plane->type] - plane->dist;
-		else
-			d = DotProduct(plane->normal, p) - plane->dist;
-		if (d < 0)
-			num = node->children[1];
-		else
-			num = node->children[0];
-	}
-
-	c_pointcontents++;			/* optimize counter */
-
-	return -1 - num;
-}
-#endif
-
-#if 0
-/**
- * @brief
- * @param[in] p
- * @sa CM_PointLeafnum_r
- */
-static int CM_PointLeafnum (vec3_t p)
-{
-	if (!curTile->numplanes)
-		return 0;				/* sound may call this without map loaded */
-	return CM_PointLeafnum_r(p, 0);
-}
-#endif
-
 /**
  * @brief Fills in a list of all the leafs touched
  * call with topnode set to the headnode, returns with topnode
@@ -1572,75 +1525,6 @@ static int CM_BoxLeafnums_headnode (vec3_t mins, vec3_t maxs, int *list, int lis
 
 	return leaf_count;
 }
-
-#if 0
-/**
- * @brief
- * @param
- * @sa
- */
-static int CM_BoxLeafnums (vec3_t mins, vec3_t maxs, int *list, int listsize, int *topnode)
-{
-	return CM_BoxLeafnums_headnode(mins, maxs, list, listsize, curTile->cmodels[0].headnode, topnode);
-}
-#endif
-
-#if 0
-/**
- * @brief returns an ORed contents mask
- * @note FIXME/WARNING: The functions, that are commented out, possibly don't
- * give the expected results, because of the new map tiles, all the others
- * should work
- * @param
- * @sa
- */
-static int CM_PointContents (vec3_t p, int headnode)
-{
-	int l;
-
-	if (!curTile || !curTile->numnodes)	/* map not loaded */
-		return 0;
-
-	l = CM_PointLeafnum_r(p, headnode);
-
-	return curTile->leafs[l].contents;
-}
-#endif
-
-#if 0
-/**
- * @brief Handles offseting and rotation of the end points for moving and rotating entities
- * @note FIXME/WARNING: The functions, that are commented out, possibly don't
- * give the expected results, because of the new map tiles, all the others
- * should work
- */
-static int CM_TransformedPointContents (vec3_t p, int headnode, vec3_t origin, vec3_t angles)
-{
-	vec3_t p_l;
-	vec3_t temp;
-	vec3_t forward, right, up;
-	int l;
-
-	/* subtract origin offset */
-	VectorSubtract(p, origin, p_l);
-
-	/* rotate start and end into the models frame of reference */
-	if (headnode != curTile->box_headnode && (angles[0] || angles[1] || angles[2])) {
-		AngleVectors(angles, forward, right, up);
-
-		VectorCopy(p_l, temp);
-		p_l[0] = DotProduct(temp, forward);
-		p_l[1] = -DotProduct(temp, right);
-		p_l[2] = DotProduct(temp, up);
-	}
-
-	l = CM_PointLeafnum_r(p_l, headnode);
-
-	return curTile->leafs[l].contents;
-}
-#endif
-
-/*======================================================================= */
 
 
 /**
@@ -2160,6 +2044,7 @@ trace_t CM_CompleteBoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs,
 	memset(&tr, 0, sizeof(trace_t));
 	tr.fraction = 2.0f;
 
+	/* trace against all loaded map tiles */
 	for (tile = 0; tile < numTiles; tile++) {
 		curTile = &mapTiles[tile];
 		for (i = 0, h = curTile->cheads; i < curTile->numcheads; i++, h++) {
@@ -2236,6 +2121,7 @@ static void BuildTnode_r (int node, int level)
 		/* alloc new node */
 		t = tnode_p++;
 
+		/* no leafs here */
 		if (n->children[0] < 0 || n->children[1] < 0)
 			Com_Error(ERR_DROP, "Unexpected leaf");
 
@@ -2674,7 +2560,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dir,
 			if (dy < 0 && !(R_CONN_NY(map, poslist[0][0], poslist[0][1], z) || R_CONN_NY(map, poslist[1][0], poslist[1][1], z)))
 				return;
 		}
-		
+
 #if 1
 		/** @todo Check diagonal connection for a 2x2 unit.
 		 * Currently this is not needed because we skip it in Grid_MoveMarkRoute :)
@@ -2836,7 +2722,7 @@ void Grid_MoveCalc (struct routing_s *map, pos3_t from, int actor_size, int dist
 	map->fblength = fb_length;
 
 	VectorCopy(from, exclude_from_forbiddenlist); /**< Prepare exclusion of starting-location (i.e. tzhis should be ent-pos or le-pos) in Grid_CheckForbidden */
-	
+
 	xl = xh = from[0];	/**< Guess: set minimum and maximum x value to start value? See Grid_MoveMarkRoute. */
 	yl = yh = from[1];	/**< Guess: set minimum and maximum y value to start value? See Grid_MoveMarkRoute. */
 

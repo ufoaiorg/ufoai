@@ -96,7 +96,7 @@ const char *ev_format[] =
 	"!sbbbbbgsb",		/* EV_ACTOR_ADD; beware of the '!' */
 	"s",				/* EV_ACTOR_START_MOVE */
 	"sb",				/* EV_ACTOR_TURN */
-	"!sb",				/* EV_ACTOR_MOVE */
+	"!sbs",				/* EV_ACTOR_MOVE */
 	"!sb",				/* EV_ACTOR_MOVE_HIDDEN */
 
 	"ssbbgg",			/* EV_ACTOR_START_SHOOT */

@@ -557,6 +557,8 @@ COLLISION DETECTION
 #define CONTENTS_WINDOW         2   /**< translucent, but not watery */
 #define CONTENTS_BURN           8   /**< will keep burning when flamed */
 #define CONTENTS_WATER          32
+/* max 16 bit please - otherwise change EV_ACTOR_MOVE to send a long and not a short */
+
 
 /* remaining contents are non-visible, and don't eat brushes */
 

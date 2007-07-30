@@ -2311,7 +2311,7 @@ void CL_ActorMoveHidden (struct dbuffer *msg)
 void CL_ActorDoMove (struct dbuffer *msg)
 {
 	le_t *le;
-	int number;
+	int number, contents;
 
 	number = NET_ReadShort(msg);
 	/* get le */
@@ -2327,7 +2327,7 @@ void CL_ActorDoMove (struct dbuffer *msg)
 	}
 
 	/* get length */
-	NET_ReadFormat(msg, ev_format[EV_ACTOR_MOVE], le->path);
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_MOVE], le->path, &contents);
 
 	/* activate PathMove function */
 	FLOOR(le) = NULL;

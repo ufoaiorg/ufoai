@@ -53,7 +53,6 @@ trace_t CM_CompleteBoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, 
 int CM_TestLine(vec3_t start, vec3_t stop);
 int CM_TestLineDM(vec3_t start, vec3_t stop, vec3_t end);
 
-
 /*==========================================================
 GRID ORIENTED MOVEMENT AND SCANNING
 ==========================================================*/

@@ -514,6 +514,8 @@ void SV_InitGameProgs (void)
 	import.configstring = PF_Configstring;
 	import.break_sound = SV_BreakSound;
 
+	import.PointContents = SV_PointContents;
+
 	import.FS_Gamedir = FS_Gamedir;
 
 	import.WriteChar = PF_WriteChar;

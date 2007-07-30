@@ -393,6 +393,23 @@ static void SV_ClipMoveToEntities (moveclip_t * clip)
 	}
 }
 
+/**
+ * @brief Returns the content flags for a given point
+ * @note Useful to determine whether an actor is e.g. inside of a water brush
+ */
+int SV_PointContents (vec3_t p)
+{
+	trace_t trace;
+
+	memset(&trace, 0, sizeof(trace_t));
+
+	/* clip to world - 0x1FF = all levels */
+	trace = CM_CompleteBoxTrace(p, p, vec3_origin, vec3_origin, 0x1FF, MASK_ALL);
+	trace.ent = ge->edicts; /* g_edicts[0] is the world */
+	if (trace.fraction == 0)
+		return trace.contents;		/* blocked by the world */
+	return 0;
+}
 
 /**
  * @brief
@@ -440,7 +457,7 @@ trace_t SV_Trace (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, edict_t * 
 
 	memset(&clip, 0, sizeof(moveclip_t));
 
-	/* clip to world */
+	/* clip to world - 0x1FF = all levels */
 	clip.trace = CM_CompleteBoxTrace(start, end, mins, maxs, 0x1FF, contentmask);
 	clip.trace.ent = ge->edicts; /* g_edicts[0] is the world */
 	if (clip.trace.fraction == 0)

@@ -190,7 +190,7 @@ void SV_LinkEdict(edict_t * ent);
 /*=================================================================== */
 
 /* returns the CONTENTS_* value from the world at the given point. */
-/* UFO:AI extends this to also check entities, to allow moving liquids */
+int SV_PointContents(vec3_t p);
 
 trace_t SV_Trace(vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, edict_t * passedict, int contentmask);
 

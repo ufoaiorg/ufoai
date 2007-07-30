@@ -1254,6 +1254,8 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	byte dv, numdv, length;
 	pos3_t pos;
 	float div, tu;
+	int contents;
+	vec3_t pointTrace;
 
 	ent = g_edicts + num;
 
@@ -1321,7 +1323,14 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				/* move */
 				PosAddDV(ent->pos, dvtab[numdv]);
 				gi.GridPosToVec(gi.map, ent->pos, ent->origin);
+				VectorCopy(ent->origin, pointTrace);
+				pointTrace[2] += PLAYER_MIN;
 
+				contents = gi.PointContents(pointTrace);
+#if 0
+				if (contents & CONTENTS_WATER)
+					Com_Printf("Inside of water\n");
+#endif
 				/* link it at new position */
 				gi.linkentity(ent);
 
@@ -1330,6 +1339,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_MOVE);
 				gi.WriteShort(num);
 				gi.WriteByte(dvtab[numdv]);
+				gi.WriteShort(contents);
 
 				/* check if player appears/perishes, seen from other teams */
 				G_CheckVis(ent, qtrue);

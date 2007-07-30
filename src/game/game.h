@@ -146,6 +146,9 @@ typedef struct {
 	 * ent - entity hit by trace
 	 */
 	trace_t (IMPORT *trace) (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, edict_t * passent, int contentmask);
+
+	int (*PointContents) (vec3_t point);
+
 	/** links entity into the world - so that it is sent to the client and used for
 	 * collision detection, etc. Must be relinked if its size, position or solidarity changes */
 	void (IMPORT *linkentity) (edict_t * ent);
