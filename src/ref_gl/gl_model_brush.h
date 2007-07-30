@@ -55,10 +55,7 @@ typedef struct mBspHeader_s {
 
 #define	SURF_PLANEBACK		2
 #define SURF_DRAWTURB		0x10
-#define SURF_DRAWBACKGROUND	0x40
-#define SURF_UNDERWATER		0x80
 
-/* !!! if this is changed, it must be changed in asm_draw.h too !!! */
 typedef struct mBspEdge_s {
 	unsigned short v[2];
 	unsigned int cachededgeoffset;
