@@ -3758,7 +3758,11 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
  * @brief field marker box
  */
 static const vec3_t boxSize = { BOX_DELTA_WIDTH, BOX_DELTA_LENGTH, BOX_DELTA_HEIGHT };
-#define BoxSize(i,source,target) (target[0]=i*source[0],target[1]=i*source[1],target[2]=source[2])
+#define BoxSize(i,source,target) (target[0]=i*source[0]+((i-1)*UNIT_SIZE),target[1]=i*source[1]+((i-1)*UNIT_SIZE),target[2]=source[2])
+#define BoxOffset(i, target) (target[0]=(i-1)*(UNIT_SIZE+BOX_DELTA_WIDTH), target[1]=(i-1)*(UNIT_SIZE+BOX_DELTA_LENGTH), target[2]=0)
+/** @todo Offset the 2x2 model as well ... 
+#define modelOffset(i, target) (target[0]=(i-1)*(UNIT_SIZE+BOX_DELTA_WIDTH)/2, target[1]=(i-1)*(UNIT_SIZE+BOX_DELTA_LENGTH)/2, target[2]=0)
+*/
 
 /**
  * @brief create a targeting box at the given position
@@ -3768,6 +3772,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 {
 	entity_t ent;
 	vec3_t realBoxSize;
+	vec3_t cursorOffset;
 
 	memset(&ent, 0, sizeof(entity_t));
 	ent.flags = RF_BOX;
@@ -3783,6 +3788,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 		VectorSet(ent.angles, 0, 0, 0.6);
 
 	VectorAdd(ent.origin, boxSize, ent.oldorigin);
+	
 	/* color */
 	if (mouseActor && (mouseActor != selActor)) {
 		ent.alpha = 0.4 + 0.2 * sin((float) cl.time / 80);
@@ -3813,10 +3819,20 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 			/* paint a light blue box if on our team */
 			VectorSet(ent.angles, 0.2, 0.3, 1);
 		}
-		BoxSize(mouseActor->fieldSize, boxSize, realBoxSize);
-		VectorSubtract(ent.origin, realBoxSize, ent.origin);
+
+		if (selActor) {
+			BoxOffset(selActor->fieldSize, cursorOffset);
+			VectorAdd(ent.oldorigin, cursorOffset, ent.oldorigin);
+			VectorAdd(ent.origin, cursorOffset, ent.origin);
+			BoxSize(selActor->fieldSize, boxSize, realBoxSize);
+			VectorSubtract(ent.origin, realBoxSize, ent.origin);
+		}
 	} else {
 		if (selActor) {
+			BoxOffset(selActor->fieldSize, cursorOffset);
+			VectorAdd(ent.oldorigin, cursorOffset, ent.oldorigin);
+			VectorAdd(ent.origin, cursorOffset, ent.origin);
+
 			BoxSize(selActor->fieldSize, boxSize, realBoxSize);
 			VectorSubtract(ent.origin, realBoxSize, ent.origin);
 		} else {
