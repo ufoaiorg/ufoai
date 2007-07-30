@@ -56,12 +56,23 @@ qboolean TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase)
 {
 	assert (od && srcbase && destbase);
 
+	/* Give some meaningful feedback to the player if the player clicks on an a.m. item but base doesn't have am storage. */
+	if(!destbase->hasAmStorage && destbase->hasStorage) {
+		MN_Popup(_("Missing storage"), _("Destination base does not have an Antimatter Storage.\n"));
+		return qfalse;
+	} else if(!destbase->hasAmStorage) {
+		return qfalse;
+	}
+
 	/* Is this antimatter and destination base has enough space in Antimatter Storage? */
 	if (!Q_strncmp(od->id, "antimatter", 10)) {
 		if (destbase->capacities[CAP_ANTIMATTER].max - destbase->capacities[CAP_ANTIMATTER].cur < ANTIMATTER_SIZE) {
 			MN_Popup(_("Not enough space"), _("Destination base does not have enough\nAntimatter Storage space to store more antimatter.\n"));
 			return qfalse;
 		}
+	} else {	/*This is not antimatter*/
+		if(!transferBase->hasStorage)	/* Return if the target base doesn't have storage or power.*/
+			return qfalse;
 	}
 
 	/* Does the destination base has enough space in storage? */
@@ -260,8 +271,10 @@ static void TR_TransferSelect_f (void)
 				}
 			if (!cnt)
 				Q_strncpyz(transferList, _("Storage is empty.\n"), sizeof(transferList));
-		} else {
+		} else if(transferBase->hasPower) {
 			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have a Storage."), sizeof(transferList));
+		} else {
+			Q_strcat(transferList, _("Transfer is not possible - the base does not have power supplies."), sizeof(transferList));
 		}
 		break;
 	case 1:		/**< humans */
@@ -326,8 +339,10 @@ static void TR_TransferSelect_f (void)
 			}
 			if (!cnt)
 				Q_strncpyz(transferList, _("Alien Containment is empty.\n"), sizeof(transferList));
-		} else {
+		} else if(transferBase->hasPower) {
 			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have an Alien Containment."), sizeof(transferList));
+		} else {
+			Q_strcat(transferList, _("Transfer is not possible - the base has not power supplies."), sizeof(transferList));
 		}
 		break;
 	case 3:			/**< aircrafts */
@@ -683,6 +698,8 @@ static void TR_TransferListSelect_f (void)
 		}
 		break;
 	case 2:		/**< aliens */
+		if(!transferBase->hasAlienCont)
+			return;
 		for (i = 0; i < numTeamDesc; i++) {
 			if (baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_dead > 0) {
 				if (cnt == num) {
@@ -797,6 +814,7 @@ static void TR_TransferBaseSelect_f (void)
 	/*char str[128];*/
 	int j = -1, num, i;
 	base_t* base;
+	qboolean powercomm = qfalse;
 
 	if (!baseCurrent)
 		return;
@@ -825,8 +843,11 @@ static void TR_TransferBaseSelect_f (void)
 
 	if (base->hasStorage) {
 		Q_strcat(baseInfo, _("You can transfer equipment - this base has a Storage.\n"), sizeof(baseInfo));
-	} else {
+	} else if (base->hasPower) {
 		Q_strcat(baseInfo, _("No Storage in this base.\n"), sizeof(baseInfo));
+	} else {
+		powercomm = qtrue;
+		Q_strcat(baseInfo, _("No power supplies in this base.\n"), sizeof(baseInfo));
 	}
 	if (base->hasQuarters) {
 		Q_strcat(baseInfo, _("You can transfer employees - this base has Living Quarters.\n"), sizeof(baseInfo));
@@ -835,13 +856,19 @@ static void TR_TransferBaseSelect_f (void)
 	}
 	if (base->hasAlienCont) {
 		Q_strcat(baseInfo, _("You can transfer Aliens - this base has an Alien Containment.\n"), sizeof(baseInfo));
-	} else {
+	} else if (base->hasPower) {
 		Q_strcat(baseInfo, _("No Alien Containment in this base.\n"), sizeof(baseInfo));
+	} else if (!powercomm) {
+		powercomm = qtrue;
+		Q_strcat(baseInfo, _("No power supplies in this base.\n"), sizeof(baseInfo));
 	}
 	if (base->hasAmStorage) {
 		Q_strcat(baseInfo, _("You can transfer antimatter - this base has an Antimatter Storage.\n"), sizeof(baseInfo));
-	} else {
+	} else if (base->hasPower){
 		Q_strcat(baseInfo, _("No Antimatter Storage in this base.\n"), sizeof(baseInfo));
+	} else if (!powercomm) {
+		powercomm = qtrue;
+		Q_strcat(baseInfo, _("No power supplies in this base.\n"), sizeof(baseInfo));
 	}
 
 	/* @todo: check hangar (for aircraft transfer) */
