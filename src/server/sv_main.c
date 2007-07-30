@@ -35,7 +35,6 @@ cvar_t *rcon_password;			/* password for remote server commands */
 static cvar_t *sv_downloadserver;
 
 cvar_t *sv_maxclients = NULL;
-cvar_t *sv_showclamp;
 cvar_t *sv_enablemorale;
 cvar_t *sv_maxsoldiersperteam;
 cvar_t *sv_maxsoldiersperplayer;
@@ -808,7 +807,6 @@ void SV_Init (void)
 	/* this cvar will become a latched cvar when you start the server */
 	sv_maxclients = Cvar_Get("sv_maxclients", "1", CVAR_SERVERINFO, "Max. connected clients");
 	sv_hostname = Cvar_Get("sv_hostname", _("noname"), CVAR_SERVERINFO | CVAR_ARCHIVE, "The name of the server that is displayed in the serverlist");
-	sv_showclamp = Cvar_Get("showclamp", "0", 0, NULL);
 	sv_downloadserver = Cvar_Get("sv_downloadserver", "", CVAR_ARCHIVE, "URL to a location where clients can download game content over HTTP");
 	sv_enablemorale = Cvar_Get("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale changes in multiplayer");
 	sv_maxsoldiersperteam = Cvar_Get("sv_maxsoldiersperteam", "4", CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers per team (see sv_maxsoldiersperplayer and sv_teamplay)");
@@ -919,22 +917,4 @@ void SV_ShutdownWhenEmpty (void)
 	abandon = qtrue;
 	/* pretend server is already dead, otherwise clients may try and reconnect */
 	Com_SetServerState(ss_dead);
-}
-
-/**
- * @brief
- */
-qboolean SV_RenderTrace (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end)
-{
-	trace_t	trace;
-
-	if (sv.state == ss_dead || sv.state == ss_loading)
-		return qfalse;
-
-	trace = SV_Trace(start, mins, maxs, end, NULL, MASK_VISIBILILITY);
-
-	if (trace.fraction != 1)
-		return qfalse;
-
-	return qtrue;
 }

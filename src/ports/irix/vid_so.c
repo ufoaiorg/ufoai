@@ -218,7 +218,6 @@ static qboolean VID_LoadRefresh (const char *name)
 	ri.Vid_NewWindow = VID_NewWindow;
 	ri.CL_WriteAVIVideoFrame = CL_WriteAVIVideoFrame;
 	ri.CL_GetFontData = CL_GetFontData;
-	ri.RenderTrace = SV_RenderTrace;
 
 	ri.genericPool = &vid_genericPool;
 	ri.imagePool = &vid_imagePool;

@@ -424,7 +424,7 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 		/* count kills */
 		if (ent->HP == 0)
 			level.num_kills[attacker->team][ent->team]++;
-		/*count stuns*/
+		/* count stuns */
 		else
 			level.num_stuns[attacker->team][ent->team]++;
 
@@ -473,9 +473,9 @@ void G_StunTeam (void)
 			G_ActorDie(ent, STATE_STUN, NULL);
 
 			if (teamToKill == TEAM_ALIEN)
-				level.num_stuns[1][TEAM_ALIEN]++;
+				level.num_stuns[TEAM_PHALANX][TEAM_ALIEN]++;
 			else
-				level.num_stuns[7][teamToKill]++;
+				level.num_stuns[TEAM_ALIEN][teamToKill]++;
 		}
 
 	/* check for win conditions */
@@ -525,8 +525,9 @@ static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_m
 		if (dist > fd->splrad)
 			continue;
 
-		/* FIXME: don't make aliens in back visible */
+		/* FIXME */
 		if (fd->irgoggles && (check->type == ET_ACTOR || check->type == ET_ACTOR2x2)) {
+			/* check whether this edict is in out field of view */
 			if (G_FrustumVis(ent, check->origin)) {
 				if (!mock) {
 					G_AppearPerishEvent(~G_VisToPM(check->visflags), 1, check);

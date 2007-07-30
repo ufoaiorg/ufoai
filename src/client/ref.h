@@ -365,7 +365,6 @@ typedef struct {
 
 	/* will return the size and the path for each font */
 	void (IMPORT *CL_GetFontData) (const char *name, int *size, const char *path);
-	qboolean (IMPORT *RenderTrace) (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end);
 
 	cvar_t *(IMPORT *Cvar_Get) (const char *name, const char *value, int flags, const char* desc);
 	cvar_t *(IMPORT *Cvar_Set) (const char *name, const char *value);
