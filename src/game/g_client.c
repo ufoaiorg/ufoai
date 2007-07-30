@@ -2241,9 +2241,15 @@ void G_ClientTeamInfo (player_t * player)
 	length = gi.ReadByte();	/* Get the length of data that the clients sent. */
 
 	for (i = 0; i < length; i++) {
-		/* Search for a spawn point for each entry the client sent */
-
-		if (i < sv_maxsoldiersperplayer->integer) {
+		/* Search for a spawn point for each entry the client sent
+		 * Don't allow spawning of soldiers if:
+		 * + the game is already running (activeTeam != -1)
+		 * + the player is not in a valid team
+		 * + the sv_maxsoldiersperplayer limit is hit (e.g. the assembled team is bigger than the allowed number of soldiers)
+		 * + the team already hit the max allowed amount of soldiers
+		 */
+		if (level.activeTeam == -1 && player->pers.team != -1 && i < sv_maxsoldiersperplayer->integer
+		 && level.num_spawned[player->pers.team] < sv_maxsoldiersperteam->integer) {
 			/* Here the client tells the server the information for the spawned actor(s). */
 
 			/* Receive fieldsize and get matching spawnpoint. */
