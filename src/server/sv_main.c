@@ -677,6 +677,12 @@ static qboolean SV_RunGameFrame (void)
  */
 void SV_Frame (int now, void *data)
 {
+	/* change the gametype even if no server is running (e.g. the first time) */
+	if (sv_dedicated->integer && gametype->modified) {
+		Com_SetGameType();
+		gametype->modified = qfalse;
+	}
+
 	/* if server is not active, do nothing */
 	if (!svs.initialized)
 		return;

@@ -359,6 +359,7 @@ static void do_accept (SOCKET sock)
 
 /**
  * @brief
+ * @sa Qcommon_Frame
  */
 void wait_for_net (int timeout)
 {

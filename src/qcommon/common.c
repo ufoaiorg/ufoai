@@ -1074,12 +1074,6 @@ void Qcommon_Frame (void)
 				Cbuf_AddText(va("%s\n", s));
 		} while (s);
 
-		/* XXX: This should be somewhere else */
-		if (gametype->modified) {
-			Com_SetGameType();
-			gametype->modified = qfalse;
-		}
-
 		time_to_next = event_queue ? (event_queue->when - Sys_Milliseconds()) : 1000;
 		if (time_to_next < 0)
 			time_to_next = 0;
