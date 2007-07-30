@@ -396,6 +396,7 @@ static void PF_EndEvents (void)
 	NET_WriteByte(pfe_msg, EV_NULL);
 	SV_Multicast(pfe_mask, pfe_msg);
 	pfe_pending = qfalse;
+	/* freed in SV_Multicast */
 	pfe_msg = NULL;
 }
 

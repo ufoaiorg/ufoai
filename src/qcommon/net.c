@@ -77,7 +77,7 @@ struct net_stream {
 	qboolean ready;
 	qboolean closed;
 	qboolean finished;
-	int socket;
+	SOCKET socket;
 	int index;
 	int family;
 	int addrlen;
@@ -97,7 +97,7 @@ struct datagram {
 };
 
 struct datagram_socket {
-	int socket;
+	SOCKET socket;
 	int index;
 	int family;
 	int addrlen;
@@ -240,7 +240,7 @@ static const char *estr (void)
 	return estr_n(WSAGetLastError());
 }
 
-static void close_socket (int socket)
+static void close_socket (SOCKET socket)
 {
 	closesocket(socket);
 }
@@ -254,7 +254,7 @@ static const char *estr (void)
 	return strerror(errno);
 }
 
-static void close_socket (int socket)
+static void close_socket (SOCKET socket)
 {
 	close(socket);
 }
@@ -333,7 +333,7 @@ static void close_stream (struct net_stream *s)
 /**
  * @brief
  */
-static void do_accept (int sock)
+static void do_accept (SOCKET sock)
 {
 	int index = find_free_stream();
 	struct net_stream *s;
@@ -516,7 +516,7 @@ void wait_for_net (int timeout)
 /**
  * @brief
  */
-static qboolean set_non_blocking (int socket)
+static qboolean set_non_blocking (SOCKET socket)
 {
 #ifdef _WIN32
 	unsigned long t = 1;
@@ -931,6 +931,10 @@ void SV_Stop (void)
 	server_socket = INVALID_SOCKET;
 }
 
+/**
+ * @brief
+ * @sa new_datagram_socket
+ */
 static struct datagram_socket *do_new_datagram_socket (const struct addrinfo *addr)
 {
 	struct datagram_socket *s;
@@ -987,6 +991,10 @@ static struct datagram_socket *do_new_datagram_socket (const struct addrinfo *ad
 	return s;
 }
 
+/**
+ * @brief Opens a datagram socket (UDP)
+ * @sa do_new_datagram_socket
+ */
 struct datagram_socket *new_datagram_socket (const char *node, const char *service, datagram_callback_func *func)
 {
 	struct datagram_socket *s;
@@ -1016,6 +1024,10 @@ struct datagram_socket *new_datagram_socket (const char *node, const char *servi
 	return s;
 }
 
+/**
+ * @brief
+ * @sa new_datagram_socket
+ */
 void send_datagram (struct datagram_socket *s, const char *buf, int len, struct sockaddr *to)
 {
 	struct datagram *dgram;
@@ -1036,6 +1048,11 @@ void send_datagram (struct datagram_socket *s, const char *buf, int len, struct 
 	FD_SET(s->socket, &write_fds);
 }
 
+/**
+ * @brief
+ * @sa send_datagram
+ * @sa new_datagram_socket
+ */
 void broadcast_datagram (struct datagram_socket *s, const char *buf, int len, int port)
 {
 	if (s->family == AF_INET) {
@@ -1056,6 +1073,11 @@ void broadcast_datagram (struct datagram_socket *s, const char *buf, int len, in
 	}
 }
 
+/**
+ * @brief
+ * @sa new_datagram_socket
+ * @sa do_new_datagram_socket
+ */
 void close_datagram_socket (struct datagram_socket *s)
 {
 	if (!s)
