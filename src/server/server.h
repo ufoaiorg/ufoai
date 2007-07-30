@@ -67,8 +67,6 @@ typedef struct {
 
 typedef enum {
 	cs_free,					/**< can be reused for a new connection */
-	cs_zombie,					/**< client has been disconnected, but don't reuse
-								 * connection for a couple seconds */
 	cs_connected,				/**< has been assigned to a client_t, but not in game yet */
 	cs_spawning,				/**< received new, not begin yet */
 	cs_spawned					/**< client is fully in game */
@@ -93,7 +91,7 @@ typedef struct client_s {
 /**
  * a client can leave the server in one of four ways:
  * dropping properly by quiting or disconnecting
- * timing out if no valid messages are received for timeout.value seconds
+ * timing out if no valid messages are received
  * getting kicked off by the server operator
  * a program error, like an overflowed reliable buffer
  */

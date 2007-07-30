@@ -656,6 +656,7 @@ struct net_stream *connect_to_loopback (void)
 
 /**
  * @brief
+ * @sa stream_dequeue
  */
 void stream_enqueue (struct net_stream *s, const char *data, int len)
 {
@@ -703,6 +704,7 @@ int stream_peek (struct net_stream *s, char *data, int len)
 
 /**
  * @brief
+ * @sa stream_enqueue
  */
 int stream_dequeue (struct net_stream *s, char *data, int len)
 {

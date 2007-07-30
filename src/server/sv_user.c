@@ -401,7 +401,7 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 		if (++stringCmdCount < MAX_STRINGCMDS)
 			SV_ExecuteUserCommand(s);
 
-		if (cl->state == cs_zombie)
+		if (cl->state == cs_free)
 			return;			/* disconnect command */
 		break;
 

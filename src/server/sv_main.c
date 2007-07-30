@@ -30,9 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 client_t *sv_client;			/* current client */
 
-cvar_t *timeout;				/* seconds without any message */
-cvar_t *zombietime;				/* seconds to sink messages after disconnect */
-
 cvar_t *rcon_password;			/* password for remote server commands */
 
 static cvar_t *sv_downloadserver;
@@ -87,7 +84,7 @@ void SV_DropClient (client_t * drop)
 	drop->stream = NULL;
 
 	drop->player->inuse = qfalse;
-	drop->state = cs_zombie;	/* become free in a few seconds */
+	drop->state = cs_free;
 	drop->name[0] = 0;
 
 	if (abandon) {
@@ -811,8 +808,6 @@ void SV_Init (void)
 	/* this cvar will become a latched cvar when you start the server */
 	sv_maxclients = Cvar_Get("sv_maxclients", "1", CVAR_SERVERINFO, "Max. connected clients");
 	sv_hostname = Cvar_Get("sv_hostname", _("noname"), CVAR_SERVERINFO | CVAR_ARCHIVE, "The name of the server that is displayed in the serverlist");
-	timeout = Cvar_Get("timeout", "125", 0, "Timeout in seconds");
-	zombietime = Cvar_Get("zombietime", "2", 0, "Timeout for zombies (in sec)");
 	sv_showclamp = Cvar_Get("showclamp", "0", 0, NULL);
 	sv_downloadserver = Cvar_Get("sv_downloadserver", "", CVAR_ARCHIVE, "URL to a location where clients can download game content over HTTP");
 	sv_enablemorale = Cvar_Get("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale changes in multiplayer");
@@ -853,10 +848,6 @@ static void SV_FinalMessage (const char *message, qboolean reconnect)
 
 	/* send it twice */
 	/* stagger the packets to crutch operating system limited buffers */
-
-	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
-		if (cl->state >= cs_connected)
-			NET_WriteConstMsg(cl->stream, msg);
 
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
 		if (cl->state >= cs_connected)

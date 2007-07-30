@@ -143,7 +143,7 @@ void SV_Multicast (int mask, struct dbuffer *msg)
 
 	/* send the data to all relevant clients */
 	for (j = 0, c = svs.clients; j < sv_maxclients->integer; j++, c++) {
-		if (c->state == cs_free || c->state == cs_zombie)
+		if (c->state == cs_free)
 			continue;
 		if (!(mask & (1 << j)))
 			continue;

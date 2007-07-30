@@ -220,8 +220,6 @@ static void SV_Status_f (void)
 
 		if (cl->state == cs_connected)
 			Com_Printf("CONNECT ");
-		else if (cl->state == cs_zombie)
-			Com_Printf("ZOMBIE  ");
 		else if (cl->state == cs_spawning)
 			Com_Printf("SPAWNIN ");
 		else

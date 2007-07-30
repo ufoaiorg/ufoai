@@ -783,7 +783,7 @@ void Cmd_RemoveCommand (const char *cmd_name)
 {
 	cmd_function_t *cmd, **back;
 	unsigned int hash;
-	hash = Com_HashKey (cmd_name, CMD_HASH_SIZE);
+	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
 	back = &cmd_functions_hash[hash];
 
 	while (1) {
@@ -792,7 +792,7 @@ void Cmd_RemoveCommand (const char *cmd_name)
 			Com_Printf("Cmd_RemoveCommand: %s not added\n", cmd_name);
 			return;
 		}
-		if (!Q_stricmp (cmd_name, cmd->name)) {
+		if (!Q_stricmp(cmd_name, cmd->name)) {
 			*back = cmd->hash_next;
 			break;
 		}
