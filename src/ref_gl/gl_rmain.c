@@ -892,8 +892,7 @@ static void R_Register (void)
 #if defined(_WIN32)
 	vid_ref = ri.Cvar_Get("vid_ref", "gl", CVAR_ARCHIVE, NULL);
 #elif defined (__APPLE__) || defined (MACOSX)
-	/* FIXME: Don't know the macosx driver, yet */
-	vid_ref = ri.Cvar_Get("vid_ref", "glx", CVAR_ARCHIVE, NULL);
+	vid_ref = ri.Cvar_Get("vid_ref", "sdl", CVAR_ARCHIVE, NULL);
 #else
 	vid_ref = ri.Cvar_Get("vid_ref", "glx", CVAR_ARCHIVE, NULL);
 #endif
@@ -906,7 +905,7 @@ static void R_Register (void)
 	con_fontShift = ri.Cvar_Get("con_fontShift", "3", CVAR_NOSET, NULL);
 
 	for (commands = r_commands; commands->name; commands++)
-		ri.Cmd_AddCommand(commands->name, commands->function, _(commands->description));
+		ri.Cmd_AddCommand(commands->name, commands->function, commands->description);
 }
 
 /**
