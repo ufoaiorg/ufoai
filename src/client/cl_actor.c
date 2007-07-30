@@ -3756,13 +3756,11 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 
 /**
  * @brief field marker box
+ * @sa ModelOffset in cl_le.c
  */
 static const vec3_t boxSize = { BOX_DELTA_WIDTH, BOX_DELTA_LENGTH, BOX_DELTA_HEIGHT };
 #define BoxSize(i,source,target) (target[0]=i*source[0]+((i-1)*UNIT_SIZE),target[1]=i*source[1]+((i-1)*UNIT_SIZE),target[2]=source[2])
 #define BoxOffset(i, target) (target[0]=(i-1)*(UNIT_SIZE+BOX_DELTA_WIDTH), target[1]=(i-1)*(UNIT_SIZE+BOX_DELTA_LENGTH), target[2]=0)
-/** @todo Offset the 2x2 model as well ... 
-#define modelOffset(i, target) (target[0]=(i-1)*(UNIT_SIZE+BOX_DELTA_WIDTH)/2, target[1]=(i-1)*(UNIT_SIZE+BOX_DELTA_LENGTH)/2, target[2]=0)
-*/
 
 /**
  * @brief create a targeting box at the given position

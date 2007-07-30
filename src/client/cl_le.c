@@ -863,6 +863,8 @@ le_t *LE_Find (int type, pos3_t pos)
 	return NULL;
 }
 
+/** @sa BoxOffset in cl_actor.c */
+#define ModelOffset(i, target) (target[0]=(i-1)*(UNIT_SIZE+BOX_DELTA_WIDTH)/2, target[1]=(i-1)*(UNIT_SIZE+BOX_DELTA_LENGTH)/2, target[2]=0)
 
 /**
  * @brief
@@ -872,6 +874,7 @@ void LE_AddToScene (void)
 	le_t *le;
 	entity_t ent;
 	vec3_t sunOrigin;
+	vec3_t modelOffset;
 	int i;
 
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
@@ -893,6 +896,22 @@ void LE_AddToScene (void)
 			/* set entity values */
 			VectorCopy(le->origin, ent.origin);
 			VectorCopy(le->origin, ent.oldorigin);
+			
+			/**
+			 * Offset the model to be inside the cursor box
+			 * @todo Dunno if this is the best place to do it - what happens to shot-origin and stuff? le->origin is never changed.
+			 */
+			switch (le->fieldSize) {
+			case ACTOR_SIZE_NORMAL:
+			case ACTOR_SIZE_2x2:
+				ModelOffset(le->fieldSize, modelOffset);
+				VectorAdd(ent.origin, modelOffset, ent.origin);
+				VectorAdd(ent.oldorigin, modelOffset, ent.oldorigin);
+				break;
+			default:
+				break;
+			}
+
 			VectorCopy(le->angles, ent.angles);
 			ent.model = le->model1;
 			ent.skinnum = le->skinnum;
