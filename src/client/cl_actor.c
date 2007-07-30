@@ -2923,7 +2923,7 @@ void CL_ActorSelectMouse (void)
 	case M_MOVE:
 	case M_PEND_MOVE:
 		/* Try and select another team member */
-		if (CL_ActorSelect(mouseActor)) {
+		if ((mouseActor != selActor) && CL_ActorSelect(mouseActor)) {
 			/* Succeeded so go back into move mode. */
 			cl.cmode = M_MOVE;
 		} else {
@@ -3784,7 +3784,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 
 	VectorAdd(ent.origin, boxSize, ent.oldorigin);
 	/* color */
-	if (mouseActor) {
+	if (mouseActor && (mouseActor != selActor)) {
 		ent.alpha = 0.4 + 0.2 * sin((float) cl.time / 80);
 		/* paint the box red if the soldiers under the cursor is */
 		/* not in our team and no civilian, too */
