@@ -490,7 +490,7 @@ void G_StunTeam (void)
  * @param[in] impact @todo ???
  * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
  */
-static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_mock_t *mock)
+static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_mock_t *mock, trace_t* tr)
 {
 	edict_t *check;
 	vec3_t center;
@@ -554,6 +554,16 @@ static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_m
 		G_Damage(check, fd, damage, ent, mock);
 		if (mock)
 			mock->allow_self = qfalse;
+	}
+
+	/* FIXME: splash might also hit other surfaces */
+	if (tr && fd->dmgtype == gi.csi->damFire && tr->contents & CONTENTS_BURN) {
+		/* sent particle to all players */
+		gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
+		gi.WriteShort(tr->contents >> 8);
+		gi.WritePos(impact);
+		gi.WriteShort(4);
+		gi.WriteString("fire");
 	}
 }
 
@@ -674,7 +684,7 @@ static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd,
 
 				/* check if this is a stone, ammor clip or grenade */
 				if (fd->splrad) {
-					G_SplashDamage(ent, fd, tr.endpos, mock);
+					G_SplashDamage(ent, fd, tr.endpos, mock, &tr);
 				} else if (!mock) {
 					/* spawn the stone on the floor */
 					if (fd->ammo && !fd->splrad && gi.csi->ods[weapon->t].thrown) {
@@ -898,7 +908,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 			/* do splash damage */
 			if (fd->splrad) {
 				VectorMA(impact, sv_shot_origin->value, tr.plane.normal, impact);
-				G_SplashDamage(ent, fd, impact, mock);
+				G_SplashDamage(ent, fd, impact, mock, &tr);
 			}
 		}
 
