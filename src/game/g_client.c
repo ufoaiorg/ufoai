@@ -2023,9 +2023,14 @@ static void G_GetTeam (player_t * player)
 		int spawnCheck[MAX_TEAMS];
 		int spawnSpots = 0;
 		int randomSpot = -1;
-		for (i = 1; i < MAX_TEAMS; i++)
+		/* skip civilian teams */
+		for (i = TEAM_PHALANX; i < MAX_TEAMS; i++) {
+			spawnCheck[i] = 0;
+			/* check whether there are spawnpoints for this team */
 			if (level.num_spawnpoints[i])
 				spawnCheck[spawnSpots++] = i;
+		}
+		/* we need at least 2 different team spawnpoints for multiplayer */
 		if (spawnSpots <= 1) {
 			gi.dprintf("G_GetTeam: Not enough spawn spots in map!\n");
 			player->pers.team = -1;
@@ -2243,13 +2248,16 @@ void G_ClientTeamInfo (player_t * player)
 	for (i = 0; i < length; i++) {
 		/* Search for a spawn point for each entry the client sent
 		 * Don't allow spawning of soldiers if:
-		 * + the game is already running (activeTeam != -1)
 		 * + the player is not in a valid team
+		 * +++ Multiplayer
+		 * + the game is already running (activeTeam != -1)
 		 * + the sv_maxsoldiersperplayer limit is hit (e.g. the assembled team is bigger than the allowed number of soldiers)
 		 * + the team already hit the max allowed amount of soldiers
 		 */
-		if (level.activeTeam == -1 && player->pers.team != -1 && i < sv_maxsoldiersperplayer->integer
-		 && level.num_spawned[player->pers.team] < sv_maxsoldiersperteam->integer) {
+		if (player->pers.team != -1
+		 && (sv_maxclients->integer == 1
+			|| (level.activeTeam == -1 && i < sv_maxsoldiersperplayer->integer
+			 && level.num_spawned[player->pers.team] < sv_maxsoldiersperteam->integer))) {
 			/* Here the client tells the server the information for the spawned actor(s). */
 
 			/* Receive fieldsize and get matching spawnpoint. */
