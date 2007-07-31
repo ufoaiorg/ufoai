@@ -145,7 +145,7 @@ menu aliencont
 
 	string txt_all_aliens
 	{
-		string "_Alive Aliens in all bases:"
+		string "_Alive aliens in all bases:"
 		pos "50 40"
 		color "0 .78 0 1"
 		size "275 16"
@@ -160,7 +160,7 @@ menu aliencont
 
 	string txt_here_aliens
 	{
-		string "_Alive Aliens in this base:"
+		string "_Alive aliens in this base:"
 		pos "50 60"
 		color "0 .78 0 1"
 		size "275 16"
