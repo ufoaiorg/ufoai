@@ -21,7 +21,7 @@ $(SND_SDL_TARGET) : $(SND_SDL_OBJS) $(BUILDDIR)/.dirs
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/snd-sdl/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [SDL] $<"; \
-		$(CC) $(CFLAGS) $(SHARED_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
+		$(CC) $(CFLAGS) $(CPPFLAGS) $(SHARED_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
 
 ###################################################################################################
 # ALSA
@@ -46,7 +46,7 @@ $(SND_ALSA_TARGET) : $(SND_ALSA_OBJS) $(BUILDDIR)/.dirs
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/snd-alsa/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [ALSA] $<"; \
-		$(CC) $(CFLAGS) $(SHARED_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
+		$(CC) $(CFLAGS) $(CPPFLAGS) $(SHARED_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
 
 ###################################################################################################
 # JACK
@@ -71,7 +71,7 @@ $(SND_JACK_TARGET) : $(SND_JACK_OBJS) $(BUILDDIR)/.dirs
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/snd-jack/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [JACK] $<"; \
-		$(CC) $(CFLAGS) $(SHARED_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
+		$(CC) $(CFLAGS) $(CPPFLAGS) $(SHARED_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
 
 ###################################################################################################
 # OSS
@@ -96,7 +96,7 @@ $(SND_OSS_TARGET) : $(SND_OSS_OBJS) $(BUILDDIR)/.dirs
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/snd-oss/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [OSS] $<"; \
-		$(CC) $(CFLAGS) $(SHARED_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
+		$(CC) $(CFLAGS) $(CPPFLAGS) $(SHARED_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
 
 ###################################################################################################
 # ARTS
@@ -121,7 +121,7 @@ $(SND_ARTS_TARGET) : $(SND_ARTS_OBJS) $(BUILDDIR)/.dirs
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/snd-arts/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [ARTS] $<"; \
-		$(CC) $(CFLAGS) $(SHARED_CFLAGS) $(SND_ARTS_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
+		$(CC) $(CFLAGS) $(CPPFLAGS) $(SHARED_CFLAGS) $(SND_ARTS_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
 
 ###################################################################################################
 # WAPI
@@ -147,7 +147,7 @@ ifeq ($(TARGET_OS),mingw32)
 	# Say how to build .o files from .c files for this module
 	$(BUILDDIR)/snd-wapi/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 		@echo " * [WAPI] $<"; \
-			$(CC) $(CFLAGS) $(SHARED_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
+			$(CC) $(CFLAGS) $(CPPFLAGS) $(SHARED_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
 
 endif
 
@@ -175,7 +175,7 @@ ifeq ($(TARGET_OS),mingw32)
 	# Say how to build .o files from .c files for this module
 	$(BUILDDIR)/snd-dx/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 		@echo " * [DX] $<"; \
-			$(CC) $(CFLAGS) $(SHARED_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
+			$(CC) $(CFLAGS) $(CPPFLAGS) $(SHARED_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
 
 endif
 
@@ -202,6 +202,6 @@ ifeq ($(TARGET_OS),darwin)
 	# Say how to build .o files from .c files for this module
 	$(BUILDDIR)/snd-osx/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 		@echo " * [OSX] $<"; \
-			$(CC) $(CFLAGS) $(SHARED_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
+			$(CC) $(CFLAGS) $(CPPFLAGS) $(SHARED_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
 
 endif

@@ -23,7 +23,7 @@ $(MASTERSERVER_TARGET): $(MASTERSERVER_OBJS) $(BUILDDIR)/.dirs
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/masterserver/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [MST] $<"; \
-		$(CC) $(CFLAGS) $(MASTER_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
+		$(CC) $(CFLAGS) $(CPPFLAGS) $(MASTER_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
 
 ifeq ($(TARGET_OS),mingw32)
 # Say how to build .o files from .rc files for this module
@@ -35,4 +35,4 @@ endif
 # Say how to build .o files from .m files for this module
 $(BUILDDIR)/masterserver/%.m: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [MST] $<"; \
-		$(CC) $(CFLAGS) $(MASTER_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
+		$(CC) $(CFLAGS) $(CPPFLAGS) $(MASTER_CFLAGS) -o $@ -c $< -MD -MT $@ -MP

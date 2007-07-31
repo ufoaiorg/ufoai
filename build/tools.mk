@@ -46,7 +46,7 @@ $(UFO2MAP_TARGET): $(UFO2MAP_OBJS) $(BUILDDIR)/.dirs
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/tools/ufo2map/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [MAP] $<"; \
-		$(CC) $(CFLAGS) -o $@ -c $< -MD -MT $@ -MP
+		$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $< -MD -MT $@ -MP
 
 ########################################################################################################
 # qdata
@@ -89,4 +89,4 @@ $(QDATA_TARGET): $(QDATA_OBJS) $(BUILDDIR)/.dirs
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/tools/qdata/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [QDT] $<"; \
-		$(CC) $(CFLAGS) -o $@ -c $< -MD -MT $@ -MP
+		$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $< -MD -MT $@ -MP
