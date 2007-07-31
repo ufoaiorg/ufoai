@@ -2880,7 +2880,7 @@ void MN_DrawMenus (void)
 			/* we are hovering an item and also want to display it
 	 		 * make sure that we draw this on top of every other node */
 			if (itemHover) {
-				char tooltiptext[MAX_VAR] = "";
+				char tooltiptext[MAX_VAR*2] = "";
 				int x = mx, y = my;
 				const int itemToolTipWidth = 250;
 				int linenum;
