@@ -1134,25 +1134,24 @@ static void MN_Drag (const menuNode_t* const node, int x, int y)
 
 			/* update character info (for armor changes) */
 			if (CL_OnBattlescape()) {
-				/** @todo Do we really need to do this (armour change) in battlescape? */
 				sel = cl_selected->integer; /**@todo is this really the correct index? */
 				if (sel >= 0 && aircraft) {
 					/** @todo checking for (sel < gd.numEmployees[EMPL_SOLDIER]) is kinda tricky/recursive here.
 					 * Is there a better way? */
 					chr = &gd.employees[aircraft->teamTypes[sel]][aircraft->teamIdxs[sel]].chr;
 					assert(chr);
-					if (chr->fieldSize == ACTOR_SIZE_2x2)
+					if (chr->empl_type == EMPL_ROBOT)
 						CL_UGVCvars(chr);
 					else
 						CL_CharacterCvars(chr);
 				}
 			} else {
 				/* We are in the base or multiplayer inventory */
-				/** @todo Replace curTeam with static list somehow. */
+				/** @todo Replace curTeam with non-global list (only shared with cl_team) somehow. */
 				sel = cl_selected->integer; /**@todo is this really the correct index? */
-				if (sel >= 0 && sel < gd.numEmployees[EMPL_SOLDIER]) {
+				if (sel >= 0 && sel < gd.numEmployees[EMPL_SOLDIER]) {	/** @todo this has to be changed/removed, see above */
 					assert(baseCurrent->curTeam[sel]);
-					if (baseCurrent->curTeam[sel]->fieldSize == ACTOR_SIZE_2x2)
+					if (baseCurrent->curTeam[sel]->empl_type == EMPL_ROBOT)
 						CL_UGVCvars(baseCurrent->curTeam[sel]);
 					else
 						CL_CharacterCvars(baseCurrent->curTeam[sel]);
