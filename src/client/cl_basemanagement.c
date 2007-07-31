@@ -3111,6 +3111,8 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			tech = RS_GetTechByProvided(MSG_ReadString(sb));
 			if (tech)
 				b->batteries[l].ammoIdx = AII_GetAircraftItemByID(tech->provides);
+			else
+				b->batteries[l].ammoIdx = -1;
 			/* read target of this weapon */
 			b->targetMissileIdx[l] = MSG_ReadShort(sb);
 		}
@@ -3126,6 +3128,8 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			tech = RS_GetTechByProvided(MSG_ReadString(sb));
 			if (tech)
 				b->lasers[l].ammoIdx = AII_GetAircraftItemByID(tech->provides);
+			else
+				b->lasers[l].ammoIdx = -1;
 			/* read target of this weapon */
 			b->targetLaserIdx[l] = MSG_ReadShort(sb);
 		}
@@ -3166,13 +3170,11 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 					aircraft->weapons[l].ammoLeft = MSG_ReadShort(sb);
 					aircraft->weapons[l].delayNextShot = MSG_ReadShort(sb);
 					aircraft->weapons[l].installationTime = MSG_ReadShort(sb);
-					s = MSG_ReadString(sb);
 					/* skip empty strings (no ammo loaded) */
-					if (*s) {
-						tech = RS_GetTechByProvided(s);
-						if (tech)
-							aircraft->weapons[l].ammoIdx = AII_GetAircraftItemByID(tech->provides);
-					} else
+					tech = RS_GetTechByProvided(MSG_ReadString(sb));
+					if (tech)
+						aircraft->weapons[l].ammoIdx = AII_GetAircraftItemByID(tech->provides);
+					else
 						aircraft->weapons[l].ammoIdx = -1;
 				} else {
 					/* just in case there are less slots in new game that in saved one */

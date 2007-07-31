@@ -2108,6 +2108,11 @@ technology_t *RS_GetTechByProvided (const char *id_provided)
 	unsigned hash;
 	technology_t *tech;
 
+	assert(id_provided);
+	/* catch empty strings */
+	if (!*id_provided)
+		return NULL;
+
 	hash = Com_HashKey(id_provided, TECH_HASH_SIZE);
 	for (tech = tech_hash_provided[hash]; tech; tech = tech->hash_provided_next)
 		if (!Q_stricmp(id_provided, tech->provides))
