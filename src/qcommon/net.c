@@ -77,7 +77,7 @@ struct net_stream {
 	qboolean ready;
 	qboolean closed;
 	qboolean finished;
-	SOCKET socket;
+	int socket;
 	int index;
 	int family;
 	int addrlen;
@@ -97,7 +97,7 @@ struct datagram {
 };
 
 struct datagram_socket {
-	SOCKET socket;
+	int socket;
 	int index;
 	int family;
 	int addrlen;
@@ -240,7 +240,7 @@ static const char *estr (void)
 	return estr_n(WSAGetLastError());
 }
 
-static void close_socket (SOCKET socket)
+static void close_socket (int socket)
 {
 	closesocket(socket);
 }
@@ -254,7 +254,7 @@ static const char *estr (void)
 	return strerror(errno);
 }
 
-static void close_socket (SOCKET socket)
+static void close_socket (int socket)
 {
 	close(socket);
 }
@@ -333,7 +333,7 @@ static void close_stream (struct net_stream *s)
 /**
  * @brief
  */
-static void do_accept (SOCKET sock)
+static void do_accept (int sock)
 {
 	int index = find_free_stream();
 	struct net_stream *s;
@@ -517,7 +517,7 @@ void wait_for_net (int timeout)
 /**
  * @brief
  */
-static qboolean set_non_blocking (SOCKET socket)
+static qboolean set_non_blocking (int socket)
 {
 #ifdef _WIN32
 	unsigned long t = 1;
