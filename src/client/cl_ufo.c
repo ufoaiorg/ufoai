@@ -217,7 +217,7 @@ static void UFO_FoundNewBase (aircraft_t *ufo, int dt)
 /**
  * @brief Check if the ufo can shoot at something
  */
-void UFO_SearchTarget (aircraft_t *ufo)
+static void UFO_SearchTarget (aircraft_t *ufo)
 {
 	base_t* base;
 	aircraft_t* phalanxAircraft;
