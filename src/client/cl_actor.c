@@ -2817,7 +2817,7 @@ void CL_ActorDie (struct dbuffer *msg)
 	re.AnimAppend(&le->as, le->model1, va("dead%i", le->state & STATE_DEAD));
 
 	/* Print some info about the death or stun. */
-	if (le->team == cls.team && baseCurrent) {
+	if (le->team == cls.team) {
 		chr = CL_GetActorChr(le);
 		if (chr && ((le->state & STATE_STUN) & ~STATE_DEAD)) {
 			Com_sprintf(tmpbuf, sizeof(tmpbuf), "%s %s %s\n",
