@@ -662,7 +662,7 @@ static void MN_DrawFree (int container, menuNode_t * node, int posx, int posy, i
 }
 
 /**
- * @brief Draws the free and useable inventory positions when dragging an item.
+ * @brief Draws the free and usable inventory positions when dragging an item.
  */
 static void MN_InvDrawFree (inventory_t * inv, menuNode_t * node)
 {
@@ -696,7 +696,7 @@ static void MN_InvDrawFree (inventory_t * inv, menuNode_t * node)
 			memset(free, 0, sizeof(free));
 			for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
 				for (x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {
-					/* Check if the current position is useable (topleft of the item) */
+					/* Check if the current position is usable (topleft of the item) */
 					if (Com_CheckToInventory(inv, item, container, x, y)) {
 						itemshape = csi.ods[dragItem.t].shape;
 						/* add '1's to each position the item is 'blocking' */
@@ -2021,14 +2021,16 @@ const char *MN_GetFont (const menu_t *m, const menuNode_t *const n)
  * @param[in] item The item we want to generate the tooltip text for.
  * @param[in|out] tooltiptext Pointer to a string the information should be written into.
  * @param[in] Max. string size of tooltiptext.
- * @todo Display used ammo
+ * @return Number of lines
+ * @todo return maximum line-width as well?
  */
-static void INV_GetItemTooltip (item_t item, char *tooltiptext, size_t string_maxlength)
+static int INV_GetItemTooltip (item_t item, char *tooltiptext, size_t string_maxlength)
 {
 	int i;
 	int weapon_idx;
-
+	int linenum = 0;
 	Q_strncpyz(tooltiptext, va("%s\n", csi.ods[item.t].name), string_maxlength);
+	linenum++;
 	/* Only display further info if item.t is researched */
 	if (RS_ItemIsResearched(csi.ods[item.t].id)) {
 		if (csi.ods[item.t].weapon) {
@@ -2037,23 +2039,33 @@ static void INV_GetItemTooltip (item_t item, char *tooltiptext, size_t string_ma
 				/* Item has no ammo but might have shot-count */
 				if (item.a) {
 					Q_strcat(tooltiptext, va(_("Ammo: %i\n"), item.a), string_maxlength);
+					linenum++;
 				}
 			} else if (item.m != NONE) {
 				/* Search for used ammo and display name + ammo count */
 				Q_strcat(tooltiptext, va(_("%s loaded\n"), csi.ods[item.m].name), string_maxlength);
+				linenum++;
 				Q_strcat(tooltiptext, va(_("Ammo: %i\n"),  item.a), string_maxlength);
+				linenum++;
 			}
 		} else if (csi.ods[item.t].numWeapons) {
-			/* If it's ammo get the weapon names it can be used in */
-			Q_strcat(tooltiptext, _("Useable in:\n"), string_maxlength);
-			for (i = 0; i < csi.ods[item.t].numWeapons; i++) {
-				weapon_idx = csi.ods[item.t].weap_idx[i];
-				if (RS_ItemIsResearched(csi.ods[weapon_idx].id)) {
-					Q_strcat(tooltiptext, va("* %s\n", csi.ods[weapon_idx].name), string_maxlength);
+			/* Check if this is a non-weapon and non-ammo item */
+			if (!(csi.ods[item.t].numWeapons == 1 && csi.ods[item.t].weap_idx[0] == item.t)) {
+				/* If it's ammo get the weapon names it can be used in */
+				Q_strcat(tooltiptext, _("Usable in:\n"), string_maxlength);
+				linenum++;
+				for (i = 0; i < csi.ods[item.t].numWeapons; i++) {
+					weapon_idx = csi.ods[item.t].weap_idx[i];
+					if (RS_ItemIsResearched(csi.ods[weapon_idx].id)) {
+						Q_strcat(tooltiptext, va("* %s\n", csi.ods[weapon_idx].name), string_maxlength);
+						linenum++;
+					}
+				}
 				}
 			}
 		}
 	}
+	return linenum;
 }
 
 /**
@@ -2872,9 +2884,11 @@ void MN_DrawMenus (void)
 				char tooltiptext[MAX_VAR] = "";
 				int x = mx, y = my;
 				const int itemToolTipWidth = 250;
-				const int itemToolTipHeight = 80;
-				/* Get name and ifo about item */
-				INV_GetItemTooltip(itemHover->item, tooltiptext, sizeof(tooltiptext));
+				int linenum;
+				int itemToolTipHeight;
+				/* Get name and info about item */
+				linenum = INV_GetItemTooltip(itemHover->item, tooltiptext, sizeof(tooltiptext));
+				itemToolTipHeight = linenum * 25; /** @todo make this a constant/define? */
 #if 1
 				if (x + itemToolTipWidth > VID_NORM_WIDTH)
 					x = VID_NORM_WIDTH - itemToolTipWidth;
