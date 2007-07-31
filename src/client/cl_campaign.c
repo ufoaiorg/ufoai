@@ -2267,7 +2267,7 @@ static void CL_GameGo (void)
 
 	CL_SetMissionCvars(mis);
 	/* Set the states of mission Cvars to proper values. */
-	Cvar_SetValue("mission_homebase", baseCurrent->idx);
+	Cvar_SetValue("mission_homebase", base->idx);
 	Cvar_SetValue("mission_uforecovered", 0);
 
 	/* @todo: Map assembling to get the current used dropship in the map is not fully implemented */
