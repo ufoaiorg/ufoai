@@ -259,7 +259,7 @@ void UP_ItemDescription (int item)
 
 	/* select item */
 	od = &csi.ods[item];
-	Cvar_Set("mn_itemname", _(od->name));
+	Cvar_Set("mn_itemname", od->name);
 	Cvar_Set("mn_item", od->id);
 	Cvar_Set("mn_displayfiremode", "0"); /* use strings here - no int */
 	Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
