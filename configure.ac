@@ -622,6 +622,7 @@ fi
 #---------------------------------------------------------------------------------------------
 
 OLD_CFLAGS=$CFLAGS
+OLD_CPPFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $SDL_CFLAGS"
 CPPFLAGS=$CFLAGS
 
@@ -644,7 +645,7 @@ else
 fi
 
 CFLAGS=$OLD_CFLAGS
-CPPFLAGS=
+CPPFLAGS=$OLD_CFLAGS
 
 OLD_LDFLAGS=$LDFLAGS
 LDFLAGS="$LDFLAGS $SDL_LDFLAGS"
