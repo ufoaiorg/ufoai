@@ -509,7 +509,7 @@ typedef struct le_s {
 	int team;
 	int pnum;
 
-	int contents;
+	int contents;			/**< content flags for this LE - used for tracing */
 	vec3_t mins, maxs;
 
 	int modelnum1, modelnum2, skinnum;
@@ -522,6 +522,8 @@ typedef struct le_s {
 
 	/** various think function vars */
 	byte path[MAX_LE_PATHLENGTH];
+	int pathContents[MAX_LE_PATHLENGTH];	/**< content flags of the brushes the actor is walking in */
+	int positionContents;					/**< content flags for the current brush the actor is standing in */
 	int pathLength, pathPos;
 	int startTime, endTime;
 	int speed;

@@ -409,12 +409,41 @@ void LET_StartIdle (le_t * le)
 }
 
 /**
+ * @brief
+ * @param[in] contents The contents flash of the brush we are currently in
+ */
+static void LE_PlaySoundFileForContents (le_t* le, int contents)
+{
+	sfx_t* sfx;
+
+	if (contents & CONTENTS_WATER) {
+		/* were we already in the water? */
+		if (le->positionContents & CONTENTS_WATER) {
+			/* play water moving sound */
+			sfx = S_RegisterSound("footsteps/water_under");
+			S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_ACTOR, sfx, 1, 1, 0);
+		} else {
+			/* play water entering sound */
+			sfx = S_RegisterSound("footsteps/water_in");
+			S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_ACTOR, sfx, 1, 1, 0);
+		}
+		return;
+	}
+
+	if (le->positionContents & CONTENTS_WATER) {
+		/* play water leaving sound */
+		sfx = S_RegisterSound("footsteps/water_out");
+		S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_ACTOR, sfx, 1, 1, 0);
+	}
+}
+
+/**
  * @brief Plays step sounds and draw particles for different terrain types
  * @param[in] le The local entity to play the sound and draw the particle for
  * @param[in] textureName The name of the texture the actor is standing on
  * @sa LET_PathMove
  */
-static void CL_PlaySoundFileAndParticleForSurface (le_t* le, const char *textureName)
+static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char *textureName)
 {
 	sfx_t *sfx;
 	int entchannel = SOUND_CHANNEL_ACTOR;
@@ -450,8 +479,6 @@ static void CL_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
 void LET_PathMoveHidden (le_t * le)
 {
 	byte dv;
-	float frac;
-	vec3_t start, dest, delta;
 	trace_t trace;
 	vec3_t from, to;
 
@@ -465,41 +492,37 @@ void LET_PathMoveHidden (le_t * le)
 
 		if (le->pathPos < le->pathLength) {
 			/* next part */
-			dv = le->path[le->pathPos++];
+			dv = le->path[le->pathPos];
 			PosAddDV(le->pos, dv);
 
-			/* prepare trace vectors */
-			PosToVec(le->pos, from);
-			VectorCopy(from, to);
-			/* between these two we should really hit the ground */
-			from[2] += UNIT_HEIGHT;
-			to[2] -= UNIT_HEIGHT;
+			/* walking in water will not play the normal footstep sounds */
+			if (!le->pathContents[le->pathPos]) {
+				/* prepare trace vectors */
+				PosToVec(le->pos, from);
+				VectorCopy(from, to);
+				/* between these two we should really hit the ground */
+				from[2] += UNIT_HEIGHT;
+				to[2] -= UNIT_HEIGHT;
 
-			trace = CL_Trace(from, to, vec3_origin, vec3_origin, NULL, NULL, MASK_SOLID);
-			if (trace.surface)
-				CL_PlaySoundFileAndParticleForSurface(le, trace.surface->name);
+				trace = CL_Trace(from, to, vec3_origin, vec3_origin, NULL, NULL, MASK_SOLID);
+				if (trace.surface)
+					LE_PlaySoundFileAndParticleForSurface(le, trace.surface->name);
+			}
 
 			le->dir = dv & (DIRECTIONS-1);
 			le->angles[YAW] = dangle[le->dir];
 			le->startTime = le->endTime;
 			/* check for straight movement or diagonal movement */
 			le->endTime += ((dv & (DIRECTIONS-1)) > 3 ? UNIT_SIZE * 1.41 : UNIT_SIZE) * 1000 / le->speed;
+
+			le->positionContents = le->pathContents[le->pathPos];
+			le->pathPos++;
 		} else {
 			le->pathLength = 0;
 			le->think = NULL;
 			return;
 		}
 	}
-
-	/* interpolate the position */
-	Grid_PosToVec(&clMap, le->pos, le->origin);
-	Grid_PosToVec(&clMap, le->oldPos, start);
-	Grid_PosToVec(&clMap, le->pos, dest);
-	VectorSubtract(dest, start, delta);
-
-	frac = (float) (cl.time - le->startTime) / (float) (le->endTime - le->startTime);
-
-	VectorMA(start, frac, delta, le->origin);
 }
 
 /**
@@ -526,7 +549,7 @@ static void LET_PathMove (le_t * le)
 
 		if (le->pathPos < le->pathLength) {
 			/* next part */
-			dv = le->path[le->pathPos++];
+			dv = le->path[le->pathPos];
 			PosAddDV(le->pos, dv);
 			tuCost = Grid_MoveLength(&clMap, le->pos, qfalse) - Grid_MoveLength(&clMap, le->oldPos, qfalse);
 			if (le->state & STATE_CROUCHED)
@@ -535,30 +558,29 @@ static void LET_PathMove (le_t * le)
 			if (le == selActor)
 				actorMoveLength -= tuCost;
 
-			/* prepare trace vectors */
-			PosToVec(le->pos, from);
-			VectorCopy(from, to);
-			/* between these two we should really hit the ground */
-			from[2] += UNIT_HEIGHT;
-			to[2] -= UNIT_HEIGHT;
+			/* walking in water will not play the normal footstep sounds */
+			if (!le->pathContents[le->pathPos]) {
+				/* prepare trace vectors */
+				PosToVec(le->pos, from);
+				VectorCopy(from, to);
+				/* between these two we should really hit the ground */
+				from[2] += UNIT_HEIGHT;
+				to[2] -= UNIT_HEIGHT;
 
-			trace = CL_Trace(from, to, vec3_origin, vec3_origin, NULL, NULL, MASK_SOLID);
-			if (trace.surface)
-				CL_PlaySoundFileAndParticleForSurface(le, trace.surface->name);
+				trace = CL_Trace(from, to, vec3_origin, vec3_origin, NULL, NULL, MASK_SOLID);
+				if (trace.surface)
+					LE_PlaySoundFileAndParticleForSurface(le, trace.surface->name);
+			} else
+				LE_PlaySoundFileForContents(le, le->pathContents[le->pathPos]);
 
 			le->dir = dv & (DIRECTIONS-1);
 			le->angles[YAW] = dangle[le->dir];
 			le->startTime = le->endTime;
 			/* check for straight movement or diagonal movement */
 			le->endTime += ((dv & (DIRECTIONS-1)) > 3 ? UNIT_SIZE * 1.41 : UNIT_SIZE) * 1000 / le->speed;
-#if 0
-			/* follow the actor's z-level */
-			if (le->team == cls.team && le == selActor
-			 && cl_worldlevel->integer == le->oldPos[2]
-			 && le->pos[2] != le->oldPos[2]) {
-				Cvar_SetValue("cl_worldlevel", le->pos[2]);
-			}
-#endif
+
+			le->positionContents = le->pathContents[le->pathPos];
+			le->pathPos++;
 		} else {
 			/* end of move */
 			le_t *floor;

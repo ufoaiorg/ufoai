@@ -165,17 +165,12 @@ FRAME UPDATES
 /**
  * @brief Each entity can have eight independant sound sources, like voice, weapon, feet, etc.
  * If cahnnel & 8, the sound will be sent to everyone, not just things in the PHS.
- * FIXME: if entity isn't in PHS, they must be forced to be sent or have the origin explicitly sent.
- *
  * Channel 0 is an auto-allocate channel, the others override anything already running on that entity/channel pair.
- *
  * An attenuation of 0 will play full volume everywhere in the level. Larger attenuations will drop off. (max 4 attenuation)
- *
  * Timeofs can range from 0.0 to 0.1 to cause sounds to be started later in the frame than they normally would.
- *
  * If origin is NULL, the origin is determined from the entity origin or the midpoint of the entity box for bmodels.
  */
-void SV_StartSound (vec3_t origin, edict_t *entity, const char *sound, int channel, float volume, float attenuation, float timeofs)
+void SV_StartSound (int mask, vec3_t origin, edict_t *entity, const char *sound, int channel, float volume, float attenuation, float timeofs)
 {
 	int sendchan;
 	int flags;
@@ -249,5 +244,5 @@ void SV_StartSound (vec3_t origin, edict_t *entity, const char *sound, int chann
 	if (flags & SND_POS)
 		NET_WritePos(msg, origin);
 
-	SV_Multicast(~0, msg);
+	SV_Multicast(mask, msg);
 }

@@ -1343,24 +1343,24 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				gi.WriteByte(dvtab[numdv]);
 				gi.WriteShort(contents);
 
-				/* FIXME: currently the sound is played too early */
+				/* check if player appears/perishes, seen from other teams */
+				G_CheckVis(ent, qtrue);
+
+				/* Send the sound effect to everyone how's not seeing the actor */
 				if (contents & CONTENTS_WATER) {
 					if (inWater) {
 						/* send water moving sound */
-						gi.PositionedSound(ent->origin, ent, "footsteps/water_under", CHAN_AUTO, 1, 1, 0);
+						gi.PositionedSound(~G_VisToPM(ent->visflags), ent->origin, ent, "footsteps/water_under", CHAN_AUTO, 1, 1, 0);
 					} else {
 						inWater = qtrue;
 						/* send water entering sound */
-						gi.PositionedSound(ent->origin, ent, "footsteps/water_in", CHAN_AUTO, 1, 1, 0);
+						gi.PositionedSound(~G_VisToPM(ent->visflags), ent->origin, ent, "footsteps/water_in", CHAN_AUTO, 1, 1, 0);
 					}
 				} else if (inWater) {
 					inWater = qfalse;
 					/* send water leaving sound */
-					gi.PositionedSound(ent->origin, ent, "footsteps/water_out", CHAN_AUTO, 1, 1, 0);
+					gi.PositionedSound(~G_VisToPM(ent->visflags), ent->origin, ent, "footsteps/water_out", CHAN_AUTO, 1, 1, 0);
 				}
-
-				/* check if player appears/perishes, seen from other teams */
-				G_CheckVis(ent, qtrue);
 
 				/* check for anything appearing, seen by "the moving one" */
 				status = G_CheckVisTeam(ent->team, NULL, qfalse);

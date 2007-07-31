@@ -2286,11 +2286,11 @@ void CL_ActorMoveHidden (struct dbuffer *msg)
 
 	/*Com_Printf("CL_ActorMoveHidden: number: %i (team: %i)\n", number, le->team);*/
 	/* get length */
-	NET_ReadFormat(msg, ev_format[EV_ACTOR_MOVE_HIDDEN], le->path);
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_MOVE_HIDDEN], le->path[le->pathLength], le->pathContents[le->pathLength]);
+	le->pathLength++;
 
 	/* activate PathMove function */
 	le->think = LET_StartPathMove;
-	le->pathLength = 1;
 	le->pathPos = 0;
 	le->startTime = cl.time;
 	le->endTime = cl.time;
@@ -2311,7 +2311,7 @@ void CL_ActorMoveHidden (struct dbuffer *msg)
 void CL_ActorDoMove (struct dbuffer *msg)
 {
 	le_t *le;
-	int number, contents;
+	int number;
 
 	number = NET_ReadShort(msg);
 	/* get le */
@@ -2327,7 +2327,7 @@ void CL_ActorDoMove (struct dbuffer *msg)
 	}
 
 	/* get length */
-	NET_ReadFormat(msg, ev_format[EV_ACTOR_MOVE], &le->path[le->pathLength], &contents);
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_MOVE], &le->path[le->pathLength], &le->pathContents[le->pathLength]);
 	le->pathLength++;
 	assert(le->pathLength <= MAX_LE_PATHLENGTH);
 
