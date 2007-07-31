@@ -1374,9 +1374,9 @@ menu mp_create_server
 	func init
 	{
 		cmd	"mn_escpop 5;"
-		cmd "killserver; set sv_maxplayersperteam 8; set sv_roundtimelimit 0"
-		cmd "gametype 2on2; gametype 1on1"
-		cmd "getmaps"
+		cmd "killserver; set sv_maxplayersperteam 8; set sv_roundtimelimit 0;"
+		cmd "mn_updategametype;"
+		cmd "getmaps;"
 	}
 }
 
@@ -1722,8 +1722,8 @@ gametype 1on1
 	{
 		sv_teamplay 0
 		sv_maxclients 2
-		sv_maxsoldiersperplayer 8
-		sv_maxsoldiersperteam 8
+		sv_maxsoldiersperplayer 4
+		sv_maxsoldiersperteam 4
 		ai_numactors 0
 		sv_ai 0
 		ai_autojoin 0
@@ -1736,8 +1736,8 @@ gametype 1on1on1
 	{
 		sv_teamplay 0
 		sv_maxclients 3
-		sv_maxsoldiersperplayer 8
-		sv_maxsoldiersperteam 8
+		sv_maxsoldiersperplayer 4
+		sv_maxsoldiersperteam 4
 		ai_numactors 0
 		sv_ai 0
 		ai_autojoin 0

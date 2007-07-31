@@ -542,6 +542,14 @@ static float MN_GetReferenceFloat (const menu_t* const menu, void *ref)
 }
 
 /**
+ * @brief Update the menu values with current gametype values
+ */
+static void MN_UpdateGametype_f (void)
+{
+	Com_SetGameType();
+}
+
+/**
  * @brief Switch to the next multiplayer game type
  */
 static void MN_NextGametype_f (void)
@@ -3539,6 +3547,7 @@ void MN_ResetMenus (void)
 	Cmd_AddCommand("messagelist", CL_ShowMessagesOnStack_f, "Print all messages to the game console");
 	Cmd_AddCommand("getmaps", MN_GetMaps_f, "Get the list of available maps");
 	Cmd_AddCommand("mn_startserver", MN_StartServer_f, NULL);
+	Cmd_AddCommand("mn_updategametype", MN_UpdateGametype_f, "Update the menu values with current gametype values");
 	Cmd_AddCommand("mn_nextgametype", MN_NextGametype_f, "Switch to the next multiplayer game type");
 	Cmd_AddCommand("mn_prevgametype", MN_PrevGametype_f, "Switch to the previous multiplayer game type");
 	Cmd_AddCommand("mn_nextmap", MN_NextMap_f, "Switch to the next multiplayer map");
