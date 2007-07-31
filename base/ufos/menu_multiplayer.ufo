@@ -1368,14 +1368,6 @@ menu mp_create_server
 		align	cc
 	}
 
-	confunc mn_servercreate_update
-	{
-		cmd "mn_translate public mn_public 0:No,1:Yes;"
-		cmd "mn_translate sv_teamplay mn_teamplay 0:No,1:Yes;"
-		cmd "mn_translate ai_autojoin mn_autojoin 0:No,1:Yes;"
-		cmd "mn_translate sv_enablemorale mn_enablemorale 0:No,1:Yes;"
-	}
-
 	// ===================
 	// INIT
 	// ===================
@@ -1385,9 +1377,6 @@ menu mp_create_server
 		cmd "killserver; set sv_maxplayersperteam 8; set sv_roundtimelimit 0"
 		cmd "gametype 2on2; gametype 1on1"
 		cmd "getmaps"
-		cmd "mn_modify ai_autojoin -1 0 1"
-		cmd "mn_modify sv_teamplay -1 0 1"
-		cmd "mn_servercreate_update"
 	}
 }
 
