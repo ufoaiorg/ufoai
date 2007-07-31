@@ -333,12 +333,6 @@ void GLMatrixMultiply(const float a[16], const float b[16], float c[16]);
 void GLVectorTransform(const float m[16], const vec4_t in, vec4_t out);
 void VectorRotate(const vec3_t m[3], const vec3_t va, vec3_t vb);
 
-/* just in case you do't want to use the macros */
-vec_t _DotProduct(const vec3_t v1, const vec3_t v2);
-void _VectorSubtract(const vec3_t veca, const vec3_t vecb, vec3_t out);
-void _VectorAdd(const vec3_t veca, const vec3_t vecb, vec3_t out);
-void _VectorCopy(const vec3_t in, vec3_t out);
-
 void ClearBounds(vec3_t mins, vec3_t maxs);
 void AddPointToBounds(const vec3_t v, vec3_t mins, vec3_t maxs);
 int VectorCompareEps(const vec3_t v1, const vec3_t v2, float epsilon);
@@ -368,7 +362,6 @@ float LerpAngle(float a1, float a2, float frac);
 
 qboolean FrustomVis(vec3_t origin, int dir, vec3_t point);
 
-void ProjectPointOnPlane(vec3_t dst, const vec3_t p, const vec3_t normal);
 void PerpendicularVector(vec3_t dst, const vec3_t src);
 void RotatePointAroundVector(vec3_t dst, const vec3_t dir, const vec3_t point, float degrees);
 

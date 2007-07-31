@@ -226,7 +226,7 @@ void AngleVectors (vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
  * @param[in] dir Direction to test into
  * @param[in] point This is the point we want to check the visibility for
  */
-inline qboolean FrustomVis (vec3_t origin, int dir, vec3_t point)
+qboolean FrustomVis (vec3_t origin, int dir, vec3_t point)
 {
 	/* view frustum check */
 	vec3_t delta;
@@ -252,7 +252,7 @@ inline qboolean FrustomVis (vec3_t origin, int dir, vec3_t point)
  * @param[out] dst Coordinates of the projection on the plane
  * @pre @c Non-null pointers and a normalized normal vector.
  */
-inline void ProjectPointOnPlane (vec3_t dst, const vec3_t point, const vec3_t normal)
+static inline void ProjectPointOnPlane (vec3_t dst, const vec3_t point, const vec3_t normal)
 {
 	float distance; /**< closest distance from the point to the plane */
 
@@ -282,7 +282,7 @@ inline void ProjectPointOnPlane (vec3_t dst, const vec3_t point, const vec3_t no
  * @sa VectorNormalize2
  * @return vector length as vec_t
  */
-inline vec_t VectorNormalize (vec3_t v)
+vec_t VectorNormalize (vec3_t v)
 {
 	float length, ilength;
 
@@ -346,11 +346,10 @@ void PerpendicularVector (vec3_t dst, const vec3_t src)
  * @example
  * you have the right and forward values of an axis, their cross product will
  * be a properly oriented "up" direction
- * @sa _DotProduct
  * @sa DotProduct
  * @sa VectorNormalize2
  */
-inline void CrossProduct (const vec3_t v1, const vec3_t v2, vec3_t cross)
+void CrossProduct (const vec3_t v1, const vec3_t v2, vec3_t cross)
 {
 	cross[0] = v1[1] * v2[2] - v1[2] * v2[1];
 	cross[1] = v1[2] * v2[0] - v1[0] * v2[2];
@@ -580,7 +579,7 @@ float AngleNormalize180 (float angle)
 /**
  * @brief
  */
-inline int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cBspPlane_s *p)
+int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cBspPlane_s *p)
 {
 	float dist1, dist2;
 	int sides;
@@ -650,7 +649,7 @@ inline int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cBspPlane_s *p)
  * @param[in] mins
  * @param[in] maxs
  */
-inline void ClearBounds (vec3_t mins, vec3_t maxs)
+void ClearBounds (vec3_t mins, vec3_t maxs)
 {
 	mins[0] = mins[1] = mins[2] = 99999;
 	maxs[0] = maxs[1] = maxs[2] = -99999;
@@ -683,7 +682,7 @@ void AddPointToBounds (const vec3_t v, vec3_t mins, vec3_t maxs)
  * @param[in] comp
  * @return qboolean
  */
-inline qboolean VectorNearer (const vec3_t v1, const vec3_t v2, const vec3_t comp)
+qboolean VectorNearer (const vec3_t v1, const vec3_t v2, const vec3_t comp)
 {
 	vec3_t d1, d2;
 
@@ -701,7 +700,7 @@ inline qboolean VectorNearer (const vec3_t v1, const vec3_t v2, const vec3_t com
  * @return vector length as vec_t
  * @sa CrossProduct
  */
-inline vec_t VectorNormalize2 (const vec3_t v, vec3_t out)
+vec_t VectorNormalize2 (const vec3_t v, vec3_t out)
 {
 	float length, ilength;
 
@@ -725,7 +724,7 @@ inline vec_t VectorNormalize2 (const vec3_t v, vec3_t out)
  * @param[in] vecb Movement direction
  * @param[out] vecc Target vector
  */
-inline void VectorMA (const vec3_t veca, const float scale, const vec3_t vecb, vec3_t vecc)
+void VectorMA (const vec3_t veca, const float scale, const vec3_t vecb, vec3_t vecc)
 {
 	vecc[0] = veca[0] + scale * vecb[0];
 	vecc[1] = veca[1] + scale * vecb[1];
@@ -775,7 +774,7 @@ void VectorClampMA (vec3_t veca, float scale, const vec3_t vecb, vec3_t vecc)
  * @param
  * @sa GLMatrixMultiply
  */
-inline void MatrixMultiply (const vec3_t a[3], const vec3_t b[3], vec3_t c[3])
+void MatrixMultiply (const vec3_t a[3], const vec3_t b[3], vec3_t c[3])
 {
 	c[0][0] = a[0][0] * b[0][0] + a[1][0] * b[0][1] + a[2][0] * b[0][2];
 	c[0][1] = a[0][1] * b[0][0] + a[1][1] * b[0][1] + a[2][1] * b[0][2];
@@ -827,7 +826,7 @@ void GLVectorTransform (const float m[16], const vec4_t in, vec4_t out)
  * @param
  * @sa
  */
-inline void VectorRotate (const vec3_t m[3], const vec3_t va, vec3_t vb)
+void VectorRotate (const vec3_t m[3], const vec3_t va, vec3_t vb)
 {
 	vb[0] = m[0][0] * va[0] + m[1][0] * va[1] + m[2][0] * va[2];
 	vb[1] = m[0][1] * va[0] + m[1][1] * va[1] + m[2][1] * va[2];
@@ -856,111 +855,6 @@ int VectorCompareEps (const vec3_t v1, const vec3_t v2, float epsilon)
 	return 1;
 }
 
-/**
- * @brief binary operation which takes two vectors returns a scalar quantity
- * It is the standard inner product of the Euclidean space.
- * @note also known as the scalar product
- * @param[in] v1
- * @param[in] v2
- * @sa CrossProduct
- */
-inline vec_t _DotProduct (const vec3_t v1, const vec3_t v2)
-{
-	return v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2];
-}
-
-/**
- * @brief
- * @param
- * @sa _VectorAdd
- */
-inline void _VectorSubtract (const vec3_t veca, const vec3_t vecb, vec3_t out)
-{
-#ifdef UFO_MMX_ENABLED
-	/* raynorpat: msvc sse optimization */
-	__m128 xmm_veca, xmm_vecb, xmm_out;
-
-	xmm_veca = _mm_load_ss(&veca[0]);
-	xmm_vecb = _mm_load_ss(&vecb[0]);
-	xmm_out = _mm_sub_ss(xmm_veca, xmm_vecb);
-	_mm_store_ss(&out[0], xmm_out);
-
-	xmm_veca = _mm_load_ss(&veca[1]);
-	xmm_vecb = _mm_load_ss(&vecb[1]);
-	xmm_out = _mm_sub_ss(xmm_veca, xmm_vecb);
-	_mm_store_ss(&out[1], xmm_out);
-
-	xmm_veca = _mm_load_ss(&veca[2]);
-	xmm_vecb = _mm_load_ss(&vecb[2]);
-	xmm_out = _mm_sub_ss(xmm_veca, xmm_vecb);
-	_mm_store_ss(&out[2], xmm_out);
-#else
-	out[0] = veca[0] - vecb[0];
-	out[1] = veca[1] - vecb[1];
-	out[2] = veca[2] - vecb[2];
-#endif
-}
-
-/**
- * @brief Adds two vectors
- * @param[in] veca First vector
- * @param[in] vecb Second vector
- * @param[out] out The sum of the two vectors
- * @sa _VectorSubtract
- */
-inline void _VectorAdd (const vec3_t veca, const vec3_t vecb, vec3_t out)
-{
-#ifdef UFO_MMX_ENABLED
-	/* raynorpat: msvc sse optimization */
-	__m128 xmm_veca, xmm_vecb, xmm_out;
-
-	xmm_veca = _mm_load_ss(&veca[0]);
-	xmm_vecb = _mm_load_ss(&vecb[0]);
-	xmm_out = _mm_add_ss(xmm_veca, xmm_vecb);
-	_mm_store_ss(&out[0], xmm_out);
-
-	xmm_veca = _mm_load_ss(&veca[1]);
-	xmm_vecb = _mm_load_ss(&vecb[1]);
-	xmm_out = _mm_add_ss(xmm_veca, xmm_vecb);
-	_mm_store_ss(&out[1], xmm_out);
-
-	xmm_veca = _mm_load_ss(&veca[2]);
-	xmm_vecb = _mm_load_ss(&vecb[2]);
-	xmm_out = _mm_add_ss(xmm_veca, xmm_vecb);
-	_mm_store_ss(&out[2], xmm_out);
-#else
-	out[0] = veca[0] + vecb[0];
-	out[1] = veca[1] + vecb[1];
-	out[2] = veca[2] + vecb[2];
-#endif
-}
-
-/**
- * @brief
- * @param
- * @sa
- */
-inline void _VectorCopy (const vec3_t in, vec3_t out)
-{
-#ifdef UFO_MMX_ENABLED
-	/* raynorpat: msvc sse optimization */
-	__m128 xmm_in;
-
-	xmm_in = _mm_load_ss(&in[0]);
-	_mm_store_ss(&out[0], xmm_in);
-
-	xmm_in = _mm_load_ss(&in[1]);
-	_mm_store_ss(&out[1], xmm_in);
-
-	xmm_in = _mm_load_ss(&in[2]);
-	_mm_store_ss(&out[2], xmm_in);
-#else
-	out[0] = in[0];
-	out[1] = in[1];
-	out[2] = in[2];
-#endif
-}
-
 double sqrt (double x);
 
 /**
@@ -969,7 +863,7 @@ double sqrt (double x);
  * @sa VectorNormalize
  * @return Vector length as vec_t
  */
-inline vec_t VectorLength (const vec3_t v)
+vec_t VectorLength (const vec3_t v)
 {
 	int i;
 	float length;
@@ -987,7 +881,7 @@ inline vec_t VectorLength (const vec3_t v)
  * @param
  * @sa
  */
-inline void VectorInverse (vec3_t v)
+void VectorInverse (vec3_t v)
 {
 	v[0] = -v[0];
 	v[1] = -v[1];
@@ -999,7 +893,7 @@ inline void VectorInverse (vec3_t v)
  * @param
  * @sa
  */
-inline void VectorScale (const vec3_t in, const vec_t scale, vec3_t out)
+void VectorScale (const vec3_t in, const vec_t scale, vec3_t out)
 {
 #ifdef UFO_MMX_ENABLED
 	/* raynorpat: msvc sse optimization */
@@ -1032,7 +926,7 @@ inline void VectorScale (const vec3_t in, const vec_t scale, vec3_t out)
  * @param
  * @sa
  */
-inline int Q_log2 (int val)
+int Q_log2 (int val)
 {
 	int answer = 0;
 
@@ -1044,7 +938,7 @@ inline int Q_log2 (int val)
 /**
   * @brief Return random values between 0 and 1
   */
-inline float frand (void)
+float frand (void)
 {
 	return (rand() & 32767) * (1.0 / 32767);
 }
@@ -1053,7 +947,7 @@ inline float frand (void)
 /**
   * @brief Return random values between -1 and 1
   */
-inline float crand (void)
+float crand (void)
 {
 	return (rand() & 32767) * (2.0 / 32767) - 1;
 }
@@ -1062,7 +956,7 @@ inline float crand (void)
  * @brief generate two gaussian distributed random numbers with median at 0 and stdev of 1
  * @param pointers to two floats that need to be set. both have to be provided.
  */
-inline void gaussrand (float *gauss1, float *gauss2)
+void gaussrand (float *gauss1, float *gauss2)
 {
 	float x1,x2,w,tmp;
 
