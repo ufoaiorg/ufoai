@@ -273,7 +273,7 @@ void CL_LanguageInit (void)
 /**
  * @brief Cycle through all parsed locale mappings and try to set one after another
  * @param[in] localeID the locale id parsed from scriptfiles
- * @sa Qcommon_LocaleSet
+ * @sa CL_LocaleSet
  */
 qboolean CL_LanguageTryToSet (const char *localeID)
 {

@@ -546,60 +546,6 @@ static void Com_Error_f (void)
 	Com_Error(ERR_FATAL, "%s", Cmd_Argv(1));
 }
 
-#ifdef HAVE_GETTEXT
-/**
- * @brief Gettext init function
- *
- * Initialize the locale settings for gettext
- * po files are searched in ./base/i18n
- * You can override the language-settings in setting
- * the cvar s_language to a valid language-string like
- * e.g. de_DE, en or en_US
- *
- * This function is only build in and called when
- * defining HAVE_GETTEXT
- * Under Linux see Makefile options for this
- *
- * @sa Qcommon_Init
- */
-qboolean Qcommon_LocaleSet (void)
-{
-	char *locale;
-
-#ifdef _WIN32
-	Q_putenv("LANG", s_language->string);
-	Q_putenv("LANGUAGE", s_language->string);
-#else /* _WIN32 */
-# ifndef __sun
-	unsetenv("LANGUAGE");
-# endif /* __sun */
-# ifdef __APPLE__
-	if (*s_language->string && Q_putenv("LANGUAGE", s_language->string) == -1)
-		Com_Printf("...setenv for LANGUAGE failed: %s\n", s_language->string);
-	if (*s_language->string && Q_putenv("LC_ALL", s_language->string) == -1)
-		Com_Printf("...setenv for LC_ALL failed: %s\n", s_language->string);
-# endif /* __APPLE__ */
-#endif /* _WIN32 */
-
-	/* set to system default */
-	setlocale(LC_ALL, "C");
-	locale = setlocale(LC_MESSAGES, s_language->string);
-	if (!locale) {
-		Com_DPrintf("...could not set to language: %s\n", s_language->string);
-		locale = setlocale(LC_MESSAGES, "");
-		if (!locale) {
-			Com_DPrintf("...could not set to system language\n");
-			return qfalse;
-		}
-	} else {
-		Com_Printf("...using language: %s\n", locale);
-		Cvar_Set("s_language", locale);
-		s_language->modified = qfalse;
-	}
-	return qtrue;
-}
-#endif /* HAVE_GETTEXT */
-
 /**
  * @brief
  */
@@ -735,22 +681,10 @@ static void Cbuf_Execute_timer (int now, void *data)
  * @sa Com_ParseScripts
  * @sa Sys_Init
  * @sa CL_Init
- * @sa Qcommon_LocaleSet
- *
- * To compile language support into UFO:AI you need to activate the preprocessor variable
- * HAVE_GETTEXT (for linux have a look at the makefile)
  */
 void Qcommon_Init (int argc, const char **argv)
 {
 	char *s;
-
-#ifndef DEDICATED_ONLY
-#ifdef HAVE_GETTEXT
-	/* i18n through gettext */
-	char languagePath[MAX_OSPATH];
-	cvar_t *fs_i18ndir;
-#endif /* HAVE_GETTEXT */
-#endif /* DEDICATED_ONLY */
 
 	com_aliasSysPool = Mem_CreatePool("Common: Alias system");
 	com_cmdSysPool = Mem_CreatePool("Common: Command system");
@@ -833,29 +767,6 @@ void Qcommon_Init (int argc, const char **argv)
 	init_net();
 
 	SV_Init();
-
-#ifndef DEDICATED_ONLY /* no gettext support for dedicated servers please */
-#ifdef HAVE_GETTEXT
-	fs_i18ndir = Cvar_Get("fs_i18ndir", "", 0, "System path to language files");
-	/* i18n through gettext */
-	setlocale(LC_ALL, "C");
-	setlocale(LC_MESSAGES, "");
-	/* use system locale dir if we can't find in gamedir */
-	if (*fs_i18ndir->string)
-		Q_strncpyz(languagePath, fs_i18ndir->string, sizeof(languagePath));
-	else
-		Com_sprintf(languagePath, sizeof(languagePath), "%s/base/i18n/", FS_GetCwd());
-	Com_DPrintf("...using mo files from %s\n", languagePath);
-	bindtextdomain(TEXT_DOMAIN, languagePath);
-	bind_textdomain_codeset(TEXT_DOMAIN, "UTF-8");
-	/* load language file */
-	textdomain(TEXT_DOMAIN);
-
-	Qcommon_LocaleSet();
-#else /* HAVE_GETTEXT */
-	Com_Printf("..no gettext compiled into this binary\n");
-#endif /* HAVE_GETTEXT */
-#endif /* DEDICATED_ONLY */
 
 	/* e.g. init the client hunk that is used in script parsing */
 	CL_Init();

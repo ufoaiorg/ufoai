@@ -32,6 +32,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "q_shared.h"
 #include "inv_shared.h"
 
+/* FIXME: no gettext support for game lib - but we must be able to mark the strings */
+# define _(String) String
+# define ngettext(x, y, cnt) x
+
 /* define GAME_INCLUDE so that game.h does not define the */
 /* short, server-visible player_t and edict_t structures, */
 /* because we define the full size ones in this file */

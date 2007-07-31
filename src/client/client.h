@@ -246,10 +246,27 @@ typedef enum {
 
 /*============================================================================= */
 
+/* i18n support via gettext */
+#if defined(_WIN32)
+# ifdef _MSC_VER
+#  ifndef LC_MESSAGES
+#   define LC_MESSAGES 3
+#  endif /* LC_MESSAGES */
+# endif /* _MSC_VER */
+# include "../ports/win32/libintl.h"
+#else
+# include <libintl.h>
+#endif
+
+/* the used textdomain for gettext */
+#define TEXT_DOMAIN "ufoai"
+#include <locale.h>
+#define _(String) gettext(String)
+#define gettext_noop(String) String
+#define N_(String) gettext_noop (String)
+
 /* cvars */
-#ifdef HAVE_GETTEXT
 extern cvar_t *s_language;
-#endif /* HAVE_GETTEXT */
 #ifdef HAVE_CURL
 extern cvar_t *cl_http_downloads;
 extern cvar_t *cl_http_filelists;

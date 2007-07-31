@@ -2337,11 +2337,9 @@ static void CL_CvarCheck (void)
 		cl_worldlevel->modified = qfalse;
 	}
 
-#ifdef HAVE_GETTEXT
 	/* language */
 	if (s_language->modified)
 		CL_LanguageTryToSet(s_language->string);
-#endif
 
 	if (mn_inputlength->modified) {
 		if (mn_inputlength->integer >= MAX_CVAR_EDITING_LENGTH)
@@ -2505,6 +2503,55 @@ void CL_SlowFrame (int now, void *data)
 	CL_ActorUpdateCVars();
 }
 
+
+/**
+ * @brief Gettext init function
+ *
+ * Initialize the locale settings for gettext
+ * po files are searched in ./base/i18n
+ * You can override the language-settings in setting
+ * the cvar s_language to a valid language-string like
+ * e.g. de_DE, en or en_US
+ *
+ * @sa CL_Init
+ */
+qboolean CL_LocaleSet (void)
+{
+	char *locale;
+
+#ifdef _WIN32
+	Q_putenv("LANG", s_language->string);
+	Q_putenv("LANGUAGE", s_language->string);
+#else /* _WIN32 */
+# ifndef __sun
+	unsetenv("LANGUAGE");
+# endif /* __sun */
+# ifdef __APPLE__
+	if (*s_language->string && Q_putenv("LANGUAGE", s_language->string) == -1)
+		Com_Printf("...setenv for LANGUAGE failed: %s\n", s_language->string);
+	if (*s_language->string && Q_putenv("LC_ALL", s_language->string) == -1)
+		Com_Printf("...setenv for LC_ALL failed: %s\n", s_language->string);
+# endif /* __APPLE__ */
+#endif /* _WIN32 */
+
+	/* set to system default */
+	setlocale(LC_ALL, "C");
+	locale = setlocale(LC_MESSAGES, s_language->string);
+	if (!locale) {
+		Com_DPrintf("...could not set to language: %s\n", s_language->string);
+		locale = setlocale(LC_MESSAGES, "");
+		if (!locale) {
+			Com_DPrintf("...could not set to system language\n");
+			return qfalse;
+		}
+	} else {
+		Com_Printf("...using language: %s\n", locale);
+		Cvar_Set("s_language", locale);
+		s_language->modified = qfalse;
+	}
+	return qtrue;
+}
+
 /**
  * @brief
  * @sa CL_Shutdown
@@ -2512,8 +2559,29 @@ void CL_SlowFrame (int now, void *data)
  */
 void CL_Init (void)
 {
+	/* i18n through gettext */
+	char languagePath[MAX_OSPATH];
+	cvar_t *fs_i18ndir;
+
 	if (sv_dedicated->integer)
 		return;					/* nothing running on the client */
+
+	fs_i18ndir = Cvar_Get("fs_i18ndir", "", 0, "System path to language files");
+	/* i18n through gettext */
+	setlocale(LC_ALL, "C");
+	setlocale(LC_MESSAGES, "");
+	/* use system locale dir if we can't find in gamedir */
+	if (*fs_i18ndir->string)
+		Q_strncpyz(languagePath, fs_i18ndir->string, sizeof(languagePath));
+	else
+		Com_sprintf(languagePath, sizeof(languagePath), "%s/base/i18n/", FS_GetCwd());
+	Com_DPrintf("...using mo files from %s\n", languagePath);
+	bindtextdomain(TEXT_DOMAIN, languagePath);
+	bind_textdomain_codeset(TEXT_DOMAIN, "UTF-8");
+	/* load language file */
+	textdomain(TEXT_DOMAIN);
+
+	CL_LocaleSet();
 
 	cl_localPool = Mem_CreatePool("Client: Local (per game)");
 	cl_genericPool = Mem_CreatePool("Client: Generic");

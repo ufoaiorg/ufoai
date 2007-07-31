@@ -106,34 +106,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  define inline
 #endif
 
-#ifdef NO_GETTEXT
-#undef HAVE_GETTEXT
-#endif
-/* i18n support via gettext */
-/* needs to be activated via -DHAVE_GETTEXT */
-#ifdef HAVE_GETTEXT
-# if defined(_WIN32)
-#  ifdef _MSC_VER
-#   ifndef LC_MESSAGES
-#    define LC_MESSAGES 3
-#   endif /* LC_MESSAGES */
-#  endif /* _MSC_VER */
-#  include "../ports/win32/libintl.h"
-# else
-#  include <libintl.h>
-# endif
-
-/* the used textdomain for gettext */
-# define TEXT_DOMAIN "ufoai"
-# include <locale.h>
-# define _(String) gettext(String)
-# define gettext_noop(String) String
-# define N_(String) gettext_noop (String)
-#else /* HAVE_GETTEXT */
-/* no gettext support */
+#ifdef DEDICATED_ONLY
+/* no gettext support for dedicated servers */
 # define _(String) String
 # define ngettext(x, y, cnt) x
-#endif /* HAVE_GETTEXT */
+#endif
 
 /* to support the gnuc __attribute__ command */
 #if defined __ICC || !defined __GNUC__

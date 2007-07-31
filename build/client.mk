@@ -1,4 +1,4 @@
-CLIENT_CFLAGS=-DHAVE_GETTEXT
+CLIENT_CFLAGS=
 
 CLIENT_SRCS = \
 	client/cl_actor.c \

@@ -30,9 +30,6 @@
 /* Define to 1 if you have the <dsound.h> header file. */
 #undef HAVE_DSOUND_H
 
-/* Enable gettext support */
-#undef HAVE_GETTEXT
-
 /* Define to 1 if you have the <glx.h> header file. */
 #undef HAVE_GLX_H
 

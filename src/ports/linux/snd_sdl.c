@@ -108,12 +108,12 @@ qboolean SND_Init (struct sndinfo *s)
 	desired.callback = paint_audio;
 
 	desired_bits = si->bits->integer;
-	switch(desired_bits){
+	switch (desired_bits) {
 	case 8:
 		desired.format = AUDIO_U8;
 		break;
 	case 16:
-		if(SDL_BYTEORDER == SDL_BIG_ENDIAN)
+		if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
 			desired.format = AUDIO_S16MSB;
 		else
 			desired.format = AUDIO_S16LSB;
@@ -124,9 +124,9 @@ qboolean SND_Init (struct sndinfo *s)
 	}
 
 	desired.channels = si->channels->integer;
-	if(desired.channels < 1)
+	if (desired.channels < 1)
 		desired.channels = 1;
-	else if(desired.channels > 2)
+	else if (desired.channels > 2)
 		desired.channels = 2;
 
 	si->Com_Printf("Bits: %i\n", desired_bits);

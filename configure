@@ -1321,7 +1321,6 @@ Optional Features:
   --enable-master         build masterserver [default=enabled]
   --disable-ufo2map       build ufo2map [default=enabled]
   --disable-qdata         build qdata [default=enabled]
-  --disable-gettext       build with multilanguage support [default=enabled]
   --enable-release        build release, if disabled then build debug
                           [default=disabled]
   --enable-valgrind       enable valgrind support [default=check]
@@ -2226,14 +2225,6 @@ if test "${enable_qdata+set}" = set; then
   enableval=$enable_qdata;
 else
   enable_qdata=yes
-fi
-
-
-# Check whether --enable-gettext was given.
-if test "${enable_gettext+set}" = set; then
-  enableval=$enable_gettext;
-else
-  enable_gettext=yes
 fi
 
 
@@ -12377,21 +12368,6 @@ then
 	{ echo "$as_me:$LINENO: Enabling qdata" >&5
 echo "$as_me: Enabling qdata" >&6;}
 	BUILD_QDATA=1
-
-fi
-
-#---------------------------------------------------------------------------------------------
-# Check for gettext
-#---------------------------------------------------------------------------------------------
-
-if test "$enable_gettext" = "yes"
-then
-	{ echo "$as_me:$LINENO: Enabling multilanguage support" >&5
-echo "$as_me: Enabling multilanguage support" >&6;}
-
-cat >>confdefs.h <<\_ACEOF
-#define HAVE_GETTEXT 1
-_ACEOF
 
 fi
 

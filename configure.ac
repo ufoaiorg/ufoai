@@ -142,10 +142,6 @@ AC_ARG_ENABLE(qdata,
 	[AS_HELP_STRING([--disable-qdata], [build qdata @<:@default=enabled@:>@])],
 	[], [enable_qdata=yes])
 
-AC_ARG_ENABLE(gettext,
-	[AS_HELP_STRING([--disable-gettext], [build with multilanguage support @<:@default=enabled@:>@])],
-	[], [enable_gettext=yes])
-
 AC_ARG_ENABLE(release,
 	[AS_HELP_STRING([--enable-release], [build release, if disabled then build debug @<:@default=disabled@:>@])],
 	[], [enable_release=no])
@@ -1174,16 +1170,6 @@ if test "$enable_qdata" = "yes"
 then
 	AC_MSG_NOTICE([Enabling qdata])
 	AC_SUBST([BUILD_QDATA],1)
-fi
-
-#---------------------------------------------------------------------------------------------
-# Check for gettext
-#---------------------------------------------------------------------------------------------
-
-if test "$enable_gettext" = "yes"
-then
-	AC_MSG_NOTICE([Enabling multilanguage support])
-	AC_DEFINE([HAVE_GETTEXT],[1],[Enable gettext support])
 fi
 
 #---------------------------------------------------------------------------------------------

@@ -23,7 +23,9 @@
 
 #include "qcommon.h"
 #include "../game/inv_shared.h"
-#include "../client/cl_research.h"
+#ifndef DEDICATED_ONLY
+#include "../client/client.h"
+#endif
 
 /**
  * @brief possible values for parsing functions
