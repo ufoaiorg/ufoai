@@ -1762,6 +1762,7 @@ qboolean CL_ActorSelect (le_t * le)
 {
 	int i;
 	qboolean same_actor = qfalse;
+	aircraft_t *aircraft = cls.missionaircraft;
 
 	/* test team */
 	if (!le || le->team != cls.team ||
@@ -1790,7 +1791,8 @@ qboolean CL_ActorSelect (le_t * le)
 		if (cl.teamList[i] == le) {
 			/* console commands, update cvars */
 			Cvar_ForceSet("cl_selected", va("%i", i));
-			selChr = baseCurrent->curTeam[i];
+			
+			selChr = &gd.employees[aircraft->teamTypes[i]][aircraft->teamIdxs[i]].chr;
 			assert(selChr);
 			switch (le->fieldSize) {
 			case ACTOR_SIZE_NORMAL:
