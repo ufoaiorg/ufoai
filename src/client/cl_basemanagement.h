@@ -272,11 +272,10 @@ extern base_t *baseCurrent;
 void B_SetSensor_f(void);
 
 void B_UpdateBaseData(void);
-base_t *B_GetBase(int id);
 void B_UpdateStatusWithPower(base_t *base);
 int B_CheckBuildingConstruction(building_t *b, int baseID);
 int B_GetNumOnTeam(aircraft_t *aircraft);
-building_t *B_GetLab(int base_id);
+building_t *B_GetLabBuildingFromBase(int base_id);
 void B_ClearBuilding(building_t *building);
 void B_ParseBuildings(const char *name, const char **text, qboolean link);
 void B_ParseBases(const char *name, const char **text);
@@ -289,7 +288,7 @@ building_t *B_GetBuildingType(const char *buildingName);
 /** Coordinates to place the new base at (long, lat) */
 extern vec3_t newBasePos;
 
-int B_GetCount(void);
+int B_GetFoundedBaseCount(void);
 void B_SetUpBase(base_t* base);
 
 void B_SetBuildingByClick(int row, int col);

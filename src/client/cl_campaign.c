@@ -2203,7 +2203,7 @@ static void CL_StartMissionMap (mission_t* mission)
 			return;
 		}
 		/* check whether are there founded bases */
-		if (B_GetCount() > 0)
+		if (B_GetFoundedBaseCount() > 0)
 			Cbuf_AddText(va("base_assemble %i 1;", bAttack->idx));
 		return;
 	default:

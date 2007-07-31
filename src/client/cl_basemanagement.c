@@ -109,39 +109,14 @@ int B_GetAvailableQuarterSpace (const base_t* const base)
 	return cnt;
 }
 
-#if 0
-/**
- * @brief Sums up max_employees laboratories values
- * @param[in] base The base to count the free space in.
- * @return int The total number of  in the labs.
- */
-/*
-@10042007 Zenerka - not needed/used anymore.
-*/
-int B_GetAvailableLabSpace (const base_t* const base)
-{
-	int cnt = 0, i;
-
-	if (base->hasLab)
-		for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-			if (gd.buildings[base->idx][i].buildingType == B_LAB
-			&& gd.buildings[base->idx][i].buildingStatus != B_STATUS_NOT_SET)
-				cnt += gd.buildings[base->idx][i].maxEmployees;
-		}
-	Com_DPrintf("B_GetAvailableLabSpace: %i\n", cnt);
-
-	return cnt;
-}
-#endif
-
 /**
  * @brief
  */
-static void B_ResetBuildingCurrent (void)
+static void B_ResetBuildingCurrent (base_t* base)
 {
-	if (baseCurrent) {
-		baseCurrent->buildingCurrent = NULL;
-		baseCurrent->buildingToBuild = -1;
+	if (base) {
+		base->buildingCurrent = NULL;
+		base->buildingToBuild = -1;
 	}
 	gd.baseAction = BA_NONE;
 }
@@ -156,7 +131,7 @@ static void B_ResetBuildingCurrent_f (void)
 	if (Cmd_Argc() == 2)
 		gd.instant_build = atoi(Cmd_Argv(1));
 
-	B_ResetBuildingCurrent();
+	B_ResetBuildingCurrent(baseCurrent);
 }
 
 /**
@@ -226,14 +201,21 @@ void B_SetSensor_f (void)
 
 /**
  * @brief Initialises base.
+ * @note This command is executed in the init node of the base menu.
+ * It is called everytime the base menu pops up and sets the cvars.
+ * The current selected base is determined via cvar mn_base_id.
  */
 static void B_BaseInit_f (void)
 {
 	int baseID = Cvar_VariableInteger("mn_base_id");
 
+	/* sanity check */
+	if (baseID < 0 || baseID > B_GetFoundedBaseCount())
+		return;
+
 	baseCurrent = &gd.bases[baseID];
 
-	Cvar_Set("mn_credits", va(_("%i c"), ccs.credits));
+	CL_UpdateCredits(ccs.credits);
 
 	/* activate or deactivate the aircraft button */
 	if (AIR_AircraftAllowed()) {
@@ -251,9 +233,9 @@ static void B_BaseInit_f (void)
 		Cbuf_ExecuteText(EXEC_NOW, "set_buysell_disabled");
 	}
 	if (gd.numBases > 1) {
-		Cbuf_AddText("set_transfer_enabled;");
+		Cbuf_ExecuteText(EXEC_NOW, "set_transfer_enabled");
 	} else {
-		Cbuf_AddText("set_transfer_disabled;");
+		Cbuf_ExecuteText(EXEC_NOW, "set_transfer_disabled");
 	}
 	if (RS_ResearchAllowed()) {
 		Cvar_SetValue("mn_base_research_allowed", qtrue);
@@ -304,7 +286,7 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	if (base->map[(int)building->pos[0]][(int)building->pos[1]] != BASE_FREESLOT) {
 		if (building->needs) {
 			/* "Child" building is always right to the "parent" building". */
-			base->map[(int)building->pos[0]][((int)building->pos[1])+1] = BASE_FREESLOT;
+			base->map[(int)building->pos[0]][((int)building->pos[1]) + 1] = BASE_FREESLOT;
 		}
 
 		base->map[(int)building->pos[0]][(int)building->pos[1]] = BASE_FREESLOT;
@@ -448,7 +430,7 @@ static void B_BuildingDestroy_f (void)
 
 	B_BuildingDestroy(baseCurrent, baseCurrent->buildingCurrent);
 
-	B_ResetBuildingCurrent();
+	B_ResetBuildingCurrent(baseCurrent);
 }
 
 /**
@@ -621,7 +603,7 @@ static void B_UpdateBaseBuildingStatus (building_t* building, base_t* base, buil
 				memset(base->hospitalMissionList, -1, sizeof(base->hospitalMissionList));
 				base->hospitalMissionListCount = 0;
 			}
- 			base->hasHospital = qtrue;
+			base->hasHospital = qtrue;
 		}
 		B_UpdateBaseCapacities(CAP_HOSPSPACE, base);
 		break;
@@ -693,7 +675,7 @@ void B_SetUpBase (base_t* base)
 	Com_DPrintf("Set up for %i\n", base->idx);
 
 	/* this cvar is used for disabling the base build button on geoscape if MAX_BASES (8) was reached */
-	Cvar_SetValue("mn_base_count", mn_base_count->value + 1.0f);
+	Cvar_Set("mn_base_count", va("%i", mn_base_count->integer + 1));
 
 	/* this cvar is needed by B_SetBuildingByClick below*/
 	Cvar_SetValue("mn_base_id", base->idx);
@@ -734,11 +716,6 @@ void B_SetUpBase (base_t* base)
 				Com_DPrintf("B_SetUpBase: %s %i;\n", building->onConstruct, base->idx);
 				Cbuf_AddText(va("%s %i;", building->onConstruct, base->idx));
 			}
-			/*
-			   if (building->moreThanOne
-			   && building->howManyOfThisType < BASE_SIZE*BASE_SIZE)
-			   building->howManyOfThisType++;
-			 */
 
 			/* update the building-list */
 			B_BuildingInit();
@@ -774,9 +751,7 @@ building_t *B_GetBuildingType (const char *buildingName)
 {
 	int i = 0;
 
-	if (!buildingName)
-		return baseCurrent->buildingCurrent;
-
+	assert(buildingName);
 	for (i = 0; i < gd.numBuildingTypes; i++)
 		if (!Q_strcasecmp(gd.buildingTypes[i].id, buildingName))
 			return &gd.buildingTypes[i];
@@ -795,7 +770,7 @@ building_t *B_GetBuildingType (const char *buildingName)
  * @sa B_NewBuilding
  * Checks whether the given costs are bigger than the current available credits
  */
-static qboolean B_CheckCredits (int costs)
+static inline qboolean B_CheckCredits (int costs)
 {
 	if (costs > ccs.credits)
 		return qfalse;
@@ -812,37 +787,37 @@ static qboolean B_CheckCredits (int costs)
  * Checks whether the player has enough credits to construct the current selected
  * building before starting construction.
  */
-static qboolean B_ConstructBuilding (void)
+static qboolean B_ConstructBuilding (base_t* base)
 {
 	building_t *building_to_build = NULL;
 
-	/*maybe someone call this command before the buildings are parsed?? */
-	if (!baseCurrent || !baseCurrent->buildingCurrent)
+	/* maybe someone call this command before the buildings are parsed?? */
+	if (!base || !base->buildingCurrent)
 		return qfalse;
 
-	/*enough credits to build this? */
-	if (!B_CheckCredits(baseCurrent->buildingCurrent->fixCosts)) {
-		Com_DPrintf("B_ConstructBuilding: Not enough credits to build: '%s'\n", baseCurrent->buildingCurrent->id);
-		B_ResetBuildingCurrent();
+	/* enough credits to build this? */
+	if (!B_CheckCredits(base->buildingCurrent->fixCosts)) {
+		Com_DPrintf("B_ConstructBuilding: Not enough credits to build: '%s'\n", base->buildingCurrent->id);
+		B_ResetBuildingCurrent(base);
 		return qfalse;
 	}
 
-	Com_DPrintf("Construction of %s is starting\n", baseCurrent->buildingCurrent->id);
+	Com_DPrintf("Construction of %s is starting\n", base->buildingCurrent->id);
 
 	/* second building part */
-	if (baseCurrent->buildingToBuild >= 0) {
-		building_to_build = &gd.buildingTypes[baseCurrent->buildingToBuild];
+	if (base->buildingToBuild >= 0) {
+		building_to_build = &gd.buildingTypes[base->buildingToBuild];
 		building_to_build->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
-		baseCurrent->buildingToBuild = -1;
+		base->buildingToBuild = -1;
 	}
 	if (!gd.instant_build) {
-		baseCurrent->buildingCurrent->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
-		baseCurrent->buildingCurrent->timeStart = ccs.date.day;
+		base->buildingCurrent->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
+		base->buildingCurrent->timeStart = ccs.date.day;
 	} else {
-		B_UpdateBaseBuildingStatus(baseCurrent->buildingCurrent, baseCurrent, B_STATUS_WORKING);
+		B_UpdateBaseBuildingStatus(base->buildingCurrent, base, B_STATUS_WORKING);
 	}
 
-	CL_UpdateCredits(ccs.credits - baseCurrent->buildingCurrent->fixCosts);
+	CL_UpdateCredits(ccs.credits - base->buildingCurrent->fixCosts);
 	B_BaseInit_f();
 	return qtrue;
 }
@@ -852,17 +827,17 @@ static qboolean B_ConstructBuilding (void)
  * @sa B_MarkBuildingDestroy
  * @sa B_ConstructBuilding
  */
-static void B_NewBuilding (void)
+static void B_NewBuilding (base_t* base)
 {
-	/*maybe someone call this command before the buildings are parsed?? */
-	if (!baseCurrent || !baseCurrent->buildingCurrent)
+	/* maybe someone call this command before the buildings are parsed?? */
+	if (!base || !base->buildingCurrent)
 		return;
 
-	if (baseCurrent->buildingCurrent->buildingStatus < B_STATUS_UNDER_CONSTRUCTION)
+	if (base->buildingCurrent->buildingStatus < B_STATUS_UNDER_CONSTRUCTION)
 		/* credits are updated in the construct function */
-		if (B_ConstructBuilding()) {
-			B_BuildingStatus(baseCurrent, baseCurrent->buildingCurrent);
-			Com_DPrintf("B_NewBuilding: buildingCurrent->buildingStatus = %i\n", baseCurrent->buildingCurrent->buildingStatus);
+		if (B_ConstructBuilding(base)) {
+			B_BuildingStatus(base, base->buildingCurrent);
+			Com_DPrintf("B_NewBuilding: buildingCurrent->buildingStatus = %i\n", base->buildingCurrent->buildingStatus);
 		}
 }
 
@@ -949,7 +924,7 @@ void B_SetBuildingByClick (int row, int col)
 				baseCurrent->buildingToBuild = -1;
 			}
 			/* credits are updated here, too */
-			B_NewBuilding();
+			B_NewBuilding(baseCurrent);
 
 			baseCurrent->map[row][col] = baseCurrent->buildingCurrent->idx;
 
@@ -957,7 +932,7 @@ void B_SetBuildingByClick (int row, int col)
 			baseCurrent->buildingCurrent->pos[0] = row;
 			baseCurrent->buildingCurrent->pos[1] = col;
 
-			B_ResetBuildingCurrent();
+			B_ResetBuildingCurrent(baseCurrent);
 			B_BuildingInit();	/* update the building-list */
 		} else {
 			Com_DPrintf("There is already a building\n");
@@ -979,14 +954,14 @@ static void B_SetBuilding_f (void)
 		return;
 	}
 
-	/*maybe someone call this command before the buildings are parsed?? */
+	/* maybe someone call this command before the buildings are parsed?? */
 	if (!baseCurrent || !baseCurrent->buildingCurrent)
 		return;
 
 	row = atoi(Cmd_Argv(1));
 	col = atoi(Cmd_Argv(2));
 
-	/*emulate the mouseclick with the given coordinates */
+	/* emulate the mouseclick with the given coordinates */
 	B_SetBuildingByClick(row, col);
 }
 
@@ -995,30 +970,26 @@ static void B_SetBuilding_f (void)
  */
 static void B_NewBuildingFromList_f (void)
 {
-	/*maybe someone call this command before the buildings are parsed?? */
+	/* maybe someone call this command before the buildings are parsed?? */
 	if (!baseCurrent || !baseCurrent->buildingCurrent)
 		return;
 
 	if (baseCurrent->buildingCurrent->buildingStatus < B_STATUS_UNDER_CONSTRUCTION)
-		B_NewBuilding();
+		B_NewBuilding(baseCurrent);
 }
 
 /**
  * @brief Draws a building.
  */
-static void B_DrawBuilding (void)
+static void B_DrawBuilding (base_t* base, building_t* building)
 {
-	building_t *building = NULL;
-
-	/*maybe someone call this command before the buildings are parsed?? */
-	if (!baseCurrent || !baseCurrent->buildingCurrent)
+	/* maybe someone call this command before the buildings are parsed?? */
+	if (!base || !building)
 		return;
 
 	*buildingText = '\0';
 
-	building = baseCurrent->buildingCurrent;
-
-	B_BuildingStatus(baseCurrent, building);
+	B_BuildingStatus(base, building);
 
 	Com_sprintf(buildingText, sizeof(buildingText), "%s\n", _(building->name));
 
@@ -1031,15 +1002,8 @@ static void B_DrawBuilding (void)
 	if (building->varCosts)
 		Q_strcat(buildingText, va(_("Running Costs:\t%1.0f c\n"), building->varCosts), sizeof(buildingText));
 
-/*	if (employees_in_building->numEmployees)
-		Q_strcat(menuText[TEXT_BUILDING_INFO], va(_("Employees:\t%i\n"), employees_in_building->numEmployees), MAX_LIST_CHAR);*/
-
-	/* FIXME: Rename mn_building_name and mn_building_title */
-	if (building->id)
-		Cvar_Set("mn_building_name", building->id);
-
 	if (building->name)
-		Cvar_Set("mn_building_title", _(building->name));
+		Cvar_Set("mn_building_name", _(building->name));
 
 	/* link into menu text array */
 	menuText[TEXT_BUILDING_INFO] = buildingText;
@@ -1163,7 +1127,6 @@ static void B_BuildingInit (void)
 	memset(baseCurrent->allBuildingsList, 0, sizeof(baseCurrent->allBuildingsList));
 	menuText[TEXT_BUILDINGS] = baseCurrent->allBuildingsList;
 	numBuildingConstructionList = 0;
-	/* ------------------ */
 
 	for (i = 0; i < gd.numBuildingTypes; i++) {
 		buildingType = &gd.buildingTypes[i];
@@ -1191,9 +1154,8 @@ static void B_BuildingInit (void)
 			}
 		}
 	}
-	if (baseCurrent->buildingCurrent) {
-		B_DrawBuilding();
-	}
+	if (baseCurrent->buildingCurrent)
+		B_DrawBuilding(baseCurrent, baseCurrent->buildingCurrent);
 }
 
 /**
@@ -1213,32 +1175,6 @@ building_t *B_GetBuildingByIdx (base_t* base, int idx)
 	/*just that there are no warnings */
 	return NULL;
 }
-
-/**
- * @brief Gets the building in a given base by its index
- *
- * @param[in] base Pointer to base_t (base has to be founded already)
- * @param[in] buildingID Pointer to char
- * @return buildings_t pointer to gd.buildings
- */
-#if 0
-static building_t *B_GetBuildingInBase (base_t* base, char* buildingID)
-{
-	int row, col;
-
-	if (base || !base->founded)
-		return NULL;
-
-	for (row = 0; row < BASE_SIZE; row++)
-		for (col = 0; col < BASE_SIZE; col++)
-			if (!Q_strncmp(gd.buildings[base->idx][base->map[row][col]].id, buildingID, MAX_VAR))
-				return &gd.buildings[base->idx][base->map[row][col]];
-
-	Com_Printf("B_GetBuildingInBase: Building '%s' not found\n", buildingID);
-	/* just that there are no warnings */
-	return NULL;
-}
-#endif
 
 /**
  * @brief Opens up the 'pedia if you right click on a building in the list.
@@ -1280,7 +1216,7 @@ static void B_BuildingClick_f (void)
 	building = &gd.buildingTypes[BuildingConstructionList[num]];
 
 	baseCurrent->buildingCurrent = building;
-	B_DrawBuilding();
+	B_DrawBuilding(baseCurrent, building);
 
 	gd.baseAction = BA_NEWBUILDING;
 }
@@ -1305,11 +1241,6 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 	const char *errhead = "B_ParseBuildings: unexpected end of file (names ";
 	const char *token = NULL;
 	int i;
-#if 0
-	char *split = NULL;
-	int employeesAmount = 0, i;
-	employee_t* employee;
-#endif
 
 	/* get id list body */
 	token = COM_Parse(text);
@@ -1394,47 +1325,36 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 				} else if (!Q_strncmp(token, "missile", MAX_VAR)) {
 					building->buildingType = B_DEFENSE_MISSILE;
 				}
-/*			} else if (!Q_strncmp(token, "max_employees", MAX_VAR)) {
-				token = COM_EParse(text, errhead, name);
-				if (!*text)
-					return;
-				employees_in_building = &building->assigned_employees;
-
-				if (*token)
-					employees_in_building->maxEmployees = atoi(token);
-				else {
-					employees_in_building->maxEmployees = MAX_EMPLOYEES_IN_BUILDING;
-					Com_Printf("Set max employees to %i for building '%s'\n", MAX_EMPLOYEES_IN_BUILDING, building->id);
-				}*/
-			} else
+			} else {
 				/* no linking yet */
 				if (!Q_strncmp(token, "depends", MAX_VAR)) {
 					token = COM_EParse(text, errhead, name);
 					if (!*text)
 						return;
 				} else {
-				for (vp = valid_building_vars; vp->string; vp++)
-					if (!Q_strncmp(token, vp->string, sizeof(vp->string))) {
-						/* found a definition */
-						token = COM_EParse(text, errhead, name);
-						if (!*text)
-							return;
+					for (vp = valid_building_vars; vp->string; vp++)
+						if (!Q_strncmp(token, vp->string, sizeof(vp->string))) {
+							/* found a definition */
+							token = COM_EParse(text, errhead, name);
+							if (!*text)
+								return;
 
-						switch (vp->type) {
-						case V_NULL:
-							break;
-						case V_TRANSLATION2_STRING:
-							token++;
-						case V_CLIENT_HUNK_STRING:
-							Mem_PoolStrDupTo(token, (char**) ((char*)building + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
-							break;
-						default:
-							Com_ParseValue(building, token, vp->type, vp->ofs, vp->size);
+							switch (vp->type) {
+							case V_NULL:
+								break;
+							case V_TRANSLATION2_STRING:
+								token++;
+							case V_CLIENT_HUNK_STRING:
+								Mem_PoolStrDupTo(token, (char**) ((char*)building + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+								break;
+							default:
+								Com_ParseValue(building, token, vp->type, vp->ofs, vp->size);
+								break;
+							}
 							break;
 						}
-						break;
-					}
 				}
+			}
 
 			if (!vp->string)
 				Com_Printf("B_ParseBuildings: unknown token \"%s\" ignored (building %s)\n", token, name);
@@ -1475,74 +1395,12 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 }
 
 /**
- * @brief Gets a free (with no assigned workers) building in the given base of the given type.
- *
- * @param[in] base_id The number/id of the base to search in.
- * @param[in] type Which type of building to search for.
- *
- * @return The (empty) building.
- */
-#if 0
-building_t *B_GetFreeBuilding (int base_idx, buildingType_t type)
-{
-	int i;
-	building_t *building = NULL;
-	employees_t *employees_in_building = NULL;
-
-	for (i = 0; i < gd.numBuildings[base_idx]; i++) {
-		building = &gd.buildings[base_idx][i];
-		if (building->buildingType == type) {
-			/* found correct building-type */
-			employees_in_building = &building->assigned_employees;
-			if (employees_in_building->numEmployees < employees_in_building->maxEmployees) {
-				/* the building has free space for employees */
-				return building;
-			}
-		}
-	}
-	/* no buildings available at all, no correct building type found or no building free */
-	return NULL;
-}
-#endif
-
-/**
- * @brief Gets a free (with no assigned workers) building of the given type.
- *
- * @param[in] type Which type of building to search for.
- *
- * @return The (empty) building.
- */
-#if 0
-static building_t *B_GetFreeBuildingType (buildingType_t type)
-{
-	int i;
-	building_t *building = NULL;
-
-	for (i = 0; i < gd.numBuildingTypes; i++) {
-		building = &gd.buildingTypes[i];
-		if (building->buildingType == type) {
-			/* found correct building-type */
-/*			employees_in_building = &building->assigned_employees;
-			if (employees_in_building->numEmployees < employees_in_building->maxEmployees) {*/
-				/* the building has free space for employees */
-				/*return building;
-			}*/
-		}
-	}
-	/* no buildings available at all, no correct building type found or no building free */
-	return NULL;
-}
-#endif
-
-/**
  * @brief Gets a lab in the given base
  * @note You can run more than one research in a lab
- *
  * @param[in] base_id The number/id of the base to search in.
- *
  * @return The lab or NULL if base has no lab
  */
-building_t *B_GetLab (int base_idx)
+building_t *B_GetLabBuildingFromBase (int base_idx)
 {
 	int i;
 	building_t *building = NULL;
@@ -1562,7 +1420,7 @@ building_t *B_GetLab (int base_idx)
  */
 void B_ClearBase (base_t *const base)
 {
-	int row, col, i;
+	int i;
 
 	CL_ResetCharacters(base);
 
@@ -1592,9 +1450,7 @@ void B_ClearBase (base_t *const base)
 			E_CreateEmployee(EMPL_MEDIC);
 	}
 
-	for (row = BASE_SIZE - 1; row >= 0; row--)
-		for (col = BASE_SIZE - 1; col >= 0; col--)
-			base->map[row][col] = BASE_FREESLOT;
+	memset(base->map, BASE_FREESLOT, sizeof(int) * BASE_SIZE * BASE_SIZE);
 }
 
 /**
@@ -1647,8 +1503,8 @@ void B_ParseBases (const char *name, const char **text)
 			token++;
 		Q_strncpyz(base->name, _(token), sizeof(base->name));
 		Com_DPrintf("Found base %s\n", base->name);
-		B_ResetBuildingCurrent();
-		gd.numBaseNames++;
+		B_ResetBuildingCurrent(base);
+		gd.numBaseNames++; /* FIXME: Use this value instead of MAX_BASES in the for loops */
 	} while (*text);
 
 	mn_base_title = Cvar_Get("mn_base_title", "", 0, NULL);
@@ -1808,7 +1664,7 @@ static void B_NextBase_f (void)
 		return;
 	else {
 		Cbuf_AddText(va("mn_select_base %i\n", baseID));
-		Cbuf_Execute();
+		Cbuf_Execute(); /* FIXME: Why is this needed? */
 	}
 }
 
@@ -1833,7 +1689,7 @@ static void B_PrevBase_f (void)
 		return;
 	else {
 		Cbuf_AddText(va("mn_select_base %i\n", baseID));
-		Cbuf_Execute();
+		Cbuf_Execute(); /* FIXME: Why is this needed? */
 	}
 }
 
@@ -1896,6 +1752,7 @@ static void B_SelectBase_f (void)
 	 * in our base view port
 	 */
 	if (gd.mapAction != MA_NEWBASE) {
+		assert(baseCurrent);
 		Cvar_SetValue("mn_base_id", baseCurrent->idx);
 		Cvar_Set("mn_base_title", baseCurrent->name);
 		Cvar_SetValue("mn_numbases", gd.numBases);
@@ -1963,7 +1820,6 @@ static void CL_SwapSkills (character_t *team[], int num)
 							/* @todo: Is there a better way to check for this case? */
 							Com_DPrintf("CL_SwapSkills: Bad or no firedef indices found (weaponr_fd_idx=%i and weaponh_fd_idx=%i)... skipping\n", weaponr_fd_idx, weaponh_fd_idx);
 						} else {
-							/* FIXME This will crash if weaponh_fd_idx or weaponr_fd_idx is -1 */
 							no2 = 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[weaponr_fd_idx][fmode1].weaponSkill)
 								+ 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[weaponr_fd_idx][fmode2].weaponSkill)
 								+ (HOLSTER(cp2) && csi.ods[HOLSTER(cp2)->item.t].reload
@@ -2673,7 +2529,7 @@ void B_ResetBaseManagement (void)
  * @brief Counts the number of bases.
  * @return The number of founded bases.
  */
-int B_GetCount (void)
+int B_GetFoundedBaseCount (void)
 {
 	int i, cnt = 0;
 
@@ -2774,21 +2630,6 @@ void B_UpdateStatusWithPower (base_t *base)
 }
 
 /**
- * @brief Selects a base by its index.
- * @param[in] base_idx Index of the base - see gd.bases array and gd.numBases
- */
-base_t *B_GetBase (int base_idx)
-{
-	int i;
-
-	for (i = 0; i < MAX_BASES; i++) {
-		if (gd.bases[i].idx == base_idx)
-			return &gd.bases[i];
-	}
-	return NULL;
-}
-
-/**
  * @brief Counts the number of soldiers in given aircraft.
  * @param[in] *aircraft Pointer to the aircraft, for which we calculate amount of soldiers.
  * @return Amount of soldiers.
@@ -2796,16 +2637,16 @@ base_t *B_GetBase (int base_idx)
 int B_GetNumOnTeam (aircraft_t *aircraft)
 {
 #if 0
-       aircraft_t* aircraft = NULL;
+	aircraft_t* aircraft = NULL;
 
-       if (!baseCurrent || baseCurrent->aircraftCurrent < 0)
-               return 0;
+	if (!baseCurrent || baseCurrent->aircraftCurrent < 0)
+		return 0;
 
-       aircraft = B_GetAircraftFromBaseByIndex (baseCurrent, baseCurrent->aircraftCurrent);
-       if (!aircraft)
-               return 0;
+	aircraft = B_GetAircraftFromBaseByIndex (baseCurrent, baseCurrent->aircraftCurrent);
+	if (!aircraft)
+		return 0;
 #endif
-       return *aircraft->teamSize;
+	return *aircraft->teamSize;
 }
 
 /**
@@ -2849,7 +2690,7 @@ void CL_DropshipReturned (base_t* base, aircraft_t* aircraft)
 }
 
 /**
- * @brief Check if the item has been collected (i.e it is in the storage .. and currently market) in the given base.
+ * @brief Check if the item has been collected (i.e it is in the storage) in the given base.
  * @param[in] item_idx The index of the item in the item-list.
  * @param[in] base The base to search in.
  * @return amount Number of available items in base
