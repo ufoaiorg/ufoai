@@ -396,6 +396,9 @@ static void SV_ClipMoveToEntities (moveclip_t * clip)
 /**
  * @brief Returns the content flags for a given point
  * @note Useful to determine whether an actor is e.g. inside of a water brush
+ * @sa CM_TestInLeaf
+ * @sa CM_TestBoxInBrush
+ * @sa CM_CompleteBoxTrace
  */
 int SV_PointContents (vec3_t p)
 {

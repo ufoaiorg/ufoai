@@ -620,7 +620,7 @@ typedef struct cBspSurface_s {
 typedef struct {
 	qboolean allsolid;		/**< if true, plane is not valid */
 	qboolean startsolid;	/**< if true, the initial point was in a solid area */
-	float fraction;			/**< time completed, 1.0 = didn't hit anything */
+	float fraction;			/**< time completed, 1.0 = didn't hit anything, 0.0 Inside of a brush */
 	vec3_t endpos;			/**< final position */
 	cBspPlane_t plane;			/**< surface normal at impact */
 	cBspSurface_t *surface;	/**< surface hit */
