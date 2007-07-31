@@ -2515,7 +2515,7 @@ void CL_SlowFrame (int now, void *data)
  *
  * @sa CL_Init
  */
-qboolean CL_LocaleSet (void)
+static qboolean CL_LocaleSet (void)
 {
 	char *locale;
 
