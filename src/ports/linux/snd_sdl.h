@@ -14,13 +14,8 @@
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#if defined (__FreeBSD__)
-#	include <SDL.h>
-#	include <SDL_version.h>
-#else
-#	include <SDL/SDL.h>
-#	include <SDL/SDL_version.h>
-#endif
+#include <SDL.h>
+#include <SDL_version.h>
 
 #include "../../client/client.h"
 #include "../../client/snd_loc.h"
