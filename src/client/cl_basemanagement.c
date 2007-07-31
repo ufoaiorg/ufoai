@@ -2865,19 +2865,20 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 		MSG_WriteByte(sb, b->maxBatteries);
 		for (l = 0; l < b->maxBatteries; l++) {
 			if (b->batteries[l].itemIdx >= 0) {
+				int ammoIdx = b->batteries[l].ammoIdx;
 				MSG_WriteString(sb, aircraftItems[b->batteries[l].itemIdx].id);
 				MSG_WriteShort(sb, b->batteries[l].ammoLeft);
 				MSG_WriteShort(sb, b->batteries[l].delayNextShot);
 				MSG_WriteShort(sb, b->batteries[l].installationTime);
 				/* if there is no ammo MSG_WriteString will write an empty string */
-				MSG_WriteString(sb, aircraftItems[b->batteries[l].ammoIdx].id);
+				MSG_WriteString(sb, ammoIdx >= 0 ? aircraftItems[ammoIdx].id : "");
 			} else {
-				MSG_WriteString(sb, "skip");
+				MSG_WriteString(sb, "");
 				MSG_WriteShort(sb, 0);
 				MSG_WriteShort(sb, 0);
 				MSG_WriteShort(sb, 0);
 				/* if there is no ammo MSG_WriteString will write an empty string */
-				MSG_WriteString(sb, "skip");
+				MSG_WriteString(sb, "");
 			}
 			/* save target of this weapon */
 			MSG_WriteShort(sb, b->targetMissileIdx[l]);
@@ -2885,19 +2886,20 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 		MSG_WriteByte(sb, b->maxLasers);
 		for (l = 0; l < b->maxLasers; l++) {
 			if (b->lasers[l].itemIdx >= 0) {
+				int ammoIdx = b->lasers[l].ammoIdx;
 				MSG_WriteString(sb, aircraftItems[b->lasers[l].itemIdx].id);
 				MSG_WriteShort(sb, b->lasers[l].ammoLeft);
 				MSG_WriteShort(sb, b->lasers[l].delayNextShot);
 				MSG_WriteShort(sb, b->lasers[l].installationTime);
 				/* if there is no ammo MSG_WriteString will write an empty string */
-				MSG_WriteString(sb, aircraftItems[b->lasers[l].ammoIdx].id);
+				MSG_WriteString(sb, ammoIdx >= 0 ? aircraftItems[ammoIdx].id : "");
 			} else {
-				MSG_WriteString(sb, "skip");
+				MSG_WriteString(sb, "");
 				MSG_WriteShort(sb, 0);
 				MSG_WriteShort(sb, 0);
 				MSG_WriteShort(sb, 0);
 				/* if there is no ammo MSG_WriteString will write an empty string */
-				MSG_WriteString(sb, "skip");
+				MSG_WriteString(sb, "");
 			}
 			/* save target of this weapon */
 			MSG_WriteShort(sb, b->targetLaserIdx[l]);
@@ -2923,19 +2925,20 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteByte(sb, aircraft->maxWeapons);
 			for (l = 0; l < aircraft->maxWeapons; l++) {
 				if (aircraft->weapons[l].itemIdx >= 0) {
+					int ammoIdx = aircraft->weapons[l].ammoIdx;
 					MSG_WriteString(sb, aircraftItems[aircraft->weapons[l].itemIdx].id);
 					MSG_WriteShort(sb, aircraft->weapons[l].ammoLeft);
 					MSG_WriteShort(sb, aircraft->weapons[l].delayNextShot);
 					MSG_WriteShort(sb, aircraft->weapons[l].installationTime);
 					/* if there is no ammo MSG_WriteString will write an empty string */
-					MSG_WriteString(sb, aircraftItems[aircraft->weapons[l].ammoIdx].id);
+					MSG_WriteString(sb, ammoIdx >= 0 ? aircraftItems[ammoIdx].id : "");
 				} else {
-					MSG_WriteString(sb, "skip");
+					MSG_WriteString(sb, "");
 					MSG_WriteShort(sb, 0);
 					MSG_WriteShort(sb, 0);
 					MSG_WriteShort(sb, 0);
 					/* if there is no ammo MSG_WriteString will write an empty string */
-					MSG_WriteString(sb, "skip");
+					MSG_WriteString(sb, "");
 				}
 			}
 			/* save shield slots - currently only one */
@@ -2944,7 +2947,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 				MSG_WriteString(sb, aircraftItems[aircraft->shield.itemIdx].id);
 				MSG_WriteShort(sb, aircraft->shield.installationTime);
 			} else {
-				MSG_WriteString(sb, "skip");
+				MSG_WriteString(sb, "");
 				MSG_WriteShort(sb, 0);
 			}
 			/* save electronics slots */
@@ -2954,7 +2957,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 					MSG_WriteString(sb, aircraftItems[aircraft->electronics[l].itemIdx].id);
 					MSG_WriteShort(sb, aircraft->electronics[l].installationTime);
 				} else {
-					MSG_WriteString(sb, "skip");
+					MSG_WriteString(sb, "");
 					MSG_WriteShort(sb, 0);
 				}
 			}
@@ -3163,9 +3166,14 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 					aircraft->weapons[l].ammoLeft = MSG_ReadShort(sb);
 					aircraft->weapons[l].delayNextShot = MSG_ReadShort(sb);
 					aircraft->weapons[l].installationTime = MSG_ReadShort(sb);
-					tech = RS_GetTechByProvided(MSG_ReadString(sb));
-					if (tech)
-						aircraft->weapons[l].ammoIdx = AII_GetAircraftItemByID(tech->provides);
+					s = MSG_ReadString(sb);
+					/* skip empty strings (no ammo loaded) */
+					if (*s) {
+						tech = RS_GetTechByProvided(s);
+						if (tech)
+							aircraft->weapons[l].ammoIdx = AII_GetAircraftItemByID(tech->provides);
+					} else
+						aircraft->weapons[l].ammoIdx = -1;
 				} else {
 					/* just in case there are less slots in new game that in saved one */
 					MSG_ReadString(sb);
@@ -3235,9 +3243,6 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			MSG_ReadPos(sb, aircraft->direction);
 			for (l = 0; l < presaveArray[PRE_AIRSTA]; l++)
 				aircraft->stats[l] = MSG_ReadLong(sb);
-#if 0
-			struct actMis_s* mission;	/**< The mission the aircraft is moving to */
-#endif
 		}
 
 		l = MSG_ReadShort(sb);
