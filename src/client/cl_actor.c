@@ -464,6 +464,36 @@ static int CL_GetActorNumber (le_t * le)
 }
 
 /**
+ * @brief Returns the character information for an actor in the teamlist.
+ * @param[in] le The actor to search.
+ * @return A pointer to a character struct.
+ */
+static character_t *CL_GetActorChr (le_t * le)
+{
+	int actor_idx;
+	aircraft_t *aircraft = cls.missionaircraft;
+
+	if (!aircraft) {
+		Com_DPrintf("CL_GetActorChr: No mission-aircraft found!\n");
+		return NULL;
+	}
+
+	assert(le);
+
+	actor_idx = CL_GetActorNumber(le);
+
+	if (actor_idx >= 0) {
+		if (actor_idx < aircraft->size
+		&& aircraft->teamTypes[actor_idx] >= 0
+		&& aircraft->teamTypes[actor_idx] < MAX_EMPL) {
+			return &gd.employees[aircraft->teamTypes[actor_idx]][aircraft->teamIdxs[actor_idx]].chr;
+		}
+	}
+
+	return NULL;
+}
+
+/**
  * @brief Makes all entries of the firemode lists invisible.
  */
 static void HideFiremodes (void)
@@ -1760,9 +1790,8 @@ void CL_RemoveActorFromTeamList (le_t * le)
  */
 qboolean CL_ActorSelect (le_t * le)
 {
-	int i;
+	int actor_idx;
 	qboolean same_actor = qfalse;
-	aircraft_t *aircraft = cls.missionaircraft;
 
 	/* test team */
 	if (!le || le->team != cls.team ||
@@ -1787,46 +1816,45 @@ qboolean CL_ActorSelect (le_t * le)
 	menuInventory = &selActor->i;
 	selActorReactionState = CL_GetReactionState(selActor);
 
-	for (i = 0; i < cl.numTeamList; i++) {
-		if (cl.teamList[i] == le) {
-			/* console commands, update cvars */
-			Cvar_ForceSet("cl_selected", va("%i", i));
-			
-			selChr = &gd.employees[aircraft->teamTypes[i]][aircraft->teamIdxs[i]].chr;
-			assert(selChr);
-			switch (le->fieldSize) {
-			case ACTOR_SIZE_NORMAL:
-				CL_CharacterCvars(selChr);
-				break;
-			case ACTOR_SIZE_2x2:
-				CL_UGVCvars(selChr);
-				break;
-			default:
-				Com_Error(ERR_DROP, "CL_ActorSelect: Unknown fieldsize\n");
-			}
+	actor_idx = CL_GetActorNumber(le);
+	if (actor_idx < 0)
+		return qfalse;
 
-			/* Forcing the hud-display to refresh it's dsiplayed stuff */
-			Cvar_SetValue("hud_refresh", 1);
-			CL_ActorUpdateCVars();
+	/* console commands, update cvars */
+	Cvar_ForceSet("cl_selected", va("%i", actor_idx));
+	
+	selChr = CL_GetActorChr(le);
+	assert(selChr);
 
-			CL_ConditionalMoveCalc(&clMap, le, MAX_ROUTE);
-
-			/* move first person camera to new actor */
-			if (camera_mode == CAMERA_MODE_FIRSTPERSON)
-				CL_CameraModeChange(CAMERA_MODE_FIRSTPERSON);
-
-			/* Change to move-mode and hide firemodes.
-			 * Only if it's a different actor - if it's the same we keep the current mode etc... */
-			if (!same_actor) {
-				HideFiremodes();
-				cl.cmode = M_MOVE;
-			}
-
-			return qtrue;
-		}
+	switch (le->fieldSize) {
+	case ACTOR_SIZE_NORMAL:
+		CL_CharacterCvars(selChr);
+		break;
+	case ACTOR_SIZE_2x2:
+		CL_UGVCvars(selChr);
+		break;
+	default:
+		Com_Error(ERR_DROP, "CL_ActorSelect: Unknown fieldsize\n");
 	}
 
-	return qfalse;
+	/* Forcing the hud-display to refresh it's dsiplayed stuff */
+	Cvar_SetValue("hud_refresh", 1);
+	CL_ActorUpdateCVars();
+
+	CL_ConditionalMoveCalc(&clMap, le, MAX_ROUTE);
+
+	/* move first person camera to new actor */
+	if (camera_mode == CAMERA_MODE_FIRSTPERSON)
+		CL_CameraModeChange(CAMERA_MODE_FIRSTPERSON);
+
+	/* Change to move-mode and hide firemodes.
+	 * Only if it's a different actor - if it's the same we keep the current mode etc... */
+	if (!same_actor) {
+		HideFiremodes();
+		cl.cmode = M_MOVE;
+	}
+
+	return qtrue;
 }
 
 
@@ -2748,6 +2776,7 @@ void CL_ActorDie (struct dbuffer *msg)
 	int i;
 	int teamDescID = -1;
 	char tmpbuf[128];
+	character_t *chr;
 
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_DIE], &number, &state);
 
@@ -2789,16 +2818,16 @@ void CL_ActorDie (struct dbuffer *msg)
 
 	/* Print some info about the death or stun. */
 	if (le->team == cls.team && baseCurrent) {
-		i = CL_GetActorNumber(le);
-		if (i >= 0 && ((le->state & STATE_STUN) & ~STATE_DEAD)) {
+		chr = CL_GetActorChr(le);
+		if (chr && ((le->state & STATE_STUN) & ~STATE_DEAD)) {
 			Com_sprintf(tmpbuf, sizeof(tmpbuf), "%s %s %s\n",
-			gd.ranks[baseCurrent->curTeam[i]->rank].shortname,
-			baseCurrent->curTeam[i]->name, _("was stunned.\n"));
+			gd.ranks[chr->rank].shortname,
+			chr->name, _("was stunned.\n"));
 			CL_DisplayHudMessage(tmpbuf, 2000);
-		} else if (i >= 0) {
+		} else if (chr) {
 			Com_sprintf(tmpbuf, sizeof(tmpbuf), "%s %s %s\n",
-			gd.ranks[baseCurrent->curTeam[i]->rank].shortname,
-			baseCurrent->curTeam[i]->name, _("was killed.\n"));
+			gd.ranks[chr->rank].shortname,
+			chr->name, _("was killed.\n"));
 			CL_DisplayHudMessage(tmpbuf, 2000);
 		}
 	} else {
