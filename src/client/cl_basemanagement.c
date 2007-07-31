@@ -687,7 +687,7 @@ void B_SetUpBase (base_t* base)
 				&& cl_start_buildings->integer)) {
 			/* @todo: implement check for moreThanOne */
 			building = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
-			memcpy(building, &gd.buildingTypes[i], sizeof(building_t));
+			*building = gd.buildingTypes[i];
 			/* self-link to building-list in base */
 			building->idx = gd.numBuildings[base->idx];
 			gd.numBuildings[base->idx]++;
@@ -880,7 +880,7 @@ void B_SetBuildingByClick (int row, int col)
 			building = &gd.buildings[baseCurrent->idx][gd.numBuildings[baseCurrent->idx]];
 
 		/* copy building from type-list to base-buildings-list */
-		memcpy(building, &gd.buildingTypes[baseCurrent->buildingCurrent->type_idx], sizeof(building_t));
+		*building = gd.buildingTypes[baseCurrent->buildingCurrent->type_idx];
 
 		if (!freeSlot) {
 			/* self-link to building-list in base */
@@ -3100,7 +3100,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			}
 		for (k = 0; k < presaveArray[PRE_MAXBUI]; k++) {
 			building = &gd.buildings[i][k];
-			memcpy(building, &gd.buildingTypes[MSG_ReadByte(sb)], sizeof(building_t));
+			*building = gd.buildingTypes[MSG_ReadByte(sb)];
 			building->idx = k;
 			building->base_idx = i;
 			building->buildingStatus = MSG_ReadByte(sb);
@@ -3127,7 +3127,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			aircraft = AIR_GetAircraft(MSG_ReadString(sb));
 			if (!aircraft)
 				return qfalse;
-			memcpy(&b->aircraft[k], aircraft, sizeof(aircraft_t));
+			b->aircraft[k] = *aircraft;
 			aircraft = &b->aircraft[k];
 			aircraft->idx = MSG_ReadShort(sb);
 			aircraft->homebase = b;
