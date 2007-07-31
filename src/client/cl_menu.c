@@ -561,8 +561,6 @@ static void MN_NextGametype_f (void)
 				newType = 0;
 			Cvar_Set("gametype", gts[newType].id);
 			Com_SetGameType();
-			/* confunc in menu_multiplayer.ufo */
-			Cbuf_ExecuteText(EXEC_NOW, "mn_servercreate_update");
 			break;
 		}
 	}
@@ -588,8 +586,6 @@ static void MN_PrevGametype_f (void)
 				newType = numGTs - 1;
 			Cvar_Set("gametype", gts[newType].id);
 			Com_SetGameType();
-			/* confunc in menu_multiplayer.ufo */
-			Cbuf_ExecuteText(EXEC_NOW, "mn_servercreate_update");
 			break;
 		}
 	}
