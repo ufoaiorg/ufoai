@@ -33,7 +33,7 @@ static mBspSurface_t *warpface;
 /**
  * @brief
  */
-static void BoundPoly(int numverts, float *verts, vec3_t mins, vec3_t maxs)
+static void BoundPoly (int numverts, float *verts, vec3_t mins, vec3_t maxs)
 {
 	int i, j;
 	float *v;

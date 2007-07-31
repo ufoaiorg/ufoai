@@ -2578,7 +2578,8 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	if ((!fd->soundOnce || firstShot) && fd->fireSound[0]
 		&& !(flags & SF_BOUNCED)) {
 		sfx_t *sfx = S_RegisterSound(fd->fireSound);
-		S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_ACTOR, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
+		/* le might be null here - because the actor is invisible */
+		S_StartSound(muzzle, le ? le->entnum : cl.pnum, SOUND_CHANNEL_ACTOR, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
 	}
 	firstShot = qfalse;
 
