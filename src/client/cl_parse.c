@@ -1442,10 +1442,7 @@ static void CL_ParseEvent (struct dbuffer *msg)
 					nextTime += 500;
 					impactTime = shootTime = nextTime;
 				} else {
-#ifdef DEBUG
-					GET_FIREDEFDEBUG(obj_idx, weap_fds_idx, fd_idx)
-#endif
-					fd = GET_FIREDEF(obj_idx, weap_fds_idx, fd_idx);
+					fd = FIRESH_GetFiredef(obj_idx, weap_fds_idx, fd_idx);
 #if 0
 					@todo: not needed? and SF_BOUNCED?
 					if (fd->speed)
@@ -1471,10 +1468,7 @@ static void CL_ParseEvent (struct dbuffer *msg)
 				/* read data */
 				NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT], &dummy, &obj_idx, &weap_fds_idx, &fd_idx, &flags, &surfaceFlags, &muzzle, &impact, &dummy);
 
-#ifdef DEBUG
-				GET_FIREDEFDEBUG(obj_idx, weap_fds_idx, fd_idx)
-#endif
-				fd = GET_FIREDEF(obj_idx, weap_fds_idx, fd_idx);
+				fd = FIRESH_GetFiredef(obj_idx, weap_fds_idx, fd_idx);
 
 				if (!(flags & SF_BOUNCED)) {
 					/* shooting */

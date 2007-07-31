@@ -1443,20 +1443,12 @@ void CL_ActorUpdateCVars (void)
 				/* No valid weapon in the hand. */
 				selFD = NULL;
 			} else {
-#ifdef PARANOID
-				GET_FIREDEFDEBUG(
-					selWeapon->item.m,
-					FIRESH_FiredefsIDXForWeapon(
-						&csi.ods[selWeapon->item.m],
-						selWeapon->item.t),
-					cl.cfiremode);
-#endif
 				/* Check whether this item uses/has ammo. */
 				if (selWeapon->item.m == NONE) {
 					/* This item does not use ammo, check for existing firedefs in this item. */
 					if (csi.ods[selWeapon->item.t].numWeapons > 0) {
 						/* Get firedef from the weapon entry instead. */
-						selFD = GET_FIREDEF(
+						selFD = FIRESH_GetFiredef(
 							selWeapon->item.t,
 							FIRESH_FiredefsIDXForWeapon(
 								&csi.ods[selWeapon->item.t],
@@ -1468,7 +1460,7 @@ void CL_ActorUpdateCVars (void)
 					}
 				} else {
 					/* This item uses ammo, get the firedefs from ammo. */
-					old = GET_FIREDEF(
+					old = FIRESH_GetFiredef(
 						selWeapon->item.m,
 						FIRESH_FiredefsIDXForWeapon(
 							&csi.ods[selWeapon->item.m],
@@ -2566,10 +2558,7 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	le = LE_Get(number);
 
 	/* get the fire def */
-#ifdef DEBUG
-	GET_FIREDEFDEBUG(obj_idx, weap_fds_idx, fd_idx)
-#endif
-	fd = GET_FIREDEF(obj_idx, weap_fds_idx, fd_idx);
+	fd = FIRESH_GetFiredef(obj_idx, weap_fds_idx, fd_idx);
 
 	/* add effect le */
 	LE_AddProjectile(fd, flags, muzzle, impact, normal, qtrue);
@@ -2639,10 +2628,7 @@ void CL_ActorShootHidden (struct dbuffer *msg)
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &obj_idx, &weap_fds_idx, &fd_idx);
 
 	/* get the fire def */
-#ifdef DEBUG
-	GET_FIREDEFDEBUG(obj_idx, weap_fds_idx, fd_idx)
-#endif
-	fd = GET_FIREDEF(obj_idx, weap_fds_idx, fd_idx);
+	fd = FIRESH_GetFiredef(obj_idx, weap_fds_idx, fd_idx);
 
 	/* start the sound; @todo: is check for SF_BOUNCED needed? */
 	if (((first && fd->soundOnce) || (!first && !fd->soundOnce)) && fd->fireSound[0])
@@ -2671,10 +2657,7 @@ void CL_ActorDoThrow (struct dbuffer *msg)
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_THROW], &dtime, &obj_idx, &weap_fds_idx, &fd_idx, &flags, &muzzle, &v0);
 
 	/* get the fire def */
-#ifdef DEBUG
-	GET_FIREDEFDEBUG(obj_idx, weap_fds_idx, fd_idx)
-#endif
-	fd = GET_FIREDEF(obj_idx, weap_fds_idx, fd_idx);
+	fd = FIRESH_GetFiredef(obj_idx, weap_fds_idx, fd_idx);
 
 	/* add effect le (local entity) */
 	LE_AddGrenade(fd, flags, muzzle, v0, dtime);
@@ -2707,10 +2690,7 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_START_SHOOT], &number, &obj_idx, &weap_fds_idx, &fd_idx, &from, &target);
 
-#ifdef DEBUG
-	GET_FIREDEFDEBUG(obj_idx, weap_fds_idx, fd_idx)
-#endif
-	fd = GET_FIREDEF(obj_idx, weap_fds_idx, fd_idx);
+	fd = FIRESH_GetFiredef(obj_idx, weap_fds_idx, fd_idx);
 
 	le = LE_Get(number);
 

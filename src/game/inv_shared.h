@@ -35,20 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_FIREDEFS_PER_WEAPON 8
 #define MAX_DAMAGETYPES 32
 
-/* #define GET_FIREDEF(type)   (&csi.ods[type & 0x7F].fd[0][!!(type & 0x80)]) @todo remove me */
-/* @todo: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
-
-#define GET_FIREDEFDEBUG(obj_idx,weap_fds_idx,fd_idx) \
-	if (obj_idx < 0 || obj_idx >= MAX_OBJDEFS) \
-		Sys_Error("GET_FIREDEF: obj_idx out of bounds [%i] (%s: %i)\n", obj_idx, __FILE__, __LINE__); \
-	if (weap_fds_idx < 0 || weap_fds_idx >= MAX_WEAPONS_PER_OBJDEF) \
-		Sys_Error("GET_FIREDEF: weap_fds_idx out of bounds [%i] (%s: %i)\n", weap_fds_idx, __FILE__, __LINE__); \
-	if (fd_idx < 0 || fd_idx >= MAX_FIREDEFS_PER_WEAPON) \
-		Sys_Error("GET_FIREDEF: fd_idx out of bounds [%i] (%s: %i)\n", fd_idx, __FILE__, __LINE__);
-
-#define GET_FIREDEF(obj_idx,weap_fds_idx,fd_idx) \
-	(&csi.ods[obj_idx & (MAX_OBJDEFS-1)].fd[weap_fds_idx & (MAX_WEAPONS_PER_OBJDEF-1)][fd_idx & (MAX_FIREDEFS_PER_WEAPON-1)])
-
 /** @brief this is a fire definition for our weapons/ammo */
 typedef struct fireDef_s {
 	char name[MAX_VAR];			/**< script id */
@@ -446,6 +432,7 @@ qboolean INVSH_LoadableInWeapon(objDef_t *od, int weapon_idx);
 /*  FIREMODE MANAGEMENT FUNCTIONS  */
 /* =============================== */
 
+fireDef_t* FIRESH_GetFiredef(int objIdx, int weapFdsIdx, int fdIdx);
 int FIRESH_FiredefsIDXForWeapon(objDef_t *od, int weapon_idx);
 int FIRESH_GetDefaultReactionFire(objDef_t *ammo, int weapon_fds_idx);
 

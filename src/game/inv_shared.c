@@ -28,11 +28,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "inv_shared.h"
 
-/* ================================ */
-
-/*  INVENTORY MANAGEMENT FUNCTIONS  */
-
-/* ================================ */
+/*================================
+INVENTORY MANAGEMENT FUNCTIONS
+================================*/
 
 static csi_t *CSI;
 static invList_t *invUnused;
@@ -49,6 +47,25 @@ void INVSH_InitCSI (csi_t * import)
 	CSI = import;
 }
 
+/**
+ * @brief Get the fire defintion for a given object
+ * @param[in] objIdx The object index to get the firedef for
+ * @param[in] weapFdsIdx
+ * @param[in] fdIdx
+ * @return Will never return NULL
+ */
+inline fireDef_t* FIRESH_GetFiredef (int objIdx, int weapFdsIdx, int fdIdx)
+{
+#ifdef DEBUG
+	if (objIdx < 0 || objIdx >= MAX_OBJDEFS) \
+		Sys_Error("FIRESH_GetFiredef: objIdx out of bounds [%i]\n", objIdx);
+	if (weapFdsIdx < 0 || weapFdsIdx >= MAX_WEAPONS_PER_OBJDEF)
+		Sys_Error("FIRESH_GetFiredef: weapFdsIdx out of bounds [%i]\n", weapFdsIdx);
+	if (fdIdx < 0 || fdIdx >= MAX_FIREDEFS_PER_WEAPON)
+		Sys_Error("FIRESH_GetFiredef: fdIdx out of bounds [%i]\n", fdIdx);
+#endif
+	return (&CSI->ods[objIdx & (MAX_OBJDEFS-1)].fd[weapFdsIdx & (MAX_WEAPONS_PER_OBJDEF-1)][fdIdx & (MAX_FIREDEFS_PER_WEAPON-1)]);
+}
 
 /**
  * @brief
