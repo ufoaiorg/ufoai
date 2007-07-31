@@ -17,8 +17,6 @@
 				<Compiler>
 					<Add option="-D__GNUWIN32__" />
 					<Add option="-D_M_IX86=500" />
-					<Add option="-DDEVCPP" />
-					<Add option="-DHAVE_GETTEXT" />
 				</Compiler>
 				<Linker>
 					<Add option="../../src/ports/win32/intl.lib" />
@@ -51,9 +49,7 @@
 					<Add option="-g" />
 					<Add option="-D__GNUWIN32__" />
 					<Add option="-D_M_IX86=500" />
-					<Add option="-DDEVCPP" />
 					<Add option="-DHAVE_SHADERS" />
-					<Add option="-DHAVE_GETTEXT" />
 					<Add option="-DDEBUG" />
 				</Compiler>
 				<Linker>
@@ -84,7 +80,6 @@
 				<Option projectIncludeDirsRelation="1" />
 				<Option projectLibDirsRelation="1" />
 				<Compiler>
-					<Add option="-DHAVE_GETTEXT" />
 					<Add directory="/usr/include/SDL" />
 				</Compiler>
 				<Linker>
@@ -109,7 +104,6 @@
 				<Option projectIncludeDirsRelation="1" />
 				<Option projectLibDirsRelation="1" />
 				<Compiler>
-					<Add option="-DHAVE_GETTEXT" />
 					<Add directory="/sw/include" />
 				</Compiler>
 				<Linker>
