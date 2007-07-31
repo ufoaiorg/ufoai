@@ -602,14 +602,14 @@ static void MN_PrevGametype_f (void)
 static void MN_StartServer_f (void)
 {
 	aircraft_t *aircraft;
-	
+
 	if (Cmd_Argc() <= 1) {
 		Com_Printf("Usage: mn_startserver <name>\n");
 		return;
 	}
 
 	aircraft = AIR_AircraftGetFromIdx(0);
-	
+
 	if (sv_dedicated->integer > 0)
 		Com_DPrintf("Dedicated server needs no team\n");
 	else if (!B_GetNumOnTeam(aircraft)) {
@@ -2060,7 +2060,6 @@ static int INV_GetItemTooltip (item_t item, char *tooltiptext, size_t string_max
 						Q_strcat(tooltiptext, va("* %s\n", csi.ods[weapon_idx].name), string_maxlength);
 						linenum++;
 					}
-				}
 				}
 			}
 		}

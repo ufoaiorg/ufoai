@@ -1343,6 +1343,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				gi.WriteByte(dvtab[numdv]);
 				gi.WriteShort(contents);
 
+				/* FIXME: currently the sound is played too early */
 				if (contents & CONTENTS_WATER) {
 					if (inWater) {
 						/* send water moving sound */
