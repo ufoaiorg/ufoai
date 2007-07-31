@@ -162,7 +162,6 @@ FRAME UPDATES
 ===============================================================================
 */
 
-
 /**
  * @brief Each entity can have eight independant sound sources, like voice, weapon, feet, etc.
  * If cahnnel & 8, the sound will be sent to everyone, not just things in the PHS.
@@ -176,11 +175,8 @@ FRAME UPDATES
  *
  * If origin is NULL, the origin is determined from the entity origin or the midpoint of the entity box for bmodels.
  */
-void SV_BreakSound (vec3_t origin, edict_t *entity, int channel, edictMaterial_t material)
+void SV_StartSound (vec3_t origin, edict_t *entity, const char *sound, int channel, float volume, float attenuation, float timeofs)
 {
-	float volume = 1.0;
-	float attenuation = 1.0;
-	float timeofs = 0.0;
 	int sendchan;
 	int flags;
 	int i;
@@ -189,13 +185,13 @@ void SV_BreakSound (vec3_t origin, edict_t *entity, int channel, edictMaterial_t
 	struct dbuffer *msg;
 
 	if (volume < 0 || volume > 1.0)
-		Com_Error(ERR_FATAL, "SV_BreakSound: volume = %f", volume);
+		Com_Error(ERR_FATAL, "SV_StartSound: volume = %f", volume);
 
 	if (attenuation < 0 || attenuation > 4)
-		Com_Error(ERR_FATAL, "SV_BreakSound: attenuation = %f", attenuation);
+		Com_Error(ERR_FATAL, "SV_StartSound: attenuation = %f", attenuation);
 
 	if (timeofs < 0 || timeofs > 0.255)
-		Com_Error(ERR_FATAL, "SV_BreakSound: timeofs = %f", timeofs);
+		Com_Error(ERR_FATAL, "SV_StartSound: timeofs = %f", timeofs);
 
 	ent = NUM_FOR_EDICT(entity);
 
@@ -236,9 +232,9 @@ void SV_BreakSound (vec3_t origin, edict_t *entity, int channel, edictMaterial_t
 
 	msg = new_dbuffer();
 
-	NET_WriteByte(msg, svc_breaksound);
+	NET_WriteByte(msg, svc_sound);
 	NET_WriteByte(msg, flags);
-	NET_WriteByte(msg, material);
+	NET_WriteString(msg, sound);
 
 	if (flags & SND_VOLUME)
 		NET_WriteByte(msg, volume * 255);

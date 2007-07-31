@@ -46,7 +46,7 @@ static const char *svc_strings[UCHAR_MAX+1] =
 	"svc_nop",
 	"svc_disconnect",
 	"svc_reconnect",
-	"svc_breaksound",
+	"svc_sound",
 	"svc_print",
 	"svc_stufftext",
 	"svc_serverdata",
@@ -457,15 +457,14 @@ ACTION MESSAGES
 
 /**
  * @brief Parsed a server send sound package
- * @sa svc_breaksound
- * @sa SV_BreakSound
+ * @sa svc_sound
+ * @sa SV_StartSound
  */
-static void CL_ParseStartBreakSoundPacket (struct dbuffer *msg)
+static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 {
 	vec3_t  pos_v;
 	float	*pos;
 	int 	channel, ent;
-	edictMaterial_t material;
 	float 	volume;
 	float 	attenuation;
 	int		flags;
@@ -474,7 +473,7 @@ static void CL_ParseStartBreakSoundPacket (struct dbuffer *msg)
 	sfx_t *sfx;
 
 	flags = NET_ReadByte(msg);
-	material = NET_ReadByte(msg);
+	sound = NET_ReadString(msg);
 
 	if (flags & SND_VOLUME)
 		volume = NET_ReadByte(msg) / 255.0;
@@ -512,29 +511,9 @@ static void CL_ParseStartBreakSoundPacket (struct dbuffer *msg)
 	} else /* use entity number */
 		pos = NULL;
 
-	Com_DPrintf("startbreaksoundpacket: flags %x, material %d, volume %.2ff, attenuation %.2f, ofs %.2f,"
+	Com_DPrintf("startsoundpacket: flags %x, sound %s, volume %.2f, attenuation %.2f, ofs %.2f,"
 		" channel %d, ent %d, pos %.3f, %.3f, %.3f\n",
-		flags, material, volume, attenuation, ofs, channel, ent, pos[0], pos[1], pos[2]);
-
-	switch (material) {
-	case MAT_METAL:
-		sound = "ambient/breakmetal.wav";
-		break;
-	case MAT_GLASS:
-		sound = "ambient/breakglass.wav";
-		break;
-	case MAT_ELECTRICAL:
-		sound = "ambient/breakeletric.wav";
-		break;
-	case MAT_WOOD:
-		sound = "ambient/breakwood.wav";
-		break;
-	default:
-		if (material >= MAT_MAX)
-			Com_Printf("CL_ParseStartBreakSoundPacket: Unknown material\n");
-		/* no sound */
-		return;
-	}
+		flags, sound, volume, attenuation, ofs, channel, ent, pos[0], pos[1], pos[2]);
 
 	sfx = S_RegisterSound(sound);
 	S_StartSound(pos, ent, channel, sfx, volume, attenuation, ofs);
@@ -1627,8 +1606,8 @@ void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
 		CL_ParseConfigString(msg);
 		break;
 
-	case svc_breaksound:
-		CL_ParseStartBreakSoundPacket(msg);
+	case svc_sound:
+		CL_ParseStartSoundPacket(msg);
 		break;
 
 	case svc_event:

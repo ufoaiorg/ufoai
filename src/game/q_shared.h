@@ -642,16 +642,6 @@ typedef struct {
 #define ATTN_IDLE               2
 #define ATTN_STATIC             3   /* diminish very rapidly with distance */
 
-/** @brief e.g. used for breakable objects */
-typedef enum {
-	MAT_GLASS,		/* default */
-	MAT_METAL,
-	MAT_ELECTRICAL,
-	MAT_WOOD,
-
-	MAT_MAX
-} edictMaterial_t;
-
 #define MAX_VAR     64
 
 typedef struct date_s {

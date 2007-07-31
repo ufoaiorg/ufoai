@@ -119,7 +119,8 @@ typedef struct {
 	void (IMPORT *cprintf) (player_t * player, int printlevel, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
 	/** sends message to one entity and displays message on center of the screen */
 	void (IMPORT *centerprintf) (player_t * player, const char *fmt, ...) __attribute__((format(printf, 2, 3)));
-	void (IMPORT *break_sound) (vec3_t origin, edict_t *ent, int channel, edictMaterial_t material);
+
+	void (IMPORT *PositionedSound) (vec3_t origin, edict_t *ent, const char *sound, int channel, float volume, float attenuation, float timeofs);
 
 	/* config strings hold all the index strings, the lightstyles, */
 	/* and misc data like the cdtrack. */
@@ -147,7 +148,7 @@ typedef struct {
 	 */
 	trace_t (IMPORT *trace) (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, edict_t * passent, int contentmask);
 
-	int (*PointContents) (vec3_t point);
+	int (IMPORT *PointContents) (vec3_t point);
 
 	/** links entity into the world - so that it is sent to the client and used for
 	 * collision detection, etc. Must be relinked if its size, position or solidarity changes */

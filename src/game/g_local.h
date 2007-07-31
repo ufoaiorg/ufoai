@@ -391,8 +391,17 @@ void G_CheckEndGame(void);
 
 /*============================================================================ */
 
-typedef struct
-{
+/** @brief e.g. used for breakable objects */
+typedef enum {
+	MAT_GLASS,		/* default */
+	MAT_METAL,
+	MAT_ELECTRICAL,
+	MAT_WOOD,
+
+	MAT_MAX
+} edictMaterial_t;
+
+typedef struct {
 	/* fixed data */
 	vec3_t		start_origin;
 	vec3_t		start_angles;

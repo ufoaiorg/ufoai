@@ -319,7 +319,22 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 					gi.WriteGPos(ent->pos);
 					gi.WriteShort((int)strlen(ent->particle));
 					gi.WriteString(ent->particle);
-					gi.break_sound(ent->origin, ent, CHAN_AUTO, ent->material);
+				}
+				switch (ent->material) {
+				case MAT_GLASS:
+					gi.PositionedSound(ent->origin, ent, "ambient/breakglass", CHAN_AUTO, 1, 1, 0);
+					break;
+				case MAT_METAL:
+					gi.PositionedSound(ent->origin, ent, "ambient/breakmetal", CHAN_AUTO, 1, 1, 0);
+					break;
+				case MAT_ELECTRICAL:
+					gi.PositionedSound(ent->origin, ent, "ambient/breakelectric", CHAN_AUTO, 1, 1, 0);
+					break;
+				case MAT_WOOD:
+					gi.PositionedSound(ent->origin, ent, "ambient/breakwood", CHAN_AUTO, 1, 1, 0);
+					break;
+				case MAT_MAX:
+					break;
 				}
 				gi.unlinkentity(ent);
 				ent->inuse = qfalse;
