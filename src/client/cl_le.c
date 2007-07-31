@@ -485,6 +485,7 @@ void LET_PathMoveHidden (le_t * le)
 			/* check for straight movement or diagonal movement */
 			le->endTime += ((dv & (DIRECTIONS-1)) > 3 ? UNIT_SIZE * 1.41 : UNIT_SIZE) * 1000 / le->speed;
 		} else {
+			le->pathLength = 0;
 			le->think = NULL;
 			return;
 		}
@@ -562,6 +563,7 @@ static void LET_PathMove (le_t * le)
 			/* end of move */
 			le_t *floor;
 
+			le->pathLength = 0;
 			CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
 
 			/* link any floor container into the actor temp floor container */
@@ -896,7 +898,7 @@ void LE_AddToScene (void)
 			/* set entity values */
 			VectorCopy(le->origin, ent.origin);
 			VectorCopy(le->origin, ent.oldorigin);
-			
+
 			/**
 			 * Offset the model to be inside the cursor box
 			 * @todo Dunno if this is the best place to do it - what happens to shot-origin and stuff? le->origin is never changed.

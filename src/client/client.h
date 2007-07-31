@@ -479,6 +479,7 @@ void CL_SniperModeSet(void);
 void CL_SniperModeUnset(void);
 
 /* cl_le.c */
+#define MAX_LE_PATHLENGTH 32
 
 /** @brief a local entity */
 typedef struct le_s {
@@ -520,7 +521,7 @@ typedef struct le_s {
 	void (*think) (struct le_s * le);
 
 	/** various think function vars */
-	byte path[32];
+	byte path[MAX_LE_PATHLENGTH];
 	int pathLength, pathPos;
 	int startTime, endTime;
 	int speed;

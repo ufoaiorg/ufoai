@@ -2327,12 +2327,13 @@ void CL_ActorDoMove (struct dbuffer *msg)
 	}
 
 	/* get length */
-	NET_ReadFormat(msg, ev_format[EV_ACTOR_MOVE], le->path, &contents);
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_MOVE], &le->path[le->pathLength], &contents);
+	le->pathLength++;
+	assert(le->pathLength <= MAX_LE_PATHLENGTH);
 
 	/* activate PathMove function */
 	FLOOR(le) = NULL;
 	le->think = LET_StartPathMove;
-	le->pathLength = 1;
 	le->pathPos = 0;
 	le->startTime = cl.time;
 	le->endTime = cl.time;
@@ -3786,7 +3787,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 		VectorSet(ent.angles, 0, 0, 0.6);
 
 	VectorAdd(ent.origin, boxSize, ent.oldorigin);
-	
+
 	/* color */
 	if (mouseActor && (mouseActor != selActor)) {
 		ent.alpha = 0.4 + 0.2 * sin((float) cl.time / 80);
