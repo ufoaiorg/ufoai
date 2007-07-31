@@ -622,9 +622,7 @@ fi
 #---------------------------------------------------------------------------------------------
 
 OLD_CFLAGS=$CFLAGS
-OLD_CPPFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $SDL_CFLAGS"
-CPPFLAGS=$CFLAGS
 
 AC_CHECK_HEADERS([SDL.h])
 if test "$ac_cv_header_SDL_h" != "yes"
@@ -645,7 +643,6 @@ else
 fi
 
 CFLAGS=$OLD_CFLAGS
-CPPFLAGS=$OLD_CFLAGS
 
 OLD_LDFLAGS=$LDFLAGS
 LDFLAGS="$LDFLAGS $SDL_LDFLAGS"

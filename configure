@@ -8723,9 +8723,7 @@ fi
 #---------------------------------------------------------------------------------------------
 
 OLD_CFLAGS=$CFLAGS
-OLD_CPPFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $SDL_CFLAGS"
-CPPFLAGS=$CFLAGS
 
 
 for ac_header in SDL.h
@@ -9030,7 +9028,6 @@ else
 fi
 
 CFLAGS=$OLD_CFLAGS
-CPPFLAGS=$OLD_CFLAGS
 
 OLD_LDFLAGS=$LDFLAGS
 LDFLAGS="$LDFLAGS $SDL_LDFLAGS"
