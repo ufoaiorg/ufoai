@@ -615,7 +615,7 @@ menu bases
 
 	func init
 	{
-		cmd base_init;
+		cmd "base_init;"
 	}
 }
 
