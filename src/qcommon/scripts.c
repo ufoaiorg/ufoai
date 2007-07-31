@@ -658,11 +658,11 @@ static const char *skillNames[SKILL_NUM_TYPES - ABILITY_NUM_TYPES] = {
 	"explosive"
 };
 
-typedef enum objdefs {
-	OD_WEAPON,
-	OD_PROTECTION,
-	OD_HARDNESS
-} objdef_t;
+enum {
+	OD_WEAPON,			/**< parse a weapon */
+	OD_PROTECTION,		/**< parse armour protection values */
+	OD_HARDNESS			/**< parse armour hardness values */
+};
 
 
 /** @sa q_shared.h:equipment_buytypes_t */
