@@ -1255,6 +1255,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	pos3_t pos;
 	float div, tu;
 	int contents;
+	qboolean inWater = qfalse;
 	vec3_t pointTrace;
 
 	ent = g_edicts + num;
@@ -1272,6 +1273,10 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 		/* start move */
 		gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_START_MOVE);
 		gi.WriteShort(ent->number);
+		contents = gi.PointContents(pointTrace);
+		if (contents & CONTENTS_WATER) {
+			inWater = qtrue; /* looks like we already are in the water */
+		}
 
 		/* assemble dv-encoded move data */
 		VectorCopy(to, pos);
@@ -1327,10 +1332,22 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				pointTrace[2] += PLAYER_MIN;
 
 				contents = gi.PointContents(pointTrace);
-#if 0
-				if (contents & CONTENTS_WATER)
-					Com_Printf("Inside of water\n");
-#endif
+
+				if (contents & CONTENTS_WATER) {
+					if (inWater) {
+						/* send water moving sound */
+						/* @todo */
+					} else {
+						inWater = qtrue;
+						/* send water entering sound */
+						/* @todo */
+					}
+				} else if (inWater) {
+					inWater = qfalse;
+					/* send water leaving sound */
+					/* @todo */
+				}
+
 				/* link it at new position */
 				gi.linkentity(ent);
 
