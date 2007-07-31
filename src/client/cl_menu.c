@@ -1059,6 +1059,8 @@ qboolean MN_CursorOnMenu (int x, int y)
 static void MN_Drag (const menuNode_t* const node, int x, int y)
 {
 	int px, py;
+	character_t *chr;
+	aircraft_t *aircraft = cls.missionaircraft;
 
 	if (!menuInventory)
 		return;
@@ -1131,13 +1133,30 @@ static void MN_Drag (const menuNode_t* const node, int x, int y)
 			}
 
 			/* update character info (for armor changes) */
-			sel = cl_selected->integer;
-			if (sel >= 0 && sel < gd.numEmployees[EMPL_SOLDIER]) {
-				assert(baseCurrent->curTeam[sel]);
-				if (baseCurrent->curTeam[sel]->fieldSize == ACTOR_SIZE_NORMAL)
-					CL_CharacterCvars(baseCurrent->curTeam[sel]);
-				else
-					CL_UGVCvars(baseCurrent->curTeam[sel]);
+			if (CL_OnBattlescape()) {
+				/** @todo Do we really need to do this (armour change) in battlescape? */
+				sel = cl_selected->integer; /**@todo is this really the correct index? */
+				if (sel >= 0 && aircraft) {
+					/** @todo checking for (sel < gd.numEmployees[EMPL_SOLDIER]) is kinda tricky/recursive here.
+					 * Is there a better way? */
+					chr = &gd.employees[aircraft->teamTypes[sel]][aircraft->teamIdxs[sel]].chr;
+					assert(chr);
+					if (chr->fieldSize == ACTOR_SIZE_2x2)
+						CL_UGVCvars(chr);
+					else
+						CL_CharacterCvars(chr);
+				}
+			} else {
+				/* We are in the base or multiplayer inventory */
+				/** @todo Replace curTeam with static list somehow. */
+				sel = cl_selected->integer; /**@todo is this really the correct index? */
+				if (sel >= 0 && sel < gd.numEmployees[EMPL_SOLDIER]) {
+					assert(baseCurrent->curTeam[sel]);
+					if (baseCurrent->curTeam[sel]->fieldSize == ACTOR_SIZE_2x2)
+						CL_UGVCvars(baseCurrent->curTeam[sel]);
+					else
+						CL_CharacterCvars(baseCurrent->curTeam[sel]);
+				}
 			}
 		}
 	}
