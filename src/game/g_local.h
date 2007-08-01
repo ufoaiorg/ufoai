@@ -517,6 +517,8 @@ struct edict_s {
 	int type;
 	int visflags;
 
+	int contents;				/**< contents flags of the brush the actor is walking in */
+
 	pos3_t pos;
 	byte dir;					/* direction the player looks at */
 

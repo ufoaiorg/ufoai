@@ -1255,7 +1255,6 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	pos3_t pos;
 	float div, tu;
 	int contents;
-	qboolean inWater = qfalse;
 	vec3_t pointTrace;
 
 	ent = g_edicts + num;
@@ -1273,10 +1272,6 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 		/* start move */
 		gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_START_MOVE);
 		gi.WriteShort(ent->number);
-		contents = gi.PointContents(ent->origin);
-		if (contents & CONTENTS_WATER) {
-			inWater = qtrue; /* looks like we already are in the water */
-		}
 
 		/* assemble dv-encoded move data */
 		VectorCopy(to, pos);
@@ -1348,19 +1343,21 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 
 				/* Send the sound effect to everyone how's not seeing the actor */
 				if (contents & CONTENTS_WATER) {
-					if (inWater) {
+					if (ent->contents & CONTENTS_WATER) {
+						/* looks like we already are in the water */
 						/* send water moving sound */
 						gi.PositionedSound(~G_VisToPM(ent->visflags), ent->origin, ent, "footsteps/water_under", CHAN_AUTO, 1, 1, 0);
 					} else {
-						inWater = qtrue;
 						/* send water entering sound */
 						gi.PositionedSound(~G_VisToPM(ent->visflags), ent->origin, ent, "footsteps/water_in", CHAN_AUTO, 1, 1, 0);
 					}
-				} else if (inWater) {
-					inWater = qfalse;
+				} else if (ent->contents & CONTENTS_WATER) {
 					/* send water leaving sound */
 					gi.PositionedSound(~G_VisToPM(ent->visflags), ent->origin, ent, "footsteps/water_out", CHAN_AUTO, 1, 1, 0);
 				}
+
+				/* and now save the new contents */
+				ent->contents = contents;
 
 				/* check for anything appearing, seen by "the moving one" */
 				status = G_CheckVisTeam(ent->team, NULL, qfalse);
