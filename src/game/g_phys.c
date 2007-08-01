@@ -49,14 +49,15 @@ static qboolean G_PhysicsThink (edict_t *ent)
 /**
  * @brief Handles door and other objects
  * @sa G_RunFrame
- * FIXME: Make sure, that the think functions are not before EV_RESET was called
- * they might send data over the netchannel - but without EV_RESET the event timer
- * will overflow and game
  */
 void G_PhysicsRun (void)
 {
 	int i;
 	edict_t *ent;
+
+	/* not all teams are spawned */
+	if (level.activeTeam == -1)
+		return;
 
 	/* don't run this too often to prevent overflows */
 	if (level.framenum % 10)
