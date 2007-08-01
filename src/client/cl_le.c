@@ -33,6 +33,9 @@ int numLMs;
 le_t LEs[MAX_EDICTS];
 int numLEs;
 
+static sfx_t* soundWaterIn;
+static sfx_t* soundWaterOut;
+static sfx_t* soundWaterMove;
 
 /*===========================================================================
  LM handling
@@ -415,25 +418,28 @@ void LET_StartIdle (le_t * le)
 static void LE_PlaySoundFileForContents (le_t* le, int contents)
 {
 	sfx_t* sfx;
+	if (!soundWaterIn)
+		soundWaterIn = S_RegisterSound("footsteps/water_in");
+	if (!soundWaterOut)
+		soundWaterOut = S_RegisterSound("footsteps/water_out");
+	if (!soundWaterMove)
+		soundWaterOut = S_RegisterSound("footsteps/water_under");
 
 	if (contents & CONTENTS_WATER) {
 		/* were we already in the water? */
 		if (le->positionContents & CONTENTS_WATER) {
 			/* play water moving sound */
-			sfx = S_RegisterSound("footsteps/water_under");
-			S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_ACTOR, sfx, 1, 1, 0);
+			S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_ACTOR, soundWaterOut, 1, 1, 0);
 		} else {
 			/* play water entering sound */
-			sfx = S_RegisterSound("footsteps/water_in");
-			S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_ACTOR, sfx, 1, 1, 0);
+			S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_ACTOR, soundWaterIn, 1, 1, 0);
 		}
 		return;
 	}
 
 	if (le->positionContents & CONTENTS_WATER) {
 		/* play water leaving sound */
-		sfx = S_RegisterSound("footsteps/water_out");
-		S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_ACTOR, sfx, 1, 1, 0);
+		S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_ACTOR, soundWaterMove, 1, 1, 0);
 	}
 }
 
@@ -467,61 +473,6 @@ static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
 	if (t->footStepSound) {
 		sfx = S_RegisterSound(t->footStepSound);
 		S_StartSound(origin, le->entnum, entchannel, sfx, t->footStepVolume, t->footStepAttenuation, 0);
-	}
-}
-
-/**
- * @brief Move the actor along the path to the given location but don't show him
- * @note Think function
- * @sa CL_ActorMoveHidden
- * @sa LET_PathMove
- */
-void LET_PathMoveHidden (le_t * le)
-{
-	byte dv;
-	trace_t trace;
-	vec3_t from, to;
-
-	/* check for start */
-	if (cl.time <= le->startTime)
-		return;
-
-	/* move ahead */
-	while (cl.time > le->endTime) {
-		VectorCopy(le->pos, le->oldPos);
-
-		if (le->pathPos < le->pathLength) {
-			/* next part */
-			dv = le->path[le->pathPos];
-			PosAddDV(le->pos, dv);
-
-			/* walking in water will not play the normal footstep sounds */
-			if (!le->pathContents[le->pathPos]) {
-				/* prepare trace vectors */
-				PosToVec(le->pos, from);
-				VectorCopy(from, to);
-				/* between these two we should really hit the ground */
-				from[2] += UNIT_HEIGHT;
-				to[2] -= UNIT_HEIGHT;
-
-				trace = CL_Trace(from, to, vec3_origin, vec3_origin, NULL, NULL, MASK_SOLID);
-				if (trace.surface)
-					LE_PlaySoundFileAndParticleForSurface(le, trace.surface->name);
-			}
-
-			le->dir = dv & (DIRECTIONS-1);
-			le->angles[YAW] = dangle[le->dir];
-			le->startTime = le->endTime;
-			/* check for straight movement or diagonal movement */
-			le->endTime += ((dv & (DIRECTIONS-1)) > 3 ? UNIT_SIZE * 1.41 : UNIT_SIZE) * 1000 / le->speed;
-
-			le->positionContents = le->pathContents[le->pathPos];
-			le->pathPos++;
-		} else {
-			le->pathLength = 0;
-			le->think = NULL;
-			return;
-		}
 	}
 }
 

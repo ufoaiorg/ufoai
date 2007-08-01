@@ -695,7 +695,6 @@ void CL_ActorStartMove(le_t * le, pos3_t to);
 void CL_ActorShoot(le_t * le, pos3_t at);
 void CL_InvCheckHands(struct dbuffer *msg);
 void CL_ActorDoMove(struct dbuffer *msg);
-void CL_ActorMoveHidden(struct dbuffer *msg);
 void CL_ActorDoShoot(struct dbuffer *msg);
 void CL_ActorShootHidden(struct dbuffer *msg);
 void CL_ActorDoThrow(struct dbuffer *msg);

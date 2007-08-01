@@ -97,7 +97,6 @@ const char *ev_format[] =
 	"s",				/* EV_ACTOR_START_MOVE */
 	"sb",				/* EV_ACTOR_TURN */
 	"!sbs",				/* EV_ACTOR_MOVE */
-	"!sbs",				/* EV_ACTOR_MOVE_HIDDEN */
 
 	"ssbbgg",			/* EV_ACTOR_START_SHOOT */
 	"ssbbbbppb",		/* EV_ACTOR_SHOOT; the last 'b' cannot be 'd' */
@@ -146,7 +145,6 @@ static const char *ev_names[] =
 	"EV_ACTOR_START_MOVE",
 	"EV_ACTOR_TURN",
 	"EV_ACTOR_MOVE",
-	"EV_ACTOR_MOVE_HIDDEN",
 	"EV_ACTOR_START_SHOOT",
 	"EV_ACTOR_SHOOT",
 	"EV_ACTOR_SHOOT_HIDDEN",
@@ -207,7 +205,6 @@ static void (*ev_func[])( struct dbuffer *msg ) =
 	CL_ActorDoStartMove,
 	CL_ActorDoTurn,
 	CL_ActorDoMove,
-	CL_ActorMoveHidden,
 	CL_ActorStartShoot,
 	CL_ActorDoShoot,
 	CL_ActorShootHidden,
