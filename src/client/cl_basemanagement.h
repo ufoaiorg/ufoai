@@ -224,10 +224,7 @@ typedef struct base_s {
 
 	qboolean isDiscovered;	/** qtrue if the base has been discovered by aliens */
 
-	int teamNum[MAX_AIRCRAFT];		/**< Number of soldiers assigned to a specific aircraft. */
-
 	radar_t	radar;	/**< the onconstruct value of the buliding building_radar increases the sensor width */
-
 
 	aliensCont_t alienscont[MAX_ALIENCONT_CAP];	/**< alien containment capacity */
 
@@ -240,7 +237,6 @@ typedef struct base_s {
 
 	int equipType;	/**< the current selected category in equip menu */
 
-	character_t *curTeam[MAX_ACTIVETEAM];	/**< set in CL_GenerateEquipment_f and CL_LoadTeamMultiplayer */
 	character_t *curChr;	/**< needn't be saved */
 
 	int buyfactor;	/**< Factor for buying items in Buy/Sell menu for this base. */

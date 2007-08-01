@@ -197,7 +197,7 @@ typedef struct aircraft_s {
 	int time;
 	int idxInBase;				/**< Index in base. See also base_t->numAircraftInBase. */
 	/* pointer to base->numOnTeam[AIRCRAFT_ID] */
-	int *teamSize;				/**< How many soldiers/units are on board (i.e. in the craft-team).
+	int teamSize;				/**< How many soldiers/units are on board (i.e. in the craft-team).
 							 * @note ATTENTION do not use this in "for" loops or similar.
 							 * entries in teamIdxs and teamTypes are not stored in order and may contain "empties".
 							 */

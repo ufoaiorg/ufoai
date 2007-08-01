@@ -246,7 +246,7 @@ void CL_DisplayPopupAircraft (const aircraft_t* aircraft)
 	Q_strcat(popupAircraft.text_popup, _("Stop\n"), POPUP_AIRCARFT_MAX_TEXT);
 
 	/* Set missions in popup_aircraft */
-	if (*aircraft->teamSize > 0) {
+	if (aircraft->teamSize > 0) {
 		for (i = 0; i < ccs.numMissions; i++) {
 			popupAircraft.itemsId[popupAircraft.nbItems] = i;
 			popupAircraft.itemsAction[popupAircraft.nbItems++] = POPUP_AIRCRAFT_ACTION_MOVETOMISSION;
@@ -352,13 +352,13 @@ void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 			air = &gd.bases[j].aircraft[i];
 
 			/* if aircraft is empty we can't send it on a ground mission */
-			if (mission && *air->teamSize <= 0)
+			if (mission && air->teamSize <= 0)
 				continue;
 			/* don't show aircraft with no weapons */
 			if (ufo && air->weapons[0].itemIdx < 0)
 				continue;
 
-			s = va("%s (%i/%i)\t%s\t%s\n", air->shortname, *air->teamSize, air->size, AIR_AircraftStatusToName(air), gd.bases[j].name);
+			s = va("%s (%i/%i)\t%s\t%s\n", air->shortname, air->teamSize, air->size, AIR_AircraftStatusToName(air), gd.bases[j].name);
 			Q_strcat(aircraftListText, s, sizeof(aircraftListText));
 			popupIntercept.idBaseAircraft[popupIntercept.numAircraft] = j;
 			popupIntercept.idInBaseAircraft[popupIntercept.numAircraft] = i;

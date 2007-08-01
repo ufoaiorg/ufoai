@@ -1467,8 +1467,10 @@ static int spawnCountFromServer = -1;
 static void CL_SpawnSoldiers_f (void)
 {
 	int n = teamnum->integer;
-	int amount = 0;
 	base_t *base = NULL;
+	aircraft_t *aircraft = cls.missionaircraft;
+	chr_list_t chr_list_temp;
+	int i;
 
 	base = CP_GetMissionBase();
 
@@ -1495,13 +1497,20 @@ static void CL_SpawnSoldiers_f (void)
 
 	/* maybe we start the map directly from commandline for testing */
 	if (base) {
-		amount = B_GetNumOnTeam(cls.missionaircraft);
-		if (amount <= 0) {
-			Com_DPrintf("CL_SpawnSoldiers_f: Error - B_GetNumOnTeam returned value smaller than zero - %i\n", amount);
+		/* convert aircraft team to chr_list */
+		for (i = 0, chr_list_temp.num = 0; i < aircraft->size; i++) {
+			if (aircraft->teamIdxs[i] != -1) {
+				chr_list_temp.chr[chr_list_temp.num] = &gd.employees[aircraft->teamTypes[i]][aircraft->teamIdxs[i]].chr;
+				chr_list_temp.num++;
+			}
+		}
+		
+		if (chr_list_temp.num <= 0) {
+			Com_DPrintf("CL_SpawnSoldiers_f: Error - team number <= zero - %i\n", chr_list_temp.num);
 		} else {
 			/* send team info */
 			struct dbuffer *msg = new_dbuffer();
-			CL_SendCurTeamInfo(msg, base->curTeam, amount);
+			CL_SendCurTeamInfo(msg, &chr_list_temp);
 			NET_WriteMsg(cls.stream, msg);
 		}
 	}

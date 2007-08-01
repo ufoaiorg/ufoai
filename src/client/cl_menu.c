@@ -1147,14 +1147,13 @@ static void MN_Drag (const menuNode_t* const node, int x, int y)
 				}
 			} else {
 				/* We are in the base or multiplayer inventory */
-				/** @todo Replace curTeam with non-global list (only shared with cl_team) somehow. */
 				sel = cl_selected->integer; /**@todo is this really the correct index? */
-				if (sel >= 0 && sel < gd.numEmployees[EMPL_SOLDIER]) {	/** @todo this has to be changed/removed, see above */
-					assert(baseCurrent->curTeam[sel]);
-					if (baseCurrent->curTeam[sel]->empl_type == EMPL_ROBOT)
-						CL_UGVCvars(baseCurrent->curTeam[sel]);
+				if (sel >= 0 && sel < chrDisplayList.num) { 
+					assert(chrDisplayList.chr[sel]);
+					if (chrDisplayList.chr[sel]->empl_type == EMPL_ROBOT)
+						CL_UGVCvars(chrDisplayList.chr[sel]);
 					else
-						CL_CharacterCvars(baseCurrent->curTeam[sel]);
+						CL_CharacterCvars(chrDisplayList.chr[sel]);
 				}
 			}
 		}

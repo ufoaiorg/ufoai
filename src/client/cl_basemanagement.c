@@ -1771,7 +1771,7 @@ static void B_SelectBase_f (void)
  * @todo This currently always uses exactly the first two firemodes (see fmode1+fmode2) for calculation. This needs to be adapted to support less (1) or more 3+ firemodes. I think the function will even  break on only one firemode .. never tested it.
  * @todo i think currently also the different ammo/firedef types for each weapon (different weaponr_fd_idx and weaponr_fd_idx values) are ignored.
  */
-static void CL_SwapSkills (character_t *team[], int num)
+static void CL_SwapSkills (chr_list_t *team)
 {
 	int j, i1, i2, skill, no1, no2, tmp1, tmp2;
 	character_t *cp1, *cp2;
@@ -1779,14 +1779,14 @@ static void CL_SwapSkills (character_t *team[], int num)
 	const byte fmode1 = 0;
 	const byte fmode2 = 1;
 
-	j = num;
+	j = team->num;
 	while (j--) {
 		/* running the loops below is not enough, we need transitive closure */
 		/* I guess num times is enough --- could anybody prove this? */
 		/* or perhaps 2 times is enough as long as weapons have 1 skill? */
 		for (skill = ABILITY_NUM_TYPES; skill < SKILL_NUM_TYPES; skill++) {
-			for (i1 = 0; i1 < num - 1; i1++) {
-				cp1 = team[i1];
+			for (i1 = 0; i1 < team->num - 1; i1++) {
+				cp1 = team->chr[i1];
 				weaponr_fd_idx = -1;
 				weaponh_fd_idx = -1;
 				if (RIGHT(cp1) && RIGHT(cp1)->item.m != NONE && RIGHT(cp1)->item.t != NONE)
@@ -1806,8 +1806,8 @@ static void CL_SwapSkills (character_t *team[], int num)
 						+ (HOLSTER(cp1) && csi.ods[HOLSTER(cp1)->item.t].reload
 						   && skill == csi.ods[HOLSTER(cp1)->item.m].fd[weaponh_fd_idx][fmode2].weaponSkill);
 
-					for (i2 = i1 + 1; i2 < num; i2++) {
-						cp2 = team[i2];
+					for (i2 = i1 + 1; i2 < team->num; i2++) {
+						cp2 = team->chr[i2];
 						weaponr_fd_idx = -1;
 						weaponh_fd_idx = -1;
 
@@ -1956,7 +1956,8 @@ static void B_PackInitialEquipment_f (void)
 	int aircraft_idxInBase;
 	aircraft_t *aircraft = NULL;
 	const char *name = curCampaign ? cl_initial_equipment->string : Cvar_VariableString("equip");
-
+	chr_list_t chr_list_temp;
+	
 	/* check syntax */
 	if (Cmd_Argc() > 1) {
 		Com_Printf("Usage: pack_initial\n");
@@ -1975,24 +1976,32 @@ static void B_PackInitialEquipment_f (void)
 		Com_DPrintf("B_PackInitialEquipment_f: Initial Phalanx equipment %s not found.\n", name);
 	} else if ((aircraft_idxInBase >= 0) && (aircraft_idxInBase < base->numAircraftInBase)) {
 		aircraft = &base->aircraft[base->aircraftCurrent];
-		for (i = 0; i < base->teamNum[aircraft_idxInBase]; i++) {
-			chr = base->curTeam[i];
-			/* pack equipment */
-			Com_DPrintf("B_PackInitialEquipment_f: Packing initial equipment for %s.\n", chr->name);
-			INVSH_EquipActor(chr->inv, ed->num, name, chr);
-			Com_DPrintf("B_PackInitialEquipment_f: armor: %i, weapons: %i\n", chr->armor, chr->weapons);
+		chr_list_temp.num = 0;
+		for (i = 0; i < aircraft->size; i++) {
+			if (aircraft->teamIdxs[i] != -1) {
+				chr = &gd.employees[aircraft->teamTypes[i]][aircraft->teamIdxs[i]].chr;
+				/* pack equipment */
+				Com_DPrintf("B_PackInitialEquipment_f: Packing initial equipment for %s.\n", chr->name);
+				INVSH_EquipActor(chr->inv, ed->num, name, chr);
+				Com_DPrintf("B_PackInitialEquipment_f: armor: %i, weapons: %i\n", chr->armor, chr->weapons);
+				chr_list_temp.chr[chr_list_temp.num] = chr;
+				chr_list_temp.num++;
+			}
 		}
 		CL_AddCarriedToEq(aircraft, &base->storage);
-		CL_SwapSkills(base->curTeam, base->teamNum[aircraft_idxInBase]);
+		CL_SwapSkills(&chr_list_temp);
 
 		/* pay for the initial equipment */
 		for (container = 0; container < csi.numIDs; container++) {
-			for (p = 0; p < base->teamNum[aircraft_idxInBase]; p++) {
-				for (ic = base->curTeam[p]->inv->c[container]; ic; ic = next) {
-					item_t item = ic->item;
-					price += csi.ods[item.t].price;
-					Com_DPrintf("B_PackInitialEquipment_f()... adding price for %s, price: %i\n", csi.ods[item.t].id, price);
-					next = ic->next;
+			for (p = 0; p < aircraft->size; p++) {
+				if (aircraft->teamIdxs[p] != -1) {
+					chr = &gd.employees[aircraft->teamTypes[i]][aircraft->teamIdxs[i]].chr;
+					for (ic = chr->inv->c[container]; ic; ic = next) {
+						item_t item = ic->item;
+						price += csi.ods[item.t].price;
+						Com_DPrintf("B_PackInitialEquipment_f()... adding price for %s, price: %i\n", csi.ods[item.t].id, price);
+						next = ic->next;
+					}
 				}
 			}
 		}
@@ -2303,7 +2312,7 @@ static void B_BaseList_f (void)
 		Com_Printf("Base numSensoredAircraft %i\n", base->radar.numUfos);
 		Com_Printf("Base aircraft %i\n", base->numAircraftInBase);
 		for (j = 0; j < base->numAircraftInBase; j++) {
-			Com_Printf("Base aircraft-team %i\n", *(base->aircraft[j].teamSize));
+			Com_Printf("Base aircraft-team %i\n", base->aircraft[j].teamSize);
 		}
 		Com_Printf("Base pos %f:%f\n", base->pos[0], base->pos[1]);
 		Com_Printf("Base map:\n");
@@ -2646,7 +2655,7 @@ int B_GetNumOnTeam (aircraft_t *aircraft)
 	if (!aircraft)
 		return 0;
 #endif
-	return *aircraft->teamSize;
+	return aircraft->teamSize;
 }
 
 /**
@@ -2976,7 +2985,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 		}
 		MSG_WriteShort(sb, presaveArray[PRE_MAXAIR]);
 		for (k = 0; k < presaveArray[PRE_MAXAIR]; k++)
-			MSG_WriteByte(sb, b->teamNum[k]);
+			MSG_WriteByte(sb, aircraft->teamSize);	/** @todo remove this altogether? */
 
 		MSG_WriteByte(sb, b->equipType);
 
@@ -3133,8 +3142,6 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			aircraft->homebase = b;
 			/* this is the aircraft array id in current base */
 			aircraft->idxInBase = k;
-			/* link the teamSize pointer in */
-			aircraft->teamSize = &b->teamNum[k];
 			aircraft->status = MSG_ReadByte(sb);
 			aircraft->fuel = MSG_ReadLong(sb);
 			MSG_ReadPos(sb, aircraft->pos);
@@ -3182,6 +3189,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 					MSG_ReadShort(sb);
 				}
 			}
+			aircraft->teamSize = presaveArray[PRE_ACTTEA];
 			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++)
 				aircraft->teamIdxs[l] = MSG_ReadShort(sb);
 			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++)
@@ -3221,8 +3229,9 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		}
 
 		l = MSG_ReadShort(sb);
-		for (k = 0; k < l; k++)
-			b->teamNum[k] = MSG_ReadByte(sb);
+		for (k = 0; k < l; k++) /** @todo remove this altogether? */
+			MSG_ReadByte(sb);
+			/* b->teamNum[k] = &(MSG_ReadByte(sb)); */
 
 		b->equipType = MSG_ReadByte(sb);
 
@@ -3289,10 +3298,6 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 
 		/* some functions needs the baseCurrent pointer set */
 		baseCurrent = b;
-
-		/* initalize team to null */
-		for (k = 0; k < MAX_ACTIVETEAM; k++)
-			b->curTeam[k] = NULL;
 	}
 	gd.numBases = bases;
 

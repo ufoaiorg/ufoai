@@ -15,7 +15,7 @@ This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-See the GNU General Public License for more details.
+See the GNU General Public License for more details.m
 
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
@@ -30,6 +30,9 @@ static qboolean display_heavy_equipment_list = qfalse; /**< Used in team assignm
 
 static int CL_GetRank(const char* rankID);
 static void CL_SaveTeamInfo(sizebuf_t * buf, int baseID, int num);
+
+/* List of currently displayed or equipeable characters. extern definition in client.h */
+chr_list_t chrDisplayList;
 
 /**
  * @brief Prepares environment for multiplayer.
@@ -362,7 +365,6 @@ void CL_ResetCharacters (base_t* const base)
 		E_UnhireAllEmployees(base, i);
 
 	for (i = 0; i < base->numAircraftInBase; i++) {
-		base->teamNum[i] = 0;
 		AIR_ResetAircraftTeam(B_GetAircraftFromBaseByIndex(base, i));
 	}
 }
@@ -407,20 +409,23 @@ static void CL_ChangeSkin_f (void)
 	int sel, newSkin;
 
 	sel = cl_selected->integer;
-	if (sel >= 0 && sel < gd.numEmployees[EMPL_SOLDIER]) {
+	if (sel >= 0 && sel < chrDisplayList.num) {
 		newSkin = Cvar_VariableInteger("mn_skin") + 1;
 		if (newSkin >= NUM_TEAMSKINS || newSkin < 0)
 			newSkin = 0;
 
-		baseCurrent->curTeam[sel]->skin = newSkin;
+		if (chrDisplayList.chr[sel]) {
+			chrDisplayList.chr[sel]->skin = newSkin;
 
-		Cvar_SetValue("mn_skin", newSkin);
-		Cvar_Set("mn_skinname", CL_GetTeamSkinName(newSkin));
+			Cvar_SetValue("mn_skin", newSkin);
+			Cvar_Set("mn_skinname", CL_GetTeamSkinName(newSkin));
+		}
 	}
 }
 
 /**
  * @brief Use current skin with the team onboard.
+  * @todo We already know what team-members are in the aircraft (teamIdxs+types) no need to loop through hired employees i think.
  */
 static void CL_ChangeSkinOnBoard_f (void)
 {
@@ -441,14 +446,14 @@ static void CL_ChangeSkinOnBoard_f (void)
 	}
 
 	sel = cl_selected->integer;
-	if (sel >= 0 && sel < gd.numEmployees[EMPL_SOLDIER]) {
+	if (sel >= 0 && sel < chrDisplayList.num) {
 		newSkin = Cvar_VariableInteger("mn_skin");
 		if (newSkin >= NUM_TEAMSKINS || newSkin < 0)
 			newSkin = 0;
 		for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
 			if (AIR_IsInAircraftTeam(aircraft, i, EMPL_SOLDIER)) {
 				assert(p < MAX_ACTIVETEAM);
-				baseCurrent->curTeam[p]->skin = newSkin;
+				chrDisplayList.chr[p]->skin = newSkin;
 				p++;
 			}
 		}
@@ -504,7 +509,7 @@ void CL_AddCarriedToEq (aircraft_t *aircraft, equipDef_t * ed)
 		return;
 	}
 
-	if (*aircraft->teamSize <= 0) {
+	if (aircraft->teamSize <= 0) {
 		Com_DPrintf("CL_AddCarriedToEq: No team to remove equipment from.\n");
 		return;
 	}
@@ -665,8 +670,8 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 	base = aircraft->homebase;
 	assert(base);
 
-	Com_Printf("CL_ReloadAndRemoveCarried()...aircraft idx: %i, teamNum: %i\n",
-	aircraft->idx, base->teamNum[aircraft->idx]);
+	Com_Printf("CL_ReloadAndRemoveCarried()...aircraft idx: %i, team size: %i\n",
+	aircraft->idx, aircraft->teamSize);
 
 	for (container = 0; container < csi.numIDs; container++) {
 		for (p = 0; p < aircraft->size; p++) {
@@ -715,6 +720,8 @@ void CL_CleanTempInventory (base_t* base)
  * @brief Displays actor equipment and unused items in proper buytype category.
  * @note This function is called everytime the equipment screen for the team pops up.
  * @sa CL_UpdatePointersInGlobalData
+ * @todo Do we allow EMPL_ROBOTs to be equipable? Or is simple buying of ammo enough (similar to original UFO/XCOM)?
+ * In the first case the EMPL_SOLDIER stuff below needs to be changed.
  */
 static void CL_GenerateEquipment_f (void)
 {
@@ -727,9 +734,10 @@ static void CL_GenerateEquipment_f (void)
 
 	assert(baseCurrent);
 	assert((baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase));
+	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 
 	/* Popup if no soldiers are assigned to the current aircraft. */
-	if (!baseCurrent->teamNum[baseCurrent->aircraftCurrent]) {
+	if (!aircraft->teamSize) {
 		MN_PopMenu(qfalse);
 		return;
 	}
@@ -743,37 +751,29 @@ static void CL_GenerateEquipment_f (void)
 		Com_DPrintf("CL_GenerateEquipment_f().. team alien, id: %i\n", team);
 	}
 
-	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+	
 
 	/* Store hired names. */
 	Cvar_ForceSet("cl_selected", "0");
-	for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
+	chrDisplayList.num = 0;
+	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
 		if (CL_SoldierInAircraft(i, EMPL_SOLDIER, aircraft->idx)) {
-			assert(p < MAX_ACTIVETEAM);
+			assert(chrDisplayList.num < MAX_ACTIVETEAM);
 			/* maybe we already have soldiers in this aircraft */
-			baseCurrent->curTeam[p] = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
-			if (!baseCurrent->curTeam[p])
-				Sys_Error("CL_GenerateEquipment_f: Could not get employee character with idx: %i\n", p);
-			Com_DPrintf("add %s to curTeam (pos: %i)\n", baseCurrent->curTeam[p]->name, p);
-			Cvar_ForceSet(va("mn_name%i", p), baseCurrent->curTeam[p]->name);
-			p++;
+			chrDisplayList.chr[chrDisplayList.num] = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
+			if (!chrDisplayList.chr[chrDisplayList.num])
+				Sys_Error("CL_GenerateEquipment_f: Could not get employee character with idx: %i\n", chrDisplayList.num);
+			Com_DPrintf("add %s to chrDisplayList (pos: %i)\n", chrDisplayList.chr[chrDisplayList.num]->name, chrDisplayList.num);
+			Cvar_ForceSet(va("mn_name%i", chrDisplayList.num), chrDisplayList.chr[chrDisplayList.num]->name);
+			chrDisplayList.num++;
 /*			if (p >= cl_numnames->integer)
 				break;*/
 		}
-	/** @todo WARNING temp-disabled because this warning is useless when updating EMPL_ROBOT stuff :(
-	 * I think checking against aircraft->teamIdxs (and *aircraft->teamSize) might be better here
-	if (p != baseCurrent->teamNum[baseCurrent->aircraftCurrent])
-		Sys_Error("CL_GenerateEquipment_f: numEmployees: %i, teamNum[%i]: %i, p: %i\n",
-			gd.numEmployees[EMPL_SOLDIER],
-			baseCurrent->aircraftCurrent,
-			baseCurrent->teamNum[baseCurrent->aircraftCurrent],
-			p);
-	*/
 
-	for (; p < MAX_ACTIVETEAM; p++) {
+	for (p = chrDisplayList.num; p < MAX_ACTIVETEAM; p++) {
 		Cvar_ForceSet(va("mn_name%i", p), "");
 		Cbuf_AddText(va("equipdisable%i\n", p));
-		baseCurrent->curTeam[p] = NULL;
+		chrDisplayList.chr[p] = NULL;	/* just in case */
 	}
 
 	menuInventory = &(gd.employees[EMPL_SOLDIER][0].inv);
@@ -954,23 +954,23 @@ static void CL_Select_f (void)
 		if (!baseCurrent || baseCurrent->aircraftCurrent < 0)
 			return;
 		/* no soldiers in the current aircraft */
-		if (baseCurrent->teamNum[baseCurrent->aircraftCurrent] <= 0) {
+		if (chrDisplayList.num <= 0) {
 			/* multiplayer - load a team first */
 			if (!ccs.singleplayer)
 				Cbuf_AddText("mn_pop;mn_push mp_team;");
 			return;
-		/* not that many soldiers in the aircraft */
-		} else if (num >= baseCurrent->teamNum[baseCurrent->aircraftCurrent])
+		/* not that many soldiers from the  aircraft shown. */
+		} else if (num >= chrDisplayList.num)
 			return;
 
 		/* update menu inventory */
-		if (menuInventory && menuInventory != baseCurrent->curTeam[num]->inv) {
-			baseCurrent->curTeam[num]->inv->c[csi.idEquip] = menuInventory->c[csi.idEquip];
+		if (menuInventory && menuInventory != chrDisplayList.chr[num]->inv) {
+			chrDisplayList.chr[num]->inv->c[csi.idEquip] = menuInventory->c[csi.idEquip];
 			/* set 'old' idEquip to NULL */
 			menuInventory->c[csi.idEquip] = NULL;
 		}
-		menuInventory = baseCurrent->curTeam[num]->inv;
-		chr = baseCurrent->curTeam[num];
+		menuInventory = chrDisplayList.chr[num]->inv;
+		chr = chrDisplayList.chr[num];
 		break;
 	case SELECT_MODE_TEAM:
 		employeeType =
@@ -1029,6 +1029,7 @@ static void CL_NextSoldier_f (void)
 /**
  * @brief Updates data about teams in aircrafts.
  * @param[in] *aircraft Pointer to an aircraft for a desired team.
+ * @todo We already know what team-members are in the aircraft (teamIdxs+types) no need to loop through hired employees i think.
  */
 void CL_UpdateHireVar (aircraft_t *aircraft, employeeType_t employeeType)
 {
@@ -1041,44 +1042,27 @@ void CL_UpdateHireVar (aircraft_t *aircraft, employeeType_t employeeType)
 	base = aircraft->homebase;
 	assert(base);
 
-	Cvar_Set("mn_hired", va(_("%i of %i"), *aircraft->teamSize, aircraft->size));
+	Cvar_Set("mn_hired", va(_("%i of %i"), aircraft->teamSize, aircraft->size));
 	hired_in_base = E_CountHired(base, employeeType);
 
 	/* Uncomment this Com_Printf here for better output in case of problems. */
 	/* Com_Printf("CL_UpdateHireVar()... aircraft idx: %i, homebase: %s\n", aircraft->idx, base->name); */
 
-	/* update curTeam list (this is the one that is currently displayed) */
-	for (i = 0, p = 0; i < hired_in_base; i++) {
+	/* update chrDisplayList list (this is the one that is currently displayed) */
+	chrDisplayList.num = 0;
+	for (i = 0; i < hired_in_base; i++) {
 		employee = E_GetHiredEmployee(base, employeeType, -(i+1));
 		if (!employee)
 			Sys_Error("CL_UpdateHireVar: Could not get employee %i\n", i);
 
 		if (CL_SoldierInAircraft(employee->idx, employee->type, aircraft->idx)) {
-			base->curTeam[p] = &employee->chr;
-			p++;
+			chrDisplayList.chr[chrDisplayList.num] = &employee->chr;
+			chrDisplayList.num++;
 		}
 	}
 
-	/** @todo WARNING temp-disabled because this warning is useless when updating EMPL_ROBOT stuff :(
-	 * I think checking against aircraft->teamIdxs (and *aircraft->teamSize) might be better here
-	if (p != base->teamNum[aircraft->idxInBase])
-		Sys_Error("CL_UpdateHireVar: SoldiersInBase: %i, teamNum[%i]: %i, p: %i\n",
-				hired_in_base,
-				aircraft->idxInBase,
-				base->teamNum[aircraft->idxInBase],
-				p);
-	*/
-	for (; p < MAX_ACTIVETEAM; p++)
-		base->curTeam[p] = NULL;
-
-	/* Update real team-count in aircraft*/
-	/** @todo not needed anymore?
-	for (i = 0, p = 0; i < aircraft->size; i++) {
-		if (aircraft->teamIdxs[i] != -1)
-			p++;
-	}
-	*(aircraft->teamSize) = p;
-	*/
+	for (p = chrDisplayList.num; p < MAX_ACTIVETEAM; p++)
+		chrDisplayList.chr[p] = NULL;	/* Just in case */
 }
 
 /**
@@ -1104,7 +1088,6 @@ void CL_ResetTeamInBase (void)
 
 	CL_CleanTempInventory(baseCurrent);
 
-	baseCurrent->teamNum[0] = 0;
 	AIR_ResetAircraftTeam(B_GetAircraftFromBaseByIndex(baseCurrent,0));
 
 	E_ResetEmployees();
@@ -1367,7 +1350,7 @@ void CL_RemoveSoldiersFromAircraft (int aircraft_idx, base_t *base)
 		}
 	}
 
-	if (*aircraft->teamSize > 0) {
+	if (aircraft->teamSize > 0) {
 		Com_DPrintf("CL_RemoveSoldiersFromAircraft: there went something wrong with soldier-removing (more exactly the counting) from aircraft.\n");
 	}
 }
@@ -1387,7 +1370,7 @@ static qboolean CL_AssignSoldierToAircraft (int employee_idx, employeeType_t emp
 	if (aircraft->idxInBase < 0)
 		return qfalse;
 
-	if (*aircraft->teamSize < MAX_ACTIVETEAM) {
+	if (aircraft->teamSize < MAX_ACTIVETEAM) {
 		/* Check whether the soldier is already on another aircraft */
 		Com_DPrintf("CL_AssignSoldierToAircraft: attempting to find idx '%d'\n", employee_idx);
 
@@ -1397,7 +1380,7 @@ static qboolean CL_AssignSoldierToAircraft (int employee_idx, employeeType_t emp
 		}
 
 		/* Assign the soldier to the aircraft. */
-		if (*aircraft->teamSize < aircraft->size) {
+		if (aircraft->teamSize < aircraft->size) {
 			Com_DPrintf("CL_AssignSoldierToAircraft: attempting to add idx '%d' \n",employee_idx);
 			AIR_AddToAircraftTeam(aircraft, employee_idx, employeeType);
 			return qtrue;
@@ -1417,29 +1400,34 @@ static qboolean CL_AssignSoldierToAircraft (int employee_idx, employeeType_t emp
  */
 static void CL_TeamListDebug_f (void)
 {
-	int i, cnt;
-	character_t *team;
+	int i;
+	character_t *chr;
 	employee_t *employee;
 	base_t *base = NULL;
+	aircraft_t *aircraft;
 	
 	base = CP_GetMissionBase();
+	aircraft = cls.missionaircraft;
 
 	if (!base) {
 		Com_Printf("Build and select a base first\n");
 		return;
 	}
+	
+	if (!aircraft) {
+		Com_Printf("Buy/build an aircraft first.\n");
+		return;
+	}
 
-	cnt = B_GetNumOnTeam(cls.missionaircraft);
-	team = base->curTeam[cls.missionaircraft->idxInBase];
-
-	Com_Printf("%i members in the current team", cnt);
-	for (i = 0; i < cnt; i++) {
-		employee = E_GetEmployeeFromChrUCN(team->ucn);
-		if (!employee)
-			Com_Printf("Could not find a valid employee for ucn %i\n", team->ucn);
-		else
-			Com_Printf("ucn %i - employee->idx: %i\n", team->ucn, employee->idx);
-		team++;
+	Com_Printf("%i members in the current team", aircraft->teamSize);
+	for (i = 0; i < aircraft->size; i++) {
+		if (aircraft->teamIdxs[i] != -1) {
+			employee = E_GetEmployeeFromChrUCN(chr->ucn);
+			if (!employee)
+				Com_Printf("Could not find a valid employee for ucn %i\n", chr->ucn);
+			else
+				Com_Printf("ucn %i - employee->idx: %i\n", chr->ucn, employee->idx);
+		}
 	}
 }
 #endif
@@ -1528,7 +1516,7 @@ static qboolean CL_SaveTeamMultiplayer (const char *filename)
 	CL_SaveTeamInfo(&sb, baseCurrent->idx, E_CountHired(baseCurrent, EMPL_SOLDIER));
 
 	/* store assignment */
-	MSG_WriteByte(&sb, baseCurrent->teamNum[0]);
+	MSG_WriteByte(&sb, aircraft->teamSize);
 
 	/* store aircraft soldier content for multi-player */
 	MSG_WriteByte(&sb, aircraft->size);
@@ -1671,18 +1659,21 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 		CL_LoadTeamMultiplayerMember(&sb, chr, version);
 	}
 
+	aircraft = &gd.bases[0].aircraft[0];
+
 	/* get assignment */
-	gd.bases[0].teamNum[0] = MSG_ReadByte(&sb);
+	aircraft->teamSize = MSG_ReadByte(&sb);
 
 	/* get aircraft soldier content for multi-player */
-	aircraft = &gd.bases[0].aircraft[0];
 	Com_DPrintf("Multiplayer aircraft IDX = %i\n", aircraft->idx);
 	aircraft->size = MSG_ReadByte(&sb);
+	chrDisplayList.num = 0;
 	for (i = 0; i < aircraft->size; i++) {
-		if (i < gd.bases[0].teamNum[0]) {
+		if (i < aircraft->teamSize) {
 			aircraft->teamIdxs[i] = MSG_ReadByte(&sb);
 			aircraft->teamTypes[i] = MSG_ReadByte(&sb);
-			gd.bases[0].curTeam[i] = &gd.employees[aircraft->teamTypes[i]][aircraft->teamIdxs[i]].chr;
+			chrDisplayList.chr[i] = &gd.employees[aircraft->teamTypes[i]][aircraft->teamIdxs[i]].chr;	/** @todo remove this? */
+			chrDisplayList.num++;	/** @todo remove this? */
 		} else
 			aircraft->teamIdxs[i] = -1;
 	}
@@ -1699,19 +1690,6 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 			gd.bases[0].storage.num_loose[num] = MSG_ReadByte(&sb);
 		}
 	}
-
-#if 0
-	for (i = 0, p = 0; i < num; i++)
-		if (CL_SoldierInAircraft(i, EMPL_SOLDIER, 0))
-			gd.bases[0].curTeam[p++] = E_GetHiredCharacter(&gd.bases[0], EMPL_SOLDIER, i);
-
-	/* gd.bases[0].numHired = p; */
-
-	Com_DPrintf("Load team with %i members and %i slots\n", p, num);
-
-	for (;p < MAX_ACTIVETEAM; p++)
-		gd.bases[0].curTeam[p] = NULL;
-#endif
 }
 
 /**
@@ -1837,12 +1815,12 @@ static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
 }
 
 /**
- * @brief Stores the curTeam info to buffer (which might be a network buffer, too)
+ * @brief Stores a team-list (chr-list) info to buffer (which might be a network buffer, too).
  * @sa G_ClientTeamInfo
  * @sa CL_SaveTeamInfo
  * @note Called in cl_main.c CL_Precache_f to send the team info to server
  */
-void CL_SendCurTeamInfo (struct dbuffer * buf, character_t ** team, int num)
+void CL_SendCurTeamInfo (struct dbuffer * buf, chr_list_t *team)
 {
 	character_t *chr;
 	int i, j;
@@ -1852,10 +1830,10 @@ void CL_SendCurTeamInfo (struct dbuffer * buf, character_t ** team, int num)
 
 	/* header */
 	NET_WriteByte(buf, clc_teaminfo);
-	NET_WriteByte(buf, num);
+	NET_WriteByte(buf, team->num);
 
-	for (i = 0; i < num; i++) {
-		chr = team[i];
+	for (i = 0; i < team->num; i++) {
+		chr = team->chr[i];
 		assert(chr);
 		/* send the fieldSize ACTOR_SIZE_* */
 		NET_WriteByte(buf, chr->fieldSize);

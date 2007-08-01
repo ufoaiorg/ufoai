@@ -2022,7 +2022,7 @@ int G_ClientAction (player_t * player)
 
 
 /**
- * @brief Sets the teanum var for this match
+ * @brief Sets the teamnum var for this match
  * @param[in] player Pointer to connected player
  * @todo: Check whether there are enough free spawnpoints in all cases
  */

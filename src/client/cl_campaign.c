@@ -899,7 +899,7 @@ static void CL_AircraftList_f (void)
 
 		for (i = 0; i < gd.bases[j].numAircraftInBase; i++) {
 			aircraft = &gd.bases[j].aircraft[i];
-			s = va("%s (%i/%i)\t%s\t%s\n", aircraft->name, *aircraft->teamSize, aircraft->size, AIR_AircraftStatusToName(aircraft), gd.bases[j].name);
+			s = va("%s (%i/%i)\t%s\t%s\n", aircraft->name, aircraft->teamSize, aircraft->size, AIR_AircraftStatusToName(aircraft), gd.bases[j].name);
 			Q_strcat(aircraftListText, s, sizeof(aircraftListText));
 		}
 	}
@@ -2229,7 +2229,6 @@ static void CL_GameGo (void)
 	mission_t *mis;
 	aircraft_t *aircraft;
 	base_t *base = NULL;
-	int i, p;
 
 	if (!curCampaign) {
 		Com_DPrintf("curCampaign: %p, selMis: %p, interceptAircraft: %i\n", (void*)curCampaign, (void*)selMis, gd.interceptAircraft);
@@ -2259,7 +2258,7 @@ static void CL_GameGo (void)
 		/* multiplayer; but we never reach this far! */
 		MN_Popup(_("Note"), _("Assemble or load a team"));
 		return;
-	} else if (ccs.singleplayer && (!mis->active || !*(aircraft->teamSize))) {
+	} else if (ccs.singleplayer && (!mis->active || !aircraft->teamSize)) {
 		/* dropship not near landing zone */
 		Com_DPrintf("Dropship not near landingzone: mis->active: %i\n", mis->active);
 		return;
@@ -2273,16 +2272,6 @@ static void CL_GameGo (void)
 	/* @todo: Map assembling to get the current used dropship in the map is not fully implemented */
 	/* but can be done via the map assembling part of the random map assembly */
 	Cvar_Set("map_dropship", aircraft->id);
-
-	/* retrieve the correct team */
-	for (i = 0, p = 0; i < aircraft->size; i++) {
-		if (aircraft->teamIdxs[i] != -1) {
-			Com_DPrintf("CL_GameGo: team-member - idx:%i size:%i\n", aircraft->teamIdxs[i], aircraft->teamTypes[i]);
-			assert(p < MAX_ACTIVETEAM);
-			base->curTeam[p] = E_GetHiredCharacter(base, aircraft->teamTypes[i], aircraft->teamIdxs[i]);
-			p++;
-		}
-	}
 
 	/* manage inventory */
 	ccs.eMission = base->storage; /* copied, including arrays inside! */
@@ -2443,9 +2432,9 @@ static void CL_GameAutoGo_f (void)
 	MN_PopMenu(qfalse);
 
 	/* FIXME: This needs work */
-	won = mis->aliens * difficulty->integer > *(aircraft->teamSize) ? 0 : 1;
+	won = mis->aliens * difficulty->integer > aircraft->teamSize ? 0 : 1;
 
-	Com_DPrintf("Aliens: %i (count as %i) - Soldiers: %i\n", mis->aliens, mis->aliens * difficulty->integer, *(aircraft->teamSize));
+	Com_DPrintf("Aliens: %i (count as %i) - Soldiers: %i\n", mis->aliens, mis->aliens * difficulty->integer, aircraft->teamSize);
 
 	/* update nation opinions */
 	if (won) {

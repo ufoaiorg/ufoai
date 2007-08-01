@@ -467,11 +467,13 @@ static int CL_GetActorNumber (le_t * le)
  * @brief Returns the character information for an actor in the teamlist.
  * @param[in] le The actor to search.
  * @return A pointer to a character struct.
+ * @todo We really needs a better way to syn this up.
  */
 static character_t *CL_GetActorChr (le_t * le)
 {
 	int actor_idx;
 	aircraft_t *aircraft = cls.missionaircraft;
+	int i, p;
 
 	if (!aircraft) {
 		Com_DPrintf("CL_GetActorChr: No mission-aircraft found!\n");
@@ -482,14 +484,21 @@ static character_t *CL_GetActorChr (le_t * le)
 
 	actor_idx = CL_GetActorNumber(le);
 
-	if (actor_idx >= 0) {
-		if (actor_idx < aircraft->size
-		&& aircraft->teamTypes[actor_idx] >= 0
-		&& aircraft->teamTypes[actor_idx] < MAX_EMPL) {
-			return &gd.employees[aircraft->teamTypes[actor_idx]][aircraft->teamIdxs[actor_idx]].chr;
-		}
+	if (actor_idx < 0) {
+		Com_DPrintf("CL_GetActorChr: BAD ACTOR IDX!\n");
+		return NULL;
 	}
 
+	/* Search in the aircraft team (we skip unused entries) for this actor. */
+	for (i = 0, p = 0; i < aircraft->size ;i++) {
+		if (aircraft->teamIdxs[i] != -1){
+			if (actor_idx == p) {
+				return &gd.employees[aircraft->teamTypes[actor_idx]][aircraft->teamIdxs[actor_idx]].chr;
+			}
+			p++;
+		}
+	}
+	Com_DPrintf("CL_GetActorChr: no character info found!\n");
 	return NULL;
 }
 
@@ -1837,7 +1846,7 @@ qboolean CL_ActorSelect (le_t * le)
 		Com_Error(ERR_DROP, "CL_ActorSelect: Unknown fieldsize\n");
 	}
 
-	/* Forcing the hud-display to refresh it's dsiplayed stuff */
+	/* Forcing the hud-display to refresh it's displayed stuff */
 	Cvar_SetValue("hud_refresh", 1);
 	CL_ActorUpdateCVars();
 
