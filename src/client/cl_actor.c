@@ -1485,14 +1485,20 @@ void CL_ActorUpdateCVars (void)
 				/* Check whether this item uses/has ammo. */
 				if (selWeapon->item.m == NONE) {
 					/* This item does not use ammo, check for existing firedefs in this item. */
+					/* This is supposed to be a weapon or other useable item. */
 					if (csi.ods[selWeapon->item.t].numWeapons > 0) {
-						/* Get firedef from the weapon entry instead. */
-						selFD = FIRESH_GetFiredef(
-							selWeapon->item.t,
-							FIRESH_FiredefsIDXForWeapon(
-								&csi.ods[selWeapon->item.t],
-								selWeapon->item.t),
-							cl.cfiremode);
+						if (csi.ods[selWeapon->item.t].weapon || (csi.ods[selWeapon->item.t].weap_idx[0] == selWeapon->item.t)) {
+							/* Get firedef from the weapon (or other useable item) entry instead. */
+							selFD = FIRESH_GetFiredef(
+								selWeapon->item.t,
+								FIRESH_FiredefsIDXForWeapon(
+									&csi.ods[selWeapon->item.t],
+									selWeapon->item.t),
+								cl.cfiremode);
+						} else {
+							/* This is ammo */
+							selFD = NULL;
+						}
 					} else {
 						/* No firedefinitions found in this presumed 'weapon with no ammo'. */
 						selFD = NULL;
