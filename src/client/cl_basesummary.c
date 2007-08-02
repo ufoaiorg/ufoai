@@ -64,7 +64,7 @@ static void BaseSummary_BuildingConstruction (const char* cvarNameBase)
 
 		daysLeft = building.timeStart + building.buildTime - ccs.date.day;
 
-		if (building.buildingStatus == B_STATUS_UNDER_CONSTRUCTION || daysLeft > 0) {
+		if (building.buildingStatus == B_STATUS_UNDER_CONSTRUCTION && daysLeft > 0) {
 			Com_sprintf(buffer, sizeof(buffer), _("%s - %i %s\n"),
 				building.name, daysLeft, ngettext("day", "days", daysLeft));
 
