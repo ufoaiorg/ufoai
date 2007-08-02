@@ -1309,6 +1309,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 					gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_TURN);
 					gi.WriteShort(ent->number);
 					gi.WriteByte(ent->dir);
+					steps = 0;
 				}
 				if (stop && (status & VIS_STOP))
 					break;
