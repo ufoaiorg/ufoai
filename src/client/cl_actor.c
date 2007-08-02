@@ -2122,6 +2122,10 @@ void CL_ActorStartMove (le_t * le, pos3_t to)
 	if (!CL_CheckAction())
 		return;
 
+	/* the actor is still moving */
+	if (blockEvents)
+		return;
+
 	length = Grid_MoveLength(&clMap, to, qfalse);
 
 	if (!length || length >= ROUTING_NOT_REACHABLE) {
