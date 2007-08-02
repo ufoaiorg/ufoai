@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int BaseSummary_AircraftCount (aircraftType_t aircraftType)
 {
 	int i, count = 0;
-	for (i = 0; i < baseCurrent->numAircraftInBase - 1; i++) {
+	for (i = 0; i < baseCurrent->numAircraftInBase; i++) {
 		if (baseCurrent->aircraft[i].type == aircraftType)
 			count++;
 	}
@@ -106,7 +106,11 @@ static void BaseSummary_BuildingUsage (const char* cvarName, const char* desc,ba
 }
 
 /**
- * @brief
+ * @brief Sum up all hired employees of a given type.
+ * @param[in] employeeType The type of employees to count.
+ * @return The number of employees.
+ * @sa BaseSummary_EmployeeTotal
+ * @sa E_CountHired
  */
 static int BaseSummary_EmployeeCount (employeeType_t employeeType)
 {
@@ -114,15 +118,19 @@ static int BaseSummary_EmployeeCount (employeeType_t employeeType)
 }
 
 /**
- * @brief
+ * @brief Sum up all hired employees.
+ * @return The number of employees.
+ * @sa BaseSummary_EmployeeCount
+ * @sa E_CountHired
  */
 static int BaseSummary_EmployeeTotal (void)
 {
 	int cnt = 0;
 	employeeType_t type;
 
-	for (type = EMPL_SOLDIER; type < MAX_EMPL; type++)
-		cnt += gd.numEmployees[type];
+	for (type = EMPL_SOLDIER; type < MAX_EMPL; type++) {
+		cnt += E_CountHired(baseCurrent, type);
+	}
 
 	return cnt;
 }
@@ -172,7 +180,7 @@ static void BaseSummary_ResearchCurrent (const char* cvarNameBase)
 		Cvar_Set(cvarName, buffer);
 	}
 
-	for (i = 0; i < gd.numTechnologies - 1; i++) {
+	for (i = 0; i < gd.numTechnologies; i++) {
 		tech = gd.technologies[i];
 		if (tech.base_idx == baseCurrent->idx && (tech.statusResearch == RS_RUNNING ||
 			tech.statusResearch == RS_PAUSED)) {
