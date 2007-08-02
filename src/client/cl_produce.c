@@ -254,6 +254,7 @@ static production_t *PR_QueueNew (production_queue_t *queue, signed int objID, s
 	}
 
 	numWorkshops = B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_WORKSHOP);
+	numWorkshops = (numWorkshops >= 0) ? numWorkshops : 0;
 
 	if (queue->numItems >= numWorkshops * MAX_PRODUCTIONS_PER_WORKSHOP) {
 		MN_Popup(_("Not enough workshops"), _("You cannot queue more items.\nBuild more workshops.\n"));
@@ -849,6 +850,7 @@ static void PR_ProductionSelect_f (void)
 static void PR_ProductionList_f (void)
 {
 	char tmpbuf[64];
+	int numWorkshops = 0;
 
 	/* can be called from everywhere without a started game */
 	if (!baseCurrent ||!curCampaign)
@@ -856,7 +858,11 @@ static void PR_ProductionList_f (void)
 
 	PR_ProductionSelect_f();
 	PR_ProductionInfo(qfalse);
-	Cvar_SetValue("mn_production_limit", MAX_PRODUCTIONS_PER_WORKSHOP * B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_WORKSHOP));
+
+	numWorkshops = B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_WORKSHOP);
+	numWorkshops = (numWorkshops >= 0) ? numWorkshops : 0;
+
+	Cvar_SetValue("mn_production_limit", MAX_PRODUCTIONS_PER_WORKSHOP * numWorkshops);
 	Cvar_SetValue("mn_production_basecap", baseCurrent->capacities[CAP_WORKSPACE].max);
 	/* Set amount of workers - all/ready to work (determined by base capacity. */
 	if (baseCurrent->capacities[CAP_WORKSPACE].max >= E_CountHired(baseCurrent, EMPL_WORKER))

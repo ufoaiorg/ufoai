@@ -80,12 +80,14 @@ static void BaseSummary_BuildingConstruction (const char* cvarNameBase)
 /**
  * @brief
  */
-static void BaseSummary_BuildingCount (const char* cvarName, const char* desc, int buildingTypeIdx)
+static void BaseSummary_BuildingCount (const char* cvarName, const char* desc, buildingType_t buildingType)
 {
 	char buffer[128];
-
-	Com_sprintf(buffer, sizeof(buffer), _("%s: %i"), desc,
-		B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx,buildingTypeIdx));
+	int num = B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, buildingType);
+	
+	Com_sprintf(buffer, sizeof(buffer), _("%s: %i"),
+		desc,
+		(num >= 0) ? num : 0);	/* Use 0 if an error occured. */
 
 	Cvar_Set(cvarName, buffer);
 }
@@ -93,12 +95,14 @@ static void BaseSummary_BuildingCount (const char* cvarName, const char* desc, i
 /**
  * @brief
  */
-static void BaseSummary_BuildingUsage (const char* cvarName, const char* desc,baseCapacities_t baseCapacity, int buildingTypeIdx)
+static void BaseSummary_BuildingUsage (const char* cvarName, const char* desc, baseCapacities_t baseCapacity, buildingType_t buildingType)
 {
 	char buffer[128];
+	int num = B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, buildingType);
 
 	Com_sprintf(buffer, sizeof(buffer), _("%s (%i): %i/%i"),
-		desc, B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx,buildingTypeIdx),
+		desc,
+		(num >= 0) ? num : 0,	/* Use 0 if an error occured. */
 		baseCurrent->capacities[baseCapacity].cur,
 		baseCurrent->capacities[baseCapacity].max);
 
