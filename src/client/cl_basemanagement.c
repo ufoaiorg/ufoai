@@ -310,72 +310,72 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	switch (building->buildingType) {
 	case B_WORKSHOP:
 		cap = CAP_WORKSPACE;
-		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType))
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0)
 			base->hasWorkshop = qfalse;
 		break;
 	case B_STORAGE:
 		cap = CAP_ITEMS;
-		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType))
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0)
 			base->hasStorage = qfalse;
 		break;
 	case B_ALIEN_CONTAINMENT:
 		cap = CAP_ALIENS;
-		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType))
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0)
 			base->hasAlienCont = qfalse;
 		break;
 	case B_LAB:
 		cap = CAP_LABSPACE;
-		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType))
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0)
 			base->hasLab = qfalse;
 		break;
 	case B_HOSPITAL:
 		cap = CAP_HOSPSPACE;
-		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType))
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0)
 			base->hasHospital = qfalse;
 		break;
 	case B_HANGAR: /* the Dropship Hangar */
 		cap = CAP_AIRCRAFTS_BIG;
-		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType))
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0)
 			base->hasHangar = qfalse;
 		break;
 	case B_QUARTERS:
 		cap = CAP_EMPLOYEES;
-		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType))
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0)
 			base->hasQuarters = qfalse;
 		break;
 	case B_SMALL_HANGAR:
 		cap = CAP_AIRCRAFTS_SMALL;
-		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType))
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0)
 			base->hasHangarSmall = qfalse;
 		break;
 	case B_UFO_HANGAR:
 	case B_UFO_SMALL_HANGAR:
 		cap = CAP_UFOHANGARS;
-		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, B_UFO_HANGAR))
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, B_UFO_HANGAR) <= 0)
 			base->hasUFOHangar = qfalse;
-		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, B_UFO_SMALL_HANGAR))
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, B_UFO_SMALL_HANGAR) <= 0)
 			base->hasUFOHangarSmall = qfalse;
 		break;
 	case B_POWER:
-		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType))
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0)
 			base->hasPower = qfalse;
 		B_UpdateStatusWithPower(base);
 		break;
 	case B_COMMAND:
-		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType))
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0)
 			base->hasCommand = qfalse;
 		break;
 	case B_ANTIMATTER:
 		cap = CAP_ANTIMATTER;
-		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType))
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0)
 			base->hasAmStorage = qfalse;
 		break;
 	case B_DEFENSE_MISSILE:
-		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType))
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0)
 			base->hasMissile = qfalse;
 		break;
 	case B_DEFENSE_LASER:
-		if (!B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType))
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0)
 			base->hasLaser = qfalse;
 		break;
 	case B_MISC:
@@ -1034,6 +1034,9 @@ static void B_BuildingAddToList (building_t * building)
  * @param[in] base_idx Which base
  * @param[in] type_idx Which buildingtype
  * @sa B_GetNumberOfBuildingsInBaseByType
+ * @return The number of buildings.
+ * @return -1 on error (e.g. base index out of range)
+ * @todo type index sanity check?
  */
 int B_GetNumberOfBuildingsInBaseByTypeIDX (int base_idx, int type_idx)
 {
@@ -1060,6 +1063,8 @@ int B_GetNumberOfBuildingsInBaseByTypeIDX (int base_idx, int type_idx)
  * @param[in] base_idx Which base
  * @param[in] type Building type value
  * @sa B_GetNumberOfBuildingsInBaseByTypeIDX
+ * @return The number of buildings.
+ * @return -1 on error (e.g. base index out of range)
  */
 int B_GetNumberOfBuildingsInBaseByType (int base_idx, buildingType_t type)
 {
