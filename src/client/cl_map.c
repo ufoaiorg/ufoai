@@ -1151,6 +1151,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node, qboolean globe)
 				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "base");
 		}
 
+		/* Draw base names */
 		if (MAP_AllMapToScreen(node, base->pos, &x, &y, NULL))
 			re.FontDrawString(font, ALIGN_UL, x, y + 10, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], base->name, 0, 0, NULL, qfalse);
 
@@ -1240,6 +1241,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node, qboolean globe)
 		}
 	}
 
+	/* Draw nation names */
 	for (i = 0; i < gd.numNations; i++) {
 		if (MAP_AllMapToScreen(node, gd.nations[i].pos, &x, &y, NULL))
 			re.FontDrawString("f_verysmall", ALIGN_UC, x , y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], gd.nations[i].name, 0, 0, NULL, qfalse);
