@@ -62,7 +62,7 @@ static void BaseSummary_BuildingConstruction (const char* cvarNameBase)
 	for (i = 0; i < gd.numBuildings[baseCurrent->idx]; i++) {
 		building = gd.buildings[baseCurrent->idx][i];
 
-		daysLeft = building.timeStart+building.buildTime-ccs.date.day;
+		daysLeft = building.timeStart + building.buildTime - ccs.date.day;
 
 		if (building.buildingStatus == B_STATUS_UNDER_CONSTRUCTION || daysLeft > 0) {
 			Com_sprintf(buffer, sizeof(buffer), _("%s - %i %s\n"),

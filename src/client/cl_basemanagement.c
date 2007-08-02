@@ -456,13 +456,17 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
  */
 void B_BuildingStatus (base_t* base, building_t* building)
 {
-	int daysLeft;
+	/* int daysLeft; */
 	int numberOfBuildings = 0;
 
 	assert(building);
 	assert(base);
 
-	daysLeft = building->timeStart + building->buildTime - ccs.date.day;
+	/**
+	 * @todo Was this planned to be used anywhere (e.g. for B_STATUS_UNDER_CONSTRUCTION text)
+	 * or was it removed intentionally?
+	 * daysLeft = building->timeStart + building->buildTime - ccs.date.day;
+	*/
 
 	Cvar_Set("mn_building_status", _("Not set"));
 
