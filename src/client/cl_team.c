@@ -1822,7 +1822,7 @@ static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
  */
 void CL_SendCurTeamInfo (struct dbuffer * buf, chr_list_t *team)
 {
-	character_t *chr;
+	character_t *chr = NULL;
 	int i, j;
 
 	/* clean temp inventory */
