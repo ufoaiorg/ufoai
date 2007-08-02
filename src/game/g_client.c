@@ -32,8 +32,6 @@ int turnTeam;	/* Defined in g_local.h Stores level.activeTeam while G_CanReactio
 
 int reactionFiremode[MAX_EDICTS][RF_MAX]; /* Defined in g_local.h See there for full info. */
 
-#define MAX_DVTAB 32
-
 /**
  * @brief Generates the player mask
  */
@@ -1237,14 +1235,15 @@ static qboolean G_CheckMoveBlock (pos3_t from, int dv)
 
 /**
  * @brief @todo: writeme
- * @param[in] player
+ * @param[in] player Player who is moving an actor
  * @param[in] visTeam
- * @param[in] num
+ * @param[in] num Edict index to move
  * @param[in] to
  * @param[in] stop
  * @param[in] quiet Don't print the console message (G_ActionCheck) if quiet is true.
  * @sa CL_ActorStartMove
  * @todo 2x2 units?
+ * @sa PA_MOVE
  */
 void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean stop, qboolean quiet)
 {
@@ -1256,6 +1255,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	float div, tu;
 	int contents;
 	vec3_t pointTrace;
+	byte* stepAmount;
 
 	ent = g_edicts + num;
 
@@ -1272,6 +1272,9 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 		/* start move */
 		gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_START_MOVE);
 		gi.WriteShort(ent->number);
+		ent->think = G_PhysicsStep;
+		ent->nextthink = level.time;
+		ent->speed = (ent->state & STATE_CROUCHED) ? 50 : 100;
 
 		/* assemble dv-encoded move data */
 		VectorCopy(to, pos);
@@ -1286,6 +1289,8 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 			dvtab[numdv++] = ((dv ^ 1) & (DIRECTIONS - 1)) | (pos[2] << 3);
 			PosAddDV(pos, dv);
 		}
+
+		assert(ent->moveinfo.steps == 0);
 
 		if (VectorCompare(pos, ent->pos)) {
 			/* everything ok, found valid route */
@@ -1331,33 +1336,27 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				/* link it at new position */
 				gi.linkentity(ent);
 
+				/* write move header if not yet done */
+				if (!ent->moveinfo.steps) {
+					gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_MOVE);
+					gi.WriteShort(num);
+					stepAmount = gi.WriteDummyByte(0);
+				}
+
+				assert(ent->moveinfo.steps < MAX_DVTAB);
+				ent->moveinfo.contents[ent->moveinfo.steps] = contents;
+				ent->moveinfo.visflags[ent->moveinfo.steps] = ent->visflags;
+				ent->moveinfo.steps++;
+				/* store steps in netchannel */
+				*stepAmount = ent->moveinfo.steps;
+
 				/* write move header and always one step after another - because the next step
 				 * might already be the last one due to some stop event */
-				gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_MOVE);
-				gi.WriteShort(num);
 				gi.WriteByte(dvtab[numdv]);
 				gi.WriteShort(contents);
 
 				/* check if player appears/perishes, seen from other teams */
 				G_CheckVis(ent, qtrue);
-
-				/* Send the sound effect to everyone how's not seeing the actor */
-				if (contents & CONTENTS_WATER) {
-					if (ent->contents & CONTENTS_WATER) {
-						/* looks like we already are in the water */
-						/* send water moving sound */
-						gi.PositionedSound(~G_VisToPM(ent->visflags), ent->origin, ent, "footsteps/water_under", CHAN_AUTO, 1, 1, 0);
-					} else {
-						/* send water entering sound */
-						gi.PositionedSound(~G_VisToPM(ent->visflags), ent->origin, ent, "footsteps/water_in", CHAN_AUTO, 1, 1, 0);
-					}
-				} else if (ent->contents & CONTENTS_WATER) {
-					/* send water leaving sound */
-					gi.PositionedSound(~G_VisToPM(ent->visflags), ent->origin, ent, "footsteps/water_out", CHAN_AUTO, 1, 1, 0);
-				}
-
-				/* and now save the new contents */
-				ent->contents = contents;
 
 				/* check for anything appearing, seen by "the moving one" */
 				status = G_CheckVisTeam(ent->team, NULL, qfalse);

@@ -226,6 +226,16 @@ static void PF_WriteByte (unsigned char c)
 }
 
 /**
+ * @brief Use this if the value might change and you need the position in the buffer
+ */
+static byte* PF_WriteDummyByte (unsigned char c)
+{
+	byte *pos = pfe_msg->end;
+	NET_WriteByte(pfe_msg, c);
+	return pos;
+}
+
+/**
  * @brief
  */
 static void PF_WriteShort (int c)
@@ -520,6 +530,7 @@ void SV_InitGameProgs (void)
 
 	import.WriteChar = PF_WriteChar;
 	import.WriteByte = PF_WriteByte;
+	import.WriteDummyByte = PF_WriteDummyByte;
 	import.WriteShort = PF_WriteShort;
 	import.WriteLong = PF_WriteLong;
 	import.WriteString = PF_WriteString;

@@ -482,6 +482,7 @@ static ai_action_t AI_PrepBestAction (player_t * player, edict_t * ent)
 	}
 
 	/* do the move */
+	/* FIXME: Why 0 - and not ent->team? */
 	G_ClientMove(player, 0, ent->number, bestAia.to, qfalse, QUIET);
 
 #if 0

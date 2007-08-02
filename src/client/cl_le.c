@@ -417,7 +417,6 @@ void LET_StartIdle (le_t * le)
  */
 static void LE_PlaySoundFileForContents (le_t* le, int contents)
 {
-	sfx_t* sfx;
 	if (!soundWaterIn)
 		soundWaterIn = S_RegisterSound("footsteps/water_in");
 	if (!soundWaterOut)
@@ -545,7 +544,9 @@ static void LET_PathMove (le_t * le)
 				FLOOR(le) = FLOOR(floor);
 
 			CL_UnblockEvents();
+
 			le->think = LET_StartIdle;
+			le->think(le);
 			/* maybe there are some other EV_ACTOR_MOVE events following */
 			return;
 		}
@@ -568,10 +569,8 @@ static void LET_PathMove (le_t * le)
  */
 void LET_StartPathMove (le_t * le)
 {
-	const char *anim = re.AnimGetName(&le->as, le->model1);
 	/* initial animation or animation change */
-	if (!anim || (anim && Q_strncmp(anim, "walk", 4)))
-		re.AnimChange(&le->as, le->model1, LE_GetAnim("walk", le->right, le->left, le->state));
+	re.AnimChange(&le->as, le->model1, LE_GetAnim("walk", le->right, le->left, le->state));
 
 	le->think = LET_PathMove;
 	le->think(le);

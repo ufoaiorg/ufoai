@@ -96,7 +96,7 @@ const char *ev_format[] =
 	"!sbbbbbgsb",		/* EV_ACTOR_ADD; beware of the '!' */
 	"s",				/* EV_ACTOR_START_MOVE */
 	"sb",				/* EV_ACTOR_TURN */
-	"!sbs",				/* EV_ACTOR_MOVE */
+	"!sbbs",			/* EV_ACTOR_MOVE: Don't use this format string - see CL_ActorDoMove for more info */
 
 	"ssbbgg",			/* EV_ACTOR_START_SHOOT */
 	"ssbbbbppb",		/* EV_ACTOR_SHOOT; the last 'b' cannot be 'd' */
@@ -787,6 +787,7 @@ void CL_SetLastMoving (le_t *le)
 
 /**
  * @brief
+ * @sa EV_ACTOR_START_MOVE
  */
 static void CL_ActorDoStartMove (struct dbuffer *msg)
 {
@@ -1339,11 +1340,17 @@ static void schedule_do_event (void)
 	Schedule_Event(events->when + timescale_delta, &do_event, NULL);
 }
 
+/**
+ * @sa CL_UnblockEvents
+ */
 void CL_BlockEvents (void)
 {
 	blockEvents = qtrue;
 }
 
+/**
+ * @sa CL_BlockEvents
+ */
 void CL_UnblockEvents (void)
 {
 	blockEvents = qfalse;

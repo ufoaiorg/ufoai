@@ -2306,7 +2306,7 @@ void CL_InvCheckHands (struct dbuffer *msg)
 void CL_ActorDoMove (struct dbuffer *msg)
 {
 	le_t *le;
-	int number;
+	int number, i;
 
 	number = NET_ReadShort(msg);
 	/* get le */
@@ -2321,10 +2321,13 @@ void CL_ActorDoMove (struct dbuffer *msg)
 		return;
 	}
 
-	/* get length */
-	NET_ReadFormat(msg, ev_format[EV_ACTOR_MOVE], &le->path[le->pathLength], &le->pathContents[le->pathLength]);
-	le->pathLength++;
+	/* get length/steps */
+	le->pathLength = NET_ReadByte(msg);
 	assert(le->pathLength <= MAX_LE_PATHLENGTH);
+	for (i = 0; i < le->pathLength; i++) {
+		le->path[i] = NET_ReadByte(msg);
+		le->pathContents[i] = NET_ReadShort(msg);
+	}
 
 	/* activate PathMove function */
 	FLOOR(le) = NULL;
@@ -2332,6 +2335,7 @@ void CL_ActorDoMove (struct dbuffer *msg)
 	le->pathPos = 0;
 	le->startTime = cl.time;
 	le->endTime = cl.time;
+
 	/* FIXME: speed should somehow depend on strength of character */
 	if (le->state & STATE_CROUCHED)
 		le->speed = 50;
@@ -2581,6 +2585,7 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	/* do actor related stuff */
 	if (!le) {
 		/* it's OK, the actor is not visible */
+		/* FIXME: Really? What about EV_ACTOR_SHOOT_HIDDEN */
 		return;
 	}
 

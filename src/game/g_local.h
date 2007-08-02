@@ -250,6 +250,7 @@ void Cmd_Score_f(edict_t * ent);
 
 /* g_phys.c */
 void G_PhysicsRun(void);
+void G_PhysicsStep(edict_t *ent);
 
 /* g_utils.c */
 edict_t *G_Find(edict_t * from, int fieldofs, char *match);
@@ -289,6 +290,8 @@ void G_RecalcRouting(edict_t * ent);
 #define VT_NOFRUSTUM	2
 
 #define MORALE_RANDOM( mod )	( (mod) * (1.0 + 0.3*crand()) )
+
+#define MAX_DVTAB 32
 
 void G_FlushSteps(void);
 
@@ -408,6 +411,13 @@ typedef struct {
 	vec3_t		end_origin;
 	vec3_t		end_angles;
 
+	/* actor movement */
+	int			contents[MAX_DVTAB];
+	int			visflags[MAX_DVTAB];
+	byte		steps;
+	int			currentStep;
+
+	/* brush movement */
 	float		accel;
 	float		speed;
 	float		decel;

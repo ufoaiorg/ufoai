@@ -26,6 +26,46 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_local.h"
 
 /**
+ * @brief
+ */
+void G_PhysicsStep (edict_t *ent)
+{
+	int contents;
+	int visflags;
+
+	if (ent->moveinfo.currentStep < ent->moveinfo.steps) {
+		contents = ent->contents;
+		visflags = ent->moveinfo.visflags[ent->moveinfo.currentStep];
+		/* Send the sound effect to everyone how's not seeing the actor */
+		if (contents & CONTENTS_WATER) {
+			if (ent->moveinfo.contents[ent->moveinfo.currentStep] & CONTENTS_WATER) {
+				/* looks like we already are in the water */
+				/* send water moving sound */
+				gi.PositionedSound(~visflags, ent->origin, ent, "footsteps/water_under", CHAN_BODY, 1, 1, 100);
+			} else {
+				/* send water entering sound */
+				gi.PositionedSound(~visflags, ent->origin, ent, "footsteps/water_in", CHAN_BODY, 1, 1, 100);
+			}
+		} else if (ent->contents & CONTENTS_WATER) {
+			/* send water leaving sound */
+			gi.PositionedSound(~visflags, ent->origin, ent, "footsteps/water_out", CHAN_BODY, 1, 1, 100);
+		}
+
+		/* and now save the new contents */
+		ent->contents = ent->moveinfo.contents[ent->moveinfo.currentStep];
+		ent->moveinfo.currentStep++;
+
+		/* immediatly rethink */
+		ent->nextthink = (level.framenum + 3) * FRAMETIME;
+/*		Com_Printf("step: %i/%i\n", ent->moveinfo.currentStep, ent->moveinfo.steps);*/
+	} else {
+		ent->moveinfo.currentStep = 0;
+		ent->moveinfo.steps = 0;
+		ent->think = NULL;
+	}
+}
+
+/**
  * @brief Runs thinking code for this frame if necessary
  */
 static qboolean G_PhysicsThink (edict_t *ent)
@@ -59,9 +99,11 @@ void G_PhysicsRun (void)
 	if (level.activeTeam == -1)
 		return;
 
+#if 0 /* taken out - otherwise footstep sounds are too slow */
 	/* don't run this too often to prevent overflows */
 	if (level.framenum % 10)
 		return;
+#endif
 
 	/* treat each object in turn */
 	/* even the world gets a chance to think */
