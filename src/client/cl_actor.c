@@ -2000,15 +2000,15 @@ static void CL_BuildForbiddenList (void)
  * @brief Draws a marker for all blocked map-positions.
  * @note currently uses basically the same code as CL_BuildForbiddenList
  * @note usage in console: "debug_drawblocked"
- * @todo currently the particles stay a _very_ long time ... so everybody ahs to stand still in order for the dsipaly to be correct.
+ * @todo currently the particles stay a _very_ long time ... so everybody has to stand still in order for the display to be correct.
  * @sa CL_BuildForbiddenList
  * @sa cl_input:CL_InitInput <-- console command init.
  */
 void CL_DisplayBlockedPaths_f (void)
 {
-	le_t *le;
+	le_t *le = NULL;
 	int i;
-	ptl_t *ptl;
+	ptl_t *ptl = NULL;
 	vec3_t s;
 
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
@@ -2024,6 +2024,38 @@ void CL_DisplayBlockedPaths_f (void)
 			ptl->roundsCnt = 2;
 			ptl->life = 10000;
 			ptl->t = 0;
+			if (le->fieldSize == ACTOR_SIZE_2x2) {
+				/* If this actor blocks 4 fields draw them as well. */
+				pos3_t temp;
+				ptl_t *ptl2 = NULL;
+				ptl_t *ptl3 = NULL;
+				ptl_t *ptl4 = NULL;
+
+				VectorSet(temp,  le->pos[0]+1,  le->pos[1],  le->pos[2]);
+				Grid_PosToVec(&clMap,temp, s);
+				ptl2 = CL_ParticleSpawn("cross", 0, s, NULL, NULL);
+				ptl2->rounds = ptl->rounds;
+				ptl2->roundsCnt = ptl->roundsCnt;
+				ptl2->life = ptl->life;
+				ptl2->t = ptl->t;
+				
+				VectorSet(temp,  le->pos[0],  le->pos[1]+1,  le->pos[2]);
+				Grid_PosToVec(&clMap,temp, s);
+				ptl3 = CL_ParticleSpawn("cross", 0, s, NULL, NULL);
+				ptl3->rounds = ptl->rounds;
+				ptl3->roundsCnt = ptl->roundsCnt;
+				ptl3->life = ptl->life;
+				ptl3->t = ptl->t;
+
+				VectorSet(temp,  le->pos[0]+1,  le->pos[1]+1,  le->pos[2]);
+				Grid_PosToVec(&clMap,temp, s);
+				ptl4 = CL_ParticleSpawn("cross", 0, s, NULL, NULL);
+				ptl4->rounds = ptl->rounds;
+				ptl4->roundsCnt = ptl->roundsCnt;
+				ptl4->life = ptl->life;
+				ptl4->t = ptl->t;
+				
+			}
 		}
 	}
 }
