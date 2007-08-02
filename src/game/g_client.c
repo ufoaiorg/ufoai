@@ -32,6 +32,10 @@ int turnTeam;	/* Defined in g_local.h Stores level.activeTeam while G_CanReactio
 
 int reactionFiremode[MAX_EDICTS][RF_MAX]; /* Defined in g_local.h See there for full info. */
 
+/* if actors appear or perish we have to handle the movement of the current actor
+ * a little bit different */
+static qboolean sentAppearPerishEvent;
+
 /**
  * @brief Generates the player mask
  */
@@ -212,6 +216,8 @@ void G_SendInventory (int player_mask, edict_t * ent)
 void G_AppearPerishEvent (int player_mask, int appear, edict_t * check)
 {
 	int maxMorale;
+
+	sentAppearPerishEvent = qtrue;
 
 	if (appear) {
 		/* appear */
@@ -1250,13 +1256,12 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	edict_t *ent;
 	int status, initTU;
 	byte dvtab[MAX_DVTAB];
-	byte dv, numdv, length;
+	byte dv, numdv, length, steps;
 	pos3_t pos;
 	float div, tu;
 	int contents;
 	vec3_t pointTrace;
 	byte* stepAmount;
-	int steps;
 
 	ent = g_edicts + num;
 
@@ -1295,9 +1300,15 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 			/* everything ok, found valid route */
 			/* create movement related events */
 			steps = 0;
+			sentAppearPerishEvent = qfalse;
 
 			FLOOR(ent) = NULL;
 
+			/* BEWARE: do not print anything (even with DPrintf)
+			   in functions called in this loop
+			   without setting 'steps = 0' afterwards;
+			   also do not send events except G_AppearPerishEvent
+			   without manually setting 'steps = 0' */
 			while (numdv > 0) {
 				/* get next dv */
 				numdv--;
@@ -1309,10 +1320,13 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 					gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_TURN);
 					gi.WriteShort(ent->number);
 					gi.WriteByte(ent->dir);
-					steps = 0;
 				}
 				if (stop && (status & VIS_STOP))
 					break;
+				if (status || sentAppearPerishEvent) {
+					steps = 0;
+					sentAppearPerishEvent = qfalse;
+				}
 
 				/* check for "blockers" */
 				if (G_CheckMoveBlock(ent->pos, dvtab[numdv]))
@@ -1322,7 +1336,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				div = ((dvtab[numdv] & (DIRECTIONS - 1)) < 4) ? TU_MOVE_STRAIGHT : TU_MOVE_DIAGONAL;
 				if (ent->state & STATE_CROUCHED)
 					div *= 1.5;
-				if ((int) (tu + div) > initTU)
+				if ((int) (tu + div) > ent->TU)
 					break;
 				tu += div;
 
@@ -1383,6 +1397,8 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 					 * coop game) and trigger the reaction fire which may kill
 					 * the targetted actor
 					 */
+					steps = 0;
+					sentAppearPerishEvent = qfalse;
 				}
 
 				/* Restore ent->TU because the movement code relies on it not being modified! */
@@ -1394,6 +1410,11 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 
 				if (stop && (status & VIS_STOP))
 					break;
+
+				if (sentAppearPerishEvent) {
+					steps = 0;
+					sentAppearPerishEvent = qfalse;
+				}
 			}
 
 			/* submit the TUs / round down */
