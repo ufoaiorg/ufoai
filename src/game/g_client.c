@@ -1256,6 +1256,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	int contents;
 	vec3_t pointTrace;
 	byte* stepAmount;
+	int steps;
 
 	ent = g_edicts + num;
 
@@ -1290,11 +1291,10 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 			PosAddDV(pos, dv);
 		}
 
-		assert(ent->moveinfo.steps == 0);
-
 		if (VectorCompare(pos, ent->pos)) {
 			/* everything ok, found valid route */
 			/* create movement related events */
+			steps = 0;
 
 			FLOOR(ent) = NULL;
 
@@ -1343,12 +1343,19 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 					stepAmount = gi.WriteDummyByte(0);
 				}
 
-				assert(ent->moveinfo.steps < MAX_DVTAB);
+				if (ent->moveinfo.steps >= MAX_DVTAB) {
+					ent->moveinfo.steps = 0;
+					ent->moveinfo.currentStep = 0;
+				}
 				ent->moveinfo.contents[ent->moveinfo.steps] = contents;
 				ent->moveinfo.visflags[ent->moveinfo.steps] = ent->visflags;
 				ent->moveinfo.steps++;
+
+				/* we are using another steps here, because the steps
+				 * in the moveinfo maybe are not 0 again */
+				steps++;
 				/* store steps in netchannel */
-				*stepAmount = ent->moveinfo.steps;
+				*stepAmount = steps;
 
 				/* write move header and always one step after another - because the next step
 				 * might already be the last one due to some stop event */
