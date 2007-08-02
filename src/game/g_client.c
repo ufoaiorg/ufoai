@@ -1352,7 +1352,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				gi.linkentity(ent);
 
 				/* write move header if not yet done */
-				if (!ent->moveinfo.steps) {
+				if (!steps) {
 					gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_MOVE);
 					gi.WriteShort(num);
 					stepAmount = gi.WriteDummyByte(0);
