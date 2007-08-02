@@ -366,30 +366,31 @@ static void BaseSummary_Init (void)
 		Cvar_SetValue("mn_basesummary_mediccount", BaseSummary_EmployeeCount(EMPL_MEDIC));
 		Cvar_SetValue("mn_basesummary_robotcount", BaseSummary_EmployeeCount(EMPL_ROBOT));
 
-		BaseSummary_BuildingUsage("mn_basesummary_capacity_aliens","Alien containment", CAP_ALIENS,B_ALIEN_CONTAINMENT);
-		BaseSummary_BuildingUsage("mn_basesummary_capacity_hangarsmall","Small", CAP_AIRCRAFTS_SMALL,B_SMALL_HANGAR);
-		BaseSummary_BuildingUsage("mn_basesummary_capacity_hangarlarge","Large", CAP_AIRCRAFTS_BIG,B_HANGAR);
-		BaseSummary_BuildingUsage("mn_basesummary_capacity_hangarufo","UFO", CAP_UFOHANGARS,B_UFO_HANGAR);
-		BaseSummary_BuildingUsage("mn_basesummary_capacity_hospital","Hospital", CAP_HOSPSPACE,B_HOSPITAL);
-		BaseSummary_BuildingUsage("mn_basesummary_capacity_labs","Laboratory", CAP_LABSPACE,B_LAB);
-		BaseSummary_BuildingUsage("mn_basesummary_capacity_quarters","Living quarters", CAP_EMPLOYEES,B_QUARTERS);
-		BaseSummary_BuildingUsage("mn_basesummary_capacity_workshops","Workshop", CAP_WORKSPACE,B_WORKSHOP);
-		BaseSummary_BuildingUsage("mn_basesummary_capacity_storage","Storage", CAP_ITEMS,B_STORAGE);
+		BaseSummary_BuildingUsage("mn_basesummary_capacity_aliens", "Alien containment", CAP_ALIENS, B_ALIEN_CONTAINMENT);
+		BaseSummary_BuildingUsage("mn_basesummary_capacity_hangarsmall", "Small Hangar", CAP_AIRCRAFTS_SMALL, B_SMALL_HANGAR);
+		BaseSummary_BuildingUsage("mn_basesummary_capacity_hangarlarge", "Large Hangar", CAP_AIRCRAFTS_BIG, B_HANGAR);
+		BaseSummary_BuildingUsage("mn_basesummary_capacity_hangarufo", "UFO Large Hangar", CAP_UFOHANGARS, B_UFO_HANGAR);
+		/** @todo UFO Small Hangar? */
+		BaseSummary_BuildingUsage("mn_basesummary_capacity_hospital", "Hospital", CAP_HOSPSPACE, B_HOSPITAL);
+		BaseSummary_BuildingUsage("mn_basesummary_capacity_labs", "Laboratory", CAP_LABSPACE, B_LAB);
+		BaseSummary_BuildingUsage("mn_basesummary_capacity_quarters", "Living quarters", CAP_EMPLOYEES, B_QUARTERS);
+		BaseSummary_BuildingUsage("mn_basesummary_capacity_workshops", "Workshop", CAP_WORKSPACE, B_WORKSHOP);
+		BaseSummary_BuildingUsage("mn_basesummary_capacity_storage", "Storage", CAP_ITEMS, B_STORAGE);
 
-		BaseSummary_BuildingCount("mn_basesummary_buildingcount_misc","Miscellaneous", B_MISC);
-		BaseSummary_BuildingCount("mn_basesummary_buildingcount_lab","Laboratory", B_LAB);
-		BaseSummary_BuildingCount("mn_basesummary_buildingcount_quarters","Living Quarters", B_QUARTERS);
-		BaseSummary_BuildingCount("mn_basesummary_buildingcount_storage","Storage", B_STORAGE);
-		BaseSummary_BuildingCount("mn_basesummary_buildingcount_workshop","Workshop", B_WORKSHOP);
-		BaseSummary_BuildingCount("mn_basesummary_buildingcount_hospital","Hospital", B_HOSPITAL);
-		BaseSummary_BuildingCount("mn_basesummary_buildingcount_hangarlarge","Large Hangar", B_HANGAR);
-		BaseSummary_BuildingCount("mn_basesummary_buildingcount_aliens","Alien Containment", B_ALIEN_CONTAINMENT);
-		BaseSummary_BuildingCount("mn_basesummary_buildingcount_hangarsmall","Small Hangar", B_SMALL_HANGAR);
-		BaseSummary_BuildingCount("mn_basesummary_buildingcount_hangarlargeufo","UFO Large Hangar", B_UFO_HANGAR);
-		BaseSummary_BuildingCount("mn_basesummary_buildingcount_hangarsmallufo","UFO Small Hangar", B_UFO_SMALL_HANGAR);
-		BaseSummary_BuildingCount("mn_basesummary_buildingcount_power","Power Plant", B_POWER);
-		BaseSummary_BuildingCount("mn_basesummary_buildingcount_command","Command Center", B_COMMAND);
-		BaseSummary_BuildingCount("mn_basesummary_buildingcount_antimatter","Anti-matter Storage", B_ANTIMATTER);
+		BaseSummary_BuildingCount("mn_basesummary_buildingcount_misc", "Miscellaneous", B_MISC);
+		BaseSummary_BuildingCount("mn_basesummary_buildingcount_lab", "Laboratory", B_LAB);
+		BaseSummary_BuildingCount("mn_basesummary_buildingcount_quarters", "Living Quarters", B_QUARTERS);
+		BaseSummary_BuildingCount("mn_basesummary_buildingcount_storage", "Storage", B_STORAGE);
+		BaseSummary_BuildingCount("mn_basesummary_buildingcount_workshop", "Workshop", B_WORKSHOP);
+		BaseSummary_BuildingCount("mn_basesummary_buildingcount_hospital", "Hospital", B_HOSPITAL);
+		BaseSummary_BuildingCount("mn_basesummary_buildingcount_hangarlarge", "Large Hangar", B_HANGAR);
+		BaseSummary_BuildingCount("mn_basesummary_buildingcount_aliens", "Alien Containment", B_ALIEN_CONTAINMENT);
+		BaseSummary_BuildingCount("mn_basesummary_buildingcount_hangarsmall", "Small Hangar", B_SMALL_HANGAR);
+		BaseSummary_BuildingCount("mn_basesummary_buildingcount_hangarlargeufo", "UFO Large Hangar", B_UFO_HANGAR);
+		BaseSummary_BuildingCount("mn_basesummary_buildingcount_hangarsmallufo", "UFO Small Hangar", B_UFO_SMALL_HANGAR);
+		BaseSummary_BuildingCount("mn_basesummary_buildingcount_power", "Power Plant", B_POWER);
+		BaseSummary_BuildingCount("mn_basesummary_buildingcount_command", "Command Center", B_COMMAND);
+		BaseSummary_BuildingCount("mn_basesummary_buildingcount_antimatter", "Anti-matter Storage", B_ANTIMATTER);
 
 		BaseSummary_BuildingConstruction("mn_basesummary_construction");
 		BaseSummary_ProductionCurrent("mn_basesummary_productioncurrent");
