@@ -535,7 +535,6 @@ static void LET_PathMove (le_t * le)
 			/* end of move */
 			le_t *floor;
 
-			le->pathLength = 0;
 			CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
 
 			/* link any floor container into the actor temp floor container */
