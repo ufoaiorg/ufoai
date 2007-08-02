@@ -864,16 +864,21 @@ static void PR_ProductionList_f (void)
 
 	Cvar_SetValue("mn_production_limit", MAX_PRODUCTIONS_PER_WORKSHOP * numWorkshops);
 	Cvar_SetValue("mn_production_basecap", baseCurrent->capacities[CAP_WORKSPACE].max);
+
 	/* Set amount of workers - all/ready to work (determined by base capacity. */
 	if (baseCurrent->capacities[CAP_WORKSPACE].max >= E_CountHired(baseCurrent, EMPL_WORKER))
 		baseCurrent->capacities[CAP_WORKSPACE].cur = E_CountHired(baseCurrent, EMPL_WORKER);
 	else
 		baseCurrent->capacities[CAP_WORKSPACE].cur = baseCurrent->capacities[CAP_WORKSPACE].max;
-	Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i", E_CountHired(baseCurrent, EMPL_WORKER),
-	baseCurrent->capacities[CAP_WORKSPACE].cur);
+
+	Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i",
+		E_CountHired(baseCurrent, EMPL_WORKER),
+		baseCurrent->capacities[CAP_WORKSPACE].cur);
 	Cvar_Set("mn_production_workers", tmpbuf);
-	Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i", baseCurrent->capacities[CAP_ITEMS].max,
-	baseCurrent->capacities[CAP_ITEMS].cur);
+
+	Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i",
+		baseCurrent->capacities[CAP_ITEMS].max,
+		baseCurrent->capacities[CAP_ITEMS].cur);
 	Cvar_Set("mn_production_storage", tmpbuf);
 }
 
