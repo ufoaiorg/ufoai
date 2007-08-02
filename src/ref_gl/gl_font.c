@@ -381,10 +381,10 @@ static char *Font_GetLineWrap (font_t * f, char *buffer, int maxWidth, int *widt
 		*newlineTest = '\0';
 		TTF_SizeUTF8(f->font, buffer, &w, &h);
 		*width = w;
-		/* fine, the hole line (up to \n) has a length smaller than maxwidth */
+		/* Fine, the whole line (up to \n) has a length smaller than maxwidth. */
 		if (w < maxWidth)
 			return newlineTest + 1;
-		/* ok, doesn't fit - revert the change */
+		/* Ok, doesn't fit - revert the change. */
 		*newlineTest = '\n';
 	}
 
