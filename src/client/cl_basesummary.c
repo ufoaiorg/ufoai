@@ -158,8 +158,8 @@ static void BaseSummary_ProductionCurrent (const char* cvarName)
 
 		objDef = csi.ods[production.objID];
 
-		Com_sprintf(buffer, sizeof(buffer), _("%s:  Qty: %d, Time Left: %d hours, Workers: %d"),
-			objDef.name, production.amount, production.timeLeft, production.workers);
+		Com_sprintf(buffer, sizeof(buffer), _("%s:  Qty: %d, Time Left: %d hours"),
+			objDef.name, production.amount, production.timeLeft);
 
 		Cvar_Set("mn_basesummary_productioncurrent", buffer);
 	}

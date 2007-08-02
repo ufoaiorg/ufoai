@@ -1197,7 +1197,6 @@ qboolean PR_Save (sizebuf_t* sb, void* data)
 			MSG_WriteString(sb, csi.ods[pq->items[j].objID].id);
 			MSG_WriteLong(sb, pq->items[j].amount);
 			MSG_WriteLong(sb, pq->items[j].timeLeft);
-			MSG_WriteLong(sb, pq->items[j].workers);
 			MSG_WriteByte(sb, pq->items[j].production);
 			MSG_WriteByte(sb, pq->items[j].items_cached);
 		}
@@ -1224,16 +1223,14 @@ qboolean PR_Load (sizebuf_t* sb, void* data)
 			k = INVSH_GetItemByID(s);
 			if (k == -1 || k >= MAX_OBJDEFS) {
 				Com_Printf("PR_Load: Could not find item '%s'\n", s);
-				MSG_ReadLong(sb);
-				MSG_ReadLong(sb);
-				MSG_ReadLong(sb);
-				MSG_ReadByte(sb);
-				MSG_ReadByte(sb);
+				MSG_ReadLong(sb); /* amount */
+				MSG_ReadLong(sb); /* timeLeft */
+				MSG_ReadByte(sb); /* production */
+				MSG_ReadByte(sb); /* items_cached */
 			} else {
 				pq->items[j].objID = k;
 				pq->items[j].amount = MSG_ReadLong(sb);
 				pq->items[j].timeLeft = MSG_ReadLong(sb);
-				pq->items[j].workers = MSG_ReadLong(sb);
 				pq->items[j].production = MSG_ReadByte(sb);
 				pq->items[j].items_cached = MSG_ReadByte(sb);
 			}

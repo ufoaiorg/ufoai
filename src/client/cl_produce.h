@@ -42,7 +42,7 @@ typedef struct production_s
 	signed int objID;	/**< Object id from global csi.ods struct. (i.e. item-idx) */
 	signed int amount;	/**< How much are we producing. */
 	int timeLeft;		/**< Get this from tech. */
-	int workers;		/**< Amount of workers assigned to the production. */
+	/**int workers;		Amount of workers assigned to the production. @todo unused? */
 	qboolean production;	/**< True if this is real production, false when disassembling. */
 	qboolean items_cached;	/**< If true the items required for production (of _one_ objID item) have been removed from production.
 				 * They need to be added to the storage again if this queue is stopped or removed.
