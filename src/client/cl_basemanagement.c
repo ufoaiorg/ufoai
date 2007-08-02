@@ -469,7 +469,7 @@ void B_BuildingStatus (base_t* base, building_t* building)
 	switch (building->buildingStatus) {
 	case B_STATUS_NOT_SET:
 		numberOfBuildings = B_GetNumberOfBuildingsInBaseByTypeIDX(base->idx, building->type_idx);
-		if (numberOfBuildings)
+		if (numberOfBuildings >= 0)
 			Cvar_Set("mn_building_status", va(_("Already %i in base"), numberOfBuildings));
 		break;
 	case B_STATUS_UNDER_CONSTRUCTION:
