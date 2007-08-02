@@ -41,14 +41,14 @@ void G_PhysicsStep (edict_t *ent)
 			if (ent->moveinfo.contents[ent->moveinfo.currentStep] & CONTENTS_WATER) {
 				/* looks like we already are in the water */
 				/* send water moving sound */
-				gi.PositionedSound(~visflags, ent->origin, ent, "footsteps/water_under", CHAN_BODY, 1, 1, 100);
+				gi.PositionedSound(~visflags, ent->origin, ent, "footsteps/water_under", CHAN_BODY, 1, 1, 0);
 			} else {
 				/* send water entering sound */
-				gi.PositionedSound(~visflags, ent->origin, ent, "footsteps/water_in", CHAN_BODY, 1, 1, 100);
+				gi.PositionedSound(~visflags, ent->origin, ent, "footsteps/water_in", CHAN_BODY, 1, 1, 0);
 			}
 		} else if (ent->contents & CONTENTS_WATER) {
 			/* send water leaving sound */
-			gi.PositionedSound(~visflags, ent->origin, ent, "footsteps/water_out", CHAN_BODY, 1, 1, 100);
+			gi.PositionedSound(~visflags, ent->origin, ent, "footsteps/water_out", CHAN_BODY, 1, 1, 0);
 		}
 
 		/* and now save the new contents */
