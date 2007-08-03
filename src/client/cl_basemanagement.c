@@ -2965,7 +2965,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 
 			/* Save team on board */
 			/** @note presaveArray[PRE_ACTTEA]==MAX_ACTIVETEAM and NOT teamSize */
-			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++)	
+			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++)
 				MSG_WriteShort(sb, aircraft->teamIdxs[l]);
 			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++)
 				MSG_WriteByte(sb, aircraft->teamTypes[l]);
@@ -3091,7 +3091,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		Q_strncpyz(b->name, MSG_ReadStringRaw(sb), sizeof(b->name));
 		MSG_ReadPos(sb, b->pos);
 		if (b->founded) {
-			color = CL_GetMapColor(b->pos, MAPTYPE_CLIMAZONE);
+			color = MAP_GetColor(b->pos, MAPTYPE_CLIMAZONE);
 			b->mapZone = MAP_GetZoneType(color);
 		}
 		b->founded = MSG_ReadByte(sb);

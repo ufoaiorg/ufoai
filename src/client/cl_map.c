@@ -260,7 +260,7 @@ void MAP_MapClick (const menuNode_t* node, int x, int y, qboolean globe)
 
 	/* new base construction */
 	if (gd.mapAction == MA_NEWBASE) {
-		if (!MapIsWater(CL_GetMapColor(pos, MAPTYPE_CLIMAZONE))) {
+		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_CLIMAZONE))) {
 			newBasePos[0] = pos[0];
 			newBasePos[1] = pos[1];
 			Com_DPrintf("MAP_MapClick: Build base at: %.0f:%.0f\n", pos[0], pos[1]);
@@ -1408,7 +1408,7 @@ void MAP_NotifyUfoRemoved (const aircraft_t* ufo)
 
 /**
  * @brief Translate nation map color to nation
- * @sa CL_GetMapColor
+ * @sa MAP_GetColor
  * @param[in] pos Map Coordinates to get the nation from
  * @return returns the nation pointer with the given color on nationPic at given pos
  * @return NULL if no nation with the given color value was found
@@ -1418,7 +1418,7 @@ nation_t* MAP_GetNation (const vec2_t pos)
 {
 	int i;
 	nation_t* nation;
-	byte* color = CL_GetMapColor(pos, MAPTYPE_NATIONS);
+	byte* color = MAP_GetColor(pos, MAPTYPE_NATIONS);
 #ifdef PARANOID
 	Com_DPrintf("MAP_GetNation: color value for %.0f:%.0f is r:%i, g:%i, b: %i\n", pos[0], pos[1], color[0], color[1], color[2]);
 #endif
@@ -1434,7 +1434,7 @@ nation_t* MAP_GetNation (const vec2_t pos)
 
 /**
  * @brief Translate color value to zone type
- * @sa CL_GetMapColor
+ * @sa MAP_GetColor
  * @param[in] byte the color value to the the zone type from
  * @return returns the zone name - the first char is used for base assemble themes
  * @note never may return a null pointer or an empty string

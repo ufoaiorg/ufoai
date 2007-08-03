@@ -333,7 +333,7 @@ void CL_CampaignRun(void);
 void CL_GameTimeStop(void);
 void CL_GameTimeFast(void);
 void CL_GameTimeSlow(void);
-extern byte *CL_GetMapColor(const vec2_t pos, mapType_t type);
+extern byte *MAP_GetColor(const vec2_t pos, mapType_t type);
 extern qboolean CL_NewBase(base_t* base, vec2_t pos);
 void CL_ParseMission(const char *name, const char **text);
 mission_t* CL_AddMission(const char *name);

@@ -434,7 +434,7 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 
 	if (phalanxWon) {
 		/* get the color value of the map at the crash position */
-		color = CL_GetMapColor(aircraft->pos, MAPTYPE_CLIMAZONE);
+		color = MAP_GetColor(aircraft->pos, MAPTYPE_CLIMAZONE);
 		/* if this color value is not the value for water ...
 		 * and we hit the probability to spawn a crashsite mission */
 		if (!MapIsWater(color)) {

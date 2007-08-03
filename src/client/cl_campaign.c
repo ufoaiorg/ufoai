@@ -359,7 +359,7 @@ static date_t Date_Random_Middle (date_t frame)
  * @param[in] polar
  * @return
  */
-static qboolean CL_MapMaskFind (byte * color, vec2_t polar)
+static qboolean MAP_MaskFind (byte * color, vec2_t polar)
 {
 	byte *c;
 	int res, i, num;
@@ -404,7 +404,7 @@ static qboolean CL_MapMaskFind (byte * color, vec2_t polar)
  * @note maskPic is a pointer to an rgba image in memory
  * @sa MAP_GetZoneType
  */
-byte *CL_GetMapColor (const vec2_t pos, mapType_t type)
+byte *MAP_GetColor (const vec2_t pos, mapType_t type)
 {
 	int x, y;
 	int width, height;
@@ -460,7 +460,7 @@ qboolean CL_NewBase (base_t* base, vec2_t pos)
 		return qfalse;
 	}
 
-	color = CL_GetMapColor(pos, MAPTYPE_CLIMAZONE);
+	color = MAP_GetColor(pos, MAPTYPE_CLIMAZONE);
 
 	if (MapIsWater(color)) {
 		/* This should already have been catched in MAP_MapClick (cl_menu.c), but just in case. */
@@ -828,7 +828,7 @@ static void CL_CampaignAddMission (setState_t * set)
 		}
 		/* get default position first, then try to find a corresponding mask color */
 		Vector2Set(mis->realPos, mis->def->pos[0], mis->def->pos[1]);
-		CL_MapMaskFind(mis->def->mask, mis->realPos);
+		MAP_MaskFind(mis->def->mask, mis->realPos);
 
 		/* Add message to message-system. */
 		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Alien activity has been reported: '%s'"), mis->def->location);
