@@ -726,14 +726,14 @@ struct base_s;
 typedef struct chr_list_s {
 	character_t* chr[MAX_ACTIVETEAM];
 	int num;	/* Number of entries */
-} chr_list_t;
+} chrList_t;
 
 void CL_SaveInventory(sizebuf_t * buf, inventory_t * i);
 void CL_NetReceiveItem(struct dbuffer * buf, item_t * item, int * container, int * x, int * y);
 void CL_LoadInventory(sizebuf_t * buf, inventory_t * i);
 void CL_ResetTeams(void);
 void CL_ParseResults(struct dbuffer *msg);
-void CL_SendCurTeamInfo(struct dbuffer * buf, chr_list_t *team);
+void CL_SendCurTeamInfo(struct dbuffer * buf, chrList_t *team);
 void CL_AddCarriedToEq(struct aircraft_s *aircraft, equipDef_t * equip);
 void CL_ParseCharacterData(struct dbuffer *msg, qboolean updateCharacter);
 qboolean CL_SoldierInAircraft(int employee_idx, employeeType_t employeeType, int aircraft_idx);
@@ -899,7 +899,7 @@ missionResults_t missionresults;	/**< Mission results pointer used for Menu Won.
 #include "cl_menu.h"
 void B_DrawBase(menuNode_t * node);
 
-extern chr_list_t chrDisplayList;	/**< List of currently displayed or equipeable characters.
+extern chrList_t chrDisplayList;	/**< List of currently displayed or equipeable characters.
 					 * See cl_team.c and cl_menu.c for usage.
 					 */
 

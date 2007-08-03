@@ -32,7 +32,7 @@ static int CL_GetRank(const char* rankID);
 static void CL_SaveTeamInfo(sizebuf_t * buf, int baseID, int num);
 
 /* List of currently displayed or equipeable characters. extern definition in client.h */
-chr_list_t chrDisplayList;
+chrList_t chrDisplayList;
 
 /**
  * @brief Prepares environment for multiplayer.
@@ -43,7 +43,7 @@ chr_list_t chrDisplayList;
 static void CL_MultiplayerEnvironment_f (void)
 {
 	base_t *base = &gd.bases[0];
-	
+
 	baseCurrent = base;
 	cls.missionaircraft = AIR_AircraftGetFromIdx(0);
 	baseCurrent->aircraftCurrent = cls.missionaircraft->idxInBase;
@@ -516,13 +516,13 @@ void CL_AddCarriedToEq (aircraft_t *aircraft, equipDef_t * ed)
 
 	for (container = 0; container < csi.numIDs; container++) {
 		for (p= 0; p < aircraft->size; p++) {
-			if (aircraft->teamIdxs[p] != -1) { 
+			if (aircraft->teamIdxs[p] != -1) {
 				chr = &gd.employees[aircraft->teamTypes[p]][aircraft->teamIdxs[p]].chr;
 				ic = chr->inv->c[container];
 				while (ic) {
 					item_t item = ic->item;
 					int type = item.t;
-					
+
 					next = ic->next;
 					ed->num[type]++;
 					if (item.a) {
@@ -751,7 +751,7 @@ static void CL_GenerateEquipment_f (void)
 		Com_DPrintf("CL_GenerateEquipment_f().. team alien, id: %i\n", team);
 	}
 
-	
+
 
 	/* Store hired names. */
 	Cvar_ForceSet("cl_selected", "0");
@@ -1405,7 +1405,7 @@ static void CL_TeamListDebug_f (void)
 	employee_t *employee;
 	base_t *base = NULL;
 	aircraft_t *aircraft;
-	
+
 	base = CP_GetMissionBase();
 	aircraft = cls.missionaircraft;
 
@@ -1413,7 +1413,7 @@ static void CL_TeamListDebug_f (void)
 		Com_Printf("Build and select a base first\n");
 		return;
 	}
-	
+
 	if (!aircraft) {
 		Com_Printf("Buy/build an aircraft first.\n");
 		return;
@@ -1818,7 +1818,7 @@ static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
  * @sa CL_SaveTeamInfo
  * @note Called in cl_main.c CL_Precache_f to send the team info to server
  */
-void CL_SendCurTeamInfo (struct dbuffer * buf, chr_list_t *team)
+void CL_SendCurTeamInfo (struct dbuffer * buf, chrList_t *team)
 {
 	character_t *chr = NULL;
 	int i, j;

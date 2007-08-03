@@ -1780,7 +1780,7 @@ static void B_SelectBase_f (void)
  * @todo This currently always uses exactly the first two firemodes (see fmode1+fmode2) for calculation. This needs to be adapted to support less (1) or more 3+ firemodes. I think the function will even  break on only one firemode .. never tested it.
  * @todo i think currently also the different ammo/firedef types for each weapon (different weaponr_fd_idx and weaponr_fd_idx values) are ignored.
  */
-static void CL_SwapSkills (chr_list_t *team)
+static void CL_SwapSkills (chrList_t *team)
 {
 	int j, i1, i2, skill, no1, no2, tmp1, tmp2;
 	character_t *cp1, *cp2;
@@ -1965,7 +1965,7 @@ static void B_PackInitialEquipment_f (void)
 	int aircraft_idxInBase;
 	aircraft_t *aircraft = NULL;
 	const char *name = curCampaign ? cl_initial_equipment->string : Cvar_VariableString("equip");
-	chr_list_t chr_list_temp;
+	chrList_t chr_list_temp;
 
 	/* check syntax */
 	if (Cmd_Argc() > 1) {

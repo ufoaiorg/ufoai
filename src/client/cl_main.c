@@ -1469,7 +1469,7 @@ static void CL_SpawnSoldiers_f (void)
 	int n = teamnum->integer;
 	base_t *base = NULL;
 	aircraft_t *aircraft = cls.missionaircraft;
-	chr_list_t chr_list_temp;
+	chrList_t chr_list_temp;
 	int i;
 
 	base = CP_GetMissionBase();
@@ -1504,7 +1504,7 @@ static void CL_SpawnSoldiers_f (void)
 				chr_list_temp.num++;
 			}
 		}
-		
+
 		if (chr_list_temp.num <= 0) {
 			Com_DPrintf("CL_SpawnSoldiers_f: Error - team number <= zero - %i\n", chr_list_temp.num);
 		} else {
