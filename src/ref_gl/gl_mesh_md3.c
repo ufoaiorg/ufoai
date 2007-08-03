@@ -195,8 +195,6 @@ void R_DrawAliasMD3Model (entity_t *e)
 		R_DrawAliasMD3FrameLerp(paliashdr, paliashdr->meshes[i], e->as.backlerp);
 	}
 
-	qglDisableClientState(GL_COLOR_ARRAY);
-
 	if (e->flags & RF_TRANSLUCENT)
 		GLSTATE_DISABLE_BLEND
 

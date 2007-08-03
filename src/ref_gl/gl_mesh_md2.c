@@ -142,7 +142,7 @@ static void R_DrawAliasFrameLerp (mdl_md2_t * paliashdr, float backlerp, int fra
 	}
 
 	qglDisableClientState(GL_VERTEX_ARRAY);
-	qglDisableClientState(GL_COLOR_ARRAY);
+	qglDisableClientState(GL_NORMAL_ARRAY);
 }
 
 /**
