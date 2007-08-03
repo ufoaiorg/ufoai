@@ -368,7 +368,7 @@ static void G_ActorSpawn (edict_t * ent)
 	if (ent->pos[2] >= HEIGHT)
 		ent->pos[2] = HEIGHT - 1;
 
-	ent->pos[2] = gi.GridFall(gi.map, ent->pos);
+	ent->pos[2] = gi.GridFall(gi.map, ent->pos, ent->fieldSize);
 	if (ent->pos[2] >= HEIGHT)
 		Com_Printf("G_ActorSpawn: Warning: z level is out of bounds: %i\n", ent->pos[2]);
 
@@ -398,7 +398,7 @@ static void G_Actor2x2Spawn (edict_t * ent)
 	/* fall to ground */
 	if (ent->pos[2] >= HEIGHT)
 		ent->pos[2] = HEIGHT - 1;
-	ent->pos[2] = gi.GridFall(gi.map, ent->pos);
+	ent->pos[2] = gi.GridFall(gi.map, ent->pos, ent->fieldSize);
 	if (ent->pos[2] >= HEIGHT)
 		Com_Printf("G_Actor2x2Spawn: Warning: z level is out of bounds: %i\n", ent->pos[2]);
 	gi.GridPosToVec(gi.map, ent->pos, ent->origin);
@@ -532,7 +532,7 @@ static void SP_civilian_target (edict_t * ent)
 	/* fall to ground */
 	if (ent->pos[2] >= HEIGHT)
 		ent->pos[2] = HEIGHT - 1;
-	ent->pos[2] = gi.GridFall(gi.map, ent->pos);
+	ent->pos[2] = gi.GridFall(gi.map, ent->pos, ent->fieldSize);
 	gi.GridPosToVec(gi.map, ent->pos, ent->origin);
 }
 
@@ -548,7 +548,7 @@ static void SP_misc_mission (edict_t * ent)
 	/* fall to ground */
 	if (ent->pos[2] >= HEIGHT)
 		ent->pos[2] = HEIGHT - 1;
-	ent->pos[2] = gi.GridFall(gi.map, ent->pos);
+	ent->pos[2] = gi.GridFall(gi.map, ent->pos, ent->fieldSize);
 	gi.GridPosToVec(gi.map, ent->pos, ent->origin);
 }
 
@@ -564,7 +564,7 @@ static void SP_misc_mission_aliens (edict_t * ent)
 	/* fall to ground */
 	if (ent->pos[2] >= HEIGHT)
 		ent->pos[2] = HEIGHT - 1;
-	ent->pos[2] = gi.GridFall(gi.map, ent->pos);
+	ent->pos[2] = gi.GridFall(gi.map, ent->pos, ent->fieldSize);
 	gi.GridPosToVec(gi.map, ent->pos, ent->origin);
 }
 

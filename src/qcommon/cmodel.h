@@ -65,7 +65,7 @@ void Grid_MoveStore(struct routing_s *map);
 byte Grid_MoveLength(struct routing_s *map, pos3_t to, qboolean stored);
 byte Grid_MoveNext(struct routing_s *map, pos3_t from);
 byte Grid_Height(struct routing_s *map, pos3_t pos);
-byte Grid_Fall(struct routing_s *map, pos3_t pos);
+byte Grid_Fall(struct routing_s *map, pos3_t pos, int actor_size);
 void Grid_PosToVec(struct routing_s *map, pos3_t pos, vec3_t vec);
 
 

@@ -462,7 +462,7 @@ static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
 	/* origin might not be up-to-date here - but pos should be */
 	PosToVec(le->pos, origin);
 
-	/* @todo use the Grid_Fall method to ensure, that the particle is
+	/* @todo use the Grid_Fall method (ACTOR_SIZE_NORMAL) to ensure, that the particle is
 	 * drawn at the ground (if needed - maybe the origin is already ground aligned)*/
 	if (t->particle) {
 		/* check whether actor is visibile */

@@ -2467,7 +2467,6 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, byte 
  * @param[in] ol The R_AREA value for x,y,z. (Guess: the "old length" i.e. the TUs used so far)
  * @param[in] actor_size Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @sa Grid_CheckForbidden
- * @todo Add diagonal-move checks for actor size (2x2).
  * @todo Add height/fall checks for actor size (2x2).
  */
 static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dir, int h, byte ol, int actor_size)
@@ -2631,7 +2630,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dir,
 	z += (h + sh) / 0x10;
 
 	VectorSet(dummy, nx, ny, z);
-	z = Grid_Fall(map, dummy);
+	z = Grid_Fall(map, dummy, actor_size);
 
 	/* Can it be better than ever? */
 	if (R_AREA(map, nx, ny, z) < l)
@@ -2883,7 +2882,7 @@ static byte Grid_MoveCheck (struct routing_s *map, pos3_t pos, byte sz, byte l)
 		z += (R_HEIGHT(map, x, y, z) + sh) / 0x10;
 
 		VectorSet(dummy, pos[0], pos[1], z);
-		z = Grid_Fall(map, dummy);
+		z = Grid_Fall(map, dummy, ACTOR_SIZE_NORMAL); /** @todo 2x2 units support? */
 
 		/*  Com_Printf("pos: (%i %i %i) (x,y,z): (%i %i %i)\n", pos[0], pos[1], pos[2], x, y, z); */
 
@@ -2959,11 +2958,11 @@ byte Grid_Height (struct routing_s *map, pos3_t pos)
  * @brief Calculated the new height level when something falls down from a certain position.
  * @param[in] map Pointer to client or server side routing table (clMap, svMap)
  * @param[in] pos Position in the map to start the fall (starting height is the z-value in this position)
+ * @param[in] actor_size Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @return New z (height) value.
  * @return 0xFF if an error occured.
- * @todo add checks for 2x2 units (they can't fall though 1x1 holes after all :))
  */
-byte Grid_Fall (struct routing_s *map, pos3_t pos)
+byte Grid_Fall (struct routing_s *map, pos3_t pos, int actor_size)
 {
 	byte z = pos[2];
 
@@ -2982,8 +2981,25 @@ byte Grid_Fall (struct routing_s *map, pos3_t pos)
 	if (z == 0)
 		return 0;
 
-	while (z > 0 && R_FALL(map, pos[0], pos[1], z))
-		z--;
+	/* Reduce z if we can fall down - depending on actor size we also check the atatched squares. */
+	switch (actor_size) {
+	case ACTOR_SIZE_NORMAL:
+		while (z > 0 && R_FALL(map, pos[0], pos[1], z)) {
+			z--;
+		}
+		break;
+	case ACTOR_SIZE_2x2:
+		while (z > 0
+			&& R_FALL(map, pos[0], pos[1], z)
+			&& R_FALL(map, pos[0]+1, pos[1], z)
+			&& R_FALL(map, pos[0], pos[1]+1, z)
+			&& R_FALL(map, pos[0]+1, pos[1]+1, z)) {
+			z--;
+		}
+		break;
+	default:
+		Com_Error(ERR_DROP, "Grid_Fall: unknown actor-size: %i\n", actor_size);
+	}
 
 	return z;
 }
