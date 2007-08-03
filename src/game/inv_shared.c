@@ -241,11 +241,12 @@ invList_t *Com_SearchInInventory (const inventory_t* const i, int container, int
 
 /**
  * @brief Add an item to a specified container in a given inventory
+ * @note Set x and y to NONE if the item shoudl get added but not displayed.
  * @param[in] i
  * @param[in] item
  * @param[in] container
- * @param[in] x
- * @param[in] y
+ * @param[in] x The x location in the container.
+ * @param[in] y The x location in the container.
  */
 invList_t *Com_AddToInventory (inventory_t * const i, item_t item, int container, int x, int y)
 {
@@ -521,9 +522,20 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 			return IA_NOTIME;
 		}
 
-		/* impossible move - back to source location */
-		Com_AddToInventory(i, cacheItem, from, fx, fy);
-		return IA_NONE;
+		if (ic && (to== CSI->idEquip || to == CSI->idEquip)){
+			/* We are moving to a blocked location container but it's the base-equipment loor of a battlsecape floor
+			 * We add the item anyway but it'll not be displayed (yet)
+			 * @todo change the other code to browse trough these things. */
+			Com_FindSpace(i, &cacheItem, to, &tx, &ty);	/**< Returns a free place or NONE for x&y if no free space is available elsewhere.
+												 * This is then used in Com_AddToInventory below.*/
+			if (tx == NONE || ty == NONE) {
+				Com_Printf("Com_MoveInInventory - item will be added non-visible\n");
+			}
+		} else {
+			/* impossible move - back to source location */
+			Com_AddToInventory(i, cacheItem, from, fx, fy);
+			return IA_NONE;
+		}
 	}
 
 	/* twohanded exception - only CSI->idRight is allowed for fireTwoHanded weapons */

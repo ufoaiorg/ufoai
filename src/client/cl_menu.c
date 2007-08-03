@@ -1092,10 +1092,10 @@ static void MN_Drag (const menuNode_t* const node, int x, int y)
 		py = (int) ((y - node->pos[1] - C_UNIT * ((csi.ods[dragItem.t].sy - 1) / 2.0)) / C_UNIT);
 
 		/* tactical mission */
-		if (selActor)
+		if (selActor) {
 			MSG_Write_PA(PA_INVMOVE, selActor->entnum, dragFrom, dragFromX, dragFromY, node->mousefx, px, py);
 		/* menu */
-		else {
+		} else {
 			invList_t *i = NULL;
 			int et = -1, sel;
 
