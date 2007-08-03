@@ -1,48 +1,59 @@
-// Every item designed for use in aircraft should be defined as craftitem
+//=========================================================================
+// Aircraft and Aircraft-item definitions
+//=========================================================================
+// aircraft
 //
-// craftitem of type: craftweapon has weight parameter, which is as follows:
-//	light	- for light weapons
-//	medium	- for medium weapons
-//	heavy	- for heavy weapons
+//	--vv-- Parameters which can get influenced by craft equipement --vv--
+//	speed - The speed of the aircraft, which tells how fast the aircraft is.
+//	shield - The parameter of aircraft shield, which tells aircraft's protection.
+//	ecm - The parameter of electronic level at aircraft, the bigger, the lower possibility to hit by enemy (in percent).
+//	damage - The parameter of aircraft hit points, which tells how much damage aircraft can suffer.
+//	accuracy - The parameter of accuracy, the bigger, the bigger possibility to hit an enemy (in percent).
+//	fuelsize - Maximum capacity of fuel tank.
+//	wrange - Not defined here for aircrafts (see aircraft items below) - will be set ingame to the biggest wrange of weapons aboard.
 //
-// other parameters are as follows:
-//	price		- cost of buying one item
-//	weapon		- only for type: ammo, defines which weapon uses this ammo
+//	slot parameters can be the following :
+//		type	- The type of item this slot can contain (See "type "in "craftitem" below)
+//		position - Slot's position on the aircraft. See cl_aircraft.c for available values.
+//		size - the Maximum weight of an item fitting this slot (light, medium, heavy) (only for weapon slots).
+//		contains - technology of the item in the slot at the beginning of the game.
+//		ammo - Technology of the ammo loading the weapon (only for weapon slots).
 //
-// aircraft parameters which can get influenced by craft equipement:
-//	speed - the speed of the aircraft, which tells how fast the aircraft is
-//	shield - the parameter of aircraft shield, which tells aircraft's protection
-//	ecm - the parameter of electronic level at aircraft, the bigger, the lower possibility to hit by enemy  (in percent)
-//	damage - the parameter of aircraft hit points, which tells how much damage aircraft can suffer
-//	accuracy - the parameter of accuracy, the bigger, the bigger possibility to hit an enemy (in percent)
-//	fuelsize - maximum capacity of fuel tank
-//	wrange - not defined here for aircrafts (see aircraft items below) - will be set ingame to the biggest wrange of weapons aboard
+// craftitem
+//	type - The type of the item. Possible values:
+//		weapon
+//		ammo
+//		shield
+//		electronics
+//		base_missile
+//		base_ammo_missile
+//	weight - Needed only for "type weapon". Possible values are:
+//		light	- For light weapons.
+//		medium	- For medium weapons.
+//		heavy	- For heavy weapons.
 //
-// aircraft slot parameters can be the following :
-//	type - the type of item this slot can contain (weapon or electronics)
-//	position - slot's position on the aircraft. See cl_aircraft.c for available values.
-//	size - the maximum weight of an item fitting this slot (light, medium, heavy) (only for weapon slots)
-//	contains - technology of the item in the slot at the begining of the game
-//	ammo - technology of the ammo loading the weapon (only for weapon slots)
+// 	price - Cost of buying one item.
+// 	weapon - Only for type: ammo, defines which weapon uses this ammo.
+//	weight	- The weight of the item used to see if it fits the slot (only for weapons).
+//	installationTime -
+//		The time needed to install/remove the item from the aircraft
+//		any param of aircraft param{}. These values are V_RELABS, and will modifiy
+//		the values of the aircraft. Understanding the values:
+//		shield 1.50	means: the shield of the aircraft is 50% stronger
+//		shield +10	means: the shield of the aircraft is stronger by 10 points
+//		speed 0.75	means: the aircraft is 25% slower
 //
-// aircraft item parameter can be :
-//	weight - the weight of the item used to see if it fits the slot (only for weapons)
-//	installationTime - the time needed to install/remove the item from the aircraft
-//	any param of aircraft param{}. This values are V_RELABS, and will modifiy the values of the aircraft.
-//		understanding the values:
-//		shield 1.50 means: the shield of the aircraft is 50% stronger
-//		shield +10 means: the shield of the aircraft is stronger by 10 points
-//		speed 0.75 means: the aircraft is 25% slower
-// parameters specific to ammos :
-//	weapon - the weapon that can use this ammo
-//	ammo - the total number of ammo that can be fired with one unit of ammunition
-//	wspeed - the speed of the ammo on geoscape once it's been shot
-//	wrange - the range of the weapon, which tells the minimum distance of opening fire
-//	delay - the delay between 2 shots of this ammunition
-//	wdamage - for ammos, it's the parameter which tells how much damage such weapon can do (this one is not V_RELABS)
-
-// don't forget to add mini-models to base/models/geoscape, too
-// also read the notes about ufos
+// 	--vv-- Parameters for craftitem specific to "type ammo". --vv--
+//	weapon	- The weapon that can use this ammo.
+//	ammo	- The total number of ammo that can be fired with one unit of ammunition.
+//	wspeed	- The speed of the ammo on geoscape once it's been shot.
+//	wrange	- The range of the weapon, which tells the minimum distance of opening fire.
+//	delay	- The delay between 2 shots of this ammunition.
+//	wdamage	- For ammos, it's the parameter which tells how much damage such weapon can do (this one is not V_RELABS).
+//=========================================================================
+// Don't forget to add mini-models to base/models/geoscape, too.
+// Also read the notes about ufos.
+//=========================================================================
 
 //
 // AIRCRAFTS
