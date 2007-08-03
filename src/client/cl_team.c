@@ -341,29 +341,36 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 
 
 /**
- * @brief
+ * @brief Remove all character_t information (and linekd tot hat employees & team info) from the game.
+ * @param[in] base The base to Remove all this stuff from.
  * @sa CL_GenerateCharacter
  * @sa AIR_ResetAircraftTeam
  */
 void CL_ResetCharacters (base_t* const base)
 {
 	int i;
-	character_t *chr;
+	character_t *chr = NULL;
 
-	/* reset inventory data */
+	/* Reset inventory data of all hired emplyoees that can be sent into combat (i.e. characters with inventories). */
 	for (i = 0; i < MAX_EMPLOYEES; i++) {
 		chr = E_GetHiredCharacter(base, EMPL_SOLDIER, i);
-		if (!chr)
-			continue;
-		INVSH_DestroyInventory(chr->inv);
+		if (chr)
+			INVSH_DestroyInventory(chr->inv);
+
+		chr = E_GetHiredCharacter(base, EMPL_ROBOT, i);
+		if (chr)
+			INVSH_DestroyInventory(chr->inv);
 	}
 
-	/* reset hire info */
+	/* Reset hire info. */
 	Cvar_ForceSet("cl_selected", "0");
 
-	for (i = 0; i < MAX_EMPL; i++)
+	/* Fire 'em all (Yes, even in multiplayer they are hired) */
+	for (i = 0; i < MAX_EMPL; i++) {
 		E_UnhireAllEmployees(base, i);
+	}
 
+	/* Purge all team-info from the aircrafts (even in multiplayer - we use a dummy craft there) */
 	for (i = 0; i < base->numAircraftInBase; i++) {
 		AIR_ResetAircraftTeam(B_GetAircraftFromBaseByIndex(base, i));
 	}
