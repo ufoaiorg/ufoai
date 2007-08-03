@@ -119,9 +119,6 @@ static void R_DrawAliasFrameLerp (mdl_md2_t * paliashdr, float backlerp, int fra
 			*na++ = backlerp * oldNormal[2] + frontlerp * newNormal[2];
 		}
 
-	if (qglLockArraysEXT != 0)
-		qglLockArraysEXT(0, paliashdr->num_xyz);
-
 	while (1) {
 		/* get the vertex count and primitive type */
 		count = *order++;
@@ -144,8 +141,8 @@ static void R_DrawAliasFrameLerp (mdl_md2_t * paliashdr, float backlerp, int fra
 		qglEnd();
 	}
 
-	if (qglUnlockArraysEXT != 0)
-		qglUnlockArraysEXT();
+	qglDisableClientState(GL_VERTEX_ARRAY);
+	qglDisableClientState(GL_COLOR_ARRAY);
 }
 
 /**
