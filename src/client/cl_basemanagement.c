@@ -2962,10 +2962,14 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 					MSG_WriteShort(sb, 0);
 				}
 			}
-			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++)
+
+			/* Save team on board */
+			/** @note presaveArray[PRE_ACTTEA]==MAX_ACTIVETEAM and NOT teamSize */
+			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++)	
 				MSG_WriteShort(sb, aircraft->teamIdxs[l]);
 			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++)
 				MSG_WriteByte(sb, aircraft->teamTypes[l]);
+
 			MSG_WriteShort(sb, aircraft->numUpgrades);
 			MSG_WriteShort(sb, aircraft->radar.range);
 			MSG_WriteShort(sb, aircraft->route.numPoints);
@@ -3194,11 +3198,18 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 					MSG_ReadShort(sb);
 				}
 			}
-			aircraft->teamSize = presaveArray[PRE_ACTTEA];
-			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++)
+
+			/* Load team on board */
+			/** @note presaveArray[PRE_ACTTEA]==MAX_ACTIVETEAM and NOT teamSize */
+			aircraft->teamSize = 0;
+			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++) {
 				aircraft->teamIdxs[l] = MSG_ReadShort(sb);
+				if (aircraft->teamIdxs[l] >= 0)
+					aircraft->teamSize++;
+			}
 			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++)
 				aircraft->teamTypes[l] = MSG_ReadByte(sb);
+
 			aircraft->numUpgrades = MSG_ReadShort(sb);
 			aircraft->radar.range = MSG_ReadShort(sb);
 			aircraft->route.numPoints = MSG_ReadShort(sb);
