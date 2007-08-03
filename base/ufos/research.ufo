@@ -2143,6 +2143,20 @@ tech rs_nano_armour
 		default "_nano_armour_pre_txt"
 	}
 
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		subject	"_Nanocomposite Armour"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		subject	"_Nanocomposite Armour"
+	}
+
 	require_AND
 	{
 		tech rs_alien_body_armour
@@ -2163,6 +2177,20 @@ tech rs_alien_body_armour
 		default "_alien_body_armour_pre_txt"
 	}
 
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		subject	"_Alien Body Armour"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		subject	"_Alien Body Armour"
+	}
+
 	require_AND
 	{
 		item light_alien 1
@@ -2181,6 +2209,20 @@ tech rs_alien_medium_armour
 	}
 	pre_description {
 		default "_alien_medium_armour_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		subject	"_Alien Medium Armour"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		subject	"_Alien Medium Armour"
 	}
 
 	require_AND
