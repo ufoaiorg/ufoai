@@ -2456,6 +2456,8 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, byte 
 }
 
 
+static int poslist_n[4][2];  /* 2*int needed for range-check because pos3_t does not support negative values and has a smaller range. */
+
 /**
  * @brief
  * @param[in|out] map Pointer to client or server side routing table (clMap, svMap)
@@ -2476,7 +2478,6 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dir,
 	pos3_t dummy;
 	byte l;
 
-	int poslist_n[4][2];  /* 2*int needed for range-check because pos3_t does not support negative values and has a smaller range. */
 	pos3_t poslist[4];
 
 #ifdef PARANOID
