@@ -1521,10 +1521,9 @@ static qboolean CL_SaveTeamMultiplayer (const char *filename)
 	/* store aircraft soldier content for multi-player */
 	MSG_WriteByte(&sb, aircraft->size);
 	for (i = 0; i < aircraft->size; i++) {
-		if (aircraft->teamIdxs[i] >= 0) {
-			MSG_WriteByte(&sb, aircraft->teamIdxs[i]);
-			MSG_WriteByte(&sb, aircraft->teamTypes[i]);
-		}
+		/* We save them all, even unused ones (->size). */
+		MSG_WriteByte(&sb, aircraft->teamIdxs[i]);
+		MSG_WriteByte(&sb, aircraft->teamTypes[i]);
 	}
 
 	/* store equipment in baseCurrent so soldiers can be properly equipped */
@@ -1669,13 +1668,12 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	aircraft->size = MSG_ReadByte(&sb);
 	chrDisplayList.num = 0;
 	for (i = 0; i < aircraft->size; i++) {
-		if (i < aircraft->teamSize) {
-			aircraft->teamIdxs[i] = MSG_ReadByte(&sb);
-			aircraft->teamTypes[i] = MSG_ReadByte(&sb);
+		aircraft->teamIdxs[i] = MSG_ReadByte(&sb);
+		aircraft->teamTypes[i] = MSG_ReadByte(&sb);
+		if (aircraft->teamIdxs[i] >= 0) { /** @todo remove this? */
 			chrDisplayList.chr[i] = &gd.employees[aircraft->teamTypes[i]][aircraft->teamIdxs[i]].chr;	/** @todo remove this? */
 			chrDisplayList.num++;	/** @todo remove this? */
-		} else
-			aircraft->teamIdxs[i] = -1;
+		}
 	}
 
 	/* read equipment */
