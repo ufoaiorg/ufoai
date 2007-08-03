@@ -283,13 +283,18 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	if (building->buildingType == B_ENTRANCE)
 		return qfalse;
 
-	if (base->map[(int)building->pos[0]][(int)building->pos[1]] != BASE_FREESLOT) {
+	switch (base->map[(int)building->pos[0]][(int)building->pos[1]]) {
+	case BASE_FREESLOT:
+	case BASE_INVALID_SPACE:
+		return qfalse;
+	default:
 		if (building->needs) {
 			/* "Child" building is always right to the "parent" building". */
 			base->map[(int)building->pos[0]][((int)building->pos[1]) + 1] = BASE_FREESLOT;
 		}
 
 		base->map[(int)building->pos[0]][(int)building->pos[1]] = BASE_FREESLOT;
+		break;
 	}
 	building->buildingStatus = B_STATUS_NOT_SET;
 
@@ -734,6 +739,13 @@ void B_SetUpBase (base_t* base)
 	/* Set up default buy/sell factors for this base. */
 	base->sellfactor = 5;
 	base->buyfactor = 1;
+	/* the first base never has invalid fields */
+	if (base->idx > 0) {
+		int *mapPtr = &gd.bases[i].map[rand() % BASE_SIZE][rand() % BASE_SIZE];
+		/* set this field to invalid if there is no building yet */
+		if (*mapPtr == BASE_FREESLOT)
+			*mapPtr = BASE_INVALID_SPACE;
+	}
 
 	/* a new base is not discovered (yet) */
 	base->isDiscovered = qfalse;
@@ -901,19 +913,20 @@ void B_SetBuildingByClick (int row, int col)
 	}
 
 	if (0 <= row && row < BASE_SIZE && 0 <= col && col < BASE_SIZE) {
-		if (baseCurrent->map[row][col] == BASE_FREESLOT) {
+		switch (baseCurrent->map[row][col]) {
+		case BASE_FREESLOT:
 			if (baseCurrent->buildingCurrent->needs)
 				secondBuildingPart = B_GetBuildingType(baseCurrent->buildingCurrent->needs);
 			if (secondBuildingPart) {
 				if (col + 1 == BASE_SIZE) {
 					if (baseCurrent->map[row][col-1] != BASE_FREESLOT) {
-						Com_DPrintf("Can't place this building here - the second part overlapped with another building\n");
+						Com_DPrintf("Can't place this building here - the second part overlapped with another building or invalid field\n");
 						return;
 					}
 					col--;
 				} else if (baseCurrent->map[row][col+1] != BASE_FREESLOT) {
 					if (baseCurrent->map[row][col-1] != BASE_FREESLOT || !col) {
-						Com_DPrintf("Can't place this building here - the second part overlapped with another building\n");
+						Com_DPrintf("Can't place this building here - the second part overlapped with another building or invalid field\n");
 						return;
 					}
 					col--;
@@ -938,7 +951,11 @@ void B_SetBuildingByClick (int row, int col)
 
 			B_ResetBuildingCurrent(baseCurrent);
 			B_BuildingInit();	/* update the building-list */
-		} else {
+			break;
+		case BASE_INVALID_SPACE:
+			Com_DPrintf("This base field is marked as invalid - you can't bulid here\n");
+			break;
+		default:
 			Com_DPrintf("There is already a building\n");
 			Com_DPrintf("Building: %i at (row:%i, col:%i)\n", baseCurrent->map[row][col], row, col);
 		}
@@ -1548,7 +1565,16 @@ void B_DrawBase (menuNode_t * node)
 			baseCurrent->posX[row][col] = x;
 			baseCurrent->posY[row][col] = y;
 
-			if (baseCurrent->map[row][col] != BASE_FREESLOT) {
+			switch (baseCurrent->map[row][col]) {
+			case BASE_INVALID_SPACE:
+				building = NULL;
+				Q_strncpyz(image, "base/invalid", sizeof(image));
+				break;
+			case BASE_FREESLOT:
+				building = NULL;
+				Q_strncpyz(image, "base/grid", sizeof(image));
+				break;
+			default:
 				building = B_GetBuildingByIdx(baseCurrent, baseCurrent->map[row][col]);
 				secondBuilding = NULL;
 
@@ -1570,9 +1596,7 @@ void B_DrawBase (menuNode_t * node)
 					Q_strncpyz(image, secondBuilding->image, sizeof(image));
 					building->used = 0;
 				}
-			} else {
-				building = NULL;
-				Q_strncpyz(image, "base/grid", sizeof(image));
+				break;
 			}
 
 			if (*image)
@@ -1580,31 +1604,37 @@ void B_DrawBase (menuNode_t * node)
 
 			/* check for hovering building name or outline border */
 			if (mouseX > x && mouseX < x + width && mouseY > y && mouseY < y + height - 20) {
-				if (baseCurrent->map[row][col] != BASE_FREESLOT)
+				switch (baseCurrent->map[row][col]) {
+				case BASE_FREESLOT:
+				case BASE_INVALID_SPACE:
 					hoverBuilding = building;
-				else if (gd.baseAction == BA_NEWBUILDING && xHover == -1) {
-					assert(baseCurrent->buildingCurrent);
-					colSecond = col;
-					if (baseCurrent->buildingCurrent->needs) {
-						if (colSecond + 1 == BASE_SIZE) {
-							if (baseCurrent->map[row][colSecond - 1] == BASE_FREESLOT)
-								colSecond--;
-						} else if (baseCurrent->map[row][colSecond + 1] != BASE_FREESLOT) {
-							if (baseCurrent->map[row][colSecond - 1] == BASE_FREESLOT)
-								colSecond--;
-						} else {
-							colSecond++;
-						}
-						if (colSecond != col) {
-							if (colSecond < col)
-								xHover = node->pos[0] + colSecond * width;
-							else
-								xHover = x;
-							widthHover = 2;
-						}
-					} else
-						xHover = x;
-					yHover = y;
+					break;
+				default:
+					if (gd.baseAction == BA_NEWBUILDING && xHover == -1) {
+						assert(baseCurrent->buildingCurrent);
+						colSecond = col;
+						if (baseCurrent->buildingCurrent->needs) {
+							if (colSecond + 1 == BASE_SIZE) {
+								if (baseCurrent->map[row][colSecond - 1] == BASE_FREESLOT)
+									colSecond--;
+							} else if (baseCurrent->map[row][colSecond + 1] != BASE_FREESLOT) {
+								if (baseCurrent->map[row][colSecond - 1] == BASE_FREESLOT)
+									colSecond--;
+							} else {
+								colSecond++;
+							}
+							if (colSecond != col) {
+								if (colSecond < col)
+									xHover = node->pos[0] + colSecond * width;
+								else
+									xHover = x;
+								widthHover = 2;
+							}
+						} else
+							xHover = x;
+						yHover = y;
+					}
+					break;
 				}
 			}
 
@@ -2169,7 +2199,7 @@ static void B_AssembleMap_f (void)
 	/* reset the used flag */
 	for (row = 0; row < BASE_SIZE; row++)
 		for (col = 0; col < BASE_SIZE; col++) {
-			if (base->map[row][col] != BASE_FREESLOT) {
+			if (base->map[row][col] != BASE_FREESLOT && base->map[row][col] != BASE_INVALID_SPACE) {
 				entry = B_GetBuildingByIdx(base, base->map[row][col]);
 				entry->used = 0;
 			}
@@ -2181,7 +2211,7 @@ static void B_AssembleMap_f (void)
 		for (col = 0; col < BASE_SIZE; col++) {
 			baseMapPart[0] = '\0';
 
-			if (base->map[row][col] != BASE_FREESLOT) {
+			if (base->map[row][col] != BASE_FREESLOT && base->map[row][col] != BASE_INVALID_SPACE) {
 				entry = B_GetBuildingByIdx(base, base->map[row][col]);
 
 				/* basemaps with needs are not (like the images in B_DrawBase) two maps - but one */
@@ -2216,7 +2246,7 @@ static void B_AssembleMap_f (void)
 }
 
 /**
- * @brief Cleans all bases but restart the base names
+ * @brief Cleans all bases but restore the base names
  * @sa CL_GameNew
  */
 void B_NewBases (void)

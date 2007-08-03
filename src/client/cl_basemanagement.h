@@ -43,7 +43,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_EMPLOYEES_IN_BUILDING 64
 
-#define BASE_FREESLOT -1
+#define BASE_FREESLOT		-1
+/* you can't place buildings here */
+#define BASE_INVALID_SPACE	-2
 
 /** @brief allocate memory for menuText[TEXT_STANDARD] contained the information about a building */
 char buildingText[MAX_LIST_CHAR];
