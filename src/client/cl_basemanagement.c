@@ -1966,7 +1966,7 @@ static void B_PackInitialEquipment_f (void)
 	aircraft_t *aircraft = NULL;
 	const char *name = curCampaign ? cl_initial_equipment->string : Cvar_VariableString("equip");
 	chr_list_t chr_list_temp;
-	
+
 	/* check syntax */
 	if (Cmd_Argc() > 1) {
 		Com_Printf("Usage: pack_initial\n");
@@ -2992,10 +2992,6 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			for (l = 0; l < presaveArray[PRE_AIRSTA]; l++)
 				MSG_WriteLong(sb, aircraft->stats[l]);
 		}
-		MSG_WriteShort(sb, presaveArray[PRE_MAXAIR]);
-		for (k = 0; k < presaveArray[PRE_MAXAIR]; k++)
-			MSG_WriteByte(sb, aircraft->teamSize);	/** @todo remove this altogether? */
-
 		MSG_WriteByte(sb, b->equipType);
 
 		/* store equipment */
@@ -3236,11 +3232,6 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			for (l = 0; l < presaveArray[PRE_AIRSTA]; l++)
 				aircraft->stats[l] = MSG_ReadLong(sb);
 		}
-
-		l = MSG_ReadShort(sb);
-		for (k = 0; k < l; k++) /** @todo remove this altogether? */
-			MSG_ReadByte(sb);
-			/* b->teamNum[k] = &(MSG_ReadByte(sb)); */
 
 		b->equipType = MSG_ReadByte(sb);
 
