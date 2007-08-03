@@ -676,7 +676,7 @@ void AIRFIGHT_CampaignRunProjectiles (int dt)
 static int AIRFIGHT_BaseChooseTarget (base_t *base, aircraftSlot_t *slot)
 {
 	aircraft_t*	ufo;
-	int ufoIdx = -1;
+	int ufoIdx;
 	int i;
 	float distance, distance0;
 
@@ -697,7 +697,8 @@ static int AIRFIGHT_BaseChooseTarget (base_t *base, aircraftSlot_t *slot)
 	}
 
 	/* otherwise, choose the closest visible ufo in range */
-	distance0 = 99999.9f;
+	distance0 = aircraftItems[slot->ammoIdx].stats[AIR_STATS_WRANGE];
+	ufoIdx = -1;
 	for (i = 0, ufo = gd.ufos; i < gd.numUfos; ufo++, i++) {
 		if (!ufo->visible)
 			continue;
@@ -709,10 +710,7 @@ static int AIRFIGHT_BaseChooseTarget (base_t *base, aircraftSlot_t *slot)
 		}
 	}
 
-	if (distance0 < aircraftItems[slot->ammoIdx].stats[AIR_STATS_WRANGE])
-		return ufoIdx;
-	else
-		return -1;
+	return ufoIdx;
 }
 
 /**
