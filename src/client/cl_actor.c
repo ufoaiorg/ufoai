@@ -3637,7 +3637,7 @@ static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
 	if (VectorDistSqr(start, end) > selFD->range * selFD->range) {
 		VectorMA(start, selFD->range, dir, mid);
 		crossNo = qtrue;
-	} else{
+	} else {
 		VectorCopy(end, mid);
 		crossNo = qfalse;
 	}

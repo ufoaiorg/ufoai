@@ -676,7 +676,7 @@ void AIRFIGHT_CampaignRunProjectiles (int dt)
 static int AIRFIGHT_BaseChooseTarget (base_t *base, aircraftSlot_t *slot)
 {
 	aircraft_t*	ufo;
-	int ufoIdx;
+	int ufoIdx = -1;
 	int i;
 	float distance, distance0;
 
