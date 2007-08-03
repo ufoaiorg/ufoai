@@ -592,11 +592,11 @@ int UP_GetUnreadMails (void)
 	while (m) {
 		switch (m->type) {
 		case MSG_RESEARCH_PROPOSAL:
-			if (m->pedia->mail[TECHMAIL_PRE].read == qfalse)
+			if (m->pedia->mail[TECHMAIL_PRE].from && m->pedia->mail[TECHMAIL_PRE].read == qfalse)
 				gd.numUnreadMails++;
 			break;
 		case MSG_RESEARCH_FINISHED:
-			if (RS_IsResearched_ptr(m->pedia) && m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
+			if (m->pedia->mail[TECHMAIL_RESEARCHED].from && RS_IsResearched_ptr(m->pedia) && m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
 				gd.numUnreadMails++;
 			break;
 		case MSG_NEWS:
