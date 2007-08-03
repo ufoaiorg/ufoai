@@ -1821,8 +1821,8 @@ Aircraft functions related to team handling.
  */
 void AIR_ResetAircraftTeam (aircraft_t *aircraft)
 {
-	memset(aircraft->teamIdxs, -1, aircraft->size * sizeof(int));
-	memset(aircraft->teamTypes, MAX_EMPL, aircraft->size * sizeof(employeeType_t));
+	memset(aircraft->teamIdxs, -1, MAX_ACTIVETEAM * sizeof(int));
+	memset(aircraft->teamTypes, MAX_EMPL, MAX_ACTIVETEAM * sizeof(employeeType_t));
 	aircraft->teamSize = 0;
 }
 
