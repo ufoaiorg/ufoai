@@ -741,7 +741,7 @@ void B_SetUpBase (base_t* base)
 	base->buyfactor = 1;
 	/* the first base never has invalid fields */
 	if (base->idx > 0) {
-		int *mapPtr = &gd.bases[i].map[rand() % BASE_SIZE][rand() % BASE_SIZE];
+		int *mapPtr = &base->map[rand() % BASE_SIZE][rand() % BASE_SIZE];
 		/* set this field to invalid if there is no building yet */
 		if (*mapPtr == BASE_FREESLOT)
 			*mapPtr = BASE_INVALID_SPACE;
