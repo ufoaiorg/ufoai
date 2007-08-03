@@ -198,11 +198,12 @@ typedef struct aircraft_s {
 	int idxInBase;				/**< Index in base. See also base_t->numAircraftInBase. */
 	/* pointer to base->numOnTeam[AIRCRAFT_ID] */
 	int teamSize;				/**< How many soldiers/units are on board (i.e. in the craft-team).
-							 * @note ATTENTION do not use this in "for" loops or similar.
-							 * entries in teamIdxs and teamTypes are not stored in order and may contain "empties".
-							 */
-	int teamIdxs[MAX_ACTIVETEAM];	/**< array of team members on board (global employee idx) */
-	employeeType_t teamTypes[MAX_ACTIVETEAM];	/**< array of team member types on board (employee type) */
+						 * @note ATTENTION do not use this in "for" loops or similar.
+						 * Entries in teamIdxs and teamTypes are not stored in order and may contain "empties" (see teamIdxs).
+						 */
+	int teamIdxs[MAX_ACTIVETEAM];	/**< Array of team members on board (global employee idx).
+					 * This value is -1 if the entry is unused/empty. (See teamSize) */
+	employeeType_t teamTypes[MAX_ACTIVETEAM];	/**< Array of team member types on board (=employee type). */
 
 	aircraftSlot_t weapons[MAX_AIRCRAFTSLOT];	/**< Weapons assigned to aircraft */
 	int maxWeapons;					/**< Total number of weapon slots aboard this aircraft */
