@@ -228,9 +228,9 @@ static void PF_WriteByte (unsigned char c)
 /**
  * @brief Use this if the value might change and you need the position in the buffer
  */
-static byte* PF_WriteDummyByte (unsigned char c)
+static char* PF_WriteDummyByte (unsigned char c)
 {
-	byte *pos = pfe_msg->end;
+	char *pos = pfe_msg->end;
 	NET_WriteByte(pfe_msg, c);
 	return pos;
 }

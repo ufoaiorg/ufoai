@@ -1261,7 +1261,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	float div, tu;
 	int contents;
 	vec3_t pointTrace;
-	byte* stepAmount;
+	char* stepAmount = NULL;
 
 	ent = g_edicts + num;
 
@@ -1357,6 +1357,8 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 					gi.WriteShort(num);
 					stepAmount = gi.WriteDummyByte(0);
 				}
+
+				assert(stepAmount);
 
 				if (ent->moveinfo.steps >= MAX_DVTAB) {
 					ent->moveinfo.steps = 0;
