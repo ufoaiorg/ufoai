@@ -432,11 +432,10 @@ static void CL_ChangeSkin_f (void)
 
 /**
  * @brief Use current skin with the team onboard.
-  * @todo We already know what team-members are in the aircraft (teamIdxs+types) no need to loop through hired employees i think.
  */
 static void CL_ChangeSkinOnBoard_f (void)
 {
-	int i, sel, newSkin, p;
+	int sel, newSkin;
 	aircraft_t *aircraft = NULL;
 
 	if (!baseCurrent)
@@ -454,16 +453,14 @@ static void CL_ChangeSkinOnBoard_f (void)
 
 	sel = cl_selected->integer;
 	if (sel >= 0 && sel < chrDisplayList.num) {
+		assert(sel < MAX_ACTIVETEAM);
+		
 		newSkin = Cvar_VariableInteger("mn_skin");
 		if (newSkin >= NUM_TEAMSKINS || newSkin < 0)
 			newSkin = 0;
-		for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
-			if (AIR_IsInAircraftTeam(aircraft, i, EMPL_SOLDIER)) {
-				assert(p < MAX_ACTIVETEAM);
-				chrDisplayList.chr[p]->skin = newSkin;
-				p++;
-			}
-		}
+
+		assert(chrDisplayList.chr[sel]);
+		chrDisplayList.chr[sel]->skin = newSkin;
 	}
 }
 
