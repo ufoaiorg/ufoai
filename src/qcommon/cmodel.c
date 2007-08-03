@@ -2410,8 +2410,8 @@ int CM_TestLineDM (vec3_t start, vec3_t stop, vec3_t end)
 */
 
 /**
- * @brief Checks a field on the grid of the given routing data.
- * @param[in] map Routing data
+ * @brief Checks one field (square) on the grid of the given routing data (i.e. the map).
+ * @param[in] map Routing data/map.
  * @param[in] x Field in x direction
  * @param[in] y Field in y direction
  * @param[in] z Field in z direction
@@ -2463,14 +2463,14 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, byte 
  * @param[in] y Current y location in the map.
  * @param[in] z Current z location in the map.
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
- * @param[in] h	(The R_HEIGHT value for x,y,z)
- * @param[in] ol (It's also the R_AREA value for x,y,z) (Guess: the "old length" i.e. the TUs used so far)
+ * @param[in] h	The R_HEIGHT value for x,y,z. Do not confuse with z-level.
+ * @param[in] ol The R_AREA value for x,y,z. (Guess: the "old length" i.e. the TUs used so far)
  * @param[in] actor_size Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
  * @sa Grid_CheckForbidden
  * @todo Add diagonal-move checks for actor size (2x2).
  * @todo Add height/fall checks for actor size (2x2).
  */
-static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dir, int h, int ol, int actor_size)
+static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dir, int h, byte ol, int actor_size)
 {
 	int nx, ny, sh;
 	int dx, dy;
@@ -2483,6 +2483,11 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dir,
 #ifdef PARANOID
 	if (z >= HEIGHT) {
 		Com_DPrintf("Grid_MoveMark: WARNING z = %i(>= HEIGHT %i)\n", z, HEIGHT);
+		return;
+	}
+	
+	if ((l + TU_MOVE_STRAIGHT) >= MAX_MOVELENGTH)) {
+		Com_DPrintf("Grid_MoveMark: maximum movelength reached %i (max %i)\n", l, MAX_MOVELENGTH);
 		return;
 	}
 #endif
@@ -2819,7 +2824,7 @@ byte Grid_MoveLength (struct routing_s *map, pos3_t to, qboolean stored)
  * @sa Grid_MoveNext
  * @todo add 2x2 unit support
  */
-static byte Grid_MoveCheck (struct routing_s *map, pos3_t pos, byte sz, int l)
+static byte Grid_MoveCheck (struct routing_s *map, pos3_t pos, byte sz, byte l)
 {
 	int x, y, sh;
 	int dir; /**< Direction vector index */
