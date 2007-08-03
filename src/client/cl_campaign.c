@@ -2253,14 +2253,21 @@ static void CL_GameGo (void)
 	/* Before we start, we should clear the missionresults array. */
 	memset(&missionresults, 0, sizeof(missionresults));
 
-	/* FIXME: IMO all of this to be removed, we never get here. */
+	if (CL_OnBattlescape()) {
+		Com_DPrintf("CL_GameGo: We already _are_ on the battlescape/on a mission.\n");
+		return;
+	}
+
 	if (!ccs.singleplayer && B_GetNumOnTeam(aircraft) == 0) {
-		/* multiplayer; but we never reach this far! */
+		/** Multiplayer; but we never reach this far!
+		 * @todo Why is that? GameGo can be called via console.*/
 		MN_Popup(_("Note"), _("Assemble or load a team"));
 		return;
-	} else if (ccs.singleplayer && (!mis->active || !aircraft->teamSize)) {
-		/* dropship not near landing zone */
-		Com_DPrintf("Dropship not near landingzone: mis->active: %i\n", mis->active);
+	}
+
+	if (ccs.singleplayer && (!mis->active || !aircraft->teamSize)) {
+		/* Dropship not near landing zone. */
+		Com_DPrintf("CL_GameGo: Dropship not near landingzone: mis->active: %i\n", mis->active);
 		return;
 	}
 
