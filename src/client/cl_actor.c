@@ -3134,7 +3134,10 @@ void CL_ActorMouseTrace (void)
 		AngleVectors(cl.cam.angles, forward, right, up);
 		/* set the intersection level to that of the selected actor */
 		VecToPos(from, testPos);
-		intersectionLevel = Grid_Fall(&clMap, testPos, selActor->fieldSize);
+		if (selActor)
+			intersectionLevel = Grid_Fall(&clMap, testPos, selActor->fieldSize);
+		else
+			intersectionLevel = Grid_Fall(&clMap, testPos, ACTOR_SIZE_NORMAL);
  		/* if looking up, raise the intersection level */
 		if (cur[1] < 0.0f)
 			intersectionLevel++;
@@ -3194,7 +3197,10 @@ void CL_ActorMouseTrace (void)
 	}
 
 	VecToPos(end, testPos);
-	restingLevel = Grid_Fall(&clMap, testPos, selActor->fieldSize);
+	if (selActor)
+		restingLevel = Grid_Fall(&clMap, testPos, selActor->fieldSize);
+	else
+		restingLevel = Grid_Fall(&clMap, testPos, ACTOR_SIZE_NORMAL);
 
 	/* hack to prevent cursor from getting stuck on the top of an invisible
 	   playerclip surface (in most cases anyway) */
