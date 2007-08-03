@@ -522,14 +522,14 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 			return IA_NOTIME;
 		}
 
-		if (ic && (to== CSI->idEquip || to == CSI->idEquip)){
+		if (ic && (to== CSI->idEquip || to == CSI->idFloor)) {
 			/* We are moving to a blocked location container but it's the base-equipment loor of a battlsecape floor
 			 * We add the item anyway but it'll not be displayed (yet)
 			 * @todo change the other code to browse trough these things. */
 			Com_FindSpace(i, &cacheItem, to, &tx, &ty);	/**< Returns a free place or NONE for x&y if no free space is available elsewhere.
 												 * This is then used in Com_AddToInventory below.*/
 			if (tx == NONE || ty == NONE) {
-				Com_Printf("Com_MoveInInventory - item will be added non-visible\n");
+				Com_DPrintf("Com_MoveInInventory - item will be added non-visible\n");
 			}
 		} else {
 			/* impossible move - back to source location */
