@@ -2906,7 +2906,7 @@ tech rs_craft_ufo_fighter
 	description {
 		default "_ufo_fighter_txt"
 	}
-	description {
+	pre_description {
 		default "_ufo_fighter_pre_txt"
 	}
 	up_chapter	crafts
@@ -3675,6 +3675,20 @@ tech rs_alien_materials
 	}
 	pre_description {
 		default "_alien_materials_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		subject	"_Alien Materials"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		subject	"_Alien Materials"
 	}
 
 	require_AND
