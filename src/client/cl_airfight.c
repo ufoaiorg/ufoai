@@ -31,6 +31,27 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 int numBullets = 0;			/**< Number of bunch of bullets on geoscape */
 vec2_t bulletPos[MAX_BULLETS_ON_GEOSCAPE][BULLETS_PER_SHOT];	/**< Position of every bullets on geoscape */
 
+#if 0
+/* @todo: Please use these integers instead of the values spreaded all over the code */
+/**
+ * @note 0 if the weapon can shoot
+ * @note -1 if it can't shoot atm
+ * @note -2 if it will never be able to shoot
+ */
+static const int AIRFIGHT_WEAPON_CAN_SHOOT = 0;
+static const int AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT = -1;
+static const int AIRFIGHT_WEAPON_CAN_NOT_SHOOT = -2;
+
+/**
+ * @note -1 if no weapon to use atm
+ * @note -2 if no weapon to use at all (no ammo left)
+ */
+static const int AIRFIGHT_SLOT_NO_WEAPON_TO_USE_AT_THE_MOMENT = -1;
+static const int AIRFIGHT_SLOT_NO_WEAPON_TO_USE_NO_AMMO_LEFT = -2;
+
+static const int AIRFIGHT_BASE_CAN_T_FIRE = -1;
+#endif
+
 /**
  * @brief Create bullets on geoscape.
  * @param[in] projectile Pointer to the projectile corresponding to this bullet.
@@ -242,7 +263,7 @@ static int AIRFIGHT_CheckWeapon (aircraftSlot_t *slot, float distance)
  * @param[in] targetpos Pointer to the aimed aircraft.
  * @return indice of the slot to use (in array weapons[]), -1 if no weapon to use atm, -2 if no weapon to use at all (no ammo left).
  */
-int AIRFIGHT_ChooseWeapon (aircraftSlot_t *slot, int maxSlot, vec3_t pos, vec3_t targetPos)
+static int AIRFIGHT_ChooseWeapon (aircraftSlot_t *slot, int maxSlot, vec3_t pos, vec3_t targetPos)
 {
 	int slotIdx = -2;
 	int i, n;
