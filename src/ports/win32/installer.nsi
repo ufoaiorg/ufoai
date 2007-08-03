@@ -131,14 +131,14 @@ SectionGroup /e "Game" SECGROUP01
     File "..\..\..\base\i18n\sv\LC_MESSAGES\*.mo"
     SetOutPath "$INSTDIR\base\i18n\slo\LC_MESSAGES"
     File "..\..\..\base\i18n\slo\LC_MESSAGES\*.mo"
-  
+
   ;======================================================================
   ; to let the game start up
   ;======================================================================
     SetOutPath "$INSTDIR"
-  
+
   SectionEnd
-  
+
   Section "Game Shortcuts" SEC01B
     CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\"
     CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME}.lnk" "$INSTDIR\ufo.exe" "+set vid_fullscreen 1 + set snd_init 1" "$INSTDIR\ufo.exe" 0
@@ -316,7 +316,6 @@ Section "Source Code" SEC03
   File "..\..\tools\ufo2map\common\*.c"
 
   SetOutPath "$INSTDIR\src"
-  File "..\..\CMakeLists.txt"
   SetOutPath "$INSTDIR"
 SectionEnd
 
