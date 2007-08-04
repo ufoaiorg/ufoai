@@ -318,11 +318,20 @@ void SCR_DrawPrecacheScreen (qboolean string)
 {
 	re.BeginFrame(0);
 	re.DrawNormPic(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0, ALIGN_UL, qfalse, "loading");
-	if (string)
+	if (string) {
 		re.FontDrawString("f_menubig", ALIGN_UC,
 			(int)(VID_NORM_WIDTH / 2),
 			(int)(VID_NORM_HEIGHT / 2 - 60),
 			0, 1, VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, _("Loading game"), 0, 0, NULL, qfalse);
+		re.FontDrawString("f_menubig", ALIGN_UC,
+			(int)(VID_NORM_WIDTH / 2),
+			60,
+			0, 1, VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, _("UFO: Alien Invasion"), 0, 0, NULL, qfalse);
+		re.FontDrawString("f_menubig", ALIGN_UC,
+			(int)(VID_NORM_WIDTH / 2),
+			120,
+			0, 1, VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, _("Download this game for free at http://ufoai.sourceforge.net"), 0, 0, NULL, qfalse);
+	}
 	SCR_DrawLoadingBar((int)(VID_NORM_WIDTH / 2) - 300, VID_NORM_HEIGHT - 30, 600, 20, (int)cls.loadingPercent);
 	re.EndFrame();
 }
