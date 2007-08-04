@@ -3116,6 +3116,10 @@ void CL_ActorMouseTrace (void)
 	pos3_t testPos;
 	pos3_t actor2x2[3];
 
+	int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
+		? selActor->fieldSize
+		: ACTOR_SIZE_NORMAL;
+	
 	le_t *le;
 
 	/* get cursor position as a -1 to +1 range for projection */
@@ -3133,10 +3137,8 @@ void CL_ActorMouseTrace (void)
 		AngleVectors(cl.cam.angles, forward, right, up);
 		/* set the intersection level to that of the selected actor */
 		VecToPos(from, testPos);
-		if (selActor)
-			intersectionLevel = Grid_Fall(&clMap, testPos, selActor->fieldSize);
-		else
-			intersectionLevel = Grid_Fall(&clMap, testPos, ACTOR_SIZE_NORMAL);
+		intersectionLevel = Grid_Fall(&clMap, testPos, fieldSize);
+
  		/* if looking up, raise the intersection level */
 		if (cur[1] < 0.0f)
 			intersectionLevel++;
@@ -3196,7 +3198,7 @@ void CL_ActorMouseTrace (void)
 	}
 
 	VecToPos(end, testPos);
-	restingLevel = Grid_Fall(&clMap, testPos, selActor ? selActor->fieldSize : ACTOR_SIZE_NORMAL);
+	restingLevel = Grid_Fall(&clMap, testPos, fieldSize);
 
 	/* hack to prevent cursor from getting stuck on the top of an invisible
 	   playerclip surface (in most cases anyway) */
@@ -3206,7 +3208,7 @@ void CL_ActorMouseTrace (void)
 	pB[2] -= UNIT_HEIGHT;
 	CM_TestLineDM(pA, pB, pC);
 	VecToPos(pC, testPos);
-	restingLevel = min(restingLevel, Grid_Fall(&clMap, testPos, selActor ? selActor->fieldSize : ACTOR_SIZE_NORMAL));
+	restingLevel = min(restingLevel, Grid_Fall(&clMap, testPos, fieldSize));
 
 	/* if grid below intersection level, start a trace from the intersection */
 	if (restingLevel < intersectionLevel) {
@@ -3214,7 +3216,7 @@ void CL_ActorMouseTrace (void)
 		from[2] -= CURSOR_OFFSET;
 		CM_TestLineDM(from, stop, end);
 		VecToPos(end, testPos);
-		restingLevel = Grid_Fall(&clMap, testPos, selActor->fieldSize);
+		restingLevel = Grid_Fall(&clMap, testPos, fieldSize);
 	}
 
 	/* test if the selected grid is out of the world */
