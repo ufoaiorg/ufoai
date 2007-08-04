@@ -2038,7 +2038,7 @@ void CL_DisplayBlockedPaths_f (void)
 				ptl2->roundsCnt = ptl->roundsCnt;
 				ptl2->life = ptl->life;
 				ptl2->t = ptl->t;
-				
+
 				VectorSet(temp,  le->pos[0],  le->pos[1]+1,  le->pos[2]);
 				Grid_PosToVec(&clMap,temp, s);
 				ptl3 = CL_ParticleSpawn("cross", 0, s, NULL, NULL);
@@ -2054,7 +2054,6 @@ void CL_DisplayBlockedPaths_f (void)
 				ptl4->roundsCnt = ptl->roundsCnt;
 				ptl4->life = ptl->life;
 				ptl4->t = ptl->t;
-				
 			}
 		}
 	}
@@ -3149,7 +3148,7 @@ void CL_ActorMouseTrace (void)
 		intersectionLevel = cl_worldlevel->integer;
 	}
 
-	if (cl_isometric->value)
+	if (cl_isometric->integer)
 		frustumslope[0] = 10.0 * cl.refdef.fov_x;
 	else
 		frustumslope[0] = tan(cl.refdef.fov_x * M_PI / 360) * projectiondistance;
@@ -3161,7 +3160,7 @@ void CL_ActorMouseTrace (void)
 	VectorMA(stop, cur[1] * -frustumslope[1], up, stop);
 
 	/* in isometric mode the camera position has to be calculated from the cursor position so that the trace goes in the right direction */
-	if (cl_isometric->value)
+	if (cl_isometric->integer)
 		VectorMA(stop, -projectiondistance * 2, forward, from);
 
 	/* set stop point to the intersection of the trace line with the desired plane */
@@ -3197,10 +3196,7 @@ void CL_ActorMouseTrace (void)
 	}
 
 	VecToPos(end, testPos);
-	if (selActor)
-		restingLevel = Grid_Fall(&clMap, testPos, selActor->fieldSize);
-	else
-		restingLevel = Grid_Fall(&clMap, testPos, ACTOR_SIZE_NORMAL);
+	restingLevel = Grid_Fall(&clMap, testPos, selActor ? selActor->fieldSize : ACTOR_SIZE_NORMAL);
 
 	/* hack to prevent cursor from getting stuck on the top of an invisible
 	   playerclip surface (in most cases anyway) */
@@ -3210,7 +3206,7 @@ void CL_ActorMouseTrace (void)
 	pB[2] -= UNIT_HEIGHT;
 	CM_TestLineDM(pA, pB, pC);
 	VecToPos(pC, testPos);
-	restingLevel = min(restingLevel, Grid_Fall(&clMap, testPos, selActor->fieldSize));
+	restingLevel = min(restingLevel, Grid_Fall(&clMap, testPos, selActor ? selActor->fieldSize : ACTOR_SIZE_NORMAL));
 
 	/* if grid below intersection level, start a trace from the intersection */
 	if (restingLevel < intersectionLevel) {
