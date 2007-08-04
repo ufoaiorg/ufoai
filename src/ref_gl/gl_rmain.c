@@ -70,8 +70,6 @@ float r_base_world_matrix[16];
 /* screen size info */
 refdef_t r_newrefdef;
 
-int r_viewcluster, r_viewcluster2, r_oldviewcluster, r_oldviewcluster2;
-
 static cvar_t *r_norefresh;
 static cvar_t *r_drawentities;
 static cvar_t *r_speeds;
