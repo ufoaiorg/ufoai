@@ -85,13 +85,6 @@ cvar_t *r_texture_lod;			/* lod_bias */
 cvar_t *gl_screenshot;
 cvar_t *gl_screenshot_jpeg_quality;
 
-cvar_t *gl_particle_min_size;
-cvar_t *gl_particle_max_size;
-cvar_t *gl_particle_size;
-cvar_t *gl_particle_att_a;
-cvar_t *gl_particle_att_b;
-cvar_t *gl_particle_att_c;
-
 cvar_t *gl_ext_swapinterval;
 cvar_t *gl_ext_multitexture;
 cvar_t *gl_ext_combine;
@@ -829,13 +822,6 @@ static void R_Register (void)
 
 	gl_screenshot = ri.Cvar_Get("gl_screenshot", "jpg", CVAR_ARCHIVE, "png, jpg or tga are valid screenshot formats");
 	gl_screenshot_jpeg_quality = ri.Cvar_Get("gl_screenshot_jpeg_quality", "75", CVAR_ARCHIVE, "jpeg quality in percent for jpeg screenshots");
-
-	gl_particle_min_size = ri.Cvar_Get("gl_particle_min_size", "2", CVAR_ARCHIVE, NULL);
-	gl_particle_max_size = ri.Cvar_Get("gl_particle_max_size", "40", CVAR_ARCHIVE, NULL);
-	gl_particle_size = ri.Cvar_Get("gl_particle_size", "40", CVAR_ARCHIVE, NULL);
-	gl_particle_att_a = ri.Cvar_Get("gl_particle_att_a", "0.01", CVAR_ARCHIVE, NULL);
-	gl_particle_att_b = ri.Cvar_Get("gl_particle_att_b", "0.0", CVAR_ARCHIVE, NULL);
-	gl_particle_att_c = ri.Cvar_Get("gl_particle_att_c", "0.01", CVAR_ARCHIVE, NULL);
 
 	gl_modulate = ri.Cvar_Get("gl_modulate", "1", CVAR_ARCHIVE, NULL);
 	gl_log = ri.Cvar_Get("gl_log", "0", 0, NULL);

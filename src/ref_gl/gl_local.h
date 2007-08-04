@@ -269,13 +269,6 @@ extern cvar_t *gl_ext_lockarrays;
 extern cvar_t *gl_ext_texture_compression;
 extern cvar_t *gl_ext_s3tc_compression;
 
-extern cvar_t *gl_particle_min_size;
-extern cvar_t *gl_particle_max_size;
-extern cvar_t *gl_particle_size;
-extern cvar_t *gl_particle_att_a;
-extern cvar_t *gl_particle_att_b;
-extern cvar_t *gl_particle_att_c;
-
 extern cvar_t *gl_bitdepth;
 extern cvar_t *gl_mode;
 extern cvar_t *gl_log;
