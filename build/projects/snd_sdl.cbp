@@ -64,6 +64,10 @@
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
+				<Compiler>
+					<Add directory="/Library/Frameworks/SDL.framework/Versions/A/Headers" />
+					<Add directory="/opt/local/include/openal" />
+				</Compiler>
 				<Linker>
 					<Add option="-dynamiclib" />
 					<Add option="-single_module" />

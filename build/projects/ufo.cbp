@@ -105,6 +105,7 @@
 				<Option projectLibDirsRelation="1" />
 				<Compiler>
 					<Add directory="/sw/include" />
+					<Add directory="/Library/Frameworks/SDL.framework/Versions/A/Headers" />
 				</Compiler>
 				<Linker>
 					<Add option="-framework SDL" />
