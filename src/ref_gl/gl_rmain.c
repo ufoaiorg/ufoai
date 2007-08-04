@@ -1469,7 +1469,6 @@ refexport_t GetRefAPI (refimport_t rimp)
 
 	re.BeginLoading = GL_BeginLoading;
 	re.RegisterModel = R_RegisterModelShort;
-	re.RegisterSkin = R_RegisterSkin;
 	re.RegisterPic = Draw_FindPic;
 	re.EndLoading = GL_EndLoading;
 

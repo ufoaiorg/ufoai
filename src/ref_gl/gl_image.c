@@ -2173,16 +2173,6 @@ image_t *GL_FindImage (const char *pname, imagetype_t type)
 	return image;
 }
 
-
-
-/**
- * @brief
- */
-struct image_s *R_RegisterSkin (const char *name)
-{
-	return GL_FindImage(name, it_skin);
-}
-
 /**
  * @brief Any image that was not touched on this registration sequence will be freed
  */

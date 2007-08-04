@@ -292,7 +292,6 @@ typedef struct {
 	/* slash will not use the "pics/" prefix or the ".pcx" postfix) */
 	void (EXPORT *BeginLoading) (const char *tiles, const char *pos);
 	struct model_s *(EXPORT *RegisterModel) (const char *name);
-	struct image_s *(EXPORT *RegisterSkin) (const char *name);
 
 	struct image_s *(EXPORT *RegisterPic) (const char *name);
 	void (EXPORT *EndLoading) (void);
