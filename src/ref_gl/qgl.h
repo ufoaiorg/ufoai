@@ -417,6 +417,8 @@ extern void (APIENTRY * qglSelectTextureSGIS) (GLenum);
 
 extern void (APIENTRY * qglActiveTextureARB) (GLenum);
 extern void (APIENTRY * qglClientActiveTextureARB) (GLenum);
+extern void (APIENTRY * qglMultiTexCoord3fARB) (GLenum, GLfloat, GLfloat, GLfloat);
+extern void (APIENTRY * qglMultiTexCoord3fvARB) (GLenum, GLfloat *);
 
 #ifdef HAVE_SHADERS
 /* arb shader stuff */

@@ -392,8 +392,10 @@ void (APIENTRY * qglPointParameterfvEXT) (GLenum param, const GLfloat *value);
 void (APIENTRY * qglColorTableEXT)(int, int, int, int, int, const void *);
 void (APIENTRY * qglSelectTextureSGIS) (GLenum);
 void (APIENTRY * qglMTexCoord2fSGIS) (GLenum, GLfloat, GLfloat);
-void (APIENTRY * qglActiveTextureARB)  (GLenum);
-void (APIENTRY * qglClientActiveTextureARB)  (GLenum);
+void (APIENTRY * qglActiveTextureARB) (GLenum);
+void (APIENTRY * qglClientActiveTextureARB) (GLenum);
+void (APIENTRY * qglMultiTexCoord3fARB) (GLenum, GLfloat, GLfloat, GLfloat);
+void (APIENTRY * qglMultiTexCoord3fvARB) (GLenum, GLfloat *);
 
 void (APIENTRY * qglActiveStencilFaceEXT) (GLenum face);
 void (APIENTRY * qglStencilOpSeparateATI) (GLenum face, GLenum sfail, GLenum dpfail, GLenum dppass);
@@ -5247,6 +5249,8 @@ void QGL_Link(void)
 	qglSelectTextureSGIS         = NULL;
 	qglMTexCoord2fSGIS           = NULL;
 	qglActiveTextureARB          = NULL;
+	qglMultiTexCoord3fARB        = NULL;
+	qglMultiTexCoord3fvARB       = NULL;
 	qglClientActiveTextureARB    = NULL;
 	qglActiveStencilFaceEXT      = NULL;
 	qglStencilOpSeparateATI      = NULL;
