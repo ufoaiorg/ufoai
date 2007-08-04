@@ -348,7 +348,7 @@ static void CL_CheckForResend (void)
 	if (cls.realtime - cls.connect_time < 3000)
 		return;
 
-	Com_Printf("Connecting to %s...\n", cls.servername ? cls.servername : "internal server");
+	Com_Printf("Connecting to %s...\n", *cls.servername ? cls.servername : "internal server");
 	CL_Connect();
 }
 
