@@ -286,6 +286,7 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	switch (base->map[(int)building->pos[0]][(int)building->pos[1]]) {
 	case BASE_FREESLOT:
 	case BASE_INVALID_SPACE:
+		assert(0);
 		return qfalse;
 	default:
 		if (building->needs) {
