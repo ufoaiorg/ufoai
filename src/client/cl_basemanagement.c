@@ -1193,13 +1193,9 @@ static void B_BuildingInit (void)
  */
 building_t *B_GetBuildingByIdx (base_t* base, int idx)
 {
-	if (base)
-		return &gd.buildings[base->idx][idx];
-	else
-		Sys_Error("B_GetBuildingByIdx: Base not initialized\n");
-
-	/*just that there are no warnings */
-	return NULL;
+	assert(base);
+	assert(idx > BASE_FREESLOT);
+	return &gd.buildings[base->idx][idx];
 }
 
 /**

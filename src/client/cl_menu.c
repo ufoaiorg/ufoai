@@ -1148,7 +1148,7 @@ static void MN_Drag (const menuNode_t* const node, int x, int y)
 			} else {
 				/* We are in the base or multiplayer inventory */
 				sel = cl_selected->integer; /**@todo is this really the correct index? */
-				if (sel >= 0 && sel < chrDisplayList.num) { 
+				if (sel >= 0 && sel < chrDisplayList.num) {
 					assert(chrDisplayList.chr[sel]);
 					if (chrDisplayList.chr[sel]->empl_type == EMPL_ROBOT)
 						CL_UGVCvars(chrDisplayList.chr[sel]);
@@ -1264,7 +1264,7 @@ static void MN_BaseMapClick (menuNode_t * node, int x, int y)
 	if (baseCurrent->buildingCurrent && baseCurrent->buildingCurrent->buildingStatus == B_STATUS_NOT_SET) {
 		for (row = 0; row < BASE_SIZE; row++)
 			for (col = 0; col < BASE_SIZE; col++)
-				if (baseCurrent->map[row][col] == -1 && x >= baseCurrent->posX[row][col]
+				if (baseCurrent->map[row][col] == BASE_FREESLOT && x >= baseCurrent->posX[row][col]
 					&& x < baseCurrent->posX[row][col] + node->size[0] / BASE_SIZE && y >= baseCurrent->posY[row][col]
 					&& y < baseCurrent->posY[row][col] + node->size[1] / BASE_SIZE) {
 					/* Set position for a new building */
@@ -1275,7 +1275,7 @@ static void MN_BaseMapClick (menuNode_t * node, int x, int y)
 
 	for (row = 0; row < BASE_SIZE; row++)
 		for (col = 0; col < BASE_SIZE; col++)
-			if (baseCurrent->map[row][col] != -1 && x >= baseCurrent->posX[row][col]
+			if (baseCurrent->map[row][col] > BASE_FREESLOT && x >= baseCurrent->posX[row][col]
 				&& x < baseCurrent->posX[row][col] + node->size[0] / BASE_SIZE && y >= baseCurrent->posY[row][col]
 				&& y < baseCurrent->posY[row][col] + node->size[1] / BASE_SIZE) {
 				entry = B_GetBuildingByIdx(baseCurrent, baseCurrent->map[row][col]);
@@ -1315,7 +1315,7 @@ static void MN_BaseMapRightClick (menuNode_t * node, int x, int y)
 
 	for (row = 0; row < BASE_SIZE; row++)
 		for (col = 0; col < BASE_SIZE; col++)
-			if (baseCurrent->map[row][col] != -1 && x >= baseCurrent->posX[row][col]
+			if (baseCurrent->map[row][col] > BASE_FREESLOT && x >= baseCurrent->posX[row][col]
 				&& x < baseCurrent->posX[row][col] + node->size[0] / BASE_SIZE && y >= baseCurrent->posY[row][col]
 				&& y < baseCurrent->posY[row][col] + node->size[1] / BASE_SIZE) {
 				entry = B_GetBuildingByIdx(baseCurrent, baseCurrent->map[row][col]);
