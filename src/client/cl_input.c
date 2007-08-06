@@ -617,6 +617,8 @@ static void CL_LeftClickDown_f (void)
 
 /**
  * @brief Draws a line to each alien the selected 'watcher' can see.
+ * @sa CL_NextAlienVisibleFromActor_f (Shares quite some code)
+ * @todo Save info about displayed traces and combine this function with CL_NextAlienActor_f.
  */
 static void CL_DrawSpottedLines_f (void)
 {
@@ -639,10 +641,10 @@ static void CL_DrawSpottedLines_f (void)
 		if (le->inuse && (le->type == ET_ACTOR || le->type == ET_ACTOR2x2)
 		 && !(le->state & STATE_DEAD) && le->team != cls.team
 		 && le->team != TEAM_CIVILIAN) {
-			VectorCopy(selActor->origin, from);
+			VectorCopy(watcher->origin, from);
 			VectorCopy(le->origin, at);
 			/* actor eye height */
-			if (selActor->state & STATE_CROUCHED)
+			if (watcher->state & STATE_CROUCHED)
 				from[2] += EYE_HT_CROUCH;
 			else
 				from[2] += EYE_HT_STAND;
@@ -651,9 +653,9 @@ static void CL_DrawSpottedLines_f (void)
 				at[2] += EYE_HT_CROUCH; /* FIXME: */
 			else
 				at[2] += UNIT_HEIGHT; /* full unit */
-			/* FIXME: check the facing of the actor: selActor->dir
+			/* FIXME: check the facing of the actor: watcher->dir
 			 * maybe doing more than one trace to different target heights */
-			tr = CL_Trace(from, at, vec3_origin, vec3_origin, selActor, NULL, MASK_SOLID);
+			tr = CL_Trace(from, at, vec3_origin, vec3_origin, watcher, NULL, MASK_SOLID);
 			/* trace didn't reach the target - something was hit before */
 			if (tr.fraction < 1.0)
 				continue;
@@ -661,6 +663,67 @@ static void CL_DrawSpottedLines_f (void)
 			CL_DrawLineOfSight(watcher, le);
 		}
 	}
+}
+
+/**
+ * @brief Cycles between visible (to selected actor) aliens.
+ * @sa CL_DrawSpottedLines_f (Shares quite some code)
+ * @sa CL_NextAlien_f
+ */
+static int lastAlien = 0;
+
+static void CL_NextAlienVisibleFromActor_f (void)
+{
+	le_t *watcher; /** @todo make this a parameter for use in other fucntions? */
+	le_t *le = NULL;
+	int i;
+	trace_t tr;
+	vec3_t from, at;
+
+	if (!selActor)
+		return;
+
+	watcher = selActor;
+
+	if (camera_mode == CAMERA_MODE_FIRSTPERSON)
+		CL_CameraModeChange(CAMERA_MODE_REMOTE);
+
+	if (lastAlien >= numLEs)
+		lastAlien = 0;
+
+	i = lastAlien;
+	do {
+		if (++i >= numLEs)
+			i = 0;
+		le = &LEs[i];
+		if (le->inuse && (le->type == ET_ACTOR || le->type == ET_ACTOR2x2)
+		 && !(le->state & STATE_DEAD) && le->team != cls.team
+		 && le->team != TEAM_CIVILIAN) {
+			VectorCopy(watcher->origin, from);
+			VectorCopy(le->origin, at);
+			/* actor eye height */
+			if (watcher->state & STATE_CROUCHED)
+				from[2] += EYE_HT_CROUCH;
+			else
+				from[2] += EYE_HT_STAND;
+			/* target height */
+			if (le->state & STATE_CROUCHED)
+				at[2] += EYE_HT_CROUCH; /* FIXME: */
+			else
+				at[2] += UNIT_HEIGHT; /* full unit */
+			/* FIXME: check the facing of the actor: watcher->dir
+			 * maybe doing more than one trace to different target heights */
+			tr = CL_Trace(from, at, vec3_origin, vec3_origin, watcher, NULL, MASK_SOLID);
+			/* trace didn't reach the target - something was hit before */
+			if (tr.fraction < 1.0)
+				continue;
+
+			lastAlien = i;
+			V_CenterView(le->pos);
+			return;
+		}
+	}
+	while (i != lastAlien);
 }
 
 /**
@@ -675,18 +738,19 @@ static void CL_LeftClickUp_f (void)
 
 /**
  * @brief Cycles between visible aliens
+ * @sa CL_NextAlienVisibleFromActor_f
  */
-static int lastAlien = 0;
 
 static void CL_NextAlien_f (void)
 {
-	le_t *le;
+	le_t *le = NULL;
 	int i;
 
 	if (camera_mode == CAMERA_MODE_FIRSTPERSON)
 		CL_CameraModeChange(CAMERA_MODE_REMOTE);
 	if (lastAlien >= numLEs)
 		lastAlien = 0;
+
 	i = lastAlien;
 	do {
 		if (++i >= numLEs)
@@ -795,6 +859,7 @@ void CL_InitInput (void)
 	Cmd_AddCommand("useheadgear", CL_ActorUseHeadgear_f, _("Toggle the headgear"));
 	Cmd_AddCommand("nextalien", CL_NextAlien_f, _("Toogle to next alien"));
 	Cmd_AddCommand("drawspottedlines", CL_DrawSpottedLines_f, _("Draw a line to each alien visible to the current actor."));
+	Cmd_AddCommand("nextalienactor", CL_NextAlienVisibleFromActor_f, _("Toogle to next alien visible from selected actor."));
 
 	Cmd_AddCommand("list_firemodes", CL_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
 	Cmd_AddCommand("fireweap", CL_FireWeapon_f, "Start aiming the weapon.");
