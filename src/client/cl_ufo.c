@@ -565,7 +565,7 @@ qboolean UFO_ConditionsForStoring (base_t *base, aircraft_t *ufocraft)
 	if (!base->hasUFOHangar && !base->hasUFOHangarSmall)
 		return qfalse;
 
-	if (base->capacities[CAP_UFOHANGARS].max - base->capacities[CAP_UFOHANGARS].cur < ufocraft->size)
+	if (base->capacities[CAP_UFOHANGARS].max - base->capacities[CAP_UFOHANGARS].cur < ufocraft->weight)
 		return qfalse;
 
 	return qtrue;

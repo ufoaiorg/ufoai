@@ -250,7 +250,7 @@ aircraft craft_ufo_harvester
 	ufotype		ufo_harvester
 	model		"ufo_harvester"
 	size		4
-	weight		3
+	weight		8
 	building	building_big_ufo_hangar
 	price		3000000
 	image		air_ufo
@@ -308,7 +308,7 @@ aircraft craft_ufo_supply
 	ufotype		ufo_supply
 	model		"ufo_supply"
 	size		4
-	weight		3
+	weight		6
 	building	building_big_ufo_hangar
 	price		3000000
 	image		air_ufo
