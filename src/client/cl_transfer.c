@@ -56,22 +56,21 @@ qboolean TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase)
 {
 	assert (od && srcbase && destbase);
 
-	/* Give some meaningful feedback to the player if the player clicks on an a.m. item but base doesn't have am storage. */
-	if(!destbase->hasAmStorage && destbase->hasStorage) {
-		MN_Popup(_("Missing storage"), _("Destination base does not have an Antimatter Storage.\n"));
-		return qfalse;
-	} else if(!destbase->hasAmStorage) {
-		return qfalse;
-	}
-
 	/* Is this antimatter and destination base has enough space in Antimatter Storage? */
 	if (!Q_strncmp(od->id, "antimatter", 10)) {
+		/* Give some meaningful feedback to the player if the player clicks on an a.m. item but base doesn't have am storage. */
+		if (!destbase->hasAmStorage && destbase->hasStorage) {
+			MN_Popup(_("Missing storage"), _("Destination base does not have an Antimatter Storage.\n"));
+			return qfalse;
+		} else if (!destbase->hasAmStorage) {	/* Return if the target base doesn't have antimatter storage or power. */
+			return qfalse;
+		}
 		if (destbase->capacities[CAP_ANTIMATTER].max - destbase->capacities[CAP_ANTIMATTER].cur < ANTIMATTER_SIZE) {
 			MN_Popup(_("Not enough space"), _("Destination base does not have enough\nAntimatter Storage space to store more antimatter.\n"));
 			return qfalse;
 		}
 	} else {	/*This is not antimatter*/
-		if(!transferBase->hasStorage)	/* Return if the target base doesn't have storage or power.*/
+		if(!transferBase->hasStorage)	/* Return if the target base doesn't have storage or power. */
 			return qfalse;
 	}
 
