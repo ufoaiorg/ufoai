@@ -1603,10 +1603,6 @@ void B_DrawBase (menuNode_t * node)
 			if (mouseX > x && mouseX < x + width && mouseY > y && mouseY < y + height - 20) {
 				switch (baseCurrent->map[row][col]) {
 				case BASE_FREESLOT:
-				case BASE_INVALID_SPACE:
-					hoverBuilding = building;
-					break;
-				default:
 					if (gd.baseAction == BA_NEWBUILDING && xHover == -1) {
 						assert(baseCurrent->buildingCurrent);
 						colSecond = col;
@@ -1631,6 +1627,9 @@ void B_DrawBase (menuNode_t * node)
 							xHover = x;
 						yHover = y;
 					}
+					break;
+				default:
+					hoverBuilding = building;
 					break;
 				}
 			}
