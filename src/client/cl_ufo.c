@@ -552,6 +552,25 @@ void UFO_Recovery (void)
 	}
 }
 
+/**
+ * @brief Checks conditions for storing given ufo in given base.
+ * @param[in] *base Pointer to the base, where we are going to store UFO.
+ * @param[in] *ufocraft Pointer to ufocraft which we are goint to store.
+ * @return qtrue if given base can store given ufo.
+ */
+qboolean UFO_ConditionsForStoring (base_t *base, aircraft_t *ufocraft)
+{
+	assert (base && ufocraft);
+
+	if (!base->hasUFOHangar && !base->hasUFOHangarSmall)
+		return qfalse;
+
+	if (base->capacities[CAP_UFOHANGARS].max - base->capacities[CAP_UFOHANGARS].cur < ufocraft->size)
+		return qfalse;
+
+	return qtrue;
+}
+
 #ifdef DEBUG
 /**
  * @brief This function will destroy all ufos on the geoscape and
