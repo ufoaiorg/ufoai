@@ -757,24 +757,29 @@ static void CL_GenerateEquipment_f (void)
 		Com_DPrintf("CL_GenerateEquipment_f().. team alien, id: %i\n", team);
 	}
 
-
-
 	/* Store hired names. */
 	Cvar_ForceSet("cl_selected", "0");
 	chrDisplayList.num = 0;
-	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
-		if (CL_SoldierInAircraft(i, EMPL_SOLDIER, aircraft->idx)) {
-			assert(chrDisplayList.num < MAX_ACTIVETEAM);
-			/* maybe we already have soldiers in this aircraft */
-			chrDisplayList.chr[chrDisplayList.num] = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
-			if (!chrDisplayList.chr[chrDisplayList.num])
-				Sys_Error("CL_GenerateEquipment_f: Could not get employee character with idx: %i\n", chrDisplayList.num);
-			Com_DPrintf("add %s to chrDisplayList (pos: %i)\n", chrDisplayList.chr[chrDisplayList.num]->name, chrDisplayList.num);
-			Cvar_ForceSet(va("mn_name%i", chrDisplayList.num), chrDisplayList.chr[chrDisplayList.num]->name);
-			chrDisplayList.num++;
-/*			if (p >= cl_numnames->integer)
-				break;*/
-		}
+	for (i = 0; i < aircraft->size; i++) {
+		assert(chrDisplayList.num < MAX_ACTIVETEAM);
+
+		if (aircraft->teamIdxs[i] <= -1)
+			continue; /* Skip unused team-slot. */
+
+		if (aircraft->teamTypes[i] != EMPL_SOLDIER)
+			continue; /* Skip EMPL_ROBOT (i.e. ugvs) for now . */
+
+		chrDisplayList.chr[chrDisplayList.num] = &gd.employees[aircraft->teamTypes[i]][aircraft->teamIdxs[i]].chr;
+
+		/* Sanity check(s) */
+		if (!chrDisplayList.chr[chrDisplayList.num])
+			Sys_Error("CL_GenerateEquipment_f: Could not get employee character with idx: %i\n", chrDisplayList.num);
+		Com_DPrintf("add %s to chrDisplayList (pos: %i)\n", chrDisplayList.chr[chrDisplayList.num]->name, chrDisplayList.num);
+		Cvar_ForceSet(va("mn_name%i", chrDisplayList.num), chrDisplayList.chr[chrDisplayList.num]->name);
+
+		/* Update nubmer of displayed team-members. */
+		chrDisplayList.num++;
+	}
 
 	for (p = chrDisplayList.num; p < MAX_ACTIVETEAM; p++) {
 		Cvar_ForceSet(va("mn_name%i", p), "");
@@ -782,7 +787,10 @@ static void CL_GenerateEquipment_f (void)
 		chrDisplayList.chr[p] = NULL;	/* just in case */
 	}
 
-	menuInventory = &(gd.employees[EMPL_SOLDIER][0].inv);
+	if (chrDisplayList.num > 0)
+		menuInventory = chrDisplayList.chr[0]->inv;
+	else
+		menuInventory = NULL;
 	selActor = NULL;
 
 	/* reset description */
@@ -805,9 +813,11 @@ static void CL_GenerateEquipment_f (void)
 		/* Don't allow to show armours for other teams in the menu. */
 		if ((Q_strncmp(csi.ods[i].type, "armor", MAX_VAR) == 0) && (csi.ods[i].useable != team))
 			continue;
+
 		/* Don't allow to show unresearched items. */
 		if (!RS_IsResearched_ptr(csi.ods[i].tech))
 			continue;
+
 		while (unused.num[i]) {
 			item.t = i;
 
