@@ -149,6 +149,14 @@ namespace UFOAI
 		{
 			filter_actorclip();
 		}
+		else if(string_equal(command, "WeaponClip"))
+		{
+			filter_weaponclip();
+		}
+		else if(string_equal(command, "NoDraw"))
+		{
+			filter_nodraw();
+		}
 
 		if (message != NULL)
 		{
