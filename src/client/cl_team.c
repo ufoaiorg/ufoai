@@ -431,36 +431,38 @@ static void CL_ChangeSkin_f (void)
 }
 
 /**
- * @brief Use current skin with the team onboard.
+ * @brief Use current skin for all team members onboard.
  */
 static void CL_ChangeSkinOnBoard_f (void)
 {
-	int sel, newSkin;
-	aircraft_t *aircraft = NULL;
+	int newSkin, i;
 
 	if (!baseCurrent)
 		return;
 
+	/** @todo Do we really need to check aircraftcurrent here? */
 	if ((baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase)) {
-		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+		/* aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent]; */
 	} else {
 #ifdef DEBUG
-		/* should never happen */
+		/* Should never happen. */
 		Com_Printf("CL_ChangeSkinOnBoard_f()... No aircraft selected!\n");
 #endif
 		return;
 	}
 
-	sel = cl_selected->integer;
-	if (sel >= 0 && sel < chrDisplayList.num) {
-		assert(sel < MAX_ACTIVETEAM);
-		
-		newSkin = Cvar_VariableInteger("mn_skin");
-		if (newSkin >= NUM_TEAMSKINS || newSkin < 0)
-			newSkin = 0;
+	/* Get selected skin and fall back to default skin if it is not valid. */
+	newSkin = Cvar_VariableInteger("mn_skin");
+	if (newSkin >= NUM_TEAMSKINS || newSkin < 0)
+		newSkin = 0;
 
-		assert(chrDisplayList.chr[sel]);
-		chrDisplayList.chr[sel]->skin = newSkin;
+	/**
+	 * Apply new skin to all (shown/dsiplayed) team-members.
+	 * @todo What happens if a model of a team member does not have the selected skin?
+	 */
+	for (i = 0; i < chrDisplayList.num; i++) {
+		assert(chrDisplayList.chr[i]);
+		chrDisplayList.chr[i]->skin = newSkin;
 	}
 }
 
