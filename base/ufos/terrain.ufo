@@ -85,7 +85,11 @@ terrain tex_buildings/floor002 {
 terrain tex_buildings/concrete001 {
 }
 
-// concrete ground
+// concrete walkway
+terrain tex_buildings/concrete005 {
+}
+
+// concrete ground and stairs
 terrain tex_buildings/concrete007 {
 }
 
@@ -115,6 +119,10 @@ terrain tex_buildings/floor003 {
 
 // terracotta floor
 terrain tex_buildings/floor_se02 {
+}
+
+//terracotta floor
+terrain tex_buildings/floor013 {
 }
 
 // terracotta floor
@@ -247,4 +255,20 @@ terrain tex_buildings/floor016 {
 terrain tex_buildings/floor017 {
 	footstepsound "footsteps/step_3"
 }
+
+// ==========================
+//  H E L I P A D
+// ==========================
+terrain exterior/ext_helipad1 {
+}
+
+terrain exterior/ext_helipad2 {
+}
+
+terrain exterior/ext_helipad3 {
+}
+
+terrain exterior/ext_helipad4 {
+}
+
 
