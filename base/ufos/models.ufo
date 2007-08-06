@@ -219,6 +219,9 @@ menu_model ufo_harvester
 menu_model inter_saracen
 {
 	model	"models/aircraft/inter_saracen/saracen.md2"
+//	menutransform {
+//		ufopedia "0.5 0.5 0.5" "180 0 -120"
+//	}
 }
 
 // ============== Stiletto Interceptor =====================
