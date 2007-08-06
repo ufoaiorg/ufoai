@@ -54,10 +54,11 @@ typedef struct menuModel_s {
 	char *tag;	/**< the tag the model should placed onto */
 	int skin;		/**< skin number to use - default 0 (first skin) */
 	char *model;
-	char *menuScale[MAX_MENUMODELS_SCALEMENUS];	/**< the menu id to scale this model for */
-	void *menuScaleMenusPtr[MAX_MENUMODELS_SCALEMENUS];	/**< linked after parsing for faster access */
+	char *menuTransform[MAX_MENUMODELS_SCALEMENUS];	/**< the menu id to scale this model for */
+	void *menuTransformMenusPtr[MAX_MENUMODELS_SCALEMENUS];	/**< linked after parsing for faster access */
 	vec3_t menuScaleValue[MAX_MENUMODELS_SCALEMENUS];	/**< the scale values for the specific menu */
-	int menuScaleCnt;			/**< parsed menuscale menus */
+	vec3_t menuAnglesValue[MAX_MENUMODELS_SCALEMENUS];	/**< the angles values for the specific menu */
+	int menuTransformCnt;			/**< parsed menutransform menus */
 	animState_t animState;
 	vec3_t origin, scale, angles, center;
 	vec4_t color;				/**< rgba */

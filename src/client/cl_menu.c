@@ -178,7 +178,7 @@ static const value_t selectBoxValues[] = {
 static const value_t menuModelValues[] = {
 	{"model", V_CLIENT_HUNK_STRING, offsetof(menuModel_t, model), 0},
 	{"need", V_NULL, 0, 0},
-	{"menuscale", V_NULL, 0, 0},
+	{"menutransform", V_NULL, 0, 0},
 	{"anim", V_CLIENT_HUNK_STRING, offsetof(menuModel_t, anim), 0},
 	{"skin", V_INT, offsetof(menuModel_t, skin), sizeof(int)},
 	{"origin", V_VECTOR, offsetof(menuModel_t, origin), sizeof(vec3_t)},
@@ -2701,30 +2701,31 @@ void MN_DrawMenus (void)
 							/* set mi pointers to menuModel */
 							mi.origin = menuModel->origin;
 							mi.angles = menuModel->angles;
-							/* @todo: menuScale stuff */
-							if (menuModel->menuScaleCnt) {
-								for (i = 0; i < menuModel->menuScaleCnt; i++) {
-									if (menu == menuModel->menuScaleMenusPtr[i]) {
-										mi.scale = menuModel->menuScaleValue[i];
-										break;
-									}
-								}
-								/* not for this menu */
-								if (i == menuModel->menuScaleCnt)
-									mi.scale = menuModel->scale;
-							} else {
-								mi.scale = menuModel->scale;
-							}
 							mi.center = menuModel->center;
 							mi.color = menuModel->color;
 
 							/* no tag and no parent means - base model or single model */
 							if (!menuModel->tag && !menuModel->parent) {
+								if (menuModel->menuTransformCnt) {
+									for (i = 0; i < menuModel->menuTransformCnt; i++) {
+										if (menu == menuModel->menuTransformMenusPtr[i]) {
+											mi.scale = menuModel->menuScaleValue[i];
+											mi.angles = menuModel->menuAnglesValue[i];
+											break;
+										}
+									}
+									/* not for this menu */
+									if (i == menuModel->menuTransformCnt) {
+										VectorCopy(node->scale, mi.scale);
+										VectorCopy(node->angles, mi.angles);
+									}
+								} else {
+									VectorCopy(node->scale, mi.scale);
+									VectorCopy(node->angles, mi.angles);
+								}
 								VectorCopy(node->color, mi.color);
 								VectorCopy(node->origin, mi.origin);
-								VectorCopy(node->scale, mi.scale);
 								VectorCopy(node->center, mi.center);
-								VectorCopy(node->angles, mi.angles);
 
 								/* get the animation given by menu node properties */
 								if (node->data[MN_DATA_ANIM_OR_FONT] && *(char *) node->data[MN_DATA_ANIM_OR_FONT]) {
@@ -4207,10 +4208,10 @@ void MN_LinkMenuModels (void)
 {
 	int i, j;
 	for (i = 0; i < numMenuModels; i++) {
-		for (j = 0; j < menuModels[i].menuScaleCnt; j++) {
-			menuModels[i].menuScaleMenusPtr[j] = MN_GetMenu(menuModels[i].menuScale[j]);
-			if (menuModels[i].menuScaleMenusPtr[j] == NULL)
-				Com_Printf("Could not find menu '%s' as requested by menumodel '%s'", menuModels[i].menuScale[j], menuModels[i].id);
+		for (j = 0; j < menuModels[i].menuTransformCnt; j++) {
+			menuModels[i].menuTransformMenusPtr[j] = MN_GetMenu(menuModels[i].menuTransform[j]);
+			if (menuModels[i].menuTransformMenusPtr[j] == NULL)
+				Com_Printf("Could not find menu '%s' as requested by menumodel '%s'", menuModels[i].menuTransform[j], menuModels[i].id);
 		}
 	}
 }
@@ -4303,12 +4304,12 @@ void MN_ParseMenuModel (const char *name, const char **text)
 					if (!menuModel->next)
 						Com_Printf("Could not find menumodel %s", token);
 					menuModel->need = Mem_PoolStrDup(token, cl_menuSysPool, CL_TAG_MENU);
-				} else if (!Q_strncmp(v->string, "menuscale", 9)) {
+				} else if (!Q_strncmp(v->string, "menutransform", 13)) {
 					token = COM_EParse(text, errhead, name);
 					if (!*text)
 						return;
 					if (*token != '{') {
-						Com_Printf("Error in menumodel '%s' menuscale definition\n", name);
+						Com_Printf("Error in menumodel '%s' menutransform definition\n", name);
 						break;
 					}
 					do {
@@ -4317,16 +4318,27 @@ void MN_ParseMenuModel (const char *name, const char **text)
 							return;
 						if (*token == '}')
 							break;
-						menuModel->menuScale[menuModel->menuScaleCnt] = Mem_PoolStrDup(token, cl_menuSysPool, CL_TAG_MENU);
+						menuModel->menuTransform[menuModel->menuTransformCnt] = Mem_PoolStrDup(token, cl_menuSysPool, CL_TAG_MENU);
+
 						token = COM_EParse(text, errhead, name);
 						if (!*text)
 							return;
 						if (*token == '}') {
-							Com_Printf("Error in menumodel '%s' menuscale definition - missing scale float value\n", name);
+							Com_Printf("Error in menumodel '%s' menutransform definition - missing scale float value\n", name);
 							break;
 						}
-						Com_ParseValue(&menuModel->menuScaleValue[menuModel->menuScaleCnt], token, V_VECTOR, 0, sizeof(vec3_t));
-						menuModel->menuScaleCnt++;
+						Com_ParseValue(&menuModel->menuScaleValue[menuModel->menuTransformCnt], token, V_VECTOR, 0, sizeof(vec3_t));
+
+						token = COM_EParse(text, errhead, name);
+						if (!*text)
+							return;
+						if (*token == '}') {
+							Com_Printf("Error in menumodel '%s' menutransform definition - missing angles float value\n", name);
+							break;
+						}
+						Com_ParseValue(&menuModel->menuAnglesValue[menuModel->menuTransformCnt], token, V_VECTOR, 0, sizeof(vec3_t));
+
+						menuModel->menuTransformCnt++;
 					} while (*token != '}'); /* dummy condition - break is earlier here */
 				} else {
 					token = COM_EParse(text, errhead, name);
