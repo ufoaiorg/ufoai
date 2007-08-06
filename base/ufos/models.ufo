@@ -201,6 +201,10 @@ menu_model drop_firebird
 menu_model inter_stingray
 {
 	model	"models/aircraft/inter_stingray/stingray_landed.md2"
+	menutransform {
+//		ufopedia	"1.0 1.0 1.0"	"-45 135 45" //"0 180 45"
+		aircraft	"1.0 1.0 1.0"	"-45 135 45"
+	}
 }
 
 // ============== UFO Carrier ======================
