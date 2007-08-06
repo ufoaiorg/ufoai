@@ -2711,6 +2711,7 @@ void MN_DrawMenus (void)
 										if (menu == menuModel->menuTransformMenusPtr[i]) {
 											mi.scale = menuModel->menuScaleValue[i];
 											mi.angles = menuModel->menuAnglesValue[i];
+											VectorAdd(node->origin, menuModel->menuOriginValue[i], mi.origin);
 											break;
 										}
 									}
@@ -2718,13 +2719,14 @@ void MN_DrawMenus (void)
 									if (i == menuModel->menuTransformCnt) {
 										VectorCopy(node->scale, mi.scale);
 										VectorCopy(node->angles, mi.angles);
+										VectorCopy(node->origin, mi.origin);
 									}
 								} else {
 									VectorCopy(node->scale, mi.scale);
 									VectorCopy(node->angles, mi.angles);
+									VectorCopy(node->origin, mi.origin);
 								}
 								VectorCopy(node->color, mi.color);
-								VectorCopy(node->origin, mi.origin);
 								VectorCopy(node->center, mi.center);
 
 								/* get the animation given by menu node properties */
@@ -4337,6 +4339,15 @@ void MN_ParseMenuModel (const char *name, const char **text)
 							break;
 						}
 						Com_ParseValue(&menuModel->menuAnglesValue[menuModel->menuTransformCnt], token, V_VECTOR, 0, sizeof(vec3_t));
+
+						token = COM_EParse(text, errhead, name);
+						if (!*text)
+							return;
+						if (*token == '}') {
+							Com_Printf("Error in menumodel '%s' menutransform definition - missing origin float value\n", name);
+							break;
+						}
+						Com_ParseValue(&menuModel->menuOriginValue[menuModel->menuTransformCnt], token, V_VECTOR, 0, sizeof(vec3_t));
 
 						menuModel->menuTransformCnt++;
 					} while (*token != '}'); /* dummy condition - break is earlier here */

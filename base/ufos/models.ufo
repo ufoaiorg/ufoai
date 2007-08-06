@@ -8,7 +8,7 @@
 // origin	<x,y,z>
 // center	<x,y,z>
 // scale	<x,y,z>
-// menutransform	{ <menuname> <x,y,z-scale> <x,y,z-angles> }	REPLACES the definition of "scale" and "angles" in the defined menu "<menuname>".
+// menutransform	{ <menuname> <x,y,z-scale> <x,y,z-angles> <x,y,z-origin> }	REPLACES the definition of "scale" and "angles" in the defined menu "<menuname>". - except for the "origin" values - tehy are added to the original values of the menu.
 // angles	<x,y,z>
 // color	(color)
 // =================================================
@@ -177,7 +177,7 @@ menu_model drop_firebird_glass
 {
 	model	"models/aircraft/drop_firebird/firebird_glass.md2"
 //	menutransform {
-//		ufopedia "0.5 0.5 0.5" "0 0 120"
+//		ufopedia "0.5 0.5 0.5"	"0 0 120"	"-40 0 0"
 //	}
 }
 menu_model drop_firebird_top
@@ -185,7 +185,7 @@ menu_model drop_firebird_top
 	model	"models/aircraft/drop_firebird/firebird_top.md2"
 	need	"drop_firebird_glass"
 //	menutransform {
-//		ufopedia "0.5 0.5 0.5" "0 0 120"
+//		ufopedia "0.5 0.5 0.5"	"0 0 120"	"-40 0 0"
 //	}
 }
 menu_model drop_firebird
@@ -193,7 +193,7 @@ menu_model drop_firebird
 	model	"models/aircraft/drop_firebird/firebird.md2"
 	need	"drop_firebird_top"
 //	menutransform {
-//		ufopedia "0.5 0.5 0.5" "0 0 120"
+//		ufopedia "0.5 0.5 0.5"	"0 0 120"	"-40 0 0"
 //	}
 }
 
@@ -202,8 +202,8 @@ menu_model inter_stingray
 {
 	model	"models/aircraft/inter_stingray/stingray_landed.md2"
 	menutransform {
-//		ufopedia	"1.0 1.0 1.0"	"-45 135 45" //"0 180 45"
-		aircraft	"1.0 1.0 1.0"	"-45 135 45"
+//		ufopedia	"0.9 0.9 0.9"	"-45 135 45"	"-70 0 0" 
+		aircraft	"1.0 1.0 1.0"	"-45 135 45"	"0 0 0"
 	}
 }
 
@@ -224,7 +224,7 @@ menu_model inter_saracen
 {
 	model	"models/aircraft/inter_saracen/saracen.md2"
 //	menutransform {
-//		ufopedia "0.5 0.5 0.5" "180 0 -120"
+//		ufopedia "0.5 0.5 0.5"	"180 0 -120"	"0 0 0"
 //	}
 }
 
@@ -233,9 +233,9 @@ menu_model inter_stiletto_glass
 {
 	model	"models/aircraft/inter_stiletto/stiletto_glass.md2"
 	menutransform {
-		// menu	scale	angles
-	//	ufopedia	"0.5 0.5 0.5"	"90 -120 0"
-		aircraft	"1.0 1.0 1.0"	"0 -135 70"
+		// menu	scale	angles	origin
+	//	ufopedia	"0.5 0.5 0.5"	"90 -120 0"	"0 0 0"
+		aircraft	"1.0 1.0 1.0"	"0 -135 70"	"0 0 0"
 	}
 }
 menu_model inter_stiletto_top
@@ -243,8 +243,8 @@ menu_model inter_stiletto_top
 	model	"models/aircraft/inter_stiletto/stiletto_engines.md2"
 	need	"inter_stiletto_glass"
 	menutransform {
-	//	ufopedia	"0.5 0.5 0.5"	"90 -120 0"
-		aircraft	"1.0 1.0 1.0"	"0 -135 70"
+	//	ufopedia	"0.5 0.5 0.5"	"90 -120 0"	"0 0 0"
+		aircraft	"1.0 1.0 1.0"	"0 -135 70"	"0 0 0"
 	}
 }
 menu_model inter_stiletto
@@ -252,8 +252,8 @@ menu_model inter_stiletto
 	model	"models/aircraft/inter_stiletto/stiletto.md2"
 	need	"inter_stiletto_top"
 	menutransform {
-	//	ufopedia	"0.5 0.5 0.5"	"90 -120 0"
-		aircraft	"1.0 1.0 1.0"	"0 -135 70"	//"0 -135 60"
+	//	ufopedia	"0.5 0.5 0.5"	"90 -120 0"	"0 0 0"
+		aircraft	"1.0 1.0 1.0"	"0 -135 70"	"0 0 0"	//"0 -135 60"
 	}
 }
 

@@ -58,6 +58,7 @@ typedef struct menuModel_s {
 	void *menuTransformMenusPtr[MAX_MENUMODELS_SCALEMENUS];	/**< linked after parsing for faster access */
 	vec3_t menuScaleValue[MAX_MENUMODELS_SCALEMENUS];	/**< the scale values for the specific menu */
 	vec3_t menuAnglesValue[MAX_MENUMODELS_SCALEMENUS];	/**< the angles values for the specific menu */
+	vec3_t menuOriginValue[MAX_MENUMODELS_SCALEMENUS];	/**< relative adjustment values for the "origin" of the model in a specific menu */
 	int menuTransformCnt;			/**< parsed menutransform menus */
 	animState_t animState;
 	vec3_t origin, scale, angles, center;
