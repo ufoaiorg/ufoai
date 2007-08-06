@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-08-03 16:37+0200\n"
-"PO-Revision-Date: 2007-08-03 16:39+0100\n"
-"Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
+"PO-Revision-Date: 2007-08-06 20:12+0100\n"
+"Last-Translator: Gerd Heisse <gerd@gezys.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -146,9 +146,8 @@ msgstr "UFO - Transporter"
 #: ../base/ufos/research.ufo:2987
 #: ../base/ufos/research.ufo:3000
 #: ../base/ufos/research.ufo:3007
-#, fuzzy
 msgid "UFO - Supply Ship"
-msgstr "UFO - Kundschafter"
+msgstr "UFO - Versorgungsschiff"
 
 #: ../base/ufos/aircraftmanagement.ufo:306
 msgid "Supply U"
@@ -832,12 +831,10 @@ msgid "Next Alien Containment"
 msgstr "Nächste Quarantänestation"
 
 #: ../base/ufos/menu_aliencont.ufo:148
-#, fuzzy
 msgid "Alive aliens in all bases:"
 msgstr "Lebende Außerirdische in allen Basen:"
 
 #: ../base/ufos/menu_aliencont.ufo:163
-#, fuzzy
 msgid "Alive aliens in this base:"
 msgstr "Lebende Außerirdische in dieser Basis:"
 
@@ -1037,80 +1034,73 @@ msgstr "Aktiviere diesen Feuermodus für das Reaktionsfeuer"
 
 #: ../base/ufos/menu_basedefense.ufo:75
 msgid "Your are changing this defense system"
-msgstr ""
+msgstr "Sie ändern dieses Verteidigungssystem"
 
 #: ../base/ufos/menu_basedefense.ufo:85
-#, fuzzy
 msgid "Available defense:"
-msgstr "Verfügbare Ausrüstung"
+msgstr "Verfügbare Verteidigung:"
 
 #: ../base/ufos/menu_basedefense.ufo:121
-#, fuzzy
 msgid "Selected defense:"
-msgstr "Gewählte Basis"
+msgstr "Gewählte Verteidigung:"
 
 #: ../base/ufos/menu_basedefense.ufo:129
-#, fuzzy
 msgid "Choose missile battery"
-msgstr "Raketengeschütze"
+msgstr "Wähle Raketengeschütze"
 
 #: ../base/ufos/menu_basedefense.ufo:140
-#, fuzzy
 msgid "Missile"
-msgstr "Missionen"
+msgstr "Rakete"
 
 #: ../base/ufos/menu_basedefense.ufo:148
 msgid "Choose laser battery"
-msgstr ""
+msgstr "Wähle Lasergeschütze"
 
 #: ../base/ufos/menu_basedefense.ufo:160
-#, fuzzy
 msgid "Laser"
 msgstr "Laser"
 
 #: ../base/ufos/menu_basedefense.ufo:185
 #: ../base/ufos/menu_basedefense.ufo:207
 msgid "Install selected defense system"
-msgstr ""
+msgstr "Baue gewähltes Verteidigungssystem ein"
 
 #: ../base/ufos/menu_basedefense.ufo:196
 #: ../base/ufos/menu_basedefense.ufo:218
 msgid "Remove this defense system"
-msgstr ""
+msgstr "Entferne dieses Verteidigungssystem"
 
 #: ../base/ufos/menu_basedefense.ufo:229
 msgid "Equip this defense system with selected ammo"
-msgstr ""
+msgstr "Dieses Verteidigungssystem mit Munition ausrüsten"
 
 #: ../base/ufos/menu_basedefense.ufo:240
 msgid "Remove ammo from this defense system"
-msgstr ""
+msgstr "Munition von diesem Verteidigungssystem entfernen"
 
 #: ../base/ufos/menu_basedefense.ufo:252
 msgid "Choose defense system to build"
-msgstr ""
+msgstr "Zu bauendes Verteidigungssystem auswählen"
 
 #: ../base/ufos/menu_basedefense.ufo:274
 msgid "Choose defense system to build after removing current one"
-msgstr ""
+msgstr "Wähle Verteidigungssystem, welches nach dem Entfernen des aktuellen gebaut werden soll"
 
 #: ../base/ufos/menu_basedefense.ufo:296
 msgid "Change ammo in the defense system"
-msgstr ""
+msgstr "Ändere Munition des Verteidigungssystems"
 
 #: ../base/ufos/menu_basedefense.ufo:317
-#, fuzzy
 msgid "Current defense system"
-msgstr "Aktueller Gegenstand im Slot"
+msgstr "Aktuelles Verteidigungssystem"
 
 #: ../base/ufos/menu_basedefense.ufo:326
-#, fuzzy
 msgid "System to install after removal"
-msgstr "Nach Entfernung zu installieren"
+msgstr "Nach Entfernung zu installierendes System"
 
 #: ../base/ufos/menu_basedefense.ufo:335
 msgid "Ammo to use with installed system"
-msgstr ""
+msgstr "Munition zur Verwendung mit dem eingebauten System"
 
 #: ../base/ufos/menu_bases.ufo:48
 msgid "Back to geoscape"
@@ -1360,9 +1350,8 @@ msgid "Robots:"
 msgstr "Tooltips:"
 
 #: ../base/ufos/menu_basesummary.ufo:234
-#, fuzzy
 msgid "Facilities  (used/available)"
-msgstr "Lebendige %s (%i verfügbar)\n"
+msgstr "Einrichtung (verwendet/verfügbar)"
 
 #: ../base/ufos/menu_basesummary.ufo:312
 msgid "Construction"
@@ -2176,9 +2165,8 @@ msgid "No UFO hangars or UFO recovery process finished"
 msgstr "Keine UFO-Hangars oder UFO-Bergung abgeschlossen"
 
 #: ../base/ufos/menu_lostwon.ufo:69
-#, fuzzy
 msgid "No nation with accepted level of alien infiltration"
-msgstr "Keine Nation mit akzeptiertem Grad an Alien-Infiltration oder UFO-Bergungsprozess beendet"
+msgstr "Keine Nation mit akzeptiertem Grad an Alien-Infiltration"
 
 #: ../base/ufos/menu_lostwon.ufo:70
 msgid "UFO recovery process finished"
@@ -3187,14 +3175,12 @@ msgstr "Soldat umbenennen"
 
 #: ../base/ufos/menu_team.ufo:929
 #: ../base/ufos/menu_team.ufo:940
-#, fuzzy
 msgid "Assign heavy equipment"
-msgstr "Verfügbare Ausrüstung"
+msgstr "Schwere Ausrüstung zuweisen"
 
 #: ../base/ufos/menu_team.ufo:934
-#, fuzzy
 msgid "Assign soldiers"
-msgstr "Soldat zuteilen"
+msgstr "Soldaten zuteilen"
 
 #: ../base/ufos/menu_team.ufo:1126
 #: ../base/ufos/menu_team.ufo:1135
@@ -6460,7 +6446,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:2225
 #, fuzzy
 msgid "Alien Medium Armour"
-msgstr "Körperrüstung eines Außerirdischen"
+msgstr "Mittlere außerirdische Rüstung"
 
 #: ../base/ufos/research.ufo:2257
 msgid "Blast Damage Type"
@@ -9318,7 +9304,7 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:10
 msgid "Remember to give your soldiers a varying array of weapons, you never know when a certain weapon may come in handy."
-msgstr ""
+msgstr "Denke daran deinen Soldaten verschiedene Waffen mitzugeben, du weißt niemals wann du sie brauchen wirst."
 
 #: ../base/ufos/tips.ufo:11
 msgid "Don't forget to equip your soldiers with enough ammo."
@@ -9338,15 +9324,15 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:15
 msgid "To make a soldier look into a certain direction (i.e. to turn him/her) place the cursor and press the right mouse button or the [Ctrl] key. This will cost you Time Units (TUs)."
-msgstr ""
+msgstr "Um einen Soldaten in eine bestimmte Richtung schauen zu lassen (also um ihn/sie zu drehen), muss der Cursor in der Richtung platziert werden und die rechte Maustaste oder die [Strg]-Taste gedrückt werden. Das kostet Zeiteinheiten."
 
 #: ../base/ufos/tips.ufo:16
 msgid "Be sure to hire as many scientists as you can. The faster you know your enemy, the easier he is to defeat."
-msgstr ""
+msgstr "Stelle so viele Wissenschaftler wie möglich ein. Um so schneller du den Feind kennst, um so schneller kannst du ihn bekämpfen."
 
 #: ../base/ufos/tips.ufo:17
 msgid "Be sure to hire as many engineers as you can. The faster your production lines, the sooner you can get access to better equipment and resupplies."
-msgstr ""
+msgstr "Stelle so viele Arbeiter wie möglich ein. Um so schneller deine Produktion arbeitet, um so schneller hast du bessere Ausrüstung und Nachschub. "
 
 #: ../base/ufos/tips.ufo:18
 msgid "Be sure to visit our website, http://ufoai.sf.net/ and drop by our community channel. You can do so by going to the Multiplayer menu and clicking on the Lobby button."
@@ -9354,19 +9340,19 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:19
 msgid "Remember that you need an active Command Centre in order to launch interceptors."
-msgstr ""
+msgstr "Denke daran, dass du eine aktive Kommandozentrale benötigst, bevor du Abfangjäger starten kannst."
 
 #: ../base/ufos/tips.ufo:20
 msgid "Never pass up an opportunity to capture a live alien, even one you have already researched."
-msgstr ""
+msgstr "Verschenke niemals die Gelegenheit einen lebendigen Außerirdischen zu fangen, auch einen, den du schon untersucht hast."
 
 #: ../base/ufos/tips.ufo:21
 msgid "Watch your back! Your soldiers can only see enemies in an arc in front of them."
-msgstr ""
+msgstr "Pass auf was hinter dir ist! Deine Soldaten können nur Feinde in einem Bereich vor ihnen sehen."
 
 #: ../base/ufos/tips.ufo:22
 msgid "Build a workshop and UFO hangars to be able to disassemble UFOs."
-msgstr ""
+msgstr "Baue eine Werkstatt und UFO-Hangars um UFOs zu demontieren."
 
 #: ../base/ufos/tips.ufo:23
 msgid "You can zoom the geoscape by holding down [Ctrl] and moving the mouse up or down."
@@ -9441,8 +9427,9 @@ msgid "You can include your own maps for multiplayer games or create your own ca
 msgstr ""
 
 #: ../base/ufos/tips.ufo:41
+#, fuzzy
 msgid "You can use [space] to cycle between all geoscape items."
-msgstr ""
+msgstr "Mit der Leertaste kann zwischen den verschiedenen Geoscape-Einträgen gewechselt werden"
 
 #: ../base/ufos/tips.ufo:42
 msgid "You can also accelerate/decelerate time on geoscape by using mouse wheel on the time buttons, or [m], [n]."
@@ -10249,19 +10236,19 @@ msgid "Fuel:\t%i/%i\n"
 msgstr "Treibstoff:\t%i/%i\n"
 
 #: client/cl_aircraft.c:623
-#, fuzzy, c-format
+#, c-format
 msgid "Weapons:\t%i on %i\n"
-msgstr "Bewaffnung:\t%i on %i\n"
+msgstr "Bewaffnung:\t%i an %i\n"
 
 #: client/cl_aircraft.c:625
-#, fuzzy, c-format
+#, c-format
 msgid "Armours:\t%i on 1\n"
-msgstr "Munition:\t%i on 1\n"
+msgstr "Rüstung:\t%i an 1\n"
 
 #: client/cl_aircraft.c:627
-#, fuzzy, c-format
+#, c-format
 msgid "Electronics:\t%i on %i"
-msgstr "Electronik:\t%i on %i"
+msgstr "Elektronik:\t%i an %i"
 
 #: client/cl_aircraft.c:703
 #, c-format
@@ -10315,24 +10302,21 @@ msgstr "Du hast die Schlacht verloren"
 #: client/cl_airfight.c:617
 #: client/cl_airfight.c:626
 #: client/cl_airfight.c:643
-#, fuzzy
 msgid "Base facility destroyed"
-msgstr "Basiseinrichtung"
+msgstr "Basiseinrichtung zerstört"
 
 #: client/cl_airfight.c:617
-#, fuzzy
 msgid "You've lost a missile battery system."
-msgstr "Du hast die Schlacht verloren"
+msgstr "Du hast ein Raketengeschütz verloren verloren."
 
 #: client/cl_airfight.c:626
-#, fuzzy
 msgid "You've lost a laser battery system."
-msgstr "Du hast die Schlacht verloren"
+msgstr "Du hast ein Lasergeschütz verloren."
 
 #: client/cl_airfight.c:642
 #, c-format
 msgid "You've lost a base facility (%s)."
-msgstr ""
+msgstr "Du hast eine Basiseinrichtung verloren (%s)."
 
 #: client/cl_aliencont.c:186
 msgid "You cannot process aliens yet. Alien Containment not ready in this base."
@@ -10486,9 +10470,9 @@ msgid "%s (%i): %i/%i"
 msgstr "%s (%i): %i/%i"
 
 #: client/cl_basesummary.c:161
-#, c-format
+#, fuzzy, c-format
 msgid "%s:  Qty: %d, Time Left: %d hours"
-msgstr ""
+msgstr "%s:  Anz.: %d, Verbeibende Zeit: %d Std."
 
 #: client/cl_basesummary.c:191
 #, c-format
@@ -11010,8 +10994,9 @@ msgid "Toogle to next alien"
 msgstr "Zum nächsten Außerirdischen"
 
 #: client/cl_input.c:797
+#, fuzzy
 msgid "Draw a line to each alien visible to the current actor."
-msgstr ""
+msgstr "Zeichne eine Linie von jedem sichbaren Außerirdischen zum aktuellen Akteur."
 
 #: client/cl_input.c:803
 msgid "Reload the weapon in the soldiers left hand"
@@ -11073,7 +11058,7 @@ msgstr[1] "%i Gegenstände wurden verkauft."
 #: client/cl_inventory.c:546
 #, c-format
 msgid "Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."
-msgstr ""
+msgstr "Basis %s hat kein Antimaterielager. %i Einheiten Antimaterie wurden entfernt."
 
 #: client/cl_main.c:371
 #: client/cl_main.c:1069
@@ -11312,9 +11297,10 @@ msgid ""
 "No power supplies in this base.\n"
 "Hangars are not functional."
 msgstr ""
+"Kein Kraftwerk in dieser Basis.\n"
+"Hangar nicht betriebsbereit."
 
 #: client/cl_market.c:350
-#, fuzzy
 msgid "Build a hangar first."
 msgstr "Zuerst muss ein Hangar gebaut werden."
 
@@ -11381,9 +11367,9 @@ msgstr "Taste: %s"
 
 #: client/cl_menu.c:2062
 #: client/cl_menu.c:2069
-#, fuzzy, c-format
+#, c-format
 msgid "Ammo: %i\n"
-msgstr "Munition:\t%i\n"
+msgstr "Munition: %i\n"
 
 #: client/cl_menu.c:2067
 #, c-format
@@ -12004,20 +11990,18 @@ msgid "Better luck next time"
 msgstr "Mehr Glück beim nächsten Mal"
 
 #: client/cl_transfer.c:61
-#, fuzzy
 msgid "Destination base does not have an Antimatter Storage.\n"
-msgstr "Zielbasis hat nicht genug Platz für diese Antimaterie in den Anitmaterielagern.\n"
+msgstr "Zielbasis hat kein Antimaterielagern.\n"
 
 #: client/cl_transfer.c:61
-#, fuzzy
 msgid "Missing storage"
-msgstr "Missionen"
+msgstr "Lager fehlt"
 
 #: client/cl_transfer.c:70
 msgid ""
 "Destination base does not have enough\n"
 "Antimatter Storage space to store more antimatter.\n"
-msgstr "Zielbasis hat nicht genug Platz für diese Antimaterie in den Anitmaterielagern.\n"
+msgstr "Zielbasis hat nicht genug Platz für diese Antimaterie in den Antimaterielagern.\n"
 
 #: client/cl_transfer.c:70
 #: client/cl_transfer.c:80
@@ -12094,9 +12078,8 @@ msgid "Transfer is not possible - the base doesn't have a Storage."
 msgstr "Transfer nicht möglich - Basis hat kein Lager."
 
 #: client/cl_transfer.c:277
-#, fuzzy
 msgid "Transfer is not possible - the base does not have power supplies."
-msgstr "Transfer nicht möglich - Basis hat kein Lager."
+msgstr "Transfer nicht möglich - Basis hat kein Kraftwerk."
 
 #: client/cl_transfer.c:310
 msgid "Living Quarters empty.\n"
@@ -12135,9 +12118,8 @@ msgid "Transfer is not possible - the base doesn't have an Alien Containment."
 msgstr "Transfer nicht möglich - Basis hat keine Quartänestation."
 
 #: client/cl_transfer.c:345
-#, fuzzy
 msgid "Transfer is not possible - the base has not power supplies."
-msgstr "Transfer nicht möglich - Basis hat kein Lager."
+msgstr "Transfer nicht möglich - Basis hat kein Kraftwerk."
 
 #: client/cl_transfer.c:352
 msgid "Transfer is not possible - the base doesn't have any hangar."
@@ -12146,7 +12128,7 @@ msgstr "Transfer nicht möglich - Basis hat keinen Hangar."
 #: client/cl_transfer.c:426
 #, c-format
 msgid "Base %s does not have Storage, items are removed!"
-msgstr ""
+msgstr "Basis %s hat keine Lagerräume, die Gegenstände wurden entfernt."
 
 #: client/cl_transfer.c:427
 #: client/cl_transfer.c:445
@@ -12160,12 +12142,12 @@ msgstr "Transportmission"
 #: client/cl_transfer.c:444
 #, c-format
 msgid "Base %s does not have Living Quarters, employees got unhired!"
-msgstr ""
+msgstr "Basis %s hat keine Quartiere, das Personal wurde entlassen."
 
 #: client/cl_transfer.c:472
-#, fuzzy, c-format
+#, c-format
 msgid "Base %s does not have Alien Containment, Aliens are removed!"
-msgstr "Die Basis hat keine Quarantänestation - kann Aliens hier nicht entladen"
+msgstr "Die Basis %s hat keine Quarantänestation, die Außerirdischen werden entfernt!"
 
 #: client/cl_transfer.c:522
 #, c-format
@@ -12196,9 +12178,8 @@ msgstr "Kein Lager in dieser Basis.\n"
 #: client/cl_transfer.c:850
 #: client/cl_transfer.c:863
 #: client/cl_transfer.c:871
-#, fuzzy
 msgid "No power supplies in this base.\n"
-msgstr "Kein Lager in dieser Basis.\n"
+msgstr "Kein Kraftwerk in dieser Basis.\n"
 
 #: client/cl_transfer.c:853
 msgid "You can transfer employees - this base has Living Quarters.\n"
@@ -12221,13 +12202,12 @@ msgid "You can transfer antimatter - this base has an Antimatter Storage.\n"
 msgstr "Transfer von Antimaterie möglich - Basis hat ein Antimaterielager\n"
 
 #: client/cl_transfer.c:868
-#, fuzzy
 msgid "No Antimatter Storage in this base.\n"
-msgstr "Kein Antimaterielager in dieser Basis\n"
+msgstr "Kein Antimaterielager in dieser Basis.\n"
 
 #: client/cl_transfer.c:1016
 msgid "The destination base no longer exists! Transfer cargo are lost, personel got unhired."
-msgstr ""
+msgstr "Die Zielbasis existiert nicht mehr! Die Ladung ist verloren, das Personal wurde entlassen."
 
 #: client/cl_transfer.c:1081
 #: client/cl_transfer.c:1082
@@ -12465,7 +12445,7 @@ msgid "Weapon:\t%s\n"
 msgstr "Bewaffnung:\t%s\n"
 
 #: client/cl_ufopedia.c:560
-#, fuzzy, c-format
+#, c-format
 msgid "Armour:\t%s\n"
 msgstr "Rüstung:\t%s\n"
 
