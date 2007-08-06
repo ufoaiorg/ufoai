@@ -1,9 +1,19 @@
-// .. model:	(string)
-// .. need:		(string)
-// .. tag		(string)	the tag where the model should be placed in the main-model - never in main model
-// .. parent	(string)	the menumodel parent with the tag specified - never in main model
-// .. anim		(string)	the animation from *.anm files
-// NOTE: This has to be top down
+// =================================================
+// model	(string)	Path to 3d model.
+// tag		(string)	The tag where the model should be placed in the main-model - never in main model
+// parent	(string)	The "menu_model" parent with the tag specified - never in main model.
+// need		(string)	"menu_model" name of e.g. head
+// anim		(string)	The animation from *.anm files
+// skin	(int)
+// origin	<x,y,z>
+// center	<x,y,z>
+// scale	<x,y,z>
+// menuscale	<menuname> <x,y,z-scale>
+// angles	<x,y,z>
+// color	(color)
+// =================================================
+// NOTE: This has to be top (e.,g. head)- down (e.g. body)
+// =================================================
 
 // ============== Aliens ===========================
 menu_model alien_ortnok_head
