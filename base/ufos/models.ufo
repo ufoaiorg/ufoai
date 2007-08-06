@@ -8,7 +8,7 @@
 // origin	<x,y,z>
 // center	<x,y,z>
 // scale	<x,y,z>
-// menuscale	{ <menuname> <x,y,z-scale> }
+// menutransform	{ <menuname> <x,y,z-scale> <x,y,z-angles> }	REPLACES the definition of "scale" and "angles" in the defined menu "<menuname>".
 // angles	<x,y,z>
 // color	(color)
 // =================================================
@@ -176,25 +176,31 @@ menu_model triax
 menu_model drop_firebird_glass
 {
 	model	"models/aircraft/drop_firebird/firebird_glass.md2"
+//	menutransform {
+//		ufopedia "0.5 0.5 0.5" "0 0 120"
+//	}
 }
 menu_model drop_firebird_top
 {
 	model	"models/aircraft/drop_firebird/firebird_top.md2"
 	need	"drop_firebird_glass"
+//	menutransform {
+//		ufopedia "0.5 0.5 0.5" "0 0 120"
+//	}
 }
 menu_model drop_firebird
 {
 	model	"models/aircraft/drop_firebird/firebird.md2"
 	need	"drop_firebird_top"
-	//menuscale {
-	//	ufopedia "0.2 0.2 0.2"
-	//}
+//	menutransform {
+//		ufopedia "0.5 0.5 0.5" "0 0 120"
+//	}
 }
 
 // ============== Stingray Interceptor ======================
 menu_model inter_stingray
 {
-	model	"models/aircraft/inter_stingray/stingray_landed.md3"
+	model	"models/aircraft/inter_stingray/stingray_landed.md2"
 }
 
 // ============== UFO Carrier ======================
@@ -219,16 +225,25 @@ menu_model inter_saracen
 menu_model inter_stiletto_glass
 {
 	model	"models/aircraft/inter_stiletto/stiletto_glass.md2"
+//	menutransform {
+//		ufopedia "0.5 0.5 0.5" "90 -120 0"
+//	}
 }
 menu_model inter_stiletto_top
 {
 	model	"models/aircraft/inter_stiletto/stiletto_engines.md2"
 	need	"inter_stiletto_glass"
+//	menutransform {
+//		ufopedia "0.5 0.5 0.5" "90 -120 0"
+//	}
 }
 menu_model inter_stiletto
 {
 	model	"models/aircraft/inter_stiletto/stiletto.md2"
 	need	"inter_stiletto_top"
+//	menutransform {
+//		ufopedia "0.5 0.5 0.5" "90 -120 0"
+//	}
 }
 
 // ============== UFO FIGHTER ============================
