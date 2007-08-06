@@ -4054,7 +4054,7 @@ static void CP_UFORecovered_f (void)
 	ufoType_t UFOtype;
 	base_t *base  = NULL;
 	aircraft_t *ufocraft = NULL;
-	qboolean hasUFOhangar = qfalse, ufofound = qfalse;
+	qboolean store = qfalse, ufofound = qfalse;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <UFOType>\n", Cmd_Argv(0));
@@ -4084,13 +4084,13 @@ static void CP_UFORecovered_f (void)
 		return;
 	}
 
-	/* Now we have to check whether any base has UFO hangar. */
+	/* Now we have to check whether we can store the UFO in any base. */
 	for (i = 0; i < gd.numBases; i++) {
 		if (!gd.bases[i].founded)
 			continue;
 		base = &gd.bases[i];
-		if ((base->hasUFOHangar) || (base->hasUFOHangarSmall)) {
-			hasUFOhangar = qtrue;
+		if (UFO_ConditionsForStoring(base, ufocraft)) {
+			store = qtrue;
 			break;
 		}
 	}
@@ -4105,13 +4105,13 @@ static void CP_UFORecovered_f (void)
 	Cvar_SetValue("mission_uforecovered", 1);	/* This is used in menus to enable UFO Recovery nodes. */
 	Cvar_SetValue("mission_uforecoverydone", 0);	/* This is used in menus to block UFO Recovery nodes. */
 	Cvar_SetValue("mission_ufotype", UFOtype);
-	Cvar_SetValue("mission_noufohangar", 0);
 	/* @todo block Sell button if no nation with requirements */
-	if (!hasUFOhangar) {
-		/* Don't allow to store if no UFO hangars in any base. */
+	if (!store) {
+		/* Block store option if storing not possible. */
 		Cbuf_AddText("disufostore\n");
 		Cvar_SetValue("mission_noufohangar", 1);
-	}
+	} else
+		Cvar_SetValue("mission_noufohangar", 0);
 	Com_DPrintf("CP_UFORecovered_f()...: base: %s, UFO: %i\n", base->name, UFOtype);
 }
 
@@ -4132,6 +4132,9 @@ static void CP_UFORecoveryDone (void)
 	Cvar_SetValue("mission_uforecoverydone", 1);
 }
 
+/** @brief Array of base indexes where we can store UFO. */
+static int UFObases[MAX_BASES];
+
 /**
  * @brief Finds the destination base for UFO recovery.
  * @note The base selection is being done here.
@@ -4139,7 +4142,7 @@ static void CP_UFORecoveryDone (void)
  */
 static void CP_UfoRecoveryBaseSelectPopup_f (void)
 {
-	int i, j = -1, num;
+	int num;
 	base_t* base;
 
 	if (Cmd_Argc() < 2) {
@@ -4148,14 +4151,8 @@ static void CP_UfoRecoveryBaseSelectPopup_f (void)
 	}
 
 	num = atoi(Cmd_Argv(1));
+	base = &gd.bases[UFObases[num]];
 
-	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
-		if (base->founded == qfalse)
-			continue;
-		j++;
-		if (j == num)
-			break;
-	}
 	assert(base);
 
 	Cvar_SetValue("mission_recoverybase", base->idx);
@@ -4188,24 +4185,48 @@ static void CP_UFORecoveredStart_f (void)
  */
 static void CP_UFORecoveredStore_f (void)
 {
-	int i, hasufohangar = 0;
+	int i, j = 0, hasufohangar = 0;
 	base_t *base = NULL;
+	aircraft_t *ufocraft = NULL;
 	static char recoveryBaseSelectPopup[512];
+	qboolean ufofound = qfalse;
 
 	/* Do nothing if recovery process is finished. */
 	if (Cvar_VariableInteger("mission_uforecoverydone") == 1)
 		return;
 
+	/* Find ufo sample of given ufotype. */
+	for (i = 0; i < numAircraft_samples; i++) {
+		ufocraft = &aircraft_samples[i];
+		if (ufocraft->type != AIRCRAFT_UFO)
+			continue;
+		if (ufocraft->ufotype == Cvar_VariableInteger("mission_ufotype")) {
+			ufofound = qtrue;
+			break;
+		}
+	}
+
+	/* Do nothing without UFO of this type. */
+	if (!ufofound) {
+		Com_Printf("CP_UFORecoveredStore_f... UFOType: %i does not have valid craft definition!\n", Cvar_VariableInteger("mission_ufotype"));
+		return;
+	}
+
+	/* Clear UFObases. */
+	memset (UFObases, -1, sizeof(UFObases));
+
 	recoveryBaseSelectPopup[0] = '\0';
-	/* Check how many bases with UFO hangars. */
+	/* Check how many bases can store this UFO. */
 	for (i = 0; i < gd.numBases; i++) {
 		if (!gd.bases[i].founded)
 			continue;
 		base = &gd.bases[i];
-		if ((base->hasUFOHangar) || (base->hasUFOHangarSmall)) {
+		if (UFO_ConditionsForStoring(base, ufocraft)) {
 			hasufohangar++;
 			Q_strcat(recoveryBaseSelectPopup, gd.bases[i].name, sizeof(recoveryBaseSelectPopup));
 			Q_strcat(recoveryBaseSelectPopup, "\n", sizeof(recoveryBaseSelectPopup));
+			UFObases[j] = i;
+			j++;
 		}
 	}
 	/* Do nothing without any base. */
