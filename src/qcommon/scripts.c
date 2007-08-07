@@ -1467,6 +1467,7 @@ int Com_GetCharacterValues (const char *team, character_t * chr)
 			continue;
 		return atoi(str);
 	}
+	Com_Printf("Could not set character values for team '%s' - namecat '%s'\n", team, nameCat[category].title);
 	return 0;
 }
 
