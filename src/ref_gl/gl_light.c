@@ -49,13 +49,6 @@ static void R_RenderDlight (const dlight_t const* light)
 	rad = light->intensity * 0.35;
 
 	VectorSubtract(light->origin, r_origin, v);
-#if 0
-	/* FIXME? */
-	if (VectorLength(v) < rad) {	/* view is inside the dlight */
-		V_AddBlend(light->color[0], light->color[1], light->color[2], light->intensity * 0.0003, v_blend);
-		return;
-	}
-#endif
 
 	qglBegin(GL_TRIANGLE_FAN);
 	qglColor3f(light->color[0] * 0.2, light->color[1] * 0.2, light->color[2] * 0.2);

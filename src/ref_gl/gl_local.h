@@ -355,8 +355,6 @@ extern unsigned d_8to24table[256];
 
 extern int registration_sequence;
 
-void V_AddBlend(float r, float g, float b, float a, float *v_blend);
-
 struct model_s *R_RegisterModelShort(const char *name);
 
 void GL_ScreenShot_f(void);

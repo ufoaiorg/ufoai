@@ -127,12 +127,6 @@ static void R_ShadowLight (vec3_t pos, vec3_t lightAdd)
 	VectorScale(dist, shadowdist, lightAdd);
 }
 
-extern cvar_t *r_shading;
-/*
-static dlight_t model_dlights[MAX_MODEL_DLIGHTS];
-static int model_dlights_num;
-*/
-
 /**
  * @brief
  */
@@ -149,11 +143,8 @@ static void R_DrawAliasShadow (entity_t * e, mdl_md2_t * paliashdr, int posenum)
 	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL)
 		return;
 
-	/*calculate model lighting and setup shadow transparenty */
-/*	if(r_shading->integer)
-		R_LightPointDynamics (currententity->origin, shadelight, model_dlights, &model_dlights_num, 3);
-	else*/
-		R_LightPoint(currententity->origin, shadelight);
+	/* calculate model lighting and setup shadow transparenty */
+	R_LightPoint(currententity->origin, shadelight);
 
 	alpha = 1 - (shadelight[0] + shadelight[1] + shadelight[2]);
 
