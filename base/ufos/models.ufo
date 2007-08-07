@@ -163,19 +163,48 @@ menu_model civ_female
 	need	"civ_female_head"
 }
 // ================== Tanks ======================
-menu_model triax_turret
+// TRIAX
+menu_model ugv_triax_turret
 {
 	model	"models/soldiers/ugv_triax/triax_wheels_turret.md2"
 	tag	"tag_head"
-	parent	"triax"
+	parent	"ugv_triax"
 	scale	"1.0 1.0 1.0"
+	menutransform {
+		ufopedia "6 6 6" "0 0 120"	"-70 0 0"
+	}
 }
-menu_model triax
+menu_model ugv_triax
 {
 	model	"models/soldiers/ugv_triax/triax_wheels.md2"
-	need	"triax_turret"
+	need	"ugv_triax_turret"
 //	anim	"stand2"
+	menutransform {
+		ufopedia "6 6 6" "0 0 120"	"-70 0 0"
+	}
 }
+
+// PHOENIX
+menu_model ugv_triax_phoenix
+{
+	model	"models/soldiers/ugv_phoenix/phoenix_turret.md2"
+	tag	"tag_head"
+	parent	"ugv_phoenix"
+	scale	"1.0 1.0 1.0"
+	menutransform {
+		ufopedia "6 6 6""0 0 120"	"-70 0 0"
+	}
+}
+menu_model ugv_phoenix
+{
+	model	"models/soldiers/ugv_phoenix/phoenix.md2"
+	need	"ugv_triax_phoenix"
+//	anim	"stand2"
+	menutransform {
+		ufopedia "6 6 6" "0 0 120"	"-70 0 0"
+	}
+}
+
 // ============== Dropship =========================
 menu_model drop_firebird_glass
 {

@@ -3396,6 +3396,8 @@ tech rs_alien_shevaar_autopsy
 tech rs_ugv_phoenix
 {
 	type	ugv
+	mdl_top	ugv_phoenix
+
 	up_chapter	equipment
 	name	"_Phoenix UGV"
 	description {
@@ -3409,13 +3411,13 @@ tech rs_ugv_phoenix
 	require_AND { tech nothing }
 	time	0
 	producetime	800
-
-	mdl_top	"soldiers/ugv_phoenix/phoenix"
 }
 
 tech rs_ugv_triax
 {
 	type	ugv
+	mdl_top	ugv_triax
+
 	up_chapter	equipment
 	name	"_Triax UGV"
 	description {
@@ -3429,8 +3431,6 @@ tech rs_ugv_triax
 	require_AND { tech nothing }
 	time	0
 	producetime	800
-
-	mdl_top	"soldiers/ugv_triax/triax_hover"
 }
 
 //========================
