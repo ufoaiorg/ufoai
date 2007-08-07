@@ -137,7 +137,7 @@ menu buildings
 
 //	pic bt_ufopedia
 //	{
-//		tooltip	"_UFOpedia"
+//		tooltip	"_UFOpaedia"
 //		image	menu/b_geobuttons
 //		pos	 "840 682"
 //		texl	"128 0"

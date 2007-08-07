@@ -105,7 +105,7 @@ menu aliencont
 
 	pic bt_alc_ufopedia
 	{
-		tooltip	"_Check UFOpedia entry"
+		tooltip	"_Check UFOpaedia entry"
 		mousefx	true
 		pos	"720 694"
 		texl	"64 0"
