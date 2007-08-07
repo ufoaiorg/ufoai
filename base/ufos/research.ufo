@@ -1108,10 +1108,12 @@ tech rs_weapon_pistol_ammo
 	producetime	12
 }
 
+// Machine Pistol
 tech rs_weapon_pistol2
 {
 	type	weapon
 	up_chapter	equipment
+	mdl_top	weap_machine_pistol	// Overrides the one from weapons*.ufo
 	description {
 		default "_pistol2_txt"
 	}

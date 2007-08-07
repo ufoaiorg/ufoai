@@ -359,3 +359,12 @@ menu_model ufo_crash
 	model	"models/objects/alien/ufo_crashed/acrash_hull.md2"
 	need	"ufo_crash_engine"
 }
+
+// ============== WEAPONS =========================
+menu_model weap_machine_pistol
+{
+	model	"models/weapons/pistol2/pistol2.md2"
+	menutransform {
+		ufopedia	"40 40 40"	#	"-15 0 0"
+	}
+}
