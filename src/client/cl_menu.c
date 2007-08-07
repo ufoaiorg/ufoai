@@ -2703,6 +2703,7 @@ void MN_DrawMenus (void)
 							mi.angles = menuModel->angles;
 							mi.center = menuModel->center;
 							mi.color = menuModel->color;
+							mi.scale = menuModel->scale;
 
 							/* no tag and no parent means - base model or single model */
 							if (!menuModel->tag && !menuModel->parent) {
@@ -2711,20 +2712,20 @@ void MN_DrawMenus (void)
 										if (menu == menuModel->menuTransform[i].menuPtr) {
 											/* Use menu scale if defined. */
 											if (menuModel->menuTransform[i].useScale) {
-												mi.scale = menuModel->menuTransform[i].scale;
+												VectorCopy(menuModel->menuTransform[i].scale, mi.scale);
 											} else {
 												VectorCopy(node->scale, mi.scale);
 											}
 											
 											/* Use menu angles if defined. */
 											if (menuModel->menuTransform[i].useAngles) {
-												mi.angles = menuModel->menuTransform[i].angles;
+												VectorCopy(menuModel->menuTransform[i].angles, mi.angles);
 											} else {
 												VectorCopy(node->angles, mi.angles);
 											}
 
 											/* Use menu origin if defined. */
-											if (menuModel->menuTransform[i].useScale) {
+											if (menuModel->menuTransform[i].useOrigin) {
 												VectorAdd(node->origin, menuModel->menuTransform[i].origin, mi.origin);
 											} else {
 												VectorCopy(node->origin, mi.origin);
@@ -4346,7 +4347,7 @@ void MN_ParseMenuModel (const char *name, const char **text)
 							Com_Printf("Error in menumodel '%s' menutransform definition - missing scale float value\n", name);
 							break;
 						}
-						if (*token == '-') {
+						if (*token == '#') {
 							menuModel->menuTransform[menuModel->menuTransformCnt].useScale = qfalse;
 						} else {
 							Com_ParseValue(&menuModel->menuTransform[menuModel->menuTransformCnt].scale, token, V_VECTOR, 0, sizeof(vec3_t));
@@ -4360,7 +4361,7 @@ void MN_ParseMenuModel (const char *name, const char **text)
 							Com_Printf("Error in menumodel '%s' menutransform definition - missing angles float value\n", name);
 							break;
 						}
-						if (*token == '-') {
+						if (*token == '#') {
 							menuModel->menuTransform[menuModel->menuTransformCnt].useAngles = qfalse;
 						} else {
 							Com_ParseValue(&menuModel->menuTransform[menuModel->menuTransformCnt].angles, token, V_VECTOR, 0, sizeof(vec3_t));
@@ -4374,7 +4375,7 @@ void MN_ParseMenuModel (const char *name, const char **text)
 							Com_Printf("Error in menumodel '%s' menutransform definition - missing origin float value\n", name);
 							break;
 						}
-						if (*token == '-') {
+						if (*token == '#') {
 							menuModel->menuTransform[menuModel->menuTransformCnt].useOrigin = qfalse;
 						} else {
 							Com_ParseValue(&menuModel->menuTransform[menuModel->menuTransformCnt].origin, token, V_VECTOR, 0, sizeof(vec3_t));
