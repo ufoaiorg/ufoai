@@ -79,7 +79,7 @@ menu aliencont
 
 	pic bt_alc_prevbase
 	{
-		tooltip	"_Previous Alien Containment"
+		tooltip	"_Previous alien containment"
 		mousefx	true
 		pos	"610 692"
 		texl	"0 0"
@@ -131,7 +131,7 @@ menu aliencont
 
 	pic bt_alc_nextbase
 	{
-		tooltip	"_Next Alien Containment"
+		tooltip	"_Next alien containment"
 		mousefx	true
 		pos	"860 692"
 		texl	"32 0"
@@ -375,7 +375,7 @@ menu aliencont
 
 	string txt_base_name
 	{
-		string "_Base Info"
+		string "_Base info"
 		pos "615 200"
 	}
 
@@ -395,7 +395,7 @@ menu aliencont
 
 	string txt_alc_alientype
 	{
-		string "_Alien Type:"
+		string "_Alien type:"
 		pos "645 260"
 		color "0 .78 0 1"
 	}
@@ -450,7 +450,7 @@ menu aliencont
 
 	string txt_alc_limit
 	{
-		string "_Base Capacity:"
+		string "_Base capacity:"
 		pos "645 600"
 		color "0 .78 0 1"
 	}
