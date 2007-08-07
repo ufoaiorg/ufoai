@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 spawn_temp_t st;
 
 static void SP_light(edict_t * ent);
-static void SP_misc_dummy(edict_t * ent);
+static void SP_dummy(edict_t * ent);
 static void SP_player_start(edict_t * ent);
 static void SP_human_start(edict_t * ent);
 static void SP_alien_start(edict_t * ent);
@@ -53,8 +53,8 @@ typedef struct {
 static const spawn_t spawns[] = {
 	{"worldspawn", SP_worldspawn},
 	{"light", SP_light},
-	{"misc_model", SP_misc_dummy},
-	{"misc_particle", SP_misc_dummy},
+	{"misc_model", SP_dummy},
+	{"misc_particle", SP_dummy},
 	{"misc_mission", SP_misc_mission},
 	{"misc_mission_aliens", SP_misc_mission_aliens},
 	{"info_player_start", SP_player_start},
@@ -64,6 +64,7 @@ static const spawn_t spawns[] = {
 	{"info_civilian_target", SP_civilian_target},
 	{"info_2x2_start", SP_2x2_start},
 	{"info_ugv_start", SP_2x2_start},
+	{"info_null", SP_dummy},
 	{"func_breakable", SP_func_breakable},
 	{"func_door", SP_func_door},
 
@@ -571,7 +572,7 @@ static void SP_misc_mission_aliens (edict_t * ent)
 /**
  * @brief a dummy to get rid of local entities
  */
-static void SP_misc_dummy (edict_t * self)
+static void SP_dummy (edict_t * self)
 {
 	/* models and particles aren't client-server communicated items */
 	/* they are completely client side */
