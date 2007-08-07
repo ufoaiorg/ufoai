@@ -505,16 +505,16 @@ int INV_DisassemblyItem (base_t *base, components_t *comp, qboolean calculate)
 	int i, j, size = 0;
 	objDef_t *compod;
 
-	assert (comp);
+	assert(comp);
 	if (!calculate)	/* We need base only if this is real disassembling. */
-		assert (base);
+		assert(base);
 
 	for (i = 0; i < comp->numItemtypes; i++) {
 		for (j = 0, compod = csi.ods; j < csi.numODs; j++, compod++) {
 			if (!Q_strncmp(compod->id, comp->item_id[i], MAX_VAR))
 				break;
 		}
-		assert (compod);
+		assert(compod);
 		size += compod->size * comp->item_amount[i];
 		/* Add to base storage only if this is real disassembling, not calculation of size. */
 		if (!calculate) {
@@ -539,7 +539,7 @@ void INV_ManageAntimatter (base_t *base, int amount, qboolean add)
 	int i, j;
 	objDef_t *od;
 
-	assert (base);
+	assert(base);
 
 	if (!base->hasAmStorage && add) {
 		Com_sprintf(messageBuffer, sizeof(messageBuffer),
@@ -553,7 +553,7 @@ void INV_ManageAntimatter (base_t *base, int amount, qboolean add)
 		if (!Q_strncmp(od->id, "antimatter", 10))
 			break;
 	}
-	assert (od);
+	assert(od);
 
 	if (add) {	/* Adding. */
 		if (base->capacities[CAP_ANTIMATTER].cur + (amount * ANTIMATTER_SIZE) <= base->capacities[CAP_ANTIMATTER].max) {

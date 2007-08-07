@@ -294,7 +294,7 @@ static void PR_QueueDelete (production_queue_t *queue, int index, int baseidx)
 
 	prod = &queue->items[index];
 
-	assert (base);
+	assert(base);
 
 	if (prod->items_cached) {
 		/* Get technology of the item in the selected queue-entry. */

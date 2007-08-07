@@ -560,7 +560,7 @@ void UFO_Recovery (void)
  */
 qboolean UFO_ConditionsForStoring (base_t *base, aircraft_t *ufocraft)
 {
-	assert (base && ufocraft);
+	assert(base && ufocraft);
 
 	if (!base->hasUFOHangar && !base->hasUFOHangarSmall)
 		return qfalse;

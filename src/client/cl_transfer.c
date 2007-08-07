@@ -54,7 +54,7 @@ static int trEmployeesTmp[MAX_EMPL][MAX_EMPLOYEES];
  */
 qboolean TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase)
 {
-	assert (od && srcbase && destbase);
+	assert(od && srcbase && destbase);
 
 	/* Is this antimatter and destination base has enough space in Antimatter Storage? */
 	if (!Q_strncmp(od->id, "antimatter", 10)) {
@@ -94,7 +94,7 @@ qboolean TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase)
  */
 qboolean TR_CheckEmployee (employee_t *employee, base_t *srcbase, base_t *destbase)
 {
-	assert (employee && srcbase && destbase);
+	assert(employee && srcbase && destbase);
 
 	/* Does the destination base has enough space in living quarters? */
 	if (destbase->capacities[CAP_EMPLOYEES].max - destbase->capacities[CAP_EMPLOYEES].cur < 1) {
@@ -124,7 +124,7 @@ qboolean TR_CheckEmployee (employee_t *employee, base_t *srcbase, base_t *destba
  */
 qboolean TR_CheckAlien (int alienidx, base_t *srcbase, base_t *destbase)
 {
-	assert (srcbase && destbase);
+	assert(srcbase && destbase);
 
 	/* Does the destination base has enough space in alien containment? */
 	if (destbase->capacities[CAP_ALIENS].max - destbase->capacities[CAP_ALIENS].cur < 1) {
@@ -175,7 +175,7 @@ static void TR_CargoList (void)
 		for (i = 0; i < gd.numEmployees[empltype]; i++) {
 			if (trEmployeesTmp[empltype][i] > -1) {
 				if (empltype == EMPL_SOLDIER) {
-					employee = &gd.employees[empltype][i];		
+					employee = &gd.employees[empltype][i];
 					Com_sprintf(str, sizeof(str), _("Soldier %s %s\n"), gd.ranks[employee->chr.rank].shortname, employee->chr.name);
 					Q_strcat(cargoList, str, sizeof(cargoList));
 					cargo[cnt].type = 2;
@@ -184,7 +184,7 @@ static void TR_CargoList (void)
 				}
 				trempl[empltype]++;
 			}
-		}	
+		}
 	}
 	for (empltype = 0; empltype < MAX_EMPL; empltype++) {
 		if (empltype == EMPL_SOLDIER)
@@ -194,7 +194,7 @@ static void TR_CargoList (void)
 			Q_strcat(cargoList, str, sizeof(cargoList));
 			cargo[cnt].type = 2;
 			cnt++;
-		}		
+		}
 	}
 
 	/* Show aliens. */
@@ -300,7 +300,7 @@ static void TR_TransferSelect_f (void)
 					Com_sprintf(str, sizeof(str), _("%s (%i for transfer, %i left)\n"), E_GetEmployeeString(i), trempl[i], numempl[i]);
 				else if (numempl[i] > 0)
 					Com_sprintf(str, sizeof(str), _("%s (%i available)\n"), E_GetEmployeeString(i), numempl[i]);
-				if (numempl[i] > 0) {	
+				if (numempl[i] > 0) {
 					Q_strcat(transferList, str, sizeof(transferList));
 					cnt++;
 				}
@@ -412,13 +412,13 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 	employee_t *employee;
 	char message[256];
 
-	assert (transfer);
+	assert(transfer);
 	if (success) {
 		destination = &gd.bases[transfer->destBase];
-		assert (destination);
+		assert(destination);
 	}
 	source = &gd.bases[transfer->srcBase];
-	assert (source);
+	assert(source);
 
 	if (transfer->hasItems && success) {	/* Items. */
 		if (!destination->hasStorage) {
@@ -513,7 +513,7 @@ void TR_TransferEnd (transfer_t *transfer)
 	base_t* destination = NULL;
 	char message[256];
 
-	assert (transfer);
+	assert(transfer);
 	destination = &gd.bases[transfer->destBase];
 	assert(destination);
 
@@ -1114,7 +1114,7 @@ qboolean TR_Save (sizebuf_t* sb, void* data)
 {
 	int i, j, k;
 	transfer_t *transfer;
-	
+
 	for (i = 0; i < presaveArray[PRE_MAXTRA]; i++) {
 		transfer = &gd.alltransfers[i];
 		for (j = 0; j < presaveArray[PRE_MAXOBJ]; j++)
@@ -1134,7 +1134,7 @@ qboolean TR_Save (sizebuf_t* sb, void* data)
 		MSG_WriteByte(sb, transfer->hasEmployees);
 		MSG_WriteByte(sb, transfer->hasAliens);
 		MSG_WriteLong(sb, transfer->event.day);
-		MSG_WriteLong(sb, transfer->event.sec);		
+		MSG_WriteLong(sb, transfer->event.sec);
 	}
 	return qtrue;
 }
@@ -1148,7 +1148,7 @@ qboolean TR_Load (sizebuf_t* sb, void* data)
 {
 	int i, j, k;
 	transfer_t *transfer;
-	
+
 	for (i = 0; i < presaveArray[PRE_MAXTRA]; i++) {
 		transfer = &gd.alltransfers[i];
 		for (j = 0; j < presaveArray[PRE_MAXOBJ]; j++)

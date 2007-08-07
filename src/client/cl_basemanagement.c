@@ -2664,7 +2664,7 @@ void B_UpdateStatusWithPower (base_t *base)
 {
 	int i;
 
-	assert (base);
+	assert(base);
 	for (i = 0; i < gd.numBuildings[base->idx]; i++) {
 		if (gd.buildings[base->idx][i].buildingType == B_POWER)
 			continue;

@@ -48,7 +48,7 @@ void AL_FillInContainment (base_t *base)
 	int i, j;
 	aliensCont_t *containment = NULL;
 
-	assert (base);
+	assert(base);
 	containment = base->alienscont;
 
 	for (i = 0; i < numTeamDesc; i++) {
@@ -178,7 +178,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 	technology_t *tech;
 	qboolean limit = qfalse;
 
-	assert (aircraft);
+	assert(aircraft);
 	tobase = aircraft->homebase;
 	assert(tobase);
 
@@ -284,7 +284,7 @@ void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_
 	int maxidx = 0;
 	aliensCont_t *containment = NULL;
 
-	assert (base);
+	assert(base);
 	containment = baseCurrent->alienscont;
 
 	switch (action) {

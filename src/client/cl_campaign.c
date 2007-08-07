@@ -4410,12 +4410,12 @@ static void CP_UFOCrashed_f (void)
 
 	/* Find dropship. */
 	aircraft = AIR_AircraftGetFromIdx(gd.interceptAircraft);
-	assert (aircraft);
+	assert(aircraft);
 	cargo = aircraft->itemcargo;
 
 	/* Find components definition. */
 	comp = INV_GetComponentsByItemIdx(INVSH_GetItemByID(ufocraft->id));
-	assert (comp);
+	assert(comp);
 
 	/* Add components of crashed UFO to dropship. */
 	for (i = 0; i < comp->numItemtypes; i++) {
@@ -4423,7 +4423,7 @@ static void CP_UFOCrashed_f (void)
 			if (!Q_strncmp(compod->id, comp->item_id[i], MAX_VAR))
 				break;
 		}
-		assert (compod);
+		assert(compod);
 		/* Add items to cargo, increase itemtypes. */
 		cargo[aircraft->itemtypes].idx = j;
 		cargo[aircraft->itemtypes].amount = comp->item_amount2[i];
@@ -4453,7 +4453,7 @@ static void CP_TryAgain_f (void)
  */
 base_t *CP_GetMissionBase (void)
 {
-	assert (cls.missionaircraft && cls.missionaircraft->homebase);
+	assert(cls.missionaircraft && cls.missionaircraft->homebase);
 	return cls.missionaircraft->homebase;
 }
 
