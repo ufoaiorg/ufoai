@@ -246,7 +246,7 @@ menu basesummary
 
 	string txt_basesummary_capacity_hanger
 	{
-		string "Hangars:"
+		string "_Hangars:"
 		pos "50 280"
 		color "0 .78 0 1"
 	}
