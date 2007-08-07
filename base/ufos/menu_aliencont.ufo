@@ -196,7 +196,7 @@ menu aliencont
 
 	string txt_alcheader_amount
 	{
-	    string "_Amount"
+	    string "_Alive"
 	    pos "390 130"
 	    color "0 .78 0 1"
 	}
