@@ -333,8 +333,8 @@ menu ufopedia
 		angles	"0 0 120"
 		color	"0.5 0.5 0.5 1"
 		pos		"790 335"
-		size	"140 140"
-		scale	"6 6 6"
+		size	"120 120"
+		//scale	"6 6 6"		// Comment-out if autoscaling is wanted.
 		click
 //		bgcolor "1 1 0.5 0.3"
 	}

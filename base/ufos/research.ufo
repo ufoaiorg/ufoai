@@ -1827,6 +1827,8 @@ tech rs_weapon_stungren
 tech rs_weapon_stunrod
 {
 	type		weapon
+	mdl_top	weap_stunrod
+
 	up_chapter	equipment
 	description {
 		default "_stunrod_txt"

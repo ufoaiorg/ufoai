@@ -377,3 +377,13 @@ menu_model weap_micro_shotgun
 		ufopedia	"25 25 25"	#	"-50 0 0"
 	}
 }
+
+menu_model weap_stunrod
+{
+	model	"models/weapons/stunrod/stunrod.md2"
+	menutransform {
+		ufopedia	"8 8 8"	"-30 0 0"	"-50 0 0"
+	}
+}
+
+// ============== EOF =========================
