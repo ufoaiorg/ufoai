@@ -338,7 +338,7 @@ void UP_ItemDescription (int item)
 			if (!(od->weapon && !od->reload)) {
 				Cvar_Set("mn_displayweapon", "1"); /* use strings here - no int */
 				Cvar_Set("mn_researchedlinkname", csi.ods[od->weap_idx[up_researchedlink]].name);
-				Cvar_Set("mn_upresearchedlinknametooltip", va(_("Go to '%s' UFOpedia entry"), csi.ods[od->weap_idx[up_researchedlink]].name));
+				Cvar_Set("mn_upresearchedlinknametooltip", va(_("Go to '%s' UFOpaedia entry"), csi.ods[od->weap_idx[up_researchedlink]].name));
 			}
 		} else if (od->weapon) {
 			/* We have a weapon that uses ammos */
@@ -367,7 +367,7 @@ void UP_ItemDescription (int item)
 
 			Cvar_Set("mn_displayweapon", "2"); /* use strings here - no int */
 			Cvar_Set("mn_researchedlinkname", od->name);
-			Cvar_Set("mn_upresearchedlinknametooltip", va(_("Go to '%s' UFOpedia entry"), od->name));
+			Cvar_Set("mn_upresearchedlinknametooltip", va(_("Go to '%s' UFOpaedia entry"), od->name));
 		}
 
 		if (od->weapon || !Q_strncmp(od->type, "ammo", 4)) {
@@ -940,7 +940,7 @@ static void UP_Content_f (void)
 	menuText[TEXT_STANDARD] = NULL;
 	menuText[TEXT_UFOPEDIA] = upText;
 	menuText[TEXT_LIST] = NULL;
-	Cvar_Set("mn_uptitle", _("Ufopedia Content"));
+	Cvar_Set("mn_uptitle", _("UFOpaedia Content"));
 }
 
 /**
@@ -974,7 +974,7 @@ static void UP_Index_f (void)
 	menuText[TEXT_STANDARD] = NULL;
 	menuText[TEXT_UFOPEDIA] = upIndex;
 	menuText[TEXT_LIST] = NULL;
-	Cvar_Set("mn_uptitle", va(_("Ufopedia Index: %s"), _(gd.upChapters[currentChapter].name)));
+	Cvar_Set("mn_uptitle", va(_("UFOpaedia Index: %s"), _(gd.upChapters[currentChapter].name)));
 
 	t = &gd.technologies[gd.upChapters[currentChapter].first];
 
@@ -1151,7 +1151,7 @@ static void UP_Click_f (void)
 		UP_Index_f();
 		break;
 	default:
-		Com_Printf("Unknown ufopedia display value\n");
+		Com_Printf("Unknown UFOpaedia display value\n");
 	}
 }
 
@@ -1507,8 +1507,8 @@ void UP_ResetUfopedia (void)
 
 	/* add commands and cvars */
 	Cmd_AddCommand("ufopedialist", UP_List_f, NULL);
-	Cmd_AddCommand("mn_upindex", UP_Index_f, "Shows the ufopedia index for the current chapter");
-	Cmd_AddCommand("mn_upcontent", UP_Content_f, "Shows the ufopedia chapters");
+	Cmd_AddCommand("mn_upindex", UP_Index_f, "Shows the UFOpaedia index for the current chapter");
+	Cmd_AddCommand("mn_upcontent", UP_Content_f, "Shows the UFOpaedia chapters");
 	Cmd_AddCommand("mn_upback", UP_Back_f, "Goes back from article to index or from index to chapters");
 	Cmd_AddCommand("mn_upprev", UP_Prev_f, NULL);
 	Cmd_AddCommand("mn_upnext", UP_Next_f, NULL);

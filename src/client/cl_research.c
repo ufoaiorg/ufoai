@@ -1490,7 +1490,7 @@ void RS_ResetResearch (void)
 	Cmd_AddCommand("research_type", CL_ResearchType_f, "Switch between different research types");
 	Cmd_AddCommand("mn_start_research", RS_ResearchStart_f, "Start the research of the selected entry");
 	Cmd_AddCommand("mn_stop_research", RS_ResearchStop_f, "Pause the research of the selected entry");
-	Cmd_AddCommand("mn_show_ufopedia", RS_ShowPedia_f, "Show the entry in the ufopedia for the selected research topic");
+	Cmd_AddCommand("mn_show_ufopedia", RS_ShowPedia_f, "Show the entry in the UFOpaedia for the selected research topic");
 	Cmd_AddCommand("mn_rs_add", RS_AssignScientist_f, "Assign one scientist to this entry");
 	Cmd_AddCommand("mn_rs_remove", RS_RemoveScientist_f, "Remove one scientist from this entry");
 	Cmd_AddCommand("research_update", RS_UpdateData, NULL);
