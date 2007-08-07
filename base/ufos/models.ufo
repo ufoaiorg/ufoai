@@ -180,25 +180,25 @@ menu_model triax
 menu_model drop_firebird_glass
 {
 	model	"models/aircraft/drop_firebird/firebird_glass.md2"
-//	menutransform {
-//		ufopedia "0.5 0.5 0.5"	"0 0 120"	"-40 0 0"
-//	}
+	menutransform {
+		ufopedia "0.5 0.5 0.5"	"0 0 120"	"-40 0 0"
+	}
 }
 menu_model drop_firebird_top
 {
 	model	"models/aircraft/drop_firebird/firebird_top.md2"
 	need	"drop_firebird_glass"
-//	menutransform {
-//		ufopedia "0.5 0.5 0.5"	"0 0 120"	"-40 0 0"
-//	}
+	menutransform {
+		ufopedia "0.5 0.5 0.5"	"0 0 120"	"-40 0 0"
+	}
 }
 menu_model drop_firebird
 {
 	model	"models/aircraft/drop_firebird/firebird.md2"
 	need	"drop_firebird_top"
-//	menutransform {
-//		ufopedia "0.5 0.5 0.5"	"0 0 120"	"-40 0 0"
-//	}
+	menutransform {
+		ufopedia "0.5 0.5 0.5"	"0 0 120"	"-40 0 0"
+	}
 }
 
 // ============== Stingray Interceptor ======================
@@ -206,7 +206,7 @@ menu_model inter_stingray
 {
 	model	"models/aircraft/inter_stingray/stingray_landed.md2"
 	menutransform {
-//		ufopedia	"0.9 0.9 0.9"	"-45 135 45"	"-70 0 0" 
+		ufopedia	"0.9 0.9 0.9"	"-45 135 45"	"-70 0 0" 
 		aircraft	"1.0 1.0 1.0"	"-45 135 45"	-
 	}
 }
@@ -227,9 +227,9 @@ menu_model ufo_harvester
 menu_model inter_saracen
 {
 	model	"models/aircraft/inter_saracen/saracen.md2"
-//	menutransform {
-//		ufopedia "0.5 0.5 0.5"	"180 0 -120"	-
-//	}
+	menutransform {
+		ufopedia "0.5 0.5 0.5"	"180 0 -120"	-
+	}
 }
 
 // ============== Stiletto Interceptor =====================
@@ -238,7 +238,7 @@ menu_model inter_stiletto_glass
 	model	"models/aircraft/inter_stiletto/stiletto_glass.md2"
 	menutransform {
 		// menu	scale	angles	origin
-	//	ufopedia	"0.5 0.5 0.5"	"90 -120 0"	-
+		ufopedia	"0.5 0.5 0.5"	"90 -120 0"	-
 		aircraft	"1.0 1.0 1.0"	"0 -135 70"	-
 	}
 }
@@ -247,7 +247,7 @@ menu_model inter_stiletto_top
 	model	"models/aircraft/inter_stiletto/stiletto_engines.md2"
 	need	"inter_stiletto_glass"
 	menutransform {
-	//	ufopedia	"0.5 0.5 0.5"	"90 -120 0"	-
+		ufopedia	"0.5 0.5 0.5"	"90 -120 0"	-
 		aircraft	"1.0 1.0 1.0"	"0 -135 70"	-
 	}
 }
@@ -256,7 +256,7 @@ menu_model inter_stiletto
 	model	"models/aircraft/inter_stiletto/stiletto.md2"
 	need	"inter_stiletto_top"
 	menutransform {
-	//	ufopedia	"0.5 0.5 0.5"	"90 -120 0"	-
+		ufopedia	"0.5 0.5 0.5"	"90 -120 0"	-
 		aircraft	"1.0 1.0 1.0"	"0 -135 70"	-	//"0 -135 60"
 	}
 }
