@@ -369,3 +369,11 @@ menu_model weap_machine_pistol
 		ufopedia	"40 40 40"	#	"-15 0 0"
 	}
 }
+
+menu_model weap_micro_shotgun
+{
+	model	"models/weapons/shotgunmicro/shotgunmicro.md2"
+	menutransform {
+		ufopedia	"25 25 25"	#	"-50 0 0"
+	}
+}

@@ -1646,6 +1646,8 @@ tech rs_weapon_shotgun2_slug_ammo
 tech rs_weapon_shotgun_micro
 {
 	type	weapon
+	mdl_top	weap_micro_shotgun
+
 	up_chapter	equipment
 	description {
 		default "_shotgun_micro_txt"
