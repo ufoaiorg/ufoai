@@ -44,6 +44,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* max menuscale values */
 #define MAX_MENUMODELS_SCALEMENUS 8
+typedef struct menuTransform_s {
+	char *menuID;		/**< The menu id wher ethe model should use these values. */
+	void *menuPtr;		/**< Linked after parsing for faster access */
+
+	qboolean useScale;	/**< Is the scale value used? */
+	qboolean useAngles;	/**< Is the angles value used? */
+	qboolean useOrigin;	/**< Is the origin value used? */
+
+	vec3_t scale;		/**< Scale values to be used instead of the ones defined in the menu. */
+	vec3_t angles;		/**< Angle values to be used instead of the ones defined in the menu. */
+	vec3_t origin;		/**< The _relative_ offset ont he screen. It is added to the "origin" value defined int he menu (-file). */
+} menuTransform_t;
 
 /** @brief Model that have more than one part (head, body) but may only use one menu node */
 typedef struct menuModel_s {
@@ -54,12 +66,8 @@ typedef struct menuModel_s {
 	char *tag;	/**< the tag the model should placed onto */
 	int skin;		/**< skin number to use - default 0 (first skin) */
 	char *model;
-	char *menuTransform[MAX_MENUMODELS_SCALEMENUS];	/**< the menu id to scale this model for */
-	void *menuTransformMenusPtr[MAX_MENUMODELS_SCALEMENUS];	/**< linked after parsing for faster access */
-	vec3_t menuScaleValue[MAX_MENUMODELS_SCALEMENUS];	/**< the scale values for the specific menu */
-	vec3_t menuAnglesValue[MAX_MENUMODELS_SCALEMENUS];	/**< the angles values for the specific menu */
-	vec3_t menuOriginValue[MAX_MENUMODELS_SCALEMENUS];	/**< relative adjustment values for the "origin" of the model in a specific menu */
-	int menuTransformCnt;			/**< parsed menutransform menus */
+	menuTransform_t menuTransform[MAX_MENUMODELS_SCALEMENUS];	/**< The various transform values for the specific menu. */
+	int menuTransformCnt;			/**< Nubmer of parsed menutransform menus. */
 	animState_t animState;
 	vec3_t origin, scale, angles, center;
 	vec4_t color;				/**< rgba */
