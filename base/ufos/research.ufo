@@ -839,6 +839,8 @@ tech rs_weapon_laserammo
 tech rs_weapon_heavylaser
 {
 	type	weapon
+	mdl_top weap_heavy_laser
+
 	up_chapter	equipment
 	description {
 		default "_heavylaser_txt"
@@ -893,6 +895,8 @@ tech rs_weapon_heavylaser
 tech rs_irgoggles
 {
 	type	weapon
+	mdl_top weap_irgoggles
+
 	up_chapter	equipment
 	description {
 		default "_irgoggles_txt"

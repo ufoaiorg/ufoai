@@ -386,4 +386,20 @@ menu_model weap_stunrod
 	}
 }
 
+menu_model weap_heavy_laser
+{
+	model	"models/weapons/laserheavy/laserheavy.md2"
+	menutransform {
+		ufopedia	"10 10 10"	#	"-80 0 0"
+	}
+}
+
+menu_model weap_irgoggles
+{
+	model	"models/weapons/irgoggles/irgoggles.md2"
+	menutransform {
+		ufopedia	" 20 20 20"	"-90 120 0" #
+	}
+}
+
 // ============== EOF =========================
