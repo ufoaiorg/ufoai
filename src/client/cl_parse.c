@@ -335,7 +335,7 @@ static void CL_ParseServerData (struct dbuffer *msg)
 
 	/* wipe the client_state_t struct */
 	CL_ClearState();
-	cls.state = ca_connected;
+	CL_SetClientState(ca_connected);
 
 	/* parse protocol version number */
 	i = NET_ReadLong(msg);
@@ -605,7 +605,7 @@ static void CL_StartGame (struct dbuffer *msg)
 	}
 
 	/* activate the renderer */
-	cls.state = ca_active;
+	CL_SetClientState(ca_active);
 
 	CL_EventReset();
 
@@ -1553,7 +1553,7 @@ void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
 
 	case svc_reconnect:
 		Com_Printf("Server disconnected, reconnecting\n");
-		cls.state = ca_connecting;
+		CL_SetClientState(ca_connecting);
 		cls.connect_time = -99999;	/* CL_CheckForResend() will fire immediately */
 		break;
 

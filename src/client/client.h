@@ -421,6 +421,7 @@ qboolean CL_LanguageTryToSet(const char *localeID);
 /* interface to refresh lib */
 extern refexport_t re;
 
+void CL_SetClientState(int state);
 void CL_Disconnect(void);
 void CL_Init(void);
 void CL_ReadSinglePlayerData(void);

@@ -155,7 +155,7 @@ static cvar_t *seq_animspeed;
  */
 void CL_SequenceEnd_f (void)
 {
-	cls.state = ca_disconnected;
+	CL_SetClientState(ca_disconnected);
 }
 
 
@@ -411,8 +411,7 @@ void CL_SequenceStart_f (void)
 	seqEndCmd = sp->start + sp->length;
 
 	/* init sequence state */
-	cls.state = ca_sequence;
-	cl.refresh_prepped = qtrue;
+	CL_SetClientState(ca_sequence);
 
 	/* init sun */
 	VectorSet(map_sun.dir, 2, 2, 3);

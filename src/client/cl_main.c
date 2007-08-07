@@ -331,10 +331,9 @@ static void CL_Connect (void)
  */
 static void CL_CheckForResend (void)
 {
-	/* if the local server is running and we aren't */
-	/* then connect */
+	/* if the local server is running and we aren't connected then connect */
 	if (cls.state == ca_disconnected && Com_ServerState()) {
-		cls.state = ca_connecting;
+		CL_SetClientState(ca_connecting);
 		cls.servername[0] = '\0';
 		CL_Connect();
 		userinfo_modified = qfalse;
@@ -383,7 +382,7 @@ static void CL_Connect_f (void)
 	/* FIXME: why a second time? */
 	CL_Disconnect();
 
-	cls.state = ca_connecting;
+	CL_SetClientState(ca_connecting);
 
 	/* everything should be reasearched for multiplayer matches */
 /*	RS_MarkResearchedAll(); */
@@ -519,7 +518,7 @@ void CL_Disconnect (void)
 	if (CL_VideoRecording())
 		CL_CloseAVI();
 
-	cls.state = ca_disconnected;
+	CL_SetClientState(ca_disconnected);
 }
 
 /**
@@ -592,19 +591,18 @@ static void CL_Packet_f (void)
 static void CL_Changing_f (void)
 {
 	SCR_BeginLoadingPlaque();
-	cls.state = ca_connected;	/* not active anymore, but not disconnected */
+	CL_SetClientState(ca_connected);	/* not active anymore, but not disconnected */
 	Com_Printf("\nChanging map...\n");
 }
 
 
 /**
- * @brief
- *
- * The server is changing levels
+ * @brief The server is changing levels
  */
 static void CL_Reconnect_f (void)
 {
 	S_StopAllSounds();
+
 	if (cls.state == ca_connected) {
 		struct dbuffer *msg;
 		Com_Printf("reconnecting...\n");
@@ -622,7 +620,7 @@ static void CL_Reconnect_f (void)
 		} else
 			cls.connect_time = -99999;	/* fire immediately */
 
-		cls.state = ca_connecting;
+		CL_SetClientState(ca_connecting);
 		Com_Printf("reconnecting...\n");
 		CL_Connect();
 	}
@@ -1319,7 +1317,7 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 		NET_WriteByte(msg, clc_stringcmd);
 		NET_WriteString(msg, "new");
 		NET_WriteMsg(cls.stream, msg);
-		cls.state = ca_connected;
+		CL_SetClientState(ca_connected);
 		return;
 	}
 
@@ -1613,7 +1611,7 @@ void CL_RequestNextDownload (void)
 	}
 
 	/* for singleplayer the soldiers get spawned here */
-	if (ccs.singleplayer || !baseCurrent)
+	if (ccs.singleplayer && cls.missionaircraft)
 		CL_SpawnSoldiers_f();
 }
 
@@ -2047,7 +2045,7 @@ static void CL_InitLocal (void)
 
 	memset(serverList, 0, sizeof(serverList_t) * MAX_SERVERLIST);
 
-	cls.state = ca_disconnected;
+	CL_SetClientState(ca_disconnected);
 	cls.stream = NULL;
 	cls.realtime = Sys_Milliseconds();
 
@@ -2187,11 +2185,11 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("bookmarks_click", CL_BookmarkListClick_f, NULL);
 	Cmd_AddCommand("bookmark_add", CL_BookmarkAdd_f, "Add a new bookmark - see adrX cvars");
 
-	Cmd_AddCommand("userinfo", CL_Userinfo_f, NULL);
+	Cmd_AddCommand("userinfo", CL_Userinfo_f, "Prints your userinfo string");
 	Cmd_AddCommand("snd_restart", CL_Snd_Restart_f, "Restart the sound renderer");
 
-	Cmd_AddCommand("changing", CL_Changing_f, NULL);
-	Cmd_AddCommand("disconnect", CL_Disconnect_f, NULL);
+	Cmd_AddCommand("changing", CL_Changing_f, "Change level without disconnecting completly");
+	Cmd_AddCommand("disconnect", CL_Disconnect_f, "Disconnect from the current server");
 
 	Cmd_AddCommand("quit", CL_Quit_f, "Quits the game");
 
@@ -2378,6 +2376,32 @@ void CL_AVIRecord (int now, void *data)
 		/* save the current screen */
 		if (cls.state == ca_active || cl_aviForceDemo->integer)
 			CL_TakeVideoFrame();
+	}
+}
+
+/**
+ * @brief Sets the client state
+ */
+void CL_SetClientState (int state)
+{
+	cls.state = state;
+
+	switch (cls.state) {
+	case ca_uninitialized:
+		Sys_Error("CL_SetClientState: Don't set state ca_uninitialized\n");
+		break;
+	case ca_ptledit:
+	case ca_sequence:
+		cl.refresh_prepped = qtrue;
+		break;
+	case ca_active:
+		break;
+	case ca_disconnected:
+	case ca_connecting:
+	case ca_connected:
+		break;
+	default:
+		break;
 	}
 }
 

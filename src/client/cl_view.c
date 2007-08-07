@@ -374,7 +374,10 @@ void CL_PrepRefresh (void)
 	   When an user has base built and calls /devmap or /map, cls.missionaircraft has to be set. */
 	if (!cls.missionaircraft) {
 		cls.missionaircraft = AIR_AircraftGetFromIdx(0);
-		cls.missionaircraft->homebase = &gd.bases[0];
+		if (cls.missionaircraft)
+			cls.missionaircraft->homebase = &gd.bases[0];
+		else
+			Com_Printf("Could not set mission aircraft\n");
 	}
 
 	/* this is needed to get shaders/image filters in game */
@@ -567,17 +570,21 @@ void V_RenderView (float stereo_separation)
 
 	V_ClearScene();
 
-	if (cls.state == ca_sequence) {
+	switch (cls.state) {
+	case ca_sequence:
 		CL_SequenceRender();
 		cl.refdef.rdflags |= RDF_NOWORLDMODEL;
-	} else if (cls.state == ca_ptledit) {
+		break;
+	case ca_ptledit:
 		PE_RenderParticles();
 		cl.refdef.rdflags |= RDF_NOWORLDMODEL;
-	} else {
+		break;
+	default:
 		LM_AddToScene();
 		LE_AddToScene();
 		CL_AddTargeting();
 		CL_AddLightStyles();
+		break;
 	}
 
 	/* update ref def - do this even in non 3d mode - we need shaders at loading time */

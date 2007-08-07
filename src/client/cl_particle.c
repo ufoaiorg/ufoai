@@ -492,8 +492,7 @@ static void CL_ParticleEditor_f (void)
 			Sys_Error("Could not find the menu node render in particle_editor menu\n");
 
 		/* init sequence state */
-		cls.state = ca_ptledit;
-		cl.refresh_prepped = qtrue;
+		CL_SetClientState(ca_ptledit);
 
 		/* init sun */
 		VectorSet(map_sun.dir, 2, 2, 3);

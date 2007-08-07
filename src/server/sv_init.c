@@ -931,8 +931,7 @@ static void SV_SpawnServer (const char *server, const char *param, server_state_
 	for (i = 1; i <= CM_NumInlineModels(); i++)
 		sv.models[i] = CM_InlineModel(va("*%i", i));
 
-	/* precache and static commands can be issued during */
-	/* map initialization */
+	/* precache and static commands can be issued during map initialization */
 	sv.state = ss_loading;
 	Com_SetServerState(sv.state);
 
@@ -969,6 +968,9 @@ static void SV_DiscoveryCallback (struct datagram_socket *s, const char *buf, in
  */
 static void SV_InitGame (void)
 {
+	if (sv.state != ss_dead)
+		return;
+
 	if (svs.initialized) {
 		/* cause any connected clients to reconnect */
 		SV_Shutdown("Server restarted\n", qtrue);
@@ -1041,7 +1043,6 @@ void SV_Map (const char *levelstring, const char *assembly)
 		Q_strncpyz(level, level + 1, sizeof(level));
 
 	l = strlen(level);
-	SCR_BeginLoadingPlaque();	/* for local system */
 	SV_BroadcastCommand("changing\n");
 	SV_SpawnServer(levelstring, assembly, ss_game);
 	Cbuf_CopyToDefer();
