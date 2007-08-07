@@ -311,8 +311,8 @@ menu ufopedia
 		angles	"0 0 120"
 		color	"0.5 0.5 0.5 1"
 		origin	"870 215 0"
-		pos		"750 85"
-		//scale	"7 7 7"	// Remove comments to test menutransform stuff examples in models.ufo
+		pos	"750 85"
+		scale	"7 7 7"		// Comment-out if autoscaling is wanted.
 		size	"240 240"
 		mousefx	true
 		click
