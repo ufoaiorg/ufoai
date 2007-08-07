@@ -1593,7 +1593,7 @@ static void Com_ParseActors (const char *name, const char **text)
 			memset(nc, 0, sizeof(nameCategory_t));
 			numNameCats++;
 		} else {
-			Com_Printf("Too many name categories, '%s' ignored.\n", name);
+			Com_Printf("Com_ParseActors: Too many name categories, '%s' ignored.\n", name);
 			return;
 		}
 	}
@@ -1621,19 +1621,25 @@ static void Com_ParseActors (const char *name, const char **text)
 			if (!Q_strcmp(token, name_strings[i])) {
 				/* initialize list */
 				nc->models[i] = infoPos;
+				if (nc->numModels[i])
+					Sys_Error("Com_ParseActors: Already parsed models for actor definition '%s'\n", name);
 				nc->numModels[i] = 0;
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					break;
-				if (*token != '{')
+				if (*token != '{') {
+					Com_Printf("Com_ParseActors: Empty actors definition '%s' for gender '%s'\n", name, name_strings[i]);
 					break;
+				}
 
 				do {
 					/* get the path, body, head and skin */
 					for (j = 0; j < 4; j++) {
 						token = COM_EParse(text, errhead, name);
-						if (!*text)
+						if (!*text) {
+							Com_Printf("Com_ParseActors: Premature end of script at j=%i\n", j);
 							break;
+						}
 						if (*token == '}')
 							break;
 
@@ -1644,14 +1650,20 @@ static void Com_ParseActors (const char *name, const char **text)
 							infoPos += strlen(token) + 1;
 						}
 					}
+					/* first token was } */
+					if (j == 0)
+						break;
 
 					/* only add complete actor info */
 					if (j == 4)
 						nc->numModels[i]++;
-					else
+					else {
+						Com_Printf("Com_ParseActors: Incomplete actor data: '%s' - j: %i\n", nc->title, j);
 						break;
-				}
-				while (*text);
+					}
+				} while (*text);
+				if (!nc->numModels[i])
+					Com_Printf("Com_ParseActors: actor definition '%s' with no models (gender: %s)\n", name, name_strings[i]);
 				break;
 			}
 
