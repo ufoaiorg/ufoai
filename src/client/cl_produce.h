@@ -64,6 +64,6 @@ void PR_ProductionRun(void);
 void PR_ProductionInit(void);
 qboolean PR_ProductionAllowed(void);
 void PR_Init(void);
-void PR_UpdateProductionTime(int base_idx);
+void PR_UpdateProductionTime(struct base_s *base);
 
 #endif /* CLIENT_CL_PROOUCE */

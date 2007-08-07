@@ -130,38 +130,29 @@ static int PR_CalculateProductionTime (base_t *base, technology_t *tech, compone
 
 /**
  * @brief Updates production time for all items in current queue.
- * @param[in] base_idx Index of base in global array.
+ * @param[in] *base Pointer to the base where we will update production time.
  * @note This should be called whenever workers amount is going to
  * @note change (or base capacity going to update).
  * @sa B_BuildingDestroy_f
  * @sa B_UpdateBaseBuildingStatus
  */
-void PR_UpdateProductionTime (int base_idx)
+void PR_UpdateProductionTime (base_t *base)
 {
 	technology_t *tech = NULL;
-	base_t *base = NULL;
 	int i, time = 0, timeTemp = 0;
 
-	base = &gd.bases[base_idx];
-
-	if (!base) {
-#ifdef DEBUG
-		Com_Printf("PR_UpdateProductionTime()... baseCurrent does not exist!\n");
-#endif
-		return;
-	}
 	assert(base);
 
 	/* Loop through all productions in queue and adjust production time. */
-	if (gd.productions[base_idx].numItems > 0) {
+	if (gd.productions[base->idx].numItems > 0) {
 		/* Don't change anything for first (current) item in queue. (that's why i = 1)*/
-		for (i = 1; i < gd.productions[base_idx].numItems; i++) {
-			timeTemp = gd.productions[base_idx].items[i].timeLeft;
-			tech = RS_GetTechByProvided(csi.ods[gd.productions[base_idx].items[i].objID].id);
+		for (i = 1; i < gd.productions[base->idx].numItems; i++) {
+			timeTemp = gd.productions[base->idx].items[i].timeLeft;
+			tech = RS_GetTechByProvided(csi.ods[gd.productions[base->idx].items[i].objID].id);
 			time = PR_CalculateProductionTime(base, tech, NULL, qfalse);
-			gd.productions[base_idx].items[i].timeLeft = time;
+			gd.productions[base->idx].items[i].timeLeft = time;
 			Com_DPrintf("PR_UpdateProductionTime()... updating production time for %s. Original time: %i, new time: %i\n",
-			csi.ods[gd.productions[base_idx].items[i].objID].id, timeTemp, gd.productions[base_idx].items[i].timeLeft);
+			csi.ods[gd.productions[base->idx].items[i].objID].id, timeTemp, gd.productions[base->idx].items[i].timeLeft);
 		}
 	}
 }

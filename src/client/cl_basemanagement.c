@@ -405,7 +405,7 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 
 	/* Update production times in queue if we destroyed B_WORKSHOP. */
 	if (building->buildingType == B_WORKSHOP) {
-		PR_UpdateProductionTime(base->idx);
+		PR_UpdateProductionTime(base);
 	}
 	/* Remove aliens if needed. */
 	if (building->buildingType == B_ALIEN_CONTAINMENT) {
@@ -602,7 +602,7 @@ static void B_UpdateBaseBuildingStatus (building_t* building, base_t* base, buil
 			base->hasWorkshop = qtrue;
 		B_UpdateBaseCapacities(CAP_WORKSPACE, base);
 		/* Update production times in queue. */
-		PR_UpdateProductionTime(base->idx);
+		PR_UpdateProductionTime(base);
 		break;
 	case B_HOSPITAL:
 		if ((building->buildingStatus == B_STATUS_WORKING) && (base->hasPower)) {
