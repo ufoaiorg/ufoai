@@ -2675,21 +2675,12 @@ void B_UpdateStatusWithPower (base_t *base)
 
 /**
  * @brief Counts the number of soldiers in given aircraft.
- * @param[in] *aircraft Pointer to the aircraft, for which we calculate amount of soldiers.
+ * @param[in] aircraft Pointer to the aircraft, for which we return the amount of soldiers.
  * @return Amount of soldiers.
  */
 int B_GetNumOnTeam (aircraft_t *aircraft)
 {
-#if 0
-	aircraft_t* aircraft = NULL;
-
-	if (!baseCurrent || baseCurrent->aircraftCurrent < 0)
-		return 0;
-
-	aircraft = B_GetAircraftFromBaseByIndex (baseCurrent, baseCurrent->aircraftCurrent);
-	if (!aircraft)
-		return 0;
-#endif
+	assert(aircraft);
 	return aircraft->teamSize;
 }
 

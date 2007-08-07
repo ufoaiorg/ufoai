@@ -359,13 +359,13 @@ static void CL_Connect_f (void)
 	const char *server;
 	aircraft_t *aircraft;
 
-	aircraft = AIR_AircraftGetFromIdx(0);
-
 	if (Cmd_Argc() != 2) {
 		Com_Printf("usage: connect <server>\n");
 		return;
 	}
 
+	aircraft = AIR_AircraftGetFromIdx(0);
+	assert(aircraft);
 	if (!B_GetNumOnTeam(aircraft)) {
 		MN_Popup(_("Error"), _("Assemble a team first"));
 		return;
@@ -378,9 +378,6 @@ static void CL_Connect_f (void)
 		CL_Disconnect();
 
 	server = Cmd_Argv(1);
-
-	/* FIXME: why a second time? */
-	CL_Disconnect();
 
 	CL_SetClientState(ca_connecting);
 
