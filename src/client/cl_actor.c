@@ -2584,21 +2584,19 @@ static void CL_ActorHit (le_t *le, vec3_t impact, int normal)
 {
 	int teamDescID = -1;
 
-	/*NET_ReadFormat(msg, ev_format[EV_ACTOR_HIT], &number, &xxx);*/
-
-
 	if (!le) {
 		Com_DPrintf("CL_ActorHit: Can't spawn particles, LE doesn't exist\n");
 		return;
 	} else if (le->type != ET_ACTOR2x2 && le->type != ET_ACTOR) {
 		Com_Printf("CL_ActorHit: Can't spawn particles, LE is not an actor\n");
 		return;
-	} else if (le->state & STATE_DEAD) {
+	}
 #if 0
+	else if (le->state & STATE_DEAD) {
 		Com_Printf("CL_ActorHit: Can't spawn particles, actor already dead\n");
 		return;
-#endif
 	}
+#endif
 
 	if (le->teamDesc) {
 		teamDescID = le->teamDesc - 1;
@@ -2606,7 +2604,7 @@ static void CL_ActorHit (le_t *le, vec3_t impact, int normal)
 		if (teamDesc[teamDescID].hit_particle[0]) {
 			CL_ParticleSpawn(teamDesc[teamDescID].hit_particle, 0, impact, bytedirs[normal], NULL);
 		}
-	} 	
+	}
 }
 
 /**
@@ -3162,7 +3160,7 @@ void CL_ActorMouseTrace (void)
 	int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
-	
+
 	le_t *le;
 
 	/* get cursor position as a -1 to +1 range for projection */

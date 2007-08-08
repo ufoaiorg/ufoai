@@ -686,7 +686,6 @@ typedef enum {
 	EV_ACTOR_DIE,
 	EV_ACTOR_STATS,
 	EV_ACTOR_STATECHANGE,	/**< set an actor to crounched or reaction fire */
-	EV_ACTOR_HIT,		/**< The actor was hit by a weapon/attack. */
 
 	EV_INV_ADD,
 	EV_INV_DEL,
