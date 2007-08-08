@@ -211,4 +211,5 @@ team civilian
 teamdesc civilian
 {
 	size 1
+	hit_particle blood
 }

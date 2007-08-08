@@ -106,7 +106,6 @@ const char *ev_format[] =
 	"ss",				/* EV_ACTOR_DIE */
 	"!sbsbbb",			/* EV_ACTOR_STATS; beware of the '!' */
 	"ss",				/* EV_ACTOR_STATECHANGE */
-	"ss",				/* EV_ACTOR_HIT */
 
 	"s*",				/* EV_INV_ADD */
 	"sbbb",				/* EV_INV_DEL */
@@ -153,7 +152,6 @@ static const char *ev_names[] =
 	"EV_ACTOR_DIE",
 	"EV_ACTOR_STATS",
 	"EV_ACTOR_STATECHANGE",
-	"EV_ACTOR_HIT",
 
 	"EV_INV_ADD",
 	"EV_INV_DEL",
@@ -214,7 +212,6 @@ static void (*ev_func[])( struct dbuffer *msg ) =
 	CL_ActorDie,
 	CL_ActorStats,
 	CL_ActorStateChange,
-	CL_ActorHit,
 
 	CL_InvAdd,
 	CL_InvDel,

@@ -1743,9 +1743,11 @@ team human_ugv
 teamdesc human
 {
 	size 1
+	hit_particle blood
 }
 
 teamdesc human_ugv
 {
 	size 2
+	//hit_particle // none
 }

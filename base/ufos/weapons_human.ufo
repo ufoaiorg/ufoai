@@ -41,7 +41,7 @@ item assault_ammo
 			skill	assault
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/assaultrifle.wav
 			speed	0
 			spread	"1.0 1.0"
@@ -61,7 +61,7 @@ item assault_ammo
 			skill	assault
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/assaultrifle.wav
 			speed	0
 			spread	"1.4 1.4"
@@ -82,7 +82,7 @@ item assault_ammo
 			skill	assault
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/assaultrifle.wav
 			speed	0
 			spread	"1.8 1.8"
@@ -145,7 +145,7 @@ item chaingun_ammo
 			skill	heavy
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/chaingun.wav
 			speed	0
 			spread	"1 4"
@@ -165,7 +165,7 @@ item chaingun_ammo
 			skill	heavy
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/chaingun.wav
 			speed	0
 			spread	"3 6"
@@ -185,7 +185,7 @@ item chaingun_ammo
 			skill	heavy
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/chaingun.wav
 			speed	0
 			spread	"3 15"
@@ -245,7 +245,7 @@ item machinegun_ammo
 			skill	assault
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/machinegun.wav
 			speed	0
 			spread	"1.0 1.0"
@@ -265,7 +265,7 @@ item machinegun_ammo
 			skill	assault
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/machinegun.wav
 			speed	0
 			spread	"1.4 1.4"
@@ -286,7 +286,7 @@ item machinegun_ammo
 			skill	assault
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/machinegun.wav
 			speed	0
 			spread	"1.8 1.8"
@@ -347,7 +347,7 @@ item sniper_ammo
 			skill	sniper
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/sniperrifle.wav
 			speed	0
 			spread	"0.3 0.3"
@@ -367,7 +367,7 @@ item sniper_ammo
 			skill	sniper
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/sniperrifle.wav
 			speed	0
 			spread	"0.1 0.1"
@@ -386,7 +386,7 @@ item sniper_ammo
 			skill	sniper
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/sniperrifle.wav
 			speed	0
 			spread	"0.3 0.3"
@@ -446,7 +446,7 @@ item pistol_ammo
 			skill	close
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/pistol2.wav
 			speed	0
 			spread	"2.2 2.2"
@@ -465,7 +465,7 @@ item pistol_ammo
 			skill	close
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/pistol2.wav
 			speed	0
 			spread	"3.2 3.2"
@@ -485,7 +485,7 @@ item pistol_ammo
 			skill	close
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/pistol2.wav
 			speed	0
 			spread	"1.2 1.2"
@@ -545,7 +545,7 @@ item pistol2_ammo
 			skill	close
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/machinepistol.wav
 			speed	0
 			spread	"0 1"
@@ -564,7 +564,7 @@ item pistol2_ammo
 			skill	close
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/machinepistol.wav
 			speed	0
 			spread	"1 2"
@@ -584,7 +584,7 @@ item pistol2_ammo
 			skill	close
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/machinepistol.wav
 			speed	0
 			spread	"2 2"
@@ -645,7 +645,7 @@ item smg_ammo
 			skill	assault
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/smg2.wav
 			speed	0
 			spread	"1.5 1.5"
@@ -664,7 +664,7 @@ item smg_ammo
 			skill	assault
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/smg2.wav
 			speed	0
 			spread	"2.5 2.5"
@@ -684,7 +684,7 @@ item smg_ammo
 			skill	assault
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/smg2.wav
 			speed	0
 			spread	"3.0 3.0"
@@ -745,7 +745,7 @@ item shotgun2
 //		skill	heavy
 //		projtl	null
 //		impact	bulletImpact
-//		hitbody blood
+//		hitbody null
 //		firesnd	weapons/shotgun.wav
 //		sndonce true
 //		speed	0
@@ -766,7 +766,7 @@ item shotgun2
 //		skill	heavy
 //		projtl	null
 //		impact	bulletImpact
-//		hitbody blood
+//		hitbody null
 //		firesnd	weapons/shotgun.wav
 //		sndonce true
 //		speed	0
@@ -803,7 +803,7 @@ item shotgun2_slug_ammo
 			skill	assault
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/riotshotgun.wav
 			sndonce true
 			speed	0
@@ -825,7 +825,7 @@ item shotgun2_slug_ammo
 			skill	assault
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/riotshotgun.wav
 			sndonce false
 			speed	0
@@ -847,7 +847,7 @@ item shotgun2_slug_ammo
 			skill	assault
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/riotshotgun.wav
 			sndonce false
 			speed	0
@@ -909,7 +909,7 @@ item shotgun_ammo
 			skill	close
 			projtl	null
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/riotshotgun.wav
 			sndonce true
 			speed	0
@@ -931,7 +931,7 @@ item shotgun_ammo
 			skill	close
 			projtl	null
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/riotshotgun.wav
 			sndonce true
 			speed	0
@@ -994,7 +994,7 @@ item shotgun_micro_ammo
 			skill	close
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/microshotgun2.wav
 			sndonce true
 			speed	0
@@ -1016,7 +1016,7 @@ item shotgun_micro_ammo
 			skill	close
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/microshotgun2.wav
 			sndonce false
 			speed	0
@@ -1041,7 +1041,7 @@ item shotgun_micro_ammo
 			skill	assault
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/riotshotgun.wav
 			sndonce true
 			speed	0
@@ -1063,7 +1063,7 @@ item shotgun_micro_ammo
 			skill	assault
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/riotshotgun.wav
 			sndonce false
 			speed	0
@@ -1085,7 +1085,7 @@ item shotgun_micro_ammo
 			skill	assault
 			projtl	bullet
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/riotshotgun.wav
 			sndonce false
 			speed	0
@@ -1746,7 +1746,7 @@ item grenl_fle_ammo
 			skill	explosive
 			projtl	grenl_fle_ammo
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/shotgun.wav
 			spread	"8 9"
 			range	10
@@ -1765,7 +1765,7 @@ item grenl_fle_ammo
 			skill	explosive
 			projtl	grenl_fle_ammo
 			impact	bulletImpact
-			hitbody blood
+			hitbody null
 			firesnd	weapons/shotgun.wav
 			spread	"10 2"
 			range	10
@@ -1999,7 +1999,7 @@ item bolterrifle_ammo
 			skill   assault
 			projtl  bolter
 			impact  bolterImpact
-			hitbody blood
+			hitbody null
 			firesnd weapons/bolter2.wav
 			speed   0
 			spread  "0 2"
@@ -2019,7 +2019,7 @@ item bolterrifle_ammo
 			skill   assault
 			projtl  bolterCannonade
 			impact  bolterImpact
-			hitbody blood
+			hitbody null
 			firesnd weapons/boltercannonade.wav
 			speed   0
 			spread  "3 2"
@@ -2039,7 +2039,7 @@ item bolterrifle_ammo
 			skill   sniper
 			projtl  bolter
 			impact  bolterImpact
-			hitbody blood
+			hitbody null
 			firesnd weapons/bolter2.wav
 			speed   0
 			spread  "0 1"

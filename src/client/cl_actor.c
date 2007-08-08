@@ -2574,6 +2574,42 @@ void CL_ActorToggleReaction_f (void)
 }
 
 /**
+ * @brief Spawns particle effects for a hit actor.
+ * @param[in] le The actor to spawn teh particles for.
+ * @param[in] impact The impact location (where the particles are spawned).
+ * @param[in] normal The index of the normal vector of the particles (think: impact angle).
+ * @todo Get real impact location and direction?
+ */
+static void CL_ActorHit (le_t *le, vec3_t impact, int normal)
+{
+	int teamDescID = -1;
+
+	/*NET_ReadFormat(msg, ev_format[EV_ACTOR_HIT], &number, &xxx);*/
+
+
+	if (!le) {
+		Com_DPrintf("CL_ActorHit: Can't spawn particles, LE doesn't exist\n");
+		return;
+	} else if (le->type != ET_ACTOR2x2 && le->type != ET_ACTOR) {
+		Com_Printf("CL_ActorHit: Can't spawn particles, LE is not an actor\n");
+		return;
+	} else if (le->state & STATE_DEAD) {
+#if 0
+		Com_Printf("CL_ActorHit: Can't spawn particles, actor already dead\n");
+		return;
+#endif
+	}
+
+	if (le->teamDesc) {
+		teamDescID = le->teamDesc - 1;
+		/* Spawn "hit_particle" if defined in teamDesc. */
+		if (teamDesc[teamDescID].hit_particle[0]) {
+			CL_ParticleSpawn(teamDesc[teamDescID].hit_particle, 0, impact, bytedirs[normal], NULL);
+		}
+	} 	
+}
+
+/**
  * @brief Records if shot is first shot.
  */
 static qboolean firstShot = qfalse;
@@ -2627,6 +2663,11 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	if (le->type != ET_ACTOR && le->type != ET_ACTOR2x2) {
 		Com_Printf("Can't shoot, LE is not an actor\n");
 		return;
+	}
+
+	/* Spawn blood particles (if defined) if actor was hit. Even if actor is dead :) */
+	if (flags & SF_BODY) { /**< @todo && !(flags & SF_BOUNCED) ? */
+		CL_ActorHit(le, impact, normal);
 	}
 
 	if (le->state & STATE_DEAD) {
@@ -2707,9 +2748,11 @@ void CL_ActorDoThrow (struct dbuffer *msg)
 
 	/* start the sound */
 	if ((!fd->soundOnce || firstShot) && fd->fireSound[0]
-		&& !(flags & SF_BOUNCED))
-		/* FIXME: use S_StartSound */
+		&& !(flags & SF_BOUNCED)) {
+		/** @todo  FIXME: use S_StartSound */
 		S_StartLocalSound(fd->fireSound);
+	}
+
 	firstShot = qfalse;
 }
 
@@ -2901,49 +2944,6 @@ void CL_ActorDie (struct dbuffer *msg)
 	CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
 }
 
-/**
- * @brief Spawns particle effects for a hit actor.
- * @param[in] msg
- * @todo Get real impact location and direction?
- */
-void CL_ActorHit (struct dbuffer *msg)
-{
-	le_t *le;
-	int number, xxx;
-	int i;
-	int teamDescID = -1;
-	vec3_t impact;
-
-	NET_ReadFormat(msg, ev_format[EV_ACTOR_HIT], &number, &xxx);
-
-	/* get le */
-	for (i = 0, le = LEs; i < numLEs; i++, le++)
-		if (le->entnum == number)
-			break;
-
-	if (le->entnum != number) {
-		Com_DPrintf("CL_ActorHit: Can't spawn particles, LE doesn't exist\n");
-		return;
-	} else if (le->type != ET_ACTOR2x2 && le->type != ET_ACTOR) {
-		Com_Printf("CL_ActorHit: Can't spawn particles, LE is not an actor\n");
-		return;
-	} else if (le->state & STATE_DEAD) {
-#if 0
-		Com_Printf("CL_ActorHit: Can't spawn particles, actor already dead\n");
-		return;
-#endif
-	}
-
-	
-	if (le->teamDesc) {
-		teamDescID = le->teamDesc - 1;
-		/* Spawn "hit_particle" if defined in teamDesc. */
-		if (teamDesc[teamDescID].hit_particle[0]) {
-			Grid_PosToVec(&clMap, le->pos, impact);
-			CL_ParticleSpawn(teamDesc[teamDescID].hit_particle, 0, impact, NULL /** @todo direction? */, NULL);
-		}
-	} 	
-}
 
 /*
 ==============================================================
