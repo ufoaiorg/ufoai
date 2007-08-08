@@ -2901,6 +2901,43 @@ void CL_ActorDie (struct dbuffer *msg)
 	CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
 }
 
+/**
+ * @brief Spawns particle effects for a hit actor.
+ * @param[in] msg
+ */
+void CL_ActorHit (struct dbuffer *msg)
+{
+	le_t *le;
+	int number, xxx;
+	int i;
+	int teamDescID = -1;
+
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_HIT], &number, &xxx);
+
+	/* get le */
+	for (i = 0, le = LEs; i < numLEs; i++, le++)
+		if (le->entnum == number)
+			break;
+
+	if (le->entnum != number) {
+		Com_DPrintf("CL_ActorHit: Can't spawn particles, LE doesn't exist\n");
+		return;
+	} else if (le->type != ET_ACTOR2x2 && le->type != ET_ACTOR) {
+		Com_Printf("CL_ActorHit: Can't spawn particles, LE is not an actor\n");
+		return;
+	} else if (le->state & STATE_DEAD) {
+#if 0
+		Com_Printf("CL_ActorHit: Can't spawn particles, actor already dead\n");
+		return;
+#endif
+	}
+
+	
+	if (le->teamDesc) {
+		teamDescID = le->teamDesc - 1;
+		/** @todo Spawn teamDesc[teamDescID].hit_particles if it is defined. */
+	} 	
+}
 
 /*
 ==============================================================

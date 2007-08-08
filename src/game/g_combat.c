@@ -411,6 +411,11 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 			}
 		} else {
 			ent->HP = MAX(ent->HP - damage, 0);
+			
+			/* Send "hit" message to client for particle effects */
+			gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_HIT);
+			gi.WriteShort(ent->number);
+			gi.WriteShort(ent->number);	/** @todo send direction or attack vector here? */
 		}
 	}
 
