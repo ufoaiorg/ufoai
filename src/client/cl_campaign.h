@@ -242,21 +242,39 @@ typedef struct market_s {
 
 #define MAX_NATION_BORDERS 64
 
-/** nation definition */
+/**
+ * @brief Nation definition
+ */
 typedef struct nation_s {
-	char *id;
-	char *name;
-	int funding;		/**< how many (monthly) credits */
+	char *id;		/**< Unique ID of this nation. */
+	char *name;		/**< Full name of the nation. */
+
+	vec4_t color;		/**< The color this nation uses int he color-coded earth-map */
+	vec2_t pos;		/**< Nation name position on geoscape. */
+
 	float happiness;
-	vec4_t color;
-	vec2_t pos;			/**< nation name position on geoscape */
-	float alienFriendly;
-	int soldiers;		/**< how many (monthly) soldiers */
-	int scientists;		/**< how many (monthly) scientists */
-	int workers;		/**< how many (monthly) workers */
-	int medics;			/**< how many (monthly) medics */
-	int ugvs;			/**< how many (monthly) ugvs (robots) */
-	char *names;		/**< space seperated list of possible team ids */
+/**	float xvi_infection;	@todo How much (percentage 0-100) of the population in this nation is infected. */
+	float alienFriendly;	/**< How friendly is this nation towards the aliens. (percentage 0-100)
+				 * @todo Check if this is still needed after XVI factors are in.
+				 * Pro: People can be alien-frienldy without being affected after all.
+				 * Con: ?
+				 */
+	
+	int funding;		/**< How many (monthly) credits. */
+	int soldiers;		/**< How many (monthly) soldiers. */
+	int scientists;		/**< How many (monthly) scientists. */
+	int workers;		/**< How many (monthly) workers. */
+	int medics;		/**< How many (monthly) medics. */
+	int ugvs;		/**< How many (monthly) ugvs (robots).
+				 * @todo this needs to be remvoed here and added into the buy&produce menues.
+				 */
+
+	char *names;		/**< Space seperated list of possible team ids.
+				 * Team IDs as defined in team_*.ufo
+				 */
+
+	/** A list if points where the border of this nation is located 
+	@todo not used right now? */
 	vec2_t borders[MAX_NATION_BORDERS];	/**< GL_LINE_LOOP coordinates */
 	int numBorders;		/**< coordinate count */
 } nation_t;
