@@ -189,6 +189,9 @@ typedef struct teamDesc_s {
 	char name[MAX_VAR];
 	char tech[MAX_VAR];	/**< tech id from research.ufo */
 	int size;		 /**< What size is this unit on the field (1=1x1 or 2=2x2)? */
+	char hit_particle[MAX_VAR];	/**< Particle id of what particle effect should be spawned if a unit of this type is hit.
+					 * @sa fireDef_t->hitbody - only "hit_particle" is for blood. :)
+					 * @todo "hitbody" will not spawn blood in the future. */
 } teamDesc_t;
 
 extern teamDesc_t teamDesc[MAX_TEAMDEFS];

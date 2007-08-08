@@ -1767,6 +1767,7 @@ static const value_t teamDescValues[] = {
 	{"armor", V_BOOL, offsetof(teamDesc_t, armor), MEMBER_SIZEOF(teamDesc_t, armor)}, /**< are these team members able to wear armor? */
 	{"weapons", V_BOOL, offsetof(teamDesc_t, weapons), MEMBER_SIZEOF(teamDesc_t, weapons)}, /**< are these team members able to use weapons? */
 	{"size", V_INT, offsetof(teamDesc_t, size), MEMBER_SIZEOF(teamDesc_t, weapons)}, /**< What size is this unit on the field (1=1x1 or 2=2x2)? */
+	{"hit_particle", V_STRING, offsetof(teamDesc_t, hit_particle), 0}, /**< What particle effect should be spawned if a unit of this type is hit? */
 	{NULL, 0, 0, 0}
 };
 
