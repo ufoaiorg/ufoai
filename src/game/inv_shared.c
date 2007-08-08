@@ -68,8 +68,8 @@ inline fireDef_t* FIRESH_GetFiredef (int objIdx, int weapFdsIdx, int fdIdx)
 }
 
 /**
- * @brief
- * @param[in] invList
+ * @brief Inits the inventory definition by linking the ->next pointers properly.
+ * @param[in] invList Pointer to invList_t definition being inited.
  * @sa InitGame
  * @sa CL_ResetSinglePlayerData
  * @sa CL_InitLocal
@@ -86,7 +86,15 @@ void INVSH_InitInventory (invList_t * invList)
 #endif
 
 	invUnused = invList;
+	/* first entry doesn't have an ancestor: invList[0]->next = NULL */
 	invUnused->next = NULL;
+
+	/* now link the invList_t next pointers
+         * invList[1]->next = invList[0]
+         * invList[2]->next = invList[1]
+         * invList[3]->next = invList[2]
+         * ... and so on
+         */
 	for (i = 0; i < MAX_INVLIST - 1; i++) {
 		last = invUnused++;
 		invUnused->next = last;
@@ -242,9 +250,9 @@ invList_t *Com_SearchInInventory (const inventory_t* const i, int container, int
 /**
  * @brief Add an item to a specified container in a given inventory
  * @note Set x and y to NONE if the item shoudl get added but not displayed.
- * @param[in] i
- * @param[in] item
- * @param[in] container
+ * @param[in] i Pointer to inventory definition, to which we will add item.
+ * @param[in] item Item to add to given container.
+ * @param[in] container Container in given inventory definition, where the new item will be stored.
  * @param[in] x The x location in the container.
  * @param[in] y The x location in the container.
  */
@@ -266,6 +274,29 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, int container
 		return NULL;	/* never reached. need for code analyst. */
 #endif
 
+	/* What we are doing here.
+	   invList_t array looks like that: [u]->next = [w]; [w]->next = [x]; [...]; [z]->next = NULL.
+	   i->c[container] as well as ic are such invList_t.
+	   Now we want to add new item to this container and that means, we need to create some [t]
+	   and make sure, that [t]->next points to [u] (so the [t] will be the first in array).
+		ic = i->c[container];
+	   So, we are storing old value of i->c[container] in ic to remember what was in the original
+	   container. If the i->c[container]->next pointed to [abc], the ic->next will also point to [abc].
+	   The ic is our [u] and [u]->next still points to our [w].
+		i->c[container] = invUnused;
+	   Now we are creating new container - the "original" i->c[container] is being set to empty invUnused.
+	   This is our [t].
+	   	invUnused = invUnused->next;
+	   Now we need to make sure, that our [t] will point to next free slot in our inventory. Remember, that
+	   invUnused was empty before, so invUnused->next will point to next free slot.
+		i->c[container]->next = ic;
+	   We assigned our [t]->next to [u] here. Thanks to that we still have the correct ->next chain in our
+	   inventory list.
+		ic = i->c[container];
+	   And now ic will be our [t], that is the newly added container.
+	   After that we can easily add the item (item.t, x and y positions) to our [t] being ic.
+	*/
+	   
 	/* allocate space */
 	ic = i->c[container];
 	/* set container to next free invUnused slot */
