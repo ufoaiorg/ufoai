@@ -1,12 +1,12 @@
 // character animations
 // name				start	end		fps
 
-death1				0	0	1
-dead1				0	0	1
-death2				0	0	1
-dead2				0	0	1
-death3				0	0	1
-dead3				0	0	1
+death1				22	34	20
+dead1				34	34	1
+death2				22	34	20
+dead2				34	34	1
+death3				22	34	20
+dead3				34	34	1
 
 stand0				0	0	1
 walk0				2	20	40	// The complete animation is really "1 21 40" but this "skips" too  much.
