@@ -297,17 +297,24 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, int container
 	   After that we can easily add the item (item.t, x and y positions) to our [t] being ic.
 	*/
 	   
-	/* allocate space */
+	/* Temporary store the pointer to the first item in this list. */
 	ic = i->c[container];
-	/* set container to next free invUnused slot */
+
+	/* Set/overwrite first item-entry in the container to a yet empty one. */
 	i->c[container] = invUnused;
-	/* ensure, that invUnused will be the next empty slot */
+	
+	/* Ensure, that for later usage in other (or this) function(s) invUnused will be the next empty/free slot.
+	 * It is not used _here_ anymore. */
 	invUnused = invUnused->next;
+	
+	/* Set the "next" link of the new "first item"  to the original "first item" we stored previously. */
 	i->c[container]->next = ic;
+	
+	/* Set point ic to the new "first item" (i.e. the yet empty entry). */
 	ic = i->c[container];
 /*	Com_Printf("Add to container %i: %s\n", container, CSI->ods[item.t].id);*/
 
-	/* set the data */
+	/* Set the data in the new entry to the data we got via function-parameters.*/
 	ic->item = item;
 	ic->x = x;
 	ic->y = y;

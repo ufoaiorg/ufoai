@@ -259,7 +259,7 @@ typedef struct nation_s {
 				 * Pro: People can be alien-frienldy without being affected after all.
 				 * Con: ?
 				 */
-	
+
 	int funding;		/**< How many (monthly) credits. */
 	int soldiers;		/**< How many (monthly) soldiers. */
 	int scientists;		/**< How many (monthly) scientists. */
@@ -273,7 +273,7 @@ typedef struct nation_s {
 				 * Team IDs as defined in team_*.ufo
 				 */
 
-	/** A list if points where the border of this nation is located 
+	/** A list if points where the border of this nation is located
 	@todo not used right now? */
 	vec2_t borders[MAX_NATION_BORDERS];	/**< GL_LINE_LOOP coordinates */
 	int numBorders;		/**< coordinate count */
