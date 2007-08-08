@@ -2904,6 +2904,7 @@ void CL_ActorDie (struct dbuffer *msg)
 /**
  * @brief Spawns particle effects for a hit actor.
  * @param[in] msg
+ * @todo Get real impact location and direction?
  */
 void CL_ActorHit (struct dbuffer *msg)
 {
@@ -2911,6 +2912,7 @@ void CL_ActorHit (struct dbuffer *msg)
 	int number, xxx;
 	int i;
 	int teamDescID = -1;
+	vec3_t impact;
 
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_HIT], &number, &xxx);
 
@@ -2935,7 +2937,11 @@ void CL_ActorHit (struct dbuffer *msg)
 	
 	if (le->teamDesc) {
 		teamDescID = le->teamDesc - 1;
-		/** @todo Spawn teamDesc[teamDescID].hit_particles if it is defined. */
+		/* Spawn "hit_particle" if defined in teamDesc. */
+		if (teamDesc[teamDescID].hit_particle[0]) {
+			Grid_PosToVec(&clMap, le->pos, impact);
+			CL_ParticleSpawn(teamDesc[teamDescID].hit_particle, 0, impact, NULL /** @todo direction? */, NULL);
+		}
 	} 	
 }
 
