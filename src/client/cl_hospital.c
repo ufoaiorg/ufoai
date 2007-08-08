@@ -38,8 +38,8 @@ static int HOSPITAL_LIST_LENGHT;
 
 /**
  * @brief Remove an employee from a hospitalList.
- * @param[in] *employee Pointer to the employee to remove.
- * @param[in] *base Pointer to the base where the employee is hired.
+ * @param[in] employee Pointer to the employee to remove.
+ * @param[in] base Pointer to the base where the employee is hired.
  * @return qtrue if the removal is OK, qfalse if it is not
  */
 qboolean HOS_RemoveFromList (employee_t *employee, base_t *base)
@@ -67,8 +67,8 @@ qboolean HOS_RemoveFromList (employee_t *employee, base_t *base)
 
 /**
  * @brief Remove an employee from a hospitalMissionList.
- * @param[in] *employee Pointer to the employee to remove.
- * @param[in] *base Pointer to the base where the employee is hired.
+ * @param[in] employee Pointer to the employee to remove.
+ * @param[in] base Pointer to the base where the employee is hired.
  */
 static qboolean HOS_RemoveFromMissionList (employee_t *employee, base_t *base)
 {
@@ -94,7 +94,7 @@ static qboolean HOS_RemoveFromMissionList (employee_t *employee, base_t *base)
 
 /**
  * @brief Checks whether an employee should be removed from Hospital healing list.
- * @param[in] *employee Pointer to the employee to check.
+ * @param[in] employee Pointer to the employee to check.
  */
 static void HOS_CheckRemovalFromEmployeeList (employee_t *employee)
 {
@@ -127,8 +127,8 @@ static void HOS_CheckRemovalFromEmployeeList (employee_t *employee)
 
 /**
  * @brief Adds an employee to the Hospital Healing list.
- * @param[in] *base Pointer to the base with hospital, where the given employee will be healed.
- * @param[in] *employee Pointer to the employee being added to hospital.
+ * @param[in] base Pointer to the base with hospital, where the given employee will be healed.
+ * @param[in] employee Pointer to the employee being added to hospital.
  */
 static qboolean HOS_AddToEmployeeList (employee_t* employee, base_t *base)
 {
@@ -152,8 +152,8 @@ static qboolean HOS_AddToEmployeeList (employee_t* employee, base_t *base)
 
 /**
  * @brief Adds an employee to the base->hospitalMissionList.
- * @param[in] *employee Pointer to the employee to add.
- * @param[in] *base Pointer to the base where we will add given employee.
+ * @param[in] employee Pointer to the employee to add.
+ * @param[in] base Pointer to the base where we will add given employee.
  */
 static qboolean HOS_AddToInMissionEmployeeList (employee_t* employee, base_t *base)
 {
@@ -243,7 +243,7 @@ void HOS_HospitalRun (void)
 
 /**
  * @brief Callback for HOS_HealCharacter() in hospital.
- * @param[in] *employee Pointer to the employee to heal.
+ * @param[in] employee Pointer to the employee to heal.
  * @sa HOS_HealCharacter
  * @sa HOS_HealAll
  */
@@ -505,7 +505,7 @@ static void HOS_StartHealing_f (void)
 
 /**
  * @brief Moves soldiers leaving base between hospital arrays in base_t.
- * @param[in] *aircraft Pointer to an aircraft with team onboard.
+ * @param[in] aircraft Pointer to an aircraft with team onboard.
  * @sa AIM_AircraftStart_f
  * @sa AIR_SendAircraftToMission
  * @todo Soldiers should also be removed from base->hospitalList during transfers
@@ -586,7 +586,7 @@ void HOS_ReaddEmployeesInHospital (aircraft_t *aircraft)
 
 /**
  * @brief Update hospital lists when an employee dies.
- * @param[in] *employee Pointer to the employee who died
+ * @param[in] employee Pointer to the employee who died
  * @sa E_DeleteEmployee
  */
 void HOS_RemoveDeadEmployeeFromLists (employee_t *employee)

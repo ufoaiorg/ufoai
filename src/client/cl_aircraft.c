@@ -341,7 +341,7 @@ const char *AIR_AircraftStatusToName (aircraft_t * aircraft)
 
 /**
  * @brief Checks whether given aircraft is in its homebase.
- * @param[in] *aircraft Pointer to an aircraft.
+ * @param[in] aircraft Pointer to an aircraft.
  * @return qtrue if given aircraft is in its homebase.
  * @return qfalse if given aircraft is not in its homebase.
  * @todo Add check for AIR_REARM when aircraft items will be implemented.
@@ -474,8 +474,8 @@ void AIM_PrevAircraft_f (void)
 
 /**
  * @brief check if aircraft has enough fuel to go to destination, and then come back home
- * @param[in] *aircraft Pointer to the aircraft
- * @param[in] *position Pointer to the position the aircraft should go to
+ * @param[in] aircraft Pointer to the aircraft
+ * @param[in] position Pointer to the position the aircraft should go to
  * @sa MAP_MapCalcLine
  * @return qtrue if the aircraft can go to the position, qfalse else
  */
@@ -511,7 +511,7 @@ qboolean AIR_AircraftHasEnoughFuel (aircraft_t *aircraft, const vec2_t destinati
 
 /**
  * @brief Calculates the way back to homebase for given aircraft and returns it.
- * @param[in] *aircraft Pointer to aircraft, which should return to base.
+ * @param[in] aircraft Pointer to aircraft, which should return to base.
  * @note Command to call this: "aircraft_return".
  */
 void AIR_AircraftReturnToBase (aircraft_t *aircraft)
@@ -550,7 +550,7 @@ void AIR_AircraftReturnToBase_f (void)
 
 /**
  * @brief Sets aircraftCurrent and updates related cvars.
- * @param[in] *aircraft Pointer to given aircraft.
+ * @param[in] aircraft Pointer to given aircraft.
  * @note If param[in] is NULL, it uses mn_aircraft_idx to determine aircraft.
  * @note If either pointer is NULL or no aircraft in mn_aircraft_idx, it takes
  * @note first aircraft in base (if there is any).
@@ -647,7 +647,7 @@ void AIR_AircraftSelect_f (void)
 
 /**
  * @brief Searches the global array of aircraft types for a given aircraft.
- * @param[in] *name Aircraft id.
+ * @param[in] name Aircraft id.
  * @return aircraft_t pointer or NULL if not found.
  */
 aircraft_t *AIR_GetAircraft (const char *name)
@@ -840,7 +840,7 @@ void CP_GetRandomPosForAircraft (float *pos)
 /**
  * @brief Moves given aircraft.
  * @param[in] dt
- * @param[in] *aircraft Pointer to aircraft on its way.
+ * @param[in] aircraft Pointer to aircraft on its way.
  * @return true if the aircraft reached its destination.
  */
 qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
@@ -1030,8 +1030,8 @@ aircraft_t* AIR_AircraftGetFromIdx (int idx)
 
 /**
  * @brief Sends the specified aircraft to specified mission.
- * @param[in] *aircraft Pointer to aircraft to send to mission.
- * @param[in] *mission Pointer to given mission.
+ * @param[in] aircraft Pointer to aircraft to send to mission.
+ * @param[in] mission Pointer to given mission.
  * @return qtrue if sending an aircraft to specified mission is possible.
  */
 qboolean AIR_SendAircraftToMission (aircraft_t* aircraft, actMis_t* mission)
@@ -1666,7 +1666,7 @@ Aircraft functions related to UFOs or missions.
 
 /**
  * @brief Notify that a mission has been removed.
- * @param[in] *mission Pointer to the mission that has been removed.
+ * @param[in] mission Pointer to the mission that has been removed.
  */
 void AIR_AircraftsNotifyMissionRemoved (const actMis_t *const mission)
 {
@@ -1691,7 +1691,7 @@ void AIR_AircraftsNotifyMissionRemoved (const actMis_t *const mission)
 
 /**
  * @brief Notify that an UFO has been removed.
- * @param[in] *ufo Pointer to UFO that has been removed.
+ * @param[in] ufo Pointer to UFO that has been removed.
  */
 void AIR_AircraftsNotifyUfoRemoved (const aircraft_t *const ufo)
 {
@@ -1728,7 +1728,7 @@ void AIR_AircraftsNotifyUfoRemoved (const aircraft_t *const ufo)
 
 /**
  * @brief Notify that an ufo disappear from radars.
- * @param[in] *ufo Pointer to an UFO that has disappeared.
+ * @param[in] ufo Pointer to an UFO that has disappeared.
  */
 void AIR_AircraftsUfoDisappear (const aircraft_t *const ufo)
 {
@@ -1746,8 +1746,8 @@ void AIR_AircraftsUfoDisappear (const aircraft_t *const ufo)
 
 /**
  * @brief Make the specified aircraft purchasing an UFO.
- * @param[in] *aircraft Pointer to an aircraft which will hunt for an UFO.
- * @param[in] *ufo Pointer to an UFO.
+ * @param[in] aircraft Pointer to an aircraft which will hunt for an UFO.
+ * @param[in] ufo Pointer to an UFO.
  */
 void AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
 {
@@ -1778,8 +1778,8 @@ void AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
 
 /**
  * @brief Make the specified UFO purchasing a phalanx aircraft.
- * @param[in] *ufo Pointer to the UFO.
- * @param[in] *aircraft Pointer to the target aircraft.
+ * @param[in] ufo Pointer to the UFO.
+ * @param[in] aircraft Pointer to the target aircraft.
  */
 void AIR_SendUfoPurchasingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 {
@@ -1795,8 +1795,8 @@ void AIR_SendUfoPurchasingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 
 /**
  * @brief Make the specified UFO attack a base.
- * @param[in] *ufo Pointer to the UFO.
- * @param[in] *base Pointer to the target base.
+ * @param[in] ufo Pointer to the UFO.
+ * @param[in] base Pointer to the target base.
  */
 void AIR_SendUfoPurchasingBase (aircraft_t* ufo, base_t* base)
 {
@@ -1817,7 +1817,7 @@ Aircraft functions related to team handling.
 
 /**
  * @brief Resets team in given aircraft.
- * @param[in] *aircraft Pointer to an aircraft, where the team will be reset.
+ * @param[in] aircraft Pointer to an aircraft, where the team will be reset.
  */
 void AIR_ResetAircraftTeam (aircraft_t *aircraft)
 {
@@ -1828,7 +1828,7 @@ void AIR_ResetAircraftTeam (aircraft_t *aircraft)
 
 /**
  * @brief Adds given employee to given aircraft.
- * @param[in] *aircraft Pointer to an aircraft, to which we will add employee.
+ * @param[in] aircraft Pointer to an aircraft, to which we will add employee.
  * @param[in] employee_idx Index of an employee in global array (?)
  * @todo FIXME: is this responsible for adding soldiers to a team in dropship?
  * 	ANSWER: yes it seems to be.
@@ -1861,7 +1861,7 @@ void AIR_AddToAircraftTeam (aircraft_t *aircraft, int employee_idx, employeeType
 
 /**
  * @brief Removes given employee to given aircraft.
- * @param[in] *aircraft Pointer to an aircraft, from which we will remove employee.
+ * @param[in] aircraft Pointer to an aircraft, from which we will remove employee.
  * @param[in] employee_idx Index of an employee in global array (?)
  * @todo FIXME: is this responsible for removing soldiers from a team in dropship?
  * 	ANSWER: yes it seems to be.
@@ -1912,7 +1912,7 @@ void AIR_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft, int employee_
 
 /**
  * @brief Checks whether given employee is in given aircraft (onboard).
- * @param[in] *aircraft Pointer to an aircraft.
+ * @param[in] aircraft Pointer to an aircraft.
  * @param[in] employee_idx Employee index in global array.
  * @return qtrue if an employee with given index is assigned to given aircraft.
  */
