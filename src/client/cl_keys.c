@@ -354,15 +354,15 @@ static void Key_Console (int key)
 		edit_line = (edit_line + 1) & (MAXKEYLINES-1);
 		history_line = edit_line;
 		key_lines[edit_line][0] = ']';
-		/**
-		 * maybe MAXKEYLINES was reached - we don't want to spawn 'random' strings
-		 * from history buffer in our console
-		 */
+		/* maybe MAXKEYLINES was reached - we don't want to spawn 'random' strings
+		 * from history buffer in our console */
 		key_lines[edit_line][1] = '\0';
 		key_linepos = 1;
+
+		/* force an update, because the command may take some time */
 		if (cls.state == ca_disconnected)
-			SCR_UpdateScreen();	/* force an update, because the command */
-		/* may take some time */
+			SCR_UpdateScreen();
+
 		return;
 	}
 

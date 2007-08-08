@@ -83,7 +83,7 @@ void SV_DropClient (client_t * drop)
 	drop->stream = NULL;
 
 	drop->player->inuse = qfalse;
-	drop->state = cs_free;
+	SV_SetClientState(drop, cs_free);
 	drop->name[0] = 0;
 
 	if (abandon) {
@@ -122,7 +122,7 @@ static void SVC_TeamInfo (struct net_stream *s)
 	NET_WriteRawString(msg, Cvar_VariableString("sv_maxplayersperteam"));
 	NET_WriteRawString(msg, "\n");
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
-		if (cl->state == cs_connected || cl->state == cs_spawned || cl->state == cs_spawning) {
+		if (cl->state > cs_free) {
 			Com_DPrintf("SV_TeamInfoString: connected client: %i %s\n", i, cl->name);
 			/* show players that already have a team with their teamnum */
 			if (ge->ClientGetTeamNum(cl->player))
@@ -160,7 +160,7 @@ static void SVC_Status (struct net_stream *s)
 
 	for (i = 0; i < sv_maxclients->integer; i++) {
 		cl = &svs.clients[i];
-		if (cl->state == cs_connected || cl->state == cs_spawning || cl->state == cs_spawned) {
+		if (cl->state > cs_free) {
 			Com_sprintf(player, sizeof(player), "%i \"%s\"\n", ge->ClientGetTeamNum(cl->player), cl->name);
 			NET_WriteRawString(msg, player);
 		}
@@ -234,7 +234,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	version = atoi(Cmd_Argv(1));
 	if (version != PROTOCOL_VERSION) {
 		NET_OOB_Printf(stream, "print\nServer is version %s.\n", UFO_VERSION);
-		Com_DPrintf("rejected connect from version %i\n", version);
+		Com_Printf("rejected connect from version %i\n", version);
 		return;
 	}
 
@@ -271,10 +271,9 @@ static void SVC_DirectConnect (struct net_stream *stream)
 			continue;
 		if (strcmp(peername, cl->peername) == 0) {
 			if (!stream_is_loopback(stream) && (svs.realtime - cl->lastconnect) < (sv_reconnect_limit->integer * 1000)) {
-				Com_DPrintf("%s:reconnect rejected : too soon\n", peername);
+				Com_Printf("%s:reconnect rejected : too soon\n", peername);
 				return;
 			}
-			/* FIXME: Dont let the fighters respawn - reuse the already spawned fighters */
 			Com_Printf("%s:reconnect\n", peername);
 			free_stream(cl->stream);
 			newcl = cl;
@@ -292,7 +291,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	}
 	if (!newcl) {
 		NET_OOB_Printf(stream, "print\nServer is full.\n");
-		Com_DPrintf("Rejected a connection.\n");
+		Com_Printf("Rejected a connection - server is full.\n");
 		return;
 	}
 
@@ -333,7 +332,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	else
 		NET_OOB_Printf(stream, "client_connect");
 
-	newcl->state = cs_connected;
+	SV_SetClientState(newcl, cs_connected);
 
 	newcl->lastconnect = svs.realtime;
 	Q_strncpyz(newcl->peername, peername, sizeof(newcl->peername));
@@ -846,15 +845,15 @@ static void SV_FinalMessage (const char *message, qboolean reconnect)
 
 	/* send it twice */
 	/* stagger the packets to crutch operating system limited buffers */
-
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
-		if (cl->state >= cs_connected)
+		if (cl->state >= cs_connected) {
 			NET_WriteConstMsg(cl->stream, msg);
+		}
+
+	free_dbuffer(msg);
 
 	/* make sure the commands are send */
 	wait_for_net(0);
-
-	free_dbuffer(msg);
 }
 
 /**
@@ -895,7 +894,7 @@ void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 
 	/* free current level */
 	memset(&sv, 0, sizeof(sv));
-	Com_SetServerState(sv.state);
+	Com_SetServerState(ss_dead);
 
 	/* free server static data */
 	if (svs.clients)

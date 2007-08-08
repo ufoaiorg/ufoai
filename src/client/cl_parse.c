@@ -1557,7 +1557,8 @@ void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
 	case svc_reconnect:
 		Com_Printf("Server disconnected, reconnecting\n");
 		CL_SetClientState(ca_connecting);
-		cls.connect_time = -99999;	/* CL_CheckForResend() will fire immediately */
+		cls.connectTime = 0;
+		cls.connectRetry = 10;
 		break;
 
 	case svc_print:

@@ -199,7 +199,7 @@ static void PF_Configstring (int index, const char *val)
 		break;
 	}
 
-	if (sv.state != ss_loading) {	/* send the update to everyone */
+	if (Com_ServerState() != ss_loading) {	/* send the update to everyone */
 		struct dbuffer *msg = new_dbuffer();
 		NET_WriteByte(msg, svc_configstring);
 		NET_WriteShort(msg, index);

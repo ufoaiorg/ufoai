@@ -884,7 +884,10 @@ qboolean SV_Start (const char *node, const char *service, stream_callback_func *
 	if (!func)
 		return qfalse;
 
-	SV_Stop();
+	if (server_running) {
+		Com_Printf("SV_Start: Server is still running - call SV_Stop before\n");
+		return qfalse;
+	}
 
 	if (service) {
 		struct addrinfo *res;

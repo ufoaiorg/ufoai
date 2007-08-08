@@ -88,7 +88,7 @@ int Cvar_CompleteVariable(const char *partial, const char **match);
 /**
  * @brief any CVAR_LATCHED variables that have been set will now take effect
  */
-void Cvar_GetLatchedVars(void);
+void Cvar_UpdateLatchedVars(void);
 
 /**
  * @brief called by Cmd_ExecuteString when Cmd_Argv(0) doesn't match a known

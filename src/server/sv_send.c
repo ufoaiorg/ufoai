@@ -109,8 +109,10 @@ void SV_BroadcastCommand (const char *fmt, ...)
 	va_list argptr;
 	struct dbuffer *msg;
 
-	if (!sv.state)
+	if (Com_ServerState() == ss_dead) {
+		Com_Printf("SV_BroadcastCommand: Server isn't up yet\n");
 		return;
+	}
 
 	msg = new_dbuffer();
 	NET_WriteByte(msg, svc_stufftext);
@@ -126,7 +128,7 @@ void SV_BroadcastCommand (const char *fmt, ...)
 		Q_vsnprintf(string, sizeof(string), fmt, argptr);
 		va_end(argptr);
 		string[sizeof(string) - 1] = 0;
-		Com_DPrintf("broadcast%s\n", string);
+		Com_DPrintf("SV_BroadcastCommand: %s\n", string);
 	}
 #endif
 	SV_Multicast(~0, msg);

@@ -314,6 +314,7 @@ int Com_ServerState (void)
  */
 void Com_SetServerState (int state)
 {
+	Com_DPrintf("Set server state to %i\n", state);
 	server_state = state;
 }
 

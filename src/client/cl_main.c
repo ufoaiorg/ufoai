@@ -321,7 +321,7 @@ static void CL_Connect (void)
 		cls.stream = connect_to_loopback();
 	if (cls.stream) {
 		NET_OOB_Printf(cls.stream, "connect %i \"%s\"\n", PROTOCOL_VERSION, Cvar_Userinfo());
-		cls.connect_time = cls.realtime;
+		cls.connectTime = cls.realtime;
 	} else
 		Com_Printf("Could not connect\n");
 }
@@ -344,10 +344,20 @@ static void CL_CheckForResend (void)
 	if (cls.state != ca_connecting)
 		return;
 
-	if (cls.realtime - cls.connect_time < 3000)
+	if (cls.realtime - cls.connectTime < 3000)
 		return;
 
-	Com_Printf("Connecting to %s...\n", *cls.servername ? cls.servername : "internal server");
+	if (cls.connectRetry <= 0) {
+		Com_Printf("Max. connection attempts hit - don't try any further.");
+		CL_SetClientState(ca_disconnected);
+		return;
+	}
+
+	cls.connectRetry--;
+
+	/* this must be a network server - otherwise Com_ServerState was true */
+	assert(*cls.servername);
+	Com_Printf("Connecting to %s (%i tries left)...\n", cls.servername, cls.connectRetry);
 	CL_Connect();
 }
 
@@ -374,8 +384,8 @@ static void CL_Connect_f (void)
 	/* if running a local server, kill it and reissue */
 	if (Com_ServerState())
 		SV_Shutdown("Server quit\n", qfalse);
-	else
-		CL_Disconnect();
+
+	CL_Disconnect();
 
 	server = Cmd_Argv(1);
 
@@ -388,9 +398,9 @@ static void CL_Connect_f (void)
 
 	CL_Connect();
 
-	/* CL_CheckForResend() will fire immediately */
 	Cvar_Set("mn_main", "multiplayerInGame");
-	cls.connect_time = -99999;
+
+	cls.connectRetry = 10;
 }
 
 #if 0
@@ -497,7 +507,7 @@ void CL_Disconnect (void)
 
 	VectorClear(cl.refdef.blend);
 
-	cls.connect_time = 0;
+	cls.connectRetry = 0;
 
 	/* send a disconnect message to the server */
 	if (!Com_ServerState()) {
@@ -505,8 +515,9 @@ void CL_Disconnect (void)
 		NET_WriteByte(msg, clc_stringcmd);
 		NET_WriteString(msg, "disconnect");
 		NET_WriteMsg(cls.stream, msg);
-		stream_finished(cls.stream);
 	}
+
+	stream_finished(cls.stream);
 	cls.stream = NULL;
 
 	CL_ClearState();
@@ -598,29 +609,25 @@ static void CL_Changing_f (void)
  */
 static void CL_Reconnect_f (void)
 {
-	S_StopAllSounds();
-
-	if (cls.state == ca_connected) {
-		struct dbuffer *msg;
-		Com_Printf("reconnecting...\n");
-		msg = new_dbuffer();
-		NET_WriteByte(msg, clc_stringcmd);
-		NET_WriteString(msg, "new");
-		NET_WriteMsg(cls.stream, msg);
+	if (Com_ServerState())
 		return;
-	}
+
+	S_StopAllSounds();
 
 	if (*cls.servername) {
 		if (cls.state >= ca_connected) {
+			Com_Printf("disconnecting...\n");
 			CL_Disconnect();
-			cls.connect_time = cls.realtime - 1500;
-		} else
-			cls.connect_time = -99999;	/* fire immediately */
+		}
+
+		cls.connectTime = cls.realtime - 1500;
+		cls.connectRetry = 10;
 
 		CL_SetClientState(ca_connecting);
 		Com_Printf("reconnecting...\n");
 		CL_Connect();
-	}
+	} else
+		Com_Printf("No server to reconnect to\n");
 }
 
 typedef struct serverList_s {
@@ -2381,6 +2388,7 @@ void CL_AVIRecord (int now, void *data)
  */
 void CL_SetClientState (int state)
 {
+	Com_DPrintf("CL_SetClientState: Set new state to %i (old was: %i)\n", state, cls.state);
 	cls.state = state;
 
 	switch (cls.state) {

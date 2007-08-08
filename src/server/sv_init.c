@@ -54,7 +54,7 @@ static int SV_FindIndex (const char *name, int start, int max, qboolean create)
 
 	Q_strncpyz(sv.configstrings[start + i], name, sizeof(sv.configstrings[i]));
 
-	if (sv.state != ss_loading) {	/* send the update to everyone */
+	if (Com_ServerState() != ss_loading) {	/* send the update to everyone */
 		struct dbuffer *msg = new_dbuffer();
 		NET_WriteByte(msg, svc_configstring);
 		NET_WriteShort(msg, start + i);
@@ -847,7 +847,7 @@ static const char* SV_GetMapTitle (const char* const mapname)
  * @sa CM_LoadMap
  * @sa Com_SetServerState
  */
-static void SV_SpawnServer (const char *server, const char *param, server_state_t serverstate)
+static void SV_SpawnServer (const char *server, const char *param)
 {
 	int i;
 	unsigned checksum = 0;
@@ -859,8 +859,7 @@ static void SV_SpawnServer (const char *server, const char *param, server_state_
 
 	svs.spawncount++;
 	/* any partially connected client will be restarted */
-	sv.state = ss_dead;
-	Com_SetServerState(sv.state);
+	Com_SetServerState(ss_dead);
 
 	/* wipe the entire per-level structure */
 	memset(&sv, 0, sizeof(sv));
@@ -883,32 +882,25 @@ static void SV_SpawnServer (const char *server, const char *param, server_state_
 		svs.clients[i].lastframe = -1;
 	}
 
-	switch (serverstate) {
-	case ss_game:
-		/* assemble and load the map */
-		if (server[0] == '+') {
-			SV_AssembleMap(server + 1, param, &map, &pos);
-			if (!map || !pos) {
-				Com_Printf("Could not load assembly for map '%s'\n", server);
-				return;
-			}
-		} else {
-			map = server;
-			pos = param;
+	/* assemble and load the map */
+	if (server[0] == '+') {
+		SV_AssembleMap(server + 1, param, &map, &pos);
+		if (!map || !pos) {
+			Com_Printf("Could not load assembly for map '%s'\n", server);
+			return;
 		}
-
-		Q_strncpyz(sv.configstrings[CS_TILES], map, MAX_TOKEN_CHARS * MAX_TILESTRINGS);
-		if (pos)
-			Q_strncpyz(sv.configstrings[CS_POSITIONS], pos, MAX_TOKEN_CHARS * MAX_TILESTRINGS);
-		else
-			sv.configstrings[CS_POSITIONS][0] = 0;
-
-		CM_LoadMap(map, pos, &checksum);
-		break;
-	default:
-		CM_LoadMap("", NULL, &checksum);
-		break;
+	} else {
+		map = server;
+		pos = param;
 	}
+
+	Q_strncpyz(sv.configstrings[CS_TILES], map, MAX_TOKEN_CHARS * MAX_TILESTRINGS);
+	if (pos)
+		Q_strncpyz(sv.configstrings[CS_POSITIONS], pos, MAX_TOKEN_CHARS * MAX_TILESTRINGS);
+	else
+		sv.configstrings[CS_POSITIONS][0] = 0;
+
+	CM_LoadMap(map, pos, &checksum);
 
 	Com_Printf("checksum for this map: %u\n", checksum);
 	Com_sprintf(sv.configstrings[CS_MAPCHECKSUM], sizeof(sv.configstrings[CS_MAPCHECKSUM]), "%i", checksum);
@@ -932,15 +924,13 @@ static void SV_SpawnServer (const char *server, const char *param, server_state_
 		sv.models[i] = CM_InlineModel(va("*%i", i));
 
 	/* precache and static commands can be issued during map initialization */
-	sv.state = ss_loading;
-	Com_SetServerState(sv.state);
+	Com_SetServerState(ss_loading);
 
 	/* load and spawn all other entities */
 	ge->SpawnEntities(sv.name, CM_EntityString());
 
 	/* all precaches are complete */
-	sv.state = serverstate;
-	Com_SetServerState(sv.state);
+	Com_SetServerState(ss_game);
 
 	sv.active = qtrue;
 
@@ -968,9 +958,6 @@ static void SV_DiscoveryCallback (struct datagram_socket *s, const char *buf, in
  */
 static void SV_InitGame (void)
 {
-	if (sv.state != ss_dead)
-		return;
-
 	if (svs.initialized) {
 		/* cause any connected clients to reconnect */
 		SV_Shutdown("Server restarted\n", qtrue);
@@ -984,18 +971,18 @@ static void SV_InitGame (void)
 	sv_maxclients->flags |= CVAR_LATCH;
 
 	/* get any latched variable changes (sv_maxclients, etc) */
-	Cvar_GetLatchedVars();
+	Cvar_UpdateLatchedVars();
 
-	svs.initialized = qtrue;
 	svs.spawncount = rand();
 	svs.clients = Mem_PoolAlloc(sizeof(client_t) * sv_maxclients->integer, sv_genericPool, 0);
 
 	/* init network stuff */
 	if (sv_maxclients->integer > 1) {
-		SV_Start(NULL, Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->string, &SV_ReadPacket);
+		cvar_t *port = Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL);
+		svs.initialized = SV_Start(NULL, port->string, &SV_ReadPacket);
 		svs.datagram_socket = new_datagram_socket(NULL, Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->string, &SV_DiscoveryCallback);
 	} else
-		SV_Start(NULL, NULL, &SV_ReadPacket);
+		svs.initialized = SV_Start(NULL, NULL, &SV_ReadPacket);
 
 	/* heartbeats will always be sent to the ufo master */
 	svs.last_heartbeat = -99999;	/* send immediately */
@@ -1024,9 +1011,7 @@ void SV_Map (const char *levelstring, const char *assembly)
 {
 	char level[MAX_QPATH];
 	char *ch;
-	int l;
-
-	SV_InitGame();			/* the game is just starting */
+	qboolean reconnect = qtrue;
 
 	Q_strncpyz(level, levelstring, sizeof(level));
 
@@ -1042,10 +1027,21 @@ void SV_Map (const char *levelstring, const char *assembly)
 	if (level[0] == '*')
 		Q_strncpyz(level, level + 1, sizeof(level));
 
-	l = strlen(level);
-	SV_BroadcastCommand("changing\n");
-	SV_SpawnServer(levelstring, assembly, ss_game);
+	/* the game is just starting */
+	if (Com_ServerState() == ss_dead) {
+		reconnect = qfalse;
+		SV_InitGame();
+	}
+
+	if (!svs.initialized) {
+		Com_Printf("Could not spawn the map\n");
+		return;
+	}
+
+	CL_Drop();
+	SV_SpawnServer(levelstring, assembly);
 	Cbuf_CopyToDefer();
 
-	SV_BroadcastCommand("reconnect\n");
+	if (reconnect)
+		SV_BroadcastCommand("reconnect\n");
 }

@@ -170,6 +170,7 @@ void SV_BroadcastCommand(const char *fmt, ...) __attribute__((format(printf,1,2)
 /* sv_user.c */
 void SV_ExecuteClientMessage(client_t * cl, int cmd, struct dbuffer *msg);
 int SV_CountPlayers(void);
+void SV_SetClientState(client_t* client, int state);
 
 /* sv_ccmds.c */
 void SV_SetMaster_f(void);

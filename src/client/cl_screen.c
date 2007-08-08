@@ -505,7 +505,6 @@ void SCR_RunConsole (void)
 		if (scr_conlines < scr_con_current)
 			scr_con_current = scr_conlines;
 	}
-
 }
 
 /**

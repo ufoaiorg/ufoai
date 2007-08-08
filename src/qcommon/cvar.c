@@ -575,7 +575,7 @@ void Cvar_SetValue (const char *var_name, float value)
  * @brief Any variables with latched values will now be updated
  * @note CVAR_LATCH cvars are not updated during a game (tactical mission)
  */
-void Cvar_GetLatchedVars (void)
+void Cvar_UpdateLatchedVars (void)
 {
 	cvar_t *var;
 

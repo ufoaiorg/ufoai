@@ -55,6 +55,17 @@ static void stufftext (client_t *client, const char *fmt, ...)
 }
 
 /**
+ * @brief Set the client state
+ * @sa client_state_t
+ */
+void SV_SetClientState (client_t* client, int state)
+{
+	assert(client);
+	Com_DPrintf("Set state for client '%s' to %i\n", client->name, state);
+	client->state = state;
+}
+
+/**
  * @brief Sends the first message from the server to a connected client.
  * This will be sent on the initial connection and upon each server load.
  * Client reads via CL_ParseServerData in cl_parse.c
@@ -80,7 +91,7 @@ static void SV_New_f (void)
 	}
 
 	/* client state to prevent multiple new from causing high cpu / overflows. */
-	sv_client->state = cs_spawning;
+	SV_SetClientState(sv_client, cs_spawning);
 
 	/* serverdata needs to go over for all types of servers */
 	/* to make sure the protocol is right, and to set the gamedir */
@@ -104,7 +115,7 @@ static void SV_New_f (void)
 	}
 
 	/* game server */
-	if (sv.state == ss_game) {
+	if (Com_ServerState() == ss_game) {
 		/* begin fetching configstrings */
 		stufftext(sv_client, "cmd configstrings %i 0\n", svs.spawncount);
 	}
@@ -217,7 +228,7 @@ static void SV_SpawnAllPending (void)
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
 		if (cl && cl->state == cs_spawning) {
 			if (ge->ClientSpawn(cl->player))
-				cl->state = cs_spawned;
+				SV_SetClientState(cl, cs_spawned);
 			else
 				/* false means, that there are not all players - so cycling to
 				 * the end here is not needed */
@@ -281,7 +292,7 @@ static void SV_Nextserver (void)
 	const char *v;
 
 	/* can't nextserver while playing a normal game */
-	if (sv.state == ss_game)
+	if (Com_ServerState() == ss_game)
 		return;
 
 	svs.spawncount++;			/* make sure another doesn't sneak in */
@@ -352,7 +363,7 @@ static void SV_ExecuteUserCommand (char *s)
 			return;
 		}
 
-	if (sv.state == ss_game) {
+	if (Com_ServerState() == ss_game) {
 		Com_DPrintf("SV_ExecuteUserCommand: client command: %s\n", s);
 		ge->ClientCommand(sv_player);
 	}

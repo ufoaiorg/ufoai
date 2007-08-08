@@ -2716,7 +2716,7 @@ void MN_DrawMenus (void)
 											} else {
 												VectorCopy(node->scale, mi.scale);
 											}
-											
+
 											/* Use menu angles if defined. */
 											if (menuModel->menuTransform[i].useAngles) {
 												VectorCopy(menuModel->menuTransform[i].angles, mi.angles);

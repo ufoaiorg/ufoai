@@ -3577,8 +3577,8 @@ void CL_ParseNations (const char *name, const char **text)
  */
 qboolean CL_OnBattlescape (void)
 {
-	/* sv.state is set to zero on every battlefield shutdown */
-	if (Com_ServerState() > 0)
+	/* server_state is set to zero (ss_dead) on every battlefield shutdown */
+	if (Com_ServerState())
 		return qtrue; /* server */
 
 	/* client */
