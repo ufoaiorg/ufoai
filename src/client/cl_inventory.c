@@ -36,8 +36,8 @@ static int eTempCredits;		/**< Used to count temporary credits for item selling.
 
 /**
  * @brief Count and collect ammo from gun magazine.
- * @param[in] *magazine Pointer to invList_t being magazine.
- * @param[in] *aircraft Pointer to aircraft used in this mission.
+ * @param[in] magazine Pointer to invList_t being magazine.
+ * @param[in] aircraft Pointer to aircraft used in this mission.
  * @sa INV_CollectingItems
  */
 static void INV_CollectingAmmo (invList_t *magazine, aircraft_t *aircraft)
@@ -70,7 +70,7 @@ static void INV_CollectingAmmo (invList_t *magazine, aircraft_t *aircraft)
 
 /**
  * @brief Process items carried by soldiers.
- * @param[in] *soldier Pointer to le_t being a soldier from our team.
+ * @param[in] soldier Pointer to le_t being a soldier from our team.
  * @sa INV_CollectingItems
  */
 static void INV_CarriedItems (le_t *soldier)
@@ -238,7 +238,7 @@ void INV_CollectingItems (int won)
 
 /**
  * @brief Sell items to the market or add them to base storage.
- * @param[in] *aircraft Pointer to an aircraft landing in base.
+ * @param[in] aircraft Pointer to an aircraft landing in base.
  * @sa CL_DropshipReturned
  */
 void INV_SellOrAddItems (aircraft_t *aircraft)
@@ -310,7 +310,7 @@ void INV_SellOrAddItems (aircraft_t *aircraft)
 
 /**
  * @brief Enable autosell option.
- * @param[in] *tech Pointer to newly researched technology.
+ * @param[in] tech Pointer to newly researched technology.
  * @sa RS_MarkResearched
  */
 void INV_EnableAutosell (technology_t *tech)
@@ -347,7 +347,7 @@ void INV_EnableAutosell (technology_t *tech)
 
 /**
  * @brief Prepares initial equipment for first base at the beginning of the campaign.
- * @param[in] *base Pointer to first base.
+ * @param[in] base Pointer to first base.
  * @sa B_BuildBase_f
  * @todo Make sure all equipment including soldiers equipment is added to capacity.cur.
  * @todo Remove curCampaign pointer usage here. Send campaign idx as param[in] instead.
@@ -477,7 +477,7 @@ void INV_ParseComponents (const char *name, const char **text)
 /**
  * @brief Returns components definition by item idx in csi.ods[].
  * @param[in] itemIdx Global item index in csi.ods[].
- * @return *comp Pointer to components_t definition.
+ * @return comp Pointer to components_t definition.
  */
 components_t *INV_GetComponentsByItemIdx (int itemIdx)
 {
@@ -495,8 +495,8 @@ components_t *INV_GetComponentsByItemIdx (int itemIdx)
 
 /**
  * @brief Disassembles item, adds components to base storage and calculates all components size.
- * @param[in] *base Pointer to base where the disassembling is being made.
- * @param[in] *comp Pointer to components definition.
+ * @param[in] base Pointer to base where the disassembling is being made.
+ * @param[in] comp Pointer to components definition.
  * @param[in] calculate True if this is only calculation of item size, false if this is real disassembling.
  * @return Size of all components in this disassembling.
  */
@@ -530,7 +530,7 @@ int INV_DisassemblyItem (base_t *base, components_t *comp, qboolean calculate)
 
 /**
  * @brief Manages Antimatter (adding, removing) through Antimatter Storage Facility.
- * @param[in] *base Pointer to the base.
+ * @param[in] base Pointer to the base.
  * @param[in] add True if we are adding antimatter, false when removing.
  * @note This function should be called whenever we add or remove antimatter from Antimatter Storage Facility.
  */

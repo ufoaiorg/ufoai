@@ -39,7 +39,7 @@ static aliensCont_t* aliencontCurrent;		/**< Current selected Alien Containment.
 
 /**
  * @brief Prepares Alien Containment - names, states, and zeroed amount.
- * @param[in] *base Pointer to the base with AC.
+ * @param[in] base Pointer to the base with AC.
  * @sa B_BuildBase
  * @sa AL_AddAliens
  */
@@ -88,7 +88,7 @@ const char *AL_AlienTypeToName (int teamDescIdx)
 
 /**
  * @brief Collecting stunned aliens and alien bodies after the mission.
- * @param[in] *aircraft Pointer to the aircraft with cargo.
+ * @param[in] aircraft Pointer to the aircraft with cargo.
  * @sa CL_ParseResults
  */
 void AL_CollectingAliens (aircraft_t *aircraft)
@@ -164,7 +164,7 @@ void AL_CollectingAliens (aircraft_t *aircraft)
 
 /**
  * @brief Puts alien cargo into Alien Containment.
- * @param[in] *aircraft Aircraft transporting cargo to homebase.
+ * @param[in] aircraft Aircraft transporting cargo to homebase.
  * @sa CL_DropshipReturned
  * @sa AL_FillInContainment
  */
@@ -268,8 +268,8 @@ void AL_AddAliens (aircraft_t *aircraft)
 
 /**
  * @brief Removes alien(s) from Alien Containment.
- * @param[in] *base Pointer to the base where we will remove aliens.
- * @param[in] *name Name of alien race.
+ * @param[in] base Pointer to the base where we will remove aliens.
+ * @param[in] name Name of alien race.
  * @param[in] amount Amount of aliens to be removed.
  * @param[in] action Type of action (see alienCalcType_t).
  * @sa AC_KillAll_f
@@ -361,7 +361,7 @@ void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_
 
 /**
  * @brief Get index of alien.
- * @param[in] *id Pointer to alien type.
+ * @param[in] id Pointer to alien type.
  * @return index of alien
  * @sa RS_AssignTechIdxs
  */

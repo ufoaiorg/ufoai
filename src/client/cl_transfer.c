@@ -47,9 +47,9 @@ static int trEmployeesTmp[MAX_EMPL][MAX_EMPLOYEES];
 
 /**
  * @brief Checks condition for item transfer.
- * @param[in] *od Pointer to object definition.
- * @param[in] *srcbase Pointer to current base.
- * @param[in] *destbase Pointer to destination base.
+ * @param[in] od Pointer to object definition.
+ * @param[in] srcbase Pointer to current base.
+ * @param[in] destbase Pointer to destination base.
  * @return qtrue if transfer of this item is possible.
  */
 qboolean TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase)
@@ -87,9 +87,9 @@ qboolean TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase)
 
 /**
  * @brief Checks condition for employee transfer.
- * @param[in] *employee Pointer to employee for transfer.
- * @param[in] *srcbase Pointer to current base.
- * @param[in] *destbase Pointer to destination base.
+ * @param[in] employee Pointer to employee for transfer.
+ * @param[in] srcbase Pointer to current base.
+ * @param[in] destbase Pointer to destination base.
  * @return qtrue if transfer of this type of alien is possible.
  */
 qboolean TR_CheckEmployee (employee_t *employee, base_t *srcbase, base_t *destbase)
@@ -118,8 +118,8 @@ qboolean TR_CheckEmployee (employee_t *employee, base_t *srcbase, base_t *destba
 /**
  * @brief Checks condition for alive alien transfer.
  * @param[in] alienidx Index of an alien type.
- * @param[in] *srcbase Pointer to current base.
- * @param[in] *destbase Pointer to destination base.
+ * @param[in] srcbase Pointer to current base.
+ * @param[in] destbase Pointer to destination base.
  * @return qtrue if transfer of this type of alien is possible.
  */
 qboolean TR_CheckAlien (int alienidx, base_t *srcbase, base_t *destbase)
@@ -400,7 +400,7 @@ static void TR_TransferListClear_f (void)
 
 /**
  * @brief Unloads transfer cargo when finishing the transfer or destroys it when no buildings/base.
- * @param[in] *transfer Pointer to transfer in gd.alltransfers.
+ * @param[in] transfer Pointer to transfer in gd.alltransfers.
  * @param[in] success True if the transfer reaches dest base, false if the base got destroyed.
  * @sa TR_TransferEnd
  */
@@ -486,7 +486,7 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 
 /**
  * @brief Shows available bases in transfer menu.
- * @param[in] *aircraft Pointer to aircraft used in transfer.
+ * @param[in] aircraft Pointer to aircraft used in transfer.
  */
 void TR_TransferAircraftMenu (aircraft_t* aircraft)
 {
@@ -506,7 +506,7 @@ void TR_TransferAircraftMenu (aircraft_t* aircraft)
 
 /**
  * @brief Ends the transfer.
- * @param[in] *transfer Pointer to transfer in gd.alltransfers
+ * @param[in] transfer Pointer to transfer in gd.alltransfers
  */
 void TR_TransferEnd (transfer_t *transfer)
 {
