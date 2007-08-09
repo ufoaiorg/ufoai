@@ -51,6 +51,10 @@ static struct dbuffer_element *free_element_list = NULL;
 static int free_dbuffers = 0, allocated_dbuffers = 0;
 static struct dbuffer *free_dbuffer_list = NULL;
 
+/**
+ * @brief
+ * @sa free_element
+ */
 static struct dbuffer_element * allocate_element (void)
 {
 	struct dbuffer_element *e;
@@ -74,6 +78,10 @@ static struct dbuffer_element * allocate_element (void)
 	return e;
 }
 
+/**
+ * @brief
+ * @sa allocate_element
+ */
 static void free_element (struct dbuffer_element *e)
 {
 	e->next = free_element_list;
@@ -88,7 +96,8 @@ static void free_element (struct dbuffer_element *e)
 	}
 }
 
-/** @brief Allocate a dbuffer
+/**
+ * @brief Allocate a dbuffer
  * @return the newly allocated buffer
  * Allocates a new dbuffer and initialises it to be empty
  */
@@ -117,7 +126,8 @@ struct dbuffer * new_dbuffer (void)
 	return buf;
 }
 
-/** @brief Deallocate a dbuffer
+/**
+ * @brief Deallocate a dbuffer
  * @param buf the dbuffer to deallocate
  * Deallocates a dbuffer, and all memory it uses
  */
@@ -144,7 +154,8 @@ void free_dbuffer (struct dbuffer *buf)
 	}
 }
 
-/** @brief This grows the buffer to provide at least enough space for the
+/**
+ * @brief This grows the buffer to provide at least enough space for the
  * given length, plus one character (see the comments in dbuffer_add()
  * for the explanation of that extra character).
  */
@@ -160,7 +171,8 @@ static void dbuffer_grow (struct dbuffer *buf, size_t len)
 	}
 }
 
-/** @brief Append data to a dbuffer
+/**
+ * @brief Append data to a dbuffer
  * @param buf the target buffer
  * @param data pointer to the start of the bytes to add
  * @param len number of bytes to add
@@ -197,7 +209,8 @@ void dbuffer_add (struct dbuffer *buf, const char *data, size_t len)
 	}
 }
 
-/** @brief Read data from a dbuffer
+/**
+ * @brief Read data from a dbuffer
  * @param buf the source buffer
  * @param data pointer to where the data should be copied
  * @param len maximum number of bytes to copy
@@ -235,7 +248,8 @@ size_t dbuffer_get (const struct dbuffer *buf, char *data, size_t len)
 	return read;
 }
 
-/** @brief Read data from a dbuffer
+/**
+ * @brief Read data from a dbuffer
  * @param buf the source buffer
  * @param offset the offset in the source buffer where data should be copied from
  * @param data pointer to where the data should be copied
@@ -286,7 +300,8 @@ size_t dbuffer_get_at (const struct dbuffer *buf, size_t offset, char *data, siz
 	return read;
 }
 
-/** @brief Allocate a dbuffer
+/**
+ * @brief Allocate a dbuffer
  * @param old the source buffer
  * @return the newly allocated buffer
  * Allocates a new dbuffer and initialises it to contain a copy of the
@@ -310,7 +325,8 @@ struct dbuffer *dbuffer_dup (struct dbuffer *old)
 	return buf;
 }
 
-/** @brief Deletes data from a dbuffer
+/**
+ * @brief Deletes data from a dbuffer
  * @param buf the target buffer
  * @param len number of bytes to delete
  * Deletes the given number of bytes from the start of the dbuffer
@@ -347,7 +363,8 @@ size_t dbuffer_remove (struct dbuffer *buf, size_t len)
 	return removed;
 }
 
-/** @brief Read and delete data from a dbuffer
+/**
+ * @brief Read and delete data from a dbuffer
  * @param buf the source buffer
  * @param data pointer to where the data should be copied
  * @param len maximum number of bytes to copy
@@ -396,7 +413,8 @@ size_t dbuffer_extract (struct dbuffer *buf, char *data, size_t len)
 	return extracted;
 }
 
-/** @brief Locate the first occurance of a character in a dbuffer
+/**
+ * @brief Locate the first occurance of a character in a dbuffer
  * @param buf dbuffer to search
  * @param c character to search for
  *
