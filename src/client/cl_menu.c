@@ -3455,9 +3455,9 @@ static void MN_SetModelTransform_f (void)
 
 	nodeID = Cmd_Argv(1);
 
-	x = atoi(Cmd_Argv(2));
-	y = atoi(Cmd_Argv(3));
-	z = atoi(Cmd_Argv(4));
+	x = atof(Cmd_Argv(2));
+	y = atof(Cmd_Argv(3));
+	z = atof(Cmd_Argv(4));
 	
 	VectorSet(value, x, y, z);
 	
