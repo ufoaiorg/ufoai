@@ -31,7 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 extern cvar_t *fs_gamedir;
 
-#if 0
 /**
  * @brief see also svc_ops_e in qcommon.h
  * @note don't change the array size - a NET_ReadByte can
@@ -56,7 +55,6 @@ static const char *svc_strings[UCHAR_MAX+1] =
 	"svc_playerinfo",
 	"svc_event"
 };
-#endif
 
 /*============================================================================= */
 
@@ -1360,6 +1358,7 @@ void CL_UnblockEvents (void)
 /**
  * @brief Called in case a svc_event was send via the network buffer
  * @sa CL_ParseServerMessage
+ * @param[in] msg The client stream message buffer to read from
  */
 static void CL_ParseEvent (struct dbuffer *msg)
 {
@@ -1531,6 +1530,7 @@ static void CL_ParseEvent (struct dbuffer *msg)
 /**
  * @brief
  * @sa CL_ReadPackets
+ * @param[in] msg The client stream message buffer to read from
  */
 void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
 {
@@ -1540,6 +1540,8 @@ void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
 	/* parse the message */
 	if (cmd == -1)
 		return;
+
+	Com_DPrintf("command: %s\n", svc_strings[cmd]);
 
 	/* commands */
 	switch (cmd) {

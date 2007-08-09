@@ -64,7 +64,7 @@ static void Cmd_Players_f (player_t * player)
  */
 static qboolean G_CheckFlood (player_t *player)
 {
-	int		i;
+	int i;
 
 	if (flood_msgs->integer) {
 		if (level.time < player->pers.flood_locktill) {
