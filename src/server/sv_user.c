@@ -30,30 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 player_t *sv_player;
 
-/*
-============================================================
-USER STRINGCMD EXECUTION
-
-sv_client and sv_player will be valid.
-============================================================
-*/
-
-static void stufftext(client_t *client, const char *fmt, ...) __attribute__((format(printf,2,3)));
-
-static void stufftext (client_t *client, const char *fmt, ...)
-{
-	va_list ap;
-	struct dbuffer *msg = new_dbuffer();
-
-	NET_WriteByte(msg, svc_stufftext);
-
-	va_start(ap, fmt);
-	NET_VPrintf(msg, fmt, ap);
-	va_end(ap);
-
-	NET_WriteMsg(client->stream, msg);
-}
-
 /**
  * @brief Set the client state
  * @sa client_state_t
@@ -64,6 +40,14 @@ void SV_SetClientState (client_t* client, int state)
 	Com_DPrintf("Set state for client '%s' to %i\n", client->name, state);
 	client->state = state;
 }
+
+/*
+============================================================
+USER STRINGCMD EXECUTION
+
+sv_client and sv_player will be valid.
+============================================================
+*/
 
 /**
  * @brief Sends the first message from the server to a connected client.
@@ -83,7 +67,7 @@ static void SV_New_f (void)
 		if (sv_client->state == cs_spawning) {
 			/* client typed 'reconnect/new' while connecting. */
 			Com_Printf("SV_New_f: client typed 'reconnect/new' while connecting\n");
-			stufftext(sv_client, "\ndisconnect\nreconnect\n");
+			SV_ClientCommand(sv_client, "\ndisconnect\nreconnect\n");
 			SV_DropClient(sv_client);
 		} else
 			Com_DPrintf("WARNING: Illegal 'new' from %s, client state %d. This shouldn't happen...\n", sv_client->name, sv_client->state);
@@ -117,7 +101,7 @@ static void SV_New_f (void)
 	/* game server */
 	if (Com_ServerState() == ss_game) {
 		/* begin fetching configstrings */
-		stufftext(sv_client, "cmd configstrings %i 0\n", svs.spawncount);
+		SV_ClientCommand(sv_client, "cmd configstrings %i 0\n", svs.spawncount);
 	}
 }
 
@@ -159,7 +143,7 @@ static void SV_Configstrings_f (void)
 		}
 	}
 
-	stufftext(sv_client, "precache %i\n", svs.spawncount);
+	SV_ClientCommand(sv_client, "precache %i\n", svs.spawncount);
 }
 
 /**
@@ -279,48 +263,6 @@ static void SV_ShowServerinfo_f (void)
 }
 
 
-/**
- * @brief This variable holds the name of the next alias to be executed.
- * A looping series of aliases is created which look something like
- * 'alias l1 "somecommandhere; set nextserver l2"'
- * and
- * 'alias l2 "someothercommandhere; set nextserver l1"'.
- * These two aliases would loop the commands until a key is pressed.
- */
-static void SV_Nextserver (void)
-{
-	const char *v;
-
-	/* can't nextserver while playing a normal game */
-	if (Com_ServerState() == ss_game)
-		return;
-
-	svs.spawncount++;			/* make sure another doesn't sneak in */
-	v = Cvar_VariableString("nextserver");
-	if (!v[0])
-		Cbuf_AddText("killserver\n");
-	else {
-		Cbuf_AddText(v);
-		Cbuf_AddText("\n");
-	}
-	Cvar_Set("nextserver", "");
-}
-
-/**
- * @brief A cinematic has completed or been aborted by a client, so move to the next server,
- */
-static void SV_Nextserver_f (void)
-{
-	if (atoi(Cmd_Argv(1)) != svs.spawncount) {
-		Com_DPrintf("Nextserver() from wrong level, from %s\n", sv_client->name);
-		return;					/* leftover from last server */
-	}
-
-	Com_DPrintf("Nextserver() from %s\n", sv_client->name);
-
-	SV_Nextserver();
-}
-
 typedef struct {
 	const char *name;
 	void (*func) (void);
@@ -332,8 +274,6 @@ static const ucmd_t ucmds[] = {
 	{"configstrings", SV_Configstrings_f},
 	{"begin", SV_Begin_f},
 	{"spawn", SV_Spawn_f},
-
-	{"nextserver", SV_Nextserver_f},
 
 	{"disconnect", SV_Disconnect_f},
 

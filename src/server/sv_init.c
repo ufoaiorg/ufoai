@@ -998,30 +998,16 @@ static void SV_InitGame (void)
 /**
  * @brief Loads the map
  * @note the full syntax is:
- * @note map [*]<map>$<startspot>+<nextserver>
- * command from the console or progs.
- * Map can also be a .pcx, or .dm file
- * Nextserver is used to allow a cinematic to play, then proceed to
- * another level:
- * map tram.pcx#jail_e3
+ * @note map [+]<map> [<assembly>]
  * @sa SV_SpawnServer
  * @sa SV_Map_f
  */
 void SV_Map (const char *levelstring, const char *assembly)
 {
 	char level[MAX_QPATH];
-	char *ch;
 	qboolean reconnect = qtrue;
 
 	Q_strncpyz(level, levelstring, sizeof(level));
-
-	/* if there is a # in the map, set nextserver to the remainder */
-	ch = strstr(level, "#");
-	if (ch && !assembly) {
-		*ch = 0;
-		Cvar_Set("nextserver", va("gamemap \"%s\"", ch + 1));
-	} else
-		Cvar_Set("nextserver", "");
 
 	/* skip the end-of-unit flag if necessary */
 	if (level[0] == '*')
@@ -1039,6 +1025,7 @@ void SV_Map (const char *levelstring, const char *assembly)
 	}
 
 	CL_Drop();
+	SCR_BeginLoadingPlaque();
 	SV_SpawnServer(levelstring, assembly);
 	Cbuf_CopyToDefer();
 

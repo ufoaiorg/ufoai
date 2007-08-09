@@ -34,6 +34,23 @@ EVENT MESSAGES
 =============================================================================
 */
 
+/**
+ * @brief
+ * @sa SV_BroadcastCommand
+ */
+void SV_ClientCommand (client_t *client, const char *fmt, ...)
+{
+	va_list ap;
+	struct dbuffer *msg = new_dbuffer();
+
+	NET_WriteByte(msg, svc_stufftext);
+
+	va_start(ap, fmt);
+	NET_VPrintf(msg, fmt, ap);
+	va_end(ap);
+
+	NET_WriteMsg(client->stream, msg);
+}
 
 /**
  * @brief Sends text across to be displayed if the level passes
@@ -103,6 +120,7 @@ void SV_BroadcastPrintf (int level, const char *fmt, ...)
 
 /**
  * @brief Sends text to all active clients
+ * @sa SV_ClientCommand
  */
 void SV_BroadcastCommand (const char *fmt, ...)
 {
