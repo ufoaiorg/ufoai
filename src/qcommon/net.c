@@ -655,8 +655,9 @@ struct net_stream *connect_to_loopback (void)
 }
 
 /**
- * @brief
+ * @brief Enqueue a network message into a stream
  * @sa stream_dequeue
+ * @sa dbuffer_add
  */
 void stream_enqueue (struct net_stream *s, const char *data, int len)
 {
@@ -692,7 +693,7 @@ int stream_length (struct net_stream *s)
 }
 
 /**
- * @brief
+ * @brief Returns the length of the waiting inbound buffer
  */
 int stream_peek (struct net_stream *s, char *data, int len)
 {
@@ -705,6 +706,7 @@ int stream_peek (struct net_stream *s, char *data, int len)
 /**
  * @brief
  * @sa stream_enqueue
+ * @sa dbuffer_extract
  */
 int stream_dequeue (struct net_stream *s, char *data, int len)
 {
