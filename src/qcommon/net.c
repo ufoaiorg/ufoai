@@ -299,6 +299,11 @@ static void close_stream (struct net_stream *s)
 		return;
 
 	if (s->socket != INVALID_SOCKET) {
+		if (s->outbound && dbuffer_len(s->outbound))
+			Com_Printf("The outbound buffer for this socket (%d) is not empty\n", s->socket);
+		else if (s->inbound && dbuffer_len(s->inbound))
+			Com_Printf("The inbound buffer for this socket (%d) is not empty\n", s->socket);
+
 		FD_CLR(s->socket, &read_fds);
 		FD_CLR(s->socket, &write_fds);
 		close_socket(s->socket);
@@ -316,7 +321,7 @@ static void close_stream (struct net_stream *s)
 	s->closed = qtrue;
 
 	/* If we have a loopback peer, don't free the outbound buffer,
-	* because it's our peer's inbound buffer */
+	 * because it's our peer's inbound buffer */
 	if (!s->loopback_peer)
 		free_dbuffer(s->outbound);
 
@@ -699,8 +704,10 @@ int stream_length (struct net_stream *s)
  */
 int stream_peek (struct net_stream *s, char *data, int len)
 {
-	if (len <= 0 || !s || s->closed || s->finished)
-		return 0;
+	if (len <= 0 || !s || s->closed || s->finished) {
+		if (!s->inbound || dbuffer_len(s->inbound) == 0)
+			return 0;
+	}
 
 	return dbuffer_get(s->inbound, data, len);
 }
