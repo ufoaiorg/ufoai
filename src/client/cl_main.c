@@ -315,7 +315,7 @@ static void CL_Connect (void)
 	close_datagram_socket(cls.datagram_socket);
 	cls.datagram_socket = NULL;
 
-	free_stream(cls.stream);
+	assert(!cls.stream);
 
 	if (cls.servername[0]) {
 		cvar_t *port = Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL);

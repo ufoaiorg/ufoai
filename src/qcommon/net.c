@@ -415,7 +415,7 @@ void wait_for_net (int timeout)
 			if (s->ready && s->func)
 				s->func(s);
 			/* If the peer is gone and the buffer is empty, close the stream */
-			else if (!s->loopback_peer && dbuffer_len(s->inbound) == 0)
+			else if (!s->loopback_peer && stream_length(s->inbound) == 0)
 				close_stream(s);
 
 			continue;
