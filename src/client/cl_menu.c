@@ -2246,7 +2246,7 @@ void MN_DrawMenus (void)
 		for (node = menu->firstNode; node; node = node->next) {
 			if (!node->invis && ((node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL] /* 0 are images, models and strings e.g. */
 					|| node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASEMAP || node->type == MN_MAP)
-					|| node->type == MN_CHECKBOX || node->type == MN_SELECTBOX
+					|| node->type == MN_CHECKBOX || node->type == MN_SELECTBOX || node->type == MN_LINESTRIP
 					|| ((node->type == MN_ZONE || node->type == MN_CONTAINER) && node->bgcolor[3]))) {
 				/* if construct */
 				if (*node->depends.var) {
@@ -2345,7 +2345,7 @@ void MN_DrawMenus (void)
 
 				/* get the reference */
 				if (node->type != MN_BAR && node->type != MN_CONTAINER && node->type != MN_BASEMAP
-					&& node->type != MN_TEXT && node->type != MN_MAP && node->type != MN_ZONE) {
+					&& node->type != MN_TEXT && node->type != MN_MAP && node->type != MN_ZONE && node->type != MN_LINESTRIP) {
 					ref = MN_GetReferenceString(menu, node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]);
 					if (!ref) {
 						/* these have default values for their image */
@@ -2574,7 +2574,6 @@ void MN_DrawMenus (void)
 
 				case MN_LINESTRIP:
 					if (node->pointList && (node->numPoints > 0)) {
-							Com_Printf("DEBUG: drawing linestrip\n");
 							re.DrawColor(node->color);
 							re.DrawLineStrip(node->numPoints, node->pointList);
 							re.DrawColor(NULL);
