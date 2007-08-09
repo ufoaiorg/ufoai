@@ -244,6 +244,7 @@ menu_model inter_stingray
 		ufopedia	"0.9 0.9 0.9"	"-45 135 45"	"-70 0 0"
 		aircraft        "1.1 1.1 1.1"   "160 20 -120"   #
 		aircraft_equip	"0.9 0.9 0.9"	"-90 0 180"	#
+		team		"1.1 1.1 1.1"   "160 20 -120"	"0 -30 0"
 	}
 }
 
@@ -272,10 +273,10 @@ menu_model inter_saracen
 {
 	model	"models/aircraft/inter_saracen/saracen.md2"
 	menutransform {
-		ufopedia "0.5 0.5 0.5"	"180 0 -120"	"-80 0 0"
-		aircraft "0.8 1.1 1.1"	"170 10 -110"	"0 40 0"
+		ufopedia	"0.5 0.5 0.5"	"180 0 -120"	"-80 0 0"
+		aircraft	"0.8 1.1 1.1"	"160 20 -120"	"0 40 0"
 		aircraft_equip	"0.9 0.9 0.9"	"-90 0 180"	"0 -20 0"
-		team "0.8 1.1 1.1"	"170 10 -110"	"0 40 0"
+		team		"0.8 1.1 1.1"	"160 20 -120"	"0 60 0"
 	}
 }
 
@@ -288,7 +289,7 @@ menu_model inter_stiletto_glass
 		ufopedia	"0.8 0.8 0.8"	"180 0 -120"	"-20 0 0"
 		aircraft        "1.1 1.1 1.1"   "160 20 -120"   #
 		aircraft_equip	"0.7 0.7 0.7"	"-90 0 180"	#
-		team		"1.1 1.1 1.1"	"160 20 -120"	#
+		team		"1.1 1.1 1.1"	"160 20 -120"	"0 -20 0"
 	}
 }
 menu_model inter_stiletto_top
@@ -299,7 +300,7 @@ menu_model inter_stiletto_top
 		ufopedia	"0.8 0.8 0.8"	"180 0 -120"	"-20 0 0"
 		aircraft        "1.1 1.1 1.1"   "160 20 -120"   #
 		aircraft_equip	"0.7 0.7 0.7"	"-90 0 180"	#
-		team		"1.1 1.1 1.1"	"160 20 -120"	#
+		team		"1.1 1.1 1.1"	"160 20 -120"	"0 -20 0"
 	}
 }
 menu_model inter_stiletto
@@ -310,7 +311,7 @@ menu_model inter_stiletto
 		ufopedia	"0.8 0.8 0.8"	"180 0 -120"	"-20 0 0"
 		aircraft        "1.1 1.1 1.1"   "160 20 -120"   #
 		aircraft_equip	"0.7 0.7 0.7"	"-90 0 180"	#
-		team		"1.1 1.1 1.1"	"160 20 -120"	#
+		team		"1.1 1.1 1.1"	"160 20 -120"	"0 -20 0"
 	}
 }
 
