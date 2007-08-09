@@ -159,6 +159,8 @@ typedef struct menuNode_s {
 	menuDepends_t depends;
 	struct menuNode_s *next;
 	struct menu_s *menu;	/**< backlink */
+	int *pointList;		/**< Pointer to list of 2d coordiantes MN_LINESTRIP. */
+	int numPoints;
 } menuNode_t;
 
 /** @brief menu with all it's nodes linked in */

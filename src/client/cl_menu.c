@@ -212,6 +212,7 @@ typedef enum mn_s {
 	MN_BASEMAP,
 	MN_CHECKBOX,
 	MN_SELECTBOX,
+	MN_LINESTRIP,
 
 	MN_NUM_NODETYPE
 } mn_t;
@@ -233,7 +234,8 @@ static const char *nt_strings[MN_NUM_NODETYPE] = {
 	"map",
 	"basemap",
 	"checkbox",
-	"selectbox"
+	"selectbox",
+	"linestrip"
 };
 
 
@@ -2567,6 +2569,15 @@ void MN_DrawMenus (void)
 						fac = node->size[0] / (MN_GetReferenceFloat(menu, node->data[0]) - MN_GetReferenceFloat(menu, node->data[1]));
 						bar_width = (MN_GetReferenceFloat(menu, node->data[2]) - MN_GetReferenceFloat(menu, node->data[1])) * fac;
 						re.DrawFill(node->pos[0], node->pos[1], bar_width, node->size[1], node->align, mouseOver ? color : node->color);
+					}
+					break;
+
+				case MN_LINESTRIP:
+					if (node->pointList && (node->numPoints > 0)) {
+							Com_Printf("DEBUG: drawing linestrip\n");
+							re.DrawColor(node->color);
+							re.DrawLineStrip(node->numPoints, node->pointList);
+							re.DrawColor(NULL);
 					}
 					break;
 

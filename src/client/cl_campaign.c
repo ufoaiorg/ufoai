@@ -1730,6 +1730,7 @@ static void CL_StatsUpdate_f (void)
 	Q_strcat(pos, va(_("\n\t-------\nSum:\t%i c\n"), sum), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 }
 
+static int funding_pts[MONTHS_PER_YEAR * 2];
 /**
  * @brief Draws a grpah for the funding values over time.
  * @param[in] nation The nation to draw the graph for.
@@ -1738,9 +1739,9 @@ static void CL_StatsUpdate_f (void)
  * @param[in] width of the graph.
  * @param[in] height of the graph.
  */
-void CL_NationDrawStats (nation_t *nation, int x, int y, int width, int height)
+static void CL_NationDrawStats (nation_t *nation, menuNode_t *node)
 {
-	int pts[MONTHS_PER_YEAR * 2];
+	int width, height, x, y;
 	int i, j;
 	int dx = (int)(width / MONTHS_PER_YEAR);
 	const vec4_t color = {1, 0.5, 0.5, 1};
@@ -1749,6 +1750,14 @@ void CL_NationDrawStats (nation_t *nation, int x, int y, int width, int height)
 	float max = min;
 	int funding;
 	int months = 0;
+	
+	if (!nation || !node)
+		return;
+	
+	width	= node->size[0];
+	height	= node->size[1];
+	x = node->pos[0];
+	y = node->pos[1];
 
 	/* Get minimum and maximum values */
 	for (i = 0; i < MONTHS_PER_YEAR; i++) {
@@ -1769,14 +1778,15 @@ void CL_NationDrawStats (nation_t *nation, int x, int y, int width, int height)
 	/* Generate pointlist. */
 	for (i = 0, j = 0; i < months; i++, j+=2) {
 		funding = nation->funding * nation->stats[i].happiness;
-		pts[j] = x + (i * dx);
-		pts[j+1] = y - ((funding - min) / (max - min)) * height;
+		funding_pts[j] = x + (i * dx);
+		funding_pts[j+1] = y - ((funding - min) / (max - min)) * height;
 	}
 
-	/* Draw the line. */
-	re.DrawColor(color);
-	re.DrawLineStrip(months, pts);
-	re.DrawColor(NULL);
+	
+	/* Link points to node */
+	node->pointList = funding_pts;
+	node->numPoints = months;
+	VectorCopy(color, node->color);
 }
 
 static int selectedNation = 0;
@@ -1788,6 +1798,7 @@ static void CL_NationStatsUpdate_f(void)
 {
 	int i;
 	int funding;
+	menuNode_t *graphNode;
 
 	for (i = 0; i < gd.numNations; i++) {
 		funding = gd.nations[i].funding * gd.nations[i].stats[0].happiness;
@@ -1806,10 +1817,11 @@ static void CL_NationStatsUpdate_f(void)
 		Cbuf_AddText(va("nation_hide%i;",i));
 	}
 	
+	graphNode = MN_GetNodeFromCurrentMenu("nation_graph_funding");
 	
 	/** @todo Display summary of nation info */
 	/*Display graph of nation-values so far. */
-	CL_NationDrawStats(&gd.nations[selectedNation], 400, 300, 300, 200);
+	CL_NationDrawStats(&gd.nations[selectedNation], graphNode);
 }
 
 /**
