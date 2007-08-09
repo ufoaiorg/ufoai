@@ -26,12 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
-/* Constants */
-#define DAYS_PER_YEAR 365
-#define DAYS_PER_YEAR_AVG 365.25
-#define MONTHS_PER_YEAR 12
-#define BID_FACTOR 0.9
-
 /* public vars */
 static mission_t missions[MAX_MISSIONS];	/**< Document me. */
 static int numMissions;				/**< Document me. */
@@ -963,6 +957,36 @@ const char* CL_GetNationTeamName (const nation_t* nation, char *teamname, size_t
 }
 
 /**
+ * @brief Backs up each nation's relationship values.
+ * @todo otehr stuff to back up?
+ */
+static void CL_BackupMonthlyData (void)
+{
+	int i, nat;
+	nationInfo_t temp;
+
+	/**
+	 * Back up nation relationship .
+	 * "inuse" is copied as well so we do not need to set it anywhere.
+	 */
+	for (nat = 0; nat < gd.numNations; nat++) {
+		nation_t *nation = &gd.nations[nat];
+
+		for (i = 0; i < MONTHS_PER_YEAR; i++) {
+			nationInfo_t *nat_stats = &nation->stats[i];
+
+			if (i > 0) {
+				/* Move data from more recent month to this one. */
+				memcpy(nat_stats, &temp, sizeof(nationInfo_t));
+			}
+
+			/* Temp-store the data of this month */
+			memcpy(&temp, nat_stats, sizeof(nationInfo_t));
+		}
+	}
+}
+
+/**
  * @brief Updates each nation's happiness and mission win/loss stats.
  * Should be called at the completion or expiration of every mission.
  * The nation where the mission took place will be most affected,
@@ -985,8 +1009,8 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 
 	for (i = 0; i < gd.numNations; i++) {
 		nation_t *nation = &gd.nations[i];
-		float alienHostile = 1.0 - (float) nation->alienFriendly / 100.0;
-		float happiness = nation->happiness;
+		float alienHostile = 1.0 - (float) nation->stats[0].alienFriendly / 100.0;
+		float happiness = nation->stats[0].happiness;
 
 		if (lost) {
 			if (!Q_strcmp(nation->id, mis->def->nation)) {
@@ -1006,12 +1030,12 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 				/* Minor positive reaction */
 				happiness += performance * alienHostile / 50.0;
 			}
-			if (nation->happiness > 1.0) {
+			if (nation->stats[0].happiness > 1.0) {
 				/* Can't be more than 100% happy with you. */
 				happiness = 1.0;
 			}
 		}
-		nation->happiness = nation->happiness * 0.40 + happiness * 0.60;
+		nation->stats[0].happiness = nation->stats[0].happiness * 0.40 + happiness * 0.60;
 	}
 	if (!is_on_Earth)
 		Com_DPrintf("CL_HandleNationData: Warning, mission '%s' located in an unknown country '%s'.\n", mis->def->name, mis->def->nation);
@@ -1188,25 +1212,25 @@ const char *CL_DateGetMonthName (int month)
  */
 static const char* CL_GetNationHappinessString (nation_t* nation)
 {
-	if (nation->happiness < 0.015)
+	if (nation->stats[0].happiness < 0.015)
 		return _("Giving up");
-	else if (nation->happiness < 0.025)
+	else if (nation->stats[0].happiness < 0.025)
 		return _("Furious");
-	else if (nation->happiness < 0.04)
+	else if (nation->stats[0].happiness < 0.04)
 		return _("Angry");
-	else if (nation->happiness < 0.06)
+	else if (nation->stats[0].happiness < 0.06)
 		return _("Mad");
-	else if (nation->happiness < 0.10)
+	else if (nation->stats[0].happiness < 0.10)
 		return _("Upset");
-	else if (nation->happiness < 0.20)
+	else if (nation->stats[0].happiness < 0.20)
 		return _("Tolerant");
-	else if (nation->happiness < 0.30)
+	else if (nation->stats[0].happiness < 0.30)
 		return _("Neutral");
-	else if (nation->happiness < 0.50)
+	else if (nation->stats[0].happiness < 0.50)
 		return _("Content");
-	else if (nation->happiness < 0.70)
+	else if (nation->stats[0].happiness < 0.70)
 		return _("Pleased");
-	else if (nation->happiness < 1.0)
+	else if (nation->stats[0].happiness < 1.0)
 		return _("Happy");
 	else
 		return _("Exuberant");
@@ -1234,30 +1258,30 @@ static void CL_HandleBudget (void)
 
 	for (i = 0; i < gd.numNations; i++) {
 		nation = &gd.nations[i];
-		funding = nation->funding * nation->happiness;
+		funding = nation->funding * nation->stats[0].happiness;
 		CL_UpdateCredits(ccs.credits + funding);
 
 		new_scientists = new_medics = new_soldiers = new_workers = 0;
 
-		for (j = 0; 0.25 + j < (float) nation->scientists * nation->happiness * nation->happiness; j++) {
+		for (j = 0; 0.25 + j < (float) nation->scientists * nation->stats[0].happiness * nation->stats[0].happiness; j++) {
 			/* Create a scientist, but don't auto-hire her. */
 			E_CreateEmployee(EMPL_SCIENTIST);
 			new_scientists++;
 		}
 
-		for (j = 0; 0.25 + j * 3 < (float) nation->scientists * nation->happiness; j++) {
+		for (j = 0; 0.25 + j * 3 < (float) nation->scientists * nation->stats[0].happiness; j++) {
 			/* Create a medic. */
 			E_CreateEmployee(EMPL_MEDIC);
 			new_medics++;
 		}
 
-		for (j = 0; 0.25 + j < (float) nation->soldiers * nation->happiness * nation->happiness * nation->happiness; j++) {
+		for (j = 0; 0.25 + j < (float) nation->soldiers * nation->stats[0].happiness * nation->stats[0].happiness * nation->stats[0].happiness; j++) {
 			/* Create a soldier. */
 			E_CreateEmployee(EMPL_SOLDIER);
 			new_soldiers++;
 		}
 
-		for (j = 0; 0.25 + j * 2 < (float) nation->soldiers * nation->happiness; j++) {
+		for (j = 0; 0.25 + j * 2 < (float) nation->soldiers * nation->stats[0].happiness; j++) {
 			/* Create a worker. */
 			E_CreateEmployee(EMPL_WORKER);
 			new_workers++;
@@ -1487,6 +1511,7 @@ void CL_CampaignRun (void)
 		CL_DateConvert(&ccs.date, &day, &month);
 		/* every first day of a month */
 		if (day == 1 && gd.fund != qfalse && gd.numBases) {
+			CL_BackupMonthlyData();	/* Back up monthly data. */
 			CL_HandleBudget();
 			gd.fund = qfalse;
 		} else if (day > 1)
@@ -1705,6 +1730,7 @@ static void CL_StatsUpdate_f (void)
 	Q_strcat(pos, va(_("\n\t-------\nSum:\t%i c\n"), sum), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 }
 
+static int selectedNation = 0;
 /**
  * @brief Shows the current nation list + statistics.
  * @note See menu_stats.ufo
@@ -1712,17 +1738,27 @@ static void CL_StatsUpdate_f (void)
 static void CL_NationStatsUpdate_f(void)
 {
 	int i;
+	int funding;
 
 	for (i = 0; i < gd.numNations; i++) {
-		Cbuf_AddText(va("nation_markdesel%i;",i));
+		funding = nation->funding * nation->stats[0].happiness;
+
+		if (selectedNation == i) {
+			Cbuf_AddText(va("nation_marksel%i;",i));
+		} else {
+			Cbuf_AddText(va("nation_markdesel%i;",i));
+		}
 		Cvar_Set(va("mn_nat_name%i",i), gd.nations[i].name);
-		Cvar_Set(va("mn_nat_fund%i",i), va("%i", gd.nations[i].funding));
+		Cvar_Set(va("mn_nat_fund%i",i), va("%i", funding));
 	}
 
 	/* Hide unused nation-entries. */
 	for (i = gd.numNations; i < MAX_NATIONS; i++) {
 		Cbuf_AddText(va("nation_hide%i;",i));
 	}
+	
+	/** @todo Display summary of nation info */
+	/** @todo Display graph of nation-values so far. */
 }
 
 /**
@@ -1730,7 +1766,21 @@ static void CL_NationStatsUpdate_f(void)
  */
 static void CL_NationSelect_f(void)
 {
-	Com_Printf("CL_NationSelect_f: TODO - does nothing right now.\n");
+	int nat;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: nation_select <nat_idx>\n");
+		return;
+	}
+
+	nat = atoi(Cmd_Argv(1));
+	if (nat < 0 || nat >=  gd.numNations) {
+		Com_Printf("Invalid nation index: %is\n",nat);
+		return;
+	}
+	
+	selectedNation = nat;
+	CL_NationStatsUpdate_f();
 }
 
 /**
@@ -2144,9 +2194,13 @@ qboolean STATS_Load (sizebuf_t* sb, void* data)
  */
 qboolean NA_Save (sizebuf_t* sb, void* data)
 {
-	int i;
+	int i, j;
 	for (i = 0; i < presaveArray[PRE_NATION]; i++) {
-		MSG_WriteFloat(sb, gd.nations[i].happiness);
+		for (j = 0; j < MONTHS_PER_YEAR; j++) {
+			MSG_WriteByte(sb, gd.nations[i].stats[j].inuse);
+			MSG_WriteFloat(sb, gd.nations[i].stats[j].happiness);
+			MSG_WriteFloat(sb, gd.nations[i].stats[j].alienFriendly);
+		}
 	}
 	return qtrue;
 }
@@ -2156,10 +2210,14 @@ qboolean NA_Save (sizebuf_t* sb, void* data)
  */
 qboolean NA_Load (sizebuf_t* sb, void* data)
 {
-	int i;
+	int i, j;
 
 	for (i = 0; i < presaveArray[PRE_NATION]; i++) {
-		gd.nations[i].happiness = MSG_ReadFloat(sb);
+		for (j = 0; j < MONTHS_PER_YEAR; j++) {
+			gd.nations[i].stats[j].inuse = MSG_ReadByte(sb);
+			gd.nations[i].stats[j].happiness = MSG_ReadFloat(sb);
+			gd.nations[i].stats[j].alienFriendly = MSG_ReadFloat(sb);
+		}
 	}
 	return qtrue;
 }
@@ -3486,8 +3544,8 @@ static const value_t nation_vals[] = {
 	{"pos", V_POS, offsetof(nation_t, pos), MEMBER_SIZEOF(nation_t, pos)},
 	{"color", V_COLOR, offsetof(nation_t, color), MEMBER_SIZEOF(nation_t, color)},
 	{"funding", V_INT, offsetof(nation_t, funding), MEMBER_SIZEOF(nation_t, funding)},
-	{"happiness", V_FLOAT, offsetof(nation_t, happiness), MEMBER_SIZEOF(nation_t, happiness)},
-	{"alien_friendly", V_FLOAT, offsetof(nation_t, alienFriendly), MEMBER_SIZEOF(nation_t, alienFriendly)},
+	{"happiness", V_FLOAT, offsetof(nation_t, stats[0].happiness), MEMBER_SIZEOF(nation_t, stats[0].happiness)},
+	{"alien_friendly", V_FLOAT, offsetof(nation_t, stats[0].alienFriendly), MEMBER_SIZEOF(nation_t, stats[0].alienFriendly)},
 	{"soldiers", V_INT, offsetof(nation_t, soldiers), MEMBER_SIZEOF(nation_t, soldiers)},
 	{"scientists", V_INT, offsetof(nation_t, scientists), MEMBER_SIZEOF(nation_t, scientists)},
 	{"names", V_CLIENT_HUNK_STRING, offsetof(nation_t, names), 0},
@@ -3520,6 +3578,8 @@ void CL_ParseNations (const char *name, const char **text)
 
 	Com_DPrintf("...found nation %s\n", name);
 	nation->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+
+	nation->stats[0].inuse = qtrue;
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -3659,8 +3719,8 @@ static void CL_NationList_f (void)
 	for (i = 0; i < gd.numNations; i++) {
 		Com_Printf("Nation ID: %s\n", gd.nations[i].id);
 		Com_Printf("...funding %i c\n", gd.nations[i].funding);
-		Com_Printf("...alienFriendly %0.2f\n", gd.nations[i].alienFriendly);
-		Com_Printf("...happiness %0.2f\n", gd.nations[i].happiness);
+		Com_Printf("...alienFriendly %0.2f\n", gd.nations[i].stats[0].alienFriendly);
+		Com_Printf("...happiness %0.2f\n", gd.nations[i].stats[0].happiness);
 		Com_Printf("...soldiers %i\n", gd.nations[i].soldiers);
 		Com_Printf("...scientists %i\n", gd.nations[i].scientists);
 		Com_Printf("...color r:%.2f g:%.2f b:%.2f a:%.2f\n", gd.nations[i].color[0], gd.nations[i].color[1], gd.nations[i].color[2], gd.nations[i].color[3]);

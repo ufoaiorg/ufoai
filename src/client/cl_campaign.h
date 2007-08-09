@@ -26,11 +26,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_CAMPAIGN_H
 #define CLIENT_CL_CAMPAIGN_H
 
+/* Time Constants */
+#define DAYS_PER_YEAR 365
+#define DAYS_PER_YEAR_AVG 365.25
+#define MONTHS_PER_YEAR 12
+
+#define BID_FACTOR 0.9
+
+/* Mission Constants */
 #define MAX_MISSIONS	255
 #define MAX_REQMISSIONS	4
 #define MAX_ACTMISSIONS	16
 #define MAX_SETMISSIONS	16
 
+/* Stage Constants */
 #define MAX_STAGESETS	256
 #define MAX_STAGES		64
 
@@ -240,8 +249,24 @@ typedef struct market_s {
 	double cumm_supp_diff[MAX_OBJDEFS];
 } market_t;
 
-#define MAX_NATION_BORDERS 64
+/**
+ * @brief Detailed information about the nation relationship (currently per month, but could be used elsewhere).
+ * @todo Maybe we should also move the "funding" stuff (see nation_t) in here? It is static right now though so i see no reason to do that yet.
+ */
+typedef struct nationInfo_s {
+	qboolean	inuse;	/**< Is this entry used? */
+	
+	/* Relationship */
+	float happiness;
+/**	float xvi_infection;	@todo How much (percentage 0-100) of the population in this nation is infected. */
+	float alienFriendly;	/**< How friendly is this nation towards the aliens. (percentage 0-100)
+				 * @todo Check if this is still needed after XVI factors are in.
+				 * Pro: People can be alien-frienldy without being affected after all.
+				 * Con: ?
+				 */
+} nationInfo_t;
 
+#define MAX_NATION_BORDERS 64
 /**
  * @brief Nation definition
  */
@@ -252,26 +277,25 @@ typedef struct nation_s {
 	vec4_t color;		/**< The color this nation uses int he color-coded earth-map */
 	vec2_t pos;		/**< Nation name position on geoscape. */
 
-	float happiness;
-/**	float xvi_infection;	@todo How much (percentage 0-100) of the population in this nation is infected. */
-	float alienFriendly;	/**< How friendly is this nation towards the aliens. (percentage 0-100)
-				 * @todo Check if this is still needed after XVI factors are in.
-				 * Pro: People can be alien-frienldy without being affected after all.
-				 * Con: ?
-				 */
+	nationInfo_t stats[MONTHS_PER_YEAR];	/**< Detailed information about teh history of this nations relationship toward PHALANX and the aliens.
+									 * The first entry [0] is the current month - all following entries are stored older months.
+									 * Combined with the funding info below we can generate an overview over time.
+									 */
 
+	/* Funding */
 	int funding;		/**< How many (monthly) credits. */
 	int soldiers;		/**< How many (monthly) soldiers. */
 	int scientists;		/**< How many (monthly) scientists. */
 	int workers;		/**< How many (monthly) workers. */
 	int medics;		/**< How many (monthly) medics. */
 	int ugvs;		/**< How many (monthly) ugvs (robots).
-				 * @todo this needs to be remvoed here and added into the buy&produce menues.
+				 * @todo this needs to be removed here and added into the buy&produce menues.
 				 */
 
 	char *names;		/**< Space seperated list of possible team ids.
 				 * Team IDs as defined in team_*.ufo
 				 */
+	
 
 	/** A list if points where the border of this nation is located
 	@todo not used right now? */
