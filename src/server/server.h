@@ -139,7 +139,7 @@ extern struct dbuffer *sv_msg;
 /*=========================================================== */
 
 /* sv_main.c */
-void SV_DropClient(client_t *drop);
+void SV_DropClient(client_t *drop, const char *message);
 
 int SV_ModelIndex(const char *name);
 

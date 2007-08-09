@@ -60,7 +60,7 @@ void SV_ClientPrintf (client_t * cl, int level, const char *fmt, ...)
 	va_list argptr;
 	struct dbuffer *msg;
 
-	if (level < cl->messagelevel)
+	if (level > cl->messagelevel)
 		return;
 
 	msg = new_dbuffer();
@@ -108,7 +108,7 @@ void SV_BroadcastPrintf (int level, const char *fmt, ...)
 	}
 
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
-		if (level < cl->messagelevel)
+		if (level > cl->messagelevel)
 			continue;
 		if (cl->state < cs_connected)
 			continue;

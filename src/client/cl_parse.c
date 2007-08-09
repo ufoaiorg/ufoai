@@ -1550,11 +1550,17 @@ void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
 		break;
 
 	case svc_disconnect:
-		Com_Error(ERR_DISCONNECT, "Server disconnected. Not attempting to reconnect.\n");
+		s = NET_ReadString(msg);
+		Com_Printf("%s\n", s);
+		CL_Drop();	/* ensure the right menu cvars are set */
+		MN_PopMenu(qfalse);	/* leave the hud mode */
+		MN_Popup(_("Notice"), _("The server has disconnected.\n"));
 		break;
 
 	case svc_reconnect:
-		Com_Printf("Server disconnected, reconnecting\n");
+		s = NET_ReadString(msg);
+		Com_Printf("%s\n", s);
+		CL_Disconnect();
 		CL_SetClientState(ca_connecting);
 		cls.connectTime = 0;
 		cls.connectRetry = 10;

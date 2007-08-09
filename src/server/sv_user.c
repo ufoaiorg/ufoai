@@ -68,7 +68,7 @@ static void SV_New_f (void)
 			/* client typed 'reconnect/new' while connecting. */
 			Com_Printf("SV_New_f: client typed 'reconnect/new' while connecting\n");
 			SV_ClientCommand(sv_client, "\ndisconnect\nreconnect\n");
-			SV_DropClient(sv_client);
+			SV_DropClient(sv_client, "");
 		} else
 			Com_DPrintf("WARNING: Illegal 'new' from %s, client state %d. This shouldn't happen...\n", sv_client->name, sv_client->state);
 		return;
@@ -180,7 +180,7 @@ static void SV_Begin_f (void)
 	/* could be abused to respawn or cause spam/other mod-specific problems */
 	if (sv_client->state != cs_spawning) {
 		Com_Printf("EXPLOIT: Illegal 'begin' from %s (already spawned), client dropped.\n", sv_client->name);
-		SV_DropClient(sv_client);
+		SV_DropClient(sv_client, "Illegal begin\n");
 		return;
 	}
 
@@ -250,7 +250,7 @@ static void SV_Spawn_f (void)
 static void SV_Disconnect_f (void)
 {
 /*	SV_EndRedirect(); */
-	SV_DropClient(sv_client);
+	SV_DropClient(sv_client, "Disconnect\n");
 }
 
 
@@ -332,7 +332,7 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 	switch (cmd) {
 	default:
 		Com_Printf("SV_ExecuteClientMessage: unknown command char '%d'\n", cmd);
-		SV_DropClient(cl);
+		SV_DropClient(cl, "Unknown command\n");
 		return;
 
 	case clc_nop:

@@ -64,14 +64,15 @@ struct memPool_s *sv_genericPool;
 
 /**
  * @brief Called when the player is totally leaving the server, either willingly
- * or unwillingly.  This is NOT called if the entire server is quiting
+ * or unwillingly. This is NOT called if the entire server is quiting
  * or crashing.
  */
-void SV_DropClient (client_t * drop)
+void SV_DropClient (client_t * drop, const char *message)
 {
 	/* add the disconnect */
 	struct dbuffer *msg = new_dbuffer();
 	NET_WriteByte(msg, svc_disconnect);
+	NET_WriteString(msg, message);
 	NET_WriteMsg(drop->stream, msg);
 
 	if (drop->state == cs_spawned || drop->state == cs_spawning) {
@@ -838,14 +839,11 @@ static void SV_FinalMessage (const char *message, qboolean reconnect)
 	client_t *cl;
 	struct dbuffer *msg = new_dbuffer();
 
-	NET_WriteByte(msg, svc_print);
-	NET_WriteByte(msg, PRINT_CONSOLE);
-	NET_WriteString(msg, message);
-
 	if (reconnect)
 		NET_WriteByte(msg, svc_reconnect);
 	else
 		NET_WriteByte(msg, svc_disconnect);
+	NET_WriteString(msg, message);
 
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
 		if (cl->state >= cs_connected) {
