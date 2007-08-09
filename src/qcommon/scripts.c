@@ -1419,7 +1419,7 @@ int Com_GetCharacterValues (const char *team, character_t * chr)
 		chr->category = category;
 		chr->gender = gender;
 		for (i = 0; i < numTeamDesc; i++) {
-			if (!Q_strcmp(teamDesc[i].id, team)) {
+			if (!Q_strcmp(teamDesc[i].id, nameCat[category].title)) {
 				/* transfered as byte - 0 means, not found - no -1 possible */
 				chr->teamDesc = i + 1;
 				/* set some team definition values to character, too */
