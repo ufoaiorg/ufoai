@@ -695,7 +695,7 @@ qboolean stream_closed (struct net_stream *s)
  */
 int stream_length (struct net_stream *s)
 {
-	return (!s || s->finished || !s->inbound) ? 0 : dbuffer_len(s->inbound);
+	return (!s || !s->inbound) ? 0 : dbuffer_len(s->inbound);
 }
 
 /**
