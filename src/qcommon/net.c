@@ -767,7 +767,7 @@ void stream_finished (struct net_stream *s)
 
 	/* If there's nothing in the outbound buffer, any finished stream is
 		ready to be closed */
-	if (stream_length(s) == 0)
+	if (!s->outbound || dbuffer_len(s->outbound) == 0)
 		close_stream(s);
 }
 
