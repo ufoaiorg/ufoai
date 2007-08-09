@@ -56,7 +56,7 @@ static void Cmd_Players_f (player_t * player)
 		count++;
 	}
 
-	gi.cprintf(player, PRINT_HIGH, "%s\n%i players\n", large, count);
+	gi.cprintf(player, PRINT_CONSOLE, "%s\n%i players\n", large, count);
 }
 
 /**
@@ -68,7 +68,7 @@ static qboolean G_CheckFlood (player_t *player)
 
 	if (flood_msgs->integer) {
 		if (level.time < player->pers.flood_locktill) {
-			gi.cprintf(player, PRINT_HIGH, "You can't talk for %d more seconds\n",
+			gi.cprintf(player, PRINT_CONSOLE, "You can't talk for %d more seconds\n",
 					   (int)(player->pers.flood_locktill - level.time));
 			return qtrue;
 		}
@@ -159,12 +159,12 @@ static void Cmd_PlayerList_f (player_t * player)
 				e2->pers.team, e2->pers.netname, (e2->ready ? "waiting" : "playing"));
 		if (strlen(text) + strlen(st) > sizeof(text) - 50) {
 			Q_strcat(text, "And more...\n", sizeof(text));
-			gi.cprintf(player, PRINT_HIGH, "%s", text);
+			gi.cprintf(player, PRINT_CONSOLE, "%s", text);
 			return;
 		}
 		Q_strcat(text, st, sizeof(text));
 	}
-	gi.cprintf(player, PRINT_HIGH, "%s", text);
+	gi.cprintf(player, PRINT_CONSOLE, "%s", text);
 }
 
 #ifdef DEBUG

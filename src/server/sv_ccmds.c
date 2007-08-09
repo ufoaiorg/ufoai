@@ -188,10 +188,10 @@ static void SV_Kick_f (void)
 	if (!SV_SetPlayer())
 		return;
 
-	SV_BroadcastPrintf(PRINT_HIGH, "%s was kicked\n", sv_client->name);
+	SV_BroadcastPrintf(PRINT_CONSOLE, "%s was kicked\n", sv_client->name);
 	/* print directly, because the dropped client won't get the */
 	/* SV_BroadcastPrintf message */
-	SV_ClientPrintf(sv_client, PRINT_HIGH, "You were kicked from the game\n");
+	SV_ClientPrintf(sv_client, PRINT_CONSOLE, "You were kicked from the game\n");
 	SV_DropClient(sv_client);
 }
 

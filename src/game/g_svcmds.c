@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void SVCmd_Test_f (void)
 {
-	gi.cprintf(NULL, PRINT_HIGH, "Svcmd_Test_f()\n");
+	gi.cprintf(NULL, PRINT_CONSOLE, "Svcmd_Test_f()\n");
 }
 
 /**
@@ -84,7 +84,7 @@ static qboolean StringToFilter (const char *s, ipfilter_t * f)
 
 	for (i = 0; i < 4; i++) {
 		if (*s < '0' || *s > '9') {
-			gi.cprintf(NULL, PRINT_HIGH, "Bad filter address: %s\n", s);
+			gi.cprintf(NULL, PRINT_CONSOLE, "Bad filter address: %s\n", s);
 			return qfalse;
 		}
 
@@ -150,7 +150,7 @@ static void SVCmd_AddIP_f (void)
 	int i;
 
 	if (gi.argc() < 3) {
-		gi.cprintf(NULL, PRINT_HIGH, "Usage: addip <ip-mask>\n");
+		gi.cprintf(NULL, PRINT_CONSOLE, "Usage: addip <ip-mask>\n");
 		return;
 	}
 
@@ -159,7 +159,7 @@ static void SVCmd_AddIP_f (void)
 			break;				/* free spot */
 	if (i == numipfilters) {
 		if (numipfilters == MAX_IPFILTERS) {
-			gi.cprintf(NULL, PRINT_HIGH, "IP filter list is full\n");
+			gi.cprintf(NULL, PRINT_CONSOLE, "IP filter list is full\n");
 			return;
 		}
 		numipfilters++;
@@ -179,7 +179,7 @@ static void SVCmd_RemoveIP_f (void)
 	int i, j;
 
 	if (gi.argc() < 3) {
-		gi.cprintf(NULL, PRINT_HIGH, "Usage:  sv removeip <ip-mask>\n");
+		gi.cprintf(NULL, PRINT_CONSOLE, "Usage:  sv removeip <ip-mask>\n");
 		return;
 	}
 
@@ -191,10 +191,10 @@ static void SVCmd_RemoveIP_f (void)
 			for (j = i + 1; j < numipfilters; j++)
 				ipfilters[j - 1] = ipfilters[j];
 			numipfilters--;
-			gi.cprintf(NULL, PRINT_HIGH, "Removed.\n");
+			gi.cprintf(NULL, PRINT_CONSOLE, "Removed.\n");
 			return;
 		}
-	gi.cprintf(NULL, PRINT_HIGH, "Didn't find %s.\n", gi.argv(2));
+	gi.cprintf(NULL, PRINT_CONSOLE, "Didn't find %s.\n", gi.argv(2));
 }
 
 /**
@@ -205,10 +205,10 @@ static void SVCmd_ListIP_f (void)
 	int i;
 	byte b[4];
 
-	gi.cprintf(NULL, PRINT_HIGH, "Filter list:\n");
+	gi.cprintf(NULL, PRINT_CONSOLE, "Filter list:\n");
 	for (i = 0; i < numipfilters; i++) {
 		*(unsigned *) b = ipfilters[i].compare;
-		gi.cprintf(NULL, PRINT_HIGH, "%3i.%3i.%3i.%3i\n", b[0], b[1], b[2], b[3]);
+		gi.cprintf(NULL, PRINT_CONSOLE, "%3i.%3i.%3i.%3i\n", b[0], b[1], b[2], b[3]);
 	}
 }
 
@@ -224,11 +224,11 @@ static void SVCmd_WriteIP_f (void)
 
 	Com_sprintf(name, sizeof(name), "%s/listip.cfg", gi.FS_Gamedir());
 
-	gi.cprintf(NULL, PRINT_HIGH, "Writing %s.\n", name);
+	gi.cprintf(NULL, PRINT_CONSOLE, "Writing %s.\n", name);
 
 	f = fopen(name, "wb");
 	if (!f) {
-		gi.cprintf(NULL, PRINT_HIGH, "Couldn't open %s\n", name);
+		gi.cprintf(NULL, PRINT_CONSOLE, "Couldn't open %s\n", name);
 		return;
 	}
 
@@ -364,7 +364,7 @@ static void SVCmd_StartGame_f (void)
 		G_PrintStats(va("Team %i: %s", p->pers.team, p->pers.netname));
 	}
 	G_PrintStats(va("Team %i got the first round", turnTeam));
-	gi.bprintf(PRINT_HIGH, _("Team %i (%s) will get the first turn.\n"), turnTeam, buffer);
+	gi.bprintf(PRINT_CONSOLE, _("Team %i (%s) will get the first turn.\n"), turnTeam, buffer);
 }
 
 /**
@@ -401,5 +401,5 @@ void ServerCommand (void)
 		SVCmd_ActorInvList_f();
 #endif
 	else
-		gi.cprintf(NULL, PRINT_HIGH, "Unknown server command \"%s\"\n", cmd);
+		gi.cprintf(NULL, PRINT_CONSOLE, "Unknown server command \"%s\"\n", cmd);
 }

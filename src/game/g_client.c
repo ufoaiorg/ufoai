@@ -818,7 +818,7 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 	int msglevel;
 
 	ent = g_edicts + num;
-	msglevel = quiet ? PRINT_NONE : PRINT_HIGH;
+	msglevel = quiet ? PRINT_NONE : PRINT_CONSOLE;
 
 	/* check if action is possible */
 	if (checkaction && !G_ActionCheck(player, ent, 1, quiet))
@@ -1508,7 +1508,7 @@ static void G_ClientStateChange (player_t * player, int num, int reqState, qbool
 	case ~STATE_REACTION: /* request to turn off reaction fire */
 		if ((ent->state & STATE_REACTION_MANY) || (ent->state & STATE_REACTION_ONCE)){
 			if (ent->state & STATE_SHAKEN)
-				gi.cprintf(player, PRINT_HIGH, _("Currently shaken, won't let their guard down.\n"));
+				gi.cprintf(player, PRINT_CONSOLE, _("Currently shaken, won't let their guard down.\n"));
 			else {
 				/* Turn off reaction fire and give the soldier back his TUs if it used some. */
 				ent->state &= ~STATE_REACTION;
@@ -1615,7 +1615,7 @@ static void G_ClientStateChange (player_t * player, int num, int reqState, qbool
  */
 static void G_MoralePanic (edict_t * ent, qboolean sanity, qboolean quiet)
 {
-	gi.cprintf(game.players + ent->pnum, PRINT_HIGH, _("%s panics!\n"), ent->chr.name);
+	gi.cprintf(game.players + ent->pnum, PRINT_CONSOLE, _("%s panics!\n"), ent->chr.name);
 
 	/* drop items in hands */
 	if (!sanity) {
@@ -1676,9 +1676,9 @@ static void G_MoraleRage (edict_t * ent, qboolean sanity)
 	G_SendState(G_VisToPM(ent->visflags), ent);
 
 	if (sanity)
-		gi.bprintf(PRINT_HIGH, _("%s is on a rampage.\n"), ent->chr.name);
+		gi.bprintf(PRINT_CONSOLE, _("%s is on a rampage.\n"), ent->chr.name);
 	else
-		gi.bprintf(PRINT_HIGH, _("%s is consumed by mad rage!\n"), ent->chr.name);
+		gi.bprintf(PRINT_CONSOLE, _("%s is consumed by mad rage!\n"), ent->chr.name);
 	AI_ActorThink(game.players + ent->pnum, ent);
 }
 
@@ -1739,7 +1739,7 @@ static void G_MoraleBehaviour (int team, qboolean quiet)
 					/* shaken is later reset along with reaction fire */
 					ent->state |= STATE_SHAKEN | STATE_REACTION_MANY;
 					G_SendState(G_VisToPM(ent->visflags), ent);
-					gi.cprintf(game.players + ent->pnum, PRINT_HIGH, _("%s is currently shaken.\n"), ent->chr.name);
+					gi.cprintf(game.players + ent->pnum, PRINT_CONSOLE, _("%s is currently shaken.\n"), ent->chr.name);
 				} else {
 					if (ent->state & STATE_PANIC)
 						G_MoraleStopPanic(ent, quiet);
@@ -2140,7 +2140,7 @@ static void G_GetTeam (player_t * player)
 			/* remove ai player */
 			for (j = 0, p = game.players + game.sv_maxplayersperteam; j < game.sv_maxplayersperteam; j++, p++)
 				if (p->inuse && p->pers.team == i) {
-					gi.bprintf(PRINT_HIGH, "Removing ai player...");
+					gi.bprintf(PRINT_CONSOLE, "Removing ai player...");
 					p->inuse = qfalse;
 					break;
 				}
@@ -2222,7 +2222,7 @@ static void G_ClientTeamAssign (player_t * player)
 			}
 		}
 		G_PrintStats(va("Team %i got the first round", turnTeam));
-		gi.bprintf(PRINT_HIGH, _("Team %i (%s) will get the first turn.\n"), turnTeam, buffer);
+		gi.bprintf(PRINT_CONSOLE, _("Team %i (%s) will get the first turn.\n"), turnTeam, buffer);
 	}
 }
 
@@ -2562,7 +2562,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 		}
 
 		if (nextTeam == -1) {
-/*			gi.bprintf(PRINT_HIGH, "Can't change round - no living actors left.\n"); */
+/*			gi.bprintf(PRINT_CONSOLE, "Can't change round - no living actors left.\n"); */
 			level.activeTeam = lastTeam;
 			gi.EndEvents();
 			return;
@@ -2655,7 +2655,7 @@ void G_ClientBegin (player_t* player)
 
 	/* FIXME: This should be a client side error */
 	if (!P_MASK(player)) {
-		gi.bprintf(PRINT_HIGH, "%s tried to join - but server is full\n", player->pers.netname);
+		gi.bprintf(PRINT_CONSOLE, "%s tried to join - but server is full\n", player->pers.netname);
 		return;
 	}
 
@@ -2674,7 +2674,7 @@ void G_ClientBegin (player_t* player)
 	gi.configstring(CS_PLAYERNAMES + player->num, player->pers.netname);
 
 	/* inform all clients */
-	gi.bprintf(PRINT_HIGH, "%s has joined team %i\n", player->pers.netname, player->pers.team);
+	gi.bprintf(PRINT_CONSOLE, "%s has joined team %i\n", player->pers.netname, player->pers.team);
 }
 
 /**
@@ -2745,7 +2745,7 @@ qboolean G_ClientSpawn (player_t * player)
 			}
 
 	/* inform all clients */
-	gi.bprintf(PRINT_HIGH, "%s has taken control over team %i.\n", player->pers.netname, player->pers.team);
+	gi.bprintf(PRINT_CONSOLE, "%s has taken control over team %i.\n", player->pers.netname, player->pers.team);
 	return qtrue;
 }
 
@@ -2796,7 +2796,7 @@ qboolean G_ClientConnect (player_t * player, char *userinfo)
 
 	/* fix for fast reconnects after a disconnect */
 	if (player->inuse) {
-		gi.bprintf(PRINT_HIGH, "%s already in use.\n", player->pers.netname);
+		gi.bprintf(PRINT_CONSOLE, "%s already in use.\n", player->pers.netname);
 		G_ClientDisconnect(player);
 	}
 
@@ -2804,7 +2804,7 @@ qboolean G_ClientConnect (player_t * player, char *userinfo)
 	memset(&player->pers, 0, sizeof(client_persistant_t));
 	G_ClientUserinfoChanged(player, userinfo);
 
-	gi.bprintf(PRINT_HIGH, "%s is connecting...\n", Info_ValueForKey(userinfo, "name"));
+	gi.bprintf(PRINT_CONSOLE, "%s is connecting...\n", Info_ValueForKey(userinfo, "name"));
 	return qtrue;
 }
 
@@ -2823,5 +2823,5 @@ void G_ClientDisconnect (player_t * player)
 	if (!level.numplayers)
 		level.intermissionTime = level.time + 10.0f;
 
-	gi.bprintf(PRINT_HIGH, "%s disconnected.\n", player->pers.netname);
+	gi.bprintf(PRINT_CONSOLE, "%s disconnected.\n", player->pers.netname);
 }

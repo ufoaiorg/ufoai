@@ -835,7 +835,7 @@ static void SV_FinalMessage (const char *message, qboolean reconnect)
 	struct dbuffer *msg = new_dbuffer();
 
 	NET_WriteByte(msg, svc_print);
-	NET_WriteByte(msg, PRINT_HIGH);
+	NET_WriteByte(msg, PRINT_CONSOLE);
 	NET_WriteString(msg, message);
 
 	if (reconnect)

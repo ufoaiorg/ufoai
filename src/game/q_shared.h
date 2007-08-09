@@ -198,7 +198,7 @@ typedef uint8_t byte;
 #define PRINT_NONE          -1  /* suppress printing */
 #define PRINT_LOW           0   /* pickup messages */
 #define PRINT_MEDIUM        1   /* death messages */
-#define PRINT_HIGH          2   /* critical messages */
+#define PRINT_CONSOLE       2   /* critical messages goes to the game console */
 #define PRINT_CHAT          3   /* chat messages */
 #define PRINT_HUD           4   /* translated hud strings */
 
