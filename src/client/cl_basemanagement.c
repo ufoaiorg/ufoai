@@ -2805,7 +2805,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 		for (i = 0; i < gd.numBuildingTypes; i++) {
 			if (gd.buildingTypes[i].buildingType == building) {
 				capacity = gd.buildingTypes[i].capacity;
-				Com_Printf("Building: %s capacity: %i\n", gd.buildingTypes[i].id, capacity);
+				Com_DPrintf("Building: %s capacity: %i\n", gd.buildingTypes[i].id, capacity);
 				break;
 			}
 		}
@@ -2821,7 +2821,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 			for (i = 0; i < gd.numBuildingTypes; i++) {
 				if (gd.buildingTypes[i].buildingType == B_UFO_SMALL_HANGAR) {
 					capacity = gd.buildingTypes[i].capacity;
-					Com_Printf("Building: %s capacity: %i\n", gd.buildingTypes[i].id, capacity);
+					Com_DPrintf("Building: %s capacity: %i\n", gd.buildingTypes[i].id, capacity);
 					break;
 				}
 			}

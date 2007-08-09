@@ -4158,6 +4158,9 @@ static void CP_UFORecovered_f (void)
 		return;
 	}
 
+	/* At the beginning we enable all UFO recovery options. */
+	Cbuf_ExecuteText(EXEC_NOW, "menuwon_update_buttons\n");
+
 	/* Find ufo sample of given ufotype. */
 	for (i = 0; i < numAircraft_samples; i++) {
 		ufocraft = &aircraft_samples[i];
@@ -4198,7 +4201,7 @@ static void CP_UFORecovered_f (void)
 	/* @todo block Sell button if no nation with requirements */
 	if (!store) {
 		/* Block store option if storing not possible. */
-		Cbuf_AddText("disufostore\n");
+		Cbuf_ExecuteText(EXEC_NOW, "disufostore\n");
 		Cvar_SetValue("mission_noufohangar", 1);
 	} else
 		Cvar_SetValue("mission_noufohangar", 0);
@@ -4323,7 +4326,10 @@ static void CP_UFORecoveredStore_f (void)
 	if (!base)
 		return;
 	/* If only one base with UFO hangars, the recovery will be done in this base. */
-	if (hasufohangar <= 1) {
+	if (hasufohangar < 1) {
+		/* No UFO base with proper conditions, do nothing. */
+		return;
+	} else if (hasufohangar == 1) {
 		/* Base is already selected above. */
 		Cvar_SetValue("mission_recoverybase", base->idx);
 		CP_UFORecoveredStart_f();

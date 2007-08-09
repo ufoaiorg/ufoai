@@ -87,7 +87,7 @@ menu won
 		pos	"544 656"
 		align	cc
 		color "1 1 1 0.6"
-		font	"f_normal"
+		font	"f_small"
 		string	"_Store UFO"
 	}
 
@@ -109,7 +109,7 @@ menu won
 		pos	"734 656"
 		align	cc
 		color "1 1 1 0.6"
-		font	"f_normal"
+		font	"f_small"
 		string	"_Sell UFO"
 	}
 
@@ -131,7 +131,7 @@ menu won
 		pos	"929 656"
 		align	cc
 		color "1 1 1 0.6"
-		font	"f_normal"
+		font	"f_small"
 		string	"_Destroy UFO"
 	}
 
@@ -203,7 +203,7 @@ menu won
 
 	func init
 	{
-		cmd "menuwon_update_buttons;music ufo2;music_start;"
+		cmd "music ufo2;music_start;"
 	}
 
 	func close

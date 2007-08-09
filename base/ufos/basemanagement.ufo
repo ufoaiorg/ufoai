@@ -237,7 +237,7 @@ building building_small_ufo_hangar
 	map_name	"ufohangar"
 	pedia		rs_building_small_ufo_hangar
 	more_than_one	true
-	capacity	1
+	capacity	4
 	type		smallufohangar
 	onclick		"building_open"
 }
@@ -251,7 +251,7 @@ building building_large_ufo_hangar
 	build_time	11
 	varcosts	5600
 	map_name	"ufohangar_l"
-	capacity	1
+	capacity	8
 	pedia		rs_building_large_ufo_hangar
 	needs		building_large_ufo_hangar2
 	more_than_one	true
