@@ -41,6 +41,7 @@ cvar_t *sv_maxsoldiersperplayer;
 
 cvar_t *sv_hostname;
 cvar_t *sv_public;			/**< should heartbeats be sent */
+cvar_t *sv_mapname;
 
 static cvar_t *sv_reconnect_limit;		/**< minimum seconds between connect messages */
 
@@ -897,6 +898,9 @@ void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 	/* maybe we shut down before we init - e.g. in case of an error */
 	if (sv_maxclients)
 		sv_maxclients->flags &= ~CVAR_LATCH;
+
+	if (sv_mapname)
+		sv_mapname->flags &= ~CVAR_NOSET;
 }
 
 /**

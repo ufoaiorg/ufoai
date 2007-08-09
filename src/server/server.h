@@ -127,6 +127,7 @@ extern int mapcycleCount;		/**< number of maps in the cycle */
 extern server_static_t svs;		/**< persistant server info */
 extern server_t sv;				/**< local server */
 
+extern cvar_t *sv_mapname;
 extern cvar_t *sv_public;			/**< should heartbeats be sent */
 extern cvar_t *masterserver_ip;
 extern cvar_t *masterserver_port;

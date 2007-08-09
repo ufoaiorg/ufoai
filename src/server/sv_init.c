@@ -935,7 +935,7 @@ static void SV_SpawnServer (const char *server, const char *param)
 	sv.active = qtrue;
 
 	/* set serverinfo variable */
-	Cvar_FullSet("mapname", sv.name, CVAR_SERVERINFO | CVAR_NOSET);
+	sv_mapname = Cvar_FullSet("mapname", sv.name, CVAR_SERVERINFO | CVAR_NOSET);
 
 	Com_Printf("-------------------------------------\n");
 }
