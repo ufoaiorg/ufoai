@@ -424,6 +424,9 @@ static void SV_ConnectionlessPacket (struct net_stream *stream, struct dbuffer *
 
 /**
  * @brief
+ * @sa CL_ReadPacket
+ * @sa NET_ReadMsg
+ * @sa SV_Start
  */
 void SV_ReadPacket (struct net_stream *s)
 {
@@ -843,8 +846,6 @@ static void SV_FinalMessage (const char *message, qboolean reconnect)
 	else
 		NET_WriteByte(msg, svc_disconnect);
 
-	/* send it twice */
-	/* stagger the packets to crutch operating system limited buffers */
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
 		if (cl->state >= cs_connected) {
 			NET_WriteConstMsg(cl->stream, msg);
@@ -867,6 +868,9 @@ void SV_Clear (void)
 
 /**
  * @brief Called when each game quits, before Sys_Quit or Sys_Error
+ * @param[in] finalmsg The message all clients get as server shutdown message
+ * @param[in] reconnect True if this is only a restart (new map or map restart),
+ * false if the server shutdown completly and you also want to disconnect all clients
  */
 void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 {

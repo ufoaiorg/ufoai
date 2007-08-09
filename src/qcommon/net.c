@@ -291,6 +291,7 @@ void init_net (void)
 
 /**
  * @brief
+ * @sa stream_finished
  */
 static void close_stream (struct net_stream *s)
 {
@@ -694,6 +695,7 @@ int stream_length (struct net_stream *s)
 
 /**
  * @brief Returns the length of the waiting inbound buffer
+ * @sa dbuffer_get
  */
 int stream_peek (struct net_stream *s, char *data, int len)
 {
@@ -736,6 +738,8 @@ void set_stream_data (struct net_stream *s, void *data)
 
 /**
  * @brief
+ * @sa close_stream
+ * @sa stream_finished
  */
 void free_stream (struct net_stream *s)
 {
