@@ -1741,9 +1741,8 @@ static int funding_pts[MONTHS_PER_YEAR * 2];
  */
 static void CL_NationDrawStats (nation_t *nation, menuNode_t *node)
 {
-	int width, height, x, y;
+	int width, height, x, y, dx;
 	int i, j;
-	int dx = (int)(width / MONTHS_PER_YEAR);
 	const vec4_t color = {1, 0.5, 0.5, 1};
 
 	float min =  nation->funding * nation->stats[0].happiness;
@@ -1758,6 +1757,7 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node)
 	height	= node->size[1];
 	x = node->pos[0];
 	y = node->pos[1];
+	dx = (int)(width / MONTHS_PER_YEAR);
 
 	/* Get minimum and maximum values */
 	for (i = 0; i < MONTHS_PER_YEAR; i++) {
