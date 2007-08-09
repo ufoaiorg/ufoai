@@ -1594,7 +1594,7 @@ void CL_RequestNextDownload (void)
 			return;
 		/* checksum doesn't match with the one the server gave us via configstring */
 		} else if (atoi(cl.configstrings[CS_UFOCHECKSUM]) && ufoScript_checksum != atoi(cl.configstrings[CS_UFOCHECKSUM])) {
-			Com_Printf("You are using modified ufo script files - might produce problems");
+			Com_Printf("You are using modified ufo script files - might produce problems\n");
 		} else if (Q_strncmp(UFO_VERSION, cl.configstrings[CS_VERSION], sizeof(UFO_VERSION))) {
 			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the servers (%s)"), UFO_VERSION, cl.configstrings[CS_VERSION]);
 			MN_Popup(_("Error"), popupText);
