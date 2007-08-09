@@ -618,7 +618,7 @@ static void CL_Reconnect_f (void)
 	S_StopAllSounds();
 
 	if (*cls.servername) {
-		if (cls.state >= ca_connected) {
+		if (cls.state >= ca_connecting) {
 			Com_Printf("disconnecting...\n");
 			CL_Disconnect();
 		}
