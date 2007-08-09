@@ -1005,7 +1005,6 @@ static void SV_InitGame (void)
 void SV_Map (const char *levelstring, const char *assembly)
 {
 	char level[MAX_QPATH];
-	qboolean reconnect = qtrue;
 
 	Q_strncpyz(level, levelstring, sizeof(level));
 
@@ -1014,10 +1013,8 @@ void SV_Map (const char *levelstring, const char *assembly)
 		Q_strncpyz(level, level + 1, sizeof(level));
 
 	/* the game is just starting */
-	if (Com_ServerState() == ss_dead) {
-		reconnect = qfalse;
+	if (Com_ServerState() == ss_dead)
 		SV_InitGame();
-	}
 
 	if (!svs.initialized) {
 		Com_Printf("Could not spawn the map\n");
@@ -1028,7 +1025,4 @@ void SV_Map (const char *levelstring, const char *assembly)
 	SCR_BeginLoadingPlaque();
 	SV_SpawnServer(levelstring, assembly);
 	Cbuf_CopyToDefer();
-
-	if (reconnect)
-		SV_BroadcastCommand("reconnect\n");
 }

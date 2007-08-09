@@ -848,12 +848,11 @@ static void SV_FinalMessage (const char *message, qboolean reconnect)
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
 		if (cl->state >= cs_connected) {
 			NET_WriteConstMsg(cl->stream, msg);
+			stream_finished(cl->stream);
+			cl->stream = NULL;
 		}
 
 	free_dbuffer(msg);
-
-	/* make sure the commands are send */
-	wait_for_net(0);
 }
 
 /**
@@ -871,19 +870,8 @@ void SV_Clear (void)
  */
 void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 {
-	client_t *cl;
-	int i;
-
-	if (svs.clients) {
+	if (svs.clients)
 		SV_FinalMessage(finalmsg, reconnect);
-
-		/* and now finish the client streams */
-		for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
-			if (cl && cl->stream) {
-				stream_finished(cl->stream);
-				cl->stream = NULL;
-			}
-	}
 
 	Master_Shutdown();
 	SV_ShutdownGameProgs();
