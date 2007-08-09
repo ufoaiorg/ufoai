@@ -257,7 +257,7 @@ menu nations
 	string nat_fund6 { string "*cvar mn_nat_fund6"	pos "340 265" invis false }
 	string nat_fund7 { string "*cvar mn_nat_fund7"	pos "340 290" invis false }
 
-
+/*
 	text full_nation_stats
 	{
 		pos	"480 90"
@@ -267,7 +267,7 @@ menu nations
 		num	"25"
 		height	"6"
 	}
-
+*/
 	func init
 	{
 		cmd "nation_update;"
