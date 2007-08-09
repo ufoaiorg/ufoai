@@ -3447,7 +3447,6 @@ static void MN_SetModelTransform_f (void)
 		Com_Printf("usage: debug_mn[scale|angles] <node> <x> <y> <z>\n");
 		return;
 	}
-	Com_Printf("!!WARNING!! This function may be dangerous and should only be used if you know what you are doing\n");
 
 	current = menuStack[menuStackPos-1];
 	
