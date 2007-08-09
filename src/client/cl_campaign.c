@@ -1706,6 +1706,34 @@ static void CL_StatsUpdate_f (void)
 }
 
 /**
+ * @brief Shows the current nation list + statistics.
+ * @note See menu_stats.ufo
+ */
+static void CL_NationStatsUpdate_f(void)
+{
+	int i;
+
+	for (i = 0; i < gd.numNations; i++) {
+		Cbuf_AddText(va("nation_markdesel%i;",i));
+		Cvar_Set(va("mn_nat_name%i",i), gd.nations[i].name);
+		Cvar_Set(va("mn_nat_fund%i",i), va("%i", gd.nations[i].funding));
+	}
+
+	/* Hide unused nation-entries. */
+	for (i = gd.numNations; i < MAX_NATIONS; i++) {
+		Cbuf_AddText(va("nation_hide%i;",i));
+	}
+}
+
+/**
+ * @brief Select nation and display all relevant information for it.
+ */
+static void CL_NationSelect_f(void)
+{
+	Com_Printf("CL_NationSelect_f: TODO - does nothing right now.\n");
+}
+
+/**
  * @brief Load callback for campaign data
  * @sa CP_Save
  * @sa SAV_GameSave
@@ -3660,6 +3688,8 @@ static const cmdList_t game_commands[] = {
 	{"aircraft_return", AIR_AircraftReturnToBase_f, NULL},
 	{"aircraft_list", CL_AircraftList_f, "Generate the aircraft (interception) list"},
 	{"stats_update", CL_StatsUpdate_f, NULL},
+	{"nation_update", CL_NationStatsUpdate_f, "Shows the current nation list + statistics."},
+	{"nation_select", CL_NationSelect_f, "Select nation and display all relevant information for it."},
 	{"game_go", CL_GameGo, NULL},
 	{"game_auto_check", CL_GameAutoCheck_f, NULL},
 	{"game_auto_go", CL_GameAutoGo_f, NULL},
