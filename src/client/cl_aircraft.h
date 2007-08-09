@@ -181,12 +181,7 @@ typedef struct aircraft_s {
 	aircraftType_t type;
 	ufoType_t ufotype;			/**< type of UFO (if craft is not UFO - not used) */
 	int status;				/**< see aircraftStatus_t */
-	vec3_t angles;				/**< menu values for rotating */
-	vec3_t scale;				/**< menu values for scaling */
-	vec3_t center;				/**< menu values for shifting */
-	vec3_t anglesEquip;			/**< menu values for rotating - aircraft_equip menu */
-	vec3_t scaleEquip;			/**< menu values for scaling - aircraft_equip menu */
-	vec3_t centerEquip;			/**< menu values for shifting - aircraft_equip menu */
+
 	int price;
 	int fuel;				/**< actual fuel */
 	int size;				/**< how many soldiers max */

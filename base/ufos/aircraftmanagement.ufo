@@ -19,7 +19,6 @@
 //		contains - technology of the item in the slot at the beginning of the game.
 //		ammo - Technology of the ammo loading the weapon (only for weapon slots).
 //
-//	scale, angles, scale_equip and angles_equip - Please do not use anymore - See menutransform in models.ufo
 //
 // craftitem
 //	type - The type of the item. Possible values:
@@ -84,10 +83,6 @@ aircraft craft_drop_firebird
 	size		8
 	weight		8
 	image		air_dropship
-	//angles	"-20 -40 120"	// see models.ufo
-	//scale		"1.1 1.1 1.1"
-	//angles_equip	"90 0 180"
-	//scale_equip	"0.7 0.7 0.7"
 	slot {
 		type		weapon
 		position	nose_center
@@ -126,10 +121,6 @@ aircraft craft_inter_stiletto
 	price		20000
 	building	building_intercept
 	image		air_interceptor
-	//angles		"-20 -40 120"	// see models.ufo
-	//scale		"1.1 1.1 1.1"
-	//angles_equip	"0 0 180"
-	//scale_equip	"0.7 0.7 0.7"
 	shield		rs_craft_shield_polymer
 	slot {
 		type		weapon
@@ -178,10 +169,6 @@ aircraft craft_inter_saracen
 	price		26000
 	building	building_intercept
 	image		air_interceptor
-	//angles		"170 10 -110"	// see models.ufo
-	//scale		"0.8 1.1 1.1"
-	//angles_equip	"-90 0 180"
-	//scale_equip	"0.9 0.9 0.9"
 	// FIXME: This is just testing
 	shield		rs_craft_shield_polymer
 	slot {
@@ -223,10 +210,6 @@ aircraft craft_inter_stingray
 	price		48000
 	building	building_intercept
 	image		air_interceptor
-	//angles		"170 10 -110"	// see models.ufo
-	//scale		"0.8 1.1 1.1"
-	//angles_equip	"-90 0 180"
-	//scale_equip	"0.9 0.9 0.9"
 }
 
 // *********************************
@@ -256,10 +239,6 @@ aircraft craft_ufo_harvester
 	building	building_big_ufo_hangar
 	price		3000000
 	image		air_ufo
-	//angles		"170 -30 -100"	// see models.ufo
-	//scale		"1.1 0.9 1.0"
-	//angles_equip	"0 0 180"
-	//scale_equip	"0.9 0.9 0.9"
 }
 
 // FIXME - should not be shown on geoscape
@@ -287,10 +266,6 @@ aircraft craft_ufo_carrier
 	building	building_small_ufo_hangar
 	price		3000000
 	image		air_ufo
-	//angles		"170 -30 -100"	// see models.ufo
-	//scale		"1.1 0.9 1.0"
-	//angles_equip	"0 0 180"
-	//scale_equip	"0.9 0.9 0.9"
 }
 
 // FIXME
@@ -314,10 +289,6 @@ aircraft craft_ufo_supply
 	building	building_big_ufo_hangar
 	price		3000000
 	image		air_ufo
-	//angles		"170 -30 -100"	// see models.ufo
-	//scale		"1.1 0.9 1.0"
-	//angles_equip	"0 0 180"
-	//scale_equip	"0.9 0.9 0.9"
 }
 
 // FIXME
@@ -341,10 +312,6 @@ aircraft craft_ufo_condor
 	building	building_big_ufo_hangar
 	price		3000000
 	image		air_ufo
-	//angles		"170 -30 -100"		// see models.ufo	CONDOR MODEL USED AT ALL?
-	//scale		"1.1 0.9 1.0"
-	//angles_equip	"0 0 180"
-	//scale_equip	"0.9 0.9 0.9"
 	slot {
 		type		weapon
 		size		light
@@ -373,10 +340,6 @@ aircraft craft_ufo_scout
 	building	building_small_ufo_hangar
 	price		3000000
 	image		air_ufo
-	//angles		"170 -30 -100"		// see models.ufo
-	//scale		"1.1 0.9 1.0"
-	//angles_equip	"0 0 180"
-	//scale_equip	"0.9 0.9 0.9"
 	slot {
 		type		weapon
 		size		light
@@ -421,10 +384,6 @@ aircraft craft_ufo_fighter
 	building	building_small_ufo_hangar
 	price		4000000
 	image		air_ufo
-	//angles		"-20 -40 120"	// see models.ufo
-	//scale		"1.1 1.1 1.1"
-	//angles_equip	"90 0 180"
-	//scale_equip	"1.1 1.1 1.1"
 	slot {
 		type		weapon
 		size		light

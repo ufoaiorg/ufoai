@@ -832,11 +832,6 @@ void AIM_AircraftEquipmenuInit_f (void)
 	assert(aircraft);
 	assert(node);
 
-	/* copy the menu align values */
-	VectorCopy(aircraft->scaleEquip, node->scale);
-	VectorCopy(aircraft->centerEquip, node->center);
-	VectorCopy(aircraft->anglesEquip, node->angles);
-	rotateAngles = aircraft->angles;
 
 	/* Check that airequipSelectedSlot corresponds to an existing slot for this aircraft */
 	AIM_CheckAirequipSelectedSlot(aircraft);

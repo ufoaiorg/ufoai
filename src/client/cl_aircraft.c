@@ -585,13 +585,6 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	node = MN_GetNodeFromCurrentMenu("aircraft");
 
 	/* we were not in the aircraft menu yet */
-	if (node) {
-		/* copy the menu align values */
-		VectorCopy(aircraft->scale, node->scale);
-		VectorCopy(aircraft->center, node->center);
-		VectorCopy(aircraft->angles, node->angles);
-		rotateAngles = aircraft->angles;
-	}
 
 	baseCurrent->aircraftCurrent = aircraftID;
 
@@ -1276,14 +1269,8 @@ static const value_t aircraft_vals[] = {
 	{"shortname", V_TRANSLATION2_STRING, offsetof(aircraft_t, shortname), 0},
 	{"size", V_INT, offsetof(aircraft_t, size), MEMBER_SIZEOF(aircraft_t, size)},
 	{"weight", V_INT, offsetof(aircraft_t, weight), MEMBER_SIZEOF(aircraft_t, weight)},
-	{"angles", V_VECTOR, offsetof(aircraft_t, angles), MEMBER_SIZEOF(aircraft_t, angles)},
-	{"center", V_VECTOR, offsetof(aircraft_t, center), MEMBER_SIZEOF(aircraft_t, center)},
-	{"scale", V_VECTOR, offsetof(aircraft_t, scale), MEMBER_SIZEOF(aircraft_t, scale)},
-	{"angles_equip", V_VECTOR, offsetof(aircraft_t, anglesEquip), MEMBER_SIZEOF(aircraft_t, anglesEquip)},
-	{"center_equip", V_VECTOR, offsetof(aircraft_t, centerEquip), MEMBER_SIZEOF(aircraft_t, centerEquip)},
-	{"scale_equip", V_VECTOR, offsetof(aircraft_t, scaleEquip), MEMBER_SIZEOF(aircraft_t, scaleEquip)},
-	{"image", V_CLIENT_HUNK_STRING, offsetof(aircraft_t, image), 0},
 
+	{"image", V_CLIENT_HUNK_STRING, offsetof(aircraft_t, image), 0},
 	{"model", V_CLIENT_HUNK_STRING, offsetof(aircraft_t, model), 0},
 	/* price for selling/buying */
 	{"price", V_INT, offsetof(aircraft_t, price), MEMBER_SIZEOF(aircraft_t, price)},
