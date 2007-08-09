@@ -120,6 +120,13 @@ language sv {
 	}
 }
 
+language th {
+	"_Thai"
+	{
+		th.UTF-8
+	}
+}
+
 language none {
 	"_No language"
 	{
