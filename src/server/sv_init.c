@@ -958,14 +958,9 @@ static void SV_DiscoveryCallback (struct datagram_socket *s, const char *buf, in
  */
 static void SV_InitGame (void)
 {
-	if (svs.initialized) {
+	if (svs.initialized)
 		/* cause any connected clients to reconnect */
 		SV_Shutdown("Server restarted\n", qtrue);
-	} else {
-		/* make sure the client is down */
-		CL_Drop();
-		SCR_BeginLoadingPlaque();
-	}
 
 	/* allow next change after map change or restart */
 	sv_maxclients->flags |= CVAR_LATCH;
