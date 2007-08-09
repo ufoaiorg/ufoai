@@ -3449,7 +3449,7 @@ static void MN_SetModelTransform_f (void)
 	}
 
 	current = menuStack[menuStackPos-1];
-	
+
 	command = Cmd_Argv(0);
 
 	nodeID = Cmd_Argv(1);
@@ -3457,15 +3457,18 @@ static void MN_SetModelTransform_f (void)
 	x = atof(Cmd_Argv(2));
 	y = atof(Cmd_Argv(3));
 	z = atof(Cmd_Argv(4));
-	
+
 	VectorSet(value, x, y, z);
-	
+
 	/* search the node */
 	node = MN_GetNode(current, nodeID);
 
 	if (!node) {
 		/* didn't find node -> "kill" action and print error */
-		Com_Printf("MN_EditMenuNode_f: node \"%s\" doesn't exist\n", nodeID);
+		Com_Printf("MN_SetModelTransform_f: node \"%s\" doesn't exist\n", nodeID);
+		return;
+	} else if (node->type != MN_MODEL) {
+		Com_Printf("MN_SetModelTransform_f: node \"%s\" isn't a model node\n", nodeID);
 		return;
 	}
 
