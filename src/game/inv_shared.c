@@ -221,11 +221,12 @@ int Com_CheckToInventory (const inventory_t * const i, const int item, const int
 
 
 /**
- * @brief Searches a suitable place in container of a given inventory
- * @param[in] i
- * @param[in] container
+ * @brief Searches a suitable place in given inventory with given container.
+ * @param[in] i Pointer to the inventory where we will search.
+ * @param[in] container Container index.
  * @param[in] x
  * @param[in] y
+ * @return invList_t Pointer to the container in given inventory, where we can place new item.
  */
 invList_t *Com_SearchInInventory (const inventory_t* const i, int container, int x, int y)
 {
@@ -618,9 +619,9 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 }
 
 /**
- * @brief Clear the linked list of a container - remove all items from this container
- * @param[in] i The inventory where the container is located
- * @param[in] container The container id which should be cleared
+ * @brief Clears the linked list of a container - removes all items from this container.
+ * @param[in] i The inventory where the container is located.
+ * @param[in] container Index of the container which will be cleared.
  * @sa INVSH_DestroyInventory
  * @note This should only be called for temp containers if the container is really a temp container
  * e.g. the container of a dropped weapon in tactical mission (ET_ITEM)
@@ -662,8 +663,9 @@ void INVSH_EmptyContainer (inventory_t* const i, const int container)
 }
 
 /**
- * @brief
- * @param[in] i The invetory which should be erased.
+ * @brief Destroys inventory.
+ * @param[in] i Pointer to the invetory which should be erased.
+ * @note Loops through all containers in inventory, NULL for temp containers and INVSH_EmptyContainer() call for real containers.
  * @sa INVSH_EmptyContainer
  */
 void INVSH_DestroyInventory (inventory_t* const i)
