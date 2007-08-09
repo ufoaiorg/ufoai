@@ -590,7 +590,7 @@ void NET_WriteMsg (struct net_stream *s, struct dbuffer *buf)
 
 /**
  * @brief Enqueue the buffer in the net stream for MULTIPLE clients
- * @note Same as NET_WriteMsg but deesn't free the buffer, use this if you send
+ * @note Same as NET_WriteMsg but doesn't free the buffer, use this if you send
  * the same buffer to more than one connected clients
  * @note Make sure that you free the msg buffer after you called this
  * @sa NET_WriteMsg
@@ -610,7 +610,11 @@ void NET_WriteConstMsg (struct net_stream *s, const struct dbuffer *buf)
 }
 
 /**
- * @brief
+ * @brief Reads messages from the network channel and adds them to the dbuffer
+ * where you can use the NET_Read* functions to get the values in the correct
+ * order
+ * @sa stream_dequeue
+ * @sa dbuffer_add
  */
 struct dbuffer *NET_ReadMsg (struct net_stream *s)
 {
