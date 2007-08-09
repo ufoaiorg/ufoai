@@ -704,10 +704,11 @@ int stream_length (struct net_stream *s)
  */
 int stream_peek (struct net_stream *s, char *data, int len)
 {
-	if (len <= 0 || !s || s->closed || s->finished) {
-		if (!s->inbound || dbuffer_len(s->inbound) == 0)
-			return 0;
-	}
+	if (len <= 0 || !s)
+		return 0;
+
+	if ((s->closed || s->finished) && (!s->inbound || dbuffer_len(s->inbound) == 0))
+		return 0;
 
 	return dbuffer_get(s->inbound, data, len);
 }
