@@ -3424,6 +3424,58 @@ static void MN_EditMenuNode_f (void)
 	else
 		Com_Printf("This var is not supported by inline editing\n");
 }
+
+/**
+ * @brief This function allows you inline transforming of mdoels.
+ * @note Changes you made are lost on quit
+ * @sa MN_EditMenuNode_f
+ */
+static void MN_SetModelTransform_f (void)
+{
+	menuNode_t *node;
+	const char *command, *nodeID;
+	menu_t *current;
+	float x, y ,z;
+	vec3_t value;
+
+
+	/* not initialized yet - commandline? */
+	if (menuStackPos <= 0)
+		return;
+
+	if (Cmd_Argc() < 5) {
+		Com_Printf("usage: debug_mn[scale|angles] <node> <x> <y> <z>\n");
+		return;
+	}
+	Com_Printf("!!WARNING!! This function may be dangerous and should only be used if you know what you are doing\n");
+
+	current = menuStack[menuStackPos-1];
+	
+	command = Cmd_Argv(0);
+
+	nodeID = Cmd_Argv(1);
+
+	x = atoi(Cmd_Argv(2));
+	y = atoi(Cmd_Argv(3));
+	z = atoi(Cmd_Argv(4));
+	
+	VectorSet(value, x, y, z);
+	
+	/* search the node */
+	node = MN_GetNode(current, nodeID);
+
+	if (!node) {
+		/* didn't find node -> "kill" action and print error */
+		Com_Printf("MN_EditMenuNode_f: node \"%s\" doesn't exist\n", nodeID);
+		return;
+	}
+
+	if (!Q_strcmp(command, "debug_mnscale")) {
+		VectorCopy(value, node->scale);
+	} else if (!Q_strcmp(command, "debug_mnangles")) {
+		VectorCopy(value, node->angles);
+	}
+}
 #endif /* DEBUG */
 
 #ifdef DEBUG
@@ -3603,6 +3655,8 @@ void MN_ResetMenus (void)
 	Cmd_AddCommand("debug_menuprint", MN_PrintMenu_f, "Shows the current menu as text on the game console");
 	Cmd_AddCommand("debug_menueditnode", MN_EditMenuNode_f, "This function is for inline editing of nodes - dangerous!!");
 	Cmd_AddCommand("debug_menureload", MN_ReloadMenus_f, "Reloads the menus to show updates without the need to restart");
+	Cmd_AddCommand("debug_mnscale", MN_SetModelTransform_f, "Transform model from command line.");
+	Cmd_AddCommand("debug_mnangles", MN_SetModelTransform_f, "Transform model from command line.");
 #endif
 	Cmd_AddCommand("hidehud", MN_PushNoHud_f, _("Hide the HUD (press ESC to reactivate HUD)"));
 	/* 256kb - FIXME: Get rid of adata, curadata and adataize */
