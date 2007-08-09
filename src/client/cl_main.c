@@ -257,7 +257,8 @@ void CL_StartSingleplayer (qboolean singleplayer)
 		Com_Printf("Changing to Multiplayer\n");
 		/* no campaign equipment but for multiplayer */
 		Cvar_Set("map_dropship", "craft_drop_firebird");
-		/* disconnect already running session */
+		/* disconnect already running session - when entering the
+		 * multiplayer menu while you are still connected */
 		if (cls.state >= ca_connecting)
 			CL_Disconnect();
 
@@ -304,6 +305,8 @@ void CL_Drop (void)
 
 /**
  * @brief
+ * @note Only call CL_Connect if there is no connection yet (cls.stream is NULL)
+ * @sa CL_Disconnect
  */
 static void CL_Connect (void)
 {
@@ -1364,6 +1367,8 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
  * @sa CL_ConnectionlessPacket
  * @sa CL_Frame
  * @sa CL_ParseServerMessage
+ * @sa NET_ReadMsg
+ * @sa SV_ReadPacket
  */
 static void CL_ReadPackets (void)
 {
