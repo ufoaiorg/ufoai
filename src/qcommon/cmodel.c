@@ -298,7 +298,7 @@ static void CMod_LoadSubmodels (lump_t * l, vec3_t shift)
 			out->origin[j] = LittleFloat(in->origin[j]) + shift[j];
 		}
 		out->headnode = LittleLong(in->headnode);
-		out->tile = curTile - mapTiles;
+		out->tile = numTiles; /* backlink to the loaded map tile */
 	}
 }
 
@@ -720,10 +720,8 @@ static int CM_EntTestLine (vec3_t start, vec3_t stop)
 		if (**name != '*')
 			continue;
 		model = CM_InlineModel(*name);
-		if (!model || model->headnode >= curTile->numnodes + 6)
+		if (!model || model->headnode >= mapTiles[model->tile].numnodes + 6)
 			continue;
-/*		Com_Printf("CM_EntTestLine call function\n"); */
-		assert(model->headnode < curTile->numnodes + 6); /* +6 => bbox */
 		trace = CM_TransformedBoxTrace(start, stop, vec3_origin, vec3_origin, model->tile, model->headnode, MASK_ALL, model->origin, vec3_origin);
 		/* if we started the trace in a wall */
 		/* or the trace is not finished */
@@ -761,10 +759,8 @@ static int CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end)
 		if (**name != '*')
 			continue;
 		model = CM_InlineModel(*name);
-		if (!model || model->headnode >= curTile->numnodes + 6)
+		if (!model || model->headnode >= mapTiles[model->tile].numnodes + 6)
 			continue;
-/*		Com_Printf("CM_EntTestLineDM call function\n"); */
-		assert(model->headnode < curTile->numnodes + 6); /* +6 => bbox */
 		trace = CM_TransformedBoxTrace(start, end, vec3_origin, vec3_origin, model->tile, model->headnode, MASK_ALL, model->origin, vec3_origin);
 		/* if we started the trace in a wall */
 		if (trace.startsolid) {
@@ -998,8 +994,8 @@ static void CMod_GetMapSize (routing_t * map)
 /**
  * @brief
  * @param[in] l Routing lump ... @todo whatsit?
- * @param[in] sX The x position on the world plane (grid position) - values from -WIDTH up to +WIDTH are allowed
- * @param[in] sY The y position on the world plane (grid position) - values from -WIDTH up to +WIDTH are allowed
+ * @param[in] sX The x position on the world plane (grid position) - values from 0 up to WIDTH are allowed
+ * @param[in] sY The y position on the world plane (grid position) - values from 0 up to WIDTH are allowed
  * @param[in] sZ The height level on the world plane (grid position) - values from 0 - HEIGHT are allowed
  * @sa CM_AddMapTile
  */
@@ -1156,13 +1152,6 @@ static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
 		/* finish entity */
 		Q_strcat(map_entitystring, "} ", MAX_MAP_ENTSTRING);
 	}
-#if 0
-	/* copy new entitystring */
-	memcpy(map_entitystringpos, cmod_base + l->fileofs, l->filelen);
-
-	/* update length */
-	map_entitystringpos += l->filelen - 1;
-#endif
 }
 
 
@@ -1217,7 +1206,7 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, int sZ)
 	if (numTiles >= MAX_MAPTILES)
 		Com_Error(ERR_FATAL, "CM_AddMapTile: too many tiles loaded\n");
 
-	curTile = &mapTiles[numTiles++];
+	curTile = &mapTiles[numTiles];
 	memset(curTile, 0, sizeof(mapTile_t));
 	Q_strncpyz(curTile->name, name, sizeof(curTile->name));
 
@@ -1245,6 +1234,9 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, int sZ)
 	FS_FreeFile(buf);
 
 	numInline += curTile->numcmodels - LEVEL_STEPON;
+
+	/* now increase the amount of loaded tiles */
+	numTiles++;
 
 	return checksum;
 }
@@ -1332,7 +1324,7 @@ cBspModel_t *CM_InlineModel (const char *name)
 		Com_Error(ERR_DROP, "CM_InlineModel: bad number");
 
 	for (i = 0; i < numTiles; i++)
-		/* FIXME: Is this if really needed? */
+		/* FIXME: Is this if statement really needed? */
 		if (num >= mapTiles[i].numcmodels - LEVEL_STEPON) {
 			num -= mapTiles[i].numcmodels - LEVEL_STEPON;
 		} else {
@@ -2009,7 +2001,7 @@ trace_t CM_TransformedBoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t ma
 	}
 
 	if (headnode >= curTile->numnodes + 6) {/* +6 => bbox */
-		Com_Printf("CM_TransformedBoxTrace: headnode: %i, curTile->numnodes: %i\n", headnode, curTile->numnodes + 6);
+		Com_Printf("CM_TransformedBoxTrace: tile: %i, headnode: %i, curTile->numnodes: %i\n", tile, headnode, curTile->numnodes + 6);
 		headnode = 0;
 	}
 
