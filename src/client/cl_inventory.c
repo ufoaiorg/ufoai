@@ -533,6 +533,7 @@ int INV_DisassemblyItem (base_t *base, components_t *comp, qboolean calculate)
  * @param[in] base Pointer to the base.
  * @param[in] add True if we are adding antimatter, false when removing.
  * @note This function should be called whenever we add or remove antimatter from Antimatter Storage Facility.
+ * @note Call with amount = 0 if you want to remove ALL antimatter from given base.
  */
 void INV_ManageAntimatter (base_t *base, int amount, qboolean add)
 {
@@ -569,8 +570,13 @@ void INV_ManageAntimatter (base_t *base, int amount, qboolean add)
 			}
 		}
 	} else {	/* Removing. */
-		base->capacities[CAP_ANTIMATTER].cur -= amount * ANTIMATTER_SIZE;
-		base->storage.num[i] -= amount;
+		if (amount == 0) {
+			base->capacities[CAP_ANTIMATTER].cur = 0;
+			base->storage.num[i] = 0;
+		} else {
+			base->capacities[CAP_ANTIMATTER].cur -= amount * ANTIMATTER_SIZE;
+			base->storage.num[i] -= amount;
+		}
 	}
 }
 

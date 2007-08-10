@@ -373,8 +373,11 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 		break;
 	case B_ANTIMATTER:
 		cap = CAP_ANTIMATTER;
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0)
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0) {
 			base->hasAmStorage = qfalse;
+			/* Remove antimatter. */
+			INV_ManageAntimatter(base, 0, qfalse);
+		}
 		break;
 	case B_DEFENSE_MISSILE:
 		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0)
