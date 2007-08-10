@@ -168,6 +168,9 @@ typedef struct objDef_s {
 	/* Armor specific */
 	short protection[MAX_DAMAGETYPES];	/**< @todo: document me. */
 	short hardness[MAX_DAMAGETYPES];	/**< @todo: document me. */
+
+	/* Aircraft specific */
+	qboolean aircraft;			/**< True if this item is dummy aircraft - used in disassembling. */
 } objDef_t;
 
 #define MAX_INVDEFS     16

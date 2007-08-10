@@ -705,6 +705,7 @@ static const value_t od_vals[] = {
 	{"buytype", V_INT, offsetof(objDef_t, buytype), MEMBER_SIZEOF(objDef_t, buytype)},	/** Not parsed automatically anymore, this enrty is just there for overview. */
 	{"useable", V_INT, offsetof(objDef_t, useable), MEMBER_SIZEOF(objDef_t, useable)},
 	{"notonmarket", V_BOOL, offsetof(objDef_t, notOnMarket), MEMBER_SIZEOF(objDef_t, notOnMarket)},
+	{"aircraft", V_BOOL, offsetof(objDef_t, aircraft), MEMBER_SIZEOF(objDef_t, aircraft)},
 	{NULL, V_NULL, 0, 0}
 };
 

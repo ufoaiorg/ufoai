@@ -385,6 +385,7 @@ void PR_ProductionRun (void)
 	objDef_t *od;
 	technology_t *t;
 	production_t *prod;
+	aircraft_t *ufocraft;
 
 	/* Loop through all founded bases. Then check productions
 	   in global data array. Then decrease timeLeft and check
@@ -441,6 +442,12 @@ void PR_ProductionRun (void)
 				gd.bases[i].capacities[CAP_ITEMS].cur += INV_DisassemblyItem(&gd.bases[i], INV_GetComponentsByItemIdx(prod->objID), qfalse);
 				prod->timeLeft = PR_CalculateProductionTime(&gd.bases[i], t, INV_GetComponentsByItemIdx(prod->objID), qtrue);
 				prod->amount--;
+				/* If this is aircraft dummy item, update UFO hangars capacity. */
+				if (od->aircraft) {
+					ufocraft = AIR_GetAircraft(od->id);
+					assert (ufocraft);
+					gd.bases[i].capacities[CAP_UFOHANGARS].cur -= ufocraft->weight;
+				}
 				if (prod->amount <= 0) {
 					Com_sprintf(messageBuffer, sizeof(messageBuffer), _("The disassembling of %s has finished."),od->name);
 					MN_AddNewMessage(_("Production finished"), messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
