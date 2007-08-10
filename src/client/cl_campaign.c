@@ -1784,9 +1784,10 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node)
 
 	
 	/* Link points to node */
-	node->pointList = funding_pts;
-	node->numPoints = months;
-	VectorCopy(color, node->color);
+	node->linestrips.numStrips = 1;
+	node->linestrips.pointList[0] = funding_pts;
+	node->linestrips.numPoints[0] = months;
+	VectorCopy(color, node->linestrips.color[0]);
 }
 
 static int selectedNation = 0;

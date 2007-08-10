@@ -2573,10 +2573,16 @@ void MN_DrawMenus (void)
 					break;
 
 				case MN_LINESTRIP:
-					if (node->pointList && (node->numPoints > 0)) {
-							re.DrawColor(node->color);
-							re.DrawLineStrip(node->numPoints, node->pointList);
-							re.DrawColor(NULL);
+					if (node->linestrips.numStrips > 0) {
+						/* Draw all linestrips. */
+						for (i = 0; i < node->linestrips.numStrips; i++) {
+							/* Draw this line if it's valid. */
+							if (node->linestrips.pointList[i] && (node->linestrips.numPoints[i] > 0)) {
+									re.DrawColor(node->linestrips.color[i]);
+									re.DrawLineStrip(node->linestrips.numPoints[i], node->linestrips.pointList[i]);
+									re.DrawColor(NULL);
+							}
+						}
 					}
 					break;
 

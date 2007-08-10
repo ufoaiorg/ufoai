@@ -123,6 +123,15 @@ typedef struct selectBoxOptions_s {
 	qboolean hovered;		/**< current selected option entry selected? */
 } selectBoxOptions_t;
 
+#define MAX_LINESTRIPS 16
+
+typedef struct lineStrips_s {
+	int *pointList[MAX_LINESTRIPS];	/**< Pointers to lists of 2d coordiantes MN_LINESTRIP. */
+	int numPoints[MAX_LINESTRIPS];	/**< Number of points in each list */
+	vec4_t color[MAX_LINESTRIPS];	/**< Color of the point-list. */
+	int numStrips;			/**< Number of point-lists. */
+} lineStrips_t;
+
 /** @brief menu node */
 typedef struct menuNode_s {
 	void *data[6];				/**< needs to be first */
@@ -159,8 +168,7 @@ typedef struct menuNode_s {
 	menuDepends_t depends;
 	struct menuNode_s *next;
 	struct menu_s *menu;	/**< backlink */
-	int *pointList;		/**< Pointer to list of 2d coordiantes MN_LINESTRIP. */
-	int numPoints;
+	lineStrips_t linestrips;	/**< List of lines to draw. (MN_LINESTRIP) */
 } menuNode_t;
 
 /** @brief menu with all it's nodes linked in */
