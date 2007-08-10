@@ -2230,7 +2230,10 @@ static void B_AssembleMap_f (void)
 			if (*baseMapPart) {
 				Q_strcat(maps, baseMapPart, sizeof(maps));
 				Q_strcat(maps, " ", sizeof(maps));
-				/* basetiles are 16 units in each direction */
+				/* basetiles are 16 units in each direction
+				 * 512 / UNIT_SIZE = 16
+				 * 512 is the size in the mapeditor and the worldplane for a
+				 * single base map tile */
 				Q_strcat(coords, va("%i %i ", col * 16, (BASE_SIZE - row - 1) * 16), sizeof(coords));
 			}
 		}
