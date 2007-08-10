@@ -492,10 +492,10 @@ menu hud
 		pos		"256 640"
 	}
 
-	confunc deselstands { *bt_duck image hud/buttons2 }
-	confunc deselcrouchs { *bt_duck image hud/buttons2 }
-	confunc disstands { *bt_duck image hud/buttons2g }
-	confunc discrouchs { *bt_duck image hud/buttons2g }
+	confunc deselstands { *bt_duck texl "52 75" *bt_duck texh "104 112" *bt_duck image hud/buttons2 }
+	confunc deselcrouchs { *bt_duck texl "0 75" *bt_duck texh "52 112" *bt_duck image hud/buttons2 }
+	confunc disstands { *bt_duck texl "52 75" *bt_duck texh "104 112" *bt_duck image hud/buttons2g }
+	confunc discrouchs { *bt_duck texl "0 75" *bt_duck texh "52 112" *bt_duck image hud/buttons2g }
 
 	pic bt_duck
 	{
@@ -504,7 +504,7 @@ menu hud
 		mousefx true
 		pos		"303 723"
 		texl	"0 75"
-		texh	"64 112"
+		texh	"52 112"
 		click	{ cmd standcrouch }
 	}
 
