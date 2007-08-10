@@ -1753,14 +1753,16 @@ static int usedGraphColors = 0;
  * @param[in] y	Y coordinate of lower left corner of the graph.
  * @param[in] width of the graph.
  * @param[in] height of the graph.
+ * @todo Somehow the display of the months isnt really correct right now (straight line :-/)
+ * @todo max (and min) values DO VARY BETWEEN NATIONS right now - this is bad for displaying specific graph-values (at the axes) later!
  */
 static void CL_NationDrawStats (nation_t *nation, menuNode_t *node)
 {
 	int width, height, x, y, dx;
 	int m, j;
 
-	float min =  nation->maxFunding * nation->stats[0].happiness;
-	float max = min;
+	float min = 0;
+	float max = nation->maxFunding * nation->stats[0].happiness;
 	int funding;
 	int months = 0;
 
@@ -1775,8 +1777,10 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node)
 
 	/* Get minimum and maximum values */
 	for (m = 0; m < MONTHS_PER_YEAR; m++) {
-		if (1) { /* if (nation->stats[m].inuse) { */	/** @todo remove DEBUG code */
-			nation->stats[m].happiness =  frand();	/** @todo remove DEBUG code */
+		if (nation->stats[m].inuse) {
+			/** @note DEBUG only
+			nation->stats[m].happiness =  frand();
+			*/
 			funding = nation->maxFunding * nation->stats[m].happiness;
 
 			if (funding < min)
@@ -1788,7 +1792,7 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node)
 			break;
 		}
 	}
-
+	
 	/* Generate pointlist. */
 	/** @todo Sort this in reverse? -> Having current month on the right side? */
 	for (m = 0, j = 0; m < months; m++, j+=2) {
@@ -1796,6 +1800,16 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node)
 		fundingPts[usedPointlists][j] = x + (m * dx);
 		fundingPts[usedPointlists][j+1] = y - ((funding - min) / (max - min)) * height;
 	}
+	
+	/* Guarantee displayable data even for only one month */
+	if (months == 1) {
+		/* Set the second point two pixel to the right - small horiz line. */
+		fundingPts[usedPointlists][2] = fundingPts[usedPointlists][0] + 2;
+		fundingPts[usedPointlists][3] = fundingPts[usedPointlists][1];
+		months++;
+	}
+
+	/* Do not use "months" after this point becasue it is NOT the number of months here anymore but the number of points. */
 
 	/* Break if we reached the max strip number. */
 	if (node->linestrips.numStrips >= MAX_LINESTRIPS-1)
@@ -1804,7 +1818,7 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node)
 	/* Link graph to node */
 	node->linestrips.pointList[node->linestrips.numStrips] = fundingPts[usedPointlists];
 	node->linestrips.numPoints[node->linestrips.numStrips] = months;
-	VectorCopy(graphColors[usedGraphColors], node->linestrips.color[node->linestrips.numStrips]);
+	Vector4Copy(graphColors[usedGraphColors], node->linestrips.color[node->linestrips.numStrips]);
 	node->linestrips.numStrips++;
 	
 	usedGraphColors++;
@@ -1821,7 +1835,7 @@ static void CL_NationStatsUpdate_f(void)
 	int i;
 	int funding;
 	menuNode_t *graphNode;
-	const vec4_t colorAxes = {1, 1, 1, 1};
+	const vec4_t colorAxes = {1, 1, 1, 0.5};
 
 	for (i = 0; i < gd.numNations; i++) {
 		funding = gd.nations[i].maxFunding * gd.nations[i].stats[0].happiness;
@@ -1855,7 +1869,7 @@ static void CL_NationStatsUpdate_f(void)
 		coordAxesPts[5] = graphNode->pos[1];	/* y */
 		graphNode->linestrips.pointList[0] = coordAxesPts;
 		graphNode->linestrips.numPoints[0] = 3;
-		VectorCopy(colorAxes, graphNode->linestrips.color[0]);
+		Vector4Copy(colorAxes, graphNode->linestrips.color[0]);
 
 		/** @todo Maybe create a margin toward the axes? */
 		/** @todo Draw a line where the current month is. */

@@ -2573,18 +2573,14 @@ void MN_DrawMenus (void)
 					break;
 
 				case MN_LINESTRIP:
-					{
-						const vec4_t colorDEBUG = {1, 1, 1, 1};	/** @todo Why do the colors from cl_campaign not work here? */
-						if (node->linestrips.numStrips > 0) {
-							/* Draw all linestrips. */
-							for (i = 0; i < node->linestrips.numStrips; i++) {
-								/* Draw this line if it's valid. */
-								if (node->linestrips.pointList[i] && (node->linestrips.numPoints[i] > 0)) {
-										/** @todo re.DrawColor(node->linestrips.color[i]); */
-										re.DrawColor(colorDEBUG);
-										re.DrawLineStrip(node->linestrips.numPoints[i], node->linestrips.pointList[i]);
-										re.DrawColor(NULL);
-								}
+					if (node->linestrips.numStrips > 0) {
+						/* Draw all linestrips. */
+						for (i = 0; i < node->linestrips.numStrips; i++) {
+							/* Draw this line if it's valid. */
+							if (node->linestrips.pointList[i] && (node->linestrips.numPoints[i] > 0)) {
+									re.DrawColor(node->linestrips.color[i]);
+									re.DrawLineStrip(node->linestrips.numPoints[i], node->linestrips.pointList[i]);
+									re.DrawColor(NULL);
 							}
 						}
 					}
@@ -2764,7 +2760,7 @@ void MN_DrawMenus (void)
 									VectorCopy(node->angles, mi.angles);
 									VectorCopy(node->origin, mi.origin);
 								}
-								VectorCopy(node->color, mi.color);
+								Vector4Copy(node->color, mi.color);
 								VectorCopy(node->center, mi.center);
 
 								/* get the animation given by menu node properties */
