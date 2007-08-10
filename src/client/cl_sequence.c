@@ -1423,7 +1423,11 @@ qboolean CL_CloseAVI (void)
 	FS_FCloseFile(&afd.idxF);
 
 	/* Remove temp index file */
-/* 	FS_HomeRemove( idxFileName ); */
+#if 0
+	/* FIXME */
+	Com_Printf("remove temp index file '%s/%s'\n", FS_Gamedir(), idxFileName);
+	/*FS_Remove(va("%s/%s", FS_Gamedir(), idxFileName);*/
+#endif
 
 	/* Write the real header */
 	FS_Seek(&afd.f, 0, FS_SEEK_SET);
