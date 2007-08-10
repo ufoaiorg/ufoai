@@ -2573,14 +2573,18 @@ void MN_DrawMenus (void)
 					break;
 
 				case MN_LINESTRIP:
-					if (node->linestrips.numStrips > 0) {
-						/* Draw all linestrips. */
-						for (i = 0; i < node->linestrips.numStrips; i++) {
-							/* Draw this line if it's valid. */
-							if (node->linestrips.pointList[i] && (node->linestrips.numPoints[i] > 0)) {
-									re.DrawColor(node->linestrips.color[i]);
-									re.DrawLineStrip(node->linestrips.numPoints[i], node->linestrips.pointList[i]);
-									re.DrawColor(NULL);
+					{
+						const vec4_t colorDEBUG = {1, 1, 1, 1};	/** @todo Why do the colors from cl_campaign not work here? */
+						if (node->linestrips.numStrips > 0) {
+							/* Draw all linestrips. */
+							for (i = 0; i < node->linestrips.numStrips; i++) {
+								/* Draw this line if it's valid. */
+								if (node->linestrips.pointList[i] && (node->linestrips.numPoints[i] > 0)) {
+										/** @todo re.DrawColor(node->linestrips.color[i]); */
+										re.DrawColor(colorDEBUG);
+										re.DrawLineStrip(node->linestrips.numPoints[i], node->linestrips.pointList[i]);
+										re.DrawColor(NULL);
+								}
 							}
 						}
 					}
