@@ -1730,7 +1730,8 @@ static void CL_StatsUpdate_f (void)
 	Q_strcat(pos, va(_("\n\t-------\nSum:\t%i c\n"), sum), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 }
 
-static int fundingPts[MONTHS_PER_YEAR * 2];
+static int fundingPts[MAX_NATIONS][MONTHS_PER_YEAR * 2];
+static int usedPointlists = 0;
 static int coordAxesPts[3 * 2];
 
 const vec4_t graphColors[MAX_NATIONS] = {
@@ -1757,7 +1758,6 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node)
 {
 	int width, height, x, y, dx;
 	int i, j;
-	/* const vec4_t color = {1, 0.5, 0.5, 1}; */
 
 	float min =  nation->maxFunding * nation->stats[0].happiness;
 	float max = min;
@@ -1775,8 +1775,8 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node)
 
 	/* Get minimum and maximum values */
 	for (i = 0; i < MONTHS_PER_YEAR; i++) {
-		if (1) { /* if (nation->stats[i].inuse) { */	/** @todo DEBUG code */
-			nation->stats[i].happiness =  frand();
+		if (1) { /* if (nation->stats[i].inuse) { */	/** @todo remove DEBUG code */
+			nation->stats[i].happiness =  frand();	/** @todo remove DEBUG code */
 			funding = nation->maxFunding * nation->stats[i].happiness;
 
 			if (funding < min)
@@ -1790,23 +1790,25 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node)
 	}
 
 	/* Generate pointlist. */
+	/** @todo Sort this in reverse? -> Having current month on the right side? */
 	for (i = 0, j = 0; i < months; i++, j+=2) {
 		funding = nation->maxFunding * nation->stats[i].happiness;
-		fundingPts[j] = x + (i * dx);
-		fundingPts[j+1] = y - ((funding - min) / (max - min)) * height;
+		fundingPts[usedPointlists][j] = x + (i * dx);
+		fundingPts[usedPointlists][j+1] = y - ((funding - min) / (max - min)) * height;
 	}
-
 
 	/* Break if we reached the max strip number. */
 	if (node->linestrips.numStrips >= MAX_LINESTRIPS-1)
 		return;
 
 	/* Link graph to node */
-	node->linestrips.pointList[node->linestrips.numStrips] = fundingPts;
+	node->linestrips.pointList[node->linestrips.numStrips] = fundingPts[usedPointlists];
 	node->linestrips.numPoints[node->linestrips.numStrips] = months;
 	VectorCopy(graphColors[usedGraphColors], node->linestrips.color[node->linestrips.numStrips]);
-	usedGraphColors++;
 	node->linestrips.numStrips++;
+	
+	usedGraphColors++;
+	usedPointlists++;
 }
 
 static int selectedNation = 0;
@@ -1857,7 +1859,6 @@ static void CL_NationStatsUpdate_f(void)
 
 		/** @todo Maybe create a margin toward the axes? */
 		/** @todo Draw a line where the current month is. */
-		/** @todo Sort months the reverse way? */
 
 		usedGraphColors = 0;
 		for (i = 0; i < gd.numNations; i++) {
