@@ -1757,7 +1757,7 @@ static int usedGraphColors = 0;
 static void CL_NationDrawStats (nation_t *nation, menuNode_t *node)
 {
 	int width, height, x, y, dx;
-	int i, j;
+	int m, j;
 
 	float min =  nation->maxFunding * nation->stats[0].happiness;
 	float max = min;
@@ -1774,10 +1774,10 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node)
 	dx = (int)(width / MONTHS_PER_YEAR);
 
 	/* Get minimum and maximum values */
-	for (i = 0; i < MONTHS_PER_YEAR; i++) {
-		if (1) { /* if (nation->stats[i].inuse) { */	/** @todo remove DEBUG code */
-			nation->stats[i].happiness =  frand();	/** @todo remove DEBUG code */
-			funding = nation->maxFunding * nation->stats[i].happiness;
+	for (m = 0; m < MONTHS_PER_YEAR; m++) {
+		if (1) { /* if (nation->stats[m].inuse) { */	/** @todo remove DEBUG code */
+			nation->stats[m].happiness =  frand();	/** @todo remove DEBUG code */
+			funding = nation->maxFunding * nation->stats[m].happiness;
 
 			if (funding < min)
 				min = funding;
@@ -1791,9 +1791,9 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node)
 
 	/* Generate pointlist. */
 	/** @todo Sort this in reverse? -> Having current month on the right side? */
-	for (i = 0, j = 0; i < months; i++, j+=2) {
-		funding = nation->maxFunding * nation->stats[i].happiness;
-		fundingPts[usedPointlists][j] = x + (i * dx);
+	for (m = 0, j = 0; m < months; m++, j+=2) {
+		funding = nation->maxFunding * nation->stats[m].happiness;
+		fundingPts[usedPointlists][j] = x + (m * dx);
 		fundingPts[usedPointlists][j+1] = y - ((funding - min) / (max - min)) * height;
 	}
 
