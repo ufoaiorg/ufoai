@@ -375,28 +375,81 @@ base/maps/villagen/vil_s12.map | GPL version 2
 base/maps/villagen/vil_s13.map | GPL version 2
 base/maps/villagen/vil_s14.map | GPL version 2
 base/maps/villagen/vil_s15.map | GPL version 2
+base/models/aircraft/craft_weapon_particle/pbw.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
+base/models/aircraft/craft_weapon_particle/pbw.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
+base/models/aircraft/craft_weapon_particle/pbw.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
+base/models/aircraft/craft_weapon_particle/pbw.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
+base/models/aircraft/craft_weapon_shiva/shiva.blend | GNU General Public License v2.0 | Werner Hoehrer (hoehrer) | Shiva Rotary Cannon model based on chaingun model by kaeau, see base/models/weapons/chaingun
+base/models/aircraft/craft_weapon_shiva/shiva.jpg | GNU General Public License v2.0 | Werner Hoehrer (hoehrer) | Shiva Rotary Cannon model based on chaingun model by kaeau, see base/models/weapons/chaingun
+base/models/aircraft/craft_weapon_shiva/shiva.md2 | GNU General Public License v2.0 | Werner Hoehrer (hoehrer) | Shiva Rotary Cannon model based on chaingun model by kaeau, see base/models/weapons/chaingun
+base/models/aircraft/craft_weapon_shiva/shiva.xcf | GNU General Public License v2.0 | Werner Hoehrer (hoehrer) | Shiva Rotary Cannon model based on chaingun model by kaeau, see base/models/weapons/chaingun
+base/models/aircraft/craft_weapon_tr20/tr20.3ds | GNU General Public License v2.0 | Ryan Span (Winter) - model, Willem Sitters - uvmap + texture
+base/models/aircraft/craft_weapon_tr20/tr20.jpg | GNU General Public License v2.0 | Willem Sitters
+base/models/aircraft/craft_weapon_tr20/tr20.md2 | GNU General Public License v2.0 | Ryan Span (Winter)
+base/models/aircraft/craft_weapon_tr20/tr20.obj | GNU General Public License v2.0 | Ryan Span (Winter) - model, Willem Sitters - uvmap + texture
+base/models/aircraft/craft_weapon_tr20/tr20_1.jpg | GNU General Public License v2.0 | Willem Sitters
+base/models/aircraft/drop_firebird/firebird.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/drop_firebird/firebird.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/drop_firebird/firebird_glass.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/drop_firebird/firebird_glass.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/drop_firebird/firebird_top.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/drop_firebird/firebird_top.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/inter_saracen/saracen.jpg | GNU General Public License v2.0 | Daniel Holden (Yoshiboy)
+base/models/aircraft/inter_saracen/saracen.md2 | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
+base/models/aircraft/inter_saracen/saracen_interceptor.blend | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
+base/models/aircraft/inter_saracen/saracen_interceptor.xcf | GNU General Public License v2.0 | Daniel Holden (Yoshiboy)
+base/models/aircraft/inter_saracen/saracen_interceptor_flying.md2 | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
 base/models/aircraft/inter_stingray/sources/stingray_hi_detail_texture_FINAL.blend | GNU General Public License v2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/sources/stingray_lopo_flightmodel.blend | GNU General Public License v2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/sources/stingray_texture_hires_release.xcf.bz2 | GNU General Public License v2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/stingray.jpg | GNU General Public License v2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/stingray_flying.md2 | GNU General Public License v2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/stingray_landed.md2 | GNU General Public License v2.0 | David Townsend (Psawhn)
-base/models/aircraft/ufo_fighter/ufo_fighter_closed.md2 | GNU General Public License v2.0 | Lukas Beyler (Rasta)
-base/models/aircraft/ufo_fighter/ufo_fighter_engines.jpg | GNU General Public License v2.0 | Lukas Beyler (Rasta)
-base/models/aircraft/ufo_fighter/ufo_fighter_engines_1.md2 | GNU General Public License v2.0 | Lukas Beyler (Rasta)
-base/models/aircraft/ufo_fighter/ufo_fighter_engines_2.md2 | GNU General Public License v2.0 | Lukas Beyler (Rasta)
-base/models/aircraft/ufo_fighter/ufo_fighter_hull.jpg | GNU General Public License v2.0 | Lukas Beyler (Rasta)
-base/models/aircraft/ufo_fighter/ufo_fighter_hull.md2 | GNU General Public License v2.0 | Lukas Beyler (Rasta)
-base/models/aircraft/ufo_fighter/ufo_fighter_upper.jpg | GNU General Public License v2.0 | Lukas Beyler (Rasta)
-base/models/aircraft/ufo_fighter/ufo_fighter_upper.md2 | GNU General Public License v2.0 | Lukas Beyler (Rasta)
-base/models/aircraft/ufo_fighter/ufo_fighter_wings.jpg | GNU General Public License v2.0 | Lukas Beyler (Rasta)
-base/models/aircraft/ufo_fighter/ufo_fighter_wings.md2 | GNU General Public License v2.0 | Lukas Beyler (Rasta)
-base/models/aircraft/ufo_scout/ufo_scout_engines.jpg | GNU General Public License v2.0 | Lukas Beyler (Rasta)
-base/models/aircraft/ufo_scout/ufo_scout_engines_1.md2 | GNU General Public License v2.0 | Lukas Beyler (Rasta)
-base/models/aircraft/ufo_scout/ufo_scout_hull.jpg | GNU General Public License v2.0 | Lukas Beyler (Rasta)
-base/models/aircraft/ufo_scout/ufo_scout_hull.md2 | GNU General Public License v2.0 | Lukas Beyler (Rasta)
-base/models/aircraft/ufo_scout/ufo_scout_upper.jpg | GNU General Public License v2.0 | Lukas Beyler (Rasta)
-base/models/aircraft/ufo_scout/ufo_scout_upper.md2 | GNU General Public License v2.0 | Lukas Beyler (Rasta)
+base/models/aircraft/sparrowhawk/sparrowhawk.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
+base/models/aircraft/sparrowhawk/sparrowhawk.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
+base/models/aircraft/sparrowhawk/sparrowhawk.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
+base/models/aircraft/sparrowhawk/sparrowhawk.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
+base/models/aircraft/sparrowhawk/sparrowhawk_full.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
+base/models/aircraft/sparrowhawk/sparrowhawk_rack.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
+base/models/aircraft/sparrowhawk/sparrowhawk_rack.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
+base/models/aircraft/sparrowhawk/sparrowhawk_rack.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
+base/models/aircraft/ufo_condor/ufo_condor.blend | GNU General Public License v2.0 | Werner Hoehrer (hoehrer) | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
+base/models/aircraft/ufo_condor/ufo_condor.jpg | GNU General Public License v2.0 | Werner Hoehrer (hoehrer) | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
+base/models/aircraft/ufo_condor/ufo_condor.md2 | GNU General Public License v2.0 | Werner Hoehrer (hoehrer) | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
+base/models/aircraft/ufo_fighter/ufo_fighter_closed.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_fighter/ufo_fighter_engines.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_fighter/ufo_fighter_engines_1.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_fighter/ufo_fighter_engines_2.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_fighter/ufo_fighter_hull.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_fighter/ufo_fighter_hull.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_fighter/ufo_fighter_upper.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_fighter/ufo_fighter_upper.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_fighter/ufo_fighter_wings.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_fighter/ufo_fighter_wings.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_harvester/ufo_harvester.blend | GNU General Public License v2.0 | Werner Hoehrer (hoehrer) | Model based on the harvester05.map made by SparX Beyler, see base/maps/harvester05.map
+base/models/aircraft/ufo_harvester/ufo_harvester.jpg | GNU General Public License v2.0 | Werner Hoehrer (hoehrer) | Model based on the harvester05.map made by SparX Beyler, see base/maps/harvester05.map
+base/models/aircraft/ufo_harvester/ufo_harvester.md2 | GNU General Public License v2.0 | Werner Hoehrer (hoehrer) | Model based on the harvester05.map made by SparX Beyler, see base/maps/harvester05.map
+base/models/aircraft/ufo_harvester/ufo_harvester.xcf.bz2 | GNU General Public License v2.0 | Werner Hoehrer (hoehrer) | Model based on the harvester05.map made by SparX Beyler, see base/maps/harvester05.map
+base/models/aircraft/ufo_scout/ufo_scout_engines.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_scout/ufo_scout_engines_1.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_scout/ufo_scout_hull.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_scout/ufo_scout_hull.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_scout/ufo_scout_upper.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_scout/ufo_scout_upper.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_supply/ufo_supply.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_supply/ufo_supply.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_supply/ufo_supply_body.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_supply/ufo_supply_body.xcf | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_supply/ufo_supply_body_closed.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_supply/ufo_supply_body_open.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_supply/ufo_supply_engine.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_supply/ufo_supply_engine.xcf | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_supply/ufo_supply_engine_left.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_supply/ufo_supply_engine_right.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_supply/ufo_supply_wing.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_supply/ufo_supply_wing.xcf | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_supply/ufo_supply_wing_left.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_supply/ufo_supply_wing_right.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aliens/bloodspider/bloodspider.anm | Creative Commons Attribution-Share Alike 3.0 | Basic model+all animations: Werner Höhrer (hoehrer); Model fixups: Ryan Span (Winter)
 base/models/aliens/bloodspider/bloodspider.blend | Creative Commons Attribution-Share Alike 3.0 | Basic model+all animations: Werner Höhrer (hoehrer); Model fixups: Ryan Span (Winter)
 base/models/aliens/bloodspider/bloodspider.jpg | Creative Commons Attribution-Share Alike 3.0 | Jake Gustafson (ProtoArmor)
