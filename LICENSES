@@ -1308,13 +1308,21 @@ base/models/weapons/binocs/binocs.jpg | Creative Commons Attribution-ShareAlike 
 base/models/weapons/binocs/binocs.md2 | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/binocs/ir_device_07_unwrapped_2.blend | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/binocs/ir_device_08_baked_6.blend | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/models/weapons/bolterrifle/bolterrifle.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
-base/models/weapons/bolterrifle/bolterrifle.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
-base/models/weapons/bolterrifle/bolterrifle_clip.blend | GPL version 2 | Lukas "rastaman_bey" Beyeler
-base/models/weapons/bolterrifle/bolterrifle_clip.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
-base/models/weapons/bolterrifle/bolterrifle_clip.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
-base/models/weapons/bolterrifle/bolterrifle_clip.xcf | GPL version 2 | Lukas "rastaman_bey" Beyeler
-base/models/weapons/bolterrifle/bolterrifle_v2_UVW.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
+base/models/weapons/bolterrifle/bolterrifle.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/bolterrifle/bolterrifle.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/bolterrifle/bolterrifle_clip.blend | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | clip model based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
+base/models/weapons/bolterrifle/bolterrifle_clip.jpg | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | clip model based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
+base/models/weapons/bolterrifle/bolterrifle_clip.md2 | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | clip model based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
+base/models/weapons/bolterrifle/bolterrifle_clip.xcf | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | clip model based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
+base/models/weapons/bolterrifle/bolterrifle_v2_UVW.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/bolterrifle/old/bolterrifle.3DS | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/bolterrifle/old/bolterrifle.max | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/bolterrifle/old/bolterrifle_UVW.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/bolterrifle/old/bolterrifle_v2.max | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/bolterrifle/old/clip.3DS | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/bolterrifle/old/clip.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/bolterrifle/old/clip.max | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/bolterrifle/old/clip_UVW.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/chaingun/chaingun.jpg | Creative Commons Attribution-ShareAlike 3.0 | Nathan : INC (Kaeau)
 base/models/weapons/chaingun/chaingun.md2 | Creative Commons Attribution-ShareAlike 3.0 | Nathan : INC (Kaeau)
 base/models/weapons/chaingun/chaingun_ammo.jpg | Creative Commons Attribution-ShareAlike 3.0 | Nathan : INC (Kaeau)
@@ -1359,15 +1367,19 @@ base/models/weapons/irgoggles/irgoggles.md2 | Creative Commons Attribution-Share
 base/models/weapons/irgoggles/irgoggles.xcf | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/knife/knife.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/knife/knife.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/laserheavy/laserheavy.blend | GNU General Public License v2.0
-base/models/weapons/laserheavy/laserheavy.jpg | GNU General Public License v2.0
-base/models/weapons/laserheavy/laserheavy.md2 | GNU General Public License v2.0
-base/models/weapons/laserheavy/laserheavy.xcf | GNU General Public License v2.0
-base/models/weapons/laserheavy/laserheavy_UVW.tga | GNU General Public License v2.0
-base/models/weapons/laserheavy/old/heavylaser.obj | GNU General Public License v2.0
-base/models/weapons/laserheavy/old/laserheavy.jpg | GNU General Public License v2.0
-base/models/weapons/laserheavy/old/laserheavy.max | GNU General Public License v2.0
-base/models/weapons/laserheavy/old/laserheavy.md2 | GNU General Public License v2.0
+base/models/weapons/knifemono/knifemono.blend | GNU General Public License v2.0 | Ryan Span (Winter), Lukas Beyeler (Rasta) | Texture is a mix of base/models/weapons/knife/ texture by Lukas Beyler (Rasta) and base/models/weapons/kerrblade/ texture by Ryan Span (Winter)
+base/models/weapons/knifemono/knifemono.jpg | GNU General Public License v2.0 | Ryan Span (Winter), Lukas Beyeler (Rasta) | Texture is a mix of base/models/weapons/knife/ texture by Lukas Beyler (Rasta) and base/models/weapons/kerrblade/ texture by Ryan Span (Winter)
+base/models/weapons/knifemono/knifemono.md2 | GNU General Public License v2.0 | Ryan Span (Winter), Lukas Beyeler (Rasta) | Texture is a mix of base/models/weapons/knife/ texture by Lukas Beyler (Rasta) and base/models/weapons/kerrblade/ texture by Ryan Span (Winter)
+base/models/weapons/knifemono/old/knife5.wings | GNU General Public License v2.0 | Ryan Span (Winter), Lukas Beyeler (Rasta) | Texture is a mix of base/models/weapons/knife/ texture by Lukas Beyler (Rasta) and base/models/weapons/kerrblade/ texture by Ryan Span (Winter)
+base/models/weapons/laserheavy/laserheavy.blend | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/laserheavy/laserheavy.jpg | GNU General Public License v2.0 | Jake Gustafson (ProtoArmor)
+base/models/weapons/laserheavy/laserheavy.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/laserheavy/laserheavy.xcf | GNU General Public License v2.0 | Jake Gustafson (ProtoArmor)
+base/models/weapons/laserheavy/laserheavy_UVW.tga | GNU General Public License v2.0 | Jake Gustafson (ProtoArmor)
+base/models/weapons/laserheavy/old/heavylaser.obj | GNU General Public License v2.0 | Lukas Beyeler (Rasta), modified by Ceobohga
+base/models/weapons/laserheavy/old/laserheavy.jpg | GNU General Public License v2.0 | Ceobohga | texture based on base/models/weapons/laserrifle/ texture by Lukas Beyeler (Rasta)
+base/models/weapons/laserheavy/old/laserheavy.max | GNU General Public License v2.0 | Lukas Beyeler (Rasta), modified by Ceobohga
+base/models/weapons/laserheavy/old/laserheavy.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta), modified by Ceobohga
 base/models/weapons/laserpistol/laserpistol.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/laserpistol/laserpistol.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/laserpistol/laserpistol_clip.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
@@ -1420,6 +1432,13 @@ base/models/weapons/pistol2/pistol2.psd | GNU General Public License v2.0 | Dani
 base/models/weapons/pistol2/pistol2_clip.jpg | GNU General Public License v2.0 | Daniel Holden (Yoshiboy)
 base/models/weapons/pistol2/pistol2_clip.md2 | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
 base/models/weapons/pistol2/pistol2_clip_UVW.tga | GNU General Public License v2.0 | Daniel Holden (Yoshiboy)
+base/models/weapons/plasblade/old/plasblade.3DS | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/plasblade/old/plasblade.max | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/plasblade/plasblade.blend | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
+base/models/weapons/plasblade/plasblade.jpg | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
+base/models/weapons/plasblade/plasblade.md2 | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
+base/models/weapons/plasblade/plasblade.xcf | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
+base/models/weapons/plasblade/plasblade_UVW.jpg | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/plasblaster/clip.3DS | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/plasblaster/clip.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/plasblaster/clip.max | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
@@ -1445,12 +1464,28 @@ base/models/weapons/plasrifle/plasrifle.jpg | GNU General Public License v2.0 | 
 base/models/weapons/plasrifle/plasrifle.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/plasrifle/plasrifle_clip.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/plasrifle/plasrifle_clip.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/shotgun2/shotgun.jpg | Creative Commons License 3.0 Attribution + Sharealike | Nathan : INC (Kaeau)
-base/models/weapons/shotgun2/shotgun.md2 | Creative Commons License 3.0 Attribution + Sharealike | Nathan : INC (Kaeau)
-base/models/weapons/shotgun2/shotgun2.blend | Creative Commons License 3.0 Attribution + Sharealike | Nathan : INC (Kaeau)
-base/models/weapons/shotgun2/shotgun_clip.blend | Creative Commons License 3.0 Attribution + Sharealike | Nathan : INC (Kaeau)
-base/models/weapons/shotgun2/shotgun_clip.jpg | Creative Commons License 3.0 Attribution + Sharealike | Nathan : INC (Kaeau)
-base/models/weapons/shotgun2/shotgun_clip.md2 | Creative Commons License 3.0 Attribution + Sharealike | Nathan : INC (Kaeau)
+base/models/weapons/rpg/old/rocket_particle_highres.jpg |  | A M D G
+base/models/weapons/rpg/rocket.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/rpg/rocket.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/rpg/rocket_inc.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/rpg/rocket_particle.jpg | GNU General Public License v2.0 | A M D G
+base/models/weapons/rpg/rpg.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/rpg/rpg.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/rpg/rpg_ammo.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/rpg/rpg_inc_ammo.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/rpg/rpg_particle_ammo.md2 | GNU General Public License v2.0 | A M D G
+base/models/weapons/shotgun/shotgun.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/shotgun/shotgun.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/shotgun/shotgun_clip.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/shotgun/shotgun_clip.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/shotgun/shotgun_clip_green.jpg | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on shotgun_clip by Lukas Beyeler (Rasta)
+base/models/weapons/shotgun/shotgun_clip_green.md2 | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on shotgun_clip by Lukas Beyeler (Rasta)
+base/models/weapons/shotgun2/shotgun.jpg | Creative Commons Attribution-ShareAlike 3.0 | Nathan : INC (Kaeau)
+base/models/weapons/shotgun2/shotgun.md2 | Creative Commons Attribution-ShareAlike 3.0 | Nathan : INC (Kaeau)
+base/models/weapons/shotgun2/shotgun2.blend | Creative Commons Attribution-ShareAlike 3.0 | Nathan : INC (Kaeau)
+base/models/weapons/shotgun2/shotgun_clip.blend | Creative Commons Attribution-ShareAlike 3.0 | Werner Hoehrer (hoehrer) | model based on microshotgun clip model by Werner Hoehrer and Ryan Span, see base/models/weapons/shotgunmicro/
+base/models/weapons/shotgun2/shotgun_clip.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Hoehrer (hoehrer) | model based on microshotgun clip model by Werner Hoehrer and Ryan Span, see base/models/weapons/shotgunmicro/
+base/models/weapons/shotgun2/shotgun_clip.md2 | Creative Commons Attribution-ShareAlike 3.0 | Werner Hoehrer (hoehrer) | model based on microshotgun clip model by Werner Hoehrer and Ryan Span, see base/models/weapons/shotgunmicro/
 base/models/weapons/shotgunmicro/old/pistolshotgun.mtl | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
 base/models/weapons/shotgunmicro/old/pistolshotgun.obj | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
 base/models/weapons/shotgunmicro/old/pistolshotgun.wings | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
@@ -1475,6 +1510,13 @@ base/models/weapons/sniper/sniper.jpg | GNU General Public License v2.0 | Lukas 
 base/models/weapons/sniper/sniper.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/sniper/sniper_clip.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/sniper/sniper_clip.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/stungren/old/canister2.mtl | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter)
+base/models/weapons/stungren/old/canister2.obj | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter)
+base/models/weapons/stungren/old/canister2.wings | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter)
+base/models/weapons/stungren/stungren.blend | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter)
+base/models/weapons/stungren/stungren.jpg | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter), texture modified by Werner Hoehrer (hoehrer)
+base/models/weapons/stungren/stungren.md2 | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter)
+base/models/weapons/stungren/stungren.xcf | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter), texture modified by Werner Hoehrer (hoehrer)
 base/models/weapons/stunrod/old/stunrod.wings | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter)
 base/models/weapons/stunrod/old/stunrodskin.png | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter)
 base/models/weapons/stunrod/stunrod.blend | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some minor fixes made by Werner Höhrer (hoehrer)
