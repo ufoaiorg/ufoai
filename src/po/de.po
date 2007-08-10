@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-08-07 15:15+0200\n"
-"PO-Revision-Date: 2007-08-07 22:07+0100\n"
+"PO-Revision-Date: 2007-08-10 17:24+0100\n"
 "Last-Translator: Gerd Heisse <gerd@gezys.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -9402,7 +9402,7 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:35
 msgid "Build more radars in the same base to increase the radar range."
-msgstr ""
+msgstr "Baue mehrere Radars in einer Basis um den Radarbereich zu erweitern"
 
 #: ../base/ufos/tips.ufo:36
 msgid "Reaction Fire can drain your Time Units (TUs) to 0. If you turn off Reaction Fire, you cannot turn it back on without enough Time Units (TU). You can, however, leave it on. Try not to adjust zeroed units until you're sure."
@@ -11703,7 +11703,7 @@ msgstr "Die Dateiversion ist zu neu"
 #: client/cl_save.c:176
 #: client/cl_save.c:183
 msgid "Error in loading a subsystem - see game console for more information"
-msgstr "Fehler beim Laden eines Subsystems - Meh Information in der Konsole."
+msgstr "Fehler beim Laden eines Subsystems - Mehr Information in der Konsole."
 
 #: client/cl_save.c:225
 msgid "No campaign active."
