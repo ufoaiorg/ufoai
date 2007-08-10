@@ -971,7 +971,7 @@ typedef struct {
  */
 static void CL_ClipMoveToLEs (moveclip_t * clip)
 {
-	int i;
+	int i, tile = 0;
 	le_t *le;
 	trace_t trace;
 	int headnode;
@@ -997,6 +997,7 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 				continue;
 			}
 			headnode = cmodel->headnode;
+			tile = cmodel->tile;
 			angles = le->angles;
 			/* bmodels don't have an origin (it's 0, 0, 0) - they use the pos instead */
 			VectorCopy(le->pos, origin);
@@ -1009,7 +1010,7 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 		}
 
 		assert(headnode < MAX_MAP_NODES);
-		trace = CM_TransformedBoxTrace(clip->start, clip->end, clip->mins, clip->maxs, 0, headnode, clip->contentmask, origin, angles);
+		trace = CM_TransformedBoxTrace(clip->start, clip->end, clip->mins, clip->maxs, tile, headnode, clip->contentmask, origin, angles);
 
 		if (trace.fraction < clip->trace.fraction) {
 			qboolean oldStart;

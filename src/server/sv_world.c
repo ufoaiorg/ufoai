@@ -300,13 +300,13 @@ typedef struct {
  */
 static int SV_HullForEntity (edict_t * ent, int *tile)
 {
-	cBspModel_t *model;
-
 	/* decide which clipping hull to use, based on the size */
 	if (ent->solid == SOLID_BSP) {	/* explicit hulls in the BSP model */
-		assert(ent->modelindex < MAX_MODELS);
-		model = sv.models[ent->modelindex];
+		cBspModel_t *model;
 
+		assert(ent->modelindex < MAX_MODELS);
+
+		model = sv.models[ent->modelindex];
 		if (!model)
 			Com_Error(ERR_FATAL, "SOLID_BSP with a non bsp model");
 
