@@ -1033,6 +1033,11 @@ base/models/misc_source_files/sitters/zuil/zuil.obj | GPL
 base/models/misc_source_files/sitters/zuil/zuil.pcx | GPL
 base/models/misc_source_files/sitters/zuil/zuil.png | GPL
 base/models/misc_source_files/sitters/zuil/zuil.tga | GPL
+base/models/misc_source_files/weapons/kerrblade_winter/kerrblade.blend | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter), Werner Hoehrer (hoehrer)
+base/models/misc_source_files/weapons/kerrblade_winter/kerrblade.md2 | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter), Werner Hoehrer (hoehrer)
+base/models/misc_source_files/weapons/kerrblade_winter/kerrblade.tga | Creative Commons Attribution-ShareAlike 3.0 | Werner Hoehrer (hoehrer)
+base/models/misc_source_files/weapons/kerrblade_winter/kerrblade_UVW.tga | Creative Commons Attribution-ShareAlike 3.0 | Werner Hoehrer (hoehrer)
+base/models/misc_source_files/weapons/kerrblade_winter/old/kerrblade.obj | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter)
 base/models/objects/base/minicrane/minicrane.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/base/minicrane/minicrane.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/base/minicrane/minicrane.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
@@ -1368,6 +1373,11 @@ base/models/weapons/irgoggles/irgoggles.blend | Creative Commons Attribution-Sha
 base/models/weapons/irgoggles/irgoggles.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/irgoggles/irgoggles.md2 | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/irgoggles/irgoggles.xcf | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/models/weapons/kerrblade/kerrblade.3DS | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/kerrblade/kerrblade.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/kerrblade/kerrblade.max | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/kerrblade/kerrblade.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/weapons/kerrblade/kerrblade_UVW.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/knife/knife.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/knife/knife.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/knifemono/knifemono.blend | GNU General Public License v2.0 | Ryan Span (Winter), Lukas Beyeler (Rasta) | Texture is a mix of base/models/weapons/knife/ texture by Lukas Beyler (Rasta) and base/models/weapons/kerrblade/ texture by Ryan Span (Winter)
