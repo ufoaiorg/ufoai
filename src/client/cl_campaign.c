@@ -1258,30 +1258,30 @@ static void CL_HandleBudget (void)
 
 	for (i = 0; i < gd.numNations; i++) {
 		nation = &gd.nations[i];
-		funding = nation->funding * nation->stats[0].happiness;
+		funding = nation->maxFunding * nation->stats[0].happiness;
 		CL_UpdateCredits(ccs.credits + funding);
 
 		new_scientists = new_medics = new_soldiers = new_workers = 0;
 
-		for (j = 0; 0.25 + j < (float) nation->scientists * nation->stats[0].happiness * nation->stats[0].happiness; j++) {
+		for (j = 0; 0.25 + j < (float) nation->maxScientists * nation->stats[0].happiness * nation->stats[0].happiness; j++) {
 			/* Create a scientist, but don't auto-hire her. */
 			E_CreateEmployee(EMPL_SCIENTIST);
 			new_scientists++;
 		}
 
-		for (j = 0; 0.25 + j * 3 < (float) nation->scientists * nation->stats[0].happiness; j++) {
+		for (j = 0; 0.25 + j * 3 < (float) nation->maxScientists * nation->stats[0].happiness; j++) {
 			/* Create a medic. */
 			E_CreateEmployee(EMPL_MEDIC);
 			new_medics++;
 		}
 
-		for (j = 0; 0.25 + j < (float) nation->soldiers * nation->stats[0].happiness * nation->stats[0].happiness * nation->stats[0].happiness; j++) {
+		for (j = 0; 0.25 + j < (float) nation->maxSoldiers * nation->stats[0].happiness * nation->stats[0].happiness * nation->stats[0].happiness; j++) {
 			/* Create a soldier. */
 			E_CreateEmployee(EMPL_SOLDIER);
 			new_soldiers++;
 		}
 
-		for (j = 0; 0.25 + j * 2 < (float) nation->soldiers * nation->stats[0].happiness; j++) {
+		for (j = 0; 0.25 + j * 2 < (float) nation->maxSoldiers * nation->stats[0].happiness; j++) {
 			/* Create a worker. */
 			E_CreateEmployee(EMPL_WORKER);
 			new_workers++;
@@ -1730,7 +1730,21 @@ static void CL_StatsUpdate_f (void)
 	Q_strcat(pos, va(_("\n\t-------\nSum:\t%i c\n"), sum), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 }
 
-static int funding_pts[MONTHS_PER_YEAR * 2];
+static int fundingPts[MONTHS_PER_YEAR * 2];
+static int coordAxesPts[3 * 2];
+
+const vec4_t graphColors[MAX_NATIONS] = {
+	{1, 0.5, 0.5, 1},
+	{0.5, 1, 0.5, 1},
+	{0.5, 0.5, 1, 1},
+	{1, 0, 0, 1},
+	{0, 1, 0, 1},
+	{0, 0, 1, 1},
+	{1, 1, 0, 1},
+	{0, 1, 1, 1}
+};
+static int usedGraphColors = 0;
+
 /**
  * @brief Draws a grpah for the funding values over time.
  * @param[in] nation The nation to draw the graph for.
@@ -1743,16 +1757,16 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node)
 {
 	int width, height, x, y, dx;
 	int i, j;
-	const vec4_t color = {1, 0.5, 0.5, 1};
+	/* const vec4_t color = {1, 0.5, 0.5, 1}; */
 
-	float min =  nation->funding * nation->stats[0].happiness;
+	float min =  nation->maxFunding * nation->stats[0].happiness;
 	float max = min;
 	int funding;
 	int months = 0;
-	
+
 	if (!nation || !node)
 		return;
-	
+
 	width	= node->size[0];
 	height	= node->size[1];
 	x = node->pos[0];
@@ -1763,8 +1777,8 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node)
 	for (i = 0; i < MONTHS_PER_YEAR; i++) {
 		if (1) { /* if (nation->stats[i].inuse) { */	/** @todo DEBUG code */
 			nation->stats[i].happiness =  frand();
-			funding = nation->funding * nation->stats[i].happiness;
-			
+			funding = nation->maxFunding * nation->stats[i].happiness;
+
 			if (funding < min)
 				min = funding;
 			if (funding > max)
@@ -1774,20 +1788,25 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node)
 			break;
 		}
 	}
-	
+
 	/* Generate pointlist. */
 	for (i = 0, j = 0; i < months; i++, j+=2) {
-		funding = nation->funding * nation->stats[i].happiness;
-		funding_pts[j] = x + (i * dx);
-		funding_pts[j+1] = y - ((funding - min) / (max - min)) * height;
+		funding = nation->maxFunding * nation->stats[i].happiness;
+		fundingPts[j] = x + (i * dx);
+		fundingPts[j+1] = y - ((funding - min) / (max - min)) * height;
 	}
 
-	
-	/* Link points to node */
-	node->linestrips.numStrips = 1;
-	node->linestrips.pointList[0] = funding_pts;
-	node->linestrips.numPoints[0] = months;
-	VectorCopy(color, node->linestrips.color[0]);
+
+	/* Break if we reached the max strip number. */
+	if (node->linestrips.numStrips >= MAX_LINESTRIPS-1)
+		return;
+
+	/* Link graph to node */
+	node->linestrips.pointList[node->linestrips.numStrips] = fundingPts;
+	node->linestrips.numPoints[node->linestrips.numStrips] = months;
+	VectorCopy(graphColors[usedGraphColors], node->linestrips.color[node->linestrips.numStrips]);
+	usedGraphColors++;
+	node->linestrips.numStrips++;
 }
 
 static int selectedNation = 0;
@@ -1800,9 +1819,10 @@ static void CL_NationStatsUpdate_f(void)
 	int i;
 	int funding;
 	menuNode_t *graphNode;
+	const vec4_t colorAxes = {1, 1, 1, 1};
 
 	for (i = 0; i < gd.numNations; i++) {
-		funding = gd.nations[i].funding * gd.nations[i].stats[0].happiness;
+		funding = gd.nations[i].maxFunding * gd.nations[i].stats[0].happiness;
 
 		if (selectedNation == i) {
 			Cbuf_AddText(va("nation_marksel%i;",i));
@@ -1817,12 +1837,33 @@ static void CL_NationStatsUpdate_f(void)
 	for (i = gd.numNations; i < MAX_NATIONS; i++) {
 		Cbuf_AddText(va("nation_hide%i;",i));
 	}
-	
-	graphNode = MN_GetNodeFromCurrentMenu("nation_graph_funding");
-	
+
 	/** @todo Display summary of nation info */
-	/*Display graph of nation-values so far. */
-	CL_NationDrawStats(&gd.nations[selectedNation], graphNode);
+
+	/* Display graph of nations-values so far. */
+	graphNode = MN_GetNodeFromCurrentMenu("nation_graph_funding");
+	if (graphNode) {
+		/* Generate axes & link to node. */
+		graphNode->linestrips.numStrips = 1;
+		coordAxesPts[0]	= graphNode->pos[0];	/* x */
+		coordAxesPts[1] = graphNode->pos[1] - graphNode->size[1];	/* y - height */
+		coordAxesPts[2]	= graphNode->pos[0];	/* x */
+		coordAxesPts[3] = graphNode->pos[1];	/* y */
+		coordAxesPts[4]	= graphNode->pos[0] + graphNode->size[0];	/* x + width */
+		coordAxesPts[5] = graphNode->pos[1];	/* y */
+		graphNode->linestrips.pointList[0] = coordAxesPts;
+		graphNode->linestrips.numPoints[0] = 3;
+		VectorCopy(colorAxes, graphNode->linestrips.color[0]);
+
+		/** @todo Maybe create a margin toward the axes? */
+		/** @todo Draw a line where the current month is. */
+		/** @todo Sort months the reverse way? */
+
+		usedGraphColors = 0;
+		for (i = 0; i < gd.numNations; i++) {
+			CL_NationDrawStats(&gd.nations[i], graphNode);
+		}
+	}
 }
 
 /**
@@ -1842,7 +1883,7 @@ static void CL_NationSelect_f(void)
 		Com_Printf("Invalid nation index: %is\n",nat);
 		return;
 	}
-	
+
 	selectedNation = nat;
 	CL_NationStatsUpdate_f();
 }
@@ -3607,11 +3648,11 @@ static const value_t nation_vals[] = {
 	{"name", V_TRANSLATION2_STRING, offsetof(nation_t, name), 0},
 	{"pos", V_POS, offsetof(nation_t, pos), MEMBER_SIZEOF(nation_t, pos)},
 	{"color", V_COLOR, offsetof(nation_t, color), MEMBER_SIZEOF(nation_t, color)},
-	{"funding", V_INT, offsetof(nation_t, funding), MEMBER_SIZEOF(nation_t, funding)},
+	{"funding", V_INT, offsetof(nation_t, maxFunding), MEMBER_SIZEOF(nation_t, maxFunding)},
 	{"happiness", V_FLOAT, offsetof(nation_t, stats[0].happiness), MEMBER_SIZEOF(nation_t, stats[0].happiness)},
 	{"alien_friendly", V_FLOAT, offsetof(nation_t, stats[0].alienFriendly), MEMBER_SIZEOF(nation_t, stats[0].alienFriendly)},
-	{"soldiers", V_INT, offsetof(nation_t, soldiers), MEMBER_SIZEOF(nation_t, soldiers)},
-	{"scientists", V_INT, offsetof(nation_t, scientists), MEMBER_SIZEOF(nation_t, scientists)},
+	{"soldiers", V_INT, offsetof(nation_t, maxSoldiers), MEMBER_SIZEOF(nation_t, maxSoldiers)},
+	{"scientists", V_INT, offsetof(nation_t, maxScientists), MEMBER_SIZEOF(nation_t, maxScientists)},
 	{"names", V_CLIENT_HUNK_STRING, offsetof(nation_t, names), 0},
 	{NULL, 0, 0, 0}
 };
@@ -3782,11 +3823,11 @@ static void CL_NationList_f (void)
 	int i;
 	for (i = 0; i < gd.numNations; i++) {
 		Com_Printf("Nation ID: %s\n", gd.nations[i].id);
-		Com_Printf("...funding %i c\n", gd.nations[i].funding);
+		Com_Printf("...max-funding %i c\n", gd.nations[i].maxFunding);
 		Com_Printf("...alienFriendly %0.2f\n", gd.nations[i].stats[0].alienFriendly);
 		Com_Printf("...happiness %0.2f\n", gd.nations[i].stats[0].happiness);
-		Com_Printf("...soldiers %i\n", gd.nations[i].soldiers);
-		Com_Printf("...scientists %i\n", gd.nations[i].scientists);
+		Com_Printf("...max-soldiers %i\n", gd.nations[i].maxSoldiers);
+		Com_Printf("...max-scientists %i\n", gd.nations[i].maxScientists);
 		Com_Printf("...color r:%.2f g:%.2f b:%.2f a:%.2f\n", gd.nations[i].color[0], gd.nations[i].color[1], gd.nations[i].color[2], gd.nations[i].color[3]);
 		Com_Printf("...pos x:%.0f y:%.0f\n", gd.nations[i].pos[0], gd.nations[i].pos[1]);
 	}

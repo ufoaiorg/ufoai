@@ -255,7 +255,7 @@ typedef struct market_s {
  */
 typedef struct nationInfo_s {
 	qboolean	inuse;	/**< Is this entry used? */
-	
+
 	/* Relationship */
 	float happiness;
 /**	float xvi_infection;	@todo How much (percentage 0-100) of the population in this nation is infected. */
@@ -283,19 +283,18 @@ typedef struct nation_s {
 									 */
 
 	/* Funding */
-	int funding;		/**< How many (monthly) credits. */
-	int soldiers;		/**< How many (monthly) soldiers. */
-	int scientists;		/**< How many (monthly) scientists. */
-	int workers;		/**< How many (monthly) workers. */
-	int medics;		/**< How many (monthly) medics. */
-	int ugvs;		/**< How many (monthly) ugvs (robots).
+	int maxFunding;		/**< How many (monthly) credits. */
+	int maxSoldiers;	/**< How many (monthly) soldiers. */
+	int maxScientists;	/**< How many (monthly) scientists. */
+	int maxWorkers;		/**< How many (monthly) workers. */
+	int maxMedics;		/**< How many (monthly) medics. */
+	int maxUgvs;		/**< How many (monthly) ugvs (robots).
 				 * @todo this needs to be removed here and added into the buy&produce menues.
 				 */
 
 	char *names;		/**< Space seperated list of possible team ids.
 				 * Team IDs as defined in team_*.ufo
 				 */
-	
 
 	/** A list if points where the border of this nation is located
 	@todo not used right now? */
