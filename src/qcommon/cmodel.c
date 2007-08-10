@@ -208,7 +208,6 @@ static byte sh_big;
 static const char **inlineList; /**< a list with all local models (like func_breakable) */
 static vec3_t tr_end;
 static byte *cmod_base;
-static vec3_t shift; /**< use for random map assembly for shifting origins and so on */
 static byte filled[256][256];
 
 static const vec3_t v_dup = { 0, 0, PLAYER_HEIGHT - UNIT_HEIGHT / 2 };
@@ -258,10 +257,11 @@ MAP LOADING
 /**
  * @brief Loads brush entities like doors and func_breakable
  * @param[in] l
+ * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  * @sa Mod_LoadSubmodels
  */
-static void CMod_LoadSubmodels (lump_t * l)
+static void CMod_LoadSubmodels (lump_t * l, vec3_t shift)
 {
 	dmodel_t *in;
 	cBspModel_t *out;
@@ -306,9 +306,10 @@ static void CMod_LoadSubmodels (lump_t * l)
 /**
  * @brief
  * @param[in] l
+ * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
-static void CMod_LoadSurfaces (lump_t * l)
+static void CMod_LoadSurfaces (lump_t * l, vec3_t shift)
 {
 	texinfo_t *in;
 	cBspSurface_t *out;
@@ -344,9 +345,10 @@ static void CMod_LoadSurfaces (lump_t * l)
 /**
  * @brief
  * @param[in] l
+ * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
-static void CMod_LoadNodes (lump_t * l)
+static void CMod_LoadNodes (lump_t * l, vec3_t shift)
 {
 	dnode_t *in;
 	int child;
@@ -379,6 +381,7 @@ static void CMod_LoadNodes (lump_t * l)
 		else
 			out->plane = curTile->planes + LittleLong(in->planenum);
 
+		/* in case this is a map assemble */
 		VectorAdd(in->mins, shift, out->mins);
 		VectorAdd(in->maxs, shift, out->maxs);
 
@@ -392,9 +395,10 @@ static void CMod_LoadNodes (lump_t * l)
 /**
  * @brief
  * @param[in] l
+ * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
-static void CMod_LoadBrushes (lump_t * l)
+static void CMod_LoadBrushes (lump_t * l, vec3_t shift)
 {
 	dbrush_t *in;
 	cBspBrush_t *out;
@@ -428,9 +432,10 @@ static void CMod_LoadBrushes (lump_t * l)
 /**
  * @brief
  * @param[in] l
+ * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
-static void CMod_LoadLeafs (lump_t * l)
+static void CMod_LoadLeafs (lump_t * l, vec3_t shift)
 {
 	int i;
 	cBspLeaf_t *out;
@@ -481,9 +486,10 @@ static void CMod_LoadLeafs (lump_t * l)
 /**
  * @brief
  * @param[in] l
+ * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
-static void CMod_LoadPlanes (lump_t * l)
+static void CMod_LoadPlanes (lump_t * l, vec3_t shift)
 {
 	int i, j;
 	cBspPlane_t *out;
@@ -533,9 +539,10 @@ static void CMod_LoadPlanes (lump_t * l)
 /**
  * @brief
  * @param[in] l
+ * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
-static void CMod_LoadLeafBrushes (lump_t * l)
+static void CMod_LoadLeafBrushes (lump_t * l, vec3_t shift)
 {
 	int i;
 	unsigned short *out;
@@ -570,9 +577,10 @@ static void CMod_LoadLeafBrushes (lump_t * l)
 /**
  * @brief
  * @param[in] l
+ * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
-static void CMod_LoadBrushSides (lump_t * l)
+static void CMod_LoadBrushSides (lump_t * l, vec3_t shift)
 {
 	int i, j;
 	cBspBrushSide_t *out;
@@ -990,9 +998,9 @@ static void CMod_GetMapSize (routing_t * map)
 /**
  * @brief
  * @param[in] l Routing lump ... @todo whatsit?
- * @param[in] sX @todo: See comments in CM_AddMapTile
- * @param[in] sY @todo: --""--
- * @param[in] sZ @todo: --""--
+ * @param[in] sX The x position on the world plane (grid position) - values from -WIDTH up to +WIDTH are allowed
+ * @param[in] sY The y position on the world plane (grid position) - values from -WIDTH up to +WIDTH are allowed
+ * @param[in] sZ The height level on the world plane (grid position) - values from 0 - HEIGHT are allowed
  * @sa CM_AddMapTile
  */
 static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
@@ -1076,9 +1084,10 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
  * @brief
  * @note Transforms coordinates and stuff for assembled maps
  * @param[in] l
+ * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
-static void CMod_LoadEntityString (lump_t * l)
+static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
 {
 	const char *com_token;
 	const char *es;
@@ -1160,19 +1169,17 @@ static void CMod_LoadEntityString (lump_t * l)
 /**
  * @brief Adds in a single map tile
  * @param[in] name The (file-)name of the tile to add.
- * @param[in] sX @todo: How it is supposed to look and why can it be negative?
- * And is the "WIDTH" value really correct, not WIDTH/2?
- * The values are created in SV_AssembleMap (**pos)
- * @param[in] sY @todo: --""--
- * @param[in] sZ @todo: --""--
- * @return A checksum (@todo: which one exactly?)
+ * @param[in] sX The x position on the world plane (grid position) - values from 0 up to WIDTH are allowed
+ * @param[in] sY The y position on the world plane (grid position) - values from 0 up to WIDTH are allowed
+ * @param[in] sZ The height level on the world plane (grid position) - values from 0 up to HEIGHT are allowed
+ * @note The sX and sY values are grid positions - max. grid size is 256 - unit size is
+ * 32 => ends up at 8192 (the worldplace size - or [-4096, 4096])
+ * @return The checksum of the maptile
  * @return 0 on error
  * @sa CM_LoadMap
- * @todo Fix asserts & comments  for sX, sY and sZ
- * @todo FIXME: here might be the map memory leak - every new map eats more and more memory
  * @sa R_AddMapTile
  */
-static unsigned CM_AddMapTile (char *name, int sX, int sY, int sZ)
+static unsigned CM_AddMapTile (const char *name, int sX, int sY, int sZ)
 {
 	char filename[MAX_QPATH];
 	unsigned checksum;
@@ -1180,14 +1187,13 @@ static unsigned CM_AddMapTile (char *name, int sX, int sY, int sZ)
 	unsigned int i;
 	int length;
 	dheader_t header;
+	/* use for random map assembly for shifting origins and so on */
+	vec3_t shift = {0.0f, 0.0f, 0.0f};
 
-	if (!name || !name[0]) {
-		/* cinematic servers won't have anything at all */
-		return 0;
-	}
-
-	assert((sX > -WIDTH) && (sX < WIDTH));
-	assert((sY > -WIDTH) && (sY < WIDTH));
+	assert(name);
+	assert(name[0]);
+	assert((sX >= 0) && (sX < WIDTH));
+	assert((sY >= 0) && (sY < WIDTH));
 	assert((sZ >= 0) && (sZ < HEIGHT));
 
 	/* load the file */
@@ -1215,18 +1221,20 @@ static unsigned CM_AddMapTile (char *name, int sX, int sY, int sZ)
 	memset(curTile, 0, sizeof(mapTile_t));
 	Q_strncpyz(curTile->name, name, sizeof(curTile->name));
 
+	/* pathfinding and the like must be shifted on the worldplane when we
+	 * are assembling a map */
 	VectorSet(shift, sX * UNIT_SIZE, sY * UNIT_SIZE, sZ * UNIT_SIZE);
 
 	/* load into heap */
-	CMod_LoadSurfaces(&header.lumps[LUMP_TEXINFO]);
-	CMod_LoadLeafs(&header.lumps[LUMP_LEAFS]);
-	CMod_LoadLeafBrushes(&header.lumps[LUMP_LEAFBRUSHES]);
-	CMod_LoadPlanes(&header.lumps[LUMP_PLANES]);
-	CMod_LoadBrushes(&header.lumps[LUMP_BRUSHES]);
-	CMod_LoadBrushSides(&header.lumps[LUMP_BRUSHSIDES]);
-	CMod_LoadSubmodels(&header.lumps[LUMP_MODELS]);
-	CMod_LoadNodes(&header.lumps[LUMP_NODES]);
-	CMod_LoadEntityString(&header.lumps[LUMP_ENTITIES]);
+	CMod_LoadSurfaces(&header.lumps[LUMP_TEXINFO], shift);
+	CMod_LoadLeafs(&header.lumps[LUMP_LEAFS], shift);
+	CMod_LoadLeafBrushes(&header.lumps[LUMP_LEAFBRUSHES], shift);
+	CMod_LoadPlanes(&header.lumps[LUMP_PLANES], shift);
+	CMod_LoadBrushes(&header.lumps[LUMP_BRUSHES], shift);
+	CMod_LoadBrushSides(&header.lumps[LUMP_BRUSHSIDES], shift);
+	CMod_LoadSubmodels(&header.lumps[LUMP_MODELS], shift);
+	CMod_LoadNodes(&header.lumps[LUMP_NODES], shift);
+	CMod_LoadEntityString(&header.lumps[LUMP_ENTITIES], shift);
 
 	CM_InitBoxHull();
 	CM_MakeTnodes();
@@ -2485,7 +2493,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dir,
 		Com_DPrintf("Grid_MoveMark: WARNING z = %i(>= HEIGHT %i)\n", z, HEIGHT);
 		return;
 	}
-	
+
 	if ((l + TU_MOVE_STRAIGHT) >= MAX_MOVELENGTH)) {
 		Com_DPrintf("Grid_MoveMark: maximum movelength reached %i (max %i)\n", l, MAX_MOVELENGTH);
 		return;
