@@ -9110,7 +9110,7 @@
 "classname" "misc_model"
 "origin" "-129 768 66"
 "model" "models/objects/vegi/plant_v1/plant_v1.md2"
-"spawnflags" "255"
+"spawnflags" "254"
 }
 // entity 105
 {
