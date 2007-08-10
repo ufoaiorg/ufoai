@@ -91,6 +91,11 @@ int SV_ModelIndex (const char *name)
 #define MAX_ASSEMBLYRETRIES 8000
 #define MAX_REGIONRETRIES 1
 
+#define MAX_RANDOM_MAP_WIDTH 32
+#define MAX_RANDOM_MAP_HEIGHT 32
+
+static byte curMap[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_WIDTH][MAX_TILEALTS];
+
 /** @brief Stores the parsed data fo a map tile. (See *.ump files) */
 typedef struct mTile_s {
 	char id[MAX_VAR];	/**< The id (string) of the tile as defined in the ump file (next to "tile"). */
@@ -418,7 +423,7 @@ static void SV_ParseAssembly (const char *filename, const char **text)
  * @sa SV_AddRegion
  * @sa SV_FitTile
  */
-static void SV_AddTile (byte map[32][32][MAX_TILEALTS], mTile_t * tile, int x, int y, int *toFill)
+static void SV_AddTile (mTile_t * tile, int x, int y, int *toFill)
 {
 	qboolean bad;
 	int tx, ty;
@@ -427,27 +432,27 @@ static void SV_AddTile (byte map[32][32][MAX_TILEALTS], mTile_t * tile, int x, i
 	/* add the new tile */
 	for (ty = 0; ty < tile->h; ty++)
 		for (tx = 0; tx < tile->w; tx++) {
-			assert(y+ty < 32);
-			assert(x+tx < 32);
-			if (tile->spec[ty][tx][0] == SOLID || !map[y + ty][x + tx][0]) {
+			assert(y + ty < MAX_RANDOM_MAP_HEIGHT);
+			assert(x + tx < MAX_RANDOM_MAP_WIDTH);
+			if (tile->spec[ty][tx][0] == SOLID || !curMap[y + ty][x + tx][0]) {
 				/* copy the solid info */
 				if (tile->spec[ty][tx][0] == SOLID && toFill)
 					*toFill -= 1;
 				for (a = 0; a < MAX_TILEALTS; a++)
-					map[y + ty][x + tx][a] = tile->spec[ty][tx][a];
-			} else if (tile->spec[ty][tx][0] && map[y + ty][x + tx][0] != SOLID) {
+					curMap[y + ty][x + tx][a] = tile->spec[ty][tx][a];
+			} else if (tile->spec[ty][tx][0] && curMap[y + ty][x + tx][0] != SOLID) {
 				/* calc remaining connection options */
-				for (a = 0; map[y + ty][x + tx][a] && a < MAX_TILEALTS; a++) {
+				for (a = 0; curMap[y + ty][x + tx][a] && a < MAX_TILEALTS; a++) {
 					bad = qtrue;
 					for (b = 0; bad && tile->spec[ty][tx][b] && b < MAX_TILEALTS; b++)
-						if (tile->spec[ty][tx][b] == map[y + ty][x + tx][a])
+						if (tile->spec[ty][tx][b] == curMap[y + ty][x + tx][a])
 							bad = qfalse;
 
 					if (bad) {
 						/* not an option anymore */
 						for (c = a + 1; c < MAX_TILEALTS; c++)
-							map[y + ty][x + tx][c - 1] = map[y + ty][x + tx][c];
-						map[y + ty][x + tx][MAX_TILEALTS - 1] = 0;
+							curMap[y + ty][x + tx][c - 1] = curMap[y + ty][x + tx][c];
+						curMap[y + ty][x + tx][MAX_TILEALTS - 1] = 0;
 						a--;
 					}
 				}
@@ -477,7 +482,7 @@ static void SV_AddTile (byte map[32][32][MAX_TILEALTS], mTile_t * tile, int x, i
  * @sa SV_AddMandatoryParts
  * @sa SV_AddRegion
  */
-static qboolean SV_FitTile (byte map[32][32][MAX_TILEALTS], mTile_t * tile, int x, int y, qboolean force)
+static qboolean SV_FitTile (mTile_t * tile, int x, int y, qboolean force)
 {
 	qboolean touch;
 	int tx, ty;
@@ -503,7 +508,7 @@ static qboolean SV_FitTile (byte map[32][32][MAX_TILEALTS], mTile_t * tile, int 
 
 	/* test for fit */
 	spec = &tile->spec[0][0][0];
-	m = &map[y][x][0];
+	m = &curMap[y][x][0];
 	for (ty = 0; ty < tile->h; ty++) {
 		for (tx = 0; tx < tile->w; tx++, spec += MAX_TILEALTS, m += MAX_TILEALTS) {
 			if (*spec == SOLID && *m == SOLID) {
@@ -526,7 +531,7 @@ static qboolean SV_FitTile (byte map[32][32][MAX_TILEALTS], mTile_t * tile, int 
 		  fine:;
 		}
 		spec += MAX_TILEALTS * (MAX_TILESIZE - tile->w);
-		m += MAX_TILEALTS * (32 - tile->w);
+		m += MAX_TILEALTS * (MAX_RANDOM_MAP_WIDTH - tile->w);
 	}
 
 	/* it fits, check for touch */
@@ -546,7 +551,7 @@ static qboolean SV_FitTile (byte map[32][32][MAX_TILEALTS], mTile_t * tile, int 
  * @sa SV_FitTile
  * @sa SV_AddTile
  */
-static qboolean SV_AddRegion (byte map[32][32][MAX_TILEALTS], byte * num)
+static qboolean SV_AddRegion (byte * num)
 {
 	mTile_t *tile = NULL;
 	int i, j, x, y;
@@ -563,7 +568,7 @@ static qboolean SV_AddRegion (byte map[32][32][MAX_TILEALTS], byte * num)
 	oldToFill = 0;
 	for (y = mapY + 1; y < mapY + mapH + 1; y++)
 		for (x = mapX + 1; x < mapX + mapW + 1; x++)
-			if (map[y][x][0] != SOLID)
+			if (curMap[y][x][0] != SOLID)
 				oldToFill++;
 
 	/* restore old values */
@@ -590,10 +595,10 @@ static qboolean SV_AddRegion (byte map[32][32][MAX_TILEALTS], byte * num)
 				tile = &mTile[j];
 
 				/* add the tile, if it fits */
-				if (SV_FitTile(map, tile, x, y, qtrue)) {
+				if (SV_FitTile(tile, x, y, qtrue)) {
 					/* mark as used and add the tile */
 					num[j]++;
-					SV_AddTile(map, tile, x, y, &toFill);
+					SV_AddTile(tile, x, y, &toFill);
 					lastPos = pos;
 					break;
 				}
@@ -623,7 +628,7 @@ static qboolean SV_AddRegion (byte map[32][32][MAX_TILEALTS], byte * num)
  * @sa SV_FitTile
  * @sa SV_AddTile
  */
-static qboolean SV_AddMandatoryParts (byte map[32][32][MAX_TILEALTS], byte * num)
+static qboolean SV_AddMandatoryParts (byte * num)
 {
 	mTile_t *tile = NULL;
 	int i, j, n, x, y;
@@ -634,9 +639,9 @@ static qboolean SV_AddMandatoryParts (byte map[32][32][MAX_TILEALTS], byte * num
 			for (n = 0; n < mapSize; n++) {
 				x = prList[n] % mapW;
 				y = prList[n] / mapH;
-				if (SV_FitTile(map, tile, x, y, qfalse)) {
+				if (SV_FitTile(tile, x, y, qfalse)) {
 					/* add tile */
-					SV_AddTile(map, tile, x, y, NULL);
+					SV_AddTile(tile, x, y, NULL);
 					break;
 				}
 			}
@@ -665,7 +670,6 @@ static qboolean SV_AddMandatoryParts (byte map[32][32][MAX_TILEALTS], byte * num
 static void SV_AssembleMap (const char *name, const char *assembly, const char **map, const char **pos)
 {
 	mPlaced_t *pl;
-	byte curMap[32][32][MAX_TILEALTS];
 	byte curNum[MAX_TILETYPES];
 	static char asmMap[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 	static char asmPos[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
@@ -758,12 +762,12 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
 
 		/* assemble the map */
 		numPlaced = 0;
-		memset(&curMap[0][0][0], 0, sizeof(curMap));
+		memset(curMap, 0, sizeof(curMap));
 		memset(&curNum[0], 0, sizeof(curNum));
 
 		/* place fixed parts - defined in ump via fix parameter */
 		for (i = 0; i < mAsm->numFixed; i++)
-			SV_AddTile(curMap, &mTile[mAsm->fT[i]], mAsm->fX[i], mAsm->fY[i], NULL);
+			SV_AddTile(&mTile[mAsm->fT[i]], mAsm->fX[i], mAsm->fY[i], NULL);
 
 		/* place mandatory parts */
 		mapX = 0;
@@ -771,7 +775,7 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
 		mapW = mAsm->w;
 		mapH = mAsm->h;
 		mapSize = mAsm->w * mAsm->h;
-		if (!SV_AddMandatoryParts(curMap, curNum))
+		if (!SV_AddMandatoryParts(curNum))
 			continue;
 
 		/* start region assembly */
@@ -783,7 +787,7 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
 				mapW = (int) ((x + 1) * regFracX + 0.1) - (int) (x * regFracX);
 				mapH = (int) ((y + 1) * regFracY + 0.1) - (int) (y * regFracY);
 				mapSize = mapW * mapH;
-				if (!SV_AddRegion(curMap, curNum))
+				if (!SV_AddRegion(curNum))
 					ok = qfalse;
 			}
 
