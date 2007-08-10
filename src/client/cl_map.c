@@ -1244,7 +1244,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node, qboolean globe)
 	/* Draw nation names */
 	for (i = 0; i < gd.numNations; i++) {
 		if (MAP_AllMapToScreen(node, gd.nations[i].pos, &x, &y, NULL))
-			re.FontDrawString("f_verysmall", ALIGN_UC, x , y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], gd.nations[i].name, 0, 0, NULL, qfalse);
+			re.FontDrawString("f_verysmall", ALIGN_UC, x , y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], _(gd.nations[i].name), 0, 0, NULL, qfalse);
 	}
 }
 

@@ -1650,7 +1650,7 @@ static void CL_StatsUpdate_f (void)
 	pos += (strlen(pos) + 1);
 	menuText[TEXT_STATS_3] = pos;
 	for (i = 0; i < gd.numNations; i++) {
-		Q_strcat(pos, va(_("%s\t%s\n"), gd.nations[i].name, CL_GetNationHappinessString(&gd.nations[i])), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
+		Q_strcat(pos, va(_("%s\t%s\n"), _(gd.nations[i].name), CL_GetNationHappinessString(&gd.nations[i])), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	}
 
 	/* costs */
@@ -1831,7 +1831,7 @@ static void CL_NationStatsUpdate_f(void)
 		} else {
 			Cbuf_AddText(va("nation_markdesel%i;",i));
 		}
-		Cvar_Set(va("mn_nat_name%i",i), gd.nations[i].name);
+		Cvar_Set(va("mn_nat_name%i",i), _(gd.nations[i].name));
 		Cvar_Set(va("mn_nat_fund%i",i), va("%i", funding));
 	}
 
@@ -4530,7 +4530,7 @@ static void CP_UFORecoveredSell_f (void)
 		nations++;
 		/* Calculate price offered by nation. */
 		UFOprices[i] = ufocraft->price + (int)(frand() * 100000);
-		Q_strcat(recoveryNationSelectPopup, gd.nations[i].name, sizeof(recoveryNationSelectPopup));
+		Q_strcat(recoveryNationSelectPopup, _(gd.nations[i].name), sizeof(recoveryNationSelectPopup));
 		Q_strcat(recoveryNationSelectPopup, "\t\t\t", sizeof(recoveryNationSelectPopup));
 		Q_strcat(recoveryNationSelectPopup, va("%i", UFOprices[i]), sizeof(recoveryNationSelectPopup));
 		Q_strcat(recoveryNationSelectPopup, "\t\t", sizeof(recoveryNationSelectPopup));
