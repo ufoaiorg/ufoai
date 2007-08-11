@@ -1119,6 +1119,8 @@ static void MAP_DrawMapMarkers (const menuNode_t* node, qboolean globe)
 				MAP_Draw3DMarkerIfVisible(node, ms->realPos, angle, "mission", globe);
 			} else
 				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "cross");
+			
+			re.FontDrawString("f_verysmall", ALIGN_UL, x + 10, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], _(ms->def->location), 0, 0, NULL, qfalse);
 		}
 
 	/* draws projectiles */
