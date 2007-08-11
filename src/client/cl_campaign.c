@@ -1593,9 +1593,12 @@ static void CL_StatsUpdate_f (void)
 	Q_strcat(pos, va(_("\n\t-------\nSum:\t%i c\n"), sum), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 }
 
-static int fundingPts[MAX_NATIONS][MONTHS_PER_YEAR * 2];
-static int usedPointlists = 0;
-static int coordAxesPts[3 * 2];
+static int fundingPts[MAX_NATIONS][MONTHS_PER_YEAR * 2]; /* Space for month-lines with 12 points for each nation. */
+static int usedFundPtslist = 0;
+static int colorLinePts[MAX_NATIONS][2*2]; /* Space for 1 line (2 points) for each nation. */
+static int usedColPtslists = 0;
+
+static int coordAxesPts[3 * 2];	/* Space for 2 lines (3 points) */
 
 const vec4_t graphColors[MAX_NATIONS] = {
 	{1.0, 0.5, 0.5, 1.0},
@@ -1607,7 +1610,6 @@ const vec4_t graphColors[MAX_NATIONS] = {
 	{1.0, 1.0, 0.0, 1.0},
 	{0.0, 1.0, 1.0, 1.0}
 };
-static int usedGraphColors = 0;
 
 /**
  * @brief Search the maximum (current) funding from all the nations (in all logged months).
@@ -1638,7 +1640,7 @@ static int CL_NationsMaxFunding (void)
 	}
 	return max;
 }
-	
+
 /**
  * @brief Draws a graph for the funding values over time.
  * @param[in] nation The nation to draw the graph for.
@@ -1646,7 +1648,7 @@ static int CL_NationsMaxFunding (void)
  * @param[in] maxFunding The upper limit of the graph - all values willb e scaled to this one.
  * @todo Somehow the display of the months isnt really correct right now (straight line :-/)
  */
-static void CL_NationDrawStats (nation_t *nation, menuNode_t *node, int maxFunding)
+static void CL_NationDrawStats (nation_t *nation, menuNode_t *node, int maxFunding, int color)
 {
 	int width, height, x, y, dx;
 	int m, j;
@@ -1658,8 +1660,8 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node, int maxFundi
 	if (!nation || !node)
 		return;
 
-	width	= node->size[0];
-	height	= node->size[1];
+	width	= (int)node->size[0];
+	height	= (int)node->size[1];
 	x = node->pos[0];
 	y = node->pos[1];
 	dx = (int)(width / MONTHS_PER_YEAR);
@@ -1674,19 +1676,19 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node, int maxFundi
 	for (m = 0, j = 0; m < MONTHS_PER_YEAR; m++, j+=2) {
 		if (nation->stats[m].inuse) {
 			funding = nation->maxFunding * nation->stats[m].happiness;
-			fundingPts[usedPointlists][j] = x + (m * dx);
-			fundingPts[usedPointlists][j+1] = y - (int)(((float)(funding - minFunding) / (float)(maxFunding - minFunding)) * height);
+			fundingPts[usedFundPtslist][j] = x + (m * dx);
+			fundingPts[usedFundPtslist][j+1] = y - (int)(((float)(funding - minFunding) / (float)(maxFunding - minFunding)) * height);
 			ptsNumber++;
 		} else {
 			break;
 		}
 	}
-	
+
 	/* Guarantee displayable data even for only one month */
 	if (ptsNumber == 1) {
 		/* Set the second point haft the distance to the next month to the right - small horiz line. */
-		fundingPts[usedPointlists][2] = fundingPts[usedPointlists][0] + (int)(0.5 * width / MONTHS_PER_YEAR);
-		fundingPts[usedPointlists][3] = fundingPts[usedPointlists][1];
+		fundingPts[usedFundPtslist][2] = fundingPts[usedFundPtslist][0] + (int)(0.5 * width / MONTHS_PER_YEAR);
+		fundingPts[usedFundPtslist][3] = fundingPts[usedFundPtslist][1];
 		ptsNumber++;
 	}
 
@@ -1695,13 +1697,12 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node, int maxFundi
 		return;
 
 	/* Link graph to node */
-	node->linestrips.pointList[node->linestrips.numStrips] = fundingPts[usedPointlists];
+	node->linestrips.pointList[node->linestrips.numStrips] = fundingPts[usedFundPtslist];
 	node->linestrips.numPoints[node->linestrips.numStrips] = ptsNumber;
-	Vector4Copy(graphColors[usedGraphColors], node->linestrips.color[node->linestrips.numStrips]);
+	Vector4Copy(graphColors[color], node->linestrips.color[node->linestrips.numStrips]);
 	node->linestrips.numStrips++;
 
-	usedGraphColors++;
-	usedPointlists++;
+	usedFundPtslist++;
 }
 
 static int selectedNation = 0;
@@ -1713,8 +1714,18 @@ static void CL_NationStatsUpdate_f(void)
 {
 	int i;
 	int funding, maxFunding;
-	menuNode_t *graphNode;
+	menuNode_t *colorNode = NULL;
+	menuNode_t *graphNode = NULL;
 	const vec4_t colorAxes = {1, 1, 1, 0.5};
+	int dy = 10;
+
+	usedColPtslists = 0;
+
+	colorNode = MN_GetNodeFromCurrentMenu("nation_graph_colors");
+	if (colorNode) {
+		dy = (int)(colorNode->size[1] / MAX_NATIONS);
+		colorNode->linestrips.numStrips = 0;
+	}
 
 	for (i = 0; i < gd.numNations; i++) {
 		funding = gd.nations[i].maxFunding * gd.nations[i].stats[0].happiness;
@@ -1726,6 +1737,20 @@ static void CL_NationStatsUpdate_f(void)
 		}
 		Cvar_Set(va("mn_nat_name%i",i), _(gd.nations[i].name));
 		Cvar_Set(va("mn_nat_fund%i",i), va("%i", funding));
+
+		if (colorNode) {
+			colorLinePts[usedColPtslists][0] = colorNode->pos[0];
+			colorLinePts[usedColPtslists][1] = colorNode->pos[1] - (int)colorNode->size[1] + dy * i;
+			colorLinePts[usedColPtslists][2] = colorNode->pos[0] + (int)colorNode->size[0];
+			colorLinePts[usedColPtslists][3] = colorLinePts[usedColPtslists][1];
+
+			colorNode->linestrips.pointList[colorNode->linestrips.numStrips] = colorLinePts[usedColPtslists];
+			colorNode->linestrips.numPoints[colorNode->linestrips.numStrips] = 2;
+			Vector4Copy(graphColors[i], colorNode->linestrips.color[colorNode->linestrips.numStrips]);
+
+			usedColPtslists++;
+			colorNode->linestrips.numStrips++;
+		}
 	}
 
 	/* Hide unused nation-entries. */
@@ -1738,27 +1763,25 @@ static void CL_NationStatsUpdate_f(void)
 	/* Display graph of nations-values so far. */
 	graphNode = MN_GetNodeFromCurrentMenu("nation_graph_funding");
 	if (graphNode) {
+		usedFundPtslist = 0;
 		graphNode->linestrips.numStrips = 0;
 
 		/* Generate axes & link to node. */
-		coordAxesPts[0]	= graphNode->pos[0];	/* x */
-		coordAxesPts[1] = graphNode->pos[1] - graphNode->size[1];	/* y - height */
-		coordAxesPts[2]	= graphNode->pos[0];	/* x */
-		coordAxesPts[3] = graphNode->pos[1];	/* y */
-		coordAxesPts[4]	= graphNode->pos[0] + graphNode->size[0];	/* x + width */
-		coordAxesPts[5] = graphNode->pos[1];	/* y */
-		graphNode->linestrips.pointList[0] = coordAxesPts;
-		graphNode->linestrips.numPoints[0] = 3;
-		Vector4Copy(colorAxes, graphNode->linestrips.color[0]);
-		graphNode->linestrips.numStrips = 1;
-
 		/** @todo Maybe create a margin toward the axes? */
-		/** @todo Draw a line where the current month is. */
+		coordAxesPts[0] = graphNode->pos[0];	/* x */
+		coordAxesPts[1] = graphNode->pos[1] - (int)graphNode->size[1];	/* y - height */
+		coordAxesPts[2] = graphNode->pos[0];	/* x */
+		coordAxesPts[3] = graphNode->pos[1];	/* y */
+		coordAxesPts[4] = graphNode->pos[0] + (int)graphNode->size[0];	/* x + width */
+		coordAxesPts[5] = graphNode->pos[1];	/* y */
+		graphNode->linestrips.pointList[graphNode->linestrips.numStrips] = coordAxesPts;
+		graphNode->linestrips.numPoints[graphNode->linestrips.numStrips] = 3;
+		Vector4Copy(colorAxes, graphNode->linestrips.color[graphNode->linestrips.numStrips]);
+		graphNode->linestrips.numStrips++;
 
-		usedGraphColors = 0;
 		maxFunding = CL_NationsMaxFunding();
 		for (i = 0; i < gd.numNations; i++) {
-			CL_NationDrawStats(&gd.nations[i], graphNode, maxFunding);
+			CL_NationDrawStats(&gd.nations[i], graphNode, maxFunding, i);
 		}
 	}
 }

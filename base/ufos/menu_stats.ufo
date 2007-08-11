@@ -257,6 +257,11 @@ menu nations
 	string nat_fund6 { string "*cvar mn_nat_fund6"	pos "340 265" invis false }
 	string nat_fund7 { string "*cvar mn_nat_fund7"	pos "340 290" invis false }
 
+	linestrip nation_graph_colors
+	{
+		pos	"310 324"
+		size	"20 200"	// 8 x 25 -> (8 x entry-height)
+	}
 
 	linestrip nation_graph_funding
 	{
@@ -281,7 +286,7 @@ menu nations
 	
 	string graph_funding { string "Funding"	pos "490 200"	align ur	font f_small }
 	string graph_funding_zero { string "0"	pos "490 290"	align ur	font f_small }	//todo *cvar mn_nat_fund_zero
-	string graph_funding_max { string "max"	pos "490 100"	align ur	font f_small }	//todo *cvar mn_nat_fund_max
+	string graph_funding_max { string "max"	pos "490 100"	align lr	font f_small }	//todo *cvar mn_nat_fund_max
 
 	func init
 	{
