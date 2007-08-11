@@ -821,12 +821,13 @@ const char* CL_GetNationTeamName (const nation_t* nation, char *teamname, size_t
 
 /**
  * @brief Backs up each nation's relationship values.
+ * @note Right after the copy the stats for the current month are the same as the ones from the (end of the) previous month.
+ * They will change while the curent month is running of course :)
  * @todo otehr stuff to back up?
  */
 static void CL_BackupMonthlyData (void)
 {
 	int i, nat;
-	nationInfo_t temp;
 
 	/**
 	 * Back up nation relationship .
@@ -835,16 +836,8 @@ static void CL_BackupMonthlyData (void)
 	for (nat = 0; nat < gd.numNations; nat++) {
 		nation_t *nation = &gd.nations[nat];
 
-		for (i = 0; i < MONTHS_PER_YEAR; i++) {
-			nationInfo_t *nat_stats = &nation->stats[i];
-
-			if (i > 0) {
-				/* Move data from more recent month to this one. */
-				memcpy(nat_stats, &temp, sizeof(nationInfo_t));
-			}
-
-			/* Temp-store the data of this month */
-			memcpy(&temp, nat_stats, sizeof(nationInfo_t));
+		for (i = MONTHS_PER_YEAR-1; i > 0; i--) {	/* Reverse copy to not overwrite with wrong data */
+			memcpy(&nation->stats[i], &nation->stats[i-1], sizeof(nationInfo_t));
 		}
 	}
 }
