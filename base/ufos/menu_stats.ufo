@@ -260,9 +260,28 @@ menu nations
 
 	linestrip nation_graph_funding
 	{
-		pos	"400 300"
+		pos	"500 300"
 		size	"300 200"
 	}
+	
+	string graph_time { string "_Month (Relative to current)"	pos "650 330"	align uc	font f_small }
+	// todo better display of real month-text (year+month?)
+	string graph_month0	{ string "0"	pos "500 300"	align ul	font f_small }
+	string graph_month1	{ string "-1"	pos "525 300"	align ul	font f_small }
+	string graph_month2	{ string "-2"	pos "550 300"	align ul	font f_small }
+	string graph_month3	{ string "-3"	pos "575 300"	align ul	font f_small }
+	string graph_month4	{ string "-4"	pos "600 300"	align ul	font f_small }
+	string graph_month5	{ string "-5"	pos "625 300"	align ul	font f_small }
+	string graph_month6	{ string "-6"	pos "650 300"	align ul	font f_small }
+	string graph_month7	{ string "-7"	pos "675 300"	align ul	font f_small }
+	string graph_month8	{ string "-8"	pos "700 300"	align ul	font f_small }
+	string graph_month9	{ string "-9"	pos "725 300"	align ul	font f_small }
+	string graph_month10	{ string "-10"	pos "750 300"	align ul	font f_small }
+	string graph_month11	{ string "-11"	pos "775 300"	align ul	font f_small }
+	
+	string graph_funding { string "Funding"	pos "490 200"	align ur	font f_small }
+	string graph_funding_zero { string "0"	pos "490 290"	align ur	font f_small }	//todo *cvar mn_nat_fund_zero
+	string graph_funding_max { string "max"	pos "490 100"	align ur	font f_small }	//todo *cvar mn_nat_fund_max
 
 	func init
 	{

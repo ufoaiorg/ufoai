@@ -1625,8 +1625,8 @@ static int CL_NationsMaxFunding (void)
 	for (n = 0; n < gd.numNations; n++) {
 		nation = &gd.nations[n];
 		for (m = 0; m < MONTHS_PER_YEAR; m++) {
-			if (1) { /** if (nation->stats[m].inuse) { @todo  DEBUG */
-				nation->stats[m].happiness = sqrt((float)m / 12.0); /** @todo  DEBUG */
+			if (nation->stats[m].inuse) {
+				/** nation->stats[m].happiness = sqrt((float)m / 12.0);  @todo  DEBUG */
 				funding = nation->maxFunding * nation->stats[m].happiness;
 				if (max < funding)
 					max = funding;
@@ -1672,7 +1672,7 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node, int maxFundi
 	/* Generate pointlist. */
 	/** @todo Sort this in reverse? -> Having current month on the right side? */
 	for (m = 0, j = 0; m < MONTHS_PER_YEAR; m++, j+=2) {
-		if (1) { /** if (nation->stats[m].inuse) { @todo  DEBUG */
+		if (nation->stats[m].inuse) {
 			funding = nation->maxFunding * nation->stats[m].happiness;
 			fundingPts[usedPointlists][j] = x + (m * dx);
 			fundingPts[usedPointlists][j+1] = y - (int)(((float)(funding - minFunding) / (float)(maxFunding - minFunding)) * height);
@@ -1684,8 +1684,8 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node, int maxFundi
 	
 	/* Guarantee displayable data even for only one month */
 	if (ptsNumber == 1) {
-		/* Set the second point two pixel to the right - small horiz line. */
-		fundingPts[usedPointlists][2] = fundingPts[usedPointlists][0] + 2;
+		/* Set the second point haft the distance to the next month to the right - small horiz line. */
+		fundingPts[usedPointlists][2] = fundingPts[usedPointlists][0] + (int)(0.5 * width / MONTHS_PER_YEAR);
 		fundingPts[usedPointlists][3] = fundingPts[usedPointlists][1];
 		ptsNumber++;
 	}
@@ -1738,8 +1738,9 @@ static void CL_NationStatsUpdate_f(void)
 	/* Display graph of nations-values so far. */
 	graphNode = MN_GetNodeFromCurrentMenu("nation_graph_funding");
 	if (graphNode) {
+		graphNode->linestrips.numStrips = 0;
+
 		/* Generate axes & link to node. */
-		graphNode->linestrips.numStrips = 1;
 		coordAxesPts[0]	= graphNode->pos[0];	/* x */
 		coordAxesPts[1] = graphNode->pos[1] - graphNode->size[1];	/* y - height */
 		coordAxesPts[2]	= graphNode->pos[0];	/* x */
@@ -1749,6 +1750,7 @@ static void CL_NationStatsUpdate_f(void)
 		graphNode->linestrips.pointList[0] = coordAxesPts;
 		graphNode->linestrips.numPoints[0] = 3;
 		Vector4Copy(colorAxes, graphNode->linestrips.color[0]);
+		graphNode->linestrips.numStrips = 1;
 
 		/** @todo Maybe create a margin toward the axes? */
 		/** @todo Draw a line where the current month is. */
