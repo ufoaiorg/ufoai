@@ -762,6 +762,10 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 	gd.numAircraft--;	/**< Decrease the global number of aircraft. */
 
 	/* Finally remove the aircraft-struct itself from the base-array and update the order. */
+	/**
+	 * @todo We need to update _all_ aircraft references here.
+	 * Every single idnext that points to an aircraft after this one will need to be updated.
+	 */
 	base->numAircraftInBase--;
 	for (i = aircraft->idxInBase; i < base->numAircraftInBase; i++) {
 		/* Remove aircraft and rearrange the aircraft-list (in base). */
