@@ -33,6 +33,7 @@ typedef struct transfer_s {
 	int itemAmount[MAX_OBJDEFS];			/**< Amount of given item [csi.ods[idx]]. */
 	int alienAmount[MAX_TEAMDEFS][2];		/**< Alien cargo, [0] alive, [1] dead. */
 	int employeesArray[MAX_EMPL][MAX_EMPLOYEES];	/**< Array of indexes of personel transfering. */
+	int aircraftsArray[MAX_AIRCRAFT];		/**< Aircrafts being transferred. */
 	int destBase;					/**< Index of destination base. */
 	int srcBase;					/**< Intex of source base. */
 	date_t event;					/**< When the transfer finish process should start. */
@@ -40,6 +41,7 @@ typedef struct transfer_s {
 	qboolean hasItems;				/**< Transfer of items. */
 	qboolean hasEmployees;				/**< Transfer of employees. */
 	qboolean hasAliens;				/**< Transfer of Aliens. */
+	qboolean hasAircrafts;				/**< Transfer of aircrafts. */
 } transfer_t;
 
 /** @brief Array of current cargo onboard. */

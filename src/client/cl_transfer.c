@@ -45,6 +45,9 @@ static int trAliensTmp[MAX_TEAMDEFS][2];
 /** @brief Current personel cargo. */
 static int trEmployeesTmp[MAX_EMPL][MAX_EMPLOYEES];
 
+/** @brief Current aircrafts for transfer. */
+static int trAircraftsTmp[MAX_AIRCRAFT];
+
 /**
  * @brief Checks condition for item transfer.
  * @param[in] od Pointer to object definition.
@@ -145,6 +148,7 @@ static void TR_CargoList (void)
 	int i, cnt = 0, empltype;
 	int trempl[MAX_EMPL];
 	employee_t *employee;
+	aircraft_t *aircraft;
 	static char cargoList[1024];
 	char str[128];
 
@@ -219,6 +223,19 @@ static void TR_CargoList (void)
 		}
 	}
 
+	/* Show aircrafts. */
+	for (i = 0; i < MAX_AIRCRAFT; i++) {
+		if (trAircraftsTmp[i] > -1) {
+			aircraft = AIR_AircraftGetFromIdx(trAircraftsTmp[i]);
+			Com_sprintf(str, sizeof(str), _("Aircraft %s\n"),
+			aircraft->name);
+			Q_strcat(cargoList, str, sizeof(cargoList));
+			cargo[cnt].type = 5;
+			cargo[cnt].itemidx = i;
+			cnt++;
+		}
+	}
+
 	menuText[TEXT_CARGO_LIST] = cargoList;
 }
 
@@ -235,6 +252,7 @@ static void TR_TransferSelect_f (void)
 	int numempl[MAX_EMPL], trempl[MAX_EMPL];
 	int i, j, cnt = 0;
 	employee_t* employee = NULL;
+	aircraft_t *aircraft = NULL;
 	char str[128];
 
 	if (!transferBase)
@@ -345,10 +363,23 @@ static void TR_TransferSelect_f (void)
 		}
 		break;
 	case 3:			/**< aircrafts */
-		if (transferBase->hasHangar) {
-			Q_strcat(transferList, "@todo: aircrafts", sizeof(transferList));
+		if (transferBase->hasHangar || transferBase->hasHangarSmall) {
+			for (i = 0; i < MAX_AIRCRAFT; i++) {
+				if (trAircraftsTmp[i] > -1)	/* Already on transfer list. */
+					continue;
+				aircraft = AIR_AircraftGetFromIdx(i);
+				if (aircraft) {
+					if (aircraft->homebase == baseCurrent) {
+						Com_sprintf(str, sizeof(str), _("Aircraft %s\n"), aircraft->name);
+						Q_strcat(transferList, str, sizeof(transferList));
+						cnt++;
+					}
+				}
+			}
+			if (!cnt)
+				Q_strncpyz(transferList, _("No aircrafts available for transfer.\n"), sizeof(transferList));
 		} else {
-			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have any hangar."), sizeof(transferList));
+			Q_strcat(transferList, _("Transfer is not possible - the base doesn't hangar functional."), sizeof(transferList));
 		}
 		break;
 	default:
@@ -393,6 +424,7 @@ static void TR_TransferListClear_f (void)
 	memset(trItemsTmp, 0, sizeof(trItemsTmp));
 	memset(trAliensTmp, 0, sizeof(trAliensTmp));
 	memset(trEmployeesTmp, -1, sizeof(trEmployeesTmp));
+	memset(trAircraftsTmp, -1, sizeof(trAircraftsTmp));
 	/* Update cargo list and items list. */
 	TR_CargoList();
  	TR_TransferSelect_f();
@@ -482,6 +514,10 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 			}
 		}
 	}
+
+	if (transfer->hasAircrafts && success) {	/* Aircrafts. */
+		/* @todo */
+	}
 }
 
 /**
@@ -531,6 +567,7 @@ static void TR_TransferStart_f (void)
 {
 	int i, j;
 	employee_t *employee;
+	aircraft_t *aircraft;
 	transfer_t *transfer = NULL;
 	char message[256];
 
@@ -597,11 +634,20 @@ static void TR_TransferStart_f (void)
 			transfer->alienAmount[i][1] = trAliensTmp[i][1];
 		}
 	}
+	for (i = 0; i < MAX_AIRCRAFT; i++) {	/* Aircrafts. */
+		if (trAircraftsTmp[i] > -1) {
+			aircraft = AIR_AircraftGetFromIdx(i);
+			aircraft->status = AIR_TRANSPORT;
+			transfer->hasAircrafts = qtrue;
+			transfer->aircraftsArray[i] = i;
+		}
+	}
 
 	/* Clear temporary cargo arrays. */
 	memset(trItemsTmp, 0, sizeof(trItemsTmp));
 	memset(trAliensTmp, 0, sizeof(trAliensTmp));
 	memset(trEmployeesTmp, -1, sizeof(trEmployeesTmp));
+	memset(trAircraftsTmp, -1, sizeof(trAircraftsTmp));
 
 	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to base %s"), gd.bases[transfer->destBase].name);
 	MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
@@ -618,6 +664,7 @@ static void TR_TransferListSelect_f (void)
 	int num, cnt = 0, i, empltype;
 	objDef_t *od;
 	employee_t* employee;
+	aircraft_t *aircraft;
 	qboolean added = qfalse;
 
 	if (Cmd_Argc() < 2)
@@ -725,7 +772,20 @@ static void TR_TransferListSelect_f (void)
 		}
 		break;
 	case 3:		/**< aircrafts */
-		/* @todo: aircrafts here. */
+		if(!transferBase->hasHangar && !transferBase->hasHangarSmall)
+			return;
+		for (i = 0; i < MAX_AIRCRAFT; i++) {
+			aircraft = AIR_AircraftGetFromIdx(i);
+			if (!aircraft)
+				return;
+			if (aircraft->homebase == baseCurrent) {
+				if (cnt == num) {
+					trAircraftsTmp[i] = i;
+					break;
+				}
+				cnt++;
+			}
+		}
 		break;
 	default:
 		return;
@@ -869,8 +929,16 @@ static void TR_TransferBaseSelect_f (void)
 		powercomm = qtrue;
 		Q_strcat(baseInfo, _("No power supplies in this base.\n"), sizeof(baseInfo));
 	}
-
-	/* @todo: check hangar (for aircraft transfer) */
+	if (base->hasHangar || base->hasHangarSmall) {
+		Q_strcat(baseInfo, _("You can transfer aircraft - this base has Hangar.\n"), sizeof(baseInfo));
+	} else if (!base->hasCommand) {
+		Q_strcat(baseInfo, _("Aircraft transfer not possible - this base does not have Command Centre.\n"), sizeof(baseInfo));
+	} else if (base->hasPower){
+		Q_strcat(baseInfo, _("No Hangar in this base.\n"), sizeof(baseInfo));
+	} else if (!powercomm) {
+		powercomm = qtrue;
+		Q_strcat(baseInfo, _("No power supplies in this base.\n"), sizeof(baseInfo));
+	}
 
 	menuText[TEXT_BASE_INFO] = baseInfo;
 
@@ -989,6 +1057,24 @@ static void TR_CargoListSelect_f (void)
 			}
 		}
 		break;
+	case 5:		/**< aircrafts */
+		for (i = 0; i < MAX_CARGO; i++) {
+			/* Count previous types on the list. */
+			if (cargo[i].type == 1 || cargo[i].type == 2 || cargo[i].type == 3 || cargo[i].type == 4)
+				entries++;
+		}
+		/* Start increasing cnt from the amount of previous entries. */
+		cnt = entries;
+		for (i = 0; i < MAX_AIRCRAFT; i++) {
+			if (trAircraftsTmp[i] > -1) {
+				if (cnt == num) {
+					trAircraftsTmp[i] = -1;
+					break;
+				}
+				cnt++;
+			}
+		}
+		break;
 	default:
 		return;
 	}
@@ -1062,6 +1148,9 @@ static void TR_Init_f (void)
 		for (j = 0; j < MAX_EMPLOYEES; j++)
 			trEmployeesTmp[i][j] = -1;
 	}
+	/* Clear aircrafts temp array. */
+	for (i = 0; i < MAX_AIRCRAFT; i++)
+		trAircraftsTmp[i] = -1;
 
 	/* Select first available item. */
 	TR_TransferSelect_f();
