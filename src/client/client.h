@@ -901,9 +901,14 @@ missionResults_t missionresults;	/**< Mission results pointer used for Menu Won.
 #include "cl_menu.h"
 void B_DrawBase(menuNode_t * node);
 
-extern chrList_t chrDisplayList;	/**< List of currently displayed or equipeable characters.
-					 * See cl_team.c and cl_menu.c for usage.
-					 */
+/* cl_map.c */
+#include "cl_map.h"
+
+/**
+ * @brief  List of currently displayed or equipeable characters.
+ * @sa cl_team.c and cl_menu.c for usage.
+ */
+extern chrList_t chrDisplayList;
 
 /* cl_particle.c */
 void CL_ParticleRegisterArt(void);
@@ -955,27 +960,6 @@ void CL_SequenceStart_f(void);
 void CL_SequenceEnd_f(void);
 void CL_ResetSequences(void);
 void CL_ParseSequence(const char *name, const char **text);
-
-/* cl_map.c */
-#define GLOBE_ROTATE -90
-#define MAX_PROJECTILESONGEOSCAPE 16
-nation_t* MAP_GetNation(const vec2_t pos);
-qboolean MAP_AllMapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y, int *z);
-qboolean MAP_Draw3DMarkerIfVisible(const menuNode_t* node, const vec2_t pos, float angle, const char *model, qboolean globe);
-void MAP_MapDrawEquidistantPoints(const menuNode_t* node, vec2_t center, const float angle, const vec4_t color, qboolean globe);
-float MAP_AngleOfPath(const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector, qboolean qtrue);
-void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line);
-void MAP_DrawMap(const menuNode_t* node, qboolean map3D);
-void MAP_CenterOnPoint(void);
-void MAP_MapClick(const menuNode_t * node, int x, int y, qboolean globe);
-void MAP_ResetAction(void);
-void MAP_SelectAircraft(aircraft_t* aircraft);
-void MAP_SelectMission(actMis_t* mission);
-void MAP_NotifyMissionRemoved(const actMis_t* mission);
-void MAP_NotifyUfoRemoved(const aircraft_t* ufo);
-void MAP_NotifyUfoDisappear(const aircraft_t* ufo);
-void MAP_GameInit(void);
-const char* MAP_GetZoneType(byte* color);
 
 /* cl_ufo.c */
 ufoType_t UFO_ShortNameToID(const char *token);

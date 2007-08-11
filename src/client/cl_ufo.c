@@ -189,7 +189,7 @@ static void UFO_FoundNewBase (aircraft_t *ufo, int dt)
 			continue;
 
 		/* ufo can't find base if it's too far */
-		distance = CP_GetDistance(ufo->pos, base->pos);
+		distance = MAP_GetDistance(ufo->pos, base->pos);
 		if (distance > max_detecting_range)
 			continue;
 
@@ -237,7 +237,7 @@ static void UFO_SearchTarget (aircraft_t *ufo)
 			ufo->status = AIR_TRANSIT;
 			for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
 				/* check if the ufo can attack a base (if it's not too far) */
-				if (base->isDiscovered && (CP_GetDistance(ufo->pos, base->pos) < max_detecting_range)) {
+				if (base->isDiscovered && (MAP_GetDistance(ufo->pos, base->pos) < max_detecting_range)) {
 					AIR_SendUfoPurchasingBase(ufo, base);
 					continue;
 				}
@@ -245,7 +245,7 @@ static void UFO_SearchTarget (aircraft_t *ufo)
 				/* check if the ufo can attack an aircraft */
 				for (phalanxAircraft = base->aircraft + base->numAircraftInBase - 1; phalanxAircraft >= base->aircraft; phalanxAircraft--) {
 					/* check that aircraft is flying */
-					if (phalanxAircraft->status > AIR_HOME && CP_GetDistance(ufo->pos, phalanxAircraft->pos) < max_detecting_range)  {
+					if (phalanxAircraft->status > AIR_HOME && MAP_GetDistance(ufo->pos, phalanxAircraft->pos) < max_detecting_range)  {
 						AIR_SendUfoPurchasingAircraft(ufo, phalanxAircraft);
 					}
 				}

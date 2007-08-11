@@ -43,14 +43,6 @@ campaign_t *curCampaign;			/**< Current running campaign */
 ccs_t ccs;					/**< Document me. */
 base_t *baseCurrent;				/**< Pointer to current base. */
 
-static byte *maskPic = NULL;				/**< this is the mask for seperating the clima
-												zone and water by different color values */
-static int maskWidth, maskHeight;		/**< the width and height for the mask pic. */
-
-static byte *nationsPic = NULL;			/**< this is the nation mask - seperated
-											by colors given in nations.ufo. */
-static int nationsWidth, nationsHeight;		/**< the width and height for the nation pic. */
-
 static salary_t salaries[MAX_CAMPAIGNS];
 
 /* extern in client.h */
@@ -228,48 +220,6 @@ static qboolean CheckBEP (char *expr, qboolean(*varFuncParam) (char *var))
 /* =========================================================== */
 
 /**
- * @brief Calculate distance on the geoscape.
- * @param[in] pos1 Position at the start.
- * @param[in] pos2 Position at the end.
- * @return Distance from pos1 to pos2.
- * @note distance is an angle! This is the angle (in degrees) between the 2 vectors starting at earth's center and ending at start or end.
- */
-float CP_GetDistance (const vec2_t pos1, const vec2_t pos2)
-{
-	float distance;
-	vec3_t start, end;
-
-	PolarToVec(pos1, start);
-	PolarToVec(pos2, end);
-
-	distance = DotProduct(start, end);
-	distance = acos(distance) * todeg;
-	return distance;
-}
-
-
-/**
- * @brief Check whether given position is Day or Night.
- * @param[in] pos Given position.
- * @return True if given position is Night.
- */
-qboolean CL_MapIsNight (vec2_t pos)
-{
-	float p, q, a, root, x;
-
-	/* set p to hours (we don't use ccs.day here because we need a float value) */
-	p = (float) ccs.date.sec / (3600 * 24);
-	/* convert current day to angle (-pi on 1st january, pi on 31 december) */
-	q = (ccs.date.day + p) * 2 * M_PI / DAYS_PER_YEAR_AVG - M_PI;
-	p = (0.5 + pos[0] / 360 - p) * 2 * M_PI - q;
-	a = -sin(pos[1] * torad);
-	root = sqrt(1.0 - a * a);
-	x = sin(p) * root * sin(q) - (a * SIN_ALPHA + cos(p) * root * COS_ALPHA) * cos(q);
-	return (x > 0);
-}
-
-
-/**
  * @brief Check wheter given date and time is later than current date.
  * @param[in] now Current date.
  * @param[in] compare Date to compare.
@@ -345,93 +295,6 @@ static date_t Date_Random_Middle (date_t frame)
 	frame.day = frame.sec / (3600 * 24);
 	frame.sec = frame.sec % (3600 * 24);
 	return frame;
-}
-
-/**
- * @brief
- * @param[in] *color
- * @param[in] polar
- * @return
- */
-static qboolean MAP_MaskFind (byte * color, vec2_t polar)
-{
-	byte *c;
-	int res, i, num;
-
-	/* check color */
-	if (!color[0] && !color[1] && !color[2])
-		return qfalse;
-
-	/* find possible positions */
-	res = maskWidth * maskHeight;
-	num = 0;
-	for (i = 0, c = maskPic; i < res; i++, c += 4)
-		if (c[0] == color[0] && c[1] == color[1] && c[2] == color[2])
-			num++;
-
-	/* nothing found? */
-	if (!num)
-		return qfalse;
-
-	/* get position */
-	num = rand() % num;
-	for (i = 0, c = maskPic; i <= num; c += 4)
-		if (c[0] == color[0] && c[1] == color[1] && c[2] == color[2])
-			i++;
-
-	/* transform to polar coords */
-	res = (c - maskPic) / 4;
-	polar[0] = 180.0 - 360.0 * ((float) (res % maskWidth) + 0.5) / maskWidth;
-	polar[1] = 90.0 - 180.0 * ((float) (res / maskWidth) + 0.5) / maskHeight;
-	Com_DPrintf("Set new coords for mission to %.0f:%.0f\n", polar[0], polar[1]);
-	return qtrue;
-}
-
-/**
- * @brief Returns the color value from geoscape of maskPic at a given position.
- * @param[in] pos vec2_t Value of position on map to get the color value from.
- * pos is longitude and latitude
- * @param[in] type determine the map to get the color from (there are different masks)
- * one for the climazone (bases made use of this - there are grass, ice and desert
- * base tiles available) and one for the nations
- * @return Returns the color value at given position.
- * @note maskPic is a pointer to an rgba image in memory
- * @sa MAP_GetZoneType
- */
-byte *MAP_GetColor (const vec2_t pos, mapType_t type)
-{
-	int x, y;
-	int width, height;
-	byte *mask;
-
-	switch (type) {
-	case MAPTYPE_CLIMAZONE:
-		mask = maskPic;
-		width = maskWidth;
-		height = maskHeight;
-		break;
-	case MAPTYPE_NATIONS:
-		mask = nationsPic;
-		width = nationsWidth;
-		height = nationsHeight;
-		break;
-	default:
-		Sys_Error("Unknown maptype %i\n", type);
-		return NULL;
-	}
-
-	/* get coordinates */
-	x = (180 - pos[0]) / 360 * width;
-	y = (90 - pos[1]) / 180 * height;
-	if (x < 0)
-		x = 0;
-	if (y < 0)
-		y = 0;
-
-	/* 4 => RGBA */
-	/* maskWidth is the width of the image */
-	/* this calulation returns the pixel in col x and in row y */
-	return mask + 4 * (x + y * width);
 }
 
 /**
@@ -812,7 +675,7 @@ static void CL_CampaignAddMission (setState_t * set)
 	} else {
 		/* A mission must not be very near a base */
 		for (i = 0; i < gd.numBases; i++) {
-			if (CP_GetDistance(mis->def->pos, gd.bases[i].pos) < DIST_MIN_BASE_MISSION) {
+			if (MAP_GetDistance(mis->def->pos, gd.bases[i].pos) < DIST_MIN_BASE_MISSION) {
 				f = frand();
 				mis->def->pos[0] = gd.bases[i].pos[0] + (gd.bases[i].pos[0] < 0 ? f * DIST_MIN_BASE_MISSION : -f * DIST_MIN_BASE_MISSION);
 				f = sin(acos(f));
@@ -1792,7 +1655,7 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node)
 			break;
 		}
 	}
-	
+
 	/* Generate pointlist. */
 	/** @todo Sort this in reverse? -> Having current month on the right side? */
 	for (m = 0, j = 0; m < months; m++, j+=2) {
@@ -1800,7 +1663,7 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node)
 		fundingPts[usedPointlists][j] = x + (m * dx);
 		fundingPts[usedPointlists][j+1] = y - ((funding - min) / (max - min)) * height;
 	}
-	
+
 	/* Guarantee displayable data even for only one month */
 	if (months == 1) {
 		/* Set the second point two pixel to the right - small horiz line. */
@@ -1820,7 +1683,7 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node)
 	node->linestrips.numPoints[node->linestrips.numStrips] = months;
 	Vector4Copy(graphColors[usedGraphColors], node->linestrips.color[node->linestrips.numStrips]);
 	node->linestrips.numStrips++;
-	
+
 	usedGraphColors++;
 	usedPointlists++;
 }
@@ -1942,24 +1805,8 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	Com_sprintf(val, sizeof(val), "%i", curCampaign->difficulty);
 	Cvar_ForceSet("difficulty", val);
 
-	if (maskPic) {
-		Mem_Free(maskPic);
-		maskPic = NULL;
-	}
-	re.LoadTGA(va("pics/menu/%s_mask.tga", curCampaign->map), &maskPic, &maskWidth, &maskHeight);
-	if (!maskPic || !maskWidth || !maskHeight)
-		Sys_Error("Couldn't load map mask %s_mask.tga in pics/menu\n", curCampaign->map);
-
-	if (nationsPic) {
-		Mem_Free(nationsPic);
-		nationsPic = NULL;
-	}
-	re.LoadTGA(va("pics/menu/%s_nations.tga", curCampaign->map), &nationsPic, &nationsWidth, &nationsHeight);
-	if (!nationsPic || !nationsWidth || !nationsHeight)
-		Sys_Error("Couldn't load map mask %s_nations.tga in pics/menu\n", curCampaign->map);
-
-	/* reset */
-	MAP_ResetAction();
+	/* init the map images and reset the map actions */
+	MAP_Init();
 
 	memset(&ccs, 0, sizeof(ccs_t));
 
@@ -2385,7 +2232,7 @@ static void CL_StartMissionMap (mission_t* mission)
 	Cvar_Set("mn_main", "singleplayermission");
 
 	/* get appropriate map */
-	if (CL_MapIsNight(mission->pos))
+	if (MAP_IsNight(mission->pos))
 		timeChar = 'n';
 	else
 		timeChar = 'd';
@@ -4028,21 +3875,7 @@ static void CL_GameNew_f (void)
 	else if (difficulty->integer > 4)
 		Cvar_ForceSet("difficulty", "4");
 
-	if (maskPic) {
-		Mem_Free(maskPic);
-		maskPic = NULL;
-	}
-	re.LoadTGA(va("pics/menu/%s_mask.tga", curCampaign->map), &maskPic, &maskWidth, &maskHeight);
-	if (!maskPic || !maskWidth || !maskHeight)
-		Sys_Error("Couldn't load map mask %s_mask.tga in pics/menu\n", curCampaign->map);
-
-	if (nationsPic) {
-		Mem_Free(nationsPic);
-		nationsPic = NULL;
-	}
-	re.LoadTGA(va("pics/menu/%s_nations.tga", curCampaign->map), &nationsPic, &nationsWidth, &nationsHeight);
-	if (!nationsPic || !nationsWidth || !nationsHeight)
-		Sys_Error("Couldn't load map mask %s_nations.tga in pics/menu\n", curCampaign->map);
+	MAP_Init();
 
 	/* base setup */
 	gd.numBases = 0;

@@ -76,9 +76,18 @@ static aircraft_t *selectedAircraft;	/**< Currently selected aircraft */
 static aircraft_t *selectedUfo;			/**< Currently selected UFO */
 static char text_standard[2048];		/**< Buffer to display standard text in geoscape */
 static int centerOnEventIdx = 0;		/**< Current Event centered on 3D geoscape */
-static vec3_t finalGlobeAngle = {0, GLOBE_ROTATE, 0};		/**< value of finale ccs.angles for a smooth change of angle (see MAP_CenterOnPoint)*/
+static vec3_t finalGlobeAngle = {0, GLOBE_ROTATE, 0};	/**< value of finale ccs.angles for a smooth change of angle (see MAP_CenterOnPoint)*/
 static vec2_t final2DGeoscapeCenter = {0.5, 0.5};		/**< value of ccs.center for a smooth change of position (see MAP_CenterOnPoint) */
-static qboolean smoothRotation = qfalse;			/**< qtrue if the rotation of 3D geoscape must me smooth */
+static qboolean smoothRotation = qfalse;				/**< qtrue if the rotation of 3D geoscape must me smooth */
+static byte *maskPic = NULL;			/**< this is the mask for seperating the clima
+											zone and water by different color values */
+static int maskWidth, maskHeight;		/**< the width and height for the mask pic. */
+
+static byte *nationsPic = NULL;			/**< this is the nation mask - seperated
+											by colors given in nations.ufo. */
+static int nationsWidth, nationsHeight;	/**< the width and height for the nation pic. */
+
+
 /*
 ==============================================================
 CLICK ON MAP and MULTI SELECTION FUNCTIONS
@@ -1103,7 +1112,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node, qboolean globe)
 	for (ms = ccs.mission + ccs.numMissions - 1; ms >= ccs.mission; ms--)
 		if (MAP_AllMapToScreen(node, ms->realPos, &x, &y, NULL)) {
 			if (ms == selMis) {
-				Cvar_Set("mn_mapdaytime", CL_MapIsNight(ms->realPos) ? _("Night") : _("Day"));
+				Cvar_Set("mn_mapdaytime", MAP_IsNight(ms->realPos) ? _("Night") : _("Day"));
 
 				/* Draw circle around the mission */
 				if (globe) {
@@ -1452,6 +1461,159 @@ const char* MAP_GetZoneType (byte* color)
 		return "water";
 	else
 		return "grass";
+}
+
+/**
+ * @brief Calculate distance on the geoscape.
+ * @param[in] pos1 Position at the start.
+ * @param[in] pos2 Position at the end.
+ * @return Distance from pos1 to pos2.
+ * @note distance is an angle! This is the angle (in degrees) between the 2 vectors starting at earth's center and ending at start or end.
+ */
+float MAP_GetDistance (const vec2_t pos1, const vec2_t pos2)
+{
+	float distance;
+	vec3_t start, end;
+
+	PolarToVec(pos1, start);
+	PolarToVec(pos2, end);
+
+	distance = DotProduct(start, end);
+	distance = acos(distance) * todeg;
+	return distance;
+}
+
+/**
+ * @brief Check whether given position is Day or Night.
+ * @param[in] pos Given position.
+ * @return True if given position is Night.
+ */
+qboolean MAP_IsNight (vec2_t pos)
+{
+	float p, q, a, root, x;
+
+	/* set p to hours (we don't use ccs.day here because we need a float value) */
+	p = (float) ccs.date.sec / (3600 * 24);
+	/* convert current day to angle (-pi on 1st january, pi on 31 december) */
+	q = (ccs.date.day + p) * 2 * M_PI / DAYS_PER_YEAR_AVG - M_PI;
+	p = (0.5 + pos[0] / 360 - p) * 2 * M_PI - q;
+	a = -sin(pos[1] * torad);
+	root = sqrt(1.0 - a * a);
+	x = sin(p) * root * sin(q) - (a * SIN_ALPHA + cos(p) * root * COS_ALPHA) * cos(q);
+	return (x > 0);
+}
+
+
+/**
+ * @brief
+ * @param[in] *color
+ * @param[in] polar
+ * @return
+ */
+qboolean MAP_MaskFind (byte * color, vec2_t polar)
+{
+	byte *c;
+	int res, i, num;
+
+	/* check color */
+	if (!color[0] && !color[1] && !color[2])
+		return qfalse;
+
+	/* find possible positions */
+	res = maskWidth * maskHeight;
+	num = 0;
+	for (i = 0, c = maskPic; i < res; i++, c += 4)
+		if (c[0] == color[0] && c[1] == color[1] && c[2] == color[2])
+			num++;
+
+	/* nothing found? */
+	if (!num)
+		return qfalse;
+
+	/* get position */
+	num = rand() % num;
+	for (i = 0, c = maskPic; i <= num; c += 4)
+		if (c[0] == color[0] && c[1] == color[1] && c[2] == color[2])
+			i++;
+
+	/* transform to polar coords */
+	res = (c - maskPic) / 4;
+	polar[0] = 180.0 - 360.0 * ((float) (res % maskWidth) + 0.5) / maskWidth;
+	polar[1] = 90.0 - 180.0 * ((float) (res / maskWidth) + 0.5) / maskHeight;
+	Com_DPrintf("Set new coords for mission to %.0f:%.0f\n", polar[0], polar[1]);
+	return qtrue;
+}
+
+
+/**
+ * @brief Returns the color value from geoscape of maskPic at a given position.
+ * @param[in] pos vec2_t Value of position on map to get the color value from.
+ * pos is longitude and latitude
+ * @param[in] type determine the map to get the color from (there are different masks)
+ * one for the climazone (bases made use of this - there are grass, ice and desert
+ * base tiles available) and one for the nations
+ * @return Returns the color value at given position.
+ * @note maskPic is a pointer to an rgba image in memory
+ * @sa MAP_GetZoneType
+ */
+byte *MAP_GetColor (const vec2_t pos, mapType_t type)
+{
+	int x, y;
+	int width, height;
+	byte *mask;
+
+	switch (type) {
+		case MAPTYPE_CLIMAZONE:
+			mask = maskPic;
+			width = maskWidth;
+			height = maskHeight;
+			break;
+		case MAPTYPE_NATIONS:
+			mask = nationsPic;
+			width = nationsWidth;
+			height = nationsHeight;
+			break;
+		default:
+			Sys_Error("Unknown maptype %i\n", type);
+			return NULL;
+	}
+
+	/* get coordinates */
+	x = (180 - pos[0]) / 360 * width;
+	y = (90 - pos[1]) / 180 * height;
+	if (x < 0)
+		x = 0;
+	if (y < 0)
+		y = 0;
+
+	/* 4 => RGBA */
+	/* maskWidth is the width of the image */
+	/* this calulation returns the pixel in col x and in row y */
+	return mask + 4 * (x + y * width);
+}
+
+/**
+ * @brief
+ */
+void MAP_Init (void)
+{
+	if (maskPic) {
+		Mem_Free(maskPic);
+		maskPic = NULL;
+	}
+	re.LoadTGA(va("pics/menu/%s_mask.tga", curCampaign->map), &maskPic, &maskWidth, &maskHeight);
+	if (!maskPic || !maskWidth || !maskHeight)
+		Sys_Error("Couldn't load map mask %s_mask.tga in pics/menu\n", curCampaign->map);
+
+	if (nationsPic) {
+		Mem_Free(nationsPic);
+		nationsPic = NULL;
+	}
+	re.LoadTGA(va("pics/menu/%s_nations.tga", curCampaign->map), &nationsPic, &nationsWidth, &nationsHeight);
+	if (!nationsPic || !nationsWidth || !nationsHeight)
+		Sys_Error("Couldn't load map mask %s_nations.tga in pics/menu\n", curCampaign->map);
+
+	MAP_ResetAction();
 }
 
 /**

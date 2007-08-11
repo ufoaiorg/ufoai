@@ -273,7 +273,7 @@ static int AIRFIGHT_ChooseWeapon (aircraftSlot_t *slot, int maxSlot, vec3_t pos,
 
 	assert(slot);
 
-	distance = CP_GetDistance(pos, targetPos);
+	distance = MAP_GetDistance(pos, targetPos);
 
 	/* We choose the usable weapon with the smallest range */
 	for (i = 0; i < maxSlot; i++) {
@@ -525,10 +525,10 @@ static qboolean AIRFIGHT_ProjectileReachedTarget (aircraftProjectile_t *projecti
 
 	if (!projectile->aimedAircraft)
 		/* the target is idle, its position is in idleTarget*/
-		distance = CP_GetDistance(projectile->idleTarget, projectile->pos);
+		distance = MAP_GetDistance(projectile->idleTarget, projectile->pos);
 	else {
 		/* the target is moving, pointer to the other aircraft is aimedAircraft */
-		distance = CP_GetDistance(projectile->aimedAircraft->pos, projectile->pos);
+		distance = MAP_GetDistance(projectile->aimedAircraft->pos, projectile->pos);
 	}
 
 	/* projectile reaches its target */
@@ -704,14 +704,14 @@ static int AIRFIGHT_BaseChooseTarget (base_t *base, aircraftSlot_t *slot)
 	/* check if there is already another weapon firing at a ufo */
 	for (i = 0; i < base->maxBatteries; i++) {
 		if (base->targetMissileIdx[i] > 0) {
-			distance = CP_GetDistance(base->pos, gd.ufos[base->targetMissileIdx[i]].pos);
+			distance = MAP_GetDistance(base->pos, gd.ufos[base->targetMissileIdx[i]].pos);
 			if (AIRFIGHT_CheckWeapon(slot, distance) >= 0)
 				return base->targetMissileIdx[i];
 		}
 	}
 	for (i = 0; i < base->maxLasers; i++) {
 		if (base->targetLaserIdx[i] > 0) {
-			distance = CP_GetDistance(base->pos, gd.ufos[base->targetLaserIdx[i]].pos);
+			distance = MAP_GetDistance(base->pos, gd.ufos[base->targetLaserIdx[i]].pos);
 			if (AIRFIGHT_CheckWeapon(slot, distance) >= 0)
 				return base->targetLaserIdx[i];
 		}
@@ -724,7 +724,7 @@ static int AIRFIGHT_BaseChooseTarget (base_t *base, aircraftSlot_t *slot)
 		if (!ufo->visible)
 			continue;
 
-		distance = CP_GetDistance(base->pos, ufo->pos);
+		distance = MAP_GetDistance(base->pos, ufo->pos);
 		if (distance < distance0) {
 			distance0 = distance;
 			ufoIdx = i;
@@ -761,7 +761,7 @@ static void AIRFIGHT_BaseShoot (base_t *base, aircraftSlot_t *slot, int maxSlot,
 			if (!gd.ufos[targetIdx[i]].visible)
 				targetIdx[i] = -1;
 			/* check if we can still fire on this target */
-			distance = CP_GetDistance(base->pos, gd.ufos[targetIdx[i]].pos);
+			distance = MAP_GetDistance(base->pos, gd.ufos[targetIdx[i]].pos);
 			test = AIRFIGHT_CheckWeapon(slot + i, distance);
 			/* weapon unable to shoot */
 			if (test == -2)
@@ -780,7 +780,7 @@ static void AIRFIGHT_BaseShoot (base_t *base, aircraftSlot_t *slot, int maxSlot,
 
 		/* try to shoot */
 		if (targetIdx[i] >= 0) {
-			distance = CP_GetDistance(base->pos, gd.ufos[targetIdx[i]].pos);
+			distance = MAP_GetDistance(base->pos, gd.ufos[targetIdx[i]].pos);
 			if (AIRFIGHT_CheckWeapon(slot + i, distance) > -1) {
 				if (AIRFIGHT_AddProjectile(base->idx, NULL, -1, gd.ufos + targetIdx[i], slot + i)) {
 					slot[i].delayNextShot = aircraftItems[slot[i].ammoIdx].weaponDelay;
