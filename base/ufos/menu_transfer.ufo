@@ -40,45 +40,31 @@ menu transfer
 		pos		"512 512"
 	}
 
-	string s_aircraft
+	pic prev_base
 	{
-		pos	"900 130"
-		align	uc
-		color "1 1 1 1"
-		font	"f_normal"
-		string	"_Aircraft"
+		tooltip	"_Select previous base for transfer"
+		image	menu/buttons_small
+		pos	"710 30"
+		mousefx true
+		texl	"0 0"
+		texh	"16 16"
+		click	{ cmd "trans_prevbase" }
 	}
 
-	string s_current_aircraft
+	pic next_base
 	{
-		pos	"900 30"
-		align	uc
-		color "0.7 0.7 0.7 1"
-		font	"f_small"
-		string	"_Selected aircraft"
-	}
-
-	string s_current_aircraft_var
-	{
-		pos	"900 60"
-		align	uc
-		color "1 1 1 1"
-		font	"f_small"
-		string	"*cvar mn_trans_aircraft_name"
-	}
-
-	string s_base
-	{
-		pos	"680 130"
-		align	uc
-		color "1 1 1 1"
-		font	"f_normal"
-		string	"_Base"
+		tooltip	"_Select next base for transfer"
+		image	menu/buttons_small
+		pos	"870 30"
+		mousefx	true
+		texl	"16 0"
+		texh	"32 16"
+		click	{ cmd "trans_nextbase" }
 	}
 
 	string s_current_base
 	{
-		pos	"680 30"
+		pos	"800 30"
 		align	uc
 		color "0.7 0.7 0.7 1"
 		font	"f_small"
@@ -87,36 +73,11 @@ menu transfer
 
 	string s_current_base_var
 	{
-		pos	"680 60"
+		pos	"800 60"
 		align	uc
 		color "1 1 1 1"
 		font	"f_small"
 		string	"*cvar mn_trans_base_name"
-	}
-
-	// B_TransferBaseSelect_f
-	text trans_bases
-	{
-		num	27
-		pos	"600 160"
-		mousefx	true
-		click
-		size	"165 280"
-		format	"20 0"
-		height	"14"
-//		bgcolor	"1 1 1 0.5"
-	}
-
-	text trans_aircraft
-	{
-		num	9
-		pos	"824 160"
-		mousefx	true
-		click
-		size	"165 280"
-		format	"20 0"
-		height	"14"
-//		bgcolor	"1 1 1 0.5"
 	}
 
 	string s_baseinfo
@@ -190,7 +151,7 @@ menu transfer
 
 	string s_trans_cargolist
 	{
-		pos	"790 360"
+		pos	"790 130"
 		align	uc
 		color "1 1 1 1"
 		font	"f_normal"
@@ -200,13 +161,13 @@ menu transfer
 	text trans_cargolist
 	{
 		num	31
-		pos	"607 382"
-		size	"400 160"
+		pos	"607 150"
+		size	"400 400"
 		mousefx	true
 		click
 		format	"20 0"
 		wheel
-		height	"8"
+		height	"21"
 //		bgcolor	"1 1 1 0.5"
 	}
 
