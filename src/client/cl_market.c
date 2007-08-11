@@ -575,12 +575,12 @@ static void BS_BuyAircraft_f (void)
 		return;
 
 	aircraftID = buyList[num];
-	freeSpace = BS_CalculateHangarStorage(aircraftID, baseCurrent->idx);
+	freeSpace = AIR_CalculateHangarStorage(aircraftID, baseCurrent);
 
 	/* Check free space in hangars. */
 	if (freeSpace < 0) {
 #ifdef DEBUG
-		Com_Printf("BS_BuyAircraft_f()... something bad happened, BS_CalculateHangarStorage returned -1!\n");
+		Com_Printf("BS_BuyAircraft_f()... something bad happened, AIR_CalculateHangarStorage returned -1!\n");
 #endif
 		return;
 	}
