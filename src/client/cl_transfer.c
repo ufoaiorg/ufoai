@@ -442,6 +442,7 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 	base_t *destination = NULL;
 	base_t *source = NULL;
 	employee_t *employee;
+	aircraft_t *aircraft;
 	char message[256];
 
 	assert(transfer);
@@ -516,7 +517,23 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 	}
 
 	if (transfer->hasAircrafts && success) {	/* Aircrafts. */
-		/* @todo */
+		for (i = 0; i < MAX_AIRCRAFT; i++) {
+			if (transfer->aircraftsArray[i] > -1) {
+				aircraft = AIR_AircraftGetFromIdx(i);
+				assert (aircraft);
+				if (BS_CalculateHangarStorage(aircraft->idx_sample, destination->idx) > 0) {
+					/* Aircraft relocated to new base, just add new one. */
+					AIR_NewAircraft(destination, aircraft->id);	
+					/* Remove aircraft from old base. */
+					AIR_DeleteAircraft(aircraft);			
+				} else {
+					/* No space, aircraft will be lost. */
+					Com_sprintf(message, sizeof(message), _("Base %s does not have enough free space in hangars. Aircraft is lost!"), destination->name);
+					MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
+					AIR_DeleteAircraft(aircraft);
+				}
+			}
+		}
 	}
 }
 
@@ -585,8 +602,9 @@ static void TR_TransferStart_f (void)
 	for (i = 0; i < MAX_TRANSFERS; i++) {
 		if (!gd.alltransfers[i].active) {
 			/* Make sure it is empty here. */
-			memset(&gd.alltransfers[i], 0, sizeof(gd.alltransfers[i]));
+			memset (&gd.alltransfers[i], 0, sizeof(gd.alltransfers[i]));
 			memset (&gd.alltransfers[i].employeesArray, -1, sizeof(gd.alltransfers[i].employeesArray));
+			memset (&gd.alltransfers[i].aircraftsArray, -1, sizeof(gd.alltransfers[i].aircraftsArray));
 			transfer = &gd.alltransfers[i];
 			break;
 		}
@@ -638,6 +656,7 @@ static void TR_TransferStart_f (void)
 		if (trAircraftsTmp[i] > -1) {
 			aircraft = AIR_AircraftGetFromIdx(i);
 			aircraft->status = AIR_TRANSPORT;
+			CL_RemoveSoldiersFromAircraft(aircraft->idx, baseCurrent);
 			transfer->hasAircrafts = qtrue;
 			transfer->aircraftsArray[i] = i;
 		}

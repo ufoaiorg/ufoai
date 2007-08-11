@@ -1359,7 +1359,7 @@ void CL_RemoveSoldiersFromAircraft (int aircraft_idx, base_t *base)
 		return;
 
 	/* Counting backwards because aircraft->teamIdxs and teamTypes are changed in CL_RemoveSoldierFromAircraft */
-	for (i = aircraft->size; i > 0; i--) {
+	for (i = aircraft->size; i >= 0; i--) {
 		if (aircraft->teamIdxs[i] != -1) {
 			/* use global aircraft index here */
 			CL_RemoveSoldierFromAircraft(aircraft->teamIdxs[i], aircraft->teamTypes[i], aircraft_idx, base);

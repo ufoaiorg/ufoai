@@ -746,7 +746,8 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 	}
 
 	/* Remove all soldiers from the aircraft (the employees are still hired after this). */
-	CL_RemoveSoldiersFromAircraft(aircraft->idx, base);
+	if (aircraft->teamSize > 0)
+		CL_RemoveSoldiersFromAircraft(aircraft->idx, base);
 
 	for (i = aircraft->idx; i < gd.numAircraft-1; i++) {
 		/* Decrease the global index of aircrafts that have a higher index than the deleted one. */
@@ -1864,10 +1865,15 @@ void AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, int employee_idx, employe
 
 	assert(aircraft);
 
+	if (aircraft->teamSize <= 0) {
+		Com_Printf("AIR_RemoveFromAircraftTeam()... aircraft->teamSize is less than or equal to 0, we should not be here!\n");
+		return;
+	}
+
 	for (i = 0; i < aircraft->size; i++) {
 		/* Search for this exact employee in the aircraft and make his place "unused". */
 		/** @todo  do we need to update aircraft->teamSize here as well? */
-		if (aircraft->teamIdxs[i] == employee_idx && aircraft->teamTypes[i] == employeeType)	{
+		if (aircraft->teamIdxs[i] != -1 && aircraft->teamIdxs[i] == employee_idx && aircraft->teamTypes[i] == employeeType)	{
 			aircraft->teamIdxs[i] = -1;
 			aircraft->teamTypes[i] = MAX_EMPL;
 			Com_DPrintf("AIR_RemoveFromAircraftTeam: removed idx '%d' \n", employee_idx);
@@ -2321,3 +2327,68 @@ qboolean AIR_ScriptSanityCheck (void)
 	else
 		return qfalse;
 }
+
+/**
+ * @brief Calculates free space in hangars in given base.
+ * @param[in] aircraftID aircraftID Index of aircraft type in aircraft_samples.
+ * @param[in] base_idx Index of base in global array.
+ * @return Amount of free space in hangars suitable for given aircraft type.
+ * @note Returns -1 in case of error. Returns 0 if no error but no free space.
+ * @todo int base_idx -> base_t *base
+ * @todo BS_ -> AIR_
+ */
+int BS_CalculateHangarStorage (int aircraftID, int base_idx)
+{
+	int aircraftSize = 0, freespace = 0;
+	base_t *base = NULL;
+
+	aircraftSize = aircraft_samples[aircraftID].weight;
+	base = &gd.bases[base_idx];
+
+	if (aircraftSize < 1) {
+#ifdef DEBUG
+		Com_Printf("BS_CalculateHangarStorage()... aircraft weight is wrong!\n");
+#endif
+		return -1;
+	}
+	if (!base) {
+#ifdef DEBUG
+		Com_Printf("BS_CalculateHangarStorage()... base does not exist!\n");
+#endif
+		return -1;
+	}
+	assert(base);
+
+	/* If the aircraft size is less than 8, we will check space in small hangar. */
+	if (aircraftSize < 8) {
+		freespace = base->capacities[CAP_AIRCRAFTS_SMALL].max - base->capacities[CAP_AIRCRAFTS_SMALL].cur;
+		Com_DPrintf("BS_CalculateHangarStorage()... freespace (small): %i aircraft weight: %i (max: %i, cur: %i)\n", freespace, aircraftSize,
+			base->capacities[CAP_AIRCRAFTS_SMALL].max, base->capacities[CAP_AIRCRAFTS_SMALL].cur);
+		if (aircraftSize <= freespace) {
+			return freespace;
+		} else {
+			/* Small aircrafts (size < 8) can be stored in big hangars as well. */
+			freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur;
+			Com_DPrintf("BS_CalculateHangarStorage()... freespace (small in big): %i aircraft weight: %i (max: %i, cur: %i)\n", freespace, aircraftSize,
+				base->capacities[CAP_AIRCRAFTS_BIG].max, base->capacities[CAP_AIRCRAFTS_BIG].cur);
+			if (aircraftSize <= freespace) {
+				return freespace;
+			} else {
+				/* No free space for this aircraft. */
+				return 0;
+			}
+		}
+	} else {
+		/* If the aircraft size is more or equal to 8, we will check space in big hangar. */
+		freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur;
+		Com_DPrintf("BS_CalculateHangarStorage()... freespace (big): %i aircraft weight: %i (max: %i, cur: %i)\n", freespace, aircraftSize,
+			base->capacities[CAP_AIRCRAFTS_BIG].max, base->capacities[CAP_AIRCRAFTS_BIG].cur);
+		if (aircraftSize <= freespace) {
+			return freespace;
+		} else {
+			/* No free space for this aircraft. */
+			return 0;
+		}
+	}
+}
+
