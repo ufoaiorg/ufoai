@@ -749,7 +749,7 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 	if (aircraft->teamSize > 0)
 		CL_RemoveSoldiersFromAircraft(aircraft->idx, base);
 
-	for (i = aircraft->idx; i < gd.numAircraft-1; i++) {
+	for (i = aircraft->idx; i < gd.numAircraft; i++) {
 		/* Decrease the global index of aircrafts that have a higher index than the deleted one. */
 		aircraft_temp = AIR_AircraftGetFromIdx(i);
 		if (aircraft_temp) {
