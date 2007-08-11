@@ -1610,24 +1610,50 @@ const vec4_t graphColors[MAX_NATIONS] = {
 static int usedGraphColors = 0;
 
 /**
- * @brief Draws a grpah for the funding values over time.
- * @param[in] nation The nation to draw the graph for.
- * @param[in] x	X coordinate of lower left corner of the graph.
- * @param[in] y	Y coordinate of lower left corner of the graph.
- * @param[in] width of the graph.
- * @param[in] height of the graph.
- * @todo Somehow the display of the months isnt really correct right now (straight line :-/)
- * @todo max (and min) values DO VARY BETWEEN NATIONS right now - this is bad for displaying specific graph-values (at the axes) later!
+ * @brief Search the maximum (current) funding from all the nations (in all logged months).
+ * @note nation->maxFunding is _not_ the real funding value.
+ * @return The maximum funding value.
+ * @todo Extend to other values?
  */
-static void CL_NationDrawStats (nation_t *nation, menuNode_t *node)
+static int CL_NationsMaxFunding (void)
+{
+	nation_t *nation = NULL;
+	int m, n;
+	int funding;
+	int max = 0;
+
+	for (n = 0; n < gd.numNations; n++) {
+		nation = &gd.nations[n];
+		for (m = 0; m < MONTHS_PER_YEAR; m++) {
+			if (1) { /** if (nation->stats[m].inuse) { @todo  DEBUG */
+				nation->stats[m].happiness = sqrt((float)m / 12.0); /** @todo  DEBUG */
+				funding = nation->maxFunding * nation->stats[m].happiness;
+				if (max < funding)
+					max = funding;
+			} else {
+				/* Abort this months-loops */
+				break;
+			}
+		}
+	}
+	return max;
+}
+	
+/**
+ * @brief Draws a graph for the funding values over time.
+ * @param[in] nation The nation to draw the graph for.
+ * @param[in] node A pointer to a "linestrip" node that we want to draw in.
+ * @param[in] maxFunding The upper limit of the graph - all values willb e scaled to this one.
+ * @todo Somehow the display of the months isnt really correct right now (straight line :-/)
+ */
+static void CL_NationDrawStats (nation_t *nation, menuNode_t *node, int maxFunding)
 {
 	int width, height, x, y, dx;
 	int m, j;
 
-	float min = 0;
-	float max = nation->maxFunding * nation->stats[0].happiness;
+	int minFunding = 0;
 	int funding;
-	int months = 0;
+	int ptsNumber = 0;
 
 	if (!nation || !node)
 		return;
@@ -1638,41 +1664,31 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node)
 	y = node->pos[1];
 	dx = (int)(width / MONTHS_PER_YEAR);
 
-	/* Get minimum and maximum values */
-	for (m = 0; m < MONTHS_PER_YEAR; m++) {
-		if (nation->stats[m].inuse) {
-			/** @note DEBUG only
-			nation->stats[m].happiness =  frand();
-			*/
-			funding = nation->maxFunding * nation->stats[m].happiness;
-
-			if (funding < min)
-				min = funding;
-			if (funding > max)
-				max = funding;
-			months++;
-		} else {
-			break;
-		}
+	if (minFunding == maxFunding) {
+		Com_Printf("CL_NationDrawStats: Given maxFunding value is the same as minFunding (min=%i, max=%i) - abort.\n", minFunding, maxFunding);
+		return;
 	}
 
 	/* Generate pointlist. */
 	/** @todo Sort this in reverse? -> Having current month on the right side? */
-	for (m = 0, j = 0; m < months; m++, j+=2) {
-		funding = nation->maxFunding * nation->stats[m].happiness;
-		fundingPts[usedPointlists][j] = x + (m * dx);
-		fundingPts[usedPointlists][j+1] = y - ((funding - min) / (max - min)) * height;
+	for (m = 0, j = 0; m < MONTHS_PER_YEAR; m++, j+=2) {
+		if (1) { /** if (nation->stats[m].inuse) { @todo  DEBUG */
+			funding = nation->maxFunding * nation->stats[m].happiness;
+			fundingPts[usedPointlists][j] = x + (m * dx);
+			fundingPts[usedPointlists][j+1] = y - (int)(((float)(funding - minFunding) / (float)(maxFunding - minFunding)) * height);
+			ptsNumber++;
+		} else {
+			break;
+		}
 	}
-
+	
 	/* Guarantee displayable data even for only one month */
-	if (months == 1) {
+	if (ptsNumber == 1) {
 		/* Set the second point two pixel to the right - small horiz line. */
 		fundingPts[usedPointlists][2] = fundingPts[usedPointlists][0] + 2;
 		fundingPts[usedPointlists][3] = fundingPts[usedPointlists][1];
-		months++;
+		ptsNumber++;
 	}
-
-	/* Do not use "months" after this point becasue it is NOT the number of months here anymore but the number of points. */
 
 	/* Break if we reached the max strip number. */
 	if (node->linestrips.numStrips >= MAX_LINESTRIPS-1)
@@ -1680,7 +1696,7 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node)
 
 	/* Link graph to node */
 	node->linestrips.pointList[node->linestrips.numStrips] = fundingPts[usedPointlists];
-	node->linestrips.numPoints[node->linestrips.numStrips] = months;
+	node->linestrips.numPoints[node->linestrips.numStrips] = ptsNumber;
 	Vector4Copy(graphColors[usedGraphColors], node->linestrips.color[node->linestrips.numStrips]);
 	node->linestrips.numStrips++;
 
@@ -1696,7 +1712,7 @@ static int selectedNation = 0;
 static void CL_NationStatsUpdate_f(void)
 {
 	int i;
-	int funding;
+	int funding, maxFunding;
 	menuNode_t *graphNode;
 	const vec4_t colorAxes = {1, 1, 1, 0.5};
 
@@ -1738,8 +1754,9 @@ static void CL_NationStatsUpdate_f(void)
 		/** @todo Draw a line where the current month is. */
 
 		usedGraphColors = 0;
+		maxFunding = CL_NationsMaxFunding();
 		for (i = 0; i < gd.numNations; i++) {
-			CL_NationDrawStats(&gd.nations[i], graphNode);
+			CL_NationDrawStats(&gd.nations[i], graphNode, maxFunding);
 		}
 	}
 }
