@@ -1205,10 +1205,27 @@ static void TR_Init_f (void)
  */
 static void TR_TransferClose_f (void)
 {
+	int i;
+
+	if (!baseCurrent)
+		return;
+
+	/* Unload what was loaded. */
+	for (i = 0; i < csi.numODs; i++) {
+		if (trItemsTmp[i] > 0)
+			baseCurrent->storage.num[i] += trItemsTmp[i];
+	}
+	for (i = 0; i < numTeamDesc; i++) {
+		if (trAliensTmp[i][1] > 0)
+			baseCurrent->alienscont[i].amount_dead += trAliensTmp[i][1];
+		if (trAliensTmp[i][0]) {
+			baseCurrent->alienscont[i].amount_alive += trAliensTmp[i][0];
+	}
 	/* Clear temporary cargo arrays. */
 	memset(trItemsTmp, 0, sizeof(trItemsTmp));
 	memset(trAliensTmp, 0, sizeof(trAliensTmp));
 	memset(trEmployeesTmp, -1, sizeof(trEmployeesTmp));
+	memset(trAircraftsTmp, -1, sizeof(trAircraftsTmp));
 
 	Cbuf_AddText("mn_pop\n");
 }
