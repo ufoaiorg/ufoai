@@ -263,7 +263,7 @@ void INV_SellOrAddItems (aircraft_t *aircraft)
 			Sys_Error("INV_SellOrAddItems: No tech for %s / %s\n", csi.ods[cargo[i].idx].id, csi.ods[cargo[i].idx].name);
 		/* If the related technology is NOT researched, don't sell items. */
 		if (!RS_IsResearched_ptr(tech)) {
-			* Items not researched cannot be thrown out even if not enough space in storage. */
+			/* Items not researched cannot be thrown out even if not enough space in storage. */
 			B_UpdateStorageAndCapacity(base, cargo[i].idx, cargo[i].amount, qfalse, qtrue);
 			if (cargo[i].amount > 0)
 				RS_MarkCollected(tech);
