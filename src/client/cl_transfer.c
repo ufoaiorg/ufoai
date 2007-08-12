@@ -57,7 +57,19 @@ static int trAircraftsTmp[MAX_AIRCRAFT];
  */
 static qboolean TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase)
 {
+	int i, intransfer = 0, amtransfer = 0;
+
 	assert(od && srcbase && destbase);
+
+	/* Count size of all items already on the transfer list. */
+	for (i = 0; i < csi.numODs; i++) {
+		if (trItemsTmp[i] > 0) {
+			if (!Q_strncmp(csi.ods[i].id, "antimatter", 10))
+				amtransfer = ANTIMATTER_SIZE * trItemsTmp[i];
+			else
+				intransfer += csi.ods[i].size * trItemsTmp[i];
+		}
+	}
 
 	/* Is this antimatter and destination base has enough space in Antimatter Storage? */
 	if (!Q_strncmp(od->id, "antimatter", 10)) {
@@ -68,22 +80,20 @@ static qboolean TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase)
 		} else if (!destbase->hasAmStorage) {	/* Return if the target base doesn't have antimatter storage or power. */
 			return qfalse;
 		}
-		if (destbase->capacities[CAP_ANTIMATTER].max - destbase->capacities[CAP_ANTIMATTER].cur < ANTIMATTER_SIZE) {
+		if (destbase->capacities[CAP_ANTIMATTER].max - destbase->capacities[CAP_ANTIMATTER].cur - amtransfer < ANTIMATTER_SIZE) {
 			MN_Popup(_("Not enough space"), _("Destination base does not have enough\nAntimatter Storage space to store more antimatter.\n"));
 			return qfalse;
 		}
 	} else {	/*This is not antimatter*/
-		if(!transferBase->hasStorage)	/* Return if the target base doesn't have storage or power. */
+		if (!transferBase->hasStorage)	/* Return if the target base doesn't have storage or power. */
 			return qfalse;
 	}
 
 	/* Does the destination base has enough space in storage? */
-	if ((destbase->capacities[CAP_ITEMS].max - destbase->capacities[CAP_ITEMS].cur < od->size) && Q_strncmp(od->id, "antimatter", 10)) {
+	if ((destbase->capacities[CAP_ITEMS].max - destbase->capacities[CAP_ITEMS].cur - intransfer < od->size) && Q_strncmp(od->id, "antimatter", 10)) {
 		MN_Popup(_("Not enough space"), _("Destination base does not have enough\nStorage space to store this item.\n"));
 		return qfalse;
 	}
-	/* Is the item under research at this moment? */
-	/* @todo: implement me */
 
 	return qtrue;
 }
