@@ -135,15 +135,21 @@ static qboolean TR_CheckEmployee (employee_t *employee, base_t *srcbase, base_t 
  */
 static qboolean TR_CheckAlien (int alienidx, base_t *srcbase, base_t *destbase)
 {
+	int i, intransfer = 0;
+
 	assert(srcbase && destbase);
 
+	/* Count amount of alive aliens already on the transfer list. */
+	for (i = 0; i < numTeamDesc; i++) {
+		if (trAliensTmp[i][0] > 0)
+			intransfer += trAliensTmp[i][0];
+	}
+
 	/* Does the destination base has enough space in alien containment? */
-	if (destbase->capacities[CAP_ALIENS].max - destbase->capacities[CAP_ALIENS].cur < 1) {
+	if (destbase->capacities[CAP_ALIENS].max - destbase->capacities[CAP_ALIENS].cur - intransfer < 1) {
 		MN_Popup(_("Not enough space"), _("Destination base does not have enough space\nin Alien Containment.\n"));
 		return qfalse;
 	}
-	/* Is the alien under research at this moment? */
-	/* @todo: implement me */
 
 	return qtrue;
 }
@@ -264,7 +270,7 @@ static void TR_CargoList (void)
 		}
 	}
 	for (i = 0; i < numTeamDesc; i++) {
-		if (trAliensTmp[i][0]) {
+		if (trAliensTmp[i][0] > 0) {
 			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)\n"),
 			_(AL_AlienTypeToName(i)), trAliensTmp[i][0]);
 			Q_strcat(cargoList, str, sizeof(cargoList));
