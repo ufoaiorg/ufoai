@@ -97,15 +97,23 @@ static qboolean TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase)
  */
 static qboolean TR_CheckEmployee (employee_t *employee, base_t *srcbase, base_t *destbase)
 {
+	int i, empltype, intransfer = 0;
+
 	assert(employee && srcbase && destbase);
 
+	/* Count amount of all employees already on the transfer list. */
+	for (empltype = 0; empltype < MAX_EMPL; empltype++) {
+		for (i = 0; i < gd.numEmployees[empltype]; i++) {
+			if (trEmployeesTmp[empltype][i] > -1)
+				intransfer++;
+		}
+	}
+
 	/* Does the destination base has enough space in living quarters? */
-	if (destbase->capacities[CAP_EMPLOYEES].max - destbase->capacities[CAP_EMPLOYEES].cur < 1) {
+	if (destbase->capacities[CAP_EMPLOYEES].max - destbase->capacities[CAP_EMPLOYEES].cur - intransfer < 1) {
 		MN_Popup(_("Not enough space"), _("Destination base does not have enough space\nin Living Quarters.\n"));
 		return qfalse;
 	}
-
-	/* @todo: check capacities also with current personel on transferlist. */
 
 	/* Is this a soldier assigned to aircraft? */
 	if ((employee->type == EMPL_SOLDIER) && CL_SoldierInAircraft(employee->idx, employee->type, -1)) {
