@@ -335,26 +335,26 @@ typedef struct ccs_s {
 /** possible geoscape actions */
 typedef enum mapAction_s {
 	MA_NONE,
-	MA_NEWBASE,					/**< build a new base */
+	MA_NEWBASE,				/**< build a new base */
 	MA_INTERCEPT,				/**< intercept */
 	MA_BASEATTACK,				/**< base attacking */
-	MA_UFORADAR					/**< ufos are in our radar */
+	MA_UFORADAR				/**< ufos are in our radar */
 } mapAction_t;
 
 /** possible aircraft states */
 typedef enum aircraftStatus_s {
 	AIR_NONE = 0,
-	AIR_REFUEL,					/**< refill fuel */
-	AIR_HOME,					/**< in homebase */
-	AIR_IDLE,					/**< just sit there on geoscape */
+	AIR_REFUEL,				/**< refill fuel */
+	AIR_HOME,				/**< in homebase */
+	AIR_IDLE,				/**< just sit there on geoscape */
 	AIR_TRANSIT,				/**< moving */
 	AIR_MISSION,				/**< moving to a mission */
-	AIR_UFO,					/**< purchasing an ufo */
-	AIR_DROP,					/**< ready to drop down */
+	AIR_UFO,				/**< purchasing an ufo */
+	AIR_DROP,				/**< ready to drop down */
 	AIR_INTERCEPT,				/**< ready to intercept */
-	AIR_TRANSPORT,				/**< transporting from one base to another */
+	AIR_TRANSFER,				/**< being transfered */
 	AIR_RETURNING,				/**< returning to homebase */
-	AIR_FLEEING					/**< fleeing other aircrafts */
+	AIR_FLEEING				/**< fleeing other aircrafts */
 } aircraftStatus_t;
 
 extern actMis_t *selMis;

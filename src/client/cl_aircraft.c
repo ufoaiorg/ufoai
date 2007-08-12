@@ -329,8 +329,8 @@ const char *AIR_AircraftStatusToName (aircraft_t * aircraft)
 		return _("Ready for drop down");
 	case AIR_INTERCEPT:
 		return _("On interception");
-	case AIR_TRANSPORT:
-		return _("Transportmission");
+	case AIR_TRANSFER:
+		return _("Being transfered");
 	case AIR_RETURNING:
 		return _("Back to base");
 	default:
@@ -918,8 +918,7 @@ void CL_CampaignRunAircraft (int dt)
 							CL_DropshipReturned(aircraft->homebase, aircraft);
 							aircraft->status = AIR_REFUEL;
 							break;
-						case AIR_TRANSPORT:
-							/* @todo REMOVEME */
+						case AIR_TRANSFER:
 							break;
 						default:
 							aircraft->status = AIR_IDLE;

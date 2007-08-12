@@ -655,7 +655,7 @@ static void TR_TransferStart_f (void)
 	for (i = 0; i < MAX_AIRCRAFT; i++) {	/* Aircrafts. */
 		if (trAircraftsTmp[i] > -1) {
 			aircraft = AIR_AircraftGetFromIdx(i);
-			aircraft->status = AIR_TRANSPORT;
+			aircraft->status = AIR_TRANSFER;
 			CL_RemoveSoldiersFromAircraft(aircraft->idx, baseCurrent);
 			transfer->hasAircrafts = qtrue;
 			transfer->aircraftsArray[i] = i;
