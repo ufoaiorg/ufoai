@@ -1,5 +1,9 @@
 /**
  * @file net.c
+ * @note This file should fully support ipv6 and any other protocol that is
+ * compatible with the getaddrinfo interface, with the exception of
+ * broadcast_datagram() which must be amended for each protocol (and
+ * currently supports only ipv4)
  */
 
 /*
@@ -22,11 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-/* This file should fully support ipv6 and any other protocol that is
- * compatible with the getaddrinfo interface, with the exception of
- * broadcast_datagram() which must be amended for each protocol (and
- * currently supports only ipv4)
- */
 
 #include "qcommon.h"
 #include "dbuffer.h"
@@ -41,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # define FD_SETSIZE (MAX_STREAMS + 1)
 # include <winsock2.h>
 # include <ws2tcpip.h>
+# include <wspiapi.h>
 # define gai_strerrorA estr_n
 #else
 # define INVALID_SOCKET (-1)
