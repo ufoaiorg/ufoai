@@ -564,7 +564,7 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 			if (transfer->aircraftsArray[i] > -1) {
 				aircraft = AIR_AircraftGetFromIdx(i);
 				assert (aircraft);
-				if (AIR_CalculateHangarStorage(aircraft->idx_sample, destinationi, 0) > 0) {
+				if (AIR_CalculateHangarStorage(aircraft->idx_sample, destination, 0) > 0) {
 					/* Aircraft relocated to new base, just add new one. */
 					AIR_NewAircraft(destination, aircraft->id);	
 					/* Remove aircraft from old base. */
