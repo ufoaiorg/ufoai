@@ -1175,7 +1175,7 @@ static void TR_TransferClose_f (void)
 	for (i = 0; i < numTeamDesc; i++) {
 		if (trAliensTmp[i][1] > 0)
 			baseCurrent->alienscont[i].amount_dead += trAliensTmp[i][1];
-		if (trAliensTmp[i][0]) {
+		if (trAliensTmp[i][0])
 			baseCurrent->alienscont[i].amount_alive += trAliensTmp[i][0];
 	}
 	/* Clear temporary cargo arrays. */
