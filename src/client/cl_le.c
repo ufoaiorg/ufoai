@@ -587,6 +587,14 @@ void LET_ProjectileAutoHide (le_t *le)
 	int i;
 	le_t *actors;
 
+	/* only compute this every 20 frames */
+	if (le->thinkDelay <= 0) {
+		le->thinkDelay = 20;
+		return;
+	} else {
+		le->thinkDelay--;
+	}
+
 	assert(le->ptl);
 
 	/* default is to show the particle */
@@ -604,8 +612,9 @@ void LET_ProjectileAutoHide (le_t *le)
 			}
 		}
 	}
+
 	/* hide the particle */
-	le->ptl->invis = qtrue;
+	CL_ParticleVisible(le->ptl, qtrue);
 }
 
 /**

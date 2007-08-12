@@ -521,6 +521,8 @@ typedef struct le_s {
 
 	/** is called every frame */
 	void (*think) (struct le_s * le);
+	/** number of frames to skip the think function for */
+	int thinkDelay;
 
 	/** various think function vars */
 	byte path[MAX_LE_PATHLENGTH];
@@ -919,6 +921,7 @@ int CL_ParseParticle(const char *name, const char **text);
 void CL_InitParticles(void);
 ptl_t *CL_ParticleSpawn(const char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a);
 void PE_RenderParticles(void);
+void CL_ParticleVisible(ptl_t *p, qboolean hide);
 extern ptlArt_t ptlArt[MAX_PTL_ART];
 extern ptl_t ptl[MAX_PTLS];
 extern int numPtlArt;

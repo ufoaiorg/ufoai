@@ -277,7 +277,7 @@ static LRESULT CALLBACK ServerWindowProc (HWND hwnd, UINT message, WPARAM wParam
 		return TRUE;
 	case WM_CLOSE:
 		if (SV_CountPlayers()) {
-			int ays = MessageBox (hwnd_Server, "There are still players on the server! Really shut it down?", "WARNING!", MB_YESNO + MB_ICONEXCLAMATION);
+			int ays = MessageBox(hwnd_Server, "There are still players on the server! Really shut it down?", "WARNING!", MB_YESNO + MB_ICONEXCLAMATION);
 			if (ays == IDNO)
 				return TRUE;
 		}
@@ -292,16 +292,16 @@ static LRESULT CALLBACK ServerWindowProc (HWND hwnd, UINT message, WPARAM wParam
 
 			if (Minimized && !minimized) {
 				int len;
-				SendDlgItemMessage (hwnd_Server, IDC_CONSOLE, WM_SETTEXT, 0, (LPARAM)consoleFullBuffer);
+				SendDlgItemMessage(hwnd_Server, IDC_CONSOLE, WM_SETTEXT, 0, (LPARAM)consoleFullBuffer);
 				len = (int)SendDlgItemMessage (hwnd_Server, IDC_CONSOLE, EM_GETLINECOUNT, 0, 0);
-				SendDlgItemMessage (hwnd_Server, IDC_CONSOLE, EM_LINESCROLL, 0, len);
+				SendDlgItemMessage(hwnd_Server, IDC_CONSOLE, EM_LINESCROLL, 0, len);
 			}
 
 			Minimized = minimized;
 			if (procShell_NotifyIcon) {
 				if (minimized && LOWORD(wParam) == WA_INACTIVE) {
 					Minimized = qtrue;
-					ShowWindow (hwnd_Server, SW_HIDE);
+					ShowWindow(hwnd_Server, SW_HIDE);
 					return FALSE;
 				}
 			}

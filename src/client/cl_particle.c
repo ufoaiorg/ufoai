@@ -189,7 +189,7 @@ ptl_t ptl[MAX_PTLS];
 int numPtlArt;
 int numPtls;
 
-static void CL_ParticleRun2 (ptl_t *p);
+static void CL_ParticleRun2(ptl_t *p);
 
 /* =========================================================== */
 
@@ -316,7 +316,7 @@ static struct ptleditMenu_s {
 } ptleditMenu;
 
 /**
- * @brief Set the camera values for a sequence
+ * @brief Set the camera values for the particle editor
  * @sa CL_SequenceRender
  */
 static void PE_SetCamera (void)
@@ -886,6 +886,22 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
 	CL_ParticleFunction(p, pd->init);
 
 	return p;
+}
+
+/**
+ * @brief Mark a particle an all its children as invisible or visibile
+ * @param[in] p Particle to set the invis flags for
+ * @param[in] hide Boolean value for hiding the particle
+ */
+void CL_ParticleVisible (ptl_t *p, qboolean hide)
+{
+	ptl_t *c;
+
+	p->invis = hide;
+
+	for (c = p->children; c; c = c->next) {
+		CL_ParticleVisible(c, hide);
+	}
 }
 
 /**
