@@ -3345,9 +3345,10 @@ qboolean B_Load (sizebuf_t* sb, void* data)
  * @param[in] amount Amount to be added to removed
  * @param[in] reset Set this to true (amount is not needed) if you want to reset the
  * storage amount and capacities (e.g. in case of a base ransack)
+ * @param[in] ignorecap Qtrue if we won't check freespace but will just add items.
  * @sa CL_BaseRansacked
  */
-qboolean B_UpdateStorageAndCapacity (base_t* base, int objIDX, int amount, qboolean reset)
+qboolean B_UpdateStorageAndCapacity (base_t* base, int objIDX, int amount, qboolean reset, qboolean ignorecap)
 {
 	assert(base);
 	if (reset) {
@@ -3355,9 +3356,12 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, int objIDX, int amount, qbool
 		base->storage.num_loose[objIDX] = 0; /* FIXME: needed? */
 		base->capacities[CAP_ITEMS].cur = 0;
 	} else {
-		if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur >= csi.ods[objIDX].size) {
+		if (ignorecap) {
 			base->storage.num[objIDX] += amount;
-			/* @todo: Items not researched cannot be thrown out even if not enough space in storage. */
+			if (csi.ods[objIDX].size > 0)
+				base->capacities[CAP_ITEMS].cur += (amount * csi.ods[objIDX].size);
+		} else if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur >= (csi.ods[objIDX].size * amount)) {
+			base->storage.num[objIDX] += amount;
 			if (csi.ods[objIDX].size > 0)
 				base->capacities[CAP_ITEMS].cur += (amount * csi.ods[objIDX].size);
 		} else {

@@ -917,7 +917,7 @@ static void CL_BaseRansacked (base_t *base)
 	/* Destroy all items in storage */
 	for (item = 0; item < csi.numODs; item++)
 		/* reset storage and capacity */
-		B_UpdateStorageAndCapacity(base, item, 0, qtrue);
+		B_UpdateStorageAndCapacity(base, item, 0, qtrue, qfalse);
 
 	/* Remove all aircrafts from the base. */
 	for (ac = base->numAircraftInBase-1; ac >= 0; ac--)
@@ -2683,7 +2683,7 @@ static void CL_DebugAllItems_f (void)
 	for (i = 0; i < csi.numODs; i++) {
 		if (!csi.ods[i].weapon && !csi.ods[i].numWeapons)
 			continue;
-		B_UpdateStorageAndCapacity(base, i, 1, qfalse);
+		B_UpdateStorageAndCapacity(base, i, 1, qfalse, qtrue);
 		if (base->storage.num[i] > 0) {
 			tech = csi.ods[i].tech;
 			if (!tech)

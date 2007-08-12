@@ -263,8 +263,8 @@ void INV_SellOrAddItems (aircraft_t *aircraft)
 			Sys_Error("INV_SellOrAddItems: No tech for %s / %s\n", csi.ods[cargo[i].idx].id, csi.ods[cargo[i].idx].name);
 		/* If the related technology is NOT researched, don't sell items. */
 		if (!RS_IsResearched_ptr(tech)) {
-			/* Items not researched cannot be thrown out even if not enough space in storage. */
-			B_UpdateStorageAndCapacity(base, cargo[i].idx, cargo[i].amount, qfalse);
+			* Items not researched cannot be thrown out even if not enough space in storage. */
+			B_UpdateStorageAndCapacity(base, cargo[i].idx, cargo[i].amount, qfalse, qtrue);
 			if (cargo[i].amount > 0)
 				RS_MarkCollected(tech);
 			continue;
@@ -279,7 +279,7 @@ void INV_SellOrAddItems (aircraft_t *aircraft)
 				/* Check whether there is enough space for adding this item. */
 				/* If yes - add. If not - sell. */
 				for (j = 0; j < cargo[i].amount; j++) {
-					if (!B_UpdateStorageAndCapacity(base, cargo[i].idx, 1, qfalse)) {
+					if (!B_UpdateStorageAndCapacity(base, cargo[i].idx, 1, qfalse, qfalse)) {
 						/* Not enough space, sell item. */
 						notenoughspace = qtrue;
 						sold++;
@@ -521,7 +521,7 @@ int INV_DisassemblyItem (base_t *base, components_t *comp, qboolean calculate)
 			if (!Q_strncmp(compod->id, "antimatter", 10))
 				INV_ManageAntimatter(base, comp->item_amount[i], qtrue);
 			else
-				B_UpdateStorageAndCapacity(base, j, comp->item_amount[i], qfalse);
+				B_UpdateStorageAndCapacity(base, j, comp->item_amount[i], qfalse, qfalse);
 			Com_DPrintf("INV_DisassemblyItem()... added %i amounts of %s\n", comp->item_amount[i], compod->id);
 		}
 	}

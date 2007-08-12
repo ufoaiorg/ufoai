@@ -477,7 +477,7 @@ static void TR_TransferListClear_f (void)
 			if (!Q_strncmp(csi.ods[i].id, "antimatter", 10))
 				INV_ManageAntimatter(baseCurrent, trItemsTmp[i], qtrue);
 			else
-				B_UpdateStorageAndCapacity(baseCurrent, i, trItemsTmp[i], qfalse);
+				B_UpdateStorageAndCapacity(baseCurrent, i, trItemsTmp[i], qfalse, qfalse);
 		}
  	}
 	for (i = 0; i < numTeamDesc; i++) {	/* Return aliens. */
@@ -531,7 +531,7 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 					if (!Q_strncmp(csi.ods[i].id, "antimatter", 10))
 						INV_ManageAntimatter(destination, transfer->itemAmount[i], qtrue);
 					else
-						B_UpdateStorageAndCapacity(destination, i, transfer->itemAmount[i], qfalse);
+						B_UpdateStorageAndCapacity(destination, i, transfer->itemAmount[i], qfalse, qtrue);
 				}
 			}
 		}
@@ -779,7 +779,7 @@ static void TR_TransferListSelect_f (void)
 						if (!Q_strncmp(od->id, "antimatter", 10))
 							INV_ManageAntimatter(baseCurrent, 1, qfalse);
 						else
-							B_UpdateStorageAndCapacity(baseCurrent, i, -1, qfalse);
+							B_UpdateStorageAndCapacity(baseCurrent, i, -1, qfalse, qfalse);
 						break;
 					} else
 						return;

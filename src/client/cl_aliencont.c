@@ -199,14 +199,14 @@ void AL_AddAliens (aircraft_t *aircraft)
 			if (Q_strncmp(tobase->alienscont[j].alientype, cargo[i].alientype, MAX_VAR) == 0) {
 				tobase->alienscont[j].amount_dead += cargo[i].amount_dead;
 				/* Add breathing apparatuses as well and update storage capacity. */
-				B_UpdateStorageAndCapacity(tobase, albridx, cargo[i].amount_dead, qfalse);
+				B_UpdateStorageAndCapacity(tobase, albridx, cargo[i].amount_dead, qfalse, qfalse);
 				if (cargo[i].amount_alive <= 0)
 					continue;
 				if (!alienBreathing) {
 					/* we cannot store alive aliens without rs_alien_breathing tech */
 					tobase->alienscont[j].amount_dead += cargo[i].amount_alive;
 					/* Add breathing apparatuses as well and update storage capacity. */
-					B_UpdateStorageAndCapacity(tobase, albridx, cargo[i].amount_alive, qfalse);
+					B_UpdateStorageAndCapacity(tobase, albridx, cargo[i].amount_alive, qfalse, qfalse);
 					/* only once */
 					if (!messageAlreadySet) {
 						MN_AddNewMessage(_("Notice"), _("You cannot hold alive aliens yet. Aliens died."), qfalse, MSG_STANDARD, NULL);
@@ -229,7 +229,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 								/* Just kill aliens which don't fit the limit. */
 								tobase->alienscont[j].amount_dead++;
 								/* Add breathing apparatus as well and update storage capacity. */
-								B_UpdateStorageAndCapacity(tobase, albridx, 1, qfalse);
+								B_UpdateStorageAndCapacity(tobase, albridx, 1, qfalse, qfalse);
 							}
 						}
 					}
