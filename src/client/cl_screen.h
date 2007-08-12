@@ -43,4 +43,8 @@ extern int sb_lines;
 extern cvar_t *cursor;
 extern vrect_t scr_vrect;		/* position of render window */
 
+typedef struct {
+	int x, y;
+} screenPoint_t;
+
 #endif /* CLIENT_SCREEN_H */

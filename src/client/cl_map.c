@@ -679,42 +679,42 @@ void MAP_MapCalcLine (const vec2_t start, const vec2_t end, mapline_t* line)
 static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
 {
 	const vec4_t color = {1, 0.5, 0.5, 1};
-	int pts[LINE_MAXPTS * 2];
-	int *p;
+	screenPoint_t pts[LINE_MAXPTS];
+	screenPoint_t *p;
 	int i, start, old;
 
 	/* draw */
 	re.DrawColor(color);
 	start = 0;
 	old = 512;
-	for (i = 0, p = pts; i < line->numPoints; i++, p += 2) {
-		MAP_MapToScreen(node, line->point[i], p, p + 1);
+	for (i = 0, p = pts; i < line->numPoints; i++, p++) {
+		MAP_MapToScreen(node, line->point[i], &p->x, &p->y);
 
 		/* If we cross longitude 180 degree (right/left edge of the screen), draw the first part of the path */
-		if (i > start && abs(p[0] - old) > 512) {
+		if (i > start && abs(p->x - old) > 512) {
 			/* shift last point */
 			int diff;
 
-			if (p[0] - old > 512)
+			if (p->x - old > 512)
 				diff = -node->size[0] * ccs.zoom;
 			else
 				diff = node->size[0] * ccs.zoom;
-			p[0] += diff;
+			p->x += diff;
 
 			/* wrap around screen border */
-			re.DrawLineStrip(i - start + 1, pts);
+			re.DrawLineStrip(i - start + 1, (int*)(&pts));
 
 			/* first path of the path is drawn, now we begin the second part of the path */
 			/* shift first point, continue drawing */
 			start = --i;
-			pts[0] = p[-2] - diff;
-			pts[1] = p[-1];
+			pts[0].x = p[-1].x - diff;
+			pts[0].y = p[-1].y;
 			p = pts;
 		}
-		old = p[0];
+		old = p->x;
 	}
 
-	re.DrawLineStrip(i - start, pts);
+	re.DrawLineStrip(i - start, (int*)(&pts));
 	re.DrawColor(NULL);
 }
 
@@ -728,20 +728,18 @@ static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
 static void MAP_3DMapDrawLine (const menuNode_t* node, const mapline_t* line)
 {
 	const vec4_t color = {1, 0.5, 0.5, 1};
-	int pts[LINE_MAXPTS * 2];
-	int *p;
+	screenPoint_t pts[LINE_MAXPTS];
 	int i, numPoints;
 
 	/* draw only when the point of the path is visible*/
 	re.DrawColor(color);
-	for (i = 0, numPoints = 0, p = pts; i < line->numPoints; i++) {
-		if (MAP_3DMapToScreen(node, line->point[i], p, p + 1, NULL)) {
-			 p += 2;
+	for (i = 0, numPoints = 0; i < line->numPoints; i++) {
+		if (MAP_3DMapToScreen(node, line->point[i], &pts[i].x, &pts[i].y, NULL)) {
 			 numPoints++;
 		}
 	}
 
-	re.DrawLineStrip(numPoints, pts);
+	re.DrawLineStrip(numPoints, (int*)(&pts));
 	re.DrawColor(NULL);
 }
 
@@ -759,7 +757,7 @@ static void MAP_3DMapDrawLine (const menuNode_t* node, const mapline_t* line)
 void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center, const float angle, const vec4_t color, qboolean globe)
 {
 	int i, xCircle, yCircle;
-	int pts[CIRCLE_DRAW_POINTS * 2 + 2];
+	screenPoint_t pts[CIRCLE_DRAW_POINTS + 1];
 	vec2_t posCircle;
 	qboolean draw, oldDraw = qfalse;
 	int numPoints = 0;
@@ -782,20 +780,20 @@ void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center, const 
 		draw = qfalse;
 		if (MAP_AllMapToScreen(node, posCircle, &xCircle, &yCircle, NULL)) {
 			draw = qtrue;
-			if (!globe && numPoints != 0 && abs(pts[(numPoints - 1) * 2] - xCircle) > 512)
+			if (!globe && numPoints != 0 && abs(pts[numPoints - 1].x - xCircle) > 512)
 				oldDraw = qfalse;
 		}
 
 		/* if moving from a point of the screen to a distant one, draw the path we already calculated, and begin a new path
 		 * (to avoid unwanted lines) */
 		if (draw != oldDraw && i != 0) {
-			re.DrawLineStrip(numPoints, pts);
+			re.DrawLineStrip(numPoints, (int*)(&pts));
 			numPoints = 0;
 		}
 		/* if the current point is to be drawn, add it to the path */
 		if (draw) {
-			pts[numPoints * 2] = xCircle;
-			pts[numPoints * 2 + 1] = yCircle;
+			pts[numPoints].x = xCircle;
+			pts[numPoints].y = yCircle;
 			numPoints++;
 		}
 		/* update value of oldDraw */
@@ -803,7 +801,7 @@ void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center, const 
 	}
 
 	/* Draw the last path */
-	re.DrawLineStrip(numPoints, pts);
+	re.DrawLineStrip(numPoints, (int*)(&pts));
 	re.DrawColor(NULL);
 }
 

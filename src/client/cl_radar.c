@@ -52,7 +52,7 @@ void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, vec2_t pos, 
 	int x, y;
 	int i;
 	const vec4_t color = {0, 1, 0, 1};
-	int pts[4];
+	screenPoint_t pts[2];
 
 	if (radar->numUfos == 0)
 		return;
@@ -65,11 +65,13 @@ void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, vec2_t pos, 
 
 	/* Draw lines from radar to ufos sensored */
 	MAP_AllMapToScreen(node, pos, &x, &y, NULL);
-	Vector2Set(pts, x, y);
+	pts[0].x = x;
+	pts[0].y = y;
 	for (i = radar->numUfos - 1; i >= 0; i--)
 		if (MAP_AllMapToScreen(node, (gd.ufos + radar->ufos[i])->pos, &x, &y, NULL)) {
-			Vector2Set(pts + 2, x, y);
-			re.DrawLineStrip(2, pts); /* FIXME */
+			pts[1].x = x;
+			pts[1].y = y;
+			re.DrawLineStrip(2, (int*)pts); /* FIXME */
 		}
 
 	re.DrawColor(NULL);
