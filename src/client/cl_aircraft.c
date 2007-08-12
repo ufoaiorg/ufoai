@@ -2331,10 +2331,11 @@ qboolean AIR_ScriptSanityCheck (void)
  * @brief Calculates free space in hangars in given base.
  * @param[in] aircraftID aircraftID Index of aircraft type in aircraft_samples.
  * @param[in] base_idx Index of base in global array.
+ * @param[in] used Additional space "used" in hangars (use that when calculating space for more than one aircraft).
  * @return Amount of free space in hangars suitable for given aircraft type.
  * @note Returns -1 in case of error. Returns 0 if no error but no free space.
  */
-int AIR_CalculateHangarStorage (int aircraftID, base_t *base)
+int AIR_CalculateHangarStorage (int aircraftID, base_t *base, int used)
 {
 	int aircraftSize = 0, freespace = 0;
 
@@ -2356,14 +2357,14 @@ int AIR_CalculateHangarStorage (int aircraftID, base_t *base)
 
 	/* If the aircraft size is less than 8, we will check space in small hangar. */
 	if (aircraftSize < 8) {
-		freespace = base->capacities[CAP_AIRCRAFTS_SMALL].max - base->capacities[CAP_AIRCRAFTS_SMALL].cur;
+		freespace = base->capacities[CAP_AIRCRAFTS_SMALL].max - base->capacities[CAP_AIRCRAFTS_SMALL].cur - used;
 		Com_DPrintf("AIR_CalculateHangarStorage()... freespace (small): %i aircraft weight: %i (max: %i, cur: %i)\n", freespace, aircraftSize,
 			base->capacities[CAP_AIRCRAFTS_SMALL].max, base->capacities[CAP_AIRCRAFTS_SMALL].cur);
 		if (aircraftSize <= freespace) {
 			return freespace;
 		} else {
 			/* Small aircrafts (size < 8) can be stored in big hangars as well. */
-			freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur;
+			freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur - used;
 			Com_DPrintf("AIR_CalculateHangarStorage()... freespace (small in big): %i aircraft weight: %i (max: %i, cur: %i)\n", freespace, aircraftSize,
 				base->capacities[CAP_AIRCRAFTS_BIG].max, base->capacities[CAP_AIRCRAFTS_BIG].cur);
 			if (aircraftSize <= freespace) {
@@ -2375,7 +2376,7 @@ int AIR_CalculateHangarStorage (int aircraftID, base_t *base)
 		}
 	} else {
 		/* If the aircraft size is more or equal to 8, we will check space in big hangar. */
-		freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur;
+		freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur - used;
 		Com_DPrintf("AIR_CalculateHangarStorage()... freespace (big): %i aircraft weight: %i (max: %i, cur: %i)\n", freespace, aircraftSize,
 			base->capacities[CAP_AIRCRAFTS_BIG].max, base->capacities[CAP_AIRCRAFTS_BIG].cur);
 		if (aircraftSize <= freespace) {

@@ -575,7 +575,7 @@ static void BS_BuyAircraft_f (void)
 		return;
 
 	aircraftID = buyList[num];
-	freeSpace = AIR_CalculateHangarStorage(aircraftID, baseCurrent);
+	freeSpace = AIR_CalculateHangarStorage(aircraftID, baseCurrent, 0);
 
 	/* Check free space in hangars. */
 	if (freeSpace < 0) {

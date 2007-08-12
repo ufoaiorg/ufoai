@@ -284,6 +284,6 @@ void AIR_AircraftsUfoDisappear(const aircraft_t *const ufo);
 void AIR_UpdateHangarCapForAll(int base_idx);
 qboolean AIR_AircraftAllowed(void);
 qboolean AIR_ScriptSanityCheck(void);
-int AIR_CalculateHangarStorage(int aircraftID, struct base_s *base);
+int AIR_CalculateHangarStorage(int aircraftID, struct base_s *base, int used);
 
 #endif

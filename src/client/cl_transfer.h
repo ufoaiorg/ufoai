@@ -54,9 +54,6 @@ void TR_TransferAircraftMenu(aircraft_t* aircraft);
 void TR_TransferEnd(transfer_t *transfer);
 void TR_EmptyTransferCargo(transfer_t *transfer, qboolean success);
 void TR_TransferCheck(void);
-qboolean TR_CheckItem(objDef_t *od, base_t *srcbase, base_t *destbase);
-qboolean TR_CheckEmployee(employee_t *employee, base_t *srcbase, base_t *destbase);
-qboolean TR_CheckAlien(int alienidx, base_t *srcbase, base_t *destbase);
 
 void TR_Reset(void);
 

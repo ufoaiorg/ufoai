@@ -55,7 +55,7 @@ static int trAircraftsTmp[MAX_AIRCRAFT];
  * @param[in] destbase Pointer to destination base.
  * @return qtrue if transfer of this item is possible.
  */
-qboolean TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase)
+static qboolean TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase)
 {
 	assert(od && srcbase && destbase);
 
@@ -95,7 +95,7 @@ qboolean TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase)
  * @param[in] destbase Pointer to destination base.
  * @return qtrue if transfer of this type of alien is possible.
  */
-qboolean TR_CheckEmployee (employee_t *employee, base_t *srcbase, base_t *destbase)
+static qboolean TR_CheckEmployee (employee_t *employee, base_t *srcbase, base_t *destbase)
 {
 	assert(employee && srcbase && destbase);
 
@@ -125,7 +125,7 @@ qboolean TR_CheckEmployee (employee_t *employee, base_t *srcbase, base_t *destba
  * @param[in] destbase Pointer to destination base.
  * @return qtrue if transfer of this type of alien is possible.
  */
-qboolean TR_CheckAlien (int alienidx, base_t *srcbase, base_t *destbase)
+static qboolean TR_CheckAlien (int alienidx, base_t *srcbase, base_t *destbase)
 {
 	assert(srcbase && destbase);
 
@@ -136,6 +136,49 @@ qboolean TR_CheckAlien (int alienidx, base_t *srcbase, base_t *destbase)
 	}
 	/* Is the alien under research at this moment? */
 	/* @todo: implement me */
+
+	return qtrue;
+}
+
+/**
+ * @brief Checks condition for aircraft transfer.
+ * @param[in] aircraft Pointer to aircraft which is going to be added to transferlist.
+ * @param[in] srcbase Pointer to current base.
+ * @param[in] destbase Pointer to destination base.
+ * @return qtrue if transfer of this aircraft is possible.
+ */
+static qboolean TR_CheckAircraft (aircraft_t *aircraft, base_t *srcbase, base_t *destbase)
+{
+	int i, intransfer = 0;
+	aircraft_t *aircraftOnList = NULL;
+	assert(aircraft && srcbase && destbase);
+
+	/* Count weight of all aircrafts already on the transfer list. */
+	for (i = 0; i < MAX_AIRCRAFT; i++) {
+		if (trAircraftsTmp[i] > -1) {
+			aircraftOnList = AIR_AircraftGetFromIdx(i);
+			intransfer += aircraftOnList->weight;
+		}
+	}
+
+	/* Hangars in destbase functional? */
+	if (!destbase->hasPower) {
+		MN_Popup(_("Hangars not ready"), _("Destination base does not have hangars ready.\nProvide power supplies.\n"));
+		return qfalse;
+	} else if (!destbase->hasCommand) {
+		MN_Popup(_("Hangars not ready"), _("Destination base does not have command centre.\nHangars not functional.\n"));
+		return qfalse;
+	} else if (!destbase->hasHangar && !destbase->hasHangarSmall) {
+		MN_Popup(_("Hangars not ready"), _("Destination base does not have any hangar."));
+		return qfalse;
+	}
+	/* Is there a place for this aircraft in destination base? */
+	if (AIR_CalculateHangarStorage(aircraft->idx_sample, destbase, intransfer) == 0) {
+		MN_Popup(_("Not enough space"), _("Destination base does not have enough space\nin hangars.\n"));
+		return qfalse;
+	} else if (AIR_CalculateHangarStorage(aircraft->idx_sample, destbase, intransfer) > 0) {
+		return qtrue;
+	}
 
 	return qtrue;
 }
@@ -521,7 +564,7 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 			if (transfer->aircraftsArray[i] > -1) {
 				aircraft = AIR_AircraftGetFromIdx(i);
 				assert (aircraft);
-				if (AIR_CalculateHangarStorage(aircraft->idx_sample, destination) > 0) {
+				if (AIR_CalculateHangarStorage(aircraft->idx_sample, destinationi, 0) > 0) {
 					/* Aircraft relocated to new base, just add new one. */
 					AIR_NewAircraft(destination, aircraft->id);	
 					/* Remove aircraft from old base. */
@@ -799,8 +842,11 @@ static void TR_TransferListSelect_f (void)
 				return;
 			if (aircraft->homebase == baseCurrent) {
 				if (cnt == num) {
-					trAircraftsTmp[i] = i;
-					break;
+					if (TR_CheckAircraft(aircraft, baseCurrent, transferBase)) {
+						trAircraftsTmp[i] = i;
+						break;
+					} else
+						return;
 				}
 				cnt++;
 			}
