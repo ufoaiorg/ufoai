@@ -427,10 +427,8 @@ void PR_ProductionRun (void)
 				CL_UpdateCredits(ccs.credits - (od->price*PRODUCE_FACTOR/PRODUCE_DIVISOR));
 				prod->timeLeft = PR_CalculateProductionTime(&gd.bases[i], t, NULL, qfalse);
 				prod->amount--;
-				/* now add it to equipment */
-				gd.bases[i].storage.num[prod->objID]++;
-				/* and update storage capacity.cur */
-				gd.bases[i].capacities[CAP_ITEMS].cur += od->size;
+				/* Now add it to equipment and update capacity. */
+				B_UpdateStorageAndCapacity(&gd.bases[i], prod->objID, 1, qfalse, qfalse);
 
 				/* queue the next production */
 				if (prod->amount <= 0) {
