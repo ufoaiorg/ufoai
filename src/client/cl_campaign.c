@@ -1603,6 +1603,7 @@ const vec4_t graphColors[MAX_NATIONS] = {
 	{1.0, 1.0, 0.0, 1.0},
 	{0.0, 1.0, 1.0, 1.0}
 };
+static const vec4_t graphColorSelected = {1, 1, 1, 1};
 
 /**
  * @brief Search the maximum (current) funding from all the nations (in all logged months).
@@ -1692,7 +1693,11 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node, int maxFundi
 	/* Link graph to node */
 	node->linestrips.pointList[node->linestrips.numStrips] = fundingPts[usedFundPtslist];
 	node->linestrips.numPoints[node->linestrips.numStrips] = ptsNumber;
-	Vector4Copy(graphColors[color], node->linestrips.color[node->linestrips.numStrips]);
+	if (color < 0) {
+		Vector4Copy(graphColorSelected, node->linestrips.color[node->linestrips.numStrips]);
+	} else {
+		Vector4Copy(graphColors[color], node->linestrips.color[node->linestrips.numStrips]);
+	}
 	node->linestrips.numStrips++;
 
 	usedFundPtslist++;
@@ -1739,7 +1744,12 @@ static void CL_NationStatsUpdate_f(void)
 
 			colorNode->linestrips.pointList[colorNode->linestrips.numStrips] = colorLinePts[usedColPtslists];
 			colorNode->linestrips.numPoints[colorNode->linestrips.numStrips] = 2;
-			Vector4Copy(graphColors[i], colorNode->linestrips.color[colorNode->linestrips.numStrips]);
+			
+			if (i == selectedNation) {
+				Vector4Copy(graphColorSelected, colorNode->linestrips.color[colorNode->linestrips.numStrips]);
+			} else {
+				Vector4Copy(graphColors[i], colorNode->linestrips.color[colorNode->linestrips.numStrips]);
+			}
 
 			usedColPtslists++;
 			colorNode->linestrips.numStrips++;
@@ -1774,7 +1784,11 @@ static void CL_NationStatsUpdate_f(void)
 
 		maxFunding = CL_NationsMaxFunding();
 		for (i = 0; i < gd.numNations; i++) {
-			CL_NationDrawStats(&gd.nations[i], graphNode, maxFunding, i);
+			if (i == selectedNation) {
+				CL_NationDrawStats(&gd.nations[i], graphNode, maxFunding, -1);
+			} else {
+				CL_NationDrawStats(&gd.nations[i], graphNode, maxFunding, i);
+			}
 		}
 	}
 }
