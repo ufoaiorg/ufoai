@@ -818,104 +818,18 @@ static void TR_TransferListSelect_f (void)
 }
 
 /**
- * @brief Callback for aircraft list click.
- * @todo REMOVEME
- */
-static void TR_TransferAircraftListClick_f (void)
-{
-	int i, j = -1, num;
-	/* initialize - maybe there are no aircraft in base */
-	aircraft_t* aircraft = NULL;
-
-	if (!baseCurrent)
-		return;
-
-	if (Cmd_Argc() < 2)
-		return;
-
-	num = atoi(Cmd_Argv(1));
-
-	for (i = 0; i < baseCurrent->numAircraftInBase; i++) {
-		aircraft = &baseCurrent->aircraft[i];
-		if (aircraft->status == AIR_HOME) {
-			j++;
-			if (j == num)
-				break;
-		}
-	}
-
-	if (j < 0)
-		return;
-}
-
-/**
- * @brief Finds the destination base.
- */
-static void TR_TransferBaseSelectPopup_f (void)
-{
-	int i, j = -1, num;
-	base_t* base;
-
-	if (!baseCurrent)
-		return;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("usage: trans_baselist_click <type>\n");
-		return;
-	}
-
-	num = atoi(Cmd_Argv(1));
-
-	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
-		if (base->founded == qfalse || base == baseCurrent)
-			continue;
-		j++;
-		if (j == num) {
-			break;
-		}
-	}
-
-	/* no base founded */
-	if (j < 0 || i == gd.numBases)
-		return;
-
-	transferBase = base;
-}
-
-/**
  * @brief Callback for base list click.
+ * @param[in] base Pointer to base which will be transferBase.
  * @note transferBase is being set here.
  */
-static void TR_TransferBaseSelect_f (void)
+static void TR_TransferBaseSelect (base_t *base)
 {
 	static char baseInfo[1024];
-	/*char str[128];*/
-	int j = -1, num, i;
-	base_t* base;
 	qboolean powercomm = qfalse;
 
 	if (!baseCurrent)
 		return;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("usage: trans_bases_click <type>\n");
-		return;
-	}
-
-	num = atoi(Cmd_Argv(1));
-
-	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
-		if (base->founded == qfalse || base == baseCurrent)
-			continue;
-		j++;
-		if (j == num) {
-			break;
-		}
-	}
-
-	/* No base founded. */
-	if (j < 0 || i == gd.numBases)
-		return;
+	assert (base);
 
 	Com_sprintf(baseInfo, sizeof(baseInfo), "%s\n\n", base->name);
 
@@ -968,6 +882,82 @@ static void TR_TransferBaseSelect_f (void)
 
 	/* Update stuff-in-base list. */
 	TR_TransferSelect_f();
+}
+
+/**
+ * @brief Selects next base.
+ * @sa TR_PrevBase_f
+ * @note Command to call this: trans_nextbase
+ */
+static void TR_NextBase_f (void)
+{
+	int i, counter;
+	base_t *base = NULL;
+	
+	if (!baseCurrent)
+		return;
+	if (!transferBase)
+		counter = baseCurrent->idx;
+	else
+		counter = transferBase->idx;
+
+	for (i = counter + 1; i < gd.numBases; i++) {
+		base = &gd.bases[i];
+		if (!base->founded)
+			continue;
+		if (base == baseCurrent)
+			continue;
+		TR_TransferBaseSelect(base);
+		return;
+	}
+	/* At this point we are at "last" base, so we will select first. */
+	for (i = 0; i < gd.numBases; i++) {
+		base = &gd.bases[i];
+		if (!base->founded)
+			continue;
+		if (base == baseCurrent)
+			continue;
+		TR_TransferBaseSelect(base);
+		return;
+	}	
+}
+
+/**
+ * @brief Selects previous base.
+ * @sa TR_NextBase_f
+ * @note Command to call this: trans_prevbase
+ */
+static void TR_PrevBase_f (void)
+{
+	int i, counter;
+	base_t *base = NULL;
+
+	if (!baseCurrent)
+		return;
+	if (!transferBase)
+		counter = baseCurrent->idx;
+	else
+		counter = transferBase->idx;
+
+	for (i = counter - 1; i >= 0; i--) {
+		base = &gd.bases[i];
+		if (!base->founded)
+			continue;
+		if (base == baseCurrent)
+			continue;
+		TR_TransferBaseSelect(base);
+		return;
+	}
+	/* At this point we are at "first" base, so we will select last. */
+	for (i = gd.numBases; i >= 0; i--) {
+		base = &gd.bases[i];
+		if (!base->founded)
+			continue;
+		if (base == baseCurrent)
+			continue;
+		TR_TransferBaseSelect(base);
+		return;
+	}	
 }
 
 /**
@@ -1137,30 +1127,15 @@ void TR_TransferCheck (void)
  */
 static void TR_Init_f (void)
 {
-	static char baseList[1024];
-	static char aircraftList[1024];
 	int i, j;
-	base_t* base = NULL;
-	aircraft_t* aircraft = NULL;
 
 	if (!baseCurrent)
 		return;
 
 	transferBase = NULL;
 
-	baseList[0] = '\0';
-	aircraftList[0] = '\0';
-
 	if (Cmd_Argc() < 2)
 		Com_Printf("warning: you should call trans_init with parameter 0\n");
-
-	/* Fill in the bases node with every founded base except current. */
-	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
-		if (base->founded == qfalse || base == baseCurrent)
-			continue;
-		Q_strcat(baseList, base->name, sizeof(baseList));
-		Q_strcat(baseList, "\n", sizeof(baseList));
-	}
 
 	/* Clear employees temp array. */
 	for (i = 0; i < MAX_EMPL; i++) {
@@ -1174,30 +1149,12 @@ static void TR_Init_f (void)
 	/* Select first available item. */
 	TR_TransferSelect_f();
 
-	/* Fill in the aircrafts node with every aircraft in current base. */
-	for (i = 0; i < baseCurrent->numAircraftInBase; i++) {
-		aircraft = &baseCurrent->aircraft[i];
-		if (aircraft->status == AIR_HOME) {
-			Q_strcat(aircraftList, aircraft->shortname, sizeof(aircraftList));
-			Q_strcat(aircraftList, "\n", sizeof(aircraftList));
-		}
-	}
-
-	/* Fill up the nodes in case of lack of aircraft (none at all or none suitable). */
-	if (!aircraft) {
-		Q_strcat(aircraftList, _("None"), sizeof(aircraftList));
-		Cvar_Set("mn_trans_aircraft_name", _("None"));
-	}
-
 	/* Select first available base. */
-	TR_TransferBaseSelect_f();
+	TR_NextBase_f();
 
 	/* Set up cvar used to display transferBase. */
 	if (transferBase)
 		Cvar_Set("mn_trans_base_name", transferBase->name);
-
-	menuText[TEXT_BASE_LIST] = baseList;
-	menuText[TEXT_AIRCRAFT_LIST] = aircraftList;
 }
 
 /**
@@ -1309,12 +1266,11 @@ void TR_Reset (void)
 	Cmd_AddCommand("trans_start", TR_TransferStart_f, "Starts the tranfer");
 	Cmd_AddCommand("trans_select", TR_TransferSelect_f, "Switch between transfer types (employees, techs, items)");
 	Cmd_AddCommand("trans_emptyairstorage", TR_TransferListClear_f, "Unload everything from transfer cargo back to base");
-	Cmd_AddCommand("trans_baselist_click", TR_TransferBaseSelectPopup_f, "Callback for transfer base list popup");
-	Cmd_AddCommand("trans_bases_click", TR_TransferBaseSelect_f, "Callback for base list node click");
 	Cmd_AddCommand("trans_list_click", TR_TransferListSelect_f, "Callback for transfer list node click");
-	Cmd_AddCommand("trans_aircraft_click", TR_TransferAircraftListClick_f, "Callback for aircraft list node click");
 	Cmd_AddCommand("trans_cargolist_click", TR_CargoListSelect_f, "Callback for cargo list node click");
 	Cmd_AddCommand("trans_close", TR_TransferClose_f, "Callback for closing Transfer Menu");
+	Cmd_AddCommand("trans_nextbase", TR_NextBase_f, "Callback for selecting next base");
+	Cmd_AddCommand("trans_prevbase", TR_PrevBase_f, "Callback for selecting previous base");
 }
 
 
