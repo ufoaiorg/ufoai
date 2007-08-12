@@ -1863,6 +1863,10 @@ base/sound/footsteps/stone4.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sa
 base/sound/footsteps/water_in.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/water_out.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/water_under.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
+base/sound/misc/geoscape_attack.wav | GNU General Public License 2.0 | BlakeD
+base/sound/misc/geoscape_info.wav | GNU General Public License 2.0 | BlakeD
+base/sound/misc/geoscape_standard.wav | GNU General Public License 2.0 | BlakeD
+base/sound/misc/geoscape_ufo_spotted.wav | GNU General Public License 2.0 | BlakeD
 base/sound/weapons/assaultrifle.wav | GPL | Alex Parker
 base/sound/weapons/bolter2.wav | GPL | Alex Parker
 base/sound/weapons/boltercannonade.wav | GPL | Alex Parker
