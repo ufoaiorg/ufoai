@@ -170,7 +170,7 @@
 ( -1160 -408 4 ) ( -1160 256 4 ) ( -448 256 4 ) tex_material/c_gray230 128 0 0 0.5 0.5 0 0 0
 ( -1160 -404 160 ) ( -448 -404 160 ) ( -448 -404 96 ) tex_material/c_gray230 128 0 0 0.5 0.5 0 0 0
 ( 32 -440 160 ) ( 32 224 160 ) ( 32 224 96 ) tex_material/c_gray230 0 0 0 0.5 0.5 0 0 0
-( -448 256 160 ) ( -1160 256 160 ) ( -1160 256 96 ) tex_material/c_gray230 128 0 0 0.5 0.5 0 0 0
+( -448 512 160 ) ( -1160 512 160 ) ( -1160 512 96 ) tex_material/c_gray230 128 0 0 0.5 0.5 0 0 0
 ( -1180 244 160 ) ( -1180 -420 160 ) ( -1180 -420 96 ) tex_material/c_gray230 0 0 0 0.5 0.5 0 0 0
 }
 // brush 17
@@ -1421,4 +1421,18 @@
 "classname" "misc_model"
 "origin" "-210 -338 5"
 "model" "models/objects/vegi/banana/banana.md2"
+}
+// entity 44
+{
+"classname" "misc_model"
+"origin" "-408 341 133"
+"model" "models/objects/vegi/plant_hang/plant1.md2"
+"spawnflags" "252"
+}
+// entity 45
+{
+"classname" "misc_model"
+"origin" "-87 299 118"
+"model" "models/objects/vegi/plant_hang/plant2.md2"
+"spawnflags" "252"
 }
