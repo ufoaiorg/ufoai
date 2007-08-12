@@ -1671,7 +1671,7 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node, int maxFundi
 		if (nation->stats[m].inuse) {
 			funding = nation->maxFunding * nation->stats[m].happiness;
 			fundingPts[usedFundPtslist][j] = x + (m * dx);
-			fundingPts[usedFundPtslist][j+1] = y - (int)(((float)(funding - minFunding) / (float)(maxFunding - minFunding)) * height);
+			fundingPts[usedFundPtslist][j+1] = y - height * (funding - minFunding) / (maxFunding - minFunding);
 			ptsNumber++;
 		} else {
 			break;
