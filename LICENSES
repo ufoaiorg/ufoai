@@ -394,11 +394,13 @@ base/models/aircraft/drop_firebird/firebird_glass.jpg | GNU General Public Licen
 base/models/aircraft/drop_firebird/firebird_glass.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/drop_firebird/firebird_top.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/drop_firebird/firebird_top.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/inter_saracen/saracen.jpg | GNU General Public License v2.0 | Daniel Holden (Yoshiboy)
+base/models/aircraft/inter_saracen/old/interceptor.rar | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
+base/models/aircraft/inter_saracen/saracen.jpg | GNU General Public License v2.0 | Daniel Holden (Yoshiboy) - minor modifications by David Psawhn Townsend
 base/models/aircraft/inter_saracen/saracen.md2 | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
-base/models/aircraft/inter_saracen/saracen_interceptor.blend | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
-base/models/aircraft/inter_saracen/saracen_interceptor.xcf | GNU General Public License v2.0 | Daniel Holden (Yoshiboy)
+base/models/aircraft/inter_saracen/saracen_highpoly.blend | GNU General Public License v2.0 | David Psawhn Townsend - High-detailed model based on 'saracen' model and texture by Ryan Span (Winter) and  Daniel Holden (Yoshiboy).
+base/models/aircraft/inter_saracen/saracen_interceptor.xcf | GNU General Public License v2.0 | Daniel Holden (Yoshiboy) - minor modifications by David Psawhn Townsend
 base/models/aircraft/inter_saracen/saracen_interceptor_flying.md2 | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
+base/models/aircraft/inter_saracen/saracen_lowpoly.blend | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
 base/models/aircraft/inter_stingray/sources/stingray_hi_detail_texture_FINAL.blend | GNU General Public License v2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/sources/stingray_lopo_flightmodel.blend | GNU General Public License v2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/sources/stingray_texture_hires_release.xcf.bz2 | GNU General Public License v2.0 | David Townsend (Psawhn)
