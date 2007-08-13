@@ -81,7 +81,6 @@ static void MakeTnode (int nodenum)
 			MakeTnode(node->children[i]);
 		}
 	}
-
 }
 
 
