@@ -236,6 +236,8 @@ terrain tex_buildings/carpet005 {
 }
 terrain tex_furniture/jap_carpet001 {
 }
+terrain tex_carpets/carpet140 {
+}
 
 // sharp ones
 terrain interior/int_carp04 {
