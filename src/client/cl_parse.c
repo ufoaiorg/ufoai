@@ -677,7 +677,7 @@ static void CL_EntPerish (struct dbuffer *msg)
 	le = LE_Get(entnum);
 
 	if (!le) {
-		Com_Printf("CL_EntPerish: Delete request ignored... LE not found (number: %i)\n", number);
+		Com_Printf("CL_EntPerish: Delete request ignored... LE not found (number: %i)\n", entnum);
 		return;
 	}
 
@@ -990,7 +990,7 @@ static void CL_ActorStats (struct dbuffer *msg)
 		Com_Printf("CL_ActorStats: LE with number %i not found\n", number);
 		return;
 	}
-	if (le->type != ET_ACTOR && le->type != ET_ACTOR2x2)) {
+	if (le->type != ET_ACTOR && le->type != ET_ACTOR2x2) {
 		Com_Printf("CL_ActorStats: LE not an actor (type: %i)\n", le->type);
 		return;
 	}
