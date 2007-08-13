@@ -383,7 +383,7 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 			if (*cvarValue != '+') {
 				Com_Printf("SV_ParseAssembly: warning - cvar value doesn't seam to be a valid tile id '%s' - set to default '%s'\n", cvarValue, token);
 				Cvar_Set(cvarName, token);
-				if (*cvarValue != '+')
+				if (*token!= '+')
 					Com_Error(ERR_DROP, "SV_ParseAssembly: wrong tile id\n");
 			}
 		}
