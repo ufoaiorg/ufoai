@@ -1345,6 +1345,8 @@ const char* Com_GetActorSound (teamDef_t* td, int gender, actorSound_t soundType
 		list = list->next;
 	}
 
+	assert(list);
+	assert(list->data);
 	return list->data;
 }
 
