@@ -622,7 +622,7 @@ static void CL_LeftClickDown_f (void)
  */
 static void CL_DrawSpottedLines_f (void)
 {
-	le_t *watcher; /** @todo make this a parameter for use in other fucntions? */
+	le_t *watcher; /** @todo make this a parameter for use in other functions? */
 	le_t *le = NULL;
 	int i;
 	trace_t tr;

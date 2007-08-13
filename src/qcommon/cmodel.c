@@ -782,10 +782,11 @@ static int CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end)
 /**
  * @brief Routing function to check the connection between two fields
  * @param[in] map Routing field of the current loaded map
- * @param[in] x
- * @param[in] y
- * @param[in] z
- * @param[in] dir
+ * @param[in] x The x position in the routing arrays (0 - WIDTH-1)
+ * @param[in] y The y position in the routing arrays (0 - WIDTH-1)
+ * @param[in] z The z position in the routing arrays (0 - HEIGHT-1)
+ * @param[in] dir Direction to check the connection into (0 - DIRECTIONS-1)
+ * @sa dvecs
  * @param[in] fill
  */
 static qboolean CM_TestConnection (routing_t * map, int x, int y, byte z, unsigned int dir, qboolean fill)
@@ -849,9 +850,9 @@ static qboolean CM_TestConnection (routing_t * map, int x, int y, byte z, unsign
 /**
  * @brief
  * @param[in] map
- * @param[in] x
- * @param[in] y
- * @param[in] z
+ * @param[in] x The x position in the routing arrays (0 - WIDTH-1)
+ * @param[in] y The y position in the routing arrays (0 - WIDTH-1)
+ * @param[in] z The z position in the routing arrays (0 - HEIGHT-1)
  * @sa Grid_RecalcRouting
  */
 static void CM_CheckUnit (routing_t * map, int x, int y, byte z)
@@ -993,9 +994,9 @@ static void CMod_GetMapSize (routing_t * map)
 
 /**
  * @brief
- * @param[in] l Routing lump ... @todo whatsit?
- * @param[in] sX The x position on the world plane (grid position) - values from 0 up to WIDTH are allowed
- * @param[in] sY The y position on the world plane (grid position) - values from 0 up to WIDTH are allowed
+ * @param[in] l Routing lump ... (routing data lump from bsp file)
+ * @param[in] sX The x position on the world plane (grid position) - values from -(WIDTH/2) up to WIDTH/2 are allowed
+ * @param[in] sY The y position on the world plane (grid position) - values from -(WIDTH/2) up to WIDTH/2 are allowed
  * @param[in] sZ The height level on the world plane (grid position) - values from 0 - HEIGHT are allowed
  * @sa CM_AddMapTile
  */
@@ -1019,8 +1020,8 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 	if (!l->filelen)
 		Com_Error(ERR_DROP, "CMod_LoadRouting: Map has NO routing lump");
 
- 	assert((sX > -WIDTH) && (sX < WIDTH));
-	assert((sY > -WIDTH) && (sY < WIDTH));
+	assert((sX > -(WIDTH/2)) && (sX < (WIDTH/2)));
+	assert((sY > -(WIDTH/2)) && (sY < (WIDTH/2)));
 	assert((sZ >= 0) && (sZ < HEIGHT));
 
 	source = cmod_base + l->fileofs;
@@ -1158,8 +1159,8 @@ static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
 /**
  * @brief Adds in a single map tile
  * @param[in] name The (file-)name of the tile to add.
- * @param[in] sX The x position on the world plane (grid position) - values from 0 up to WIDTH are allowed
- * @param[in] sY The y position on the world plane (grid position) - values from 0 up to WIDTH are allowed
+ * @param[in] sX The x position on the world plane (grid position) - values from -(WIDTH/2) up to WIDTH/2 are allowed
+ * @param[in] sY The y position on the world plane (grid position) - values from -(WIDTH/2) up to WIDTH/2 are allowed
  * @param[in] sZ The height level on the world plane (grid position) - values from 0 up to HEIGHT are allowed
  * @note The sX and sY values are grid positions - max. grid size is 256 - unit size is
  * 32 => ends up at 8192 (the worldplace size - or [-4096, 4096])
@@ -1168,7 +1169,7 @@ static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
  * @sa CM_LoadMap
  * @sa R_AddMapTile
  */
-static unsigned CM_AddMapTile (const char *name, int sX, int sY, int sZ)
+static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
 {
 	char filename[MAX_QPATH];
 	unsigned checksum;
@@ -1181,9 +1182,9 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, int sZ)
 
 	assert(name);
 	assert(name[0]);
-	assert((sX >= 0) && (sX < WIDTH));
-	assert((sY >= 0) && (sY < WIDTH));
-	assert((sZ >= 0) && (sZ < HEIGHT));
+	assert((sX > -(WIDTH/2)) && (sX < (WIDTH/2)));
+	assert((sY > -(WIDTH/2)) && (sY < (WIDTH/2)));
+	assert(sZ < HEIGHT);
 
 	/* load the file */
 	Com_sprintf(filename, MAX_QPATH, "maps/%s.bsp", name);
