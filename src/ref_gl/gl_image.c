@@ -331,82 +331,10 @@ void GL_ImageList_f (void)
 
 
 /*
-=============================================================================
-scrap allocation
-
-Allocate all the little status bar objects into a single texture
-to crutch up inefficient hardware / drivers
-=============================================================================
-*/
-
-#define	MAX_SCRAPS		1
-#define	BLOCK_WIDTH		256
-#define	BLOCK_HEIGHT	256
-
-static int scrap_allocated[MAX_SCRAPS][BLOCK_WIDTH];
-static byte scrap_texels[MAX_SCRAPS][BLOCK_WIDTH * BLOCK_HEIGHT];
-qboolean scrap_dirty;
-
-/**
- * @brief
- * @return a texture number and the position inside it
- */
-static int Scrap_AllocBlock (int w, int h, int *x, int *y)
-{
-	int i, j;
-	int best, best2;
-	int texnum;
-
-	for (texnum = 0; texnum < MAX_SCRAPS; texnum++) {
-		best = BLOCK_HEIGHT;
-
-		for (i = 0; i < BLOCK_WIDTH - w; i++) {
-			best2 = 0;
-
-			for (j = 0; j < w; j++) {
-				if (scrap_allocated[texnum][i + j] >= best)
-					break;
-				if (scrap_allocated[texnum][i + j] > best2)
-					best2 = scrap_allocated[texnum][i + j];
-			}
-			if (j == w) {		/* this is a valid spot */
-				*x = i;
-				*y = best = best2;
-			}
-		}
-
-		if (best + h > BLOCK_HEIGHT)
-			continue;
-
-		for (i = 0; i < w; i++)
-			scrap_allocated[texnum][*x + i] = best + h;
-
-		return texnum;
-	}
-
-	return -1;
-/*	Sys_Error ("Scrap_AllocBlock: full"); */
-}
-
-static int scrap_uploads = 0;
-
-/**
- * @brief
- */
-void Scrap_Upload (void)
-{
-	scrap_uploads++;
-	GL_Bind(TEXNUM_SCRAPS);
-	GL_Upload8(scrap_texels[0], BLOCK_WIDTH, BLOCK_HEIGHT, qfalse, it_pic, NULL);
-	scrap_dirty = qfalse;
-}
-
-/*
 =================================================================
 PCX LOADING
 =================================================================
 */
-
 
 /**
  * @brief
@@ -1957,37 +1885,17 @@ image_t *GL_LoadPic (const char *name, byte * pic, int width, int height, imaget
 	if (image->shader)
 		Com_DPrintf("GL_LoadPic: Shader found: '%s'\n", image->name);
 
-	/* load little pics into the scrap */
-	if (image->type == it_pic && bits == 8 && image->width < 64 && image->height < 64) {
-		int x = 0, y = 0;
-		int i, j, k;
-		int texnum;
-
-		texnum = Scrap_AllocBlock(image->width, image->height, &x, &y);
-		if (texnum == -1)
-			goto nonscrap;
-		scrap_dirty = qtrue;
-
-		/* copy the texels into the scrap block */
-		k = 0;
-		for (i = 0; i < image->height; i++)
-			for (j = 0; j < image->width; j++, k++)
-				scrap_texels[texnum][(y + i) * BLOCK_WIDTH + x + j] = pic[k];
-		image->texnum = TEXNUM_SCRAPS + texnum;
-		image->has_alpha = qtrue;
-	} else {
-	  nonscrap:
-		image->texnum = TEXNUM_IMAGES + (image - gltextures);
-		if (pic) {
-			GL_Bind(image->texnum);
-			if (bits == 8)
-				image->has_alpha = GL_Upload8(pic, width, height, (image->type != it_pic), image->type, image);
-			else
-				image->has_alpha = GL_Upload32((unsigned *) pic, width, height,
-										(image->type != it_pic), image->type == it_pic, image->type, image);
-			image->upload_width = upload_width;	/* after power of 2 and scales */
-			image->upload_height = upload_height;
-		}
+	image->texnum = TEXNUM_IMAGES + (image - gltextures);
+	if (pic) {
+		GL_Bind(image->texnum);
+		if (bits == 8) {
+			image->has_alpha = GL_Upload8(pic, width, height, (image->type != it_pic), image->type, image);
+			Com_Printf("....................8bit image\n");
+		} else
+			image->has_alpha = GL_Upload32((unsigned *) pic, width, height,
+				(image->type != it_pic), (image->type == it_pic), image->type, image);
+		image->upload_width = upload_width;	/* after power of 2 and scales */
+		image->upload_height = upload_height;
 	}
 	return image;
 }

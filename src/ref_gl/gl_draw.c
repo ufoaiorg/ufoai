@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "gl_local.h"
 
 extern cvar_t *gl_drawclouds;
-extern qboolean scrap_dirty;
 image_t *shadow;
 image_t *blood;
 
@@ -341,9 +340,6 @@ void Draw_NormPic (float x, float y, float w, float h, float sh, float th, float
 		return;
 	}
 
-	if (scrap_dirty)
-		Scrap_Upload();
-
 	/* normalize */
 	nx = x * vid.rx;
 	ny = y * vid.ry;
@@ -435,9 +431,6 @@ void Draw_Pic (int x, int y, const char *pic)
 		ri.Con_Printf(PRINT_ALL, "Can't find pic: %s\n", pic);
 		return;
 	}
-
-	if (scrap_dirty)
-		Scrap_Upload();
 
 #ifdef HAVE_SHADERS
 	if (gl->shader)
@@ -1000,7 +993,7 @@ void Draw_3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, 
 	/* add the light */
 	a = cos(q) * SIN_ALPHA;
 	VectorSet(lightPos, cos(p) * sqrt(0.5f * (1 - a * a)), -sin(p) * sqrt(0.5f * (1 - a * a)), a);
-	
+
 	qglLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 	qglLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor);
 	qglLightfv(GL_LIGHT0, GL_AMBIENT, lightColor);

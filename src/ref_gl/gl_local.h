@@ -578,6 +578,4 @@ void GL_BloomBlend(void);
 void R_SetCacheState(mBspSurface_t * surf);
 void R_BuildLightMap(mBspSurface_t * surf, byte * dest, int stride);
 
-void Scrap_Upload(void);
-
 #endif                          /* GL_LOCAL_H */
