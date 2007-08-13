@@ -167,7 +167,7 @@ menu transfer
 		click
 		format	"20 0"
 		wheel
-		height	"21"
+		height	"20"
 //		bgcolor	"1 1 1 0.5"
 	}
 
