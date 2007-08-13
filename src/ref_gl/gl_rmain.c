@@ -1470,10 +1470,8 @@ refexport_t GetRefAPI (refimport_t rimp)
 	re.FontDrawString = Font_DrawString;
 	re.FontLength = Font_Length;
 	re.FontRegister = Font_Register;
-	re.DrawTileClear = Draw_TileClear;
 	re.DrawFill = Draw_Fill;
 	re.DrawColor = Draw_Color;
-	re.DrawFadeScreen = Draw_FadeScreen;
 	re.DrawDayAndNight = Draw_DayAndNight;
 	re.DrawLineStrip = Draw_LineStrip;
 	re.DrawLineLoop = Draw_LineLoop;

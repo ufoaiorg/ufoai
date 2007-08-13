@@ -308,10 +308,8 @@ typedef struct {
 	void (EXPORT *FontRegister) (const char *name, int size, const char *path, const char *style);
 	void (EXPORT *FontLength) (const char *font, char *c, int *width, int *height);
 	int (EXPORT *FontDrawString) (const char *font, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine);
-	void (EXPORT *DrawTileClear) (int x, int y, int w, int h, const char *name);
 	void (EXPORT *DrawFill) (int x, int y, int w, int h, int align, const vec4_t color);
 	void (EXPORT *DrawColor) (const float *rgba);
-	void (EXPORT *DrawFadeScreen) (void);
 	void (EXPORT *DrawDayAndNight) (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map);
 	void (EXPORT *DrawLineStrip) (int points, int *verts);
 	void (EXPORT *DrawLineLoop) (int points, int *verts);
