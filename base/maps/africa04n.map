@@ -9814,6 +9814,7 @@
 "classname" "misc_particle"
 "particle" "camping_fire"
 "origin" "356 -480 24"
+"spawnflags" "255"
 }
 // entity 3
 {
