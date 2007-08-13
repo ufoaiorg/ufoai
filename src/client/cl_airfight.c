@@ -468,7 +468,7 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 			} else {
 				Com_sprintf(ms->location, sizeof(ms->location), _("No nation"));
 			}
-			CL_GetNationTeamName(nation, ms->civTeam, sizeof(ms->civTeam));
+			Q_strncpyz(ms->civTeam, nation->id, sizeof(ms->civTeam));
 
 			/* FIXME */
 			Q_strncpyz(ms->alienTeam, "ortnok", sizeof(ms->alienTeam));

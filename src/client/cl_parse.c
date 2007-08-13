@@ -90,8 +90,8 @@ const char *ev_format[] =
 	"s",				/* EV_ENT_PERISH */
 	"sss",				/* EV_ENT_EDICT */
 
-	"!sbbbbbgbbbssbsbbbs",	/* EV_ACTOR_APPEAR; beware of the '!' */
-	"!sbbbbbgsb",		/* EV_ACTOR_ADD; beware of the '!' */
+	"!sbbbbgbbbssbsbbbs",	/* EV_ACTOR_APPEAR; beware of the '!' */
+	"!sbbbbgsb",		/* EV_ACTOR_ADD; beware of the '!' */
 	"s",				/* EV_ACTOR_START_MOVE */
 	"sb",				/* EV_ACTOR_TURN */
 	"!sbbs",			/* EV_ACTOR_MOVE: Don't use this format string - see CL_ActorDoMove for more info */
@@ -830,6 +830,7 @@ static void CL_ActorAdd (struct dbuffer *msg)
 {
 	le_t *le;
 	int entnum;
+	int teamDefID;
 
 	/* check if the actor is already visible */
 	entnum = NET_ReadShort(msg);
@@ -842,9 +843,14 @@ static void CL_ActorAdd (struct dbuffer *msg)
 
 	/* get the info */
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_ADD],
-				&le->team, &le->teamDesc, &le->category,
+				&le->team, &teamDefID,
 				&le->gender, &le->pnum, &le->pos,
 				&le->state, &le->fieldSize);
+
+	if (teamDefID < 0 || teamDefID > numTeamDefs)
+		Com_Printf("CL_ActorAppear: Invalid teamDef index\n");
+	else
+		le->teamDef = &teamDef[teamDefID];
 
 	/*Com_Printf("CL_ActorAdd: Add number: %i\n", entnum);*/
 
@@ -867,7 +873,7 @@ static void CL_ActorAppear (struct dbuffer *msg)
 	le_t *le;
 	char tmpbuf[128];
 	int entnum, modelnum1, modelnum2;
-	int teamDescID = -1;
+	int teamDefID = -1;
 
 	/* check if the actor is already visible */
 	entnum = NET_ReadShort(msg);
@@ -889,11 +895,16 @@ static void CL_ActorAppear (struct dbuffer *msg)
 
 	/* get the info */
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_APPEAR],
-				&le->team, &le->teamDesc, &le->category, &le->gender, &le->pnum, &le->pos,
+				&le->team, &teamDefID, &le->gender, &le->pnum, &le->pos,
 				&le->dir, &le->right, &le->left,
 				&modelnum1, &modelnum2, &le->skinnum,
 				&le->state, &le->fieldSize,
 				&le->maxTU, &le->maxMorale, &le->maxHP);
+
+	if (teamDefID < 0 || teamDefID > numTeamDefs)
+		Com_Printf("CL_ActorAppear: Invalid teamDef index\n");
+	else
+		le->teamDef = &teamDef[teamDefID];
 
 	switch (le->fieldSize) {
 	case ACTOR_SIZE_NORMAL:
@@ -943,11 +954,10 @@ static void CL_ActorAppear (struct dbuffer *msg)
 			/* message */
 			if (le->team != TEAM_CIVILIAN) {
 				if (curCampaign) {
-					if (le->teamDesc) {
-						teamDescID = le->teamDesc - 1;
-						if (RS_IsResearched_idx(RS_GetTechIdxByName(teamDesc[teamDescID].tech))) {
+					if (le->teamDef) {
+						if (RS_IsResearched_idx(RS_GetTechIdxByName(le->teamDef->tech))) {
 							Com_sprintf(tmpbuf, sizeof(tmpbuf), "%s %s!\n",
-							_("Alien spotted:"), _(teamDesc[teamDescID].name));
+							_("Alien spotted:"), _(le->teamDef->name));
 							CL_DisplayHudMessage(tmpbuf, 2000);
 						} else
 							CL_DisplayHudMessage(_("Alien spotted!\n"), 2000);

@@ -292,10 +292,6 @@ typedef struct nation_s {
 				 * @todo this needs to be removed here and added into the buy&produce menues.
 				 */
 
-	char *names;		/**< Space seperated list of possible team ids.
-				 * Team IDs as defined in team_*.ufo
-				 */
-
 	/** A list if points where the border of this nation is located
 	@todo not used right now? */
 	vec2_t borders[MAX_NATION_BORDERS];	/**< GL_LINE_LOOP coordinates */
@@ -388,7 +384,6 @@ void CL_ParseResearchedCampaignItems(const char *name, const char **text);
 void CL_ParseResearchableCampaignStates(const char *name, const char **text, qboolean researchable);
 extern void CP_ExecuteMissionTrigger(mission_t * m, int won, base_t* base);
 extern actMis_t* CL_CampaignAddGroundMission(mission_t* mis);
-const char* CL_GetNationTeamName(const nation_t* nation, char *teamname, size_t size);
 
 campaign_t* CL_GetCampaign(const char* name);
 void CL_GameExit(void);

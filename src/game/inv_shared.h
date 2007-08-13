@@ -344,16 +344,16 @@ typedef struct character_s {
 
 	int skills[SKILL_NUM_TYPES];		/**< Array of skills and abilities. */
 
-	int HP;					/**< Health points (current ones). */
-	int maxHP;				/**< Maximum health points (as in: 100% == fully healed). */
-	int STUN, AP, morale;			/**< @todo: document me. */
+	int HP;						/**< Health points (current ones). */
+	int maxHP;					/**< Maximum health points (as in: 100% == fully healed). */
+	int STUN, AP, morale;		/**< @todo: document me. */
 
-	chrScore_t chrscore;			/**< Array of scores. */
+	chrScore_t chrscore;		/**< Array of scores. */
 
-	int kills[KILLED_NUM_TYPES];		/**< Array of kills (@todo: integrate me with chrScore_t chrscore). */
-	int assigned_missions;			/**< Assigned missions (@todo: integrate me with chrScore_t chrscore). */
+	int kills[KILLED_NUM_TYPES];/**< Array of kills (@todo: integrate me with chrScore_t chrscore). */
+	int assigned_missions;		/**< Assigned missions (@todo: integrate me with chrScore_t chrscore). */
 
-	int rank;				/**< Index of rank (in gd.ranks). */
+	int rank;					/**< Index of rank (in gd.ranks). */
 
 	int fieldSize;				/**< ACTOR_SIZE_* */
 
@@ -365,9 +365,8 @@ typedef struct character_s {
 	qboolean armor;				/**< Able to use armour. */
 	qboolean weapons;			/**< Able to use weapons. */
 
-	int teamDesc;				/**< Index in teamDesc array. */
-	int category;				/**< nameCategory index in nameCat. */
-	int gender;				/**< Gender index. */
+	int teamDefIndex;			/**< teamDef array index. */
+	int gender;					/**< Gender index. */
 
 /* @todo: remove me, if this is not needed. */
 /*  int     destroyed_objects; */

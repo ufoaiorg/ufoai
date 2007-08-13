@@ -2305,7 +2305,7 @@ void CL_InvCheckHands (struct dbuffer *msg)
 	actor_idx = CL_GetActorNumber(le);
 	if (actor_idx == -1) {
 		Com_DPrintf("CL_InvCheckHands: Could not get local entity actor id via CL_GetActorNumber\n");
-		Com_Printf("CL_InvCheckHands: DEBUG actor info: team=%i(%s) type=%i inuse=%i\n", le->team, teamDesc[le->teamDesc].name, le->type, le->inuse);
+		Com_Printf("CL_InvCheckHands: DEBUG actor info: team=%i(%s) type=%i inuse=%i\n", le->team, le->teamDef ? le->teamDef->name : "No team", le->type, le->inuse);
 		return;
 	}
 
@@ -2582,8 +2582,6 @@ void CL_ActorToggleReaction_f (void)
  */
 static void CL_ActorHit (le_t *le, vec3_t impact, int normal)
 {
-	int teamDescID = -1;
-
 	if (!le) {
 		Com_DPrintf("CL_ActorHit: Can't spawn particles, LE doesn't exist\n");
 		return;
@@ -2598,12 +2596,10 @@ static void CL_ActorHit (le_t *le, vec3_t impact, int normal)
 	}
 #endif
 
-	if (le->teamDesc) {
-		teamDescID = le->teamDesc - 1;
-		/* Spawn "hit_particle" if defined in teamDesc. */
-		if (teamDesc[teamDescID].hit_particle[0]) {
-			CL_ParticleSpawn(teamDesc[teamDescID].hit_particle, 0, impact, bytedirs[normal], NULL);
-		}
+	if (le->teamDef) {
+		/* Spawn "hit_particle" if defined in teamDef. */
+		if (le->teamDef->hitParticle[0])
+			CL_ParticleSpawn(le->teamDef->hitParticle, 0, impact, bytedirs[normal], NULL);
 	}
 }
 
@@ -2828,7 +2824,6 @@ void CL_ActorDie (struct dbuffer *msg)
 	le_t *le;
 	int number, state;
 	int i;
-	int teamDescID = -1;
 	char tmpbuf[128];
 	character_t *chr;
 
@@ -2893,16 +2888,15 @@ void CL_ActorDie (struct dbuffer *msg)
 				CL_DisplayHudMessage(_("A civilian was killed.\n"), 2000);
 			break;
 		case (TEAM_ALIEN):
-			if (le->teamDesc) {
-				teamDescID = le->teamDesc - 1;
-				if (RS_IsResearched_idx(RS_GetTechIdxByName(teamDesc[teamDescID].tech))) {
+			if (le->teamDef) {
+				if (RS_IsResearched_idx(RS_GetTechIdxByName(le->teamDef->tech))) {
 					if ((le->state & STATE_STUN) & ~STATE_DEAD) {
 						Com_sprintf(tmpbuf, sizeof(tmpbuf), "%s %s.\n",
-						_("An alien was stunned:"), _(teamDesc[teamDescID].name));
+						_("An alien was stunned:"), _(le->teamDef->name));
 						CL_DisplayHudMessage(tmpbuf, 2000);
 					} else {
 						Com_sprintf(tmpbuf, sizeof(tmpbuf), "%s %s.\n",
-						_("An alien was killed:"), _(teamDesc[teamDescID].name));
+						_("An alien was killed:"), _(le->teamDef->name));
 						CL_DisplayHudMessage(tmpbuf, 2000);
 					}
 				} else {
@@ -2933,7 +2927,6 @@ void CL_ActorDie (struct dbuffer *msg)
 		}
 	}
 
-	Com_DPrintf("CL_ActorDie()... category: %i, gender: %i\n", le->category, le->gender);
 	CL_PlayActorSound(le, SND_DEATH);
 
 	VectorCopy(player_dead_maxs, le->maxs);
@@ -4041,17 +4034,15 @@ void CL_AddTargeting (void)
 void CL_PlayActorSound (le_t* le, actorSound_t soundType)
 {
 	const char *actorSound;
-	int gender = le->gender;
-	int category = le->category;
 	sfx_t* sfx;
 
-	actorSound = Com_GetActorSound(category, gender, soundType);
+	actorSound = Com_GetActorSound(le->teamDef, le->gender, soundType);
 
 	Com_DPrintf("CL_PlayActorSound()... actorSound: %s\n", actorSound);
 	if (actorSound) {
 		sfx = S_RegisterSound(actorSound);
 		S_StartSound(NULL, le->entnum, SOUND_CHANNEL_ACTOR, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
 	} else
-		Com_Printf("CL_PlayActorSound()... could not start sound for category: %i gender: %i soundType: %i\n",
-			category, gender, soundType);
+		Com_Printf("CL_PlayActorSound()... could not start sound for teamID: %s gender: %i soundType: %i\n",
+			le->teamDef ? le->teamDef->id : "No team", le->gender, soundType);
 }

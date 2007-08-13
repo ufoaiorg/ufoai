@@ -765,61 +765,6 @@ static void CL_AircraftList_f (void)
 }
 
 /**
- * @brief Returns one of the teamnames from nation->names
- * @param[in] nation The nation to get the team name for - may also be NULL
- * @param[in] teamname This is the target buffer for the teamname string
- * @param[in] size Size of the the target buffer teamname
- * @return Also returns the teamname
- */
-const char* CL_GetNationTeamName (const nation_t* nation, char *teamname, size_t size)
-{
-	int i = 0, randTeamString;
-	char *string, *string2;
-	char namesString[256];
-
-	if (!nation || !nation->names) {
-		Q_strncpyz(teamname, "european", size);
-		return teamname;
-	}
-
-#ifdef DEBUG
-	if (strlen(nation->names) >= sizeof(namesString))
-		Com_Printf("CL_GetNationTeamName: nation->names will be trancated\n");
-#endif
-
-	string = nation->names;
-	while (*string) {
-		if (*string == ' ')
-			i++;
-		string++;
-	}
-
-	/* only one entry */
-	if (i == 0) {
-		Q_strncpyz(teamname, nation->names, size);
-		return nation->names;
-	}
-
-	Com_sprintf(namesString, sizeof(namesString), nation->names);
-	randTeamString = rand() % i;
-	Com_DPrintf("CL_GetNationTeamName: rnd: %i (names: %s)\n", randTeamString, nation->names);
-	string2 = namesString;
-	for (i = 0; i <= randTeamString; i++) {
-		string = string2;
-		string2 = strstr(string, " ");
-		assert(string2);
-		*string2++ = '\0';
-	}
-	Com_DPrintf("CL_GetNationTeamName: name: %s\n", string);
-#ifdef DEBUG
-	if (strlen(string) >= size)
-		Com_Printf("CL_GetNationTeamName: teamname buffer will be trancated (%s is too long)\n", string);
-#endif
-	Q_strncpyz(teamname, string, size);
-	return string;
-}
-
-/**
  * @brief Backs up each nation's relationship values.
  * @note Right after the copy the stats for the current month are the same as the ones from the (end of the) previous month.
  * They will change while the curent month is running of course :)
@@ -1744,7 +1689,7 @@ static void CL_NationStatsUpdate_f(void)
 
 			colorNode->linestrips.pointList[colorNode->linestrips.numStrips] = (int*)colorLinePts[usedColPtslists];
 			colorNode->linestrips.numPoints[colorNode->linestrips.numStrips] = 2;
-			
+
 			if (i == selectedNation) {
 				Vector4Copy(graphColorSelected, colorNode->linestrips.color[colorNode->linestrips.numStrips]);
 			} else {
@@ -2017,10 +1962,11 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 			Com_sprintf(mis->def->type, sizeof(mis->def->type), _("UFO crash site"));
 			if (nation) {
 				Com_sprintf(mis->def->location, sizeof(mis->def->location), _(nation->name));
+				Q_strncpyz(mis->def->civTeam, nation->id, sizeof(mis->def->civTeam));
 			} else {
 				Com_sprintf(mis->def->location, sizeof(mis->def->location), _("No nation"));
+				Q_strncpyz(mis->def->civTeam, "europa", sizeof(mis->def->civTeam));
 			}
-			CL_GetNationTeamName(nation, mis->def->civTeam, sizeof(mis->def->civTeam));
 			break;
 		}
 		case MIS_MAX:
@@ -3000,6 +2946,9 @@ void CL_ParseMission (const char *name, const char **text)
 #endif
 	if (!*ms->loadingscreen)
 		Q_strncpyz(ms->loadingscreen, "default.jpg", MAX_VAR);
+
+	if (!*ms->civTeam)
+		Q_strncpyz(ms->civTeam, ms->nation, sizeof(ms->civTeam));
 }
 
 
@@ -3564,7 +3513,7 @@ static const value_t nation_vals[] = {
 	{"alien_friendly", V_FLOAT, offsetof(nation_t, stats[0].alienFriendly), MEMBER_SIZEOF(nation_t, stats[0].alienFriendly)},
 	{"soldiers", V_INT, offsetof(nation_t, maxSoldiers), MEMBER_SIZEOF(nation_t, maxSoldiers)},
 	{"scientists", V_INT, offsetof(nation_t, maxScientists), MEMBER_SIZEOF(nation_t, maxScientists)},
-	{"names", V_CLIENT_HUNK_STRING, offsetof(nation_t, names), 0},
+
 	{NULL, 0, 0, 0}
 };
 
@@ -4062,8 +4011,8 @@ void CL_ResetSinglePlayerData (void)
 	E_ResetEmployees();
 	INVSH_InitInventory(invList);
 	/* Count Alien team definitions. */
-	for (i = 0; i < numTeamDesc; i++) {
-		if (teamDesc[i].alien)
+	for (i = 0; i < numTeamDefs; i++) {
+		if (teamDef[i].alien)
 			gd.numAliensTD++;
 	}
 }

@@ -1145,34 +1145,8 @@ typedef enum model_script_s {
 	MODEL_NUM_TYPES
 } model_script_t;
 
-/* different sounds for each sex and actor definition */
-#define MAX_ACTOR_SOUNDS 16
-
-typedef struct nameCategory_s {
-	char title[MAX_VAR];
-	char *names[NAME_NUM_TYPES];
-	int numNames[NAME_NUM_TYPES];
-	char *models[NAME_LAST];
-	int numModels[NAME_LAST];
-	char sounds[MAX_SOUND_TYPES][NAME_LAST][MAX_ACTOR_SOUNDS][MAX_QPATH];
-	int numSounds[MAX_SOUND_TYPES][NAME_LAST];
-} nameCategory_t;
-
-typedef struct teamDef_s {
-	char title[MAX_VAR];
-	char *cats;
-	int num;
-} teamDef_t;
-
-teamDesc_t teamDesc[MAX_TEAMDEFS];
-
-static nameCategory_t nameCat[MAX_NAMECATS];
-static teamDef_t teamDef[MAX_TEAMDEFS];
-static char infoStr[MAX_INFOSTRING];
-static char *infoPos; /* size checked - see infoSize */
-static int numNameCats = 0;
-static int numTeamDefs = 0;
-int numTeamDesc = 0;
+teamDef_t teamDef[MAX_TEAMDEFS];
+int numTeamDefs = 0;
 
 const char *name_strings[NAME_NUM_TYPES] = {
 	"neutral",
@@ -1255,41 +1229,43 @@ NAME AND TEAM DEFINITION INTERPRETER
 /**
  * @brief
  * @param[in] gender 1 (female) or 2 (male)
- * @param[in] category country strings like: spanish_italian, german, russian and so on
+ * @param[in] team Country strings like: spanish_italian, german, russian and so on
  * @sa Com_GetCharacterValues
  */
-char *Com_GiveName (int gender, const char *category)
+const char *Com_GiveName (int gender, const char *team)
 {
 	static char returnName[MAX_VAR];
-	nameCategory_t *nc;
-	char *pos;
+	teamDef_t *td;
 	int i, j, name = 0;
+	linkedList_t* list;
 
 	/* search the name */
-	for (i = 0, nc = nameCat; i < numNameCats; i++, nc++)
-		if (!Q_strncmp(category, nc->title, MAX_VAR)) {
+	for (i = 0, td = teamDef; i < numTeamDefs; i++, td++)
+		if (!Q_strncmp(team, td->id, MAX_VAR)) {
 #ifdef DEBUG
 			for (j = 0; j < NAME_NUM_TYPES; j++)
-				name += nc->numNames[j];
+				name += td->numNames[j];
 			if (!name)
-				Sys_Error("Could not find any valid name definitions for category '%s'\n", category);
+				Sys_Error("Could not find any valid name definitions for category '%s'\n", team);
 #endif
 			/* found category */
-			if (!nc->numNames[gender]) {
+			if (!td->numNames[gender]) {
 #ifdef DEBUG
-				Com_DPrintf("No valid name definitions for gender %i in category '%s'\n", gender, category);
+				Com_DPrintf("No valid name definitions for gender %i in category '%s'\n", gender, team);
 #endif
 				return NULL;
 			}
-			name = rand() % nc->numNames[gender];
+			name = rand() % td->numNames[gender];
 
 			/* skip names */
-			pos = nc->names[gender];
-			for (j = 0; j < name; j++)
-				pos += strlen(pos) + 1;
+			list = td->names[gender];
+			for (j = 0; j < name; j++) {
+				assert(list);
+				list = list->next;
+			}
 
 			/* store the name */
-			Q_strncpyz(returnName, pos, sizeof(returnName));
+			Q_strncpyz(returnName, list->data, sizeof(returnName));
 			return returnName;
 		}
 
@@ -1304,65 +1280,72 @@ char *Com_GiveName (int gender, const char *category)
  * @param[in] category country strings like: spanish_italian, german, russian and so on
  * @sa Com_GetCharacterValues
  */
-char *Com_GiveModel (int type, int gender, const char *category)
+const char *Com_GiveModel (int type, int gender, const char *teamID)
 {
-	nameCategory_t *nc;
-	char *str;
+	teamDef_t *td;
 	int i, j, num;
+	linkedList_t* list;
 
 	/* search the name */
-	for (i = 0, nc = nameCat; i < numNameCats; i++, nc++)
-		if (!Q_strncmp(category, nc->title, MAX_VAR)) {
+	for (i = 0, td = teamDef; i < numTeamDefs; i++, td++)
+		if (!Q_strncmp(teamID, td->id, MAX_VAR)) {
 			/* found category */
-			if (!nc->numModels[gender]) {
-				Com_Printf("Com_GiveModel: no models defined for gender %i and category '%s'\n", gender, category);
+			if (!td->numModels[gender]) {
+				Com_Printf("Com_GiveModel: no models defined for gender %i and category '%s'\n", gender, teamID);
 				return NULL;
 			}
 			/* search one of the model definitions */
-			num = (rand() % nc->numModels[gender]) * MODEL_NUM_TYPES;
+			num = (rand() % td->numModels[gender]) * MODEL_NUM_TYPES;
 			/* now go to the type entry from team_*.ufo */
 			num += type;
 
 			/* skip models and unwanted info */
-			str = nc->models[gender];
-			for (j = 0; j < num; j++)
-				str += strlen(str) + 1;
+			list = td->models[gender];
+			for (j = 0; j < num; j++) {
+				assert(list);
+				list = list->next;
+			}
 
 			/* return the value */
-			return str;
+			return list->data;
 		}
 
-	Com_Printf("Com_GiveModel: no models for gender %i and category '%s'\n", gender, category);
+	Com_Printf("Com_GiveModel: no models for gender %i and category '%s'\n", gender, teamID);
 	/* nothing found */
 	return NULL;
 }
 
 /**
  * @brief Returns the actor sounds for a given category
- * @param[in] category Index in nameCat array (from le_t after actor appear event)
+ * @param[in] teamID Index in teamDef array
  * @param[in] gender The gender of the actor
  * @param[in] sound Which sound category (actorSound_t)
  */
-const char* Com_GetActorSound (int category, int gender, actorSound_t soundType)
+const char* Com_GetActorSound (teamDef_t* td, int gender, actorSound_t soundType)
 {
-	int random;
+	int random, j;
+	linkedList_t* list;
 
-	if (category < 0 || category >= numNameCats) {
-		Com_Printf("Com_GetActorSound: invalid category: %i\n", category);
+	if (!td)
 		return NULL;
-	}
+
 	if (gender < 0 || gender >= 3) {
 		Com_Printf("Com_GetActorSound: invalid gender: %i\n", gender);
 		return NULL;
 	}
-	if (nameCat[category].numSounds[soundType][gender] <= 0) {
-		Com_Printf("Com_GetActorSound: no sound defined for soundtype: %i, category: %i, gender: %i\n", soundType, category, gender);
+	if (td->numSounds[soundType][gender] <= 0) {
+		Com_Printf("Com_GetActorSound: no sound defined for soundtype: %i, teamID: '%s', gender: %i\n", soundType, td->id, gender);
 		return NULL;
 	}
 
-	random = rand() % nameCat[category].numSounds[soundType][gender];
+	random = rand() % td->numSounds[soundType][gender];
+	list = td->sounds[soundType][gender];
+	for (j = 0; j < random; j++) {
+		assert(list);
+		list = list->next;
+	}
 
-	return nameCat[category].sounds[soundType][gender][random];
+	return list->data;
 }
 
 /**
@@ -1375,100 +1358,66 @@ const char* Com_GetActorSound (int category, int gender, actorSound_t soundType)
 int Com_GetCharacterValues (const char *team, character_t * chr)
 {
 	teamDef_t *td;
-	char *str;
-	int i, gender, category = 0;
+	const char *str;
+	int i, gender;
 	int retry = 1000;
 
 	/* get team definition */
 	for (i = 0; i < numTeamDefs; i++)
-		if (!Q_strncmp(team, teamDef[i].title, MAX_VAR))
+		if (!Q_strncmp(team, teamDef[i].id, MAX_VAR))
 			break;
 
 	if (i < numTeamDefs)
 		td = &teamDef[i];
 	else {
-		Com_DPrintf("Com_GetCharacterValues: could not find team '%s' in team definitions - searching name definitions now\n", team);
-		/* search in name categories, if it isn't a team definition */
-		td = NULL;
-		for (i = 0; i < numNameCats; i++)
-			if (!Q_strncmp(team, nameCat[i].title, MAX_VAR))
-				break;
-		if (i == numNameCats) {
-			/* use default team */
-			td = &teamDef[0];
-			assert(td);
-			Com_DPrintf("Com_GetCharacterValues: could not find team '%s' in name definitions - using the first team definition now: '%s'\n", team, td->title);
-		} else
-			category = i;
+		Com_Printf("Com_GetCharacterValues: could not find team '%s' in team definitions - searching name definitions now\n", team);
+		return 0;
 	}
-
-#ifdef DEBUG
-	if (!td)
-		Com_DPrintf("Com_GetCharacterValues: Warning - this team (%s) could not be handled via aliencont code - no tech pointer will be available\n", team);
-#endif
 
 	/* default values for human characters */
 	chr->fieldSize = ACTOR_SIZE_NORMAL; /* Default value is 1x1 */
-	chr->weapons = chr->armor = qtrue;
+	chr->weapons = td->weapons;
+	chr->armor = td->armor;
+	chr->teamDefIndex = i;
 
 	/* get the models */
 	while (retry--) {
 		gender = rand() % NAME_LAST;
-		if (td)
-			category = (int) td->cats[rand() % td->num];
-
-		chr->category = category;
 		chr->gender = gender;
-		for (i = 0; i < numTeamDesc; i++) {
-			if (!Q_strcmp(teamDesc[i].id, nameCat[category].title)) {
-				/* transfered as byte - 0 means, not found - no -1 possible */
-				chr->teamDesc = i + 1;
-				/* set some team definition values to character, too */
-				/* make these values available to the game lib */
-				chr->weapons = teamDesc[i].weapons;
-				chr->armor = teamDesc[i].armor;
-				chr->fieldSize = teamDesc[i].size;
-			}
-		}
-
-#ifdef DEBUG
-		if (i == numTeamDesc)
-			Com_DPrintf("Com_GetCharacterValues: Warning - could not find a valid teamdesc for team '%s'\n", nameCat[category].title);
-#endif
 
 		/* get name */
-		str = Com_GiveName(gender, nameCat[category].title);
+		str = Com_GiveName(gender, td->id);
 		if (!str)
 			continue;
 		Q_strncpyz(chr->name, str, sizeof(chr->name));
 		Q_strcat(chr->name, " ", sizeof(chr->name));
-		str = Com_GiveName(gender + LASTNAME, nameCat[category].title);
+		str = Com_GiveName(gender + LASTNAME, td->id);
 		if (!str)
 			continue;
 		Q_strcat(chr->name, str, sizeof(chr->name));
 
 		/* get model */
-		str = Com_GiveModel(MODEL_PATH, gender, nameCat[category].title);
+		str = Com_GiveModel(MODEL_PATH, gender, td->id);
 		if (!str)
 			continue;
 		Q_strncpyz(chr->path, str, sizeof(chr->path));
 
-		str = Com_GiveModel(MODEL_BODY, gender, nameCat[category].title);
+		str = Com_GiveModel(MODEL_BODY, gender, td->id);
 		if (!str)
 			continue;
 		Q_strncpyz(chr->body, str, sizeof(chr->body));
 
-		str = Com_GiveModel(MODEL_HEAD, gender, nameCat[category].title);
+		str = Com_GiveModel(MODEL_HEAD, gender, td->id);
 		if (!str)
 			continue;
 		Q_strncpyz(chr->head, str, sizeof(chr->head));
 
-		str = Com_GiveModel(MODEL_SKIN, gender, nameCat[category].title);
+		str = Com_GiveModel(MODEL_SKIN, gender, td->id);
 		if (!str)
 			continue;
 		return atoi(str);
 	}
-	Com_Printf("Could not set character values for team '%s' - namecat '%s'\n", team, nameCat[category].title);
+	Com_Printf("Could not set character values for team '%s' - team '%s'\n", team, td->id);
 	return 0;
 }
 
@@ -1476,36 +1425,18 @@ int Com_GetCharacterValues (const char *team, character_t * chr)
  * @brief Parses "name" definition from team_* ufo script files
  * @sa Com_ParseActors
  * @sa Com_ParseScripts
- * @note fills the nameCat array
- * @note searches whether the actor id is already somewhere in the nameCat array
- * if not, it generates a new nameCat entry
  */
-static void Com_ParseNames (const char *name, const char **text)
+static void Com_ParseActorNames (const char *name, const char **text, teamDef_t* td)
 {
-	nameCategory_t *nc;
 	const char *errhead = "Com_ParseNames: unexpected end of file (names ";
 	const char *token;
 	int i;
-
-	/* check for additions to existing name categories */
-	for (i = 0, nc = nameCat; i < numNameCats; i++, nc++)
-		if (!Q_strncmp(nc->title, name, sizeof(nc->title)))
-			break;
-
-	/* reset new category */
-	if (i == numNameCats) {
-		memset(nc, 0, sizeof(nameCategory_t));
-		numNameCats++;
-	}
-	Q_strncpyz(nc->title, name, sizeof(nc->title));
 
 	/* get name list body body */
 	token = COM_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("Com_ParseNames: name def \"%s\" without body ignored\n", name);
-		if (numNameCats - 1 == nc - nameCat)
-			numNameCats--;
+		Com_Printf("Com_ParseActorNames: names def \"%s\" without body ignored\n", name);
 		return;
 	}
 
@@ -1519,9 +1450,7 @@ static void Com_ParseNames (const char *name, const char **text)
 
 		for (i = 0; i < NAME_NUM_TYPES; i++)
 			if (!Q_strcmp(token, name_strings[i])) {
-				/* initialize list */
-				nc->names[i] = infoPos;
-				nc->numNames[i] = 0;
+				td->numNames[i] = 0;
 
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
@@ -1540,17 +1469,16 @@ static void Com_ParseNames (const char *name, const char **text)
 					/* some names can be translateable */
 					if (*token == '_')
 						token++;
-					strcpy(infoPos, token);
-					infoPos += strlen(token) + 1;
-					nc->numNames[i]++;
+					LIST_Add(&td->names[i], token);
+					td->numNames[i]++;
 				} while (*text);
 
 				/* lastname is different */
 				/* fill female and male lastnames from neutral lastnames */
 				if (i == NAME_LAST)
 					for (i = NAME_NUM_TYPES - 1; i > NAME_LAST; i--) {
-						nc->names[i] = nc->names[NAME_LAST];
-						nc->numNames[i] = nc->numNames[NAME_LAST];
+						td->names[i] = td->names[NAME_LAST];
+						td->numNames[i] = td->numNames[NAME_LAST];
 					}
 				break;
 			}
@@ -1560,53 +1488,30 @@ static void Com_ParseNames (const char *name, const char **text)
 
 	} while (*text);
 
-	if (nc->numNames[NAME_FEMALE] && !nc->numNames[NAME_FEMALE_LAST])
-		Sys_Error("Com_ParseNames: '%s' has no female lastname category\n", nc->title);
-	if (nc->numNames[NAME_MALE] && !nc->numNames[NAME_MALE_LAST])
-		Sys_Error("Com_ParseNames: '%s' has no male lastname category\n", nc->title);
-	if (nc->numNames[NAME_NEUTRAL] && !nc->numNames[NAME_LAST])
-		Sys_Error("Com_ParseNames: '%s' has no neutral lastname category\n", nc->title);
+	if (td->numNames[NAME_FEMALE] && !td->numNames[NAME_FEMALE_LAST])
+		Sys_Error("Com_ParseNames: '%s' has no female lastname category\n", td->id);
+	if (td->numNames[NAME_MALE] && !td->numNames[NAME_MALE_LAST])
+		Sys_Error("Com_ParseNames: '%s' has no male lastname category\n", td->id);
+	if (td->numNames[NAME_NEUTRAL] && !td->numNames[NAME_LAST])
+		Sys_Error("Com_ParseNames: '%s' has no neutral lastname category\n", td->id);
 }
 
 /**
  * @brief Parses "actors" definition from team_* ufo script files
  * @sa Com_ParseNames
  * @sa Com_ParseScripts
- * @note fills the nameCat array
- * @note searches whether the actor id is already somewhere in the nameCat array
- * if not, it generates a new nameCat entry
  */
-static void Com_ParseActors (const char *name, const char **text)
+static void Com_ParseActorModels (const char *name, const char **text, teamDef_t* td)
 {
-	nameCategory_t *nc;
-	const char *errhead = "Com_ParseActors: unexpected end of file (actors ";
+	const char *errhead = "Com_ParseActorModels: unexpected end of file (actors ";
 	const char *token;
 	int i, j;
-
-	/* check for additions to existing name categories */
-	for (i = 0, nc = nameCat; i < numNameCats; i++, nc++)
-		if (!Q_strncmp(nc->title, name, sizeof(nc->title)))
-			break;
-
-	/* reset new category */
-	if (i == numNameCats) {
-		if (numNameCats < MAX_NAMECATS) {
-			memset(nc, 0, sizeof(nameCategory_t));
-			numNameCats++;
-		} else {
-			Com_Printf("Com_ParseActors: Too many name categories, '%s' ignored.\n", name);
-			return;
-		}
-	}
-	Q_strncpyz(nc->title, name, sizeof(nc->title));
 
 	/* get name list body body */
 	token = COM_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("Com_ParseActors: actor def \"%s\" without body ignored\n", name);
-		if (numNameCats - 1 == nc - nameCat)
-			numNameCats--;
+		Com_Printf("Com_ParseActorModels: actor def \"%s\" without body ignored\n", td->id);
 		return;
 	}
 
@@ -1620,16 +1525,14 @@ static void Com_ParseActors (const char *name, const char **text)
 
 		for (i = 0; i < NAME_NUM_TYPES; i++)
 			if (!Q_strcmp(token, name_strings[i])) {
-				/* initialize list */
-				nc->models[i] = infoPos;
-				if (nc->numModels[i])
-					Sys_Error("Com_ParseActors: Already parsed models for actor definition '%s'\n", name);
-				nc->numModels[i] = 0;
+				if (td->numModels[i])
+					Sys_Error("Com_ParseActorModels: Already parsed models for actor definition '%s'\n", name);
+				td->numModels[i] = 0;
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					break;
 				if (*token != '{') {
-					Com_Printf("Com_ParseActors: Empty actors definition '%s' for gender '%s'\n", name, name_strings[i]);
+					Com_Printf("Com_ParseActorModels: Empty model definition '%s' for gender '%s'\n", name, name_strings[i]);
 					break;
 				}
 
@@ -1645,11 +1548,9 @@ static void Com_ParseActors (const char *name, const char **text)
 							break;
 
 						if (j == 3 && *token == '*')
-							*infoPos++ = 0;
-						else {
-							strcpy(infoPos, token);
-							infoPos += strlen(token) + 1;
-						}
+							LIST_Add(&td->models[i], "");
+						else
+							LIST_Add(&td->models[i], token);
 					}
 					/* first token was } */
 					if (j == 0)
@@ -1657,13 +1558,13 @@ static void Com_ParseActors (const char *name, const char **text)
 
 					/* only add complete actor info */
 					if (j == 4)
-						nc->numModels[i]++;
+						td->numModels[i]++;
 					else {
-						Com_Printf("Com_ParseActors: Incomplete actor data: '%s' - j: %i\n", nc->title, j);
+						Com_Printf("Com_ParseActors: Incomplete actor data: '%s' - j: %i\n", td->id, j);
 						break;
 					}
 				} while (*text);
-				if (!nc->numModels[i])
+				if (!td->numModels[i])
 					Com_Printf("Com_ParseActors: actor definition '%s' with no models (gender: %s)\n", name, name_strings[i]);
 				break;
 			}
@@ -1679,37 +1580,17 @@ static void Com_ParseActors (const char *name, const char **text)
  * @sa Com_ParseNames
  * @sa Com_ParseScripts
  */
-static void Com_ParseActorSounds (const char *name, const char **text)
+static void Com_ParseActorSounds (const char *name, const char **text, teamDef_t* td)
 {
-	nameCategory_t *nc;
 	const char *errhead = "Com_ParseActorSounds: unexpected end of file (actorsounds ";
 	const char *token;
 	int i;
-
-	/* check for additions to existing name categories */
-	for (i = 0, nc = nameCat; i < numNameCats; i++, nc++)
-		if (!Q_strncmp(nc->title, name, sizeof(nc->title)))
-			break;
-
-	/* reset new category */
-	if (i == numNameCats) {
-		if (numNameCats < MAX_NAMECATS) {
-			memset(nc, 0, sizeof(nameCategory_t));
-			numNameCats++;
-		} else {
-			Com_Printf("Too many name categories, '%s' ignored.\n", name);
-			return;
-		}
-	}
-	Q_strncpyz(nc->title, name, sizeof(nc->title));
 
 	/* get name list body body */
 	token = COM_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseActorSounds: actorsounds def \"%s\" without body ignored\n", name);
-		if (numNameCats - 1 == nc - nameCat)
-			numNameCats--;
 		return;
 	}
 
@@ -1740,18 +1621,17 @@ static void Com_ParseActorSounds (const char *name, const char **text)
 						token = COM_EParse(text, errhead, name);
 						if (!*text)
 							break;
-						Q_strncpyz(nc->sounds[SOUND_HURT][i][nc->numSounds[SOUND_HURT][i]++], token, MAX_QPATH);
+						LIST_Add(&td->sounds[SOUND_HURT][i], token);
 					} else if (!Q_strcmp(token, "deathsound")) {
 						token = COM_EParse(text, errhead, name);
 						if (!*text)
 							break;
-						Q_strncpyz(nc->sounds[SOUND_DEATH][i][nc->numSounds[SOUND_DEATH][i]++], token, MAX_QPATH);
+						LIST_Add(&td->sounds[SOUND_DEATH][i], token);
 					} else {
 						Com_Printf("Com_ParseActorSounds: unknown token \"%s\" ignored (actorsounds %s)\n", token, name);
 					}
-				}
-				while (*text);
-				break;
+				} while (*text);
+				break; /* next gender sound definition */
 			}
 
 		if (i == NAME_NUM_TYPES)
@@ -1761,111 +1641,52 @@ static void Com_ParseActorSounds (const char *name, const char **text)
 }
 
 /** @brief possible teamdesc values (ufo-scriptfiles) */
-static const value_t teamDescValues[] = {
-	{"tech", V_STRING, offsetof(teamDesc_t, tech), 0}, /**< tech id from research.ufo */
-	{"name", V_TRANSLATION2_STRING, offsetof(teamDesc_t, name), 0}, /**< internal team name */
-	{"alien", V_BOOL, offsetof(teamDesc_t, alien), MEMBER_SIZEOF(teamDesc_t, alien)}, /**< is this an alien? */
-	{"armor", V_BOOL, offsetof(teamDesc_t, armor), MEMBER_SIZEOF(teamDesc_t, armor)}, /**< are these team members able to wear armor? */
-	{"weapons", V_BOOL, offsetof(teamDesc_t, weapons), MEMBER_SIZEOF(teamDesc_t, weapons)}, /**< are these team members able to use weapons? */
-	{"size", V_INT, offsetof(teamDesc_t, size), MEMBER_SIZEOF(teamDesc_t, weapons)}, /**< What size is this unit on the field (1=1x1 or 2=2x2)? */
-	{"hit_particle", V_STRING, offsetof(teamDesc_t, hit_particle), 0}, /**< What particle effect should be spawned if a unit of this type is hit? */
+static const value_t teamDefValues[] = {
+	{"tech", V_STRING, offsetof(teamDef_t, tech), 0}, /**< tech id from research.ufo */
+	{"name", V_TRANSLATION2_STRING, offsetof(teamDef_t, name), 0}, /**< internal team name */
+	{"alien", V_BOOL, offsetof(teamDef_t, alien), MEMBER_SIZEOF(teamDef_t, alien)}, /**< is this an alien? */
+	{"armor", V_BOOL, offsetof(teamDef_t, armor), MEMBER_SIZEOF(teamDef_t, armor)}, /**< are these team members able to wear armor? */
+	{"weapons", V_BOOL, offsetof(teamDef_t, weapons), MEMBER_SIZEOF(teamDef_t, weapons)}, /**< are these team members able to use weapons? */
+	{"size", V_INT, offsetof(teamDef_t, size), MEMBER_SIZEOF(teamDef_t, size)}, /**< What size is this unit on the field (1=1x1 or 2=2x2)? */
+	{"hit_particle", V_STRING, offsetof(teamDef_t, hitParticle), 0}, /**< What particle effect should be spawned if a unit of this type is hit? */
 	{NULL, 0, 0, 0}
 };
-
-
-/**
- * @brief Parse the team descriptions (teamdesc) in the teams*.ufo files.
- */
-static void Com_ParseTeamDesc (const char *name, const char **text)
-{
-	teamDesc_t *td;
-	const char *errhead = "Com_ParseTeamDesc: unexpected end of file (teamdesc ";
-	const char *token;
-	int i;
-	const value_t *v;
-
-	/* check whether team description already exists */
-	for (i = 0, td = teamDesc; i < numTeamDesc; i++, td++)
-		if (!Q_strncmp(td->id, name, MAX_VAR))
-			break;
-
-	/* reset new category */
-	if (i >= MAX_TEAMDEFS) {
-		Com_Printf("Too many team descriptions, '%s' ignored.\n", name);
-		return;
-	}
-
-	if (i < numTeamDesc) {
-		Com_Printf("Com_ParseTeamDesc: found defition with same name - second ignored\n");
-		return;
-	}
-
-	td = &teamDesc[numTeamDesc++];
-	memset(td, 0, sizeof(teamDesc_t));
-	Q_strncpyz(td->id, name, sizeof(td->id));
-	td->armor = td->weapons = qtrue; /* default values */
-
-	/* get name list body body */
-	token = COM_Parse(text);
-
-	if (!*text || *token != '{') {
-		Com_Printf("Com_ParseTeamDesc: team desc \"%s\" without body ignored\n", name);
-		if (numTeamDesc - 1 == td - teamDesc)
-			numTeamDesc--;
-		return;
-	}
-
-	do {
-		/* get the name type */
-		token = COM_EParse(text, errhead, name);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-
-		for (v = teamDescValues; v->string; v++)
-			if (!Q_strncmp(token, v->string, sizeof(v->string))) {
-				/* found a definition */
-				token = COM_EParse(text, errhead, name);
-				if (!*text)
-					return;
-
-				Com_ParseValue(td, token, v->type, v->ofs, v->size);
-				break;
-			}
-
-		if (!v->string)
-			Com_Printf("Com_ParseTeamDesc: unknown token \"%s\" ignored (team %s)\n", token, name);
-	} while (*text);
-}
 
 /**
  * @brief
  */
 static void Com_ParseTeam (const char *name, const char **text)
 {
-	nameCategory_t *nc;
 	teamDef_t *td;
 	const char *errhead = "Com_ParseTeam: unexpected end of file (team ";
 	const char *token;
 	int i;
+	const value_t *v;
 
 	/* check for additions to existing name categories */
 	for (i = 0, td = teamDef; i < numTeamDefs; i++, td++)
-		if (!Q_strncmp(td->title, name, sizeof(td->title)))
+		if (!Q_strncmp(td->id, name, sizeof(td->id)))
 			break;
 
 	/* reset new category */
 	if (i == numTeamDefs) {
 		if (numTeamDefs < MAX_TEAMDEFS) {
 			memset(td, 0, sizeof(teamDef_t));
+			/* index backlink */
+			td->index = numTeamDefs;
 			numTeamDefs++;
 		} else {
-			Com_Printf("Too many team definitions, '%s' ignored.\n", name);
+			Com_Printf("CL_ParseTeam: Too many team definitions, '%s' ignored.\n", name);
 			return;
 		}
+	} else {
+		Com_Printf("CL_ParseTeam: Team with same name found, second ignored '%s'\n", name);
+		FS_SkipBlock(text);
+		return;
 	}
-	Q_strncpyz(td->title, name, sizeof(td->title));
+
+	Q_strncpyz(td->id, name, sizeof(td->id));
+	td->armor = td->weapons = qtrue; /* default values */
 
 	/* get name list body body */
 	token = COM_Parse(text);
@@ -1877,10 +1698,6 @@ static void Com_ParseTeam (const char *name, const char **text)
 		return;
 	}
 
-	/* initialize list */
-	td->cats = infoPos;
-	td->num = 0;
-
 	do {
 		/* get the name type */
 		token = COM_EParse(text, errhead, name);
@@ -1889,24 +1706,26 @@ static void Com_ParseTeam (const char *name, const char **text)
 		if (*token == '}')
 			break;
 
-		if (*token == '{') {
-			for (;;) {
+		for (v = teamDefValues; v->string; v++)
+			if (!Q_strncmp(token, v->string, strlen(token))) {
+				/* found a definition */
 				token = COM_EParse(text, errhead, name);
-				if (*token == '}') {
-					token = COM_EParse(text, errhead, name);
-					break;
-				}
-				for (i = 0, nc = nameCat; i < numNameCats; i++, nc++)
-					if (!Q_strncmp(token, nc->title, MAX_VAR)) {
-						*infoPos++ = (char) i;
-						td->num++;
-						break;
-					}
-				if (i == numNameCats)
-					Com_Printf("Com_ParseTeam: unknown token \"%s\" ignored (team %s)\n", token, name);
-			}
-			if (*token == '}')
+				if (!*text)
+					return;
+
+				Com_ParseValue(td, token, v->type, v->ofs, v->size);
 				break;
+			}
+
+		if (!v->string) {
+			if (!Q_strcmp(token, "models"))
+				Com_ParseActorModels(name, text, td);
+			else if (!Q_strcmp(token, "names"))
+				Com_ParseActorNames(name, text, td);
+			else if (!Q_strcmp(token, "actorsounds"))
+				Com_ParseActorSounds(name, text, td);
+			else
+				Com_Printf("Com_ParseTeam: unknown token \"%s\" ignored (team %s)\n", token, name);
 		}
 	} while (*text);
 }
@@ -2244,7 +2063,6 @@ void Com_AddObjectLinks (void)
 void Com_ParseScripts (void)
 {
 	const char *type, *name, *text;
-	ptrdiff_t infoSize = 0;
 
 	/* reset csi basic info */
 	INVSH_InitCSI(&csi);
@@ -2258,9 +2076,7 @@ void Com_ParseScripts (void)
 	csi.numDTs = 0;
 
 	/* reset name and team def counters */
-	numNameCats = 0;
 	numTeamDefs = 0;
-	infoPos = infoStr;
 
 	/* pre-stage parsing */
 	FS_BuildFileList("ufos/*.ufo");
@@ -2282,12 +2098,6 @@ void Com_ParseScripts (void)
 			Com_ParseItem(name, &text);
 		else if (!Q_strncmp(type, "inventory", 9))
 			Com_ParseInventory(name, &text);
-		else if (!Q_strncmp(type, "names", 5))
-			Com_ParseNames(name, &text);
-		else if (!Q_strncmp(type, "actorsounds", 11))
-			Com_ParseActorSounds(name, &text);
-		else if (!Q_strncmp(type, "actors", 6))
-			Com_ParseActors(name, &text);
 		else if (!Q_strncmp(type, "terrain", 7))
 			Com_ParseTerrain(name, &text);
 		else if (!sv_dedicated->integer)
@@ -2302,19 +2112,9 @@ void Com_ParseScripts (void)
 		/* server/client scripts */
 		if (!Q_strncmp(type, "equipment", 9))
 			Com_ParseEquipment(name, &text);
-		else if (!Q_strncmp(type, "teamdesc", 8))
-			Com_ParseTeamDesc(name, &text);
 		else if (!Q_strncmp(type, "team", 4))
 			Com_ParseTeam(name, &text);
 	}
-
-	infoSize = infoPos - infoStr;
-	if (infoSize > sizeof(infoStr))
-		Sys_Error("Com_ParseScripts: infoStr overflow\n");
-#ifdef DEBUG
-	else
-		Com_DPrintf("Free info memory: %ib\n", (int)infoSize);
-#endif
 
 	Com_Printf("Shared Client/Server Info loaded\n");
 }
@@ -2328,44 +2128,48 @@ void Com_ParseScripts (void)
  */
 void Com_PrecacheCharacterModels (void)
 {
-	nameCategory_t *nc;
+	teamDef_t *td;
 	int i, j, num;
-	char *str;
 	char model[MAX_QPATH];
 	const char *path;
 	float loading = cls.loadingPercent;
+	linkedList_t *list;
 
 	/* search the name */
-	for (i = 0, nc = nameCat; i < numNameCats; i++, nc++)
+	for (i = 0, td = teamDef; i < numTeamDefs; i++, td++)
 		for (j = NAME_NEUTRAL; j < NAME_LAST; j++) {
 			/* no models for this gender */
-			if (!nc->numModels[j])
+			if (!td->numModels[j])
 				continue;
 			/* search one of the model definitions */
-			str = nc->models[j];
-			for (num = 0; num < nc->numModels[j]; num++) {
-				path = str; /* model base path */
-				str += strlen(str) + 1;
+			list = td->models[j];
+			assert(list);
+			for (num = 0; num < td->numModels[j]; num++) {
+				assert(list);
+				path = list->data;
+				list = list->next;
 				/* register body */
-				Com_sprintf(model, sizeof(model), "%s/%s", path, str);
+				Com_sprintf(model, sizeof(model), "%s/%s", path, list->data);
 				if (!re.RegisterModel(model))
 					Com_Printf("Com_PrecacheCharacterModels: Could not register model %s\n", model);
 #ifdef DEBUG
 				_Mem_CheckPoolIntegrity(vid_modelPool, model, __LINE__);
 #endif
-				str += strlen(str) + 1;
+				list = list->next;
 				/* register head */
-				Com_sprintf(model, sizeof(model), "%s/%s", path, str);
+				Com_sprintf(model, sizeof(model), "%s/%s", path, list->data);
 				if (!re.RegisterModel(model))
 					Com_Printf("Com_PrecacheCharacterModels: Could not register model %s\n", model);
 #ifdef DEBUG
 				_Mem_CheckPoolIntegrity(vid_modelPool, model, __LINE__);
 #endif
 				/* skip skin */
-				str += strlen(str) + 1;
+				list = list->next;
+
 				/* new path */
-				str += strlen(str) + 1;
-				cls.loadingPercent += 20.0f / (nc->numModels[j] * numNameCats * NAME_LAST);
+				list = list->next;
+
+				cls.loadingPercent += 20.0f / (td->numModels[j] * numTeamDefs * NAME_LAST);
 				SCR_DrawPrecacheScreen(qtrue);
 			}
 		}

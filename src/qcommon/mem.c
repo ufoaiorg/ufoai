@@ -343,7 +343,6 @@ MISC FUNCTIONS
 
 /**
  * @brief Saves a string to client hunk
- * @sa CL_ClientHunkUse
  * @param[in] string String to store on hunk
  * @param[in] dst The offset or char pointer that points to the hunk space that
  * was used to store the string

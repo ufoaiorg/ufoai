@@ -1011,3 +1011,37 @@ qboolean Qcommon_ServerActive (void)
 {
 	return sv.active;
 }
+
+/*
+============================================================
+LINKED LIST
+============================================================
+*/
+
+/**
+ * @brief Adds an entry to the linked list
+ */
+void LIST_Add (linkedList_t** listDest, const char* data)
+{
+	linkedList_t *newEntry;
+	linkedList_t *list;
+
+	assert(list);
+	assert(data);
+
+	/* create the list */
+	if (!*listDest) {
+		*listDest = (linkedList_t*)Mem_PoolAlloc(sizeof(linkedList_t), com_genericPool, 0);
+		(*listDest)->data = Mem_PoolStrDup(data, com_genericPool, 0);
+		return;
+	} else
+		list = *listDest;
+
+	while (list->next)
+		list = list->next;
+
+	newEntry = (linkedList_t*)Mem_PoolAlloc(sizeof(linkedList_t), com_genericPool, 0);
+	list->next = newEntry;
+	newEntry->data = Mem_PoolStrDup(data, com_genericPool, 0);
+	newEntry->next = NULL;
+}

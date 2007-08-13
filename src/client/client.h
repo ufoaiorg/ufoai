@@ -539,8 +539,7 @@ typedef struct le_s {
 	inventory_t i;
 	int left, right, extension;
 	int fieldSize;				/**< ACTOR_SIZE_* */
-	int teamDesc;
-	int category; 	/**< nameCategory_t index */
+	teamDef_t* teamDef;
 	int gender;
 
 	/** is called before adding a le to scene */

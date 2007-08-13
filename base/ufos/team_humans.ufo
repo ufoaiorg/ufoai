@@ -40,1434 +40,136 @@
 // HUMANS
 //========================================================================
 
-//==================
-// german
-//==================
-
-names german
-{
-	female
-	{
-	Alexandra
-	Anna
-	Andrea
-	Barbara
-	Claudia
-	Denise
-	Elisabeth
-	Gaby
-	Heike
-	Ilona
-	Katrin
-	Lisa
-	Magdalena
-	Mareike
-	Martina
-	Meike
-	Melanie
-	Nicole
-	Sabine
-	Sandra
-	Susi
-	Stefanie
-	Ute
-	Yvonne
-	}
-
-	male
-	{
-	Adrian
-	Andreas
-	Anton
-	Axel
-	Bernhard
-	Boris
-	Christian
-	David
-	Emil
-	Felix
-	Frank
-	Gunter
-	Hans
-	Hans-Peter
-	Henrik
-	Horst
-	Holger
-	Johann
-	Jurgen
-	Karl
-	Kai-Uwe
-	Klaus
-	Lukas
-	Martin
-	Markus
-	Mathias
-	Michael
-	Otto
-	Peter
-	Philipp
-	Ralf
-	Rolf
-	Roman
-	Samuel
-	Silvio
-	Sonke
-	Thomas
-	Uwe
-	Ulrich
-	Walter
-	Xaver
-	}
-
-	lastname
-	{
-	Allensbach
-	Aschwanden
-	Benz
-	Berger
-	Beyeler
-	Baltner
-	Dorfer
-	Eitl
-	Gratner
-	Hofer
-	Jost
-	Klein
-	Kohlmann
-	Kohler
-	Loher
-	Luscher
-	Maler
-	Mayer
-	Maier
-	Meier
-	Niederer
-	Nipp
-	Rugger
-	Schafer
-	Schlatter
-	Schmitt
-	Schiffer
-	Sedlmaier
-	Seidl
-	Sommer
-	Stein
-	Tetzlaff
-	Tschannen
-	Winter
-	Zeder
-	Zemp
-	}
-}
-
-actors german
-{
-	female
-	{
-		soldiers/female body head01a 0
-		soldiers/female body head01b 0
-		soldiers/female body head03a 0
-		soldiers/female body head03b 0
-	}
-
-	male
-	{
-		soldiers/male body head01a 0
-		soldiers/male body head01b 0
-		soldiers/male body head02a 0
-		soldiers/male body head02b 0
-	}
-}
-
-actorsounds german
-{
-	female
-	{
-		hurtsound misc/newmission.wav
-		deathsound misc/newmission.wav
-	}
-        male
-        {
-                hurtsound misc/newmission.wav
-                deathsound misc/newmission.wav
-        }
-}
-
-
-//==================
-// spanish_italian
-//==================
-
-names spanish_italian
-{
-	female
-	{
-	Anna
-	Bianca
-	Carmella
-	Carmen
-	Eumelia
-	Felicia
-	Fabienne
-	Graciella
-	Julia
-	Larissa
-	Laura
-	Lavina
-	Lelia
-	Leola
-	Leonora
-	Lorena
-	Madonna
-	Maria
-	Marina
-	Marcella
-	"Norma Alicia"
-	Odessa
-	Olivia
-	Salma
-	Simonetta
-	Sophia
-	}
-
-	male
-	{
-	Adolfo
-	Antonio
-	Armando
-	Bernardo
-	Carlos
-	Claudio
-	Emilio
-	Fabian
-	Fabrizio
-	Felice
-	Garcia
-	Getulio
-	Giancarlo
-	Giorgo
-	Giovanni
-	Gustavo
-	Gulliano
-	Jesus
-	Joaquin
-	"Joaquin Sanchez"
-	Jose
-	"Jose Guadalupe"
-	"Juan Martin"
-	Leo
-	Luca
-	Luigi
-	Mauro
-	"Martin Alejandro"
-	"Marco Antonio"
-	Massimo
-	Ovidio
-	Peso
-	Ricardo
-	}
-
-	lastname
-	{
-	"Al Capone"
-	Alejandro
-	Andujar
-	Banderas
-	Balaguer
-	Campangolo
-	Campos
-	Cano
-	Checa
-	Cortes
-	Cuevas
-	"De Cesare"
-	"De Francesco"
-	"De La Rosa"
-	"De Ramon Rius"
-	"De Tomaso"
-	"Di Cesare"
-	Eduardo
-	Esteban
-	Estevez
-	Espinoza
-	Gonzalez
-	Gonzalo
-	Guadalupe
-	Lavin
-	Lopez
-	Mantovani
-	Martinez
-	Maurin
-	Meazzi
-	Mendez
-	Padilla
-	Pizarro
-	Prieto
-	Ramos
-	Rivera
-	Rodriguez
-	Russo
-	Sabina
-	Segura
-	Tomba
-	Turina
-	Vasquez
-	Zapata
-	Zavala
-	}
-}
-
-actors spanish_italian
-{
-	female
-	{
-		soldiers/female body head01a 0
-		soldiers/female body head01b 0
-	}
-
-	male
-	{
-		soldiers/male body head02a 0
-		soldiers/male body head02b 0
-		soldiers/male body head03a 0
-	}
-}
-
-actorsounds spanish_italian
-{
-	female
-	{
-		hurtsound	misc/newmission.wav
-		deathsound	misc/newmission.wav
-	}
-	male
-	{
-		hurtsound 	misc/newmission.wav
-		deathsound	misc/newmission.wav
-	}
-}
-
-
-
-//==================
-// french & canadian
-//==================
-
-names french
-{
-	female
-	{
-	Alice
-	Amelie
-	Anette
-	Aurelie
-	Agnes
-	Catherine
-	Caroline
-	Christine
-	Claire
-	Dominique
-	Elaine
-	Eloise
-	Elise
-	Evette
-	Evonne
-	Emanuelle
-	Geraldine
-	Helene
-	Isabelle
-	Stephanie
-	Sylvie
-	Therese
-	Laure
-	Laramie
-	Leona
-	Linette
-	Lorraine
-	Lucie
-	Marie
-	Michelle
-	Monique
-	Veronique
-	Virginie
-	}
-
-	male
-	{
-	Albin
-	Antoine
-	Benoit
-	Charles
-	Christophe
-	David
-	Emeralde
-	Guillaume
-	Henri
-	Henry
-	Herve
-	Jean
-	Jean-Luc
-	Jean-Pierre
-	Jean-Marc
-	Louis
-	Laurence
-	Laurent
-	Lucien
-	Ludovic
-	Marc
-	Michel
-	Pierre
-	Remi
-	Richard
-	Romain
-	Stephane
-	Simon
-	Talon
-	Thiery
-	Thierry
-	Vincent
-	Xavier
-	Yves
-	}
-
-	lastname
-	{
-	Aiton
-	Abney
-	Avitabile
-	Basset
-	Bataille
-	Battesti
-	Berry
-	Beaudouin
-	Beauvais
-	Beaumont
-	Bezier
-	Bodine
-	Bussey
-	Chardonais
-	Colville
-	Coustillac
-	D'Aubigne
-	D'Aubigny
-	"de Bressy"
-	"de Calderac"
-	"de Lorme"
-	Devereux
-	Finet
-	Garnier
-	Guaydon
-	Laurens
-	"Le Calvez"
-	L'Hostis
-	Montague
-	Montagne
-	Neville
-	Millet
-	Rouff
-	Rougerie
-	Tresse
-	Weissenbach
-	}
-}
-
-actors french
-{
-	female
-	{
-		soldiers/female body head01a 0
-		soldiers/female body head01b 0
-	}
-
-	male
-	{
-		soldiers/male body head01a 0
-		soldiers/male body head01b 0
-		soldiers/male body head02a 0
-		soldiers/male body head02b 0
-		soldiers/male body head03a 0
-	}
-}
-
-actorsounds french
-{
-	female
-	{
-		hurtsound	misc/newmission.wav
-		deathsound	misc/newmission.wav
-	}
-	male
-	{
-		hurtsound 	misc/newmission.wav
-		deathsound	misc/newmission.wav
-	}
-}
-
-
-
-//==================
-// english_american
-//==================
-
-names english_american
-{
-	female
-	{
-	Amy
-	Angela
-	Beverly
-	Britney
-	Buffy
-	Candice
-	Christin
-	Cindy
-	Crystal
-	Diane
-	Elisha
-	Fancy
-	Holly
-	Jenniver
-	Jodi-Ann
-	Jamie
-	Karen
-	Kelly
-	Kimberley
-	Lynn
-	Laine
-	Lisa
-	Mary
-	Mary-Jane
-	Rachel
-	Sarah
-	Suzi
-	Suzanne
-	Tina
-	}
-
-	male
-	{
-	Aaron
-	Andrew
-	Al
-	Bill
-	Bradley
-	Bruce
-	Chris
-	Dennis
-	Evan
-	Flint
-	Garfield
-	Gary
-	Geoffrey
-	George
-	Gilbert
-	Jack
-	Jim
-	Joe
-	Larry
-	Mark
-	Norman
-	Paul
-	Phillip
-	Raymond
-	Robert
-	Sam
-	Steven
-	Shawn
-	Tom
-	Thomas
-	Tim
-	Trevor
-	}
-
-	lastname
-	{
-	Beckett
-	Borland
-	Bush
-	Black
-	Cage
-	Campbell
-	Chandler
-	Cruise
-	Clinton
-	Crawford
-	Furlong
-	Gibson
-	Gore
-	Kennedy
-	Lincoln
-	Little
-	Michaels
-	Mitchell
-	Pressly
-	Quinn
-	Spears
-	Taylor
-	Tyler
-	Walker
-	Wayne
-	Wood
-	}
-}
-
-
-actors english_american
-{
-	female
-	{
-		soldiers/female body head01a 0
-		soldiers/female body head01b 0
-		soldiers/female body head03a 0
-		soldiers/female body head03b 0
-	}
-
-	male
-	{
-		soldiers/male body head01a 0
-		soldiers/male body head01b 0
-		soldiers/male body head02a 0
-		soldiers/male body head02b 0
-		soldiers/male body head03a 0
-		soldiers/male body head03b 0
-	}
-}
-
-actorsounds english_american
-{
-	female
-	{
-		hurtsound	misc/newmission.wav
-		deathsound	misc/newmission.wav
-	}
-	male
-	{
-		hurtsound 	misc/newmission.wav
-		deathsound	misc/newmission.wav
-	}
-}
-
-//==================
-// arabic
-//==================
-
-names arabic
-{
-	female
-	{
-	Aaliya
-	Abia
-	Amal
-	Ayar
-	Badieh
-	Dabab
-	Damaa
-	Ebra
-	Emel
-	Essa
-	Farah
-	Fareeda
-	Fathia
-	Fatima
-	Hanna
-	Isa
-	Meira
-	Naiya
-	Nadia
-	Natara
-	Nurcan
-	Soraya
-	Rasha
-	Yasemine
-	}
-
-	male
-	{
-	Abdullah
-	Abdalrahman
-	Adish
-	Ahmad
-	Ahmed
-	Abdel-Kader
-	Abdul-Matin
-	Abdul-Majid
-	Abdul-Jalil
-	Adham
-	Ali
-	Aziz
-	Dabrir
-	Fakhir
-	Farran
-	Hasan
-	Jassir
-	Kader
-	Mustaffa
-	Mahmoud
-	Manuosh
-	Namir
-	Rafi
-	Seif
-	Tarik
-	}
-
-
-	lastname
-	{
-	"Abu Rajab"
-	"Ab Del Farak"
-	Ahmadi
-	"Al Masri"
-	"Al Hussein"
-	"Al Ghadban"
-	"Al Din"
-	"Al Hashimi"
-	Arafat
-	Assar
-	Bouzid
-	Hassan
-	Hussein
-	Haqzouk
-	"Jabr Solagh"
-	Jabir
-	Khaleq
-	Mubarak
-	Nasser
-	Rasheed
-	"Reza Shebani"
-	Sharif
-	Sulaiman
-	Zahar
-	}
-}
-
-actors arabic
-{
-	female
-	{
-		soldiers/female body head01a 0
-		soldiers/female body head01b 0
-	}
-
-	male
-	{
-		soldiers/male body head03a 0
-	}
-}
-
-actorsounds arabic
-{
-	female
-	{
-		hurtsound	misc/newmission.wav
-		deathsound	misc/newmission.wav
-	}
-	male
-	{
-		hurtsound 	misc/newmission.wav
-		deathsound	misc/newmission.wav
-	}
-}
-
-//==================
-// scandinavian
-//==================
-
-names scandinavian
-{
-	female
-	{
-	Aina
-	Anne
-	Anna
-	Astrid
-	Beate
-	Berit
-	Betje
-	Dana
-	Doris
-	Edda
-	Emma
-	Elin
-	Eva
-	Hendrika
-	Helga
-	Ida
-	Ingrid
-	Kari
-	Karin
-	Katrina
-	Kirsten
-	Kerstin
-	Lena
-	Lise
-	Liv
-	Nada
-	Nyssa
-	Neve
-	Sara
-	Sofie
-	Tove
-	Unni
-	}
-
-	male
-	{
-	Anders
-	Andreas
-	Arne
-	Bjorn
-	Benny
-	Christian
-	Daniel
-	Erik
-	Godewyn
-	Groot
-	Gustaf
-	Gustav
-	Hans
-	Henrik
-	Inge
-	Jan
-	Jilt
-	Jens
-	Jon
-	John-Andre
-	Knut
-	Kristian
-	Kjell
-	Lars
-	Magnus
-	Martin
-	Nicolaas
-	Nils
-	Ottar
-	Olav
-	Olaf
-	Ole
-	Ole-Gunnar
-	Soren
-	Sven
-	Tor
-	Ragnar
-	Royd
-	Rune
-	Ulf
-	}
-
-	lastname
-	{
-	Aas
-	Arneberg
-	Berg
-	Fidjestoel
-	Gudmundsen
-	Hagen
-	Haugen
-	Heyerdal
-	Hjelset
-	Hostmark
-	Kramberger
-	Lerby
-	Lie
-	Lund
-	Nylander
-	Salhoff
-	Skog
-	Vik
-// "...son" or "...dottir" names:
-	Andersen
-	Andersson
-	Eriksson
-	Gustavsson
-	Hansson
-	Jensen
-	Johansson
-	Larsson
-	Sorensen
-	}
-}
-
-actors scandinavian
-{
-	female
-	{
-		soldiers/female body head01a 0
-		soldiers/female body head01b 0
-		soldiers/female body head03a 0
-		soldiers/female body head03b 0
-	}
-
-	male
-	{
-		soldiers/male body head01a 0
-		soldiers/male body head03b 0
-	}
-}
-
-actorsounds scandinavian
-{
-	female
-	{
-		hurtsound	misc/newmission.wav
-		deathsound	misc/newmission.wav
-	}
-	male
-	{
-		hurtsound 	misc/newmission.wav
-		deathsound	misc/newmission.wav
-	}
-}
-
-//==================
-// russian
-//==================
-
-names russian
-{
-	female
-	{
-	Aleksandra
-	Alisa
-	Alla
-	Anastasija
-	Anna
-	Valentina
-	Valerija
-	Vera
-	Veronika
-	Viktorija
-	Galina
-	Darija
-	Evgenija
-	Ekaterina
-	Elena
-	Elizaveta
-	Zhanna
-	Zinaida
-	Inna
-	Irina
-	Karina
-	Klara
-	Larisa
-	Lidija
-	Lyudmila
-	Marina
-	Marija
-	Nadezhda
-	Natalija
-	Nina
-	Oksana
-	Olga
-	Polina
-	Svetlana
-	Tamara
-	Tatijana
-	Julija
-	Jana
-	}
-
-	male
-	{
-	Alexandr
-	Alexey
-	Anatoliy
-	Andrey
-	Anton
-	Boris
-	Vadim
-	Valeriy
-	Vasiliy
-	Viktor
-	Vitaliy
-	Vladimir
-	Gennadiy
-	Georgiy
-	Gleb
-	Grigoriy
-	Denis
-	Dmitriy
-	Evgeniy
-	Egor
-	Ivan
-	Igor
-	Kirill
-	Konstantin
-	Leonid
-	Leontiy
-	Maksim
-	Mihail
-	Nikita
-	Nikolay
-	Oleg
-	Pavel
-	Piotr
-	Roman
-	Sergey
-	Stepan
-	Fiodor
-	Juriy
-	}
-
-	female_lastname
-	{
-	Ivanova
-	Vasileva
-	Petrova
-	Smirnova
-	Mihailova
-	Fiodorova
-	Sokolova
-	Jakovleva
-	Popova
-	Andreeva
-	Alekseeva
-	Aleksandrova
-	Lebedeva
-	Grigorieva
-	Stepanova
-	Semionova
-	Pavlova
-	Bogdanova
-	Nikolaeva
-	Dmitrieva
-	Egorova
-	Volkova
-	Kuznetzova
-	Nikitina
-	Soloviova
-	Timofeeva
-	Orlova
-	Afanasieva
-	Filippova
-	Sergeeva
-	Zaharova
-	Matveeva
-	Vinogradova
-	Kuzmina
-	Maksimova
-	Kozlova
-	Gerasimova
-	Markova
-	Novikova
-	Morozova
-	Romanova
-	}
-
-	male_lastname
-	{
-	Ivanov
-	Vasilev
-	Petrov
-	Smirnov
-	Mihailov
-	Fiodorov
-	Sokolov
-	Jakovlev
-	Popov
-	Andreev
-	Alekseev
-	Aleksandrov
-	Lebedev
-	Grigoriev
-	Stepanov
-	Semionov
-	Pavlov
-	Bogdanov
-	Nikolaev
-	Dmitriev
-	Egorov
-	Volkov
-	Kuznetzov
-	Nikitin
-	Soloviov
-	Timofeev
-	Orlov
-	Afanasiev
-	Filippov
-	Sergeev
-	Zaharov
-	Matveev
-	Vinogradov
-	Kuzmin
-	Maksimov
-	Kozlov
-	Gerasimov
-	Markov
-	Novikov
-	Morozov
-	Romanov
-	}
-}
-
-actors russian
-{
-	female
-	{
-		soldiers/female body head03a 0
-		soldiers/female body head03b 0
-	}
-
-	male
-	{
-		soldiers/male body head01a 0
-		soldiers/male body head03b 0
-	}
-}
-
-actorsounds russian
-{
-	female
-	{
-		hurtsound	misc/newmission.wav
-		deathsound	misc/newmission.wav
-	}
-	male
-	{
-		hurtsound 	misc/newmission.wav
-		deathsound	misc/newmission.wav
-	}
-}
-
-//==================
-// chinese
-//==================
-
-names chinese
-{
-	female
-	{
-	An
-	Bo
-	Chang
-	Feng
-	"Jia Li"
-	Jin
-	Joanne
-	Lei
-	"Li Mei"
-	"Li Qin"
-	Ling
-	Ping
-	"San San"
-	Shuwei
-	Wan
-	Wei
-	Wenjing
-	Xia
-	Xue
-	"Xue Wen"
-	"Yi Min"
-	Yu
-	"Yue Yan"
-	"Zhen Shan"
-	Zi
-	}
-
-	male
-	{
-	Sun
-	Mao
-	Fai
-	Lei
-	Hao
-	Ho
-	Long
-	Shing
-	Li
-	Kuan-Yin
-	Chen
-	Sying
-	}
-
-	lastname
-	{
-	Aw
-	Chan
-	Chong
-	Chua
-	Dong
-	Huong
-	Jiang
-	Lai
-	Li
-	Lu
-	Lee
-	Liang
-	Luo
-	Peng
-	Qian
-	Su
-	Song
-	Tao
-	Wang
-	Wu
-	Wan
-	Xu
-	Xia
-	Yang
-	Yu
-	Zhang
-	Zhao
-	Zheng
-	}
-}
-
-actors chinese
-{
-	female
-	{
-		soldiers/female body head02a 0
-		soldiers/female body head02b 0
-	}
-
-	male
-	{
-		soldiers/male body head04a 0
-		soldiers/male body head04b 0
-		soldiers/male body head05a 0
-	}
-}
-
-actorsounds chinese
-{
-	female
-	{
-		hurtsound	misc/newmission.wav
-		deathsound	misc/newmission.wav
-	}
-	male
-	{
-		hurtsound 	misc/newmission.wav
-		deathsound	misc/newmission.wav
-	}
-}
-
-//==================
-// japanese
-//==================
-// TODO: Japanese names are normally written as "Last name" "First name". It would be good to have a "lastnamefirst true" parameter.
-// See http://ufoai.ninex.info/phpBB2/viewtopic.php?p=755#755
-//===================
-
-names japanese
-{
-	female
-	{
-	Aiko
-	Cho
-	Gin
-	Eriko
-	Hisa
-	Keiko
-	Kimi
-	Kyoko
-	Kiyomi
-	Kyoumi
-	Maemi
-	Matsuko
-	Mutsu
-	Rei
-	Suki
-	Sumi
-	Shakiko
-	Yumiko
-	Yoshiko
-	}
-
-	male
-	{
-	Akeno
-	Hiroshi
-	Jiro
-	Kado
-	Kaori
-	Keiji
-	Kenjiro
-	Kin
-	Matsuhiro
-	Makoto
-	Naoko
-	Shiro
-	Tadao
-	Yoshi
-	Yasuo
-	Yukio
-	}
-
-	lastname
-	{
-	Aoki
-	Fujimoto
-	Fuijwara
-	Hashimoto
-	Hujita
-	Ishii
-	Kikuchi
-	Kurosawa
-	Miyamoto
-	Masuda
-	Matsumoto
-	Nakagawa
-	Ogawa
-	Sato
-	Satou
-	Saitou
-	Sakamoto
-	Suzuki
-	Takagi
-	Simizu
-	Takagi
-	Tanaka
-	Tomihira
-	Yamamoto
-	Yamada
-	}
-}
-
-actors japanese
-{
-	female
-	{
-		soldiers/female body head02a 0
-		soldiers/female body head02b 0
-	}
-
-	male
-	{
-		soldiers/male body head04a 0
-		soldiers/male body head04b 0
-		soldiers/male body head05a 0
-	}
-}
-
-actorsounds japanese
-{
-	female
-	{
-		hurtsound	misc/newmission.wav
-		deathsound	misc/newmission.wav
-	}
-	male
-	{
-		hurtsound 	misc/newmission.wav
-		deathsound	misc/newmission.wav
-	}
-}
-
-//==================
-// african
-//==================
-
-names african
-{
-	female
-	{
-	Abeba
-	Adina
-	Afra
-	Afua
-	Aja
-	Asabi
-	Aza
-	Binta
-	Chicha
-	Dalila
-	Eshe
-	Fola
-	Leza
-	Makeda
-	Nini
-	Tatu
-	Zalika
-	Zola
-	}
-
-	male
-	{
-	Abasi
-	Adofo
-	Amazu
-	Azibo
-	Bobo
-	Camara
-	Dobi
-	Din
-	Habib
-	Jaja
-	Jiri
-	Jahi
-	Manute
-	Negus
-	Oko
-	Tutu
-	Yao
-	Zuberi
-	}
-
-	lastname
-	{
-	Akinkuotu
-	Olakuotu
-	Ifasen
-	Ogunfiditimi
-	Otunla
-	Idowu
-	Ola
-	Etaoku
-	Ewegbemi
-	Eweji
-	Awogbemi
-	Adedayo
-	}
-}
-
-actors african
-{
-	female
-	{
-		soldiers/female body head04a 0
-		soldiers/female body head04b 0
-	}
-
-	male
-	{
-		soldiers/male body head04b 0
-		soldiers/male body head05a 0
-		soldiers/male body head05b 0
-	}
-}
-
-actorsounds african
-{
-	female
-	{
-		hurtsound	misc/newmission.wav
-		deathsound	misc/newmission.wav
-	}
-	male
-	{
-		hurtsound 	misc/newmission.wav
-		deathsound	misc/newmission.wav
-	}
-}
-
-// ==================
-// TEAMS
-// ==================
-
 team human
 {
-	{
-	german
-	spanish_italian
-	french
-	english_american
-	arabic
-	scandinavian
-	russian
-	chinese
-	japanese
-	african
+	size 1
+	hit_particle blood
+
+	names {
+		female {
+			Amy
+			Angela
+			Beverly
+			Britney
+			Buffy
+			Candice
+			Christin
+			Cindy
+			Crystal
+			Diane
+			Elisha
+			Fancy
+			Holly
+			Jenniver
+			Jodi-Ann
+			Jamie
+			Karen
+			Kelly
+			Kimberley
+			Lynn
+			Laine
+			Lisa
+			Mary
+			Mary-Jane
+			Rachel
+			Sarah
+			Suzi
+			Suzanne
+			Tina
+		}
+
+		male {
+			Aaron
+			Andrew
+			Al
+			Bill
+			Bradley
+			Bruce
+			Chris
+			Dennis
+			Evan
+			Flint
+			Garfield
+			Gary
+			Geoffrey
+			George
+			Gilbert
+			Jack
+			Jim
+			Joe
+			Larry
+			Mark
+			Norman
+			Paul
+			Phillip
+			Raymond
+			Robert
+			Sam
+			Steven
+			Shawn
+			Tom
+			Thomas
+			Tim
+			Trevor
+		}
+
+		lastname {
+			Beckett
+			Borland
+			Bush
+			Black
+			Cage
+			Campbell
+			Chandler
+			Cruise
+			Clinton
+			Crawford
+			Furlong
+			Gibson
+			Gore
+			Kennedy
+			Lincoln
+			Little
+			Michaels
+			Mitchell
+			Pressly
+			Quinn
+			Spears
+			Taylor
+			Tyler
+			Walker
+			Wayne
+			Wood
+		}
+	}
+
+	models {
+		female {
+			soldiers/female body head01a 0
+			soldiers/female body head01b 0
+			soldiers/female body head03a 0
+			soldiers/female body head03b 0
+		}
+
+		male {
+			soldiers/male body head01a 0
+			soldiers/male body head01b 0
+			soldiers/male body head02a 0
+			soldiers/male body head02b 0
+			soldiers/male body head03a 0
+			soldiers/male body head03b 0
+		}
+	}
+
+	actorsounds {
+		female {
+			hurtsound	misc/newmission.wav
+			deathsound	misc/newmission.wav
+		}
+		male {
+			hurtsound 	misc/newmission.wav
+			deathsound	misc/newmission.wav
+		}
 	}
 }
 
@@ -1475,77 +177,77 @@ team human
 // SCIENTISTS
 // ======================
 
-names human_scientist
+team human_scientist
 {
-	female
-	{
-	Alexandra
-	Anna
-	Andrea
-	Barbara
-	Claudia
-	Denise
+	size 1
+	hit_particle blood
+
+	names {
+		female {
+			Alexandra
+			Anna
+			Andrea
+			Barbara
+			Claudia
+			Denise
+		}
+
+		male {
+			Adrian
+			Andreas
+			Anton
+			Axel
+			Bernhard
+			Boris
+			Christian
+			David
+			Emil
+			Klaus
+			Lukas
+			Martin
+			Markus
+			Mathias
+			Ralf
+			Rolf
+			Roman
+			Sonke
+			Ulrich
+		}
+
+		lastname {
+			Allensbach
+			Benz
+			Berger
+			Baltner
+			Dorfer
+			Eitl
+			Maier
+			Meier
+			Niederer
+			Nipp
+			Schafer
+			Stein
+			Winter
+		}
 	}
 
-	male
-	{
-	Adrian
-	Andreas
-	Anton
-	Axel
-	Bernhard
-	Boris
-	Christian
-	David
-	Emil
-	Klaus
-	Lukas
-	Martin
-	Markus
-	Mathias
-	Ralf
-	Rolf
-	Roman
-	Sonke
-	Ulrich
-	}
+	models {
+		female {
+			// FIXME: this is a male model
+			civilians/male scientist01 sci_head01 0
+			civilians/male scientist01 sci_head02a 0
+			civilians/male scientist01 sci_head02b 0
+			civilians/male scientist01 sci_head03a 0
+			civilians/male scientist01 sci_head03b 0
+		}
 
-	lastname
-	{
-	Allensbach
-	Benz
-	Berger
-	Baltner
-	Dorfer
-	Eitl
-	Maier
-	Meier
-	Niederer
-	Nipp
-	Schafer
-	Stein
-	Winter
-	}
-}
-
-actors human_scientist
-{
-	female
-	{
-		// FIXME: this is a male model
-		civilians/male scientist01 sci_head01 0
-		civilians/male scientist01 sci_head02a 0
-		civilians/male scientist01 sci_head02b 0
-		civilians/male scientist01 sci_head03a 0
-		civilians/male scientist01 sci_head03b 0
-	}
-	male
-	{
-		civilians/male scientist01 sci_head01 0
-		civilians/male scientist01 sci_head02a 0
-		civilians/male scientist01 sci_head02b 0
-		civilians/male scientist01 sci_head03a 0
-		civilians/male scientist01 sci_head03b 0
+		male {
+			civilians/male scientist01 sci_head01 0
+			civilians/male scientist01 sci_head02a 0
+			civilians/male scientist01 sci_head02b 0
+			civilians/male scientist01 sci_head03a 0
+			civilians/male scientist01 sci_head03b 0
+		}
 	}
 }
 
@@ -1553,77 +255,76 @@ actors human_scientist
 // MEDICS
 // ======================
 
-names human_medic
+team human_medic
 {
-	female
-	{
-	Alexandra
-	Anna
-	Andrea
-	Barbara
-	Claudia
-	Denise
+	size 1
+	hit_particle blood
+
+	names {
+		female {
+			Alexandra
+			Anna
+			Andrea
+			Barbara
+			Claudia
+			Denise
+		}
+
+		male {
+			Adrian
+			Andreas
+			Anton
+			Axel
+			Bernhard
+			Boris
+			Christian
+			David
+			Emil
+			Klaus
+			Lukas
+			Martin
+			Markus
+			Mathias
+			Ralf
+			Rolf
+			Roman
+			Sonke
+			Ulrich
+		}
+
+		lastname {
+			Allensbach
+			Benz
+			Berger
+			Baltner
+			Dorfer
+			Eitl
+			Maier
+			Meier
+			Niederer
+			Nipp
+			Schafer
+			Stein
+			Winter
+		}
 	}
 
-	male
-	{
-	Adrian
-	Andreas
-	Anton
-	Axel
-	Bernhard
-	Boris
-	Christian
-	David
-	Emil
-	Klaus
-	Lukas
-	Martin
-	Markus
-	Mathias
-	Ralf
-	Rolf
-	Roman
-	Sonke
-	Ulrich
-	}
-
-	lastname
-	{
-	Allensbach
-	Benz
-	Berger
-	Baltner
-	Dorfer
-	Eitl
-	Maier
-	Meier
-	Niederer
-	Nipp
-	Schafer
-	Stein
-	Winter
-	}
-}
-
-actors human_medic
-{
-	female
-	{
-		// FIXME: this is a male model
-		civilians/male scientist01 sci_head01 0
-		civilians/male scientist01 sci_head02a 0
-		civilians/male scientist01 sci_head02b 0
-		civilians/male scientist01 sci_head03a 0
-		civilians/male scientist01 sci_head03b 0
-	}
-	male
-	{
-		civilians/male scientist01 sci_head01 0
-		civilians/male scientist01 sci_head02a 0
-		civilians/male scientist01 sci_head02b 0
-		civilians/male scientist01 sci_head03a 0
-		civilians/male scientist01 sci_head03b 0
+	models {
+		female {
+			// FIXME: this is a male model
+			civilians/male scientist01 sci_head01 0
+			civilians/male scientist01 sci_head02a 0
+			civilians/male scientist01 sci_head02b 0
+			civilians/male scientist01 sci_head03a 0
+			civilians/male scientist01 sci_head03b 0
+		}
+		male {
+			civilians/male scientist01 sci_head01 0
+			civilians/male scientist01 sci_head02a 0
+			civilians/male scientist01 sci_head02b 0
+			civilians/male scientist01 sci_head03a 0
+			civilians/male scientist01 sci_head03b 0
+		}
 	}
 }
 
@@ -1631,59 +332,60 @@ actors human_medic
 // WORKERS
 // ======================
 
-names human_worker
+team human_worker
 {
-	male
-	{
-	Adrian
-	Andreas
-	Anton
-	Axel
-	Bernhard
-	Boris
-	Christian
-	David
-	Emil
-	Klaus
-	Lukas
-	Martin
-	Markus
-	Mathias
-	Ralf
-	Rolf
-	Roman
-	Sonke
-	Ulrich
+	size 1
+	hit_particle blood
+
+	names {
+		male {
+			Adrian
+			Andreas
+			Anton
+			Axel
+			Bernhard
+			Boris
+			Christian
+			David
+			Emil
+			Klaus
+			Lukas
+			Martin
+			Markus
+			Mathias
+			Ralf
+			Rolf
+			Roman
+			Sonke
+			Ulrich
+		}
+
+		lastname {
+			Allensbach
+			Benz
+			Berger
+			Baltner
+			Dorfer
+			Eitl
+			Maier
+			Meier
+			Niederer
+			Nipp
+			Schafer
+			Stein
+			Winter
+		}
 	}
 
-	lastname
-	{
-	Allensbach
-	Benz
-	Berger
-	Baltner
-	Dorfer
-	Eitl
-	Maier
-	Meier
-	Niederer
-	Nipp
-	Schafer
-	Stein
-	Winter
-	}
-}
-
-actors human_worker
-{
-	male
-	{
-		civilians/male body01 head01 0
-		civilians/male body01 head01 1
-		civilians/male body01 head01 2
-		civilians/male body01 head03 0 // FIXME: other body
-		civilians/male body01 head03 1 // FIXME: other body
-		civilians/male body01 head03 2 // FIXME: other body
+	models {
+		male {
+			civilians/male body01 head01 0
+			civilians/male body01 head01 1
+			civilians/male body01 head01 2
+			civilians/male body01 head03 0 // FIXME: other body
+			civilians/male body01 head03 1 // FIXME: other body
+			civilians/male body01 head03 2 // FIXME: other body
+		}
 	}
 }
 
@@ -1691,63 +393,44 @@ actors human_worker
 // UGVs
 // ======================
 
-names ugv_phoenix
-{
-	neutral
-	{
-		"_UGV"
-	}
-	lastname
-	{
-		"_Phoenix"
-	}
-}
-
-actors ugv_phoenix
-{
-	neutral
-	{
-		soldiers/ugv_phoenix phoenix phoenix_turret 0
-	}
-}
-
-names ugv_triax
-{
-	neutral
-	{
-		"_UGV"
-	}
-	lastname
-	{
-		"_Triax"
-	}
-}
-
-actors ugv_triax
-{
-	neutral
-	{
-		soldiers/ugv_triax triax_wheels triax_wheels_turret 0
-	}
-}
-
-team human_ugv
-{
-	{
-	ugv_triax
-	ugv_phoenix
-	}
-}
-
-
-teamdesc human
-{
-	size 1
-	hit_particle blood
-}
-
-teamdesc human_ugv
+team human_ugv_phoenix
 {
 	size 2
-	//hit_particle // none
+	//hit_particle none
+
+	names {
+		neutral {
+			"_UGV"
+		}
+		lastname {
+			"_Phoenix"
+		}
+	}
+
+	models {
+		neutral {
+			soldiers/ugv_phoenix phoenix phoenix_turret 0
+		}
+	}
+}
+
+team human_ugv_triax
+{
+	size 2
+	//hit_particle none
+
+	names {
+		neutral {
+			"_UGV"
+		}
+		lastname {
+			"_Triax"
+		}
+	}
+
+	models {
+		neutral {
+			soldiers/ugv_triax triax_wheels triax_wheels_turret 0
+		}
+	}
 }

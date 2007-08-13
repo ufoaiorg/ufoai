@@ -228,8 +228,7 @@ void G_AppearPerishEvent (int player_mask, int appear, edict_t * check)
 			gi.AddEvent(player_mask, EV_ACTOR_APPEAR);
 			gi.WriteShort(check->number);
 			gi.WriteByte(check->team);
-			gi.WriteByte(check->chr.teamDesc);
-			gi.WriteByte(check->chr.category);
+			gi.WriteByte(check->chr.teamDefIndex);
 			gi.WriteByte(check->chr.gender);
 			gi.WriteByte(check->pnum);
 			gi.WriteGPos(check->pos);
@@ -492,8 +491,7 @@ void G_SendInvisible (int team)
 					gi.AddEvent(G_TeamToPM(team), EV_ACTOR_ADD);
 					gi.WriteShort(ent->number);
 					gi.WriteByte(ent->team);
-					gi.WriteByte(ent->chr.teamDesc);
-					gi.WriteByte(ent->chr.category);
+					gi.WriteByte(ent->chr.teamDefIndex);
 					gi.WriteByte(ent->chr.gender);
 					gi.WriteByte(ent->pnum);
 					gi.WriteGPos(ent->pos);
@@ -2264,7 +2262,7 @@ static inline void G_ClientSkipActorInfo (void)
 	gi.ReadByte(); /* skin */
 	gi.ReadShort(); /* HP */
 	gi.ReadShort(); /* maxHP */
-	gi.ReadByte(); /* category */
+	gi.ReadByte(); /* teamDefIndex */
 	gi.ReadByte(); /* gender */
 	gi.ReadByte(); /* STUN */
 	gi.ReadByte(); /* AP */
@@ -2371,7 +2369,7 @@ void G_ClientTeamInfo (player_t * player)
 
 			ent->chr.HP = gi.ReadShort();
 			ent->chr.maxHP = gi.ReadShort();
-			ent->chr.category = gi.ReadByte();
+			ent->chr.teamDefIndex = gi.ReadByte();
 			ent->chr.gender = gi.ReadByte();
 			ent->chr.STUN = gi.ReadByte();
 			ent->chr.AP = gi.ReadByte();

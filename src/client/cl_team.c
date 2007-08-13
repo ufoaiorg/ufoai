@@ -200,16 +200,16 @@ void CL_NetReceiveItem (struct dbuffer *buf, item_t *item, int *container, int *
  * @brief Test the names in team_*.ufo
  *
  * This is a console command to test the names that were defined in team_*.ufo
- * Usage: givename <gender> <category> [num]
+ * Usage: givename <gender> <teamid> [num]
  * valid genders are male, female, neutral
  */
 static void CL_GiveName_f (void)
 {
-	char *name;
+	const char *name;
 	int i, j, num;
 
 	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: givename <gender> <category> [num]\n");
+		Com_Printf("Usage: givename <gender> <teamid> [num]\n");
 		return;
 	}
 
@@ -236,7 +236,7 @@ static void CL_GiveName_f (void)
 		/* get first name */
 		name = Com_GiveName(i, Cmd_Argv(2));
 		if (!name) {
-			Com_Printf("No first name in category '%s'\n", Cmd_Argv(2));
+			Com_Printf("No first name in team '%s'\n", Cmd_Argv(2));
 			return;
 		}
 		Com_Printf(name);
@@ -244,7 +244,7 @@ static void CL_GiveName_f (void)
 		/* get last name */
 		name = Com_GiveName(i + LASTNAME, Cmd_Argv(2));
 		if (!name) {
-			Com_Printf("\nNo last name in category '%s'\n", Cmd_Argv(2));
+			Com_Printf("\nNo last name in team '%s'\n", Cmd_Argv(2));
 			return;
 		}
 
@@ -325,7 +325,7 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 		chr->rank = CL_GetRank("ugv");
 		/* Create attributes. */
 		CHRSH_CharGenAbilitySkills(chr, teamValue);
-		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_ugv", team);
+		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_ugv_phoenix", team);
 		break;
 	default:
 		Sys_Error("Unknown employee type\n");
@@ -1599,7 +1599,7 @@ static void CL_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr, int
 
 	chr->HP = MSG_ReadShort(sb);
 	chr->maxHP = MSG_ReadShort(sb);
-	chr->category = MSG_ReadByte(sb);
+	chr->teamDefIndex = MSG_ReadByte(sb);
 	chr->gender = MSG_ReadByte(sb);
 	chr->STUN = MSG_ReadByte(sb);
 	chr->AP = MSG_ReadByte(sb);
@@ -1806,7 +1806,7 @@ static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
 
 		MSG_WriteShort(buf, chr->HP);
 		MSG_WriteShort(buf, chr->maxHP);
-		MSG_WriteByte(buf, chr->category);
+		MSG_WriteByte(buf, chr->teamDefIndex);
 		MSG_WriteByte(buf, chr->gender);
 		MSG_WriteByte(buf, chr->STUN);
 		MSG_WriteByte(buf, chr->AP);
@@ -1866,7 +1866,7 @@ void CL_SendCurTeamInfo (struct dbuffer * buf, chrList_t *team)
 
 		NET_WriteShort(buf, chr->HP);
 		NET_WriteShort(buf, chr->maxHP);
-		NET_WriteByte(buf, chr->category);
+		NET_WriteByte(buf, chr->teamDefIndex);
 		NET_WriteByte(buf, chr->gender);
 		NET_WriteByte(buf, chr->STUN);
 		NET_WriteByte(buf, chr->AP);
@@ -2245,8 +2245,7 @@ static int CL_GetRank (const char* rankID)
 	return -1;
 }
 
-static const value_t rankValues[] =
-{
+static const value_t rankValues[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(rank_t, name), 0},
 	{"shortname", V_TRANSLATION_STRING,	offsetof(rank_t, shortname), 0},
 	{"image", V_CLIENT_HUNK_STRING, offsetof(rank_t, image), 0},

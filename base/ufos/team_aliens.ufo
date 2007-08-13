@@ -6,415 +6,224 @@
 //========================================================================
 
 // ==================
-// ortnok
-// ==================
-
-names ortnok
-{
-	neutral
-	{
-	Akrokk
-	Mkeek
-	Rniuk
-	Tranok
-	Kronuk
-	Trenakk
-	Zrokk
-	Kraerak
-	Mnookk
-	Zmolukk
-	Abtrenek
-	Uonak
-	Ktrukk
-	Onukark
-	Ebnuzuk
-	Krrnaak
-	Zmuknesk
-	}
-
-
-	lastname
-	{
-	"Uk Kronok"
-	"Np Zlrok"
-	"T Zruujk"
-	"Kr Zrrosk"
-	"Mt Trekluk"
-	"H Hrkakk"
-	"Pt Mrlkuk"
-	"Tsk Hrekk"
-	"Kkr Kraukk"
-	"Tkr Hruk"
-	"Ts Srulok"
-	"K Krokk"
-	"Zt Hrmokuk"
-	"H Nhrokekk"
-	"Tt Treknk"
-	"Ok Orokk"
-	"Sk Trevuk"
-	"Zr Znaztrk"
-	}
-}
-
-actors ortnok
-{
-	neutral
-	{
-		aliens/ortnok body01 head01 0
-		aliens/ortnok body01 head02 0
-		aliens/ortnok body01 head03 0
-		aliens/ortnok body01 head01 1
-		aliens/ortnok body01 head02 1
-		aliens/ortnok body01 head03 1
-		aliens/ortnok body01 head01 2
-		aliens/ortnok body01 head02 2
-		aliens/ortnok body01 head03 2
-	}
-}
-
-actorsounds ortnok
-{
-	neutral
-	{
-		hurtsound aliens/big_angry.wav
-		deathsound aliens/ortnok.wav
-	}
-}
-
-// ==================
-// taman
-// ==================
-
-names taman
-{
-	neutral
-	{
-	Akrokk
-	Mkeek
-	Rniuk
-	Tranok
-	Kronuk
-	Trenakk
-	Zrokk
-	Kraerak
-	Mnookk
-	Zmolukk
-	Abtrenek
-	Uonak
-	Ktrukk
-	Onukark
-	Ebnuzuk
-	Krrnaak
-	Zmuknesk
-	}
-
-
-	lastname
-	{
-	"Uk Kronok"
-	"Np Zlrok"
-	"T Zruujk"
-	"Kr Zrrosk"
-	"Mt Trekluk"
-	"H Hrkakk"
-	"Pt Mrlkuk"
-	"Tsk Hrekk"
-	"Kkr Kraukk"
-	"Tkr Hruk"
-	"Ts Srulok"
-	"K Krokk"
-	"Zt Hrmokuk"
-	"H Nhrokekk"
-	"Tt Treknk"
-	"Ok Orokk"
-	"Sk Trevuk"
-	"Zr Znaztrk"
-	}
-}
-
-actors taman
-{
-	neutral
-	{
-		aliens/taman body01 head01 0
-		aliens/taman body01 head01 1
-	}
-}
-
-actorsounds taman
-{
-	neutral
-	{
-		hurtsound aliens/echovoice1.wav
-		deathsound aliens/echovoice3.wav
-	}
-}
-
-// ==================
-// shevaar
-// ==================
-
-names shevaar
-{
-	neutral
-	{
-	Akrokk
-	Mkeek
-	Rniuk
-	}
-	lastname
-	{
-	"Uk Kronok"
-	"Np Zlrok"
-	}
-}
-
-actors shevaar
-{
-	neutral
-	{
-		aliens/shevaar body01 head01 0
-		aliens/shevaar body01 head01 1
-	}
-}
-
-actorsounds shevaar
-{
-	neutral
-	{
-		hurtsound aliens/gurgle.wav
-		deathsound aliens/shevaar.wav
-	}
-}
-
-// ==================
-// cyborg_ortnok
-// ==================
-
-//names cyborg_ortnok
-//{
-//	neutral
-//	{
-//	Akrokk
-//	Mkeek
-//	Rniuk
-//	}
-//	lastname
-//	{
-//	"Uk Kronok"
-//	"Np Zlrok"
-//	}
-//}
-
-//actors cyborg_ortnok
-//{
-//	neutral
-//	{
-//		aliens/cyborg_ortnok body01 head01 0
-//		aliens/cyborg_ortnok body01 head01 1
-//	}
-//}
-
-// ==================
-// hovernet
-// ==================
-
-names hovernet
-{
-	neutral
-	{
-	Akrokk
-	Mkeek
-	Rniuk
-	}
-	lastname
-	{
-	"Uk Kronok"
-	"Np Zlrok"
-	}
-}
-
-actors hovernet
-{
-	neutral
-	{
-		aliens/hovernet body01 head01 0
-		aliens/hovernet body01 head01 1
-	}
-}
-
-// ==================
 // TEAM DESCRIPTIONS
 // weapons	Team may carry and use weapons
 // armor	Team may carry armour
 // alien	Team is an alien team
 // tech		Tech id to link
 // name		Translateable team name
+// size		Actorsize
 // ==================
 // Things to come:
 // footsteps	Append this the the footstep sound of the terrain to get
 //				the team specific footsteps
-// size			Actorsize
 // ==================
-teamdesc ortnok
-{
-	name "_Ortnok"
-	tech rs_alien_ortnok_autopsy
-	alien	true
-	size 1
-	//hit_particle // none
-}
-
-teamdesc taman
-{
-	name "_Taman"
-	tech "rs_alien_taman_autopsy"
-	alien	true
-	size 1
-	hit_particle blood
-}
-
-teamdesc shevaar
-{
-	name "_Shevaar"
-	tech "rs_alien_shevaar_autopsy"
-	alien	true
-	armor false
-	size 1
-	hit_particle blood
-}
-
-teamdesc bloodspider
-{
-	name "_Bloodspider"
-	tech "rs_alien_bloodspider_autopsy"
-	alien true
-	armor false
-	weapons false
-	size 1
-	//hit_particle // none
-}
-
-// I am commenting this since this team seems to have three
-// different names everywhere: HOVERNET, FLYER and STINGER
-// and nothing about it is ready anyway; the same for
-// cyborg ortnok
-// -Zenerka 20.01.2007
-//teamdesc hovernet
-//{
-//	name "_Hovernet"
-//	tech "rs_alien_hovernet_autopsy"
-//	alien	true
-//	size 2
-//	//hit_particle // none
-//}
-//teamdesc cyborg_ortnok
-//{
-//	name "_Cyborg Ortnok"
-//	tech "rs_alien_cyborg_ortnok_autopsy"
-//	alien	true
-//	size 1
-//	//hit_particle // none
-//}
-
-names bloodspider
-{
-	neutral
-	{
-	"Bloodspider"
-	}
-	lastname
-	{
-	"Bloodspider"
-	}
-}
-
-actors bloodspider
-{
-	neutral
-	{
-		aliens/bloodspider bloodspider head 0
-	}
-}
-
-actorsounds bloodspider
-{
-	neutral
-	{
-		hurtsound aliens/big_angry.wav
-		deathsound aliens/ortnok.wav
-	}
-}
-
-// ==================
-// TEAMS
-// ==================
-
-team alien
-{
-	{
-	ortnok
-	taman
-	shevaar
-// 	hovernet
-	bloodspider
-	}
-}
-
-team TamOrt
-{
-	{
-	taman
-	ortnok
-	}
-}
-
-team TamShe
-{
-	{
-	taman
-	shevaar
-	}
-}
-
-team OrtShe
-{
-	{
-	ortnok
-	shevaar
-	}
-}
 
 team taman
 {
-	{
-	taman
+	name	"_Taman"
+	tech	"rs_alien_taman_autopsy"
+	alien	true
+	size	1
+	hit_particle	blood
+
+	names {
+		neutral {
+			Akrokk
+			Mkeek
+			Rniuk
+			Tranok
+			Kronuk
+			Trenakk
+			Zrokk
+			Kraerak
+			Mnookk
+			Zmolukk
+			Abtrenek
+			Uonak
+			Ktrukk
+			Onukark
+			Ebnuzuk
+			Krrnaak
+			Zmuknesk
+		}
+
+		lastname {
+			"Uk Kronok"
+			"Np Zlrok"
+			"T Zruujk"
+			"Kr Zrrosk"
+			"Mt Trekluk"
+			"H Hrkakk"
+			"Pt Mrlkuk"
+			"Tsk Hrekk"
+			"Kkr Kraukk"
+			"Tkr Hruk"
+			"Ts Srulok"
+			"K Krokk"
+			"Zt Hrmokuk"
+			"H Nhrokekk"
+			"Tt Treknk"
+			"Ok Orokk"
+			"Sk Trevuk"
+			"Zr Znaztrk"
+		}
+	}
+
+	models {
+		neutral {
+			aliens/taman body01 head01 0
+			aliens/taman body01 head01 1
+		}
+	}
+
+	actorsounds {
+		neutral {
+			hurtsound aliens/echovoice1.wav
+			deathsound aliens/echovoice3.wav
+		}
 	}
 }
 
 team ortnok
 {
-	{
-	ortnok
+	name	"_Ortnok"
+	tech	rs_alien_ortnok_autopsy
+	alien	true
+	size	1
+	//hit_particle	none
+
+	names {
+		neutral {
+			Akrokk
+			Mkeek
+			Rniuk
+			Tranok
+			Kronuk
+			Trenakk
+			Zrokk
+			Kraerak
+			Mnookk
+			Zmolukk
+			Abtrenek
+			Uonak
+			Ktrukk
+			Onukark
+			Ebnuzuk
+			Krrnaak
+			Zmuknesk
+		}
+
+		lastname {
+			"Uk Kronok"
+			"Np Zlrok"
+			"T Zruujk"
+			"Kr Zrrosk"
+			"Mt Trekluk"
+			"H Hrkakk"
+			"Pt Mrlkuk"
+			"Tsk Hrekk"
+			"Kkr Kraukk"
+			"Tkr Hruk"
+			"Ts Srulok"
+			"K Krokk"
+			"Zt Hrmokuk"
+			"H Nhrokekk"
+			"Tt Treknk"
+			"Ok Orokk"
+			"Sk Trevuk"
+			"Zr Znaztrk"
+		}
+	}
+
+	models {
+		neutral {
+			aliens/ortnok body01 head01 0
+			aliens/ortnok body01 head02 0
+			aliens/ortnok body01 head03 0
+			aliens/ortnok body01 head01 1
+			aliens/ortnok body01 head02 1
+			aliens/ortnok body01 head03 1
+			aliens/ortnok body01 head01 2
+			aliens/ortnok body01 head02 2
+			aliens/ortnok body01 head03 2
+		}
+	}
+
+	actorsounds {
+		neutral {
+			hurtsound aliens/big_angry.wav
+			deathsound aliens/ortnok.wav
+		}
 	}
 }
 
 team shevaar
 {
-	{
-	shevaar
+	name	"_Shevaar"
+	tech	"rs_alien_shevaar_autopsy"
+	alien	true
+	armor	false
+	size	1
+	hit_particle	blood
+
+	names {
+		neutral {
+			Akrokk
+			Mkeek
+			Rniuk
+		}
+		lastname {
+			"Uk Kronok"
+			"Np Zlrok"
+		}
+	}
+
+	models {
+		neutral {
+			aliens/shevaar body01 head01 0
+			aliens/shevaar body01 head01 1
+		}
+	}
+
+	actorsounds {
+		neutral {
+			hurtsound aliens/gurgle.wav
+			deathsound aliens/shevaar.wav
+		}
 	}
 }
 
-// team hovernet
-// {
-// 	hovernet
-// }
-
 team bloodspider
 {
-	{
-	bloodspider
+	name	"_Bloodspider"
+	tech	"rs_alien_bloodspider_autopsy"
+	alien	true
+	armor	false
+	weapons	false
+	size	1
+	//hit_particle	none
+
+	names {
+		neutral {
+			"Bloodspider"
+		}
+		lastname {
+			"Bloodspider"
+		}
+	}
+
+	models {
+		neutral {
+			aliens/bloodspider bloodspider head 0
+		}
+	}
+
+	actorsounds {
+		neutral {
+			hurtsound aliens/big_angry.wav
+			deathsound aliens/ortnok.wav
+		}
 	}
 }
 

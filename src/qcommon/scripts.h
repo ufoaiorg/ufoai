@@ -182,20 +182,48 @@ typedef enum {
 	NAME_NUM_TYPES
 } nametypes_t;
 
-typedef struct teamDesc_s {
-	char id[MAX_VAR];
-	qboolean alien;			/**< is this an alien teamdesc definition */
-	qboolean armor, weapons;	/**< able to use weapons/armor */
-	char name[MAX_VAR];
-	char tech[MAX_VAR];	/**< tech id from research.ufo */
-	int size;		 /**< What size is this unit on the field (1=1x1 or 2=2x2)? */
-	char hit_particle[MAX_VAR];	/**< Particle id of what particle effect should be spawned if a unit of this type is hit.
-					 * @sa fireDef_t->hitbody - only "hit_particle" is for blood. :)
-					 * @todo "hitbody" will not spawn blood in the future. */
-} teamDesc_t;
+typedef enum actor_sounds_s {
+	SOUND_DEATH,
+	SOUND_HURT,
 
-extern teamDesc_t teamDesc[MAX_TEAMDEFS];
-extern int numTeamDesc;
+	MAX_SOUND_TYPES
+} actor_sounds_t;
+
+typedef struct teamDef_s {
+	/** the index in the teamDef array */
+	int index;
+	/** id from script file */
+	char id[MAX_VAR];
+	/** translateable name */
+	char name[MAX_VAR];
+	/** tech id from research.ufo */
+	char tech[MAX_VAR];
+	/** names list per gender */
+	linkedList_t *names[NAME_NUM_TYPES];
+	/** amount of names in this list for all different genders */
+	int numNames[NAME_NUM_TYPES];
+	/** models list per gender */
+	linkedList_t *models[NAME_LAST];
+	/** amount of models in this list for all different genders */
+	int numModels[NAME_LAST];
+	/** sounds list per gender and per sound type */
+	linkedList_t *sounds[MAX_SOUND_TYPES][NAME_LAST];
+	/** amount of sounds in this list for all different genders and soundtypes */
+	int numSounds[MAX_SOUND_TYPES][NAME_LAST];
+	/** is this an alien teamdesc definition */
+	qboolean alien;
+	/** able to use weapons/armor */
+	qboolean armor, weapons;
+	/** What size is this unit on the field (1=1x1 or 2=2x2)? */
+	int size;
+	/** Particle id of what particle effect should be spawned if a unit of this type is hit.
+	 * @sa fireDef_t->hitbody - only "hit_particle" is for blood. :)
+	 * @todo "hitbody" will not spawn blood in the future. */
+	char hitParticle[MAX_VAR];
+} teamDef_t;
+
+extern teamDef_t teamDef[MAX_TEAMDEFS];
+extern int numTeamDefs;
 
 extern const char *name_strings[NAME_NUM_TYPES];
 
@@ -211,10 +239,10 @@ typedef struct terrainType_s {
 
 const terrainType_t* Com_GetTerrainType(const char *textureName);
 
-char *Com_GiveName(int gender, const char *category);
-char *Com_GiveModel(int type, int gender, const char *category);
+const char *Com_GiveName(int gender, const char *category);
+const char *Com_GiveModel(int type, int gender, const char *teamID);
 int Com_GetCharacterValues(const char *team, character_t * chr);
-const char* Com_GetActorSound(int category, int gender, actorSound_t soundType);
+const char* Com_GetActorSound(teamDef_t* td, int gender, actorSound_t soundType);
 
 void Com_AddObjectLinks(void);
 void Com_ParseScripts(void);

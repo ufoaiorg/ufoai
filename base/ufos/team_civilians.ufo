@@ -4,212 +4,342 @@
 // Description:
 //	Please see team_humans.ufo
 //========================================================================
+// The civilian teams must match the nation ids
+//========================================================================
 
-names european
+team states
 {
-	female { a }
-	male { b }
-	lastname { c }
-}
+	size	1
+	hit_particle	blood
 
-names americans
-{
-	female { a }
-	male { b }
-	lastname { c }
-}
-
-names oriental
-{
-	female { a }
-	male { b }
-	lastname { c }
-}
-
-names scientist
-{
-	female { a }
-	male { b }
-	lastname { c }
-}
-
-actors americans
-{
-	female
-	{
-		civilians/female body01 head01a 0
-		civilians/female body01 head01a 1
-		civilians/female body01 head01a 2
-		civilians/female body02 head01a 0
-		civilians/female body02 head01a 1
-		civilians/female body01 head01b 0
-		civilians/female body01 head01b 1
-		civilians/female body01 head01b 2
-		civilians/female body02 head01b 0
-		civilians/female body02 head01b 1
-		civilians/female body01 head02a 0
-		civilians/female body01 head02a 1
-		civilians/female body01 head02a 2
-		civilians/female body02 head02a 0
-		civilians/female body02 head02a 1
-		civilians/female body01 head02b 0
-		civilians/female body01 head02b 1
-		civilians/female body01 head02b 2
-		civilians/female body02 head02b 0
-		civilians/female body02 head02b 1
-		// FIXME: This model is broken
-//		civilians/female body04 head01c 0
-//		civilians/female body04 head01b 0
-//		civilians/female body04 head01a 0
-//		civilians/female body04 head02c 0
-//		civilians/female body04 head02b 0
-//		civilians/female body04 head02a 0
+	names {
+		female { a }
+		male { b }
+		lastname { c }
 	}
-	male
-	{
-		civilians/male body01 head01 0
-		civilians/male body01 head01 1
-		civilians/male body01 head01 2
-		civilians/male body01 head03 2
+
+	models {
+		female {
+			civilians/female body01 head01a 0
+			civilians/female body01 head01a 1
+			civilians/female body01 head01a 2
+			civilians/female body02 head01a 0
+			civilians/female body02 head01a 1
+			civilians/female body01 head01b 0
+			civilians/female body01 head01b 1
+			civilians/female body01 head01b 2
+			civilians/female body02 head01b 0
+			civilians/female body02 head01b 1
+			civilians/female body01 head02a 0
+			civilians/female body01 head02a 1
+			civilians/female body01 head02a 2
+			civilians/female body02 head02a 0
+			civilians/female body02 head02a 1
+			civilians/female body01 head02b 0
+			civilians/female body01 head02b 1
+			civilians/female body01 head02b 2
+			civilians/female body02 head02b 0
+			civilians/female body02 head02b 1
+			// FIXME: This model is broken
+//			civilians/female body04 head01c 0
+//			civilians/female body04 head01b 0
+//			civilians/female body04 head01a 0
+//			civilians/female body04 head02c 0
+//			civilians/female body04 head02b 0
+//			civilians/female body04 head02a 0
+		}
+
+		male {
+			civilians/male body01 head01 0
+			civilians/male body01 head01 1
+			civilians/male body01 head01 2
+			civilians/male body01 head03 2
+		}
+	}
+
+	actorsounds {
+		female {
+			hurtsound	misc/newmission.wav
+			deathsound	misc/newmission.wav
+		}
+
+		male {
+			hurtsound 	misc/newmission.wav
+			deathsound	misc/newmission.wav
+		}
 	}
 }
 
-actorsounds americans
+team europa
 {
-	female
-	{
-		hurtsound	misc/newmission.wav
-		deathsound	misc/newmission.wav
+	names {
+		female { a }
+		male { b }
+		lastname { c }
 	}
-	male
-	{
-		hurtsound 	misc/newmission.wav
-		deathsound	misc/newmission.wav
+
+	models {
+		female {
+			civilians/female body01 head01a 0
+			civilians/female body01 head01a 1
+			civilians/female body01 head01a 2
+			civilians/female body02 head01a 0
+			civilians/female body02 head01a 1
+			civilians/female body01 head01b 0
+			civilians/female body01 head01b 1
+			civilians/female body01 head01b 2
+			civilians/female body02 head01b 0
+			civilians/female body02 head01b 1
+			civilians/female body01 head02a 0
+			civilians/female body01 head02a 1
+			civilians/female body01 head02a 2
+			civilians/female body02 head02a 0
+			civilians/female body02 head02a 1
+			civilians/female body01 head02b 0
+			civilians/female body01 head02b 1
+			civilians/female body01 head02b 2
+			civilians/female body02 head02b 0
+			civilians/female body02 head02b 1
+			// FIXME this model is broken
+//			civilians/female body04 head01c 0
+//			civilians/female body04 head01b 0
+//			civilians/female body04 head01a 0
+//			civilians/female body04 head02c 0
+//			civilians/female body04 head02b 0
+//			civilians/female body04 head02a 0
+		}
+		male {
+			civilians/male body01 head01 0
+			civilians/male body01 head01 1
+			civilians/male body01 head01 2
+		}
+	}
+
+	actorsounds {
+		female {
+			hurtsound	misc/newmission.wav
+			deathsound	misc/newmission.wav
+		}
+
+		male {
+			hurtsound 	misc/newmission.wav
+			deathsound	misc/newmission.wav
+		}
 	}
 }
 
-
-actors european
+team asia
 {
-	female
-	{
-		civilians/female body01 head01a 0
-		civilians/female body01 head01a 1
-		civilians/female body01 head01a 2
-		civilians/female body02 head01a 0
-		civilians/female body02 head01a 1
-		civilians/female body01 head01b 0
-		civilians/female body01 head01b 1
-		civilians/female body01 head01b 2
-		civilians/female body02 head01b 0
-		civilians/female body02 head01b 1
-		civilians/female body01 head02a 0
-		civilians/female body01 head02a 1
-		civilians/female body01 head02a 2
-		civilians/female body02 head02a 0
-		civilians/female body02 head02a 1
-		civilians/female body01 head02b 0
-		civilians/female body01 head02b 1
-		civilians/female body01 head02b 2
-		civilians/female body02 head02b 0
-		civilians/female body02 head02b 1
-		// FIXME this model is broken
-//		civilians/female body04 head01c 0
-//		civilians/female body04 head01b 0
-//		civilians/female body04 head01a 0
-//		civilians/female body04 head02c 0
-//		civilians/female body04 head02b 0
-//		civilians/female body04 head02a 0
+	size	1
+	hit_particle	blood
+
+	names {
+		female { a }
+		male { b }
+		lastname { c }
 	}
-	male
-	{
-		civilians/male body01 head01 0
-		civilians/male body01 head01 1
-		civilians/male body01 head01 2
+
+	models {
+		female {
+			civilians/female body03 head04a 0
+			civilians/female body03 head04a 1
+			civilians/female body03 head04b 0
+			civilians/female body03 head04c 1
+		}
+
+		male {
+			civilians/male body02 head02 0
+		}
+	}
+
+	actorsounds {
+		female {
+			hurtsound	misc/newmission.wav
+			deathsound	misc/newmission.wav
+		}
+		male {
+			hurtsound 	misc/newmission.wav
+			deathsound	misc/newmission.wav
+		}
 	}
 }
 
-actorsounds european
+team middle
 {
-	female
-	{
-		hurtsound	misc/newmission.wav
-		deathsound	misc/newmission.wav
+	size	1
+	hit_particle	blood
+
+	names {
+		female { a }
+		male { b }
+		lastname { c }
 	}
-	male
-	{
-		hurtsound 	misc/newmission.wav
-		deathsound	misc/newmission.wav
+
+	models {
+		female {
+			civilians/female body03 head04a 0
+			civilians/female body03 head04a 1
+			civilians/female body03 head04b 0
+			civilians/female body03 head04c 1
+		}
+
+		male {
+			civilians/male body02 head02 0
+		}
+	}
+
+	actorsounds {
+		female {
+			hurtsound	misc/newmission.wav
+			deathsound	misc/newmission.wav
+		}
+		male {
+			hurtsound 	misc/newmission.wav
+			deathsound	misc/newmission.wav
+		}
 	}
 }
 
-actors oriental
+team africa
 {
-	female
-	{
-		civilians/female body03 head04a 0
-		civilians/female body03 head04a 1
-		civilians/female body03 head04b 0
-		civilians/female body03 head04c 1
+	size	1
+	hit_particle	blood
+
+
+	names {
+		female { a }
+		male { b }
+		lastname { c }
 	}
-	male
-	{
-		civilians/male body02 head02 0
+
+	models {
+		female {
+			civilians/female body03 head04a 0
+			civilians/female body03 head04a 1
+			civilians/female body03 head04b 0
+			civilians/female body03 head04c 1
+		}
+
+		male {
+			civilians/male body02 head02 0
+		}
+	}
+
+	actorsounds {
+		female {
+			hurtsound	misc/newmission.wav
+			deathsound	misc/newmission.wav
+		}
+		male {
+			hurtsound 	misc/newmission.wav
+			deathsound	misc/newmission.wav
+		}
 	}
 }
 
-actorsounds oriental
+team russia
 {
-	female
-	{
-		hurtsound	misc/newmission.wav
-		deathsound	misc/newmission.wav
+	size	1
+	hit_particle	blood
+
+	names {
+		female { a }
+		male { b }
+		lastname { c }
 	}
-	male
-	{
-		hurtsound 	misc/newmission.wav
-		deathsound	misc/newmission.wav
+
+	models {
+		female {
+			civilians/female body03 head04a 0
+			civilians/female body03 head04a 1
+			civilians/female body03 head04b 0
+			civilians/female body03 head04c 1
+		}
+
+		male {
+			civilians/male body02 head02 0
+		}
+	}
+
+	actorsounds {
+		female {
+			hurtsound	misc/newmission.wav
+			deathsound	misc/newmission.wav
+		}
+		male {
+			hurtsound 	misc/newmission.wav
+			deathsound	misc/newmission.wav
+		}
 	}
 }
 
-actors scientist
+team oceania
 {
-	female
-	{
-		// FIXME: this is a male model
-		civilians/male scientist01 sci_head01 0
-		civilians/male scientist01 sci_head02a 0
-		civilians/male scientist01 sci_head02b 0
-		civilians/male scientist01 sci_head03a 0
-		civilians/male scientist01 sci_head03b 0
+	size	1
+	hit_particle	blood
+
+	names {
+		female { a }
+		male { b }
+		lastname { c }
 	}
-	male
-	{
-		civilians/male scientist01 sci_head01 0
-		civilians/male scientist01 sci_head02a 0
-		civilians/male scientist01 sci_head02b 0
-		civilians/male scientist01 sci_head03a 0
-		civilians/male scientist01 sci_head03b 0
+
+	models {
+		female {
+			civilians/female body03 head04a 0
+			civilians/female body03 head04a 1
+			civilians/female body03 head04b 0
+			civilians/female body03 head04c 1
+		}
+
+		male {
+			civilians/male body02 head02 0
+		}
+	}
+
+	actorsounds {
+		female {
+			hurtsound	misc/newmission.wav
+			deathsound	misc/newmission.wav
+		}
+		male {
+			hurtsound 	misc/newmission.wav
+			deathsound	misc/newmission.wav
+		}
 	}
 }
 
-// ==================
-// TEAMS
-// ==================
+//========================================================================
+// OTHER NONE-NATION CIVILIANS
+//========================================================================
 
-team civilian
+team scientist
 {
-	{
-	european
-	oriental
-	scientist
-	americans
-	human_scientist
+	size	1
+	hit_particle	blood
+
+	names {
+		female { a }
+		male { b }
+		lastname { c }
 	}
-}
 
-teamdesc civilian
-{
-	size 1
-	hit_particle blood
+	models {
+		female {
+			// FIXME: this is a male model
+			civilians/male scientist01 sci_head01 0
+			civilians/male scientist01 sci_head02a 0
+			civilians/male scientist01 sci_head02b 0
+			civilians/male scientist01 sci_head03a 0
+			civilians/male scientist01 sci_head03b 0
+		}
+
+		male {
+			civilians/male scientist01 sci_head01 0
+			civilians/male scientist01 sci_head02a 0
+			civilians/male scientist01 sci_head02b 0
+			civilians/male scientist01 sci_head03a 0
+			civilians/male scientist01 sci_head03b 0
+		}
+	}
 }
