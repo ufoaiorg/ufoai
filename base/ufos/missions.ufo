@@ -198,6 +198,26 @@ mission transport
 	storyrelated	true
 }
 
+//Rzeszow, Poland
+mission rzeszow
+{
+	location	"_Rzeszow"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map		terrain02
+	music		van_mission
+	pos		"-21 50"
+	aliens	7
+	alienteam	TamOrt
+	alienequip	stage1_soldiers
+	civilians	5
+	civteam		european
+	nation		"europa"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
 //-------------------------------------
 // STAGE 1, SUBSTAGE 3 - soldier_terror
 //-------------------------------------
