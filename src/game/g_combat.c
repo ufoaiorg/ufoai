@@ -912,8 +912,8 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 			/* check for shooting through wall */
 			if (throughWall && tr.contents & CONTENTS_SOLID) {
 				throughWall--;
-				/* redruce damage */
-				/* TODO: redruce even more if the wall was hit far away and
+				/* reduce damage */
+				/* TODO: reduce even more if the wall was hit far away and
 				 * not close by the shooting actor */
 				damage /= sqrt(fd->throughWall - throughWall + 1);
 				VectorMA(tr.endpos, MAX_WALL_THICKNESS_FOR_SHOOTING_THROUGH, dir, tracefrom);

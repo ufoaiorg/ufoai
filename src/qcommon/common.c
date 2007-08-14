@@ -735,7 +735,7 @@ void Qcommon_Init (int argc, const char **argv)
 	Cmd_AddCommand("debug_help", Com_DebugHelp_f, "Show some debugging help");
 #endif
 
-	s_sleep = Cvar_Get("s_sleep", "1", CVAR_ARCHIVE, "Use the sleep function to redruce cpu usage");
+	s_sleep = Cvar_Get("s_sleep", "1", CVAR_ARCHIVE, "Use the sleep function to reduce cpu usage");
 	developer = Cvar_Get("developer", "0", 0, "Activate developer output to logfile and gameconsole");
 	timescale = Cvar_Get("timescale", "1", 0, NULL);
 	fixedtime = Cvar_Get("fixedtime", "0", 0, NULL);
