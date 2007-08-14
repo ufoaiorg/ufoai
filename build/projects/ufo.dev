@@ -9,7 +9,7 @@ CppCompiler=
 Includes=
 Linker=-lvorbisfile_@@_-lvorbis_@@_-logg_@@_-lwinmm _@@_-lwsock32 _@@_-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lgmon_@@_../../src/ports/win32/intl.lib _@@_-lSDL_@@_-lSDL_ttf_@@_../../src/ports/win32/libjpeg.lib_@@_-lz_@@_-lws2_32_@@_
 Libs=C:\Dev-Cpp\lib
-UnitCount=135
+UnitCount=134
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=ufo_private.rc
@@ -48,1313 +48,1313 @@ ProductVersion=2.2-dev1
 AutoIncBuildNr=0
 
 [Unit1]
-FileName=..\..\src\ports\win32\cd_win.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=
-BuildCmd=
-
-[Unit2]
 FileName=..\..\src\client\cl_actor.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit3]
+[Unit2]
 FileName=..\..\src\client\cl_basemanagement.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit4]
+[Unit3]
 FileName=..\..\src\client\cl_campaign.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit5]
+[Unit4]
 FileName=..\..\src\client\cl_fx.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit6]
+[Unit5]
 FileName=..\..\src\client\cl_input.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit7]
+[Unit6]
 FileName=..\..\src\client\cl_le.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit8]
+[Unit7]
 FileName=..\..\src\client\cl_main.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit9]
+[Unit8]
 FileName=..\..\src\client\cl_menu.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit10]
+[Unit9]
 FileName=..\..\src\client\cl_parse.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit11]
+[Unit10]
 FileName=..\..\src\client\cl_particle.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit12]
+[Unit11]
 FileName=..\..\src\client\cl_research.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit13]
+[Unit12]
 FileName=..\..\src\client\cl_screen.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit14]
+[Unit13]
 FileName=..\..\src\client\cl_sequence.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit15]
+[Unit14]
 FileName=..\..\src\client\cl_team.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit16]
+[Unit15]
 FileName=..\..\src\client\cl_ufopedia.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit17]
+[Unit16]
 FileName=..\..\src\client\cl_view.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit18]
+[Unit17]
 FileName=..\..\src\qcommon\cmd.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit19]
+[Unit18]
 FileName=..\..\src\qcommon\cmodel.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit20]
+[Unit19]
 FileName=..\..\src\qcommon\common.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit21]
+[Unit20]
 FileName=..\..\src\client\cl_console.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit22]
+[Unit21]
 FileName=..\..\src\qcommon\ioapi.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit23]
+[Unit22]
 FileName=..\..\src\qcommon\cvar.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit24]
+[Unit23]
 FileName=..\..\src\qcommon\files.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit25]
+[Unit24]
 FileName=..\..\src\ports\win32\in_win.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit26]
+[Unit25]
 FileName=..\..\src\client\cl_keys.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit27]
+[Unit26]
 FileName=..\..\src\qcommon\md4.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit28]
+[Unit27]
 FileName=..\..\src\game\q_shared.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit29]
+[Unit28]
 FileName=..\..\src\ports\win32\q_shwin.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit30]
+[Unit29]
 FileName=..\..\src\qcommon\scripts.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit31]
+[Unit30]
 FileName=..\..\src\client\snd_ref.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit32]
+[Unit31]
 FileName=..\..\src\client\snd_mix.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit33]
+[Unit32]
 FileName=..\..\src\server\sv_ccmds.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit34]
+[Unit33]
 FileName=..\..\src\server\sv_game.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit35]
+[Unit34]
 FileName=..\..\src\server\sv_init.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit36]
+[Unit35]
 FileName=..\..\src\server\sv_main.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit37]
+[Unit36]
 FileName=..\..\src\server\sv_send.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit38]
+[Unit37]
 FileName=..\..\src\server\sv_user.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit39]
+[Unit38]
 FileName=..\..\src\server\sv_world.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit40]
+[Unit39]
 FileName=..\..\src\ports\win32\sys_win.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit41]
+[Unit40]
 FileName=..\..\src\ports\win32\vid_dll.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit42]
+[Unit41]
 FileName=..\..\src\client\anorms.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit43]
+[Unit42]
 FileName=..\..\src\client\cl_basemanagement.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit44]
+[Unit43]
 FileName=..\..\src\client\cl_research.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit45]
+[Unit44]
 FileName=..\..\src\client\client.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit46]
+[Unit45]
 FileName=..\..\src\game\game.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit47]
+[Unit46]
 FileName=..\..\src\client\cl_input.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit48]
+[Unit47]
 FileName=..\..\src\client\cl_keys.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit49]
+[Unit48]
 FileName=..\..\src\ports\win32\libintl.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit50]
+[Unit49]
 FileName=..\..\src\client\os_types.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit51]
+[Unit50]
 FileName=..\..\src\game\q_shared.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit52]
+[Unit51]
 FileName=..\..\src\qcommon\qcommon.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit53]
+[Unit52]
 FileName=..\..\src\qcommon\qfiles.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit54]
+[Unit53]
 FileName=..\..\src\client\ref.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit55]
+[Unit54]
 FileName=..\..\src\client\cl_screen.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit56]
+[Unit55]
 FileName=..\..\src\server\server.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit57]
+[Unit56]
 FileName=..\..\src\client\snd_loc.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit58]
+[Unit57]
 FileName=..\..\src\client\cl_sound.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit59]
+[Unit58]
 FileName=..\..\src\client\vid.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit60]
+[Unit59]
 FileName=..\..\src\ports\win32\vorbisfile.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit61]
+[Unit60]
 FileName=..\..\src\ports\win32\win_local.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit62]
+[Unit61]
 FileName=..\..\src\client\cl_shader.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit63]
+[Unit62]
 FileName=..\..\src\client\cl_market.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit64]
+[Unit63]
 FileName=..\..\src\client\cl_market.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit65]
+[Unit64]
 FileName=..\..\src\client\cl_aircraft.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit66]
+[Unit65]
 FileName=..\..\src\client\cl_aircraft.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit67]
+[Unit66]
 FileName=..\..\src\qcommon\filesys.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit68]
+[Unit67]
 FileName=..\..\src\qcommon\md4.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit69]
+[Unit68]
 FileName=..\..\src\qcommon\mem.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit69]
+FileName=..\..\src\qcommon\scripts.h
+Folder=Header Files
+Compile=0
+CompileCpp=0
+Link=0
+Priority=1000
+OverrideBuildCmd=0
 BuildCmd=
 
 [Unit70]
-FileName=..\..\src\qcommon\scripts.h
-CompileCpp=0
-Folder=Header Files
-Compile=0
-Link=0
-Priority=1000
-OverrideBuildCmd=
-BuildCmd=
-
-[Unit71]
 FileName=..\..\src\qcommon\ufotypes.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit71]
+FileName=..\..\src\qcommon\cmd.h
+CompileCpp=0
+Folder=Header Files
+Compile=0
+Link=0
+Priority=1000
+OverrideBuildCmd=0
 BuildCmd=
 
 [Unit72]
-FileName=..\..\src\qcommon\cmd.h
-Folder=Header Files
-Compile=0
-CompileCpp=0
-Link=0
-Priority=1000
-OverrideBuildCmd=
-BuildCmd=
-
-[Unit73]
 FileName=..\..\src\qcommon\cmodel.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit74]
+[Unit73]
 FileName=..\..\src\qcommon\doxygen.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit74]
+FileName=..\..\src\qcommon\cvar.h
+Folder=Header Files
+Compile=0
+CompileCpp=0
+Link=0
+Priority=1000
+OverrideBuildCmd=0
 BuildCmd=
 
 [Unit75]
-FileName=..\..\src\qcommon\cvar.h
-CompileCpp=0
-Folder=Header Files
-Compile=0
-Link=0
-Priority=1000
-OverrideBuildCmd=
-BuildCmd=
-
-[Unit76]
 FileName=..\..\src\client\cl_map.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit77]
+[Unit76]
 FileName=..\..\src\client\cl_produce.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit78]
+[Unit77]
 FileName=..\..\src\client\cl_popup.c
+CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit78]
+FileName=..\..\src\client\cl_ufo.c
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
 BuildCmd=
 CompileCpp=0
 
 [Unit79]
-FileName=..\..\src\client\cl_ufo.c
-CompileCpp=0
-Folder=Source Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=
-BuildCmd=
-
-[Unit80]
 FileName=..\..\src\client\cl_radar.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit81]
+[Unit80]
 FileName=..\..\src\client\cl_employee.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit82]
+[Unit81]
 FileName=..\..\src\client\cl_employee.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit83]
+[Unit82]
 FileName=..\..\src\qcommon\unzip.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit84]
+[Unit83]
 FileName=..\..\src\qcommon\unzip.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit85]
+[Unit84]
 FileName=..\..\src\client\cl_hospital.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit86]
+[Unit85]
 FileName=..\..\src\client\cl_hospital.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit87]
+[Unit86]
 FileName=..\..\src\client\snd_openal.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit88]
+[Unit87]
 FileName=..\..\src\client\qal.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit89]
+[Unit88]
 FileName=..\..\src\ports\win32\qal_win.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit90]
+[Unit89]
 FileName=..\..\src\client\cl_event.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit91]
+[Unit90]
 FileName=..\..\src\client\cl_event.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit92]
+[Unit91]
 FileName=..\..\src\client\cl_irc.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit93]
+[Unit92]
 FileName=..\..\src\client\cl_irc.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit94]
+[Unit93]
 FileName=..\..\src\client\snd_openal.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit95]
+[Unit94]
 FileName=..\..\src\client\qal.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit96]
+[Unit95]
 FileName=..\..\src\client\cl_aliencont.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit97]
+[Unit96]
 FileName=..\..\src\client\cl_aliencont.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit98]
+[Unit97]
 FileName=..\..\src\ports\win32\ufo.rc
-CompileCpp=1
+CompileCpp=0
 Folder=Resource Files
 Compile=1
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit99]
+[Unit98]
 FileName=..\..\src\qcommon\md5.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit100]
+[Unit99]
 FileName=..\..\src\client\cl_campaign.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit101]
+[Unit100]
 FileName=..\..\src\client\cl_global.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit102]
+[Unit101]
 FileName=..\..\src\client\cl_transfer.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit103]
+[Unit102]
 FileName=..\..\src\client\cl_transfer.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit104]
+[Unit103]
 FileName=..\..\src\client\cl_produce.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit105]
+[Unit104]
 FileName=..\..\src\client\cl_save.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit106]
+[Unit105]
 FileName=..\..\src\client\cl_save.c
+CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
-CompileCpp=0
 
-[Unit107]
+[Unit106]
 FileName=..\..\src\client\cl_inventory.h
-CompileCpp=0
 Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
+CompileCpp=0
 
-[Unit108]
+[Unit107]
 FileName=..\..\src\client\cl_inventory.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit109]
+[Unit108]
 FileName=..\..\src\client\cl_console.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit110]
+[Unit109]
 FileName=..\..\src\qcommon\msg.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit111]
+[Unit110]
 FileName=..\..\src\client\cl_http.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit112]
+[Unit111]
 FileName=..\..\src\client\cl_http.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit113]
+[Unit112]
 FileName=..\..\src\client\cl_vid.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit114]
+[Unit113]
 FileName=..\..\src\client\cl_airfight.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit115]
+[Unit114]
 FileName=..\..\src\qcommon\mem.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit116]
+[Unit115]
 FileName=..\..\src\client\cl_cinematic.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit117]
+[Unit116]
 FileName=..\..\src\client\cl_tip.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit118]
+[Unit117]
 FileName=..\..\src\client\cl_language.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit119]
+[Unit118]
 FileName=..\..\src\game\inv_shared.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit120]
+[Unit119]
 FileName=..\..\src\game\inv_shared.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit121]
+[Unit120]
 FileName=..\..\src\client\snd_ogg.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit122]
+[Unit121]
 FileName=..\..\src\client\snd_ogg.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit123]
+[Unit122]
 FileName=..\..\src\client\snd_wave.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit124]
+[Unit123]
 FileName=..\..\src\client\snd_wave.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit125]
+[Unit124]
 FileName=..\..\src\client\cl_basesummary.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit126]
+[Unit125]
 FileName=..\..\src\client\cl_basesummary.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit127]
+[Unit126]
 FileName=..\..\src\qcommon\dbuffer.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit128]
+[Unit127]
 FileName=..\..\src\qcommon\net.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit129]
+[Unit128]
 FileName=..\..\src\qcommon\netpack.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit130]
+[Unit129]
 FileName=..\..\src\qcommon\net.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
-[Unit131]
+[Unit130]
 FileName=..\..\src\qcommon\netpack.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit131]
+FileName=..\..\src\qcommon\dbuffer.h
+CompileCpp=0
+Folder=Header Files
+Compile=0
+Link=0
+Priority=1000
+OverrideBuildCmd=0
 BuildCmd=
 
 [Unit132]
@@ -1364,27 +1364,27 @@ Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
 BuildCmd=
 
 [Unit133]
-FileName=..\..\src\qcommon\dbuffer.h
-CompileCpp=0
-Folder=Header Files
-Compile=0
-Link=0
-Priority=1000
-OverrideBuildCmd=
-BuildCmd=
-
-[Unit134]
 FileName=..\..\src\client\cl_mapfightequip.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
-OverrideBuildCmd=
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit134]
+FileName=..\..\src\client\cl_mapfightequip.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
 BuildCmd=
 
 [Unit135]
