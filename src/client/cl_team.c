@@ -69,6 +69,12 @@ char* CL_GetTeamSkinName (int id)
 	case 3:
 		return _("Arctic");
 		break;
+	case 4:
+		return _("Yellow");
+		break;
+	case 5:
+		return _("CCCP");
+		break;
 	default:
 		Sys_Error("CL_GetTeamSkinName: Unknown skin id %i - max is %i\n", id, NUM_TEAMSKINS-1);
 		break;
@@ -421,6 +427,10 @@ static void CL_ChangeSkin_f (void)
 		if (newSkin >= NUM_TEAMSKINS || newSkin < 0)
 			newSkin = 0;
 
+		/* don't allow all skins in singleplayer */
+		if (ccs.singleplayer && newSkin > NUM_TEAMSKINS_SINGLEPLAYER)
+			newSkin = 0;
+
 		if (chrDisplayList.chr[sel]) {
 			chrDisplayList.chr[sel]->skin = newSkin;
 
@@ -454,6 +464,10 @@ static void CL_ChangeSkinOnBoard_f (void)
 	/* Get selected skin and fall back to default skin if it is not valid. */
 	newSkin = Cvar_VariableInteger("mn_skin");
 	if (newSkin >= NUM_TEAMSKINS || newSkin < 0)
+		newSkin = 0;
+
+	/* don't allow all skins in singleplayer */
+	if (ccs.singleplayer && newSkin > NUM_TEAMSKINS_SINGLEPLAYER)
 		newSkin = 0;
 
 	/**
