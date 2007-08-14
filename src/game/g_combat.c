@@ -1086,6 +1086,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 	edict_t *ent;
 	item_t *weapon = NULL;
 	vec3_t dir, center, target, shotOrigin;
+	vec3_t tarv;
 	int i, ammo, prev_dir = 0, reaction_leftover, shots;
 	int container = 0, mask;
 	qboolean quiet;
@@ -1125,6 +1126,14 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 	if (!ammo && fd->ammo && !gi.csi->ods[weapon->t].thrown) {
 		if (!quiet)
 			gi.cprintf(player, PRINT_CONSOLE, _("Can't perform action - no ammo!\n"));
+		return qfalse;
+	}
+
+	/* check target is not out of range */
+	PosToVec(at, tarv);
+	if (fd->range < VectorDist(ent->origin, tarv)) {
+		if (!quiet)
+			gi.cprintf(player, PRINT_HUD, _("Can't peform action - target out of range!\n"));
 		return qfalse;
 	}
 
