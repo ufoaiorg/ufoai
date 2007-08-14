@@ -776,8 +776,15 @@ static void FixWorkingDirectory (void)
 static void Sys_SetAffinity (void)
 {
 	SYSTEM_INFO sysInfo;
+	/* 1 - use core #0
+	 * 2 - use core #1
+	 * 3 - use cores #0 and #1 */
 	DWORD_PTR procAffinity = 0;
 	HANDLE proc = GetCurrentProcess();
+
+#if 0
+	SetPriorityClass(proc, HIGH_PRIORITY_CLASS);
+#endif
 
 	GetSystemInfo(&sysInfo);
 	Com_Printf("Found %i processors\n", (int)sysInfo.dwNumberOfProcessors);
