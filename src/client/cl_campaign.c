@@ -4148,6 +4148,7 @@ static void CP_UFORecovered_f (void)
 	Cvar_SetValue("mission_uforecovered", 1);	/* This is used in menus to enable UFO Recovery nodes. */
 	Cvar_SetValue("mission_uforecoverydone", 0);	/* This is used in menus to block UFO Recovery nodes. */
 	Cvar_SetValue("mission_ufotype", UFOtype);
+	Cvar_SetValue("mission_recoverynation", -1);
 	/* @todo block Sell button if no nation with requirements */
 	if (!store) {
 		/* Block store option if storing not possible. */
@@ -4314,13 +4315,17 @@ static void CP_UfoRecoveryNationSelectPopup_f (void)
 
 	for (i = 0, nation = gd.nations; i < gd.numNations; i++, nation++) {
 		j++;
-		if (j == num)
+		if (j == num) {
+			Cvar_SetValue("mission_recoverynation", i);
 			break;
+		}
 	}
 	assert(nation);
 
-	Cvar_SetValue("mission_recoverynation", i);
+	/* Pop the menu and launch it again - now with updated value of selected nation. */
+	Cbuf_ExecuteText(EXEC_NOW, "mn_pop\n");
 	Com_DPrintf(DEBUG_CLIENT, "CP_UfoRecoveryNationSelectPopup_f()... picked nation: %s\n", nation->name);
+	Cbuf_ExecuteText(EXEC_NOW, "cp_uforecoverysell\n");
 }
 
 /**
@@ -4366,20 +4371,32 @@ static void CP_UFORecoveredSell_f (void)
 			break;
 	}
 
-	memset (UFOprices, 0, sizeof(UFOprices));
+	if (Cvar_VariableInteger("mission_recoverynation") == -1)
+		memset (UFOprices, 0, sizeof(UFOprices));
 	recoveryNationSelectPopup[0] = '\0';
 	for (i = 0; i < gd.numNations; i++) {
 		nation = &gd.nations[i];
 		/* @todo only nations with proper alien infiltration values */
 		nations++;
-		/* Calculate price offered by nation. */
-		UFOprices[i] = ufocraft->price + (int)(frand() * 100000);
+		/* Calculate price offered by nation only if this is first popup opening. */
+		if (Cvar_VariableInteger("mission_recoverynation") == -1)
+			UFOprices[i] = ufocraft->price + (int)(frand() * 100000);
 		Q_strcat(recoveryNationSelectPopup, _(gd.nations[i].name), sizeof(recoveryNationSelectPopup));
 		Q_strcat(recoveryNationSelectPopup, "\t\t\t", sizeof(recoveryNationSelectPopup));
 		Q_strcat(recoveryNationSelectPopup, va("%i", UFOprices[i]), sizeof(recoveryNationSelectPopup));
 		Q_strcat(recoveryNationSelectPopup, "\t\t", sizeof(recoveryNationSelectPopup));
 		Q_strcat(recoveryNationSelectPopup, CL_GetNationHappinessString(nation), sizeof(recoveryNationSelectPopup));
 		Q_strcat(recoveryNationSelectPopup, "\n", sizeof(recoveryNationSelectPopup));
+	}
+	Q_strcat(recoveryNationSelectPopup, _("\n\nSelected nation:\t\t\t"), sizeof(recoveryNationSelectPopup));
+	if (Cvar_VariableInteger("mission_recoverynation") != -1) {
+		Com_Printf("cvar: %i\n", Cvar_VariableInteger("mission_recoverynation"));
+		for (i = 0; i < gd.numNations; i++) {
+			if (i == Cvar_VariableInteger("mission_recoverynation")) {
+				Q_strcat(recoveryNationSelectPopup, _(gd.nations[i].name), sizeof(recoveryNationSelectPopup));
+				break;
+			}
+		}
 	}
 
 	/* Do nothing without at least one nation. */

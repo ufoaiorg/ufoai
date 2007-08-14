@@ -468,7 +468,8 @@ menu popup_recoverynationlist
 		format	"16 100"
 //		bgcolor	"1 1 1 0.6"
 		height	"16"
-		wheel click
+		wheel
+		click { }
 		rclick { cmd "mn_pop;" }
 		mousefx true
 	}
