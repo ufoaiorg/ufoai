@@ -144,6 +144,7 @@ typedef struct {
  *	Access with "step[y][x] & (1 << z)"
  *	Guess:
  *		Each bit if set to 0 if a unit can step on it (e.g. ground or chair) or it's 1 if there is a wall or similar (i.e. it's blocked).
+ * 		GERD THINKS it shows stairs and step-on stuff
  *		Search for "sh = (map->step[y][x] & (1 << z)) ? sh_big : sh_low;" and similar.
  *		"sh" seems to mean "step height"
  *
@@ -800,6 +801,7 @@ static qboolean CM_TestConnection (routing_t * map, int x, int y, byte z, unsign
 	assert((x >= 0) && (x < WIDTH));
 	assert((y >= 0) && (y < WIDTH));
 	assert(z < HEIGHT);
+	assert(dir < DIRECTIONS);
 
 	/* totally blocked unit */
 	if ((fill && (filled[y][x] & (1 << z))) || (map->fall[y][x] == ROUTING_NOT_REACHABLE))
@@ -811,14 +813,15 @@ static qboolean CM_TestConnection (routing_t * map, int x, int y, byte z, unsign
 	VectorSet(pos, x, y, z);
 	PosToVec(pos, start);
 	start[2] += h * 4;
-	assert(dir < DIRECTIONS);
 	VectorSet(end, start[0] + (UNIT_HEIGHT / 2) * dvecs[dir][0], start[1] + (UNIT_HEIGHT / 2) * dvecs[dir][1], start[2]);
 
 	ax = x + dvecs[dir][0];
 	ay = y + dvecs[dir][1];
 	az = z + (h + sh) / 0x10;
-	h = (R_HEIGHT(map, x, y, z) + sh) % 0x10;
+	h = (h + sh) % 0x10;
 
+	assert((ax >= 0) && (ax < WIDTH));
+	assert((ay >= 0) && (ay < WIDTH));
 	assert(az < HEIGHT);	/* Well, it just has to be, doesn't it? :) */
 
 	/* assume blocked */
@@ -826,6 +829,10 @@ static qboolean CM_TestConnection (routing_t * map, int x, int y, byte z, unsign
 
 	/* test filled */
 	if (fill && (filled[ay][ax] & (1 << az)))
+		return qfalse;
+
+	/* test not reachable */
+	if (map->fall[ay][ax] == ROUTING_NOT_REACHABLE)
 		return qfalse;
 
 	/* test height */
@@ -1011,6 +1018,10 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 	int maxX, maxY;
 	int ax, ay;
 	unsigned int i;
+#ifdef DEBUG
+	/* count all reachable fields of the map for debugging */
+	unsigned long route_count = 0;
+#endif
 
 	inlineList = NULL;
 
@@ -1033,7 +1044,7 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 
 	/* 10 => HEIGHT (8), level 257 (1), level 258 (1) */
 	if (length != WIDTH * WIDTH * 10)
-		Com_Error(ERR_DROP, "Map has BAD routing lump");
+		Com_Error(ERR_DROP, "CMod_LoadRouting: Map has BAD routing lump");
 
 	/* shift and merge the routing information
 	 * in case of map assemble (random maps) */
@@ -1054,7 +1065,7 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 					clMap.route[z][y + sY][x + sX] = temp_route[z][y][x];
 
 				/* check border connections */
-				for (i = 0; i < DIRECTIONS; i++) {
+				for (i = 0; i < BASE_DIRECTIONS; i++) {
 					/* test for border */
 					ax = x + dvecs[i][0];
 					ay = y + dvecs[i][1];
@@ -1067,7 +1078,15 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 						CM_TestConnection(&clMap, ax + sX, ay + sY, z, i ^ 1, qfalse);
 					}
 				}
+#ifdef DEBUG
+				route_count++;
+#endif				
 			}
+
+#ifdef DEBUG
+	if (!route_count)	
+		Com_Error(ERR_DROP, "CMod_LoadRouting: Map has NO reachable field");
+#endif
 
 	/* calculate new border */
 	CMod_GetMapSize(&clMap);
@@ -1180,6 +1199,9 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
 	/* use for random map assembly for shifting origins and so on */
 	vec3_t shift = {0.0f, 0.0f, 0.0f};
 
+#ifdef DEBUG
+	Com_Printf("CM_AddMapTile: %s at %i,%i\n", name, sX, sY); 
+#endif
 	assert(name);
 	assert(name[0]);
 	assert((sX > -(WIDTH/2)) && (sX < (WIDTH/2)));
