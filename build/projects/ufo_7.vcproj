@@ -328,9 +328,6 @@
 			Name="Source Files"
 			Filter="cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90">
 			<File
-				RelativePath="ports\win32\cd_win.c">
-			</File>
-			<File
 				RelativePath="client\cl_actor.c">
 			</File>
 			<File

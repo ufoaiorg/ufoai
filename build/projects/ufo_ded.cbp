@@ -120,9 +120,6 @@
 			<Option link="1" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="../../src/ports/null/cd_null.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="../../src/ports/null/cl_null.c">
 			<Option compilerVar="CC" />
 		</Unit>

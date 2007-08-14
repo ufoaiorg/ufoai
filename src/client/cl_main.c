@@ -2496,8 +2496,6 @@ void CL_Frame (int now, void *data)
 	/* update audio */
 	S_Update(cl.refdef.vieworg, cl.cam.axis[0], cl.cam.axis[1], cl.cam.axis[2]);
 
-	CDAudio_Update();
-
 	/* advance local effects for next frame */
 	CL_RunLightStyles();
 	SCR_RunConsole();
@@ -2652,7 +2650,6 @@ void CL_Init (void)
 	cls.loadingPercent = 0.0f;
 	SCR_DrawPrecacheScreen(qfalse);
 
-	CDAudio_Init();
 	CL_InitLocal();
 	IN_Init();
 
@@ -2701,7 +2698,6 @@ void CL_Shutdown (void)
 	Con_SaveConsoleHistory(FS_Gamedir());
 	if (CL_VideoRecording())
 		CL_CloseAVI();
-	CDAudio_Shutdown();
 	S_Shutdown();
 	IN_Shutdown();
 	VID_Shutdown();

@@ -763,15 +763,6 @@ extern void Radar_Initialise(radar_t* radar, int range);
 extern qboolean RADAR_CheckUfoSensored(radar_t* radar, vec2_t posRadar,
 const struct aircraft_s* ufo, qboolean wasUfoSensored);
 
-/* audio cd headers */
-int CDAudio_Init(void);
-void CDAudio_Shutdown(void);
-void CDAudio_Play(int track, qboolean looping);
-void CDAudio_Stop(void);
-void CDAudio_Update(void);
-void CDAudio_Activate (qboolean active);
-void CDAudio_RandomPlay(void);
-
 /* cl_research.c */
 #include "cl_research.h"
 

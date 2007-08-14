@@ -34,8 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <intrin.h>
 #endif
 
-LONG CDAudio_MessageHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-
 /* Structure containing functions exported from refresh DLL */
 refexport_t re;
 
@@ -129,14 +127,12 @@ void AppActivate (BOOL fActive, BOOL minimize)
 	/* minimize/restore mouse-capture on demand */
 	if (!ActiveApp) {
 		IN_Activate(qfalse);
-		CDAudio_Activate(qfalse);
 		S_Activate(qfalse);
 
 		if (win_noalttab->integer)
 			WIN_EnableAltTab();
 	} else {
 		IN_Activate(qtrue);
-		CDAudio_Activate(qtrue);
 		S_Activate(qtrue);
 		if (win_noalttab->integer)
 			WIN_DisableAltTab();
@@ -279,10 +275,6 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 	case WM_SYSKEYUP:
 	case WM_KEYUP:
 		Key_Event(IN_MapKey(wParam, lParam), qfalse, sys_msg_time);
-		break;
-
-	case MM_MCINOTIFY:
-		lRet = CDAudio_MessageHandler(hWnd, uMsg, wParam, lParam);
 		break;
 
 	default:	/* pass all unhandled messages to DefWindowProc */

@@ -94,7 +94,6 @@ ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux-gnu),)
 		CLIENT_SRCS+= \
 			ports/linux/qal_linux.c
 	endif
-	CLIENT_CD=ports/linux/cd_linux.c
 endif
 
 ifeq ($(TARGET_OS),mingw32)
@@ -105,7 +104,6 @@ ifeq ($(TARGET_OS),mingw32)
 		ports/win32/in_win.c \
 		ports/win32/sys_win.c \
 		ports/win32/ufo.rc
-	CLIENT_CD=ports/win32/cd_win.c
 
 	ifeq ($(HAVE_OPENAL),1)
 		CLIENT_SRCS+=\
@@ -123,12 +121,6 @@ ifeq ($(TARGET_OS),darwin)
 		ports/unix/sys_unix.c \
 		ports/macosx/q_shosx.c \
 		ports/macosx/qal_osx.c
-
-		# FIXME Add more objects
-
-#	FIXME: cd_sdl.c is used below - remove cd_osx.m
-#	(at least it is used if HAVE_SDL is true - which should be the case)
-	CLIENT_CD+=ports/macosx/cd_osx.m
 endif
 
 ifeq ($(TARGET_OS),solaris)
@@ -143,22 +135,10 @@ ifeq ($(TARGET_OS),solaris)
 		CLIENT_SRCS+=\
 			ports/linux/qal_linux.c
 	endif
-	CLIENT_CD=ports/linux/cd_linux.c
 endif
 
 ifeq ($(HAVE_CURL),1)
 	CLIENT_CFLAGS+=-DHAVE_CURL
-endif
-
-ifeq ($(TARGET_OS),mingw32)
-	CLIENT_SRCS+=$(CLIENT_CD)
-else
-	ifeq ($(HAVE_SDL),1)
-		CLIENT_SRCS+=ports/unix/cd_sdl.c
-		CLIENT_LIBS+=$(SDL_LIBS)
-	else
-		CLIENT_SRCS+=$(CLIENT_CD)
-	endif
 endif
 
 CLIENT_OBJS= \

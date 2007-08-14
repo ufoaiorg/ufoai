@@ -327,11 +327,6 @@
 			<Option link="1" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="../../src/ports/unix/cd_sdl.c">
-			<Option compilerVar="CC" />
-			<Option target="linux" />
-			<Option target="macosx" />
-		</Unit>
 		<Unit filename="../../src/ports/unix/glob.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
@@ -346,11 +341,6 @@
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 			<Option target="macosx" />
-		</Unit>
-		<Unit filename="../../src/ports/win32/cd_win.c">
-			<Option compilerVar="CC" />
-			<Option target="windows" />
-			<Option target="windows_debug" />
 		</Unit>
 		<Unit filename="../../src/ports/win32/in_win.c">
 			<Option compilerVar="CC" />

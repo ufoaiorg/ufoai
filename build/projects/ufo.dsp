@@ -95,10 +95,6 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 # Begin Source File
 
-SOURCE=..\..\src\ports\win32\cd_win.c
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\client\cl_actor.c
 # End Source File
 # Begin Source File

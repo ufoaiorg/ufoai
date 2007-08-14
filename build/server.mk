@@ -28,8 +28,7 @@ SERVER_SRCS += \
 	game/q_shared.c \
 	game/inv_shared.c \
 	\
-	ports/null/cl_null.c \
-	ports/null/cd_null.c
+	ports/null/cl_null.c
 
 ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux-gnu),)
 	SERVER_SRCS += \

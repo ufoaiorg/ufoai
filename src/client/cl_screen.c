@@ -553,7 +553,6 @@ void SCR_BeginLoadingPlaque (void)
 {
 	S_StopAllSounds();
 
-	CDAudio_Stop();
 	if (developer->integer)
 		return;
 

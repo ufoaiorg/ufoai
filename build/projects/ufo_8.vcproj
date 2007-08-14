@@ -500,10 +500,6 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 			>
 			<File
-				RelativePath="..\..\src\ports\win32\cd_win.c"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\client\cl_actor.c"
 				>
 			</File>

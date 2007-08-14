@@ -368,8 +368,6 @@ int FS_CheckFile (const char *filename)
 	return result;
 }
 
-void CDAudio_Stop (void);
-
 #define	MAX_READ	0x10000		/* read in blocks of 64k */
 /**
  * @brief Read a file into a given buffer in memory.
@@ -425,7 +423,6 @@ int FS_Read (void *buffer, int len, qFILE * f)
 			/* we might have been trying to read from a CD */
 			if (!tries) {
 				tries = 1;
-				CDAudio_Stop();
 			} else {
 #ifdef DEBUG
 				Com_Printf("FS_Read: %s:%i (%s)\n", file, line, f->name);

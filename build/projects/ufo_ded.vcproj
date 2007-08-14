@@ -498,10 +498,6 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 			>
 			<File
-				RelativePath="..\..\src\ports\null\cd_null.c"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\ports\null\cl_null.c"
 				>
 			</File>
