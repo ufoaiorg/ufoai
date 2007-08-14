@@ -268,6 +268,18 @@ menu_model ufo_harvester
 	}
 }
 
+// ============== UFO Condor ======================
+/* todo: This model has too many vertices - either we reduce them in the model or we adapt the md2-parsing
+menu_model ufo_condor
+{
+	model	"models/aircraft/ufo_condor/ufo_condor.md2"
+	menutransform {
+		aircraft "1.1 0.9 1.0"	"170 -30 -100"	#
+		aircraft_equip	"0.9 0.9 0.9"	"0 0 180"	#
+	}
+}
+*/
+
 // ============== Saracen Interceptor ======================
 menu_model inter_saracen
 {
