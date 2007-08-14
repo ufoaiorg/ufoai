@@ -2456,8 +2456,12 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, byte 
 	return qfalse;
 }
 
-
-static int poslist_n[4][2];  /* 2*int needed for range-check because pos3_t does not support negative values and has a smaller range. */
+/**
+ * @brief
+ * @note 2*int needed for range-check because pos3_t does not support negative values and has a smaller range.
+ * @todo what is the 4? BASE_DIRECTIONS?
+ */
+static int poslist_n[4][2];
 
 /**
  * @brief
