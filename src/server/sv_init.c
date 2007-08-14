@@ -638,7 +638,7 @@ static qboolean SV_AddMandatoryParts (byte * num)
 			RandomList(mapSize, prList);
 			for (n = 0; n < mapSize; n++) {
 				x = prList[n] % mapW;
-				y = prList[n] / mapH;
+				y = prList[n] / mapW;
 				if (SV_FitTile(tile, x, y, qfalse)) {
 					/* add tile */
 					SV_AddTile(tile, x, y, NULL);
@@ -784,8 +784,8 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
 			for (x = 0; x < regNumX && ok; x++) {
 				mapX = x * regFracX;
 				mapY = y * regFracY;
-				mapW = (int) ((x + 1) * regFracX + 0.1) - (int) (x * regFracX);
-				mapH = (int) ((y + 1) * regFracY + 0.1) - (int) (y * regFracY);
+				mapW = (int) (regFracX + 0.1);
+				mapH = (int) (regFracY + 0.1);
 				mapSize = mapW * mapH;
 				if (!SV_AddRegion(curNum))
 					ok = qfalse;
