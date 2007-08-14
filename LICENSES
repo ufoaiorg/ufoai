@@ -1414,40 +1414,40 @@ base/models/weapons/stunrod/stunrod.blend | Creative Commons Attribution-ShareAl
 base/models/weapons/stunrod/stunrod.jpg | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some minor fixes made by Werner Höhrer (hoehrer)
 base/models/weapons/stunrod/stunrod.md2 | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some minor fixes made by Werner Höhrer (hoehrer)
 base/models/weapons/stunrod/stunrod.xcf | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some minor fixes made by Werner Höhrer (hoehrer)
-base/music/AlexFightmare.ogg | GPL | Alex Parker
+base/music/AlexFightmare.ogg | GNU General Public License v2.0 | Alex Parker
 base/music/AlexForest.ogg | Creative Commons Sampling Plus 1.0 License | Alex Parker | contains sounds sourced from thefreesoundproject.com and released under the creative commons sampling plus license (1.0).   These sounds and their authors are:   Odayam sounds (night time).wav - "genghis attenborough"   winter woods junkyard.wav - "offthesky (www.offthesky.com)"
 base/music/AlexSullencity.ogg | Creative Commons Sampling Plus 1.0 License | Alex Parker | background sounds taken from The Free Sound Project, under the Creative Commons Sampling Plus License 1.0; contributors:   RHumphries: 2523_RHumphries_rbh_thunder_storm.wav   Acutescream: 24716_acutescream_file0084edit_LANightAlarm.wav
-base/music/David01.ogg | Creative Commons Attribution-Noncommercial-Share Alike 3.0 United States License | David Reeves (Destructavator)
-base/music/PsymongN1.ogg | GPL | Simon Green (Psymong)
-base/music/PsymongN2.ogg | GPL | Simon Green (Psymong)
-base/music/PsymongN3.ogg | GPL | Simon Green (Psymong)
-base/music/PsymongN4.ogg | GPL | Simon Green (Psymong)
-base/music/PsymongN5.ogg | GPL | Simon Green (Psymong)
-base/music/PsymongO1.ogg | GPL | Simon Green (Psymong)
-base/music/PsymongO2.ogg | GPL | Simon Green (Psymong)
-base/music/PsymongO3.ogg | GPL | Simon Green (Psymong)
-base/music/PsymongO4.ogg | GPL | Simon Green (Psymong)
-base/music/PsymongO5.ogg | GPL | Simon Green (Psymong)
-base/music/PsymongO6.ogg | GPL | Simon Green (Psymong)
-base/music/PsymongR1.ogg | GPL | Simon Green (Psymong)
-base/music/PsymongR2.ogg | GPL | Simon Green (Psymong)
-base/music/PsymongR3.ogg | GPL | Simon Green (Psymong)
-base/music/PsymongR4.ogg | GPL | Simon Green (Psymong)
-base/music/PsymongR5.ogg | GPL | Simon Green (Psymong)
+base/music/David01.ogg | Creative Commons Attribution-NonCommercial-ShareAlike 3.0 | David Reeves (Destructavator)
+base/music/PsymongN1.ogg | GNU General Public License v2.0 | Simon Green (Psymong)
+base/music/PsymongN2.ogg | GNU General Public License v2.0 | Simon Green (Psymong)
+base/music/PsymongN3.ogg | GNU General Public License v2.0 | Simon Green (Psymong)
+base/music/PsymongN4.ogg | GNU General Public License v2.0 | Simon Green (Psymong)
+base/music/PsymongN5.ogg | GNU General Public License v2.0 | Simon Green (Psymong)
+base/music/PsymongO1.ogg | GNU General Public License v2.0 | Simon Green (Psymong)
+base/music/PsymongO2.ogg | GNU General Public License v2.0 | Simon Green (Psymong)
+base/music/PsymongO3.ogg | GNU General Public License v2.0 | Simon Green (Psymong)
+base/music/PsymongO4.ogg | GNU General Public License v2.0 | Simon Green (Psymong)
+base/music/PsymongO5.ogg | GNU General Public License v2.0 | Simon Green (Psymong)
+base/music/PsymongO6.ogg | GNU General Public License v2.0 | Simon Green (Psymong)
+base/music/PsymongR1.ogg | GNU General Public License v2.0 | Simon Green (Psymong)
+base/music/PsymongR2.ogg | GNU General Public License v2.0 | Simon Green (Psymong)
+base/music/PsymongR3.ogg | GNU General Public License v2.0 | Simon Green (Psymong)
+base/music/PsymongR4.ogg | GNU General Public License v2.0 | Simon Green (Psymong)
+base/music/PsymongR5.ogg | GNU General Public License v2.0 | Simon Green (Psymong)
 base/music/alBasrahM.ogg | Public domain | Golgotha
-base/music/dawn.ogg | GPL | Draikon
-base/music/dbsea.ogg | GPL | Draikon
+base/music/dawn.ogg | GNU General Public License v2.0 | Draikon
+base/music/dbsea.ogg | GNU General Public License v2.0 | Draikon
 base/music/greecei.ogg | Public domain | Golgotha
-base/music/space.ogg | GPL | Draikon
+base/music/space.ogg | GNU General Public License v2.0 | Draikon
 base/music/turinItalyM.ogg | Public domain | Golgotha
-base/music/ufo1.ogg | GPL | Paul Bee
-base/music/ufo2.ogg | GPL | Paul Bee
-base/music/van_geoscape.ogg | Creative Commons - Attribution | Manuel "Vanethian" Marino (www.manuelmarino.com)
-base/music/van_mission.ogg | Creative Commons - Attribution | Manuel "Vanethian" Marino (www.manuelmarino.com)
-base/music/van_mission2.ogg | Creative Commons - Attribution | Manuel "Vanethian" Marino (www.manuelmarino.com)
-base/music/van_mission3.ogg | Creative Commons - Attribution | Manuel "Vanethian" Marino (www.manuelmarino.com)
-base/music/van_mission4.ogg | Creative Commons - Attribution | Manuel "Vanethian" Marino (www.manuelmarino.com)
-base/music/van_theme.ogg | Creative Commons - Attribution | Manuel "Vanethian" Marino (www.manuelmarino.com)
+base/music/ufo1.ogg | GNU General Public License v2.0 | Paul Bee
+base/music/ufo2.ogg | GNU General Public License v2.0 | Paul Bee
+base/music/van_geoscape.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethian" Marino (www.manuelmarino.com)
+base/music/van_mission.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethian" Marino (www.manuelmarino.com)
+base/music/van_mission2.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethian" Marino (www.manuelmarino.com)
+base/music/van_mission3.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethian" Marino (www.manuelmarino.com)
+base/music/van_mission4.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethian" Marino (www.manuelmarino.com)
+base/music/van_theme.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethian" Marino (www.manuelmarino.com)
 base/pics/air_dropship.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/air_interceptor.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/air_ufo.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
