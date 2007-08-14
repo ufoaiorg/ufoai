@@ -57,6 +57,10 @@ unsigned	sys_frame_time;
 
 uid_t saved_euid;	/* extern in vid_so */
 
+cvar_t* sys_priority;
+cvar_t* sys_affinity;
+cvar_t* sys_os;
+
 /* ======================================================================= */
 /* General routines */
 /* ======================================================================= */
@@ -64,9 +68,25 @@ uid_t saved_euid;	/* extern in vid_so */
 /**
  * @brief
  */
+void Sys_SetAffinityAndPriority (void)
+{
+	if (sys_affinity->modified) {
+		sys_affinity->modified = qfalse;
+	}
+
+	if (sys_priority->modified) {
+		sys_priority->modified = qfalse;
+	}
+}
+
+/**
+ * @brief
+ */
 void Sys_Init (void)
 {
-	Cvar_Get("sys_os", "macosx", CVAR_SERVERINFO, NULL);
+	sys_os = Cvar_Get("sys_os", "macosx", CVAR_SERVERINFO, NULL);
+	sys_affinity = Cvar_Get("sys_affinity", "0", CVAR_ARCHIVE, NULL);
+	sys_priority = Cvar_Get("sys_priority", "0", CVAR_ARCHIVE, "Process nice level");
 }
 
 /**

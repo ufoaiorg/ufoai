@@ -144,8 +144,6 @@ void AppActivate (BOOL fActive, BOOL minimize)
  */
 LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 {
-	LRESULT lRet = 0;
-
 	if (uMsg == MSH_MOUSEWHEEL) {
 		if (((int)wParam) > 0) {
 			Key_Event(K_MWHEELUP, qtrue, sys_msg_time);

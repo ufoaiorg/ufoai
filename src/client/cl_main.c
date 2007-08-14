@@ -2454,6 +2454,9 @@ void CL_Frame (int now, void *data)
 		sv_maxclients->modified = qfalse;
 	}
 
+	if (sys_priority->modified || sys_affinity->modified)
+		Sys_SetAffinityAndPriority();
+
 	/* decide the simulation time */
 	delta = now - last_frame;
 	if (last_frame)

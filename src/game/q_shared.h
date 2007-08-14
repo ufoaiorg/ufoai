@@ -444,37 +444,6 @@ void Info_SetValueForKey(char *s, const char *key, const char *value);
 qboolean Info_Validate(const char *s);
 
 /*
-==============================================================
-SYSTEM SPECIFIC
-==============================================================
-*/
-
-extern int curtime;             /* time returned by last Sys_Milliseconds */
-
-int Sys_Milliseconds(void);
-void Sys_Mkdir(const char *path);
-
-/* directory searching */
-#define SFF_ARCH    0x01
-#define SFF_HIDDEN  0x02
-#define SFF_RDONLY  0x04
-#define SFF_SUBDIR  0x08
-#define SFF_SYSTEM  0x10
-
-/* pass in an attribute mask of things you wish to REJECT */
-char *Sys_FindFirst(const char *path, unsigned musthave, unsigned canthave);
-char *Sys_FindNext(unsigned musthave, unsigned canthave);
-void Sys_FindClose(void);
-void Sys_DebugBreak(void);
-char *Sys_Cwd(void);
-
-/* this is only here so the functions in q_shared.c and q_shwin.c can link */
-void Sys_Error(const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
-void Com_Printf(const char *msg, ...) __attribute__((format(printf, 1, 2)));
-void Com_DPrintf(const char *msg, ...) __attribute__((format(printf, 1, 2)));
-
-
-/*
 ==========================================================
 CVARS (console variables)
 ==========================================================
@@ -521,6 +490,41 @@ typedef struct cvarList_s {
 cvar_t *Cvar_Get(const char *var_name, const char *var_value, int flags, const char* desc);
 
 #endif                          /* CVAR */
+
+/*
+==============================================================
+SYSTEM SPECIFIC
+==============================================================
+*/
+
+extern int curtime;             /* time returned by last Sys_Milliseconds */
+
+int Sys_Milliseconds(void);
+void Sys_Mkdir(const char *path);
+
+/* directory searching */
+#define SFF_ARCH    0x01
+#define SFF_HIDDEN  0x02
+#define SFF_RDONLY  0x04
+#define SFF_SUBDIR  0x08
+#define SFF_SYSTEM  0x10
+
+/* pass in an attribute mask of things you wish to REJECT */
+char *Sys_FindFirst(const char *path, unsigned musthave, unsigned canthave);
+char *Sys_FindNext(unsigned musthave, unsigned canthave);
+void Sys_FindClose(void);
+void Sys_DebugBreak(void);
+char *Sys_Cwd(void);
+void Sys_SetAffinityAndPriority(void);
+
+/* this is only here so the functions in q_shared.c and q_shwin.c can link */
+void Sys_Error(const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
+void Com_Printf(const char *msg, ...) __attribute__((format(printf, 1, 2)));
+void Com_DPrintf(const char *msg, ...) __attribute__((format(printf, 1, 2)));
+
+extern cvar_t* sys_priority;
+extern cvar_t* sys_affinity;
+extern cvar_t* sys_os;
 
 /*
 ==============================================================

@@ -73,6 +73,10 @@ uid_t saved_euid;
 
 extern cvar_t *nostdout;
 
+cvar_t* sys_priority;
+cvar_t* sys_affinity;
+cvar_t* sys_os;
+
 #if 0
 /**
  * @brief This resolves any symlinks to the binary. It's disabled for debug
@@ -225,6 +229,23 @@ static void Sys_Backtrace (int sig, siginfo_t *siginfo, void *secret)
 /**
  * @brief
  */
+void Sys_SetAffinityAndPriority (void)
+{
+	if (sys_affinity->modified) {
+		sys_affinity->modified = qfalse;
+	}
+
+	if (sys_priority->modified) {
+		Com_Printf("Change priority to %i\n", sys_priority->integer);
+		if (setpriority(PRIO_PROCESS, 0, sys_priority->integer))
+			Com_Printf("Failed to set nice level of %i\n", sys_priority->integer);
+		sys_priority->modified = qfalse;
+	}
+}
+
+/**
+ * @brief
+ */
 void Sys_Init (void)
 {
 #ifdef __linux__
@@ -247,7 +268,9 @@ void Sys_Init (void)
 	signal(SIGSEGV, Sys_Backtrace);
 # endif
 #endif /* __linux__ */
-	Cvar_Get("sys_os", "linux", CVAR_SERVERINFO, NULL);
+	sys_os = Cvar_Get("sys_os", "linux", CVAR_SERVERINFO, NULL);
+	sys_affinity = Cvar_Get("sys_affinity", "0", CVAR_ARCHIVE, NULL);
+	sys_priority = Cvar_Get("sys_priority", "0", CVAR_ARCHIVE, "Process nice level");
 }
 
 /**
@@ -255,8 +278,8 @@ void Sys_Init (void)
  */
 void Sys_Error (const char *error, ...)
 {
-	va_list     argptr;
-	char        string[1024];
+	va_list argptr;
+	char string[1024];
 
 	/* change stdin to non blocking */
 	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);

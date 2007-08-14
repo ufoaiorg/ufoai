@@ -114,6 +114,9 @@ void Sys_FindClose (void)
 
 void Sys_Init (void)
 {
+	sys_os = Cvar_Get("sys_os", "null", CVAR_SERVERINFO, NULL);
+	sys_affinity = Cvar_Get("sys_affinity", "0", CVAR_ARCHIVE, NULL);
+	sys_priority = Cvar_Get("sys_priority", "0", CVAR_ARCHIVE, "Process nice level");
 }
 
 char *Sys_GetHomeDirectory (void)

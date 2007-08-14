@@ -69,6 +69,10 @@ const char		*argv[MAX_NUM_ARGVS];
 
 int SV_CountPlayers(void);
 
+cvar_t* sys_priority;
+cvar_t* sys_affinity;
+cvar_t* sys_os;
+
 /*
 ===============================================================================
 SYSTEM IO
@@ -440,6 +444,9 @@ void Sys_Init (void)
 {
 	OSVERSIONINFO	vinfo;
 
+	sys_affinity = Cvar_Get("sys_affinity", "1", CVAR_ARCHIVE, "Which core to use - 1 = only first, 2 = only second, 3 = both");
+	sys_priority = Cvar_Get("sys_priority", "1", CVAR_ARCHIVE, "Process priority - 0 = normal, 1 = high, 2 = realtime");
+
 #if 0
 	/* allocate a named semaphore on the client so the */
 	/* front end can tell if it is alive */
@@ -480,7 +487,14 @@ void Sys_Init (void)
 			s_vista = qtrue;
 	}
 
-	Cvar_Get("sys_os", "win", CVAR_SERVERINFO, NULL);
+	if (s_win95)
+		sys_os = Cvar_Get("sys_os", "win95", CVAR_SERVERINFO, NULL);
+	else if (s_winxp)
+		sys_os = Cvar_Get("sys_os", "winXP", CVAR_SERVERINFO, NULL);
+	else if (s_vista)
+		sys_os = Cvar_Get("sys_os", "winVista", CVAR_SERVERINFO, NULL);
+	else
+		sys_os = Cvar_Get("sys_os", "win", CVAR_SERVERINFO, NULL);
 
 	if (sv_dedicated->integer) {
 		HICON hIcon;
@@ -773,7 +787,7 @@ static void FixWorkingDirectory (void)
  * @brief Switch to one processor usage for windows system with more than
  * one processor
  */
-static void Sys_SetAffinity (void)
+void Sys_SetAffinityAndPriority (void)
 {
 	SYSTEM_INFO sysInfo;
 	/* 1 - use core #0
@@ -782,16 +796,55 @@ static void Sys_SetAffinity (void)
 	DWORD_PTR procAffinity = 0;
 	HANDLE proc = GetCurrentProcess();
 
-#if 0
-	SetPriorityClass(proc, HIGH_PRIORITY_CLASS);
-#endif
+	if (sys_priority->modified) {
+		if (sys_priority->integer < 0)
+			Cvar_SetValue("sys_priority", 0);
+		else if (sys_priority->integer > 2)
+			Cvar_SetValue("sys_priority", 2);
 
-	GetSystemInfo(&sysInfo);
-	Com_Printf("Found %i processors\n", (int)sysInfo.dwNumberOfProcessors);
-	if (sysInfo.dwNumberOfProcessors > 1) {
-		Com_Printf("...only use one processor\n");
-		SetProcessAffinityMask(proc, procAffinity);
+		sys_priority->modified = qfalse;
+
+		switch (sys_priority->integer) {
+		case 0:
+			SetPriorityClass(proc, NORMAL_PRIORITY_CLASS);
+			Com_Printf("Priority changed to NORMAL\n");
+			break;
+		case 1:
+			SetPriorityClass(proc, HIGH_PRIORITY_CLASS);
+			Com_Printf("Priority changed to HIGH\n");
+			break;
+		default:
+			SetPriorityClass(proc, REALTIME_PRIORITY_CLASS);
+			Com_Printf("Priority changed to REALTIME\n");
+			break;
+		}
 	}
+
+	if (sys_affinity->modified) {
+		GetSystemInfo(&sysInfo);
+		Com_Printf("Found %i processors\n", (int)sysInfo.dwNumberOfProcessors);
+		sys_affinity->modified = qfalse;
+		if (sysInfo.dwNumberOfProcessors > 1) {
+			switch (sys_affinity->integer) {
+			case 1:
+				Com_Printf("Only use the first core\n");
+				procAffinity = 1;
+				break;
+			case 2:
+				Com_Printf("Only use the second core\n");
+				procAffinity = 2;
+				break;
+			case 3:
+				Com_Printf("Use both cores\n");
+				procAffinity = 3;
+				break;
+			}
+		} else {
+			Com_Printf("...only use one processor\n");
+		}
+		SetThreadAffinityMask(proc, procAffinity);
+	}
+
 	CloseHandle(proc);
 }
 
@@ -816,8 +869,6 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	FixWorkingDirectory();
 
 	Qcommon_Init(argc, argv);
-
-	Sys_SetAffinity();	/* only use one processor */
 
 	/* main window message loop */
 	while (1) {
