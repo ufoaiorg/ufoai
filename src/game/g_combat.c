@@ -1222,6 +1222,18 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 			gi.WriteByte(0);
 			gi.WriteByte(0);
 		}
+
+		/* remove throwable oneshot && deplete weapon from inventory */
+		if (gi.csi->ods[weapon->t].thrown && gi.csi->ods[weapon->t].oneshot && gi.csi->ods[weapon->t].deplete) {
+			gi.AddEvent(G_VisToPM(ent->visflags), EV_INV_DEL);
+			gi.WriteShort(num);
+			gi.WriteByte(container);
+			assert(gi.csi->ids[container].single);
+			INVSH_EmptyContainer(&ent->i, container);
+			/* x and y value */
+			gi.WriteByte(0);
+			gi.WriteByte(0);
+		}
 	}
 
 	G_GetShotOrigin(ent, fd, dir, shotOrigin);
