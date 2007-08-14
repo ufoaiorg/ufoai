@@ -233,12 +233,19 @@ typedef uint8_t byte;
 #define CENTER_LAT  0.0
 #define SIZE_LAT    2.0
 
-/**<
+/**
  * @brief Number of angles from a position (2-dimensional)
  * @sa dvecs (in q_shared.c) for a description of its use.
  * @sa AngleToDV.
+ * @sa BASE_DIRECTIONS
  */
 #define DIRECTIONS 8
+
+/**
+ * @brief Number of direct connected fields for a position
+ * @sa DIRECTIONS.
+ */
+#define BASE_DIRECTIONS 4
 
 extern const int dvecs[DIRECTIONS][2];
 extern const float dvecsn[DIRECTIONS][2];
