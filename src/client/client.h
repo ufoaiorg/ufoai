@@ -720,9 +720,10 @@ void CL_AddTargeting(void);
 void CL_ActorTargetAlign_f(void);
 
 /* cl_team.c */
+/* if you increase this, you also have to change the aircraft buy/sell menu scripts */
 #define MAX_ACTIVETEAM	8
 #define MAX_WHOLETEAM	32
-/* if you increase this, you also have to change the aircraft buy/sell menu scripts */
+
 #define NUM_TEAMSKINS	6
 #define NUM_TEAMSKINS_SINGLEPLAYER 4
 struct base_s;
