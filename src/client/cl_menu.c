@@ -2671,7 +2671,7 @@ void MN_DrawMenus (void)
 						mi.model = re.RegisterModel(source);
 						mi.name = source;
 						if (!mi.model) {
-							Com_Printf("Could not find '%s'\n", source);
+							Com_Printf("Could not find model '%s'\n", source);
 							break;
 						}
 					} else
