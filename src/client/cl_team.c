@@ -428,7 +428,7 @@ static void CL_ChangeSkin_f (void)
 			newSkin = 0;
 
 		/* don't allow all skins in singleplayer */
-		if (ccs.singleplayer && newSkin > NUM_TEAMSKINS_SINGLEPLAYER)
+		if (ccs.singleplayer && newSkin >= NUM_TEAMSKINS_SINGLEPLAYER)
 			newSkin = 0;
 
 		if (chrDisplayList.chr[sel]) {
@@ -467,7 +467,7 @@ static void CL_ChangeSkinOnBoard_f (void)
 		newSkin = 0;
 
 	/* don't allow all skins in singleplayer */
-	if (ccs.singleplayer && newSkin > NUM_TEAMSKINS_SINGLEPLAYER)
+	if (ccs.singleplayer && newSkin >= NUM_TEAMSKINS_SINGLEPLAYER)
 		newSkin = 0;
 
 	/**
