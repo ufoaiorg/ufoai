@@ -1739,25 +1739,25 @@ base/sound/misc/geoscape_attack.wav | GNU General Public License 2.0 | BlakeD
 base/sound/misc/geoscape_info.wav | GNU General Public License 2.0 | BlakeD
 base/sound/misc/geoscape_standard.wav | GNU General Public License 2.0 | BlakeD
 base/sound/misc/geoscape_ufo_spotted.wav | GNU General Public License 2.0 | BlakeD
-base/sound/weapons/assaultrifle.wav | GPL | Alex Parker
-base/sound/weapons/bolter2.wav | GPL | Alex Parker
-base/sound/weapons/boltercannonade.wav | GPL | Alex Parker
-base/sound/weapons/deepexplosion.wav | GPL | Alex Parker
+base/sound/weapons/assaultrifle.wav | GNU General Public License v2.0 | Alex Parker
+base/sound/weapons/bolter2.wav | GNU General Public License v2.0 | Alex Parker
+base/sound/weapons/boltercannonade.wav | GNU General Public License v2.0 | Alex Parker
+base/sound/weapons/deepexplosion.wav | GNU General Public License v2.0 | Alex Parker
 base/sound/weapons/electrolaser.wav | Creative Commons Sampling Plus 1.0 License | BlakeD | Sine Wave 1 - Self Created via sine waves   12506__Koops__NEWLazerLOOP - Licensed under Creative Commons Sampling Plus 1.0 License. (http://freesound.iua.upf.edu/samplesViewSingle.php?id=12506)   30935__aust_paul__possiblelazer - Licensed under Creative Commons Sampling Plus 1.0 License.  (http://freesound.iua.upf.edu/samplesViewSingle.php?id=30935)   36990__Sea_Fury__M1_Abrams_Tank_Gun_Shot - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=36990)   19483__Halleck__JacobsLadderLong2 - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=19483)   19486__Halleck__JacobsLadderSingle1 - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=19486)   19484__Halleck__JacobsLadderShort1 - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=19484)   19487__Halleck__JacobsLadderSingle2 - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=19487)
-base/sound/weapons/fireexplosion.wav | GPL | Alex Parker
-base/sound/weapons/grenade.wav | GPL | Alex Parker
-base/sound/weapons/kerrblade_swip.wav | GPL | Alex Parker
-base/sound/weapons/knife.wav | GPL | Alex Parker
-base/sound/weapons/machinegun.wav | GPL | Alex Parker
-base/sound/weapons/machinepistol.wav | GPL | Alex Parker
-base/sound/weapons/medikit.wav | GPL | Alex Parker
-base/sound/weapons/microshotgun2.wav | GPL | Alex Parker
-base/sound/weapons/pistol2.wav | GPL | Alex Parker
-base/sound/weapons/plasmablade.wav | GPL | Alex Parker
-base/sound/weapons/riotshotgun.wav | GPL | Alex Parker
-base/sound/weapons/smg2.wav | GPL | Alex Parker
-base/sound/weapons/smokeexplosion.wav | GPL | Alex Parker
-base/sound/weapons/sniperrifle.wav | GPL | Alex Parker
+base/sound/weapons/fireexplosion.wav | GNU General Public License v2.0 | Alex Parker
+base/sound/weapons/grenade.wav | GNU General Public License v2.0 | Alex Parker
+base/sound/weapons/kerrblade_swip.wav | GNU General Public License v2.0 | Alex Parker
+base/sound/weapons/knife.wav | GNU General Public License v2.0 | Alex Parker
+base/sound/weapons/machinegun.wav | GNU General Public License v2.0 | Alex Parker
+base/sound/weapons/machinepistol.wav | GNU General Public License v2.0 | Alex Parker
+base/sound/weapons/medikit.wav | GNU General Public License v2.0 | Alex Parker
+base/sound/weapons/microshotgun2.wav | GNU General Public License v2.0 | Alex Parker
+base/sound/weapons/pistol2.wav | GNU General Public License v2.0 | Alex Parker
+base/sound/weapons/plasmablade.wav | GNU General Public License v2.0 | Alex Parker
+base/sound/weapons/riotshotgun.wav | GNU General Public License v2.0 | Alex Parker
+base/sound/weapons/smg2.wav | GNU General Public License v2.0 | Alex Parker
+base/sound/weapons/smokeexplosion.wav | GNU General Public License v2.0 | Alex Parker
+base/sound/weapons/sniperrifle.wav | GNU General Public License v2.0 | Alex Parker
 base/textures/tex_buildings/leadglasswindow.jpg | Creative Commons Attribution Non Commercial | Andy Buckle
 base/textures/tex_buildings/roof004.jpg |  |  | Public Domain Golgotha
 base/textures/tex_buildings/roof005.jpg |  |  | Public Domain Golgotha

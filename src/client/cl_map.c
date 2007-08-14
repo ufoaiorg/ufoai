@@ -1632,6 +1632,6 @@ void MAP_NotifyUfoDisappear (const aircraft_t* ufo)
  */
 void MAP_GameInit (void)
 {
-	cl_showCoords = Cvar_Get("cl_showcoords", "0", CVAR_ARCHIVE, NULL);
+	cl_showCoords = Cvar_Get("cl_showcoords", "0", 0, NULL);
 	Cmd_AddCommand("multi_select_click", MAP_MultiSelectExecuteAction_f, NULL);
 }
