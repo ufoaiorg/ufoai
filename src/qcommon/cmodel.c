@@ -2457,11 +2457,12 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, byte 
 }
 
 /**
- * @brief
+ * @brief All positions of a 2x2 unit (at the new location).
  * @note 2*int needed for range-check because pos3_t does not support negative values and has a smaller range.
- * @todo what is the 4? BASE_DIRECTIONS?
+ * There are 2 ints (x and y position) for all 4 squares a 2x2 unit blocks.
+ * @sa poslist in Grid_MoveMark
  */
-static int poslist_n[4][2];
+static int poslistNew[4][2];
 
 /**
  * @brief
@@ -2483,7 +2484,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dir,
 	pos3_t dummy;
 	byte l;
 
-	pos3_t poslist[4];
+	pos3_t poslist[4];	/**< All positions of a 2x2 unit (at the original location). @sa poslistNew */
 
 #ifdef PARANOID
 	if (z >= HEIGHT) {
@@ -2538,15 +2539,15 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dir,
 		break;
 	case ACTOR_SIZE_2x2:
 		/* Range check of new values (2x2) */
-		Vector2Set(poslist_n[0], nx, ny);
-		Vector2Set(poslist_n[1], nx + 1, ny);
-		Vector2Set(poslist_n[2], nx,     ny + 1);
-		Vector2Set(poslist_n[3], nx + 1, ny + 1);
+		Vector2Set(poslistNew[0], nx, ny);
+		Vector2Set(poslistNew[1], nx + 1, ny);
+		Vector2Set(poslistNew[2], nx,     ny + 1);
+		Vector2Set(poslistNew[3], nx + 1, ny + 1);
 
-		if (poslist_n[0][0] < 0 || poslist_n[0][0] >= WIDTH || poslist_n[0][1] < 0 || poslist_n[0][1] >= WIDTH
-		||  poslist_n[1][0] < 0 || poslist_n[1][0] >= WIDTH || poslist_n[1][1] < 0 || poslist_n[1][1] >= WIDTH
-		||  poslist_n[2][0] < 0 || poslist_n[2][0] >= WIDTH || poslist_n[2][1] < 0 || poslist_n[2][1] >= WIDTH
-		||  poslist_n[3][0] < 0 || poslist_n[3][0] >= WIDTH || poslist_n[3][1] < 0 || poslist_n[3][1] >= WIDTH)
+		if (poslistNew[0][0] < 0 || poslistNew[0][0] >= WIDTH || poslistNew[0][1] < 0 || poslistNew[0][1] >= WIDTH
+		||  poslistNew[1][0] < 0 || poslistNew[1][0] >= WIDTH || poslistNew[1][1] < 0 || poslistNew[1][1] >= WIDTH
+		||  poslistNew[2][0] < 0 || poslistNew[2][0] >= WIDTH || poslistNew[2][1] < 0 || poslistNew[2][1] >= WIDTH
+		||  poslistNew[3][0] < 0 || poslistNew[3][0] >= WIDTH || poslistNew[3][1] < 0 || poslistNew[3][1] >= WIDTH)
 			return;
 
 		/* Connection checks for actor (2x2) */
@@ -2649,10 +2650,10 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dir,
 			return;
 		break;
 	case ACTOR_SIZE_2x2:
-		if (Grid_CheckForbidden(map, poslist_n[0][0], poslist_n[0][1], z)
-		|| Grid_CheckForbidden(map, poslist_n[1][0], poslist_n[1][1], z)
-		|| Grid_CheckForbidden(map, poslist_n[2][0], poslist_n[2][1], z)
-		|| Grid_CheckForbidden(map, poslist_n[3][0], poslist_n[3][1], z))
+		if (Grid_CheckForbidden(map, poslistNew[0][0], poslistNew[0][1], z)
+		|| Grid_CheckForbidden(map, poslistNew[1][0], poslistNew[1][1], z)
+		|| Grid_CheckForbidden(map, poslistNew[2][0], poslistNew[2][1], z)
+		|| Grid_CheckForbidden(map, poslistNew[3][0], poslistNew[3][1], z))
 			return;
 		break;
 	default:
