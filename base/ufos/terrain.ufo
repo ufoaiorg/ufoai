@@ -101,7 +101,7 @@ terrain tex_buildings/floor_se01 {
 //concrete floor
 terrain tex_buildings/wall001 {
 	footstepsound "footsteps/stone1"
-{
+}
 
 // concrete floor
 terrain tex_buildings/wall003 {
