@@ -543,13 +543,9 @@ static int LoadPNG (const char *name, byte **pic, int *width, int *height)
 		png_set_packing(png_ptr);
 
 	png_set_read_fn(png_ptr, (png_voidp)&PngFileBuffer, (png_rw_ptr)PngReadFunc);
-
 	png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_IDENTITY, NULL);
-
 	row_pointers = png_get_rows(png_ptr, info_ptr);
-
 	rowptr = 0;
-
 
 	img = ri.TagMalloc(ri.imagePool, info_ptr->width * info_ptr->height * 4, 0);
 	if (pic)
@@ -867,8 +863,8 @@ void LoadTGA (const char *name, byte ** pic, int *width, int *height)
  */
 void WriteTGA (FILE *f, byte *buffer, int width, int height)
 {
-	int		i, temp;
-	byte	*out;
+	int i, temp;
+	byte *out;
 	size_t size;
 
 	/* Allocate an output buffer */
@@ -1236,15 +1232,15 @@ size_t SaveJPGToBuffer (byte * buffer, int quality, int image_width, int image_h
  */
 void WriteJPG (FILE *f, byte *buffer, int width, int height, int quality)
 {
-	int			offset, w3;
-	struct		jpeg_compress_struct	cinfo;
-	struct		jpeg_error_mgr			jerr;
-	byte		*s;
+	int offset, w3;
+	struct jpeg_compress_struct cinfo;
+	struct jpeg_error_mgr jerr;
+	byte *s;
 
 	/* Initialise the jpeg compression object */
-	cinfo.err = jpeg_std_error (&jerr);
-	jpeg_create_compress (&cinfo);
-	jpeg_stdio_dest (&cinfo, f);
+	cinfo.err = jpeg_std_error(&jerr);
+	jpeg_create_compress(&cinfo);
+	jpeg_stdio_dest(&cinfo, f);
 
 	/* Setup jpeg parameters */
 	cinfo.image_width = width;
@@ -1253,9 +1249,9 @@ void WriteJPG (FILE *f, byte *buffer, int width, int height, int quality)
 	cinfo.input_components = 3;
 	cinfo.progressive_mode = TRUE;
 
-	jpeg_set_defaults (&cinfo);
-	jpeg_set_quality (&cinfo, quality, TRUE);
-	jpeg_start_compress (&cinfo, qtrue);	/* start compression */
+	jpeg_set_defaults(&cinfo);
+	jpeg_set_quality(&cinfo, quality, TRUE);
+	jpeg_start_compress(&cinfo, qtrue);	/* start compression */
 	jpeg_write_marker(&cinfo, JPEG_COM, (const byte *) "UFO:AI", (uint32_t) strlen("UFO:AI"));
 
 	/* Feed scanline data */
@@ -1263,12 +1259,12 @@ void WriteJPG (FILE *f, byte *buffer, int width, int height, int quality)
 	offset = w3 * cinfo.image_height - w3;
 	while (cinfo.next_scanline < cinfo.image_height) {
 		s = &buffer[offset - (cinfo.next_scanline * w3)];
-		jpeg_write_scanlines (&cinfo, &s, 1);
+		jpeg_write_scanlines(&cinfo, &s, 1);
 	}
 
 	/* Finish compression */
-	jpeg_finish_compress (&cinfo);
-	jpeg_destroy_compress (&cinfo);
+	jpeg_finish_compress(&cinfo);
+	jpeg_destroy_compress(&cinfo);
 }
 
 /**
@@ -2177,7 +2173,7 @@ void GL_InitImages (void)
 	}
 
 	for (i = 0; i < 256; i++) {
-		j = i * gl_intensity->value;
+		j = i * gl_intensity->integer;
 
 		if (j > 255)
 			j = 255;
