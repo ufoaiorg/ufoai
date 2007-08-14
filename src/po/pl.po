@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-08-07 15:15+0200\n"
-"PO-Revision-Date: 2007-08-10 11:30+0100\n"
+"PO-Revision-Date: 2007-08-14 22:54+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -2212,7 +2212,7 @@ msgstr "Zabezpiecz"
 
 #: ../base/ufos/menu_lostwon.ufo:439
 msgid "Select nation for UFO recovery"
-msgstr "Wybierz naród, któremu sprzedaż pojazd UFO"
+msgstr "Wybierz naród, któremu sprzedasz pojazd UFO"
 
 #: ../base/ufos/menu_lostwon.ufo:447
 msgid "Nation:"
