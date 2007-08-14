@@ -310,7 +310,7 @@ static qboolean Irc_Proto_Msg (const char *target, const char *text)
 	char msg[IRC_SEND_BUF_SIZE];
 	const int msg_len = snprintf(msg, sizeof(msg) - 1, "PRIVMSG %s :%s\r\n", target, text);
 	if (*text == '/') {
-		Com_DPrintf("Don't send irc commands as PRIVMSG\n");
+		Com_DPrintf(DEBUG_CLIENT, "Don't send irc commands as PRIVMSG\n");
 		Cbuf_AddText(va("%s\n", &text[1]));
 		return qtrue;
 	}
@@ -797,7 +797,7 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 		 || !Q_strncmp(trailing, "version", 7)) {
 			/* response with the game version */
 			Irc_Proto_Msg(irc_defaultChannel->string, Cvar_VariableString("version"));
-			Com_DPrintf("Irc_Client_CmdPrivmsg: Response to version query\n");
+			Com_DPrintf(DEBUG_CLIENT, "Irc_Client_CmdPrivmsg: Response to version query\n");
 		} else {
 			Com_Printf("Irc_Client_CmdPrivmsg: Unknown ctcp command: '%s'\n", trailing);
 		}
@@ -867,7 +867,7 @@ static qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 	cmd.type = msg->type;
 
 	/* some debug output */
-	Com_DPrintf("pre: '%s', param: '%s', trail: '%s'\n", msg->prefix, msg->params, msg->trailing);
+	Com_DPrintf(DEBUG_CLIENT, "pre: '%s', param: '%s', trail: '%s'\n", msg->prefix, msg->params, msg->trailing);
 
 	/* @todo: Skip non printable chars here */
 
@@ -875,7 +875,7 @@ static qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 	case IRC_COMMAND_NUMERIC:
 		cmd.id.numeric = msg->id.numeric;
 #ifdef DEBUG
-		Com_DPrintf("<%s> [%03d] %s : %s", msg->prefix, cmd.id.numeric, msg->params, msg->trailing);
+		Com_DPrintf(DEBUG_CLIENT, "<%s> [%03d] %s : %s", msg->prefix, cmd.id.numeric, msg->params, msg->trailing);
 #endif
 		switch (cmd.id.numeric) {
 		case RPL_HELLO:
@@ -1014,7 +1014,7 @@ static qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 	case IRC_COMMAND_STRING:
 		cmd.id.string = msg->id.string;
 #ifdef DEBUG
-		Com_DPrintf("<%s> [%s] %s : %s", msg->prefix, cmd.id.string, msg->params, msg->trailing);
+		Com_DPrintf(DEBUG_CLIENT, "<%s> [%s] %s : %s", msg->prefix, cmd.id.string, msg->params, msg->trailing);
 #endif
 		if (!Q_strncmp(cmd.id.string, "NICK", 4))
 			Irc_Client_CmdNick(msg->prefix, msg->params, msg->trailing);
@@ -1037,7 +1037,7 @@ static qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 		else if (!Q_strncmp(cmd.id.string, "KICK", 4))
 			Irc_Client_CmdKick(msg->prefix, msg->params, msg->trailing);
 		else if (!Q_strncmp(cmd.id.string, "PING", 4))
-			Com_DPrintf("IRC: <PING> %s\n", msg->trailing);
+			Com_DPrintf(DEBUG_CLIENT, "IRC: <PING> %s\n", msg->trailing);
 		else if (!Q_strncmp(cmd.id.string, "ERROR", 5))
 			Irc_Logic_Disconnect(msg->trailing);
 		else
@@ -1158,7 +1158,7 @@ static qboolean Irc_Proto_Enqueue (const char *msg, size_t msg_len)
 
 	/* connection failed if this is null */
 	if (!irc_messageBucketSize) {
-		Com_DPrintf("Irc_Proto_Enqueue: irc_messageBucketSize is zero\n");
+		Com_DPrintf(DEBUG_CLIENT, "Irc_Proto_Enqueue: irc_messageBucketSize is zero\n");
 		return qtrue;
 	}
 
@@ -1223,7 +1223,7 @@ static qboolean Irc_Proto_DrainBucket (void)
 	qboolean status = qfalse;
 	irc_bucket_message_t *msg;
 #if 0
-	Com_DPrintf("Irc_Proto_DrainBucket: Queue send\n");
+	Com_DPrintf(DEBUG_CLIENT, "Irc_Proto_DrainBucket: Queue send\n");
 #endif
 	/* remove messages whose size exceed our burst size (we can not send them) */
 	for (msg = irc_bucket.first_msg; msg && msg->msg_len > characterBucketBurst; msg = irc_bucket.first_msg) {
@@ -1376,7 +1376,7 @@ static void Irc_Logic_AddChannelName (irc_channel_t *channel, irc_nick_prefix_t 
 
 	Com_sprintf(user->key, sizeof(user->key), "%c%s", prefix, nick);
 	channel->users++;
-	Com_DPrintf("Add user '%s' to userlist at pos %i\n", user->key, channel->users);
+	Com_DPrintf(DEBUG_CLIENT, "Add user '%s' to userlist at pos %i\n", user->key, channel->users);
 	Irc_Client_Names_f();
 }
 
@@ -1770,7 +1770,7 @@ void Irc_Input_Activate (void)
 		menuText[TEXT_LIST] = irc_names_buffer;
 		Key_SetDest(key_input);
 	} else {
-		Com_DPrintf("Irc_Input_Activate: Warning - IRC not connected\n");
+		Com_DPrintf(DEBUG_CLIENT, "Irc_Input_Activate: Warning - IRC not connected\n");
 		Cbuf_AddText("mn_pop;");
 		/* cancel any active editing */
 		return;

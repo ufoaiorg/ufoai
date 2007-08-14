@@ -60,7 +60,7 @@ static int alias_count;				/* for detecting runaway loops */
  */
 static void Cmd_Open_f (void)
 {
-	Com_DPrintf("Cmd_Close_f: command buffer opened again\n");
+	Com_DPrintf(DEBUG_ENGINE, "Cmd_Close_f: command buffer opened again\n");
 	cmd_closed = qfalse;
 }
 
@@ -72,7 +72,7 @@ static void Cmd_Open_f (void)
  */
 static void Cmd_Close_f (void)
 {
-	Com_DPrintf("Cmd_Close_f: command buffer closed\n");
+	Com_DPrintf(DEBUG_COMMANDS, "Cmd_Close_f: command buffer closed\n");
 	cmd_closed = qtrue;
 }
 
@@ -119,7 +119,7 @@ void Cbuf_AddText (const char *text)
 	if (cmd_closed && (cmdopen = strstr(text, "cmdopen")) != NULL)
 		text = cmdopen;
 	else if (cmd_closed) {
-		Com_DPrintf("Cbuf_AddText: currently closed\n");
+		Com_DPrintf(DEBUG_COMMANDS, "Cbuf_AddText: currently closed\n");
 		return;
 	}
 
@@ -757,7 +757,7 @@ void Cmd_AddCommand (const char *cmd_name, xcommand_t function, const char *desc
 	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
 	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
 		if (!Q_strcmp(cmd_name, cmd->name)) {
-			Com_DPrintf("Cmd_AddCommand: %s already defined\n", cmd_name);
+			Com_DPrintf(DEBUG_COMMANDS, "Cmd_AddCommand: %s already defined\n", cmd_name);
 			return;
 		}
 	}
@@ -913,7 +913,7 @@ void Cmd_ExecuteString (const char *text)
 	unsigned int hash;
 
 #ifdef DEBUG
-	Com_DPrintf("ExecuteString: '%s'\n", text);
+	Com_DPrintf(DEBUG_COMMANDS, "ExecuteString: '%s'\n", text);
 #endif
 
 	Cmd_TokenizeString(text, qtrue);

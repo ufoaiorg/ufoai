@@ -125,7 +125,7 @@ static void SVC_TeamInfo (struct net_stream *s)
 	NET_WriteRawString(msg, "\n");
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
 		if (cl->state > cs_free) {
-			Com_DPrintf("SV_TeamInfoString: connected client: %i %s\n", i, cl->name);
+			Com_DPrintf(DEBUG_SERVER, "SV_TeamInfoString: connected client: %i %s\n", i, cl->name);
 			/* show players that already have a team with their teamnum */
 			if (ge->ClientGetTeamNum(cl->player))
 				Com_sprintf(player, sizeof(player), "%i\t\"%s\"\n", ge->ClientGetTeamNum(cl->player), cl->name);
@@ -135,7 +135,7 @@ static void SVC_TeamInfo (struct net_stream *s)
 				Com_sprintf(player, sizeof(player), "-\t\"%s\"\n", cl->name);
 			NET_WriteRawString(msg, player);
 		} else {
-			Com_DPrintf("SV_TeamInfoString: unconnected client: %i %s\n", i, cl->name);
+			Com_DPrintf(DEBUG_SERVER, "SV_TeamInfoString: unconnected client: %i %s\n", i, cl->name);
 		}
 	}
 
@@ -186,7 +186,7 @@ static void SVC_Info (struct net_stream *s)
 	char infostring[MAX_INFO_STRING];
 
 	if (sv_maxclients->integer == 1) {
-		Com_DPrintf("Ignore info string in singleplayer mode\n");
+		Com_DPrintf(DEBUG_SERVER, "Ignore info string in singleplayer mode\n");
 		return;	/* ignore in single player */
 	}
 
@@ -231,7 +231,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	char buf[256];
 	const char *peername = stream_peer_name(stream, buf, sizeof(buf), qtrue);
 
-	Com_DPrintf("SVC_DirectConnect ()\n");
+	Com_DPrintf(DEBUG_SERVER, "SVC_DirectConnect ()\n");
 
 	version = atoi(Cmd_Argv(1));
 	if (version != PROTOCOL_VERSION) {
@@ -406,7 +406,7 @@ static void SV_ConnectionlessPacket (struct net_stream *stream, struct dbuffer *
 	Cmd_TokenizeString(s, qfalse);
 
 	c = Cmd_Argv(0);
-	Com_DPrintf("Packet : %s\n", c);
+	Com_DPrintf(DEBUG_SERVER, "Packet : %s\n", c);
 
 	if (!strcmp(c, "teaminfo"))
 		SVC_TeamInfo(stream);
@@ -480,12 +480,12 @@ void SV_NextMapcycle (void)
 						if (mapcycle->next) {
 							map = mapcycle->next->map;
 							gameType = mapcycle->next->type;
-							Com_DPrintf("SV_NextMapcycle: next one: '%s' (gametype: %s)\n", map, gameType);
+							Com_DPrintf(DEBUG_SERVER, "SV_NextMapcycle: next one: '%s' (gametype: %s)\n", map, gameType);
 						/* switch back to first list on cycle - if there is one */
 						} else {
 							map = mapcycleList->map;
 							gameType = mapcycleList->type;
-							Com_DPrintf("SV_NextMapcycle: first one: '%s' (gametype: %s)\n", map, gameType);
+							Com_DPrintf(DEBUG_SERVER, "SV_NextMapcycle: first one: '%s' (gametype: %s)\n", map, gameType);
 						}
 						break;
 					}
@@ -500,12 +500,12 @@ void SV_NextMapcycle (void)
 					if (mapcycle->next) {
 						map = mapcycle->next->map;
 						gameType = mapcycle->next->type;
-						Com_DPrintf("SV_NextMapcycle: next one: '%s' (gametype: %s)\n", map, gameType);
+						Com_DPrintf(DEBUG_SERVER, "SV_NextMapcycle: next one: '%s' (gametype: %s)\n", map, gameType);
 					/* switch back to first list on cycle - if there is one */
 					} else {
 						map = mapcycleList->map;
 						gameType = mapcycleList->type;
-						Com_DPrintf("SV_NextMapcycle: first one: '%s' (gametype: %s)\n", map, gameType);
+						Com_DPrintf(DEBUG_SERVER, "SV_NextMapcycle: first one: '%s' (gametype: %s)\n", map, gameType);
 					}
 					Com_sprintf(expanded, sizeof(expanded), "maps/%s.bsp", map);
 
@@ -603,7 +603,7 @@ void SV_MapcycleAdd (const char* mapName, const char* gameType)
 	}
 	mapcycle->map = Mem_PoolStrDup(mapName, sv_genericPool, 0);
 	mapcycle->type = Mem_PoolStrDup(gameType, sv_genericPool, 0);
-	Com_DPrintf("mapcycle add: '%s' type '%s'\n", mapcycle->map, mapcycle->type);
+	Com_DPrintf(DEBUG_SERVER, "mapcycle add: '%s' type '%s'\n", mapcycle->map, mapcycle->type);
 	mapcycle->next = NULL;
 	mapcycleCount++;
 }

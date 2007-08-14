@@ -120,7 +120,7 @@ static void HOS_CheckRemovalFromEmployeeList (employee_t *employee)
 		}
 #ifdef DEBUG
 	} else {
-		Com_DPrintf("character with %i hp\n", employee->chr.HP);
+		Com_DPrintf(DEBUG_CLIENT, "character with %i hp\n", employee->chr.HP);
 #endif
 	}
 }
@@ -313,7 +313,7 @@ static void HOS_Init_f (void)
 				Q_strcat(name, " ", sizeof(name));
 				/* Print HP stats. */
 				Q_strcat(name, va("(%i/%i)", employee->chr.HP, employee->chr.maxHP), sizeof(name));
-				Com_DPrintf("%s idx: %i j: %i\n", name, employee->idx, j);
+				Com_DPrintf(DEBUG_CLIENT, "%s idx: %i j: %i\n", name, employee->idx, j);
 				/* If the employee is seriously wounded (HP <= 50% maxHP), make him red. */
 				if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.5))
 					Cbuf_AddText(va("hospitalserious%i\n", j));

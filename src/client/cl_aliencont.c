@@ -70,7 +70,7 @@ void AL_FillInContainment (base_t *base)
 		}
 		if (containment[i].techIdx == -1)
 			Sys_Error("Could not find a valid tech for '%s'\n", containment[i].alientype);
-		Com_DPrintf("AL_FillInContainment()... type: %s techIdx: %i\n", containment[i].alientype, containment[i].techIdx);
+		Com_DPrintf(DEBUG_CLIENT, "AL_FillInContainment()... type: %s techIdx: %i\n", containment[i].alientype, containment[i].techIdx);
 	}
 }
 
@@ -121,11 +121,11 @@ void AL_CollectingAliens (aircraft_t *aircraft)
 						if ((le->state & STATE_STUN) & ~STATE_DEAD) {
 							/* alive alien */
 							cargo[j].amount_alive++;
-							Com_DPrintf("Counting: alive %s count: %i\n", cargo[j].alientype, cargo[j].amount_alive);
+							Com_DPrintf(DEBUG_CLIENT, "Counting: alive %s count: %i\n", cargo[j].alientype, cargo[j].amount_alive);
 						} else {
 							/* alien body */
 							cargo[j].amount_dead++;
-							Com_DPrintf("Counting: dead %s count: %i\n", cargo[j].alientype, cargo[j].amount_dead);
+							Com_DPrintf(DEBUG_CLIENT, "Counting: dead %s count: %i\n", cargo[j].alientype, cargo[j].amount_dead);
 						}
 						break;
 					}
@@ -137,11 +137,11 @@ void AL_CollectingAliens (aircraft_t *aircraft)
 					if ((le->state & STATE_STUN) & ~STATE_DEAD) {
 						/* alive alien */
 						cargo[j].amount_alive++;
-						Com_DPrintf("Adding: alive %s count: %i\n", cargo[j].alientype, cargo[j].amount_alive);
+						Com_DPrintf(DEBUG_CLIENT, "Adding: alive %s count: %i\n", cargo[j].alientype, cargo[j].amount_alive);
 					} else {
 						/* alien body */
 						cargo[j].amount_dead++;
-						Com_DPrintf("Adding: dead %s count: %i\n", cargo[j].alientype, cargo[j].amount_dead);
+						Com_DPrintf(DEBUG_CLIENT, "Adding: dead %s count: %i\n", cargo[j].alientype, cargo[j].amount_dead);
 					}
 					aircraft->alientypes++;
 				}
@@ -152,9 +152,9 @@ void AL_CollectingAliens (aircraft_t *aircraft)
 	/* print all of them */
 	for (i = 0; i < aircraft->alientypes; i++) {
 		if (cargo[i].amount_dead > 0)
-			Com_DPrintf("Collecting alien bodies... type: %s amount: %i\n", cargo[i].alientype, cargo[i].amount_dead);
+			Com_DPrintf(DEBUG_CLIENT, "Collecting alien bodies... type: %s amount: %i\n", cargo[i].alientype, cargo[i].amount_dead);
 		if (cargo[i].amount_alive > 0)
-			Com_DPrintf("Alive aliens captured... type: %s amount: %i\n", cargo[i].alientype, cargo[i].amount_alive);
+			Com_DPrintf(DEBUG_CLIENT, "Alive aliens captured... type: %s amount: %i\n", cargo[i].alientype, cargo[i].amount_alive);
 	}
 }
 
@@ -255,9 +255,9 @@ void AL_AddAliens (aircraft_t *aircraft)
 #ifdef DEBUG
 		/* print all of them */
 		if (tobase->alienscont[i].amount_alive > 0)
-			Com_DPrintf("AL_AddAliens alive: %s amount: %i\n", tobase->alienscont[i].alientype, tobase->alienscont[i].amount_alive);
+			Com_DPrintf(DEBUG_CLIENT, "AL_AddAliens alive: %s amount: %i\n", tobase->alienscont[i].alientype, tobase->alienscont[i].amount_alive);
 		if (tobase->alienscont[i].amount_dead > 0)
-			Com_DPrintf("AL_AddAliens bodies: %s amount: %i\n", tobase->alienscont[i].alientype, tobase->alienscont[i].amount_dead);
+			Com_DPrintf(DEBUG_CLIENT, "AL_AddAliens bodies: %s amount: %i\n", tobase->alienscont[i].alientype, tobase->alienscont[i].amount_dead);
 #endif
 	}
 }
@@ -761,10 +761,10 @@ static void AC_KillOne_f (void)
 	/* which item from the list? */
 	num = atoi(Cmd_Argv(1));
 
-	Com_DPrintf("AC_KillOne_f: listnumber %i\n", num);
+	Com_DPrintf(DEBUG_CLIENT, "AC_KillOne_f: listnumber %i\n", num);
 
 	if (num >= numAliensOnList || num < 0) {
-		Com_DPrintf("AC_KillOne_f: max exceeded %i/%i\n", num, numAliensOnList);
+		Com_DPrintf(DEBUG_CLIENT, "AC_KillOne_f: max exceeded %i/%i\n", num, numAliensOnList);
 		return;
 	}
 
@@ -928,10 +928,10 @@ static void AC_AlienListClick_f (void)
 	/* which item from the list? */
 	num = atoi(Cmd_Argv(1));
 
-	Com_DPrintf("AC_AlienListClick_f: listnumber %i\n", num);
+	Com_DPrintf(DEBUG_CLIENT, "AC_AlienListClick_f: listnumber %i\n", num);
 
 	if (num >= numAliensOnList || num < 0) {
-		Com_DPrintf("AC_AlienListClick_f: max exceeded %i/%i\n", num, numAliensOnList);
+		Com_DPrintf(DEBUG_CLIENT, "AC_AlienListClick_f: max exceeded %i/%i\n", num, numAliensOnList);
 		return;
 	}
 

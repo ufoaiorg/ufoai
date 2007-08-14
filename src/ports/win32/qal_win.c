@@ -40,7 +40,7 @@ ALenum	(ALAPIENTRY * qalEAXGet)(const GUID*, ALuint, ALuint, ALvoid *, ALuint);
  */
 qboolean QAL_Init (void)
 {
-	Com_DPrintf("...calling LoadLibrary( '%s' ): ", AL_DRIVER_OPENAL);
+	Com_DPrintf(DEBUG_SYSTEM, "...calling LoadLibrary( '%s' ): ", AL_DRIVER_OPENAL);
 
 	if ((oalState.hInstOpenAL = LoadLibrary(AL_DRIVER_OPENAL)) == NULL) {
 		Com_Printf("OpenAL loading failed\n");

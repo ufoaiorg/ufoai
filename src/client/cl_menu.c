@@ -391,7 +391,7 @@ static void MN_ReinitCurrentMenu_f (void)
 		/* initialize it */
 		if (menuStack[menuStackPos-1]) {
 			MN_ExecuteActions(menuStack[menuStackPos-1], menuStack[menuStackPos-1]->initNode->click);
-			Com_DPrintf("Reinit %s\n", menuStack[menuStackPos-1]->name);
+			Com_DPrintf(DEBUG_CLIENT, "Reinit %s\n", menuStack[menuStackPos-1]->name);
 		}
 	}
 }
@@ -617,13 +617,13 @@ static void MN_StartServer_f (void)
 	aircraft = AIR_AircraftGetFromIdx(0);
 
 	if (sv_dedicated->integer > 0)
-		Com_DPrintf("Dedicated server needs no team\n");
+		Com_DPrintf(DEBUG_CLIENT, "Dedicated server needs no team\n");
 	else if (!B_GetNumOnTeam(aircraft)) {
 		Com_Printf("MN_StartServer_f: Multiplayer team not loaded, please choose your team now.\n");
 		Cbuf_ExecuteText(EXEC_NOW, "assign_initial 1");
 		return;
 	} else
-		Com_DPrintf("There are %i members on team\n", B_GetNumOnTeam(aircraft));
+		Com_DPrintf(DEBUG_CLIENT, "There are %i members on team\n", B_GetNumOnTeam(aircraft));
 
 	if (Cvar_VariableInteger("sv_teamplay")
 		&& Cvar_VariableValue("sv_maxsoldiersperplayer") > Cvar_VariableValue("sv_maxsoldiersperteam")) {
@@ -807,7 +807,7 @@ static void MN_Command_f (void)
 		for (node = menuStack[i]->firstNode; node; node = node->next)
 			if (node->type == MN_CONFUNC && !Q_strncmp(node->name, name, sizeof(node->name))) {
 				/* found the node */
-				Com_DPrintf("MN_Command_f: menu '%s'\n", menuStack[i]->name);
+				Com_DPrintf(DEBUG_CLIENT, "MN_Command_f: menu '%s'\n", menuStack[i]->name);
 				MN_ExecuteActions(menuStack[i], node->click);
 				return;
 			}
@@ -817,7 +817,7 @@ static void MN_Command_f (void)
 		for (node = menus[i].firstNode; node; node = node->next)
 			if (node->type == MN_CONFUNC && !Q_strncmp(node->name, name, sizeof(node->name))) {
 				/* found the node */
-				Com_DPrintf("MN_Command_f: menu '%s'\n", menus[i].name);
+				Com_DPrintf(DEBUG_CLIENT, "MN_Command_f: menu '%s'\n", menus[i].name);
 				MN_ExecuteActions(&menus[i], node->click);
 				return;
 			}
@@ -1598,7 +1598,7 @@ static void MN_TextScroll_f (void)
 	node = MN_GetNodeFromCurrentMenu(Cmd_Argv(1));
 
 	if (!node) {
-		Com_DPrintf("MN_TextScroll_f: Node '%s' not found.\n", Cmd_Argv(1));
+		Com_DPrintf(DEBUG_CLIENT, "MN_TextScroll_f: Node '%s' not found.\n", Cmd_Argv(1));
 		return;
 	}
 
@@ -1625,12 +1625,12 @@ void MN_TextScrollBottom (const char* nodeName)
 	node = MN_GetNodeFromCurrentMenu(nodeName);
 
 	if (!node) {
-		Com_DPrintf("Node '%s' could not be found\n", nodeName);
+		Com_DPrintf(DEBUG_CLIENT, "Node '%s' could not be found\n", nodeName);
 		return;
 	}
 
 	if (node->textLines > node->height) {
-		Com_DPrintf("\nMN_TextScrollBottom: Scrolling to line %i\n", node->textLines - node->height + 1);
+		Com_DPrintf(DEBUG_CLIENT, "\nMN_TextScrollBottom: Scrolling to line %i\n", node->textLines - node->height + 1);
 		node->textScroll = node->textLines - node->height + 1;
 	}
 }
@@ -2239,7 +2239,7 @@ void MN_DrawMenus (void)
 				menu->eventTime = cls.realtime;
 				MN_ExecuteActions(menu, menu->eventNode->click);
 #ifdef DEBUG
-				Com_DPrintf("Event node '%s' '%i\n", menu->eventNode->name, menu->eventNode->timeOut);
+				Com_DPrintf(DEBUG_CLIENT, "Event node '%s' '%i\n", menu->eventNode->name, menu->eventNode->timeOut);
 #endif
 			}
 		}
@@ -2295,7 +2295,7 @@ void MN_DrawMenus (void)
 						/* only timeout this once, otherwise there is a new timeout after every new stack push */
 						if (node->timeOutOnce)
 							node->timeOut = 0;
-						Com_DPrintf("MN_DrawMenus: timeout for node '%s'\n", node->name);
+						Com_DPrintf(DEBUG_CLIENT, "MN_DrawMenus: timeout for node '%s'\n", node->name);
 						continue;
 					}
 				}
@@ -3930,7 +3930,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 			if (!Cmd_Exists(node->name))
 				Cmd_AddCommand(node->name, MN_Command_f, "Confunc callback");
 			else
-				Com_DPrintf("MN_ParseNodeBody: skip confunc '%s' - already added (menu %s)\n", node->name, node->menu->name);
+				Com_DPrintf(DEBUG_CLIENT, "MN_ParseNodeBody: skip confunc '%s' - already added (menu %s)\n", node->name, node->menu->name);
 		}
 
 		return MN_ParseAction(node, *action, text, token);
@@ -4060,7 +4060,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 			if (!*text)
 				return qfalse;
 			Q_strncpyz(menuSelectBoxes[numSelectBoxes].id, *token, sizeof(menuSelectBoxes[numSelectBoxes].id));
-			Com_DPrintf("...found selectbox: '%s'\n", *token);
+			Com_DPrintf(DEBUG_CLIENT, "...found selectbox: '%s'\n", *token);
 
 			*token = COM_EParse(text, errhead, node->name);
 			if (!*text)
@@ -4172,7 +4172,7 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 						if (!Q_strncmp(token, node->name, sizeof(node->name))) {
 							if (node->type != i)
 								Com_Printf("MN_ParseMenuBody: node prototype type change (menu \"%s\")\n", menu->name);
-							Com_DPrintf("... over-riding node %s in menu %s\n", node->name, menu->name);
+							Com_DPrintf(DEBUG_CLIENT, "... over-riding node %s in menu %s\n", node->name, menu->name);
 							/* reset action list of node */
 							node->click = NULL;
 							break;
@@ -4365,7 +4365,7 @@ void MN_ParseMenuModel (const char *name, const char **text)
 	Vector4Set(menuModel->color, 0.5, 0.5, 0.5, 1.0);
 
 	menuModel->id = Mem_PoolStrDup(name, cl_menuSysPool, CL_TAG_MENU);
-	Com_DPrintf("Found menu model %s (%i)\n", menuModel->id, numMenuModels);
+	Com_DPrintf(DEBUG_CLIENT, "Found menu model %s (%i)\n", menuModel->id, numMenuModels);
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -4517,7 +4517,7 @@ void MN_ParseMenu (const char *name, const char **text)
 	if (!Q_strncmp(token, "extends", 7)) {
 		menu_t *superMenu;
 		token = COM_Parse(text);
-		Com_DPrintf("MN_ParseMenus: menu \"%s\" inheriting menu \"%s\"\n", name, token);
+		Com_DPrintf(DEBUG_CLIENT, "MN_ParseMenus: menu \"%s\" inheriting menu \"%s\"\n", name, token);
 		superMenu = MN_GetMenu(token);
 		if (!superMenu)
 			Sys_Error("MN_ParseMenu: menu '%s' can't inherit from menu '%s' - because '%s' was not found\n", name, token, token);
@@ -4897,7 +4897,7 @@ void CL_ParseFont (const char *name, const char **text)
 	else if (!Q_strcmp(font->name, "f_big"))
 		fontBig = font;
 
-	Com_DPrintf("...found font %s (%i)\n", font->name, numFonts);
+	Com_DPrintf(DEBUG_CLIENT, "...found font %s (%i)\n", font->name, numFonts);
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -5047,7 +5047,7 @@ static void MS_MessageSave (sizebuf_t * sb, message_t * message)
 	if (message->pedia)
 		idx = message->pedia->idx;
 
-	Com_DPrintf("MS_MessageSave: Save '%s' - '%s'; type = %i; idx = %i\n", message->title, message->text, message->type, idx);
+	Com_DPrintf(DEBUG_CLIENT, "MS_MessageSave: Save '%s' - '%s'; type = %i; idx = %i\n", message->title, message->text, message->type, idx);
 	MSG_WriteString(sb, message->title);
 	MSG_WriteString(sb, message->text);
 	MSG_WriteByte(sb, message->type);

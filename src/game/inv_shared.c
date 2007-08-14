@@ -211,7 +211,7 @@ int Com_CheckToInventory (const inventory_t * const i, const int item, const int
 				return 2;	/* Return status "fits, but only rotated". */
 			}
 
-			Com_DPrintf("Com_CheckToInventory: INFO: Moving to 'single' container but item would not fit normally.\n");
+			Com_DPrintf(DEBUG_SHARED, "Com_CheckToInventory: INFO: Moving to 'single' container but item would not fit normally.\n");
 			return 1; /* We are returning with status qtrue (1) if the item does not fit at all - unlikely but not impossible. */
 		}
 	}
@@ -297,20 +297,20 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, int container
 	   And now ic will be our [t], that is the newly added container.
 	   After that we can easily add the item (item.t, x and y positions) to our [t] being ic.
 	*/
-	   
+
 	/* Temporary store the pointer to the first item in this list. */
 	ic = i->c[container];
 
 	/* Set/overwrite first item-entry in the container to a yet empty one. */
 	i->c[container] = invUnused;
-	
+
 	/* Ensure, that for later usage in other (or this) function(s) invUnused will be the next empty/free slot.
 	 * It is not used _here_ anymore. */
 	invUnused = invUnused->next;
-	
+
 	/* Set the "next" link of the new "first item"  to the original "first item" we stored previously. */
 	i->c[container]->next = ic;
-	
+
 	/* Set point ic to the new "first item" (i.e. the yet empty entry). */
 	ic = i->c[container];
 /*	Com_Printf("Add to container %i: %s\n", container, CSI->ods[item.t].id);*/
@@ -363,7 +363,7 @@ qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, int container, int
 	ic = i->c[container];
 	if (!ic) {
 #ifdef PARANOID
-		Com_DPrintf("Com_RemoveFromInventoryIgnore - empty container %s\n", CSI->ids[container].name);
+		Com_DPrintf(DEBUG_SHARED, "Com_RemoveFromInventoryIgnore - empty container %s\n", CSI->ids[container].name);
 #endif
 		return qfalse;
 	}
@@ -568,7 +568,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 			Com_FindSpace(i, &cacheItem, to, &tx, &ty);	/**< Returns a free place or NONE for x&y if no free space is available elsewhere.
 												 * This is then used in Com_AddToInventory below.*/
 			if (tx == NONE || ty == NONE) {
-				Com_DPrintf("Com_MoveInInventory - item will be added non-visible\n");
+				Com_DPrintf(DEBUG_SHARED, "Com_MoveInInventory - item will be added non-visible\n");
 			}
 		} else {
 			/* impossible move - back to source location */
@@ -580,13 +580,13 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 	/* twohanded exception - only CSI->idRight is allowed for fireTwoHanded weapons */
 	if (CSI->ods[cacheItem.t].fireTwoHanded && to == CSI->idLeft) {
 #ifdef DEBUG
-		Com_DPrintf("Com_MoveInInventory - don't move the item to CSI->idLeft it's fireTwoHanded\n");
+		Com_DPrintf(DEBUG_SHARED, "Com_MoveInInventory - don't move the item to CSI->idLeft it's fireTwoHanded\n");
 #endif
 		to = CSI->idRight;
 	}
 #ifdef PARANOID
 	else if (CSI->ods[cacheItem.t].fireTwoHanded)
-		Com_DPrintf("Com_MoveInInventory: move fireTwoHanded item to container: %s\n", CSI->ids[to].name);
+		Com_DPrintf(DEBUG_SHARED, "Com_MoveInInventory: move fireTwoHanded item to container: %s\n", CSI->ids[to].name);
 #endif
 
 	/* successful */
@@ -596,11 +596,11 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 	if (checkedTo == 2) {
 		/* Set rotated tag */
 		/** @todo remove this again when moving out of a container. */
-		Com_DPrintf("Com_MoveInInventoryIgnore: setting rotate tag.\n");
+		Com_DPrintf(DEBUG_SHARED, "Com_MoveInInventoryIgnore: setting rotate tag.\n");
 		cacheItem.rotated = 1;
 	} else if (cacheItem.rotated) {
 		/* Remove rotated tag */
-		Com_DPrintf("Com_MoveInInventoryIgnore: removing rotate tag.\n");
+		Com_DPrintf(DEBUG_SHARED, "Com_MoveInInventoryIgnore: removing rotate tag.\n");
 		cacheItem.rotated = 0;
 	}
 
@@ -634,7 +634,7 @@ void INVSH_EmptyContainer (inventory_t* const i, const int container)
 #ifdef DEBUG
 	int cnt = 0;
 	if (CSI->ids[container].temp)
-		Com_DPrintf("INVSH_EmptyContainer: Emptying temp container %s.\n", CSI->ids[container].name);
+		Com_DPrintf(DEBUG_SHARED, "INVSH_EmptyContainer: Emptying temp container %s.\n", CSI->ids[container].name);
 #endif
 
 	assert(i);
@@ -706,7 +706,7 @@ void Com_FindSpace (const inventory_t* const inv, item_t *item, const int contai
 				if (checkedTo == 2) {
 					/* Set rotated tag */
 					/** @todo remove this again when moving out of a container. */
-					Com_DPrintf("Com_FindSpace: setting rotate tag (%s: %s in %s)\n", CSI->ods[item->t].type, CSI->ods[item->t].id, CSI->ids[container].name);
+					Com_DPrintf(DEBUG_SHARED, "Com_FindSpace: setting rotate tag (%s: %s in %s)\n", CSI->ods[item->t].type, CSI->ods[item->t].id, CSI->ids[container].name);
 					item->rotated = 1;
 				}
 				cache_Com_CheckToInventory = 0;
@@ -721,7 +721,7 @@ void Com_FindSpace (const inventory_t* const inv, item_t *item, const int contai
 	cache_Com_CheckToInventory = 0;
 
 #ifdef PARANOID
-	Com_DPrintf("Com_FindSpace: no space for %s: %s in %s\n", CSI->ods[item->t].type, CSI->ods[item->t].id, CSI->ids[container].name);
+	Com_DPrintf(DEBUG_SHARED, "Com_FindSpace: no space for %s: %s in %s\n", CSI->ods[item->t].type, CSI->ods[item->t].id, CSI->ids[container].name);
 #endif
 	*px = *py = NONE;
 }
@@ -841,7 +841,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, co
 			/* The weapon provides its own ammo (i.e. it is charged or loaded in the base.) */
 			item.a = CSI->ods[weapon].ammo;
 			item.m = weapon;
-			Com_DPrintf("INVSH_PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s'.\n", CSI->ods[weapon].id, name);
+			Com_DPrintf(DEBUG_SHARED, "INVSH_PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s'.\n", CSI->ods[weapon].id, name);
 		} else {
 			max_price = 0;
 			/* find some suitable ammo for the weapon */
@@ -854,7 +854,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, co
 				}
 
 			if (ammo < 0) {
-				Com_DPrintf("INVSH_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", CSI->ods[weapon].id, name);
+				Com_DPrintf(DEBUG_SHARED, "INVSH_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", CSI->ods[weapon].id, name);
 				return 0;
 			}
 			/* load ammo */
@@ -1075,7 +1075,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], con
 
 		/* if no weapon at all, bad guys will always find a blade to wield */
 		if (!has_weapon) {
-			Com_DPrintf("INVSH_EquipActor: no weapon picked in equipment '%s', defaulting to the most expensive secondary weapon without reload.\n", name);
+			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: no weapon picked in equipment '%s', defaulting to the most expensive secondary weapon without reload.\n", name);
 			max_price = 0;
 			for (i = 0; i < CSI->numODs; i++) {
 				obj = CSI->ods[i];
@@ -1091,17 +1091,17 @@ void INVSH_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], con
 		}
 		/* if still no weapon, something is broken, or no blades in equip */
 		if (!has_weapon)
-			Com_DPrintf("INVSH_EquipActor: cannot add any weapon; no secondary weapon without reload detected for equipment '%s'.\n", name);
+			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: cannot add any weapon; no secondary weapon without reload detected for equipment '%s'.\n", name);
 
 		/* armor; especially for those without primary weapons */
 		repeat = (float) missed_primary * (1 + frand() * PROB_COMPENSATION) / 40.0;
 	} else {
-		Com_DPrintf("INVSH_EquipActor: character '%s' may not carry weapons\n", chr->name);
+		Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: character '%s' may not carry weapons\n", chr->name);
 		return;
 	}
 
 	if (!chr->armor) {
-		Com_DPrintf("INVSH_EquipActor: character '%s' may not carry armor\n", chr->name);
+		Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: character '%s' may not carry armor\n", chr->name);
 		return;
 	}
 
@@ -1134,11 +1134,11 @@ void INVSH_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], con
 	} while (!has_armor && repeat--);
 }
 
-/* ================================ */
-
-/*  CHARACTER GENERATING FUNCTIONS  */
-
-/* ================================ */
+/*
+================================
+CHARACTER GENERATING FUNCTIONS
+================================
+*/
 
 /**
  * @brief Translate the team string to the team int value
@@ -1211,7 +1211,7 @@ static void CHRSH_GetAbility (character_t *chr, int team, int *minAbility, int *
 		*maxAbility = CHRSH_abilityValues[campaignID][team][chr->empl_type][1];
 	}
 #ifdef PARANOID
-	Com_DPrintf("CHRSH_GetAbility: use minAbility %i and maxAbility %i for team %i and empl_type %i\n", *minAbility, *maxAbility, team, chr->empl_type);
+	Com_DPrintf(DEBUG_SHARED, "CHRSH_GetAbility: use minAbility %i and maxAbility %i for team %i and empl_type %i\n", *minAbility, *maxAbility, team, chr->empl_type);
 #endif
 }
 
@@ -1264,7 +1264,7 @@ static void CHRSH_GetSkill (character_t *chr, int team, int *minSkill, int *maxS
 		*maxSkill = CHRSH_skillValues[campaignID][team][chr->empl_type][1];
 	}
 #ifdef PARANOID
-	Com_DPrintf("CHRSH_GetSkill: use minSkill %i and maxSkill %i for team %i and empl_type %i\n", *minSkill, *maxSkill, team, chr->empl_type);
+	Com_DPrintf(DEBUG_SHARED, "CHRSH_GetSkill: use minSkill %i and maxSkill %i for team %i and empl_type %i\n", *minSkill, *maxSkill, team, chr->empl_type);
 #endif
 }
 
@@ -1527,7 +1527,7 @@ qboolean INVSH_LoadableInWeapon (objDef_t *od, int weapon_idx)
 	for (i = 0; i < od->numWeapons; i++) {
 #ifdef DEBUG
 		if (od->weap_idx[i] < 0) {
-			Com_DPrintf("INVSH_LoadableInWeapon: negative weap_idx entry (%s) found in item '%s'.\n", od->weap_id[i], od->id );
+			Com_DPrintf(DEBUG_SHARED, "INVSH_LoadableInWeapon: negative weap_idx entry (%s) found in item '%s'.\n", od->weap_id[i], od->id );
 			break;
 		}
 #endif
@@ -1537,16 +1537,16 @@ qboolean INVSH_LoadableInWeapon (objDef_t *od, int weapon_idx)
 		}
 	}
 #if 0
-	Com_DPrintf("INVSH_LoadableInWeapon: item '%s' usable/unusable (%i) in weapon '%s'.\n", od->id, usable, CSI->ods[weapon_idx].id );
+	Com_DPrintf(DEBUG_SHARED, "INVSH_LoadableInWeapon: item '%s' usable/unusable (%i) in weapon '%s'.\n", od->id, usable, CSI->ods[weapon_idx].id );
 #endif
 	return usable;
 }
 
-/* =============================== */
-
-/*  FIREMODE MANAGEMENT FUNCTIONS  */
-
-/* =============================== */
+/*
+===============================
+FIREMODE MANAGEMENT FUNCTIONS
+===============================
+*/
 
 /**
  * @brief Returns the index of the array that has the firedefinitions for a given weapon (-index)
@@ -1560,12 +1560,12 @@ int FIRESH_FiredefsIDXForWeapon (objDef_t *od, int weapon_idx)
 	int i;
 
 	if (!od) {
-		Com_DPrintf("FIRESH_FiredefsIDXForWeapon: object definition is NULL.\n");
+		Com_DPrintf(DEBUG_SHARED, "FIRESH_FiredefsIDXForWeapon: object definition is NULL.\n");
 		return -1;
 	}
 
 	if (weapon_idx == NONE) {
-		Com_DPrintf("FIRESH_FiredefsIDXForWeapon: bad weapon_idx (NONE) in item '%s' - using default weapon/firemodes.\n", od->id);
+		Com_DPrintf(DEBUG_SHARED, "FIRESH_FiredefsIDXForWeapon: bad weapon_idx (NONE) in item '%s' - using default weapon/firemodes.\n", od->id);
 		/* FIXME: this won't work if there is no weapon_idx, don't it? - should be -1 here, too */
 		return 0;
 	}
@@ -1577,7 +1577,7 @@ int FIRESH_FiredefsIDXForWeapon (objDef_t *od, int weapon_idx)
 
 	/* No firedef index found for this weapon/ammo. */
 #ifdef DEBUG
-	Com_DPrintf("FIRESH_FiredefsIDXForWeapon: No firedef index found for weapon. od:%s weap_idx:%i).\n", od->id, weapon_idx);
+	Com_DPrintf(DEBUG_SHARED, "FIRESH_FiredefsIDXForWeapon: No firedef index found for weapon. od:%s weap_idx:%i).\n", od->id, weapon_idx);
 #endif
 	return -1;
 }

@@ -530,7 +530,7 @@ static void Key_Message (int key)
 			return;
 		}
 		if (send) {
-			Com_DPrintf("msg_buffer: %s\n", msg_buffer);
+			Com_DPrintf(DEBUG_CLIENT, "msg_buffer: %s\n", msg_buffer);
 			Cbuf_AddText(msg_buffer);
 			Cbuf_AddText("\"\n");
 		}
@@ -692,18 +692,18 @@ static void Key_SetBinding (int keynum, const char *binding, keyBindSpace_t spac
 	if (keynum == -1 || keynum >= K_KEY_SIZE)
 		return;
 
-	Com_DPrintf("Binding for '%s' for space ", binding);
+	Com_DPrintf(DEBUG_CLIENT, "Binding for '%s' for space ", binding);
 	switch (space) {
 	case KEYSPACE_MENU:
 		keySpace = &menukeybindings[keynum];
-		Com_DPrintf("menu\n");
+		Com_DPrintf(DEBUG_CLIENT, "menu\n");
 		break;
 	case KEYSPACE_GAME:
 		keySpace = &keybindings[keynum];
-		Com_DPrintf("game\n");
+		Com_DPrintf(DEBUG_CLIENT, "game\n");
 		break;
 	default:
-		Com_DPrintf("failure\n");
+		Com_DPrintf(DEBUG_CLIENT, "failure\n");
 		return;
 	}
 

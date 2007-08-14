@@ -222,7 +222,7 @@ void CL_AddMapParticle (const char *ptl, vec3_t origin, vec2_t wait, const char 
 	mp->wait[1] = wait[1] * 1000;
 	mp->nextTime = cl.time + wait[0] + wait[1] * frand() + 1;
 
-	Com_DPrintf("Adding map particle %s (%i) with levelflags %i\n", ptl, numMPs, levelflags);
+	Com_DPrintf(DEBUG_CLIENT, "Adding map particle %s (%i) with levelflags %i\n", ptl, numMPs, levelflags);
 }
 
 /**

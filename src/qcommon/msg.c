@@ -230,7 +230,7 @@ void MSG_V_WriteFormat (sizebuf_t * sb, const char *format, va_list ap)
 {
 	char typeID;
 
-	Com_DPrintf("MSG_WriteFormat: %s\n", format);
+	Com_DPrintf(DEBUG_ENGINE, "MSG_WriteFormat: %s\n", format);
 
 	while (*format) {
 		typeID = *format++;

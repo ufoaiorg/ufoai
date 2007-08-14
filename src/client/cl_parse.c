@@ -329,7 +329,7 @@ static void CL_ParseServerData (struct dbuffer *msg)
 	char *str;
 	int i;
 
-	Com_DPrintf("Serverdata packet received.\n");
+	Com_DPrintf(DEBUG_CLIENT, "Serverdata packet received.\n");
 
 	/* wipe the client_state_t struct */
 	CL_ClearState();
@@ -357,7 +357,7 @@ static void CL_ParseServerData (struct dbuffer *msg)
 	/* get the full level name */
 	str = NET_ReadString(msg);
 
-	Com_DPrintf("serverdata: count %d, gamedir %s, pnum %d, level %s\n",
+	Com_DPrintf(DEBUG_CLIENT, "serverdata: count %d, gamedir %s, pnum %d, level %s\n",
 		cl.servercount, cl.gamedir, cl.pnum, str);
 
 	if (cl.pnum >= 0) {
@@ -413,7 +413,7 @@ static void CL_ParseConfigString (struct dbuffer *msg)
 	/* value */
 	s = NET_ReadString(msg);
 
-	Com_DPrintf("configstring %d: %s\n", i, s);
+	Com_DPrintf(DEBUG_CLIENT, "configstring %d: %s\n", i, s);
 
 	/* there may be overflows in i==CS_TILES - but thats ok */
 	/* see definition of configstrings and MAX_TILESTRINGS */
@@ -506,7 +506,7 @@ static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 	} else /* use entity number */
 		pos = NULL;
 
-	Com_DPrintf("startsoundpacket: flags %x, sound %s, volume %.2f, attenuation %.2f, ofs %.2f,"
+	Com_DPrintf(DEBUG_CLIENT, "startsoundpacket: flags %x, sound %s, volume %.2f, attenuation %.2f, ofs %.2f,"
 		" channel %d, ent %d, pos %.3f, %.3f, %.3f\n",
 		flags, sound, volume, attenuation, ofs, channel, ent, pos[0], pos[1], pos[2]);
 
@@ -653,7 +653,7 @@ static void CL_EntAppear (struct dbuffer *msg)
 	if (!le) {
 		le = LE_Add(entnum);
 	} else {
-		Com_DPrintf("Entity appearing already visible... overwriting the old one\n");
+		Com_DPrintf(DEBUG_CLIENT, "Entity appearing already visible... overwriting the old one\n");
 		le->inuse = qtrue;
 	}
 
@@ -694,7 +694,7 @@ static void CL_EntPerish (struct dbuffer *msg)
 			if (actor->inuse
 				 && (actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
 				 && VectorCompare(actor->pos, le->pos)) {
-				Com_DPrintf("CL_EntPerish: le of type ET_ITEM hidden\n");
+				Com_DPrintf(DEBUG_CLIENT, "CL_EntPerish: le of type ET_ITEM hidden\n");
 				FLOOR(actor) = NULL;
 			}
 		break;
@@ -732,7 +732,7 @@ static void CL_EntEdict (struct dbuffer *msg)
 	if (!le) {
 		le = LE_Add(entnum);
 	} else {
-		Com_DPrintf("Entity appearing already visible... overwriting the old one\n");
+		Com_DPrintf(DEBUG_CLIENT, "Entity appearing already visible... overwriting the old one\n");
 		le->inuse = qtrue;
 	}
 
@@ -1104,7 +1104,7 @@ static void CL_PlaceItem (le_t *le)
 			 && (actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
 			 && VectorCompare(actor->pos, le->pos) ) {
 #if PARANOID
-			Com_DPrintf("CL_PlaceItem: shared container: '%p'\n", FLOOR(le));
+			Com_DPrintf(DEBUG_CLIENT, "CL_PlaceItem: shared container: '%p'\n", FLOOR(le));
 #endif
 			if (FLOOR(le))
 				FLOOR(actor) = FLOOR(le);
@@ -1156,7 +1156,7 @@ static void CL_InvAdd (struct dbuffer *msg)
 		return;
 	}
 	if (!le->inuse)
-		Com_DPrintf("InvAdd: warning... LE found but not in-use\n");
+		Com_DPrintf(DEBUG_CLIENT, "InvAdd: warning... LE found but not in-use\n");
 
 	nr = NET_ReadShort(msg) / INV_INVENTORY_BYTES;
 
@@ -1199,7 +1199,7 @@ static void CL_InvDel (struct dbuffer *msg)
 
 	le = LE_Get(number);
 	if (!le) {
-		Com_DPrintf("InvDel message ignored... LE not found\n");
+		Com_DPrintf(DEBUG_CLIENT, "InvDel message ignored... LE not found\n");
 		return;
 	}
 
@@ -1238,7 +1238,7 @@ static void CL_InvAmmo (struct dbuffer *msg)
 
 	le = LE_Get(number);
 	if (!le) {
-		Com_DPrintf("InvAmmo message ignored... LE not found\n");
+		Com_DPrintf(DEBUG_CLIENT, "InvAmmo message ignored... LE not found\n");
 		return;
 	}
 
@@ -1272,7 +1272,7 @@ static void CL_InvReload (struct dbuffer *msg)
 
 	le = LE_Get(number);
 	if (!le) {
-		Com_DPrintf("CL_InvReload: only sound played\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_InvReload: only sound played\n");
 		return;
 	}
 
@@ -1332,7 +1332,7 @@ static void do_event (int now, void *data)
 
 		events = event->next;
 
-		Com_DPrintf("event(dispatching): %s %p\n", ev_names[event->eType], event);
+		Com_DPrintf(DEBUG_CLIENT, "event(dispatching): %s %p\n", ev_names[event->eType], event);
 		CL_LogEvent(event->eType);
 		ev_func[event->eType](event->msg);
 
@@ -1399,7 +1399,7 @@ static void CL_ParseEvent (struct dbuffer *msg)
 	if (now) {
 		/* log and call function */
 		CL_LogEvent(eType);
-		Com_DPrintf("event(now): %s\n", ev_names[eType]);
+		Com_DPrintf(DEBUG_CLIENT, "event(now): %s\n", ev_names[eType]);
 		ev_func[eType](msg);
 	} else {
 		struct dbuffer *event_msg = dbuffer_dup(msg);
@@ -1537,7 +1537,7 @@ static void CL_ParseEvent (struct dbuffer *msg)
 			e->next = cur;
 		}
 
-		Com_DPrintf("event(at %d): %s %p\n", event_time, ev_names[eType], cur);
+		Com_DPrintf(DEBUG_CLIENT, "event(at %d): %s %p\n", event_time, ev_names[eType], cur);
 	}
 }
 
@@ -1555,7 +1555,7 @@ void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
 	if (cmd == -1)
 		return;
 
-	Com_DPrintf("command: %s\n", svc_strings[cmd]);
+	Com_DPrintf(DEBUG_CLIENT, "command: %s\n", svc_strings[cmd]);
 
 	/* commands */
 	switch (cmd) {
@@ -1602,19 +1602,19 @@ void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
 		default:
 			break;
 		}
-		Com_DPrintf("svc_print(%d): %s\n", i, s);
+		Com_DPrintf(DEBUG_CLIENT, "svc_print(%d): %s\n", i, s);
 		Com_Printf("%s", s);
 		break;
 
 	case svc_centerprint:
 		s = NET_ReadString(msg);
-		Com_DPrintf("svc_centerprint: %s\n", s);
+		Com_DPrintf(DEBUG_CLIENT, "svc_centerprint: %s\n", s);
 		SCR_CenterPrint(s);
 		break;
 
 	case svc_stufftext:
 		s = NET_ReadString(msg);
-		Com_DPrintf("stufftext: %s\n", s);
+		Com_DPrintf(DEBUG_CLIENT, "stufftext: %s\n", s);
 		Cbuf_AddText(s);
 		break;
 

@@ -212,7 +212,7 @@ static int FS_FOpenFileSingle (const char *filename, qFILE * file)
 			Com_sprintf(netpath, sizeof(netpath), "%s%s", link->to, filename + link->fromlength);
 			file->f = fopen(netpath, "rb");
 			if (file->f) {
-				Com_DPrintf("link file: %s\n", netpath);
+				Com_DPrintf(DEBUG_ENGINE, "link file: %s\n", netpath);
 				return FS_FileLength(file);
 			}
 			return -1;
@@ -227,12 +227,12 @@ static int FS_FOpenFileSingle (const char *filename, qFILE * file)
 			for (i = 0; i < pak->numfiles; i++)
 				/* found it! */
 				if (!Q_strcasecmp(pak->files[i].name, filename)) {
-					Com_DPrintf("PackFile: %s : %s\n", pak->filename, filename);
+					Com_DPrintf(DEBUG_ENGINE, "PackFile: %s : %s\n", pak->filename, filename);
 					/* open a new file on the pakfile */
 					if (unzLocateFile(pak->handle.z, filename, 2) == UNZ_OK) {	/* found it! */
 						if (unzOpenCurrentFile(pak->handle.z) == UNZ_OK) {
 							unz_file_info info;
-							Com_DPrintf("PackFile: %s : %s\n", pak->filename, filename);
+							Com_DPrintf(DEBUG_ENGINE, "PackFile: %s : %s\n", pak->filename, filename);
 							if (unzGetCurrentFileInfo(pak->handle.z, &info, NULL, 0, NULL, 0, NULL, 0) != UNZ_OK)
 								Com_Error(ERR_FATAL, "Couldn't get size of %s in %s", filename, pak->filename);
 							unzGetCurrentFileInfoPosition(pak->handle.z, &file->filepos);
@@ -251,7 +251,7 @@ static int FS_FOpenFileSingle (const char *filename, qFILE * file)
 			if (!file->f)
 				continue;
 
-			/*Com_DPrintf("FindFile: %s\n", netpath);*/
+			/*Com_DPrintf(DEBUG_ENGINE, "FindFile: %s\n", netpath);*/
 			return FS_FileLength(file);
 		}
 	}
@@ -333,7 +333,7 @@ int FS_FOpenFile (const char *filename, qFILE * file)
 
 	/* nothing corresponding found */
 	if (result == -1)
-		Com_DPrintf("FS_FOpenFile: can't find %s\n", filename);
+		Com_DPrintf(DEBUG_ENGINE, "FS_FOpenFile: can't find %s\n", filename);
 
 	return result;
 }
@@ -348,7 +348,7 @@ void FS_FOpenFileWrite (const char *filename, qFILE * f)
 
 	f->f = fopen(filename, "wb");
 	if (!f->f)
-		Com_DPrintf("Could not open %s for writing\n", filename);
+		Com_DPrintf(DEBUG_ENGINE, "Could not open %s for writing\n", filename);
 }
 
 
@@ -464,7 +464,7 @@ int FS_LoadFile (const char *path, void **buffer)
 	/* look for it in the filesystem or pack files */
 	len = FS_FOpenFile(path, &h);
 	if (!h.f && !h.z) {
-		Com_DPrintf("FS_LoadFile: Could not open %s\n", path);
+		Com_DPrintf(DEBUG_ENGINE, "FS_LoadFile: Could not open %s\n", path);
 		if (buffer)
 			*buffer = NULL;
 		return -1;
@@ -1335,7 +1335,7 @@ void FS_GetMaps (qboolean reset)
 	if (!reset && fs_mapsInstalledInit)
 		return;
 	else if (fs_mapsInstalledInit) {
-		Com_DPrintf("Free old list with %i entries\n", fs_numInstalledMaps);
+		Com_DPrintf(DEBUG_ENGINE, "Free old list with %i entries\n", fs_numInstalledMaps);
 		for (i = 0; i < fs_numInstalledMaps; i++)
 			Mem_Free(fs_maps[i]);
 	}
@@ -1385,7 +1385,7 @@ void FS_GetMaps (qboolean reset)
 
 			if ((dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM)) != 0) {
 				for (i = 0; i < ndirs - 1; i++) {
-					Com_DPrintf("... found map: '%s' (pos %i out of %i)\n", dirnames[i], i + 1, ndirs);
+					Com_DPrintf(DEBUG_ENGINE, "... found map: '%s' (pos %i out of %i)\n", dirnames[i], i + 1, ndirs);
 					baseMapName = COM_SkipPath(dirnames[i]);
 					COM_StripExtension(baseMapName, filename);
 					status = CheckBSPFile(filename);

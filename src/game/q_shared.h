@@ -148,6 +148,15 @@ typedef uint8_t byte;
 #define LEVEL_TRACING 259
 #define LEVEL_MAX 260
 
+#define DEBUG_ALL		(1<<0)
+#define DEBUG_SHARED	(1<<1)
+#define DEBUG_ENGINE	(1<<2)
+#define DEBUG_SYSTEM	(1<<3)
+#define DEBUG_COMMANDS	(1<<4)
+#define DEBUG_CLIENT	(1<<5)
+#define DEBUG_SERVER	(1<<6)
+#define DEBUG_GAME		(1<<7)
+
 #define NONE		0xFF
 #define NONE_AMMO	0
 
@@ -208,8 +217,7 @@ typedef uint8_t byte;
 #define ERR_DISCONNECT      2   /* don't kill server */
 
 #define PRINT_ALL           0
-#define PRINT_DEVELOPER     1   /* only print when "developer 1" */
-#define PRINT_ALERT         2
+#define PRINT_DEVELOPER     1   /* only print when "developer" is set */
 
 /* important units */
 #define UNIT_SIZE           32
@@ -520,7 +528,7 @@ void Sys_SetAffinityAndPriority(void);
 /* this is only here so the functions in q_shared.c and q_shwin.c can link */
 void Sys_Error(const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
 void Com_Printf(const char *msg, ...) __attribute__((format(printf, 1, 2)));
-void Com_DPrintf(const char *msg, ...) __attribute__((format(printf, 1, 2)));
+void Com_DPrintf(int level, const char *msg, ...) __attribute__((format(printf, 2, 3)));
 
 extern cvar_t* sys_priority;
 extern cvar_t* sys_affinity;

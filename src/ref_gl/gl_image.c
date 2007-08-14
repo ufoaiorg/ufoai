@@ -997,7 +997,7 @@ static void LoadJPG (const char *filename, byte ** pic, int *width, int *height)
 
 	components = cinfo.output_components;
     if (components != 3 && components != 1) {
-		Com_DPrintf("R_LoadJPG: Bad jpeg components '%s' (%d)\n", filename, components);
+		ri.Con_Printf(PRINT_DEVELOPER, "R_LoadJPG: Bad jpeg components '%s' (%d)\n", filename, components);
 		jpeg_destroy_decompress(&cinfo);
 		ri.FS_FreeFile(rawdata);
 		return;
@@ -1644,7 +1644,7 @@ static qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mip
 
 	/* emboss filter */
 	if (gl_imagefilter->integer && image && image->shader) {
-		Com_DPrintf("Using image filter %s\n", image->shader->name);
+		ri.Con_Printf(PRINT_DEVELOPER, "Using image filter %s\n", image->shader->name);
 		if (image->shader->emboss)
 			R_FilterTexture(EMBOSS_FILTER, data, width, height, 1, 128, qtrue, image->shader->glMode);
 		if (image->shader->emboss2)
@@ -1883,7 +1883,7 @@ image_t *GL_LoadPic (const char *name, byte * pic, int width, int height, imaget
 
 	image->shader = GL_GetShaderForImage(image->name);
 	if (image->shader)
-		Com_DPrintf("GL_LoadPic: Shader found: '%s'\n", image->name);
+		ri.Con_Printf(PRINT_DEVELOPER, "GL_LoadPic: Shader found: '%s'\n", image->name);
 
 	image->texnum = TEXNUM_IMAGES + (image - gltextures);
 	if (pic) {

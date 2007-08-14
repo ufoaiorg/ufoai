@@ -37,7 +37,7 @@ player_t *sv_player;
 void SV_SetClientState (client_t* client, int state)
 {
 	assert(client);
-	Com_DPrintf("Set state for client '%s' to %i\n", client->name, state);
+	Com_DPrintf(DEBUG_SERVER, "Set state for client '%s' to %i\n", client->name, state);
 	client->state = state;
 }
 
@@ -61,7 +61,7 @@ static void SV_New_f (void)
 	const char *gamedir;
 	int playernum;
 
-	Com_DPrintf("New() from %s\n", sv_client->name);
+	Com_DPrintf(DEBUG_SERVER, "New() from %s\n", sv_client->name);
 
 	if (sv_client->state != cs_connected) {
 		if (sv_client->state == cs_spawning) {
@@ -70,7 +70,7 @@ static void SV_New_f (void)
 			SV_ClientCommand(sv_client, "\ndisconnect\nreconnect\n");
 			SV_DropClient(sv_client, "");
 		} else
-			Com_DPrintf("WARNING: Illegal 'new' from %s, client state %d. This shouldn't happen...\n", sv_client->name, sv_client->state);
+			Com_DPrintf(DEBUG_SERVER, "WARNING: Illegal 'new' from %s, client state %d. This shouldn't happen...\n", sv_client->name, sv_client->state);
 		return;
 	}
 
@@ -113,7 +113,7 @@ static void SV_Configstrings_f (void)
 	int i;
 	int start;
 
-	Com_DPrintf("Configstrings() from %s\n", sv_client->name);
+	Com_DPrintf(DEBUG_SERVER, "Configstrings() from %s\n", sv_client->name);
 
 	if (sv_client->state != cs_spawning) {
 		Com_Printf("configstrings not valid -- already spawning\n");
@@ -134,7 +134,7 @@ static void SV_Configstrings_f (void)
 	for (i = start; i < MAX_CONFIGSTRINGS; i++) {
 		if (sv.configstrings[i][0]) {
 			struct dbuffer *msg = new_dbuffer();
-			Com_DPrintf("sending configstring %d: %s\n", i, sv.configstrings[i]);
+			Com_DPrintf(DEBUG_SERVER, "sending configstring %d: %s\n", i, sv.configstrings[i]);
 			NET_WriteByte(msg, svc_configstring);
 			NET_WriteShort(msg, i);
 			NET_WriteString(msg, sv.configstrings[i]);
@@ -175,7 +175,7 @@ int SV_CountPlayers (void)
  */
 static void SV_Begin_f (void)
 {
-	Com_DPrintf("Begin() from %s\n", sv_client->name);
+	Com_DPrintf(DEBUG_SERVER, "Begin() from %s\n", sv_client->name);
 
 	/* could be abused to respawn or cause spam/other mod-specific problems */
 	if (sv_client->state != cs_spawning) {
@@ -227,7 +227,7 @@ static void SV_SpawnAllPending (void)
  */
 static void SV_Spawn_f (void)
 {
-	Com_DPrintf("Spawn() from %s\n", sv_client->name);
+	Com_DPrintf(DEBUG_SERVER, "Spawn() from %s\n", sv_client->name);
 
 	/* handle the case of a level changing while a client was connecting */
 	if (atoi(Cmd_Argv(1)) != svs.spawncount) {
@@ -298,13 +298,13 @@ static void SV_ExecuteUserCommand (char *s)
 
 	for (u = ucmds; u->name; u++)
 		if (!Q_strncmp(Cmd_Argv(0), u->name, MAX_VAR)) {
-			Com_DPrintf("SV_ExecuteUserCommand: %s\n", s);
+			Com_DPrintf(DEBUG_SERVER, "SV_ExecuteUserCommand: %s\n", s);
 			u->func();
 			return;
 		}
 
 	if (Com_ServerState() == ss_game) {
-		Com_DPrintf("SV_ExecuteUserCommand: client command: %s\n", s);
+		Com_DPrintf(DEBUG_SERVER, "SV_ExecuteUserCommand: client command: %s\n", s);
 		ge->ClientCommand(sv_player);
 	}
 

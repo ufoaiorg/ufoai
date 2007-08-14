@@ -95,7 +95,7 @@ void RS_MarkOneResearchable (technology_t* tech)
 	if (!tech)
 		return;
 
-	Com_DPrintf("RS_MarkOneResearchable: \"%s\" marked as researchable.\n", tech->id);
+	Com_DPrintf(DEBUG_CLIENT, "RS_MarkOneResearchable: \"%s\" marked as researchable.\n", tech->id);
 
 	if ((tech->mailSent < MAILSENT_PROPOSAL) && (tech->time != 0)) { /* No mail sent for research proposal. */
 		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("New research proposal: %s\n"), _(tech->name));
@@ -131,16 +131,16 @@ static qboolean RS_RequirementsMet (requirements_t *required_AND, requirements_t
 		for (i = 0; i < required_AND->numLinks; i++) {
 			switch (required_AND->type[i]) {
 			case RS_LINK_TECH:
-				Com_DPrintf("RS_RequirementsMet: ANDtech: %s / %i\n", required_AND->id[i], required_AND->idx[i]);
+				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ANDtech: %s / %i\n", required_AND->id[i], required_AND->idx[i]);
 				if (!RS_TechIsResearched(required_AND->idx[i])
 					&& Q_strncmp(required_AND->id[i], "nothing", MAX_VAR)) {
-					Com_DPrintf("RS_RequirementsMet: this tech not researched ----> %s \n", required_AND->id[i]);
+					Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: this tech not researched ----> %s \n", required_AND->id[i]);
 					met_AND = qfalse;
 				}
 				break;
 			case RS_LINK_ITEM:
 				/* The same code is used in "PR_RequirementsMet" */
-				Com_DPrintf("RS_RequirementsMet: ANDitem: %s / %i\n", required_AND->id[i], required_AND->idx[i]);
+				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ANDitem: %s / %i\n", required_AND->id[i], required_AND->idx[i]);
 				if (B_ItemInBase(required_AND->idx[i], baseCurrent) < required_AND->amount[i]) {
 					met_AND = qfalse;
 				}
@@ -169,13 +169,13 @@ static qboolean RS_RequirementsMet (requirements_t *required_AND, requirements_t
 		for (i = 0; i < required_OR->numLinks; i++) {
 			switch (required_OR->type[i]) {
 			case RS_LINK_TECH:
-				Com_DPrintf("RS_RequirementsMet: ORtech: %s / %i\n", required_OR->id[i], required_OR->idx[i]);
+				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ORtech: %s / %i\n", required_OR->id[i], required_OR->idx[i]);
 				if (RS_TechIsResearched(required_OR->idx[i]))
 					met_OR = qtrue;
 				break;
 			case RS_LINK_ITEM:
 				/* The same code is used in "PR_RequirementsMet" */
-				Com_DPrintf("RS_RequirementsMet: ORitem: %s / %i\n", required_OR->id[i], required_OR->idx[i]);
+				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ORitem: %s / %i\n", required_OR->id[i], required_OR->idx[i]);
 				if (B_ItemInBase(required_OR->idx[i], baseCurrent) >= required_OR->amount[i])
 					met_OR = qtrue;
 				break;
@@ -200,7 +200,7 @@ static qboolean RS_RequirementsMet (requirements_t *required_AND, requirements_t
 			if (met_OR)
 				break;
 		}
-	Com_DPrintf("met_AND is %i, met_OR is %i\n", met_AND, met_OR);
+	Com_DPrintf(DEBUG_CLIENT, "met_AND is %i, met_OR is %i\n", met_AND, met_OR);
 
 	return (met_AND || met_OR);
 }
@@ -384,12 +384,12 @@ void RS_MarkResearchable (qboolean init)
 			/* Check for collected items/aliens/etc... */
 
 			if (tech->statusResearch != RS_FINISH) {
-				Com_DPrintf("RS_MarkResearchable: handling \"%s\".\n", tech->id);
+				Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: handling \"%s\".\n", tech->id);
 				/* If required techs are all researched and all other requirements are met, mark this as researchable. */
 
 				/* All requirements are met. */
 				if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR)) {
-					Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable. reason:requirements.\n", tech->id);
+					Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: \"%s\" marked researchable. reason:requirements.\n", tech->id);
 					if (init && tech->time <= 0)
 						tech->mailSent = MAILSENT_PROPOSAL;
 					RS_MarkOneResearchable(tech);
@@ -402,14 +402,14 @@ void RS_MarkResearchable (qboolean init)
 					if (init)
 						tech->mailSent = MAILSENT_FINISHED;
 					RS_ResearchFinish(tech);
-					Com_DPrintf("RS_MarkResearchable: automatically researched \"%s\"\n", tech->id);
+					Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: automatically researched \"%s\"\n", tech->id);
 					/* Restart the loop as this may have unlocked new possibilities. */
 					i = 0;
 				}
 			}
 		}
 	}
-	Com_DPrintf("RS_MarkResearchable: Done.\n");
+	Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: Done.\n");
 }
 
 /**
@@ -505,15 +505,15 @@ void RS_InitTree (qboolean load)
 		switch (tech->type) {
 		case RS_CRAFTITEM:
 			if (!tech->name)
-				Com_DPrintf("RS_InitTree: \"%s\" A type craftitem needs to have a 'name\txxx' defined.", tech->id);
+				Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: \"%s\" A type craftitem needs to have a 'name\txxx' defined.", tech->id);
 			break;
 		case RS_NEWS:
 			if (!tech->name)
-				Com_DPrintf("RS_InitTree: \"%s\" A 'type news' item needs to have a 'name\txxx' defined.", tech->id);
+				Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: \"%s\" A 'type news' item needs to have a 'name\txxx' defined.", tech->id);
 			break;
 		case RS_TECH:
 			if (!tech->name)
-				Com_DPrintf("RS_InitTree: \"%s\" A 'type tech' item needs to have a 'name\txxx' defined.", tech->id);
+				Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: \"%s\" A 'type tech' item needs to have a 'name\txxx' defined.", tech->id);
 			break;
 		case RS_WEAPON:
 		case RS_ARMOR:
@@ -558,7 +558,7 @@ void RS_InitTree (qboolean load)
 			}
 			if (!found) {
 				tech->name = Mem_PoolStrDup(tech->id, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
-				Com_DPrintf("RS_InitTree: \"%s\" - Linked building (provided=\"%s\") not found. Tech-id used as name.\n", tech->id, tech->provides);
+				Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: \"%s\" - Linked building (provided=\"%s\") not found. Tech-id used as name.\n", tech->id, tech->provides);
 			}
 			break;
 		case RS_CRAFT:
@@ -572,14 +572,14 @@ void RS_InitTree (qboolean load)
 						tech->name = Mem_PoolStrDup(air_samp->name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 					if (!tech->mdl_top) {	/* DEBUG testing */
 						tech->mdl_top = Mem_PoolStrDup(air_samp->model, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
-						Com_DPrintf("RS_InitTree: aircraft model \"%s\" \n", air_samp->model);
+						Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: aircraft model \"%s\" \n", air_samp->model);
 					}
 					/* Should return to CASE RS_xxx. */
 					break;
 				}
 			}
 			if (!found)
-				Com_DPrintf("RS_InitTree: \"%s\" - Linked aircraft or craft-upgrade (provided=\"%s\") not found.\n", tech->id, tech->provides);
+				Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: \"%s\" - Linked aircraft or craft-upgrade (provided=\"%s\") not found.\n", tech->id, tech->provides);
 			break;
 		case RS_ALIEN:
 			/* does nothing right now */
@@ -599,7 +599,7 @@ void RS_InitTree (qboolean load)
 
 	memset(&curRequiredList, 0, sizeof(stringlist_t));
 
-	Com_DPrintf("RS_InitTree: Technology tree initialised. %i entries found.\n", i);
+	Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: Technology tree initialised. %i entries found.\n", i);
 }
 
 #if 0
@@ -742,7 +742,7 @@ void RS_AssignScientist (technology_t* tech)
 	base_t *base = NULL;
 
 	assert(tech);
-	Com_DPrintf("RS_AssignScientist: %i | %s \n", tech->idx, tech->name);
+	Com_DPrintf(DEBUG_CLIENT, "RS_AssignScientist: %i | %s \n", tech->idx, tech->name);
 
 	if (tech->base_idx >= 0) {
 		base = &gd.bases[tech->base_idx];
@@ -771,7 +771,7 @@ void RS_AssignScientist (technology_t* tech)
 				employee->buildingID = building->idx;
 #ifdef DEBUG
 				if (base->capacities[CAP_LABSPACE].cur > base->capacities[CAP_LABSPACE].max)
-					Com_DPrintf("RS_AssignScientist: more lab-space used (%i) than available (%i) - please investigate.\n", base->capacities[CAP_LABSPACE].cur, base->capacities[CAP_LABSPACE].max);
+					Com_DPrintf(DEBUG_CLIENT, "RS_AssignScientist: more lab-space used (%i) than available (%i) - please investigate.\n", base->capacities[CAP_LABSPACE].cur, base->capacities[CAP_LABSPACE].max);
 #endif
 
 			} else {
@@ -809,7 +809,7 @@ static void RS_AssignScientist_f (void)
 	if (num < 0 || num >= researchListLength)
 		return;
 
-	Com_DPrintf("RS_AssignScientist_f: num %i\n", num);
+	Com_DPrintf(DEBUG_CLIENT, "RS_AssignScientist_f: num %i\n", num);
 	RS_AssignScientist(researchList[num]);
 }
 
@@ -926,7 +926,7 @@ static void RS_ResearchStart_f (void)
 		If there are enough items add them to the tech (i.e. block them from selling or for other research), otherwise pop an errormessage telling the palyer what is missing.
 	*/
 	if (!tech->statusResearchable) {
-		Com_DPrintf("RS_ResearchStart_f: %s was not researchable yet. re-checking\n",tech->id);
+		Com_DPrintf(DEBUG_CLIENT, "RS_ResearchStart_f: %s was not researchable yet. re-checking\n",tech->id);
 		/* If all requiremnts are met (includes a check for "enough-collected") mark this tech as researchable.*/
 		if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR))
 			RS_MarkOneResearchable(tech);
@@ -1153,7 +1153,7 @@ void RS_UpdateData (void)
 
 	/* Select last selected item if possible or the very first one if not. */
 	if (researchListLength) {
-		Com_DPrintf("RS_UpdateData: Pos%i Len%i\n", researchListPos, researchListLength);
+		Com_DPrintf(DEBUG_CLIENT, "RS_UpdateData: Pos%i Len%i\n", researchListPos, researchListLength);
 		if ((researchListPos < researchListLength) && (researchListLength < MAX_RESEARCHDISPLAY)) {
 			Cbuf_ExecuteText(EXEC_NOW, va("researchselect%i\n", researchListPos));
 		} else {
@@ -1231,12 +1231,12 @@ static qboolean RS_DependsOn(char *id1, char *id2)
 static void RS_MarkResearched (technology_t *tech)
 {
 	RS_ResearchFinish(tech);
-	Com_DPrintf("Research of \"%s\" finished.\n", tech->id);
+	Com_DPrintf(DEBUG_CLIENT, "Research of \"%s\" finished.\n", tech->id);
 	INV_EnableAutosell(tech);
 #if 0
 	if (RS_DependsOn(tech->id, id) && (tech->time <= 0) && RS_TechIsResearchable(tech)) {
 		RS_ResearchFinish(tech);
-		Com_DPrintf("Depending tech \"%s\" has been researched as well.\n", tech->id);
+		Com_DPrintf(DEBUG_CLIENT, "Depending tech \"%s\" has been researched as well.\n", tech->id);
 	}
 #endif
 	RS_MarkResearchable(qfalse);
@@ -1259,11 +1259,11 @@ void CL_CheckResearchStatus (void)
 		tech = &gd.technologies[i];
 		if (tech->statusResearch == RS_RUNNING) {
 			if ((tech->time > 0) && (tech->scientists >= 0)) {
-				Com_DPrintf("timebefore %.2f\n", tech->time);
-				Com_DPrintf("timedelta %.2f\n", tech->scientists * 0.8);
+				Com_DPrintf(DEBUG_CLIENT, "timebefore %.2f\n", tech->time);
+				Com_DPrintf(DEBUG_CLIENT, "timedelta %.2f\n", tech->scientists * 0.8);
 				/* @todo: Just for testing, better formular may be needed. */
 				tech->time -= tech->scientists * 0.8;
-				Com_DPrintf("timeafter %.2f\n", tech->time);
+				Com_DPrintf(DEBUG_CLIENT, "timeafter %.2f\n", tech->time);
 				/* @todo include employee-skill in calculation. */
 				/* Will be a good thing (think of percentage-calculation) once non-integer values are used. */
 				if (tech->time <= 0) {
@@ -1404,7 +1404,7 @@ void RS_MarkResearchedAll (void)
 	int i;
 
 	for (i = 0; i < gd.numTechnologies; i++) {
-		Com_DPrintf("...mark %s as researched\n", gd.technologies[i].id);
+		Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", gd.technologies[i].id);
 		RS_MarkOneResearchable(&gd.technologies[i]);
 		RS_ResearchFinish(&gd.technologies[i]);
 		/* @todo: Set all "collected" entries in the requirements to the "amount" value. */
@@ -1424,7 +1424,7 @@ static void RS_DebugResearchAll (void)
 		RS_MarkResearchedAll();
 	} else {
 		tech= RS_GetTechByID(Cmd_Argv(1));
-		Com_DPrintf("...mark %s as researched\n", tech->id);
+		Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
 		RS_MarkOneResearchable(tech);
 		RS_ResearchFinish(tech);
 	}
@@ -1739,7 +1739,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 							token = COM_Parse(text);
 							required_temp->id[required_temp->numLinks] = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 
-							Com_DPrintf("RS_ParseTechnologies: require-tech - %s\n", required_temp->id[required_temp->numLinks]);
+							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-tech - %s\n", required_temp->id[required_temp->numLinks]);
 
 							required_temp->numLinks++;
 						} else {
@@ -1756,14 +1756,14 @@ void RS_ParseTechnologies (const char *name, const char **text)
 							/* Set requirement-amount of item. */
 							token = COM_Parse(text);
 							required_temp->amount[required_temp->numLinks] = atoi(token);
-							Com_DPrintf("RS_ParseTechnologies: require-item - %s - %i\n", required_temp->id[required_temp->numLinks], required_temp->amount[required_temp->numLinks]);
+							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-item - %s - %i\n", required_temp->id[required_temp->numLinks], required_temp->amount[required_temp->numLinks]);
 							required_temp->numLinks++;
 						} else {
 							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
 						}
 					} else if (!Q_strncmp(token, "event", MAX_VAR)) {
 						token = COM_Parse(text);
-						Com_DPrintf("RS_ParseTechnologies: require-event - %s\n", token);
+						Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies: require-event - %s\n", token);
 						required_temp->type[required_temp->numLinks] = RS_LINK_EVENT;
 						/* Get name/id & amount of required item. */
 						/* @todo: Implement final event system, so this can work 100% */
@@ -1771,7 +1771,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 						if (required_temp->numLinks < MAX_TECHLINKS) {
 							/* Set requirement-type. */
 							required_temp->type[required_temp->numLinks] = RS_LINK_ALIEN_GLOBAL;
-							Com_DPrintf("RS_ParseTechnologies:  require-alienglobal - %i\n", required_temp->amount[required_temp->numLinks]);
+							Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies:  require-alienglobal - %i\n", required_temp->amount[required_temp->numLinks]);
 
 							/* Set requirement-amount of item. */
 							token = COM_Parse(text);
@@ -1786,10 +1786,10 @@ void RS_ParseTechnologies (const char *name, const char **text)
 							/* Set requirement-type. */
 							if (!Q_strncmp(token, "alien_dead", MAX_VAR)) {
 								required_temp->type[required_temp->numLinks] = RS_LINK_ALIEN_DEAD;
-								Com_DPrintf("RS_ParseTechnologies:  require-alien dead - %s - %i\n", required_temp->id[required_temp->numLinks], required_temp->amount[required_temp->numLinks]);
+								Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies:  require-alien dead - %s - %i\n", required_temp->id[required_temp->numLinks], required_temp->amount[required_temp->numLinks]);
 							} else {
 								required_temp->type[required_temp->numLinks] = RS_LINK_ALIEN;
-								Com_DPrintf("RS_ParseTechnologies:  require-alien alive - %s - %i\n", required_temp->id[required_temp->numLinks], required_temp->amount[required_temp->numLinks]);
+								Com_DPrintf(DEBUG_CLIENT, "RS_ParseTechnologies:  require-alien alive - %s - %i\n", required_temp->id[required_temp->numLinks], required_temp->amount[required_temp->numLinks]);
 							}
 							/* Set requirement-name (id). */
 							token = COM_Parse(text);
@@ -1929,7 +1929,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 		*/
 		tech_hash_provided[hash] = tech;
 	} else {
-		Com_DPrintf("tech '%s' doesn't have a provides string\n", tech->id);
+		Com_DPrintf(DEBUG_CLIENT, "tech '%s' doesn't have a provides string\n", tech->id);
 	}
 
 	/* set the overall reseach time to the one given in the ufo-file. */
@@ -1994,7 +1994,7 @@ int RS_Collected_ (technology_t * tech)
 	if (tech)
 		return tech->statusCollected;
 
-	Com_DPrintf("RS_Collected_: NULL technology given.\n");
+	Com_DPrintf(DEBUG_CLIENT, "RS_Collected_: NULL technology given.\n");
 	return -1;
 }
 
@@ -2118,7 +2118,7 @@ technology_t *RS_GetTechByProvided (const char *id_provided)
 		if (!Q_stricmp(id_provided, tech->provides))
 			return tech;
 
-	Com_DPrintf("RS_GetTechByProvided: %s\n", id_provided);
+	Com_DPrintf(DEBUG_CLIENT, "RS_GetTechByProvided: %s\n", id_provided);
 	/* if a building, probably needs another building */
 	/* if not a building, catch NULL where function is called! */
 	return NULL;
@@ -2148,7 +2148,7 @@ technology_t **RS_GetTechsByType (researchType_t type)
 		}
 	}
 	techList[j] = NULL;
-	Com_DPrintf("techlist with %i entries\n", j);
+	Com_DPrintf(DEBUG_CLIENT, "techlist with %i entries\n", j);
 	return techList;
 }
 #endif

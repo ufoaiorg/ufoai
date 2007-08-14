@@ -55,14 +55,14 @@ static void INV_CollectingAmmo (invList_t *magazine, aircraft_t *aircraft)
 		for (i = 0; i < aircraft->itemtypes; i++) {
 			if (cargo[i].idx == magazine->item.m) {
 				cargo[i].amount++;
-				Com_DPrintf("Collecting item in INV_CollectingAmmo(): %i name: %s amount: %i\n", cargo[i].idx, csi.ods[magazine->item.m].name, cargo[i].amount);
+				Com_DPrintf(DEBUG_CLIENT, "Collecting item in INV_CollectingAmmo(): %i name: %s amount: %i\n", cargo[i].idx, csi.ods[magazine->item.m].name, cargo[i].amount);
 				break;
 			}
 		}
 		if (i == aircraft->itemtypes) {
 			cargo[i].idx = magazine->item.m;
 			cargo[i].amount++;
-			Com_DPrintf("Adding item in INV_CollectingAmmo(): %i, name: %s\n", cargo[i].idx, csi.ods[magazine->item.m].name);
+			Com_DPrintf(DEBUG_CLIENT, "Adding item in INV_CollectingAmmo(): %i, name: %s\n", cargo[i].idx, csi.ods[magazine->item.m].name);
 			aircraft->itemtypes++;
 		}
 	}
@@ -155,13 +155,13 @@ void INV_CollectingItems (int won)
 					if ((item->item.a <= 0) /* No ammo left, and... */
 					&& csi.ods[item->item.t].oneshot /* ... oneshot weapon, and... */
 					&& csi.ods[item->item.t].deplete) { /* ... useless after ammo is gone. */
-						Com_DPrintf("INV_CollectItems: depletable item not collected: %s\n", csi.ods[item->item.t].name);
+						Com_DPrintf(DEBUG_CLIENT, "INV_CollectItems: depletable item not collected: %s\n", csi.ods[item->item.t].name);
 						continue;
 					}
 					for (j = 0; j < aircraft->itemtypes; j++) {
 						if (cargo[j].idx == item->item.t) {
 							cargo[j].amount++;
-							Com_DPrintf("Collecting item: %i name: %s amount: %i\n", cargo[j].idx, csi.ods[item->item.t].name, cargo[j].amount);
+							Com_DPrintf(DEBUG_CLIENT, "Collecting item: %i name: %s amount: %i\n", cargo[j].idx, csi.ods[item->item.t].name, cargo[j].amount);
 							/* If this is not reloadable item, or no ammo left, break... */
 							if (!csi.ods[item->item.t].reload || item->item.a == 0)
 								break;
@@ -173,7 +173,7 @@ void INV_CollectingItems (int won)
 					if (j == aircraft->itemtypes) {
 						cargo[j].idx = item->item.t;
 						cargo[j].amount++;
-						Com_DPrintf("Adding item: %i name: %s\n", cargo[j].idx, csi.ods[item->item.t].name);
+						Com_DPrintf(DEBUG_CLIENT, "Adding item: %i name: %s\n", cargo[j].idx, csi.ods[item->item.t].name);
 						aircraft->itemtypes++;
 						/* If this is not reloadable item, or no ammo left, break... */
 						if (!csi.ods[item->item.t].reload || item->item.a == 0)
@@ -195,14 +195,14 @@ void INV_CollectingItems (int won)
 						for (j = 0; j < aircraft->itemtypes; j++) {
 							if (cargo[j].idx == item->item.t) {
 								cargo[j].amount++;
-								Com_DPrintf("Collecting armour: %i name: %s amount: %i\n", cargo[j].idx, csi.ods[item->item.t].name, cargo[j].amount);
+								Com_DPrintf(DEBUG_CLIENT, "Collecting armour: %i name: %s amount: %i\n", cargo[j].idx, csi.ods[item->item.t].name, cargo[j].amount);
 								break;
 							}
 						}
 						if (j == aircraft->itemtypes) {
 							cargo[j].idx = item->item.t;
 							cargo[j].amount++;
-							Com_DPrintf("Adding item: %i name: %s\n", cargo[j].idx, csi.ods[item->item.t].name);
+							Com_DPrintf(DEBUG_CLIENT, "Adding item: %i name: %s\n", cargo[j].idx, csi.ods[item->item.t].name);
 							aircraft->itemtypes++;
 						}
 					}
@@ -231,7 +231,7 @@ void INV_CollectingItems (int won)
 	/* Print all of collected items. */
 	for (i = 0; i < aircraft->itemtypes; i++) {
 		if (cargo[i].amount > 0)
-			Com_DPrintf("Collected items: idx: %i name: %s amount: %i\n", cargo[i].idx, csi.ods[cargo[i].idx].name, cargo[i].amount);
+			Com_DPrintf(DEBUG_CLIENT, "Collected items: idx: %i name: %s amount: %i\n", cargo[i].idx, csi.ods[cargo[i].idx].name, cargo[i].amount);
 	}
 #endif
 }
@@ -377,7 +377,7 @@ void INV_InitialEquipment (base_t *base)
 				break;
 		}
 		if (i == csi.numEDs) {
-			Com_DPrintf("B_BuildBase_f: Initial Phalanx equipment %s not found.\n", eqname);
+			Com_DPrintf(DEBUG_CLIENT, "B_BuildBase_f: Initial Phalanx equipment %s not found.\n", eqname);
 		} else {
 			for (i = 0; i < csi.numODs; i++)
 				base->storage.num[i] += ed->num[i] / 5;
@@ -430,7 +430,7 @@ void INV_ParseComponents (const char *name, const char **text)
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 		if (!Q_strncmp(od->id, name, MAX_VAR)) {
 			comp->assembly_idx = i;
-			Com_DPrintf("INV_ParseComponents()... linked item: %s idx %i with components: %s idx %i \n", od->id, i, comp->assembly_id, comp->assembly_idx);
+			Com_DPrintf(DEBUG_CLIENT, "INV_ParseComponents()... linked item: %s idx %i with components: %s idx %i \n", od->id, i, comp->assembly_id, comp->assembly_idx);
 			break;
 		}
 	}
@@ -489,7 +489,7 @@ components_t *INV_GetComponentsByItemIdx (int itemIdx)
 		if (comp->assembly_idx == itemIdx)
 			break;
 	}
-	Com_DPrintf("INV_GetComponentsByItemIdx()... found components id: %s\n", comp->assembly_id);
+	Com_DPrintf(DEBUG_CLIENT, "INV_GetComponentsByItemIdx()... found components id: %s\n", comp->assembly_id);
 	return comp;
 }
 
@@ -522,7 +522,7 @@ int INV_DisassemblyItem (base_t *base, components_t *comp, qboolean calculate)
 				INV_ManageAntimatter(base, comp->item_amount[i], qtrue);
 			else
 				B_UpdateStorageAndCapacity(base, j, comp->item_amount[i], qfalse, qfalse);
-			Com_DPrintf("INV_DisassemblyItem()... added %i amounts of %s\n", comp->item_amount[i], compod->id);
+			Com_DPrintf(DEBUG_CLIENT, "INV_DisassemblyItem()... added %i amounts of %s\n", comp->item_amount[i], compod->id);
 		}
 	}
 	return size;

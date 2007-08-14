@@ -476,7 +476,7 @@ static character_t *CL_GetActorChr (le_t * le)
 	int i, p;
 
 	if (!aircraft) {
-		Com_DPrintf("CL_GetActorChr: No mission-aircraft found!\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_GetActorChr: No mission-aircraft found!\n");
 		return NULL;
 	}
 
@@ -485,7 +485,7 @@ static character_t *CL_GetActorChr (le_t * le)
 	actor_idx = CL_GetActorNumber(le);
 
 	if (actor_idx < 0) {
-		Com_DPrintf("CL_GetActorChr: BAD ACTOR IDX!\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_GetActorChr: BAD ACTOR IDX!\n");
 		return NULL;
 	}
 
@@ -498,7 +498,7 @@ static character_t *CL_GetActorChr (le_t * le)
 			p++;
 		}
 	}
-	Com_DPrintf("CL_GetActorChr: no character info found!\n");
+	Com_DPrintf(DEBUG_CLIENT, "CL_GetActorChr: no character info found!\n");
 	return NULL;
 }
 
@@ -531,24 +531,24 @@ static void CL_SetReactionFiremode (int actor_idx, int handidx, int obj_idx, int
 
 	if (cls.team != cl.actTeam) {	/**< Not our turn */
 		/* This check is just here (additional to the one in CL_DisplayFiremodes_f) in case a possible situation was missed. */
-		Com_DPrintf("CL_SetReactionFiremode: Function called on enemy/other turn.\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: Function called on enemy/other turn.\n");
 		return;
 	}
 
 	if (actor_idx < 0 || actor_idx >= MAX_EDICTS) {
-		Com_DPrintf("CL_SetReactionFiremode: Actor index is negative or out of bounds. Abort.\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: Actor index is negative or out of bounds. Abort.\n");
 		return;
 	}
 
 	if (handidx < -1 || handidx > 1) {
-		Com_DPrintf("CL_SetReactionFiremode: Bad hand index given. Abort.\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: Bad hand index given. Abort.\n");
 		return;
 	}
 
 	assert(actor_idx < MAX_TEAMLIST);
 
 	le = cl.teamList[actor_idx];
-	Com_DPrintf("CL_SetReactionFiremode: actor:%i entnum:%i hand:%i fd:%i\n", actor_idx,le->entnum, handidx, fd_idx);
+	Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: actor:%i entnum:%i hand:%i fd:%i\n", actor_idx,le->entnum, handidx, fd_idx);
 
 	reactionFiremode[actor_idx][RF_HAND] = handidx;	/* Store the given hand. */
 	reactionFiremode[actor_idx][RF_FM] = fd_idx;	/* Store the given firemode for this hand. */
@@ -664,7 +664,7 @@ static qboolean CL_WeaponWithReaction (le_t *actor, char hand)
 	CL_GetWeaponAndAmmo(actor, hand, &weapon, &ammo, &weap_fd_idx);
 
 	if (weap_fd_idx == -1) {
-		Com_DPrintf("CL_WeaponWithReaction: No weapondefinition in ammo found\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_WeaponWithReaction: No weapondefinition in ammo found\n");
 		return qfalse;
 	}
 
@@ -691,7 +691,7 @@ static void CL_DisplayPossibleReaction (le_t *actor)
 		return;
 
 	if (actor != selActor) {
-		Com_DPrintf("CL_DisplayPossibleReaction: Something went wront, given actor does not equal the currently selectd actor!\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_DisplayPossibleReaction: Something went wront, given actor does not equal the currently selectd actor!\n");
 		return;
 	}
 
@@ -720,7 +720,7 @@ static qboolean CL_DisplayImpossibleReaction (le_t *actor)
 		return qfalse;
 
 	if (actor != selActor) {
-		Com_DPrintf("CL_DisplayImpossibleReaction: Something went wront, given actor does not equal the currently selected actor!\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_DisplayImpossibleReaction: Something went wront, given actor does not equal the currently selected actor!\n");
 		return qfalse;
 	}
 
@@ -758,7 +758,7 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 	int handidx = (hand == 'r') ? 0 : 1;
 
 	if (actor_idx < 0) {
-		Com_DPrintf("CL_UpdateReactionFiremodes: Invalid (negative) actor index given!\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: Invalid (negative) actor index given!\n");
 		return;
 	}
 
@@ -766,20 +766,20 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 
 	if (weap_fd_idx == -1) {
 		CL_DisplayImpossibleReaction(cl.teamList[actor_idx]);
-		Com_DPrintf("CL_UpdateReactionFiremodes: No weap_fd_idx found for %c hand.\n", hand);
+		Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: No weap_fd_idx found for %c hand.\n", hand);
 		return;
 	}
 
 	if (!weapon) {
 		CL_DisplayImpossibleReaction(cl.teamList[actor_idx]);
-		Com_DPrintf("CL_UpdateReactionFiremodes: No weapon found for %c hand.\n", hand);
+		Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: No weapon found for %c hand.\n", hand);
 		return;
 	}
 
 	/* ammo is definitly set here - otherwise the both checks above would have
 	 * left this function already */
 	if (!RS_ItemIsResearched(csi.ods[ammo->weap_idx[weap_fd_idx]].id)) {
-		Com_DPrintf("CL_UpdateReactionFiremodes: Weapon '%s' not researched, can't use for reaction fire.\n", csi.ods[ammo->weap_idx[weap_fd_idx]].id);
+		Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: Weapon '%s' not researched, can't use for reaction fire.\n", csi.ods[ammo->weap_idx[weap_fd_idx]].id);
 		return;
 	}
 
@@ -793,24 +793,24 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 		i = FIRESH_GetDefaultReactionFire(ammo, weap_fd_idx);
 
 		if (i >= 0) {
-			Com_DPrintf("CL_UpdateReactionFiremodes: DEBUG i>=0\n");
+			Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: DEBUG i>=0\n");
 			/* Found useable firemode for the weapon in this hand */
 			CL_SetReactionFiremode(actor_idx, handidx, ammo->weap_idx[weap_fd_idx], i);
 
 			/* Display 'useable" (blue) reaction buttons */
 			CL_DisplayPossibleReaction(cl.teamList[actor_idx]);
 		} else {
-			Com_DPrintf("CL_UpdateReactionFiremodes: DEBUG else (i>=0)\n");
+			Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: DEBUG else (i>=0)\n");
 			/* weapon in hand not RF-capable. */
 			if (CL_WeaponWithReaction(cl.teamList[actor_idx], (hand == 'r') ? 'l' : 'r')) {
 				/* The other hand has useable firemodes for RF, use it instead. */
 				CL_UpdateReactionFiremodes((hand == 'r') ? 'l' : 'r', actor_idx, -1);
 
-				Com_DPrintf("CL_UpdateReactionFiremodes: DEBUG inverse hand\n");
+				Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: DEBUG inverse hand\n");
 				/* Display 'useable" (blue) reaction buttons */
 				CL_DisplayPossibleReaction(cl.teamList[actor_idx]);
 			} else {
-				Com_DPrintf("CL_UpdateReactionFiremodes: DEBUG no rf-items in hands\n");
+				Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: DEBUG no rf-items in hands\n");
 				/* No RF-capable item in either hand. */
 
 				/* Display "impossible" (red) reaction button or disable button. */
@@ -823,7 +823,7 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 		return;
 	}
 
-	Com_DPrintf("CL_UpdateReactionFiremodes: act%i handidx%i weapfdidx%i\n", actor_idx, handidx, weap_fd_idx);
+	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: act%i handidx%i weapfdidx%i\n", actor_idx, handidx, weap_fd_idx);
 	if (reactionFiremode[actor_idx][RF_WPIDX] == ammo->weap_idx[weap_fd_idx]
 	 && reactionFiremode[actor_idx][RF_HAND] == handidx) {
 		if (ammo->fd[weap_fd_idx][active_firemode].reaction) {
@@ -856,7 +856,7 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 void CL_SetDefaultReactionFiremode (int actor_idx, char hand)
 {
 	if (actor_idx < 0 || actor_idx >= MAX_EDICTS) {
-		Com_DPrintf("CL_SetDefaultReactionFiremode: Actor index is negative or out of bounds. Abort.\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_SetDefaultReactionFiremode: Actor index is negative or out of bounds. Abort.\n");
 		return;
 	}
 
@@ -928,14 +928,14 @@ void CL_DisplayFiremodes_f (void)
 	if (weap_fd_idx == -1)
 		return;
 
-	Com_DPrintf("CL_DisplayFiremodes_f: %s | %s | %i\n", weapon->name, ammo->name, weap_fd_idx);
+	Com_DPrintf(DEBUG_CLIENT, "CL_DisplayFiremodes_f: %s | %s | %i\n", weapon->name, ammo->name, weap_fd_idx);
 
 	if (!weapon || !ammo) {
-		Com_DPrintf("CL_DisplayFiremodes_f: no weapon or ammo found.\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_DisplayFiremodes_f: no weapon or ammo found.\n");
 		return;
 	}
 
-	Com_DPrintf("CL_DisplayFiremodes_f: displaying %s firemodes.\n", hand);
+	Com_DPrintf(DEBUG_CLIENT, "CL_DisplayFiremodes_f: displaying %s firemodes.\n", hand);
 
 	if (firemodes_change_display) {
 		/* Toggle firemode lists if needed. Mind you that HideFiremodes modifies visible_firemode_list_xxx to qfalse */
@@ -962,7 +962,7 @@ void CL_DisplayFiremodes_f (void)
 	firemodes_change_display = qtrue;
 
 	actor_idx = CL_GetActorNumber(selActor);
-	Com_DPrintf("CL_DisplayFiremodes_f: actor index: %i\n", actor_idx);
+	Com_DPrintf(DEBUG_CLIENT, "CL_DisplayFiremodes_f: actor index: %i\n", actor_idx);
 	if (actor_idx == -1)
 		Com_Error(ERR_DROP, "Could not get current selected actor's id\n");
 
@@ -994,7 +994,7 @@ void CL_DisplayFiremodes_f (void)
 
 			/* Display checkbox for reaction firemode (this needs a sane reactionFiremode array) */
 			if (ammo->fd[weap_fd_idx][i].reaction) {
-				Com_DPrintf("CL_DisplayFiremodes_f: This is a reaction firemode: %i\n", i);
+				Com_DPrintf(DEBUG_CLIENT, "CL_DisplayFiremodes_f: This is a reaction firemode: %i\n", i);
 				if (hand[0] == 'r') {
 					if (THIS_REACTION(actor_idx,0,i)) {
 						/* Set this checkbox visible+active. */
@@ -1128,7 +1128,7 @@ void CL_FireWeapon_f (void)
 		/* Cannot shoot because of not enough TUs - every other
 		   case should be checked previously in this function. */
 		CL_DisplayHudMessage(_("Can't perform action:\nnot enough TUs.\n"), 2000);
-		Com_DPrintf("CL_FireWeapon_f: Firemode not available (%s, %s).\n", hand, ammo->fd[weap_fd_idx][firemode].name);
+		Com_DPrintf(DEBUG_CLIENT, "CL_FireWeapon_f: Firemode not available (%s, %s).\n", hand, ammo->fd[weap_fd_idx][firemode].name);
 		return;
 	}
 }
@@ -2187,7 +2187,7 @@ void CL_ActorShoot (le_t * le, pos3_t at)
 	if (!CL_CheckAction())
 		return;
 
-	Com_DPrintf("CL_ActorShoot: cl.firemode %i.\n",  cl.cfiremode);
+	Com_DPrintf(DEBUG_CLIENT, "CL_ActorShoot: cl.firemode %i.\n",  cl.cfiremode);
 
 	/* @todo: Is there a better way to do this?
 	 * This type value will travel until it is checked in at least g_combat.c:G_GetShotFromType.
@@ -2304,7 +2304,7 @@ void CL_InvCheckHands (struct dbuffer *msg)
 
 	actor_idx = CL_GetActorNumber(le);
 	if (actor_idx == -1) {
-		Com_DPrintf("CL_InvCheckHands: Could not get local entity actor id via CL_GetActorNumber\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_InvCheckHands: Could not get local entity actor id via CL_GetActorNumber\n");
 		Com_Printf("CL_InvCheckHands: DEBUG actor info: team=%i(%s) type=%i inuse=%i\n", le->team, le->teamDef ? le->teamDef->name : "No team", le->type, le->inuse);
 		return;
 	}
@@ -2324,10 +2324,10 @@ void CL_InvCheckHands (struct dbuffer *msg)
 	/* ... ELSE  (not sane and/or not useable) */
 	/* Update the changed hand with default firemode. */
 	if (hand == 0) {
-		Com_DPrintf("CL_InvCheckHands: DEBUG right\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_InvCheckHands: DEBUG right\n");
 		CL_UpdateReactionFiremodes('r', actor_idx, -1);
 	} else {
-		Com_DPrintf("CL_InvCheckHands: DEBUG left\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_InvCheckHands: DEBUG left\n");
 		CL_UpdateReactionFiremodes('l', actor_idx, -1);
 	}
 	HideFiremodes();
@@ -2583,7 +2583,7 @@ void CL_ActorToggleReaction_f (void)
 static void CL_ActorHit (le_t *le, vec3_t impact, int normal)
 {
 	if (!le) {
-		Com_DPrintf("CL_ActorHit: Can't spawn particles, LE doesn't exist\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_ActorHit: Can't spawn particles, LE doesn't exist\n");
 		return;
 	} else if (le->type != ET_ACTOR2x2 && le->type != ET_ACTOR) {
 		Com_Printf("CL_ActorHit: Can't spawn particles, LE is not an actor\n");
@@ -2684,7 +2684,7 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 		re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->left, le->right, le->state));
 		re.AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->left, le->right, le->state));
 	} else {
-		Com_DPrintf("CL_ActorDoShoot: No information about weapon hand found or left/right info out of sync somehow.\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_ActorDoShoot: No information about weapon hand found or left/right info out of sync somehow.\n");
 		/* We use the default (right) animation now. */
 		re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
 		re.AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
@@ -2809,7 +2809,7 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 	} else if (LEFT(le) && IS_MODE_FIRE_LEFT(cl.cmode)) {
 		re.AnimChange(&le->as, le->model1, LE_GetAnim("move", le->left, le->right, le->state));
 	} else {
-		Com_DPrintf("CL_ActorStartShoot: No information about weapon hand found or left/right info out of sync somehow.\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_ActorStartShoot: No information about weapon hand found or left/right info out of sync somehow.\n");
 		/* We use the default (right) animation now. */
 		re.AnimChange(&le->as, le->model1, LE_GetAnim("move", le->right, le->left, le->state));
 	}
@@ -2835,7 +2835,7 @@ void CL_ActorDie (struct dbuffer *msg)
 			break;
 
 	if (le->entnum != number) {
-		Com_DPrintf("CL_ActorDie: Can't kill, LE doesn't exist\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_ActorDie: Can't kill, LE doesn't exist\n");
 		return;
 	} else if (le->type != ET_ACTOR2x2 && le->type != ET_ACTOR) {
 		Com_Printf("CL_ActorDie: Can't kill, LE is not an actor\n");
@@ -4038,7 +4038,7 @@ void CL_PlayActorSound (le_t* le, actorSound_t soundType)
 
 	actorSound = Com_GetActorSound(le->teamDef, le->gender, soundType);
 
-	Com_DPrintf("CL_PlayActorSound()... actorSound: %s\n", actorSound);
+	Com_DPrintf(DEBUG_CLIENT, "CL_PlayActorSound()... actorSound: %s\n", actorSound);
 	if (actorSound) {
 		sfx = S_RegisterSound(actorSound);
 		S_StartSound(NULL, le->entnum, SOUND_CHANNEL_ACTOR, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);

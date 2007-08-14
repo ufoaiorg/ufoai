@@ -146,7 +146,7 @@ void SV_BroadcastCommand (const char *fmt, ...)
 		Q_vsnprintf(string, sizeof(string), fmt, argptr);
 		va_end(argptr);
 		string[sizeof(string) - 1] = 0;
-		Com_DPrintf("SV_BroadcastCommand: %s\n", string);
+		Com_DPrintf(DEBUG_SERVER, "SV_BroadcastCommand: %s\n", string);
 	}
 #endif
 	SV_Multicast(~0, msg);

@@ -310,10 +310,10 @@ qboolean CL_NewBase (base_t* base, vec2_t pos)
 	assert(base);
 
 	if (base->founded) {
-		Com_DPrintf("CL_NewBase: base already founded: %i\n", base->idx);
+		Com_DPrintf(DEBUG_CLIENT, "CL_NewBase: base already founded: %i\n", base->idx);
 		return qfalse;
 	} else if (gd.numBases == MAX_BASES) {
-		Com_DPrintf("CL_NewBase: max base limit hit\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_NewBase: max base limit hit\n");
 		return qfalse;
 	}
 
@@ -325,10 +325,10 @@ qboolean CL_NewBase (base_t* base, vec2_t pos)
 		return qfalse;
 	} else {
 		base->mapZone = MAP_GetZoneType(color);
-		Com_DPrintf("CL_NewBase: zoneType: '%s'\n", base->mapZone);
+		Com_DPrintf(DEBUG_CLIENT, "CL_NewBase: zoneType: '%s'\n", base->mapZone);
 	}
 
-	Com_DPrintf("Colorvalues for base: R:%i G:%i B:%i\n", color[0], color[1], color[2]);
+	Com_DPrintf(DEBUG_CLIENT, "Colorvalues for base: R:%i G:%i B:%i\n", color[0], color[1], color[2]);
 
 	/* build base */
 	Vector2Copy(pos, base->pos);
@@ -382,7 +382,7 @@ static void CL_CampaignActivateStageSets (stage_t *stage)
 #endif
 	for (i = 0, set = &ccs.set[stage->first]; i < stage->num; i++, set++)
 		if (!set->active && !set->num) {
-			Com_DPrintf("CL_CampaignActivateStageSets: i = %i, stage->first = %i, stage->num = %i, stage->name = %s\n", i, stage->first, stage->num, stage->name);
+			Com_DPrintf(DEBUG_CLIENT, "CL_CampaignActivateStageSets: i = %i, stage->first = %i, stage->num = %i, stage->name = %s\n", i, stage->first, stage->num, stage->name);
 			assert(!set->done); /* if not started, not done, as well */
 			assert(set->stage);
 			assert(set->def);
@@ -391,7 +391,7 @@ static void CL_CampaignActivateStageSets (stage_t *stage)
 			if (set->def->needed[0] && !CheckBEP(set->def->needed, CL_StageSetDone))
 				continue;
 
-			Com_DPrintf("Activated: set->def->name = %s.\n", set->def->name);
+			Com_DPrintf(DEBUG_CLIENT, "Activated: set->def->name = %s.\n", set->def->name);
 
 			/* activate it */
 			set->active = qtrue;
@@ -553,7 +553,7 @@ actMis_t* CL_CampaignAddGroundMission (mission_t* mission)
 
 	/* add mission */
 	if (ccs.numMissions >= MAX_ACTMISSIONS) {
-		Com_DPrintf("CL_CampaignAddGroundMission: Too many active missions!\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_CampaignAddGroundMission: Too many active missions!\n");
 		return NULL;
 	}
 	mis = &ccs.mission[ccs.numMissions++];
@@ -601,7 +601,7 @@ static void CL_CampaignAddMission (setState_t * set)
 
 	/* add mission */
 	if (ccs.numMissions >= MAX_ACTMISSIONS) {
-		Com_DPrintf("CL_CampaignAddMission: Too many active missions!\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_CampaignAddMission: Too many active missions!\n");
 		return;
 	}
 
@@ -619,7 +619,7 @@ static void CL_CampaignAddMission (setState_t * set)
 
 	/* maybe the mission is already on geoscape --- e.g. one-mission sets */
 	if (misTemp->onGeoscape) {
-		Com_DPrintf("CL_CampaignAddMission: Mission is already on geoscape\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_CampaignAddMission: Mission is already on geoscape\n");
 		return;
 	} else {
 		misTemp->onGeoscape = qtrue;
@@ -654,7 +654,7 @@ static void CL_CampaignAddMission (setState_t * set)
 			/* at this point there should be at least one base - but maybe they
 			 * are destroyed already */
 			if (i == MAX_BASES) {
-				Com_DPrintf("CL_CampaignAddMission: No bases found\n");
+				Com_DPrintf(DEBUG_CLIENT, "CL_CampaignAddMission: No bases found\n");
 				return;
 			}
 		}
@@ -690,7 +690,7 @@ static void CL_CampaignAddMission (setState_t * set)
 		/* Add message to message-system. */
 		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Alien activity has been reported: '%s'"), mis->def->location);
 		MN_AddNewMessage(_("Alien activity"), messageBuffer, qfalse, MSG_TERRORSITE, NULL);
-		Com_DPrintf("Alien activity at long: %.0f lat: %0.f\n", mis->realPos[0], mis->realPos[1]);
+		Com_DPrintf(DEBUG_CLIENT, "Alien activity at long: %.0f lat: %0.f\n", mis->realPos[0], mis->realPos[1]);
 	}
 
 	/* prepare next event (if any) */
@@ -734,7 +734,7 @@ static void CL_CampaignRemoveMission (actMis_t * mis)
 	CL_PopupNotifyMissionRemoved(mis);
 
 	ccs.numMissions--;
-	Com_DPrintf("%i missions left\n", ccs.numMissions);
+	Com_DPrintf(DEBUG_CLIENT, "%i missions left\n", ccs.numMissions);
 	for (i = num; i < ccs.numMissions; i++)
 		ccs.mission[i] = ccs.mission[i + 1];
 }
@@ -839,9 +839,9 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 		nation->stats[0].happiness = nation->stats[0].happiness * 0.40 + happiness * 0.60;
 	}
 	if (!is_on_Earth)
-		Com_DPrintf("CL_HandleNationData: Warning, mission '%s' located in an unknown country '%s'.\n", mis->def->name, mis->def->nation);
+		Com_DPrintf(DEBUG_CLIENT, "CL_HandleNationData: Warning, mission '%s' located in an unknown country '%s'.\n", mis->def->name, mis->def->nation);
 	else if (is_on_Earth > 1)
-		Com_DPrintf("CL_HandleNationData: Error, mission '%s' located in many countries '%s'.\n", mis->def->name, mis->def->nation);
+		Com_DPrintf(DEBUG_CLIENT, "CL_HandleNationData: Error, mission '%s' located in many countries '%s'.\n", mis->def->name, mis->def->nation);
 }
 
 /**
@@ -1940,7 +1940,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 			int baseidx = (int)MSG_ReadByte(sb);
 			base = &gd.bases[baseidx];
 			if (base->baseStatus == BASE_UNDER_ATTACK && !Q_strncmp(mis->def->location, base->name, MAX_VAR))
-				Com_DPrintf("......base %i (%s) is under attack\n", j, base->name);
+				Com_DPrintf(DEBUG_CLIENT, "......base %i (%s) is under attack\n", j, base->name);
 			else
 				Com_Printf("......warning: base %i (%s) is supposedly under attack but base status or mission location (%s) doesn't match!\n", j, base->name, selMis->def->location);
 			mis->def->data = (void*)base;
@@ -2199,9 +2199,9 @@ static void CL_SetMissionCvars (mission_t* mission)
 	Cvar_Set("ai_civilian", mission->civTeam);
 	Cvar_Set("ai_equipment", mission->alienEquipment);
 	Cvar_Set("music", mission->music);
-	Com_DPrintf("CL_SetMissionCvars:\n");
+	Com_DPrintf(DEBUG_CLIENT, "CL_SetMissionCvars:\n");
 
-	Com_DPrintf("..numAliens: %i\n..numCivilians: %i\n..alienTeam: '%s'\n..civTeam: '%s'\n..alienEquip: '%s'\n..music: '%s'\n",
+	Com_DPrintf(DEBUG_CLIENT, "..numAliens: %i\n..numCivilians: %i\n..alienTeam: '%s'\n..civTeam: '%s'\n..alienEquip: '%s'\n..music: '%s'\n",
 		mission->aliens,
 		mission->civilians,
 		mission->alienTeam,
@@ -2279,7 +2279,7 @@ static void CL_GameGo (void)
 	base_t *base = NULL;
 
 	if (!curCampaign) {
-		Com_DPrintf("curCampaign: %p, selMis: %p, interceptAircraft: %i\n", (void*)curCampaign, (void*)selMis, gd.interceptAircraft);
+		Com_DPrintf(DEBUG_CLIENT, "curCampaign: %p, selMis: %p, interceptAircraft: %i\n", (void*)curCampaign, (void*)selMis, gd.interceptAircraft);
 		return;
 	}
 
@@ -2290,7 +2290,7 @@ static void CL_GameGo (void)
 		selMis = aircraft->mission;
 
 	if (!selMis) {
-		Com_DPrintf("No selMis\n");
+		Com_DPrintf(DEBUG_CLIENT, "No selMis\n");
 		return;
 	}
 
@@ -2303,16 +2303,16 @@ static void CL_GameGo (void)
 
 	/* Various sanity checks. */
 	if (CL_OnBattlescape()) {
-		Com_DPrintf("CL_GameGo: We already _are_ on the battlescape/on a mission.\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_GameGo: We already _are_ on the battlescape/on a mission.\n");
 		return;
 	}
 	if (ccs.singleplayer) {
 		if (!mis->active) {
-			Com_DPrintf("CL_GameGo: Dropship not near landing zone: mis->active: %i\n", mis->active);
+			Com_DPrintf(DEBUG_CLIENT, "CL_GameGo: Dropship not near landing zone: mis->active: %i\n", mis->active);
 			return;
 		}
 		if (aircraft->teamSize <= 0) {
-			Com_DPrintf("CL_GameGo: No team in dropship. teamSize=%i\n", aircraft->teamSize);
+			Com_DPrintf(DEBUG_CLIENT, "CL_GameGo: No team in dropship. teamSize=%i\n", aircraft->teamSize);
 			return;
 		}
 	} else {
@@ -2374,7 +2374,7 @@ static void CP_AddItemAsCollected (void)
 		item = &csi.ods[i];
 		if (!Q_strncmp(id, item->id, MAX_VAR)) {
 			gd.bases[baseID].storage.num[i]++;
-			Com_DPrintf("add item: '%s'\n", item->id);
+			Com_DPrintf(DEBUG_CLIENT, "add item: '%s'\n", item->id);
 			assert(item->tech);
 			RS_MarkCollected((technology_t*)(item->tech));
 		}
@@ -2416,14 +2416,14 @@ void CP_ExecuteMissionTrigger (mission_t * m, int won, base_t* base)
 {
 	/* we add them only here - and remove them afterwards to prevent cheating */
 	CP_MissionTriggerFunctions(qtrue);
-	Com_DPrintf("Execute mission triggers\n");
+	Com_DPrintf(DEBUG_CLIENT, "Execute mission triggers\n");
 	if (won && *m->onwin) {
 		assert(base);
-		Com_DPrintf("...won - executing '%s'\n", m->onwin);
+		Com_DPrintf(DEBUG_CLIENT, "...won - executing '%s'\n", m->onwin);
 		Cbuf_ExecuteText(EXEC_NOW, va("%s %i", m->onwin, base->idx));
 	} else if (!won && *m->onlose) {
 		assert(base);
-		Com_DPrintf("...lost - executing '%s'\n", m->onlose);
+		Com_DPrintf(DEBUG_CLIENT, "...lost - executing '%s'\n", m->onlose);
 		Cbuf_ExecuteText(EXEC_NOW, va("%s %i", m->onlose, base->idx));
 	}
 	CP_MissionTriggerFunctions(qfalse);
@@ -2440,17 +2440,17 @@ void CP_ExecuteMissionTrigger (mission_t * m, int won, base_t* base)
 static void CL_GameAutoCheck_f (void)
 {
 	if (!curCampaign || !selMis || gd.interceptAircraft < 0 || gd.interceptAircraft >= gd.numAircraft) {
-		Com_DPrintf("No update after automission\n");
+		Com_DPrintf(DEBUG_CLIENT, "No update after automission\n");
 		return;
 	}
 
 	switch (selMis->def->storyRelated) {
 	case qtrue:
-		Com_DPrintf("story related - auto mission is disabled\n");
+		Com_DPrintf(DEBUG_CLIENT, "story related - auto mission is disabled\n");
 		Cvar_SetValue("game_autogo", 0.0f);
 		break;
 	default:
-		Com_DPrintf("auto mission is enabled\n");
+		Com_DPrintf(DEBUG_CLIENT, "auto mission is enabled\n");
 		Cvar_SetValue("game_autogo", 1.0f);
 		break;
 	}
@@ -2469,7 +2469,7 @@ static void CL_GameAutoGo_f (void)
 	aircraft_t *aircraft;
 
 	if (!curCampaign || !selMis || gd.interceptAircraft < 0 || gd.interceptAircraft >= gd.numAircraft) {
-		Com_DPrintf("No update after automission\n");
+		Com_DPrintf(DEBUG_CLIENT, "No update after automission\n");
 		return;
 	}
 
@@ -2485,7 +2485,7 @@ static void CL_GameAutoGo_f (void)
 		MN_AddNewMessage(_("Notice"), _("Your dropship is not near the landing zone"), qfalse, MSG_STANDARD, NULL);
 		return;
 	} else if (mis->storyRelated) {
-		Com_DPrintf("You have to play this mission, because it's story related\n");
+		Com_DPrintf(DEBUG_CLIENT, "You have to play this mission, because it's story related\n");
 		return;
 	}
 
@@ -2494,7 +2494,7 @@ static void CL_GameAutoGo_f (void)
 	/* FIXME: This needs work */
 	won = mis->aliens * difficulty->integer > aircraft->teamSize ? 0 : 1;
 
-	Com_DPrintf("Aliens: %i (count as %i) - Soldiers: %i\n", mis->aliens, mis->aliens * difficulty->integer, aircraft->teamSize);
+	Com_DPrintf(DEBUG_CLIENT, "Aliens: %i (count as %i) - Soldiers: %i\n", mis->aliens, mis->aliens * difficulty->integer, aircraft->teamSize);
 
 	/* update nation opinions */
 	if (won) {
@@ -2553,17 +2553,17 @@ static void CL_UpdateCharacterStats (int won)
 	aircraft_t *aircraft;
 	int i, j, idx = 0;
 
-	Com_DPrintf("CL_UpdateCharacterStats: numTeamList: %i\n", cl.numTeamList);
+	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: numTeamList: %i\n", cl.numTeamList);
 
 	/* aircraft = &baseCurrent->aircraft[gd.interceptAircraft]; remove this @todo: check if baseCurrent has the currect aircraftCurrent.  */
 	aircraft = AIR_AircraftGetFromIdx(gd.interceptAircraft);
 
-	Com_DPrintf("CL_UpdateCharacterStats: baseCurrent: %s\n", baseCurrent->name);
+	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: baseCurrent: %s\n", baseCurrent->name);
 
 	/** @todo What about UGVs/Tanks? */
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
 		if (CL_SoldierInAircraft(i, EMPL_SOLDIER, gd.interceptAircraft) ) {
-			Com_DPrintf("CL_UpdateCharacterStats: searching for soldier: %i\n", i);
+			Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: searching for soldier: %i\n", i);
 			chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, -(idx+1));
 			assert(chr);
 			/* count every hired soldier in aircraft */
@@ -2599,7 +2599,7 @@ static void CL_UpdateCharacterStats (int won)
 		/* also count the employees that are only hired but not in the aircraft */
 		} else if (E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, i))
 			idx++;
-	Com_DPrintf("CL_UpdateCharacterStats: Done\n");
+	Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: Done\n");
 }
 
 #ifdef DEBUG
@@ -2714,7 +2714,7 @@ static void CL_GameResults_f (void)
 	base_t *attackedbase = NULL;
 	character_t *chr = NULL;
 
-	Com_DPrintf("CL_GameResults_f\n");
+	Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f\n");
 
 	/* multiplayer? */
 	if (!curCampaign || !selMis || !baseCurrent)
@@ -2758,24 +2758,24 @@ static void CL_GameResults_f (void)
 		if (CL_SoldierInAircraft(i, EMPL_SOLDIER, gd.interceptAircraft))	/* DEBUG? */
 			numberofsoldiers++;
 
-		Com_DPrintf("CL_GameResults_f - try to get player %i \n", i);
+		Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - try to get player %i \n", i);
 		employee = E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, i);
 
 		if (employee != NULL) {
 			chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
 			assert(chr);
-			Com_DPrintf("CL_GameResults_f - idx %d hp %d\n",chr->ucn, chr->HP);
+			Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - idx %d hp %d\n",chr->ucn, chr->HP);
 			if (chr->HP <= 0) { /* @todo: <= -50, etc. */
 				/* Delete the employee. */
 				/* sideeffect: gd.numEmployees[EMPL_SOLDIER] and teamNum[] are decremented by one here. */
-				Com_DPrintf("CL_GameResults_f: Delete this dead employee: %i (%s)\n", i, gd.employees[EMPL_SOLDIER][i].chr.name);
+				Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f: Delete this dead employee: %i (%s)\n", i, gd.employees[EMPL_SOLDIER][i].chr.name);
 				E_DeleteEmployee(employee, EMPL_SOLDIER);
 			} /* if dead */
 		} /* if employee != NULL */
 	} /* for */
-	Com_DPrintf("CL_GameResults_f - num %i\n", numberofsoldiers); /* DEBUG */
+	Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - num %i\n", numberofsoldiers); /* DEBUG */
 
-	Com_DPrintf("CL_GameResults_f - done removing dead players\n");
+	Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - done removing dead players\n");
 
 	/* Check for alien containment in aircraft homebase. */
 	if (baseCurrent->aircraft[baseCurrent->aircraftCurrent].alientypes && !baseCurrent->hasAlienCont) {
@@ -2872,7 +2872,7 @@ mission_t *CL_AddMission (const char *name)
 		if (!Q_strncmp(name, missions[i].name, MAX_VAR))
 			break;
 	if (i < numMissions)
-		Com_DPrintf("CL_AddMission: mission def \"%s\" with same name found\n", name);
+		Com_DPrintf(DEBUG_CLIENT, "CL_AddMission: mission def \"%s\" with same name found\n", name);
 
 	if (numMissions >= MAX_MISSIONS) {
 		Com_Printf("CL_AddMission: Max missions reached\n");
@@ -2882,7 +2882,7 @@ mission_t *CL_AddMission (const char *name)
 	ms = &missions[numMissions++];
 	memset(ms, 0, sizeof(mission_t));
 	Q_strncpyz(ms->name, name, sizeof(ms->name));
-	Com_DPrintf("CL_AddMission: mission name: '%s'\n", name);
+	Com_DPrintf(DEBUG_CLIENT, "CL_AddMission: mission name: '%s'\n", name);
 
 	return ms;
 }
@@ -2982,7 +2982,7 @@ void CL_ParseResearchedCampaignItems (const char *name, const char **text)
 		return;
 	}
 
-	Com_DPrintf("..campaign research list '%s'\n", name);
+	Com_DPrintf(DEBUG_CLIENT, "..campaign research list '%s'\n", name);
 	do {
 		token = COM_EParse(text, errhead, name);
 		if (!*text || *token == '}')
@@ -2994,7 +2994,7 @@ void CL_ParseResearchedCampaignItems (const char *name, const char **text)
 				gd.technologies[i].markResearched.markOnly[gd.technologies[i].markResearched.numDefinitions] = qtrue;
 				gd.technologies[i].markResearched.campaign[gd.technologies[i].markResearched.numDefinitions] = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 				gd.technologies[i].markResearched.numDefinitions++;
-				Com_DPrintf("...tech %s\n", gd.technologies[i].id);
+				Com_DPrintf(DEBUG_CLIENT, "...tech %s\n", gd.technologies[i].id);
 				break;
 			}
 
@@ -3031,11 +3031,11 @@ void CL_ParseResearchableCampaignStates (const char *name, const char **text, qb
 	}
 
 	if (Q_strncmp(campaign->researched, name, MAX_VAR)) {
-		Com_DPrintf("..don't use '%s' as researchable list\n", name);
+		Com_DPrintf(DEBUG_CLIENT, "..don't use '%s' as researchable list\n", name);
 		return;
 	}
 
-	Com_DPrintf("..campaign researchable list '%s'\n", name);
+	Com_DPrintf(DEBUG_CLIENT, "..campaign researchable list '%s'\n", name);
 	do {
 		token = COM_EParse(text, errhead, name);
 		if (!*text || *token == '}')
@@ -3048,7 +3048,7 @@ void CL_ParseResearchableCampaignStates (const char *name, const char **text, qb
 					RS_MarkOneResearchable(&gd.technologies[i]);
 				} else
 					Com_Printf("@todo: Mark unresearchable");
-				Com_DPrintf("...tech %s\n", gd.technologies[i].id);
+				Com_DPrintf(DEBUG_CLIENT, "...tech %s\n", gd.technologies[i].id);
 				break;
 			}
 
@@ -3205,7 +3205,7 @@ void CL_ParseStage (const char *name, const char **text)
 	Q_strncpyz(sp->name, name, sizeof(sp->name));
 	sp->first = numStageSets;
 
-	Com_DPrintf("stage: %s\n", name);
+	Com_DPrintf(DEBUG_CLIENT, "stage: %s\n", name);
 
 	do {
 		token = COM_EParse(text, errhead, name);
@@ -3322,7 +3322,7 @@ static void CL_ParseCharacterValues (const char *name, const char **text, int ca
 	const char *token;
 	int team = 0, i, empl_type = 0;
 
-	Com_DPrintf("...found character value %s\n", name);
+	Com_DPrintf(DEBUG_CLIENT, "...found character value %s\n", name);
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -3541,7 +3541,7 @@ void CL_ParseNations (const char *name, const char **text)
 	nation = &gd.nations[gd.numNations++];
 	memset(nation, 0, sizeof(nation_t));
 
-	Com_DPrintf("...found nation %s\n", name);
+	Com_DPrintf(DEBUG_CLIENT, "...found nation %s\n", name);
 	nation->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 
 	nation->stats[0].inuse = qtrue;
@@ -3761,9 +3761,9 @@ void CL_GameExit (void)
 
 	/* singleplayer commands are no longer available */
 	if (curCampaign) {
-		Com_DPrintf("Remove game commands\n");
+		Com_DPrintf(DEBUG_CLIENT, "Remove game commands\n");
 		for (commands = game_commands; commands->name; commands++) {
-			Com_DPrintf("...%s\n", commands->name);
+			Com_DPrintf(DEBUG_CLIENT, "...%s\n", commands->name);
 			Cmd_RemoveCommand(commands->name);
 		}
 	}
@@ -3782,9 +3782,9 @@ void CL_GameInit (qboolean load)
 
 	assert(curCampaign);
 
-	Com_DPrintf("Init game commands\n");
+	Com_DPrintf(DEBUG_CLIENT, "Init game commands\n");
 	for (commands = game_commands; commands->name; commands++) {
-		Com_DPrintf("...%s\n", commands->name);
+		Com_DPrintf(DEBUG_CLIENT, "...%s\n", commands->name);
 		Cmd_AddCommand(commands->name, commands->function, commands->description);
 	}
 
@@ -4156,7 +4156,7 @@ static void CP_UFORecovered_f (void)
 		Cvar_SetValue("mission_noufohangar", 1);
 	} else
 		Cvar_SetValue("mission_noufohangar", 0);
-	Com_DPrintf("CP_UFORecovered_f()...: base: %s, UFO: %i\n", base->name, UFOtype);
+	Com_DPrintf(DEBUG_CLIENT, "CP_UFORecovered_f()...: base: %s, UFO: %i\n", base->name, UFOtype);
 }
 
 /**
@@ -4200,7 +4200,7 @@ static void CP_UfoRecoveryBaseSelectPopup_f (void)
 	assert(base);
 
 	Cvar_SetValue("mission_recoverybase", base->idx);
-	Com_DPrintf("CP_UfoRecoveryBaseSelectPopup_f()... picked base: %s\n", base->name);
+	Com_DPrintf(DEBUG_CLIENT, "CP_UfoRecoveryBaseSelectPopup_f()... picked base: %s\n", base->name);
 }
 
 /**
@@ -4321,7 +4321,7 @@ static void CP_UfoRecoveryNationSelectPopup_f (void)
 	assert(nation);
 
 	Cvar_SetValue("mission_recoverynation", i);
-	Com_DPrintf("CP_UfoRecoveryNationSelectPopup_f()... picked nation: %s\n", nation->name);
+	Com_DPrintf(DEBUG_CLIENT, "CP_UfoRecoveryNationSelectPopup_f()... picked nation: %s\n", nation->name);
 }
 
 /**

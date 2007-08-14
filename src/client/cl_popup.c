@@ -266,7 +266,7 @@ static void CL_PopupAircraftClick_f (void)
 	int num, id;
 	aircraft_t* aircraft;
 
-	Com_DPrintf("CL_PopupAircraftClick\n");
+	Com_DPrintf(DEBUG_CLIENT, "CL_PopupAircraftClick\n");
 
 	/* Get num of item selected in list */
 	if (Cmd_Argc() < 2)

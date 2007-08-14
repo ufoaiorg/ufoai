@@ -347,7 +347,7 @@ static void SVCmd_StartGame_f (void)
 				knownTeams[teamCount++] = p->pers.team;
 		}
 	}
-	Com_DPrintf("SVCmd_StartGame_f: Players in game: %i, Unique teams in game: %i\n", playerCount, teamCount);
+	Com_DPrintf(DEBUG_GAME, "SVCmd_StartGame_f: Players in game: %i, Unique teams in game: %i\n", playerCount, teamCount);
 
 	G_PrintStats(va("Starting new game: %s", level.mapname));
 	level.activeTeam = knownTeams[(int)(frand() * (teamCount - 1) + 0.5)];

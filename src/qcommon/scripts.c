@@ -1251,7 +1251,7 @@ const char *Com_GiveName (int gender, const char *team)
 			/* found category */
 			if (!td->numNames[gender]) {
 #ifdef DEBUG
-				Com_DPrintf("No valid name definitions for gender %i in category '%s'\n", gender, team);
+				Com_DPrintf(DEBUG_ENGINE, "No valid name definitions for gender %i in category '%s'\n", gender, team);
 #endif
 				return NULL;
 			}

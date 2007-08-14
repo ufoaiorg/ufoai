@@ -781,11 +781,11 @@ static edict_t *G_GetFloorItems (edict_t * ent)
 static void G_PrintFloorToConsole (pos3_t pos)
 {
 	edict_t *floor = G_GetFloorItemsFromPos(pos);
-	Com_DPrintf("G_PrintFloorToConsole: Printing containers from floor at %i,%i,%i.\n", pos[0], pos[1], pos[2]);
+	Com_DPrintf(DEBUG_GAME, "G_PrintFloorToConsole: Printing containers from floor at %i,%i,%i.\n", pos[0], pos[1], pos[2]);
 	if (floor) {
 		INVSH_PrintContainerToConsole(&floor->i);
 	} else {
-		Com_DPrintf("G_PrintFloorToConsole: No Floor items found.\n");
+		Com_DPrintf(DEBUG_GAME, "G_PrintFloorToConsole: No Floor items found.\n");
 	}
 }
 #endif
@@ -975,12 +975,12 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 
 	/* Update reaction firemode when something is moved from/to a hand. */
 	if ((from == gi.csi->idRight) || (to == gi.csi->idRight)) {
-		Com_DPrintf("G_ClientInvMove: Something moved in/out of Right hand.\n");
+		Com_DPrintf(DEBUG_GAME, "G_ClientInvMove: Something moved in/out of Right hand.\n");
 		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
 		gi.WriteShort(num);
 		gi.WriteShort(0);	/**< hand=right */
 	} else if ((from == gi.csi->idLeft) || (to == gi.csi->idLeft)) {
-		Com_DPrintf("G_ClientInvMove:  Something moved in/out of Left hand.\n");
+		Com_DPrintf(DEBUG_GAME, "G_ClientInvMove:  Something moved in/out of Left hand.\n");
 		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
 		gi.WriteShort(num);
 		gi.WriteShort(1);	/**< hand=left */
@@ -1053,7 +1053,7 @@ static void G_InventoryToFloor (edict_t * ent)
 		   not idFloor */
 		if (k == gi.csi->idArmor) {
 			if (ent->i.c[gi.csi->idArmor])
-				Com_DPrintf("G_InventoryToFloor()... this actor has armour: %s\n", gi.csi->ods[ent->i.c[gi.csi->idArmor]->item.t].name);
+				Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor()... this actor has armour: %s\n", gi.csi->ods[ent->i.c[gi.csi->idArmor]->item.t].name);
 			continue;
 		}
 		/* now cycle through all items for the container of the character (or the entity) */
@@ -1118,7 +1118,7 @@ static void G_InventoryToFloor (edict_t * ent)
 				ic->next = FLOOR(floor);
 				FLOOR(floor) = ic;
 #ifdef PARANOID
-				Com_DPrintf("G_InventoryToFloor: item to floor: %s\n", gi.csi->ods[ic->item.t].id);
+				Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor: item to floor: %s\n", gi.csi->ods[ic->item.t].id);
 #endif
 			}
 		}
@@ -1130,9 +1130,9 @@ static void G_InventoryToFloor (edict_t * ent)
 	FLOOR(ent) = FLOOR(floor);
 
 	if (ent->i.c[gi.csi->idArmor])
-		Com_DPrintf("At the end of G_InventoryToFloor()... this actor has armor in idArmor container: %s\n", gi.csi->ods[ent->i.c[gi.csi->idArmor]->item.t].name);
+		Com_DPrintf(DEBUG_GAME, "At the end of G_InventoryToFloor()... this actor has armor in idArmor container: %s\n", gi.csi->ods[ent->i.c[gi.csi->idArmor]->item.t].name);
 	else
-		Com_DPrintf("At the end of G_InventoryToFloor()... this actor has NOT armor in idArmor container\n");
+		Com_DPrintf(DEBUG_GAME, "At the end of G_InventoryToFloor()... this actor has NOT armor in idArmor container\n");
 
 	/* send item info to the clients */
 	G_CheckVis(floor, qtrue);
@@ -1520,7 +1520,7 @@ static void G_ClientStateChange (player_t * player, int num, int reqState, qbool
 				} else {
 					/* reactionTUs[ent->number][REACT_TUS] == 0) */
 					/* This should never be the case.  */
-					Com_DPrintf("G_ClientStateChange: 0 value saved for reaction while reaction is activated.\n");
+					Com_DPrintf(DEBUG_GAME, "G_ClientStateChange: 0 value saved for reaction while reaction is activated.\n");
 				}
 			}
 		}
@@ -1917,7 +1917,7 @@ void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
 		return;	/* never reached. need for code analyst. */
 #endif
 
-	Com_DPrintf("G_ActorDie: kill actor on team %i\n", ent->team);
+	Com_DPrintf(DEBUG_GAME, "G_ActorDie: kill actor on team %i\n", ent->team);
 	switch (state) {
 	case STATE_DEAD:
 		ent->state |= (1 + rand() % MAX_DEATH);
@@ -1968,7 +1968,7 @@ void G_KillTeam (void)
 	if (gi.argc() == 2)
 		teamToKill = atoi(gi.argv(1));
 
-	Com_DPrintf("G_KillTeam: kill team %i\n", teamToKill);
+	Com_DPrintf(DEBUG_GAME, "G_KillTeam: kill team %i\n", teamToKill);
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2) && !(ent->state & STATE_DEAD)) {
@@ -2035,7 +2035,7 @@ int G_ClientAction (player_t * player)
 		hand = -1;
 		fd_idx = -1;
 		gi.ReadFormat(pa_format[PA_REACT_SELECT], &hand, &fd_idx);
-		Com_DPrintf("G_ClientAction: entnum:%i hand:%i fd:%i\n", num, hand, fd_idx);
+		Com_DPrintf(DEBUG_GAME, "G_ClientAction: entnum:%i hand:%i fd:%i\n", num, hand, fd_idx);
 		/* @todo: Add check for correct player here (player==g_edicts[num]->team ???) */
 		reactionFiremode[num][RF_HAND] = hand;
 		reactionFiremode[num][RF_FM] = fd_idx;
@@ -2123,7 +2123,7 @@ static void G_GetTeam (player_t * player)
 				/*        maybe we could identify such a situation */
 				for (j = 0, p = game.players; j < game.sv_maxplayersperteam; j++, p++)
 					if (p->inuse && p->pers.team == i) {
-						Com_DPrintf("Team %i is already in use\n", i);
+						Com_DPrintf(DEBUG_GAME, "Team %i is already in use\n", i);
 						/* team already in use */
 						teamAvailable = qfalse;
 						break;
@@ -2142,7 +2142,7 @@ static void G_GetTeam (player_t * player)
 					p->inuse = qfalse;
 					break;
 				}
-			Com_DPrintf("Assigning %s to Team %i\n", player->pers.netname, i);
+			Com_DPrintf(DEBUG_GAME, "Assigning %s to Team %i\n", player->pers.netname, i);
 			player->pers.team = i;
 		} else {
 			Com_Printf("No free team - disconnecting '%s'\n", player->pers.netname);
@@ -2199,7 +2199,7 @@ static void G_ClientTeamAssign (player_t * player)
 		}
 	}
 
-	Com_DPrintf("G_ClientTeamAssign: Players in game: %i, Unique teams in game: %i\n", playerCount, teamCount);
+	Com_DPrintf(DEBUG_GAME, "G_ClientTeamAssign: Players in game: %i, Unique teams in game: %i\n", playerCount, teamCount);
 
 	/* if all teams/players have joined the game, randomly assign which team gets the first turn */
 	if ((sv_teamplay->integer && teamCount >= sv_maxteams->integer) || playerCount >= sv_maxclients->integer) {
@@ -2348,7 +2348,7 @@ void G_ClientTeamInfo (player_t * player)
 			ent->chr.fieldSize = dummyFieldSize;
 			ent->fieldSize = ent->chr.fieldSize;
 
-			Com_DPrintf("Player: %i - team %i - size: %i\n", player->num, ent->team, ent->fieldSize);
+			Com_DPrintf(DEBUG_GAME, "Player: %i - team %i - size: %i\n", player->num, ent->team, ent->fieldSize);
 
 			gi.linkentity(ent);
 

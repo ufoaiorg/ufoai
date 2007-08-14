@@ -280,7 +280,7 @@ void Con_LoadConsoleHistory (const char* path)
 	memcpy(f2, f, len);
 	f2[len] = 0;
 
-	Com_DPrintf("...load console history\n");
+	Com_DPrintf(DEBUG_CLIENT, "...load console history\n");
 
 	cmdStart = strstr(f2, "\n");
 	if (cmdStart != NULL) {
@@ -292,7 +292,7 @@ void Con_LoadConsoleHistory (const char* path)
 				*cmdEnd++ = '\0';
 			if (*cmdStart) {
 				Q_strncpyz(&key_lines[i][1], cmdStart, MAXCMDLINE-1);
-				Com_DPrintf("....command: '%s'\n", cmdStart);
+				Com_DPrintf(DEBUG_CLIENT, "....command: '%s'\n", cmdStart);
 				i++;
 			}
 			cmdStart = cmdEnd;
@@ -334,7 +334,7 @@ void Con_SaveConsoleHistory (const char *path)
 	for (i = 0; i < history_line; i++) {
 		if (lastLine && !Q_strncmp(lastLine, &(key_lines[i][1]), MAXCMDLINE)) {
 #if 0
-			Com_DPrintf("Don't save '%s' again\n", lastLine);
+			Com_DPrintf(DEBUG_CLIENT, "Don't save '%s' again\n", lastLine);
 #endif
 		} else {
 			lastLine = &(key_lines[i][1]);

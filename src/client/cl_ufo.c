@@ -209,7 +209,7 @@ static void UFO_FoundNewBase (aircraft_t *ufo, int dt)
 
 		if (frand() < baseProbability) {
 			base->isDiscovered = qtrue;
-			Com_DPrintf("Base '%s' has been discoverd by UFO\n", base->name);
+			Com_DPrintf(DEBUG_CLIENT, "Base '%s' has been discoverd by UFO\n", base->name);
 		}
 	}
 }
@@ -359,14 +359,14 @@ static void UFO_NewUfoOnGeoscape_f (void)
 				break;
 	if (newUfoNum == numAircraft_samples) {
 		if (ufotype != UFO_MAX)
-			Com_DPrintf("Could not add ufo type %i to geoscape\n", ufotype);
+			Com_DPrintf(DEBUG_CLIENT, "Could not add ufo type %i to geoscape\n", ufotype);
 		return;
 	}
 
 	/* Create ufo */
 	ufo = gd.ufos + gd.numUfos;
 	memcpy(ufo, aircraft_samples + newUfoNum, sizeof(aircraft_t));
-	Com_DPrintf("New ufo on geoscape: '%s' (gd.numUfos: %i, newUfoNum: %i)\n", ufo->id, gd.numUfos, newUfoNum);
+	Com_DPrintf(DEBUG_CLIENT, "New ufo on geoscape: '%s' (gd.numUfos: %i, newUfoNum: %i)\n", ufo->id, gd.numUfos, newUfoNum);
 	gd.numUfos++;
 
 	/* Initialise ufo data */
@@ -389,10 +389,10 @@ void UFO_RemoveUfoFromGeoscape (aircraft_t* ufo)
 	/* Remove ufo from ufos list */
 	num = ufo - gd.ufos;
 	if (num < 0 || num >= gd.numUfos) {
-		Com_DPrintf("Cannot remove ufo: '%s'\n", ufo->name);
+		Com_DPrintf(DEBUG_CLIENT, "Cannot remove ufo: '%s'\n", ufo->name);
 		return;
 	}
-	Com_DPrintf("Remove ufo from geoscape: '%s'\n", ufo->name);
+	Com_DPrintf(DEBUG_CLIENT, "Remove ufo from geoscape: '%s'\n", ufo->name);
 	memcpy(gd.ufos + num, gd.ufos + num + 1, (gd.numUfos - num - 1) * sizeof(aircraft_t));
 	gd.numUfos--;
 

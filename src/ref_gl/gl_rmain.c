@@ -1540,7 +1540,7 @@ void Com_Printf (const char *fmt, ...)
 /**
  * @brief
  */
-void Com_DPrintf (const char *fmt, ...)
+void Com_DPrintf (int level, const char *fmt, ...)
 {
 	va_list argptr;
 	char text[1024];
@@ -1551,6 +1551,6 @@ void Com_DPrintf (const char *fmt, ...)
 
 	text[sizeof(text)-1] = 0;
 
-	ri.Con_Printf(PRINT_DEVELOPER, "%s", text);
+	ri.Con_Printf(level, "%s", text);
 }
 #endif /* REF_HARD_LINKED */

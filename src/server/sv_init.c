@@ -373,13 +373,13 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 		} else if (*token == '*') {
 			/* '*' is: replace by cvar value */
 			token++; /* strip '*' */
-			Com_DPrintf("SV_ParseAssembly: cvar replacement: %s\n", token);
+			Com_DPrintf(DEBUG_SERVER, "SV_ParseAssembly: cvar replacement: %s\n", token);
 			cvarName = token;
 			token = COM_EParse(text, errhead, filename);
 			if (!text || *token == '}')
 				break;
 			cvarValue = Cvar_VariableString(cvarName);
-			Com_DPrintf("SV_ParseAssembly: cvar replacement value: %s\n", cvarValue);
+			Com_DPrintf(DEBUG_SERVER, "SV_ParseAssembly: cvar replacement value: %s\n", cvarValue);
 			if (*cvarValue != '+') {
 				Com_Printf("SV_ParseAssembly: warning - cvar value doesn't seam to be a valid tile id '%s' - set to default '%s'\n", cvarValue, token);
 				Cvar_Set(cvarName, token);
@@ -723,14 +723,14 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
 		Com_Error(ERR_DROP, "No map tiles defined (%s)!\n", filename);
 #ifdef DEBUG
 	else
-		Com_DPrintf("numTiles: %i\n", numTiles);
+		Com_DPrintf(DEBUG_SERVER, "numTiles: %i\n", numTiles);
 #endif
 
 	if (!numAssemblies)
 		Com_Error(ERR_DROP, "No map assemblies defined (%s)!\n", filename);
 #ifdef DEBUG
 	else
-		Com_DPrintf("numAssemblies: %i\n", numAssemblies);
+		Com_DPrintf(DEBUG_SERVER, "numAssemblies: %i\n", numAssemblies);
 #endif
 
 	/* get assembly */
@@ -748,7 +748,7 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
 	/* use random assembly, if no valid one has been specified */
 	if (!mAsm) {
 		mAsm = &mAssembly[rand() % numAssemblies];
-		Com_DPrintf("Use random assembly: '%s'\n", mAsm->id);
+		Com_DPrintf(DEBUG_SERVER, "Use random assembly: '%s'\n", mAsm->id);
 	}
 
 	/* calculate regions */
@@ -817,9 +817,9 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
 		Q_strcat(asmPos, va(" %i %i", (pl->x - mAsm->w / 2) * 8, (pl->y - mAsm->h / 2) * 8), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
 	}
 
-	Com_DPrintf("tiles: %s\n", *map);
-	Com_DPrintf("pos: %s\n", *pos);
-	Com_DPrintf("tiles: %i tries: %i\n", numPlaced, tries + 1);
+	Com_DPrintf(DEBUG_SERVER, "tiles: %s\n", *map);
+	Com_DPrintf(DEBUG_SERVER, "pos: %s\n", *pos);
+	Com_DPrintf(DEBUG_SERVER, "tiles: %i tries: %i\n", numPlaced, tries + 1);
 }
 
 /**
@@ -859,7 +859,7 @@ static void SV_SpawnServer (const char *server, const char *param)
 
 	Com_Printf("------- Server Initialization -------\n");
 
-	Com_DPrintf("SpawnServer: %s\n", server);
+	Com_DPrintf(DEBUG_SERVER, "SpawnServer: %s\n", server);
 
 	svs.spawncount++;
 	/* any partially connected client will be restarted */

@@ -159,7 +159,7 @@ static void SV_Map_f (void)
 	/* random maps uses position strings */
 	if (Cmd_Argc() == 3) {
 		assembly = Cmd_Argv(2);
-		Com_DPrintf("SV_Map_f: assembly: '%s'\n", assembly);
+		Com_DPrintf(DEBUG_SERVER, "SV_Map_f: assembly: '%s'\n", assembly);
 	}
 
 	if (!SV_CheckMap(map, assembly))

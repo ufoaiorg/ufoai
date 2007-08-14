@@ -324,7 +324,7 @@ static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target,
 
 	/* Take Base probability from the ammo of the attacking aircraft */
 	probability = aircraftItems[idx].stats[AIR_STATS_ACCURACY];
-	Com_DPrintf("AIRFIGHT_ProbabilityToHit: Base probablity: %f\n", probability);
+	Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Base probablity: %f\n", probability);
 
 	/* Modify this probability by items of the attacking aircraft (stats is in percent) */
 	if (shooter)
@@ -334,7 +334,7 @@ static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target,
 	if (target)
 		probability /= target->stats[AIR_STATS_ECM] / 100.0f;
 
-	Com_DPrintf("AIRFIGHT_ProbabilityToHit: Probability to hit: %f\n", probability);
+	Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ProbabilityToHit: Probability to hit: %f\n", probability);
 	return probability;
 }
 

@@ -166,7 +166,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 			od = &gi.csi->ods[LEFT(ent)->item.m];
 			weap_idx = LEFT(ent)->item.t;
 		} else {
-			Com_DPrintf("AI_FighterCalcGuete: @todo: grenade/knife toss from inventory using empty hand\n");
+			Com_DPrintf(DEBUG_GAME, "AI_FighterCalcGuete: @todo: grenade/knife toss from inventory using empty hand\n");
 			/* @todo: grenade/knife toss from inventory using empty hand */
 			/* @todo: evaluate possible items to retrieve and pick one, then evaluate an action against the nearby enemies or allies */
 		}
@@ -455,10 +455,10 @@ static ai_action_t AI_PrepBestAction (player_t * player, edict_t * ent)
 			/* the lower the count value - the nearer the final target */
 			if (checkPoint->count < ent->count) {
 				i++;
-				Com_DPrintf("civ found civtarget with %i\n", checkPoint->count);
+				Com_DPrintf(DEBUG_GAME, "civ found civtarget with %i\n", checkPoint->count);
 				/* test for time */
 				if (ent->TU - gi.MoveLength(gi.map, checkPoint->pos, qtrue) < 0) {
-					Com_DPrintf("civtarget too far away (%i)\n", checkPoint->count);
+					Com_DPrintf(DEBUG_GAME, "civtarget too far away (%i)\n", checkPoint->count);
 					/* FIXME: Nevertheless walk to that direction */
 					continue;
 				}
@@ -486,7 +486,7 @@ static ai_action_t AI_PrepBestAction (player_t * player, edict_t * ent)
 	G_ClientMove(player, 0, ent->number, bestAia.to, qfalse, QUIET);
 
 #if 0
-	Com_DPrintf("(%i %i %i) (%i %i %i)\n",
+	Com_DPrintf(DEBUG_GAME, "(%i %i %i) (%i %i %i)\n",
 		(int)bestAia.to[0], (int)bestAia.to[1], (int)bestAia.to[2],
 		(int)bestAia.stop[0], (int)bestAia.stop[1], (int)bestAia.stop[2]);
 #endif
@@ -508,7 +508,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 	ai_action_t bestAia;
 
 #ifdef PARANOID
-	Com_DPrintf("AI_ActorThink: (ent %i, frame %i)\n", ent->number, level.framenum);
+	Com_DPrintf(DEBUG_GAME, "AI_ActorThink: (ent %i, frame %i)\n", ent->number, level.framenum);
 #endif
 
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
@@ -516,12 +516,12 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 		if (RIGHT(ent) && gi.csi->ods[RIGHT(ent)->item.t].reload && RIGHT(ent)->item.a == 0) {
 			if (G_ClientCanReload(game.players + ent->pnum, ent->number, gi.csi->idRight)) {
 #ifdef PARANOID
-				Com_DPrintf("AI_ActorThink: Reloading right hand weapon\n");
+				Com_DPrintf(DEBUG_GAME, "AI_ActorThink: Reloading right hand weapon\n");
 #endif
 				G_ClientReload(player, ent->number, ST_RIGHT_RELOAD, QUIET);
 			} else {
 #ifdef PARANOID
-				Com_DPrintf("AI_ActorThink: Dropping right hand weapon\n");
+				Com_DPrintf(DEBUG_GAME, "AI_ActorThink: Dropping right hand weapon\n");
 #endif
 				G_ClientInvMove(game.players + ent->pnum, ent->number, gi.csi->idRight, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue, QUIET);
 			}
@@ -529,12 +529,12 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 		if (LEFT(ent) && gi.csi->ods[LEFT(ent)->item.t].reload && LEFT(ent)->item.a == 0) {
 			if (G_ClientCanReload(game.players + ent->pnum, ent->number, gi.csi->idLeft)) {
 #ifdef PARANOID
-				Com_DPrintf("AI_ActorThink: Reloading left hand weapon\n");
+				Com_DPrintf(DEBUG_GAME, "AI_ActorThink: Reloading left hand weapon\n");
 #endif
 				G_ClientReload(player, ent->number, ST_LEFT_RELOAD, QUIET);
 			} else {
 #ifdef PARANOID
-				Com_DPrintf("AI_ActorThink: Dropping left hand weapon\n");
+				Com_DPrintf(DEBUG_GAME, "AI_ActorThink: Dropping left hand weapon\n");
 #endif
 				G_ClientInvMove(game.players + ent->pnum, ent->number, gi.csi->idLeft, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue, QUIET);
 			}
@@ -545,7 +545,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 	if (ent->chr.weapons && !LEFT(ent) && !RIGHT(ent)) {
 		G_ClientGetWeaponFromInventory(player, ent->number, QUIET);
 		if (LEFT(ent) || RIGHT(ent))
-			Com_DPrintf("AI_ActorThink: Got weapon from inventory\n");
+			Com_DPrintf(DEBUG_GAME, "AI_ActorThink: Got weapon from inventory\n");
 	}
 
 	bestAia = AI_PrepBestAction(player, ent);

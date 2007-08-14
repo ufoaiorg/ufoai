@@ -154,11 +154,11 @@ static void MAP_MultiSelectExecuteAction_f (void)
 			/* we need no dropship in our base */
 			selMis->def->active = qtrue;
 			gd.mapAction = MA_BASEATTACK;
-			Com_DPrintf("Base attack: %s at %.0f:%.0f\n", selMis->def->name, selMis->realPos[0], selMis->realPos[1]);
+			Com_DPrintf(DEBUG_CLIENT, "Base attack: %s at %.0f:%.0f\n", selMis->def->name, selMis->realPos[0], selMis->realPos[1]);
 			CL_DisplayPopupIntercept(selMis, NULL);
 			return;
 		} else {
-			Com_DPrintf("Select mission: %s at %.0f:%.0f\n", selMis->def->name, selMis->realPos[0], selMis->realPos[1]);
+			Com_DPrintf(DEBUG_CLIENT, "Select mission: %s at %.0f:%.0f\n", selMis->def->name, selMis->realPos[0], selMis->realPos[1]);
 			gd.mapAction = MA_INTERCEPT;
 		}
 		break;
@@ -166,7 +166,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 	case MULTISELECT_TYPE_AIRCRAFT: /* Selection of an aircraft */
 		aircraft = AIR_AircraftGetFromIdx(id);
 		if (aircraft == NULL) {
-			Com_DPrintf("MAP_MultiSelectExecuteAction: selection of an unknow aircraft idx %i\n", id);
+			Com_DPrintf(DEBUG_CLIENT, "MAP_MultiSelectExecuteAction: selection of an unknow aircraft idx %i\n", id);
 			return;
 		}
 
@@ -199,7 +199,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 	case MULTISELECT_TYPE_NONE :	/* Selection of an element that has been removed */
 		break;
 	default:
-		Com_DPrintf("MAP_MultiSelectExecuteAction: selection of an unknow element type %i\n", multiSelect.selectType[selected]);
+		Com_DPrintf(DEBUG_CLIENT, "MAP_MultiSelectExecuteAction: selection of an unknow element type %i\n", multiSelect.selectType[selected]);
 	}
 }
 
@@ -272,10 +272,10 @@ void MAP_MapClick (const menuNode_t* node, int x, int y, qboolean globe)
 		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_CLIMAZONE))) {
 			newBasePos[0] = pos[0];
 			newBasePos[1] = pos[1];
-			Com_DPrintf("MAP_MapClick: Build base at: %.0f:%.0f\n", pos[0], pos[1]);
+			Com_DPrintf(DEBUG_CLIENT, "MAP_MapClick: Build base at: %.0f:%.0f\n", pos[0], pos[1]);
 			nation = MAP_GetNation(pos);
 			if (nation)
-				Com_DPrintf("MAP_MapClick: Build base in nation '%s'\n", nation->id);
+				Com_DPrintf(DEBUG_CLIENT, "MAP_MapClick: Build base in nation '%s'\n", nation->id);
 			MN_PushMenu("popup_newbase");
 			return;
 		} else {
@@ -1126,7 +1126,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node, qboolean globe)
 				MAP_Draw3DMarkerIfVisible(node, ms->realPos, angle, "mission", globe);
 			} else
 				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "cross");
-			
+
 			re.FontDrawString("f_verysmall", ALIGN_UL, x + 10, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], _(ms->def->location), 0, 0, NULL, qfalse);
 		}
 
@@ -1429,7 +1429,7 @@ nation_t* MAP_GetNation (const vec2_t pos)
 	nation_t* nation;
 	byte* color = MAP_GetColor(pos, MAPTYPE_NATIONS);
 #ifdef PARANOID
-	Com_DPrintf("MAP_GetNation: color value for %.0f:%.0f is r:%i, g:%i, b: %i\n", pos[0], pos[1], color[0], color[1], color[2]);
+	Com_DPrintf(DEBUG_CLIENT, "MAP_GetNation: color value for %.0f:%.0f is r:%i, g:%i, b: %i\n", pos[0], pos[1], color[0], color[1], color[2]);
 #endif
 	for (i = 0; i < gd.numNations; i++) {
 		nation = &gd.nations[i];
@@ -1538,7 +1538,7 @@ qboolean MAP_MaskFind (byte * color, vec2_t polar)
 	res = (c - maskPic) / 4;
 	polar[0] = 180.0 - 360.0 * ((float) (res % maskWidth) + 0.5) / maskWidth;
 	polar[1] = 90.0 - 180.0 * ((float) (res / maskWidth) + 0.5) / maskHeight;
-	Com_DPrintf("Set new coords for mission to %.0f:%.0f\n", polar[0], polar[1]);
+	Com_DPrintf(DEBUG_CLIENT, "Set new coords for mission to %.0f:%.0f\n", polar[0], polar[1]);
 	return qtrue;
 }
 

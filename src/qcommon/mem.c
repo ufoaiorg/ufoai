@@ -492,7 +492,7 @@ void _Mem_CheckGlobalIntegrity (const char *fileName, const int fileLine)
 			_Mem_CheckPoolIntegrity(pool, fileName, fileLine);
 	}
 
-	Com_DPrintf("Mem_CheckGlobalIntegrity: %ims\n", Sys_Milliseconds() - startTime);
+	Com_DPrintf(DEBUG_ENGINE, "Mem_CheckGlobalIntegrity: %ims\n", Sys_Milliseconds() - startTime);
 }
 
 
@@ -544,7 +544,7 @@ void _Mem_TouchGlobal (const char *fileName, const int fileLine)
 		}
 	}
 
-	Com_DPrintf("Mem_TouchGlobal: %u pools touched in %ims\n", num, Sys_Milliseconds()-startTime);
+	Com_DPrintf(DEBUG_ENGINE, "Mem_TouchGlobal: %u pools touched in %ims\n", num, Sys_Milliseconds()-startTime);
 }
 
 /*==============================================================================

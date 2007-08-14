@@ -923,7 +923,7 @@ void LE_Cleanup (void)
 	le_t *le;
 	inventory_t inv;
 
-	Com_DPrintf("LE_Cleanup: Clearing up to %i unused LE inventories\n", numLEs);
+	Com_DPrintf(DEBUG_CLIENT, "LE_Cleanup: Clearing up to %i unused LE inventories\n", numLEs);
 	for (i = numLEs - 1, le = &LEs[numLEs - 1]; i >= 0; i--, le--) {
 		switch (le->type) {
 		case ET_ACTOR:

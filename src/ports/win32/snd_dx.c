@@ -114,11 +114,11 @@ static qboolean DS_CreateBuffers (void)
 	format.cbSize = 0;
 	format.nAvgBytesPerSec = format.nSamplesPerSec * format.nBlockAlign;
 
-	si->Com_DPrintf("Creating DS buffers\n");
+	si->Com_DPrintf(DEBUG_SYSTEM, DEBUG_SYSTEM, "Creating DS buffers\n");
 
-	si->Com_DPrintf("...setting EXCLUSIVE coop level: ");
+	si->Com_DPrintf(DEBUG_SYSTEM, DEBUG_SYSTEM, DEBUG_SYSTEM, "...setting EXCLUSIVE coop level: ");
 	if (DS_OK != pDS->lpVtbl->SetCooperativeLevel(pDS, si->cl_hwnd, DSSCL_EXCLUSIVE)) {
-		si->Com_DPrintf("failed\n");
+		si->Com_DPrintf(DEBUG_SYSTEM, "failed\n");
 		FreeSound();
 		return qfalse;
 	}
@@ -135,21 +135,21 @@ static qboolean DS_CreateBuffers (void)
 	dsbcaps.dwSize = sizeof(dsbcaps);
 	primary_format_set = qfalse;
 
-	si->Com_DPrintf("...creating primary buffer: ");
+	si->Com_DPrintf(DEBUG_SYSTEM, "...creating primary buffer: ");
 	if (DS_OK == pDS->lpVtbl->CreateSoundBuffer(pDS, &dsbuf, &pDSPBuf, NULL)) {
 		pformat = format;
 
 		if (DS_OK != pDSPBuf->lpVtbl->SetFormat (pDSPBuf, &pformat)) {
 			if (snd_firsttime)
-				si->Com_DPrintf("...setting primary sound format: failed\n");
+				si->Com_DPrintf(DEBUG_SYSTEM, "...setting primary sound format: failed\n");
 		} else {
 			if (snd_firsttime)
-				si->Com_DPrintf("...setting primary sound format: ok\n");
+				si->Com_DPrintf(DEBUG_SYSTEM, "...setting primary sound format: ok\n");
 
 			primary_format_set = qtrue;
 		}
 	} else
-		si->Com_DPrintf("failed\n");
+		si->Com_DPrintf(DEBUG_SYSTEM, "failed\n");
 
 	if (!primary_format_set || !s_primary->integer) {
 		/* create the secondary buffer we'll actually work with */
@@ -162,9 +162,9 @@ static qboolean DS_CreateBuffers (void)
 		memset(&dsbcaps, 0, sizeof(dsbcaps));
 		dsbcaps.dwSize = sizeof(dsbcaps);
 
-		si->Com_DPrintf("...creating secondary buffer: ");
+		si->Com_DPrintf(DEBUG_SYSTEM, "...creating secondary buffer: ");
 		if (DS_OK != pDS->lpVtbl->CreateSoundBuffer(pDS, &dsbuf, &pDSBuf, NULL)) {
-			si->Com_DPrintf("failed\n");
+			si->Com_DPrintf(DEBUG_SYSTEM, "failed\n");
 			FreeSound();
 			return qfalse;
 		}
@@ -174,24 +174,24 @@ static qboolean DS_CreateBuffers (void)
 		si->dma->speed = format.nSamplesPerSec;
 
 		if (DS_OK != pDSBuf->lpVtbl->GetCaps(pDSBuf, &dsbcaps)) {
-			si->Com_DPrintf("*** GetCaps failed ***\n");
+			si->Com_DPrintf(DEBUG_SYSTEM, "*** GetCaps failed ***\n");
 			FreeSound();
 			return qfalse;
 		}
 
-		si->Com_DPrintf("...using secondary sound buffer\n");
+		si->Com_DPrintf(DEBUG_SYSTEM, "...using secondary sound buffer\n");
 	} else {
-		si->Com_DPrintf("...using primary buffer\n");
+		si->Com_DPrintf(DEBUG_SYSTEM, "...using primary buffer\n");
 
-		si->Com_DPrintf("...setting WRITEPRIMARY coop level: ");
+		si->Com_DPrintf(DEBUG_SYSTEM, "...setting WRITEPRIMARY coop level: ");
 		if (DS_OK != pDS->lpVtbl->SetCooperativeLevel(pDS, si->cl_hwnd, DSSCL_WRITEPRIMARY)) {
-			si->Com_DPrintf("failed\n");
+			si->Com_DPrintf(DEBUG_SYSTEM, "failed\n");
 			FreeSound();
 			return qfalse;
 		}
 
 		if (DS_OK != pDSPBuf->lpVtbl->GetCaps (pDSPBuf, &dsbcaps)) {
-			si->Com_DPrintf("*** GetCaps failed ***\n");
+			si->Com_DPrintf(DEBUG_SYSTEM, "*** GetCaps failed ***\n");
 			return qfalse;
 		}
 
@@ -202,7 +202,7 @@ static qboolean DS_CreateBuffers (void)
 	pDSBuf->lpVtbl->Play(pDSBuf, 0, 0, DSBPLAY_LOOPING);
 
 	if (snd_firsttime)
-		si->Com_DPrintf("   %d channel(s)\n   %d bits/sample\n   %d bytes/sec\n", si->dma->channels, si->dma->samplebits, si->dma->speed);
+		si->Com_DPrintf(DEBUG_SYSTEM, "   %d channel(s)\n   %d bits/sample\n   %d bytes/sec\n", si->dma->channels, si->dma->samplebits, si->dma->speed);
 
 	gSndBufSize = dsbcaps.dwBufferBytes;
 
@@ -227,21 +227,21 @@ static qboolean DS_CreateBuffers (void)
  */
 static void DS_DestroyBuffers (void)
 {
-	si->Com_DPrintf("Destroying DS buffers\n");
+	si->Com_DPrintf(DEBUG_SYSTEM, "Destroying DS buffers\n");
 	if (pDS) {
-		si->Com_DPrintf("...setting NORMAL coop level\n");
+		si->Com_DPrintf(DEBUG_SYSTEM, "...setting NORMAL coop level\n");
 		pDS->lpVtbl->SetCooperativeLevel( pDS, si->cl_hwnd, DSSCL_NORMAL );
 	}
 
 	if (pDSBuf) {
-		si->Com_DPrintf("...stopping and releasing sound buffer\n");
+		si->Com_DPrintf(DEBUG_SYSTEM, "...stopping and releasing sound buffer\n");
 		pDSBuf->lpVtbl->Stop( pDSBuf );
 		pDSBuf->lpVtbl->Release( pDSBuf );
 	}
 
 	/* only release primary buffer if it's not also the mixing buffer we just released */
 	if (pDSPBuf && (pDSBuf != pDSPBuf)) {
-		si->Com_DPrintf("...releasing primary buffer\n");
+		si->Com_DPrintf(DEBUG_SYSTEM, "...releasing primary buffer\n");
 		pDSPBuf->lpVtbl->Release(pDSPBuf);
 	}
 	pDSBuf = NULL;
@@ -323,7 +323,7 @@ static sndinitstat SND_InitDirect (void)
 	else
 		si->dma->speed = 11025;
 
-	si->Com_DPrintf("Initializing DirectSound\n");
+	si->Com_DPrintf(DEBUG_SYSTEM, "Initializing DirectSound\n");
 
 	if (!hInstDS) {
 		hInstDS = LoadLibrary("dsound.dll");
@@ -341,10 +341,10 @@ static sndinitstat SND_InitDirect (void)
 		}
 	}
 
-	si->Com_DPrintf("...creating DS object: ");
+	si->Com_DPrintf(DEBUG_SYSTEM, "...creating DS object: ");
 	while ((hresult = pDirectSoundCreate(NULL, &pDS, NULL))!= DS_OK) {
 		if (hresult != DSERR_ALLOCATED) {
-			si->Com_DPrintf("failed\n");
+			si->Com_DPrintf(DEBUG_SYSTEM, "failed\n");
 			return SIS_FAILURE;
 		}
 
@@ -352,16 +352,16 @@ static sndinitstat SND_InitDirect (void)
 						"Select Retry to try to start sound again or Cancel to run UFO with no sound.",
 						"Sound not available",
 						MB_RETRYCANCEL | MB_SETFOREGROUND | MB_ICONEXCLAMATION) != IDRETRY) {
-			si->Com_DPrintf("failed, hardware already in use\n");
+			si->Com_DPrintf(DEBUG_SYSTEM, "failed, hardware already in use\n");
 			return SIS_NOTAVAIL;
 		}
 	}
-	si->Com_DPrintf("ok\n");
+	si->Com_DPrintf(DEBUG_SYSTEM, "ok\n");
 
 	dscaps.dwSize = sizeof(dscaps);
 
 	if (DS_OK != pDS->lpVtbl->GetCaps(pDS, &dscaps)) {
-		si->Com_DPrintf("*** couldn't get DS caps ***\n");
+		si->Com_DPrintf(DEBUG_SYSTEM, "*** couldn't get DS caps ***\n");
 	}
 
 	if (dscaps.dwFlags & DSCAPS_EMULDRIVER) {
@@ -375,7 +375,7 @@ static sndinitstat SND_InitDirect (void)
 
 	dsound_init = qtrue;
 
-	si->Com_DPrintf("...completed successfully\n");
+	si->Com_DPrintf(DEBUG_SYSTEM, "...completed successfully\n");
 
 	return SIS_SUCCESS;
 }
@@ -400,7 +400,7 @@ qboolean SND_Init (struct sndinfo *s)
 
 		if (stat == SIS_SUCCESS) {
 			if (snd_firsttime)
-				si->Com_DPrintf("dsound init succeeded\n");
+				si->Com_DPrintf(DEBUG_SYSTEM, "dsound init succeeded\n");
 		} else {
 			si->Com_Printf("*** dsound init failed ***\n");
 		}

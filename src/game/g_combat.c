@@ -1290,7 +1290,7 @@ static qboolean G_FireWithJudgementCall (player_t * player, int num, pos3_t at, 
 	for (i = 0; i < 100; i++)
 		G_ClientShoot(player, num, at, type, firemode, &mock, qfalse, 0);
 
-	Com_DPrintf("G_FireWithJudgementCall: Hit: %d/%d FF+Civ: %d+%d=%d/%d Self: %d.\n",
+	Com_DPrintf(DEBUG_GAME, "G_FireWithJudgementCall: Hit: %d/%d FF+Civ: %d+%d=%d/%d Self: %d.\n",
 		mock.enemy, minhit, mock.friend, mock.civilian, mock.friend + mock.civilian, maxff, mock.self);
 
 	ff = mock.friend + (shooter->team == TEAM_ALIEN ? 0 : mock.civilian);
@@ -1420,7 +1420,7 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, i
 					*fire_hand_type = ST_RIGHT_REACTION;
 				}
 
-				Com_DPrintf("G_GetFiringTUs: right entnumber:%i firemode:%i entteam:%i\n", ent->number, *firemode, ent->team);
+				Com_DPrintf(DEBUG_GAME, "G_GetFiringTUs: right entnumber:%i firemode:%i entteam:%i\n", ent->number, *firemode, ent->team);
 				return gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer;
 			}
 		}
@@ -1444,7 +1444,7 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, i
 					*fire_hand_type = ST_LEFT_REACTION;
 				}
 
-				Com_DPrintf("G_GetFiringTUs: left entnumber:%i firemode:%i entteam:%i\n", ent->number, *firemode, ent->team);
+				Com_DPrintf(DEBUG_GAME, "G_GetFiringTUs: left entnumber:%i firemode:%i entteam:%i\n", ent->number, *firemode, ent->team);
 				return gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer;
 			}
 		}
@@ -1563,7 +1563,7 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 	/* Check if a firemode has been set by the client. */
 	if (firemode < 0) {
 		if (!mock)
-			Com_DPrintf("G_ResolveRF: Cancelling resolution because %s has not set a reaction-firemode (%i).\n", ent->chr.name, firemode);
+			Com_DPrintf(DEBUG_GAME, "G_ResolveRF: Cancelling resolution because %s has not set a reaction-firemode (%i).\n", ent->chr.name, firemode);
 		return qfalse;
 	}
 
@@ -1587,7 +1587,7 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 	level.activeTeam = ent->team;
 
 	/* take the shot */
-	Com_DPrintf("G_ResolveRF: reaction shot: fd:%i\n", firemode);
+	Com_DPrintf(DEBUG_GAME, "G_ResolveRF: reaction shot: fd:%i\n", firemode);
 	tookShot = G_FireWithJudgementCall(player, ent->number, ent->reactionTarget->pos, fire_hand_type, firemode);
 
 	/* Revert active team. */

@@ -524,13 +524,13 @@ int SEQ_Precache (const char *name, char *data)
 {
 	if (!Q_strncmp(name, "models", 6)) {
 		while (*data) {
-			Com_DPrintf("Precaching model: %s\n", data);
+			Com_DPrintf(DEBUG_CLIENT, "Precaching model: %s\n", data);
 			re.RegisterModel(data);
 			data += strlen(data) + 1;
 		}
 	} else if (!Q_strncmp(name, "pics", 4)) {
 		while (*data) {
-			Com_DPrintf("Precaching image: %s\n", data);
+			Com_DPrintf(DEBUG_CLIENT, "Precaching image: %s\n", data);
 			re.RegisterPic(data);
 			data += strlen(data) + 1;
 		}
@@ -603,11 +603,11 @@ int SEQ_Model (const char *name, char *data)
 		if (!vp->string) {
 			if (!Q_strncmp(data, "model", 5)) {
 				data += strlen(data) + 1;
-				Com_DPrintf("Registering model: %s\n", data);
+				Com_DPrintf(DEBUG_CLIENT, "Registering model: %s\n", data);
 				se->model = re.RegisterModel(data);
 			} else if (!Q_strncmp(data, "anim", 4)) {
 				data += strlen(data) + 1;
-				Com_DPrintf("Change anim to: %s\n", data);
+				Com_DPrintf(DEBUG_CLIENT, "Change anim to: %s\n", data);
 				re.AnimChange(&se->as, se->model, data);
 			} else
 				Com_Printf("SEQ_Model: unknown token '%s'\n", data);

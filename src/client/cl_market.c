@@ -277,7 +277,7 @@ static void BS_BuyType_f (void)
 		/* We cannot buy aircraft if there is no power in our base. */
 		if (!baseCurrent->hasPower) {
 			Cbuf_ExecuteText(EXEC_NOW, "mn_pop\n");
-			MN_Popup(_("Note"), _("No power supplies in this base.\nHangars are not functional."));		
+			MN_Popup(_("Note"), _("No power supplies in this base.\nHangars are not functional."));
 			return;
 		}
 		/* We cannot buy aircraft without any hangar. */
@@ -368,7 +368,7 @@ static void BS_BuyItem_f (void)
 	item = buyList[num + buyListScrollPos];
 	Cvar_SetValue("mn_bs_current", item);
 	UP_ItemDescription(item);
-	Com_DPrintf("BS_BuyItem_f: item %i\n", item);
+	Com_DPrintf(DEBUG_CLIENT, "BS_BuyItem_f: item %i\n", item);
 	for (i = 0; i < baseCurrent->buyfactor; i++) {
 		if (ccs.credits >= ccs.eMarket.ask[item] && ccs.eMarket.num[item]) {
 			if (baseCurrent->capacities[CAP_ITEMS].max - baseCurrent->capacities[CAP_ITEMS].cur >= csi.ods[item].size) {
@@ -456,21 +456,21 @@ static void BS_Autosell_f (void)
 	}
 
 	num = atoi(Cmd_Argv(1));
-	Com_DPrintf("BS_Autosell_f: listnumber %i\n", num);
+	Com_DPrintf(DEBUG_CLIENT, "BS_Autosell_f: listnumber %i\n", num);
 	if (num < 0 || num >= buyListLength)
 		return;
 	item = buyList[num + buyListScrollPos];
 
 	if (gd.autosell[item]) {
 		gd.autosell[item] = qfalse;
-		Com_DPrintf("item name: %s, autosell false\n", csi.ods[item].name);
+		Com_DPrintf(DEBUG_CLIENT, "item name: %s, autosell false\n", csi.ods[item].name);
 	} else {
 		/* Don't allow to enable autosell for items not researched. */
 		tech = csi.ods[item].tech;
 		if (!RS_IsResearched_ptr(tech))
 			return;
 		gd.autosell[item] = qtrue;
-		Com_DPrintf("item name: %s, autosell true\n", csi.ods[item].name);
+		Com_DPrintf(DEBUG_CLIENT, "item name: %s, autosell true\n", csi.ods[item].name);
 	}
 
 	/* Reinit the menu. */
@@ -579,9 +579,7 @@ static void BS_BuyAircraft_f (void)
 
 	/* Check free space in hangars. */
 	if (freeSpace < 0) {
-#ifdef DEBUG
 		Com_Printf("BS_BuyAircraft_f()... something bad happened, AIR_CalculateHangarStorage returned -1!\n");
-#endif
 		return;
 	}
 
@@ -646,7 +644,7 @@ static void BS_SellAircraft_f (void)
 	/* ok, we've found an empty aircraft (no team) in a base
 	   so now we can sell it */
 	if (found) {
-		Com_DPrintf("BS_SellAircraft_f: Selling aircraft with IDX %i\n", aircraft->idx);
+		Com_DPrintf(DEBUG_CLIENT, "BS_SellAircraft_f: Selling aircraft with IDX %i\n", aircraft->idx);
 		AIR_DeleteAircraft(aircraft);
 
 		CL_UpdateCredits(ccs.credits + aircraft_samples[aircraftID].price);
@@ -661,7 +659,7 @@ static void BS_SellAircraft_f (void)
 		if (teamNote)
 			MN_Popup(_("Note"), _("You can't sell an aircraft if it still has a team assigned"));
 		else
-			Com_DPrintf("BS_SellAircraft_f: There are no aircraft available (with no team assigned) for selling\n");
+			Com_DPrintf(DEBUG_CLIENT, "BS_SellAircraft_f: There are no aircraft available (with no team assigned) for selling\n");
 	}
 }
 

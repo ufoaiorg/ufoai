@@ -68,7 +68,7 @@ static void AIR_UpdateHangarCapForOne (int aircraftID, int base_idx)
 	assert(base);
 
 	freespace = base->capacities[CAP_AIRCRAFTS_SMALL].max - base->capacities[CAP_AIRCRAFTS_SMALL].cur;
-	Com_DPrintf("AIR_UpdateHangarCapForOne()... freespace: %i aircraft weight: %i\n", freespace, aircraftSize);
+	Com_DPrintf(DEBUG_CLIENT, "AIR_UpdateHangarCapForOne()... freespace: %i aircraft weight: %i\n", freespace, aircraftSize);
 	/* If the aircraft size is less than 8, we will try to update CAP_AIRCRAFTS_SMALL. */
 	if (aircraftSize < 8) {
 		if (freespace >= aircraftSize) {
@@ -76,7 +76,7 @@ static void AIR_UpdateHangarCapForOne (int aircraftID, int base_idx)
 		} else {
 			/* Not enough space in small hangar. Aircraft will go to big hangar. */
 			freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur;
-			Com_DPrintf("AIR_UpdateHangarCapForOne()... freespace: %i aircraft weight: %i\n", freespace, aircraftSize);
+			Com_DPrintf(DEBUG_CLIENT, "AIR_UpdateHangarCapForOne()... freespace: %i aircraft weight: %i\n", freespace, aircraftSize);
 			if (freespace >= aircraftSize) {
 				base->capacities[CAP_AIRCRAFTS_BIG].cur += aircraftSize;
 			} else {
@@ -87,7 +87,7 @@ static void AIR_UpdateHangarCapForOne (int aircraftID, int base_idx)
 	} else {
 		/* The aircraft is too big for small hangar. Update big hangar capacities. */
 		freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur;
-		Com_DPrintf("AIR_UpdateHangarCapForOne()... freespace: %i aircraft weight: %i\n", freespace, aircraftSize);
+		Com_DPrintf(DEBUG_CLIENT, "AIR_UpdateHangarCapForOne()... freespace: %i aircraft weight: %i\n", freespace, aircraftSize);
 		if (freespace >= aircraftSize) {
 			base->capacities[CAP_AIRCRAFTS_BIG].cur += aircraftSize;
 		} else {
@@ -96,7 +96,7 @@ static void AIR_UpdateHangarCapForOne (int aircraftID, int base_idx)
 		}
 	}
 	/* @todo: introduce capacities for UFO hangars and do space checks for them here. */
-	Com_DPrintf("AIR_UpdateHangarCapForOne()... base capacities.cur: small: %i big: %i\n", base->capacities[CAP_AIRCRAFTS_SMALL].cur, base->capacities[CAP_AIRCRAFTS_BIG].cur);
+	Com_DPrintf(DEBUG_CLIENT, "AIR_UpdateHangarCapForOne()... base capacities.cur: small: %i big: %i\n", base->capacities[CAP_AIRCRAFTS_SMALL].cur, base->capacities[CAP_AIRCRAFTS_BIG].cur);
 }
 
 /**
@@ -127,10 +127,10 @@ void AIR_UpdateHangarCapForAll (int base_idx)
 
 	for (i = 0; i < base->numAircraftInBase; i++) {
 		aircraft = &base->aircraft[i];
-		Com_DPrintf("AIR_UpdateHangarCapForAll()... base: %s, aircraft: %s\n", base->name, aircraft->id);
+		Com_DPrintf(DEBUG_CLIENT, "AIR_UpdateHangarCapForAll()... base: %s, aircraft: %s\n", base->name, aircraft->id);
 		AIR_UpdateHangarCapForOne(aircraft->idx_sample, base->idx);
 	}
-	Com_DPrintf("AIR_UpdateHangarCapForAll()... base capacities.cur: small: %i big: %i\n", base->capacities[CAP_AIRCRAFTS_SMALL].cur, base->capacities[CAP_AIRCRAFTS_BIG].cur);
+	Com_DPrintf(DEBUG_CLIENT, "AIR_UpdateHangarCapForAll()... base capacities.cur: small: %i big: %i\n", base->capacities[CAP_AIRCRAFTS_SMALL].cur, base->capacities[CAP_AIRCRAFTS_BIG].cur);
 }
 
 #ifdef DEBUG
@@ -425,7 +425,7 @@ void AIM_NextAircraft_f (void)
 	if ((aircraftID < 0) || (aircraftID >= baseCurrent->numAircraftInBase)) {
 		/* Bad aircraft idx found (no or no sane aircraft).
 		 * Setting it to the first aircraft since numAircraftInBase has been checked to be at least 1. */
-		Com_DPrintf("AIM_NextAircraft_f: bad aircraft idx found.\n");
+		Com_DPrintf(DEBUG_CLIENT, "AIM_NextAircraft_f: bad aircraft idx found.\n");
 		aircraftID = 0;
 		Cvar_SetValue("mn_aircraft_idx", aircraftID);
 		AIR_AircraftSelect(NULL);
@@ -437,7 +437,7 @@ void AIM_NextAircraft_f (void)
 		Cvar_SetValue("mn_aircraft_idx", aircraftID + 1);
 		AIR_AircraftSelect(NULL);
 	} else {
-		Com_DPrintf("AIM_NextAircraft_f: we are at the end of the list already -> mn_aircraft_idx: %i - numAircraftInBase: %i\n", aircraftID, baseCurrent->numAircraftInBase);
+		Com_DPrintf(DEBUG_CLIENT, "AIM_NextAircraft_f: we are at the end of the list already -> mn_aircraft_idx: %i - numAircraftInBase: %i\n", aircraftID, baseCurrent->numAircraftInBase);
 	}
 }
 
@@ -457,7 +457,7 @@ void AIM_PrevAircraft_f (void)
 	if ((aircraftID < 0) || (aircraftID >= baseCurrent->numAircraftInBase)) {
 		/* Bad aircraft idx found (no or no sane aircraft).
 		 * Setting it to the first aircraft since numAircraftInBase has been checked to be at least 1. */
-		Com_DPrintf("AIM_PrevAircraft_f: bad aircraft idx found.\n");
+		Com_DPrintf(DEBUG_CLIENT, "AIM_PrevAircraft_f: bad aircraft idx found.\n");
 		aircraftID = 0;
 		Cvar_SetValue("mn_aircraft_idx", aircraftID);
 		AIR_AircraftSelect(NULL);
@@ -468,7 +468,7 @@ void AIM_PrevAircraft_f (void)
 		Cvar_SetValue("mn_aircraft_idx", aircraftID - 1);
 		AIR_AircraftSelect(NULL);
 	} else {
-		Com_DPrintf("AIM_PrevAircraft_f: we are at the beginning of the list already -> mn_aircraft_idx: %i - numAircraftInBase: %i\n", aircraftID, baseCurrent->numAircraftInBase);
+		Com_DPrintf(DEBUG_CLIENT, "AIM_PrevAircraft_f: we are at the beginning of the list already -> mn_aircraft_idx: %i - numAircraftInBase: %i\n", aircraftID, baseCurrent->numAircraftInBase);
 	}
 }
 
@@ -503,7 +503,7 @@ qboolean AIR_AircraftHasEnoughFuel (aircraft_t *aircraft, const vec2_t destinati
 	else {
 		/* @todo Should check if another base is closer than homeBase and have a hangar */
 		MN_AddNewMessage(_("Notice"), _("Your aircraft doesn't have enough fuel to go there and then come back to its home base"), qfalse, MSG_STANDARD, NULL);
-		Com_DPrintf("Your aircraft doesn't have enough fuel to go there and then come back to its home base. This distance would be %f, but it can only fly on: %f\n", distance, aircraft->stats[AIR_STATS_SPEED] * aircraft->fuel / 3600.0f);
+		Com_DPrintf(DEBUG_CLIENT, "Your aircraft doesn't have enough fuel to go there and then come back to its home base. This distance would be %f, but it can only fly on: %f\n", distance, aircraft->stats[AIR_STATS_SPEED] * aircraft->fuel / 3600.0f);
 	}
 
 	return qfalse;
@@ -521,7 +521,7 @@ void AIR_AircraftReturnToBase (aircraft_t *aircraft)
 	if (aircraft && aircraft->status != AIR_HOME) {
 		base = aircraft->homebase;
 		assert(base);
-		Com_DPrintf("return '%s' (%i) to base ('%s').\n", aircraft->name, aircraft->idx, base->name);
+		Com_DPrintf(DEBUG_CLIENT, "return '%s' (%i) to base ('%s').\n", aircraft->name, aircraft->idx, base->name);
 		MAP_MapCalcLine(aircraft->pos, base->pos, &aircraft->route);
 		aircraft->status = AIR_RETURNING;
 		aircraft->time = 0;
@@ -695,16 +695,16 @@ void AIR_NewAircraft (base_t *base, const char *name)
 
 		Q_strncpyz(messageBuffer, va(_("You've got a new aircraft (a %s) in base %s"), aircraft->name, base->name), MAX_MESSAGE_TEXT);
 		MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
-		Com_DPrintf("Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
+		Com_DPrintf(DEBUG_CLIENT, "Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
 		Vector2Copy(base->pos, aircraft->pos);
 		Radar_Initialise(&(aircraft->radar), AIRCRAFT_RADAR_RANGE);
 
 		gd.numAircraft++;		/**< Increase the global number of aircraft. */
 		base->numAircraftInBase++;	/**< Increase the number of aircraft in the base. */
 		/* Update base capacities. */
-		Com_DPrintf("idx_sample: %i name: %s weight: %i\n", aircraft->idx_sample, aircraft->id, aircraft->weight);
+		Com_DPrintf(DEBUG_CLIENT, "idx_sample: %i name: %s weight: %i\n", aircraft->idx_sample, aircraft->id, aircraft->weight);
 		AIR_UpdateHangarCapForOne(aircraft->idx_sample, base->idx);
-		Com_DPrintf("Adding new aircraft %s with IDX %i for base %s\n", aircraft->name, aircraft->idx, base->name);
+		Com_DPrintf(DEBUG_CLIENT, "Adding new aircraft %s with IDX %i for base %s\n", aircraft->name, aircraft->idx, base->name);
 		/* Now update the aircraft list - maybe there is a popup active */
 		Cbuf_ExecuteText(EXEC_NOW, "aircraft_list");
 	}
@@ -725,14 +725,14 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 	int previous_aircraftCurrent = baseCurrent->aircraftCurrent;
 
 	if (!aircraft) {
-		Com_DPrintf("AIR_DeleteAircraft: no aircraft given (NULL)\n");
+		Com_DPrintf(DEBUG_CLIENT, "AIR_DeleteAircraft: no aircraft given (NULL)\n");
 		/* @todo: Return deletion status here. */
 		return;
 	}
 
 	/* Check if this aircraft is currently transferred. */
 	if (aircraft->status == AIR_TRANSIT) {
-		Com_DPrintf("CL_DeleteAircraft: this aircraft is currently transferred. We can not remove it.\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_DeleteAircraft: this aircraft is currently transferred. We can not remove it.\n");
 		/* @todo: Return deletion status here. */
 		return;
 	}
@@ -740,7 +740,7 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 	base = aircraft->homebase;
 
 	if (!base) {
-		Com_DPrintf("AIR_DeleteAircraft: No homebase found for aircraft.\n");
+		Com_DPrintf(DEBUG_CLIENT, "AIR_DeleteAircraft: No homebase found for aircraft.\n");
 		/* @todo: Return deletion status here. */
 		return;
 	}
@@ -756,7 +756,7 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 			aircraft_temp->idx--;
 		} else {
 			/* For some reason there was no aircraft found for this index. */
-			Com_DPrintf("AIR_DeleteAircraft: No aircraft found for this global index: %i\n", i);
+			Com_DPrintf(DEBUG_CLIENT, "AIR_DeleteAircraft: No aircraft found for this global index: %i\n", i);
 		}
 	}
 
@@ -910,7 +910,7 @@ void CL_CampaignRunAircraft (int dt)
 #endif
 							MAP_SelectMission(cls.missionaircraft->mission);
 							gd.interceptAircraft = cls.missionaircraft->idx;
-							Com_DPrintf("gd.interceptAircraft: %i\n", gd.interceptAircraft);
+							Com_DPrintf(DEBUG_CLIENT, "gd.interceptAircraft: %i\n", gd.interceptAircraft);
 							MN_PushMenu("popup_intercept_ready");
 							break;
 						case AIR_RETURNING:
@@ -1003,20 +1003,20 @@ aircraft_t* AIR_AircraftGetFromIdx (int idx)
 	aircraft_t*	aircraft;
 
 	if (idx < 0) {
-		Com_DPrintf("AIR_AircraftGetFromIdx: bad aircraft index: %i\n", idx);
+		Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIdx: bad aircraft index: %i\n", idx);
 		return NULL;
 	}
 
 #ifdef PARANOID
 	if (gd.numBases < 1) {
-		Com_DPrintf("AIR_AircraftGetFromIdx: no base(s) found!\n");
+		Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIdx: no base(s) found!\n");
 	}
 #endif
 
 	for (base = gd.bases; base < (gd.bases + gd.numBases); base++) {
 		for (aircraft = base->aircraft; aircraft < (base->aircraft + base->numAircraftInBase); aircraft++) {
 			if (aircraft->idx == idx) {
-				Com_DPrintf("AIR_AircraftGetFromIdx: aircraft idx: %i - base idx: %i (%s)\n", aircraft->idx, base->idx, base->name);
+				Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIdx: aircraft idx: %i - base idx: %i (%s)\n", aircraft->idx, base->idx, base->name);
 				return aircraft;
 			}
 		}
@@ -1139,7 +1139,7 @@ void AII_ParseAircraftItem (const char *name, const char **text)
 	airItem = &aircraftItems[gd.numAircraftItems];
 	memset(airItem, 0, sizeof(aircraftItem_t));
 
-	Com_DPrintf("...found craftitem %s\n", name);
+	Com_DPrintf(DEBUG_CLIENT, "...found craftitem %s\n", name);
 	airItem->idx = gd.numAircraftItems;
 	gd.numAircraftItems++;
 	airItem->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
@@ -1321,7 +1321,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 		air_samp = &aircraft_samples[numAircraft_samples];
 		memset(air_samp, 0, sizeof(aircraft_t));
 
-		Com_DPrintf("...found aircraft %s\n", name);
+		Com_DPrintf(DEBUG_CLIENT, "...found aircraft %s\n", name);
 		air_samp->idx = gd.numAircraft;
 		air_samp->idx_sample = numAircraft_samples;
 		air_samp->id = Mem_PoolStrDup(name, cl_genericPool, CL_TAG_NONE);
@@ -1374,7 +1374,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
-				Com_DPrintf("use shield %s for aircraft %s\n", token, air_samp->id);
+				Com_DPrintf(DEBUG_CLIENT, "use shield %s for aircraft %s\n", token, air_samp->id);
 				tech = RS_GetTechByID(token);
 				if (tech)
 					air_samp->shield.itemIdx = AII_GetAircraftItemByID(tech->provides);
@@ -1461,11 +1461,11 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 								switch (itemType) {
 								case AC_ITEM_WEAPON:
 									air_samp->weapons[air_samp->maxWeapons - 1].itemIdx = AII_GetAircraftItemByID(tech->provides);
-									Com_DPrintf("use weapon %s for aircraft %s\n", token, air_samp->id);
+									Com_DPrintf(DEBUG_CLIENT, "use weapon %s for aircraft %s\n", token, air_samp->id);
 									break;
 								case AC_ITEM_ELECTRONICS:
 									air_samp->electronics[air_samp->maxElectronics - 1].itemIdx = AII_GetAircraftItemByID(tech->provides);
-									Com_DPrintf("use electronics %s for aircraft %s\n", token, air_samp->id);
+									Com_DPrintf(DEBUG_CLIENT, "use electronics %s for aircraft %s\n", token, air_samp->id);
 									break;
 								default:
 									Com_Printf("Ignoring item value '%s' due to unknown slot type\n", token);
@@ -1479,7 +1479,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 							if (tech) {
 								if (itemType == AC_ITEM_WEAPON) {
 									air_samp->weapons[air_samp->maxWeapons - 1].ammoIdx = AII_GetAircraftItemByID(tech->provides);
-									Com_DPrintf("use ammo %s for aircraft %s\n", token, air_samp->id);
+									Com_DPrintf(DEBUG_CLIENT, "use ammo %s for aircraft %s\n", token, air_samp->id);
 								} else
 									Com_Printf("Ignoring ammo value '%s' due to unknown slot type\n", token);
 							}
@@ -1530,7 +1530,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 
 			if (vp->string && !Q_strncmp(vp->string, "size", 4)) {
 				if (air_samp->size > MAX_ACTIVETEAM) {
-					Com_DPrintf("AIR_ParseAircraft: Set size for aircraft to the max value of %i\n", MAX_ACTIVETEAM);
+					Com_DPrintf(DEBUG_CLIENT, "AIR_ParseAircraft: Set size for aircraft to the max value of %i\n", MAX_ACTIVETEAM);
 					air_samp->size = MAX_ACTIVETEAM;
 				}
 			}
@@ -1829,7 +1829,7 @@ void AIR_AddToAircraftTeam (aircraft_t *aircraft, int employee_idx, employeeType
 	int i;
 
 	if (aircraft == NULL) {
-		Com_DPrintf("AIR_AddToAircraftTeam: null aircraft \n");
+		Com_DPrintf(DEBUG_CLIENT, "AIR_AddToAircraftTeam: null aircraft \n");
 		return;
 	}
 	if (aircraft->teamSize < aircraft->size) {
@@ -1839,14 +1839,14 @@ void AIR_AddToAircraftTeam (aircraft_t *aircraft, int employee_idx, employeeType
 			if (aircraft->teamIdxs[i] == -1) {
 				aircraft->teamIdxs[i] = employee_idx;
 				aircraft->teamTypes[i] = employeeType;
-				Com_DPrintf("AIR_AddToAircraftTeam: added idx '%d'\n", employee_idx);
+				Com_DPrintf(DEBUG_CLIENT, "AIR_AddToAircraftTeam: added idx '%d'\n", employee_idx);
 				aircraft->teamSize++;
 				break;
 			}
 		if (i >= aircraft->size)
-			Com_DPrintf("AIR_AddToAircraftTeam: couldnt find space\n");
+			Com_DPrintf(DEBUG_CLIENT, "AIR_AddToAircraftTeam: couldnt find space\n");
 	} else {
-		Com_DPrintf("AIR_AddToAircraftTeam: error: no space in aircraft\n");
+		Com_DPrintf(DEBUG_CLIENT, "AIR_AddToAircraftTeam: error: no space in aircraft\n");
 	}
 }
 
@@ -1875,7 +1875,7 @@ void AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, int employee_idx, employe
 		if (aircraft->teamIdxs[i] != -1 && aircraft->teamIdxs[i] == employee_idx && aircraft->teamTypes[i] == employeeType)	{
 			aircraft->teamIdxs[i] = -1;
 			aircraft->teamTypes[i] = MAX_EMPL;
-			Com_DPrintf("AIR_RemoveFromAircraftTeam: removed idx '%d' \n", employee_idx);
+			Com_DPrintf(DEBUG_CLIENT, "AIR_RemoveFromAircraftTeam: removed idx '%d' \n", employee_idx);
 			aircraft->teamSize--;
 			return;
 		}
@@ -1902,7 +1902,7 @@ void AIR_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft, int employee_
 	for (i = 0; i < aircraft->size; i++)
 		if (aircraft->teamIdxs[i] > employee_idx && aircraft->teamTypes[i] == employeeType) {
 			aircraft->teamIdxs[i]--;
-			Com_DPrintf("AIR_DecreaseAircraftTeamIdxGreaterThan: decreased idx '%d' \n", aircraft->teamIdxs[i]+1);
+			Com_DPrintf(DEBUG_CLIENT, "AIR_DecreaseAircraftTeamIdxGreaterThan: decreased idx '%d' \n", aircraft->teamIdxs[i]+1);
 		}
 }
 
@@ -1917,7 +1917,7 @@ qboolean AIR_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx, employeeT
 	int i;
 
 	if (aircraft == NULL) {
-		Com_DPrintf("AIR_IsInAircraftTeam: No aircraft given\n");
+		Com_DPrintf(DEBUG_CLIENT, "AIR_IsInAircraftTeam: No aircraft given\n");
 		return qfalse;
 	}
 
@@ -1929,7 +1929,7 @@ qboolean AIR_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx, employeeT
 #ifdef PARANOID
 	else {
 		if (aircraft->homebase)
-			Com_DPrintf("AIR_IsInAircraftTeam: aircraft: '%s' (base: '%s')\n", aircraft->name, aircraft->homebase->name);
+			Com_DPrintf(DEBUG_CLIENT, "AIR_IsInAircraftTeam: aircraft: '%s' (base: '%s')\n", aircraft->name, aircraft->homebase->name);
 	}
 #endif
 
@@ -1938,12 +1938,12 @@ qboolean AIR_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx, employeeT
 		if (aircraft->teamIdxs[i] == employee_idx && aircraft->teamTypes[i] == employeeType) {
 			/** @note This also skips the -1 entries in teamIdxs. */
 #ifdef DEBUG
-			Com_DPrintf("AIR_IsInAircraftTeam: found idx '%d' (homebase: '%s' - baseCurrent: '%s') \n", employee_idx, aircraft->homebase ? aircraft->homebase->name : "", baseCurrent ? baseCurrent->name : "");
+			Com_DPrintf(DEBUG_CLIENT, "AIR_IsInAircraftTeam: found idx '%d' (homebase: '%s' - baseCurrent: '%s') \n", employee_idx, aircraft->homebase ? aircraft->homebase->name : "", baseCurrent ? baseCurrent->name : "");
 #endif
 			return qtrue;
 		}
 	}
-	Com_DPrintf("AIR_IsInAircraftTeam:not found idx '%d' \n", employee_idx);
+	Com_DPrintf(DEBUG_CLIENT, "AIR_IsInAircraftTeam:not found idx '%d' \n", employee_idx);
 	return qfalse;
 }
 
@@ -2358,14 +2358,14 @@ int AIR_CalculateHangarStorage (int aircraftID, base_t *base, int used)
 	/* If the aircraft size is less than 8, we will check space in small hangar. */
 	if (aircraftSize < 8) {
 		freespace = base->capacities[CAP_AIRCRAFTS_SMALL].max - base->capacities[CAP_AIRCRAFTS_SMALL].cur - used;
-		Com_DPrintf("AIR_CalculateHangarStorage()... freespace (small): %i aircraft weight: %i (max: %i, cur: %i)\n", freespace, aircraftSize,
+		Com_DPrintf(DEBUG_CLIENT, "AIR_CalculateHangarStorage()... freespace (small): %i aircraft weight: %i (max: %i, cur: %i)\n", freespace, aircraftSize,
 			base->capacities[CAP_AIRCRAFTS_SMALL].max, base->capacities[CAP_AIRCRAFTS_SMALL].cur);
 		if (aircraftSize <= freespace) {
 			return freespace;
 		} else {
 			/* Small aircrafts (size < 8) can be stored in big hangars as well. */
 			freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur - used;
-			Com_DPrintf("AIR_CalculateHangarStorage()... freespace (small in big): %i aircraft weight: %i (max: %i, cur: %i)\n", freespace, aircraftSize,
+			Com_DPrintf(DEBUG_CLIENT, "AIR_CalculateHangarStorage()... freespace (small in big): %i aircraft weight: %i (max: %i, cur: %i)\n", freespace, aircraftSize,
 				base->capacities[CAP_AIRCRAFTS_BIG].max, base->capacities[CAP_AIRCRAFTS_BIG].cur);
 			if (aircraftSize <= freespace) {
 				return freespace;
@@ -2377,7 +2377,7 @@ int AIR_CalculateHangarStorage (int aircraftID, base_t *base, int used)
 	} else {
 		/* If the aircraft size is more or equal to 8, we will check space in big hangar. */
 		freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur - used;
-		Com_DPrintf("AIR_CalculateHangarStorage()... freespace (big): %i aircraft weight: %i (max: %i, cur: %i)\n", freespace, aircraftSize,
+		Com_DPrintf(DEBUG_CLIENT, "AIR_CalculateHangarStorage()... freespace (big): %i aircraft weight: %i (max: %i, cur: %i)\n", freespace, aircraftSize,
 			base->capacities[CAP_AIRCRAFTS_BIG].max, base->capacities[CAP_AIRCRAFTS_BIG].cur);
 		if (aircraftSize <= freespace) {
 			return freespace;

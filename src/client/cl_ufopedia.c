@@ -881,7 +881,7 @@ static void UP_FindEntry_f (void)
 		return;
 	}
 
-	Com_DPrintf("UP_FindEntry_f: id=\"%s\"\n", id); /*DEBUG */
+	Com_DPrintf(DEBUG_CLIENT, "UP_FindEntry_f: id=\"%s\"\n", id); /*DEBUG */
 
 	tech = RS_GetTechByID(id);
 
@@ -891,8 +891,8 @@ static void UP_FindEntry_f (void)
 		return;
 	}
 
-	/*if we can not find it */
-	Com_DPrintf("UP_FindEntry_f: No PediaEntry found for %s\n", id );
+	/* if we can not find it */
+	Com_DPrintf(DEBUG_CLIENT, "UP_FindEntry_f: No PediaEntry found for %s\n", id );
 }
 
 /**

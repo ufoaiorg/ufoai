@@ -1284,7 +1284,7 @@ void CM_LoadMap (const char *tiles, const char *pos, unsigned *mapchecksum)
 		}
 
 		/* get tile name */
-		Com_DPrintf("CM_LoadMap: token: %s\n", token);
+		Com_DPrintf(DEBUG_ENGINE, "CM_LoadMap: token: %s\n", token);
 		if (token[0] == '+')
 			Com_sprintf(name, sizeof(name), "%s%s", base, token + 1);
 		else
@@ -2428,7 +2428,7 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, byte 
 	for (i = 0, p = map->fblist; i < map->fblength / 2; i++, p += 2) {
 		/* Skip initial position. */
 		if (VectorCompare((*p), exclude_from_forbiddenlist)) {
-			/* Com_DPrintf("Grid_CheckForbidden: skipping %i|%i|%i\n", (*p)[0], (*p)[1], (*p)[2]); */
+			/* Com_DPrintf(DEBUG_ENGINE, "Grid_CheckForbidden: skipping %i|%i|%i\n", (*p)[0], (*p)[1], (*p)[2]); */
 			continue;
 		}
 
@@ -2488,12 +2488,12 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dir,
 
 #ifdef PARANOID
 	if (z >= HEIGHT) {
-		Com_DPrintf("Grid_MoveMark: WARNING z = %i(>= HEIGHT %i)\n", z, HEIGHT);
+		Com_DPrintf(DEBUG_ENGINE, "Grid_MoveMark: WARNING z = %i(>= HEIGHT %i)\n", z, HEIGHT);
 		return;
 	}
 
 	if ((l + TU_MOVE_STRAIGHT) >= MAX_MOVELENGTH)) {
-		Com_DPrintf("Grid_MoveMark: maximum movelength reached %i (max %i)\n", l, MAX_MOVELENGTH);
+		Com_DPrintf(DEBUG_ENGINE, "Grid_MoveMark: maximum movelength reached %i (max %i)\n", l, MAX_MOVELENGTH);
 		return;
 	}
 #endif
@@ -2809,7 +2809,7 @@ byte Grid_MoveLength (struct routing_s *map, pos3_t to, qboolean stored)
 {
 #ifdef PARANOID
 	if (to[2] >= HEIGHT) {
-		Com_DPrintf("Grid_MoveLength: WARNING to[2] = %i(>= HEIGHT)\n", to[2]);
+		Com_DPrintf(DEBUG_ENGINE, "Grid_MoveLength: WARNING to[2] = %i(>= HEIGHT)\n", to[2]);
 		return ROUTING_NOT_REACHABLE;
 	}
 #endif
@@ -2840,7 +2840,7 @@ static byte Grid_MoveCheck (struct routing_s *map, pos3_t pos, byte sz, byte l)
 
 #ifdef PARANOID
 	if (sz >= HEIGHT) {
-		Com_DPrintf("Grid_MoveCheck: WARNING sz = %i(>= HEIGHT %i)\n", sz, HEIGHT);
+		Com_DPrintf(DEBUG_ENGINE, "Grid_MoveCheck: WARNING sz = %i(>= HEIGHT %i)\n", sz, HEIGHT);
 		return 0xFF;
 	}
 #endif
@@ -2975,7 +2975,7 @@ byte Grid_Fall (struct routing_s *map, pos3_t pos, int actor_size)
 
 	/* is z off-map? */
 	if (z >= HEIGHT) {
-		Com_DPrintf("Grid_Fall: z (height) out of bounds): z=%i max=%i\n", z, HEIGHT);
+		Com_DPrintf(DEBUG_ENGINE, "Grid_Fall: z (height) out of bounds): z=%i max=%i\n", z, HEIGHT);
 		return 0xFF;
 	}
 

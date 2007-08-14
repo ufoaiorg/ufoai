@@ -50,7 +50,7 @@ int B_GetEmployeeCount (const base_t* const base)
 
 	for (type = EMPL_SOLDIER; type < MAX_EMPL; type++)
 		cnt += E_CountHired(base, type);
-	Com_DPrintf("B_GetEmployeeCount: %i\n", cnt);
+	Com_DPrintf(DEBUG_CLIENT, "B_GetEmployeeCount: %i\n", cnt);
 
 	return cnt;
 }
@@ -104,7 +104,7 @@ int B_GetAvailableQuarterSpace (const base_t* const base)
 			&& gd.buildings[base->idx][i].buildingStatus != B_STATUS_NOT_SET)
 				cnt += gd.buildings[base->idx][i].maxEmployees;
 		}
-	Com_DPrintf("B_GetAvailableQuarterSpace: %i\n", cnt);
+	Com_DPrintf(DEBUG_CLIENT, "B_GetAvailableQuarterSpace: %i\n", cnt);
 
 	return cnt;
 }
@@ -396,7 +396,7 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 
 	/* call ondestroy trigger */
 	if (*building->onDestroy) {
-		Com_DPrintf("B_BuildingDestroy: %s %i;\n", building->onDestroy, base->idx);
+		Com_DPrintf(DEBUG_CLIENT, "B_BuildingDestroy: %s %i;\n", building->onDestroy, base->idx);
 		Cbuf_AddText(va("%s %i;", building->onDestroy, base->idx));
 	}
 
@@ -548,17 +548,17 @@ static void B_HireForBuilding (base_t* base, building_t * building, int num)
 		case B_QUARTERS:
 			return;
 		case B_MISC:
-			Com_DPrintf("B_HireForBuilding: Misc building type: %i with employees: %i.\n", building->buildingType, num);
+			Com_DPrintf(DEBUG_CLIENT, "B_HireForBuilding: Misc building type: %i with employees: %i.\n", building->buildingType, num);
 			return;
 		default:
-			Com_DPrintf("B_HireForBuilding: Unknown building type: %i.\n", building->buildingType);
+			Com_DPrintf(DEBUG_CLIENT, "B_HireForBuilding: Unknown building type: %i.\n", building->buildingType);
 			return;
 		}
 		if (num > gd.numEmployees[employeeType])
 			num = gd.numEmployees[employeeType];
 		for (;num--;)
 			if (!E_HireEmployee(base, employeeType, -1)) {
-				Com_DPrintf("B_HireForBuilding: Hiring %i employee(s) of type %i failed.\n", num, employeeType);
+				Com_DPrintf(DEBUG_CLIENT, "B_HireForBuilding: Hiring %i employee(s) of type %i failed.\n", num, employeeType);
 				return;
 			}
 	}
@@ -685,7 +685,7 @@ void B_SetUpBase (base_t* base)
 
 	/* update the building-list */
 	B_BuildingInit();
-	Com_DPrintf("Set up for %i\n", base->idx);
+	Com_DPrintf(DEBUG_CLIENT, "Set up for %i\n", base->idx);
 
 	/* this cvar is used for disabling the base build button on geoscape if MAX_BASES (8) was reached */
 	Cvar_Set("mn_base_count", va("%i", mn_base_count->integer + 1));
@@ -706,7 +706,7 @@ void B_SetUpBase (base_t* base)
 			gd.numBuildings[base->idx]++;
 			/* Link to the base. */
 			building->base_idx = base->idx;
-			Com_DPrintf("Base %i new building:%s (%i) at (%.0f:%.0f)\n", base->idx, building->id, i, building->pos[0], building->pos[1]);
+			Com_DPrintf(DEBUG_CLIENT, "Base %i new building:%s (%i) at (%.0f:%.0f)\n", base->idx, building->id, i, building->pos[0], building->pos[1]);
 			base->buildingCurrent = building;
 			/* fake a click to basemap */
 			B_SetBuildingByClick((int) building->pos[0], (int) building->pos[1]);
@@ -726,7 +726,7 @@ void B_SetUpBase (base_t* base)
 			/* now call the onconstruct trigger */
 			if (*building->onConstruct) {
 				base->buildingCurrent = building;
-				Com_DPrintf("B_SetUpBase: %s %i;\n", building->onConstruct, base->idx);
+				Com_DPrintf(DEBUG_CLIENT, "B_SetUpBase: %s %i;\n", building->onConstruct, base->idx);
 				Cbuf_AddText(va("%s %i;", building->onConstruct, base->idx));
 			}
 
@@ -817,12 +817,12 @@ static qboolean B_ConstructBuilding (base_t* base)
 
 	/* enough credits to build this? */
 	if (!B_CheckCredits(base->buildingCurrent->fixCosts)) {
-		Com_DPrintf("B_ConstructBuilding: Not enough credits to build: '%s'\n", base->buildingCurrent->id);
+		Com_DPrintf(DEBUG_CLIENT, "B_ConstructBuilding: Not enough credits to build: '%s'\n", base->buildingCurrent->id);
 		B_ResetBuildingCurrent(base);
 		return qfalse;
 	}
 
-	Com_DPrintf("Construction of %s is starting\n", base->buildingCurrent->id);
+	Com_DPrintf(DEBUG_CLIENT, "Construction of %s is starting\n", base->buildingCurrent->id);
 
 	/* second building part */
 	if (base->buildingToBuild >= 0) {
@@ -857,7 +857,7 @@ static void B_NewBuilding (base_t* base)
 		/* credits are updated in the construct function */
 		if (B_ConstructBuilding(base)) {
 			B_BuildingStatus(base, base->buildingCurrent);
-			Com_DPrintf("B_NewBuilding: buildingCurrent->buildingStatus = %i\n", base->buildingCurrent->buildingStatus);
+			Com_DPrintf(DEBUG_CLIENT, "B_NewBuilding: buildingCurrent->buildingStatus = %i\n", base->buildingCurrent->buildingStatus);
 		}
 }
 
@@ -924,13 +924,13 @@ void B_SetBuildingByClick (int row, int col)
 			if (secondBuildingPart) {
 				if (col + 1 == BASE_SIZE) {
 					if (baseCurrent->map[row][col-1] != BASE_FREESLOT) {
-						Com_DPrintf("Can't place this building here - the second part overlapped with another building or invalid field\n");
+						Com_DPrintf(DEBUG_CLIENT, "Can't place this building here - the second part overlapped with another building or invalid field\n");
 						return;
 					}
 					col--;
 				} else if (baseCurrent->map[row][col+1] != BASE_FREESLOT) {
 					if (baseCurrent->map[row][col-1] != BASE_FREESLOT || !col) {
-						Com_DPrintf("Can't place this building here - the second part overlapped with another building or invalid field\n");
+						Com_DPrintf(DEBUG_CLIENT, "Can't place this building here - the second part overlapped with another building or invalid field\n");
 						return;
 					}
 					col--;
@@ -957,14 +957,14 @@ void B_SetBuildingByClick (int row, int col)
 			B_BuildingInit();	/* update the building-list */
 			break;
 		case BASE_INVALID_SPACE:
-			Com_DPrintf("This base field is marked as invalid - you can't bulid here\n");
+			Com_DPrintf(DEBUG_CLIENT, "This base field is marked as invalid - you can't bulid here\n");
 			break;
 		default:
-			Com_DPrintf("There is already a building\n");
-			Com_DPrintf("Building: %i at (row:%i, col:%i)\n", baseCurrent->map[row][col], row, col);
+			Com_DPrintf(DEBUG_CLIENT, "There is already a building\n");
+			Com_DPrintf(DEBUG_CLIENT, "Building: %i at (row:%i, col:%i)\n", baseCurrent->map[row][col], row, col);
 		}
 	} else
-		Com_DPrintf("Invalid coordinates\n");
+		Com_DPrintf(DEBUG_CLIENT, "Invalid coordinates\n");
 }
 
 /**
@@ -1078,7 +1078,7 @@ int B_GetNumberOfBuildingsInBaseByTypeIDX (int base_idx, int type_idx)
 		 && gd.buildings[base_idx][i].buildingStatus != B_STATUS_NOT_SET)
 			NumberOfBuildings++;
 	}
-	Com_DPrintf("B_GetNumOfBuildType: base: '%s' - num_b: %i - type_idx: %s\n", gd.bases[base_idx].name, NumberOfBuildings, gd.buildingTypes[type_idx].id);
+	Com_DPrintf(DEBUG_CLIENT, "B_GetNumOfBuildType: base: '%s' - num_b: %i - type_idx: %s\n", gd.bases[base_idx].name, NumberOfBuildings, gd.buildingTypes[type_idx].id);
 	return NumberOfBuildings;
 }
 
@@ -1150,8 +1150,8 @@ static void B_BuildingInit (void)
 	if (!baseCurrent)
 		return;
 
-	Com_DPrintf("B_BuildingInit: Updating b-list for '%s' (%i)\n", baseCurrent->name, baseCurrent->idx);
-	Com_DPrintf("B_BuildingInit: Buildings in base: %i\n", gd.numBuildings[baseCurrent->idx]);
+	Com_DPrintf(DEBUG_CLIENT, "B_BuildingInit: Updating b-list for '%s' (%i)\n", baseCurrent->name, baseCurrent->idx);
+	Com_DPrintf(DEBUG_CLIENT, "B_BuildingInit: Buildings in base: %i\n", gd.numBuildings[baseCurrent->idx]);
 
 	/* initialising the vars used in B_BuildingAddToList */
 	memset(baseCurrent->allBuildingsList, 0, sizeof(baseCurrent->allBuildingsList));
@@ -1180,7 +1180,7 @@ static void B_BuildingInit (void)
 					B_BuildingAddToList(buildingType);
 				}
 			} else {
-				Com_DPrintf("Building not researched yet %s (tech idx: %i)\n", buildingType->id, buildingType->tech);
+				Com_DPrintf(DEBUG_CLIENT, "Building not researched yet %s (tech idx: %i)\n", buildingType->id, buildingType->tech);
 			}
 		}
 	}
@@ -1211,7 +1211,7 @@ building_t *B_GetBuildingByIdx (base_t* base, int idx)
 static void B_BuildingInfoClick_f (void)
 {
 	if (baseCurrent && baseCurrent->buildingCurrent) {
-		Com_DPrintf("B_BuildingInfoClick_f: %s - %i\n", baseCurrent->buildingCurrent->id, baseCurrent->buildingCurrent->buildingStatus);
+		Com_DPrintf(DEBUG_CLIENT, "B_BuildingInfoClick_f: %s - %i\n", baseCurrent->buildingCurrent->id, baseCurrent->buildingCurrent->buildingStatus);
 		UP_OpenWith(baseCurrent->buildingCurrent->pedia);
 	}
 }
@@ -1232,10 +1232,10 @@ static void B_BuildingClick_f (void)
 	/* which building? */
 	num = atoi(Cmd_Argv(1));
 
-	Com_DPrintf("B_BuildingClick_f: listnumber %i base %i\n", num, baseCurrent->idx);
+	Com_DPrintf(DEBUG_CLIENT, "B_BuildingClick_f: listnumber %i base %i\n", num, baseCurrent->idx);
 
 	if (num > numBuildingConstructionList || num < 0) {
-		Com_DPrintf("B_BuildingClick_f: max exceeded %i/%i\n", num, numBuildingConstructionList);
+		Com_DPrintf(DEBUG_CLIENT, "B_BuildingClick_f: max exceeded %i/%i\n", num, numBuildingConstructionList);
 		return;
 	}
 
@@ -1293,7 +1293,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 		memset(building, 0, sizeof(building_t));
 		building->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 
-		Com_DPrintf("...found building %s\n", building->id);
+		Com_DPrintf(DEBUG_CLIENT, "...found building %s\n", building->id);
 
 		/*set standard values */
 		building->type_idx = gd.numBuildingTypes;
@@ -1397,7 +1397,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 		} else {
 			if (building->visible)
 				/* @todo: are the techs already parsed? */
-				Com_DPrintf("B_ParseBuildings: Could not find tech that provides %s\n", name);
+				Com_DPrintf(DEBUG_CLIENT, "B_ParseBuildings: Could not find tech that provides %s\n", name);
 		}
 
 		do {
@@ -1459,19 +1459,19 @@ void B_ClearBase (base_t *const base)
 	/* setup team */
 	if (!E_CountUnhired(EMPL_SOLDIER)) {
 		/* should be multiplayer (campaignmode @todo) or singleplayer */
-		Com_DPrintf("B_ClearBase: create %i soldiers\n", curCampaign->soldiers);
+		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i soldiers\n", curCampaign->soldiers);
 		for (i = 0; i < curCampaign->soldiers; i++)
 			E_CreateEmployee(EMPL_SOLDIER);
-		Com_DPrintf("B_ClearBase: create %i scientists\n", curCampaign->scientists);
+		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i scientists\n", curCampaign->scientists);
 		for (i = 0; i < curCampaign->scientists; i++)
 			E_CreateEmployee(EMPL_SCIENTIST);
-		Com_DPrintf("B_ClearBase: create %i robots\n", curCampaign->ugvs);
+		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i robots\n", curCampaign->ugvs);
 		for (i = 0; i < curCampaign->ugvs; i++)
 			E_CreateEmployee(EMPL_ROBOT);
-		Com_DPrintf("B_ClearBase: create %i workers\n", curCampaign->workers);
+		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i workers\n", curCampaign->workers);
 		for (i = 0; i < curCampaign->workers; i++)
 			E_CreateEmployee(EMPL_WORKER);
-		Com_DPrintf("B_ClearBase: create %i medics\n", curCampaign->medics);
+		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i medics\n", curCampaign->medics);
 		for (i = 0; i < curCampaign->medics; i++)
 			E_CreateEmployee(EMPL_MEDIC);
 	}
@@ -1528,7 +1528,7 @@ void B_ParseBases (const char *name, const char **text)
 		if (*token == '_')
 			token++;
 		Q_strncpyz(base->name, _(token), sizeof(base->name));
-		Com_DPrintf("Found base %s\n", base->name);
+		Com_DPrintf(DEBUG_CLIENT, "Found base %s\n", base->name);
 		B_ResetBuildingCurrent(base);
 		gd.numBaseNames++; /* FIXME: Use this value instead of MAX_BASES in the for loops */
 	} while (*text);
@@ -1587,7 +1587,7 @@ void B_DrawBase (menuNode_t * node)
 					if (building->image) {	/* @todo:DEBUG */
 						Q_strncpyz(image, building->image, sizeof(image));
 					} else {
-						/*Com_DPrintf("B_DrawBase: no image found for building %s / %i\n",building->id ,building->idx); */
+						/*Com_DPrintf(DEBUG_CLIENT, "B_DrawBase: no image found for building %s / %i\n",building->id ,building->idx); */
 					}
 				} else if (building->needs) {
 					secondBuilding = B_GetBuildingType(building->needs);
@@ -1692,12 +1692,12 @@ static void B_NextBase_f (void)
 {
 	int baseID = Cvar_VariableInteger("mn_base_id");
 
-	Com_DPrintf("cur-base=%i num-base=%i\n", baseID, gd.numBases);
+	Com_DPrintf(DEBUG_CLIENT, "cur-base=%i num-base=%i\n", baseID, gd.numBases);
 	if (baseID < gd.numBases - 1)
 		baseID++;
 	else
 		baseID = 0;
-	Com_DPrintf("new-base=%i\n", baseID);
+	Com_DPrintf(DEBUG_CLIENT, "new-base=%i\n", baseID);
 	if (!gd.bases[baseID].founded)
 		return;
 	else {
@@ -1715,12 +1715,12 @@ static void B_PrevBase_f (void)
 {
 	int baseID = Cvar_VariableInteger("mn_base_id");
 
-	Com_DPrintf("cur-base=%i num-base=%i\n", baseID, gd.numBases);
+	Com_DPrintf(DEBUG_CLIENT, "cur-base=%i num-base=%i\n", baseID, gd.numBases);
 	if (baseID > 0)
 		baseID--;
 	else
 		baseID = gd.numBases - 1;
-	Com_DPrintf("new-base=%i\n", baseID);
+	Com_DPrintf(DEBUG_CLIENT, "new-base=%i\n", baseID);
 
 	/* this must be false - but i'm paranoid' */
 	if (!gd.bases[baseID].founded)
@@ -1751,11 +1751,11 @@ static void B_SelectBase_f (void)
 	if (baseID < 0) {
 		gd.mapAction = MA_NEWBASE;
 		baseID = gd.numBases;
-		Com_DPrintf("B_SelectBase_f: new baseID is %i\n", baseID);
+		Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: new baseID is %i\n", baseID);
 		if (baseID < MAX_BASES) {
 			baseCurrent = &gd.bases[baseID];
 			baseCurrent->idx = baseID;
-			Com_DPrintf("B_SelectBase_f: baseID is valid for base: %s\n", baseCurrent->name);
+			Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: baseID is valid for base: %s\n", baseCurrent->name);
 			Cbuf_ExecuteText(EXEC_NOW, "set_base_to_normal");
 		} else {
 			Com_Printf("MaxBases reached\n");
@@ -1764,7 +1764,7 @@ static void B_SelectBase_f (void)
 			gd.mapAction = MA_NONE;
 		}
 	} else if (baseID < MAX_BASES) {
-		Com_DPrintf("B_SelectBase_f: select base with id %i\n", baseID);
+		Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: select base with id %i\n", baseID);
 		baseCurrent = &gd.bases[baseID];
 		if (baseCurrent->founded) {
 			gd.mapAction = MA_NONE;
@@ -1835,7 +1835,7 @@ static void CL_SwapSkills (chrList_t *team)
 
 				if (weaponr_fd_idx < 0 || weaponh_fd_idx < 0) {
 					/* @todo: Is there a better way to check for this case? */
-					Com_DPrintf("CL_SwapSkills: Bad or no firedef indices found (weaponr_fd_idx=%i and weaponh_fd_idx=%i)... skipping\n", weaponr_fd_idx, weaponh_fd_idx);
+					Com_DPrintf(DEBUG_CLIENT, "CL_SwapSkills: Bad or no firedef indices found (weaponr_fd_idx=%i and weaponh_fd_idx=%i)... skipping\n", weaponr_fd_idx, weaponh_fd_idx);
 				} else {
 					no1 = 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[weaponr_fd_idx][fmode1].weaponSkill)
 						+ 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[weaponr_fd_idx][fmode2].weaponSkill)
@@ -1856,7 +1856,7 @@ static void CL_SwapSkills (chrList_t *team)
 
 						if (weaponr_fd_idx < 0 || weaponh_fd_idx < 0) {
 							/* @todo: Is there a better way to check for this case? */
-							Com_DPrintf("CL_SwapSkills: Bad or no firedef indices found (weaponr_fd_idx=%i and weaponh_fd_idx=%i)... skipping\n", weaponr_fd_idx, weaponh_fd_idx);
+							Com_DPrintf(DEBUG_CLIENT, "CL_SwapSkills: Bad or no firedef indices found (weaponr_fd_idx=%i and weaponh_fd_idx=%i)... skipping\n", weaponr_fd_idx, weaponh_fd_idx);
 						} else {
 							no2 = 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[weaponr_fd_idx][fmode1].weaponSkill)
 								+ 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[weaponr_fd_idx][fmode2].weaponSkill)
@@ -2011,7 +2011,7 @@ static void B_PackInitialEquipment_f (void)
 			break;
 
 	if (i == csi.numEDs) {
-		Com_DPrintf("B_PackInitialEquipment_f: Initial Phalanx equipment %s not found.\n", name);
+		Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment_f: Initial Phalanx equipment %s not found.\n", name);
 	} else if ((aircraft_idxInBase >= 0) && (aircraft_idxInBase < base->numAircraftInBase)) {
 		aircraft = &base->aircraft[base->aircraftCurrent];
 		chr_list_temp.num = 0;
@@ -2019,9 +2019,9 @@ static void B_PackInitialEquipment_f (void)
 			if (aircraft->teamIdxs[i] != -1) {
 				chr = &gd.employees[aircraft->teamTypes[i]][aircraft->teamIdxs[i]].chr;
 				/* pack equipment */
-				Com_DPrintf("B_PackInitialEquipment_f: Packing initial equipment for %s.\n", chr->name);
+				Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment_f: Packing initial equipment for %s.\n", chr->name);
 				INVSH_EquipActor(chr->inv, ed->num, name, chr);
-				Com_DPrintf("B_PackInitialEquipment_f: armor: %i, weapons: %i\n", chr->armor, chr->weapons);
+				Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment_f: armor: %i, weapons: %i\n", chr->armor, chr->weapons);
 				chr_list_temp.chr[chr_list_temp.num] = chr;
 				chr_list_temp.num++;
 			}
@@ -2037,7 +2037,7 @@ static void B_PackInitialEquipment_f (void)
 					for (ic = chr->inv->c[container]; ic; ic = next) {
 						item_t item = ic->item;
 						price += csi.ods[item.t].price;
-						Com_DPrintf("B_PackInitialEquipment_f()... adding price for %s, price: %i\n", csi.ods[item.t].id, price);
+						Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment_f()... adding price for %s, price: %i\n", csi.ods[item.t].id, price);
 						next = ic->next;
 					}
 				}
@@ -2064,7 +2064,7 @@ static void B_BuildBase_f (void)
 
 	if (ccs.credits - BASE_COSTS > 0) {
 		if (CL_NewBase(baseCurrent, newBasePos)) {
-			Com_DPrintf("B_BuildBase_f: numBases: %i\n", gd.numBases);
+			Com_DPrintf(DEBUG_CLIENT, "B_BuildBase_f: numBases: %i\n", gd.numBases);
 			baseCurrent->idx = gd.numBases - 1;
 			baseCurrent->founded = qtrue;
 			baseCurrent->numAircraftInBase = 0;
@@ -2166,13 +2166,13 @@ static void B_AssembleMap_f (void)
 	base_t* base = baseCurrent;
 
 	if (Cmd_Argc() < 2)
-		Com_DPrintf("Usage: %s <baseID> <setUnderAttack>\n", Cmd_Argv(0));
+		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <baseID> <setUnderAttack>\n", Cmd_Argv(0));
 	else {
 		if (Cmd_Argc() == 3)
 			setUnderAttack = atoi(Cmd_Argv(2));
 		baseID = atoi(Cmd_Argv(1));
 		if (baseID < 0 || baseID >= gd.numBases) {
-			Com_DPrintf("Invalid baseID: %i\n", baseID);
+			Com_DPrintf(DEBUG_CLIENT, "Invalid baseID: %i\n", baseID);
 			return;
 		}
 		base = &gd.bases[baseID];
@@ -2186,7 +2186,7 @@ static void B_AssembleMap_f (void)
 	if (setUnderAttack) {
 		base->baseStatus = BASE_UNDER_ATTACK;
 		gd.mapAction = MA_BASEATTACK;
-		Com_DPrintf("Set base %i under attack\n", base->idx);
+		Com_DPrintf(DEBUG_CLIENT, "Set base %i under attack\n", base->idx);
 	}
 
 	/* reset menu text */
@@ -2218,7 +2218,7 @@ static void B_AssembleMap_f (void)
 				if (!entry->used && entry->needs) {
 					entry->used = 1;
 				} else if (entry->needs) {
-					Com_DPrintf("B_AssembleMap_f: '%s' needs '%s' (used: %i)\n", entry->id, entry->needs, entry->used );
+					Com_DPrintf(DEBUG_CLIENT, "B_AssembleMap_f: '%s' needs '%s' (used: %i)\n", entry->id, entry->needs, entry->used );
 					entry->used = 0;
 					continue;
 				}
@@ -2274,7 +2274,7 @@ static void B_AssembleRandomBase_f (void)
 	int setUnderAttack = 0;
 	int randomBase = rand() % gd.numBases;
 	if (Cmd_Argc() < 2)
-		Com_DPrintf("Usage: %s <setUnderAttack>\n", Cmd_Argv(0));
+		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <setUnderAttack>\n", Cmd_Argv(0));
 	else
 		setUnderAttack = atoi(Cmd_Argv(1));
 
@@ -2373,7 +2373,7 @@ static void B_BaseList_f (void)
  */
 static void B_SetBaseTitle_f (void)
 {
-	Com_DPrintf("B_SetBaseTitle_f: #bases: %i\n", gd.numBases);
+	Com_DPrintf(DEBUG_CLIENT, "B_SetBaseTitle_f: #bases: %i\n", gd.numBases);
 	if (gd.numBases < MAX_BASES)
 		Cvar_Set("mn_base_title", gd.bases[gd.numBases].name);
 	else {
@@ -2540,7 +2540,7 @@ static void B_PrintCapacities_f (void)
  */
 void B_ResetBaseManagement (void)
 {
-	Com_DPrintf("Reset basemanagement\n");
+	Com_DPrintf(DEBUG_CLIENT, "Reset basemanagement\n");
 
 	/* add commands and cvars */
 	Cmd_AddCommand("mn_prev_base", B_PrevBase_f, "Go to the previous base");
@@ -2648,7 +2648,7 @@ int B_CheckBuildingConstruction (building_t * building, int base_idx)
 
 			if (*building->onConstruct) {
 				gd.bases[base_idx].buildingCurrent = building;
-				Com_DPrintf("B_CheckBuildingConstruction: %s %i;\n", building->onConstruct, base_idx);
+				Com_DPrintf(DEBUG_CLIENT, "B_CheckBuildingConstruction: %s %i;\n", building->onConstruct, base_idx);
 				Cbuf_AddText(va("%s %i;", building->onConstruct, base_idx));
 			}
 
@@ -2701,7 +2701,7 @@ aircraft_t *B_GetAircraftFromBaseByIndex (base_t* base, int index)
 	if (index < base->numAircraftInBase) {
 		return &base->aircraft[index];
 	} else {
-		Com_DPrintf("B_GetAircraftFromBaseByIndex: error: index bigger then number of aircrafts in this base\n");
+		Com_DPrintf(DEBUG_CLIENT, "B_GetAircraftFromBaseByIndex: error: index bigger then number of aircrafts in this base\n");
 		return NULL;
 	}
 }
@@ -2749,7 +2749,7 @@ int B_ItemInBase (int item_idx, base_t *base)
 	if (!ed)
 		return -1;
 
-	/* Com_DPrintf("B_ItemInBase: DEBUG idx %s\n",  csi.ods[item_idx].id); */
+	/* Com_DPrintf(DEBUG_CLIENT, "B_ItemInBase: DEBUG idx %s\n",  csi.ods[item_idx].id); */
 
 	return ed->num[item_idx];
 }
@@ -2785,7 +2785,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 		for (i = 0; i < gd.numBuildingTypes; i++) {
 			if (gd.buildingTypes[i].buildingType == building) {
 				capacity = gd.buildingTypes[i].capacity;
-				Com_DPrintf("Building: %s capacity: %i\n", gd.buildingTypes[i].id, capacity);
+				Com_DPrintf(DEBUG_CLIENT, "Building: %s capacity: %i\n", gd.buildingTypes[i].id, capacity);
 				b_idx = i;
 				break;
 			}
@@ -2801,7 +2801,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 		if ((gd.numBases == 1) && (base->idx == 0) && (cap == CAP_EMPLOYEES))
 			base->capacities[cap].max += 13;
 		if (b_idx != -1)
-			Com_DPrintf("B_UpdateBaseCapacities()... updated capacity of %s: %i\n",
+			Com_DPrintf(DEBUG_CLIENT, "B_UpdateBaseCapacities()... updated capacity of %s: %i\n",
 				gd.buildingTypes[b_idx].id, base->capacities[cap].max);
 		break;
 	case CAP_UFOHANGARS:	/**< Base capacities for UFO hangars. */
@@ -2811,7 +2811,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 		for (i = 0; i < gd.numBuildingTypes; i++) {
 			if (gd.buildingTypes[i].buildingType == building) {
 				capacity = gd.buildingTypes[i].capacity;
-				Com_DPrintf("Building: %s capacity: %i\n", gd.buildingTypes[i].id, capacity);
+				Com_DPrintf(DEBUG_CLIENT, "Building: %s capacity: %i\n", gd.buildingTypes[i].id, capacity);
 				break;
 			}
 		}
@@ -2827,7 +2827,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 			for (i = 0; i < gd.numBuildingTypes; i++) {
 				if (gd.buildingTypes[i].buildingType == B_UFO_SMALL_HANGAR) {
 					capacity = gd.buildingTypes[i].capacity;
-					Com_DPrintf("Building: %s capacity: %i\n", gd.buildingTypes[i].id, capacity);
+					Com_DPrintf(DEBUG_CLIENT, "Building: %s capacity: %i\n", gd.buildingTypes[i].id, capacity);
 					break;
 				}
 			}
@@ -2840,7 +2840,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 		}
 		break;
 	case MAX_CAP:			/**< Update all capacities in base. */
-		Com_DPrintf("B_UpdateBaseCapacities()... going to update ALL capacities.\n");
+		Com_DPrintf(DEBUG_CLIENT, "B_UpdateBaseCapacities()... going to update ALL capacities.\n");
 		/* Loop through all capacities and update them. */
 		for (i = 0; i < cap; i++) {
 			B_UpdateBaseCapacities(i, base);
@@ -3365,7 +3365,7 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, int objIDX, int amount, qbool
 			if (csi.ods[objIDX].size > 0)
 				base->capacities[CAP_ITEMS].cur += (amount * csi.ods[objIDX].size);
 		} else {
-			Com_DPrintf("B_UpdateStorageAndCapacity: Not enough storage space (item: %i, amount: %i)\n", objIDX, amount);
+			Com_DPrintf(DEBUG_CLIENT, "B_UpdateStorageAndCapacity: Not enough storage space (item: %i, amount: %i)\n", objIDX, amount);
 			return qfalse;
 		}
 	}

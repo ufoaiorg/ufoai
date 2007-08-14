@@ -248,7 +248,7 @@ void E_ResetEmployees (void)
 {
 	int i;
 
-	Com_DPrintf("E_ResetEmployees: Delete all employees\n");
+	Com_DPrintf(DEBUG_CLIENT, "E_ResetEmployees: Delete all employees\n");
 	for (i = EMPL_SOLDIER; i < MAX_EMPL; i++)
 		if (gd.numEmployees[i]) {
 			memset(gd.employees[i], 0, sizeof(employee_t)*MAX_EMPLOYEES);
@@ -691,7 +691,7 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 				AIR_DecreaseAircraftTeamIdxGreaterThan(AIR_AircraftGetFromIdx(i),idx, EMPL_SOLDIER);
 		}
 	} else {
-		Com_DPrintf("E_DeleteEmployee: Employee wasn't in the global list.\n");
+		Com_DPrintf(DEBUG_CLIENT, "E_DeleteEmployee: Employee wasn't in the global list.\n");
 		return qfalse;
 	}
 
@@ -711,25 +711,25 @@ void E_DeleteAllEmployees (base_t* base)
 
 	if (!base)
 		return;
-	Com_DPrintf("E_DeleteAllEmployees: starting ...\n");
+	Com_DPrintf(DEBUG_CLIENT, "E_DeleteAllEmployees: starting ...\n");
 	for (type = EMPL_SOLDIER; type < MAX_EMPL; type++) {
-		Com_DPrintf("E_DeleteAllEmployees: Removing empl-type %i | num %i\n", type, gd.numEmployees[type]);
+		Com_DPrintf(DEBUG_CLIENT, "E_DeleteAllEmployees: Removing empl-type %i | num %i\n", type, gd.numEmployees[type]);
 		/* Attention:
 			gd.numEmployees[type] is changed in E_DeleteAllEmployees!  (it's decreased by 1 per call)
 			For this reason we start this loop from the back of the empl-list. toward 0.
 		*/
 		for (i = gd.numEmployees[type]-1; i >= 0; i--) {
-			Com_DPrintf("E_DeleteAllEmployees: %i\n", i);
+			Com_DPrintf(DEBUG_CLIENT, "E_DeleteAllEmployees: %i\n", i);
 			employee = &gd.employees[type][i];
 			if (employee->baseIDHired == base->idx) {
 				E_DeleteEmployee(employee, type);
-				Com_DPrintf("E_DeleteAllEmployees:	 Removing empl.\n");
+				Com_DPrintf(DEBUG_CLIENT, "E_DeleteAllEmployees:	 Removing empl.\n");
 			} else if (employee->baseIDHired >= 0) {
-				Com_DPrintf("E_DeleteAllEmployees:	 Not removing empl. (other base)\n");
+				Com_DPrintf(DEBUG_CLIENT, "E_DeleteAllEmployees:	 Not removing empl. (other base)\n");
 			}
 		}
 	}
-	Com_DPrintf("E_DeleteAllEmployees: ... finished\n");
+	Com_DPrintf(DEBUG_CLIENT, "E_DeleteAllEmployees: ... finished\n");
 }
 
 #if 0
@@ -760,7 +760,7 @@ qboolean E_AssignEmployeeToBuilding (building_t *building, employeeType_t type)
 		}
 		break;
 	default:
-		Com_DPrintf("E_AssignEmployee: Unhandled employee type: %i\n", type);
+		Com_DPrintf(DEBUG_CLIENT, "E_AssignEmployee: Unhandled employee type: %i\n", type);
 		break;
 	}
 	return qfalse;
@@ -800,7 +800,7 @@ qboolean E_RemoveEmployeeFromBuilding (employee_t *employee)
 			/*@todo: Check if they are linked to anywhere and remove them there. */
 			break;
 		default:
-			Com_DPrintf("E_RemoveEmployeeFromBuilding: Unhandled employee type: %i\n", chr->empl_type);
+			Com_DPrintf(DEBUG_CLIENT, "E_RemoveEmployeeFromBuilding: Unhandled employee type: %i\n", chr->empl_type);
 			break;
 		}
 	}

@@ -474,7 +474,7 @@ void BDEF_Init_f (void)
 	menuNode_t *node;
 
 	if(!baseCurrent)
-		return;	
+		return;
 
 	if (Cmd_Argc() != 2 || noparams) {
 		if (airequipID == -1) {
@@ -823,7 +823,7 @@ void AIM_AircraftEquipmenuInit_f (void)
 
 	/* we are not in the aircraft menu */
 	if (!node) {
-		Com_DPrintf("AIM_AircraftEquipmenuInit_f: Error - node aircraftequip not found\n");
+		Com_DPrintf(DEBUG_CLIENT, "AIM_AircraftEquipmenuInit_f: Error - node aircraftequip not found\n");
 		return;
 	}
 

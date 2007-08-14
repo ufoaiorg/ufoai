@@ -175,7 +175,7 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 		path = FS_NextPath(path);
 		if (!path) {
 			Com_Printf("LoadLibrary failed (game."SHARED_EXT")\n");
-			Com_DPrintf("%s\n", dlerror());
+			Com_DPrintf(DEBUG_SYSTEM, "%s\n", dlerror());
 			return NULL;		/* couldn't find one anywhere */
 		}
 		Com_sprintf(name, sizeof(name), "%s/game_"CPUSTRING".%s", path, SHARED_EXT);
@@ -226,14 +226,14 @@ void *Sys_LoadLibrary (const char *name, int flags)
 
 	/* first try system wide */
 	Com_sprintf(libName, sizeof(libName), "%s_"CPUSTRING"."SHARED_EXT, name);
-	Com_DPrintf("Sys_LoadLibrary: try %s\n", libName);
+	Com_DPrintf(DEBUG_SYSTEM, "Sys_LoadLibrary: try %s\n", libName);
 	lib = dlopen(libName, flags|RTLD_LAZY|RTLD_GLOBAL);
 	if (lib)
 		return lib;
 
 	/* then use s_libdir cvar or current dir */
 	Com_sprintf(libName, sizeof(libName), "%s/%s_"CPUSTRING"."SHARED_EXT, libDir, name);
-	Com_DPrintf("Sys_LoadLibrary: try %s\n", libName);
+	Com_DPrintf(DEBUG_SYSTEM, "Sys_LoadLibrary: try %s\n", libName);
 	lib = dlopen(libName, flags|RTLD_LAZY);
 	if (lib)
 		return lib;
@@ -241,14 +241,14 @@ void *Sys_LoadLibrary (const char *name, int flags)
 	/* and not both again but without CPUSTRING */
 	/* system wide */
 	Com_sprintf(libName, sizeof(libName), "%s.%s", name, SHARED_EXT);
-	Com_DPrintf("Sys_LoadLibrary: try %s\n", libName);
+	Com_DPrintf(DEBUG_SYSTEM, "Sys_LoadLibrary: try %s\n", libName);
 	lib = dlopen(libName, flags|RTLD_LAZY|RTLD_GLOBAL);
 	if (lib)
 		return lib;
 
 	/* then use s_libdir cvar or current dir */
 	Com_sprintf(libName, sizeof(libName), "%s/%s."SHARED_EXT, libDir, name);
-	Com_DPrintf("Sys_LoadLibrary: try %s\n", libName);
+	Com_DPrintf(DEBUG_SYSTEM, "Sys_LoadLibrary: try %s\n", libName);
 	lib = dlopen(libName, flags|RTLD_LAZY);
 	if (lib)
 		return lib;

@@ -107,7 +107,7 @@ static int PR_CalculateProductionTime (base_t *base, technology_t *tech, compone
 
 	if (maxworkers == 10) {
 		/* Return default time because we can use only 10 workers. */
-		Com_DPrintf("PR_CalculateProductionTime()... workers: %i, tech: %s, time: %i\n",
+		Com_DPrintf(DEBUG_CLIENT, "PR_CalculateProductionTime()... workers: %i, tech: %s, time: %i\n",
 		maxworkers, tech->id, timeDefault);
 		return timeDefault;
 	} else {
@@ -118,7 +118,7 @@ static int PR_CalculateProductionTime (base_t *base, technology_t *tech, compone
 		timeTemp = timeTemp / PRODUCE_WORKERS;
 		timeTemp = timeTemp * timeDefault;
 		time = timeDefault - (int)timeTemp;
-		Com_DPrintf("PR_CalculateProductionTime()... workers: %i, tech: %s, time: %i\n",
+		Com_DPrintf(DEBUG_CLIENT, "PR_CalculateProductionTime()... workers: %i, tech: %s, time: %i\n",
 		maxworkers, tech->id, time);
 		/* Don't allow to return less time than 1 hour. */
 		if (time < 1)
@@ -151,7 +151,7 @@ void PR_UpdateProductionTime (base_t *base)
 			tech = RS_GetTechByProvided(csi.ods[gd.productions[base->idx].items[i].objID].id);
 			time = PR_CalculateProductionTime(base, tech, NULL, qfalse);
 			gd.productions[base->idx].items[i].timeLeft = time;
-			Com_DPrintf("PR_UpdateProductionTime()... updating production time for %s. Original time: %i, new time: %i\n",
+			Com_DPrintf(DEBUG_CLIENT, "PR_UpdateProductionTime()... updating production time for %s. Original time: %i, new time: %i\n",
 			csi.ods[gd.productions[base->idx].items[i].objID].id, timeTemp, gd.productions[base->idx].items[i].timeLeft);
 		}
 	}
@@ -174,7 +174,7 @@ static int PR_RequirementsMet (int amount, requirements_t *req)
 		for (i = 0; i < req->numLinks; i++) {
 			if (req->type[i] == RS_LINK_ITEM) {
 				/* The same code is used in "RS_RequirementsMet" */
-				Com_DPrintf("PR_RequirementsMet: %s / %i\n", req->id[i], req->idx[i]);
+				Com_DPrintf(DEBUG_CLIENT, "PR_RequirementsMet: %s / %i\n", req->id[i], req->idx[i]);
 				if (B_ItemInBase(req->idx[i], baseCurrent) < req->amount[i]) {
 					produceable = qfalse;
 				}
@@ -304,7 +304,7 @@ static void PR_QueueDelete (production_queue_t *queue, int index, int baseidx)
 			/* Add all items listed in the prod.-requirements /multiplied by amount) to the storage again. */
 			PR_UpdateRequiredItemsInBasestorage(prod->amount, &tech->require_for_production);
 		} else {
-			Com_DPrintf("PR_QueueDelete: Problem getting technology entry for %i\n", index);
+			Com_DPrintf(DEBUG_CLIENT, "PR_QueueDelete: Problem getting technology entry for %i\n", index);
 		}
 		prod->items_cached = qfalse;
 	}
@@ -509,7 +509,7 @@ static void PR_ProductionInfo (qboolean disassembly)
 		/* Find related components array. */
 		for (i = 0; i < gd.numComponents; i++) {
 			comp = &gd.components[i];
-			Com_DPrintf("components definition: %s item: %s\n", comp->assembly_id, csi.ods[comp->assembly_idx].id);
+			Com_DPrintf(DEBUG_CLIENT, "components definition: %s item: %s\n", comp->assembly_id, csi.ods[comp->assembly_idx].id);
 			if (comp->assembly_idx == objID)
 				break;
 		}
@@ -600,7 +600,7 @@ static void PR_ProductionListRightClick_f (void)
 	}
 #ifdef DEBUG
 	else
-		Com_DPrintf("PR_ProductionListRightClick_f: Click on spacer %i\n", num);
+		Com_DPrintf(DEBUG_CLIENT, "PR_ProductionListRightClick_f: Click on spacer %i\n", num);
 #endif
 }
 
@@ -695,7 +695,7 @@ static void PR_ProductionListClick_f (void)
 	}
 #ifdef DEBUG
 	else
-		Com_DPrintf("PR_ProductionListClick_f: Click on spacer %i\n", num);
+		Com_DPrintf(DEBUG_CLIENT, "PR_ProductionListClick_f: Click on spacer %i\n", num);
 #endif
 }
 
@@ -908,7 +908,7 @@ static void PR_ProductionListScroll_f (void)
  */
 void PR_ProductionInit (void)
 {
-	Com_DPrintf("Reset all productions\n");
+	Com_DPrintf(DEBUG_CLIENT, "Reset all productions\n");
 	memset(gd.productions, 0, sizeof(production_queue_t)*MAX_BASES);
 	mn_production_limit = Cvar_Get("mn_production_limit", "0", 0, NULL);
 	mn_production_workers = Cvar_Get("mn_production_workers", "0", 0, NULL);
@@ -962,7 +962,7 @@ static void PR_ProductionIncrease_f (void)
 				amount_temp = amount;
 			else
 				amount_temp = baseCurrent->storage.num[prod->objID];
-			Com_DPrintf("PR_ProductionIncrease_f()... amounts: storage: %i, param: %i, temp: %i\n", baseCurrent->storage.num[prod->objID], amount, amount_temp);
+			Com_DPrintf(DEBUG_CLIENT, "PR_ProductionIncrease_f()... amounts: storage: %i, param: %i, temp: %i\n", baseCurrent->storage.num[prod->objID], amount, amount_temp);
 			/* Now remove the amount we just added to queue from base storage. */
 			baseCurrent->storage.num[prod->objID] -= amount_temp;
 			prod->amount += amount_temp;

@@ -660,11 +660,11 @@ static serverList_t serverList[MAX_SERVERLIST];
 static void CL_ProcessPingReply (serverList_t *server, const char *msg)
 {
 	if (PROTOCOL_VERSION != atoi(Info_ValueForKey(msg, "protocol"))) {
-		Com_DPrintf("CL_ProcessPingReply: Protocol mismatch\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_ProcessPingReply: Protocol mismatch\n");
 		return;
 	}
 	if (Q_strcmp(UFO_VERSION, Info_ValueForKey(msg, "version"))) {
-		Com_DPrintf("CL_ProcessPingReply: Version mismatch\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_ProcessPingReply: Version mismatch\n");
 	}
 
 	if (server->pinged)
@@ -726,7 +726,7 @@ static void CL_PingServer (serverList_t *server)
 {
 	struct net_stream *s = connect_to_host(server->node, server->service);
 	if (s) {
-		Com_DPrintf("pinging [%s]:%s...\n", server->node, server->service);
+		Com_DPrintf(DEBUG_CLIENT, "pinging [%s]:%s...\n", server->node, server->service);
 		NET_OOB_Printf(s, "info %i", PROTOCOL_VERSION);
 		set_stream_data(s, server);
 		stream_callback(s, &CL_PingServerCallback);
@@ -824,7 +824,7 @@ static void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 
 	if (!s) {
 		menuText[TEXT_LIST] = NULL;
-		Com_DPrintf("CL_ParseTeamInfoMessage: No teaminfo string\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_ParseTeamInfoMessage: No teaminfo string\n");
 		return;
 	}
 
@@ -911,7 +911,7 @@ static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 	/* check for server status response message */
 	value = Info_ValueForKey(s, "sv_dedicated");
 	if (*value) {
-		Com_DPrintf("%s\n", s); /* status string */
+		Com_DPrintf(DEBUG_CLIENT, "%s\n", s); /* status string */
 		/* server info cvars and users are seperated via newline */
 		users = strstr(s, "\n");
 		if (!users) {
@@ -1016,7 +1016,7 @@ static void CL_ParseMasterServerResponse (struct dbuffer *buf)
 		port += NET_ReadByte(buf);
 		Com_sprintf(node, sizeof(node), "%d.%d.%d.%d", ip[0], ip[1], ip[2], ip[3]);
 		Com_sprintf(service, sizeof(service), "%d", port);
-		Com_DPrintf("server: [%s]:%s\n", node, service);
+		Com_DPrintf(DEBUG_CLIENT, "server: [%s]:%s\n", node, service);
 		CL_AddServerToList(node, service);
 	}
 	/* end of stream */
@@ -1081,7 +1081,7 @@ static void CL_ServerConnect_f (void)
 	}
 
 	if (ip) {
-		Com_DPrintf("CL_ServerConnect_f: connect to %s\n", ip);
+		Com_DPrintf(DEBUG_CLIENT, "CL_ServerConnect_f: connect to %s\n", ip);
 		Cbuf_AddText(va("connect %s\n", ip));
 	}
 }
@@ -1297,7 +1297,7 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 
 	c = Cmd_Argv(0);
 
-	Com_DPrintf("server OOB: %s\n", Cmd_Args());
+	Com_DPrintf(DEBUG_CLIENT, "server OOB: %s\n", Cmd_Args());
 
 	/* server connection */
 	if (!Q_strncmp(c, "client_connect", 13)) {
@@ -1439,7 +1439,7 @@ static void CL_TeamNum_f (void)
 			} else {
 				menuText[TEXT_STANDARD] = _("Team is already in use");
 #if DEBUG
-				Com_DPrintf("team %i: %i (max: %i)\n", i, teamData.teamCount[i], teamData.maxplayersperteam);
+				Com_DPrintf(DEBUG_CLIENT, "team %i: %i (max: %i)\n", i, teamData.teamCount[i], teamData.maxplayersperteam);
 #endif
 			}
 		}
@@ -1453,7 +1453,7 @@ static void CL_TeamNum_f (void)
 			} else {
 				menuText[TEXT_STANDARD] = _("Team is already in use");
 #if DEBUG
-				Com_DPrintf("team %i: %i (max: %i)\n", i, teamData.teamCount[i], teamData.maxplayersperteam);
+				Com_DPrintf(DEBUG_CLIENT, "team %i: %i (max: %i)\n", i, teamData.teamCount[i], teamData.maxplayersperteam);
 #endif
 			}
 		}
@@ -1513,7 +1513,7 @@ static void CL_SpawnSoldiers_f (void)
 		}
 
 		if (chr_list_temp.num <= 0) {
-			Com_DPrintf("CL_SpawnSoldiers_f: Error - team number <= zero - %i\n", chr_list_temp.num);
+			Com_DPrintf(DEBUG_CLIENT, "CL_SpawnSoldiers_f: Error - team number <= zero - %i\n", chr_list_temp.num);
 		} else {
 			/* send team info */
 			struct dbuffer *msg = new_dbuffer();
@@ -1900,7 +1900,7 @@ void CL_ReadSinglePlayerData (void)
 	FS_NextScriptHeader(NULL, NULL, NULL);
 	text = NULL;
 
-	Com_DPrintf("Second stage parsing started...\n");
+	Com_DPrintf(DEBUG_CLIENT, "Second stage parsing started...\n");
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0)
 		CL_ParseScriptSecond(type, name, &text);
 
@@ -2337,7 +2337,7 @@ static void CL_CvarCheck (void)
 		int i;
 		if (cl_worldlevel->integer < 0) {
 			CL_Drop();
-			Com_DPrintf("CL_CvarCheck: Called drop - something went wrong\n");
+			Com_DPrintf(DEBUG_CLIENT, "CL_CvarCheck: Called drop - something went wrong\n");
 			return;
 		}
 
@@ -2393,7 +2393,7 @@ void CL_AVIRecord (int now, void *data)
  */
 void CL_SetClientState (int state)
 {
-	Com_DPrintf("CL_SetClientState: Set new state to %i (old was: %i)\n", state, cls.state);
+	Com_DPrintf(DEBUG_CLIENT, "CL_SetClientState: Set new state to %i (old was: %i)\n", state, cls.state);
 	cls.state = state;
 
 	switch (cls.state) {
@@ -2582,10 +2582,10 @@ static qboolean CL_LocaleSet (void)
 	setlocale(LC_ALL, "C");
 	locale = setlocale(LC_MESSAGES, s_language->string);
 	if (!locale) {
-		Com_DPrintf("...could not set to language: %s\n", s_language->string);
+		Com_DPrintf(DEBUG_CLIENT, "...could not set to language: %s\n", s_language->string);
 		locale = setlocale(LC_MESSAGES, "");
 		if (!locale) {
-			Com_DPrintf("...could not set to system language\n");
+			Com_DPrintf(DEBUG_CLIENT, "...could not set to system language\n");
 			return qfalse;
 		}
 	} else {
@@ -2619,7 +2619,7 @@ void CL_Init (void)
 		Q_strncpyz(languagePath, fs_i18ndir->string, sizeof(languagePath));
 	else
 		Com_sprintf(languagePath, sizeof(languagePath), "%s/base/i18n/", FS_GetCwd());
-	Com_DPrintf("...using mo files from %s\n", languagePath);
+	Com_DPrintf(DEBUG_CLIENT, "...using mo files from %s\n", languagePath);
 	bindtextdomain(TEXT_DOMAIN, languagePath);
 	bind_textdomain_codeset(TEXT_DOMAIN, "UTF-8");
 	/* load language file */

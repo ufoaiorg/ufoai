@@ -186,17 +186,18 @@ void Com_Printf (const char *fmt, ...)
 
 
 /**
- * @brief
- *
- * A Com_Printf that only shows up if the "developer" cvar is set
+ * @brief A Com_Printf that only shows up if the "developer" cvar is set
  */
-void Com_DPrintf (const char *fmt, ...)
+void Com_DPrintf (int level, const char *fmt, ...)
 {
 	va_list argptr;
 	char msg[MAXPRINTMSG];
 
 	/* don't confuse non-developers with techie stuff... */
-	if (!developer || !developer->integer)
+	if (!developer || developer->integer == 0)
+		return;
+
+	if (developer->integer != DEBUG_ALL && developer->integer & ~level)
 		return;
 
 	va_start(argptr, fmt);
@@ -314,7 +315,7 @@ int Com_ServerState (void)
  */
 void Com_SetServerState (int state)
 {
-	Com_DPrintf("Set server state to %i\n", state);
+	Com_DPrintf(DEBUG_ENGINE, "Set server state to %i\n", state);
 	server_state = state;
 }
 
@@ -875,7 +876,7 @@ static void tick_timer (int now, void *data)
 	timer->interval = max(timer->interval, 1000 / timer->min_freq->integer);
 
 	if (timer->interval != old_interval)
-		Com_DPrintf("Adjusted timer on %s to interval %d\n", timer->min_freq->name, timer->interval);
+		Com_DPrintf(DEBUG_ENGINE, "Adjusted timer on %s to interval %d\n", timer->min_freq->name, timer->interval);
 
 	if (setjmp(abortframe) == 0)
 		timer->func(now, timer->data);

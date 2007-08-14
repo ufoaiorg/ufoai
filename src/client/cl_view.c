@@ -353,7 +353,7 @@ static void CL_ParseEntitystring (const char *es)
 			|| !Q_strcmp(classname, "func_door")) {
 			VectorClear(angles);
 			CL_AddLocalModel(model, particle, origin, angles, entnum, (spawnflags & 0xFF));
-			Com_DPrintf("Add %i as local model (%s)\n", entnum, classname);
+			Com_DPrintf(DEBUG_CLIENT, "Add %i as local model (%s)\n", entnum, classname);
 		}
 
 		entnum++;

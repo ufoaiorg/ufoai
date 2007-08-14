@@ -80,7 +80,7 @@ static const objDef_t* G_GetObjectForFiredef (fireDef_t* fd)
 		}
 	}
 
-	Com_DPrintf("Could nor find a objDef_t for fireDef_t '%s'\n", fd->name);
+	Com_DPrintf(DEBUG_GAME, "Could nor find a objDef_t for fireDef_t '%s'\n", fd->name);
 
 	return NULL;
 }

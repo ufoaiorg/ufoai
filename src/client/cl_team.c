@@ -104,7 +104,7 @@ void CL_SaveInventory (sizebuf_t *buf, inventory_t *i)
 		for (ic = i->c[j]; ic; ic = ic->next)
 			nr++;
 
-	Com_DPrintf("CL_SaveInventory: Send %i items\n", nr);
+	Com_DPrintf(DEBUG_CLIENT, "CL_SaveInventory: Send %i items\n", nr);
 	MSG_WriteShort(buf, nr * INV_INVENTORY_BYTES);
 	for (j = 0; j < csi.numIDs; j++)
 		for (ic = i->c[j]; ic; ic = ic->next)
@@ -144,7 +144,7 @@ void CL_LoadInventory (sizebuf_t *buf, inventory_t *i)
 	int container, x, y;
 	int nr = MSG_ReadShort(buf) / INV_INVENTORY_BYTES;
 
-	Com_DPrintf("CL_LoadInventory: Read %i items\n", nr);
+	Com_DPrintf(DEBUG_CLIENT, "CL_LoadInventory: Read %i items\n", nr);
 	for (; nr-- > 0;) {
 		CL_LoadItem(buf, &item, &container, &x, &y);
 		Com_AddToInventory(i, item, container, x, y);
@@ -283,7 +283,7 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 	/* get ucn */
 	chr->ucn = gd.nextUCN++;
 
-	Com_DPrintf("Generate character for team: '%s' (type: %i)\n", team, employeeType);
+	Com_DPrintf(DEBUG_CLIENT, "Generate character for team: '%s' (type: %i)\n", team, employeeType);
 
 	/* Backlink from chr to employee struct. */
 	chr->empl_type = employeeType;
@@ -516,7 +516,7 @@ void CL_AddCarriedToEq (aircraft_t *aircraft, equipDef_t * ed)
 	}
 
 	if (aircraft->teamSize <= 0) {
-		Com_DPrintf("CL_AddCarriedToEq: No team to remove equipment from.\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_AddCarriedToEq: No team to remove equipment from.\n");
 		return;
 	}
 
@@ -565,7 +565,7 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 			/* "Recharge" the oneshot weapon. */
 			item.a = csi.ods[type].ammo;
 			item.m = item.t; /* Just in case this hasn't been done yet. */
-			Com_DPrintf("CL_AddWeaponAmmo: oneshot weapon '%s'.\n", csi.ods[type].id);
+			Com_DPrintf(DEBUG_CLIENT, "CL_AddWeaponAmmo: oneshot weapon '%s'.\n", csi.ods[type].id);
 			return item;
 		} else {
 			/* No change, nothing needs to be done to this item. */
@@ -751,10 +751,10 @@ static void CL_GenerateEquipment_f (void)
 	/* Get team. */
 	if (strstr(Cvar_VariableString("team"), "human")) {
 		team = 0;
-		Com_DPrintf("CL_GenerateEquipment_f().. team human, id: %i\n", team);
+		Com_DPrintf(DEBUG_CLIENT, "CL_GenerateEquipment_f().. team human, id: %i\n", team);
 	} else if (strstr(Cvar_VariableString("team"), "alien")) {
 		team = 1;
-		Com_DPrintf("CL_GenerateEquipment_f().. team alien, id: %i\n", team);
+		Com_DPrintf(DEBUG_CLIENT, "CL_GenerateEquipment_f().. team alien, id: %i\n", team);
 	}
 
 	/* Store hired names. */
@@ -774,7 +774,7 @@ static void CL_GenerateEquipment_f (void)
 		/* Sanity check(s) */
 		if (!chrDisplayList.chr[chrDisplayList.num])
 			Sys_Error("CL_GenerateEquipment_f: Could not get employee character with idx: %i\n", chrDisplayList.num);
-		Com_DPrintf("add %s to chrDisplayList (pos: %i)\n", chrDisplayList.chr[chrDisplayList.num]->name, chrDisplayList.num);
+		Com_DPrintf(DEBUG_CLIENT, "add %s to chrDisplayList (pos: %i)\n", chrDisplayList.chr[chrDisplayList.num]->name, chrDisplayList.num);
 		Cvar_ForceSet(va("mn_name%i", chrDisplayList.num), chrDisplayList.chr[chrDisplayList.num]->name);
 
 		/* Update nubmer of displayed team-members. */
@@ -870,8 +870,8 @@ static void CL_MoveMultiEquipment (inventory_t* const inv, int buytype_container
 	/* This is a container that might hold some of the affected items.
 	 * Move'em to the target (buytype_container) container (if there are any)
 	 */
-	Com_DPrintf("CL_MoveMultiEquipment: buytype_container:%i\n", buytype_container);
-	Com_DPrintf("CL_MoveMultiEquipment: container:%i\n", container);
+	Com_DPrintf(DEBUG_CLIENT, "CL_MoveMultiEquipment: buytype_container:%i\n", buytype_container);
+	Com_DPrintf(DEBUG_CLIENT, "CL_MoveMultiEquipment: container:%i\n", container);
 	ic = inv->c[container];
 	while (ic) {
 		if (csi.ods[ic->item.t].buytype == BUY_MULTI_AMMO) {
@@ -1020,7 +1020,7 @@ static void CL_Select_f (void)
 	/* now set the cl_selected cvar to the new actor id */
 	Cvar_ForceSet("cl_selected", va("%i", num));
 
-	Com_DPrintf("CL_Select_f: Command: '%s' - num: %i\n", command, num);
+	Com_DPrintf(DEBUG_CLIENT, "CL_Select_f: Command: '%s' - num: %i\n", command, num);
 
 	assert(chr);
 	/* set info cvars */
@@ -1096,9 +1096,9 @@ void CL_ResetTeamInBase (void)
 	if (ccs.singleplayer)
 		return;
 
-	Com_DPrintf("Reset of baseCurrent team flags.\n");
+	Com_DPrintf(DEBUG_CLIENT, "Reset of baseCurrent team flags.\n");
 	if (!baseCurrent) {
-		Com_DPrintf("CL_ResetTeamInBase: No baseCurrent\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_ResetTeamInBase: No baseCurrent\n");
 		return;
 	}
 
@@ -1111,7 +1111,7 @@ void CL_ResetTeamInBase (void)
 		employee = E_CreateEmployee(EMPL_SOLDIER);
 		employee->hired = qtrue;
 		employee->baseIDHired = baseCurrent->idx;
-		Com_DPrintf("CL_ResetTeamInBase: Generate character for multiplayer - employee->chr.name: '%s' (base: %i)\n", employee->chr.name, baseCurrent->idx);
+		Com_DPrintf(DEBUG_CLIENT, "CL_ResetTeamInBase: Generate character for multiplayer - employee->chr.name: '%s' (base: %i)\n", employee->chr.name, baseCurrent->idx);
 	}
 
 	/* reset the multiplayer inventory; stored in baseCurrent->storage */
@@ -1122,7 +1122,7 @@ void CL_ResetTeamInBase (void)
 
 		/* search equipment definition */
 		name = "multiplayer";
-		Com_DPrintf("CL_ResetTeamInBase: no curCampaign - using equipment '%s'\n", name);
+		Com_DPrintf(DEBUG_CLIENT, "CL_ResetTeamInBase: no curCampaign - using equipment '%s'\n", name);
 		for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++) {
 			if (!Q_strncmp(name, ed->name, MAX_VAR))
 				break;
@@ -1219,17 +1219,17 @@ static void CL_MarkTeam_f (void)
 static void CL_ToggleTeamList_f (void)
 {
 	if (display_heavy_equipment_list) {
-		Com_DPrintf("Changing to soldier-list.\n");
+		Com_DPrintf(DEBUG_CLIENT, "Changing to soldier-list.\n");
 		display_heavy_equipment_list = qfalse;
 		Cbuf_AddText("toggle_show_heavybutton\n");
 	} else {
 		if (gd.numEmployees[EMPL_ROBOT] > 0) {
-			Com_DPrintf("Changing to heavy equipment (tank) list.\n");
+			Com_DPrintf(DEBUG_CLIENT, "Changing to heavy equipment (tank) list.\n");
 			display_heavy_equipment_list = qtrue;
 			Cbuf_AddText("toggle_show_soldiersbutton\n");
 		} else {
 			/* Nothing to display/assign - staying in soldier-list. */
-			Com_DPrintf("No heavy equipment available.\n");
+			Com_DPrintf(DEBUG_CLIENT, "No heavy equipment available.\n");
 		}
 	}
 	CL_MarkTeam_f();
@@ -1334,7 +1334,7 @@ void CL_RemoveSoldierFromAircraft (int employee_idx, employeeType_t employeeType
 
 	assert(base == aircraft->homebase);
 
-	Com_DPrintf("CL_RemoveSoldierFromAircraft: base: %i - aircraftID: %i - aircraft_idx: %i\n", base->idx, aircraft->idx, aircraft_idx);
+	Com_DPrintf(DEBUG_CLIENT, "CL_RemoveSoldierFromAircraft: base: %i - aircraftID: %i - aircraft_idx: %i\n", base->idx, aircraft->idx, aircraft_idx);
 
 	INVSH_DestroyInventory(&gd.employees[employeeType][employee_idx].inv);
 	AIR_RemoveFromAircraftTeam(aircraft, employee_idx, employeeType);
@@ -1367,7 +1367,7 @@ void CL_RemoveSoldiersFromAircraft (int aircraft_idx, base_t *base)
 	}
 
 	if (aircraft->teamSize > 0) {
-		Com_DPrintf("CL_RemoveSoldiersFromAircraft: there went something wrong with soldier-removing (more exactly the counting) from aircraft.\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_RemoveSoldiersFromAircraft: there went something wrong with soldier-removing (more exactly the counting) from aircraft.\n");
 	}
 }
 
@@ -1388,22 +1388,22 @@ static qboolean CL_AssignSoldierToAircraft (int employee_idx, employeeType_t emp
 
 	if (aircraft->teamSize < MAX_ACTIVETEAM) {
 		/* Check whether the soldier is already on another aircraft */
-		Com_DPrintf("CL_AssignSoldierToAircraft: attempting to find idx '%d'\n", employee_idx);
+		Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldierToAircraft: attempting to find idx '%d'\n", employee_idx);
 
 		if (CL_SoldierInAircraft(employee_idx,employeeType, -1)) {
-			Com_DPrintf("CL_AssignSoldierToAircraft: found idx '%d' \n",employee_idx);
+			Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldierToAircraft: found idx '%d' \n",employee_idx);
 			return qfalse;
 		}
 
 		/* Assign the soldier to the aircraft. */
 		if (aircraft->teamSize < aircraft->size) {
-			Com_DPrintf("CL_AssignSoldierToAircraft: attempting to add idx '%d' \n",employee_idx);
+			Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldierToAircraft: attempting to add idx '%d' \n",employee_idx);
 			AIR_AddToAircraftTeam(aircraft, employee_idx, employeeType);
 			return qtrue;
 		}
 #ifdef DEBUG
 	} else {
-		Com_DPrintf("CL_AssignSoldierToAircraft: aircraft full - not added\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldierToAircraft: aircraft full - not added\n");
 #endif
 	}
 	return qfalse;
@@ -1478,20 +1478,20 @@ static void CL_AssignSoldier_f (void)
 	if (!employee)
 		Sys_Error("CL_AssignSoldier_f: Could not get employee %i\n", num);
 
-	Com_DPrintf("CL_AssignSoldier_f: employee with idx %i selected\n", employee->idx);
+	Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldier_f: employee with idx %i selected\n", employee->idx);
 	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
-	Com_DPrintf("aircraft->idx: %i - aircraft->idxInBase: %i\n", aircraft->idx, aircraft->idxInBase);
+	Com_DPrintf(DEBUG_CLIENT, "aircraft->idx: %i - aircraft->idxInBase: %i\n", aircraft->idx, aircraft->idxInBase);
 	assert(aircraft->idxInBase == baseCurrent->aircraftCurrent);
 
 	if (CL_SoldierInAircraft(employee->idx, employee->type, aircraft->idx)) {
-		Com_DPrintf("CL_AssignSoldier_f: removing\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldier_f: removing\n");
 		/* Remove soldier from aircraft/team. */
 		Cbuf_AddText(va("listdel%i\n", num));
 		/* use the global aircraft index here */
 		CL_RemoveSoldierFromAircraft(employee->idx, employee->type, aircraft->idx, baseCurrent);
 		Cbuf_AddText(va("listholdsnoequip%i\n", num));
 	} else {
-		Com_DPrintf("CL_AssignSoldier_f: assigning\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldier_f: assigning\n");
 		/* Assign soldier to aircraft/team if aircraft is not full */
 		if (CL_AssignSoldierToAircraft(employee->idx, employee->type, aircraft))
 			Cbuf_AddText(va("listadd%i\n", num));
@@ -1663,7 +1663,7 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 
 	/* read whole team list */
 	num = MSG_ReadByte(&sb);
-	Com_DPrintf("load %i teammembers\n", num);
+	Com_DPrintf(DEBUG_CLIENT, "load %i teammembers\n", num);
 	E_ResetEmployees();
 	for (i = 0; i < num; i++) {
 		/* New employee */
@@ -1680,7 +1680,7 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	aircraft->teamSize = MSG_ReadByte(&sb);
 
 	/* get aircraft soldier content for multi-player */
-	Com_DPrintf("Multiplayer aircraft IDX = %i\n", aircraft->idx);
+	Com_DPrintf(DEBUG_CLIENT, "Multiplayer aircraft IDX = %i\n", aircraft->idx);
 	aircraft->size = MSG_ReadByte(&sb);
 	chrDisplayList.num = 0;
 	for (i = 0; i < aircraft->size; i++) {
@@ -2028,7 +2028,7 @@ void CL_ParseResults (struct dbuffer *msg)
 	if (num > MAX_TEAMS)
 		Sys_Error("Too many teams in result message\n");
 
-	Com_DPrintf("Receiving results with %i teams.\n", num);
+	Com_DPrintf(DEBUG_CLIENT, "Receiving results with %i teams.\n", num);
 
 	/* get winning team */
 	winner = NET_ReadByte(msg);

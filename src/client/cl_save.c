@@ -404,7 +404,7 @@ static void SAV_GameLoad_f (void)
 		return;
 	}
 
-	Com_DPrintf("load file '%s'\n", Cmd_Argv(1));
+	Com_DPrintf(DEBUG_CLIENT, "load file '%s'\n", Cmd_Argv(1));
 
 	/* load and go to map */
 	if (!SAV_GameLoad(Cmd_Argv(1), &error)) {

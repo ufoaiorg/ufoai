@@ -189,7 +189,7 @@ static qboolean VID_LoadRefresh (const char *name)
 
 		reflib_library = dlopen(fn, RTLD_NOW);
 		if (reflib_library) {
-			Com_DPrintf("LoadLibrary (%s)\n",name);
+			Com_DPrintf(DEBUG_SYSTEM, "LoadLibrary (%s)\n",name);
 			break;
 		}
 	}

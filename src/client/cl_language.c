@@ -135,16 +135,16 @@ static qboolean CL_LanguageTest (const char *localeID)
 		Q_strncpyz(languagePath, fs_i18ndir->string, sizeof(languagePath));
 	else
 		Com_sprintf(languagePath, sizeof(languagePath), "%s/base/i18n/", FS_GetCwd());
-	Com_DPrintf("Sys_TestLanguage()... using mo files from %s\n", languagePath);
+	Com_DPrintf(DEBUG_CLIENT, "Sys_TestLanguage()... using mo files from %s\n", languagePath);
 	Q_strcat(languagePath, localeID, sizeof(languagePath));
 	Q_strcat(languagePath, "/LC_MESSAGES/ufoai.mo", sizeof(languagePath));
 
 #ifdef _WIN32
 	if ((Q_putenv("LANGUAGE", localeID) == 0) && FS_FileExists(languagePath)) {
-		Com_DPrintf("CL_LanguageTest()... locale %s found.\n", localeID);
+		Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest()... locale %s found.\n", localeID);
 		return qtrue;
 	} else {
-		Com_DPrintf("CL_LanguageTest()... locale %s not found.\n", localeID);
+		Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest()... locale %s not found.\n", localeID);
 		return qfalse;
 	}
 #else
@@ -153,7 +153,7 @@ static qboolean CL_LanguageTest (const char *localeID)
 			break;
 	}
 	if (i == languageCount) {
-		Com_DPrintf("Could not find locale with id '%s'\n", localeID);
+		Com_DPrintf(DEBUG_CLIENT, "Could not find locale with id '%s'\n", localeID);
 		return qfalse;
 	}
 
@@ -163,23 +163,23 @@ static qboolean CL_LanguageTest (const char *localeID)
 
 	mapping = language->localeMapping;
 	if (!mapping) {
-		Com_DPrintf("No locale mappings for locale with id '%s'\n", localeID);
+		Com_DPrintf(DEBUG_CLIENT, "No locale mappings for locale with id '%s'\n", localeID);
 		return qfalse;
 	}
 	/* Cycle through all mappings, but stop at first locale possible to set. */
 	do {
 		/* setlocale() will return NULL if no setting possible. */
 		if (setlocale(LC_MESSAGES, mapping->localeMapping)) {
-			Com_DPrintf("CL_LanguageTest()... language %s with locale %s found.\n", localeID, mapping->localeMapping);
+			Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest()... language %s with locale %s found.\n", localeID, mapping->localeMapping);
 			return qtrue;
 		} else {
-			Com_DPrintf("CL_LanguageTest()... language %s with locale %s not found.\n", localeID, mapping->localeMapping);
+			Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest()... language %s with locale %s not found.\n", localeID, mapping->localeMapping);
 			possible = qfalse;
 		}
 		mapping = mapping->next;
 	} while (mapping);
 	if (!possible)
-		Com_DPrintf("CL_LanguageTest()... not possible to use %s language.\n", localeID);
+		Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest()... not possible to use %s language.\n", localeID);
 	return qfalse;
 #endif
 }
@@ -216,7 +216,7 @@ void CL_LanguageInit (void)
 #endif
 	}
 
-	Com_DPrintf("CL_LanguageInit()... deflang: %s\n", deflang);
+	Com_DPrintf(DEBUG_CLIENT, "CL_LanguageInit()... deflang: %s\n", deflang);
 
 	menu = MN_GetMenu("options_game");
 	if (!menu)

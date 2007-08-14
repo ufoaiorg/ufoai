@@ -329,13 +329,18 @@ void Com_Printf (const char *msg, ...)
 	gi.dprintf("%s", text);
 }
 
-void Com_DPrintf (const char *msg, ...)
+void Com_DPrintf (int level, const char *msg, ...)
 {
 	va_list argptr;
 	char text[1024];
 
-	if (!developer->integer)
+	/* don't confuse non-developers with techie stuff... */
+	if (!developer || developer->integer == 0)
 		return;
+
+	if (developer->integer != DEBUG_ALL && developer->integer & ~level)
+		return;
+
 	va_start(argptr, msg);
 	Q_vsnprintf(text, sizeof(text), msg, argptr);
 	va_end(argptr);
@@ -457,7 +462,7 @@ void G_EndGame (int team)
 		}
 
 	/* send results */
-	Com_DPrintf("Sending results for game won by team %i.\n", team);
+	Com_DPrintf(DEBUG_GAME, "Sending results for game won by team %i.\n", team);
 	gi.AddEvent(PM_ALL, EV_RESULTS);
 	number_of_teams = MAX_TEAMS;
 	gi.WriteByte(number_of_teams);
@@ -487,7 +492,7 @@ void G_EndGame (int team)
 			 && ent->team == TEAM_PHALANX)
 			j++;
 
-	Com_DPrintf("Sending results with %i actors.\n", j);
+	Com_DPrintf(DEBUG_GAME, "Sending results with %i actors.\n", j);
 	/* this is (size of updateCharacter_t) * number of phalanx actors - see CL_ParseCharacterData for more info */
 	/* KILLED_NUM_TYPES + 2 gi.WriteShorts */
 	/* 16 gi.WriteByte */
@@ -499,7 +504,7 @@ void G_EndGame (int team)
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
 			if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)
 				 && ent->team == TEAM_PHALANX) {
-				Com_DPrintf("Sending results for actor %i.\n", i);
+				Com_DPrintf(DEBUG_GAME, "Sending results for actor %i.\n", i);
 				G_SendCharacterData(ent);
 			}
 	}

@@ -711,10 +711,10 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 		Com_sprintf(name, sizeof(name), "%s/game.dll", path);
 		game_library = LoadLibrary(name);
 		if (game_library) {
-			Com_DPrintf("LoadLibrary (%s)\n", name);
+			Com_DPrintf(DEBUG_SYSTEM, "LoadLibrary (%s)\n", name);
 			break;
 		} else {
-			Com_DPrintf("LoadLibrary (%s) failed\n", name);
+			Com_DPrintf(DEBUG_SYSTEM, "LoadLibrary (%s) failed\n", name);
 		}
 	}
 

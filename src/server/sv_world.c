@@ -369,7 +369,7 @@ static void SV_ClipMoveToEntities (moveclip_t * clip)
 		trace = CM_TransformedBoxTrace(clip->start, clip->end, clip->mins, clip->maxs, tile, headnode, clip->contentmask, touch->origin, angles);
 
 #ifdef PARANOID
-		Com_DPrintf("SV_ClipMoveToEntities: %i %i: (%i %i %i) (%i %i %i) (%i %i %i)\n", touch->number, touch->modelindex,
+		Com_DPrintf(DEBUG_SERVER, "SV_ClipMoveToEntities: %i %i: (%i %i %i) (%i %i %i) (%i %i %i)\n", touch->number, touch->modelindex,
 			(int)touch->mins[0], (int)touch->mins[1], (int)touch->mins[2],
 			(int)touch->maxs[0], (int)touch->maxs[1], (int)touch->maxs[2],
 			(int)touch->origin[0], (int)touch->origin[1], (int)touch->origin[2] );
