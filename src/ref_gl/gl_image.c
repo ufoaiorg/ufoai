@@ -391,10 +391,8 @@ static void LoadPCX (const char *filename, byte ** pic, byte ** palette, int *wi
 	}
 
 	out = ri.TagMalloc(ri.imagePool, (pcx->ymax + 1) * (pcx->xmax + 1), 0);
-	if (!out) {
+	if (!out)
 		ri.Sys_Error(ERR_FATAL, "TagMalloc: failed on allocation of %i bytes", (pcx->ymax + 1) * (pcx->xmax + 1));
-		return;					/* never reached. need for code analyst. */
-	}
 
 	*pic = out;
 
@@ -1480,10 +1478,8 @@ static void R_FilterTexture (int filterindex, unsigned int *data, int width, int
 
 	/* allocate a temp buffer */
 	temp = ri.TagMalloc(ri.imagePool, temp_size, 0);
-	if (!temp) {
+	if (!temp)
 		ri.Sys_Error(ERR_FATAL, "TagMalloc: failed on allocation of "UFO_SIZE_T" bytes", temp_size);
-		return;					/* never reached. need for code analyst. */
-	}
 
 	for (x = 0; x < width; x++) {
 		for (y = 0; y < height; y++) {
@@ -1731,10 +1727,8 @@ static qboolean GL_Upload8 (byte * data, int width, int height, qboolean mipmap,
 	qboolean ret;
 
 	trans = ri.TagMalloc(ri.imagePool, trans_size, 0);
-	if (!trans) {
+	if (!trans)
 		ri.Sys_Error(ERR_FATAL, "TagMalloc: failed on allocation of "UFO_SIZE_T" bytes", trans_size);
-		return qfalse;			/* never reached. need for code analyst. */
-	}
 
 	if (s > trans_size / 4)
 		ri.Sys_Error(ERR_DROP, "GL_Upload8: too large");
@@ -2120,10 +2114,8 @@ int Draw_GetPalette (void)
 
 	/* get the palette */
 	LoadPCX("pics/colormap.pcx", &pic, &pal, &width, &height);
-	if (!pal) {
+	if (!pal)
 		ri.Sys_Error(ERR_FATAL, "Couldn't load pics/colormap.pcx");
-		return 0;				/* never reached. need for code analyst. */
-	}
 
 	for (i = 0; i < 256; i++) {
 		r = pal[i * 3 + 0];

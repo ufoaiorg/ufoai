@@ -1511,35 +1511,21 @@ void Q_strncpyz (char *dest, const char *src, size_t destsize)
 #endif
 {
 #ifdef DEBUG
-	if (!dest) {
+	if (!dest)
 		Sys_Error("Q_strncpyz: NULL dest (%s, %i)", file, line);
-		return;	/* never reached. need for code analyst. */
-	}
-	if (!src) {
+	if (!src)
 		Sys_Error("Q_strncpyz: NULL src (%s, %i)", file, line);
-		return;	/* never reached. need for code analyst. */
-	}
 	if (destsize < 1)
 		Sys_Error("Q_strncpyz: destsize < 1 (%s, %i)", file, line);
 #endif
 
-#if 0
-	strncpy(dest, src, destsize - 1);
-	dest[destsize - 1] = 0;
-#else
 	/* space for \0 terminating */
 	while (*src && destsize - 1) {
 		*dest++ = *src++;
 		destsize--;
 	}
 	/* the rest is filled with null */
-#if 1
 	memset(dest, 0, destsize);
-#else
-	while (destsize--)
-		*dest++ = 0;
-#endif
-#endif
 }
 
 /**

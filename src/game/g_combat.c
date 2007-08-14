@@ -387,12 +387,6 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 
 	assert((attacker->team >= 0) && (attacker->team < MAX_TEAMS));
 	assert((ent->team >= 0) && (ent->team < MAX_TEAMS));
-#ifdef DEBUG
-	if ((attacker->team < 0) || (attacker->team >= MAX_TEAMS))
-		return;	/* never reached. need for code analyst. */
-	if ((ent->team < 0) || (ent->team >= MAX_TEAMS))
-		return;	/* never reached. need for code analyst. */
-#endif
 
 	if (g_nodamage != NULL && !g_nodamage->integer) {
 		/* hit */

@@ -3137,10 +3137,9 @@ static void CL_ParseStageSet (const char *name, const char **text)
 			misp = missionstr;
 
 			/* add mission options */
-			if (sp->numMissions) {
+			if (sp->numMissions)
 				Sys_Error("CL_ParseStageSet: Double mission tag in set '%s'\n", sp->name);
-				return; /* code analyst */
-			}
+
 			sp->numMissions = 0;
 			do {
 				token = COM_Parse(&misp);

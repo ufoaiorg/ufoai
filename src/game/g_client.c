@@ -611,10 +611,6 @@ static int G_DoTurn (edict_t * ent, byte toDV)
 	int status;
 
 	assert(ent->dir < DIRECTIONS);
-#ifdef DEBUG
-	if (ent->dir >= DIRECTIONS)
-		return 0;	/* never reached. need for code analyst. */
-#endif
 
 	toDV &= (DIRECTIONS-1);
 
@@ -873,10 +869,6 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 
 	/* FIXME: This is impossible - if not we should check MAX_INVDEFS*/
 	assert((gi.csi->idFloor >= 0) && (gi.csi->idFloor < MAX_CONTAINERS));
-#ifdef DEBUG
-	if ((gi.csi->idFloor < 0) || (gi.csi->idFloor >= MAX_CONTAINERS))
-		return;	/* never reached. need for code analyst. */
-#endif
 
 	/* successful inventory change; remove the item in clients */
 	if (from == gi.csi->idFloor) {
@@ -1912,10 +1904,6 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
 {
 	assert(ent);
-#ifdef DEBUG
-	if (!ent)
-		return;	/* never reached. need for code analyst. */
-#endif
 
 	Com_DPrintf(DEBUG_GAME, "G_ActorDie: kill actor on team %i\n", ent->team);
 	switch (state) {

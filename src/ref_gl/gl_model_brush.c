@@ -545,15 +545,11 @@ static void R_AddMapTile (const char *name, int sX, int sY, int sZ)
 	mBspHeader_t *bm;
 
 	/* get new model */
-	if ((mod_numknown < 0) || (mod_numknown >= MAX_MOD_KNOWN)) {
+	if ((mod_numknown < 0) || (mod_numknown >= MAX_MOD_KNOWN))
 		ri.Sys_Error(ERR_DROP, "mod_numknown >= MAX_MOD_KNOWN");
-		return;					/* never reached. need for code analyst. */
-	}
 
-	if ((rNumTiles < 0) || (rNumTiles >= MAX_MAPTILES)) {
+	if ((rNumTiles < 0) || (rNumTiles >= MAX_MAPTILES))
 		ri.Sys_Error(ERR_DROP, "Too many map tiles");
-		return;					/* never reached. need for code analyst. */
-	}
 
 	/* alloc model and tile */
 	loadmodel = &mod_known[mod_numknown++];
@@ -563,10 +559,8 @@ static void R_AddMapTile (const char *name, int sX, int sY, int sZ)
 
 	/* load the file */
 	ri.FS_LoadFile(loadmodel->name, (void **) &buffer);
-	if (!buffer) {
+	if (!buffer)
 		ri.Sys_Error(ERR_DROP, "R_AddMapTile: %s not found", loadmodel->name);
-		return;					/* never reached. need for code analyst. */
-	}
 
 	/* init */
 	loadmodel->registration_sequence = registration_sequence;

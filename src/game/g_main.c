@@ -387,10 +387,6 @@ static void G_SendCharacterData (edict_t* ent)
 	int k;
 
 	assert(ent);
-#ifdef DEBUG
-	if (!ent)
-		return;	/* never reached. need for code analyst. */
-#endif
 
 	/* write character number */
 	gi.WriteShort(ent->chr.ucn);

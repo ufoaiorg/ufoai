@@ -569,10 +569,6 @@ void Draw_DayAndNight (int x, int y, int w, int h, float p, float q, float cx, f
 	}
 
 	assert(DaN);
-#ifdef DEBUG
-	if (!DaN)
-		return;					/* never reached. need for code analyst. */
-#endif
 
 	GL_Bind(DaN->texnum);
 	qglEnable(GL_TEXTURE_2D);

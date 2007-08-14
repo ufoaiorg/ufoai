@@ -62,10 +62,6 @@ void Anim_Append (animState_t * as, model_t * mod, const char *name)
 	mAliasAnim_t *anim;
 
 	assert(as->ladd < MAX_ANIMLIST);
-#ifdef DEBUG
-	if (as->ladd >= MAX_ANIMLIST)
-		return;					/* never reached. need for code analyst. */
-#endif
 
 	if (!mod || mod->type != mod_alias_md2)
 		return;
@@ -113,10 +109,6 @@ void Anim_Change (animState_t * as, model_t * mod, const char *name)
 	mAliasAnim_t *anim;
 
 	assert(as->ladd < MAX_ANIMLIST);
-#ifdef DEBUG
-	if (as->ladd >= MAX_ANIMLIST)
-		return;					/* never reached. need for code analyst. */
-#endif
 
 	if (!mod || mod->type != mod_alias_md2) {
 		ri.Con_Printf(PRINT_ALL, "Anim_Change: No md2 model - can't set animation (%s) (model: %s)\n", name, mod->name);
@@ -174,10 +166,6 @@ void Anim_Run (animState_t * as, model_t * mod, int msec)
 	mAliasAnim_t *anim;
 
 	assert(as->lcur < MAX_ANIMLIST);
-#ifdef DEBUG
-	if (as->lcur >= MAX_ANIMLIST)
-		return;					/* never reached. need for code analyst. */
-#endif
 
 	if (!mod || mod->type != mod_alias_md2)
 		return;
@@ -228,10 +216,6 @@ char *Anim_GetName (animState_t * as, model_t * mod)
 	mAliasAnim_t *anim;
 
 	assert(as->lcur < MAX_ANIMLIST);
-#ifdef DEBUG
-	if (as->lcur >= MAX_ANIMLIST)
-		return NULL;			/* never reached. need for code analyst. */
-#endif
 
 	if (!mod || mod->type != mod_alias_md2)
 		return NULL;

@@ -80,21 +80,17 @@ void INVSH_InitInventory (invList_t * invList)
 	int i;
 
 	assert(invList);
-#ifdef DEBUG
-	if (!invList)
-		return;	/* never reached. need for code analyst. */
-#endif
 
 	invUnused = invList;
 	/* first entry doesn't have an ancestor: invList[0]->next = NULL */
 	invUnused->next = NULL;
 
 	/* now link the invList_t next pointers
-         * invList[1]->next = invList[0]
-         * invList[2]->next = invList[1]
-         * invList[3]->next = invList[2]
-         * ... and so on
-         */
+	 * invList[1]->next = invList[0]
+	 * invList[2]->next = invList[1]
+	 * invList[3]->next = invList[2]
+	 * ... and so on
+	 */
 	for (i = 0; i < MAX_INVLIST - 1; i++) {
 		last = invUnused++;
 		invUnused->next = last;
@@ -157,16 +153,7 @@ int Com_CheckToInventory (const inventory_t * const i, const int item, const int
 {
 
 	assert(i);
-#ifdef DEBUG
-	if (!i)
-		return 0;	/* never reached. need for code analyst. */
-#endif
-
 	assert((container >= 0) && (container < CSI->numIDs));
-#ifdef DEBUG
-	if ((container < 0) || (container >= CSI->numIDs))
-		return 0;	/* never reached. need for code analyst. */
-#endif
 
 	/* armor vs item */
 	if (!Q_strncmp(CSI->ods[item].type, "armor", MAX_VAR)) {
@@ -264,38 +251,32 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, int container
 	if (item.t == NONE)
 		return NULL;
 
-	if (!invUnused) {
+	if (!invUnused)
 		Sys_Error("No free inventory space!\n");
-		return NULL;	/* never reached. need for code analyst. */
-	}
 
 	assert(i);
-#ifdef DEBUG
-	if (!i)
-		return NULL;	/* never reached. need for code analyst. */
-#endif
 
-	/* What we are doing here.
-	   invList_t array looks like that: [u]->next = [w]; [w]->next = [x]; [...]; [z]->next = NULL.
-	   i->c[container] as well as ic are such invList_t.
-	   Now we want to add new item to this container and that means, we need to create some [t]
-	   and make sure, that [t]->next points to [u] (so the [t] will be the first in array).
+	/*  What we are doing here.
+		invList_t array looks like that: [u]->next = [w]; [w]->next = [x]; [...]; [z]->next = NULL.
+		i->c[container] as well as ic are such invList_t.
+		Now we want to add new item to this container and that means, we need to create some [t]
+		and make sure, that [t]->next points to [u] (so the [t] will be the first in array).
 		ic = i->c[container];
-	   So, we are storing old value of i->c[container] in ic to remember what was in the original
-	   container. If the i->c[container]->next pointed to [abc], the ic->next will also point to [abc].
-	   The ic is our [u] and [u]->next still points to our [w].
+		So, we are storing old value of i->c[container] in ic to remember what was in the original
+		container. If the i->c[container]->next pointed to [abc], the ic->next will also point to [abc].
+		The ic is our [u] and [u]->next still points to our [w].
 		i->c[container] = invUnused;
-	   Now we are creating new container - the "original" i->c[container] is being set to empty invUnused.
-	   This is our [t].
-	   	invUnused = invUnused->next;
-	   Now we need to make sure, that our [t] will point to next free slot in our inventory. Remember, that
-	   invUnused was empty before, so invUnused->next will point to next free slot.
+		Now we are creating new container - the "original" i->c[container] is being set to empty invUnused.
+		This is our [t].
+			invUnused = invUnused->next;
+		Now we need to make sure, that our [t] will point to next free slot in our inventory. Remember, that
+		invUnused was empty before, so invUnused->next will point to next free slot.
 		i->c[container]->next = ic;
-	   We assigned our [t]->next to [u] here. Thanks to that we still have the correct ->next chain in our
-	   inventory list.
+		We assigned our [t]->next to [u] here. Thanks to that we still have the correct ->next chain in our
+		inventory list.
 		ic = i->c[container];
-	   And now ic will be our [t], that is the newly added container.
-	   After that we can easily add the item (item.t, x and y positions) to our [t] being ic.
+		And now ic will be our [t], that is the newly added container.
+		After that we can easily add the item (item.t, x and y positions) to our [t] being ic.
 	*/
 
 	/* Temporary store the pointer to the first item in this list. */
@@ -353,11 +334,6 @@ qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, int container, int
 	invList_t *ic, *old;
 
 	assert(i);
-#ifdef DEBUG
-	if (!i)
-		return qfalse;	/* never reached. need for code analyst. */
-#endif
-
 	assert(container < MAX_CONTAINERS);
 
 	ic = i->c[container];
@@ -446,10 +422,6 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 
 	assert(to >= 0 && to < CSI->numIDs);
 	assert(from >= 0 && from < CSI->numIDs);
-#ifdef DEBUG
-	if (from < 0 || from >= CSI->numIDs)
-		return 0;	/* never reached. need for code analyst. */
-#endif
 
 	if (icp)
 		*icp = NULL;
@@ -630,7 +602,6 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 void INVSH_EmptyContainer (inventory_t* const i, const int container)
 {
 	invList_t *ic, *old;
-
 #ifdef DEBUG
 	int cnt = 0;
 	if (CSI->ids[container].temp)
@@ -638,10 +609,6 @@ void INVSH_EmptyContainer (inventory_t* const i, const int container)
 #endif
 
 	assert(i);
-#ifdef DEBUG
-	if (!i)
-		return;	/* never reached. need for code analyst. */
-#endif
 
 	ic = i->c[container];
 
@@ -1390,16 +1357,7 @@ char *CHRSH_CharGetBody (character_t * const chr)
 	char *underline;
 
 	assert(chr);
-#ifdef DEBUG
-	if (!chr)
-		return NULL;	/* never reached. need for code analyst. */
-#endif
-
 	assert(chr->inv);
-#ifdef DEBUG
-	if (!chr->inv)
-		return NULL;	/* never reached. need for code analyst. */
-#endif
 
 	/* models of UGVs don't change - because they are already armored */
 	if (chr->inv->c[CSI->idArmor] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
@@ -1429,16 +1387,7 @@ char *CHRSH_CharGetHead (character_t * const chr)
 	char *underline;
 
 	assert(chr);
-#ifdef DEBUG
-	if (!chr)
-		return NULL;	/* never reached. need for code analyst. */
-#endif
-
 	assert(chr->inv);
-#ifdef DEBUG
-	if (!chr->inv)
-		return NULL;	/* never reached. need for code analyst. */
-#endif
 
 	/* models of UGVs don't change - because they are already armored */
 	if (chr->inv->c[CSI->idArmor] && chr->fieldSize == ACTOR_SIZE_NORMAL) {

@@ -528,10 +528,8 @@ int Font_DrawString (const char *fontID, int align, int x, int y, int absX, int 
 
 	/* get the font */
 	f = Font_GetFont(fontID);
-	if (!f) {
+	if (!f)
 		ri.Sys_Error(ERR_FATAL, "...could not find font: %s\n", fontID);
-		return 0;				/* never reached. need for code analyst. */
-	}
 
 	cache = Font_GetFromCache(c);
 	if (cache) { /* @todo: check that cache.font = fontID and that texh0 was the same */
