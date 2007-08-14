@@ -2991,7 +2991,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++)
 				MSG_WriteShort(sb, aircraft->teamIdxs[l]);
 			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++)
-				MSG_WriteByte(sb, aircraft->teamTypes[l]);
+				MSG_WriteShort(sb, aircraft->teamTypes[l]);
 
 			MSG_WriteShort(sb, aircraft->numUpgrades);
 			MSG_WriteShort(sb, aircraft->radar.range);
@@ -3231,7 +3231,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 					aircraft->teamSize++;
 			}
 			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++)
-				aircraft->teamTypes[l] = MSG_ReadByte(sb);
+				aircraft->teamTypes[l] = MSG_ReadShort(sb);
 
 			aircraft->numUpgrades = MSG_ReadShort(sb);
 			aircraft->radar.range = MSG_ReadShort(sb);
