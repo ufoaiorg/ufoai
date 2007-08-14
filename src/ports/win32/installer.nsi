@@ -131,6 +131,8 @@ SectionGroup /e "Game" SECGROUP01
     File "..\..\..\base\i18n\sv\LC_MESSAGES\*.mo"
     SetOutPath "$INSTDIR\base\i18n\slo\LC_MESSAGES"
     File "..\..\..\base\i18n\slo\LC_MESSAGES\*.mo"
+    SetOutPath "$INSTDIR\base\i18n\th\LC_MESSAGES"
+    File "..\..\..\base\i18n\th\LC_MESSAGES\*.mo"
 
   ;======================================================================
   ; to let the game start up
