@@ -575,7 +575,7 @@ static void CL_CheckAndQueueDownload (char *path)
 			}
 		}
 	} else
-		CL_CheckOrDownloadFile (path);
+		CL_CheckOrDownloadFile(path);
 }
 
 /**

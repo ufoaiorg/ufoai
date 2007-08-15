@@ -247,6 +247,8 @@ static qboolean parsedDeath = qfalse;
 
 /**
  * @return true if the file exists, otherwise it attempts to start a download via curl
+ * @sa CL_CheckAndQueueDownload
+ * @sa CL_RequestNextDownload
  */
 qboolean CL_CheckOrDownloadFile (const char *filename)
 {
@@ -770,12 +772,26 @@ static void CL_EndRoundAnnounce (struct dbuffer * msg)
 	team = NET_ReadByte(msg);
 	playerName = cl.configstrings[CS_PLAYERNAMES + playerNum];
 
-	/* add translated message to chat buffer */
-	Com_sprintf(buf, sizeof(buf), _("%s ended his round (team %i)\n"), playerName, team);
-	MN_AddChatMessage(buf);
+	/* not needed to announce this for singleplayer games */
+	if (ccs.singleplayer)
+		return;
 
-	/* don't translate on the game console */
-	Com_Printf("%s ended his round (team %i)\n", playerName, team);
+	/* it was our own round */
+	if (cl.pnum == playerNum) {
+		/* add translated message to chat buffer */
+		Com_sprintf(buf, sizeof(buf), _("You've ended your round\n"));
+		MN_AddChatMessage(buf);
+
+		/* don't translate on the game console */
+		Com_Printf("You've ended your round\n");
+	} else {
+		/* add translated message to chat buffer */
+		Com_sprintf(buf, sizeof(buf), _("%s ended his round (team %i)\n"), playerName, team);
+		MN_AddChatMessage(buf);
+
+		/* don't translate on the game console */
+		Com_Printf("%s ended his round (team %i)\n", playerName, team);
+	}
 }
 
 static le_t	*lastMoving;
