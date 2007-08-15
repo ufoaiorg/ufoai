@@ -677,14 +677,14 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 	invList_t *ic, *next;
 	int p, container;
 
-	/* Iterate through in container order (right hand, left hand, belt, */
-	/* holster, backpack) at the top level, i.e. each squad member reloads */
-	/* her right hand, then each reloads his left hand, etc. The effect */
-	/* of this is that when things are tight, everyone has the opportunity */
-	/* to get their preferred weapon(s) loaded before anyone is allowed */
-	/* to keep her spares in the backpack or on the floor. We don't want */
-	/* the first person in the squad filling their backpack with spare ammo */
-	/* leaving others with unloaded guns in their hands... */
+	/** Iterate through in container order (right hand, left hand, belt,
+	 * holster, backpack) at the top level, i.e. each squad member reloads
+	 * her right hand, then each reloads his left hand, etc. The effect
+	 * of this is that when things are tight, everyone has the opportunity
+	 * to get their preferred weapon(s) loaded before anyone is allowed
+	 * to keep her spares in the backpack or on the floor. We don't want
+	 * the first person in the squad filling their backpack with spare ammo
+	 * leaving others with unloaded guns in their hands... */
 
 	assert(aircraft);
 	base = aircraft->homebase;
