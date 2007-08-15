@@ -1498,8 +1498,8 @@ static void CL_ParseEvent (struct dbuffer *msg)
 #endif
 						impactTime = shootTime;
 					nextTime = shootTime + 1400;
-					if (fd->rof)
-						shootTime += 1000 / fd->rof;
+					if (fd->delayBetweenShots)
+						shootTime += 1000 / fd->delayBetweenShots;
 				}
 				parsedDeath = qfalse;
 			}
@@ -1527,8 +1527,8 @@ static void CL_ParseEvent (struct dbuffer *msg)
 						nextTime = impactTime + 1400;
 					else
 						nextTime = impactTime + 400;
-					if (fd->rof)
-						shootTime += 1000 / fd->rof;
+					if (fd->delayBetweenShots)
+						shootTime += 1000 / fd->delayBetweenShots;
 				} else {
 					/* only a bounced shot */
 					event_time = impactTime;

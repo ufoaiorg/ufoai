@@ -87,7 +87,7 @@ item ugv_chaingun_belt
 			range	60
 			shots	10
 			ammo	10
-			rof		10
+			delaybetweenshots		10
 			time	10
 			damage	"25 5"
 			dmgtype normal
@@ -108,14 +108,14 @@ item ugv_chaingun_belt
 			range	60
 			shots	50
 			ammo	50
-			rof		20
+			delaybetweenshots		20
 			time	20
 			damage	"25 5"
 			dmgtype normal
 			//reaction 	true
 			reaction 	false	// do we allow RF for remove-controlled (or are they autonomous?) tanks?
 		}
-// Deactivated for now 
+// Deactivated for now
 //		firedef
 //		{
 //			name	"_Full-Auto Sweep"
@@ -130,7 +130,7 @@ item ugv_chaingun_belt
 //			range	60
 //			shots	50
 //			ammo	50
-//			rof		20
+//			delaybetweenshots		20
 //			time	20
 //			damage	"25 5"
 //			dmgtype normal

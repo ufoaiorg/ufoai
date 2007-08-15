@@ -68,7 +68,7 @@ item pbeampistol_ammo
 			range	30
 			shots	4
 			ammo	4
-			rof		5
+			delaybetweenshots		5
 			time	7
 			damage	"28 3"
 			dmgtype particlebeam
@@ -149,7 +149,7 @@ item pbeamcannon_ammo
 			range	50
 			shots	5
 			ammo	1
-			rof		5
+			delaybetweenshots		5
 			time	9
 			damage	"38 5"
 			dmgtype particlebeam
@@ -249,7 +249,7 @@ item pbeamrifle_ammo
 			range	90
 			shots	4
 			ammo	4
-			rof		5
+			delaybetweenshots		5
 			time	12
 			damage	"40 4"
 			dmgtype particlebeam

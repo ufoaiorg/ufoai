@@ -70,7 +70,7 @@ item assault_ammo
 			range	70
 			shots	3
 			ammo	3
-			rof		5
+			delaybetweenshots		5
 			time	12
 			damage	"37 0"
 			dmgtype normal
@@ -91,7 +91,7 @@ item assault_ammo
 			range	70
 			shots	8
 			ammo	8
-			rof		10
+			delaybetweenshots		10
 			time	18
 			damage	"37 0"
 			dmgtype normal
@@ -153,7 +153,7 @@ item chaingun_ammo
 			range	60
 			shots	5
 			ammo	5
-			rof		10
+			delaybetweenshots		10
 			time	10
 			damage	"20 5"
 			dmgtype normal
@@ -173,7 +173,7 @@ item chaingun_ammo
 			range	60
 			shots	25
 			ammo	25
-			rof		20
+			delaybetweenshots		20
 			time	20
 			damage	"20 5"
 			dmgtype normal
@@ -193,7 +193,7 @@ item chaingun_ammo
 			range	60
 			shots	25
 			ammo	25
-			rof		20
+			delaybetweenshots		20
 			time	20
 			damage	"20 5"
 			dmgtype normal
@@ -274,7 +274,7 @@ item machinegun_ammo
 			range	70
 			shots	3
 			ammo	3
-			rof		5
+			delaybetweenshots		5
 			time	12
 			damage	"37 0"
 			dmgtype normal
@@ -295,7 +295,7 @@ item machinegun_ammo
 			range	70
 			shots	8
 			ammo	8
-			rof		10
+			delaybetweenshots		10
 			time	18
 			damage	"37 0"
 			dmgtype normal
@@ -473,7 +473,7 @@ item pistol_ammo
 			range	40
 			shots	3
 			ammo	3
-			rof		10
+			delaybetweenshots		10
 			time	8
 			damage	"37 5"
 			dmgtype normal
@@ -494,7 +494,7 @@ item pistol_ammo
 			range	40
 			shots	1
 			ammo	1
-			rof		10
+			delaybetweenshots		10
 			time	8
 			damage	"37 0"
 			dmgtype normal
@@ -572,7 +572,7 @@ item pistol2_ammo
 			range	40
 			shots	3
 			ammo	3
-			rof		10
+			delaybetweenshots		10
 			time	7
 			damage	"20 5"
 			dmgtype normal
@@ -592,7 +592,7 @@ item pistol2_ammo
 			range	40
 			shots	8
 			ammo	8
-			rof		10
+			delaybetweenshots		10
 			time	14
 			damage	"20 5"
 			dmgtype normal
@@ -672,7 +672,7 @@ item smg_ammo
 			range	45
 			shots	5
 			ammo	5
-			rof		10
+			delaybetweenshots		10
 			time	14
 			damage	"25 0"
 			dmgtype normal
@@ -693,7 +693,7 @@ item smg_ammo
 			range	45
 			shots	15
 			ammo	15
-			rof		20
+			delaybetweenshots		20
 			time	20
 			damage	"25 0"
 			dmgtype normal
@@ -754,7 +754,7 @@ item shotgun2
 //		range	60
 //		shots	10
 //		ammo	1
-//		rof		0
+//		delaybetweenshots		0
 //		time	8
 //		damage	"11 0"
 //		dmgtype blast
@@ -775,7 +775,7 @@ item shotgun2
 //		range	60
 //		shots	20
 //		ammo	2
-//		rof		0
+//		delaybetweenshots		0
 //		time	12
 //		damage	"11 0"
 //		dmgtype blast
@@ -812,7 +812,7 @@ item shotgun2_slug_ammo
 			range	60
 			shots	1
 			ammo	1
-			rof		0
+			delaybetweenshots		0
 			time	8
 			damage	"51 0"
 			dmgtype normal
@@ -834,7 +834,7 @@ item shotgun2_slug_ammo
 			range	60
 			shots	3
 			ammo	3
-			rof		5
+			delaybetweenshots		5
 			time	12
 			damage	"51 0"
 			dmgtype normal
@@ -856,7 +856,7 @@ item shotgun2_slug_ammo
 			range	60
 			shots	7
 			ammo	7
-			rof		7
+			delaybetweenshots		7
 			time	20
 			damage	"51 0"
 			dmgtype normal
@@ -918,7 +918,7 @@ item shotgun_ammo
 			range	60
 			shots	10
 			ammo	1
-			rof		0
+			delaybetweenshots		0
 			time	8
 			damage	"11 0"
 			dmgtype blast
@@ -940,7 +940,7 @@ item shotgun_ammo
 			range	60
 			shots	20
 			ammo	2
-			rof		0
+			delaybetweenshots		0
 			time	12
 			damage	"11 0"
 			dmgtype blast
@@ -1003,7 +1003,7 @@ item shotgun_micro_ammo
 			range	60
 			shots	8
 			ammo	1
-			rof		0
+			delaybetweenshots		0
 			time	6
 			damage	"7 2"
 			dmgtype blast
@@ -1025,7 +1025,7 @@ item shotgun_micro_ammo
 			range	60
 			shots	24
 			ammo	3
-			rof		15
+			delaybetweenshots		15
 			time	10
 			damage	"7 2"
 			dmgtype blast
@@ -1050,7 +1050,7 @@ item shotgun_micro_ammo
 			range	60
 			shots	8
 			ammo	1
-			rof		0
+			delaybetweenshots		0
 			time	8
 			damage	"11 0"
 			dmgtype blast
@@ -1072,7 +1072,7 @@ item shotgun_micro_ammo
 			range	60
 			shots	24
 			ammo	3
-			rof		15
+			delaybetweenshots		15
 			time	12
 			damage	"11 0"
 			dmgtype blast
@@ -1094,7 +1094,7 @@ item shotgun_micro_ammo
 			range	60
 			shots	56
 			ammo	7
-			rof		30
+			delaybetweenshots		30
 			time	20
 			damage	"11 0"
 			dmgtype blast
@@ -1155,7 +1155,7 @@ item flamer_ammo
 			range	8
 			shots	30
 			ammo	1
-			rof		25
+			delaybetweenshots		25
 			time	8
 			damage	"6 2"
 			dmgtype fire
@@ -1176,7 +1176,7 @@ item flamer_ammo
 			range	8
 			shots	60
 			ammo	2
-			rof		25
+			delaybetweenshots		25
 			time	12
 			damage	"6 2"
 			dmgtype fire
@@ -1197,7 +1197,7 @@ item flamer_ammo
 			range	8
 			shots	60
 			ammo	2
-			rof		25
+			delaybetweenshots		25
 			time	12
 			damage	"6 2"
 			dmgtype fire
@@ -1405,7 +1405,7 @@ item grenl_ammo
 			range	15
 			shots	1
 			ammo	1
-			rof		1
+			delaybetweenshots		1
 			time	8
 			damage	"20 10"
 			spldmg	"70 20"
@@ -1431,7 +1431,7 @@ item grenl_ammo
 			range	15
 			shots	1
 			ammo	1
-			rof		1
+			delaybetweenshots		1
 			time	12
 			damage	"20 10"
 			spldmg	"70 20"
@@ -1456,7 +1456,7 @@ item grenl_ammo
 			range	15
 			shots	3
 			ammo	3
-			rof		3
+			delaybetweenshots		3
 			time	15
 			damage	"20 10"
 			spldmg	"70 20"
@@ -1485,7 +1485,7 @@ item grenl_ammo
 			range	15
 			shots	1
 			ammo	1
-			rof		1
+			delaybetweenshots		1
 			time	8
 			spldmg	"70 20"
 			splrad	4
@@ -1512,7 +1512,7 @@ item grenl_ammo
 			range	15
 			shots	1
 			ammo	1
-			rof		1
+			delaybetweenshots		1
 			time	12
 			spldmg	"70 20"
 			splrad	4
@@ -1539,7 +1539,7 @@ item grenl_ammo
 			range	15
 			shots	3
 			ammo	3
-			rof		3
+			delaybetweenshots		3
 			time	15
 			spldmg	"70 20"
 			splrad	4
@@ -1581,7 +1581,7 @@ item grenl_incendiary_ammo
 			range	15
 			shots	1
 			ammo	1
-			rof		1
+			delaybetweenshots		1
 			time	8
 			damage	"20 10"
 			spldmg	"70 20"
@@ -1608,7 +1608,7 @@ item grenl_incendiary_ammo
 			range	15
 			shots	1
 			ammo	1
-			rof		1
+			delaybetweenshots		1
 			time	12
 			damage	"20 10"
 			spldmg	"70 20"
@@ -1633,7 +1633,7 @@ item grenl_incendiary_ammo
 			range	15
 			shots	3
 			ammo	3
-			rof		3
+			delaybetweenshots		3
 			time	15
 			damage	"20 10"
 			spldmg	"70 20"
@@ -1662,7 +1662,7 @@ item grenl_incendiary_ammo
 			range	15
 			shots	1
 			ammo	1
-			rof		1
+			delaybetweenshots		1
 			time	8
 			spldmg	"70 20"
 			splrad	4
@@ -1689,7 +1689,7 @@ item grenl_incendiary_ammo
 			range	15
 			shots	1
 			ammo	1
-			rof		1
+			delaybetweenshots		1
 			time	12
 			spldmg	"70 20"
 			splrad	4
@@ -1716,7 +1716,7 @@ item grenl_incendiary_ammo
 			range	15
 			shots	3
 			ammo	3
-			rof		3
+			delaybetweenshots		3
 			time	15
 			spldmg	"70 20"
 			splrad	4
@@ -1752,7 +1752,7 @@ item grenl_fle_ammo
 			range	10
 			shots	24
 			ammo	1
-			rof		15
+			delaybetweenshots		15
 			time	8
 			damage	"6 2"
 			dmgtype blast
@@ -1771,7 +1771,7 @@ item grenl_fle_ammo
 			range	10
 			shots	72
 			ammo	3
-			rof		72
+			delaybetweenshots		72
 			time	14
 			damage	"6 2"
 			dmgtype blast
@@ -1812,7 +1812,7 @@ item grenl_plasma_ammo
 			range	15
 			shots	1
 			ammo	1
-			rof		1
+			delaybetweenshots		1
 			time	8
 			damage	"20 10"
 			spldmg	"100 20"
@@ -1838,7 +1838,7 @@ item grenl_plasma_ammo
 			range	15
 			shots	1
 			ammo	1
-			rof		1
+			delaybetweenshots		1
 			time	12
 			damage	"20 10"
 			spldmg	"100 20"
@@ -1863,7 +1863,7 @@ item grenl_plasma_ammo
 			range	15
 			shots	3
 			ammo	3
-			rof		3
+			delaybetweenshots		3
 			time	15
 			damage	"20 10"
 			spldmg	"100 20"
@@ -1892,7 +1892,7 @@ item grenl_plasma_ammo
 			range	15
 			shots	1
 			ammo	1
-			rof		1
+			delaybetweenshots		1
 			time	8
 			spldmg	"100 20"
 			splrad	5
@@ -1919,7 +1919,7 @@ item grenl_plasma_ammo
 			range	15
 			shots	1
 			ammo	1
-			rof		1
+			delaybetweenshots		1
 			time	12
 			spldmg	"100 20"
 			splrad	5
@@ -1946,7 +1946,7 @@ item grenl_plasma_ammo
 			range	15
 			shots	3
 			ammo	3
-			rof		3
+			delaybetweenshots		3
 			time	15
 			spldmg	"100 20"
 			splrad	5
@@ -2047,7 +2047,7 @@ item bolterrifle_ammo
 			range	250
 			shots   1
 			ammo    1
-			rof     2
+			delaybetweenshots     2
 			time    16
 			damage  "100 5"
 			dmgtype normal

@@ -144,7 +144,7 @@ item fraggrenade
 			range	14
 			shots	1
 			ammo	1
-			rof		1
+			delaybetweenshots		1
 			time	8
 			spldmg	"200 90"
 			splrad	4
@@ -169,7 +169,7 @@ item fraggrenade
 			range	14
 			shots	1
 			ammo	1
-			rof		1
+			delaybetweenshots		1
 			time	8
 			spldmg	"200 90"
 			splrad	4
@@ -217,7 +217,7 @@ item flashbang
 			range	12
 			shots	1
 			ammo	1
-			rof		1
+			delaybetweenshots		1
 			time	12
 			spldmg	"999 0"	// TODO: needed at all?
 			splrad	4
@@ -242,7 +242,7 @@ item flashbang
 			range	12
 			shots	1
 			ammo	1
-			rof		1
+			delaybetweenshots		1
 			time	12
 			spldmg	"999 0"	// TODO: needed at all?
 			splrad	4
@@ -289,7 +289,7 @@ item smokegrenade
 			range	12
 			shots	1
 			ammo	1
-			rof		1
+			delaybetweenshots		1
 			time	8
 			spldmg	"5 5"
 			splrad	6
@@ -314,7 +314,7 @@ item smokegrenade
 			range	12
 			shots	1
 			ammo	1
-			rof		1
+			delaybetweenshots		1
 			time	8
 			spldmg	"5 5"
 			splrad	6
@@ -361,7 +361,7 @@ item stungrenade
 			range	12
 			shots	1
 			ammo	1
-			rof		1
+			delaybetweenshots		1
 			time	8
 			spldmg	"150 60"
 			splrad	6
@@ -386,7 +386,7 @@ item stungrenade
 			range	12
 			shots	1
 			ammo	1
-			rof		1
+			delaybetweenshots		1
 			time	8
 			spldmg	"150 60"
 			splrad	6
@@ -434,7 +434,7 @@ item incgrenade
 			range	12
 			shots	1
 			ammo	1
-			rof		1
+			delaybetweenshots		1
 			time	8
 			spldmg	"160 60"
 			splrad	3
@@ -459,7 +459,7 @@ item incgrenade
 			range	12
 			shots	1
 			ammo	1
-			rof		1
+			delaybetweenshots		1
 			time	8
 			spldmg	"160 60"
 			splrad	3
@@ -506,7 +506,7 @@ item plasmagrenade
 			range	12
 			shots	1
 			ammo	1
-			rof		1
+			delaybetweenshots		1
 			time	8
 			spldmg	"320 60"
 			splrad	6
@@ -531,7 +531,7 @@ item plasmagrenade
 			range	12
 			shots	1
 			ammo	1
-			rof		1
+			delaybetweenshots		1
 			time	8
 			spldmg	"320 60"
 			splrad	6

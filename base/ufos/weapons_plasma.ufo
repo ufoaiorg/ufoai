@@ -49,7 +49,7 @@ item plaspistol_ammo
 			range	15
 			shots	1
 			ammo	1
-			rof		6
+			delaybetweenshots		6
 			time	6
 			damage	"16 6"
 			dmgtype plasma
@@ -69,7 +69,7 @@ item plaspistol_ammo
 			range	15
 			shots	4
 			ammo	4
-			rof		6
+			delaybetweenshots		6
 			time	15
 			damage	"16 6"
 			dmgtype plasma
@@ -90,7 +90,7 @@ item plaspistol_ammo
 			range	10
 			shots	30
 			ammo	3
-			rof		32
+			delaybetweenshots		32
 			time	15
 			damage	"6 2"
 			dmgtype plasma
@@ -150,7 +150,7 @@ item plasrifle_ammo
 			range	22
 			shots	1
 			ammo	1
-			rof		5
+			delaybetweenshots		5
 			time	9
 			damage	"20 5"
 			dmgtype plasma
@@ -170,7 +170,7 @@ item plasrifle_ammo
 			range	22
 			shots	5
 			ammo	5
-			rof		5
+			delaybetweenshots		5
 			time	14
 			damage	"20 5"
 			dmgtype plasma
@@ -191,7 +191,7 @@ item plasrifle_ammo
 			range	18
 			shots	30
 			ammo	3
-			rof		21
+			delaybetweenshots		21
 			time	14
 			damage	"12 2"
 			dmgtype plasma
@@ -252,7 +252,7 @@ item plasblaster_ammo
 			range	90
 			shots	10
 			ammo	2
-			rof		10
+			delaybetweenshots		10
 			time	12
 			damage	"10 5"
 			spldmg	"10 5"
@@ -275,7 +275,7 @@ item plasblaster_ammo
 			range	30
 			shots	50
 			ammo	10
-			rof		38
+			delaybetweenshots		38
 			time	20
 			damage	"15 6"
 			dmgtype plasma
@@ -296,7 +296,7 @@ item plasblaster_ammo
 			range	30
 			shots	50
 			ammo	10
-			rof		38
+			delaybetweenshots		38
 			time	20
 			damage	"15 6"
 			dmgtype plasma

@@ -737,7 +737,7 @@ static const value_t fdps[] = {
 /*	{"range", V_FLOAT, offsetof(fireDef_t, range), MEMBER_SIZEOF(fireDef_t, range)},*/
 	{"shots", V_INT, offsetof(fireDef_t, shots), MEMBER_SIZEOF(fireDef_t, shots)},
 	{"ammo", V_INT, offsetof(fireDef_t, ammo), MEMBER_SIZEOF(fireDef_t, ammo)},
-	{"rof", V_FLOAT, offsetof(fireDef_t, rof), MEMBER_SIZEOF(fireDef_t, rof)},
+	{"delaybetweenshots", V_FLOAT, offsetof(fireDef_t, delayBetweenShots), MEMBER_SIZEOF(fireDef_t, delayBetweenShots)},
 	{"time", V_INT, offsetof(fireDef_t, time), MEMBER_SIZEOF(fireDef_t, time)},
 	{"damage", V_POS, offsetof(fireDef_t, damage), MEMBER_SIZEOF(fireDef_t, damage)},
 	{"spldmg", V_POS, offsetof(fireDef_t, spldmg), MEMBER_SIZEOF(fireDef_t, spldmg)},

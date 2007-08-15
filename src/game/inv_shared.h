@@ -74,7 +74,9 @@ typedef struct fireDef_s {
 	float range;			/**< range of the weapon ammunition */
 	int shots;
 	int ammo;
-	float rof;
+	/** the delay that the weapon needs to play sounds and particles
+	 * The higher the value, the less the delay (1000/delay) */
+	float delayBetweenShots;
 	int time;
 	vec2_t damage, spldmg;
 	float splrad;			/**< splash damage radius */
