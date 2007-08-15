@@ -1322,15 +1322,15 @@ static void CL_LogEvent (int num)
 	fclose(logfile);
 }
 
-static void schedule_do_event(void);
+static void CL_ScheduleEvent(void);
 
-static void do_event (int now, void *data)
+static void CL_ExecuteEvent (int now, void *data)
 {
 	while (events && !blockEvents) {
 		evTimes_t *event = events;
 
 		if (event->when > cl.eventTime) {
-			schedule_do_event();
+			CL_ScheduleEvent();
 			return;
 		}
 
@@ -1345,7 +1345,12 @@ static void do_event (int now, void *data)
 	}
 }
 
-static void schedule_do_event (void)
+/**
+ * @brief Schedule the first event in the queue
+ * @sa Schedule_Event
+ * @sa do_event
+ */
+static void CL_ScheduleEvent (void)
 {
 	/* We need to schedule the first event in the queue. Unfortunately,
 	 events don't run on the master timer (yet - this should change),
@@ -1353,7 +1358,7 @@ static void schedule_do_event (void)
 	int timescale_delta = Sys_Milliseconds() - cl.eventTime;
 	if (!events)
 		return;
-	Schedule_Event(events->when + timescale_delta, &do_event, NULL);
+	Schedule_Event(events->when + timescale_delta, &CL_ExecuteEvent, NULL);
 }
 
 /**
@@ -1370,7 +1375,7 @@ void CL_BlockEvents (void)
 void CL_UnblockEvents (void)
 {
 	blockEvents = qfalse;
-	schedule_do_event();
+	CL_ScheduleEvent();
 }
 
 /**
@@ -1410,20 +1415,23 @@ static void CL_ParseEvent (struct dbuffer *msg)
 		int event_time;
 
 		/* get event time */
-		if (nextTime < cl.eventTime)
+		if (nextTime < cl.eventTime) {
 			nextTime = cl.eventTime;
-		if (impactTime < cl.eventTime)
+		}
+		if (impactTime < cl.eventTime) {
 			impactTime = cl.eventTime;
+		}
 
 		if (eType == EV_ACTOR_DIE)
 			parsedDeath = qtrue;
 
-		if (eType == EV_ACTOR_DIE || eType == EV_MODEL_EXPLODE)
+		if (eType == EV_ACTOR_DIE || eType == EV_MODEL_EXPLODE) {
 			event_time = impactTime;
-		else if (eType == EV_ACTOR_SHOOT || eType == EV_ACTOR_SHOOT_HIDDEN)
+		} else if (eType == EV_ACTOR_SHOOT || eType == EV_ACTOR_SHOOT_HIDDEN) {
 			event_time = shootTime;
-		else
+		} else {
 			event_time = nextTime;
+		}
 
 		if ((eType == EV_ENT_APPEAR || eType == EV_INV_ADD)) {
 			if (parsedDeath) { /* drop items after death (caused by impact) */
@@ -1439,8 +1447,9 @@ static void CL_ParseEvent (struct dbuffer *msg)
 		/* calculate time interval before the next event */
 		switch (eType) {
 		case EV_ACTOR_APPEAR:
-			if (cls.state == ca_active && cl.actTeam != cls.team)
+			if (cls.state == ca_active && cl.actTeam != cls.team) {
 				nextTime += 600;
+			}
 			break;
 		case EV_INV_RELOAD:
 			/* let the reload sound play */
@@ -1532,7 +1541,7 @@ static void CL_ParseEvent (struct dbuffer *msg)
 		if (!events || (events)->when > event_time) {
 			cur->next = events;
 			events = cur;
-			schedule_do_event();
+			CL_ScheduleEvent();
 		} else {
 			evTimes_t *e = events;
 			while (e->next && e->next->when <= event_time)
