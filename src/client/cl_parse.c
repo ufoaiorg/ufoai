@@ -1387,9 +1387,9 @@ static void CL_ParseEvent (struct dbuffer *msg)
 		return;
 
 	/* check instantly flag */
-	if (eType & INSTANTLY) {
+	if (eType & EVENT_INSTANTLY) {
 		now = qtrue;
-		eType &= ~INSTANTLY;
+		eType &= ~EVENT_INSTANTLY;
 	} else
 		now = qfalse;
 

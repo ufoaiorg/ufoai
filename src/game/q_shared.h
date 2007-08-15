@@ -668,7 +668,7 @@ ELEMENTS COMMUNICATED ACROSS THE NET
 #define TEAM_ALIEN      7
 
 /** add this flag for instant event execution */
-#define INSTANTLY   0x80
+#define EVENT_INSTANTLY   0x80
 
 /**
  * @brief Possible event values

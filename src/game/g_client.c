@@ -2649,7 +2649,7 @@ void G_ClientBegin (player_t* player)
 
 	/*Com_Printf("G_ClientBegin: player: %i - pnum: %i , game.sv_maxplayersperteam: %i	\n", P_MASK(player), player->num, game.sv_maxplayersperteam);*/
 	/* spawn camera (starts client rendering) */
-	gi.AddEvent(P_MASK(player), EV_START | INSTANTLY);
+	gi.AddEvent(P_MASK(player), EV_START | EVENT_INSTANTLY);
 	gi.WriteByte(sv_teamplay->integer);
 
 	/* send events */
@@ -2691,7 +2691,7 @@ qboolean G_ClientSpawn (player_t * player)
 
 	/* do all the init events here... */
 	/* reset the data */
-	gi.AddEvent(P_MASK(player), EV_RESET | INSTANTLY);
+	gi.AddEvent(P_MASK(player), EV_RESET | EVENT_INSTANTLY);
 	gi.WriteByte(player->pers.team);
 	gi.WriteByte(level.activeTeam);
 
