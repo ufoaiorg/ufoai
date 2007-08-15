@@ -511,7 +511,7 @@ void UFO_PrepareRecovery (base_t *base)
 	/* Update base capacity. */
 	gd.bases[recovery->baseID].capacities[CAP_UFOHANGARS].cur += ufocraft->weight;
 
-	Com_Printf("UFO_PrepareRecovery()... the recovery entry in global array is done; base: %s, ufotype: %i, date: %i\n",
+	Com_DPrintf(DEBUG_CLIENT, "UFO_PrepareRecovery()... the recovery entry in global array is done; base: %s, ufotype: %i, date: %i\n",
 	gd.bases[recovery->baseID].name, recovery->ufotype, recovery->event.day);
 }
 

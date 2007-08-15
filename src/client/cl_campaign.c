@@ -4338,7 +4338,7 @@ static void CP_UFOSellStart_f (void)
 
 	nation = &gd.nations[Cvar_VariableInteger("mission_recoverynation")];
 	assert(nation);
-	Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Recovered UFO of type %s from the battlefield. UFO sold to nation %s, gained %i credits."),
+	Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."),
 	UFO_TypeToName(Cvar_VariableInteger("mission_ufotype")), _(nation->name), UFOprices[Cvar_VariableInteger("mission_recoverynation")]);
 	MN_AddNewMessage(_("UFO Recovery"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 	CL_UpdateCredits(ccs.credits + UFOprices[Cvar_VariableInteger("mission_recoverynation")]);
@@ -4417,7 +4417,7 @@ static void CP_UFORecoveredDestroy_f (void)
 	if (Cvar_VariableInteger("mission_uforecoverydone") == 1)
 		return;
 
-	Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Secured UFO of type %s was destroyed."),
+	Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Secured %s was destroyed."),
 	UFO_TypeToName(Cvar_VariableInteger("mission_ufotype")));
 	MN_AddNewMessage(_("UFO Recovery"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 
