@@ -785,10 +785,10 @@ typedef enum {
 #define IS_SHOT_HEADGEAR(x)    ((x) == ST_HEADGEAR)
 
 /* shoot flags */
-#define SF_IMPACT           1
-#define SF_BODY             2
-#define SF_BOUNCING         4
-#define SF_BOUNCED          8
+#define SF_IMPACT	1
+#define SF_BODY		2
+#define SF_BOUNCING	4
+#define SF_BOUNCED	8
 
 #define MAX_DEATH	3	/**< @sa STATE_DEAD */
 

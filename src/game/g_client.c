@@ -723,9 +723,10 @@ edict_t *G_SpawnFloor (pos3_t pos)
 	floor = G_Spawn();
 	floor->classname = "item";
 	floor->type = ET_ITEM;
+	floor->fieldSize = ACTOR_SIZE_NORMAL;
 	VectorCopy(pos, floor->pos);
+	floor->pos[2] = gi.GridFall(gi.map, floor->pos, floor->fieldSize);
 	gi.GridPosToVec(gi.map, floor->pos, floor->origin);
-	floor->origin[2] -= 24;
 	return floor;
 }
 
