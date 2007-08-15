@@ -694,7 +694,7 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 	aircraft->idx, aircraft->teamSize);
 
 	for (container = 0; container < csi.numIDs; container++) {
-		for (p = 0; p < aircraft->size; p++) {
+		for (p = 0; p < aircraft->teamSize; p++) {
 			if (aircraft->teamIdxs[p] != -1) {
 				cp = &gd.employees[aircraft->teamTypes[p]][aircraft->teamIdxs[p]].chr;
 				assert(cp);
