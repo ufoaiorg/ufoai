@@ -74,14 +74,14 @@ void R_RenderDlights (void)
 	int i;
 	dlight_t *l;
 
-	if (!gl_flashblend->integer)
+	if (!r_flashblend->integer)
 		return;
 
 	r_dlightframecount = r_framecount + 1;	/* because the count hasn't */
 	/*  advanced yet for this frame */
 	qglDepthMask(GL_FALSE);
 	qglDisable(GL_TEXTURE_2D);
-	GLSTATE_ENABLE_BLEND
+	RSTATE_ENABLE_BLEND
 	qglBlendFunc(GL_ONE, GL_ONE);
 
 	l = r_newrefdef.dlights;
@@ -89,7 +89,7 @@ void R_RenderDlights (void)
 		R_RenderDlight(l);
 
 	qglColor3f(1, 1, 1);
-	GLSTATE_DISABLE_BLEND
+	RSTATE_DISABLE_BLEND
 	qglEnable(GL_TEXTURE_2D);
 	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	qglDepthMask(GL_TRUE);
@@ -296,7 +296,7 @@ void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 		bl = s_blocklights;
 
 		for (i = 0; i < 3; i++)
-			scale[i] = gl_modulate->value * r_newrefdef.lightstyles[surf->styles[maps]].rgb[i];
+			scale[i] = r_modulate->value * r_newrefdef.lightstyles[surf->styles[maps]].rgb[i];
 
 		if (scale[0] == 1.0F && scale[1] == 1.0F && scale[2] == 1.0F) {
 			for (i = 0; i < size; i++, bl += 3) {
@@ -323,7 +323,7 @@ void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 	stride -= (smax << 2);
 	bl = s_blocklights;
 
-	monolightmap = gl_monolightmap->string[0];
+	monolightmap = r_monolightmap->string[0];
 
 	if (monolightmap == '0') {
 		for (i = 0; i < tmax; i++, dest += stride) {

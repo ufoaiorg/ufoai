@@ -1,3 +1,14 @@
+/**
+ * @file qgl_irix.C
+ *
+ * This file implements the operating system binding of GL to QGL function
+ * pointers.  When doing a port of Quake2 you must implement the following
+ * two functions:
+ *
+ * QR_Init() - loads libraries, assigns function pointers, etc.
+ * QR_Shutdown() - unloads libraries, NULLs function pointers
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -17,43 +28,29 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/*
-** qgl_irix.C
-**
-** This file implements the operating system binding of GL to QGL function
-** pointers.  When doing a port of Quake2 you must implement the following
-** two functions:
-**
-** QGL_Init() - loads libraries, assigns function pointers, etc.
-** QGL_Shutdown() - unloads libraries, NULLs function pointers
-*/
+
 #define QGL
 #include "../../ref_gl/gl_local.h"
 
 #define SIG( x ) fprintf(log_fp, x "\n")
 
-/*
-** QGL_Shutdown
-**
-** Unloads the specified DLL then nulls out all the proc pointers.
-*/
-void QGL_Shutdown (void)
+/**
+ * @brief Unloads the specified DLL then nulls out all the proc pointers.
+ */
+void QR_Shutdown (void)
 {
 	/* general links */
-	QGL_UnLink();
+	QR_UnLink();
 }
 
-/*
-** QGL_Init
-**
-** This is responsible for binding our qgl function pointers to
-** the appropriate GL stuff.  In Windows this means doing a
-** LoadLibrary and a bunch of calls to GetProcAddress.  On other
-** operating systems we need to do the right thing, whatever that
-** might be.
-**
-*/
-qboolean QGL_Init( const char *dllname )
+/**
+ * @brief This is responsible for binding our qgl function pointers to
+ * the appropriate GL stuff.  In Windows this means doing a
+ * LoadLibrary and a bunch of calls to GetProcAddress.  On other
+ * operating systems we need to do the right thing, whatever that
+ * might be.
+ */
+qboolean QR_Init (const char *dllname)
 {
 	if ((glw_state.OpenGLLib = dlopen(dllname, RTLD_LAZY|RTLD_GLOBAL)) == 0) {
 		char libPath[MAX_OSPATH];
@@ -75,6 +72,6 @@ qboolean QGL_Init( const char *dllname )
 	}
 
 	/* general qgl bindings */
-	QGL_Link();
+	QR_Link();
 	return qtrue;
 }

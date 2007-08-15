@@ -134,7 +134,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 	e->angles[YAW] = e->angles[YAW] + 90;
 
 	if (e->flags & RF_TRANSLUCENT)
-		GLSTATE_ENABLE_BLEND
+		RSTATE_ENABLE_BLEND
 
 	if ((e->as.frame >= paliashdr->num_frames) || (e->as.frame < 0)) {
 		ri.Con_Printf(PRINT_ALL, "R_DrawAliasMD3Model %s: no such frame %d\n", currentmodel->name, e->as.frame);
@@ -152,16 +152,16 @@ void R_DrawAliasMD3Model (entity_t *e)
 	if (!r_lerpmodels->integer)
 		e->as.backlerp = 0;
 
-	if (gl_shadows->integer == 1 && (e->flags & (RF_SHADOW | RF_BLOOD))) {
+	if (r_shadows->integer == 1 && (e->flags & (RF_SHADOW | RF_BLOOD))) {
 		if (!(e->flags & RF_TRANSLUCENT))
 			qglDepthMask(GL_FALSE);
-		GLSTATE_ENABLE_BLEND
+		RSTATE_ENABLE_BLEND
 
 		qglColor4f(1, 1, 1, 1);
 		if (e->flags & RF_SHADOW)
-			GL_Bind(shadow->texnum);
+			R_Bind(shadow->texnum);
 		else
-			GL_Bind(blood->texnum);
+			R_Bind(blood->texnum);
 		qglBegin(GL_QUADS);
 
 		qglTexCoord2f(0.0, 1.0);
@@ -175,32 +175,32 @@ void R_DrawAliasMD3Model (entity_t *e)
 
 		qglEnd();
 
-		GLSTATE_DISABLE_BLEND
+		RSTATE_DISABLE_BLEND
 		if (!(e->flags & RF_TRANSLUCENT))
 			qglDepthMask(GL_TRUE);
-	} else if (gl_shadows->integer == 2 && (e->flags & (RF_SHADOW | RF_BLOOD))) {
+	} else if (r_shadows->integer == 2 && (e->flags & (RF_SHADOW | RF_BLOOD))) {
 		R_DrawShadowVolume(e);
 	}
 
-	if (gl_fog->integer && r_newrefdef.fog)
+	if (r_fog->integer && r_newrefdef.fog)
 		qglDisable(GL_FOG);
 
 	for (i = 0; i < paliashdr->num_meshes; i++) {
 		skin = currentmodel->alias.skins_img[e->skinnum];
 		if (!skin)
 			skin = r_notexture;
-		GL_Bind(skin->texnum);
+		R_Bind(skin->texnum);
 		/* locate the proper data */
 		c_alias_polys += paliashdr->meshes[i].num_tris;
 		R_DrawAliasMD3FrameLerp(paliashdr, paliashdr->meshes[i], e->as.backlerp);
 	}
 
 	if (e->flags & RF_TRANSLUCENT)
-		GLSTATE_DISABLE_BLEND
+		RSTATE_DISABLE_BLEND
 
 	qglPopMatrix();
 
-	if (gl_fog->integer && r_newrefdef.fog)
+	if (r_fog->integer && r_newrefdef.fog)
 		qglEnable(GL_FOG);
 
 	qglColor4f(1,1,1,1);

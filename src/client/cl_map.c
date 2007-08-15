@@ -361,7 +361,7 @@ static qboolean MAP_IsMapPositionSelected (const menuNode_t* node, vec2_t pos, i
 	return qfalse;
 }
 
-#define GLOBE_RADIUS gl_3dmapradius->value * (ccs.zoom / 4.0f) * 0.1
+#define GLOBE_RADIUS r_3dmapradius->value * (ccs.zoom / 4.0f) * 0.1
 /**
  * @brief Transform a 2D position on the map to screen coordinates.
  * @param[in] pos vector that holds longitude and latitude

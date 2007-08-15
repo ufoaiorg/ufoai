@@ -30,6 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 console_t con;
 
+#define CONSOLE_CHAR_ALIGN 4
+
 static cvar_t *con_notifytime;
 static cvar_t *con_history;
 cvar_t *con_fontHeight;

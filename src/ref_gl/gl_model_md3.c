@@ -174,14 +174,14 @@ void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 			/* FIXME: support the . feature for model textures like for md2 */
 			memcpy(poutskin->name, name, MD3_MAX_PATH);
 			if (name[0] != '.')
-				mod->alias.skins_img[i] = GL_FindImage(name, it_skin);
+				mod->alias.skins_img[i] = R_FindImage(name, it_skin);
 			else {
 				Q_strncpyz(path, mod->name, sizeof(path));
 				end = path;
 				while ((slash = strchr(end, '/')) != 0)
 					end = slash + 1;
 				strcpy(end, name + 1);
-				mod->alias.skins_img[i] = GL_FindImage(path, it_skin);
+				mod->alias.skins_img[i] = R_FindImage(path, it_skin);
 			}
 		}
 

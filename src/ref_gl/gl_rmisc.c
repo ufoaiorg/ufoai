@@ -1,5 +1,5 @@
 /**
- * @file gl_rmisc.c
+ * @file r_rmisc.c
  * @brief
  */
 
@@ -64,7 +64,7 @@ void R_InitMiscTexture (void)
 			data[y][x][3] = dottexture[x][y] * 255;
 		}
 	}
-	r_particletexture = GL_LoadPic("***particle***", (byte *) data, 8, 8, it_sprite, 32);
+	r_particletexture = R_LoadPic("***particle***", (byte *) data, 8, 8, it_sprite, 32);
 
 	/* also use this for bad textures, but without alpha */
 	for (x = 0; x < 8; x++) {
@@ -75,10 +75,10 @@ void R_InitMiscTexture (void)
 			data[y][x][3] = 255;
 		}
 	}
-	r_notexture = GL_LoadPic("***r_notexture***", (byte *) data, 8, 8, it_wall, 32);
+	r_notexture = R_LoadPic("***r_notexture***", (byte *) data, 8, 8, it_wall, 32);
 
 	/* empty pic in the texture chain for cinematic frames */
-	GL_LoadPic("***cinematic***", NULL, VID_NORM_WIDTH, VID_NORM_HEIGHT, it_pic, 32);
+	R_LoadPic("***cinematic***", NULL, VID_NORM_WIDTH, VID_NORM_HEIGHT, it_pic, 32);
 }
 
 
@@ -105,7 +105,7 @@ enum {
 /**
  * @brief
  */
-void GL_ScreenShot_f (void)
+void R_ScreenShot_f (void)
 {
 	char	checkName[MAX_OSPATH];
 	int		type, shotNum, quality = 100;
@@ -117,7 +117,7 @@ void GL_ScreenShot_f (void)
 	if (ri.Cmd_Argc() > 1)
 		ext = ri.Cmd_Argv(1);
 	else
-		ext = gl_screenshot->string;
+		ext = r_screenshot->string;
 
 	if (!Q_stricmp (ext, "png"))
 		type = SSHOTTYPE_PNG;
@@ -142,7 +142,7 @@ void GL_ScreenShot_f (void)
 		if (ri.Cmd_Argc() == 3)
 			quality = atoi(ri.Cmd_Argv(2));
 		else
-			quality = gl_screenshot_jpeg_quality->integer;
+			quality = r_screenshot_jpeg_quality->integer;
 		if (quality > 100 || quality <= 0)
 			quality = 100;
 
@@ -166,12 +166,12 @@ void GL_ScreenShot_f (void)
 	f = fopen(checkName, "wb");
 
 	if (!f) {
-		ri.Con_Printf(PRINT_ALL, "GL_ScreenShot_f: Couldn't create file: %s\n", checkName);
+		ri.Con_Printf(PRINT_ALL, "R_ScreenShot_f: Couldn't create file: %s\n", checkName);
 		return;
 	}
 
 	if (shotNum == 1000) {
-		ri.Con_Printf(PRINT_ALL, "GL_ScreenShot_f: screenshot limit (of 1000) exceeded!\n");
+		ri.Con_Printf(PRINT_ALL, "R_ScreenShot_f: screenshot limit (of 1000) exceeded!\n");
 		fclose(f);
 		return;
 	}
@@ -179,7 +179,7 @@ void GL_ScreenShot_f (void)
 	/* Allocate room for a copy of the framebuffer */
 	buffer = ri.TagMalloc(ri.imagePool, vid.width * vid.height * 3, 0);
 	if (!buffer) {
-		ri.Con_Printf(PRINT_ALL, "GL_ScreenShot_f: Could not allocate %i bytes for screenshot!\n", vid.width * vid.height * 3);
+		ri.Con_Printf(PRINT_ALL, "R_ScreenShot_f: Could not allocate %i bytes for screenshot!\n", vid.width * vid.height * 3);
 		fclose(f);
 		return;
 	}
@@ -190,15 +190,15 @@ void GL_ScreenShot_f (void)
 	/* Write */
 	switch (type) {
 	case SSHOTTYPE_TGA:
-		WriteTGA(f, buffer, vid.width, vid.height);
+		R_WriteTGA(f, buffer, vid.width, vid.height);
 		break;
 
 	case SSHOTTYPE_PNG:
-		WritePNG(f, buffer, vid.width, vid.height);
+		R_WritePNG(f, buffer, vid.width, vid.height);
 		break;
 
 	case SSHOTTYPE_JPG:
-		WriteJPG(f, buffer, vid.width, vid.height, quality);
+		R_WriteJPG(f, buffer, vid.width, vid.height, quality);
 		break;
 	}
 
@@ -213,28 +213,28 @@ void GL_ScreenShot_f (void)
 /**
  * @brief
  */
-void GL_SetDefaultState (void)
+void R_SetDefaultState (void)
 {
 	qglCullFace(GL_FRONT);
 	qglEnable(GL_TEXTURE_2D);
 
 	qglEnable(GL_ALPHA_TEST);
 	qglAlphaFunc(GL_GREATER, 0.1f);
-	gl_state.alpha_test = qtrue;
+	r_state.alpha_test = qtrue;
 
 	qglDisable(GL_DEPTH_TEST);
 	qglDisable(GL_CULL_FACE);
 	qglDisable(GL_BLEND);
-	gl_state.blend = qfalse;
+	r_state.blend = qfalse;
 
 	qglColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	qglClearColor(0, 0, 0, 0);
 
 	qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	GL_TextureMode(gl_texturemode->string);
-	GL_TextureAlphaMode(gl_texturealphamode->string);
-	GL_TextureSolidMode(gl_texturesolidmode->string);
+	R_TextureMode(r_texturemode->string);
+	R_TextureAlphaMode(r_texturealphamode->string);
+	R_TextureSolidMode(r_texturesolidmode->string);
 
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_min);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
@@ -244,9 +244,9 @@ void GL_SetDefaultState (void)
 
 	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	GL_TexEnv(GL_REPLACE);
+	R_TexEnv(GL_REPLACE);
 
-	GL_UpdateSwapInterval();
+	R_UpdateSwapInterval();
 
 	/* doesn't really belong here... but works fine */
 	vid.rx = (float) vid.width / VID_NORM_WIDTH;
@@ -256,15 +256,15 @@ void GL_SetDefaultState (void)
 /**
  * @brief
  */
-void GL_UpdateSwapInterval(void)
+void R_UpdateSwapInterval (void)
 {
-	if (gl_swapinterval->modified) {
-		gl_swapinterval->modified = qfalse;
+	if (r_swapinterval->modified) {
+		r_swapinterval->modified = qfalse;
 
 #ifdef _WIN32
-		if (!gl_state.stereo_enabled) {
+		if (!r_state.stereo_enabled) {
 			if (qwglSwapIntervalEXT)
-				qwglSwapIntervalEXT(gl_swapinterval->value);
+				qwglSwapIntervalEXT(r_swapinterval->value);
 		}
 #endif
 	}
@@ -291,10 +291,10 @@ void R_DrawBox (entity_t * e)
 /*		return; */
 
 	qglDepthMask(GL_FALSE);
-	GLSTATE_ENABLE_BLEND
+	RSTATE_ENABLE_BLEND
 	qglDisable(GL_CULL_FACE);
 	qglDisable(GL_TEXTURE_2D);
-	if (!gl_wire->integer)
+	if (!r_wire->integer)
 		qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	qglEnable(GL_LINE_SMOOTH);
 
@@ -331,10 +331,10 @@ void R_DrawBox (entity_t * e)
 	qglEnd();
 
 	qglDisable(GL_LINE_SMOOTH);
-	if (!gl_wire->integer)
+	if (!r_wire->integer)
 		qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	qglEnable(GL_TEXTURE_2D);
 	qglEnable(GL_CULL_FACE);
-	GLSTATE_DISABLE_BLEND
+	RSTATE_DISABLE_BLEND
 	qglDepthMask(GL_TRUE);
 }

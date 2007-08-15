@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "gl_local.h"
 
-extern cvar_t *gl_drawclouds;
+extern cvar_t *r_drawclouds;
 image_t *shadow;
 image_t *blood;
 
@@ -40,7 +40,7 @@ static float globeverts[GLOBE_VERTS];
  * @brief Draw a sphere! The verts and texcoords are precalculated for extra efficiency.
  * @note The sphere is put into a display list to reduce overhead even further.
  */
-static void GL_DrawSphere (void)
+static void R_DrawSphere (void)
 {
 	if (spherelist == -1) {
 		int i;
@@ -87,7 +87,7 @@ static void GL_DrawSphere (void)
 /**
  * @brief Initialize the globe chain arrays
  */
-static void GL_InitGlobeChain (void)
+static void R_InitGlobeChain (void)
 {
 	const float drho = M_PI / GLOBE_TRIS;
 	const float dtheta = M_PI / (GLOBE_TRIS / 2);
@@ -121,16 +121,16 @@ static void GL_InitGlobeChain (void)
 			globetexes[texespos++] = s;
 			globetexes[texespos++] = (t - dt);
 
-			globeverts[vertspos++] = stheta * srhodrho * gl_3dmapradius->value;
-			globeverts[vertspos++] = ctheta * srhodrho * gl_3dmapradius->value;
-			globeverts[vertspos++] = crhodrho * gl_3dmapradius->value;
+			globeverts[vertspos++] = stheta * srhodrho * r_3dmapradius->value;
+			globeverts[vertspos++] = ctheta * srhodrho * r_3dmapradius->value;
+			globeverts[vertspos++] = crhodrho * r_3dmapradius->value;
 
 			globetexes[texespos++] = s;
 			globetexes[texespos++] = t;
 
-			globeverts[vertspos++] = stheta * srho * gl_3dmapradius->value;
-			globeverts[vertspos++] = ctheta * srho * gl_3dmapradius->value;
-			globeverts[vertspos++] = crho * gl_3dmapradius->value;
+			globeverts[vertspos++] = stheta * srho * r_3dmapradius->value;
+			globeverts[vertspos++] = ctheta * srho * r_3dmapradius->value;
+			globeverts[vertspos++] = crho * r_3dmapradius->value;
 
 			s += ds;
 		}
@@ -148,26 +148,26 @@ image_t *draw_chars[2];
  */
 void Draw_InitLocal (void)
 {
-	shadow = GL_FindImage("pics/sfx/shadow", it_pic);
+	shadow = R_FindImage("pics/sfx/shadow", it_pic);
 	if (!shadow)
 		ri.Con_Printf(PRINT_ALL, "Could not find shadow image in game pics/sfx directory!\n");
-	blood = GL_FindImage("pics/sfx/blood", it_pic);
+	blood = R_FindImage("pics/sfx/blood", it_pic);
 	if (!blood)
 		ri.Con_Printf(PRINT_ALL, "Could not find shadow image in game pics/sfx directory!\n");
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	/* load console characters (don't bilerp characters) */
 
-	draw_chars[0] = GL_FindImage("pics/conchars", it_pic);
+	draw_chars[0] = R_FindImage("pics/conchars", it_pic);
 	if (!draw_chars[0])
 		ri.Sys_Error(ERR_FATAL, "Could not find conchars image in game pics directory!\n");
-	draw_chars[1] = GL_FindImage("pics/conchars_small", it_pic);
+	draw_chars[1] = R_FindImage("pics/conchars_small", it_pic);
 	if (!draw_chars[1])
 		ri.Con_Printf(PRINT_ALL, "Could not find conchars2 image in game pics directory!\n");
 
 	Font_Init();
-	GL_InitGlobeChain();
-	GL_DrawSphere();
+	R_InitGlobeChain();
+	R_DrawSphere();
 }
 
 
@@ -197,7 +197,7 @@ void Draw_Char (int x, int y, int num)
 	fcol = col * 0.0625;
 
 	assert(con_font->integer < 2);
-	GL_Bind(draw_chars[con_font->integer]->texnum);
+	R_Bind(draw_chars[con_font->integer]->texnum);
 
 	qglBegin(GL_QUADS);
 	qglTexCoord2f(fcol, frow);
@@ -214,15 +214,15 @@ void Draw_Char (int x, int y, int num)
 /**
  * @brief
  */
-void GL_DrawImagePixelData (const char *name, byte *frame, int width, int height)
+void R_DrawImagePixelData (const char *name, byte *frame, int width, int height)
 {
 	image_t *img;
 
-	img = GL_FindImage(name, it_pic);
+	img = R_FindImage(name, it_pic);
 	if (!img)
 		ri.Sys_Error(ERR_FATAL, "Could not find the searched image: %s\n", name);
 
-	GL_Bind(img->texnum);
+	R_Bind(img->texnum);
 
 	if (img->width == width && img->height == height)
 		qglTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, img->width, img->height, GL_RGBA, GL_UNSIGNED_BYTE, frame);
@@ -258,10 +258,10 @@ void Draw_Color (const float *rgba)
 {
 	if (rgba) {
 		if (rgba[3] < 1.0f)
-			GLSTATE_ENABLE_BLEND
+			RSTATE_ENABLE_BLEND
 		qglColor4fv(rgba);
 	} else {
-		GLSTATE_DISABLE_BLEND
+		RSTATE_DISABLE_BLEND
 		qglColor4f(1, 1, 1, 1);
 	}
 }
@@ -272,7 +272,7 @@ void Draw_Color (const float *rgba)
  * @note the imagename can contain a / or \ (relative to gamedir/) - otherwise it's relative to gamedir/pics
  * @note name may not be null and has to be longer than 4 chars
  * @return NULL on error or image_t pointer on success
- * @sa GL_FindImage
+ * @sa R_FindImage
  */
 image_t *Draw_FindPic (const char *name)
 {
@@ -287,7 +287,7 @@ image_t *Draw_FindPic (const char *name)
 	} else
 		Q_strncpyz(fullname, name, MAX_QPATH);
 
-	gl = GL_FindImage(fullname, it_pic);
+	gl = R_FindImage(fullname, it_pic);
 	return gl;
 }
 
@@ -390,14 +390,14 @@ void Draw_NormPic (float x, float y, float w, float h, float sh, float th, float
 	}
 
 	if (blend)
-		GLSTATE_ENABLE_BLEND
+		RSTATE_ENABLE_BLEND
 
 #ifdef HAVE_SHADERS
 	if (gl->shader)
 		SH_UseShader(gl->shader, qfalse);
 #endif
 
-	GL_Bind(gl->texnum);
+	R_Bind(gl->texnum);
 	qglBegin(GL_QUADS);
 	qglTexCoord2f(sl, tl);
 	qglVertex2f(nx, ny);
@@ -410,7 +410,7 @@ void Draw_NormPic (float x, float y, float w, float h, float sh, float th, float
 	qglEnd();
 
 	if (blend)
-		GLSTATE_DISABLE_BLEND
+		RSTATE_DISABLE_BLEND
 
 #ifdef HAVE_SHADERS
 	if (gl->shader)
@@ -436,7 +436,7 @@ void Draw_Pic (int x, int y, const char *pic)
 	if (gl->shader)
 		SH_UseShader(gl->shader, qfalse);
 #endif
-	GL_Bind(gl->texnum);
+	R_Bind(gl->texnum);
 	qglBegin(GL_QUADS);
 	qglTexCoord2f(0, 0);
 	qglVertex2f(x, y);
@@ -519,7 +519,7 @@ void Draw_DayAndNight (int x, int y, int w, int h, float p, float q, float cx, f
 	nh = h * vid.ry;
 
 	/* load day image */
-	gl = GL_FindImage(va("pics/menu/%s_day", map), it_wrappic);
+	gl = R_FindImage(va("pics/menu/%s_day", map), it_wrappic);
 
 #ifdef HAVE_SHADERS
 	if (gl->shader)
@@ -527,7 +527,7 @@ void Draw_DayAndNight (int x, int y, int w, int h, float p, float q, float cx, f
 #endif
 
 	/* draw day image */
-	GL_Bind(gl->texnum);
+	R_Bind(gl->texnum);
 	qglBegin(GL_QUADS);
 	qglTexCoord2f(cx - iz, cy - iz);
 	qglVertex2f(nx, ny);
@@ -547,7 +547,7 @@ void Draw_DayAndNight (int x, int y, int w, int h, float p, float q, float cx, f
 	if (!qglSelectTextureSGIS && !qglActiveTextureARB)
 		return;
 
-	gl = GL_FindImage(va("pics/menu/%s_night", map), it_wrappic);
+	gl = R_FindImage(va("pics/menu/%s_night", map), it_wrappic);
 	/* maybe the campaign map doesn't have a night image */
 	if (!gl)
 		return;
@@ -557,20 +557,20 @@ void Draw_DayAndNight (int x, int y, int w, int h, float p, float q, float cx, f
 		SH_UseShader(gl->shader, qfalse);
 #endif
 	/* init combiner */
-	GLSTATE_ENABLE_BLEND
+	RSTATE_ENABLE_BLEND
 
-	GL_SelectTexture(gl_texture0);
-	GL_Bind(gl->texnum);
+	R_SelectTexture(gl_texture0);
+	R_Bind(gl->texnum);
 
-	GL_SelectTexture(gl_texture1);
+	R_SelectTexture(gl_texture1);
 	if (!DaN || lastQ != q) {
-		GL_CalcDayAndNight(q);
+		R_CalcDayAndNight(q);
 		lastQ = q;
 	}
 
 	assert(DaN);
 
-	GL_Bind(DaN->texnum);
+	R_Bind(DaN->texnum);
 	qglEnable(GL_TEXTURE_2D);
 
 	/* draw night image */
@@ -596,10 +596,10 @@ void Draw_DayAndNight (int x, int y, int w, int h, float p, float q, float cx, f
 
 	/* reset mode */
 	qglDisable(GL_TEXTURE_2D);
-	GL_SelectTexture(gl_texture0);
+	R_SelectTexture(gl_texture0);
 
-	GLSTATE_DISABLE_BLEND
-	if (gl_drawclouds->integer)
+	RSTATE_DISABLE_BLEND
+	if (r_drawclouds->integer)
 		Draw_Clouds(x, y, w, h, p, q, cx, cy, iz, map);
 }
 
@@ -612,7 +612,7 @@ void Draw_Clouds (int x, int y, int w, int h, float p, float q, float cx, float 
 	float nx, ny, nw, nh;
 
 	/* load clouds image */
-	gl = GL_FindImage(va("pics/menu/%s_clouds", map), it_wrappic);
+	gl = R_FindImage(va("pics/menu/%s_clouds", map), it_wrappic);
 	/* maybe the campaign map doesn't have a clouds image */
 	if (!gl)
 		return;
@@ -628,13 +628,13 @@ void Draw_Clouds (int x, int y, int w, int h, float p, float q, float cx, float 
 		SH_UseShader(gl->shader, qfalse);
 #endif
 	/* init combiner */
-	GLSTATE_ENABLE_BLEND
+	RSTATE_ENABLE_BLEND
 	qglBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_COLOR);
 
 	qglEnable(GL_TEXTURE_2D);
 
 	/* draw day image */
-	GL_Bind(gl->texnum);
+	R_Bind(gl->texnum);
 	qglBegin(GL_QUADS);
 	qglTexCoord2f(q-p + cx - iz, cy - iz);
 	qglVertex2f(nx, ny);
@@ -653,7 +653,7 @@ void Draw_Clouds (int x, int y, int w, int h, float p, float q, float cx, float 
 	/* reset mode */
 	qglDisable(GL_TEXTURE_2D);
 
-	GLSTATE_DISABLE_BLEND
+	RSTATE_DISABLE_BLEND
 	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
@@ -672,7 +672,7 @@ void Draw_Circle (vec3_t mid, float radius, const vec4_t color, int thickness)
 
 	qglDisable(GL_TEXTURE_2D);
 	qglEnable(GL_LINE_SMOOTH);
-	GLSTATE_ENABLE_BLEND
+	RSTATE_ENABLE_BLEND
 
 	Draw_Color(color);
 
@@ -709,7 +709,7 @@ void Draw_Circle (vec3_t mid, float radius, const vec4_t color, int thickness)
 
 	Draw_Color(NULL);
 
-	GLSTATE_DISABLE_BLEND
+	RSTATE_DISABLE_BLEND
 	qglDisable(GL_LINE_SMOOTH);
 	qglEnable(GL_TEXTURE_2D);
 }
@@ -870,7 +870,7 @@ void Draw_3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, 
 	nh = h * vid.ry;
 
 	/* load day image */
-	gl = GL_FindImage(va("pics/menu/%s_day", map), it_wrappic);
+	gl = R_FindImage(va("pics/menu/%s_day", map), it_wrappic);
 	if (!gl) {
 		ri.Con_Printf(PRINT_ALL, "Could not find pics/menu/%s_day\n", map);
 		return;
@@ -884,7 +884,7 @@ void Draw_3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, 
 	/* turn on fogging. fog looks good on the skies - it gives them a more */
 	/* "airy" far-away look, and has the knock-on effect of preventing the */
 	/* old "texture distortion at the poles" problem. */
-	if (gl_fog->integer) {
+	if (r_fog->integer) {
 		qglFogi(GL_FOG_MODE, GL_LINEAR);
 		qglFogfv(GL_FOG_COLOR, globe_fog);
 		qglFogf(GL_FOG_START, 5.0);
@@ -954,7 +954,7 @@ void Draw_3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, 
 	/* revert the cullface mode */
 	qglCullFace(GL_FRONT);
 
-	if (gl_fog->integer) {
+	if (r_fog->integer) {
 		/* turn off fog */
 		qglDisable(GL_FOG);
 	}

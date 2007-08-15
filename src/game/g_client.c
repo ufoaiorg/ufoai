@@ -2503,8 +2503,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 		 && player->pers.team != TEAM_ALIEN) {
 			gi.AddEvent(PM_ALL, EV_ENDROUNDANNOUNCE);
 			gi.WriteByte(player->num);
-			gi.WriteShort((int)strlen(player->pers.netname));
-			gi.WriteString(player->pers.netname);
+			gi.WriteByte(player->pers.team);
 		}
 	}
 	for (i = 0, p = game.players; i < game.sv_maxplayersperteam * 2; i++, p++)

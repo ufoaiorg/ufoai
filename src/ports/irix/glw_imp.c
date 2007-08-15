@@ -1,3 +1,17 @@
+/**
+ * @file glw_imp.c
+ *
+ * This file contains ALL Irix specific stuff having to do with the
+ * OpenGL refresh.  When a port is being made the following functions
+ * must be implemented by the port:
+ *
+ * Rimp_EndFrame
+ * Rimp_Init
+ * Rimp_Shutdown
+ * Rimp_SwitchFullscreen
+ *
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -16,19 +30,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-*/
-/*
-** GLW_IMP.C
-**
-** This file contains ALL Linux specific stuff having to do with the
-** OpenGL refresh.  When a port is being made the following functions
-** must be implemented by the port:
-**
-** GLimp_EndFrame
-** GLimp_Init
-** GLimp_Shutdown
-** GLimp_SwitchFullscreen
-**
 */
 
 #include <signal.h>
@@ -58,30 +59,30 @@ static XVisualInfo		*x_visinfo;
 
 static int StudlyRGBattributes[] =
 {
-    GLX_DOUBLEBUFFER,
-    GLX_RGBA,
-    GLX_RED_SIZE, 4,
-    GLX_GREEN_SIZE, 4,
-    GLX_BLUE_SIZE, 4,
-    GLX_DEPTH_SIZE, 1,
-    GLX_SAMPLES_SGIS, 4, /* for better AA */
-    None,
+	GLX_DOUBLEBUFFER,
+	GLX_RGBA,
+	GLX_RED_SIZE, 4,
+	GLX_GREEN_SIZE, 4,
+	GLX_BLUE_SIZE, 4,
+	GLX_DEPTH_SIZE, 1,
+	GLX_SAMPLES_SGIS, 4, /* for better AA */
+	None,
 };
 
 static int RGBattributes[] =
 {
-    GLX_DOUBLEBUFFER,
-    GLX_RGBA,
-    GLX_RED_SIZE, 4,
-    GLX_GREEN_SIZE, 4,
-    GLX_BLUE_SIZE, 4,
-    GLX_DEPTH_SIZE, 1,
-    None,
+	GLX_DOUBLEBUFFER,
+	GLX_RGBA,
+	GLX_RED_SIZE, 4,
+	GLX_GREEN_SIZE, 4,
+	GLX_BLUE_SIZE, 4,
+	GLX_DEPTH_SIZE, 1,
+	None,
 };
 
 #define STD_EVENT_MASK (StructureNotifyMask | KeyPressMask \
-	     | KeyReleaseMask | ExposureMask | PointerMotionMask | \
-	     ButtonPressMask | ButtonReleaseMask)
+	| KeyReleaseMask | ExposureMask | PointerMotionMask | \
+	ButtonPressMask | ButtonReleaseMask)
 
 int current_framebuffer;
 static int				x_shmeventtype;
@@ -90,21 +91,20 @@ static int				x_shmeventtype;
 static qboolean			oktodraw = qfalse;
 static qboolean			X11_active = qfalse;
 
-struct
-{
+struct {
 	int key;
 	int down;
 } keyq[64];
-int keyq_head=0;
-int keyq_tail=0;
+int keyq_head = 0;
+int keyq_tail = 0;
 
-static int		mx, my;
+static int mx, my;
 static int p_mouse_x, p_mouse_y;
-static cvar_t	*_windowed_mouse;
+static cvar_t *_windowed_mouse;
 
 static cvar_t *sensitivity;
 
-int config_notify=0;
+int config_notify = 0;
 int config_notify_width;
 int config_notify_height;
 
@@ -144,7 +144,7 @@ int XShmGetEventBase(Display *);
 static void signal_handler(int sig)
 {
 	fprintf(stderr, "Received signal %d, exiting...\n", sig);
-	GLimp_Shutdown();
+	Rimp_Shutdown();
 	exit(0);
 }
 
@@ -163,12 +163,12 @@ static void InitSig(void)
 /**
  * @brief
  */
-int GLimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen )
+int Rimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen )
 {
 	int width, height;
 	GLint attribs[32];
 
-	fprintf(stderr, "GLimp_SetMode\n");
+	fprintf(stderr, "Rimp_SetMode\n");
 
 	ri.Con_Printf(PRINT_ALL, "Initializing OpenGL display\n");
 
@@ -182,12 +182,12 @@ int GLimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen )
 	ri.Con_Printf(PRINT_ALL, " %d %d\n", width, height);
 
 	/* destroy the existing window */
-	GLimp_Shutdown();
+	Rimp_Shutdown();
 
 	*pwidth = width;
 	*pheight = height;
 
-	if (!GLimp_InitGraphics(fullscreen)) {
+	if (!Rimp_InitGraphics(fullscreen)) {
 		/* failed to set a valid mode in windowed mode */
 		return rserr_invalid_mode;
 	}
@@ -205,9 +205,9 @@ int GLimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen )
  * HGLRC, deleting the rendering context, and releasing the DC acquired
  * for the window.  The state structure is also nulled out.
  */
-void GLimp_Shutdown( void )
+void Rimp_Shutdown (void)
 {
-	fprintf(stderr, "GLimp_Shutdown\n");
+	fprintf(stderr, "Rimp_Shutdown\n");
 
 	if (!x_disp)
 	    return;
@@ -221,7 +221,7 @@ void GLimp_Shutdown( void )
 /**
  * @brief This routine is responsible for initializing the OS specific portions of OpenGL.
  */
-int GLimp_Init( void *hinstance, void *wndproc )
+int Rimp_Init (void *hinstance, void *wndproc)
 {
 	/* catch signals so i can turn on auto-repeat and stuff */
 	InitSig();
@@ -232,25 +232,25 @@ int GLimp_Init( void *hinstance, void *wndproc )
 /**
  * @brief
  */
-void GLimp_BeginFrame( float camera_seperation )
+void Rimp_BeginFrame (float camera_seperation)
 {
 }
 
 /**
  * @brief Responsible for doing a swapbuffers and possibly for other stuff
- * as yet to be determined. Probably better not to make this a GLimp
- * function and instead do a call to GLimp_SwapBuffers.
+ * as yet to be determined. Probably better not to make this a Rimp
+ * function and instead do a call to Rimp_SwapBuffers.
  */
-void GLimp_EndFrame (void)
+void Rimp_EndFrame (void)
 {
-	glFlush();
-	glXSwapBuffers( x_disp, x_win );
+	qglFlush();
+	qglXSwapBuffers(x_disp, x_win);
 }
 
 /**
  * @brief
  */
-void GLimp_AppActivate( qboolean active )
+void Rimp_AppActivate( qboolean active )
 {
 }
 
@@ -283,19 +283,19 @@ static Cursor CreateNullCursor(Display *display, Window root)
  * @brief This initializes the GL implementation specific graphics subsystem.
  * @note The necessary width and height parameters are grabbed from vid.width and vid.height.
  */
-qboolean GLimp_InitGraphics( qboolean fullscreen )
+qboolean Rimp_InitGraphics( qboolean fullscreen )
 {
 	int pnum, i;
 	XVisualInfo template;
 	int num_visuals;
 	int template_mask;
 
-	fprintf(stderr, "GLimp_InitGraphics\n");
+	fprintf(stderr, "Rimp_InitGraphics\n");
 
 	srandom(getpid());
 
 	/* let the sound and input subsystems know about the new window */
-	ri.Vid_NewWindow (vid.width, vid.height);
+	ri.Vid_NewWindow(vid.width, vid.height);
 
 	/* open the display */
 	x_disp = XOpenDisplay(NULL);
@@ -630,7 +630,7 @@ static void GetEvent (void)
 	int b;
 
 	XNextEvent(x_disp, &x_event);
-	switch(x_event.type) {
+	switch (x_event.type) {
 	case KeyPress:
 		keyq[keyq_head].key = XLateKey(&x_event.xkey);
 		keyq[keyq_head].down = qtrue;
@@ -650,7 +650,7 @@ static void GetEvent (void)
 			/* move the mouse to the window center again */
 			XSelectInput(x_disp,x_win, STD_EVENT_MASK & ~PointerMotionMask);
 			XWarpPointer(x_disp,None,x_win,0,0,0,0,
-				(vid.width/2),(vid.height/2));
+				(vid.width / 2),(vid.height / 2));
 			XSelectInput(x_disp,x_win, STD_EVENT_MASK);
 		} else {
 			mx = ((int)x_event.xmotion.x - (int)p_mouse_x);
@@ -661,7 +661,7 @@ static void GetEvent (void)
 		break;
 
 	case ButtonPress:
-		b=-1;
+		b = -1;
 		if (x_event.xbutton.button == 1)
 			b = 0;
 		else if (x_event.xbutton.button == 2)
@@ -718,7 +718,7 @@ Key_Event_fp_t Key_Event_fp;
 /**
  * @brief
  */
-void KBD_Init(Key_Event_fp_t fp)
+void KBD_Init (Key_Event_fp_t fp)
 {
 	_windowed_mouse = ri.Cvar_Get("_windowed_mouse", "0", CVAR_ARCHIVE, NULL);
 	Key_Event_fp = fp;
@@ -727,7 +727,7 @@ void KBD_Init(Key_Event_fp_t fp)
 /**
  * @brief
  */
-void KBD_Update(void)
+void KBD_Update (void)
 {
 	/* get events from x server */
 	if (x_disp) {
@@ -743,7 +743,7 @@ void KBD_Update(void)
 /**
  * @brief
  */
-void KBD_Close(void)
+void KBD_Close (void)
 {
 }
 
@@ -842,6 +842,6 @@ void RW_IN_Frame (void)
 /**
  * @brief
  */
-void RW_IN_Activate(void)
+void RW_IN_Activate (void)
 {
 }

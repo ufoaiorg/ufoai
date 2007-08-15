@@ -1519,7 +1519,7 @@ void RS_ResetHash (void)
  * description, pre_description, require_AND, require_OR, up_chapter
  */
 static const value_t valid_tech_vars[] = {
-	{"name", V_TRANSLATION2_STRING, offsetof(technology_t, name), 0},
+	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(technology_t, name), 0},
 	{"provides", V_CLIENT_HUNK_STRING, offsetof(technology_t, provides), 0},
 	{"delay", V_INT, offsetof(technology_t, delay), MEMBER_SIZEOF(technology_t, delay)},
 	{"producetime", V_INT, offsetof(technology_t, produceTime), MEMBER_SIZEOF(technology_t, produceTime)},
@@ -1535,10 +1535,10 @@ static const value_t valid_tech_vars[] = {
  * @brief The valid definition names in the research.ufo file for tech mails
  */
 static const value_t valid_techmail_vars[] = {
-	{"from", V_TRANSLATION2_STRING, offsetof(techMail_t, from), 0},
-	{"to", V_TRANSLATION2_STRING, offsetof(techMail_t, to), 0},
-	{"subject", V_TRANSLATION2_STRING, offsetof(techMail_t, subject), 0},
-	{"date", V_TRANSLATION2_STRING, offsetof(techMail_t, date), 0},
+	{"from", V_TRANSLATION_MANUAL_STRING, offsetof(techMail_t, from), 0},
+	{"to", V_TRANSLATION_MANUAL_STRING, offsetof(techMail_t, to), 0},
+	{"subject", V_TRANSLATION_MANUAL_STRING, offsetof(techMail_t, subject), 0},
+	{"date", V_TRANSLATION_MANUAL_STRING, offsetof(techMail_t, date), 0},
 
 	{NULL, 0, 0, 0}
 };
@@ -1868,7 +1868,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 								return;
 
 							switch (vp->type) {
-							case V_TRANSLATION2_STRING:
+							case V_TRANSLATION_MANUAL_STRING:
 								token++;	/**< Remove first char (i.e. we assume it's the "_") */
 							case V_CLIENT_HUNK_STRING:
 								Mem_PoolStrDupTo(token, (char**) ((char*)mail + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
@@ -1897,7 +1897,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 						if (!vp->ofs)
 							break;
 						switch (vp->type) {
-						case V_TRANSLATION2_STRING:
+						case V_TRANSLATION_MANUAL_STRING:
 							token++;
 						case V_CLIENT_HUNK_STRING:
 							Mem_PoolStrDupTo(token, (char**) ((char*)tech + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);

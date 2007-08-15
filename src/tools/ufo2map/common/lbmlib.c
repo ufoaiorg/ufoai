@@ -811,7 +811,7 @@ static void jpeg_mem_src (j_decompress_ptr cinfo, byte * mem, int len)
  * @sa LoadPCX
  * @sa LoadTGA
  * @sa LoadPNG
- * @sa GL_FindImage
+ * @sa R_FindImage
  */
 void LoadJPG (const char *filename, byte ** pic, int *width, int *height)
 {

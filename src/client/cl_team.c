@@ -2315,7 +2315,7 @@ void CL_ParseMedalsAndRanks (const char *name, const char **text, byte parserank
 					if (!*text)
 						return;
 					switch (v->type) {
-					case V_TRANSLATION2_STRING:
+					case V_TRANSLATION_MANUAL_STRING:
 						token++;
 					case V_CLIENT_HUNK_STRING:
 						Mem_PoolStrDupTo(token, (char**) ((char*)rank + (int)v->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);

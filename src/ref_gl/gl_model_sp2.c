@@ -76,18 +76,18 @@ void R_DrawSpriteModel (entity_t * e)
 		alpha = e->alpha;
 
 	if (alpha != 1.0F)
-		GLSTATE_ENABLE_BLEND
+		RSTATE_ENABLE_BLEND
 
 	qglColor4f(1, 1, 1, alpha);
 
-	GL_Bind(currentmodel->alias.skins_img[e->as.frame]->texnum);
+	R_Bind(currentmodel->alias.skins_img[e->as.frame]->texnum);
 
-	GL_TexEnv(GL_MODULATE);
+	R_TexEnv(GL_MODULATE);
 
 	if (alpha == 1.0) {
-		GLSTATE_ENABLE_ALPHATEST
+		RSTATE_ENABLE_ALPHATEST
 	} else {
-		GLSTATE_DISABLE_ALPHATEST
+		RSTATE_DISABLE_ALPHATEST
 	}
 
 	qglBegin(GL_QUADS);
@@ -114,11 +114,11 @@ void R_DrawSpriteModel (entity_t * e)
 
 	qglEnd();
 
-	GLSTATE_DISABLE_ALPHATEST
-	GL_TexEnv(GL_REPLACE);
+	RSTATE_DISABLE_ALPHATEST
+	R_TexEnv(GL_REPLACE);
 
 	if (alpha != 1.0F)
-		GLSTATE_DISABLE_BLEND
+		RSTATE_DISABLE_BLEND
 
 	qglColor4f(1, 1, 1, 1);
 }
@@ -151,7 +151,7 @@ void Mod_LoadSpriteModel (model_t * mod, void *buffer, int bufSize)
 		sprout->frames[i].origin_x = LittleLong(sprin->frames[i].origin_x);
 		sprout->frames[i].origin_y = LittleLong(sprin->frames[i].origin_y);
 		memcpy(sprout->frames[i].name, sprin->frames[i].name, SPRITE_MAX_SKINNAME);
-		mod->alias.skins_img[i] = GL_FindImage(sprout->frames[i].name, it_sprite);
+		mod->alias.skins_img[i] = R_FindImage(sprout->frames[i].name, it_sprite);
 	}
 
 	mod->alias.extraData = sprout;

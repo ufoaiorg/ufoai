@@ -1,5 +1,5 @@
-#ifndef _GL_FONTS
-#define _GL_FONTS
+#ifndef _R_FONTS
+#define _R_FONTS
 
 #define MAX_HASH_STRING		128
 #define MAX_FONT_CACHE		1024
@@ -41,4 +41,4 @@ void Font_Init(void);
 void Font_ListCache_f(void);
 void Font_Register(const char *name, int size, const char *path, const char *style);
 
-#endif	/* _GL_FONTS */
+#endif	/* _R_FONTS */

@@ -23,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef __QGL_H__
-#define __QGL_H__
+#ifndef __QR_H__
+#define __QR_H__
 
 #ifdef _WIN32
 #  include <windows.h>
@@ -58,8 +58,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 #endif
 
-qboolean QGL_Init(const char *dllname);
-void QGL_Shutdown(void);
+qboolean QR_Init(const char *dllname);
+void QR_Shutdown(void);
 
 #ifndef APIENTRY
 #  define APIENTRY
@@ -522,4 +522,4 @@ extern GLenum gl_combine;
 #define GL_TEXTURE3_SGIS					0x8361
 #endif							/* _WIN32 */
 
-#endif							/* __QGL_H__ */
+#endif							/* __QR_H__ */

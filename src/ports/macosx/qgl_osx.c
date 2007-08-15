@@ -1,8 +1,6 @@
 /**
  * @file qgl_osx.c
  * @brief This file implements the MacOS X system bindings of OpenGL to QGL function pointers
- * @note: By default the ARB Extension will not be used, because of a performance issue
- * To enable it define QGL_ENABLE_ARB_EXT at the targets/GL Renderer Module compiler options
  * Written by:	awe				[mailto:awe@fruitz-of-dojo.de]
  * 2001-2002 Fruitz Of Dojo 	[http://www.fruitz-of-dojo.de]
  */
@@ -40,15 +38,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma mark =Macros=
 #define SIG(x) 		fprintf (gQGLLogFile, x "\n")
-#define GPA(A)		qglGetProcAddress (A, QGL_SAFE_SYMBOL)
+#define GPA(A)		qglGetProcAddress (A, QR_SAFE_SYMBOL)
 #pragma mark -
 
 
 #pragma mark =Enums=
-enum qglGetAdrMode
-{
-    QGL_LAZY_SYMBOL = 0,
-    QGL_SAFE_SYMBOL
+enum qglGetAdrMode {
+    QR_LAZY_SYMBOL = 0,
+    QR_SAFE_SYMBOL
 };
 #pragma mark -
 
@@ -73,7 +70,7 @@ void* qglGetProcAddress (const char *theName, enum qglGetAdrMode theMode)
 		free(mySymbolName);
 	}
 
-	if (theMode == QGL_SAFE_SYMBOL && mySymbol == NULL) {
+	if (theMode == QR_SAFE_SYMBOL && mySymbol == NULL) {
 		ri.Sys_Error(ERR_FATAL, "Failed to import a required OpenGL function!\n");
 	}
 
@@ -85,17 +82,17 @@ void* qglGetProcAddress (const char *theName, enum qglGetAdrMode theMode)
  */
 void* qwglGetProcAddress (const char *theSymbol)
 {
-	return (qglGetProcAddress(theSymbol, QGL_LAZY_SYMBOL));
+	return (qglGetProcAddress(theSymbol, QR_LAZY_SYMBOL));
 }
 
 /**
  * @brief
- * @sa QGL_UnLink
+ * @sa QR_UnLink
  */
-void QGL_Shutdown (void)
+void QR_Shutdown (void)
 {
 	/* general pointers */
-	QGL_UnLink();
+	QR_UnLink();
 	/* macos specific */
 	qglPNTrianglesiATIX          = NULL;
 	qglPNTrianglesfATIX          = NULL;
@@ -103,12 +100,12 @@ void QGL_Shutdown (void)
 
 /**
  * @brief This is responsible for binding our qgl function pointers to the appropriate GL stuff
- * @sa QGL_Init
+ * @sa QR_Init
  */
-qboolean QGL_Init (const char *dllname)
+qboolean QR_Init (const char *dllname)
 {
 	/* general qgl bindings */
-	QGL_Link();
+	QR_Link();
 	/* mac specific ones */
 	qglPNTrianglesiATIX          = NULL;
 	qglPNTrianglesfATIX          = NULL;

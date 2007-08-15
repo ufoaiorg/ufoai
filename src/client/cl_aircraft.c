@@ -1198,7 +1198,7 @@ void AII_ParseAircraftItem (const char *name, const char **text)
 						return;
 
 					switch (vp->type) {
-					case V_TRANSLATION2_STRING:
+					case V_TRANSLATION_MANUAL_STRING:
 						token++;
 					case V_CLIENT_HUNK_STRING:
 						Mem_PoolStrDupTo(token, (char**) ((char*)airItem + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
@@ -1269,8 +1269,8 @@ static const value_t aircraft_param_vals[] = {
 
 /** @brief Valid aircraft definition values from script files. */
 static const value_t aircraft_vals[] = {
-	{"name", V_TRANSLATION2_STRING, offsetof(aircraft_t, name), 0},
-	{"shortname", V_TRANSLATION2_STRING, offsetof(aircraft_t, shortname), 0},
+	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(aircraft_t, name), 0},
+	{"shortname", V_TRANSLATION_MANUAL_STRING, offsetof(aircraft_t, shortname), 0},
 	{"size", V_INT, offsetof(aircraft_t, size), MEMBER_SIZEOF(aircraft_t, size)},
 	{"weight", V_INT, offsetof(aircraft_t, weight), MEMBER_SIZEOF(aircraft_t, weight)},
 
@@ -1398,7 +1398,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 							if (!*text)
 								return;
 							switch (vp->type) {
-							case V_TRANSLATION2_STRING:
+							case V_TRANSLATION_MANUAL_STRING:
 								token++;
 							case V_CLIENT_HUNK_STRING:
 								Mem_PoolStrDupTo(token, (char**) ((char*)air_samp + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
@@ -1516,7 +1516,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 					if (!*text)
 						return;
 					switch (vp->type) {
-					case V_TRANSLATION2_STRING:
+					case V_TRANSLATION_MANUAL_STRING:
 						token++;
 					case V_CLIENT_HUNK_STRING:
 						Mem_PoolStrDupTo(token, (char**) ((char*)air_samp + (int)vp->ofs), cl_genericPool, CL_TAG_NONE);
@@ -1572,7 +1572,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 							if (!*text)
 								return;
 							switch (vp->type) {
-							case V_TRANSLATION2_STRING:
+							case V_TRANSLATION_MANUAL_STRING:
 								token++;
 							case V_CLIENT_HUNK_STRING:
 								Mem_PoolStrDupTo(token, (char**) ((char*)air_samp + (int)vp->ofs), cl_genericPool, CL_TAG_NONE);

@@ -76,6 +76,9 @@ void Mod_FreeAll(void);
 void Mod_DrawModelBBox(vec4_t bbox[8], entity_t *e);
 void Mod_DrawNullModel(void);
 
+void Mod_BeginLoading(const char *tiles, const char *pos);
+void Mod_EndLoading(void);
+
 extern model_t mod_known[MAX_MOD_KNOWN];
 extern int mod_numknown;
 

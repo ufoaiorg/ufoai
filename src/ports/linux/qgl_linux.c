@@ -2,8 +2,8 @@
  * @file qgl_linux.c
  * @brief  This file implements the operating system binding of GL to QGL function pointers
  * @note When doing a port of Quake2 you must implement the following two functions:
- ** QGL_Init() - loads libraries, assigns function pointers, etc.
- ** QGL_Shutdown() - unloads libraries, NULLs function pointers
+ ** QR_Init() - loads libraries, assigns function pointers, etc.
+ ** QR_Shutdown() - unloads libraries, NULLs function pointers
  */
 
 /*
@@ -49,16 +49,16 @@ int (*qglXGetConfig) (Display *dpy, XVisualInfo *vis, int attrib, int *value);
 
 /**
  * @brief Unloads the specified DLL then nulls out all the proc pointers.
- * @sa QGL_UnLink
+ * @sa QR_UnLink
  */
-void QGL_Shutdown (void)
+void QR_Shutdown (void)
 {
 	if (glw_state.OpenGLLib)
 		dlclose(glw_state.OpenGLLib);
 
 	glw_state.OpenGLLib = NULL;
 	/* general links */
-	QGL_UnLink();
+	QR_UnLink();
 	/* linux specific */
 	qglXChooseVisual             = NULL;
 	qglXCreateContext            = NULL;
@@ -99,9 +99,9 @@ void *qwglGetProcAddress (const char *symbol)
 
 /**
  * @brief This is responsible for binding our qgl function pointers to the appropriate GL stuff
- * @sa QGL_Link
+ * @sa QR_Link
  */
-qboolean QGL_Init (const char *dllname)
+qboolean QR_Init (const char *dllname)
 {
 	if ((glw_state.OpenGLLib = dlopen(dllname, RTLD_LAZY|RTLD_GLOBAL)) == 0) {
 		char libPath[MAX_OSPATH];
@@ -122,7 +122,7 @@ qboolean QGL_Init (const char *dllname)
 	}
 
 	/* general qgl bindings */
-	QGL_Link();
+	QR_Link();
 	/* linux specific ones */
 	qglXChooseVisual   = GPA("glXChooseVisual");
 	qglXCreateContext  = GPA("glXCreateContext");

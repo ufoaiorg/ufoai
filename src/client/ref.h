@@ -95,8 +95,6 @@ typedef struct entity_s {
 	animState_t as;
 } entity_t;
 
-#define ENTITY_FLAGS  68
-
 /*============================================================================= */
 
 #define MAX_SHADERS 64
@@ -389,7 +387,5 @@ typedef refexport_t (EXPORT *GetRefAPI_t)(refimport_t);
 #else
 refexport_t GetRefAPI(refimport_t rimp);
 #endif
-
-#define CONSOLE_CHAR_ALIGN 4
 
 #endif /* CLIENT_REF_H */

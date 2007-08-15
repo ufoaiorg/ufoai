@@ -120,7 +120,7 @@ static const size_t vt_sizes[V_NUM_TYPES] = {
 	sizeof(vec4_t),	/* V_RGBA */
 	0,	/* V_STRING */
 	0,	/* V_TRANSLATION_STRING */
-	0,	/* V_TRANSLATION2_STRING */
+	0,	/* V_TRANSLATION_MANUAL_STRING */
 	0,	/* V_LONGSTRING */
 	sizeof(byte),	/* V_ALIGN */
 	sizeof(byte),	/* V_BLEND */
@@ -250,7 +250,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		return ALIGN((int)strlen((char *) b) + 1);
 
 	/* just remove the _ but don't translate */
-	case V_TRANSLATION2_STRING:
+	case V_TRANSLATION_MANUAL_STRING:
 		if (*token == '_')
 			token++;
 
@@ -582,7 +582,7 @@ const char *Com_ValueToStr (void *base, valueTypes_t type, int ofs)
 		return valuestr;
 
 	case V_TRANSLATION_STRING:
-	case V_TRANSLATION2_STRING:
+	case V_TRANSLATION_MANUAL_STRING:
 	case V_STRING:
 	case V_LONGSTRING:
 		if (b == NULL)
@@ -1372,7 +1372,7 @@ int Com_GetCharacterValues (const char *team, character_t * chr)
 	if (i < numTeamDefs)
 		td = &teamDef[i];
 	else {
-		Com_Printf("Com_GetCharacterValues: could not find team '%s' in team definitions - searching name definitions now\n", team);
+		Com_Printf("Com_GetCharacterValues: could not find team '%s' in team definitions\n", team);
 		return 0;
 	}
 
@@ -1645,7 +1645,7 @@ static void Com_ParseActorSounds (const char *name, const char **text, teamDef_t
 /** @brief possible teamdesc values (ufo-scriptfiles) */
 static const value_t teamDefValues[] = {
 	{"tech", V_STRING, offsetof(teamDef_t, tech), 0}, /**< tech id from research.ufo */
-	{"name", V_TRANSLATION2_STRING, offsetof(teamDef_t, name), 0}, /**< internal team name */
+	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(teamDef_t, name), 0}, /**< internal team name */
 	{"alien", V_BOOL, offsetof(teamDef_t, alien), MEMBER_SIZEOF(teamDef_t, alien)}, /**< is this an alien? */
 	{"armor", V_BOOL, offsetof(teamDef_t, armor), MEMBER_SIZEOF(teamDef_t, armor)}, /**< are these team members able to wear armor? */
 	{"weapons", V_BOOL, offsetof(teamDef_t, weapons), MEMBER_SIZEOF(teamDef_t, weapons)}, /**< are these team members able to use weapons? */
@@ -1845,7 +1845,7 @@ int numGTs = 0;
 
 /** @brief possible gametype values for the gameserver (ufo-scriptfiles) */
 static const value_t gameTypeValues[] = {
-	{"name", V_TRANSLATION2_STRING, offsetof(gametype_t, name), 0}, /**< translated game-type name for menu displaying */
+	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(gametype_t, name), 0}, /**< translated game-type name for menu displaying */
 	{NULL, 0, 0, 0}
 };
 

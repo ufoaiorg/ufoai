@@ -81,7 +81,7 @@ static void R_DrawSprite (ptl_t * p)
 	vec3_t pos;
 
 	/* load texture set up coordinates */
-	GL_Bind(((image_t *) r_newrefdef.ptl_art[p->pic].art)->texnum);
+	R_Bind(((image_t *) r_newrefdef.ptl_art[p->pic].art)->texnum);
 
 	/* calculate main position and normalised up and right vectors */
 	q = p->parent ? p->parent : p;
@@ -228,28 +228,28 @@ static int blend_mode;
  * @brief
  * @sa R_DrawPtls
  */
-static void GL_SetBlendMode (int mode)
+static void R_SetBlendMode (int mode)
 {
 	if (blend_mode != mode) {
 		blend_mode = mode;
 		switch (mode) {
 		case BLEND_REPLACE:
-			GL_TexEnv(GL_REPLACE);
+			R_TexEnv(GL_REPLACE);
 			break;
 		case BLEND_BLEND:
-			GL_TexEnv(GL_MODULATE);
+			R_TexEnv(GL_MODULATE);
 			qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			break;
 		case BLEND_ADD:
-			GL_TexEnv(GL_MODULATE);
+			R_TexEnv(GL_MODULATE);
 			qglBlendFunc(GL_ONE, GL_ONE);
 			break;
 		case BLEND_FILTER:
-			GL_TexEnv(GL_MODULATE);
+			R_TexEnv(GL_MODULATE);
 			qglBlendFunc(GL_ZERO, GL_SRC_COLOR);
 			break;
 		case BLEND_INVFILTER:
-			GL_TexEnv(GL_MODULATE);
+			R_TexEnv(GL_MODULATE);
 			qglBlendFunc(GL_ZERO, GL_ONE_MINUS_SRC_COLOR);
 			break;
 		default:
@@ -270,13 +270,13 @@ void R_DrawPtls (void)
 	ptl_t *p;
 	int i;
 
-	if (gl_fog->integer && r_newrefdef.fog)
+	if (r_fog->integer && r_newrefdef.fog)
 		qglDisable(GL_FOG);
 	/* no z buffering */
 	qglDepthMask(GL_FALSE);
 	qglDisable(GL_CULL_FACE);
-	GLSTATE_ENABLE_BLEND
-/*	GLSTATE_ENABLE_ALPHATEST*/
+	RSTATE_ENABLE_BLEND
+/*	RSTATE_ENABLE_ALPHATEST*/
 	blend_mode = BLEND_REPLACE;
 
 	for (i = 0, p = r_newrefdef.ptls; i < r_newrefdef.num_ptls; i++, p++)
@@ -286,7 +286,7 @@ void R_DrawPtls (void)
 				continue;
 
 			/* set blend mode and draw gfx */
-			GL_SetBlendMode(p->blend);
+			R_SetBlendMode(p->blend);
 			switch (p->style) {
 			case STYLE_LINE:
 				R_DrawPtlLine(p);
@@ -305,11 +305,11 @@ void R_DrawPtls (void)
 			}
 		}
 
-	GLSTATE_DISABLE_BLEND
-/*	GLSTATE_DISABLE_ALPHATEST*/
+	RSTATE_DISABLE_BLEND
+/*	RSTATE_DISABLE_ALPHATEST*/
 	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	qglEnable(GL_CULL_FACE);
 	qglDepthMask(GL_TRUE);
-	if (gl_fog->integer && r_newrefdef.fog)
+	if (r_fog->integer && r_newrefdef.fog)
 		qglEnable(GL_FOG);
 }

@@ -34,10 +34,10 @@ static const float diamond[4][4] = {
 
 static int bloom_size = 0;
 
-static cvar_t *gl_bloom;
-static cvar_t *gl_bloomalpha;
-static cvar_t *gl_bloomintensity;
-static cvar_t *gl_bloomsize;
+static cvar_t *r_bloom;
+static cvar_t *r_bloomalpha;
+static cvar_t *r_bloomintensity;
+static cvar_t *r_bloomsize;
 
 static image_t *gl_bloomscreentexture = NULL;
 static image_t *gl_bloomeffecttexture = NULL;
@@ -57,7 +57,7 @@ static int	sample_tex_width, sample_tex_height;
 static float sample_texc_width, sample_texc_height;
 
 /*this macro is in sample size workspace coordinates */
-#define GL_Bloom_SamplePass(x, y)									\
+#define R_Bloom_SamplePass(x, y)									\
 	qglBegin(GL_QUADS);												\
 	qglTexCoord2f(	0,						sample_texc_height);	\
 	qglVertex2f(	x,						y);						\
@@ -69,7 +69,7 @@ static float sample_texc_width, sample_texc_height;
 	qglVertex2f(	x + sample_tex_width,	y);						\
 	qglEnd();
 
-#define GL_Bloom_Quad(x, y, width, height, tex_width, tex_height)	\
+#define R_Bloom_Quad(x, y, width, height, tex_width, tex_height)	\
 	qglBegin(GL_QUADS);												\
 	qglTexCoord2f(	0,			tex_height);						\
 	qglVertex2f(	x,			y);									\
@@ -84,9 +84,9 @@ static float sample_texc_width, sample_texc_height;
 
 /**
  * @brief
- * @sa GL_Bloom_InitTextures
+ * @sa R_Bloom_InitTextures
  */
-static void GL_Bloom_InitOriginalTexture (int width, int height)
+static void R_Bloom_InitOriginalTexture (int width, int height)
 {
 	byte *data;
 
@@ -95,7 +95,7 @@ static void GL_Bloom_InitOriginalTexture (int width, int height)
 
 	original_tex_size = width;
 
-	gl_bloomoriginaltexture = GL_LoadPic("***gl_bloomoriginaltexture***",
+	gl_bloomoriginaltexture = R_LoadPic("***gl_bloomoriginaltexture***",
 			(byte *)data, width, height, it_pic, 32);
 
 	ri.TagFree(data);
@@ -104,14 +104,14 @@ static void GL_Bloom_InitOriginalTexture (int width, int height)
 
 /**
  * @brief
- * @sa GL_Bloom_InitTextures
+ * @sa R_Bloom_InitTextures
  */
-static void GL_Bloom_InitEffectTexture (void)
+static void R_Bloom_InitEffectTexture (void)
 {
 	byte *data;
 	float b;
 
-	bloom_size = gl_bloomsize->integer;
+	bloom_size = r_bloomsize->integer;
 
 	/* enforce a reasonable minimum sample size */
 	if (bloom_size < 16)
@@ -128,13 +128,13 @@ static void GL_Bloom_InitEffectTexture (void)
 
 	if (b != 1.0f) {
 		bloom_size = 16;
-		while (bloom_size < gl_bloomsize->integer)
+		while (bloom_size < r_bloomsize->integer)
 			bloom_size *= 2;
 	}
 
 	data = ri.TagMalloc(ri.imagePool, bloom_size * bloom_size * 4, 0);
 	memset(data, 0, bloom_size * bloom_size * 4);
-	gl_bloomeffecttexture = GL_LoadPic("***gl_bloomeffecttexture***",
+	gl_bloomeffecttexture = R_LoadPic("***gl_bloomeffecttexture***",
 			(byte *)data, bloom_size, bloom_size, it_pic, 32);
 	ri.TagFree(data);
 }
@@ -142,10 +142,10 @@ static void GL_Bloom_InitEffectTexture (void)
 
 /**
  * @brief
- * @sa GL_Bloom_InitEffectTexture
- * @sa GL_Bloom_InitOriginalTexture
+ * @sa R_Bloom_InitEffectTexture
+ * @sa R_Bloom_InitOriginalTexture
  */
-static void GL_Bloom_InitTextures (void)
+static void R_Bloom_InitTextures (void)
 {
 	byte *data;
 	int size;
@@ -175,59 +175,59 @@ static void GL_Bloom_InitTextures (void)
 	size = screen_tex_width * screen_tex_height * 4;
 	data = ri.TagMalloc(ri.imagePool, size, 0);
 	memset(data, 0, size);
-	gl_bloomscreentexture = GL_LoadPic("***gl_bloomscreentexture***",
+	gl_bloomscreentexture = R_LoadPic("***gl_bloomscreentexture***",
 			(byte *)data, screen_tex_width, screen_tex_height, it_pic, 32);
 	ri.TagFree(data);
 
 	/* validate bloom size and init the bloom effect texture */
-	GL_Bloom_InitEffectTexture();
+	R_Bloom_InitEffectTexture();
 
 	/* init the downsample texture */
 	data = ri.TagMalloc(ri.imagePool, bloom_size * bloom_size * 4, 0);
 	memset(data, 0, bloom_size * bloom_size * 4);
-	gl_bloomdowntexture = GL_LoadPic("***gl_bloomdowntexture***",
+	gl_bloomdowntexture = R_LoadPic("***gl_bloomdowntexture***",
 			(byte *)data, bloom_size, bloom_size, it_pic, 32);
 	ri.TagFree(data);
 
 	/* init the screen original texture */
-	GL_Bloom_InitOriginalTexture(bloom_size, bloom_size);
+	R_Bloom_InitOriginalTexture(bloom_size, bloom_size);
 }
 
 
 /**
  * @brief
- * @sa GL_Bloom_InitTextures
+ * @sa R_Bloom_InitTextures
  */
-void GL_InitBloom (void)
+void R_InitBloom (void)
 {
-	gl_bloom = ri.Cvar_Get("gl_bloom", "0", CVAR_ARCHIVE, "Activate light blooms");
-	gl_bloomalpha = ri.Cvar_Get("gl_bloomalpha", "0.4", CVAR_ARCHIVE, NULL);
-	gl_bloomintensity = ri.Cvar_Get("gl_bloomintensity", "0.2", CVAR_ARCHIVE, NULL);
-	gl_bloomsize = ri.Cvar_Get("gl_bloomsize", "256", CVAR_ARCHIVE, NULL);
+	r_bloom = ri.Cvar_Get("r_bloom", "0", CVAR_ARCHIVE, "Activate light blooms");
+	r_bloomalpha = ri.Cvar_Get("r_bloomalpha", "0.4", CVAR_ARCHIVE, NULL);
+	r_bloomintensity = ri.Cvar_Get("r_bloomintensity", "0.2", CVAR_ARCHIVE, NULL);
+	r_bloomsize = ri.Cvar_Get("r_bloomsize", "256", CVAR_ARCHIVE, NULL);
 
 	bloom_size = 0;
 
-	if (!gl_bloom->integer)
+	if (!r_bloom->integer)
 		return;
 
-	GL_Bloom_InitTextures();
+	R_Bloom_InitTextures();
 }
 
 
 /**
  * @brief
  */
-static void GL_Bloom_DrawEffect (void)
+static void R_Bloom_DrawEffect (void)
 {
 	float a;
 
-	a = gl_bloomalpha->value;
+	a = r_bloomalpha->value;
 
-	GL_Bind(gl_bloomeffecttexture->texnum);
-	GLSTATE_ENABLE_BLEND
+	R_Bind(gl_bloomeffecttexture->texnum);
+	RSTATE_ENABLE_BLEND
 	qglBlendFunc(GL_ONE, GL_ONE);
 	qglColor4f(a, a, a, 1.0f);
-	GL_TexEnv(GL_MODULATE);
+	R_TexEnv(GL_MODULATE);
 
 	qglBegin(GL_QUADS);
 	qglTexCoord2f(0, sample_texc_height);
@@ -240,14 +240,14 @@ static void GL_Bloom_DrawEffect (void)
 	qglVertex2f(vid.width, 0);
 	qglEnd();
 
-	GLSTATE_DISABLE_BLEND
+	RSTATE_DISABLE_BLEND
 }
 
 
 /**
  * @brief
  */
-static void GL_Bloom_GenerateBlooms (void)
+static void R_Bloom_GenerateBlooms (void)
 {
 	int i, j;
 	float intensity;
@@ -261,15 +261,15 @@ static void GL_Bloom_GenerateBlooms (void)
 	qglLoadIdentity();
 
 	/* copy small scene into effect texture */
-	GL_Bind(gl_bloomeffecttexture->texnum);
+	R_Bind(gl_bloomeffecttexture->texnum);
 	qglCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, sample_tex_width, sample_tex_height);
 
-	GLSTATE_ENABLE_BLEND
+	RSTATE_ENABLE_BLEND
 
 	/* one darkening pass */
 	qglBlendFunc(GL_DST_COLOR, GL_ZERO);
-	GL_TexEnv(GL_MODULATE);
-	GL_Bloom_SamplePass(0, 0);
+	R_TexEnv(GL_MODULATE);
+	R_Bloom_SamplePass(0, 0);
 
 	qglCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, sample_tex_width, sample_tex_height);
 
@@ -278,9 +278,9 @@ static void GL_Bloom_GenerateBlooms (void)
 
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
-			intensity = gl_bloomintensity->value * 0.8f * diamond[i][j];
+			intensity = r_bloomintensity->value * 0.8f * diamond[i][j];
 			qglColor4f(intensity, intensity, intensity, 1.0);
-			GL_Bloom_SamplePass(i - 2, j - 2);
+			R_Bloom_SamplePass(i - 2, j - 2);
 		}
 	}
 
@@ -298,55 +298,55 @@ static void GL_Bloom_GenerateBlooms (void)
 
 /**
  * @brief
- * @sa GL_BloomBlend
+ * @sa R_BloomBlend
  */
-static void GL_Bloom_DownsampleView (void)
+static void R_Bloom_DownsampleView (void)
 {
 	int midsample_tex_width = bloom_size * sample_texc_width;
 	int midsample_tex_height = bloom_size * sample_texc_height;
 
 	/* copy the screen texture into bloom space and blur it */
-	GL_Bind(gl_bloomscreentexture->texnum);
+	R_Bind(gl_bloomscreentexture->texnum);
 
 	qglCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, vid.width, vid.height);
 
-	GL_Bloom_Quad(0, vid.height - midsample_tex_height, midsample_tex_width,
+	R_Bloom_Quad(0, vid.height - midsample_tex_height, midsample_tex_width,
 			midsample_tex_height, screen_texc_width, screen_texc_height);
 
-	GL_Bind(gl_bloomdowntexture->texnum);
+	R_Bind(gl_bloomdowntexture->texnum);
 
 	qglCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0,
 			midsample_tex_width, midsample_tex_height);
 
-	GL_Bloom_Quad(0, vid.height - sample_tex_height, sample_tex_width,
+	R_Bloom_Quad(0, vid.height - sample_tex_height, sample_tex_width,
 			sample_tex_height, sample_texc_width, sample_texc_height);
 
 	/* blend screen texture into bloom space for final rendering */
-	GLSTATE_ENABLE_BLEND
+	RSTATE_ENABLE_BLEND
 	qglBlendFunc(GL_ONE, GL_ONE);
 
-	GL_Bind(gl_bloomscreentexture->texnum);
+	R_Bind(gl_bloomscreentexture->texnum);
 
-	GL_Bloom_Quad(0, vid.height - sample_tex_height, sample_tex_width, sample_tex_height,
+	R_Bloom_Quad(0, vid.height - sample_tex_height, sample_tex_width, sample_tex_height,
 			screen_texc_width, screen_texc_height);
 
-	GLSTATE_DISABLE_BLEND
+	RSTATE_DISABLE_BLEND
 }
 
 
-extern void GL_SetupGL(void);
+extern void R_SetupGL(void);
 /**
  * @brief
  */
-void GL_BloomBlend (void)
+void R_BloomBlend (void)
 {
 	/* if params have changed, update texture sizes */
-	if (gl_bloom->modified || gl_bloomsize->modified) {
-		GL_Bloom_InitTextures();
-		gl_bloom->modified = gl_bloomsize->modified = qfalse;
+	if (r_bloom->modified || r_bloomsize->modified) {
+		R_Bloom_InitTextures();
+		r_bloom->modified = r_bloomsize->modified = qfalse;
 	}
 
-	if (!gl_bloom->integer)
+	if (!r_bloom->integer)
 		return;
 
 	if (screen_tex_width < bloom_size || screen_tex_height < bloom_size)
@@ -356,7 +356,7 @@ void GL_BloomBlend (void)
 	qglViewport(0, 0, vid.width, vid.height);
 	qglDisable(GL_DEPTH_TEST);
 	qglDisable(GL_CULL_FACE);
-	GLSTATE_DISABLE_BLEND
+	RSTATE_DISABLE_BLEND
 	qglEnable(GL_TEXTURE_2D);
 
 	qglMatrixMode(GL_PROJECTION);
@@ -374,26 +374,26 @@ void GL_BloomBlend (void)
 	sample_tex_height = bloom_size * sample_texc_height;
 
 	/* copy the screen into the original texture */
-	GL_Bind(gl_bloomoriginaltexture->texnum);
+	R_Bind(gl_bloomoriginaltexture->texnum);
 	qglCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, original_tex_size * sample_texc_width,
 			original_tex_size * sample_texc_height);
 
 	/* downsample the screen image to a workable size */
-	GL_Bloom_DownsampleView();
+	R_Bloom_DownsampleView();
 
 	/* create the blooms */
-	GL_Bloom_GenerateBlooms();
+	R_Bloom_GenerateBlooms();
 
 	/* restore the screen */
-	GLSTATE_DISABLE_BLEND
-	GL_Bind(gl_bloomoriginaltexture->texnum);
+	RSTATE_DISABLE_BLEND
+	R_Bind(gl_bloomoriginaltexture->texnum);
 	qglColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	GL_Bloom_Quad(0, vid.height - (original_tex_size * sample_texc_height),
+	R_Bloom_Quad(0, vid.height - (original_tex_size * sample_texc_height),
 			original_tex_size * sample_texc_width,
 			original_tex_size * sample_texc_height,
 			sample_texc_width, sample_texc_height);
 
 	/* blend in the blooms */
-	GL_Bloom_DrawEffect();
+	R_Bloom_DrawEffect();
 }
 

@@ -303,7 +303,7 @@ extern cvar_t *cl_centerview;
 extern cvar_t *cl_worldlevel;
 extern cvar_t *cl_selected;
 extern cvar_t *cl_3dmap;
-extern cvar_t *gl_3dmapradius;
+extern cvar_t *r_3dmapradius;
 extern cvar_t *cl_numnames;
 extern cvar_t *difficulty;
 extern cvar_t *cl_start_employees;

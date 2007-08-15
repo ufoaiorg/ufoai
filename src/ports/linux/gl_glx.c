@@ -657,12 +657,12 @@ void KBD_Close (void)
 }
 
 
-qboolean GLimp_InitGL (void);
+qboolean Rimp_InitGL (void);
 
 /**
  * @brief
  */
-rserr_t GLimp_SetMode (unsigned *pwidth, unsigned *pheight, int mode, qboolean fullscreen)
+rserr_t Rimp_SetMode (unsigned *pwidth, unsigned *pheight, int mode, qboolean fullscreen)
 {
 	int width, height;
 	int attrib[] = {
@@ -713,7 +713,7 @@ rserr_t GLimp_SetMode (unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	ri.Con_Printf(PRINT_ALL, " %d %d\n", width, height);
 
 	/* destroy the existing window */
-	GLimp_Shutdown();
+	Rimp_Shutdown();
 
 	/* Mesa VooDoo hacks */
 	if (fullscreen)
@@ -752,7 +752,7 @@ rserr_t GLimp_SetMode (unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 		return rserr_invalid_mode;
 	}
 
-	gl_state.hwgamma = qfalse;
+	r_state.hwgamma = qfalse;
 
 	/* do some pantsness */
 	if (qglXGetConfig) {
@@ -813,7 +813,7 @@ rserr_t GLimp_SetMode (unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 				vidmode_active = qtrue;
 
 				if (XF86VidModeGetGamma(dpy, scrnum, &oldgamma)) {
-					gl_state.hwgamma = qtrue;
+					r_state.hwgamma = qtrue;
 					/* We can not reliably detect hardware gamma
 					   changes across software gamma calls, which
 					   can reset the flag, so change it anyway */
@@ -825,7 +825,7 @@ rserr_t GLimp_SetMode (unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 			}
 		}
 	}
-	if (gl_state.hwgamma)
+	if (r_state.hwgamma)
 		ri.Con_Printf(PRINT_ALL, "...using hardware gamma\n");
 	else if (!fullscreen)
 		ri.Con_Printf(PRINT_ALL, "...using no hardware gamma - only available in fullscreen mode\n");
@@ -937,7 +937,7 @@ rserr_t GLimp_SetMode (unsigned *pwidth, unsigned *pheight, int mode, qboolean f
  * HGLRC, deleting the rendering context, and releasing the DC acquired
  * for the window.  The state structure is also nulled out.
  */
-void GLimp_Shutdown (void)
+void Rimp_Shutdown (void)
 {
 	uninstall_grabs();
 	mouse_active = qfalse;
@@ -948,7 +948,7 @@ void GLimp_Shutdown (void)
 
 #ifdef HAVE_XF86_VIDMODE
 		/*revert to original gamma-settings */
-		if (gl_state.hwgamma)
+		if (r_state.hwgamma)
 			XF86VidModeSetGamma(dpy, scrnum, &oldgamma);
 		if (vidmode_active)
 			XF86VidModeSwitchToMode(dpy, scrnum, vidmodes[0]);
@@ -990,7 +990,7 @@ static int qXErrorHandler (Display *display, XErrorEvent *ev)
 static void signal_handler (int sig)
 {
 	printf("Received signal %d, exiting...\n", sig);
-	GLimp_Shutdown();
+	Rimp_Shutdown();
 	exit(0);
 }
 
@@ -1017,7 +1017,7 @@ void InitSig (void)
 /**
  * @brief This routine is responsible for initializing the OS specific portions of OpenGL.
  */
-qboolean GLimp_Init (void *hinstance, void *wndproc)
+qboolean Rimp_Init (void *hinstance, void *wndproc)
 {
 	InitSig();
 
@@ -1030,15 +1030,15 @@ qboolean GLimp_Init (void *hinstance, void *wndproc)
 /**
  * @brief
  */
-void GLimp_BeginFrame (float camera_seperation)
+void Rimp_BeginFrame (float camera_seperation)
 {
 }
 
 /**
  * @brief Responsible for doing a swapbuffers and possibly for other stuff as yet to be determined.
- * @note Probably better not to make this a GLimp function and instead do a call to GLimp_SwapBuffers.
+ * @note Probably better not to make this a Rimp function and instead do a call to Rimp_SwapBuffers.
  */
-void GLimp_EndFrame (void)
+void Rimp_EndFrame (void)
 {
 	qglFlush();
 	qglXSwapBuffers(dpy, win);
@@ -1047,13 +1047,13 @@ void GLimp_EndFrame (void)
 /**
  * @brief
  */
-void GLimp_SetGamma (void)
+void Rimp_SetGamma (void)
 {
 #ifdef HAVE_XF86_VIDMODE
 	float g = vid_gamma->value;
 	XF86VidModeGamma gamma;
 
-	assert(gl_state.hwgamma);
+	assert(r_state.hwgamma);
 
 	gamma.red = g;
 	gamma.green = g;
@@ -1065,6 +1065,6 @@ void GLimp_SetGamma (void)
 /**
  * @brief
  */
-void GLimp_AppActivate (qboolean active)
+void Rimp_AppActivate (qboolean active)
 {
 }

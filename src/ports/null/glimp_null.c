@@ -19,35 +19,35 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 #include "../../ref_gl/gl_local.h"
 
-void GLimp_BeginFrame (float camera_separation)
+void Rimp_BeginFrame (float camera_separation)
 {
 }
 
-void GLimp_EndFrame (void)
+void Rimp_EndFrame (void)
 {
 }
 
-int GLimp_Init (void *hinstance, void *hWnd)
+int Rimp_Init (void *hinstance, void *hWnd)
 {
 }
 
-void GLimp_Shutdown (void)
+void Rimp_Shutdown (void)
 {
 }
 
-int GLimp_SetMode (int *pwidth, int *pheight, int mode, qboolean fullscreen)
+int Rimp_SetMode (int *pwidth, int *pheight, int mode, qboolean fullscreen)
 {
 }
 
-void GLimp_AppActivate (qboolean active)
+void Rimp_AppActivate (qboolean active)
 {
 }
 
-void GLimp_EnableLogging (qboolean enable)
+void Rimp_EnableLogging (qboolean enable)
 {
 }
 
-void GLimp_LogNewFrame (void)
+void Rimp_LogNewFrame (void)
 {
 }
 

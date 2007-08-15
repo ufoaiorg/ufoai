@@ -1,5 +1,5 @@
 /**
- * @file gl_image.c
+ * @file r_image.c
  * @brief
  */
 
@@ -33,13 +33,13 @@ static int numgltextures;
 static byte intensitytable[256];
 static byte gammatable[256];
 
-cvar_t *gl_intensity;
-extern cvar_t *gl_imagefilter;
+cvar_t *r_intensity;
+extern cvar_t *r_imagefilter;
 
 unsigned d_8to24table[256];
 
-static qboolean GL_Upload8(byte * data, int width, int height, qboolean mipmap, imagetype_t type, image_t* image);
-static qboolean GL_Upload32(unsigned *data, int width, int height, qboolean mipmap, qboolean clamp, imagetype_t type, image_t* image);
+static qboolean R_Upload8(byte * data, int width, int height, qboolean mipmap, imagetype_t type, image_t* image);
+static qboolean R_Upload32(unsigned *data, int width, int height, qboolean mipmap, qboolean clamp, imagetype_t type, image_t* image);
 
 int gl_solid_format = GL_RGB;
 int gl_alpha_format = GL_RGBA;
@@ -54,22 +54,22 @@ int gl_filter_max = GL_LINEAR;
 /**
  * @brief Set the anisotropic value for textures
  * @note not used atm
- * @sa GL_ResampleTexture
+ * @sa R_ResampleTexture
  */
-void GL_UpdateAnisotropy (void)
+void R_UpdateAnisotropy (void)
 {
 	int		i;
 	image_t	*glt;
 	float	value;
 
-	if (!gl_state.anisotropic)
+	if (!r_state.anisotropic)
 		value = 0;
 	else
 		value = r_ext_max_anisotropy->value;
 
 	for (i = 0, glt = gltextures; i < numgltextures; i++, glt++) {
 		if (glt->type != it_pic) {
-			GL_Bind(glt->texnum);
+			R_Bind(glt->texnum);
 			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, value);
 		}
 	}
@@ -79,33 +79,33 @@ void GL_UpdateAnisotropy (void)
 /**
  * @brief
  */
-void GL_EnableMultitexture (qboolean enable)
+void R_EnableMultitexture (qboolean enable)
 {
 	if (!qglSelectTextureSGIS && !qglActiveTextureARB)
 		return;
 
-	if (enable == gl_state.multitexture)
+	if (enable == r_state.multitexture)
 		return;
 
-	gl_state.multitexture = enable;
+	r_state.multitexture = enable;
 
 	if (enable) {
-		GL_SelectTexture(gl_texture1);
+		R_SelectTexture(gl_texture1);
 		qglEnable(GL_TEXTURE_2D);
-		GL_TexEnv(GL_REPLACE);
+		R_TexEnv(GL_REPLACE);
 	} else {
-		GL_SelectTexture(gl_texture1);
+		R_SelectTexture(gl_texture1);
 		qglDisable(GL_TEXTURE_2D);
-		GL_TexEnv(GL_REPLACE);
+		R_TexEnv(GL_REPLACE);
 	}
-	GL_SelectTexture(gl_texture0);
-	GL_TexEnv(GL_REPLACE);
+	R_SelectTexture(gl_texture0);
+	R_TexEnv(GL_REPLACE);
 }
 
 /**
  * @brief
  */
-void GL_SelectTexture (GLenum texture)
+void R_SelectTexture (GLenum texture)
 {
 	int tmu;
 
@@ -117,10 +117,10 @@ void GL_SelectTexture (GLenum texture)
 	else
 		tmu = 1;
 
-	if (tmu == gl_state.currenttmu)
+	if (tmu == r_state.currenttmu)
 		return;
 
-	gl_state.currenttmu = tmu;
+	r_state.currenttmu = tmu;
 
 	if (qglSelectTextureSGIS) {
 		qglSelectTextureSGIS(texture);
@@ -133,41 +133,41 @@ void GL_SelectTexture (GLenum texture)
 /**
  * @brief
  */
-void GL_TexEnv (GLenum mode)
+void R_TexEnv (GLenum mode)
 {
 	static GLenum lastmodes[2] = { (GLenum) - 1, (GLenum) - 1 };
 
-	if (mode != lastmodes[gl_state.currenttmu]) {
+	if (mode != lastmodes[r_state.currenttmu]) {
 		qglTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
-		lastmodes[gl_state.currenttmu] = mode;
+		lastmodes[r_state.currenttmu] = mode;
 	}
 }
 
 /**
  * @brief
  */
-void GL_Bind (int texnum)
+void R_Bind (int texnum)
 {
-	if (gl_state.currenttextures[gl_state.currenttmu] == texnum)
+	if (r_state.currenttextures[r_state.currenttmu] == texnum)
 		return;
-	gl_state.currenttextures[gl_state.currenttmu] = texnum;
+	r_state.currenttextures[r_state.currenttmu] = texnum;
 	qglBindTexture(GL_TEXTURE_2D, texnum);
 }
 
 /**
  * @brief
  */
-void GL_MBind (GLenum target, int texnum)
+void R_MBind (GLenum target, int texnum)
 {
-	GL_SelectTexture(target);
+	R_SelectTexture(target);
 	if (target == gl_texture0) {
-		if (gl_state.currenttextures[0] == texnum)
+		if (r_state.currenttextures[0] == texnum)
 			return;
 	} else {
-		if (gl_state.currenttextures[1] == texnum)
+		if (r_state.currenttextures[1] == texnum)
 			return;
 	}
-	GL_Bind(texnum);
+	R_Bind(texnum);
 }
 
 typedef struct {
@@ -184,7 +184,7 @@ static const glmode_t modes[] = {
 	{"GL_LINEAR_MIPMAP_LINEAR", GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR}
 };
 
-#define NUM_GL_MODES (sizeof(modes) / sizeof (glmode_t))
+#define NUM_R_MODES (sizeof(modes) / sizeof (glmode_t))
 
 typedef struct {
 	const char *name;
@@ -200,7 +200,7 @@ static const gltmode_t gl_alpha_modes[] = {
 	{"GL_RGBA2", GL_RGBA2},
 };
 
-#define NUM_GL_ALPHA_MODES (sizeof(gl_alpha_modes) / sizeof (gltmode_t))
+#define NUM_R_ALPHA_MODES (sizeof(gl_alpha_modes) / sizeof (gltmode_t))
 
 static const gltmode_t gl_solid_modes[] = {
 	{"default", 3},
@@ -214,22 +214,22 @@ static const gltmode_t gl_solid_modes[] = {
 #endif
 };
 
-#define NUM_GL_SOLID_MODES (sizeof(gl_solid_modes) / sizeof (gltmode_t))
+#define NUM_R_SOLID_MODES (sizeof(gl_solid_modes) / sizeof (gltmode_t))
 
 /**
  * @brief
  */
-void GL_TextureMode (const char *string)
+void R_TextureMode (const char *string)
 {
 	int i;
 	image_t *glt;
 
-	for (i = 0; i < NUM_GL_MODES; i++) {
+	for (i = 0; i < NUM_R_MODES; i++) {
 		if (!Q_stricmp(modes[i].name, string))
 			break;
 	}
 
-	if (i == NUM_GL_MODES) {
+	if (i == NUM_R_MODES) {
 		ri.Con_Printf(PRINT_ALL, "bad filter name\n");
 		return;
 	}
@@ -240,7 +240,7 @@ void GL_TextureMode (const char *string)
 	/* change all the existing mipmap texture objects */
 	for (i = 0, glt = gltextures; i < numgltextures; i++, glt++) {
 		if (glt->type != it_pic) {
-			GL_Bind(glt->texnum);
+			R_Bind(glt->texnum);
 			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_min);
 			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
 		}
@@ -250,16 +250,16 @@ void GL_TextureMode (const char *string)
 /**
  * @brief
  */
-void GL_TextureAlphaMode (const char *string)
+void R_TextureAlphaMode (const char *string)
 {
 	int i;
 
-	for (i = 0; i < NUM_GL_ALPHA_MODES; i++) {
+	for (i = 0; i < NUM_R_ALPHA_MODES; i++) {
 		if (!Q_stricmp(gl_alpha_modes[i].name, string))
 			break;
 	}
 
-	if (i == NUM_GL_ALPHA_MODES) {
+	if (i == NUM_R_ALPHA_MODES) {
 		ri.Con_Printf(PRINT_ALL, "bad alpha texture mode name\n");
 		return;
 	}
@@ -270,16 +270,16 @@ void GL_TextureAlphaMode (const char *string)
 /**
  * @brief
  */
-void GL_TextureSolidMode (const char *string)
+void R_TextureSolidMode (const char *string)
 {
 	int i;
 
-	for (i = 0; i < NUM_GL_SOLID_MODES; i++) {
+	for (i = 0; i < NUM_R_SOLID_MODES; i++) {
 		if (!Q_stricmp(gl_solid_modes[i].name, string))
 			break;
 	}
 
-	if (i == NUM_GL_SOLID_MODES) {
+	if (i == NUM_R_SOLID_MODES) {
 		ri.Con_Printf(PRINT_ALL, "bad solid texture mode name\n");
 		return;
 	}
@@ -290,7 +290,7 @@ void GL_TextureSolidMode (const char *string)
 /**
  * @brief Shows all loaded images
  */
-void GL_ImageList_f (void)
+void R_ImageList_f (void)
 {
 	int i;
 	image_t *image;
@@ -338,12 +338,12 @@ PCX LOADING
 
 /**
  * @brief
- * @sa LoadTGA
- * @sa LoadJPG
- * @sa LoadPNG
- * @sa GL_FindImage
+ * @sa R_LoadTGA
+ * @sa R_LoadJPG
+ * @sa R_LoadPNG
+ * @sa R_FindImage
  */
-static void LoadPCX (const char *filename, byte ** pic, byte ** palette, int *width, int *height)
+static void R_LoadPCX (const char *filename, byte ** pic, byte ** palette, int *width, int *height)
 {
 	byte *raw;
 	pcx_t *pcx;
@@ -353,13 +353,13 @@ static void LoadPCX (const char *filename, byte ** pic, byte ** palette, int *wi
 	byte *out, *pix;
 
 	if (*pic != NULL)
-		Sys_Error("possible mem leak in LoadPCX\n");
+		Sys_Error("possible mem leak in R_LoadPCX\n");
 	*palette = NULL;
 
 	/* load the file */
 	len = ri.FS_LoadFile(filename, (void **) &raw);
 	if (!raw) {
-		ri.Con_Printf(PRINT_DEVELOPER, "LoadPCX: Could not load pcx file '%s'\n", filename);
+		ri.Con_Printf(PRINT_DEVELOPER, "R_LoadPCX: Could not load pcx file '%s'\n", filename);
 		return;
 	}
 
@@ -378,7 +378,7 @@ static void LoadPCX (const char *filename, byte ** pic, byte ** palette, int *wi
 	raw = &pcx->data;
 
 	if (pcx->manufacturer != 0x0a || pcx->version != 5 || pcx->encoding != 1 || pcx->bits_per_pixel != 8 || pcx->xmax >= 640 || pcx->ymax >= 480) {
-		ri.Con_Printf(PRINT_ALL, "LoadPCX: Bad pcx file %s\n", filename);
+		ri.Con_Printf(PRINT_ALL, "R_LoadPCX: Bad pcx file %s\n", filename);
 		ri.Con_Printf(PRINT_ALL, "manufacturer: %x, version: %i, encoding: %i, bits_per_pixel: %i, xmax: %i, ymax: %i\n",
 			pcx->manufacturer,
 			pcx->version,
@@ -459,12 +459,12 @@ static void PngReadFunc (png_struct *Png, png_bytep buf, png_size_t size)
 
 /**
  * @brief
- * @sa LoadPCX
- * @sa LoadTGA
- * @sa LoadJPG
- * @sa GL_FindImage
+ * @sa R_LoadPCX
+ * @sa R_LoadTGA
+ * @sa R_LoadJPG
+ * @sa R_FindImage
  */
-static int LoadPNG (const char *name, byte **pic, int *width, int *height)
+static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 {
 	int				rowptr;
 	int				samples, color_type, bit_depth;
@@ -582,12 +582,12 @@ static int LoadPNG (const char *name, byte **pic, int *width, int *height)
 
 /**
  * @brief
- * @sa LoadTGA
- * @sa LoadJPG
- * @sa LoadPCX
- * @sa GL_FindImage
+ * @sa R_LoadTGA
+ * @sa R_LoadJPG
+ * @sa R_LoadPCX
+ * @sa R_FindImage
  */
-void WritePNG (FILE *f, byte *buffer, int width, int height)
+void R_WritePNG (FILE *f, byte *buffer, int width, int height)
 {
 	int			i;
 	png_structp	png_ptr;
@@ -596,14 +596,14 @@ void WritePNG (FILE *f, byte *buffer, int width, int height)
 
 	png_ptr = png_create_write_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 	if (!png_ptr) {
-		Com_Printf("WritePNG: LibPNG Error!\n");
+		Com_Printf("R_WritePNG: LibPNG Error!\n");
 		return;
 	}
 
 	info_ptr = png_create_info_struct(png_ptr);
 	if (!info_ptr) {
 		png_destroy_write_struct(&png_ptr, (png_infopp)NULL);
-		Com_Printf("WritePNG: LibPNG Error!\n");
+		Com_Printf("R_WritePNG: LibPNG Error!\n");
 		return;
 	}
 
@@ -652,12 +652,12 @@ typedef struct _TargaHeader {
 
 /**
  * @brief
- * @sa LoadPCX
- * @sa LoadJPG
- * @sa LoadPNG
- * @sa GL_FindImage
+ * @sa R_LoadPCX
+ * @sa R_LoadJPG
+ * @sa R_LoadPNG
+ * @sa R_FindImage
  */
-void LoadTGA (const char *name, byte ** pic, int *width, int *height)
+void R_LoadTGA (const char *name, byte ** pic, int *width, int *height)
 {
 	int columns, rows, numPixels;
 	byte *pixbuf;
@@ -859,9 +859,9 @@ void LoadTGA (const char *name, byte ** pic, int *width, int *height)
 
 /**
  * @brief
- * @sa LoadTGA
+ * @sa R_LoadTGA
  */
-void WriteTGA (FILE *f, byte *buffer, int width, int height)
+void R_WriteTGA (FILE *f, byte *buffer, int width, int height)
 {
 	int i, temp;
 	byte *out;
@@ -890,7 +890,7 @@ void WriteTGA (FILE *f, byte *buffer, int width, int height)
 	}
 
 	if (fwrite (out, 1, size, f) != size)
-		Com_Printf("Failed to write the tga file\n");
+		Com_Printf("R_WriteTGA: Failed to write the tga file\n");
 
 	ri.TagFree(out);
 }
@@ -948,12 +948,12 @@ static void jpeg_mem_src (j_decompress_ptr cinfo, byte * mem, int len)
 
 /**
  * @brief
- * @sa LoadPCX
- * @sa LoadTGA
- * @sa LoadPNG
- * @sa GL_FindImage
+ * @sa R_LoadPCX
+ * @sa R_LoadTGA
+ * @sa R_LoadPNG
+ * @sa R_FindImage
  */
-static void LoadJPG (const char *filename, byte ** pic, int *width, int *height)
+static void R_LoadJPG (const char *filename, byte ** pic, int *width, int *height)
 {
 	struct jpeg_decompress_struct cinfo;
 	struct jpeg_error_mgr jerr;
@@ -1156,9 +1156,9 @@ static void jpegDest (j_compress_ptr cinfo, byte * outfile, int size)
 
 /**
  * @brief
- * @sa LoadJPG
+ * @sa R_LoadJPG
  */
-size_t SaveJPGToBuffer (byte * buffer, int quality, int image_width, int image_height, byte * image_buffer)
+size_t R_SaveJPGToBuffer (byte * buffer, int quality, int image_width, int image_height, byte * image_buffer)
 {
 	struct jpeg_compress_struct cinfo;
 	struct jpeg_error_mgr jerr;
@@ -1227,10 +1227,10 @@ size_t SaveJPGToBuffer (byte * buffer, int quality, int image_width, int image_h
 
 /**
  * @brief
- * @sa GL_ScreenShot_f
- * @sa LoadJPG
+ * @sa R_ScreenShot_f
+ * @sa R_LoadJPG
  */
-void WriteJPG (FILE *f, byte *buffer, int width, int height, int quality)
+void R_WriteJPG (FILE *f, byte *buffer, int width, int height, int quality)
 {
 	int offset, w3;
 	struct jpeg_compress_struct cinfo;
@@ -1270,7 +1270,7 @@ void WriteJPG (FILE *f, byte *buffer, int width, int height, int quality)
 /**
  * @brief
  */
-static void GL_ResampleTexture (unsigned *in, int inwidth, int inheight, unsigned *out, int outwidth, int outheight)
+static void R_ResampleTexture (unsigned *in, int inwidth, int inheight, unsigned *out, int outwidth, int outheight)
 {
 	int i, j;
 	unsigned *inrow, *inrow2;
@@ -1307,16 +1307,16 @@ static void GL_ResampleTexture (unsigned *in, int inwidth, int inheight, unsigne
 		}
 	}
 
-	if (r_anisotropic->integer && gl_state.anisotropic)
+	if (r_anisotropic->integer && r_state.anisotropic)
 		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_anisotropic->value);
-	if (r_texture_lod->integer && gl_state.lod_bias)
+	if (r_texture_lod->integer && r_state.lod_bias)
 		qglTexEnvf(GL_TEXTURE_FILTER_CONTROL_EXT, GL_TEXTURE_LOD_BIAS_EXT, r_texture_lod->value);
 }
 
 /**
  * @brief Scale up the pixel values in a texture to increase the lighting range
  */
-static void GL_LightScaleTexture (unsigned *in, int inwidth, int inheight, qboolean only_gamma)
+static void R_LightScaleTexture (unsigned *in, int inwidth, int inheight, qboolean only_gamma)
 {
 	if (gl_combine || only_gamma) {
 		int i, c;
@@ -1348,7 +1348,7 @@ static void GL_LightScaleTexture (unsigned *in, int inwidth, int inheight, qbool
 /**
  * @brief Operates in place, quartering the size of the texture
  */
-static void GL_MipMap (byte * in, int width, int height)
+static void R_MipMap (byte * in, int width, int height)
 {
 	int i, j;
 	byte *out;
@@ -1582,7 +1582,7 @@ static unsigned scaled_buffer[1024 * 1024];
  * @brief
  * @return has_alpha
  */
-static qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mipmap, qboolean clamp, imagetype_t type, image_t* image)
+static qboolean R_Upload32 (unsigned *data, int width, int height, qboolean mipmap, qboolean clamp, imagetype_t type, image_t* image)
 {
 	unsigned *scaled;
 	int samples;
@@ -1592,16 +1592,16 @@ static qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mip
 	byte *scan;
 
 	for (scaled_width = 1; scaled_width < width; scaled_width <<= 1);
-	if (gl_round_down->integer && scaled_width > width && mipmap)
+	if (r_round_down->integer && scaled_width > width && mipmap)
 		scaled_width >>= 1;
 	for (scaled_height = 1; scaled_height < height; scaled_height <<= 1);
-	if (gl_round_down->integer && scaled_height > height && mipmap)
+	if (r_round_down->integer && scaled_height > height && mipmap)
 		scaled_height >>= 1;
 
 	/* let people sample down the world textures for speed */
 	if (mipmap) {
-		scaled_width >>= gl_picmip->integer;
-		scaled_height >>= gl_picmip->integer;
+		scaled_width >>= r_picmip->integer;
+		scaled_height >>= r_picmip->integer;
 	}
 
 	/* don't ever bother with > 2048*2048 textures */
@@ -1610,7 +1610,7 @@ static qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mip
 	if (scaled_height > 2048)
 		scaled_height = 2048;
 
-	while (scaled_width > gl_maxtexres->value || scaled_height > gl_maxtexres->value) {
+	while (scaled_width > r_maxtexres->integer || scaled_height > r_maxtexres->integer) {
 		scaled_width >>= 1;
 		scaled_height >>= 1;
 	}
@@ -1635,7 +1635,7 @@ static qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mip
 	}
 
 	/* emboss filter */
-	if (gl_imagefilter->integer && image && image->shader) {
+	if (r_imagefilter->integer && image && image->shader) {
 		ri.Con_Printf(PRINT_DEVELOPER, "Using image filter %s\n", image->shader->name);
 		if (image->shader->emboss)
 			R_FilterTexture(EMBOSS_FILTER, data, width, height, 1, 128, qtrue, image->shader->glMode);
@@ -1669,10 +1669,10 @@ static qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mip
 		while (scaled_height > 1024)
 			scaled_height >>= 1;
 
-		GL_ResampleTexture(data, width, height, scaled, scaled_width, scaled_height);
+		R_ResampleTexture(data, width, height, scaled, scaled_width, scaled_height);
 	}
 
-	GL_LightScaleTexture(scaled, scaled_width, scaled_height, !mipmap);
+	R_LightScaleTexture(scaled, scaled_width, scaled_height, !mipmap);
 
 	qglTexImage2D(GL_TEXTURE_2D, 0, samples, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
 
@@ -1681,7 +1681,7 @@ static qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mip
 
 		miplevel = 0;
 		while (scaled_width > 1 || scaled_height > 1) {
-			GL_MipMap((byte *) scaled, scaled_width, scaled_height);
+			R_MipMap((byte *) scaled, scaled_width, scaled_height);
 			scaled_width >>= 1;
 			scaled_height >>= 1;
 			if (scaled_width < 1)
@@ -1702,9 +1702,9 @@ static qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mip
 		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 	}
 
-	if (r_anisotropic->integer && gl_state.anisotropic)
+	if (r_anisotropic->integer && r_state.anisotropic)
 		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_anisotropic->value);
-	if (r_texture_lod->integer && gl_state.lod_bias)
+	if (r_texture_lod->integer && r_state.lod_bias)
 		qglTexEnvf(GL_TEXTURE_FILTER_CONTROL_EXT, GL_TEXTURE_LOD_BIAS_EXT, r_texture_lod->value);
 
 	return (samples == gl_alpha_format || samples == gl_compressed_alpha_format);
@@ -1714,7 +1714,7 @@ static qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mip
  * @brief
  * @return has_alpha
  */
-static qboolean GL_Upload8 (byte * data, int width, int height, qboolean mipmap, imagetype_t type, image_t* image)
+static qboolean R_Upload8 (byte * data, int width, int height, qboolean mipmap, imagetype_t type, image_t* image)
 {
 	unsigned *trans;
 	size_t trans_size = 512 * 256 * sizeof(trans[0]);
@@ -1727,7 +1727,7 @@ static qboolean GL_Upload8 (byte * data, int width, int height, qboolean mipmap,
 		ri.Sys_Error(ERR_FATAL, "TagMalloc: failed on allocation of "UFO_SIZE_T" bytes", trans_size);
 
 	if (s > trans_size / 4)
-		ri.Sys_Error(ERR_DROP, "GL_Upload8: too large");
+		ri.Sys_Error(ERR_DROP, "R_Upload8: too large");
 
 	for (i = 0; i < s; i++) {
 		p = data[i];
@@ -1754,7 +1754,7 @@ static qboolean GL_Upload8 (byte * data, int width, int height, qboolean mipmap,
 		}
 	}
 
-	ret = GL_Upload32(trans, width, height, mipmap, qtrue, type, image);
+	ret = R_Upload32(trans, width, height, mipmap, qtrue, type, image);
 	ri.TagFree(trans);
 
 	return ret;
@@ -1773,7 +1773,7 @@ image_t *DaN;
  * @brief Applies alpha values to the night overlay image for 2d geoscape
  * @param[in] q
  */
-void GL_CalcDayAndNight (float q)
+void R_CalcDayAndNight (float q)
 {
 	int x, y;
 	float phi, dphi, a, da;
@@ -1792,7 +1792,7 @@ void GL_CalcDayAndNight (float q)
 		DaN->type = it_pic;
 		DaN->texnum = TEXNUM_IMAGES + (DaN - gltextures);
 	}
-	GL_Bind(DaN->texnum);
+	R_Bind(DaN->texnum);
 
 	/* init geometric data */
 	dphi = (float) 2 * M_PI / DAN_WIDTH;
@@ -1836,7 +1836,7 @@ void GL_CalcDayAndNight (float q)
 /**
  * @brief This is also used as an entry point for the generated r_notexture
  */
-image_t *GL_LoadPic (const char *name, byte * pic, int width, int height, imagetype_t type, int bits)
+image_t *R_LoadPic (const char *name, byte * pic, int width, int height, imagetype_t type, int bits)
 {
 	image_t *image;
 	int i;
@@ -1871,18 +1871,18 @@ image_t *GL_LoadPic (const char *name, byte * pic, int width, int height, imaget
 	if (image->type == it_pic && strstr(image->name, "_noclamp"))
 		image->type = it_wrappic;
 
-	image->shader = GL_GetShaderForImage(image->name);
+	image->shader = R_GetShaderForImage(image->name);
 	if (image->shader)
-		ri.Con_Printf(PRINT_DEVELOPER, "GL_LoadPic: Shader found: '%s'\n", image->name);
+		ri.Con_Printf(PRINT_DEVELOPER, "R_LoadPic: Shader found: '%s'\n", image->name);
 
 	image->texnum = TEXNUM_IMAGES + (image - gltextures);
 	if (pic) {
-		GL_Bind(image->texnum);
+		R_Bind(image->texnum);
 		if (bits == 8) {
-			image->has_alpha = GL_Upload8(pic, width, height, (image->type != it_pic), image->type, image);
+			image->has_alpha = R_Upload8(pic, width, height, (image->type != it_pic), image->type, image);
 			Com_Printf("....................8bit image\n");
 		} else
-			image->has_alpha = GL_Upload32((unsigned *) pic, width, height,
+			image->has_alpha = R_Upload32((unsigned *) pic, width, height,
 				(image->type != it_pic), (image->type == it_pic), image->type, image);
 		image->upload_width = upload_width;	/* after power of 2 and scales */
 		image->upload_height = upload_height;
@@ -1894,10 +1894,10 @@ image_t *GL_LoadPic (const char *name, byte * pic, int width, int height, imaget
 /**
  * @brief Loads a ID wall image format
  * basically pcx with 3 midmap levels
- * @sa GL_LoadPic
+ * @sa R_LoadPic
  * @param[in] bpp Should be 8 for wal images, and 32 for m32
  */
-static image_t *GL_LoadWal (const char *name, int bpp)
+static image_t *R_LoadWal (const char *name, int bpp)
 {
 	miptex_t *mt;
 	int width, height, ofs;
@@ -1905,7 +1905,7 @@ static image_t *GL_LoadWal (const char *name, int bpp)
 
 	ri.FS_LoadFile(name, (void **) &mt);
 	if (!mt) {
-		ri.Con_Printf(PRINT_ALL, "GL_LoadWal: can't load %s\n", name);
+		ri.Con_Printf(PRINT_ALL, "R_LoadWal: can't load %s\n", name);
 		return r_notexture;
 	}
 
@@ -1913,7 +1913,7 @@ static image_t *GL_LoadWal (const char *name, int bpp)
 	height = LittleLong(mt->height);
 	ofs = LittleLong(mt->offsets[0]);
 
-	image = GL_LoadPic(name, (byte *) mt + ofs, width, height, it_wall, bpp);
+	image = R_LoadPic(name, (byte *) mt + ofs, width, height, it_wall, bpp);
 
 	ri.FS_FreeFile((void *) mt);
 
@@ -1924,7 +1924,7 @@ static image_t *GL_LoadWal (const char *name, int bpp)
 /**
  * @brief Finds an image for a shader
  */
-image_t *GL_FindImageForShader (const char *name)
+image_t *R_FindImageForShader (const char *name)
 {
 	int i;
 	image_t *image;
@@ -1947,9 +1947,9 @@ image_t *GL_FindImageForShader (const char *name)
  * @sa LoadPCX
  */
 #ifdef DEBUG
-image_t *GL_FindImageDebug (const char *pname, imagetype_t type, const char *file, int line)
+image_t *R_FindImageDebug (const char *pname, imagetype_t type, const char *file, int line)
 #else
-image_t *GL_FindImage (const char *pname, imagetype_t type)
+image_t *R_FindImage (const char *pname, imagetype_t type)
 #endif
 {
 	char lname[MAX_QPATH];
@@ -1962,10 +1962,10 @@ image_t *GL_FindImage (const char *pname, imagetype_t type)
 	int width, height;
 
 	if (!pname)
-		ri.Sys_Error(ERR_DROP, "GL_FindImage: NULL name");
+		ri.Sys_Error(ERR_DROP, "R_FindImage: NULL name");
 	len = strlen(pname);
 	if (len < 5)
-		return NULL;			/*  ri.Sys_Error (ERR_DROP, "GL_FindImage: bad name: %s", name); */
+		return NULL;			/*  ri.Sys_Error (ERR_DROP, "R_FindImage: bad name: %s", name); */
 
 	/* drop extension */
 	Q_strncpyz(lname, pname, MAX_QPATH);
@@ -1998,49 +1998,49 @@ image_t *GL_FindImage (const char *pname, imagetype_t type)
 
 	strcpy(ename, ".tga");
 	if (ri.FS_CheckFile(lname) != -1) {
-		LoadTGA(lname, &pic, &width, &height);
+		R_LoadTGA(lname, &pic, &width, &height);
 		if (pic) {
-			image = GL_LoadPic(lname, pic, width, height, type, 32);
+			image = R_LoadPic(lname, pic, width, height, type, 32);
 			goto end;
 		}
 	}
 
 	strcpy(ename, ".png");
 	if (ri.FS_CheckFile(lname) != -1) {
-		LoadPNG(lname, &pic, &width, &height);
+		R_LoadPNG(lname, &pic, &width, &height);
 		if (pic) {
-			image = GL_LoadPic(lname, pic, width, height, type, 32);
+			image = R_LoadPic(lname, pic, width, height, type, 32);
 			goto end;
 		}
 	}
 
 	strcpy(ename, ".jpg");
 	if (ri.FS_CheckFile(lname) != -1) {
-		LoadJPG(lname, &pic, &width, &height);
+		R_LoadJPG(lname, &pic, &width, &height);
 		if (pic) {
-			image = GL_LoadPic(lname, pic, width, height, type, 32);
+			image = R_LoadPic(lname, pic, width, height, type, 32);
 			goto end;
 		}
 	}
 
 	strcpy(ename, ".pcx");
 	if (ri.FS_CheckFile(lname) != -1) {
-		LoadPCX(lname, &pic, &palette, &width, &height);
+		R_LoadPCX(lname, &pic, &palette, &width, &height);
 		if (pic) {
-			image = GL_LoadPic(lname, pic, width, height, type, 8);
+			image = R_LoadPic(lname, pic, width, height, type, 8);
 			goto end;
 		}
 	}
 
 	strcpy(ename, ".m32");
 	if (ri.FS_CheckFile(lname) != -1) {
-		image = GL_LoadWal(lname, 32);
+		image = R_LoadWal(lname, 32);
 		goto end;
 	}
 
 	strcpy(ename, ".wal");
 	if (ri.FS_CheckFile(lname) != -1) {
-		image = GL_LoadWal(lname, 8);
+		image = R_LoadWal(lname, 8);
 		goto end;
 	}
 
@@ -2050,9 +2050,9 @@ image_t *GL_FindImage (const char *pname, imagetype_t type)
 
 	*ename = 0;
 #ifdef DEBUG
-	ri.Con_Printf(PRINT_ALL, "GL_FindImage: Can't find %s (%s) - file: %s, line %i\n", lname, pname, file, line);
+	ri.Con_Printf(PRINT_ALL, "R_FindImage: Can't find %s (%s) - file: %s, line %i\n", lname, pname, file, line);
 #else
-	ri.Con_Printf(PRINT_ALL, "GL_FindImage: Can't find %s (%s)\n", lname, pname);
+	ri.Con_Printf(PRINT_ALL, "R_FindImage: Can't find %s (%s)\n", lname, pname);
 #endif
 
 	if ((glerrortexend - glerrortex) + strlen(lname) < MAX_GLERRORTEX) {
@@ -2074,7 +2074,7 @@ image_t *GL_FindImage (const char *pname, imagetype_t type)
 /**
  * @brief Any image that was not touched on this registration sequence will be freed
  */
-void GL_FreeUnusedImages (void)
+void R_FreeUnusedImages (void)
 {
 	int i;
 	image_t *image;
@@ -2100,7 +2100,7 @@ void GL_FreeUnusedImages (void)
 /**
  * @brief
  */
-int Draw_GetPalette (void)
+static int R_GetPalette (void)
 {
 	int i;
 	int r, g, b;
@@ -2109,7 +2109,7 @@ int Draw_GetPalette (void)
 	int width, height;
 
 	/* get the palette */
-	LoadPCX("pics/colormap.pcx", &pic, &pal, &width, &height);
+	R_LoadPCX("pics/colormap.pcx", &pic, &pal, &width, &height);
 	if (!pal)
 		ri.Sys_Error(ERR_FATAL, "Couldn't load pics/colormap.pcx");
 
@@ -2133,7 +2133,7 @@ int Draw_GetPalette (void)
 /**
  * @brief
  */
-void GL_InitImages (void)
+void R_InitImages (void)
 {
 	int i, j;
 	float g = vid_gamma->value;
@@ -2145,20 +2145,20 @@ void GL_InitImages (void)
 	DaN = NULL;
 
 	/* init intensity conversions */
-	gl_intensity = ri.Cvar_Get("gl_intensity", "2", CVAR_ARCHIVE, NULL);
+	r_intensity = ri.Cvar_Get("r_intensity", "2", CVAR_ARCHIVE, NULL);
 
-	if (gl_intensity->value < 1)
-		ri.Cvar_Set("gl_intensity", "1");
+	if (r_intensity->value < 1)
+		ri.Cvar_Set("r_intensity", "1");
 
-	gl_state.inverse_intensity = 1 / gl_intensity->value;
+	r_state.inverse_intensity = 1 / r_intensity->value;
 
-	Draw_GetPalette();
+	R_GetPalette();
 
-	if (gl_config.renderer & (GL_RENDERER_VOODOO | GL_RENDERER_VOODOO2))
+	if (r_config.renderer & (GL_RENDERER_VOODOO | GL_RENDERER_VOODOO2))
 		g = 1.0F;
 
 	for (i = 0; i < 256; i++) {
-		if (g == 1 || gl_state.hwgamma) {
+		if (g == 1 || r_state.hwgamma) {
 			gammatable[i] = i;
 		} else {
 			float inf;
@@ -2173,7 +2173,7 @@ void GL_InitImages (void)
 	}
 
 	for (i = 0; i < 256; i++) {
-		j = i * gl_intensity->integer;
+		j = i * r_intensity->integer;
 
 		if (j > 255)
 			j = 255;
@@ -2185,7 +2185,7 @@ void GL_InitImages (void)
 /**
  * @brief
  */
-void GL_ShutdownImages (void)
+void R_ShutdownImages (void)
 {
 	int i;
 	image_t *image;

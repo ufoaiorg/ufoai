@@ -39,7 +39,7 @@ static float normalArray[MD2_MAX_VERTS * 3];
 /**
  * @brief
  */
-static void GL_LerpVerts (int nverts, dtrivertx_t * v, dtrivertx_t * ov, float *lerp, float move[3], float frontv[3], float backv[3])
+static void R_LerpVerts (int nverts, dtrivertx_t * v, dtrivertx_t * ov, float *lerp, float move[3], float frontv[3], float backv[3])
 {
 	int i;
 
@@ -88,7 +88,7 @@ static void R_DrawAliasFrameLerp (mdl_md2_t * paliashdr, float backlerp, int fra
 
 	lerp = s_lerped[0];
 
-	GL_LerpVerts(paliashdr->num_xyz, v, ov, lerp, move, frontv, backv);
+	R_LerpVerts(paliashdr->num_xyz, v, ov, lerp, move, frontv, backv);
 
 	/* setup vertex array */
 	qglEnableClientState(GL_VERTEX_ARRAY);
@@ -321,39 +321,39 @@ void R_DrawAliasMD2Model (entity_t * e)
 	qglMultMatrixf(trafo[e - r_newrefdef.entities].matrix);
 
 	/* draw it */
-	GL_Bind(skin->texnum);
+	R_Bind(skin->texnum);
 
 	if (gl_combine) {
-		GL_TexEnv(gl_combine);
-		qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, gl_intensity->value);
+		R_TexEnv(gl_combine);
+		qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, r_intensity->value);
 	} else {
-		GL_TexEnv(GL_MODULATE);
+		R_TexEnv(GL_MODULATE);
 	}
 
 	if ((e->flags & RF_TRANSLUCENT))
-		GLSTATE_ENABLE_BLEND
+		RSTATE_ENABLE_BLEND
 
 	qglEnable(GL_DEPTH_TEST);
 	qglEnable(GL_CULL_FACE);
 
 	R_DrawAliasFrameLerp(paliashdr, e->as.backlerp, e->as.frame, e->as.oldframe);
 
-	GL_TexEnv(GL_REPLACE);
+	R_TexEnv(GL_REPLACE);
 	qglDisable(GL_LIGHTING);
 
 	if ((e->flags & RF_TRANSLUCENT) || (skin && skin->has_alpha))
-		GLSTATE_DISABLE_BLEND
+		RSTATE_DISABLE_BLEND
 
-	if (gl_shadows->integer == 1 && (e->flags & (RF_SHADOW | RF_BLOOD))) {
+	if (r_shadows->integer == 1 && (e->flags & (RF_SHADOW | RF_BLOOD))) {
 		if (!(e->flags & RF_TRANSLUCENT))
 			qglDepthMask(GL_FALSE);
-		GLSTATE_ENABLE_BLEND
+		RSTATE_ENABLE_BLEND
 
 		qglColor4f(1, 1, 1, 1);
 		if (e->flags & RF_SHADOW)
-			GL_Bind(shadow->texnum);
+			R_Bind(shadow->texnum);
 		else
-			GL_Bind(blood->texnum);
+			R_Bind(blood->texnum);
 		qglBegin(GL_QUADS);
 
 		qglTexCoord2f(0.0, 1.0);
@@ -367,14 +367,14 @@ void R_DrawAliasMD2Model (entity_t * e)
 
 		qglEnd();
 
-		GLSTATE_DISABLE_BLEND
+		RSTATE_DISABLE_BLEND
 		if (!(e->flags & RF_TRANSLUCENT))
 			qglDepthMask(GL_TRUE);
-	} else if (gl_shadows->integer == 2 && (e->flags & (RF_SHADOW | RF_BLOOD))) {
+	} else if (r_shadows->integer == 2 && (e->flags & (RF_SHADOW | RF_BLOOD))) {
 		R_DrawShadowVolume(e);
 	}
 
-	if (gl_fog->integer && r_newrefdef.fog)
+	if (r_fog->integer && r_newrefdef.fog)
 		qglDisable(GL_FOG);
 
 	qglDisable(GL_CULL_FACE);
@@ -384,7 +384,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 	if (e->flags & (RF_SELECTED | RF_ALLIED | RF_MEMBER)) {
 		qglDisable(GL_TEXTURE_2D);
 		qglEnable(GL_LINE_SMOOTH);
-		GLSTATE_ENABLE_BLEND
+		RSTATE_ENABLE_BLEND
 
 		if (e->flags & RF_MEMBER) {
 			if (e->flags & RF_SELECTED)
@@ -414,7 +414,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 
 		qglEnd();
 
-		GLSTATE_DISABLE_BLEND
+		RSTATE_DISABLE_BLEND
 		qglDisable(GL_LINE_SMOOTH);
 		qglEnable(GL_TEXTURE_2D);
 	}
@@ -427,7 +427,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 	/* show model bounding box */
 	Mod_DrawModelBBox(bbox, e);
 
-	if (gl_fog->integer && r_newrefdef.fog)
+	if (r_fog->integer && r_newrefdef.fog)
 		qglEnable(GL_FOG);
 
 	qglColor4f(1, 1, 1, 1);
@@ -577,30 +577,30 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	R_TransformModelDirect(mi);
 
 	/* draw it */
-	GL_Bind(skin->texnum);
+	R_Bind(skin->texnum);
 
 	qglEnable(GL_DEPTH_TEST);
 	qglEnable(GL_CULL_FACE);
 
 	if (gl_combine) {
-		GL_TexEnv(gl_combine);
-		qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, gl_intensity->value);
+		R_TexEnv(gl_combine);
+		qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, r_intensity->value);
 	} else {
-		GL_TexEnv(GL_MODULATE);
+		R_TexEnv(GL_MODULATE);
 	}
 
 	if ((mi->color[3] && mi->color[3] < 1.0f) || (skin && skin->has_alpha))
-		GLSTATE_ENABLE_BLEND
+		RSTATE_ENABLE_BLEND
 
 	/* draw the model */
 	R_DrawAliasFrameLerp(paliashdr, mi->backlerp, mi->frame, mi->oldframe);
 
-	GL_TexEnv(GL_MODULATE);
+	R_TexEnv(GL_MODULATE);
 	qglDisable(GL_CULL_FACE);
 	qglDisable(GL_DEPTH_TEST);
 
 	if ((mi->color[3] && mi->color[3] < 1.0f) || (skin && skin->has_alpha))
-		GLSTATE_DISABLE_BLEND
+		RSTATE_DISABLE_BLEND
 
 	qglPopMatrix();
 
@@ -661,30 +661,30 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	qglRotatef(-mi->angles[2], 1, 0, 0);
 
 	/* draw it */
-	GL_Bind(skin->texnum);
+	R_Bind(skin->texnum);
 
 	qglEnable(GL_DEPTH_TEST);
 	qglEnable(GL_CULL_FACE);
 
 	if (gl_combine) {
-		GL_TexEnv(gl_combine);
-		qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, gl_intensity->value);
+		R_TexEnv(gl_combine);
+		qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, r_intensity->value);
 	} else {
-		GL_TexEnv(GL_MODULATE);
+		R_TexEnv(GL_MODULATE);
 	}
 
 	if ((mi->color[3] && mi->color[3] < 1.0f) || (skin && skin->has_alpha))
-		GLSTATE_ENABLE_BLEND
+		RSTATE_ENABLE_BLEND
 
 	/* draw the model */
 	R_DrawAliasFrameLerp(paliashdr, mi->backlerp, mi->frame, mi->oldframe);
 
-	GL_TexEnv(GL_REPLACE);
+	R_TexEnv(GL_REPLACE);
 	qglDisable(GL_CULL_FACE);
 	qglDisable(GL_DEPTH_TEST);
 
 	if ((mi->color[3] && mi->color[3] < 1.0f) || (skin && skin->has_alpha))
-		GLSTATE_DISABLE_BLEND
+		RSTATE_DISABLE_BLEND
 
 	qglPopMatrix();
 

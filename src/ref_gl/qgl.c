@@ -3822,7 +3822,7 @@ static void APIENTRY logViewport (GLint x, GLint y, GLsizei width, GLsizei heigh
 /**
  * @brief Mark a new frame in our gl log file
  */
-void GLimp_LogNewFrame (void)
+void Rimp_LogNewFrame (void)
 {
 	fprintf(glw_state.log_fp, "*** R_BeginFrame ***\n");
 }
@@ -3830,7 +3830,7 @@ void GLimp_LogNewFrame (void)
 /**
  * @brief Qgl function pointers for logging or normal opengl function
  */
-void GLimp_EnableLogging (qboolean enable)
+void Rimp_EnableLogging (qboolean enable)
 {
 	if (enable) {
 		if (!glw_state.log_fp) {
@@ -4525,7 +4525,7 @@ void GLimp_EnableLogging (qboolean enable)
 /**
  * @brief Reset all pointers to null
  */
-void QGL_UnLink(void)
+void QR_UnLink(void)
 {
 	qglAccum                     = NULL;
 	qglAlphaFunc                 = NULL;
@@ -4905,7 +4905,7 @@ void QGL_UnLink(void)
 /**
  * @brief Link the qgl function pointers
  */
-void QGL_Link(void)
+void QR_Link(void)
 {
 	qglAccum                     = dllAccum                     = GPA("glAccum");
 	qglAlphaFunc                 = dllAlphaFunc                 = GPA("glAlphaFunc");

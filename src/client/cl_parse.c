@@ -81,7 +81,7 @@ const char *ev_format[] =
 	"bb",				/* EV_RESET */
 	"b",				/* EV_START */
 	"b",				/* EV_ENDROUND */
-	"b*",				/* EV_ENDROUNDANNOUNCE */
+	"bb",				/* EV_ENDROUNDANNOUNCE */
 
 	"bb****",			/* EV_RESULTS */
 	"g",				/* EV_CENTERVIEW */
@@ -753,23 +753,28 @@ static void CL_EntEdict (struct dbuffer *msg)
 
 /**
  * @brief Announces that a player ends his round
- * @param[in] msg
+ * @param[in] msg The message buffer to read from
  * @sa CL_DoEndRound
  * @note event EV_ENDROUNDANNOUNCE
  * @todo Build into hud
  */
 static void CL_EndRoundAnnounce (struct dbuffer * msg)
 {
-	int playerNum, length;
+	int playerNum, team;
 	const char *playerName;
+	char buf[128];
 
+	/* get the needed values */
 	playerNum = NET_ReadByte(msg);
-	length = NET_ReadShort(msg); /* for stringlength */
-	playerName = NET_ReadString(msg);
-	if (length != (int)strlen(playerName))
-		Com_Printf("CL_EndRoundAnnounce: wrong transmitted playername length: %i (or string)\n", length);
+	team = NET_ReadByte(msg);
+	playerName = cl.configstrings[CS_PLAYERNAMES + playerNum];
 
-	Com_Printf("%s ended his round\n", playerName);
+	/* add translated message to chat buffer */
+	Com_sprintf(buf, sizeof(buf), _("%s ended his round (team %i)\n"), playerName, team);
+	MN_AddChatMessage(buf);
+
+	/* don't translate on the game console */
+	Com_Printf("%s ended his round (team %i)\n", playerName, team);
 }
 
 static le_t	*lastMoving;
@@ -956,8 +961,7 @@ static void CL_ActorAppear (struct dbuffer *msg)
 				if (curCampaign) {
 					if (le->teamDef) {
 						if (RS_IsResearched_idx(RS_GetTechIdxByName(le->teamDef->tech))) {
-							Com_sprintf(tmpbuf, sizeof(tmpbuf), "%s %s!\n",
-							_("Alien spotted:"), _(le->teamDef->name));
+							Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Alien spotted: %s!"), _(le->teamDef->name));
 							CL_DisplayHudMessage(tmpbuf, 2000);
 						} else
 							CL_DisplayHudMessage(_("Alien spotted!\n"), 2000);

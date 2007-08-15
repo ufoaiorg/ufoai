@@ -23,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef GL_MODEL_BRUSH_H
-#define GL_MODEL_BRUSH_H
+#ifndef R_MODEL_BRUSH_H
+#define R_MODEL_BRUSH_H
 
 /*
 ==============================================================================
@@ -179,9 +179,9 @@ typedef struct mBspModel_s {
 	byte *lightdata;
 } mBspModel_t;
 
-void GL_BuildPolygonFromSurface(mBspSurface_t * fa, int shift[3]);
-void GL_CreateSurfaceLightmap(mBspSurface_t * surf);
-void GL_EndBuildingLightmaps(void);
-void GL_BeginBuildingLightmaps(void);
+void R_BuildPolygonFromSurface(mBspSurface_t * fa, int shift[3]);
+void R_CreateSurfaceLightmap(mBspSurface_t * surf);
+void R_EndBuildingLightmaps(void);
+void R_BeginBuildingLightmaps(void);
 
-#endif /* GL_MODEL_BRUSH_H */
+#endif /* R_MODEL_BRUSH_H */

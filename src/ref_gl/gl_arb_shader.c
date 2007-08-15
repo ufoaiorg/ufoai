@@ -1,5 +1,5 @@
 /**
- * @file gl_arb_shader.c
+ * @file r_arb_shader.c
  * @brief Shader and image filter stuff
  * @note This code is only active if HAVE_SHADERS is true
  */
@@ -34,9 +34,9 @@ static qboolean shaderInited = qfalse;
 
 /**
  * @brief Cycle through all parsed shaders and compile them
- * @sa GL_ShutdownShaders
+ * @sa R_ShutdownShaders
  */
-void GL_ShaderInit (void)
+void R_ShaderInit (void)
 {
 	int i = 0;
 	shader_t *s;
@@ -45,7 +45,7 @@ void GL_ShaderInit (void)
 	for (i = 0; i < r_newrefdef.num_shaders; i++) {
 		s = &r_newrefdef.shaders[i];
 		if (s->glsl) {
-			if (gl_state.glsl_program) {
+			if (r_state.glsl_program) {
 				/* a glsl can be a shader or a vertex program */
 				SH_LoadProgram_GLSL(s);
 			}
@@ -64,7 +64,7 @@ void GL_ShaderInit (void)
  * @param[in] image Image name
  * @return shader_t pointer if image name and shader title match otherwise NULL
  */
-shader_t* GL_GetShaderForImage (char* image)
+shader_t* R_GetShaderForImage (char* image)
 {
 	int i = 0;
 	shader_t *s;
@@ -72,7 +72,7 @@ shader_t* GL_GetShaderForImage (char* image)
 #ifdef HAVE_SHADERS
 	/* init the shaders */
 	if (!shaderInited && r_newrefdef.num_shaders)
-		GL_ShaderInit();
+		R_ShaderInit();
 #endif
 
 	/* search for shader title and check whether it matches an image name */
@@ -89,22 +89,22 @@ shader_t* GL_GetShaderForImage (char* image)
 #ifdef HAVE_SHADERS
 /**
  * @brief Delete all ARB shader programs at shutdown
- * GL_ShaderInit
+ * R_ShaderInit
  */
-void GL_ShutdownShaders (void)
+void R_ShutdownShaders (void)
 {
 	int i = 0;
 	shader_t *s;
 
 	/* init the shaders */
 	if (!shaderInited && r_newrefdef.num_shaders)
-		GL_ShaderInit();
+		R_ShaderInit();
 
 	ri.Con_Printf(PRINT_DEVELOPER, "Shader shutdown\n");
 	/* search for shader title and check whether it matches an image name */
 	for (i = 0; i < r_newrefdef.num_shaders; i++) {
 		s = &r_newrefdef.shaders[i];
-		if (s->glsl && gl_state.glsl_program) {
+		if (s->glsl && r_state.glsl_program) {
 			if (s->fpid > 0)
 				qglDeleteShader(s->fpid);
 			if (s->fpid > 0)
@@ -301,13 +301,13 @@ void SH_UseShader (shader_t * shader, qboolean deactivate)
 	image_t *gl = NULL, *normal, *distort;
 
 	/* no shaders supported */
-	if (gl_state.arb_fragment_program == qfalse)
+	if (r_state.arb_fragment_program == qfalse)
 		return;
 
 	assert(shader);
 
 	if (!deactivate)
-		gl = GL_FindImageForShader(shader->name);
+		gl = R_FindImageForShader(shader->name);
 
 	if (shader->glslpid > 0) {
 		if (deactivate)
@@ -327,13 +327,13 @@ void SH_UseShader (shader_t * shader, qboolean deactivate)
 			qglActiveTextureARB(GL_TEXTURE0_ARB);
 			qglBindTexture(GL_TEXTURE_2D, gl->texnum);
 			if (shader->distort[0]) {
-				distort = GL_FindImage(shader->distort, it_pic);
+				distort = R_FindImage(shader->distort, it_pic);
 				qglActiveTextureARB(GL_TEXTURE1_ARB);
 				qglBindTexture(GL_TEXTURE_2D, distort->texnum);
 				qglEnable(GL_TEXTURE_2D);
 			}
 			if (shader->normal[0]) {
-				normal = GL_FindImage(shader->normal, it_pic);
+				normal = R_FindImage(shader->normal, it_pic);
 			}
 			SH_UseProgram_ARB_FP(shader->fpid);
 		}
@@ -350,7 +350,7 @@ void SH_UseShader (shader_t * shader, qboolean deactivate)
 			qglActiveTextureARB(GL_TEXTURE0_ARB);
 			qglBindTexture(GL_TEXTURE_2D, gl->texnum);
 			if (shader->distort[0]) {
-				distort = GL_FindImage(shader->distort, it_pic);
+				distort = R_FindImage(shader->distort, it_pic);
 				if (distort) {
 					qglActiveTextureARB(GL_TEXTURE1_ARB);
 					qglBindTexture(GL_TEXTURE_2D, distort->texnum);
@@ -358,7 +358,7 @@ void SH_UseShader (shader_t * shader, qboolean deactivate)
 				}
 			}
 			if (shader->normal[0]) {
-				normal = GL_FindImage(shader->normal, it_pic);
+				normal = R_FindImage(shader->normal, it_pic);
 			}
 			SH_UseProgram_ARB_VP(shader->vpid);
 		}

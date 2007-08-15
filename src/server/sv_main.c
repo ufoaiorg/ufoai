@@ -124,7 +124,7 @@ static void SVC_TeamInfo (struct net_stream *s)
 	NET_WriteRawString(msg, Cvar_VariableString("sv_maxplayersperteam"));
 	NET_WriteRawString(msg, "\n");
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
-		if (cl->state > cs_free) {
+		if (cl->state >= cs_connected) {
 			Com_DPrintf(DEBUG_SERVER, "SV_TeamInfoString: connected client: %i %s\n", i, cl->name);
 			/* show players that already have a team with their teamnum */
 			if (ge->ClientGetTeamNum(cl->player))

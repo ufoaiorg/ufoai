@@ -143,7 +143,7 @@ static void B_ResetBuildingCurrent_f (void)
 static const value_t valid_building_vars[] = {
 	{"map_name", V_CLIENT_HUNK_STRING, offsetof(building_t, mapPart), 0},	/**< Name of the map file for generating basemap. */
 	{"more_than_one", V_BOOL, offsetof(building_t, moreThanOne), MEMBER_SIZEOF(building_t, moreThanOne)},	/**< Is the building allowed to be build more the one time? */
-	{"name", V_TRANSLATION2_STRING, offsetof(building_t, name), 0},	/**< The displayed building name. */
+	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(building_t, name), 0},	/**< The displayed building name. */
 	{"pedia", V_CLIENT_HUNK_STRING, offsetof(building_t, pedia), 0},	/**< The pedia-id string for the associated pedia entry. */
 	{"status", V_INT, offsetof(building_t, buildingStatus), MEMBER_SIZEOF(building_t, buildingStatus)},	/**< The current status of the building. */
 	{"image", V_CLIENT_HUNK_STRING, offsetof(building_t, image), 0},	/**< Identifies the image for the building. */
@@ -1368,7 +1368,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 							switch (vp->type) {
 							case V_NULL:
 								break;
-							case V_TRANSLATION2_STRING:
+							case V_TRANSLATION_MANUAL_STRING:
 								token++;
 							case V_CLIENT_HUNK_STRING:
 								Mem_PoolStrDupTo(token, (char**) ((char*)building + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);

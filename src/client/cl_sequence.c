@@ -91,14 +91,14 @@ typedef struct seqEnt_s {
 typedef struct seq2D_s {
 	qboolean inuse;
 	char name[MAX_VAR];
-	char text[MAX_VAR];			/* a placeholder for gettext (V_TRANSLATION2_STRING) */
+	char text[MAX_VAR];	/**< a placeholder for gettext (V_TRANSLATION_MANUAL_STRING) */
 	char font[MAX_VAR];
 	char image[MAX_VAR];
 	vec2_t pos, speed;
 	vec2_t size, enlarge;
 	vec4_t color, fade, bgcolor;
 	byte align;
-	qboolean relativePos;		/* useful for translations when sentence length may differ */
+	qboolean relativePos;	/**< useful for translations when sentence length may differ */
 } seq2D_t;
 
 int SEQ_Click(const char *name, char *data);
@@ -469,7 +469,7 @@ static const value_t seqEnt_vals[] = {
 /** @brief valid id names for 2d entity */
 static const value_t seq2D_vals[] = {
 	{"name", V_STRING, offsetof(seq2D_t, name), 0},
-	{"text", V_TRANSLATION2_STRING, offsetof(seq2D_t, text), 0},
+	{"text", V_TRANSLATION_MANUAL_STRING, offsetof(seq2D_t, text), 0},
 	{"font", V_STRING, offsetof(seq2D_t, font), 0},
 	{"image", V_STRING, offsetof(seq2D_t, image), 0},
 	{"pos", V_POS, offsetof(seq2D_t, pos), MEMBER_SIZEOF(seq2D_t, pos)},

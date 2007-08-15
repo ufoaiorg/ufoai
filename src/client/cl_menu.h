@@ -114,8 +114,8 @@ typedef enum {
 
 /** @brief MN_SELECTBOX definition */
 typedef struct selectBoxOptions_s {
-	char id[MAX_VAR];	/**< text for the select box - V_TRANSLATION2_STRING */
-	char label[MAX_VAR];	/**< text for the select box - V_TRANSLATION2_STRING */
+	char id[MAX_VAR];	/**< text for the select box - V_TRANSLATION_MANUAL_STRING */
+	char label[MAX_VAR];	/**< text for the select box - V_TRANSLATION_MANUAL_STRING */
 	char action[MAX_VAR];	/**< execute this when the value is selected */
 	char value[MAX_VAR];	/**< the value the cvar should get */
 	struct selectBoxOptions_s *next;	/**< pointer to next option entry for this node

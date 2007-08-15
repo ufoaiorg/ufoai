@@ -183,7 +183,7 @@ static model_t *R_RegisterModel (const char *name)
 		case mod_sprite:
 			sprout = (dsprite_t *) mod->alias.extraData;
 			for (i = 0; i < sprout->numframes; i++)
-				mod->alias.skins_img[i] = GL_FindImage(sprout->frames[i].name, it_sprite);
+				mod->alias.skins_img[i] = R_FindImage(sprout->frames[i].name, it_sprite);
 			break;
 		case mod_alias_md2:
 			{
@@ -194,14 +194,14 @@ static model_t *R_RegisterModel (const char *name)
 			for (i = 0; i < pheader->num_skins; i++) {
 				skin = (char *) pheader + pheader->ofs_skins + i * MD2_MAX_SKINNAME;
 				if (skin[0] != '.')
-					mod->alias.skins_img[i] = GL_FindImage(skin, it_skin);
+					mod->alias.skins_img[i] = R_FindImage(skin, it_skin);
 				else {
 					Q_strncpyz(path, mod->name, sizeof(path));
 					end = path;
 					while ((slash = strchr(end, '/')) != 0)
 						end = slash + 1;
 					strcpy(end, skin + 1);
-					mod->alias.skins_img[i] = GL_FindImage(path, it_skin);
+					mod->alias.skins_img[i] = R_FindImage(path, it_skin);
 				}
 			}
 			mod->numframes = pheader->num_frames;
@@ -285,9 +285,9 @@ static void Mod_Free (model_t * mod)
 
 /**
  * @brief
- * @sa GL_BeginLoading
+ * @sa Mod_BeginLoading
  */
-void GL_EndLoading (void)
+void Mod_EndLoading (void)
 {
 	int i;
 	model_t *mod;
@@ -300,7 +300,7 @@ void GL_EndLoading (void)
 			Mod_Free(mod);
 	}
 
-	GL_FreeUnusedImages();
+	R_FreeUnusedImages();
 }
 
 /**
@@ -309,7 +309,7 @@ void GL_EndLoading (void)
  */
 void Mod_FreeAll (void)
 {
-	GL_ShutdownModels();
+	R_ShutdownModels();
 	mod_numknown = 0;
 }
 
@@ -319,7 +319,7 @@ void Mod_FreeAll (void)
  */
 void Mod_DrawModelBBox (vec4_t bbox[8], entity_t *e)
 {
-	if (!gl_showbox->integer)
+	if (!r_showbox->integer)
 		return;
 
 	qglDisable(GL_CULL_FACE);
@@ -396,7 +396,7 @@ void Mod_DrawNullModel (void)
 /**
  * @brief Frees the model pool
  */
-void GL_ShutdownModels (void)
+void R_ShutdownModels (void)
 {
 	ri.FreeTags(ri.modelPool, 0);
 	ri.FreeTags(ri.lightPool, 0);

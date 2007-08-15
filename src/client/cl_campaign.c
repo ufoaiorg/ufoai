@@ -3391,7 +3391,7 @@ static const value_t campaign_vals[] = {
 	{"map", V_STRING, offsetof(campaign_t, map), 0},
 	{"credits", V_INT, offsetof(campaign_t, credits), MEMBER_SIZEOF(campaign_t, credits)},
 	{"visible", V_BOOL, offsetof(campaign_t, visible), MEMBER_SIZEOF(campaign_t, visible)},
-	{"text", V_TRANSLATION2_STRING, offsetof(campaign_t, text), 0}, /* just a gettext placeholder */
+	{"text", V_TRANSLATION_MANUAL_STRING, offsetof(campaign_t, text), 0}, /* just a gettext placeholder */
 	{"name", V_TRANSLATION_STRING, offsetof(campaign_t, name), 0},
 	{"date", V_DATE, offsetof(campaign_t, date), 0},
 	{NULL, 0, 0, 0}
@@ -3504,7 +3504,7 @@ void CL_ParseCampaign (const char *name, const char **text)
 /* =========================================================== */
 
 static const value_t nation_vals[] = {
-	{"name", V_TRANSLATION2_STRING, offsetof(nation_t, name), 0},
+	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(nation_t, name), 0},
 	{"pos", V_POS, offsetof(nation_t, pos), MEMBER_SIZEOF(nation_t, pos)},
 	{"color", V_COLOR, offsetof(nation_t, color), MEMBER_SIZEOF(nation_t, color)},
 	{"funding", V_INT, offsetof(nation_t, maxFunding), MEMBER_SIZEOF(nation_t, maxFunding)},
@@ -3599,7 +3599,7 @@ void CL_ParseNations (const char *name, const char **text)
 						return;
 
 					switch (vp->type) {
-					case V_TRANSLATION2_STRING:
+					case V_TRANSLATION_MANUAL_STRING:
 						token++;
 					case V_CLIENT_HUNK_STRING:
 						Mem_PoolStrDupTo(token, (char**) ((char*)nation + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);

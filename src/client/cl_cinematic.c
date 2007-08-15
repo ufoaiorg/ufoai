@@ -550,7 +550,7 @@ void CIN_RunCinematic (int now, void *data)
 
 /**
  * @brief
- * @sa GL_DrawPixelData
+ * @sa R_DrawImagePixelData
  */
 void CIN_DrawCinematic (void)
 {

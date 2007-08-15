@@ -167,7 +167,7 @@ static const value_t nps[] = {
 
 /** @brief valid properties for a select box */
 static const value_t selectBoxValues[] = {
-	{"label", V_TRANSLATION2_STRING, offsetof(selectBoxOptions_t, label), 0},
+	{"label", V_TRANSLATION_MANUAL_STRING, offsetof(selectBoxOptions_t, label), 0},
 	{"action", V_STRING, offsetof(selectBoxOptions_t, action), 0},
 	{"value", V_STRING, offsetof(selectBoxOptions_t, value), 0},
 
@@ -4838,7 +4838,7 @@ font_t *fontBig;
 font_t *fontSmall;
 
 static const value_t fontValues[] = {
-	{"font", V_TRANSLATION2_STRING, offsetof(font_t, path), 0},
+	{"font", V_TRANSLATION_MANUAL_STRING, offsetof(font_t, path), 0},
 	{"size", V_INT, offsetof(font_t, size), MEMBER_SIZEOF(font_t, size)},
 	{"style", V_CLIENT_HUNK_STRING, offsetof(font_t, style), 0},
 
@@ -4925,7 +4925,7 @@ void CL_ParseFont (const char *name, const char **text)
 					return;
 
 				switch (v->type) {
-				case V_TRANSLATION2_STRING:
+				case V_TRANSLATION_MANUAL_STRING:
 					token++;
 				case V_CLIENT_HUNK_STRING:
 					Mem_PoolStrDupTo(token, (char**) ((char*)font + (int)v->ofs), cl_menuSysPool, CL_TAG_MENU);

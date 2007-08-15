@@ -69,8 +69,8 @@ typedef enum {
 	V_COLOR,
 	V_RGBA,
 	V_STRING = 10,
-	V_TRANSLATION_STRING,	/**< translate via gettext */
-	V_TRANSLATION2_STRING,		/**< remove _ but don't translate */
+	V_TRANSLATION_STRING,	/**< translate via gettext and store already translated in target buffer */
+	V_TRANSLATION_MANUAL_STRING,	/**< remove _ but don't translate */
 	V_LONGSTRING,
 	V_ALIGN,
 	V_BLEND = 15,

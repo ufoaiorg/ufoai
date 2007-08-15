@@ -62,7 +62,7 @@ cvar_t *cl_worldlevel;
 cvar_t *cl_selected;
 
 cvar_t *cl_3dmap;
-cvar_t *gl_3dmapradius;
+cvar_t *r_3dmapradius;
 
 cvar_t *cl_numnames;
 
@@ -2124,7 +2124,7 @@ static void CL_InitLocal (void)
 	cl_selected = Cvar_Get("cl_selected", "0", CVAR_NOSET, "Current selected soldier");
 
 	cl_3dmap = Cvar_Get("cl_3dmap", "0", CVAR_ARCHIVE, "3D geoscape or float geoscape");
-	gl_3dmapradius = Cvar_Get("gl_3dmapradius", "8192.0", CVAR_NOSET, "3D geoscape radius");
+	r_3dmapradius = Cvar_Get("r_3dmapradius", "8192.0", CVAR_NOSET, "3D geoscape radius");
 
 	/* only 19 soldiers in soldier selection list */
 	cl_numnames = Cvar_Get("cl_numnames", "19", CVAR_NOSET, NULL);
@@ -2365,14 +2365,14 @@ static void CL_CvarCheck (void)
 	/* gl_mode and fullscreen */
 	v = Cvar_VariableInteger("mn_glmode");
 	if (v < -1 || v >= maxVidModes) {
-		Com_Printf("Max gl_mode mode is %i (%i)\n", maxVidModes, v);
-		v = Cvar_VariableInteger("gl_mode");
-		Cvar_SetValue("mn_glmode", v);
+		Com_Printf("Max r_mode mode is %i (%i)\n", maxVidModes, v);
+		v = Cvar_VariableInteger("r_mode");
+		Cvar_SetValue("mn_rmode", v);
 	}
 	if (v >= 0)
-		Cvar_Set("mn_glmodestr", va("%i*%i", vid_modes[v].width, vid_modes[v].height));
+		Cvar_Set("mn_rmodestr", va("%i*%i", vid_modes[v].width, vid_modes[v].height));
 	else
-		Cvar_Set("mn_glmodestr", _("Custom"));
+		Cvar_Set("mn_rmodestr", _("Custom"));
 }
 
 /**

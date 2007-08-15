@@ -430,7 +430,7 @@ static void GetEvent (SDL_Event *event)
 /**
  * @brief
  */
-void *GLimp_GetProcAddress (const char *func)
+void *Rimp_GetProcAddress (const char *func)
 {
 	return SDL_GL_GetProcAddress(func);
 }
@@ -442,7 +442,7 @@ void *GLimp_GetProcAddress (const char *func)
 static void signal_handler (int sig)
 {
 	printf("Received signal %d, exiting...\n", sig);
-	GLimp_Shutdown();
+	Rimp_Shutdown();
 	exit(0);
 }
 
@@ -469,7 +469,7 @@ void InitSig (void)
 /**
  * @brief
  */
-qboolean GLimp_Init (void *hInstance, void *wndProc)
+qboolean Rimp_Init (void *hInstance, void *wndProc)
 {
 	if (SDL_WasInit(SDL_INIT_AUDIO|SDL_INIT_CDROM|SDL_INIT_VIDEO) == 0) {
 		if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -529,7 +529,7 @@ static void SetSDLIcon (void)
  * @brief Init the SDL window
  * @param fullscreen Start in fullscreen or not (bool value)
  */
-static qboolean GLimp_InitGraphics (qboolean fullscreen)
+static qboolean Rimp_InitGraphics (qboolean fullscreen)
 {
 	int flags;
 	int stencil_bits;
@@ -622,14 +622,14 @@ static qboolean GLimp_InitGraphics (qboolean fullscreen)
 /**
  * @brief
  */
-void GLimp_BeginFrame (float camera_seperation)
+void Rimp_BeginFrame (float camera_seperation)
 {
 }
 
 /**
  * @brief
  */
-void GLimp_EndFrame (void)
+void Rimp_EndFrame (void)
 {
 	SDL_GL_SwapBuffers();
 }
@@ -637,7 +637,7 @@ void GLimp_EndFrame (void)
 /**
  * @brief
  */
-rserr_t GLimp_SetMode (unsigned int *pwidth, unsigned int *pheight, int mode, qboolean fullscreen)
+rserr_t Rimp_SetMode (unsigned int *pwidth, unsigned int *pheight, int mode, qboolean fullscreen)
 {
 	ri.Con_Printf(PRINT_ALL, "setting mode %d:", mode );
 
@@ -648,7 +648,7 @@ rserr_t GLimp_SetMode (unsigned int *pwidth, unsigned int *pheight, int mode, qb
 
 	ri.Con_Printf(PRINT_ALL, " %d %d\n", *pwidth, *pheight);
 
-	if (!GLimp_InitGraphics(fullscreen)) {
+	if (!Rimp_InitGraphics(fullscreen)) {
 		/* failed to set a valid mode in windowed mode */
 		return rserr_invalid_mode;
 	}
@@ -659,7 +659,7 @@ rserr_t GLimp_SetMode (unsigned int *pwidth, unsigned int *pheight, int mode, qb
 /**
  * @brief
  */
-void GLimp_SetGamma (void)
+void Rimp_SetGamma (void)
 {
 	float g;
 
@@ -670,7 +670,7 @@ void GLimp_SetGamma (void)
 /**
  * @brief
  */
-void GLimp_Shutdown (void)
+void Rimp_Shutdown (void)
 {
 	if (surface)
 		SDL_FreeSurface(surface);
@@ -689,7 +689,7 @@ void GLimp_Shutdown (void)
 /**
  * @brief
  */
-void GLimp_AppActivate (qboolean active)
+void Rimp_AppActivate (qboolean active)
 {
 }
 

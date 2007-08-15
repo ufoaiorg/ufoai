@@ -189,7 +189,7 @@ static void Mod_LoadTexinfo (lump_t * l)
 		else
 			Com_sprintf(name, sizeof(name), "textures/%s", in->texture);
 
-		out->image = GL_FindImage(name, it_wall);
+		out->image = R_FindImage(name, it_wall);
 		if (!out->image) {
 			ri.Con_Printf(PRINT_ALL, "Couldn't load %s\n", name);
 			out->image = r_notexture;
@@ -310,15 +310,15 @@ static void Mod_LoadFaces (lump_t * l)
 				out->texturemins[i] = -8192;
 			}
 			/* cut up polygon for warps */
-			GL_SubdivideSurface(out);
+			R_SubdivideSurface(out);
 		}
 
 		/* create lightmaps and polygons */
 		if (!(out->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66 | SURF_WARP)))
-			GL_CreateSurfaceLightmap(out);
+			R_CreateSurfaceLightmap(out);
 
 		if (!(out->texinfo->flags & SURF_WARP))
-			GL_BuildPolygonFromSurface(out, shift);
+			R_BuildPolygonFromSurface(out, shift);
 	}
 }
 
@@ -537,7 +537,7 @@ static void Mod_ShiftTile (void)
  * @brief
  * @sa CM_AddMapTile
  */
-static void R_AddMapTile (const char *name, int sX, int sY, int sZ)
+static void Mod_AddMapTile (const char *name, int sX, int sY, int sZ)
 {
 	int i;
 	unsigned *buffer;
@@ -546,10 +546,10 @@ static void R_AddMapTile (const char *name, int sX, int sY, int sZ)
 
 	/* get new model */
 	if ((mod_numknown < 0) || (mod_numknown >= MAX_MOD_KNOWN))
-		ri.Sys_Error(ERR_DROP, "mod_numknown >= MAX_MOD_KNOWN");
+		ri.Sys_Error(ERR_DROP, "Mod_AddMapTile: mod_numknown >= MAX_MOD_KNOWN");
 
 	if ((rNumTiles < 0) || (rNumTiles >= MAX_MAPTILES))
-		ri.Sys_Error(ERR_DROP, "Too many map tiles");
+		ri.Sys_Error(ERR_DROP, "Mod_AddMapTile: Too many map tiles");
 
 	/* alloc model and tile */
 	loadmodel = &mod_known[mod_numknown++];
@@ -560,7 +560,7 @@ static void R_AddMapTile (const char *name, int sX, int sY, int sZ)
 	/* load the file */
 	ri.FS_LoadFile(loadmodel->name, (void **) &buffer);
 	if (!buffer)
-		ri.Sys_Error(ERR_DROP, "R_AddMapTile: %s not found", loadmodel->name);
+		ri.Sys_Error(ERR_DROP, "Mod_AddMapTile: %s not found", loadmodel->name);
 
 	/* init */
 	loadmodel->registration_sequence = registration_sequence;
@@ -573,7 +573,7 @@ static void R_AddMapTile (const char *name, int sX, int sY, int sZ)
 	header = (dheader_t *) buffer;
 	i = LittleLong(header->version);
 	if (i != BSPVERSION)
-		ri.Sys_Error(ERR_DROP, "R_AddMapTile: %s has wrong version number (%i should be %i)", loadmodel->name, i, BSPVERSION);
+		ri.Sys_Error(ERR_DROP, "Mod_AddMapTile: %s has wrong version number (%i should be %i)", loadmodel->name, i, BSPVERSION);
 
 	/* swap all the lumps */
 	mod_base = (byte *) header;
@@ -612,7 +612,7 @@ static void R_AddMapTile (const char *name, int sX, int sY, int sZ)
 		starmod->bsp.nummodelsurfaces = bm->numfaces;
 		starmod->bsp.firstnode = bm->headnode;
 		if (starmod->bsp.firstnode >= loadmodel->bsp.numnodes)
-			ri.Sys_Error(ERR_DROP, "Inline model %i has bad firstnode", i);
+			ri.Sys_Error(ERR_DROP, "Mod_AddMapTile: Inline model %i has bad firstnode", i);
 
 		FastVectorCopy(bm->maxs, starmod->maxs);
 		FastVectorCopy(bm->mins, starmod->mins);
@@ -628,8 +628,9 @@ static void R_AddMapTile (const char *name, int sX, int sY, int sZ)
 
 /**
  * @brief Specifies the model that will be used as the world
+ * @sa Mod_EndLoading
  */
-void GL_BeginLoading (const char *tiles, const char *pos)
+void Mod_BeginLoading (const char *tiles, const char *pos)
 {
 	const char *token;
 	char name[MAX_VAR];
@@ -644,7 +645,7 @@ void GL_BeginLoading (const char *tiles, const char *pos)
 	Mod_FreeAll();
 
 	/* init */
-	GL_BeginBuildingLightmaps();
+	R_BeginBuildingLightmaps();
 	numInline = 0;
 	rNumTiles = 0;
 
@@ -654,7 +655,7 @@ void GL_BeginLoading (const char *tiles, const char *pos)
 		token = COM_Parse(&tiles);
 		if (!tiles) {
 			/* finish */
-			GL_EndBuildingLightmaps();
+			R_EndBuildingLightmaps();
 			return;
 		}
 
@@ -675,17 +676,17 @@ void GL_BeginLoading (const char *tiles, const char *pos)
 			for (i = 0; i < 2; i++) {
 				token = COM_Parse(&pos);
 				if (!pos)
-					ri.Sys_Error(ERR_DROP, "GL_BeginLoading: invalid positions\n");
+					ri.Sys_Error(ERR_DROP, "Mod_BeginLoading: invalid positions\n");
 				sh[i] = atoi(token);
 			}
-			R_AddMapTile(name, sh[0], sh[1], 0);
+			Mod_AddMapTile(name, sh[0], sh[1], 0);
 		} else {
 			/* load only a single tile, if no positions are specified */
-			R_AddMapTile(name, 0, 0, 0);
-			GL_EndBuildingLightmaps();
+			Mod_AddMapTile(name, 0, 0, 0);
+			R_EndBuildingLightmaps();
 			return;
 		}
 	}
 
-	ri.Sys_Error(ERR_DROP, "GL_BeginLoading: invalid tile names\n");
+	ri.Sys_Error(ERR_DROP, "Mod_BeginLoading: invalid tile names\n");
 }

@@ -152,7 +152,7 @@ static void SubdividePolygon (int numverts, float *verts)
  * @brief Breaks a polygon up along axial 64 unit boundaries so that turbulent
  * can be done reasonably.
  */
-void GL_SubdivideSurface (mBspSurface_t * fa)
+void R_SubdivideSurface (mBspSurface_t * fa)
 {
 	vec3_t verts[64];
 	int numverts;

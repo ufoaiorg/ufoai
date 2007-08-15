@@ -204,7 +204,7 @@ static void R_DrawAliasShadow (entity_t * e, mdl_md2_t * paliashdr, int posenum)
 
 /**
  * @brief
- * @sa GL_RenderVolumes
+ * @sa R_RenderVolumes
  */
 static void BuildShadowVolume (mdl_md2_t * hdr, vec3_t light, float projectdistance)
 {
@@ -320,18 +320,18 @@ static void BuildShadowVolume (mdl_md2_t * hdr, vec3_t light, float projectdista
  * @sa R_DrawAliasShadowVolume
  * @sa BuildShadowVolume
  */
-static void GL_RenderVolumes (mdl_md2_t * paliashdr, vec3_t lightdir, int projdist)
+static void R_RenderVolumes (mdl_md2_t * paliashdr, vec3_t lightdir, int projdist)
 {
-	int incr = gl_state.stencil_wrap ? GL_INCR_WRAP_EXT : GL_INCR;
-	int decr = gl_state.stencil_wrap ? GL_DECR_WRAP_EXT : GL_DECR;
+	int incr = r_state.stencil_wrap ? GL_INCR_WRAP_EXT : GL_INCR;
+	int decr = r_state.stencil_wrap ? GL_DECR_WRAP_EXT : GL_DECR;
 
-	if (gl_state.ati_separate_stencil) {	/* ati separate stensil support for r300+ by Kirk Barnes */
+	if (r_state.ati_separate_stencil) {	/* ati separate stensil support for r300+ by Kirk Barnes */
 		qglDisable(GL_CULL_FACE);
 		qglStencilOpSeparateATI(GL_BACK, GL_KEEP, incr, GL_KEEP);
 		qglStencilOpSeparateATI(GL_FRONT, GL_KEEP, decr, GL_KEEP);
 		BuildShadowVolume(paliashdr, lightdir, projdist);
 		qglEnable(GL_CULL_FACE);
-	} else if (gl_state.stencil_two_side) {	/* two side stensil support for nv30+ by Kirk Barnes */
+	} else if (r_state.stencil_two_side) {	/* two side stensil support for nv30+ by Kirk Barnes */
 		qglDisable(GL_CULL_FACE);
 		qglEnable(GL_STENCIL_TEST_TWO_SIDE_EXT);
 		qglActiveStencilFaceEXT(GL_BACK);
@@ -395,12 +395,12 @@ static void R_DrawAliasShadowVolume (mdl_md2_t * paliashdr, int posenumm)
 
 	qglPushAttrib(GL_STENCIL_BUFFER_BIT); /* save stencil buffer */
 
-	if (gl_shadow_debug_volume->integer)
+	if (r_shadow_debug_volume->integer)
 		qglColor3f(1, 0, 0);
 	else
 		qglColorMask(0, 0, 0, 0);
 
-	if (gl_state.stencil_two_side)
+	if (r_state.stencil_two_side)
 		qglEnable(GL_STENCIL_TEST_TWO_SIDE_EXT);
 
 	qglEnable(GL_STENCIL_TEST);
@@ -408,12 +408,12 @@ static void R_DrawAliasShadowVolume (mdl_md2_t * paliashdr, int posenumm)
 	qglDepthMask(GL_FALSE);
 	qglDepthFunc(GL_LESS);
 
-	if (gl_state.ati_separate_stencil)
+	if (r_state.ati_separate_stencil)
 		qglStencilFuncSeparateATI(GL_EQUAL, GL_EQUAL, 1, 2);
 	else
 		qglStencilFunc(GL_EQUAL, 1, 2);
 
-	qglStencilOp(GL_KEEP, GL_KEEP, (gl_state.stencil_wrap ? GL_INCR_WRAP_EXT : GL_INCR));
+	qglStencilOp(GL_KEEP, GL_KEEP, (r_state.stencil_wrap ? GL_INCR_WRAP_EXT : GL_INCR));
 
 	for (i = 0; i < r_newrefdef.num_dlights; i++, l++) {
 		if ((l->origin[0] == currententity->origin[0]) && (l->origin[1] == currententity->origin[1]) && (l->origin[2] == currententity->origin[2]))
@@ -449,16 +449,17 @@ static void R_DrawAliasShadowVolume (mdl_md2_t * paliashdr, int posenumm)
 	} else
 		projected_distance = 25;
 
-	GL_RenderVolumes(paliashdr, light, projected_distance);
+	R_RenderVolumes(paliashdr, light, projected_distance);
 
-	if (gl_state.stencil_two_side)
+	if (r_state.stencil_two_side)
 		qglDisable(GL_STENCIL_TEST_TWO_SIDE_EXT);
 
 	qglDisable(GL_STENCIL_TEST);
 
-/* 	if (clamp) qglDisable(GL_DEPTH_CLAMP_NV); */
+/* 	if (clamp)
+		qglDisable(GL_DEPTH_CLAMP_NV); */
 
-	if (gl_shadow_debug_volume->integer)
+	if (r_shadow_debug_volume->integer)
 		qglColor3f(1, 1, 1);
 	else
 		qglColorMask(1, 1, 1, 1);
@@ -519,7 +520,7 @@ void R_DrawShadow (entity_t * e)
 		backv[i] = currententity->as.backlerp * oldframe->scale[i];
 	}
 
-/*	GL_LerpVerts( paliashdr->num_xyz, v, ov, s_lerped[0], move, frontv, backv,0); */
+/*	R_LerpVerts(paliashdr->num_xyz, v, ov, s_lerped[0], move, frontv, backv, 0); */
 
 	/*|RF_NOSHADOW */
 	if (!(currententity->flags & RF_TRANSLUCENT)) {
@@ -528,7 +529,7 @@ void R_DrawShadow (entity_t * e)
 			vec3_t end;
 
 			qglDisable(GL_TEXTURE_2D);
-			GLSTATE_ENABLE_BLEND
+			RSTATE_ENABLE_BLEND
 			qglDepthMask(GL_FALSE);
 			qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			qglTranslatef(e->origin[0], e->origin[1], e->origin[2]);
@@ -540,7 +541,7 @@ void R_DrawShadow (entity_t * e)
 			qglDepthMask(GL_TRUE);
 		}
 		qglEnable(GL_TEXTURE_2D);
-		GLSTATE_DISABLE_BLEND
+		RSTATE_DISABLE_BLEND
 		qglPopMatrix();
 	}
 }
@@ -594,7 +595,7 @@ void R_DrawShadowVolume (entity_t * e)
 		backv[i] = currententity->as.backlerp * oldframe->scale[i];
 	}
 
-/*	GL_LerpVerts(paliashdr->num_xyz, v, ov, s_lerped[0], move, frontv, backv, 0); */
+/*	R_LerpVerts(paliashdr->num_xyz, v, ov, s_lerped[0], move, frontv, backv, 0); */
 
 /*	|RF_NOSHADOW|RF_NOSHADOW2 */
 	if (!(currententity->flags & RF_TRANSLUCENT)) {
@@ -617,7 +618,7 @@ void R_ShadowBlend (void)
 	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL)
 		return;
 
-	if (gl_shadows->integer < 2)
+	if (r_shadows->integer < 2)
 		return;
 
 	qglMatrixMode(GL_PROJECTION);
@@ -629,8 +630,8 @@ void R_ShadowBlend (void)
 	qglPushMatrix();
 	qglLoadIdentity();
 
-	GLSTATE_DISABLE_ALPHATEST
-	GLSTATE_ENABLE_BLEND
+	RSTATE_DISABLE_ALPHATEST
+	RSTATE_ENABLE_BLEND
 	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	qglDepthMask(GL_FALSE);
 	qglDisable(GL_TEXTURE_2D);
@@ -645,9 +646,9 @@ void R_ShadowBlend (void)
 	qglVertex2f(-5, 10);
 	qglEnd();
 
-	GLSTATE_DISABLE_BLEND
+	RSTATE_DISABLE_BLEND
 	qglEnable(GL_TEXTURE_2D);
-	GLSTATE_ENABLE_ALPHATEST
+	RSTATE_ENABLE_ALPHATEST
 	qglDisable(GL_STENCIL_TEST);
 	qglDepthMask(GL_TRUE);
 
