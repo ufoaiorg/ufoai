@@ -1507,9 +1507,9 @@ static void CL_ParseEvent (struct dbuffer *msg)
 					else
 						impactTime = shootTime;
 					if (cl.actTeam != cls.team)
-						nextTime = shootTime + 1400;
+						nextTime = impactTime + 1400;
 					else
-						nextTime = shootTime + 400;
+						nextTime = impactTime + 400;
 					if (fd->rof)
 						shootTime += 1000 / fd->rof;
 				} else {
