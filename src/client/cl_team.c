@@ -694,7 +694,7 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 	aircraft->idx, aircraft->teamSize);
 
 	for (container = 0; container < csi.numIDs; container++) {
-		for (p = 0; p < aircraft->teamSize; p++) {
+		for (p = 0; p < aircraft->size; p++) {
 			if (aircraft->teamIdxs[p] != -1) {
 				cp = &gd.employees[aircraft->teamTypes[p]][aircraft->teamIdxs[p]].chr;
 				assert(cp);
@@ -1552,8 +1552,8 @@ static qboolean CL_SaveTeamMultiplayer (const char *filename)
 	MSG_WriteByte(&sb, aircraft->size);
 	for (i = 0; i < aircraft->size; i++) {
 		/* We save them all, even unused ones (->size). */
-		MSG_WriteByte(&sb, aircraft->teamIdxs[i]);
-		MSG_WriteByte(&sb, aircraft->teamTypes[i]);
+		MSG_WriteShort(&sb, aircraft->teamIdxs[i]);
+		MSG_WriteShort(&sb, aircraft->teamTypes[i]);
 	}
 
 	/* store equipment in baseCurrent so soldiers can be properly equipped */
@@ -1689,6 +1689,7 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	}
 
 	aircraft = &gd.bases[0].aircraft[0];
+	AIR_ResetAircraftTeam(aircraft);
 
 	/* get assignment */
 	aircraft->teamSize = MSG_ReadByte(&sb);
@@ -1698,8 +1699,8 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	aircraft->size = MSG_ReadByte(&sb);
 	chrDisplayList.num = 0;
 	for (i = 0; i < aircraft->size; i++) {
-		aircraft->teamIdxs[i] = MSG_ReadByte(&sb);
-		aircraft->teamTypes[i] = MSG_ReadByte(&sb);
+		aircraft->teamIdxs[i] = MSG_ReadShort(&sb);
+		aircraft->teamTypes[i] = MSG_ReadShort(&sb);
 		if (aircraft->teamIdxs[i] >= 0) { /** @todo remove this? */
 			chrDisplayList.chr[i] = &gd.employees[aircraft->teamTypes[i]][aircraft->teamIdxs[i]].chr;	/** @todo remove this? */
 			chrDisplayList.num++;	/** @todo remove this? */
