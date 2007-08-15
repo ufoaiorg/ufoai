@@ -1348,6 +1348,10 @@ void MAP_DrawMap (const menuNode_t* node, qboolean map3D)
  */
 void MAP_ResetAction (void)
 {
+	/* only if there is a running single player campaign */
+	if (!curCampaign)
+		return;
+
 	/* don't allow a reset when no base is set up */
 	if (gd.numBases)
 		gd.mapAction = MA_NONE;
