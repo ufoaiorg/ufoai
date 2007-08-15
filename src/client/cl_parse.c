@@ -237,9 +237,10 @@ static evTimes_t *events = NULL;
 
 qboolean blockEvents;	/**< block network events - see CL_Events */
 
-static int nextTime;
-static int shootTime;
-static int impactTime;
+/** @brief CL_ParseEvent timers and vars */
+static int nextTime;	/**< time when the next event should be executed */
+static int shootTime;	/**< time when the shoot was fired */
+static int impactTime;	/**< time when the shoot hits the target */
 static qboolean parsedDeath = qfalse;
 
 /*============================================================================= */
