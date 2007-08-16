@@ -494,10 +494,11 @@ void G_StunTeam (void)
 
 /**
  * @brief Deals splash damage to a target and its surroundings.
- * @param[in] ent @todo ???
+ * @param[in] ent The shooting actor
  * @param[in] fd The fire definition that defines what type of damage is dealt and how big the splash radius is.
- * @param[in] impact @todo ???
+ * @param[in] impact The impact vector where the grenade is exploding
  * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
+ * @param[in] tr The trace where the grenade hits something (or not)
  */
 static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_mock_t *mock, trace_t* tr)
 {
@@ -516,8 +517,9 @@ static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_m
 		if (!check->inuse)
 			continue;
 
-		/* If we use a blinding weapon we skip the target if it's looking away from the impact location. */
-		if (shock && !G_FrustumVis(ent, impact))
+		/* If we use a blinding weapon we skip the target if it's looking
+		 * away from the impact location. */
+		if (shock && !G_FrustumVis(check, impact))
 			continue;
 
 		if (check->type == ET_ACTOR || check->type == ET_ACTOR2x2)
@@ -534,9 +536,8 @@ static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_m
 		if (dist > fd->splrad)
 			continue;
 
-		/* FIXME */
 		if (fd->irgoggles && (check->type == ET_ACTOR || check->type == ET_ACTOR2x2)) {
-			/* check whether this edict is in out field of view */
+			/* check whether this actor (check) is in the field of view of the 'shooter' (ent) */
 			if (G_FrustumVis(ent, check->origin)) {
 				if (!mock) {
 					G_AppearPerishEvent(~G_VisToPM(check->visflags), 1, check);
@@ -582,13 +583,13 @@ static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_m
  * @brief
  * @sa G_ShootSingle
  * @sa Com_GrenadeTarget
- * @param[in] player
- * @param[in] ent
- * @param[in] fd
- * @param[in] from
- * @param[in] at
- * @param[in] mask
- * @param[in] weapon
+ * @param[in] player The shooting player
+ * @param[in] ent The shooting actor
+ * @param[in] fd The firedefition the actor is shooting with
+ * @param[in] from The position the actor is shooting from
+ * @param[in] at The position the actor is shooting to
+ * @param[in] mask The team visibility mask (who's seeing the event)
+ * @param[in] weapon The weapon to shoot with
  * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
  * @param[in] z_align This value may change the target z height
  */
@@ -661,7 +662,7 @@ static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd,
 				VectorCopy(tr.endpos, newPos);
 
 #if 0
-/* please debug, currently it causes double sounds */
+			/* please debug, currently it causes double sounds */
 			/* calculate additional visibility */
 			for (i = 0; i < MAX_TEAMS; i++)
 				if (G_TeamPointVis(i, newPos))
