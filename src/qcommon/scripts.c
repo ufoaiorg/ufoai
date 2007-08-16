@@ -1689,6 +1689,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 
 	Q_strncpyz(td->id, name, sizeof(td->id));
 	td->armor = td->weapons = qtrue; /* default values */
+	td->onlyWeaponIndex = -1;
 
 	/* get name list body body */
 	token = COM_Parse(text);
@@ -1720,7 +1721,12 @@ static void Com_ParseTeam (const char *name, const char **text)
 			}
 
 		if (!v->string) {
-			if (!Q_strcmp(token, "models"))
+			if (!Q_strcmp(token, "onlyWeapon")) {
+				token = COM_EParse(text, errhead, name);
+				if (!*text)
+					return;
+				td->onlyWeaponIndex = INVSH_GetItemByID(token);
+			} else if (!Q_strcmp(token, "models"))
 				Com_ParseActorModels(name, text, td);
 			else if (!Q_strcmp(token, "names"))
 				Com_ParseActorNames(name, text, td);

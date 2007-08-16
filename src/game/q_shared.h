@@ -923,6 +923,11 @@ typedef struct teamDef_s {
 	qboolean alien;
 	/** able to use weapons/armor */
 	qboolean armor, weapons;
+	/** if this team is not able to use 'normal' weapons, we have to assign a weapon to it
+	 * The default value is -1 for every 'normal' actor - but e.g. bloodspiders only have
+	 * the ability to melee attack their victims. They get a weapon assigned with several
+	 * bloodspider melee attack firedefitions */
+	int onlyWeaponIndex;
 	/** What size is this unit on the field (1=1x1 or 2=2x2)? */
 	int size;
 	/** Particle id of what particle effect should be spawned if a unit of this type is hit.
