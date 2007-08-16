@@ -150,7 +150,7 @@ static qboolean TR_CheckAlien (int alienidx, base_t *srcbase, base_t *destbase)
 	assert(srcbase && destbase);
 
 	/* Count amount of alive aliens already on the transfer list. */
-	for (i = 0; i < numTeamDefs; i++) {
+	for (i = 0; i < csi.numTeamDefs; i++) {
 		if (trAliensTmp[i][0] > 0)
 			intransfer += trAliensTmp[i][0];
 	}
@@ -269,7 +269,7 @@ static void TR_CargoList (void)
 	}
 
 	/* Show aliens. */
-	for (i = 0; i < numTeamDefs; i++) {
+	for (i = 0; i < csi.numTeamDefs; i++) {
 		if (trAliensTmp[i][1] > 0) {
 			Com_sprintf(str, sizeof(str), _("Corpse of %s (%i for transfer)\n"),
 			_(AL_AlienTypeToName(i)), trAliensTmp[i][1]);
@@ -279,7 +279,7 @@ static void TR_CargoList (void)
 			cnt++;
 		}
 	}
-	for (i = 0; i < numTeamDefs; i++) {
+	for (i = 0; i < csi.numTeamDefs; i++) {
 		if (trAliensTmp[i][0] > 0) {
 			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)\n"),
 			_(AL_AlienTypeToName(i)), trAliensTmp[i][0]);
@@ -397,7 +397,7 @@ static void TR_TransferSelect_f (void)
 		break;
 	case 2:		/**< aliens */
 		if (transferBase->hasAlienCont) {
-			for (i = 0; i < numTeamDefs; i++) {
+			for (i = 0; i < csi.numTeamDefs; i++) {
 				if (baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_dead > 0) {
 					if (trAliensTmp[i][1] > 0)
 						Com_sprintf(str, sizeof(str), _("Corpse of %s (%i for transfer, %i left)\n"),
@@ -480,7 +480,7 @@ static void TR_TransferListClear_f (void)
 				B_UpdateStorageAndCapacity(baseCurrent, i, trItemsTmp[i], qfalse, qfalse);
 		}
  	}
-	for (i = 0; i < numTeamDefs; i++) {	/* Return aliens. */
+	for (i = 0; i < csi.numTeamDefs; i++) {	/* Return aliens. */
 		if (trAliensTmp[i][0] > 0)
 			baseCurrent->alienscont[i].amount_alive += trAliensTmp[i][0];
 		if (trAliensTmp[i][1] > 0)
@@ -572,7 +572,7 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 			MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
 			/* Aliens cargo is not unloaded, will be destroyed in TR_TransferCheck(). */
 		} else {
-			for (i = 0; i < numTeamDefs; i++) {
+			for (i = 0; i < csi.numTeamDefs; i++) {
 				if (transfer->alienAmount[i][0] > 0) {
 					destination->alienscont[i].amount_alive += transfer->alienAmount[i][0];
 					destination->capacities[CAP_ALIENS].cur += transfer->alienAmount[i][0];
@@ -707,8 +707,8 @@ static void TR_TransferStart_f (void)
 			}
 		}
 	}
-	for (i = 0; i < numTeamDefs; i++) {		/* Aliens. */
-		if (!teamDef[i].alien)
+	for (i = 0; i < csi.numTeamDefs; i++) {		/* Aliens. */
+		if (!csi.teamDef[i].alien)
 			continue;
 		if (trAliensTmp[i][0] > 0) {
 			transfer->hasAliens = qtrue;
@@ -832,7 +832,7 @@ static void TR_TransferListSelect_f (void)
 	case 2:		/**< aliens */
 		if(!transferBase->hasAlienCont)
 			return;
-		for (i = 0; i < numTeamDefs; i++) {
+		for (i = 0; i < csi.numTeamDefs; i++) {
 			if (baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_dead > 0) {
 				if (cnt == num) {
 					trAliensTmp[i][1]++;
@@ -1106,7 +1106,7 @@ static void TR_CargoListSelect_f (void)
 		}
 		/* Start increasing cnt from the amount of previous entries. */
 		cnt = entries;
-		for (i = 0; i < numTeamDefs; i++) {
+		for (i = 0; i < csi.numTeamDefs; i++) {
 			if (trAliensTmp[i][1] > 0) {
 				if (cnt == num) {
 					trAliensTmp[i][1]--;
@@ -1125,7 +1125,7 @@ static void TR_CargoListSelect_f (void)
 		}
 		/* Start increasing cnt from the amount of previous entries. */
 		cnt = entries;
-		for (i = 0; i < numTeamDefs; i++) {
+		for (i = 0; i < csi.numTeamDefs; i++) {
 			if (trAliensTmp[i][0] > 0) {
 				if (cnt == num) {
 					trAliensTmp[i][0]--;
@@ -1242,7 +1242,7 @@ static void TR_TransferClose_f (void)
 		if (trItemsTmp[i] > 0)
 			baseCurrent->storage.num[i] += trItemsTmp[i];
 	}
-	for (i = 0; i < numTeamDefs; i++) {
+	for (i = 0; i < csi.numTeamDefs; i++) {
 		if (trAliensTmp[i][1] > 0)
 			baseCurrent->alienscont[i].amount_dead += trAliensTmp[i][1];
 		if (trAliensTmp[i][0])

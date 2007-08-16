@@ -3289,13 +3289,13 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		AL_FillInContainment(b);	/* Fill Alien Containment with default values. */
 		for (k = 0; k < presaveArray[PRE_NUMALI]; k++) {
 			s = MSG_ReadString(sb);
-			for (l = 0; l < numTeamDefs; l++) {
-				if (!teamDef[l].alien)
+			for (l = 0; l < csi.numTeamDefs; l++) {
+				if (!csi.teamDef[l].alien)
 					continue;
-				if ((Q_strncmp(s, teamDef[l].name, MAX_VAR)) == 0)
+				if ((Q_strncmp(s, csi.teamDef[l].name, MAX_VAR)) == 0)
 					break;
 			}
-			if (l == numTeamDefs) {
+			if (l == csi.numTeamDefs) {
 				Com_Printf("B_Load: Could not find teamDesc '%s' - skipping the aliencont\n", s);
 				MSG_ReadShort(sb);
 				MSG_ReadShort(sb);

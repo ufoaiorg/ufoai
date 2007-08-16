@@ -869,10 +869,10 @@ static void CL_ActorAdd (struct dbuffer *msg)
 				&le->gender, &le->pnum, &le->pos,
 				&le->state, &le->fieldSize);
 
-	if (teamDefID < 0 || teamDefID > numTeamDefs)
+	if (teamDefID < 0 || teamDefID > csi.numTeamDefs)
 		Com_Printf("CL_ActorAppear: Invalid teamDef index\n");
 	else
-		le->teamDef = &teamDef[teamDefID];
+		le->teamDef = &csi.teamDef[teamDefID];
 
 	/*Com_Printf("CL_ActorAdd: Add number: %i\n", entnum);*/
 
@@ -923,10 +923,10 @@ static void CL_ActorAppear (struct dbuffer *msg)
 				&le->state, &le->fieldSize,
 				&le->maxTU, &le->maxMorale, &le->maxHP);
 
-	if (teamDefID < 0 || teamDefID > numTeamDefs)
+	if (teamDefID < 0 || teamDefID > csi.numTeamDefs)
 		Com_Printf("CL_ActorAppear: Invalid teamDef index\n");
 	else
-		le->teamDef = &teamDef[teamDefID];
+		le->teamDef = &csi.teamDef[teamDefID];
 
 	switch (le->fieldSize) {
 	case ACTOR_SIZE_NORMAL:

@@ -252,6 +252,10 @@ typedef struct csi_s {
 	/** Damage types */
 	char dts[MAX_DAMAGETYPES][MAX_VAR];
 	int numDTs;
+
+	/** team definitions */
+	teamDef_t teamDef[MAX_TEAMDEFS];
+	int numTeamDefs;
 } csi_t;
 
 
@@ -411,7 +415,6 @@ char *CHRSH_CharGetHead(character_t* const chr) __attribute__((nonnull));
 /*  INVENTORY MANAGEMENT FUNCTIONS  */
 /* ================================ */
 
-void INVSH_InitTEAMDEF(teamDef_t * import) __attribute__((nonnull));
 void INVSH_InitCSI(csi_t * import) __attribute__((nonnull));
 void INVSH_InitInventory(invList_t * invChain) __attribute__((nonnull));
 int Com_CheckToInventory(const inventory_t* const i, const int item, const int container, int x, int y);

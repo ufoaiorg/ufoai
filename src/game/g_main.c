@@ -235,7 +235,6 @@ static void InitGame (void)
 
 	/* init csi and inventory */
 	INVSH_InitCSI(gi.csi);
-	INVSH_InitTEAMDEF(gi.teamDef);
 	INVSH_InitInventory(invChain);
 
 	logstatsfile = NULL;

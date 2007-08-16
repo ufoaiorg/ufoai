@@ -936,7 +936,4 @@ typedef struct teamDef_s {
 	char hitParticle[MAX_VAR];
 } teamDef_t;
 
-extern teamDef_t teamDef[MAX_TEAMDEFS];
-extern int numTeamDefs;
-
 #endif /* GAME_Q_SHARED_H */

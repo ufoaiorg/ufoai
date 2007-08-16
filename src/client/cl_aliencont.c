@@ -51,8 +51,8 @@ void AL_FillInContainment (base_t *base)
 	assert(base);
 	containment = base->alienscont;
 
-	for (i = 0; i < numTeamDefs; i++) {
-		if (!teamDef[i].alien)
+	for (i = 0; i < csi.numTeamDefs; i++) {
+		if (!csi.teamDef[i].alien)
 			continue;
 		containment[i].idx = i;
 		Q_strncpyz(containment[i].alientype, AL_AlienTypeToName(i), MAX_VAR);
@@ -60,11 +60,11 @@ void AL_FillInContainment (base_t *base)
 		containment[i].amount_dead = 0;
 		/* for sanity checking */
 		containment[i].techIdx = -1;
-		for (j = 0; j < numTeamDefs; j++) {
-			if (!teamDef[j].alien)
+		for (j = 0; j < csi.numTeamDefs; j++) {
+			if (!csi.teamDef[j].alien)
 				continue;
-			if ((Q_strncmp(containment[i].alientype, teamDef[j].name, MAX_VAR)) == 0) {
-				containment[i].techIdx = RS_GetTechIdxByName(teamDef[j].tech);
+			if ((Q_strncmp(containment[i].alientype, csi.teamDef[j].name, MAX_VAR)) == 0) {
+				containment[i].techIdx = RS_GetTechIdxByName(csi.teamDef[j].tech);
 				break;
 			}
 		}
@@ -81,9 +81,9 @@ void AL_FillInContainment (base_t *base)
  */
 const char *AL_AlienTypeToName (int teamDefIdx)
 {
-	if (teamDefIdx < 0 || teamDefIdx >= numTeamDefs)
+	if (teamDefIdx < 0 || teamDefIdx >= csi.numTeamDefs)
 		return NULL;
-	return teamDef[teamDefIdx].name;
+	return csi.teamDef[teamDefIdx].name;
 }
 
 /**
@@ -189,8 +189,8 @@ void AL_AddAliens (aircraft_t *aircraft)
 	albridx = INVSH_GetItemByID("brapparatus");
 
 	for (i = 0; i < aircraft->alientypes; i++) {
-		for (j = 0; j < numTeamDefs; j++) {
-			if (!teamDef[j].alien)
+		for (j = 0; j < csi.numTeamDefs; j++) {
+			if (!csi.teamDef[j].alien)
 				continue;
 			if (Q_strncmp(tobase->alienscont[j].alientype, cargo[i].alientype, MAX_VAR) == 0) {
 				tobase->alienscont[j].amount_dead += cargo[i].amount_dead;
@@ -241,8 +241,8 @@ void AL_AddAliens (aircraft_t *aircraft)
 	/* Set the amount of currently stored in capacities. */
 	tobase->capacities[CAP_ALIENS].cur = AL_CountInBase();
 
-	for (i = 0; i < numTeamDefs; i++ ) {
-		if (!teamDef[i].alien)
+	for (i = 0; i < csi.numTeamDefs; i++ ) {
+		if (!csi.teamDef[i].alien)
 			continue;
 #ifdef DEBUG
 		if (tobase->alienscont[i].techIdx == -1)
@@ -290,8 +290,8 @@ void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_
 			   in Alien Containment, then remove (amount). */
 			while (amount > 0) {
 				/* Find the type with maxamount. */
-				for (j = 0; j < numTeamDefs; j++) {
-					if (!teamDef[j].alien)
+				for (j = 0; j < csi.numTeamDefs; j++) {
+					if (!csi.teamDef[j].alien)
 						continue;
 					if (maxamount < containment[j].amount_alive) {
 						maxamount = containment[j].amount_alive;
@@ -322,8 +322,8 @@ void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_
 		break;
 	case AL_KILL:
 		/* We ignore 2nd and 3rd parameter of AL_RemoveAliens() here. */
-		for (j = 0; j < numTeamDefs; j++) {
-			if (!teamDef[j].alien)
+		for (j = 0; j < csi.numTeamDefs; j++) {
+			if (!csi.teamDef[j].alien)
 				continue;
 			if (containment[j].amount_alive > 0) {
 				containment[j].amount_dead += containment[j].amount_alive;
@@ -333,8 +333,8 @@ void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_
 		break;
 	case AL_KILLONE:
 		/* We ignore 3rd parameter of AL_RemoveAliens() here. */
-		for (j = 0; j < numTeamDefs; j++) {
-			if (!teamDef[j].alien)
+		for (j = 0; j < csi.numTeamDefs; j++) {
+			if (!csi.teamDef[j].alien)
 				continue;
 			if (Q_strncmp(containment[j].alientype, name, MAX_VAR) == 0) {
 				if (containment[j].amount_alive == 0)
@@ -365,8 +365,8 @@ int AL_GetAlienIdx (const char *id)
 {
 	int i;
 
-	for (i = 0; i < numTeamDefs; i++) {
-		if (!teamDef[i].alien)
+	for (i = 0; i < csi.numTeamDefs; i++) {
+		if (!csi.teamDef[i].alien)
 			continue;
 		if (!Q_strncmp(id, AL_AlienTypeToName(i), MAX_VAR))
 			return i;
@@ -431,8 +431,8 @@ int AL_CountAll (void)
 			continue;
 		if (!base->hasAlienCont)
 			continue;
-		for (j = 0; j < numTeamDefs; j++) {
-			if (!teamDef[j].alien)
+		for (j = 0; j < csi.numTeamDefs; j++) {
+			if (!csi.teamDef[j].alien)
 				continue;
 			if (base->alienscont[j].alientype)
 				amount += base->alienscont[j].amount_alive;
@@ -463,8 +463,8 @@ int AL_CountInBase (void)
 	}
 	if (!base->hasAlienCont)
 		return 0;
-	for (j = 0; j < numTeamDefs; j++) {
-		if (!teamDef[j].alien)
+	for (j = 0; j < csi.numTeamDefs; j++) {
+		if (!csi.teamDef[j].alien)
 			continue;
 		if (base->alienscont[j].alientype)
 			amount += base->alienscont[j].amount_alive;
@@ -491,8 +491,8 @@ static int AL_CountForMenu (int alienidx, qboolean alive)
 			continue;
 		if (!base->hasAlienCont)
 			continue;
-		for (j = 0; j < numTeamDefs; j++) {
-			if (!teamDef[j].alien)
+		for (j = 0; j < csi.numTeamDefs; j++) {
+			if (!csi.teamDef[j].alien)
 				continue;
 			if ((base->alienscont[j].alientype) &&
 				(Q_strncmp(base->alienscont[j].alientype, AL_AlienTypeToName(alienidx), MAX_VAR)) == 0) {
@@ -721,8 +721,8 @@ static void AC_KillAll_f (void)
 		return;
 
 	/* Are there aliens here at all? */
-	for (i = 0; i < numTeamDefs; i++) {
-		if (!teamDef[i].alien)
+	for (i = 0; i < csi.numTeamDefs; i++) {
+		if (!csi.teamDef[i].alien)
 			continue;
 		if (aliencontCurrent[i].amount_alive > 0) {
 			aliens = qtrue;
@@ -770,8 +770,8 @@ static void AC_KillOne_f (void)
 
 	if (baseCurrent->hasAlienCont) {
 		containment = baseCurrent->alienscont;
-		for (i = 0, step = 0; i < numTeamDefs; i++) {
-			if (!teamDef[i].alien)
+		for (i = 0, step = 0; i < csi.numTeamDefs; i++) {
+			if (!csi.teamDef[i].alien)
 				continue;
 			if (!containment[i].amount_alive && !containment[i].amount_dead)
 				continue;
@@ -835,8 +835,8 @@ static void AC_Init (void)
 
 	if (baseCurrent->hasAlienCont) {
 		containment = baseCurrent->alienscont;
-		for (i = 0; i < numTeamDefs; i++) {
-			if (!teamDef[i].alien)
+		for (i = 0; i < csi.numTeamDefs; i++) {
+			if (!csi.teamDef[i].alien)
 				continue;
 			if (containment[i].alientype) {
 				tech = RS_GetTechByIDX(containment[i].techIdx);
@@ -874,8 +874,8 @@ static void AC_Init (void)
 		}
 
 		/* Set state of KillAll button. */
-		for (i = 0; i < numTeamDefs; i++) {
-			if (!teamDef[i].alien)
+		for (i = 0; i < csi.numTeamDefs; i++) {
+			if (!csi.teamDef[i].alien)
 				continue;
 			if (containment[i].amount_alive > 0) {
 				killall_state = qtrue;
@@ -937,8 +937,8 @@ static void AC_AlienListClick_f (void)
 
 	if (baseCurrent->hasAlienCont) {
 		containment = baseCurrent->alienscont;
-		for (i = 0, step = 0; i < numTeamDefs; i++) {
-			if (!teamDef[i].alien)
+		for (i = 0, step = 0; i < csi.numTeamDefs; i++) {
+			if (!csi.teamDef[i].alien)
 				continue;
 			if (!containment[i].amount_alive && !containment[i].amount_dead)
 				continue;

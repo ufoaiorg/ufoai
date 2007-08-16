@@ -1145,9 +1145,6 @@ typedef enum model_script_s {
 	MODEL_NUM_TYPES
 } model_script_t;
 
-teamDef_t teamDef[MAX_TEAMDEFS];
-int numTeamDefs = 0;
-
 const char *name_strings[NAME_NUM_TYPES] = {
 	"neutral",
 	"female",
@@ -1240,7 +1237,7 @@ const char *Com_GiveName (int gender, const char *team)
 	linkedList_t* list;
 
 	/* search the name */
-	for (i = 0, td = teamDef; i < numTeamDefs; i++, td++)
+	for (i = 0, td = csi.teamDef; i < csi.numTeamDefs; i++, td++)
 		if (!Q_strncmp(team, td->id, MAX_VAR)) {
 #ifdef DEBUG
 			for (j = 0; j < NAME_NUM_TYPES; j++)
@@ -1287,7 +1284,7 @@ const char *Com_GiveModel (int type, int gender, const char *teamID)
 	linkedList_t* list;
 
 	/* search the name */
-	for (i = 0, td = teamDef; i < numTeamDefs; i++, td++)
+	for (i = 0, td = csi.teamDef; i < csi.numTeamDefs; i++, td++)
 		if (!Q_strncmp(teamID, td->id, MAX_VAR)) {
 			/* found category */
 			if (!td->numModels[gender]) {
@@ -1365,12 +1362,12 @@ int Com_GetCharacterValues (const char *team, character_t * chr)
 	int retry = 1000;
 
 	/* get team definition */
-	for (i = 0; i < numTeamDefs; i++)
-		if (!Q_strncmp(team, teamDef[i].id, MAX_VAR))
+	for (i = 0; i < csi.numTeamDefs; i++)
+		if (!Q_strncmp(team, csi.teamDef[i].id, MAX_VAR))
 			break;
 
-	if (i < numTeamDefs)
-		td = &teamDef[i];
+	if (i < csi.numTeamDefs)
+		td = &csi.teamDef[i];
 	else {
 		Com_Printf("Com_GetCharacterValues: could not find team '%s' in team definitions\n", team);
 		return 0;
@@ -1666,17 +1663,17 @@ static void Com_ParseTeam (const char *name, const char **text)
 	const value_t *v;
 
 	/* check for additions to existing name categories */
-	for (i = 0, td = teamDef; i < numTeamDefs; i++, td++)
+	for (i = 0, td = csi.teamDef; i < csi.numTeamDefs; i++, td++)
 		if (!Q_strncmp(td->id, name, sizeof(td->id)))
 			break;
 
 	/* reset new category */
-	if (i == numTeamDefs) {
-		if (numTeamDefs < MAX_TEAMDEFS) {
+	if (i == csi.numTeamDefs) {
+		if (csi.numTeamDefs < MAX_TEAMDEFS) {
 			memset(td, 0, sizeof(teamDef_t));
 			/* index backlink */
-			td->index = numTeamDefs;
-			numTeamDefs++;
+			td->index = csi.numTeamDefs;
+			csi.numTeamDefs++;
 		} else {
 			Com_Printf("CL_ParseTeam: Too many team definitions, '%s' ignored.\n", name);
 			return;
@@ -1696,8 +1693,8 @@ static void Com_ParseTeam (const char *name, const char **text)
 
 	if (!*text || *token != '{') {
 		Com_Printf("Com_ParseTeam: team def \"%s\" without body ignored\n", name);
-		if (numTeamDefs - 1 == td - teamDef)
-			numTeamDefs--;
+		if (csi.numTeamDefs - 1 == td - csi.teamDef)
+			csi.numTeamDefs--;
 		return;
 	}
 
@@ -2074,7 +2071,6 @@ void Com_ParseScripts (void)
 
 	/* reset csi basic info */
 	INVSH_InitCSI(&csi);
-	INVSH_InitTEAMDEF(teamDef);
 	csi.idRight = csi.idLeft = csi.idExtension = csi.idBackpack = csi.idBelt = csi.idHolster = csi.idArmor = csi.idFloor = csi.idEquip = csi.idHeadgear = NONE;
 	csi.damNormal = csi.damBlast = csi.damFire = csi.damShock = csi.damLaser = csi.damPlasma = csi.damParticle = csi.damStun = NONE;
 
@@ -2085,7 +2081,7 @@ void Com_ParseScripts (void)
 	csi.numDTs = 0;
 
 	/* reset name and team def counters */
-	numTeamDefs = 0;
+	csi.numTeamDefs = 0;
 
 	/* pre-stage parsing */
 	FS_BuildFileList("ufos/*.ufo");
@@ -2145,7 +2141,7 @@ void Com_PrecacheCharacterModels (void)
 	linkedList_t *list;
 
 	/* search the name */
-	for (i = 0, td = teamDef; i < numTeamDefs; i++, td++)
+	for (i = 0, td = csi.teamDef; i < csi.numTeamDefs; i++, td++)
 		for (j = NAME_NEUTRAL; j < NAME_LAST; j++) {
 			/* no models for this gender */
 			if (!td->numModels[j])
@@ -2178,7 +2174,7 @@ void Com_PrecacheCharacterModels (void)
 				/* new path */
 				list = list->next;
 
-				cls.loadingPercent += 20.0f / (td->numModels[j] * numTeamDefs * NAME_LAST);
+				cls.loadingPercent += 20.0f / (td->numModels[j] * csi.numTeamDefs * NAME_LAST);
 				SCR_DrawPrecacheScreen(qtrue);
 			}
 		}

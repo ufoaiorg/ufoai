@@ -57,7 +57,7 @@ static qboolean SAV_PresaveArraySave (sizebuf_t* sb, void* data)
 	presaveArray[PRE_SKILTP] = SKILL_NUM_TYPES;	/* SKILL_NUM_TYPES in abilityskills_t */
 	presaveArray[PRE_NMTECH] = gd.numTechnologies;	/* gd.numTechnologies */
 	presaveArray[PRE_TECHMA] = TECHMAIL_MAX;	/* TECHMAIL_MAX in techMailType_t */
-	presaveArray[PRE_NUMTDS] = numTeamDefs;		/* numTeamDefs */
+	presaveArray[PRE_NUMTDS] = csi.numTeamDefs;		/* numTeamDefs */
 	presaveArray[PRE_NUMALI] = gd.numAliensTD;	/* gd.numAliensTD */
 	presaveArray[PRE_NUMUFO] = gd.numUfos;		/* gd.numUfos */
 	presaveArray[PRE_MAXREC] = MAX_RECOVERIES;	/* #define MAX_RECOVERIES */

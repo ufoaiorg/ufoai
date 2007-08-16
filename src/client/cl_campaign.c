@@ -4010,8 +4010,8 @@ void CL_ResetSinglePlayerData (void)
 	E_ResetEmployees();
 	INVSH_InitInventory(invList);
 	/* Count Alien team definitions. */
-	for (i = 0; i < numTeamDefs; i++) {
-		if (teamDef[i].alien)
+	for (i = 0; i < csi.numTeamDefs; i++) {
+		if (csi.teamDef[i].alien)
 			gd.numAliensTD++;
 	}
 }

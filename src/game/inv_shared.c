@@ -32,21 +32,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 INVENTORY MANAGEMENT FUNCTIONS
 ================================*/
 
-static teamDef_t *TEAMDEF;
 static csi_t *CSI;
 static invList_t *invUnused;
 static item_t cacheItem = {NONE,NONE,NONE, 0}; /* to crash as soon as possible */
-
-/**
- * @brief Initializes teamDef_t *TEAMDEF pointer.
- * @param[in] import
- * @sa InitGame
- * @sa Com_ParseScripts
- */
-void INVSH_InitTEAMDEF (teamDef_t * import)
-{
-	TEAMDEF = import;
-}
 
 /**
  * @brief Initializes csi_t *CSI pointer.
@@ -1126,20 +1114,20 @@ void INVSH_EquipActorMelee (inventory_t* const inv, character_t* chr)
 	item_t item;
 
 	assert(!chr->weapons && chr);
-	assert(TEAMDEF[chr->teamDefIndex].onlyWeaponIndex > -1 && TEAMDEF[chr->teamDefIndex].onlyWeaponIndex < CSI->numODs);
+	assert(CSI->teamDef[chr->teamDefIndex].onlyWeaponIndex > -1 && CSI->teamDef[chr->teamDefIndex].onlyWeaponIndex < CSI->numODs);
 
 	/* Get weapon */
-	obj = &CSI->ods[TEAMDEF[chr->teamDefIndex].onlyWeaponIndex];
+	obj = &CSI->ods[CSI->teamDef[chr->teamDefIndex].onlyWeaponIndex];
 	assert(obj);
 	Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActorMelee()... team %i: %s, weapon %i: %s\n",
-	chr->teamDefIndex, TEAMDEF[chr->teamDefIndex].id, TEAMDEF[chr->teamDefIndex].onlyWeaponIndex, obj->id);
+	chr->teamDefIndex, CSI->teamDef[chr->teamDefIndex].id, CSI->teamDef[chr->teamDefIndex].onlyWeaponIndex, obj->id);
 
 	/* Prepare item. This kind of item has no ammo, fire definitions are in item.t. */
-	item.t = TEAMDEF[chr->teamDefIndex].onlyWeaponIndex;
+	item.t = CSI->teamDef[chr->teamDefIndex].onlyWeaponIndex;
 	item.m = item.t;
 	/* Every melee actor weapon definition is firetwohanded, add to right hand. */
 	if (!obj->fireTwoHanded)
-		Sys_Error("INVSH_EquipActorMelee()... melee weapon %s for team %s is not firetwohanded!\n", obj->id, TEAMDEF[chr->teamDefIndex].id);
+		Sys_Error("INVSH_EquipActorMelee()... melee weapon %s for team %s is not firetwohanded!\n", obj->id, CSI->teamDef[chr->teamDefIndex].id);
 	Com_TryAddToInventory(inv, item, CSI->idRight);
 }
 
