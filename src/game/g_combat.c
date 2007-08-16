@@ -585,9 +585,9 @@ static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_m
  * @sa Com_GrenadeTarget
  * @param[in] player The shooting player
  * @param[in] ent The shooting actor
- * @param[in] fd The firedefition the actor is shooting with
+ * @param[in] fd The firedefinition the actor is shooting with
  * @param[in] from The position the actor is shooting from
- * @param[in] at The position the actor is shooting to
+ * @param[in] at The grid position the actor is shooting to (or trying to shoot to)
  * @param[in] mask The team visibility mask (who's seeing the event)
  * @param[in] weapon The weapon to shoot with
  * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
@@ -770,8 +770,8 @@ static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd,
  * @param[in] fd The fire definition that is used for the shot.
  * @param[in] from Location of the gun muzzle.
  * @param[in] at Grid coordinate of the target.
- * @param[in] mask ?? @todo Visibility bit-mask of the others?
- * @param[in] weapon
+ * @param[in] mask Visibility bit-mask (who's seeing the event)
+ * @param[in] weapon The weapon the actor is shooting with
  * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
  * @param[in] z_align This value may change the target z height
  */
