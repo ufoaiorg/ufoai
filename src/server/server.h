@@ -129,7 +129,7 @@ extern server_t sv;				/**< local server */
 
 extern cvar_t *sv_mapname;
 extern cvar_t *sv_public;			/**< should heartbeats be sent */
-extern cvar_t *masterserver_ip;
+extern cvar_t *masterserver_host;
 extern cvar_t *masterserver_port;
 
 extern client_t *sv_client;

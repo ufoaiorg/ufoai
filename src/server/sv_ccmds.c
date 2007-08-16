@@ -43,9 +43,9 @@ void SV_SetMaster_f (void)
 	/* make sure the server is listed public */
 	Cvar_Set("public", "1");
 
-	Com_Printf("Master server at [%s]:%s - sending a ping\n", masterserver_ip->string, masterserver_port->string);
+	Com_Printf("Master server at [%s]:%s - sending a ping\n", masterserver_host->string, masterserver_port->string);
 
-	s = connect_to_host(masterserver_ip->string, masterserver_port->string);
+	s = connect_to_host(masterserver_host->string, masterserver_port->string);
 	if (s) {
 		NET_OOB_Printf(s, "ping\n");
 		stream_finished(s);
@@ -610,7 +610,7 @@ void SV_InitOperatorCommands (void)
 	Cmd_AddParamCompleteFunction("devmap", SV_CompleteMapCommand);
 	Cmd_AddCommand("maplist", SV_ListMaps_f, "List of all available maps");
 
-	Cmd_AddCommand("setmaster", SV_SetMaster_f, "Send ping command to masterserver (see cvars: masterserver_ip and masterserver_port)");
+	Cmd_AddCommand("setmaster", SV_SetMaster_f, "Send ping command to masterserver (see cvars: masterserver_host and masterserver_port)");
 	Cmd_AddCommand("tray", SV_Trayicon_f, "Enable or disable minimize to notifcation area");
 	Cmd_AddCommand("minimize", SV_Minimize_f, "Minimize");
 	Cmd_AddCommand("mapcyclelist", SV_MapcycleList_f, "Print the current mapcycle");

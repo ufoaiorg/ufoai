@@ -45,7 +45,7 @@ cvar_t *sv_mapname;
 
 static cvar_t *sv_reconnect_limit;		/**< minimum seconds between connect messages */
 
-cvar_t *masterserver_ip;
+cvar_t *masterserver_host;
 cvar_t *masterserver_port;
 
 void Master_Shutdown(void);
@@ -733,7 +733,7 @@ void Master_Heartbeat (void)
 	svs.last_heartbeat = svs.realtime;
 
 	/* send to master */
-	s = connect_to_host(masterserver_ip->string, masterserver_port->string);
+	s = connect_to_host(masterserver_host->string, masterserver_port->string);
 	if (s) {
 		NET_OOB_Printf(s, "heartbeat\n");
 		stream_finished(s);
@@ -756,7 +756,7 @@ void Master_Shutdown (void)
 		return;					/* a private dedicated game */
 
 	/* send to master */
-	s = connect_to_host(masterserver_ip->string, masterserver_port->string);
+	s = connect_to_host(masterserver_host->string, masterserver_port->string);
 	if (s) {
 		NET_OOB_Printf(s, "shutdown\n");
 		stream_finished(s);
@@ -806,7 +806,7 @@ void SV_Init (void)
 	Cvar_Get("timelimit", "0", CVAR_SERVERINFO, NULL);
 	Cvar_Get("cheats", "0", CVAR_SERVERINFO | CVAR_LATCH, NULL);
 	Cvar_Get("protocol", va("%i", PROTOCOL_VERSION), CVAR_SERVERINFO | CVAR_NOSET, NULL);
-	masterserver_ip = Cvar_Get("masterserver_ip", "195.136.48.62", CVAR_ARCHIVE, "IP address of UFO:AI masterserver (Sponsored by NineX)");
+	masterserver_host = Cvar_Get("masterserver_host", MASTER_SERVER, CVAR_ARCHIVE, "IP address of UFO:AI masterserver (Sponsored by NineX)");
 	masterserver_port = Cvar_Get("masterserver_port", "27900", CVAR_ARCHIVE, "Port of UFO:AI masterserver");
 	/* this cvar will become a latched cvar when you start the server */
 	sv_maxclients = Cvar_Get("sv_maxclients", "1", CVAR_SERVERINFO, "Max. connected clients");

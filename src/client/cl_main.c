@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 FILE *log_stats_file;
 
-cvar_t *masterserver_ip;
+cvar_t *masterserver_host;
 cvar_t *masterserver_port;
 
 cvar_t *cl_isometric;
@@ -1269,7 +1269,7 @@ static void CL_PingServers_f (void)
 	/* query master server? */
 	/* @todo: Cache this to save bandwidth */
 	if (Cmd_Argc() == 2 || Q_strcmp(Cmd_Argv(1), "local")) {
-		struct net_stream *s = connect_to_host(masterserver_ip->string, masterserver_port->string);
+		struct net_stream *s = connect_to_host(masterserver_host->string, masterserver_port->string);
 		if (s) {
 			Com_Printf("Query masterserver\n");
 			NET_OOB_Printf(s, "getservers 0\n");
@@ -2164,7 +2164,7 @@ static void CL_InitLocal (void)
 	msg = Cvar_Get("msg", "1", CVAR_USERINFO | CVAR_ARCHIVE, "Sets the message level for server messages the client receives");
 	sv_maxclients = Cvar_Get("sv_maxclients", "1", CVAR_SERVERINFO, "If sv_maxclients is 1 we are in singleplayer - otherwise we are mutliplayer mode (see sv_teamplay)");
 
-	masterserver_ip = Cvar_Get("masterserver_ip", "195.136.48.62", CVAR_ARCHIVE, "IP address of UFO:AI masterserver (Sponsored by NineX)");
+	masterserver_host = Cvar_Get("masterserver_host", MASTER_SERVER, CVAR_ARCHIVE, "IP address of UFO:AI masterserver (Sponsored by NineX)");
 	masterserver_port = Cvar_Get("masterserver_port", "27900", CVAR_ARCHIVE, "Port of UFO:AI masterserver");
 
 	log_stats = Cvar_Get("log_stats", "0", 0, NULL);

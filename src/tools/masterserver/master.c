@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * ufoai master server - based on gloommaster 0.0.3
  */
 
-#define MASTER_SERVER "195.136.48.62" /* sponsored by NineX */
+#define MASTER_SERVER "ufoai.ninex.info" /* sponsored by NineX */
 #define VERSION "0.0.5"
 
 #define MS_PORT 27900
