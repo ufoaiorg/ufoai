@@ -114,9 +114,9 @@ static qboolean DS_CreateBuffers (void)
 	format.cbSize = 0;
 	format.nAvgBytesPerSec = format.nSamplesPerSec * format.nBlockAlign;
 
-	si->Com_DPrintf(DEBUG_SYSTEM, DEBUG_SYSTEM, "Creating DS buffers\n");
+	si->Com_DPrintf(DEBUG_SYSTEM, "Creating DS buffers\n");
 
-	si->Com_DPrintf(DEBUG_SYSTEM, DEBUG_SYSTEM, DEBUG_SYSTEM, "...setting EXCLUSIVE coop level: ");
+	si->Com_DPrintf(DEBUG_SYSTEM, "...setting EXCLUSIVE coop level: ");
 	if (DS_OK != pDS->lpVtbl->SetCooperativeLevel(pDS, si->cl_hwnd, DSSCL_EXCLUSIVE)) {
 		si->Com_DPrintf(DEBUG_SYSTEM, "failed\n");
 		FreeSound();
