@@ -1735,6 +1735,13 @@ base/sound/aliens/ortnok.wav | GNU General Public License v2.0 | Karen Rei Pease
 base/sound/aliens/shevaar.wav | GNU General Public License v2.0 | Karen Rei Pease
 base/sound/aliens/slithering.wav | GNU General Public License v2.0 | Karen Rei Pease
 base/sound/aliens/strange_chat.wav | GNU General Public License v2.0 | Karen Rei Pease
+base/sound/ambience/alien_engine.wav | GNU General Public License v2.0 | Karen Rei Pease
+base/sound/ambience/bird01.wav | Creative Commons Sampling Plus 1.0 License | dobroide | Taken from Free Sound Project, see http://freesound.iua.upf.edu/samplesViewSingle.php?id=17517
+base/sound/ambience/creak.wav | GNU General Public License v2.0 | Karen Rei Pease
+base/sound/ambience/droning_long.wav | GNU General Public License v2.0 | Karen Rei Pease
+base/sound/ambience/droning_short.wav | GNU General Public License v2.0 | Karen Rei Pease
+base/sound/ambience/jingle.wav | GNU General Public License v2.0 | Karen Rei Pease
+base/sound/ambience/jingle2.wav | GNU General Public License v2.0 | Karen Rei Pease
 base/sound/ambience/windloop.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/flesh1.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/flesh2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
