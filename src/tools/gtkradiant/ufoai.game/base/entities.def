@@ -116,8 +116,10 @@ Used as a target where civilians try to get in a mission (TODO: Implement me)
 */
 
 /*QUAKED misc_sound (0.5 1 0.5) (-4 -4 -4) (4 4 4)
-Used to play ambient sounds (TODO: Implement me)
-"radius"	the radius a player has to be within to play that sound
+Used to play ambient sounds (looped sounds)
+"sound"		sound file name relative to sound/ambience
+"attenuation"	sound volume falloff - default is 0.03
+"volume"	0 - 255
 */
 
 /*QUAKED misc_mission (0.1 0.6 0.3) (-16 -16 -16) (16 16 16) level1 level2 level3 level4 level5 level6 level7 level8

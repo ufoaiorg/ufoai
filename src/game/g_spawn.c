@@ -53,6 +53,7 @@ typedef struct {
 static const spawn_t spawns[] = {
 	{"worldspawn", SP_worldspawn},
 	{"light", SP_light},
+	{"misc_sound", SP_dummy},
 	{"misc_model", SP_dummy},
 	{"misc_particle", SP_dummy},
 	{"misc_mission", SP_misc_mission},

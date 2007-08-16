@@ -141,8 +141,9 @@ static void CL_ParseEntitystring (const char *es)
 
 	char classname[MAX_VAR];
 	char animname[MAX_QPATH];
-	char model[MAX_VAR];
-	char particle[MAX_VAR];
+	char model[MAX_QPATH];
+	char particle[MAX_QPATH];
+	char sound[MAX_QPATH];
 	float light;
 	vec3_t color, ambient, origin, angles, lightangles, dropship_coord;
 	vec2_t wait;
@@ -152,6 +153,9 @@ static void CL_ParseEntitystring (const char *es)
 	int entnum;
 	int skin;
 	int frame;
+	float volume = 255.0f;
+	/* FIXME: use the  SOUND_LOOPATTENUATE value here as soon as the spatialize function is fixed */
+	float attenuation = 0.0f;
 
 	/* dropship default values */
 	/* -1.0f means - don't use it */
@@ -234,6 +238,12 @@ static void CL_ParseEntitystring (const char *es)
 				Q_strncpyz(animname, entity_token, sizeof(animname));
 			else if (!Q_strcmp(keyname, "particle"))
 				Q_strncpyz(particle, entity_token, sizeof(particle));
+			else if (!Q_strcmp(keyname, "sound"))
+				Q_strncpyz(sound, entity_token, sizeof(sound));
+			else if (!Q_strcmp(keyname, "attenuation"))
+				attenuation = atof(entity_token);
+			else if (!Q_strcmp(keyname, "volume"))
+				volume = atof(entity_token);
 			else if (!Q_strcmp(keyname, "_color") || !Q_strcmp(keyname, "lightcolor"))
 				Com_ParseValue(color, entity_token, V_VECTOR, 0, sizeof(vec3_t));
 			else if (!Q_strcmp(keyname, "origin"))
@@ -344,7 +354,7 @@ static void CL_ParseEntitystring (const char *es)
 		} else if (!Q_strcmp(classname, "misc_particle")) {
 			CL_AddMapParticle(particle, origin, wait, strstart, (spawnflags & 0xFF));
 		} else if (!Q_strcmp(classname, "misc_sound")) {
-			Com_Printf("implement misc_sound\n");
+			LE_AddAmbientSound(sound, origin, volume, attenuation);
 		} else if (!Q_strcmp(classname, "misc_rope")) {
 			Com_Printf("implement misc_rope\n");
 		} else if (!Q_strcmp(classname, "misc_decal")) {

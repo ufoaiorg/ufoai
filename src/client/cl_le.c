@@ -392,6 +392,61 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
 	return retAnim;
 }
 
+/**
+ * @brief
+ * @sa LE_AddAmbientSound
+ */
+void LET_PlayAmbientSound (le_t * le)
+{
+	int left_total, right_total;
+	channel_t *ch;
+	sfxcache_t *sc;
+
+	if (!le->sfx) {
+		le->think = NULL;
+		return;
+	}
+
+	if (!le->sfx->cache) {
+		Com_Printf("LET_PlayAmbientSound: no sound loaded\n");
+		return;
+	}
+
+	/* find the total contribution of all sounds of this type */
+	S_SpatializeOrigin(le->origin, le->volume, le->attenuation, &left_total, &right_total);
+
+	if (left_total == 0 && right_total == 0) {
+		/*Com_Printf("LET_PlayAmbientSound: nothing to play - not audible\n");*/
+		return;  /* not audible */
+	}
+
+	/* allocate a channel */
+	ch = S_PickChannel(0, SOUND_CHANNEL_AMBIENT);
+	if (!ch) {
+		Com_Printf("LET_PlayAmbientSound: Could not allocate sound channel\n");
+		return;
+	}
+
+	if (left_total > 255)
+		left_total = 255;
+	if (right_total > 255)
+		right_total = 255;
+	ch->leftvol = left_total;
+	ch->rightvol = right_total;
+	ch->autosound = qtrue;  /* remove next frame */
+	ch->sfx = le->sfx;
+	sc = ch->sfx->cache;
+	assert(sc);
+	/* sometimes, the sc->length argument can become 0, and in that
+	 * case we get a SIGFPE in the next modulo.  The workaround checks
+	 * for this situation and sets the pos and end to zero if true */
+	if (sc->length == 0) {
+		ch->pos = ch->end = 0;
+	} else {
+		ch->pos = paintedtime % sc->length;
+		ch->end = paintedtime + sc->length - ch->pos;
+	}
+}
 
 /**
  * @brief Change the animation of an actor to the idle animation (which can be
@@ -771,6 +826,31 @@ void LE_AddGrenade (fireDef_t * fd, int flags, vec3_t muzzle, vec3_t v0, int dt)
 	le->think(le);
 }
 
+/**
+ * @brief
+ */
+void LE_AddAmbientSound (const char *sound, vec3_t origin, float volume, float attenuation)
+{
+	le_t* le;
+	char soundPath[MAX_QPATH];
+	sfx_t* sfx;
+
+	Com_sprintf(soundPath, sizeof(soundPath), "ambience/%s", sound);
+	sfx = S_RegisterSound(soundPath);
+	if (!sfx) {
+		Com_Printf("LE_AddAmbientSound: can't cache %s\n", soundPath);
+		return;
+	}
+
+	le = LE_Add(0);
+	if (!le)
+		return;
+	le->sfx = sfx;
+	le->attenuation = attenuation;
+	le->volume = volume;
+	le->inuse = qtrue;
+	le->think = LET_PlayAmbientSound;
+}
 
 /*===========================================================================
  LE Management functions

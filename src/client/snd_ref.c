@@ -50,11 +50,6 @@ Internal sound data & structures
 =======================================================================
 */
 
-/* only begin attenuating sound volumes when outside the FULLVOLUME range */
-#define		SOUND_FULLVOLUME	80
-
-#define		SOUND_LOOPATTENUATE	0.003
-
 static int s_registration_sequence;
 
 channel_t channels[MAX_CHANNELS];
@@ -513,10 +508,12 @@ void S_BeginRegistration (void)
 
 /**
  * @brief
+ * @param[in] name Sound path - relative to gameDir/sound
  */
 sfx_t *S_RegisterSound (const char *name)
 {
 	sfx_t *sfx;
+	sfxcache_t *sc = NULL;;
 
 	if (!sound_started)
 		return NULL;
@@ -526,8 +523,11 @@ sfx_t *S_RegisterSound (const char *name)
 		return NULL;
 	sfx->registration_sequence = s_registration_sequence;
 
-	if (!s_registering)
-		S_LoadSound(sfx);
+	if (!s_registering) {
+		sc = S_LoadSound(sfx);
+		if (!sc)
+			return NULL;
+	}
 
 	return sfx;
 }
@@ -572,7 +572,7 @@ void S_EndRegistration (void)
 /**
  * @brief picks a channel based on priorities, empty slots, number of channels
  */
-static channel_t *S_PickChannel (int entnum, int entchannel)
+channel_t *S_PickChannel (int entnum, int entchannel)
 {
 	int ch_idx;
 	int first_to_die = -1;
@@ -611,14 +611,16 @@ static channel_t *S_PickChannel (int entnum, int entchannel)
 
 /**
  * @brief Used for spatializing channels and autosounds
+ * @todo Fix this function for birds view
  */
-static void S_SpatializeOrigin (vec3_t origin, float master_vol, float dist_mult, int *left_vol, int *right_vol)
+void S_SpatializeOrigin (vec3_t origin, float master_vol, float dist_mult, int *left_vol, int *right_vol)
 {
 	vec_t dot;
 	vec_t dist;
 	vec_t lscale, rscale, scale;
 	vec3_t source_vec;
 
+	/* full volumn when we are not in mission view */
 	if (cls.state != ca_active) {
 		*left_vol = *right_vol = 255;
 		return;
@@ -631,7 +633,8 @@ static void S_SpatializeOrigin (vec3_t origin, float master_vol, float dist_mult
 	dist -= SOUND_FULLVOLUME;
 	if (dist < 0.)
 		dist = 0.;				/* close enough to be at full volume */
-	dist *= dist_mult;			/* different attenuation levels */
+	else
+		dist *= dist_mult;			/* different attenuation levels */
 
 	dot = DotProduct(listener_right, source_vec);
 

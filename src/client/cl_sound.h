@@ -29,12 +29,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_SOUND_H
 #define CLIENT_SOUND_H
 
+/** only begin attenuating sound volumes when outside the FULLVOLUME range */
+#define SOUND_FULLVOLUME 80
+
+#define SOUND_LOOPATTENUATE 0.003
+
+
 struct sfx_s;
 
 enum {
 	SOUND_CHANNEL_OVERRIDE,	/**< entchannel 0 is always overwritten */
 	SOUND_CHANNEL_WEAPON,	/**< shooting sound */
-	SOUND_CHANNEL_ACTOR		/**< actor die sound, footsteps */
+	SOUND_CHANNEL_ACTOR,	/**< actor die sound, footsteps */
+	SOUND_CHANNEL_AMBIENT
 };
 
 typedef struct snd_stream_s {
@@ -61,7 +68,6 @@ void S_Update(vec3_t origin, vec3_t v_forward, vec3_t v_right, vec3_t v_up);
 void S_BeginRegistration(void);
 struct sfx_s *S_RegisterSound(const char *sample);
 void S_EndRegistration(void);
-
 
 #ifdef HAVE_OPENAL
 	#ifndef DEDICATED_ONLY

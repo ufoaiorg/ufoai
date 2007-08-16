@@ -532,6 +532,11 @@ typedef struct le_s {
 	int startTime, endTime;
 	int speed;
 
+	/** sound effects */
+	struct sfx_s* sfx;
+	float attenuation;
+	float volume;
+
 	/** gfx */
 	animState_t as;
 	ptl_t *ptl;
@@ -602,11 +607,13 @@ const char *LE_GetAnim(const char *anim, int right, int left, int state);
 
 void LE_AddProjectile(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, int normal, qboolean autohide);
 void LE_AddGrenade(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t v0, int dt);
+void LE_AddAmbientSound(const char *sound, vec3_t origin, float volume, float attenuation);
 
 void LET_StartIdle(le_t * le);
 void LET_Appear(le_t * le);
 void LET_StartPathMove(le_t * le);
 void LET_ProjectileAutoHide(le_t *le);
+void LET_PlayAmbientSound(le_t * le);
 
 void LM_Perish(struct dbuffer *msg);
 void LM_Explode(struct dbuffer *msg);

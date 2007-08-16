@@ -100,10 +100,10 @@ typedef struct {
 	int looping;				/**< where to loop, -1 = no looping OBSOLETE? */
 	int entnum;					/**< to allow overriding a specific sound */
 	int entchannel;				/**< */
-	vec3_t origin;				/**< only use if fixed_origin is set */
+	vec3_t origin;				/**< @todo not used right now - only use if fixed_origin is set */
 	vec_t dist_mult;			/**< distance multiplier (attenuation/clipK) */
 	int master_vol;				/**< 0-255 master volume */
-	qboolean fixed_origin;		/**< use origin instead of fetching entnum's origin */
+	qboolean fixed_origin;		/**< @todo not used right now - use origin instead of fetching entnum's origin */
 	qboolean autosound;			/**< from an entity->sound, cleared each frame */
 } channel_t;
 
@@ -167,6 +167,8 @@ void S_IssuePlaysound(playsound_t * ps);
 void S_PaintChannels(int endtime);
 void S_ClearBuffer(void);
 void S_ResampleSfx(sfx_t * sfx, int inrate, int inwidth, byte * data);
+channel_t *S_PickChannel(int entnum, int entchannel);
+void S_SpatializeOrigin(vec3_t origin, float master_vol, float dist_mult, int *left_vol, int *right_vol);
 
 #include "snd_ogg.h"
 #include "snd_wave.h"
