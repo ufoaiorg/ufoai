@@ -2074,6 +2074,7 @@ void Com_ParseScripts (void)
 
 	/* reset csi basic info */
 	INVSH_InitCSI(&csi);
+	INVSH_InitTEAMDEF(teamDef);
 	csi.idRight = csi.idLeft = csi.idExtension = csi.idBackpack = csi.idBelt = csi.idHolster = csi.idArmor = csi.idFloor = csi.idEquip = csi.idHeadgear = NONE;
 	csi.damNormal = csi.damBlast = csi.damFire = csi.damShock = csi.damLaser = csi.damPlasma = csi.damParticle = csi.damStun = NONE;
 
