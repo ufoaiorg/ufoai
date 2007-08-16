@@ -79,17 +79,23 @@ static int BuildNodeChildren (vec3_t mins, vec3_t maxs, int n[3])
 	node = -1;
 
 	for (i = 0; i < 3; i++) {
+		dnode_t		*newnode;
+		vec3_t		newmins, newmaxs;
+		vec3_t		addvec;
+
 		if (n[i] == -1)
 			continue;
 
 		if (node == -1) {
 			/* store the valid node */
 			node = n[i];
-		} else {
-			dnode_t		*newnode;
-			vec3_t		newmins, newmaxs;
-			vec3_t		addvec;
 
+			ClearBounds(newmins, newmaxs);
+			VectorCopy(dnodes[node].mins, addvec);
+			AddPointToBounds(addvec, newmins, newmaxs);
+			VectorCopy(dnodes[node].maxs, addvec);
+			AddPointToBounds(addvec, newmins, newmaxs);
+		} else {
 			/* add a new "special" dnode and store it */
 			newnode = &dnodes[numnodes];
 			numnodes++;
@@ -112,11 +118,11 @@ static int BuildNodeChildren (vec3_t mins, vec3_t maxs, int n[3])
 			VectorCopy(newmins, newnode->mins);
 			VectorCopy(newmaxs, newnode->maxs);
 
-			AddPointToBounds(newmins, worldMins, worldMaxs);
-			AddPointToBounds(newmaxs, worldMins, worldMaxs);
-
 			node = numnodes - 1;
 		}
+
+		AddPointToBounds(newmins, worldMins, worldMaxs);
+		AddPointToBounds(newmaxs, worldMins, worldMaxs);
 	}
 
 	/* return the last stored node */
