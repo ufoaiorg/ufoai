@@ -769,9 +769,11 @@ static void AIM_DrawAircraftSlots (aircraft_t *aircraft)
 						Vector2Set(node->texl, 0, 0);
 						Vector2Set(node->texh, 64, 64);
 					}
-					assert(slot->itemIdx >= 0);
-					assert(aircraftItems[slot->itemIdx].tech_idx >= 0);
-					Cvar_Set(va("mn_aircraft_item_model_slot%i", i), gd.technologies[aircraftItems[slot->itemIdx].tech_idx].mdl_top);
+					if (slot->itemIdx >= 0) {
+						assert(aircraftItems[slot->itemIdx].tech_idx >= 0);
+						Cvar_Set(va("mn_aircraft_item_model_slot%i", i), gd.technologies[aircraftItems[slot->itemIdx].tech_idx].mdl_top);
+					} else
+						Cvar_Set(va("mn_aircraft_item_model_slot%i", i), "");
 				}
 			}
 			i++;
