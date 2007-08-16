@@ -1113,6 +1113,7 @@ void INVSH_EquipActorMelee (inventory_t* const inv, character_t* chr)
 	objDef_t *obj = NULL;
 	item_t item;
 
+	assert(chr->teamDefIndex >= 0);
 	assert(!chr->weapons && chr);
 	assert(CSI->teamDef[chr->teamDefIndex].onlyWeaponIndex > -1 && CSI->teamDef[chr->teamDefIndex].onlyWeaponIndex < CSI->numODs);
 
