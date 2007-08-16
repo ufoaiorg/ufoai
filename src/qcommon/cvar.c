@@ -260,7 +260,7 @@ int Cvar_CompleteVariable (const char *partial, const char **match)
 			if (cvar->flags & CVAR_DEVELOPER)
 				continue;
 #endif
-			Com_Printf("[var] %s\n", cvar->name);
+			Com_Printf("[var] %-20s = \"%s\"\n", cvar->name, cvar->string);
 			if (cvar->description)
 				Com_Printf("%c      %s\n", 1, cvar->description);
 			localMatch = cvar->name;
@@ -778,7 +778,7 @@ static void Cvar_List_f (void)
 			Com_Printf("L");
 		else
 			Com_Printf(" ");
-		Com_Printf(" %s \"%s\"\n", var->name, var->string);
+		Com_Printf(" %-20s \"%s\"\n", var->name, var->string);
 		if (var->description)
 			Com_Printf("%c       %s\n", 2, var->description);
 	}
