@@ -826,13 +826,22 @@ tech rs_weapon_laserammo
 		to		"_mail_to_base_commander"
 		subject	"_D-F Cartridge"
 	}
+
+/* todo: add this again without influencing the "research finished" action :-/
 	require_AND
 	{
-		tech rs_laser
 		tech rs_damage_laser
 	}
+*/
+	require_OR
+	{
+		tech rs_weapon_heavylaser
+		tech rs_weapon_laserpistol
+		tech rs_weapon_laserrifle
+	}
+	time		0
+
 	provides	laserrifle_ammo
-	time		1200
 	producetime	20
 }
 
