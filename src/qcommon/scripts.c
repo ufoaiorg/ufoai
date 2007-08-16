@@ -1623,12 +1623,12 @@ static void Com_ParseActorSounds (const char *name, const char **text, teamDef_t
 						token = COM_EParse(text, errhead, name);
 						if (!*text)
 							break;
-						LIST_Add(&td->sounds[SOUND_HURT][i], token);
+						LIST_Add(&td->sounds[SND_HURT][i], token);
 					} else if (!Q_strcmp(token, "deathsound")) {
 						token = COM_EParse(text, errhead, name);
 						if (!*text)
 							break;
-						LIST_Add(&td->sounds[SOUND_DEATH][i], token);
+						LIST_Add(&td->sounds[SND_DEATH][i], token);
 					} else {
 						Com_Printf("Com_ParseActorSounds: unknown token \"%s\" ignored (actorsounds %s)\n", token, name);
 					}

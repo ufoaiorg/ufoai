@@ -262,6 +262,15 @@ extern const float dangle[DIRECTIONS];
 extern const byte dvright[DIRECTIONS];
 extern const byte dvleft[DIRECTIONS];
 
+/* LINKED LIST STUFF */
+
+typedef struct linkedList_s {
+	const char *data;
+	struct linkedList_s *next;
+} linkedList_t;
+
+void LIST_Add(linkedList_t** list, const char* data);
+
 /*
 ==============================================================
 MATHLIB
@@ -871,5 +880,58 @@ typedef enum {
 
 	SND_MAX
 } actorSound_t;
+
+/* team definitions */
+
+#define MAX_TEAMDEFS	128
+
+#define LASTNAME	3
+typedef enum {
+	NAME_NEUTRAL,
+	NAME_FEMALE,
+	NAME_MALE,
+
+	NAME_LAST,
+	NAME_FEMALE_LAST,
+	NAME_MALE_LAST,
+
+	NAME_NUM_TYPES
+} nametypes_t;
+
+typedef struct teamDef_s {
+	/** the index in the teamDef array */
+	int index;
+	/** id from script file */
+	char id[MAX_VAR];
+	/** translateable name */
+	char name[MAX_VAR];
+	/** tech id from research.ufo */
+	char tech[MAX_VAR];
+	/** names list per gender */
+	linkedList_t *names[NAME_NUM_TYPES];
+	/** amount of names in this list for all different genders */
+	int numNames[NAME_NUM_TYPES];
+	/** models list per gender */
+	linkedList_t *models[NAME_LAST];
+	/** amount of models in this list for all different genders */
+	int numModels[NAME_LAST];
+	/** sounds list per gender and per sound type */
+	linkedList_t *sounds[SND_MAX][NAME_LAST];
+	/** amount of sounds in this list for all different genders and soundtypes */
+	int numSounds[SND_MAX][NAME_LAST];
+	/** is this an alien teamdesc definition */
+	qboolean alien;
+	/** able to use weapons/armor */
+	qboolean armor, weapons;
+	/** What size is this unit on the field (1=1x1 or 2=2x2)? */
+	int size;
+	/** Particle id of what particle effect should be spawned if a unit of this type is hit.
+	 * @sa fireDef_t->hitbody - only "hit_particle" is for blood. :)
+	 * @todo "hitbody" will not spawn blood in the future. */
+	char hitParticle[MAX_VAR];
+} teamDef_t;
+
+extern teamDef_t teamDef[MAX_TEAMDEFS];
+extern int numTeamDefs;
 
 #endif /* GAME_Q_SHARED_H */

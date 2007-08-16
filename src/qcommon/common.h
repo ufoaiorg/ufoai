@@ -127,12 +127,3 @@ void COM_InitArgv(int argc, const char **argv);
 
 void Key_Init(void);
 void SCR_EndLoadingPlaque(void);
-
-/*============================================================================ */
-
-typedef struct linkedList_s {
-	const char *data;
-	struct linkedList_s *next;
-} linkedList_t;
-
-void LIST_Add(linkedList_t** list, const char* data);
