@@ -44,8 +44,6 @@ jmp_buf abortframe;				/* an ERR_DROP occured, exit the entire frame */
 cvar_t *s_sleep;
 cvar_t *s_language;
 cvar_t *developer;
-cvar_t *timescale;
-cvar_t *fixedtime;
 cvar_t *logfile_active;			/* 1 = buffer log, 2 = flush after each print */
 cvar_t *sv_dedicated;
 cvar_t *cl_maxfps;
@@ -737,8 +735,6 @@ void Qcommon_Init (int argc, const char **argv)
 
 	s_sleep = Cvar_Get("s_sleep", "1", CVAR_ARCHIVE, "Use the sleep function to reduce cpu usage");
 	developer = Cvar_Get("developer", "0", 0, "Activate developer output to logfile and gameconsole");
-	timescale = Cvar_Get("timescale", "1", 0, NULL);
-	fixedtime = Cvar_Get("fixedtime", "0", 0, NULL);
 	logfile_active = Cvar_Get("logfile", "1", 0, "0 = deacticate logfile, 1 = write normal logfile, 2 = flush on every new line");
 	gametype = Cvar_Get("gametype", "1on1", CVAR_ARCHIVE | CVAR_SERVERINFO, "Sets the multiplayer gametype - see gametypelist command for a list of all gametypes");
 #ifdef DEDICATED_ONLY

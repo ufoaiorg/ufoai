@@ -54,8 +54,8 @@ qboolean SND_Init (struct sndinfo *s)
 
 	si = s;
 
-	snd_loadas8bit = Cvar_Get("snd_loadas8bit", "16", CVAR_ARCHIVE, NULL);
-	if (s_loadas8bit->integer)
+	snd_loadas8bit = Cvar_Get("snd_loadas8bit", "1", CVAR_ARCHIVE, NULL);
+	if (snd_loadas8bit->integer)
 		si->dma->samplebits = 8;
     else
 		si->dma->samplebits = 16;

@@ -54,8 +54,6 @@ typedef unsigned int			UInt;
 
 #pragma mark =Variables=
 
-cvar_t *snd_ref;
-
 AudioDeviceID gSNDDMASoundDeviceID;
 
 static Boolean gSNDDMAIOProcIsInstalled = NO;
@@ -95,7 +93,7 @@ static OSStatus SND_Audio8BitIOProc (AudioDeviceID inDevice,	const AudioTimeStam
 
 	/* increase the bufferposition: */
 	gSNDDMABufferPosition += gSNDDMABufferByteCount * (dma.samplebits >> 3);
-	if (gSNDDMABufferPosition >= sizeof (gSNDDMABuffer)) {
+	if (gSNDDMABufferPosition >= sizeof(gSNDDMABuffer)) {
 		gSNDDMABufferPosition = 0;
 	}
 
@@ -121,7 +119,7 @@ static OSStatus SND_Audio16BitIOProc (AudioDeviceID inDevice,
 
 	/* increase the bufferposition: */
 	gSNDDMABufferPosition += gSNDDMABufferByteCount * (dma.samplebits >> 3);
-	if (gSNDDMABufferPosition >= sizeof (gSNDDMABuffer)) {
+	if (gSNDDMABufferPosition >= sizeof(gSNDDMABuffer)) {
 		gSNDDMABufferPosition = 0;
 	}
 
@@ -140,16 +138,16 @@ qboolean SND_ReserveBufferSize (void)
 
 	/* this function has to be called before any QuickTime movie data is loaded, so that the QuickTime handler */
 	/* knows about our custom buffersize! */
-	myPropertySize = sizeof (AudioDeviceID);
-	myError = AudioHardwareGetProperty (kAudioHardwarePropertyDefaultOutputDevice, &myPropertySize,&myAudioDevice);
+	myPropertySize = sizeof(AudioDeviceID);
+	myError = AudioHardwareGetProperty(kAudioHardwarePropertyDefaultOutputDevice, &myPropertySize,&myAudioDevice);
 
 	if (!myError && myAudioDevice != kAudioDeviceUnknown) {
-		UInt32		myBufferByteCount = OUTPUT_BUFFER_SIZE * sizeof (float);
+		UInt32 myBufferByteCount = OUTPUT_BUFFER_SIZE * sizeof(float);
 
-		myPropertySize = sizeof (myBufferByteCount);
+		myPropertySize = sizeof(myBufferByteCount);
 
 		/* set the buffersize for the audio device: */
-		myError = AudioDeviceSetProperty (myAudioDevice, NULL, 0, NO, kAudioDevicePropertyBufferSize,
+		myError = AudioDeviceSetProperty(myAudioDevice, NULL, 0, NO, kAudioDevicePropertyBufferSize,
 										myPropertySize, &myBufferByteCount);
 
 		if (!myError) {
@@ -169,8 +167,8 @@ qboolean SND_Init (struct sndinfo *si__) /* argument ignored */
 	UInt32	myPropertySize;
 
 	/* check sample bits: */
-	cvar_t* s_loadas8bit = Cvar_Get("s_loadas8bit", "16", CVAR_ARCHIVE, NULL);
-	if (s_loadas8bit->integer) {
+	cvar_t* snd_loadas8bit = Cvar_Get("s_loadas8bit", "16", CVAR_ARCHIVE, NULL);
+	if (snd_loadas8bit->integer) {
 		dma.samplebits = 8;
 		SND_AudioIOProc = SND_Audio8BitIOProc;
 	} else {
@@ -178,10 +176,10 @@ qboolean SND_Init (struct sndinfo *si__) /* argument ignored */
 		SND_AudioIOProc = SND_Audio16BitIOProc;
 	}
 
-	myPropertySize = sizeof (gSNDDMASoundDeviceID);
+	myPropertySize = sizeof(gSNDDMASoundDeviceID);
 
 	/* find a suitable audio device: */
-	if (AudioHardwareGetProperty (kAudioHardwarePropertyDefaultOutputDevice, &myPropertySize, &gSNDDMASoundDeviceID)) {
+	if (AudioHardwareGetProperty(kAudioHardwarePropertyDefaultOutputDevice, &myPropertySize, &gSNDDMASoundDeviceID)) {
 		Com_Printf("Audio init fails: Can\'t get audio device.\n");
 		return (0);
 	}
@@ -193,26 +191,26 @@ qboolean SND_Init (struct sndinfo *si__) /* argument ignored */
 	}
 
 	/* get the buffersize of the audio device [must previously be set via "SND_ReserveBufferSize ()"]: */
-	myPropertySize = sizeof (gSNDDMABufferByteCount);
-	if (AudioDeviceGetProperty (gSNDDMASoundDeviceID, 0, NO, kAudioDevicePropertyBufferSize,
+	myPropertySize = sizeof(gSNDDMABufferByteCount);
+	if (AudioDeviceGetProperty(gSNDDMASoundDeviceID, 0, NO, kAudioDevicePropertyBufferSize,
 								&myPropertySize, &gSNDDMABufferByteCount) || gSNDDMABufferByteCount == 0) {
 		Com_Printf("Audio init fails: Can't get audiobuffer.\n");
 		return (0);
 	}
 
 	/*check the buffersize: */
-	gSNDDMABufferByteCount /= sizeof (float);
+	gSNDDMABufferByteCount /= sizeof(float);
 	if (gSNDDMABufferByteCount != OUTPUT_BUFFER_SIZE) {
 		Com_Printf("Audio init: Audiobuffer size is not sufficient for clean movie playback!\n");
 	}
-	if (sizeof (gSNDDMABuffer) % gSNDDMABufferByteCount != 0 ||
-		sizeof (gSNDDMABuffer) / gSNDDMABufferByteCount < 2) {
+	if (sizeof(gSNDDMABuffer) % gSNDDMABufferByteCount != 0 ||
+		sizeof(gSNDDMABuffer) / gSNDDMABufferByteCount < 2) {
 		Com_Printf("Audio init: Bad audiobuffer size!\n");
 		return (0);
 	}
 
 	/* get the audiostream format: */
-	myPropertySize = sizeof (gSNDDMABasicDescription);
+	myPropertySize = sizeof(gSNDDMABasicDescription);
 	if (AudioDeviceGetProperty(gSNDDMASoundDeviceID, 0, NO, kAudioDevicePropertyStreamFormat,
 								&myPropertySize, &gSNDDMABasicDescription)) {
 		Com_Printf("Audio init fails.\n");
@@ -246,7 +244,7 @@ qboolean SND_Init (struct sndinfo *si__) /* argument ignored */
 	/* setup Quake sound variables: */
 	dma.speed = gSNDDMABasicDescription.mSampleRate;
 	dma.channels = gSNDDMABasicDescription.mChannelsPerFrame;
-	dma.samples = sizeof (gSNDDMABuffer) / (dma.samplebits >> 3);
+	dma.samples = sizeof(gSNDDMABuffer) / (dma.samplebits >> 3);
 	dma.samplepos = 0;
 	dma.submission_chunk = gSNDDMABufferByteCount;
 	dma.buffer = gSNDDMABuffer;

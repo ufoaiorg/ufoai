@@ -272,8 +272,8 @@ void S_Init (void)
 	snd_khz = Cvar_Get("snd_khz", "48", CVAR_ARCHIVE, "Khz value for sound renderer - default is 48");
 	snd_loadas8bit = Cvar_Get("snd_loadas8bit", "0", CVAR_ARCHIVE, NULL);
 	snd_mixahead = Cvar_Get("snd_mixahead", "0.2", CVAR_ARCHIVE, NULL);
-	snd_show = Cvar_Get("snd_show", "0", 0, NULL);
-	snd_testsound = Cvar_Get("snd_testsound", "0", 0, NULL);
+	snd_show = Cvar_Get("snd_show", "0", 0, "Sound debugging output");
+	snd_testsound = Cvar_Get("snd_testsound", "0", 0, "Write a fixed sine wave");
 	/* @todo: make openal the default when it is working (i.e. change 0 below to a 1) */
 	snd_openal = Cvar_Get("snd_openal", "0", CVAR_ARCHIVE, "use OpenAL");
 	snd_ref = Cvar_Get("snd_ref", "sdl", CVAR_ARCHIVE, "Sound renderer libary name - default is sdl");
@@ -1042,7 +1042,7 @@ static void S_UpdateMixer (void)
 	}
 
 	/* mix ahead of current position */
-	endtime = soundtime + snd_mixahead->integer * dma.speed;
+	endtime = soundtime + snd_mixahead->value * dma.speed;
 	/*endtime = (soundtime + 4096) & ~4095; */
 
 	/* mix to an even submission block size */
