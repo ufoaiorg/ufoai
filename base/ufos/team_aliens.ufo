@@ -201,6 +201,7 @@ team bloodspider
 	alien	true
 	armor	false
 	weapons	false
+	onlyWeapon	bloodspider_weapon
 	size	1
 	//hit_particle	none
 

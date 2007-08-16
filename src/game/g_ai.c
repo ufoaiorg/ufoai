@@ -679,7 +679,10 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 			ent->STUN = 0;
 
 			/* pack equipment */
-			INVSH_EquipActor(&ent->i, ed->num, name, &ent->chr);
+			if (ent->chr.weapons)	/* actor can handle equipment */
+				INVSH_EquipActor(&ent->i, ed->num, name, &ent->chr);
+			else			/* actor cannot handle equipment */
+				INVSH_EquipActorMelee(&ent->i, &ent->chr);
 
 			/* set model */
 			ent->chr.inv = &ent->i;

@@ -1063,6 +1063,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], con
 		/* armor; especially for those without primary weapons */
 		repeat = (float) missed_primary * (1 + frand() * PROB_COMPENSATION) / 40.0;
 	} else {
+		/* @todo: for melee actors we should not be able to get into this function, this can be removed */
 		Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: character '%s' may not carry weapons\n", chr->name);
 		return;
 	}
@@ -1099,6 +1100,36 @@ void INVSH_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], con
 			}
 		} while (max_price);
 	} while (!has_armor && repeat--);
+}
+
+/**
+ * @brief Equip melee actor with item defined per teamDefs.
+ * @param[in] inv The inventory that will get the weapon.
+ * @param[in] chr Pointer to character data.
+ * @note Weapons assigned here cannot be collected in any case. These are dummy "actor weapons".
+ */
+void INVSH_EquipActorMelee (inventory_t* const inv, character_t* chr)
+{
+	int i;
+	objDef_t *obj = NULL;
+	item_t item;
+
+	assert(!chr->weapons && chr);
+	assert(gi.teamDef[chr->teamDefsIndex].onlyWeaponIndex > -1 && gi.teamDef[chr->teamDefsIndex].onlyWeaponIndex < CSI->numODs);
+
+	/* Get weapon */
+	obj = &CSI->ods[gi.teamDef[chr->teamDefsIndex].onlyWeaponIndex];
+	assert(obj);
+	Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActorMelee()... team %i: %s, weapon %i: %s\n", 
+	chr->teamDefIndex, gi.teamDef[chr->teamDefsIndex].id, gi.teamDef[chr->teamDefsIndex].onlyWeaponIndex, obj->id);
+
+	/* Prepare item. This kind of item has no ammo, fire definitions are in item.t. */
+	item.t = chr->onlyWeaponIndex;
+	item.m = item.t;
+	/* Every melee actor weapon definition is firetwohanded, add to right hand. */
+	if (!obj->fireTwoHanded)
+		gi.error("INVSH_EquipActorMelee()... melee weapon %s for team %s is not firetwohanded!\n", obj->id, gi.teamDef[chr->teamDefsIndex].id);
+	Com_TryAddToInventory(inv, item, CSI->idRight);
 }
 
 /*

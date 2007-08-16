@@ -1609,7 +1609,7 @@ static void G_MoralePanic (edict_t * ent, qboolean sanity, qboolean quiet)
 	gi.cprintf(game.players + ent->pnum, PRINT_CONSOLE, _("%s panics!\n"), ent->chr.name);
 
 	/* drop items in hands */
-	if (!sanity) {
+	if (!sanity && ent->chr.weapons) {
 		if (RIGHT(ent))
 			G_ClientInvMove(game.players + ent->pnum, ent->number, gi.csi->idRight, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue, quiet);
 		if (LEFT(ent))
@@ -1927,8 +1927,9 @@ void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
 	gi.WriteShort(ent->number);
 	gi.WriteShort(ent->state);
 
-	/* handle inventory - drop everything to floor edict (but not the armor) */
-	G_InventoryToFloor(ent);
+	/* handle inventory - drop everything to floor edict (but not the armor) if actor can handle equipment */
+	if (ent->chr.weapons)
+		G_InventoryToFloor(ent);
 
 	/* check if the player appears/perishes, seen from other teams */
 	G_CheckVis(ent, qtrue);
