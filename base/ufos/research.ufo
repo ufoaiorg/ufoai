@@ -3216,6 +3216,21 @@ tech rs_alien_bloodspider_autopsy
 	//TODO: autopsy image
 }
 
+tech rs_weapon_bloodspider
+{
+	type		weapon
+	up_chapter	equipment
+
+        require_AND
+        {
+		tech rs_alien_bloodspider_autopsy
+        }
+        provides	bloodspider_weapon
+        time		0
+        producetime	-1
+}
+
+
 // ORTNOK
 
 tech rs_alien_ortnok_autopsy
