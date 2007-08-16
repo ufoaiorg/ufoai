@@ -1279,12 +1279,15 @@ qboolean TR_Save (sizebuf_t* sb, void* data)
 			for (k = 0; k < presaveArray[PRE_MAXEMP]; k++)
 				MSG_WriteShort(sb, transfer->employeesArray[j][k]);
 		}
+		for (j = 0; j < presaveArray[PRE_MAXAIR]; j++)
+			MSG_WriteShort(sb, transfer->aircraftsArray[j]);
 		MSG_WriteByte(sb, transfer->destBase);
 		MSG_WriteByte(sb, transfer->srcBase);
 		MSG_WriteByte(sb, transfer->active);
 		MSG_WriteByte(sb, transfer->hasItems);
 		MSG_WriteByte(sb, transfer->hasEmployees);
 		MSG_WriteByte(sb, transfer->hasAliens);
+		MSG_WriteByte(sb, transfer->hasAircrafts);
 		MSG_WriteLong(sb, transfer->event.day);
 		MSG_WriteLong(sb, transfer->event.sec);
 	}
@@ -1313,12 +1316,15 @@ qboolean TR_Load (sizebuf_t* sb, void* data)
 			for (k = 0; k < presaveArray[PRE_MAXEMP]; k++)
 				transfer->employeesArray[j][k] = MSG_ReadShort(sb);
 		}
+		for (j = 0; j < presaveArray[PRE_MAXAIR]; j++)
+			transfer->aircraftsArray[j] = MSG_ReadShort(sb);
 		transfer->destBase = MSG_ReadByte(sb);
 		transfer->srcBase = MSG_ReadByte(sb);
 		transfer->active = MSG_ReadByte(sb);
 		transfer->hasItems = MSG_ReadByte(sb);
 		transfer->hasEmployees = MSG_ReadByte(sb);
 		transfer->hasAliens = MSG_ReadByte(sb);
+		transfer->hasAircrafts = MSG_ReadByte(sb);
 		transfer->event.day = MSG_ReadLong(sb);
 		transfer->event.sec = MSG_ReadLong(sb);
 	}
