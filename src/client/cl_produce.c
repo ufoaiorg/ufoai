@@ -233,7 +233,6 @@ static void PR_UpdateRequiredItemsInBasestorage (int amount, requirements_t *req
 static production_t *PR_QueueNew (production_queue_t *queue, signed int objID, signed int amount, qboolean disassembling)
 {
 	int numWorkshops = 0;
-	technology_t *t = NULL;
 	objDef_t *od = NULL;
 	production_t *prod = NULL;
 
@@ -255,7 +254,7 @@ static production_t *PR_QueueNew (production_queue_t *queue, signed int objID, s
 	/* initialize */
 	prod = &queue->items[queue->numItems];
 	od = &csi.ods[objID];
-	t = (technology_t*)(od->tech);
+	assert(od->tech);
 
 	prod->objID = objID;
 	prod->amount = amount;
@@ -264,13 +263,13 @@ static production_t *PR_QueueNew (production_queue_t *queue, signed int objID, s
 		/* We have to remove amount of items being disassembled from base storage. */
 		baseCurrent->storage.num[objID] -= amount;
 		/* Now find related components definition. */
-		prod->timeLeft = PR_CalculateProductionTime(baseCurrent, t, INV_GetComponentsByItemIdx(prod->objID), qtrue);
+		prod->timeLeft = PR_CalculateProductionTime(baseCurrent, od->tech, INV_GetComponentsByItemIdx(prod->objID), qtrue);
 	} else {	/* Production. */
 		prod->production = qtrue;
 		/* Don't try to add to queue an item which is not produceable. */
-		if (t->produceTime < 0)
+		if (od->tech->produceTime < 0)
 			return NULL;
-		prod->timeLeft = PR_CalculateProductionTime(baseCurrent, t, NULL, qfalse);
+		prod->timeLeft = PR_CalculateProductionTime(baseCurrent, od->tech, NULL, qfalse);
 	}
 
 	queue->numItems++;
@@ -288,7 +287,6 @@ static void PR_QueueDelete (production_queue_t *queue, int index, int baseidx)
 {
 	int i;
 	objDef_t *od = NULL;
-	technology_t *tech = NULL;
 	production_t *prod = NULL;
 	base_t *base = &gd.bases[baseidx];
 
@@ -299,10 +297,9 @@ static void PR_QueueDelete (production_queue_t *queue, int index, int baseidx)
 	if (prod->items_cached) {
 		/* Get technology of the item in the selected queue-entry. */
 		od = &csi.ods[prod->objID];
-		tech = (technology_t*)(od->tech);
-		if (tech) {
+		if (od->tech) {
 			/* Add all items listed in the prod.-requirements /multiplied by amount) to the storage again. */
-			PR_UpdateRequiredItemsInBasestorage(prod->amount, &tech->require_for_production);
+			PR_UpdateRequiredItemsInBasestorage(prod->amount, &od->tech->require_for_production);
 		} else {
 			Com_DPrintf(DEBUG_CLIENT, "PR_QueueDelete: Problem getting technology entry for %i\n", index);
 		}
@@ -319,7 +316,7 @@ static void PR_QueueDelete (production_queue_t *queue, int index, int baseidx)
 
 	/* Copy up other items. */
 	for (i = index; i < queue->numItems; i++) {
-		queue->items[i] = queue->items[i+1];
+		queue->items[i] = queue->items[i + 1];
 	}
 }
 
@@ -383,7 +380,6 @@ void PR_ProductionRun (void)
 {
 	int i;
 	objDef_t *od;
-	technology_t *t;
 	production_t *prod;
 	aircraft_t *ufocraft;
 
@@ -416,16 +412,15 @@ void PR_ProductionRun (void)
 				continue;
 		}
 
-		t = (technology_t*)(od->tech);
 #ifdef DEBUG
-		if (!t)
+		if (!od->tech)
 			Sys_Error("PR_ProductionRun: No tech pointer for object id %i ('%s')\n", prod->objID, od->id);
 #endif
 		prod->timeLeft--;
 		if (prod->timeLeft <= 0) {
 			if (prod->production) {	/* This is production, not disassembling. */
-				CL_UpdateCredits(ccs.credits - (od->price*PRODUCE_FACTOR/PRODUCE_DIVISOR));
-				prod->timeLeft = PR_CalculateProductionTime(&gd.bases[i], t, NULL, qfalse);
+				CL_UpdateCredits(ccs.credits - (od->price * PRODUCE_FACTOR / PRODUCE_DIVISOR));
+				prod->timeLeft = PR_CalculateProductionTime(&gd.bases[i], od->tech, NULL, qfalse);
 				prod->amount--;
 				/* Now add it to equipment and update capacity. */
 				B_UpdateStorageAndCapacity(&gd.bases[i], prod->objID, 1, qfalse, qfalse);
@@ -438,7 +433,7 @@ void PR_ProductionRun (void)
 				}
 			} else {	/* This is disassembling. */
 				gd.bases[i].capacities[CAP_ITEMS].cur += INV_DisassemblyItem(&gd.bases[i], INV_GetComponentsByItemIdx(prod->objID), qfalse);
-				prod->timeLeft = PR_CalculateProductionTime(&gd.bases[i], t, INV_GetComponentsByItemIdx(prod->objID), qtrue);
+				prod->timeLeft = PR_CalculateProductionTime(&gd.bases[i], od->tech, INV_GetComponentsByItemIdx(prod->objID), qtrue);
 				prod->amount--;
 				/* If this is aircraft dummy item, update UFO hangars capacity. */
 				if (od->aircraft) {
@@ -464,7 +459,6 @@ void PR_ProductionRun (void)
 static void PR_ProductionInfo (qboolean disassembly)
 {
 	static char productionInfo[512];
-	technology_t *t;
 	objDef_t *od, *compod;
 	int objID;
 	int time, i, j;
@@ -481,9 +475,9 @@ static void PR_ProductionInfo (qboolean disassembly)
 	if (!disassembly) {
 		if (objID >= 0) {
 			od = &csi.ods[objID];
-			t = (technology_t*)(od->tech);
+			assert(od->tech);
 			/* Don't try to display the item which is not produceable. */
-			if (t->produceTime < 0) {
+			if (od->tech->produceTime < 0) {
 				Com_sprintf(productionInfo, sizeof(productionInfo), _("No item selected"));
 				Cvar_Set("mn_item", "");
 			} else {
@@ -491,7 +485,7 @@ static void PR_ProductionInfo (qboolean disassembly)
 				if (objID == gd.productions[baseCurrent->idx].items[0].objID)
 					time = gd.productions[baseCurrent->idx].items[0].timeLeft;
 				else
-					time = PR_CalculateProductionTime(baseCurrent, t, NULL, qfalse);
+					time = PR_CalculateProductionTime(baseCurrent, od->tech, NULL, qfalse);
 				Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", od->name);
 				Q_strcat(productionInfo, va(_("Costs per item\t%i c\n"), (od->price*PRODUCE_FACTOR/PRODUCE_DIVISOR)),
 					sizeof(productionInfo) );
@@ -516,9 +510,9 @@ static void PR_ProductionInfo (qboolean disassembly)
 		assert(comp);
 		if (objID >= 0) {
 			od = &csi.ods[objID];
-			t = (technology_t*)(od->tech);
+			assert(od->tech);
 			/* Don't try to display the item which is not produceable. */
-			if (t->produceTime < 0) {
+			if (od->tech->produceTime < 0) {
 				Com_sprintf(productionInfo, sizeof(productionInfo), _("No disassembly selected"));
 				Cvar_Set("mn_item", "");
 			} else {
@@ -526,7 +520,7 @@ static void PR_ProductionInfo (qboolean disassembly)
 				if (objID == gd.productions[baseCurrent->idx].items[0].objID)
 					time = gd.productions[baseCurrent->idx].items[0].timeLeft;
 				else
-					time = PR_CalculateProductionTime(baseCurrent, t, comp, qtrue);
+					time = PR_CalculateProductionTime(baseCurrent, od->tech, comp, qtrue);
 				Com_sprintf(productionInfo, sizeof(productionInfo), _("%s - disassembly\n"), od->name);
 				Q_strcat(productionInfo, va(_("Components: ")),
 					sizeof(productionInfo) );
@@ -556,7 +550,6 @@ static void PR_ProductionInfo (qboolean disassembly)
 static void PR_ProductionListRightClick_f (void)
 {
 	int i, j, num, idx;
-	technology_t *t = NULL;
 	objDef_t *od = NULL;
 	production_queue_t *queue = NULL;
 
@@ -577,21 +570,20 @@ static void PR_ProductionListRightClick_f (void)
 	/* Clicked the production queue or the item list? */
 	if (num < queue->numItems) {
 		od = &csi.ods[queue->items[num].objID];
-		t = (technology_t*)(od->tech);
-		UP_OpenWith(t->id);
+		assert(od->tech);
+		UP_OpenWith(od->tech->id);
 	} else if (num >= queue->numItems + QUEUE_SPACERS) {
 		/* Clicked in the item list. */
 		idx = num - queue->numItems - QUEUE_SPACERS;
 		for (j = 0, i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-			t = (technology_t*)(od->tech);
 #ifdef DEBUG
-			if (!t)
+			if (!od->tech)
 				Sys_Error("PR_ProductionListRightClick_f: No tech pointer for object id %i ('%s')\n", i, od->id);
 #endif
 			/* Open up ufopedia for this entry. */
-			if (BUYTYPE_MATCH(od->buytype,produceCategory) && RS_IsResearched_ptr(t)) {
+			if (BUYTYPE_MATCH(od->buytype,produceCategory) && RS_IsResearched_ptr(od->tech)) {
 				if (j == idx) {
-					UP_OpenWith(t->id);
+					UP_OpenWith(od->tech->id);
 					return;
 				}
 				j++;
@@ -611,7 +603,6 @@ static void PR_ProductionListClick_f (void)
 {
 	int i, j, num, idx;
 	objDef_t *od = NULL;
-	technology_t *t = NULL;
 	components_t *comp = NULL;
 	production_queue_t *queue = NULL;
 	production_t *prod = NULL;
@@ -652,15 +643,14 @@ static void PR_ProductionListClick_f (void)
 		idx = num - queue->numItems - QUEUE_SPACERS;
 		if (Cvar_VariableInteger("mn_prod_disassembling") == 0) {
 			for (j = 0, i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-				t = (technology_t*)(od->tech);
 #ifdef DEBUG
-				if (!t)
+				if (!od->tech)
 					Sys_Error("PR_ProductionListClick_f: No tech pointer for object id %i ('%s')\n", i, od->id);
 #endif
 				/* We can only produce items that fulfill the following conditions... */
 				if (BUYTYPE_MATCH(od->buytype, produceCategory)	/* Item is in the current inventory-category */
-					&& RS_IsResearched_ptr(t)		/* Tech is researched */
-					&& t->produceTime >= 0		/* Item is produceable */
+					&& RS_IsResearched_ptr(od->tech)		/* Tech is researched */
+					&& od->tech->produceTime >= 0		/* Item is produceable */
 				) {
 					assert(*od->name);
 					if (j == idx) {
@@ -941,7 +931,6 @@ static void PR_ProductionIncrease_f (void)
 	int produceable_amount;
 	production_queue_t *queue = NULL;
 	objDef_t *od = NULL;
-	technology_t *tech = NULL;
 	production_t *prod = NULL;
 
 	if (Cmd_Argc() == 2)
@@ -986,17 +975,16 @@ static void PR_ProductionIncrease_f (void)
 
 		/* Get technology of the item in the selected queue-entry. */
 		od = &csi.ods[prod->objID];
-		tech = (technology_t*)(od->tech);
 
-		if (tech)
-			produceable_amount = PR_RequirementsMet(amount, &tech->require_for_production);
+		if (od->tech)
+			produceable_amount = PR_RequirementsMet(amount, &od->tech->require_for_production);
 		else
 			produceable_amount = amount;
 
 		if (produceable_amount > 0) {	/* Check if production requirements have been (even partially) met. */
-			if (tech) {
+			if (od->tech) {
 				/* Remove the additionally required items (multiplied by 'produceable_amount') from base-storage.*/
-				PR_UpdateRequiredItemsInBasestorage(-amount, &tech->require_for_production);
+				PR_UpdateRequiredItemsInBasestorage(-amount, &od->tech->require_for_production);
 				prod->items_cached = qtrue;
 			}
 
@@ -1016,7 +1004,7 @@ static void PR_ProductionIncrease_f (void)
 
 				/* Now we select the item we just created. */
 				selectedQueueItem = qtrue;
-				selectedIndex = queue->numItems-1;
+				selectedIndex = queue->numItems - 1;
 			} else {
 				/* Oops! Too many items! */
 				MN_Popup(_("Queue full!"), _("You cannot queue any more items!"));

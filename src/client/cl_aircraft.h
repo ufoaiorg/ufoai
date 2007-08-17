@@ -45,24 +45,6 @@ typedef enum {
 	AIRCRAFT_UFO
 } aircraftType_t;
 
-/**
- * @brief Aircraft parameters.
- * @note This is a list of all aircraft parameters that depends on aircraft items.
- *  those values doesn't change with shield or weapon assigned to aircraft
- * @note AIR_STATS_WRANGE must be the last parameter (see AII_UpdateAircraftStats)
- */
-typedef enum {
-	AIR_STATS_SPEED,	/**< Aircraft speed. */
-	AIR_STATS_SHIELD,	/**< Aircraft shield. */
-	AIR_STATS_ECM,		/**< Aircraft electronic warfare level. */
-	AIR_STATS_DAMAGE,	/**< Aircraft damage points (= hit points of the aircraft). */
-	AIR_STATS_ACCURACY,	/**< Aircraft accuracy - base accuracy (without weapon). */
-	AIR_STATS_FUELSIZE,	/**< Aircraft fuel capacity. */
-	AIR_STATS_WRANGE,	/**< Aircraft weapon range - the maximum distance aircraft can open fire. */
-
-	AIR_STATS_MAX
-} aircraftParams_t;
-
 /** @brief different weight for aircraft items
  * @note values must go from the lightest to the heaviest item */
 typedef enum {
