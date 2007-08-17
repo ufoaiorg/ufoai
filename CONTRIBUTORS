@@ -44,12 +44,12 @@ Ryan "Winter" Span
 * equipment models: pistol2, shotgunmicro, plasmagren, machinegun, kerrblade (new model)
 * equipment models and textures: stungren, knifemono (texture is a mix from knife
   model and kerrblade model), stunrod
-* aircrafts models: interceptor2
+* aircrafts models: inter_saracen
 * models: ufo_carrier, Some changes to the powersuit character models
 
 Daniel "Yoshiboy" Holden
 * equipment textures: plasmagren, pistol2, machinegun
-* aircrafts textures: interceptor2
+* aircrafts textures: inter_saracen
 
 "A M D G"
 * equipment models and textures: tachyon rocket
@@ -80,7 +80,7 @@ Willem "sitters"
 David "PikkaBird" Dallaston
 * powersuit character models
 
-"RaXaR"
+Ray "RaXaR" West
 * images: altmenu templates
 * models: objects/alien/disassembled
 
