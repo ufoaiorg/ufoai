@@ -1115,7 +1115,7 @@ static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
 		Com_Error(ERR_DROP, "CMod_LoadEntityString: No lump given");
 
 	if (!l->filelen)
-		Com_Error(ERR_DROP, "CMod_LoadEntityString: Map has NO routing lump");
+		Com_Error(ERR_DROP, "CMod_LoadEntityString: Map has NO entity lump");
 
 	if (l->filelen + 1 > MAX_MAP_ENTSTRING)
 		Com_Error(ERR_DROP, "CMod_LoadEntityString: Map has too large entity lump");
@@ -1251,15 +1251,20 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
 	CM_InitBoxHull();
 	CM_MakeTnodes();
 
-	CMod_LoadRouting(&header.lumps[LUMP_ROUTING], sX, sY, sZ);
-	memcpy(&svMap, &clMap, sizeof(routing_t));
+	/* Lets test if curTile is changed */
+	assert(curTile == &mapTiles[numTiles]);
 
-	FS_FreeFile(buf);
-
+	/* CMod_LoadRouting plays with curTile and numTiles, so lets set */
+	/* these to the right values now */ 
 	numInline += curTile->numcmodels - LEVEL_STEPON;
 
 	/* now increase the amount of loaded tiles */
 	numTiles++;
+
+	CMod_LoadRouting(&header.lumps[LUMP_ROUTING], sX, sY, sZ);
+	memcpy(&svMap, &clMap, sizeof(routing_t));
+
+	FS_FreeFile(buf);
 
 	return checksum;
 }
@@ -1338,7 +1343,7 @@ void CM_LoadMap (const char *tiles, const char *pos, unsigned *mapchecksum)
  */
 cBspModel_t *CM_InlineModel (const char *name)
 {
-	int i, num;
+	int i, num, models;
 
 	if (!name || name[0] != '*')
 		Com_Error(ERR_DROP, "CM_InlineModel: bad name");
@@ -1346,14 +1351,17 @@ cBspModel_t *CM_InlineModel (const char *name)
 	if (num < 0 || num >= curTile->numcmodels)
 		Com_Error(ERR_DROP, "CM_InlineModel: bad number");
 
-	for (i = 0; i < numTiles; i++)
-		/* FIXME: Is this if statement really needed? */
-		if (num >= mapTiles[i].numcmodels - LEVEL_STEPON) {
-			num -= mapTiles[i].numcmodels - LEVEL_STEPON;
-		} else {
-			return &mapTiles[i].cmodels[LEVEL_STEPON + num];
-		}
+	for (i = 0; i < numTiles; i++) {
+		models = mapTiles[i].numcmodels - LEVEL_STEPON;
+		assert(models>=0);
 
+		if ( num >= models) 
+			num -= models;
+		else 
+			return &mapTiles[i].cmodels[LEVEL_STEPON + num];
+	}
+
+	Com_Printf("CM_InlineModel: cannot find model %s\n", name);
 	Com_Error(ERR_DROP, "CM_InlineModel: impossible error ;)");
 	return NULL;
 }
