@@ -108,6 +108,39 @@ typedef struct fireDef_s {
 /** @brief 32 bit mask */
 #define SHAPE_BIG_MAX_WIDTH 32
 
+/** @brief All different types of craft items. */
+/** @note must begin with weapons and end with ammos */
+typedef enum {
+	/* weapons */
+	AC_ITEM_BASE_MISSILE,
+	AC_ITEM_BASE_LASER,
+	AC_ITEM_WEAPON,
+
+	/* misc */
+	AC_ITEM_SHIELD,
+	AC_ITEM_ELECTRONICS,
+
+	/* ammos */
+	AC_ITEM_AMMO,		/* aircraft ammos */
+	AC_ITEM_AMMO_MISSILE,	/* base ammos */
+	AC_ITEM_AMMO_LASER,	/* base ammos */
+
+	MAX_ACITEMS
+} aircraftItemType_t;
+
+/** @note this define must always be bigger than or equal to AIR_STATS_MAX enum of aircraftParams_t, see cl_aircraft.h. */
+#define MAX_AIRSTATS	16
+
+/** @brief Defines all attributes of craftitems. */
+typedef struct craftitem_s {
+	aircraftItemType_t type;	/**< The type of the aircraft item. */
+	float stats[MAX_AIRSTATS];	/**< All coefficient that can affect aircraft->stats */
+	float weaponDamage;		/**< The base damage inflicted by an ammo */
+	float weaponSpeed;		/**< The speed of the projectile on geoscape */
+	float weaponDelay;		/**< The minimum delay between 2 shots */
+	int installationTime;		/**< The time needed to install/remove the item on an aircraft */
+} craftitem_t;
+
 /**
  * @brief Defines all attributes of obejcts used in the inventory.
  * @todo Document the various (and mostly not obvious) varables here. The documentation in the .ufo file(s) might be a good starting point.
@@ -173,6 +206,7 @@ typedef struct objDef_s {
 
 	/* Aircraft specific */
 	qboolean aircraft;			/**< True if this item is dummy aircraft - used in disassembling. */
+	craftitem_t craftitem;			/**< Structure of craftitem which defines its attributes. */
 } objDef_t;
 
 #define MAX_INVDEFS     16

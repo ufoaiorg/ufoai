@@ -45,26 +45,6 @@ typedef enum {
 	AIRCRAFT_UFO
 } aircraftType_t;
 
-/** @brief All different types of craft items. */
-/** @note must begin with weapons and end with ammos */
-typedef enum {
-	/* weapons */
-	AC_ITEM_BASE_MISSILE,
-	AC_ITEM_BASE_LASER,
-	AC_ITEM_WEAPON,
-
-	/* misc */
-	AC_ITEM_SHIELD,
-	AC_ITEM_ELECTRONICS,
-
-	/* ammos */
-	AC_ITEM_AMMO,			/* aircraft ammos */
-	AC_ITEM_AMMO_MISSILE,	/* base ammos */
-	AC_ITEM_AMMO_LASER,		/* base ammos */
-
-	MAX_ACITEMS
-} aircraftItemType_t;
-
 /**
  * @brief Aircraft parameters.
  * @note This is a list of all aircraft parameters that depends on aircraft items.
