@@ -144,7 +144,7 @@ mission mart
 	music		PsymongO4
 	pos		"-13 52"
 	aliens		6
-	alienteam	taman
+	alienteam	"taman ortnok"
 	alienequip	stage1_workers
 	civilians	6
 	nation		"europa"
@@ -182,7 +182,7 @@ mission transport
 	music		dbsea
 	pos		"83 36"
 	aliens		3
-	alienteam	shevaar			//FIXME: Shevaars should appear in STAGE1 SUBSTAGE3
+	alienteam	taman
 	alienequip	stage1_soldiers
 	civilians	6
 	nation		"states"
@@ -225,7 +225,7 @@ mission bunker
 	pos		"2 51"
 	aliens		8
 	alienteam	"ortnok taman"
-	alienequip	stage1_workers_explosive	//FIXME: stage1_workers_explosive is broken, fix it
+	alienequip	stage1_workers_explosive
 	civilians	7
 	nation		"europa"
 	onlose		""
@@ -243,7 +243,7 @@ mission dam
 	music		PsymongO1
 	pos		"-62 25"
 	aliens		7
-	alienteam	alien
+	alienteam	"ortnok taman shevaar"
 	alienequip	stage1_soldiers
 	civilians	3
 	nation		"middle"
@@ -281,7 +281,7 @@ mission spedition
 	music		AlexForest
 	pos		"-10 60"
 	aliens		4
-	alienteam	alien
+	alienteam	"ortnok shevaar"
 	alienequip	stage4_soldiers
 	civilians	2
 	nation		"europa"
@@ -300,7 +300,7 @@ mission stadium
 	music		PsymongR4
 	pos		"74 41"
 	aliens		4
-	alienteam	alien
+	alienteam	"shevaar bloodspider"
 	alienequip	stage4_soldiers
 	civilians	2
 	nation		"states"
@@ -320,7 +320,7 @@ mission industrial
 	music		AlexFightmare
 	pos		"77 54"
 	aliens		8
-	alienteam	shevaar
+	alienteam	"taman shevaar bloodspider"
 	alienequip	stage4_soldiers
 	civilians	4
 	nation		"states"
@@ -381,7 +381,7 @@ mission oriental
 	music		PsymongO4
 	pos		"-20 -23"
 	aliens		5
-	alienteam	ortnok
+	alienteam	"taman ortnok"
 	alienequip	stage2_soldiers
 	civilians	7
 	nation		"africa"
@@ -400,7 +400,7 @@ mission subway
 	music		PsymongN4
 	pos		"74 40"
 	aliens		6
-	alienteam	alien
+	alienteam	"taman ortnok shevaar"
 	alienequip	stage2_workers
 	civilians	8
 	nation		"states"
@@ -419,7 +419,7 @@ mission tower
 	music           greecei		//FIXME: AlexSullencity here?
 	pos		"119 34"
 	aliens		6
-	alienteam	alien
+	alienteam	"taman shevaar bloodspider"
 	alienequip	stage2_soldiers
 	civilians	8
 	nation		"states"
@@ -438,7 +438,7 @@ mission village
 	music		PsymongO3
 	pos		"97 47"
 	aliens		4
-	alienteam	ortnok
+	alienteam	"taman ortnok"
 	alienequip	stage4_soldiers
 	civilians	6
 	nation		"states"
@@ -462,7 +462,7 @@ mission mine_crash
 	music		PsymongR2
 	pos		"-40 2"
 	aliens		7
-	alienteam	alien
+	alienteam	"ortnok taman shevaar"
 	alienequip	stage2_soldiers
 	civilians	6
 	nation		"africa"
@@ -486,7 +486,7 @@ mission bridge
 	music		PsymongR2
 	pos		"-6 52"
 	aliens		7
-	alienteam	alien
+	alienteam	"ortnok taman shevaar bloodspider"
 	alienequip	stage3_soldiers
 	civilians	6
 	nation		"europa"
@@ -505,7 +505,7 @@ mission construction
 	music		PsymongR1
 	pos		"-17 60"
 	aliens		6
-	alienteam	alien
+	alienteam	"taman shevaar"
 	alienequip	stage3_soldiers
 	civilians	6
 	nation		"europa"
@@ -526,7 +526,7 @@ mission farm2
 	music		PsymongO4
 	pos		"116 52"
 	aliens		5
-	alienteam	alien
+	alienteam	"taman ortnok"
 	alienequip	stage3_workers
 	civilians	4
 	nation		"states"
@@ -545,7 +545,7 @@ mission harbor
 	music		AlexFightmare
 	pos		"-129 35"
 	aliens		8
-	alienteam	ortnok
+	alienteam	"taman shevaar bloodspider"
 	alienequip	stage3_workers
 	civilians	6
 	nation		"asia"
@@ -564,7 +564,7 @@ mission office
 	music		dawn
 	pos		"-149 -21"
 	aliens		8
-	alienteam	taman
+	alienteam	"taman bloodspider"
 	alienequip	stage3_soldiers
 	civilians	2
 	nation		"oceania"
@@ -583,7 +583,7 @@ mission pdi
 	music		PsymongO5
 	pos		"-30 36"
 	aliens		4
-	alienteam	alien
+	alienteam	"taman ortnok shevaar"
 	alienequip	stage3_workers_explosive
 	civilians	2
 	nation		"europa"
@@ -607,7 +607,7 @@ mission africa
 	music		PsymongR4
 	pos		"-30 18"
 	aliens		10
-	alienteam	alien
+	alienteam	"taman ortnok shevaar bloodspider"
 	alienequip	stage4_workers
 	civilians	6
 	nation		"africa"
@@ -627,7 +627,7 @@ mission harvestercrash
 	music		PsymongR3
 	pos		"70 -27"
 	aliens		7
-	alienteam	alien
+	alienteam	"taman ortnok shevaar bloodspider"
 	alienequip	stage4_soldiers
 	civilians	3
 	nation		"latin"
@@ -646,7 +646,7 @@ mission lake
 	music		AlexForest
 	pos		"-77 67"
 	aliens		6
-	alienteam	alien
+	alienteam	"taman shevaar"
 	alienequip	stage4_soldiers
 	civilians	5
 	nation		"russia"
@@ -685,7 +685,7 @@ mission terrain
 	music		PsymongO6
 	pos		"-9 46"
 	aliens		4
-	alienteam	alien
+	alienteam	ortnok
 	alienequip	stage4_soldiers_plasma
 	civilians	2
 	nation		"europa"
@@ -711,7 +711,7 @@ mission baseattack
 	map		".base"
 	music		turinItalyM
 	aliens		12
-	alienteam	alien
+	alienteam	"taman ortnok shevaar bloodspider"
 	alienequip	stage4_soldiers
 	civilians	12
 	nation		"baseTODO"	//FIXME - code needed

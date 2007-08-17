@@ -27,7 +27,7 @@ stage intro
 		expire		"0 8 0"  // average expire time is 4d
 			                 // minimum interval between missions is 3d
 			                 // so you have 2 or less on geoscape any time
-		missions	"africa_excavation transport mine mart italy estate frozen_alienlandingindustrial terrain02"
+		missions	"africa_excavation transport mine mart italy estate frozen_alienlandingindustrial rzeszow"
 		number		11 // don't torment the player with the same missions
 		quota		6
 	}
