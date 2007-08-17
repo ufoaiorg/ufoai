@@ -235,7 +235,8 @@ void AIM_AircraftStart_f (void)
 {
 	aircraft_t *aircraft;
 
-	assert(baseCurrent);
+	if (!baseCurrent)
+		return;
 
 	if (baseCurrent->aircraftCurrent < 0 || baseCurrent->aircraftCurrent >= baseCurrent->numAircraftInBase) {
 #ifdef DEBUG
