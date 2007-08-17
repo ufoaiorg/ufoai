@@ -7,8 +7,6 @@
 //	Initial funding per month of this faction.
 // color
 //	Defines the color used to seperate the nations in the geoscape (internally)
-// names
-//	Defines what "type" of names should be used. They are defined in team_human.ufo.
 // alien_friendly (percentage 0-100)
 //	Indicated the friendlyness (political and civilan) towards the aliens and influence the chance that this country stops it's funding after some time.
 //	TODO This value should be changed according to Phalanx' performance on it's territory and the terror missions of the aliens.
@@ -76,7 +74,6 @@ nation asia
 {
 	name "_The Asian Republic"
 	color "128 128 0 1"
-	names "chinese japanese"
 	funding	1200000
 	happiness 0.44
 	alien_friendly	30
