@@ -857,7 +857,6 @@ void AIM_AircraftEquipmenuInit_f (void)
 	assert(aircraft);
 	assert(node);
 
-
 	/* Check that airequipSelectedSlot corresponds to an existing slot for this aircraft */
 	AIM_CheckAirequipSelectedSlot(aircraft);
 
