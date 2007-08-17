@@ -85,7 +85,7 @@ mission estate
 	music		PsymongO3
 	pos		"-15 48"
 	aliens		7
-	alienteam	alien		//FIXME: Shevaars should appear in STAGE1 SUBSTAGE3
+	alienteam	shevaar		//FIXME: Shevaars should appear in STAGE1 SUBSTAGE3
 	alienequip	stage1_soldiers
 	civilians	3
 	nation		"europa"
@@ -106,7 +106,7 @@ mission frozen_alienlandingindustrial
 	music		alBasrahM
 	pos		"22 -77"
 	aliens		7
-	alienteam	alien			//FIXME: Shevaars should appear in STAGE1 SUBSTAGE3
+	alienteam	shevaar			//FIXME: Shevaars should appear in STAGE1 SUBSTAGE3
 	alienequip	stage4_soldiers		//FIXME: this is way too hard alien team for this stage
 	civilians	3
 	nation		"oceania"		//FIXME: does Antarctica belongs to Oceania?
@@ -182,7 +182,7 @@ mission transport
 	music		dbsea
 	pos		"83 36"
 	aliens		3
-	alienteam	alien			//FIXME: Shevaars should appear in STAGE1 SUBSTAGE3
+	alienteam	shevaar			//FIXME: Shevaars should appear in STAGE1 SUBSTAGE3
 	alienequip	stage1_soldiers
 	civilians	6
 	nation		"states"
@@ -201,7 +201,7 @@ mission rzeszow
 	music		van_mission
 	pos		"-21 50"
 	aliens	7
-	alienteam	TamOrt
+	alienteam	"taman ortnok"
 	alienequip	stage1_soldiers
 	civilians	5
 	nation		"europa"
@@ -224,7 +224,7 @@ mission bunker
 	music		greecei
 	pos		"2 51"
 	aliens		8
-	alienteam	alien				//FIXME: ortnoks and tamans here only
+	alienteam	"ortnok taman"
 	alienequip	stage1_workers_explosive	//FIXME: stage1_workers_explosive is broken, fix it
 	civilians	7
 	nation		"europa"
@@ -320,7 +320,7 @@ mission industrial
 	music		AlexFightmare
 	pos		"77 54"
 	aliens		8
-	alienteam	alien		//FIXME: put only Sheevars here
+	alienteam	shevaar
 	alienequip	stage4_soldiers
 	civilians	4
 	nation		"states"
