@@ -1348,6 +1348,22 @@ const char* Com_GetActorSound (teamDef_t* td, int gender, actorSound_t soundType
 }
 
 /**
+ * @brief Returns the teamDef pointer for the searched team id - or NULL if not
+ * found in the teamDef array
+ */
+teamDef_t* Com_GetTeamDefinitionByID (const char *team)
+{
+	int i;
+
+	/* get team definition */
+	for (i = 0; i < csi.numTeamDefs; i++)
+		if (!Q_strncmp(team, csi.teamDef[i].id, MAX_VAR))
+			return &csi.teamDef[i];
+
+	return NULL;
+}
+
+/**
  * @brief Assign character values, 3D models and names to a character.
  * @param[in] team What team the character is on.
  * @param[in,out] chr The character that should get the paths to the different models/skins.
@@ -1361,10 +1377,15 @@ int Com_GetCharacterValues (const char *team, character_t * chr)
 	int i, gender;
 	int retry = 1000;
 
+	assert(chr);
+
 	/* get team definition */
 	for (i = 0; i < csi.numTeamDefs; i++)
 		if (!Q_strncmp(team, csi.teamDef[i].id, MAX_VAR))
 			break;
+
+	/* if no team was found this should be -1 for error checking */
+	chr->teamDefIndex = -1;
 
 	if (i < csi.numTeamDefs)
 		td = &csi.teamDef[i];

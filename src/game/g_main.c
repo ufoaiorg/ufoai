@@ -166,7 +166,7 @@ static void InitGame (void)
 	sv_reaction_leftover = gi.cvar("sv_reaction_leftover", "0", CVAR_LATCH, "Minimum TU left over by reaction fire");
 	sv_shot_origin = gi.cvar("sv_shot_origin", "8", 0, "Assumed distance of muzzle from model");
 
-	ai_alien = gi.cvar("ai_alien", "alien", 0, "Alien team");
+	ai_alien = gi.cvar("ai_alien", "ortnok", 0, "Alien team");
 	ai_civilian = gi.cvar("ai_civilian", "civilian", 0, "Civilian team");
 	/* this cvar is set in singleplayer via campaign definition */
 	ai_equipment = gi.cvar("ai_equipment", "multiplayer", 0, "Initial equipment definition for aliens");

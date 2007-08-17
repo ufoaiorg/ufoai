@@ -1,3 +1,9 @@
+/**
+ * @file snd_irix.c
+ * @brief IRIX Sound driver
+ * @todo: Change to dynamic sound lib
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 

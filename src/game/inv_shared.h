@@ -222,6 +222,8 @@ typedef struct equipDef_s {
 	byte num_loose[MAX_OBJDEFS];
 } equipDef_t;
 
+#define MAX_TEAMS_PER_MISSION 4
+
 /**
  * @brief The csi structure is the client-server-information structure
  * which contains all the UFO info needed by the server and the client.
@@ -256,6 +258,10 @@ typedef struct csi_s {
 	/** team definitions */
 	teamDef_t teamDef[MAX_TEAMDEFS];
 	int numTeamDefs;
+
+	/** the current assigned teams for this mission */
+	teamDef_t* alienTeams[MAX_TEAMS_PER_MISSION];
+	int numAlienTeams;
 } csi_t;
 
 

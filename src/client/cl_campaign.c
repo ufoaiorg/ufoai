@@ -495,7 +495,7 @@ static void CL_CampaignExecute (setState_t * set)
  */
 static void CP_MissionList_f (void)
 {
-	int i;
+	int i, j;
 	qboolean details = qfalse;
 	char tmp[DETAILSWIDTH+1];
 
@@ -521,9 +521,9 @@ static void CP_MissionList_f (void)
 			Com_Printf("%-*s | ", DETAILSWIDTH, tmp);
 			Q_strncpyz(tmp, missions[i].param, sizeof(tmp));
 			Com_Printf("%-*s | ", DETAILSWIDTH, tmp);
-			Q_strncpyz(tmp, missions[i].alienTeam, sizeof(tmp));
+			for (j = 0; j < missions[i].numAlienTeams; j++)
+				Q_strncpyz(tmp, missions[i].alienTeams[j]->id, sizeof(tmp));
 			Com_Printf("%-*s | ", DETAILSWIDTH, tmp);
-			Q_strncpyz(tmp, missions[i].alienTeam, sizeof(tmp));
 			Com_Printf("%02i | ", missions[i].aliens);
 			Q_strncpyz(tmp, missions[i].alienEquipment, sizeof(tmp));
 			Com_Printf("%-*s | ", DETAILSWIDTH, tmp);
@@ -2192,19 +2192,26 @@ qboolean NA_Load (sizebuf_t* sb, void* data)
  */
 static void CL_SetMissionCvars (mission_t* mission)
 {
+	int i;
+
 	/* start the map */
 	Cvar_SetValue("ai_numaliens", (float) mission->aliens);
 	Cvar_SetValue("ai_numcivilians", (float) mission->civilians);
-	Cvar_Set("ai_alien", mission->alienTeam);
 	Cvar_Set("ai_civilian", mission->civTeam);
 	Cvar_Set("ai_equipment", mission->alienEquipment);
 	Cvar_Set("music", mission->music);
 	Com_DPrintf(DEBUG_CLIENT, "CL_SetMissionCvars:\n");
 
-	Com_DPrintf(DEBUG_CLIENT, "..numAliens: %i\n..numCivilians: %i\n..alienTeam: '%s'\n..civTeam: '%s'\n..alienEquip: '%s'\n..music: '%s'\n",
+	/* now store the alien teams in the shared csi struct to let the game dll
+	 * have access to this data, too */
+	for (i = 0; i < MAX_TEAMS_PER_MISSION; i++)
+		csi.alienTeams[i] = mission->alienTeams[i];
+	csi.numAlienTeams = mission->numAlienTeams;
+
+	Com_DPrintf(DEBUG_CLIENT, "..numAliens: %i\n..numCivilians: %i\n..alienTeams: '%i'\n..civTeam: '%s'\n..alienEquip: '%s'\n..music: '%s'\n",
 		mission->aliens,
 		mission->civilians,
-		mission->alienTeam,
+		mission->numAlienTeams,
 		mission->civTeam,
 		mission->alienEquipment,
 		mission->music);
@@ -2833,7 +2840,6 @@ static const value_t mission_vals[] = {
 	{"commands", V_STRING, offsetof(mission_t, cmds), 0},	/* commands that are excuted when this mission gets active */
 	{"onwin", V_STRING, offsetof(mission_t, onwin), 0},
 	{"onlose", V_STRING, offsetof(mission_t, onlose), 0},
-	{"alienteam", V_STRING, offsetof(mission_t, alienTeam), 0},
 	{"alienequip", V_STRING, offsetof(mission_t, alienEquipment), 0},
 	{"civilians", V_INT, offsetof(mission_t, civilians), MEMBER_SIZEOF(mission_t, civilians)},
 	{"civteam", V_STRING, offsetof(mission_t, civTeam), 0},
@@ -2934,8 +2940,39 @@ void CL_ParseMission (const char *name, const char **text)
 				break;
 			}
 
-		if (!vp->string)
-			Com_Printf("CL_ParseMission: unknown token \"%s\" ignored (mission %s)\n", token, name);
+		if (!vp->string) {
+			/* alienteams might be seperated by whitespaces */
+			if (!Q_strcmp(token, "alienteam")) {
+				char teamID[MAX_VAR];
+				const char *tokenTeam, *parseTeam;
+				/* found a definition */
+				token = COM_EParse(text, errhead, name);
+				if (!*text)
+					return;
+
+				/* prepare parsing the team list */
+				Q_strncpyz(teamID, token, sizeof(teamID));
+				parseTeam = teamID;
+				do {
+					tokenTeam = COM_Parse(&parseTeam);
+					if (!parseTeam)
+						break;
+					if (ms->numAlienTeams >= MAX_TEAMS_PER_MISSION) {
+						Com_Printf("CL_ParseMission: Max teams per mission exceeded (%i)\n", MAX_TEAMS_PER_MISSION);
+						break;
+					}
+					ms->alienTeams[ms->numAlienTeams] = Com_GetTeamDefinitionByID(tokenTeam);
+					if (ms->alienTeams[ms->numAlienTeams]) {
+						ms->numAlienTeams++;
+					} else
+						Com_Printf("CL_ParseMission: Could not find team with id: '%s'\n", tokenTeam);
+				} while (parseTeam);
+				if (!ms->numAlienTeams)
+					Com_Printf("CL_ParseMission: This mission will always use the default alien team\n"
+						"please define set the alienteam variable in the mission description of '%s'\n", ms->name);
+			} else
+				Com_Printf("CL_ParseMission: unknown token \"%s\" ignored (mission %s)\n", token, name);
+		}
 
 	} while (*text);
 #ifdef DEBUG

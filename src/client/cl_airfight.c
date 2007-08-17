@@ -471,7 +471,7 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 			Q_strncpyz(ms->civTeam, nation->id, sizeof(ms->civTeam));
 
 			/* FIXME */
-			Q_strncpyz(ms->alienTeam, "ortnok", sizeof(ms->alienTeam));
+			ms->alienTeams[0] = Com_GetTeamDefinitionByID("ortnok");
 
 			Q_strncpyz(ms->loadingscreen, "crashsite", sizeof(ms->loadingscreen));
 			Com_sprintf(ms->onwin, sizeof(ms->onwin), "cp_ufocrashed %i", aircraft->ufotype);

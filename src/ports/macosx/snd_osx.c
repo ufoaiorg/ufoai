@@ -3,6 +3,7 @@
  * @brief MacOS X Sound driver
  * Written by:	awe				[mailto:awe@fruitz-of-dojo.de]
  * 2001-2002 Fruitz Of Dojo 	[http://www.fruitz-of-dojo.de]
+ * @todo: Change to dynamic sound lib
  */
 
 /*
@@ -160,14 +161,13 @@ qboolean SND_ReserveBufferSize (void)
 
 /**
  * @brief
- * FIXME: Change to dynamic sound lib
  */
 qboolean SND_Init (struct sndinfo *si__) /* argument ignored */
 {
 	UInt32	myPropertySize;
 
 	/* check sample bits: */
-	cvar_t* snd_loadas8bit = Cvar_Get("s_loadas8bit", "16", CVAR_ARCHIVE, NULL);
+	cvar_t* snd_loadas8bit = Cvar_Get("snd_loadas8bit", "1", CVAR_ARCHIVE, NULL);
 	if (snd_loadas8bit->integer) {
 		dma.samplebits = 8;
 		SND_AudioIOProc = SND_Audio8BitIOProc;

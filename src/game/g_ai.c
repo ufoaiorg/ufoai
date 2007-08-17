@@ -657,7 +657,12 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 		level.num_spawned[team]++;
 		level.num_alive[team]++;
 		if (team != TEAM_CIVILIAN) {
-			ent->chr.skin = gi.GetCharacterValues(gi.cvar_string("ai_alien"), &ent->chr);
+			if (gi.csi->numAlienTeams) {
+				int alienTeam = rand() % gi.csi->numAlienTeams;
+				assert(gi.csi->alienTeams[alienTeam]);
+				ent->chr.skin = gi.GetCharacterValues(gi.csi->alienTeams[alienTeam]->id, &ent->chr);
+			} else
+				ent->chr.skin = gi.GetCharacterValues(gi.cvar_string("ai_alien"), &ent->chr);
 
 			ent->type = ET_ACTOR;
 			ent->pnum = player->num;
@@ -681,8 +686,11 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 			/* pack equipment */
 			if (ent->chr.weapons)	/* actor can handle equipment */
 				INVSH_EquipActor(&ent->i, ed->num, name, &ent->chr);
-			else			/* actor cannot handle equipment */
+			else if (ent->chr.teamDefIndex >= 0)
+				/* actor cannot handle equipment */
 				INVSH_EquipActorMelee(&ent->i, &ent->chr);
+			else
+				Com_Printf("G_SpawnAIPlayer: actor with no equipment\n");
 
 			/* set model */
 			ent->chr.inv = &ent->i;
