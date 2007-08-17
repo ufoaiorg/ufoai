@@ -2969,7 +2969,7 @@ void CL_ParseMission (const char *name, const char **text)
 				} while (parseTeam);
 				if (!ms->numAlienTeams)
 					Com_Printf("CL_ParseMission: This mission will always use the default alien team\n"
-						"please define set the alienteam variable in the mission description of '%s'\n", ms->name);
+						"please set the alienteam variable in the mission description of '%s'\n", ms->name);
 			} else
 				Com_Printf("CL_ParseMission: unknown token \"%s\" ignored (mission %s)\n", token, name);
 		}
