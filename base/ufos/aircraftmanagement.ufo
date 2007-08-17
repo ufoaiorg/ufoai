@@ -402,6 +402,7 @@ craftitem craft_weapon_shiva
 	size		40 // light
 	installationTime	2
 	price		34000
+	buytype		craftitem
 }
 
 craftitem craft_ammo_shiva_API
@@ -409,6 +410,7 @@ craftitem craft_ammo_shiva_API
 	type	ammo
 	craftweapon		craft_weapon_shiva
 	price		100
+	buytype		craftitem
 
 	ammo		20
 	wdamage		15
@@ -423,6 +425,7 @@ craftitem craft_ammo_shiva_HEI
 	type	ammo
 	craftweapon		craft_weapon_shiva
 	price		100
+	buytype		craftitem
 
 	ammo		20
 	wdamage		22
@@ -437,6 +440,7 @@ craftitem craft_el_raven
 	type	electronics
 	installationTime	1
 	price		12345
+	buytype		craftitem
 
 	ecm		1.25
 }
@@ -447,6 +451,7 @@ craftitem craft_weapon_sparrowhawk
 	size	40	// light
 	installationTime	2
 	price		12321
+	buytype		craftitem
 }
 
 craftitem craft_ammo_sparrowhawk
@@ -454,6 +459,7 @@ craftitem craft_ammo_sparrowhawk
 	type	ammo
 	craftweapon		craft_weapon_sparrowhawk
 	price		250
+	buytype		craftitem
 
 	ammo		8
 	wdamage		20
@@ -469,6 +475,7 @@ craftitem craft_weapon_tr20
 	size	90	// medium
 	installationTime	2
 	price		19998
+	buytype		craftitem
 
 	speed		.9
 }
@@ -478,6 +485,7 @@ craftitem craft_ammo_tr20
 	type	ammo
 	craftweapon		craft_weapon_tr20
 	price		310
+	buytype		craftitem
 
 	ammo		12
 	wdamage		28
@@ -493,6 +501,7 @@ craftitem craft_weapon_particle_beam
 	size	90	// medium
 	installationTime	2
 	price		25252
+	buytype		craftitem
 
 	wdamage		35
 	speed		0.8
@@ -504,6 +513,7 @@ craftitem craft_el_targeting
 	type	electronics
 	installationTime	1
 	price		33333
+	buytype		craftitem
 
 	accuracy	1.25
 }
@@ -513,6 +523,7 @@ craftitem craft_el_fuelpod
 	type	electronics
 	installationTime	2
 	price		8500
+	buytype		craftitem
 
 	fuelsize	+30000
 	speed		0.9
@@ -523,6 +534,7 @@ craftitem craft_shield_polymer
 	type	shield
 	installationTime	24
 	price		16000
+	buytype		craftitem
 
 	shield		+5
 	speed		0.9
@@ -533,6 +545,7 @@ craftitem craft_shield_plating
 	type	shield
 	installationTime	24
 	price		24000
+	buytype		craftitem
 
 	shield		+10
 	speed		0.8
@@ -548,6 +561,7 @@ craftitem base_weapon_tr20
 	size	90	// medium
 	installationTime	48
 	price		19998
+	buytype		craftitem
 
 	speed		.9
 }
@@ -557,6 +571,7 @@ craftitem base_ammo_tr20
 	type		base_ammo_missile
 	craftweapon		craft_weapon_sparrowhawk
 	price		310
+	buytype		craftitem
 
 	ammo		12
 	wdamage		28
