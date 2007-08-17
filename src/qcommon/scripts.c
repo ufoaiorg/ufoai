@@ -1642,11 +1642,13 @@ static void Com_ParseActorSounds (const char *name, const char **text, teamDef_t
 						if (!*text)
 							break;
 						LIST_Add(&td->sounds[SND_HURT][i], token);
+						td->numSounds[SND_HURT][i]++;
 					} else if (!Q_strcmp(token, "deathsound")) {
 						token = COM_EParse(text, errhead, name);
 						if (!*text)
 							break;
 						LIST_Add(&td->sounds[SND_DEATH][i], token);
+						td->numSounds[SND_DEATH][i]++;
 					} else {
 						Com_Printf("Com_ParseActorSounds: unknown token \"%s\" ignored (actorsounds %s)\n", token, name);
 					}
