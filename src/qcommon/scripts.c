@@ -703,7 +703,6 @@ static const value_t od_vals[] = {
 	{"reload", V_INT, offsetof(objDef_t, reload), MEMBER_SIZEOF(objDef_t, reload)},
 	{"size", V_INT, offsetof(objDef_t, size), MEMBER_SIZEOF(objDef_t, size)},
 	{"price", V_INT, offsetof(objDef_t, price), MEMBER_SIZEOF(objDef_t, price)},
-	{"buytype", V_INT, offsetof(objDef_t, buytype), MEMBER_SIZEOF(objDef_t, buytype)},	/** Not parsed automatically anymore, this enrty is just there for overview. */
 	{"useable", V_INT, offsetof(objDef_t, useable), MEMBER_SIZEOF(objDef_t, useable)},
 	{"notonmarket", V_BOOL, offsetof(objDef_t, notOnMarket), MEMBER_SIZEOF(objDef_t, notOnMarket)},
 
@@ -1032,6 +1031,11 @@ void Com_ParseItem (const char *name, const char **text, qboolean craftitem)
 		if (od->shape & (0xFF << (i * SHAPE_SMALL_MAX_WIDTH)))
 			break;
 	od->sy = i + 1;
+
+	if (craftitem && od->buytype != BUY_CRAFTITEM) {
+		Com_Printf("Com_ParseItem: Craftitem %s is not buytype craftitem\n", od->id);
+		od->buytype = BUY_CRAFTITEM;
+	}
 }
 
 
