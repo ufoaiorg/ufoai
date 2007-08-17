@@ -30,13 +30,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 
 aircraft_t aircraft_samples[MAX_AIRCRAFT];		/**< Available aircraft types. */
-int numAircraft_samples = 0; /* @todo: should be reset to 0 each time scripts are read anew; also aircraft_samples memory should be freed at that time, or old memory used for new records */
+/**
+ * @todo: should be reset to 0 each time scripts are read anew; also
+ * aircraft_samples memory should be freed at that time,
+ * or old memory used for new records
+*/
+int numAircraft_samples = 0;
 aircraftItem_t aircraftItems[MAX_AIRCRAFTITEMS];	/**< Available aicraft items. */
 
-#define AIRCRAFT_RADAR_RANGE	20			/* FIXME: const */
-
-/* =========================================================== */
-#define DISTANCE 15					/* FIXME: const */
+static const int AIRCRAFT_RADAR_RANGE = 20;
+static const int DISTANCE = 15;
 
 /**
  * @brief Updates base capacities after buying new aircraft.
