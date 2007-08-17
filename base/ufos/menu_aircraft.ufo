@@ -220,6 +220,35 @@ menu aircraft
 		align	cc
 	}
 
+	// ===============
+	// produce
+	// ===============
+	pic button_produce
+	{
+		if "mn_aircraftinbase > 0" // FIXME: check whether workshop is built
+		tooltip	"_Produce aircraft or aircraft components"
+		image	menu/button
+		pos	"45 450"
+		texl	"0 0"
+		texh	"230 64"
+		mousefx true
+		click
+		{
+			cmd "mn_push air_production;"
+		}
+		out		{ *txt_produce color "0 0.8 0 1" *button_produce texl "0 0" *button_produce texh "230 64" }
+		in		{ *txt_produce color "1 1 1 1" *button_produce texl "230 0" *button_produce texh "460 64" }
+	}
+	string txt_produce
+	{
+		if "mn_aircraftinbase > 0" // FIXME: check whether workshop is built
+		string	"_Produce"
+		color	"0 0.8 0 1"
+		pos	"164 483"
+		font	f_menu
+		align	cc
+	}
+
 	// ==================
 	// aircraft
 	// ==================
