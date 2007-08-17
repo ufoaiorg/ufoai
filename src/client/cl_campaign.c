@@ -3735,7 +3735,6 @@ static void CL_NationList_f (void)
 static const cmdList_t game_commands[] = {
 	{"aircraft_start", AIM_AircraftStart_f, NULL},
 	{"aircraft_select", AIR_AircraftSelect_f, NULL},
-	{"aircraft_init", AIR_AircraftInit, NULL},
 	{"airequip_init", AIM_AircraftEquipmenuInit_f, NULL},
 	{"airequip_list_click", AIM_AircraftEquipmenuClick_f, NULL},
 	{"airequip_slot_select", AIM_AircraftEquipSlotSelect_f, NULL},
@@ -3828,10 +3827,6 @@ void CL_GameInit (qboolean load)
 
 	Com_AddObjectLinks();	/* Add tech links + ammo<->weapon links to items.*/
 	RS_InitTree(load);	/* Initialise all data in the research tree. */
-
-	/* After inited the techtree we can assign the weapons
-	 * and shields to aircrafts. */
-	AIR_AircraftInit();
 
 	CL_CampaignInitMarket();
 

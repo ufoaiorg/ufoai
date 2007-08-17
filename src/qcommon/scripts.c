@@ -706,7 +706,21 @@ static const value_t od_vals[] = {
 	{"buytype", V_INT, offsetof(objDef_t, buytype), MEMBER_SIZEOF(objDef_t, buytype)},	/** Not parsed automatically anymore, this enrty is just there for overview. */
 	{"useable", V_INT, offsetof(objDef_t, useable), MEMBER_SIZEOF(objDef_t, useable)},
 	{"notonmarket", V_BOOL, offsetof(objDef_t, notOnMarket), MEMBER_SIZEOF(objDef_t, notOnMarket)},
+
 	{"aircraft", V_BOOL, offsetof(objDef_t, aircraft), MEMBER_SIZEOF(objDef_t, aircraft)},
+
+	{"installationTime", V_INT, offsetof(objDef_t, craftitem.installationTime), MEMBER_SIZEOF(objDef_t, craftitem.installationTime)},
+	{"wdamage", V_FLOAT, offsetof(objDef_t, craftitem.weaponDamage), MEMBER_SIZEOF(objDef_t, craftitem.weaponDamage)},
+	{"wspeed", V_FLOAT, offsetof(objDef_t, craftitem.weaponSpeed), MEMBER_SIZEOF(objDef_t, craftitem.weaponSpeed)},
+	{"delay", V_FLOAT, offsetof(objDef_t, craftitem.weaponDelay), MEMBER_SIZEOF(objDef_t, craftitem.weaponDelay)},
+	{"shield", V_FLOAT, offsetof(objDef_t, craftitem.stats[AIR_STATS_SHIELD]), MEMBER_SIZEOF(objDef_t, craftitem.stats[AIR_STATS_SHIELD])},
+	{"wrange", V_FLOAT, offsetof(objDef_t, craftitem.stats[AIR_STATS_WRANGE]), MEMBER_SIZEOF(objDef_t, craftitem.stats[AIR_STATS_WRANGE])},
+	{"damage", V_RELABS, offsetof(objDef_t, craftitem.stats[AIR_STATS_DAMAGE]), MEMBER_SIZEOF(objDef_t, craftitem.stats[AIR_STATS_DAMAGE])},
+	{"accuracy", V_RELABS, offsetof(objDef_t, craftitem.stats[AIR_STATS_ACCURACY]), MEMBER_SIZEOF(objDef_t, craftitem.stats[AIR_STATS_ACCURACY])},
+	{"ecm", V_RELABS, offsetof(objDef_t, craftitem.stats[AIR_STATS_ECM]), MEMBER_SIZEOF(objDef_t, craftitem.stats[AIR_STATS_ECM])},
+	{"speed", V_RELABS, offsetof(objDef_t, craftitem.stats[AIR_STATS_SPEED]), MEMBER_SIZEOF(objDef_t, craftitem.stats[AIR_STATS_SPEED])},
+	{"fuelsize", V_RELABS, offsetof(objDef_t, craftitem.stats[AIR_STATS_FUELSIZE]), MEMBER_SIZEOF(objDef_t, craftitem.stats[AIR_STATS_FUELSIZE])},
+
 	{NULL, V_NULL, 0, 0}
 };
 
@@ -860,7 +874,7 @@ static void Com_ParseArmor (const char *name, const char **text, short *ad)
 /**
  * @brief
  */
-static void Com_ParseItem (const char *name, const char **text)
+void Com_ParseItem (const char *name, const char **text, qboolean craftitem)
 {
 	const char *errhead = "Com_ParseItem: unexpected end of file (weapon ";
 	const value_t *val;
@@ -886,6 +900,8 @@ static void Com_ParseItem (const char *name, const char **text)
 	od = &csi.ods[csi.numODs++];
 	memset(od, 0, sizeof(objDef_t));
 
+	od->aircraftItem = craftitem;
+
 	/* default value is no ammo */
 	memset(od->weap_idx, -1, sizeof(od->weap_idx));
 
@@ -908,20 +924,7 @@ static void Com_ParseItem (const char *name, const char **text)
 			break;
 
 		for (val = od_vals, i = 0; val->string; val++, i++) {
-			if (!Q_stricmp(token, "buytype")) {
-				/* Found a buytype option ... checking for the correct string */
-
-				/* parse a value */
-				token = COM_EParse(text, errhead, name);
-				/* @todo: maybe we could add a check for the old numbers as well here */
-				for (j = 0; j < MAX_BUYTYPES; j++) {
-					if (!Q_stricmp(token, buytypeNames[j])) {
-						od->buytype = j;
-						break;
-					}
-				}
-				break;
-			} else if (!Q_stricmp(token, val->string)) {
+			if (!Q_stricmp(token, val->string)) {
 				/* found a definition */
 				if (val->type != V_NULL) {
 					/* parse a value */
@@ -995,8 +998,29 @@ static void Com_ParseItem (const char *name, const char **text)
 				break;
 			}
 		}
-		if (!val->string)
-			Com_Printf("Com_ParseItem: unknown token \"%s\" ignored (weapon %s)\n", token, name);
+		if (!val->string) {
+			if (!Q_strcmp(token, "buytype")) {
+				/* Found a buytype option ... checking for the correct string */
+
+				/* parse a value */
+				token = COM_EParse(text, errhead, name);
+				/* @todo: maybe we could add a check for the old numbers as well here */
+				for (j = 0; j < MAX_BUYTYPES; j++) {
+					if (!Q_stricmp(token, buytypeNames[j])) {
+						od->buytype = j;
+						break;
+					}
+				}
+			} else if (!Q_strcmp(token, "craftweapon")) {
+				/* parse a value */
+				token = COM_EParse(text, errhead, name);
+
+				od->weap_idx[0] = INVSH_GetItemByID(token);
+				if (od->weap_idx[0] == -1)
+					Sys_Error("Com_ParseItem: could not find craft weapon useable for this ammo: %s (ammo: %s)\n", token, od->id);
+			} else
+				Com_Printf("Com_ParseItem: unknown token \"%s\" ignored (weapon %s)\n", token, name);
+		}
 
 	} while (*text);
 
@@ -2124,7 +2148,7 @@ void Com_ParseScripts (void)
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0) {
 		/* server/client scripts */
 		if (!Q_strncmp(type, "item", 4))
-			Com_ParseItem(name, &text);
+			Com_ParseItem(name, &text, qfalse);
 		else if (!Q_strncmp(type, "inventory", 9))
 			Com_ParseInventory(name, &text);
 		else if (!Q_strncmp(type, "terrain", 7))

@@ -187,6 +187,8 @@ int Com_GetCharacterValues(const char *team, character_t * chr);
 const char* Com_GetActorSound(teamDef_t* td, int gender, actorSound_t soundType);
 teamDef_t* Com_GetTeamDefinitionByID(const char *team);
 
+void Com_ParseItem(const char *name, const char **text, qboolean craftitem);
+
 void Com_AddObjectLinks(void);
 void Com_ParseScripts(void);
 void Com_PrecacheCharacterModels(void);

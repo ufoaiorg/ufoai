@@ -155,7 +155,6 @@ typedef struct craftitem_s {
 	float weaponSpeed;			/**< The speed of the projectile on geoscape */
 	float weaponDelay;			/**< The minimum delay between 2 shots */
 	int installationTime;		/**< The time needed to install/remove the item on an aircraft */
-	int itemWeight;				/**< FIXME */
 } craftitem_t;
 
 /**

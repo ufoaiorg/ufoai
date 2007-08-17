@@ -57,24 +57,6 @@ struct actMis_s;
 
 #define MAX_AIRCRAFTITEMS 64
 
-/** @brief parsed craftitem from script files */
-typedef struct aircraftItem_s {
-	char *id;			/**< from script files */
-	int idx;					/**< self link */
-	aircraftItemType_t type;		/**< The type of the aircraft item. */
-	char *tech;		/**< tech id for this item.*/
-	int tech_idx;				/**< tech index for this item.*/
-	char *weapon;		/**< if this is ammo there must be a weapon */
-	float stats[AIR_STATS_MAX];	/**< All coefficient that can affect aircraft->stats */
-	itemWeight_t itemWeight;	/**< The weight of the item (which must be smaller that slot size) */
-	float weaponDamage;			/**< The base damage inflicted by an ammo */
-	float weaponSpeed;			/**< The speed of the projectile on geoscape */
-	float weaponDelay;			/**< The minimum delay between 2 shots */
-	int ammo;					/**< The total number of ammo that can be fired */
-	int installationTime;		/**< The time needed to install/remove the item on an aircraft */
-	int price;
-} aircraftItem_t;
-
 /** @brief different positions for aircraft items */
 typedef enum {
 	AIR_NOSE_LEFT,
@@ -96,14 +78,14 @@ typedef struct aircraftSlot_s {
 	int idx;					/**< self link */
 	int aircraftIdx;			/**< Global index of this aircraft. See also gd.numAircraft. */
 	aircraftItemType_t type;	/**< The type of item that can fit in this slot. */
-	int itemIdx;				/**< The index in aircraftItems[] of item that is currently in the slot. -1 if empty */
-	int ammoIdx;				/**< The index in aircraftItems[] of the ammo that is currently in the slot. -1 if empty */
+	int itemIdx;				/**< The index in csi.ods[] of item that is currently in the slot. -1 if empty */
+	int ammoIdx;				/**< The index in csi.ods[] of the ammo that is currently in the slot. -1 if empty */
 	itemWeight_t size;			/**< The maximum size (weight) of item that can fit in this slot. */
 	int ammoLeft;				/**< The number of ammo left in this slot */
 	int delayNextShot;			/**< The delay before the next projectile can be shot */
 	int installationTime;		/**< The time (in hours) left before the item is finished to be installed or removed in/from slot
 								  *	This is > 0 if the item is being installed, < 0 if the item is being removed, 0 if the item is in place */
-	int nextItemIdx;			/**< Indice in aircraftItems[] of the next item to install when the current item in slot will be removed
+	int nextItemIdx;			/**< Indice in csi.ods[] of the next item to install when the current item in slot will be removed
 								  *	(Should be used only if installationTime is different of 0 */
 	itemPos_t pos;				/**< Position of the slot on the aircraft */
 } aircraftSlot_t;
@@ -194,8 +176,6 @@ typedef struct aircraft_s {
 */
 extern aircraft_t aircraft_samples[MAX_AIRCRAFT]; /**< available aircraft types */
 extern int numAircraft_samples;
-extern int numAircraftItems;			/**< number of available aircrafts items in game. */
-extern aircraftItem_t aircraftItems[MAX_AIRCRAFTITEMS];	/**< Available aicraft items. */
 
 /* script functions */
 
@@ -213,7 +193,6 @@ void AIR_AircraftReturnToBase_f(void);
 
 const char *AIR_AircraftStatusToName(aircraft_t *aircraft);
 qboolean AIR_IsAircraftInBase(aircraft_t *aircraft);
-void AIR_AircraftInit(void);
 void AIR_AircraftSelect(aircraft_t *aircraft);
 void AIR_AircraftSelect_f(void);
 
@@ -233,7 +212,6 @@ int AII_GetAircraftItemByID(const char *id);
 void CP_GetRandomPosForAircraft(float *pos);
 qboolean AIR_AircraftMakeMove(int dt, aircraft_t* aircraft);
 void AIR_ParseAircraft(const char *name, const char **text, qboolean assignAircraftItems);
-void AII_ParseAircraftItem(const char *name, const char **text);
 void AII_ReloadWeapon(aircraft_t *aircraft);
 qboolean AIR_AircraftHasEnoughFuel(aircraft_t *aircraft, const vec2_t destination);
 void AIR_AircraftReturnToBase(aircraft_t *aircraft);

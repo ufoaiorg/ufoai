@@ -36,7 +36,6 @@ aircraft_t aircraft_samples[MAX_AIRCRAFT];		/**< Available aircraft types. */
  * or old memory used for new records
 */
 int numAircraft_samples = 0;
-aircraftItem_t aircraftItems[MAX_AIRCRAFTITEMS];	/**< Available aicraft items. */
 
 static const int AIRCRAFT_RADAR_RANGE = 20;
 static const int DISTANCE = 15;
@@ -165,7 +164,7 @@ void AIR_ListAircraft_f (void)
 			Com_Printf("...idx cur=base/global %i=%i/%i\n", i, aircraft->idxInBase, aircraft->idx);
 			for (k = 0; k < aircraft->maxWeapons; k++) {
 				if (aircraft->weapons[k].itemIdx > -1) {
-					Com_Printf("...weapon slot %i contains %s", k, aircraftItems[aircraft->weapons[k].itemIdx].id);
+					Com_Printf("...weapon slot %i contains %s", k, csi.ods[aircraft->weapons[k].itemIdx].id);
 					if (!aircraft->weapons[k].installationTime)
 						Com_Printf(" (functional)\n");
 					else if (aircraft->weapons[k].installationTime > 0)
@@ -173,7 +172,7 @@ void AIR_ListAircraft_f (void)
 					else
 						Com_Printf(" (%i hours before removing is finished)\n",aircraft->weapons[k].installationTime);
 					if (aircraft->weapons[k].ammoIdx > -1)
-						Com_Printf("......this weapon is loaded with ammo %s\n", aircraftItems[aircraft->weapons[k].ammoIdx].id);
+						Com_Printf("......this weapon is loaded with ammo %s\n", csi.ods[aircraft->weapons[k].ammoIdx].id);
 					else
 						Com_Printf("......this weapon isn't loaded with ammo\n");
 				}
@@ -181,7 +180,7 @@ void AIR_ListAircraft_f (void)
 					Com_Printf("...weapon slot %i is empty\n", k);
 			}
 			if (aircraft->shield.itemIdx > -1) {
-				Com_Printf("...armour slot contains %s", aircraftItems[aircraft->shield.itemIdx].id);
+				Com_Printf("...armour slot contains %s", csi.ods[aircraft->shield.itemIdx].id);
 				if (!aircraft->shield.installationTime)
 						Com_Printf(" (functional)\n");
 					else if (aircraft->shield.installationTime > 0)
@@ -192,7 +191,7 @@ void AIR_ListAircraft_f (void)
 				Com_Printf("...armour slot is empty\n");
 			for (k = 0; k < aircraft->maxElectronics; k++) {
 				if (aircraft->electronics[k].itemIdx > -1) {
-					Com_Printf("...electronics slot %i contains %s", k, aircraftItems[aircraft->electronics[k].itemIdx].id);
+					Com_Printf("...electronics slot %i contains %s", k, csi.ods[aircraft->electronics[k].itemIdx].id);
 					if (!aircraft->electronics[k].installationTime)
 						Com_Printf(" (functional)\n");
 					else if (aircraft->electronics[k].installationTime > 0)
@@ -267,35 +266,6 @@ void AIM_AircraftStart_f (void)
 	/* Return to geoscape. */
 	MN_PopMenu(qfalse);
 	MN_PopMenu(qfalse);
-}
-
-/**
- * @brief Assigns the tech pointers, homebase and teamsize pointers to all aircraft.
- * @sa CL_GameInit
- */
-void AIR_AircraftInit (void)
-{
-	int i = 0;
-	technology_t *tech = NULL;
-	aircraftItem_t *aircraftitem = NULL;
-
-	Com_Printf("Initializing aircrafts and aircraft-items ...\n");
-
-	/* Link technologies for craftitems. */
-	for (i = 0; i < gd.numAircraftItems; i++) {
-		aircraftitem = &aircraftItems[i];
-		aircraftitem->tech_idx = -1; /* Default is -1 so it can be checked. */
-		if (aircraftitem) {
-			assert(aircraftitem->tech);
-			tech = RS_GetTechByID(aircraftitem->tech);
-			if (tech)
-				aircraftitem->tech_idx = tech->idx;
-			else
-				Com_Printf("AIR_AircraftInit: No tech with the name '%s' found for craftitem '%s'.\n",  aircraftitem->tech, aircraftitem->id);
-		}
-	}
-
-	Com_Printf("...aircraft and aircraft-items inited\n");
 }
 
 /**
@@ -605,11 +575,11 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	idx = aircraft->weapons[0].itemIdx;
 	I don't think this Cvar is used anymore.
 	Should be replaced by mn_aircraft_item_model in airequip menu when we will have models -- Kracken 200707
-	Cvar_Set("mn_aircraft_weapon_img", idx > -1 ? gd.technologies[aircraftItems[idx].tech_idx].image_top : "menu/airequip_no_weapon");
+	Cvar_Set("mn_aircraft_weapon_img", idx > -1 ? gd.technologies[csi.ods[idx].tech_idx].image_top : "menu/airequip_no_weapon");
 	idx = aircraft->shield.itemIdx;
-	Cvar_Set("mn_aircraft_shield_img", idx > -1 ? gd.technologies[aircraftItems[idx].tech_idx].image_top : "menu/airequip_no_shield");
+	Cvar_Set("mn_aircraft_shield_img", idx > -1 ? gd.technologies[csi.ods[idx].tech_idx].image_top : "menu/airequip_no_shield");
 	idx = aircraft->electronics[0].itemIdx;
-	Cvar_Set("mn_aircraft_item_img", idx > -1 ? gd.technologies[aircraftItems[idx].tech_idx].image_top : "menu/airequip_no_item");
+	Cvar_Set("mn_aircraft_item_img", idx > -1 ? gd.technologies[csi.ods[idx].tech_idx].image_top : "menu/airequip_no_item");
 #endif
 
 	/* generate aircraft info text */
@@ -971,12 +941,12 @@ void CL_CampaignRunAircraft (int dt)
 /**
  * @brief Returns the index of this aircraft item in the list of aircraft Items.
  * @note id may not be null or empty
- * @param[in] id the item id in our aircraftItems array
+ * @param[in] id the item id in our csi.ods array
  */
 int AII_GetAircraftItemByID (const char *id)
 {
 	int i;
-	aircraftItem_t *aircraftItem = NULL;
+	objDef_t *aircraftItem = NULL;
 
 #ifdef DEBUG
 	if (!id || !*id) {
@@ -985,9 +955,11 @@ int AII_GetAircraftItemByID (const char *id)
 	}
 #endif
 
-	for (i = 0; i < gd.numAircraftItems; i++) {	/* i = item index */
-		aircraftItem = &aircraftItems[i];
+	for (i = 0; i < csi.numODs; i++) {	/* i = item index */
+		aircraftItem = &csi.ods[i];
 		if (!Q_strncmp(id, aircraftItem->id, MAX_VAR)) {
+			if (!aircraftItem->aircraftItem)
+				Sys_Error("Same name for a none aircraft item object (%s)\n", id);
 			return i;
 		}
 	}
@@ -1092,134 +1064,6 @@ static const char *air_slot_type_strings[MAX_ACITEMS] = {
 	"base_ammo_missile",
 	"base_ammo_laser"
 };
-
-/** @brief Valid aircraft items (craftitem) definition values from script files. */
-static const value_t aircraftitems_vals[] = {
-	{"tech", V_CLIENT_HUNK_STRING, offsetof(aircraftItem_t, tech), 0},
-	{"speed", V_RELABS, offsetof(aircraftItem_t, stats[AIR_STATS_SPEED]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_SPEED])},
-	{"fuelsize", V_RELABS, offsetof(aircraftItem_t, stats[AIR_STATS_FUELSIZE]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_FUELSIZE])},
-	{"price", V_INT, offsetof(aircraftItem_t, price), MEMBER_SIZEOF(aircraftItem_t, price)},
-	{"installationTime", V_INT, offsetof(aircraftItem_t, installationTime), MEMBER_SIZEOF(aircraftItem_t, installationTime)},
-	{"wdamage", V_FLOAT, offsetof(aircraftItem_t, weaponDamage), MEMBER_SIZEOF(aircraftItem_t, weaponDamage)},
-	{"shield", V_FLOAT, offsetof(aircraftItem_t, stats[AIR_STATS_SHIELD]), MEMBER_SIZEOF(aircraftItem_t,  stats[AIR_STATS_SHIELD])},
-	{"wrange", V_FLOAT, offsetof(aircraftItem_t, stats[AIR_STATS_WRANGE]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_WRANGE])},
-	{"wspeed", V_FLOAT, offsetof(aircraftItem_t, weaponSpeed), MEMBER_SIZEOF(aircraftItem_t, weaponSpeed)},
-	{"ammo", V_INT, offsetof(aircraftItem_t, ammo), MEMBER_SIZEOF(aircraftItem_t, ammo)},
-	{"delay", V_FLOAT, offsetof(aircraftItem_t, weaponDelay), MEMBER_SIZEOF(aircraftItem_t, weaponDelay)},
-	{"damage", V_RELABS, offsetof(aircraftItem_t, stats[AIR_STATS_DAMAGE]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_DAMAGE])},
-	{"accuracy", V_RELABS, offsetof(aircraftItem_t, stats[AIR_STATS_ACCURACY]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_ACCURACY])},
-	{"ecm", V_RELABS, offsetof(aircraftItem_t, stats[AIR_STATS_ECM]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_ECM])},
-	{"weapon", V_CLIENT_HUNK_STRING, offsetof(aircraftItem_t, weapon), 0},
-
-	{NULL, 0, 0, 0}
-};
-
-/**
- * @brief Parses all aircraft items that are defined in our UFO-scripts.
- * @sa CL_ParseScriptFirst
- * @note write into cl_localPool - free on every game restart and reparse
- */
-void AII_ParseAircraftItem (const char *name, const char **text)
-{
-	const char *errhead = "AII_ParseAircraftItem: unexpected end of file (aircraft ";
-	aircraftItem_t *airItem;
-	const value_t *vp;
-	const char *token;
-	int i;
-
-	for (i = 0; i < gd.numAircraftItems; i++) {
-		if (!Q_strcmp(aircraftItems[i].id, name)) {
-			Com_Printf("AII_ParseAircraftItem: Second airitem with same name found (%s) - second ignored\n", name);
-			return;
-		}
-	}
-
-	if (gd.numAircraftItems >= MAX_AIRCRAFTITEMS) {
-		Com_Printf("AII_ParseAircraftItem: too many craftitem definitions; def \"%s\" ignored\n", name);
-		return;
-	}
-
-	/* initialize the menu */
-	airItem = &aircraftItems[gd.numAircraftItems];
-	memset(airItem, 0, sizeof(aircraftItem_t));
-
-	Com_DPrintf(DEBUG_CLIENT, "...found craftitem %s\n", name);
-	airItem->idx = gd.numAircraftItems;
-	gd.numAircraftItems++;
-	airItem->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
-
-	/* get it's body */
-	token = COM_Parse(text);
-
-	if (!*text || *token != '{') {
-		Com_Printf("AII_ParseAircraftItem: craftitem def \"%s\" without body ignored\n", name);
-		gd.numAircraftItems--;
-		return;
-	}
-
-	do {
-		token = COM_EParse(text, errhead, name);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-
-		if (!Q_strncmp(token, "type", MAX_VAR)) {
-			/* Craftitem type definition. */
-			token = COM_EParse(text, errhead, name);
-			if (!*text)
-				return;
-
-			/* Check which type it is and store the correct one.*/
-			for (i = 0; i < MAX_ACITEMS; i++) {
-				if (!Q_strcmp(token, air_slot_type_strings[i])) {
-					airItem->type = i;
-					break;
-				}
-			}
-			if (i == MAX_ACITEMS)
-				Com_Printf("AII_ParseAircraftItem: \"%s\" unknown craftitem type: \"%s\" - ignored.\n", name, token);
-		} else if (!Q_strncmp(token, "weight", MAX_VAR)) {
-			/* Craftitem type definition. */
-			token = COM_EParse(text, errhead, name);
-			if (!*text)
-				return;
-			if (!Q_strncmp(token, "light", MAX_VAR))
-				airItem->itemWeight = ITEM_LIGHT;
-			else if (!Q_strncmp(token, "medium", MAX_VAR))
-				airItem->itemWeight = ITEM_MEDIUM;
-			else if (!Q_strncmp(token, "heavy", MAX_VAR))
-				airItem->itemWeight = ITEM_HEAVY;
-			else
-				Com_Printf("Unknown weight value for craftitem '%s': '%s'\n", airItem->id, token);
-		} else {
-			/* Check for some standard values. */
-			for (vp = aircraftitems_vals; vp->string; vp++) {
-				if (!Q_strcmp(token, vp->string)) {
-					/* found a definition */
-					token = COM_EParse(text, errhead, name);
-					if (!*text)
-						return;
-
-					switch (vp->type) {
-					case V_TRANSLATION_MANUAL_STRING:
-						token++;
-					case V_CLIENT_HUNK_STRING:
-						Mem_PoolStrDupTo(token, (char**) ((char*)airItem + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
-						break;
-					default:
-						Com_ParseValue(airItem, token, vp->type, vp->ofs, vp->size);
-					}
-					break;
-				}
-			}
-			if (!vp->string) {
-				Com_Printf("AII_ParseAircraftItem: unknown token \"%s\" ignored (craftitem %s)\n", token, name);
-				COM_EParse(text, errhead, name);
-			}
-		}
-	} while (*text);
-}
 
 /**
  * @brief Initialise all values of an aircraft slot.
@@ -1650,7 +1494,7 @@ void AII_ReloadWeapon (aircraft_t *aircraft)
 	for (i = 0; i < aircraft->maxWeapons; i++) {
 		if (aircraft->weapons[i].ammoIdx > -1) {
 			idx = aircraft->weapons[i].ammoIdx;
-			aircraft->weapons[i].ammoLeft = aircraftItems[idx].ammo;
+			aircraft->weapons[i].ammoLeft = csi.ods[idx].ammo;
 		}
 	}
 }
@@ -1988,12 +1832,12 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 		MSG_WriteByte(sb, gd.ufos[i].maxWeapons);
 		for (j = 0; j < gd.ufos[i].maxWeapons; j++) {
 			if (gd.ufos[i].weapons[j].itemIdx >= 0) {
-				MSG_WriteString(sb, aircraftItems[gd.ufos[i].weapons[j].itemIdx].id);
+				MSG_WriteString(sb, csi.ods[gd.ufos[i].weapons[j].itemIdx].id);
 				MSG_WriteShort(sb, gd.ufos[i].weapons[j].ammoLeft);
 				MSG_WriteShort(sb, gd.ufos[i].weapons[j].delayNextShot);
 				MSG_WriteShort(sb, gd.ufos[i].weapons[j].installationTime);
 				/* if there is no ammo MSG_WriteString will write an empty string */
-				MSG_WriteString(sb, aircraftItems[gd.ufos[i].weapons[j].ammoIdx].id);
+				MSG_WriteString(sb, csi.ods[gd.ufos[i].weapons[j].ammoIdx].id);
 			} else {
 				MSG_WriteString(sb, "skip");
 				MSG_WriteShort(sb, 0);
@@ -2006,7 +1850,7 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 		/* save shield slots - currently only one */
 		MSG_WriteByte(sb, 1);
 		if (gd.ufos[i].shield.itemIdx >= 0) {
-			MSG_WriteString(sb, aircraftItems[gd.ufos[i].shield.itemIdx].id);
+			MSG_WriteString(sb, csi.ods[gd.ufos[i].shield.itemIdx].id);
 			MSG_WriteShort(sb, gd.ufos[i].shield.installationTime);
 		} else {
 			MSG_WriteString(sb, "skip");
@@ -2016,7 +1860,7 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 		MSG_WriteByte(sb, gd.ufos[i].maxElectronics);
 		for (j = 0; j < gd.ufos[i].maxElectronics; j++) {
 			if (gd.ufos[i].electronics[j].itemIdx >= 0) {
-				MSG_WriteString(sb, aircraftItems[gd.ufos[i].electronics[j].itemIdx].id);
+				MSG_WriteString(sb, csi.ods[gd.ufos[i].electronics[j].itemIdx].id);
 				MSG_WriteShort(sb, gd.ufos[i].electronics[j].installationTime);
 			} else {
 				MSG_WriteString(sb, "skip");
@@ -2029,7 +1873,7 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 	/* Save projectiles. */
 	MSG_WriteByte(sb, gd.numProjectiles);
 	for (i = 0; i < gd.numProjectiles; i++) {
-		MSG_WriteString(sb, aircraftItems[gd.projectiles[i].aircraftItemsIdx].id);
+		MSG_WriteString(sb, csi.ods[gd.projectiles[i].aircraftItemsIdx].id);
 		MSG_WritePos(sb, gd.projectiles[i].pos);
 		MSG_WritePos(sb, gd.projectiles[i].idleTarget);
 		if (gd.projectiles[i].attackingAircraft) {
@@ -2299,9 +2143,9 @@ qboolean AIR_ScriptSanityCheck (void)
 
 		/* check that every weapons fits slot */
 		for (j = 0; j < a->maxWeapons - 1; j++)
-			if (a->weapons[j].itemIdx > -1 && aircraftItems[a->weapons[j].itemIdx].itemWeight > a->weapons[j].size) {
+			if (a->weapons[j].itemIdx > -1 && AII_GetItemWeightBySize(&csi.ods[a->weapons[j].itemIdx]) > a->weapons[j].size) {
 				error++;
-				Com_Printf("...... aircraft '%s' has an item (%s) too heavy for its slot\n", a->id, aircraftItems[a->weapons[j].itemIdx].id);
+				Com_Printf("...... aircraft '%s' has an item (%s) too heavy for its slot\n", a->id, csi.ods[a->weapons[j].itemIdx].id);
 			}
 
 		/* check that every slots has a different location for PHALANX aircraft (not needed for UFOs) */

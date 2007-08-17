@@ -2865,12 +2865,12 @@ static void B_SaveItemSlots (aircraftSlot_t* slot, int num, int* targets, sizebu
 	for (i = 0; i < num; i++) {
 		if (slot[i].itemIdx >= 0) {
 			ammoIdx = slot[i].ammoIdx;
-			MSG_WriteString(sb, aircraftItems[slot[i].itemIdx].id);
+			MSG_WriteString(sb, csi.ods[slot[i].itemIdx].id);
 			MSG_WriteShort(sb, slot[i].ammoLeft);
 			MSG_WriteShort(sb, slot[i].delayNextShot);
 			MSG_WriteShort(sb, slot[i].installationTime);
 			/* if there is no ammo MSG_WriteString will write an empty string */
-			MSG_WriteString(sb, ammoIdx >= 0 ? aircraftItems[ammoIdx].id : "");
+			MSG_WriteString(sb, ammoIdx >= 0 ? csi.ods[ammoIdx].id : "");
 		} else {
 			MSG_WriteString(sb, "");
 			MSG_WriteShort(sb, 0);
@@ -2968,7 +2968,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			/* save shield slots - currently only one */
 			MSG_WriteByte(sb, 1);
 			if (aircraft->shield.itemIdx >= 0) {
-				MSG_WriteString(sb, aircraftItems[aircraft->shield.itemIdx].id);
+				MSG_WriteString(sb, csi.ods[aircraft->shield.itemIdx].id);
 				MSG_WriteShort(sb, aircraft->shield.installationTime);
 			} else {
 				MSG_WriteString(sb, "");
@@ -2978,7 +2978,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteByte(sb, aircraft->maxElectronics);
 			for (l = 0; l < aircraft->maxElectronics; l++) {
 				if (aircraft->electronics[l].itemIdx >= 0) {
-					MSG_WriteString(sb, aircraftItems[aircraft->electronics[l].itemIdx].id);
+					MSG_WriteString(sb, csi.ods[aircraft->electronics[l].itemIdx].id);
 					MSG_WriteShort(sb, aircraft->electronics[l].installationTime);
 				} else {
 					MSG_WriteString(sb, "");

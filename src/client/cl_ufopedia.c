@@ -476,7 +476,7 @@ static void UP_BuildingDescription (technology_t* t)
 void UP_AircraftItemDescription (int idx)
 {
 	static char itemText[MAX_SMALLMENUTEXTLEN];
-	aircraftItem_t *item;
+	objDef_t *item;
 	int i;
 
 	/* no valid item id given */
@@ -487,49 +487,49 @@ void UP_AircraftItemDescription (int idx)
 	}
 
 	/* select item */
-	item = &aircraftItems[idx];
-	Cvar_Set("mn_itemname", _(gd.technologies[item->tech_idx].name));
+	item = &csi.ods[idx];
+	assert(item->aircraft);
+	Cvar_Set("mn_itemname", _(item->tech->name));
 	Cvar_Set("mn_item", item->id);
-	Cvar_Set("mn_upmodel_top", gd.technologies[item->tech_idx].mdl_top);
+	Cvar_Set("mn_upmodel_top", item->tech->mdl_top);
 	Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
 	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
 	Cvar_Set("mn_researchedlinkname", "");
 	Cvar_Set("mn_upresearchedlinknametooltip", "");
 
 #ifdef DEBUG
-	if (item->tech_idx < 0 && ccs.singleplayer) {
+	if (!item->tech && ccs.singleplayer) {
 		Com_sprintf(itemText, sizeof(itemText), "Error - no tech assigned\n");
 		menuText[TEXT_STANDARD] = itemText;
 	} else
 #endif
 	/* set description text */
-	if (RS_IsResearched_idx(item->tech_idx)) {
+	if (RS_IsResearched_ptr(item->tech)) {
 		*itemText = '\0';
 
-		if (item->type == AC_ITEM_WEAPON)
-			Q_strcat(itemText, va(_("Weight:\t%s\n"), AII_WeightToName(item->itemWeight)), sizeof(itemText));
-
-		if (item->type == AC_ITEM_AMMO) {
+		if (item->craftitem.type == AC_ITEM_WEAPON)
+			Q_strcat(itemText, va(_("Weight:\t%s\n"), AII_WeightToName(AII_GetItemWeightBySize(item))), sizeof(itemText));
+		else if (item->craftitem.type == AC_ITEM_AMMO) {
 			/* We display the characteristics of this ammo */
 			Q_strcat(itemText, va(_("Ammo:\t%i\n"), item->ammo), sizeof(itemText));
-			if (item->weaponDamage > UFO_EPSILON)
-				Q_strcat(itemText, va(_("Damage:\t%i\n"), (int) item->weaponDamage), sizeof(itemText));
-			Q_strcat(itemText, va(_("Reloading time:\t%i\n"),  (int) item->weaponDelay),  sizeof(itemText));
+			if (item->craftitem.weaponDamage > UFO_EPSILON)
+				Q_strcat(itemText, va(_("Damage:\t%i\n"), (int) item->craftitem.weaponDamage), sizeof(itemText));
+			Q_strcat(itemText, va(_("Reloading time:\t%i\n"),  (int) item->craftitem.weaponDelay),  sizeof(itemText));
 		}
 		/* We write the range of the weapon */
-		if (item->stats[AIR_STATS_MAX - 1] > UFO_EPSILON)
-		Q_strcat(itemText, va("%s:\t%i\n", CL_AircraftStatToName(AIR_STATS_MAX - 1), (int) item->stats[AIR_STATS_MAX - 1]), sizeof(itemText));
+		if (item->craftitem.stats[AIR_STATS_MAX - 1] > UFO_EPSILON)
+			Q_strcat(itemText, va("%s:\t%i\n", CL_AircraftStatToName(AIR_STATS_MAX - 1), (int) item->craftitem.stats[AIR_STATS_MAX - 1]), sizeof(itemText));
 
 		/* we scan all stats except last one which is range */
 		for (i = 0 ; i < AIR_STATS_MAX - 1 ; i++) {
-			if (item->stats[i] > 2.0f)
-				Q_strcat(itemText, va("%s:\t+%i\n", CL_AircraftStatToName(i), (int) item->stats[i]), sizeof(itemText));
-			else if (item->stats[i] < -2.0f)
-				Q_strcat(itemText, va("%s:\t%i\n", CL_AircraftStatToName(i), (int) item->stats[i]),  sizeof(itemText));
-			else if (item->stats[i] > 1.0f)
-				Q_strcat(itemText, va(_("%s:\t+%i %%\n"), CL_AircraftStatToName(i), (int) (item->stats[i] * 100) - 100),  sizeof(itemText));
-			else if (item->stats[i] > UFO_EPSILON)
-				Q_strcat(itemText, va(_("%s:\t%i %%\n"), CL_AircraftStatToName(i), (int) (item->stats[i] * 100) - 100),  sizeof(itemText));
+			if (item->craftitem.stats[i] > 2.0f)
+				Q_strcat(itemText, va("%s:\t+%i\n", CL_AircraftStatToName(i), (int) item->craftitem.stats[i]), sizeof(itemText));
+			else if (item->craftitem.stats[i] < -2.0f)
+				Q_strcat(itemText, va("%s:\t%i\n", CL_AircraftStatToName(i), (int) item->craftitem.stats[i]),  sizeof(itemText));
+			else if (item->craftitem.stats[i] > 1.0f)
+				Q_strcat(itemText, va(_("%s:\t+%i %%\n"), CL_AircraftStatToName(i), (int) (item->craftitem.stats[i] * 100) - 100),  sizeof(itemText));
+			else if (item->craftitem.stats[i] > UFO_EPSILON)
+				Q_strcat(itemText, va(_("%s:\t%i %%\n"), CL_AircraftStatToName(i), (int) (item->craftitem.stats[i] * 100) - 100),  sizeof(itemText));
 		}
 	}
 
@@ -555,11 +555,11 @@ void UP_AircraftDescription (technology_t* t)
 			Q_strcat(upBuffer, va(_("Fuel:\t%i\n"), aircraft->stats[AIR_STATS_FUELSIZE] ), sizeof(upBuffer));
 			/* Maybe there are standard equipments given */
 			idx = aircraft->weapons[0].itemIdx;
-			Q_strcat(upBuffer, va(_("Weapon:\t%s\n"), idx >= 0 ? _(gd.technologies[aircraftItems[idx].tech_idx].name) : _("None") ), sizeof(upBuffer));
+			Q_strcat(upBuffer, va(_("Weapon:\t%s\n"), idx >= 0 ? _(csi.ods[idx].tech->name) : _("None") ), sizeof(upBuffer));
 			idx = aircraft->shield.itemIdx;
-			Q_strcat(upBuffer, va(_("Armour:\t%s\n"), idx >= 0 ? _(gd.technologies[aircraftItems[idx].tech_idx].name) : _("None") ), sizeof(upBuffer));
+			Q_strcat(upBuffer, va(_("Armour:\t%s\n"), idx >= 0 ? _(csi.ods[idx].tech->name) : _("None") ), sizeof(upBuffer));
 			idx = aircraft->electronics[0].itemIdx;
-			Q_strcat(upBuffer, va(_("Equipment:\t%s\n"), idx >= 0 ? _(gd.technologies[aircraftItems[idx].tech_idx].name) : _("None") ), sizeof(upBuffer));
+			Q_strcat(upBuffer, va(_("Equipment:\t%s\n"), idx >= 0 ? _(csi.ods[idx].tech->name) : _("None") ), sizeof(upBuffer));
 		}
 	}
 #if 0

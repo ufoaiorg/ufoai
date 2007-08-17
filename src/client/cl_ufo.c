@@ -307,7 +307,7 @@ static void UFO_ListUfosOnGeoscape_f (void)
 		Com_Printf("...%i weapon slots: ", ufo->maxWeapons);
 		for (k = 0; k < ufo->maxWeapons; k++) {
 				if (ufo->weapons[k].itemIdx > -1) {
-					Com_Printf("%s", aircraftItems[ufo->weapons[k].itemIdx].id);
+					Com_Printf("%s", csi.ods[ufo->weapons[k].itemIdx].id);
 					if (ufo->weapons[k].ammoIdx > -1 && ufo->weapons[k].ammoLeft > 0)
 						Com_Printf(" (loaded)");
 					else

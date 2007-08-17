@@ -35,6 +35,24 @@ static int airequipSelectedZone = 0;		/**< Selected zone in equip menu */
 static int airequipSelectedSlot = 0;			/**< Selected slot in equip menu */
 static technology_t *airequipSelectedTechnology = NULL;		/**< Selected technolgy in equip menu */
 
+/**
+ * @brief Returns craftitem weight based on size.
+ * @param[in] od Pointer to objDef_t object being craftitem.
+ * @return itemWeight_t
+ */
+itemWeight_t AII_GetItemWeightBySize (objDef_t *od)
+{
+	assert(od);
+	assert(od->buytype == BUY_CRAFTITEM);
+
+	if (od->size < 50)
+		return ITEM_LIGHT;
+	else if (od->size < 100)
+		return ITEM_MEDIUM;
+	else
+		return ITEM_HEAVY;
+}
+
 
 /**
  * @brief Returns a list of craftitem technologies for the given type.
@@ -45,39 +63,41 @@ static technology_t *airequipSelectedTechnology = NULL;		/**< Selected technolgy
 static technology_t **AII_GetCraftitemTechsByType (int type, qboolean usetypedef)
 {
 	static technology_t *techList[MAX_TECHNOLOGIES];
-	aircraftItem_t *aircraftitem = NULL;
+	objDef_t *aircraftitem = NULL;
 	int i, j = 0;
 
-	for (i = 0; i < gd.numAircraftItems; i++) {
-		aircraftitem = &aircraftItems[i];
+	for (i = 0; i < csi.numODs; i++) {
+		aircraftitem = &csi.ods[i];
+		if (!aircraftitem->aircraftItem)
+			continue;
 		if (usetypedef) {
-			if (aircraftitem->type == type) {
-				techList[j] = &gd.technologies[aircraftitem->tech_idx];
+			if (aircraftitem->craftitem.type == type) {
+				techList[j] = aircraftitem->tech;
 				j++;
 			}
 		} else {
 			switch (type) {
 			case 1: /* armour */
-				if (aircraftitem->type == AC_ITEM_SHIELD) {
-					techList[j] = &gd.technologies[aircraftitem->tech_idx];
+				if (aircraftitem->craftitem.type == AC_ITEM_SHIELD) {
+					techList[j] = aircraftitem->tech;
 					j++;
 				}
 				break;
 			case 2:	/* items */
-				if (aircraftitem->type == AC_ITEM_ELECTRONICS)	{
-					techList[j] = &gd.technologies[aircraftitem->tech_idx];
+				if (aircraftitem->craftitem.type == AC_ITEM_ELECTRONICS)	{
+					techList[j] = aircraftitem->tech;
 					j++;
 				}
 				break;
 			case 3:	/* ammos */
-				if (aircraftitem->type == AC_ITEM_AMMO)	{
-					techList[j] = &gd.technologies[aircraftitem->tech_idx];
+				if (aircraftitem->craftitem.type == AC_ITEM_AMMO)	{
+					techList[j] = aircraftitem->tech;
 					j++;
 				}
 				break;
 			default:
-				if (aircraftitem->type == AC_ITEM_WEAPON) {
-					techList[j] = &gd.technologies[aircraftitem->tech_idx];
+				if (aircraftitem->craftitem.type == AC_ITEM_WEAPON) {
+					techList[j] = aircraftitem->tech;
 					j++;
 				}
 				break;
@@ -237,7 +257,7 @@ static aircraftSlot_t *BDEF_SelectBaseSlot (base_t *base)
  */
 static qboolean AIM_SelectableAircraftItem (aircraft_t *aircraft, technology_t *tech)
 {
-	int idx;
+	int itemIdx;
 	aircraftSlot_t *slot;
 	menu_t *activeMenu = NULL;
 	qboolean aircraftMenu;
@@ -255,15 +275,16 @@ static qboolean AIM_SelectableAircraftItem (aircraft_t *aircraft, technology_t *
 	if (!RS_IsResearched_ptr(tech))
 		return qfalse;
 
+	itemIdx = AII_GetAircraftItemByID(tech->provides);
+
 	/* you can choose an ammo only if it fits the weapons installed in this slot */
 	if (airequipID >= AC_ITEM_AMMO) {
-		idx = slot->itemIdx;
-		if (Q_strncmp(aircraftItems[AII_GetAircraftItemByID(tech->provides)].weapon, aircraftItems[idx].id, MAX_VAR))
+		if (itemIdx < 0 || csi.ods[itemIdx].weap_idx[0] != slot->itemIdx)
 			return qfalse;
 	}
 
 	/* you can install an item only if its weight is small enough for the slot */
-	if (aircraftItems[AII_GetAircraftItemByID(tech->provides)].itemWeight > slot->size)
+	if (itemIdx < 0 || AII_GetItemWeightBySize(&csi.ods[itemIdx]) > slot->size)
 		return qfalse;
 
 	return qtrue;
@@ -467,7 +488,7 @@ void BDEF_Init_f (void)
 	static char smallbuffer1[128];
 	static char smallbuffer2[128];
 	static char smallbuffer3[128];
-	aircraftItem_t *item;
+	objDef_t *item;
 	aircraftSlot_t *slot;
 	int i;
 	int type;
@@ -539,8 +560,8 @@ void BDEF_Init_f (void)
 			if (baseCurrent->batteries[i].itemIdx == -1)
 				Q_strcat(defBuffer, va(_("Slot %i:\tempty\n"), i), sizeof(defBuffer));
 			else {
-				item = aircraftItems + baseCurrent->batteries[i].itemIdx;
-				Q_strcat(defBuffer, va(_("Slot %i:\t%s\n"), i, gd.technologies[item->tech_idx].name), sizeof(defBuffer));
+				item = csi.ods + baseCurrent->batteries[i].itemIdx;
+				Q_strcat(defBuffer, va(_("Slot %i:\t%s\n"), i, item->tech->name), sizeof(defBuffer));
 			}
 		}
 	}
@@ -553,7 +574,7 @@ void BDEF_Init_f (void)
 		/* Weight are not used for base defense atm
 		Q_strcat(smallbuffer1, va(_("This slot is for %s or smaller items."), AII_WeightToName(slot->size)), sizeof(smallbuffer1)); */
 	} else {
-		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _(gd.technologies[aircraftItems[slot->itemIdx].tech_idx].name));
+		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _(csi.ods[slot->itemIdx].tech->name));
 		Q_strcat(smallbuffer1, "\n", sizeof(smallbuffer1));
 		if (!slot->installationTime)
 			Q_strcat(smallbuffer1, _("This defense system is functional.\n"), sizeof(smallbuffer1));
@@ -569,9 +590,9 @@ void BDEF_Init_f (void)
 		if (slot->nextItemIdx < 0)
 			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _("No defense system assigned."));
 		else {
-			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _(gd.technologies[aircraftItems[slot->nextItemIdx].tech_idx].name));
+			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _(csi.ods[slot->nextItemIdx].tech->name));
 			Q_strcat(smallbuffer2, "\n", sizeof(smallbuffer2));
-			Q_strcat(smallbuffer2, va(_("This defense system will be operational in %i hours.\n"), aircraftItems[slot->nextItemIdx].installationTime - slot->installationTime), sizeof(smallbuffer2));
+			Q_strcat(smallbuffer2, va(_("This defense system will be operational in %i hours.\n"), csi.ods[slot->nextItemIdx].craftitem.installationTime - slot->installationTime), sizeof(smallbuffer2));
 		}
 	} else
 		*smallbuffer2 = '\0';
@@ -582,7 +603,7 @@ void BDEF_Init_f (void)
 		if (slot->ammoIdx < 0)
 			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _("No ammo assigned to this defense system."));
 		else
-			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _(gd.technologies[aircraftItems[slot->ammoIdx].tech_idx].name));
+			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _(csi.ods[slot->ammoIdx].tech->name));
 	} else
 		*smallbuffer3 = '\0';
 	menuText[TEXT_AIREQUIP_3] = smallbuffer3;
@@ -648,7 +669,7 @@ static void AII_UpdateOneInstallationDelay (aircraft_t *aircraft, aircraftSlot_t
 				/* there is anoter item to install after this one */
 				slot->itemIdx = slot->nextItemIdx;
 				slot->nextItemIdx = -1;
-				slot->installationTime = aircraftItems[slot->itemIdx].installationTime;
+				slot->installationTime = csi.ods[slot->itemIdx].craftitem.installationTime;
 			} else {
 				slot->itemIdx = -1;
 				slot->installationTime = 0;
@@ -770,8 +791,8 @@ static void AIM_DrawAircraftSlots (aircraft_t *aircraft)
 						Vector2Set(node->texh, 64, 64);
 					}
 					if (slot->itemIdx >= 0) {
-						assert(aircraftItems[slot->itemIdx].tech_idx >= 0);
-						Cvar_Set(va("mn_aircraft_item_model_slot%i", i), gd.technologies[aircraftItems[slot->itemIdx].tech_idx].mdl_top);
+						assert(csi.ods[slot->itemIdx].tech);
+						Cvar_Set(va("mn_aircraft_item_model_slot%i", i), csi.ods[slot->itemIdx].tech->mdl_top);
 					} else
 						Cvar_Set(va("mn_aircraft_item_model_slot%i", i), "");
 				}
@@ -859,7 +880,7 @@ void AIM_AircraftEquipmenuInit_f (void)
 		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _("No item assigned.\n"));
 		Q_strcat(smallbuffer1, va(_("This slot is for %s or smaller items."), AII_WeightToName(slot->size)), sizeof(smallbuffer1));
 	} else {
-		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _(gd.technologies[aircraftItems[slot->itemIdx].tech_idx].name));
+		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _(csi.ods[slot->itemIdx].tech->name));
 		Q_strcat(smallbuffer1, "\n", sizeof(smallbuffer1));
 		if (!slot->installationTime)
 			Q_strcat(smallbuffer1, _("This item is functional.\n"), sizeof(smallbuffer1));
@@ -875,9 +896,9 @@ void AIM_AircraftEquipmenuInit_f (void)
 		if (slot->nextItemIdx < 0)
 			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _("No item assigned."));
 		else {
-			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _(gd.technologies[aircraftItems[slot->nextItemIdx].tech_idx].name));
+			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _(csi.ods[slot->nextItemIdx].tech->name));
 			Q_strcat(smallbuffer2, "\n", sizeof(smallbuffer2));
-			Q_strcat(smallbuffer2, va(_("This item will be operational in %i hours.\n"), aircraftItems[slot->nextItemIdx].installationTime - slot->installationTime), sizeof(smallbuffer2));
+			Q_strcat(smallbuffer2, va(_("This item will be operational in %i hours.\n"), csi.ods[slot->nextItemIdx].craftitem.installationTime - slot->installationTime), sizeof(smallbuffer2));
 		}
 	} else
 		*smallbuffer2 = '\0';
@@ -888,7 +909,7 @@ void AIM_AircraftEquipmenuInit_f (void)
 		if (slot->ammoIdx < 0)
 			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _("No ammo assigned to this weapon."));
 		else
-			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _(gd.technologies[aircraftItems[slot->ammoIdx].tech_idx].name));
+			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _(csi.ods[slot->ammoIdx].tech->name));
 	} else
 		*smallbuffer3 = '\0';
 	menuText[TEXT_AIREQUIP_3] = smallbuffer3;
@@ -1044,7 +1065,7 @@ qboolean AII_AddItemToSlot (technology_t *tech, aircraftSlot_t *slot)
 	assert(tech);
 
 	slot->itemIdx = AII_GetAircraftItemByID(tech->provides);
-	slot->installationTime = aircraftItems[slot->itemIdx].installationTime;
+	slot->installationTime = csi.ods[slot->itemIdx].craftitem.installationTime;
 
 	return qtrue;
 }
@@ -1151,8 +1172,8 @@ void AIM_AircraftEquipDeleteItem_f (void)
 	/* update the new item to slot */
 	if (num == 1) {
 		/* if the item has been installed since less than 1 hour, you don't need time to remove it */
-		if (slot->installationTime < aircraftItems[slot->itemIdx].installationTime)
-			slot->installationTime = -aircraftItems[slot->itemIdx].installationTime;
+		if (slot->installationTime < csi.ods[slot->itemIdx].craftitem.installationTime)
+			slot->installationTime = -csi.ods[slot->itemIdx].craftitem.installationTime;
 		else
 			slot->itemIdx = -1;
 		slot->ammoIdx = -1;
@@ -1250,7 +1271,7 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 {
 	int i, currentStat;
 	const aircraft_t *source;
-	const aircraftItem_t *item;
+	const objDef_t *item;
 
 	assert(aircraft);
 
@@ -1266,11 +1287,11 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 			/* check if the electroincs is operationnal (not in installing or removing process) */
 			if (aircraft->electronics[i].installationTime != 0)
 				continue;
-			item = &aircraftItems[aircraft->electronics[i].itemIdx];
-			if (fabs(item->stats[currentStat]) > 2.0f)
-				aircraft->stats[currentStat] += (int) item->stats[currentStat];
-			else if (item->stats[currentStat] > UFO_EPSILON)
-				aircraft->stats[currentStat] *= item->stats[currentStat];
+			item = &csi.ods[aircraft->electronics[i].itemIdx];
+			if (fabs(item->craftitem.stats[currentStat]) > 2.0f)
+				aircraft->stats[currentStat] += (int) item->craftitem.stats[currentStat];
+			else if (item->craftitem.stats[currentStat] > UFO_EPSILON)
+				aircraft->stats[currentStat] *= item->craftitem.stats[currentStat];
 		}
 
 		/* modify by weapons (do nothing if the value of stat is 0) */
@@ -1279,21 +1300,21 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 			/* check if the weapon is operationnal (not in installing or removing process) */
 			if (aircraft->weapons[i].installationTime != 0)
 				continue;
-			item = &aircraftItems[aircraft->weapons[i].itemIdx];
-			if (fabs(item->stats[currentStat]) > 2.0f)
-				aircraft->stats[currentStat] += item->stats[currentStat];
-			else if (item->stats[currentStat] > UFO_EPSILON)
-				aircraft->stats[currentStat] *= item->stats[currentStat];
+			item = &csi.ods[aircraft->weapons[i].itemIdx];
+			if (fabs(item->craftitem.stats[currentStat]) > 2.0f)
+				aircraft->stats[currentStat] += item->craftitem.stats[currentStat];
+			else if (item->craftitem.stats[currentStat] > UFO_EPSILON)
+				aircraft->stats[currentStat] *= item->craftitem.stats[currentStat];
 		}
 
 		/* modify by shield (do nothing if the value of stat is 0) */
 		/* check if the shield is operationnal (not in installing or removing process) */
 		if (aircraft->shield.installationTime == 0) {
-			item = &aircraftItems[aircraft->shield.itemIdx];
-			if (fabs(item->stats[currentStat]) > 2.0f)
-				aircraft->stats[currentStat] += item->stats[currentStat];
-			else if (item->stats[currentStat] > UFO_EPSILON)
-				aircraft->stats[currentStat] *= item->stats[currentStat];
+			item = &csi.ods[aircraft->shield.itemIdx];
+			if (fabs(item->craftitem.stats[currentStat]) > 2.0f)
+				aircraft->stats[currentStat] += item->craftitem.stats[currentStat];
+			else if (item->craftitem.stats[currentStat] > UFO_EPSILON)
+				aircraft->stats[currentStat] *= item->craftitem.stats[currentStat];
 		}
 	}
 
@@ -1303,9 +1324,9 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 		/* check if the weapon is operationnal (not in installing or removing process) */
 		if (aircraft->weapons[i].installationTime != 0)
 			continue;
-		item = &aircraftItems[aircraft->weapons[i].ammoIdx];
-		if (item->stats[AIR_STATS_WRANGE] > aircraft->stats[AIR_STATS_WRANGE])
-			aircraft->stats[AIR_STATS_WRANGE] = item->stats[AIR_STATS_WRANGE];
+		item = &csi.ods[aircraft->weapons[i].ammoIdx];
+		if (item->craftitem.stats[AIR_STATS_WRANGE] > aircraft->stats[AIR_STATS_WRANGE])
+			aircraft->stats[AIR_STATS_WRANGE] = item->craftitem.stats[AIR_STATS_WRANGE];
 	}
 
 	/* check that iracraft hasn't too much fuel (caused by removal of fuel pod) */

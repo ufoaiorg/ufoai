@@ -1799,7 +1799,7 @@ static void CL_ParseScriptFirst (const char *type, const char *name, const char 
 	else if (!Q_strncmp(type, "tech", 4))
 		RS_ParseTechnologies(name, text);
 	else if (!Q_strncmp(type, "craftitem", 8))
-		AII_ParseAircraftItem(name, text);
+		Com_ParseItem(name, text, qtrue);
 	else if (!Q_strncmp(type, "base", 4))
 		B_ParseBases(name, text);
 	else if (!Q_strncmp(type, "nation", 6))

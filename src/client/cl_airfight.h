@@ -34,7 +34,7 @@ extern vec2_t bulletPos[MAX_BULLETS_ON_GEOSCAPE][BULLETS_PER_SHOT];	/**< Positio
 
 /** @brief projectile used during fight between aircrafts */
 typedef struct aircraftProjectile_s {
-	int aircraftItemsIdx;	/**< idx of the corresponding ammo in the array aircraftItems[] */
+	int aircraftItemsIdx;	/**< idx of the corresponding ammo in the array csi.ods[] */
 	int idx;				/**< self link of the idx in gd.projectiles[] */
 	vec3_t pos;				/**< position of the projectile (latitude and longitude) */
 	vec3_t idleTarget;		/**< target of the projectile
