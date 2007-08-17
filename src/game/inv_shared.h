@@ -506,7 +506,8 @@ typedef enum {
 	BUY_MULTI_AMMO, /**< Ammo (and other stuff) that is used in both Pri/Sec weapons. */
 	/* MAX_SOLDIER_EQU_BUYTYPES ... possible better solution? */
 	BUY_AIRCRAFT,	/**< Aircraft and craft-equipment. */
-	BUY_DUMMY,	/**< Everything that is not equipment for soldiers. */
+	BUY_DUMMY,	/**< Everything that is not equipment for soldiers except craftitems. */
+	BUY_CRAFTITEM,	/**< Craftitem. */
 	MAX_BUYTYPES
 } equipment_buytypes_t;
 

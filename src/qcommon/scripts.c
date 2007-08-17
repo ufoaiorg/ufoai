@@ -673,7 +673,8 @@ static const char *buytypeNames[MAX_BUYTYPES] = {
 	"armour",
 	"multi_ammo",
 	"aircraft",
-	"dummy"
+	"dummy",
+	"craftitem"
 };
 
 static const value_t od_vals[] = {
