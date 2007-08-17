@@ -802,8 +802,8 @@ menu air_production
 		*s_craft		color "1 1 1 0.6"
 		*s_craftitem	color "1 1 1 0.6"
 	}
-	confunc air_prod_craft		{ cmd "prod_select 0;" prod_reset *s_primary	color "1 1 1 1" }
-	confunc air_prod_craftitem	{ cmd "prod_select 1;" prod_reset *s_secondary	color "1 1 1 1" }
+	confunc air_prod_craft		{ cmd "air_prod_select 0;" air_prod_reset *s_craft	color "1 1 1 1" }
+	confunc air_prod_craftitem	{ cmd "air_prod_select 1;" air_prod_reset *s_craftitem	color "1 1 1 1" }
 
 	pic bt_craft
 	{
@@ -870,6 +870,6 @@ menu air_production
 
 	func init
 	{
-		cmd "prod_airinit 0;"
+		cmd "air_prod_init 0;"
 	}
 }
