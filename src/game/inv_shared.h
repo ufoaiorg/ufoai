@@ -222,7 +222,6 @@ typedef struct objDef_s {
 
 	/* Aircraft specific */
 	qboolean aircraft;			/**< True if this item is dummy aircraft - used in disassembling. */
-	qboolean aircraftItem;
 	craftitem_t craftitem;
 } objDef_t;
 

@@ -68,7 +68,7 @@ static technology_t **AII_GetCraftitemTechsByType (int type, qboolean usetypedef
 
 	for (i = 0; i < csi.numODs; i++) {
 		aircraftitem = &csi.ods[i];
-		if (!aircraftitem->aircraftItem)
+		if (aircraftitem->buytype != BUY_CRAFTITEM)
 			continue;
 		if (usetypedef) {
 			if (aircraftitem->craftitem.type == type) {

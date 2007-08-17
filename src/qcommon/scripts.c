@@ -900,8 +900,6 @@ void Com_ParseItem (const char *name, const char **text, qboolean craftitem)
 	od = &csi.ods[csi.numODs++];
 	memset(od, 0, sizeof(objDef_t));
 
-	od->aircraftItem = craftitem;
-
 	/* default value is no ammo */
 	memset(od->weap_idx, -1, sizeof(od->weap_idx));
 
