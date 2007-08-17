@@ -832,7 +832,7 @@ tech rs_weapon_laserammo
 		tech rs_damage_laser
 	}
 	time		1200
-	
+
 	provides	laserrifle_ammo
 	producetime	20
 }
@@ -3447,6 +3447,46 @@ tech rs_ugv_triax
 	require_AND { tech nothing }
 	time	0
 	producetime	800
+}
+
+//========================
+// Base Weapons
+//========================
+
+tech rs_base_weapon_tr20
+{
+	type		tech
+	up_chapter	tech
+	name		"_TR-20 Rocket Pod"
+	// pre_description	"_base_weapon_tr20_pre_txt"
+	description {
+		default "_base_weapon_tr20_txt"
+	}
+
+	provides	base_weapon_tr20
+	require_AND { tech nothing }
+	time		0
+	producetime	1221
+
+	image_top	"techs/base_weapon_tr20"
+}
+
+tech rs_base_ammo_tr20
+{
+	type		tech
+	up_chapter	tech
+	name		"_TR-20 Rocket"
+	// pre_description	"_base_ammo_tr20_pre_txt"
+	description {
+		default "_base_ammo_tr20_txt"
+	}
+
+	provides	base_ammo_tr20
+	require_AND { tech nothing }
+	time		0
+	producetime	1221
+
+	image_top	"techs/base_ammo_tr20"
 }
 
 //========================
