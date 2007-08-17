@@ -756,7 +756,7 @@ mission frozen_groenland
 	music		AlexFightmare
 	pos		"47 -42"
 	aliens		6
-	alienteam	alien
+	alienteam	ortnok
 	alienequip	stage4_soldiers
 	civilians	3
 	nation		"states"
@@ -775,7 +775,7 @@ mission frozen_small
 	music		PsymongO6
 	pos		"116 52"
 	aliens		7
-	alienteam	alien
+	alienteam	ortnok
 	alienequip	stage4_soldiers
 	civilians	3
 	nation		"states"
@@ -794,7 +794,7 @@ mission frozen_landingnature
 	music		PsymongR5
 	pos		"32 -66"
 	aliens		7
-	alienteam	alien
+	alienteam	ortnok
 	alienequip	stage4_soldiers
 	civilians	3
 	nation		"oceania"
@@ -813,7 +813,7 @@ mission frozen_industrial
 	music		PsymongR4
 	pos		"54 75"
 	aliens		7
-	alienteam	alien
+	alienteam	ortnok
 	alienequip	stage4_soldiers
 	civilians	3
 	nation		"latin"
@@ -831,7 +831,7 @@ mission or_asyut
 	music		PsymongO6
 	pos		"-31 27"
 	aliens		7
-	alienteam	alien
+	alienteam	ortnok
 	alienequip	stage4_soldiers
 	civilians	6
 	nation		"middle"
@@ -849,7 +849,7 @@ mission or_tabelbala
 	music		PsymongO4
 	pos		"3 28"
 	aliens		7
-	alienteam	alien
+	alienteam	ortnok
 	alienequip	stage4_soldiers
 	civilians	6
 	nation		"middle"
@@ -887,7 +887,7 @@ mission tropic_river
 	music		PsymongR5
 	pos			"86 14"
 	aliens		4
-	alienteam	alien
+	alienteam	ortnok
 	alienequip	stage4_soldiers
 	civilians	2
 	nation		"latin"
@@ -907,7 +907,7 @@ mission tropic_drug
 	music		PsymongR5
 	pos		"77 18"
 	aliens		4
-	alienteam	alien
+	alienteam	ortnok
 	alienequip	stage4_soldiers
 	civilians	2
 	nation		"latin"
@@ -926,7 +926,7 @@ mission vil_grenchen
 	music		PsymongO6
 	pos		"-7 47"
 	aliens		3
-	alienteam	alien
+	alienteam	ortnok
 	alienequip	stage4_soldiers
 	civilians	7
 	nation		"europa"
@@ -945,7 +945,7 @@ mission vil_albany
 	music		PsymongO4
 	pos		"84 32"
 	aliens		8
-	alienteam	alien
+	alienteam	ortnok
 	alienequip	stage4_soldiers
 	civilians	7
 	nation		"europa"
@@ -964,7 +964,7 @@ mission vil_shannon
 	music		PsymongR5
 	pos		"9 52"
 	aliens		18
-	alienteam	alien
+	alienteam	ortnok
 	alienequip	stage4_soldiers
 	civilians	4
 	nation		"europa"
