@@ -946,7 +946,6 @@ void CL_CampaignRunAircraft (int dt)
 int AII_GetAircraftItemByID (const char *id)
 {
 	int i;
-	objDef_t *aircraftItem = NULL;
 
 #ifdef DEBUG
 	if (!id || !*id) {
@@ -956,10 +955,9 @@ int AII_GetAircraftItemByID (const char *id)
 #endif
 
 	for (i = 0; i < csi.numODs; i++) {	/* i = item index */
-		aircraftItem = &csi.ods[i];
-		if (!Q_strncmp(id, aircraftItem->id, MAX_VAR)) {
-			if (aircraftItem->buytype != BUY_CRAFTITEM)
-				Sys_Error("Same name for a none aircraft item object (%s)\n", id);
+		if (!Q_strncmp(id, csi.ods[i].id, MAX_VAR)) {
+			if (csi.ods[i].buytype != BUY_CRAFTITEM)
+				Sys_Error("Same name for a none aircraft item object or not the correct buytype for this object (%s)\n", id);
 			return i;
 		}
 	}
