@@ -301,6 +301,22 @@ static void BS_BuyType_f (void)
 			}
 		}
 		buyListLength = j;
+	} else if (buyCategory == BUY_CRAFTITEM) {
+		/* get item list */
+		for (i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+			if (od->notOnMarket)
+				continue;
+			tech = (technology_t *) od->tech;
+			/* Check whether the proper buytype, storage in current base and market. */
+			if (tech && (od->buytype == BUY_CRAFTITEM) && (baseCurrent->storage.num[i] || ccs.eMarket.num[i])) {
+				BS_AddToList(od->name, baseCurrent->storage.num[i], ccs.eMarket.num[i], ccs.eMarket.ask[i]);
+				if (j >= MAX_BUYLIST)
+					Sys_Error("Increase the MAX_BUYLIST value to handle that much items\n");
+				buyList[j] = i;
+				j++;
+			}
+		}
+		buyListLength = j;
 	}
 
 	for (; j < MAX_MARKET_MENU_ENTRIES; j++) {

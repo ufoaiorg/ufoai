@@ -1847,6 +1847,55 @@ menu buyaircraft
 	// buttons
 	// ==================
 
+	confunc abuy_reset
+	{
+		*s_aircrafts	color "1 1 1 0.6"
+		*s_craftitems	color "1 1 1 0.6"
+	}
+	confunc abuy_aircrafts	{ cmd "buy_type 5;" abuy_reset *s_aircrafts	color "1 1 1 1" }
+	confunc abuy_craftitems	{ cmd "buy_type 7;" abuy_reset *s_craftitems	color "1 1 1 1" }
+
+
+	pic bt_aircrafts
+	{
+		tooltip	"_Show aircrafts"
+		image	menu/button_blue
+		mousefx	true
+		pos		"615 560"
+		texl	"0 0"
+		texh	"128 52"
+		click	{ abuy_aircrafts }
+	}
+
+	string s_aircrafts
+	{
+		pos	"679 586"
+		align	cc
+		color "1 1 1 0.6"
+		font	"f_small"
+		string	"_Aircraft"
+	}
+
+	pic bt_craftitems
+	{
+		tooltip	"_Show craftitems"
+		image	menu/button_blue
+		mousefx	true
+		pos		"765 560"
+		texl	"0 0"
+		texh	"128 52"
+		click	{ abuy_craftitems }
+	}
+
+	string s_craftitems
+	{
+		pos	"829 586"
+		align	cc
+		color "1 1 1 0.6"
+		font	"f_small"
+		string	"_Craftitems"
+	}
+
 	pic bt_continue
 	{
 		tooltip	"_Back to hangar"
