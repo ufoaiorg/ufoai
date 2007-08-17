@@ -1472,216 +1472,217 @@ base/music/van_mission2.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethi
 base/music/van_mission3.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethian" Marino (www.manuelmarino.com)
 base/music/van_mission4.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethian" Marino (www.manuelmarino.com)
 base/music/van_theme.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethian" Marino (www.manuelmarino.com)
-base/pics/air_dropship.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/pics/air_interceptor.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/pics/air_ufo.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/pics/altmenu/temp_field_back.png |  | (RaXaR) raxarATmeccanineDOTcom or MSN:raxar_sxsAThotmailDOTcom
-base/pics/altmenu/temp_metal_corner_pieces.png |  | (RaXaR) raxarATmeccanineDOTcom or MSN:raxar_sxsAThotmailDOTcom
-base/pics/altmenu/temp_metal_straight_pieces.png |  | (RaXaR) raxarATmeccanineDOTcom or MSN:raxar_sxsAThotmailDOTcom
-base/pics/altmenu/ufo_logo.png |  | (RaXaR) raxarATmeccanineDOTcom or MSN:raxar_sxsAThotmailDOTcom
-base/pics/base.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/pics/base/adrop.tga | GPL | Martin Gerhardy
-base/pics/base/adropl1.tga | GPL | Martin Gerhardy
-base/pics/base/adropl2.tga | GPL | Martin Gerhardy
-base/pics/base/aliencont.tga | GPL | Martin Gerhardy
-base/pics/base/antimatter.tga | GPL | Martin Gerhardy
-base/pics/base/commando.tga | GPL | Martin Gerhardy
-base/pics/base/drop1.tga | GPL | Martin Gerhardy
-base/pics/base/drop2.tga | GPL | Martin Gerhardy
-base/pics/base/empty.tga | GPL | Martin Gerhardy
-base/pics/base/entrance.tga | GPL | Martin Gerhardy
-base/pics/base/grid.tga | GPL | Martin Gerhardy
-base/pics/base/hospital.tga | GPL | Martin Gerhardy
-base/pics/base/hover.tga | GPL | Martin Gerhardy
-base/pics/base/hover2.tga | GPL | Martin Gerhardy
-base/pics/base/intercept.tga | GPL | Martin Gerhardy
-base/pics/base/lab.tga | GPL | Martin Gerhardy
-base/pics/base/missile.tga | GPL | Martin Gerhardy
-base/pics/base/powerplant.tga | GPL | Martin Gerhardy
-base/pics/base/quarters.tga | GPL | Martin Gerhardy
-base/pics/base/radar.tga | GPL | Martin Gerhardy
-base/pics/base/storage.tga | GPL | Martin Gerhardy
-base/pics/base/teamroom.tga | GPL | Martin Gerhardy
-base/pics/base/workshop1.tga | GPL | Martin Gerhardy
-base/pics/base/workshop2.tga | GPL | Martin Gerhardy
-base/pics/baseattack.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/air_dropship.tga | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/pics/air_interceptor.tga | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/pics/air_ufo.tga | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/pics/altmenu/temp_field_back.png | Creative Commons Attribution 3.0 | Ray West (RaXaR), raxarATmeccanineDOTcom or MSN:raxar_sxsAThotmailDOTcom
+base/pics/altmenu/temp_metal_corner_pieces.png | Creative Commons Attribution 3.0 | Ray West (RaXaR), raxarATmeccanineDOTcom or MSN:raxar_sxsAThotmailDOTcom
+base/pics/altmenu/temp_metal_straight_pieces.png | Creative Commons Attribution 3.0 | Ray West (RaXaR), raxarATmeccanineDOTcom or MSN:raxar_sxsAThotmailDOTcom
+base/pics/altmenu/ufo_logo.png | Creative Commons Attribution 3.0 | Ray West (RaXaR), raxarATmeccanineDOTcom or MSN:raxar_sxsAThotmailDOTcom
+base/pics/base.tga | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/pics/base/adrop.tga | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/base/adropl1.tga | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/base/adropl2.tga | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/base/aliencont.tga | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/base/antimatter.tga | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/base/commando.tga | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/base/drop1.tga | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/base/drop2.tga | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/base/empty.tga | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/base/entrance.tga | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/base/grid.tga | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/base/hospital.tga | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/base/hover.tga | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/base/hover2.tga | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/base/intercept.tga | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/base/invalid.tga | GNU General Public License v2.0
+base/pics/base/lab.tga | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/base/missile.tga | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/base/powerplant.tga | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/base/quarters.tga | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/base/radar.tga | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/base/storage.tga | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/base/teamroom.tga | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/base/workshop1.tga | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/base/workshop2.tga | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/baseattack.tga | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
 base/pics/hud/checkbox.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/hud/checkbox.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/hud/firemode.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/hud/firemode.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/maps/loading/README | GPL | Martin Gerhardy
-base/pics/maps/loading/africa04.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/bridge01.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/bunker01.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/city04.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/condor_crash04.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/const05.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/convoy01.jpg |  | Martin Gerhardy
-base/pics/maps/loading/crashsite.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/dam01.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/default.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/druglord07.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/estate01.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/excavation06.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/farm08.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/gasstation05.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/harbor07.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/harvestercrash04.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/industrial06.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/italy05.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/japan06.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/lake02.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/lake03.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/mart05.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/mine01.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/mine_crash05.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/office06.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/oriental05.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/oriental06.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/pdi08.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/rivertown01.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/spedition06.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/stadium06.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/subway07.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/template.xcf | GPL | Martin Gerhardy
-base/pics/maps/loading/terrain02.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/terrain08.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/tower06.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/transport06.jpg | GPL | Martin Gerhardy
-base/pics/maps/loading/village07.jpg | GPL | Martin Gerhardy
+base/pics/maps/loading/africa04.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/bridge01.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/bunker01.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/city04.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/condor_crash04.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/const05.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/convoy01.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/crashsite.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/dam01.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/default.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/druglord07.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/estate01.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/excavation06.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/farm08.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/gasstation05.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/harbor07.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/harvestercrash04.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/industrial06.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/italy05.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/japan06.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/lake02.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/lake03.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/mart05.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/mine01.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/mine_crash05.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/office06.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/oriental05.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/oriental06.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/pdi08.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/rivertown01.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/spedition06.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/stadium06.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/subway07.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/template.xcf | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/terrain02.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/terrain08.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/tower06.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/transport06.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/loading/village07.jpg | GNU General Public License v2.0 | Martin Gerhardy
 base/pics/maps/shots/README | GPL | Martin Gerhardy
-base/pics/maps/shots/africa04.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/africa04_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/africa04_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/bridge01.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/bridge01_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/bridge01_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/bunker01.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/bunker01_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/bunker01_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/city04.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/city04_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/city04_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/condor_crash04.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/condor_crash04_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/condor_crash04_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/const05.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/const05_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/const05_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/convoy01.jpg |  | Martin Gerhardy
-base/pics/maps/shots/dam01.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/dam01_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/dam01_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/druglord07.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/druglord07_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/druglord07_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/estate01.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/estate01_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/estate01_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/excavation06.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/excavation06_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/excavation06_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/farm08.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/farm08_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/farm08_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/gasstation05.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/gasstation05_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/gasstation05_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/harbor07.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/harbor07_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/harbor07_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/harvestercrash04.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/harvestercrash04_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/harvestercrash04_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/industrial06.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/industrial06_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/industrial06_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/italy05.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/italy05_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/italy05_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/japan06.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/japan06_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/japan06_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/lake02.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/lake02_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/lake02_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/lake03.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/lake03_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/lake03_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/mart05.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/mart05_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/mart05_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/mine01.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/mine01_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/mine01_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/mine_crash05.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/mine_crash05_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/mine_crash05_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/na.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/newshot.xcf | GPL | Martin Gerhardy
-base/pics/maps/shots/office06.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/office06_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/office06_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/oriental05.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/oriental05_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/oriental05_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/oriental06.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/oriental06_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/oriental06_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/pdi08.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/pdi08_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/pdi08_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/rivertown01.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/rivertown01_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/rivertown01_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/roh.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/spedition06.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/spedition06_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/spedition06_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/stadium06.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/stadium06_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/stadium06_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/subway07.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/subway07_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/subway07_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/terrain02.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/terrain02_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/terrain08.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/terrain08_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/terrain08_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/tower06.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/tower06_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/tower06_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/transport06.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/transport06_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/transport06_3.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/village07.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/village07_2.jpg | GPL | Martin Gerhardy
-base/pics/maps/shots/village07_3.jpg | GPL | Martin Gerhardy
+base/pics/maps/shots/africa04.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/africa04_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/africa04_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/bridge01.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/bridge01_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/bridge01_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/bunker01.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/bunker01_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/bunker01_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/city04.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/city04_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/city04_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/condor_crash04.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/condor_crash04_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/condor_crash04_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/const05.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/const05_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/const05_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/convoy01.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/dam01.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/dam01_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/dam01_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/druglord07.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/druglord07_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/druglord07_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/estate01.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/estate01_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/estate01_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/excavation06.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/excavation06_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/excavation06_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/farm08.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/farm08_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/farm08_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/gasstation05.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/gasstation05_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/gasstation05_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/harbor07.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/harbor07_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/harbor07_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/harvestercrash04.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/harvestercrash04_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/harvestercrash04_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/industrial06.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/industrial06_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/industrial06_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/italy05.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/italy05_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/italy05_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/japan06.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/japan06_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/japan06_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/lake02.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/lake02_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/lake02_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/lake03.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/lake03_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/lake03_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/mart05.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/mart05_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/mart05_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/mine01.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/mine01_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/mine01_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/mine_crash05.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/mine_crash05_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/mine_crash05_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/na.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/newshot.xcf | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/office06.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/office06_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/office06_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/oriental05.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/oriental05_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/oriental05_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/oriental06.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/oriental06_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/oriental06_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/pdi08.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/pdi08_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/pdi08_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/rivertown01.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/rivertown01_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/rivertown01_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/roh.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/spedition06.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/spedition06_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/spedition06_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/stadium06.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/stadium06_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/stadium06_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/subway07.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/subway07_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/subway07_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/terrain02.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/terrain02_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/terrain08.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/terrain08_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/terrain08_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/tower06.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/tower06_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/tower06_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/transport06.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/transport06_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/transport06_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/village07.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/village07_2.jpg | GNU General Public License v2.0 | Martin Gerhardy
+base/pics/maps/shots/village07_3.jpg | GNU General Public License v2.0 | Martin Gerhardy
 base/pics/menu/map_earth_clouds.jpg |  |  | Blue Marble Next generation - NASA's Earth Obervatory (See http://www.iac.ethz.ch/staff/stockli/bmng/#acknowledgements and http://www.nasa.gov/vision/earth/features/blue_marble.html)
 base/pics/menu/map_earth_day.jpg |  |  | Blue Marble Next generation - NASA's Earth Obervatory (See http://www.iac.ethz.ch/staff/stockli/bmng/#acknowledgements and http://www.nasa.gov/vision/earth/features/blue_marble.html)
 base/pics/menu/map_earth_night.jpg |  |  | Blue Marble Next generation - NASA's Earth Obervatory (See http://www.iac.ethz.ch/staff/stockli/bmng/#acknowledgements and http://www.nasa.gov/vision/earth/features/blue_marble.html)
-base/pics/phalanx_badge.png | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/pics/phalanx_badge_big.png | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_01.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_02.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_03.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_04.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_05.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_06.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_07.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_08.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_09.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_10.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_11.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_12.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_medic.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_pc.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_scientist.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_worker.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/ranks.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/pics/reactionfire.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/pics/reactionfiremany.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/phalanx_badge.png | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/pics/phalanx_badge_big.png | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_01.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_02.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_03.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_04.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_05.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_06.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_07.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_08.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_09.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_10.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_11.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_12.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_medic.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_pc.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_scientist.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_worker.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/ranks.blend | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/pics/reactionfire.tga | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/pics/reactionfiremany.tga | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
 base/pics/sfx/explosions1.jpg |  |  | Public Domain Golgotha
 base/pics/sfx/explosions2.jpg |  |  | Public Domain Golgotha
 base/pics/sfx/explosions3.jpg |  |  | Public Domain Golgotha
@@ -1702,14 +1703,14 @@ base/pics/sfx/smoke_puff2.jpg |  |  | Public Domain Golgotha
 base/pics/sfx/smoke_puff3.jpg |  |  | Public Domain Golgotha
 base/pics/sfx/smoke_puff4.jpg |  |  | Public Domain Golgotha
 base/pics/sfx/smoke_puff5.jpg |  |  | Public Domain Golgotha
-base/pics/techs/alien_breathing.jpg | Creative Commons License 3.0 Attribution + Sharealike | Michal Bilinski (Blywulf)
-base/pics/techs/alien_breathing.psd | Creative Commons License 3.0 Attribution + Sharealike | Michal Bilinski (Blywulf)
-base/pics/techs/antimatter.jpg | Creative Commons License 3.0 Attribution + Sharealike | Michal Bilinski (Blywulf)
-base/pics/techs/antimatter.psd | Creative Commons License 3.0 Attribution + Sharealike | Michal Bilinski (Blywulf)
-base/pics/techs/ortnok.jpg | Creative Commons License 3.0 Attribution + Sharealike | Michal Bilinski (Blywulf)
-base/pics/techs/taman.jpg | Creative Commons License 3.0 Attribution + Sharealike | Michal Bilinski (Blywulf)
-base/pics/techs/taman_autopsy.jpg | Creative Commons License 3.0 Attribution + Sharealike | Michal Bilinski (Blywulf)
-base/pics/techs/taman_autopsy.psd | Creative Commons License 3.0 Attribution + Sharealike | Michal Bilinski (Blywulf)
+base/pics/techs/alien_breathing.jpg | Creative Commons Attribution-ShareAlike 3.0 | Michal Bilinski (Blywulf)
+base/pics/techs/alien_breathing.psd | Creative Commons Attribution-ShareAlike 3.0 | Michal Bilinski (Blywulf)
+base/pics/techs/antimatter.jpg | Creative Commons Attribution-ShareAlike 3.0 | Michal Bilinski (Blywulf)
+base/pics/techs/antimatter.psd | Creative Commons Attribution-ShareAlike 3.0 | Michal Bilinski (Blywulf)
+base/pics/techs/ortnok.jpg | Creative Commons Attribution-ShareAlike 3.0 | Michal Bilinski (Blywulf)
+base/pics/techs/taman.jpg | Creative Commons Attribution-ShareAlike 3.0 | Michal Bilinski (Blywulf)
+base/pics/techs/taman_autopsy.jpg | Creative Commons Attribution-ShareAlike 3.0 | Michal Bilinski (Blywulf)
+base/pics/techs/taman_autopsy.psd | Creative Commons Attribution-ShareAlike 3.0 | Michal Bilinski (Blywulf)
 base/sound/aliens/aliendeath1.wav | Creative Commons Sampling Plus 1.0 License | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
 base/sound/aliens/aliendeath2.wav | Creative Commons Sampling Plus 1.0 License | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
 base/sound/aliens/aliendeath3.wav | Creative Commons Sampling Plus 1.0 License | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
