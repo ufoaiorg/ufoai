@@ -559,7 +559,6 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	node = MN_GetNodeFromCurrentMenu("aircraft");
 
 	/* we were not in the aircraft menu yet */
-
 	baseCurrent->aircraftCurrent = aircraftID;
 
 	assert(aircraft);
@@ -571,19 +570,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	Cvar_Set("mn_aircraftname", va("%s (%i/%i)", aircraft->name, (aircraftID + 1), baseCurrent->numAircraftInBase));
 	Cvar_Set("mn_aircraft_model", aircraft->model);
 
-#if 0
-	idx = aircraft->weapons[0].itemIdx;
-	I don't think this Cvar is used anymore.
-	Should be replaced by mn_aircraft_item_model in airequip menu when we will have models -- Kracken 200707
-	Cvar_Set("mn_aircraft_weapon_img", idx > -1 ? gd.technologies[csi.ods[idx].tech_idx].image_top : "menu/airequip_no_weapon");
-	idx = aircraft->shield.itemIdx;
-	Cvar_Set("mn_aircraft_shield_img", idx > -1 ? gd.technologies[csi.ods[idx].tech_idx].image_top : "menu/airequip_no_shield");
-	idx = aircraft->electronics[0].itemIdx;
-	Cvar_Set("mn_aircraft_item_img", idx > -1 ? gd.technologies[csi.ods[idx].tech_idx].image_top : "menu/airequip_no_item");
-#endif
-
 	/* generate aircraft info text */
-	/* @todo: reimplement me when aircraft equipment will be implemented. */
 	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%i\n"), aircraft->stats[AIR_STATS_SPEED]);
 	Q_strcat(aircraftInfo, va(_("Fuel:\t%i/%i\n"), aircraft->fuel / 1000, aircraft->stats[AIR_STATS_FUELSIZE] / 1000), sizeof(aircraftInfo));
 	idx = aircraft->weapons[0].itemIdx;
@@ -1094,12 +1081,6 @@ static const char *air_position_strings[AIR_POSITIONS_MAX] = {
 	"rear_right"
 };
 
-/** @brief Valid aircraft slot definitions from script files. */
-static const value_t aircraft_slot_vals[] = {
-
-	{NULL, 0, 0, 0}
-};
-
 /** @brief Valid aircraft parameter definitions from script files. */
 static const value_t aircraft_param_vals[] = {
 	{"speed", V_INT, offsetof(aircraft_t, stats[AIR_STATS_SPEED]), MEMBER_SIZEOF(aircraft_t, stats[0])},
@@ -1237,116 +1218,97 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 					if (*token == '}')
 						break;
 
-					for (vp = aircraft_slot_vals; vp->string; vp++)
-						if (!Q_strcmp(token, vp->string)) {
-							/* found a definition */
-							token = COM_EParse(text, errhead, name);
-							if (!*text)
-								return;
-							switch (vp->type) {
-							case V_TRANSLATION_MANUAL_STRING:
-								token++;
-							case V_CLIENT_HUNK_STRING:
-								Mem_PoolStrDupTo(token, (char**) ((char*)air_samp + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
-								break;
-							default:
-								Com_ParseValue(air_samp, token, vp->type, vp->ofs, vp->size);
-							}
-							break;
-						}
-					if (!vp->string) {
-						if (!Q_strcmp(token, "type")) {
-							token = COM_EParse(text, errhead, name);
-							if (!*text)
-								return;
-							for (i = 0; i < MAX_ACITEMS; i++) {
-								if (!Q_strcmp(token, air_slot_type_strings[i])) {
-									itemType = i;
-									switch (itemType) {
-									case AC_ITEM_WEAPON:
-										air_samp->maxWeapons++;
-										break;
-									case AC_ITEM_ELECTRONICS:
-										air_samp->maxElectronics++;
-										break;
-									default:
-										itemType = MAX_ACITEMS;
-									}
-									break;
-								}
-							}
-							if (i == MAX_ACITEMS)
-								Sys_Error("Unknown value '%s' for slot type\n", token);
-						} else if (!Q_strcmp(token, "position")) {
-							token = COM_EParse(text, errhead, name);
-							if (!*text)
-								return;
-							for (i = 0; i < AIR_POSITIONS_MAX; i++) {
-								if (!Q_strcmp(token, air_position_strings[i])) {
-									switch (itemType) {
-									case AC_ITEM_WEAPON:
-										air_samp->weapons[air_samp->maxWeapons - 1].pos = i;
-										break;
-									case AC_ITEM_ELECTRONICS:
-										air_samp->electronics[air_samp->maxElectronics - 1].pos = i;
-										break;
-									default:
-										i = AIR_POSITIONS_MAX;
-									}
-									break;
-								}
-							}
-							if (i == AIR_POSITIONS_MAX)
-								Sys_Error("Unknown value '%s' for slot position\n", token);
-						} else if (!Q_strcmp(token, "contains")) {
-							token = COM_EParse(text, errhead, name);
-							if (!*text)
-								return;
-							tech = RS_GetTechByID(token);
-							if (tech) {
+					if (!Q_strcmp(token, "type")) {
+						token = COM_EParse(text, errhead, name);
+						if (!*text)
+							return;
+						for (i = 0; i < MAX_ACITEMS; i++) {
+							if (!Q_strcmp(token, air_slot_type_strings[i])) {
+								itemType = i;
 								switch (itemType) {
 								case AC_ITEM_WEAPON:
-									air_samp->weapons[air_samp->maxWeapons - 1].itemIdx = AII_GetAircraftItemByID(tech->provides);
-									Com_DPrintf(DEBUG_CLIENT, "use weapon %s for aircraft %s\n", token, air_samp->id);
+									air_samp->maxWeapons++;
 									break;
 								case AC_ITEM_ELECTRONICS:
-									air_samp->electronics[air_samp->maxElectronics - 1].itemIdx = AII_GetAircraftItemByID(tech->provides);
-									Com_DPrintf(DEBUG_CLIENT, "use electronics %s for aircraft %s\n", token, air_samp->id);
+									air_samp->maxElectronics++;
 									break;
 								default:
-									Com_Printf("Ignoring item value '%s' due to unknown slot type\n", token);
+									itemType = MAX_ACITEMS;
 								}
+								break;
 							}
-						} else if (!Q_strcmp(token, "ammo")) {
-							token = COM_EParse(text, errhead, name);
-							if (!*text)
-								return;
-							tech = RS_GetTechByID(token);
-							if (tech) {
-								if (itemType == AC_ITEM_WEAPON) {
-									air_samp->weapons[air_samp->maxWeapons - 1].ammoIdx = AII_GetAircraftItemByID(tech->provides);
-									Com_DPrintf(DEBUG_CLIENT, "use ammo %s for aircraft %s\n", token, air_samp->id);
-								} else
-									Com_Printf("Ignoring ammo value '%s' due to unknown slot type\n", token);
+						}
+						if (i == MAX_ACITEMS)
+							Sys_Error("Unknown value '%s' for slot type\n", token);
+					} else if (!Q_strcmp(token, "position")) {
+						token = COM_EParse(text, errhead, name);
+						if (!*text)
+							return;
+						for (i = 0; i < AIR_POSITIONS_MAX; i++) {
+							if (!Q_strcmp(token, air_position_strings[i])) {
+								switch (itemType) {
+								case AC_ITEM_WEAPON:
+									air_samp->weapons[air_samp->maxWeapons - 1].pos = i;
+									break;
+								case AC_ITEM_ELECTRONICS:
+									air_samp->electronics[air_samp->maxElectronics - 1].pos = i;
+									break;
+								default:
+									i = AIR_POSITIONS_MAX;
+								}
+								break;
 							}
-						} else if (!Q_strncmp(token, "size", MAX_VAR)) {
-							token = COM_EParse(text, errhead, name);
-							if (!*text)
-								return;
+						}
+						if (i == AIR_POSITIONS_MAX)
+							Sys_Error("Unknown value '%s' for slot position\n", token);
+					} else if (!Q_strcmp(token, "contains")) {
+						token = COM_EParse(text, errhead, name);
+						if (!*text)
+							return;
+						tech = RS_GetTechByID(token);
+						if (tech) {
+							switch (itemType) {
+							case AC_ITEM_WEAPON:
+								air_samp->weapons[air_samp->maxWeapons - 1].itemIdx = AII_GetAircraftItemByID(tech->provides);
+								Com_DPrintf(DEBUG_CLIENT, "use weapon %s for aircraft %s\n", token, air_samp->id);
+								break;
+							case AC_ITEM_ELECTRONICS:
+								air_samp->electronics[air_samp->maxElectronics - 1].itemIdx = AII_GetAircraftItemByID(tech->provides);
+								Com_DPrintf(DEBUG_CLIENT, "use electronics %s for aircraft %s\n", token, air_samp->id);
+								break;
+							default:
+								Com_Printf("Ignoring item value '%s' due to unknown slot type\n", token);
+							}
+						}
+					} else if (!Q_strcmp(token, "ammo")) {
+						token = COM_EParse(text, errhead, name);
+						if (!*text)
+							return;
+						tech = RS_GetTechByID(token);
+						if (tech) {
 							if (itemType == AC_ITEM_WEAPON) {
-								if (!Q_strncmp(token, "light", MAX_VAR))
-									air_samp->weapons[air_samp->maxWeapons - 1].size = ITEM_LIGHT;
-								else if (!Q_strncmp(token, "medium", MAX_VAR))
-									air_samp->weapons[air_samp->maxWeapons - 1].size = ITEM_MEDIUM;
-								else if (!Q_strncmp(token, "heavy", MAX_VAR))
-									air_samp->weapons[air_samp->maxWeapons - 1].size = ITEM_HEAVY;
-								else
-									Com_Printf("Unknown size value for aircraft slot: '%s'\n", token);
+								air_samp->weapons[air_samp->maxWeapons - 1].ammoIdx = AII_GetAircraftItemByID(tech->provides);
+								Com_DPrintf(DEBUG_CLIENT, "use ammo %s for aircraft %s\n", token, air_samp->id);
 							} else
-								Com_Printf("Ignoring size parameter '%s' for non-weapon aircraft slots\n", token);
+								Com_Printf("Ignoring ammo value '%s' due to unknown slot type\n", token);
+						}
+					} else if (!Q_strncmp(token, "size", MAX_VAR)) {
+						token = COM_EParse(text, errhead, name);
+						if (!*text)
+							return;
+						if (itemType == AC_ITEM_WEAPON) {
+							if (!Q_strncmp(token, "light", MAX_VAR))
+								air_samp->weapons[air_samp->maxWeapons - 1].size = ITEM_LIGHT;
+							else if (!Q_strncmp(token, "medium", MAX_VAR))
+								air_samp->weapons[air_samp->maxWeapons - 1].size = ITEM_MEDIUM;
+							else if (!Q_strncmp(token, "heavy", MAX_VAR))
+								air_samp->weapons[air_samp->maxWeapons - 1].size = ITEM_HEAVY;
+							else
+								Com_Printf("Unknown size value for aircraft slot: '%s'\n", token);
 						} else
-							Com_Printf("AIR_ParseAircraft: Ignoring unknown slot value '%s'\n", token);
-					}
+							Com_Printf("Ignoring size parameter '%s' for non-weapon aircraft slots\n", token);
+					} else
+						Com_Printf("AIR_ParseAircraft: Ignoring unknown slot value '%s'\n", token);
 				} while (*text); /* dummy condition */
 			}
 		} else {
@@ -1779,7 +1741,6 @@ qboolean AIR_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx, employeeT
 	}
 #endif
 
-
 	for (i = 0; i < aircraft->size; i++) {
 		if (aircraft->teamIdxs[i] == employee_idx && aircraft->teamTypes[i] == employeeType) {
 			/** @note This also skips the -1 entries in teamIdxs. */
@@ -2106,7 +2067,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 /**
  * @brief Returns true if the current base is able to handle aircrafts
  * @sa B_BaseInit_f
- * TODO : if base is under attack, if there is no command center, if there is no power ?
+ * @todo if base is under attack, if there is no command center, if there is no power ?
  */
 qboolean AIR_AircraftAllowed (void)
 {
