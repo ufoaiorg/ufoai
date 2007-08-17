@@ -13,28 +13,28 @@
 //	wrange - Not defined here for aircrafts (see aircraft items below) - will be set ingame to the biggest wrange of weapons aboard.
 //
 //	slot {}	- Any number of entries. Parameters can be the following :
-//		type	- The type of item this slot can contain (See "type "in "craftitem" below)
-//		position - Slot's position on the aircraft. See cl_aircraft.c for available values.
-//		size - the Maximum weight of an item fitting this slot (light, medium, heavy) (only for weapon slots).
-//		contains - technology of the item in the slot at the beginning of the game.
-//		ammo - Technology of the ammo loading the weapon (only for weapon slots).
+//		type		- The type of item this slot can contain (See "type "in "craftitem" below)
+//		position	- Slot's position on the aircraft. See cl_aircraft.c for available values.
+//		size		- the Maximum weight of an item fitting this slot (light, medium, heavy) (only for weapon slots).
+//		contains	- technology of the item in the slot at the beginning of the game.
+//		ammo		- Technology of the ammo loading the weapon (only for weapon slots).
 //
 //
 // craftitem
-//	type - The type of the item. Possible values:
+//	crafttype - The type of the item. Possible values:
 //		weapon
 //		ammo
 //		shield
 //		electronics
 //		base_missile
 //		base_ammo_missile
-//	size - Needed only for "type weapon". Possible values are:
+//	size - Needed only for "crafttype weapon". Possible values are:
 //		< 50 => light			- For light weapons.
 //		> 50 && < 100 => medium	- For medium weapons.
 //		> 100 heavy				- For heavy weapons.
 //
 //	price		- Cost of buying one item.
-//	craftweapon	- Only for type: ammo, defines which weapon uses this ammo.
+//	craftweapon	- Only for crafttype: ammo, defines which weapon uses this ammo.
 //	size		- The weight of the item used to see if it fits the slot (only for weapons).
 //	installationTime -
 //		The time needed to install/remove the item from the aircraft
@@ -44,7 +44,7 @@
 //		shield +10	means: the shield of the aircraft is stronger by 10 points
 //		speed 0.75	means: the aircraft is 25% slower
 //
-//	--vv-- Parameters for craftitem specific to "type ammo". --vv--
+//	--vv-- Parameters for craftitem specific to "crafttype ammo". --vv--
 //	craftweapon	- The weapon that can use this ammo.
 //	ammo		- The total number of ammo that can be fired with one unit of ammunition.
 //	wspeed		- The speed of the ammo on geoscape once it's been shot.
@@ -398,7 +398,7 @@ aircraft craft_ufo_fighter
 
 craftitem craft_weapon_shiva
 {
-	type		weapon
+	crafttype		weapon
 	size		40 // light
 	installationTime	2
 	price		34000
@@ -407,7 +407,7 @@ craftitem craft_weapon_shiva
 
 craftitem craft_ammo_shiva_API
 {
-	type	ammo
+	crafttype	ammo
 	craftweapon		craft_weapon_shiva
 	price		100
 	buytype		craftitem
@@ -422,7 +422,7 @@ craftitem craft_ammo_shiva_API
 
 craftitem craft_ammo_shiva_HEI
 {
-	type	ammo
+	crafttype	ammo
 	craftweapon		craft_weapon_shiva
 	price		100
 	buytype		craftitem
@@ -437,7 +437,7 @@ craftitem craft_ammo_shiva_HEI
 
 craftitem craft_el_raven
 {
-	type	electronics
+	crafttype	electronics
 	installationTime	1
 	price		12345
 	buytype		craftitem
@@ -447,7 +447,7 @@ craftitem craft_el_raven
 
 craftitem craft_weapon_sparrowhawk
 {
-	type	weapon
+	crafttype	weapon
 	size	40	// light
 	installationTime	2
 	price		12321
@@ -456,7 +456,7 @@ craftitem craft_weapon_sparrowhawk
 
 craftitem craft_ammo_sparrowhawk
 {
-	type	ammo
+	crafttype	ammo
 	craftweapon		craft_weapon_sparrowhawk
 	price		250
 	buytype		craftitem
@@ -471,7 +471,7 @@ craftitem craft_ammo_sparrowhawk
 
 craftitem craft_weapon_tr20
 {
-	type	weapon
+	crafttype	weapon
 	size	90	// medium
 	installationTime	2
 	price		19998
@@ -482,7 +482,7 @@ craftitem craft_weapon_tr20
 
 craftitem craft_ammo_tr20
 {
-	type	ammo
+	crafttype	ammo
 	craftweapon		craft_weapon_tr20
 	price		310
 	buytype		craftitem
@@ -497,7 +497,7 @@ craftitem craft_ammo_tr20
 
 craftitem craft_weapon_particle_beam
 {
-	type	weapon
+	crafttype	weapon
 	size	90	// medium
 	installationTime	2
 	price		25252
@@ -510,7 +510,7 @@ craftitem craft_weapon_particle_beam
 
 craftitem craft_el_targeting
 {
-	type	electronics
+	crafttype	electronics
 	installationTime	1
 	price		33333
 	buytype		craftitem
@@ -520,7 +520,7 @@ craftitem craft_el_targeting
 
 craftitem craft_el_fuelpod
 {
-	type	electronics
+	crafttype	electronics
 	installationTime	2
 	price		8500
 	buytype		craftitem
@@ -531,7 +531,7 @@ craftitem craft_el_fuelpod
 
 craftitem craft_shield_polymer
 {
-	type	shield
+	crafttype	shield
 	installationTime	24
 	price		16000
 	buytype		craftitem
@@ -542,7 +542,7 @@ craftitem craft_shield_polymer
 
 craftitem craft_shield_plating
 {
-	type	shield
+	crafttype	shield
 	installationTime	24
 	price		24000
 	buytype		craftitem
@@ -557,7 +557,7 @@ craftitem craft_shield_plating
 
 craftitem base_weapon_tr20
 {
-	type		base_missile
+	crafttype		base_missile
 	size	90	// medium
 	installationTime	48
 	price		19998
@@ -568,7 +568,7 @@ craftitem base_weapon_tr20
 
 craftitem base_ammo_tr20
 {
-	type		base_ammo_missile
+	crafttype		base_ammo_missile
 	craftweapon		craft_weapon_sparrowhawk
 	price		310
 	buytype		craftitem
