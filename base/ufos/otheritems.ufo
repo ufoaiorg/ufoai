@@ -107,6 +107,7 @@ item bloodspider_weapon
         price           210
         size            6
         buytype weap_sec			//FIXME
+	firetwohanded   true
 
         weapon_mod bloodspider_weapon
         {
