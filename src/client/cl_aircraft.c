@@ -1036,21 +1036,6 @@ qboolean AIR_SendAircraftToMission (aircraft_t* aircraft, actMis_t* mission)
 }
 
 /**
- * @brief List of valid strings for slot types
- * @note slot names are the same as the item types (and must be in the same order)
- */
-static const char *air_slot_type_strings[MAX_ACITEMS] = {
-	"base_missile",
-	"base_laser",
-	"weapon",
-	"shield",
-	"electronics",
-	"ammo",
-	"base_ammo_missile",
-	"base_ammo_laser"
-};
-
-/**
  * @brief Initialise all values of an aircraft slot.
  * @param[in] aircraft Pointer to the aircraft which needs initalisation of its slots.
  */

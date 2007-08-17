@@ -142,6 +142,7 @@ extern const char *align_names[ALIGN_LAST];
 extern const char *blend_names[BLEND_LAST];
 extern const char *style_names[STYLE_LAST];
 extern const char *fade_names[FADE_LAST];
+extern const char *air_slot_type_strings[MAX_ACITEMS];
 
 /** used e.g. in our parsers */
 typedef struct value_s {

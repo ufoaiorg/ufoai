@@ -870,6 +870,22 @@ static void Com_ParseArmor (const char *name, const char **text, short *ad)
 	} while (*text);
 }
 
+
+/**
+ * @brief List of valid strings for slot types
+ * @note slot names are the same as the item types (and must be in the same order)
+ */
+const char *air_slot_type_strings[MAX_ACITEMS] = {
+	"base_missile",
+	"base_laser",
+	"weapon",
+	"shield",
+	"electronics",
+	"ammo",
+	"base_ammo_missile",
+	"base_ammo_laser"
+};
+
 /**
  * @brief
  */
@@ -1015,6 +1031,21 @@ void Com_ParseItem (const char *name, const char **text, qboolean craftitem)
 				od->weap_idx[0] = INVSH_GetItemByID(token);
 				if (od->weap_idx[0] == -1)
 					Sys_Error("Com_ParseItem: could not find craft weapon useable for this ammo: %s (ammo: %s)\n", token, od->id);
+			} else if (!Q_strcmp(token, "crafttype")) {
+				/* Craftitem type definition. */
+				token = COM_EParse(text, errhead, name);
+				if (!*text)
+					return;
+
+				/* Check which type it is and store the correct one.*/
+				for (i = 0; i < MAX_ACITEMS; i++) {
+					if (!Q_strcmp(token, air_slot_type_strings[i])) {
+						od->craftitem.type = i;
+						break;
+					}
+				}
+				if (i == MAX_ACITEMS)
+					Com_Printf("AII_ParseAircraftItem: \"%s\" unknown craftitem type: \"%s\" - ignored.\n", name, token);
 			} else
 				Com_Printf("Com_ParseItem: unknown token \"%s\" ignored (weapon %s)\n", token, name);
 		}
