@@ -108,8 +108,10 @@ typedef struct fireDef_s {
 /** @brief 32 bit mask */
 #define SHAPE_BIG_MAX_WIDTH 32
 
-/** @brief All different types of craft items. */
-/** @note must begin with weapons and end with ammos */
+/**
+ * @brief All different types of craft items.
+ * @note must begin with weapons and end with ammos
+ */
 typedef enum {
 	/* weapons */
 	AC_ITEM_BASE_MISSILE,
@@ -121,24 +123,39 @@ typedef enum {
 	AC_ITEM_ELECTRONICS,
 
 	/* ammos */
-	AC_ITEM_AMMO,		/* aircraft ammos */
+	AC_ITEM_AMMO,			/* aircraft ammos */
 	AC_ITEM_AMMO_MISSILE,	/* base ammos */
-	AC_ITEM_AMMO_LASER,	/* base ammos */
+	AC_ITEM_AMMO_LASER,		/* base ammos */
 
 	MAX_ACITEMS
 } aircraftItemType_t;
 
-/** @note this define must always be bigger than or equal to AIR_STATS_MAX enum of aircraftParams_t, see cl_aircraft.h. */
-#define MAX_AIRSTATS	16
+/**
+ * @brief Aircraft parameters.
+ * @note This is a list of all aircraft parameters that depends on aircraft items.
+ * those values doesn't change with shield or weapon assigned to aircraft
+ * @note AIR_STATS_WRANGE must be the last parameter (see AII_UpdateAircraftStats)
+ */
+typedef enum {
+	AIR_STATS_SPEED,	/**< Aircraft speed. */
+	AIR_STATS_SHIELD,	/**< Aircraft shield. */
+	AIR_STATS_ECM,		/**< Aircraft electronic warfare level. */
+	AIR_STATS_DAMAGE,	/**< Aircraft damage points (= hit points of the aircraft). */
+	AIR_STATS_ACCURACY,	/**< Aircraft accuracy - base accuracy (without weapon). */
+	AIR_STATS_FUELSIZE,	/**< Aircraft fuel capacity. */
+	AIR_STATS_WRANGE,	/**< Aircraft weapon range - the maximum distance aircraft can open fire. */
 
-/** @brief Defines all attributes of craftitems. */
+	AIR_STATS_MAX
+} aircraftParams_t;
+
 typedef struct craftitem_s {
-	aircraftItemType_t type;	/**< The type of the aircraft item. */
-	float stats[MAX_AIRSTATS];	/**< All coefficient that can affect aircraft->stats */
-	float weaponDamage;		/**< The base damage inflicted by an ammo */
-	float weaponSpeed;		/**< The speed of the projectile on geoscape */
-	float weaponDelay;		/**< The minimum delay between 2 shots */
+	aircraftItemType_t type;		/**< The type of the aircraft item. */
+	float stats[AIR_STATS_MAX];	/**< All coefficient that can affect aircraft->stats */
+	float weaponDamage;			/**< The base damage inflicted by an ammo */
+	float weaponSpeed;			/**< The speed of the projectile on geoscape */
+	float weaponDelay;			/**< The minimum delay between 2 shots */
 	int installationTime;		/**< The time needed to install/remove the item on an aircraft */
+	int itemWeight;				/**< FIXME */
 } craftitem_t;
 
 /**
@@ -197,8 +214,8 @@ typedef struct objDef_s {
 	int numWeapons;					/**< Number of weapons this ammo can be used in.
 							     Maximum value for fireDef_t.weap_fds_idx <= MAX_WEAPONS_PER_OBJDEF. */
 
-	void *tech;				/**< Technology link to item. @todo: struct technology_t instead of void pointer? */
-	void *extension_tech;			/**< Technology link to item to use this extension for (if this is an extension). @todo: is this used anywhere? */
+	struct technology_s *tech;	/**< Technology link to item. */
+	struct technology_s *extension_tech;	/**< Technology link to item to use this extension for (if this is an extension). @todo: is this used anywhere? */
 
 	/* Armor specific */
 	short protection[MAX_DAMAGETYPES];	/**< @todo: document me. */
@@ -206,7 +223,8 @@ typedef struct objDef_s {
 
 	/* Aircraft specific */
 	qboolean aircraft;			/**< True if this item is dummy aircraft - used in disassembling. */
-	craftitem_t craftitem;			/**< Structure of craftitem which defines its attributes. */
+	qboolean aircraftItem;
+	craftitem_t craftitem;
 } objDef_t;
 
 #define MAX_INVDEFS     16
