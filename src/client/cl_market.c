@@ -292,8 +292,10 @@ static void BS_BuyType_f (void)
 			tech = RS_GetTechByProvided(air_samp->id);
 			assert(tech);
 			if (RS_Collected_(tech) || RS_IsResearched_ptr(tech)) {
-				if (j >= buyListScrollPos && j < MAX_MARKET_MENU_ENTRIES)
+				if (j >= buyListScrollPos && j < MAX_MARKET_MENU_ENTRIES) {
 					Cbuf_AddText(va("buy_show%i\n", j - buyListScrollPos));
+					Cbuf_AddText(va("buy_tooltip_aircraft%i\n", j - buyListScrollPos));
+				}
 				BS_AddToList(air_samp->name, AIR_GetStorageSupply(air_samp->id, qtrue), AIR_GetStorageSupply(air_samp->id, qfalse), air_samp->price);
 
 				buyList[j] = i;
@@ -311,8 +313,10 @@ static void BS_BuyType_f (void)
 			if (tech && (od->buytype == BUY_CRAFTITEM) && 
 			(RS_Collected_(tech) || RS_IsResearched_ptr(tech)) &&
 			(baseCurrent->storage.num[i] || ccs.eMarket.num[i])) {
-				if (j >= buyListScrollPos && j < MAX_MARKET_MENU_ENTRIES)
+				if (j >= buyListScrollPos && j < MAX_MARKET_MENU_ENTRIES) {
 					Cbuf_AddText(va("buy_show%i\n", j - buyListScrollPos));
+					Cbuf_AddText(va("buy_tooltip_craftitem%i\n", j - buyListScrollPos));
+				}
 				BS_AddToList(od->name, baseCurrent->storage.num[i], ccs.eMarket.num[i], ccs.eMarket.ask[i]);
 				if (j >= MAX_BUYLIST)
 					Sys_Error("Increase the MAX_BUYLIST value to handle that much items\n");
