@@ -7,6 +7,43 @@
 // The civilian teams must match the nation ids
 //========================================================================
 
+team latin
+{
+	size	1
+	hit_particle	blood
+
+
+	names {
+		female { a }
+		male { b }
+		lastname { c }
+	}
+
+	models {
+		female {
+			civilians/female body03 head04a 0
+			civilians/female body03 head04a 1
+			civilians/female body03 head04b 0
+			civilians/female body03 head04c 1
+		}
+
+		male {
+			civilians/male body02 head02 0
+		}
+	}
+
+	actorsounds {
+		female {
+			hurtsound	misc/newmission.wav
+			deathsound	misc/newmission.wav
+		}
+		male {
+			hurtsound 	misc/newmission.wav
+			deathsound	misc/newmission.wav
+		}
+	}
+}
+
 team states
 {
 	size	1
