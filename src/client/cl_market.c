@@ -217,6 +217,30 @@ static void BS_AddToList (const char *name, int storage, int market, int price)
 }
 
 /**
+ * @brief Updates status of category buttons in aircraft buy/sell menu.
+ */
+static void BS_UpdateAircraftBSButtons (void)
+{
+	if (!baseCurrent)
+		return;
+	/* We cannot buy aircraft without any hangar. */
+	if (!baseCurrent->hasHangar && !baseCurrent->hasHangarSmall)
+		Cbuf_AddText("abuy_disableaircrafts2\n");
+	else
+		Cbuf_AddText("abuy_enableaircrafts\n");
+	/* We cannot buy aircraft if there is no power in our base. */
+	if (!baseCurrent->hasPower)
+		Cbuf_AddText("abuy_disableaircrafts1\n");
+	else	
+		Cbuf_AddText("abuy_enableaircrafts\n");	
+	/* We cannot buy any item without storage. */
+	if (!baseCurrent->hasStorage)
+		Cbuf_AddText("abuy_disableitems\n");
+	else
+		Cbuf_AddText("abuy_enableitems\n");
+}
+
+/**
  * @brief Init function for Buy/Sell menu. Updates the Buy/Sell menu list.
  */
 static void BS_BuyType_f (void)
@@ -281,18 +305,7 @@ static void BS_BuyType_f (void)
 	/* aircraft */
 	else if (buyCategory == BUY_AIRCRAFT) {
 		technology_t* tech;
-		/* We cannot buy aircraft if there is no power in our base. */
-		if (!baseCurrent->hasPower) {
-			Cbuf_ExecuteText(EXEC_NOW, "mn_pop\n");
-			MN_Popup(_("Note"), _("No power supplies in this base.\nHangars are not functional."));
-			return;
-		}
-		/* We cannot buy aircraft without any hangar. */
-		if (!baseCurrent->hasHangar && !baseCurrent->hasHangarSmall) {
-			MN_PopMenu(qfalse);
-			MN_Popup(_("Note"), _("Build a hangar first."));
-			return;
-		}
+		BS_UpdateAircraftBSButtons();
 		for (i = 0, j = 0, air_samp = aircraft_samples; i < numAircraft_samples; i++, air_samp++) {
 			if (air_samp->type == AIRCRAFT_UFO || air_samp->price == -1)
 				continue;
@@ -311,6 +324,7 @@ static void BS_BuyType_f (void)
 		}
 		buyListLength = j;
 	} else if (buyCategory == BUY_CRAFTITEM) {
+		BS_UpdateAircraftBSButtons();
 		/* get item list */
 		for (i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 			if (od->notOnMarket)
@@ -605,6 +619,16 @@ static void BS_BuyAircraft_f (void)
 		return;
 
 	if (buyCategory == BUY_AIRCRAFT) {
+		/* We cannot buy aircraft if there is no power in our base. */
+		if (!baseCurrent->hasPower) {
+			MN_Popup(_("Note"), _("No power supplies in this base.\nHangars are not functional."));
+			return;
+		}
+		/* We cannot buy aircraft without any hangar. */
+		if (!baseCurrent->hasHangar && !baseCurrent->hasHangarSmall) {
+			MN_Popup(_("Note"), _("Build a hangar first."));
+			return;
+		}
 		aircraftID = buyList[num];
 		freeSpace = AIR_CalculateHangarStorage(aircraftID, baseCurrent, 0);
 
@@ -628,8 +652,11 @@ static void BS_BuyAircraft_f (void)
 			}
 		}
 	} else {
+		if (!baseCurrent->hasStorage) {
+			MN_Popup(_("Note"), _("No storage in this base."));
+			return;
+		}
 		craftitemID = buyList[num];
-
 		if (ccs.credits >= ccs.eMarket.ask[craftitemID] && ccs.eMarket.num[craftitemID]) {
 			if (baseCurrent->capacities[CAP_ITEMS].max - baseCurrent->capacities[CAP_ITEMS].cur >= csi.ods[craftitemID].size) {
 				B_UpdateStorageAndCapacity(baseCurrent, craftitemID, 1, qfalse, qfalse);
