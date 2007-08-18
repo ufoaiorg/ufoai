@@ -35,6 +35,15 @@ equipment campaign_player
 	medikit			2
 	irgoggles		1
 	flashbang		5
+	craft_weapon_shiva	2
+	craft_ammo_shiva_API	30
+	craft_ammo_shiva_HEI	30
+	craft_weapon_sparrowhawk	2
+	craft_ammo_sparrowhawk		16
+	craft_weapon_tr20		1
+	craft_ammo_tr20		6
+	craft_el_fuelpod		2
+	craft_shield_polymer	2
 }
 
 equipment campaign_market
@@ -84,6 +93,17 @@ equipment campaign_market
 	light					20
 	medium					5
 //	heavy					1
+	craft_weapon_shiva	6
+	craft_ammo_shiva_API	100
+	craft_ammo_shiva_HEI	100
+	craft_weapon_sparrowhawk	3
+	craft_ammo_sparrowhawk		56
+	craft_weapon_tr20		3
+	craft_ammo_tr20		30
+	craft_el_fuelpod		10
+	craft_el_raven		4
+	craft_el_targeting	2
+	craft_shield_polymer	4
 }
 
 //=================
