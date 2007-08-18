@@ -299,14 +299,42 @@ menu employees
 		click { cmd "employee_hire 18" }
 	}
 
+	pic button_scrollup
+	{
+		tooltip "_Scroll up"
+		image	menu/buttons_small
+		mousefx true
+		pos		"25 30"
+		texh	"48 48"
+		texl	"32 32"
+		click	{ cmd "mn_textscroll employee_list -1; employee_scroll" }
+		repeat	true
+		out		{ *button_scrollup texl "32 32" *button_scrollup texh "48 48" }
+		in		{ *button_scrollup texl "48 32" *button_scrollup texh "64 48" }
+	}
+
+	pic button_scrolldown
+	{
+		tooltip "_Scroll down"
+		image	menu/buttons_small
+		mousefx true
+		pos		"25 720"
+		texl	"32 48"
+		texh	"48 64"
+		click	{ cmd "mn_textscroll employee_list 1; employee_scroll" }
+		repeat	true
+		out		{ *button_scrolldown texl "32 48" *button_scrolldown texh "48 64" }
+		in		{ *button_scrolldown texl "48 48" *button_scrolldown texh "64 64" }
+	}
+
 	text employee_list
 	{
-		height	"18"
+		height	"19"
 		format	"38 100"
 		color	"0 .78 0 1"
 		mousefx	true
-		pos		"50 32"
-		size	"290 702"
+		pos		"60 32"
+		size	"280 702"
 		num		1
 //		bgcolor	"1 1 1 0.5"
 		click
