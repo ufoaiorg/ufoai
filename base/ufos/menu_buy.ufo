@@ -1866,126 +1866,126 @@ menu buyaircraft
 	pic bt_buy10
 	{
 		image	menu/buttons_small
-		pos		"376 265"	mousefx true
+		pos		"376 290"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 10" }
 	}
 	pic bt_sell10
 	{
 		image	menu/buttons_small
-		pos		"392 265"	mousefx	true
+		pos		"392 290"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 10" }
 	}
 	pic bt_buy11
 	{
 		image	menu/buttons_small
-		pos		"376 265"	mousefx true
+		pos		"376 315"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 11" }
 	}
 	pic bt_sell11
 	{
 		image	menu/buttons_small
-		pos		"392 265"	mousefx	true
+		pos		"392 315"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 11" }
 	}
 	pic bt_buy12
 	{
 		image	menu/buttons_small
-		pos		"376 265"	mousefx true
+		pos		"376 340"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 12" }
 	}
 	pic bt_sell12
 	{
 		image	menu/buttons_small
-		pos		"392 265"	mousefx	true
+		pos		"392 340"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 12" }
 	}
 	pic bt_buy13
 	{
 		image	menu/buttons_small
-		pos		"376 265"	mousefx true
+		pos		"376 365"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 13" }
 	}
 	pic bt_sell13
 	{
 		image	menu/buttons_small
-		pos		"392 265"	mousefx	true
+		pos		"392 365"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 13" }
 	}
 	pic bt_buy14
 	{
 		image	menu/buttons_small
-		pos		"376 265"	mousefx true
+		pos		"376 390"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 14" }
 	}
 	pic bt_sell14
 	{
 		image	menu/buttons_small
-		pos		"392 265"	mousefx	true
+		pos		"392 390"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 14" }
 	}
 	pic bt_buy15
 	{
 		image	menu/buttons_small
-		pos		"376 265"	mousefx true
+		pos		"376 415"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 15" }
 	}
 	pic bt_sell15
 	{
 		image	menu/buttons_small
-		pos		"392 265"	mousefx	true
+		pos		"392 415"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 15" }
 	}
 	pic bt_buy16
 	{
 		image	menu/buttons_small
-		pos		"376 265"	mousefx true
+		pos		"376 440"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 16" }
 	}
 	pic bt_sell16
 	{
 		image	menu/buttons_small
-		pos		"392 265"	mousefx	true
+		pos		"392 440"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 16" }
 	}
 	pic bt_buy17
 	{
 		image	menu/buttons_small
-		pos		"376 265"	mousefx true
+		pos		"376 465"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 17" }
 	}
 	pic bt_sell17
 	{
 		image	menu/buttons_small
-		pos		"392 265"	mousefx	true
+		pos		"392 465"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 17" }
 	}
 	pic bt_buy18
 	{
 		image	menu/buttons_small
-		pos		"376 265"	mousefx true
+		pos		"376 490"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy_aircraft 18" }
 	}
 	pic bt_sell18
 	{
 		image	menu/buttons_small
-		pos		"392 265"	mousefx	true
+		pos		"392 490"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 18" }
 	}
