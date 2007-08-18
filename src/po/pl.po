@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-08-07 15:15+0200\n"
-"PO-Revision-Date: 2007-08-18 10:34+0100\n"
+"PO-Revision-Date: 2007-08-18 15:04+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1477,7 +1477,7 @@ msgstr "Sprzedaj"
 
 #: ../base/ufos/menu_buy.ufo:1084
 msgid "Buy factor:"
-msgstr "Wskaźnik zakupów:"
+msgstr "Kupno:"
 
 #: ../base/ufos/menu_buy.ufo:1100
 msgid "Decrease the amount of items you want to buy"
@@ -1489,7 +1489,7 @@ msgstr "Zwiększ ilość obiektów, które chcesz kupić"
 
 #: ../base/ufos/menu_buy.ufo:1128
 msgid "Sell factor:"
-msgstr "Wskaźnik sprzedaży:"
+msgstr "Sprzedaż:"
 
 #: ../base/ufos/menu_buy.ufo:1144
 msgid "Decrease the amount of items you want to sell"
@@ -2916,7 +2916,7 @@ msgstr "Rozmontowywanie obiektów"
 
 #: ../base/ufos/menu_production.ufo:464
 msgid "Disassembling"
-msgstr "Rozmontowywanie"
+msgstr "Demontaż"
 
 #: ../base/ufos/menu_ptleditor.ufo:16
 msgid "Loop"
