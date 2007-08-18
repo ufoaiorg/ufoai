@@ -108,7 +108,7 @@ static void BS_MarketScroll_f (void)
 			break;
 		assert(i >= 0);
 		od = &csi.ods[buyList[i]];
-		tech = (technology_t *) od->tech;
+		tech = od->tech;
 		/* Check whether the proper buytype, storage in current base and market. */
 		if (tech && BUYTYPE_MATCH(od->buytype, buyCategory) && (baseCurrent->storage.num[buyList[i]] || ccs.eMarket.num[buyList[i]])) {
 			Cbuf_AddText(va("buy_show%i\n", i - buyListScrollPos));
@@ -215,7 +215,6 @@ static void BS_BuyType_f (void)
 {
 	objDef_t *od;
 	aircraft_t *air_samp;
-	technology_t *tech;
 	int i, j = 0;
 	menuNode_t* node;
 	char tmpbuf[64];
@@ -251,9 +250,8 @@ static void BS_BuyType_f (void)
 		for (i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 			if (od->notOnMarket)
 				continue;
-			tech = (technology_t *) od->tech;
 			/* Check whether the proper buytype, storage in current base and market. */
-			if (tech && BUYTYPE_MATCH(od->buytype, buyCategory) && (baseCurrent->storage.num[i] || ccs.eMarket.num[i])) {
+			if (od->tech && BUYTYPE_MATCH(od->buytype, buyCategory) && (baseCurrent->storage.num[i] || ccs.eMarket.num[i])) {
 				BS_AddToList(od->name, baseCurrent->storage.num[i], ccs.eMarket.num[i], ccs.eMarket.ask[i]);
 				/* Set state of Autosell button. */
 				if (j >= buyListScrollPos && j < MAX_MARKET_MENU_ENTRIES) {
@@ -274,6 +272,7 @@ static void BS_BuyType_f (void)
 	}
 	/* aircraft */
 	else if (buyCategory == BUY_AIRCRAFT) {
+		technology_t* tech;
 		/* We cannot buy aircraft if there is no power in our base. */
 		if (!baseCurrent->hasPower) {
 			Cbuf_ExecuteText(EXEC_NOW, "mn_pop\n");
@@ -308,11 +307,10 @@ static void BS_BuyType_f (void)
 		for (i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 			if (od->notOnMarket)
 				continue;
-			tech = (technology_t *) od->tech;
 			/* Check whether the proper buytype, storage in current base and market. */
-			if (tech && (od->buytype == BUY_CRAFTITEM) && 
-			(RS_Collected_(tech) || RS_IsResearched_ptr(tech)) &&
-			(baseCurrent->storage.num[i] || ccs.eMarket.num[i])) {
+			if (od->tech && (od->buytype == BUY_CRAFTITEM)
+			 && (RS_Collected_(od->tech) || RS_IsResearched_ptr(od->tech))
+			 && (baseCurrent->storage.num[i] || ccs.eMarket.num[i])) {
 				if (j >= buyListScrollPos && j < MAX_MARKET_MENU_ENTRIES) {
 					Cbuf_AddText(va("buy_show%i\n", j - buyListScrollPos));
 					Cbuf_AddText(va("buy_tooltip_craftitem%i\n", j - buyListScrollPos));
