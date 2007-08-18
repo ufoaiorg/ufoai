@@ -144,7 +144,7 @@ void UFO_FleePhalanxAircraft (aircraft_t *ufo, vec2_t v)
 	VecToPolar(dest, pos);
 
 	MAP_MapCalcLine(ufo->pos, pos, &(ufo->route));
-	ufo->target = NULL;
+	ufo->aircraftTarget = NULL;
 	ufo->status = AIR_FLEEING;
 }
 
@@ -224,15 +224,15 @@ static void UFO_SearchTarget (aircraft_t *ufo)
 
 	if (ufo->status != AIR_FLEEING) {
 		/* check if the ufo is already attacking a base */
-		if (ufo->baseTargetIdx > AIRFIGHT_TARGET_IS_AIRCRAFT) {
+		if (ufo->baseTarget) {
 			AIRFIGHT_ExecuteActions(ufo, NULL);
 		/* check if the ufo is already attacking an aircraft */
-		} else if (ufo->target) {
+		} else if (ufo->aircraftTarget) {
 			/* check if the target flee in a base */
-			if (ufo->target->status > AIR_HOME)
-				AIRFIGHT_ExecuteActions(ufo, ufo->target);
+			if (ufo->aircraftTarget->status > AIR_HOME)
+				AIRFIGHT_ExecuteActions(ufo, ufo->aircraftTarget);
 			else
-				ufo->target = NULL;
+				ufo->aircraftTarget = NULL;
 		} else {
 			ufo->status = AIR_TRANSIT;
 			for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {

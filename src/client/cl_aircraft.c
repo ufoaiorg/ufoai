@@ -911,7 +911,7 @@ void CL_CampaignRunAircraft (int dt)
 					Cbuf_ExecuteText(EXEC_NOW, "seq_start airfight");
 #endif
 					/* Solve the fight */
-					AIRFIGHT_ExecuteActions(aircraft, aircraft->target);
+					AIRFIGHT_ExecuteActions(aircraft, aircraft->aircraftTarget);
 				}
 
 				/* Update delay to launch next projectile */
@@ -1138,7 +1138,6 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 		air_samp->idx_sample = numAircraft_samples;
 		air_samp->id = Mem_PoolStrDup(name, cl_genericPool, CL_TAG_NONE);
 		air_samp->status = AIR_HOME;
-		air_samp->baseTargetIdx = AIRFIGHT_TARGET_IS_AIRCRAFT;
 		AII_InitialiseAircraftSlots(air_samp);
 
 		/* TODO: document why do we have two values for this */
@@ -1503,10 +1502,10 @@ void AIR_AircraftsNotifyUfoRemoved (const aircraft_t *const ufo)
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1;
 			aircraft >= base->aircraft; aircraft--)
 			if (aircraft->status == AIR_UFO) {
-				if (ufo == aircraft->target)
+				if (ufo == aircraft->aircraftTarget)
 					AIR_AircraftReturnToBase(aircraft);
-				else if (ufo < aircraft->target)
-					aircraft->target--;
+				else if (ufo < aircraft->aircraftTarget)
+					aircraft->aircraftTarget--;
 			}
 }
 
@@ -1524,7 +1523,7 @@ void AIR_AircraftsUfoDisappear (const aircraft_t *const ufo)
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1;
 			aircraft >= base->aircraft; aircraft--)
 			if (aircraft->status == AIR_UFO)
-				if (ufo == aircraft->target)
+				if (ufo == aircraft->aircraftTarget)
 					AIR_AircraftReturnToBase(aircraft);
 }
 
@@ -1557,7 +1556,8 @@ void AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
 	aircraft->status = AIR_UFO;
 	aircraft->time = 0;
 	aircraft->point = 0;
-	aircraft->target = ufo;
+	aircraft->aircraftTarget = ufo;
+	aircraft->baseTarget = NULL;
 }
 
 /**
@@ -1574,7 +1574,8 @@ void AIR_SendUfoPurchasingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 	ufo->status = AIR_UFO;
 	ufo->time = 0;
 	ufo->point = 0;
-	ufo->target = aircraft;
+	ufo->aircraftTarget = aircraft;
+	ufo->baseTarget = NULL;
 }
 
 /**
@@ -1588,11 +1589,11 @@ void AIR_SendUfoPurchasingBase (aircraft_t* ufo, base_t* base)
 	assert(base);
 
 	MAP_MapCalcLine(ufo->pos, base->pos, &(ufo->route));
-	ufo->baseTargetIdx = base->idx;
-	ufo->status = AIR_UFO;
+	ufo->baseTarget = base;
+	ufo->aircraftTarget = NULL;
+	ufo->status = AIR_UFO; /* FIXME: Might crash in cl_map.c MAP_DrawMapMarkers */
 	ufo->time = 0;
 	ufo->point = 0;
-	ufo->target = NULL;
 }
 
 /*============================================
@@ -1766,9 +1767,12 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 		for (j = 0; j < presaveArray[PRE_AIRSTA]; j++)
 			MSG_WriteLong(sb, gd.ufos[i].stats[j]);
 		/* Save target of the ufo */
-		MSG_WriteShort(sb, gd.ufos[i].baseTargetIdx);
-		if (gd.ufos[i].target)
-			MSG_WriteShort(sb, gd.ufos[i].target->idx);
+		if (gd.ufos[i].baseTarget)
+			MSG_WriteShort(sb, gd.ufos[i].baseTarget->idx);
+		else
+			MSG_WriteShort(sb, -1);
+		if (gd.ufos[i].aircraftTarget)
+			MSG_WriteShort(sb, gd.ufos[i].aircraftTarget->idx);
 		else
 			MSG_WriteShort(sb, -1);
 
@@ -1828,7 +1832,10 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 				MSG_WriteShort(sb, gd.projectiles[i].attackingAircraft->idx);
 		} else
 			MSG_WriteByte(sb, 2);
-		MSG_WriteShort(sb, gd.projectiles[i].aimedBaseIdx);
+		if (gd.projectiles[i].aimedBase)
+			MSG_WriteShort(sb, gd.projectiles[i].aimedBase->idx);
+		else
+			MSG_WriteShort(sb, -1);
 		if (gd.projectiles[i].aimedAircraft) {
 			MSG_WriteByte(sb, gd.projectiles[i].aimedAircraft->type == AIRCRAFT_UFO);
 			if (gd.projectiles[i].aimedAircraft->type == AIRCRAFT_UFO)
@@ -1898,8 +1905,8 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			MSG_ReadPos(sb, tmp_vec3t);		/* direction */
 			for (j = 0; j < presaveArray[PRE_AIRSTA]; j++)
 				MSG_ReadLong(sb);
-			MSG_ReadShort(sb);			/* baseTargetIdx */
-			MSG_ReadByte(sb);			/* target->idx */
+			MSG_ReadShort(sb);			/* baseTarget index */
+			MSG_ReadByte(sb);			/* aircraftTarget index */
 			/* read slots */
 			tmp_int = MSG_ReadByte(sb);
 			for (j = 0; j < tmp_int; j++) {
@@ -1938,12 +1945,16 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			MSG_ReadPos(sb, ufo->direction);
 			for (j = 0; j < presaveArray[PRE_AIRSTA]; j++)
 				ufo->stats[i] = MSG_ReadLong(sb);
-			ufo->baseTargetIdx = MSG_ReadShort(sb);
 			tmp_int = MSG_ReadShort(sb);
 			if (tmp_int == -1)
-				ufo->target = NULL;
+				ufo->baseTarget = NULL;
 			else
-				ufo->target = AIR_AircraftGetFromIdx(MSG_ReadShort(sb));
+				ufo->baseTarget = &gd.bases[tmp_int];
+			tmp_int = MSG_ReadShort(sb);
+			if (tmp_int == -1)
+				ufo->aircraftTarget = NULL;
+			else
+				ufo->aircraftTarget = AIR_AircraftGetFromIdx(MSG_ReadShort(sb));
 			/* read weapon slot */
 			tmp_int = MSG_ReadByte(sb);
 			for (j = 0; j < tmp_int; j++) {
@@ -2013,7 +2024,11 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 				gd.projectiles[i].attackingAircraft = gd.ufos + MSG_ReadShort(sb);
 			else
 				gd.projectiles[i].attackingAircraft = AIR_AircraftGetFromIdx(MSG_ReadShort(sb));
-			gd.projectiles[i].aimedBaseIdx = MSG_ReadShort(sb);
+			tmp_int = MSG_ReadShort(sb);
+			if (tmp_int >= 0)
+				gd.projectiles[i].aimedBase = &gd.bases[tmp_int];
+			else
+				gd.projectiles[i].aimedBase = NULL;
 			tmp_int = MSG_ReadByte(sb);
 			if (tmp_int == 2)
 				gd.projectiles[i].aimedAircraft = NULL;

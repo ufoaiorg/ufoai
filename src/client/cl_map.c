@@ -1198,7 +1198,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node, qboolean globe)
 						re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
 
 					/* Draw a circle around ufo purchased by selected aircraft */
-					if (aircraft->status == AIR_UFO && MAP_AllMapToScreen(node, aircraft->target->pos, &x, &y, NULL)) {
+					if (aircraft->status == AIR_UFO && MAP_AllMapToScreen(node, aircraft->aircraftTarget->pos, &x, &y, NULL)) {
 						if (globe)
 							MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow, qtrue);
 						else
