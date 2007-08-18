@@ -402,7 +402,7 @@ craftitem craft_weapon_shiva
 	crafttype		weapon
 	size		40 // light
 	installationTime	2
-	price		34000
+	price		3000
 	buytype		craftitem
 }
 
@@ -411,7 +411,7 @@ craftitem craft_ammo_shiva_API
 	name		"_SHIVA 20mm API Rounds"
 	crafttype	ammo
 	craftweapon		craft_weapon_shiva
-	price		100
+	price		150
 	buytype		craftitem
 
 	ammo		20
@@ -427,7 +427,7 @@ craftitem craft_ammo_shiva_HEI
 	name		"_SHIVA 20mm HEI Rounds"
 	crafttype	ammo
 	craftweapon		craft_weapon_shiva
-	price		100
+	price		160
 	buytype		craftitem
 
 	ammo		20
@@ -443,7 +443,7 @@ craftitem craft_el_raven
 	name		"_Raven ECM Unit"
 	crafttype	electronics
 	installationTime	1
-	price		12345
+	price		5400
 	buytype		craftitem
 
 	ecm		1.25
@@ -455,7 +455,7 @@ craftitem craft_weapon_sparrowhawk
 	crafttype	weapon
 	size	40	// light
 	installationTime	2
-	price		12321
+	price		2800
 	buytype		craftitem
 }
 
@@ -481,7 +481,7 @@ craftitem craft_weapon_tr20
 	crafttype	weapon
 	size	90	// medium
 	installationTime	2
-	price		19998
+	price		6600
 	buytype		craftitem
 
 	speed		.9
@@ -509,7 +509,7 @@ craftitem craft_weapon_particle_beam
 	crafttype	weapon
 	size	90	// medium
 	installationTime	2
-	price		25252
+	price		9400
 	buytype		craftitem
 
 	wdamage		35
@@ -522,7 +522,7 @@ craftitem craft_el_targeting
 	name		"_Targeting Computer"
 	crafttype	electronics
 	installationTime	1
-	price		33333
+	price		6400
 	buytype		craftitem
 
 	accuracy	1.25
@@ -533,7 +533,7 @@ craftitem craft_el_fuelpod
 	name		"Fuel Pod"
 	crafttype	electronics
 	installationTime	2
-	price		8500
+	price		800
 	buytype		craftitem
 
 	fuelsize	+30000
@@ -545,7 +545,7 @@ craftitem craft_shield_polymer
 	name		"Polymer Aircraft Armour"
 	crafttype	shield
 	installationTime	24
-	price		16000
+	price		8400
 	buytype		craftitem
 
 	shield		+5
@@ -557,7 +557,7 @@ craftitem craft_shield_plating
 	name		"Alien Aircraft Plating"
 	crafttype	shield
 	installationTime	24
-	price		24000
+	price		12200
 	buytype		craftitem
 
 	shield		+10
@@ -574,7 +574,7 @@ craftitem base_weapon_tr20
 	crafttype		base_missile
 	size	90	// medium
 	installationTime	48
-	price		19998
+	price		7000
 	buytype		dummy
 
 	speed		.9
