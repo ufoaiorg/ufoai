@@ -536,6 +536,7 @@ void UP_AircraftItemDescription (int idx)
 
 	menuText[TEXT_STANDARD] = itemText;
 }
+
 /**
  * @brief Prints the ufopedia description for aircraft
  * @note Also checks whether the aircraft tech is already researched or collected

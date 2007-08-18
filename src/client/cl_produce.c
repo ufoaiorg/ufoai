@@ -163,7 +163,7 @@ void PR_UpdateProductionTime (base_t *base)
  * @param[in] req The production requirements of the item that is to be produced.
  * @return 0: If nothing can be produced. 1+: If anything can be produced. 'amount': Maximum.
  */
-static int PR_RequirementsMet (int amount, requirements_t *req)
+static int PR_RequirementsMet (int amount, requirements_t *req, base_t* base)
 {
 	int a, i;
 	int produceable_amount = 0;
@@ -175,7 +175,7 @@ static int PR_RequirementsMet (int amount, requirements_t *req)
 			if (req->type[i] == RS_LINK_ITEM) {
 				/* The same code is used in "RS_RequirementsMet" */
 				Com_DPrintf(DEBUG_CLIENT, "PR_RequirementsMet: %s / %i\n", req->id[i], req->idx[i]);
-				if (B_ItemInBase(req->idx[i], baseCurrent) < req->amount[i]) {
+				if (B_ItemInBase(req->idx[i], base) < req->amount[i]) {
 					produceable = qfalse;
 				}
 			}
@@ -977,7 +977,7 @@ static void PR_ProductionIncrease_f (void)
 		od = &csi.ods[prod->objID];
 
 		if (od->tech)
-			produceable_amount = PR_RequirementsMet(amount, &od->tech->require_for_production);
+			produceable_amount = PR_RequirementsMet(amount, &od->tech->require_for_production, baseCurrent);
 		else
 			produceable_amount = amount;
 

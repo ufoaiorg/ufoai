@@ -36,8 +36,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static technology_t *tech_hash[TECH_HASH_SIZE];
 static technology_t *tech_hash_provided[TECH_HASH_SIZE];
 
-qboolean RS_TechIsResearchable(technology_t *t);
-
 /* A (local) list of displayed technology-entries (the research list in the base) */
 static technology_t *researchList[MAX_RESEARCHLIST];
 
@@ -89,6 +87,7 @@ static void RS_ResearchFinish (technology_t* tech)
  * @brief Marks one tech as researchable.
  * @param tech The technology to be marked.
  * @sa RS_MarkCollected
+ * @sa RS_MarkResearchable
  */
 void RS_MarkOneResearchable (technology_t* tech)
 {
@@ -115,7 +114,7 @@ void RS_MarkOneResearchable (technology_t* tech)
  * @return Returns qtrue if all requirements are satisfied otherwise qfalse.
  * @todo Add support for the "delay" value.
  */
-static qboolean RS_RequirementsMet (requirements_t *required_AND, requirements_t *required_OR)
+static qboolean RS_RequirementsMet (requirements_t *required_AND, requirements_t *required_OR, base_t* base)
 {
 	int i;
 	qboolean met_AND = qfalse;
@@ -141,7 +140,7 @@ static qboolean RS_RequirementsMet (requirements_t *required_AND, requirements_t
 			case RS_LINK_ITEM:
 				/* The same code is used in "PR_RequirementsMet" */
 				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ANDitem: %s / %i\n", required_AND->id[i], required_AND->idx[i]);
-				if (B_ItemInBase(required_AND->idx[i], baseCurrent) < required_AND->amount[i]) {
+				if (B_ItemInBase(required_AND->idx[i], base) < required_AND->amount[i]) {
 					met_AND = qfalse;
 				}
 				break;
@@ -176,7 +175,7 @@ static qboolean RS_RequirementsMet (requirements_t *required_AND, requirements_t
 			case RS_LINK_ITEM:
 				/* The same code is used in "PR_RequirementsMet" */
 				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsMet: ORitem: %s / %i\n", required_OR->id[i], required_OR->idx[i]);
-				if (B_ItemInBase(required_OR->idx[i], baseCurrent) >= required_OR->amount[i])
+				if (B_ItemInBase(required_OR->idx[i], base) >= required_OR->amount[i])
 					met_OR = qtrue;
 				break;
 			case RS_LINK_EVENT:
@@ -205,9 +204,37 @@ static qboolean RS_RequirementsMet (requirements_t *required_AND, requirements_t
 	return (met_AND || met_OR);
 }
 
+
+/**
+ * @brief Checks if the technology (tech-id) is researchable.
+ * @param[in] tech pointer to technology_t.
+ * @return qboolean
+ * @sa RS_TechIsResearched
+ */
+static qboolean RS_TechIsResearchable (technology_t * tech)
+{
+	base_t* base = NULL;
+
+	if (!tech)
+		return qfalse;
+
+	/* Research item found */
+	if (tech->statusResearch == RS_FINISH)
+		return qfalse;
+
+	if (tech->statusResearchable)
+		return qtrue;
+
+	/* which base is it researched in */
+	if (tech->base_idx >= 0)
+		base = &gd.bases[tech->base_idx];
+
+	return RS_RequirementsMet(&tech->require_AND, &tech->require_OR, base);
+}
+
 /**
  * @brief returns the currently used description for a technology.
- * @param[in] desc A list of possible descriptions (with tech-links that decide which one is the corerect one)
+ * @param[in] desc A list of possible descriptions (with tech-links that decide which one is the correct one)
  */
 char *RS_GetDescription (descriptions_t *desc)
 {
@@ -232,7 +259,7 @@ char *RS_GetDescription (descriptions_t *desc)
 		if (!tech)
 			continue;
 
-		if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR)) {
+		if (RS_TechIsResearchable(tech)) {
 			desc->usedDescription = i;	/**< Stored used description */
 			return desc->text[i];
 		}
@@ -384,11 +411,15 @@ void RS_MarkResearchable (qboolean init)
 			/* Check for collected items/aliens/etc... */
 
 			if (tech->statusResearch != RS_FINISH) {
+				base_t* base = NULL;
 				Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: handling \"%s\".\n", tech->id);
 				/* If required techs are all researched and all other requirements are met, mark this as researchable. */
 
+				if (tech->base_idx >= 0)
+					base = &gd.bases[tech->base_idx];
+
 				/* All requirements are met. */
-				if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR)) {
+				if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR, base)) {
 					Com_DPrintf(DEBUG_CLIENT, "RS_MarkResearchable: \"%s\" marked researchable. reason:requirements.\n", tech->id);
 					if (init && tech->time <= 0)
 						tech->mailSent = MAILSENT_PROPOSAL;
@@ -928,7 +959,7 @@ static void RS_ResearchStart_f (void)
 	if (!tech->statusResearchable) {
 		Com_DPrintf(DEBUG_CLIENT, "RS_ResearchStart_f: %s was not researchable yet. re-checking\n",tech->id);
 		/* If all requiremnts are met (includes a check for "enough-collected") mark this tech as researchable.*/
-		if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR))
+		if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR, baseCurrent))
 			RS_MarkOneResearchable(tech);
 		RS_MarkResearchable(qfalse);	/* Re-check all other techs in case they depend on the marked one. */
 	}
@@ -1233,12 +1264,6 @@ static void RS_MarkResearched (technology_t *tech)
 	RS_ResearchFinish(tech);
 	Com_DPrintf(DEBUG_CLIENT, "Research of \"%s\" finished.\n", tech->id);
 	INV_EnableAutosell(tech);
-#if 0
-	if (RS_DependsOn(tech->id, id) && (tech->time <= 0) && RS_TechIsResearchable(tech)) {
-		RS_ResearchFinish(tech);
-		Com_DPrintf(DEBUG_CLIENT, "Depending tech \"%s\" has been researched as well.\n", tech->id);
-	}
-#endif
 	RS_MarkResearchable(qfalse);
 }
 
@@ -2013,27 +2038,6 @@ qboolean RS_TechIsResearched (int tech_idx)
 		return qtrue;
 
 	return qfalse;
-}
-
-/**
- * @brief Checks if the technology (tech-id) is researchable.
- * @param[in] tech pointer to technology_t.
- * @return qboolean
- * @sa RS_TechIsResearched
- */
-qboolean RS_TechIsResearchable (technology_t * tech)
-{
-	if (!tech)
-		return qfalse;
-
-	/* Research item found */
-	if (tech->statusResearch == RS_FINISH)
-		return qfalse;
-
-	if (tech->statusResearchable)
-		return qtrue;
-
-	return RS_RequirementsMet(&tech->require_AND, &tech->require_OR);
 }
 
 /**

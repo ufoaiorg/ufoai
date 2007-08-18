@@ -134,11 +134,19 @@ static void BS_MarketClick_f (void)
 	if (num >= buyListLength)
 		return;
 
-	if (buyCategory == BUY_AIRCRAFT)
+	switch (buyCategory) {
+	case BUY_AIRCRAFT:
 		BS_MarketAircraftDescription(buyList[num]);
-	else if (buyCategory != -1) {
+		break;
+	case BUY_CRAFTITEM:
+		UP_AircraftItemDescription(buyList[num]);
+		break;
+	case -1:
+		break;
+	default:
 		UP_ItemDescription(buyList[num]);
 		Cvar_SetValue("mn_bs_current", buyList[num]);
+		break;
 	}
 }
 
@@ -626,7 +634,7 @@ static void BS_BuyAircraft_f (void)
 			if (baseCurrent->capacities[CAP_ITEMS].max - baseCurrent->capacities[CAP_ITEMS].cur >= csi.ods[craftitemID].size) {
 				B_UpdateStorageAndCapacity(baseCurrent, craftitemID, 1, qfalse, qfalse);
 				ccs.eMarket.num[craftitemID]--;
-				/* reinit the menu */			
+				/* reinit the menu */
 				Cmd_BufClear();
 				BS_BuyType_f();
 				CL_UpdateCredits(ccs.credits - ccs.eMarket.ask[craftitemID]);
@@ -704,11 +712,11 @@ static void BS_SellAircraft_f (void)
 		if (baseCurrent->storage.num[craftitemID]) {
 			B_UpdateStorageAndCapacity(baseCurrent, craftitemID, -1, qfalse, qfalse);
 			ccs.eMarket.num[craftitemID]++;
-			/* reinit the menu */	
+			/* reinit the menu */
 			Cmd_BufClear();
 			BS_BuyType_f();
 			CL_UpdateCredits(ccs.credits + ccs.eMarket.bid[craftitemID]);
-		} 
+		}
 	}
 }
 
