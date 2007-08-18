@@ -2178,7 +2178,7 @@ void Com_ParseScripts (void)
 		if (!Q_strncmp(type, "item", 4))
 			Com_ParseItem(name, &text, qfalse);
 		else if (!Q_strncmp(type, "craftitem", 8))
-			Com_ParseItem(name, text, qtrue);
+			Com_ParseItem(name, &text, qtrue);
 		else if (!Q_strncmp(type, "inventory", 9))
 			Com_ParseInventory(name, &text);
 		else if (!Q_strncmp(type, "terrain", 7))
