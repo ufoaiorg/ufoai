@@ -348,6 +348,7 @@ void INV_EnableAutosell (technology_t *tech)
 /**
  * @brief Prepares initial equipment for first base at the beginning of the campaign.
  * @param[in] base Pointer to first base.
+ * @param[in] campaign The current running campaign
  * @sa B_BuildBase_f
  * @todo Make sure all equipment including soldiers equipment is added to capacity.cur.
  */
@@ -358,6 +359,7 @@ void INV_InitialEquipment (base_t *base, campaign_t* campaign)
 	const char *eqname = cl_initial_equipment->string;
 
 	assert(campaign);
+	assert(base);
 
 	/* Find the initial equipment definition for current campaign. */
 	for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++) {

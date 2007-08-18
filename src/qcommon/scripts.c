@@ -889,7 +889,7 @@ const char *air_slot_type_strings[MAX_ACITEMS] = {
 /**
  * @brief
  */
-void Com_ParseItem (const char *name, const char **text, qboolean craftitem)
+static void Com_ParseItem (const char *name, const char **text, qboolean craftitem)
 {
 	const char *errhead = "Com_ParseItem: unexpected end of file (weapon ";
 	const value_t *val;
@@ -2177,6 +2177,8 @@ void Com_ParseScripts (void)
 		/* server/client scripts */
 		if (!Q_strncmp(type, "item", 4))
 			Com_ParseItem(name, &text, qfalse);
+		else if (!Q_strncmp(type, "craftitem", 8))
+			Com_ParseItem(name, text, qtrue);
 		else if (!Q_strncmp(type, "inventory", 9))
 			Com_ParseInventory(name, &text);
 		else if (!Q_strncmp(type, "terrain", 7))

@@ -1798,8 +1798,6 @@ static void CL_ParseScriptFirst (const char *type, const char *name, const char 
 		CL_ParseResearchableCampaignStates(name, text, qfalse);
 	else if (!Q_strncmp(type, "tech", 4))
 		RS_ParseTechnologies(name, text);
-	else if (!Q_strncmp(type, "craftitem", 8))
-		Com_ParseItem(name, text, qtrue);
 	else if (!Q_strncmp(type, "base", 4))
 		B_ParseBases(name, text);
 	else if (!Q_strncmp(type, "nation", 6))
