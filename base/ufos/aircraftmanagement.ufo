@@ -408,6 +408,7 @@ craftitem craft_weapon_shiva
 
 craftitem craft_ammo_shiva_API
 {
+	name		"_SHIVA 20mm API Rounds"
 	crafttype	ammo
 	craftweapon		craft_weapon_shiva
 	price		100
@@ -423,6 +424,7 @@ craftitem craft_ammo_shiva_API
 
 craftitem craft_ammo_shiva_HEI
 {
+	name		"_SHIVA 20mm HEI Rounds"
 	crafttype	ammo
 	craftweapon		craft_weapon_shiva
 	price		100
@@ -438,6 +440,7 @@ craftitem craft_ammo_shiva_HEI
 
 craftitem craft_el_raven
 {
+	name		"_Raven ECM Unit"
 	crafttype	electronics
 	installationTime	1
 	price		12345
@@ -448,6 +451,7 @@ craftitem craft_el_raven
 
 craftitem craft_weapon_sparrowhawk
 {
+	name		"_Sparrowhawk AA Missile Rack"
 	crafttype	weapon
 	size	40	// light
 	installationTime	2
@@ -457,6 +461,7 @@ craftitem craft_weapon_sparrowhawk
 
 craftitem craft_ammo_sparrowhawk
 {
+	name		"_Sparrowhawk Missile"
 	crafttype	ammo
 	craftweapon		craft_weapon_sparrowhawk
 	price		250
@@ -472,6 +477,7 @@ craftitem craft_ammo_sparrowhawk
 
 craftitem craft_weapon_tr20
 {
+	name		"_TR-20 Rocket Pod"
 	crafttype	weapon
 	size	90	// medium
 	installationTime	2
@@ -483,6 +489,7 @@ craftitem craft_weapon_tr20
 
 craftitem craft_ammo_tr20
 {
+	name		"_TR-20 Rocket"
 	crafttype	ammo
 	craftweapon		craft_weapon_tr20
 	price		310
@@ -498,6 +505,7 @@ craftitem craft_ammo_tr20
 
 craftitem craft_weapon_particle_beam
 {
+	name		"_Particle Beam Weapon"
 	crafttype	weapon
 	size	90	// medium
 	installationTime	2
@@ -511,6 +519,7 @@ craftitem craft_weapon_particle_beam
 
 craftitem craft_el_targeting
 {
+	name		"_Targeting Computer"
 	crafttype	electronics
 	installationTime	1
 	price		33333
@@ -521,6 +530,7 @@ craftitem craft_el_targeting
 
 craftitem craft_el_fuelpod
 {
+	name		"Fuel Pod"
 	crafttype	electronics
 	installationTime	2
 	price		8500
@@ -532,6 +542,7 @@ craftitem craft_el_fuelpod
 
 craftitem craft_shield_polymer
 {
+	name		"Polymer Aircraft Armour"
 	crafttype	shield
 	installationTime	24
 	price		16000
@@ -543,6 +554,7 @@ craftitem craft_shield_polymer
 
 craftitem craft_shield_plating
 {
+	name		"Alien Aircraft Plating"
 	crafttype	shield
 	installationTime	24
 	price		24000
@@ -570,7 +582,7 @@ craftitem base_weapon_tr20
 craftitem base_ammo_tr20
 {
 	crafttype		base_ammo_missile
-	craftweapon		craft_weapon_sparrowhawk
+	craftweapon		base_weapon_tr20
 	price		310
 	buytype		craftitem
 
