@@ -1062,11 +1062,6 @@ void Com_ParseItem (const char *name, const char **text, qboolean craftitem)
 		if (od->shape & (0xFF << (i * SHAPE_SMALL_MAX_WIDTH)))
 			break;
 	od->sy = i + 1;
-
-	if (craftitem && od->buytype != BUY_CRAFTITEM) {
-		Com_Printf("Com_ParseItem: Craftitem %s is not buytype craftitem\n", od->id);
-		od->buytype = BUY_CRAFTITEM;
-	}
 }
 
 

@@ -570,21 +570,23 @@ craftitem craft_shield_plating
 
 craftitem base_weapon_tr20
 {
+	name		"_Base defence: TR-20 Rocket Pod"
 	crafttype		base_missile
 	size	90	// medium
 	installationTime	48
 	price		19998
-	buytype		craftitem
+	buytype		dummy
 
 	speed		.9
 }
 
 craftitem base_ammo_tr20
 {
+	name		"_Base defence: TR-20 Rocket"
 	crafttype		base_ammo_missile
 	craftweapon		base_weapon_tr20
 	price		310
-	buytype		craftitem
+	buytype		dummy
 
 	ammo		12
 	wdamage		28

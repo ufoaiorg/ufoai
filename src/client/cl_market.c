@@ -308,7 +308,11 @@ static void BS_BuyType_f (void)
 				continue;
 			tech = (technology_t *) od->tech;
 			/* Check whether the proper buytype, storage in current base and market. */
-			if (tech && (od->buytype == BUY_CRAFTITEM) && (baseCurrent->storage.num[i] || ccs.eMarket.num[i])) {
+			if (tech && (od->buytype == BUY_CRAFTITEM) && 
+			(RS_Collected_(tech) || RS_IsResearched_ptr(tech)) &&
+			(baseCurrent->storage.num[i] || ccs.eMarket.num[i])) {
+				if (j >= buyListScrollPos && j < MAX_MARKET_MENU_ENTRIES)
+					Cbuf_AddText(va("buy_show%i\n", j - buyListScrollPos));
 				BS_AddToList(od->name, baseCurrent->storage.num[i], ccs.eMarket.num[i], ccs.eMarket.ask[i]);
 				if (j >= MAX_BUYLIST)
 					Sys_Error("Increase the MAX_BUYLIST value to handle that much items\n");

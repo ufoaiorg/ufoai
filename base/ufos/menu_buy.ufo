@@ -1645,6 +1645,15 @@ menu buyaircraft
 	confunc buy_hide7 { *bt_buy7 invis true	*bt_sell7 invis true  }
 	confunc buy_hide8 { *bt_buy8 invis true	*bt_sell8 invis true  }
 	confunc buy_hide9 { *bt_buy9 invis true	*bt_sell9 invis true  }
+	confunc buy_hide10 { *bt_buy10 invis true *bt_sell10 invis true  }
+	confunc buy_hide11 { *bt_buy11 invis true *bt_sell11 invis true  }
+	confunc buy_hide12 { *bt_buy12 invis true *bt_sell12 invis true  }
+	confunc buy_hide13 { *bt_buy13 invis true *bt_sell13 invis true  }
+	confunc buy_hide14 { *bt_buy14 invis true *bt_sell14 invis true  }
+	confunc buy_hide15 { *bt_buy15 invis true *bt_sell15 invis true  }
+	confunc buy_hide16 { *bt_buy16 invis true *bt_sell16 invis true  }
+	confunc buy_hide17 { *bt_buy17 invis true *bt_sell17 invis true  }
+	confunc buy_hide18 { *bt_buy18 invis true *bt_sell18 invis true  }
 
 	confunc buy_show0 { *bt_buy0 invis false	*bt_sell0 invis false  }
 	confunc buy_show1 { *bt_buy1 invis false	*bt_sell1 invis false  }
@@ -1656,6 +1665,15 @@ menu buyaircraft
 	confunc buy_show7 { *bt_buy7 invis false	*bt_sell7 invis false  }
 	confunc buy_show8 { *bt_buy8 invis false	*bt_sell8 invis false  }
 	confunc buy_show9 { *bt_buy9 invis false	*bt_sell9 invis false  }
+        confunc buy_show10 { *bt_buy10 invis false	*bt_sell10 invis false  }
+        confunc buy_show11 { *bt_buy11 invis false	*bt_sell11 invis false  }
+        confunc buy_show12 { *bt_buy12 invis false	*bt_sell12 invis false  }
+        confunc buy_show13 { *bt_buy13 invis false	*bt_sell13 invis false  }
+        confunc buy_show14 { *bt_buy14 invis false	*bt_sell14 invis false  }
+        confunc buy_show15 { *bt_buy15 invis false	*bt_sell15 invis false  }
+        confunc buy_show16 { *bt_buy16 invis false	*bt_sell16 invis false  }
+        confunc buy_show17 { *bt_buy17 invis false	*bt_sell17 invis false  }
+        confunc buy_show18 { *bt_buy18 invis false	*bt_sell18 invis false  }
 
 
 	// ==================
@@ -1822,6 +1840,151 @@ menu buyaircraft
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell_aircraft 9" }
 	}
+	pic bt_buy10
+	{
+		tooltip	"_Buy aircraft"
+		image	menu/buttons_small
+		pos		"376 265"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy_aircraft 10" }
+	}
+	pic bt_sell10
+	{
+		tooltip	"_Sell aircraft"
+		image	menu/buttons_small
+		pos		"392 265"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell_aircraft 10" }
+	}
+	pic bt_buy11
+	{
+		tooltip	"_Buy aircraft"
+		image	menu/buttons_small
+		pos		"376 265"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy_aircraft 11" }
+	}
+	pic bt_sell11
+	{
+		tooltip	"_Sell aircraft"
+		image	menu/buttons_small
+		pos		"392 265"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell_aircraft 11" }
+	}
+	pic bt_buy12
+	{
+		tooltip	"_Buy aircraft"
+		image	menu/buttons_small
+		pos		"376 265"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy_aircraft 12" }
+	}
+	pic bt_sell12
+	{
+		tooltip	"_Sell aircraft"
+		image	menu/buttons_small
+		pos		"392 265"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell_aircraft 12" }
+	}
+	pic bt_buy13
+	{
+		tooltip	"_Buy aircraft"
+		image	menu/buttons_small
+		pos		"376 265"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy_aircraft 13" }
+	}
+	pic bt_sell13
+	{
+		tooltip	"_Sell aircraft"
+		image	menu/buttons_small
+		pos		"392 265"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell_aircraft 13" }
+	}
+	pic bt_buy14
+	{
+		tooltip	"_Buy aircraft"
+		image	menu/buttons_small
+		pos		"376 265"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy_aircraft 14" }
+	}
+	pic bt_sell14
+	{
+		tooltip	"_Sell aircraft"
+		image	menu/buttons_small
+		pos		"392 265"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell_aircraft 14" }
+	}
+	pic bt_buy15
+	{
+		tooltip	"_Buy aircraft"
+		image	menu/buttons_small
+		pos		"376 265"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy_aircraft 15" }
+	}
+	pic bt_sell15
+	{
+		tooltip	"_Sell aircraft"
+		image	menu/buttons_small
+		pos		"392 265"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell_aircraft 15" }
+	}
+	pic bt_buy16
+	{
+		tooltip	"_Buy aircraft"
+		image	menu/buttons_small
+		pos		"376 265"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy_aircraft 16" }
+	}
+	pic bt_sell16
+	{
+		tooltip	"_Sell aircraft"
+		image	menu/buttons_small
+		pos		"392 265"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell_aircraft 16" }
+	}
+	pic bt_buy17
+	{
+		tooltip	"_Buy aircraft"
+		image	menu/buttons_small
+		pos		"376 265"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy_aircraft 17" }
+	}
+	pic bt_sell17
+	{
+		tooltip	"_Sell aircraft"
+		image	menu/buttons_small
+		pos		"392 265"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell_aircraft 17" }
+	}
+	pic bt_buy18
+	{
+		tooltip	"_Buy aircraft"
+		image	menu/buttons_small
+		pos		"376 265"	mousefx true
+		texl	"0 0"		texh	"16 16"
+		click	{ cmd "mn_buy_aircraft 18" }
+	}
+	pic bt_sell18
+	{
+		tooltip	"_Sell aircraft"
+		image	menu/buttons_small
+		pos		"392 265"	mousefx	true
+		texl	"16 0"		texh	"32 16"
+		click	{ cmd "mn_sell_aircraft 18" }
+	}
+
 
 	// ==================
 	// credits
