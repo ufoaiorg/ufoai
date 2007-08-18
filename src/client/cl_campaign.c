@@ -4200,9 +4200,7 @@ static void CP_UFORecoveryDone (void)
 	Cvar_SetValue("mission_tryagain", 1);
 	Cbuf_AddText("distryagain\n");
 	/* Disable UFORecovery buttons. */
-	Cbuf_AddText("disufostore\n");
-	Cbuf_AddText("disufosell\n");
-	Cbuf_AddText("disufodestroy\n");
+	Cbuf_AddText("disallrecovery\n");
 
 	/* Set done cvar for function updating. */
 	Cvar_SetValue("mission_uforecoverydone", 1);
