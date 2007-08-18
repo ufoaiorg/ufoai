@@ -350,17 +350,18 @@ void INV_EnableAutosell (technology_t *tech)
  * @param[in] base Pointer to first base.
  * @sa B_BuildBase_f
  * @todo Make sure all equipment including soldiers equipment is added to capacity.cur.
- * @todo Remove curCampaign pointer usage here. Send campaign idx as param[in] instead.
  */
-void INV_InitialEquipment (base_t *base)
+void INV_InitialEquipment (base_t *base, campaign_t* campaign)
 {
 	int i, price = 0;
 	equipDef_t *ed;
 	const char *eqname = cl_initial_equipment->string;
 
+	assert(campaign);
+
 	/* Find the initial equipment definition for current campaign. */
 	for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++) {
-		if (!Q_strncmp(curCampaign->equipment, ed->name, sizeof(curCampaign->equipment)))
+		if (!Q_strncmp(campaign->equipment, ed->name, sizeof(campaign->equipment)))
 			break;
 	}
 

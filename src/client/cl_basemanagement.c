@@ -2083,7 +2083,7 @@ static void B_BuildBase_f (void)
 
 			/* initial base equipment */
 			if (gd.numBases == 1) {
-				INV_InitialEquipment(baseCurrent);
+				INV_InitialEquipment(baseCurrent, curCampaign);
 				CL_GameTimeFast();
 				CL_GameTimeFast();
 			}

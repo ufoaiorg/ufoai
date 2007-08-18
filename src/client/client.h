@@ -795,9 +795,6 @@ const struct aircraft_s* ufo, qboolean wasUfoSensored);
 /* needs the MAX_ACTIVETEAM definition from above. */
 #include "cl_basemanagement.h"
 
-/* cl_inventory.c */
-#include "cl_inventory.h"
-
 /* cl_employee.c */
 #include "cl_employee.h"
 
@@ -904,6 +901,9 @@ void B_DrawBase(menuNode_t * node);
 
 /* cl_map.c */
 #include "cl_map.h"
+
+/* cl_inventory.c */
+#include "cl_inventory.h"
 
 /**
  * @brief  List of currently displayed or equipeable characters.
