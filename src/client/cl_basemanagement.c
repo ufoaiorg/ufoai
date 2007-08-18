@@ -3360,10 +3360,14 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, int objIDX, int amount, qbool
 			base->storage.num[objIDX] += amount;
 			if (csi.ods[objIDX].size > 0)
 				base->capacities[CAP_ITEMS].cur += (amount * csi.ods[objIDX].size);
+			if (base->capacities[CAP_ITEMS].cur < 0)
+				base->capacities[CAP_ITEMS].cur = 0;
 		} else if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur >= (csi.ods[objIDX].size * amount)) {
 			base->storage.num[objIDX] += amount;
 			if (csi.ods[objIDX].size > 0)
 				base->capacities[CAP_ITEMS].cur += (amount * csi.ods[objIDX].size);
+			if (base->capacities[CAP_ITEMS].cur < 0)
+				base->capacities[CAP_ITEMS].cur = 0;
 		} else {
 			Com_DPrintf(DEBUG_CLIENT, "B_UpdateStorageAndCapacity: Not enough storage space (item: %i, amount: %i)\n", objIDX, amount);
 			return qfalse;
