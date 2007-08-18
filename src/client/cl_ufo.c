@@ -224,7 +224,7 @@ static void UFO_SearchTarget (aircraft_t *ufo)
 
 	if (ufo->status != AIR_FLEEING) {
 		/* check if the ufo is already attacking a base */
-		if (ufo->baseTargetIdx > -1) {
+		if (ufo->baseTargetIdx > AIRFIGHT_TARGET_IS_AIRCRAFT) {
 			AIRFIGHT_ExecuteActions(ufo, NULL);
 		/* check if the ufo is already attacking an aircraft */
 		} else if (ufo->target) {
