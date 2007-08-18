@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-08-07 15:15+0200\n"
-"PO-Revision-Date: 2007-08-14 22:54+0100\n"
+"PO-Revision-Date: 2007-08-18 10:34+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -7941,7 +7941,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3510
 msgid "SHIVA 20mm API Rounds"
-msgstr "Pociski penetrujące SHIVA kal. 20 mm"
+msgstr "Pociski penetrujące SHIVA 20 mm"
 
 #: ../base/ufos/research.ufo:3513
 msgid "craft_ammo_shiva_1_txt"
@@ -7984,7 +7984,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3531
 msgid "SHIVA 20mm HEI Rounds"
-msgstr "Pociski odłamkowe SHIVA kal. 20 mm"
+msgstr "Pociski odłamkowe SHIVA  20 mm"
 
 #: ../base/ufos/research.ufo:3534
 msgid "craft_ammo_shiva_2_txt"
