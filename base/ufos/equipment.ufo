@@ -104,6 +104,8 @@ equipment campaign_market
 	craft_el_raven		4
 	craft_el_targeting	2
 	craft_shield_polymer	4
+	base_weapon_tr20	3
+	base_ammo_tr20	30
 }
 
 //=================
