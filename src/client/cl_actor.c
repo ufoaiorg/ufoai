@@ -1109,10 +1109,10 @@ void CL_FireWeapon_f (void)
 	/* Let's check if shooting is possible.
 	 * Don't let the selActor->TU parameter irritate you, it is not checked/used here. */
 	if (hand[0] == 'r') {
-		if(!CL_CheckMenuAction(selActor->TU, RIGHT(selActor), EV_INV_AMMO))
+		if (!CL_CheckMenuAction(selActor->TU, RIGHT(selActor), EV_INV_AMMO))
 			return;
 	} else {
-		if(!CL_CheckMenuAction(selActor->TU, LEFT(selActor), EV_INV_AMMO))
+		if (!CL_CheckMenuAction(selActor->TU, LEFT(selActor), EV_INV_AMMO))
 			return;
 	}
 

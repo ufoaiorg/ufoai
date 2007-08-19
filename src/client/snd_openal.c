@@ -258,10 +258,10 @@ static qboolean SND_OAL_StreamPlayback (music_t* music)
 	if (SND_OAL_StreamPlaying(music))
 		return qtrue;
 
-	if(!SND_OAL_ReadOGG(music, music->buffers[0]))
+	if (!SND_OAL_ReadOGG(music, music->buffers[0]))
 		return qfalse;
 
-	if(!SND_OAL_ReadOGG(music, music->buffers[1]))
+	if (!SND_OAL_ReadOGG(music, music->buffers[1]))
 		return qfalse;
 
 	qalSourceQueueBuffers(music->source, 2, music->buffers);

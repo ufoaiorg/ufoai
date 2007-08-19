@@ -425,7 +425,7 @@ static void Key_Console (int key)
 			return;
 		}
 
-		if(key_linepos > 1)  /* or just a char */
+		if (key_linepos > 1)  /* or just a char */
 			key_linepos--;
 		return;
 	} else if (key == K_RIGHTARROW) {  /* move cursor right */

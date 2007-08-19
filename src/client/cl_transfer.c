@@ -355,7 +355,7 @@ static void TR_TransferSelect_f (void)
 				}
 			if (!cnt)
 				Q_strncpyz(transferList, _("Storage is empty.\n"), sizeof(transferList));
-		} else if(transferBase->hasPower) {
+		} else if (transferBase->hasPower) {
 			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have a Storage."), sizeof(transferList));
 		} else {
 			Q_strcat(transferList, _("Transfer is not possible - the base does not have power supplies."), sizeof(transferList));
@@ -423,7 +423,7 @@ static void TR_TransferSelect_f (void)
 			}
 			if (!cnt)
 				Q_strncpyz(transferList, _("Alien Containment is empty.\n"), sizeof(transferList));
-		} else if(transferBase->hasPower) {
+		} else if (transferBase->hasPower) {
 			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have an Alien Containment."), sizeof(transferList));
 		} else {
 			Q_strcat(transferList, _("Transfer is not possible - the base has not power supplies."), sizeof(transferList));
@@ -830,7 +830,7 @@ static void TR_TransferListSelect_f (void)
 		}
 		break;
 	case 2:		/**< aliens */
-		if(!transferBase->hasAlienCont)
+		if (!transferBase->hasAlienCont)
 			return;
 		for (i = 0; i < csi.numTeamDefs; i++) {
 			if (baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_dead > 0) {
@@ -858,7 +858,7 @@ static void TR_TransferListSelect_f (void)
 		}
 		break;
 	case 3:		/**< aircrafts */
-		if(!transferBase->hasHangar && !transferBase->hasHangarSmall)
+		if (!transferBase->hasHangar && !transferBase->hasHangarSmall)
 			return;
 		for (i = 0; i < MAX_AIRCRAFT; i++) {
 			aircraft = AIR_AircraftGetFromIdx(i);

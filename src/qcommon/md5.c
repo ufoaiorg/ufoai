@@ -294,7 +294,7 @@ char *Com_MD5File (const char *fn, int length)
 			r = length - total;
 		total += r;
 		MD5Update(&md5 , (unsigned char *)buffer, r);
-		if(r < sizeof(buffer) || total >= length)
+		if (r < sizeof(buffer) || total >= length)
 			break;
 	}
 	FS_FCloseFile(&f);
