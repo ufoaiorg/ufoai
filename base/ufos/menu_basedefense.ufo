@@ -163,7 +163,7 @@ menu basedefense
 		align	cc
 	}
 
-	text airequip_list
+	text baseequip_list
 	{
 		pos	"756 480"
 		size	"252 300"

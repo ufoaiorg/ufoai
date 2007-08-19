@@ -1,4 +1,3 @@
-
 /**
  * @file cl_mapfightequip.c
  * @brief contains everything related to equiping slots of aircrafts or base
@@ -43,7 +42,7 @@ static technology_t *airequipSelectedTechnology = NULL;		/**< Selected technolgy
 itemWeight_t AII_GetItemWeightBySize (objDef_t *od)
 {
 	assert(od);
-	assert(od->buytype == BUY_CRAFTITEM);
+	assert(od->craftitem.type >= 0);
 
 	if (od->size < 50)
 		return ITEM_LIGHT;
@@ -58,50 +57,21 @@ itemWeight_t AII_GetItemWeightBySize (objDef_t *od)
  * @brief Returns a list of craftitem technologies for the given type.
  * @note This list is terminated by a NULL pointer.
  * @param[in] type Type of the craft-items to return.
- * @param[in] usetypedef Defines if the type param should be handled as a aircraftItemType_t (qtrue) or not (qfalse - See the code).
  */
-static technology_t **AII_GetCraftitemTechsByType (int type, qboolean usetypedef)
+static technology_t **AII_GetCraftitemTechsByType (int type, base_t* base)
 {
 	static technology_t *techList[MAX_TECHNOLOGIES];
 	objDef_t *aircraftitem = NULL;
 	int i, j = 0;
 
+	assert(base);
+
 	for (i = 0; i < csi.numODs; i++) {
 		aircraftitem = &csi.ods[i];
-		if (aircraftitem->buytype != BUY_CRAFTITEM)
-			continue;
-		if (usetypedef) {
-			if (aircraftitem->craftitem.type == type) {
-				techList[j] = aircraftitem->tech;
-				j++;
-			}
-		} else {
-			switch (type) {
-			case 1: /* armour */
-				if (aircraftitem->craftitem.type == AC_ITEM_SHIELD) {
-					techList[j] = aircraftitem->tech;
-					j++;
-				}
-				break;
-			case 2:	/* items */
-				if (aircraftitem->craftitem.type == AC_ITEM_ELECTRONICS)	{
-					techList[j] = aircraftitem->tech;
-					j++;
-				}
-				break;
-			case 3:	/* ammos */
-				if (aircraftitem->craftitem.type == AC_ITEM_AMMO)	{
-					techList[j] = aircraftitem->tech;
-					j++;
-				}
-				break;
-			default:
-				if (aircraftitem->craftitem.type == AC_ITEM_WEAPON) {
-					techList[j] = aircraftitem->tech;
-					j++;
-				}
-				break;
-			}
+		if (aircraftitem->craftitem.type == type && base->storage.num[i]) {
+			assert(j < MAX_TECHNOLOGIES);
+			techList[j] = aircraftitem->tech;
+			j++;
 		}
 		/* j+1 because last item has to be NULL */
 		if (j + 1 >= MAX_TECHNOLOGIES) {
@@ -255,21 +225,19 @@ static aircraftSlot_t *BDEF_SelectBaseSlot (base_t *base)
  * @param[in] tech Pointer to the technology to test
  * @return qtrue if the aircraft item should be displayed, qfalse else
  */
-static qboolean AIM_SelectableAircraftItem (aircraft_t *aircraft, technology_t *tech)
+static qboolean AIM_SelectableAircraftItem (base_t* base, aircraft_t *aircraft, technology_t *tech)
 {
 	int itemIdx;
 	aircraftSlot_t *slot;
-	menu_t *activeMenu = NULL;
-	qboolean aircraftMenu;
 
-	/* select menu */
-	activeMenu = MN_ActiveMenu();
-	aircraftMenu = !Q_strncmp(activeMenu->name, "aircraft_equip", 14);
-
-	if (aircraftMenu)
+	if (aircraft)
 		slot = AII_SelectAircraftSlot(aircraft);
-	else
-		slot = BDEF_SelectBaseSlot(baseCurrent);
+	else if (base)
+		slot = BDEF_SelectBaseSlot(base);
+	else {
+		Com_Printf("AIM_SelectableAircraftItem: no aircraft and no base given\n");
+		return qfalse;
+	}
 
 	/* item is researched */
 	if (!RS_IsResearched_ptr(tech))
@@ -293,27 +261,27 @@ static qboolean AIM_SelectableAircraftItem (aircraft_t *aircraft, technology_t *
 /**
  * @brief Update the list of item you can choose
  */
-static void AIM_UpdateAircraftItemList (void)
+static void AIM_UpdateAircraftItemList (base_t* base, aircraft_t* aircraft)
 {
 	static char buffer[1024];
 	technology_t **list;
-	aircraft_t *aircraft;
 	int i;
-
-	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
-
-	assert(aircraft);
 
 	/* Delete list */
 	buffer[0] = '\0';
 
+	assert(base || aircraft);
+
+	if (airequipID == -1)
+		return;
+
 	/* Add all items corresponding to airequipID to list */
-	list = AII_GetCraftitemTechsByType(airequipID, qtrue);
+	list = AII_GetCraftitemTechsByType(airequipID, base ? base : baseCurrent);
 
 	/* Copy only those which are researched to buffer */
 	i = 0;
 	while (*list) {
-		if (AIM_SelectableAircraftItem(aircraft, *list))
+		if (AIM_SelectableAircraftItem(base, aircraft, *list))
 			Q_strcat(buffer, va("%s\n", _((*list)->name)), sizeof(buffer));
 		list++;
 		i++;
@@ -494,7 +462,14 @@ void BDEF_Init_f (void)
 	int type;
 	menuNode_t *node;
 
-	if(!baseCurrent)
+	/* don't let old links appear on this menu */
+	menuText[TEXT_BASEDEFENSE_LIST] = NULL;
+	menuText[TEXT_AIREQUIP_1] = NULL;
+	menuText[TEXT_AIREQUIP_2] = NULL;
+	menuText[TEXT_AIREQUIP_3] = NULL;
+	menuText[TEXT_STANDARD] = NULL;
+
+	if (!baseCurrent)
 		return;
 
 	if (Cmd_Argc() != 2 || noparams) {
@@ -548,7 +523,7 @@ void BDEF_Init_f (void)
 	AIM_CheckAirequipSelectedZone(slot);
 
 	/* Fill the list of item you can equip your aircraft with */
-	AIM_UpdateAircraftItemList();
+	AIM_UpdateAircraftItemList(baseCurrent, NULL);
 
 	/* Delete list */
 	defBuffer[0] = '\0';
@@ -816,6 +791,12 @@ void AIM_AircraftEquipmenuInit_f (void)
 	aircraft_t *aircraft;
 	aircraftSlot_t *slot;
 
+	/* don't let old links appear on this menu */
+	menuText[TEXT_STANDARD] = NULL;
+	menuText[TEXT_AIREQUIP_1] = NULL;
+	menuText[TEXT_AIREQUIP_2] = NULL;
+	menuText[TEXT_AIREQUIP_3] = NULL;
+
 	if (Cmd_Argc() != 2 || noparams) {
 		if (airequipID == -1) {
 			Com_Printf("Usage: airequip_init <num>\n");
@@ -867,7 +848,7 @@ void AIM_AircraftEquipmenuInit_f (void)
 	AIM_CheckAirequipSelectedZone(slot);
 
 	/* Fill the list of item you can equip your aircraft with */
-	AIM_UpdateAircraftItemList();
+	AIM_UpdateAircraftItemList(NULL, aircraft);
 
 	/* shield / weapon description */
 	menuText[TEXT_STANDARD] = NULL;
@@ -979,7 +960,7 @@ void AIM_AircraftEquipSlotSelect_f (void)
 void AIM_AircraftEquipzoneSelect_f (void)
 {
 	int num;
-	aircraft_t *aircraft;
+	aircraft_t *aircraft = NULL;
 	aircraftSlot_t *slot;
 	menu_t *activeMenu = NULL;
 	qboolean aircraftMenu;
@@ -1003,6 +984,7 @@ void AIM_AircraftEquipzoneSelect_f (void)
 	} else {
 		/* Select slot */
 		slot = BDEF_SelectBaseSlot(baseCurrent);
+		assert(!aircraft);
 	}
 
 	/* ammos are only available for weapons */
@@ -1045,7 +1027,7 @@ void AIM_AircraftEquipzoneSelect_f (void)
 	airequipSelectedZone = num;
 
 	/* Fill the list of item you can equip your aircraft with */
-	AIM_UpdateAircraftItemList();
+	AIM_UpdateAircraftItemList(aircraftMenu ? NULL : baseCurrent, aircraft);
 
 	/* Check that the selected zone is OK */
 	AIM_CheckAirequipSelectedZone(slot);
@@ -1199,39 +1181,43 @@ void AIM_AircraftEquipDeleteItem_f (void)
  */
 void AIM_AircraftEquipmenuClick_f (void)
 {
-	aircraft_t *aircraft;
+	aircraft_t *aircraft = NULL;
+	base_t *base = NULL;
 	int num;
 	technology_t **list;
-	menu_t *activeMenu = NULL;
-	qboolean aircraftMenu;
+	menu_t *activeMenu;
 
-	if (baseCurrent->aircraftCurrent < 0 || airequipID == -1)
+	if (!baseCurrent || airequipID == -1)
 		return;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: airequip_list_click <arg>\n");
+		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 		return;
+	}
+
+	/* select menu */
+	activeMenu = MN_ActiveMenu();
+	/* check in which menu we are */
+	if (!Q_strncmp(activeMenu->name, "aircraft_equip", 14)) {
+		if (baseCurrent->aircraftCurrent < 0)
+			return;
+		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+		assert(aircraft);
+		assert(!base);
+	} else if (!Q_strncmp(activeMenu->name, "basedefense", 11)) {
+		base = baseCurrent;
+		assert(base);
+		assert(!aircraft);
 	}
 
 	/* Which entry in the list? */
 	num = atoi(Cmd_Argv(1));
 
-	/* select menu */
-	activeMenu = MN_ActiveMenu();
-	aircraftMenu = !Q_strncmp(activeMenu->name, "aircraft_equip", 14);
-
-	/* check in which menu we are */
-	if (aircraftMenu) {
-		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
-		assert(aircraft);
-	} else
-		aircraft = NULL;
-
 	/* build the list of all aircraft items of type airequipID - null terminated */
-	list = AII_GetCraftitemTechsByType(airequipID, qtrue);
+	list = AII_GetCraftitemTechsByType(airequipID, base ? base : baseCurrent);
 	/* to prevent overflows we go through the list instead of address it directly */
 	while (*list) {
-		if (AIM_SelectableAircraftItem(aircraft, *list)) {
+		if (AIM_SelectableAircraftItem(base, aircraft, *list)) {
 			/* found it */
 			if (num <= 0) {
 				airequipSelectedTechnology = *list;

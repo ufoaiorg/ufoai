@@ -3457,7 +3457,7 @@ tech rs_base_weapon_tr20
 {
 	type		tech
 	up_chapter	tech
-	name		"_TR-20 Rocket Pod"
+	name		"_Base defence: TR-20 Rocket Pod"
 	// pre_description	"_base_weapon_tr20_pre_txt"
 	description {
 		default "_base_weapon_tr20_txt"
@@ -3475,7 +3475,7 @@ tech rs_base_ammo_tr20
 {
 	type		tech
 	up_chapter	tech
-	name		"_TR-20 Rocket"
+	name		"_Base defence: TR-20 Rocket"
 	// pre_description	"_base_ammo_tr20_pre_txt"
 	description {
 		default "_base_ammo_tr20_txt"

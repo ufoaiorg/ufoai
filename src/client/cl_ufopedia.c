@@ -488,7 +488,7 @@ void UP_AircraftItemDescription (int idx)
 
 	/* select item */
 	item = &csi.ods[idx];
-	assert(item->buytype == BUY_CRAFTITEM);
+	assert(item->craftitem.type >= 0);
 	assert(item->tech);
 	Cvar_Set("mn_itemname", _(item->tech->name));
 	Cvar_Set("mn_item", item->id);

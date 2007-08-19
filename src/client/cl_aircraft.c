@@ -943,7 +943,7 @@ int AII_GetAircraftItemByID (const char *id)
 
 	for (i = 0; i < csi.numODs; i++) {	/* i = item index */
 		if (!Q_strncmp(id, csi.ods[i].id, MAX_VAR)) {
-			if (csi.ods[i].buytype != BUY_CRAFTITEM)
+			if (csi.ods[i].craftitem.type < 0)
 				Sys_Error("Same name for a none aircraft item object or not the correct buytype for this object (%s)\n", id);
 			return i;
 		}
