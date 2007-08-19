@@ -1088,9 +1088,8 @@ void broadcast_datagram (struct datagram_socket *s, const char *buf, int len, in
 		addr.sin_addr.s_addr = INADDR_BROADCAST;
 		send_datagram(s, buf, len, (struct sockaddr *)&addr);
 	} else if (s->family == AF_INET6) {
-		/* @todo: I'm not sure whether this is the correct approach - but it works */
 		struct sockaddr_in addr;
-		addr.sin_family = AF_INET;
+		addr.sin_family = AF_INET6;
 		addr.sin_port = htons(port);
 		addr.sin_addr.s_addr = INADDR_BROADCAST;
 		send_datagram(s, buf, len, (struct sockaddr *)&addr);
