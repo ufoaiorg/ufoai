@@ -1125,6 +1125,10 @@ void close_datagram_socket (struct datagram_socket *s)
 	free(s);
 }
 
+/**
+ * @brief Convert sockaddr to string
+ * @note uses getnameinfo
+ */
 void sockaddr_to_strings (struct datagram_socket *s, struct sockaddr *addr, char *node, size_t nodelen, char *service, size_t servicelen)
 {
 	int rc = getnameinfo(addr, s->addrlen, node, nodelen, service, servicelen,
@@ -1134,5 +1138,4 @@ void sockaddr_to_strings (struct datagram_socket *s, struct sockaddr *addr, char
 		Q_strncpyz(node, "(error)", nodelen);
 		Q_strncpyz(service, "(error)", servicelen);
 	}
-	return;
 }
