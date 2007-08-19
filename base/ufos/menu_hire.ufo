@@ -329,13 +329,12 @@ menu employees
 
 	text employee_list
 	{
-		height	"19"
 		format	"38 100"
 		color	"0 .78 0 1"
 		mousefx	true
-		height	"18"
+		height	"19"
 		pos		"60 32"
-		size	"280 684"
+		size	"280 722"
 		num		1
 //		bgcolor	"1 1 1 0.5"
 		click
