@@ -453,7 +453,7 @@ static void Irc_AppendToBuffer (const char* const msg)
 
 	while (strlen(irc_buffer) + strlen(msg) + 1 >= sizeof(irc_buffer) ) {
 		char *n;
-		if(!(n = strchr(irc_buffer, '\n'))) {
+		if (!(n = strchr(irc_buffer, '\n'))) {
 			irc_buffer[0] = '\0';
 			break;
 		}

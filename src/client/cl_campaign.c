@@ -1198,8 +1198,7 @@ static void CL_CampaignInitMarket (void)
 {
 	int i;
 	for (i = 0; i < csi.numODs; i++) {
-		if(ccs.eMarket.ask[i] == 0)
-		{
+		if (ccs.eMarket.ask[i] == 0) {
 			ccs.eMarket.ask[i] = csi.ods[i].price;
 			ccs.eMarket.bid[i] = floor(ccs.eMarket.ask[i]*BID_FACTOR);
 		}
@@ -1214,16 +1213,11 @@ static void CL_CampaignInitMarket (void)
 static void CL_CampaignRunMarket (void)
 {
 	int i, market_action;
-	equipDef_t *ed;
 	double research_factor, price_factor, curr_supp_diff;
 	/* supply and demand */
 	const double mrs1 = 0.1, mpr1 = 400, mrg1 = 0.002, mrg2 = 0.03;
 
-	/* find the relevant market */
-	for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
-		if (!Q_strncmp(curCampaign->market, ed->name, MAX_VAR))
-			break;
-	assert(i != csi.numEDs);
+	assert(curCampaign->marketDef);
 
 	/* @todo: Find out why there is a 2 days discrepancy in reasearched_date*/
 	for (i = 0; i < csi.numODs; i++) {
@@ -1239,7 +1233,7 @@ static void CL_CampaignRunMarket (void)
 			research_factor = mrs1 * sqrt(ccs.date.day - reasearched_date);
 			price_factor = mpr1 / sqrt(csi.ods[i].price+1);
 			curr_supp_diff = floor(research_factor*price_factor - ccs.eMarket.num[i]);
-			if(curr_supp_diff != 0)
+			if (curr_supp_diff != 0)
 				ccs.eMarket.cumm_supp_diff[i] += curr_supp_diff;
 			else
 				ccs.eMarket.cumm_supp_diff[i] *= 0.9;
@@ -1249,7 +1243,7 @@ static void CL_CampaignRunMarket (void)
 				ccs.eMarket.num[i] = 0;
 
 			/* set item price based on supply imbalance */
-			if(research_factor*price_factor >= 1)
+			if (research_factor*price_factor >= 1)
 				ccs.eMarket.ask[i] = floor(csi.ods[i].price * (1 - (1 - BID_FACTOR) / 2 * (1 / (1 + exp(curr_supp_diff / (research_factor * price_factor))) * 2 - 1)) );
 			else
 				ccs.eMarket.ask[i] = csi.ods[i].price;
@@ -3863,11 +3857,13 @@ campaign_t* CL_GetCampaign (const char* name)
 /**
  * @brief Starts a new single-player game
  * @sa CL_GameInit
+ * @sa CL_CampaignInitMarket
  */
 static void CL_GameNew_f (void)
 {
 	int i;
 	char val[8];
+	equipDef_t *ed;
 
 	Cvar_Set("mn_main", "singleplayerInGame");
 	Cvar_Set("mn_active", "map");
@@ -3945,11 +3941,30 @@ static void CL_GameNew_f (void)
 	/* create a base as first step */
 	Cbuf_ExecuteText(EXEC_NOW, "mn_select_base -1");
 
-	/* add some items to the market so it does not start empty */
-	for (i = 0; i < 7; i++)
-		CL_CampaignRunMarket();
-
 	CL_GameInit(qfalse);
+
+	/* find the relevant market */
+	for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
+		if (!Q_strncmp(curCampaign->market, ed->name, MAX_VAR)) {
+			curCampaign->marketDef = ed;
+			break;
+		}
+
+	if (!curCampaign->marketDef)
+		Sys_Error("CL_GameNew_f: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
+			curCampaign->id, curCampaign->market);
+
+	for (i = 0; i < csi.numODs; i++) {
+		if (!ed->num[i])
+			continue;
+		if (!RS_ItemIsResearched(csi.ods[i].id))
+			Com_Printf("CL_GameNew_f: Could not add item %s to the market - not marked as researched\n", csi.ods[i].id);
+		else
+			/* the other relevant values were already set in CL_CampaignInitMarket */
+			ccs.eMarket.num[i] = ed->num[i];
+	}
+
+	CL_CampaignRunMarket();
 }
 
 #define MAXCAMPAIGNTEXT 4096

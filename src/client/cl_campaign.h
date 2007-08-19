@@ -181,6 +181,7 @@ typedef struct campaign_s {
 	char researched[MAX_VAR];
 	char equipment[MAX_VAR];
 	char market[MAX_VAR];
+	equipDef_t *marketDef;
 	char text[MAX_VAR];			/**< placeholder for gettext stuff */
 	char map[MAX_VAR];			/**< geoscape map */
 	char firststage[MAX_VAR];
