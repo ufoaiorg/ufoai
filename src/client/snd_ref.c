@@ -460,19 +460,11 @@ static sfx_t *S_FindName (const char *name, qboolean create)
 	ename = &(lname[len]);
 	*ename = '\0';
 
-	strcpy(ename, ".wav");
 	/* see if already loaded */
 	for (i = 0; i < num_sfx; i++)
 		if (!Q_strncmp(known_sfx[i].name, lname, sizeof(known_sfx[i].name))) {
 			return &known_sfx[i];
 		}
-	strcpy(ename, ".ogg");
-	/* see if already loaded */
-	for (i = 0; i < num_sfx; i++)
-		if (!Q_strncmp(known_sfx[i].name, lname, sizeof(known_sfx[i].name))) {
-			return &known_sfx[i];
-		}
-	*ename = '\0';
 
 	if (!create)
 		return NULL;
