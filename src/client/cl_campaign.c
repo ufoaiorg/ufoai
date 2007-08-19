@@ -1197,11 +1197,34 @@ static void CL_HandleBudget (void)
 static void CL_CampaignInitMarket (void)
 {
 	int i;
+	equipDef_t *ed;
+
+	assert(curCampaign);
+
+	/* find the relevant market */
+	for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
+		if (!Q_strncmp(curCampaign->market, ed->name, MAX_VAR)) {
+			curCampaign->marketDef = ed;
+			break;
+		}
+
+	if (!curCampaign->marketDef)
+		Sys_Error("CL_GameNew_f: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
+			curCampaign->id, curCampaign->market);
+
 	for (i = 0; i < csi.numODs; i++) {
 		if (ccs.eMarket.ask[i] == 0) {
 			ccs.eMarket.ask[i] = csi.ods[i].price;
 			ccs.eMarket.bid[i] = floor(ccs.eMarket.ask[i]*BID_FACTOR);
 		}
+
+		if (!ed->num[i])
+			continue;
+		if (!RS_ItemIsResearched(csi.ods[i].id))
+			Com_Printf("CL_GameNew_f: Could not add item %s to the market - not marked as researched\n", csi.ods[i].id);
+		else
+			/* the other relevant values were already set in CL_CampaignInitMarket */
+			ccs.eMarket.num[i] = ed->num[i];
 	}
 }
 
@@ -3861,9 +3884,7 @@ campaign_t* CL_GetCampaign (const char* name)
  */
 static void CL_GameNew_f (void)
 {
-	int i;
 	char val[8];
-	equipDef_t *ed;
 
 	Cvar_Set("mn_main", "singleplayerInGame");
 	Cvar_Set("mn_active", "map");
@@ -3942,27 +3963,6 @@ static void CL_GameNew_f (void)
 	Cbuf_ExecuteText(EXEC_NOW, "mn_select_base -1");
 
 	CL_GameInit(qfalse);
-
-	/* find the relevant market */
-	for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
-		if (!Q_strncmp(curCampaign->market, ed->name, MAX_VAR)) {
-			curCampaign->marketDef = ed;
-			break;
-		}
-
-	if (!curCampaign->marketDef)
-		Sys_Error("CL_GameNew_f: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
-			curCampaign->id, curCampaign->market);
-
-	for (i = 0; i < csi.numODs; i++) {
-		if (!ed->num[i])
-			continue;
-		if (!RS_ItemIsResearched(csi.ods[i].id))
-			Com_Printf("CL_GameNew_f: Could not add item %s to the market - not marked as researched\n", csi.ods[i].id);
-		else
-			/* the other relevant values were already set in CL_CampaignInitMarket */
-			ccs.eMarket.num[i] = ed->num[i];
-	}
 
 	CL_CampaignRunMarket();
 }
