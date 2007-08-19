@@ -2218,6 +2218,7 @@ void MN_DrawMenus (void)
 	const char* cond;
 	invList_t *itemHover = NULL;
 	char *tab, *end;
+	static menuNode_t *selectBoxNode = NULL;
 
 	/* render every menu on top of a menu with a render node */
 	pp = 0;
@@ -2301,7 +2302,10 @@ void MN_DrawMenus (void)
 				}
 
 				/* mouse effects */
-				if (sp > pp) {
+				/* don't allow to open more than one selectbox */
+				if (selectBoxNode && selectBoxNode != node)
+					node->state = qfalse;
+				else if (sp > pp) {
 					/* in and out events */
 					mouseOver = MN_CheckNodeZone(node, mx, my);
 					if (mouseOver != node->state) {
@@ -2312,6 +2316,7 @@ void MN_DrawMenus (void)
 						else
 							MN_ExecuteActions(menu, node->mouseOut);
 						node->state = mouseOver;
+						selectBoxNode = NULL;
 					}
 				}
 
@@ -2445,6 +2450,7 @@ void MN_DrawMenus (void)
 						/* active? */
 						if (node->state) {
 							selBoxY += node->size[1];
+							selectBoxNode = node;
 
 							/* drop down menu */
 							/* left side */
