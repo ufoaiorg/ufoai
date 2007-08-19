@@ -72,16 +72,16 @@ menu bases
 		if "mn_base_status_id != 1"
 		tooltip	"_Build base facilities"
 		image	menu/button
-		pos	"755 120"
-		texl	"0 0"
-		texh	"230 64"
+		pos	"755 128"
+		texl	"0 8"
+		texh	"230 56"
 		mousefx true
 		click
 		{
 			cmd "mn_push buildings"
 		}
-		out		{ *txt_building color "0 0.8 0 1" *buildings texl "0 0" *buildings texh "230 64" }
-		in		{ *txt_building color "1 1 1 1" *buildings texl "230 0" *buildings texh "460 64" }
+		out		{ *txt_building color "0 0.8 0 1" *buildings texl "0 8" *buildings texh "230 56" }
+		in		{ *txt_building color "1 1 1 1" *buildings texl "230 8" *buildings texh "460 56" }
 	}
 	pic buildings_na
 	{
@@ -89,9 +89,9 @@ menu bases
 		if "mn_base_status_id == 1"
 		tooltip	"_Build base facilities"
 		image	menu/button
-		pos	"755 120"
-		texl	"0 64"
-		texh	"230 128"
+		pos	"755 128"
+		texl	"0 72"
+		texh	"230 120"
 		in
 	}
 	string txt_building
@@ -109,16 +109,16 @@ menu bases
 		if "mn_base_num_aircraft >= 1"
 		tooltip	"_Manage your aircraft"
 		image	menu/button
-		pos	"755 180"
-		texl	"0 0"
-		texh	"230 64"
+		pos	"755 188"
+		texl	"0 8"
+		texh	"230 56"
 		mousefx true
 		click
 		{
 			cmd "mn_push aircraft;"
 		}
-		out		{ *txt_aircraft color "0 0.8 0 1" *aircraft texl "0 0" *aircraft texh "230 64" }
-		in		{ *txt_aircraft color "1 1 1 1" *aircraft texl "230 0" *aircraft texh "460 64" }
+		out		{ *txt_aircraft color "0 0.8 0 1" *aircraft texl "0 8" *aircraft texh "230 56" }
+		in		{ *txt_aircraft color "1 1 1 1" *aircraft texl "230 8" *aircraft texh "460 56" }
 	}
 	pic aircraft_buy
 	{
@@ -126,16 +126,16 @@ menu bases
 		if "mn_base_num_aircraft == 0"
 		tooltip	"_Buy a new aircraft"
 		image	menu/button
-		pos	"755 180"
+		pos	"755 188"
 		texl	"0 0"
-		texh	"230 64"
+		texh	"230 56"
 		mousefx true
 		click
 		{
 			cmd "mn_push buyaircraft;"
 		}
-		out		{ *txt_aircraft color "0 0.8 0 1" *aircraft_buy texl "0 0" *aircraft_buy texh "230 64" }
-		in		{ *txt_aircraft color "1 1 1 1" *aircraft_buy texl "230 0" *aircraft_buy texh "460 64" }
+		out		{ *txt_aircraft color "0 0.8 0 1" *aircraft_buy texl "0 8" *aircraft_buy texh "230 56" }
+		in		{ *txt_aircraft color "1 1 1 1" *aircraft_buy texl "230 8" *aircraft_buy texh "460 56" }
 	}
 	pic aircraft_na
 	{
@@ -143,9 +143,9 @@ menu bases
 		if "mn_base_num_aircraft == -1"
 		tooltip	"_Build at least one Hangar"
 		image	menu/button
-		pos	"755 180"
-		texl	"0 64"
-		texh	"230 128"
+		pos	"755 188"
+		texl	"0 72"
+		texh	"230 120"
 		in
 	}
 	string txt_aircraft
@@ -163,16 +163,16 @@ menu bases
 		if "mn_base_buysell_allowed == 1"
 		tooltip	"_Buy/Sell equipment"
 		image	menu/button
-		pos	"755 240"
-		texl	"0 0"
-		texh	"230 64"
+		pos	"755 248"
+		texl	"0 8"
+		texh	"230 56"
 		mousefx true
 		click
 		{
 			cmd "mn_push buy"
 		}
-		out		{ *txt_buysell color "0 0.8 0 1" *buysell texl "0 0" *buysell texh "230 64" }
-		in		{ *txt_buysell color "1 1 1 1" *buysell texl "230 0" *buysell texh "460 64" }
+		out		{ *txt_buysell color "0 0.8 0 1" *buysell texl "0 8" *buysell texh "230 56" }
+		in		{ *txt_buysell color "1 1 1 1" *buysell texl "230 8" *buysell texh "460 56" }
 	}
 	pic buysell_na
 	{
@@ -180,9 +180,9 @@ menu bases
 		if "mn_base_buysell_allowed != 1"
 		tooltip	"_Build at least one Storage"
 		image	menu/button
-		pos	"755 240"
-		texl	"0 64"
-		texh	"230 128"
+		pos	"755 248"
+		texl	"0 72"
+		texh	"230 120"
 		in
 	}
 	string txt_buysell
@@ -199,25 +199,25 @@ menu bases
 		if "mn_numbases > 1"
 		tooltip	"_Transfer equipment or personnel"
 		image	menu/button
-		pos	"755 300"
-		texl	"0 0"
-		texh	"230 64"
+		pos	"755 308"
+		texl	"0 8"
+		texh	"230 56"
 		mousefx true
 		click
 		{
 			cmd "mn_push transfer"
 		}
-		out		{ *txt_transfer color "0 0.8 0 1" *transfer texl "0 0" *transfer texh "230 64" }
-		in		{ *txt_transfer color "1 1 1 1" *transfer texl "230 0" *transfer texh "460 64" }
+		out		{ *txt_transfer color "0 0.8 0 1" *transfer texl "0 8" *transfer texh "230 56" }
+		in		{ *txt_transfer color "1 1 1 1" *transfer texl "230 8" *transfer texh "460 56" }
 	}
 	pic transfer_na
 	{
 		if "mn_numbases == 1"
 		tooltip	"_Can't transfer - only one base"
 		image	menu/button
-		pos	"755 300"
-		texl	"0 64"
-		texh	"230 128"
+		pos	"755 308"
+		texl	"0 72"
+		texh	"230 120"
 		in
 	}
 	string txt_transfer
@@ -235,16 +235,16 @@ menu bases
 		if "mn_base_research_allowed == 1"
 		tooltip	"_Research new technology"
 		image	menu/button
-		pos	"755 360"
-		texl	"0 0"
-		texh	"230 64"
+		pos	"755 368"
+		texl	"0 8"
+		texh	"230 56"
 		mousefx true
 		click
 		{
 			cmd "mn_push research"
 		}
-		out		{ *txt_research color "0 0.8 0 1" *research texl "0 0" *research texh "230 64" }
-		in		{ *txt_research color "1 1 1 1" *research texl "230 0" *research texh "460 64" }
+		out		{ *txt_research color "0 0.8 0 1" *research texl "0 8" *research texh "230 56" }
+		in		{ *txt_research color "1 1 1 1" *research texl "230 8" *research texh "460 56" }
 	}
 	pic research_na
 	{
@@ -252,9 +252,9 @@ menu bases
 		if "mn_base_research_allowed != 1"
 		tooltip	"_Build at least one Laboratory"
 		image	menu/button
-		pos	"755 360"
-		texl	"0 64"
-		texh	"230 128"
+		pos	"755 368"
+		texl	"0 72"
+		texh	"230 120"
 		in
 	}
 	string txt_research
@@ -272,16 +272,16 @@ menu bases
 		if "mn_base_prod_allowed == 1"
 		tooltip	"_Produce new equipment"
 		image	menu/button
-		pos	"755 420"
-		texl	"0 0"
-		texh	"230 64"
+		pos	"755 428"
+		texl	"0 8"
+		texh	"230 56"
 		mousefx true
 		click
 		{
 			cmd "mn_push production"
 		}
-		out		{ *txt_production color "0 0.8 0 1" *production texl "0 0" *production texh "230 64" }
-		in		{ *txt_production color "1 1 1 1" *production texl "230 0" *production texh "460 64" }
+		out		{ *txt_production color "0 0.8 0 1" *production texl "0 8" *production texh "230 56" }
+		in		{ *txt_production color "1 1 1 1" *production texl "230 8" *production texh "460 56" }
 	}
 	pic production_na
 	{
@@ -289,9 +289,9 @@ menu bases
 		if "mn_base_prod_allowed == 0"
 		tooltip	"_Workshop not operational"
 		image	menu/button
-		pos	"755 420"
-		texl	"0 64"
-		texh	"230 128"
+		pos	"755 428"
+		texl	"0 72"
+		texh	"230 120"
 		in
 	}
 	string txt_production
@@ -309,16 +309,16 @@ menu bases
 		if "mn_base_hire_allowed == 1"
 		tooltip	"_Hire employees"
 		image	menu/button
-		pos	"755 480"
-		texl	"0 0"
-		texh	"230 64"
+		pos	"755 488"
+		texl	"0 8"
+		texh	"230 56"
 		mousefx true
 		click
 		{
 			cmd "mn_push employees"
 		}
-		out		{ *txt_hire color "0 0.8 0 1" *hire texl "0 0" *hire texh "230 64" }
-		in		{ *txt_hire color "1 1 1 1" *hire texl "230 0" *hire texh "460 64" }
+		out		{ *txt_hire color "0 0.8 0 1" *hire texl "0 8" *hire texh "230 56" }
+		in		{ *txt_hire color "1 1 1 1" *hire texl "230 8" *hire texh "460 56" }
 	}
 	pic hire_na
 	{
@@ -326,9 +326,9 @@ menu bases
 		if "mn_base_hire_allowed != 1"
 		tooltip	"_Build at least one Living Quarter"
 		image	menu/button
-		pos	"755 480"
-		texl	"0 64"
-		texh	"230 128"
+		pos	"755 488"
+		texl	"0 72"
+		texh	"230 120"
 		in
 	}
 	string txt_hire
@@ -345,25 +345,25 @@ menu bases
 		if "mn_base_containment_allowed == 1"
 		tooltip	"_Deal with Aliens in Alien Containment"
 		image	menu/button
-		pos	"755 540"
-		texl	"0 0"
-		texh	"230 64"
+		pos	"755 548"
+		texl	"0 8"
+		texh	"230 56"
 		mousefx true
 		click
 		{
 			cmd "mn_push aliencont"
 		}
-		out		{ *txt_containment color "0 0.8 0 1" *containment texl "0 0" *containment texh "230 64" }
-		in		{ *txt_containment color "1 1 1 1" *containment texl "230 0" *containment texh "460 64" }
+		out		{ *txt_containment color "0 0.8 0 1" *containment texl "0 8" *containment texh "230 56" }
+		in		{ *txt_containment color "1 1 1 1" *containment texl "230 8" *containment texh "460 56" }
 	}
 	pic containment_na
 	{
 		if "mn_base_containment_allowed != 1"
 		tooltip	"_Build at least one Alien Containment"
 		image	menu/button
-		pos	"755 540"
-		texl	"0 64"
-		texh	"230 128"
+		pos	"755 548"
+		texl	"0 72"
+		texh	"230 120"
 		in
 	}
 	string txt_containment
@@ -380,25 +380,25 @@ menu bases
 		if "mn_base_hospital_allowed == 1"
 		tooltip	"_Medical and Surgery operations"
 		image	menu/button
-		pos	"755 600"
-		texl	"0 0"
-		texh	"230 64"
+		pos	"755 608"
+		texl	"0 8"
+		texh	"230 56"
 		mousefx true
 		click
 		{
 			cmd "mn_push hospital"
 		}
-		out		{ *txt_hospital color "0 0.8 0 1" *hospital texl "0 0" *hospital texh "230 64" }
-		in		{ *txt_hospital color "1 1 1 1" *hospital texl "230 0" *hospital texh "460 64" }
+		out		{ *txt_hospital color "0 0.8 0 1" *hospital texl "0 8" *hospital texh "230 56" }
+		in		{ *txt_hospital color "1 1 1 1" *hospital texl "230 8" *hospital texh "460 56" }
 	}
 	pic hospital_na
 	{
 		if "mn_base_hospital_allowed != 1"
 		tooltip	"_Build at least one Hospital"
 		image	menu/button
-		pos	"755 600"
-		texl	"0 64"
-		texh	"230 128"
+		pos	"755 608"
+		texl	"0 72"
+		texh	"230 120"
 		in
 	}
 	string txt_hospital
@@ -414,16 +414,16 @@ menu bases
 	{
 		tooltip	"_Base Information"
 		image	menu/button
-		pos	"755 660"
-		texl	"0 0"
-		texh	"230 64"
+		pos	"755 668"
+		texl	"0 8"
+		texh	"230 56"
 		mousefx true
 		click
 		{
 			cmd "mn_push basesummary;"
 		}
-		out		{ *txt_summary color "0 0.8 0 1" *summary texl "0 0" *summary texh "230 64" }
-		in		{ *txt_summary color "1 1 1 1" *summary texl "230 0" *summary texh "460 64" }
+		out		{ *txt_summary color "0 0.8 0 1" *summary texl "0 8" *summary texh "230 56" }
+		in		{ *txt_summary color "1 1 1 1" *summary texl "230 8" *summary texh "460 56" }
 	}
 
 	string txt_summary
