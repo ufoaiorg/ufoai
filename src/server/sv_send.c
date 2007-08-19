@@ -235,9 +235,9 @@ void SV_StartSound (int mask, vec3_t origin, edict_t *entity, const char *sound,
 		flags |= SND_OFFSET;
 
 	/* use the entity origin unless it is a bmodel or explicitly specified */
-	if (!origin){
+	if (!origin) {
 		origin = origin_v;
-		if (entity->solid == SOLID_BSP){
+		if (entity->solid == SOLID_BSP) {
 			for (i = 0; i < 3; i++)
 				origin_v[i] = entity->origin[i] + 0.5 * (entity->mins[i] + entity->maxs[i]);
 		} else {

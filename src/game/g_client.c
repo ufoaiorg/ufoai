@@ -1497,7 +1497,7 @@ static void G_ClientStateChange (player_t * player, int num, int reqState, qbool
 		}
 		break;
 	case ~STATE_REACTION: /* request to turn off reaction fire */
-		if ((ent->state & STATE_REACTION_MANY) || (ent->state & STATE_REACTION_ONCE)){
+		if ((ent->state & STATE_REACTION_MANY) || (ent->state & STATE_REACTION_ONCE)) {
 			if (ent->state & STATE_SHAKEN)
 				gi.cprintf(player, PRINT_CONSOLE, _("Currently shaken, won't let their guard down.\n"));
 			else {

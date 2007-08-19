@@ -119,7 +119,7 @@ static void CIN_ApplyVector2x2 (int x, int y, const byte *indices)
 	int		xp, yp;
 	int		i;
 
-	for (i = 0; i < 4; i++){
+	for (i = 0; i < 4; i++) {
 		xp = x + cin_quadOffsets2[0][i];
 		yp = y + cin_quadOffsets2[1][i];
 
@@ -581,7 +581,7 @@ void CIN_PlayCinematic (const char *name)
 
 	/* Open the file */
 	size = FS_FOpenFile(name, &cin.file);
-	if (!cin.file.f && !cin.file.z){
+	if (!cin.file.f && !cin.file.z) {
 		Com_Printf("Cinematic %s not found\n", name);
 		return;
 	}
@@ -593,7 +593,7 @@ void CIN_PlayCinematic (const char *name)
 	chunk.size = header[2] | (header[3] << 8) | (header[4] << 16) | (header[5] << 24);
 	chunk.flags = header[6] | (header[7] << 8);
 
-	if (chunk.id != ROQ_IDENT){
+	if (chunk.id != ROQ_IDENT) {
 		FS_FCloseFile(&cin.file);
 		Com_Error(ERR_DROP, "CIN_PlayCinematic: invalid RoQ header");
 	}
@@ -703,7 +703,7 @@ void CIN_Init (void)
 	Cmd_AddCommand("cinematic_stop", CIN_CinematicStop_f, "Stops a cinematic");
 
 	/* Build YUV table */
-	for (i = 0; i < 256; i++){
+	for (i = 0; i < 256; i++) {
 		f = (float)(i - 128);
 		cin_yuvTable.vr[i] = Q_ftol(f * 1.40200f);
 		cin_yuvTable.ug[i] = Q_ftol(f * 0.34414f);
@@ -712,7 +712,7 @@ void CIN_Init (void)
 	}
 
 	/* Build square table */
-	for (i = 0; i < 128; i++){
+	for (i = 0; i < 128; i++) {
 		s = (short)(i * i);
 		cin_sqrTable[i] = s;
 		cin_sqrTable[i + 128] = -s;

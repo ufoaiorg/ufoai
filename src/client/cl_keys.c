@@ -416,7 +416,7 @@ static void Key_Console (int key)
 		return;
 	}
 
-	if (key == K_LEFTARROW){  /* move cursor left */
+	if (key == K_LEFTARROW) {  /* move cursor left */
 		if (keydown[K_CTRL]) { /* by a whole word */
 			while (key_linepos > 1 && key_lines[edit_line][key_linepos - 1] == ' ')
 				key_linepos--;  /* get off current word */
@@ -431,7 +431,7 @@ static void Key_Console (int key)
 	} else if (key == K_RIGHTARROW) {  /* move cursor right */
 		if ((i = strlen(key_lines[edit_line])) == key_linepos)
 			return; /* no character to get */
-		if (keydown[K_CTRL]){  /* by a whole word */
+		if (keydown[K_CTRL]) {  /* by a whole word */
 			while (key_linepos < i && key_lines[edit_line][key_linepos + 1] == ' ')
 				key_linepos++;  /* get off current word */
 			while (key_linepos < i && key_lines[edit_line][key_linepos + 1] != ' ')
@@ -543,7 +543,7 @@ static void Key_Message (int key)
 	}
 
 	if (key == K_ESCAPE) {
-		if (cls.state != ca_active){
+		if (cls.state != ca_active) {
 			/* If connecting or loading a level, disconnect */
 			if (cls.state != ca_disconnected)
 				Com_Error(ERR_DROP, "Disconnected from server");

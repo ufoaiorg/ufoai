@@ -98,7 +98,7 @@ static void R_DrawSprite (ptl_t * p)
 	VectorMA(pos, q->offset[0], nup, pos);
 	VectorMA(pos, q->offset[1], nright, pos);
 
-	if (p->parent){
+	if (p->parent) {
 		/* if this is a child then calculate our own up and right vectors and offsets */
 		R_GetSpriteVectors(p, right, up);
 

@@ -1153,7 +1153,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node, qboolean globe)
 				MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "baseattack", globe);
 			else
 				MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "base", globe);
-		} else if (MAP_MapToScreen(node, base->pos, &x, &y)){
+		} else if (MAP_MapToScreen(node, base->pos, &x, &y)) {
 			if (base->baseStatus == BASE_UNDER_ATTACK)
 				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "baseattack");
 			else

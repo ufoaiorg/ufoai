@@ -747,7 +747,7 @@ rserr_t Rimp_SetMode (unsigned *pwidth, unsigned *pheight, int mode, qboolean fu
 		visinfo = qglXChooseVisual(dpy, scrnum, attrib_nostencil);
 	}
 
-	if (!visinfo){
+	if (!visinfo) {
 		fprintf(stderr, "Error couldn't get an RGB, Double-buffered, Depth visual\n");
 		return rserr_invalid_mode;
 	}

@@ -926,7 +926,7 @@ static void TR_TransferBaseSelect (base_t *base)
 	}
 	if (base->hasAmStorage) {
 		Q_strcat(baseInfo, _("You can transfer antimatter - this base has an Antimatter Storage.\n"), sizeof(baseInfo));
-	} else if (base->hasPower){
+	} else if (base->hasPower) {
 		Q_strcat(baseInfo, _("No Antimatter Storage in this base.\n"), sizeof(baseInfo));
 	} else if (!powercomm) {
 		powercomm = qtrue;
@@ -936,7 +936,7 @@ static void TR_TransferBaseSelect (base_t *base)
 		Q_strcat(baseInfo, _("You can transfer aircraft - this base has Hangar.\n"), sizeof(baseInfo));
 	} else if (!base->hasCommand) {
 		Q_strcat(baseInfo, _("Aircraft transfer not possible - this base does not have Command Centre.\n"), sizeof(baseInfo));
-	} else if (base->hasPower){
+	} else if (base->hasPower) {
 		Q_strcat(baseInfo, _("No Hangar in this base.\n"), sizeof(baseInfo));
 	} else if (!powercomm) {
 		powercomm = qtrue;
