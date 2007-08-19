@@ -473,7 +473,7 @@ static void UP_BuildingDescription (technology_t* t)
  * @sa UP_DrawEntry
  * Not only called from Ufopedia but also from other places to display
  * @todo Don't display things like speed for base defense items - a missile
- * vacility isn't getting slower or faster due a special weapon or ammunition
+ * facility isn't getting slower or faster due a special weapon or ammunition
  */
 void UP_AircraftItemDescription (int idx)
 {
