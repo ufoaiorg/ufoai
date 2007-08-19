@@ -227,6 +227,7 @@ mission bunker
 	alienteam	"ortnok taman"
 	alienequip	stage1_workers_explosive
 	civilians	7
+	civteam		"armysoldier"
 	nation		"europa"
 	onlose		""
 	onwin		""

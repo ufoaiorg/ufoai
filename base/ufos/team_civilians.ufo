@@ -350,6 +350,23 @@ team oceania
 // OTHER NONE-NATION CIVILIANS
 //========================================================================
 
+team armysoldier
+{
+	size	1
+	hit_particle	blood
+
+	names {
+		male { b }
+		lastname { c }
+	}
+
+	models {
+		male {
+			civilians/male soldier01 soldier01_head 0
+		}
+	}
+}
+
 team scientist
 {
 	size	1
