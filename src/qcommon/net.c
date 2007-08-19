@@ -605,6 +605,9 @@ struct net_stream *connect_to_host (const char *node, const char *service)
 	memset(&hints, 0, sizeof(hints));
 	hints.ai_flags = AI_NUMERICHOST | AI_ADDRCONFIG | AI_NUMERICSERV;
 	hints.ai_socktype = SOCK_STREAM;
+	/* force ipv4 */
+	if (net_ipv4->integer)
+		hints.ai_family = AF_INET;
 
 	rc = getaddrinfo(node, service, &hints, &res);
 
@@ -1034,6 +1037,9 @@ struct datagram_socket *new_datagram_socket (const char *node, const char *servi
 	memset(&hints, 0, sizeof(hints));
 	hints.ai_flags = AI_NUMERICHOST | AI_ADDRCONFIG | AI_NUMERICSERV | AI_PASSIVE;
 	hints.ai_socktype = SOCK_DGRAM;
+	/* force ipv4 */
+	if (net_ipv4->integer)
+		hints.ai_family = AF_INET;
 
 	rc = getaddrinfo(node, service, &hints, &res);
 
