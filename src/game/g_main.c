@@ -167,7 +167,7 @@ static void InitGame (void)
 	sv_shot_origin = gi.cvar("sv_shot_origin", "8", 0, "Assumed distance of muzzle from model");
 
 	ai_alien = gi.cvar("ai_alien", "ortnok", 0, "Alien team");
-	ai_civilian = gi.cvar("ai_civilian", "civilian", 0, "Civilian team");
+	ai_civilian = gi.cvar("ai_civilian", "europa", 0, "Civilian team");
 	/* this cvar is set in singleplayer via campaign definition */
 	ai_equipment = gi.cvar("ai_equipment", "multiplayer", 0, "Initial equipment definition for aliens");
 	/* aliens in singleplayer (can differ each mission) */
