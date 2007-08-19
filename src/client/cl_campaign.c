@@ -3899,6 +3899,9 @@ static void CL_GameNew_f (void)
 	if (!curCampaign)
 		return;
 
+	/* reset, set time */
+	selMis = NULL;
+
 	memset(&ccs, 0, sizeof(ccs_t));
 	CL_StartSingleplayer(qtrue);
 
@@ -3934,9 +3937,6 @@ static void CL_GameNew_f (void)
 
 	B_NewBases();
 	PR_ProductionInit();
-
-	/* reset, set time */
-	selMis = NULL;
 
 	/* ensure ccs.singleplayer is set to true */
 	CL_StartSingleplayer(qtrue);
