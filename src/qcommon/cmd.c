@@ -1041,6 +1041,11 @@ static int Cmd_CompleteExecCommand (const char *partial, const char **match)
 }
 
 #ifdef DEBUG
+/**
+ * @brief Tries to call every command (except the quit command) that's currently
+ * in the command list - Use this function to test whether some console bindings
+ * produce asserts or segfaults in some situations.
+ */
 static void Cmd_Test_f (void)
 {
 	cmd_function_t *cmd;
