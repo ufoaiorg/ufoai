@@ -311,8 +311,6 @@ Section "Source Code" SEC03
   SetOutPath "$INSTDIR\src\tools\ufo2map"
   File "..\..\tools\ufo2map\*.h"
   File "..\..\tools\ufo2map\*.c"
-  SetOutPath "$INSTDIR\src\tools\campaign_editor"
-; TODO
   SetOutPath "$INSTDIR\src\tools\ufo2map\common"
   File "..\..\tools\ufo2map\common\*.h"
   File "..\..\tools\ufo2map\common\*.c"
