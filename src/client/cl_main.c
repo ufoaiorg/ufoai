@@ -1068,6 +1068,10 @@ static void CL_ServerConnect_f (void)
 	aircraft_t *aircraft;
 
 	aircraft = AIR_AircraftGetFromIdx(0);
+	if (!aircraft) {
+		Com_Printf("CL_ServerConnect_f: Not in multiplayer mode\n");
+		return;
+	}
 
 	/* @todo: if we are in multiplayer auto generate a team */
 	if (!B_GetNumOnTeam(aircraft)) {
@@ -1478,6 +1482,11 @@ static void CL_SpawnSoldiers_f (void)
 	aircraft_t *aircraft = cls.missionaircraft;
 	chrList_t chr_list_temp;
 	int i;
+
+	if (!cls.missionaircraft) {
+		Com_Printf("CL_SpawnSoldiers_f: No mission aircraft\n");
+		return;
+	}
 
 	base = CP_GetMissionBase();
 

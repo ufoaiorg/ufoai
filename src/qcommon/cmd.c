@@ -1040,6 +1040,18 @@ static int Cmd_CompleteExecCommand (const char *partial, const char **match)
 	return 0;
 }
 
+#ifdef DEBUG
+static void Cmd_Test_f (void)
+{
+	cmd_function_t *cmd;
+
+	for (cmd = cmd_functions; cmd; cmd = cmd->next) {
+		if (Q_strcmp(cmd->name, "quit"))
+			Cbuf_ExecuteText(EXEC_NOW, cmd->name);
+	}
+}
+#endif
+
 /**
  * @brief
  */
@@ -1054,4 +1066,7 @@ void Cmd_Init (void)
 	Cmd_AddCommand("wait", Cmd_Wait_f, "Causes execution of the remainder of the command buffer to be delayed until next frame");
 	Cmd_AddCommand("cmdclose", Cmd_Close_f, "Close the command buffer");
 	Cmd_AddCommand("cmdopen", Cmd_Open_f, "Open the command buffer again");
+#ifdef DEBUG
+	Cmd_AddCommand("debug_cmdtest", Cmd_Test_f, "Calls every command in the current list");
+#endif
 }
