@@ -69,6 +69,8 @@ typedef int SOCKET;
 #define AI_ADDRCONFIG 0
 #endif
 
+static cvar_t* net_ipv4;
+
 struct net_stream {
 	void *data;
 
@@ -286,6 +288,8 @@ void init_net (void)
 #else
 	signal(SIGPIPE, SIG_IGN);
 #endif
+
+	net_ipv4 = Cvar_Get("net_ipv4", "1", CVAR_ARCHIVE, "Only use ipv4");
 }
 
 /**
@@ -910,6 +914,9 @@ qboolean SV_Start (const char *node, const char *service, stream_callback_func *
 		memset(&hints, 0, sizeof(hints));
 		hints.ai_flags = AI_NUMERICHOST | AI_ADDRCONFIG | AI_NUMERICSERV | AI_PASSIVE;
 		hints.ai_socktype = SOCK_STREAM;
+		/* force ipv4 */
+		if (net_ipv4->integer)
+			hints.ai_family = AF_INET;
 
 		rc = getaddrinfo(node, service, &hints, &res);
 
