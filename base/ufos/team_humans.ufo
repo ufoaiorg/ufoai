@@ -185,48 +185,109 @@ team human_scientist
 	names {
 		female {
 			Alexandra
+			Aneke
 			Anna
 			Andrea
 			Barbara
+			Carla
 			Claudia
 			Denise
+			Dina
+			Ella
+			Emily
+			Florentine
+			Hannah
+			Jenny
+			Julie
+			Lilly
+			Luna
+			Malka
+			Oceane
+			Rinah
+			Tomma
 		}
 
 		male {
 			Adrian
 			Andreas
 			Anton
+			Arne
 			Axel
+			Bela
 			Bernhard
+			Bjarne
 			Boris
+			Carlo
+			Caspar
 			Christian
 			David
 			Emil
+			Jannis
+			Jim
+			Juri
+			Karl
+			Kiran
 			Klaus
+			Linus
 			Lukas
 			Martin
+			Marco
 			Markus
 			Mathias
+			Oscar
+			Pablo
+			Peter
+			Quentin
 			Ralf
 			Rolf
 			Roman
 			Sonke
+			Thor
+			Thomas
+			Tom
+			Till
 			Ulrich
+			Valentin
+			Xaver
 		}
 
 		lastname {
 			Allensbach
+			Asimov
+			Auster
 			Benz
 			Berger
+			Beck
 			Baltner
+			Boyle
+			Bradbury
+			Burroughs
+			Camus
+			Canetti
 			Dorfer
 			Eitl
+			Folco
+			Gibson
+			Heinlein
+			Heisenberg
 			Maier
 			Meier
+			Moore
+			Newton
 			Niederer
 			Nipp
+			Noon
+			Orwell
+			Penrose
 			Schafer
+			Shirley
+			Slesar
 			Stein
+			Stephenson
+			Strugazki
+			Verne
+			Wells
+			Willson
 			Winter
 		}
 	}
@@ -263,48 +324,109 @@ team human_medic
 	names {
 		female {
 			Alexandra
+			Aneke
 			Anna
 			Andrea
 			Barbara
+			Carla
 			Claudia
 			Denise
+			Dina
+			Ella
+			Emily
+			Florentine
+			Hannah
+			Jenny
+			Julie
+			Lilly
+			Luna
+			Malka
+			Oceane
+			Rinah
+			Tomma
 		}
 
 		male {
 			Adrian
 			Andreas
 			Anton
+			Arne
 			Axel
+			Bela
 			Bernhard
+			Bjarne
 			Boris
+			Carlo
+			Caspar
 			Christian
 			David
 			Emil
+			Jannis
+			Jim
+			Juri
+			Karl
+			Kiran
 			Klaus
+			Linus
 			Lukas
 			Martin
+			Marco
 			Markus
 			Mathias
+			Oscar
+			Pablo
+			Peter
+			Quentin
 			Ralf
 			Rolf
 			Roman
 			Sonke
+			Thor
+			Thomas
+			Tom
+			Till
 			Ulrich
+			Valentin
+			Xaver
 		}
 
 		lastname {
 			Allensbach
+			Asimov
+			Auster
 			Benz
 			Berger
+			Beck
 			Baltner
+			Boyle
+			Bradbury
+			Burroughs
+			Camus
+			Canetti
 			Dorfer
 			Eitl
+			Folco
+			Gibson
+			Heinlein
+			Heisenberg
 			Maier
 			Meier
+			Moore
+			Newton
 			Niederer
 			Nipp
+			Noon
+			Orwell
+			Penrose
 			Schafer
+			Shirley
+			Slesar
 			Stein
+			Stephenson
+			Strugazki
+			Verne
+			Wells
+			Willson
 			Winter
 		}
 	}
@@ -342,37 +464,83 @@ team human_worker
 			Adrian
 			Andreas
 			Anton
+			Arne
 			Axel
+			Bela
 			Bernhard
+			Bjarne
 			Boris
+			Carlo
+			Caspar
 			Christian
 			David
 			Emil
+			Jannis
+			Jim
+			Juri
+			Karl
+			Kiran
 			Klaus
+			Linus
 			Lukas
 			Martin
+			Marco
 			Markus
 			Mathias
+			Oscar
+			Pablo
+			Peter
+			Quentin
 			Ralf
 			Rolf
 			Roman
 			Sonke
+			Thor
+			Thomas
+			Tom
+			Till
 			Ulrich
+			Valentin
+			Xaver
 		}
 
 		lastname {
 			Allensbach
+			Asimov
+			Auster
 			Benz
 			Berger
+			Beck
 			Baltner
+			Boyle
+			Bradbury
+			Burroughs
+			Camus
+			Canetti
 			Dorfer
 			Eitl
+			Folco
+			Gibson
+			Heinlein
+			Heisenberg
 			Maier
 			Meier
+			Moore
+			Newton
 			Niederer
 			Nipp
+			Noon
+			Orwell
+			Penrose
 			Schafer
+			Shirley
+			Slesar
 			Stein
+			Stephenson
+			Strugazki
+			Verne
+			Wells
+			Willson
 			Winter
 		}
 	}
