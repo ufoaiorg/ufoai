@@ -419,7 +419,7 @@ menu popup_tipoftheday
 		pos		"64 514"
 		size	"444 120"
 		format	"20 150"
-		num	7
+		num	43
 		click	{ }
 		wheel
 		height	6
