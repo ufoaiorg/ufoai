@@ -166,11 +166,11 @@ menu basedefense
 	text baseequip_list
 	{
 		pos	"756 480"
-		size	"252 300"
+		size	"252 220"
 //		bgcolor	"1 1 1 0.5"
 		format	"20 0"
 		wheel
-		height	"15"
+		height	"11"
 		num 1
 		mousefx	true
 		click
