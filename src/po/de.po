@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-08-07 15:15+0200\n"
-"PO-Revision-Date: 2007-08-10 17:24+0100\n"
+"PO-Revision-Date: 2007-08-17 23:13+0100\n"
 "Last-Translator: Gerd Heisse <gerd@gezys.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -9282,7 +9282,7 @@ msgstr "Triax"
 
 #: ../base/ufos/tips.ufo:5
 msgid "Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
-msgstr ""
+msgstr "Benutze die [Shift]-Taste um die Zielhöhe anzupassen - das ist beispielsweise praktisch, um eine Rakete vor eine Gruppe von Außerirdischen zu schießen."
 
 #: ../base/ufos/tips.ufo:6
 msgid "Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
@@ -9354,11 +9354,11 @@ msgstr "Baue eine Werkstatt und UFO-Hangars um UFOs zu demontieren."
 
 #: ../base/ufos/tips.ufo:23
 msgid "You can zoom the geoscape by holding down [Ctrl] and moving the mouse up or down."
-msgstr ""
+msgstr "Man kann die Geoscape-Ansicht zoomen indem man die [Strg]-Taste gedrückt hält und die Maus hoch oder runter bewegt.   "
 
 #: ../base/ufos/tips.ufo:24
 msgid "You can make soldiers crouch to better protect them from enemy fire. But remember that crouching and standing up cost Time Units (TUs), and moving while crouched costs more TUs than walking normally."
-msgstr ""
+msgstr "Man kann Soldaten kriechen lassen um sie besser vor feindlichem Feuer zu schützen. Aber denke daran, dass der Wechsel zwischen Kriechen und Laufen Zeiteinheiten kostet und dass das Kriechen mehr Zeiteinheiten benötigt als das normale Laufen. "
 
 #: ../base/ufos/tips.ufo:25
 msgid "Watch out for Reaction Fire! A soldier can fall under Reaction Fire even if another soldier is moving."
@@ -9366,7 +9366,7 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:26
 msgid "Use [c] to toggle crouching. Crouching makes some weapons considerably more precise. It also makes your soldier a smaller target."
-msgstr ""
+msgstr "Benutze [c] um zwischen Kriechen und Laufen umzuschalten. Beim Kriechen sind einige Waffen deutlich effektiver. Außerdem gibt ein kriechender Soldat ein kleineres Ziel ab."
 
 #: ../base/ufos/tips.ufo:27
 msgid "If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
@@ -9382,15 +9382,15 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:30
 msgid "Build a hospital to be able to faster heal your soldiers for the next mission."
-msgstr ""
+msgstr "Baue eine Krankenstation um deine Soldaten schneller für die nächste Mission zu heilen."
 
 #: ../base/ufos/tips.ufo:31
 msgid "Plasma grenades do the most damage, but frag grenades can be useful, as they can be thrown slightly further."
-msgstr ""
+msgstr "Plasmagranaten machen den größten Schaden, aber Splittergranaten können nützlich sein, da sie etwas weiter geworfen werden können.  "
 
 #: ../base/ufos/tips.ufo:32
 msgid "Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
-msgstr ""
+msgstr "Mit [x] kann zwischen den Einstellungen für Reaktionsfeuer umgeschaltet werden: Kein, Einzelschuss, Mehrfachschuss."
 
 #: ../base/ufos/tips.ufo:33
 msgid "Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your round, so that they can't be killed with one grenade."
@@ -9418,11 +9418,11 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:39
 msgid "Before throwing a grenade, look closely at the shape of the land. A slight slope will affect the direction that the grenade bounces."
-msgstr ""
+msgstr "Bevor man eine Granate wirft sollte man sich genau die Form der Landschaft anschauen. Eine leichte Neigung beeinflusst die Richtung in der die Granate abprallt. "
 
 #: ../base/ufos/tips.ufo:40
 msgid "You can include your own maps for multiplayer games or create your own campaigns. Just have a look at our wiki to read about content creation."
-msgstr ""
+msgstr "Man kann eigene Maps für Mehrspieler-Partien einbinden oder eigene Kampagnen erzeugen. Besuche unser Wiki um mehr über das Erzeugen eigener Inhalte zu erfahren.   "
 
 #: ../base/ufos/tips.ufo:41
 msgid "You can use [space] to cycle between all geoscape items."
@@ -9430,19 +9430,19 @@ msgstr "Mit der Leertaste kann zwischen den verschiedenen Geoscape-Einträgen ge
 
 #: ../base/ufos/tips.ufo:42
 msgid "You can also accelerate/decelerate time on geoscape by using mouse wheel on the time buttons, or [m], [n]."
-msgstr ""
+msgstr "Man kann die Zeit im Geoscape beschleunigen, indem man das Mausrad auf den Zeit-Knöpfen bewegt oder durch die Tasten [m] und [n]. "
 
 #: ../base/ufos/tips.ufo:43
 msgid "Be sure to equip your interceptor with weapons before launching it."
-msgstr ""
+msgstr "Rüste deine Abfangjäger mit Waffen aus, bevor du sie starten lässt."
 
 #: ../base/ufos/tips.ufo:44
 msgid "Remember that items will slow an aircraft. To intercept fast UFOs, you may prefer to send several aircrafts lightly equiped."
-msgstr ""
+msgstr "Denke daran, dass Ausrüstungsgegenstände ein Flugzeug langsamer machen. Um UFOs abzufangen kann es günstiger sein, mehrere Flugzeuge mit leichter Ausrüstung auszusenden."
 
 #: ../base/ufos/tips.ufo:45
 msgid "Your attacked aircraft may flee to one of your base to avoid beeing destroyed by UFOs."
-msgstr ""
+msgstr "Ein angegriffenes Flugzeug kann zu einer der Basen fliehen um der Zerstörung durch UFOs zu entgehen."
 
 #: ../base/ufos/tips.ufo:46
 msgid "Build an alien containment to be able to imprison alive aliens."
