@@ -641,6 +641,9 @@ static void CL_DrawSpottedLines_f (void)
 		if (le->inuse && (le->type == ET_ACTOR || le->type == ET_ACTOR2x2)
 		 && !(le->state & STATE_DEAD) && le->team != cls.team
 		 && le->team != TEAM_CIVILIAN) {
+			/* not facing in the direction of the 'target' */
+			if (!FrustomVis(watcher->origin, watcher->dir, le->origin))
+				continue;
 			VectorCopy(watcher->origin, from);
 			VectorCopy(le->origin, at);
 			/* actor eye height */
@@ -653,8 +656,7 @@ static void CL_DrawSpottedLines_f (void)
 				at[2] += EYE_HT_CROUCH; /* FIXME: */
 			else
 				at[2] += UNIT_HEIGHT; /* full unit */
-			/* FIXME: check the facing of the actor: watcher->dir
-			 * maybe doing more than one trace to different target heights */
+			/* FIXME: maybe doing more than one trace to different target heights */
 			tr = CL_Trace(from, at, vec3_origin, vec3_origin, watcher, NULL, MASK_SOLID);
 			/* trace didn't reach the target - something was hit before */
 			if (tr.fraction < 1.0)
