@@ -2107,11 +2107,17 @@ static void MN_DrawTextNode (const char *text, const char* font, menuNode_t* nod
 	int lineHeight = 0;
 	char newFont[MAX_VAR];
 	const char* oldFont = NULL;
+	vec4_t color;
 	char *cur, *tab, *end;
 	int x1, y1; /* variable x and y position */
 
 	Q_strncpyz(textCopy, text, MAX_MENUTEXTLEN);
 	cur = textCopy;
+
+	/* hover darkening effect for text lines */
+	VectorScale(node->color, 0.8, color);
+	color[3] = node->color[3];
+
 	y1 = y;
 	/*Com_Printf("\n\n\nnode->textLines: %i \n", node->textLines);*/
 	if (node)
@@ -2148,9 +2154,10 @@ static void MN_DrawTextNode (const char *text, const char* font, menuNode_t* nod
 			*end++ = '\0';
 
 		/* hightlight if mousefx is true */
+		/* node->state is the line number to highlight */
 		/* FIXME: what about multiline text that should be highlighted completly? */
 		if (node && node->mousefx && node->textLines + 1 == node->state)
-			re.DrawColor(node->color);
+			re.DrawColor(color);
 
 		/* we assume all the tabs fit on a single line */
 		do {
@@ -2185,7 +2192,7 @@ static void MN_DrawTextNode (const char *text, const char* font, menuNode_t* nod
 			y1 += lineHeight;
 
 		if (node && node->mousefx)
-			re.DrawColor(node->color); /* why is this repeated? */
+			re.DrawColor(node->color); /* restore original color */
 
 		/* now set cur to the next char after the \n (see above) */
 		cur = end;
