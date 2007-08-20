@@ -37,14 +37,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 #endif
 
-#if !defined _MSC_VER && !defined __MINGW32__
-#include <jpeglib.h>
-#include <png.h>
-#else
-#include "../ports/win32/jpeglib.h"
-#include "../ports/win32/png.h"
-#endif
-
 /* this was taken from jmorecfg.h */
 #define RGB_PIXELSIZE 3
 

@@ -276,6 +276,7 @@ void S_Init (void)
 	snd_testsound = Cvar_Get("snd_testsound", "0", 0, "Write a fixed sine wave");
 	/* @todo: make openal the default when it is working (i.e. change 0 below to a 1) */
 	snd_openal = Cvar_Get("snd_openal", "0", CVAR_ARCHIVE, "use OpenAL");
+	/* FIXME Why done twice? snd_ref is already inited */
 	snd_ref = Cvar_Get("snd_ref", "sdl", CVAR_ARCHIVE, "Sound renderer libary name - default is sdl");
 
 	S_OGG_Init();
