@@ -1023,7 +1023,7 @@ void LIST_Add (linkedList_t** listDest, const char* data)
 	linkedList_t *newEntry;
 	linkedList_t *list;
 
-	assert(list);
+	assert(listDest);
 	assert(data);
 
 	/* create the list */
