@@ -306,16 +306,6 @@ void CL_CameraModeChange (camera_mode_t new_camera_mode)
 	}
 }
 
-#if 0
-/**
- * @brief Print the time long integer value
- */
-void CL_Time_f (void)
-{
-	Com_Printf("time: %d\n", cl.time);
-}
-#endif
-
 const float MIN_ZOOM = 0.5;
 const float MAX_ZOOM = 32.0;
 

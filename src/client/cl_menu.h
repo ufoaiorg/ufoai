@@ -40,7 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* used to speed up buffer safe string copies */
 #define MAX_SMALLMENUTEXTLEN	1024
 
-#define MAX_EXLUDERECTS	4
+#define MAX_EXLUDERECTS	16
 
 /* max menuscale values */
 #define MAX_MENUMODELS_SCALEMENUS 8

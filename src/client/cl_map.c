@@ -973,7 +973,7 @@ static void MAP_GetGeoscapeAngle (float *Vector, qboolean globe)
  * @sa MAP3D_SmoothRotate
  * @sa MAP_SmoothTranslate
  */
-void MAP_CenterOnPoint (void)
+void MAP_CenterOnPoint_f (void)
 {
 	menu_t *activeMenu = NULL;
 
@@ -1045,7 +1045,7 @@ static void MAP_SmoothTranslate (void)
 	diff[1] = final2DGeoscapeCenter[1] - ccs.center[1];
 	diff_zoom = ZOOM_LIMIT - ccs.zoom;
 
-	length = sqrt (diff[0] * diff[0] + diff[1] * diff[1]);
+	length = sqrt(diff[0] * diff[0] + diff[1] * diff[1]);
 	if (length < SMOOTHING_STEP_2D) {
 		ccs.center[0] = final2DGeoscapeCenter[0];
 		ccs.center[1] = final2DGeoscapeCenter[1];

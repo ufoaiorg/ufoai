@@ -3782,7 +3782,7 @@ static const cmdList_t game_commands[] = {
 	{"nationlist", CL_NationList_f, "List all nations on the game console"},
 	{"mission", CL_StartMission_f, NULL},
 	{"addeventmail", CL_EventAddMail_f, "Add a new mail (event trigger) - e.g. after a mission"},
-	{"center_geoscape", MAP_CenterOnPoint, NULL},
+	{"center_geoscape", MAP_CenterOnPoint_f, "Centers the geoscape view on items on the geoscape - and cycle through them"},
 	{"add_battery", BDEF_AddBattery_f, "Add a new battery to base"},
 	{"remove_battery", BDEF_RemoveBattery_f, "Remove a battery from base"},
 	{"basedef_init", BDEF_Init_f, "Inits base defense menu"},
