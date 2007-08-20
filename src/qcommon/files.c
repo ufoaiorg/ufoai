@@ -459,8 +459,6 @@ int FS_LoadFile (const char *path, void **buffer)
 	byte *buf;
 	int len;
 
-	buf = NULL;					/* quiet compiler warning */
-
 	/* look for it in the filesystem or pack files */
 	len = FS_FOpenFile(path, &h);
 	if (!h.f && !h.z) {

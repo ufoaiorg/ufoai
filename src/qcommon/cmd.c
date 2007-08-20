@@ -373,7 +373,8 @@ SCRIPT COMMANDS
  */
 static void Cmd_Exec_f (void)
 {
-	char *f, *f2;
+	void *f;
+	char *f2;
 	int len;
 
 	if (Cmd_Argc() != 2) {
@@ -381,7 +382,7 @@ static void Cmd_Exec_f (void)
 		return;
 	}
 
-	len = FS_LoadFile(Cmd_Argv(1), (void **) &f);
+	len = FS_LoadFile(Cmd_Argv(1), &f);
 	if (!f) {
 		Com_Printf("couldn't exec %s\n", Cmd_Argv(1));
 		return;
