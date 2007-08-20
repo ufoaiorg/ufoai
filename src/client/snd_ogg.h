@@ -26,11 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#if defined (__linux__) || defined (__FreeBSD__) || defined(__NetBSD__)
 #include <vorbis/vorbisfile.h>
-#else
-#include "../ports/win32/vorbisfile.h"
-#endif
 
 typedef struct music_s {
 	OggVorbis_File ovFile;			/**< currently playing ogg vorbis file */

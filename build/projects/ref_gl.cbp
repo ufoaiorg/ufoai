@@ -22,7 +22,6 @@
 					<Add option="-DDONT_TYPEDEF_INT32" />
 				</Compiler>
 				<Linker>
-					<Add option="../../src/ports/win32/intl.lib" />
 					<Add option="-def ../../src/ref_gl/ref_gl.def" />
 					<Add library="kernel32" />
 					<Add library="user32" />
@@ -54,7 +53,6 @@
 				</Compiler>
 				<Linker>
 					<Add option="-pg -lgmon" />
-					<Add option="../../src/ports/win32/intl.lib" />
 					<Add option="-def ../../src/ref_gl/ref_gl.def" />
 					<Add library="kernel32" />
 					<Add library="user32" />

@@ -75,7 +75,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  endif
 
 #elif defined __FreeBSD__ || defined __NetBSD__
-#  define BUILDSTRING "FreeBSD"
+#  ifdef DEBUG
+#    define BUILDSTRING "FreeBSD DEBUG"
+#  else
+#    define BUILDSTRING "FreeBSD RELEASE"
+#  endif
 #  ifndef SHARED_EXT
 #    define SHARED_EXT "so"
 #  endif
@@ -90,7 +94,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  endif
 
 #elif defined __sun
-#  define BUILDSTRING "Solaris"
+#  ifdef DEBUG
+#    define BUILDSTRING "Solaris DEBUG"
+#  else
+#    define BUILDSTRING "Solaris RELEASE"
+#  endif
 #  ifndef SHARED_EXT
 #    define SHARED_EXT "so"
 #  endif
@@ -101,7 +109,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  endif
 
 #elif defined (__APPLE__) || defined (MACOSX)
-#  define BUILDSTRING "MacOSX"
+#  ifdef DEBUG
+#    define BUILDSTRING "MacOSX DEBUG"
+#  else
+#    define BUILDSTRING "MacOSX RELEASE"
+#  endif
 #  ifndef SHARED_EXT
 #    define SHARED_EXT "dylib"
 #  endif

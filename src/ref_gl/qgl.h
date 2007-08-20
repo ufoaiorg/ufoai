@@ -58,6 +58,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 #endif
 
+#ifndef GL_COLOR_INDEX8_EXT
+#	define GL_COLOR_INDEX8_EXT GL_COLOR_INDEX
+#endif
+
 qboolean QR_Init(const char *dllname);
 void QR_Shutdown(void);
 

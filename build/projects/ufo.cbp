@@ -19,7 +19,7 @@
 					<Add option="-D_M_IX86=500" />
 				</Compiler>
 				<Linker>
-					<Add option="../../src/ports/win32/intl.lib" />
+					<Add library="intl" />
 					<Add library="vorbisfile" />
 					<Add library="vorbis" />
 					<Add library="ogg" />
@@ -54,7 +54,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="-pg -lgmon" />
-					<Add option="../../src/ports/win32/intl.lib" />
+					<Add library="intl" />
 					<Add library="vorbisfile" />
 					<Add library="vorbis" />
 					<Add library="ogg" />
