@@ -666,12 +666,15 @@ static void CL_DrawSpottedLines_f (void)
 }
 
 /**
+ * @brief
+ */
+static int lastAlien = 0;
+
+/**
  * @brief Cycles between visible (to selected actor) aliens.
  * @sa CL_DrawSpottedLines_f (Shares quite some code)
  * @sa CL_NextAlien_f
  */
-static int lastAlien = 0;
-
 static void CL_NextAlienVisibleFromActor_f (void)
 {
 	le_t *watcher; /** @todo make this a parameter for use in other fucntions? */
@@ -722,8 +725,7 @@ static void CL_NextAlienVisibleFromActor_f (void)
 			V_CenterView(le->pos);
 			return;
 		}
-	}
-	while (i != lastAlien);
+	} while (i != lastAlien);
 }
 
 /**
@@ -761,8 +763,7 @@ static void CL_NextAlien_f (void)
 			V_CenterView(le->pos);
 			return;
 		}
-	}
-	while (i != lastAlien);
+	} while (i != lastAlien);
 }
 
 /*========================================================================== */
