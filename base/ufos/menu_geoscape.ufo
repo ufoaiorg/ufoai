@@ -37,6 +37,12 @@ menu map
 			pos		"0 608"
 			size	"384 192"
 		}
+		// panel
+		excluderect
+		{
+			pos		"864 608"
+			size	"140 140"
+		}
 	}
 
 	text messagesystem
@@ -113,6 +119,74 @@ menu map
 		font	f_big
 		align	ur
 		in
+	}
+
+	pic bt_panel
+	{
+		tooltip	"_Scroll and zoom"
+		image	menu/panel
+		pos	"1024 768"
+		align	"lr"
+		texl	"0 0"
+		texh	"180 180"
+		click	{ cmd "prod_inc;" }
+		repeat	true
+	}
+
+	zone panel_scroll_uo {
+		pos		"914 608"
+		size	"40 20"
+		repeat true
+//		bgcolor	"1 1 1 0.5"
+		click	{ cmd "map_scroll up;" }
+	}
+
+	zone panel_scroll_down {
+		pos		"914 726"
+		size	"40 20"
+		repeat true
+//		bgcolor	"1 1 1 0.5"
+		click	{ cmd "map_scroll down;" }
+	}
+
+	zone panel_scroll_left {
+		pos		"864 658"
+		size	"20 40"
+		repeat true
+//		bgcolor	"1 1 1 0.5"
+		click	{ cmd "map_scroll left;" }
+	}
+
+	zone panel_scroll_right {
+		pos		"981 658"
+		size	"20 40"
+		repeat true
+//		bgcolor	"1 1 1 0.5"
+		click	{ cmd "map_scroll right;" }
+	}
+
+	zone panel_zoom_in {
+		pos		"920 645"
+		size	"28 25"
+		repeat true
+//		bgcolor	"1 1 1 0.5"
+		click	{ cmd "map_zoom in;" }
+	}
+
+	zone panel_zoom_out {
+		pos		"920 688"
+		size	"28 25"
+//		bgcolor	"1 1 1 0.5"
+		repeat true
+		click	{ cmd "map_zoom out;" }
+	}
+
+	zone panel_center {
+		pos		"926 672"
+		size	"16 12"
+//		bgcolor	"1 1 1 0.5"
+		repeat true
+		click	{ cmd "map_center;" }
 	}
 
 	pic bt_timestop

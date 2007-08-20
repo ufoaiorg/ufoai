@@ -66,7 +66,7 @@ STATIC DEFINITION
 */
 
 /* Functions */
-static qboolean MAP_IsMapPositionSelected(const menuNode_t* node, vec2_t pos, int x, int y, qboolean globe);
+static qboolean MAP_IsMapPositionSelected(const menuNode_t* node, vec2_t pos, int x, int y);
 static void MAP3D_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos);
 static void MAP_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos);
 
@@ -246,7 +246,7 @@ static void MAP_MultiSelectNotifyUfoDisappeared (const aircraft_t* ufo)
 /**
  * @brief Click on the map/geoscape
  */
-void MAP_MapClick (const menuNode_t* node, int x, int y, qboolean globe)
+void MAP_MapClick (const menuNode_t* node, int x, int y)
 {
 	aircraft_t *aircraft = NULL;
 	actMis_t *ms;
@@ -256,7 +256,7 @@ void MAP_MapClick (const menuNode_t* node, int x, int y, qboolean globe)
 	char clickBuffer[30];
 
 	/* get map position */
-	if (globe) {
+	if (cl_3dmap->integer) {
 		MAP3D_ScreenToMap(node, x, y, pos);
 	} else {
 		MAP_ScreenToMap(node, x, y, pos);
@@ -293,18 +293,18 @@ void MAP_MapClick (const menuNode_t* node, int x, int y, qboolean globe)
 
 	/* Get selected missions */
 	for (i = 0, ms = ccs.mission; i < ccs.numMissions && multiSelect.nbSelect < MULTISELECT_MAXSELECT; i++, ms++)
-		if (MAP_IsMapPositionSelected(node, ms->realPos, x, y, globe))
+		if (MAP_IsMapPositionSelected(node, ms->realPos, x, y))
 			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_MISSION, i, _(ms->def->type), _(ms->def->location));
 
 	/* Get selected bases */
 	for (i = 0; i < gd.numBases && multiSelect.nbSelect < MULTISELECT_MAXSELECT; i++) {
-		if (MAP_IsMapPositionSelected(node, gd.bases[i].pos, x, y, globe))
+		if (MAP_IsMapPositionSelected(node, gd.bases[i].pos, x, y))
 			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_BASE, i, _("Base"), gd.bases[i].name);
 
 		/* Get selected aircrafts wich belong to the base */
-		for (aircraft = gd.bases[i].aircraft + gd.bases[i].numAircraftInBase - 1;
-		aircraft >= gd.bases[i].aircraft; aircraft--)
-			if (aircraft->status > AIR_HOME && aircraft->fuel > 0 && MAP_IsMapPositionSelected(node, aircraft->pos, x, y, globe))
+		aircraft = gd.bases[i].aircraft + gd.bases[i].numAircraftInBase - 1;
+		for (; aircraft >= gd.bases[i].aircraft; aircraft--)
+			if (aircraft->status > AIR_HOME && aircraft->fuel > 0 && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
 				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_AIRCRAFT, aircraft->idx, _("Aircraft"), aircraft->name);
 	}
 
@@ -315,7 +315,7 @@ void MAP_MapClick (const menuNode_t* node, int x, int y, qboolean globe)
 		|| Cvar_VariableInteger("debug_showufos")
 #endif
 		)
-			if (aircraft->status > AIR_HOME && MAP_IsMapPositionSelected(node, aircraft->pos, x, y, globe))
+			if (aircraft->status > AIR_HOME && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
 				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_UFO, aircraft - gd.ufos, _("UFO"), aircraft->name);
 
 	if (multiSelect.nbSelect == 1) {
@@ -349,7 +349,7 @@ GEOSCAPE DRAWING AND COORDINATES
 /**
  * @brief Tell if the specified position is considered clicked
  */
-static qboolean MAP_IsMapPositionSelected (const menuNode_t* node, vec2_t pos, int x, int y, qboolean globe)
+static qboolean MAP_IsMapPositionSelected (const menuNode_t* node, vec2_t pos, int x, int y)
 {
 	int msx, msy;
 
@@ -478,7 +478,7 @@ qboolean MAP_AllMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, i
  * @param[in] model The name of the model of the marker.
  * @param[in] globe qtrue if the 3D marker is to be drawn on 3D geoscape, qfalse else.
  */
-qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, float theta, const char *model, qboolean globe)
+qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, float theta, const char *model)
 {
 	int x, y, z;
 	vec3_t screenPos, angles, v;
@@ -493,7 +493,7 @@ qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, fl
 		/* Set position of the model on the screen */
 		VectorSet(screenPos, x, y, z);
 
-		if (globe) {
+		if (cl_3dmap->integer) {
 			/* Set angles of the model */
 			VectorCopy(screenPos, v);
 			v[0] -= (node->pos[0] + node->size[0]) / 2.0f;
@@ -754,7 +754,7 @@ static void MAP_3DMapDrawLine (const menuNode_t* node, const mapline_t* line)
  * @param[in] globe qtrue is this is 3D geoscape, qfalse if this is 2D geoscape
  * @sa RADAR_DrawCoverage
  */
-void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center, const float angle, const vec4_t color, qboolean globe)
+void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center, const float angle, const vec4_t color)
 {
 	int i, xCircle, yCircle;
 	screenPoint_t pts[CIRCLE_DRAW_POINTS + 1];
@@ -780,7 +780,7 @@ void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center, const 
 		draw = qfalse;
 		if (MAP_AllMapToScreen(node, posCircle, &xCircle, &yCircle, NULL)) {
 			draw = qtrue;
-			if (!globe && numPoints != 0 && abs(pts[numPoints - 1].x - xCircle) > 512)
+			if (!cl_3dmap->integer && numPoints != 0 && abs(pts[numPoints - 1].x - xCircle) > 512)
 				oldDraw = qfalse;
 		}
 
@@ -811,10 +811,9 @@ void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center, const 
  * @param[in] end Latitude and longitude of aimed point.
  * @param[in] direction vec3_t giving current direction of the model (NULL if the model is idle).
  * @param[out] ortVector If not NULL, this will be filled with the normalized vector around which rotation allows to go toward @c direction.
- * @param[in] globe qtrue if this is 3D geoscape, qfalse else.
  * @return Angle (degrees) of rotation around the axis perpendicular to the screen for a model in @c start going toward @c end.
  */
-float MAP_AngleOfPath (const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector, qboolean globe)
+float MAP_AngleOfPath (const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector)
 {
 	float angle = 0.0f;
 	vec3_t start3D, end3D, tangentVector, v, rotationAxis;
@@ -851,7 +850,7 @@ float MAP_AngleOfPath (const vec3_t start, const vec2_t end, vec3_t direction, v
 		}
 	}
 
-	if (globe) {
+	if (cl_3dmap->integer) {
 		/* rotate vector tangent to movement in the frame of the screen */
 		VectorSet(rotationAxis, 0, 0, 1);
 		RotatePointAroundVector(v, rotationAxis, tangentVector, - ccs.angles[PITCH]);
@@ -875,10 +874,10 @@ float MAP_AngleOfPath (const vec3_t start, const vec2_t end, vec3_t direction, v
 /**
  * @brief Returns position of the model corresponding to centerOnEventIdx.
  * @param[out] Vector Latitude and longitude of the model (finalAngle[2] is always 0).
- * @note Vector is a vec3_t if globe is qtrue, and a vec2_t if globe is qfalse.
+ * @note Vector is a vec3_t if cl_3dmap is true, and a vec2_t if cl_3dmap is false.
  * @sa MAP_CenterOnPoint
  */
-static void MAP_GetGeoscapeAngle (float *Vector, qboolean globe)
+static void MAP_GetGeoscapeAngle (float *Vector)
 {
 	int i;
 	int counter = 0;
@@ -907,7 +906,7 @@ static void MAP_GetGeoscapeAngle (float *Vector, qboolean globe)
 
 	/* Cycle through missions */
 	if (centerOnEventIdx < ccs.numMissions) {
-		if (globe)
+		if (cl_3dmap->integer)
 			VectorSet(Vector, ccs.mission[centerOnEventIdx - counter].realPos[0], -ccs.mission[centerOnEventIdx - counter].realPos[1], 0);
 		else
 			Vector2Set(Vector, ccs.mission[centerOnEventIdx - counter].realPos[0], ccs.mission[centerOnEventIdx - counter].realPos[1]);
@@ -919,7 +918,7 @@ static void MAP_GetGeoscapeAngle (float *Vector, qboolean globe)
 
 	/* Cycle through bases */
 	if (centerOnEventIdx < gd.numBases + counter) {
-		if (globe)
+		if (cl_3dmap->integer)
 			VectorSet(Vector, gd.bases[centerOnEventIdx - counter].pos[0], -gd.bases[centerOnEventIdx - counter].pos[1], 0);
 		else
 			Vector2Set(Vector, gd.bases[centerOnEventIdx - counter].pos[0], gd.bases[centerOnEventIdx - counter].pos[1]);
@@ -932,7 +931,7 @@ static void MAP_GetGeoscapeAngle (float *Vector, qboolean globe)
 		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
 			if (aircraft->status > AIR_HOME) {
 				if (centerOnEventIdx == counter) {
-					if (globe)
+					if (cl_3dmap->integer)
 						VectorSet(Vector, aircraft->pos[0], -aircraft->pos[1], 0);
 					else
 						Vector2Set(Vector, aircraft->pos[0], aircraft->pos[1]);
@@ -949,7 +948,7 @@ static void MAP_GetGeoscapeAngle (float *Vector, qboolean globe)
 	for (aircraft = gd.ufos + gd.numUfos - 1; aircraft >= gd.ufos; aircraft --) {
 		if (aircraft->visible) {
 			if (centerOnEventIdx == counter) {
-				if (globe)
+				if (cl_3dmap->integer)
 					VectorSet(Vector, aircraft->pos[0], -aircraft->pos[1], 0);
 				else
 					Vector2Set(Vector, aircraft->pos[0], aircraft->pos[1]);
@@ -986,11 +985,11 @@ void MAP_CenterOnPoint_f (void)
 
 	if (cl_3dmap->integer) {
 		/* case 3D geoscape */
-		MAP_GetGeoscapeAngle(finalGlobeAngle, qtrue);
+		MAP_GetGeoscapeAngle(finalGlobeAngle);
 		finalGlobeAngle[1] += GLOBE_ROTATE;
 	} else {
 		/* case 2D geoscape */
-		MAP_GetGeoscapeAngle(final2DGeoscapeCenter, qfalse);
+		MAP_GetGeoscapeAngle(final2DGeoscapeCenter);
 		Vector2Set(final2DGeoscapeCenter, 0.5f - final2DGeoscapeCenter[0] / 360.0f, 0.5f - final2DGeoscapeCenter[1] / 180.0f);
 		if (final2DGeoscapeCenter[1] < 0.5 / ZOOM_LIMIT)
 			final2DGeoscapeCenter[1] = 0.5 / ZOOM_LIMIT;
@@ -1082,10 +1081,9 @@ static void MAP_DrawBullets (const menuNode_t* node, int bulletIdx)
 /**
  * @brief Draws all ufos, aircraft, bases and so on to the geoscape map (2D and 3D)
  * @param[in] node The menu node which will be used for drawing markers.
- * @param[in] globe qtrue if this is the 3D geoscape, qfalse else.
  * @sa MAP_DrawMap
  */
-static void MAP_DrawMapMarkers (const menuNode_t* node, qboolean globe)
+static void MAP_DrawMapMarkers (const menuNode_t* node)
 {
 	aircraft_t *aircraft;
 	actMis_t *ms;
@@ -1113,17 +1111,17 @@ static void MAP_DrawMapMarkers (const menuNode_t* node, qboolean globe)
 				Cvar_Set("mn_mapdaytime", MAP_IsNight(ms->realPos) ? _("Night") : _("Day"));
 
 				/* Draw circle around the mission */
-				if (globe) {
+				if (cl_3dmap->integer) {
 					if (!selMis->def->active)
-						MAP_MapDrawEquidistantPoints(node,  ms->realPos, SELECT_CIRCLE_RADIUS, yellow, globe);
+						MAP_MapDrawEquidistantPoints(node,  ms->realPos, SELECT_CIRCLE_RADIUS, yellow);
 				} else
 					re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, selMis->def->active ? "circleactive" : "circle");
 			}
 
 			/* Draw mission model (this must be after drawing 'selected circle' so that the model looks above it)*/
-			if (globe) {
-				angle = MAP_AngleOfPath(ms->realPos, northPole, NULL, NULL, globe) + 90.0f;
-				MAP_Draw3DMarkerIfVisible(node, ms->realPos, angle, "mission", globe);
+			if (cl_3dmap->integer) {
+				angle = MAP_AngleOfPath(ms->realPos, northPole, NULL, NULL) + 90.0f;
+				MAP_Draw3DMarkerIfVisible(node, ms->realPos, angle, "mission");
 			} else
 				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "cross");
 
@@ -1133,9 +1131,9 @@ static void MAP_DrawMapMarkers (const menuNode_t* node, qboolean globe)
 	/* draws projectiles */
 	for (projectile = gd.projectiles + gd.numProjectiles - 1; projectile >= gd.projectiles; projectile --) {
 		if (projectile->bulletIdx > -1)
-			MAP_DrawBullets (node, projectile->bulletIdx);
+			MAP_DrawBullets(node, projectile->bulletIdx);
 		else
-			MAP_Draw3DMarkerIfVisible(node, projectile->pos, projectile->angle, "missile", globe);
+			MAP_Draw3DMarkerIfVisible(node, projectile->pos, projectile->angle, "missile");
 	}
 
 	/* draw bases */
@@ -1144,15 +1142,15 @@ static void MAP_DrawMapMarkers (const menuNode_t* node, qboolean globe)
 			continue;
 
 		/* Draw base radar info */
-		RADAR_DrawInMap(node, &(base->radar), base->pos, globe);
+		RADAR_DrawInMap(node, &(base->radar), base->pos);
 
 		/* Draw base */
-		if (globe) {
-			angle = MAP_AngleOfPath(base->pos, northPole, NULL, NULL, globe) + 90.0f;
+		if (cl_3dmap->integer) {
+			angle = MAP_AngleOfPath(base->pos, northPole, NULL, NULL) + 90.0f;
 			if (base->baseStatus == BASE_UNDER_ATTACK)
-				MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "baseattack", globe);
+				MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "baseattack");
 			else
-				MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "base", globe);
+				MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "base");
 		} else if (MAP_MapToScreen(node, base->pos, &x, &y)) {
 			if (base->baseStatus == BASE_UNDER_ATTACK)
 				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "baseattack");
@@ -1169,7 +1167,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node, qboolean globe)
 			if (aircraft->status > AIR_HOME) {
 
 				/* Draw aircraft radar */
-				RADAR_DrawInMap(node, &(aircraft->radar), aircraft->pos, globe);
+				RADAR_DrawInMap(node, &(aircraft->radar), aircraft->pos);
 
 				/* Draw aircraft route */
 				if (aircraft->status >= AIR_TRANSIT) {
@@ -1179,35 +1177,35 @@ static void MAP_DrawMapMarkers (const menuNode_t* node, qboolean globe)
 					/* @todo : check why path.numPoints can be sometime equal to -1 */
 					if (path.numPoints > 1) {
 						memcpy(path.point, aircraft->pos, sizeof(vec2_t));
-							memcpy(path.point + 1, aircraft->route.point + aircraft->point + 1, (path.numPoints - 1) * sizeof(vec2_t));
-						if (globe)
+						memcpy(path.point + 1, aircraft->route.point + aircraft->point + 1, (path.numPoints - 1) * sizeof(vec2_t));
+						if (cl_3dmap->integer)
 							MAP_3DMapDrawLine(node, &path);
 						else
 							MAP_MapDrawLine(node, &path);
 					}
-					angle = MAP_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL, globe);
+					angle = MAP_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL);
 				} else {
-					angle = MAP_AngleOfPath(aircraft->pos, northPole, aircraft->direction, NULL, globe);
+					angle = MAP_AngleOfPath(aircraft->pos, northPole, aircraft->direction, NULL);
 				}
 
 				/* Draw a circle around selected aircraft */
 				if (aircraft == selectedAircraft) {
-					if (globe)
-						MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow, qtrue);
+					if (cl_3dmap->integer)
+						MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
 					else
 						re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
 
 					/* Draw a circle around ufo purchased by selected aircraft */
 					if (aircraft->status == AIR_UFO && MAP_AllMapToScreen(node, aircraft->aircraftTarget->pos, &x, &y, NULL)) {
-						if (globe)
-							MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow, qtrue);
+						if (cl_3dmap->integer)
+							MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
 						else
 							re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
 					}
 				}
 
 				/* Draw aircraft (this must be after drawing 'selected circle' so that the aircraft looks above it)*/
-				MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, globe);
+				MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model);
 			}
 	}
 
@@ -1217,7 +1215,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node, qboolean globe)
 		/* in debug mode you execute set showufos 1 to see the ufos on geoscape */
 		if (Cvar_VariableInteger("debug_showufos")) {
 			/* Draw ufo route */
-			if (globe)
+			if (cl_3dmap->integer)
 				MAP_3DMapDrawLine(node, &(aircraft->route));
 			else
 				MAP_MapDrawLine(node, &(aircraft->route));
@@ -1226,13 +1224,13 @@ static void MAP_DrawMapMarkers (const menuNode_t* node, qboolean globe)
 		if (!aircraft->visible || !MAP_AllMapToScreen(node, aircraft->pos, &x, &y, NULL))
 			continue;
 		if (aircraft == selectedUfo) {
-			if (globe)
-				MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow, qtrue);
+			if (cl_3dmap->integer)
+				MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
 			else
 				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "circle");
 		}
-		angle = MAP_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL, globe);
-		MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, globe);
+		angle = MAP_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL);
+		MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model);
 	}
 
 	/* FIXME */
@@ -1263,10 +1261,9 @@ static menuNode_t* geobackground = NULL;
 /**
  * @brief Draw the geoscape
  * @param[in] node The map menu node
- * @param[in] map3D Draw the map as flat map or as globe?
  * @sa MAP_DrawMapMarkers
  */
-void MAP_DrawMap (const menuNode_t* node, qboolean map3D)
+void MAP_DrawMap (const menuNode_t* node)
 {
 	float q;
 	base_t* base;
@@ -1276,7 +1273,7 @@ void MAP_DrawMap (const menuNode_t* node, qboolean map3D)
 	Vector2Copy(node->size, ccs.mapSize);
 
 	/* Draw the map and markers */
-	if (map3D || cl_3dmap->integer) {
+	if (cl_3dmap->integer) {
 		if (!geobackground)
 			geobackground = MN_GetNodeFromCurrentMenu("geobackground");
 		Vector2Set(geobackground->texl, 511 - 512 / ccs.zoom, 387 - 384 / ccs.zoom);
@@ -1293,7 +1290,7 @@ void MAP_DrawMap (const menuNode_t* node, qboolean map3D)
 		re.DrawDayAndNight(node->pos[0], node->pos[1], node->size[0], node->size[1], (float) ccs.date.sec / (3600 * 24), q,
 			ccs.center[0], ccs.center[1], 0.5 / ccs.zoom, curCampaign->map);
 	}
-	MAP_DrawMapMarkers(node, map3D);
+	MAP_DrawMapMarkers(node);
 
 	/* display text */
 	menuText[TEXT_STANDARD] = NULL;
@@ -1301,7 +1298,7 @@ void MAP_DrawMap (const menuNode_t* node, qboolean map3D)
 	case MA_NEWBASE:
 		for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
 			/* Draw base radar info */
-			RADAR_DrawCoverage(node, &(base->radar),base->pos, map3D);
+			RADAR_DrawCoverage(node, &(base->radar),base->pos);
 
 		menuText[TEXT_STANDARD] = _("Select the desired location of the new base on the map.\n");
 		return;
@@ -1629,6 +1626,109 @@ void MAP_NotifyUfoDisappear (const aircraft_t* ufo)
 
 	/* Notify the multi selection popup */
 	MAP_MultiSelectNotifyUfoDisappeared(ufo);
+}
+
+/**
+ * @brief Command binding for map zooming
+ */
+void MAP_Zoom_f (void)
+{
+	const char *cmd;
+	const float zoomAmount = 15.0f;
+
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <in|out>\n", Cmd_Argv(0));
+		return;
+	}
+
+	cmd = Cmd_Argv(1);
+	switch (*cmd) {
+	case 'i':
+		ccs.zoom *= pow(0.995, -zoomAmount);
+		break;
+	case 'o':
+		ccs.zoom *= pow(0.995, zoomAmount);
+		break;
+	default:
+		Com_Printf("MAP_Zoom_f: Invalid parameter: %s\n", cmd);
+		return;
+	}
+
+	if (ccs.zoom < cl_mapzoommin->value)
+		ccs.zoom = cl_mapzoommin->value;
+	else if (ccs.zoom > cl_mapzoommax->value)
+		ccs.zoom = cl_mapzoommax->value;
+
+	if (!cl_3dmap->integer) {
+		if (ccs.center[1] < 0.5 / ccs.zoom)
+			ccs.center[1] = 0.5 / ccs.zoom;
+		if (ccs.center[1] > 1.0 - 0.5 / ccs.zoom)
+			ccs.center[1] = 1.0 - 0.5 / ccs.zoom;
+	}
+}
+
+/**
+ * @brief Command binding for map scrolling
+ */
+void MAP_Scroll_f (void)
+{
+	const char *cmd;
+	float scrollX = 0.0f, scrollY = 0.0f;
+	const float scrollAmount = 30.0f;
+
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <up|down|left|right>\n", Cmd_Argv(0));
+		return;
+	}
+
+	cmd = Cmd_Argv(1);
+	switch (*cmd) {
+	case 'l':
+		scrollX = scrollAmount;
+		break;
+	case 'r':
+		scrollX = -scrollAmount;
+		break;
+	case 'u':
+		scrollY = scrollAmount;
+		break;
+	case 'd':
+		scrollY = -scrollAmount;
+		break;
+	default:
+		Com_Printf("MAP_Scroll_f: Invalid parameter\n");
+		return;
+	}
+	if (cl_3dmap->integer) {
+		/* rotate a model */
+		ccs.angles[PITCH] += ROTATE_SPEED3D * (scrollX) / ccs.zoom;
+		ccs.angles[YAW] -= ROTATE_SPEED3D * (scrollY) / ccs.zoom;
+
+		while (ccs.angles[YAW] > 180.0)
+			ccs.angles[YAW] -= 360.0;
+		while (ccs.angles[YAW] < -180.0)
+			ccs.angles[YAW] += 360.0;
+
+		while (ccs.angles[PITCH] > 180.0)
+			ccs.angles[PITCH] -= 360.0;
+		while (ccs.angles[PITCH] < -180.0)
+			ccs.angles[PITCH] += 360.0;
+	} else {
+		int i;
+		/* shift the map */
+		ccs.center[0] -= (float) (scrollX) / (ccs.mapSize[0] * ccs.zoom);
+		ccs.center[1] -= (float) (scrollY) / (ccs.mapSize[1] * ccs.zoom);
+		for (i = 0; i < 2; i++) {
+			while (ccs.center[i] < 0.0)
+				ccs.center[i] += 1.0;
+			while (ccs.center[i] > 1.0)
+				ccs.center[i] -= 1.0;
+		}
+		if (ccs.center[1] < 0.5 / ccs.zoom)
+			ccs.center[1] = 0.5 / ccs.zoom;
+		if (ccs.center[1] > 1.0 - 0.5 / ccs.zoom)
+			ccs.center[1] = 1.0 - 0.5 / ccs.zoom;
+	}
 }
 
 /**

@@ -1422,7 +1422,7 @@ void MN_Click (int x, int y)
 				MN_BaseMapClick(node, x, y);
 				break;
 			case MN_MAP:
-				MAP_MapClick(node, x, y, cl_3dmap->integer);
+				MAP_MapClick(node, x, y);
 				break;
 			case MN_CHECKBOX:
 				MN_CheckboxClick(node);
@@ -2920,7 +2920,7 @@ void MN_DrawMenus (void)
 				case MN_MAP:
 					if (curCampaign) {
 						CL_CampaignRun();	/* advance time */
-						MAP_DrawMap(node, cl_3dmap->value); /* Draw geoscape */
+						MAP_DrawMap(node); /* Draw geoscape */
 					}
 					break;
 

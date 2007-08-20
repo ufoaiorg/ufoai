@@ -1194,8 +1194,6 @@ void CL_CameraRoute (pos3_t from, pos3_t target)
 	CL_BlockEvents();
 }
 
-#define ROTATE_SPEED	0.5
-#define ROTATE_SPEED3D	0.3
 /**
  * @brief Called every frame to parse the input
  * @note The geoscape zooming code is in MN_MouseWheel too

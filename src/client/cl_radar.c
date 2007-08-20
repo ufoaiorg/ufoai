@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Show Radar coverage
  * @sa MAP_MapDrawEquidistantPoints
  */
-void RADAR_DrawCoverage (const menuNode_t* node, const radar_t* radar, vec2_t pos, qboolean globe)
+void RADAR_DrawCoverage (const menuNode_t* node, const radar_t* radar, vec2_t pos)
 {
 	float rangeTracking;
 
@@ -40,14 +40,14 @@ void RADAR_DrawCoverage (const menuNode_t* node, const radar_t* radar, vec2_t po
 
 	rangeTracking = 1.1f * radar->range;
 
-	MAP_MapDrawEquidistantPoints(node, pos, radar->range, color, globe);
-	MAP_MapDrawEquidistantPoints(node, pos, rangeTracking, color, globe);
+	MAP_MapDrawEquidistantPoints(node, pos, radar->range, color);
+	MAP_MapDrawEquidistantPoints(node, pos, rangeTracking, color);
 }
 
 /**
  * @brief Display radar in geoscape
  */
-void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, vec2_t pos, qboolean globe)
+void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, vec2_t pos)
 {
 	int x, y;
 	int i;
@@ -58,7 +58,7 @@ void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, vec2_t pos, 
 		return;
 
 	/* Show radar range zones */
-	RADAR_DrawCoverage(node,radar,pos, globe);
+	RADAR_DrawCoverage(node,radar,pos);
 
 	/* Set color */
 	re.DrawColor(color);

@@ -756,14 +756,14 @@ typedef struct radar_s {
 	int numUfos;					/**< Num ufos sensored by radar */
 } radar_t;
 
-extern void RADAR_DrawCoverage(const struct menuNode_s* node, const radar_t* radar, vec2_t pos, qboolean globe);
-extern void RADAR_DrawInMap(const struct menuNode_s* node, const radar_t* radar, vec2_t pos, qboolean globe);
+extern void RADAR_DrawCoverage(const struct menuNode_s* node, const radar_t* radar, vec2_t pos);
+extern void RADAR_DrawInMap(const struct menuNode_s* node, const radar_t* radar, vec2_t pos);
 extern void RADAR_RemoveUfo(radar_t* radar, const struct aircraft_s* ufo);
 extern void Radar_NotifyUfoRemoved(radar_t* radar, const struct aircraft_s* ufo);
 extern void RADAR_ChangeRange(radar_t* radar, int change);
 extern void Radar_Initialise(radar_t* radar, int range);
 extern qboolean RADAR_CheckUfoSensored(radar_t* radar, vec2_t posRadar,
-const struct aircraft_s* ufo, qboolean wasUfoSensored);
+	const struct aircraft_s* ufo, qboolean wasUfoSensored);
 
 /* cl_research.c */
 #include "cl_research.h"
