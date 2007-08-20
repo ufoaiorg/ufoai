@@ -163,6 +163,7 @@ typedef struct menuNode_s {
 	vec4_t bordercolor;			/**< rgba - see border and padding */
 	menuAction_t *click, *rclick, *mclick, *wheel, *mouseIn, *mouseOut, *wheelUp, *wheelDown;
 	qboolean repeat;			/**< repeat action when "click" is holded */
+	qboolean scrollbar;			/**< if you want to add a scrollbar to a text node, set this to true */
 	excludeRect_t exclude[MAX_EXLUDERECTS];	/**< exclude this for hover or click functions */
 	int excludeNum;				/**< how many exclude rects defined? */
 	menuDepends_t depends;

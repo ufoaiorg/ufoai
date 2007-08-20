@@ -194,6 +194,7 @@ menu ufopedia
 		click rclick wheel
 //		bgcolor " 0.5 1 0.5 0.3"
 		height	"21"
+		scrollbar true
 	}
 
 	text ufopedia_mail
@@ -206,6 +207,7 @@ menu ufopedia
 		click rclick wheel
 //		bgcolor " 0.5 1 0.5 0.3"
 		height	"11"
+		scrollbar true
 	}
 
 	text ufopedia_mail_header
