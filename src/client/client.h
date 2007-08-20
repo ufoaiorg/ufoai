@@ -42,12 +42,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_menu.h"
 #include "cl_save.h"
 
-#ifndef _MSC_VER
-#include <zlib.h>
-#else
-#include "../ports/win32/zlib.h"
-#endif
-
 #ifdef HAVE_CURL
 #define CURL_STATICLIB
 #include <curl/curl.h>
@@ -248,15 +242,14 @@ typedef enum {
 /*============================================================================= */
 
 /* i18n support via gettext */
+# include <libintl.h>
+
 #if defined(_WIN32)
 # ifdef _MSC_VER
 #  ifndef LC_MESSAGES
 #   define LC_MESSAGES 3
 #  endif /* LC_MESSAGES */
 # endif /* _MSC_VER */
-# include "../ports/win32/libintl.h"
-#else
-# include <libintl.h>
 #endif
 
 /* the used textdomain for gettext */

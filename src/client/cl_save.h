@@ -40,6 +40,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_GAMESAVESIZE	3145728
 #define MAX_COMMENTLENGTH	32
 
+#include <zlib.h>
+
 /**
  * @brief save file header
  */

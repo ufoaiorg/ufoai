@@ -45,12 +45,13 @@ static pack_t *pak;
 
 static pack_t *FS_LoadPackFile(const char *packfile);
 
+#include <zlib.h>
+
 #ifdef _WIN32
 #include <direct.h>
 #include <io.h>
 #define PATHSEPERATOR   '\\'
 #else
-#include <zlib.h>
 #include <unistd.h>
 #include <dirent.h>
 #define PATHSEPERATOR   '/'

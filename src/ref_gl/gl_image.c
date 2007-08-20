@@ -25,13 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "gl_local.h"
 
-#if !defined _MSC_VER && !defined __MINGW32__
 #include <jpeglib.h>
 #include <png.h>
-#else
-#include "../ports/win32/jpeglib.h"
-#include "../ports/win32/png.h"
-#endif
 
 static char glerrortex[MAX_GLERRORTEX];
 static char *glerrortexend;

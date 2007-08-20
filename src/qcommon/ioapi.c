@@ -10,11 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef _MSC_VER
-# include "../ports/win32/zlib.h"
-#else
-# include <zlib.h>
-#endif
+#include <zlib.h>
 #include "ioapi.h"
 
 
