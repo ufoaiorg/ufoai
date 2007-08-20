@@ -170,7 +170,6 @@ void S_ResampleSfx(sfx_t * sfx, int inrate, int inwidth, byte * data);
 channel_t *S_PickChannel(int entnum, int entchannel);
 void S_SpatializeOrigin(vec3_t origin, float master_vol, float dist_mult, int *left_vol, int *right_vol);
 
-#include "snd_ogg.h"
 #include "snd_wave.h"
 
 #endif /* CLIENT_SND_LOC_H */
