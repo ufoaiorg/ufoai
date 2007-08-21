@@ -46,257 +46,295 @@ menu employees
 
 	func employee_clear
 	{
-		*bt_employee0 image hud/buttons1
-		*bt_employee1 image hud/buttons1
-		*bt_employee2 image hud/buttons1
-		*bt_employee3 image hud/buttons1
-		*bt_employee4 image hud/buttons1
-		*bt_employee5 image hud/buttons1
-		*bt_employee6 image hud/buttons1
-		*bt_employee7 image hud/buttons1
-		*bt_employee8 image hud/buttons1
-		*bt_employee9 image hud/buttons1
-		*bt_employee10 image hud/buttons1
-		*bt_employee11 image hud/buttons1
-		*bt_employee12 image hud/buttons1
-		*bt_employee13 image hud/buttons1
-		*bt_employee14 image hud/buttons1
-		*bt_employee15 image hud/buttons1
-		*bt_employee16 image hud/buttons1
-		*bt_employee17 image hud/buttons1
-		*bt_employee18 image hud/buttons1
+		*bt_employee0 image menu/checkbox_green_unchecked
+		*bt_employee1 image menu/checkbox_green_unchecked
+		*bt_employee2 image menu/checkbox_green_unchecked
+		*bt_employee3 image menu/checkbox_green_unchecked
+		*bt_employee4 image menu/checkbox_green_unchecked
+		*bt_employee5 image menu/checkbox_green_unchecked
+		*bt_employee6 image menu/checkbox_green_unchecked
+		*bt_employee7 image menu/checkbox_green_unchecked
+		*bt_employee8 image menu/checkbox_green_unchecked
+		*bt_employee9 image menu/checkbox_green_unchecked
+		*bt_employee10 image menu/checkbox_green_unchecked
+		*bt_employee11 image menu/checkbox_green_unchecked
+		*bt_employee12 image menu/checkbox_green_unchecked
+		*bt_employee13 image menu/checkbox_green_unchecked
+		*bt_employee14 image menu/checkbox_green_unchecked
+		*bt_employee15 image menu/checkbox_green_unchecked
+		*bt_employee16 image menu/checkbox_green_unchecked
+		*bt_employee17 image menu/checkbox_green_unchecked
+		*bt_employee18 image menu/checkbox_green_unchecked
 	}
 
-	confunc employeedel0 { *bt_employee0 image hud/buttons1 }
-	confunc employeedel1 { *bt_employee1 image hud/buttons1 }
-	confunc employeedel2 { *bt_employee2 image hud/buttons1 }
-	confunc employeedel3 { *bt_employee3 image hud/buttons1 }
-	confunc employeedel4 { *bt_employee4 image hud/buttons1 }
-	confunc employeedel5 { *bt_employee5 image hud/buttons1 }
-	confunc employeedel6 { *bt_employee6 image hud/buttons1 }
-	confunc employeedel7 { *bt_employee7 image hud/buttons1 }
-	confunc employeedel8 { *bt_employee8 image hud/buttons1 }
-	confunc employeedel9 { *bt_employee9 image hud/buttons1 }
-	confunc employeedel10 { *bt_employee10 image hud/buttons1 }
-	confunc employeedel11 { *bt_employee11 image hud/buttons1 }
-	confunc employeedel12 { *bt_employee12 image hud/buttons1 }
-	confunc employeedel13 { *bt_employee13 image hud/buttons1 }
-	confunc employeedel14 { *bt_employee14 image hud/buttons1 }
-	confunc employeedel15 { *bt_employee15 image hud/buttons1 }
-	confunc employeedel16 { *bt_employee16 image hud/buttons1 }
-	confunc employeedel17 { *bt_employee17 image hud/buttons1 }
-	confunc employeedel18 { *bt_employee18 image hud/buttons1 }
+	confunc employeedel0 { *bt_employee0 image menu/checkbox_green_unchecked }
+	confunc employeedel1 { *bt_employee1 image menu/checkbox_green_unchecked }
+	confunc employeedel2 { *bt_employee2 image menu/checkbox_green_unchecked }
+	confunc employeedel3 { *bt_employee3 image menu/checkbox_green_unchecked }
+	confunc employeedel4 { *bt_employee4 image menu/checkbox_green_unchecked }
+	confunc employeedel5 { *bt_employee5 image menu/checkbox_green_unchecked }
+	confunc employeedel6 { *bt_employee6 image menu/checkbox_green_unchecked }
+	confunc employeedel7 { *bt_employee7 image menu/checkbox_green_unchecked }
+	confunc employeedel8 { *bt_employee8 image menu/checkbox_green_unchecked }
+	confunc employeedel9 { *bt_employee9 image menu/checkbox_green_unchecked }
+	confunc employeedel10 { *bt_employee10 image menu/checkbox_green_unchecked }
+	confunc employeedel11 { *bt_employee11 image menu/checkbox_green_unchecked }
+	confunc employeedel12 { *bt_employee12 image menu/checkbox_green_unchecked }
+	confunc employeedel13 { *bt_employee13 image menu/checkbox_green_unchecked }
+	confunc employeedel14 { *bt_employee14 image menu/checkbox_green_unchecked }
+	confunc employeedel15 { *bt_employee15 image menu/checkbox_green_unchecked }
+	confunc employeedel16 { *bt_employee16 image menu/checkbox_green_unchecked }
+	confunc employeedel17 { *bt_employee17 image menu/checkbox_green_unchecked }
+	confunc employeedel18 { *bt_employee18 image menu/checkbox_green_unchecked }
 
-	confunc employeeadd0 { *bt_employee0 image hud/buttons1a }
-	confunc employeeadd1 { *bt_employee1 image hud/buttons1a }
-	confunc employeeadd2 { *bt_employee2 image hud/buttons1a }
-	confunc employeeadd3 { *bt_employee3 image hud/buttons1a }
-	confunc employeeadd4 { *bt_employee4 image hud/buttons1a }
-	confunc employeeadd5 { *bt_employee5 image hud/buttons1a }
-	confunc employeeadd6 { *bt_employee6 image hud/buttons1a }
-	confunc employeeadd7 { *bt_employee7 image hud/buttons1a }
-	confunc employeeadd8 { *bt_employee8 image hud/buttons1a }
-	confunc employeeadd9 { *bt_employee9 image hud/buttons1a }
-	confunc employeeadd10 { *bt_employee10 image hud/buttons1a }
-	confunc employeeadd11 { *bt_employee11 image hud/buttons1a }
-	confunc employeeadd12 { *bt_employee12 image hud/buttons1a }
-	confunc employeeadd13 { *bt_employee13 image hud/buttons1a }
-	confunc employeeadd14 { *bt_employee14 image hud/buttons1a }
-	confunc employeeadd15 { *bt_employee15 image hud/buttons1a }
-	confunc employeeadd16 { *bt_employee16 image hud/buttons1a }
-	confunc employeeadd17 { *bt_employee17 image hud/buttons1a }
-	confunc employeeadd18 { *bt_employee18 image hud/buttons1a }
+	confunc employeeadd0 { *bt_employee0 image menu/checkbox_green_checked }
+	confunc employeeadd1 { *bt_employee1 image menu/checkbox_green_checked }
+	confunc employeeadd2 { *bt_employee2 image menu/checkbox_green_checked }
+	confunc employeeadd3 { *bt_employee3 image menu/checkbox_green_checked }
+	confunc employeeadd4 { *bt_employee4 image menu/checkbox_green_checked }
+	confunc employeeadd5 { *bt_employee5 image menu/checkbox_green_checked }
+	confunc employeeadd6 { *bt_employee6 image menu/checkbox_green_checked }
+	confunc employeeadd7 { *bt_employee7 image menu/checkbox_green_checked }
+	confunc employeeadd8 { *bt_employee8 image menu/checkbox_green_checked }
+	confunc employeeadd9 { *bt_employee9 image menu/checkbox_green_checked }
+	confunc employeeadd10 { *bt_employee10 image menu/checkbox_green_checked }
+	confunc employeeadd11 { *bt_employee11 image menu/checkbox_green_checked }
+	confunc employeeadd12 { *bt_employee12 image menu/checkbox_green_checked }
+	confunc employeeadd13 { *bt_employee13 image menu/checkbox_green_checked }
+	confunc employeeadd14 { *bt_employee14 image menu/checkbox_green_checked }
+	confunc employeeadd15 { *bt_employee15 image menu/checkbox_green_checked }
+	confunc employeeadd16 { *bt_employee16 image menu/checkbox_green_checked }
+	confunc employeeadd17 { *bt_employee17 image menu/checkbox_green_checked }
+	confunc employeeadd18 { *bt_employee18 image menu/checkbox_green_checked }
 
-	confunc employeedisable0 { *bt_employee0 image hud/buttons1g }
-	confunc employeedisable1 { *bt_employee1 image hud/buttons1g }
-	confunc employeedisable2 { *bt_employee2 image hud/buttons1g }
-	confunc employeedisable3 { *bt_employee3 image hud/buttons1g }
-	confunc employeedisable4 { *bt_employee4 image hud/buttons1g }
-	confunc employeedisable5 { *bt_employee5 image hud/buttons1g }
-	confunc employeedisable6 { *bt_employee6 image hud/buttons1g }
-	confunc employeedisable7 { *bt_employee7 image hud/buttons1g }
-	confunc employeedisable8 { *bt_employee8 image hud/buttons1g }
-	confunc employeedisable9 { *bt_employee9 image hud/buttons1g }
-	confunc employeedisable10 { *bt_employee10 image hud/buttons1g }
-	confunc employeedisable11 { *bt_employee11 image hud/buttons1g }
-	confunc employeedisable12 { *bt_employee12 image hud/buttons1g }
-	confunc employeedisable13 { *bt_employee13 image hud/buttons1g }
-	confunc employeedisable14 { *bt_employee14 image hud/buttons1g }
-	confunc employeedisable15 { *bt_employee15 image hud/buttons1g }
-	confunc employeedisable16 { *bt_employee16 image hud/buttons1g }
-	confunc employeedisable17 { *bt_employee17 image hud/buttons1g }
-	confunc employeedisable18 { *bt_employee18 image hud/buttons1g }
+	confunc employeedisable0 { *bt_employee0 image menu/checkbox_green_disabled }
+	confunc employeedisable1 { *bt_employee1 image menu/checkbox_green_disabled }
+	confunc employeedisable2 { *bt_employee2 image menu/checkbox_green_disabled }
+	confunc employeedisable3 { *bt_employee3 image menu/checkbox_green_disabled }
+	confunc employeedisable4 { *bt_employee4 image menu/checkbox_green_disabled }
+	confunc employeedisable5 { *bt_employee5 image menu/checkbox_green_disabled }
+	confunc employeedisable6 { *bt_employee6 image menu/checkbox_green_disabled }
+	confunc employeedisable7 { *bt_employee7 image menu/checkbox_green_disabled }
+	confunc employeedisable8 { *bt_employee8 image menu/checkbox_green_disabled }
+	confunc employeedisable9 { *bt_employee9 image menu/checkbox_green_disabled }
+	confunc employeedisable10 { *bt_employee10 image menu/checkbox_green_disabled }
+	confunc employeedisable11 { *bt_employee11 image menu/checkbox_green_disabled }
+	confunc employeedisable12 { *bt_employee12 image menu/checkbox_green_disabled }
+	confunc employeedisable13 { *bt_employee13 image menu/checkbox_green_disabled }
+	confunc employeedisable14 { *bt_employee14 image menu/checkbox_green_disabled }
+	confunc employeedisable15 { *bt_employee15 image menu/checkbox_green_disabled }
+	confunc employeedisable16 { *bt_employee16 image menu/checkbox_green_disabled }
+	confunc employeedisable17 { *bt_employee17 image menu/checkbox_green_disabled }
+	confunc employeedisable18 { *bt_employee18 image menu/checkbox_green_disabled }
 
 	pic bt_employee0
 	{
 		tooltip	"_Hire/Unhire"
-		pos		"365 22"
-		texl	"154 76"
-		texh	"207 113"
+		pos	"362 30"
+		texl	"0 0"
+		texh	"20 20"
 		mousefx true
 		click { cmd "employee_hire 0" }
+		out	{ *bt_employee0 texl "0 0" *bt_employee0 texh "20 20" }
+		in	{ *bt_employee0 texl "0 20" *bt_employee0 texh "20 40" }
 	}
 	pic bt_employee1
 	{
 		tooltip	"_Hire/Unhire"
-		pos		"365 60"
-		texl	"154 76"
-		texh	"207 113"
+		pos	"362 68"
+		texl	"0 0"
+		texh	"20 20"
 		mousefx true
 		click { cmd "employee_hire 1" }
+		out	{ *bt_employee1 texl "0 0" *bt_employee1 texh "20 20" }
+		in	{ *bt_employee1 texl "0 20" *bt_employee1 texh "20 40" }
 	}
 	pic bt_employee2
 	{
 		tooltip	"_Hire/Unhire"
-		pos		"365 98"
-		texl	"154 76"
-		texh	"207 113"
+		pos	"362 106"
+		texl	"0 0"
+		texh	"20 20"
 		mousefx true
 		click { cmd "employee_hire 2" }
+		out	{ *bt_employee2 texl "0 0" *bt_employee2 texh "20 20" }
+		in	{ *bt_employee2 texl "0 20" *bt_employee2 texh "20 40" }
 	}
 	pic bt_employee3
 	{
 		tooltip	"_Hire/Unhire"
-		pos		"365 136"
-		texl	"154 76"
-		texh	"207 113"
+		pos	"362 144"
+		texl	"0 0"
+		texh	"20 20"
 		mousefx true
 		click { cmd "employee_hire 3" }
+		out	{ *bt_employee3 texl "0 0" *bt_employee3 texh "20 20" }
+		in	{ *bt_employee3 texl "0 20" *bt_employee3 texh "20 40" }
 	}
 	pic bt_employee4
 	{
 		tooltip	"_Hire/Unhire"
-		pos		"365 174"
-		texl	"154 76"
-		texh	"207 113"
+		pos	"362 182"
+		texl	"0 0"
+		texh	"20 20"
 		mousefx true
 		click { cmd "employee_hire 4" }
+		out	{ *bt_employee4 texl "0 0" *bt_employee4 texh "20 20" }
+		in	{ *bt_employee4 texl "0 20" *bt_employee4 texh "20 40" }
 	}
 	pic bt_employee5
 	{
 		tooltip	"_Hire/Unhire"
-		pos		"365 212"
-		texl	"154 76"
-		texh	"207 113"
+		pos	"362 220"
+		texl	"0 0"
+		texh	"20 20"
 		mousefx true
 		click { cmd "employee_hire 5" }
+		out	{ *bt_employee5 texl "0 0" *bt_employee5 texh "20 20" }
+		in	{ *bt_employee5 texl "0 20" *bt_employee5 texh "20 40" }
 	}
 	pic bt_employee6
 	{
 		tooltip	"_Hire/Unhire"
-		pos		"365 250"
-		texl	"154 76"
-		texh	"207 113"
+		pos	"362 258"
+		texl	"0 0"
+		texh	"20 20"
 		mousefx true
 		click { cmd "employee_hire 6" }
+		out	{ *bt_employee6 texl "0 0" *bt_employee6 texh "20 20" }
+		in	{ *bt_employee6 texl "0 20" *bt_employee6 texh "20 40" }
 	}
 	pic bt_employee7
 	{
 		tooltip	"_Hire/Unhire"
-		pos		"365 288"
-		texl	"154 76"
-		texh	"207 113"
+		pos	"362 296"
+		texl	"0 0"
+		texh	"20 20"
 		mousefx true
 		click { cmd "employee_hire 7" }
+		out	{ *bt_employee7 texl "0 0" *bt_employee7 texh "20 20" }
+		in	{ *bt_employee7 texl "0 20" *bt_employee7 texh "20 40" }
 	}
 	pic bt_employee8
 	{
 		tooltip	"_Hire/Unhire"
-		pos		"365 326"
-		texl	"154 76"
-		texh	"207 113"
+		pos	"362 334"
+		texl	"0 0"
+		texh	"20 20"
 		mousefx true
 		click { cmd "employee_hire 8" }
+		out	{ *bt_employee8 texl "0 0" *bt_employee8 texh "20 20" }
+		in	{ *bt_employee8 texl "0 20" *bt_employee8 texh "20 40" }
 	}
 	pic bt_employee9
 	{
 		tooltip	"_Hire/Unhire"
-		pos		"365 364"
-		texl	"154 76"
-		texh	"207 113"
+		pos	"362 372"
+		texl	"0 0"
+		texh	"20 20"
 		mousefx true
 		click { cmd "employee_hire 9" }
+		out	{ *bt_employee9 texl "0 0" *bt_employee9 texh "20 20" }
+		in	{ *bt_employee9 texl "0 20" *bt_employee9 texh "20 40" }
 	}
 	pic bt_employee10
 	{
 		tooltip	"_Hire/Unhire"
-		pos		"365 402"
-		texl	"154 76"
-		texh	"207 113"
+		pos	"362 410"
+		texl	"0 0"
+		texh	"20 20"
 		mousefx true
 		click { cmd "employee_hire 10" }
+		out	{ *bt_employee10 texl "0 0" *bt_employee10 texh "20 20" }
+		in	{ *bt_employee10 texl "0 20" *bt_employee10 texh "20 40" }
 	}
 	pic bt_employee11
 	{
 		tooltip	"_Hire/Unhire"
-		pos		"365 440"
-		texl	"154 76"
-		texh	"207 113"
+		pos	"362 448"
+		texl	"0 0"
+		texh	"20 20"
 		mousefx true
 		click { cmd "employee_hire 11" }
+		out	{ *bt_employee11 texl "0 0" *bt_employee11 texh "20 20" }
+		in	{ *bt_employee11 texl "0 20" *bt_employee11 texh "20 40" }
 	}
 	pic bt_employee12
 	{
 		tooltip	"_Hire/Unhire"
-		pos		"365 478"
-		texl	"154 76"
-		texh	"207 113"
+		pos	"362 486"
+		texl	"0 0"
+		texh	"20 20"
 		mousefx true
 		click { cmd "employee_hire 12" }
+		out	{ *bt_employee12 texl "0 0" *bt_employee12 texh "20 20" }
+		in	{ *bt_employee12 texl "0 20" *bt_employee12 texh "20 40" }
 	}
 	pic bt_employee13
 	{
 		tooltip	"_Hire/Unhire"
-		pos		"365 516"
-		texl	"154 76"
-		texh	"207 113"
+		pos	"362 524"
+		texl	"0 0"
+		texh	"20 20"
 		mousefx true
 		click { cmd "employee_hire 13" }
+		out	{ *bt_employee13 texl "0 0" *bt_employee13 texh "20 20" }
+		in	{ *bt_employee13 texl "0 20" *bt_employee13 texh "20 40" }
 	}
 	pic bt_employee14
 	{
 		tooltip	"_Hire/Unhire"
-		pos		"365 554"
-		texl	"154 76"
-		texh	"207 113"
+		pos	"362 562"
+		texl	"0 0"
+		texh	"20 20"
 		mousefx true
 		click { cmd "employee_hire 14" }
+		out	{ *bt_employee14 texl "0 0" *bt_employee14 texh "20 20" }
+		in	{ *bt_employee14 texl "0 20" *bt_employee14 texh "20 40" }
 	}
 	pic bt_employee15
 	{
 		tooltip	"_Hire/Unhire"
-		pos		"365 592"
-		texl	"154 76"
-		texh	"207 113"
+		pos	"362 600"
+		texl	"0 0"
+		texh	"20 20"
 		mousefx true
 		click { cmd "employee_hire 15" }
+		out	{ *bt_employee15 texl "0 0" *bt_employee15 texh "20 20" }
+		in	{ *bt_employee15 texl "0 20" *bt_employee15 texh "20 40" }
 	}
 	pic bt_employee16
 	{
 		tooltip	"_Hire/Unhire"
-		pos		"365 630"
-		texl	"154 76"
-		texh	"207 113"
+		pos	"362 638"
+		texl	"0 0"
+		texh	"20 20"
 		mousefx true
 		click { cmd "employee_hire 16" }
+		out	{ *bt_employee16 texl "0 0" *bt_employee16 texh "20 20" }
+		in	{ *bt_employee16 texl "0 20" *bt_employee16 texh "20 40" }
 	}
 	pic bt_employee17
 	{
 		tooltip	"_Hire/Unhire"
-		pos		"365 668"
-		texl	"154 76"
-		texh	"207 113"
+		pos	"362 676"
+		texl	"0 0"
+		texh	"20 20"
 		mousefx true
 		click { cmd "employee_hire 17" }
+		out	{ *bt_employee17 texl "0 0" *bt_employee17 texh "20 20" }
+		in	{ *bt_employee17 texl "0 20" *bt_employee17 texh "20 40" }
 	}
 	pic bt_employee18
 	{
 		tooltip	"_Hire/Unhire"
-		pos		"365 706"
-		texl	"154 76"
-		texh	"207 113"
+		pos	"362 714"
+		texl	"0 0"
+		texh	"20 20"
 		mousefx true
 		click { cmd "employee_hire 18" }
+		out	{ *bt_employee18 texl "0 0" *bt_employee18 texh "20 20" }
+		in	{ *bt_employee18 texl "0 20" *bt_employee18 texh "20 40" }
 	}
 
 	pic button_scrollup
@@ -304,7 +342,7 @@ menu employees
 		tooltip "_Scroll up"
 		image	menu/buttons_small
 		mousefx true
-		pos		"25 30"
+		pos	"28 30"
 		texh	"48 48"
 		texl	"32 32"
 		click	{ cmd "mn_textscroll employee_list -1; employee_scroll" }
@@ -318,7 +356,7 @@ menu employees
 		tooltip "_Scroll down"
 		image	menu/buttons_small
 		mousefx true
-		pos		"25 720"
+		pos	"28 720"
 		texl	"32 48"
 		texh	"48 64"
 		click	{ cmd "mn_textscroll employee_list 1; employee_scroll" }
@@ -333,7 +371,7 @@ menu employees
 		color	"0 .78 0 1"
 		mousefx	true
 		height	"19"
-		pos		"60 32"
+		pos	"60 32"
 		size	"280 722"
 		num		1
 //		bgcolor	"1 1 1 0.5"
