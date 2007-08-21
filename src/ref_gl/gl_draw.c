@@ -29,6 +29,7 @@ extern cvar_t *r_drawclouds;
 image_t *shadow;
 image_t *blood;
 
+/* FIXME set this */
 static float globe_fog[4];
 int spherelist;
 #define GLOBE_TRIS 60

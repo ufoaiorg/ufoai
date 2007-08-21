@@ -530,6 +530,7 @@ static void SP_civilian_target (edict_t * ent)
 	ent->team = TEAM_CIVILIAN;
 	ent->classname = "civtarget";
 	ent->type = ET_CIVILIANTARGET;
+	ent->fieldSize = ACTOR_SIZE_NORMAL; /* to let the grid fall function work */
 
 	/* fall to ground */
 	if (ent->pos[2] >= HEIGHT)

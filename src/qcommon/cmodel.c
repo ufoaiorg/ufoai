@@ -1080,11 +1080,11 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 				}
 #ifdef DEBUG
 				route_count++;
-#endif				
+#endif
 			}
 
 #ifdef DEBUG
-	if (!route_count)	
+	if (!route_count)
 		Com_Error(ERR_DROP, "CMod_LoadRouting: Map has NO reachable field");
 #endif
 
@@ -1200,7 +1200,7 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
 	vec3_t shift = {0.0f, 0.0f, 0.0f};
 
 #ifdef DEBUG
-	Com_Printf("CM_AddMapTile: %s at %i,%i\n", name, sX, sY); 
+	Com_Printf("CM_AddMapTile: %s at %i,%i\n", name, sX, sY);
 #endif
 	assert(name);
 	assert(name[0]);
@@ -1255,7 +1255,7 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
 	assert(curTile == &mapTiles[numTiles]);
 
 	/* CMod_LoadRouting plays with curTile and numTiles, so lets set */
-	/* these to the right values now */ 
+	/* these to the right values now */
 	numInline += curTile->numcmodels - LEVEL_STEPON;
 
 	/* now increase the amount of loaded tiles */
@@ -1355,9 +1355,9 @@ cBspModel_t *CM_InlineModel (const char *name)
 		models = mapTiles[i].numcmodels - LEVEL_STEPON;
 		assert(models>=0);
 
-		if ( num >= models) 
+		if (num >= models)
 			num -= models;
-		else 
+		else
 			return &mapTiles[i].cmodels[LEVEL_STEPON + num];
 	}
 

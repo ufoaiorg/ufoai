@@ -26,9 +26,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_local.h"
 
 typedef struct {
-	pos3_t to, stop;
-	byte mode, shots;
-	edict_t *target;
+	pos3_t to;			/**< grid pos to walk to */
+	pos3_t stop;		/**< grid pos to stop at (e.g. hiding spots) */
+	byte mode;			/**< shoot_types_t */
+	byte shots;			/**< how many shoots can this actor do */
+	edict_t *target;	/**< the target edict */
 } ai_action_t;
 
 /**
@@ -79,6 +81,8 @@ static qboolean AI_CheckFF (edict_t * ent, vec3_t target, float spread)
 #define GUETE_REACTION_FEAR_FACTOR 20
 #define GUETE_CIV_FACTOR	0.25
 
+#define AI_ACTION_NOTHING_FOUND -10000.0
+
 #define CLOSE_IN_DIST		1200.0
 #define SPREAD_FACTOR		8.0
 #define	SPREAD_NORM(x)		(x > 0 ? SPREAD_FACTOR/(x*torad) : 0)
@@ -109,7 +113,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 
 	/* test for time */
 	if (tu < 0)
-		return -10000.0;
+		return AI_ACTION_NOTHING_FOUND;
 
 	/* see if we are very well visible by a reacting enemy */
 	/* @todo: this is worthless now; need to check all squares along our way! */
@@ -185,6 +189,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 
 			nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * 0.5 +
 				GET_ACC(ent->chr.skills[ABILITY_ACCURACY] * (1 + fd->modif), fd->weaponSkill));
+			/* how many shoots can this actor do */
 			shots = tu / fd->time;
 			if (shots) {
 				/* search best target */
@@ -371,7 +376,7 @@ static float AI_CivilianCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 
 	/* test for time */
 	if (tu < 0)
-		return -10000.0;
+		return AI_ACTION_NOTHING_FOUND;
 
 	/* run away */
 	minDist = RUN_AWAY_DIST;
@@ -429,7 +434,7 @@ static ai_action_t AI_PrepBestAction (player_t * player, edict_t * ent)
 		yh = WIDTH;
 
 	/* search best action */
-	best = -10000.0;
+	best = AI_ACTION_NOTHING_FOUND;
 	VectorCopy(ent->pos, oldPos);
 	VectorCopy(ent->origin, oldOrigin);
 
@@ -476,7 +481,7 @@ static ai_action_t AI_PrepBestAction (player_t * player, edict_t * ent)
 	VectorCopy(oldOrigin, ent->origin);
 
 	/* nothing found to do */
-	if (best == -10000.0) {
+	if (best == AI_ACTION_NOTHING_FOUND) {
 		bestAia.target = NULL;
 		return bestAia;
 	}
