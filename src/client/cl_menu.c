@@ -162,6 +162,7 @@ static const value_t nps[] = {
 	{"if", V_IF, offsetof(menuNode_t, depends), 0},
 	{"repeat", V_BOOL, offsetof(menuNode_t, repeat), MEMBER_SIZEOF(menuNode_t, repeat)},
 	{"scrollbar", V_BOOL, offsetof(menuNode_t, scrollbar), MEMBER_SIZEOF(menuNode_t, scrollbar)},
+	{"scrollbarleft", V_BOOL, offsetof(menuNode_t, scrollbarLeft), MEMBER_SIZEOF(menuNode_t, scrollbarLeft)},
 
 	{NULL, V_NULL, 0, 0},
 };
@@ -2103,7 +2104,7 @@ static int INV_GetItemTooltip (item_t item, char *tooltiptext, size_t string_max
  * @param[in] y The fixed y position the text node starts
  * @todo The node pointer can be NULL
  */
-static void MN_DrawTextNode (const char *text, const char* font, menuNode_t* node, const int x, const int y, int width, const int height)
+static void MN_DrawTextNode (const char *text, const char* font, menuNode_t* node, int x, int y, int width, int height)
 {
 	char textCopy[MAX_MENUTEXTLEN];
 	int lineHeight = 0;
@@ -2122,7 +2123,11 @@ static void MN_DrawTextNode (const char *text, const char* font, menuNode_t* nod
 	VectorScale(node->color, 0.8, color);
 	color[3] = node->color[3];
 
-	width -= SCROLLBAR_WIDTH; /* scrollbar space */
+	if (node->scrollbar) {
+		width -= SCROLLBAR_WIDTH; /* scrollbar space */
+		if (node->scrollbarLeft)
+			x += SCROLLBAR_WIDTH;
+	}
 
 	y1 = y;
 	/*Com_Printf("\n\n\nnode->textLines: %i \n", node->textLines);*/
@@ -2206,23 +2211,26 @@ static void MN_DrawTextNode (const char *text, const char* font, menuNode_t* nod
 
 	/* draw scrollbars */
 	if (node->scrollbar && node->height  && node->textLines > node->height) {
-		int x, height;
-		float heightBar, y;
+		int scrollBarX, nodePixelHeight;
+		float scrollBarHeight, scrollBarY;
 
 		if (!node->texh[0])
 			Sys_Error("MN_DrawTextNode: no format height for node '%s'\n", node->name);
 
-		height = node->height * node->texh[0];
-		x = node->pos[0] + node->size[0] - SCROLLBAR_WIDTH;
-		y = node->pos[1];
+		nodePixelHeight = node->height * node->texh[0];
+		if (!node->scrollbarLeft)
+			scrollBarX = node->pos[0] + node->size[0] - SCROLLBAR_WIDTH;
+		else
+			scrollBarX = node->pos[0];
+		scrollBarY = node->pos[1];
 
 		/* draw background of scrollbar */
-		re.DrawFill(x, y, SCROLLBAR_WIDTH, height, 0, scrollbarColorBG);
+		re.DrawFill(scrollBarX, scrollBarY, SCROLLBAR_WIDTH, nodePixelHeight, 0, scrollbarColorBG);
 
 		/* draw scroll bar */
-		heightBar = height * (height / (node->textLines * node->texh[0]));
-		y += node->textScroll * (heightBar / node->height);
-		re.DrawFill(x, y, SCROLLBAR_WIDTH, heightBar, 0, scrollbarColorBar);
+		scrollBarHeight = nodePixelHeight * (nodePixelHeight / (node->textLines * node->texh[0]));
+		scrollBarY += node->textScroll * (scrollBarHeight / node->height);
+		re.DrawFill(scrollBarX, scrollBarY, SCROLLBAR_WIDTH, scrollBarHeight, 0, scrollbarColorBar);
 	}
 }
 
