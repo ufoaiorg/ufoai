@@ -72,26 +72,14 @@ equipment campaign_market
 //	rpg_particle_ammo		10
 	grenl					2
 	grenl_ammo				20
-	grenl_plasma_ammo		10
-	bolterrifle				2
-	bolterrifle_ammo		20
-	laserpistol				1
-//	laserpistol_ammo		20
-	laserrifle				1
-	laserrifle_ammo			35
-	heavylaser				1
-//	heavylaser_ammo			5
 	fraggrenade				40
 	incgrenade				10
 	smokegrenade			10
 	knife					20
 	irgoggles				2
 	medikit					4
-	stunrod					2
-	stungrenade				10
 	flashbang				10
 	light					20
-	medium					5
 //	heavy					1
 	craft_weapon_shiva	6
 	craft_ammo_shiva_API	100

@@ -255,6 +255,7 @@ menu map
 		format	"18 0"
 		height	"4"
 		wheel
+		scrollbar true
 	}
 
 	// ==================
