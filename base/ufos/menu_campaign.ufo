@@ -108,23 +108,26 @@ menu campaigns
 		click	{ }
 		height	"10"
 		wheel
+		scrollbar true
 	}
 
 	text campaign_desc
 	{
 		pos	"500 300"
 		format	"20 0"
-		size	"420 400"
+		size	"420 380"
 		num		0
-		height	20
+		height	19
 		wheel
+		scrollbar true
+//		bgcolor "1 1 1 0.4"
 	}
 
 	pic cp_scrollup
 	{
 		tooltip "_Scroll up"
 		image menu/buttons_small
-		pos		"930 339"
+		pos		"908 284"
 		texl	"32 32"
 		texh	"48 48"
 		mousefx	true
@@ -138,7 +141,7 @@ menu campaigns
 	{
 		tooltip "_Scroll down"
 		image menu/buttons_small
-		pos		"930 355"
+		pos		"908 680"
 		texl	"32 48"
 		texh	"48 64"
 		mousefx	true
