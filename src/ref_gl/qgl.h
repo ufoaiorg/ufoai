@@ -516,7 +516,6 @@ extern void ( APIENTRY * qglPNTrianglesfATIX) (GLenum pname, GLfloat param);
 /* extension constants */
 
 extern GLenum gl_texture0, gl_texture1, gl_texture2, gl_texture3;
-extern GLenum gl_combine;
 
 /* we use glext.h */
 #ifndef _WIN32

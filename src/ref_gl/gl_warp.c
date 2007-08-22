@@ -190,7 +190,7 @@ float r_turbsin[] = {
 /**
  * @brief Does a water warp on the pre-fragmented mBspPoly_t chain
  */
-void EmitWaterPolys (mBspSurface_t * fa)
+void R_DrawTurbSurface (mBspSurface_t * fa)
 {
 	mBspPoly_t *p, *bp;
 	float *v;

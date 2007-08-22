@@ -34,7 +34,6 @@ viddef_t vid;
 refimport_t ri;
 
 GLenum gl_texture0, gl_texture1, gl_texture2, gl_texture3;
-GLenum gl_combine;
 
 float gldepthmin, gldepthmax;
 
@@ -553,87 +552,6 @@ static void R_SetupFrame (void)
 /**
  * @brief
  */
-static void MYgluPerspective (GLdouble zNear, GLdouble zFar)
-{
-	GLdouble xmin, xmax, ymin, ymax, yaspect = (double) r_newrefdef.height / r_newrefdef.width;
-
-	if (r_isometric->integer) {
-		qglOrtho(-10 * r_newrefdef.fov_x, 10 * r_newrefdef.fov_x, -10 * r_newrefdef.fov_x * yaspect, 10 * r_newrefdef.fov_x * yaspect, -zFar, zFar);
-	} else {
-		xmax = zNear * tan(r_newrefdef.fov_x * M_PI / 360.0);
-		xmin = -xmax;
-
-		ymin = xmin * yaspect;
-		ymax = xmax * yaspect;
-
-		qglFrustum(xmin, xmax, ymin, ymax, zNear, zFar);
-	}
-}
-
-
-/**
- * @brief
- */
-static void R_SetupGL3D (void)
-{
-	int x, x2, y2, y, w, h;
-
-	/* set up viewport */
-	x = floor(r_newrefdef.x * vid.width / vid.width);
-	x2 = ceil((r_newrefdef.x + r_newrefdef.width) * vid.width / vid.width);
-	y = floor(vid.height - r_newrefdef.y * vid.height / vid.height);
-	y2 = ceil(vid.height - (r_newrefdef.y + r_newrefdef.height) * vid.height / vid.height);
-
-	w = x2 - x;
-	h = y - y2;
-
-	qglViewport(x, y2, w, h);
-
-	/* set up projection matrix */
-	qglMatrixMode(GL_PROJECTION);
-	qglLoadIdentity();
-	MYgluPerspective(4.0, 4096.0);
-
-	qglCullFace(GL_FRONT);
-
-	qglMatrixMode(GL_MODELVIEW);
-	qglLoadIdentity();
-
-	qglRotatef(-90, 1, 0, 0);	/* put Z going up */
-	qglRotatef(90, 0, 0, 1);	/* put Z going up */
-	qglRotatef(-r_newrefdef.viewangles[2], 1, 0, 0);
-	qglRotatef(-r_newrefdef.viewangles[0], 0, 1, 0);
-	qglRotatef(-r_newrefdef.viewangles[1], 0, 0, 1);
-	qglTranslatef(-r_newrefdef.vieworg[0], -r_newrefdef.vieworg[1], -r_newrefdef.vieworg[2]);
-
-	qglGetFloatv(GL_MODELVIEW_MATRIX, r_world_matrix);
-
-	/* set drawing parms */
-	qglEnable(GL_CULL_FACE);
-
-	RSTATE_DISABLE_BLEND
-	RSTATE_DISABLE_ALPHATEST
-	qglEnable(GL_DEPTH_TEST);
-
-#if 0
-	qglHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
-	qglHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_DONT_CARE);
-#endif
-
-	if (r_fog->integer && r_newrefdef.fog && r_state.fog_coord) {
-		qglEnable(GL_FOG);
-		qglFogi(GL_FOG_MODE, GL_EXP2);
-		qglFogf(GL_FOG_START, 0.1 * r_newrefdef.fog);
-		qglFogf(GL_FOG_END, r_newrefdef.fog);
-		qglHint(GL_FOG_HINT, GL_DONT_CARE);
-		qglFogf(GL_FOG_DENSITY, 0.005 * r_newrefdef.fog );
-		qglFogfv(GL_FOG_COLOR, r_newrefdef.fogColor);
-	}
-}
-
-/**
- * @brief
- */
 static void R_Clear (void)
 {
 	qglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -726,47 +644,6 @@ static void R_RenderView (refdef_t * fd)
 
 	/* apply 2d bloom effect */
 	R_BloomBlend();
-}
-
-#if 0
-/**
- * @brief
- * @note Currently unused
- * @sa R_SetupGL2D
- */
-void R_LeaveGL2D (void)
-{
-	qglMatrixMode(GL_MODELVIEW);
-	qglPopMatrix();
-
-	qglMatrixMode(GL_PROJECTION);
-	qglPopMatrix();
-
-	qglPopAttrib();
-}
-#endif
-
-/**
- * @brief
- * @sa R_LeaveGL2D
- */
-static void R_SetupGL2D (void)
-{
-	/* set 2D virtual screen size */
-	qglViewport(0, 0, vid.width, vid.height);
-	qglMatrixMode(GL_PROJECTION);
-	qglLoadIdentity();
-	qglOrtho(0, vid.width, vid.height, 0, 9999, -9999);
-	qglMatrixMode(GL_MODELVIEW);
-	qglLoadIdentity();
-	qglDisable(GL_DEPTH_TEST);
-	qglDisable(GL_CULL_FACE);
-	RSTATE_DISABLE_BLEND
-	qglDisable(GL_FOG);
-	RSTATE_ENABLE_ALPHATEST
-	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	R_TexEnv(GL_MODULATE);
-	qglColor4f(1, 1, 1, 1);
 }
 
 /**
@@ -1060,14 +937,14 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 	if (strstr(r_config.extensions_string, "GL_EXT_texture_env_combine") || strstr(r_config.extensions_string, "GL_ARB_texture_env_combine")) {
 		if (r_ext_combine->integer) {
 			ri.Con_Printf(PRINT_ALL, "...using GL_EXT_texture_env_combine\n");
-			gl_combine = GL_COMBINE_EXT;
+			r_config.envCombine = GL_COMBINE_EXT;
 		} else {
 			ri.Con_Printf(PRINT_ALL, "...ignoring EXT_texture_env_combine\n");
-			gl_combine = 0;
+			r_config.envCombine = 0;
 		}
 	} else {
 		ri.Con_Printf(PRINT_ALL, "...GL_EXT_texture_env_combine not found\n");
-		gl_combine = 0;
+		r_config.envCombine = 0;
 	}
 
 	if (strstr(r_config.extensions_string, "GL_SGIS_multitexture")) {

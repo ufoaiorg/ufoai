@@ -351,7 +351,7 @@ void R_SubdivideSurface(mBspSurface_t * fa);
 qboolean R_CullBox(vec3_t mins, vec3_t maxs);
 void R_RotateForEntity(entity_t * e);
 
-void EmitWaterPolys(mBspSurface_t * fa);
+void R_DrawTurbSurface(mBspSurface_t * fa);
 void R_DrawTriangleOutlines(void);
 void R_MarkLights(dlight_t * light, int bit, mBspNode_t * node);
 void R_EnableLights(qboolean fixed, float *matrix, float *lightparam, float *lightambient);
@@ -454,6 +454,8 @@ typedef struct {
 	const char *version_string;
 	const char *extensions_string;
 	int maxTextureSize;
+	int maxTextureUnits;
+	GLenum envCombine;
 } rconfig_t;
 
 typedef struct {
@@ -533,5 +535,8 @@ void R_BloomBlend(void);
 
 void R_SetCacheState(mBspSurface_t * surf);
 void R_BuildLightMap(mBspSurface_t * surf, byte * dest, int stride);
+
+void R_SetupGL2D(void);
+void R_SetupGL3D(void);
 
 #endif /* R_LOCAL_H */

@@ -144,7 +144,7 @@ static void R_DrawPoly (const mBspSurface_t * fa, const float scroll)
 /**
  * @brief Used for flowing and non-flowing surfaces
  * @param[in] scroll != 0 for SURF_FLOWING
- * @sa R_RenderLightmappedPoly
+ * @sa R_DrawLightmappedSurface
  * @sa R_DrawPolyChainOffset
  */
 static void R_DrawPolyChain (const mBspSurface_t *surf, const float scroll)
@@ -340,7 +340,7 @@ static void R_RenderBrushPoly (mBspSurface_t * fa)
 		/* warp texture, no lightmaps */
 		R_TexEnv(GL_MODULATE);
 		qglColor4f(r_state.inverse_intensity, r_state.inverse_intensity, r_state.inverse_intensity, 1.0F);
-		EmitWaterPolys(fa);
+		R_DrawTurbSurface(fa);
 		R_TexEnv(GL_REPLACE);
 		return;
 	} else {
@@ -442,7 +442,7 @@ void R_DrawAlphaSurfaces (void)
 			qglColor4f(intens, intens, intens, 1);
 
 		if (s->flags & SURF_DRAWTURB)
-			EmitWaterPolys(s);
+			R_DrawTurbSurface(s);
 		else if (s->texinfo->flags & SURF_FLOWING) {
 			float scroll;
 			scroll = -64 * ((r_newrefdef.time / 40.0) - (int) (r_newrefdef.time / 40.0));
@@ -470,7 +470,7 @@ void R_DrawAlphaSurfaces (void)
  * @brief
  * @note only called when qglMTexCoord2fSGIS is not null
  */
-static void R_RenderLightmappedPoly (mBspSurface_t * surf)
+static void R_DrawLightmappedSurface (mBspSurface_t * surf)
 {
 	int map;
 	image_t *image = R_TextureAnimation(surf->texinfo);
@@ -602,7 +602,7 @@ static void R_DrawInlineBModel (void)
 					r_alpha_surfaces = psurf;
 				}
 			} else if (qglMTexCoord2fSGIS && !(psurf->flags & SURF_DRAWTURB)) {
-				R_RenderLightmappedPoly(psurf);
+				R_DrawLightmappedSurface(psurf);
 			} else {
 				R_EnableMultitexture(qfalse);
 				R_RenderBrushPoly(psurf);
@@ -752,7 +752,7 @@ static void R_RecursiveWorldNode (mBspNode_t * node)
 			r_alpha_surfaces = surf;
 		} else {
 			if (qglMTexCoord2fSGIS && !(surf->flags & SURF_DRAWTURB))
-				R_RenderLightmappedPoly(surf);
+				R_DrawLightmappedSurface(surf);
 			else {
 				/* the polygon is visible, so add it to the texture */
 				/* sorted chain */
@@ -797,8 +797,8 @@ static void R_DrawWorld (mBspNode_t * nodes)
 		R_TexEnv(GL_REPLACE);
 		R_SelectTexture(gl_texture1);
 
-		if (gl_combine) {
-			R_TexEnv(gl_combine);
+		if (r_config.envCombine) {
+			R_TexEnv(r_config.envCombine);
 			qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, r_intensity->value);
 		} else {
 			R_TexEnv(GL_MODULATE);

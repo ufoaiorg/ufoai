@@ -323,8 +323,8 @@ void R_DrawAliasMD2Model (entity_t * e)
 	/* draw it */
 	R_Bind(skin->texnum);
 
-	if (gl_combine) {
-		R_TexEnv(gl_combine);
+	if (r_config.envCombine) {
+		R_TexEnv(r_config.envCombine);
 		qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, r_intensity->value);
 	} else {
 		R_TexEnv(GL_MODULATE);
@@ -582,8 +582,8 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	qglEnable(GL_DEPTH_TEST);
 	qglEnable(GL_CULL_FACE);
 
-	if (gl_combine) {
-		R_TexEnv(gl_combine);
+	if (r_config.envCombine) {
+		R_TexEnv(r_config.envCombine);
 		qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, r_intensity->value);
 	} else {
 		R_TexEnv(GL_MODULATE);
@@ -666,8 +666,8 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	qglEnable(GL_DEPTH_TEST);
 	qglEnable(GL_CULL_FACE);
 
-	if (gl_combine) {
-		R_TexEnv(gl_combine);
+	if (r_config.envCombine) {
+		R_TexEnv(r_config.envCombine);
 		qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, r_intensity->value);
 	} else {
 		R_TexEnv(GL_MODULATE);

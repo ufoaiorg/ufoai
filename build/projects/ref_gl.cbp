@@ -250,6 +250,9 @@
 		<Unit filename="..\..\src\ref_gl\gl_rsurf.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\ref_gl\gl_state.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\ref_gl\gl_shadows.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -1,5 +1,6 @@
 REF_GL_SRCS = \
 	ref_gl/gl_anim.c \
+	ref_gl/gl_arb_shader.c \
 	ref_gl/gl_bloom.c \
 	ref_gl/gl_draw.c \
 	ref_gl/gl_font.c \
@@ -18,9 +19,9 @@ REF_GL_SRCS = \
 	ref_gl/gl_rmain.c \
 	ref_gl/gl_rmisc.c \
 	ref_gl/gl_rsurf.c \
+	ref_gl/gl_state.c \
 	ref_gl/gl_warp.c \
 	ref_gl/gl_particle.c \
-	ref_gl/gl_arb_shader.c \
 	ref_gl/gl_shadows.c \
 	ref_gl/qgl.c \
 	\

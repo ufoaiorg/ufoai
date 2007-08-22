@@ -83,100 +83,6 @@ void R_UpdateAnisotropy (void)
 }
 #endif
 
-/**
- * @brief
- */
-void R_EnableMultitexture (qboolean enable)
-{
-	if (!qglSelectTextureSGIS && !qglActiveTextureARB)
-		return;
-
-	if (enable == r_state.multitexture)
-		return;
-
-	r_state.multitexture = enable;
-
-	if (enable) {
-		R_SelectTexture(gl_texture1);
-		qglEnable(GL_TEXTURE_2D);
-		R_TexEnv(GL_REPLACE);
-	} else {
-		R_SelectTexture(gl_texture1);
-		qglDisable(GL_TEXTURE_2D);
-		R_TexEnv(GL_REPLACE);
-	}
-	R_SelectTexture(gl_texture0);
-	R_TexEnv(GL_REPLACE);
-}
-
-/**
- * @brief
- */
-void R_SelectTexture (GLenum texture)
-{
-	int tmu;
-
-	if (!qglSelectTextureSGIS && !qglActiveTextureARB)
-		return;
-
-	if (texture == gl_texture0)
-		tmu = 0;
-	else
-		tmu = 1;
-
-	if (tmu == r_state.currenttmu)
-		return;
-
-	r_state.currenttmu = tmu;
-
-	if (qglSelectTextureSGIS) {
-		qglSelectTextureSGIS(texture);
-	} else if (qglActiveTextureARB) {
-		qglActiveTextureARB(texture);
-		qglClientActiveTextureARB(texture);
-	}
-}
-
-/**
- * @brief
- */
-void R_TexEnv (GLenum mode)
-{
-	static GLenum lastmodes[2] = { (GLenum) - 1, (GLenum) - 1 };
-
-	if (mode != lastmodes[r_state.currenttmu]) {
-		qglTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
-		lastmodes[r_state.currenttmu] = mode;
-	}
-}
-
-/**
- * @brief
- */
-void R_Bind (int texnum)
-{
-	if (r_state.currenttextures[r_state.currenttmu] == texnum)
-		return;
-	r_state.currenttextures[r_state.currenttmu] = texnum;
-	qglBindTexture(GL_TEXTURE_2D, texnum);
-}
-
-/**
- * @brief
- */
-void R_MBind (GLenum target, int texnum)
-{
-	R_SelectTexture(target);
-	if (target == gl_texture0) {
-		if (r_state.currenttextures[0] == texnum)
-			return;
-	} else {
-		if (r_state.currenttextures[1] == texnum)
-			return;
-	}
-	R_Bind(texnum);
-}
-
 typedef struct {
 	const char *name;
 	int minimize, maximize;
@@ -1325,7 +1231,7 @@ static void R_ResampleTexture (unsigned *in, int inwidth, int inheight, unsigned
  */
 static void R_LightScaleTexture (unsigned *in, int inwidth, int inheight, qboolean only_gamma)
 {
-	if (gl_combine || only_gamma) {
+	if (r_config.envCombine || only_gamma) {
 		int i, c;
 		byte *p;
 
