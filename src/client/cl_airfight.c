@@ -482,7 +482,7 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 				ms->numAlienTeams++;
 
 			Q_strncpyz(ms->loadingscreen, "crashsite", sizeof(ms->loadingscreen));
-			Com_sprintf(ms->onwin, sizeof(ms->onwin), "cp_ufocrashed %i", aircraft->ufotype);
+			Com_sprintf(ms->onwin, sizeof(ms->onwin), "cp_ufocrashed %i;", aircraft->ufotype);
 			/* use ufocrash.ump as random tile assembly */
 			Com_sprintf(ms->map, sizeof(ms->map), "+ufocrash");
 			Com_sprintf(ms->param, sizeof(ms->param), "%s-%s", UFO_TypeToShortName(aircraft->ufotype), zoneType);
