@@ -1390,7 +1390,15 @@ char *CHRSH_CharGetBody (character_t * const chr)
 	char *underline;
 
 	assert(chr);
-	assert(chr->inv);
+	if (!chr->inv) {
+		/**
+		 * No inventory means we do not have a finished charachter definition.
+		 * Return empty path.
+		 */
+		CHRSH_returnModel[0] = '\0';
+		return CHRSH_returnModel;
+	}
+
 
 	/* models of UGVs don't change - because they are already armored */
 	if (chr->inv->c[CSI->idArmor] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
@@ -1420,7 +1428,14 @@ char *CHRSH_CharGetHead (character_t * const chr)
 	char *underline;
 
 	assert(chr);
-	assert(chr->inv);
+	if (!chr->inv) {
+		/**
+		 * No inventory means we do not have a finished charachter definition.
+		 * Return empty path.
+		 */
+		CHRSH_returnModel[0] = '\0';
+		return CHRSH_returnModel;
+	}
 
 	/* models of UGVs don't change - because they are already armored */
 	if (chr->inv->c[CSI->idArmor] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
