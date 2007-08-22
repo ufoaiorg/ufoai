@@ -230,6 +230,8 @@ void *Sys_LoadLibrary (const char *name, int flags)
 	lib = dlopen(libName, flags|RTLD_LAZY|RTLD_GLOBAL);
 	if (lib)
 		return lib;
+	else
+		Com_DPrintf(DEBUG_SYSTEM, "%s\n", dlerror());
 
 	/* then use s_libdir cvar or current dir */
 	Com_sprintf(libName, sizeof(libName), "%s/%s_"CPUSTRING"."SHARED_EXT, libDir, name);
@@ -237,6 +239,8 @@ void *Sys_LoadLibrary (const char *name, int flags)
 	lib = dlopen(libName, flags|RTLD_LAZY);
 	if (lib)
 		return lib;
+	else
+		Com_DPrintf(DEBUG_SYSTEM, "%s\n", dlerror());
 
 	/* and not both again but without CPUSTRING */
 	/* system wide */
@@ -245,6 +249,8 @@ void *Sys_LoadLibrary (const char *name, int flags)
 	lib = dlopen(libName, flags|RTLD_LAZY|RTLD_GLOBAL);
 	if (lib)
 		return lib;
+	else
+		Com_DPrintf(DEBUG_SYSTEM, "%s\n", dlerror());
 
 	/* then use s_libdir cvar or current dir */
 	Com_sprintf(libName, sizeof(libName), "%s/%s."SHARED_EXT, libDir, name);
@@ -252,6 +258,8 @@ void *Sys_LoadLibrary (const char *name, int flags)
 	lib = dlopen(libName, flags|RTLD_LAZY);
 	if (lib)
 		return lib;
+	else
+		Com_DPrintf(DEBUG_SYSTEM, "%s\n", dlerror());
 
 	Com_Printf("Could not load %s."SHARED_EXT" and %s_"CPUSTRING"."SHARED_EXT"\n", name, name);
 	return NULL;
