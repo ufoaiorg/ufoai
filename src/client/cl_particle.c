@@ -1058,7 +1058,7 @@ static void CL_ParticleRun2 (ptl_t *p)
 	}
 
 	if (p->light)
-		V_AddLight(p->s, p->light, p->color[0], p->color[1], p->color[2]);
+		V_AddLight(p->s, p->light, p->color);
 
 	/* animate */
 	while (p->fps && p->lastFrame * p->fps >= 1) {

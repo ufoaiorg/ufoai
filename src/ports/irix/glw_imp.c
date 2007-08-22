@@ -232,7 +232,7 @@ int Rimp_Init (void *hinstance, void *wndproc)
 /**
  * @brief
  */
-void Rimp_BeginFrame (float camera_seperation)
+void Rimp_BeginFrame (void)
 {
 }
 

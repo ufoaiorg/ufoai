@@ -622,7 +622,7 @@ static qboolean Rimp_InitGraphics (qboolean fullscreen)
 /**
  * @brief
  */
-void Rimp_BeginFrame (float camera_seperation)
+void Rimp_BeginFrame (void)
 {
 }
 

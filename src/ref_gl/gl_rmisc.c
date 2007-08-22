@@ -262,10 +262,8 @@ void R_UpdateSwapInterval (void)
 		r_swapinterval->modified = qfalse;
 
 #ifdef _WIN32
-		if (!r_state.stereo_enabled) {
-			if (qwglSwapIntervalEXT)
-				qwglSwapIntervalEXT(r_swapinterval->value);
-		}
+		if (qwglSwapIntervalEXT)
+			qwglSwapIntervalEXT(r_swapinterval->value);
 #endif
 	}
 }

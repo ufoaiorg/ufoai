@@ -558,17 +558,13 @@ static void MYgluPerspective (GLdouble zNear, GLdouble zFar)
 	GLdouble xmin, xmax, ymin, ymax, yaspect = (double) r_newrefdef.height / r_newrefdef.width;
 
 	if (r_isometric->integer) {
-		/* @todo: someone with stereo glasses should try to figure out what the correct stereo separation multiplier is for ortho mode */
-		qglOrtho((-10 - 2 * r_state.camera_separation) * r_newrefdef.fov_x, (10 - 2 * r_state.camera_separation) * r_newrefdef.fov_x, -10 * r_newrefdef.fov_x * yaspect, 10 * r_newrefdef.fov_x * yaspect, -zFar, zFar);
+		qglOrtho(-10 * r_newrefdef.fov_x, 10 * r_newrefdef.fov_x, -10 * r_newrefdef.fov_x * yaspect, 10 * r_newrefdef.fov_x * yaspect, -zFar, zFar);
 	} else {
 		xmax = zNear * tan(r_newrefdef.fov_x * M_PI / 360.0);
 		xmin = -xmax;
 
 		ymin = xmin * yaspect;
 		ymax = xmax * yaspect;
-
-		xmin += -(2 * r_state.camera_separation) / zNear;
-		xmax += -(2 * r_state.camera_separation) / zNear;
 
 		qglFrustum(xmin, xmax, ymin, ymax, zNear, zFar);
 	}
@@ -1328,10 +1324,8 @@ static void R_Shutdown (void)
  * @sa R_RenderFrame
  * @sa Rimp_BeginFrame
  */
-static void R_BeginFrame (float camera_separation)
+static void R_BeginFrame (void)
 {
-	r_state.camera_separation = camera_separation;
-
 	/* change modes if necessary */
 	/* FIXME: only restart if CDS is required */
 	if (r_mode->modified || vid_fullscreen->modified || r_ext_texture_compression->modified) {
@@ -1376,7 +1370,7 @@ static void R_BeginFrame (float camera_separation)
 			Rimp_SetGamma();
 	}
 
-	Rimp_BeginFrame(camera_separation);
+	Rimp_BeginFrame();
 
 	/* go into 2D mode */
 	R_SetGL2D();
@@ -1385,12 +1379,10 @@ static void R_BeginFrame (float camera_separation)
 	if (r_drawbuffer->modified) {
 		r_drawbuffer->modified = qfalse;
 
-		if (r_state.camera_separation == 0 || !r_state.stereo_enabled) {
-			if (Q_stricmp(r_drawbuffer->string, "GL_FRONT") == 0)
-				qglDrawBuffer(GL_FRONT);
-			else
-				qglDrawBuffer(GL_BACK);
-		}
+		if (Q_stricmp(r_drawbuffer->string, "GL_FRONT") == 0)
+			qglDrawBuffer(GL_FRONT);
+		else
+			qglDrawBuffer(GL_BACK);
 	}
 
 	/* texturemode stuff */

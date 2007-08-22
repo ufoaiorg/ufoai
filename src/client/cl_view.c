@@ -92,10 +92,10 @@ void V_AddEntity (entity_t * ent)
 
 /**
  * @brief
- * @param
+ * @param[in] intensity The radius of the light
  * @sa
  */
-void V_AddLight (vec3_t org, float intensity, float r, float g, float b)
+void V_AddLight (vec3_t org, float intensity, vec3_t color)
 {
 	dlight_t *dl;
 
@@ -104,9 +104,7 @@ void V_AddLight (vec3_t org, float intensity, float r, float g, float b)
 	dl = &r_dlights[r_numdlights++];
 	VectorCopy(org, dl->origin);
 	dl->intensity = intensity;
-	dl->color[0] = r;
-	dl->color[1] = g;
-	dl->color[2] = b;
+	VectorCopy(color, dl->color);
 }
 
 
@@ -563,10 +561,9 @@ void V_UpdateRefDef (void)
 
 /**
  * @brief
- * @param stereo_separation
  * @sa SCR_UpdateScreen
  */
-void V_RenderView (float stereo_separation)
+void V_RenderView (void)
 {
 	if (cls.state != ca_active && cls.state != ca_sequence && cls.state != ca_ptledit)
 		return;
@@ -600,14 +597,6 @@ void V_RenderView (float stereo_separation)
 	/* update ref def - do this even in non 3d mode - we need shaders at loading time */
 	V_UpdateRefDef();
 	CL_CalcRefdef();
-
-	/* offset vieworg appropriately if we're doing stereo separation */
-	if (stereo_separation != 0) {
-		vec3_t tmp;
-
-		VectorScale(cl.cam.axis[1], stereo_separation, tmp);
-		VectorAdd(cl.refdef.vieworg, tmp, cl.refdef.vieworg);
-	}
 
 	/* render the frame */
 	re.RenderFrame(&cl.refdef);

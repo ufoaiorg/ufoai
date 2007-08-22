@@ -535,6 +535,7 @@ void R_DrawShadow (entity_t * e)
 			qglTranslatef(e->origin[0], e->origin[1], e->origin[2]);
 			qglRotatef(e->angles[1], 0, 0, 1);
 			VectorSet(end, currententity->origin[0], currententity->origin[1], currententity->origin[2] - 2048);
+			/* FIXME: go through other rTiles, too */
 			RecursiveLightPoint(rTiles[0]->bsp.nodes, currententity->origin, end);
 			R_ShadowLight(currententity->origin, shadevector);
 			R_DrawAliasShadow(e, paliashdr, currententity->as.frame);

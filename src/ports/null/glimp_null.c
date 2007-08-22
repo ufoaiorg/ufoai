@@ -19,7 +19,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 #include "../../ref_gl/gl_local.h"
 
-void Rimp_BeginFrame (float camera_separation)
+void Rimp_BeginFrame (void)
 {
 }
 

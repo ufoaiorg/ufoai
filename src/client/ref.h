@@ -325,7 +325,7 @@ typedef struct {
 	void (EXPORT *LoadTGA) (const char *name, byte ** pic, int *width, int *height);
 
 	/* video mode and refresh state management entry points */
-	void (EXPORT *BeginFrame) (float camera_separation);
+	void (EXPORT *BeginFrame) (void);
 	void (EXPORT *EndFrame) (void);
 	void (EXPORT *AppActivate) (qboolean activate);
 	void (EXPORT *TakeVideoFrame) (int h, int w, byte * captureBuffer, byte * encodeBuffer, qboolean motionJpeg);

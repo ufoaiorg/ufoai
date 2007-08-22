@@ -316,7 +316,7 @@ static void SCR_DrawLoadingBar (int x, int y, int w, int h, int percent)
  */
 void SCR_DrawPrecacheScreen (qboolean string)
 {
-	re.BeginFrame(0);
+	re.BeginFrame();
 	re.DrawNormPic(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0, ALIGN_UL, qfalse, "loading");
 	if (string) {
 		re.FontDrawString("f_menubig", ALIGN_UC,
@@ -600,7 +600,7 @@ static void SCR_TimeRefresh_f (void)
 	start = Sys_Milliseconds();
 
 	if (Cmd_Argc() == 2) {		/* run without page flipping */
-		re.BeginFrame(0);
+		re.BeginFrame();
 		for (i = 0; i < 128; i++) {
 			cl.refdef.viewangles[1] = i / 128.0 * 360.0;
 			re.RenderFrame(&cl.refdef);
@@ -610,7 +610,7 @@ static void SCR_TimeRefresh_f (void)
 		for (i = 0; i < 128; i++) {
 			cl.refdef.viewangles[1] = i / 128.0 * 360.0;
 
-			re.BeginFrame(0);
+			re.BeginFrame();
 			re.RenderFrame(&cl.refdef);
 			re.EndFrame();
 		}
@@ -668,10 +668,6 @@ static void SCR_DrawString (int x, int y, const char *string, qboolean bitmapFon
  */
 void SCR_UpdateScreen (void)
 {
-	int numframes;
-	int i;
-	float separation[2] = { 0, 0 };
-
 	/* if the screen is disabled (loading plaque is up, or vid mode changing) */
 	/* do nothing at all */
 	if (cls.disable_screen) {
@@ -687,64 +683,43 @@ void SCR_UpdateScreen (void)
 	if (!scr_initialized || !con.initialized)
 		return;
 
-	/*
-	 ** range check cl_camera_separation so we don't inadvertently fry someone's
-	 ** brain
-	 */
-	if (cl_stereo_separation->integer > 1.0)
-		Cvar_SetValue("cl_stereo_separation", 1.0);
-	else if (cl_stereo_separation->integer < 0)
-		Cvar_SetValue("cl_stereo_separation", 0.0);
+	re.BeginFrame();
 
-	if (cl_stereo->integer) {
-		numframes = 2;
-		separation[0] = -cl_stereo_separation->value / 2;
-		separation[1] = cl_stereo_separation->value / 2;
-	} else {
-		separation[0] = 0;
-		separation[1] = 0;
-		numframes = 1;
-	}
+	if (cls.state == ca_disconnected && !scr_draw_loading)
+		SCR_EndLoadingPlaque();
 
-	for (i = 0; i < numframes; i++) {
-		re.BeginFrame(separation[i]);
+	if (scr_draw_loading)
+		SCR_DrawLoading();
+	else {
+		MN_SetViewRect(MN_ActiveMenu());
 
-		if (cls.state == ca_disconnected && !scr_draw_loading)
-			SCR_EndLoadingPlaque();
+		if (cls.playingCinematic) {
+			CIN_DrawCinematic();
+		} else {
+			/* draw scene */
+			V_RenderView();
 
-		if (scr_draw_loading)
-			SCR_DrawLoading();
-		else {
-			MN_SetViewRect(MN_ActiveMenu());
+			/* draw the menus on top of the render view (for hud and so on) */
+			MN_DrawMenus();
 
-			if (cls.playingCinematic) {
-				CIN_DrawCinematic();
-			} else {
-				/* draw scene */
-				V_RenderView(separation[i]);
-
-				/* draw the menus on top of the render view (for hud and so on) */
-				MN_DrawMenus();
-
-				SCR_CheckDrawCenterString();
-			}
-
-			if (cl_fps->integer)
-				SCR_DrawString(viddef.width - con_fontWidth->integer * 10, 4, va("fps: %3.1f", cls.framerate), qtrue);
-			if (cls.state == ca_active && scr_rspeed->integer)
-				SCR_DrawString(viddef.width - con_fontWidth->integer * 30, 20, va("brushes: %6i alias: %6i\n", cl.refdef.c_brush_polys, cl.refdef.c_alias_polys), qtrue);
-
-			if (scr_timegraph->integer)
-				SCR_DebugGraph(cls.frametime * 300, 0);
-
-			if (scr_debuggraph->integer || scr_timegraph->integer)
-				SCR_DrawDebugGraph();
-
-			SCR_DrawConsole();
-
-			if (cls.state != ca_sequence)
-				SCR_DrawCursor();
+			SCR_CheckDrawCenterString();
 		}
+
+		if (cl_fps->integer)
+			SCR_DrawString(viddef.width - con_fontWidth->integer * 10, 4, va("fps: %3.1f", cls.framerate), qtrue);
+		if (cls.state == ca_active && scr_rspeed->integer)
+			SCR_DrawString(viddef.width - con_fontWidth->integer * 30, 20, va("brushes: %6i alias: %6i\n", cl.refdef.c_brush_polys, cl.refdef.c_alias_polys), qtrue);
+
+		if (scr_timegraph->integer)
+			SCR_DebugGraph(cls.frametime * 300, 0);
+
+		if (scr_debuggraph->integer || scr_timegraph->integer)
+			SCR_DrawDebugGraph();
+
+		SCR_DrawConsole();
+
+		if (cls.state != ca_sequence)
+			SCR_DrawCursor();
 	}
 
 	re.EndFrame();

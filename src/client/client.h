@@ -268,8 +268,6 @@ extern cvar_t *cl_http_proxy;
 extern cvar_t *cl_http_max_connections;
 #endif /* HAVE_CURL */
 extern cvar_t *cl_isometric;
-extern cvar_t *cl_stereo_separation;
-extern cvar_t *cl_stereo;
 extern cvar_t *cl_aviForceDemo;
 extern cvar_t *cl_aviMotionJpeg;
 extern cvar_t *cl_particleWeather;
@@ -938,10 +936,10 @@ extern cvar_t *map_dropship;
 extern vec3_t map_dropship_coord;
 
 void V_Init(void);
-void V_RenderView(float stereo_separation);
+void V_RenderView(void);
 void V_UpdateRefDef(void);
 void V_AddEntity(entity_t * ent);
-void V_AddLight(vec3_t org, float intensity, float r, float g, float b);
+void V_AddLight(vec3_t org, float intensity, vec3_t color);
 void V_AddLightStyle(int style, float r, float g, float b);
 entity_t *V_GetEntity(void);
 void V_CenterView(pos3_t pos);

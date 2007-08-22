@@ -443,17 +443,6 @@ qboolean Rimp_InitGL (void)
 		0, 0, 0							/* layer masks ignored */
 	};
 	int pixelformat;
-	cvar_t *stereo;
-
-	stereo = ri.Cvar_Get("cl_stereo", "0", 0, NULL);
-
-	/* set PFD_STEREO if necessary */
-	if (stereo->integer != 0) {
-		ri.Con_Printf(PRINT_ALL, "...attempting to use stereo\n");
-		pfd.dwFlags |= PFD_STEREO;
-		r_state.stereo_enabled = qtrue;
-	} else
-		r_state.stereo_enabled = qfalse;
 
 	/* figure out if we're running on a minidriver or not */
 	if (strstr(r_driver->string, "opengl32") != 0)
@@ -490,13 +479,6 @@ qboolean Rimp_InitGL (void)
 			return qfalse;
 		}
 		DescribePixelFormat(glw_state.hDC, pixelformat, sizeof(pfd), &pfd);
-	}
-
-	/* report if stereo is desired but unavailable */
-	if (!(pfd.dwFlags & PFD_STEREO) && stereo->integer) {
-		ri.Con_Printf(PRINT_ALL, "...failed to select stereo pixel format\n");
-		ri.Cvar_SetValue("cl_stereo", 0);
-		r_state.stereo_enabled = qfalse;
 	}
 
 	/* startup the OpenGL subsystem by creating a context and making it current */
@@ -536,7 +518,7 @@ fail:
 /**
  * @brief
  */
-void Rimp_BeginFrame (float camera_separation)
+void Rimp_BeginFrame (void)
 {
 	if (r_bitdepth->modified) {
 		if (r_bitdepth->integer && !glw_state.allowdisplaydepthchange) {
@@ -546,12 +528,7 @@ void Rimp_BeginFrame (float camera_separation)
 		r_bitdepth->modified = qfalse;
 	}
 
-	if (camera_separation < 0 && r_state.stereo_enabled)
-		qglDrawBuffer(GL_BACK_LEFT);
-	else if (camera_separation > 0 && r_state.stereo_enabled)
-		qglDrawBuffer(GL_BACK_RIGHT);
-	else
-		qglDrawBuffer(GL_BACK);
+	qglDrawBuffer(GL_BACK);
 }
 
 /**

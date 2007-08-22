@@ -35,8 +35,6 @@ cvar_t *masterserver_host;
 cvar_t *masterserver_port;
 
 cvar_t *cl_isometric;
-cvar_t *cl_stereo_separation;
-cvar_t *cl_stereo;
 
 cvar_t *rcon_client_password;
 cvar_t *rcon_address;
@@ -2085,8 +2083,6 @@ static void CL_InitLocal (void)
 	map_dropship = Cvar_Get("map_dropship", "craft_drop_firebird", 0, "The dropship that is to be used in the map");
 
 	/* register our variables */
-	cl_stereo_separation = Cvar_Get("cl_stereo_separation", "0.4", CVAR_ARCHIVE, NULL);
-	cl_stereo = Cvar_Get("cl_stereo", "0", 0, NULL);
 	cl_isometric = Cvar_Get("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
 
 	cl_show_tooltips = Cvar_Get("cl_show_tooltips", "1", CVAR_ARCHIVE, "Show tooltips in menus and hud");

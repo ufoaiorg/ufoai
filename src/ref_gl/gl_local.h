@@ -472,23 +472,16 @@ typedef struct {
 
 	int prev_mode;
 
-	unsigned char *d_16to8table;
-
 	int lightmap_textures;
 
 	int currenttextures[2];
 	int currenttmu;
 
-	qboolean hwgamma;
-
-	float camera_separation;
-	qboolean stereo_enabled;
-
-	qboolean stencil_two_side;
-	qboolean ati_separate_stencil;
-
 	int max_lod;
 
+	qboolean hwgamma;
+	qboolean stencil_two_side;
+	qboolean ati_separate_stencil;
 	qboolean blend;
 	qboolean alpha_test;
 	qboolean fog_coord;
@@ -498,10 +491,6 @@ typedef struct {
 	qboolean lod_bias;
 	qboolean arb_fragment_program;
 	qboolean glsl_program;
-
-	unsigned char originalRedGammaTable[256];
-	unsigned char originalGreenGammaTable[256];
-	unsigned char originalBlueGammaTable[256];
 } rstate_t;
 
 extern rconfig_t r_config;
@@ -528,7 +517,7 @@ IMPLEMENTATION SPECIFIC FUNCTIONS
 ====================================================================
 */
 
-void Rimp_BeginFrame(float camera_separation);
+void Rimp_BeginFrame(void);
 void Rimp_EndFrame(void);
 qboolean Rimp_Init(HINSTANCE hinstance, WNDPROC wndproc);
 void Rimp_Shutdown(void);
