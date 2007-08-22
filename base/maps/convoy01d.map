@@ -9066,7 +9066,7 @@
 // entity 3
 {
 "classname" "misc_model"
-"origin" "30.9882 -80 16.3848"
+"origin" "-62.0118 -80 72.3848"
 "model" "models/objects/trucks/truck2/truck.md2"
 "spawnflags" "255"
 "angles" "-2.20357 -180 1.00179e-05"
@@ -9074,7 +9074,7 @@
 // entity 4
 {
 "classname" "misc_model"
-"origin" "944 288 4"
+"origin" "944 381 54"
 "model" "models/objects/trucks/truck2/fuel.md2"
 "spawnflags" "255"
 "angle" "-90"
@@ -9082,7 +9082,7 @@
 // entity 5
 {
 "classname" "misc_model"
-"origin" "-0.988168 -80 17.6152"
+"origin" "96.0118 -80 56.6152"
 "model" "models/objects/trucks/truck2/load.md2"
 "spawnflags" "255"
 "angles" "-2.20357 -180 1.00179e-05"
@@ -9090,7 +9090,7 @@
 // entity 6
 {
 "classname" "misc_model"
-"origin" "944 320 4"
+"origin" "944 226 54"
 "model" "models/objects/trucks/truck2/truck.md2"
 "spawnflags" "255"
 "angle" "-90"
@@ -9098,7 +9098,7 @@
 // entity 7
 {
 "classname" "misc_model"
-"origin" "480 152 4"
+"origin" "480 136 42"
 "model" "models/objects/trucks/watertruck/watertruck.md2"
 "spawnflags" "255"
 "angle" "-180"
@@ -9106,7 +9106,7 @@
 // entity 8
 {
 "classname" "misc_model"
-"origin" "-802.007 -80 45.5109"
+"origin" "-895.007 -80 99.5109"
 "model" "models/objects/trucks/truck2/truck.md2"
 "spawnflags" "254"
 "angles" "-1.75174 -180 1.00179e-05"
@@ -9114,7 +9114,7 @@
 // entity 9
 {
 "classname" "misc_model"
-"origin" "-833.992 -80 46.4891"
+"origin" "-736.992 -80 84.4891"
 "model" "models/objects/trucks/truck2/load.md2"
 "spawnflags" "254"
 "angles" "-1.75174 -180 1.00179e-05"
@@ -9122,7 +9122,7 @@
 // entity 10
 {
 "classname" "misc_model"
-"origin" "-386.01 -80 30.4474"
+"origin" "-478.01 -80 85.4474"
 "model" "models/objects/trucks/truck2/truck.md2"
 "spawnflags" "255"
 "angles" "-1.97916 -180 1.00179e-05"
@@ -9130,7 +9130,7 @@
 // entity 11
 {
 "classname" "misc_model"
-"origin" "-417.99 -80 31.5526"
+"origin" "-318.99 -80 70.5526"
 "model" "models/objects/trucks/truck2/load.md2"
 "spawnflags" "255"
 "angles" "-1.97916 -180 1.00179e-05"
@@ -9855,7 +9855,7 @@
 // entity 119
 {
 "classname" "misc_model"
-"origin" "944 768 4"
+"origin" "944 862 54"
 "model" "models/objects/trucks/truck2/fuel.md2"
 "spawnflags" "255"
 "angle" "-90"
@@ -9863,7 +9863,7 @@
 // entity 120
 {
 "classname" "misc_model"
-"origin" "944 800 4"
+"origin" "944 706 54"
 "model" "models/objects/trucks/truck2/truck.md2"
 "spawnflags" "255"
 "angle" "-90"

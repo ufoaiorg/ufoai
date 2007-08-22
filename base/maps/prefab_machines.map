@@ -4106,28 +4106,28 @@
 // entity 25
 {
 "classname" "misc_model"
-"origin" "-320 -560 4"
+"origin" "-227 -560 55"
 "model" "models/objects/trucks/truck2/truck.md2"
 "spawnflags" "255"
 }
 // entity 26
 {
 "classname" "misc_model"
-"origin" "-288 -688 4"
+"origin" "-382 -688 54"
 "model" "models/objects/trucks/truck2/fuel.md2"
 "spawnflags" "255"
 }
 // entity 27
 {
 "classname" "misc_model"
-"origin" "-288 -560 4"
+"origin" "-384 -560 46"
 "model" "models/objects/trucks/truck2/load.md2"
 "spawnflags" "255"
 }
 // entity 28
 {
 "classname" "misc_model"
-"origin" "-320 -688 4"
+"origin" "-226 -688 54"
 "model" "models/objects/trucks/truck2/truck.md2"
 "spawnflags" "255"
 }
@@ -4195,7 +4195,7 @@
 // entity 38
 {
 "classname" "misc_model"
-"origin" "-480 -920 4"
+"origin" "-480 -904 42"
 "model" "models/objects/trucks/watertruck/watertruck.md2"
 "spawnflags" "255"
 }
