@@ -171,10 +171,11 @@ static const char *CL_GetSkillString (const int skill)
 void CL_CharacterCvars (character_t *chr)
 {
 	assert(chr);
+	assert(chr->inv);	/** needed for CHRSH_CharGetBody and CHRSH_CharGetHead */
 
 	Cvar_ForceSet("mn_name", chr->name);
-	Cvar_ForceSet("mn_body", chr->inv ? CHRSH_CharGetBody(chr) : "");
-	Cvar_ForceSet("mn_head", chr->inv ? CHRSH_CharGetHead(chr) : "");
+	Cvar_ForceSet("mn_body", CHRSH_CharGetBody(chr));
+	Cvar_ForceSet("mn_head", CHRSH_CharGetHead(chr));
 	Cvar_ForceSet("mn_skin", va("%i", chr->skin));
 	Cvar_ForceSet("mn_skinname", CL_GetTeamSkinName(chr->skin));
 
@@ -234,10 +235,11 @@ void CL_CharacterCvars (character_t *chr)
 void CL_UGVCvars (character_t *chr)
 {
 	assert(chr);
+	assert(chr->inv);	/** needed for CHRSH_CharGetBody and CHRSH_CharGetHead */
 
 	Cvar_ForceSet("mn_name", chr->name);
-	Cvar_ForceSet("mn_body", chr->inv ? CHRSH_CharGetBody(chr) : "");
-	Cvar_ForceSet("mn_head", chr->inv ? CHRSH_CharGetHead(chr) : "");
+	Cvar_ForceSet("mn_body", CHRSH_CharGetBody(chr));
+	Cvar_ForceSet("mn_head", CHRSH_CharGetHead(chr));
 	Cvar_ForceSet("mn_skin", va("%i", chr->skin));
 	Cvar_ForceSet("mn_skinname", CL_GetTeamSkinName(chr->skin));
 
@@ -1840,16 +1842,17 @@ qboolean CL_ActorSelect (le_t * le)
 
 	selChr = CL_GetActorChr(le);
 	assert(selChr);
-
-	switch (le->fieldSize) {
-	case ACTOR_SIZE_NORMAL:
-		CL_CharacterCvars(selChr);
-		break;
-	case ACTOR_SIZE_2x2:
-		CL_UGVCvars(selChr);
-		break;
-	default:
-		Com_Error(ERR_DROP, "CL_ActorSelect: Unknown fieldsize\n");
+	if (selChr->inv) {
+		switch (le->fieldSize) {
+		case ACTOR_SIZE_NORMAL:
+			CL_CharacterCvars(selChr);
+			break;
+		case ACTOR_SIZE_2x2:
+			CL_UGVCvars(selChr);
+			break;
+		default:
+			Com_Error(ERR_DROP, "CL_ActorSelect: Unknown fieldsize\n");
+		}
 	}
 
 	/* Forcing the hud-display to refresh it's displayed stuff */
