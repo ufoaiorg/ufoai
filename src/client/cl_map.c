@@ -1458,6 +1458,14 @@ const char* MAP_GetZoneType (byte* color)
 		return "arctic";
 	else if (MapIsWater(color))
 		return "water";
+	else if (MapIsMountain(color))
+		return "mountain";
+	else if (MapIsTropical(color))
+		return "tropical";
+	else if (MapIsUrban(color))
+		return "urban";
+	else if (MapIsVillage(color))
+		return "village";
 	else
 		return "grass";
 }
