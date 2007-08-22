@@ -819,7 +819,7 @@ char **FS_ListFiles (const char *findname, int *numfiles, unsigned musthave, uns
 }
 
 /**
- * @brief
+ * @brief Show the filesystem contents - also supports wildcarding
  */
 static void FS_Dir_f (void)
 {
@@ -857,7 +857,7 @@ static void FS_Dir_f (void)
 }
 
 /**
- * @brief
+ * @brief Prints search paths and file links
  */
 static void FS_Path_f (void)
 {
@@ -928,9 +928,9 @@ static void FS_Info_f (void)
  */
 static const cmdList_t fs_commands[] = {
 	{"fs_restart", FS_RestartFilesystem, "Reloads the file subsystem"},
-	{"path", FS_Path_f, NULL},
-	{"link", FS_Link_f, NULL},
-	{"dir", FS_Dir_f, NULL},
+	{"path", FS_Path_f, "Print search paths and file links"},
+	{"link", FS_Link_f, "Create file links"},
+	{"dir", FS_Dir_f, "Show the filesystem contents - also supports wildcarding"},
 	{"fs_info", FS_Info_f, "Show information about the virtuell filesystem"},
 
 	{NULL, NULL, NULL}
