@@ -334,7 +334,6 @@ static void R_Bloom_DownsampleView (void)
 }
 
 
-extern void R_SetupGL(void);
 /**
  * @brief
  */

@@ -129,7 +129,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 	qglPushMatrix();
 	e->angles[PITCH] = -e->angles[PITCH];	/* sigh. */
 	e->angles[YAW] = e->angles[YAW] - 90;
-	R_RotateForEntity (e);
+	R_RotateForEntity(e);
 	e->angles[PITCH] = -e->angles[PITCH];	/* sigh. */
 	e->angles[YAW] = e->angles[YAW] + 90;
 

@@ -189,15 +189,6 @@ void R_UpdateSwapInterval(void);
 
 extern float gldepthmin, gldepthmax;
 
-typedef struct {
-	float x, y, z;
-	float s, t;
-	float r, g, b;
-} glvert_t;
-
-
-#define MAX_LBM_HEIGHT      1024    /* Was 480 (some standard?), but we used some higher textures now. */
-
 #define BACKFACE_EPSILON    0.01
 
 /** @brief entity transform */
@@ -477,8 +468,6 @@ typedef struct {
 	int currenttextures[2];
 	int currenttmu;
 
-	int max_lod;
-
 	qboolean hwgamma;
 	qboolean stencil_two_side;
 	qboolean ati_separate_stencil;
@@ -538,8 +527,6 @@ void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, vec3_t rotate, f
 void Draw_3DMapMarkers(vec3_t angles, float zoom, vec3_t position, const char *model);
 
 /* end of 3d globe */
-
-extern qboolean update_viewdef;
 
 void R_InitBloom(void);
 void R_BloomBlend(void);

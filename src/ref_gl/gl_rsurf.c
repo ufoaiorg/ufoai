@@ -29,9 +29,6 @@ static vec3_t modelorg;			/* relative to viewpoint */
 
 static mBspSurface_t *r_alpha_surfaces;
 
-#define DYNAMIC_LIGHT_WIDTH  256
-#define DYNAMIC_LIGHT_HEIGHT 256
-
 #define LIGHTMAP_BYTES 4
 
 #define	BLOCK_WIDTH		256

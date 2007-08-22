@@ -574,7 +574,7 @@ static void MYgluPerspective (GLdouble zNear, GLdouble zFar)
 /**
  * @brief
  */
-static void R_SetupGL (void)
+static void R_SetupGL3D (void)
 {
 	int x, x2, y2, y, w, h;
 
@@ -695,7 +695,7 @@ static void R_RenderView (refdef_t * fd)
 
 	R_SetFrustum();
 
-	R_SetupGL();
+	R_SetupGL3D();
 
 	if (r_wire->integer)
 		qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -732,9 +732,9 @@ static void R_RenderView (refdef_t * fd)
 /**
  * @brief
  * @note Currently unused
- * @sa R_SetGL2D
+ * @sa R_SetupGL2D
  */
-void R_LeaveGL2D(void)
+void R_LeaveGL2D (void)
 {
 	qglMatrixMode(GL_MODELVIEW);
 	qglPopMatrix();
@@ -750,7 +750,7 @@ void R_LeaveGL2D(void)
  * @brief
  * @sa R_LeaveGL2D
  */
-static void R_SetGL2D (void)
+static void R_SetupGL2D (void)
 {
 	/* set 2D virtual screen size */
 	qglViewport(0, 0, vid.width, vid.height);
@@ -778,7 +778,7 @@ static void R_SetGL2D (void)
 static void R_RenderFrame (refdef_t * fd)
 {
 	R_RenderView(fd);
-	R_SetGL2D();
+	R_SetupGL2D();
 
 	if (r_speeds->integer) {
 		fd->c_brush_polys = c_brush_polys;
@@ -1373,7 +1373,7 @@ static void R_BeginFrame (void)
 	Rimp_BeginFrame();
 
 	/* go into 2D mode */
-	R_SetGL2D();
+	R_SetupGL2D();
 
 	/* draw buffer stuff */
 	if (r_drawbuffer->modified) {
