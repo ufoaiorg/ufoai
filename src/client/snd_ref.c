@@ -31,15 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "snd_ogg.h"
 #include "snd_wave.h"
 
-#ifdef _WIN32
-#define dlladdr GetProcAddress
-#include <windows.h>
-#include "../ports/win32/win_local.h"
-#else
-#define dlladdr dlsym
-#include <dlfcn.h>
-#endif
-
 static void S_Play_f(void);
 static void S_SoundList_f(void);
 void S_StopAllSounds(void);

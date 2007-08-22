@@ -1887,7 +1887,6 @@ image_t *R_LoadPic (const char *name, byte * pic, int width, int height, imagety
 		R_Bind(image->texnum);
 		if (bits == 8) {
 			image->has_alpha = R_Upload8(pic, width, height, (image->type != it_pic), image->type, image);
-			Com_Printf("....................8bit image\n");
 		} else
 			image->has_alpha = R_Upload32((unsigned *) pic, width, height,
 				(image->type != it_pic), (image->type == it_pic), image->type, image);
