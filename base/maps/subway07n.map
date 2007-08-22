@@ -4,9 +4,9 @@
 "classname" "worldspawn"
 "maxlevel" "5"
 "angles" "30 30"
-"ambient" "0.3 0.3 0.3"
 "_color" "1 0.8 0.8"
-"light" "50"
+"light" "15"
+"ambient" "0 0 0"
 // brush 0
 {
 ( 320 316 192 ) ( 320 164 192 ) ( 320 164 128 ) tex_nature/dirt001 0 84 0 0.375 0.375 64512 0 0

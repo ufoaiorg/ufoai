@@ -2,10 +2,10 @@
 // entity 0
 {
 "classname" "worldspawn"
-"light" "50"
 "_color" "1 0.6 0.5"
-"ambient" "0.45 0.41 0.41"
 "angles" "40 320 0"
+"light" "15"
+"ambient" "0 0 0"
 // brush 0
 {
 ( 1584 64 0 ) ( 1376 64 0 ) ( 1376 -72 0 ) tex_material/c_blue 0 0 0 0.5 0.5 1073741824 0 0
@@ -9814,7 +9814,6 @@
 "classname" "misc_particle"
 "particle" "camping_fire"
 "origin" "356 -480 24"
-"spawnflags" "255"
 }
 // entity 3
 {

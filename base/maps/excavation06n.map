@@ -3,10 +3,10 @@
 {
 "classname" "worldspawn"
 "maxlevel" "4"
-"light" "30"
 "angles" "30 30"
-"ambient" "0.65 0.65 0.85"
 "_color" "0.4 0.4 0.4"
+"light" "15"
+"ambient" "0 0 0"
 // brush 0
 {
 ( 477 1155 66 ) ( 443 1155 66 ) ( 443 1087 66 ) tex_material/c_blue 0 0 0 0.5 0.5 1073741824 0 0

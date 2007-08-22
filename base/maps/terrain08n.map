@@ -3,8 +3,8 @@
 {
 "classname" "worldspawn"
 "_color" "0.6 0.65 1"
-"light" "66"
-"ambient" "0.2 0.2 0.3"
+"light" "15"
+"ambient" "0 0 0"
 "angles" "5 120"
 // brush 0
 {
