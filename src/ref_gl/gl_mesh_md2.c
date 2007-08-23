@@ -99,7 +99,7 @@ static void R_DrawAliasFrameLerp (mdl_md2_t * paliashdr, float backlerp, int fra
 	qglNormalPointer(GL_FLOAT, 0, normalArray);
 
 	na = normalArray;
-	if (backlerp == 0.0)
+	if (backlerp == 0.0) {
 		for (i = 0; i < paliashdr->num_xyz; v++, i++) {
 			/* get current normals */
 			newNormal = r_avertexnormals[v->lightnormalindex];
@@ -107,7 +107,8 @@ static void R_DrawAliasFrameLerp (mdl_md2_t * paliashdr, float backlerp, int fra
 			*na++ = newNormal[0];
 			*na++ = newNormal[1];
 			*na++ = newNormal[2];
-	} else
+		}
+	} else {
 		for (i = 0; i < paliashdr->num_xyz; v++, ov++, i++) {
 			/* normalize interpolated normals? */
 			/* no: probably too much to compute */
@@ -118,6 +119,7 @@ static void R_DrawAliasFrameLerp (mdl_md2_t * paliashdr, float backlerp, int fra
 			*na++ = backlerp * oldNormal[1] + frontlerp * newNormal[1];
 			*na++ = backlerp * oldNormal[2] + frontlerp * newNormal[2];
 		}
+	}
 
 	while (1) {
 		/* get the vertex count and primitive type */

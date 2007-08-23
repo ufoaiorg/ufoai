@@ -465,7 +465,7 @@ typedef struct {
 
 	int prev_mode;
 
-	int lightmap_textures;
+	int lightmap_texnum;
 
 	int currenttextures[2];
 	int currenttmu;

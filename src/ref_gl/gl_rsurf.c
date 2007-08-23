@@ -238,7 +238,7 @@ static void R_BlendLightmaps (void)
 		if (gl_lms.lightmap_surfaces[i]) {
 			if (currentmodel == rTiles[0])
 				c_visible_lightmaps++;
-			R_Bind(r_state.lightmap_textures + i);
+			R_Bind(r_state.lightmap_texnum + i);
 
 			for (surf = gl_lms.lightmap_surfaces[i]; surf; surf = surf->lightmapchain) {
 				if (surf->polys)
@@ -251,7 +251,7 @@ static void R_BlendLightmaps (void)
 	if (r_dynamic->integer) {
 		LM_InitBlock();
 
-		R_Bind(r_state.lightmap_textures + 0);
+		R_Bind(r_state.lightmap_texnum + 0);
 
 		if (currentmodel == rTiles[0])
 			c_visible_lightmaps++;
@@ -383,7 +383,7 @@ static void R_RenderBrushPoly (mBspSurface_t * fa)
 			R_BuildLightMap(fa, (byte *) temp, smax * 4);
 			R_SetCacheState(fa);
 
-			R_Bind(r_state.lightmap_textures + fa->lightmaptexturenum);
+			R_Bind(r_state.lightmap_texnum + fa->lightmaptexturenum);
 
 			qglTexSubImage2D(GL_TEXTURE_2D, 0, fa->light_s, fa->light_t, smax, tmax, GL_LIGHTMAP_FORMAT, GL_UNSIGNED_BYTE, temp);
 
@@ -505,7 +505,7 @@ static void R_DrawLightmappedSurface (mBspSurface_t * surf)
 			R_BuildLightMap(surf, (byte *) temp, smax * 4);
 			R_SetCacheState(surf);
 
-			R_MBind(gl_texture1, r_state.lightmap_textures + surf->lightmaptexturenum);
+			R_MBind(gl_texture1, r_state.lightmap_texnum + surf->lightmaptexturenum);
 
 			lmtex = surf->lightmaptexturenum;
 
@@ -517,7 +517,7 @@ static void R_DrawLightmappedSurface (mBspSurface_t * surf)
 
 			R_BuildLightMap(surf, (byte *) temp, smax * 4);
 
-			R_MBind(gl_texture1, r_state.lightmap_textures + 0);
+			R_MBind(gl_texture1, r_state.lightmap_texnum + 0);
 
 			lmtex = 0;
 
@@ -528,7 +528,7 @@ static void R_DrawLightmappedSurface (mBspSurface_t * surf)
 	c_brush_polys++;
 
 	R_MBind(gl_texture0, image->texnum);
-	R_MBind(gl_texture1, r_state.lightmap_textures + lmtex);
+	R_MBind(gl_texture1, r_state.lightmap_texnum + lmtex);
 
 	if (surf->texinfo->flags & SURF_FLOWING) {
 		float scroll;
@@ -896,7 +896,7 @@ static void LM_UploadBlock (qboolean dynamic)
 	else
 		texture = gl_lms.current_lightmap_texture;
 
-	R_Bind(r_state.lightmap_textures + texture);
+	R_Bind(r_state.lightmap_texnum + texture);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
@@ -1080,8 +1080,8 @@ void R_BeginBuildingLightmaps (void)
 	}
 	r_newrefdef.lightstyles = lightstyles;
 
-	if (!r_state.lightmap_textures)
-		r_state.lightmap_textures = TEXNUM_LIGHTMAPS;
+	if (!r_state.lightmap_texnum)
+		r_state.lightmap_texnum = TEXNUM_LIGHTMAPS;
 
 	gl_lms.current_lightmap_texture = 1;
 
@@ -1112,7 +1112,7 @@ void R_BeginBuildingLightmaps (void)
 	}
 
 	/* initialize the dynamic lightmap texture */
-	R_Bind(r_state.lightmap_textures + 0);
+	R_Bind(r_state.lightmap_texnum + 0);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	qglTexImage2D(GL_TEXTURE_2D, 0, gl_lms.internal_format, BLOCK_WIDTH, BLOCK_HEIGHT, 0, GL_LIGHTMAP_FORMAT, GL_UNSIGNED_BYTE, dummy);

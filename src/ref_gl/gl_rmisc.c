@@ -209,50 +209,6 @@ void R_ScreenShot_f (void)
 	ri.Con_Printf(PRINT_ALL, "Wrote %s\n", checkName);
 }
 
-
-/**
- * @brief
- */
-void R_SetDefaultState (void)
-{
-	qglCullFace(GL_FRONT);
-	qglEnable(GL_TEXTURE_2D);
-
-	qglEnable(GL_ALPHA_TEST);
-	qglAlphaFunc(GL_GREATER, 0.1f);
-	r_state.alpha_test = qtrue;
-
-	qglDisable(GL_DEPTH_TEST);
-	qglDisable(GL_CULL_FACE);
-	qglDisable(GL_BLEND);
-	r_state.blend = qfalse;
-
-	qglColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	qglClearColor(0, 0, 0, 0);
-
-	qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-	R_TextureMode(r_texturemode->string);
-	R_TextureAlphaMode(r_texturealphamode->string);
-	R_TextureSolidMode(r_texturesolidmode->string);
-
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_min);
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
-
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	R_TexEnv(GL_REPLACE);
-
-	R_UpdateSwapInterval();
-
-	/* doesn't really belong here... but works fine */
-	vid.rx = (float) vid.width / VID_NORM_WIDTH;
-	vid.ry = (float) vid.height / VID_NORM_HEIGHT;
-}
-
 /**
  * @brief
  */

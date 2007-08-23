@@ -25,6 +25,28 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "gl_local.h"
 
+/**
+ * @brief
+ */
+void R_SetDefaultState (void)
+{
+	qglEnable(GL_TEXTURE_2D);
+
+	qglAlphaFunc(GL_GREATER, 0.1f);
+
+	qglColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	qglClearColor(0, 0, 0, 0);
+
+	qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	R_UpdateSwapInterval();
+
+	/* doesn't really belong here... but works fine */
+	vid.rx = (float) vid.width / VID_NORM_WIDTH;
+	vid.ry = (float) vid.height / VID_NORM_HEIGHT;
+}
 
 /**
  * @brief
@@ -223,4 +245,76 @@ void R_MBind (GLenum target, int texnum)
 			return;
 	}
 	R_Bind(texnum);
+}
+
+/*============================================================================*/
+
+typedef struct {
+	const char *name;
+	int mode;
+} gltmode_t;
+
+static const gltmode_t gl_alpha_modes[] = {
+	{"default", 4},
+	{"GL_RGBA", GL_RGBA},
+	{"GL_RGBA8", GL_RGBA8},
+	{"GL_RGB5_A1", GL_RGB5_A1},
+	{"GL_RGBA4", GL_RGBA4},
+	{"GL_RGBA2", GL_RGBA2},
+};
+
+#define NUM_R_ALPHA_MODES (sizeof(gl_alpha_modes) / sizeof (gltmode_t))
+
+/**
+ * @brief
+ */
+void R_TextureAlphaMode (const char *string)
+{
+	int i;
+
+	for (i = 0; i < NUM_R_ALPHA_MODES; i++) {
+		if (!Q_stricmp(gl_alpha_modes[i].name, string))
+			break;
+	}
+
+	if (i == NUM_R_ALPHA_MODES) {
+		ri.Con_Printf(PRINT_ALL, "bad alpha texture mode name\n");
+		return;
+	}
+
+	gl_alpha_format = gl_alpha_modes[i].mode;
+}
+
+static const gltmode_t gl_solid_modes[] = {
+	{"default", 3},
+	{"GL_RGB", GL_RGB},
+	{"GL_RGB8", GL_RGB8},
+	{"GL_RGB5", GL_RGB5},
+	{"GL_RGB4", GL_RGB4},
+	{"GL_R3_G3_B2", GL_R3_G3_B2},
+#ifdef GL_RGB2_EXT
+	{"GL_RGB2", GL_RGB2_EXT},
+#endif
+};
+
+#define NUM_R_SOLID_MODES (sizeof(gl_solid_modes) / sizeof (gltmode_t))
+
+/**
+ * @brief
+ */
+void R_TextureSolidMode (const char *string)
+{
+	int i;
+
+	for (i = 0; i < NUM_R_SOLID_MODES; i++) {
+		if (!Q_stricmp(gl_solid_modes[i].name, string))
+			break;
+	}
+
+	if (i == NUM_R_SOLID_MODES) {
+		ri.Con_Printf(PRINT_ALL, "bad solid texture mode name\n");
+		return;
+	}
+
+	gl_solid_format = gl_solid_modes[i].mode;
 }

@@ -86,9 +86,9 @@ void R_UpdateAnisotropy (void)
 typedef struct {
 	const char *name;
 	int minimize, maximize;
-} glmode_t;
+} glTextureMode_t;
 
-static const glmode_t modes[] = {
+static const glTextureMode_t gl_texture_modes[] = {
 	{"GL_NEAREST", GL_NEAREST, GL_NEAREST},
 	{"GL_LINEAR", GL_LINEAR, GL_LINEAR},
 	{"GL_NEAREST_MIPMAP_NEAREST", GL_NEAREST_MIPMAP_NEAREST, GL_NEAREST},
@@ -96,38 +96,7 @@ static const glmode_t modes[] = {
 	{"GL_NEAREST_MIPMAP_LINEAR", GL_NEAREST_MIPMAP_LINEAR, GL_NEAREST},
 	{"GL_LINEAR_MIPMAP_LINEAR", GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR}
 };
-
-#define NUM_R_MODES (sizeof(modes) / sizeof (glmode_t))
-
-typedef struct {
-	const char *name;
-	int mode;
-} gltmode_t;
-
-static const gltmode_t gl_alpha_modes[] = {
-	{"default", 4},
-	{"GL_RGBA", GL_RGBA},
-	{"GL_RGBA8", GL_RGBA8},
-	{"GL_RGB5_A1", GL_RGB5_A1},
-	{"GL_RGBA4", GL_RGBA4},
-	{"GL_RGBA2", GL_RGBA2},
-};
-
-#define NUM_R_ALPHA_MODES (sizeof(gl_alpha_modes) / sizeof (gltmode_t))
-
-static const gltmode_t gl_solid_modes[] = {
-	{"default", 3},
-	{"GL_RGB", GL_RGB},
-	{"GL_RGB8", GL_RGB8},
-	{"GL_RGB5", GL_RGB5},
-	{"GL_RGB4", GL_RGB4},
-	{"GL_R3_G3_B2", GL_R3_G3_B2},
-#ifdef GL_RGB2_EXT
-	{"GL_RGB2", GL_RGB2_EXT},
-#endif
-};
-
-#define NUM_R_SOLID_MODES (sizeof(gl_solid_modes) / sizeof (gltmode_t))
+#define NUM_R_MODES (sizeof(gl_texture_modes) / sizeof(glTextureMode_t))
 
 /**
  * @brief
@@ -138,7 +107,7 @@ void R_TextureMode (const char *string)
 	image_t *glt;
 
 	for (i = 0; i < NUM_R_MODES; i++) {
-		if (!Q_stricmp(modes[i].name, string))
+		if (!Q_stricmp(gl_texture_modes[i].name, string))
 			break;
 	}
 
@@ -147,8 +116,8 @@ void R_TextureMode (const char *string)
 		return;
 	}
 
-	gl_filter_min = modes[i].minimize;
-	gl_filter_max = modes[i].maximize;
+	gl_filter_min = gl_texture_modes[i].minimize;
+	gl_filter_max = gl_texture_modes[i].maximize;
 
 	/* change all the existing mipmap texture objects */
 	for (i = 0, glt = gltextures; i < numgltextures; i++, glt++) {
@@ -158,46 +127,6 @@ void R_TextureMode (const char *string)
 			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
 		}
 	}
-}
-
-/**
- * @brief
- */
-void R_TextureAlphaMode (const char *string)
-{
-	int i;
-
-	for (i = 0; i < NUM_R_ALPHA_MODES; i++) {
-		if (!Q_stricmp(gl_alpha_modes[i].name, string))
-			break;
-	}
-
-	if (i == NUM_R_ALPHA_MODES) {
-		ri.Con_Printf(PRINT_ALL, "bad alpha texture mode name\n");
-		return;
-	}
-
-	gl_alpha_format = gl_alpha_modes[i].mode;
-}
-
-/**
- * @brief
- */
-void R_TextureSolidMode (const char *string)
-{
-	int i;
-
-	for (i = 0; i < NUM_R_SOLID_MODES; i++) {
-		if (!Q_stricmp(gl_solid_modes[i].name, string))
-			break;
-	}
-
-	if (i == NUM_R_SOLID_MODES) {
-		ri.Con_Printf(PRINT_ALL, "bad solid texture mode name\n");
-		return;
-	}
-
-	gl_solid_format = gl_solid_modes[i].mode;
 }
 
 /**
@@ -1219,11 +1148,6 @@ static void R_ResampleTexture (unsigned *in, int inwidth, int inheight, unsigned
 			((byte *) (out + j))[3] = (pix1[3] + pix2[3] + pix3[3] + pix4[3]) >> 2;
 		}
 	}
-
-	if (r_anisotropic->integer && r_state.anisotropic)
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_anisotropic->value);
-	if (r_texture_lod->integer && r_state.lod_bias)
-		qglTexEnvf(GL_TEXTURE_FILTER_CONTROL_EXT, GL_TEXTURE_LOD_BIAS_EXT, r_texture_lod->value);
 }
 
 /**
@@ -1583,6 +1507,13 @@ static qboolean R_Upload32 (unsigned *data, int width, int height, qboolean mipm
 			scaled_height >>= 1;
 
 		R_ResampleTexture(data, width, height, scaled, scaled_width, scaled_height);
+	}
+
+	if (mipmap) {
+		if (r_anisotropic->integer && r_state.anisotropic)
+			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_anisotropic->value);
+		if (r_texture_lod->integer && r_state.lod_bias)
+			qglTexEnvf(GL_TEXTURE_FILTER_CONTROL_EXT, GL_TEXTURE_LOD_BIAS_EXT, r_texture_lod->value);
 	}
 
 	R_LightScaleTexture(scaled, scaled_width, scaled_height, !mipmap);
