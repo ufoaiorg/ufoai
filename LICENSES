@@ -574,6 +574,10 @@ base/models/civilians/female/body03.md2 | GNU General Public License v2.0 | Luka
 base/models/civilians/female/body03.tag | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/civilians/female/body03a.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/civilians/female/body03b.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/civilians/female/body05.anm | GNU General Public License 2.0
+base/models/civilians/female/body05.md2 | GNU General Public License 2.0 | Willem "Sitters"   Martin Gerhardy
+base/models/civilians/female/body05.tag | GNU General Public License 2.0
+base/models/civilians/female/body05a.jpg | GNU General Public License 2.0 | Willem "Sitters"
 base/models/civilians/female/head01a.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/civilians/female/head01a.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/civilians/female/head01b.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
@@ -591,6 +595,8 @@ base/models/civilians/female/head04b.jpg | GNU General Public License v2.0 | Luk
 base/models/civilians/female/head04b.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/civilians/female/head04c.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/civilians/female/head04c.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/civilians/female/head05a.jpg | GNU General Public License 2.0 | Willem "Sitters"
+base/models/civilians/female/head05a.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/civilians/female/scientist01.anm | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/civilians/female/scientist01.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/civilians/female/scientist01.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
