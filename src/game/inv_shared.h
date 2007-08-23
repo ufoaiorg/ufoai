@@ -157,6 +157,36 @@ typedef struct craftitem_s {
 	int installationTime;		/**< The time needed to install/remove the item on an aircraft */
 } craftitem_t;
 
+/** @brief Buytype categories in the various equipment screens (buy/sell, equip, etc...)
+ ** Do not mess with the order (especially BUY_AIRCRAFT and BUY_MULTI_AMMO is/will be used for max-check in normal equipment screens)
+ ** @sa scripts.c:buytypeNames
+ ** @note Be sure to also update all usages of the buy_type" console function (defined in cl_market.c and mostly used there and in menu_buy.ufo) when changing this.
+ **/
+typedef enum {
+	BUY_WEAP_PRI,	/**< All 'Primary' weapons and their ammo for soldiers. */
+	BUY_WEAP_SEC,	/**< All 'Secondary' weapons and their ammo for soldiers. */
+	BUY_MISC,		/**< Misc soldier equipment. */
+	BUY_ARMOUR,		/**< Armour for soldiers. */
+	BUY_MULTI_AMMO, /**< Ammo (and other stuff) that is used in both Pri/Sec weapons. */
+	/* MAX_SOLDIER_EQU_BUYTYPES */
+	BUY_AIRCRAFT,	/**< Aircraft and craft-equipment. */
+	BUY_DUMMY,		/**< Everything that is not equipment for soldiers except craftitems. */
+	BUY_CRAFTITEM,	/**< Craftitem. */
+	MAX_BUYTYPES,
+
+	ENSURE_32BIT = 0xFFFFFF
+} equipmentBuytypes_t;
+
+#define MAX_SOLDIER_EQU_BUYTYPES BUY_MULTI_AMMO
+
+#define BUY_PRI(type)	( (((type) == BUY_WEAP_PRI) || ((type) == BUY_MULTI_AMMO)) ) /** < Checks if "type" is displayable/usable in the primary category. */
+#define BUY_SEC(type)	( (((type) == BUY_WEAP_SEC) || ((type) == BUY_MULTI_AMMO)) ) /** < Checks if "type" is displayable/usable in the secondary category. */
+#define BUYTYPE_MATCH(type1,type2) (\
+	(  ((((type1) == BUY_WEAP_PRI) || ((type1) == BUY_WEAP_SEC)) && ((type2) == BUY_MULTI_AMMO)) \
+	|| ((((type2) == BUY_WEAP_PRI) || ((type2) == BUY_WEAP_SEC)) && ((type1) == BUY_MULTI_AMMO)) \
+	|| ((type1) == (type2)) ) \
+	) /**< Check if the 2 buytypes (type1 and type2) are compatible) */
+
 /**
  * @brief Defines all attributes of obejcts used in the inventory.
  * @todo Document the various (and mostly not obvious) varables here. The documentation in the .ufo file(s) might be a good starting point.
@@ -185,7 +215,7 @@ typedef struct objDef_s {
 
 	int price;			/**< Price for this item. */
 	int size;			/**< Size of an item, used in storage capacities. */
-	int buytype;			/**< Category of the item - used in menus (see equipment_buytypes_t). */
+	equipmentBuytypes_t buytype;			/**< Category of the item - used in menus (see equipment_buytypes_t). */
 	qboolean notOnMarket;		/**< True if this item should not be available on market. */
 
 	/* Weapon specific. */
@@ -508,32 +538,6 @@ uint32_t Com_ShapeRotate(uint32_t shape);
 #ifdef DEBUG
 void Com_ShapePrint(uint32_t shape);
 #endif
-
-/** @brief Buytype categories in the various equipment screens (buy/sell, equip, etc...)
- ** Do not mess with the order (especially BUY_AIRCRAFT and BUY_MULTI_AMMO is/will be used for max-check in normal equipment screens)
- ** @sa scripts.c:buytypeNames
- ** @note Be sure to also update all usages of the buy_type" console function (defined in cl_market.c and mostly used there and in menu_buy.ufo) when changing this.
- **/
-typedef enum {
-	BUY_WEAP_PRI,	/**< All 'Primary' weapons and their ammo for soldiers. */
-	BUY_WEAP_SEC,	/**< All 'Secondary' weapons and their ammo for soldiers. */
-	BUY_MISC,	/**< Misc sodldier equipment. */
-	BUY_ARMOUR,	/**< Armour for soldiers. */
-	BUY_MULTI_AMMO, /**< Ammo (and other stuff) that is used in both Pri/Sec weapons. */
-	/* MAX_SOLDIER_EQU_BUYTYPES ... possible better solution? */
-	BUY_AIRCRAFT,	/**< Aircraft and craft-equipment. */
-	BUY_DUMMY,	/**< Everything that is not equipment for soldiers except craftitems. */
-	BUY_CRAFTITEM,	/**< Craftitem. */
-	MAX_BUYTYPES
-} equipment_buytypes_t;
-
-#define BUY_PRI(type)	( (((type) == BUY_WEAP_PRI) || ((type) == BUY_MULTI_AMMO)) ) /** < Checks if "type" is displayable/usable in the primary category. */
-#define BUY_SEC(type)	( (((type) == BUY_WEAP_SEC) || ((type) == BUY_MULTI_AMMO)) ) /** < Checks if "type" is displayable/usable in the secondary category. */
-#define BUYTYPE_MATCH(type1,type2) (\
-	(  ((((type1) == BUY_WEAP_PRI) || ((type1) == BUY_WEAP_SEC)) && ((type2) == BUY_MULTI_AMMO)) \
-	|| ((((type2) == BUY_WEAP_PRI) || ((type2) == BUY_WEAP_SEC)) && ((type1) == BUY_MULTI_AMMO)) \
-	|| ((type1) == (type2)) ) \
-	) /**< Check if the 2 buytypes (type1 and type2) are compatible) */
 
 /** @brief Number of bytes that is read and written via inventory transfer functions */
 #define INV_INVENTORY_BYTES 7

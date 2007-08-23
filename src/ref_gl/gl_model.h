@@ -72,7 +72,6 @@ typedef struct model_s {
 
 void Mod_ClearAll(void);
 void Mod_Modellist_f(void);
-void Mod_FreeAll(void);
 void Mod_DrawModelBBox(vec4_t bbox[8], entity_t *e);
 void Mod_DrawNullModel(void);
 

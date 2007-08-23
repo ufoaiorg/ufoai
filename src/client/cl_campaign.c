@@ -2326,10 +2326,6 @@ static void CL_GameGo (void)
 	memset(&missionresults, 0, sizeof(missionresults));
 
 	/* Various sanity checks. */
-	if (CL_OnBattlescape()) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_GameGo: We already _are_ on the battlescape/on a mission.\n");
-		return;
-	}
 	if (ccs.singleplayer) {
 		if (!mis->active) {
 			Com_DPrintf(DEBUG_CLIENT, "CL_GameGo: Dropship not near landing zone: mis->active: %i\n", mis->active);
@@ -2772,6 +2768,10 @@ static void CL_GameResults_f (void)
 
 	/* update the character stats */
 	CL_ParseCharacterData(NULL, qtrue);
+
+	/* hack to free all the allocated renderer memory */
+	Mem_FreePool(vid_modelPool);
+	Mem_FreePool(vid_lightPool);
 
 	/* update stats */
 	CL_UpdateCharacterStats(won);
@@ -3823,6 +3823,10 @@ void CL_GameExit (void)
 		}
 	}
 	curCampaign = NULL;
+
+	/* hack to free all the allocated renderer memory */
+	Mem_FreePool(vid_modelPool);
+	Mem_FreePool(vid_lightPool);
 }
 
 /**

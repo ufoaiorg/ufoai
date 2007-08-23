@@ -642,7 +642,7 @@ void Mod_BeginLoading (const char *tiles, const char *pos)
 	registration_sequence++;
 
 	/* fix this, currently needed, slows down loading times */
-	Mod_FreeAll();
+	R_ShutdownModels();
 
 	/* init */
 	R_BeginBuildingLightmaps();

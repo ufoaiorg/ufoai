@@ -273,7 +273,7 @@ model_t *R_RegisterModelShort (const char *name)
 
 /**
  * @brief
- * @sa Mod_FreeAll
+ * @sa R_ShutdownModels
  */
 static void Mod_Free (model_t * mod)
 {
@@ -301,16 +301,6 @@ void Mod_EndLoading (void)
 	}
 
 	R_FreeUnusedImages();
-}
-
-/**
- * @brief
- * @sa Mod_Free
- */
-void Mod_FreeAll (void)
-{
-	R_ShutdownModels();
-	mod_numknown = 0;
 }
 
 /**
@@ -400,4 +390,5 @@ void R_ShutdownModels (void)
 {
 	ri.FreeTags(ri.modelPool, 0);
 	ri.FreeTags(ri.lightPool, 0);
+	mod_numknown = 0;
 }
