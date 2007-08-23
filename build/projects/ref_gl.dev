@@ -9,7 +9,7 @@ CppCompiler=
 Includes=
 Linker=-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lwinmm _@@_-llibjpeg_@@_-lpng_@@_-lSDL_ttf_@@_-lSDL_@@_-def ../../src/ref_gl/ref_gl.def_@@_
 Libs=
-UnitCount=47
+UnitCount=48
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=
@@ -526,4 +526,14 @@ Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c gl_model_obj.c -o ref_gl/gl_model_obj.o $(CFLAGS)
+
+[Unit48]
+FileName=..\..\src\ref_gl\gl_state.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
 
