@@ -38,7 +38,7 @@ extern void CL_PopupNotifyUfoDisappeared(const aircraft_t* ufo);
 #define POPUP_AIRCARFT_MAX_TEXT		2048	/**< Max size of text displayed in popup_aircraft */
 
 /**
- * Enumerate type of actions available for popup_aircraft
+ * @brief Enumerate type of actions available for popup_aircraft
  */
 typedef enum {
 	POPUP_AIRCRAFT_ACTION_BACKTOBASE = 1,	/**< Aircraft back to base */
@@ -61,7 +61,7 @@ typedef struct popup_aircarft_s {
 } popup_aircraft_t;
 
 /** FIXME: Save me */
-static popup_aircraft_t popupAircraft; /** Data about popup_aircraft */
+static popup_aircraft_t popupAircraft; /**< Data about popup_aircraft */
 
 /* popup_intercept display list of aircraft availables to move to a mission or an ufo */
 
@@ -76,16 +76,6 @@ typedef struct popup_intercept_s {
 } popup_intercept_t;
 
 static popup_intercept_t popupIntercept;	/**< Data about popup_intercept */
-
-#if 0
-
-/* popup_interception_ready */
-extern void CL_DisplayPopupInterceptionReady(aircraft_t* aircraft, actMis_t* mission);
-static void CL_PopupInterceptionReadyEnter_f(void);
-static void CL_PopupInterceptionReadyAuto_f(void);
-static void CL_PopupInterceptionReadyCancel_f(void);
-
-#endif
 
 /* popup_aircraft */
 extern void CL_DisplayPopupAircraft(const aircraft_t* aircraft);
@@ -112,12 +102,6 @@ void CL_PopupInit (void)
 	/* popup_intercept commands */
 	Cmd_AddCommand("ships_click", CL_PopupInterceptClick_f, NULL);
 	Cmd_AddCommand("ships_rclick", CL_PopupInterceptRClick_f, NULL);
-
-	/* popup_interception_ready commands */
-	/*Cmd_AddCommand("popup_interception_ready_enter", CL_PopupInterceptionReadyEnter_f, NULL);
-	Cmd_AddCommand("popup_interception_ready_auto", CL_PopupInterceptionReadyAuto_f, NULL);
-	Cmd_AddCommand("popup_interception_ready_cancel", CL_PopupInterceptionReadyCancel_f, NULL);
-	*/
 
 	memset(&popupIntercept, 0, sizeof(popup_intercept_t));
 	memset(&popupAircraft, 0, sizeof(popup_aircraft_t));
@@ -151,75 +135,6 @@ void CL_PopupNotifyUfoDisappeared (const aircraft_t* ufo)
 	CL_PopupInterceptNotifyUfoDisappeared(ufo);
 }
 
-#if 0
-/*========================================
-POPUP_INTERCEPT_READY
-========================================*/
-
-/* Ask confirmation just before entering in mission */
-
-/**
- * @brief Structure to store information about popup_interception_ready
- */
-typedef struct popup_interception_ready_s {
-	aircraft_t* aircraft;
-	actMis_t* mission;
-} popup_interception_ready_t;
-
-popup_interception_ready_t popupInterceptionReady;	/**< Data about popup_interception_ready */
-
-/**
- * @brief Display the popup_interception_ready
- */
-void CL_DisplayPopupInterceptionReady (aircraft_t* aircraft, actMis_t* mission)
-{
-	if (!popupInterceptionReady.aircraft || ! popupInterceptionReady.mission)
-		return;
-
-	popupInterceptionReady.aircraft = aircraft;
-	popupInterceptionReady.mission = mission;
-	MN_PushMenu("popup_intercept_ready");
-}
-
-/**
- * @brief Enter in the mission of the popup_interception_ready
- */
-static void CL_PopupInterceptionReadyEnter_f (void)
-{
-	MN_PopMenu(qfalse);	/* Close popup */
-	if (!popupInterceptionReady.aircraft || ! popupInterceptionReady.mission)
-		return;
-
-	CL_GameGo(popupInterceptionReady.mission->def, popupInterceptionReady.aircraft);
-}
-
-/**
- * @brief Auto mission of the popup_interception_ready
- */
-static void CL_PopupInterceptionReadyAuto_f (void)
-{
-	MN_PopMenu(qfalse);	/* Close popup */
-	if (!popupInterceptionReady.aircraft || ! popupInterceptionReady.mission)
-		return;
-	if (popupInterceptionReady.aircraft->status != AIR_DROP)
-		return;
-
-	/* @todo : launch auto mission */
-}
-
-/**
- * @brief Cancel the popup_interception_ready
- */
-static void CL_PopupInterceptionReadyCancel_f (void)
-{
-	MN_PopMenu(qfalse);	/* Close popup */
-
-	/* Stop the aircraft */
-	if (popupInterceptionReady.aircraft->status == AIR_DROP)
-		CL_AircraftStop(popupInterceptionReady.aircraft);
-}
-
-#endif
 /*========================================
 POPUP_AIRCRAFT
 ========================================*/
