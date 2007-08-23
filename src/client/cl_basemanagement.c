@@ -3114,8 +3114,8 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		Q_strncpyz(b->name, MSG_ReadStringRaw(sb), sizeof(b->name));
 		MSG_ReadPos(sb, b->pos);
 		if (b->founded) {
-			color = MAP_GetColor(b->pos, MAPTYPE_CLIMAZONE);
-			b->mapZone = MAP_GetZoneType(color);
+			color = MAP_GetColor(b->pos, MAPTYPE_TERRAIN);
+			b->mapZone = MAP_GetTerrainType(color);
 		}
 		b->founded = MSG_ReadByte(sb);
 		b->hasHangar = MSG_ReadByte(sb);

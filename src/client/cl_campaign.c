@@ -317,14 +317,14 @@ qboolean CL_NewBase (base_t* base, vec2_t pos)
 		return qfalse;
 	}
 
-	color = MAP_GetColor(pos, MAPTYPE_CLIMAZONE);
+	color = MAP_GetColor(pos, MAPTYPE_TERRAIN);
 
 	if (MapIsWater(color)) {
 		/* This should already have been catched in MAP_MapClick (cl_menu.c), but just in case. */
 		MN_AddNewMessage(_("Notice"), _("Could not set up your base at this location"), qfalse, MSG_INFO, NULL);
 		return qfalse;
 	} else {
-		base->mapZone = MAP_GetZoneType(color);
+		base->mapZone = MAP_GetTerrainType(color);
 		Com_DPrintf(DEBUG_CLIENT, "CL_NewBase: zoneType: '%s'\n", base->mapZone);
 	}
 

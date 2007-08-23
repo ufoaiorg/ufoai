@@ -79,9 +79,17 @@ static int centerOnEventIdx = 0;		/**< Current Event centered on 3D geoscape */
 static vec3_t finalGlobeAngle = {0, GLOBE_ROTATE, 0};	/**< value of finale ccs.angles for a smooth change of angle (see MAP_CenterOnPoint)*/
 static vec2_t final2DGeoscapeCenter = {0.5, 0.5};		/**< value of ccs.center for a smooth change of position (see MAP_CenterOnPoint) */
 static qboolean smoothRotation = qfalse;				/**< qtrue if the rotation of 3D geoscape must me smooth */
-static byte *maskPic = NULL;			/**< this is the mask for seperating the clima
+static byte *terrainPic = NULL;			/**< this is the terrain mask for seperating the clima
 											zone and water by different color values */
-static int maskWidth, maskHeight;		/**< the width and height for the mask pic. */
+static int terrainWidth, terrainHeight;		/**< the width and height for the terrain pic. */
+
+static byte *culturePic = NULL;			/**< this is the mask for seperating the culture
+											zone and water by different color values */
+static int cultureWidth, cultureHeight;		/**< the width and height for the culture pic. */
+
+static byte *populationPic = NULL;			/**< this is the mask for seperating the population rate
+											zone and water by different color values */
+static int populationWidth, populationHeight;		/**< the width and height for the population pic. */
 
 static byte *nationsPic = NULL;			/**< this is the nation mask - seperated
 											by colors given in nations.ufo. */
@@ -269,7 +277,7 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
 
 	/* new base construction */
 	if (gd.mapAction == MA_NEWBASE) {
-		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_CLIMAZONE))) {
+		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN))) {
 			newBasePos[0] = pos[0];
 			newBasePos[1] = pos[1];
 			Com_DPrintf(DEBUG_CLIENT, "MAP_MapClick: Build base at: %.0f:%.0f\n", pos[0], pos[1]);
@@ -1450,7 +1458,7 @@ nation_t* MAP_GetNation (const vec2_t pos)
  * @note never may return a null pointer or an empty string
  * @note Make sure, that there are textures with the same name in base/textures/tex_terrain
  */
-const char* MAP_GetZoneType (byte* color)
+const char* MAP_GetTerrainType (byte* color)
 {
 	if (MapIsDesert(color))
 		return "desert";
@@ -1468,6 +1476,40 @@ const char* MAP_GetZoneType (byte* color)
 		return "village";
 	else
 		return "grass";
+}
+
+const char* MAP_GetCultureType (byte* color)
+{
+	if (MapIsWater(color))
+		return "water";
+	else if (MapIsEastern(color))
+		return "eastern";
+	else if (MapIsWestern(color))
+		return "western";
+	else if (MapIsOriental(color))
+		return "oriental";
+	else if (MapIsAfrican(color))
+		return "african";
+	else
+		return "western";
+}
+
+const char* MAP_GetPopulationType (byte* color)
+{
+	if (MapIsWater(color))
+		return "water";
+	else if (MapIsUrban(color))
+		return "urban";
+	else if (MapIsSuburban(color))
+		return "suburban";
+	else if (MapIsVillage(color))
+		return "village";
+	else if (MapIsRural(color))
+		return "rural";
+	else if (MapIsNopopulation(color))
+		return "nopopulation";
+	else
+		return "nopopulation";
 }
 
 /**
@@ -1527,9 +1569,9 @@ qboolean MAP_MaskFind (byte * color, vec2_t polar)
 		return qfalse;
 
 	/* find possible positions */
-	res = maskWidth * maskHeight;
+	res = terrainWidth * terrainHeight;
 	num = 0;
-	for (i = 0, c = maskPic; i < res; i++, c += 4)
+	for (i = 0, c = terrainPic; i < res; i++, c += 4)
 		if (c[0] == color[0] && c[1] == color[1] && c[2] == color[2])
 			num++;
 
@@ -1539,29 +1581,29 @@ qboolean MAP_MaskFind (byte * color, vec2_t polar)
 
 	/* get position */
 	num = rand() % num;
-	for (i = 0, c = maskPic; i <= num; c += 4)
+	for (i = 0, c = terrainPic; i <= num; c += 4)
 		if (c[0] == color[0] && c[1] == color[1] && c[2] == color[2])
 			i++;
 
 	/* transform to polar coords */
-	res = (c - maskPic) / 4;
-	polar[0] = 180.0 - 360.0 * ((float) (res % maskWidth) + 0.5) / maskWidth;
-	polar[1] = 90.0 - 180.0 * ((float) (res / maskWidth) + 0.5) / maskHeight;
+	res = (c - terrainPic) / 4;
+	polar[0] = 180.0 - 360.0 * ((float) (res % terrainWidth) + 0.5) / terrainWidth;
+	polar[1] = 90.0 - 180.0 * ((float) (res / terrainWidth) + 0.5) / terrainHeight;
 	Com_DPrintf(DEBUG_CLIENT, "Set new coords for mission to %.0f:%.0f\n", polar[0], polar[1]);
 	return qtrue;
 }
 
 
 /**
- * @brief Returns the color value from geoscape of maskPic at a given position.
+ * @brief Returns the color value from geoscape of terrainPic at a given position.
  * @param[in] pos vec2_t Value of position on map to get the color value from.
  * pos is longitude and latitude
  * @param[in] type determine the map to get the color from (there are different masks)
  * one for the climazone (bases made use of this - there are grass, ice and desert
  * base tiles available) and one for the nations
  * @return Returns the color value at given position.
- * @note maskPic is a pointer to an rgba image in memory
- * @sa MAP_GetZoneType
+ * @note terrainPic is a pointer to an rgba image in memory
+ * @sa MAP_GetTerrainType
  */
 byte *MAP_GetColor (const vec2_t pos, mapType_t type)
 {
@@ -1570,19 +1612,29 @@ byte *MAP_GetColor (const vec2_t pos, mapType_t type)
 	byte *mask;
 
 	switch (type) {
-		case MAPTYPE_CLIMAZONE:
-			mask = maskPic;
-			width = maskWidth;
-			height = maskHeight;
-			break;
-		case MAPTYPE_NATIONS:
-			mask = nationsPic;
-			width = nationsWidth;
-			height = nationsHeight;
-			break;
-		default:
-			Sys_Error("Unknown maptype %i\n", type);
-			return NULL;
+	case MAPTYPE_TERRAIN:
+		mask = terrainPic;
+		width = terrainWidth;
+		height = terrainHeight;
+		break;
+	case MAPTYPE_CULTURE:
+		mask = culturePic;
+		width = cultureWidth;
+		height = cultureHeight;
+		break;
+	case MAPTYPE_POPULATION:
+		mask = populationPic;
+		width = populationWidth;
+		height = populationHeight;
+		break;
+	case MAPTYPE_NATIONS:
+		mask = nationsPic;
+		width = nationsWidth;
+		height = nationsHeight;
+		break;
+	default:
+		Sys_Error("Unknown maptype %i\n", type);
+		return NULL;
 	}
 
 	/* get coordinates */
@@ -1594,7 +1646,7 @@ byte *MAP_GetColor (const vec2_t pos, mapType_t type)
 		y = 0;
 
 	/* 4 => RGBA */
-	/* maskWidth is the width of the image */
+	/* terrainWidth is the width of the image */
 	/* this calulation returns the pixel in col x and in row y */
 	return mask + 4 * (x + y * width);
 }
@@ -1604,14 +1656,34 @@ byte *MAP_GetColor (const vec2_t pos, mapType_t type)
  */
 void MAP_Init (void)
 {
-	if (maskPic) {
-		Mem_Free(maskPic);
-		maskPic = NULL;
+	/* load terrain mask */
+	if (terrainPic) {
+		Mem_Free(terrainPic);
+		terrainPic = NULL;
 	}
-	re.LoadTGA(va("pics/menu/%s_mask.tga", curCampaign->map), &maskPic, &maskWidth, &maskHeight);
-	if (!maskPic || !maskWidth || !maskHeight)
-		Sys_Error("Couldn't load map mask %s_mask.tga in pics/menu\n", curCampaign->map);
+	re.LoadTGA(va("pics/menu/%s_terrain.tga", curCampaign->map), &terrainPic, &terrainWidth, &terrainHeight);
+	if (!terrainPic || !terrainWidth || !terrainHeight)
+		Sys_Error("Couldn't load map mask %s_terrain.tga in pics/menu\n", curCampaign->map);
 
+	/* load culture mask */
+	if (culturePic) {
+		Mem_Free(culturePic);
+		culturePic = NULL;
+	}
+	re.LoadTGA(va("pics/menu/%s_culture.tga", curCampaign->map), &culturePic, &cultureWidth, &cultureHeight);
+	if (!culturePic || !cultureWidth || !cultureHeight)
+		Sys_Error("Couldn't load map mask %s_culture.tga in pics/menu\n", curCampaign->map);
+
+	/* load population mask */
+	if (populationPic) {
+		Mem_Free(populationPic);
+		populationPic = NULL;
+	}
+	re.LoadTGA(va("pics/menu/%s_population.tga", curCampaign->map), &populationPic, &populationWidth, &populationHeight);
+	if (!populationPic || !populationWidth || !populationHeight)
+		Sys_Error("Couldn't load map mask %s_population.tga in pics/menu\n", curCampaign->map);
+
+	/* load nations mask */
 	if (nationsPic) {
 		Mem_Free(nationsPic);
 		nationsPic = NULL;

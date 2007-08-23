@@ -440,7 +440,7 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 
 	if (phalanxWon) {
 		/* get the color value of the map at the crash position */
-		color = MAP_GetColor(aircraft->pos, MAPTYPE_CLIMAZONE);
+		color = MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN);
 		/* if this color value is not the value for water ...
 		 * and we hit the probability to spawn a crashsite mission */
 		if (!MapIsWater(color)) {
@@ -448,7 +448,7 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 			/* some random data like alien race, alien count (also depends on ufo-size) */
 			/* @todo: We should have a ufo crash theme for random map assembly */
 			/* @todo: call the map assembly theme with the right parameter, e.g.: +ufocrash [climazone] */
-			zoneType = MAP_GetZoneType(color);
+			zoneType = MAP_GetTerrainType(color);
 			Com_sprintf(missionName, sizeof(missionName), "ufocrash%.0f:%.0f", aircraft->pos[0], aircraft->pos[1]);
 			ms = CL_AddMission(missionName);
 			if (!ms) {

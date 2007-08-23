@@ -45,26 +45,36 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* check for water */
 /* blue value is 64 */
-#define MapIsWater(color) (color[0] == 0 && color[1] == 0 && color[2] == 64)
-#define MapIsArctic(color) (color[0] == 128 && color[1] == 255 && color[2] == 255)
-#define MapIsDesert(color) (color[0] == 255 && color[1] == 128 && color[2] == 0)
-#define MapIsMountain(color) (color[0] == 255 && color[1] == 0 && color[2] == 0)
-#define MapIsTropical(color) (color[0] == 128 && color[1] == 128 && color[2] == 255)
-#define MapIsGrass(color) (color[0] == 128 && color[1] == 255 && color[2] == 0)
-#define MapIsUrban(color) (color[0] == 128 && color[1] == 0 && color[2] == 128)
-#define MapIsVillage(color) (color[0] == 0 && color[1] == 0 && color[2] == 255)
+#define MapIsWater(color)        (color[0] ==   0 && color[1] ==   0 && color[2] ==  64)
 
-/* others: */
-/* red 255, 0, 0 */
-/* yellow 255, 255, 0 */
-/* green 128, 255, 0 */
-/* violet 128, 0, 128 */
-/* blue (not water) 128, 128, 255 */
-/* blue (not water, too) 0, 0, 255 */
+/* terrain types */
+#define MapIsArctic(color)       (color[0] == 128 && color[1] == 255 && color[2] == 255)
+#define MapIsDesert(color)       (color[0] == 255 && color[1] == 128 && color[2] ==   0)
+#define MapIsMountain(color)     (color[0] == 255 && color[1] ==   0 && color[2] ==   0)
+#define MapIsTropical(color)     (color[0] == 128 && color[1] == 128 && color[2] == 255)
+#define MapIsGrass(color)        (color[0] == 128 && color[1] == 255 && color[2] ==   0)
+#define MapIsWasted(color)       (color[0] == 128 && color[1] ==   0 && color[2] == 128)
+#define MapIsCold(color)         (color[0] ==   0 && color[1] ==   0 && color[2] == 255)
+
+/* culture types */
+#define MapIsEastern(color)      (color[0] == 128 && color[1] == 255 && color[2] == 255)
+#define MapIsWestern(color)      (color[0] == 255 && color[1] == 128 && color[2] ==   0)
+#define MapIsOriental(color)     (color[0] == 255 && color[1] ==   0 && color[2] ==   0)
+#define MapIsAfrican(color)      (color[0] == 128 && color[1] == 128 && color[2] == 255)
+
+/* population types */
+#define MapIsUrban(color)        (color[0] == 128 && color[1] == 255 && color[2] == 255)
+#define MapIsSuburban(color)     (color[0] == 255 && color[1] == 128 && color[2] ==   0)
+#define MapIsVillage(color)      (color[0] == 255 && color[1] ==   0 && color[2] ==   0)
+#define MapIsRural(color)        (color[0] == 128 && color[1] == 128 && color[2] == 255)
+#define MapIsNopopulation(color) (color[0] == 128 && color[1] == 255 && color[2] ==   0)
+
 
 /** possible map types */
 typedef enum mapType_s {
-	MAPTYPE_CLIMAZONE,
+	MAPTYPE_TERRAIN,
+	MAPTYPE_CULTURE,
+	MAPTYPE_POPULATION,
 	MAPTYPE_NATIONS,
 
 	MAPTYPE_MAX
