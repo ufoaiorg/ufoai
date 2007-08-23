@@ -762,7 +762,7 @@ void Qcommon_Init (int argc, const char **argv)
 	Mem_Init();
 	Sys_Init();
 
-	init_net();
+	NET_Init();
 
 	SV_Init();
 

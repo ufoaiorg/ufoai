@@ -40,7 +40,7 @@ void broadcast_datagram(struct datagram_socket *s, const char *buf, int len, int
 void close_datagram_socket(struct datagram_socket *s);
 void sockaddr_to_strings(struct datagram_socket *s, struct sockaddr *addr, char *node, size_t nodelen, char *service, size_t servicelen);
 
-void init_net(void);
+void NET_Init(void);
 void wait_for_net(int timeout);
 struct net_stream *connect_to_host(const char *node, const char *service);
 struct net_stream *connect_to_loopback(void);

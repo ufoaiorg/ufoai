@@ -41,6 +41,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # include <winsock2.h>
 # include <ws2tcpip.h>
 # define gai_strerrorA estr_n
+static HINSTANCE libNet = NULL;
+static void (*FreeAddrInfo)(struct addrinfo* res) = NULL;
 #else
 # define INVALID_SOCKET (-1)
 typedef int SOCKET;
@@ -118,6 +120,33 @@ static qboolean server_running = qfalse;
 static stream_callback_func *server_func = NULL;
 static int server_socket = INVALID_SOCKET;
 static int server_family, server_addrlen;
+
+/**
+ * @brief This function implements a freeaddrinfo function for
+ * windows systems which don't have it
+ */
+static inline void Sys_FreeAddrInfo (struct addrinfo *res)
+{
+#ifdef _WIN32
+	if (FreeAddrInfo) {
+		FreeAddrInfo(res);
+		return;
+	} else {
+		struct addrinfo *list;
+		for (list = res; list != NULL;) {
+			if (list->ai_addr)
+				free(list->ai_addr);
+			if (list->ai_canonname)
+				free(list->ai_canonname);
+			res = list;
+			list = list->ai_next;
+			free(res);
+		}
+	}
+#else
+	freeaddrinfo(res);
+#endif
+}
 
 /**
  * @brief
@@ -264,14 +293,25 @@ static void close_socket (int socket)
 /**
  * @brief
  */
-void init_net (void)
+void NET_Init (void)
 {
 	int i;
-
 #ifdef _WIN32
 	WSADATA winsockdata;
+#endif
+
+	Com_Printf("----- network initialization -------\n");
+
+#ifdef _WIN32
 	if (WSAStartup(MAKEWORD(2, 0), &winsockdata) != 0)
 		Com_Error(ERR_FATAL,"Winsock initialization failed.");
+
+	assert(!libNet);
+	netLib = LoadLibrary("ws2_32.dll");
+	if (netLib)
+		FreeAddrInfo = GetProcAddress(netLib, "freeaddrinfo");
+	if (!FreeAddrInfo)
+		Com_Printf("...couldn't find freeaddrinfo\n");
 #endif
 
 	maxfd = 0;
@@ -283,9 +323,7 @@ void init_net (void)
 	for (i = 0; i < MAX_DATAGRAM_SOCKETS; i++)
 		datagram_sockets[i] = NULL;
 
-#ifdef _WIN32
-
-#else
+#ifndef _WIN32
 	signal(SIGPIPE, SIG_IGN);
 #endif
 
@@ -624,7 +662,7 @@ struct net_stream *connect_to_host (const char *node, const char *service)
 
 	s = do_connect(node, service, res, index);
 
-	freeaddrinfo(res);
+	Sys_FreeAddrInfo(res);
 	return s;
 }
 
@@ -936,7 +974,7 @@ qboolean SV_Start (const char *node, const char *service, stream_callback_func *
 			server_func = func;
 		}
 
-		freeaddrinfo(res);
+		Sys_FreeAddrInfo(res);
 	} else {
 		/* Loopback server only */
 		server_running = qtrue;
@@ -1052,7 +1090,7 @@ struct datagram_socket *new_datagram_socket (const char *node, const char *servi
 	if (s)
 		s->func = func;
 
-	freeaddrinfo(res);
+	Sys_FreeAddrInfo(res);
 	return s;
 }
 

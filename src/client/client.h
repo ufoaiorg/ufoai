@@ -242,7 +242,7 @@ typedef enum {
 /*============================================================================= */
 
 /* i18n support via gettext */
-# include <libintl.h>
+#include <libintl.h>
 
 #if defined(_WIN32)
 # ifdef _MSC_VER
