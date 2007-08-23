@@ -55,18 +55,18 @@ void SZ_Print(sizebuf_t * buf, const char *data);	/* strcats onto the sizebuf */
 struct usercmd_s;
 struct entity_state_s;
 
-void MSG_WriteChar(sizebuf_t * sb, int c);
+void MSG_WriteChar(sizebuf_t * sb, int32_t c);
 
 #ifdef DEBUG
 #define MSG_WriteByte(buffer, char) MSG_WriteByteDebug( buffer, char, __FILE__, __LINE__ )
 #define MSG_WriteShort(buffer, char) MSG_WriteShortDebug( buffer, char, __FILE__, __LINE__ )
-void MSG_WriteByteDebug(sizebuf_t * sb, int c, const char *file, int line);
-void MSG_WriteShortDebug(sizebuf_t * sb, int c, const char* file, int line);
+void MSG_WriteByteDebug(sizebuf_t * sb, int32_t c, const char *file, int line);
+void MSG_WriteShortDebug(sizebuf_t * sb, int32_t c, const char* file, int line);
 #else
-void MSG_WriteByte(sizebuf_t * sb, int c);
-void MSG_WriteShort(sizebuf_t * sb, int c);
+void MSG_WriteByte(sizebuf_t * sb, int32_t c);
+void MSG_WriteShort(sizebuf_t * sb, int32_t c);
 #endif
-void MSG_WriteLong(sizebuf_t * sb, int c);
+void MSG_WriteLong(sizebuf_t * sb, int32_t c);
 void MSG_WriteFloat(sizebuf_t * sb, float f);
 void MSG_WriteString(sizebuf_t * sb, const char *s);
 void MSG_WriteCoord(sizebuf_t * sb, float f);
@@ -81,10 +81,10 @@ void MSG_WriteFormat(sizebuf_t * sb, const char *format, ...);
 
 void MSG_BeginReading(sizebuf_t * sb);
 
-int MSG_ReadChar(sizebuf_t * sb);
-int MSG_ReadByte(sizebuf_t * sb);
-int MSG_ReadShort(sizebuf_t * sb);
-int MSG_ReadLong(sizebuf_t * sb);
+int32_t MSG_ReadChar(sizebuf_t * sb);
+int32_t MSG_ReadByte(sizebuf_t * sb);
+int32_t MSG_ReadShort(sizebuf_t * sb);
+int32_t MSG_ReadLong(sizebuf_t * sb);
 float MSG_ReadFloat(sizebuf_t * sb);
 char *MSG_ReadString(sizebuf_t * sb);
 char *MSG_ReadStringLine(sizebuf_t * sb);
