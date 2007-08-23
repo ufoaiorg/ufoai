@@ -305,7 +305,7 @@ menu singleplayermission
 
 	pic button_abort
 	{
-		click	{ cmd game_abort; }
+		click	{ cmd "game_abort;" }
 		pos	"640 240"
 		image	menu/button_big
 		texl	"0 0"
@@ -326,7 +326,7 @@ menu singleplayermission
 	pic button_retry
 	{
 		pos	"640 310"
-		click	{ cmd "game_go" }
+		click	{ cmd "game_go;" }
 		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"
