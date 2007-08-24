@@ -298,6 +298,7 @@ void NET_Init (void)
 	int i;
 #ifdef _WIN32
 	WSADATA winsockdata;
+	HMODULE netLib;
 #endif
 
 	Com_Printf("----- network initialization -------\n");
@@ -309,7 +310,7 @@ void NET_Init (void)
 	assert(!libNet);
 	netLib = LoadLibrary("ws2_32.dll");
 	if (netLib)
-		FreeAddrInfo = GetProcAddress(netLib, "freeaddrinfo");
+		FreeAddrInfo = (void*)GetProcAddress(netLib, "freeaddrinfo");
 	if (!FreeAddrInfo)
 		Com_Printf("...couldn't find freeaddrinfo\n");
 #endif
