@@ -407,3 +407,24 @@ team scientist
 		}
 	}
 }
+
+team worker
+{
+	size	1
+	hit_particle	blood
+	weapons false
+	armor false
+	civilian true
+
+	names {
+		male { b }
+		lastname { c }
+	}
+
+	models {
+		male {
+			civilians/male worker01 worker01_head 0
+			civilians/male worker01 worker01_head 1
+		}
+	}
+}

@@ -508,6 +508,7 @@ mission construction
 	aliens		6
 	alienteam	"taman shevaar"
 	alienequip	stage3_soldiers
+	civteam		"worker"
 	civilians	6
 	nation		"europa"
 	onlose		""
