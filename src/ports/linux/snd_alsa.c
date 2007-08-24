@@ -211,7 +211,7 @@ qboolean SND_Init (struct sndinfo *s)
  */
 int SND_GetDMAPos (void)
 {
-	if(si->dma->buffer)
+	if (si->dma->buffer)
 		return si->dma->samplepos;
 
 	si->Com_Printf("Sound not inizialized\n");
@@ -223,7 +223,7 @@ int SND_GetDMAPos (void)
  */
 void SND_Shutdown (void)
 {
-	if(!si->dma->buffer)
+	if (!si->dma->buffer)
 		return;
 
 	snd_pcm_drop(pcm_handle);
@@ -241,7 +241,7 @@ void SND_Submit (void)
 	int s, w, frames;
 	void *start;
 
-	if(!si->dma->buffer)
+	if (!si->dma->buffer)
 		return;
 
 	s = si->dma->samplepos * sample_bytes;
@@ -260,7 +260,7 @@ void SND_Submit (void)
 	si->dma->samplepos += w * si->dma->channels;
 
 	/* wrap buffer */
-	if(si->dma->samplepos >= si->dma->samples)
+	if (si->dma->samplepos >= si->dma->samples)
 		si->dma->samplepos = 0;
 }
 

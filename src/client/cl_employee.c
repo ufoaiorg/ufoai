@@ -70,7 +70,7 @@ static void E_EmployeeListScroll_f (void)
 	j = employeeListNode->textScroll;
 
 	for (i = 0, employee = &(gd.employees[employeeCategory][0]); i < gd.numEmployees[employeeCategory]; i++, employee++) {
-		/* don't show employees of other bases */ 
+		/* don't show employees of other bases */
 		if (employee->baseIDHired != baseCurrent->idx && employee->hired)
 			continue;
 
@@ -78,7 +78,7 @@ static void E_EmployeeListScroll_f (void)
 		if (j) {
 			j--;
 			continue;
-		} 
+		}
 		/* change the buttons */
 		if (employee->hired) {
 			if (employee->baseIDHired == baseCurrent->idx)
@@ -134,7 +134,7 @@ static void E_EmployeeList_f (void)
 	employeeListNode->textScroll = 0;
 
 	for (j = 0, employee = gd.employees[employeeCategory]; j < gd.numEmployees[employeeCategory]; j++, employee++) {
-		/* don't show employees of other bases */ 
+		/* don't show employees of other bases */
 		if (employee->baseIDHired != baseCurrent->idx && employee->hired)
 			continue;
 
@@ -529,7 +529,7 @@ qboolean E_HireEmployee (base_t* base, employee_t* employee)
 qboolean E_HireEmployeeByType (base_t* base, employeeType_t type)
 {
 	employee_t* employee = NULL;
-	
+
 	employee = E_GetUnhiredEmployee(type, -1);
 	return employee? E_HireEmployee(base, employee): qfalse;
 }
@@ -545,10 +545,10 @@ qboolean E_HireEmployeeByType (base_t* base, employeeType_t type)
 qboolean E_UnhireEmployee (employee_t* employee)
 {
 	base_t* base = NULL;
-	
+
 	if (employee && employee->hired) {
 		base = &gd.bases[employee->baseIDHired];
-		
+
 		if (employee->buildingID >= 0) {
 			/* Remove employee from building (and tech/production). */
 			E_RemoveEmployeeFromBuilding(employee);
@@ -694,7 +694,7 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 	*/
 
 	if (employee->baseIDHired >= 0) {
-		HOS_RemoveDeadEmployeeFromLists (employee);
+		HOS_RemoveDeadEmployeeFromLists(employee);
 		E_UnhireEmployee(employee);
 	}
 
@@ -922,15 +922,15 @@ employee_t* E_GetEmployeeByMenuIndex(int num)
 		return NULL;
 
 	for (i = 0, j = 0, employee = &(gd.employees[employeeCategory][0]); i < gd.numEmployees[employeeCategory]; i++, employee++) {
-		/* don't count employees of other bases */ 
+		/* don't count employees of other bases */
 		if (employee->baseIDHired != baseCurrent->idx && employee->hired)
 			continue;
 
-		if (num == j) 
+		if (num == j)
 			return employee;
 
 		j++;
-	} 
+	}
 	return NULL;
 }
 
@@ -970,7 +970,7 @@ static void E_EmployeeHire_f (void)
 
 	employee = E_GetEmployeeByMenuIndex(num);
 	assert(employee);
-			
+
 	if (employee->hired) {
 		if (!E_UnhireEmployee(employee)) {
 			/* @todo: message - Couldn't fire employee. */

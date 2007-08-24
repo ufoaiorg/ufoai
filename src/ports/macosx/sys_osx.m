@@ -226,7 +226,7 @@ unsigned char CheckForFinderCall (char **argv, int argc)
 		} else {
 			/*change directory is needed */
 			/* finder gives as second argument -psxxxx process ID */
-			if(argv[1][0] == '-') {
+			if (argv[1][0] == '-') {
 				change = 1;
 			}
 		}
