@@ -30,6 +30,7 @@ stage intro
 		missions	"africa_excavation transport mine mart italy estate frozen_alienlandingindustrial rzeszow"
 		number		11 // don't torment the player with the same missions
 		quota		6
+		ufos		2
 	}
 	set soldier_terror
 	{
@@ -40,6 +41,7 @@ stage intro
 		missions	"bunker japan dam spedition stadium industrial"
 		number		4 // no mission will get repeated
 		quota		4
+		ufos		2
 	}
 // from this place on, due to not enough missions in RC5,
 // and only 19 scientists total, I increase all "frame" settings
@@ -53,6 +55,7 @@ stage intro
 		missions	"oriental city subway gasstation tower village"
 		quota		5 // torment the player until he's done
 		nextstage	ufos_are_coming
+		ufos		2
 	}
 	set stop
 	{
@@ -74,6 +77,7 @@ stage ufos_are_coming
 		commands	"addufo;"
 		missions	"mine_crash"
 		quota		1
+		ufos		4
 	}
 	set crashed_and_landed // stage3 equipment start here
 	{
@@ -84,8 +88,8 @@ stage ufos_are_coming
 		expire		"0 8 0"
 		missions	"construction farm2 office harbor pdi bridge"
 		quota		5
-		commands	"addufo;"
 		nextstage	invasion
+		ufos		2
 	}
 	set stop_coming
 	{

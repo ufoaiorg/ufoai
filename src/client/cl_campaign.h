@@ -137,6 +137,7 @@ typedef struct stageSet_s {
 	int quota;					/**< number of successfully ended missions until set gets deactivated */
 	byte numMissions;			/**< number of missions in this set */
 	int missions[MAX_SETMISSIONS];	/**< mission names in this set */
+	int ufos;					/**< how many ufos should appear in this stage */
 } stageSet_t;
 
 typedef struct stage_s {

@@ -667,6 +667,11 @@ static void CL_CampaignAddMission (setState_t * set)
 	else
 		set->event = Date_Add(ccs.date, Date_Random_Middle(set->def->frame));
 
+	if (set->def->ufos > 0) {
+		Cbuf_AddText("addufo;");
+		set->def->ufos--;
+	}
+
 	/* stop time */
 	CL_GameTimeStop();
 }
@@ -867,15 +872,17 @@ static void CL_CampaignCheckEvents (void)
 	for (i = 0, stage = ccs.stage; i < numStages; i++, stage++)
 		if (stage->active)
 			for (j = 0, set = &ccs.set[stage->def->first]; j < stage->def->num; j++, set++)
-				if (set->active && set->event.day && Date_LaterThan(ccs.date, set->event)) {
-					if (set->def->numMissions) {
-						CL_CampaignAddMission(set);
-						if (gd.mapAction == MA_NONE) {
-							gd.mapAction = MA_INTERCEPT;
-							CL_AircraftList_f();
-						}
-					} else
-						CL_CampaignExecute(set);
+				if (set->active) {
+					if (set->event.day && Date_LaterThan(ccs.date, set->event)) {
+						if (set->def->numMissions) {
+							CL_CampaignAddMission(set);
+							if (gd.mapAction == MA_NONE) {
+								gd.mapAction = MA_INTERCEPT;
+								CL_AircraftList_f();
+							}
+						} else
+							CL_CampaignExecute(set);
+					}
 				}
 
 	/* Check UFOs events. */
@@ -3107,6 +3114,7 @@ static const value_t stageset_vals[] = {
 	{"expire", V_DATE, offsetof(stageSet_t, expire), 0},
 	{"number", V_INT, offsetof(stageSet_t, number), MEMBER_SIZEOF(stageSet_t, number)},
 	{"quota", V_INT, offsetof(stageSet_t, quota), MEMBER_SIZEOF(stageSet_t, quota)},
+	{"ufos", V_INT, offsetof(stageSet_t, ufos), MEMBER_SIZEOF(stageSet_t, ufos)},
 	{"seq", V_STRING, offsetof(stageSet_t, sequence), 0},
 	{"nextstage", V_STRING, offsetof(stageSet_t, nextstage), 0},
 	{"endstage", V_STRING, offsetof(stageSet_t, endstage), 0},
