@@ -1369,3 +1369,57 @@ refexport_t GetRefAPI (refimport_t rimp)
 
 	return re;
 }
+
+#ifndef REF_HARD_LINKED
+/* this is only here so the functions in q_shared.c and q_shwin.c can link */
+/**
+* @brief
+*/
+void Sys_Error (const char *error, ...)
+{
+	va_list argptr;
+	char text[1024];
+
+	va_start(argptr, error);
+	Q_vsnprintf(text, sizeof(text), error, argptr);
+	va_end(argptr);
+
+	text[sizeof(text)-1] = 0;
+
+	ri.Sys_Error(ERR_FATAL, "%s", text);
+}
+
+/**
+* @brief
+*/
+void Com_Printf (const char *fmt, ...)
+{
+	va_list argptr;
+	char text[1024];
+
+	va_start(argptr, fmt);
+	Q_vsnprintf(text, sizeof(text), fmt, argptr);
+	va_end(argptr);
+
+	text[sizeof(text)-1] = 0;
+
+	ri.Con_Printf(PRINT_ALL, "%s", text);
+}
+
+/**
+* @brief
+*/
+void Com_DPrintf (int level, const char *fmt, ...)
+{
+	va_list argptr;
+	char text[1024];
+
+	va_start(argptr, fmt);
+	Q_vsnprintf(text, sizeof(text), fmt, argptr);
+	va_end(argptr);
+
+	text[sizeof(text)-1] = 0;
+
+	ri.Con_Printf(level, "%s", text);
+}
+#endif /* REF_HARD_LINKED */
