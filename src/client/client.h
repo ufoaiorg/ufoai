@@ -955,6 +955,12 @@ void CL_ResetSequences(void);
 void CL_ParseSequence(const char *name, const char **text);
 
 /* cl_ufo.c */
+enum {
+	UFO_IS_NO_TARGET,
+	UFO_IS_TARGET_OF_MISSILE,
+	UFO_IS_TARGET_OF_LASER
+};
+
 ufoType_t UFO_ShortNameToID(const char *token);
 const char* UFO_TypeToShortName(ufoType_t type);
 const char* UFO_TypeToName(ufoType_t type);

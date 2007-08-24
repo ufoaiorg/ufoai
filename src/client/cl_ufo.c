@@ -32,7 +32,7 @@ static void UFO_RemoveUfoFromGeoscape_f(void);
 extern void UFO_CampaignCheckEvents(void);
 extern void UFO_Reset(void);
 
-const float max_detecting_range = 60.0f; /**< range to detect and fire at phalanx aircrafts */
+static const float max_detecting_range = 60.0f; /**< range to detect and fire at phalanx aircrafts */
 
 typedef struct ufoTypeList_s {
 	const char *id;		/**< script id string */
@@ -160,15 +160,15 @@ static int UFO_IsTargetOfBase (int num, base_t *base)
 
 	for (i = 0; i < base->maxBatteries; i++) {
 		if (base->targetMissileIdx[i] == num)
-			return 1;
+			return UFO_IS_TARGET_OF_MISSILE;
 	}
 
 	for (i = 0; i < base->maxLasers; i++) {
 		if (base->targetLaserIdx[i] == num)
-			return 2;
+			return UFO_IS_TARGET_OF_LASER;
 	}
 
-	return 0;
+	return UFO_IS_NO_TARGET;
 }
 
 /**
@@ -194,16 +194,21 @@ static void UFO_FoundNewBase (aircraft_t *ufo, int dt)
 			continue;
 
 		test = UFO_IsTargetOfBase(ufo - gd.ufos, base);
-		if (test == 1)
+		switch (UFO_IsTargetOfBase(ufo - gd.ufos, base)) {
+		case UFO_IS_TARGET_OF_MISSILE:
 			baseProbability = 0.001f;
-		else if (test == 2)
+			break;
+		case UFO_IS_TARGET_OF_LASER:
 			baseProbability = 0.0001f;
-		else
+			break;
+		default:
 			baseProbability = 0.00001f;
+			break;
+		}
 
 		/* decrease probability if the ufo is far from base */
 		if (distance > 10.0f)
-		baseProbability /= 5.0f;
+			baseProbability /= 5.0f;
 
 		baseProbability *= dt;
 
