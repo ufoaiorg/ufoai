@@ -473,12 +473,12 @@ qboolean Rimp_Init (void *hInstance, void *wndProc)
 {
 	if (SDL_WasInit(SDL_INIT_AUDIO|SDL_INIT_CDROM|SDL_INIT_VIDEO) == 0) {
 		if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-			Sys_Error("Video SDL_Init failed: %s\n", SDL_GetError());
+			ri.Sys_Error(ERR_FATAL, "Video SDL_Init failed: %s\n", SDL_GetError());
 			return qfalse;
 		}
 	} else if (SDL_WasInit(SDL_INIT_VIDEO) == 0) {
 		if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
-			Sys_Error("Video SDL_InitSubsystem failed: %s\n", SDL_GetError());
+			ri.Sys_Error(ERR_FATAL, "Video SDL_InitSubsystem failed: %s\n", SDL_GetError());
 			return qfalse;
 		}
 	}
@@ -594,12 +594,12 @@ static qboolean Rimp_InitGraphics (qboolean fullscreen)
 	SetSDLIcon(); /* currently uses ufoicon.xbm data */
 #if 0
 	if (!SDL_VideoModeOK(vid.width, vid.height, 0, flags)) {
-		Sys_Error("(SDLGL) SDL_VideoModeOK failed (%ix%i): %s\n", vid.width, vid.height, SDL_GetError());
+		ri.Sys_Error(ERR_FATAL, "(SDLGL) SDL_VideoModeOK failed (%ix%i): %s\n", vid.width, vid.height, SDL_GetError());
 		return qfalse;
 	}
 #endif
 	if ((surface = SDL_SetVideoMode(vid.width, vid.height, 0, flags)) == NULL) {
-		Sys_Error("(SDLGL) SDL SetVideoMode failed: %s\n", SDL_GetError());
+		ri.Sys_Error(ERR_FATAL, "(SDLGL) SDL SetVideoMode failed: %s\n", SDL_GetError());
 		return qfalse;
 	}
 

@@ -543,7 +543,7 @@ void Rimp_EndFrame (void)
 	err = qglGetError();
 #ifdef PARANOID
 	if (err != GL_NO_ERROR)
-		Com_Printf("Rimp_EndFrame: glGetError: %i\n", err);
+		ri.Con_Printf(PRINT_ALL, "Rimp_EndFrame: glGetError: %i\n", err);
 #else
 	assert(err == GL_NO_ERROR);
 #endif /*PARANOID*/
