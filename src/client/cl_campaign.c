@@ -2455,33 +2455,45 @@ static void CL_GameAutoGo_f (void)
 	int won;
 	aircraft_t *aircraft;
 
-	if (!curCampaign || !selMis || gd.interceptAircraft < 0 || gd.interceptAircraft >= gd.numAircraft) {
+	if (!curCampaign || !selMis) {
 		Com_DPrintf(DEBUG_CLIENT, "No update after automission\n");
 		return;
 	}
 
-	aircraft = AIR_AircraftGetFromIdx(gd.interceptAircraft);
-
 	/* start the map */
 	mis = selMis->def;
-	baseCurrent = aircraft->homebase;
-	assert(baseCurrent && mis && aircraft);
-	baseCurrent->aircraftCurrent = aircraft->idxInBase; /* Might not be needed, but it's used later on in AIR_AircraftReturnToBase_f */
+	assert(mis);
 
-	if (!mis->active) {
-		MN_AddNewMessage(_("Notice"), _("Your dropship is not near the landing zone"), qfalse, MSG_STANDARD, NULL);
-		return;
-	} else if (mis->storyRelated) {
-		Com_DPrintf(DEBUG_CLIENT, "You have to play this mission, because it's story related\n");
-		return;
+	if (mis->missionType != MIS_BASEATTACK) {
+		if (gd.interceptAircraft < 0 || gd.interceptAircraft >= gd.numAircraft) {
+			Com_DPrintf(DEBUG_CLIENT, "No update after automission\n");
+			return;
+		}
+
+		aircraft = AIR_AircraftGetFromIdx(gd.interceptAircraft);
+		assert(aircraft);
+		baseCurrent = aircraft->homebase;
+		assert(baseCurrent);
+		baseCurrent->aircraftCurrent = aircraft->idxInBase; /* Might not be needed, but it's used later on in AIR_AircraftReturnToBase_f */
+
+		if (!mis->active) {
+			MN_AddNewMessage(_("Notice"), _("Your dropship is not near the landing zone"), qfalse, MSG_STANDARD, NULL);
+			return;
+		} else if (mis->storyRelated) {
+			Com_DPrintf(DEBUG_CLIENT, "You have to play this mission, because it's story related\n");
+			return;
+		}
+		/* FIXME: This needs work */
+		won = mis->aliens * difficulty->integer > aircraft->teamSize ? 0 : 1;
+		Com_DPrintf(DEBUG_CLIENT, "Aliens: %i (count as %i) - Soldiers: %i\n", mis->aliens, mis->aliens * difficulty->integer, aircraft->teamSize);
+	} else {
+		baseCurrent = (base_t*)mis->data;
+		assert(baseCurrent);
+		/* FIXME: This needs work */
+		won = 1;
 	}
 
 	MN_PopMenu(qfalse);
-
-	/* FIXME: This needs work */
-	won = mis->aliens * difficulty->integer > aircraft->teamSize ? 0 : 1;
-
-	Com_DPrintf(DEBUG_CLIENT, "Aliens: %i (count as %i) - Soldiers: %i\n", mis->aliens, mis->aliens * difficulty->integer, aircraft->teamSize);
 
 	/* update nation opinions */
 	if (won) {
@@ -2490,17 +2502,20 @@ static void CL_GameAutoGo_f (void)
 		CL_HandleNationData(1, 0, mis->civilians, mis->aliens, 0, selMis);
 	}
 
-	/* campaign effects */
-	selMis->cause->done++;
-	if ((selMis->cause->def->quota && selMis->cause->done >= selMis->cause->def->quota)
-		 || (selMis->cause->def->number
-			 && selMis->cause->num >= selMis->cause->def->number)) {
-		selMis->cause->active = qfalse;
-		CL_CampaignExecute(selMis->cause);
+	if (mis->missionType != MIS_BASEATTACK) {
+		/* campaign effects */
+		selMis->cause->done++;
+		if ((selMis->cause->def->quota && selMis->cause->done >= selMis->cause->def->quota)
+			|| (selMis->cause->def->number
+				&& selMis->cause->num >= selMis->cause->def->number)) {
+			selMis->cause->active = qfalse;
+			CL_CampaignExecute(selMis->cause);
+		}
+		AIR_AircraftReturnToBase_f();
 	}
 
 	/* onwin and onlose triggers */
-	CP_ExecuteMissionTrigger(selMis->def, won, aircraft->homebase);
+	CP_ExecuteMissionTrigger(selMis->def, won, baseCurrent);
 
 	if (won || !selMis->def->keepAfterFail)
 		CL_CampaignRemoveMission(selMis);
@@ -2511,8 +2526,6 @@ static void CL_GameAutoGo_f (void)
 		MN_AddNewMessage(_("Notice"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
 
 	MAP_ResetAction();
-
-	AIR_AircraftReturnToBase_f();
 }
 
 /**
@@ -2698,7 +2711,6 @@ static void CL_GameResults_f (void)
 	int i;
 	employee_t* employee;
 	int numberofsoldiers = 0; /* DEBUG */
-	base_t *attackedbase = NULL;
 	character_t *chr = NULL;
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f\n");
@@ -2720,10 +2732,13 @@ static void CL_GameResults_f (void)
 	}
 	won = atoi(Cmd_Argv(1));
 
-	assert(gd.interceptAircraft >= 0);
-
-	baseCurrent = AIR_AircraftGetFromIdx(gd.interceptAircraft)->homebase;
-	baseCurrent->aircraftCurrent =  AIR_AircraftGetFromIdx(gd.interceptAircraft)->idxInBase;
+	if (selMis->def->missionType == MIS_BASEATTACK) {
+		baseCurrent = (base_t*)selMis->def->data;
+	} else {
+		assert(gd.interceptAircraft >= 0);
+		baseCurrent = AIR_AircraftGetFromIdx(gd.interceptAircraft)->homebase;
+		baseCurrent->aircraftCurrent =  AIR_AircraftGetFromIdx(gd.interceptAircraft)->idxInBase;
+	}
 
 	/* add the looted goods to base storage and market */
 	baseCurrent->storage = ccs.eMission; /* copied, including the arrays! */
@@ -2768,37 +2783,40 @@ static void CL_GameResults_f (void)
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - done removing dead players\n");
 
-	/* Check for alien containment in aircraft homebase. */
-	if (baseCurrent->aircraft[baseCurrent->aircraftCurrent].alientypes && !baseCurrent->hasAlienCont) {
-		/* We have captured/killed aliens, but the homebase of this aircraft does not have alien containment. Popup aircraft transer dialog. */
-		TR_TransferAircraftMenu(&(baseCurrent->aircraft[baseCurrent->aircraftCurrent]));
-	} else {
-		/* The aircraft can be savely sent to its homebase without losing aliens */
+	/* no transfer or campaign effects for base attack missions */
+	if (selMis->def->missionType != MIS_BASEATTACK) {
+		/* Check for alien containment in aircraft homebase. */
+		if (baseCurrent->aircraft[baseCurrent->aircraftCurrent].alientypes && !baseCurrent->hasAlienCont) {
+			/* We have captured/killed aliens, but the homebase of this aircraft does not have alien containment. Popup aircraft transer dialog. */
+			TR_TransferAircraftMenu(&(baseCurrent->aircraft[baseCurrent->aircraftCurrent]));
+		} else {
+			/* The aircraft can be savely sent to its homebase without losing aliens */
 
-		/* @todo: Is this really needed? At the beginning of CL_GameResults_f we already have this status (if I read this correctly). */
-		baseCurrent->aircraft[baseCurrent->aircraftCurrent].homebase = baseCurrent;
+			/* @todo: Is this really needed? At the beginning of CL_GameResults_f we already have this status (if I read this correctly). */
+			baseCurrent->aircraft[baseCurrent->aircraftCurrent].homebase = baseCurrent;
 
-		AIR_AircraftReturnToBase_f();
-	}
+			AIR_AircraftReturnToBase_f();
+		}
 
-	/* campaign effects */
-	selMis->cause->done++;
-	if ((selMis->cause->def->quota
-		  && selMis->cause->done >= selMis->cause->def->quota)
-		 || (selMis->cause->def->number
-			 && selMis->cause->num >= selMis->cause->def->number)) {
-		selMis->cause->active = qfalse;
-		CL_CampaignExecute(selMis->cause);
+		/* campaign effects */
+		selMis->cause->done++;
+		if ((selMis->cause->def->quota
+			&& selMis->cause->done >= selMis->cause->def->quota)
+			|| (selMis->cause->def->number
+				&& selMis->cause->num >= selMis->cause->def->number)) {
+			selMis->cause->active = qfalse;
+			CL_CampaignExecute(selMis->cause);
+		}
 	}
 
 	/* handle base attack mission */
 	if (selMis->def->missionType == MIS_BASEATTACK) {
-		attackedbase = (base_t*)selMis->def->data;
 		if (won) {
-			Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Defense of base: %s successful!"), attackedbase->name);
+			Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Defense of base: %s successful!"), baseCurrent->name);
 			MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+			baseCurrent->baseStatus = BASE_WORKING;
 		} else
-			CL_BaseRansacked(attackedbase);
+			CL_BaseRansacked(baseCurrent);
 	}
 
 	/* remove mission from list */

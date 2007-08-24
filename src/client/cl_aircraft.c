@@ -843,7 +843,7 @@ void CL_CampaignRunAircraft (int dt)
 			continue;
 
 		/* Run each aircraft */
-		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++)
+		for (i = 0, aircraft = base->aircraft; i < base->numAircraftInBase; i++, aircraft++)
 			if (aircraft->homebase) {
 				if (aircraft->status > AIR_IDLE) {
 					/* Aircraft is moving */
@@ -860,15 +860,6 @@ void CL_CampaignRunAircraft (int dt)
 							aircraft->mission->def->active = qtrue;
 							aircraft->status = AIR_DROP;
 							cls.missionaircraft = aircraft;
-#if 0
-							/* set baseCurrent information so the
-							 * correct team goes to the mission */
-							baseCurrent = aircraft->homebase;
-							assert(i == aircraft->idxInBase); /* Just in case the index is out of sync. */
-							baseCurrent->aircraftCurrent = aircraft->idxInBase;
-							MAP_SelectMission(aircraft->mission);
-							gd.interceptAircraft = aircraft->idx;
-#endif
 							MAP_SelectMission(cls.missionaircraft->mission);
 							gd.interceptAircraft = cls.missionaircraft->idx;
 							Com_DPrintf(DEBUG_CLIENT, "gd.interceptAircraft: %i\n", gd.interceptAircraft);

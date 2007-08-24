@@ -301,9 +301,11 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 
 	gd.numBuildings[base->idx]--;
 
+	/* last building in the list - just wipe it away */
 	if (building->idx == gd.numBuildings[base->idx]) {
 		memset(building, 0, sizeof(building_t));
 	} else {
+		/* the building is not the last one, so we have to fix some indices and move some mem */
 		int i, row, col;
 		for (i = building->idx; i < gd.numBuildings[base->idx]; i++) {
 			Com_DPrintf(DEBUG_CLIENT, "Move building %i to pos %i (%i)\n", i+1, i, gd.numBuildings[base->idx]);
@@ -313,7 +315,6 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 					if (base->map[row][col] == gd.buildings[base->idx][i].idx)
 						base->map[row][col] = i;
 			gd.buildings[base->idx][i].idx = i;
-
 		}
 	}
 
@@ -2105,9 +2106,57 @@ void B_BaseResetStatus (base_t* const base)
  */
 void B_BaseAttack (base_t* const base)
 {
+	mission_t* ms = NULL;
+	actMis_t* mis = NULL;
+
 	assert(base);
+
+	/* base is already under attack - don't spawn a new mission */
+	if (base->baseStatus == BASE_UNDER_ATTACK)
+		return;
+
+	/* HACK FIXME */
+	if (!base->numAircraftInBase) {
+		Com_Printf("B_BaseAttack: FIXME: This base (%s) can not be set under attack - because there are not crafts in this base\n", base->name);
+		return;
+	}
+
+	ms = CL_AddMission(va("baseattack%i%i", (int)base->pos[0], (int)base->pos[1]));
+	if (!ms) {
+		Com_DPrintf(DEBUG_CLIENT, "B_BaseAttack: Could not set base %s under attack\n", base->name);
+		return;
+	}
+
 	base->baseStatus = BASE_UNDER_ATTACK;
-	gd.mapAction = MA_BASEATTACK;
+
+	/* realPos is set below */
+	Vector2Set(ms->pos, base->pos[0], base->pos[1]);
+
+	/* set the mission type to base attack and store the base in data pointer */
+	/* this is useful if the mission expires and we want to know which base it was */
+	ms->missionType = MIS_BASEATTACK;
+	ms->data = (void*)base;
+
+	Com_sprintf(ms->location, sizeof(ms->location), base->name);
+	Q_strncpyz(ms->civTeam, "human_scientist", sizeof(ms->civTeam));
+	Q_strncpyz(ms->type, _("Base attack"), sizeof(ms->type));
+	/* FIXME */
+	ms->alienTeams[0] = Com_GetTeamDefinitionByID("ortnok");
+	if (ms->alienTeams[0])
+		ms->numAlienTeams++;
+
+	mis = CL_CampaignAddGroundMission(ms);
+	if (mis) {
+		Vector2Set(mis->realPos, ms->pos[0], ms->pos[1]);
+	} else {
+		/* no active stage - to decrement the mission counter */
+		CL_RemoveLastMission();
+		Com_DPrintf(DEBUG_CLIENT, "B_BaseAttack: Could not set base %s under attack - remove the mission data again\n", base->name);
+	}
+
+	Q_strncpyz(ms->loadingscreen, "baseattack", sizeof(ms->loadingscreen));
+	Com_sprintf(ms->map, sizeof(ms->map), ".baseattack");
+
 #if 0							/*@todo: run eventhandler for each building in base */
 	if (b->onAttack)
 		Cbuf_AddText(va("%s %i", b->onAttack, b->id));
@@ -2392,7 +2441,10 @@ static void B_BuildingOpen_f (void)
 	if (baseCurrent && baseCurrent->buildingCurrent) {
 		if (baseCurrent->buildingCurrent->buildingStatus != B_STATUS_WORKING) {
 			UP_OpenWith(baseCurrent->buildingCurrent->pedia);
-		} else
+		} else {
+			/* FIXME: Some buildings are even allowed to be opened when base is under attack */
+			if (baseCurrent->baseStatus == BASE_UNDER_ATTACK)
+				return;
 			switch (baseCurrent->buildingCurrent->buildingType) {
 			case B_LAB:
 				MN_PushMenu("research");
@@ -2434,6 +2486,7 @@ static void B_BuildingOpen_f (void)
 				UP_OpenWith(baseCurrent->buildingCurrent->pedia);
 				break;
 			}
+		}
 	} else {
 		Com_Printf("Usage: Only call me from baseview\n");
 	}

@@ -35,8 +35,8 @@ MULTI SELECTION DEFINITION
 #define MULTISELECT_MAXSELECT 6	/**< Maximal count of elements that can be selected at once */
 
 /**
-  * @brief Types of elements that can be selected in map
-  */
+ * @brief Types of elements that can be selected in map
+ */
 typedef enum {
 	MULTISELECT_TYPE_BASE,
 	MULTISELECT_TYPE_MISSION,
@@ -47,8 +47,8 @@ typedef enum {
 
 
 /**
-  * @brief Structure to manage the multi selection
-  */
+ * @brief Structure to manage the multi selection
+ */
 typedef struct multiSelect_s {
 	int nbSelect;						/**< Count of currently selected elements */
 	multiSelectType_t selectType[MULTISELECT_MAXSELECT];	/**< Type of currently selected elements */
@@ -137,7 +137,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 	id = multiSelect.selectId[selected];
 
 	/* Execute action on element */
-	switch(multiSelect.selectType[selected]) {
+	switch (multiSelect.selectType[selected]) {
 	case MULTISELECT_TYPE_BASE:	/* Select a base */
 		if (id >= gd.numBases)
 			break;
@@ -158,8 +158,21 @@ static void MAP_MultiSelectExecuteAction_f (void)
 		MAP_ResetAction();
 		selMis = ccs.mission + id;
 
-		Com_DPrintf(DEBUG_CLIENT, "Select mission: %s at %.0f:%.0f\n", selMis->def->name, selMis->realPos[0], selMis->realPos[1]);
-		gd.mapAction = MA_INTERCEPT;
+		if (selMis->def->missionType == MIS_BASEATTACK) {
+			base_t* base;
+			/* we need no dropship in our base */
+			selMis->def->active = qtrue;
+			gd.mapAction = MA_BASEATTACK;
+			Com_DPrintf(DEBUG_CLIENT, "Base attack: %s at %.0f:%.0f\n", selMis->def->name, selMis->realPos[0], selMis->realPos[1]);
+			base = (base_t*)selMis->def->data;
+			assert(base);
+			cls.missionaircraft = &base->aircraft[0]; /* FIXME */
+			assert(cls.missionaircraft);
+			assert(cls.missionaircraft->homebase == base);
+		} else {
+			Com_DPrintf(DEBUG_CLIENT, "Select mission: %s at %.0f:%.0f\n", selMis->def->name, selMis->realPos[0], selMis->realPos[1]);
+			gd.mapAction = MA_INTERCEPT;
+		}
 		break;
 
 	case MULTISELECT_TYPE_AIRCRAFT: /* Selection of an aircraft */
@@ -262,12 +275,13 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
 	}
 	if (cl_showCoords->integer) {
 		Com_sprintf(clickBuffer, sizeof(clickBuffer), "Long: %.1f Lat: %.1f", pos[0], pos[1]);
-		MN_AddNewMessage("Click"	, clickBuffer, qfalse, MSG_DEBUG, NULL);
+		MN_AddNewMessage("Click", clickBuffer, qfalse, MSG_DEBUG, NULL);
 		Com_Printf("Clicked at %.1f %.1f\n", pos[0], pos[1]);
 	}
 
 	/* new base construction */
-	if (gd.mapAction == MA_NEWBASE) {
+	switch (gd.mapAction) {
+	case MA_NEWBASE:
 		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN))) {
 			newBasePos[0] = pos[0];
 			newBasePos[1] = pos[1];
@@ -280,10 +294,17 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
 		} else {
 			MN_AddNewMessage(_("Notice"), _("Could not set up your base at this location"), qfalse, MSG_INFO, NULL);
 		}
-	} else if (gd.mapAction == MA_UFORADAR) {
+		break;
+	case MA_UFORADAR:
 		MN_PushMenu("popup_intercept_ufo");
 		/* @todo: Select aircraft - follow ufo - fight */
 		/* if shoot down - we have a new crashsite mission if color != water */
+		break;
+	case MA_BASEATTACK:
+		MN_PushMenu("popup_base_attack");
+		break;
+	default:
+		break;
 	}
 
 	/* Init datas for multi selection */
@@ -1377,7 +1398,7 @@ void MAP_SelectAircraft (aircraft_t* aircraft)
  */
 void MAP_SelectMission (actMis_t* mission)
 {
-	if (! mission || mission == selMis)
+	if (!mission || mission == selMis)
 		return;
 	MAP_ResetAction();
 	gd.mapAction = MA_INTERCEPT;
@@ -1386,7 +1407,6 @@ void MAP_SelectMission (actMis_t* mission)
 
 /**
  * @brief Notify that a mission has been removed
- * @todo: Destroy base after removing a baseattack mission??
  */
 void MAP_NotifyMissionRemoved (const actMis_t* mission)
 {
