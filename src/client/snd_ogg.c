@@ -462,7 +462,7 @@ void S_OGG_RandomTrack_f (void)
 		}
 	}
 
-	randomID = rand() & musicTrackCount;
+	randomID = rand() % musicTrackCount;
 	Com_DPrintf(DEBUG_CLIENT, "S_OGG_RandomTrack_f: random track id: %i/%i\n", randomID, musicTrackCount);
 
 	/* search through the path, one element at a time */
