@@ -1462,8 +1462,8 @@ static void G_ClientTurn (player_t * player, int num, int dv)
 
 /**
  * @brief Changes the thate of a player/soldier.
- * @param[in,out] player @todo Writeme
- * @param[in] num @todo Writeme
+ * @param[in,out] player The player who controlls the actor
+ * @param[in] num The index of the edict in the global g_edicts array
  * @param[in] reqState The bit-map of the requested state change
  * @param[in] checkaction only activate the events - network stuff is handled in the calling function
  * don't even use the G_ActionCheck function

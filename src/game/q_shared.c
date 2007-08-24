@@ -66,13 +66,14 @@ const byte dvleft[DIRECTIONS] = { 4, 5, 6, 7, 2, 3, 1, 0 };
 /** @brief Player action format strings for netchannel transfer */
 const char *pa_format[] =
 {
-	"",					/* PA_NULL */
-	"b",				/* PA_TURN */
-	"g",				/* PA_MOVE */
-	"s",				/* PA_STATE */
-	"gbbl",				/* PA_SHOOT */
-	"bbbbbb",			/* PA_INVMOVE */
-	"ll"				/* PA_REACT_SELECT */
+	"",					/**< PA_NULL */
+	"b",				/**< PA_TURN */
+	"g",				/**< PA_MOVE */
+	"s",				/**< PA_STATE - don't use a bitmask here - only one value
+						 * @sa G_ClientStateChange */
+	"gbbl",				/**< PA_SHOOT */
+	"bbbbbb",			/**< PA_INVMOVE */
+	"ll"				/**< PA_REACT_SELECT */
 };
 
 /*===========================================================================*/

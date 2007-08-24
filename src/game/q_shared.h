@@ -801,7 +801,7 @@ typedef enum {
 
 #define MAX_DEATH	3	/**< @sa STATE_DEAD */
 
-/* state flags */
+/* state flags - transfered as short (so max 16 bits please) */
 /* public */
 #define STATE_PUBLIC		0x00FF
 #define STATE_DEAD			0x0003	/**< 0 alive, 1-3 different deaths @sa MAX_DEATH*/
@@ -818,6 +818,7 @@ typedef enum {
 #define STATE_REACTION_MANY	0x0200
 #define STATE_REACTION		0x0300	/**< reaction - once or many */
 #define STATE_SHAKEN		0x0400	/**< forced reaction fire */
+#define STATE_XVI			0x0800	/**< controlled by the other team */
 
 #define ANGLE2SHORT(x)		((int)((x)*65536/360) & 65535)
 #define SHORT2ANGLE(x)		((x)*(360.0/65536))
