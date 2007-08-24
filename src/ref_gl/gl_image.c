@@ -477,20 +477,31 @@ TARGA LOADING
 =========================================================
 */
 
-typedef struct _TargaHeader {
-	unsigned char id_length, colormap_type, image_type;
-	unsigned short colormap_index, colormap_length;
-	unsigned char colormap_size;
-	unsigned short x_origin, y_origin, width, height;
-	unsigned char pixel_size, attributes;
-} TargaHeader;
+typedef struct targaHeader_s {
+	byte idLength;
+	byte colorMapType;
+	byte imageType;
 
-/*
+	uint16_t colorMapIndex;
+	uint16_t colorMapLength;
+	byte colorMapSize;
+
+	uint16_t xOrigin;
+	uint16_t yOrigin;
+	uint16_t width;
+	uint16_t height;
+
+	byte pixelSize;
+
+	byte attributes;
+} targaHeader_t;
+
 #define TGA_COLMAP_UNCOMP		1
 #define TGA_COLMAP_COMP			9
-*/
 #define TGA_UNMAP_UNCOMP		2
 #define TGA_UNMAP_COMP			10
+#define TGA_GREY_UNCOMP			3
+#define TGA_GREY_COMP			11
 
 /**
  * @brief
@@ -501,199 +512,193 @@ typedef struct _TargaHeader {
  */
 void R_LoadTGA (const char *name, byte ** pic, int *width, int *height)
 {
-	int columns, rows, numPixels;
-	byte *pixbuf;
-	int row, column;
-	byte *buf_p;
-	byte *buffer;
-	int length;
-	TargaHeader targa_header;
-	byte *targa_rgba;
-	byte tmp[2];
+	int i, columns, rows, row_inc, row, col;
+	byte *buf_p, *buffer, *pixbuf, *targaRGBA;
+	int length, samples, readPixelCount, pixelCount;
+	byte palette[256][4], red, green, blue, alpha;
+	qboolean compressed;
+	targaHeader_t targaHeader;
 
 	if (*pic != NULL)
-		Sys_Error("possible mem leak in LoadTGA\n");
+		Sys_Error("R_LoadTGA: possible mem leak\n");
 
-	/* load the file */
-	length = ri.FS_LoadFile(name, (void **) &buffer);
-	if (!buffer) {
-		ri.Con_Printf(PRINT_DEVELOPER, "Bad tga file %s\n", name);
+	/* Load the file */
+	length = ri.FS_LoadFile(name, (void **)&buffer);
+	if (!buffer || length <= 0) {
+		ri.Con_Printf(PRINT_DEVELOPER, "R_LoadTGA: Bad tga file %s\n", name);
 		return;
 	}
 
+	/* Parse the header */
 	buf_p = buffer;
+	targaHeader.idLength = *buf_p++;
+	targaHeader.colorMapType = *buf_p++;
+	targaHeader.imageType = *buf_p++;
 
-	targa_header.id_length = *buf_p++;
-	targa_header.colormap_type = *buf_p++;
-	targa_header.image_type = *buf_p++;
+	targaHeader.colorMapIndex = buf_p[0] + buf_p[1] * 256; buf_p += 2;
+	targaHeader.colorMapLength = buf_p[0] + buf_p[1] * 256; buf_p += 2;
+	targaHeader.colorMapSize = *buf_p++;
+	targaHeader.xOrigin = LittleShort(*((int16_t *)buf_p)); buf_p += 2;
+	targaHeader.yOrigin = LittleShort(*((int16_t *)buf_p)); buf_p += 2;
+	targaHeader.width = LittleShort(*((int16_t *)buf_p)); buf_p += 2;
+	targaHeader.height = LittleShort(*((int16_t *)buf_p)); buf_p += 2;
+	targaHeader.pixelSize = *buf_p++;
+	targaHeader.attributes = *buf_p++;
 
-	tmp[0] = buf_p[0];
-	tmp[1] = buf_p[1];
-	targa_header.colormap_index = LittleShort(*((short *) tmp));
-	buf_p += 2;
-	tmp[0] = buf_p[0];
-	tmp[1] = buf_p[1];
-	targa_header.colormap_length = LittleShort(*((short *) tmp));
-	buf_p += 2;
-	targa_header.colormap_size = *buf_p++;
-	targa_header.x_origin = LittleShort(*((short *) buf_p));
-	buf_p += 2;
-	targa_header.y_origin = LittleShort(*((short *) buf_p));
-	buf_p += 2;
-	targa_header.width = LittleShort(*((short *) buf_p));
-	buf_p += 2;
-	targa_header.height = LittleShort(*((short *) buf_p));
-	buf_p += 2;
-	targa_header.pixel_size = *buf_p++;
-	targa_header.attributes = *buf_p++;
+	/* Skip TARGA image comment */
+	if (targaHeader.idLength != 0)
+		buf_p += targaHeader.idLength;
 
-	switch (targa_header.image_type) {
-	case TGA_UNMAP_UNCOMP:
-	case TGA_UNMAP_COMP:
+	compressed = qfalse;
+	switch (targaHeader.imageType) {
+	case TGA_COLMAP_COMP:
+		compressed = qtrue;
+	case TGA_COLMAP_UNCOMP:
+		/* Uncompressed colormapped image */
+		if (targaHeader.pixelSize != 8) {
+			ri.Con_Printf(PRINT_ALL, "R_LoadTGA: Only 8 bit images supported for type 1 and 9 (%s)\n", name);
+			ri.FS_FreeFile(buffer);
+			return;
+		}
+		if (targaHeader.colorMapLength != 256) {
+			ri.Con_Printf(PRINT_ALL, "R_LoadTGA: Only 8 bit colormaps are supported for type 1 and 9 (%s)\n", name);
+			ri.FS_FreeFile(buffer);
+			return;
+		}
+		if (targaHeader.colorMapIndex) {
+			ri.Con_Printf(PRINT_ALL, "R_LoadTGA: colorMapIndex is not supported for type 1 and 9 (%s)\n", name);
+			ri.FS_FreeFile(buffer);
+			return;
+		}
+
+		switch (targaHeader.colorMapSize) {
+		case 32:
+			for (i = 0; i < targaHeader.colorMapLength ; i++) {
+				palette[i][0] = *buf_p++;
+				palette[i][1] = *buf_p++;
+				palette[i][2] = *buf_p++;
+				palette[i][3] = *buf_p++;
+			}
+			break;
+
+		case 24:
+			for (i = 0; i < targaHeader.colorMapLength ; i++) {
+				palette[i][0] = *buf_p++;
+				palette[i][1] = *buf_p++;
+				palette[i][2] = *buf_p++;
+				palette[i][3] = 255;
+			}
+			break;
+
+		default:
+			ri.Con_Printf(PRINT_ALL, "R_LoadTGA: only 24 and 32 bit colormaps are supported for type 1 and 9 (%s)\n", name);
+			ri.FS_FreeFile(buffer);
+			return;
+		}
 		break;
-	default:
-		ri.Con_Printf(PRINT_ALL, "LoadTGA: Only type 2 and 10 targa RGB images supported (%s) (type: %i)\n", name, targa_header.image_type);
-		ri.FS_FreeFile(buffer);
-		return;
+
+	case TGA_UNMAP_COMP:
+		compressed = qtrue;
+	case TGA_UNMAP_UNCOMP:
+		/* Uncompressed or RLE compressed RGB */
+		if (targaHeader.pixelSize != 32 && targaHeader.pixelSize != 24) {
+			ri.Con_Printf(PRINT_ALL, "R_LoadTGA: Only 32 or 24 bit images supported for type 2 and 10 (%s)\n", name);
+			ri.FS_FreeFile(buffer);
+			return;
+		}
+		break;
+
+	case TGA_GREY_COMP:
+		compressed = qtrue;
+	case TGA_GREY_UNCOMP:
+		/* Uncompressed greyscale */
+		if (targaHeader.pixelSize != 8) {
+			ri.Con_Printf(PRINT_ALL, "R_LoadTGA: Only 8 bit images supported for type 3 and 11 (%s)\n", name);
+			ri.FS_FreeFile(buffer);
+			return;
+		}
+		break;
 	}
 
-	if (targa_header.colormap_type != 0 || (targa_header.pixel_size != 32 && targa_header.pixel_size != 24))
-		ri.Sys_Error(ERR_DROP, "LoadTGA: Only 32 or 24 bit images supported (no colormaps) (%s) (pixel_size: %i)\n", name, targa_header.pixel_size);
-
-	columns = targa_header.width;
-	rows = targa_header.height;
-	numPixels = columns * rows;
-
+	columns = targaHeader.width;
 	if (width)
 		*width = columns;
+
+	rows = targaHeader.height;
 	if (height)
 		*height = rows;
 
-	targa_rgba = ri.TagMalloc(ri.imagePool, numPixels * 4, 0);
-	*pic = targa_rgba;
+	targaRGBA = ri.TagMalloc(ri.imagePool, columns * rows * 4, 0);
+	*pic = targaRGBA;
 
-	if (targa_header.id_length != 0)
-		buf_p += targa_header.id_length;	/* skip TARGA image comment */
+	/* If bit 5 of attributes isn't set, the image has been stored from bottom to top */
+	if (targaHeader.attributes & 0x20) {
+		pixbuf = targaRGBA;
+		row_inc = 0;
+	} else {
+		pixbuf = targaRGBA + (rows - 1) * columns * 4;
+		row_inc = -columns * 4 * 2;
+	}
 
-	switch (targa_header.image_type) {
-	case TGA_UNMAP_UNCOMP:	/* Uncompressed, RGB images */
-		for (row = rows - 1; row >= 0; row--) {
-			pixbuf = targa_rgba + row * columns * 4;
-			for (column = 0; column < columns; column++) {
-				unsigned char red, green, blue, alphabyte;
+	for (row = col = 0, samples = 3; row < rows;) {
+		pixelCount = 0x10000;
+		readPixelCount = 0x10000;
 
-				red = green = blue = alphabyte = 0;
-				switch (targa_header.pixel_size) {
-				case 24:
+		if (compressed) {
+			pixelCount = *buf_p++;
+			if (pixelCount & 0x80)	/* Run-length packet */
+				readPixelCount = 1;
+			pixelCount = 1 + (pixelCount & 0x7f);
+		}
+
+		while (pixelCount-- && row < rows) {
+			if (readPixelCount-- > 0) {
+				switch (targaHeader.imageType) {
+				case TGA_COLMAP_UNCOMP:
+				case TGA_COLMAP_COMP:
+					/* Colormapped image */
+					blue = *buf_p++;
+					red = palette[blue][0];
+					green = palette[blue][1];
+					alpha = palette[blue][3];
+					blue = palette[blue][2];
+					if (alpha != 255)
+						samples = 4;
+					break;
+				case TGA_UNMAP_UNCOMP:
+				case TGA_UNMAP_COMP:
+					/* 24 or 32 bit image */
 					blue = *buf_p++;
 					green = *buf_p++;
 					red = *buf_p++;
-					*pixbuf++ = red;
-					*pixbuf++ = green;
-					*pixbuf++ = blue;
-					*pixbuf++ = 255;
+					if (targaHeader.pixelSize == 32) {
+						alpha = *buf_p++;
+						if (alpha != 255)
+							samples = 4;
+					} else
+						alpha = 255;
 					break;
-				case 32:
-					blue = *buf_p++;
-					green = *buf_p++;
-					red = *buf_p++;
-					alphabyte = *buf_p++;
-					*pixbuf++ = red;
-					*pixbuf++ = green;
-					*pixbuf++ = blue;
-					*pixbuf++ = alphabyte;
-					break;
-				default:
+				case TGA_GREY_UNCOMP:
+				case TGA_GREY_COMP:
+					/* Greyscale image */
+					blue = green = red = *buf_p++;
+					alpha = 255;
 					break;
 				}
 			}
-		}
-		break;
-	case TGA_UNMAP_COMP:	/* Runlength encoded RGB images */
-		{
-		unsigned char red, green, blue, alphabyte, packetHeader, packetSize, j;
 
-		red = green = blue = alphabyte = 0;
-		for (row = rows - 1; row >= 0; row--) {
-			pixbuf = targa_rgba + row * columns * 4;
-			for (column = 0; column < columns;) {
-				packetHeader = *buf_p++;
-				/* SCHAR_MAX although it's unsigned */
-				packetSize = 1 + (packetHeader & SCHAR_MAX);
-				if (packetHeader & 0x80) {	/* run-length packet */
-					switch (targa_header.pixel_size) {
-					case 24:
-						blue = *buf_p++;
-						green = *buf_p++;
-						red = *buf_p++;
-						alphabyte = 255;
-						break;
-					case 32:
-						blue = *buf_p++;
-						green = *buf_p++;
-						red = *buf_p++;
-						alphabyte = *buf_p++;
-						break;
-					default:
-						break;
-					}
-
-					for (j = 0; j < packetSize; j++) {
-						*pixbuf++ = red;
-						*pixbuf++ = green;
-						*pixbuf++ = blue;
-						*pixbuf++ = alphabyte;
-						column++;
-						if (column == columns) {	/* run spans across rows */
-							column = 0;
-							if (row > 0)
-								row--;
-							else
-								goto breakOut;
-							pixbuf = targa_rgba + row * columns * 4;
-						}
-					}
-				} else {		/* non run-length packet */
-					for (j = 0; j < packetSize; j++) {
-						switch (targa_header.pixel_size) {
-						case 24:
-							blue = *buf_p++;
-							green = *buf_p++;
-							red = *buf_p++;
-							*pixbuf++ = red;
-							*pixbuf++ = green;
-							*pixbuf++ = blue;
-							*pixbuf++ = 255;
-							break;
-						case 32:
-							blue = *buf_p++;
-							green = *buf_p++;
-							red = *buf_p++;
-							alphabyte = *buf_p++;
-							*pixbuf++ = red;
-							*pixbuf++ = green;
-							*pixbuf++ = blue;
-							*pixbuf++ = alphabyte;
-							break;
-						default:
-							break;
-						}
-						column++;
-						if (column == columns) {	/* pixel packet run spans across rows */
-							column = 0;
-							if (row > 0)
-								row--;
-							else
-								goto breakOut;
-							pixbuf = targa_rgba + row * columns * 4;
-						}
-					}
-				}
+			*pixbuf++ = red;
+			*pixbuf++ = green;
+			*pixbuf++ = blue;
+			*pixbuf++ = alpha;
+			if (++col == columns) {
+				/* Run spans across rows */
+				row++;
+				col = 0;
+				pixbuf += row_inc;
 			}
-		  breakOut:;
 		}
-		}
-	} /* switch */
+	}
 
 	ri.FS_FreeFile(buffer);
 }
