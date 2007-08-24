@@ -921,6 +921,8 @@ typedef struct teamDef_s {
 	int numSounds[SND_MAX][NAME_LAST];
 	/** is this an alien teamdesc definition */
 	qboolean alien;
+	/** is this a civilian teamdesc definition */
+	qboolean civilian;
 	/** able to use weapons/armor */
 	qboolean armor, weapons;
 	/** if this team is not able to use 'normal' weapons, we have to assign a weapon to it

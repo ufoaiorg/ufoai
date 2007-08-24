@@ -11,7 +11,9 @@ team latin
 {
 	size	1
 	hit_particle	blood
-
+	weapons false
+	armor false
+	civilian true
 
 	names {
 		female { a }
@@ -48,6 +50,9 @@ team states
 {
 	size	1
 	hit_particle	blood
+	weapons false
+	armor false
+	civilian true
 
 	names {
 		female { a }
@@ -103,6 +108,12 @@ team states
 
 team europa
 {
+	size	1
+	hit_particle	blood
+	weapons false
+	armor false
+	civilian true
+
 	names {
 		female { a }
 		male { b }
@@ -157,6 +168,9 @@ team asia
 {
 	size	1
 	hit_particle	blood
+	weapons false
+	armor false
+	civilian true
 
 	names {
 		female { a }
@@ -193,6 +207,9 @@ team middle
 {
 	size	1
 	hit_particle	blood
+	weapons false
+	armor false
+	civilian true
 
 	names {
 		female { a }
@@ -209,6 +226,7 @@ team middle
 		}
 
 		male {
+			// sheik
 			civilians/male body02 head02 0
 		}
 	}
@@ -229,7 +247,9 @@ team africa
 {
 	size	1
 	hit_particle	blood
-
+	weapons false
+	armor false
+	civilian true
 
 	names {
 		female { a }
@@ -266,6 +286,9 @@ team russia
 {
 	size	1
 	hit_particle	blood
+	weapons false
+	armor false
+	civilian true
 
 	names {
 		female { a }
@@ -302,6 +325,9 @@ team oceania
 {
 	size	1
 	hit_particle	blood
+	weapons false
+	armor false
+	civilian true
 
 	names {
 		female { a }
@@ -342,6 +368,9 @@ team armysoldier
 {
 	size	1
 	hit_particle	blood
+	weapons true
+	armor false
+	civilian true
 
 	names {
 		male { b }
@@ -359,23 +388,16 @@ team scientist
 {
 	size	1
 	hit_particle	blood
+	weapons false
+	armor false
+	civilian true
 
 	names {
-		female { a }
 		male { b }
 		lastname { c }
 	}
 
 	models {
-		female {
-			// FIXME: this is a male model
-			civilians/male scientist01 sci_head01 0
-			civilians/male scientist01 sci_head02a 0
-			civilians/male scientist01 sci_head02b 0
-			civilians/male scientist01 sci_head03a 0
-			civilians/male scientist01 sci_head03b 0
-		}
-
 		male {
 			civilians/male scientist01 sci_head01 0
 			civilians/male scientist01 sci_head02a 0

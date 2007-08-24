@@ -10,6 +10,7 @@
 // weapons	Team may carry and use weapons
 // armor	Team may carry armour
 // alien	Team is an alien team
+// civilian	Team is a civilian team
 // tech		Tech id to link
 // name		Translateable team name
 // size		Actorsize

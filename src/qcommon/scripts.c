@@ -1723,6 +1723,7 @@ static const value_t teamDefValues[] = {
 	{"alien", V_BOOL, offsetof(teamDef_t, alien), MEMBER_SIZEOF(teamDef_t, alien)}, /**< is this an alien? */
 	{"armor", V_BOOL, offsetof(teamDef_t, armor), MEMBER_SIZEOF(teamDef_t, armor)}, /**< are these team members able to wear armor? */
 	{"weapons", V_BOOL, offsetof(teamDef_t, weapons), MEMBER_SIZEOF(teamDef_t, weapons)}, /**< are these team members able to use weapons? */
+	{"civilian", V_BOOL, offsetof(teamDef_t, civilian), MEMBER_SIZEOF(teamDef_t, civilian)}, /**< is this a civilian? */
 	{"size", V_INT, offsetof(teamDef_t, size), MEMBER_SIZEOF(teamDef_t, size)}, /**< What size is this unit on the field (1=1x1 or 2=2x2)? */
 	{"hit_particle", V_STRING, offsetof(teamDef_t, hitParticle), 0}, /**< What particle effect should be spawned if a unit of this type is hit? */
 	{NULL, 0, 0, 0}

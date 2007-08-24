@@ -31,7 +31,7 @@ typedef struct {
 	byte mode;			/**< shoot_types_t */
 	byte shots;			/**< how many shoots can this actor do */
 	edict_t *target;	/**< the target edict */
-} ai_action_t;
+} aiAction_t;
 
 /**
  * @brief Check whether friendly units are in the line of fire when shooting
@@ -93,7 +93,7 @@ static qboolean AI_CheckFF (edict_t * ent, vec3_t target, float spread)
  * @sa AI_ActorThink
  * @todo fix firedef stuff
  */
-static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
+static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 {
 	edict_t *check;
 	int move, delta = 0, tu;
@@ -107,7 +107,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 	int fd_idx;	/* firedef index fd[][x]*/
 
 	guete = 0.0;
-	memset(aia, 0, sizeof(ai_action_t));
+	memset(aia, 0, sizeof(aiAction_t));
 	move = gi.MoveLength(gi.map, to, qtrue);
 	tu = ent->TU - move;
 
@@ -355,17 +355,19 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 /**
  * @brief
  * @sa AI_ActorThink
+ * @note Even civilians can use weapons if the teamdef allows this
  */
-static float AI_CivilianCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
+static float AI_CivilianCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 {
 	edict_t *check;
 	int i, move, tu;
 	float dist, minDist;
 	float guete;
+	teamDef_t* teamDef;
 
 	/* set basic parameters */
 	guete = 0.0;
-	memset(aia, 0, sizeof(ai_action_t));
+	memset(aia, 0, sizeof(aiAction_t));
 	VectorCopy(to, ent->pos);
 	VectorCopy(to, aia->to);
 	VectorCopy(to, aia->stop);
@@ -377,6 +379,14 @@ static float AI_CivilianCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 	/* test for time */
 	if (tu < 0)
 		return AI_ACTION_NOTHING_FOUND;
+
+	/* check whether this civilian can use weapons */
+	if (ent->chr.teamDefIndex >= 0) {
+		teamDef = &gi.csi->teamDef[ent->chr.teamDefIndex];
+		if (ent->state & ~STATE_PANIC && teamDef->weapons)
+			return AI_FighterCalcGuete(ent, to, aia);
+	} else
+		Com_Printf("AI_CivilianCalcGuete: Error - civilian team with no teamdef\n");
 
 	/* run away */
 	minDist = RUN_AWAY_DIST;
@@ -405,9 +415,9 @@ static float AI_CivilianCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
  * @param[in] player
  * @param[in] ent
  */
-static ai_action_t AI_PrepBestAction (player_t * player, edict_t * ent)
+static aiAction_t AI_PrepBestAction (player_t * player, edict_t * ent)
 {
-	ai_action_t aia, bestAia;
+	aiAction_t aia, bestAia;
 	pos3_t oldPos, to;
 	vec3_t oldOrigin;
 	edict_t *checkPoint = NULL;
@@ -510,7 +520,7 @@ static ai_action_t AI_PrepBestAction (player_t * player, edict_t * ent)
  */
 void AI_ActorThink (player_t * player, edict_t * ent)
 {
-	ai_action_t bestAia;
+	aiAction_t bestAia;
 
 #ifdef PARANOID
 	Com_DPrintf(DEBUG_GAME, "AI_ActorThink: (ent %i, frame %i)\n", ent->number, level.framenum);

@@ -183,30 +183,6 @@ team human_scientist
 	hit_particle blood
 
 	names {
-		female {
-			Alexandra
-			Aneke
-			Anna
-			Andrea
-			Barbara
-			Carla
-			Claudia
-			Denise
-			Dina
-			Ella
-			Emily
-			Florentine
-			Hannah
-			Jenny
-			Julie
-			Lilly
-			Luna
-			Malka
-			Oceane
-			Rinah
-			Tomma
-		}
-
 		male {
 			Adrian
 			Andreas
@@ -293,15 +269,6 @@ team human_scientist
 	}
 
 	models {
-		female {
-			// FIXME: this is a male model
-			civilians/male scientist01 sci_head01 0
-			civilians/male scientist01 sci_head02a 0
-			civilians/male scientist01 sci_head02b 0
-			civilians/male scientist01 sci_head03a 0
-			civilians/male scientist01 sci_head03b 0
-		}
-
 		male {
 			civilians/male scientist01 sci_head01 0
 			civilians/male scientist01 sci_head02a 0
@@ -322,30 +289,6 @@ team human_medic
 	hit_particle blood
 
 	names {
-		female {
-			Alexandra
-			Aneke
-			Anna
-			Andrea
-			Barbara
-			Carla
-			Claudia
-			Denise
-			Dina
-			Ella
-			Emily
-			Florentine
-			Hannah
-			Jenny
-			Julie
-			Lilly
-			Luna
-			Malka
-			Oceane
-			Rinah
-			Tomma
-		}
-
 		male {
 			Adrian
 			Andreas
@@ -432,14 +375,6 @@ team human_medic
 	}
 
 	models {
-		female {
-			// FIXME: this is a male model
-			civilians/male scientist01 sci_head01 0
-			civilians/male scientist01 sci_head02a 0
-			civilians/male scientist01 sci_head02b 0
-			civilians/male scientist01 sci_head03a 0
-			civilians/male scientist01 sci_head03b 0
-		}
 		male {
 			civilians/male scientist01 sci_head01 0
 			civilians/male scientist01 sci_head02a 0
