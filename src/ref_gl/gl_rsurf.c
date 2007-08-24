@@ -631,7 +631,7 @@ void R_DrawBrushModel (entity_t * e)
 	int i;
 	qboolean rotated;
 
-/*	Com_Printf("Brush model %i!\n", currentmodel->nummodelsurfaces); */
+/*	ri.Con_Printf(DEBUG_RENDERER, "Brush model %i!\n", currentmodel->nummodelsurfaces); */
 
 	if (currentmodel->bsp.nummodelsurfaces == 0)
 		return;

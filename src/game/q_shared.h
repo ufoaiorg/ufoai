@@ -156,6 +156,7 @@ typedef uint8_t byte;
 #define DEBUG_CLIENT	(1<<5)
 #define DEBUG_SERVER	(1<<6)
 #define DEBUG_GAME		(1<<7)
+#define DEBUG_RENDERER	(1<<8)
 
 #define NONE		0xFF
 #define NONE_AMMO	0

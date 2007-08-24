@@ -305,7 +305,7 @@ static int SDLateKey (SDL_keysym *keysym, int *key)
 			*key = '~'; /* console HACK */
 	}
 	if (sdl_debug->integer)
-		Com_Printf("unicode: %hx keycode: %i key: %hx\n", keysym->unicode, *key, *key);
+		ri.Con_Printf(PRINT_ALL, "unicode: %hx keycode: %i key: %hx\n", keysym->unicode, *key, *key);
 
 	return buf;
 }
@@ -316,13 +316,13 @@ static int SDLateKey (SDL_keysym *keysym, int *key)
 static void printkey (const SDL_Event* event, int down)
 {
 	if (sdl_debug->integer) {
-		Com_Printf("key name: %s (down: %i)", SDL_GetKeyName(event->key.keysym.sym), down);
-		if(event->key.keysym.unicode) {
-			Com_Printf(" unicode: %hx", event->key.keysym.unicode);
+		ri.Con_Printf(PRINT_ALL, "key name: %s (down: %i)", SDL_GetKeyName(event->key.keysym.sym), down);
+		if (event->key.keysym.unicode) {
+			ri.Con_Printf(PRINT_ALL, " unicode: %hx", event->key.keysym.unicode);
 			if (event->key.keysym.unicode >= '0' && event->key.keysym.unicode <= '~')  /* printable? */
-				Com_Printf(" (%c)", (unsigned char)(event->key.keysym.unicode));
+				ri.Con_Printf(PRINT_ALL, " (%c)", (unsigned char)(event->key.keysym.unicode));
 		}
-		Com_Printf("\n");
+		ri.Con_Printf(PRINT_ALL, "\n");
 	}
 }
 
@@ -541,7 +541,7 @@ static qboolean Rimp_InitGraphics (qboolean fullscreen)
 #ifndef __APPLE__
 	SDL_SysWMinfo info;
 	SDL_VERSION(&info.version);
-	Com_Printf("SDL version: %i.%i.%i\n", info.version.major, info.version.minor, info.version.patch);
+	ri.Con_Printf(PRINT_ALL, "SDL version: %i.%i.%i\n", info.version.major, info.version.minor, info.version.patch);
 	have_stencil = qfalse;
 #endif
 
@@ -555,7 +555,7 @@ static qboolean Rimp_InitGraphics (qboolean fullscreen)
 			width = DisplayWidth(info.info.x11.display, DefaultScreen(info.info.x11.display));
 			height = DisplayHeight(info.info.x11.display, DefaultScreen(info.info.x11.display));
 			info.info.x11.unlock_func();
-			Com_Printf("Desktop resolution: %i:%i\n", width, height);
+			ri.Con_Printf(PRINT_ALL, "Desktop resolution: %i:%i\n", width, height);
 		}
 	}
 #endif
@@ -578,7 +578,7 @@ static qboolean Rimp_InitGraphics (qboolean fullscreen)
 		SDL_FreeSurface(surface);
 
 	/* let the sound and input subsystems know about the new window */
-	ri.Vid_NewWindow (vid.width, vid.height);
+	ri.Vid_NewWindow(vid.width, vid.height);
 
 	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
 	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 5);

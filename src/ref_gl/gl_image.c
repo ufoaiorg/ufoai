@@ -195,7 +195,7 @@ static void R_LoadPCX (const char *filename, byte ** pic, byte ** palette, int *
 	byte *out, *pix;
 
 	if (*pic != NULL)
-		Sys_Error("possible mem leak in R_LoadPCX\n");
+		ri.Sys_Error(ERR_FATAL, "possible mem leak in R_LoadPCX\n");
 	*palette = NULL;
 
 	/* load the file */
@@ -320,7 +320,7 @@ static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 	pngBuf_t		PngFileBuffer = {NULL,0};
 
 	if (*pic != NULL)
-		Sys_Error("possible mem leak in LoadPNG\n");
+		ri.Sys_Error(ERR_FATAL, "possible mem leak in LoadPNG\n");
 
 	/* Load the file */
 	ri.FS_LoadFile(name, (void **)&PngFileBuffer.buffer);
@@ -329,7 +329,7 @@ static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 
 	/* Parse the PNG file */
 	if ((png_check_sig(PngFileBuffer.buffer, 8)) == 0) {
-		Com_Printf("LoadPNG: Not a PNG file: %s\n", name);
+		ri.Con_Printf(PRINT_ALL, "LoadPNG: Not a PNG file: %s\n", name);
 		ri.FS_FreeFile(PngFileBuffer.buffer);
 		return 0;
 	}
@@ -338,7 +338,7 @@ static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 
 	png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL,  NULL, NULL);
 	if (!png_ptr) {
-		Com_Printf("LoadPNG: Bad PNG file: %s\n", name);
+		ri.Con_Printf(PRINT_ALL, "LoadPNG: Bad PNG file: %s\n", name);
 		ri.FS_FreeFile(PngFileBuffer.buffer);
 		return 0;
 	}
@@ -346,7 +346,7 @@ static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 	info_ptr = png_create_info_struct(png_ptr);
 	if (!info_ptr) {
 		png_destroy_read_struct(&png_ptr, (png_infopp)NULL, (png_infopp)NULL);
-		Com_Printf("LoadPNG: Bad PNG file: %s\n", name);
+		ri.Con_Printf(PRINT_ALL, "LoadPNG: Bad PNG file: %s\n", name);
 		ri.FS_FreeFile(PngFileBuffer.buffer);
 		return 0;
 	}
@@ -354,7 +354,7 @@ static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 	end_info = png_create_info_struct (png_ptr);
 	if (!end_info) {
 		png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
-		Com_Printf("LoadPNG: Bad PNG file: %s\n", name);
+		ri.Con_Printf(PRINT_ALL, "LoadPNG: Bad PNG file: %s\n", name);
 		ri.FS_FreeFile(PngFileBuffer.buffer);
 		return 0;
 	}
@@ -438,14 +438,14 @@ void R_WritePNG (FILE *f, byte *buffer, int width, int height)
 
 	png_ptr = png_create_write_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 	if (!png_ptr) {
-		Com_Printf("R_WritePNG: LibPNG Error!\n");
+		ri.Con_Printf(PRINT_ALL, "R_WritePNG: LibPNG Error!\n");
 		return;
 	}
 
 	info_ptr = png_create_info_struct(png_ptr);
 	if (!info_ptr) {
 		png_destroy_write_struct(&png_ptr, (png_infopp)NULL);
-		Com_Printf("R_WritePNG: LibPNG Error!\n");
+		ri.Con_Printf(PRINT_ALL, "R_WritePNG: LibPNG Error!\n");
 		return;
 	}
 
@@ -520,7 +520,7 @@ void R_LoadTGA (const char *name, byte ** pic, int *width, int *height)
 	targaHeader_t targaHeader;
 
 	if (*pic != NULL)
-		Sys_Error("R_LoadTGA: possible mem leak\n");
+		ri.Sys_Error(ERR_FATAL, "R_LoadTGA: possible mem leak\n");
 
 	/* Load the file */
 	length = ri.FS_LoadFile(name, (void **)&buffer);
@@ -736,8 +736,8 @@ void R_WriteTGA (FILE *f, byte *buffer, int width, int height)
 		out[i + 2] = temp;
 	}
 
-	if (fwrite (out, 1, size, f) != size)
-		Com_Printf("R_WriteTGA: Failed to write the tga file\n");
+	if (fwrite(out, 1, size, f) != size)
+		ri.Con_Printf(PRINT_ALL, "R_WriteTGA: Failed to write the tga file\n");
 
 	ri.TagFree(out);
 }
@@ -808,7 +808,7 @@ static void R_LoadJPG (const char *filename, byte ** pic, int *width, int *heigh
 	int rawsize, i, components;
 
 	if (*pic != NULL)
-		Sys_Error("possible mem leak in LoadJPG\n");
+		ri.Sys_Error(ERR_FATAL, "possible mem leak in LoadJPG\n");
 
 	/* Load JPEG file into memory */
 	rawsize = ri.FS_LoadFile(filename, (void **) &rawdata);

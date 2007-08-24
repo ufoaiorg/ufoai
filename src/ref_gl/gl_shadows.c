@@ -468,7 +468,7 @@ static void R_DrawAliasShadowVolume (mdl_md2_t * paliashdr, int posenumm)
 	qglStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
 	qglDepthMask(GL_TRUE);
 	qglDepthFunc(GL_LEQUAL);
-/*	Com_Printf("worldlight: %i - c_shadow_volumes: %i - dlights: %i\n", worldlight, c_shadow_volumes, r_newrefdef.num_dlights);*/
+/*	ri.Con_Printf(DEBUG_RENDERER, "worldlight: %i - c_shadow_volumes: %i - dlights: %i\n", worldlight, c_shadow_volumes, r_newrefdef.num_dlights);*/
 }
 
 /**

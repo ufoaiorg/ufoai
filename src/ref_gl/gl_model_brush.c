@@ -64,7 +64,7 @@ static void Mod_LoadVertexes (lump_t * l)
 		ri.Sys_Error(ERR_DROP, "Mod_LoadVertexes: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
 	out = ri.TagMalloc(ri.modelPool, count * sizeof(*out), 0);
-	Com_Printf("...verts: %i\n", count);
+	ri.Con_Printf(DEBUG_RENDERER, "...verts: %i\n", count);
 
 	loadmodel->bsp.vertexes = out;
 	loadmodel->bsp.numvertexes = count;
@@ -106,7 +106,7 @@ static void Mod_LoadSubmodels (lump_t * l)
 		ri.Sys_Error(ERR_DROP, "Mod_LoadSubmodels: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
 	out = ri.TagMalloc(ri.modelPool, count * sizeof(*out), 0);
-	Com_Printf("...submodels: %i\n", count);
+	ri.Con_Printf(DEBUG_RENDERER, "...submodels: %i\n", count);
 
 	loadmodel->bsp.submodels = out;
 	loadmodel->bsp.numsubmodels = count;
@@ -139,7 +139,7 @@ static void Mod_LoadEdges (lump_t * l)
 		ri.Sys_Error(ERR_DROP, "Mod_LoadEdges: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
 	out = ri.TagMalloc(ri.modelPool, (count + 1) * sizeof(*out), 0);
-	Com_Printf("...edges: %i\n", count);
+	ri.Con_Printf(DEBUG_RENDERER, "...edges: %i\n", count);
 
 	loadmodel->bsp.edges = out;
 	loadmodel->bsp.numedges = count;
@@ -166,7 +166,7 @@ static void Mod_LoadTexinfo (lump_t * l)
 		ri.Sys_Error(ERR_DROP, "Mod_LoadTexinfo: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
 	out = ri.TagMalloc(ri.modelPool, count * sizeof(*out), 0);
-	Com_Printf("...texinfo: %i\n", count);
+	ri.Con_Printf(DEBUG_RENDERER, "...texinfo: %i\n", count);
 
 	loadmodel->bsp.texinfo = out;
 	loadmodel->bsp.numtexinfo = count;
@@ -265,7 +265,7 @@ static void Mod_LoadFaces (lump_t * l)
 		ri.Sys_Error(ERR_DROP, "Mod_LoadFaces: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
 	out = ri.TagMalloc(ri.modelPool, count * sizeof(*out), 0);
-	Com_Printf("...faces: %i\n", count);
+	ri.Con_Printf(DEBUG_RENDERER, "...faces: %i\n", count);
 
 	loadmodel->bsp.surfaces = out;
 	loadmodel->bsp.numsurfaces = count;
@@ -349,7 +349,7 @@ static void Mod_LoadNodes (lump_t * l)
 		ri.Sys_Error(ERR_DROP, "Mod_LoadNodes: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
 	out = ri.TagMalloc(ri.modelPool, count * sizeof(*out), 0);
-	Com_Printf("...nodes: %i\n", count);
+	ri.Con_Printf(DEBUG_RENDERER, "...nodes: %i\n", count);
 
 	loadmodel->bsp.nodes = out;
 	loadmodel->bsp.numnodes = count;
@@ -400,7 +400,7 @@ static void Mod_LoadLeafs (lump_t * l)
 		ri.Sys_Error(ERR_DROP, "Mod_LoadLeafs: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
 	out = ri.TagMalloc(ri.modelPool, count * sizeof(*out), 0);
-	Com_Printf("...leafs: %i\n", count);
+	ri.Con_Printf(DEBUG_RENDERER, "...leafs: %i\n", count);
 
 	loadmodel->bsp.leafs = out;
 	loadmodel->bsp.numleafs = count;
@@ -436,7 +436,7 @@ static void Mod_LoadMarksurfaces (lump_t * l)
 		ri.Sys_Error(ERR_DROP, "Mod_LoadMarksurfaces: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
 	out = ri.TagMalloc(ri.modelPool, count * sizeof(*out), 0);
-	Com_Printf("...marksurfaces: %i\n", count);
+	ri.Con_Printf(DEBUG_RENDERER, "...marksurfaces: %i\n", count);
 
 	loadmodel->bsp.marksurfaces = out;
 	loadmodel->bsp.nummarksurfaces = count;
@@ -465,7 +465,7 @@ static void Mod_LoadSurfedges (lump_t * l)
 		ri.Sys_Error(ERR_DROP, "Mod_LoadSurfedges: bad surfedges count in %s: %i", loadmodel->name, count);
 
 	out = ri.TagMalloc(ri.modelPool, count * sizeof(*out), 0);
-	Com_Printf("...surface edges: %i\n", count);
+	ri.Con_Printf(DEBUG_RENDERER, "...surface edges: %i\n", count);
 
 	loadmodel->bsp.surfedges = out;
 	loadmodel->bsp.numsurfedges = count;
@@ -491,7 +491,7 @@ static void Mod_LoadPlanes (lump_t * l)
 		ri.Sys_Error(ERR_DROP, "Mod_LoadPlanes: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
 	out = ri.TagMalloc(ri.modelPool, count * 2 * sizeof(*out), 0);
-	Com_Printf("...planes: %i\n", count);
+	ri.Con_Printf(DEBUG_RENDERER, "...planes: %i\n", count);
 
 	loadmodel->bsp.planes = out;
 	loadmodel->bsp.numplanes = count;
