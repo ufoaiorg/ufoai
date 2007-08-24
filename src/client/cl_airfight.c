@@ -661,6 +661,11 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 	/* set the base under attack */
 	if (baseAttack) {
 		B_BaseAttack(base);
+		/* @todo: when entering base defense missing, all projectiles should be destroyed on geoscape
+		 * we can saftly assume, that they reached the base while we defended it - otherwise
+		 * - with bad luck - the projectile hits the base and may set it under attack right after
+		 * we defended it
+		 * @sa CL_GameResults_f */
 	}
 }
 

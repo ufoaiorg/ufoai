@@ -2815,6 +2815,7 @@ static void CL_GameResults_f (void)
 			Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Defense of base: %s successful!"), baseCurrent->name);
 			MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 			baseCurrent->baseStatus = BASE_WORKING;
+			/* @todo: @sa AIRFIGHT_ProjectileHitsBase notes */
 		} else
 			CL_BaseRansacked(baseCurrent);
 	}
