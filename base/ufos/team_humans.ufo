@@ -483,6 +483,7 @@ team human_worker
 	models {
 		male {
 			civilians/male worker01 worker01_head 0
+			civilians/male worker01 worker01_head 1
 		}
 	}
 }
