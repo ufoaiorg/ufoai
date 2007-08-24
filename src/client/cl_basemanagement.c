@@ -299,19 +299,23 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	}
 	building->buildingStatus = B_STATUS_NOT_SET;
 
-#if 0 /* this would be a clean approach - but we have to fix all the linkage */
 	gd.numBuildings[base->idx]--;
 
 	if (building->idx == gd.numBuildings[base->idx]) {
-		memset(b1, 0, sizeof(building_t));
+		memset(building, 0, sizeof(building_t));
 	} else {
-		for (i = b1->idx; i < gd.numBuildings[base->idx]; i++) {
-			Com_Printf("Move building %i to pos %i (%i)\n", i+1, i, gd.numBuildings[base->idx]);
+		int i, row, col;
+		for (i = building->idx; i < gd.numBuildings[base->idx]; i++) {
+			Com_DPrintf(DEBUG_CLIENT, "Move building %i to pos %i (%i)\n", i+1, i, gd.numBuildings[base->idx]);
 			memmove(&gd.buildings[base->idx][i], &gd.buildings[base->idx][i+1], sizeof(building_t));
+			for (row = 0; row < BASE_SIZE; row++)
+				for (col = 0; col < BASE_SIZE; col++)
+					if (base->map[row][col] == gd.buildings[base->idx][i].idx)
+						base->map[row][col] = i;
 			gd.buildings[base->idx][i].idx = i;
+
 		}
 	}
-#endif
 
 	switch (building->buildingType) {
 	case B_WORKSHOP:
@@ -869,8 +873,6 @@ static void B_NewBuilding (base_t* base)
  */
 void B_SetBuildingByClick (int row, int col)
 {
-	int j;
-	qboolean freeSlot = qfalse;
 	building_t *building = NULL;
 	building_t *secondBuildingPart = NULL;
 
@@ -888,28 +890,14 @@ void B_SetBuildingByClick (int row, int col)
 	/*@todo: this is bad style (baseCurrent->buildingCurrent shouldn't link to gd.buildingTypes at all ... it's just not logical) */
 	/* if the building is in gd.buildingTypes[] */
 	if (baseCurrent->buildingCurrent->base_idx < 0) {
-		/* search for a free slot - in case of building destruction */
-		for (j = 0; j < gd.numBuildings[baseCurrent->idx]; j++) {
-			if (gd.buildings[baseCurrent->idx][j].buildingStatus == B_STATUS_NOT_SET) {
-				building = &gd.buildings[baseCurrent->idx][j];
-				freeSlot = qtrue;
-				break;
-			}
-		}
-		if (!building)
-			building = &gd.buildings[baseCurrent->idx][gd.numBuildings[baseCurrent->idx]];
+		building = &gd.buildings[baseCurrent->idx][gd.numBuildings[baseCurrent->idx]];
 
 		/* copy building from type-list to base-buildings-list */
 		*building = gd.buildingTypes[baseCurrent->buildingCurrent->type_idx];
 
-		if (!freeSlot) {
-			/* self-link to building-list in base */
-			building->idx = gd.numBuildings[baseCurrent->idx];
-			gd.numBuildings[baseCurrent->idx]++;
-		} else {
-			/* use existing slot */
-			building->idx = j;
-		}
+		/* self-link to building-list in base */
+		building->idx = gd.numBuildings[baseCurrent->idx];
+		gd.numBuildings[baseCurrent->idx]++;
 
 		/* Link to the base. */
 		building->base_idx = baseCurrent->idx;

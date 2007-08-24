@@ -595,6 +595,7 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 	base_t *base;
 	int damage = 0;
 	int i, rnd;
+	qboolean baseAttack = qfalse;
 
 	assert(projectile);
 	base = projectile->aimedBase;
@@ -627,6 +628,7 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 					/* FIXME: Destroy a random one - otherwise the player might 'cheat' with this
 					 * e.g. just building an empty defense station (a lot cheaper) */
 					B_BuildingDestroy(base, &gd.buildings[base->idx][i]);
+					baseAttack = qtrue;
 					break;
 				}
 			}
@@ -638,6 +640,7 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 					/* FIXME: Destroy a random one - otherwise the player might 'cheat' with this
 					 * e.g. just building an empty defense station (a lot cheaper) */
 					B_BuildingDestroy(base, &gd.buildings[base->idx][i]);
+					baseAttack = qtrue;
 					break;
 				}
 			}
@@ -652,10 +655,11 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("You've lost a base facility (%s)."), _(gd.buildings[base->idx][rnd].name));
 		MN_AddNewMessage(_("Base facility destroyed"), messageBuffer, qfalse, MSG_BASEATTACK, NULL);
 		B_BuildingDestroy(base, &gd.buildings[base->idx][rnd]);
+		baseAttack = qtrue;
 	}
 
 	/* set the base under attack */
-	if (base->baseDamage <= 0 || base->batteryDamage <= 0) {
+	if (baseAttack) {
 		B_BaseAttack(base);
 	}
 }
@@ -817,11 +821,15 @@ static void AIRFIGHT_BaseShoot (base_t *base, aircraftSlot_t *slot, int maxSlot,
  */
 void AIRFIGHT_CampaignRunBaseDefense (int dt)
 {
-	base_t*		base;
+	base_t* base;
 	int idx;
 
 
 	for (base = gd.bases; base < (gd.bases + gd.numBases); base++) {
+		if (!base->founded)
+			continue;
+		if (base->baseStatus == BASE_UNDER_ATTACK)
+			continue;
 		for (idx = 0; idx < base->maxBatteries; idx++) {
 			if (base->batteries[idx].delayNextShot > 0)
 				base->batteries[idx].delayNextShot -= dt;
