@@ -696,32 +696,6 @@ mission terrain
 	storyrelated	true
 }
 
-//-----------------------------------------
-// BASE DEFEMCE MISSIONS
-// FIXME: in the future versions we should
-// make a static list of base defence missions
-// and use them in given stages as normal
-// missions
-//-----------------------------------------
-
-mission baseattack
-{
-	location	""		//FIXME - code needed
-	type		"_Base Attack"
-	text		"_Aliens attacked one of our bases" //FIXME: simple present instead of past simple here?
-	// . means that they attack a random base (only the first char counts)
-	map		".base"
-	music		turinItalyM
-	aliens		12
-	alienteam	"taman ortnok shevaar bloodspider"
-	alienequip	stage4_soldiers
-	civilians	12
-	nation		"baseTODO"	//FIXME - code needed
-	onlose		""
-	onwin		""
-	storyrelated	true
-}
-
 //
 // CLEANUP CURRENTLY FINISHED HERE - DON'T MESS (20070325 Zenerka)
 // BELOW ONLY MISSIONS UNFINISHED AND COMMENTED OUT
@@ -975,3 +949,20 @@ mission vil_shannon
 	storyrelated	false
 }
 
+mission convoy
+{
+	location	"_TODO"
+	type		"_Terror Attack"
+	text		"_The Aliens have attacked a military convoy. Go and secure that area."
+	map			convoy01
+	music		PsymongR5
+	pos			"308 412"
+	aliens		4
+	civilians	8
+	civteam		"armysoldier"
+	nation		"states"
+	alienequip	stage4_soldiers
+	onlose		""
+	onwin		""
+	storyrelated	true
+}

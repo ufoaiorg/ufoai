@@ -594,7 +594,7 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 {
 	base_t *base;
 	int damage = 0;
-	int i;
+	int i, rnd;
 
 	assert(projectile);
 	base = projectile->aimedBase;
@@ -609,13 +609,12 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 	base->baseDamage -= csi.ods[projectile->aircraftItemsIdx].craftitem.weaponDamage - damage;
 
 	if (base->batteryDamage <= 0) {
-		int rnd;
 		/* projectile destroyed a base defense system */
 		base->batteryDamage = MAX_BATTERY_DAMAGE;
 		rnd = rand() % 2;
-		if (base->maxBatteries + base->maxLasers <= 0) {
+		if (base->maxBatteries + base->maxLasers <= 0)
 			rnd = -1;
-		} else if (rnd == 0 && base->maxBatteries <= 0)
+		else if (rnd == 0 && base->maxBatteries <= 0)
 			rnd = 1;
 		else if (rnd == 1 && base->maxLasers <= 0)
 			rnd = 0;
@@ -625,6 +624,8 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 			MN_AddNewMessage(_("Base facility destroyed"), _("You've lost a missile battery system."), qfalse, MSG_CRASHSITE, NULL);
 			for (i = 0; i < gd.numBuildings[base->idx]; i++) {
 				if (gd.buildings[base->idx][i].buildingType == B_DEFENSE_MISSILE) {
+					/* FIXME: Destroy a random one - otherwise the player might 'cheat' with this
+					 * e.g. just building an empty defense station (a lot cheaper) */
 					B_BuildingDestroy(base, &gd.buildings[base->idx][i]);
 					break;
 				}
@@ -634,6 +635,8 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 			MN_AddNewMessage(_("Base facility destroyed"), _("You've lost a laser battery system."), qfalse, MSG_CRASHSITE, NULL);
 			for (i = 0; i < gd.numBuildings[base->idx]; i++) {
 				if (gd.buildings[base->idx][i].buildingType == B_DEFENSE_LASER) {
+					/* FIXME: Destroy a random one - otherwise the player might 'cheat' with this
+					 * e.g. just building an empty defense station (a lot cheaper) */
 					B_BuildingDestroy(base, &gd.buildings[base->idx][i]);
 					break;
 				}
@@ -643,13 +646,17 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 
 	if (base->baseDamage <= 0) {
 		/* projectile destroyed a building */
-		int rnd;
 		base->baseDamage = MAX_BASE_DAMAGE;
 		rnd = frand() * gd.numBuildings[base->idx];
 		/* Add message to message-system. */
 		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("You've lost a base facility (%s)."), _(gd.buildings[base->idx][rnd].name));
 		MN_AddNewMessage(_("Base facility destroyed"), messageBuffer, qfalse, MSG_BASEATTACK, NULL);
 		B_BuildingDestroy(base, &gd.buildings[base->idx][rnd]);
+	}
+
+	/* set the base under attack */
+	if (base->baseDamage <= 0 || base->batteryDamage <= 0) {
+		B_BaseAttack(base);
 	}
 }
 

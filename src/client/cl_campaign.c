@@ -641,57 +641,24 @@ static void CL_CampaignAddMission (setState_t * set)
 	if (set->def->expire.day)
 		mis->expire = Date_Add(ccs.date, Date_Random_Middle(set->def->expire));
 
-	/* there can be more than one baseattack mission */
-	/* just use baseattack1, baseattack2 and so on as mission names */
-	if (!Q_strncmp(mis->def->name, "baseattack", 10)) {
-		i = rand() % gd.numBases;
-		/* the first founded base is more likely to be attacked */
-		if (!gd.bases[i].founded) {
-			for (i = 0; i < MAX_BASES; i++) {
-				if (gd.bases[i].founded)
-					break;
-			}
-			/* at this point there should be at least one base - but maybe they
-			 * are destroyed already */
-			if (i == MAX_BASES) {
-				Com_DPrintf(DEBUG_CLIENT, "CL_CampaignAddMission: No bases found\n");
-				return;
-			}
+	/* A mission must not be very near a base */
+	for (i = 0; i < gd.numBases; i++) {
+		if (MAP_GetDistance(mis->def->pos, gd.bases[i].pos) < DIST_MIN_BASE_MISSION) {
+			f = frand();
+			mis->def->pos[0] = gd.bases[i].pos[0] + (gd.bases[i].pos[0] < 0 ? f * DIST_MIN_BASE_MISSION : -f * DIST_MIN_BASE_MISSION);
+			f = sin(acos(f));
+			mis->def->pos[1] = gd.bases[i].pos[1] + (gd.bases[i].pos[1] < 0 ? f * DIST_MIN_BASE_MISSION : -f * DIST_MIN_BASE_MISSION);
+			break;
 		}
-
-		B_BaseAttack(&gd.bases[i]);
-		mis->realPos[0] = gd.bases[i].pos[0];
-		mis->realPos[1] = gd.bases[i].pos[1];
-		Q_strncpyz(mis->def->location, gd.bases[i].name, sizeof(mis->def->location));
-		/* set the mission type to base attack and store the base in data pointer */
-		/* this is useful if the mission expires and we want to know which base it was */
-		mis->def->missionType = MIS_BASEATTACK;
-		mis->def->data = (void*)&gd.bases[i];
-
-		/* Add message to message-system. */
-		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Your base %s is under attack."), gd.bases[i].name);
-		MN_AddNewMessage(_("Base Attack"), messageBuffer, qfalse, MSG_BASEATTACK, NULL);
-		gd.mapAction = MA_BASEATTACK;
-	} else {
-		/* A mission must not be very near a base */
-		for (i = 0; i < gd.numBases; i++) {
-			if (MAP_GetDistance(mis->def->pos, gd.bases[i].pos) < DIST_MIN_BASE_MISSION) {
-				f = frand();
-				mis->def->pos[0] = gd.bases[i].pos[0] + (gd.bases[i].pos[0] < 0 ? f * DIST_MIN_BASE_MISSION : -f * DIST_MIN_BASE_MISSION);
-				f = sin(acos(f));
-				mis->def->pos[1] = gd.bases[i].pos[1] + (gd.bases[i].pos[1] < 0 ? f * DIST_MIN_BASE_MISSION : -f * DIST_MIN_BASE_MISSION);
-				break;
-			}
-		}
-		/* get default position first, then try to find a corresponding mask color */
-		Vector2Set(mis->realPos, mis->def->pos[0], mis->def->pos[1]);
-		MAP_MaskFind(mis->def->mask, mis->realPos);
-
-		/* Add message to message-system. */
-		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Alien activity has been reported: '%s'"), mis->def->location);
-		MN_AddNewMessage(_("Alien activity"), messageBuffer, qfalse, MSG_TERRORSITE, NULL);
-		Com_DPrintf(DEBUG_CLIENT, "Alien activity at long: %.0f lat: %0.f\n", mis->realPos[0], mis->realPos[1]);
 	}
+	/* get default position first, then try to find a corresponding mask color */
+	Vector2Set(mis->realPos, mis->def->pos[0], mis->def->pos[1]);
+	MAP_MaskFind(mis->def->mask, mis->realPos);
+
+	/* Add message to message-system. */
+	Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Alien activity has been reported: '%s'"), mis->def->location);
+	MN_AddNewMessage(_("Alien activity"), messageBuffer, qfalse, MSG_TERRORSITE, NULL);
+	Com_DPrintf(DEBUG_CLIENT, "Alien activity at long: %.0f lat: %0.f\n", mis->realPos[0], mis->realPos[1]);
 
 	/* prepare next event (if any) */
 	set->num++;

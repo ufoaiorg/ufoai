@@ -158,17 +158,8 @@ static void MAP_MultiSelectExecuteAction_f (void)
 		MAP_ResetAction();
 		selMis = ccs.mission + id;
 
-		if (!Q_strncmp(selMis->def->name, "baseattack", 10)) {
-			/* we need no dropship in our base */
-			selMis->def->active = qtrue;
-			gd.mapAction = MA_BASEATTACK;
-			Com_DPrintf(DEBUG_CLIENT, "Base attack: %s at %.0f:%.0f\n", selMis->def->name, selMis->realPos[0], selMis->realPos[1]);
-			CL_DisplayPopupIntercept(selMis, NULL);
-			return;
-		} else {
-			Com_DPrintf(DEBUG_CLIENT, "Select mission: %s at %.0f:%.0f\n", selMis->def->name, selMis->realPos[0], selMis->realPos[1]);
-			gd.mapAction = MA_INTERCEPT;
-		}
+		Com_DPrintf(DEBUG_CLIENT, "Select mission: %s at %.0f:%.0f\n", selMis->def->name, selMis->realPos[0], selMis->realPos[1]);
+		gd.mapAction = MA_INTERCEPT;
 		break;
 
 	case MULTISELECT_TYPE_AIRCRAFT: /* Selection of an aircraft */

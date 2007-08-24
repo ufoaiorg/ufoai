@@ -2119,6 +2119,7 @@ void B_BaseAttack (base_t* const base)
 {
 	assert(base);
 	base->baseStatus = BASE_UNDER_ATTACK;
+	gd.mapAction = MA_BASEATTACK;
 #if 0							/*@todo: run eventhandler for each building in base */
 	if (b->onAttack)
 		Cbuf_AddText(va("%s %i", b->onAttack, b->id));
@@ -2184,8 +2185,7 @@ static void B_AssembleMap_f (void)
 	}
 
 	if (setUnderAttack) {
-		base->baseStatus = BASE_UNDER_ATTACK;
-		gd.mapAction = MA_BASEATTACK;
+		B_BaseAttack(base);
 		Com_DPrintf(DEBUG_CLIENT, "Set base %i under attack\n", base->idx);
 	}
 
