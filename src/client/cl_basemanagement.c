@@ -562,7 +562,7 @@ static void B_HireForBuilding (base_t* base, building_t * building, int num)
 		if (num > gd.numEmployees[employeeType])
 			num = gd.numEmployees[employeeType];
 		for (;num--;)
-			if (!E_HireEmployee(base, employeeType, -1)) {
+			if (!E_HireEmployeeByType(base, employeeType)) {
 				Com_DPrintf(DEBUG_CLIENT, "B_HireForBuilding: Hiring %i employee(s) of type %i failed.\n", num, employeeType);
 				return;
 			}

@@ -64,10 +64,21 @@ static void E_EmployeeListClick_f (void)
  */
 static void E_EmployeeListScroll_f (void)
 {
-	int j, cnt = 0;
+	int i, j, cnt = 0;
 	employee_t* employee;
 
-	for (j = employeeListNode->textScroll, employee = &(gd.employees[employeeCategory][employeeListNode->textScroll]); j < gd.numEmployees[employeeCategory]; j++, employee++) {
+	j = employeeListNode->textScroll;
+
+	for (i = 0, employee = &(gd.employees[employeeCategory][0]); i < gd.numEmployees[employeeCategory]; i++, employee++) {
+		/* don't show employees of other bases */ 
+		if (employee->baseIDHired != baseCurrent->idx && employee->hired)
+			continue;
+
+		/* drop the first j entries */
+		if (j) {
+			j--;
+			continue;
+		} 
 		/* change the buttons */
 		if (employee->hired) {
 			if (employee->baseIDHired == baseCurrent->idx)
@@ -123,6 +134,10 @@ static void E_EmployeeList_f (void)
 	employeeListNode->textScroll = 0;
 
 	for (j = 0, employee = gd.employees[employeeCategory]; j < gd.numEmployees[employeeCategory]; j++, employee++) {
+		/* don't show employees of other bases */ 
+		if (employee->baseIDHired != baseCurrent->idx && employee->hired)
+			continue;
+
 		Q_strcat(hirelist, va("%s\n", employee->chr.name), sizeof(hirelist));
 		/* change the buttons */
 		if (employeesInCurrentList < cl_numnames->integer) {
@@ -457,15 +472,14 @@ employee_t* E_GetUnassignedEmployee (const base_t* const base, employeeType_t ty
 }
 
 /**
- * @brief Hires an employee.
+ * @brief Hires the employee in a base.
  * @param[in] base Which base the employee should be hired in
- * @param[in] type Which employee type do we search
- * @param[in] idx Which employee id (in global employee array) See E_GetUnhiredEmployee for usage.
+ * @param[in] employee Which employee to hire
+ * @sa E_HireEmployeeByType
  * @sa E_UnhireEmployee
  */
-qboolean E_HireEmployee (base_t* base, employeeType_t type, int idx)
+qboolean E_HireEmployee (base_t* base, employee_t* employee)
 {
-	employee_t* employee = NULL;
 #if 0
 /* Introducing capacity for quarters. 15042007 Zenerka */
 	int spaceTotal = 0;
@@ -490,13 +504,12 @@ qboolean E_HireEmployee (base_t* base, employeeType_t type, int idx)
 		return qfalse;
 	}
 
-	employee = E_GetUnhiredEmployee(type, idx);
 	if (employee) {
 		/* Now uses quarter space. */
 		employee->hired = qtrue;
 		employee->baseIDHired = base->idx;
 		/* If we hired EMPL_WORKER update production times in production queue. */
-		if (type == EMPL_WORKER)
+		if (employee->type == EMPL_WORKER)
 			PR_UpdateProductionTime(base);
 		/* Update capacity. */
 		base->capacities[CAP_EMPLOYEES].cur++;
@@ -506,19 +519,36 @@ qboolean E_HireEmployee (base_t* base, employeeType_t type, int idx)
 }
 
 /**
- * @brief Fires an employee.
- * @note also remove him from the aircraft
- * @param[in] base Which base the employee was hired in
+ * @brief Hires the first free employee of that type.
+ * @param[in] base Which base the employee should be hired in
  * @param[in] type Which employee type do we search
- * @param[in] idx Which employee id (in global employee array) See E_GetHiredEmployee for usage.
+ * @param[in] idx Which employee id (in global employee array) See E_GetUnhiredEmployee for usage.
  * @sa E_HireEmployee
- * @sa CL_RemoveSoldierFromAircraft
+ * @sa E_UnhireEmployee
  */
-qboolean E_UnhireEmployee (base_t* base, employeeType_t type, int idx)
+qboolean E_HireEmployeeByType (base_t* base, employeeType_t type)
 {
 	employee_t* employee = NULL;
-	employee = E_GetHiredEmployee(base, type, idx);
-	if (employee) {
+	
+	employee = E_GetUnhiredEmployee(type, -1);
+	return employee? E_HireEmployee(base, employee): qfalse;
+}
+
+/**
+ * @brief Fires an employee.
+ * @note also remove him from the aircraft
+ * @param[in] employee The employee who will be fired
+ * @sa E_HireEmployee
+ * @sa E_HireEmployeeByType
+ * @sa CL_RemoveSoldierFromAircraft
+ */
+qboolean E_UnhireEmployee (employee_t* employee)
+{
+	base_t* base = NULL;
+	
+	if (employee && employee->hired) {
+		base = &gd.bases[employee->baseIDHired];
+		
 		if (employee->buildingID >= 0) {
 			/* Remove employee from building (and tech/production). */
 			E_RemoveEmployeeFromBuilding(employee);
@@ -567,7 +597,7 @@ qboolean E_UnhireEmployee (base_t* base, employeeType_t type, int idx)
 		base->capacities[CAP_EMPLOYEES].cur--;
 		return qtrue;
 	} else
-		Com_Printf("Could not get hired employee '%i' from base '%i'\n", idx, base->idx);
+		Com_Printf("Could not fire employee\n");
 	return qfalse;
 }
 
@@ -586,8 +616,8 @@ void E_UnhireAllEmployees (base_t* base, employeeType_t type)
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
-		if (employee->baseIDHired == base->idx)
-			E_UnhireEmployee(base, type, i);
+		if (employee->hired && employee->baseIDHired == base->idx)
+			E_UnhireEmployee(employee);
 	}
 }
 
@@ -665,7 +695,7 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 
 	if (employee->baseIDHired >= 0) {
 		HOS_RemoveDeadEmployeeFromLists (employee);
-		E_UnhireEmployee(&gd.bases[employee->baseIDHired], type, employee->idx);
+		E_UnhireEmployee(employee);
 	}
 
 	/* Remove the employee from the global list. */
@@ -873,12 +903,46 @@ int E_CountUnassigned (const base_t* const base, employeeType_t type)
 }
 
 /**
+ * @brief Find an hired or free employee by the menu index
+ * @param[in] num The index from the hire menu screen.
+ */
+employee_t* E_GetEmployeeByMenuIndex(int num)
+{
+	int i, j;
+	employee_t* employee;
+
+	if (!baseCurrent)
+		return NULL;
+
+	/* Some sanity checks (is employeeCategory valid?). */
+	if (employeeCategory < EMPL_SOLDIER || employeeCategory >= MAX_EMPL)
+		return NULL;
+
+	if (num >= employeesInCurrentList || num < 0)
+		return NULL;
+
+	for (i = 0, j = 0, employee = &(gd.employees[employeeCategory][0]); i < gd.numEmployees[employeeCategory]; i++, employee++) {
+		/* don't count employees of other bases */ 
+		if (employee->baseIDHired != baseCurrent->idx && employee->hired)
+			continue;
+
+		if (num == j) 
+			return employee;
+
+		j++;
+	} 
+	return NULL;
+}
+
+/**
  * @brief Callback for employee_hire command
  */
 static void E_EmployeeHire_f (void)
 {
-	int num, minus = 0, plus = 0;
+	/* num - menu index (line in text), button - number of button */
+	int num, button;
 	const char *arg;
+	employee_t* employee;
 
 	if (!baseCurrent)
 		return;
@@ -896,39 +960,29 @@ static void E_EmployeeHire_f (void)
 	 * cl_numnames [19]) possible ... */
 	if (*arg == '+') {
 		num = atoi(arg+1);
-		minus = employeeListNode->textScroll % cl_numnames->integer;
+		button = num - employeeListNode->textScroll;
 	/* ... or with the hire pictures that are using only values from
 	 * 0 - cl_numnames [19] */
 	} else {
-		num = atoi(Cmd_Argv(1));
-		plus = employeeListNode->textScroll;
+		button = atoi(Cmd_Argv(1));
+		num = button + employeeListNode->textScroll;
 	}
 
-	/* Some sanity checks (is employeeCategory valid?). */
-	if (employeeCategory < EMPL_SOLDIER || employeeCategory >= MAX_EMPL)
-		return;
-
-	if (num + plus >= employeesInCurrentList || num - minus < 0)
-		return;
-
-	/* Already hired in another base. */
-	/* @todo: Should hired employees in another base be listed here at all? */
-	if (gd.employees[employeeCategory][num + plus].hired
-		&& gd.employees[employeeCategory][num + plus].baseIDHired != baseCurrent->idx)
-		return;
-
-	if (gd.employees[employeeCategory][num + plus].hired) {
-		if (!E_UnhireEmployee(&gd.bases[gd.employees[employeeCategory][num + plus].baseIDHired], employeeCategory, num + plus)) {
+	employee = E_GetEmployeeByMenuIndex(num);
+	assert(employee);
+			
+	if (employee->hired) {
+		if (!E_UnhireEmployee(employee)) {
 			/* @todo: message - Couldn't fire employee. */
 		} else
-			Cbuf_AddText(va("employeedel%i\n", num - minus));
+			Cbuf_AddText(va("employeedel%i\n", button));
 	} else {
-		if (!E_HireEmployee(baseCurrent, employeeCategory, num + plus)) {
+		if (!E_HireEmployee(baseCurrent, employee)) {
 			/* @todo: message - Couldn't hire employee. */
 		} else
-			Cbuf_AddText(va("employeeadd%i\n", num - minus));
+			Cbuf_AddText(va("employeeadd%i\n", button));
 	}
-	Cbuf_AddText(va("employee_select %i\n", num + plus));
+	Cbuf_AddText(va("employee_select %i\n", num));
 }
 
 /**
@@ -937,6 +991,7 @@ static void E_EmployeeHire_f (void)
 static void E_EmployeeSelect_f (void)
 {
 	int num;
+	employee_t* employee;
 
 	/* Check syntax. */
 	if (Cmd_Argc() < 2) {
@@ -948,14 +1003,14 @@ static void E_EmployeeSelect_f (void)
 	if (num >= gd.numEmployees[employeeCategory])
 		return;
 
+	employee = E_GetEmployeeByMenuIndex(num);
+	assert(employee);
+
 	/* mn_employee_hired is needed to allow renaming */
-	if (!gd.employees[employeeCategory][num].hired)
-		Cvar_SetValue("mn_employee_hired", 0);
-	else
-		Cvar_SetValue("mn_employee_hired", 1);
+	Cvar_SetValue("mn_employee_hired", employee->hired? 1: 0);
 
 	/* set info cvars */
-	CL_CharacterCvars(&(gd.employees[employeeCategory][num].chr));
+	CL_CharacterCvars(&(employee->chr));
 }
 
 /**

@@ -58,8 +58,9 @@ typedef struct employee_s {
 void E_ResetEmployees(void);
 employee_t* E_CreateEmployee(employeeType_t type);
 qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type);
-qboolean E_HireEmployee(base_t* base, employeeType_t type, int num);
-qboolean E_UnhireEmployee(base_t* base, employeeType_t type, int idx);
+qboolean E_HireEmployee(base_t* base, employee_t* employee);
+qboolean E_HireEmployeeByType(base_t* base, employeeType_t type);
+qboolean E_UnhireEmployee(employee_t* employee);
 qboolean E_RemoveEmployeeFromBuilding(employee_t *employee);
 
 employeeType_t E_GetEmployeeType(const char* type);
@@ -73,6 +74,7 @@ employee_t* E_GetUnassignedEmployee(const base_t* const base, employeeType_t typ
 employee_t* E_GetAssignedEmployee(const base_t* const base, employeeType_t type);
 employee_t* E_GetHiredEmployeeByUcn(const base_t* const base, employeeType_t type, int ucn);
 employee_t* E_GetEmployeeFromChrUCN(int ucn);
+employee_t* E_GetEmployeeByMenuIndex(int num);
 
 int E_CountHired(const base_t* const base, employeeType_t type);
 int E_CountUnhired(employeeType_t type);

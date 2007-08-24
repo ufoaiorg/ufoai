@@ -548,7 +548,7 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 					if (transfer->employeesArray[i][j] > -1) {
 						employee = &gd.employees[i][j];
 						employee->baseIDHired = transfer->srcBase;	/* Restore back the original baseid. */
-						E_UnhireEmployee (source, i, employee->idx);
+						E_UnhireEmployee (employee);
 					}
 				}
 			}
@@ -558,8 +558,8 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 					if (transfer->employeesArray[i][j] > -1) {
 						employee = &gd.employees[i][j];
 						employee->baseIDHired = transfer->srcBase;	/* Restore back the original baseid. */
-						E_UnhireEmployee (source, i, employee->idx);
-						E_HireEmployee (destination, i, employee->idx);
+						E_UnhireEmployee (employee);
+						E_HireEmployee (destination, employee);
 					}
 				}
 			}
