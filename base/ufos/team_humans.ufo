@@ -482,12 +482,7 @@ team human_worker
 
 	models {
 		male {
-			civilians/male body01 head01 0
-			civilians/male body01 head01 1
-			civilians/male body01 head01 2
-			civilians/male body01 head03 0 // FIXME: other body
-			civilians/male body01 head03 1 // FIXME: other body
-			civilians/male body01 head03 2 // FIXME: other body
+			civilians/male worker01_body worker01_head 0
 		}
 	}
 }
