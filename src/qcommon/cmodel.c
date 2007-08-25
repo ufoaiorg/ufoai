@@ -275,7 +275,7 @@ static void CMod_LoadSubmodels (lump_t * l, vec3_t shift)
 	if (l->filelen % sizeof(dmodel_t))
 		Com_Error(ERR_DROP, "CMod_LoadSubmodels: funny lump size (%i => "UFO_SIZE_T, l->filelen, sizeof(dmodel_t));
 	count = l->filelen / sizeof(dmodel_t);
-	Com_Printf("%c...submodels: %i\n", 1, count);
+	Com_DPrintf(DEBUG_ENGINE, "%c...submodels: %i\n", 1, count);
 
 	if (count < 1)
 		Com_Error(ERR_DROP, "Map with no models");
@@ -323,7 +323,7 @@ static void CMod_LoadSurfaces (lump_t * l, vec3_t shift)
 	if (l->filelen % sizeof(texinfo_t))
 		Com_Error(ERR_DROP, "CMod_LoadSurfaces: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(texinfo_t);
-	Com_Printf("%c...surfaces: %i\n", 1, count);
+	Com_DPrintf(DEBUG_ENGINE, "%c...surfaces: %i\n", 1, count);
 
 	if (count < 1)
 		Com_Error(ERR_DROP, "Map with no surfaces");
@@ -363,7 +363,7 @@ static void CMod_LoadNodes (lump_t * l, vec3_t shift)
 	if (l->filelen % sizeof(dnode_t))
 		Com_Error(ERR_DROP, "CMod_LoadNodes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(dnode_t);
-	Com_Printf("%c...nodes: %i\n", 1, count);
+	Com_DPrintf(DEBUG_ENGINE, "%c...nodes: %i\n", 1, count);
 
 	if (count < 1)
 		Com_Error(ERR_DROP, "Map has no nodes");
@@ -412,7 +412,7 @@ static void CMod_LoadBrushes (lump_t * l, vec3_t shift)
 	if (l->filelen % sizeof(dbrush_t))
 		Com_Error(ERR_DROP, "CMod_LoadBrushes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(dbrush_t);
-	Com_Printf("%c...brushes: %i\n", 1, count);
+	Com_DPrintf(DEBUG_ENGINE, "%c...brushes: %i\n", 1, count);
 
 	if (count > MAX_MAP_BRUSHES)
 		Com_Error(ERR_DROP, "Map has too many brushes");
@@ -450,7 +450,7 @@ static void CMod_LoadLeafs (lump_t * l, vec3_t shift)
 	if (l->filelen % sizeof(dleaf_t))
 		Com_Error(ERR_DROP, "CMod_LoadLeafs: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(dleaf_t);
-	Com_Printf("%c...leafs: %i\n", 1, count);
+	Com_DPrintf(DEBUG_ENGINE, "%c...leafs: %i\n", 1, count);
 
 	if (count < 1)
 		Com_Error(ERR_DROP, "Map with no leafs");
@@ -505,7 +505,7 @@ static void CMod_LoadPlanes (lump_t * l, vec3_t shift)
 	if (l->filelen % sizeof(dplane_t))
 		Com_Error(ERR_DROP, "CMod_LoadPlanes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(dplane_t);
-	Com_Printf("%c...planes: %i\n", 1, count);
+	Com_DPrintf(DEBUG_ENGINE, "%c...planes: %i\n", 1, count);
 
 	if (count < 1)
 		Com_Error(ERR_DROP, "Map with no planes");
@@ -557,7 +557,7 @@ static void CMod_LoadLeafBrushes (lump_t * l, vec3_t shift)
 	if (l->filelen % sizeof(unsigned short))
 		Com_Error(ERR_DROP, "CMod_LoadLeafBrushes: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(unsigned short);
-	Com_Printf("%c...leafbrushes: %i\n", 1, count);
+	Com_DPrintf(DEBUG_ENGINE, "%c...leafbrushes: %i\n", 1, count);
 
 	/* add some for the box */
 	out = Mem_PoolAlloc((count + 1) * sizeof(*out), com_cmodelSysPool, 0);
@@ -596,7 +596,7 @@ static void CMod_LoadBrushSides (lump_t * l, vec3_t shift)
 	if (l->filelen % sizeof(dbrushside_t))
 		Com_Error(ERR_DROP, "CMod_LoadBrushSides: funny lump size: %i", l->filelen);
 	count = l->filelen / sizeof(dbrushside_t);
-	Com_Printf("%c...brushsides: %i\n", 1, count);
+	Com_DPrintf(DEBUG_ENGINE, "%c...brushsides: %i\n", 1, count);
 
 	/* need to save space for box planes */
 	if (count > MAX_MAP_BRUSHSIDES)

@@ -236,7 +236,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	version = atoi(Cmd_Argv(1));
 	if (version != PROTOCOL_VERSION) {
 		NET_OOB_Printf(stream, "print\nServer is version %s.\n", UFO_VERSION);
-		Com_Printf("rejected connect from version %i\n", version);
+		Com_Printf("rejected connect from version %i - %s\n", version, peername);
 		return;
 	}
 
