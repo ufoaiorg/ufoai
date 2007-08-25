@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-08-25 21:23+0200\n"
+"POT-Creation-Date: 2007-08-26 00:31+0200\n"
 "PO-Revision-Date: 2007-08-25 21:23+0100\n"
 "Last-Translator: Lubomír Bláha <tritol@trilogic.cz>\n"
 "Language-Team: čeština <cs@li.org>\n"
@@ -778,7 +778,7 @@ msgid "Weapons"
 msgstr "Zbraně"
 
 #: ../base/ufos/menu_aircraft.ufo:509 ../base/ufos/menu_aircraft.ufo:519
-#: ../base/ufos/menu_buy.ufo:1285 ../base/ufos/menu_production.ufo:424
+#: ../base/ufos/menu_buy.ufo:1397 ../base/ufos/menu_production.ufo:424
 #: ../base/ufos/menu_team.ufo:1384 client/cl_ufopedia.c:182
 msgid "Armour"
 msgstr "Zbroj"
@@ -824,14 +824,14 @@ msgstr "Vybrat tuto pozici"
 
 #: ../base/ufos/menu_aliencont.ufo:48 ../base/ufos/menu_bases.ufo:444
 #: ../base/ufos/menu_basesummary.ufo:48 ../base/ufos/menu_buildings.ufo:76
-#: ../base/ufos/menu_buy.ufo:1064 ../base/ufos/menu_buy.ufo:2038
+#: ../base/ufos/menu_buy.ufo:1176 ../base/ufos/menu_buy.ufo:2225
 #: ../base/ufos/menu_geoscape.ufo:107 ../base/ufos/menu_production.ufo:49
 #: ../base/ufos/menu_production.ufo:544 ../base/ufos/menu_research.ufo:1137
 msgid "CREDIT"
 msgstr "ZŮSTATEK"
 
 #: ../base/ufos/menu_aliencont.ufo:68 ../base/ufos/menu_basesummary.ufo:67
-#: ../base/ufos/menu_buildings.ufo:58 ../base/ufos/menu_buy.ufo:1311
+#: ../base/ufos/menu_buildings.ufo:58 ../base/ufos/menu_buy.ufo:1423
 #: ../base/ufos/menu_hire.ufo:712 ../base/ufos/menu_production.ufo:477
 #: ../base/ufos/menu_production.ufo:858 ../base/ufos/menu_research.ufo:1193
 #: ../base/ufos/menu_transfer.ufo:312
@@ -1115,7 +1115,7 @@ msgstr "Koupit nový letoun"
 msgid "Build at least one Hangar"
 msgstr "Vybudujte alespoň jednen hangár"
 
-#: ../base/ufos/menu_bases.ufo:153 ../base/ufos/menu_buy.ufo:2087
+#: ../base/ufos/menu_bases.ufo:153 ../base/ufos/menu_buy.ufo:2283
 #: ../base/ufos/menu_geoscape.ufo:1014 ../base/ufos/menu_production.ufo:825
 #: ../base/ufos/menu_transfer.ufo:267 ../base/ufos/research.ufo:101
 #: client/cl_map.c:328
@@ -1338,273 +1338,273 @@ msgstr "Základen:"
 msgid "Personnel:"
 msgstr "Zaměstnanci:"
 
-#: ../base/ufos/menu_buy.ufo:97 ../base/ufos/menu_buy.ufo:99
-#: ../base/ufos/menu_buy.ufo:101 ../base/ufos/menu_buy.ufo:103
-#: ../base/ufos/menu_buy.ufo:105 ../base/ufos/menu_buy.ufo:107
-#: ../base/ufos/menu_buy.ufo:109 ../base/ufos/menu_buy.ufo:111
-#: ../base/ufos/menu_buy.ufo:113 ../base/ufos/menu_buy.ufo:115
-#: ../base/ufos/menu_buy.ufo:117 ../base/ufos/menu_buy.ufo:119
-#: ../base/ufos/menu_buy.ufo:121 ../base/ufos/menu_buy.ufo:123
-#: ../base/ufos/menu_buy.ufo:125 ../base/ufos/menu_buy.ufo:127
-#: ../base/ufos/menu_buy.ufo:129 ../base/ufos/menu_buy.ufo:131
-#: ../base/ufos/menu_buy.ufo:133 ../base/ufos/menu_buy.ufo:135
-#: ../base/ufos/menu_buy.ufo:137 ../base/ufos/menu_buy.ufo:139
-#: ../base/ufos/menu_buy.ufo:141 ../base/ufos/menu_buy.ufo:143
-#: ../base/ufos/menu_buy.ufo:145 ../base/ufos/menu_buy.ufo:147
-#: ../base/ufos/menu_buy.ufo:149 ../base/ufos/menu_buy.ufo:151
+#: ../base/ufos/menu_buy.ufo:98 ../base/ufos/menu_buy.ufo:104
+#: ../base/ufos/menu_buy.ufo:110 ../base/ufos/menu_buy.ufo:116
+#: ../base/ufos/menu_buy.ufo:122 ../base/ufos/menu_buy.ufo:128
+#: ../base/ufos/menu_buy.ufo:134 ../base/ufos/menu_buy.ufo:140
+#: ../base/ufos/menu_buy.ufo:146 ../base/ufos/menu_buy.ufo:152
+#: ../base/ufos/menu_buy.ufo:158 ../base/ufos/menu_buy.ufo:164
+#: ../base/ufos/menu_buy.ufo:170 ../base/ufos/menu_buy.ufo:176
+#: ../base/ufos/menu_buy.ufo:182 ../base/ufos/menu_buy.ufo:188
+#: ../base/ufos/menu_buy.ufo:194 ../base/ufos/menu_buy.ufo:200
+#: ../base/ufos/menu_buy.ufo:206 ../base/ufos/menu_buy.ufo:212
+#: ../base/ufos/menu_buy.ufo:218 ../base/ufos/menu_buy.ufo:224
+#: ../base/ufos/menu_buy.ufo:230 ../base/ufos/menu_buy.ufo:236
+#: ../base/ufos/menu_buy.ufo:242 ../base/ufos/menu_buy.ufo:248
+#: ../base/ufos/menu_buy.ufo:254 ../base/ufos/menu_buy.ufo:260
 msgid "Item autosell enabled."
 msgstr "Automatický prodej předmětu povolen."
 
-#: ../base/ufos/menu_buy.ufo:98 ../base/ufos/menu_buy.ufo:100
-#: ../base/ufos/menu_buy.ufo:102 ../base/ufos/menu_buy.ufo:104
-#: ../base/ufos/menu_buy.ufo:106 ../base/ufos/menu_buy.ufo:108
-#: ../base/ufos/menu_buy.ufo:110 ../base/ufos/menu_buy.ufo:112
-#: ../base/ufos/menu_buy.ufo:114 ../base/ufos/menu_buy.ufo:116
-#: ../base/ufos/menu_buy.ufo:118 ../base/ufos/menu_buy.ufo:120
-#: ../base/ufos/menu_buy.ufo:122 ../base/ufos/menu_buy.ufo:124
-#: ../base/ufos/menu_buy.ufo:126 ../base/ufos/menu_buy.ufo:128
-#: ../base/ufos/menu_buy.ufo:130 ../base/ufos/menu_buy.ufo:132
-#: ../base/ufos/menu_buy.ufo:134 ../base/ufos/menu_buy.ufo:136
-#: ../base/ufos/menu_buy.ufo:138 ../base/ufos/menu_buy.ufo:140
-#: ../base/ufos/menu_buy.ufo:142 ../base/ufos/menu_buy.ufo:144
-#: ../base/ufos/menu_buy.ufo:146 ../base/ufos/menu_buy.ufo:148
-#: ../base/ufos/menu_buy.ufo:150 ../base/ufos/menu_buy.ufo:152
+#: ../base/ufos/menu_buy.ufo:101 ../base/ufos/menu_buy.ufo:107
+#: ../base/ufos/menu_buy.ufo:113 ../base/ufos/menu_buy.ufo:119
+#: ../base/ufos/menu_buy.ufo:125 ../base/ufos/menu_buy.ufo:131
+#: ../base/ufos/menu_buy.ufo:137 ../base/ufos/menu_buy.ufo:143
+#: ../base/ufos/menu_buy.ufo:149 ../base/ufos/menu_buy.ufo:155
+#: ../base/ufos/menu_buy.ufo:161 ../base/ufos/menu_buy.ufo:167
+#: ../base/ufos/menu_buy.ufo:173 ../base/ufos/menu_buy.ufo:179
+#: ../base/ufos/menu_buy.ufo:185 ../base/ufos/menu_buy.ufo:191
+#: ../base/ufos/menu_buy.ufo:197 ../base/ufos/menu_buy.ufo:203
+#: ../base/ufos/menu_buy.ufo:209 ../base/ufos/menu_buy.ufo:215
+#: ../base/ufos/menu_buy.ufo:221 ../base/ufos/menu_buy.ufo:227
+#: ../base/ufos/menu_buy.ufo:233 ../base/ufos/menu_buy.ufo:239
+#: ../base/ufos/menu_buy.ufo:245 ../base/ufos/menu_buy.ufo:251
+#: ../base/ufos/menu_buy.ufo:257 ../base/ufos/menu_buy.ufo:263
 msgid "Item autosell disabled."
 msgstr "Automatický prodej předmětu zakázán."
 
-#: ../base/ufos/menu_buy.ufo:219 ../base/ufos/menu_buy.ufo:249
-#: ../base/ufos/menu_buy.ufo:279 ../base/ufos/menu_buy.ufo:309
-#: ../base/ufos/menu_buy.ufo:339 ../base/ufos/menu_buy.ufo:369
-#: ../base/ufos/menu_buy.ufo:399 ../base/ufos/menu_buy.ufo:429
-#: ../base/ufos/menu_buy.ufo:459 ../base/ufos/menu_buy.ufo:489
-#: ../base/ufos/menu_buy.ufo:519 ../base/ufos/menu_buy.ufo:549
-#: ../base/ufos/menu_buy.ufo:579 ../base/ufos/menu_buy.ufo:609
-#: ../base/ufos/menu_buy.ufo:639 ../base/ufos/menu_buy.ufo:669
-#: ../base/ufos/menu_buy.ufo:699 ../base/ufos/menu_buy.ufo:729
-#: ../base/ufos/menu_buy.ufo:759 ../base/ufos/menu_buy.ufo:789
-#: ../base/ufos/menu_buy.ufo:819 ../base/ufos/menu_buy.ufo:849
-#: ../base/ufos/menu_buy.ufo:879 ../base/ufos/menu_buy.ufo:909
-#: ../base/ufos/menu_buy.ufo:939 ../base/ufos/menu_buy.ufo:969
-#: ../base/ufos/menu_buy.ufo:999 ../base/ufos/menu_buy.ufo:1029
+#: ../base/ufos/menu_buy.ufo:331 ../base/ufos/menu_buy.ufo:361
+#: ../base/ufos/menu_buy.ufo:391 ../base/ufos/menu_buy.ufo:421
+#: ../base/ufos/menu_buy.ufo:451 ../base/ufos/menu_buy.ufo:481
+#: ../base/ufos/menu_buy.ufo:511 ../base/ufos/menu_buy.ufo:541
+#: ../base/ufos/menu_buy.ufo:571 ../base/ufos/menu_buy.ufo:601
+#: ../base/ufos/menu_buy.ufo:631 ../base/ufos/menu_buy.ufo:661
+#: ../base/ufos/menu_buy.ufo:691 ../base/ufos/menu_buy.ufo:721
+#: ../base/ufos/menu_buy.ufo:751 ../base/ufos/menu_buy.ufo:781
+#: ../base/ufos/menu_buy.ufo:811 ../base/ufos/menu_buy.ufo:841
+#: ../base/ufos/menu_buy.ufo:871 ../base/ufos/menu_buy.ufo:901
+#: ../base/ufos/menu_buy.ufo:931 ../base/ufos/menu_buy.ufo:961
+#: ../base/ufos/menu_buy.ufo:991 ../base/ufos/menu_buy.ufo:1021
+#: ../base/ufos/menu_buy.ufo:1051 ../base/ufos/menu_buy.ufo:1081
+#: ../base/ufos/menu_buy.ufo:1111 ../base/ufos/menu_buy.ufo:1141
 msgid "Buy item"
 msgstr "Koupit položku"
 
-#: ../base/ufos/menu_buy.ufo:230 ../base/ufos/menu_buy.ufo:260
-#: ../base/ufos/menu_buy.ufo:290 ../base/ufos/menu_buy.ufo:320
-#: ../base/ufos/menu_buy.ufo:350 ../base/ufos/menu_buy.ufo:380
-#: ../base/ufos/menu_buy.ufo:410 ../base/ufos/menu_buy.ufo:440
-#: ../base/ufos/menu_buy.ufo:470 ../base/ufos/menu_buy.ufo:500
-#: ../base/ufos/menu_buy.ufo:530 ../base/ufos/menu_buy.ufo:560
-#: ../base/ufos/menu_buy.ufo:590 ../base/ufos/menu_buy.ufo:620
-#: ../base/ufos/menu_buy.ufo:650 ../base/ufos/menu_buy.ufo:680
-#: ../base/ufos/menu_buy.ufo:710 ../base/ufos/menu_buy.ufo:740
-#: ../base/ufos/menu_buy.ufo:770 ../base/ufos/menu_buy.ufo:800
-#: ../base/ufos/menu_buy.ufo:830 ../base/ufos/menu_buy.ufo:860
-#: ../base/ufos/menu_buy.ufo:890 ../base/ufos/menu_buy.ufo:920
-#: ../base/ufos/menu_buy.ufo:950 ../base/ufos/menu_buy.ufo:980
-#: ../base/ufos/menu_buy.ufo:1010 ../base/ufos/menu_buy.ufo:1040
+#: ../base/ufos/menu_buy.ufo:342 ../base/ufos/menu_buy.ufo:372
+#: ../base/ufos/menu_buy.ufo:402 ../base/ufos/menu_buy.ufo:432
+#: ../base/ufos/menu_buy.ufo:462 ../base/ufos/menu_buy.ufo:492
+#: ../base/ufos/menu_buy.ufo:522 ../base/ufos/menu_buy.ufo:552
+#: ../base/ufos/menu_buy.ufo:582 ../base/ufos/menu_buy.ufo:612
+#: ../base/ufos/menu_buy.ufo:642 ../base/ufos/menu_buy.ufo:672
+#: ../base/ufos/menu_buy.ufo:702 ../base/ufos/menu_buy.ufo:732
+#: ../base/ufos/menu_buy.ufo:762 ../base/ufos/menu_buy.ufo:792
+#: ../base/ufos/menu_buy.ufo:822 ../base/ufos/menu_buy.ufo:852
+#: ../base/ufos/menu_buy.ufo:882 ../base/ufos/menu_buy.ufo:912
+#: ../base/ufos/menu_buy.ufo:942 ../base/ufos/menu_buy.ufo:972
+#: ../base/ufos/menu_buy.ufo:1002 ../base/ufos/menu_buy.ufo:1032
+#: ../base/ufos/menu_buy.ufo:1062 ../base/ufos/menu_buy.ufo:1092
+#: ../base/ufos/menu_buy.ufo:1122 ../base/ufos/menu_buy.ufo:1152
 msgid "Sell item"
 msgstr "Prodat položku"
 
 # Faktor
-#: ../base/ufos/menu_buy.ufo:1084
+#: ../base/ufos/menu_buy.ufo:1196
 msgid "Buy factor:"
 msgstr "Fa. nákupu:"
 
-#: ../base/ufos/menu_buy.ufo:1100
+#: ../base/ufos/menu_buy.ufo:1212
 msgid "Decrease the amount of items you want to buy"
 msgstr "Snížit počet položek které koupíte najednou"
 
-#: ../base/ufos/menu_buy.ufo:1114
+#: ../base/ufos/menu_buy.ufo:1226
 msgid "Increase the amount of items you want to buy"
 msgstr "Zvýšit počet položek které koupíte najednou"
 
 # Faktor
-#: ../base/ufos/menu_buy.ufo:1128
+#: ../base/ufos/menu_buy.ufo:1240
 msgid "Sell factor:"
 msgstr "Fa. prodeje:"
 
-#: ../base/ufos/menu_buy.ufo:1144
+#: ../base/ufos/menu_buy.ufo:1256
 msgid "Decrease the amount of items you want to sell"
 msgstr "Snížit počet položek které prodáte najednou"
 
-#: ../base/ufos/menu_buy.ufo:1158
+#: ../base/ufos/menu_buy.ufo:1270
 msgid "Increase the amount of items you want to sell"
 msgstr "Zvýšit počet položek které prodáte najednou"
 
-#: ../base/ufos/menu_buy.ufo:1176
+#: ../base/ufos/menu_buy.ufo:1288
 msgid "Storage (all/used):"
 msgstr "Sklady (celkem/použito)"
 
-#: ../base/ufos/menu_buy.ufo:1210 ../base/ufos/menu_production.ufo:349
+#: ../base/ufos/menu_buy.ufo:1322 ../base/ufos/menu_production.ufo:349
 msgid "Show primary weapons"
 msgstr "Ukázat hlavní zbraně"
 
-#: ../base/ufos/menu_buy.ufo:1225 ../base/ufos/menu_production.ufo:364
+#: ../base/ufos/menu_buy.ufo:1337 ../base/ufos/menu_production.ufo:364
 #: ../base/ufos/menu_team.ufo:1324
 msgid "Primary"
 msgstr "Hlavní"
 
-#: ../base/ufos/menu_buy.ufo:1230 ../base/ufos/menu_production.ufo:369
+#: ../base/ufos/menu_buy.ufo:1342 ../base/ufos/menu_production.ufo:369
 msgid "Show only secondary weapons"
 msgstr "Ukázat jen doplňkové zbraně"
 
-#: ../base/ufos/menu_buy.ufo:1245 ../base/ufos/menu_production.ufo:384
+#: ../base/ufos/menu_buy.ufo:1357 ../base/ufos/menu_production.ufo:384
 #: ../base/ufos/menu_team.ufo:1344
 msgid "Secondary"
 msgstr "Doplňkové"
 
-#: ../base/ufos/menu_buy.ufo:1250 ../base/ufos/menu_production.ufo:389
+#: ../base/ufos/menu_buy.ufo:1362 ../base/ufos/menu_production.ufo:389
 msgid "Show miscellaneous equipment"
 msgstr "Ukázat ostatní vybavení"
 
-#: ../base/ufos/menu_buy.ufo:1265 ../base/ufos/menu_production.ufo:404
+#: ../base/ufos/menu_buy.ufo:1377 ../base/ufos/menu_production.ufo:404
 #: ../base/ufos/menu_team.ufo:1364
 msgid "Misc"
 msgstr "Ostatní"
 
-#: ../base/ufos/menu_buy.ufo:1270 ../base/ufos/menu_production.ufo:409
+#: ../base/ufos/menu_buy.ufo:1382 ../base/ufos/menu_production.ufo:409
 msgid "Show armour"
 msgstr "Ukázat zbroj"
 
-#: ../base/ufos/menu_buy.ufo:1290 ../base/ufos/menu_production.ufo:429
+#: ../base/ufos/menu_buy.ufo:1402 ../base/ufos/menu_production.ufo:429
 msgid "Show other items and materials"
 msgstr "Ukázat ostatní položky a součástky"
 
-#: ../base/ufos/menu_buy.ufo:1305 ../base/ufos/menu_production.ufo:444
+#: ../base/ufos/menu_buy.ufo:1417 ../base/ufos/menu_production.ufo:444
 msgid "Other"
 msgstr "Ostatní"
 
-#: ../base/ufos/menu_buy.ufo:1350 ../base/ufos/menu_team.ufo:1416
+#: ../base/ufos/menu_buy.ufo:1462 ../base/ufos/menu_team.ufo:1416
 #: ../base/ufos/menu_ufopedia.ufo:348
 msgid "Previous weapon chambered for this ammunition"
 msgstr "Předchozí zbraň vhodná pro tuto munici"
 
-#: ../base/ufos/menu_buy.ufo:1373 ../base/ufos/menu_team.ufo:1431
+#: ../base/ufos/menu_buy.ufo:1485 ../base/ufos/menu_team.ufo:1431
 #: ../base/ufos/menu_ufopedia.ufo:363
 msgid "Previous ammunition compatible with this weapon"
 msgstr "Předchozí munice použitelná v této zbrani"
 
-#: ../base/ufos/menu_buy.ufo:1397 ../base/ufos/menu_team.ufo:1447
+#: ../base/ufos/menu_buy.ufo:1509 ../base/ufos/menu_team.ufo:1447
 #: ../base/ufos/menu_ufopedia.ufo:378
 msgid "Next weapon chambered for this ammunition"
 msgstr "Další zbraň vhodná pro tuto munici"
 
-#: ../base/ufos/menu_buy.ufo:1420 ../base/ufos/menu_team.ufo:1462
+#: ../base/ufos/menu_buy.ufo:1532 ../base/ufos/menu_team.ufo:1462
 #: ../base/ufos/menu_ufopedia.ufo:393
 msgid "Next ammunition compatible with this weapon"
 msgstr "Další munice použitelná v této zbrani"
 
-#: ../base/ufos/menu_buy.ufo:1444 ../base/ufos/menu_team.ufo:1478
+#: ../base/ufos/menu_buy.ufo:1556 ../base/ufos/menu_team.ufo:1478
 #: ../base/ufos/menu_ufopedia.ufo:408
 msgid "With weapon:"
 msgstr "Ve zbrani:"
 
-#: ../base/ufos/menu_buy.ufo:1453 ../base/ufos/menu_team.ufo:1487
+#: ../base/ufos/menu_buy.ufo:1565 ../base/ufos/menu_team.ufo:1487
 #: ../base/ufos/menu_ufopedia.ufo:417
 msgid "With ammo:"
 msgstr "S municí:"
 
-#: ../base/ufos/menu_buy.ufo:1470 ../base/ufos/menu_team.ufo:1504
+#: ../base/ufos/menu_buy.ufo:1582 ../base/ufos/menu_team.ufo:1504
 #: ../base/ufos/menu_ufopedia.ufo:449
 msgid "Previous firemode"
 msgstr "Předchozí režim"
 
-#: ../base/ufos/menu_buy.ufo:1493 ../base/ufos/menu_team.ufo:1519
+#: ../base/ufos/menu_buy.ufo:1605 ../base/ufos/menu_team.ufo:1519
 #: ../base/ufos/menu_ufopedia.ufo:464
 msgid "Next firemode"
 msgstr "Další režim"
 
-#: ../base/ufos/menu_buy.ufo:1516 ../base/ufos/menu_team.ufo:1534
+#: ../base/ufos/menu_buy.ufo:1628 ../base/ufos/menu_team.ufo:1534
 #: ../base/ufos/menu_ufopedia.ufo:479
 msgid "Firemode:"
 msgstr "Režim střelby:"
 
-#: ../base/ufos/menu_buy.ufo:1682 ../base/ufos/menu_buy.ufo:1684
-#: ../base/ufos/menu_buy.ufo:1686 ../base/ufos/menu_buy.ufo:1688
-#: ../base/ufos/menu_buy.ufo:1690 ../base/ufos/menu_buy.ufo:1692
-#: ../base/ufos/menu_buy.ufo:1694 ../base/ufos/menu_buy.ufo:1696
-#: ../base/ufos/menu_buy.ufo:1698 ../base/ufos/menu_buy.ufo:1700
-#: ../base/ufos/menu_buy.ufo:1702 ../base/ufos/menu_buy.ufo:1704
-#: ../base/ufos/menu_buy.ufo:1706 ../base/ufos/menu_buy.ufo:1708
-#: ../base/ufos/menu_buy.ufo:1710 ../base/ufos/menu_buy.ufo:1712
-#: ../base/ufos/menu_buy.ufo:1714 ../base/ufos/menu_buy.ufo:1716
-#: ../base/ufos/menu_buy.ufo:1718
+#: ../base/ufos/menu_buy.ufo:1795 ../base/ufos/menu_buy.ufo:1799
+#: ../base/ufos/menu_buy.ufo:1803 ../base/ufos/menu_buy.ufo:1807
+#: ../base/ufos/menu_buy.ufo:1811 ../base/ufos/menu_buy.ufo:1815
+#: ../base/ufos/menu_buy.ufo:1819 ../base/ufos/menu_buy.ufo:1823
+#: ../base/ufos/menu_buy.ufo:1827 ../base/ufos/menu_buy.ufo:1831
+#: ../base/ufos/menu_buy.ufo:1835 ../base/ufos/menu_buy.ufo:1839
+#: ../base/ufos/menu_buy.ufo:1843 ../base/ufos/menu_buy.ufo:1847
+#: ../base/ufos/menu_buy.ufo:1851 ../base/ufos/menu_buy.ufo:1855
+#: ../base/ufos/menu_buy.ufo:1859 ../base/ufos/menu_buy.ufo:1863
+#: ../base/ufos/menu_buy.ufo:1867
 msgid "Buy aircraft"
 msgstr "Koupit letoun"
 
-#: ../base/ufos/menu_buy.ufo:1683 ../base/ufos/menu_buy.ufo:1685
-#: ../base/ufos/menu_buy.ufo:1687 ../base/ufos/menu_buy.ufo:1689
-#: ../base/ufos/menu_buy.ufo:1691 ../base/ufos/menu_buy.ufo:1693
-#: ../base/ufos/menu_buy.ufo:1695 ../base/ufos/menu_buy.ufo:1697
-#: ../base/ufos/menu_buy.ufo:1699 ../base/ufos/menu_buy.ufo:1701
-#: ../base/ufos/menu_buy.ufo:1703 ../base/ufos/menu_buy.ufo:1705
-#: ../base/ufos/menu_buy.ufo:1707 ../base/ufos/menu_buy.ufo:1709
-#: ../base/ufos/menu_buy.ufo:1711 ../base/ufos/menu_buy.ufo:1713
-#: ../base/ufos/menu_buy.ufo:1715 ../base/ufos/menu_buy.ufo:1717
-#: ../base/ufos/menu_buy.ufo:1719
+#: ../base/ufos/menu_buy.ufo:1796 ../base/ufos/menu_buy.ufo:1800
+#: ../base/ufos/menu_buy.ufo:1804 ../base/ufos/menu_buy.ufo:1808
+#: ../base/ufos/menu_buy.ufo:1812 ../base/ufos/menu_buy.ufo:1816
+#: ../base/ufos/menu_buy.ufo:1820 ../base/ufos/menu_buy.ufo:1824
+#: ../base/ufos/menu_buy.ufo:1828 ../base/ufos/menu_buy.ufo:1832
+#: ../base/ufos/menu_buy.ufo:1836 ../base/ufos/menu_buy.ufo:1840
+#: ../base/ufos/menu_buy.ufo:1844 ../base/ufos/menu_buy.ufo:1848
+#: ../base/ufos/menu_buy.ufo:1852 ../base/ufos/menu_buy.ufo:1856
+#: ../base/ufos/menu_buy.ufo:1860 ../base/ufos/menu_buy.ufo:1864
+#: ../base/ufos/menu_buy.ufo:1868
 msgid "Sell aircraft"
 msgstr "Prodat letoun"
 
-#: ../base/ufos/menu_buy.ufo:1721 ../base/ufos/menu_buy.ufo:1723
-#: ../base/ufos/menu_buy.ufo:1725 ../base/ufos/menu_buy.ufo:1727
-#: ../base/ufos/menu_buy.ufo:1729 ../base/ufos/menu_buy.ufo:1731
-#: ../base/ufos/menu_buy.ufo:1733 ../base/ufos/menu_buy.ufo:1735
-#: ../base/ufos/menu_buy.ufo:1737 ../base/ufos/menu_buy.ufo:1739
-#: ../base/ufos/menu_buy.ufo:1741 ../base/ufos/menu_buy.ufo:1743
-#: ../base/ufos/menu_buy.ufo:1745 ../base/ufos/menu_buy.ufo:1747
-#: ../base/ufos/menu_buy.ufo:1749 ../base/ufos/menu_buy.ufo:1751
-#: ../base/ufos/menu_buy.ufo:1753 ../base/ufos/menu_buy.ufo:1755
-#: ../base/ufos/menu_buy.ufo:1757
+#: ../base/ufos/menu_buy.ufo:1871 ../base/ufos/menu_buy.ufo:1875
+#: ../base/ufos/menu_buy.ufo:1879 ../base/ufos/menu_buy.ufo:1883
+#: ../base/ufos/menu_buy.ufo:1887 ../base/ufos/menu_buy.ufo:1891
+#: ../base/ufos/menu_buy.ufo:1895 ../base/ufos/menu_buy.ufo:1899
+#: ../base/ufos/menu_buy.ufo:1903 ../base/ufos/menu_buy.ufo:1907
+#: ../base/ufos/menu_buy.ufo:1911 ../base/ufos/menu_buy.ufo:1915
+#: ../base/ufos/menu_buy.ufo:1919 ../base/ufos/menu_buy.ufo:1923
+#: ../base/ufos/menu_buy.ufo:1927 ../base/ufos/menu_buy.ufo:1931
+#: ../base/ufos/menu_buy.ufo:1935 ../base/ufos/menu_buy.ufo:1939
+#: ../base/ufos/menu_buy.ufo:1943
 msgid "Buy craftitem"
 msgstr "Koupit součást letounu"
 
-#: ../base/ufos/menu_buy.ufo:1722 ../base/ufos/menu_buy.ufo:1724
-#: ../base/ufos/menu_buy.ufo:1726 ../base/ufos/menu_buy.ufo:1728
-#: ../base/ufos/menu_buy.ufo:1730 ../base/ufos/menu_buy.ufo:1732
-#: ../base/ufos/menu_buy.ufo:1734 ../base/ufos/menu_buy.ufo:1736
-#: ../base/ufos/menu_buy.ufo:1738 ../base/ufos/menu_buy.ufo:1740
-#: ../base/ufos/menu_buy.ufo:1742 ../base/ufos/menu_buy.ufo:1744
-#: ../base/ufos/menu_buy.ufo:1746 ../base/ufos/menu_buy.ufo:1748
-#: ../base/ufos/menu_buy.ufo:1750 ../base/ufos/menu_buy.ufo:1752
-#: ../base/ufos/menu_buy.ufo:1754 ../base/ufos/menu_buy.ufo:1756
-#: ../base/ufos/menu_buy.ufo:1758
+#: ../base/ufos/menu_buy.ufo:1872 ../base/ufos/menu_buy.ufo:1876
+#: ../base/ufos/menu_buy.ufo:1880 ../base/ufos/menu_buy.ufo:1884
+#: ../base/ufos/menu_buy.ufo:1888 ../base/ufos/menu_buy.ufo:1892
+#: ../base/ufos/menu_buy.ufo:1896 ../base/ufos/menu_buy.ufo:1900
+#: ../base/ufos/menu_buy.ufo:1904 ../base/ufos/menu_buy.ufo:1908
+#: ../base/ufos/menu_buy.ufo:1912 ../base/ufos/menu_buy.ufo:1916
+#: ../base/ufos/menu_buy.ufo:1920 ../base/ufos/menu_buy.ufo:1924
+#: ../base/ufos/menu_buy.ufo:1928 ../base/ufos/menu_buy.ufo:1932
+#: ../base/ufos/menu_buy.ufo:1936 ../base/ufos/menu_buy.ufo:1940
+#: ../base/ufos/menu_buy.ufo:1944
 msgid "Sell craftitem"
 msgstr "Prodat součást letounu"
 
-#: ../base/ufos/menu_buy.ufo:2064
+#: ../base/ufos/menu_buy.ufo:2252
 msgid "No power supplies in this base."
 msgstr "Na této základně nejsou zdroje energie."
 
-#: ../base/ufos/menu_buy.ufo:2065
+#: ../base/ufos/menu_buy.ufo:2254
 msgid "No hangars in this base."
 msgstr "Na této základně nejsou hangáry."
 
-#: ../base/ufos/menu_buy.ufo:2066 client/cl_market.c:656
+#: ../base/ufos/menu_buy.ufo:2257 client/cl_market.c:656
 msgid "No storage in this base."
 msgstr "Na této základně nejsou sklady."
 
-#: ../base/ufos/menu_buy.ufo:2067
+#: ../base/ufos/menu_buy.ufo:2260
 msgid "Buy or sell aircrafts."
 msgstr "Koupit nebo prodat letouny."
 
-#: ../base/ufos/menu_buy.ufo:2068
+#: ../base/ufos/menu_buy.ufo:2263
 msgid "Buy or sell craftitems."
 msgstr "Koupit nebo prodat součásti letounu."
 
-#: ../base/ufos/menu_buy.ufo:2072
+#: ../base/ufos/menu_buy.ufo:2268
 msgid "Show aircrafts"
 msgstr "Ukázat letouny"
 
-#: ../base/ufos/menu_buy.ufo:2092
+#: ../base/ufos/menu_buy.ufo:2288
 msgid "Show craftitems"
 msgstr "Ukázat součásti letounu"
 
-#: ../base/ufos/menu_buy.ufo:2107
+#: ../base/ufos/menu_buy.ufo:2303
 msgid "Craftitems"
 msgstr "Součásti letounu"
 
-#: ../base/ufos/menu_buy.ufo:2112
+#: ../base/ufos/menu_buy.ufo:2308
 msgid "Back to hangar"
 msgstr "Zpět do hangáru"
 
@@ -2974,21 +2974,78 @@ msgstr "Náklady"
 msgid "Nations"
 msgstr "Státy"
 
-#: ../base/ufos/menu_stats.ufo:206
+#: ../base/ufos/menu_stats.ufo:208
 msgid "Nation Statistics"
 msgstr "Statistiky státu"
 
-#: ../base/ufos/menu_stats.ufo:240
+#: ../base/ufos/menu_stats.ufo:243
 msgid "Nation"
 msgstr "Stát"
 
-#: ../base/ufos/menu_stats.ufo:251
+#: ../base/ufos/menu_stats.ufo:257
 msgid "Current Funding"
 msgstr "Současné financování"
 
-#: ../base/ufos/menu_stats.ufo:274
+#: ../base/ufos/menu_stats.ufo:283
 msgid "Month (Relative to current)"
 msgstr "Měsíc (vztažený k současnému)"
+
+#: ../base/ufos/menu_stats.ufo:290
+msgid "0"
+msgstr ""
+
+#: ../base/ufos/menu_stats.ufo:294
+msgid "-1"
+msgstr ""
+
+#: ../base/ufos/menu_stats.ufo:298
+msgid "-2"
+msgstr ""
+
+#: ../base/ufos/menu_stats.ufo:302
+msgid "-3"
+msgstr ""
+
+#: ../base/ufos/menu_stats.ufo:306
+msgid "-4"
+msgstr ""
+
+#: ../base/ufos/menu_stats.ufo:310
+msgid "-5"
+msgstr ""
+
+#: ../base/ufos/menu_stats.ufo:314
+msgid "-6"
+msgstr ""
+
+#: ../base/ufos/menu_stats.ufo:318
+msgid "-7"
+msgstr ""
+
+#: ../base/ufos/menu_stats.ufo:322
+msgid "-8"
+msgstr ""
+
+#: ../base/ufos/menu_stats.ufo:326
+msgid "-9"
+msgstr ""
+
+#: ../base/ufos/menu_stats.ufo:330
+msgid "-10"
+msgstr ""
+
+#: ../base/ufos/menu_stats.ufo:334
+msgid "-11"
+msgstr ""
+
+#: ../base/ufos/menu_stats.ufo:339
+#, fuzzy
+msgid "Funding"
+msgstr "Vyjímečný"
+
+#: ../base/ufos/menu_stats.ufo:349
+msgid "max"
+msgstr ""
 
 #: ../base/ufos/menu_team.ufo:132 ../base/ufos/menu_team.ufo:134
 #: ../base/ufos/menu_team.ufo:136 ../base/ufos/menu_team.ufo:138
@@ -3113,7 +3170,7 @@ msgid "Show only aliens"
 msgstr "Ukázat jen cizáky"
 
 # Alien = cizák - tradice českého překladu UFO: Enemy Unknown
-#: ../base/ufos/menu_transfer.ufo:247 client/cl_campaign.c:4025
+#: ../base/ufos/menu_transfer.ufo:247 client/cl_campaign.c:4048
 msgid "Aliens"
 msgstr "Cizáci"
 
@@ -3206,6 +3263,8 @@ msgstr "Gwanda"
 #: ../base/ufos/missions.ufo:822 ../base/ufos/missions.ufo:859
 #: ../base/ufos/missions.ufo:879 ../base/ufos/missions.ufo:898
 #: ../base/ufos/missions.ufo:917 ../base/ufos/missions.ufo:955
+#: ../base/ufos/missions.ufo:989 ../base/ufos/missions.ufo:1005
+#: ../base/ufos/missions.ufo:1021
 msgid "Terror Attack"
 msgstr "Zastrašování"
 
@@ -3227,7 +3286,8 @@ msgstr "Wachau"
 #: ../base/ufos/missions.ufo:729 ../base/ufos/missions.ufo:748
 #: ../base/ufos/missions.ufo:786 ../base/ufos/missions.ufo:805
 #: ../base/ufos/missions.ufo:823 ../base/ufos/missions.ufo:899
-#: ../base/ufos/missions.ufo:918
+#: ../base/ufos/missions.ufo:918 ../base/ufos/missions.ufo:990
+#: ../base/ufos/missions.ufo:1006 ../base/ufos/missions.ufo:1022
 msgid "Protect inhabitants"
 msgstr "Ochrana obyvatelstva"
 
@@ -3456,13 +3516,27 @@ msgstr "Významné cizácké obtěžování"
 msgid "Stop them"
 msgstr "Zastavte je"
 
-#: ../base/ufos/missions.ufo:954
+#: ../base/ufos/missions.ufo:954 ../base/ufos/missions.ufo:988
+#: ../base/ufos/missions.ufo:1020
 msgid "TODO"
 msgstr "UDĚLAT"
 
 #: ../base/ufos/missions.ufo:956
 msgid "The Aliens have attacked a military convoy. Go and secure that area."
 msgstr "Cizáci zaútočili na vojenský konvoj. Vyražte a zabezpečte oblast."
+
+#: ../base/ufos/missions.ufo:972 ../base/ufos/missions.ufo:973
+#, fuzzy
+msgid "Alien colony"
+msgstr "Cizácký druh"
+
+#: ../base/ufos/missions.ufo:974
+msgid "We located the alien colony, go there and destroy it."
+msgstr ""
+
+#: ../base/ufos/missions.ufo:1004
+msgid "Rom"
+msgstr ""
 
 #: ../base/ufos/nations.ufo:29
 msgid "The Revolutionary Countries"
@@ -14184,8 +14258,8 @@ msgstr ""
 #: client/cl_campaign.c:1113 client/cl_campaign.c:1124
 #: client/cl_campaign.c:1137 client/cl_campaign.c:1147
 #: client/cl_campaign.c:1154 client/cl_campaign.c:1162
-#: client/cl_campaign.c:2487 client/cl_campaign.c:2531
-#: client/cl_campaign.c:2533 client/cl_campaign.c:2823
+#: client/cl_campaign.c:2508 client/cl_campaign.c:2552
+#: client/cl_campaign.c:2554 client/cl_campaign.c:2844
 #: client/cl_inventory.c:300 client/cl_inventory.c:306
 #: client/cl_inventory.c:552 client/cl_main.c:1119 client/cl_map.c:295
 #: client/cl_market.c:642 client/cl_market.c:646 client/cl_parse.c:1602
@@ -14304,11 +14378,11 @@ msgstr "Stíhání"
 msgid "UFO interception successful -- UFO lost."
 msgstr "Stíhání UFO bylo úspěšné -- UFO bylo ztraceno."
 
-#: client/cl_airfight.c:471 client/cl_campaign.c:1953
+#: client/cl_airfight.c:471 client/cl_campaign.c:1974
 msgid "UFO crash site"
 msgstr "Místo havárie UFO"
 
-#: client/cl_airfight.c:475 client/cl_campaign.c:1958
+#: client/cl_airfight.c:475 client/cl_campaign.c:1979
 msgid "No nation"
 msgstr "Území nikoho"
 
@@ -14320,7 +14394,7 @@ msgstr "Stíhání UFO bylo úspěšné -- Je k dispozici nová mise."
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "Stíhání UFO bylo úspěšné -- UFO bylo ztraceno v moři."
 
-#: client/cl_airfight.c:519 client/cl_campaign.c:2533
+#: client/cl_airfight.c:519 client/cl_campaign.c:2554
 msgid "You've lost the battle"
 msgstr "Prohrál jste bitvu"
 
@@ -14451,7 +14525,7 @@ msgstr ""
 "Na této základně není letoun - Musíte nejdříve nějaký koupit nebo přepravit\n"
 
 #: client/cl_basemanagement.c:2476 client/cl_basemanagement.c:2478
-#: client/cl_campaign.c:2316 client/cl_market.c:624 client/cl_market.c:629
+#: client/cl_campaign.c:2337 client/cl_market.c:624 client/cl_market.c:629
 #: client/cl_market.c:656 client/cl_market.c:732 client/cl_save.c:349
 #: client/cl_team.c:1589
 msgid "Note"
@@ -14504,7 +14578,7 @@ msgid "%s - %1.2f%% (%d %s)\n"
 msgstr "%s - %1.2f%% (%d %s)\n"
 
 #: client/cl_basesummary.c:193 client/cl_campaign.c:1067
-#: client/cl_campaign.c:4030
+#: client/cl_campaign.c:4053
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "vědec"
@@ -14657,21 +14731,21 @@ msgstr[0] "kredit"
 msgstr[1] "kredity"
 msgstr[2] "kreditů"
 
-#: client/cl_campaign.c:1068 client/cl_campaign.c:4032
+#: client/cl_campaign.c:1068 client/cl_campaign.c:4055
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "lékař"
 msgstr[1] "lékaři"
 msgstr[2] "lékařů"
 
-#: client/cl_campaign.c:1069 client/cl_campaign.c:4029
+#: client/cl_campaign.c:1069 client/cl_campaign.c:4052
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "voják"
 msgstr[1] "vojáci"
 msgstr[2] "vojáků"
 
-#: client/cl_campaign.c:1070 client/cl_campaign.c:4031
+#: client/cl_campaign.c:1070 client/cl_campaign.c:4054
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "dělník"
@@ -14739,7 +14813,7 @@ msgstr "%02i:%02i"
 msgid "%i c"
 msgstr "%i k"
 
-#: client/cl_campaign.c:1433
+#: client/cl_campaign.c:1454
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -14750,7 +14824,7 @@ msgstr ""
 "Prohráno:\t%i\n"
 "\n"
 
-#: client/cl_campaign.c:1438
+#: client/cl_campaign.c:1459
 #, c-format
 msgid ""
 "Built:\t%i\n"
@@ -14761,42 +14835,42 @@ msgstr ""
 "V provozu:\t%i\n"
 "Napadeno:\t%i\n"
 
-#: client/cl_campaign.c:1445
+#: client/cl_campaign.c:1466
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/cl_campaign.c:1484
+#: client/cl_campaign.c:1505
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/cl_campaign.c:1490
+#: client/cl_campaign.c:1511
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "Zaměstnanci:\t%i k\n"
 
-#: client/cl_campaign.c:1499
+#: client/cl_campaign.c:1520
 #, c-format
 msgid "Aircrafts:\t%i c\n"
 msgstr "Letouny:\t%i k\n"
 
-#: client/cl_campaign.c:1507
+#: client/cl_campaign.c:1528
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "Základna (%s):\t%i k\n"
 
-#: client/cl_campaign.c:1512
+#: client/cl_campaign.c:1533
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "Správní poplatky:\t%i k\n"
 
-#: client/cl_campaign.c:1519
+#: client/cl_campaign.c:1540
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "Dluh:\t%i k\n"
 
-#: client/cl_campaign.c:1522
+#: client/cl_campaign.c:1543
 #, c-format
 msgid ""
 "\n"
@@ -14807,24 +14881,24 @@ msgstr ""
 "\t-------\n"
 "Celkem:\t%i k\n"
 
-#: client/cl_campaign.c:2316
+#: client/cl_campaign.c:2337
 msgid "Assemble or load a team"
 msgstr "Sestavit nebo načíst tým"
 
-#: client/cl_campaign.c:2487
+#: client/cl_campaign.c:2508
 msgid "Your dropship is not near the landing zone"
 msgstr "Transportér není v blízkosti přistávacího prostoru"
 
-#: client/cl_campaign.c:2531
+#: client/cl_campaign.c:2552
 msgid "You've won the battle"
 msgstr "Vyhrál jste bitvu"
 
-#: client/cl_campaign.c:2598
+#: client/cl_campaign.c:2619
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s byl(a) povýšen(a) do hodnosti %s.\n"
 
-#: client/cl_campaign.c:2600
+#: client/cl_campaign.c:2621
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\\for inspirational gallantry "
@@ -14833,20 +14907,20 @@ msgstr ""
 "%s byl(a) posmrtně povýšen(a) do hodnosti %s\\za příkladnou statečnost tváří "
 "v tvář drtivé převaze.\n"
 
-#: client/cl_campaign.c:2601
+#: client/cl_campaign.c:2622
 msgid "Soldier promoted"
 msgstr "Voják povýšen"
 
-#: client/cl_campaign.c:2822
+#: client/cl_campaign.c:2843
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "Obrana základny %s byla úspěšná!"
 
-#: client/cl_campaign.c:4025
+#: client/cl_campaign.c:4048
 msgid "Human"
 msgstr "Lidé"
 
-#: client/cl_campaign.c:4027
+#: client/cl_campaign.c:4050
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -14861,23 +14935,23 @@ msgstr ""
 "Obtížnost: %s\n"
 "%s\n"
 
-#: client/cl_campaign.c:4263
+#: client/cl_campaign.c:4286
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to base %s."
 msgstr "Ukořistěné %s je přepravováno na základnu %s."
 
-#: client/cl_campaign.c:4265 client/cl_campaign.c:4389
-#: client/cl_campaign.c:4468
+#: client/cl_campaign.c:4288 client/cl_campaign.c:4412
+#: client/cl_campaign.c:4491
 msgid "UFO Recovery"
 msgstr "UFO - Zpracování"
 
-#: client/cl_campaign.c:4387
+#: client/cl_campaign.c:4410
 #, c-format
 msgid ""
 "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr "Ukořistěné %s bylo prodáno státu %s a získal jste za něj %i kreditů."
 
-#: client/cl_campaign.c:4437
+#: client/cl_campaign.c:4460
 msgid ""
 "\n"
 "\n"
@@ -14887,7 +14961,7 @@ msgstr ""
 "\n"
 "Vybraný stát:\t\t\t"
 
-#: client/cl_campaign.c:4466
+#: client/cl_campaign.c:4489
 #, c-format
 msgid "Secured %s was destroyed."
 msgstr "Zajištěné %s bylo zničeno."
