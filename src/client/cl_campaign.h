@@ -129,7 +129,11 @@ typedef struct stageSet_s {
 	char nextstage[MAX_VAR];
 	char endstage[MAX_VAR];
 	char cmds[MAX_VAR];			/**< script commands to execute when stageset gets activated */
+
+	/** @note set only one of the two - cutscene should have higher priority */
 	char sequence[MAX_VAR];		/**< play a sequence when entering a new stage? */
+	char cutscene[MAX_VAR];		/**< play a cutscent when entering a new stage? */
+
 	date_t delay;
 	date_t frame;
 	date_t expire;				/**< date when this mission will expire and will be removed from geoscape */
