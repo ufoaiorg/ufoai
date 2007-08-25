@@ -1410,6 +1410,27 @@ void CL_UpdateCredits (int credits)
 	Cvar_Set("mn_credits", va(_("%i c"), ccs.credits));
 }
 
+/**
+ * @brief
+ */
+static void CP_NationStatsClick_f (void)
+{
+	int num;
+
+	if (!curCampaign)
+		return;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
+		return;
+	}
+
+	/* Which entry in the list? */
+	num = atoi(Cmd_Argv(1));
+
+	MN_PushMenu("nations");
+	Cbuf_AddText(va("nation_select %i;", num));
+}
 
 #define MAX_STATS_BUFFER 2048
 /**
@@ -3760,6 +3781,7 @@ static const cmdList_t game_commands[] = {
 	{"aircraft_return", AIR_AircraftReturnToBase_f, NULL},
 	{"aircraft_list", CL_AircraftList_f, "Generate the aircraft (interception) list"},
 	{"stats_update", CL_StatsUpdate_f, NULL},
+	{"nation_stats_click", CP_NationStatsClick_f, NULL},
 	{"nation_update", CL_NationStatsUpdate_f, "Shows the current nation list + statistics."},
 	{"nation_select", CL_NationSelect_f, "Select nation and display all relevant information for it."},
 	{"game_go", CL_GameGo, NULL},

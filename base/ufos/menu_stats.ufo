@@ -142,6 +142,8 @@ menu stats
 		format  "22 360"
 		num		"24"
 		height	"10"
+		click
+		mousefx	true
 	}
 
 	func init
@@ -208,7 +210,7 @@ menu nations
 		align	uc
 		font	f_big
 	}
-	
+
 	// Number of nations (0-7) defined by MAX_NATIONS in cl_campaign.h
 	confunc nation_marksel0 { *nation0 invis false	*nation0 color "1 1 1 1"	*nat_fund0 invis false	*nat_fund0 color "1 1 1 1" }
 	confunc nation_marksel1 { *nation1 invis false	*nation1 color "1 1 1 1"	*nat_fund1 invis false	*nat_fund1 color "1 1 1 1" }
@@ -218,7 +220,7 @@ menu nations
 	confunc nation_marksel5 { *nation5 invis false	*nation5 color "1 1 1 1"	*nat_fund5 invis false	*nat_fund5 color "1 1 1 1" }
 	confunc nation_marksel6 { *nation6 invis false	*nation6 color "1 1 1 1"	*nat_fund6 invis false	*nat_fund6 color "1 1 1 1" }
 	confunc nation_marksel7 { *nation7 invis false	*nation7 color "1 1 1 1"	*nat_fund7 invis false	*nat_fund7 color "1 1 1 1" }
-	
+
 	confunc nation_markdesel0 { *nation0 invis false	*nation0 color "0 .78 0 1"	 *nat_fund0 invis false	*nat_fund0 color "0 .78 0 1" }
 	confunc nation_markdesel1 { *nation1 invis false	*nation1 color "0 .78 0 1"	 *nat_fund1 invis false	*nat_fund1 color "0 .78 0 1" }
 	confunc nation_markdesel2 { *nation2 invis false	*nation2 color "0 .78 0 1"	 *nat_fund2 invis false	*nat_fund2 color "0 .78 0 1" }
@@ -227,7 +229,7 @@ menu nations
 	confunc nation_markdesel5 { *nation5 invis false	*nation5 color "0 .78 0 1"	 *nat_fund5 invis false	*nat_fund5 color "0 .78 0 1" }
 	confunc nation_markdesel6 { *nation6 invis false	*nation6 color "0 .78 0 1"	 *nat_fund6 invis false	*nat_fund6 color "0 .78 0 1" }
 	confunc nation_markdesel7 { *nation7 invis false	*nation7 color "0 .78 0 1"	 *nat_fund7 invis false	*nat_fund7 color "0 .78 0 1" }
-	
+
 	confunc nation_hide0 { *nation0 invis true	*nat_fund0 invis true }
 	confunc nation_hide1 { *nation1 invis true	*nat_fund1 invis true }
 	confunc nation_hide2 { *nation2 invis true	*nat_fund2 invis true }
@@ -236,7 +238,7 @@ menu nations
 	confunc nation_hide5 { *nation5 invis true	*nat_fund5 invis true }
 	confunc nation_hide6 { *nation6 invis true	*nat_fund6 invis true }
 	confunc nation_hide7 { *nation7 invis true	*nat_fund7 invis true }
-	
+
 	string nation { string	"_Nation"				pos "40  90"	size "400 16" }
 	string nation0 { string	"*cvar mn_nat_name0"	pos "40 115"	size "400 16"	invis false	click { cmd "nation_select 0" } }
 	string nation1 { string	"*cvar mn_nat_name1"	pos "40 140"	size "400 16"	invis false	click { cmd "nation_select 1" } }
@@ -268,25 +270,25 @@ menu nations
 		pos	"500 300"
 		size	"300 200"
 	}
-	
+
 	string graph_time { string "_Month (Relative to current)"	pos "650 330"	align uc	font f_small }
 	// todo better display of real month-text (year+month?)
-	string graph_month0	{ string "0"	pos "500 300"	align ul	font f_small }
-	string graph_month1	{ string "-1"	pos "525 300"	align ul	font f_small }
-	string graph_month2	{ string "-2"	pos "550 300"	align ul	font f_small }
-	string graph_month3	{ string "-3"	pos "575 300"	align ul	font f_small }
-	string graph_month4	{ string "-4"	pos "600 300"	align ul	font f_small }
-	string graph_month5	{ string "-5"	pos "625 300"	align ul	font f_small }
-	string graph_month6	{ string "-6"	pos "650 300"	align ul	font f_small }
-	string graph_month7	{ string "-7"	pos "675 300"	align ul	font f_small }
-	string graph_month8	{ string "-8"	pos "700 300"	align ul	font f_small }
-	string graph_month9	{ string "-9"	pos "725 300"	align ul	font f_small }
-	string graph_month10	{ string "-10"	pos "750 300"	align ul	font f_small }
-	string graph_month11	{ string "-11"	pos "775 300"	align ul	font f_small }
-	
-	string graph_funding { string "Funding"	pos "490 200"	align ur	font f_small }
+	string graph_month0	{ string "_0"	pos "500 300"	align ul	font f_small }
+	string graph_month1	{ string "_-1"	pos "525 300"	align ul	font f_small }
+	string graph_month2	{ string "_-2"	pos "550 300"	align ul	font f_small }
+	string graph_month3	{ string "_-3"	pos "575 300"	align ul	font f_small }
+	string graph_month4	{ string "_-4"	pos "600 300"	align ul	font f_small }
+	string graph_month5	{ string "_-5"	pos "625 300"	align ul	font f_small }
+	string graph_month6	{ string "_-6"	pos "650 300"	align ul	font f_small }
+	string graph_month7	{ string "_-7"	pos "675 300"	align ul	font f_small }
+	string graph_month8	{ string "_-8"	pos "700 300"	align ul	font f_small }
+	string graph_month9	{ string "_-9"	pos "725 300"	align ul	font f_small }
+	string graph_month10	{ string "_-10"	pos "750 300"	align ul	font f_small }
+	string graph_month11	{ string "_-11"	pos "775 300"	align ul	font f_small }
+
+	string graph_funding { string "_Funding"	pos "490 200"	align ur	font f_small }
 	string graph_funding_zero { string "0"	pos "490 290"	align ur	font f_small }	//todo *cvar mn_nat_fund_zero
-	string graph_funding_max { string "max"	pos "490 100"	align lr	font f_small }	//todo *cvar mn_nat_fund_max
+	string graph_funding_max { string "_max"	pos "490 100"	align lr	font f_small }	//todo *cvar mn_nat_fund_max
 
 	func init
 	{
