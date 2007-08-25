@@ -14,7 +14,7 @@ stage intro
 		frame		"0 3 0"  // mission starts between 0d 10h and 1d 10h
 		expire		"0 6 0"  // expires not sooner than 2d 10h
 			                 // and not later than 5d 10h
-		missions	"farm"
+		missions	"rzeszow"
 		number		1 // no quota --- give scared newbies some slack...
 	}
 	set terror_only
@@ -27,7 +27,7 @@ stage intro
 		expire		"0 8 0"  // average expire time is 4d
 			                 // minimum interval between missions is 3d
 			                 // so you have 2 or less on geoscape any time
-		missions	"africa_excavation transport mine mart italy estate frozen_alienlandingindustrial rzeszow"
+		missions	"africa_excavation transport mine mart italy estate frozen_alienlandingindustrial farm"
 		number		11 // don't torment the player with the same missions
 		quota		6
 		ufos		2
