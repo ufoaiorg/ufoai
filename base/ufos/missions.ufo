@@ -982,3 +982,51 @@ mission aliencolony_small
 	onwin		""
 	storyrelated	true
 }
+
+mission druglord
+{
+	location	"_TODO"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map			druglord07
+	music		PsymongR5
+	pos			"59 -6"
+	aliens		6
+	nation		"latin"
+	alienequip	stage4_soldiers
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+mission rivertown
+{
+	location	"_Rom"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map			rivertown01
+	music		PsymongR5
+	pos			"-13 42"
+	aliens		6
+	nation		"europa"
+	alienequip	stage4_soldiers
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+mission lake2
+{
+	location	"_TODO"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map			lake02
+	music		PsymongR5
+	pos			"308 412" // FIXME
+	aliens		6
+	nation		"states" // FIXME
+	alienequip	stage4_soldiers
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
