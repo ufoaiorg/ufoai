@@ -1004,13 +1004,13 @@ static void E_EmployeeSelect_f (void)
 		return;
 
 	employee = E_GetEmployeeByMenuIndex(num);
-	assert(employee);
+	if (employee) {
+		/* mn_employee_hired is needed to allow renaming */
+		Cvar_SetValue("mn_employee_hired", employee->hired? 1: 0);
 
-	/* mn_employee_hired is needed to allow renaming */
-	Cvar_SetValue("mn_employee_hired", employee->hired? 1: 0);
-
-	/* set info cvars */
-	CL_CharacterCvars(&(employee->chr));
+		/* set info cvars */
+		CL_CharacterCvars(&(employee->chr));
+	}
 }
 
 /**
