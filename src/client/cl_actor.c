@@ -3906,7 +3906,12 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 		}
 		ent.alpha = 0.3;
 	}
-/*	V_AddLight(ent.origin, 256, 1.0, 0, 0); */
+#if 0
+	{
+		vec3_t color = {1.0, 0, 0};
+		V_AddLight(ent.origin, 256, color);
+	}
+#endif
 	/* if pendBox is true then ignore all the previous color considerations and use cyan */
 	if (pendBox) {
 		VectorSet(ent.angles, 0, 1, 1);
