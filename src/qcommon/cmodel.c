@@ -1199,9 +1199,7 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
 	/* use for random map assembly for shifting origins and so on */
 	vec3_t shift = {0.0f, 0.0f, 0.0f};
 
-#ifdef DEBUG
-	Com_Printf("CM_AddMapTile: %s at %i,%i\n", name, sX, sY);
-#endif
+	Com_DPrintf(DEBUG_ENGINE, "CM_AddMapTile: %s at %i,%i\n", name, sX, sY);
 	assert(name);
 	assert(name[0]);
 	assert((sX > -(WIDTH/2)) && (sX < (WIDTH/2)));
