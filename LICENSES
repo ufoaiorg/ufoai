@@ -30,7 +30,8 @@ base/maps/bunker01d.map | GPL version 2
 base/maps/bunker01n.map | GPL version 2
 base/maps/city04d.map | GPL version 2 | 'SparX' Beyeler
 base/maps/city04n.map | GPL version 2 | 'SparX' Beyeler
-base/maps/colon04.map | GPL version 2 | 'SparX' Beyeler
+base/maps/colon04d.map | GPL version 2 | 'SparX' Beyeler
+base/maps/colon04n.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/colon_city04d.map | GPL version 2 | Martin Gerhardy
 base/maps/condor04.map | GPL version 2 | 'SparX' Beyeler
 base/maps/condor_crash04d.map | GPL version 2 | Martin Gerhardy
