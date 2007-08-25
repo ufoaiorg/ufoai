@@ -8,27 +8,27 @@ stage intro
 {
 	set first
 	{
-		seq			intro
-			      // y d h
-		delay		"0 0 10" // time in comments is given as elapsed game time
-		frame		"0 3 0"  // mission starts between 0d 10h and 1d 10h
-		expire		"0 6 0"  // expires not sooner than 2d 10h
-			                 // and not later than 5d 10h
+		sequence	intro
+					// y d h
+		delay		"0 0 10"	// time in comments is given as elapsed game time
+		frame		"0 3 0"		// mission starts between 0d 10h and 1d 10h
+		expire		"0 6 0"		// expires not sooner than 2d 10h
+								// and not later than 5d 10h
 		missions	"rzeszow"
-		number		1 // no quota --- give scared newbies some slack...
+		number		1			// no quota --- give scared newbies some slack...
 	}
 	set terror_only
 	{
 		needed		first
-		delay		"0 5 12" // set starts not sooner than 5d 22h
-			                 // and not later than 10d 22h
-		frame		"0 9 0"  // 1st mission starts not sooner than 8d 22h
-			                 // and not later than 16d 22h
-		expire		"0 8 0"  // average expire time is 4d
-			                 // minimum interval between missions is 3d
-			                 // so you have 2 or less on geoscape any time
+		delay		"0 5 12"	// set starts not sooner than 5d 22h
+								// and not later than 10d 22h
+		frame		"0 9 0"		// 1st mission starts not sooner than 8d 22h
+								// and not later than 16d 22h
+		expire		"0 8 0"		// average expire time is 4d
+								// minimum interval between missions is 3d
+								// so you have 2 or less on geoscape any time
 		missions	"africa_excavation transport mine mart italy estate frozen_alienlandingindustrial farm"
-		number		11 // don't torment the player with the same missions
+		number		11			// don't torment the player with the same missions
 		quota		6
 		ufos		2
 	}
@@ -36,24 +36,24 @@ stage intro
 	{
 		needed		terror_only
 		delay		"0 10 7"
-		frame		"0 15 0" // big missions, but less traffic
-		expire		"0 45 0" // three at geoscape, but lots of time to do them
+		frame		"0 15 0"	// big missions, but less traffic
+		expire		"0 45 0"	// three at geoscape, but lots of time to do them
 		missions	"bunker japan dam spedition stadium industrial"
-		number		4 // no mission will get repeated
+		number		4			// no mission will get repeated
 		quota		4
 		ufos		2
 	}
-// from this place on, due to not enough missions in RC5,
-// and only 19 scientists total, I increase all "frame" settings
-	set ultimate_terror // stage2 equipment start here
+	// from this place on, due to not enough missions in RC5,
+	// and only 19 scientists total, I increase all "frame" settings
+	set ultimate_terror	// stage2 equipment start here
 	{
 		needed		soldier_terror
 		delay		"0 15 7"
-//		frame		"0 6 0" // change of pace --- quick ones
+//		frame		"0 6 0"	// change of pace --- quick ones
 		frame		"0 27 0"
 		expire		"0 5 0"
 		missions	"oriental city subway gasstation tower village"
-		quota		5 // torment the player until he's done
+		quota		5		// torment the player until he's done
 		nextstage	ufos_are_coming
 		ufos		2
 	}
@@ -67,9 +67,9 @@ stage intro
 
 stage ufos_are_coming
 {
-	set first_coming // set names have to be unique for game saving
+	set first_coming	// set names have to be unique for game saving
 	{
-		seq			ufos_are_coming
+		sequence	ufos_are_coming
 		delay		"0 2 7"
 //		frame		"0 12 0"
 		frame		"0 20 0"
@@ -78,7 +78,7 @@ stage ufos_are_coming
 		quota		1
 		ufos		4
 	}
-	set crashed_and_landed // stage3 equipment start here
+	set crashed_and_landed	// stage3 equipment start here
 	{
 		needed		first_coming
 		delay		"0 0 1"
@@ -100,9 +100,9 @@ stage ufos_are_coming
 
 stage invasion
 {
-	set first_invasion // stage4 equipment start here
+	set first_invasion	// stage4 equipment start here
 	{
-		seq	invasion
+		sequence	invasion
 		delay		"0 5 1"
 //		frame		"0 10 0"
 		frame		"0 30 0"
@@ -123,18 +123,18 @@ stage alienbase
 {
 	set first_alienbase
 	{
-		seq	alienbase
+		cutscene	alienbase
 		delay		"0 11 0"
-		// aliencolony mission here
-
-		commands	"mn_push endgame;" // until aliencolony is done
+		// aliencolony missions here
+		missions	"aliencolony_small"
+		quota		1
 	}
 	set stop_alienbase
 	{
 		needed		first_alienbase
 		delay		"0 12 0"
 		endstage	alienbase
-//		commands	"mn_push endgame;"
+		commands	"mn_push endgame;"
 	}
 }
 

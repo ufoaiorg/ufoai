@@ -966,3 +966,19 @@ mission convoy
 	onwin		""
 	storyrelated	true
 }
+
+mission aliencolony_small
+{
+	location	"_Alien colony"
+	type		"_Alien colony"
+	text		"_We located the alien colony, go there and destroy it."
+	map			colon04
+	music		PsymongR5
+	pos			"308 412" // FIXME
+	aliens		12
+	nation		"states" // FIXME
+	alienequip	stage4_soldiers
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
