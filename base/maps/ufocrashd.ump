@@ -20,11 +20,11 @@ base ucd/uc_
 // ---------------------------------
 tile +drop_firebird
 {
-4 4
-0      ab     ab     0
-ac     +a     +a      ac
-ac     +a     +a      ac
-0      ab     ab     0
+6 4
+0      ab     ab      ab     ab     0
+ac     +a     +a      +a     +a      ac
+ac     +a     +a      +a     +a      ac
+0      ab     ab      ab     ab     0
 }
 
 // ---------------------------------
@@ -33,10 +33,11 @@ ac     +a     +a      ac
 tile +inter_stiletto
 {
 4 4
-0      ab     ab     0
-ac     +a     +a      ac
-ac     +a     +a      ac
-0      ab     ab     0
+6 4
+0      ab     ab      ab     ab     0
+ac     +a     +a      +a     +a      ac
+ac     +a     +a      +a     +a      ac
+0      ab     ab      ab     ab     0
 }
 
 // ---------------------------------
@@ -45,10 +46,11 @@ ac     +a     +a      ac
 tile +inter_saracen
 {
 4 4
-0      ab     ab     0
-ac     +a     +a      ac
-ac     +a     +a      ac
-0      ab     ab     0
+6 4
+0      ab     ab      ab     ab     0
+ac     +a     +a      +a     +a      ac
+ac     +a     +a      +a     +a      ac
+0      ab     ab      ab     ab     0
 }
 
 // ---------------------------------
@@ -57,10 +59,11 @@ ac     +a     +a      ac
 tile +inter_stingray
 {
 4 4
-0      ab     ab     0
-ac     +a     +a      ac
-ac     +a     +a      ac
-0      ab     ab     0
+6 4
+0      ab     ab      ab     ab     0
+ac     +a     +a      +a     +a      ac
+ac     +a     +a      +a     +a      ac
+0      ab     ab      ab     ab     0
 }
 
 // ---------------------------------
