@@ -113,6 +113,9 @@ const char* UFO_TypeToName (ufoType_t type)
 
 /**
  * @brief Give a random destination to an ufo, and make him to move there
+ * @todo Sometimes the ufos aren't changing the routes - CP_GetRandomPosForAircraft
+ * returns correct values, but it seams, that MAP_MapCalcLine is not doing the correct
+ * things - set debug_showufos to 1
  */
 static void UFO_SetUfoRandomDest (aircraft_t* ufo)
 {
@@ -137,7 +140,7 @@ void UFO_FleePhalanxAircraft (aircraft_t *ufo, vec2_t v)
 	PolarToVec(ufo->pos, initialVector);
 	PolarToVec(v, dest);
 
-	CrossProduct (initialVector, dest, rotationAxis);
+	CrossProduct(initialVector, dest, rotationAxis);
 	VectorNormalize(rotationAxis);
 	RotatePointAroundVector(dest, rotationAxis, initialVector, -15.0f);
 
@@ -272,12 +275,15 @@ void UFO_CampaignRunUfos (int dt)
 		/* Check if the UFO found a new base */
 		UFO_FoundNewBase(ufo, dt);
 
-		if (AIR_AircraftMakeMove(dt, ufo) && ufo->status != AIR_UFO) {
-			/* check if a fleeing UFO is still in danger */
-			if (ufo->status == AIR_FLEEING && !ufo->visible)
-				ufo->status = AIR_TRANSIT;
+		if (AIR_AircraftMakeMove(dt, ufo)) {
+			if (ufo->status != AIR_UFO) {
+				/* check if a fleeing UFO is still in danger */
+				if (ufo->status == AIR_FLEEING && !ufo->visible)
+					ufo->status = AIR_TRANSIT;
 
-			UFO_SetUfoRandomDest(ufo);
+				UFO_SetUfoRandomDest(ufo);
+			} else
+				Com_DPrintf(DEBUG_CLIENT, "UFO_CampaignRunUfos: UFO status: %i\n", ufo->status);
 		}
 
 		UFO_SearchTarget(ufo);
@@ -376,7 +382,7 @@ static void UFO_NewUfoOnGeoscape_f (void)
 
 	/* Initialise ufo data */
 	AII_ReloadWeapon(ufo);					/* Load its weapons */
-	ufo->visible = qfalse;					/* No visible in radars (just for now) */
+	ufo->visible = qfalse;					/* Not visible in radars (just for now) */
 	CP_GetRandomPosForAircraft(ufo->pos);	/* Random position */
 	UFO_SetUfoRandomDest(ufo);				/* Random destination */
 }

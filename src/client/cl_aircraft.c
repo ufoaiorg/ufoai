@@ -794,6 +794,7 @@ void CP_GetRandomPosForAircraft (float *pos)
 {
 	pos[0] = (rand() % 180) - (rand() % 180);
 	pos[1] = (rand() % 90) - (rand() % 90);
+	Com_DPrintf(DEBUG_CLIENT, "Get random pos on geoscape %.2f:%.2f\n", pos[0], pos[1]);
 }
 
 /**

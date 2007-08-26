@@ -431,12 +431,12 @@ static void AIRFIGHT_RemoveProjectileAimingAircraft (aircraft_t * aircraft)
  */
 void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, qboolean phalanxWon)
 {
-	mission_t* ms = NULL;
-	actMis_t* mis = NULL;
+	mission_t* ms;
+	actMis_t* mis;
 	byte *color;
-	const char *zoneType = NULL;
+	const char *zoneType;
 	char missionName[MAX_VAR];
-	const nation_t *nation = NULL;
+	const nation_t *nation;
 
 	if (phalanxWon) {
 		/* get the color value of the map at the crash position */
@@ -475,6 +475,7 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 				Com_sprintf(ms->location, sizeof(ms->location), _("No nation"));
 			}
 			Q_strncpyz(ms->civTeam, nation->id, sizeof(ms->civTeam));
+			ms->missionText = "Crashed Alien Ship. Secure the area.";
 
 			/* FIXME */
 			ms->alienTeams[0] = Com_GetTeamDefinitionByID("ortnok");

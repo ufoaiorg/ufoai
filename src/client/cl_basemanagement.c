@@ -2140,6 +2140,7 @@ void B_BaseAttack (base_t* const base)
 	Com_sprintf(ms->location, sizeof(ms->location), base->name);
 	Q_strncpyz(ms->civTeam, "human_scientist", sizeof(ms->civTeam));
 	Q_strncpyz(ms->type, _("Base attack"), sizeof(ms->type));
+	ms->missionText = "Base is under attack.";
 	/* FIXME */
 	ms->alienTeams[0] = Com_GetTeamDefinitionByID("ortnok");
 	if (ms->alienTeams[0])
