@@ -61,7 +61,7 @@ item ugv_chaingun
 
 item ugv_chaingun_belt
 {
-	name		"__Chaingun Belt"
+	name		"_Chaingun Belt"
 	model		weapons/chaingun/chaingun_ammo	// todo: new model of "Belt" needed
 	type		ammo
 	animationindex	0
