@@ -428,3 +428,23 @@ team worker
 		}
 	}
 }
+
+team miner
+{
+	size	1
+	hit_particle	blood
+	weapons false
+	armor false
+	civilian true
+
+	names {
+		male { b }
+		lastname { c }
+	}
+
+	models {
+		male {
+			civilians/male worker01 worker02_head 1
+		}
+	}
+}

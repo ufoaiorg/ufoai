@@ -166,6 +166,7 @@ mission mine
 	alienteam	ortnok
 	alienequip	stage1_workers_explosive
 	civilians	6
+	civteam		"miner"
 	nation		"oceania"
 	onlose		""
 	onwin		""
@@ -465,6 +466,7 @@ mission mine_crash
 	aliens		7
 	alienteam	"ortnok taman shevaar"
 	alienequip	stage2_soldiers
+	civteam		"miner"
 	civilians	6
 	nation		"africa"
 	onlose		""
