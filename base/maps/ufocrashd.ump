@@ -32,7 +32,6 @@ ac     +a     +a      +a     +a      ac
 // ---------------------------------
 tile +inter_stiletto
 {
-4 4
 6 4
 0      ab     ab      ab     ab     0
 ac     +a     +a      +a     +a      ac
@@ -45,7 +44,6 @@ ac     +a     +a      +a     +a      ac
 // ---------------------------------
 tile +inter_saracen
 {
-4 4
 6 4
 0      ab     ab      ab     ab     0
 ac     +a     +a      +a     +a      ac
@@ -58,7 +56,6 @@ ac     +a     +a      +a     +a      ac
 // ---------------------------------
 tile +inter_stingray
 {
-4 4
 6 4
 0      ab     ab      ab     ab     0
 ac     +a     +a      +a     +a      ac
