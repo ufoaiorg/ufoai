@@ -463,6 +463,7 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 			ms->civilians = (frand() * 10);
 			ms->civilians %= 4;
 			ms->civilians += 1;
+			ms->zoneType = zoneType; /* store to terrain type for texture replacement */
 
 			/* realPos is set below */
 			Vector2Set(ms->pos, aircraft->pos[0], aircraft->pos[1]);
@@ -486,7 +487,7 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 			Com_sprintf(ms->onwin, sizeof(ms->onwin), "cp_ufocrashed %i;", aircraft->ufotype);
 			/* use ufocrash.ump as random tile assembly */
 			Com_sprintf(ms->map, sizeof(ms->map), "+ufocrash");
-			Com_sprintf(ms->param, sizeof(ms->param), "%s-%s", UFO_TypeToShortName(aircraft->ufotype), zoneType);
+			Com_sprintf(ms->param, sizeof(ms->param), "%s", UFO_TypeToShortName(aircraft->ufotype));
 			mis = CL_CampaignAddGroundMission(ms);
 			if (mis) {
 				Vector2Set(mis->realPos, ms->pos[0], ms->pos[1]);

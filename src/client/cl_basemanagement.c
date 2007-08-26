@@ -2146,6 +2146,8 @@ void B_BaseAttack (base_t* const base)
 	if (ms->alienTeams[0])
 		ms->numAlienTeams++;
 
+	ms->zoneType = base->mapZone;
+
 	mis = CL_CampaignAddGroundMission(ms);
 	if (mis) {
 		Vector2Set(mis->realPos, ms->pos[0], ms->pos[1]);
@@ -2280,7 +2282,6 @@ static void B_AssembleMap_f (void)
 		}
 	/* set maxlevel for base attacks to 5 */
 	map_maxlevel_base = 6;
-	cl.refdef.mapZone = base->mapZone;
 
 	Cbuf_AddText(va("map \"%s\" \"%s\"\n", maps, coords));
 }

@@ -2251,8 +2251,11 @@ static void CL_StartMissionMap (mission_t* mission)
 	else
 		timeChar = 'd';
 
-	/* reset the mapZone - this is only needed in vase of base assembly map */
-	cl.refdef.mapZone = NULL;
+	/** @note set the mapZone - this allows us to replace the ground texture
+	 * with the suitable terrain texture - just use tex_terrain/dummy for the
+	 * brushes you want the terrain textures on
+	 * @sa Mod_LoadTexinfo */
+	cl.refdef.mapZone = mission->zoneType;
 
 	switch (mission->map[0]) {
 	case '+':

@@ -105,6 +105,7 @@ typedef struct mission_s {
 	char alienEquipment[MAX_VAR];
 	char civTeam[MAX_VAR];
 	char cmds[MAX_VAR];
+	const char *zoneType;
 	/** @note Don't end with ; - the trigger commands get the base index as
 	 * parameter - see CP_ExecuteMissionTrigger - If you don't need the base index
 	 * in your trigger command, you can seperate more commands with ; of course */
