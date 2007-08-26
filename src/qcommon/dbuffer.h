@@ -101,6 +101,6 @@ extern ssize_t dbuffer_find_char(const struct dbuffer *, int);
 /* Duplicate the buffer */
 extern struct dbuffer *dbuffer_dup(struct dbuffer *);
 
-#define dbuffer_len(A) ((A)->len)
+#define dbuffer_len(A) (A ? (A)->len : 0)
 
 #endif

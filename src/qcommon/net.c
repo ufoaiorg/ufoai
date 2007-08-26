@@ -341,9 +341,9 @@ static void close_stream (struct net_stream *s)
 		return;
 
 	if (s->socket != INVALID_SOCKET) {
-		if (s->outbound && dbuffer_len(s->outbound))
+		if (dbuffer_len(s->outbound))
 			Com_Printf("The outbound buffer for this socket (%d) is not empty\n", s->socket);
-		else if (s->inbound && dbuffer_len(s->inbound))
+		else if (dbuffer_len(s->inbound))
 			Com_Printf("The inbound buffer for this socket (%d) is not empty\n", s->socket);
 
 		FD_CLR(s->socket, &read_fds);
@@ -740,7 +740,7 @@ qboolean stream_closed (struct net_stream *s)
  */
 int stream_length (struct net_stream *s)
 {
-	return (!s || !s->inbound) ? 0 : dbuffer_len(s->inbound);
+	return s ? dbuffer_len(s->inbound) : 0;
 }
 
 /**
@@ -752,7 +752,7 @@ int stream_peek (struct net_stream *s, char *data, int len)
 	if (len <= 0 || !s)
 		return 0;
 
-	if ((s->closed || s->finished) && (!s->inbound || dbuffer_len(s->inbound) == 0))
+	if ((s->closed || s->finished) && dbuffer_len(s->inbound) == 0)
 		return 0;
 
 	return dbuffer_get(s->inbound, data, len);
@@ -824,7 +824,7 @@ void stream_finished (struct net_stream *s)
 
 	/* If there's nothing in the outbound buffer, any finished stream is
 		ready to be closed */
-	if (!s->outbound || dbuffer_len(s->outbound) == 0)
+	if (dbuffer_len(s->outbound) == 0)
 		close_stream(s);
 }
 
