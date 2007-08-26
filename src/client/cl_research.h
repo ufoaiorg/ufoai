@@ -107,6 +107,7 @@ typedef struct techMail_s {
 								 * this will be filled with Proposal: (mail_pre) and Re: (mail)
 								 * automatically */
 	char *date;			/**< date string, if empty use the date of research */
+	char *icon;			/**< name of an image file to display in the mail client */
 	qboolean read;				/**< already read the mail? */
 } techMail_t;
 

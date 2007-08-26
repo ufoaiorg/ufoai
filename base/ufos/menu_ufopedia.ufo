@@ -583,18 +583,367 @@ menu ufopedia_mail
 		font	f_normal
 	}
 
+	pic mail_icon_0
+	{
+		image "*cvar mn_mail_icon0"
+		pos		"50 124"
+		texl	"0 0"
+		texh	"28 28"
+	}
+	pic mail_icon_1
+	{
+		image "*cvar mn_mail_icon1"
+		pos		"50 162"
+		texl	"0 0"
+		texh	"28 28"
+	}
+	pic mail_icon_2
+	{
+		image "*cvar mn_mail_icon2"
+		pos		"50 200"
+		texl	"0 0"
+		texh	"28 28"
+	}
+	pic mail_icon_3
+	{
+		image "*cvar mn_mail_icon3"
+		pos		"50 238"
+		texl	"0 0"
+		texh	"28 28"
+	}
+	pic mail_icon_4
+	{
+		image "*cvar mn_mail_icon4"
+		pos		"50 276"
+		texl	"0 0"
+		texh	"28 28"
+	}
+	pic mail_icon_5
+	{
+		image "*cvar mn_mail_icon5"
+		pos		"50 314"
+		texl	"0 0"
+		texh	"28 28"
+	}	
+	pic mail_icon_6
+	{
+		image "*cvar mn_mail_icon6"
+		pos		"50 352"
+		texl	"0 0"
+		texh	"28 28"
+	}
+	pic mail_icon_7
+	{
+		image "*cvar mn_mail_icon7"
+		pos		"50 390"
+		texl	"0 0"
+		texh	"28 28"
+	}
+	pic mail_icon_8
+	{
+		image "*cvar mn_mail_icon8"
+		pos		"50 428"
+		texl	"0 0"
+		texh	"28 28"
+	}
+	pic mail_icon_9
+	{
+		image "*cvar mn_mail_icon9"
+		pos		"50 466"
+		texl	"0 0"
+		texh	"28 28"
+	}
+	pic mail_icon_10
+	{
+		image "*cvar mn_mail_icon10"
+		pos		"50 504"
+		texl	"0 0"
+		texh	"28 28"
+	}
+	pic mail_icon_11
+	{
+		image "*cvar mn_mail_icon11"
+		pos		"50 542"
+		texl	"0 0"
+		texh	"28 28"
+	}
+	pic mail_icon_12
+	{
+		image "*cvar mn_mail_icon12"
+		pos		"50 580"
+		texl	"0 0"
+		texh	"28 28"
+	}
+	pic mail_icon_13
+	{
+		image "*cvar mn_mail_icon13"
+		pos		"50 618"
+		texl	"0 0"
+		texh	"28 28"
+	}
+	pic mail_icon_14
+	{
+		image "*cvar mn_mail_icon14"
+		pos		"50 656"
+		texl	"0 0"
+		texh	"28 28"
+	}
+	
+	pic mail_button_0
+	{
+		if		"mn_mail_read0 == 1"
+		image 	menu/mail_button
+		pos		"90 124"
+		texl	"0 0"
+		texh	"852 28"
+	}
+	pic mail_button_1
+	{
+		if		"mn_mail_read1 == 1"
+		image 	menu/mail_button
+		pos		"90 162"
+		texl	"0 0"
+		texh	"852 28"
+	}
+	pic mail_button_2
+	{
+		if		"mn_mail_read2 == 1"
+		image 	menu/mail_button
+		pos		"90 200"
+		texl	"0 0"
+		texh	"852 28"
+	}
+	pic mail_button_3
+	{
+		if		"mn_mail_read3 == 1"
+		image 	menu/mail_button
+		pos		"90 238"
+		texl	"0 0"
+		texh	"852 28"
+	}
+	pic mail_button_4
+	{
+		if		"mn_mail_read4 == 1"
+		image 	menu/mail_button
+		pos		"90 276"
+		texl	"0 0"
+		texh	"852 28"
+	}
+	pic mail_button_5
+	{
+		if		"mn_mail_read5 == 1"
+		image 	menu/mail_button
+		pos		"90 314"
+		texl	"0 0"
+		texh	"852 28"
+	}	
+	pic mail_button_6
+	{
+		if		"mn_mail_read6 == 1"
+		image 	menu/mail_button
+		pos		"90 352"
+		texl	"0 0"
+		texh	"852 28"
+	}
+	pic mail_button_7
+	{
+		if		"mn_mail_read7 == 1"
+		image 	menu/mail_button
+		pos		"90 390"
+		texl	"0 0"
+		texh	"852 28"
+	}
+	pic mail_button_8
+	{
+		if		"mn_mail_read8 == 1"
+		image 	menu/mail_button
+		pos		"90 428"
+		texl	"0 0"
+		texh	"852 28"
+	}
+	pic mail_button_9
+	{
+		if		"mn_mail_read9 == 1"
+		image 	menu/mail_button
+		pos		"90 466"
+		texl	"0 0"
+		texh	"852 28"
+	}
+	pic mail_button_10
+	{
+		if		"mn_mail_read10 == 1"
+		image 	menu/mail_button
+		pos		"90 504"
+		texl	"0 0"
+		texh	"852 28"
+	}
+	pic mail_button_11
+	{
+		if		"mn_mail_read11 == 1"
+		image 	menu/mail_button
+		pos		"90 542"
+		texl	"0 0"
+		texh	"852 28"
+	}
+	pic mail_button_12
+	{
+		if		"mn_mail_read12 == 1"
+		image 	menu/mail_button
+		pos		"90 580"
+		texl	"0 0"
+		texh	"852 28"
+	}
+	pic mail_button_13
+	{
+		if		"mn_mail_read13 == 1"
+		image 	menu/mail_button
+		pos		"90 618"
+		texl	"0 0"
+		texh	"852 28"
+	}
+	pic mail_button_14
+	{
+		if		"mn_mail_read14 == 1"
+		image 	menu/mail_button
+		pos		"90 656"
+		texl	"0 0"
+		texh	"852 28"
+	}
+
+	pic mail_button_un_0
+	{
+		if		"mn_mail_read0 == 0"
+		image 	menu/mail_button
+		pos		"90 124"
+		texl	"0 28"
+		texh	"852 56"
+	}
+	pic mail_button_un_1
+	{
+		if		"mn_mail_read1 == 0"
+		image 	menu/mail_button
+		pos		"90 162"
+		texl	"0 28"
+		texh	"852 56"
+	}
+	pic mail_button_un_2
+	{
+		if		"mn_mail_read2 == 0"
+		image 	menu/mail_button
+		pos		"90 200"
+		texl	"0 28"
+		texh	"852 56"
+	}
+	pic mail_button_un_3
+	{
+		if		"mn_mail_read3 == 0"
+		image 	menu/mail_button
+		pos		"90 238"
+		texl	"0 28"
+		texh	"852 56"
+	}
+	pic mail_button_un_4
+	{
+		if		"mn_mail_read4 == 0"
+		image 	menu/mail_button
+		pos		"90 276"
+		texl	"0 28"
+		texh	"852 56"
+	}
+	pic mail_button_un_5
+	{
+		if		"mn_mail_read5 == 0"
+		image 	menu/mail_button
+		pos		"90 314"
+		texl	"0 28"
+		texh	"852 56"
+	}	
+	pic mail_button_un_6
+	{
+		if		"mn_mail_read6 == 0"
+		image 	menu/mail_button
+		pos		"90 352"
+		texl	"0 28"
+		texh	"852 56"
+	}
+	pic mail_button_un_7
+	{
+		if		"mn_mail_read7 == 0"
+		image 	menu/mail_button
+		pos		"90 390"
+		texl	"0 28"
+		texh	"852 56"
+	}
+	pic mail_button_un_8
+	{
+		if		"mn_mail_read8 == 0"
+		image 	menu/mail_button
+		pos		"90 428"
+		texl	"0 28"
+		texh	"852 56"
+	}
+	pic mail_button_un_9
+	{
+		if		"mn_mail_read9 == 0"
+		image 	menu/mail_button
+		pos		"90 466"
+		texl	"0 28"
+		texh	"852 56"
+	}
+	pic mail_button_un_10
+	{
+		if		"mn_mail_read10 == 0"
+		image 	menu/mail_button
+		pos		"90 504"
+		texl	"0 28"
+		texh	"852 56"
+	}
+	pic mail_button_un_11
+	{
+		if		"mn_mail_read11 == 0"
+		image 	menu/mail_button
+		pos		"90 542"
+		texl	"0 28"
+		texh	"852 56"
+	}
+	pic mail_button_un_12
+	{
+		if		"mn_mail_read12 == 0"
+		image 	menu/mail_button
+		pos		"90 580"
+		texl	"0 28"
+		texh	"852 56"
+	}
+	pic mail_button_un_13
+	{
+		if		"mn_mail_read13 == 0"
+		image 	menu/mail_button
+		pos		"90 618"
+		texl	"0 28"
+		texh	"852 56"
+	}
+	pic mail_button_un_14
+	{
+		if		"mn_mail_read14 == 0"
+		image 	menu/mail_button
+		pos		"90 656"
+		texl	"0 28"
+		texh	"852 56"
+	}
+
 	text mailclient
 	{
-		pos		"50 120"
-		size	"920 564"
+		pos		"100 130"
+		size	"870 570"
 		num		33
-		font	"f_verysmall"
-		format	"12 0"
+		height	"15"
+		font	"f_small"
+		format	"38 700"
 		click rclick wheel
 		mousefx	true
 //		bgcolor " 0 1 0 0.5"
-		height	"47"
 		scrollbar true
+		wheel	{ cmd "ufopedia_scrollmail" }
 	}
 
 	pic button_exit
