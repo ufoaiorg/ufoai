@@ -34,7 +34,7 @@ const vec3_t bytedirs[NUMVERTEXNORMALS] = {
 /**
  * @brief
  */
-void MSG_WriteChar (sizebuf_t * sb, int32_t c)
+void MSG_WriteChar (sizebuf_t * sb, int c)
 {
 	byte *buf;
 
@@ -51,9 +51,9 @@ void MSG_WriteChar (sizebuf_t * sb, int32_t c)
  * @brief
  */
 #ifdef DEBUG
-void MSG_WriteByteDebug (sizebuf_t * sb, int c, const char *file, int32_t line)
+void MSG_WriteByteDebug (sizebuf_t * sb, int c, const char *file, int line)
 #else
-void MSG_WriteByte (sizebuf_t * sb, int32_t c)
+void MSG_WriteByte (sizebuf_t * sb, int c)
 #endif
 {
 	byte *buf;
@@ -72,9 +72,9 @@ void MSG_WriteByte (sizebuf_t * sb, int32_t c)
  * @brief
  */
 #ifdef DEBUG
-void MSG_WriteShortDebug (sizebuf_t * sb, int32_t c, const char* file, int line)
+void MSG_WriteShortDebug (sizebuf_t * sb, int c, const char* file, int line)
 #else
-void MSG_WriteShort (sizebuf_t * sb, int32_t c)
+void MSG_WriteShort (sizebuf_t * sb, int c)
 #endif
 {
 #if 1
@@ -97,7 +97,7 @@ void MSG_WriteShort (sizebuf_t * sb, int32_t c)
 /**
  * @brief
  */
-void MSG_WriteLong (sizebuf_t * sb, int32_t c)
+void MSG_WriteLong (sizebuf_t * sb, int c)
 {
 #if 1
 	unsigned int *ip = (unsigned int *)SZ_GetSpace(sb, 4);
@@ -324,9 +324,9 @@ void MSG_BeginReading (sizebuf_t * msg)
  *
  * returns -1 if no more characters are available
  */
-int32_t MSG_ReadChar (sizebuf_t * msg_read)
+int MSG_ReadChar (sizebuf_t * msg_read)
 {
-	int32_t c;
+	int c;
 
 	if (msg_read->readcount + 1 > msg_read->cursize)
 		c = -1;
@@ -342,9 +342,9 @@ int32_t MSG_ReadChar (sizebuf_t * msg_read)
  * @note Beware that you don't put this into a byte or short - this will overflow
  * use an int value to store the return value!!!
  */
-int32_t MSG_ReadByte (sizebuf_t * msg_read)
+int MSG_ReadByte (sizebuf_t * msg_read)
 {
-	int32_t c;
+	int c;
 
 	if (msg_read->readcount + 1 > msg_read->cursize)
 		c = -1;
@@ -358,9 +358,9 @@ int32_t MSG_ReadByte (sizebuf_t * msg_read)
 /**
  * @brief
  */
-int32_t MSG_ReadShort (sizebuf_t * msg_read)
+int MSG_ReadShort (sizebuf_t * msg_read)
 {
-	int32_t c;
+	int c;
 
 	if (msg_read->readcount + 2 > msg_read->cursize)
 		c = -1;
@@ -382,7 +382,7 @@ int32_t MSG_ReadShort (sizebuf_t * msg_read)
 /**
  * @brief
  */
-int32_t MSG_ReadLong (sizebuf_t * msg_read)
+int MSG_ReadLong (sizebuf_t * msg_read)
 {
 	int c;
 
