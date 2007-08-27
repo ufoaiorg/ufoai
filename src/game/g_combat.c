@@ -942,8 +942,8 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 	}
 
 	if (!mock) {
-		/* spawn the knife on the floor */
-		if (fd->ammo && !fd->splrad && gi.csi->ods[weapon->t].thrown) {
+		/* spawn the throwable item on the floor but only if it is not depletable */
+		if (fd->ammo && !fd->splrad && gi.csi->ods[weapon->t].thrown && !gi.csi->ods[weapon->t].deplete) {
 			pos3_t drop;
 			edict_t *floor, *actor;
 
