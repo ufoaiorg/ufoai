@@ -2858,7 +2858,8 @@ static void CL_GameResults_f (void)
 static const value_t mission_vals[] = {
 	{"location", V_TRANSLATION_STRING, offsetof(mission_t, location), 0},
 	{"type", V_TRANSLATION_STRING, offsetof(mission_t, type), 0},
-	{"text", V_TRANSLATION_STRING, 0, 0},	/* max length is 128 */
+	{"text", V_TRANSLATION_MANUAL_STRING, offsetof(mission_t, missionText), 0},	/* max length is 128 */
+	{"triggertext", V_TRANSLATION_MANUAL_STRING, offsetof(mission_t, triggerText), 0},	/* max length is 128 */
 	{"nation", V_STRING, offsetof(mission_t, nation), 0},
 	{"map", V_STRING, offsetof(mission_t, map), 0},
 	{"param", V_STRING, offsetof(mission_t, param), 0},
@@ -2960,14 +2961,18 @@ void CL_ParseMission (const char *name, const char **text)
 				if (!*text)
 					return;
 
-				if (vp->ofs)
+				switch (vp->type) {
+				default:
 					Com_ParseValue(ms, token, vp->type, vp->ofs, vp->size);
-				else {
+					break;
+				case V_TRANSLATION_MANUAL_STRING:
 					if (*token == '_')
 						token++;
-					ms->missionText = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+				/* fall through */
+				case V_CLIENT_HUNK_STRING:
+					Mem_PoolStrDupTo(token, (char**) ((char*)ms + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+					break;
 				}
-				break;
 			}
 
 		if (!vp->string) {

@@ -92,6 +92,7 @@ typedef enum missionType_s {
 /** mission definition */
 typedef struct mission_s {
 	char *missionText;	/**< translateable - but untranslated in memory */
+	char *triggerText;	/**< translateable - but untranslated in memory */
 	char name[MAX_VAR];
 	char map[MAX_VAR];
 	char loadingscreen[MAX_VAR];
