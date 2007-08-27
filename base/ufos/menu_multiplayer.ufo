@@ -369,7 +369,7 @@ menu mp_team
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
-		click	{ cmd "mn_modifystring team -1 human:alien;" }
+		click	{ cmd "mn_modifystring team -1 human:ortnok:taman;" }
 	}
 	pic race_inc
 	{
@@ -378,7 +378,7 @@ menu mp_team
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
-		click	{ cmd "mn_modifystring team +1 human:alien;" }
+		click	{ cmd "mn_modifystring team +1 human:ortnok:taman;" }
 	}
 
 	string current_name
