@@ -428,77 +428,21 @@ static void AIRFIGHT_RemoveProjectileAimingAircraft (aircraft_t * aircraft)
  * @note shooter may be NULL
  * @sa UFO_DestroyAllUFOsOnGeoscape_f
  * @sa CP_Load
+ * @sa CP_SpawnCrashSiteMission
  */
 void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, qboolean phalanxWon)
 {
-	mission_t* ms;
-	actMis_t* mis;
 	byte *color;
-	const char *zoneType;
-	char missionName[MAX_VAR];
-	const nation_t *nation;
 
 	if (phalanxWon) {
 		/* get the color value of the map at the crash position */
 		color = MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN);
-		zoneType = MAP_GetTerrainType(color);
 		/* if this color value is not the value for water ...
 		 * and we hit the probability to spawn a crashsite mission */
 		if (!MapIsWater(color)) {
-			/* spawn new mission */
-			/* some random data like alien race, alien count (also depends on ufo-size) */
-			/* @todo: We should have a ufo crash theme for random map assembly */
-			/* @todo: call the map assembly theme with the right parameter, e.g.: +ufocrash [climazone] */
-			Com_sprintf(missionName, sizeof(missionName), "ufocrash%.0f:%.0f", aircraft->pos[0], aircraft->pos[1]);
-			ms = CL_AddMission(missionName);
-			if (!ms) {
-				MN_AddNewMessage(_("Interception"), _("UFO interception successful -- UFO lost."), qfalse, MSG_CRASHSITE, NULL);
-				return;
-			}
-			ms->missionType = MIS_CRASHSITE;
-			/* the size if somewhat random, because not all map tiles would have
-			 * alien spawn points */
-			ms->aliens = aircraft->size;
-			/* 1-4 civilians */
-			ms->civilians = (frand() * 10);
-			ms->civilians %= 4;
-			ms->civilians += 1;
-			ms->zoneType = zoneType; /* store to terrain type for texture replacement */
-
-			/* realPos is set below */
-			Vector2Set(ms->pos, aircraft->pos[0], aircraft->pos[1]);
-
-			nation = MAP_GetNation(ms->pos);
-			Com_sprintf(ms->type, sizeof(ms->type), _("UFO crash site"));
-			if (nation) {
-				Com_sprintf(ms->location, sizeof(ms->location), _(nation->name));
-			} else {
-				Com_sprintf(ms->location, sizeof(ms->location), _("No nation"));
-			}
-			Q_strncpyz(ms->civTeam, nation->id, sizeof(ms->civTeam));
-			ms->missionText = "Crashed Alien Ship. Secure the area.";
-
-			/* FIXME */
-			ms->alienTeams[0] = Com_GetTeamDefinitionByID("ortnok");
-			if (ms->alienTeams[0])
-				ms->numAlienTeams++;
-
-			Q_strncpyz(ms->loadingscreen, "crashsite", sizeof(ms->loadingscreen));
-			Com_sprintf(ms->onwin, sizeof(ms->onwin), "cp_ufocrashed %i;", aircraft->ufotype);
-			/* use ufocrash.ump as random tile assembly */
-			Com_sprintf(ms->map, sizeof(ms->map), "+ufocrash");
-			Com_sprintf(ms->param, sizeof(ms->param), "%s", UFO_TypeToShortName(aircraft->ufotype));
-			mis = CL_CampaignAddGroundMission(ms);
-			if (mis) {
-				Vector2Set(mis->realPos, ms->pos[0], ms->pos[1]);
-				MN_AddNewMessage(_("Interception"), _("UFO interception successful -- New mission available."), qfalse, MSG_CRASHSITE, NULL);
-			} else {
-				/* no active stage - to decrement the mission counter */
-				CP_RemoveLastMission();
-				MN_AddNewMessage(_("Interception"), _("UFO interception successful -- UFO lost."), qfalse, MSG_CRASHSITE, NULL);
-			}
+			CP_SpawnCrashSiteMission(aircraft);
 		} else {
-			Com_Printf("zone: %s (%i:%i:%i)\n", zoneType, color[0], color[1], color[2]);
+			Com_Printf("zone: %s (%i:%i:%i)\n", MAP_GetTerrainType(color), color[0], color[1], color[2]);
 			MN_AddNewMessage(_("Interception"), _("UFO interception successful -- UFO lost to sea."), qfalse, MSG_STANDARD, NULL);
 		}
 		/* change destination of other projectiles aiming aircraft */
