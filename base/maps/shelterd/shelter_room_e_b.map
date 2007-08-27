@@ -1749,6 +1749,24 @@
 ( 508 64 0 ) ( 480 64 4 ) ( 480 64 0 ) tex_buildings/concrete003 0 0 0 1 1 65024 0 0
 ( 512 448 128 ) ( 512 448 96 ) ( 512 0 128 ) tex_buildings/concrete003 0 0 0 1 1 65024 0 0
 }
+// brush 192
+{
+( 512 64 192 ) ( 512 60 192 ) ( 480 64 192 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 512 64 160 ) ( 480 64 160 ) ( 512 64 32 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 512 64 192 ) ( 512 64 64 ) ( 512 60 192 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 480 60 128 ) ( 512 60 128 ) ( 480 64 128 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 480 60 128 ) ( 480 60 256 ) ( 512 60 128 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 480 60 32 ) ( 480 64 32 ) ( 480 60 160 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+}
+// brush 193
+{
+( 480 192 192 ) ( 480 64 192 ) ( 476 192 192 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 480 192 160 ) ( 476 192 160 ) ( 480 192 32 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 480 192 160 ) ( 480 192 32 ) ( 480 64 160 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 476 64 32 ) ( 480 64 32 ) ( 476 192 32 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 476 64 32 ) ( 476 64 160 ) ( 480 64 32 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 476 64 32 ) ( 476 192 32 ) ( 476 64 160 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+}
 }
 // entity 1
 {
@@ -3870,4 +3888,75 @@
 "light" "100"
 "_color" "1 0.0 0"
 "origin" "-16 164 140"
+}
+// entity 133
+{
+"classname" "info_civilian_start"
+"origin" "208 240 32"
+}
+// entity 134
+{
+"classname" "info_civilian_start"
+"origin" "144 368 32"
+}
+// entity 135
+{
+"classname" "info_civilian_start"
+"origin" "240 464 32"
+}
+// entity 136
+{
+"classname" "info_civilian_start"
+"origin" "464 48 32"
+}
+// entity 137
+{
+"classname" "info_civilian_start"
+"origin" "400 400 32"
+}
+// entity 138
+{
+"classname" "info_civilian_start"
+"origin" "208 240 160"
+}
+// entity 139
+{
+"classname" "info_civilian_start"
+"origin" "80 272 160"
+}
+// entity 140
+{
+"classname" "info_civilian_start"
+"origin" "208 432 160"
+}
+// entity 141
+{
+"classname" "info_civilian_start"
+"origin" "368 176 160"
+}
+// entity 142
+{
+"classname" "info_player_start"
+"origin" "208 304 32"
+"team" "3"
+}
+// entity 143
+{
+"classname" "info_player_start"
+"origin" "144 464 32"
+"team" "3"
+}
+// entity 144
+{
+"classname" "info_player_start"
+"origin" "368 144 32"
+"team" "3"
+"angle" "180"
+}
+// entity 145
+{
+"classname" "info_player_start"
+"origin" "432 48 32"
+"team" "3"
+"angle" "180"
 }

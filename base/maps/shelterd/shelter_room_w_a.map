@@ -1758,6 +1758,24 @@
 ( 176 512 4 ) ( 176 512 0 ) ( 176 504 0 ) tex_material/c_black 0 0 0 1 1 65280 0 0
 ( 180 504 -64 ) ( 100 504 -64 ) ( 180 504 64 ) tex_material/c_black 0 0 0 1 1
 }
+// brush 193
+{
+( 32 64 192 ) ( 0 60 192 ) ( 0 64 192 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 0 64 32 ) ( 32 64 160 ) ( 0 64 160 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 0 60 192 ) ( 0 64 64 ) ( 0 64 192 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 32 64 128 ) ( 0 60 128 ) ( 32 60 128 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 0 60 128 ) ( 32 60 256 ) ( 32 60 128 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 32 60 160 ) ( 32 64 32 ) ( 32 60 32 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+}
+// brush 194
+{
+( 36 192 192 ) ( 32 64 192 ) ( 32 192 192 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 32 192 32 ) ( 36 192 160 ) ( 32 192 160 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 32 64 160 ) ( 32 192 32 ) ( 32 192 160 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 36 192 32 ) ( 32 64 32 ) ( 36 64 32 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 32 64 32 ) ( 36 64 160 ) ( 36 64 32 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 36 64 160 ) ( 36 192 32 ) ( 36 64 32 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+}
 }
 // entity 1
 {
@@ -3879,4 +3897,77 @@
 "light" "100"
 "_color" "1 1 0"
 "origin" "528 164 140"
+}
+// entity 133
+{
+"classname" "info_civilian_start"
+"origin" "304 240 32"
+}
+// entity 134
+{
+"classname" "info_civilian_start"
+"origin" "368 368 32"
+}
+// entity 135
+{
+"classname" "info_civilian_start"
+"origin" "272 464 32"
+}
+// entity 136
+{
+"classname" "info_civilian_start"
+"origin" "48 48 32"
+}
+// entity 137
+{
+"classname" "info_civilian_start"
+"origin" "112 400 32"
+}
+// entity 138
+{
+"classname" "info_civilian_start"
+"origin" "304 240 160"
+}
+// entity 139
+{
+"classname" "info_civilian_start"
+"origin" "432 272 160"
+}
+// entity 140
+{
+"classname" "info_civilian_start"
+"origin" "304 432 160"
+}
+// entity 141
+{
+"classname" "info_civilian_start"
+"origin" "144 176 160"
+}
+// entity 142
+{
+"classname" "info_player_start"
+"origin" "304 432 32"
+"team" "4"
+"angle" "180"
+}
+// entity 143
+{
+"classname" "info_player_start"
+"origin" "272 304 32"
+"team" "4"
+"angle" "180"
+}
+// entity 144
+{
+"classname" "info_player_start"
+"origin" "176 272 32"
+"team" "4"
+"angle" "180"
+}
+// entity 145
+{
+"classname" "info_player_start"
+"origin" "144 368 32"
+"team" "4"
+"angle" "90"
 }

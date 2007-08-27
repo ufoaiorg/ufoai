@@ -2155,6 +2155,24 @@
 ( 288 0 130 ) ( 224 0 130 ) ( 288 0 162 ) tex_base/lab_floor002 156 -614.6666259766 0 0.25 0.25 64512 0 0
 ( 304 -956 160 ) ( 208 -1084 160 ) ( 304 -1084 160 ) tex_buildings/9techwall03b 156 -614.6666259766 0 0.25 0.25 64512 0 0
 }
+// brush 243
+{
+( 452 512 192 ) ( 452 480 192 ) ( 448 512 192 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 452 512 164 ) ( 448 512 164 ) ( 452 512 160 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 452 512 164 ) ( 452 512 160 ) ( 452 480 164 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 448 480 128 ) ( 452 480 128 ) ( 448 512 128 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 448 480 160 ) ( 448 480 164 ) ( 452 480 160 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 448 480 160 ) ( 448 512 160 ) ( 448 480 164 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+}
+// brush 244
+{
+( 448 476 192 ) ( 416 476 192 ) ( 448 480 192 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 448 476 164 ) ( 448 480 164 ) ( 448 476 160 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 416 476 100 ) ( 416 476 96 ) ( 384 476 100 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 416 480 64 ) ( 416 476 64 ) ( 448 480 64 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 320 480 160 ) ( 320 480 164 ) ( 320 476 160 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 416 480 160 ) ( 448 480 160 ) ( 416 480 164 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+}
 }
 // entity 1
 {
@@ -3494,4 +3512,62 @@
 "origin" "96 44 52"
 "light" "150"
 "_color" "1 1 1"
+}
+// entity 106
+{
+"classname" "info_player_start"
+"origin" "240 368 160"
+"team" "2"
+"angle" "270"
+}
+// entity 107
+{
+"classname" "info_player_start"
+"origin" "368 400 160"
+"team" "2"
+"angle" "-90"
+}
+// entity 108
+{
+"classname" "info_player_start"
+"origin" "400 240 160"
+"team" "2"
+"angle" "90"
+}
+// entity 109
+{
+"classname" "info_player_start"
+"origin" "112 272 160"
+"team" "2"
+"angle" "90"
+}
+// entity 110
+{
+"classname" "info_alien_start"
+"origin" "240 144 32"
+}
+// entity 111
+{
+"classname" "info_alien_start"
+"origin" "80 208 32"
+}
+// entity 112
+{
+"classname" "info_alien_start"
+"origin" "304 464 96"
+}
+// entity 113
+{
+"classname" "info_alien_start"
+"origin" "432 368 160"
+}
+// entity 114
+{
+"classname" "info_alien_start"
+"origin" "80 400 160"
+}
+// entity 115
+{
+"classname" "info_alien_start"
+"origin" "400 144 160"
 }
