@@ -152,12 +152,6 @@ void INV_CollectingItems (int won)
 		case ET_ITEM:
 			if (won) {
 				for (item = FLOOR(le); item; item = item->next) {
-					if ((item->item.a <= 0) /* No ammo left, and... */
-					&& csi.ods[item->item.t].oneshot /* ... oneshot weapon, and... */
-					&& csi.ods[item->item.t].deplete) { /* ... useless after ammo is gone. */
-						Com_DPrintf(DEBUG_CLIENT, "INV_CollectItems: depletable item not collected: %s\n", csi.ods[item->item.t].name);
-						continue;
-					}
 					for (j = 0; j < aircraft->itemtypes; j++) {
 						if (cargo[j].idx == item->item.t) {
 							cargo[j].amount++;
