@@ -2126,9 +2126,8 @@ void B_BaseAttack (base_t* const base)
 		return;
 	}
 
-	base->baseStatus = BASE_UNDER_ATTACK;
-
-	CP_SpawnBaseAttackMission(base, ms);
+	if (CP_SpawnBaseAttackMission(base, ms, NULL))
+		base->baseStatus = BASE_UNDER_ATTACK;
 
 #if 0							/*@todo: run eventhandler for each building in base */
 	if (b->onAttack)
@@ -3015,7 +3014,8 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteShort(sb, aircraft->alientypes);
 			MSG_WriteShort(sb, aircraft->itemtypes);
 			/* Save only needed if aircraft returns from a mission. */
-			if (aircraft->status == AIR_RETURNING) {
+			switch (aircraft->status) {
+			case AIR_RETURNING:
 				/* aliencargo */
 				for (l = 0; l < aircraft->alientypes; l++) {
 					MSG_WriteString(sb, aircraft->aliencargo[l].alientype);
@@ -3027,6 +3027,12 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 					MSG_WriteString(sb, csi.ods[aircraft->itemcargo[l].idx].id);
 					MSG_WriteShort(sb, aircraft->itemcargo[l].amount);
 				}
+				break;
+			case AIR_MISSION:
+				assert(aircraft->mission);
+				assert(aircraft->mission->def);
+				MSG_WriteString(sb, aircraft->mission->def->name);
+				break;
 			}
 			MSG_WritePos(sb, aircraft->direction);
 			for (l = 0; l < presaveArray[PRE_AIRSTA]; l++)
@@ -3255,7 +3261,8 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			/* Load only needed if aircraft returns from a mission. */
 			aircraft->alientypes = MSG_ReadShort(sb);
 			aircraft->itemtypes = MSG_ReadShort(sb);
-			if (aircraft->status == AIR_RETURNING) {
+			switch (aircraft->status) {
+			case AIR_RETURNING:
 				/* aliencargo */
 				for (l = 0; l < aircraft->alientypes; l++) {
 					Q_strncpyz(aircraft->aliencargo[l].alientype, MSG_ReadString(sb), sizeof(aircraft->aliencargo[l].alientype));
@@ -3273,6 +3280,13 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 						aircraft->itemcargo[l].idx = m;
 						aircraft->itemcargo[l].amount = MSG_ReadShort(sb);
 					}
+				}
+				break;
+			case AIR_MISSION:
+				s = MSG_ReadString(sb);
+				for (i = 0; i < ccs.numMissions; i++) {
+					if (!Q_strcmp(ccs.mission[i].def->name, s))
+						aircraft->mission = &ccs.mission[i];
 				}
 			}
 			MSG_ReadPos(sb, aircraft->direction);

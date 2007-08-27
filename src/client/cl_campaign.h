@@ -94,7 +94,7 @@ typedef struct mission_s {
 	char *missionText;	/**< translateable - but untranslated in memory */
 	char *missionTextAlternate;	/**< translateable - but untranslated in memory */
 	char *triggerText;	/**< translateable - but untranslated in memory */
-	char name[MAX_VAR];
+	char name[MAX_VAR];	/**< script id */
 	char map[MAX_VAR];
 	char loadingscreen[MAX_VAR];
 	char param[MAX_VAR];
@@ -397,7 +397,7 @@ void CL_CampaignRun(void);
 void CL_GameTimeStop(void);
 void CL_GameTimeFast(void);
 void CL_GameTimeSlow(void);
-extern qboolean CL_NewBase(base_t* base, vec2_t pos);
+qboolean CL_NewBase(base_t* base, vec2_t pos);
 void CL_ParseMission(const char *name, const char **text);
 mission_t* CL_AddMission(const char *name);
 void CP_RemoveLastMission(void);
@@ -410,16 +410,16 @@ void CL_GameInit(qboolean load);
 void AIR_NewAircraft(base_t * base, const char *name);
 void CL_ParseResearchedCampaignItems(const char *name, const char **text);
 void CL_ParseResearchableCampaignStates(const char *name, const char **text, qboolean researchable);
-extern void CP_ExecuteMissionTrigger(mission_t * m, int won, base_t* base);
-extern actMis_t* CL_CampaignAddGroundMission(mission_t* mis);
+void CP_ExecuteMissionTrigger(mission_t * m, int won, base_t* base);
+actMis_t* CL_CampaignAddGroundMission(mission_t* mis);
 
 campaign_t* CL_GetCampaign(const char* name);
 void CL_GameExit(void);
 
-extern qboolean AIR_SendAircraftToMission(aircraft_t * aircraft, actMis_t * mission);
-extern void AIR_AircraftsNotifyMissionRemoved(const actMis_t * mission);
+qboolean AIR_SendAircraftToMission(aircraft_t * aircraft, actMis_t * mission);
+void AIR_AircraftsNotifyMissionRemoved(const actMis_t * mission);
 
-extern base_t *CP_GetMissionBase(void);
-void CP_SpawnBaseAttackMission(base_t* base, mission_t* mis);
+base_t *CP_GetMissionBase(void);
+qboolean CP_SpawnBaseAttackMission(base_t* base, mission_t* mis, setState_t *cause);
 
 #endif /* CLIENT_CL_CAMPAIGN_H */
