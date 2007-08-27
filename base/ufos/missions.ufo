@@ -173,20 +173,20 @@ mission transport
 //FIXME - where do we play now?
 mission or_asyut
 {
-        location        "_Asyut"
-        type            "_Terror attack"
-        text            "_Protect inhabitants."
-        map             "+oriental"
-        music           PsymongO6
-        pos             "-31 27"
-        aliens          7
-        alienteam       "taman ortnok"
-        alienequip      stage1_soldiers
-        civilians       6
-        nation          "middle"
-        onlose          ""
-        onwin           ""
-        storyrelated    false
+	location        "_Asyut"
+	type            "_Terror attack"
+	text            "_Protect inhabitants."
+	map             "+oriental"
+	music           PsymongO6
+	pos             "-31 27"
+	aliens          7
+	alienteam       "taman ortnok"
+	alienequip      stage1_soldiers
+	civilians       6
+	nation          "middle"
+	onlose          ""
+	onwin           ""
+	storyrelated    false
 }
 
 //-------------------------------------
@@ -346,7 +346,7 @@ mission farm
 	alienequip	stage1_soldiers
 	civilians	3
 	nation		"states"
-	onlose          ""
+	onlose		""
 	onwin		"cp_uforecovery 0"
 	storyrelated	true
 }
