@@ -40,7 +40,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # define FD_SETSIZE (MAX_STREAMS + 1)
 # include <winsock2.h>
 # include <ws2tcpip.h>
-# define gai_strerrorA estr_n
+# define netError WSAGetLastError()
+# define netStringError netStringErrorWin
+# define netCloseSocket closesocket
 #else
 # define INVALID_SOCKET (-1)
 typedef int SOCKET;
@@ -53,6 +55,9 @@ typedef int SOCKET;
 # include <netinet/in.h>
 # include <sys/time.h>
 # include <unistd.h>
+# define netError errno
+# define netStringError strerror
+# define netCloseSocket close
 #endif /* WIN32 */
 #include <errno.h>
 #include <string.h>
@@ -181,7 +186,7 @@ static struct net_stream *new_stream (int index)
 /**
  * @brief
  */
-static const char *estr_n (int code)
+static const char *netStringErrorWin (int code)
 {
 	switch (code) {
 	case WSAEINTR: return "WSAEINTR";
@@ -231,33 +236,6 @@ static const char *estr_n (int code)
 	case WSANO_DATA: return "WSANO_DATA";
 	default: return "NO ERROR";
 	}
-}
-
-/**
- * @brief
- */
-static const char *estr (void)
-{
-	return estr_n(WSAGetLastError());
-}
-
-static void close_socket (int socket)
-{
-	closesocket(socket);
-}
-#else
-#define estr_n strerror
-/**
- * @brief
- */
-static const char *estr (void)
-{
-	return strerror(errno);
-}
-
-static void close_socket (int socket)
-{
-	close(socket);
 }
 #endif
 
@@ -324,7 +302,7 @@ static void close_stream (struct net_stream *s)
 
 		FD_CLR(s->socket, &read_fds);
 		FD_CLR(s->socket, &write_fds);
-		close_socket(s->socket);
+		netCloseSocket(s->socket);
 		s->socket = INVALID_SOCKET;
 	}
 	if (s->index >= 0)
@@ -363,7 +341,7 @@ static void do_accept (int sock)
 	struct net_stream *s;
 	if (index == -1) {
 		Com_Printf("Too many streams open, rejecting inbound connection\n");
-		close_socket(sock);
+		netCloseSocket(sock);
 		return;
 	}
 
@@ -413,7 +391,7 @@ void NET_Wait (int timeout)
 		ready = select(maxfd, &read_fds_out, &write_fds_out, NULL, &tv);
 
 	if (ready == -1)
-		Sys_Error("select failed: %s\n", estr());
+		Sys_Error("select failed: %s\n", netStringError(netError));
 
 	if (ready == 0 && !loopback_ready)
 		return;
@@ -422,7 +400,7 @@ void NET_Wait (int timeout)
 		int client_socket = accept(server_socket, NULL, 0);
 		if (client_socket == INVALID_SOCKET) {
 			if (errno != EAGAIN)
-				Com_Printf("accept on socket %d failed: %s\n", server_socket, estr());
+				Com_Printf("accept on socket %d failed: %s\n", server_socket, netStringError(netError));
 		} else
 			do_accept(client_socket);
 	}
@@ -465,7 +443,7 @@ void NET_Wait (int timeout)
 			len = send(s->socket, buf, len, 0);
 
 			if (len < 0) {
-				Com_Printf("write on socket %d failed: %s\n", s->socket, estr());
+				Com_Printf("write on socket %d failed: %s\n", s->socket, netStringError(netError));
 				close_stream(s);
 				continue;
 			}
@@ -480,7 +458,7 @@ void NET_Wait (int timeout)
 			int len = recv(s->socket, buf, sizeof(buf), 0);
 			if (len <= 0) {
 				if (len == -1)
-					Com_Printf("read on socket %d failed: %s\n", s->socket, estr());
+					Com_Printf("read on socket %d failed: %s\n", s->socket, netStringError(netError));
 				close_stream(s);
 				continue;
 			} else {
@@ -510,7 +488,7 @@ void NET_Wait (int timeout)
 				struct datagram *dgram = s->queue;
 				int len = sendto(s->socket, dgram->msg, dgram->len, 0, (struct sockaddr *)dgram->addr, s->addrlen);
 				if (len == -1)
-					Com_Printf("sendto on socket %d failed: %s\n", s->socket, estr());
+					Com_Printf("sendto on socket %d failed: %s\n", s->socket, netStringError(netError));
 				/* Regardless of whether it worked, we don't retry datagrams */
 				s->queue = dgram->next;
 				free(dgram->msg);
@@ -529,7 +507,7 @@ void NET_Wait (int timeout)
 			socklen_t addrlen = sizeof(addrbuf);
 			int len = recvfrom(s->socket, buf, sizeof(buf), 0, (struct sockaddr *)addrbuf, &addrlen);
 			if (len == -1)
-				Com_Printf("recvfrom on socket %d failed: %s\n", s->socket, estr());
+				Com_Printf("recvfrom on socket %d failed: %s\n", s->socket, netStringError(netError));
 			else
 				s->func(s, buf, len, (struct sockaddr *)addrbuf);
 		}
@@ -566,31 +544,26 @@ static struct net_stream *NET_DoConnect (const char *node, const char *service, 
 	struct net_stream *s;
 	SOCKET sock = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
 	if (sock == INVALID_SOCKET) {
-		Com_Printf("Failed to create socket: %s\n", estr());
+		Com_Printf("Failed to create socket: %s\n", netStringError(netError));
 		return NULL;
 	}
 
 	if (!set_non_blocking(sock)) {
-		close_socket(sock);
+		netCloseSocket(sock);
 		return NULL;
 	}
 
 	if (connect(sock, addr->ai_addr, addr->ai_addrlen) != 0) {
+		int err = netError;
 #ifdef _WIN32
-		int err = WSAGetLastError();
 		if (err != WSAEWOULDBLOCK) {
-			Com_Printf("Failed to start connection to %s:%s: %s\n", node, service, estr_n(err));
-			closesocket(sock);
-			return NULL;
-		}
 #else
-		int err = errno;
 		if (err != EINPROGRESS) {
-			Com_Printf("Failed to start connection to %s:%s: %s\n", node, service, estr_n(err));
-			close(sock);
+#endif
+			Com_Printf("Failed to start connection to %s:%s: %s\n", node, service, netStringError(err));
+			netCloseSocket(sock);
 			return NULL;
 		}
-#endif
 	}
 
 	s = new_stream(i);
@@ -872,12 +845,12 @@ static int do_start_server (const struct addrinfo *addr)
 	int t = 1;
 
 	if (sock == INVALID_SOCKET) {
-		Com_Printf("Failed to create socket: %s\n", estr());
+		Com_Printf("Failed to create socket: %s\n", netStringError(netError));
 		return INVALID_SOCKET;
 	}
 
 	if (!set_non_blocking(sock)) {
-		close_socket(sock);
+		netCloseSocket(sock);
 		return INVALID_SOCKET;
 	}
 
@@ -886,20 +859,20 @@ static int do_start_server (const struct addrinfo *addr)
 #else
 	if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &t, sizeof(t)) != 0) {
 #endif
-		Com_Printf("Failed to set SO_REUSEADDR on socket: %s\n", estr());
-		close_socket(sock);
+		Com_Printf("Failed to set SO_REUSEADDR on socket: %s\n", netStringError(netError));
+		netCloseSocket(sock);
 		return INVALID_SOCKET;
 	}
 
 	if (bind(sock, addr->ai_addr, addr->ai_addrlen) != 0) {
-		Com_Printf("Failed to bind socket: %s\n", estr());
-		close_socket(sock);
+		Com_Printf("Failed to bind socket: %s\n", netStringError(netError));
+		netCloseSocket(sock);
 		return INVALID_SOCKET;
 	}
 
 	if (listen(sock, SOMAXCONN) != 0) {
-		Com_Printf("Failed to listen on socket: %s\n", estr());
-		close_socket(sock);
+		Com_Printf("Failed to listen on socket: %s\n", netStringError(netError));
+		netCloseSocket(sock);
 		return INVALID_SOCKET;
 	}
 
@@ -970,7 +943,7 @@ void SV_Stop (void)
 	server_func = NULL;
 	if (server_socket != INVALID_SOCKET) {
 		FD_CLR(server_socket, &read_fds);
-		close_socket(server_socket);
+		netCloseSocket(server_socket);
 	}
 	server_socket = INVALID_SOCKET;
 }
@@ -992,30 +965,30 @@ static struct datagram_socket *do_new_datagram_socket (const struct addrinfo *ad
 	}
 
 	if (sock == INVALID_SOCKET) {
-		Com_Printf("Failed to create socket: %s\n", estr());
+		Com_Printf("Failed to create socket: %s\n", netStringError(netError));
 		return NULL;
 	}
 
 	if (!set_non_blocking(sock)) {
-		close_socket(sock);
+		netCloseSocket(sock);
 		return NULL;
 	}
 
 	if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (char *) &t, sizeof(t)) != 0) {
-		Com_Printf("Failed to set SO_REUSEADDR on socket: %s\n", estr());
-		close_socket(sock);
+		Com_Printf("Failed to set SO_REUSEADDR on socket: %s\n", netStringError(netError));
+		netCloseSocket(sock);
 		return NULL;
 	}
 
 	if (setsockopt(sock, SOL_SOCKET, SO_BROADCAST, (char *) &t, sizeof(t)) != 0) {
-		Com_Printf("Failed to set SO_BROADCAST on socket: %s\n", estr());
-		close_socket(sock);
+		Com_Printf("Failed to set SO_BROADCAST on socket: %s\n", netStringError(netError));
+		netCloseSocket(sock);
 		return NULL;
 	}
 
 	if (bind(sock, addr->ai_addr, addr->ai_addrlen) != 0) {
-		Com_Printf("Failed to bind socket: %s\n", estr());
-		close_socket(sock);
+		Com_Printf("Failed to bind socket: %s\n", netStringError(netError));
+		netCloseSocket(sock);
 		return NULL;
 	}
 
@@ -1131,7 +1104,7 @@ void close_datagram_socket (struct datagram_socket *s)
 
 	FD_CLR(s->socket, &read_fds);
 	FD_CLR(s->socket, &write_fds);
-	close_socket(s->socket);
+	netCloseSocket(s->socket);
 
 	while (s->queue) {
 		struct datagram *dgram = s->queue;
