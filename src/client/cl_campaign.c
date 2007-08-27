@@ -2782,10 +2782,6 @@ static void CL_GameResults_f (void)
 	/* update the character stats */
 	CL_ParseCharacterData(NULL, qtrue);
 
-	/* hack to free all the allocated renderer memory */
-	Mem_FreePool(vid_modelPool);
-	Mem_FreePool(vid_lightPool);
-
 	/* update stats */
 	CL_UpdateCharacterStats(won);
 
@@ -3843,10 +3839,6 @@ void CL_GameExit (void)
 		}
 	}
 	curCampaign = NULL;
-
-	/* hack to free all the allocated renderer memory */
-	Mem_FreePool(vid_modelPool);
-	Mem_FreePool(vid_lightPool);
 }
 
 /**
