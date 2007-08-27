@@ -249,7 +249,7 @@ void Com_Error (int code, const char *fmt, ...)
 	}
 
 	/* send an receive net messages a last time */
-	wait_for_net(0);
+	NET_Wait(0);
 
 	if (logfile) {
 		fclose(logfile);
@@ -287,7 +287,7 @@ void Com_Quit (void)
 	Cvar_WriteVariables(va("%s/config.cfg", FS_Gamedir()));
 #endif
 	/* send an receive net messages a last time */
-	wait_for_net(0);
+	NET_Wait(0);
 	if (logfile) {
 		fclose(logfile);
 		logfile = NULL;
@@ -987,7 +987,7 @@ void Qcommon_Frame (void)
 		if (time_to_next < 0)
 			time_to_next = 0;
 
-		wait_for_net(time_to_next);
+		NET_Wait(time_to_next);
 	} while (time_to_next > 0);
 }
 

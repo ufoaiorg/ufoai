@@ -41,9 +41,10 @@ void close_datagram_socket(struct datagram_socket *s);
 void sockaddr_to_strings(struct datagram_socket *s, struct sockaddr *addr, char *node, size_t nodelen, char *service, size_t servicelen);
 
 void NET_Init(void);
-void wait_for_net(int timeout);
-struct net_stream *connect_to_host(const char *node, const char *service);
-struct net_stream *connect_to_loopback(void);
+void NET_Shutdown(void);
+void NET_Wait(int timeout);
+struct net_stream *NET_Connect(const char *node, const char *service);
+struct net_stream *NET_ConnectToLoopBack(void);
 void stream_enqueue(struct net_stream *s, const char *data, int len);
 qboolean stream_closed(struct net_stream *s);
 int stream_length(struct net_stream *s);

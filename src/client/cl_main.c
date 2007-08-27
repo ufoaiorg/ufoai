@@ -317,9 +317,9 @@ static void CL_Connect (void)
 
 	if (cls.servername[0]) {
 		cvar_t *port = Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL);
-		cls.stream = connect_to_host(cls.servername, port->string);
+		cls.stream = NET_Connect(cls.servername, port->string);
 	} else
-		cls.stream = connect_to_loopback();
+		cls.stream = NET_ConnectToLoopBack();
 	if (cls.stream) {
 		NET_OOB_Printf(cls.stream, "connect %i \"%s\"\n", PROTOCOL_VERSION, Cvar_Userinfo());
 		cls.connectTime = cls.realtime;
@@ -722,7 +722,7 @@ static void CL_PingServerCallback (struct net_stream *s)
  */
 static void CL_PingServer (serverList_t *server)
 {
-	struct net_stream *s = connect_to_host(server->node, server->service);
+	struct net_stream *s = NET_Connect(server->node, server->service);
 	if (s) {
 		Com_DPrintf(DEBUG_CLIENT, "pinging [%s]:%s...\n", server->node, server->service);
 		NET_OOB_Printf(s, "info %i", PROTOCOL_VERSION);
@@ -1149,9 +1149,9 @@ static void CL_ServerInfo_f (void)
 {
 	struct net_stream *s;
 	if (Cmd_Argc() < 2)
-		s = connect_to_host(Cvar_VariableString("mn_server_ip"), va("%d", PORT_SERVER));
+		s = NET_Connect(Cvar_VariableString("mn_server_ip"), va("%d", PORT_SERVER));
 	else
-		s = connect_to_host(Cmd_Argv(1), va("%d", PORT_SERVER));
+		s = NET_Connect(Cmd_Argv(1), va("%d", PORT_SERVER));
 	if (s) {
 		NET_OOB_Printf(s, "status %i", PROTOCOL_VERSION);
 		stream_callback(s, &CL_ServerInfoCallback);
@@ -1271,7 +1271,7 @@ static void CL_PingServers_f (void)
 	/* query master server? */
 	/* @todo: Cache this to save bandwidth */
 	if (Cmd_Argc() == 2 || Q_strcmp(Cmd_Argv(1), "local")) {
-		struct net_stream *s = connect_to_host(masterserver_host->string, masterserver_port->string);
+		struct net_stream *s = NET_Connect(masterserver_host->string, masterserver_port->string);
 		if (s) {
 			Com_Printf("Query masterserver\n");
 			NET_OOB_Printf(s, "getservers 0\n");

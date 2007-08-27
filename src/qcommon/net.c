@@ -41,8 +41,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # include <winsock2.h>
 # include <ws2tcpip.h>
 # define gai_strerrorA estr_n
-static HINSTANCE libNet = NULL;
-static void (*FreeAddrInfo)(struct addrinfo* res) = NULL;
 #else
 # define INVALID_SOCKET (-1)
 typedef int SOCKET;
@@ -120,33 +118,6 @@ static qboolean server_running = qfalse;
 static stream_callback_func *server_func = NULL;
 static int server_socket = INVALID_SOCKET;
 static int server_family, server_addrlen;
-
-/**
- * @brief This function implements a freeaddrinfo function for
- * windows systems which don't have it
- */
-static inline void Sys_FreeAddrInfo (struct addrinfo *res)
-{
-#ifdef _WIN32
-	if (FreeAddrInfo) {
-		FreeAddrInfo(res);
-		return;
-	} else {
-		struct addrinfo *list;
-		for (list = res; list != NULL;) {
-			if (list->ai_addr)
-				free(list->ai_addr);
-			if (list->ai_canonname)
-				free(list->ai_canonname);
-			res = list;
-			list = list->ai_next;
-			free(res);
-		}
-	}
-#else
-	freeaddrinfo(res);
-#endif
-}
 
 /**
  * @brief
@@ -292,27 +263,21 @@ static void close_socket (int socket)
 
 /**
  * @brief
+ * @sa NET_Shutdown
+ * @sa Qcommon_Init
  */
 void NET_Init (void)
 {
 	int i;
 #ifdef _WIN32
 	WSADATA winsockdata;
-	HMODULE netLib;
 #endif
 
 	Com_Printf("----- network initialization -------\n");
 
 #ifdef _WIN32
 	if (WSAStartup(MAKEWORD(2, 0), &winsockdata) != 0)
-		Com_Error(ERR_FATAL,"Winsock initialization failed.");
-
-	assert(!libNet);
-	netLib = LoadLibrary("ws2_32.dll");
-	if (netLib)
-		FreeAddrInfo = (void*)GetProcAddress(netLib, "freeaddrinfo");
-	if (!FreeAddrInfo)
-		Com_Printf("...couldn't find freeaddrinfo\n");
+		Com_Error(ERR_FATAL, "Winsock initialization failed.");
 #endif
 
 	maxfd = 0;
@@ -329,6 +294,17 @@ void NET_Init (void)
 #endif
 
 	net_ipv4 = Cvar_Get("net_ipv4", "1", CVAR_ARCHIVE, "Only use ipv4");
+}
+
+/**
+ * @brief
+ * @sa NET_Init
+ */
+void NET_Shutdown (void)
+{
+#ifdef _WIN32
+	WSACleanup();
+#endif
 }
 
 /**
@@ -409,7 +385,7 @@ static void do_accept (int sock)
  * @brief
  * @sa Qcommon_Frame
  */
-void wait_for_net (int timeout)
+void NET_Wait (int timeout)
 {
 	struct timeval tv;
 	int ready;
@@ -585,7 +561,7 @@ static qboolean set_non_blocking (int socket)
 /**
  * @brief
  */
-static struct net_stream *do_connect (const char *node, const char *service, const struct addrinfo *addr, int i)
+static struct net_stream *NET_DoConnect (const char *node, const char *service, const struct addrinfo *addr, int i)
 {
 	struct net_stream *s;
 	SOCKET sock = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
@@ -633,7 +609,7 @@ static struct net_stream *do_connect (const char *node, const char *service, con
 /**
  * @brief
  */
-struct net_stream *connect_to_host (const char *node, const char *service)
+struct net_stream *NET_Connect (const char *node, const char *service)
 {
 	struct addrinfo *res;
 	struct addrinfo hints;
@@ -661,16 +637,16 @@ struct net_stream *connect_to_host (const char *node, const char *service)
 		return NULL;
 	}
 
-	s = do_connect(node, service, res, index);
+	s = NET_DoConnect(node, service, res, index);
 
-	Sys_FreeAddrInfo(res);
+	freeaddrinfo(res);
 	return s;
 }
 
 /**
  * @brief
  */
-struct net_stream *connect_to_loopback (void)
+struct net_stream *NET_ConnectToLoopBack (void)
 {
 	struct net_stream *client, *server;
 	int server_index, client_index;
@@ -975,7 +951,7 @@ qboolean SV_Start (const char *node, const char *service, stream_callback_func *
 			server_func = func;
 		}
 
-		Sys_FreeAddrInfo(res);
+		freeaddrinfo(res);
 	} else {
 		/* Loopback server only */
 		server_running = qtrue;
@@ -1091,7 +1067,7 @@ struct datagram_socket *new_datagram_socket (const char *node, const char *servi
 	if (s)
 		s->func = func;
 
-	Sys_FreeAddrInfo(res);
+	freeaddrinfo(res);
 	return s;
 }
 

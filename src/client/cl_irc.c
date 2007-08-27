@@ -1419,7 +1419,7 @@ static qboolean Irc_Net_Connect (const char *host, const char *port)
 {
 	if (irc_stream)
 		free_stream(irc_stream);
-	irc_stream = connect_to_host(host, port);
+	irc_stream = NET_Connect(host, port);
 	return irc_stream ? qtrue : qfalse;
 }
 

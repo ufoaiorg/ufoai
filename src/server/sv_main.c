@@ -733,7 +733,7 @@ void Master_Heartbeat (void)
 	svs.last_heartbeat = svs.realtime;
 
 	/* send to master */
-	s = connect_to_host(masterserver_host->string, masterserver_port->string);
+	s = NET_Connect(masterserver_host->string, masterserver_port->string);
 	if (s) {
 		NET_OOB_Printf(s, "heartbeat\n");
 		stream_finished(s);
@@ -756,7 +756,7 @@ void Master_Shutdown (void)
 		return;					/* a private dedicated game */
 
 	/* send to master */
-	s = connect_to_host(masterserver_host->string, masterserver_port->string);
+	s = NET_Connect(masterserver_host->string, masterserver_port->string);
 	if (s) {
 		NET_OOB_Printf(s, "shutdown\n");
 		stream_finished(s);
