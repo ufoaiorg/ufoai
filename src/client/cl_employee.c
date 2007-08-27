@@ -969,7 +969,10 @@ static void E_EmployeeHire_f (void)
 	}
 
 	employee = E_GetEmployeeByMenuIndex(num);
-	assert(employee);
+	
+	/* empty slot selected */
+	if (!employee)
+		return; 
 
 	if (employee->hired) {
 		if (!E_UnhireEmployee(employee)) {
