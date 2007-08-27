@@ -624,7 +624,7 @@ menu ufopedia_mail
 		pos		"50 314"
 		texl	"0 0"
 		texh	"28 28"
-	}	
+	}
 	pic mail_icon_6
 	{
 		image "*cvar mn_mail_icon6"
@@ -688,7 +688,7 @@ menu ufopedia_mail
 		texl	"0 0"
 		texh	"28 28"
 	}
-	
+
 	pic mail_button_0
 	{
 		if		"mn_mail_read0 == 1"
@@ -736,7 +736,7 @@ menu ufopedia_mail
 		pos		"90 314"
 		texl	"0 0"
 		texh	"852 28"
-	}	
+	}
 	pic mail_button_6
 	{
 		if		"mn_mail_read6 == 1"
@@ -857,7 +857,7 @@ menu ufopedia_mail
 		pos		"90 314"
 		texl	"0 28"
 		texh	"852 56"
-	}	
+	}
 	pic mail_button_un_6
 	{
 		if		"mn_mail_read6 == 0"
@@ -943,7 +943,7 @@ menu ufopedia_mail
 		mousefx	true
 //		bgcolor " 0 1 0 0.5"
 		scrollbar true
-		wheel	{ cmd "ufopedia_scrollmail" }
+		wheel	{ cmd "ufopedia_scrollmail;" }
 	}
 
 	pic button_exit
