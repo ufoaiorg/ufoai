@@ -152,7 +152,7 @@ static void Mod_LoadEdges (lump_t * l)
 
 /**
  * @brief
- * @sa CL_StartMissionMap
+ * @sa CP_StartMissionMap
  */
 static void Mod_LoadTexinfo (lump_t * l)
 {

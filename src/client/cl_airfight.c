@@ -494,7 +494,7 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 				MN_AddNewMessage(_("Interception"), _("UFO interception successful -- New mission available."), qfalse, MSG_CRASHSITE, NULL);
 			} else {
 				/* no active stage - to decrement the mission counter */
-				CL_RemoveLastMission();
+				CP_RemoveLastMission();
 				MN_AddNewMessage(_("Interception"), _("UFO interception successful -- UFO lost."), qfalse, MSG_CRASHSITE, NULL);
 			}
 		} else {

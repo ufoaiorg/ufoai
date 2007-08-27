@@ -537,6 +537,51 @@ static void CP_MissionList_f (void)
 }
 
 /**
+ * @brief
+ * @sa B_BaseAttack
+ * @sa CP_Load
+ */
+void CP_SpawnBaseAttackMission (base_t* base, mission_t* ms)
+{
+	actMis_t *mis;
+
+	assert(ms);
+	assert(base);
+
+	/* realPos is set below */
+	Vector2Set(ms->pos, base->pos[0], base->pos[1]);
+
+	/* set the mission type to base attack and store the base in data pointer */
+	/* this is useful if the mission expires and we want to know which base it was */
+	ms->missionType = MIS_BASEATTACK;
+	ms->data = (void*)base;
+
+	Com_sprintf(ms->location, sizeof(ms->location), base->name);
+	Q_strncpyz(ms->civTeam, "human_scientist", sizeof(ms->civTeam));
+	Q_strncpyz(ms->type, _("Base attack"), sizeof(ms->type));
+	ms->missionText = "Base is under attack.";
+	/* FIXME */
+	ms->alienTeams[0] = Com_GetTeamDefinitionByID("ortnok");
+	if (ms->alienTeams[0])
+		ms->numAlienTeams++;
+
+	ms->zoneType = base->mapZone;
+
+	mis = CL_CampaignAddGroundMission(ms);
+	if (mis) {
+		Vector2Set(mis->realPos, ms->pos[0], ms->pos[1]);
+	} else {
+		/* no active stage - to decrement the mission counter */
+		CP_RemoveLastMission();
+		baseCurrent->baseStatus = BASE_WORKING;
+		Com_DPrintf(DEBUG_CLIENT, "CP_SpawnBaseAttackMission: Could not set base %s under attack - remove the mission data again\n", base->name);
+	}
+
+	Q_strncpyz(ms->loadingscreen, "baseattack", sizeof(ms->loadingscreen));
+	Com_sprintf(ms->map, sizeof(ms->map), ".baseattack");
+}
+
+/**
  * @brief Add a new ground mission to the ccs.mission array
  * @param[in] mis The mission to add to geoscape
  * @note This mission must already be defined completly
@@ -677,7 +722,14 @@ static void CL_CampaignAddMission (setState_t * set)
 }
 
 /**
- * @brief
+ * @brief Removes a mission from geoscape
+ * @note This function is called in several different situations:
+ * a mission was won
+ * a mission doesn't have the keepAfterFail set and was lost
+ * a mission that expired (prevent this via noExpire)
+ * @sa CL_CampaignAddMission
+ * @note Missions that are removed should already have the onGeoscape set to true
+ * and thus won't be respawned on geoscape
  * @sa CL_CampaignAddMission
  */
 static void CL_CampaignRemoveMission (actMis_t * mis)
@@ -691,8 +743,10 @@ static void CL_CampaignRemoveMission (actMis_t * mis)
 		return;
 	}
 
-	/* allow respawn on geoscape */
-	mis->def->onGeoscape = qfalse;
+	/* don't remove missions that were not played but were spawned
+	 * (e.g. they expired) and have the storyRelated flag set */
+	if (mis->def->storyRelated && !mis->def->played)
+		return;
 
 	/* Clear base-attack status if required */
 	if (mis->def->missionType == MIS_BASEATTACK) {
@@ -890,7 +944,7 @@ static void CL_CampaignCheckEvents (void)
 
 	/* Let missions expire. */
 	for (i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++)
-		if (mis->expire.day && Date_LaterThan(ccs.date, mis->expire)) {
+		if (!mis->def->noExpire && mis->expire.day && Date_LaterThan(ccs.date, mis->expire)) {
 			/* Mission is expired. Calculating penalties for the various mission types. */
 			switch (mis->def->missionType) {
 			case MIS_BASEATTACK:
@@ -2202,7 +2256,7 @@ qboolean NA_Load (sizebuf_t* sb, void* data)
  * @sa CL_StartMission_f
  * @sa CL_GameGo
  */
-static void CL_SetMissionCvars (mission_t* mission)
+static void CP_SetMissionVars (mission_t* mission)
 {
 	int i;
 
@@ -2212,7 +2266,7 @@ static void CL_SetMissionCvars (mission_t* mission)
 	Cvar_Set("ai_civilian", mission->civTeam);
 	Cvar_Set("ai_equipment", mission->alienEquipment);
 	Cvar_Set("music", mission->music);
-	Com_DPrintf(DEBUG_CLIENT, "CL_SetMissionCvars:\n");
+	Com_DPrintf(DEBUG_CLIENT, "CP_SetMissionVars:\n");
 
 	/* now store the alien teams in the shared csi struct to let the game dll
 	 * have access to this data, too */
@@ -2227,6 +2281,8 @@ static void CL_SetMissionCvars (mission_t* mission)
 		mission->civTeam,
 		mission->alienEquipment,
 		mission->music);
+
+	mission->played = qtrue;
 }
 
 /**
@@ -2235,7 +2291,7 @@ static void CL_SetMissionCvars (mission_t* mission)
  * @sa CL_GameGo
  * @sa CL_StartMission_f
  */
-static void CL_StartMissionMap (mission_t* mission)
+static void CP_StartMissionMap (mission_t* mission)
 {
 	char expanded[MAX_QPATH];
 	char timeChar;
@@ -2291,7 +2347,7 @@ static void CL_StartMissionMap (mission_t* mission)
  * @brief Starts a selected mission
  *
  * @note Checks whether a dropship is near the landing zone and whether it has a team on board
- * @sa CL_SetMissionCvars
+ * @sa CP_SetMissionVars
  * @sa CL_StartMission_f
  */
 static void CL_GameGo (void)
@@ -2342,7 +2398,7 @@ static void CL_GameGo (void)
 		}
 	}
 
-	CL_SetMissionCvars(mis);
+	CP_SetMissionVars(mis);
 	/* Set the states of mission Cvars to proper values. */
 	Cvar_SetValue("mission_homebase", base->idx);
 	Cvar_SetValue("mission_uforecovered", 0);
@@ -2362,7 +2418,7 @@ static void CL_GameGo (void)
 	ccs.civiliansKilled = 0;
 	ccs.aliensKilled = 0;
 
-	CL_StartMissionMap(mis);
+	CP_StartMissionMap(mis);
 }
 
 /**
@@ -2858,8 +2914,9 @@ static void CL_GameResults_f (void)
 static const value_t mission_vals[] = {
 	{"location", V_TRANSLATION_STRING, offsetof(mission_t, location), 0},
 	{"type", V_TRANSLATION_STRING, offsetof(mission_t, type), 0},
-	{"text", V_TRANSLATION_MANUAL_STRING, offsetof(mission_t, missionText), 0},	/* max length is 128 */
-	{"triggertext", V_TRANSLATION_MANUAL_STRING, offsetof(mission_t, triggerText), 0},	/* max length is 128 */
+	{"text", V_TRANSLATION_MANUAL_STRING, offsetof(mission_t, missionText), 0},
+	{"triggertext", V_TRANSLATION_MANUAL_STRING, offsetof(mission_t, triggerText), 0},
+	{"alttext", V_TRANSLATION_MANUAL_STRING, offsetof(mission_t, missionTextAlternate), 0},
 	{"nation", V_STRING, offsetof(mission_t, nation), 0},
 	{"map", V_STRING, offsetof(mission_t, map), 0},
 	{"param", V_STRING, offsetof(mission_t, param), 0},
@@ -2876,6 +2933,7 @@ static const value_t mission_vals[] = {
 	{"civteam", V_STRING, offsetof(mission_t, civTeam), 0},
 	{"storyrelated", V_BOOL, offsetof(mission_t, storyRelated), MEMBER_SIZEOF(mission_t, storyRelated)},
 	{"keepafterfail", V_BOOL, offsetof(mission_t, keepAfterFail), MEMBER_SIZEOF(mission_t, keepAfterFail)},
+	{"noexpire", V_BOOL, offsetof(mission_t, noExpire), MEMBER_SIZEOF(mission_t, noExpire)},
 	{"loadingscreen", V_STRING, offsetof(mission_t, loadingscreen), 0},
 	{NULL, 0, 0, 0}
 };
@@ -2886,7 +2944,7 @@ static const value_t mission_vals[] = {
  * @sa CL_AddMission
  * @sa CL_CampaignAddGroundMission
  */
-void CL_RemoveLastMission (void)
+void CP_RemoveLastMission (void)
 {
 	numMissions--;
 }
@@ -3718,7 +3776,7 @@ qboolean CL_OnBattlescape (void)
 /**
  * @brief Starts a given mission
  * @note Mainly for testing
- * @sa CL_SetMissionCvars
+ * @sa CP_SetMissionVars
  * @sa CL_GameGo
  */
 static void CL_StartMission_f (void)
@@ -3745,8 +3803,8 @@ static void CL_StartMission_f (void)
 		return;
 	}
 
-	CL_SetMissionCvars(mission);
-	CL_StartMissionMap(mission);
+	CP_SetMissionVars(mission);
+	CP_StartMissionMap(mission);
 }
 
 /**

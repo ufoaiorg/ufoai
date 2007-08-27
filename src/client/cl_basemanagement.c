@@ -2107,7 +2107,6 @@ void B_BaseResetStatus (base_t* const base)
 void B_BaseAttack (base_t* const base)
 {
 	mission_t* ms = NULL;
-	actMis_t* mis = NULL;
 
 	assert(base);
 
@@ -2129,36 +2128,7 @@ void B_BaseAttack (base_t* const base)
 
 	base->baseStatus = BASE_UNDER_ATTACK;
 
-	/* realPos is set below */
-	Vector2Set(ms->pos, base->pos[0], base->pos[1]);
-
-	/* set the mission type to base attack and store the base in data pointer */
-	/* this is useful if the mission expires and we want to know which base it was */
-	ms->missionType = MIS_BASEATTACK;
-	ms->data = (void*)base;
-
-	Com_sprintf(ms->location, sizeof(ms->location), base->name);
-	Q_strncpyz(ms->civTeam, "human_scientist", sizeof(ms->civTeam));
-	Q_strncpyz(ms->type, _("Base attack"), sizeof(ms->type));
-	ms->missionText = "Base is under attack.";
-	/* FIXME */
-	ms->alienTeams[0] = Com_GetTeamDefinitionByID("ortnok");
-	if (ms->alienTeams[0])
-		ms->numAlienTeams++;
-
-	ms->zoneType = base->mapZone;
-
-	mis = CL_CampaignAddGroundMission(ms);
-	if (mis) {
-		Vector2Set(mis->realPos, ms->pos[0], ms->pos[1]);
-	} else {
-		/* no active stage - to decrement the mission counter */
-		CL_RemoveLastMission();
-		Com_DPrintf(DEBUG_CLIENT, "B_BaseAttack: Could not set base %s under attack - remove the mission data again\n", base->name);
-	}
-
-	Q_strncpyz(ms->loadingscreen, "baseattack", sizeof(ms->loadingscreen));
-	Com_sprintf(ms->map, sizeof(ms->map), ".baseattack");
+	CP_SpawnBaseAttackMission(base, ms);
 
 #if 0							/*@todo: run eventhandler for each building in base */
 	if (b->onAttack)

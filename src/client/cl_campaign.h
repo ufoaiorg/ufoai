@@ -92,6 +92,7 @@ typedef enum missionType_s {
 /** mission definition */
 typedef struct mission_s {
 	char *missionText;	/**< translateable - but untranslated in memory */
+	char *missionTextAlternate;	/**< translateable - but untranslated in memory */
 	char *triggerText;	/**< translateable - but untranslated in memory */
 	char name[MAX_VAR];
 	char map[MAX_VAR];
@@ -114,12 +115,14 @@ typedef struct mission_s {
 	char onlose[MAX_VAR];		/**< trigger command after you've lost a battle */
 	int ugv;					/**< uncontrolled ground units (entity: info_ugv_start) */
 	qboolean active;			/**< aircraft at place? */
-	qboolean onGeoscape;		/**< already on geoscape - don't add it twice */
+	qboolean onGeoscape;		/**< is or was already on geoscape - don't add it twice */
 	date_t dateOnGeoscape;		/**< last time the mission was on geoscape */
 	qboolean storyRelated;		/**< auto mission play disabled when true */
 	missionType_t missionType;	/**< type of mission */
 	void* data;					/**< may be related to mission type */
 	qboolean keepAfterFail;		/**< keep the mission on geoscape after failing */
+	qboolean noExpire;			/**< the mission won't expire */
+	qboolean played;			/**< a mission could have onGeoscape true but played false - because it expired */
 	vec2_t pos;
 	byte mask[4];
 	int aliens, civilians;
@@ -397,7 +400,7 @@ void CL_GameTimeSlow(void);
 extern qboolean CL_NewBase(base_t* base, vec2_t pos);
 void CL_ParseMission(const char *name, const char **text);
 mission_t* CL_AddMission(const char *name);
-void CL_RemoveLastMission(void);
+void CP_RemoveLastMission(void);
 void CL_ParseStage(const char *name, const char **text);
 void CL_ParseCampaign(const char *name, const char **text);
 void CL_ParseNations(const char *name, const char **text);
@@ -417,5 +420,6 @@ extern qboolean AIR_SendAircraftToMission(aircraft_t * aircraft, actMis_t * miss
 extern void AIR_AircraftsNotifyMissionRemoved(const actMis_t * mission);
 
 extern base_t *CP_GetMissionBase(void);
+void CP_SpawnBaseAttackMission(base_t* base, mission_t* mis);
 
 #endif /* CLIENT_CL_CAMPAIGN_H */

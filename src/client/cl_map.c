@@ -1343,9 +1343,16 @@ void MAP_DrawMap (const menuNode_t* node)
 
 	/* Nothing is displayed yet */
 	if (selMis) {
+		const char *txt;
 		if (!selMis->def)
 			Sys_Error("the selected mission has no def pointer set\n");
-		menuText[TEXT_STANDARD] = va(_("Location: %s\nType: %s\nObjective: %s\n"), selMis->def->location, selMis->def->type, _(selMis->def->missionText));
+
+		if (!selMis->def->played && selMis->def->onGeoscape && selMis->def->missionTextAlternate)
+			txt = selMis->def->missionTextAlternate;
+		else
+			txt = selMis->def->missionText;
+
+		menuText[TEXT_STANDARD] = va(_("Location: %s\nType: %s\nObjective: %s\n"), selMis->def->location, selMis->def->type, _(txt));
 	} else if (selectedAircraft) {
 		if (selectedAircraft->status <= AIR_HOME)
 			MAP_ResetAction();
