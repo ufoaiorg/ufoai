@@ -823,11 +823,6 @@ static void CL_CampaignRemoveMission (actMis_t * mis)
 		return;
 	}
 
-	/* don't remove missions that were not played but were spawned
-	 * (e.g. they expired) and have the storyRelated flag set */
-	if (mis->def->storyRelated && !mis->def->played)
-		return;
-
 	/* Clear base-attack status if required */
 	if (mis->def->missionType == MIS_BASEATTACK) {
 		base = (base_t*)mis->def->data;
@@ -1034,7 +1029,7 @@ static void CL_CampaignCheckEvents (void)
 				CL_HandleNationData(1, 0, mis->def->civilians, mis->def->aliens, 0, mis);
 				CL_BaseRansacked(base);
 				break;
-			case MIS_INTERCEPT:
+			case MIS_TERRORATTACK:
 				/* Normal ground mission. */
 				CL_HandleNationData(1, 0, mis->def->civilians, mis->def->aliens, 0, mis);
 				Q_strncpyz(messageBuffer, va(ngettext("The mission expired and %i civilian died.", "The mission expired and %i civilians died.", mis->def->civilians), mis->def->civilians), MAX_MESSAGE_TEXT);
@@ -1044,6 +1039,16 @@ static void CL_CampaignCheckEvents (void)
 				Sys_Error("Unknown missionType for '%s'\n", mis->def->name);
 				break;
 			}
+
+			/* don't remove missions that were not played but were spawned
+			 * (e.g. they expired) and have the storyRelated flag set */
+			if (mis->def->storyRelated && !mis->def->played) {
+				date_t date = {7, 0};
+				/* FIXME use set->def->expire */
+				mis->expire = Date_Add(ccs.date, Date_Random_Middle(date));
+				return;
+			}
+
 			/* Remove mission from the map. */
 			if (mis->cause->def->number && mis->cause->num >= mis->cause->def->number)
 				CL_CampaignExecute(mis->cause);
@@ -2105,16 +2110,18 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 					}
 				}
 				break;
-			case MIS_INTERCEPT:
-				assert(mis);
-				mis->realPos[0] = MSG_ReadFloat(sb);
-				mis->realPos[1] = MSG_ReadFloat(sb);
+			case MIS_TERRORATTACK:
 				Com_Printf("......warning: Mission '%s' not found\n", name);
 				break;
-			case MIS_MAX:
+			default:
 				Com_Printf("......warning: Unknown mission type %i for mission %s\n", misType, name);
 				return qfalse;
 			}
+		} else {
+			assert(mis);
+			assert(misType == MIS_TERRORATTACK);
+			mis->realPos[0] = MSG_ReadFloat(sb);
+			mis->realPos[1] = MSG_ReadFloat(sb);
 		}
 
 		/* ignore incomplete info */
@@ -2233,7 +2240,7 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 			assert(base);
 			MSG_WriteByte(sb, base->idx);
 			break;
-		case MIS_INTERCEPT:
+		case MIS_TERRORATTACK:
 			MSG_WriteFloat(sb, mis->realPos[0]);
 			MSG_WriteFloat(sb, mis->realPos[1]);
 			break;
@@ -2247,7 +2254,7 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 			MSG_WriteString(sb, mis->def->map);
 			MSG_WriteString(sb, mis->def->param);
 			break;
-		case MIS_MAX:
+		default:
 			Com_Printf("CP_Save: Error - unknown mission type: %i\n", mis->def->missionType);
 			return qfalse;
 		}

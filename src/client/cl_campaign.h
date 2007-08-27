@@ -82,7 +82,7 @@ typedef enum mapType_s {
 
 /** possible mission types */
 typedef enum missionType_s {
-	MIS_INTERCEPT, /* default */
+	MIS_TERRORATTACK, /* default */
 	MIS_BASEATTACK,
 	MIS_CRASHSITE,
 
