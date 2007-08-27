@@ -1965,7 +1965,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 
 		/* ignore incomplete info */
 		if (!mis->def) {
-			Com_Printf("......warning: Incomplete mission info\n");
+			Com_Printf("......warning: Incomplete mission info for mission type %i (name: %s)\n", misType, name);
 			return qfalse;
 		}
 
@@ -1987,7 +1987,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 
 		/* ignore incomplete info */
 		if (!mis->cause) {
-			Com_Printf("......warning: Incomplete mission info\n");
+			Com_Printf("......warning: Incomplete mission info for mission type %i (name: %s)\n", misType, name);
 			return qfalse;
 		}
 
