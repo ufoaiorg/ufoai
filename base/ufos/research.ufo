@@ -218,7 +218,7 @@ tech rs_alien_live
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		subject	"_Live Alien"
-		icon	icons/alien		
+		icon	icons/alien
 	}
 
 	mail
@@ -226,7 +226,7 @@ tech rs_alien_live
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		subject	"_Live Alien"
-		icon	icons/alien		
+		icon	icons/alien
 	}
 
 	require_AND
@@ -256,7 +256,7 @@ tech rs_alien_breathing
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		subject	"_Alien Breathing Apparatus"
-		icon	icons/alien		
+		icon	icons/alien
 	}
 
 	mail
@@ -264,7 +264,7 @@ tech rs_alien_breathing
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		subject	"_Alien Breathing Apparatus"
-		icon	icons/alien		
+		icon	icons/alien
 	}
 
 	require_OR
@@ -314,7 +314,7 @@ tech rs_alien_mind
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		subject	"_The Alien Mind"
-		icon	icons/alien		
+		icon	icons/alien
 	}
 
 	mail
@@ -322,7 +322,7 @@ tech rs_alien_mind
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		subject	"_The Alien Mind"
-		icon	icons/alien		
+		icon	icons/alien
 	}
 
 	require_AND
@@ -350,7 +350,7 @@ tech rs_alien_oddbehaviour
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		subject	"_Odd Behaviour"
-		icon	icons/alien		
+		icon	icons/alien
 	}
 
 	mail
@@ -358,7 +358,7 @@ tech rs_alien_oddbehaviour
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		subject	"_Odd Behaviour"
-		icon	icons/alien		
+		icon	icons/alien
 	}
 
 	require_AND
@@ -3281,7 +3281,7 @@ tech rs_alien_bloodspider_autopsy
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		subject	"_Alien Autopsy - Bloodspider"
-		icon	icons/alien		
+		icon	icons/alien
 	}
 
 	mail
@@ -3289,7 +3289,7 @@ tech rs_alien_bloodspider_autopsy
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		subject	"_Alien Autopsy - Bloodspider"
-		icon	icons/alien		
+		icon	icons/alien
 	}
 
 	require_AND
@@ -3308,13 +3308,13 @@ tech rs_weapon_bloodspider
 	type		weapon
 	up_chapter	equipment
 
-        require_AND
-        {
+	require_AND
+	{
 		tech rs_alien_bloodspider_autopsy
-        }
-        provides	bloodspider_weapon
-        time		0
-        producetime	-1
+	}
+	provides	bloodspider_weapon
+	time		0
+	producetime	-1
 }
 
 
@@ -3339,7 +3339,7 @@ tech rs_alien_ortnok_autopsy
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		subject	"_Alien Autopsy - Ortnok"
-		icon	icons/alien		
+		icon	icons/alien
 	}
 
 	mail
@@ -3347,7 +3347,7 @@ tech rs_alien_ortnok_autopsy
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		subject	"_Alien Autopsy - Ortnok"
-		icon	icons/alien		
+		icon	icons/alien
 	}
 
 	require_AND
@@ -3383,7 +3383,7 @@ tech rs_alien_taman_autopsy
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		subject	"_Alien Autopsy - Taman"
-		icon	icons/alien		
+		icon	icons/alien
 	}
 
 	mail
@@ -3391,7 +3391,7 @@ tech rs_alien_taman_autopsy
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		subject	"_Alien Autopsy - Taman"
-		icon	icons/alien		
+		icon	icons/alien
 	}
 
 	require_AND
@@ -3425,7 +3425,7 @@ tech rs_alien_shevaar_autopsy
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		subject	"_Alien Autopsy - Shevaar"
-		icon	icons/alien		
+		icon	icons/alien
 	}
 
 	mail
@@ -3433,7 +3433,7 @@ tech rs_alien_shevaar_autopsy
 		from	"_mail_from_dr_connor"
 		to		"_mail_to_base_commander"
 		subject	"_Alien Autopsy - Shevaar"
-		icon	icons/alien		
+		icon	icons/alien
 	}
 
 	require_AND
