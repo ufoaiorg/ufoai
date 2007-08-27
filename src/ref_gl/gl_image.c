@@ -618,6 +618,10 @@ void R_LoadTGA (const char *name, byte ** pic, int *width, int *height)
 			return;
 		}
 		break;
+	default:
+		ri.Con_Printf(PRINT_ALL, "R_LoadTGA: Unknown tga image type: %i for image %s\n", targaHeader.imageType, name);
+ri.FS_FreeFile(buffer);
+		return;
 	}
 
 	columns = targaHeader.width;
@@ -639,6 +643,8 @@ void R_LoadTGA (const char *name, byte ** pic, int *width, int *height)
 		pixbuf = targaRGBA + (rows - 1) * columns * 4;
 		row_inc = -columns * 4 * 2;
 	}
+
+	red = blue = green = alpha = 0;
 
 	for (row = col = 0, samples = 3; row < rows;) {
 		pixelCount = 0x10000;
@@ -684,6 +690,8 @@ void R_LoadTGA (const char *name, byte ** pic, int *width, int *height)
 					blue = green = red = *buf_p++;
 					alpha = 255;
 					break;
+				default:
+					ri.Sys_Error(ERR_FATAL, "R_LoadTGA: Unknown tga image type: %i\n", targaHeader.imageType);
 				}
 			}
 
