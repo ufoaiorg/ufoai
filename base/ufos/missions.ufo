@@ -536,7 +536,7 @@ mission convoy
 	text		"_The aliens have attacked a military convoy. Go and secure that area."
 	map		convoy01
 	music		van_mission2
-	pos		"308 412"	//FIXME
+	pos		"97 47"	//FIXME
 	aliens		11
 	civilians	8
 	civteam		"armysoldier"
@@ -1000,7 +1000,7 @@ mission aliencolony_small
 	text		"_We located the alien colony, go there and destroy it."
 	map			colon04
 	music		PsymongR5
-	pos			"308 412" // FIXME
+	pos			"11 12" // FIXME
 	aliens		12
 	nation		"states" // FIXME
 	alienequip	stage4_soldiers
@@ -1016,7 +1016,7 @@ mission lake2
 	text		"_Protect inhabitants"
 	map			lake02
 	music		PsymongR5
-	pos			"308 412" // FIXME
+	pos			"11 12" // FIXME
 	aliens		6
 	nation		"states" // FIXME
 	alienequip	stage4_soldiers
