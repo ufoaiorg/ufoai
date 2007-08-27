@@ -531,12 +531,12 @@ mission village
 // America
 mission convoy
 {
-	location	"_Arizona"
+	location	"_Georgia"
 	type		"_Terror attack"
 	text		"_The aliens have attacked a military convoy. Go and secure that area."
 	map		convoy01
 	music		van_mission2
-	pos		"97 47"	//FIXME
+	pos		"80 34"
 	aliens		11
 	civilians	8
 	civteam		"armysoldier"
