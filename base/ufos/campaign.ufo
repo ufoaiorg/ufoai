@@ -14,7 +14,7 @@ stage intro
 		frame		"0 3 0"		// mission starts between 0d 10h and 1d 10h
 		expire		"0 6 0"		// expires not sooner than 2d 10h
 								// and not later than 5d 10h
-		missions	"rzeszow"
+		missions	"or_tabelbala"
 		number		1			// no quota --- give scared newbies some slack...
 	}
 	set terror_only
@@ -27,7 +27,7 @@ stage intro
 		expire		"0 8 0"		// average expire time is 4d
 								// minimum interval between missions is 3d
 								// so you have 2 or less on geoscape any time
-		missions	"africa_excavation transport mine mart italy estate frozen_alienlandingindustrial farm"
+		missions	"africa_excavation transport mine mart italy estate"
 		number		11			// don't torment the player with the same missions
 		quota		6
 		ufos		2
@@ -38,10 +38,20 @@ stage intro
 		delay		"0 10 7"
 		frame		"0 15 0"	// big missions, but less traffic
 		expire		"0 45 0"	// three at geoscape, but lots of time to do them
-		missions	"bunker japan dam spedition stadium industrial"
-		number		4			// no mission will get repeated
-		quota		4
+		missions	"bunker japan dam spedition stadium druglord rzeszow"
+		number		7
+		quota		7
 		ufos		2
+	}
+	set landed_ships
+	{
+		needed		soldier_terror
+		delay		"0 5 2"
+		frame		"0 6 0"
+		expire		"0 5 0"
+		missions	"industrial rivertown farm frozen_alienlandingindustrial"
+		quota		4	
+		ufos		1
 	}
 	// from this place on, due to not enough missions in RC5,
 	// and only 19 scientists total, I increase all "frame" settings
@@ -52,8 +62,8 @@ stage intro
 //		frame		"0 6 0"	// change of pace --- quick ones
 		frame		"0 27 0"
 		expire		"0 5 0"
-		missions	"oriental city subway gasstation tower village"
-		quota		5		// torment the player until he's done
+		missions	"oriental city subway gasstation tower village convoy"
+		quota		7		// torment the player until he's done
 		nextstage	ufos_are_coming
 		ufos		2
 	}
@@ -85,8 +95,8 @@ stage ufos_are_coming
 //		frame		"0 10 0"
 		frame		"0 23 0"
 		expire		"0 8 0"
-		missions	"construction farm2 office harbor pdi bridge"
-		quota		5
+		missions	"construction farm2 office harbor pdi bridge tropic_river"
+		quota		6
 		nextstage	invasion
 		ufos		2
 	}
