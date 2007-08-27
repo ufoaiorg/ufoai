@@ -3177,12 +3177,16 @@ void CL_ParseMission (const char *name, const char **text)
 		}
 
 	} while (*text);
-#ifdef DEBUG
+
 	if (abs(ms->pos[0]) > 180.0f)
-		Com_Printf("Longitude for mission '%s' is bigger than 180 EW (%.0f)\n", ms->name, ms->pos[0]);
+		Com_Printf("CL_ParseMission: Longitude for mission '%s' is bigger than 180 EW (%.0f)\n", ms->name, ms->pos[0]);
 	if (abs(ms->pos[1]) > 90.0f)
-		Com_Printf("Latitude for mission '%s' is bigger than 90 NS (%.0f)\n", ms->name, ms->pos[1]);
-#endif
+		Com_Printf("CL_ParseMission: Latitude for mission '%s' is bigger than 90 NS (%.0f)\n", ms->name, ms->pos[1]);
+	if (*ms->onwin && ms->onwin[strlen(ms->onwin)-1] == ';')
+		Com_Printf("CL_ParseMission: onwin trigger must not end on ; - mission '%s'\n", ms->name);
+	if (*ms->onlose && ms->onlose[strlen(ms->onlose)-1] == ';')
+		Com_Printf("CL_ParseMission: onlose trigger must not end on ; - mission '%s'\n", ms->name);
+
 	if (!*ms->loadingscreen)
 		Q_strncpyz(ms->loadingscreen, "default.jpg", MAX_VAR);
 
