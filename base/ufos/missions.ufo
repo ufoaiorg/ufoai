@@ -347,7 +347,7 @@ mission farm
 	civilians	3
 	nation		"states"
 	onlose          ""
-	onwin		"cp_uforecovery 0;"
+	onwin		"cp_uforecovery 0"
 	storyrelated	true
 }
 
@@ -367,7 +367,7 @@ mission industrial
 	civilians	4
 	nation		"states"
 	onlose		""
-	onwin		"cp_uforecovery 1;"
+	onwin		"cp_uforecovery 1"
 	storyrelated	true
 }
 
@@ -406,7 +406,7 @@ mission frozen_alienlandingindustrial
 	civilians	3
 	nation		"oceania"		//FIXME: does Antarctica belongs to Oceania?
 	onlose		""
-	onwin		"cp_uforecovery 1;"
+	onwin		"cp_uforecovery 1"
 	storyrelated	false
 }
 
@@ -569,7 +569,7 @@ mission mine_crash
 	civilians	6
 	nation		"africa"
 	onlose		""
-	onwin		"cp_ufocrashed ufo_fighter;"
+	onwin		"cp_ufocrashed ufo_fighter"
 	storyrelated	true
 }
 
@@ -593,7 +593,7 @@ mission bridge
 	civilians	6
 	nation		"europa"
 	onlose		""
-	onwin		"cp_ufocrashed ufo_fighter;"
+	onwin		"cp_ufocrashed ufo_fighter"
 	storyrelated	true
 }
 
@@ -714,7 +714,7 @@ mission africa
 	civilians	6
 	nation		"africa"
 	onlose		""
-	onwin		"cp_uforecovery 2;"
+	onwin		"cp_uforecovery 2"
 	storyrelated	true
 }
 
@@ -734,7 +734,7 @@ mission harvestercrash
 	civilians	3
 	nation		"latin"
 	onlose		""
-	onwin		"cp_ufocrashed ufo_harvester;"
+	onwin		"cp_ufocrashed ufo_harvester"
 	storyrelated	true
 }
 
@@ -792,7 +792,7 @@ mission terrain
 	civilians	2
 	nation		"europa"
 	onlose		""
-	onwin		"cp_uforecovery 1;"
+	onwin		"cp_uforecovery 1"
 	storyrelated	true
 }
 
