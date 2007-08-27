@@ -2973,6 +2973,7 @@ void CL_ParseMission (const char *name, const char **text)
 					Mem_PoolStrDupTo(token, (char**) ((char*)ms + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 					break;
 				}
+				break;
 			}
 
 		if (!vp->string) {
