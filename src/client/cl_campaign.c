@@ -1910,6 +1910,8 @@ static void CL_NationSelect_f(void)
  * @brief Load callback for campaign data
  * @sa CP_Save
  * @sa SAV_GameSave
+ * @sa CP_SpawnBaseAttackMission
+ * @sa CP_SpawnCrashSiteMission
  */
 qboolean CP_Load (sizebuf_t *sb, void *data)
 {
@@ -2091,7 +2093,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 					Q_strncpyz(mis->def->onwin, MSG_ReadString(sb), sizeof(mis->def->onwin));
 					Q_strncpyz(mis->def->map, MSG_ReadString(sb), sizeof(mis->def->map));
 					Q_strncpyz(mis->def->param, MSG_ReadString(sb), sizeof(mis->def->param));
-					/** @sa AIRFIGHT_ActionsAfterAirfight */
+					/** @sa CP_SpawnCrashSiteMission */
 					nation = MAP_GetNation(mis->realPos);
 					Com_sprintf(mis->def->type, sizeof(mis->def->type), _("UFO crash site"));
 					if (nation) {

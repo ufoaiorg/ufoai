@@ -2120,7 +2120,7 @@ void B_BaseAttack (base_t* const base)
 		return;
 	}
 
-	ms = CL_AddMission(va("baseattack%i%i", (int)base->pos[0], (int)base->pos[1]));
+	ms = CL_AddMission(va("baseattack%i:%i", (int)base->pos[0], (int)base->pos[1]));
 	if (!ms) {
 		Com_DPrintf(DEBUG_CLIENT, "B_BaseAttack: Could not set base %s under attack\n", base->name);
 		return;
