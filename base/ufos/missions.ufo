@@ -1009,22 +1009,6 @@ mission aliencolony_small
 	storyrelated	true
 }
 
-mission druglord
-{
-	location	"_TODO"
-	type		"_Terror Attack"
-	text		"_Protect inhabitants"
-	map			druglord07
-	music		PsymongR5
-	pos			"59 -6"
-	aliens		6
-	nation		"latin"
-	alienequip	stage4_soldiers
-	onlose		""
-	onwin		""
-	storyrelated	true
-}
-
 mission lake2
 {
 	location	"_TODO"
