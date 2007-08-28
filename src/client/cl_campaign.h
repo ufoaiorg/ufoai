@@ -409,7 +409,7 @@ void CL_GameInit(qboolean load);
 void AIR_NewAircraft(base_t * base, const char *name);
 void CL_ParseResearchedCampaignItems(const char *name, const char **text);
 void CL_ParseResearchableCampaignStates(const char *name, const char **text, qboolean researchable);
-void CP_ExecuteMissionTrigger(mission_t * m, int won, base_t* base);
+void CP_ExecuteMissionTrigger(mission_t * m, int won);
 actMis_t* CL_CampaignAddGroundMission(mission_t* mis);
 
 campaign_t* CL_GetCampaign(const char* name);

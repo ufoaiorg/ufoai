@@ -2198,7 +2198,7 @@ void CL_ParseResults (struct dbuffer *msg)
 		/* Make sure that at this point we are able to 'Try Again' a mission. */
 		Cvar_SetValue("mission_tryagain", 0);
 		if (selMis && base)
-			CP_ExecuteMissionTrigger(selMis->def, winner == we, base);
+			CP_ExecuteMissionTrigger(selMis->def, winner == we);
 		else
 			Com_Printf("CL_ParseResults: Error - no mission triggers, because selMis or baseCurrent are not valid\n");
 

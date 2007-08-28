@@ -2564,9 +2564,46 @@ static void CP_AddItemAsCollected (void)
 	}
 }
 
+/**
+ * @brief Changes nation happiness by given multiplier.
+ * @note There must be argument passed to this function being converted to float.
+ */
+void CP_ChangeNationHappiness_f (void)
+{
+	float multiplier = 0;
+	nation_t *nation;
+	
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <multiplier>\n", Cmd_Argv(0));
+		return;
+	}
+	multiplier = atof(Cmd_Argv(1));
+	
+	assert(selMis);
+	nation = MAP_GetNation(selMis->def->pos);
+	assert(nation);
+	
+	nation->stats[0].happiness = nation->stats[0].happiness * multiplier;
+}
+
+/**
+ * @brief Adds new message generated from mission triggerText variable.
+ */
+void CP_AddTriggerMessage_f (void)
+{
+	assert (selMis);
+	
+	if (selMis->def->triggerText)
+		MN_AddNewMessage(_("Notice"), selMis->def->triggerText, qfalse, MSG_STANDARD, NULL);
+	else
+		Com_Printf("CP_AddTriggerMessage_f()... function call without mission triggerText (%s)\n", selMis->def->name);
+}
+
 /** @brief mission trigger functions */
 static const cmdList_t cp_commands[] = {
 	{"cp_add_item", CP_AddItemAsCollected, "Add an item as collected"},
+	{"cp_triggermessage", CP_AddTriggerMessage_f, "Function to add new message with mission triggerText."},
+	{"cp_changehappiness", CP_ChangeNationHappiness_f, "Function to raise or lower nation hapiness."},
 
 	{NULL, NULL, NULL}
 };
@@ -2595,20 +2632,19 @@ static void CP_MissionTriggerFunctions (qboolean add)
  * Can execute console commands (triggers) on win and lose
  * This can be used for story dependent missions
  */
-void CP_ExecuteMissionTrigger (mission_t * m, int won, base_t* base)
+void CP_ExecuteMissionTrigger (mission_t * m, int won)
 {
 	/* we add them only here - and remove them afterwards to prevent cheating */
 	CP_MissionTriggerFunctions(qtrue);
 	Com_DPrintf(DEBUG_CLIENT, "Execute mission triggers\n");
 	if (won && *m->onwin) {
-		assert(base);
 		Com_DPrintf(DEBUG_CLIENT, "...won - executing '%s'\n", m->onwin);
-		Cbuf_ExecuteText(EXEC_NOW, va("%s %i", m->onwin, base->idx));
+		Cbuf_AddText(va("%s\n", m->onwin));
 	} else if (!won && *m->onlose) {
-		assert(base);
 		Com_DPrintf(DEBUG_CLIENT, "...lost - executing '%s'\n", m->onlose);
-		Cbuf_ExecuteText(EXEC_NOW, va("%s %i", m->onlose, base->idx));
+		Cbuf_AddText(va("%s\n", m->onlose));
 	}
+	Cbuf_Execute();
 	CP_MissionTriggerFunctions(qfalse);
 }
 
@@ -2711,7 +2747,7 @@ static void CL_GameAutoGo_f (void)
 	}
 
 	/* onwin and onlose triggers */
-	CP_ExecuteMissionTrigger(selMis->def, won, baseCurrent);
+	CP_ExecuteMissionTrigger(selMis->def, won);
 
 	if (won || !selMis->def->keepAfterFail)
 		CL_CampaignRemoveMission(selMis);
@@ -4355,7 +4391,7 @@ static void CP_UFORecovered_f (void)
 		return;
 	}
 
-	if ((atoi(Cmd_Argv(2)) >= 0) && (atoi(Cmd_Argv(2)) < UFO_MAX)) {
+	if ((atoi(Cmd_Argv(1)) >= 0) && (atoi(Cmd_Argv(1)) < UFO_MAX)) {
 		UFOtype = atoi(Cmd_Argv(1));
 	} else {
 		Com_Printf("CP_UFORecovered()... UFOType: %i does not exist!\n", atoi(Cmd_Argv(1)));
