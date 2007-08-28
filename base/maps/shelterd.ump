@@ -148,7 +148,7 @@ a      +x      +x      a
 0      0       0       0
 }
 
-assembly test
+assembly standard
 {
 size "8 8"
 +solid "2 2"
