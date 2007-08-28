@@ -342,7 +342,6 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	set_stream_data(stream, newcl);
 }
 
-#if 0
 /**
  * @brief Checks whether the remote connection is allowed (rcon_password must be
  * set on the server) - and verify the user given password with the cvar value.
@@ -361,20 +360,20 @@ static qboolean Rcon_Validate (void)
 /**
  * @brief A client issued an rcon command. Shift down the remaining args. Redirect all printfs
  */
-static void SVC_RemoteCommand (void)
+static void SVC_RemoteCommand (struct net_stream *stream)
 {
 	int i;
 	qboolean valid;
 	char remaining[1024];
+	char buf[256];
+	const char *peername = stream_peer_name(stream, buf, sizeof(buf), qtrue);
 
 	valid = Rcon_Validate();
 
 	if (!valid)
-		Com_Printf("Bad rcon from %s (%s):\n%s\n", SV_FindPlayer(net_from), NET_AdrToString(net_from), net_message.data + 4);
+		Com_Printf("Bad rcon from %s:\n%s\n", peername, Cmd_Argv(1));
 	else
-		Com_Printf("Rcon from %s (%s):\n%s\n", SV_FindPlayer(net_from), NET_AdrToString(net_from), net_message.data + 4);
-
-	Com_BeginRedirect(RD_PACKET, sv_outputbuf, SV_OUTPUTBUF_LENGTH, SV_FlushRedirect);
+		Com_Printf("Rcon from %s:\n%s\n", peername, Cmd_Argv(1));
 
 	if (!valid)
 		/* inform the client */
@@ -391,11 +390,11 @@ static void SVC_RemoteCommand (void)
 		/* execute the string */
 		Cmd_ExecuteString(remaining);
 	}
-
-	Com_EndRedirect();
 }
-#endif
 
+/**
+ * @brief
+ */
 static void SV_ConnectionlessPacket (struct net_stream *stream, struct dbuffer *msg)
 {
 	const char *s, *c;
@@ -416,10 +415,8 @@ static void SV_ConnectionlessPacket (struct net_stream *stream, struct dbuffer *
 		SVC_Status(stream);
 	else if (!strcmp(c, "connect"))
 		SVC_DirectConnect(stream);
-#if 0
 	else if (!strcmp(c, "rcon"))
-		SVC_RemoteCommand();
-#endif
+		SVC_RemoteCommand(stream);
 	else
 		Com_Printf("bad connectionless packet from %s:\n%s\n", stream_peer_name(stream, buf, sizeof(buf), qfalse), s);
 }

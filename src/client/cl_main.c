@@ -37,7 +37,6 @@ cvar_t *masterserver_port;
 cvar_t *cl_isometric;
 
 cvar_t *rcon_client_password;
-cvar_t *rcon_address;
 
 cvar_t *cl_fps;
 cvar_t *cl_shownet;
@@ -404,7 +403,6 @@ static void CL_Connect_f (void)
 	cls.connectRetry = 10;
 }
 
-#if 0
 /**
  * @brief
  *
@@ -415,7 +413,6 @@ static void CL_Rcon_f (void)
 {
 	char message[1024];
 	int i;
-	netadr_t to;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("usage: %s <command>\n", Cmd_Argv(0));
@@ -427,11 +424,8 @@ static void CL_Rcon_f (void)
 		return;
 	}
 
-	message[0] = (char) 255; /* \xFF - for searching only */
-	message[1] = (char) 255;
-	message[2] = (char) 255;
-	message[3] = (char) 255;
-	message[4] = 0;
+	if (cls.state < ca_connected)
+		return;
 
 	Q_strcat(message, "rcon ", sizeof(message));
 
@@ -443,24 +437,8 @@ static void CL_Rcon_f (void)
 		Q_strcat(message, " ", sizeof(message));
 	}
 
-	if (cls.state >= ca_connected)
-		to = cls.netchan.remote_address;
-	else {
-		if (!strlen(rcon_address->string)) {
-			Com_Printf("You must either be connected, or set the 'rcon_address' cvar to issue rcon commands\n");
-			return;
-		}
-		if (!NET_StringToAdr(rcon_address->string, &to)) {
-			Com_Printf("Bad address: %s\n", rcon_address->string);
-			return;
-		}
-		if (to.port == 0)
-			to.port = htons(PORT_SERVER);
-	}
-
-	NET_SendPacket(NS_CLIENT, strlen(message) + 1, message, to);
+	NET_OOB_Printf(cls.stream, message);
 }
-#endif
 
 /**
  * @brief
@@ -2116,7 +2094,6 @@ static void CL_InitLocal (void)
 	cl_shownet = Cvar_Get("cl_shownet", "0", CVAR_ARCHIVE, NULL);
 
 	rcon_client_password = Cvar_Get("rcon_password", "", 0, "Remote console password");
-	rcon_address = Cvar_Get("rcon_address", "", 0, "Remote console address - set this if you aren't connected to a server");
 
 	cl_logevents = Cvar_Get("cl_logevents", "0", 0, "Log all events to events.log");
 
@@ -2207,7 +2184,7 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("connect", CL_Connect_f, "Connect to given ip");
 	Cmd_AddCommand("reconnect", CL_Reconnect_f, "Reconnect to last server");
 
-	/*Cmd_AddCommand("rcon", CL_Rcon_f, "Execute a rcon command - see rcon_password");*/
+	Cmd_AddCommand("rcon", CL_Rcon_f, "Execute a rcon command - see rcon_password");
 
 #ifdef ACTIVATE_PACKET_COMMAND
 	/* this is dangerous to leave in */
