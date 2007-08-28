@@ -3923,6 +3923,23 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 }
 
 /**
+ * @brief Key binding for fast inventory access
+ */
+void CL_ActorInventoryOpen_f (void)
+{
+	if (CL_OnBattlescape()) {
+		menu_t* menu = MN_ActiveMenu();
+		if (!strstr(menu->name, "hudinv")) {
+			if (!Q_strcmp(mn_hud->string, "althud"))
+				MN_PushMenu("ahudinv");
+			else
+				MN_PushMenu("hudinv");
+		} else
+			MN_PopMenu(qfalse);
+	}
+}
+
+/**
  * @brief Targets to the ground when holding the assigned button
  * @sa mousePosTargettingAlign
  */

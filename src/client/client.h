@@ -716,6 +716,7 @@ qboolean CL_AddUGV(le_t * le, entity_t * ent);
 
 void CL_AddTargeting(void);
 void CL_ActorTargetAlign_f(void);
+void CL_ActorInventoryOpen_f(void);
 
 /* cl_team.c */
 /* if you increase this, you also have to change the aircraft buy/sell menu scripts */
