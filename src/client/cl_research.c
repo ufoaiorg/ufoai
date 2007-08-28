@@ -207,14 +207,14 @@ static qboolean RS_RequirementsMet (requirements_t *required_AND, requirements_t
 
 /**
  * @brief Checks if the technology (tech-id) is researchable.
- * @param[in] tech pointer to technology_t.
+ * @param[in] tech Pointer to technology_t to be checked.
+ * @param[in] base In what base to check reseachability.
+ * "base" can be NULL (i.e. everything related to a base is ignored). See code in RS_RequirementsMet for details.
  * @return qboolean
  * @sa RS_TechIsResearched
  */
-static qboolean RS_TechIsResearchable (technology_t * tech)
+static qboolean RS_TechIsResearchable (technology_t * tech, base_t *base)
 {
-	base_t* base = NULL;
-
 	if (!tech)
 		return qfalse;
 
@@ -224,11 +224,7 @@ static qboolean RS_TechIsResearchable (technology_t * tech)
 
 	if (tech->statusResearchable)
 		return qtrue;
-
-	/* which base is it researched in */
-	if (tech->base_idx >= 0)
-		base = &gd.bases[tech->base_idx];
-
+	
 	return RS_RequirementsMet(&tech->require_AND, &tech->require_OR, base);
 }
 
@@ -239,6 +235,7 @@ static qboolean RS_TechIsResearchable (technology_t * tech)
 char *RS_GetDescription (descriptions_t *desc)
 {
 	technology_t *tech = NULL;
+	base_t* base = NULL;
 	int i = 0;
 
 	/* Return (unparsed) default description (0) if nothing is defined.
@@ -259,7 +256,12 @@ char *RS_GetDescription (descriptions_t *desc)
 		if (!tech)
 			continue;
 
-		if (RS_TechIsResearchable(tech)) {
+		if (tech->base_idx >= 0)
+			base = &gd.bases[tech->base_idx];
+		else
+			base = baseCurrent;
+
+		if (RS_TechIsResearchable(tech, base)) {
 			desc->usedDescription = i;	/**< Stored used description */
 			return desc->text[i];
 		}
@@ -417,6 +419,8 @@ void RS_MarkResearchable (qboolean init)
 
 				if (tech->base_idx >= 0)
 					base = &gd.bases[tech->base_idx];
+				else
+					base = baseCurrent;
 
 				/* All requirements are met. */
 				if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR, base)) {
