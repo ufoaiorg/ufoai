@@ -420,3 +420,10 @@ mapdef lake2
 	music			PsymongR5
 	multiplayer		true
 }
+
+mapdef shelter_standard
+{
+	map				"+shelter"
+	music			PsymongR4
+	multiplayer		true
+}
