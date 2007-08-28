@@ -148,6 +148,7 @@ typedef uint8_t byte;
 #define LEVEL_TRACING 259
 #define LEVEL_MAX 260
 
+/** @sa Com_DeveloperSet_f */
 #define DEBUG_ALL		(1<<0)
 #define DEBUG_SHARED	(1<<1)
 #define DEBUG_ENGINE	(1<<2)

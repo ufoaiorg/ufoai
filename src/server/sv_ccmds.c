@@ -595,6 +595,7 @@ static int SV_CompleteServerCommand (const char *partial, const char **match)
 
 /**
  * @brief
+ * @sa SV_Init
  */
 void SV_InitOperatorCommands (void)
 {

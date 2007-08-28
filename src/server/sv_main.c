@@ -789,7 +789,7 @@ void SV_UserinfoChanged (client_t * cl)
 }
 
 /**
- * @brief Only called at ufo.exe startup, not for each game
+ * @brief Only called once at startup, not for each game
  */
 void SV_Init (void)
 {
@@ -801,7 +801,6 @@ void SV_Init (void)
 	SV_InitOperatorCommands();
 
 	rcon_password = Cvar_Get("rcon_password", "", 0, NULL);
-/*	Cvar_Get("skill", "1", 0); */
 	Cvar_Get("deathmatch", "0", CVAR_LATCH, NULL);
 	Cvar_Get("timelimit", "0", CVAR_SERVERINFO, NULL);
 	Cvar_Get("cheats", "0", CVAR_SERVERINFO | CVAR_LATCH, NULL);

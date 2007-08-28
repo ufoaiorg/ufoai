@@ -539,14 +539,6 @@ void Info_Print (char *s)
 /*======================================================== */
 
 /**
- * @brief Just throw a fatal error to test error shutdown procedures
- */
-static void Com_Error_f (void)
-{
-	Com_Error(ERR_FATAL, "%s", Cmd_Argv(1));
-}
-
-/**
  * @brief
  */
 void Com_SetGameType (void)
@@ -617,6 +609,8 @@ static void Com_DebugHelp_f (void)
 			" * debug_destroyallufos\n"
 			" * debug_drawblocked\n"
 			"   prints forbidden list to console\n"
+			" * debug_error\n"
+			"   throw and error to test the Com_Error function\n"
 			" * debug_fullcredits\n"
 			"   restore to full credits\n"
 			" * debug_hosp_hurt_all\n"
@@ -652,7 +646,86 @@ static void Com_DebugHelp_f (void)
 			"------------------------------\n"
 			);
 }
+
+/**
+ * @brief Just throw a fatal error to test error shutdown procedures
+ */
+static void Com_DebugError_f (void)
+{
+	if (Cmd_Argc() == 3) {
+		const char *errorType = Cmd_Argv(1);
+		if (!Q_strcmp(errorType, "ERR_DROP"))
+			Com_Error(ERR_DROP, "%s", Cmd_Argv(2));
+		else if (!Q_strcmp(errorType, "ERR_FATAL"))
+			Com_Error(ERR_FATAL, "%s", Cmd_Argv(2));
+		else if (!Q_strcmp(errorType, "ERR_DISCONNECT"))
+			Com_Error(ERR_DISCONNECT, "%s", Cmd_Argv(2));
+	}
+	Com_Printf("usage: %s <ERR_FATAL|ERR_DROP|ERR_DISCONNECT> <msg>\n", Cmd_Argv(0));
+}
 #endif
+
+
+typedef struct debugLevel_s {
+	const char *str;
+	int debugLevel;
+} debugLevel_t;
+
+static const debugLevel_t debugLevels[] = {
+	{"DEBUG_ALL", DEBUG_ALL},
+	{"DEBUG_ENGINE", DEBUG_ENGINE},
+	{"DEBUG_SHARED", DEBUG_SHARED},
+	{"DEBUG_SYSTEM", DEBUG_SYSTEM},
+	{"DEBUG_COMMANDS", DEBUG_COMMANDS},
+	{"DEBUG_CLIENT", DEBUG_CLIENT},
+	{"DEBUG_SERVER", DEBUG_SERVER},
+	{"DEBUG_GAME", DEBUG_GAME},
+	{"DEBUG_RENDERER", DEBUG_RENDERER},
+
+	{NULL, 0}
+};
+/**
+ * @brief
+ */
+static void Com_DeveloperSet_f (void)
+{
+	int oldValue = Cvar_VariableInteger("developer");
+	int newValue = oldValue;
+	int i = 0;
+
+	if (Cmd_Argc() == 2) {
+		const char *debugLevel = Cmd_Argv(1);
+		while (debugLevels[i].str) {
+			if (!Q_strcmp(debugLevel, debugLevels[i].str)) {
+				if (oldValue & debugLevels[i].debugLevel)
+					newValue &= ~debugLevels[i].debugLevel;
+				else
+					newValue |= debugLevels[i].debugLevel;
+				break;
+			}
+			i++;
+		}
+		if (!debugLevels[i].str) {
+			Com_Printf("No valid debug mode paramter\n");
+			return;
+		}
+		Cvar_SetValue("developer", newValue);
+		Com_Printf("Currently selected debug print levels\n");
+		i = 0;
+		while (debugLevels[i].str) {
+			if (newValue & debugLevels[i].debugLevel)
+				Com_Printf("* %s\n", debugLevels[i].str);
+			i++;
+		}
+	} else {
+		Com_Printf("usage: %s <debug_level>\n", Cmd_Argv(0));
+		Com_Printf("  valid debug_levels are:\n");
+		while (debugLevels[i].str) {
+			Com_Printf("  * %s\n", debugLevels[i].str);
+			i++;
+		}
+	}
+}
 
 #ifndef DEDICATED_ONLY
 /**
@@ -727,11 +800,12 @@ void Qcommon_Init (int argc, const char **argv)
 	Cbuf_Execute();
 
 	/* init commands and vars */
-	Cmd_AddCommand("error", Com_Error_f, "Just throw a fatal error to test error shutdown procedures");
 	Cmd_AddCommand("gametypelist", Com_GameTypeList_f, "List all available multiplayer game types");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_help", Com_DebugHelp_f, "Show some debugging help");
+	Cmd_AddCommand("debug_error", Com_DebugError_f, "Just throw a fatal error to test error shutdown procedures");
 #endif
+	Cmd_AddCommand("setdeveloper", Com_DeveloperSet_f, "Set the developer cvar to only get the debug output you want");
 
 	s_sleep = Cvar_Get("s_sleep", "1", CVAR_ARCHIVE, "Use the sleep function to reduce cpu usage");
 	developer = Cvar_Get("developer", "0", 0, "Activate developer output to logfile and gameconsole");
