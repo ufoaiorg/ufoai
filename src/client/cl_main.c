@@ -427,10 +427,7 @@ static void CL_Rcon_f (void)
 	if (cls.state < ca_connected)
 		return;
 
-	Q_strcat(message, "rcon ", sizeof(message));
-
-	Q_strcat(message, rcon_client_password->string, sizeof(message));
-	Q_strcat(message, " ", sizeof(message));
+	Com_sprintf(message, sizeof(message), "rcon %s ", rcon_client_password->string);
 
 	for (i = 1; i < Cmd_Argc(); i++) {
 		Q_strcat(message, Cmd_Argv(i), sizeof(message));
