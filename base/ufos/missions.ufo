@@ -911,3 +911,18 @@ mission lake2
 	onwin		""
 	storyrelated	true
 }
+
+mission shelter_standard
+{
+	location	"_Rocky Mountains"
+	type		"_Terror Attack"
+	text		"_Aliens are attacking a shelter. Defend the people inside."
+	pos			"114 40"
+	aliens		8
+	nation		"states"
+	civilians	7
+	alienequip	stage3_soldiers
+	onlose		""
+	onwin		""
+	storyrelated	false
+}

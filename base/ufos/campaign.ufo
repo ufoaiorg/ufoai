@@ -95,7 +95,7 @@ stage ufos_are_coming
 //		frame		"0 10 0"
 		frame		"0 23 0"
 		expire		"0 8 0"
-		missions	"construction office harbor pdi bridge tropic_river"
+		missions	"construction office harbor pdi bridge tropic_river shelter_standard"
 		quota		6
 		nextstage	invasion
 		ufos		2
