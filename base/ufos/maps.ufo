@@ -430,25 +430,25 @@ mapdef shelter_standard
 
 mapdef shelter_standard
 {
-		map			"+shelter"
-		teams		4
-		music		PsymongO6
-		multiplayer	true
-		coop		true
- 
-		terrains
-		{
-				mountain
-		}
- 
-		cultures
-		{
-				western
-				eastern
-		}
- 
-		populations
-		{
-				//any
-		}
+	map				"+shelter"
+	teams			4
+	music			PsymongO6
+	multiplayer		true
+	coop			true
+
+	terrains
+	{
+		mountain
+	}
+
+	cultures
+	{
+		western
+		eastern
+	}
+
+	populations
+	{
+		//any
+	}
 }
