@@ -3094,6 +3094,8 @@ mission_t *CL_AddMission (const char *name)
 	Q_strncpyz(ms->name, name, sizeof(ms->name));
 	Com_DPrintf(DEBUG_CLIENT, "CL_AddMission: mission name: '%s'\n", name);
 
+	ms->mapDef = md;
+
 	return ms;
 }
 
