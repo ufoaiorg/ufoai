@@ -153,7 +153,7 @@ mapdef rzeszow
 mapdef farm
 {
 	map				farm08
-	description		"_A	farmhouse surrounded by	fields and sheds. A	UFO	has	landed in one of the fields."
+	description		"_A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
 	size			"medium"
 	teams			2
 	music			PsymongN2
@@ -424,13 +424,8 @@ mapdef lake2
 mapdef shelter_standard
 {
 	map				"+shelter"
-	music			PsymongO6
-	multiplayer		true
-}
-
-mapdef shelter_standard
-{
-	map				"+shelter"
+	description		"_A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
+	size			"medium"
 	teams			4
 	music			PsymongO6
 	multiplayer		true
