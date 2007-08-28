@@ -407,12 +407,8 @@ void AIM_NextAircraft_f (void)
 	}
 
 
-	if (aircraftID < baseCurrent->numAircraftInBase - 1) {
-		Cvar_SetValue("mn_aircraft_idx", aircraftID + 1);
-		AIR_AircraftSelect(NULL);
-	} else {
-		Com_DPrintf(DEBUG_CLIENT, "AIM_NextAircraft_f: we are at the end of the list already -> mn_aircraft_idx: %i - numAircraftInBase: %i\n", aircraftID, baseCurrent->numAircraftInBase);
-	}
+	Cvar_SetValue("mn_aircraft_idx",(aircraftID + 1) % baseCurrent->numAircraftInBase);
+	AIR_AircraftSelect(NULL);
 }
 
 /**
@@ -438,12 +434,8 @@ void AIM_PrevAircraft_f (void)
 		return;
 	}
 
-	if (aircraftID >= 1) {
-		Cvar_SetValue("mn_aircraft_idx", aircraftID - 1);
-		AIR_AircraftSelect(NULL);
-	} else {
-		Com_DPrintf(DEBUG_CLIENT, "AIM_PrevAircraft_f: we are at the beginning of the list already -> mn_aircraft_idx: %i - numAircraftInBase: %i\n", aircraftID, baseCurrent->numAircraftInBase);
-	}
+	Cvar_SetValue("mn_aircraft_idx",(aircraftID - 1 + baseCurrent->numAircraftInBase) % baseCurrent->numAircraftInBase);
+	AIR_AircraftSelect(NULL);
 }
 
 /**
