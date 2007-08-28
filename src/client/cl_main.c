@@ -529,31 +529,23 @@ static void CL_Disconnect_f (void)
  */
 static void CL_Packet_f (void)
 {
-	char send[2048];
-
 	int i, l;
-	char *in, *out;
-	netadr_t adr;
+	const char *in;
+	char *out;
+	struct net_stream *s;
 
-	if (Cmd_Argc() != 3) {
-		Com_Printf("Usage: packet <destination> <contents>\n");
+	if (Cmd_Argc() != 4) {
+		Com_Printf("Usage: packet <destination> <port> <contents>\n");
 		return;
 	}
 
-	/* allow remote */
-	NET_Config(qtrue);
-
-	if (!NET_StringToAdr(Cmd_Argv(1), &adr)) {
-		Com_Printf("Bad address\n");
+	s = NET_Connect(Cmd_Argv(1), Cmd_Argv(2));
+	if (!s) {
+		Com_Printf("Could not connect to %s at port %s\n", Cmd_Argv(1), Cmd_Argv(2));
 		return;
 	}
-	if (!adr.port)
-		adr.port = htons(PORT_SERVER);
 
-	in = Cmd_Argv(2);
-	out = send + 4;
-	/* FIXME: Should be unsigned, don't it */
-	send[0] = send[1] = send[2] = send[3] = (char) 0xff;
+	in = Cmd_Argv(3);
 
 	l = strlen(in);
 	for (i = 0; i < l; i++) {
@@ -565,7 +557,7 @@ static void CL_Packet_f (void)
 	}
 	*out = 0;
 
-	NET_SendPacket(NS_CLIENT, out - send, send, adr);
+	NET_OOB_Printf(s, va("%s %i", out, PROTOCOL_VERSION));
 }
 #endif
 
