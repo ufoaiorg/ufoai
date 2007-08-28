@@ -4600,6 +4600,9 @@ static void MN_MapInfo (int step)
 {
 	ccs.multiplayerMapDefinitionIndex += step;
 
+	if (ccs.multiplayerMapDefinitionIndex < 0)
+		ccs.multiplayerMapDefinitionIndex = csi.numMDs - 1;
+
 	ccs.multiplayerMapDefinitionIndex %= csi.numMDs;
 
 	if (!ccs.singleplayer) {
