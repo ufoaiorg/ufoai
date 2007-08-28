@@ -3117,9 +3117,8 @@ void CL_ParseMission (const char *name, const char **text)
 		return;
 	}
 
-	ms->mapDef = Com_GetMapDefinitionByID(name);
-	if (!ms->mapDef) {
-		Com_Printf("CL_ParseMission: mission def \"%s\" has no mapdef\n", name);
+	if (!ms) {
+		Com_Printf("CL_ParseMission: could not add mission \"%s\"\n", name);
 		numMissions--;
 		FS_SkipBlock(text);
 		return;
