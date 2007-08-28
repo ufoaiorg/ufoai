@@ -1,0 +1,40 @@
+// MAP DESCRIPTIONS
+//
+// valid terrain values:
+// * desert, arctic, water, mountain, tropical, grass
+// valid culture values:
+// * eastern, western, oriental, african
+// valid population values:
+// * urban, suburban, village, rural, nopopulation
+
+/*
+map farm
+{
+	map			farm08
+	description	"_A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
+	size		"medium"
+	teams		2
+	music		PsymongN2
+	deathmatch	true
+	assault		false
+	takeandhold	true
+
+	terrains
+	{
+		grass
+	}
+
+	cultures
+	{
+		western
+	}
+
+	population
+	{
+		rural
+		village
+		suburban
+		urban
+	}
+}
+*/
