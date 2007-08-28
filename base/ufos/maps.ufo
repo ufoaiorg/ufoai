@@ -1,11 +1,11 @@
 // MAP DESCRIPTIONS
 //
 // valid terrain values:
-// * desert, arctic, water, mountain, tropical, grass
+// * desert, arctic, water,	mountain, tropical,	grass
 // valid culture values:
 // * eastern, western, oriental, african
-// valid population values:
-// * urban, suburban, village, rural, nopopulation
+// valid population	values:
+// * urban,	suburban, village, rural, nopopulation
 
 mapdef or_tabelbala
 {
@@ -77,8 +77,8 @@ mapdef transport
 
 mapdef or_asyut
 {
-	map             "+oriental"
-	music           PsymongO6
+	map				"+oriental"
+	music			PsymongO6
 	multiplayer		true
 }
 
@@ -153,7 +153,7 @@ mapdef rzeszow
 mapdef farm
 {
 	map				farm08
-	description		"_A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
+	description		"_A	farmhouse surrounded by	fields and sheds. A	UFO	has	landed in one of the fields."
 	size			"medium"
 	teams			2
 	music			PsymongN2
@@ -232,7 +232,7 @@ mapdef subway
 mapdef tower
 {
 	map				tower06
-	music           greecei		//FIXME: AlexSullencity here?
+	music			greecei		//FIXME: AlexSullencity	here?
 	multiplayer		true
 }
 
@@ -428,3 +428,27 @@ mapdef shelter_standard
 	multiplayer		true
 }
 
+mapdef shelter_standard
+{
+		map			"+shelter"
+		teams		4
+		music		PsymongO6
+		multiplayer	true
+		coop		true
+ 
+		terrains
+		{
+				mountain
+		}
+ 
+		cultures
+		{
+				western
+				eastern
+		}
+ 
+		populations
+		{
+				any
+		}
+}
