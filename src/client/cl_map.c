@@ -1469,10 +1469,10 @@ nation_t* MAP_GetNation (const vec2_t pos)
 }
 
 /**
- * @brief Translate color value to zone type
+ * @brief Translate color value to terrain type
  * @sa MAP_GetColor
- * @param[in] byte the color value to the the zone type from
- * @return returns the zone name - the first char is used for base assemble themes
+ * @param[in] byte the color value from the terrain mask
+ * @return returns the zone name
  * @note never may return a null pointer or an empty string
  * @note Make sure, that there are textures with the same name in base/textures/tex_terrain
  */
@@ -1488,14 +1488,16 @@ const char* MAP_GetTerrainType (byte* color)
 		return "mountain";
 	else if (MapIsTropical(color))
 		return "tropical";
-	else if (MapIsUrban(color))
-		return "urban";
-	else if (MapIsVillage(color))
-		return "village";
 	else
 		return "grass";
 }
 
+/**
+ * @brief Translate color value to culture type
+ * @sa MAP_GetColor
+ * @param[in] byte the color value from the culture mask
+ * @note never may return a null pointer or an empty string
+ */
 const char* MAP_GetCultureType (byte* color)
 {
 	if (MapIsWater(color))
@@ -1512,6 +1514,12 @@ const char* MAP_GetCultureType (byte* color)
 		return "western";
 }
 
+/**
+ * @brief Translate color value to population type
+ * @sa MAP_GetColor
+ * @param[in] byte the color value from the population mask
+ * @note never may return a null pointer or an empty string
+ */
 const char* MAP_GetPopulationType (byte* color)
 {
 	if (MapIsWater(color))
