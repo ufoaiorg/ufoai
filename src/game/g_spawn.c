@@ -867,7 +867,7 @@ static void SP_worldspawn (edict_t * ent)
 		gi.configstring(CS_MAXSOLDIERSPERTEAM, va("%i", sv_maxsoldiersperteam->integer));
 		gi.configstring(CS_MAXSOLDIERSPERPLAYER, va("%i", sv_maxsoldiersperplayer->integer));
 		gi.configstring(CS_ENABLEMORALE, va("%i", sv_enablemorale->integer));
-		if (gi.csi->currentMD->teams) {
+		if (gi.csi->currentMD) {
 			gi.configstring(CS_MAXTEAMS, va("%i", gi.csi->currentMD->teams));
 			gi.cvar_set("sv_maxteams", va("%i", gi.csi->currentMD->teams));
 		} else
