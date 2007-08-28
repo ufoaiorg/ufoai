@@ -610,24 +610,17 @@ static void MN_PrevGametype_f (void)
 static void MN_StartServer_f (void)
 {
 	aircraft_t *aircraft;
-	char map[MAX_QPATH];
+	char map[MAX_VAR];
+	mapDef_t *md;
 	cvar_t* mn_serverday = Cvar_Get("mn_serverday", "1", 0, "Decides whether the server starts the day or the night version of the selected map");
-
-	if (Cmd_Argc() <= 1) {
-		Com_Printf("Usage: mn_startserver <name>\n");
-		return;
-	}
 
 	aircraft = AIR_AircraftGetFromIdx(0);
 
-	if (sv_dedicated->integer > 0)
-		Com_DPrintf(DEBUG_CLIENT, "Dedicated server needs no team\n");
-	else if (!B_GetNumOnTeam(aircraft)) {
+	if (!sv_dedicated->integer && !B_GetNumOnTeam(aircraft)) {
 		Com_Printf("MN_StartServer_f: Multiplayer team not loaded, please choose your team now.\n");
 		Cbuf_ExecuteText(EXEC_NOW, "assign_initial 1");
 		return;
-	} else
-		Com_DPrintf(DEBUG_CLIENT, "There are %i members on team\n", B_GetNumOnTeam(aircraft));
+	}
 
 	if (Cvar_VariableInteger("sv_teamplay")
 		&& Cvar_VariableValue("sv_maxsoldiersperplayer") > Cvar_VariableValue("sv_maxsoldiersperteam")) {
@@ -635,10 +628,13 @@ static void MN_StartServer_f (void)
 		return;
 	}
 
-	Com_sprintf(map, sizeof(map), "map %s%c", Cmd_Argv(1), mn_serverday->integer ? 'd' : 'n');
+	md = &csi.mds[ccs.multiplayerMapDefinitionIndex];
+	if (!md || !md->multiplayer)
+		return;
+	assert(md->map);
 
-	/* everything should be reasearched for multiplayer matches */
-/*	RS_MarkResearchedAll(); */
+	Com_sprintf(map, sizeof(map), "map %s%c %s", md->map, mn_serverday->integer ? 'd' : 'n', md->param ? md->param : "");
+
 	Cvar_Set("mn_main", "multiplayerInGame");
 
 	Cbuf_ExecuteText(EXEC_NOW, map);
@@ -4598,25 +4594,34 @@ void MN_ParseMenu (const char *name, const char **text)
 }
 
 /**
- * @brief
+ * @brief Prints the map info
  */
 static void MN_MapInfo (int step)
 {
-	static int currentMapIndex = 0;
+	ccs.multiplayerMapDefinitionIndex += step;
 
-	currentMapIndex += step;
+	ccs.multiplayerMapDefinitionIndex %= csi.numMDs;
 
-	currentMapIndex %= csi.numMDs;
+	if (!ccs.singleplayer) {
+		int i = 0;
+		while (!csi.mds[ccs.multiplayerMapDefinitionIndex].multiplayer) {
+			i++;
+			ccs.multiplayerMapDefinitionIndex += step;
+			ccs.multiplayerMapDefinitionIndex %= csi.numMDs;
+			if (i >= csi.numMDs)
+				Sys_Error("MN_MapInfo: There is no multiplayer map in any mapdef\n");
+		}
+	}
 
-	Cvar_ForceSet("mapname", csi.mds[currentMapIndex].map);
-	if (FS_CheckFile(va("pics/maps/shots/%s.jpg", csi.mds[currentMapIndex].map)) != -1)
-		Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", csi.mds[currentMapIndex].map));
+	Cvar_Set("mn_svmapname", csi.mds[ccs.multiplayerMapDefinitionIndex].id);
+	if (FS_CheckFile(va("pics/maps/shots/%s.jpg", csi.mds[ccs.multiplayerMapDefinitionIndex].map)) != -1)
+		Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", csi.mds[ccs.multiplayerMapDefinitionIndex].map));
 
-	if (FS_CheckFile(va("pics/maps/shots/%s_2.jpg", csi.mds[currentMapIndex].map)) != -1)
-		Cvar_Set("mn_mappic2", va("maps/shots/%s_2.jpg", csi.mds[currentMapIndex].map));
+	if (FS_CheckFile(va("pics/maps/shots/%s_2.jpg", csi.mds[ccs.multiplayerMapDefinitionIndex].map)) != -1)
+		Cvar_Set("mn_mappic2", va("maps/shots/%s_2.jpg", csi.mds[ccs.multiplayerMapDefinitionIndex].map));
 
-	if (FS_CheckFile(va("pics/maps/shots/%s_3.jpg", csi.mds[currentMapIndex].map)) != -1)
-		Cvar_Set("mn_mappic3", va("maps/shots/%s_3.jpg", csi.mds[currentMapIndex].map));
+	if (FS_CheckFile(va("pics/maps/shots/%s_3.jpg", csi.mds[ccs.multiplayerMapDefinitionIndex].map)) != -1)
+		Cvar_Set("mn_mappic3", va("maps/shots/%s_3.jpg", csi.mds[ccs.multiplayerMapDefinitionIndex].map));
 }
 
 /**

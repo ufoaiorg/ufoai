@@ -346,6 +346,7 @@ typedef struct ccs_s {
 	vec2_t mapSize;
 
 	qboolean singleplayer;	/**< singleplayer or multiplayer */
+	int multiplayerMapDefinitionIndex;	/**< current selected multiplayer map */
 
 	int credits;			/**< actual credits amount */
 	int civiliansKilled;	/**< how many civilians were killed already */

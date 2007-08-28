@@ -187,7 +187,7 @@ const char *Com_GiveModel(int type, int gender, const char *teamID);
 int Com_GetCharacterValues(const char *team, character_t * chr);
 const char* Com_GetActorSound(teamDef_t* td, int gender, actorSound_t soundType);
 teamDef_t* Com_GetTeamDefinitionByID(const char *team);
-
+mapDef_t* Com_GetMapDefinitionByID(const char *mapDefID);
 void Com_AddObjectLinks(void);
 void Com_ParseScripts(void);
 void Com_PrecacheCharacterModels(void);

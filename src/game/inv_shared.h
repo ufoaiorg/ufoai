@@ -319,6 +319,7 @@ typedef struct mapDef_s {
 	char *music;			/**< music that should be played during this mission */
 
 	/* multiplayer */
+	qboolean multiplayer;	/**< is this map multiplayer ready at all */
 	int teams;				/**< multiplayer teams */
 	qboolean coop;			/**< is this map multiplayer coop ready */
 

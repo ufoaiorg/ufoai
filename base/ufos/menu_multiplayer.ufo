@@ -1297,7 +1297,7 @@ menu mp_create_server
 	}
 	string txt_mapname
 	{
-		string	"*cvar mapname"
+		string	"*cvar mn_svmapname"
 		pos	"510 535"
 		color	"0 .78 0 1"
 		whup	{ cmd "mn_prevmap;" }
@@ -1366,7 +1366,7 @@ menu mp_create_server
 	pic button_server
 	{
 		pos	"570 630"
-		click	{ cmd "mn_startserver *mapname; music_randomtrack" }
+		click	{ cmd "mn_startserver;music_randomtrack;" }
 		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"

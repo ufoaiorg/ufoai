@@ -2136,6 +2136,24 @@ void Com_AddObjectLinks (void)
 	}
 }
 
+/**
+ * @brief
+ */
+mapDef_t* Com_GetMapDefinitionByID (const char *mapDefID)
+{
+	int i;
+
+	assert(mapDefID);
+
+	for (i = 0; i < csi.numMDs; i++) {
+		if (!Q_strcmp(csi.mds[i].id, mapDefID))
+			return &csi.mds[i];
+	}
+
+	Com_Printf("Com_GetMapDefinition: Could not find mapdef with id: '%s'\n", mapDefID);
+	return NULL;
+}
+
 /** @brief valid mapdef descriptors */
 static const value_t mapdef_vals[] = {
 	{"description", V_TRANSLATION_MANUAL_STRING, offsetof(mapDef_t, description), 0},
@@ -2147,6 +2165,7 @@ static const value_t mapdef_vals[] = {
 
 	{"teams", V_INT, offsetof(mapDef_t, teams), MEMBER_SIZEOF(mapDef_t, teams)},
 	{"coop", V_BOOL, offsetof(mapDef_t, coop), MEMBER_SIZEOF(mapDef_t, coop)},
+	{"multiplayer", V_BOOL, offsetof(mapDef_t, multiplayer), MEMBER_SIZEOF(mapDef_t, multiplayer)},
 
 	{NULL, 0, 0, 0}
 };
