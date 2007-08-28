@@ -517,9 +517,9 @@ static void CP_MissionList_f (void)
 		if (details) {
 			Q_strncpyz(tmp, missions[i].name, sizeof(tmp));
 			Com_Printf("| %-*s | ", DETAILSWIDTH, tmp);
-			Q_strncpyz(tmp, missions[i].map, sizeof(tmp));
+			Q_strncpyz(tmp, missions[i].mapDef->map, sizeof(tmp));
 			Com_Printf("%-*s | ", DETAILSWIDTH, tmp);
-			Q_strncpyz(tmp, missions[i].param, sizeof(tmp));
+			Q_strncpyz(tmp, missions[i].mapDef->param, sizeof(tmp));
 			Com_Printf("%-*s | ", DETAILSWIDTH, tmp);
 			for (j = 0; j < missions[i].numAlienTeams; j++)
 				Q_strncpyz(tmp, missions[i].alienTeams[j]->id, sizeof(tmp));
@@ -591,11 +591,11 @@ qboolean CP_SpawnCrashSiteMission (aircraft_t* aircraft)
 	if (ms->alienTeams[0])
 		ms->numAlienTeams++;
 
-	Q_strncpyz(ms->loadingscreen, "crashsite", sizeof(ms->loadingscreen));
-	Com_sprintf(ms->onwin, sizeof(ms->onwin), "cp_ufocrashed %i;", aircraft->ufotype);
 	/* use ufocrash.ump as random tile assembly */
-	Com_sprintf(ms->map, sizeof(ms->map), "+ufocrash");
-	Com_sprintf(ms->param, sizeof(ms->param), "%s", UFO_TypeToShortName(aircraft->ufotype));
+	ms->mapDef->map = Mem_PoolStrDup("+ufocrash", cl_localPool, CL_TAG_NONE);
+	ms->mapDef->param = Mem_PoolStrDup(UFO_TypeToShortName(aircraft->ufotype), cl_localPool, CL_TAG_NONE);
+	ms->mapDef->loadingscreen = Mem_PoolStrDup("crashsite", cl_localPool, CL_TAG_NONE);
+	Com_sprintf(ms->onwin, sizeof(ms->onwin), "cp_ufocrashed %i;", aircraft->ufotype);
 	mis = CL_CampaignAddGroundMission(ms);
 	if (mis) {
 		Vector2Set(mis->realPos, ms->pos[0], ms->pos[1]);
@@ -640,8 +640,8 @@ qboolean CP_SpawnBaseAttackMission (base_t* base, mission_t* ms, setState_t *cau
 		ms->numAlienTeams++;
 
 	ms->zoneType = base->mapZone;
-	Q_strncpyz(ms->loadingscreen, "baseattack", sizeof(ms->loadingscreen));
-	Com_sprintf(ms->map, sizeof(ms->map), ".baseattack");
+	ms->mapDef->loadingscreen = Mem_PoolStrDup("baseattack", cl_localPool, CL_TAG_NONE);
+	ms->mapDef->map = Mem_PoolStrDup(".baseattack", cl_localPool, CL_TAG_NONE);
 
 	if (cause)
 		return qtrue;
@@ -2095,10 +2095,10 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 					mis->realPos[1] = MSG_ReadFloat(sb);
 					mis->def->aliens = MSG_ReadByte(sb);
 					mis->def->civilians = MSG_ReadByte(sb);
-					Q_strncpyz(mis->def->loadingscreen, MSG_ReadString(sb), sizeof(mis->def->loadingscreen));
+					mis->def->mapDef->loadingscreen = Mem_PoolStrDup(MSG_ReadString(sb), cl_localPool, CL_TAG_NONE);
 					Q_strncpyz(mis->def->onwin, MSG_ReadString(sb), sizeof(mis->def->onwin));
-					Q_strncpyz(mis->def->map, MSG_ReadString(sb), sizeof(mis->def->map));
-					Q_strncpyz(mis->def->param, MSG_ReadString(sb), sizeof(mis->def->param));
+					mis->def->mapDef->map = Mem_PoolStrDup(MSG_ReadString(sb), cl_localPool, CL_TAG_NONE);
+					mis->def->mapDef->param = Mem_PoolStrDup(MSG_ReadString(sb), cl_localPool, CL_TAG_NONE);
 					/** @sa CP_SpawnCrashSiteMission */
 					nation = MAP_GetNation(mis->realPos);
 					Com_sprintf(mis->def->type, sizeof(mis->def->type), _("UFO crash site"));
@@ -2250,10 +2250,10 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 			MSG_WriteFloat(sb, mis->realPos[1]);
 			MSG_WriteByte(sb, mis->def->aliens);
 			MSG_WriteByte(sb, mis->def->civilians);
-			MSG_WriteString(sb, mis->def->loadingscreen);
+			MSG_WriteString(sb, mis->def->mapDef->loadingscreen);
 			MSG_WriteString(sb, mis->def->onwin);
-			MSG_WriteString(sb, mis->def->map);
-			MSG_WriteString(sb, mis->def->param);
+			MSG_WriteString(sb, mis->def->mapDef->map);
+			MSG_WriteString(sb, mis->def->mapDef->param);
 			break;
 		default:
 			Com_Printf("CP_Save: Error - unknown mission type: %i\n", mis->def->missionType);
@@ -2419,9 +2419,9 @@ static void CP_StartMissionMap (mission_t* mission)
 	 * @sa Mod_LoadTexinfo */
 	cl.refdef.mapZone = mission->zoneType;
 
-	switch (mission->map[0]) {
+	switch (mission->mapDef->map[0]) {
 	case '+':
-		Com_sprintf(expanded, sizeof(expanded), "maps/%s%c.ump", mission->map + 1, timeChar);
+		Com_sprintf(expanded, sizeof(expanded), "maps/%s%c.ump", mission->mapDef->map + 1, timeChar);
 		break;
 	/* base attack maps starts with a dot */
 	case '.':
@@ -2439,14 +2439,14 @@ static void CP_StartMissionMap (mission_t* mission)
 			Cbuf_AddText(va("base_assemble %i 1;", bAttack->idx));
 		return;
 	default:
-		Com_sprintf(expanded, sizeof(expanded), "maps/%s%c.bsp", mission->map, timeChar);
+		Com_sprintf(expanded, sizeof(expanded), "maps/%s%c.bsp", mission->mapDef->map, timeChar);
 		break;
 	}
 
 	if (FS_LoadFile(expanded, NULL) != -1)
-		Cbuf_AddText(va("map %s%c %s\n", mission->map, timeChar, mission->param));
+		Cbuf_AddText(va("map %s%c %s\n", mission->mapDef->map, timeChar, mission->mapDef->param));
 	else
-		Cbuf_AddText(va("map %s %s\n", mission->map, mission->param));
+		Cbuf_AddText(va("map %s %s\n", mission->mapDef->map, mission->mapDef->param));
 }
 
 /**
@@ -3024,8 +3024,6 @@ static const value_t mission_vals[] = {
 	{"triggertext", V_TRANSLATION_MANUAL_STRING, offsetof(mission_t, triggerText), 0},
 	{"alttext", V_TRANSLATION_MANUAL_STRING, offsetof(mission_t, missionTextAlternate), 0},
 	{"nation", V_STRING, offsetof(mission_t, nation), 0},
-	{"map", V_STRING, offsetof(mission_t, map), 0},
-	{"param", V_STRING, offsetof(mission_t, param), 0},
 	{"music", V_STRING, offsetof(mission_t, music), 0},
 	{"pos", V_POS, offsetof(mission_t, pos), MEMBER_SIZEOF(mission_t, pos)},
 	{"mask", V_RGBA, offsetof(mission_t, mask), MEMBER_SIZEOF(mission_t, mask)}, /* color values from map mask this mission needs */
@@ -3040,7 +3038,7 @@ static const value_t mission_vals[] = {
 	{"storyrelated", V_BOOL, offsetof(mission_t, storyRelated), MEMBER_SIZEOF(mission_t, storyRelated)},
 	{"keepafterfail", V_BOOL, offsetof(mission_t, keepAfterFail), MEMBER_SIZEOF(mission_t, keepAfterFail)},
 	{"noexpire", V_BOOL, offsetof(mission_t, noExpire), MEMBER_SIZEOF(mission_t, noExpire)},
-	{"loadingscreen", V_STRING, offsetof(mission_t, loadingscreen), 0},
+
 	{NULL, 0, 0, 0}
 };
 
@@ -3067,6 +3065,7 @@ mission_t *CL_AddMission (const char *name)
 {
 	int i;
 	mission_t *ms;
+	mapDef_t *md;
 
 	/* just to let us know: search for missions with same name */
 	for (i = 0; i < numMissions; i++)
@@ -3081,6 +3080,12 @@ mission_t *CL_AddMission (const char *name)
 		Com_Printf("CL_AddMission: Max missions reached\n");
 		return NULL;
 	}
+	md = Com_GetMapDefinitionByID(name);
+	if (!md) {
+		Com_Printf("CL_AddMission: Could not find map definition with id '%s'\n", name);
+		return NULL;
+	}
+
 	/* initialize the mission */
 	ms = &missions[numMissions++];
 	memset(ms, 0, sizeof(mission_t));
@@ -3110,6 +3115,14 @@ void CL_ParseMission (const char *name, const char **text)
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseMission: mission def \"%s\" without body ignored\n", name);
 		numMissions--;
+		return;
+	}
+
+	ms->mapDef = Com_GetMapDefinitionByID(name);
+	if (!ms->mapDef) {
+		Com_Printf("CL_ParseMission: mission def \"%s\" has no mapdef\n", name);
+		numMissions--;
+		FS_SkipBlock(text);
 		return;
 	}
 
@@ -3186,9 +3199,6 @@ void CL_ParseMission (const char *name, const char **text)
 		Com_Printf("CL_ParseMission: onwin trigger must not end on ; - mission '%s'\n", ms->name);
 	if (*ms->onlose && ms->onlose[strlen(ms->onlose)-1] == ';')
 		Com_Printf("CL_ParseMission: onlose trigger must not end on ; - mission '%s'\n", ms->name);
-
-	if (!*ms->loadingscreen)
-		Q_strncpyz(ms->loadingscreen, "default.jpg", MAX_VAR);
 
 	if (!*ms->civTeam)
 		Q_strncpyz(ms->civTeam, ms->nation, sizeof(ms->civTeam));

@@ -389,7 +389,7 @@ static void SCR_DrawLoading (void)
 	}
 
 	if (!loadingPic)
-		loadingPic = SCR_SetLoadingBackground(selMis ? selMis->def->map : cl.configstrings[CS_MAPTITLE]);
+		loadingPic = SCR_SetLoadingBackground(selMis ? selMis->def->mapDef->map : cl.configstrings[CS_MAPTITLE]);
 	if (!loadingPic)
 		return;
 	re.DrawNormPic(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0, ALIGN_UL, qfalse, loadingPic);
