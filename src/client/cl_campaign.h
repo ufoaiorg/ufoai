@@ -91,11 +91,12 @@ typedef enum missionType_s {
 
 /** mission definition */
 typedef struct mission_s {
+	mapDef_t* mapDef;
+	char name[MAX_VAR];	/**< script id */
+	char map[MAX_VAR];
 	char *missionText;	/**< translateable - but untranslated in memory */
 	char *missionTextAlternate;	/**< translateable - but untranslated in memory */
 	char *triggerText;	/**< translateable - but untranslated in memory */
-	char name[MAX_VAR];	/**< script id */
-	char map[MAX_VAR];
 	char loadingscreen[MAX_VAR];
 	char param[MAX_VAR];
 	char location[MAX_VAR];
@@ -330,6 +331,7 @@ typedef struct nation_s {
 
 /**
  * @brief client structure
+ * @sa csi_t
  */
 typedef struct ccs_s {
 	equipDef_t eMission;

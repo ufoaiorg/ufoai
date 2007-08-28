@@ -37,7 +37,6 @@ FILESYSTEM
 #define MAX_MAPS 400
 extern char *fs_maps[MAX_MAPS];
 extern int fs_numInstalledMaps;
-extern int fs_mapInstalledIndex;
 
 typedef struct qFILE_s {
 	void *z; /* in case of the file being a zip archive */

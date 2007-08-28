@@ -926,6 +926,21 @@ menu mp_bookmarks
 
 menu mp_create_server
 {
+	// ===================
+	// DAY + NIGHT
+	// ===================
+	string daynight_str
+	{
+		string	"_Day version:"
+		pos	"500 100"
+	}
+	checkbox daynight_value
+	{
+		cvar	"*cvar mn_serverday"
+		pos	"840 100"
+		align	ur
+	}
+
 	// =====================
 	// PUBLIC - MASTERSERVER
 	// =====================
@@ -1374,9 +1389,8 @@ menu mp_create_server
 	func init
 	{
 		cmd	"mn_escpop 5;"
-		cmd "killserver; set sv_maxplayersperteam 8; set sv_roundtimelimit 0;"
-		cmd "mn_updategametype;"
-		cmd "getmaps;"
+		cmd "killserver;set sv_maxplayersperteam 8;set sv_roundtimelimit 0;set mn_serverday 1;"
+		cmd "mn_updategametype;mn_getmaps;"
 	}
 }
 

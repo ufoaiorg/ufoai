@@ -2136,6 +2136,108 @@ void Com_AddObjectLinks (void)
 	}
 }
 
+/** @brief valid mapdef descriptors */
+static const value_t mapdef_vals[] = {
+	{"description", V_TRANSLATION_MANUAL_STRING, offsetof(mapDef_t, description), 0},
+	{"map", V_STRING, offsetof(mapDef_t, map), 0},
+	{"param", V_STRING, offsetof(mapDef_t, param), 0},
+	{"music", V_STRING, offsetof(mapDef_t, music), 0},
+	{"loadingscreen", V_STRING, offsetof(mapDef_t, loadingscreen), 0},
+	{"size", V_STRING, offsetof(mapDef_t, size), 0},
+
+	{"teams", V_INT, offsetof(mapDef_t, teams), MEMBER_SIZEOF(mapDef_t, teams)},
+	{"coop", V_BOOL, offsetof(mapDef_t, coop), MEMBER_SIZEOF(mapDef_t, coop)},
+
+	{NULL, 0, 0, 0}
+};
+
+/**
+ * @brief
+ */
+static void Com_ParseMapDefinition (const char *name, const char **text)
+{
+	const char *errhead = "Com_ParseMapDefinition: unexpected end of file (mapdef ";
+	mapDef_t *md;
+	const value_t *vp;
+	const char *token;
+
+	/* get it's body */
+	token = COM_Parse(text);
+
+	if (!*text || *token != '{') {
+		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" without body ignored\n", name);
+		return;
+	}
+
+	md = &csi.mds[csi.numMDs++];
+	memset(md, 0, sizeof(*md));
+	md->id = Mem_PoolStrDup(name, com_genericPool, 0);
+
+	do {
+		token = COM_EParse(text, errhead, name);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+
+		for (vp = mapdef_vals; vp->string; vp++)
+			if (!Q_strcmp(token, vp->string)) {
+				/* found a definition */
+				token = COM_EParse(text, errhead, name);
+				if (!*text)
+					return;
+
+				switch (vp->type) {
+				default:
+					Com_ParseValue(md, token, vp->type, vp->ofs, vp->size);
+					break;
+				case V_TRANSLATION_MANUAL_STRING:
+					if (*token == '_')
+						token++;
+				/* fall through */
+				case V_STRING:
+				case V_CLIENT_HUNK_STRING:
+					Mem_PoolStrDupTo(token, (char**) ((char*)md + (int)vp->ofs), com_genericPool, 0);
+					break;
+				}
+				break;
+			}
+
+		if (!vp->string) {
+			linkedList_t *list;
+			if (!Q_strcmp(token, "terrains")) {
+				list = md->terrains;
+			} else if (!Q_strcmp(token, "populations")) {
+				list = md->populations;
+			} else if (!Q_strcmp(token, "cultures")) {
+				list = md->cultures;
+			} else {
+				Com_Printf("Com_ParseMapDefinition: unknown token \"%s\" ignored (mapdef %s)\n", token, name);
+				continue;
+			}
+			token = COM_EParse(text, errhead, name);
+			if (!*text || *token != '{') {
+				Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" has terrains, populations or cultures block with no opening brace\n", name);
+				break;
+			}
+			do {
+				token = COM_EParse(text, errhead, name);
+				if (!*text || *token == '}')
+					break;
+				LIST_Add(&list, token);
+			} while (*text);
+		}
+	} while (*text);
+
+	if (!md->loadingscreen)
+		md->loadingscreen = "default.jpg";
+
+	if (!md->map) {
+		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" with no map\n", name);
+		csi.numMDs--;
+	}
+}
+
 /**
  * @brief
  * @sa CL_ParseClientData
@@ -2179,6 +2281,8 @@ void Com_ParseScripts (void)
 		/* server/client scripts */
 		if (!Q_strncmp(type, "item", 4))
 			Com_ParseItem(name, &text, qfalse);
+		else if (!Q_strncmp(type, "mapdef", 6))
+			Com_ParseMapDefinition(name, &text);
 		else if (!Q_strncmp(type, "craftitem", 8))
 			Com_ParseItem(name, &text, qtrue);
 		else if (!Q_strncmp(type, "inventory", 9))

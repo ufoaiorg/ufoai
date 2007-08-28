@@ -1699,8 +1699,6 @@ void CL_InitAfter (void)
 	/* init some production menu nodes */
 	PR_Init();
 
-	FS_GetMaps(qfalse);
-
 	cls.loadingPercent = 5.0f;
 	SCR_DrawPrecacheScreen(qtrue);
 

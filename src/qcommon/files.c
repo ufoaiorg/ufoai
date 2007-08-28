@@ -1311,7 +1311,6 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 char *fs_maps[MAX_MAPS];
 int fs_numInstalledMaps = -1;
 static qboolean fs_mapsInstalledInit = qfalse;
-int fs_mapInstalledIndex = 0;
 
 /**
  * @brief
@@ -1338,7 +1337,6 @@ void FS_GetMaps (qboolean reset)
 			Mem_Free(fs_maps[i]);
 	}
 
-	fs_mapInstalledIndex = 0;
 	fs_numInstalledMaps = -1;
 
 	/* search through the path, one element at a time */

@@ -7,17 +7,14 @@
 // valid population values:
 // * urban, suburban, village, rural, nopopulation
 
-/*
-map farm
+mapdef farm
 {
 	map			farm08
 	description	"_A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
 	size		"medium"
 	teams		2
 	music		PsymongN2
-	deathmatch	true
-	assault		false
-	takeandhold	true
+	coop		true
 
 	terrains
 	{
@@ -29,7 +26,7 @@ map farm
 		western
 	}
 
-	population
+	populations
 	{
 		rural
 		village
@@ -37,4 +34,3 @@ map farm
 		urban
 	}
 }
-*/

@@ -3194,7 +3194,6 @@ void CL_ParseMission (const char *name, const char **text)
 		Q_strncpyz(ms->civTeam, ms->nation, sizeof(ms->civTeam));
 }
 
-
 /* =========================================================== */
 
 /**

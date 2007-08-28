@@ -610,6 +610,8 @@ static void MN_PrevGametype_f (void)
 static void MN_StartServer_f (void)
 {
 	aircraft_t *aircraft;
+	char map[MAX_QPATH];
+	cvar_t* mn_serverday = Cvar_Get("mn_serverday", "1", 0, "Decides whether the server starts the day or the night version of the selected map");
 
 	if (Cmd_Argc() <= 1) {
 		Com_Printf("Usage: mn_startserver <name>\n");
@@ -633,11 +635,13 @@ static void MN_StartServer_f (void)
 		return;
 	}
 
+	Com_sprintf(map, sizeof(map), "map %s%c", Cmd_Argv(1), mn_serverday->integer ? 'd' : 'n');
+
 	/* everything should be reasearched for multiplayer matches */
 /*	RS_MarkResearchedAll(); */
 	Cvar_Set("mn_main", "multiplayerInGame");
 
-	Cbuf_ExecuteText(EXEC_NOW, va("map %s", Cmd_Argv(1)));
+	Cbuf_ExecuteText(EXEC_NOW, map);
 }
 
 /**
@@ -3701,11 +3705,11 @@ void MN_ResetMenus (void)
 	Cmd_AddCommand("tutoriallist_click", MN_TutorialListClick_f, NULL);
 	Cmd_AddCommand("chatlist", CL_ShowChatMessagesOnStack_f, "Print all chat messages to the game console");
 	Cmd_AddCommand("messagelist", CL_ShowMessagesOnStack_f, "Print all messages to the game console");
-	Cmd_AddCommand("getmaps", MN_GetMaps_f, "Get the list of available maps");
 	Cmd_AddCommand("mn_startserver", MN_StartServer_f, NULL);
 	Cmd_AddCommand("mn_updategametype", MN_UpdateGametype_f, "Update the menu values with current gametype values");
 	Cmd_AddCommand("mn_nextgametype", MN_NextGametype_f, "Switch to the next multiplayer game type");
 	Cmd_AddCommand("mn_prevgametype", MN_PrevGametype_f, "Switch to the previous multiplayer game type");
+	Cmd_AddCommand("mn_getmaps", MN_GetMaps_f, "The initial map to show");
 	Cmd_AddCommand("mn_nextmap", MN_NextMap_f, "Switch to the next multiplayer map");
 	Cmd_AddCommand("mn_prevmap", MN_PrevMap_f, "Switch to the previous multiplayer map");
 	Cmd_AddCommand("mn_push", MN_PushMenu_f, "Push a menu to the menustack");
@@ -4596,64 +4600,23 @@ void MN_ParseMenu (const char *name, const char **text)
 /**
  * @brief
  */
-static void MN_MapInfo (void)
+static void MN_MapInfo (int step)
 {
-	char normalizedName[MAX_VAR];
-	int length = 0;
-	qboolean normalized = qfalse, found = qfalse;
+	static int currentMapIndex = 0;
 
-	/* maybe mn_next/prev_map are called before getmaps??? */
-	FS_GetMaps(qfalse);
+	currentMapIndex += step;
 
-	Cvar_Set("mn_mappic", "maps/shots/na.jpg");
-	Cvar_Set("mn_mappic2", "maps/shots/na.jpg");
-	Cvar_Set("mn_mappic3", "maps/shots/na.jpg");
+	currentMapIndex %= csi.numMDs;
 
-	/* check whether there are maps */
-	if (fs_numInstalledMaps == -1)
-		return;
+	Cvar_ForceSet("mapname", csi.mds[currentMapIndex].map);
+	if (FS_CheckFile(va("pics/maps/shots/%s.jpg", csi.mds[currentMapIndex].map)) != -1)
+		Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", csi.mds[currentMapIndex].map));
 
-	/* remove the day and night char */
-	Q_strncpyz(normalizedName, fs_maps[fs_mapInstalledIndex], sizeof(normalizedName));
-	length = strlen(normalizedName);
-	if (normalizedName[length - 1] == 'n' || normalizedName[length - 1] == 'd') {
-		normalizedName[length - 1] = '\0';
-		normalized = qtrue;
-	}
+	if (FS_CheckFile(va("pics/maps/shots/%s_2.jpg", csi.mds[currentMapIndex].map)) != -1)
+		Cvar_Set("mn_mappic2", va("maps/shots/%s_2.jpg", csi.mds[currentMapIndex].map));
 
-	Cvar_ForceSet("mapname", fs_maps[fs_mapInstalledIndex]);
-	if (FS_CheckFile(va("pics/maps/shots/%s.jpg", fs_maps[fs_mapInstalledIndex])) != -1) {
-		Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", fs_maps[fs_mapInstalledIndex]));
-		found = qtrue;
-	}
-
-	if (FS_CheckFile(va("pics/maps/shots/%s_2.jpg", fs_maps[fs_mapInstalledIndex])) != -1) {
-		Cvar_Set("mn_mappic2", va("maps/shots/%s_2.jpg", fs_maps[fs_mapInstalledIndex]));
-		found = qtrue;
-	}
-
-	if (FS_CheckFile(va("pics/maps/shots/%s_3.jpg", fs_maps[fs_mapInstalledIndex])) != -1) {
-		Cvar_Set("mn_mappic3", va("maps/shots/%s_3.jpg", fs_maps[fs_mapInstalledIndex]));
-		found = qtrue;
-	}
-
-	/* then check the normalized names */
-	if (!found && normalized) {
-		if (FS_CheckFile(va("pics/maps/shots/%s.jpg", normalizedName)) != -1) {
-			Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", normalizedName));
-			found = qtrue;
-		}
-
-		if (FS_CheckFile(va("pics/maps/shots/%s_2.jpg", normalizedName)) != -1) {
-			Cvar_Set("mn_mappic2", va("maps/shots/%s_2.jpg", normalizedName));
-			found = qtrue;
-		}
-
-		if (FS_CheckFile(va("pics/maps/shots/%s_3.jpg", normalizedName)) != -1) {
-			Cvar_Set("mn_mappic3", va("maps/shots/%s_3.jpg", normalizedName));
-			found = qtrue;
-		}
-	}
+	if (FS_CheckFile(va("pics/maps/shots/%s_3.jpg", csi.mds[currentMapIndex].map)) != -1)
+		Cvar_Set("mn_mappic3", va("maps/shots/%s_3.jpg", csi.mds[currentMapIndex].map));
 }
 
 /**
@@ -4661,9 +4624,7 @@ static void MN_MapInfo (void)
  */
 static void MN_GetMaps_f (void)
 {
-	FS_GetMaps(qfalse);
-
-	MN_MapInfo();
+	MN_MapInfo(0);
 }
 
 /**
@@ -4671,11 +4632,7 @@ static void MN_GetMaps_f (void)
  */
 static void MN_NextMap_f (void)
 {
-	if (fs_mapInstalledIndex < fs_numInstalledMaps)
-		fs_mapInstalledIndex++;
-	else
-		fs_mapInstalledIndex = 0;
-	MN_MapInfo();
+	MN_MapInfo(1);
 }
 
 /**
@@ -4683,11 +4640,7 @@ static void MN_NextMap_f (void)
  */
 static void MN_PrevMap_f (void)
 {
-	if (fs_mapInstalledIndex > 0)
-		fs_mapInstalledIndex--;
-	else
-		fs_mapInstalledIndex = fs_numInstalledMaps;
-	MN_MapInfo();
+	MN_MapInfo(-1);
 }
 
 /**

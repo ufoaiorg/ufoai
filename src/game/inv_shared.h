@@ -29,7 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "q_shared.h"
 
 /* this is the absolute max for now */
-#define MAX_OBJDEFS     128		/* Remember to adapt the "NONE" define (and similar) if this gets changed. */
+#define MAX_OBJDEFS		128		/* Remember to adapt the "NONE" define (and similar) if this gets changed. */
+#define MAX_MAPDEFS		128
 #define MAX_WEAPONS_PER_OBJDEF 4
 #define MAX_AMMOS_PER_OBJDEF 4
 #define MAX_FIREDEFS_PER_WEAPON 8
@@ -303,10 +304,34 @@ typedef struct equipDef_s {
 } equipDef_t;
 
 #define MAX_TEAMS_PER_MISSION 4
+#define MAX_TERRAINS 8
+#define MAX_CULTURES 8
+#define MAX_POPULATIONS 8
+
+typedef struct mapDef_s {
+	/* general */
+	char *id;				/**< script file id */
+	char *map;				/**< bsp or ump base filename (without extension and day or night char) */
+	char *param;			/**< in case of ump file, the assembly to use */
+	char *description;		/**< the description to show in the menus */
+	char *loadingscreen;	/**< the loading screen */
+	char *size;				/**< small, medium, big */
+	char *music;			/**< music that should be played during this mission */
+
+	/* multiplayer */
+	int teams;				/**< multiplayer teams */
+	qboolean coop;			/**< is this map multiplayer coop ready */
+
+	/* singleplayer */
+	linkedList_t *terrains;		/**< terrain strings this map is useable for */
+	linkedList_t *populations;	/**< population strings this map is useable for */
+	linkedList_t *cultures;		/**< culture strings this map is useable for */
+} mapDef_t;
 
 /**
  * @brief The csi structure is the client-server-information structure
  * which contains all the UFO info needed by the server and the client.
+ * @sa ccs_t
  */
 typedef struct csi_s {
 	/** Object definitions */
@@ -316,6 +341,10 @@ typedef struct csi_s {
 	/** Inventory definitions */
 	invDef_t ids[MAX_INVDEFS];
 	int numIDs;
+
+	/** Map definitions */
+	mapDef_t mds[MAX_MAPDEFS];
+	int numMDs;
 
 	/** Special container ids */
 	int idRight, idLeft, idExtension;
