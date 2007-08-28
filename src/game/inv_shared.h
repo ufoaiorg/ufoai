@@ -346,6 +346,7 @@ typedef struct csi_s {
 	/** Map definitions */
 	mapDef_t mds[MAX_MAPDEFS];
 	int numMDs;
+	mapDef_t *currentMD;	/**< currently selected mapdef */
 
 	/** Special container ids */
 	int idRight, idLeft, idExtension;

@@ -100,7 +100,6 @@ Only used for the world.
 "angles"	direction of the sun light [pitch yaw roll] - pitch (up/down), yaw (left/right) and roll (fall over)
 "ambient"	ambient light (NOT normalized)
 "maxlevel"	highest selectable level
-"maxteams"	max multiplayer teams (default is 2)
 "fog"		activate fog - density (0.0-1.0)
 "fogcolor"	fogcolor (rgb) (0.0-1.0)
 */

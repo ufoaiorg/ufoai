@@ -124,7 +124,6 @@ static const field_t fields[] = {
 	{"minpitch", offsetof(spawn_temp_t, minpitch), F_FLOAT, FFL_SPAWNTEMP},
 	{"maxpitch", offsetof(spawn_temp_t, maxpitch), F_FLOAT, FFL_SPAWNTEMP},
 	{"nextmap", offsetof(spawn_temp_t, nextmap), F_LSTRING, FFL_SPAWNTEMP},
-	{"maxteams", offsetof(spawn_temp_t, maxteams), F_INT, FFL_SPAWNTEMP},
 
 	{0, 0, 0, 0}
 };
@@ -854,10 +853,6 @@ static void SP_worldspawn (edict_t * ent)
 	if (st.nextmap)
 		Q_strncpyz(level.nextmap, st.nextmap, sizeof(level.nextmap));
 
-	/* default value */
-	if (st.maxteams < 2)
-		st.maxteams = 2;
-
 	/* make some data visible to the server */
 	if (ent->message && ent->message[0]) {
 		gi.configstring(CS_NAME, ent->message);
@@ -872,8 +867,11 @@ static void SP_worldspawn (edict_t * ent)
 		gi.configstring(CS_MAXSOLDIERSPERTEAM, va("%i", sv_maxsoldiersperteam->integer));
 		gi.configstring(CS_MAXSOLDIERSPERPLAYER, va("%i", sv_maxsoldiersperplayer->integer));
 		gi.configstring(CS_ENABLEMORALE, va("%i", sv_enablemorale->integer));
-		gi.configstring(CS_MAXTEAMS, va("%i", st.maxteams));
-		gi.cvar_set("sv_maxteams", va("%i", st.maxteams));
+		if (gi.csi->currentMD->teams) {
+			gi.configstring(CS_MAXTEAMS, va("%i", gi.csi->currentMD->teams));
+			gi.cvar_set("sv_maxteams", va("%i", gi.csi->currentMD->teams));
+		} else
+			gi.configstring(CS_MAXTEAMS, sv_maxteams->string);
 	}
 
 	if (!st.gravity)

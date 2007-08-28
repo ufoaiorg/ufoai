@@ -141,7 +141,7 @@ void get_team_count (const char *classname, int *count, int *team)
 }
 
 /**
- * @brief Some default values to worldspawn like maxlevel, maxteams and so on
+ * @brief Some default values to worldspawn like maxlevel and so on
  */
 void assign_default_values_to_worldspawn (bool override, bool day, char **returnMsg)
 {
@@ -166,16 +166,6 @@ void assign_default_values_to_worldspawn (bool override, bool day, char **return
 
 	// TODO: Get highest brush - a level has 64 units
 	worldspawn->setKeyValue("maxlevel", "5");
-
-	if (string_empty(worldspawn->getKeyValue("maxteams"))
-	 || atoi(worldspawn->getKeyValue("maxteams")) != teams)
-	{
-		snprintf(str, sizeof(str) - 1, "%i", teams);
-		worldspawn->setKeyValue("maxteams", str);
-		strncat(message, "Worldspawn: Set maxteams to ", sizeof(message) - 1);
-		strncat(message, str, sizeof(message) - 1);
-		strncat(message, "\n", sizeof(message) - 1);
-	}
 
 	if (day)
 	{
@@ -307,14 +297,6 @@ void check_map_values (char **returnMsg)
 	get_team_count("info_player_start", &count, &teams);
 	if (!count)
 		strncat(message, "No multiplayer start positions (info_player_start)\n", sizeof(message) - 1);
-	else if (string_empty(worldspawn->getKeyValue("maxteams")))
-	{
-		snprintf(message, sizeof(message) - 1, "Worldspawn: No maxteams defined (#info_player_start) (set to: %i)\n", teams);
-		snprintf(str, sizeof(str) - 1, "%i", teams);
-		worldspawn->setKeyValue("maxteams", str);
-	}
-	else if (teams != atoi(worldspawn->getKeyValue("maxteams")))
-		snprintf(message, sizeof(message) - 1, "Worldspawn: Settings for maxteams (%s) doesn't match team count (%i)\n", worldspawn->getKeyValue("maxteams"), teams);
 
 	// singleplayer map?
 	count = 0;

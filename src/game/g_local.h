@@ -136,8 +136,6 @@ typedef struct {
 	/* up and down */
 	float minpitch;
 	float maxpitch;
-
-	int maxteams; /**< the max team amount for multiplayer games for the current map */
 } spawn_temp_t;
 
 /** @brief used in shot probability calculations (pseudo shots) */

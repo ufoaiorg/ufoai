@@ -637,6 +637,9 @@ static void MN_StartServer_f (void)
 
 	Cvar_Set("mn_main", "multiplayerInGame");
 
+	/* let the (local) server know which map we are running right now */
+	csi.currentMD = md;
+
 	Cbuf_ExecuteText(EXEC_NOW, map);
 }
 
