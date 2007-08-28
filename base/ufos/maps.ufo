@@ -7,15 +7,158 @@
 // valid population values:
 // * urban, suburban, village, rural, nopopulation
 
+mapdef or_tabelbala
+{
+	map				"+oriental"
+	music			van_mission
+	multiplayer		true
+}
+
+mapdef africa_excavation
+{
+	map				excavation06
+	music			PsymongN1
+	multiplayer		true
+}
+
+mapdef estate
+{
+	map				estate01
+	music			PsymongO3
+	multiplayer		true
+}
+
+mapdef italy
+{
+	map				italy05
+	loadingscreen	italy05
+	teams			2
+	music			PsymongO2
+	coop			true
+	multiplayer		true
+
+	terrains
+	{
+		grass
+	}
+
+	cultures
+	{
+		western
+	}
+
+	populations
+	{
+		village
+		suburban
+	}
+}
+
+mapdef mart
+{
+	map			mart05
+	music		PsymongO4
+	multiplayer		true
+}
+
+mapdef mine
+{
+	map				mine01
+	music			alBasrahM
+	multiplayer		true
+}
+
+mapdef transport
+{
+	map				transport06
+	music			dbsea
+	multiplayer		true
+}
+
+mapdef or_asyut
+{
+	map             "+oriental"
+	music           PsymongO6
+	multiplayer		true
+}
+
+mapdef bunker
+{
+	map				bunker01
+	music			greecei
+	multiplayer		true
+}
+
+mapdef dam
+{
+	map				dam01
+	music			PsymongO1
+	multiplayer		true
+}
+
+mapdef japan
+{
+	map				japan06
+	loadingscreen	japan06
+	teams			2
+	music			PsymongR5
+	coop			true
+	multiplayer		true
+
+	terrains
+	{
+		grass
+	}
+
+	cultures
+	{
+		eastern
+	}
+
+	populations
+	{
+		village
+		suburban
+	}
+}
+
+mapdef spedition
+{
+	map				spedition06
+	music			AlexForest
+	multiplayer		true
+}
+
+mapdef stadium
+{
+	map				stadium06
+	music			PsymongR4
+	multiplayer		true
+}
+
+mapdef druglord
+{
+	map				druglord07
+	music			van_mission4
+	multiplayer		true
+}
+
+mapdef rzeszow
+{
+	map				terrain02
+	music			van_mission
+	multiplayer		true
+}
+
 mapdef farm
 {
-	map			farm08
-	description	"_A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
-	size		"medium"
-	teams		2
-	music		PsymongN2
-	coop		true
-	multiplayer	true
+	map				farm08
+	description		"_A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
+	size			"medium"
+	teams			2
+	music			PsymongN2
+	coop			true
+	multiplayer		true
 	loadingscreen	farm08
 
 	terrains
@@ -37,55 +180,243 @@ mapdef farm
 	}
 }
 
-mapdef italy
+mapdef industrial
 {
-	map			italy05
-	loadingscreen	italy05
-	teams		2
-	music		PsymongN2
-	coop		true
-	multiplayer	true
-
-	terrains
-	{
-		grass
-	}
-
-	cultures
-	{
-		western
-	}
-
-	populations
-	{
-		village
-		suburban
-	}
+	map				industrial06
+	music			AlexFightmare
+	multiplayer		true
 }
 
-
-mapdef japan
+mapdef rivertown
 {
-	map			japan06
-	loadingscreen	japan06
-	teams		2
-	music		PsymongN2
-	coop		true
-	multiplayer	true
+	map				rivertown01
+	music			van_mission3
+	multiplayer		true
+}
 
-	terrains
-	{
-		grass
-	}
+mapdef frozen_alienlandingindustrial
+{
+	map				"+frozen"
+	param			alienlandingindustrial
+	multiplayer		false
+}
 
-	cultures
-	{
-		eastern
-	}
+mapdef city
+{
+	map				city04
+	music			ufo1
+	multiplayer		true
+}
 
-	populations
-	{
-		village
-		suburban
-	}
+mapdef gasstation
+{
+	map				gasstation05
+	music			AlexFightmare
+	multiplayer		true
+}
+
+mapdef oriental
+{
+	map				oriental06
+	music			PsymongO4
+	multiplayer		true
+}
+
+mapdef subway
+{
+	map				subway07
+	music			PsymongN4
+	multiplayer		true
+}
+
+mapdef tower
+{
+	map				tower06
+	music           greecei		//FIXME: AlexSullencity here?
+	multiplayer		true
+}
+
+mapdef village
+{
+	map				village07
+	music			PsymongO3
+	multiplayer		true
+}
+
+mapdef convoy
+{
+	map				convoy01
+	music			van_mission2
+	multiplayer		true
+}
+
+mapdef mine_crash
+{
+	map				mine_crash05
+	music			PsymongR2
+	multiplayer		true
+}
+
+mapdef bridge
+{
+	map				bridge01
+	music			PsymongR2
+	multiplayer		true
+}
+
+mapdef construction
+{
+	map				const05
+	music			PsymongR1
+	multiplayer		true
+}
+
+mapdef harbor
+{
+	map				harbor07
+	music			AlexFightmare
+	multiplayer		true
+}
+
+mapdef office
+{
+	map				office06
+	music			dawn
+	multiplayer		true
+}
+
+mapdef pdi
+{
+	map				pdi08
+	music			PsymongO5
+	multiplayer		true
+}
+
+mapdef tropic_river
+{
+	map				"+tropic"
+	param			river
+	music			PsymongR5
+	multiplayer		false
+}
+
+mapdef africa
+{
+	map				africa04
+	music			PsymongR4
+	multiplayer		true
+}
+
+mapdef harvestercrash
+{
+	map				harvestercrash04
+	music			PsymongR3
+	multiplayer		true
+}
+
+mapdef lake
+{
+	map				lake03
+	music			AlexForest
+	multiplayer		true
+}
+
+mapdef qatar
+{
+	map				oriental05
+	music			PsymongN3
+	multiplayer		true
+}
+
+mapdef terrain
+{
+	map				terrain08
+	music			PsymongO6
+	multiplayer		true
+}
+
+mapdef vil_lille
+{
+	map				"+village"
+	param			recreational
+	music			PsymongN5
+	multiplayer		false
+}
+
+mapdef frozen_groenland
+{
+	map				"+frozen"
+	param			small
+	music			AlexFightmare
+	multiplayer		true
+}
+
+mapdef frozen_small
+{
+	map				"+frozen"
+	param			small
+	music			PsymongO6
+	multiplayer		false
+}
+
+mapdef frozen_landingnature
+{
+	map				"+frozen"
+	param			alienlandingnature
+	music			PsymongR5
+	multiplayer		false
+}
+
+mapdef frozen_industrial
+{
+	map				"+frozen"
+	param			industrial
+	music			PsymongR4
+	multiplayer		false
+}
+
+mapdef tropic_drug
+{
+	map				"+tropic"
+	param			drug
+	music			PsymongR5
+	multiplayer		false
+}
+
+mapdef vil_grenchen
+{
+	map				"+village"
+	param			residential
+	music			PsymongO6
+	multiplayer		false
+}
+
+mapdef vil_albany
+{
+	map				"+village"
+	param			commercial
+	music			PsymongO4
+	multiplayer		false
+}
+
+mapdef vil_shannon
+{
+	map				"+village"
+	param			big
+	music			PsymongR5
+	multiplayer		false
+}
+
+mapdef aliencolony_small
+{
+	map				colon04
+	music			PsymongR5
+	multiplayer		false
+}
+
+mapdef lake2
+{
+	map				lake02
+	music			PsymongR5
+	multiplayer		true
 }
