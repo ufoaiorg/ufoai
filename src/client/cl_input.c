@@ -798,9 +798,6 @@ static void CL_CamSetAngles_f (void)
  */
 static void CL_MakeBaseMapShot_f (void)
 {
-	/* dummy mapdef */
-	csi.currentMD = &csi.mds[0];
-
 	if (Cmd_Argc() > 1)
 		Cbuf_ExecuteText(EXEC_NOW, va("map %s", Cmd_Argv(1)));
 	cl.cam.angles[0] = 60.0f;
