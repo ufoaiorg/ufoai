@@ -13,8 +13,6 @@
 // 	location	"_City or region, mark as translatable"
 //	type		"_Type of mission - translatable, this will go into mission description node"
 //	text		"_Mission description - translatable"
-//	map		mapname from base/maps/ - without "d" or "n" marks
-//	music		track name from base/music/
 //	pos		position on the map - if you want new, use set cl_showcoords 1 and then click
 //	aliens		amount of aliens
 //	alienteam	name of alien team, see team_aliens.ufo
@@ -360,7 +358,6 @@ mission frozen_alienlandingindustrial
 	location	"_Somewhere in Antarctica"
 	type		"_Landed alien ship"
 	text		"_Secure alien ship before liftoff."
-	music		alBasrahM
 	pos		"22 -77"
 	aliens		7
 	alienteam	"taman shevaar bloodspider"
@@ -812,8 +809,6 @@ mission frozen_industrial
 //	location	"_TODO"
 //	type		"_Terror Attack"
 //	text		"_The Aliens have taken over a rocket silo. Go and capture it again."
-//	map			rocketsilo06
-//	music		PsymongR5
 //	pos			"308 412"
 //	aliens		4
 //	civilians	2
