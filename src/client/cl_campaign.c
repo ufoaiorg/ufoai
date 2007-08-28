@@ -2371,7 +2371,7 @@ static void CP_SetMissionVars (mission_t* mission)
 	Cvar_SetValue("ai_numcivilians", (float) mission->civilians);
 	Cvar_Set("ai_civilian", mission->civTeam);
 	Cvar_Set("ai_equipment", mission->alienEquipment);
-	Cvar_Set("music", mission->music);
+	Cvar_Set("music", mission->mapDef->music);
 	Com_DPrintf(DEBUG_CLIENT, "CP_SetMissionVars:\n");
 
 	/* now store the alien teams in the shared csi struct to let the game dll
@@ -2386,7 +2386,7 @@ static void CP_SetMissionVars (mission_t* mission)
 		mission->numAlienTeams,
 		mission->civTeam,
 		mission->alienEquipment,
-		mission->music);
+		mission->mapDef->music);
 
 	mission->played = qtrue;
 }
@@ -3024,7 +3024,6 @@ static const value_t mission_vals[] = {
 	{"triggertext", V_TRANSLATION_MANUAL_STRING, offsetof(mission_t, triggerText), 0},
 	{"alttext", V_TRANSLATION_MANUAL_STRING, offsetof(mission_t, missionTextAlternate), 0},
 	{"nation", V_STRING, offsetof(mission_t, nation), 0},
-	{"music", V_STRING, offsetof(mission_t, music), 0},
 	{"pos", V_POS, offsetof(mission_t, pos), MEMBER_SIZEOF(mission_t, pos)},
 	{"mask", V_RGBA, offsetof(mission_t, mask), MEMBER_SIZEOF(mission_t, mask)}, /* color values from map mask this mission needs */
 	{"aliens", V_INT, offsetof(mission_t, aliens), MEMBER_SIZEOF(mission_t, aliens)},

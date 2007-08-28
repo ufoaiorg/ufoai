@@ -99,7 +99,6 @@ typedef struct mission_s {
 	char location[MAX_VAR];
 	char nation[MAX_VAR];
 	char type[MAX_VAR];
-	char music[MAX_VAR];
 	teamDef_t* alienTeams[MAX_TEAMS_PER_MISSION];
 	int numAlienTeams;
 	char alienEquipment[MAX_VAR];
