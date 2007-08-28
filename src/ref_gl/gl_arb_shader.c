@@ -64,7 +64,7 @@ void R_ShaderInit (void)
  * @param[in] image Image name
  * @return shader_t pointer if image name and shader title match otherwise NULL
  */
-shader_t* R_GetShaderForImage (char* image)
+shader_t* R_GetShaderForImage (const char* image)
 {
 	int i = 0;
 	shader_t *s;
@@ -317,7 +317,7 @@ void SH_UseShader (shader_t * shader, qboolean deactivate)
 	} else if (shader->fpid > 0) {
 		if (deactivate) {
 			SH_UseProgram_ARB_FP(0);
-			if (shader->distort[0]) {
+			if (shader->distort) {
 				qglActiveTextureARB(GL_TEXTURE1_ARB);
 				qglDisable(GL_TEXTURE_2D);
 				qglActiveTextureARB(GL_TEXTURE0_ARB);
@@ -326,13 +326,13 @@ void SH_UseShader (shader_t * shader, qboolean deactivate)
 			assert(gl);
 			qglActiveTextureARB(GL_TEXTURE0_ARB);
 			qglBindTexture(GL_TEXTURE_2D, gl->texnum);
-			if (shader->distort[0]) {
+			if (shader->distort) {
 				distort = R_FindImage(shader->distort, it_pic);
 				qglActiveTextureARB(GL_TEXTURE1_ARB);
 				qglBindTexture(GL_TEXTURE_2D, distort->texnum);
 				qglEnable(GL_TEXTURE_2D);
 			}
-			if (shader->normal[0]) {
+			if (shader->normal) {
 				normal = R_FindImage(shader->normal, it_pic);
 			}
 			SH_UseProgram_ARB_FP(shader->fpid);
@@ -340,7 +340,7 @@ void SH_UseShader (shader_t * shader, qboolean deactivate)
 	} else if (shader->vpid > 0) {
 		if (deactivate) {
 			SH_UseProgram_ARB_VP(0);
-			if (shader->distort[0]) {
+			if (shader->distort) {
 				qglActiveTextureARB(GL_TEXTURE1_ARB);
 				qglDisable(GL_TEXTURE_2D);
 				qglActiveTextureARB(GL_TEXTURE0_ARB);
@@ -349,7 +349,7 @@ void SH_UseShader (shader_t * shader, qboolean deactivate)
 			assert(gl);
 			qglActiveTextureARB(GL_TEXTURE0_ARB);
 			qglBindTexture(GL_TEXTURE_2D, gl->texnum);
-			if (shader->distort[0]) {
+			if (shader->distort) {
 				distort = R_FindImage(shader->distort, it_pic);
 				if (distort) {
 					qglActiveTextureARB(GL_TEXTURE1_ARB);
@@ -357,7 +357,7 @@ void SH_UseShader (shader_t * shader, qboolean deactivate)
 					qglEnable(GL_TEXTURE_2D);
 				}
 			}
-			if (shader->normal[0]) {
+			if (shader->normal) {
 				normal = R_FindImage(shader->normal, it_pic);
 			}
 			SH_UseProgram_ARB_VP(shader->vpid);

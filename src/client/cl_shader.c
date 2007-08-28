@@ -99,7 +99,7 @@ void CL_ParseShaders (const char *name, const char **text)
 	/* default value */
 	entry->glMode = BLEND_FILTER;
 
-	entry->name = Mem_PoolStrDup(token, cl_genericPool, CL_TAG_NONE);
+	entry->name = Mem_PoolStrDup(name, cl_genericPool, CL_TAG_NONE);
 	do {
 		/* get the name type */
 		token = COM_EParse(text, errhead, name);
