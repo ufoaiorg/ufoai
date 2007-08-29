@@ -1310,8 +1310,10 @@ static void CL_HandleBudget (void)
 /**
  * @brief sets market prices at start of the game
  * @sa CL_GameInit
+ * @sa BS_Load (Market load function)
+ * @param[in] load It this an attempt to init the market for a savegame?
  */
-static void CL_CampaignInitMarket (void)
+static void CL_CampaignInitMarket (qboolean load)
 {
 	int i;
 	equipDef_t *ed;
@@ -1328,6 +1330,10 @@ static void CL_CampaignInitMarket (void)
 	if (!curCampaign->marketDef)
 		Sys_Error("CL_CampaignInitMarket: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
 			curCampaign->id, curCampaign->market);
+
+	/* the savegame loading process will get the following values from savefile */
+	if (load)
+		return;
 
 	for (i = 0; i < csi.numODs; i++) {
 		if (ccs.eMarket.ask[i] == 0) {
@@ -2109,7 +2115,6 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 					mis->def->civilians = MSG_ReadByte(sb);
 					mis->def->mapDef->loadingscreen = Mem_PoolStrDup(MSG_ReadString(sb), cl_localPool, CL_TAG_NONE);
 					Q_strncpyz(mis->def->onwin, MSG_ReadString(sb), sizeof(mis->def->onwin));
-					MSG_ReadString(sb);
 					mis->def->mapDef->param = Mem_PoolStrDup(MSG_ReadString(sb), cl_localPool, CL_TAG_NONE);
 					/** @sa CP_SpawnCrashSiteMission */
 					nation = MAP_GetNation(mis->realPos);
@@ -2693,24 +2698,19 @@ static void CL_GameAutoCheck_f (void)
 }
 
 /**
- * @brief
- *
- * @sa CL_GameAutoCheck_f
- * @sa CL_GameGo
+ * @brief Handles the auto mission for none storyrelated missions or missions that
+ * failed to assembly
+ * @sa CL_GameAutoGo_f
+ * @sa CL_Drop
  */
-static void CL_GameAutoGo_f (void)
+void CL_GameAutoGo (actMis_t *mission)
 {
-	mission_t *mis;
 	int won;
 	aircraft_t *aircraft;
+	mission_t *mis;
 
-	if (!curCampaign || !selMis) {
-		Com_DPrintf(DEBUG_CLIENT, "No update after automission\n");
-		return;
-	}
-
-	/* start the map */
-	mis = selMis->def;
+	assert(mission);
+	mis = mission->def;
 	assert(mis);
 
 	if (mis->missionType != MIS_BASEATTACK) {
@@ -2775,6 +2775,23 @@ static void CL_GameAutoGo_f (void)
 		MN_AddNewMessage(_("Notice"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
 
 	MAP_ResetAction();
+}
+
+/**
+ * @brief
+ *
+ * @sa CL_GameAutoCheck_f
+ * @sa CL_GameGo
+ */
+static void CL_GameAutoGo_f (void)
+{
+	if (!curCampaign || !selMis) {
+		Com_DPrintf(DEBUG_CLIENT, "No update after automission\n");
+		return;
+	}
+
+	/* start the map */
+	CL_GameAutoGo(selMis);
 }
 
 /**
@@ -4104,8 +4121,7 @@ void CL_GameInit (qboolean load)
 	Com_AddObjectLinks();	/* Add tech links + ammo<->weapon links to items.*/
 	RS_InitTree(load);	/* Initialise all data in the research tree. */
 
-	if (!load)
-		CL_CampaignInitMarket();
+	CL_CampaignInitMarket(load);
 
 	/* Init popup and map/geoscape */
 	CL_PopupInit();

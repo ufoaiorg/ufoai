@@ -414,6 +414,7 @@ actMis_t* CL_CampaignAddGroundMission(mission_t* mis);
 
 campaign_t* CL_GetCampaign(const char* name);
 void CL_GameExit(void);
+void CL_GameAutoGo(actMis_t *mission);
 
 qboolean AIR_SendAircraftToMission(aircraft_t * aircraft, actMis_t * mission);
 void AIR_AircraftsNotifyMissionRemoved(const actMis_t * mission);

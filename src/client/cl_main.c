@@ -284,18 +284,21 @@ void CL_Drop (void)
 	/* drop loading plaque */
 	SCR_EndLoadingPlaque();
 
+	MN_PopMenu(qtrue);
+
 	/* make sure that we are in the correct menus in singleplayer after
 	 * dropping the game due to a failure */
 	if (ccs.singleplayer) {
-		Com_Printf("CL_Drop: Singleplayer\n");
 		Cvar_Set("mn_main", "singleplayerInGame");
 		Cvar_Set("mn_active", "map");
+		MN_PushMenu("map");
+		/* this mission failed to load */
+		if (selMis)
+			CL_GameAutoGo(selMis);
 	} else {
-		Com_Printf("CL_Drop: Multiplayer\n");
 		Cvar_Set("mn_main", "main");
 		Cvar_Set("mn_active", "");
 	}
-	MN_PopMenu(qtrue);
 
 	if (cls.state == ca_uninitialized || cls.state == ca_disconnected)
 		return;

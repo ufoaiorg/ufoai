@@ -188,7 +188,6 @@ static qboolean SAV_GameLoad (const char *filename, char **error)
 	assert(ccs.singleplayer);
 
 	CL_Drop();
-	MN_PushMenu("map");
 
 	Com_Printf("File '%s' loaded.\n", filename);
 	Mem_Free(buf);
