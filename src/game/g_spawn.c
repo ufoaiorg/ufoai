@@ -698,6 +698,7 @@ static void Touch_DoorTrigger (edict_t *self)
 		/* FIXME: if a spawnpoint is too close to this door, the EV_RESET was not send */
 		if (VectorDist(e->origin, self->owner->absmin) < UNIT_SIZE) {
 			door_go_up(self->owner);
+			Com_DPrintf(DEBUG_SERVER, "Touch_DoorTrigger: Door goes up\n");
 			self->nextthink = level.time + FRAMETIME;
 			return;
 		}

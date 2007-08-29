@@ -1090,9 +1090,10 @@ LINKED LIST
 */
 
 /**
- * @brief Adds an entry to the linked list
+ * @brief Adds an entry to a new or to an already existing linked list
+ * @sa LIST_AddString
  */
-void LIST_Add (linkedList_t** listDest, const char* data)
+void LIST_Add (linkedList_t** listDest, const byte* data, size_t length)
 {
 	linkedList_t *newEntry;
 	linkedList_t *list;
@@ -1103,7 +1104,8 @@ void LIST_Add (linkedList_t** listDest, const char* data)
 	/* create the list */
 	if (!*listDest) {
 		*listDest = (linkedList_t*)Mem_PoolAlloc(sizeof(linkedList_t), com_genericPool, 0);
-		(*listDest)->data = Mem_PoolStrDup(data, com_genericPool, 0);
+		(*listDest)->data = (byte*)Mem_PoolAlloc(length, com_genericPool, 0);
+		memcpy(((*listDest)->data), data, length);
 		(*listDest)->next = NULL; /* not really needed - but for better readability */
 		return;
 	} else
@@ -1114,6 +1116,53 @@ void LIST_Add (linkedList_t** listDest, const char* data)
 
 	newEntry = (linkedList_t*)Mem_PoolAlloc(sizeof(linkedList_t), com_genericPool, 0);
 	list->next = newEntry;
-	newEntry->data = Mem_PoolStrDup(data, com_genericPool, 0);
+	newEntry->data = (byte*)Mem_PoolAlloc(length, com_genericPool, 0);
+	memcpy(newEntry->data, data, length);
 	newEntry->next = NULL; /* not really needed - but for better readability */
+}
+
+/**
+ * @brief Adds an string to a new or to an already existing linked list
+ * @sa LIST_Add
+ */
+void LIST_AddString (linkedList_t** listDest, const char* data)
+{
+	linkedList_t *newEntry;
+	linkedList_t *list;
+
+	assert(listDest);
+	assert(data);
+
+	/* create the list */
+	if (!*listDest) {
+		*listDest = (linkedList_t*)Mem_PoolAlloc(sizeof(linkedList_t), com_genericPool, 0);
+		(*listDest)->data = (byte*)Mem_PoolStrDup(data, com_genericPool, 0);
+		(*listDest)->next = NULL; /* not really needed - but for better readability */
+		return;
+	} else
+		list = *listDest;
+
+	while (list->next)
+		list = list->next;
+
+	newEntry = (linkedList_t*)Mem_PoolAlloc(sizeof(linkedList_t), com_genericPool, 0);
+	list->next = newEntry;
+	newEntry->data = (byte*)Mem_PoolStrDup(data, com_genericPool, 0);
+	newEntry->next = NULL; /* not really needed - but for better readability */
+}
+
+/**
+ * @brief
+ * @sa LIST_Add
+ */
+void LIST_Delete (linkedList_t *list)
+{
+	linkedList_t *l = list;
+
+	while (l) {
+		list = list->next;
+		Mem_Free(l->data);
+		Mem_Free(l);
+		l = list;
+	}
 }

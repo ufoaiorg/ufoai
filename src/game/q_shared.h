@@ -267,11 +267,13 @@ extern const byte dvleft[DIRECTIONS];
 /* LINKED LIST STUFF */
 
 typedef struct linkedList_s {
-	const char *data;
+	byte *data;
 	struct linkedList_s *next;
 } linkedList_t;
 
-void LIST_Add(linkedList_t** list, const char* data);
+void LIST_AddString(linkedList_t** list, const char* data);
+void LIST_Add(linkedList_t** list, const byte* data, size_t length);
+void LIST_Delete(linkedList_t *list);
 
 /*
 ==============================================================

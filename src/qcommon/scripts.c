@@ -1316,7 +1316,7 @@ const char *Com_GiveName (int gender, const char *team)
 			}
 
 			/* store the name */
-			Q_strncpyz(returnName, list->data, sizeof(returnName));
+			Q_strncpyz(returnName, (const char*)list->data, sizeof(returnName));
 			return returnName;
 		}
 
@@ -1358,7 +1358,7 @@ const char *Com_GiveModel (int type, int gender, const char *teamID)
 			}
 
 			/* return the value */
-			return list->data;
+			return (const char*)list->data;
 		}
 
 	Com_Printf("Com_GiveModel: no models for gender %i and category '%s'\n", gender, teamID);
@@ -1398,7 +1398,7 @@ const char* Com_GetActorSound (teamDef_t* td, int gender, actorSound_t soundType
 
 	assert(list);
 	assert(list->data);
-	return list->data;
+	return (const char*)list->data;
 }
 
 /**
@@ -1543,7 +1543,7 @@ static void Com_ParseActorNames (const char *name, const char **text, teamDef_t*
 					/* some names can be translateable */
 					if (*token == '_')
 						token++;
-					LIST_Add(&td->names[i], token);
+					LIST_AddString(&td->names[i], token);
 					td->numNames[i]++;
 				} while (*text);
 
@@ -1622,9 +1622,9 @@ static void Com_ParseActorModels (const char *name, const char **text, teamDef_t
 							break;
 
 						if (j == 3 && *token == '*')
-							LIST_Add(&td->models[i], "");
+							LIST_AddString(&td->models[i], "");
 						else
-							LIST_Add(&td->models[i], token);
+							LIST_AddString(&td->models[i], token);
 					}
 					/* first token was } */
 					if (j == 0)
@@ -1695,13 +1695,13 @@ static void Com_ParseActorSounds (const char *name, const char **text, teamDef_t
 						token = COM_EParse(text, errhead, name);
 						if (!*text)
 							break;
-						LIST_Add(&td->sounds[SND_HURT][i], token);
+						LIST_AddString(&td->sounds[SND_HURT][i], token);
 						td->numSounds[SND_HURT][i]++;
 					} else if (!Q_strcmp(token, "deathsound")) {
 						token = COM_EParse(text, errhead, name);
 						if (!*text)
 							break;
-						LIST_Add(&td->sounds[SND_DEATH][i], token);
+						LIST_AddString(&td->sounds[SND_DEATH][i], token);
 						td->numSounds[SND_DEATH][i]++;
 					} else {
 						Com_Printf("Com_ParseActorSounds: unknown token \"%s\" ignored (actorsounds %s)\n", token, name);
@@ -2243,7 +2243,7 @@ static void Com_ParseMapDefinition (const char *name, const char **text)
 				token = COM_EParse(text, errhead, name);
 				if (!*text || *token == '}')
 					break;
-				LIST_Add(&list, token);
+				LIST_AddString(&list, token);
 			} while (*text);
 		}
 	} while (*text);
@@ -2355,7 +2355,7 @@ void Com_PrecacheCharacterModels (void)
 			assert(list);
 			for (num = 0; num < td->numModels[j]; num++) {
 				assert(list);
-				path = list->data;
+				path = (const char*)list->data;
 				list = list->next;
 				/* register body */
 				Com_sprintf(model, sizeof(model), "%s/%s", path, list->data);
