@@ -303,49 +303,46 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 			|| ent->type == ET_DOOR);
 
 	/* Breakables are immune to stun & shock damage. */
-	if ((stun || shock) && (ent->type == ET_BREAKABLE || ent->type == ET_DOOR))
+	if ((stun || shock || mock) && (ent->type == ET_BREAKABLE || ent->type == ET_DOOR))
  		return;
 
 	/* Breakables */
 	if (ent->type == ET_BREAKABLE || ent->type == ET_DOOR) {
-		if (!mock) {
-			if (damage >= ent->HP) {
-				gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE);
-				gi.WriteShort(ent->mapNum);
-				gi.WriteShort(ent->number);
-				if (ent->particle && Q_strcmp(ent->particle, "null")) {
-					gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
-					gi.WriteShort(ent->spawnflags);
-					gi.WriteGPos(ent->pos);
-					gi.WriteShort((int)strlen(ent->particle));
-					gi.WriteString(ent->particle);
-				}
-				switch (ent->material) {
-				case MAT_GLASS:
-					gi.PositionedSound(PM_ALL, ent->origin, ent, "misc/breakglass", CHAN_AUTO, 1, 1, 0);
-					break;
-				case MAT_METAL:
-					gi.PositionedSound(PM_ALL, ent->origin, ent, "misc/breakmetal", CHAN_AUTO, 1, 1, 0);
-					break;
-				case MAT_ELECTRICAL:
-					gi.PositionedSound(PM_ALL, ent->origin, ent, "misc/breakelectric", CHAN_AUTO, 1, 1, 0);
-					break;
-				case MAT_WOOD:
-					gi.PositionedSound(PM_ALL, ent->origin, ent, "misc/breakwood", CHAN_AUTO, 1, 1, 0);
-					break;
-				case MAT_MAX:
-					break;
-				}
-				gi.unlinkentity(ent);
-				ent->inuse = qfalse;
-				ent->HP = 0;
-				G_RecalcRouting(ent);
-				G_FreeEdict(ent);
-			} else {
-				ent->HP = MAX(ent->HP - damage, 0);
+		if (damage >= ent->HP) {
+			gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE);
+			gi.WriteShort(ent->mapNum);
+			gi.WriteShort(ent->number);
+			if (ent->particle && Q_strcmp(ent->particle, "null")) {
+				gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
+				gi.WriteShort(ent->spawnflags);
+				gi.WriteGPos(ent->pos);
+				gi.WriteShort((int)strlen(ent->particle));
+				gi.WriteString(ent->particle);
 			}
+			switch (ent->material) {
+			case MAT_GLASS:
+				gi.PositionedSound(PM_ALL, ent->origin, ent, "misc/breakglass", CHAN_AUTO, 1, 1, 0);
+				break;
+			case MAT_METAL:
+				gi.PositionedSound(PM_ALL, ent->origin, ent, "misc/breakmetal", CHAN_AUTO, 1, 1, 0);
+				break;
+			case MAT_ELECTRICAL:
+				gi.PositionedSound(PM_ALL, ent->origin, ent, "misc/breakelectric", CHAN_AUTO, 1, 1, 0);
+				break;
+			case MAT_WOOD:
+				gi.PositionedSound(PM_ALL, ent->origin, ent, "misc/breakwood", CHAN_AUTO, 1, 1, 0);
+				break;
+			case MAT_MAX:
+				break;
+			}
+			gi.unlinkentity(ent);
+			ent->inuse = qfalse;
+			ent->HP = 0;
+			G_RecalcRouting(ent);
+			G_FreeEdict(ent);
+		} else {
+			ent->HP = MAX(ent->HP - damage, 0);
 		}
-		/* Com_Printf("remaining hps: %i\n", ent->HP); */
 		return;
 	}
 

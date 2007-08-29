@@ -234,8 +234,6 @@ extern cvar_t *flood_waitdelay;
 
 extern cvar_t *difficulty;
 
-/*#define world	(&g_edicts[0])*/
-
 /* fields are needed for spawning from the entity string */
 /* and saving / loading games */
 #define FFL_SPAWNTEMP		1
@@ -359,12 +357,14 @@ typedef enum {
 	RF_MAX
 } g_reaction_firemode_type_t;
 
+/**
+ * @brief Per actor: Stores the firemode to be used for reaction fire (if the fireDef allows that)
+ * Used in g_combat.c for choosing correct reaction fire. It is (must be) filled with data from cl_actor.c
+ * The CLIENT has to make sure that any default firemodes (and unusable firemodes) are transferred correctly to this one.
+ * Otherwise reaction fire will not work at all.
+ */
 extern int reactionFiremode[MAX_EDICTS][RF_MAX];
-	/**< Per actor: Stores the firemode to be used for reaction fire (if the fireDef allows that)
-	  * Used in g_combat.c for choosing correct reaction fire. It is (must be) filled with data from cl_actor.c
-	  * The CLIENT has to make sure that any default firemodes (and unusable firemodes) are transferred correctly to this one.
-	  * Otherwise reaction fire will not work at all.
-	  */
+
 
 extern int turnTeam;
 
