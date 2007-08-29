@@ -2568,31 +2568,35 @@ static void CP_AddItemAsCollected (void)
  * @brief Changes nation happiness by given multiplier.
  * @note There must be argument passed to this function being converted to float.
  */
-void CP_ChangeNationHappiness_f (void)
+static void CP_ChangeNationHappiness_f (void)
 {
 	float multiplier = 0;
 	nation_t *nation;
-	
+
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <multiplier>\n", Cmd_Argv(0));
 		return;
 	}
 	multiplier = atof(Cmd_Argv(1));
-	
+
+	/* we can use an assert here - because this script function will only
+	 * be available as trigger command - selMis must be set at that stage */
 	assert(selMis);
 	nation = MAP_GetNation(selMis->def->pos);
 	assert(nation);
-	
+
 	nation->stats[0].happiness = nation->stats[0].happiness * multiplier;
 }
 
 /**
  * @brief Adds new message generated from mission triggerText variable.
  */
-void CP_AddTriggerMessage_f (void)
+static void CP_AddTriggerMessage_f (void)
 {
-	assert (selMis);
-	
+	/* we can use an assert here - because this script function will only
+	 * be available as trigger command - selMis must be set at that stage */
+	assert(selMis);
+
 	if (selMis->def->triggerText)
 		MN_AddNewMessage(_("Notice"), selMis->def->triggerText, qfalse, MSG_STANDARD, NULL);
 	else
@@ -3234,10 +3238,10 @@ void CL_ParseMission (const char *name, const char **text)
 		Com_Printf("CL_ParseMission: Longitude for mission '%s' is bigger than 180 EW (%.0f)\n", ms->name, ms->pos[0]);
 	if (abs(ms->pos[1]) > 90.0f)
 		Com_Printf("CL_ParseMission: Latitude for mission '%s' is bigger than 90 NS (%.0f)\n", ms->name, ms->pos[1]);
-	if (*ms->onwin && ms->onwin[strlen(ms->onwin)-1] == ';')
-		Com_Printf("CL_ParseMission: onwin trigger must not end on ; - mission '%s'\n", ms->name);
-	if (*ms->onlose && ms->onlose[strlen(ms->onlose)-1] == ';')
-		Com_Printf("CL_ParseMission: onlose trigger must not end on ; - mission '%s'\n", ms->name);
+	if (*ms->onwin && ms->onwin[strlen(ms->onwin)-1] != ';')
+		Com_Printf("CL_ParseMission: onwin trigger do not end on ; - mission '%s'\n", ms->name);
+	if (*ms->onlose && ms->onlose[strlen(ms->onlose)-1] != ';')
+		Com_Printf("CL_ParseMission: onlose trigger do not end on ; - mission '%s'\n", ms->name);
 
 	if (!*ms->civTeam)
 		Q_strncpyz(ms->civTeam, ms->nation, sizeof(ms->civTeam));
