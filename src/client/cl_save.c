@@ -185,12 +185,9 @@ static qboolean SAV_GameLoad (const char *filename, char **error)
 			return qfalse;
 		}
 	}
+	assert(ccs.singleplayer);
 
-	Cvar_Set("mn_main", "singleplayerInGame");
-	Cvar_Set("mn_active", "map");
-	Cbuf_AddText("disconnect\n");
-
-	MN_PopMenu(qtrue);
+	CL_Drop();
 	MN_PushMenu("map");
 
 	Com_Printf("File '%s' loaded.\n", filename);

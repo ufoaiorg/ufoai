@@ -1326,7 +1326,7 @@ static void CL_CampaignInitMarket (void)
 		}
 
 	if (!curCampaign->marketDef)
-		Sys_Error("CL_GameNew_f: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
+		Sys_Error("CL_CampaignInitMarket: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
 			curCampaign->id, curCampaign->market);
 
 	for (i = 0; i < csi.numODs; i++) {
@@ -1338,7 +1338,7 @@ static void CL_CampaignInitMarket (void)
 		if (!ed->num[i])
 			continue;
 		if (!RS_ItemIsResearched(csi.ods[i].id))
-			Com_Printf("CL_GameNew_f: Could not add item %s to the market - not marked as researched\n", csi.ods[i].id);
+			Com_Printf("CL_CampaignInitMarket: Could not add item %s to the market - not marked as researched\n", csi.ods[i].id);
 		else
 			/* the other relevant values were already set in CL_CampaignInitMarket */
 			ccs.eMarket.num[i] = ed->num[i];
@@ -1959,6 +1959,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	MAP_Init();
 
 	memset(&ccs, 0, sizeof(ccs_t));
+	ccs.singleplayer = qtrue;
 
 	ccs.angles[YAW] = GLOBE_ROTATE;
 
@@ -4103,14 +4104,16 @@ void CL_GameInit (qboolean load)
 	Com_AddObjectLinks();	/* Add tech links + ammo<->weapon links to items.*/
 	RS_InitTree(load);	/* Initialise all data in the research tree. */
 
-	CL_CampaignInitMarket();
+	if (!load)
+		CL_CampaignInitMarket();
 
 	/* Init popup and map/geoscape */
 	CL_PopupInit();
 	MAP_GameInit();
 
 	/* now check the parsed values for errors that are not catched at parsing stage */
-	CL_ScriptSanityCheck();
+	if (!load)
+		CL_ScriptSanityCheck();
 }
 
 /**
@@ -4143,8 +4146,6 @@ static void CL_GameNew_f (void)
 {
 	char val[8];
 
-	Cvar_Set("mn_main", "singleplayerInGame");
-	Cvar_Set("mn_active", "map");
 	Cvar_SetValue("sv_maxclients", 1.0f);
 
 	/* exit running game */
@@ -4214,6 +4215,8 @@ static void CL_GameNew_f (void)
 	CL_CampaignActivateStage(curCampaign->firststage, qtrue);
 
 	MN_PopMenu(qtrue);
+	Cvar_Set("mn_main", "singleplayerInGame");
+	Cvar_Set("mn_active", "map");
 	MN_PushMenu("map");
 
 	/* create a base as first step */

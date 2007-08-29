@@ -1073,16 +1073,6 @@ void Qcommon_Shutdown (void)
 	Cbuf_ExecuteText(EXEC_NOW, "shutdown_alias");
 }
 
-/**
- * @brief
- * @note This is here to let the client know (without sv or server.h) about the server active bool
- * @sa SV_SpawnServer
- */
-qboolean Qcommon_ServerActive (void)
-{
-	return sv.active;
-}
-
 /*
 ============================================================
 LINKED LIST

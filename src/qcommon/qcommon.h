@@ -321,7 +321,6 @@ extern int numGTs;
 void Qcommon_Init(int argc, const char **argv);
 void Qcommon_Frame(void);
 void Qcommon_Shutdown(void);
-qboolean Qcommon_ServerActive(void);
 void Com_SetGameType(void);
 
 #define NUMVERTEXNORMALS	162

@@ -936,8 +936,6 @@ static void SV_SpawnServer (const char *server, const char *param)
 	/* all precaches are complete */
 	Com_SetServerState(ss_game);
 
-	sv.active = qtrue;
-
 	/* set serverinfo variable */
 	sv_mapname = Cvar_FullSet("mapname", sv.name, CVAR_SERVERINFO | CVAR_NOSET);
 

@@ -208,7 +208,7 @@ void CL_StartSingleplayer (qboolean singleplayer)
 
 	if (singleplayer) {
 		ccs.singleplayer = qtrue;
-		if (Qcommon_ServerActive()) {
+		if (Com_ServerState()) {
 			/* shutdown server */
 			SV_Shutdown("Server was killed.\n", qfalse);
 		} else if (cls.state >= ca_connecting) {
@@ -284,20 +284,23 @@ void CL_Drop (void)
 	/* drop loading plaque */
 	SCR_EndLoadingPlaque();
 
+	/* make sure that we are in the correct menus in singleplayer after
+	 * dropping the game due to a failure */
+	if (ccs.singleplayer) {
+		Com_Printf("CL_Drop: Singleplayer\n");
+		Cvar_Set("mn_main", "singleplayerInGame");
+		Cvar_Set("mn_active", "map");
+	} else {
+		Com_Printf("CL_Drop: Multiplayer\n");
+		Cvar_Set("mn_main", "main");
+		Cvar_Set("mn_active", "");
+	}
+	MN_PopMenu(qtrue);
+
 	if (cls.state == ca_uninitialized || cls.state == ca_disconnected)
 		return;
 
 	CL_Disconnect();
-
-	/* make sure that we are in the correct menus in singleplayer after
-	 * dropping the game due to a failure */
-	if (ccs.singleplayer) {
-		Cvar_Set("mn_main", "singleplayerInGame");
-		Cvar_Set("mn_active", "map");
-	} else {
-		Cvar_Set("mn_main", "main");
-		Cvar_Set("mn_active", "");
-	}
 }
 
 /**

@@ -48,8 +48,6 @@ typedef enum {
 typedef struct {
 	server_state_t state;		/**< precache commands are only valid during load */
 
-	qboolean active;			/**< false if only a net client */
-
 	int framenum;
 
 	char name[MAX_QPATH];		/**< map name, or cinematic name */

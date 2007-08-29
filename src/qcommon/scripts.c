@@ -2150,7 +2150,7 @@ mapDef_t* Com_GetMapDefinitionByID (const char *mapDefID)
 			return &csi.mds[i];
 	}
 
-	Com_Printf("Com_GetMapDefinition: Could not find mapdef with id: '%s'\n", mapDefID);
+	Com_DPrintf(DEBUG_CLIENT, "Com_GetMapDefinition: Could not find mapdef with id: '%s'\n", mapDefID);
 	return NULL;
 }
 
