@@ -938,7 +938,7 @@ static void CL_ActorAppear (struct dbuffer *msg)
 		le->type = ET_ACTOR2x2;
 		break;
 	default:
-		Com_Error(ERR_DROP, "Unknown fieldSize for le in CL_ActorAppear (EV_ACTOR_APPEAR)\n");
+		Com_Error(ERR_DROP, "Unknown fieldSize for le in CL_ActorAppear (EV_ACTOR_APPEAR)");
 	}
 	le->modelnum1 = modelnum1;
 	le->modelnum2 = modelnum2;
@@ -1417,10 +1417,10 @@ static void CL_ParseEvent (struct dbuffer *msg)
 
 	/* check if eType is valid */
 	if (eType < 0 || eType >= EV_NUM_EVENTS)
-		Com_Error(ERR_DROP, "CL_ParseEvent: invalid event %s\n", ev_names[eType]);
+		Com_Error(ERR_DROP, "CL_ParseEvent: invalid event %s", ev_names[eType]);
 
 	if (!ev_func[eType])
-		Com_Error(ERR_DROP, "CL_ParseEvent: no handling function for event %i\n", eType);
+		Com_Error(ERR_DROP, "CL_ParseEvent: no handling function for event %i", eType);
 
 	if (now) {
 		/* log and call function */
@@ -1671,7 +1671,7 @@ void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
 		break;
 
 	default:
-		Com_Error(ERR_DROP,"CL_ParseServerMessage: Illegible server message %d\n", cmd);
+		Com_Error(ERR_DROP,"CL_ParseServerMessage: Illegible server message %d", cmd);
 		break;
 	}
 }

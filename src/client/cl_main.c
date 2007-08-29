@@ -1563,7 +1563,7 @@ void CL_RequestNextDownload (void)
 		/* checksum doesn't match with the one the server gave us via configstring */
 		} else if (map_checksum != atoi(cl.configstrings[CS_MAPCHECKSUM])) {
 			MN_Popup(_("Error"), _("Local map version differs from server"));
-			Com_Error(ERR_DISCONNECT, "Local map version differs from server: %u != '%s'\n",
+			Com_Error(ERR_DISCONNECT, "Local map version differs from server: %u != '%s'",
 				map_checksum, cl.configstrings[CS_MAPCHECKSUM]);
 			return;
 		/* checksum doesn't match with the one the server gave us via configstring */

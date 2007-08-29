@@ -202,7 +202,7 @@ static byte tileChar (const char chr)
 	else if (chr >= 'A' && chr <= 'Z')
 		return chr - ('A' + 10);
 	else
-		Com_Error(ERR_DROP, "SV_ParseMapTile: Invalid tile char '%c'\n", chr);
+		Com_Error(ERR_DROP, "SV_ParseMapTile: Invalid tile char '%c'", chr);
 	/* never reached */
 	return 0;
 }
@@ -317,7 +317,7 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 
 	token = COM_EParse(text, errhead, filename);
 	if (!*text || *token != '{') {
-		Com_Error(ERR_DROP, "Invalid assembly definition '%s' - invalid token '%s'\n", a->id, token);
+		Com_Error(ERR_DROP, "Invalid assembly definition '%s' - invalid token '%s'", a->id, token);
 		return;
 	}
 
@@ -384,7 +384,7 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 				Com_Printf("SV_ParseAssembly: warning - cvar value doesn't seam to be a valid tile id '%s' - set to default '%s'\n", cvarValue, token);
 				Cvar_Set(cvarName, token);
 				if (*token!= '+')
-					Com_Error(ERR_DROP, "SV_ParseAssembly: wrong tile id\n");
+					Com_Error(ERR_DROP, "SV_ParseAssembly: wrong tile id");
 			}
 		}
 
@@ -396,7 +396,7 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 					break;
 
 				if (!strstr(token, " ")) {
-					Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (min max value of tile %s)\n", filename, mTile[i].id);
+					Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (min max value of tile %s)", filename, mTile[i].id);
 					return;
 				}
 				sscanf(token, "%i %i", &x, &y);
@@ -405,7 +405,7 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 				break;
 			}
 		if (i == numTiles)
-			Com_Error(ERR_DROP, "Could not find tile: '%s'\n", token);
+			Com_Error(ERR_DROP, "Could not find tile: '%s'", token);
 	} while (text);
 }
 
@@ -461,7 +461,7 @@ static void SV_AddTile (mTile_t * tile, int x, int y, int *toFill)
 
 	/* add the tile */
 	if (numPlaced >= MAX_MAPTILES)
-		Com_Error(ERR_DROP, "SV_AddTile: Too many map tiles\n");
+		Com_Error(ERR_DROP, "SV_AddTile: Too many map tiles");
 
 	mPlaced[numPlaced].tile = tile;
 	mPlaced[numPlaced].x = x;
@@ -686,7 +686,7 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
 	Com_sprintf(filename, sizeof(filename), "maps/%s.ump", name);
 	FS_LoadFile(filename, (void **) &buf);
 	if (!buf)
-		Com_Error(ERR_DROP, "SV_AssembleMap: Map assembly info '%s' not found\n", filename);
+		Com_Error(ERR_DROP, "SV_AssembleMap: Map assembly info '%s' not found", filename);
 
 	/* parse it */
 	text = buf;
@@ -720,14 +720,14 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
 
 	/* check for parsed tiles and assemblies */
 	if (!numTiles)
-		Com_Error(ERR_DROP, "No map tiles defined (%s)!\n", filename);
+		Com_Error(ERR_DROP, "No map tiles defined (%s)!", filename);
 #ifdef DEBUG
 	else
 		Com_DPrintf(DEBUG_SERVER, "numTiles: %i\n", numTiles);
 #endif
 
 	if (!numAssemblies)
-		Com_Error(ERR_DROP, "No map assemblies defined (%s)!\n", filename);
+		Com_Error(ERR_DROP, "No map assemblies defined (%s)!", filename);
 #ifdef DEBUG
 	else
 		Com_DPrintf(DEBUG_SERVER, "numAssemblies: %i\n", numAssemblies);
@@ -797,7 +797,7 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
 	}
 
 	if (tries >= MAX_ASSEMBLYRETRIES)
-		Com_Error(ERR_DROP, "SV_AssembleMap: Failed to assemble map (%s) (max-tries reached)\n", filename);
+		Com_Error(ERR_DROP, "SV_AssembleMap: Failed to assemble map (%s) (max-tries reached)", filename);
 
 	/* prepare map and pos strings */
 	if (basePath[0]) {

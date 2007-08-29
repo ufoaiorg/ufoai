@@ -293,7 +293,7 @@ int FS_Seek (qFILE * f, long offset, int origin)
 			break;
 
 		default:
-			Com_Error( ERR_FATAL, "Bad origin in FS_Seek\n");
+			Com_Error(ERR_FATAL, "Bad origin in FS_Seek");
 			return -1;
 			break;
 		}
@@ -424,17 +424,13 @@ int FS_Read (void *buffer, int len, qFILE * f)
 			if (!tries) {
 				tries = 1;
 			} else {
-#ifdef DEBUG
-				Com_Printf("FS_Read: %s:%i (%s)\n", file, line, f->name);
-#endif
-				Com_Error(ERR_FATAL, "FS_Read: 0 bytes read\n");
+				Com_DPrintf(DEBUG_ENGINE, "FS_Read: %s:%i (%s)\n", file, line, f->name);
+				Com_Error(ERR_FATAL, "FS_Read: 0 bytes read");
 			}
 		}
 
 		if (read == -1) {
-#ifdef DEBUG
-			Com_Printf("FS_Read: %s:%i (%s)\n", file, line, f->name);
-#endif
+			Com_DPrintf(DEBUG_ENGINE, "FS_Read: %s:%i (%s)\n", file, line, f->name);
 			Com_Error(ERR_FATAL, "FS_Read: -1 bytes read");
 		}
 
@@ -1596,7 +1592,7 @@ void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
 
 	buf = Mem_PoolAlloc(len, com_fileSysPool, 0);
 	if (fread(buf, 1, len, f) != len)
-		Com_Error(ERR_FATAL, "Short read in FS_CopyFile()\n");
+		Com_Error(ERR_FATAL, "Short read in FS_CopyFile()");
 	fclose(f);
 
 	FS_CreatePath(toOSPath);
@@ -1606,7 +1602,7 @@ void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
 		return;
 
 	if (fwrite(buf, 1, len, f) != len)
-		Com_Error(ERR_FATAL, "Short write in FS_CopyFile()\n");
+		Com_Error(ERR_FATAL, "Short write in FS_CopyFile()");
 
 	fclose(f);
 	Mem_Free(buf);
@@ -1618,7 +1614,7 @@ void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
  */
 void FS_Remove (const char *osPath)
 {
-	Com_Printf("FS_Remove: remove %s\n", osPath);
+	Com_Printf("FS_Remove: remove %s", osPath);
 	remove(osPath);
 }
 
@@ -1634,7 +1630,7 @@ qboolean FS_Rename (const char *from, const char *to, qboolean relative)
 	char to_buf[MAX_OSPATH];
 
 	if (!fs_searchpaths)
-		Com_Error(ERR_FATAL, "Filesystem call made without initialization\n");
+		Com_Error(ERR_FATAL, "Filesystem call made without initialization");
 
 	if (relative) {
 		from_ospath = FS_BuildOSPath(FS_Gamedir(), from, from_buf, sizeof(from_buf));

@@ -309,7 +309,7 @@ static void CL_ParseEntitystring (const char *es)
 
 			/* add light to list */
 			if (map_numlights >= MAX_MAP_LIGHTS)
-				Com_Error(ERR_DROP, "Too many lights...\n");
+				Com_Error(ERR_DROP, "Too many lights...");
 
 			newlight = &(map_lights[map_numlights++]);
 			VectorCopy(origin, newlight->origin);

@@ -181,7 +181,7 @@ static void PF_SetModel (edict_t * ent, const char *name)
 static void PF_Configstring (int index, const char *val)
 {
 	if (index < 0 || index >= MAX_CONFIGSTRINGS)
-		Com_Error(ERR_DROP, "configstring: bad index %i\n", index);
+		Com_Error(ERR_DROP, "configstring: bad index %i", index);
 
 	if (!val)
 		val = "";

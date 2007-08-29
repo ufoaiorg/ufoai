@@ -563,6 +563,13 @@ qboolean CP_SpawnCrashSiteMission (aircraft_t* aircraft)
 		MN_AddNewMessage(_("Interception"), _("UFO interception successful -- UFO lost."), qfalse, MSG_CRASHSITE, NULL);
 		return qfalse;
 	}
+	ms->mapDef = Com_GetMapDefinitionByID("ufocrash");
+	if (!ms->mapDef) {
+		CP_RemoveLastMission();
+		MN_AddNewMessage(_("Interception"), _("UFO interception successful -- UFO lost."), qfalse, MSG_CRASHSITE, NULL);
+		return qfalse;
+	}
+
 	ms->missionType = MIS_CRASHSITE;
 	/* the size if somewhat random, because not all map tiles would have
 		* alien spawn points */
@@ -592,7 +599,6 @@ qboolean CP_SpawnCrashSiteMission (aircraft_t* aircraft)
 		ms->numAlienTeams++;
 
 	/* use ufocrash.ump as random tile assembly */
-	ms->mapDef->map = Mem_PoolStrDup("+ufocrash", cl_localPool, CL_TAG_NONE);
 	ms->mapDef->param = Mem_PoolStrDup(UFO_TypeToShortName(aircraft->ufotype), cl_localPool, CL_TAG_NONE);
 	ms->mapDef->loadingscreen = Mem_PoolStrDup("crashsite", cl_localPool, CL_TAG_NONE);
 	Com_sprintf(ms->onwin, sizeof(ms->onwin), "cp_ufocrashed %i;", aircraft->ufotype);
@@ -640,8 +646,6 @@ qboolean CP_SpawnBaseAttackMission (base_t* base, mission_t* ms, setState_t *cau
 		ms->numAlienTeams++;
 
 	ms->zoneType = base->mapZone;
-	ms->mapDef->loadingscreen = Mem_PoolStrDup("baseattack", cl_localPool, CL_TAG_NONE);
-	ms->mapDef->map = Mem_PoolStrDup(".baseattack", cl_localPool, CL_TAG_NONE);
 
 	if (cause)
 		return qtrue;
@@ -2088,6 +2092,13 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 					/* create a new mission - this mission is not in the campaign definition */
 					mis->def = CL_AddMission(name);
 					if (!mis->def) {
+						CP_RemoveLastMission();
+						Com_Printf("......warning: could not load crashsite mission '%s'!\n", name);
+						return qfalse;
+					}
+					mis->def->mapDef = Com_GetMapDefinitionByID("ufocrash");
+					if (!mis->def->mapDef) {
+						CP_RemoveLastMission();
 						Com_Printf("......warning: could not load crashsite mission '%s'!\n", name);
 						return qfalse;
 					}
@@ -2097,7 +2108,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 					mis->def->civilians = MSG_ReadByte(sb);
 					mis->def->mapDef->loadingscreen = Mem_PoolStrDup(MSG_ReadString(sb), cl_localPool, CL_TAG_NONE);
 					Q_strncpyz(mis->def->onwin, MSG_ReadString(sb), sizeof(mis->def->onwin));
-					mis->def->mapDef->map = Mem_PoolStrDup(MSG_ReadString(sb), cl_localPool, CL_TAG_NONE);
+					MSG_ReadString(sb);
 					mis->def->mapDef->param = Mem_PoolStrDup(MSG_ReadString(sb), cl_localPool, CL_TAG_NONE);
 					/** @sa CP_SpawnCrashSiteMission */
 					nation = MAP_GetNation(mis->realPos);
@@ -2252,7 +2263,6 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 			MSG_WriteByte(sb, mis->def->civilians);
 			MSG_WriteString(sb, mis->def->mapDef->loadingscreen);
 			MSG_WriteString(sb, mis->def->onwin);
-			MSG_WriteString(sb, mis->def->mapDef->map);
 			MSG_WriteString(sb, mis->def->mapDef->param);
 			break;
 		default:
@@ -3109,7 +3119,6 @@ mission_t *CL_AddMission (const char *name)
 {
 	int i;
 	mission_t *ms;
-	mapDef_t *md;
 
 	/* just to let us know: search for missions with same name */
 	for (i = 0; i < numMissions; i++)
@@ -3124,11 +3133,6 @@ mission_t *CL_AddMission (const char *name)
 		Com_Printf("CL_AddMission: Max missions reached\n");
 		return NULL;
 	}
-	md = Com_GetMapDefinitionByID(name);
-	if (!md) {
-		Com_Printf("CL_AddMission: Could not find map definition with id '%s'\n", name);
-		return NULL;
-	}
 
 	/* initialize the mission */
 	ms = &missions[numMissions++];
@@ -3136,7 +3140,8 @@ mission_t *CL_AddMission (const char *name)
 	Q_strncpyz(ms->name, name, sizeof(ms->name));
 	Com_DPrintf(DEBUG_CLIENT, "CL_AddMission: mission name: '%s'\n", name);
 
-	ms->mapDef = md;
+	/* this might be null for baseattack and crashsite missions */
+	ms->mapDef = Com_GetMapDefinitionByID(name);
 
 	return ms;
 }
@@ -3154,6 +3159,10 @@ void CL_ParseMission (const char *name, const char **text)
 	const char *token;
 
 	ms = CL_AddMission(name);
+	if (!ms->mapDef) {
+		numMissions--;
+		return;
+	}
 
 	/* get it's body */
 	token = COM_Parse(text);

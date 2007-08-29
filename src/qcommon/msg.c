@@ -289,12 +289,12 @@ void MSG_V_WriteFormat (sizebuf_t * sb, const char *format, va_list ap)
 			}
 			break;
 		default:
-			Com_Error(ERR_DROP, "WriteFormat: Unknown type!\n");
+			Com_Error(ERR_DROP, "WriteFormat: Unknown type!");
 		}
 	}
 	/* Too many arguments for the given format; too few cause crash above */
 	if (!ap)
-		Com_Error(ERR_DROP, "WriteFormat: Too many arguments!\n");
+		Com_Error(ERR_DROP, "WriteFormat: Too many arguments!");
 }
 
 /**
@@ -669,12 +669,12 @@ void MSG_V_ReadFormat (sizebuf_t * msg_read, const char *format, va_list ap)
 			}
 			break;
 		default:
-			Com_Error(ERR_DROP, "ReadFormat: Unknown type!\n");
+			Com_Error(ERR_DROP, "ReadFormat: Unknown type!");
 		}
 	}
 	/* Too many arguments for the given format; too few cause crash above */
 	if (!ap)
-		Com_Error(ERR_DROP, "ReadFormat: Too many arguments!\n");
+		Com_Error(ERR_DROP, "ReadFormat: Too many arguments!");
 }
 
 /**
@@ -743,7 +743,7 @@ int MSG_LengthFormat (sizebuf_t * sb, const char *format)
 			length += 2;
 			break;
 		default:
-			Com_Error(ERR_DROP, "LengthFormat: Unknown type!\n");
+			Com_Error(ERR_DROP, "LengthFormat: Unknown type!");
 		}
 
 		/* advance in buffer */

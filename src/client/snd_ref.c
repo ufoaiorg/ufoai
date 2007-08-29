@@ -308,17 +308,17 @@ void S_Init (void)
 		}
 
 		if ((SND_Init = (SND_Init_t) Sys_GetProcAddress(snd_ref_lib, "SND_Init")) == 0)
-			Com_Error(ERR_FATAL, "Sys_GetProcAddress failed loading SND_Init\n");
+			Com_Error(ERR_FATAL, "Sys_GetProcAddress failed loading SND_Init");
 		if ((SND_Shutdown = (SND_Shutdown_t) Sys_GetProcAddress(snd_ref_lib, "SND_Shutdown")) == 0)
-			Com_Error(ERR_FATAL, "Sys_GetProcAddress failed loading SND_Shutdown\n");
+			Com_Error(ERR_FATAL, "Sys_GetProcAddress failed loading SND_Shutdown");
 		if ((SND_GetDMAPos = (SND_GetDMAPos_t) Sys_GetProcAddress(snd_ref_lib, "SND_GetDMAPos")) == 0)
-			Com_Error(ERR_FATAL, "Sys_GetProcAddress failed loading SND_GetDMAPos\n");
+			Com_Error(ERR_FATAL, "Sys_GetProcAddress failed loading SND_GetDMAPos");
 		if ((SND_BeginPainting = (SND_BeginPainting_t) Sys_GetProcAddress(snd_ref_lib, "SND_BeginPainting")) == 0)
-			Com_Error(ERR_FATAL, "Sys_GetProcAddress failed loading SND_BeginPainting\n");
+			Com_Error(ERR_FATAL, "Sys_GetProcAddress failed loading SND_BeginPainting");
 		if ((SND_Submit = (SND_Submit_t) Sys_GetProcAddress(snd_ref_lib, "SND_Submit")) == 0)
-			Com_Error(ERR_FATAL, "Sys_GetProcAddress failed loading SND_Submit\n");
+			Com_Error(ERR_FATAL, "Sys_GetProcAddress failed loading SND_Submit");
 		if ((SND_Activate = (SND_Activate_t) Sys_GetProcAddress(snd_ref_lib, "SND_Activate")) == 0)
-			Com_Error(ERR_FATAL, "Sys_GetProcAddress failed loading SND_Activate\n");
+			Com_Error(ERR_FATAL, "Sys_GetProcAddress failed loading SND_Activate");
 
 		snd_ref_active = qtrue;
 
@@ -443,9 +443,9 @@ static sfx_t *S_FindName (const char *name, qboolean create)
 	size_t len;
 
 	if (!name)
-		Com_Error(ERR_FATAL, "S_FindName: NULL\n");
+		Com_Error(ERR_FATAL, "S_FindName: NULL");
 	if (!name[0])
-		Com_Error(ERR_FATAL, "S_FindName: empty name\n");
+		Com_Error(ERR_FATAL, "S_FindName: empty name");
 
 	len = strlen(name);
 	if (len >= MAX_QPATH)

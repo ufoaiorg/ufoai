@@ -273,7 +273,7 @@ static void CMod_LoadSubmodels (lump_t * l, vec3_t shift)
 
 	in = (void *) (cmod_base + l->fileofs);
 	if (l->filelen % sizeof(dmodel_t))
-		Com_Error(ERR_DROP, "CMod_LoadSubmodels: funny lump size (%i => "UFO_SIZE_T, l->filelen, sizeof(dmodel_t));
+		Com_Error(ERR_DROP, "CMod_LoadSubmodels: funny lump size (%i => "UFO_SIZE_T")", l->filelen, sizeof(dmodel_t));
 	count = l->filelen / sizeof(dmodel_t);
 	Com_DPrintf(DEBUG_ENGINE, "%c...submodels: %i\n", 1, count);
 
@@ -1225,7 +1225,7 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
 
 	/* init */
 	if (numTiles >= MAX_MAPTILES)
-		Com_Error(ERR_FATAL, "CM_AddMapTile: too many tiles loaded\n");
+		Com_Error(ERR_FATAL, "CM_AddMapTile: too many tiles loaded");
 
 	curTile = &mapTiles[numTiles];
 	memset(curTile, 0, sizeof(mapTile_t));
@@ -1320,7 +1320,7 @@ void CM_LoadMap (const char *tiles, const char *pos, unsigned *mapchecksum)
 			for (i = 0; i < 2; i++) {
 				token = COM_Parse(&pos);
 				if (!pos)
-					Com_Error(ERR_DROP, "CM_LoadMap: invalid positions\n");
+					Com_Error(ERR_DROP, "CM_LoadMap: invalid positions");
 				sh[i] = atoi(token);
 			}
 			*mapchecksum += CM_AddMapTile(name, sh[0], sh[1], 0);
@@ -1331,7 +1331,7 @@ void CM_LoadMap (const char *tiles, const char *pos, unsigned *mapchecksum)
 		}
 	}
 
-	Com_Error(ERR_DROP, "CM_LoadMap: invalid tile names\n");
+	Com_Error(ERR_DROP, "CM_LoadMap: invalid tile names");
 }
 
 /**
@@ -2478,7 +2478,7 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, byte 
 			}
 			break;
 		default:
-			Com_Error(ERR_DROP, "Grid_CheckForbidden: unknown forbidden-size: %i\n", (int)*forbidden_size);
+			Com_Error(ERR_DROP, "Grid_CheckForbidden: unknown forbidden-size: %i", (int)*forbidden_size);
 		}
 	}
 	return qfalse;
@@ -2654,7 +2654,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dir,
 #endif
 		break;
 	default:
-		Com_Error(ERR_DROP, "Grid_MoveMark: unknown actor-size: %i\n", actor_size);
+		Com_Error(ERR_DROP, "Grid_MoveMark: unknown actor-size: %i", actor_size);
 	}
 
 	/* Height checks. */
@@ -2685,7 +2685,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dir,
 			return;
 		break;
 	default:
-		Com_Error(ERR_DROP, "Grid_MoveMark: (2) unknown actor-size: %i\n", actor_size);
+		Com_Error(ERR_DROP, "Grid_MoveMark: (2) unknown actor-size: %i", actor_size);
 	}
 
 	/* Store move. */
@@ -2786,7 +2786,7 @@ void Grid_MoveCalc (struct routing_s *map, pos3_t from, int actor_size, int dist
 #endif
 			break;
 		default:
-			Com_Error(ERR_DROP, "Grid_MoveCalc: unknown actor-size: %i\n", actor_size);
+			Com_Error(ERR_DROP, "Grid_MoveCalc: unknown actor-size: %i", actor_size);
 			break;
 	}
 
@@ -3033,7 +3033,7 @@ byte Grid_Fall (struct routing_s *map, pos3_t pos, int actor_size)
 		}
 		break;
 	default:
-		Com_Error(ERR_DROP, "Grid_Fall: unknown actor-size: %i\n", actor_size);
+		Com_Error(ERR_DROP, "Grid_Fall: unknown actor-size: %i", actor_size);
 	}
 
 	return z;

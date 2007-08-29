@@ -583,7 +583,7 @@ int SEQ_Model (const char *name, char *data)
 				break;
 		if (i >= numSeqEnts) {
 			if (numSeqEnts >= MAX_SEQENTS)
-				Com_Error(ERR_FATAL, "Too many sequence entities\n");
+				Com_Error(ERR_FATAL, "Too many sequence entities");
 			se = &seqEnts[numSeqEnts++];
 		}
 		/* allocate */
@@ -639,7 +639,7 @@ int SEQ_2Dobj (const char *name, char *data)
 				break;
 		if (i >= numSeq2Ds) {
 			if (numSeq2Ds >= MAX_SEQ2DS)
-				Com_Error(ERR_FATAL, "Too many sequence 2d objects\n");
+				Com_Error(ERR_FATAL, "Too many sequence 2d objects");
 			s2d = &seq2Ds[numSeq2Ds++];
 		}
 		/* allocate */
@@ -728,7 +728,7 @@ void CL_ParseSequence (const char *name, const char **text)
 
 	/* initialize the sequence */
 	if (numSequences >= MAX_SEQUENCES)
-		Com_Error(ERR_FATAL, "Too many sequences\n");
+		Com_Error(ERR_FATAL, "Too many sequences");
 
 	sp = &sequences[numSequences++];
 	memset(sp, 0, sizeof(sequence_t));
@@ -762,7 +762,7 @@ void CL_ParseSequence (const char *name, const char **text)
 					return;
 
 				if (numSeqCmds >= MAX_SEQCMDS)
-					Com_Error(ERR_FATAL, "Too many sequence commands\n");
+					Com_Error(ERR_FATAL, "Too many sequence commands");
 
 				/* init seqCmd */
 				sc = &seqCmds[numSeqCmds++];

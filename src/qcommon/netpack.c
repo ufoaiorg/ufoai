@@ -218,12 +218,12 @@ void NET_V_WriteFormat (struct dbuffer *buf, const char *format, va_list ap)
 			}
 			break;
 		default:
-			Com_Error(ERR_DROP, "WriteFormat: Unknown type!\n");
+			Com_Error(ERR_DROP, "WriteFormat: Unknown type!");
 		}
 	}
 	/* Too many arguments for the given format; too few cause crash above */
 	if (!ap)
-		Com_Error(ERR_DROP, "WriteFormat: Too many arguments!\n");
+		Com_Error(ERR_DROP, "WriteFormat: Too many arguments!");
 }
 
 /**
@@ -527,12 +527,12 @@ void NET_V_ReadFormat (struct dbuffer *buf, const char *format, va_list ap)
 			}
 			break;
 		default:
-			Com_Error(ERR_DROP, "ReadFormat: Unknown type!\n");
+			Com_Error(ERR_DROP, "ReadFormat: Unknown type!");
 		}
 	}
 	/* Too many arguments for the given format; too few cause crash above */
 	if (!ap)
-		Com_Error(ERR_DROP, "ReadFormat: Too many arguments!\n");
+		Com_Error(ERR_DROP, "ReadFormat: Too many arguments!");
 }
 
 /**

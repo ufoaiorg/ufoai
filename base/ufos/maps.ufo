@@ -447,3 +447,18 @@ mapdef shelter_standard
 		//any
 	}
 }
+
+mapdef ufocrash
+{
+	map				"+ufocrash"
+	loadingscreen	"ufocrash"
+	multiplayer		false
+}
+
+mapdef baseattack
+{
+	map				".baseattack"
+	loadingscreen	"baseattack"
+	multiplayer		false
+}
+

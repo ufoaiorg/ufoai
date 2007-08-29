@@ -966,7 +966,7 @@ void CL_DisplayFiremodes_f (void)
 	actor_idx = CL_GetActorNumber(selActor);
 	Com_DPrintf(DEBUG_CLIENT, "CL_DisplayFiremodes_f: actor index: %i\n", actor_idx);
 	if (actor_idx == -1)
-		Com_Error(ERR_DROP, "Could not get current selected actor's id\n");
+		Com_Error(ERR_DROP, "Could not get current selected actor's id");
 
 	/* Set default firemode if the currenttly seleced one is not sane or for another weapon. */
 	if (!SANE_REACTION(actor_idx)) {	/* No sane firemode selected. */
@@ -1051,7 +1051,7 @@ void CL_SelectReactionFiremode_f (void)
 
 	actor_idx = CL_GetActorNumber(selActor);
 	if (actor_idx == -1)
-		Com_Error(ERR_DROP, "Could not get current selected actor's id\n");
+		Com_Error(ERR_DROP, "Could not get current selected actor's id");
 
 	firemode = atoi(Cmd_Argv(2));
 
@@ -1851,7 +1851,7 @@ qboolean CL_ActorSelect (le_t * le)
 			CL_UGVCvars(selChr);
 			break;
 		default:
-			Com_Error(ERR_DROP, "CL_ActorSelect: Unknown fieldsize\n");
+			Com_Error(ERR_DROP, "CL_ActorSelect: Unknown fieldsize");
 		}
 	}
 
@@ -2529,7 +2529,7 @@ void CL_ActorToggleReaction_f (void)
 
 	actor_idx = CL_GetActorNumber(selActor);
 	if (actor_idx == -1)
-		Com_Error(ERR_DROP, "Could not get current selected actor's id\n");
+		Com_Error(ERR_DROP, "Could not get current selected actor's id");
 
 	/* Check all hands for reaction-enabled ammo-firemodes. */
 	if (CL_WeaponWithReaction(selActor, 'r') || CL_WeaponWithReaction(selActor, 'l')) {
@@ -3286,7 +3286,7 @@ void CL_ActorMouseTrace (void)
 				}
 				break;
 			default:
-				Com_Error(ERR_DROP, "Grid_MoveCalc: unknown actor-size: %i\n", le->fieldSize);
+				Com_Error(ERR_DROP, "Grid_MoveCalc: unknown actor-size: %i", le->fieldSize);
 				break;
 		}
 

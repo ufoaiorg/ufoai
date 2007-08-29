@@ -874,7 +874,7 @@ le_t *LE_Add (int entnum)
 	if (i == numLEs) {
 		if (numLEs >= MAX_EDICTS - numLMs) {
 			/* no free LEs */
-			Com_Error(ERR_DROP, "Too many LEs\n");
+			Com_Error(ERR_DROP, "Too many LEs");
 			return NULL;
 		}
 
