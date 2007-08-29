@@ -65,6 +65,8 @@ typedef struct saveSubsystems_s {
 extern saveSubsystems_t saveSubsystems[MAX_SAVESUBSYSTEMS];
 extern int saveSubsystemsAmount;
 
+qboolean SAV_QuickSave(void);
+
 /** and now the save and load prototypes for every subsystem */
 qboolean CP_Save(sizebuf_t *sb, void *data);
 qboolean CP_Load(sizebuf_t *sb, void *data);

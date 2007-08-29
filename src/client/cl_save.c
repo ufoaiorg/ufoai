@@ -409,10 +409,7 @@ static void SAV_GameLoad_f (void)
 	/* load and go to map */
 	if (!SAV_GameLoad(Cmd_Argv(1), &error)) {
 		Cbuf_Execute(); /* wipe outstanding campaign commands */
-		if (error)
-			Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error loading game."), error);
-		else
-			Com_sprintf(popupText, sizeof(popupText), "%s\n", _("Error loading game."));
+		Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error loading game."), error ? error : "");
 		MN_Popup(_("Error"), popupText);
 	}
 }
@@ -435,10 +432,7 @@ static void SAV_GameContinue_f (void)
 		/* try to load the last saved campaign */
 		if (!SAV_GameLoad(mn_lastsave->string, &error)) {
 			Cbuf_Execute(); /* wipe outstanding campaign commands */
-			if (error)
-				Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error loading game."), error);
-			else
-				Com_sprintf(popupText, sizeof(popupText), "%s\n", _("Error loading game."));
+			Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error loading game."), error ? error : "");
 			MN_Popup(_("Error"), popupText);
 		}
 		if (!curCampaign)
@@ -505,6 +499,88 @@ static void SAV_GameSaveNameCleanup_f (void)
 }
 
 /**
+ * @brief Quick save the current campaign
+ * @sa CP_StartMissionMap
+ */
+qboolean SAV_QuickSave (void)
+{
+	char *error = NULL;
+	qboolean result;
+
+	assert(curCampaign);
+
+	if (CL_OnBattlescape())
+		return qfalse;
+
+	result = SAV_GameSave("slotquick", "QuickSave", &error);
+	if (!result)
+		Com_Printf("Error saving the game: %s\n", error ? error : "");
+
+	return qtrue;
+}
+
+/**
+ * @brief Checks whether there is a quicksave file at all - otherwise close
+ * the quickload menu
+ */
+static void SAV_GameQuickLoadInit_f (void)
+{
+	FILE *f;
+
+	/* only allow quickload while there is already a running campaign */
+	if (!curCampaign) {
+		MN_PopMenu(qfalse);
+		return;
+	}
+
+	f = fopen(va("%s/save/slotquick.sav", FS_Gamedir()), "rb");
+	if (!f)
+		MN_PopMenu(qfalse);
+	else
+		fclose(f);
+}
+
+/**
+ * @brief Saves to the quick save slot
+ * @sa SAV_GameQuickLoad_f
+ */
+static void SAV_GameQuickSave_f (void)
+{
+	if (!curCampaign)
+		return;
+
+	if (!SAV_QuickSave())
+		Com_Printf("Could not save the campaign\n");
+	else
+		MN_AddNewMessage(_("Quicksave"), _("Campaign was successfully saved."), qfalse, MSG_INFO, NULL);
+}
+
+/**
+ * @brief Loads the quick save slot
+ * @sa SAV_GameQuickSave_f
+ */
+static void SAV_GameQuickLoad_f (void)
+{
+	char *error = NULL;
+
+	if (!curCampaign)
+		return;
+
+	if (CL_OnBattlescape()) {
+		Com_Printf("Could not load the campaign while you are on the battlefield\n");
+		return;
+	}
+
+	if (!SAV_GameLoad("slotquick", &error)) {
+		Cbuf_Execute(); /* wipe outstanding campaign commands */
+		Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error loading game."), error ? error : "");
+		MN_Popup(_("Error"), popupText);
+	} else {
+		MN_Popup(_("Campaign loaded"), "Quicksave campaign was successfully loaded.");
+	}
+}
+
+/**
  * @brief Register all save-subsystems and init some cvars and commands
  * @sa SAV_GameSave
  * @sa SAV_GameLoad
@@ -546,6 +622,9 @@ void SAV_Init (void)
 	SAV_AddSubsystem(&na_subsystem);
 	SAV_AddSubsystem(&trans_subsystem);
 
+	Cmd_AddCommand("game_quickloadinit", SAV_GameQuickLoadInit_f, "Check whether there is a quicksave at all");
+	Cmd_AddCommand("game_quicksave", SAV_GameQuickSave_f, "Saves to the quick save slot");
+	Cmd_AddCommand("game_quickload", SAV_GameQuickLoad_f, "Loads the quick save slot");
 	Cmd_AddCommand("game_save", SAV_GameSave_f, "Saves to a given filename");
 	Cmd_AddCommand("game_load", SAV_GameLoad_f, "Loads a given filename");
 	Cmd_AddCommand("game_comments", SAV_GameSaveNames_f, "Loads the savegame names");

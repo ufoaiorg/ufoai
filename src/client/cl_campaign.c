@@ -2443,6 +2443,8 @@ static void CP_StartMissionMap (mission_t* mission)
 		break;
 	}
 
+	SAV_QuickSave();
+
 	if (FS_LoadFile(expanded, NULL) != -1)
 		Cbuf_AddText(va("map %s%c %s\n", mission->mapDef->map, timeChar, mission->mapDef->param));
 	else

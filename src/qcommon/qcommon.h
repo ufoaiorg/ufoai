@@ -388,7 +388,6 @@ void CL_ParseClientData(const char *type, const char *name, const char **text);
 void CIN_RunCinematic(int now, void *data);
 void Con_Print(const char *text);
 void SCR_BeginLoadingPlaque(void);
-void MN_PrecacheMenus(void);
 void CL_InitAfter(void);
 
 void SV_Init(void);

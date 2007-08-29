@@ -151,7 +151,7 @@ static const value_t nps[] = {
 	{"cvar", V_STRING, -3, 0},	/* for selectbox */
 	{"skin", V_STRING, -3, 0},
 	/* -4 is animation state */
-	{"string", V_STRING, 0, 0},	/* no gettext here - this can be a cvar, too */
+	{"string", V_LONGSTRING, 0, 0},	/* no gettext here - this can be a cvar, too */
 	{"font", V_STRING, -1, 0},
 	{"max", V_FLOAT, 0, 0},
 	{"min", V_FLOAT, -1, 0},
@@ -1979,33 +1979,6 @@ static void MN_Tooltip (menu_t *menu, menuNode_t *node, int x, int y)
 		if (node->key[0] == '*')
 			Com_sprintf(node->key, sizeof(node->key), _("Key: %s"), MN_GetReferenceString(menu, node->key));
 		MN_DrawTooltip("f_verysmall", node->key, x, y, width,0);
-	}
-}
-
-/**
- * @brief Load all menu images at startup
- * @todo Rename and move this function and preload all character models and
- * the models from models.ufo, too
- */
-void MN_PrecacheMenus (void)
-{
-	int i;
-	menu_t *menu;
-	menuNode_t *node;
-
-	Com_Printf("...precaching %i menus\n", numMenus);
-
-	for (i = 0; i < numMenus; i++) {
-		menu = &menus[i];
-		for (node = menu->firstNode; node; node = node->next) {
-			if (!node->invis && node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL] && node->type == MN_PIC) {
-				if (*((char*)node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]) == '*') /* don't load references */
-					continue;
-				re.RegisterPic(node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]);
-			}
-		}
-		cls.loadingPercent += 35.0f / numMenus;
-		SCR_DrawPrecacheScreen(qtrue);
 	}
 }
 
@@ -4018,6 +3991,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 							/* a reference to data is handled like this */
 /* 							Com_Printf("%i %s\n", val->ofs, *token); */
 							node->data[-((int)val->ofs)] = curadata;
+							/* references are parsed as string */
 							if (**token == '*')
 								curadata += Com_ParseValue(curadata, *token, V_STRING, 0, 0);
 							else

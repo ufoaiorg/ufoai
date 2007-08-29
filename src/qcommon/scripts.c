@@ -2342,6 +2342,7 @@ void Com_PrecacheCharacterModels (void)
 	const char *path;
 	float loading = cls.loadingPercent;
 	linkedList_t *list;
+	const float percent = 55.0f;
 
 	/* search the name */
 	for (i = 0, td = csi.teamDef; i < csi.numTeamDefs; i++, td++)
@@ -2360,7 +2361,7 @@ void Com_PrecacheCharacterModels (void)
 				Com_sprintf(model, sizeof(model), "%s/%s", path, list->data);
 				if (!re.RegisterModel(model))
 					Com_Printf("Com_PrecacheCharacterModels: Could not register model %s\n", model);
-#ifdef DEBUG
+#ifdef PARANOID
 				_Mem_CheckPoolIntegrity(vid_modelPool, model, __LINE__);
 #endif
 				list = list->next;
@@ -2368,7 +2369,7 @@ void Com_PrecacheCharacterModels (void)
 				Com_sprintf(model, sizeof(model), "%s/%s", path, list->data);
 				if (!re.RegisterModel(model))
 					Com_Printf("Com_PrecacheCharacterModels: Could not register model %s\n", model);
-#ifdef DEBUG
+#ifdef PARANOID
 				_Mem_CheckPoolIntegrity(vid_modelPool, model, __LINE__);
 #endif
 				/* skip skin */
@@ -2377,11 +2378,11 @@ void Com_PrecacheCharacterModels (void)
 				/* new path */
 				list = list->next;
 
-				cls.loadingPercent += 20.0f / (td->numModels[j] * csi.numTeamDefs * NAME_LAST);
+				cls.loadingPercent += percent / (td->numModels[j] * csi.numTeamDefs * NAME_LAST);
 				SCR_DrawPrecacheScreen(qtrue);
 			}
 		}
-	/* some genders may not have models - ensure that we do a 20 percent step */
-	cls.loadingPercent = loading + 20.0f;
+	/* some genders may not have models - ensure that we do the wanted percent step */
+	cls.loadingPercent = loading + percent;
 }
 #endif

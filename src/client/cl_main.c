@@ -1623,9 +1623,9 @@ static void CL_PrecacheModels (void)
 {
 	int i;
 	float loading;
+	const float percent = 40.0f;
 
-	MN_PrecacheModels(); /* 20% */
-	Com_PrecacheCharacterModels(); /* 20% */
+	Com_PrecacheCharacterModels(); /* 55% */
 
 	loading = cls.loadingPercent;
 
@@ -1633,11 +1633,11 @@ static void CL_PrecacheModels (void)
 		if (*csi.ods[i].model)
 			if (!re.RegisterModel(csi.ods[i].model))
 				Com_Printf("CL_PrecacheModels: Could not register object model: '%s'\n", csi.ods[i].model);
-		cls.loadingPercent += 20.0f / csi.numODs;
+		cls.loadingPercent += percent / csi.numODs;
 		SCR_DrawPrecacheScreen(qtrue);
 	}
-	/* ensure 20% */
-	cls.loadingPercent = loading + 20.0f;
+	/* ensure 40% */
+	cls.loadingPercent = loading + percent;
 	SCR_DrawPrecacheScreen(qtrue);
 }
 
@@ -1671,9 +1671,7 @@ void CL_InitAfter (void)
 
 	/* preload all models for faster access */
 	if (cl_precache->integer) {
-		CL_PrecacheModels(); /* 60% */
-		/* loading percent is 65 now */
-		MN_PrecacheMenus(); /* 35% */
+		CL_PrecacheModels(); /* 95% */
 	}
 
 	cls.loadingPercent = 100.0f;
@@ -2109,7 +2107,7 @@ static void CL_InitLocal (void)
 	mn_sequence = Cvar_Get("mn_sequence", "sequence", 0, "Which is the sequence menu node to render the sequence in");
 	mn_active = Cvar_Get("mn_active", "", 0, NULL);
 	mn_hud = Cvar_Get("mn_hud", "hud", CVAR_ARCHIVE, "Which is the current selected hud");
-	mn_lastsave = Cvar_Get("mn_lastsave", "", CVAR_ARCHIVE, NULL);
+	mn_lastsave = Cvar_Get("mn_lastsave", "", CVAR_ARCHIVE, "Last saved slot - use for the continue-campaign function");
 
 	mn_serverlist = Cvar_Get("mn_serverlist", "0", CVAR_ARCHIVE, "0=show all, 1=hide full - servers on the serverlist");
 
