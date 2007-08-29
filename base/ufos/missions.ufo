@@ -653,7 +653,7 @@ mission harvestercrash
 {
 	location	"_Atacama Desert"
 	type		"_Crashed alien ship"
-	text		"_Secure alien Ship."
+	text		"_Secure alien ship."
 	pos		"70 -27"
 	aliens		7
 	alienteam	"taman ortnok shevaar bloodspider"
