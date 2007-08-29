@@ -850,6 +850,8 @@ void CL_CampaignRunAircraft (int dt)
 						switch (aircraft->status) {
 						case AIR_MISSION:
 							/* Aircraft reach its mission */
+							assert(aircraft->mission);
+							assert(aircraft->mission->def);
 							aircraft->mission->def->active = qtrue;
 							aircraft->status = AIR_DROP;
 							cls.missionaircraft = aircraft;
