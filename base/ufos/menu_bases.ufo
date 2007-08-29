@@ -492,7 +492,7 @@ menu bases
 		mousefx true
 		texl	"0 0"
 		texh	"16 16"
-		click	{ cmd "mn_prev_base" }
+		click	{ cmd "mn_prev_base;" }
 	}
 
 	pic next_base
@@ -503,7 +503,7 @@ menu bases
 		mousefx	true
 		texl	"16 0"
 		texh	"32 16"
-		click	{ cmd "mn_next_base" }
+		click	{ cmd "mn_next_base;" }
 	}
 
 	string base_status

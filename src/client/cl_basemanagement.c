@@ -1019,6 +1019,11 @@ static void B_DrawBuilding (base_t* base, building_t* building)
 	if (building->name)
 		Cvar_Set("mn_building_name", _(building->name));
 
+	if (building->image)
+		Cvar_Set("mn_building_image", building->image);
+	else
+		Cvar_Set("mn_building_image", "base/empty");
+
 	/* link into menu text array */
 	menuText[TEXT_BUILDING_INFO] = buildingText;
 }
