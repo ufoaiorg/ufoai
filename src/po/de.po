@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-08-26 00:31+0200\n"
-"PO-Revision-Date: 2007-08-26 07:55+0100\n"
+"PO-Revision-Date: 2007-08-29 22:26+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -240,12 +240,12 @@ msgstr "Zielcomputer"
 #: ../base/ufos/aircraftmanagement.ufo:573
 #: ../base/ufos/research.ufo:3460
 msgid "Base defence: TR-20 Rocket Pod"
-msgstr "Basisverteidigung: TR-20 Raketenwerfer"
+msgstr "Basis: TR-20 Raketenwerfer"
 
 #: ../base/ufos/aircraftmanagement.ufo:585
 #: ../base/ufos/research.ufo:3478
 msgid "Base defence: TR-20 Rocket"
-msgstr "Basisverteidigung: TR-20 Rakete"
+msgstr "Basis: TR-20 Rakete"
 
 #: ../base/ufos/armor.ufo:9
 msgid "normal"
