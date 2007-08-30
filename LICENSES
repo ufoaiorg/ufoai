@@ -295,6 +295,20 @@ base/maps/shelterd/shelter_room_n_b.map | GNU General Public License 2.0 | Bas F
 base/maps/shelterd/shelter_room_w_a.map | GNU General Public License 2.0 | Bas Fournier
 base/maps/shelterd/shelter_room_w_b.map | GNU General Public License 2.0 | Bas Fournier
 base/maps/shelterd/shelter_solid.map | GNU General Public License 2.0 | Bas Fournier
+base/maps/sheltern/shelter_corridor_ne.map | GNU General Public License 2.0 | Bas Fournier
+base/maps/sheltern/shelter_corridor_nw.map | GNU General Public License 2.0 | Bas Fournier
+base/maps/sheltern/shelter_entrance.map | GNU General Public License 2.0 | Bas Fournier
+base/maps/sheltern/shelter_hallnorth_a.map | GNU General Public License 2.0 | Bas Fournier
+base/maps/sheltern/shelter_hallnorth_b.map | GNU General Public License 2.0 | Bas Fournier
+base/maps/sheltern/shelter_hallsouth_a.map | GNU General Public License 2.0 | Bas Fournier
+base/maps/sheltern/shelter_hallsouth_b.map | GNU General Public License 2.0 | Bas Fournier
+base/maps/sheltern/shelter_room_e_a.map | GNU General Public License 2.0 | Bas Fournier
+base/maps/sheltern/shelter_room_e_b.map | GNU General Public License 2.0 | Bas Fournier
+base/maps/sheltern/shelter_room_n_a.map | GNU General Public License 2.0 | Bas Fournier
+base/maps/sheltern/shelter_room_n_b.map | GNU General Public License 2.0 | Bas Fournier
+base/maps/sheltern/shelter_room_w_a.map | GNU General Public License 2.0 | Bas Fournier
+base/maps/sheltern/shelter_room_w_b.map | GNU General Public License 2.0 | Bas Fournier
+base/maps/sheltern/shelter_solid.map | GNU General Public License 2.0 | Bas Fournier
 base/maps/spedition06d.map | GPL version 2 | Martin Gerhardy
 base/maps/spedition06n.map | GPL version 2 | Martin Gerhardy
 base/maps/stadium06d.map | GPL version 2 | 'SparX' Beyeler
