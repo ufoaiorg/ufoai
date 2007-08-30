@@ -11,7 +11,7 @@ mapdef or_tabelbala
 {
 	map				"+oriental"
 	music			van_mission
-	multiplayer		true
+	multiplayer		false
 }
 
 mapdef africa_excavation
@@ -79,7 +79,7 @@ mapdef or_asyut
 {
 	map				"+oriental"
 	music			PsymongO6
-	multiplayer		true
+	multiplayer		false
 }
 
 mapdef bunker

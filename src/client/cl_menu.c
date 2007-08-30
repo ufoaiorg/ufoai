@@ -4586,7 +4586,7 @@ static void MN_MapInfo (int step)
 		int i = 0;
 		while (!csi.mds[ccs.multiplayerMapDefinitionIndex].multiplayer) {
 			i++;
-			ccs.multiplayerMapDefinitionIndex += step;
+			ccs.multiplayerMapDefinitionIndex += (step ? step : 1);
 			ccs.multiplayerMapDefinitionIndex %= csi.numMDs;
 			if (i >= csi.numMDs)
 				Sys_Error("MN_MapInfo: There is no multiplayer map in any mapdef\n");
