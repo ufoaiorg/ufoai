@@ -934,7 +934,6 @@ void CL_ParticleSpawnFromSizeBuf (struct dbuffer *msg)
 
 	levelflags = NET_ReadShort(msg);
 	NET_ReadPos(msg, origin);
-
 	length = NET_ReadShort(msg); /* for stringlength */
 	particle = NET_ReadString(msg);
 	if (length != (int)strlen(particle))
@@ -945,6 +944,8 @@ void CL_ParticleSpawnFromSizeBuf (struct dbuffer *msg)
 		if (!le)
 			return;
 		le->inuse = qtrue;
+		VectorCopy(origin, le->origin);
+		VecToPos(le->origin, le->pos);
 		le->ptl = CL_ParticleSpawn(particle, levelflags, origin, NULL, NULL);
 		le->autohide = qtrue;
 		le->think = LET_ProjectileAutoHide;
