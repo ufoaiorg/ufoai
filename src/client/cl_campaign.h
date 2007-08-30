@@ -216,6 +216,7 @@ typedef struct campaign_s {
 	int credits;				/**< start with x credits */
 	int num;
 	signed int difficulty;		/**< difficulty level -4 - 4 */
+	int civiliansKilledUntilLost;	/**< how many civilians may be killed until you've lost the game */
 	qboolean visible;			/**< visible in campaign menu? */
 	date_t date;				/**< starting date for this campaign */
 	qboolean finished;
@@ -409,7 +410,7 @@ void CL_GameInit(qboolean load);
 void AIR_NewAircraft(base_t * base, const char *name);
 void CL_ParseResearchedCampaignItems(const char *name, const char **text);
 void CL_ParseResearchableCampaignStates(const char *name, const char **text, qboolean researchable);
-void CP_ExecuteMissionTrigger(mission_t * m, int won);
+void CP_ExecuteMissionTrigger(mission_t * m, qboolean won);
 actMis_t* CL_CampaignAddGroundMission(mission_t* mis);
 
 campaign_t* CL_GetCampaign(const char* name);

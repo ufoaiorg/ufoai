@@ -50,7 +50,7 @@ stage intro
 		frame		"0 6 0"
 		expire		"0 5 0"
 		missions	"industrial rivertown farm frozen_alienlandingindustrial"
-		quota		4	
+		quota		4
 		ufos		1
 	}
 	// from this place on, due to not enough missions in RC5,
@@ -159,6 +159,7 @@ campaign veryhard
 	workers		1
 	medics		0
 	difficulty	4
+	killedcivilians	20
 	researched rslist_human
 	equipment	campaign_player
 	market		campaign_market
@@ -180,6 +181,7 @@ campaign hard
 	workers		2
 	medics		1
 	difficulty	2
+	killedcivilians	30
 	character_data {
 		TEAM_PHALANX EMPL_SOLDIER skill 65 80
 		TEAM_PHALANX EMPL_SOLDIER ability 65 80
@@ -210,6 +212,7 @@ campaign main
 	workers		14
 	medics		2
 	difficulty	0
+	killedcivilians	40
 	character_data {
 		TEAM_PHALANX EMPL_SOLDIER skill 75 100
 		TEAM_PHALANX EMPL_SOLDIER ability 15 80
@@ -259,6 +262,7 @@ campaign easy
 	workers		10
 	medics		10
 	difficulty	-2
+	killedcivilians	50
 	character_data {
 		TEAM_PHALANX EMPL_SOLDIER skill 75 100
 		TEAM_PHALANX EMPL_SOLDIER ability 55 100
@@ -289,6 +293,7 @@ campaign veryeasy
 	workers		20
 	medics		20
 	difficulty	-4
+	killedcivilians	60
 	character_data {
 		TEAM_PHALANX EMPL_SOLDIER skill 85 100
 		TEAM_PHALANX EMPL_SOLDIER ability 75 100
@@ -324,6 +329,7 @@ campaign veryeasy
 	firststage	intro
 }
 
+/*
 campaign aliencampaign
 {
 	name		"_Play the aliens"
@@ -347,7 +353,7 @@ campaign aliencampaign
 
 campaign test
 {
-	name		"_Testing and Tweaking Campaign --- Please Ignore"
+	name		"Testing and Tweaking Campaign --- Please Ignore"
 	text		"_txt_standard_campaign"
 	team		human
 	soldiers	11
@@ -355,6 +361,7 @@ campaign test
 	workers		11
 	medics		11
 	difficulty	0
+	killedcivilians	20
 	researched	rslist_human
 	equipment	testing_and_tweaking
 	market		testing_and_tweaking
@@ -365,3 +372,4 @@ campaign test
 	date		"2084 0 7"
 	firststage	ufos_are_coming
 }
+*/

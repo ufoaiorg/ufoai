@@ -893,6 +893,38 @@ static void CL_BackupMonthlyData (void)
 }
 
 /**
+ * @brief Function to handle the campaign
+ */
+static void CP_EndCampaign (qboolean won)
+{
+	CL_GameExit();
+	CL_Drop();
+	if (won) {
+		MN_PushMenu("endgame");
+		CIN_PlayCinematic("videos/end.roq");
+	} else
+		MN_PushMenu("lostcampaign");
+}
+
+/**
+ * @brief Checks whether the player has lost the campaign
+ * @note
+ */
+static void CP_CheckLostCondition (qboolean lost, mission_t* mission, int civiliansKilled)
+{
+	assert(curCampaign);
+
+	/* only if the definition tells us to keep an eye on this lost criteria */
+	if (curCampaign->civiliansKilledUntilLost) {
+		curCampaign->civiliansKilledUntilLost -= civiliansKilled;
+		if (curCampaign->civiliansKilledUntilLost <= 0) {
+			/* lost the game */
+			CP_EndCampaign(qfalse);
+		}
+	}
+}
+
+/**
  * @brief Updates each nation's happiness and mission win/loss stats.
  * Should be called at the completion or expiration of every mission.
  * The nation where the mission took place will be most affected,
@@ -1030,12 +1062,12 @@ static void CL_CampaignCheckEvents (void)
 				/* Base attack mission never attended to, so
 				 * invaders had plenty of time to ransack it */
 				base = (base_t*)mis->def->data;
-				CL_HandleNationData(1, 0, mis->def->civilians, mis->def->aliens, 0, mis);
+				CL_HandleNationData(qtrue, 0, mis->def->civilians, mis->def->aliens, 0, mis);
 				CL_BaseRansacked(base);
 				break;
 			case MIS_TERRORATTACK:
 				/* Normal ground mission. */
-				CL_HandleNationData(1, 0, mis->def->civilians, mis->def->aliens, 0, mis);
+				CL_HandleNationData(qtrue, 0, mis->def->civilians, mis->def->aliens, 0, mis);
 				Q_strncpyz(messageBuffer, va(ngettext("The mission expired and %i civilian died.", "The mission expired and %i civilians died.", mis->def->civilians), mis->def->civilians), MAX_MESSAGE_TEXT);
 				MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 				break;
@@ -1043,6 +1075,8 @@ static void CL_CampaignCheckEvents (void)
 				Sys_Error("Unknown missionType for '%s'\n", mis->def->name);
 				break;
 			}
+
+			CP_CheckLostCondition(qtrue, mis->def, mis->def->civilians);
 
 			/* don't remove missions that were not played but were spawned
 			 * (e.g. they expired) and have the storyRelated flag set */
@@ -2654,7 +2688,7 @@ static void CP_MissionTriggerFunctions (qboolean add)
  * Can execute console commands (triggers) on win and lose
  * This can be used for story dependent missions
  */
-void CP_ExecuteMissionTrigger (mission_t * m, int won)
+void CP_ExecuteMissionTrigger (mission_t * m, qboolean won)
 {
 	/* we add them only here - and remove them afterwards to prevent cheating */
 	CP_MissionTriggerFunctions(qtrue);
@@ -2705,9 +2739,10 @@ static void CL_GameAutoCheck_f (void)
  */
 void CL_GameAutoGo (actMis_t *mission)
 {
-	int won;
+	qboolean won;
 	aircraft_t *aircraft;
 	mission_t *mis;
+	int civiliansKilled = 0; /* @todo: fill this for the case you won the game */
 
 	assert(mission);
 	mis = mission->def;
@@ -2733,22 +2768,24 @@ void CL_GameAutoGo (actMis_t *mission)
 			return;
 		}
 		/* FIXME: This needs work */
-		won = mis->aliens * difficulty->integer > aircraft->teamSize ? 0 : 1;
+		won = mis->aliens * difficulty->integer > aircraft->teamSize ? qfalse : qtrue;
 		Com_DPrintf(DEBUG_CLIENT, "Aliens: %i (count as %i) - Soldiers: %i\n", mis->aliens, mis->aliens * difficulty->integer, aircraft->teamSize);
 	} else {
 		baseCurrent = (base_t*)mis->data;
 		assert(baseCurrent);
 		/* FIXME: This needs work */
-		won = 1;
+		won = qtrue;
 	}
 
 	MN_PopMenu(qfalse);
 
 	/* update nation opinions */
 	if (won) {
-		CL_HandleNationData(0, mis->civilians, 0, 0, mis->aliens, selMis);
+		CL_HandleNationData(!won, mis->civilians, 0, 0, mis->aliens, selMis);
+		CP_CheckLostCondition(!won, mis, civiliansKilled);
 	} else {
-		CL_HandleNationData(1, 0, mis->civilians, mis->aliens, 0, selMis);
+		CL_HandleNationData(!won, 0, mis->civilians, mis->aliens, 0, selMis);
+		CP_CheckLostCondition(!won, mis, mis->civilians);
 	}
 
 	if (mis->missionType != MIS_BASEATTACK) {
@@ -3003,7 +3040,7 @@ static void CL_GameResults_f (void)
 	} else {
 		assert(gd.interceptAircraft >= 0);
 		baseCurrent = AIR_AircraftGetFromIdx(gd.interceptAircraft)->homebase;
-		baseCurrent->aircraftCurrent =  AIR_AircraftGetFromIdx(gd.interceptAircraft)->idxInBase;
+		baseCurrent->aircraftCurrent = AIR_AircraftGetFromIdx(gd.interceptAircraft)->idxInBase;
 	}
 
 	/* add the looted goods to base storage and market */
@@ -3011,8 +3048,11 @@ static void CL_GameResults_f (void)
 
 	civilians_killed = ccs.civiliansKilled;
 	aliens_killed = ccs.aliensKilled;
-	/* fprintf(stderr, "Won: %d   Civilians: %d/%d   Aliens: %d/%d\n", won, selMis->def->civilians - civilians_killed, civilians_killed, selMis->def->aliens - aliens_killed, aliens_killed); */
+	Com_DPrintf(DEBUG_CLIENT, "Won: %d   Civilians: %d/%d   Aliens: %d/%d\n",
+		won, selMis->def->civilians - civilians_killed, civilians_killed,
+		selMis->def->aliens - aliens_killed, aliens_killed);
 	CL_HandleNationData(!won, selMis->def->civilians - civilians_killed, civilians_killed, selMis->def->aliens - aliens_killed, aliens_killed, selMis);
+	CP_CheckLostCondition(!won, selMis->def, civilians_killed);
 
 	/* update the character stats */
 	CL_ParseCharacterData(NULL, qtrue);
@@ -3707,6 +3747,7 @@ static const value_t campaign_vals[] = {
 	{"soldiers", V_INT, offsetof(campaign_t, soldiers), MEMBER_SIZEOF(campaign_t, soldiers)},
 	{"workers", V_INT, offsetof(campaign_t, workers), MEMBER_SIZEOF(campaign_t, workers)},
 	{"medics", V_INT, offsetof(campaign_t, medics), MEMBER_SIZEOF(campaign_t, medics)},
+	{"killedcivilians", V_INT, offsetof(campaign_t, civiliansKilledUntilLost), MEMBER_SIZEOF(campaign_t, civiliansKilledUntilLost)},
 	{"scientists", V_INT, offsetof(campaign_t, scientists), MEMBER_SIZEOF(campaign_t, scientists)},
 	{"ugvs", V_INT, offsetof(campaign_t, ugvs), MEMBER_SIZEOF(campaign_t, ugvs)},
 	{"equipment", V_STRING, offsetof(campaign_t, equipment), 0},
