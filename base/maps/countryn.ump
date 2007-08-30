@@ -39,7 +39,7 @@ base countryn/c_
 //--------------------------------------------------
 
 // Dropship
-tile +drop
+tile +drop_firebird
 {
 5 4
 
@@ -50,8 +50,8 @@ acefgrst  +a       +a       +a       adefgopq
 }
 //--
 
-// Big UFO
-tile +ufobig
+// UFO - Harvester
+tile +ufo_harvester
 {
 8 6
 
@@ -64,8 +64,8 @@ acefgrst  +a       +a       +a       +a       +a       +a       adefgopq
 }
 //--
 
-// Small UFO
-tile +ufofighter
+// UFO - Fighter
+tile +ufo_fighter
 {
 5 4
 
@@ -676,7 +676,7 @@ size "7 7"
 +re02_2 "0 1"
 +re03_2 "0 1"
 +re04_2 "0 1"
-*rm_dropship +drop "1 1"
+*rm_dropship +drop_firebird "1 1"
 }
 
 assembly large
@@ -717,7 +717,7 @@ size "7 7"
 +re02_2 "0 1"
 +re03_2 "0 1"
 +re04_2 "0 1"
-*rm_dropship +drop "1 1"
+*rm_dropship +drop_firebird "1 1"
 +s01 "0 1"
 +s02 "1 1"
 +s03 "0 1"
@@ -745,7 +745,7 @@ size "10 10"
 +d08 "0 8"
 +d09 "0 8"
 +d10 "0 8"
-*rm_dropship +drop "1 1"
-+ufofighter "1 1"
-+ufobig "1 1"
+*rm_dropship +drop_firebird "1 1"
++ufo_fighter "1 1"
++ufo_harvester "1 1"
 }

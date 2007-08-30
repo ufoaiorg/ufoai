@@ -51,7 +51,7 @@ base/maps/countryd/c_d07.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryd/c_d08.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryd/c_d09.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryd/c_d10.map | GNU General Public License 2.0 | Martin Gerhardy
-base/maps/countryd/c_drop.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_drop_firebird.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryd/c_h01.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryd/c_h02.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryd/c_h03.map | GNU General Public License 2.0 | Martin Gerhardy
@@ -87,8 +87,8 @@ base/maps/countryd/c_s05_2.map | GNU General Public License 2.0 | Martin Gerhard
 base/maps/countryd/c_s06.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryd/c_s06_2.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryd/c_s07.map | GNU General Public License 2.0 | Martin Gerhardy
-base/maps/countryd/c_ufobig.map | GNU General Public License 2.0 | Martin Gerhardy
-base/maps/countryd/c_ufofighter.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_ufo_fighter.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_ufo_harvester.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryd/c_v01.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryd/c_v01_2.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryn/c_c01.map | GNU General Public License 2.0 | Martin Gerhardy
@@ -103,7 +103,7 @@ base/maps/countryn/c_d07.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryn/c_d08.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryn/c_d09.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryn/c_d10.map | GNU General Public License 2.0 | Martin Gerhardy
-base/maps/countryn/c_drop.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryn/c_drop_firebird.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryn/c_h01.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryn/c_h02.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryn/c_h03.map | GNU General Public License 2.0 | Martin Gerhardy
@@ -139,8 +139,8 @@ base/maps/countryn/c_s05_2.map | GNU General Public License 2.0 | Martin Gerhard
 base/maps/countryn/c_s06.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryn/c_s06_2.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryn/c_s07.map | GNU General Public License 2.0 | Martin Gerhardy
-base/maps/countryn/c_ufobig.map | GNU General Public License 2.0 | Martin Gerhardy
-base/maps/countryn/c_ufofighter.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryn/c_ufo_fighter.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryn/c_ufo_harvester.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryn/c_v01.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryn/c_v01_2.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/dam01d.map | GPL version 2 | Martin Gerhardy
