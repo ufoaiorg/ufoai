@@ -893,7 +893,7 @@ static void CL_BackupMonthlyData (void)
 }
 
 /**
- * @brief Function to handle the campaign
+ * @brief Function to handle the campaign end
  */
 static void CP_EndCampaign (qboolean won)
 {
@@ -920,7 +920,7 @@ static void CP_CheckLostCondition (qboolean lost, mission_t* mission, int civili
 		curCampaign->civiliansKilledUntilLost -= civiliansKilled;
 		if (curCampaign->civiliansKilledUntilLost <= 0) {
 			/* lost the game */
-			/*menuText[TEXT_STANDARD] = _("TODO: Fill lost reason text here"); @todo */
+			menuText[TEXT_STANDARD] = _("Too many civilians died under your command.");
 			CP_EndCampaign(qfalse);
 		}
 	}

@@ -854,12 +854,32 @@ menu lostgame
 		color	"0 0.8 0 1"
 	}
 
-/*
 	// reason why you've lost
-	text {
-
+	text reason {
+		color	"0 0.8 0 0.9"
+		align	uc
+		pos		"512 700"
+		font	"f_menu"
 	}
-*/
+
+	string lostgame_click
+	{
+		pos	"1014 750"
+		string	"_Click to continue"
+		font "f_verysmall"
+		align	ur
+		color	"0 0.8 0 0.9"
+	}
+
+	// ==================
+	// leave
+	// ==================
+
+	zone leave
+	{
+		size	"1024 768"
+		click	{ cmd "mn_pop;" }
+	}
 }
 
 // ==================
