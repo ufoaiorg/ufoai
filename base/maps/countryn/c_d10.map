@@ -2,10 +2,10 @@
 // entity 0
 {
 "classname" "worldspawn"
-"angles" "30 30"
-"light" "120"
-"ambient" "0.3 0.3 0.32"
-"_color" "1 0.8 0.8"
+"light" "15"
+"_color" "0.8 0.8 1"
+"ambient" "0 0 0"
+"angles" "15 60"
 // brush 0
 {
 ( 34 192 4 ) ( 30 192 4 ) ( 30 172 4 ) tex_material/s_wood003 229.3329162598 26.6669921875 -0 0.375 0.375 2 0 0
