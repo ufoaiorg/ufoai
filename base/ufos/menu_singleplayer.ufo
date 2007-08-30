@@ -809,6 +809,58 @@ menu save
 	}
 }
 
+// ==================
+// LOST GAME MENU
+// ==================
+
+menu lostgame
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis true
+	}
+
+	pic back_ul
+	{
+		image	menu/endgame_ul
+		pos		"0 0"
+	}
+	pic back_ur
+	{
+		image	menu/endgame_ur
+		pos		"512 0"
+	}
+	pic back_ll
+	{
+		image	menu/endgame_ll
+		pos		"0 512"
+	}
+	pic back_lr
+	{
+		image	menu/endgame_lr
+		pos		"512 512"
+	}
+
+	string lostgame
+	{
+		pos	"512 20"
+		string	"_You've lost the game"
+		font "f_menubig"
+		align	uc
+		color	"0 0.8 0 1"
+	}
+
+/*
+	// reason why you've lost
+	text {
+
+	}
+*/
+}
 
 // ==================
 // END GAME MENU
@@ -901,6 +953,10 @@ menu endgame
 		font "f_verysmall"
 		align	ur
 		color	"0 0.8 0 0.9"
+	}
+
+	func init {
+		cmd "cinematic end;"
 	}
 
 	// ==================

@@ -302,6 +302,7 @@ extern cvar_t *cl_initial_equipment;
 extern cvar_t *cl_start_buildings;
 extern cvar_t *mn_serverlist;
 extern cvar_t *mn_active;
+extern cvar_t *mn_afterdrop;
 extern cvar_t *mn_main;
 extern cvar_t *mn_sequence;
 extern cvar_t *mn_hud;

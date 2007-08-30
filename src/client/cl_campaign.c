@@ -898,12 +898,13 @@ static void CL_BackupMonthlyData (void)
 static void CP_EndCampaign (qboolean won)
 {
 	CL_GameExit();
-	CL_Drop();
-	if (won) {
-		MN_PushMenu("endgame");
-		CIN_PlayCinematic("videos/end.roq");
-	} else
-		MN_PushMenu("lostcampaign");
+	assert(!curCampaign);
+
+	if (won)
+		Cvar_Set("mn_afterdrop", "endgame");
+	else
+		Cvar_Set("mn_afterdrop", "lostgame");
+	Com_Drop();
 }
 
 /**
@@ -919,6 +920,7 @@ static void CP_CheckLostCondition (qboolean lost, mission_t* mission, int civili
 		curCampaign->civiliansKilledUntilLost -= civiliansKilled;
 		if (curCampaign->civiliansKilledUntilLost <= 0) {
 			/* lost the game */
+			/*menuText[TEXT_STANDARD] = _("TODO: Fill lost reason text here"); @todo */
 			CP_EndCampaign(qfalse);
 		}
 	}

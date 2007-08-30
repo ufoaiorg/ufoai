@@ -68,6 +68,7 @@ cvar_t *mn_serverlist;
 cvar_t *mn_main;
 cvar_t *mn_sequence;
 cvar_t *mn_active;
+cvar_t *mn_afterdrop;
 cvar_t *mn_hud;
 cvar_t *mn_lastsave;
 
@@ -298,6 +299,12 @@ void CL_Drop (void)
 	} else {
 		Cvar_Set("mn_main", "main");
 		Cvar_Set("mn_active", "");
+		MN_PushMenu("main");
+	}
+
+	if (*mn_afterdrop->string) {
+		MN_PushMenu(mn_afterdrop->string);
+		Cvar_Set("mn_afterdrop", "");
 	}
 
 	if (cls.state == ca_uninitialized || cls.state == ca_disconnected)
@@ -2109,9 +2116,10 @@ static void CL_InitLocal (void)
 
 	Cvar_Set("music", "");
 
-	mn_main = Cvar_Get("mn_main", "main", 0, "Which is the main menu id to return to");
+	mn_main = Cvar_Get("mn_main", "main", 0, "Which is the main menu id to return to - also see mn_active");
 	mn_sequence = Cvar_Get("mn_sequence", "sequence", 0, "Which is the sequence menu node to render the sequence in");
-	mn_active = Cvar_Get("mn_active", "", 0, NULL);
+	mn_active = Cvar_Get("mn_active", "", 0, "The active menu can will return to when hitting esc - also see mn_main");
+	mn_afterdrop = Cvar_Get("mn_afterdrop", "", 0, "The menu that should be pushed after the drop function was called");
 	mn_hud = Cvar_Get("mn_hud", "hud", CVAR_ARCHIVE, "Which is the current selected hud");
 	mn_lastsave = Cvar_Get("mn_lastsave", "", CVAR_ARCHIVE, "Last saved slot - use for the continue-campaign function");
 
