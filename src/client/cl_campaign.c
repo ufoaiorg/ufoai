@@ -1936,7 +1936,7 @@ static void CL_NationStatsUpdate_f(void)
 /**
  * @brief Select nation and display all relevant information for it.
  */
-static void CL_NationSelect_f(void)
+static void CL_NationSelect_f (void)
 {
 	int nat;
 
@@ -4341,13 +4341,17 @@ static void CP_CampaignsClick_f (void)
 	racetype = campaigns[num].team;
 	(!Q_strncmp(racetype, "human", 5)) ? (racetype = _("Human")) : (racetype = _("Aliens"));
 
-	Com_sprintf(campaignDesc, sizeof(campaignDesc), _("Race: %s\nRecruits: %i %s, %i %s, %i %s, %i %s\nCredits: %ic\nDifficulty: %s\n%s\n"),
+	Com_sprintf(campaignDesc, sizeof(campaignDesc), _("Race: %s\nRecruits: %i %s, %i %s, %i %s, %i %s\n"
+		"Credits: %ic\nDifficulty: %s\n"
+		"Civilians die amount: %i\n"
+		"%s\n"),
 			racetype,
 			campaigns[num].soldiers, ngettext("soldier", "soldiers", campaigns[num].soldiers),
 			campaigns[num].scientists, ngettext("scientist", "scientists", campaigns[num].scientists),
 			campaigns[num].workers, ngettext("worker", "workers", campaigns[num].workers),
 			campaigns[num].medics, ngettext("medic", "medics", campaigns[num].medics),
-			campaigns[num].credits, CL_ToDifficultyName(campaigns[num].difficulty), _(campaigns[num].text));
+			campaigns[num].credits, CL_ToDifficultyName(campaigns[num].difficulty),
+			campaigns[num].civiliansKilledUntilLost, _(campaigns[num].text));
 	menuText[TEXT_STANDARD] = campaignDesc;
 }
 

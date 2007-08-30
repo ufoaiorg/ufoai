@@ -61,7 +61,7 @@ menu campaigns
 	pic c_button_start
 	{
 		pos	"80 320"
-		click	{ cmd "game_new" }
+		click	{ cmd "game_new;" }
 		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"
@@ -81,7 +81,7 @@ menu campaigns
 	pic c_button_exit
 	{
 		pos	"80 450"
-		click	{ cmd "mn_pop esc" }
+		click	{ cmd "mn_pop esc;" }
 		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"
