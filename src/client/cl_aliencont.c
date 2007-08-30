@@ -55,7 +55,7 @@ void AL_FillInContainment (base_t *base)
 		if (!csi.teamDef[i].alien)
 			continue;
 		containment[i].idx = i;
-		Q_strncpyz(containment[i].alientype, AL_AlienTypeToName(i), MAX_VAR);
+		Q_strncpyz(containment[i].alientype, AL_AlienTypeToName(i), sizeof(containment[i].alientype));
 		containment[i].amount_alive = 0;
 		containment[i].amount_dead = 0;
 		/* for sanity checking */
@@ -81,8 +81,10 @@ void AL_FillInContainment (base_t *base)
  */
 const char *AL_AlienTypeToName (int teamDefIdx)
 {
-	if (teamDefIdx < 0 || teamDefIdx >= csi.numTeamDefs)
+	if (teamDefIdx < 0 || teamDefIdx >= csi.numTeamDefs) {
+		Com_Printf("AL_AlienTypeToName: invalid team index %i\n", teamDefIdx);
 		return NULL;
+	}
 	return csi.teamDef[teamDefIdx].name;
 }
 
@@ -192,6 +194,8 @@ void AL_AddAliens (aircraft_t *aircraft)
 		for (j = 0; j < csi.numTeamDefs; j++) {
 			if (!csi.teamDef[j].alien)
 				continue;
+			assert(*tobase->alienscont[j].alientype);
+			assert(*cargo[i].alientype);
 			if (Q_strncmp(tobase->alienscont[j].alientype, cargo[i].alientype, MAX_VAR) == 0) {
 				tobase->alienscont[j].amount_dead += cargo[i].amount_dead;
 				/* Add breathing apparatuses as well and update storage capacity. */
@@ -336,6 +340,7 @@ void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_
 		for (j = 0; j < csi.numTeamDefs; j++) {
 			if (!csi.teamDef[j].alien)
 				continue;
+			assert(*containment[j].alientype);
 			if (Q_strncmp(containment[j].alientype, name, MAX_VAR) == 0) {
 				if (containment[j].amount_alive == 0)
 					return;
@@ -494,7 +499,7 @@ static int AL_CountForMenu (int alienidx, qboolean alive)
 		for (j = 0; j < csi.numTeamDefs; j++) {
 			if (!csi.teamDef[j].alien)
 				continue;
-			if ((base->alienscont[j].alientype) &&
+			if ((*base->alienscont[j].alientype) &&
 				(Q_strncmp(base->alienscont[j].alientype, AL_AlienTypeToName(alienidx), MAX_VAR)) == 0) {
 				if (alive == qfalse)
 					amount += base->alienscont[j].amount_dead;
@@ -838,7 +843,7 @@ static void AC_Init (void)
 		for (i = 0; i < csi.numTeamDefs; i++) {
 			if (!csi.teamDef[i].alien)
 				continue;
-			if (containment[i].alientype) {
+			if (*containment[i].alientype) {
 				tech = RS_GetTechByIDX(containment[i].techIdx);
 				if (tech == NULL) {
 					Com_Printf("Could not find tech '%i'\n", containment[i].techIdx);

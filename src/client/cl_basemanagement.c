@@ -3023,6 +3023,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			case AIR_RETURNING:
 				/* aliencargo */
 				for (l = 0; l < aircraft->alientypes; l++) {
+					assert(*aircraft->aliencargo[l].alientype);
 					MSG_WriteString(sb, aircraft->aliencargo[l].alientype);
 					MSG_WriteShort(sb, aircraft->aliencargo[l].amount_alive);
 					MSG_WriteShort(sb, aircraft->aliencargo[l].amount_dead);
@@ -3056,6 +3057,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 
 		/* Alien Containment. */
 		for (k = 0; k < presaveArray[PRE_NUMALI]; k++) {
+			assert(*aircraft->aliencargo[l].alientype);
 			MSG_WriteString(sb, b->alienscont[k].alientype);
 			MSG_WriteShort(sb, b->alienscont[k].amount_alive);
 			MSG_WriteShort(sb, b->alienscont[k].amount_dead);
@@ -3324,11 +3326,11 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			for (l = 0; l < csi.numTeamDefs; l++) {
 				if (!csi.teamDef[l].alien)
 					continue;
-				if ((Q_strncmp(s, csi.teamDef[l].name, MAX_VAR)) == 0)
+				if (!Q_strncmp(s, csi.teamDef[l].name, MAX_VAR))
 					break;
 			}
 			if (l == csi.numTeamDefs) {
-				Com_Printf("B_Load: Could not find teamDesc '%s' - skipping the aliencont\n", s);
+				Com_Printf("B_Load: Could not find teamDesc '%s' - skipping the aliencont (%i)\n", s, csi.numTeamDefs);
 				MSG_ReadShort(sb);
 				MSG_ReadShort(sb);
 			} else {

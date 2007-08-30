@@ -398,7 +398,7 @@ static void TR_TransferSelect_f (void)
 	case 2:		/**< aliens */
 		if (transferBase->hasAlienCont) {
 			for (i = 0; i < csi.numTeamDefs; i++) {
-				if (baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_dead > 0) {
+				if (*baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_dead > 0) {
 					if (trAliensTmp[i][1] > 0)
 						Com_sprintf(str, sizeof(str), _("Corpse of %s (%i for transfer, %i left)\n"),
 						_(AL_AlienTypeToName(i)), trAliensTmp[i][1],
@@ -409,7 +409,7 @@ static void TR_TransferSelect_f (void)
 					Q_strcat(transferList, str, sizeof(transferList));
 					cnt++;
 				}
-				if (baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_alive > 0) {
+				if (*baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_alive > 0) {
 					if (trAliensTmp[i][0] > 0)
 						Com_sprintf(str, sizeof(str), _("Alive %s (%i for transfer, %i left)\n"),
 						_(AL_AlienTypeToName(i)), trAliensTmp[i][0],
@@ -833,7 +833,7 @@ static void TR_TransferListSelect_f (void)
 		if (!transferBase->hasAlienCont)
 			return;
 		for (i = 0; i < csi.numTeamDefs; i++) {
-			if (baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_dead > 0) {
+			if (*baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_dead > 0) {
 				if (cnt == num) {
 					trAliensTmp[i][1]++;
 					/* Remove the corpse from Alien Containment. */
@@ -842,7 +842,7 @@ static void TR_TransferListSelect_f (void)
 				}
 				cnt++;
 			}
-			if (baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_alive > 0) {
+			if (*baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_alive > 0) {
 				if (cnt == num) {
 					if (TR_CheckAlien(i, baseCurrent, transferBase)) {
 						trAliensTmp[i][0]++;
