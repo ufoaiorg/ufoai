@@ -165,10 +165,6 @@ static void SV_Map_f (void)
 	if (!SV_CheckMap(map, assembly))
 		return;
 
-#ifdef DEDICATED_ONLY
-
-#endif
-
 	/* start up the next map */
 	Com_SetServerState(ss_dead);
 	SV_Map(map, assembly);

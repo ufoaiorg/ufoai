@@ -857,7 +857,8 @@ static void SV_SpawnServer (const char *server, const char *param)
 	unsigned checksum = 0;
 	const char *map, *pos, *buf;
 
-	Com_Printf("------- Server Initialization -------\n");
+	assert(server);
+	assert(*server);
 
 	Com_DPrintf(DEBUG_SERVER, "SpawnServer: %s\n", server);
 
@@ -906,7 +907,7 @@ static void SV_SpawnServer (const char *server, const char *param)
 
 	CM_LoadMap(map, pos, &checksum);
 
-	Com_Printf("checksum for this map: %u\n", checksum);
+	Com_Printf("checksum for the map '%s': %u\n", server, checksum);
 	Com_sprintf(sv.configstrings[CS_MAPCHECKSUM], sizeof(sv.configstrings[CS_MAPCHECKSUM]), "%i", checksum);
 
 	checksum = 0;
@@ -1003,11 +1004,11 @@ void SV_Map (const char *levelstring, const char *assembly)
 {
 	char level[MAX_QPATH];
 
+	/* we have to copy this, because levelstring might be a pointer
+	 * to the commandbuffer - and thus might be wiped at every time */
 	Q_strncpyz(level, levelstring, sizeof(level));
 
-	/* skip the end-of-unit flag if necessary */
-	if (level[0] == '*')
-		Q_strncpyz(level, level + 1, sizeof(level));
+	assert(*level);
 
 	/* the game is just starting */
 	if (Com_ServerState() == ss_dead)
@@ -1020,6 +1021,6 @@ void SV_Map (const char *levelstring, const char *assembly)
 
 	CL_Drop();
 	SCR_BeginLoadingPlaque();
-	SV_SpawnServer(levelstring, assembly);
+	SV_SpawnServer(level, assembly);
 	Cbuf_CopyToDefer();
 }
