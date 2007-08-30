@@ -39,58 +39,58 @@ base/maps/const05d.map | GPL version 2 | 'SparX' Beyeler
 base/maps/const05n.map | GPL version 2 | 'SparX' Beyeler
 base/maps/convoy01d.map | GNU General Public License 2.0 | Martin Gerhardy   Maciej Wierzbicki
 base/maps/convoy01n.map | GNU General Public License 2.0 | Martin Gerhardy   Maciej Wierzbicki
-base/maps/countryd/c_c01.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_c02.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_d01.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_d02.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_d03.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_d04.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_d05.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_d06.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_d07.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_d08.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_d09.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_d10.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_drop.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_h01.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_h02.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_h03.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_h04.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_r01.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_r01_2.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_r02.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_r02_2.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_r03.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_r03_2.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_r04.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_r04_2.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_r05.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_r05_2.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_re01.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_re01_2.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_re02.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_re02_2.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_re03.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_re03_2.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_re04.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_re04_2.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_s01.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_s01_2.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_s02.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_s02_2.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_s03.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_s03_2.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_s04.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_s04_2.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_s05.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_s05_2.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_s06.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_s06_2.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_s07.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_ufobig.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_ufofighter.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_v01.map | GPL version 2 | Martin Gerhardy
-base/maps/countryd/c_v01_2.map | GPL version 2 | Martin Gerhardy
+base/maps/countryd/c_c01.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_c02.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_d01.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_d02.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_d03.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_d04.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_d05.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_d06.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_d07.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_d08.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_d09.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_d10.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_drop.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_h01.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_h02.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_h03.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_h04.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_r01.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_r01_2.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_r02.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_r02_2.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_r03.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_r03_2.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_r04.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_r04_2.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_r05.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_r05_2.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_re01.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_re01_2.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_re02.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_re02_2.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_re03.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_re03_2.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_re04.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_re04_2.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_s01.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_s01_2.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_s02.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_s02_2.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_s03.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_s03_2.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_s04.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_s04_2.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_s05.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_s05_2.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_s06.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_s06_2.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_s07.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_ufobig.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_ufofighter.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_v01.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd/c_v01_2.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryn/c_c01.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryn/c_c02.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryn/c_d01.map | GNU General Public License 2.0 | Martin Gerhardy
