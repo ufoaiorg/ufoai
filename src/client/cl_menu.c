@@ -635,12 +635,12 @@ static void MN_StartServer_f (void)
 
 	Com_sprintf(map, sizeof(map), "map %s%c %s", md->map, mn_serverday->integer ? 'd' : 'n', md->param ? md->param : "");
 
-	Cvar_Set("mn_main", "multiplayerInGame");
-
 	/* let the (local) server know which map we are running right now */
 	csi.currentMD = md;
 
 	Cbuf_ExecuteText(EXEC_NOW, map);
+
+	Cvar_Set("mn_main", "multiplayerInGame");
 }
 
 /**
