@@ -1,9 +1,9 @@
 {
-"angles" "20 45 0"
-"ambient" "0.65 0.65 0.75"
-"_color" "0.7 0.75 1"
-"light" "20"
 "classname" "worldspawn"
+"angles" "20 45 0"
+"light" "15"
+"ambient" "0 0 0"
+"_color" "0.7 0.75 1"
 // brush 0
 {
 ( 308 4 4 ) ( 308 4 28 ) ( 316 12 28 ) tex_misc/barrel2 0 21 0 -0.062500 0.187500 134217728 0 0
