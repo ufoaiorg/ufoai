@@ -904,7 +904,8 @@ static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 
 		Com_sprintf(serverInfoText, sizeof(serverInfoText), _("IP\t%s\n\n"), stream_peer_name(stream, buf, sizeof(buf), qtrue));
 		value = Info_ValueForKey(s, "mapname");
-		Cvar_Set("mapname", value);
+		assert(value);
+		Cvar_Set("mn_svmapname", value);
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Map:\t%s\n"), value);
 		if (FS_CheckFile(va("pics/maps/shots/%s.jpg", value)) != -1)
 			Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", value));

@@ -497,7 +497,7 @@ menu serverinfo
 	{
 		font	f_menubig
 		color	"1 1 1 1"
-		string	"*cvar mapname"
+		string	"*cvar mn_svmapname"
 		pos	"500 110"
 		align	ul
 	}
@@ -1447,7 +1447,7 @@ menu multiplayer_selectteam
 	{
 		font	f_small
 		color	"1 1 1 1"
-		string	"*cvar mapname"
+		string	"*cvar mn_svmapname"
 		pos	"512 72"
 		align	uc
 	}
@@ -1600,7 +1600,7 @@ menu multiplayer_wait
 	{
 		font	f_small
 		color	"1 1 1 1"
-		string	"*cvar mapname"
+		string	"*cvar mn_svmapname"
 		pos	"512 72"
 		align	uc
 	}
