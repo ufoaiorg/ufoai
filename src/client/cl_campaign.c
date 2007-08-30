@@ -2422,13 +2422,21 @@ static void CP_SetMissionVars (mission_t* mission)
 {
 	int i;
 
+	assert(mission);
+
+	Com_DPrintf(DEBUG_CLIENT, "CP_SetMissionVars:\n");
+
 	/* start the map */
 	Cvar_SetValue("ai_numaliens", (float) mission->aliens);
 	Cvar_SetValue("ai_numcivilians", (float) mission->civilians);
 	Cvar_Set("ai_civilian", mission->civTeam);
 	Cvar_Set("ai_equipment", mission->alienEquipment);
-	Cvar_Set("music", mission->mapDef->music);
-	Com_DPrintf(DEBUG_CLIENT, "CP_SetMissionVars:\n");
+	if (mission->mapDef->music)
+		Cvar_Set("music", mission->mapDef->music);
+	else {
+		Com_DPrintf(DEBUG_CLIENT, "..mission '%s' doesn't have a music track assigned\n", mission->name);
+		Cbuf_AddText("music_randomtrack;");
+	}
 
 	/* now store the alien teams in the shared csi struct to let the game dll
 	 * have access to this data, too */
@@ -2468,6 +2476,8 @@ static void CP_StartMissionMap (mission_t* mission)
 		timeChar = 'n';
 	else
 		timeChar = 'd';
+
+	assert(mission->mapDef->map);
 
 	/** @note set the mapZone - this allows us to replace the ground texture
 	 * with the suitable terrain texture - just use tex_terrain/dummy for the
