@@ -270,7 +270,7 @@
 // brush 29
 {
 ( 768 448 4 ) ( 768 0 4 ) ( 0 448 4 ) tex_nature/dirt_se01 0 0 0 1 1
-( 768 448 4 ) ( 0 448 4 ) ( 768 448 0 ) tex_nature/dirt_se01 0 0 0 1 1
+( 768 512 4 ) ( 0 512 4 ) ( 768 512 0 ) tex_nature/dirt_se01 0 0 0 1 1
 ( 768 448 4 ) ( 768 448 0 ) ( 768 0 4 ) tex_nature/dirt_se01 0 0 0 1 1
 ( 0 0 0 ) ( 768 0 0 ) ( 0 448 0 ) tex_nature/dirt_se01 0 0 0 1 1
 ( 0 0 0 ) ( 0 0 4 ) ( 768 0 0 ) tex_nature/dirt_se01 0 0 0 1 1
