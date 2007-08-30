@@ -747,7 +747,8 @@ typedef enum {
 	ET_ACTOR2x2,
 	ET_CIVILIANTARGET,
 	ET_MISSION,
-	ET_HIDDEN
+	ET_ACTORHIDDEN,
+	ET_PARTICLE
 } entity_type_t;
 
 

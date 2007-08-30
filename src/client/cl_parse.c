@@ -876,7 +876,7 @@ static void CL_ActorAdd (struct dbuffer *msg)
 
 	/*Com_Printf("CL_ActorAdd: Add number: %i\n", entnum);*/
 
-	le->type = ET_HIDDEN;
+	le->type = ET_ACTORHIDDEN;
 
 	Grid_PosToVec(&clMap, le->pos, le->origin);
 	le->invis = qtrue;
@@ -907,7 +907,7 @@ static void CL_ActorAppear (struct dbuffer *msg)
 	} else {
 /*		Com_Printf("Actor appearing already visible... overwriting the old one\n"); */
 		le->inuse = qtrue;
-		if (le->type == ET_HIDDEN)
+		if (le->type == ET_ACTORHIDDEN)
 			newActor = qtrue;
 		else
 			newActor = qfalse;

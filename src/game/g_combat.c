@@ -890,7 +890,8 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 			gi.WriteByte(fd->weap_fds_idx);
 			gi.WriteByte(fd->fd_idx);
 
-			if (i == 0 && fd->dmgtype == gi.csi->damFire && tr.contents & CONTENTS_BURN) {
+			if (i == 0 && (fd->dmgtype == gi.csi->damFire
+				|| fd->dmgtype == gi.csi->damBlast) && tr.contents & CONTENTS_BURN) {
 				/* sent particle to all players */
 				gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
 				gi.WriteShort(tr.contents >> 8);

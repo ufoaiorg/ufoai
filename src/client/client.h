@@ -531,6 +531,8 @@ typedef struct le_s {
 
 	/** gfx */
 	animState_t as;
+	const char *particleID;
+	int particleLevelFlags;
 	ptl_t *ptl;
 	char *ref1, *ref2;
 	inventory_t i;

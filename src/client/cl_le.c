@@ -650,26 +650,27 @@ void LET_ProjectileAutoHide (le_t *le)
 		le->thinkDelay--;
 	}
 
-	assert(le->ptl);
-
-	/* default is to show the particle */
-	le->ptl->invis = qfalse;
-
 	/* check whether any of our actors can see this le */
 	for (i = 0, actors = LEs; i < numLEs; i++, actors++) {
-		if (!actors->inuse || actors->invis || le->team != cls.team)
+		if (actors->team != cls.team || actors->state & STATE_DEAD)
 			continue;
 		if (actors->type == ET_ACTOR || actors->type == ET_ACTOR2x2) {
 			/* at least one of our actors can see this */
-			if (FrustomVis(actors->origin, actors->dir, le->origin)
-			 && CM_TestLine(le->origin, actors->origin)) {
-				return;
+			if (FrustomVis(actors->origin, actors->dir, le->origin)) {
+				if (CM_TestLine(actors->origin, le->origin)) {
+					if (!le->ptl)
+						le->ptl = CL_ParticleSpawn(le->particleID, le->particleLevelFlags, le->origin, NULL, NULL);
+					return;
+				}
 			}
 		}
 	}
 
 	/* hide the particle */
-	CL_ParticleVisible(le->ptl, qtrue);
+	if (le->ptl) {
+		CL_ParticleFree(le->ptl);
+		le->ptl = NULL;
+	}
 }
 
 /**
@@ -693,11 +694,6 @@ static void LET_Projectile (le_t * le)
 			sfx_t *sfx = S_RegisterSound(le->ref2);
 			S_StartSound(NULL, le->entnum, SOUND_CHANNEL_OVERRIDE, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
 		}
-	} else {
-		if (!le->autohide)
-			return;
-
-		LET_ProjectileAutoHide(le);
 	}
 }
 
@@ -996,6 +992,7 @@ void LE_AddToScene (void)
 
 /**
  * @brief Cleanup unused LE inventories that the server sent to the client
+ * also free some unused LE memory
  */
 void LE_Cleanup (void)
 {
@@ -1013,6 +1010,10 @@ void LE_Cleanup (void)
 			break;
 		case ET_ITEM:
 			INVSH_EmptyContainer(&le->i, csi.idFloor);
+			break;
+		case ET_PARTICLE:
+			if (le->ptl)
+				Mem_Free(le->ptl);
 			break;
 		default:
 			break;

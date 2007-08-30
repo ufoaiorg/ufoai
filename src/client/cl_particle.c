@@ -944,9 +944,12 @@ void CL_ParticleSpawnFromSizeBuf (struct dbuffer *msg)
 		if (!le)
 			return;
 		le->inuse = qtrue;
+		le->type = ET_PARTICLE;
+		le->invis = qtrue;
+		le->particleLevelFlags = levelflags;
+		le->particleID = Mem_PoolStrDup(particle, cl_localPool, 0);
 		VectorCopy(origin, le->origin);
 		VecToPos(le->origin, le->pos);
-		le->ptl = CL_ParticleSpawn(particle, levelflags, origin, NULL, NULL);
 		le->autohide = qtrue;
 		le->think = LET_ProjectileAutoHide;
 		le->think(le);
