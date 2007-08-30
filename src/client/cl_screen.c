@@ -400,13 +400,17 @@ static void SCR_DrawLoading (void)
 		re.FontDrawString("f_menubig", ALIGN_UC,
 			(int)(VID_NORM_WIDTH / 2),
 			(int)(VID_NORM_HEIGHT / 2 - 60),
-			0, 1, VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, mapmsg, 0, 0, NULL, qfalse);
+			(int)(VID_NORM_WIDTH / 2),
+			(int)(VID_NORM_HEIGHT / 2 - 60),
+			VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, mapmsg, 1, 0, NULL, qfalse);
 	}
 
 	re.FontDrawString("f_menu", ALIGN_UC,
 		(int)(VID_NORM_WIDTH / 2),
 		(int)(VID_NORM_HEIGHT / 2),
-		0, 1, VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, cls.loadingMessages, 0, 0, NULL, qfalse);
+		(int)(VID_NORM_WIDTH / 2),
+		(int)(VID_NORM_HEIGHT / 2),
+		VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, cls.loadingMessages, 1, 0, NULL, qfalse);
 
 	SCR_DrawLoadingBar((int)(VID_NORM_WIDTH / 2) - 300, VID_NORM_HEIGHT - 30, 600, 20, (int)cls.loadingPercent);
 }
