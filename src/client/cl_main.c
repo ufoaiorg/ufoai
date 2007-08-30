@@ -300,6 +300,8 @@ void CL_Drop (void)
 		Cvar_Set("mn_main", "main");
 		Cvar_Set("mn_active", "");
 		MN_PushMenu("main");
+		/* the main menu may have a init node - execute it */
+		Cbuf_Execute();
 	}
 
 	if (*mn_afterdrop->string) {
