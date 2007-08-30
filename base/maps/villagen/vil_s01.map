@@ -2,10 +2,11 @@
 // entity 0
 {
 "classname" "worldspawn"
-"light" "50"
-"angles" "15 60"
+"light" "15"
 "_color" "0.8 0.8 1"
-"ambient" "0.3 0.3 0.32"
+"ambient" "0 0 0"
+"angles" "15 60"
+"maxteams" "0"
 // brush 0
 {
 ( 480 104 0 ) ( 420 104 0 ) ( 420 96 0 ) tex_nature/grass001 -192 192 0 0.5 0.5 0 128 0
@@ -171,9 +172,9 @@
 // entity 3
 {
 "classname" "light"
-"origin" "144 128 40"
+"origin" "144 128 24"
 "_color" "0.9 0.95 1"
-"light" "160"
+"light" "180"
 }
 // entity 4
 {
@@ -326,9 +327,9 @@
 // entity 8
 {
 "classname" "light"
-"light" "160"
+"light" "180"
 "_color" "0.9 0.95 1"
-"origin" "336 128 40"
+"origin" "336 128 24"
 }
 // entity 9
 {
@@ -481,16 +482,16 @@
 // entity 13
 {
 "classname" "light"
-"origin" "380 336 40"
+"origin" "380 336 24"
 "_color" "0.9 0.95 1"
-"light" "160"
+"light" "180"
 }
 // entity 14
 {
 "classname" "light"
-"light" "160"
+"light" "180"
 "_color" "0.9 0.95 1"
-"origin" "384 588 40"
+"origin" "384 588 24"
 }
 // entity 15
 {

@@ -2,10 +2,11 @@
 // entity 0
 {
 "classname" "worldspawn"
-"light" "50"
-"angles" "15 60"
+"light" "15"
 "_color" "0.8 0.8 1"
-"ambient" "0.3 0.3 0.32"
+"ambient" "0 0 0"
+"angles" "15 60"
+"maxteams" "0"
 // brush 0
 {
 ( 124 132 24 ) ( 124 188 24 ) ( 8 188 24 ) tex_vehicles/truck_d -82 10 -90 0.4375 -0.375 134217728 0 0
@@ -64,9 +65,9 @@
 // entity 1
 {
 "classname" "light"
-"origin" "144 120 56"
+"origin" "144 120 24"
 "_color" "0.9 0.95 1"
-"light" "120"
+"light" "180"
 }
 // entity 2
 {

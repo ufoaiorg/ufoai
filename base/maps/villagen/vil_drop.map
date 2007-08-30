@@ -1,8 +1,10 @@
 {
 "classname" "worldspawn"
+"light" "15"
 "_color" "0.8 0.8 1"
-"light" "50"
-"ambient" "0.3 0.3 0.32"
+"ambient" "0 0 0"
+"angles" "15 60"
+"maxteams" "0"
 // brush 0
 {
 ( 212 400 4 ) ( 200 400 4 ) ( 200 392 4 ) tex_nature/grass001 -192 192 0 0.500000 0.500000 0 128 0

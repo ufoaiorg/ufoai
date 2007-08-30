@@ -2,10 +2,11 @@
 // entity 0
 {
 "classname" "worldspawn"
-"ambient" "0.3 0.3 0.28"
+"light" "15"
 "_color" "0.8 0.8 1"
-"light" "50"
+"ambient" "0 0 0"
 "angles" "15 60"
+"maxteams" "0"
 // brush 0
 {
 ( 416 384 0 ) ( 352 384 0 ) ( 352 364 0 ) tex_material/c_orange 16 0 0 0.5 0.5 65536 0 0

@@ -2,10 +2,11 @@
 // entity 0
 {
 "classname" "worldspawn"
-"light" "50"
+"light" "15"
 "_color" "0.8 0.8 1"
+"ambient" "0 0 0"
 "angles" "15 60"
-"ambient" "0.3 0.3 0.32"
+"maxteams" "0"
 // brush 0
 {
 ( 256 256 0 ) ( 0 256 0 ) ( 0 0 0 ) tex_nature/grass001 0 0 0 0.5 0.5 0 128 0

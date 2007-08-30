@@ -1,9 +1,10 @@
 {
-"angles" "15 60 0"
-"ambient" "0.3 0.3 0.32"
-"_color" "0.8 0.8 1"
-"light" "50"
 "classname" "worldspawn"
+"light" "15"
+"_color" "0.8 0.8 1"
+"ambient" "0 0 0"
+"angles" "15 60"
+"maxteams" "0"
 // brush 0
 {
 ( 316 100 68 ) ( 204 100 68 ) ( 204 96 68 ) tex_material/c_orange2 0 0 0 0.500000 0.500000 65536 0 0

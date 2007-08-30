@@ -2,10 +2,11 @@
 // entity 0
 {
 "classname" "worldspawn"
-"angles" "15 60"
+"light" "15"
 "_color" "0.8 0.8 1"
-"ambient" "0.3 0.3 0.32"
-"light" "50"
+"ambient" "0 0 0"
+"angles" "15 60"
+"maxteams" "0"
 // brush 0
 {
 ( 560 452 8 ) ( 504 452 8 ) ( 504 356 8 ) tex_material/c_orange2 0 8 0 0.5 0.5 65536 0 0
@@ -1490,9 +1491,9 @@
 // entity 9
 {
 "classname" "light"
-"light" "160"
+"light" "180"
 "_color" "0.9 0.95 1"
-"origin" "128 176 40"
+"origin" "128 176 24"
 }
 // entity 10
 {
@@ -1571,9 +1572,9 @@
 // entity 12
 {
 "classname" "light"
-"origin" "132 400 40"
+"origin" "132 400 24"
 "_color" "0.9 0.95 1"
-"light" "160"
+"light" "180"
 }
 // entity 13
 {
@@ -1652,9 +1653,9 @@
 // entity 15
 {
 "classname" "light"
-"light" "160"
+"light" "180"
 "_color" "0.9 0.95 1"
-"origin" "132 624 40"
+"origin" "132 624 24"
 }
 // entity 16
 {

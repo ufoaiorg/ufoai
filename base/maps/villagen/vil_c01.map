@@ -2,10 +2,11 @@
 // entity 0
 {
 "classname" "worldspawn"
-"light" "50"
+"light" "15"
 "_color" "0.8 0.8 1"
-"ambient" "0.3 0.3 0.32"
+"ambient" "0 0 0"
 "angles" "15 60"
+"maxteams" "0"
 // brush 0
 {
 ( 368 536 -4 ) ( 288 536 -4 ) ( 288 488 -4 ) tex_material/c_orange2 0 0 0 0.5 0.5 65536 0 0
@@ -4332,7 +4333,7 @@
 // entity 59
 {
 "classname" "light"
-"light" "140"
+"light" "180"
 "_color" "0.9 0.95 1"
 "origin" "144 128 28"
 }
@@ -4341,7 +4342,7 @@
 "classname" "light"
 "origin" "336 128 28"
 "_color" "0.9 0.95 1"
-"light" "140"
+"light" "180"
 }
 // entity 61
 {
