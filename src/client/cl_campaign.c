@@ -2215,6 +2215,8 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 		}
 	}
 
+	curCampaign->civiliansKilledUntilLost = MSG_ReadShort(sb);
+
 	return qtrue;
 }
 
@@ -2324,6 +2326,8 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 		MSG_WriteString(sb, selMis->def->name);
 	else
 		MSG_WriteString(sb, "");
+
+	MSG_WriteShort(sb, curCampaign->civiliansKilledUntilLost);
 
 	return qtrue;
 }
