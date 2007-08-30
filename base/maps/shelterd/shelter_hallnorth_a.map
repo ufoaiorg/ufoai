@@ -3239,4 +3239,5 @@
 "origin" "446 324 54"
 "model" "models/objects/trucks/truck2/truck.md2"
 "angle" "-90"
+"spawnflags" "255"
 }
