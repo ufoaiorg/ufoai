@@ -346,7 +346,7 @@ menu map
 	{
 		tooltip	"_Options"
 		image	menu/button_mapmen_options2
-		pos	"950 15"
+		pos	"950 10"
 		texl	"0 0"
 		texh	"64 64"
 		mousefx false
