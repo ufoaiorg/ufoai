@@ -906,9 +906,12 @@ static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 		value = Info_ValueForKey(s, "mapname");
 		assert(value);
 		Cvar_Set("mn_svmapname", value);
+		Q_strncpyz(buf, value, sizeof(buf));
+		if (buf[strlen(buf)-1] == 'd' || buf[strlen(buf)-1] == 'n')
+			buf[strlen(buf)-1] = '\0';
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Map:\t%s\n"), value);
-		if (FS_CheckFile(va("pics/maps/shots/%s.jpg", value)) != -1)
-			Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", value));
+		if (FS_CheckFile(va("pics/maps/shots/%s.jpg", buf)) != -1)
+			Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", buf));
 		else {
 			char filename[MAX_QPATH];
 			Q_strncpyz(filename, "pics/maps/shots/", sizeof(filename));

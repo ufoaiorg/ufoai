@@ -4593,7 +4593,7 @@ static void MN_MapInfo (int step)
 		}
 	}
 
-	Cvar_Set("mn_svmapname", csi.mds[ccs.multiplayerMapDefinitionIndex].id);
+	Cvar_Set("mn_svmapname", csi.mds[ccs.multiplayerMapDefinitionIndex].map);
 	if (FS_CheckFile(va("pics/maps/shots/%s.jpg", csi.mds[ccs.multiplayerMapDefinitionIndex].map)) != -1)
 		Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", csi.mds[ccs.multiplayerMapDefinitionIndex].map));
 
