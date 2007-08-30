@@ -1,0 +1,168 @@
+// base/maps/sheltern.ump
+
+// *********************************
+// NUCLEAR SHELTER
+// *********************************
+
+// Tiletypes:
+// ----------
+// +: tile contains something
+// a: entrance
+// b: main hall SOUTH
+// c: main hall NORTH
+// d: Shelter WEST
+// e: Shelter NORTH
+// f: Shelter EAST
+// g: Corridor NORTHWEST
+// h: Corridor NORTHEAST
+// x: Solid
+
+
+base sheltern/shelter_
+
+// ---------------------------------
+// Shelter entrance
+tile +entrance
+{
+6 4
+0      b       b       b       b       0
+x      +a      +a      +a      +a      x
+x      +a      +a      +a      +a      x
+0      0       0       0       0       0
+}
+
+tile +hallsouth_a
+{
+6 4
+0      c       c       c       c       0
+d      +b      +b      +b      +b      f
+d      +b      +b      +b      +b      f
+0      a       a       a       a       0
+}
+
+tile +hallsouth_b
+{
+6 4
+0      c       c       c       c       0
+d      +b      +b      +b      +b      f
+d      +b      +b      +b      +b      f
+0      a       a       a       a       0
+}
+
+tile +hallnorth_a
+{
+6 4
+0      e       e       e       e       0
+d      +c      +c      +c      +c      f
+d      +c      +c      +c      +c      f
+0      b       b       b       b       0
+}
+
+tile +hallnorth_b
+{
+6 4
+0      e       e       e       e       0
+d      +c      +c      +c      +c      f
+d      +c      +c      +c      +c      f
+0      b       b       b       b       0
+}
+
+tile +room_w_a
+{
+4 4
+0      dg      dg      0
+0      +d      +d      bc
+0      +d      +d      bc
+0      0       0       0
+}
+
+tile +room_w_b
+{
+4 4
+0      dg      dg      0
+0      +d      +d      bc
+0      +d      +d      bc
+0      0       0       0
+}
+
+tile +room_n_a
+{
+4 4
+0      0       0       0
+eg     +e      +e      eh
+eg     +e      +e      eh
+0      c       c       0
+}
+
+tile +room_n_b
+{
+4 4
+0      0       0       0
+eg     +e      +e      eh
+eg     +e      +e      eh
+0      c       c       0
+}
+
+tile +room_e_a
+{
+4 4
+0      fh      fh      0
+bc     +f      +f      0
+bc     +f      +f      0
+0      0       0       0
+}
+
+tile +room_e_b
+{
+4 4
+0      fh      fh      0
+bc     +f      +f      0
+bc     +f      +f      0
+0      0       0       0
+}
+
+tile +corridor_nw
+{
+4 4
+0      0       0       0
+0      +g      +g      e
+0      +g      +g      e
+0      d       d       0
+}
+
+tile +corridor_ne
+{
+4 4
+0      0       0       0
+e      +h      +h      0
+e      +h      +h      0
+0      f       f       0
+}
+
+tile +solid
+{
+4 4
+0      df      df      0
+a      +x      +x      a
+a      +x      +x      a
+0      0       0       0
+}
+
+assembly test
+{
+size "8 8"
++solid "2 2"
+fix +corridor_ne "6 6"
+fix +corridor_nw "0 6"
++entrance "1 1"
++room_w_a "0 2"
++room_w_b "0 2"
++room_n_a "0 2"
++room_n_b "0 2"
++room_e_a "0 2"
++room_e_b "0 2"
++hallsouth_a "0 1"
++hallsouth_b "0 1"
++hallnorth_a "0 1"
++hallnorth_b "0 1"
+}
