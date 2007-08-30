@@ -179,7 +179,7 @@ typedef enum {
 #include "gl_model.h"
 
 #define MAX_MODEL_DLIGHTS 3
-int RecursiveLightPoint(mBspNode_t * node, vec3_t start, vec3_t end);
+int RecursiveLightPoint(model_t* mapTile, mBspNode_t * node, vec3_t start, vec3_t end);
 
 void R_BeginRendering(int *x, int *y, int *width, int *height);
 void R_EndRendering(void);

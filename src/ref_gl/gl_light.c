@@ -469,7 +469,7 @@ static vec3_t lightspot;
 /**
  * @brief
  */
-int RecursiveLightPoint (mBspNode_t * node, vec3_t start, vec3_t end)
+int RecursiveLightPoint (model_t* mapTile, mBspNode_t * node, vec3_t start, vec3_t end)
 {
 	float front, back, frac;
 	int side;
@@ -483,18 +483,23 @@ int RecursiveLightPoint (mBspNode_t * node, vec3_t start, vec3_t end)
 	int maps;
 	int r;
 
+	/* didn't hit anything */
 	if (node->contents != -1)
-		return -1;				/* didn't hit anything */
+		return -1;
 
 	/* calculate mid point */
-	/* FIXME: optimize for axial */
 	plane = node->plane;
-	front = DotProduct(start, plane->normal) - plane->dist;
-	back = DotProduct(end, plane->normal) - plane->dist;
+	if (plane->type < 3) {
+		front = start[plane->type] - plane->dist;
+		back = end[plane->type] - plane->dist;
+	} else {
+		front = DotProduct(start, plane->normal) - plane->dist;
+		back = DotProduct(end, plane->normal) - plane->dist;
+	}
 	side = front < 0;
 
 	if ((back < 0) == side)
-		return RecursiveLightPoint(node->children[side], start, end);
+		return RecursiveLightPoint(mapTile, node->children[side], start, end);
 
 	frac = front / (front - back);
 	mid[0] = start[0] + (end[0] - start[0]) * frac;
@@ -502,7 +507,7 @@ int RecursiveLightPoint (mBspNode_t * node, vec3_t start, vec3_t end)
 	mid[2] = start[2] + (end[2] - start[2]) * frac;
 
 	/* go down front side */
-	r = RecursiveLightPoint(node->children[side], start, mid);
+	r = RecursiveLightPoint(mapTile, node->children[side], start, mid);
 	if (r >= 0)
 		return r;				/* hit something */
 
@@ -513,8 +518,7 @@ int RecursiveLightPoint (mBspNode_t * node, vec3_t start, vec3_t end)
 	VectorCopy(mid, lightspot);
 	lightplane = plane;
 
-	/* FIXME: Go through other rTiles, too */
-	surf = rTiles[0]->bsp.surfaces + node->firstsurface;
+	surf = mapTile->bsp.surfaces + node->firstsurface;
 
 	for (i = 0; i < node->numsurfaces; i++, surf++) {
 		if (surf->flags & SURF_DRAWTURB)
@@ -522,8 +526,8 @@ int RecursiveLightPoint (mBspNode_t * node, vec3_t start, vec3_t end)
 
 		tex = surf->texinfo;
 
-		s = DotProduct(mid, tex->vecs[0]) + tex->vecs[0][3];
-		t = DotProduct(mid, tex->vecs[1]) + tex->vecs[1][3];
+		s = Q_ftol(DotProduct(mid, tex->vecs[0]) + tex->vecs[0][3]);
+		t = Q_ftol(DotProduct(mid, tex->vecs[1]) + tex->vecs[1][3]);
 
 		if (s < surf->texturemins[0] || t < surf->texturemins[1])
 			continue;
@@ -541,19 +545,17 @@ int RecursiveLightPoint (mBspNode_t * node, vec3_t start, vec3_t end)
 		dt >>= 4;
 
 		lightmap = surf->samples;
-		VectorCopy(vec3_origin, pointcolor);
+		VectorClear(pointcolor);
 		if (lightmap) {
 			vec3_t scale;
 
 			lightmap += 3 * (dt * ((surf->extents[0] >> 4) + 1) + ds);
 
 			for (maps = 0; maps < MAXLIGHTMAPS && surf->styles[maps] != 255; maps++) {
+				VectorScale(r_newrefdef.lightstyles[surf->styles[maps]].rgb, r_modulate->value, scale);
 				for (i = 0; i < 3; i++)
-					scale[i] = r_newrefdef.lightstyles[surf->styles[maps]].rgb[i];
+					pointcolor[i] += lightmap[i] * scale[i] * (1.0f/255.0f);
 
-				pointcolor[0] += lightmap[0] * scale[0] * 0.003921568627450980392156862745098;
-				pointcolor[1] += lightmap[1] * scale[1] * 0.003921568627450980392156862745098;
-				pointcolor[2] += lightmap[2] * scale[2] * 0.003921568627450980392156862745098;
 				lightmap += 3 * ((surf->extents[0] >> 4) + 1) * ((surf->extents[1] >> 4) + 1);
 			}
 		}
@@ -562,7 +564,7 @@ int RecursiveLightPoint (mBspNode_t * node, vec3_t start, vec3_t end)
 	}
 
 	/* go down back side */
-	return RecursiveLightPoint(node->children[!side], mid, end);
+	return RecursiveLightPoint(mapTile, node->children[!side], mid, end);
 }
 
 /**
@@ -572,43 +574,42 @@ void R_LightPoint (vec3_t p, vec3_t color)
 {
 	vec3_t end;
 	float r;
-	int lnum, i;
+	int lnum, i, num;
 	dlight_t *dl;
 	float light;
 	vec3_t dist;
 	float add;
 
-	/* FIXME: Go through other rTiles, too */
-	if (!rTiles[0]->bsp.lightdata) {
-		color[0] = color[1] = color[2] = 1.0;
-		return;
-	}
-
 	end[0] = p[0];
 	end[1] = p[1];
 	end[2] = p[2] - 2048;
 
-	/* FIXME: Go through other rTiles, too */
-	r = RecursiveLightPoint(rTiles[0]->bsp.nodes, p, end);
+	VectorClear(color);
 
-	if (r == -1)
-		VectorCopy(vec3_origin, color);
-	else
-		VectorCopy(pointcolor, color);
+	/* FIXME */
+	for (num = 0; num < /*rNumTiles*/ 1; num++) {
+		if (!rTiles[num]->bsp.lightdata)
+			continue;
 
-	/* this catches too bright modulated color */
-	for (i = 0; i < 3; i++)
-		if (color[i] > 1)
-			color[i] = 1;
+		r = RecursiveLightPoint(rTiles[num], rTiles[num]->bsp.nodes, p, end);
 
-	/* add dynamic lights */
-	light = 0;
-	dl = r_newrefdef.dlights;
-	for (lnum = 0; lnum < r_newrefdef.num_dlights; lnum++, dl++) {
-		VectorSubtract(currententity->origin, dl->origin, dist);
-		add = dl->intensity - VectorLength(dist);
-		add /= 64.0f;
-		if (add > 0)
-			VectorMA(color, add, dl->color, color);
+		if (r != -1)
+			VectorMA(color, 1.1, pointcolor, color);
+
+		/* this catches too bright modulated color */
+		for (i = 0; i < 3; i++)
+			if (color[i] > 1)
+				color[i] = 1;
+
+		/* add dynamic lights */
+		light = 0;
+		dl = r_newrefdef.dlights;
+		for (lnum = 0; lnum < r_newrefdef.num_dlights; lnum++, dl++) {
+			VectorSubtract(currententity->origin, dl->origin, dist);
+			add = dl->intensity - VectorLength(dist);
+			add /= 64.0f;
+			if (add > 0)
+				VectorMA(color, add, dl->color, color);
+		}
 	}
 }
