@@ -879,7 +879,7 @@ menu endgame
 	string endgame_note
 	{
 		pos	"512 700"
-		string	"_Visit http://www.ufoai.net"
+		string	"_Visit http://ufoai.sf.net"
 		font "f_normal"
 		align	uc
 		color	"0 0.8 0 0.9"
