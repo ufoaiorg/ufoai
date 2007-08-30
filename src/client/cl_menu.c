@@ -641,6 +641,8 @@ static void MN_StartServer_f (void)
 	Cbuf_ExecuteText(EXEC_NOW, map);
 
 	Cvar_Set("mn_main", "multiplayerInGame");
+	MN_PushMenu("multiplayer_wait");
+	Cvar_Set("mn_active", "multiplayer_wait");
 }
 
 /**
