@@ -59,31 +59,6 @@ static void FindBrushInTree (node_t *node, int brushnum)
 }
 
 /**
- * @brief
- */
-static void DrawBrushList (bspbrush_t *brush, node_t *node)
-{
-	int		i;
-	side_t	*s;
-
-	GLS_BeginScene ();
-	for (; brush; brush = brush->next) {
-		for (i = 0; i < brush->numsides; i++) {
-			s = &brush->sides[i];
-			if (!s->winding)
-				continue;
-			if (s->texinfo == TEXINFO_NODE)
-				GLS_Winding (s->winding, 1);
-			else if (!s->visible)
-				GLS_Winding (s->winding, 2);
-			else
-				GLS_Winding (s->winding, 0);
-		}
-	}
-	GLS_EndScene ();
-}
-
-/**
  * @brief Sets the mins/maxs based on the windings
  */
 static void BoundBrush (bspbrush_t *brush)
@@ -965,9 +940,6 @@ static node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
 	bspbrush_t	*children[2];
 
 	c_nodes++;
-
-	if (config.drawflag)
-		DrawBrushList(brushes, node);
 
 	/* find the best plane to use as a splitter */
 	bestside = SelectSplitSide(brushes, node);

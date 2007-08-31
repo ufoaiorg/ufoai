@@ -49,9 +49,6 @@ static void U2M_BSP_Parameter (int argc, char **argv)
 		if (!strcmp(argv[i], "-v")) {
 			Sys_Printf("verbose = true\n");
 			config.verbose = qtrue;
-		} else if (!strcmp(argv[i], "-draw")) {
-			Sys_Printf("drawflag = true\n");
-			config.drawflag = qtrue;
 		} else if (!strcmp(argv[i], "-convert")) {
 			Sys_Printf("convert bsp to ase = true\n");
 			config.convertFunc = ConvertBSPToASE;

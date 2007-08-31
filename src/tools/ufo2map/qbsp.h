@@ -213,17 +213,6 @@ extern	textureref_t	textureref[MAX_MAP_TEXTURES];
 int	FindMiptex(const char *name);
 int TexinfoForBrushTexture(plane_t *plane, brush_texture_t *bt, const vec3_t origin, qboolean isTerrain);
 
-/* draw.c */
-
-extern vec3_t	draw_mins, draw_maxs;
-
-void Draw_ClearWindow(void);
-void DrawWinding(winding_t *w);
-
-void GLS_BeginScene(void);
-void GLS_Winding(winding_t *w, int code);
-void GLS_EndScene(void);
-
 /* csg */
 
 int MapBrushesBounds(int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs, vec3_t mins, vec3_t maxs);

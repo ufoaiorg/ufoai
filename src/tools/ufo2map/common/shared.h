@@ -99,7 +99,6 @@ typedef struct mapConfig_s {
 	qboolean notjunc;
 	qboolean verboseentities;
 	qboolean nobackclip;
-	qboolean drawflag;
 	qboolean noradiosity;
 	int block_xl, block_xh, block_yl, block_yh;
 	float microvolume;
