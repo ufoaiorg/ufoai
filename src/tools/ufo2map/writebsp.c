@@ -51,7 +51,7 @@ void U2M_ProgressBar (void (*func) (unsigned int cnt), unsigned int count, qbool
 	}
 	end = I_FloatTime();
 	if (showProgress)
-		Sys_Printf(" (time: %4is)\n", end - start);
+		Sys_Printf(" (time: %4is, count: %i)\n", end - start, count);
 }
 
 
@@ -189,6 +189,8 @@ static void EmitLeaf (node_t *node)
 
 /**
  * @brief
+ * @sa EmitDrawNode_r
+ * @note Called for every node face
  */
 static void EmitFace (face_t *f)
 {
@@ -221,8 +223,7 @@ static void EmitFace (face_t *f)
 	df->numedges = f->numpoints;
 	df->texinfo = f->texinfo;
 	for (i = 0; i < f->numpoints; i++) {
-/*		e = GetEdge(f->pts[i], f->pts[(i+1)%f->numpoints], f); */
-		e = GetEdge2(f->vertexnums[i], f->vertexnums[(i+1)%f->numpoints], f);
+		e = GetEdge(f->vertexnums[i], f->vertexnums[(i + 1) % f->numpoints], f);
 		if (numsurfedges >= MAX_MAP_SURFEDGES)
 			Error("numsurfedges >= MAX_MAP_SURFEDGES (%i)", numsurfedges);
 		dsurfedges[numsurfedges] = e;

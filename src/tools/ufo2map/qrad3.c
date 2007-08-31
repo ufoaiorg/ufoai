@@ -70,7 +70,7 @@ static void MakeBackplanes (void)
 /**
  * @brief
  */
-void CalcVertexNormals (unsigned int vnum)
+static void CalcVertexNormals (unsigned int vnum)
 {
 	qboolean	found;
 	int		i, k;
@@ -96,7 +96,7 @@ void CalcVertexNormals (unsigned int vnum)
 
 				if (v == vnum || VectorCompare(dvertexes[v].point, vert)) {
 					/* found a plane containing that vertex */
-					VectorAdd( normal, dplanes[face->planenum].normal, normal );
+					VectorAdd(normal, dplanes[face->planenum].normal, normal);
 					found = qtrue;
 					break;
 				}
@@ -115,7 +115,6 @@ void CalcVertexNormals (unsigned int vnum)
 	Sys_FPrintf(SYS_VRB, "(%1.4f %1.4f %1.4f)\n", (vnormals[vnum])[0], (vnormals[vnum])[1], (vnormals[vnum])[2]);
 }
 #endif
-
 
 /*
 ===================================================================
@@ -368,6 +367,7 @@ static void BounceLight (void)
 	float	added;
 	char	name[64];
 	patch_t	*p;
+	char buf[12];
 
 	for (i = 0; i < num_patches; i++) {
 		p = &patches[i];
@@ -378,7 +378,8 @@ static void BounceLight (void)
 	}
 
 	for (i = 0; i < config.numbounce; i++) {
-		U2M_ProgressBar(ShootLight, num_patches, qfalse, "LIGHTBOUNCE");
+		snprintf(buf, sizeof(buf), " %i LGHTBNCE", i);
+		U2M_ProgressBar(ShootLight, num_patches, qtrue, buf);
 		added = CollectLight();
 
 		Sys_FPrintf(SYS_VRB, "bounce:%i added:%f\n", i, added);
@@ -427,7 +428,7 @@ void RadWorld (void)
 	SubdividePatches();
 
 	/* calculate vertex normals for smooth lightning */
-	/*U2M_ProgressBar(CalcVertexNormals, numvertexes - 1, qfalse, "VERTEXNRM");*/
+	/*U2M_ProgressBar(CalcVertexNormals, numvertexes - 1, qtrue, "VERTEXNRM");*/
 
 	/* create directlights out of patches and lights */
 	CreateDirectLights();

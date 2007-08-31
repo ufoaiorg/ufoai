@@ -525,7 +525,7 @@ void FreeFace (face_t *f)
  * @note Called by writebsp.
  * @note Don't allow four way edges
  */
-int GetEdge2 (int v1, int v2,  face_t *f)
+int GetEdge (int v1, int v2,  face_t *f)
 {
 	dedge_t	*edge;
 	int		i;
