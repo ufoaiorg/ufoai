@@ -726,7 +726,7 @@ static void R_Register (void)
 	r_texturemode = ri.Cvar_Get("r_texturemode", "GL_LINEAR_MIPMAP_NEAREST", CVAR_ARCHIVE, NULL);
 	r_texturealphamode = ri.Cvar_Get("r_texturealphamode", "default", CVAR_ARCHIVE, NULL);
 	r_texturesolidmode = ri.Cvar_Get("r_texturesolidmode", "default", CVAR_ARCHIVE, NULL);
-	r_wire = ri.Cvar_Get("r_wire", "0", CVAR_CHEAT, "Draw the scene in wireframe mode");
+	r_wire = ri.Cvar_Get("r_wire", "0", 0, "Draw the scene in wireframe mode");
 	r_fog = ri.Cvar_Get("r_fog", "1", CVAR_ARCHIVE, NULL);
 	r_showbox = ri.Cvar_Get("r_showbox", "0", CVAR_ARCHIVE, "Shows model bounding box");
 
