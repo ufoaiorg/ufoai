@@ -843,7 +843,10 @@ static face_t *FaceFromPortal (portal_t *p, int pside)
 
 	/* do back-clipping */
 	if (!config.nobackclip && mapplanes[f->planenum].normal[2] < -0.9)
-		return NULL;
+		/* this face is not visible from birds view - optimize away
+		 * but only if it's not light emitting surface */
+		if (!texinfo[f->texinfo].flags & SURF_LIGHT)
+			return NULL;
 
 	if (texinfo[f->texinfo].flags & SURF_NODRAW)
 		return NULL;
