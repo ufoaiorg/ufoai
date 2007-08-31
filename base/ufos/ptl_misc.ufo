@@ -122,7 +122,7 @@ particle explosion_1
 {
 	init
 	{
-		frame 1
+		frame 0
 		endframe 10
 		image +sfx/uexp_
 		blend blend
@@ -509,6 +509,48 @@ particle smoke2
 	{
 		spawn  smoke
 		spawn  smokeRound2
+	}
+}
+
+particle smoking
+{
+	init
+	{
+		frame 0
+		endframe 3
+		image +sfx/smoke_
+		blend  blend
+		style  facing
+		thinkfade  out
+		rand   float 0.5
+		add    float 0.2
+		pop    *tps
+		crand  vector "8 8 8"
+		add    *s
+		pop    *s
+		v      "0 0 30"
+	}
+	run
+	{
+		push   pos "20 20"
+		mul    *t
+		add    pos "10 10"
+		pop    *size
+	}
+	think { kill }
+}
+
+particle smoke3
+{
+	init
+	{
+		v      "0 0 0"
+		tps    25.0
+		spawn  smoking
+	}
+	think
+	{
+		spawn  smoking
 	}
 }
 
