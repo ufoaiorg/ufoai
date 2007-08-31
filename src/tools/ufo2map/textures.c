@@ -135,6 +135,7 @@ static void TextureAxisFromPlane (plane_t *pln, vec3_t xv, vec3_t yv, qboolean i
 
 /**
  * @brief
+ * @sa BaseLightForFace
  */
 int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, const vec3_t origin, qboolean isTerrain)
 {
@@ -234,7 +235,7 @@ skip:;
 	numtexinfo++;
 
 	/* load the next animation */
-	mt = FindMiptex (bt->name);
+	mt = FindMiptex(bt->name);
 	if (textureref[mt].animname[0]) {
 		anim = *bt;
 		strcpy(anim.name, textureref[mt].animname);

@@ -191,7 +191,9 @@ static winding_t *WindingFromFace (dface_t *f)
 }
 
 /**
- *	@brief
+ * @brief Check for light emited by texture
+ * @note Surface lights
+ * @sa TexinfoForBrushTexture
  */
 static void BaseLightForFace (dface_t *f, vec3_t color)
 {
@@ -200,6 +202,8 @@ static void BaseLightForFace (dface_t *f, vec3_t color)
 	/* check for light emited by texture */
 	tx = &texinfo[f->texinfo];
 	if (!(tx->flags & SURF_LIGHT) || tx->value == 0) {
+		if (tx->flags & SURF_LIGHT)
+			Sys_Printf("Surface light has 0 intensity.\n");
 		VectorClear(color);
 		return;
 	}
@@ -277,27 +281,25 @@ static void MakePatchForFace (int fn, winding_t *w)
 	num_patches++;
 }
 
-#if 0
 /**
  *	@brief
  */
 static entity_t *EntityForModel (int modnum)
 {
-	int		i;
-	char	*s;
-	char	name[16];
+	int i;
+	const char *s;
+	char name[16];
 
-	sprintf (name, "*%i", modnum);
+	sprintf(name, "*%i", modnum);
 	/* search the entities for one using modnum */
 	for (i = 0; i < num_entities; i++) {
-		s = ValueForKey (&entities[i], "model");
-		if (!strcmp (s, name))
+		s = ValueForKey(&entities[i], "model");
+		if (!strcmp(s, name))
 			return &entities[i];
 	}
 
 	return &entities[0];
 }
-#endif
 
 /**
  *	@brief
@@ -310,22 +312,16 @@ void MakePatches (void)
 	winding_t	*w;
 	dmodel_t	*mod;
 	vec3_t		origin;
-#if 0
 	entity_t	*ent;
-#endif
 
-	Sys_FPrintf( SYS_VRB, "%i faces\n", numfaces);
+	Sys_FPrintf(SYS_VRB, "%i faces\n", numfaces);
 
 	for (i = 0; i < nummodels; i++) {
 		mod = &dmodels[i];
-#if 0
 		ent = EntityForModel(i);
 		/* bmodels with origin brushes need to be offset into their
 		 * in-use position */
 		GetVectorForKey(ent, "origin", origin);
-#else
-		VectorCopy(vec3_origin, origin);
-#endif
 
 		for (j = 0; j < mod->numfaces; j++) {
 			fn = mod->firstface + j;
