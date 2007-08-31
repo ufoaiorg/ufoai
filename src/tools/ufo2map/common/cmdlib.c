@@ -132,18 +132,22 @@ void ExpandWildcards (int *argc, char ***argv)
 void Error (const char *error, ...)
 {
 	va_list argptr;
-	char	text[1024];
-	char	text2[1024];
-	int		err;
+	char	text[2048];
+	char	text2[2048];
+	int		err, len;
 
 	err = GetLastError();
 
 	va_start(argptr, error);
-	vsprintf(text, error, argptr);
-	va_end(argptr);
-
-	snprintf(text2, sizeof(text2), "%s\nGetLastError() = %i", text, err);
-	MessageBox(NULL, text2, "Error", 0 /* MB_OK */ );
+	len = _vsnprintf(text, sizeof(text), error, argptr);
+	if (len != -1) {
+		text[strlen(text)-1] = '\0';
+		va_end(argptr);
+		snprintf(text2, sizeof(text2), "%s\n\nGetLastError() = %i", text, err);
+		MessageBox(NULL, text2, "Error", 0 /* MB_OK */ );
+	} else {
+		MessageBox(NULL, "Buffer too short to display error message", "Error", 0 /* MB_OK */ );
+	}
 
 	exit(1);
 }
@@ -155,12 +159,12 @@ void Error (const char *error, ...)
 void Error (const char *error, ...)
 {
 	va_list argptr;
-	char	text[1024];
+	char	text[2048];
 
 	Sys_Printf("\n************ ERROR ************\n");
 
 	va_start(argptr, error);
-	vsprintf(text, error, argptr);
+	vsnprintf(text, sizeof(text), error, argptr);
 	va_end(argptr);
 	Sys_Printf("%s\n", text);
 
