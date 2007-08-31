@@ -93,8 +93,8 @@ void ParseFromMemory (char *buffer, int size)
 	script = scriptstack;
 	script++;
 	if (script == &scriptstack[MAX_INCLUDES])
-		Error ("script file exceeded MAX_INCLUDES");
-	strncpy (script->filename, "memory buffer", sizeof(script->filename));
+		Error("script file exceeded MAX_INCLUDES");
+	strncpy(script->filename, "memory buffer", sizeof(script->filename));
 
 	script->buffer = buffer;
 	script->line = 1;
@@ -110,7 +110,7 @@ void ParseFromMemory (char *buffer, int size)
 static qboolean EndOfScript (qboolean crossline)
 {
 	if (!crossline)
-		Error ("Line %i is incomplete\n",scriptline);
+		Error("Line %i is incomplete\n",scriptline);
 
 	if (!strcmp (script->filename, "memory buffer")) {
 		endofscript = qtrue;
@@ -145,7 +145,7 @@ skipspace:
 			return EndOfScript (crossline);
 		if (*script->script_p++ == '\n') {
 			if (!crossline)
-				Error ("Line %i is incomplete\n",scriptline);
+				Error("Line %i is incomplete\n",scriptline);
 			scriptline = script->line++;
 		}
 	}
@@ -157,7 +157,7 @@ skipspace:
 	if (*script->script_p == ';' || *script->script_p == '#'
 		|| ( script->script_p[0] == '/' && script->script_p[1] == '/') ) {
 		if (!crossline)
-			Error ("Line %i is incomplete\n",scriptline);
+			Error("Line %i is incomplete\n",scriptline);
 		while (*script->script_p++ != '\n')
 			if (script->script_p >= script->end_p)
 				return EndOfScript (crossline);
@@ -167,7 +167,7 @@ skipspace:
 	/* c-style comments */
 	if (script->script_p[0] == '/' && script->script_p[1] == '*') {
 		if (!crossline)
-			Error ("Line %i is incomplete\n",scriptline);
+			Error("Line %i is incomplete\n",scriptline);
 		script->script_p+=2;
 		while (script->script_p[0] != '*' && script->script_p[1] != '/') {
 			script->script_p++;
@@ -189,7 +189,7 @@ skipspace:
 			if (script->script_p == script->end_p)
 				break;
 			if (token_p == &token[MAXTOKEN])
-				Error ("Token too large on line %i\n",scriptline);
+				Error("Token too large on line %i\n",scriptline);
 		}
 		script->script_p++;
 	} else	/* regular token */
