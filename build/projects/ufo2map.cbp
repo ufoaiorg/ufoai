@@ -131,9 +131,6 @@
 		<Unit filename="../../src/tools/ufo2map/map.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/ufo2map/nodraw.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="../../src/tools/ufo2map/patches.c">
 			<Option compilerVar="CC" />
 		</Unit>

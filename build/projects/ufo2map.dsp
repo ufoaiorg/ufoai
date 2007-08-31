@@ -135,10 +135,6 @@ SOURCE=..\..\src\tools\ufo2map\common\mathlib.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\tools\ufo2map\nodraw.c
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\tools\ufo2map\patches.c
 # End Source File
 # Begin Source File

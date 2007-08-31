@@ -12,7 +12,6 @@ UFO2MAP_SRCS = \
 	tools/ufo2map/levels.c \
 	tools/ufo2map/lightmap.c \
 	tools/ufo2map/map.c \
-	tools/ufo2map/nodraw.c \
 	tools/ufo2map/patches.c \
 	tools/ufo2map/portals.c \
 	tools/ufo2map/routing.c \
