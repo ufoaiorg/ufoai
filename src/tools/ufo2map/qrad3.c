@@ -107,12 +107,12 @@ void CalcVertexNormals (unsigned int vnum)
 	normal[2] = (float)(rand()%256);
 	VectorCopy(normal, lastNormal);*/
 
-	if (found && !VectorCompare( normal, vec3_origin))
+	if (found && !VectorCompare(normal, vec3_origin))
 		VectorNormalize(normal, vnormals[vnum]);
 	else
 		VectorClear(vnormals[vnum]);
 
-/*	printf("(%1.4f %1.4f %1.4f)\n", (vnormals[vnum])[0], (vnormals[vnum])[1], (vnormals[vnum])[2]); */
+	Sys_FPrintf(SYS_VRB, "(%1.4f %1.4f %1.4f)\n", (vnormals[vnum])[0], (vnormals[vnum])[1], (vnormals[vnum])[2]);
 }
 #endif
 

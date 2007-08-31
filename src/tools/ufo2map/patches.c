@@ -34,7 +34,7 @@ TEXTURE LIGHT VALUES
 */
 
 /**
- *	@brief
+ * @brief
  */
 void CalcTextureReflectivity (void)
 {

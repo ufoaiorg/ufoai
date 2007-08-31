@@ -431,7 +431,6 @@ typedef struct {
 #define CONTENTS_PASSABLE		0x20000		/**< only used in the compiler */
 #define CONTENTS_ORIGIN			0x1000000	/**< removed before bsping an entity */
 #define CONTENTS_WEAPONCLIP		0x2000000
-#define CONTENTS_DEADMONSTER	0x4000000
 #define CONTENTS_DETAIL			0x8000000	/**< brushes to be added after vis leafs */
 #define CONTENTS_TRANSLUCENT	0x10000000	/**< auto set if any surface has trans */
 #define CONTENTS_STEPON         0x40000000  /**< marks areas elevated passable areas */

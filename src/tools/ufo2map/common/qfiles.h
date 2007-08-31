@@ -266,8 +266,6 @@ int TryLoadJPG(const char *path, miptex_t **mt);
 #define MAX_MAP_ENTSTRING	0x40000
 #define MAX_MAP_TEXINFO		8192
 
-#define MAX_MAP_AREAS		256
-#define MAX_MAP_AREAPORTALS	1024
 #define MAX_MAP_PLANES		65536
 #define MAX_MAP_NODES		65536
 #define MAX_MAP_BRUSHSIDES	65536
@@ -362,7 +360,7 @@ typedef struct {
 #define CONTENTS_WINDOW			2	/**< translucent, but not watery */
 #define CONTENTS_BURN			8   /**< will keep burning when flamed */
 #define CONTENTS_WATER			32
-#define LAST_VISIBLE_CONTENTS	128
+#define LAST_VISIBLE_CONTENTS	0x8000
 
 /** remaining contents are non-visible, and don't eat brushes */
 
@@ -370,7 +368,6 @@ typedef struct {
 #define CONTENTS_PASSABLE		0x20000
 #define CONTENTS_ORIGIN			0x1000000	/**< removed before bsping an entity */
 #define CONTENTS_WEAPONCLIP		0x2000000
-#define CONTENTS_DEADMONSTER	0x4000000
 #define CONTENTS_DETAIL			0x8000000	/**< brushes to be added after vis leafs */
 #define CONTENTS_TRANSLUCENT	0x10000000	/**< auto set if any surface has trans */
 #define CONTENTS_STEPON			0x40000000
