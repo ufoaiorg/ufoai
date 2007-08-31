@@ -329,8 +329,6 @@ typedef struct miptex_s {
 #define MAX_MAP_ENTSTRING	0x40000
 #define MAX_MAP_TEXINFO		8192
 
-#define MAX_MAP_AREAS		256
-#define MAX_MAP_AREAPORTALS	1024
 #define MAX_MAP_PLANES		65536
 #define MAX_MAP_NODES		65536
 #define MAX_MAP_BRUSHSIDES	65536
@@ -423,6 +421,7 @@ typedef struct {
 /** lower bits are stronger, and will eat weaker brushes completely */
 #define CONTENTS_SOLID			1	/**< an eye is never valid in a solid */
 #define CONTENTS_WINDOW			2	/**< translucent, but not watery */
+#define CONTENTS_BURN			8   /**< will keep burning when flamed */
 #define CONTENTS_WATER			32
 #define LAST_VISIBLE_CONTENTS	128
 
