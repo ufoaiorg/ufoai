@@ -125,11 +125,8 @@ static void U2M_BSP_Parameter (int argc, char **argv)
 			Sys_Printf("blocks: %i,%i to %i,%i\n",
 				config.block_xl, config.block_yl, config.block_xh, config.block_yh);
 			i += 4;
-		} else if (!strcmp (argv[i],"-tmpout"))
+		} else if (!strcmp (argv[i],"-tmpout")) {
 			strcpy(outbase, "/tmp");
-		else if (!strcmp (argv[i],"-norouting")) {
-			Sys_Printf("norouting = true\n");
-			config.norouting = qtrue;
 		} else if (!strcmp(argv[i], "-nobackclip")) {
 			Sys_Printf("nobackclip = true\n");
 			config.nobackclip = qtrue;
@@ -244,7 +241,6 @@ int main (int argc, char **argv)
 		" -nofill                  : \n"
 		" -nomerge                 : \n"
 		" -noprune                 : \n"
-		" -norouting               : \n"
 		" -nosubdiv                : \n"
 		" -noshare                 : \n"
 		" -notjunc                 : \n"

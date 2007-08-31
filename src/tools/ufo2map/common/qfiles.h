@@ -48,7 +48,6 @@ typedef struct mapConfig_s {
 	qboolean nosubdiv;
 	qboolean notjunc;
 	qboolean verboseentities;
-	qboolean norouting;
 	qboolean nobackclip;
 	qboolean drawflag;
 	qboolean noradiosity;

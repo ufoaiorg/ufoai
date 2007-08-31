@@ -50,8 +50,7 @@ static void ProcessWorldModel (void)
 	U2M_ProgressBar(ProcessLevel, NUMMODELS, qtrue, "LEVEL");
 
 	/* calculate routing */
-	if (!config.norouting)
-		DoRouting();
+	DoRouting();
 }
 
 
