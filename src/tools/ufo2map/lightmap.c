@@ -161,7 +161,7 @@ static triedge_t *FindEdge (triangulation_t *trian, int p0, int p1)
 		Error("trian->numedges > MAX_TRI_EDGES-2");
 
 	VectorSubtract(trian->points[p1]->origin, trian->points[p0]->origin, v1);
-	VectorNormalize(v1, v1);
+	VectorNormalize(v1);
 	CrossProduct(v1, trian->plane->normal, normal);
 	dist = DotProduct(trian->points[p0]->origin, normal);
 
@@ -227,9 +227,9 @@ static void TriEdge_r (triangulation_t *trian, triedge_t *e)
 			continue;	/* behind edge */
 		VectorSubtract(p0, p, v1);
 		VectorSubtract(p1, p, v2);
-		if (!VectorNormalize(v1,v1))
+		if (!VectorNormalize(v1))
 			continue;
-		if (!VectorNormalize(v2,v2))
+		if (!VectorNormalize(v2))
 			continue;
 		ang = DotProduct(v1, v2);
 		if (ang < best) {
@@ -399,7 +399,7 @@ static void SampleTriangulation (vec3_t point, triangulation_t *trian, vec3_t co
 		p1 = trian->points[e->p1];
 
 		VectorSubtract(p1->origin, p0->origin, v1);
-		VectorNormalize(v1, v1);
+		VectorNormalize(v1);
 		VectorSubtract(point, p0->origin, v2);
 		d = DotProduct(v2, v1);
 		if (d < 0)
@@ -536,7 +536,7 @@ static void CalcFaceVectors (lightinfo_t *l)
 	texnormal[0] = tex->vecs[1][1] * tex->vecs[0][2] - tex->vecs[1][2]*tex->vecs[0][1];
 	texnormal[1] = tex->vecs[1][2] * tex->vecs[0][0] - tex->vecs[1][0]*tex->vecs[0][2];
 	texnormal[2] = tex->vecs[1][0] * tex->vecs[0][1] - tex->vecs[1][1]*tex->vecs[0][0];
-	VectorNormalize(texnormal, texnormal);
+	VectorNormalize(texnormal);
 
 	/* flip it towards plane normal */
 	distscale = DotProduct(texnormal, l->facenormal);
@@ -794,7 +794,7 @@ void CreateDirectLights (void)
 				else {
 					GetVectorForKey(e2, "origin", dest);
 					VectorSubtract(dest, dl->origin, dl->normal);
-					VectorNormalize(dl->normal, dl->normal);
+					VectorNormalize(dl->normal);
 				}
 			} else {	/* point down angle */
 				angle = FloatForKey(e, "angle");
@@ -870,7 +870,7 @@ static void GatherSampleLight (vec3_t pos, vec3_t normal,
 
 	for (l = directlights; l; l = l->next) {
 		VectorSubtract(l->origin, pos, delta);
-		dist = VectorNormalize(delta, delta);
+		dist = VectorNormalize(delta);
 		dot = DotProduct(delta, normal);
 		if (dot <= 0.001)
 			continue;	/* behind sample surface */

@@ -152,20 +152,19 @@ void _VectorScale (const vec3_t v, const vec_t scale, vec3_t out)
  * @brief Returns a vector in the same direction as the given vector but only
  * one unit long
  */
-vec_t VectorNormalize (const vec3_t in, vec3_t out)
+vec_t VectorNormalize (vec3_t v)
 {
-	vec_t	length, ilength;
+	float length, ilength;
 
-	length = sqrt (in[0]*in[0] + in[1]*in[1] + in[2]*in[2]);
-	if (length == 0) {
-		VectorClear (out);
-		return 0;
+	length = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+	length = sqrtf(length);
+
+	if (length) {
+		ilength = 1 / length;
+		v[0] *= ilength;
+		v[1] *= ilength;
+		v[2] *= ilength;
 	}
-
-	ilength = 1.0/length;
-	out[0] = in[0]*ilength;
-	out[1] = in[1]*ilength;
-	out[2] = in[2]*ilength;
 
 	return length;
 }

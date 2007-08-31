@@ -92,8 +92,8 @@ void RemoveColinearPoints (winding_t *w)
 		k = (i + w->numpoints - 1) % w->numpoints;
 		VectorSubtract(w->p[j], w->p[i], v1);
 		VectorSubtract(w->p[i], w->p[k], v2);
-		VectorNormalize(v1,v1);
-		VectorNormalize(v2,v2);
+		VectorNormalize(v1);
+		VectorNormalize(v2);
 		if (DotProduct(v1, v2) < 0.999) {
 			VectorCopy(w->p[i], p[nump]);
 			nump++;
@@ -119,7 +119,7 @@ static void WindingPlane (winding_t *w, vec3_t normal, vec_t *dist)
 	VectorSubtract(w->p[1], w->p[0], v1);
 	VectorSubtract(w->p[2], w->p[0], v2);
 	CrossProduct(v2, v1, normal);
-	VectorNormalize(normal, normal);
+	VectorNormalize(normal);
 	*dist = DotProduct(w->p[0], normal);
 }
 #endif
@@ -217,7 +217,7 @@ winding_t *BaseWindingForPlane (vec3_t normal, vec_t dist)
 
 	v = DotProduct(vup, normal);
 	VectorMA(vup, -v, normal, vup);
-	VectorNormalize(vup, vup);
+	VectorNormalize(vup);
 
 	VectorScale(normal, dist, org);
 
@@ -527,18 +527,18 @@ static void CheckWinding (winding_t *w)
 		/* check the point is on the face plane */
 		d = DotProduct (p1, facenormal) - facedist;
 		if (d < -ON_EPSILON || d > ON_EPSILON)
-			Error ("CheckWinding: point off plane");
+			Error("CheckWinding: point off plane");
 
 		/* check the edge isnt degenerate */
 		p2 = w->p[j];
 		VectorSubtract (p2, p1, dir);
 
-		if (VectorLength (dir) < ON_EPSILON)
-			Error ("CheckWinding: degenerate edge");
+		if (VectorLength(dir) < ON_EPSILON)
+			Error("CheckWinding: degenerate edge");
 
-		CrossProduct (facenormal, dir, edgenormal);
-		VectorNormalize (edgenormal, edgenormal);
-		edgedist = DotProduct (p1, edgenormal);
+		CrossProduct(facenormal, dir, edgenormal);
+		VectorNormalize(edgenormal);
+		edgedist = DotProduct(p1, edgenormal);
 		edgedist += ON_EPSILON;
 
 		/* all other points must be on front side */
@@ -547,7 +547,7 @@ static void CheckWinding (winding_t *w)
 				continue;
 			d = DotProduct (w->p[j], edgenormal);
 			if (d > edgedist)
-				Error ("CheckWinding: non-convex");
+				Error("CheckWinding: non-convex");
 		}
 	}
 }

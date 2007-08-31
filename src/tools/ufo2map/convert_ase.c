@@ -100,7 +100,7 @@ static void ConvertSurface (FILE *f, entity_t* e, int entity_num, int surfaceNum
 		VectorCopy(bspDrawVerts[ a ].normal, normal);
 		VectorAdd(normal, bspDrawVerts[ b ].normal, normal);
 		VectorAdd(normal, bspDrawVerts[ c ].normal, normal);
-		if( VectorNormalize( normal, normal))
+		if (VectorNormalize(normal))
 			fprintf(f, "\t\t\t*MESH_FACENORMAL\t%d\t%f\t%f\t%f\r\n", face, normal[ 0 ], normal[ 1 ], normal[ 2 ] );
 	}
 	for (i = 0; i < ds->numVerts; i++) {

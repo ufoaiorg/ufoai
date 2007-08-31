@@ -107,9 +107,10 @@ static void CalcVertexNormals (unsigned int vnum)
 	normal[2] = (float)(rand()%256);
 	VectorCopy(normal, lastNormal);*/
 
-	if (found && !VectorCompare(normal, vec3_origin))
-		VectorNormalize(normal, vnormals[vnum]);
-	else
+	if (found && !VectorCompare(normal, vec3_origin)) {
+		VectorCopy(normal, vnormals[vnum]);
+		VectorNormalize(vnormals[vnum]);
+	} else
 		VectorClear(vnormals[vnum]);
 
 	Sys_FPrintf(SYS_VRB, "(%1.4f %1.4f %1.4f)\n", (vnormals[vnum])[0], (vnormals[vnum])[1], (vnormals[vnum])[2]);
@@ -197,7 +198,7 @@ static void MakeTransfers (unsigned int i)
 
 		/* calculate vector */
 		VectorSubtract(patch2->origin, origin, delta);
-		dist = VectorNormalize(delta, delta);
+		dist = VectorNormalize(delta);
 		if (!dist)
 			continue;	/* should never happen */
 
