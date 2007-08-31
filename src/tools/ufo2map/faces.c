@@ -124,7 +124,7 @@ static int GetVertexnum (vec3_t in)
 
 	numvertexes++;
 
-	return numvertexes-1;
+	return numvertexes - 1;
 }
 #else
 /**
@@ -164,7 +164,7 @@ static int GetVertexnum (vec3_t v)
 	numvertexes++;
 	c_uniqueverts++;
 
-	return numvertexes-1;
+	return numvertexes - 1;
 }
 #endif
 
@@ -554,7 +554,7 @@ int GetEdge (int v1, int v2,  face_t *f)
 	edge->v[1] = v2;
 	edgefaces[numedges - 1][0] = f;
 
-	return numedges-1;
+	return numedges - 1;
 }
 
 /*
@@ -845,7 +845,7 @@ static face_t *FaceFromPortal (portal_t *p, int pside)
 	if (!config.nobackclip && mapplanes[f->planenum].normal[2] < -0.9)
 		/* this face is not visible from birds view - optimize away
 		 * but only if it's not light emitting surface */
-		if (!texinfo[f->texinfo].surfaceFlags & SURF_LIGHT)
+		if (!(texinfo[f->texinfo].surfaceFlags & SURF_LIGHT))
 			return NULL;
 
 	if (texinfo[f->texinfo].surfaceFlags & SURF_NODRAW)

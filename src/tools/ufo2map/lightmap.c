@@ -860,7 +860,6 @@ void CreateDirectLights (void)
 static void GatherSampleLight (vec3_t pos, vec3_t normal,
 			float **styletable, int offset, int mapsize, float lightscale)
 {
-/*	int				i; */
 	directlight_t	*l;
 	vec3_t			delta;
 	float			dot, dot2;
@@ -1017,7 +1016,7 @@ void BuildFacelights (unsigned int facenum)
 	else
 		numsamples = 1;
 	for (i = 0; i < numsamples; i++) {
-		memset (&l[i], 0, sizeof(l[i]));
+		memset(&l[i], 0, sizeof(l[i]));
 		l[i].surfnum = facenum;
 		l[i].face = f;
 		/* rotate plane */
@@ -1071,8 +1070,8 @@ void BuildFacelights (unsigned int facenum)
 		fl->numstyles++;
 	}
 
-	/* the light from DIRECT_LIGHTS is sent out, but the */
-	/* texture itself should still be full bright */
+	/* the light from DIRECT_LIGHTS is sent out, but the
+	 * texture itself should still be full bright */
 	if (face_patches[facenum] &&
 		(face_patches[facenum]->baselight[0] >= DIRECT_LIGHT ||
 		face_patches[facenum]->baselight[1] >= DIRECT_LIGHT ||
