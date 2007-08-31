@@ -295,19 +295,16 @@ typedef struct {
 .WAL texture file format
 ==============================================================================*/
 
-
 #define	MIPLEVELS	4
 typedef struct miptex_s {
 	char name[32];
 	unsigned width, height;
 	unsigned offsets[MIPLEVELS];	/**< four mip maps stored */
 	char animname[32];			/**< next frame in animation chain */
-	int flags;
-	int contents;
+	int surfaceFlagsFromFile;
+	int contentFlagsFromFile;
 	int value;
 } miptex_t;
-
-
 
 /*==============================================================================
 .BSP file format
@@ -419,13 +416,23 @@ typedef struct {
 /** these definitions also need to be in q_shared.h! */
 
 /** lower bits are stronger, and will eat weaker brushes completely */
-#define CONTENTS_SOLID			1	/**< an eye is never valid in a solid */
-#define CONTENTS_WINDOW			2	/**< translucent, but not watery */
-#define CONTENTS_BURN			8   /**< will keep burning when flamed */
-#define CONTENTS_WATER			32
-#define LAST_VISIBLE_CONTENTS	128
+#define CONTENTS_SOLID			0x1	/**< an eye is never valid in a solid */
+#define CONTENTS_WINDOW			0x2	/**< translucent, but not watery */
+#define CONTENTS_BURN			0x8	/**< will keep burning when flamed */
+#define CONTENTS_WATER			0x20
 
-/* remaining contents are non-visible, and don't eat brushes */
+#define CONTENTS_LEVEL_1		0x100
+#define CONTENTS_LEVEL_2		0x200
+#define CONTENTS_LEVEL_3		0x400
+#define CONTENTS_LEVEL_4		0x800
+#define CONTENTS_LEVEL_5		0x1000
+#define CONTENTS_LEVEL_6		0x2000
+#define CONTENTS_LEVEL_7		0x4000
+#define CONTENTS_LEVEL_8		0x8000
+
+#define LAST_VISIBLE_CONTENTS	0x80
+
+/** remaining contents are non-visible, and don't eat brushes */
 #define CONTENTS_ACTORCLIP		0x10000
 #define CONTENTS_PASSABLE		0x20000		/**< only used in the compiler */
 #define CONTENTS_ORIGIN			0x1000000	/**< removed before bsping an entity */
@@ -489,7 +496,7 @@ typedef struct {
 } dface_t;
 
 typedef struct {
-	int contents;				/**< OR of all brushes (not needed?) */
+	int contentFlags;				/**< OR of all brushes */
 
 	short cluster;
 	short area;
@@ -512,7 +519,7 @@ typedef struct {
 typedef struct {
 	int firstside;
 	int numsides;
-	int contents;
+	int contentFlags;				/**< OR of all brushes */
 } dbrush_t;
 
 #define ANGLE_UP	-1

@@ -410,7 +410,7 @@ int SV_PointContents (vec3_t p)
 	trace = CM_CompleteBoxTrace(p, p, vec3_origin, vec3_origin, 0x1FF, MASK_ALL);
 	trace.ent = ge->edicts; /* g_edicts[0] is the world */
 	if (trace.fraction == 0)
-		return trace.contents;		/* blocked by the world */
+		return trace.contentFlags;		/* blocked by the world */
 	return 0;
 }
 

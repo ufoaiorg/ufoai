@@ -46,13 +46,13 @@ typedef struct {
 } cBspBrushSide_t;
 
 typedef struct {
-	int contents;
+	int contentFlags;
 	unsigned short firstleafbrush;
 	unsigned short numleafbrushes;
 } cBspLeaf_t;
 
 typedef struct {
-	int contents;
+	int contentFlags;
 	int numsides;
 	int firstbrushside;
 	int checkcount;				/**< to avoid repeated testings */
@@ -426,7 +426,7 @@ static void CMod_LoadBrushes (lump_t * l, vec3_t shift)
 	for (i = 0; i < count; i++, out++, in++) {
 		out->firstbrushside = LittleLong(in->firstside);
 		out->numsides = LittleLong(in->numsides);
-		out->contents = LittleLong(in->contents);
+		out->contentFlags = LittleLong(in->contentFlags);
 	}
 }
 
@@ -465,17 +465,17 @@ static void CMod_LoadLeafs (lump_t * l, vec3_t shift)
 	curTile->leafs = out;
 
 	for (i = 0; i < count; i++, in++, out++) {
-		out->contents = LittleLong(in->contents);
+		out->contentFlags = LittleLong(in->contentFlags);
 		out->firstleafbrush = LittleShort(in->firstleafbrush);
 		out->numleafbrushes = LittleShort(in->numleafbrushes);
 	}
 
-	if (curTile->leafs[0].contents != CONTENTS_SOLID)
+	if (curTile->leafs[0].contentFlags != CONTENTS_SOLID)
 		Com_Error(ERR_DROP, "Map leaf 0 is not CONTENTS_SOLID");
 	curTile->solidleaf = 0;
 	curTile->emptyleaf = -1;
 	for (i = 1; i < curTile->numleafs; i++) {
-		if (!curTile->leafs[i].contents) {
+		if (!curTile->leafs[i].contentFlags) {
 			curTile->emptyleaf = i;
 			break;
 		}
@@ -1389,7 +1389,7 @@ static int CM_LeafContents (int leafnum)
 {
 	if (leafnum < 0 || leafnum >= curTile->numleafs)
 		Com_Error(ERR_DROP, "CM_LeafContents: bad number");
-	return curTile->leafs[leafnum].contents;
+	return curTile->leafs[leafnum].contentFlags;
 }
 #endif
 
@@ -1424,10 +1424,10 @@ static void CM_InitBoxHull (void)
 	curTile->box_brush = &curTile->brushes[curTile->numbrushes];
 	curTile->box_brush->numsides = 6;
 	curTile->box_brush->firstbrushside = curTile->numbrushsides;
-	curTile->box_brush->contents = CONTENTS_WEAPONCLIP;
+	curTile->box_brush->contentFlags = CONTENTS_WEAPONCLIP;
 
 	curTile->box_leaf = &curTile->leafs[curTile->numleafs];
-	curTile->box_leaf->contents = CONTENTS_WEAPONCLIP;
+	curTile->box_leaf->contentFlags = CONTENTS_WEAPONCLIP;
 	curTile->box_leaf->firstleafbrush = curTile->numleafbrushes;
 	curTile->box_leaf->numleafbrushes = 1;
 
@@ -1653,7 +1653,7 @@ static void CM_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, t
 			trace->fraction = enterfrac;
 			trace->plane = *clipplane;
 			trace->surface = leadside->surface;
-			trace->contents = brush->contents;
+			trace->contentFlags = brush->contentFlags;
 		}
 	}
 }
@@ -1706,7 +1706,7 @@ static void CM_TestBoxInBrush (vec3_t mins, vec3_t maxs, vec3_t p1, trace_t * tr
 	/* inside this brush */
 	trace->startsolid = trace->allsolid = qtrue;
 	trace->fraction = 0;
-	trace->contents = brush->contents;
+	trace->contentFlags = brush->contentFlags;
 }
 
 
@@ -1725,7 +1725,7 @@ static void CM_TraceToLeaf (int leafnum)
 	assert(leafnum >= 0);
 
 	leaf = &curTile->leafs[leafnum];
-	if (!(leaf->contents & trace_contents))
+	if (!(leaf->contentFlags & trace_contents))
 		return;
 	/* trace line against all brushes in the leaf */
 	for (k = 0; k < leaf->numleafbrushes; k++) {
@@ -1735,7 +1735,7 @@ static void CM_TraceToLeaf (int leafnum)
 			continue;			/* already checked this brush in another leaf */
 		b->checkcount = checkcount;
 
-		if (!(b->contents & trace_contents))
+		if (!(b->contentFlags & trace_contents))
 			continue;
 		CM_ClipBoxToBrush(trace_mins, trace_maxs, trace_start, trace_end, &trace_trace, b);
 		if (!trace_trace.fraction)
@@ -1760,7 +1760,7 @@ static void CM_TestInLeaf (int leafnum)
 	assert(leafnum >= 0);
 
 	leaf = &curTile->leafs[leafnum];
-	if (!(leaf->contents & trace_contents))
+	if (!(leaf->contentFlags & trace_contents))
 		return;
 	/* trace line against all brushes in the leaf */
 	for (k = 0; k < leaf->numleafbrushes; k++) {
@@ -1770,7 +1770,7 @@ static void CM_TestInLeaf (int leafnum)
 			continue;			/* already checked this brush in another leaf */
 		b->checkcount = checkcount;
 
-		if (!(b->contents & trace_contents))
+		if (!(b->contentFlags & trace_contents))
 			continue;
 		CM_TestBoxInBrush(trace_mins, trace_maxs, trace_start, &trace_trace, b);
 		if (!trace_trace.fraction)
@@ -2118,7 +2118,7 @@ static void MakeTnode (int nodenum)
 
 	for (i = 0; i < 2; i++) {
 		if (node->children[i] < 0) {
-			if (curTile->leafs[-(node->children[i]) - 1].contents & CONTENTS_SOLID)
+			if (curTile->leafs[-(node->children[i]) - 1].contentFlags & CONTENTS_SOLID)
 				t->children[i] = 1 | (1 << 31);
 			else
 				t->children[i] = (1 << 31);

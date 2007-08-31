@@ -52,8 +52,8 @@ int FindMiptex (const char *name)
 	sprintf(path, "%stextures/%s.tga", gamedir, name);
 	if (TryLoadTGA(path, &mt) != -1) {
 		textureref[i].value = LittleLong(mt->value);
-		textureref[i].flags = LittleLong(mt->flags);
-		textureref[i].contents = LittleLong(mt->contents);
+		textureref[i].surfaceFlags = 0;
+		textureref[i].contentFlags = 0;
 		strcpy(textureref[i].animname, mt->animname);
 		free(mt);
 		loaded = qtrue;
@@ -63,8 +63,8 @@ int FindMiptex (const char *name)
 		sprintf(path, "%stextures/%s.jpg", gamedir, name);
 		if (TryLoadJPG(path, &mt) != -1) {
 			textureref[i].value = LittleLong(mt->value);
-			textureref[i].flags = LittleLong(mt->flags);
-			textureref[i].contents = LittleLong(mt->contents);
+			textureref[i].surfaceFlags = 0;
+			textureref[i].contentFlags = 0;
 			strcpy(textureref[i].animname, mt->animname);
 			free(mt);
 			loaded = qtrue;
@@ -75,8 +75,8 @@ int FindMiptex (const char *name)
 		sprintf(path, "%stextures/%s.wal", gamedir, name);
 		if (TryLoadFile(path, (void **)&mt) != -1) {
 			textureref[i].value = LittleLong(mt->value);
-			textureref[i].flags = LittleLong(mt->flags);
-			textureref[i].contents = LittleLong(mt->contents);
+			textureref[i].surfaceFlags = LittleLong(mt->surfaceFlagsFromFile);
+			textureref[i].contentFlags = LittleLong(mt->contentFlagsFromFile);
 			strcpy(textureref[i].animname, mt->animname);
 			free(mt);
 			loaded = qtrue;

@@ -234,7 +234,7 @@ static void SwapBSPFile (void)
 
 	/* leafs */
 	for (i = 0; i < numleafs; i++) {
-		dleafs[i].contents = LittleLong(dleafs[i].contents);
+		dleafs[i].contentFlags = LittleLong(dleafs[i].contentFlags);
 		dleafs[i].cluster = LittleShort(dleafs[i].cluster);
 		dleafs[i].area = LittleShort(dleafs[i].area);
 		for (j = 0; j < 3; j++) {
@@ -270,7 +270,7 @@ static void SwapBSPFile (void)
 	for (i = 0; i < numbrushes; i++) {
 		dbrushes[i].firstside = LittleLong(dbrushes[i].firstside);
 		dbrushes[i].numsides = LittleLong(dbrushes[i].numsides);
-		dbrushes[i].contents = LittleLong(dbrushes[i].contents);
+		dbrushes[i].contentFlags = LittleLong(dbrushes[i].contentFlags);
 	}
 
 	/* brushsides */

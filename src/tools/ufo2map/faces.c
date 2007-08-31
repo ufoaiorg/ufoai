@@ -536,7 +536,7 @@ int GetEdge (int v1, int v2,  face_t *f)
 		for (i = firstmodeledge; i < numedges; i++) {
 			edge = &dedges[i];
 			if (v1 == edge->v[1] && v2 == edge->v[0]
-				&& edgefaces[i][0]->contents == f->contents) {
+				&& edgefaces[i][0]->contentFlags == f->contentFlags) {
 				if (edgefaces[i][1])
 					continue;
 				edgefaces[i][1] = f;
@@ -678,7 +678,7 @@ static face_t *TryMerge (face_t *f1, face_t *f2, vec3_t planenormal)
 		return NULL;
 	if (f1->planenum != f2->planenum)	/* on front and back sides */
 		return NULL;
-	if (f1->contents != f2->contents)
+	if (f1->contentFlags != f2->contentFlags)
 		return NULL;
 
 	nw = TryMergeWinding(f1->w, f2->w, planenormal);
@@ -828,7 +828,7 @@ static face_t *FaceFromPortal (portal_t *p, int pside)
 		return NULL;
 
 	/* nodraw/caulk faces */
-	if ((side->surf & SURF_NODRAW) && !(side->surf & SURF_SKIP))
+	if ((side->surfaceFlags & SURF_NODRAW) && !(side->surfaceFlags & SURF_SKIP))
 		return NULL;
 
 	f = AllocFace();
@@ -837,8 +837,8 @@ static face_t *FaceFromPortal (portal_t *p, int pside)
 	f->planenum = (side->planenum & ~1) | pside;
 	f->portal = p;
 
-	if ((p->nodes[pside]->contents & CONTENTS_WINDOW)
-		&& VisibleContents(p->nodes[!pside]->contents^p->nodes[pside]->contents) == CONTENTS_WINDOW)
+	if ((p->nodes[pside]->contentFlags & CONTENTS_WINDOW)
+		&& VisibleContents(p->nodes[!pside]->contentFlags ^ p->nodes[pside]->contentFlags) == CONTENTS_WINDOW)
 		return NULL;	/* don't show insides of windows */
 
 	/* do back-clipping */
@@ -853,10 +853,10 @@ static face_t *FaceFromPortal (portal_t *p, int pside)
 
 	if (pside) {
 		f->w = ReverseWinding(p->winding);
-		f->contents = p->nodes[1]->contents;
+		f->contentFlags = p->nodes[1]->contentFlags;
 	} else {
 		f->w = CopyWinding(p->winding);
-		f->contents = p->nodes[0]->contents;
+		f->contentFlags = p->nodes[0]->contentFlags;
 	}
 	return f;
 }
@@ -889,7 +889,7 @@ static void MakeFaces_r (node_t *node)
 	}
 
 	/* solid leafs never have visible faces */
-	if (node->contents & CONTENTS_SOLID)
+	if (node->contentFlags & CONTENTS_SOLID)
 		return;
 
 	/* see which portals are valid */

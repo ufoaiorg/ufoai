@@ -143,7 +143,7 @@ static void EmitLeaf (node_t *node)
 	leaf_p = &dleafs[numleafs];
 	numleafs++;
 
-	leaf_p->contents = node->contents;
+	leaf_p->contentFlags = node->contentFlags;
 	leaf_p->cluster = node->cluster;
 	leaf_p->area = node->area;
 
@@ -169,7 +169,7 @@ static void EmitLeaf (node_t *node)
 	leaf_p->numleafbrushes = numleafbrushes - leaf_p->firstleafbrush;
 
 	/* write the leaffaces */
-	if (leaf_p->contents & CONTENTS_SOLID)
+	if (leaf_p->contentFlags & CONTENTS_SOLID)
 		return;		/* no leaffaces in solids */
 
 	leaf_p->firstleafface = numleaffaces;
@@ -390,7 +390,7 @@ static void EmitBrushes (void)
 		b = &mapbrushes[bnum];
 		db = &dbrushes[bnum];
 
-		db->contents = b->contents;
+		db->contentFlags = b->contentFlags;
 		db->firstside = numbrushsides;
 		db->numsides = b->numsides;
 		for (j = 0; j < b->numsides; j++) {
@@ -455,7 +455,7 @@ void BeginBSPFile (void)
 
 	/* leave leaf 0 as an error */
 	numleafs = 1;
-	dleafs[0].contents = CONTENTS_SOLID;
+	dleafs[0].contentFlags = CONTENTS_SOLID;
 }
 
 

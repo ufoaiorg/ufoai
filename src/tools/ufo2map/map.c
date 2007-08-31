@@ -258,20 +258,20 @@ static int PlaneFromPoints (int *p0, int *p1, int *p2)
  */
 static int BrushContents (mapbrush_t *b)
 {
-	int			contents;
+	int			contentFlags;
 	side_t		*s;
 	int			i;
 	int			trans;
 
 	s = &b->original_sides[0];
-	contents = s->contents;
+	contentFlags = s->contentFlags;
 	trans = texinfo[s->texinfo].flags;
 	for (i = 1; i < b->numsides; i++, s++) {
 		s = &b->original_sides[i];
 		trans |= texinfo[s->texinfo].flags;
-		if (s->contents != contents) {
+		if (s->contentFlags != contentFlags) {
 			Sys_FPrintf(SYS_VRB, "Entity %i, Brush %i: mixed face contents (f: %i, %i)\n"
-				, b->entitynum, b->brushnum, s->contents, contents);
+				, b->entitynum, b->brushnum, s->contentFlags, contentFlags);
 			break;
 		}
 	}
@@ -279,14 +279,14 @@ static int BrushContents (mapbrush_t *b)
 	/* if any side is translucent, mark the contents */
 	/* and change solid to window */
 	if (trans & (SURF_TRANS33|SURF_TRANS66|SURF_ALPHATEST)) {
-		contents |= CONTENTS_TRANSLUCENT;
-		if (contents & CONTENTS_SOLID) {
-			contents &= ~CONTENTS_SOLID;
-			contents |= CONTENTS_WINDOW;
+		contentFlags |= CONTENTS_TRANSLUCENT;
+		if (contentFlags & CONTENTS_SOLID) {
+			contentFlags &= ~CONTENTS_SOLID;
+			contentFlags |= CONTENTS_WINDOW;
 		}
 	}
 
-	return contents;
+	return contentFlags;
 }
 
 
@@ -332,7 +332,7 @@ static void AddBrushBevels (mapbrush_t *b)
 					dist = -b->mins[axis];
 				s->planenum = FindFloatPlane (normal, dist);
 				s->texinfo = b->original_sides[0].texinfo;
-				s->contents = b->original_sides[0].contents;
+				s->contentFlags = b->original_sides[0].contentFlags;
 				s->bevel = qtrue;
 				c_boxbevels++;
 			}
@@ -344,9 +344,9 @@ static void AddBrushBevels (mapbrush_t *b)
 				b->original_sides[i] = sidetemp;
 
 				j = b->original_sides - brushsides;
-				tdtemp = side_brushtextures[j+order];
-				side_brushtextures[j+order] = side_brushtextures[j+i];
-				side_brushtextures[j+i] = tdtemp;
+				tdtemp = side_brushtextures[j + order];
+				side_brushtextures[j + order] = side_brushtextures[j + i];
+				side_brushtextures[j + i] = tdtemp;
 			}
 		}
 	}
@@ -415,7 +415,7 @@ static void AddBrushBevels (mapbrush_t *b)
 					s2 = &b->original_sides[b->numsides];
 					s2->planenum = FindFloatPlane(normal, dist);
 					s2->texinfo = b->original_sides[0].texinfo;
-					s2->contents = b->original_sides[0].contents;
+					s2->contentFlags = b->original_sides[0].contentFlags;
 					s2->bevel = qtrue;
 					c_edgebevels++;
 					b->numsides++;
@@ -550,32 +550,32 @@ static void ParseBrush (entity_t *mapent)
 
 		/* find default flags and values */
 		mt = FindMiptex(td.name);
-		td.flags = textureref[mt].flags;
+		td.flags = textureref[mt].surfaceFlags;
 		td.value = textureref[mt].value;
-		side->contents = textureref[mt].contents;
-		side->surf = td.flags = textureref[mt].flags;
+		side->contentFlags = textureref[mt].contentFlags;
+		side->surfaceFlags = td.flags = textureref[mt].surfaceFlags;
 
 		if (TokenAvailable()) {
 			GetToken(qfalse);
-			side->contents = atoi(token);
+			side->contentFlags = atoi(token);
 			GetToken(qfalse);
-			side->surf = td.flags = atoi(token);
+			side->surfaceFlags = td.flags= atoi(token);
 			GetToken(qfalse);
 			td.value = atoi(token);
 		}
 
 		/* translucent objects are automatically classified as detail */
-		if (side->surf & (SURF_TRANS33|SURF_TRANS66|SURF_ALPHATEST) )
-			side->contents |= CONTENTS_DETAIL;
+		if (side->surfaceFlags & (SURF_TRANS33|SURF_TRANS66|SURF_ALPHATEST))
+			side->contentFlags |= CONTENTS_DETAIL;
 		if (config.fulldetail)
-			side->contents &= ~CONTENTS_DETAIL;
-		if (!(side->contents & (LAST_VISIBLE_CONTENTS - 1) ) )
-			side->contents |= CONTENTS_SOLID;
+			side->contentFlags &= ~CONTENTS_DETAIL;
+		if (!(side->contentFlags & (LAST_VISIBLE_CONTENTS - 1)))
+			side->contentFlags |= CONTENTS_SOLID;
 
 		/* hints and skips are never detail, and have no content */
-		if (side->surf & (SURF_HINT|SURF_SKIP) ) {
-			side->contents = 0;
-			side->surf &= ~CONTENTS_DETAIL;
+		if (side->surfaceFlags & (SURF_HINT|SURF_SKIP)) {
+			side->contentFlags = 0;
+			side->surfaceFlags &= ~CONTENTS_DETAIL;
 		}
 
 		/* find the plane number */
@@ -609,8 +609,8 @@ static void ParseBrush (entity_t *mapent)
 		side->texinfo = TexinfoForBrushTexture(&mapplanes[planenum],
 			&td, vec3_origin, b->isTerrain);
 
-		/* save the td off in case there is an origin brush and we */
-		/* have to recalculate the texinfo */
+		/* save the td off in case there is an origin brush and we
+		 * have to recalculate the texinfo */
 		side_brushtextures[nummapbrushsides] = td;
 
 		nummapbrushsides++;
@@ -618,26 +618,26 @@ static void ParseBrush (entity_t *mapent)
 	} while (1);
 
 	/* get the content for the entire brush */
-	b->contents = BrushContents(b);
+	b->contentFlags = BrushContents(b);
 
 	/* allow detail brushes to be removed  */
-	if (config.nodetail && (b->contents & CONTENTS_DETAIL)) {
+	if (config.nodetail && (b->contentFlags & CONTENTS_DETAIL)) {
 		b->numsides = 0;
 		return;
 	}
 
 	/* allow water brushes to be removed */
-	if (config.nowater && (b->contents & CONTENTS_WATER)) {
+	if (config.nowater && (b->contentFlags & CONTENTS_WATER)) {
 		b->numsides = 0;
 		return;
 	}
 
 	/* Knightmare- check if this is an optimized detail brush (has caulk faces)
 	 * also exclude trans brushes and terrain */
-	if ((b->contents & CONTENTS_DETAIL) && (b->contents & CONTENTS_SOLID) && !b->isTerrain && !b->isGenSurf)
+	if ((b->contentFlags & CONTENTS_DETAIL) && (b->contentFlags & CONTENTS_SOLID) && !b->isTerrain && !b->isGenSurf)
 		for (i = 0; i < b->numsides; i++) {
 			/* nodraw/caulk faces */
-			if ((b->original_sides[i].surf & SURF_NODRAW) && !(b->original_sides[i].surf & SURF_SKIP)) {
+			if ((b->original_sides[i].surfaceFlags & SURF_NODRAW) && !(b->original_sides[i].surfaceFlags & SURF_SKIP)) {
 				b->optimizedDetail = qtrue;
 				Sys_Printf("Entity %i, Brush %i: optimized detail\n", b->entitynum, b->brushnum);
 				break;
@@ -649,7 +649,8 @@ static void ParseBrush (entity_t *mapent)
 		for (i = 0; i < b->numsides; i++) {
 			s2 = &b->original_sides[i];
 			/* set ArghRad phong shading value (because EasyGen/GTKGenSurf doesn't allow this) */
-			if (!(b->original_sides[i].surf & SURF_NODRAW) && (b->original_sides[i].surf & SURF_SKIP)) {
+			if (!(b->original_sides[i].surfaceFlags & SURF_NODRAW)
+			 && (b->original_sides[i].surfaceFlags & SURF_SKIP)) {
 				texinfo[s2->texinfo].value = 777 + b->entitynum;	/* lucky 7's */
 				texinfo[s2->texinfo].flags &= ~SURF_LIGHT;			/* must not be light-emitting */
 			}
@@ -658,12 +659,12 @@ static void ParseBrush (entity_t *mapent)
 	/* create windings for sides and bounds for brush */
 	MakeBrushWindings(b);
 
-	/* origin brushes are removed, but they set */
-	/* the rotation origin for the rest of the brushes */
-	/* in the entity.  After the entire entity is parsed, */
-	/* the planenums and texinfos will be adjusted for */
-	/* the origin brush */
-	if (b->contents & CONTENTS_ORIGIN) {
+	/* origin brushes are removed, but they set
+	 * the rotation origin for the rest of the brushes
+	 * in the entity.  After the entire entity is parsed,
+	 * the planenums and texinfos will be adjusted for
+	 * the origin brush */
+	if (b->contentFlags & CONTENTS_ORIGIN) {
 		char	string[32];
 		vec3_t	origin;
 

@@ -745,10 +745,6 @@ int TryLoadTGA (const char *path, miptex_t **mt)
 	(*mt)->width = width;
 	(*mt)->height = height;
 	(*mt)->offsets[0] = sizeof(miptex_t);
-	(*mt)->value = 0;
-	(*mt)->flags = 0;
-	(*mt)->contents = 0;
-	(*mt)->animname[0] = 0;
 
 	return 0;
 }
@@ -937,7 +933,6 @@ int TryLoadJPG (const char *path, miptex_t **mt)
 	(*mt)->width = width;
 	(*mt)->height = height;
 	(*mt)->offsets[0] = sizeof(miptex_t);
-	(*mt)->animname[0] = 0;
 
 	return 0;
 }

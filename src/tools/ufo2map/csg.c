@@ -225,7 +225,7 @@ int MapBrushesBounds (int startbrush, int endbrush, int level, vec3_t clipmins, 
 		if (b->finished)
 			continue;
 
-		if (!IsInLevel(b->contents, level))
+		if (!IsInLevel(b->contentFlags, level))
 			continue;
 
 		/* check the bounds */
@@ -276,7 +276,7 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, vec3_t cl
 	for (i = startbrush; i < endbrush; i++) {
 		mb = &mapbrushes[i];
 
-		if (!IsInLevel(mb->contents, level))
+		if (!IsInLevel(mb->contentFlags, level))
 			continue;
 
 		if (mb->finished)
@@ -308,7 +308,7 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, vec3_t cl
 		for (j = 0; j < numsides; j++) {
 			if (newbrush->sides[j].winding)
 				newbrush->sides[j].winding = CopyWinding(newbrush->sides[j].winding);
-			if (newbrush->sides[j].surf & SURF_HINT)
+			if (newbrush->sides[j].surfaceFlags & SURF_HINT)
 				newbrush->sides[j].visible = qtrue; /* hints are always visible */
 		}
 		VectorCopy(mb->mins, newbrush->mins);
@@ -374,10 +374,10 @@ static bspbrush_t *CullList (bspbrush_t *list, bspbrush_t *skip1)
 static qboolean BrushGE (bspbrush_t *b1, bspbrush_t *b2)
 {
 	/* detail brushes never bite structural brushes */
-	if ((b1->original->contents & CONTENTS_DETAIL)
-		&& !(b2->original->contents & CONTENTS_DETAIL))
+	if ((b1->original->contentFlags & CONTENTS_DETAIL)
+		&& !(b2->original->contentFlags & CONTENTS_DETAIL))
 		return qfalse;
-	if (b1->original->contents & CONTENTS_SOLID)
+	if (b1->original->contentFlags & CONTENTS_SOLID)
 		return qtrue;
 	return qfalse;
 }

@@ -407,9 +407,9 @@ static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 				back = 1;
 		}
 		if (front && back) {
-			if (!(brush->sides[i].surf & SURF_SKIP)) {
+			if (!(brush->sides[i].surfaceFlags & SURF_SKIP)) {
 				(*numsplits)++;
-				if (brush->sides[i].surf & SURF_HINT)
+				if (brush->sides[i].surfaceFlags & SURF_HINT)
 					*hintsplit = qtrue;
 			}
 		}
@@ -420,8 +420,8 @@ static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 		(*epsilonbrush)++;
 
 #if 0
-	if (*numsplits == 0)
-	{	/*	didn't really need to be split */
+	if (*numsplits == 0) {
+		/*	didn't really need to be split */
 		if (front)
 			s = PSIDE_FRONT;
 		else if (back)
@@ -442,7 +442,7 @@ static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 qboolean WindingIsTiny (winding_t *w)
 {
 #if 0
-	if (WindingArea (w) < 1)
+	if (WindingArea(w) < 1)
 		return qtrue;
 	return qfalse;
 #else
@@ -489,21 +489,21 @@ static void LeafNode (node_t *node, bspbrush_t *brushes)
 	int			i;
 
 	node->planenum = PLANENUM_LEAF;
-	node->contents = 0;
+	node->contentFlags = 0;
 
 	for (b = brushes; b; b = b->next) {
 		/* if the brush is solid and all of its sides are on nodes, */
 		/* it eats everything */
-		if (b->original->contents & CONTENTS_SOLID) {
+		if (b->original->contentFlags & CONTENTS_SOLID) {
 			for (i = 0; i < b->numsides; i++)
 				if (b->sides[i].texinfo != TEXINFO_NODE)
 					break;
 			if (i == b->numsides) {
-				node->contents = CONTENTS_SOLID;
+				node->contentFlags = CONTENTS_SOLID;
 				break;
 			}
 		}
-		node->contents |= b->original->contents;
+		node->contentFlags |= b->original->contentFlags;
 	}
 
 	node->brushlist = brushes;
@@ -536,9 +536,9 @@ static qboolean CheckPlaneAgainstVolume (int pnum, node_t *node)
 	good = (front && back);
 
 	if (front)
-		FreeBrush (front);
+		FreeBrush(front);
 	if (back)
-		FreeBrush (back);
+		FreeBrush(back);
 
 	return good;
 }
@@ -573,9 +573,9 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 	numpasses = 4;
 	for (pass = 0; pass < numpasses; pass++) {
 		for (brush = brushes; brush; brush = brush->next) {
-			if ((pass & 1) && !(brush->original->contents & CONTENTS_DETAIL))
+			if ((pass & 1) && !(brush->original->contentFlags & CONTENTS_DETAIL))
 				continue;
-			if (!(pass & 1) && (brush->original->contents & CONTENTS_DETAIL))
+			if (!(pass & 1) && (brush->original->contentFlags & CONTENTS_DETAIL))
 				continue;
 			for (i = 0; i < brush->numsides; i++) {
 				side = brush->sides + i;
@@ -587,17 +587,17 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 					continue;	/* allready a node splitter */
 				if (side->tested)
 					continue;	/* we allready have metrics for this plane */
-				if (side->surf & SURF_SKIP)
+				if (side->surfaceFlags & SURF_SKIP)
 					continue;	/* skip surfaces are never chosen */
-				if ( side->visible ^ (pass<2) )
+				if (side->visible ^ (pass<2))
 					continue;	/* only check visible faces on first pass */
 
 				pnum = side->planenum;
 				pnum &= ~1;	/* allways use positive facing plane */
 
-				CheckPlaneAgainstParents (pnum, node);
+				CheckPlaneAgainstParents(pnum, node);
 
-				if (!CheckPlaneAgainstVolume (pnum, node))
+				if (!CheckPlaneAgainstVolume(pnum, node))
 					continue;	/* would produce a tiny volume */
 
 				front = 0;
@@ -635,14 +635,14 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 				/* give a value estimate for using this plane */
 
 				value =  5 * facing - 5 * splits - abs(front-back);
-/*					value =  -5*splits; */
-/*					value =  5*facing - 5*splits; */
+/*				value = -5 * splits; */
+/*				value = 5 * facing - 5 * splits; */
 				if (mapplanes[pnum].type < 3)
 					value += 5;		/* axial is better */
-				value -= epsilonbrush*1000;	/* avoid! */
+				value -= epsilonbrush * 1000;	/* avoid! */
 
 				/* never split a hint side except with another hint */
-				if (hintsplit && !(side->surf & SURF_HINT) )
+				if (hintsplit && !(side->surfaceFlags & SURF_HINT))
 					value = -9999999;
 
 				/* save off the side test so we don't need */

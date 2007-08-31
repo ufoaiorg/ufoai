@@ -627,7 +627,7 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 					+ l->textoworld[1][j] * ut;
 
 				leaf = Rad_PointInLeaf(surf);
-				if (leaf->contents != CONTENTS_SOLID) {
+				if (leaf->contentFlags != CONTENTS_SOLID) {
 					if (!TestLine(facemid, surf))
 						break;	/* got it */
 				}

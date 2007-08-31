@@ -330,7 +330,7 @@ static void Mod_LoadFaces (lump_t * l)
 static void Mod_SetParent (mBspNode_t * node, mBspNode_t * parent)
 {
 	node->parent = parent;
-	if (node->contents != -1)
+	if (node->contents != NODE_NO_LEAF)
 		return;
 	Mod_SetParent(node->children[0], node);
 	Mod_SetParent(node->children[1], node);
@@ -370,7 +370,7 @@ static void Mod_LoadNodes (lump_t * l)
 		out->firstsurface = LittleShort(in->firstface);
 		out->numsurfaces = LittleShort(in->numfaces);
 		/* differentiate from leafs */
-		out->contents = -1;
+		out->contents = NODE_NO_LEAF;
 
 		for (j = 0; j < 2; j++) {
 			p = LittleLong(in->children[j]);
@@ -412,7 +412,7 @@ static void Mod_LoadLeafs (lump_t * l)
 			out->minmaxs[3 + j] = LittleShort(in->maxs[j]) + shift[j];
 		}
 
-		p = LittleLong(in->contents);
+		p = LittleLong(in->contentFlags);
 		out->contents = p;
 
 		out->cluster = LittleShort(in->cluster);

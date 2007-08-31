@@ -72,8 +72,8 @@ typedef struct side_s {
 	int			texinfo;
 	winding_t	*winding;
 	struct side_s	*original;	/**< bspbrush_t sides will reference the mapbrush_t sides */
-	int			contents;		/**< from miptex */
-	int			surf;			/**< from miptex */
+	int			contentFlags;	/**< from miptex */
+	int			surfaceFlags;	/**< from miptex */
 	qboolean	visible;		/**< choose visible planes first */
 	qboolean	tested;			/**< this plane allready checked as a split */
 	qboolean	bevel;			/**< don't ever use for bsp splitting */
@@ -83,7 +83,7 @@ typedef struct brush_s {
 	int		entitynum;
 	int		brushnum;
 
-	int		contents;
+	int		contentFlags;
 
 	vec3_t	mins, maxs;
 
@@ -112,7 +112,7 @@ typedef struct face_s {
 	struct portal_s	*portal;
 	int				texinfo;
 	int				planenum;
-	int				contents;	/**< faces in different contents can't merge */
+	int				contentFlags;	/**< faces in different contents can't merge */
 	int				outputnumber;
 	winding_t		*w;
 	int				numpoints;
@@ -145,7 +145,7 @@ typedef struct node_s {
 
 	/** leafs only */
 	bspbrush_t		*brushlist;	/**< fragments of all brushes in this leaf */
-	int				contents;	/**< OR of all brush contents */
+	int				contentFlags;	/**< OR of all brush contents */
 	int				occupied;	/**< 1 or greater can reach entity */
 	entity_t		*occupant;	/**< for leak file testing */
 	int				cluster;	/**< for portalfile writing */
@@ -201,9 +201,9 @@ int FindFloatPlane(vec3_t normal, vec_t dist);
 
 typedef struct {
 	char	name[64];
-	int		flags;
+	int		surfaceFlags;
 	int		value;
-	int		contents;
+	int		contentFlags;
 	char	animname[64];
 } textureref_t;
 

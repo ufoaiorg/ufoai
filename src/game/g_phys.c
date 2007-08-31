@@ -30,15 +30,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void G_PhysicsStep (edict_t *ent)
 {
-	int contents;
+	int contentFlags;
 	int visflags;
 
 	if (ent->moveinfo.currentStep < ent->moveinfo.steps) {
-		contents = ent->contents;
+		contentFlags = ent->contentFlags;
 		visflags = ent->moveinfo.visflags[ent->moveinfo.currentStep];
 		/* Send the sound effect to everyone how's not seeing the actor */
-		if (contents & CONTENTS_WATER) {
-			if (ent->moveinfo.contents[ent->moveinfo.currentStep] & CONTENTS_WATER) {
+		if (contentFlags & CONTENTS_WATER) {
+			if (ent->moveinfo.contentFlags[ent->moveinfo.currentStep] & CONTENTS_WATER) {
 				/* looks like we already are in the water */
 				/* send water moving sound */
 				gi.PositionedSound(~visflags, ent->origin, ent, "footsteps/water_under", CHAN_BODY, 1, 1, 0);
@@ -46,13 +46,13 @@ void G_PhysicsStep (edict_t *ent)
 				/* send water entering sound */
 				gi.PositionedSound(~visflags, ent->origin, ent, "footsteps/water_in", CHAN_BODY, 1, 1, 0);
 			}
-		} else if (ent->contents & CONTENTS_WATER) {
+		} else if (ent->contentFlags & CONTENTS_WATER) {
 			/* send water leaving sound */
 			gi.PositionedSound(~visflags, ent->origin, ent, "footsteps/water_out", CHAN_BODY, 1, 1, 0);
 		}
 
 		/* and now save the new contents */
-		ent->contents = ent->moveinfo.contents[ent->moveinfo.currentStep];
+		ent->contentFlags = ent->moveinfo.contentFlags[ent->moveinfo.currentStep];
 		ent->moveinfo.currentStep++;
 
 		/* immediatly rethink */

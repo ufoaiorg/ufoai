@@ -1250,7 +1250,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	byte dv, numdv, length, steps;
 	pos3_t pos;
 	float div, tu;
-	int contents;
+	int contentFlags;
 	vec3_t pointTrace;
 	char* stepAmount = NULL;
 
@@ -1337,7 +1337,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				VectorCopy(ent->origin, pointTrace);
 				pointTrace[2] += PLAYER_MIN;
 
-				contents = gi.PointContents(pointTrace);
+				contentFlags = gi.PointContents(pointTrace);
 
 				/* link it at new position */
 				gi.linkentity(ent);
@@ -1355,7 +1355,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 					ent->moveinfo.steps = 0;
 					ent->moveinfo.currentStep = 0;
 				}
-				ent->moveinfo.contents[ent->moveinfo.steps] = contents;
+				ent->moveinfo.contentFlags[ent->moveinfo.steps] = contentFlags;
 				ent->moveinfo.visflags[ent->moveinfo.steps] = ent->visflags;
 				ent->moveinfo.steps++;
 
@@ -1368,7 +1368,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				/* write move header and always one step after another - because the next step
 				 * might already be the last one due to some stop event */
 				gi.WriteByte(dvtab[numdv]);
-				gi.WriteShort(contents);
+				gi.WriteShort(contentFlags);
 
 				/* check if player appears/perishes, seen from other teams */
 				G_CheckVis(ent, qtrue);

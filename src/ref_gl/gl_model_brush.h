@@ -108,6 +108,8 @@ typedef struct mBspSurface_s {
 	byte *samples;				/**< [numstyles*surfsize] */
 } mBspSurface_t;
 
+#define NODE_NO_LEAF -1
+
 typedef struct mBspNode_s {
 	/* common with leaf */
 	int contents;				/**< -1, to differentiate from leafs */

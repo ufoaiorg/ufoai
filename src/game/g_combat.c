@@ -564,10 +564,10 @@ static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_m
 	}
 
 	/* FIXME: splash might also hit other surfaces */
-	if (tr && fd->dmgtype == gi.csi->damFire && tr->contents & CONTENTS_BURN) {
+	if (tr && fd->dmgtype == gi.csi->damFire && tr->contentFlags & CONTENTS_BURN) {
 		/* sent particle to all players */
 		gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
-		gi.WriteShort(tr->contents >> 8);
+		gi.WriteShort(tr->contentFlags >> 8);
 		gi.WritePos(impact);
 		gi.WriteShort(4);
 		gi.WriteString("burning");
@@ -878,7 +878,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 			gi.WriteByte(fd->weap_fds_idx);
 			gi.WriteByte(fd->fd_idx);
 			gi.WriteByte(flags);
-			gi.WriteByte(tr.contents);
+			gi.WriteByte(tr.contentFlags);
 			gi.WritePos(tracefrom);
 			gi.WritePos(impact);
 			gi.WriteDir(tr.plane.normal);
@@ -891,10 +891,10 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 			gi.WriteByte(fd->fd_idx);
 
 			if (i == 0 && (fd->dmgtype == gi.csi->damFire
-				|| fd->dmgtype == gi.csi->damBlast) && tr.contents & CONTENTS_BURN) {
+			 || fd->dmgtype == gi.csi->damBlast) && tr.contentFlags & CONTENTS_BURN) {
 				/* sent particle to all players */
 				gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
-				gi.WriteShort(tr.contents >> 8);
+				gi.WriteShort(tr.contentFlags >> 8);
 				gi.WritePos(impact);
 				gi.WriteShort(4);
 				gi.WriteString("fire");
@@ -903,7 +903,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 
 		if (tr.fraction < 1.0 && !fd->bounce) {
 			/* check for shooting through wall */
-			if (throughWall && tr.contents & CONTENTS_SOLID) {
+			if (throughWall && tr.contentFlags & CONTENTS_SOLID) {
 				throughWall--;
 				/* reduce damage */
 				/* TODO: reduce even more if the wall was hit far away and

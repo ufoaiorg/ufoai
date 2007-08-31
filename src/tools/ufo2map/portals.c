@@ -63,12 +63,12 @@ void FreePortal (portal_t *p)
 /**
  * @brief Returns the single content bit of the strongest visible content present
  */
-int VisibleContents (int contents)
+int VisibleContents (int contentFlags)
 {
 	int i;
 
 	for (i = 1; i <= LAST_VISIBLE_CONTENTS; i <<= 1)
-		if (contents & i)
+		if (contentFlags & i)
 			return i;
 
 	return 0;
@@ -83,7 +83,7 @@ static int ClusterContents (node_t *node)
 	int c1, c2, c;
 
 	if (node->planenum == PLANENUM_LEAF)
-		return node->contents;
+		return node->contentFlags;
 
 	c1 = ClusterContents(node->children[0]);
 	c2 = ClusterContents(node->children[1]);
@@ -176,7 +176,7 @@ static void MakeHeadnodePortals (tree_t *tree)
 	tree->outside_node.planenum = PLANENUM_LEAF;
 	tree->outside_node.brushlist = NULL;
 	tree->outside_node.portals = NULL;
-	tree->outside_node.contents = 0;
+	tree->outside_node.contentFlags = 0;
 
 	for (i = 0; i < 3; i++)
 		for (j = 0; j < 2; j++) {
@@ -459,7 +459,7 @@ static void FindPortalSide (portal_t *p)
 
 	/* decide which content change is strongest */
 	/* solid > lava > water, etc */
-	viscontents = VisibleContents(p->nodes[0]->contents ^ p->nodes[1]->contents);
+	viscontents = VisibleContents(p->nodes[0]->contentFlags ^ p->nodes[1]->contentFlags);
 	if (!viscontents)
 		return;
 
@@ -473,7 +473,7 @@ static void FindPortalSide (portal_t *p)
 		for (bb = n->brushlist; bb; bb = bb->next) {
 			brush = bb->original;
 
-			if (!(brush->contents & viscontents))
+			if (!(brush->contentFlags & viscontents))
 				continue;
 			for (i = 0; i < brush->numsides; i++) {
 				side = &brush->original_sides[i];
@@ -520,7 +520,7 @@ static void MarkVisibleSides_r (node_t *node)
 	}
 
 	/* empty leafs are never boundary leafs */
-	if (!node->contents)
+	if (!node->contentFlags)
 		return;
 
 	/* see if there is a visible face */
