@@ -1149,6 +1149,9 @@ void CL_ParticleRun (void)
 
 /**
  * @brief
+ * @param[in] es Entity string to parse the particle from
+ * @param[in] afterwards If this is true you can modify the particle after the init
+ * function for the particle was already called
  */
 static void CL_ParseMapParticle (ptl_t * ptl, const char *es, qboolean afterwards)
 {
