@@ -1,13 +1,13 @@
 /**
- * @file lbmlib.h
+ * @file imagelib.h
  */
 
-#ifndef _LBMLIB_HEADER_H
-#define _LBMLIB_HEADER_H
+#ifndef _IMAGELIB_HEADER_H
+#define _IMAGELIB_HEADER_H
 
+/* loads a pcx */
 void LoadPCX(const char *filename, byte **picture, byte **palette, int *width, int *height);
 
-/* loads / saves either lbm or pcx, depending on extension */
 void Load256Image(const char *name, byte **pixels, byte **palette, int *width, int *height);
 
 /*==============================================================================
@@ -39,4 +39,4 @@ typedef struct targa_header_s {
 int TryLoadTGA(const char *path, miptex_t **mt);
 void LoadTGA(const char *filename, byte **pixels, int *width, int *height);
 
-#endif /* _LBMLIB_HEADER_H */
+#endif /* _IMAGELIB_HEADER_H */

@@ -282,7 +282,7 @@ int ConvertBSPToASE (const char *bspName)
 	strcat(name, ".ase");
 	Sys_Printf("writing '%s'\n", name);
 
-	ExtractFileBase( bspName, base );
+	ExtractFileBase(bspName, base, sizeof(bspName));
 	strcat(base, ".bsp");
 
 	/* open it */

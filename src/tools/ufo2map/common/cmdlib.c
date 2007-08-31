@@ -105,7 +105,7 @@ void ExpandWildcards (int *argc, char ***argv)
 		if (handle == -1)
 			return;
 
-		ExtractFilePath(path, filebase);
+		ExtractFilePath(path, filebase, sizeof(path));
 
 		do {
 			sprintf(filename, "%s%s", filebase, fileinfo.name);
@@ -865,7 +865,7 @@ void StripExtension (char *path)
  * FIXME: should include the slash, otherwise
  * backing to an empty path will be wrong when appending a slash
  */
-void ExtractFilePath (const char *path, char *dest)
+void ExtractFilePath (const char *path, char *dest, size_t size)
 {
 	const char *src;
 
@@ -875,22 +875,24 @@ void ExtractFilePath (const char *path, char *dest)
 	while (src != path && *(src-1) != '\\' && *(src-1) != '/')
 		src--;
 
-	memcpy (dest, path, src-path);
-	dest[src-path] = 0;
+	strncpy(dest, path, size - 1);
+	dest[size - 1] = 0;
 }
 
 /**
  * @brief
  */
-void ExtractFileBase (const char *path, char *dest)
+void ExtractFileBase (const char *path, char *dest, size_t size)
 {
 	const char *src;
 
 	src = path + strlen(path) - 1;
 
 	/* back up until a \ or the start */
-	while (src != path && *(src-1) != '\\' && *(src-1) != '/')
+	while (src != path && *(src-1) != '\\' && *(src-1) != '/' && size - 1 > 0) {
 		src--;
+		size--;
+	}
 
 	while (*src && *src != '.') {
 		*dest++ = *src++;
@@ -901,7 +903,7 @@ void ExtractFileBase (const char *path, char *dest)
 /**
  * @brief
  */
-void ExtractFileExtension (const char *path, char *dest)
+void ExtractFileExtension (const char *path, char *dest, size_t size)
 {
 	const char *src;
 
@@ -915,7 +917,8 @@ void ExtractFileExtension (const char *path, char *dest)
 		return;
 	}
 
-	strcpy (dest,src);
+	strncpy(dest, src, size - 1);
+	dest[size - 1] = '\0';
 }
 
 

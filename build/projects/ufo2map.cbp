@@ -96,10 +96,10 @@
 		<Unit filename="../../src/tools/ufo2map/common/cmdlib.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/ufo2map/common/lbmlib.c">
+		<Unit filename="../../src/tools/ufo2map/common/imagelib.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/ufo2map/common/lbmlib.h" />
+		<Unit filename="../../src/tools/ufo2map/common/imagelib.h" />
 		<Unit filename="../../src/tools/ufo2map/common/mathlib.c">
 			<Option compilerVar="CC" />
 		</Unit>

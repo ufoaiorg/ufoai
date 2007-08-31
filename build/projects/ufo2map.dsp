@@ -115,7 +115,7 @@ SOURCE=..\..\src\qcommon\ioapi.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\tools\ufo2map\common\lbmlib.c
+SOURCE=..\..\src\tools\ufo2map\common\imagelib.c
 # End Source File
 # Begin Source File
 
@@ -203,7 +203,7 @@ SOURCE=..\..\src\qcommon\ioapi.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\tools\ufo2map\common\lbmlib.h
+SOURCE=..\..\src\tools\ufo2map\common\imagelib.h
 # End Source File
 # Begin Source File
 

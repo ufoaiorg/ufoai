@@ -1,5 +1,5 @@
 /**
- * @file lbmlib.c
+ * @file imagelib.c
  * @brief Image related code
  */
 
@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "shared.h"
 #include "cmdlib.h"
-#include "lbmlib.h"
+#include "imagelib.h"
 
 /*
 ============================================================================
@@ -121,7 +121,7 @@ LOAD IMAGE
 */
 
 /**
- * @brief Will load either an lbm or pcx, depending on extension.
+ * @brief Will load a pcx
  * @note Any of the return pointers can be NULL if you don't want them.
  * @sa LoadPCX
  * @sa Save256Image
@@ -130,9 +130,9 @@ LOAD IMAGE
  */
 void Load256Image (const char *name, byte **pixels, byte **palette, int *width, int *height)
 {
-	char ext[128];
+	char ext[4];
 
-	ExtractFileExtension(name, ext);
+	ExtractFileExtension(name, ext, sizeof(ext));
 	if (!Q_strcasecmp(ext, "pcx")) {
 		LoadPCX(name, pixels, palette, width, height);
 	} else

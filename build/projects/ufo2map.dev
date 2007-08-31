@@ -110,7 +110,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit25]
-FileName=..\..\src\tools\ufo2map\common\lbmlib.h
+FileName=..\..\src\tools\ufo2map\common\imagelib.h
 Folder=Headers
 Compile=1
 CompileCpp=1
@@ -120,14 +120,14 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit26]
-FileName=..\..\src\tools\ufo2map\common\lbmlib.c
+FileName=..\..\src\tools\ufo2map\common\imagelib.c
 Folder=Source
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=$(CC) -c lbmlib.c -o lbmlib.o $(CFLAGS)
+BuildCmd=$(CC) -c imagelib.c -o imagelib.o $(CFLAGS)
 
 [Unit27]
 FileName=..\..\src\tools\ufo2map\convert_ase.c

@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "common/mathlib.h"
 #include "common/bspfile.h"
 #include "common/polylib.h"
-#include "common/lbmlib.h"
+#include "common/imagelib.h"
 
 #ifdef _WIN32
 #include <windows.h>
