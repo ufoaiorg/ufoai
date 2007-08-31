@@ -566,10 +566,12 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 	bestvalue = -99999;
 	bestsplits = 0;
 
-	/* the search order goes: visible-structural, visible-detail, */
-	/* nonvisible-structural, nonvisible-detail. */
-	/* If any valid plane is available in a pass, no further */
-	/* passes will be tried. */
+	/**
+	 * the search order goes: visible-structural, visible-detail,
+	 * nonvisible-structural, nonvisible-detail.
+	 * If any valid plane is available in a pass, no further
+	 * passes will be tried.
+	 */
 	numpasses = 4;
 	for (pass = 0; pass < numpasses; pass++) {
 		for (brush = brushes; brush; brush = brush->next) {

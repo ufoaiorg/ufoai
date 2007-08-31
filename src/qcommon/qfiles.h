@@ -466,7 +466,7 @@ typedef struct {
 
 typedef struct texinfo_s {
 	float vecs[2][4];			/**< [s/t][xyz offset] */
-	int flags;					/**< miptex flags + overrides */
+	int surfaceFlags;			/**< miptex flags + overrides */
 	int value;					/**< light emission, etc */
 	char texture[32];			/**< texture name (textures\*.wal) */
 	int nexttexinfo;			/**< for animations, -1 = end of chain */

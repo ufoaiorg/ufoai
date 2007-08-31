@@ -749,7 +749,7 @@ static void SubdivideFace (node_t *node, face_t *f)
 	/* special (non-surface cached) faces don't need subdivision */
 	tex = &texinfo[f->texinfo];
 
-	if (tex->flags & SURF_WARP)
+	if (tex->surfaceFlags & SURF_WARP)
 		return;
 
 	for (axis = 0; axis < 2; axis++) {
@@ -845,10 +845,10 @@ static face_t *FaceFromPortal (portal_t *p, int pside)
 	if (!config.nobackclip && mapplanes[f->planenum].normal[2] < -0.9)
 		/* this face is not visible from birds view - optimize away
 		 * but only if it's not light emitting surface */
-		if (!texinfo[f->texinfo].flags & SURF_LIGHT)
+		if (!texinfo[f->texinfo].surfaceFlags & SURF_LIGHT)
 			return NULL;
 
-	if (texinfo[f->texinfo].flags & SURF_NODRAW)
+	if (texinfo[f->texinfo].surfaceFlags & SURF_NODRAW)
 		return NULL;
 
 	if (pside) {

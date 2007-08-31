@@ -63,7 +63,7 @@ typedef struct {
 	vec_t	rotate;
 	vec_t	scale[2];
 	char	name[32];
-	int		flags;
+	int		surfaceFlags;
 	int		value;
 } brush_texture_t;
 

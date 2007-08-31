@@ -201,8 +201,8 @@ static void BaseLightForFace (dface_t *f, vec3_t color)
 
 	/* check for light emited by texture */
 	tx = &texinfo[f->texinfo];
-	if (!(tx->flags & SURF_LIGHT) || tx->value == 0) {
-		if (tx->flags & SURF_LIGHT)
+	if (!(tx->surfaceFlags & SURF_LIGHT) || tx->value == 0) {
+		if (tx->surfaceFlags & SURF_LIGHT)
 			Sys_Printf("Surface light has 0 intensity.\n");
 		VectorClear(color);
 		return;

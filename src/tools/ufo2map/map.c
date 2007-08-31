@@ -265,10 +265,10 @@ static int BrushContents (mapbrush_t *b)
 
 	s = &b->original_sides[0];
 	contentFlags = s->contentFlags;
-	trans = texinfo[s->texinfo].flags;
+	trans = texinfo[s->texinfo].surfaceFlags;
 	for (i = 1; i < b->numsides; i++, s++) {
 		s = &b->original_sides[i];
-		trans |= texinfo[s->texinfo].flags;
+		trans |= texinfo[s->texinfo].surfaceFlags;
 		if (s->contentFlags != contentFlags) {
 			Sys_FPrintf(SYS_VRB, "Entity %i, Brush %i: mixed face contents (f: %i, %i)\n"
 				, b->entitynum, b->brushnum, s->contentFlags, contentFlags);
@@ -550,16 +550,16 @@ static void ParseBrush (entity_t *mapent)
 
 		/* find default flags and values */
 		mt = FindMiptex(td.name);
-		td.flags = textureref[mt].surfaceFlags;
+		td.surfaceFlags = textureref[mt].surfaceFlags;
 		td.value = textureref[mt].value;
 		side->contentFlags = textureref[mt].contentFlags;
-		side->surfaceFlags = td.flags = textureref[mt].surfaceFlags;
+		side->surfaceFlags = td.surfaceFlags = textureref[mt].surfaceFlags;
 
 		if (TokenAvailable()) {
 			GetToken(qfalse);
 			side->contentFlags = atoi(token);
 			GetToken(qfalse);
-			side->surfaceFlags = td.flags= atoi(token);
+			side->surfaceFlags = td.surfaceFlags = atoi(token);
 			GetToken(qfalse);
 			td.value = atoi(token);
 		}
@@ -652,7 +652,7 @@ static void ParseBrush (entity_t *mapent)
 			if (!(b->original_sides[i].surfaceFlags & SURF_NODRAW)
 			 && (b->original_sides[i].surfaceFlags & SURF_SKIP)) {
 				texinfo[s2->texinfo].value = 777 + b->entitynum;	/* lucky 7's */
-				texinfo[s2->texinfo].flags &= ~SURF_LIGHT;			/* must not be light-emitting */
+				texinfo[s2->texinfo].surfaceFlags &= ~SURF_LIGHT;			/* must not be light-emitting */
 			}
 		}
 

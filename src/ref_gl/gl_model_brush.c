@@ -178,7 +178,7 @@ static void Mod_LoadTexinfo (lump_t * l)
 			out->vecs[1][j] = LittleFloat(in->vecs[1][j]);
 		}
 
-		out->flags = LittleLong(in->flags);
+		out->flags = LittleLong(in->surfaceFlags);
 		next = LittleLong(in->nexttexinfo);
 		if (next > 0)
 			out->next = loadmodel->bsp.texinfo + next;

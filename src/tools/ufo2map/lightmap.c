@@ -1006,7 +1006,7 @@ void BuildFacelights (unsigned int facenum)
 
 	f = &dfaces[facenum];
 
-	if (texinfo[f->texinfo].flags & SURF_WARP)
+	if (texinfo[f->texinfo].surfaceFlags & SURF_WARP)
 		return;		/* non-lit texture */
 
 	l = malloc(MAX_SAMPLES * sizeof(lightinfo_t));
@@ -1108,7 +1108,7 @@ void FinalLightFace (unsigned int facenum)
 	fl = &facelight[facenum];
 
 	/* non-lit texture */
-	if (texinfo[f->texinfo].flags & SURF_WARP)
+	if (texinfo[f->texinfo].surfaceFlags & SURF_WARP)
 		return;
 
 	f->lightofs = lightdatasize;

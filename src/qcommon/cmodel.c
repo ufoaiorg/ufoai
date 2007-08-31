@@ -337,7 +337,7 @@ static void CMod_LoadSurfaces (lump_t * l, vec3_t shift)
 
 	for (i = 0; i < count; i++, in++, out++) {
 		Q_strncpyz(out->name, in->texture, sizeof(out->name));
-		out->flags = LittleLong(in->flags);
+		out->flags = LittleLong(in->surfaceFlags);
 		out->value = LittleLong(in->value);
 	}
 }
