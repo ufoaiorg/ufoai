@@ -84,6 +84,8 @@ static void ProcessSubModel (void)
 	if (!config.nocsg)
 		list = ChopBrushes(list);
 	tree = BrushBSP(list, mins, maxs);
+	if (tree->headnode->planenum == PLANENUM_LEAF)
+		Error("No head node bmodel of %s\n", ValueForKey(e, "classname"));
 	MakeTreePortals(tree);
 	MarkVisibleSides(tree, start, end);
 	MakeFaces(tree->headnode);

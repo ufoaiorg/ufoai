@@ -409,7 +409,7 @@ static void FixFaceEdges (node_t *node, face_t *f)
 	/* on either side, which can cause artifacts on trifans, */
 	/* especially underwater */
 	for (i = 0; i < f->numpoints; i++) {
-		if (count[i] == 1 && count[(i+f->numpoints-1)%f->numpoints] == 1)
+		if (count[i] == 1 && count[(i + f->numpoints - 1) % f->numpoints] == 1)
 			break;
 	}
 	if (i == f->numpoints) {
@@ -515,7 +515,7 @@ void FreeFace (face_t *f)
 {
 	if (f->w)
 		FreeWinding(f->w);
-	free (f);
+	free(f);
 	c_faces--;
 }
 
@@ -527,8 +527,8 @@ void FreeFace (face_t *f)
  */
 int GetEdge (int v1, int v2,  face_t *f)
 {
-	dedge_t	*edge;
-	int		i;
+	dedge_t *edge;
+	int i;
 
 	c_tryedges++;
 
@@ -629,9 +629,9 @@ static winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, vec3_t planenor
 	CrossProduct(planenormal, delta, normal);
 	VectorNormalize(normal, normal);
 
-	back = f2->p[(j+f2->numpoints-1)%f2->numpoints];
-	VectorSubtract (back, p2, delta);
-	dot = DotProduct (delta, normal);
+	back = f2->p[(j + f2->numpoints - 1) % f2->numpoints];
+	VectorSubtract(back, p2, delta);
+	dot = DotProduct(delta, normal);
 	/* not a convex polygon */
 	if (dot > CONTINUOUS_EPSILON)
 		return NULL;
