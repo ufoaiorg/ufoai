@@ -25,38 +25,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "qbsp.h"
 
-
 int c_nodes;
 static int c_nonvis;
 static int c_active_brushes;
 
-/* if a brush just barely pokes onto the other side, */
-/* let it slide by without chopping */
+/* if a brush just barely pokes onto the other side, let it slide by without chopping */
 #define	PLANESIDE_EPSILON	0.001
-/*0.1 */
 
 #define	PSIDE_FRONT			1
 #define	PSIDE_BACK			2
 #define	PSIDE_BOTH			(PSIDE_FRONT|PSIDE_BACK)
 #define	PSIDE_FACING		4
-
-
-/**
- * @brief
- */
-static void FindBrushInTree (node_t *node, int brushnum)
-{
-	bspbrush_t	*b;
-
-	if (node->planenum == PLANENUM_LEAF) {
-		for (b = node->brushlist; b; b = b->next)
-			if (b->original->brushnum == brushnum)
-				Sys_Printf("here\n");
-		return;
-	}
-	FindBrushInTree (node->children[0], brushnum);
-	FindBrushInTree (node->children[1], brushnum);
-}
 
 /**
  * @brief Sets the mins/maxs based on the windings
@@ -66,7 +45,7 @@ static void BoundBrush (bspbrush_t *brush)
 	int			i, j;
 	winding_t	*w;
 
-	ClearBounds (brush->mins, brush->maxs);
+	ClearBounds(brush->mins, brush->maxs);
 	for (i = 0; i < brush->numsides; i++) {
 		w = brush->sides[i].winding;
 		if (!w)
@@ -89,20 +68,20 @@ static void CreateBrushWindings (bspbrush_t *brush)
 	for (i = 0; i < brush->numsides; i++) {
 		side = &brush->sides[i];
 		plane = &mapplanes[side->planenum];
-		w = BaseWindingForPlane (plane->normal, plane->dist);
+		w = BaseWindingForPlane(plane->normal, plane->dist);
 		for (j = 0; j < brush->numsides && w; j++) {
 			if (i == j)
 				continue;
 			if (brush->sides[j].bevel)
 				continue;
 			plane = &mapplanes[brush->sides[j].planenum^1];
-			ChopWindingInPlace (&w, plane->normal, plane->dist, 0); /*CLIP_EPSILON); */
+			ChopWindingInPlace(&w, plane->normal, plane->dist, 0); /*CLIP_EPSILON); */
 		}
 
 		side->winding = w;
 	}
 
-	BoundBrush (brush);
+	BoundBrush(brush);
 }
 
 /**
@@ -825,11 +804,11 @@ void SplitBrush (bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t
 		else
 			Sys_FPrintf(SYS_VRB, "split not on both sides\n");
 		if (b[0]) {
-			FreeBrush (b[0]);
+			FreeBrush(b[0]);
 			*front = CopyBrush(brush);
 		}
 		if (b[1]) {
-			FreeBrush (b[1]);
+			FreeBrush(b[1]);
 			*back = CopyBrush(brush);
 		}
 		return;

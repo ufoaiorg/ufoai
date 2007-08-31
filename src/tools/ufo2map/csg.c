@@ -53,7 +53,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void SplitBrush2 (bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t **back)
 {
-	SplitBrush (brush, planenum, front, back);
+	SplitBrush(brush, planenum, front, back);
 }
 
 /**
@@ -126,17 +126,17 @@ static bspbrush_t *ClipBrushToBox (bspbrush_t *brush, vec3_t clipmins, vec3_t cl
 
 	for (j = 0; j < 2; j++) {
 		if (brush->maxs[j] > clipmaxs[j]) {
-			SplitBrush (brush, maxplanenums[j], &front, &back);
+			SplitBrush(brush, maxplanenums[j], &front, &back);
 			if (front)
-				FreeBrush (front);
+				FreeBrush(front);
 			brush = back;
 			if (!brush)
 				return NULL;
 		}
 		if (brush->mins[j] < clipmins[j]) {
-			SplitBrush (brush, minplanenums[j], &front, &back);
+			SplitBrush(brush, minplanenums[j], &front, &back);
 			if (back)
-				FreeBrush (back);
+				FreeBrush(back);
 			brush = front;
 			if (!brush)
 				return NULL;

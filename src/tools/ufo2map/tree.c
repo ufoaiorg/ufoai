@@ -37,8 +37,8 @@ static void FreeTreePortals_r (node_t *node)
 
 	/* free children */
 	if (node->planenum != PLANENUM_LEAF) {
-		FreeTreePortals_r (node->children[0]);
-		FreeTreePortals_r (node->children[1]);
+		FreeTreePortals_r(node->children[0]);
+		FreeTreePortals_r(node->children[1]);
 	}
 
 	/* free portals */
@@ -46,8 +46,8 @@ static void FreeTreePortals_r (node_t *node)
 		s = (p->nodes[1] == node);
 		nextp = p->next[s];
 
-		RemovePortalFromNode (p, p->nodes[!s]);
-		FreePortal (p);
+		RemovePortalFromNode(p, p->nodes[!s]);
+		FreePortal(p);
 	}
 	node->portals = NULL;
 }
@@ -93,41 +93,11 @@ void FreeTree (tree_t *tree)
 	free(tree);
 }
 
-/**
- * @brief
- */
-static void PrintTree_r (node_t *node, int depth)
-{
-	int i;
-	plane_t *plane;
-	bspbrush_t *bb;
-
-	for (i = 0; i < depth; i++)
-		Sys_Printf("  ");
-	if (node->planenum == PLANENUM_LEAF) {
-		if (!node->brushlist)
-			Sys_Printf("NULL\n");
-		else {
-			for (bb = node->brushlist; bb; bb = bb->next)
-				Sys_Printf("%i ", bb->original->brushnum);
-			Sys_Printf("\n");
-		}
-		return;
-	}
-
-	plane = &mapplanes[node->planenum];
-	Sys_Printf("#%i (%5.2f %5.2f %5.2f):%5.2f\n", node->planenum,
-		plane->normal[0], plane->normal[1], plane->normal[2],
-		plane->dist);
-	PrintTree_r(node->children[0], depth+1);
-	PrintTree_r(node->children[1], depth+1);
-}
-
 /*=========================================================
 NODES THAT DON'T SEPERATE DIFFERENT CONTENTS CAN BE PRUNED
 =========================================================*/
 
-int	c_pruned;
+static int c_pruned;
 
 /**
  * @brief
