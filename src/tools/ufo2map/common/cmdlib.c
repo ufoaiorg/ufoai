@@ -144,9 +144,9 @@ void Error (const char *error, ...)
 		text[strlen(text)-1] = '\0';
 		va_end(argptr);
 		snprintf(text2, sizeof(text2), "%s\n\nGetLastError() = %i", text, err);
-		MessageBox(NULL, text2, "Error", 0 /* MB_OK */ );
+		MessageBox(NULL, text2, "Error", MB_OK|MB_ICONINFORMATION);
 	} else {
-		MessageBox(NULL, "Buffer too short to display error message", "Error", 0 /* MB_OK */ );
+		MessageBox(NULL, "Buffer too short to display error message", "Error", MB_OK|MB_ICONINFORMATION);
 	}
 
 	exit(1);

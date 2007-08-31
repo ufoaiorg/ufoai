@@ -145,9 +145,9 @@ void Sys_Minimize (void)
  */
 void Sys_Error (const char *error, ...)
 {
-	va_list		argptr;
-	char		text[1024];
-	int			ret;
+	va_list argptr;
+	char text[1024];
+	int ret;
 
 	CL_Shutdown();
 	Qcommon_Shutdown();
@@ -156,10 +156,8 @@ void Sys_Error (const char *error, ...)
 	Q_vsnprintf(text, sizeof(text), error, argptr);
 	va_end(argptr);
 
-	text[sizeof(text)-1] = 0;
-
 	if (strlen(text) < 900)
-		strcat (text, "\n\nWould you like to debug? (DEVELOPERS ONLY!)\n");
+		strcat(text, "\n\nWould you like to debug? (DEVELOPERS ONLY!)\n");
 
 rebox:;
 
@@ -167,15 +165,9 @@ rebox:;
 
 	if (ret == IDYES) {
 		ret = MessageBox(NULL, "Please attach your debugger now to prevent the built in exception handler from catching the breakpoint. When ready, press Yes to cause a breakpoint or No to cancel.", "UFO:AI Fatal Error", MB_ICONEXCLAMATION | MB_YESNO | MB_DEFBUTTON2);
-		if (ret == IDYES) {
-#if _MSC_VER >= 1300 /* >= MSVC 7.0 */
-#ifndef DEBUG
-			if (!IsDebuggerPresent())
-				ExitProcess(0x1d107);
-#endif
-#endif
+		if (ret == IDYES)
 			Sys_DebugBreak();
-		} else
+		else
 			goto rebox;
 	}
 
