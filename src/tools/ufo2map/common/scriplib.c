@@ -42,10 +42,10 @@ typedef struct {
 #define	MAX_INCLUDES	8
 static script_t	scriptstack[MAX_INCLUDES];
 static script_t	*script;
-int scriptline; /* extern - qdata */
+static int scriptline;
 
 char token[MAXTOKEN];
-qboolean endofscript; /* extern - qdata */
+static qboolean endofscript;
 /* only true if UnGetToken was just called */
 
 /**

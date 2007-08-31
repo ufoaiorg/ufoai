@@ -50,7 +50,6 @@ extern	int			numbrushsides;
 extern	dbrushside_t	dbrushsides[MAX_MAP_BRUSHSIDES];
 
 void LoadBSPFile(const char *filename);
-void LoadBSPFileTexinfo(const char *filename);	/* just for qdata */
 void WriteBSPFile(const char *filename);
 void PrintBSPFileSizes(void);
 

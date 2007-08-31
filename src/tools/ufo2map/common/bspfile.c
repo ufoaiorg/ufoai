@@ -345,52 +345,6 @@ void LoadBSPFile (const char *filename)
 	SwapBSPFile();
 }
 
-
-/**
- * @brief Only loads the texinfo lump, so qdata can scan for textures
- */
-void LoadBSPFileTexinfo (const char *filename)
-{
-	int i, length, ofs;
-	qFILE f;
-
-	SafeOpenRead(filename, &f);
-	if (!f.f) {
-		Sys_Printf("LoadBSPFileTexinfo: Could not load '%s'\n", filename);
-		return;
-	}
-	header = malloc(sizeof(dheader_t));
-	if (fread(header, sizeof(dheader_t), 1, f.f) != 1) {
-		Sys_Printf("LoadBSPFileTexinfo: Header size mismatch\n");
-		free(header);
-		return;
-	}
-
-	/* swap the header */
-	for (i = 0; i < sizeof(dheader_t) / 4; i++)
-		((int *)header)[i] = LittleLong(((int *)header)[i]);
-
-	if (header->ident != IDBSPHEADER)
-		Error("%s is not a IBSP file", filename);
-	if (header->version != BSPVERSION)
-		Error("%s is version %i, not %i", filename, header->version, BSPVERSION);
-
-	length = header->lumps[LUMP_TEXINFO].filelen;
-	ofs = header->lumps[LUMP_TEXINFO].fileofs;
-
-	fseek(f.f, ofs, SEEK_SET);
-	if (fread(texinfo, length, 1, f.f) != 1)
-		Sys_Printf("LoadBSPFileTexInfo: Warning, read error\n");
-	CloseFile(&f);
-
-	numtexinfo = length / sizeof(texinfo_t);
-
-	free(header);		/* everything has been copied out */
-
-	SwapBSPFile();
-}
-
-
 static qFILE bspfile;
 static dheader_t outheader;
 
