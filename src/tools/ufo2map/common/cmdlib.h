@@ -3,78 +3,6 @@
 #ifndef __CMDLIB__
 #define __CMDLIB__
 
-/* to support the gnuc __attribute__ command */
-#ifndef __GNUC__
-#  define  __attribute__(x)  /*NOTHING*/
-#endif
-
-
-#ifdef _MSC_VER
-#  pragma warning(disable : 4244)     /* MIPS */
-#  pragma warning(disable : 4136)     /* X86 */
-#  pragma warning(disable : 4051)     /* ALPHA */
-#  pragma warning(disable : 4018)     /* signed/unsigned mismatch */
-#  pragma warning(disable : 4305)     /* truncate from double to float */
-#endif	/* _MSC_VER */
-
-#if defined __STDC_VERSION__
-#  if __STDC_VERSION__ < 199901L
-#    if defined __GNUC__
-/* if we are using ansi - the compiler doesn't know about inline */
-#      define inline __inline__
-#    elif defined _MSVC
-#      define inline __inline
-#    else
-#      define inline
-#    endif
-#  endif
-#else
-#  define inline
-#endif
-
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <errno.h>
-#include <ctype.h>
-#include <time.h>
-#include <stdarg.h>
-#include <stddef.h>
-#include <assert.h>
-
-#ifndef errno
-extern int errno;
-#endif
-
-#ifndef __BYTEBOOL__
-#define __BYTEBOOL__
-typedef enum {qfalse, qtrue} qboolean;
-typedef unsigned char byte;
-#endif
-
-#include "qfiles.h"
-
-#if defined(_WIN32)
-# ifndef snprintf
-#  define snprintf _snprintf
-# endif
-#endif
-
-extern	qboolean verbose;
-
-#define SYS_VRB 0 /* verbose support (on/off) */
-#define SYS_STD 1 /* standard print level */
-#define SYS_WRN 2 /* warnings */
-#define SYS_ERR 3 /* error */
-
-/* the dec offsetof macro doesnt work very well... */
-#define myoffsetof(type,identifier) ((size_t)&((type *)0)->identifier)
-
-
-/* set these before calling CheckParm */
-extern int myargc;
-extern char **myargv;
-
 char *strupr(char *in);
 char *strlower(char *in);
 int Q_strncasecmp(const char *s1, const char *s2, int n);
@@ -86,8 +14,6 @@ int FileTime(const char *path);
 
 void Q_mkdir(const char *path);
 
-extern char qdir[1024];
-extern char gamedir[1024];
 void SetQdirFromPath(char *path);
 char *ExpandArg(const char *path);	/* from cmd line */
 char *ExpandPath(const char *path);	/* from scripts */
@@ -134,13 +60,6 @@ char *copystring(const char *s);
 
 void CreatePath(char *path);
 void QCopyFile(const char *from, char *to);
-
-extern qboolean archive;
-extern char archivedir[1024];
-
-void Error(const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
-void Sys_Printf(const char *format, ...) __attribute__((format(printf, 1, 2)));
-void Sys_FPrintf(int flag, const char *text, ...) __attribute__((format(printf, 2, 3)));
 
 void ExpandWildcards(int *argc, char ***argv);
 

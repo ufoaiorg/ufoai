@@ -25,10 +25,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <assert.h>
 
+#include "common/shared.h"
+#include "common/cmdlib.h"
 #include "common/scriplib.h"
 #include "common/mathlib.h"
 #include "common/polylib.h"
 #include "common/bspfile.h"
+#include "common/lbmlib.h"
 
 #define	CLIP_EPSILON	0.1
 

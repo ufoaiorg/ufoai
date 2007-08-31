@@ -202,20 +202,20 @@ typedef struct {
 } dmd3vertex_t;
 
 typedef struct {
-	vec3_t point;
-	vec3_t normal;
+	float point[3];
+	float normal[3];
 } admd3vertex_t;
 
 typedef struct {
-	vec3_t mins;
-	vec3_t maxs;
-	vec3_t translate;
+	float mins[3];
+	float maxs[3];
+	float translate[3];
 	float radius;
 	char creator[16];
 } dmd3frame_t;
 
 typedef struct {
-	vec3_t origin;
+	float origin[3];
 	float axis[3][3];
 } dorientation_t;
 
@@ -434,6 +434,8 @@ typedef struct {
 #define CONTENTS_DETAIL			0x8000000	/**< brushes to be added after vis leafs */
 #define CONTENTS_TRANSLUCENT	0x10000000	/**< auto set if any surface has trans */
 #define CONTENTS_STEPON         0x40000000  /**< marks areas elevated passable areas */
+
+#define MASK_CLIP		(CONTENTS_ACTORCLIP | CONTENTS_WEAPONCLIP | CONTENTS_STEPON)
 
 #define SURF_LIGHT		0x1		/**< value will hold the light strength */
 #define SURF_SLICK		0x2		/**< effects game physics */
