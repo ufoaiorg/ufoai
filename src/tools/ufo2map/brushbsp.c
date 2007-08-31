@@ -42,8 +42,8 @@ static int c_active_brushes;
  */
 static void BoundBrush (bspbrush_t *brush)
 {
-	int			i, j;
-	winding_t	*w;
+	int i, j;
+	winding_t *w;
 
 	ClearBounds(brush->mins, brush->maxs);
 	for (i = 0; i < brush->numsides; i++) {
@@ -60,10 +60,10 @@ static void BoundBrush (bspbrush_t *brush)
  */
 static void CreateBrushWindings (bspbrush_t *brush)
 {
-	int			i, j;
-	winding_t	*w;
-	side_t		*side;
-	plane_t		*plane;
+	int i, j;
+	winding_t *w;
+	side_t *side;
+	plane_t *plane;
 
 	for (i = 0; i < brush->numsides; i++) {
 		side = &brush->sides[i];

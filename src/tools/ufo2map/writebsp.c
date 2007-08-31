@@ -69,10 +69,10 @@ static int planeused[MAX_MAP_PLANES];
  */
 void EmitPlanes (void)
 {
-	int			i;
-	dplane_t	*dp;
-	plane_t		*mp;
-	int		planetranslate[MAX_MAP_PLANES];
+	int i;
+	dplane_t *dp;
+	plane_t *mp;
+	int planetranslate[MAX_MAP_PLANES];
 
 	mp = mapplanes;
 	for (i = 0; i < nummapplanes; i++, mp++) {
@@ -91,8 +91,7 @@ void EmitPlanes (void)
  */
 static void EmitMarkFace (dleaf_t *leaf_p, face_t *f)
 {
-	int			i;
-	int			facenum;
+	int i, facenum;
 
 	while (f->merged)
 		f = f->merged;
@@ -119,7 +118,6 @@ static void EmitMarkFace (dleaf_t *leaf_p, face_t *f)
 		dleaffaces[numleaffaces] =  facenum;
 		numleaffaces++;
 	}
-
 }
 
 
@@ -128,13 +126,11 @@ static void EmitMarkFace (dleaf_t *leaf_p, face_t *f)
  */
 static void EmitLeaf (node_t *node)
 {
-	dleaf_t		*leaf_p;
-	portal_t	*p;
-	int			s;
-	face_t		*f;
-	bspbrush_t	*b;
-	int			i;
-	int			brushnum;
+	dleaf_t *leaf_p;
+	portal_t *p;
+	int			s, i, brushnum;
+	face_t *f;
+	bspbrush_t *b;
 
 	/* emit a leaf */
 	if (numleafs >= MAX_MAP_LEAFS)
@@ -194,9 +190,8 @@ static void EmitLeaf (node_t *node)
  */
 static void EmitFace (face_t *f)
 {
-	dface_t	*df;
-	int		i;
-	int		e;
+	dface_t *df;
+	int i, e;
 
 	f->outputnumber = -1;
 
@@ -236,9 +231,9 @@ static void EmitFace (face_t *f)
  */
 static int EmitDrawNode_r (node_t *node)
 {
-	dnode_t	*n;
-	face_t	*f;
-	int		i;
+	dnode_t *n;
+	face_t *f;
+	int i;
 
 	if (node->planenum == PLANENUM_LEAF) {
 		EmitLeaf(node);
@@ -291,7 +286,7 @@ static int EmitDrawNode_r (node_t *node)
  */
 void WriteBSP (node_t *headnode)
 {
-	int		oldfaces;
+	int oldfaces;
 
 	c_nofaces = 0;
 	c_facenodes = 0;
@@ -311,9 +306,8 @@ void WriteBSP (node_t *headnode)
  */
 void SetModelNumbers (void)
 {
-	int		i;
-	int		models;
-	char	value[10];
+	int i, models;
+	char value[10];
 
 	models = 1;
 	for (i = 1; i < num_entities; i++) {
@@ -332,12 +326,12 @@ void SetModelNumbers (void)
  */
 void SetLightStyles (void)
 {
-	int		stylenum;
-	const char	*t;
-	entity_t	*e;
-	int		i, j;
-	char	value[10];
-	char	lighttargets[MAX_SWITCHED_LIGHTS][64];
+	int stylenum;
+	const char *t;
+	entity_t *e;
+	int i, j;
+	char value[10];
+	char lighttargets[MAX_SWITCHED_LIGHTS][64];
 
 	/* any light that is controlled (has a targetname) */
 	/* must have a unique style number generated for it */
@@ -375,13 +369,13 @@ void SetLightStyles (void)
  */
 static void EmitBrushes (void)
 {
-	int			i, j, bnum, s, x;
-	dbrush_t	*db;
-	mapbrush_t		*b;
-	dbrushside_t	*cp;
-	vec3_t		normal;
-	vec_t		dist;
-	int			planenum;
+	int i, j, bnum, s, x;
+	dbrush_t *db;
+	mapbrush_t *b;
+	dbrushside_t *cp;
+	vec3_t normal;
+	vec_t dist;
+	int planenum;
 
 	numbrushsides = 0;
 	numbrushes = nummapbrushes;
@@ -465,14 +459,14 @@ void BeginBSPFile (void)
  */
 void EndBSPFile (void)
 {
-	char	path[1024];
+	char path[1024];
 
 	EmitBrushes();
 	EmitPlanes();
 	UnparseEntities();
 
 	/* write the map */
-	sprintf(path, "%s.bsp", source);
+	snprintf(path, sizeof(path), "%s.bsp", source);
 	Sys_Printf("Writing %s\n", path);
 	WriteBSPFile(path);
 }
@@ -487,12 +481,12 @@ extern int firstmodelface;
  */
 void BeginModel (void)
 {
-	dmodel_t	*mod;
-	int			start, end;
-	mapbrush_t	*b;
-	int			j;
-	entity_t	*e;
-	vec3_t		mins, maxs;
+	dmodel_t *mod;
+	int start, end;
+	mapbrush_t *b;
+	int j;
+	entity_t *e;
+	vec3_t mins, maxs;
 
 	if (nummodels == MAX_MAP_MODELS)
 		Error("MAX_MAP_MODELS (%i)", nummodels);
@@ -530,7 +524,7 @@ void BeginModel (void)
  */
 void EndModel (void)
 {
-	dmodel_t	*mod;
+	dmodel_t *mod;
 
 	mod = &dmodels[nummodels];
 	mod->numfaces = numfaces - mod->firstface;

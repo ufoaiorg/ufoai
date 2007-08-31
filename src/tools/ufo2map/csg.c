@@ -63,7 +63,8 @@ static void SplitBrush2 (bspbrush_t *brush, int planenum, bspbrush_t **front, bs
  * @note The originals are undisturbed.
  */
 static bspbrush_t *SubtractBrush (bspbrush_t *a, bspbrush_t *b)
-{	/* a - b = out (list) */
+{
+	/* a - b = out (list) */
 	int i;
 	bspbrush_t *front, *back, *out, *in;
 
@@ -212,8 +213,8 @@ static qboolean IsInLevel (int contents, int level)
  */
 int MapBrushesBounds (int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs, vec3_t mins, vec3_t maxs)
 {
-	mapbrush_t	*b;
-	int		i, j, num;
+	mapbrush_t *b;
+	int i, j, num;
 
 	ClearBounds(mins, maxs);
 	num = 0;
@@ -250,15 +251,12 @@ int MapBrushesBounds (int startbrush, int endbrush, int level, vec3_t clipmins, 
  */
 bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs)
 {
-	mapbrush_t	*mb;
-	bspbrush_t	*brushlist, *newbrush;
-	int			i, j;
-	int			c_faces;
-	int			c_brushes;
-	int			numsides;
-	int			vis;
-	vec3_t		normal;
-	float		dist;
+	mapbrush_t *mb;
+	bspbrush_t *brushlist, *newbrush;
+	int i, j, vis;
+	int c_faces, c_brushes, numsides;
+	vec3_t normal;
+	float dist;
 
 	for (i = 0; i < 2; i++) {
 		VectorClear(normal);
@@ -334,9 +332,10 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, vec3_t cl
  */
 static bspbrush_t *AddBrushListToTail (bspbrush_t *list, bspbrush_t *tail)
 {
-	bspbrush_t	*walk, *next;
+	bspbrush_t *walk, *next;
 
-	for (walk = list; walk; walk = next) {	/* add to end of list */
+	/* add to end of list */
+	for (walk = list; walk; walk = next) {
 		next = walk->next;
 		walk->next = NULL;
 		tail->next = walk;
@@ -351,8 +350,8 @@ static bspbrush_t *AddBrushListToTail (bspbrush_t *list, bspbrush_t *tail)
  */
 static bspbrush_t *CullList (bspbrush_t *list, bspbrush_t *skip1)
 {
-	bspbrush_t	*newlist;
-	bspbrush_t	*next;
+	bspbrush_t *newlist;
+	bspbrush_t *next;
 
 	newlist = NULL;
 
@@ -387,11 +386,11 @@ static qboolean BrushGE (bspbrush_t *b1, bspbrush_t *b2)
  */
 bspbrush_t *ChopBrushes (bspbrush_t *head)
 {
-	bspbrush_t	*b1, *b2, *next;
-	bspbrush_t	*tail;
-	bspbrush_t	*keep;
-	bspbrush_t	*sub, *sub2;
-	int			c1, c2;
+	bspbrush_t *b1, *b2, *next;
+	bspbrush_t *tail;
+	bspbrush_t *keep;
+	bspbrush_t *sub, *sub2;
+	int c1, c2;
 
 	Sys_FPrintf(SYS_VRB, "---- ChopBrushes ----\n");
 	Sys_FPrintf(SYS_VRB, "original brushes: %i\n", CountBrushList(head));
