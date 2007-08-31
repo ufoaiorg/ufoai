@@ -138,8 +138,8 @@ void Error (const char *error, ...)
 
 	err = GetLastError();
 
-	va_start(argptr,error);
-	vsprintf(text, error,argptr);
+	va_start(argptr, error);
+	vsprintf(text, error, argptr);
 	va_end(argptr);
 
 	snprintf(text2, sizeof(text2), "%s\nGetLastError() = %i", text, err);

@@ -75,7 +75,28 @@ static void U2M_BSP_Parameter (int argc, char **argv)
 			if (setpriority(PRIO_PROCESS, 0, config.nice))
 				Sys_Printf("failed to set nice level of %i\n", config.nice);
 #else
+#ifdef _WIN32
+			HANDLE proc = GetCurrentProcess();
+			config.nice = atoi(argv[i+1]);
+			Sys_Printf("nice = %i\n", config.nice);
+			switch (config.nice) {
+			case 0:
+				SetPriorityClass(proc, HIGH_PRIORITY_CLASS);
+				Sys_Printf("Priority changed to HIGH\n");
+				break;
+			case 1:
+				SetPriorityClass(proc, NORMAL_PRIORITY_CLASS);
+				Sys_Printf("Priority changed to NORMAL\n");
+				break;
+			default:
+				SetPriorityClass(proc, IDLE_PRIORITY_CLASS);
+				Sys_Printf("Priority changed to IDLE\n");
+				break;
+			}
+			CloseHandle(proc);
+#else
 			Sys_Printf("nice not implemented for this arch\n");
+#endif
 #endif
 			i++;
 		} else if (!strcmp(argv[i], "-noprune")) {
@@ -232,7 +253,11 @@ int main (int argc, char **argv)
 		" -fulldetail              : don't treat details (and trans surfaces) as details\n"
 		" -maxlight                : \n"
 		" -micro <float>           : \n"
-		" -nice <prio>             : priority level\n"
+#ifndef _WIN32
+		" -nice <prio>             : priority level [normal unix nice level - e.g. 19 = IDLE]\n"
+#else
+		" -nice <prio>             : priority level [0 = HIGH, 1 = NORMAL, 2 = IDLE]\n"
+#endif
 		" -nobackclip              : \n"
 		" -nocsg                   : \n"
 		" -nodetail                : \n"

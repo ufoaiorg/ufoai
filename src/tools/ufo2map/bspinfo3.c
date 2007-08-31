@@ -41,7 +41,7 @@ int main (int argc, char **argv)
 	FILE		*f;
 
 	if (argc == 1)
-		Error ("usage: bspinfo bspfile [bspfiles]");
+		Error("usage: bspinfo bspfile [bspfiles]");
 
 	for (i = 1; i < argc; i++) {
 		Sys_Printf(("---------------------\n");
