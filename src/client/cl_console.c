@@ -459,28 +459,6 @@ void Con_Print (const char *txt)
 	}
 }
 
-
-/**
- * @brief Centers the text to print on console
- * @param[in] text
- * @sa Con_Print
- * @note not used atm
- */
-void Con_CenteredPrint (const char *text)
-{
-	int l;
-	char buffer[MAX_STRING_CHARS];
-
-	l = strlen(text);
-	l = (con.linewidth - l) / 2;
-	if (l < 0)
-		l = 0;
-	memset(buffer, ' ', l);
-	Q_strcat(buffer, text, sizeof(buffer));
-	Q_strcat(buffer, "\n", sizeof(buffer));
-	Con_Print(buffer);
-}
-
 /*
 ==============================================================================
 DRAWING

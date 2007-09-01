@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <windows.h>
 #include <float.h>
 #include "../../client/qal.h"
-#include "qal_win.h"
+#include "win_qal.h"
 
 /*
 ALenum	(ALAPIENTRY * qalEAXSet)(const GUID*, ALuint, ALuint, ALvoid *, ALuint);

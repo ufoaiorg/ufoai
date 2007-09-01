@@ -23,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 
-#ifndef __QAL_LINUX_H__
-#define __QAL_LINUX_H__
+#ifndef __LINUX_QAL_H__
+#define __LINUX_QAL_H__
 
 
 #ifndef __linux__
@@ -52,4 +52,4 @@ typedef struct {
 
 extern oalState_t	oalState;
 
-#endif	/* __QAL_LINUX_H__ */
+#endif	/* __LINUX_QAL_H__ */

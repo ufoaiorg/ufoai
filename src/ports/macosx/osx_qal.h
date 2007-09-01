@@ -23,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 
-#ifndef __QAL_OSX_H__
-#define __QAL_OSX_H__
+#ifndef __OSX_QAL_H__
+#define __OSX_QAL_H__
 
 
 #ifndef __APPLE__
@@ -51,4 +51,4 @@ typedef struct {
 
 extern oalState_t	oalState;
 
-#endif	/* __QAL_OSX_H__ */
+#endif	/* __OSX_QAL_H__ */

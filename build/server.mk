@@ -24,11 +24,10 @@ SERVER_SRCS += \
 	server/sv_send.c \
 	server/sv_user.c \
 	server/sv_world.c \
+	server/sv_clientstub.c \
 	\
 	game/q_shared.c \
-	game/inv_shared.c \
-	\
-	ports/null/cl_null.c
+	game/inv_shared.c
 
 ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux-gnu),)
 	SERVER_SRCS += \

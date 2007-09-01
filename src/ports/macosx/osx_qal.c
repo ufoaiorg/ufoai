@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../client/qal.h"
-#include "qal_osx.h"
+#include "osx_qal.h"
 
 #ifdef HAVE_OPENAL
 

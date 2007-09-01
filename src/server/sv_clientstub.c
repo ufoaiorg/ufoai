@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../../qcommon/qcommon.h"
+#include "../qcommon/qcommon.h"
 
 static void Key_Bind_Null_f (void)
 {
@@ -48,10 +48,6 @@ void CL_Frame (int now, void *data)
 }
 
 void CL_ParseClientData (const char *type, const char *name, const char **text)
-{
-}
-
-void Con_Print (const char *text)
 {
 }
 

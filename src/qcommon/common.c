@@ -159,7 +159,9 @@ void Com_Printf (const char *fmt, ...)
 		return;
 	}
 
+#ifndef DEDICATED_ONLY
 	Con_Print(msg);
+#endif
 
 	/* also echo to debugging console */
 	Sys_ConsoleOutput(msg);

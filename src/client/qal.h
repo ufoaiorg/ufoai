@@ -25,15 +25,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 
 #ifdef _WIN32
-	#include "../ports/win32/qal_win.h"
+	#include "../ports/win32/win_qal.h"
 #endif
 
 #if defined(__linux__) || defined(__FreeBSD__)
-	#include "../ports/linux/qal_linux.h"
+	#include "../ports/linux/linux_qal.h"
 #endif
 
 #ifdef __APPLE__
-	#include "../ports/macosx/qal_osx.h"
+	#include "../ports/macosx/osx_qal.h"
 #endif
 
 #ifndef ALCAPIENTRY

@@ -23,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 
-#ifndef __QAL_WIN_H__
-#define __QAL_WIN_H__
+#ifndef __WIN_QAL_H__
+#define __WIN_QAL_H__
 
 
 #ifndef _WIN32
@@ -64,4 +64,4 @@ extern ALenum			(ALAPIENTRY * qalEAXSet)(const GUID*, ALuint, ALuint, ALvoid *, 
 extern ALenum			(ALAPIENTRY * qalEAXGet)(const GUID*, ALuint, ALuint, ALvoid *, ALuint);
 */
 
-#endif	/* __QAL_WIN_H__ */
+#endif	/* __WIN_QAL_H__ */
