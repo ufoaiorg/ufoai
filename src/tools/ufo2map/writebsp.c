@@ -51,7 +51,7 @@ void U2M_ProgressBar (void (*func) (unsigned int cnt), unsigned int count, qbool
 	}
 	end = I_FloatTime();
 	if (showProgress)
-		Sys_Printf(" (time: %4is, count: %i)\n", end - start, count);
+		Com_Printf(" (time: %4is, count: %i)\n", end - start, count);
 }
 
 
@@ -467,7 +467,7 @@ void EndBSPFile (void)
 
 	/* write the map */
 	snprintf(path, sizeof(path), "%s.bsp", source);
-	Sys_Printf("Writing %s\n", path);
+	Com_Printf("Writing %s\n", path);
 	WriteBSPFile(path);
 }
 

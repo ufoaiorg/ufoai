@@ -33,4 +33,6 @@ void COM_StripExtension(const char *in, char *out);
 void COM_FileBase(const char *in, char *out);
 void COM_FilePath(const char *in, char *out);
 
+const char *COM_Parse(const char **data_p);
+
 #endif /* __SHARED_H__ */

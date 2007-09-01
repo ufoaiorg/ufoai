@@ -461,9 +461,9 @@ static qboolean MakeBrushWindings (mapbrush_t *ob)
 
 	for (i = 0; i < 3; i++) {
 		if (ob->mins[0] < -4096 || ob->maxs[0] > 4096)
-			Sys_Printf("entity %i, brush %i: bounds out of range\n", ob->entitynum, ob->brushnum);
+			Com_Printf("entity %i, brush %i: bounds out of range\n", ob->entitynum, ob->brushnum);
 		if (ob->mins[0] > 4096 || ob->maxs[0] < -4096)
-			Sys_Printf("entity %i, brush %i: no visible sides on brush\n", ob->entitynum, ob->brushnum);
+			Com_Printf("entity %i, brush %i: no visible sides on brush\n", ob->entitynum, ob->brushnum);
 	}
 
 	return qtrue;
@@ -581,7 +581,7 @@ static void ParseBrush (entity_t *mapent)
 		/* find the plane number */
 		planenum = PlaneFromPoints(planepts[0], planepts[1], planepts[2]);
 		if (planenum == -1) {
-			Sys_Printf("Entity %i, Brush %i: plane with no normal\n"
+			Com_Printf("Entity %i, Brush %i: plane with no normal\n"
 				, b->entitynum, b->brushnum);
 			continue;
 		}
@@ -590,12 +590,12 @@ static void ParseBrush (entity_t *mapent)
 		for (k = 0; k < b->numsides; k++) {
 			s2 = b->original_sides + k;
 			if (s2->planenum == planenum) {
-				Sys_Printf("Entity %i, Brush %i: duplicate plane\n"
+				Com_Printf("Entity %i, Brush %i: duplicate plane\n"
 					, b->entitynum, b->brushnum);
 				break;
 			}
 			if (s2->planenum == (planenum ^ 1) ) {
-				Sys_Printf("Entity %i, Brush %i: mirrored plane\n"
+				Com_Printf("Entity %i, Brush %i: mirrored plane\n"
 					, b->entitynum, b->brushnum);
 				break;
 			}
@@ -639,7 +639,7 @@ static void ParseBrush (entity_t *mapent)
 			/* nodraw/caulk faces */
 			if ((b->original_sides[i].surfaceFlags & SURF_NODRAW) && !(b->original_sides[i].surfaceFlags & SURF_SKIP)) {
 				b->optimizedDetail = qtrue;
-				Sys_Printf("Entity %i, Brush %i: optimized detail\n", b->entitynum, b->brushnum);
+				Com_Printf("Entity %i, Brush %i: optimized detail\n", b->entitynum, b->brushnum);
 				break;
 			}
 		}
@@ -829,7 +829,7 @@ static void TestExpandBrushes (void)
 	mapbrush_t	*brush;
 	vec_t	dist;
 
-	Sys_Printf("writing %s\n", name);
+	Com_Printf("writing %s\n", name);
 	f = fopen(name, "wb");
 	if (!f)
 		Error("Can't write %s\b", name);

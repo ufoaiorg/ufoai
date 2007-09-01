@@ -972,7 +972,7 @@ tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 
 		volume = BrushVolume(b);
 		if (volume < config.microvolume) {
-			Sys_Printf("WARNING: entity %i, brush %i: microbrush\n",
+			Com_Printf("WARNING: entity %i, brush %i: microbrush\n",
 				b->original->entitynum, b->original->brushnum);
 		}
 
@@ -1018,7 +1018,7 @@ tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 		p[1] = -118;
 		p[2] = 119;
 		tnode = PointInLeaf(tree->headnode, p);
-		Sys_Printf("contents: %i\n", tnode->contents);
+		Com_Printf("contents: %i\n", tnode->contents);
 		p[0] = 0;
 	}
 #endif

@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <sys/types.h>
 #include <sys/stat.h>
 #include "../../../common/unzip.h"
+#include "../../../shared/shared.h"
 
 typedef struct {
 	char name[MAX_QPATH];
@@ -65,11 +66,7 @@ static pack_t *FS_LoadPackFile(const char *packfile);
 #define	BASEDIR_ID_FILE	".gamedir"	/* This is the name of the "trunk" directory. */
 #define	BASEDIR	"base"	/* This is the directory the game-data is stored. */
 
-/* set these before calling CheckParm */
-int myargc;
-char **myargv;
-
-static char com_token[1024];
+/*static char com_token[1024];*/
 qboolean com_eof, archive;
 char archivedir[1024];
 
@@ -160,12 +157,12 @@ void Error (const char *error, ...)
 	va_list argptr;
 	char text[2048];
 
-	Sys_Printf("\n************ ERROR ************\n");
+	Com_Printf("\n************ ERROR ************\n");
 
 	va_start(argptr, error);
 	vsnprintf(text, sizeof(text), error, argptr);
 	va_end(argptr);
-	Sys_Printf("%s\n", text);
+	Com_Printf("%s\n", text);
 
 	exit(1);
 }
@@ -209,11 +206,11 @@ void SetQdirFromPath (char *path)
 		if (FileExists(temp)) {
 			strncpy(gamedir, c, strlen(c)-1);
 			strncat(gamedir, "/"BASEDIR"/", sizeof(gamedir));
-			Sys_Printf("gamedir: %s\n", gamedir);
+			Com_Printf("gamedir: %s\n", gamedir);
 			snprintf(c, sizeof(c) - 1, "%s0pics.pk3", gamedir);
 			pak = FS_LoadPackFile(c);
 			if (!pak)
-				Sys_Printf("Could not load image pk3 (%s)\n", c);
+				Com_Printf("Could not load image pk3 (%s)\n", c);
 			return;
 		}
 	}
@@ -255,24 +252,6 @@ char *ExpandPath (const char *path)
 /**
  * @brief
  */
-char *ExpandPathAndArchive (const char *path)
-{
-	char *expanded;
-	char archivename[1024];
-
-	expanded = ExpandPath (path);
-
-	if (archive) {
-		snprintf(archivename, sizeof(archivename), "%s/%s", archivedir, path);
-		QCopyFile(expanded, archivename);
-	}
-	return expanded;
-}
-
-
-/**
- * @brief
- */
 char *copystring (const char *s)
 {
 	char *b;
@@ -301,7 +280,7 @@ void Q_getwd (char *out)
 	strcat(out, "\\");
 #else
 	if (getcwd(out, 256) == NULL)
-		Sys_Printf("Warning, getcwd failed\n");
+		Com_Printf("Warning, getcwd failed\n");
 	strcat(out, "/");
 #endif
 }
@@ -323,20 +302,7 @@ void Q_mkdir (const char *path)
 		Error("mkdir %s: %s", path, strerror(errno));
 }
 
-/**
- * @brief
- * @return -1 if not present
- */
-int	FileTime (const char *path)
-{
-	struct stat buf;
-
-	if (stat(path,&buf) == -1)
-		return -1;
-
-	return buf.st_mtime;
-}
-
+#if 0
 /**
  * @brief Parse a token out of a string
  */
@@ -383,7 +349,7 @@ skipwhite:
 	}
 
 	/* parse single characters */
-	if (c=='{' || c=='}'|| c==')'|| c=='(' || c=='\'' || c==':') {
+	if (c == '{' || c == '}'|| c == ')'|| c == '(' || c == '\'' || c == ':') {
 		com_token[len] = c;
 		len++;
 		com_token[len] = 0;
@@ -396,13 +362,14 @@ skipwhite:
 		data++;
 		len++;
 		c = *data;
-	if (c=='{' || c=='}'|| c==')'|| c=='(' || c=='\'' || c==':')
+		if (c == '{' || c == '}'|| c == ')'|| c == '(' || c == '\'' || c == ':')
 			break;
 	} while (c > 32);
 
 	com_token[len] = 0;
 	return data;
 }
+#endif
 
 /**
  * @brief
@@ -474,23 +441,6 @@ char *strlower (char *start)
 MISC FUNCTIONS
 =============================================================================
 */
-
-
-/**
- * @brief Checks for the given parameter in the program's command line arguments
- * @return the argument number (1 to argc-1) or 0 if not present
- */
-int CheckParm (char *check)
-{
-	int i;
-
-	for (i = 1; i < myargc; i++) {
-		if (!Q_strcasecmp(check, myargv[i]))
-			return i;
-	}
-
-	return 0;
-}
 
 /**
  * @brief
@@ -590,11 +540,11 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 		}
 		pack->files = newfiles;
 
-		Sys_Printf("Added packfile %s (%li files)\n", packfile, gi.number_entry);
+		Com_Printf("Added packfile %s (%li files)\n", packfile, gi.number_entry);
 		return pack;
 	} else {
 		/* Unrecognized file type! */
-		Sys_Printf("Pack file type %s unrecognized\n", packfile + len - 4);
+		Com_Printf("Pack file type %s unrecognized\n", packfile + len - 4);
 		return NULL;
 	}
 }
@@ -618,7 +568,7 @@ qFILE *SafeOpenRead (const char *filename, qFILE *f)
 		if (unzLocateFile(pak->handle.z, filename, 2) == UNZ_OK) {	/* found it! */
 			if (unzOpenCurrentFile(pak->handle.z) == UNZ_OK) {
 				unz_file_info info;
-				Sys_Printf("PackFile: %s : %s\n", pak->filename, filename);
+				Com_Printf("PackFile: %s : %s\n", pak->filename, filename);
 				if (unzGetCurrentFileInfo(pak->handle.z, &info, NULL, 0, NULL, 0, NULL, 0) != UNZ_OK)
 					Error("Couldn't get size of %s in %s", filename, pak->filename);
 				unzGetCurrentFileInfoPosition(pak->handle.z, &f->filepos);
@@ -839,7 +789,7 @@ void Sys_FPrintf (int flag, const char *format, ...)
 /**
  * @brief
  */
-void Sys_Printf (const char *format, ...)
+void Com_Printf (const char *format, ...)
 {
 	char out_buffer[4096];
 	va_list argptr;

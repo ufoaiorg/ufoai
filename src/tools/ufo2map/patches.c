@@ -203,7 +203,7 @@ static void BaseLightForFace (dface_t *f, vec3_t color)
 	tx = &texinfo[f->texinfo];
 	if (!(tx->surfaceFlags & SURF_LIGHT) || tx->value == 0) {
 		if (tx->surfaceFlags & SURF_LIGHT)
-			Sys_Printf("Surface light has 0 intensity.\n");
+			Com_Printf("Surface light has 0 intensity.\n");
 		VectorClear(color);
 		return;
 	}

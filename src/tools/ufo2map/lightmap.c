@@ -789,7 +789,7 @@ void CreateDirectLights (void)
 			if (target[0]) {	/* point towards target */
 				e2 = FindTargetEntity(target);
 				if (!e2)
-					Sys_Printf("WARNING: light at (%i %i %i) has missing target\n",
+					Com_Printf("WARNING: light at (%i %i %i) has missing target\n",
 					(int)dl->origin[0], (int)dl->origin[1], (int)dl->origin[2]);
 				else {
 					GetVectorForKey(e2, "origin", dest);
@@ -999,7 +999,7 @@ void BuildFacelights (unsigned int facenum)
 	facelight_t		*fl;
 
 	if (facenum >= MAX_MAP_FACES) {
-		Sys_Printf("MAX_MAP_FACES hit\n");
+		Com_Printf("MAX_MAP_FACES hit\n");
 		return;
 	}
 
@@ -1175,7 +1175,7 @@ void FinalLightFace (unsigned int facenum)
 
 	if (fl->numstyles > MAXLIGHTMAPS) {
 		fl->numstyles = MAXLIGHTMAPS;
-		Sys_Printf("face with too many lightstyles (%i): (%f %f %f)\n",
+		Com_Printf("face with too many lightstyles (%i): (%f %f %f)\n",
 			fl->numstyles,
 			face_patches[facenum]->origin[0],
 			face_patches[facenum]->origin[1],

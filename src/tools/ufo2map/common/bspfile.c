@@ -402,22 +402,22 @@ void WriteBSPFile (const char *filename)
 	AddLump(LUMP_ENTITIES, dentdata, entdatasize);
 
 #if 0
-	Sys_Printf("numplanes: %i\n", numplanes);
-	Sys_Printf("numleafs: %i\n", numleafs);
-	Sys_Printf("numvertexes: %i\n", numvertexes);
-	Sys_Printf("numnodes: %i\n", numnodes);
-	Sys_Printf("numtexinfo: %i\n", numtexinfo);
-	Sys_Printf("numfaces: %i\n", numfaces);
-	Sys_Printf("numbrushes: %i\n", numbrushes);
-	Sys_Printf("numbrushsides: %i\n", numbrushsides);
-	Sys_Printf("numleaffaces: %i\n", numleaffaces);
-	Sys_Printf("numleafbrushes: %i\n", numleafbrushes);
-	Sys_Printf("numsurfedges: %i\n", numsurfedges);
-	Sys_Printf("numedges: %i\n", numedges);
-	Sys_Printf("nummodels: %i\n", nummodels);
-	Sys_Printf("lightdatasize: %i\n", lightdatasize);
-	Sys_Printf("routedatasize: %i\n", routedatasize);
-	Sys_Printf("entdatasize: %i\n", entdatasize);
+	Com_Printf("numplanes: %i\n", numplanes);
+	Com_Printf("numleafs: %i\n", numleafs);
+	Com_Printf("numvertexes: %i\n", numvertexes);
+	Com_Printf("numnodes: %i\n", numnodes);
+	Com_Printf("numtexinfo: %i\n", numtexinfo);
+	Com_Printf("numfaces: %i\n", numfaces);
+	Com_Printf("numbrushes: %i\n", numbrushes);
+	Com_Printf("numbrushsides: %i\n", numbrushsides);
+	Com_Printf("numleaffaces: %i\n", numleaffaces);
+	Com_Printf("numleafbrushes: %i\n", numleafbrushes);
+	Com_Printf("numsurfedges: %i\n", numsurfedges);
+	Com_Printf("numedges: %i\n", numedges);
+	Com_Printf("nummodels: %i\n", nummodels);
+	Com_Printf("lightdatasize: %i\n", lightdatasize);
+	Com_Printf("routedatasize: %i\n", routedatasize);
+	Com_Printf("entdatasize: %i\n", entdatasize);
 #endif
 
 	fseek(bspfile.f, 0, SEEK_SET);
@@ -435,38 +435,38 @@ void PrintBSPFileSizes (void)
 	if (!num_entities)
 		ParseEntities();
 
-	Sys_Printf("%5i models       %7i\n"
+	Com_Printf("%5i models       %7i\n"
 		,nummodels, (int)(nummodels*sizeof(dmodel_t)));
-	Sys_Printf("%5i brushes      %7i\n"
+	Com_Printf("%5i brushes      %7i\n"
 		,numbrushes, (int)(numbrushes*sizeof(dbrush_t)));
-	Sys_Printf("%5i brushsides   %7i\n"
+	Com_Printf("%5i brushsides   %7i\n"
 		,numbrushsides, (int)(numbrushsides*sizeof(dbrushside_t)));
-	Sys_Printf("%5i planes       %7i\n"
+	Com_Printf("%5i planes       %7i\n"
 		,numplanes, (int)(numplanes*sizeof(dplane_t)));
-	Sys_Printf("%5i texinfo      %7i\n"
+	Com_Printf("%5i texinfo      %7i\n"
 		,numtexinfo, (int)(numtexinfo*sizeof(texinfo_t)));
-	Sys_Printf("%5i entdata      %7i\n", num_entities, entdatasize);
+	Com_Printf("%5i entdata      %7i\n", num_entities, entdatasize);
 
-	Sys_Printf("\n");
+	Com_Printf("\n");
 
-	Sys_Printf("%5i vertexes     %7i\n"
+	Com_Printf("%5i vertexes     %7i\n"
 		,numvertexes, (int)(numvertexes*sizeof(dvertex_t)));
-	Sys_Printf("%5i nodes        %7i\n"
+	Com_Printf("%5i nodes        %7i\n"
 		,numnodes, (int)(numnodes*sizeof(dnode_t)));
-	Sys_Printf("%5i faces        %7i\n"
+	Com_Printf("%5i faces        %7i\n"
 		,numfaces, (int)(numfaces*sizeof(dface_t)));
-	Sys_Printf("%5i leafs        %7i\n"
+	Com_Printf("%5i leafs        %7i\n"
 		,numleafs, (int)(numleafs*sizeof(dleaf_t)));
-	Sys_Printf("%5i leaffaces    %7i\n"
+	Com_Printf("%5i leaffaces    %7i\n"
 		,numleaffaces, (int)(numleaffaces*sizeof(dleaffaces[0])));
-	Sys_Printf("%5i leafbrushes  %7i\n"
+	Com_Printf("%5i leafbrushes  %7i\n"
 		,numleafbrushes, (int)(numleafbrushes*sizeof(dleafbrushes[0])));
-	Sys_Printf("%5i surfedges    %7i\n"
+	Com_Printf("%5i surfedges    %7i\n"
 		,numsurfedges, (int)(numsurfedges*sizeof(dsurfedges[0])));
-	Sys_Printf("%5i edges        %7i\n"
+	Com_Printf("%5i edges        %7i\n"
 		,numedges, (int)(numedges*sizeof(dedge_t)));
-	Sys_Printf("      lightdata    %7i\n", lightdatasize);
-	Sys_Printf("      routedata    %7i\n", routedatasize);
+	Com_Printf("      lightdata    %7i\n", lightdatasize);
+	Com_Printf("      routedata    %7i\n", routedatasize);
 }
 
 
@@ -615,9 +615,9 @@ static void PrintEntity (entity_t *ent)
 {
 	epair_t *ep;
 
-	Sys_Printf("------- entity %p -------\n", ent);
+	Com_Printf("------- entity %p -------\n", ent);
 	for (ep = ent->epairs; ep; ep = ep->next)
-		Sys_Printf("%s = %s\n", ep->key, ep->value);
+		Com_Printf("%s = %s\n", ep->key, ep->value);
 }
 #endif
 

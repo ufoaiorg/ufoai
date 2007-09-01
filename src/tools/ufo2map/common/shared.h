@@ -138,10 +138,6 @@ extern qboolean verbose;
 /* the dec offsetof macro doesnt work very well... */
 #define myoffsetof(type,identifier) ((size_t)&((type *)0)->identifier)
 
-/* set these before calling CheckParm */
-extern int myargc;
-extern char **myargv;
-
 extern char qdir[1024];
 extern char gamedir[1024];
 
@@ -149,7 +145,7 @@ extern qboolean archive;
 extern char archivedir[1024];
 
 void Error(const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
-void Sys_Printf(const char *format, ...) __attribute__((format(printf, 1, 2)));
+void Com_Printf(const char *format, ...) __attribute__((format(printf, 1, 2)));
 void Sys_FPrintf(int flag, const char *text, ...) __attribute__((format(printf, 2, 3)));
 
 #endif /* _SHARED_H */

@@ -401,16 +401,10 @@ void gaussrand(float *gauss1, float *gauss2);   /* -inf to +inf, median 0, stdev
 
 /*============================================= */
 
-void stradd(char **str, const char *addStr);
-
-const char *COM_Parse(const char **data_p);
-
 /* data is an in/out parm, returns a parsed out token */
 const char *COM_EParse(const char **text, const char *errhead, const char *errinfo);
 
 qboolean Com_sprintf(char *dest, size_t size, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
-
-void Com_PageInMemory(byte * buffer, int size);
 
 /*============================================= */
 

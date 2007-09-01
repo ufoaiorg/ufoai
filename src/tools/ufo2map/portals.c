@@ -411,12 +411,12 @@ static void MakeTreePortals_r (node_t *node)
 
 	CalcNodeBounds (node);
 	if (node->mins[0] >= node->maxs[0]) {
-		Sys_Printf("WARNING: node without a volume\n");
+		Com_Printf("WARNING: node without a volume\n");
 	}
 
 	for (i = 0; i < 3; i++) {
 		if (node->mins[i] < -8000 || node->maxs[i] > 8000) {
-			Sys_Printf("WARNING: node with unbounded volume\n");
+			Com_Printf("WARNING: node with unbounded volume\n");
 			break;
 		}
 	}

@@ -3,6 +3,8 @@
 #ifndef __CMDLIB__
 #define __CMDLIB__
 
+#include "../../../shared/byte.h"
+
 char *strupr(char *in);
 char *strlower(char *in);
 int Q_strncasecmp(const char *s1, const char *s2, int n);
@@ -10,18 +12,14 @@ int Q_strcasecmp(const char *s1, const char *s2);
 void Q_getwd(char *out);
 
 int Q_filelength(qFILE *f);
-int FileTime(const char *path);
 
 void Q_mkdir(const char *path);
 
 void SetQdirFromPath(char *path);
 char *ExpandArg(const char *path);	/* from cmd line */
 char *ExpandPath(const char *path);	/* from scripts */
-char *ExpandPathAndArchive(const char *path);
 
 double I_FloatTime(void);
-
-int CheckParm(char *check);
 
 qFILE *SafeOpenWrite(const char *filename, qFILE *f);
 qFILE *SafeOpenRead(const char *filename, qFILE *f);
@@ -36,16 +34,6 @@ void SaveFile(const char *filename, void *buffer, int count);
 qboolean FileExists(const char *filename);
 
 void DefaultExtension(char *path, const char *extension);
-
-short BigShort(short l);
-short LittleShort(short l);
-int BigLong(int l);
-int LittleLong(int l);
-float BigFloat(float l);
-float LittleFloat(float l);
-
-
-const char *COM_Parse(const char *data);
 
 char *copystring(const char *s);
 
