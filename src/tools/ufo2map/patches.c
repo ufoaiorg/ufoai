@@ -268,7 +268,7 @@ static void MakePatchForFace (int fn, winding_t *w)
 	VectorCopy(texture_reflectivity[f->texinfo], patch->reflectivity);
 
 	/* non-bmodel patches can emit light */
-	if (fn < dmodels[0].numfaces) {
+	if (fn < dmodels[0].numfaces || (texinfo[f->texinfo].surfaceFlags & SURF_LIGHT)) {
 		BaseLightForFace(f, patch->baselight);
 
 		ColorNormalize(patch->reflectivity, color);
