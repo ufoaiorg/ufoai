@@ -27,8 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cmdlib.h"
 #include <sys/types.h>
 #include <sys/stat.h>
-#include "../../../common/unzip.h"
-#include "../../../shared/shared.h"
 
 typedef struct {
 	char name[MAX_QPATH];
@@ -59,66 +57,8 @@ static pack_t *FS_LoadPackFile(const char *packfile);
 #define PATHSEPERATOR   '/'
 #endif
 
-#ifdef NeXT
-#include <libc.h>
-#endif
-
 #define	BASEDIR_ID_FILE	".gamedir"	/* This is the name of the "trunk" directory. */
 #define	BASEDIR	"base"	/* This is the directory the game-data is stored. */
-
-/*static char com_token[1024];*/
-qboolean com_eof, archive;
-char archivedir[1024];
-
-/* only printf if in verbose mode */
-qboolean verbose = qfalse;
-
-#define	MAX_EX_ARGC	1024
-int ex_argc;
-char *ex_argv[MAX_EX_ARGC];
-
-#ifdef _WIN32
-/**
- * @brief Mimic unix command line expansion
- */
-void ExpandWildcards (int *argc, char ***argv)
-{
-	struct _finddata_t fileinfo;
-	int handle, i;
-	char filename[1024];
-	char filebase[1024];
-	char *path;
-
-	ex_argc = 0;
-	for (i = 0; i < *argc; i++) {
-		path = (*argv)[i];
-		if (path[0] == '-' || (!strstr(path, "*") && !strstr(path, "?"))) {
-			ex_argv[ex_argc++] = path;
-			continue;
-		}
-
-		handle = _findfirst(path, &fileinfo);
-		if (handle == -1)
-			return;
-
-		COM_FilePath(path, filebase, sizeof(path));
-
-		do {
-			sprintf(filename, "%s%s", filebase, fileinfo.name);
-			ex_argv[ex_argc++] = copystring(filename);
-		} while (_findnext(handle, &fileinfo) != -1);
-
-		_findclose(handle);
-	}
-
-	*argc = ex_argc;
-	*argv = ex_argv;
-}
-#else
-void ExpandWildcards (int *argc, char ***argv)
-{
-}
-#endif
 
 #ifdef WIN_ERROR
 #include <windows.h>
@@ -285,23 +225,6 @@ void Q_getwd (char *out)
 #endif
 }
 
-
-/**
- * @brief
- */
-void Q_mkdir (const char *path)
-{
-#ifdef _WIN32
-	if (_mkdir(path) != -1)
-		return;
-#else
-	if (mkdir(path, 0777) != -1)
-		return;
-#endif
-	if (errno != EEXIST)
-		Error("mkdir %s: %s", path, strerror(errno));
-}
-
 #if 0
 /**
  * @brief Parse a token out of a string
@@ -319,10 +242,8 @@ const char *COM_Parse (const char *data)
 	/* skip whitespace */
 skipwhite:
 	while ((c = *data) <= ' ') {
-		if (c == 0) {
-			com_eof = qtrue;
+		if (c == 0)
 			return NULL;			/* end of file; */
-		}
 		data++;
 	}
 
@@ -736,47 +657,12 @@ void DefaultExtension (char *path, const char *extension)
 /**
  * @brief
  */
-void CreatePath (char *path)
-{
-	char *ofs, c;
-
-	if (path[1] == ':')
-		path += 2;
-
-	for (ofs = path + 1; *ofs; ofs++) {
-		c = *ofs;
-		if (c == '/' || c == '\\') {	/* create the directory */
-			*ofs = 0;
-			Q_mkdir(path);
-			*ofs = c;
-		}
-	}
-}
-
-
-/**
- * @brief Used to archive source files
- */
-void QCopyFile (const char *from, char *to)
-{
-	void *buffer;
-	int length;
-
-	length = LoadFile(from, &buffer);
-	CreatePath(to);
-	SaveFile(to, buffer, length);
-	free(buffer);
-}
-
-/**
- * @brief
- */
 void Sys_FPrintf (int flag, const char *format, ...)
 {
 	char out_buffer[4096];
 	va_list argptr;
 
-	if ((flag == SYS_VRB) && (verbose == qfalse))
+	if ((flag == SYS_VRB) && (config.verbose == qfalse))
 		return;
 
 	va_start(argptr, format);

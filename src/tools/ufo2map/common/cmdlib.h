@@ -13,8 +13,6 @@ void Q_getwd(char *out);
 
 int Q_filelength(qFILE *f);
 
-void Q_mkdir(const char *path);
-
 void SetQdirFromPath(char *path);
 char *ExpandArg(const char *path);	/* from cmd line */
 char *ExpandPath(const char *path);	/* from scripts */
@@ -36,11 +34,6 @@ qboolean FileExists(const char *filename);
 void DefaultExtension(char *path, const char *extension);
 
 char *copystring(const char *s);
-
-void CreatePath(char *path);
-void QCopyFile(const char *from, char *to);
-
-void ExpandWildcards(int *argc, char ***argv);
 
 /* for compression routines */
 typedef struct

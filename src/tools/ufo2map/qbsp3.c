@@ -117,7 +117,7 @@ void ProcessModels (void)
 			ProcessSubModel();
 
 		if (!config.verboseentities)
-			verbose = qfalse;	/* don't bother printing submodels */
+			config.verbose = qfalse;	/* don't bother printing submodels */
 	}
 
 	EndBSPFile();

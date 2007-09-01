@@ -6,19 +6,14 @@
 #ifndef _SHARED_H
 #define _SHARED_H
 
-#if defined _WIN64
-# define UFO_SIZE_T "%I64u"
-#elif defined _WIN32
-# define UFO_SIZE_T "%u"
-#else
-# define UFO_SIZE_T "%zu"
-#endif
+#include "../../../common/unzip.h"
+#include "../../../shared/shared.h"
+#include "../../../shared/ufotypes.h"
 
 /* to support the gnuc __attribute__ command */
 #ifndef __GNUC__
 #  define  __attribute__(x)  /*NOTHING*/
 #endif
-
 
 #ifdef _MSC_VER
 #  pragma warning(disable : 4244)     /* MIPS */
@@ -72,12 +67,6 @@ typedef struct qFILE_s {
 	unsigned long filepos;
 	unsigned long size;
 } qFILE;
-
-#ifndef __BYTEBOOL__
-#define __BYTEBOOL__
-typedef enum {qfalse, qtrue} qboolean;
-typedef unsigned char byte;
-#endif
 
 typedef struct mapConfig_s {
 	float subdivideSize;
@@ -140,9 +129,6 @@ extern qboolean verbose;
 
 extern char qdir[1024];
 extern char gamedir[1024];
-
-extern qboolean archive;
-extern char archivedir[1024];
 
 void Error(const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
 void Com_Printf(const char *format, ...) __attribute__((format(printf, 1, 2)));

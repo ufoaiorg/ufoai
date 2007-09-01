@@ -120,10 +120,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  define __attribute__(x)  /*NOTHING*/
 #endif
 
-#ifndef byte
-typedef uint8_t byte;
-#endif
-
 #ifndef NULL
 #define NULL ((void *)0)
 #endif

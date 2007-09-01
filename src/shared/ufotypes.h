@@ -82,6 +82,10 @@ typedef double double64_t;
 
 typedef enum {qfalse, qtrue} qboolean;
 
+#ifndef byte
+typedef uint8_t byte;
+#endif
+
 #if defined _WIN64
 # define UFO_SIZE_T "%I64u"
 #elif defined _WIN32
