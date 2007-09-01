@@ -25,7 +25,9 @@ REF_GL_SRCS = \
 	ref_gl/gl_shadows.c \
 	ref_gl/qgl.c \
 	\
-	game/q_shared.c
+	game/q_shared.c \
+	shared/byte.c \
+	shared/shared.c
 
 ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux-gnu),)
 	REF_GL_SRCS += \
