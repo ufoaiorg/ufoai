@@ -37,7 +37,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define Q_strncpyz(string1,string2,length) Q_strncpyzDebug( string1, string2, length, __FILE__, __LINE__ )
 #endif
 
-#include "../common/ufotypes.h"
+#include "../shared/ufotypes.h"
+#include "../shared/byte.h"
+#include "../shared/infostring.h"
 #include "../common/mem.h"
 
 #ifdef _MSC_VER
@@ -439,30 +441,8 @@ char *Q_getcwd(char *dest, size_t size) __attribute__((nonnull));
 
 /*============================================= */
 
-short BigShort(short l);
-short LittleShort(short l);
-int BigLong(int l);
-int LittleLong(int l);
-float BigFloat(float l);
-float LittleFloat(float l);
-
-void Swap_Init(void);
-qboolean Q_IsBigEndian(void);
-
 char *va(const char *format, ...) __attribute__((format(printf, 1, 2)));
 
-/*============================================= */
-
-/* key / value info strings */
-#define MAX_INFO_KEY        64
-#define MAX_INFO_VALUE      64
-#define MAX_INFO_STRING     512
-
-const char *Info_ValueForKey(const char *s, const char *key);
-void Info_RemoveKey(char *s, const char *key);
-void Info_SetValueForKey(char *s, const char *key, const char *value);
-
-qboolean Info_Validate(const char *s);
 
 /*
 ==========================================================

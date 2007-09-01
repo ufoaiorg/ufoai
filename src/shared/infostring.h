@@ -1,14 +1,11 @@
 /**
- * @file sv_null.c
- * @brief Stub out the entire server system for pure net-only clients.
- *
- * NOTE: This code is currently not in use and is not compiled.
+ * @file infostring.c
+ * @brief Info string handling
  */
 
 /*
 All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
 
-Original file from Quake 2 v3.21: quake2-2.31/server/sv_null.c
 Copyright (C) 1997-2001 Id Software, Inc.
 
 This program is free software; you can redistribute it and/or
@@ -28,16 +25,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../shared/ufotypes.h"
+#ifndef __INFOSTRING_H__
+#define __INFOSTRING_H__
 
-void SV_Init (void)
-{
-}
+/* key / value info strings */
+#define MAX_INFO_KEY        64
+#define MAX_INFO_VALUE      64
+#define MAX_INFO_STRING     512
 
-void SV_Shutdown (const char *finalmsg, qboolean reconnect)
-{
-}
+const char *Info_ValueForKey(const char *s, const char *key);
+void Info_RemoveKey(char *s, const char *key);
+void Info_SetValueForKey(char *s, const char *key, const char *value);
 
-void SV_Frame (int time)
-{
-}
+qboolean Info_Validate(const char *s);
+
+#endif /* __INFOSTRING_H__ */

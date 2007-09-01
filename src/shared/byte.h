@@ -1,14 +1,11 @@
 /**
- * @file sv_null.c
- * @brief Stub out the entire server system for pure net-only clients.
- *
- * NOTE: This code is currently not in use and is not compiled.
+ * @file byte.h
+ * @brief Byte order functions header
  */
 
 /*
 All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
 
-Original file from Quake 2 v3.21: quake2-2.31/server/sv_null.c
 Copyright (C) 1997-2001 Id Software, Inc.
 
 This program is free software; you can redistribute it and/or
@@ -28,16 +25,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../shared/ufotypes.h"
+#ifndef __BYTE_H__
+#define __BYTE_H__
 
-void SV_Init (void)
-{
-}
+short BigShort(short l);
+short LittleShort(short l);
+int BigLong(int l);
+int LittleLong(int l);
+float BigFloat(float l);
+float LittleFloat(float l);
 
-void SV_Shutdown (const char *finalmsg, qboolean reconnect)
-{
-}
+void Swap_Init(void);
+qboolean Q_IsBigEndian(void);
 
-void SV_Frame (int time)
-{
-}
+#endif /* __BYTE_H__ */

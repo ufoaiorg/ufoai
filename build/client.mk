@@ -73,7 +73,9 @@ CLIENT_SRCS = \
 	server/sv_world.c \
 	\
 	game/q_shared.c \
-	game/inv_shared.c
+	game/inv_shared.c \
+	shared/byte.c \
+	shared/infostring.c
 
 ifeq ($(HAVE_OPENAL),1)
 	CLIENT_SRCS+= \
