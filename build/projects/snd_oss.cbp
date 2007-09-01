@@ -17,10 +17,10 @@
 				<Option createStaticLib="1" />
 			</Target>
 		</Build>
-		<Unit filename="../../src/ports/linux/snd_oss.c">
+		<Unit filename="../../src/ports/linux/linux_snd_oss.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/ports/linux/snd_oss.h" />
+		<Unit filename="../../src/ports/linux/linux_snd_oss.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

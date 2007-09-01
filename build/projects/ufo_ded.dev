@@ -200,7 +200,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit18]
-FileName=..\..\src\ports\null\cl_null.c
+FileName=..\..\src\server\sv_clientstub.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
@@ -210,7 +210,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit19]
-FileName=..\..\src\ports\win32\sys_win.c
+FileName=..\..\src\ports\windows\win_main.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
@@ -220,7 +220,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit20]
-FileName=..\..\src\ports\win32\q_shwin.c
+FileName=..\..\src\ports\windows\win_shared.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
@@ -248,7 +248,7 @@ ProductVersion=
 AutoIncBuildNr=0
 
 [Unit21]
-FileName=..\..\src\ports\win32\ufo.rc
+FileName=..\..\src\ports\windows\ufo.rc
 CompileCpp=0
 Folder=Ressource Files
 Compile=1

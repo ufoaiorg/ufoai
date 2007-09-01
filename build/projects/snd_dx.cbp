@@ -46,7 +46,7 @@
 			<Add directory='&quot;C:/Program Files (x86)/Microsoft DirectX SDK (February 2006)/Lib/x86&quot;' />
 			<Add directory='&quot;C:/Programme/Microsoft DirectX SDK (June 2006)/Lib/x86&quot;' />
 		</Linker>
-		<Unit filename="../../src/ports/win32/snd_dx.c">
+		<Unit filename="../../src/ports/windows/win_snd_dx.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>

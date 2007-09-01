@@ -48,7 +48,7 @@ ProductVersion=0.1
 AutoIncBuildNr=0
 
 [Unit1]
-FileName=..\..\src\ports\win32\snd_wapi.c
+FileName=..\..\src\ports\windows\win_snd_wapi.c
 CompileCpp=0
 Folder=Source Files
 Compile=1

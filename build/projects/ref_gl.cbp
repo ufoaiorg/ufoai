@@ -118,59 +118,59 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\game\q_shared.h" />
-		<Unit filename="..\..\src\ports\linux\gl_glx.c">
+		<Unit filename="..\..\src\ports\linux\linux_ref_glx.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 		</Unit>
-		<Unit filename="..\..\src\ports\linux\q_shlinux.c">
+		<Unit filename="..\..\src\ports\linux\linux_shared.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 		</Unit>
-		<Unit filename="..\..\src\ports\linux\qgl_linux.c">
+		<Unit filename="..\..\src\ports\linux\linux_qgl.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 		</Unit>
-		<Unit filename="..\..\src\ports\macosx\q_shosx.c">
+		<Unit filename="..\..\src\ports\macosx\osx_shared.c">
 			<Option compilerVar="CC" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="..\..\src\ports\macosx\qgl_osx.c">
+		<Unit filename="..\..\src\ports\macosx\osx_qgl.c">
 			<Option compilerVar="CC" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="..\..\src\ports\unix\gl_sdl.c">
+		<Unit filename="..\..\src\ports\unix\unix_ref_sdl.c">
 			<Option compilerVar="CC" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="..\..\src\ports\unix\glob.c">
+		<Unit filename="..\..\src\ports\unix\unix_glob.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="..\..\src\ports\unix\glob.h">
+		<Unit filename="..\..\src\ports\unix\unix_glob.h">
 			<Option target="linux" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="..\..\src\ports\win32\glw_imp.c">
+		<Unit filename="..\..\src\ports\windows\win_ref_glw.c">
 			<Option compilerVar="CC" />
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
-		<Unit filename="..\..\src\ports\win32\glw_win.h">
+		<Unit filename="..\..\src\ports\windows\win_ref_glw.h">
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
-		<Unit filename="..\..\src\ports\win32\q_shwin.c">
+		<Unit filename="..\..\src\ports\windows\win_shared.c">
 			<Option compilerVar="CC" />
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
-		<Unit filename="..\..\src\ports\win32\qgl_win.c">
+		<Unit filename="..\..\src\ports\windows\win_qgl.c">
 			<Option compilerVar="CC" />
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
-		<Unit filename="..\..\src\ports\win32\win_local.h">
+		<Unit filename="..\..\src\ports\windows\win_local.h">
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>

@@ -20,10 +20,10 @@
 				</Linker>
 			</Target>
 		</Build>
-		<Unit filename="../../src/ports/linux/snd_alsa.c">
+		<Unit filename="../../src/ports/linux/linux_snd_alsa.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/ports/linux/snd_alsa.h" />
+		<Unit filename="../../src/ports/linux/linux_snd_alsa.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

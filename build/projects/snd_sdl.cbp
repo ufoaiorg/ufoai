@@ -76,10 +76,10 @@
 				</Linker>
 			</Target>
 		</Build>
-		<Unit filename="../../src/ports/linux/snd_sdl.c">
+		<Unit filename="../../src/ports/unix/unix_snd_sdl.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/ports/linux/snd_sdl.h" />
+		<Unit filename="../../src/ports/unix/unix_snd_sdl.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

@@ -13,7 +13,7 @@ UnitCount=131
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=ufo_private.rc
-ResourceIncludes=..\..\src\ports\win32
+ResourceIncludes=..\..\src\ports\windows
 MakeIncludes=
 Icon=
 ExeOutput=..\..
@@ -278,7 +278,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit24]
-FileName=..\..\src\ports\win32\in_win.c
+FileName=..\..\src\ports\windows\win_input.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -318,7 +318,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit28]
-FileName=..\..\src\ports\win32\q_shwin.c
+FileName=..\..\src\ports\windows\win_shared.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -428,7 +428,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit39]
-FileName=..\..\src\ports\win32\sys_win.c
+FileName=..\..\src\ports\windows\win_main.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -438,7 +438,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit40]
-FileName=..\..\src\ports\win32\vid_dll.c
+FileName=..\..\src\ports\windows\win_vid.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -608,7 +608,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit57]
-FileName=..\..\src\ports\win32\win_local.h
+FileName=..\..\src\ports\windows\win_local.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
@@ -888,7 +888,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit85]
-FileName=..\..\src\ports\win32\qal_win.h
+FileName=..\..\src\ports\windows\win_qal.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
@@ -978,7 +978,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit94]
-FileName=..\..\src\ports\win32\ufo.rc
+FileName=..\..\src\ports\windows\ufo.rc
 CompileCpp=0
 Folder=Resource Files
 Compile=1

@@ -302,84 +302,76 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/game/q_shared.h" />
-		<Unit filename="../../src/ports/linux/q_shlinux.c">
+		<Unit filename="../../src/ports/linux/linux_shared.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 		</Unit>
-		<Unit filename="../../src/ports/linux/sys_linux.c">
+		<Unit filename="../../src/ports/linux/linux_main.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 		</Unit>
-		<Unit filename="../../src/ports/linux/vid_so.c">
+		<Unit filename="../../src/ports/linux/linux_vid.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="../../src/ports/macosx/in_osx.m">
+		<Unit filename="../../src/ports/macosx/osx_input.m">
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="../../src/ports/macosx/q_shosx.c">
+		<Unit filename="../../src/ports/macosx/osx_shared.c">
 			<Option compilerVar="CC" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="../../src/ports/macosx/sys_osx.m">
+		<Unit filename="../../src/ports/macosx/osx_main.m">
 			<Option compile="1" />
 			<Option link="1" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="../../src/ports/unix/glob.c">
+		<Unit filename="../../src/ports/unix/unix_glob.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="../../src/ports/unix/sys_console.c">
+		<Unit filename="../../src/ports/unix/unix_console.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="../../src/ports/unix/sys_unix.c">
+		<Unit filename="../../src/ports/unix/unix_main.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="../../src/ports/win32/in_win.c">
+		<Unit filename="../../src/ports/windows/win_input.c">
 			<Option compilerVar="CC" />
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
-		<Unit filename="../../src/ports/win32/libintl.h">
-			<Option target="windows" />
-			<Option target="windows_debug" />
-		</Unit>
-		<Unit filename="../../src/ports/win32/q_shwin.c">
+		<Unit filename="../../src/ports/windows/win_shared.c">
 			<Option compilerVar="CC" />
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
-		<Unit filename="../../src/ports/win32/sys_win.c">
+		<Unit filename="../../src/ports/windows/win_main.c">
 			<Option compilerVar="CC" />
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
-		<Unit filename="../../src/ports/win32/ufo.ico">
+		<Unit filename="../../src/ports/windows/ufo.ico">
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
-		<Unit filename="../../src/ports/win32/ufo.rc">
+		<Unit filename="../../src/ports/windows/ufo.rc">
 			<Option compilerVar="WINDRES" />
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
-		<Unit filename="../../src/ports/win32/vid_dll.c">
+		<Unit filename="../../src/ports/windows/win_vid.c">
 			<Option compilerVar="CC" />
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
-		<Unit filename="../../src/ports/win32/vorbisfile.h">
-			<Option target="windows" />
-			<Option target="windows_debug" />
-		</Unit>
-		<Unit filename="../../src/ports/win32/win_local.h">
+		<Unit filename="../../src/ports/windows/win_local.h">
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>

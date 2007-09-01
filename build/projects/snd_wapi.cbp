@@ -39,7 +39,7 @@
 			<Add library="user32" />
 			<Add library="winmm" />
 		</Linker>
-		<Unit filename="../../src/ports/win32/snd_wapi.c">
+		<Unit filename="../../src/ports/windows/win_snd_wapi.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>

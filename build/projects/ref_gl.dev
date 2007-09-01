@@ -130,7 +130,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit11]
-FileName=..\..\src\ports\win32\glw_imp.c
+FileName=..\..\src\ports\windows\win_ref_glw.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -150,7 +150,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit13]
-FileName=..\..\src\ports\win32\q_shwin.c
+FileName=..\..\src\ports\windows\win_shared.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -160,7 +160,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit14]
-FileName=..\..\src\ports\win32\qgl_win.c
+FileName=..\..\src\ports\windows\win_qgl.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -210,7 +210,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit19]
-FileName=..\..\src\ports\win32\glw_win.h
+FileName=..\..\src\ports\windows\win_ref_glw.h
 Folder=Header Files
 Compile=1
 CompileCpp=1
@@ -260,7 +260,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit26]
-FileName=..\..\src\ports\win32\win_local.h
+FileName=..\..\src\ports\windows\win_local.h
 Folder=Header Files
 Compile=1
 CompileCpp=1
