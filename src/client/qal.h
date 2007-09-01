@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 
 #ifdef _WIN32
-	#include "../ports/win32/win_qal.h"
+	#include "../ports/windows/win_qal.h"
 #endif
 
 #if defined(__linux__) || defined(__FreeBSD__)

@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "snd_wave.h"
 
 #ifdef _WIN32
-# include "../ports/win32/win_local.h"
+# include "../ports/windows/win_local.h"
 #endif
 
 static void S_Play_f(void);
