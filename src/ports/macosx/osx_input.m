@@ -1,5 +1,5 @@
 /**
- * @file in_osx.m
+ * @file osx_input.m
  * @brief MaxOSX input handling code
  */
 

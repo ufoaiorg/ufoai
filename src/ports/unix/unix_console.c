@@ -1,5 +1,5 @@
 /**
- * @file sys_console.c
+ * @file unix_console.c
  * @brief console functions for *nix ports
  */
 

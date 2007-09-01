@@ -1,5 +1,5 @@
 /**
- * @file snd_sdl.c
+ * @file unix_snd_sdl.c
  * @brief SDL sound driver
  */
 

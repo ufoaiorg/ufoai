@@ -1,5 +1,5 @@
 /**
- * @file linux/vid_so.c
+ * @file unix_vid.c
  * @brief Main windowed and fullscreen graphics interface module.
  * @note This module is used for the OpenGL rendering versions of the UFO refresh engine.
  */

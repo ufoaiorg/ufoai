@@ -1,5 +1,5 @@
 /**
- * @file snd_oss.c
+ * @file linux_snd_oss.c
  * @brief OSS sound driver
  */
 

@@ -1,5 +1,5 @@
 /**
- * @file snd_wapi.c
+ * @file win_snd_wapi.c
  * @brief WindowsAPI sound driver
  */
 

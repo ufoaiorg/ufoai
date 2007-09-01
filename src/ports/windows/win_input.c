@@ -1,6 +1,6 @@
 /**
- * @file in_win.c
- * @brief windows 95 mouse code
+ * @file win_input.c
+ * @brief windows mouse code
  * 02/21/97 JCB Added extended DirectInput code to support external controllers.
  */
 

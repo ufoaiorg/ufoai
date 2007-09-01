@@ -1,5 +1,5 @@
 /**
- * @file qal_win.h
+ * @file win_qal.h
  */
 
 /*

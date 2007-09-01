@@ -1,5 +1,5 @@
 /**
- * @file sys_unix.c
+ * @file unix_main.c
  * @brief Some generic *nix functions
  */
 

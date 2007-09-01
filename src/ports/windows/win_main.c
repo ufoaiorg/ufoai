@@ -1,6 +1,6 @@
 /**
- * @file sys_win.c
- * @brief
+ * @file win_main.c
+ * @brief Windows system functions
  */
 
 /*

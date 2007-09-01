@@ -1,5 +1,5 @@
 /**
- * @file gl_glx.c
+ * @file linux_ref_glx.c
  * @brief This file contains ALL Linux specific stuff having to do with the OpenGL refresh
  */
 

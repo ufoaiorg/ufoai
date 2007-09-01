@@ -1,5 +1,5 @@
 /**
- * @file snd_arts.c
+ * @file linux_snd_arts.c
  * @brief Sound code for linux arts sound daemon
  */
 

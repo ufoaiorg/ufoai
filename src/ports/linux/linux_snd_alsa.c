@@ -1,5 +1,5 @@
 /**
- * @file snd_alsa.c
+ * @file linux_snd_alsa.c
  * @brief Sound code for linux alsa sound architecture
  */
 

@@ -1,6 +1,6 @@
 /**
- * @file q_shwin.c
- * @brief Windows system functions
+ * @file win_shared.c
+ * @brief Windows shared functions
  */
 
 /*

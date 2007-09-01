@@ -1,5 +1,5 @@
 /**
- * @file qal_linux.h
+ * @file linux_qal.h
  */
 
 /*

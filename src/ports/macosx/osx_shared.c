@@ -1,5 +1,5 @@
 /**
- * @file q_shosx.c
+ * @file osx_shared.c
  * @brief shared functions for the plug-ins
  * Written by:	awe				[mailto:awe@fruitz-of-dojo.de]
  * 2001-2002 Fruitz Of Dojo 	[http://www.fruitz-of-dojo.de]

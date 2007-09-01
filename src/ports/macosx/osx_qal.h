@@ -1,5 +1,5 @@
 /**
- * @file qal_osx.h
+ * @file osx_qal.h
  */
 
 /*

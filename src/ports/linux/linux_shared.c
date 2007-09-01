@@ -1,5 +1,5 @@
 /**
- * @file q_shlinux.c
+ * @file linux_shared.c
  * @brief Shared linux functions
  */
 

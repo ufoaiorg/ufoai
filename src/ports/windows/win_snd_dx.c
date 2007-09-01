@@ -1,5 +1,5 @@
 /**
- * @file snd_dx.c
+ * @file win_snd_dx.c
  * @brief DirectX (DirectSound) sound driver
  */
 

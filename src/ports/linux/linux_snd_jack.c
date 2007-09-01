@@ -1,5 +1,5 @@
 /**
- * @file snd_jack.c
+ * @file linux_snd_jack.c
  * @brief Sound code for jack sound server
  * @todo finish the implementation
  */

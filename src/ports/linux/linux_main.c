@@ -1,5 +1,5 @@
 /**
- * @file sys_linux.c
+ * @file linux_main.c
  * @brief main function and system functions
  */
 
