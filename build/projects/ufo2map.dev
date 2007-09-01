@@ -170,7 +170,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit32]
-FileName=..\..\src\qcommon\ioapi.c
+FileName=..\..\src\common\ioapi.c
 Folder=Source
 Compile=1
 CompileCpp=0
@@ -180,7 +180,7 @@ OverrideBuildCmd=0
 BuildCmd=$(CC) -c ioapi.c -o ufo2map/ioapi.o $(CFLAGS)
 
 [Unit33]
-FileName=..\..\src\qcommon\unzip.c
+FileName=..\..\src\common\unzip.c
 Folder=Source
 Compile=1
 CompileCpp=0
@@ -190,7 +190,7 @@ OverrideBuildCmd=0
 BuildCmd=$(CC) -c unzip.c -o ufo2map/unzip.o $(CFLAGS)
 
 [Unit35]
-FileName=..\..\src\qcommon\unzip.c
+FileName=..\..\src\common\unzip.c
 Folder=Source
 Compile=1
 CompileCpp=0
@@ -210,7 +210,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit37]
-FileName=..\..\src\qcommon\ioapi.c
+FileName=..\..\src\common\ioapi.c
 Folder=Source
 Compile=1
 CompileCpp=0
@@ -347,7 +347,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit34]
-FileName=..\..\src\qcommon\ioapi.c
+FileName=..\..\src\common\ioapi.c
 CompileCpp=0
 Folder=Source
 Compile=1
@@ -357,7 +357,7 @@ OverrideBuildCmd=0
 BuildCmd=$(CC) -c ioapi.c -o ufo2map/ioapi.o $(CFLAGS)
 
 [Unit38]
-FileName=..\..\src\qcommon\unzip.c
+FileName=..\..\src\common\unzip.c
 CompileCpp=0
 Folder=Source
 Compile=1

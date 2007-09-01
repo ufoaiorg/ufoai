@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 extern cvar_t *fs_gamedir;
 
 /**
- * @brief see also svc_ops_e in qcommon.h
+ * @brief see also svc_ops_e in common.h
  * @note don't change the array size - a NET_ReadByte can
  * return values between 0 and UCHAR_MAX (-1 is not handled here)
  */

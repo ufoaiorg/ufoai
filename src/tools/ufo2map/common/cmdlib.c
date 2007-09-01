@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cmdlib.h"
 #include <sys/types.h>
 #include <sys/stat.h>
-#include "../../../qcommon/unzip.h"
+#include "../../../common/unzip.h"
 
 typedef struct {
 	char name[MAX_QPATH];

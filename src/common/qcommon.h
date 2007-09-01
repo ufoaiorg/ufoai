@@ -1,5 +1,5 @@
 /**
- * @file qcommon.h
+ * @file common.h
  * @brief definitions common between client and server, but not game lib
  */
 

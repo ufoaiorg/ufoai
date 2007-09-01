@@ -26,8 +26,8 @@ UFO2MAP_SRCS = \
 	tools/ufo2map/common/scriplib.c \
 	tools/ufo2map/common/trace.c \
 	tools/ufo2map/common/imagelib.c \
-	qcommon/unzip.c \
-	qcommon/ioapi.c
+	common/unzip.c \
+	common/ioapi.c
 
 UFO2MAP_OBJS=$(UFO2MAP_SRCS:%.c=$(BUILDDIR)/tools/ufo2map/%.o)
 UFO2MAP_TARGET=ufo2map$(EXE_EXT)

@@ -1,7 +1,7 @@
 #ifndef _BSPFILE
 #define _BSPFILE
 
-#include "../../../qcommon/qfiles.h"
+#include "../../../common/qfiles.h"
 
 extern	int			nummodels;
 extern	dmodel_t	dmodels[MAX_MAP_MODELS];

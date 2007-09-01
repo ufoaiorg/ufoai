@@ -375,64 +375,64 @@
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
-		<Unit filename="../../src/qcommon/cmd.c">
+		<Unit filename="../../src/common/cmd.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/qcommon/cmd.h" />
-		<Unit filename="../../src/qcommon/cmodel.c">
+		<Unit filename="../../src/common/cmd.h" />
+		<Unit filename="../../src/common/cmodel.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/qcommon/cmodel.h" />
-		<Unit filename="../../src/qcommon/common.c">
+		<Unit filename="../../src/common/cmodel.h" />
+		<Unit filename="../../src/common/common.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/qcommon/cvar.c">
+		<Unit filename="../../src/common/cvar.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/qcommon/cvar.h" />
-		<Unit filename="../../src/qcommon/dbuffer.c">
+		<Unit filename="../../src/common/cvar.h" />
+		<Unit filename="../../src/common/dbuffer.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/qcommon/dbuffer.h" />
-		<Unit filename="../../src/qcommon/doxygen.h" />
-		<Unit filename="../../src/qcommon/files.c">
+		<Unit filename="../../src/common/dbuffer.h" />
+		<Unit filename="../../src/common/doxygen.h" />
+		<Unit filename="../../src/common/files.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/qcommon/filesys.h" />
-		<Unit filename="../../src/qcommon/ioapi.c">
+		<Unit filename="../../src/common/filesys.h" />
+		<Unit filename="../../src/common/ioapi.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/qcommon/ioapi.h" />
-		<Unit filename="../../src/qcommon/md4.c">
+		<Unit filename="../../src/common/ioapi.h" />
+		<Unit filename="../../src/common/md4.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/qcommon/md4.h" />
-		<Unit filename="../../src/qcommon/mem.c">
+		<Unit filename="../../src/common/md4.h" />
+		<Unit filename="../../src/common/mem.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/qcommon/mem.h" />
-		<Unit filename="../../src/qcommon/msg.c">
+		<Unit filename="../../src/common/mem.h" />
+		<Unit filename="../../src/common/msg.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/qcommon/net.c">
+		<Unit filename="../../src/common/net.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/qcommon/net.h" />
-		<Unit filename="../../src/qcommon/netpack.c">
+		<Unit filename="../../src/common/net.h" />
+		<Unit filename="../../src/common/netpack.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/qcommon/netpack.h" />
-		<Unit filename="../../src/qcommon/qcommon.h" />
-		<Unit filename="../../src/qcommon/qfiles.h" />
-		<Unit filename="../../src/qcommon/scripts.c">
+		<Unit filename="../../src/common/netpack.h" />
+		<Unit filename="../../src/common/common.h" />
+		<Unit filename="../../src/common/qfiles.h" />
+		<Unit filename="../../src/common/scripts.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/qcommon/scripts.h" />
-		<Unit filename="../../src/qcommon/ufotypes.h" />
-		<Unit filename="../../src/qcommon/unzip.c">
+		<Unit filename="../../src/common/scripts.h" />
+		<Unit filename="../../src/common/ufotypes.h" />
+		<Unit filename="../../src/common/unzip.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/qcommon/unzip.h" />
+		<Unit filename="../../src/common/unzip.h" />
 		<Unit filename="../../src/server/server.h" />
 		<Unit filename="../../src/server/sv_ccmds.c">
 			<Option compilerVar="CC" />

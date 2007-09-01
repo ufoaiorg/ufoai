@@ -79,14 +79,14 @@
 		<Linker>
 			<Add directory="C:/Dev-Cpp/lib" />
 		</Linker>
-		<Unit filename="../../src/qcommon/ioapi.c">
+		<Unit filename="../../src/common/ioapi.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/qcommon/ioapi.h" />
-		<Unit filename="../../src/qcommon/unzip.c">
+		<Unit filename="../../src/common/ioapi.h" />
+		<Unit filename="../../src/common/unzip.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/qcommon/unzip.h" />
+		<Unit filename="../../src/common/unzip.h" />
 		<Unit filename="../../src/tools/ufo2map/brushbsp.c">
 			<Option compilerVar="CC" />
 		</Unit>

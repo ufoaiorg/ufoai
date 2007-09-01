@@ -20,7 +20,7 @@
  * will fill a supplied 16-byte array with the digest.
  */
 
-#include "qcommon.h"
+#include "common.h"
 
 typedef struct MD5Context {
 	uint32_t buf[4];

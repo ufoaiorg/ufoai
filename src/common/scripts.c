@@ -1,5 +1,5 @@
 /**
- * @file qcommon/scripts.c
+ * @file scripts.c
  * @brief Ufo scripts used in client and server
  * @note interpreters for: object, inventory, equipment, name and team, damage
  */
@@ -21,7 +21,7 @@
 */
 
 
-#include "qcommon.h"
+#include "common.h"
 #include "../game/inv_shared.h"
 #ifndef DEDICATED_ONLY
 #include "../client/client.h"

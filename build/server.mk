@@ -1,21 +1,21 @@
 #FIXME: check for -ldl (mingw doesn't have this)
 
 SERVER_SRCS += \
-	qcommon/cmd.c \
-	qcommon/ioapi.c \
-	qcommon/unzip.c \
-	qcommon/cmodel.c \
-	qcommon/common.c \
-	qcommon/cvar.c \
-	qcommon/files.c \
-	qcommon/md4.c \
-	qcommon/md5.c \
-	qcommon/mem.c \
-	qcommon/msg.c \
-	qcommon/dbuffer.c \
-	qcommon/net.c \
-	qcommon/netpack.c \
-	qcommon/scripts.c \
+	common/cmd.c \
+	common/ioapi.c \
+	common/unzip.c \
+	common/cmodel.c \
+	common/common.c \
+	common/cvar.c \
+	common/files.c \
+	common/md4.c \
+	common/md5.c \
+	common/mem.c \
+	common/msg.c \
+	common/dbuffer.c \
+	common/net.c \
+	common/netpack.c \
+	common/scripts.c \
 	\
 	server/sv_ccmds.c \
 	server/sv_game.c \

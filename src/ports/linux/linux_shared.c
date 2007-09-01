@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <sys/time.h>
 #include "../unix/unix_glob.h"
 
-#include "../../qcommon/qcommon.h"
+#include "../../common/common.h"
 #if defined(__FreeBSD__) || defined(__NetBSD__)
 #include <machine/param.h>
 #endif

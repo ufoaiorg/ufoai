@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef SERVER_SERVER_H
 #define SERVER_SERVER_H
 
-#include "../qcommon/qcommon.h"
+#include "../common/common.h"
 
 extern struct memPool_s *sv_gameSysPool;
 extern struct memPool_s *sv_genericPool;

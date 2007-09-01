@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_REF_H
 #define CLIENT_REF_H
 
-#include "../qcommon/qcommon.h"
+#include "../common/common.h"
 
 #ifdef _WIN32
 #include <windows.h>

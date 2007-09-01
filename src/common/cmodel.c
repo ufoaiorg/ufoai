@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "qcommon.h"
+#include "common.h"
 #define	ON_EPSILON	0.1
 #define QUANT	4
 #define GRENADE_ALPHAFAC	0.7

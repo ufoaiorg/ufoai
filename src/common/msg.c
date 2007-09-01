@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "qcommon.h"
+#include "common.h"
 
 const vec3_t bytedirs[NUMVERTEXNORMALS] = {
 #include "../client/anorms.h"

@@ -120,7 +120,7 @@ extern mapConfig_t config;
 
 void U2M_ProgressBar(void (*func) (unsigned int cnt), unsigned int count, qboolean showProgress, const char *id);
 
-#include "../../../qcommon/qfiles.h"
+#include "../../../common/qfiles.h"
 
 #if defined(_WIN32)
 # ifndef snprintf

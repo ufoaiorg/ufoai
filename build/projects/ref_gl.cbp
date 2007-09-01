@@ -174,8 +174,8 @@
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
-		<Unit filename="..\..\src\qcommon\qcommon.h" />
-		<Unit filename="..\..\src\qcommon\qfiles.h" />
+		<Unit filename="..\..\src\common\common.h" />
+		<Unit filename="..\..\src\common\qfiles.h" />
 		<Unit filename="..\..\src\ref_gl\anorms.h" />
 		<Unit filename="..\..\src\ref_gl\anormtab.h" />
 		<Unit filename="..\..\src\ref_gl\gl_anim.c">

@@ -208,7 +208,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit17]
-FileName=..\..\src\qcommon\cmd.c
+FileName=..\..\src\common\cmd.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -218,7 +218,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit18]
-FileName=..\..\src\qcommon\cmodel.c
+FileName=..\..\src\common\cmodel.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -228,7 +228,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit19]
-FileName=..\..\src\qcommon\common.c
+FileName=..\..\src\common\common.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -248,7 +248,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit21]
-FileName=..\..\src\qcommon\ioapi.c
+FileName=..\..\src\common\ioapi.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -258,7 +258,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit22]
-FileName=..\..\src\qcommon\cvar.c
+FileName=..\..\src\common\cvar.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -268,7 +268,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit23]
-FileName=..\..\src\qcommon\files.c
+FileName=..\..\src\common\files.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -298,7 +298,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit26]
-FileName=..\..\src\qcommon\md4.c
+FileName=..\..\src\common\md4.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -328,7 +328,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit29]
-FileName=..\..\src\qcommon\scripts.c
+FileName=..\..\src\common\scripts.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -528,7 +528,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit49]
-FileName=..\..\src\qcommon\qcommon.h
+FileName=..\..\src\common\common.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
@@ -538,7 +538,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit50]
-FileName=..\..\src\qcommon\qfiles.h
+FileName=..\..\src\common\qfiles.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
@@ -668,7 +668,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit63]
-FileName=..\..\src\qcommon\filesys.h
+FileName=..\..\src\common\filesys.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
@@ -678,7 +678,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit64]
-FileName=..\..\src\qcommon\md4.h
+FileName=..\..\src\common\md4.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
@@ -688,7 +688,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit65]
-FileName=..\..\src\qcommon\mem.h
+FileName=..\..\src\common\mem.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
@@ -698,7 +698,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit66]
-FileName=..\..\src\qcommon\scripts.h
+FileName=..\..\src\common\scripts.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
@@ -708,7 +708,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit67]
-FileName=..\..\src\qcommon\ufotypes.h
+FileName=..\..\src\common\ufotypes.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
@@ -718,7 +718,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit68]
-FileName=..\..\src\qcommon\cmd.h
+FileName=..\..\src\common\cmd.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
@@ -728,7 +728,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit69]
-FileName=..\..\src\qcommon\cmodel.h
+FileName=..\..\src\common\cmodel.h
 Folder=Header Files
 Compile=0
 CompileCpp=0
@@ -738,7 +738,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit70]
-FileName=..\..\src\qcommon\doxygen.h
+FileName=..\..\src\common\doxygen.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
@@ -748,7 +748,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit71]
-FileName=..\..\src\qcommon\cvar.h
+FileName=..\..\src\common\cvar.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
@@ -828,7 +828,7 @@ BuildCmd=
 CompileCpp=0
 
 [Unit79]
-FileName=..\..\src\qcommon\unzip.c
+FileName=..\..\src\common\unzip.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
@@ -838,7 +838,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit80]
-FileName=..\..\src\qcommon\unzip.h
+FileName=..\..\src\common\unzip.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
@@ -988,7 +988,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit95]
-FileName=..\..\src\qcommon\md5.c
+FileName=..\..\src\common\md5.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
@@ -1098,7 +1098,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit106]
-FileName=..\..\src\qcommon\msg.c
+FileName=..\..\src\common\msg.c
 Folder=Source Files
 Compile=1
 Link=1
@@ -1148,7 +1148,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit111]
-FileName=..\..\src\qcommon\mem.c
+FileName=..\..\src\common\mem.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
@@ -1268,7 +1268,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit123]
-FileName=..\..\src\qcommon\dbuffer.c
+FileName=..\..\src\common\dbuffer.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
@@ -1278,7 +1278,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit124]
-FileName=..\..\src\qcommon\net.c
+FileName=..\..\src\common\net.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
@@ -1288,7 +1288,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit125]
-FileName=..\..\src\qcommon\netpack.c
+FileName=..\..\src\common\netpack.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
@@ -1298,7 +1298,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit126]
-FileName=..\..\src\qcommon\net.h
+FileName=..\..\src\common\net.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
@@ -1308,7 +1308,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit127]
-FileName=..\..\src\qcommon\netpack.h
+FileName=..\..\src\common\netpack.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
@@ -1318,7 +1318,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit128]
-FileName=..\..\src\qcommon\dbuffer.h
+FileName=..\..\src\common\dbuffer.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
@@ -1328,7 +1328,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit129]
-FileName=..\..\src\qcommon\dbuffer.h
+FileName=..\..\src\common\dbuffer.h
 CompileCpp=0
 Folder=Header Files
 Compile=0
@@ -1358,7 +1358,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit132]
-FileName=..\..\src\qcommon\dbuffer.h
+FileName=..\..\src\common\dbuffer.h
 CompileCpp=0
 Folder=Header Files
 Compile=0

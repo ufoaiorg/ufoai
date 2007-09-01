@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../../qcommon/qcommon.h"
+#include "../../common/common.h"
 #include "win_local.h"
 #include <fcntl.h>
 #include <direct.h>

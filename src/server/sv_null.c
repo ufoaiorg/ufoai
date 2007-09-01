@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../qcommon/ufotypes.h"
+#include "../common/ufotypes.h"
 
 void SV_Init (void)
 {

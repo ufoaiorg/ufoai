@@ -100,7 +100,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit8]
-FileName=..\..\src\qcommon\scripts.c
+FileName=..\..\src\common\scripts.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
@@ -110,7 +110,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit9]
-FileName=..\..\src\qcommon\unzip.c
+FileName=..\..\src\common\unzip.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
@@ -120,7 +120,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit10]
-FileName=..\..\src\qcommon\cmd.c
+FileName=..\..\src\common\cmd.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
@@ -130,7 +130,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit11]
-FileName=..\..\src\qcommon\cmodel.c
+FileName=..\..\src\common\cmodel.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
@@ -140,7 +140,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit12]
-FileName=..\..\src\qcommon\common.c
+FileName=..\..\src\common\common.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
@@ -150,7 +150,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit13]
-FileName=..\..\src\qcommon\ioapi.c
+FileName=..\..\src\common\ioapi.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
@@ -160,7 +160,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit14]
-FileName=..\..\src\qcommon\cvar.c
+FileName=..\..\src\common\cvar.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
@@ -170,7 +170,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit15]
-FileName=..\..\src\qcommon\files.c
+FileName=..\..\src\common\files.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
@@ -180,7 +180,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit16]
-FileName=..\..\src\qcommon\md4.c
+FileName=..\..\src\common\md4.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
@@ -268,7 +268,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit23]
-FileName=..\..\src\qcommon\md5.c
+FileName=..\..\src\common\md5.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
@@ -278,7 +278,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit24]
-FileName=..\..\src\qcommon\msg.c
+FileName=..\..\src\common\msg.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
@@ -288,7 +288,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit25]
-FileName=..\..\src\qcommon\mem.c
+FileName=..\..\src\common\mem.c
 Folder=Source Files
 Compile=1
 Link=1
@@ -308,7 +308,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit27]
-FileName=..\..\src\qcommon\dbuffer.c
+FileName=..\..\src\common\dbuffer.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
@@ -318,7 +318,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit28]
-FileName=..\..\src\qcommon\dbuffer.h
+FileName=..\..\src\common\dbuffer.h
 CompileCpp=0
 Folder=Header Files
 Compile=1
@@ -328,7 +328,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit29]
-FileName=..\..\src\qcommon\net.c
+FileName=..\..\src\common\net.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
@@ -338,7 +338,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit30]
-FileName=..\..\src\qcommon\net.h
+FileName=..\..\src\common\net.h
 CompileCpp=0
 Folder=Header Files
 Compile=1
@@ -348,7 +348,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit31]
-FileName=..\..\src\qcommon\netpack.c
+FileName=..\..\src\common\netpack.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
@@ -358,7 +358,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit32]
-FileName=..\..\src\qcommon\netpack.h
+FileName=..\..\src\common\netpack.h
 CompileCpp=0
 Folder=Header Files
 Compile=1
@@ -368,7 +368,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit33]
-FileName=..\..\src\qcommon\netpack.h
+FileName=..\..\src\common\netpack.h
 CompileCpp=0
 Folder=Header Files
 Compile=1
@@ -378,7 +378,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit34]
-FileName=..\..\src\qcommon\netpack.h
+FileName=..\..\src\common\netpack.h
 CompileCpp=0
 Folder=Header Files
 Compile=1

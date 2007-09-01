@@ -80,7 +80,7 @@ void VID_Init(void);
 void VID_Shutdown(void);
 void VID_CheckChanges(void);
 
-#include "../qcommon/qcommon.h"
+#include "../common/common.h"
 
 void *VID_TagAlloc(struct memPool_s **pool, int size, int tagNum);
 void VID_FreeTags(struct memPool_s **pool, int tagNum);

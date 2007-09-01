@@ -318,7 +318,7 @@ ProductVersion=0.1
 AutoIncBuildNr=0
 
 [Unit21]
-FileName=..\..\src\qcommon\qcommon.h
+FileName=..\..\src\common\common.h
 CompileCpp=1
 Folder=Header Files
 Compile=1
@@ -328,7 +328,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit22]
-FileName=..\..\src\qcommon\qfiles.h
+FileName=..\..\src\common\qfiles.h
 CompileCpp=1
 Folder=Header Files
 Compile=1
