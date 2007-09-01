@@ -87,11 +87,10 @@ char *ex_argv[MAX_EX_ARGC];
 void ExpandWildcards (int *argc, char ***argv)
 {
 	struct _finddata_t fileinfo;
-	int		handle;
-	int		i;
-	char	filename[1024];
-	char	filebase[1024];
-	char	*path;
+	int handle, i;
+	char filename[1024];
+	char filebase[1024];
+	char *path;
 
 	ex_argc = 0;
 	for (i = 0; i < *argc; i++) {
@@ -132,9 +131,9 @@ void ExpandWildcards (int *argc, char ***argv)
 void Error (const char *error, ...)
 {
 	va_list argptr;
-	char	text[2048];
-	char	text2[2048];
-	int		err, len;
+	char text[2048];
+	char text2[2048];
+	int err, len;
 
 	err = GetLastError();
 
@@ -159,7 +158,7 @@ void Error (const char *error, ...)
 void Error (const char *error, ...)
 {
 	va_list argptr;
-	char	text[2048];
+	char text[2048];
 
 	Sys_Printf("\n************ ERROR ************\n");
 
@@ -188,29 +187,28 @@ char gamedir[1024];
  */
 void SetQdirFromPath (char *path)
 {
-	char	temp[1024] = "";
-	char	c[1024] = "";
+	char temp[1024] = "";
+	char c[1024] = "";
 	int pathlength = 0;
 
 	if (!(path[0] == '/' || path[0] == '\\' || path[1] == ':')) {	/* path is partial */
-		Q_getwd (temp);
-		strcat (temp, path);
+		Q_getwd(temp);
+		strcat(temp, path);
 		path = temp;
 	}
 
 	/* search for ".gamedir"-file in path */
-	strncpy (c, path, strlen(path)-1);
+	strncpy(c, path, strlen(path) - 1);
 	for (pathlength = strlen(c) - 1; pathlength > 0; pathlength--) {
 		c[pathlength] = 0;
 		if ((!c[strlen(c)-1] == '/')
 		 && (!c[strlen(c)-1] == '\\')
 		 && (!c[strlen(c)-1] == ':'))
 			continue;
-		snprintf (temp, sizeof(temp), "%s/%s", c, BASEDIR_ID_FILE);
+		snprintf(temp, sizeof(temp), "%s/%s", c, BASEDIR_ID_FILE);
 		if (FileExists(temp)) {
 			strncpy(gamedir, c, strlen(c)-1);
 			strncat(gamedir, "/"BASEDIR"/", sizeof(gamedir));
-/*			Sys_FPrintf(SYS_VRB, "gamedir: %s\n", gamedir);*/
 			Sys_Printf("gamedir: %s\n", gamedir);
 			snprintf(c, sizeof(c) - 1, "%s0pics.pk3", gamedir);
 			pak = FS_LoadPackFile(c);
@@ -228,26 +226,12 @@ void SetQdirFromPath (char *path)
 char *ExpandArg (const char *path)
 {
 	static char full[1024];
-#if 0
-	size_t l;
-	int i;
-#endif
 
 	if (path[0] != '/' && path[0] != '\\' && path[1] != ':') {
-		Q_getwd (full);
-		strcat (full, path);
+		Q_getwd(full);
+		strcat(full, path);
 	} else
-		strncpy (full, path, sizeof(full));
-
-
-#if 0
-	l = strlen(full);
-
-	/* normalize */
-	for (i = 0; i < l; i++)
-		if (full[i] == '\\')
-			full[i] = '/';
-#endif
+		strncpy(full, path, sizeof(full));
 
 	return full;
 }
@@ -259,12 +243,12 @@ char *ExpandPath (const char *path)
 {
 	static char full[1024];
 	if (!qdir)
-		Error ("ExpandPath called without qdir set");
+		Error("ExpandPath called without qdir set");
 	if (path[0] == '/' || path[0] == '\\' || path[1] == ':') {
 		strncpy(full, path, sizeof(full));
 		return full;
 	}
-	snprintf (full, sizeof(full), "%s%s", qdir, path);
+	snprintf(full, sizeof(full), "%s%s", qdir, path);
 	return full;
 }
 
@@ -279,8 +263,8 @@ char *ExpandPathAndArchive (const char *path)
 	expanded = ExpandPath (path);
 
 	if (archive) {
-		snprintf (archivename, sizeof(archivename), "%s/%s", archivedir, path);
-		QCopyFile (expanded, archivename);
+		snprintf(archivename, sizeof(archivename), "%s/%s", archivedir, path);
+		QCopyFile(expanded, archivename);
 	}
 	return expanded;
 }
@@ -289,11 +273,11 @@ char *ExpandPathAndArchive (const char *path)
 /**
  * @brief
  */
-char *copystring(const char *s)
+char *copystring (const char *s)
 {
-	char	*b;
+	char *b;
 	b = (char*)malloc(sizeof(char)*(strlen(s)+1));
-	strcpy (b, s);
+	strcpy(b, s);
 	return b;
 }
 
@@ -305,21 +289,6 @@ double I_FloatTime (void)
 	time_t t;
 	time(&t);
 	return t;
-#if 0
-	/* more precise, less portable */
-	struct timeval tp;
-	struct timezone tzp;
-	static int		secbase;
-
-	gettimeofday(&tp, &tzp);
-
-	if (!secbase) {
-		secbase = tp.tv_sec;
-		return tp.tv_usec/1000000.0;
-	}
-
-	return (tp.tv_sec - secbase) + tp.tv_usec/1000000.0;
-#endif
 }
 
 /**
@@ -333,7 +302,7 @@ void Q_getwd (char *out)
 #else
 	if (getcwd(out, 256) == NULL)
 		Sys_Printf("Warning, getcwd failed\n");
-	strcat (out, "/");
+	strcat(out, "/");
 #endif
 }
 
@@ -351,7 +320,7 @@ void Q_mkdir (const char *path)
 		return;
 #endif
 	if (errno != EEXIST)
-		Error("mkdir %s: %s",path, strerror(errno));
+		Error("mkdir %s: %s", path, strerror(errno));
 }
 
 /**
@@ -942,7 +911,7 @@ static int ParseHex (char *hex)
 		else if (*str >= 'A' && *str <= 'F')
 			num += 10 + *str-'A';
 		else
-			Error ("Bad hex number: %s",hex);
+			Error("Bad hex number: %s",hex);
 		str++;
 	}
 
@@ -980,12 +949,12 @@ BYTE ORDER FUNCTIONS
  */
 short LittleShort (short l)
 {
-	byte    b1,b2;
+	byte b1,b2;
 
-	b1 = l&255;
-	b2 = (l>>8)&255;
+	b1 = l & 255;
+	b2 = (l >> 8) & 255;
 
-	return (b1<<8) + b2;
+	return (b1 << 8) + b2;
 }
 
 /**
@@ -1003,12 +972,12 @@ int LittleLong (int l)
 {
 	byte b1,b2,b3,b4;
 
-	b1 = l&255;
-	b2 = (l>>8)&255;
-	b3 = (l>>16)&255;
-	b4 = (l>>24)&255;
+	b1 = l & 255;
+	b2 = (l >> 8) & 255;
+	b3 = (l >> 16) & 255;
+	b4 = (l >> 24) & 255;
 
-	return ((int)b1<<24) + ((int)b2<<16) + ((int)b3<<8) + b4;
+	return ((int)b1 << 24) + ((int)b2 << 16) + ((int)b3 << 8) + b4;
 }
 
 /**
@@ -1025,7 +994,10 @@ int BigLong (int l)
  */
 float LittleFloat (float l)
 {
-	union {byte b[4]; float f;} in, out;
+	union {
+		byte b[4];
+		float f;
+	} in, out;
 
 	in.f = l;
 	out.b[0] = in.b[3];
@@ -1053,10 +1025,10 @@ short BigShort (short l)
 {
 	byte b1,b2;
 
-	b1 = l&255;
-	b2 = (l>>8)&255;
+	b1 = l & 255;
+	b2 = (l >> 8) & 255;
 
-	return (b1<<8) + b2;
+	return (b1 << 8) + b2;
 }
 
 /**
@@ -1075,12 +1047,12 @@ int BigLong (int l)
 {
 	byte b1,b2,b3,b4;
 
-	b1 = l&255;
-	b2 = (l>>8)&255;
-	b3 = (l>>16)&255;
-	b4 = (l>>24)&255;
+	b1 = l & 255;
+	b2 = (l >> 8) & 255;
+	b3 = (l >> 16) & 255;
+	b4 = (l >> 24) & 255;
 
-	return ((int)b1<<24) + ((int)b2<<16) + ((int)b3<<8) + b4;
+	return ((int)b1 << 24) + ((int)b2 << 16) + ((int)b3 << 8) + b4;
 }
 
 /**
@@ -1096,7 +1068,10 @@ int LittleLong (int l)
  */
 float BigFloat (float l)
 {
-	union {byte b[4]; float f;} in, out;
+	union {
+		byte b[4];
+		float f;
+	} in, out;
 
 	in.f = l;
 	out.b[0] = in.b[3];
@@ -1122,7 +1097,7 @@ float LittleFloat (float l)
  */
 void CreatePath (char *path)
 {
-	char	*ofs, c;
+	char *ofs, c;
 
 	if (path[1] == ':')
 		path += 2;
@@ -1131,7 +1106,7 @@ void CreatePath (char *path)
 		c = *ofs;
 		if (c == '/' || c == '\\') {	/* create the directory */
 			*ofs = 0;
-			Q_mkdir (path);
+			Q_mkdir(path);
 			*ofs = c;
 		}
 	}
@@ -1143,8 +1118,8 @@ void CreatePath (char *path)
  */
 void QCopyFile (const char *from, char *to)
 {
-	void	*buffer;
-	int		length;
+	void *buffer;
+	int length;
 
 	length = LoadFile(from, &buffer);
 	CreatePath(to);
