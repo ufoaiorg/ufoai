@@ -295,6 +295,3 @@ void DoRouting(void);
 
 void ProcessModels(void);
 
-/* conver_ase.c */
-
-int ConvertBSPToASE(const char *bspName);

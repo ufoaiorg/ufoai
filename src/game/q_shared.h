@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/ufotypes.h"
 #include "../shared/byte.h"
 #include "../shared/infostring.h"
+#include "../shared/shared.h"
 #include "../common/mem.h"
 
 #ifdef _MSC_VER
@@ -401,11 +402,6 @@ void gaussrand(float *gauss1, float *gauss2);   /* -inf to +inf, median 0, stdev
 /*============================================= */
 
 void stradd(char **str, const char *addStr);
-
-const char *COM_SkipPath(char *pathname);
-void COM_StripExtension(const char *in, char *out);
-void COM_FileBase(const char *in, char *out);
-void COM_FilePath(const char *in, char *out);
 
 const char *COM_Parse(const char **data_p);
 

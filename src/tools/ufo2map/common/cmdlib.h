@@ -36,15 +36,6 @@ void SaveFile(const char *filename, void *buffer, int count);
 qboolean FileExists(const char *filename);
 
 void DefaultExtension(char *path, const char *extension);
-void DefaultPath(char *path, char *basepath);
-void StripFilename(char *path);
-void StripExtension(char *path);
-
-void ExtractFilePath(const char *path, char *dest, size_t size);
-void ExtractFileBase(const char *path, char *dest, size_t size);
-void ExtractFileExtension(const char *path, char *dest, size_t size);
-
-int ParseNum(char *str);
 
 short BigShort(short l);
 short LittleShort(short l);

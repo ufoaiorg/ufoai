@@ -1,5 +1,5 @@
 /**
- * @file infostring.h
+ * @file shared.h
  * @brief Info string handling
  */
 
@@ -25,18 +25,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef __INFOSTRING_H__
-#define __INFOSTRING_H__
+#ifndef __SHARED_H__
+#define __SHARED_H__
 
-/* key / value info strings */
-#define MAX_INFO_KEY        64
-#define MAX_INFO_VALUE      64
-#define MAX_INFO_STRING     512
+const char *COM_SkipPath(char *pathname);
+void COM_StripExtension(const char *in, char *out);
+void COM_FileBase(const char *in, char *out);
+void COM_FilePath(const char *in, char *out);
 
-const char *Info_ValueForKey(const char *s, const char *key);
-void Info_RemoveKey(char *s, const char *key);
-void Info_SetValueForKey(char *s, const char *key, const char *value);
-void Info_Print(const char *s);
-qboolean Info_Validate(const char *s);
-
-#endif /* __INFOSTRING_H__ */
+#endif /* __SHARED_H__ */

@@ -100,7 +100,7 @@ char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canhave)
 	if (fdir)
 		Sys_Error("Sys_BeginFind without close");
 
-/*	COM_FilePath (path, findbase); */
+/*	COM_FilePath(path, findbase); */
 	strcpy(findbase, path);
 
 	if ((p = strrchr(findbase, '/')) != NULL) {

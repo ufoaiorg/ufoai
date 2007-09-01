@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "qrad.h"
 #include "qbsp.h"
+#include "../../shared/shared.h"
 
 #if defined(__linux__) || defined(__NetBSD__) || defined(__FreeBSD__)
 #include <sys/time.h>
@@ -49,9 +50,6 @@ static void U2M_BSP_Parameter (int argc, char **argv)
 		if (!strcmp(argv[i], "-v")) {
 			Sys_Printf("verbose = true\n");
 			config.verbose = qtrue;
-		} else if (!strcmp(argv[i], "-convert")) {
-			Sys_Printf("convert bsp to ase = true\n");
-			config.convertFunc = ConvertBSPToASE;
 		} else if (!strcmp(argv[i], "-noweld")) {
 			/* make every point unique */
 			Sys_Printf("noweld = true\n");
@@ -244,7 +242,6 @@ int main (int argc, char **argv)
 		" -block num num           : \n"
 		" -blocks num num num num  : \n"
 		" -chop                    : \n"
-		" -convert                 : \n"
 		" -direct                  : \n"
 		" -draw                    : \n"
 		" -dump                    : \n"
@@ -284,10 +281,8 @@ int main (int argc, char **argv)
 	Sys_Printf("path: '%s'\n", argv[argc - 1]);
 	SetQdirFromPath(argv[argc - 1]);
 
-	strcpy(source, ExpandArg(argv[argc - 1]));
-	StripExtension(source);
-
 	strcpy(name, ExpandArg(argv[argc - 1]));
+	COM_StripExtension(name, source);
 	DefaultExtension(name, ".map");
 
 	sprintf(out, "%s.bsp", source);

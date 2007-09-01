@@ -139,8 +139,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "common.h"
 
-void Info_Print(char *s);
-
 #define MASTER_SERVER "ufoai.ninex.info" /* sponsored by NineX */
 
 
@@ -328,6 +326,7 @@ extern const vec3_t bytedirs[NUMVERTEXNORMALS];
 
 /** this is in the client code, but can be used for debugging from server */
 void SCR_DebugGraph(float value, int color);
+void Con_Print(const char *txt);
 
 /* Event timing */
 

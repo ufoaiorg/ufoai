@@ -8,8 +8,6 @@
 /* loads a pcx */
 void LoadPCX(const char *filename, byte **picture, byte **palette, int *width, int *height);
 
-void Load256Image(const char *name, byte **pixels, byte **palette, int *width, int *height);
-
 /*==============================================================================
 JPEG
 ==============================================================================*/

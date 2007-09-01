@@ -106,8 +106,8 @@ char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canthave)
 		Sys_Error("Sys_BeginFind without close");
 	findhandle = 0;
 
-	COM_FilePath (path, findbase);
-	findhandle = _findfirst (path, &findinfo);
+	COM_FilePath(path, findbase);
+	findhandle = _findfirst(path, &findinfo);
 	while (findhandle != -1) {
 		/* found one that matched */
 		if (strcmp(findinfo.name, ".") && strcmp(findinfo.name, "..") &&

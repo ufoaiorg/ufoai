@@ -119,7 +119,7 @@ void CalcTextureReflectivity (void)
 			sprintf(path, "%spics/colormap.pcx", gamedir);
 
 			/* get the game palette */
-			Load256Image(path, NULL, &palette, NULL, NULL);
+			LoadPCX(path, NULL, &palette, NULL, NULL);
 
 			for (j = 0; j < texels; j++) {
 				texel = ((byte *) mt)[LittleLong(mt->offsets[0]) + j];

@@ -18,7 +18,6 @@ UFO2MAP_SRCS = \
 	tools/ufo2map/textures.c \
 	tools/ufo2map/tree.c \
 	tools/ufo2map/writebsp.c \
-	tools/ufo2map/convert_ase.c \
 	tools/ufo2map/common/bspfile.c \
 	tools/ufo2map/common/cmdlib.c \
 	tools/ufo2map/common/mathlib.c \
@@ -26,6 +25,8 @@ UFO2MAP_SRCS = \
 	tools/ufo2map/common/scriplib.c \
 	tools/ufo2map/common/trace.c \
 	tools/ufo2map/common/imagelib.c \
+	shared/byte.c \
+	shared/shared.c \
 	common/unzip.c \
 	common/ioapi.c
 

@@ -116,31 +116,6 @@ void LoadPCX (const char *filename, byte **pic, byte **palette, int *width, int 
 
 /*
 ============================================================================
-LOAD IMAGE
-============================================================================
-*/
-
-/**
- * @brief Will load a pcx
- * @note Any of the return pointers can be NULL if you don't want them.
- * @sa LoadPCX
- * @sa Save256Image
- * @note LoadPCX will allocate pixles and palette - make sure you free them
- * after using them
- */
-void Load256Image (const char *name, byte **pixels, byte **palette, int *width, int *height)
-{
-	char ext[4];
-
-	ExtractFileExtension(name, ext, sizeof(ext));
-	if (!Q_strcasecmp(ext, "pcx")) {
-		LoadPCX(name, pixels, palette, width, height);
-	} else
-		Error("%s doesn't have a known image extension", name);
-}
-
-/*
-============================================================================
 TARGA IMAGE
 ============================================================================
 */

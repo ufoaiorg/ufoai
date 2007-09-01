@@ -29,7 +29,8 @@ SERVER_SRCS += \
 	game/q_shared.c \
 	game/inv_shared.c \
 	shared/byte.c \
-	shared/infostring.c
+	shared/infostring.c \
+	shared/shared.c
 
 ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux-gnu),)
 	SERVER_SRCS += \

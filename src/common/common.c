@@ -496,48 +496,6 @@ void COM_AddParm (const char *parm)
 	com_argv[com_argc++] = parm;
 }
 
-/**
- * @brief
- */
-void Info_Print (char *s)
-{
-	char key[512];
-	char value[512];
-	char *o;
-	int l;
-
-	if (*s == '\\')
-		s++;
-	while (*s) {
-		o = key;
-		while (*s && *s != '\\')
-			*o++ = *s++;
-
-		l = o - key;
-		if (l < 20) {
-			memset(o, ' ', 20 - l);
-			key[20] = 0;
-		} else
-			*o = 0;
-		Com_Printf("%s", key);
-
-		if (!*s) {
-			Com_Printf("MISSING VALUE\n");
-			return;
-		}
-
-		o = value;
-		s++;
-		while (*s && *s != '\\')
-			*o++ = *s++;
-		*o = 0;
-
-		if (*s)
-			s++;
-		Com_Printf("%s\n", value);
-	}
-}
-
 /*======================================================== */
 
 /**
