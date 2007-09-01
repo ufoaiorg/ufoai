@@ -114,10 +114,16 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="..\..\src\client\ref.h" />
+		<Unit filename="..\..\src\common\common.h" />
+		<Unit filename="..\..\src\common\qfiles.h" />
 		<Unit filename="..\..\src\game\q_shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\game\q_shared.h" />
+		<Unit filename="..\..\src\ports\linux\linux_qgl.c">
+			<Option compilerVar="CC" />
+			<Option target="linux" />
+		</Unit>
 		<Unit filename="..\..\src\ports\linux\linux_ref_glx.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
@@ -126,19 +132,11 @@
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 		</Unit>
-		<Unit filename="..\..\src\ports\linux\linux_qgl.c">
-			<Option compilerVar="CC" />
-			<Option target="linux" />
-		</Unit>
-		<Unit filename="..\..\src\ports\macosx\osx_shared.c">
-			<Option compilerVar="CC" />
-			<Option target="macosx" />
-		</Unit>
 		<Unit filename="..\..\src\ports\macosx\osx_qgl.c">
 			<Option compilerVar="CC" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="..\..\src\ports\unix\unix_ref_sdl.c">
+		<Unit filename="..\..\src\ports\macosx\osx_shared.c">
 			<Option compilerVar="CC" />
 			<Option target="macosx" />
 		</Unit>
@@ -150,6 +148,19 @@
 		<Unit filename="..\..\src\ports\unix\unix_glob.h">
 			<Option target="linux" />
 			<Option target="macosx" />
+		</Unit>
+		<Unit filename="..\..\src\ports\unix\unix_ref_sdl.c">
+			<Option compilerVar="CC" />
+			<Option target="macosx" />
+		</Unit>
+		<Unit filename="..\..\src\ports\windows\win_local.h">
+			<Option target="windows" />
+			<Option target="windows_debug" />
+		</Unit>
+		<Unit filename="..\..\src\ports\windows\win_qgl.c">
+			<Option compilerVar="CC" />
+			<Option target="windows" />
+			<Option target="windows_debug" />
 		</Unit>
 		<Unit filename="..\..\src\ports\windows\win_ref_glw.c">
 			<Option compilerVar="CC" />
@@ -165,17 +176,6 @@
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
-		<Unit filename="..\..\src\ports\windows\win_qgl.c">
-			<Option compilerVar="CC" />
-			<Option target="windows" />
-			<Option target="windows_debug" />
-		</Unit>
-		<Unit filename="..\..\src\ports\windows\win_local.h">
-			<Option target="windows" />
-			<Option target="windows_debug" />
-		</Unit>
-		<Unit filename="..\..\src\common\common.h" />
-		<Unit filename="..\..\src\common\qfiles.h" />
 		<Unit filename="..\..\src\ref_gl\anorms.h" />
 		<Unit filename="..\..\src\ref_gl\anormtab.h" />
 		<Unit filename="..\..\src\ref_gl\gl_anim.c">
@@ -250,10 +250,10 @@
 		<Unit filename="..\..\src\ref_gl\gl_rsurf.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\ref_gl\gl_state.c">
+		<Unit filename="..\..\src\ref_gl\gl_shadows.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\ref_gl\gl_shadows.c">
+		<Unit filename="..\..\src\ref_gl\gl_state.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\ref_gl\gl_warp.c">
@@ -266,6 +266,12 @@
 		<Unit filename="..\..\src\ref_gl\qgl.h" />
 		<Unit filename="..\..\src\ref_gl\ref_gl.def" />
 		<Unit filename="..\..\src\ref_gl\warpsin.h" />
+		<Unit filename="..\..\src\shared\byte.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\shared\shared.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 		</Extensions>

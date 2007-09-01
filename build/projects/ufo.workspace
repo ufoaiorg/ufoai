@@ -6,7 +6,6 @@
 		<Project filename="snd_sdl.cbp" />
 		<Project filename="snd_wapi.cbp" />
 		<Project filename="snd_dx.cbp" />
-		<Project filename="Campaigneditor.cbp" />
 		<Project filename="snd_alsa.cbp" />
 		<Project filename="snd_oss.cbp" />
 		<Project filename="ufo.cbp" active="1">
