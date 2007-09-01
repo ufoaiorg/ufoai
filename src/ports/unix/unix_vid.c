@@ -1,3 +1,9 @@
+/**
+ * @file linux/vid_so.c
+ * @brief Main windowed and fullscreen graphics interface module.
+ * @note This module is used for the OpenGL rendering versions of the UFO refresh engine.
+ */
+
 /*
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -17,19 +23,18 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-/* Main windowed and fullscreen graphics interface module. This module */
-/* is used for both the software and OpenGL rendering versions of the */
-/* Quake refresh engine. */
 
-#include <errno.h>
 #include <assert.h>
 #include <dlfcn.h> /* ELF dl loader */
 #include <sys/stat.h>
 #include <unistd.h>
+#include <errno.h>
+#include <string.h>
+/* #include <uuid/uuid.h> */
 
 #include "../../client/client.h"
 
-#include "../../linux/rw_linux.h"
+#include "unix_input.h"
 
 /* Structure containing functions exported from refresh DLL */
 refexport_t	re;
@@ -63,6 +68,7 @@ void (*RW_IN_Init_fp)(in_state_t *in_state_p);
 void (*RW_IN_Shutdown_fp)(void);
 void (*RW_IN_Activate_fp)(qboolean active);
 void (*RW_IN_Commands_fp)(void);
+void (*RW_IN_GetMousePos_fp)(int *mx, int *my);
 void (*RW_IN_Frame_fp)(void);
 
 void Real_IN_Init (void);
@@ -99,7 +105,7 @@ const vidmode_t vid_modes[] =
 	{ 1280,  800, 17 },
 	{ 1680, 1050, 18 },
 	{ 1920, 1200, 19 },
-	{ 1400, 1050, 20 },
+	{ 1400, 1050, 20 }, /* samsung x20 */
 	{ 1440, 900, 21 }
 };
 
@@ -137,11 +143,12 @@ static void VID_FreeReflib (void)
 	RW_IN_Shutdown_fp = NULL;
 	RW_IN_Activate_fp = NULL;
 	RW_IN_Commands_fp = NULL;
+	RW_IN_GetMousePos_fp = NULL;
 	RW_IN_Frame_fp = NULL;
 
 	memset(&re, 0, sizeof(re));
 	reflib_library = NULL;
-	reflib_active  = qfalse;
+	reflib_active = qfalse;
 }
 
 /**
@@ -149,52 +156,34 @@ static void VID_FreeReflib (void)
  */
 static qboolean VID_LoadRefresh (const char *name)
 {
-	refimport_t	ri;
-#ifndef REF_HARD_LINKED
-	GetRefAPI_t	GetRefAPI;
-#endif
-	char	fn[MAX_OSPATH];
-	struct stat st;
+	refimport_t ri;
+	GetRefAPI_t GetRefAPI;
+	qboolean restart = qfalse;
 	extern uid_t saved_euid;
-	FILE *fp;
-	char	*path;
-	char	curpath[MAX_OSPATH];
-	qboolean	restart = qfalse;
 
 	if (reflib_active) {
+#if 0
 		if (KBD_Close_fp)
 			KBD_Close_fp();
 		if (RW_IN_Shutdown_fp)
 			RW_IN_Shutdown_fp();
 		KBD_Close_fp = NULL;
 		RW_IN_Shutdown_fp = NULL;
+#endif
 		re.Shutdown();
 		VID_FreeReflib();
 		restart = qtrue;
 	}
 
-#ifndef REF_HARD_LINKED
-	getcwd(curpath, sizeof(curpath));
-
 	Com_Printf("------- Loading %s -------\n", name);
 
-	/* now run through the search paths */
-	path = NULL;
-	while (1) {
-		path = FS_NextPath(path);
-		if (!path)
-			return NULL;		/* couldn't find one anywhere */
-		sprintf(fn, "%s/%s/%s", curpath, path, name);
-		Com_Printf("Trying to load library (%s)\n", fn);
+	/*regain root */
+	seteuid(saved_euid);
 
-		reflib_library = dlopen(fn, RTLD_NOW);
-		if (reflib_library) {
-			Com_DPrintf(DEBUG_SYSTEM, "LoadLibrary (%s)\n",name);
-			break;
-		}
-	}
+	if ((reflib_library = Sys_LoadLibrary(name, 0)) == 0)
+		return qfalse;
 
-#endif
+	Com_Printf("Sys_LoadLibrary (\"%s\")\n", name);
 
 	ri.Cmd_AddCommand = Cmd_AddCommand;
 	ri.Cmd_RemoveCommand = Cmd_RemoveCommand;
@@ -228,10 +217,9 @@ static qboolean VID_LoadRefresh (const char *name)
 	ri.TagFree = VID_MemFree;
 	ri.FreeTags = VID_FreeTags;
 
-#ifndef REF_HARD_LINKED
-	if ((GetRefAPI = (void *)dlsym(reflib_library, "GetRefAPI")) == 0)
+	if ((GetRefAPI = (void *) dlsym(reflib_library, "GetRefAPI")) == 0)
 		Com_Error(ERR_FATAL, "dlsym failed on %s", name);
-#endif
+
 	re = GetRefAPI(ri);
 
 	if (re.api_version != API_VERSION) {
@@ -241,49 +229,32 @@ static qboolean VID_LoadRefresh (const char *name)
 
 	/* Init IN (Mouse) */
 	in_state.Key_Event_fp = Do_Key_Event;
-	in_state.viewangles = cl.viewangles;
 
-#ifndef REF_HARD_LINKED
 	if ((RW_IN_Init_fp = dlsym(reflib_library, "RW_IN_Init")) == NULL ||
 		(RW_IN_Shutdown_fp = dlsym(reflib_library, "RW_IN_Shutdown")) == NULL ||
 		(RW_IN_Activate_fp = dlsym(reflib_library, "RW_IN_Activate")) == NULL ||
 		(RW_IN_Commands_fp = dlsym(reflib_library, "RW_IN_Commands")) == NULL ||
+		(RW_IN_GetMousePos_fp = dlsym(reflib_library, "RW_IN_GetMousePos")) == NULL ||
 		(RW_IN_Frame_fp = dlsym(reflib_library, "RW_IN_Frame")) == NULL)
 		Sys_Error("No RW_IN functions in REF.\n");
-#else
-	{
-	    void RW_IN_Init(in_state_t *in_state_p);
-	    void RW_IN_Shutdown(void);
-	    void RW_IN_Commands (void);
-	    void RW_IN_Frame (void);
-	    void RW_IN_Activate(void);
 
-	    RW_IN_Init_fp = RW_IN_Init;
-	    RW_IN_Shutdown_fp = RW_IN_Shutdown;
-	    RW_IN_Activate_fp = RW_IN_Activate;
-	    RW_IN_Commands_fp = RW_IN_Commands;
-	    RW_IN_Frame_fp = RW_IN_Frame;
-	}
-#endif
+	Real_IN_Init();
 
-	if (re.Init( 0, 0 ) == qfalse) {
+	if (re.Init(0, 0) == qfalse) {
 		re.Shutdown();
 		VID_FreeReflib();
 		return qfalse;
 	}
 
-	/* give up root now */
-	setreuid(getuid(), getuid());
-	setegid(getgid());
-
 	/* Init KBD */
-#ifndef REF_HARD_LINKED
+#if 1
 	if ((KBD_Init_fp = dlsym(reflib_library, "KBD_Init")) == NULL ||
 		(KBD_Update_fp = dlsym(reflib_library, "KBD_Update")) == NULL ||
 		(KBD_Close_fp = dlsym(reflib_library, "KBD_Close")) == NULL)
 		Sys_Error("No KBD functions in REF.\n");
 #else
 	{
+
 		void KBD_Init(void);
 		void KBD_Update(void);
 		void KBD_Close(void);
@@ -294,26 +265,30 @@ static qboolean VID_LoadRefresh (const char *name)
 	}
 #endif
 	KBD_Init_fp(Do_Key_Event);
-	Real_IN_Init();
+
+	/* give up root now */
+	setreuid(getuid(), getuid());
+	setegid(getgid());
 
 	/* vid_restart */
 	if (restart)
 		CL_InitFonts();
 
 	Com_Printf("------------------------------------\n");
+
 	reflib_active = qtrue;
+
 	return qtrue;
 }
 
 /**
  * @brief This function gets called once just before drawing each frame, and it's sole purpose in life
- *is to check to see if any of the video mode parameters have changed, and if they have to
+ * is to check to see if any of the video mode parameters have changed, and if they have to
  * update the rendering DLL and/or video mode to match.
  */
 void VID_CheckChanges (void)
 {
 	char name[MAX_VAR];
-	cvar_t *sw_mode;
 
 	if (vid_ref->modified)
 		S_StopAllSounds();
@@ -325,13 +300,14 @@ void VID_CheckChanges (void)
 		cl.refresh_prepped = qfalse;
 		cls.disable_screen = qtrue;
 		Com_sprintf(name, sizeof(name), "ref_%s", vid_ref->string);
+
 		if (!VID_LoadRefresh(name)) {
 			Cmd_ExecuteString("condump gl_debug");
+
 			Com_Error(ERR_FATAL, "Couldn't initialize OpenGL renderer!\nConsult gl_debug.txt for further information.");
 		}
 		cls.disable_screen = qfalse;
 	}
-
 }
 
 /**
@@ -340,7 +316,11 @@ void VID_CheckChanges (void)
 void Sys_Vid_Init (void)
 {
 	/* Create the video variables so we know how to start the graphics drivers */
-	vid_ref = Cvar_Get("vid_ref", "soft", CVAR_ARCHIVE, "Video renderer");
+#if !defined __APPLE__ && !defined __sun
+	vid_ref = Cvar_Get("vid_ref", "glx", CVAR_ARCHIVE, "Video renderer");
+#else
+	vid_ref = Cvar_Get("vid_ref", "sdl", CVAR_ARCHIVE, "Video renderer");
+#endif
 
 	maxVidModes = VID_NUM_MODES;
 }
@@ -357,8 +337,8 @@ void VID_Shutdown (void)
 			RW_IN_Shutdown_fp();
 		KBD_Close_fp = NULL;
 		RW_IN_Shutdown_fp = NULL;
-		re.Shutdown ();
-		VID_FreeReflib ();
+		re.Shutdown();
+		VID_FreeReflib();
 	}
 }
 
@@ -404,8 +384,24 @@ void IN_Commands (void)
 /**
  * @brief
  */
+void IN_GetMousePos (int *mx, int *my)
+{
+	if (RW_IN_GetMousePos_fp)
+		RW_IN_GetMousePos_fp(mx, my);
+}
+
+/**
+ * @brief
+ */
 void IN_Frame (void)
 {
+	if (RW_IN_Activate_fp) {
+		if (cls.key_dest == key_console)
+			RW_IN_Activate_fp(qfalse);
+		else
+			RW_IN_Activate_fp(qtrue);
+	}
+
 	if (RW_IN_Frame_fp)
 		RW_IN_Frame_fp();
 }
@@ -415,8 +411,6 @@ void IN_Frame (void)
  */
 void IN_Activate (qboolean active)
 {
-	if (RW_IN_Activate_fp)
-		RW_IN_Activate_fp(active);
 }
 
 /**

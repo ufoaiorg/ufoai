@@ -563,6 +563,7 @@ static void CL_Reset (struct dbuffer *msg)
 		MN_PopMenu(qtrue);
 		MN_PushMenu(mn_hud->string);
 		Cvar_Set("mn_active", mn_hud->string);
+		Cvar_Set("mn_main", "multiplayerInGame");
 	}
 	if (cls.team == cl.actTeam)
 		Cbuf_AddText("startround\n");

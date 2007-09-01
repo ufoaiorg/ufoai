@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifdef _WIN32
 #include "../ports/win32/glw_win.h"
 #else
-#include "../ports/unix/qgl_unix.h"
+#include "../ports/unix/unix_qgl.h"
 #endif
 
 void (APIENTRY * qglAccum) (GLenum op, GLfloat value);

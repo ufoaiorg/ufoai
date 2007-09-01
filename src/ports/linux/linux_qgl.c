@@ -1,5 +1,5 @@
 /**
- * @file qgl_linux.c
+ * @file linux_qgl.c
  * @brief  This file implements the operating system binding of GL to QGL function pointers
  * @note When doing a port of Quake2 you must implement the following two functions:
  ** QR_Init() - loads libraries, assigns function pointers, etc.
@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <float.h>
 #include "../../ref_gl/gl_local.h"
-#include "../unix/qgl_unix.h"
+#include "../unix/unix_qgl.h"
 
 #ifdef USE_OPENGL_FRAMEWORK
 #	include <OpenGL/glx.h>

@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "snd_oss.h"
+#include "linux_snd_oss.h"
 
 int audio_fd = -1;
 int snd_inited;

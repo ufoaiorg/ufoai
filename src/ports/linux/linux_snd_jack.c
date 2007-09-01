@@ -20,7 +20,7 @@
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "snd_jack.h"
+#include "linux_snd_jack.h"
 
 static jack_client_t *client;
 

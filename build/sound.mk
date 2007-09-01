@@ -2,7 +2,7 @@
 # SDL
 ###################################################################################################
 
-SND_SDL_SRCS=ports/linux/snd_sdl.c
+SND_SDL_SRCS=ports/unix/unix_snd_sdl.c
 SND_SDL_OBJS=$(SND_SDL_SRCS:%.c=$(BUILDDIR)/snd-sdl/%.o)
 SND_SDL_TARGET=snd_sdl.$(SHARED_EXT)
 
@@ -27,7 +27,7 @@ $(BUILDDIR)/snd-sdl/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 # ALSA
 ###################################################################################################
 
-SND_ALSA_SRCS=ports/linux/snd_alsa.c
+SND_ALSA_SRCS=ports/linux/linux_snd_alsa.c
 SND_ALSA_OBJS=$(SND_ALSA_SRCS:%.c=$(BUILDDIR)/snd-alsa/%.o)
 SND_ALSA_TARGET=snd_alsa.$(SHARED_EXT)
 
@@ -52,7 +52,7 @@ $(BUILDDIR)/snd-alsa/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 # JACK
 ###################################################################################################
 
-SND_JACK_SRCS=ports/linux/snd_jack.c
+SND_JACK_SRCS=ports/linux/linux_snd_jack.c
 SND_JACK_OBJS=$(SND_JACK_SRCS:%.c=$(BUILDDIR)/snd-jack/%.o)
 SND_JACK_TARGET=snd_jack.$(SHARED_EXT)
 
@@ -77,7 +77,7 @@ $(BUILDDIR)/snd-jack/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 # OSS
 ###################################################################################################
 
-SND_OSS_SRCS=ports/linux/snd_oss.c
+SND_OSS_SRCS=ports/linux/linux_snd_oss.c
 SND_OSS_OBJS=$(SND_OSS_SRCS:%.c=$(BUILDDIR)/snd-oss/%.o)
 SND_OSS_TARGET=snd_oss.$(SHARED_EXT)
 
@@ -102,7 +102,7 @@ $(BUILDDIR)/snd-oss/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 # ARTS
 ###################################################################################################
 
-SND_ARTS_SRCS=ports/linux/snd_arts.c
+SND_ARTS_SRCS=ports/linux/linux_snd_arts.c
 SND_ARTS_OBJS=$(SND_ARTS_SRCS:%.c=$(BUILDDIR)/snd-arts/%.o)
 SND_ARTS_TARGET=snd_arts.$(SHARED_EXT)
 
@@ -128,7 +128,7 @@ $(BUILDDIR)/snd-arts/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 ###################################################################################################
 
 ifeq ($(TARGET_OS),mingw32)
-	SND_WAPI_SRCS=ports/win32/snd_wapi.c
+	SND_WAPI_SRCS=ports/windows/win_snd_wapi.c
 	SND_WAPI_OBJS=$(SND_WAPI_SRCS:%.c=$(BUILDDIR)/snd-wapi/%.o)
 	SND_WAPI_TARGET=snd_wapi.$(SHARED_EXT)
 
@@ -156,7 +156,7 @@ endif
 ###################################################################################################
 
 ifeq ($(TARGET_OS),mingw32)
-	SND_DX_SRCS=ports/win32/snd_dx.c
+	SND_DX_SRCS=ports/windows/win_snd_dx.c
 	SND_DX_OBJS=$(SND_DX_SRCS:%.c=$(BUILDDIR)/snd-dx/%.o)
 	SND_DX_TARGET=snd_dx.$(SHARED_EXT)
 
@@ -183,7 +183,7 @@ endif
 # OSX sound driver
 ###################################################################################################
 ifeq ($(TARGET_OS),darwin)
-	SND_OSX_SRCS=ports/macosx/snd_osx.c
+	SND_OSX_SRCS=ports/macosx/osx_snd_native.c
 	SND_OSX_OBJS=$(SND_OSX_SRCS:%.c=$(BUILDDIR)/snd-osx/%.o)
 	SND_OSX_TARGET=snd_osx.$(SHARED_EXT)
 

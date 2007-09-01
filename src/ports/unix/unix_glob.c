@@ -24,12 +24,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include <stdio.h>
-#include "glob.h"
+#include "unix_glob.h"
 
 /**
  * @brief Like glob_match, but match PATTERN against any final segment of TEXT.
  */
-static int glob_match_after_star(char *pattern, char *text)
+static int glob_match_after_star (char *pattern, char *text)
 {
 	register char *p = pattern, *t = text;
 	register char c, c1;
@@ -68,7 +68,7 @@ static int glob_match_after_star(char *pattern, char *text)
  * @note To suppress the special syntactic significance of any of `[]*?!-\',
  * and match the character exactly, precede it with a `\'.
  */
-int glob_match(char *pattern, char *text)
+int glob_match (char *pattern, char *text)
 {
 	register char *p = pattern, *t = text;
 	register char c;

@@ -1,20 +1,20 @@
 VERSION=$(shell grep UFO_VERSION src/qcommon/qcommon.h | sed -e 's/.*UFO_VERSION \"\(.*\)\"/\1/')
 
-installer: win32installer linuxinstaller sourcearchive
+installer: wininstaller linuxinstaller sourcearchive
 
 mappack:
 	$(MAKE) maps
 	tar -cvjp --exclude-from=src/ports/linux/tar.ex -f ufoai-$(VERSION)-mappack.tar.bz2 ./base/maps
 	scp ufoai-$(VERSION)-mappack.tar.bz2 ufo:~/public_html/download
 
-win32installer:
+wininstaller:
 	$(MAKE) lang
 	$(MAKE) maps
 	cd base; ./archives.sh
-	makensis src/ports/win32/installer.nsi
-	md5sum src/ports/win32/ufoai-$(VERSION)-win32.exe > src/ports/win32/ufoai-$(VERSION)-win32.md5
-	scp src/ports/win32/ufoai-$(VERSION)-win32.exe src/ports/win32/ufoai-$(VERSION)-win32.md5 ufo:~/public_html/download
-	scp src/ports/win32/ufoai-$(VERSION)-win32.exe src/ports/win32/ufoai-$(VERSION)-win32.md5 mirror:~/public_html
+	makensis src/ports/windows/installer.nsi
+	md5sum src/ports/windows/ufoai-$(VERSION)-win32.exe > src/ports/windows/ufoai-$(VERSION)-win32.md5
+	scp src/ports/windows/ufoai-$(VERSION)-win32.exe src/ports/windows/ufoai-$(VERSION)-win32.md5 ufo:~/public_html/download
+	scp src/ports/windows/ufoai-$(VERSION)-win32.exe src/ports/windows/ufoai-$(VERSION)-win32.md5 mirror:~/public_html
 
 linuxarchive:
 	tar -cvjp --exclude-from=src/ports/linux/tar.ex -f ufoai-$(VERSION)-linux.tar.bz2 ./

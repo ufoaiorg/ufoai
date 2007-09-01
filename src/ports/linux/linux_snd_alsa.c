@@ -19,7 +19,7 @@
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "snd_alsa.h"
+#include "linux_snd_alsa.h"
 
 static snd_pcm_t *pcm_handle;
 static snd_pcm_hw_params_t *hw_params;

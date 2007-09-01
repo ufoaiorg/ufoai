@@ -83,57 +83,56 @@ endif
 
 ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux-gnu),)
 	CLIENT_SRCS+= \
-		ports/linux/q_shlinux.c \
-		ports/linux/vid_so.c \
-		ports/linux/sys_linux.c \
-		ports/unix/sys_console.c \
-		ports/unix/sys_unix.c \
-		ports/unix/glob.c
+		ports/linux/linux_shared.c \
+		ports/linux/linux_main.c \
+		ports/unix/unix_vid.c \
+		ports/unix/unix_console.c \
+		ports/unix/unix_main.c \
+		ports/unix/unix_glob.c
 
 	ifeq ($(HAVE_OPENAL),1)
 		CLIENT_SRCS+= \
-			ports/linux/qal_linux.c
+			ports/linux/linux_qal.c
 	endif
 endif
 
 ifeq ($(TARGET_OS),mingw32)
 	CLIENT_SRCS+=\
-		ports/win32/ufo.rc \
-		ports/win32/q_shwin.c \
-		ports/win32/vid_dll.c \
-		ports/win32/in_win.c \
-		ports/win32/sys_win.c \
-		ports/win32/ufo.rc
+		ports/windows/win_shared.c \
+		ports/windows/win_vid.c \
+		ports/windows/win_input.c \
+		ports/windows/win_main.c \
+		ports/windows/ufo.rc
 
 	ifeq ($(HAVE_OPENAL),1)
 		CLIENT_SRCS+=\
-			ports/win32/qal_win.c
+			ports/windows/win_qal.c
 	endif
 endif
 
 ifeq ($(TARGET_OS),darwin)
 	CLIENT_SRCS+= \
-		ports/macosx/sys_osx.m \
-		ports/linux/vid_so.c \
-		ports/macosx/in_osx.m \
-		ports/unix/glob.c \
-		ports/unix/sys_console.c \
-		ports/unix/sys_unix.c \
-		ports/macosx/q_shosx.c \
-		ports/macosx/qal_osx.c
+		ports/macosx/osx_main.m \
+		ports/macosx/osx_shared.c \
+		ports/macosx/osx_qal.c \
+		ports/macosx/osx_input.m \
+		ports/unix/unix_vid.c \
+		ports/unix/unix_glob.c \
+		ports/unix/unix_console.c \
+		ports/unix/unix_main.c
 endif
 
 ifeq ($(TARGET_OS),solaris)
 	CLIENT_SRCS+= \
-		ports/solaris/q_shsolaris.c \
-		ports/linux/vid_so.c \
-		ports/solaris/sys_solaris.c \
-		ports/unix/sys_console.c \
-		ports/unix/sys_unix.c \
-		ports/unix/glob.c
+		ports/solaris/solaris_shared.c \
+		ports/solaris/solaris_main.c \
+		ports/unix/unix_vid.c \
+		ports/unix/unix_console.c \
+		ports/unix/unix_main.c \
+		ports/unix/unix_glob.c
 	ifeq ($(HAVE_OPENAL),1)
 		CLIENT_SRCS+=\
-			ports/linux/qal_linux.c
+			ports/linux/linux_qal.c
 	endif
 endif
 

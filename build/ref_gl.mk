@@ -29,39 +29,39 @@ REF_GL_SRCS = \
 
 ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux-gnu),)
 	REF_GL_SRCS += \
-			ports/linux/qgl_linux.c \
-			ports/linux/q_shlinux.c \
-			ports/unix/glob.c
-	REF_SDL_SRCS = ports/unix/gl_sdl.c
+			ports/linux/linux_qgl.c \
+			ports/linux/linux_shared.c \
+			ports/unix/unix_glob.c
+	REF_SDL_SRCS = ports/unix/unix_ref_sdl.c
 	REF_SDL_TARGET=ref_sdl.$(SHARED_EXT)
-	REF_GLX_SRCS = ports/linux/gl_glx.c
+	REF_GLX_SRCS = ports/linux/linux_ref_glx.c
 endif
 
 ifeq ($(TARGET_OS),mingw32)
 	REF_GL_SRCS += \
-		ports/win32/qgl_win.c \
-		ports/win32/glw_imp.c \
-		ports/win32/q_shwin.c
+		ports/windows/win_qgl.c \
+		ports/windows/glw_imp.c \
+		ports/windows/win_shared.c
 	REF_SDL_SRCS =
 	REF_SDL_TARGET=ref_gl.$(SHARED_EXT)
 endif
 
 ifeq ($(TARGET_OS),darwin)
 	REF_GL_SRCS += \
-			ports/macosx/qgl_osx.c \
-			ports/macosx/q_shosx.c \
-			ports/unix/glob.c
-	REF_SDL_SRCS = ports/unix/gl_sdl.c
+			ports/macosx/osx_qgl.c \
+			ports/macosx/osx_shared.c \
+			ports/unix/unix_glob.c
+	REF_SDL_SRCS = ports/unix/unix_ref_sdl.c
 	REF_SDL_TARGET=ref_sdl.$(SHARED_EXT)
 endif
 
 ifeq ($(TARGET_OS),solaris)
 	#TODO
 	REF_GL_SRCS += \
-			ports/solaris/qgl_solaris.c \
-			ports/solaris/q_shsolaris.c \
-			ports/unix/glob.c
-	REF_SDL_SRCS = ports/unix/gl_sdl.c
+			ports/solaris/solaris_qgl.c \
+			ports/solaris/solaris_shared.c \
+			ports/unix/unix_glob.c
+	REF_SDL_SRCS = ports/unix/unix_ref_sdl.c
 	REF_SDL_TARGET=ref_sdl.$(SHARED_EXT)
 endif
 

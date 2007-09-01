@@ -949,7 +949,7 @@ skipadd: ;
  * for the radiosity pass.
  *
  * The sample is added to all patches that might include
- * any part of it.  They are counted and averaged, so it
+ * any part of it. They are counted and averaged, so it
  * doesn't generate extra light.
  */
 static void AddSampleToPatch (vec3_t pos, vec3_t color, int facenum)
@@ -1052,7 +1052,7 @@ void BuildFacelights (unsigned int facenum)
 		}
 
 		/* contribute the sample to one or more patches */
-		AddSampleToPatch(l[0].surfpt[i], styletable[0]+i*3, facenum);
+		AddSampleToPatch(l[0].surfpt[i], styletable[0] + i * 3, facenum);
 	}
 
 	/* average up the direct light on each patch for radiosity */
@@ -1165,9 +1165,9 @@ void FinalLightFace (unsigned int facenum)
 
 	/* sample the triangulation */
 
-	/* _minlight allows models that have faces that would not be */
-	/* illuminated to receive a mottled light pattern instead of */
-	/* black */
+	/* _minlight allows models that have faces that would not be
+	 * illuminated to receive a mottled light pattern instead of
+	 * black */
 /*	minlight = FloatForKey(face_entity[facenum], "_minlight") * 128; */
 	minlight = 0;
 

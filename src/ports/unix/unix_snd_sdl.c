@@ -28,7 +28,7 @@ Boston, MA  02111-1307, USA
 
 */
 
-#include "snd_sdl.h"
+#include "unix_snd_sdl.h"
 
 static int snd_inited;
 

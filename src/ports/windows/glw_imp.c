@@ -1,5 +1,5 @@
 /**
- * @file win32/glw_imp.c
+ * @file win_ref_glw.c
  * @brief This file contains ALL Win32 specific stuff having to do with the OpenGL refresh.
  * @note When a port is being made the following functions must be implemented by the port:
  ** Rimp_EndFrame

@@ -65,8 +65,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <libgen.h> /* dirname */
 
 #include "../../qcommon/qcommon.h"
-
-#include "rw_linux.h"
+#include "../unix/unix_input.h"
 
 unsigned	sys_frame_time;
 

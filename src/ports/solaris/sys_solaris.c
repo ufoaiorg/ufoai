@@ -40,7 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <dlfcn.h>
 
 #include "../../qcommon/qcommon.h"
-#include "../linux/rw_linux.h"
+#include "../unix/unix_input.h"
 
 extern cvar_t *nostdout;
 

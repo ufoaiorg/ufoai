@@ -1,5 +1,5 @@
 /**
- * @file qgl_osx.c
+ * @file osx_qgl.c
  * @brief This file implements the MacOS X system bindings of OpenGL to QGL function pointers
  * Written by:	awe				[mailto:awe@fruitz-of-dojo.de]
  * 2001-2002 Fruitz Of Dojo 	[http://www.fruitz-of-dojo.de]
