@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <assert.h>
 #include "../../ref_gl/gl_local.h"
-#include "glw_win.h"
+#include "win_ref_glw.h"
 #include "win_local.h"
 
 qboolean Rimp_InitGL(void);
