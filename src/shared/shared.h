@@ -28,6 +28,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __SHARED_H__
 #define __SHARED_H__
 
+#ifndef M_PI
+#define M_PI	3.14159265358979323846  /* matches value in gcc v2 math.h */
+#endif
+
 /* important units */
 #define UNIT_SIZE 32
 #define UNIT_HEIGHT 64
@@ -47,5 +51,69 @@ void COM_FileBase(const char *in, char *out);
 void COM_FilePath(const char *in, char *out);
 
 const char *COM_Parse(const char **data_p);
+
+/*
+==============================================================
+COLLISION DETECTION
+==============================================================
+*/
+
+/**
+ * @note contents flags are seperate bits
+ * a given brush can contribute multiple content bits
+ * multiple brushes can be in a single leaf
+ */
+
+/** lower bits are stronger, and will eat weaker brushes completely */
+#define CONTENTS_SOLID			0x1	/**< an eye is never valid in a solid */
+#define CONTENTS_WINDOW			0x2	/**< translucent, but not watery */
+#define CONTENTS_BURN			0x8	/**< will keep burning when flamed */
+#define CONTENTS_WATER			0x20
+/** max 16 bit please - otherwise change EV_ACTOR_MOVE to send a long and not a short */
+
+#define LAST_VISIBLE_CONTENTS	0x80
+
+#define CONTENTS_LEVEL_1		0x100
+#define CONTENTS_LEVEL_2		0x200
+#define CONTENTS_LEVEL_3		0x400
+#define CONTENTS_LEVEL_4		0x800
+#define CONTENTS_LEVEL_5		0x1000
+#define CONTENTS_LEVEL_6		0x2000
+#define CONTENTS_LEVEL_7		0x4000
+#define CONTENTS_LEVEL_8		0x8000
+
+/** remaining contents are non-visible, and don't eat brushes */
+#define CONTENTS_ACTORCLIP		0x10000
+#define CONTENTS_PASSABLE		0x20000
+#define CONTENTS_ACTOR			0x40000		/**< should never be on a brush, only in game */
+#define CONTENTS_ORIGIN			0x1000000	/**< removed before bsping an entity */
+#define CONTENTS_WEAPONCLIP		0x2000000	/**< stop bullets */
+#define CONTENTS_DEADACTOR		0x4000000
+#define CONTENTS_DETAIL			0x8000000	/**< brushes to be added after vis leafs */
+#define CONTENTS_TRANSLUCENT	0x10000000	/**< auto set if any surface has trans */
+#define CONTENTS_STEPON			0x40000000	/**< marks areas elevated passable areas */
+
+#define SURF_LIGHT		0x1			/**< value will hold the light strength */
+#define SURF_SLICK		0x2			/**< effects game physics */
+#define SURF_WARP		0x8			/**< turbulent water warp */
+#define SURF_TRANS33	0x10		/* 0.33 alpha blending */
+#define SURF_TRANS66	0x20		/* 0.66 alpha blending */
+#define SURF_FLOWING	0x40		/**< scroll towards angle */
+#define SURF_NODRAW		0x80		/**< don't bother referencing the texture */
+#define SURF_HINT		0x100	/* make a primary bsp splitter */
+#define SURF_SKIP		0x200	/* completely ignore, allowing non-closed brushes */
+#define SURF_ALPHATEST	0x2000000	/**< alpha test for transparent textures */
+
+/* content masks */
+#define MASK_ALL			(-1)
+#define MASK_SOLID			(CONTENTS_SOLID|CONTENTS_WINDOW)
+#define MASK_SHOT			(CONTENTS_SOLID|CONTENTS_ACTOR|CONTENTS_WEAPONCLIP|CONTENTS_WINDOW|CONTENTS_DEADACTOR)
+#define MASK_VISIBILILITY	(CONTENTS_SOLID|CONTENTS_WATER)
+#define MASK_CLIP			(CONTENTS_ACTORCLIP|CONTENTS_WEAPONCLIP|CONTENTS_STEPON)
+
+/*============================================================== */
+
+#define ROUTING_NOT_REACHABLE 0xFF
+
 
 #endif /* __SHARED_H__ */

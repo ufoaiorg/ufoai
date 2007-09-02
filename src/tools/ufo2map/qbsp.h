@@ -279,8 +279,6 @@ void PruneNodes(node_t *node);
 
 void DoRouting(void);
 
-#define ROUTING_NOT_REACHABLE 0xFF
-
 /* qbsp3.c */
 
 void ProcessModels(void);

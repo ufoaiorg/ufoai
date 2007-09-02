@@ -286,14 +286,6 @@ typedef vec_t vec5_t[5];
 typedef byte pos_t;
 typedef pos_t pos3_t[3];
 
-#ifndef M_PI
-#define M_PI	3.14159265358979323846  /* matches value in gcc v2 math.h */
-#endif
-
-#ifndef M_TWOPI
-#define M_TWOPI	6.28318530717958647692
-#endif
-
 struct cBspPlane_s;
 
 extern const vec3_t vec3_origin;
@@ -489,57 +481,6 @@ void Com_DPrintf(int level, const char *msg, ...) __attribute__((format(printf, 
 extern cvar_t* sys_priority;
 extern cvar_t* sys_affinity;
 extern cvar_t* sys_os;
-
-/*
-==============================================================
-COLLISION DETECTION
-==============================================================
-*/
-
-/** lower bits are stronger, and will eat weaker brushes completely */
-#define CONTENTS_SOLID			0x1	/**< an eye is never valid in a solid */
-#define CONTENTS_WINDOW			0x2	/**< translucent, but not watery */
-#define CONTENTS_BURN			0x8	/**< will keep burning when flamed */
-#define CONTENTS_WATER			0x20
-/** max 16 bit please - otherwise change EV_ACTOR_MOVE to send a long and not a short */
-
-#define CONTENTS_LEVEL_1		0x100
-#define CONTENTS_LEVEL_2		0x200
-#define CONTENTS_LEVEL_3		0x400
-#define CONTENTS_LEVEL_4		0x800
-#define CONTENTS_LEVEL_5		0x1000
-#define CONTENTS_LEVEL_6		0x2000
-#define CONTENTS_LEVEL_7		0x4000
-#define CONTENTS_LEVEL_8		0x8000
-
-/** remaining contents are non-visible, and don't eat brushes */
-
-#define CONTENTS_ACTORCLIP		0x10000
-#define CONTENTS_PASSABLE		0x20000
-#define CONTENTS_ACTOR			0x40000		/**< should never be on a brush, only in game */
-#define CONTENTS_ORIGIN			0x1000000	/**< removed before bsping an entity */
-#define CONTENTS_WEAPONCLIP		0x2000000	/**< stop bullets */
-#define CONTENTS_DEADACTOR		0x4000000
-#define CONTENTS_DETAIL			0x8000000	/**< brushes to be added after vis leafs */
-#define CONTENTS_TRANSLUCENT	0x10000000	/**< auto set if any surface has trans */
-#define CONTENTS_STEPON			0x40000000	/**< marks areas elevated passable areas */
-
-
-#define SURF_LIGHT		0x1			/**< value will hold the light strength */
-#define SURF_SLICK		0x2			/**< effects game physics */
-#define SURF_WARP		0x8			/**< turbulent water warp */
-#define SURF_TRANS33	0x10		/* 0.33 alpha blending */
-#define SURF_TRANS66	0x20		/* 0.66 alpha blending */
-#define SURF_FLOWING	0x40		/**< scroll towards angle */
-#define SURF_NODRAW		0x80		/**< don't bother referencing the texture */
-#define SURF_ALPHATEST	0x2000000	/**< alpha test for transparent textures */
-
-/* content masks */
-#define MASK_ALL			(-1)
-#define MASK_SOLID			(CONTENTS_SOLID|CONTENTS_WINDOW)
-#define MASK_SHOT			(CONTENTS_SOLID|CONTENTS_ACTOR|CONTENTS_WEAPONCLIP|CONTENTS_WINDOW|CONTENTS_DEADACTOR)
-#define MASK_VISIBILILITY	(CONTENTS_SOLID|CONTENTS_WATER)
-
 
 /* FIXME: eliminate AREA_ distinction? */
 #define AREA_SOLID			1
@@ -786,8 +727,6 @@ typedef enum {
 #define PLAYER_DEAD			-12
 #define PLAYER_MIN			-24
 #define PLAYER_WIDTH		9
-
-#define ROUTING_NOT_REACHABLE 0xFF
 
 /* field marker box */
 #define BOX_DELTA_WIDTH		11
