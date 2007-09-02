@@ -717,9 +717,6 @@ typedef enum {
 #define STATE_SHAKEN		0x0400	/**< forced reaction fire */
 #define STATE_XVI			0x0800	/**< controlled by the other team */
 
-#define ANGLE2SHORT(x)		((int)((x)*65536/360) & 65535)
-#define SHORT2ANGLE(x)		((x)*(360.0/65536))
-
 #define EYE_STAND			15
 #define EYE_CROUCH			3
 #define PLAYER_STAND		20
