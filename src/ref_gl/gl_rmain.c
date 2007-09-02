@@ -753,7 +753,7 @@ static void R_Register (void)
 #else
 	vid_ref = ri.Cvar_Get("vid_ref", "glx", CVAR_ARCHIVE, NULL);
 #endif
-	vid_grabmouse = ri.Cvar_Get("vid_grabmouse", "1", CVAR_ARCHIVE, NULL);
+	vid_grabmouse = ri.Cvar_Get("vid_grabmouse", "0", CVAR_ARCHIVE, NULL);
 	vid_grabmouse->modified = qfalse;
 
 	con_font = ri.Cvar_Get("con_font", "0", CVAR_ARCHIVE, NULL);

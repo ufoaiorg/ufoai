@@ -685,7 +685,6 @@ void Font_Init (void)
 		ri.Sys_Error(ERR_FATAL, "...SDL_ttf error: %s\n", TTF_GetError());
 
 	ri.Con_Printf(PRINT_ALL, "...SDL_ttf inited\n");
-	atexit(TTF_Quit);
 }
 
 /**
