@@ -294,6 +294,9 @@ static int SDLateKey (SDL_keysym *keysym, int *key)
 	case SDLK_CAPSLOCK:
 		*key = K_CAPSLOCK;
 		break;
+	case SDLK_SPACE:
+		*key = K_SPACE;
+		break;
 	default:
 		if (!keysym->unicode && (keysym->sym >= ' ') && (keysym->sym <= '~'))
 			*key = (int) keysym->sym;

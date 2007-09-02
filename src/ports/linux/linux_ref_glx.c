@@ -484,6 +484,19 @@ static int XLateKey (XKeyEvent *ev)
 	case XK_KP_Divide:
 		key = K_KP_SLASH;
 		break;
+	case XK_Caps_Lock:
+		key = K_CAPSLOCK;
+		break;
+	case XK_Num_Lock:
+		key = K_KP_NUMLOCK;
+		break;
+	case XK_Scroll_Lock:
+		key = K_SCROLLOCK;
+		break;
+	case XK_space:
+	case XK_KP_Space:
+		key = K_SPACE;
+		break;
 
 	default:
 		if (XLookupRet == 0) {
