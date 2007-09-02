@@ -138,13 +138,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define DEFAULT_TEAMNUM 1
 
-#define LEVEL_LASTVISIBLE 255
-#define LEVEL_WEAPONCLIP 256
-#define LEVEL_ACTORCLIP 257
-#define LEVEL_STEPON 258
-#define LEVEL_TRACING 259
-#define LEVEL_MAX 260
-
 /** @sa Com_DeveloperSet_f */
 #define DEBUG_ALL		(1<<0)
 #define DEBUG_SHARED	(1<<1)

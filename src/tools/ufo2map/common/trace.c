@@ -176,12 +176,10 @@ void MakeTnodes (int levels)
  */
 static int TestLine_r (int node, const vec3_t start, const vec3_t stop)
 {
-	tnode_t	*tnode;
-	float	front, back;
-	vec3_t	mid;
-	float	frac;
-	int		side;
-	int		r;
+	tnode_t *tnode;
+	float front, back, frac;
+	vec3_t mid;
+	int side, r;
 
 	if (node & (1<<31))
 		return node & ~(1<<31);	/* leaf node */
@@ -237,12 +235,10 @@ static int TestLine_r (int node, const vec3_t start, const vec3_t stop)
  */
 static int TestLineDist_r (int node, const vec3_t start, const vec3_t stop)
 {
-	tnode_t	*tnode;
-	float	front, back;
-	vec3_t	mid;
-	float	frac;
-	int		side;
-	int		r;
+	tnode_t *tnode;
+	float front, back, frac;
+	vec3_t mid;
+	int side, r;
 
 	if (node & (1<<31)) {
 		r = node & ~(1<<31);
@@ -327,7 +323,7 @@ int TestLine (const vec3_t start, const vec3_t stop)
  * @brief
  * @param[in] start
  * @param[in] stop
- * @param[in] levels don't check levels higher than 255 + levels
+ * @param[in] levels don't check levels higher than LEVEL_LASTVISIBLE + levels
  * @note levels:
  * 256: weaponclip-level
  * 257: actorclip-level
@@ -340,7 +336,7 @@ int TestLineMask (const vec3_t start, const vec3_t stop, int levels)
 
 	/* loop over all theads */
 	for (i = 0; i < numtheads; i++) {
-		if (theadlevel[i] > 255 + levels)
+		if (theadlevel[i] > LEVEL_LASTVISIBLE + levels)
 			continue;
 
 		if (TestLine_r(thead[i], start, stop))
@@ -359,7 +355,7 @@ int TestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, int levels)
 	VectorCopy(stop, end);
 
 	for (i = 0; i < numtheads; i++) {
-		if (theadlevel[i] > 255 + levels)
+		if (theadlevel[i] > LEVEL_LASTVISIBLE + levels)
 			continue;
 
 		if (TestLineDist_r(thead[i], start, stop))

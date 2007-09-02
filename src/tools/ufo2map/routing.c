@@ -251,14 +251,14 @@ void DoRouting (void)
 	nummodels += 1;
 
 	/* process actorclip-level */
-	ProcessLevel(NUMMODELS - 1);
+	ProcessLevel(LEVEL_ACTORCLIP);
 	/* process stepon-level */
-	ProcessLevel(NUMMODELS);
+	ProcessLevel(LEVEL_STEPON);
 
 	/* build tracing structure */
 /*	EmitBrushes(); */
 	EmitPlanes();
-	MakeTnodes(NUMMODELS + 1);
+	MakeTnodes(LEVEL_TRACING);
 
 	PopInfo();
 	nummodels -= 1;

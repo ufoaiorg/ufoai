@@ -165,7 +165,7 @@ static qboolean IsInLevel (int contents, int level)
 	/* special levels */
 
 	/* weaponclip */
-	if (level == NUMMODELS - 2) {
+	if (level == LEVEL_WEAPONCLIP) {
 		if (contents & CONTENTS_WEAPONCLIP)
 			return qtrue;
 		else
@@ -173,7 +173,7 @@ static qboolean IsInLevel (int contents, int level)
 	}
 
 	/* actorclip */
-	if (level == NUMMODELS - 1) {
+	if (level == LEVEL_ACTORCLIP) {
 		if (contents & CONTENTS_ACTORCLIP)
 			return qtrue;
 		else
@@ -181,7 +181,7 @@ static qboolean IsInLevel (int contents, int level)
 	}
 
 	/* stepon */
-	if (level == NUMMODELS) {
+	if (level == LEVEL_STEPON) {
 		if (contents & CONTENTS_STEPON)
 			return qtrue;
 		else
