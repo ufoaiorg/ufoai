@@ -39,9 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../shared/ufotypes.h"
 #include "../shared/byte.h"
-#include "../shared/infostring.h"
 #include "../shared/shared.h"
-#include "../common/mem.h"
 
 #ifdef _MSC_VER
 /* unknown pragmas are SUPPOSED to be ignored, but.... */

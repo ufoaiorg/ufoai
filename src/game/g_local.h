@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "q_shared.h"
 #include "inv_shared.h"
+#include "../shared/infostring.h"
 
 /* FIXME: no gettext support for game lib - but we must be able to mark the strings */
 # define _(String) String
