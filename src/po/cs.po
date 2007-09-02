@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-09-02 13:02+0200\n"
-"PO-Revision-Date: 2007-09-02 12:57+0100\n"
+"POT-Creation-Date: 2007-09-02 17:59+0200\n"
+"PO-Revision-Date: 2007-09-02 17:53+0100\n"
 "Last-Translator: Lubomír Bláha <tritol@trilogic.cz>\n"
 "Language-Team: čeština <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -821,7 +821,7 @@ msgstr "Současná položka v pozici"
 
 #: ../base/ufos/menu_aircraft.ufo:697
 msgid "Item to install after removal"
-msgstr "Položka k namontování po demontování"
+msgstr "Položka k namontování po demontáži"
 
 #: ../base/ufos/menu_aircraft.ufo:706
 msgid "Ammo fitting this weapon"
@@ -2624,12 +2624,12 @@ msgstr "Gama:"
 msgid "Low"
 msgstr "Nízké"
 
-#: ../base/ufos/menu_options.ufo:338
+#: ../base/ufos/menu_options.ufo:338 client/cl_mapfightequip.c:1422
 msgid "Medium"
 msgstr "Střední"
 
 #: ../base/ufos/menu_options.ufo:343 ../base/ufos/menu_ptleditor.ufo:74
-#: client/cl_main.c:2299
+#: client/cl_main.c:2300
 msgid "Normal"
 msgstr "Normální"
 
@@ -14336,7 +14336,7 @@ msgstr ""
 #: client/cl_campaign.c:2780 client/cl_campaign.c:2826
 #: client/cl_campaign.c:2828 client/cl_campaign.c:3134
 #: client/cl_inventory.c:294 client/cl_inventory.c:300
-#: client/cl_inventory.c:546 client/cl_main.c:1105 client/cl_map.c:295
+#: client/cl_inventory.c:546 client/cl_main.c:1106 client/cl_map.c:295
 #: client/cl_market.c:642 client/cl_market.c:646 client/cl_parse.c:1603
 #: client/cl_popup.c:338 client/cl_research.c:980 client/cl_research.c:998
 #: client/cl_research.c:1004 client/cl_research.c:1042
@@ -15270,25 +15270,25 @@ msgid ""
 "got removed."
 msgstr "Základna %s nemá sklad antihnoty. %i jednotek antihmoty bylo odebráno."
 
-#: client/cl_main.c:395 client/cl_main.c:1062
+#: client/cl_main.c:396 client/cl_main.c:1063
 msgid "Assemble a team first"
 msgstr "Nejprve sestavte tým"
 
-#: client/cl_main.c:395 client/cl_main.c:784 client/cl_main.c:1062
-#: client/cl_main.c:1579 client/cl_main.c:1584 client/cl_main.c:1593
+#: client/cl_main.c:396 client/cl_main.c:785 client/cl_main.c:1063
+#: client/cl_main.c:1580 client/cl_main.c:1585 client/cl_main.c:1594
 #: client/cl_save.c:409 client/cl_save.c:432 client/cl_save.c:573
 msgid "Error"
 msgstr "Chyba"
 
-#: client/cl_main.c:784
+#: client/cl_main.c:785
 msgid "Server needs restarting - something went wrong"
 msgstr "Server vyžaduje restart - něco dopadlo špatně"
 
-#: client/cl_main.c:857
+#: client/cl_main.c:858
 msgid "No player connected\n"
 msgstr "Žádný hráč není připojen\n"
 
-#: client/cl_main.c:905
+#: client/cl_main.c:906
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -15297,88 +15297,88 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:912
+#: client/cl_main.c:913
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Mapa:\t%s\n"
 
-#: client/cl_main.c:923
+#: client/cl_main.c:924
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Jméno serveru:\t%s\n"
 
-#: client/cl_main.c:924
+#: client/cl_main.c:925
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Stavy morálky:\t%s\n"
 
-#: client/cl_main.c:925
+#: client/cl_main.c:926
 #, c-format
 msgid "Gametype:\t%s\n"
 msgstr "Druh hry:\t%s\n"
 
-#: client/cl_main.c:926
+#: client/cl_main.c:927
 #, c-format
 msgid "Gameversion:\t%s\n"
 msgstr "Verze hry:\t%s\n"
 
-#: client/cl_main.c:927
+#: client/cl_main.c:928
 #, c-format
 msgid "Dedicated server:\t%s\n"
 msgstr "Vyhrazený server:\t%s\n"
 
-#: client/cl_main.c:928
+#: client/cl_main.c:929
 #, c-format
 msgid "Operating system:\t%s\n"
 msgstr "Operační systém:\t%s\n"
 
-#: client/cl_main.c:929
+#: client/cl_main.c:930
 #, c-format
 msgid "Network protocol:\t%s\n"
 msgstr "Síťový protokol:\t%s\n"
 
-#: client/cl_main.c:930
+#: client/cl_main.c:931
 #, c-format
 msgid "Roundtime:\t%s\n"
 msgstr "Délka tahu:\t%s\n"
 
-#: client/cl_main.c:931
+#: client/cl_main.c:932
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Týmová hra:\t%s\n"
 
-#: client/cl_main.c:932
+#: client/cl_main.c:933
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Maximum hráčů na tým:\t%s\n"
 
-#: client/cl_main.c:933
+#: client/cl_main.c:934
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr "Maximum týmů povolených v této mapě:\t%s\n"
 
-#: client/cl_main.c:934
+#: client/cl_main.c:935
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Maximum klientů:\t%s\n"
 
-#: client/cl_main.c:935
+#: client/cl_main.c:936
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Maximum vojáků na hráče:\t%s\n"
 
-#: client/cl_main.c:936
+#: client/cl_main.c:937
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Maximum vojáků na tým:\t%s\n"
 
-#: client/cl_main.c:937
+#: client/cl_main.c:938
 #, c-format
 msgid "Password protected:\t%s\n"
 msgstr "Chráněno heslem:\t%s\n"
 
 # doladit
-#: client/cl_main.c:1105
+#: client/cl_main.c:1106
 msgid ""
 "All bookmark slots are used - please removed unused entries and repeat this "
 "step"
@@ -15386,71 +15386,71 @@ msgstr ""
 "Není místo pro další oblíbené - smažte prosím nepoužívané položky a zkuste "
 "to znovu"
 
-#: client/cl_main.c:1183
+#: client/cl_main.c:1184
 msgid "Select a free team or your coop team"
 msgstr "Zvolte volný tým nebo tým pro spolupráci"
 
-#: client/cl_main.c:1424 client/cl_main.c:1438
+#: client/cl_main.c:1425 client/cl_main.c:1439
 #, c-format
 msgid "Current team: %i"
 msgstr "Současný tým: %i"
 
-#: client/cl_main.c:1428 client/cl_main.c:1442
+#: client/cl_main.c:1429 client/cl_main.c:1443
 msgid "Team is already in use"
 msgstr "Tým je již používán"
 
-#: client/cl_main.c:1452 client/cl_main.c:1490
+#: client/cl_main.c:1453 client/cl_main.c:1491
 msgid "Invalid or full team"
 msgstr "Neplatný nebo plný tým"
 
-#: client/cl_main.c:1578
+#: client/cl_main.c:1579
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr "Vaše verze hry (%s) se liší od té na serveru"
 
-#: client/cl_main.c:1584
+#: client/cl_main.c:1585
 msgid "Local map version differs from server"
 msgstr "Vaše verze mapy se liší od té na serveru"
 
-#: client/cl_main.c:1592
+#: client/cl_main.c:1593
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr "Vaše verze hry (%s) se liší od té na serveru (%s)"
 
 # doladit
-#: client/cl_main.c:2172
+#: client/cl_main.c:2173
 msgid "Target your shot to the ground"
 msgstr "Zamířit výstřel k zemi"
 
-#: client/cl_main.c:2173
+#: client/cl_main.c:2174
 msgid "Open the actors inventory while we are in tactical mission"
 msgstr "Vstoupit do inventáře postavy (během bojové mise)"
 
-#: client/cl_main.c:2292
+#: client/cl_main.c:2293
 msgid "Chicken-hearted"
 msgstr "Pro sraby"
 
-#: client/cl_main.c:2294
+#: client/cl_main.c:2295
 msgid "Very Easy"
 msgstr "Velice snadné"
 
-#: client/cl_main.c:2297
+#: client/cl_main.c:2298
 msgid "Easy"
 msgstr "Snadné"
 
-#: client/cl_main.c:2302
+#: client/cl_main.c:2303
 msgid "Hard"
 msgstr "Těžké"
 
-#: client/cl_main.c:2304
+#: client/cl_main.c:2305
 msgid "Very Hard"
 msgstr "Velice těžké"
 
-#: client/cl_main.c:2306
+#: client/cl_main.c:2307
 msgid "Insane"
 msgstr "Nemožné"
 
-#: client/cl_main.c:2361
+#: client/cl_main.c:2362
 msgid "Custom"
 msgstr "Uživatelský"
 
@@ -15506,6 +15506,99 @@ msgstr "Jméno:\t%s (%i/%i)\n"
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Stav:\t%s\n"
+
+#: client/cl_mapfightequip.c:532
+msgid "No defense of this type in this base\n"
+msgstr "Na této základně není obranná soustava.\n"
+
+#: client/cl_mapfightequip.c:536
+#, c-format
+msgid "Slot %i:\tempty\n"
+msgstr "Pozice %i:\tprázdná\n"
+
+#: client/cl_mapfightequip.c:539
+#, c-format
+msgid "Slot %i:\t%s\n"
+msgstr "Pozice %i:\t%s\n"
+
+#: client/cl_mapfightequip.c:548
+msgid "No defense system assigned.\n"
+msgstr "Není přiřazena žádná obranná soustava.\n"
+
+#: client/cl_mapfightequip.c:555
+msgid "This defense system is functional.\n"
+msgstr "Tato obranná soustava funguje.\n"
+
+#: client/cl_mapfightequip.c:557
+#, c-format
+msgid "This defense system will be installed in %i hours.\n"
+msgstr "Tato obranná soustava bude namontována během %d hodin.\n"
+
+#: client/cl_mapfightequip.c:559
+#, c-format
+msgid "This defense system will be removed in %i hours.\n"
+msgstr "Tato obranná soustava bude demontována během %d hodin.\n"
+
+#: client/cl_mapfightequip.c:566
+msgid "No defense system assigned."
+msgstr "Není přiřazena žádná obranná soustava."
+
+#: client/cl_mapfightequip.c:570
+#, c-format
+msgid "This defense system will be operational in %i hours.\n"
+msgstr "Tato obranná soustava bude v provozu během %d hodin.\n"
+
+#: client/cl_mapfightequip.c:579
+msgid "No ammo assigned to this defense system."
+msgstr "K této obranné soustavě není přiřazena žádná munice."
+
+#: client/cl_mapfightequip.c:860
+msgid "No item assigned.\n"
+msgstr "Není přiřazena žádná položka.\n"
+
+#: client/cl_mapfightequip.c:861
+#, c-format
+msgid "This slot is for %s or smaller items."
+msgstr "Tato pozice je pro %s nebo menší položky."
+
+#: client/cl_mapfightequip.c:866
+msgid "This item is functional.\n"
+msgstr "Tato položka funguje.\n"
+
+#: client/cl_mapfightequip.c:868
+#, c-format
+msgid "This item will be installed in %i hours.\n"
+msgstr "Tato položka bude namontována během %d hodin.\n"
+
+#: client/cl_mapfightequip.c:870
+#, c-format
+msgid "This item will be removed in %i hours.\n"
+msgstr "Tato položka bude demontována během %d hodin.\n"
+
+#: client/cl_mapfightequip.c:877
+msgid "No item assigned."
+msgstr "Není přiřazena žádná položka."
+
+#: client/cl_mapfightequip.c:881
+#, c-format
+msgid "This item will be operational in %i hours.\n"
+msgstr "Tato položka bude v provozu během %d hodin.\n"
+
+#: client/cl_mapfightequip.c:890
+msgid "No ammo assigned to this weapon."
+msgstr "K této zbrani není přiřazena žádná munice."
+
+#: client/cl_mapfightequip.c:1419
+msgid "Light"
+msgstr "Lehká"
+
+#: client/cl_mapfightequip.c:1425 client/cl_ufopedia.c:152
+msgid "Heavy"
+msgstr "Těžká"
+
+#: client/cl_mapfightequip.c:1428
+msgid "Unknown weight"
+msgstr "Neznámá hmotnost"
 
 #: client/cl_market.c:427 client/cl_market.c:669
 msgid "Not enough storage space"
@@ -16528,10 +16621,6 @@ msgstr "Náš radar ztratil zaměřené UFO"
 #: client/cl_ufopedia.c:149
 msgid "Close"
 msgstr "Boj zblízka"
-
-#: client/cl_ufopedia.c:152
-msgid "Heavy"
-msgstr "Těžká"
 
 #: client/cl_ufopedia.c:155
 msgid "Assault"
