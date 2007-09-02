@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "qbsp.h"
 
 
-vec3_t v_epsilon = { 1, 1, 1 };
+const vec3_t v_epsilon = { 1, 1, 1 };
 int brush_start, brush_end;
 
 vec3_t worldMins, worldMaxs;
@@ -73,15 +73,11 @@ void PopInfo (void)
  */
 static int BuildNodeChildren (vec3_t mins, vec3_t maxs, int n[3])
 {
-	int		node;
-	int		i;
-
-	node = -1;
+	int node = -1, i;
 
 	for (i = 0; i < 3; i++) {
-		dnode_t		*newnode;
-		vec3_t		newmins, newmaxs;
-		vec3_t		addvec;
+		dnode_t	 *newnode;
+		vec3_t newmins, newmaxs, addvec;
 
 		if (n[i] == -1)
 			continue;
@@ -137,12 +133,11 @@ static int BuildNodeChildren (vec3_t mins, vec3_t maxs, int n[3])
  */
 static int ConstructLevelNodes_r (int levelnum, vec3_t cmins, vec3_t cmaxs)
 {
-	bspbrush_t	*list;
-	tree_t		*tree;
-	vec3_t		diff;
-	vec3_t		bmins, bmaxs;
-	int			nn[3];
-	node_t		*n;
+	bspbrush_t *list;
+	tree_t *tree;
+	vec3_t diff, bmins, bmaxs;
+	int nn[3];
+	node_t *n;
 
 	/* calculate bounds, stop if no brushes are available */
 	if (!MapBrushesBounds(brush_start, brush_end, levelnum, cmins, cmaxs, bmins, bmaxs))
@@ -241,8 +236,8 @@ static int ConstructLevelNodes_r (int levelnum, vec3_t cmins, vec3_t cmaxs)
  */
 void ProcessLevel (unsigned int levelnum)
 {
-	vec3_t		mins, maxs;
-	dmodel_t	*dm;
+	vec3_t mins, maxs;
+	dmodel_t *dm;
 
 	/* get maxs */
 	mins[0] = (config.block_xl) * 512.0 + 1.0;

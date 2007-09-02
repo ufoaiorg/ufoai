@@ -126,43 +126,6 @@ byte *CompressRouting (byte *dataStart, byte *destStart, int l)
 	return dest_p;
 }
 
-#if 0
-/**
- * @brief
- * @sa CompressRouting
- * @note unused
- */
-int DeCompressRouting (byte **source, byte *dataStart)
-{
-	int	i, c;
-	byte	*data_p;
-	byte	*src;
-
-	data_p = dataStart;
-	src = *source;
-
-	while (*src) {
-		if (*src & 0x80) {
-			/* repetitions */
-			c = *src++ & ~0x80;
-			for (i = 0; i < c+1; i++)
-				*data_p++ = *src;
-			src++;
-		} else {
-			/* identities */
-			c = *src++;
-			for (i = 0; i < c; i++)
-				*data_p++ = *src++;
-		}
-	}
-
-	src++;
-	*source = src;
-
-	return data_p - dataStart;
-}
-#endif
-
 /**
  * @brief Byte swaps all data in a bsp file.
  */
@@ -606,20 +569,6 @@ void UnparseEntities (void)
 	}
 	entdatasize = end - buf + 1;
 }
-
-#if 0
-/**
- * @brief
- */
-static void PrintEntity (entity_t *ent)
-{
-	epair_t *ep;
-
-	Com_Printf("------- entity %p -------\n", ent);
-	for (ep = ent->epairs; ep; ep = ep->next)
-		Com_Printf("%s = %s\n", ep->key, ep->value);
-}
-#endif
 
 /**
  * @brief

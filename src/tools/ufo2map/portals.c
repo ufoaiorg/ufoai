@@ -409,7 +409,7 @@ static void MakeTreePortals_r (node_t *node)
 {
 	int i;
 
-	CalcNodeBounds (node);
+	CalcNodeBounds(node);
 	if (node->mins[0] >= node->maxs[0]) {
 		Com_Printf("WARNING: node without a volume\n");
 	}
@@ -447,15 +447,14 @@ void MakeTreePortals (tree_t *tree)
  */
 static void FindPortalSide (portal_t *p)
 {
-	int			viscontents;
-	bspbrush_t	*bb;
-	mapbrush_t	*brush;
-	node_t		*n;
-	int			i,j;
-	int			planenum;
-	side_t		*side, *bestside;
-	float		dot, bestdot;
-	plane_t		*p1, *p2;
+	int viscontents;
+	bspbrush_t *bb;
+	mapbrush_t *brush;
+	node_t *n;
+	int i,j, planenum;
+	side_t *side, *bestside;
+	float dot, bestdot;
+	plane_t *p1, *p2;
 
 	/* decide which content change is strongest */
 	/* solid > lava > water, etc */
@@ -510,8 +509,8 @@ gotit:
  */
 static void MarkVisibleSides_r (node_t *node)
 {
-	portal_t	*p;
-	int			s;
+	portal_t *p;
+	int s;
 
 	if (node->planenum != PLANENUM_LEAF) {
 		MarkVisibleSides_r(node->children[0]);
@@ -541,9 +540,8 @@ static void MarkVisibleSides_r (node_t *node)
  */
 void MarkVisibleSides (tree_t *tree, int startbrush, int endbrush)
 {
-	int		i, j;
-	mapbrush_t	*mb;
-	int		numsides;
+	int i, j, numsides;
+	mapbrush_t *mb;
 
 	Sys_FPrintf(SYS_VRB, "--- MarkVisibleSides ---\n");
 

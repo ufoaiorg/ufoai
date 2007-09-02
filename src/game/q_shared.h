@@ -220,9 +220,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define PRINT_ALL           0
 #define PRINT_DEVELOPER     1   /* only print when "developer" is set */
 
-/* important units */
-#define UNIT_SIZE           32
-#define UNIT_HEIGHT         64
 /* substract this from the ent->pos[z] to get the ground position */
 #define GROUND_DELTA        28
 /* player height - 12 to be able to walk trough doors
@@ -299,39 +296,19 @@ typedef pos_t pos3_t[3];
 
 struct cBspPlane_s;
 
-extern vec3_t vec3_origin;
-extern vec4_t vec4_origin;
-
-#define nanmask (255<<23)
-
-#define IS_NAN(x) (((*(int *)&x)&nanmask)==nanmask)
+extern const vec3_t vec3_origin;
+extern const vec4_t vec4_origin;
 
 qboolean Q_IsPowerOfTwo(int i);
 
 /* microsoft's fabs seems to be ungodly slow... */
 #define Q_ftol(f) (long) (f)
 
-typedef union {
-	float f[3];
-	int i[3];
-} vectorhack_t;
-
-/** @brief Map boundary is +/- 4096 - to get into the positive area we
- * add the possible max negative value and divide by the size of a grid unit field
- */
-#define VecToPos(v,p)       (p[0]=(((int)v[0]+4096)/UNIT_SIZE), p[1]=(((int)v[1]+4096)/UNIT_SIZE), p[2]=((int)v[2]/UNIT_HEIGHT))
-/** @brief Pos boundary size is +/- 128 - to get into the positive area we add
- * the possible max negative value and multiply with the grid unit size to get
- * back the the vector coordinates - now go into the middle of the grid field
- * by adding the half of the grid unit size to this value */
-#define PosToVec(p,v)       (v[0]=((int)p[0]-128)*UNIT_SIZE+UNIT_SIZE/2, v[1]=((int)p[1]-128)*UNIT_SIZE+UNIT_SIZE/2, v[2]=(int)p[2]*UNIT_HEIGHT+UNIT_HEIGHT/2)
-
 #define DotProduct(x,y)         (x[0]*y[0]+x[1]*y[1]+x[2]*y[2])
 #define VectorSubtract(a,b,c)   (c[0]=a[0]-b[0],c[1]=a[1]-b[1],c[2]=a[2]-b[2])
 #define VectorAdd(a,b,c)        (c[0]=a[0]+b[0],c[1]=a[1]+b[1],c[2]=a[2]+b[2])
 #define VectorMul(scalar,b,c)       (c[0]=scalar*b[0],c[1]=scalar*b[1],c[2]=scalar*b[2])
 #define Vector2Mul(scalar,b,c)      (c[0]=scalar*b[0],c[1]=scalar*b[1])
-#define FastVectorCopy(a,b)     (*(vectorhack_t*)&(b) = *(vectorhack_t*)&(a))
 #define VectorCopy(a,b)         (b[0]=a[0],b[1]=a[1],b[2]=a[2])
 #define Vector2Copy(a,b)            (b[0]=a[0],b[1]=a[1])
 #define Vector4Copy(a,b)        (b[0]=a[0],b[1]=a[1],b[2]=a[2],b[3]=a[3])
@@ -379,7 +356,7 @@ void Print3Vector(const vec3_t v);
 void VecToPolar(const vec3_t v, vec2_t a);
 void PolarToVec(const vec2_t a, vec3_t v);
 
-void AngleVectors(vec3_t angles, vec3_t forward, vec3_t right, vec3_t up);
+void AngleVectors(const vec3_t angles, vec3_t forward, vec3_t right, vec3_t up);
 int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cBspPlane_s *plane);
 float AngleNormalize360(float angle);
 float AngleNormalize180(float angle);

@@ -146,7 +146,7 @@ typedef struct {
 	 * plane - surface normal at hitpoisee
 	 * ent - entity hit by trace
 	 */
-	trace_t (IMPORT *trace) (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, edict_t * passent, int contentmask);
+	trace_t (IMPORT *trace) (vec3_t start, const vec3_t mins, const vec3_t maxs, vec3_t end, edict_t * passent, int contentmask);
 
 	int (IMPORT *PointContents) (vec3_t point);
 

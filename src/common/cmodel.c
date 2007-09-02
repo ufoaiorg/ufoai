@@ -1906,12 +1906,12 @@ static void CM_RecursiveHullCheck (int num, float p1f, float p2f, vec3_t p1, vec
  * @sa CM_RecursiveHullCheck
  * @sa CM_BoxLeafnums_headnode
  */
-static trace_t CM_BoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int tile, int headnode, int brushmask)
+static trace_t CM_BoxTrace (vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, int tile, int headnode, int brushmask)
 {
 	int i;
 
-	checkcount++;				/* for multi-check avoidance */
-	c_traces++;					/* for statistics, may be zeroed */
+	checkcount++;	/* for multi-check avoidance */
+	c_traces++;		/* for statistics, may be zeroed */
 
 	/* init */
 	assert(tile < numTiles);
@@ -1928,10 +1928,10 @@ static trace_t CM_BoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, 
 		return trace_trace;
 
 	trace_contents = brushmask;
-	FastVectorCopy(*start, trace_start);
-	FastVectorCopy(*end, trace_end);
-	FastVectorCopy(*mins, trace_mins);
-	FastVectorCopy(*maxs, trace_maxs);
+	VectorCopy(start, trace_start);
+	VectorCopy(end, trace_end);
+	VectorCopy(mins, trace_mins);
+	VectorCopy(maxs, trace_maxs);
 
 	/* check for position test special case */
 	if (start[0] == end[0] && start[1] == end[1] && start[2] == end[2]) {
@@ -1953,7 +1953,7 @@ static trace_t CM_BoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, 
 			if (trace_trace.allsolid)
 				break;
 		}
-		FastVectorCopy(*start, trace_trace.endpos);
+		VectorCopy(start, trace_trace.endpos);
 		return trace_trace;
 	}
 
@@ -1972,7 +1972,7 @@ static trace_t CM_BoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, 
 	CM_RecursiveHullCheck(headnode, 0, 1, start, end);
 
 	if (trace_trace.fraction == 1.0) {
-		FastVectorCopy(*end, trace_trace.endpos);
+		VectorCopy(end, trace_trace.endpos);
 	} else {
 		for (i = 0; i < 3; i++)
 			trace_trace.endpos[i] = start[i] + trace_trace.fraction * (end[i] - start[i]);
@@ -1988,7 +1988,7 @@ static trace_t CM_BoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, 
  * @brief Handles offseting and rotation of the end points for moving and rotating entities
  * @sa CM_BoxTrace
  */
-trace_t CM_TransformedBoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int tile, int headnode, int brushmask, vec3_t origin, vec3_t angles)
+trace_t CM_TransformedBoxTrace (vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, int tile, int headnode, int brushmask, vec3_t origin, const vec3_t angles)
 {
 	trace_t trace;
 	vec3_t start_l, end_l;
@@ -2064,7 +2064,7 @@ trace_t CM_TransformedBoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t ma
 /**
  * @brief Handles all 255 level specific submodels too
  */
-trace_t CM_CompleteBoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int levelmask, int brushmask)
+trace_t CM_CompleteBoxTrace (vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask)
 {
 	trace_t newtr, tr;
 	int tile, i;

@@ -615,8 +615,8 @@ static void Mod_AddMapTile (const char *name, int sX, int sY, int sZ)
 		if (starmod->bsp.firstnode >= loadmodel->bsp.numnodes)
 			ri.Sys_Error(ERR_DROP, "Mod_AddMapTile: Inline model %i has bad firstnode", i);
 
-		FastVectorCopy(bm->maxs, starmod->maxs);
-		FastVectorCopy(bm->mins, starmod->mins);
+		VectorCopy(bm->maxs, starmod->maxs);
+		VectorCopy(bm->mins, starmod->mins);
 		starmod->radius = bm->radius;
 
 		if (i == 0)

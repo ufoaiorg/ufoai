@@ -1045,7 +1045,7 @@ void LE_List_f (void)
 /** @brief Client side moveclip */
 typedef struct {
 	vec3_t boxmins, boxmaxs;	/**< enclose the test object along entire move */
-	float *mins, *maxs;			/**< size of the moving object */
+	const float *mins, *maxs;	/**< size of the moving object */
 	vec3_t mins2, maxs2;		/**< size when clipping against mosnters */
 	float *start, *end;
 	trace_t trace;
@@ -1066,7 +1066,7 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 	trace_t trace;
 	int headnode;
 	cBspModel_t *cmodel;
-	float *angles;
+	const float *angles;
 	vec3_t origin;
 
 	if (clip->trace.allsolid)
@@ -1127,7 +1127,7 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
  * @brief
  * @sa CL_Trace
  */
-static void CL_TraceBounds (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, vec3_t boxmins, vec3_t boxmaxs)
+static void CL_TraceBounds (const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t end, vec3_t boxmins, vec3_t boxmaxs)
 {
 	int i;
 
@@ -1155,7 +1155,7 @@ static void CL_TraceBounds (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, 
  * @param[in] passle2 Ignore this local entity in the trace (might be NULL)
  * @param[in] contentmask Searched content the trace should watch for
  */
-trace_t CL_Trace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, le_t * passle, le_t * passle2, int contentmask)
+trace_t CL_Trace (vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, le_t * passle, le_t * passle2, int contentmask)
 {
 	moveclip_t clip;
 

@@ -547,7 +547,7 @@ static qboolean SV_FitTile (mTile_t * tile, int x, int y, qboolean force)
  * @param[in] map The map array the region should be added to.
  * @param[in] num @todo: writeme
  * @return qtrue if the region could be added.
- * @return qtrue if the region does not fit or an error was encountered.
+ * @return qfalse if the region does not fit or an error was encountered.
  * @sa SV_FitTile
  * @sa SV_AddTile
  */

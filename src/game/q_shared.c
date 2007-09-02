@@ -35,8 +35,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define DEG2RAD( a ) (( a * M_PI ) / 180.0F)
 
-vec3_t vec3_origin = { 0, 0, 0 };
-vec4_t vec4_origin = { 0, 0, 0, 0 };
+const vec3_t vec3_origin = { 0, 0, 0 };
+const vec4_t vec4_origin = { 0, 0, 0, 0 };
 
 
 #define RT2	0.707107
@@ -187,7 +187,7 @@ int AngleToDV (int angle)
  * @param[out] right result of previous rotation for point {0, -1, 0} (!) (can be NULL if not needed)
  * @param[out] up result of previous rotation for point {0, 0, 1} (can be NULL if not needed)
  */
-void AngleVectors (vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
+void AngleVectors (const vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
 {
 	float angle;
 	static float sr, sp, sy, cr, cp, cy;

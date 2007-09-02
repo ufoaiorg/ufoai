@@ -41,13 +41,11 @@ typedef struct {
 } script_t;
 
 #define	MAX_INCLUDES	8
-static script_t	scriptstack[MAX_INCLUDES];
-static script_t	*script;
+static script_t scriptstack[MAX_INCLUDES];
+static script_t *script;
 static int scriptline;
 
 char token[MAXTOKEN];
-static qboolean endofscript;
-/* only true if UnGetToken was just called */
 
 /**
  * @brief
@@ -80,8 +78,6 @@ void LoadScriptFile (const char *filename)
 {
 	script = scriptstack;
 	AddScriptToStack(filename);
-
-	endofscript = qfalse;
 }
 
 
@@ -100,8 +96,6 @@ void ParseFromMemory (char *buffer, int size)
 	script->line = 1;
 	script->script_p = script->buffer;
 	script->end_p = script->buffer + size;
-
-	endofscript = qfalse;
 }
 
 /**
@@ -112,20 +106,17 @@ static qboolean EndOfScript (qboolean crossline)
 	if (!crossline)
 		Error("Line %i is incomplete\n",scriptline);
 
-	if (!strcmp (script->filename, "memory buffer")) {
-		endofscript = qtrue;
+	if (!strcmp(script->filename, "memory buffer"))
 		return qfalse;
-	}
 
-	free (script->buffer);
-	if (script == scriptstack+1) {
-		endofscript = qtrue;
+	free(script->buffer);
+	if (script == scriptstack + 1)
 		return qfalse;
-	}
+
 	script--;
 	scriptline = script->line;
-	Com_Printf ("returning to %s\n", script->filename);
-	return GetToken (crossline);
+	Com_Printf("returning to %s\n", script->filename);
+	return GetToken(crossline);
 }
 
 /**
@@ -136,13 +127,13 @@ qboolean GetToken (qboolean crossline)
 	char *token_p;
 
 	if (script->script_p >= script->end_p)
-		return EndOfScript (crossline);
+		return EndOfScript(crossline);
 
 	/* skip space */
 skipspace:
 	while (*script->script_p <= 32) {
 		if (script->script_p >= script->end_p)
-			return EndOfScript (crossline);
+			return EndOfScript(crossline);
 		if (*script->script_p++ == '\n') {
 			if (!crossline)
 				Error("Line %i is incomplete\n",scriptline);
@@ -151,7 +142,7 @@ skipspace:
 	}
 
 	if (script->script_p >= script->end_p)
-		return EndOfScript (crossline);
+		return EndOfScript(crossline);
 
 	/* ; # // comments */
 	if (*script->script_p == ';' || *script->script_p == '#'
@@ -160,7 +151,7 @@ skipspace:
 			Error("Line %i is incomplete\n",scriptline);
 		while (*script->script_p++ != '\n')
 			if (script->script_p >= script->end_p)
-				return EndOfScript (crossline);
+				return EndOfScript(crossline);
 		goto skipspace;
 	}
 
@@ -168,11 +159,11 @@ skipspace:
 	if (script->script_p[0] == '/' && script->script_p[1] == '*') {
 		if (!crossline)
 			Error("Line %i is incomplete\n",scriptline);
-		script->script_p+=2;
+		script->script_p += 2;
 		while (script->script_p[0] != '*' && script->script_p[1] != '/') {
 			script->script_p++;
 			if (script->script_p >= script->end_p)
-				return EndOfScript (crossline);
+				return EndOfScript(crossline);
 		}
 		script->script_p += 2;
 		goto skipspace;
@@ -202,12 +193,6 @@ skipspace:
 		}
 
 	*token_p = 0;
-
-	if (!strcmp(token, "$include")) {
-		GetToken(qfalse);
-		AddScriptToStack(token);
-		return GetToken(crossline);
-	}
 
 	return qtrue;
 }

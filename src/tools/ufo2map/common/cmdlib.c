@@ -50,11 +50,9 @@ static pack_t *FS_LoadPackFile(const char *packfile);
 #ifdef _WIN32
 #include <direct.h>
 #include <io.h>
-#define PATHSEPERATOR   '\\'
 #else
 #include <unistd.h>
 #include <dirent.h>
-#define PATHSEPERATOR   '/'
 #endif
 
 #define	BASEDIR_ID_FILE	".gamedir"	/* This is the name of the "trunk" directory. */
@@ -225,73 +223,6 @@ void Q_getwd (char *out)
 #endif
 }
 
-#if 0
-/**
- * @brief Parse a token out of a string
- */
-const char *COM_Parse (const char *data)
-{
-	int c, len;
-
-	len = 0;
-	com_token[0] = 0;
-
-	if (!data)
-		return NULL;
-
-	/* skip whitespace */
-skipwhite:
-	while ((c = *data) <= ' ') {
-		if (c == 0)
-			return NULL;			/* end of file; */
-		data++;
-	}
-
-	/* skip // comments */
-	if (c == '/' && data[1] == '/') {
-		while (*data && *data != '\n')
-			data++;
-		goto skipwhite;
-	}
-
-
-	/* handle quoted strings specially */
-	if (c == '\"') {
-		data++;
-		do {
-			c = *data++;
-			if (c == '\"') {
-				com_token[len] = 0;
-				return data;
-			}
-			com_token[len] = c;
-			len++;
-		} while (1);
-	}
-
-	/* parse single characters */
-	if (c == '{' || c == '}'|| c == ')'|| c == '(' || c == '\'' || c == ':') {
-		com_token[len] = c;
-		len++;
-		com_token[len] = 0;
-		return data + 1;
-	}
-
-	/* parse a regular word */
-	do {
-		com_token[len] = c;
-		data++;
-		len++;
-		c = *data;
-		if (c == '{' || c == '}'|| c == ')'|| c == '(' || c == '\'' || c == ':')
-			break;
-	} while (c > 32);
-
-	com_token[len] = 0;
-	return data;
-}
-#endif
-
 /**
  * @brief
  */
@@ -325,21 +256,6 @@ int Q_strncasecmp (const char *s1, const char *s2, int n)
 int Q_strcasecmp (const char *s1, const char *s2)
 {
 	return Q_strncasecmp(s1, s2, 99999);
-}
-
-
-/**
- * @brief
- */
-char *strupr (char *start)
-{
-	char *in;
-	in = start;
-	while (*in) {
-		*in = toupper(*in);
-		in++;
-	}
-	return start;
 }
 
 /**

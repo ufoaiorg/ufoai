@@ -283,7 +283,7 @@ static int SV_AreaEdicts (vec3_t mins, vec3_t maxs, edict_t ** list, int maxcoun
 /** @brief Server side moveclip - see cmodel.c */
 typedef struct {
 	vec3_t boxmins, boxmaxs;	/**< enclose the test object along entire move */
-	float *mins, *maxs;			/**< size of the moving object */
+	const float *mins, *maxs;	/**< size of the moving object */
 	vec3_t mins2, maxs2;		/**< size when clipping against mosnters */
 	float *start, *end;
 	trace_t trace;
@@ -332,7 +332,7 @@ static void SV_ClipMoveToEntities (moveclip_t * clip)
 	int i, num;
 	edict_t *touchlist[MAX_EDICTS], *touch;
 	trace_t trace;
-	float *angles;
+	const float *angles;
 	int tile = 0, headnode = 0;
 
 	num = SV_AreaEdicts(clip->boxmins, clip->boxmaxs, touchlist, MAX_EDICTS, AREA_SOLID);
@@ -449,7 +449,7 @@ static void SV_TraceBounds (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, 
  * @note Passedict and edicts owned by passedict are explicitly not checked.
  * @sa SV_TraceBounds
  */
-trace_t SV_Trace (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, edict_t * passedict, int contentmask)
+trace_t SV_Trace (vec3_t start, const vec3_t mins, const vec3_t maxs, vec3_t end, edict_t * passedict, int contentmask)
 {
 	moveclip_t clip;
 
@@ -473,8 +473,8 @@ trace_t SV_Trace (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, edict_t * 
 	clip.maxs = maxs;
 	clip.passedict = passedict;
 
-	FastVectorCopy(*mins, clip.mins2);
-	FastVectorCopy(*maxs, clip.maxs2);
+	VectorCopy(mins, clip.mins2);
+	VectorCopy(maxs, clip.maxs2);
 
 	/* create the bounding box of the entire move */
 	SV_TraceBounds(start, clip.mins2, clip.maxs2, end, clip.boxmins, clip.boxmaxs);

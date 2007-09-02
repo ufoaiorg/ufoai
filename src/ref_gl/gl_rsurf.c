@@ -662,7 +662,7 @@ void R_DrawBrushModel (entity_t * e)
 		vec3_t temp;
 		vec3_t forward, right, up;
 
-		FastVectorCopy(modelorg, temp);
+		VectorCopy(modelorg, temp);
 		AngleVectors(e->angles, forward, right, up);
 		modelorg[0] = DotProduct(temp, forward);
 		modelorg[1] = -DotProduct(temp, right);
@@ -778,7 +778,7 @@ static void R_DrawWorld (mBspNode_t * nodes)
 {
 	entity_t ent;
 
-	FastVectorCopy(r_newrefdef.vieworg, modelorg);
+	VectorCopy(r_newrefdef.vieworg, modelorg);
 
 	/* auto cycle the world frame for texture animation */
 	memset(&ent, 0, sizeof(ent));

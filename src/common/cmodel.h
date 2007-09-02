@@ -47,8 +47,8 @@ CMODEL BOX TRACING
 /** creates a clipping hull for an arbitrary box */
 int CM_HeadnodeForBox(int tile, vec3_t mins, vec3_t maxs);
 
-trace_t CM_TransformedBoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int tile, int headnode, int brushmask, vec3_t origin, vec3_t angles);
-trace_t CM_CompleteBoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int levelmask, int brushmask);
+trace_t CM_TransformedBoxTrace(vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, int tile, int headnode, int brushmask, vec3_t origin, const vec3_t angles);
+trace_t CM_CompleteBoxTrace(vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask);
 
 int CM_TestLine(vec3_t start, vec3_t stop);
 int CM_TestLineDM(vec3_t start, vec3_t stop, vec3_t end);

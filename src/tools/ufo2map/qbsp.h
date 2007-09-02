@@ -37,19 +37,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define	TEXINFO_NODE		-1		/* side is already on a node */
 
-
-#define UNIT_SIZE			32
-#define UNIT_HEIGHT			64
-
 typedef byte pos_t;
 typedef pos_t pos3_t[3];
 
 typedef int ipos_t;
 typedef ipos_t ipos3_t[3];
-
-#define VecToPos(v,p)		(p[0]=(((int)v[0]+4096)/UNIT_SIZE), p[1]=(((int)v[1]+4096)/UNIT_SIZE), p[2]=((int)v[2]/UNIT_HEIGHT))
-#define PosToVec(p,v)		(v[0]=((int)p[0]-128)*UNIT_SIZE+UNIT_SIZE/2, v[1]=((int)p[1]-128)*UNIT_SIZE+UNIT_SIZE/2, v[2]=(int)p[2]*UNIT_HEIGHT+UNIT_HEIGHT/2)
-
 
 typedef struct plane_s {
 	vec3_t	normal;
@@ -171,26 +163,24 @@ typedef struct {
 	vec3_t		mins, maxs;
 } tree_t;
 
-extern	int			entity_num;
+extern int entity_num;
 
-extern	plane_t		mapplanes[MAX_MAP_PLANES];
-extern	int			nummapplanes;
+extern plane_t mapplanes[MAX_MAP_PLANES];
+extern int nummapplanes;
 
-extern	int			nummapbrushes;
-extern	mapbrush_t	mapbrushes[MAX_MAP_BRUSHES];
+extern int nummapbrushes;
+extern mapbrush_t mapbrushes[MAX_MAP_BRUSHES];
 
-#define	MAX_MAP_SIDES		(MAX_MAP_BRUSHES*6)
+#define	MAX_MAP_SIDES (MAX_MAP_BRUSHES*6)
 
-extern	int			nummapbrushsides;
-extern	side_t		brushsides[MAX_MAP_SIDES];
+extern int nummapbrushsides;
+extern side_t brushsides[MAX_MAP_SIDES];
 
+extern int brush_start, brush_end;
 
-extern	vec3_t		v_epsilon;
-extern	int			brush_start, brush_end;
+extern char outbase[32];
 
-extern	char		outbase[32];
-
-extern	char	source[1024];
+extern char source[1024];
 
 void LoadMapFile(const char *filename);
 int FindFloatPlane(vec3_t normal, vec_t dist);
@@ -275,8 +265,8 @@ qboolean TestContents(const vec3_t pos);
 
 /* levels.c */
 
-extern vec3_t	v_epsilon;
-extern vec3_t	worldMins, worldMaxs;
+extern const vec3_t v_epsilon;
+extern vec3_t worldMins, worldMaxs;
 
 #define NUMMODELS 258
 

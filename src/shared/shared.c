@@ -52,8 +52,27 @@ const char *COM_SkipPath (char *pathname)
  */
 void COM_StripExtension (const char *in, char *out)
 {
-	while (*in && *in != '.')
+	int len = 0;
+	const char *ext;
+
+	/* check how many chars we should strip to
+	 * get rid of the extension */
+	ext = &in[strlen(in)];
+	while (*ext && *ext != '.' && *ext != '/' && *ext != '\\') {
+		ext--;
+		len++;
+	}
+	/* maybe there is no extension */
+	if (len > 4)
+		len = 0;
+
+	/* how many chars should go into the out buffer */
+	len = strlen(in) - len;
+
+	while (*in && len) {
 		*out++ = *in++;
+		len--;
+	}
 	*out = 0;
 }
 

@@ -509,7 +509,7 @@ static void ParseBrush (entity_t *mapent)
 	do {
 		if (!GetToken(qtrue))
 			break;
-		if (!strcmp(token, "}") )
+		if (*token == '}')
 			break;
 
 		if (nummapbrushsides == MAX_MAP_BRUSHSIDES)
@@ -520,7 +520,7 @@ static void ParseBrush (entity_t *mapent)
 		for (i = 0; i < 3; i++) {
 			if (i != 0)
 				GetToken(qtrue);
-			if (strcmp(token, "(") )
+			if (*token != '(')
 				Error("parsing brush");
 
 			for (j = 0; j < 3; j++) {
@@ -529,7 +529,7 @@ static void ParseBrush (entity_t *mapent)
 			}
 
 			GetToken(qfalse);
-			if (strcmp(token, ")") )
+			if (*token != ')')
 				Error("parsing brush");
 		}
 
@@ -665,8 +665,8 @@ static void ParseBrush (entity_t *mapent)
 	 * the planenums and texinfos will be adjusted for
 	 * the origin brush */
 	if (b->contentFlags & CONTENTS_ORIGIN) {
-		char	string[32];
-		vec3_t	origin;
+		char string[32];
+		vec3_t origin;
 
 		if (num_entities == 1) {
 			Error("Entity %i, Brush %i: origin brushes not allowed in world"
@@ -700,10 +700,8 @@ static void ParseBrush (entity_t *mapent)
  */
 static void MoveBrushesToWorld (entity_t *mapent)
 {
-	int			newbrushes;
-	int			worldbrushes;
-	mapbrush_t	*temp;
-	int			i;
+	int newbrushes, worldbrushes, i;
+	mapbrush_t *temp;
 
 	/* this is pretty gross, because the brushes are expected to be */
 	/* in linear order for each entity */
@@ -742,18 +740,17 @@ static void MoveBrushesToWorld (entity_t *mapent)
  */
 static qboolean ParseMapEntity (void)
 {
-	entity_t	*mapent;
-	epair_t		*e;
-	side_t		*s;
-	int			i, j;
-	int			startbrush, startsides;
-	vec_t		newdist;
-	mapbrush_t	*b;
+	entity_t *mapent;
+	epair_t *e;
+	side_t *s;
+	int i, j, startbrush, startsides;
+	vec_t newdist;
+	mapbrush_t *b;
 
 	if (!GetToken(qtrue))
 		return qfalse;
 
-	if (strcmp(token, "{") )
+	if (*token != '{')
 		Error("ParseMapEntity: { not found");
 
 	if (num_entities == MAX_MAP_ENTITIES)
@@ -773,9 +770,9 @@ static qboolean ParseMapEntity (void)
 	do {
 		if (!GetToken(qtrue))
 			Error("ParseMapEntity: EOF without closing brace");
-		if (!strcmp(token, "}") )
+		if (*token == '}')
 			break;
-		if (!strcmp(token, "{") )
+		if (*token == '{')
 			ParseBrush(mapent);
 		else {
 			e = ParseEpair();
@@ -802,8 +799,8 @@ static qboolean ParseMapEntity (void)
 		}
 	}
 
-	/* group entities are just for editor convenience */
-	/* toss all brushes into the world entity */
+	/* group entities are just for editor convenience
+	 * toss all brushes into the world entity */
 	if (!strcmp("func_group", ValueForKey(mapent, "classname"))) {
 		MoveBrushesToWorld(mapent);
 		mapent->numbrushes = 0;
