@@ -1617,6 +1617,44 @@ static qboolean R_Upload8 (byte * data, int width, int height, qboolean mipmap, 
 	return ret;
 }
 
+/*
+GL_SoftenTexture
+*/
+void R_SoftenTexture (byte *in, int width, int height, int bpp)
+{
+	byte *out;
+	int i, j, k;
+	byte *src, *dest;
+	byte *u, *d, *l, *r;
+
+	/* soften into a copy of the original image, as in-place would be incorrect */
+	out = (byte *)ri.TagMalloc(ri.imagePool, width * height * bpp, 0);
+	if (!out)
+		ri.Sys_Error(ERR_FATAL, "TagMalloc: failed on allocation of %i bytes for R_SoftenTexture", width * height * bpp);
+
+	memcpy(out, in, width * height * bpp);
+
+	for (i = 1; i < height - 1; i++){
+		for (j = 1; j < width - 1; j++){
+
+			src = in + ((i * width) + j) * bpp;  /* current input pixel */
+
+			u = (src - (width * bpp));  /* and it's neighbors */
+			d = (src + (width * bpp));
+			l = (src - (1 * bpp));
+			r = (src + (1 * bpp));
+
+			dest = out + ((i * width) + j) * bpp;  /* current output pixel */
+
+			for (k = 0; k < bpp; k++)
+				dest[k] = (u[k] + d[k] + l[k] + r[k]) / 4;
+		}
+	}
+
+	/* copy the softened image over the input image, and free it */
+	memcpy(in, out, width * height * bpp);
+	ri.TagFree(out);
+}
 
 #define DAN_WIDTH	512
 #define DAN_HEIGHT	256

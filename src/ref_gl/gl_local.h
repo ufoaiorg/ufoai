@@ -266,6 +266,7 @@ extern cvar_t *r_ati_separate_stencil;
 extern cvar_t *r_stencil_two_side;
 
 extern cvar_t *r_dynamic;
+extern cvar_t *r_soften;
 extern cvar_t *r_round_down;
 extern cvar_t *r_picmip;
 extern cvar_t *r_maxtexres;
@@ -374,6 +375,7 @@ void R_SwapBuffers(int);
 
 struct image_s *Draw_FindPic(const char *name);
 void R_LoadTGA(const char *name, byte ** pic, int *width, int *height);
+void R_SoftenTexture(byte *in, int width, int height, int bpp);
 
 void Anim_Append(animState_t * as, model_t * mod, const char *name);
 void Anim_Change(animState_t * as, model_t * mod, const char *name);

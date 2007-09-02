@@ -249,7 +249,7 @@ void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 	unsigned int smax, tmax;
 	int r, g, b, a, max;
 	unsigned int i, j, size;
-	byte *lightmap;
+	byte *lightmap, *lm;
 	float scale[4];
 	int nummaps;
 	float *bl;
@@ -297,14 +297,12 @@ void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 		for (i = 0; i < 3; i++)
 			scale[i] = r_modulate->value * r_newrefdef.lightstyles[surf->styles[maps]].rgb[i];
 
-		if (scale[0] == 1.0F && scale[1] == 1.0F && scale[2] == 1.0F) {
-			for (i = 0; i < size; i++, bl += 3) {
-				bl[0] = lightmap[i * 3 + 0];
-				bl[1] = lightmap[i * 3 + 1];
-				bl[2] = lightmap[i * 3 + 2];
-			}
-		} else {
-			for (i = 0; i < size; i++, bl += 3) {
+		for (i = 0; i < size; i++, bl += 3) {
+			if (maps > 0) {
+				bl[0] += lightmap[i * 3 + 0] * scale[0];
+				bl[1] += lightmap[i * 3 + 1] * scale[1];
+				bl[2] += lightmap[i * 3 + 2] * scale[2];
+			} else {
 				bl[0] = lightmap[i * 3 + 0] * scale[0];
 				bl[1] = lightmap[i * 3 + 1] * scale[1];
 				bl[2] = lightmap[i * 3 + 2] * scale[2];
@@ -322,9 +320,12 @@ void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 	stride -= (smax << 2);
 	bl = s_blocklights;
 
-	for (i = 0; i < tmax; i++, dest += stride) {
-		for (j = 0; j < smax; j++) {
+	/* first into an rgba linear block for softening */
+	lightmap = (byte *)ri.TagMalloc(ri.lightPool, size * 4, 0);
+	lm = lightmap;
 
+	for (i = 0; i < tmax; i++) {
+		for (j = 0; j < smax; j++) {
 			r = Q_ftol(bl[0]);
 			g = Q_ftol(bl[1]);
 			b = Q_ftol(bl[2]);
@@ -337,9 +338,7 @@ void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 			if (b < 0)
 				b = 0;
 
-			/*
-				** determine the brightest of the three color components
-				*/
+			/* determine the brightest of the three color components */
 			if (r > g)
 				max = r;
 			else
@@ -347,17 +346,13 @@ void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 			if (b > max)
 				max = b;
 
-			/*
-				** alpha is ONLY used for the mono lightmap case.  For this reason
-				** we set it to the brightest of the color components so that
-				** things don't get too dim.
-				*/
+			/* alpha is ONLY used for the mono lightmap case.  For this reason
+			 * we set it to the brightest of the color components so that
+			 * things don't get too dim. */
 			a = max;
 
-			/*
-				** rescale all the color components if the intensity of the greatest
-				** channel exceeds 1.0
-				*/
+			/* rescale all the color components if the intensity of the greatest
+			 * channel exceeds 1.0 */
 			if (max > 255) {
 				float t = 255.0F / max;
 
@@ -367,15 +362,38 @@ void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 				a = a * t;
 			}
 
-			dest[0] = r;
-			dest[1] = g;
-			dest[2] = b;
-			dest[3] = a;
+			lm[0] = r;
+			lm[1] = g;
+			lm[2] = b;
+			lm[3] = a;
 
 			bl += 3;
+			lm += 4;
+		}
+	}
+
+	/* soften it if it's sufficiently large */
+	if (r_soften->integer && size > 512)
+		for (i = 0; i < 4; i++)
+			R_SoftenTexture(lightmap, smax, tmax, 4);
+	else
+		ri.Con_Printf(PRINT_ALL, "size: %i - lquant: %i\n", size, surf->lquant);
+
+	/* then copy into the final strided lightmap block */
+	lm = lightmap;
+	for (i = 0; i < tmax; i++, dest += stride) {
+		for (j = 0; j < smax; j++) {
+			dest[0] = lm[0];
+			dest[1] = lm[1];
+			dest[2] = lm[2];
+			dest[3] = lm[3];
+
+			lm += 4;
 			dest += 4;
 		}
 	}
+
+	ri.TagFree(lightmap);
 }
 
 static vec3_t pointcolor;

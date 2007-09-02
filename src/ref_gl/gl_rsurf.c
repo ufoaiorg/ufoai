@@ -49,7 +49,7 @@ typedef struct {
 
 	/* the lightmap texture data needs to be kept in */
 	/* main memory so texsubimage can update properly */
-	byte lightmap_buffer[4 * BLOCK_WIDTH * BLOCK_HEIGHT];
+	byte lightmap_buffer[LIGHTMAP_BYTES * BLOCK_WIDTH * BLOCK_HEIGHT];
 } gllightmapstate_t;
 
 static gllightmapstate_t gl_lms;
@@ -986,13 +986,13 @@ void R_BuildPolygonFromSurface (mBspSurface_t * fa, int shift[3])
 		s -= fa->texturemins[0];
 		s += fa->light_s << fa->lquant;
 		s += 1 << (fa->lquant - 1);
-		s /= BLOCK_WIDTH << fa->lquant;	/*fa->texinfo->texture->width; */
+		s /= BLOCK_WIDTH << fa->lquant;
 
 		t = DotProduct(vec, fa->texinfo->vecs[1]) + fa->texinfo->vecs[1][3];
 		t -= fa->texturemins[1];
 		t += fa->light_t << fa->lquant;
 		t += 1 << (fa->lquant - 1);
-		t /= BLOCK_HEIGHT << fa->lquant;	/*fa->texinfo->texture->height; */
+		t /= BLOCK_HEIGHT << fa->lquant;
 
 		poly->verts[i][5] = s;
 		poly->verts[i][6] = t;
@@ -1020,7 +1020,7 @@ void R_CreateSurfaceLightmap (mBspSurface_t * surf)
 		LM_UploadBlock(qfalse);
 		LM_InitBlock();
 		if (!LM_AllocBlock(smax, tmax, &surf->light_s, &surf->light_t))
-			ri.Sys_Error(ERR_FATAL, "Consecutive calls to LM_AllocBlock(%d,%d) failed\n", smax, tmax);
+			ri.Sys_Error(ERR_FATAL, "Consecutive calls to LM_AllocBlock(%d,%d) failed (lquant: %i)\n", smax, tmax, surf->lquant);
 	}
 
 	surf->lightmaptexturenum = gl_lms.current_lightmap_texture;

@@ -106,6 +106,7 @@ cvar_t *r_drawclouds;
 cvar_t *r_imagefilter;
 cvar_t *r_mode;
 cvar_t *r_dynamic;
+cvar_t *r_soften;
 cvar_t *r_modulate;
 cvar_t *r_round_down;
 cvar_t *r_picmip;
@@ -708,6 +709,7 @@ static void R_Register (void)
 	r_drawclouds = ri.Cvar_Get("r_drawclouds", "0", CVAR_ARCHIVE, NULL);
 	r_imagefilter = ri.Cvar_Get("r_imagefilter", "1", CVAR_ARCHIVE, NULL);
 	r_dynamic = ri.Cvar_Get("r_dynamic", "1", 0, "Render dynamic lightmaps");
+	r_soften = ri.Cvar_Get("r_soften", "1", 0, "Apply blur to lightmap");
 	r_round_down = ri.Cvar_Get("r_round_down", "1", 0, NULL);
 	r_picmip = ri.Cvar_Get("r_picmip", "0", 0, NULL);
 	r_maxtexres = ri.Cvar_Get("r_maxtexres", "2048", CVAR_ARCHIVE, NULL);
