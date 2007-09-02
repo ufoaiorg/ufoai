@@ -2,12 +2,12 @@
 // entity 0
 {
 "classname" "worldspawn"
-"light" "60"
 "_color" "0.8 0.8 1"
 "maxteams" "2"
 "maxlevel" "5"
 "angles" "15 60"
-"ambient" "0.25 0.25 0.275"
+"light" "15"
+"ambient" "0 0 0"
 // brush 0
 {
 ( 672 576 80 ) ( 992 608 80 ) ( 992 576 80 ) tex_buildings/concrete003 0 0 0 1 1 65280 0 0
