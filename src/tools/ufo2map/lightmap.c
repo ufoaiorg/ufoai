@@ -37,10 +37,9 @@ static edgeshare_t	edgeshare[MAX_MAP_EDGES];
 static int facelinks[MAX_MAP_FACES];
 static int planelinks[2][MAX_MAP_PLANES];
 
-vec3_t vnormals[MAX_MAP_VERTS];
-
 /**
  * @brief
+ * @sa RadWorld
  */
 void LinkPlaneFaces (void)
 {
@@ -691,6 +690,7 @@ static entity_t *FindTargetEntity (const char *target)
 
 /**
  * @brief
+ * @sa RadWorld
  */
 void CreateDirectLights (void)
 {

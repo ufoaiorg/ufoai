@@ -34,8 +34,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <sys/resource.h>
 #endif
 
-char source[1024];
-char name[1024];
+static char outbase[32];
+static char source[1024];
+static char name[1024];
 mapConfig_t config;
 
 /**
@@ -287,7 +288,7 @@ int main (int argc, char **argv)
 	COM_StripExtension(name, source);
 	DefaultExtension(name, ".map");
 
-	sprintf(out, "%s.bsp", source);
+	snprintf(out, sizeof(out), "%s.bsp", source);
 
 	Com_Printf("...map: '%s'\n...bsp: '%s'\n", name, out);
 
@@ -303,33 +304,30 @@ int main (int argc, char **argv)
 		UnparseEntities();
 
 		WriteBSPFile(out);
-	} else if (config.convertFunc) {
-		config.convertFunc(source);
 	} else {
 		/* start from scratch */
 		LoadMapFile(name);
 		SetModelNumbers();
 		SetLightStyles();
 
-		ProcessModels();
+		ProcessModels(source);
 	}
 
 	end = I_FloatTime();
 	Com_Printf("%5.0f seconds elapsed\n", end-start);
 
-	if (!config.convertFunc && !config.onlyents && !config.noradiosity) {
+	if (!config.onlyents && !config.noradiosity) {
 		Com_Printf("----- Radiosity ----\n");
 
 		begin = start;
 
 		start = I_FloatTime();
-		DefaultExtension(source, ".bsp");
 
-		sprintf(name, "%s%s", inbase, source);
 		CalcTextureReflectivity();
 
 		RadWorld();
 
+		DefaultExtension(source, ".bsp");
 		sprintf(name, "%s%s", outbase, source);
 		Com_Printf("writing %s\n", name);
 		WriteBSPFile(name);

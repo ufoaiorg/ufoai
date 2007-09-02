@@ -37,11 +37,8 @@ vec3_t		illumination[MAX_PATCHES];	/* light arriving at a patch */
 vec3_t		face_offset[MAX_MAP_FACES];		/* for rotating bmodels */
 dplane_t	backplanes[MAX_MAP_PLANES];
 
-char		inbase[32], outbase[32];
-
 int			fakeplanes;					/* created planes for origin offset */
 
-void BuildLightmaps(void);
 int TestLine(const vec3_t start, const vec3_t stop);
 
 qboolean	noradiosity = qfalse;
@@ -67,6 +64,8 @@ static void MakeBackplanes (void)
 }
 
 #if 0
+static vec3_t vnormals[MAX_MAP_VERTS];
+
 /**
  * @brief
  */

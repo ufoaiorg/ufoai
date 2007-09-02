@@ -35,10 +35,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 int main (int argc, char **argv)
 {
-	int			i;
-	char		source[1024];
-	int			size;
-	FILE		*f;
+	int i, size;
+	char source[1024];
+	FILE *f;
 
 	if (argc == 1)
 		Error("usage: bspinfo bspfile [bspfiles]");

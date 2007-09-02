@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "qbsp.h"
 
-char outbase[32];
 int entity_num;
 
 
@@ -36,7 +35,7 @@ int entity_num;
  */
 static void ProcessWorldModel (void)
 {
-	entity_t	*e;
+	entity_t *e;
 
 	e = &entities[entity_num];
 
@@ -60,11 +59,11 @@ static void ProcessWorldModel (void)
  */
 static void ProcessSubModel (void)
 {
-	entity_t	*e;
-	int			start, end;
-	tree_t		*tree;
-	bspbrush_t	*list;
-	vec3_t		mins, maxs;
+	entity_t *e;
+	int start, end;
+	tree_t *tree;
+	bspbrush_t *list;
+	vec3_t mins, maxs;
 
 	BeginModel();
 
@@ -102,7 +101,7 @@ static void ProcessSubModel (void)
  * @sa ProcessWorldModel
  * @sa ProcessSubModel
  */
-void ProcessModels (void)
+void ProcessModels (const char *filename)
 {
 	BeginBSPFile();
 
@@ -120,5 +119,5 @@ void ProcessModels (void)
 			config.verbose = qfalse;	/* don't bother printing submodels */
 	}
 
-	EndBSPFile();
+	EndBSPFile(filename);
 }

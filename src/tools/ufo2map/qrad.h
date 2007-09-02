@@ -96,40 +96,20 @@ extern vec3_t face_offset[MAX_MAP_FACES];		/* for rotating bmodels */
 extern patch_t patches[MAX_PATCHES];
 extern unsigned num_patches;
 
-
-void MakeShadowSplits(void);
-
-/*============================================== */
-
-
-void BuildVisMatrix(void);
-qboolean CheckVisBit(unsigned p1, unsigned p2);
-
 /*============================================== */
 
 void LinkPlaneFaces(void);
-
-extern char inbase[32], outbase[32];
-
-extern byte nodehit[MAX_MAP_NODES];
-
-void BuildLightmaps(void);
-
 void BuildFacelights(unsigned int facenum);
-
 void FinalLightFace(unsigned int facenum);
-
 void MakeTnodes(int levels);
 void CloseTNodes(void);
 int TestLine(const vec3_t start, const vec3_t stop);
-
 void CreateDirectLights(void);
 
 dleaf_t *Rad_PointInLeaf(vec3_t point);
 
 extern dplane_t backplanes[MAX_MAP_PLANES];
 extern int fakeplanes;					/* created planes for origin offset  */
-extern vec3_t vnormals[MAX_MAP_VERTS];
 
 void MakePatches(void);
 void SubdividePatches(void);

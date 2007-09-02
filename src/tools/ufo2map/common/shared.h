@@ -71,8 +71,6 @@ typedef struct qFILE_s {
 typedef struct mapConfig_s {
 	float subdivideSize;
 	int nice;
-	/**< convert function pointer */
-	int (*convertFunc) (const char *);
 	qboolean verbose;
 	qboolean noprune;
 	qboolean nodetail;

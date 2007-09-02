@@ -457,7 +457,7 @@ void BeginBSPFile (void)
  * @brief
  * @sa BeginBSPFile
  */
-void EndBSPFile (void)
+void EndBSPFile (const char *filename)
 {
 	char path[1024];
 
@@ -466,15 +466,14 @@ void EndBSPFile (void)
 	UnparseEntities();
 
 	/* write the map */
-	snprintf(path, sizeof(path), "%s.bsp", source);
+	snprintf(path, sizeof(path), "%s.bsp", filename);
 	Com_Printf("Writing %s\n", path);
 	WriteBSPFile(path);
 }
 
-
-static int firstmodleaf = 0;
 extern int firstmodeledge;
 extern int firstmodelface;
+
 /**
  * @brief
  * @sa EndModel
@@ -494,7 +493,6 @@ void BeginModel (void)
 
 	mod->firstface = numfaces;
 
-	firstmodleaf = numleafs;
 	firstmodeledge = numedges;
 	firstmodelface = numfaces;
 
@@ -503,7 +501,7 @@ void BeginModel (void)
 
 	start = e->firstbrush;
 	end = start + e->numbrushes;
-	ClearBounds (mins, maxs);
+	ClearBounds(mins, maxs);
 
 	for (j = start; j < end; j++) {
 		b = &mapbrushes[j];

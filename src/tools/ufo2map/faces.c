@@ -525,7 +525,7 @@ void FreeFace (face_t *f)
  * @note Called by writebsp.
  * @note Don't allow four way edges
  */
-int GetEdge (int v1, int v2,  face_t *f)
+int GetEdge (int v1, int v2, face_t *f)
 {
 	dedge_t *edge;
 	int i;
@@ -574,13 +574,12 @@ FACE MERGING
  */
 static winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, vec3_t planenormal)
 {
-	vec_t		*p1, *p2, *p3, *p4, *back;
-	winding_t	*newf;
-	int			i, j, k, l;
-	vec3_t		normal, delta;
-	vec_t		dot;
-	qboolean	keep1, keep2;
-
+	vec_t *p1, *p2, *p3, *p4, *back;
+	winding_t *newf;
+	int i, j, k, l;
+	vec3_t normal, delta;
+	vec_t dot;
+	qboolean keep1, keep2;
 
 	/* find a common edge */
 	p1 = p2 = NULL;	/* stop compiler warning */
@@ -669,8 +668,8 @@ static winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, vec3_t planenor
  */
 static face_t *TryMerge (face_t *f1, face_t *f2, vec3_t planenormal)
 {
-	face_t		*newf;
-	winding_t	*nw;
+	face_t *newf;
+	winding_t *nw;
 
 	if (!f1->w || !f2->w)
 		return NULL;
@@ -700,9 +699,9 @@ static face_t *TryMerge (face_t *f1, face_t *f2, vec3_t planenormal)
  */
 static void MergeNodeFaces (node_t *node)
 {
-	face_t	*f1, *f2, *end;
-	face_t	*merged;
-	plane_t	*plane;
+	face_t *f1, *f2, *end;
+	face_t *merged;
+	plane_t *plane;
 
 	plane = &mapplanes[node->planenum];
 	merged = NULL;
@@ -735,13 +734,13 @@ static void MergeNodeFaces (node_t *node)
  */
 static void SubdivideFace (node_t *node, face_t *f)
 {
-	float		mins, maxs;
-	vec_t		v;
-	int			axis, i;
-	texinfo_t	*tex;
-	vec3_t		temp;
-	vec_t		dist;
-	winding_t	*w, *frontw, *backw;
+	float mins, maxs;
+	vec_t v;
+	int axis, i;
+	texinfo_t *tex;
+	vec3_t temp;
+	vec_t dist;
+	winding_t *w, *frontw, *backw;
 
 	if (f->merged)
 		return;
@@ -806,7 +805,7 @@ static void SubdivideFace (node_t *node, face_t *f)
  */
 static void SubdivideNodeFaces (node_t *node)
 {
-	face_t	*f;
+	face_t *f;
 
 	for (f = node->faces; f; f = f->next)
 		SubdivideFace(node, f);
@@ -819,8 +818,8 @@ static int c_nodefaces;
  */
 static face_t *FaceFromPortal (portal_t *p, int pside)
 {
-	face_t	*f;
-	side_t	*side;
+	face_t *f;
+	side_t *side;
 
 	side = p->side;
 	/* portal does not bridge different visible contents */
@@ -871,8 +870,8 @@ static face_t *FaceFromPortal (portal_t *p, int pside)
  */
 static void MakeFaces_r (node_t *node)
 {
-	portal_t	*p;
-	int			s;
+	portal_t *p;
+	int s;
 
 	/* recurse down to leafs */
 	if (node->planenum != PLANENUM_LEAF) {

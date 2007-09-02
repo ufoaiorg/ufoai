@@ -114,8 +114,8 @@ static qboolean BrushesDisjoint (bspbrush_t *a, bspbrush_t *b)
 	return qfalse;	/* might intersect */
 }
 
-int minplanenums[3];
-int maxplanenums[3];
+static int minplanenums[3];
+static int maxplanenums[3];
 
 /**
  * @brief Any planes shared with the box edge will be set to no texinfo

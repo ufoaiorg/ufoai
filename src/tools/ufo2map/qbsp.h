@@ -178,10 +178,6 @@ extern side_t brushsides[MAX_MAP_SIDES];
 
 extern int brush_start, brush_end;
 
-extern char outbase[32];
-
-extern char source[1024];
-
 void LoadMapFile(const char *filename);
 int FindFloatPlane(vec3_t normal, vec_t dist);
 
@@ -237,7 +233,7 @@ void SetLightStyles(void);
 
 void BeginBSPFile(void);
 void WriteBSP(node_t *headnode);
-void EndBSPFile(void);
+void EndBSPFile(const char *filename);
 void BeginModel(void);
 void EndModel(void);
 /*void EmitBrushes(void);*/
@@ -281,5 +277,5 @@ void DoRouting(void);
 
 /* qbsp3.c */
 
-void ProcessModels(void);
+void ProcessModels(const char *filename);
 
