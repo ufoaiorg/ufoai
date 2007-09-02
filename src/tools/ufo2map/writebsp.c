@@ -478,7 +478,7 @@ extern int firstmodelface;
  * @brief
  * @sa EndModel
  */
-void BeginModel (void)
+void BeginModel (int entityNum)
 {
 	dmodel_t *mod;
 	int start, end;
@@ -497,7 +497,7 @@ void BeginModel (void)
 	firstmodelface = numfaces;
 
 	/* bound the brushes */
-	e = &entities[entity_num];
+	e = &entities[entityNum];
 
 	start = e->firstbrush;
 	end = start + e->numbrushes;

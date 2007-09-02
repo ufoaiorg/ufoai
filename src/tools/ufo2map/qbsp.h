@@ -234,7 +234,7 @@ void SetLightStyles(void);
 void BeginBSPFile(void);
 void WriteBSP(node_t *headnode);
 void EndBSPFile(const char *filename);
-void BeginModel(void);
+void BeginModel(int entityNum);
 void EndModel(void);
 /*void EmitBrushes(void);*/
 void EmitPlanes(void);

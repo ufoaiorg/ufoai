@@ -180,7 +180,7 @@ static int ConstructLevelNodes_r (int levelnum, vec3_t cmins, vec3_t cmaxs)
 		nn[1] = -1;
 	}
 
-	BeginModel();
+	BeginModel(entity_num);
 
 	/* add v_epsilon to avoid clipping errors */
 	VectorSubtract(bmins, v_epsilon, bmins);

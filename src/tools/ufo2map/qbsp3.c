@@ -57,7 +57,7 @@ static void ProcessWorldModel (void)
  * @brief
  * @sa ProcessModels
  */
-static void ProcessSubModel (void)
+static void ProcessSubModel (int entityNum)
 {
 	entity_t *e;
 	int start, end;
@@ -65,9 +65,9 @@ static void ProcessSubModel (void)
 	bspbrush_t *list;
 	vec3_t mins, maxs;
 
-	BeginModel();
+	BeginModel(entityNum);
 
-	e = &entities[entity_num];
+	e = &entities[entityNum];
 
 	start = e->firstbrush;
 	end = start + e->numbrushes;
@@ -113,7 +113,7 @@ void ProcessModels (const char *filename)
 		if (entity_num == 0)
 			ProcessWorldModel();
 		else
-			ProcessSubModel();
+			ProcessSubModel(entity_num);
 
 		if (!config.verboseentities)
 			config.verbose = qfalse;	/* don't bother printing submodels */
