@@ -598,8 +598,8 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 	for (j = 0; j < 3; j++)
 		facemid[j] = l->texorg[j] + l->textoworld[0][j] * mids + l->textoworld[1][j] * midt;
 
-	h = l->texsize[1]+1;
-	w = l->texsize[0]+1;
+	h = l->texsize[1] + 1;
+	w = l->texsize[0] + 1;
 	l->numsurfpt = w * h;
 
 	step = 1 << config.lightquant;

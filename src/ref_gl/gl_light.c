@@ -373,11 +373,9 @@ void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 	}
 
 	/* soften it if it's sufficiently large */
-	if (r_soften->integer && size > 512)
+	if (r_soften->integer && size > 1024)
 		for (i = 0; i < 4; i++)
 			R_SoftenTexture(lightmap, smax, tmax, 4);
-	else
-		ri.Con_Printf(PRINT_ALL, "size: %i - lquant: %i\n", size, surf->lquant);
 
 	/* then copy into the final strided lightmap block */
 	lm = lightmap;

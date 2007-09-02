@@ -1617,9 +1617,9 @@ static qboolean R_Upload8 (byte * data, int width, int height, qboolean mipmap, 
 	return ret;
 }
 
-/*
-GL_SoftenTexture
-*/
+/**
+ * @brief
+ */
 void R_SoftenTexture (byte *in, int width, int height, int bpp)
 {
 	byte *out;
