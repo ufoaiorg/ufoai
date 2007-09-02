@@ -1,4 +1,4 @@
-./qcommon/files.c
+./common/files.c
 ./game/g_ai.c
 ./game/g_svcmds.c
 ./game/g_client.c
