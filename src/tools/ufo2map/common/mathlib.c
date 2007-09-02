@@ -27,17 +27,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cmdlib.h"
 #include "mathlib.h"
 
-const vec3_t vec3_origin = {0,0,0};
+const vec3_t vec3_origin = {0, 0, 0};
 
 /**
  * @brief
  */
 double VectorLength (const vec3_t v)
 {
-	int		i;
-	double	length;
+	int	 i;
+	double length = 0;
 
-	length = 0;
 	for (i = 0; i < 3; i++)
 		length += v[i] * v[i];
 	length = sqrt(length);		/* FIXME */
@@ -50,7 +49,7 @@ double VectorLength (const vec3_t v)
  */
 qboolean VectorCompare (const vec3_t v1, const vec3_t v2)
 {
-	int		i;
+	int i;
 
 	for (i = 0; i < 3; i++)
 		if (fabs(v1[i]-v2[i]) > EQUAL_EPSILON)
@@ -101,54 +100,6 @@ void CrossProduct (const vec3_t v1, const vec3_t v2, vec3_t cross)
 }
 
 /**
- * @brief Dot product of v1 and v2
- */
-vec_t _DotProduct (const vec3_t v1, vec3_t v2)
-{
-	return v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2];
-}
-
-/**
- * @brief
- */
-void _VectorSubtract (const vec3_t va, const vec3_t vb, vec3_t out)
-{
-	out[0] = va[0]-vb[0];
-	out[1] = va[1]-vb[1];
-	out[2] = va[2]-vb[2];
-}
-
-/**
- * @brief
- */
-void _VectorAdd (const vec3_t va, const vec3_t vb, vec3_t out)
-{
-	out[0] = va[0] + vb[0];
-	out[1] = va[1] + vb[1];
-	out[2] = va[2] + vb[2];
-}
-
-/**
- * @brief
- */
-void _VectorCopy (const vec3_t in, vec3_t out)
-{
-	out[0] = in[0];
-	out[1] = in[1];
-	out[2] = in[2];
-}
-
-/**
- * @brief Sets out to scale * v
- */
-void _VectorScale (const vec3_t v, const vec_t scale, vec3_t out)
-{
-	out[0] = v[0] * scale;
-	out[1] = v[1] * scale;
-	out[2] = v[2] * scale;
-}
-
-/**
  * @brief Returns a vector in the same direction as the given vector but only
  * one unit long
  */
@@ -174,7 +125,7 @@ vec_t VectorNormalize (vec3_t v)
  */
 vec_t ColorNormalize (const vec3_t in, vec3_t out)
 {
-	float	max, scale;
+	float max, scale;
 
 	max = in[0];
 	if (in[1] > max)
@@ -190,16 +141,6 @@ vec_t ColorNormalize (const vec3_t in, vec3_t out)
 	VectorScale (in, scale, out);
 
 	return max;
-}
-
-/**
- * @brief Sets vector to -1 * v
- */
-void VectorInverse (vec3_t v)
-{
-	v[0] = -v[0];
-	v[1] = -v[1];
-	v[2] = -v[2];
 }
 
 /**

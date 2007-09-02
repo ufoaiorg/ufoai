@@ -106,6 +106,19 @@ void Error (const char *error, ...)
 }
 #endif
 
+/**
+ * @brief
+ */
+static qboolean FileExists (const char *filename)
+{
+	qFILE f;
+
+	SafeOpenRead(filename, &f);
+	if (!f.f && !f.z)
+		return qfalse;
+	CloseFile(&f);
+	return qtrue;
+}
 
 /**
  * qdir will hold the path up to the quake directory, including the slash
@@ -452,21 +465,6 @@ void SafeWrite (qFILE *f, void *buffer, int count)
 		Error("SafeWrite: File write failure");
 }
 
-
-/**
- * @brief
- */
-qboolean FileExists (const char *filename)
-{
-	qFILE	f;
-
-	SafeOpenRead(filename, &f);
-	if (!f.f && !f.z)
-		return qfalse;
-	CloseFile(&f);
-	return qtrue;
-}
-
 /**
  * @brief
  */
@@ -477,7 +475,6 @@ void FreeFile (void *buffer)
 
 /**
  * @brief
- * @sa SaveFile
  * @sa SafeRead
  */
 int LoadFile (const char *filename, void **bufferptr)
@@ -540,30 +537,17 @@ int TryLoadFile (const char *filename, void **bufferptr)
 
 /**
  * @brief
- * @sa LoadFile
- */
-void SaveFile (const char *filename, void *buffer, int count)
-{
-	qFILE f;
-
-	SafeOpenWrite(filename, &f);
-	SafeWrite(&f, buffer, count);
-	CloseFile(&f);
-}
-
-/**
- * @brief
  */
 void DefaultExtension (char *path, const char *extension)
 {
 	char    *src;
-	/* if path doesnt have a .EXT, append extension */
-	/* (extension should include the .) */
+	/* if path doesnt have a .EXT, append extension
+	 * (extension should include the .) */
 	src = path + strlen(path) - 1;
 
 	while (*src != '/' && *src != '\\' && src != path) {
 		if (*src == '.')
-			return;                 /* it has an extension */
+			return; /* it has an extension */
 		src--;
 	}
 

@@ -5,15 +5,10 @@
 #ifndef _SCRIPTLIB
 #define _SCRIPTLIB
 
-#ifndef __CMDLIB__
-/*#include "cmdlib.h"*/
-#endif
-
 #define	MAXTOKEN	1024
 
 extern char token[MAXTOKEN];
-extern char *scriptbuffer,*script_p,*scriptend_p;
-extern int grabbed;
+extern char *script_p;
 
 void LoadScriptFile(const char *filename);
 void ParseFromMemory(char *buffer, int size);

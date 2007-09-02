@@ -33,11 +33,6 @@ qboolean VectorNearer(const vec3_t v1, const vec3_t v2, const vec3_t comp);
 #define	VectorNegate(x) {x[0]=-x[0];x[1]=-x[1];x[2]=-x[2];}
 
 vec_t Q_rint(const vec_t in);
-vec_t _DotProduct(const vec3_t v1const , vec3_t v2);
-void _VectorSubtract(const vec3_t va, const vec3_t vb, vec3_t out);
-void _VectorAdd(const vec3_t va, const vec3_t vb, vec3_t out);
-void _VectorCopy(const vec3_t in, vec3_t out);
-void _VectorScale(const vec3_t v, const vec_t scale, vec3_t out);
 
 double VectorLength(const vec3_t v);
 
@@ -46,7 +41,6 @@ void VectorMA(const vec3_t va, const vec_t scale, const vec3_t vb, vec3_t vc);
 void CrossProduct(const vec3_t v1, const vec3_t v2, vec3_t cross);
 vec_t VectorNormalize(vec3_t vec);
 vec_t ColorNormalize(const vec3_t in, vec3_t out);
-void VectorInverse(vec3_t v);
 
 void ClearBounds(vec3_t mins, vec3_t maxs);
 void AddPointToBounds(const vec3_t v, vec3_t mins, vec3_t maxs);

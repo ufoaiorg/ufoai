@@ -52,18 +52,13 @@ void LoadBSPFile(const char *filename);
 void WriteBSPFile(const char *filename);
 void PrintBSPFileSizes(void);
 
-/*=============== */
-
-
-typedef struct epair_s
-{
+typedef struct epair_s {
 	struct epair_s	*next;
 	char	*key;
 	char	*value;
 } epair_t;
 
-typedef struct
-{
+typedef struct {
 	vec3_t		origin;
 	int			firstbrush;
 	int			numbrushes;
@@ -74,22 +69,19 @@ typedef struct
 	int			portalareas[2];
 } entity_t;
 
-extern	int			num_entities;
-extern	entity_t	entities[MAX_MAP_ENTITIES];
+extern int num_entities;
+extern entity_t entities[MAX_MAP_ENTITIES];
 
-void	ParseEntities(void);
-void	UnparseEntities(void);
+void ParseEntities(void);
+void UnparseEntities(void);
 
-void 	SetKeyValue(entity_t *ent, const char *key, const char *value);
-const char 	*ValueForKey(entity_t *ent, const char *key);
+void  SetKeyValue(entity_t *ent, const char *key, const char *value);
 /* will return "" if not present */
+const char *ValueForKey(entity_t *ent, const char *key);
 
-vec_t	FloatForKey(entity_t *ent, const char *key);
-void 	GetVectorForKey(entity_t *ent, const char *key, vec3_t vec);
-
+vec_t FloatForKey(entity_t *ent, const char *key);
+void GetVectorForKey(entity_t *ent, const char *key, vec3_t vec);
 epair_t *ParseEpair(void);
-
 byte *CompressRouting(byte *dataStart, byte *destStart, int l);
-/*int DeCompressRouting(byte **source, byte *dataStart );*/
 
 #endif /* _BSP_FILE */
