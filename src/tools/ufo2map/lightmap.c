@@ -121,7 +121,7 @@ typedef struct {
  */
 static triangulation_t *AllocTriangulation (dplane_t *plane)
 {
-	triangulation_t	*t;
+	triangulation_t *t;
 
 	t = malloc(sizeof(triangulation_t));
 	t->numpoints = 0;
@@ -149,10 +149,9 @@ static void FreeTriangulation (triangulation_t *tr)
  */
 static triedge_t *FindEdge (triangulation_t *trian, int p0, int p1)
 {
-	triedge_t	*e, *be;
-	vec3_t		v1;
-	vec3_t		normal;
-	vec_t		dist;
+	triedge_t *e, *be;
+	vec3_t v1, normal;
+	vec_t dist;
 
 	if (trian->edgematrix[p0][p1])
 		return trian->edgematrix[p0][p1];
@@ -191,7 +190,7 @@ static triedge_t *FindEdge (triangulation_t *trian, int p0, int p1)
  */
 static triangle_t *AllocTriangle (triangulation_t *trian)
 {
-	triangle_t	*t;
+	triangle_t *t;
 
 	if (trian->numtris >= MAX_TRI_TRIS)
 		Error("trian->numtris >= MAX_TRI_TRIS");
@@ -207,11 +206,11 @@ static triangle_t *AllocTriangle (triangulation_t *trian)
  */
 static void TriEdge_r (triangulation_t *trian, triedge_t *e)
 {
-	int		i, bestp = 0;
-	vec3_t	v1, v2;
-	vec_t	*p0, *p1, *p;
-	vec_t	best, ang;
-	triangle_t	*nt;
+	int i, bestp = 0;
+	vec3_t v1, v2;
+	vec_t *p0, *p1, *p;
+	vec_t best, ang;
+	triangle_t *nt;
 
 	if (e->tri)
 		return;		/* allready connected by someone */
@@ -256,11 +255,11 @@ static void TriEdge_r (triangulation_t *trian, triedge_t *e)
  */
 static void TriangulatePoints (triangulation_t *trian)
 {
-	vec_t	d, bestd;
-	vec3_t	v1;
-	int		bp1 = 0, bp2 = 0, i, j;
-	vec_t	*p1, *p2;
-	triedge_t	*e, *e2;
+	vec_t d, bestd;
+	vec3_t v1;
+	int bp1 = 0, bp2 = 0, i, j;
+	vec_t *p1, *p2;
+	triedge_t *e, *e2;
 
 	if (trian->numpoints < 2)
 		return;
@@ -306,9 +305,9 @@ static void AddPointToTriangulation (patch_t *patch, triangulation_t *trian)
  */
 static void LerpTriangle (triangulation_t *trian, triangle_t *t, vec3_t point, vec3_t color)
 {
-	patch_t		*p1, *p2, *p3;
-	vec3_t		base, d1, d2;
-	float		x, y, x1, y1, x2, y2;
+	patch_t *p1, *p2, *p3;
+	vec3_t base, d1, d2;
+	float x, y, x1, y1, x2, y2;
 
 	p1 = trian->points[t->edges[0]->p0];
 	p2 = trian->points[t->edges[1]->p0];
@@ -341,9 +340,9 @@ static void LerpTriangle (triangulation_t *trian, triangle_t *t, vec3_t point, v
  */
 static qboolean PointInTriangle (vec3_t point, triangle_t *t)
 {
-	int		i;
-	triedge_t	*e;
-	vec_t	d;
+	int i;
+	triedge_t *e;
+	vec_t d;
 
 	for (i = 0; i < 3; i++) {
 		e = t->edges[i];
@@ -360,12 +359,12 @@ static qboolean PointInTriangle (vec3_t point, triangle_t *t)
  */
 static void SampleTriangulation (vec3_t point, triangulation_t *trian, vec3_t color)
 {
-	triangle_t	*t;
-	triedge_t	*e;
-	vec_t		d, best;
-	patch_t		*p0, *p1;
-	vec3_t		v1, v2;
-	int			i, j;
+	triangle_t *t;
+	triedge_t *e;
+	vec_t d, best;
+	patch_t *p0, *p1;
+	vec3_t v1, v2;
+	int i, j;
 
 	if (trian->numpoints == 0) {
 		VectorClear(color);
@@ -437,7 +436,7 @@ LIGHTMAP SAMPLE GENERATION
 */
 
 
-#define	SINGLEMAP	(128 * 128 * 4)
+#define	SINGLEMAP	(256 * 256 * 4)
 
 typedef struct {
 	vec_t	facedist;
@@ -466,16 +465,16 @@ typedef struct {
 static void CalcFaceExtents (lightinfo_t *l)
 {
 	dface_t *s;
-	vec_t	mins[2], maxs[2], val;
-	int		i,j, e;
-	dvertex_t	*v;
-	texinfo_t	*tex;
-	vec3_t		vt;
+	vec_t mins[2], maxs[2], val;
+	int i, j, e;
+	dvertex_t *v;
+	texinfo_t *tex;
+	vec3_t vt;
 
 	s = l->face;
 
 	mins[0] = mins[1] = 999999;
-	maxs[0] = maxs[1] = -99999;
+	maxs[0] = maxs[1] = -999999;
 
 	tex = &texinfo[s->texinfo];
 
@@ -486,8 +485,8 @@ static void CalcFaceExtents (lightinfo_t *l)
 		else
 			v = dvertexes + dedges[-e].v[1];
 
-/*		VectorAdd (v->point, l->modelorg, vt); */
-		VectorCopy (v->point, vt);
+/*		VectorAdd(v->point, l->modelorg, vt); */
+		VectorCopy(v->point, vt);
 
 		for (j = 0; j < 2; j++) {
 			val = DotProduct(vt, tex->vecs[j]) + tex->vecs[j][3];
@@ -508,7 +507,7 @@ static void CalcFaceExtents (lightinfo_t *l)
 		l->texmins[i] = mins[i];
 		l->texsize[i] = maxs[i] - mins[i];
 		if (l->texsize[0] * l->texsize[1] > SINGLEMAP)
-			Error("Surface to large to map %i - %i (%i)", l->texsize[0], l->texsize[1], SINGLEMAP);
+			Error("Surface too large to light %i - %i (%i)", l->texsize[0], l->texsize[1], SINGLEMAP);
 	}
 }
 
@@ -517,12 +516,10 @@ static void CalcFaceExtents (lightinfo_t *l)
  */
 static void CalcFaceVectors (lightinfo_t *l)
 {
-	texinfo_t	*tex;
-	int			i, j;
-	vec3_t	texnormal;
-	vec_t	distscale;
-	vec_t	dist, len;
-	int			w, h;
+	texinfo_t *tex;
+	int i, j, w, h;
+	vec3_t texnormal;
+	vec_t distscale, dist, len;
 
 	tex = &texinfo[l->face->texinfo];
 
@@ -561,7 +558,6 @@ static void CalcFaceVectors (lightinfo_t *l)
 		VectorScale(l->textoworld[i], (1 / len) * (1 / len), l->textoworld[i]);
 	}
 
-
 	/* calculate texorg on the texture plane */
 	for (i = 0; i < 3; i++)
 		l->texorg[i] = -tex->vecs[0][3] * l->textoworld[0][i] - tex->vecs[1][3] * l->textoworld[1][i];
@@ -586,19 +582,15 @@ static void CalcFaceVectors (lightinfo_t *l)
  */
 static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 {
-	int		i;
-	int		s, t, j;
-	int		w, h, step;
-	vec_t	starts, startt, us, ut;
-	vec_t	*surf;
-	vec_t	mids, midt;
-	vec3_t	facemid;
-	dleaf_t	*leaf;
+	int i, s, t, j, w, h, step;
+	vec_t starts, startt, us, ut, mids, midt;
+	vec_t *surf;
+	vec3_t facemid;
+	dleaf_t *leaf;
 
 	/* fill in surforg
 	 * the points are biased towards the center of the surfaces
-	 * to help avoid edge cases just inside walls
-	 */
+	 * to help avoid edge cases just inside walls */
 	surf = l->surfpt[0];
 	mids = (l->exactmaxs[0] + l->exactmins[0]) / 2;
 	midt = (l->exactmaxs[1] + l->exactmins[1]) / 2;
@@ -659,11 +651,6 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 	}
 }
 
-
-/*============================================================== */
-
-
-
 #define	MAX_STYLES	32
 typedef struct {
 	int			numsamples;
@@ -687,8 +674,8 @@ static vec3_t sun_dir;
  */
 static entity_t *FindTargetEntity (const char *target)
 {
-	int		i;
-	const char	*n;
+	int i;
+	const char *n;
 
 	for (i = 0; i < num_entities; i++) {
 		n = ValueForKey(&entities[i], "targetname");
@@ -707,17 +694,17 @@ static entity_t *FindTargetEntity (const char *target)
  */
 void CreateDirectLights (void)
 {
-	int		i;
-	patch_t	*p;
-	directlight_t	*dl;
-	dleaf_t	*leaf;
-	entity_t	*e, *e2;
-	const char	*name;
-	const char	*target;
-	float	angle;
-	vec3_t	dest;
-	const char	*_color;
-	float	intensity;
+	int i;
+	patch_t *p;
+	directlight_t *dl;
+	dleaf_t *leaf;
+	entity_t *e, *e2;
+	const char *name;
+	const char *target;
+	float angle;
+	vec3_t dest;
+	const char *_color;
+	float intensity;
 
 	/* surfaces */
 	for (i = 0, p = patches; i < num_patches; i++, p++) {
@@ -860,12 +847,11 @@ void CreateDirectLights (void)
 static void GatherSampleLight (vec3_t pos, vec3_t normal,
 			float **styletable, int offset, int mapsize, float lightscale)
 {
-	directlight_t	*l;
-	vec3_t			delta;
-	float			dot, dot2;
-	float			dist;
-	float			scale = 0.0f;
-	float			*dest;
+	directlight_t *l;
+	vec3_t delta;
+	float dot, dot2, dist;
+	float scale = 0.0f;
+	float *dest;
 
 	for (l = directlights; l; l = l->next) {
 		VectorSubtract(l->origin, pos, delta);
@@ -954,9 +940,9 @@ skipadd: ;
  */
 static void AddSampleToPatch (vec3_t pos, vec3_t color, int facenum)
 {
-	patch_t	*patch;
-	vec3_t	mins, maxs;
-	int		i;
+	patch_t *patch;
+	vec3_t mins, maxs;
+	int i;
 
 	if (config.numbounce == 0)
 		return;
@@ -988,15 +974,14 @@ static const float sampleofs[MAX_SAMPLES][2] = { {0,0}, {-0.4, -0.4}, {0.4, -0.4
  */
 void BuildFacelights (unsigned int facenum)
 {
-	dface_t	*f;
-	lightinfo_t	*l;
-	float		*styletable[MAX_LSTYLES];
-	int			i, j;
-	float		*spot;
-	patch_t		*patch;
-	int			numsamples;
-	size_t		tablesize;
-	facelight_t		*fl;
+	dface_t *f;
+	lightinfo_t *l;
+	float *styletable[MAX_LSTYLES];
+	int i, j, numsamples;
+	float *spot;
+	patch_t *patch;
+	size_t tablesize;
+	facelight_t *fl;
 
 	if (facenum >= MAX_MAP_FACES) {
 		Com_Printf("MAX_MAP_FACES hit\n");
@@ -1091,17 +1076,14 @@ void BuildFacelights (unsigned int facenum)
  */
 void FinalLightFace (unsigned int facenum)
 {
-	dface_t		*f;
-	int			i, j, k, st;
-	vec3_t		lb;
-	patch_t		*patch;
-	triangulation_t	*trian = NULL;
+	dface_t *f;
+	int i, j, k, st, pfacenum;
+	patch_t *patch;
+	triangulation_t *trian = NULL;
 	facelight_t	*fl;
-	float		minlight;
-	float		max, newmax;
-	byte		*dest;
-	int			pfacenum;
-	vec3_t		facemins, facemaxs;
+	float minlight, max, newmax;
+	byte *dest;
+	vec3_t facemins, facemaxs, lb;
 
 	f = &dfaces[facenum];
 	fl = &facelight[facenum];
