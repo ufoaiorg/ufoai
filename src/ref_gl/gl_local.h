@@ -266,7 +266,6 @@ extern cvar_t *r_ati_separate_stencil;
 extern cvar_t *r_stencil_two_side;
 
 extern cvar_t *r_dynamic;
-extern cvar_t *r_monolightmap;
 extern cvar_t *r_round_down;
 extern cvar_t *r_picmip;
 extern cvar_t *r_maxtexres;

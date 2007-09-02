@@ -41,7 +41,6 @@ int c_visible_lightmaps;
 #define GL_LIGHTMAP_FORMAT GL_RGBA
 
 typedef struct {
-	int internal_format;
 	int current_lightmap_texture;
 
 	mBspSurface_t *lightmap_surfaces[MAX_LIGHTMAPS];
@@ -210,24 +209,8 @@ static void R_BlendLightmaps (void)
 
 		if (r_saturatelighting->integer)
 			qglBlendFunc(GL_ONE, GL_ONE);
-		else {
-			if (r_monolightmap->string[0] != '0') {
-				switch (toupper(r_monolightmap->string[0])) {
-				case 'I':
-					qglBlendFunc(GL_ZERO, GL_SRC_COLOR);
-					break;
-				case 'L':
-					qglBlendFunc(GL_ZERO, GL_SRC_COLOR);
-					break;
-				case 'A':
-				default:
-					qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-					break;
-				}
-			} else {
-				qglBlendFunc(GL_ZERO, GL_SRC_COLOR);
-			}
-		}
+		else
+			qglBlendFunc(GL_ZERO, GL_SRC_COLOR);
 	}
 
 	if (currentmodel == rTiles[0])
@@ -910,7 +893,7 @@ static void LM_UploadBlock (qboolean dynamic)
 
 		qglTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, BLOCK_WIDTH, height, GL_LIGHTMAP_FORMAT, GL_UNSIGNED_BYTE, gl_lms.lightmap_buffer);
 	} else {
-		qglTexImage2D(GL_TEXTURE_2D, 0, gl_lms.internal_format, BLOCK_WIDTH, BLOCK_HEIGHT, 0, GL_LIGHTMAP_FORMAT, GL_UNSIGNED_BYTE, gl_lms.lightmap_buffer);
+		qglTexImage2D(GL_TEXTURE_2D, 0, gl_solid_format, BLOCK_WIDTH, BLOCK_HEIGHT, 0, GL_LIGHTMAP_FORMAT, GL_UNSIGNED_BYTE, gl_lms.lightmap_buffer);
 		if (++gl_lms.current_lightmap_texture == MAX_LIGHTMAPS)
 			ri.Sys_Error(ERR_DROP, "LM_UploadBlock() - MAX_LIGHTMAPS exceeded\n");
 	}
@@ -1085,37 +1068,11 @@ void R_BeginBuildingLightmaps (void)
 
 	gl_lms.current_lightmap_texture = 1;
 
-	/*
-	 ** if mono lightmaps are enabled and we want to use alpha
-	 ** blending (a,1-a) then we're likely running on a 3DLabs
-	 ** Permedia2.  In a perfect world we'd use a GL_ALPHA lightmap
-	 ** in order to conserve space and maximize bandwidth, however
-	 ** this isn't a perfect world.
-	 **
-	 ** So we have to use alpha lightmaps, but stored in GL_RGBA format,
-	 ** which means we only get 1/16th the color resolution we should when
-	 ** using alpha lightmaps.  If we find another board that supports
-	 ** only alpha lightmaps but that can at least support the GL_ALPHA
-	 ** format then we should change this code to use real alpha maps.
-	 */
-	if (toupper(r_monolightmap->string[0]) == 'A') {
-		gl_lms.internal_format = gl_alpha_format;
-		/* try to do hacked colored lighting with a blended texture */
-	} else if (toupper(r_monolightmap->string[0]) == 'C') {
-		gl_lms.internal_format = gl_alpha_format;
-	} else if (toupper(r_monolightmap->string[0]) == 'I') {
-		gl_lms.internal_format = GL_INTENSITY8;
-	} else if (toupper(r_monolightmap->string[0]) == 'L') {
-		gl_lms.internal_format = GL_LUMINANCE8;
-	} else {
-		gl_lms.internal_format = gl_solid_format;
-	}
-
 	/* initialize the dynamic lightmap texture */
 	R_Bind(r_state.lightmap_texnum + 0);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	qglTexImage2D(GL_TEXTURE_2D, 0, gl_lms.internal_format, BLOCK_WIDTH, BLOCK_HEIGHT, 0, GL_LIGHTMAP_FORMAT, GL_UNSIGNED_BYTE, dummy);
+	qglTexImage2D(GL_TEXTURE_2D, 0, gl_solid_format, BLOCK_WIDTH, BLOCK_HEIGHT, 0, GL_LIGHTMAP_FORMAT, GL_UNSIGNED_BYTE, dummy);
 }
 
 /**

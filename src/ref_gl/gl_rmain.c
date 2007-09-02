@@ -106,7 +106,6 @@ cvar_t *r_drawclouds;
 cvar_t *r_imagefilter;
 cvar_t *r_mode;
 cvar_t *r_dynamic;
-cvar_t *r_monolightmap;
 cvar_t *r_modulate;
 cvar_t *r_round_down;
 cvar_t *r_picmip;
@@ -715,7 +714,6 @@ static void R_Register (void)
 	r_showtris = ri.Cvar_Get("r_showtris", "0", 0, NULL);
 	r_finish = ri.Cvar_Get("r_finish", "0", CVAR_ARCHIVE, NULL);
 	r_flashblend = ri.Cvar_Get("r_flashblend", "0", 0, "Controls the way dynamic lights are drawn");
-	r_monolightmap = ri.Cvar_Get("r_monolightmap", "0", 0, NULL);
 #if defined(_WIN32)
 	r_driver = ri.Cvar_Get("r_driver", "opengl32", CVAR_ARCHIVE, NULL);
 #elif defined (__APPLE__) || defined (MACOSX)
@@ -883,14 +881,6 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 		r_config.renderer = GL_RENDERER_RENDITION;
 	else
 		r_config.renderer = GL_RENDERER_OTHER;
-
-	if (toupper(r_monolightmap->string[1]) != 'F') {
-		if (r_config.renderer == GL_RENDERER_PERMEDIA2) {
-			ri.Cvar_Set("r_monolightmap", "A");
-			ri.Con_Printf(PRINT_ALL, "...using r_monolightmap ' a '\n");
-		} else
-			ri.Cvar_Set("r_monolightmap", "0");
-	}
 
 #if defined (__linux__) || defined (__FreeBSD__) || defined (__NetBSD__)
 	ri.Cvar_SetValue("r_finish", 1);
