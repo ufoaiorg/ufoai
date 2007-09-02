@@ -22,10 +22,12 @@
 ./client/cl_inventory.c
 ./client/cl_irc.c
 ./client/cl_keys.c
+./client/cl_language.c
 ./client/cl_le.c
 ./client/cl_main.c
 ./client/cl_market.c
 ./client/cl_map.c
+./client/cl_mapfightequip.c
 ./client/cl_menu.c
 ./client/cl_parse.c
 ./client/cl_particle.c
