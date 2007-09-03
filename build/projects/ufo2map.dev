@@ -9,7 +9,7 @@ CppCompiler=
 Includes=D:\Programme\Dev-Cpp\include
 Linker=-lz -llibjpeg_@@_
 Libs=C:\Dev-Cpp\lib
-UnitCount=33
+UnitCount=32
 Folders=Headers,Source
 ObjFiles=
 PrivateResource=
@@ -130,16 +130,6 @@ OverrideBuildCmd=0
 BuildCmd=$(CC) -c imagelib.c -o imagelib.o $(CFLAGS)
 
 [Unit27]
-FileName=..\..\src\tools\ufo2map\convert_ase.c
-Folder=Source
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c convert_ase.c -o convert_ase.o $(CFLAGS)
-
-[Unit28]
 FileName=..\..\src\tools\ufo2map\common\bspfile.h
 Folder=Headers
 Compile=1
@@ -149,7 +139,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit29]
+[Unit28]
 FileName=..\..\src\tools\ufo2map\common\cmdlib.h
 Folder=Headers
 Compile=1
@@ -159,7 +149,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit30]
+[Unit29]
 FileName=..\..\src\tools\ufo2map\common\mathlib.h
 Folder=Headers
 Compile=1
@@ -169,15 +159,25 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
+[Unit30]
+FileName=..\..\src\tools\ufo2map\common\polylib.h
+Folder=Headers
+Compile=1
+CompileCpp=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
 [Unit32]
-FileName=..\..\src\common\ioapi.c
+FileName=..\..\src\common\unzip.c
 Folder=Source
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=$(CC) -c ioapi.c -o ufo2map/ioapi.o $(CFLAGS)
+BuildCmd=$(CC) -c unzip.c -o ufo2map/unzip.o $(CFLAGS)
 
 [Unit33]
 FileName=..\..\src\common\unzip.c
@@ -507,12 +507,12 @@ OverrideBuildCmd=0
 BuildCmd=$(CC) -c scriplib.c -o scriplib.o $(CFLAGS)
 
 [Unit31]
-FileName=..\..\src\tools\ufo2map\common\polylib.h
-CompileCpp=1
-Folder=Headers
+FileName=..\..\src\common\ioapi.c
+CompileCpp=0
+Folder=Source
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=
+BuildCmd=$(CC) -c ioapi.c -o ufo2map/ioapi.o $(CFLAGS)
 
