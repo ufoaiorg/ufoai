@@ -44,10 +44,8 @@ int msg_mode;
 char msg_buffer[MAXCMDLINE];
 size_t msg_bufferlen = 0;
 
-static int key_waiting;
 char *keybindings[K_KEY_SIZE];
 static char *menukeybindings[K_KEY_SIZE];
-static qboolean consolekeys[K_KEY_SIZE];		/* if true, can't be rebound while in console */
 static int keyshift[K_KEY_SIZE];				/* key to map to if shift held down in console */
 qboolean keydown[K_KEY_SIZE];
 
@@ -878,43 +876,6 @@ void Key_Init (void)
 	}
 	key_linepos = 1;
 
-	/* init ascii characters in console mode */
-	for (i = 32; i < 128; i++)
-		consolekeys[i] = qtrue;
-	consolekeys[K_ENTER] = qtrue;
-	consolekeys[K_KP_ENTER] = qtrue;
-	consolekeys[K_TAB] = qtrue;
-	consolekeys[K_LEFTARROW] = qtrue;
-	consolekeys[K_KP_LEFTARROW] = qtrue;
-	consolekeys[K_RIGHTARROW] = qtrue;
-	consolekeys[K_KP_RIGHTARROW] = qtrue;
-	consolekeys[K_UPARROW] = qtrue;
-	consolekeys[K_KP_UPARROW] = qtrue;
-	consolekeys[K_DOWNARROW] = qtrue;
-	consolekeys[K_KP_DOWNARROW] = qtrue;
-	consolekeys[K_BACKSPACE] = qtrue;
-	consolekeys[K_HOME] = qtrue;
-	consolekeys[K_KP_HOME] = qtrue;
-	consolekeys[K_END] = qtrue;
-	consolekeys[K_KP_END] = qtrue;
-	consolekeys[K_PGUP] = qtrue;
-	consolekeys[K_KP_PGUP] = qtrue;
-	consolekeys[K_PGDN] = qtrue;
-	consolekeys[K_KP_PGDN] = qtrue;
-	consolekeys[K_SHIFT] = qtrue;
-	consolekeys[K_INS] = qtrue;
-	consolekeys[K_KP_INS] = qtrue;
-	consolekeys[K_KP_DEL] = qtrue;
-	consolekeys[K_KP_SLASH] = qtrue;
-	consolekeys[K_KP_PLUS] = qtrue;
-	consolekeys[K_KP_MINUS] = qtrue;
-	consolekeys[K_KP_5] = qtrue;
-	consolekeys[K_MWHEELUP] = qtrue;
-	consolekeys[K_MWHEELDOWN] = qtrue;
-
-	consolekeys['`'] = qfalse;
-	consolekeys['~'] = qfalse;
-
 	for (i = 0; i < K_LAST_KEY; i++)
 		keyshift[i] = i;
 	for (i = 'a'; i <= 'z'; i++)
@@ -973,13 +934,6 @@ void Key_Event (int key, qboolean down, unsigned time)
 {
 	char *kb = NULL;
 	char cmd[MAX_STRING_CHARS];
-
-	/* hack for modal presses */
-	if (key_waiting == -1) {
-		if (down)
-			key_waiting = key;
-		return;
-	}
 
 	/* unbindable key */
 	if (key >= K_KEY_SIZE)
@@ -1105,18 +1059,4 @@ void Key_ClearStates (void)
 			Key_Event(i, qfalse, 0);
 		keydown[i] = 0;
 	}
-}
-
-
-/**
- * @brief
- */
-int Key_GetKey (void)
-{
-	key_waiting = -1;
-
-	while (key_waiting == -1)
-		Sys_SendKeyEvents();
-
-	return key_waiting;
 }
