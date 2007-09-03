@@ -453,10 +453,10 @@ base/models/aircraft/drop_firebird/firebird_glass.jpg | GNU General Public Licen
 base/models/aircraft/drop_firebird/firebird_glass.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/drop_firebird/firebird_top.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/drop_firebird/firebird_top.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/inter_dragon/ufo_dragon.jpg | GNU General Public License 2.0 | Willem "Sitters"
-base/models/aircraft/inter_dragon/ufo_dragon.md2 | GNU General Public License 2.0 | Willem "Sitters"
-base/models/aircraft/inter_dragon/ufo_dragon_gear.jpg | GNU General Public License 2.0 | Willem "Sitters"
-base/models/aircraft/inter_dragon/ufo_dragon_gear.md2 | GNU General Public License 2.0 | Willem "Sitters"
+base/models/aircraft/inter_dragon/inter_dragon.jpg | GNU General Public License 2.0 | Willem "Sitters"
+base/models/aircraft/inter_dragon/inter_dragon.md2 | GNU General Public License 2.0 | Willem "Sitters"
+base/models/aircraft/inter_dragon/inter_dragon_gear.jpg | GNU General Public License 2.0 | Willem "Sitters"
+base/models/aircraft/inter_dragon/inter_dragon_gear.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/inter_saracen/old/interceptor.rar | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
 base/models/aircraft/inter_saracen/saracen.jpg | GNU General Public License v2.0 | Daniel Holden (Yoshiboy) - minor modifications by David Townsend (Psawhn)
 base/models/aircraft/inter_saracen/saracen.md2 | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
