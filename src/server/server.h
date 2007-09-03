@@ -71,10 +71,6 @@ typedef enum {
 	cs_spawned					/**< client is fully in game */
 } client_state_t;
 
-#define	LATENCY_COUNTS	16
-
-#define RELIABLEBUFFERS	16
-
 typedef struct client_s {
 	client_state_t state;
 	int lastframe;				/**< for delta compression */
