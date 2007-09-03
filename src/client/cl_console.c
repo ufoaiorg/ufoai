@@ -180,6 +180,10 @@ void Con_ClearNotify (void)
  */
 static void Con_MessageModeSay_f (void)
 {
+	/* chatting makes only sense in battle field mode */
+	if (!CL_OnBattlescape() || ccs.singleplayer)
+		return;
+
 	msg_mode = MSG_SAY;
 	Key_SetDest(key_message);
 }
@@ -189,6 +193,10 @@ static void Con_MessageModeSay_f (void)
  */
 static void Con_MessageModeSayTeam_f (void)
 {
+	/* chatting makes only sense in battle field mode */
+	if (!CL_OnBattlescape() || ccs.singleplayer)
+		return;
+
 	msg_mode = MSG_SAY_TEAM;
 	Key_SetDest(key_message);
 }
