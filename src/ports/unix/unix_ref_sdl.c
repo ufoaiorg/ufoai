@@ -712,7 +712,7 @@ void Rimp_AppActivate (qboolean active)
 /* KEYBOARD                                                                  */
 /*****************************************************************************/
 
-Key_Event_fp_t Key_Event_fp;
+static Key_Event_fp_t Key_Event_fp;
 
 /**
  * @brief

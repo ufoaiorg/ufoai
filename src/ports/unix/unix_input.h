@@ -18,6 +18,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#ifndef UNIX_INPUT_H
+#define UNIX_INPUT_H
+
+#include <dlfcn.h> /* ELF dl loader */
 
 typedef void (*Key_Event_fp_t)(int key, qboolean down);
 
@@ -43,6 +47,10 @@ void RW_IN_GetMousePos(int *x, int *y);
 void RW_IN_Activate(qboolean active);
 void RW_IN_Frame(void);
 
+void Real_IN_Init(void *lib);
+
 void KBD_Update(void);
 void KBD_Init(Key_Event_fp_t fp);
 void KBD_Close(void);
+
+#endif /* UNIX_INPUT_H */

@@ -52,25 +52,6 @@ extern viddef_t viddef;				/* global video state; used by other modules */
 void		*reflib_library;		/* Handle to refresh DLL */
 qboolean	reflib_active = qfalse;
 
-/** KEYBOARD **************************************************************/
-
-void Do_Key_Event(int key, qboolean down);
-
-void (*KBD_Update_fp)(void);
-void (*KBD_Init_fp)(Key_Event_fp_t fp);
-void (*KBD_Close_fp)(void);
-
-/** MOUSE *****************************************************************/
-
-in_state_t in_state;
-
-void (*RW_IN_Init_fp)(in_state_t *in_state_p);
-void (*RW_IN_Shutdown_fp)(void);
-void (*RW_IN_Activate_fp)(qboolean active);
-void (*RW_IN_GetMousePos_fp)(int *mx, int *my);
-
-void Real_IN_Init (void);
-
 /*
 ==========================================================================
 DLL GLUE
@@ -125,22 +106,11 @@ static void VID_NewWindow (int width, int height)
 static void VID_FreeReflib (void)
 {
 	if (reflib_library) {
-		if (KBD_Close_fp)
-			KBD_Close_fp();
-		if (RW_IN_Shutdown_fp)
-			RW_IN_Shutdown_fp();
+		IN_Shutdown();
 #ifndef REF_HARD_LINKED
 		Sys_FreeLibrary(reflib_library);
 #endif
 	}
-
-	KBD_Init_fp = NULL;
-	KBD_Update_fp = NULL;
-	KBD_Close_fp = NULL;
-	RW_IN_Init_fp = NULL;
-	RW_IN_Shutdown_fp = NULL;
-	RW_IN_Activate_fp = NULL;
-	RW_IN_GetMousePos_fp = NULL;
 
 	memset(&re, 0, sizeof(re));
 	reflib_library = NULL;
@@ -159,12 +129,7 @@ static qboolean VID_LoadRefresh (const char *name)
 
 	if (reflib_active) {
 #if 0
-		if (KBD_Close_fp)
-			KBD_Close_fp();
-		if (RW_IN_Shutdown_fp)
-			RW_IN_Shutdown_fp();
-		KBD_Close_fp = NULL;
-		RW_IN_Shutdown_fp = NULL;
+		IN_Shutdown();
 #endif
 		re.Shutdown();
 		VID_FreeReflib();
@@ -223,42 +188,13 @@ static qboolean VID_LoadRefresh (const char *name)
 		Com_Error(ERR_FATAL, "%s has incompatible api_version", name);
 	}
 
-	/* Init IN (Mouse) */
-	in_state.Key_Event_fp = Do_Key_Event;
-
-	if ((RW_IN_Init_fp = dlsym(reflib_library, "RW_IN_Init")) == NULL ||
-		(RW_IN_Shutdown_fp = dlsym(reflib_library, "RW_IN_Shutdown")) == NULL ||
-		(RW_IN_Activate_fp = dlsym(reflib_library, "RW_IN_Activate")) == NULL ||
-		(RW_IN_GetMousePos_fp = dlsym(reflib_library, "RW_IN_GetMousePos")) == NULL)
-		Sys_Error("No RW_IN functions in REF.\n");
-
-	Real_IN_Init();
-
 	if (re.Init(0, 0) == qfalse) {
 		re.Shutdown();
 		VID_FreeReflib();
 		return qfalse;
 	}
 
-	/* Init KBD */
-#if 1
-	if ((KBD_Init_fp = dlsym(reflib_library, "KBD_Init")) == NULL ||
-		(KBD_Update_fp = dlsym(reflib_library, "KBD_Update")) == NULL ||
-		(KBD_Close_fp = dlsym(reflib_library, "KBD_Close")) == NULL)
-		Sys_Error("No KBD functions in REF.\n");
-#else
-	{
-
-		void KBD_Init(void);
-		void KBD_Update(void);
-		void KBD_Close(void);
-
-		KBD_Init_fp = KBD_Init;
-		KBD_Update_fp = KBD_Update;
-		KBD_Close_fp = KBD_Close;
-	}
-#endif
-	KBD_Init_fp(Do_Key_Event);
+	Real_IN_Init(reflib_library);
 
 	/* give up root now */
 	setreuid(getuid(), getuid());
@@ -327,79 +263,9 @@ void VID_Shutdown (void)
 	if (reflib_active) {
 		if (KBD_Close_fp)
 			KBD_Close_fp();
-		if (RW_IN_Shutdown_fp)
-			RW_IN_Shutdown_fp();
 		KBD_Close_fp = NULL;
-		RW_IN_Shutdown_fp = NULL;
+		IN_Shutdown();
 		re.Shutdown();
 		VID_FreeReflib();
 	}
 }
-
-
-/*****************************************************************************/
-/* INPUT                                                                     */
-/*****************************************************************************/
-
-/**
- * @brief
- */
-void IN_Init (void)
-{
-}
-
-/**
- * @brief
- */
-void Real_IN_Init (void)
-{
-	if (RW_IN_Init_fp)
-		RW_IN_Init_fp(&in_state);
-}
-
-/**
- * @brief
- */
-void IN_Shutdown (void)
-{
-	if (RW_IN_Shutdown_fp)
-		RW_IN_Shutdown_fp();
-}
-
-/**
- * @brief
- */
-void IN_GetMousePos (int *mx, int *my)
-{
-	if (RW_IN_GetMousePos_fp)
-		RW_IN_GetMousePos_fp(mx, my);
-}
-
-/**
- * @brief
- */
-void IN_Frame (void)
-{
-	if (RW_IN_Activate_fp) {
-		if (cls.key_dest == key_console)
-			RW_IN_Activate_fp(qfalse);
-		else
-			RW_IN_Activate_fp(qtrue);
-	}
-}
-
-/**
- * @brief
- */
-void IN_Activate (qboolean active)
-{
-}
-
-/**
- * @brief
- */
-void Do_Key_Event (int key, qboolean down)
-{
-	Key_Event(key, down, Sys_Milliseconds());
-}
-
