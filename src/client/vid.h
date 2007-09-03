@@ -57,8 +57,8 @@ typedef struct vrect_s {
  * This allows the GUI system to use a "normalized" coordinate
  * system of 1024x768 texels.
  *
- * this struct is also defined in src/ref_gl/gl_local.h
-*/
+ * this struct is also defined in src/renderer/gl_local.h
+ */
 typedef struct {
 	unsigned width;		/**< game screen/window width */
 	unsigned height;	/**< game screen/window height */

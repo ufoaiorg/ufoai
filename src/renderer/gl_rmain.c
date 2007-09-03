@@ -782,18 +782,18 @@ static qboolean R_SetMode (void)
 		if (err == rserr_invalid_fullscreen) {
 			ri.Cvar_SetValue("vid_fullscreen", 0);
 			vid_fullscreen->modified = qfalse;
-			ri.Con_Printf(PRINT_ALL, "ref_gl::R_SetMode() - fullscreen unavailable in this mode\n");
+			ri.Con_Printf(PRINT_ALL, "renderer::R_SetMode() - fullscreen unavailable in this mode\n");
 			if ((err = Rimp_SetMode(&vid.width, &vid.height, r_mode->integer, qfalse)) == rserr_ok)
 				return qtrue;
 		} else if (err == rserr_invalid_mode) {
 			ri.Cvar_SetValue("r_mode", r_state.prev_mode);
 			r_mode->modified = qfalse;
-			ri.Con_Printf(PRINT_ALL, "ref_gl::R_SetMode() - invalid mode\n");
+			ri.Con_Printf(PRINT_ALL, "renderer::R_SetMode() - invalid mode\n");
 		}
 
 		/* try setting it back to something safe */
 		if ((err = Rimp_SetMode(&vid.width, &vid.height, r_state.prev_mode, qfalse)) != rserr_ok) {
-			ri.Con_Printf(PRINT_ALL, "ref_gl::R_SetMode() - could not revert to safe mode\n");
+			ri.Con_Printf(PRINT_ALL, "renderer::R_SetMode() - could not revert to safe mode\n");
 			return qfalse;
 		}
 	}
@@ -814,14 +814,14 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 	for (j = 0; j < 256; j++)
 		r_turbsin[j] *= 0.5;
 
-	ri.Con_Printf(PRINT_ALL, "ref_gl version: "REF_VERSION"\n");
+	ri.Con_Printf(PRINT_ALL, "renderer version: "REF_VERSION"\n");
 
 	R_Register();
 
 	/* initialize our QGL dynamic bindings */
 	if (!QR_Init(r_driver->string)) {
 		QR_Shutdown();
-		ri.Con_Printf(PRINT_ALL, "ref_gl::R_Init() - could not load \"%s\"\n", r_driver->string);
+		ri.Con_Printf(PRINT_ALL, "renderer::R_Init() - could not load \"%s\"\n", r_driver->string);
 		return qfalse;
 	}
 
@@ -837,7 +837,7 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 	/* create the window and set up the context */
 	if (!R_SetMode()) {
 		QR_Shutdown();
-		ri.Con_Printf(PRINT_ALL, "ref_gl::R_Init() - could not R_SetMode()\n");
+		ri.Con_Printf(PRINT_ALL, "renderer::R_Init() - could not R_SetMode()\n");
 		return qfalse;
 	}
 

@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include <assert.h>
-#include "../../ref_gl/gl_local.h"
+#include "../../renderer/gl_local.h"
 #include "win_ref_glw.h"
 #include "win_local.h"
 
@@ -345,15 +345,15 @@ void Rimp_Shutdown (void)
 		WG_RestoreGamma();
 
 	if (qwglMakeCurrent && !qwglMakeCurrent(NULL, NULL))
-		ri.Con_Printf(PRINT_ALL, "ref_gl::R_Shutdown() - wglMakeCurrent failed\n");
+		ri.Con_Printf(PRINT_ALL, "renderer::R_Shutdown() - wglMakeCurrent failed\n");
 	if (glw_state.hGLRC) {
 		if (qwglDeleteContext && !qwglDeleteContext( glw_state.hGLRC) )
-			ri.Con_Printf(PRINT_ALL, "ref_gl::R_Shutdown() - wglDeleteContext failed\n");
+			ri.Con_Printf(PRINT_ALL, "renderer::R_Shutdown() - wglDeleteContext failed\n");
 		glw_state.hGLRC = NULL;
 	}
 	if (glw_state.hDC) {
 		if (!ReleaseDC(glw_state.hWnd, glw_state.hDC))
-			ri.Con_Printf(PRINT_ALL, "ref_gl::R_Shutdown() - ReleaseDC failed\n");
+			ri.Con_Printf(PRINT_ALL, "renderer::R_Shutdown() - ReleaseDC failed\n");
 		glw_state.hDC = NULL;
 	}
 	if (glw_state.hWnd) {
