@@ -289,7 +289,7 @@ void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 
 	/* only add one lightmap */
 	if (nummaps != 1)
-		memset(s_blocklights, 0, sizeof(s_blocklights[0]) * size * 3);
+		memset(s_blocklights, 0, sizeof(s_blocklights[0]) * size * RGB_PIXELSIZE);
 
 	for (maps = 0; maps < MAXLIGHTMAPS && surf->styles[maps] != 255; maps++) {
 		bl = s_blocklights;
@@ -297,18 +297,18 @@ void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 		for (i = 0; i < 3; i++)
 			scale[i] = r_modulate->value * r_newrefdef.lightstyles[surf->styles[maps]].rgb[i];
 
-		for (i = 0; i < size; i++, bl += 3) {
+		for (i = 0; i < size; i++, bl += RGB_PIXELSIZE) {
 			if (maps > 0) {
-				bl[0] += lightmap[i * 3 + 0] * scale[0];
-				bl[1] += lightmap[i * 3 + 1] * scale[1];
-				bl[2] += lightmap[i * 3 + 2] * scale[2];
+				bl[0] += lightmap[i * RGB_PIXELSIZE + 0] * scale[0];
+				bl[1] += lightmap[i * RGB_PIXELSIZE + 1] * scale[1];
+				bl[2] += lightmap[i * RGB_PIXELSIZE + 2] * scale[2];
 			} else {
-				bl[0] = lightmap[i * 3 + 0] * scale[0];
-				bl[1] = lightmap[i * 3 + 1] * scale[1];
-				bl[2] = lightmap[i * 3 + 2] * scale[2];
+				bl[0] = lightmap[i * RGB_PIXELSIZE + 0] * scale[0];
+				bl[1] = lightmap[i * RGB_PIXELSIZE + 1] * scale[1];
+				bl[2] = lightmap[i * RGB_PIXELSIZE + 2] * scale[2];
 			}
 		}
-		lightmap += size * 3;	/* skip to next lightmap */
+		lightmap += size * RGB_PIXELSIZE;	/* skip to next lightmap */
 	}
 
 	/* add all the dynamic lights */
@@ -367,7 +367,7 @@ void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 			lm[2] = b;
 			lm[3] = a;
 
-			bl += 3;
+			bl += RGB_PIXELSIZE;
 			lm += 4;
 		}
 	}

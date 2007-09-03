@@ -40,8 +40,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <SDL_ttf.h>
 #include <SDL_syswm.h>
 
-void R_ShutdownSDLFonts(void); /* r_draw.c */
-
 #include "qgl.h"
 
 #define REF_VERSION "GL 0.12"
