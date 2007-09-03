@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-09-02 17:59+0200\n"
+"POT-Creation-Date: 2007-09-03 20:06+0200\n"
 "PO-Revision-Date: 2007-09-02 17:53+0100\n"
 "Last-Translator: Lubomír Bláha <tritol@trilogic.cz>\n"
 "Language-Team: čeština <cs@li.org>\n"
@@ -105,119 +105,129 @@ msgid "Saracen I"
 msgstr "s. Saracen"
 
 #: ../base/ufos/aircraftmanagement.ufo:204
-msgid "Stingray Interceptor"
+#, fuzzy
+msgid "Dragon Interceptor"
 msgstr "Stíhačka Stingray"
 
 #: ../base/ufos/aircraftmanagement.ufo:205
+#, fuzzy
+msgid "Dragon"
+msgstr "Hotovo"
+
+#: ../base/ufos/aircraftmanagement.ufo:243
+msgid "Stingray Interceptor"
+msgstr "Stíhačka Stingray"
+
+#: ../base/ufos/aircraftmanagement.ufo:244
 msgid "Stingray"
 msgstr "Stingray"
 
-#: ../base/ufos/aircraftmanagement.ufo:232 ../base/ufos/otheritems.ufo:59
-#: ../base/ufos/research.ufo:3200 ../base/ufos/research.ufo:3213
-#: ../base/ufos/research.ufo:3221
+#: ../base/ufos/aircraftmanagement.ufo:271 ../base/ufos/otheritems.ufo:59
+#: ../base/ufos/research.ufo:3220 ../base/ufos/research.ufo:3233
+#: ../base/ufos/research.ufo:3241
 msgid "UFO - Harvester"
 msgstr "UFO - Sklízeč"
 
-#: ../base/ufos/aircraftmanagement.ufo:233
+#: ../base/ufos/aircraftmanagement.ufo:272
 msgid "Harvester U"
 msgstr "u. Sklízeč"
 
-#: ../base/ufos/aircraftmanagement.ufo:259 ../base/ufos/otheritems.ufo:78
-#: ../base/ufos/research.ufo:3116 ../base/ufos/research.ufo:3129
-#: ../base/ufos/research.ufo:3137
+#: ../base/ufos/aircraftmanagement.ufo:298 ../base/ufos/otheritems.ufo:78
+#: ../base/ufos/research.ufo:3136 ../base/ufos/research.ufo:3149
+#: ../base/ufos/research.ufo:3157
 msgid "UFO - Carrier"
 msgstr "UFO - Nosič"
 
-#: ../base/ufos/aircraftmanagement.ufo:282 ../base/ufos/otheritems.ufo:87
-#: ../base/ufos/research.ufo:3074 ../base/ufos/research.ufo:3087
-#: ../base/ufos/research.ufo:3095
+#: ../base/ufos/aircraftmanagement.ufo:321 ../base/ufos/otheritems.ufo:87
+#: ../base/ufos/research.ufo:3094 ../base/ufos/research.ufo:3107
+#: ../base/ufos/research.ufo:3115
 msgid "UFO - Supply Ship"
 msgstr "UFO - Zásobovací loď "
 
-#: ../base/ufos/aircraftmanagement.ufo:283
+#: ../base/ufos/aircraftmanagement.ufo:322
 msgid "Supply U"
 msgstr "u. Zásobovací"
 
-#: ../base/ufos/aircraftmanagement.ufo:305 ../base/ufos/otheritems.ufo:69
-#: ../base/ufos/research.ufo:3158 ../base/ufos/research.ufo:3171
-#: ../base/ufos/research.ufo:3179
+#: ../base/ufos/aircraftmanagement.ufo:344 ../base/ufos/otheritems.ufo:69
+#: ../base/ufos/research.ufo:3178 ../base/ufos/research.ufo:3191
+#: ../base/ufos/research.ufo:3199
 msgid "UFO - Condor"
 msgstr "UFO - Kondor"
 
-#: ../base/ufos/aircraftmanagement.ufo:306
+#: ../base/ufos/aircraftmanagement.ufo:345
 msgid "Condor U"
 msgstr "u. Kondor"
 
-#: ../base/ufos/aircraftmanagement.ufo:333 ../base/ufos/otheritems.ufo:39
-#: ../base/ufos/research.ufo:2991 ../base/ufos/research.ufo:3004
-#: ../base/ufos/research.ufo:3012
+#: ../base/ufos/aircraftmanagement.ufo:372 ../base/ufos/otheritems.ufo:39
+#: ../base/ufos/research.ufo:3011 ../base/ufos/research.ufo:3024
+#: ../base/ufos/research.ufo:3032
 msgid "UFO - Scout"
 msgstr "UFO - Průzkumník"
 
-#: ../base/ufos/aircraftmanagement.ufo:334
+#: ../base/ufos/aircraftmanagement.ufo:373
 msgid "Scout U"
 msgstr "u. Průzkumník"
 
-#: ../base/ufos/aircraftmanagement.ufo:376 ../base/ufos/otheritems.ufo:49
-#: ../base/ufos/research.ufo:3032 ../base/ufos/research.ufo:3045
-#: ../base/ufos/research.ufo:3053
+#: ../base/ufos/aircraftmanagement.ufo:415 ../base/ufos/otheritems.ufo:49
+#: ../base/ufos/research.ufo:3052 ../base/ufos/research.ufo:3065
+#: ../base/ufos/research.ufo:3073
 msgid "UFO - Fighter"
 msgstr "UFO - Stíhačka"
 
-#: ../base/ufos/aircraftmanagement.ufo:377
+#: ../base/ufos/aircraftmanagement.ufo:416
 msgid "Fighter U"
 msgstr "u. Stíhačka"
 
-#: ../base/ufos/aircraftmanagement.ufo:401
+#: ../base/ufos/aircraftmanagement.ufo:440
 msgid "Shiva Rotary Cannon"
 msgstr "Rotační dělo Shiva"
 
 # PZ=Průbojná Zápalná, RDS=Rotační Dělo Shiva
-#: ../base/ufos/aircraftmanagement.ufo:411 ../base/ufos/research.ufo:3668
+#: ../base/ufos/aircraftmanagement.ufo:450 ../base/ufos/research.ufo:3688
 msgid "SHIVA 20mm API Rounds"
 msgstr "20mm PZ munice pro RDS"
 
 # TZ=Tříštivá Zápalná, RDS=Rotační Dělo Shiva
-#: ../base/ufos/aircraftmanagement.ufo:427 ../base/ufos/research.ufo:3689
+#: ../base/ufos/aircraftmanagement.ufo:466 ../base/ufos/research.ufo:3709
 msgid "SHIVA 20mm HEI Rounds"
 msgstr "20mm TZ munice pro RDS"
 
 # EPO=Elektronické ProtiOpatření
-#: ../base/ufos/aircraftmanagement.ufo:443
+#: ../base/ufos/aircraftmanagement.ufo:482
 msgid "Raven ECM Unit"
 msgstr "Jednotka EPO Raven"
 
 # VV = Vzduch-Vzduch
-#: ../base/ufos/aircraftmanagement.ufo:454
+#: ../base/ufos/aircraftmanagement.ufo:493
 msgid "Sparrowhawk AA Missile Rack"
 msgstr "Nosič střel VV Sparrowhawk"
 
-#: ../base/ufos/aircraftmanagement.ufo:464
+#: ../base/ufos/aircraftmanagement.ufo:503
 msgid "Sparrowhawk Missile"
 msgstr "Střela Sparrowhawk"
 
-#: ../base/ufos/aircraftmanagement.ufo:480 ../base/ufos/research.ufo:3751
+#: ../base/ufos/aircraftmanagement.ufo:519 ../base/ufos/research.ufo:3771
 msgid "TR-20 Rocket Pod"
 msgstr "Baterie raket TR-20"
 
-#: ../base/ufos/aircraftmanagement.ufo:492 ../base/ufos/research.ufo:3770
+#: ../base/ufos/aircraftmanagement.ufo:531 ../base/ufos/research.ufo:3790
 msgid "TR-20 Rocket"
 msgstr "Raketa TR-20"
 
-#: ../base/ufos/aircraftmanagement.ufo:508 ../base/ufos/research.ufo:3791
-#: ../base/ufos/research.ufo:3805 ../base/ufos/research.ufo:3813
+#: ../base/ufos/aircraftmanagement.ufo:547 ../base/ufos/research.ufo:3811
+#: ../base/ufos/research.ufo:3825 ../base/ufos/research.ufo:3833
 msgid "Particle Beam Weapon"
 msgstr "Částicová zbraň"
 
-#: ../base/ufos/aircraftmanagement.ufo:522 ../base/ufos/research.ufo:3836
+#: ../base/ufos/aircraftmanagement.ufo:561 ../base/ufos/research.ufo:3856
 msgid "Targeting Computer"
 msgstr "Zaměřovací počítač"
 
-#: ../base/ufos/aircraftmanagement.ufo:573 ../base/ufos/research.ufo:3552
+#: ../base/ufos/aircraftmanagement.ufo:612 ../base/ufos/research.ufo:3572
 msgid "Base defence: TR-20 Rocket Pod"
 msgstr "Obrana základny: Baterie raket TR-20"
 
-#: ../base/ufos/aircraftmanagement.ufo:585 ../base/ufos/research.ufo:3570
+#: ../base/ufos/aircraftmanagement.ufo:624 ../base/ufos/research.ufo:3590
 msgid "Base defence: TR-20 Rocket"
 msgstr "Obrana základny: Raketa TR-20"
 
@@ -2629,7 +2639,7 @@ msgid "Medium"
 msgstr "Střední"
 
 #: ../base/ufos/menu_options.ufo:343 ../base/ufos/menu_ptleditor.ufo:74
-#: client/cl_main.c:2300
+#: client/cl_main.c:2299
 msgid "Normal"
 msgstr "Normální"
 
@@ -3656,9 +3666,9 @@ msgstr "Antihmota"
 msgid "Alien Breathing Apparatus"
 msgstr "Dýchací přístroj pro cizáky"
 
-#: ../base/ufos/otheritems.ufo:25 ../base/ufos/research.ufo:3876
-#: ../base/ufos/research.ufo:3888 ../base/ufos/research.ufo:3896
-#: ../base/ufos/research.ufo:3912
+#: ../base/ufos/otheritems.ufo:25 ../base/ufos/research.ufo:3896
+#: ../base/ufos/research.ufo:3908 ../base/ufos/research.ufo:3916
+#: ../base/ufos/research.ufo:3932
 msgid "Alien Materials"
 msgstr "Cizácké materiály"
 
@@ -3808,14 +3818,14 @@ msgstr ""
 #: ../base/ufos/research.ufo:2225 ../base/ufos/research.ufo:2233
 #: ../base/ufos/research.ufo:2261 ../base/ufos/research.ufo:2269
 #: ../base/ufos/research.ufo:2297 ../base/ufos/research.ufo:2305
-#: ../base/ufos/research.ufo:3002 ../base/ufos/research.ufo:3010
-#: ../base/ufos/research.ufo:3043 ../base/ufos/research.ufo:3051
-#: ../base/ufos/research.ufo:3085 ../base/ufos/research.ufo:3093
-#: ../base/ufos/research.ufo:3127 ../base/ufos/research.ufo:3135
-#: ../base/ufos/research.ufo:3169 ../base/ufos/research.ufo:3177
-#: ../base/ufos/research.ufo:3211 ../base/ufos/research.ufo:3219
-#: ../base/ufos/research.ufo:3803 ../base/ufos/research.ufo:3811
-#: ../base/ufos/research.ufo:3886 ../base/ufos/research.ufo:3894
+#: ../base/ufos/research.ufo:3022 ../base/ufos/research.ufo:3030
+#: ../base/ufos/research.ufo:3063 ../base/ufos/research.ufo:3071
+#: ../base/ufos/research.ufo:3105 ../base/ufos/research.ufo:3113
+#: ../base/ufos/research.ufo:3147 ../base/ufos/research.ufo:3155
+#: ../base/ufos/research.ufo:3189 ../base/ufos/research.ufo:3197
+#: ../base/ufos/research.ufo:3231 ../base/ufos/research.ufo:3239
+#: ../base/ufos/research.ufo:3823 ../base/ufos/research.ufo:3831
+#: ../base/ufos/research.ufo:3906 ../base/ufos/research.ufo:3914
 msgid "mail_from_paul_navarre"
 msgstr ""
 "Velitel Paul Navarre, VaV: technické oddělení, PHALANX, Velení tichomořských "
@@ -3857,19 +3867,19 @@ msgstr ""
 #: ../base/ufos/research.ufo:2226 ../base/ufos/research.ufo:2234
 #: ../base/ufos/research.ufo:2262 ../base/ufos/research.ufo:2270
 #: ../base/ufos/research.ufo:2298 ../base/ufos/research.ufo:2306
-#: ../base/ufos/research.ufo:3003 ../base/ufos/research.ufo:3011
-#: ../base/ufos/research.ufo:3044 ../base/ufos/research.ufo:3052
-#: ../base/ufos/research.ufo:3086 ../base/ufos/research.ufo:3094
-#: ../base/ufos/research.ufo:3128 ../base/ufos/research.ufo:3136
-#: ../base/ufos/research.ufo:3170 ../base/ufos/research.ufo:3178
-#: ../base/ufos/research.ufo:3212 ../base/ufos/research.ufo:3220
-#: ../base/ufos/research.ufo:3282 ../base/ufos/research.ufo:3290
-#: ../base/ufos/research.ufo:3340 ../base/ufos/research.ufo:3348
-#: ../base/ufos/research.ufo:3384 ../base/ufos/research.ufo:3392
-#: ../base/ufos/research.ufo:3426 ../base/ufos/research.ufo:3434
-#: ../base/ufos/research.ufo:3804 ../base/ufos/research.ufo:3812
-#: ../base/ufos/research.ufo:3887 ../base/ufos/research.ufo:3895
-#: ../base/ufos/research.ufo:3981
+#: ../base/ufos/research.ufo:3023 ../base/ufos/research.ufo:3031
+#: ../base/ufos/research.ufo:3064 ../base/ufos/research.ufo:3072
+#: ../base/ufos/research.ufo:3106 ../base/ufos/research.ufo:3114
+#: ../base/ufos/research.ufo:3148 ../base/ufos/research.ufo:3156
+#: ../base/ufos/research.ufo:3190 ../base/ufos/research.ufo:3198
+#: ../base/ufos/research.ufo:3232 ../base/ufos/research.ufo:3240
+#: ../base/ufos/research.ufo:3302 ../base/ufos/research.ufo:3310
+#: ../base/ufos/research.ufo:3360 ../base/ufos/research.ufo:3368
+#: ../base/ufos/research.ufo:3404 ../base/ufos/research.ufo:3412
+#: ../base/ufos/research.ufo:3446 ../base/ufos/research.ufo:3454
+#: ../base/ufos/research.ufo:3824 ../base/ufos/research.ufo:3832
+#: ../base/ufos/research.ufo:3907 ../base/ufos/research.ufo:3915
+#: ../base/ufos/research.ufo:4001
 msgid "mail_to_base_commander"
 msgstr "Velitel základny, PHALANX, Velení tichomořských operací"
 
@@ -4085,11 +4095,11 @@ msgstr ""
 #: ../base/ufos/research.ufo:256 ../base/ufos/research.ufo:264
 #: ../base/ufos/research.ufo:314 ../base/ufos/research.ufo:322
 #: ../base/ufos/research.ufo:350 ../base/ufos/research.ufo:358
-#: ../base/ufos/research.ufo:3281 ../base/ufos/research.ufo:3289
-#: ../base/ufos/research.ufo:3339 ../base/ufos/research.ufo:3347
-#: ../base/ufos/research.ufo:3383 ../base/ufos/research.ufo:3391
-#: ../base/ufos/research.ufo:3425 ../base/ufos/research.ufo:3433
-#: ../base/ufos/research.ufo:3980
+#: ../base/ufos/research.ufo:3301 ../base/ufos/research.ufo:3309
+#: ../base/ufos/research.ufo:3359 ../base/ufos/research.ufo:3367
+#: ../base/ufos/research.ufo:3403 ../base/ufos/research.ufo:3411
+#: ../base/ufos/research.ufo:3445 ../base/ufos/research.ufo:3453
+#: ../base/ufos/research.ufo:4000
 msgid "mail_from_dr_connor"
 msgstr ""
 "Dr. Connor, VaV: biologické oddělení, PHALANX, Velení tichomořských operací"
@@ -9968,17 +9978,144 @@ msgstr ""
 "Nosnost -- zbraně: jeden malý nosič (příď), dva střední nosiče (křidélka)"
 
 #: ../base/ufos/research.ufo:2937
-msgid "saracen_interceptor_txt"
+#, fuzzy
+msgid "inter_saracen_txt"
 msgstr ""
-"Aircraft Evaluation -- Saracen-class Interceptor\n"
+"Vyhodnocení letounu -- Stíhačka třídy Stiletto\n"
 "\n"
-"CLASSIFIED LEVEL BLACK\n"
+"STUPEŇ UTAJENÍ: ČERNÁ\n"
+"\n"
+"PHALANX -- Jednotka pro boj s mimozemšťany\n"
+"\n"
+"Technická dokumentace, prověření Sigma -- pouze pro velitele\n"
+"\n"
+"Zaznamenáno: 4. listopadu 2026\n"
+"\n"
+"Kým: Dr. Richard Strohm, Velitel základny, PHALANX, Velení tichomořských "
+"operací\n"
+"\n"
+"\n"
+"\n"
+"Souhrn\n"
+"\n"
+"Jsem velice šťastný, že mohu oznámit dokončení prvního výrobního modelu naší "
+"stíhačky nové generace a jeho bezproblémové projití všemi letovými "
+"zkouškami. Přestože to nejspíš bude znít jako vychloubání, může to být "
+"nejlepší kousek lidské technologie, který byl kdy vytvořen.\n"
+"\n"
+"Stiletto je nepřekonatelná jednomístná stíhačka se schopnostmi SVP (Svislý "
+"Vzlet a Přistání), které jí umožňují přistávat na velice malých přistávacích "
+"plochách nebo pokud je to nutné uprostřed ničeho. Její ohromná a vysoce "
+"účinná turbodmychadla se mohou otáčet o 360 stupňů k dosažení plné "
+"manévrovatelnosti a to i při nadzvukových rychlostech. Obrovská sání motoru "
+"jsou chráněna důmyslným systémem vzdušných kanálků, které před motorem "
+"aktivně čistí vzduch a odvádějí pryč jakýkoliv kousek materiálu, který je "
+"dostatečně velký na to aby poškodil lopatky dmychadla. Tato turbodmychadla "
+"jsou více než dostatečně silná ke zvednutí vysoce vyzbrojeného trupu a bez "
+"podpory ho mohou udržet ve vzduchu až dvě hodiny než spálí veškeré své "
+"palivo.\n"
+"\n"
+"Helikoptérový tvar letounu nemusí vypadat zvláště rychlý, ale zdání někdy "
+"klame. Celistvá kostra Stiletta je schopna krátkodobě vydržet cokoliv až do "
+"rychlosti dvou Machů. Jeho cestovní rychlost je 1.3 Machu, maximální s "
+"přídavným spalováním 2,1 Machu. Tyto vysoké meze staví Stiletto vysoko nad "
+"mnoho vojenských tryskových stíhaček, které nejsou schopny dosahovat "
+"takových rychlostí.\n"
+"\n"
+"Jakmile je ve vzduchu, umí poskakovat jako zajíc a v rukách zkušeného pilota "
+"je naprosto nelítostný. Je schopen bokem obletět svůj hangárový komplex "
+"během šesti sekund, zatímco stále udržuje příďový kulomet zaměřený na cíl. "
+"Dokáže se zcela přetočit během tří desetin sekundy a zaměřit řízené střely "
+"na letoun typu stealth ještě před tím, než je obrátka dokončena.\n"
+"\n"
+"Řízené střely jsou umístěny v nosičích přímo pod vnějšími křidélky. Stiletto "
+"má také výkonné prostředky elektronického boje s nejmodernější senzorickou "
+"soustavu umístěnou v přídi. Ta zahrnuje -- ale není omezena na -- několik "
+"zaměřovacích laserů, propracovaný radarový systém a optické zobrazování "
+"výkonné tak jako v jakémkoliv špionážním satelitu. Malé EPO emitory umístěné "
+"na strategických místech po celém trupu zmatou zaměřovač raket a jsou "
+"schopny aktivně rušit příchozí radarové paprsky. Nosič zbraní může pojmout "
+"velký výběr výzbroje a elektronika je kvůli možnosti zdokonalování zcela "
+"modulární. Nicméně je třeba pamatovat na to, že v letounu není prostoru "
+"nazbyt.\n"
+"\n"
+"Silné motory Volkot VO-36 spotřebují ohromné množství paliva a nosnost "
+"Stiletta není velká. S ponecháním dostatku paliva pro stíhání není jeho "
+"maximální účinný dolet větší než 2000 kilometrů. Ale uvnitř tohoto dosahu je "
+"tento letoun naprosto nepřekonatelný.\n"
+"\n"
+"Vezměte prosím na vědomí, že v důsledku svého mimořádného výkonu by neměl "
+"být tento letoun používán nezkušenými piloty. Našimi testovacími posádkami "
+"bylo jeho ovládání za malých rychlostí popisováno jako 'záludné'.\n"
+"\n"
+"Stiletto vyžaduje jeden malý hangár na uložení, údržbu a vyzbrojení. Má tři "
+"střední nosiče zbraní, jeden na přídi a dva pod křidélky.\n"
+"\n"
+"\n"
+"Taktická doporučení\n"
+"\n"
+"Stiletto je ideální pro krátkodobé stíhání nepřátelských plavidel "
+"ohrožujících základny PHALANXu nebo poblíž civilních cílů. Je schopno "
+"postavit se čemukoliv na Zemi a vyhraje. Bohužel nemůže být vysláno proti "
+"cílům, které jsou od jeho hangáru vzdáleny více než 2000 km, neboť by nemělo "
+"dostatek paliva pro útočné manévry a zpáteční let na základnu. Pro zvětšení "
+"bojového dosahu lze uvažovat o doplňování paliva během letu, ale to by "
+"vyžadovalo dodatečný vývoj.\n"
+"\n"
+"Výkonnost proti mimozemskému letounu nemůže být samozřejmě změřena, ale "
+"dělali jsme to nejlepší co jsme mohli. Pokud se skutečně dožijeme příchodu "
+"cizácké hrozby a Stiletto nebude schopno zastat svou práci, pak bude lidská "
+"rasa v maléru.\n"
+"\n"
+"\n"
+"Dodatky\n"
+"\n"
+"Dodatek, Velitel Paul Navarre, 18. března 2084:\n"
+"\n"
+"Veliteli, právě jsem se podíval na tyto lodě třídy Stiletto na papíře i ve "
+"skutečnosti a naprosto mě uchvátily. Jen těžko lze uvěřit, že jsme "
+"zkonstruovali tyhle věcičky už v šestadvacátém --- a že si nikdo ani "
+"nedokázal představit jaký poklad drželi ve svých rukou. Tedy až doteď. To co "
+"máme je pravděpodobně nejmanévrovatelnější letoun který byl kdy postaven; "
+"naprosto zahanbí útočné helikoptéry a dokáže v kruzích oblétat nejmodernější "
+"tryskáče. Dělá zkrátka věci o kterých se moderním letounům může jenom zdát.\n"
+"\n"
+"Na druhou stranu je noční můrou pilotovat ho díky jeho letové nestabilitě, "
+"zejména ve vyšších rychlostech. Původní zpráva vážně podceňuje tuto část "
+"technického hodnocení. I přesto mě naši piloti informovali, že budou schopni "
+"to zvládnout. A co je ještě lepší, podařilo se nám vysledovat úplný "
+"nepoškozený exemplář a právě v dílně probíhá jeho uvedení do provozu. Na mou "
+"zodpovědnost jsem vydal pokyn pro úplné vybavení a letové testy. Tohle je "
+"prostě ten nejlepší stíhací nástroj jaký jsem kdy viděl. Budeme ho "
+"potřebovat.\n"
+"\n"
+"Statistiky letounu:\n"
+"\n"
+"Rozměry: 5m x 11m x 4m\n"
+"\n"
+"Cestovní rychlost: 1 380 km/h\n"
+"\n"
+"Maximální rychlost: 2 230 km/h\n"
+"\n"
+"Akční rádius: 2 000 km\n"
+"\n"
+"Nosnost -- posádka: jeden člen posádky\n"
+"\n"
+"Nosnost -- zbraně: jeden malý nosič (příď), dva střední nosiče (křidélka)"
+
+#: ../base/ufos/research.ufo:2954
+#, fuzzy
+msgid "inter_dragon_txt"
+msgstr ""
+"Technical Specifications: Sniper Rifle Magazine\n"
+"\n"
+"CLASSIFIED LEVEL YELLOW\n"
 "\n"
 "PHALANX Extraterrestrial Response Unit\n"
 "\n"
-"Technical Document, Sigma Clearance -- Commander's Eyes Only\n"
+"Technical Document, Delta Clearance\n"
 "\n"
-"Filed: 19 March 2084\n"
+"Filed: 20 March 2084\n"
 "\n"
 "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
 "Operations Command\n"
@@ -9987,97 +10124,181 @@ msgstr ""
 "\n"
 "Overview\n"
 "\n"
-"It is clear that the Stiletto-class Interceptor, while a terrific aircraft, "
-"does not cover all our needs. We must be ready to defend our planet and our "
-"people anywhere across the globe. The Stiletto's operational range is too "
-"limited and it is not fast enough to engage all the UFOs we might detect.\n"
+"This magazine contains 5 rounds of 20x140mm HMG (Heavy Machine Gun) "
+"ammunition. It is a conventional single-column box design, and can be "
+"extremely heavy due to the weight of the rounds inside. One magazine can "
+"weigh up to 1 kilogramme depending on the type of ammo used. The rounds in "
+"this magazine are high-quality match grade ammunition meant for heavy sniper "
+"rifles; they are more accurate and expensive than ordinary HMG rounds.\n"
 "\n"
-"Only one aircraft in the world is capable of filling the operational gap we "
-"face; the Argentinian KB-550 Hypersonic Wing, dubbed the \"Saracen\" in NATO "
-"code. Mixing old and new stealth technology into a single airframe, the "
-"Saracen most resembles the ancient SR-71 \"Blackbird\" in its shape and "
-"bearing. It is black as the night itself, covered in radiation-absorbing "
-"paint that makes it practically invisible to radar, lidar and most other "
-"forms of active scanning. Its fuselage is composed almost entirely of carbon "
-"nanotubes and sheets of graphite-reinforced plastic. This makes the craft "
-"extremely strong and heat-resistant enough to cope with the temperatures of "
-"cruising at speeds in excess of Mach 4. The Saracen is the fastest military "
-"airplane still flying today.\n"
-"\n"
-"In terms of its capabilities, the Saracen pushes our interception range into "
-"international territory. Its huge, armoured tanks and amazing fuel-"
-"efficiency allow it to go anywhere up to 10,000 kilometres from its hangar "
-"at hypersonic speeds -- and back again -- with fuel to spare for combat "
-"manoeuvres. Its stealthy design, high speed and tough airframe allow it to "
-"engage UFOs that our Stiletto-class Interceptors may simply be unable to "
-"catch. It has tough armour and can fly home even on one engine. Thanks to "
-"the power of its engines and a set of additional manoeuvring thrusters in "
-"its belly, it can take off almost vertically; this is definitely within the "
-"restrictions of our hangar facilities.\n"
-"\n"
-"Its electronics suite is similarly impressive. It has state-of-the-art "
-"targeting computers, advanced radar and lidar systems, advanced ECM "
-"(Electronic Counter-Measures) equipment, in-helmet VR imaging for the pilot, "
-"and more. The Saracen can carry about twice the electronics load of a "
-"Stiletto-class Interceptor, with room to spare for further modular "
-"equipment.\n"
-"\n"
-"Unfortunately, for all its strengths, it is costly to lease and maintain, "
-"and its heavy load of fuel and armour cuts badly into weapons capacity. The "
-"Saracen cannot equal the weapons load of the far smaller and less expensive "
-"Stiletto. Nor can it hope to equal the Stiletto's manoeuvrability. Despite "
-"thrust-vectoring technology (the ability to change the shape of its engine "
-"nozzles to direct thrust), electro-elastic wing surface (the ability to "
-"dynamically change the shape of its wings) and other terrific advances, the "
-"Saracen is still a large fixed-wing aircraft with all the limitations that "
-"implies. Though it can take much more damage than a Stiletto and remain "
-"effective, the Saracen will not perform as well in combat with alien craft.\n"
-"\n"
-"The Saracen requires 1 Large Hangar for storage, maintenance and deployment. "
-"It has 2 weapon hardpoints; 2 medium belly bays.\n"
+"The magazine is meant to be loaded into an S-1 Sniper Rifle.\n"
 "\n"
 "\n"
 "Recommended Doctrine\n"
 "\n"
-"At its heart the Saracen is a long-range interceptor to be used against "
-"extremely distant or fast UFOs. Unlike the alien craft, it is barely slowed "
-"by moving inside Earth atmosphere, making it slightly faster than most of "
-"the UFOs we have observed so far. This will allow PHALANX to catch the "
-"aliens wherever they may be going -- short of interplanetary space.\n"
-"\n"
-"As always, the Saracen's performance against extraterrestrial craft can't be "
-"measured without solid observational data from at least one real combat "
-"encounter. However, if deployed in large enough flights, it should be able "
-"to cut up alien craft of all varieties.\n"
+"All soldiers equipped with sniper rifles should carry at least one reload "
+"whenever they go out in the field. It is not advisable to send our troops "
+"into combat without spare magazines.\n"
 "\n"
 "\n"
 "Addenda\n"
 "\n"
-"None.\n"
-"\n"
-"\n"
-"Aircraft statistics:\n"
-"\n"
-"\n"
-"Size: 10m x 27m x 5m\n"
-"\n"
-"Cruising speed: 4,110 km/h\n"
-"\n"
-"Top speed: 4,600km/h\n"
-"\n"
-"Operational range: 10,000km\n"
-"\n"
-"Crew capacity: 1 crew\n"
-"\n"
-"Weapon capacity: 2 Medium hardpoints (belly)"
+"None."
 
-#: ../base/ufos/research.ufo:2954
-msgid "stingray_interceptor_txt"
+#: ../base/ufos/research.ufo:2956
+#, fuzzy
+msgid "inter_dragon_pre_txt"
 msgstr ""
-"Na překladu se pracuje. Více informací na\n"
-"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+"This is one of several proposals I'm submitting for the research and "
+"development of new laser weaponry. Each of these will have to be developed "
+"separately due to the size differences, power levels and complexity of the "
+"systems involved.\n"
+"\n"
+"In order to power our deuterium-fluoride laser weaponry, we need to design a "
+"magazine that can safely store a lot of different hazardous materials. "
+"Ethylene, nitrogen trifluoride, helium and deuterium -- three of which are "
+"toxic compounds -- have to be kept in separate pressurised compartments, "
+"under complete control at all times. If these materials were allowed to mix, "
+"it would be what we engineers call a 'Bad Thing'.\n"
+"\n"
+"We already have a basic design that should overcome these problems, but we "
+"need lab facilities and funding in order to test it, prototype it and build "
+"it to UN safety spec. It's drudge work, but it has to be done in order to "
+"make our lasers safe to use on the battlefield. I'm not prepared to risk "
+"poisoning our own troops with deuterium gas by cutting corners. We need "
+"proper magazines if we're going to use our new laser weapons.\n"
+"\n"
+"Please approve this program as soon as you can, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2993
+#: ../base/ufos/research.ufo:2974
+#, fuzzy
+msgid "inter_stingray_txt"
+msgstr ""
+"Vyhodnocení letounu -- Stíhačka třídy Stiletto\n"
+"\n"
+"STUPEŇ UTAJENÍ: ČERNÁ\n"
+"\n"
+"PHALANX -- Jednotka pro boj s mimozemšťany\n"
+"\n"
+"Technická dokumentace, prověření Sigma -- pouze pro velitele\n"
+"\n"
+"Zaznamenáno: 4. listopadu 2026\n"
+"\n"
+"Kým: Dr. Richard Strohm, Velitel základny, PHALANX, Velení tichomořských "
+"operací\n"
+"\n"
+"\n"
+"\n"
+"Souhrn\n"
+"\n"
+"Jsem velice šťastný, že mohu oznámit dokončení prvního výrobního modelu naší "
+"stíhačky nové generace a jeho bezproblémové projití všemi letovými "
+"zkouškami. Přestože to nejspíš bude znít jako vychloubání, může to být "
+"nejlepší kousek lidské technologie, který byl kdy vytvořen.\n"
+"\n"
+"Stiletto je nepřekonatelná jednomístná stíhačka se schopnostmi SVP (Svislý "
+"Vzlet a Přistání), které jí umožňují přistávat na velice malých přistávacích "
+"plochách nebo pokud je to nutné uprostřed ničeho. Její ohromná a vysoce "
+"účinná turbodmychadla se mohou otáčet o 360 stupňů k dosažení plné "
+"manévrovatelnosti a to i při nadzvukových rychlostech. Obrovská sání motoru "
+"jsou chráněna důmyslným systémem vzdušných kanálků, které před motorem "
+"aktivně čistí vzduch a odvádějí pryč jakýkoliv kousek materiálu, který je "
+"dostatečně velký na to aby poškodil lopatky dmychadla. Tato turbodmychadla "
+"jsou více než dostatečně silná ke zvednutí vysoce vyzbrojeného trupu a bez "
+"podpory ho mohou udržet ve vzduchu až dvě hodiny než spálí veškeré své "
+"palivo.\n"
+"\n"
+"Helikoptérový tvar letounu nemusí vypadat zvláště rychlý, ale zdání někdy "
+"klame. Celistvá kostra Stiletta je schopna krátkodobě vydržet cokoliv až do "
+"rychlosti dvou Machů. Jeho cestovní rychlost je 1.3 Machu, maximální s "
+"přídavným spalováním 2,1 Machu. Tyto vysoké meze staví Stiletto vysoko nad "
+"mnoho vojenských tryskových stíhaček, které nejsou schopny dosahovat "
+"takových rychlostí.\n"
+"\n"
+"Jakmile je ve vzduchu, umí poskakovat jako zajíc a v rukách zkušeného pilota "
+"je naprosto nelítostný. Je schopen bokem obletět svůj hangárový komplex "
+"během šesti sekund, zatímco stále udržuje příďový kulomet zaměřený na cíl. "
+"Dokáže se zcela přetočit během tří desetin sekundy a zaměřit řízené střely "
+"na letoun typu stealth ještě před tím, než je obrátka dokončena.\n"
+"\n"
+"Řízené střely jsou umístěny v nosičích přímo pod vnějšími křidélky. Stiletto "
+"má také výkonné prostředky elektronického boje s nejmodernější senzorickou "
+"soustavu umístěnou v přídi. Ta zahrnuje -- ale není omezena na -- několik "
+"zaměřovacích laserů, propracovaný radarový systém a optické zobrazování "
+"výkonné tak jako v jakémkoliv špionážním satelitu. Malé EPO emitory umístěné "
+"na strategických místech po celém trupu zmatou zaměřovač raket a jsou "
+"schopny aktivně rušit příchozí radarové paprsky. Nosič zbraní může pojmout "
+"velký výběr výzbroje a elektronika je kvůli možnosti zdokonalování zcela "
+"modulární. Nicméně je třeba pamatovat na to, že v letounu není prostoru "
+"nazbyt.\n"
+"\n"
+"Silné motory Volkot VO-36 spotřebují ohromné množství paliva a nosnost "
+"Stiletta není velká. S ponecháním dostatku paliva pro stíhání není jeho "
+"maximální účinný dolet větší než 2000 kilometrů. Ale uvnitř tohoto dosahu je "
+"tento letoun naprosto nepřekonatelný.\n"
+"\n"
+"Vezměte prosím na vědomí, že v důsledku svého mimořádného výkonu by neměl "
+"být tento letoun používán nezkušenými piloty. Našimi testovacími posádkami "
+"bylo jeho ovládání za malých rychlostí popisováno jako 'záludné'.\n"
+"\n"
+"Stiletto vyžaduje jeden malý hangár na uložení, údržbu a vyzbrojení. Má tři "
+"střední nosiče zbraní, jeden na přídi a dva pod křidélky.\n"
+"\n"
+"\n"
+"Taktická doporučení\n"
+"\n"
+"Stiletto je ideální pro krátkodobé stíhání nepřátelských plavidel "
+"ohrožujících základny PHALANXu nebo poblíž civilních cílů. Je schopno "
+"postavit se čemukoliv na Zemi a vyhraje. Bohužel nemůže být vysláno proti "
+"cílům, které jsou od jeho hangáru vzdáleny více než 2000 km, neboť by nemělo "
+"dostatek paliva pro útočné manévry a zpáteční let na základnu. Pro zvětšení "
+"bojového dosahu lze uvažovat o doplňování paliva během letu, ale to by "
+"vyžadovalo dodatečný vývoj.\n"
+"\n"
+"Výkonnost proti mimozemskému letounu nemůže být samozřejmě změřena, ale "
+"dělali jsme to nejlepší co jsme mohli. Pokud se skutečně dožijeme příchodu "
+"cizácké hrozby a Stiletto nebude schopno zastat svou práci, pak bude lidská "
+"rasa v maléru.\n"
+"\n"
+"\n"
+"Dodatky\n"
+"\n"
+"Dodatek, Velitel Paul Navarre, 18. března 2084:\n"
+"\n"
+"Veliteli, právě jsem se podíval na tyto lodě třídy Stiletto na papíře i ve "
+"skutečnosti a naprosto mě uchvátily. Jen těžko lze uvěřit, že jsme "
+"zkonstruovali tyhle věcičky už v šestadvacátém --- a že si nikdo ani "
+"nedokázal představit jaký poklad drželi ve svých rukou. Tedy až doteď. To co "
+"máme je pravděpodobně nejmanévrovatelnější letoun který byl kdy postaven; "
+"naprosto zahanbí útočné helikoptéry a dokáže v kruzích oblétat nejmodernější "
+"tryskáče. Dělá zkrátka věci o kterých se moderním letounům může jenom zdát.\n"
+"\n"
+"Na druhou stranu je noční můrou pilotovat ho díky jeho letové nestabilitě, "
+"zejména ve vyšších rychlostech. Původní zpráva vážně podceňuje tuto část "
+"technického hodnocení. I přesto mě naši piloti informovali, že budou schopni "
+"to zvládnout. A co je ještě lepší, podařilo se nám vysledovat úplný "
+"nepoškozený exemplář a právě v dílně probíhá jeho uvedení do provozu. Na mou "
+"zodpovědnost jsem vydal pokyn pro úplné vybavení a letové testy. Tohle je "
+"prostě ten nejlepší stíhací nástroj jaký jsem kdy viděl. Budeme ho "
+"potřebovat.\n"
+"\n"
+"Statistiky letounu:\n"
+"\n"
+"Rozměry: 5m x 11m x 4m\n"
+"\n"
+"Cestovní rychlost: 1 380 km/h\n"
+"\n"
+"Maximální rychlost: 2 230 km/h\n"
+"\n"
+"Akční rádius: 2 000 km\n"
+"\n"
+"Nosnost -- posádka: jeden člen posádky\n"
+"\n"
+"Nosnost -- zbraně: jeden malý nosič (příď), dva střední nosiče (křidélka)"
+
+#: ../base/ufos/research.ufo:3013
 msgid "ufo_scout_txt"
 msgstr ""
 "Commander, my team and I have finished our analysis of the small UFO we "
@@ -10160,7 +10381,7 @@ msgstr ""
 "\n"
 "Weapon capacity: None"
 
-#: ../base/ufos/research.ufo:2996
+#: ../base/ufos/research.ufo:3016
 msgid "ufo_scout_pre_txt"
 msgstr ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar "
@@ -10170,7 +10391,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3034
+#: ../base/ufos/research.ufo:3054
 msgid "ufo_fighter_txt"
 msgstr ""
 "Commander, my team and I have just finished another UFO report for you. Here "
@@ -10239,7 +10460,7 @@ msgstr ""
 "\n"
 "Weapon capacity: 1 Particle Beam hardpoint"
 
-#: ../base/ufos/research.ufo:3037
+#: ../base/ufos/research.ufo:3057
 msgid "ufo_fighter_pre_txt"
 msgstr ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar "
@@ -10254,7 +10475,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3076
+#: ../base/ufos/research.ufo:3096
 msgid "ufo_supply_txt"
 msgstr ""
 "Commander, my team and I have just finished another UFO report for you. Here "
@@ -10313,7 +10534,7 @@ msgstr ""
 "\n"
 "Weapon capacity: None"
 
-#: ../base/ufos/research.ufo:3079
+#: ../base/ufos/research.ufo:3099
 msgid "ufo_supply_pre_txt"
 msgstr ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar "
@@ -10330,27 +10551,27 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3118
+#: ../base/ufos/research.ufo:3138
 msgid "ufo_carrier_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:3121
+#: ../base/ufos/research.ufo:3141
 msgid "ufo_carrier_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:3160
+#: ../base/ufos/research.ufo:3180
 msgid "ufo_condor_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:3163
+#: ../base/ufos/research.ufo:3183
 msgid "ufo_condor_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:3202
+#: ../base/ufos/research.ufo:3222
 msgid "ufo_harvester_txt"
 msgstr ""
 "Commander, my team and I have just finished another UFO report for you. Here "
@@ -10426,7 +10647,7 @@ msgstr ""
 "\n"
 "Weapon capacity: 2 Particle Beam hardpoints, 1 Alien Launcher hardpoint"
 
-#: ../base/ufos/research.ufo:3205
+#: ../base/ufos/research.ufo:3225
 msgid "ufo_harvester_pre_txt"
 msgstr ""
 "Commander, we've recovered a new UFO type which is now waiting in our hangar "
@@ -10442,26 +10663,26 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3248
+#: ../base/ufos/research.ufo:3268
 msgid "Live Specimen - Bloodspider"
 msgstr "Živý jedinec - Bloodspider"
 
-#: ../base/ufos/research.ufo:3250
+#: ../base/ufos/research.ufo:3270
 msgid "bloodspider_notes_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:3253
+#: ../base/ufos/research.ufo:3273
 msgid "bloodspider_notes_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:3270 ../base/ufos/research.ufo:3283
-#: ../base/ufos/research.ufo:3291
+#: ../base/ufos/research.ufo:3290 ../base/ufos/research.ufo:3303
+#: ../base/ufos/research.ufo:3311
 msgid "Alien Autopsy - Bloodspider"
 msgstr "Pitva cizáka - Bloodspider"
 
-#: ../base/ufos/research.ufo:3272
+#: ../base/ufos/research.ufo:3292
 msgid "bloodspider_autopsy_txt"
 msgstr ""
 "Commander,\n"
@@ -10504,7 +10725,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3275
+#: ../base/ufos/research.ufo:3295
 msgid "bloodspider_autopsy_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -10516,12 +10737,12 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3326 ../base/ufos/research.ufo:3341
-#: ../base/ufos/research.ufo:3349
+#: ../base/ufos/research.ufo:3346 ../base/ufos/research.ufo:3361
+#: ../base/ufos/research.ufo:3369
 msgid "Alien Autopsy - Ortnok"
 msgstr "Pitva cizáka - Ortnok"
 
-#: ../base/ufos/research.ufo:3328
+#: ../base/ufos/research.ufo:3348
 msgid "ortnok_autopsy_txt"
 msgstr ""
 "Commander,\n"
@@ -10609,7 +10830,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3329
+#: ../base/ufos/research.ufo:3349
 msgid "ortnok_autopsy_extra_txt"
 msgstr ""
 "Commander,\n"
@@ -10693,7 +10914,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3332
+#: ../base/ufos/research.ufo:3352
 msgid "ortnok_autopsy_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -10705,7 +10926,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3333
+#: ../base/ufos/research.ufo:3353
 msgid "ortnok_autopsy_extra_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -10717,12 +10938,12 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3370 ../base/ufos/research.ufo:3385
-#: ../base/ufos/research.ufo:3393
+#: ../base/ufos/research.ufo:3390 ../base/ufos/research.ufo:3405
+#: ../base/ufos/research.ufo:3413
 msgid "Alien Autopsy - Taman"
 msgstr "Pitva cizáka - Taman"
 
-#: ../base/ufos/research.ufo:3372
+#: ../base/ufos/research.ufo:3392
 msgid "taman_autopsy_txt"
 msgstr ""
 "Commander,\n"
@@ -10817,7 +11038,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3373
+#: ../base/ufos/research.ufo:3393
 msgid "taman_autopsy_extra_txt"
 msgstr ""
 "Commander,\n"
@@ -10908,7 +11129,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3376
+#: ../base/ufos/research.ufo:3396
 msgid "taman_autopsy_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -10920,7 +11141,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3377
+#: ../base/ufos/research.ufo:3397
 msgid "taman_autopsy_extra_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -10932,12 +11153,12 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3412 ../base/ufos/research.ufo:3427
-#: ../base/ufos/research.ufo:3435
+#: ../base/ufos/research.ufo:3432 ../base/ufos/research.ufo:3447
+#: ../base/ufos/research.ufo:3455
 msgid "Alien Autopsy - Shevaar"
 msgstr "Pitva cizáka - Shevaar"
 
-#: ../base/ufos/research.ufo:3414
+#: ../base/ufos/research.ufo:3434
 msgid "shevaar_autopsy_txt"
 msgstr ""
 "Commander,\n"
@@ -11024,7 +11245,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3415
+#: ../base/ufos/research.ufo:3435
 msgid "shevaar_autopsy_extra_txt"
 msgstr ""
 "Commander,\n"
@@ -11107,7 +11328,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3418
+#: ../base/ufos/research.ufo:3438
 msgid "shevaar_autopsy_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -11119,7 +11340,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3419
+#: ../base/ufos/research.ufo:3439
 msgid "shevaar_autopsy_extra_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -11131,35 +11352,35 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3510
+#: ../base/ufos/research.ufo:3530
 msgid "Phoenix UGV"
 msgstr "PVBO Phoenix"
 
-#: ../base/ufos/research.ufo:3512
+#: ../base/ufos/research.ufo:3532
 msgid "ugv_phoenix_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:3515
+#: ../base/ufos/research.ufo:3535
 msgid "ugv_phoenix_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:3530
+#: ../base/ufos/research.ufo:3550
 msgid "Triax UGV"
 msgstr "PVBO Triax"
 
-#: ../base/ufos/research.ufo:3532
+#: ../base/ufos/research.ufo:3552
 msgid "ugv_triax_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
 "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
-#: ../base/ufos/research.ufo:3535
+#: ../base/ufos/research.ufo:3555
 msgid "ugv_triax_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:3555
+#: ../base/ufos/research.ufo:3575
 msgid "base_weapon_tr20_txt"
 msgstr ""
 "Technical Specifications: TR-20 Rocket Pod\n"
@@ -11242,7 +11463,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3573
+#: ../base/ufos/research.ufo:3593
 msgid "base_ammo_tr20_txt"
 msgstr ""
 "Technical Specifications: TR-20 Rocket\n"
@@ -11317,11 +11538,11 @@ msgstr ""
 "None."
 
 # EPO=Elektronické ProtiOpatření
-#: ../base/ufos/research.ufo:3592
+#: ../base/ufos/research.ufo:3612
 msgid "'Raven' ECM Unit"
 msgstr "Jednotka EPO 'Raven'"
 
-#: ../base/ufos/research.ufo:3595
+#: ../base/ufos/research.ufo:3615
 msgid "craft_electronics_raven_txt"
 msgstr ""
 "Technical Specifications: \"Raven\" ECM Unit\n"
@@ -11393,11 +11614,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3610
+#: ../base/ufos/research.ufo:3630
 msgid "Polymer Aircraft Armour"
 msgstr "Polymerové pancéřování letounu"
 
-#: ../base/ufos/research.ufo:3613
+#: ../base/ufos/research.ufo:3633
 msgid "craft_shield_light_txt"
 msgstr ""
 "Technical Specifications: Polymer Aircraft Armour\n"
@@ -11482,11 +11703,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3628
+#: ../base/ufos/research.ufo:3648
 msgid "Alien Aircraft Plating"
 msgstr "Pancéřování cizáckých plavidel"
 
-#: ../base/ufos/research.ufo:3630
+#: ../base/ufos/research.ufo:3650
 msgid "craft_shield_plating_pre_txt"
 msgstr ""
 "Commander, now that we have the ability to produce and work the alien "
@@ -11513,7 +11734,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3633
+#: ../base/ufos/research.ufo:3653
 msgid "craft_shield_plating_txt"
 msgstr ""
 "Commander, I've got some good news. My team and I have finished prototyping "
@@ -11560,11 +11781,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3650
+#: ../base/ufos/research.ufo:3670
 msgid "SHIVA Rotary Cannon"
 msgstr "Rotační dělo SHIVA"
 
-#: ../base/ufos/research.ufo:3653
+#: ../base/ufos/research.ufo:3673
 msgid "craft_weapon_shiva_txt"
 msgstr ""
 "Technical Specifications: SHIVA Rotary Cannon\n"
@@ -11647,7 +11868,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3671
+#: ../base/ufos/research.ufo:3691
 msgid "craft_ammo_shiva_1_txt"
 msgstr ""
 "Technical Specifications: SHIVA 20mm API Rounds\n"
@@ -11706,7 +11927,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3692
+#: ../base/ufos/research.ufo:3712
 msgid "craft_ammo_shiva_2_txt"
 msgstr ""
 "Technical Specifications: SHIVA 20mm HEI Rounds\n"
@@ -11768,11 +11989,11 @@ msgstr ""
 "None."
 
 # VV = Vzduch-Vzduch
-#: ../base/ufos/research.ufo:3710
+#: ../base/ufos/research.ufo:3730
 msgid "'Sparrowhawk' AA Missile Rack"
 msgstr "Nosič střel VV 'Sparrowhawk'"
 
-#: ../base/ufos/research.ufo:3713
+#: ../base/ufos/research.ufo:3733
 msgid "craft_weapon_sparrowhawk_txt"
 msgstr ""
 "Technical Specifications: \"Sparrowhawk\" AA Missile Rack\n"
@@ -11866,11 +12087,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3730
+#: ../base/ufos/research.ufo:3750
 msgid "'Sparrowhawk' Missile"
 msgstr "Střela 'Sparrowhawk'"
 
-#: ../base/ufos/research.ufo:3733
+#: ../base/ufos/research.ufo:3753
 msgid "craft_ammo_sparrowhawk_txt"
 msgstr ""
 "Technical Specifications: \"Sparrowhawk\" Missile\n"
@@ -11946,7 +12167,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3754
+#: ../base/ufos/research.ufo:3774
 msgid "craft_weapon_tr20_txt"
 msgstr ""
 "Technical Specifications: TR-20 Rocket Pod\n"
@@ -12029,7 +12250,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3773
+#: ../base/ufos/research.ufo:3793
 msgid "craft_ammo_tr20_txt"
 msgstr ""
 "Technical Specifications: TR-20 Rocket\n"
@@ -12103,7 +12324,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3793
+#: ../base/ufos/research.ufo:3813
 msgid "craft_weapon_particle_beam_pre_txt"
 msgstr ""
 "Commander, one of the UFOs we've recovered was equipped with a very "
@@ -12115,7 +12336,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3796
+#: ../base/ufos/research.ufo:3816
 msgid "craft_weapon_particle_beam_txt"
 msgstr ""
 "Our report on the alien PBW (Particle Beam Weapon) is ready for your review, "
@@ -12167,7 +12388,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3839
+#: ../base/ufos/research.ufo:3859
 msgid "craft_electronics_targeting_txt"
 msgstr ""
 "Technical Specifications: Targeting Computer\n"
@@ -12231,11 +12452,11 @@ msgstr ""
 "there is no golden rule that will help decide when to deploy the Targeting "
 "Computer. It is ready for use at the Commander's discretion."
 
-#: ../base/ufos/research.ufo:3854
+#: ../base/ufos/research.ufo:3874
 msgid "Fuel Pod"
 msgstr "Palivová nádrž"
 
-#: ../base/ufos/research.ufo:3857
+#: ../base/ufos/research.ufo:3877
 msgid "craft_electronics_fuelpod_txt"
 msgstr ""
 "Technical Specifications: Fuel Pod\n"
@@ -12295,7 +12516,7 @@ msgstr ""
 "should keep some fuel pod-equipped planes on standby to deal with distant "
 "incidents."
 
-#: ../base/ufos/research.ufo:3878 ../base/ufos/research.ufo:3914
+#: ../base/ufos/research.ufo:3898 ../base/ufos/research.ufo:3934
 msgid "alien_materials_txt"
 msgstr ""
 "Commander, I think we've uncovered the secret to the alien materials. After "
@@ -12334,7 +12555,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3881
+#: ../base/ufos/research.ufo:3901
 msgid "alien_materials_pre_txt"
 msgstr ""
 "Commander, as I mentioned in my previous report, the Scout UFO was plated "
@@ -12351,11 +12572,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3933
+#: ../base/ufos/research.ufo:3953
 msgid "Political Situation Before The Invasion"
 msgstr "Politická situace před invazí"
 
-#: ../base/ufos/research.ufo:3935
+#: ../base/ufos/research.ufo:3955
 msgid "news_initial_political_situation_txt"
 msgstr ""
 "V roce 2048 je Země v lepší formě než tomu bylo po více než století. Asi "
@@ -12419,11 +12640,11 @@ msgstr ""
 "životů bylo ztraceno než vládní síly 15. srpna 2036 kapitulovaly. To byl "
 "oficiální konec Druhé studené války."
 
-#: ../base/ufos/research.ufo:3946
+#: ../base/ufos/research.ufo:3966
 msgid "After The War"
 msgstr "Po válce"
 
-#: ../base/ufos/research.ufo:3948
+#: ../base/ufos/research.ufo:3968
 msgid "news_after_the_war_txt"
 msgstr ""
 "Asijská Republika:\n"
@@ -12786,11 +13007,11 @@ msgstr ""
 "pouze obrannou funkci, je průměrně trénovaná a vybavená. Nicméně v krizových "
 "situacích může zareagovat poměrně rychle."
 
-#: ../base/ufos/research.ufo:3959
+#: ../base/ufos/research.ufo:3979
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr "PHALANX a následky Bombajského masakru"
 
-#: ../base/ufos/research.ufo:3961
+#: ../base/ufos/research.ufo:3981
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr ""
 "\"Projekt PHALANX\" byl poprvé založen Ministerstvem obrany Spojených států "
@@ -12896,11 +13117,11 @@ msgstr ""
 "\n"
 "Jediné co scházelo byl vůdce."
 
-#: ../base/ufos/research.ufo:3972 ../base/ufos/research.ufo:3982
+#: ../base/ufos/research.ufo:3992 ../base/ufos/research.ufo:4002
 msgid "A New Twist"
 msgstr "Nečekaný obrat"
 
-#: ../base/ufos/research.ufo:3974
+#: ../base/ufos/research.ufo:3994
 msgid "news_newtwist_txt"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
@@ -14336,7 +14557,7 @@ msgstr ""
 #: client/cl_campaign.c:2780 client/cl_campaign.c:2826
 #: client/cl_campaign.c:2828 client/cl_campaign.c:3134
 #: client/cl_inventory.c:294 client/cl_inventory.c:300
-#: client/cl_inventory.c:546 client/cl_main.c:1106 client/cl_map.c:295
+#: client/cl_inventory.c:546 client/cl_main.c:1108 client/cl_map.c:295
 #: client/cl_market.c:642 client/cl_market.c:646 client/cl_parse.c:1603
 #: client/cl_popup.c:338 client/cl_research.c:980 client/cl_research.c:998
 #: client/cl_research.c:1004 client/cl_research.c:1042
@@ -15047,15 +15268,15 @@ msgstr ""
 msgid "Secured %s was destroyed."
 msgstr "Zajištěné %s bylo zničeno."
 
-#: client/cl_console.c:364
+#: client/cl_console.c:372
 msgid "Bring up the in-game console"
 msgstr "Vyvolat herní konzolu"
 
-#: client/cl_console.c:366
+#: client/cl_console.c:374
 msgid "Send a message to all players"
 msgstr "Poslat zprávu všem hráčům"
 
-#: client/cl_console.c:367
+#: client/cl_console.c:375
 msgid "Send a message to allied team members"
 msgstr "Poslat zprávu členům spojeneckého týmu"
 
@@ -15270,25 +15491,25 @@ msgid ""
 "got removed."
 msgstr "Základna %s nemá sklad antihnoty. %i jednotek antihmoty bylo odebráno."
 
-#: client/cl_main.c:396 client/cl_main.c:1063
+#: client/cl_main.c:398 client/cl_main.c:1065
 msgid "Assemble a team first"
 msgstr "Nejprve sestavte tým"
 
-#: client/cl_main.c:396 client/cl_main.c:785 client/cl_main.c:1063
-#: client/cl_main.c:1580 client/cl_main.c:1585 client/cl_main.c:1594
+#: client/cl_main.c:398 client/cl_main.c:787 client/cl_main.c:1065
+#: client/cl_main.c:1582 client/cl_main.c:1587 client/cl_main.c:1596
 #: client/cl_save.c:409 client/cl_save.c:432 client/cl_save.c:573
 msgid "Error"
 msgstr "Chyba"
 
-#: client/cl_main.c:785
+#: client/cl_main.c:787
 msgid "Server needs restarting - something went wrong"
 msgstr "Server vyžaduje restart - něco dopadlo špatně"
 
-#: client/cl_main.c:858
+#: client/cl_main.c:860
 msgid "No player connected\n"
 msgstr "Žádný hráč není připojen\n"
 
-#: client/cl_main.c:906
+#: client/cl_main.c:908
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -15297,88 +15518,88 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:913
+#: client/cl_main.c:915
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Mapa:\t%s\n"
 
-#: client/cl_main.c:924
+#: client/cl_main.c:926
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Jméno serveru:\t%s\n"
 
-#: client/cl_main.c:925
+#: client/cl_main.c:927
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Stavy morálky:\t%s\n"
 
-#: client/cl_main.c:926
+#: client/cl_main.c:928
 #, c-format
 msgid "Gametype:\t%s\n"
 msgstr "Druh hry:\t%s\n"
 
-#: client/cl_main.c:927
+#: client/cl_main.c:929
 #, c-format
 msgid "Gameversion:\t%s\n"
 msgstr "Verze hry:\t%s\n"
 
-#: client/cl_main.c:928
+#: client/cl_main.c:930
 #, c-format
 msgid "Dedicated server:\t%s\n"
 msgstr "Vyhrazený server:\t%s\n"
 
-#: client/cl_main.c:929
+#: client/cl_main.c:931
 #, c-format
 msgid "Operating system:\t%s\n"
 msgstr "Operační systém:\t%s\n"
 
-#: client/cl_main.c:930
+#: client/cl_main.c:932
 #, c-format
 msgid "Network protocol:\t%s\n"
 msgstr "Síťový protokol:\t%s\n"
 
-#: client/cl_main.c:931
+#: client/cl_main.c:933
 #, c-format
 msgid "Roundtime:\t%s\n"
 msgstr "Délka tahu:\t%s\n"
 
-#: client/cl_main.c:932
+#: client/cl_main.c:934
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Týmová hra:\t%s\n"
 
-#: client/cl_main.c:933
+#: client/cl_main.c:935
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Maximum hráčů na tým:\t%s\n"
 
-#: client/cl_main.c:934
+#: client/cl_main.c:936
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr "Maximum týmů povolených v této mapě:\t%s\n"
 
-#: client/cl_main.c:935
+#: client/cl_main.c:937
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Maximum klientů:\t%s\n"
 
-#: client/cl_main.c:936
+#: client/cl_main.c:938
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Maximum vojáků na hráče:\t%s\n"
 
-#: client/cl_main.c:937
+#: client/cl_main.c:939
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Maximum vojáků na tým:\t%s\n"
 
-#: client/cl_main.c:938
+#: client/cl_main.c:940
 #, c-format
 msgid "Password protected:\t%s\n"
 msgstr "Chráněno heslem:\t%s\n"
 
 # doladit
-#: client/cl_main.c:1106
+#: client/cl_main.c:1108
 msgid ""
 "All bookmark slots are used - please removed unused entries and repeat this "
 "step"
@@ -15386,71 +15607,71 @@ msgstr ""
 "Není místo pro další oblíbené - smažte prosím nepoužívané položky a zkuste "
 "to znovu"
 
-#: client/cl_main.c:1184
+#: client/cl_main.c:1186
 msgid "Select a free team or your coop team"
 msgstr "Zvolte volný tým nebo tým pro spolupráci"
 
-#: client/cl_main.c:1425 client/cl_main.c:1439
+#: client/cl_main.c:1427 client/cl_main.c:1441
 #, c-format
 msgid "Current team: %i"
 msgstr "Současný tým: %i"
 
-#: client/cl_main.c:1429 client/cl_main.c:1443
+#: client/cl_main.c:1431 client/cl_main.c:1445
 msgid "Team is already in use"
 msgstr "Tým je již používán"
 
-#: client/cl_main.c:1453 client/cl_main.c:1491
+#: client/cl_main.c:1455 client/cl_main.c:1493
 msgid "Invalid or full team"
 msgstr "Neplatný nebo plný tým"
 
-#: client/cl_main.c:1579
+#: client/cl_main.c:1581
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr "Vaše verze hry (%s) se liší od té na serveru"
 
-#: client/cl_main.c:1585
+#: client/cl_main.c:1587
 msgid "Local map version differs from server"
 msgstr "Vaše verze mapy se liší od té na serveru"
 
-#: client/cl_main.c:1593
+#: client/cl_main.c:1595
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr "Vaše verze hry (%s) se liší od té na serveru (%s)"
 
 # doladit
-#: client/cl_main.c:2173
+#: client/cl_main.c:2175
 msgid "Target your shot to the ground"
 msgstr "Zamířit výstřel k zemi"
 
-#: client/cl_main.c:2174
+#: client/cl_main.c:2176
 msgid "Open the actors inventory while we are in tactical mission"
 msgstr "Vstoupit do inventáře postavy (během bojové mise)"
 
-#: client/cl_main.c:2293
+#: client/cl_main.c:2292
 msgid "Chicken-hearted"
 msgstr "Pro sraby"
 
-#: client/cl_main.c:2295
+#: client/cl_main.c:2294
 msgid "Very Easy"
 msgstr "Velice snadné"
 
-#: client/cl_main.c:2298
+#: client/cl_main.c:2297
 msgid "Easy"
 msgstr "Snadné"
 
-#: client/cl_main.c:2303
+#: client/cl_main.c:2302
 msgid "Hard"
 msgstr "Těžké"
 
-#: client/cl_main.c:2305
+#: client/cl_main.c:2304
 msgid "Very Hard"
 msgstr "Velice těžké"
 
-#: client/cl_main.c:2307
+#: client/cl_main.c:2306
 msgid "Insane"
 msgstr "Nemožné"
 
-#: client/cl_main.c:2362
+#: client/cl_main.c:2361
 msgid "Custom"
 msgstr "Uživatelský"
 
@@ -17045,6 +17266,117 @@ msgstr "5 dnů"
 #: po/OTHER_STRINGS:12
 msgid "Take a screenshot"
 msgstr "Udělat snímek obrazovky"
+
+#~ msgid "saracen_interceptor_txt"
+#~ msgstr ""
+#~ "Aircraft Evaluation -- Saracen-class Interceptor\n"
+#~ "\n"
+#~ "CLASSIFIED LEVEL BLACK\n"
+#~ "\n"
+#~ "PHALANX Extraterrestrial Response Unit\n"
+#~ "\n"
+#~ "Technical Document, Sigma Clearance -- Commander's Eyes Only\n"
+#~ "\n"
+#~ "Filed: 19 March 2084\n"
+#~ "\n"
+#~ "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
+#~ "Operations Command\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "Overview\n"
+#~ "\n"
+#~ "It is clear that the Stiletto-class Interceptor, while a terrific "
+#~ "aircraft, does not cover all our needs. We must be ready to defend our "
+#~ "planet and our people anywhere across the globe. The Stiletto's "
+#~ "operational range is too limited and it is not fast enough to engage all "
+#~ "the UFOs we might detect.\n"
+#~ "\n"
+#~ "Only one aircraft in the world is capable of filling the operational gap "
+#~ "we face; the Argentinian KB-550 Hypersonic Wing, dubbed the \"Saracen\" "
+#~ "in NATO code. Mixing old and new stealth technology into a single "
+#~ "airframe, the Saracen most resembles the ancient SR-71 \"Blackbird\" in "
+#~ "its shape and bearing. It is black as the night itself, covered in "
+#~ "radiation-absorbing paint that makes it practically invisible to radar, "
+#~ "lidar and most other forms of active scanning. Its fuselage is composed "
+#~ "almost entirely of carbon nanotubes and sheets of graphite-reinforced "
+#~ "plastic. This makes the craft extremely strong and heat-resistant enough "
+#~ "to cope with the temperatures of cruising at speeds in excess of Mach 4. "
+#~ "The Saracen is the fastest military airplane still flying today.\n"
+#~ "\n"
+#~ "In terms of its capabilities, the Saracen pushes our interception range "
+#~ "into international territory. Its huge, armoured tanks and amazing fuel-"
+#~ "efficiency allow it to go anywhere up to 10,000 kilometres from its "
+#~ "hangar at hypersonic speeds -- and back again -- with fuel to spare for "
+#~ "combat manoeuvres. Its stealthy design, high speed and tough airframe "
+#~ "allow it to engage UFOs that our Stiletto-class Interceptors may simply "
+#~ "be unable to catch. It has tough armour and can fly home even on one "
+#~ "engine. Thanks to the power of its engines and a set of additional "
+#~ "manoeuvring thrusters in its belly, it can take off almost vertically; "
+#~ "this is definitely within the restrictions of our hangar facilities.\n"
+#~ "\n"
+#~ "Its electronics suite is similarly impressive. It has state-of-the-art "
+#~ "targeting computers, advanced radar and lidar systems, advanced ECM "
+#~ "(Electronic Counter-Measures) equipment, in-helmet VR imaging for the "
+#~ "pilot, and more. The Saracen can carry about twice the electronics load "
+#~ "of a Stiletto-class Interceptor, with room to spare for further modular "
+#~ "equipment.\n"
+#~ "\n"
+#~ "Unfortunately, for all its strengths, it is costly to lease and maintain, "
+#~ "and its heavy load of fuel and armour cuts badly into weapons capacity. "
+#~ "The Saracen cannot equal the weapons load of the far smaller and less "
+#~ "expensive Stiletto. Nor can it hope to equal the Stiletto's "
+#~ "manoeuvrability. Despite thrust-vectoring technology (the ability to "
+#~ "change the shape of its engine nozzles to direct thrust), electro-elastic "
+#~ "wing surface (the ability to dynamically change the shape of its wings) "
+#~ "and other terrific advances, the Saracen is still a large fixed-wing "
+#~ "aircraft with all the limitations that implies. Though it can take much "
+#~ "more damage than a Stiletto and remain effective, the Saracen will not "
+#~ "perform as well in combat with alien craft.\n"
+#~ "\n"
+#~ "The Saracen requires 1 Large Hangar for storage, maintenance and "
+#~ "deployment. It has 2 weapon hardpoints; 2 medium belly bays.\n"
+#~ "\n"
+#~ "\n"
+#~ "Recommended Doctrine\n"
+#~ "\n"
+#~ "At its heart the Saracen is a long-range interceptor to be used against "
+#~ "extremely distant or fast UFOs. Unlike the alien craft, it is barely "
+#~ "slowed by moving inside Earth atmosphere, making it slightly faster than "
+#~ "most of the UFOs we have observed so far. This will allow PHALANX to "
+#~ "catch the aliens wherever they may be going -- short of interplanetary "
+#~ "space.\n"
+#~ "\n"
+#~ "As always, the Saracen's performance against extraterrestrial craft can't "
+#~ "be measured without solid observational data from at least one real "
+#~ "combat encounter. However, if deployed in large enough flights, it should "
+#~ "be able to cut up alien craft of all varieties.\n"
+#~ "\n"
+#~ "\n"
+#~ "Addenda\n"
+#~ "\n"
+#~ "None.\n"
+#~ "\n"
+#~ "\n"
+#~ "Aircraft statistics:\n"
+#~ "\n"
+#~ "\n"
+#~ "Size: 10m x 27m x 5m\n"
+#~ "\n"
+#~ "Cruising speed: 4,110 km/h\n"
+#~ "\n"
+#~ "Top speed: 4,600km/h\n"
+#~ "\n"
+#~ "Operational range: 10,000km\n"
+#~ "\n"
+#~ "Crew capacity: 1 crew\n"
+#~ "\n"
+#~ "Weapon capacity: 2 Medium hardpoints (belly)"
+
+#~ msgid "stingray_interceptor_txt"
+#~ msgstr ""
+#~ "Na překladu se pracuje. Více informací na\n"
+#~ "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #, fuzzy
 #~ msgid "Harvester crash"
