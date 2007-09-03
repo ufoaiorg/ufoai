@@ -1,4 +1,4 @@
-VERSION=$(shell grep UFO_VERSION src/qcommon/qcommon.h | sed -e 's/.*UFO_VERSION \"\(.*\)\"/\1/')
+VERSION=$(shell grep UFO_VERSION src/common/common.h | sed -e 's/.*UFO_VERSION \"\(.*\)\"/\1/')
 
 installer: wininstaller linuxinstaller sourcearchive
 
