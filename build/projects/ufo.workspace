@@ -23,5 +23,6 @@
 			<Depends filename="game.cbp" />
 		</Project>
 		<Project filename="ref_gl.cbp" />
+		<Project filename="ref_sdl.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>
