@@ -453,6 +453,10 @@ base/models/aircraft/drop_firebird/firebird_glass.jpg | GNU General Public Licen
 base/models/aircraft/drop_firebird/firebird_glass.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/drop_firebird/firebird_top.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/drop_firebird/firebird_top.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/inter_dragon/ufo_dragon.jpg | GNU General Public License 2.0 | Willem "Sitters"
+base/models/aircraft/inter_dragon/ufo_dragon.md2 | GNU General Public License 2.0 | Willem "Sitters"
+base/models/aircraft/inter_dragon/ufo_dragon_gear.jpg | GNU General Public License 2.0 | Willem "Sitters"
+base/models/aircraft/inter_dragon/ufo_dragon_gear.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/inter_saracen/old/interceptor.rar | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
 base/models/aircraft/inter_saracen/saracen.jpg | GNU General Public License v2.0 | Daniel Holden (Yoshiboy) - minor modifications by David Townsend (Psawhn)
 base/models/aircraft/inter_saracen/saracen.md2 | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
@@ -477,10 +481,6 @@ base/models/aircraft/sparrowhawk/sparrowhawk_rack.xcf | Creative Commons Attribu
 base/models/aircraft/ufo_condor/ufo_condor.blend | GNU General Public License v2.0 | Werner Hoehrer (hoehrer) | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
 base/models/aircraft/ufo_condor/ufo_condor.jpg | GNU General Public License v2.0 | Werner Hoehrer (hoehrer) | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
 base/models/aircraft/ufo_condor/ufo_condor.md2 | GNU General Public License v2.0 | Werner Hoehrer (hoehrer) | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
-base/models/aircraft/ufo_dragon/ufo_dragon.jpg | GNU General Public License 2.0 | Willem "Sitters"
-base/models/aircraft/ufo_dragon/ufo_dragon.md2 | GNU General Public License 2.0 | Willem "Sitters"
-base/models/aircraft/ufo_dragon/ufo_dragon_gear.jpg | GNU General Public License 2.0 | Willem "Sitters"
-base/models/aircraft/ufo_dragon/ufo_dragon_gear.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/ufo_fighter/ufo_fighter_closed.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/ufo_fighter/ufo_fighter_engines.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/ufo_fighter/ufo_fighter_engines_1.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
