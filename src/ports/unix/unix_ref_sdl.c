@@ -76,7 +76,7 @@ static int keyq_tail = 0;
 #define MOUSE_MAX 3000
 #define MOUSE_MIN 40
 qboolean mouse_active;
-int mx, my, mouse_buttonstate;
+int mx, my;
 
 /* this is inside the renderer shared lib, so these are called from vid_so */
 
@@ -338,10 +338,9 @@ static void printkey (const SDL_Event* event, int down)
  */
 static void GetEvent (SDL_Event *event)
 {
-	int key;
-	int p = 0;
+	int key, mouse_buttonstate, p = 0;
 
-	switch(event->type) {
+	switch (event->type) {
 	case SDL_MOUSEBUTTONDOWN:
 	case SDL_MOUSEBUTTONUP:
 		switch (event->button.button) {
@@ -802,9 +801,9 @@ void RW_IN_Init (in_state_t *in_state_p)
  * @brief
  * @sa RW_IN_Init
  */
-void RW_IN_Shutdown(void)
+void RW_IN_Shutdown (void)
 {
-	RW_IN_Activate (qfalse);
+	RW_IN_Activate(qfalse);
 
 	if (mouse_avail)
 		mouse_avail = qfalse;

@@ -34,7 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 char key_lines[MAXKEYLINES][MAXCMDLINE];
 int key_linepos;
 static qboolean shift_down = qfalse;
-static int anykeydown;
 
 static int key_insert = 1;
 
@@ -50,7 +49,6 @@ char *keybindings[K_KEY_SIZE];
 static char *menukeybindings[K_KEY_SIZE];
 static qboolean consolekeys[K_KEY_SIZE];		/* if true, can't be rebound while in console */
 static int keyshift[K_KEY_SIZE];				/* key to map to if shift held down in console */
-static int key_repeats[K_KEY_SIZE];			/* if > 1, it is autorepeating */
 qboolean keydown[K_KEY_SIZE];
 
 typedef struct {
@@ -987,19 +985,6 @@ void Key_Event (int key, qboolean down, unsigned time)
 	if (key >= K_KEY_SIZE)
 		return;
 
-	/* update auto-repeat status */
-	if (down) {
-		key_repeats[key]++;
-		if (key != K_BACKSPACE && key != K_PAUSE && key != K_PGUP && key != K_KP_PGUP && key != K_PGDN && key != K_KP_PGDN && key_repeats[key] > 1)
-			return;				/* ignore most autorepeats */
-#if 0
-		if (key >= K_LAST_KEY && !keybindings[key])
-			Com_Printf("%s is unbound, hit F4 to set.\n", Key_KeynumToString(key));
-#endif
-	} else {
-		key_repeats[key] = 0;
-	}
-
 	if (key == K_SHIFT)
 		shift_down = down;
 
@@ -1041,14 +1026,7 @@ void Key_Event (int key, qboolean down, unsigned time)
 
 	/* track if any key is down for BUTTON_ANY */
 	keydown[key] = down;
-	if (down) {
-		if (key_repeats[key] == 1)
-			anykeydown++;
-	} else {
-		anykeydown--;
-		if (anykeydown < 0)
-			anykeydown = 0;
-
+	if (!down) {
 		/* key up events only generate commands if the game key binding is */
 		/* a button command (leading + sign).  These will occur even in console mode, */
 		/* to keep the character from continuing an action started before a console */
@@ -1122,13 +1100,10 @@ void Key_ClearStates (void)
 {
 	int i;
 
-	anykeydown = qfalse;
-
 	for (i = 0; i < K_LAST_KEY; i++) {
-		if (keydown[i] || key_repeats[i])
+		if (keydown[i])
 			Key_Event(i, qfalse, 0);
 		keydown[i] = 0;
-		key_repeats[i] = 0;
 	}
 }
 
