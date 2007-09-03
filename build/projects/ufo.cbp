@@ -333,6 +333,7 @@
 		<Unit filename="..\..\src\common\msg.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\common\msg.h" />
 		<Unit filename="..\..\src\common\net.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -457,13 +458,17 @@
 		<Unit filename="..\..\src\shared\byte.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\shared\byte.h" />
 		<Unit filename="..\..\src\shared\infostring.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\shared\infostring.h" />
 		<Unit filename="..\..\src\shared\shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\shared\shared.h" />
 		<Unit filename="..\..\src\shared\ufotypes.h" />
+		<Unit filename="..\..\src\shared\vertex_normals.h" />
 		<Extensions>
 			<code_completion />
 		</Extensions>

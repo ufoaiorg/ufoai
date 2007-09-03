@@ -22,7 +22,7 @@
 					<Add option="-DDONT_TYPEDEF_INT32" />
 				</Compiler>
 				<Linker>
-					<Add option="-def ../../src/ref_gl/ref_gl.def" />
+					<Add option="-def ../../src/renderer/ref_gl.def" />
 					<Add library="kernel32" />
 					<Add library="user32" />
 					<Add library="gdi32" />
@@ -53,7 +53,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="-pg -lgmon" />
-					<Add option="-def ../../src/ref_gl/ref_gl.def" />
+					<Add option="-def ../../src/renderer/ref_gl.def" />
 					<Add library="kernel32" />
 					<Add library="user32" />
 					<Add library="gdi32" />
@@ -261,7 +261,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\renderer\qgl.h" />
-		<Unit filename="..\..\src\renderer\ref_gl.def" />
 		<Unit filename="..\..\src\renderer\r_warpsin.h" />
 		<Unit filename="..\..\src\shared\byte.c">
 			<Option compilerVar="CC" />
