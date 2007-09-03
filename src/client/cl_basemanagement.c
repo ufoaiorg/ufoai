@@ -3057,7 +3057,6 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 
 		/* Alien Containment. */
 		for (k = 0; k < presaveArray[PRE_NUMALI]; k++) {
-			assert(*aircraft->aliencargo[l].alientype);
 			MSG_WriteString(sb, b->alienscont[k].alientype);
 			MSG_WriteShort(sb, b->alienscont[k].amount_alive);
 			MSG_WriteShort(sb, b->alienscont[k].amount_dead);
