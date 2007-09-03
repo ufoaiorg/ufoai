@@ -248,7 +248,6 @@ extern cvar_t *r_ext_s3tc_compression;
 
 extern cvar_t *r_bitdepth;
 extern cvar_t *r_mode;
-extern cvar_t *r_log;
 extern cvar_t *r_lightmap;
 
 extern cvar_t *r_showbox;
@@ -512,8 +511,6 @@ qboolean Rimp_Init(void* hinstance, void* wndproc);
 void Rimp_Shutdown(void);
 rserr_t Rimp_SetMode(unsigned int *pwidth, unsigned int *pheight, int mode, qboolean fullscreen);
 void Rimp_AppActivate(qboolean active);
-void Rimp_EnableLogging(qboolean enable);
-void Rimp_LogNewFrame(void);
 void Rimp_SetGamma(void);
 
 /* 3d globe */

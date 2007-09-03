@@ -91,7 +91,6 @@ cvar_t *r_ext_lockarrays;
 cvar_t *r_ext_texture_compression;
 cvar_t *r_ext_s3tc_compression;
 
-cvar_t *r_log;
 cvar_t *r_bitdepth;
 cvar_t *r_drawbuffer;
 cvar_t *r_driver;
@@ -693,7 +692,6 @@ static void R_Register (void)
 	r_screenshot_jpeg_quality = ri.Cvar_Get("r_screenshot_jpeg_quality", "75", CVAR_ARCHIVE, "jpeg quality in percent for jpeg screenshots");
 
 	r_modulate = ri.Cvar_Get("r_modulate", "1", CVAR_ARCHIVE, NULL);
-	r_log = ri.Cvar_Get("r_log", "0", 0, NULL);
 	r_bitdepth = ri.Cvar_Get("r_bitdepth", "0", CVAR_ARCHIVE, NULL);
 	r_mode = ri.Cvar_Get("r_mode", "6", CVAR_ARCHIVE, "Display resolution");
 	r_lightmap = ri.Cvar_Get("r_lightmap", "0", 0, NULL);
@@ -1192,11 +1190,6 @@ static void R_BeginFrame (void)
 		vid_ref->modified = qtrue;
 	}
 
-	if (r_log->modified) {
-		Rimp_EnableLogging(r_log->integer);
-		r_log->modified = qfalse;
-	}
-
 	if (r_anisotropic->modified) {
 		if (r_anisotropic->integer > r_ext_max_anisotropy->integer) {
 			ri.Con_Printf(PRINT_ALL, "...max GL_EXT_texture_filter_anisotropic value is %i\n", r_ext_max_anisotropy->integer);
@@ -1220,9 +1213,6 @@ static void R_BeginFrame (void)
 		} else
 			ri.Cvar_ForceSet("con_font", "1");
 	}
-
-	if (r_log->integer)
-		Rimp_LogNewFrame();
 
 	if (vid_gamma->modified) {
 		vid_gamma->modified = qfalse;
