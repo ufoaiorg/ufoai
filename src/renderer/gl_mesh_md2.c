@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define NUMVERTEXNORMALS	162
 
 static float r_avertexnormals[NUMVERTEXNORMALS][3] = {
-#include "anorms.h"
+#include "../shared/vertex_normals.h"
 };
 
 static vec4_t s_lerped[MD2_MAX_VERTS];

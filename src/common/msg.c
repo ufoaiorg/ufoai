@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "msg.h"
 
 const vec3_t bytedirs[NUMVERTEXNORMALS] = {
-#include "../client/anorms.h"
+#include "../shared/vertex_normals.h"
 };
 
 /* writing functions */
