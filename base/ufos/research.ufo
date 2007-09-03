@@ -2953,7 +2953,9 @@ tech rs_craft_inter_dragon
 	description {
 		default "_inter_dragon_txt"
 	}
-	pre_description	"_inter_dragon_pre_txt"
+	pre_description	{
+		default "_inter_dragon_pre_txt"
+	}
 	up_chapter	crafts
 
 	provides	craft_inter_dragon
