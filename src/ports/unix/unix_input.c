@@ -57,15 +57,15 @@ void Real_IN_Init (void *lib)
 	/* Init IN (Mouse) */
 	in_state.Key_Event_fp = Do_Key_Event;
 
-	if ((RW_IN_Init_fp = dlsym(lib, "RW_IN_Init")) == NULL ||
-		(RW_IN_Shutdown_fp = dlsym(lib, "RW_IN_Shutdown")) == NULL ||
-		(RW_IN_Activate_fp = dlsym(lib, "RW_IN_Activate")) == NULL ||
-		(RW_IN_GetMousePos_fp = dlsym(lib, "RW_IN_GetMousePos")) == NULL)
+	if ((RW_IN_Init_fp = Sys_GetProcAddress(lib, "RW_IN_Init")) == NULL ||
+		(RW_IN_Shutdown_fp = Sys_GetProcAddress(lib, "RW_IN_Shutdown")) == NULL ||
+		(RW_IN_Activate_fp = Sys_GetProcAddress(lib, "RW_IN_Activate")) == NULL ||
+		(RW_IN_GetMousePos_fp = Sys_GetProcAddress(lib, "RW_IN_GetMousePos")) == NULL)
 		Sys_Error("No RW_IN functions in REF.\n");
 
-	if ((KBD_Init_fp = dlsym(lib, "KBD_Init")) == NULL ||
-		(KBD_Update_fp = dlsym(lib, "KBD_Update")) == NULL ||
-		(KBD_Close_fp = dlsym(lib, "KBD_Close")) == NULL)
+	if ((KBD_Init_fp = Sys_GetProcAddress(lib, "KBD_Init")) == NULL ||
+		(KBD_Update_fp = Sys_GetProcAddress(lib, "KBD_Update")) == NULL ||
+		(KBD_Close_fp = Sys_GetProcAddress(lib, "KBD_Close")) == NULL)
 		Sys_Error("No KBD functions in REF.\n");
 	KBD_Init_fp(Do_Key_Event);
 
