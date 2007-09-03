@@ -91,12 +91,12 @@ static Atom wmDeleteWindow;
 /* this is inside the renderer shared lib, so these are called from vid_so */
 
 static qboolean	mouse_avail;
-static int	mx, my;
+static int mx, my;
 
-static int	win_x, win_y;
+static int win_x, win_y;
 
-static cvar_t	*in_mouse;
-static cvar_t	*in_dgamouse;
+static cvar_t *in_mouse;
+static cvar_t *in_dgamouse;
 
 #ifdef HAVE_XF86_VIDMODE
 static XF86VidModeModeInfo **vidmodes;
@@ -105,16 +105,12 @@ static XF86VidModeGamma oldgamma;
 static qboolean vidmode_ext = qfalse;
 #endif /* HAVE_XF86_VIDMODE */
 
-/* static int default_dotclock_vidmode; */
 static qboolean vidmode_active = qfalse;
-
-/* static qboolean	mlooking; */
 
 static qboolean mouse_active = qfalse;
 static qboolean dgamouse = qfalse;
 
-/* state struct passed in Init */
-static in_state_t	*in_state;
+static in_state_t *in_state;
 
 static cvar_t *sensitivity;
 
@@ -652,9 +648,6 @@ void KBD_Update (void)
 void KBD_Close (void)
 {
 }
-
-
-qboolean Rimp_InitGL (void);
 
 /**
  * @brief

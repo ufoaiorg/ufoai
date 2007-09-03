@@ -207,10 +207,7 @@ static void R_BlendLightmaps (void)
 	if (!r_lightmap->integer) {
 		RSTATE_ENABLE_BLEND
 
-		if (r_saturatelighting->integer)
-			qglBlendFunc(GL_ONE, GL_ONE);
-		else
-			qglBlendFunc(GL_ZERO, GL_SRC_COLOR);
+		qglBlendFunc(GL_ZERO, GL_SRC_COLOR);
 	}
 
 	if (currentmodel == rTiles[0])

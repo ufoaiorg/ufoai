@@ -246,11 +246,7 @@ void VID_CheckChanges (void)
 void Sys_Vid_Init (void)
 {
 	/* Create the video variables so we know how to start the graphics drivers */
-#if !defined __APPLE__ && !defined __sun
-	vid_ref = Cvar_Get("vid_ref", "glx", CVAR_ARCHIVE, "Video renderer");
-#else
 	vid_ref = Cvar_Get("vid_ref", "sdl", CVAR_ARCHIVE, "Video renderer");
-#endif
 
 	maxVidModes = VID_NUM_MODES;
 }

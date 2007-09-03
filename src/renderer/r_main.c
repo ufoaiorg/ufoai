@@ -114,7 +114,6 @@ cvar_t *r_maxtexres;
 cvar_t *r_showtris;
 cvar_t *r_finish;
 cvar_t *r_flashblend;
-cvar_t *r_saturatelighting;
 cvar_t *r_swapinterval;
 cvar_t *r_texturemode;
 cvar_t *r_texturealphamode;
@@ -737,18 +736,14 @@ static void R_Register (void)
 	r_drawbuffer = ri.Cvar_Get("r_drawbuffer", "GL_BACK", 0, NULL);
 	r_swapinterval = ri.Cvar_Get("r_swapinterval", "1", CVAR_ARCHIVE, NULL);
 
-	r_saturatelighting = ri.Cvar_Get("r_saturatelighting", "0", 0, NULL);
-
 	r_3dmapradius = ri.Cvar_Get("r_3dmapradius", "8192.0", CVAR_NOSET, NULL);
 
 	vid_fullscreen = ri.Cvar_Get("vid_fullscreen", "0", CVAR_ARCHIVE, NULL);
 	vid_gamma = ri.Cvar_Get("vid_gamma", "1.0", CVAR_ARCHIVE, NULL);
 #if defined(_WIN32)
 	vid_ref = ri.Cvar_Get("vid_ref", "gl", CVAR_ARCHIVE, NULL);
-#elif defined (__APPLE__) || defined (MACOSX)
-	vid_ref = ri.Cvar_Get("vid_ref", "sdl", CVAR_ARCHIVE, NULL);
 #else
-	vid_ref = ri.Cvar_Get("vid_ref", "glx", CVAR_ARCHIVE, NULL);
+	vid_ref = ri.Cvar_Get("vid_ref", "sdl", CVAR_ARCHIVE, NULL);
 #endif
 	vid_grabmouse = ri.Cvar_Get("vid_grabmouse", "0", CVAR_ARCHIVE, NULL);
 	vid_grabmouse->modified = qfalse;
