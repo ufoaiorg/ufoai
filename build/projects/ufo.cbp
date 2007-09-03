@@ -378,9 +378,6 @@
 			<Option target="linux" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="..\..\src\ports\macosx\osx_input.m">
-			<Option target="macosx" />
-		</Unit>
 		<Unit filename="..\..\src\ports\macosx\osx_main.m">
 			<Option compile="1" />
 			<Option link="1" />

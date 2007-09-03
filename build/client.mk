@@ -119,7 +119,6 @@ ifeq ($(TARGET_OS),darwin)
 		ports/macosx/osx_main.m \
 		ports/macosx/osx_shared.c \
 		ports/macosx/osx_qal.c \
-		ports/macosx/osx_input.m \
 		ports/unix/unix_input.c \
 		ports/unix/unix_vid.c \
 		ports/unix/unix_glob.c \

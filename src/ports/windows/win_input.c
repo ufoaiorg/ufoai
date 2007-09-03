@@ -259,7 +259,7 @@ static RECT window_rect;
  * @brief Called when the window gains focus or changes in some way
  * @sa IN_DeactivateMouse
  */
-void IN_ActivateMouse (void)
+static void IN_ActivateMouse (void)
 {
 	int width, height;
 	int window_center_x, window_center_y;
@@ -308,7 +308,7 @@ void IN_ActivateMouse (void)
  * @brief Called when the window loses focus
  * @sa IN_ActivateMouse
  */
-void IN_DeactivateMouse (void)
+static void IN_DeactivateMouse (void)
 {
 	if (!mouseinitialized)
 		return;
