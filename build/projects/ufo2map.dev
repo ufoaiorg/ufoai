@@ -9,7 +9,7 @@ CppCompiler=
 Includes=D:\Programme\Dev-Cpp\include
 Linker=-lz -llibjpeg_@@_
 Libs=C:\Dev-Cpp\lib
-UnitCount=32
+UnitCount=34
 Folders=Headers,Source
 ObjFiles=
 PrivateResource=
@@ -180,14 +180,14 @@ OverrideBuildCmd=0
 BuildCmd=$(CC) -c unzip.c -o ufo2map/unzip.o $(CFLAGS)
 
 [Unit33]
-FileName=..\..\src\common\unzip.c
+FileName=..\..\src\shared\byte.c
 Folder=Source
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=$(CC) -c unzip.c -o ufo2map/unzip.o $(CFLAGS)
+BuildCmd=
 
 [Unit35]
 FileName=..\..\src\common\unzip.c
@@ -347,14 +347,14 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit34]
-FileName=..\..\src\common\ioapi.c
+FileName=..\..\src\shared\shared.c
 CompileCpp=0
 Folder=Source
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=$(CC) -c ioapi.c -o ufo2map/ioapi.o $(CFLAGS)
+BuildCmd=
 
 [Unit38]
 FileName=..\..\src\common\unzip.c
