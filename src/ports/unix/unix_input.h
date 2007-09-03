@@ -21,8 +21,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef UNIX_INPUT_H
 #define UNIX_INPUT_H
 
-#include <dlfcn.h> /* ELF dl loader */
-
 typedef void (*Key_Event_fp_t)(int key, qboolean down);
 
 extern void (*KBD_Update_fp)(void);

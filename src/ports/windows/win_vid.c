@@ -251,18 +251,18 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 			if (wParam & MK_MBUTTON)
 				temp |= 4;
 
-			IN_MouseEvent (temp);
+			IN_MouseEvent(temp);
 		}
 		break;
 
 	case WM_SYSCOMMAND:
 		if (wParam == SC_SCREENSAVE)
 			return 0;
-		return DefWindowProc (hWnd, uMsg, wParam, lParam);
+		return DefWindowProc(hWnd, uMsg, wParam, lParam);
 	case WM_SYSKEYDOWN:
 		if (wParam == 13) {
 			if (vid_fullscreen)
-				Cvar_SetValue("vid_fullscreen", !vid_fullscreen->value);
+				Cvar_SetValue("vid_fullscreen", !vid_fullscreen->integer);
 			return 0;
 		}
 		/* fall through */
