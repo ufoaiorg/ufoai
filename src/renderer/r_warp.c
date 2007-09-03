@@ -182,7 +182,7 @@ void R_SubdivideSurface (mBspSurface_t * fa)
 
 /* speed up sin calculations - Ed */
 float r_turbsin[] = {
-#include "warpsin.h"
+#include "r_warpsin.h"
 };
 
 #define TURBSCALE (256.0 / (2 * M_PI))

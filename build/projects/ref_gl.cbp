@@ -176,84 +176,84 @@
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\anorms.h" />
+		<Unit filename="..\..\src\shared\anorms.h" />
 		<Unit filename="..\..\src\renderer\anormtab.h" />
-		<Unit filename="..\..\src\renderer\gl_anim.c">
+		<Unit filename="..\..\src\renderer\r_anim.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\gl_arb_shader.c">
+		<Unit filename="..\..\src\renderer\r_shader.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\gl_arb_shader.h" />
-		<Unit filename="..\..\src\renderer\gl_draw.c">
+		<Unit filename="..\..\src\renderer\r_shader.h" />
+		<Unit filename="..\..\src\renderer\r_draw.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\gl_font.c">
+		<Unit filename="..\..\src\renderer\r_font.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\gl_font.h" />
-		<Unit filename="..\..\src\renderer\gl_image.c">
+		<Unit filename="..\..\src\renderer\r_font.h" />
+		<Unit filename="..\..\src\renderer\r_image.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\gl_light.c">
+		<Unit filename="..\..\src\renderer\r_light.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\gl_local.h" />
-		<Unit filename="..\..\src\renderer\gl_mesh.c">
+		<Unit filename="..\..\src\renderer\r_local.h" />
+		<Unit filename="..\..\src\renderer\r_mesh.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\gl_mesh_md2.c">
+		<Unit filename="..\..\src\renderer\r_mesh_md2.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\gl_mesh_md3.c">
+		<Unit filename="..\..\src\renderer\r_mesh_md3.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\gl_model.c">
+		<Unit filename="..\..\src\renderer\r_model.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\gl_model.h" />
-		<Unit filename="..\..\src\renderer\gl_model_alias.c">
+		<Unit filename="..\..\src\renderer\r_model.h" />
+		<Unit filename="..\..\src\renderer\r_model_alias.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\gl_model_alias.h" />
-		<Unit filename="..\..\src\renderer\gl_model_brush.c">
+		<Unit filename="..\..\src\renderer\r_model_alias.h" />
+		<Unit filename="..\..\src\renderer\r_model_brush.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\gl_model_brush.h" />
-		<Unit filename="..\..\src\renderer\gl_model_md2.c">
+		<Unit filename="..\..\src\renderer\r_model_brush.h" />
+		<Unit filename="..\..\src\renderer\r_model_md2.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\gl_model_md2.h" />
-		<Unit filename="..\..\src\renderer\gl_model_md3.c">
+		<Unit filename="..\..\src\renderer\r_model_md2.h" />
+		<Unit filename="..\..\src\renderer\r_model_md3.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\gl_model_md3.h" />
-		<Unit filename="..\..\src\renderer\gl_model_obj.c">
+		<Unit filename="..\..\src\renderer\r_model_md3.h" />
+		<Unit filename="..\..\src\renderer\r_model_obj.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\gl_model_sp2.c">
+		<Unit filename="..\..\src\renderer\r_model_sp2.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\gl_model_sp2.h" />
-		<Unit filename="..\..\src\renderer\gl_particle.c">
+		<Unit filename="..\..\src\renderer\r_model_sp2.h" />
+		<Unit filename="..\..\src\renderer\r_particle.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\gl_rmain.c">
+		<Unit filename="..\..\src\renderer\r_main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\gl_rmisc.c">
+		<Unit filename="..\..\src\renderer\r_misc.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\gl_rsurf.c">
+		<Unit filename="..\..\src\renderer\r_surf.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\gl_shadows.c">
+		<Unit filename="..\..\src\renderer\r_shadows.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\gl_state.c">
+		<Unit filename="..\..\src\renderer\r_state.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\gl_warp.c">
+		<Unit filename="..\..\src\renderer\r_warp.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\renderer\glext.h" />
@@ -262,7 +262,7 @@
 		</Unit>
 		<Unit filename="..\..\src\renderer\qgl.h" />
 		<Unit filename="..\..\src\renderer\ref_gl.def" />
-		<Unit filename="..\..\src\renderer\warpsin.h" />
+		<Unit filename="..\..\src\renderer\r_warpsin.h" />
 		<Unit filename="..\..\src\shared\byte.c">
 			<Option compilerVar="CC" />
 		</Unit>
