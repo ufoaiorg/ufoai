@@ -464,7 +464,7 @@ menu team
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "team_hire 0" }
+		click { cmd "team_hire 0;" }
 		out	{ *bt_actor0 texl "0 0" *bt_actor0 texh "20 20" }
 		in	{ *bt_actor0 texl "0 20" *bt_actor0 texh "20 40" }
 	}
@@ -475,7 +475,7 @@ menu team
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "team_hire 1" }
+		click { cmd "team_hire 1;" }
 		out	{ *bt_actor1 texl "0 0" *bt_actor1 texh "20 20" }
 		in	{ *bt_actor1 texl "0 20" *bt_actor1 texh "20 40" }
 	}
@@ -486,7 +486,7 @@ menu team
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "team_hire 2" }
+		click { cmd "team_hire 2;" }
 		out	{ *bt_actor2 texl "0 0" *bt_actor2 texh "20 20" }
 		in	{ *bt_actor2 texl "0 20" *bt_actor2 texh "20 40" }
 	}
@@ -497,7 +497,7 @@ menu team
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "team_hire 3" }
+		click { cmd "team_hire 3;" }
 		out	{ *bt_actor3 texl "0 0" *bt_actor3 texh "20 20" }
 		in	{ *bt_actor3 texl "0 20" *bt_actor3 texh "20 40" }
 	}
@@ -508,7 +508,7 @@ menu team
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "team_hire 4" }
+		click { cmd "team_hire 4;" }
 		out	{ *bt_actor4 texl "0 0" *bt_actor4 texh "20 20" }
 		in	{ *bt_actor4 texl "0 20" *bt_actor4 texh "20 40" }
 	}
@@ -519,7 +519,7 @@ menu team
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "team_hire 5" }
+		click { cmd "team_hire 5;" }
 		out	{ *bt_actor5 texl "0 0" *bt_actor5 texh "20 20" }
 		in	{ *bt_actor5 texl "0 20" *bt_actor5 texh "20 40" }
 	}
@@ -530,7 +530,7 @@ menu team
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "team_hire 6" }
+		click { cmd "team_hire 6;" }
 		out	{ *bt_actor6 texl "0 0" *bt_actor6 texh "20 20" }
 		in	{ *bt_actor6 texl "0 20" *bt_actor6 texh "20 40" }
 	}
@@ -541,7 +541,7 @@ menu team
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "team_hire 7" }
+		click { cmd "team_hire 7;" }
 		out	{ *bt_actor7 texl "0 0" *bt_actor7 texh "20 20" }
 		in	{ *bt_actor7 texl "0 20" *bt_actor7 texh "20 40" }
 	}
@@ -552,7 +552,7 @@ menu team
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "team_hire 8" }
+		click { cmd "team_hire 8;" }
 		out	{ *bt_actor8 texl "0 0" *bt_actor8 texh "20 20" }
 		in	{ *bt_actor8 texl "0 20" *bt_actor8 texh "20 40" }
 	}
@@ -563,7 +563,7 @@ menu team
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "team_hire 9" }
+		click { cmd "team_hire 9;" }
 		out	{ *bt_actor9 texl "0 0" *bt_actor9 texh "20 20" }
 		in	{ *bt_actor9 texl "0 20" *bt_actor9 texh "20 40" }
 	}
@@ -574,7 +574,7 @@ menu team
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "team_hire 10" }
+		click { cmd "team_hire 10;" }
 		out	{ *bt_actor10 texl "0 0" *bt_actor10 texh "20 20" }
 		in	{ *bt_actor10 texl "0 20" *bt_actor10 texh "20 40" }
 	}
@@ -585,7 +585,7 @@ menu team
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "team_hire 11" }
+		click { cmd "team_hire 11;" }
 		out	{ *bt_actor11 texl "0 0" *bt_actor11 texh "20 20" }
 		in	{ *bt_actor11 texl "0 20" *bt_actor11 texh "20 40" }
 	}
@@ -596,7 +596,7 @@ menu team
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "team_hire 12" }
+		click { cmd "team_hire 12;" }
 		out	{ *bt_actor12 texl "0 0" *bt_actor12 texh "20 20" }
 		in	{ *bt_actor12 texl "0 20" *bt_actor12 texh "20 40" }
 	}
@@ -607,7 +607,7 @@ menu team
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "team_hire 13" }
+		click { cmd "team_hire 13;" }
 		out	{ *bt_actor13 texl "0 0" *bt_actor13 texh "20 20" }
 		in	{ *bt_actor13 texl "0 20" *bt_actor13 texh "20 40" }
 	}
@@ -618,7 +618,7 @@ menu team
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "team_hire 14" }
+		click { cmd "team_hire 14;" }
 		out	{ *bt_actor14 texl "0 0" *bt_actor14 texh "20 20" }
 		in	{ *bt_actor14 texl "0 20" *bt_actor14 texh "20 40" }
 	}
@@ -629,7 +629,7 @@ menu team
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "team_hire 15" }
+		click { cmd "team_hire 15;" }
 		out	{ *bt_actor15 texl "0 0" *bt_actor15 texh "20 20" }
 		in	{ *bt_actor15 texl "0 20" *bt_actor15 texh "20 40" }
 	}
@@ -640,7 +640,7 @@ menu team
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "team_hire 16" }
+		click { cmd "team_hire 16;" }
 		out	{ *bt_actor16 texl "0 0" *bt_actor16 texh "20 20" }
 		in	{ *bt_actor16 texl "0 20" *bt_actor16 texh "20 40" }
 	}
@@ -651,7 +651,7 @@ menu team
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "team_hire 17" }
+		click { cmd "team_hire 17;" }
 		out	{ *bt_actor17 texl "0 0" *bt_actor17 texh "20 20" }
 		in	{ *bt_actor17 texl "0 20" *bt_actor17 texh "20 40" }
 	}
@@ -662,7 +662,7 @@ menu team
 		texl	"0 0"
 		texh	"20 20"
 		mousefx true
-		click { cmd "team_hire 18" }
+		click { cmd "team_hire 18;" }
 		out	{ *bt_actor18 texl "0 0" *bt_actor18 texh "20 20" }
 		in	{ *bt_actor18 texl "0 20" *bt_actor18 texh "20 40" }
 	}
@@ -671,133 +671,133 @@ menu team
 		string	"*cvar mn_name0"
 		pos		"60 32"
 		size	"290 16"
-		click { cmd "team_select 0" }
+		click { cmd "team_select 0;" }
 	}
 	string txt_actor1
 	{
 		string	"*cvar mn_name1"
 		pos		"60 70"
 		size	"290 16"
-		click { cmd "team_select 1" }
+		click { cmd "team_select 1;" }
 	}
 	string txt_actor2
 	{
 		string	"*cvar mn_name2"
 		pos		"60 108"
 		size	"290 16"
-		click { cmd "team_select 2" }
+		click { cmd "team_select 2;" }
 	}
 	string txt_actor3
 	{
 		string	"*cvar mn_name3"
 		pos		"60 146"
 		size	"290 16"
-		click { cmd "team_select 3" }
+		click { cmd "team_select 3;" }
 	}
 	string txt_actor4
 	{
 		string	"*cvar mn_name4"
 		pos		"60 184"
 		size	"290 16"
-		click { cmd "team_select 4" }
+		click { cmd "team_select 4;" }
 	}
 	string txt_actor5
 	{
 		string	"*cvar mn_name5"
 		pos		"60 222"
 		size	"290 16"
-		click { cmd "team_select 5" }
+		click { cmd "team_select 5;" }
 	}
 	string txt_actor6
 	{
 		string	"*cvar mn_name6"
 		pos		"60 260"
 		size	"290 16"
-		click { cmd "team_select 6" }
+		click { cmd "team_select 6;" }
 	}
 	string txt_actor7
 	{
 		string	"*cvar mn_name7"
 		pos		"60 298"
 		size	"290 16"
-		click { cmd "team_select 7" }
+		click { cmd "team_select 7;" }
 	}
 	string txt_actor8
 	{
 		string	"*cvar mn_name8"
 		pos		"60 336"
 		size	"290 16"
-		click { cmd "team_select 8" }
+		click { cmd "team_select 8;" }
 	}
 	string txt_actor9
 	{
 		string	"*cvar mn_name9"
 		pos		"60 374"
 		size	"290 16"
-		click { cmd "team_select 9" }
+		click { cmd "team_select 9;" }
 	}
 	string txt_actor10
 	{
 		string	"*cvar mn_name10"
 		pos		"60 412"
 		size	"290 16"
-		click { cmd "team_select 10" }
+		click { cmd "team_select 10;" }
 	}
 	string txt_actor11
 	{
 		string	"*cvar mn_name11"
 		pos		"60 450"
 		size	"290 16"
-		click { cmd "team_select 11" }
+		click { cmd "team_select 11;" }
 	}
 	string txt_actor12
 	{
 		string	"*cvar mn_name12"
 		pos		"60 488"
 		size	"290 16"
-		click { cmd "team_select 12" }
+		click { cmd "team_select 12;" }
 	}
 	string txt_actor13
 	{
 		string	"*cvar mn_name13"
 		pos		"60 526"
 		size	"290 16"
-		click { cmd "team_select 13" }
+		click { cmd "team_select 13;" }
 	}
 	string txt_actor14
 	{
 		string	"*cvar mn_name14"
 		pos		"60 564"
 		size	"290 16"
-		click { cmd "team_select 14" }
+		click { cmd "team_select 14;" }
 	}
 	string txt_actor15
 	{
 		string	"*cvar mn_name15"
 		pos		"60 602"
 		size	"290 16"
-		click { cmd "team_select 15" }
+		click { cmd "team_select 15;" }
 	}
 	string txt_actor16
 	{
 		string	"*cvar mn_name16"
 		pos		"60 640"
 		size	"290 16"
-		click { cmd "team_select 16" }
+		click { cmd "team_select 16;" }
 	}
 	string txt_actor17
 	{
 		string	"*cvar mn_name17"
 		pos		"60 678"
 		size	"290 16"
-		click { cmd "team_select 17" }
+		click { cmd "team_select 17;" }
 	}
 	string txt_actor18
 	{
 		string	"*cvar mn_name18"
 		pos		"60 716"
 		size	"290 16"
-		click { cmd "team_select 18" }
+		click { cmd "team_select 18;" }
 	}
 
 
@@ -814,7 +814,7 @@ menu team
 	confunc mn_name_changed
 	{
 		*name mousefx false
-		cmd	"team_changename"
+		cmd	"team_changename;"
 	}
 
 	pic bt_edit
@@ -825,7 +825,7 @@ menu team
 		pos	"875 17"
 		texl	"0 48"
 		texh	"16 64"
-				click
+		click
 		{
 			cmd "msgmenu ?mn_name"
 			*name mousefx true
@@ -980,7 +980,7 @@ menu team
 		texl	"0 0"
 		texh	"64 37"
 		mousefx	true
-		click	{ cmd "team_toggle_list;"  }
+		click	{ cmd "team_toggle_list;" }
 	}
 
 	pic bt_go
@@ -991,13 +991,13 @@ menu team
 		pos		"940 720"
 		texl	"0 0"
 		texh	"64 37"
-		click	{ cmd "mn_pop;mn_push equipment"  }
+		click	{ cmd "mn_pop;mn_push equipment;"  }
 	}
 
 	func init
 	{
 		team_clear
-		cmd "team_mark;team_select 0"
+		cmd "team_mark;team_select 0;"
 	}
 }
 
