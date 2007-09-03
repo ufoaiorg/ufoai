@@ -299,13 +299,6 @@ static void IN_ActivateMouse (void)
 /**
  * @brief
  */
-void RW_IN_Frame (void)
-{
-}
-
-/**
- * @brief
- */
 void RW_IN_Activate (qboolean active)
 {
 	if (active || vidmode_active)

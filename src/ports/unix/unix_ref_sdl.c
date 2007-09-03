@@ -815,10 +815,3 @@ void RW_IN_GetMousePos (int *x, int *y)
 	*x = mx / vid.rx;
 	*y = my / vid.ry;
 }
-
-/**
- * @brief
- */
-void RW_IN_Frame (void)
-{
-}
