@@ -368,7 +368,12 @@
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 		</Unit>
-		<Unit filename="..\..\src\ports\linux\linux_vid.c">
+		<Unit filename="..\..\src\ports\unix\unix_vid.c">
+			<Option compilerVar="CC" />
+			<Option target="linux" />
+			<Option target="macosx" />
+		</Unit>
+		<Unit filename="..\..\src\ports\unix\unix_input.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 			<Option target="macosx" />
