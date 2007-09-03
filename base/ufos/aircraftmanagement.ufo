@@ -201,7 +201,7 @@ aircraft craft_inter_dragon
 		accuracy	100
 		fuelsize	60000
 	}
-	name		"_Dragon-class Interceptor"
+	name		"_Dragon Interceptor"
 	shortname	"_Dragon"
 	type		interceptor
 	model		"inter_dragon"
