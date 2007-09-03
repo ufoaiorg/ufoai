@@ -382,16 +382,6 @@ void CL_ResetCharacters (base_t* const base)
 	}
 }
 
-
-/**
- * @brief
- */
-static void CL_GenerateNames_f (void)
-{
-	Cbuf_AddText("disconnect\ngame_exit\n");
-}
-
-
 /**
  * @brief Change the name of the selected actor.
  */
@@ -1747,7 +1737,7 @@ static void CL_GenerateNewTeam_f (void)
 {
 	CL_ResetTeamInBase();
 	Cvar_Set("mn_teamname", _("NewTeam"));
-	CL_GenerateNames_f();
+	CL_GameExit();
 	MN_PushMenu("team");
 }
 
@@ -1758,7 +1748,6 @@ void CL_ResetTeams (void)
 {
 	Cmd_AddCommand("new_team", CL_GenerateNewTeam_f, NULL);
 	Cmd_AddCommand("givename", CL_GiveName_f, NULL);
-	Cmd_AddCommand("gennames", CL_GenerateNames_f, NULL);
 	Cmd_AddCommand("team_reset", CL_ResetTeamInBase, NULL);
 	Cmd_AddCommand("genequip", CL_GenerateEquipment_f, NULL);
 	Cmd_AddCommand("equip_type", CL_EquipType_f, NULL);

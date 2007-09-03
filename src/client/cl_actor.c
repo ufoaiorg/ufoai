@@ -191,8 +191,7 @@ void CL_CharacterCvars (character_t *chr)
 	if (chr->rank >= 0 && gd.numRanks) {
 		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Rank: %s"), gd.ranks[chr->rank].name);
 		Cvar_Set("mn_chrrank", messageBuffer);
-		Com_sprintf(messageBuffer, sizeof(messageBuffer), "%s", gd.ranks[chr->rank].image);
-		Cvar_Set("mn_chrrank_img", messageBuffer);
+		Cvar_Set("mn_chrrank_img", gd.ranks[chr->rank].image);
 	} else {
 		Cvar_Set("mn_chrrank", "");
 		Cvar_Set("mn_chrrank_img", "");
