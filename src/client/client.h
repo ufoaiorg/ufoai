@@ -64,8 +64,6 @@ typedef struct {
 	char cinfo[MAX_QPATH];
 } clientinfo_t;
 
-#define	CMD_BACKUP		64		/* allow a lot of command backups for very fast systems */
-
 #define FOV				75.0
 #define FOV_FPS			90.0
 #define CAMERA_START_DIST   600
@@ -334,15 +332,12 @@ void CL_ClearEffects(void);
 void CL_SetLightstyle(int i);
 void CL_RunLightStyles(void);
 void CL_AddLightStyles(void);
-void CL_AddEntities(void);
 
 /*================================================= */
 
 void CL_PrepRefresh(void);
 void CL_RegisterSounds(void);
 void CL_RegisterLocalModels(void);
-
-void IN_Accumulate(void);
 
 /* cl_save.c */
 void SAV_Init(void);
@@ -467,10 +462,6 @@ void CL_ClearState(void);
 const char *Key_KeynumToString(int keynum);
 
 void CL_CameraModeChange(camera_mode_t newcameramode);
-
-void CL_Sniper(void);
-void CL_SniperModeSet(void);
-void CL_SniperModeUnset(void);
 
 /* cl_le.c */
 #define MAX_LE_PATHLENGTH 32
@@ -758,13 +749,13 @@ typedef struct radar_s {
 	int numUfos;					/**< Num ufos sensored by radar */
 } radar_t;
 
-extern void RADAR_DrawCoverage(const struct menuNode_s* node, const radar_t* radar, vec2_t pos);
-extern void RADAR_DrawInMap(const struct menuNode_s* node, const radar_t* radar, vec2_t pos);
-extern void RADAR_RemoveUfo(radar_t* radar, const struct aircraft_s* ufo);
-extern void Radar_NotifyUfoRemoved(radar_t* radar, const struct aircraft_s* ufo);
-extern void RADAR_ChangeRange(radar_t* radar, int change);
-extern void Radar_Initialise(radar_t* radar, int range);
-extern qboolean RADAR_CheckUfoSensored(radar_t* radar, vec2_t posRadar,
+void RADAR_DrawCoverage(const struct menuNode_s* node, const radar_t* radar, vec2_t pos);
+void RADAR_DrawInMap(const struct menuNode_s* node, const radar_t* radar, vec2_t pos);
+void RADAR_RemoveUfo(radar_t* radar, const struct aircraft_s* ufo);
+void Radar_NotifyUfoRemoved(radar_t* radar, const struct aircraft_s* ufo);
+void RADAR_ChangeRange(radar_t* radar, int change);
+void Radar_Initialise(radar_t* radar, int range);
+qboolean RADAR_CheckUfoSensored(radar_t* radar, vec2_t posRadar,
 	const struct aircraft_s* ufo, qboolean wasUfoSensored);
 
 /* cl_research.c */
@@ -821,7 +812,6 @@ void CL_ResetTeamInBase(void);
 void CL_GenerateCharacter(employee_t *employee, const char *team, employeeType_t employeeType);
 char* CL_GetTeamSkinName(int id);
 
-void MN_BuildNewBase(vec2_t pos);
 
 /* END MISC */
 
@@ -879,7 +869,7 @@ typedef struct message_s {
 	int d, m, y, h, min, s;
 } message_t;
 
-char messageBuffer[MAX_MESSAGE_TEXT];
+extern char messageBuffer[MAX_MESSAGE_TEXT];
 
 extern message_t *messageStack;
 

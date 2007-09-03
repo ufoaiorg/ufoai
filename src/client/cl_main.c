@@ -111,6 +111,8 @@ static teamData_t teamData;
 
 static int precache_check;
 
+char messageBuffer[MAX_MESSAGE_TEXT];
+
 static void CL_SpawnSoldiers_f(void);
 
 struct memPool_s *cl_localPool;		/**< reset on every game restart */
