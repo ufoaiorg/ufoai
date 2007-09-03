@@ -7,17 +7,17 @@ Type=3
 Compiler=-D__GNUWIN32__ _@@_-D_M_IX86=500 _@@_-Wall _@@_ -DDONT_TYPEDEF_INT32_@@_
 CppCompiler=
 Includes=
-Linker=-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lwinmm _@@_-llibjpeg_@@_-lpng_@@_-lSDL_ttf_@@_-lSDL_@@_-def ../../src/ref_gl/ref_gl.def_@@_
+Linker=-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lwinmm _@@_-llibjpeg_@@_-lpng_@@_-lSDL_ttf_@@_-lSDL_@@_-def ../../src/renderer/ref_gl.def_@@_
 Libs=
-UnitCount=48
+UnitCount=52
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=
 ResourceIncludes=
 MakeIncludes=
 Icon=
-ExeOutput=..\..
-ObjectOutput=ref_gl
+ExeOutput=..\..\..\trunk
+ObjectOutput=renderer
 OverrideOutput=0
 OverrideOutputName=ref_gl.dll
 HostApplication=
@@ -108,36 +108,6 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit7]
-FileName=..\..\src\renderer\r_rmain.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit8]
-FileName=..\..\src\renderer\r_rmisc.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit9]
-FileName=..\..\src\renderer\r_rsurf.c
-Folder=Source Files
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit10]
 FileName=..\..\src\renderer\r_warp.c
 Folder=Source Files
 Compile=1
@@ -147,7 +117,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit11]
+[Unit8]
 FileName=..\..\src\ports\windows\win_ref_glw.c
 Folder=Source Files
 Compile=1
@@ -157,7 +127,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit12]
+[Unit9]
 FileName=..\..\src\game\q_shared.c
 Folder=Source Files
 Compile=1
@@ -167,7 +137,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit13]
+[Unit10]
 FileName=..\..\src\ports\windows\win_shared.c
 Folder=Source Files
 Compile=1
@@ -177,7 +147,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit14]
+[Unit11]
 FileName=..\..\src\ports\windows\win_qgl.c
 Folder=Source Files
 Compile=1
@@ -187,17 +157,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit15]
-FileName=..\..\src\renderer\anorms.h
-Folder=Header Files
-Compile=1
-CompileCpp=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit16]
+[Unit12]
 FileName=..\..\src\renderer\anormtab.h
 Folder=Header Files
 Compile=1
@@ -207,7 +167,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit17]
+[Unit13]
 FileName=..\..\src\renderer\r_local.h
 Folder=Header Files
 Compile=1
@@ -217,7 +177,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit18]
+[Unit14]
 FileName=..\..\src\renderer\r_model.h
 Folder=Header Files
 Compile=1
@@ -227,7 +187,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit19]
+[Unit15]
 FileName=..\..\src\ports\windows\win_ref_glw.h
 Folder=Header Files
 Compile=1
@@ -237,7 +197,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit20]
+[Unit16]
 FileName=..\..\src\game\q_shared.h
 Folder=Header Files
 Compile=1
@@ -247,7 +207,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit21]
+[Unit17]
 FileName=..\..\src\renderer\qgl.h
 Folder=Header Files
 Compile=1
@@ -257,7 +217,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit22]
+[Unit18]
 FileName=..\..\src\client\ref.h
 Folder=Header Files
 Compile=1
@@ -267,7 +227,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit23]
+[Unit19]
 FileName=..\..\src\renderer\r_warpsin.h
 Folder=Header Files
 Compile=1
@@ -277,7 +237,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit24]
+[Unit20]
 FileName=..\..\src\ports\windows\win_local.h
 Folder=Header Files
 Compile=1
@@ -287,7 +247,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit25]
+[Unit21]
 FileName=..\..\src\renderer\ref_gl.def
 Folder=Resource Files
 Compile=0
@@ -297,7 +257,7 @@ Priority=1000
 OverrideBuildCmd=1
 BuildCmd=
 
-[Unit26]
+[Unit22]
 FileName=..\..\src\renderer\r_image.c
 Folder=Source Files
 Compile=1
@@ -307,8 +267,48 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
+[Unit23]
+FileName=..\..\src\renderer\r_shader.c
+Folder=Source Files
+Compile=1
+CompileCpp=0
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit24]
+FileName=..\..\src\common\common.h
+Folder=Header Files
+Compile=1
+CompileCpp=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit25]
+FileName=..\..\src\common\qfiles.h
+Folder=Header Files
+Compile=1
+CompileCpp=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit26]
+FileName=..\..\src\renderer\r_shadows.c
+Folder=Source Files
+Compile=1
+CompileCpp=0
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
 [Unit27]
-FileName=../../src/renderer/r_shader.c
+FileName=..\..\src\renderer\r_font.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -318,46 +318,6 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit28]
-FileName=..\..\src\common\common.h
-CompileCpp=1
-Folder=Header Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit29]
-FileName=..\..\src\common\qfiles.h
-CompileCpp=1
-Folder=Header Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit30]
-FileName=..\..\src\renderer\r_shadows.c
-CompileCpp=0
-Folder=Source Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit31]
-FileName=..\..\src\renderer\r_font.c
-CompileCpp=0
-Folder=Source Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit32]
 FileName=..\..\src\renderer\r_font.h
 CompileCpp=1
 Folder=Header Files
@@ -367,7 +327,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit33]
+[Unit29]
 FileName=..\..\src\renderer\qgl.c
 CompileCpp=0
 Folder=Source Files
@@ -377,37 +337,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit36]
-FileName=..\..\src\renderer\r_mesh_md2.c
-CompileCpp=0
-Folder=Source Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit37]
-FileName=..\..\src\renderer\r_mesh_md3.c
-CompileCpp=0
-Folder=Source Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit34]
-FileName=..\..\src\renderer\r_bloom.c
-CompileCpp=0
-Folder=Source Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit35]
+[Unit30]
 FileName=..\..\src\renderer\r_model_sp2.c
 CompileCpp=0
 Folder=Source Files
@@ -417,7 +347,27 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit38]
+[Unit31]
+FileName=..\..\src\renderer\r_mesh_md2.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit32]
+FileName=..\..\src\renderer\r_mesh_md3.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit33]
 FileName=..\..\src\renderer\r_model_alias.c
 CompileCpp=0
 Folder=Source Files
@@ -427,27 +377,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit39]
-FileName=..\..\src\renderer\r_model_brush.c
-CompileCpp=0
-Folder=Source Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit40]
-FileName=..\..\src\renderer\r_model_md2.c
-CompileCpp=0
-Folder=Source Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit41]
+[Unit36]
 FileName=..\..\src\renderer\r_model_md3.c
 CompileCpp=0
 Folder=Source Files
@@ -457,7 +387,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit42]
+[Unit37]
 FileName=..\..\src\renderer\r_model_sp2.h
 CompileCpp=1
 Folder=Header Files
@@ -467,7 +397,27 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit43]
+[Unit34]
+FileName=..\..\src\renderer\r_model_brush.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit35]
+FileName=..\..\src\renderer\r_model_md2.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit38]
 FileName=..\..\src\renderer\r_model_alias.h
 CompileCpp=1
 Folder=Header Files
@@ -477,7 +427,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit44]
+[Unit39]
 FileName=..\..\src\renderer\r_model_brush.h
 CompileCpp=1
 Folder=Header Files
@@ -487,7 +437,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit45]
+[Unit40]
 FileName=..\..\src\renderer\r_model_md2.h
 CompileCpp=1
 Folder=Header Files
@@ -497,7 +447,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit46]
+[Unit41]
 FileName=..\..\src\renderer\r_model_md3.h
 CompileCpp=1
 Folder=Header Files
@@ -507,7 +457,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit47]
+[Unit42]
 FileName=..\..\src\renderer\r_model_obj.c
 CompileCpp=0
 Folder=Source Files
@@ -517,10 +467,100 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit48]
+[Unit43]
 FileName=..\..\src\renderer\r_state.c
 CompileCpp=0
 Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit44]
+FileName=..\..\src\shared\byte.h
+CompileCpp=0
+Folder=Header Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit45]
+FileName=..\..\src\shared\byte.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit46]
+FileName=..\..\src\renderer\r_main.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit47]
+FileName=..\..\src\renderer\r_misc.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit48]
+FileName=..\..\src\shared\shared.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit49]
+FileName=..\..\src\shared\shared.h
+CompileCpp=0
+Folder=Header Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit50]
+FileName=..\..\src\renderer\r_surf.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit51]
+FileName=..\..\src\renderer\r_shader.h
+CompileCpp=0
+Folder=Header Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit52]
+FileName=..\..\src\renderer\glext.h
+CompileCpp=0
+Folder=Header Files
 Compile=1
 Link=1
 Priority=1000

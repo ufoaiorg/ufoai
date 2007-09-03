@@ -1,7 +1,7 @@
 [Project]
 FileName=ufo_ded.dev
 Name=ufoded
-UnitCount=32
+UnitCount=38
 Type=0
 Ver=1
 ObjFiles=
@@ -368,7 +368,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit33]
-FileName=..\..\src\common\netpack.h
+FileName=..\..\src\shared\infostring.h
 CompileCpp=0
 Folder=Header Files
 Compile=1
@@ -378,7 +378,47 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit34]
-FileName=..\..\src\common\netpack.h
+FileName=..\..\src\shared\byte.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit35]
+FileName=..\..\src\shared\infostring.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit36]
+FileName=..\..\src\shared\byte.h
+CompileCpp=0
+Folder=Header Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit37]
+FileName=..\..\src\shared\shared.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit38]
+FileName=..\..\src\shared\shared.h
 CompileCpp=0
 Folder=Header Files
 Compile=1
