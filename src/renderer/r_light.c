@@ -1,5 +1,5 @@
 /**
- * @file gl_light.c
+ * @file r_light.c
  * @brief
  */
 
@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "gl_local.h"
+#include "r_local.h"
 
 static int r_dlightframecount;
 

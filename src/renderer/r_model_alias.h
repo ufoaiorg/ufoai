@@ -1,5 +1,5 @@
 /**
- * @file gl_model_alias.h
+ * @file r_model_alias.h
  * @brief Shared alias model functions
  */
 

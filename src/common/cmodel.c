@@ -295,7 +295,7 @@ static void CMod_LoadSubmodels (lump_t * l, vec3_t shift)
 			out->maxs[j] = LittleFloat(in->maxs[j]) + 1 + shift[j];
 			/* @todo: why don't we shift the origin, too? It is relative to the
 			 * global origin, too - or am I wrong? - i added the shifting here, too
-			 * it's in the gl_model.c code, too */
+			 * it's in the r_model.c code, too */
 			out->origin[j] = LittleFloat(in->origin[j]) + shift[j];
 		}
 		out->headnode = LittleLong(in->headnode);

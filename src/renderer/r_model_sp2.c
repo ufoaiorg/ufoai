@@ -1,5 +1,5 @@
 /**
- * @file gl_model_sp2.c
+ * @file r_model_sp2.c
  * @brief sprite model loading
  */
 
@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "gl_local.h"
+#include "r_local.h"
 
 /*
 ==============================================================================

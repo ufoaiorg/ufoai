@@ -1,5 +1,5 @@
 /**
- * @file gl_model_alias.c
+ * @file r_model_alias.c
  * @brief shared alias model loading code (md2, md3)
  */
 
@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "gl_local.h"
+#include "r_local.h"
 
 /*
 ==============================================================================

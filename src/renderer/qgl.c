@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "gl_local.h"
+#include "r_local.h"
 
 #ifdef _WIN32
 #include "../ports/windows/win_ref_glw.h"

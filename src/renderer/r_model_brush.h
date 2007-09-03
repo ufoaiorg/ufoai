@@ -1,5 +1,5 @@
 /**
- * @file gl_model_brush.h
+ * @file r_model_brush.h
  * @brief brush model loading
  */
 

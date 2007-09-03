@@ -1,5 +1,5 @@
 /**
- * @file gl_draw.c
+ * @file r_draw.c
  * @brief
  */
 
@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "gl_local.h"
+#include "r_local.h"
 
 extern cvar_t *r_drawclouds;
 image_t *shadow;

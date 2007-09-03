@@ -1,5 +1,5 @@
 /**
- * @file gl_rmain.c
+ * @file r_main.c
  * @brief
  */
 
@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "gl_local.h"
+#include "r_local.h"
 
 #if defined DEBUG && defined _MSC_VER
 #include <intrin.h>

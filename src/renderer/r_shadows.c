@@ -1,5 +1,5 @@
 /**
- * @file gl_shadows.c
+ * @file r_shadows.c
  * @brief shadow functions
  */
 
@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "gl_local.h"
+#include "r_local.h"
 
 vec4_t s_lerped[MD2_MAX_VERTS];
 static vec3_t shadevector;

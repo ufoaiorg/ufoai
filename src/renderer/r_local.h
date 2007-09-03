@@ -1,5 +1,5 @@
 /**
- * @file gl_local.h
+ * @file r_local.h
  * @brief local graphics definitions
  */
 
@@ -34,13 +34,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* this was taken from jmorecfg.h */
 #define RGB_PIXELSIZE 3
 
-#include "gl_arb_shader.h"
+#include "r_shader.h"
 
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <SDL_syswm.h>
 
-void R_ShutdownSDLFonts(void); /* gl_draw.c */
+void R_ShutdownSDLFonts(void); /* r_draw.c */
 
 #include "qgl.h"
 
@@ -176,7 +176,7 @@ typedef enum {
 	rserr_unknown
 } rserr_t;
 
-#include "gl_model.h"
+#include "r_model.h"
 
 #define MAX_MODEL_DLIGHTS 3
 int RecursiveLightPoint(model_t* mapTile, mBspNode_t * node, vec3_t start, vec3_t end);
@@ -356,7 +356,7 @@ void R_DrawTriangleOutlines(void);
 void R_MarkLights(dlight_t * light, int bit, mBspNode_t * node);
 void R_EnableLights(qboolean fixed, float *matrix, float *lightparam, float *lightambient);
 
-#include "gl_font.h"
+#include "r_font.h"
 
 void Draw_GetPicSize(int *w, int *h, const char *name);
 void Draw_Pic(int x, int y, const char *name);

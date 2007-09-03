@@ -1,5 +1,5 @@
 /**
- * @file gl_anim.c
+ * @file r_anim.c
  * @brief animation parsing and playing
  */
 
@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "gl_local.h"
+#include "r_local.h"
 #define LNEXT(x)	((x+1 < MAX_ANIMLIST) ? x+1 : 0)
 
 /**

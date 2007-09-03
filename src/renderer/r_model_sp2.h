@@ -1,5 +1,5 @@
 /**
- * @file gl_model_sp2.h
+ * @file r_model_sp2.h
  * @brief sprite model loading
  */
 

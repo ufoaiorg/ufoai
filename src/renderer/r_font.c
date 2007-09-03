@@ -1,5 +1,5 @@
 /**
- * @file gl_font.c
+ * @file r_font.c
  * @brief font handling with SDL_ttf font engine
  */
 
@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "gl_local.h"
+#include "r_local.h"
 
 #define BUF_SIZE 2048
 static const SDL_Color color = { 255, 255, 255, 0 };	/* The 4. value is unused */

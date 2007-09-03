@@ -109,8 +109,8 @@ void VID_Init (void)
 	vid_fullscreen = Cvar_Get("vid_fullscreen", "0", CVAR_ARCHIVE, "Run the game in fullscreen mode");
 	vid_grabmouse = Cvar_Get("vid_grabmouse", "0", CVAR_ARCHIVE, "Grab the mouse in the game window - open the console to switch back to your desktop via Alt+Tab");
 	vid_gamma = Cvar_Get("vid_gamma", "1", CVAR_ARCHIVE, NULL);
-	vid_height = Cvar_Get("vid_height", "768", CVAR_ARCHIVE, "Custom video height - set gl_mode to -1 to use this");
-	vid_width = Cvar_Get("vid_width", "1024", CVAR_ARCHIVE, "Custom video width - set gl_mode to -1 to use this");
+	vid_height = Cvar_Get("vid_height", "768", CVAR_ARCHIVE, "Custom video height - set r_mode to -1 to use this");
+	vid_width = Cvar_Get("vid_width", "1024", CVAR_ARCHIVE, "Custom video width - set r_mode to -1 to use this");
 	vid_xpos = Cvar_Get("vid_xpos", "3", CVAR_ARCHIVE, "Position of the ufo window");
 	vid_ypos = Cvar_Get("vid_ypos", "22", CVAR_ARCHIVE, "Position of the ufo window");
 

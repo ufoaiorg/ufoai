@@ -1,5 +1,5 @@
 /**
- * @file gl_obj.c
+ * @file r_model_obj.c
  * @brief Wavefront (.obj) model loader & display code.
  *
  * ======= Original file information =======
@@ -36,7 +36,7 @@
 
 /**
  * @todo Rename load/display functions to match the ones for md2/md3.
- * @todo transfer this to model_t - see gl_model.h
+ * @todo transfer this to model_t - see r_model.h
  */
 
 #include <stdio.h>
@@ -44,7 +44,7 @@
 #include <string.h>
 
 
-#include "gl_local.h"
+#include "r_local.h"
 
 /** @brief obj Vertex */
 typedef struct {

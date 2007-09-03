@@ -1,5 +1,5 @@
 /**
- * @file gl_rsurf.c
+ * @file r_surf.c
  * @brief surface-related refresh code
  */
 
@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "gl_local.h"
+#include "r_local.h"
 
 static vec3_t modelorg;			/* relative to viewpoint */
 

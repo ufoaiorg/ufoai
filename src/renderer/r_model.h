@@ -1,5 +1,5 @@
 /**
- * @file gl_model.h
+ * @file r_model.h
  * @brief Brush model header file
  * @note d*_t structures are on-disk representations
  * @note m*_t structures are in-memory
@@ -27,11 +27,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define VERTEXSIZE	7
 
-#include "gl_model_alias.h"
-#include "gl_model_brush.h"
-#include "gl_model_md2.h"
-#include "gl_model_md3.h"
-#include "gl_model_sp2.h"
+#include "r_model_alias.h"
+#include "r_model_brush.h"
+#include "r_model_md2.h"
+#include "r_model_md3.h"
+#include "r_model_sp2.h"
 
 /* Whole model */
 

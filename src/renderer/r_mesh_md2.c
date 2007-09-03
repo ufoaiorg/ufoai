@@ -1,5 +1,5 @@
 /**
- * @file gl_mesh_md2.c
+ * @file r_mesh_md2.c
  * @brief MD2 Model drawing code
  */
 
@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "gl_local.h"
+#include "r_local.h"
 
 #define NUMVERTEXNORMALS	162
 
