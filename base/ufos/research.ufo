@@ -2934,9 +2934,9 @@ tech rs_craft_inter_saracen
 {
 	type	craft
 	description {
-		default "_saracen_interceptor_txt"
+		default "_inter_saracen_txt"
 	}
-	// pre_description	"_saracen_interceptor_pre_txt"
+	// pre_description	"_inter_saracen_pre_txt"
 	up_chapter	crafts
 
 	provides	craft_inter_saracen
@@ -2947,13 +2947,33 @@ tech rs_craft_inter_saracen
 	mdl_top		inter_saracen
 }
 
+tech rs_craft_inter_dragon
+{
+	type	craft
+	description {
+		default "_inter_dragon_txt"
+	}
+	pre_description	"_inter_dragon_pre_txt"
+	up_chapter	crafts
+
+	provides	craft_inter_dragon
+	require_OR {
+		tech rs_craft_ufo_scout
+		tech rs_craft_ufo_fighter
+	}
+	time	0
+
+	// TODO should come from craft-definition:
+	mdl_top		inter_dragon
+}
+
 tech rs_craft_inter_stingray
 {
 	type	craft
 	description {
-		default "_stingray_interceptor_txt"
+		default "_inter_stingray_txt"
 	}
-	// pre_description	"_stingray_interceptor_pre_txt"
+	// pre_description	"_inter_stingray_pre_txt"
 	up_chapter	crafts
 
 	provides	craft_inter_stingray

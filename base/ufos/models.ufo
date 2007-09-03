@@ -290,6 +290,15 @@ menu_model inter_saracen
 	}
 }
 
+// ============== Dragon Interceptor ======================
+menu_model inter_dragon
+{
+	model	"models/aircraft/inter_dragon/inter_dragon.md2"
+	// TODO
+	//menutransform {
+	//}
+}
+
 // ============== Stiletto Interceptor =====================
 menu_model inter_stiletto_glass
 {
