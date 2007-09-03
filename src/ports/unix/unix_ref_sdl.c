@@ -24,15 +24,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../../renderer/r_local.h"
+#include "../../client/cl_keys.h"
 
 #include <signal.h>
-#include <sys/mman.h>
-
 /*#include <SDL_opengl.h>*/
 
-#include "../../client/cl_keys.h"
 #include "unix_input.h"
+#ifndef _WIN32
+#include <sys/mman.h>
 #include "unix_qgl.h"
+#else
+#include "../windows/win_local.h"
+#include "../windows/win_ref_glw.h"
+#endif
 
 glwstate_t glw_state;
 
@@ -439,6 +443,7 @@ void *Rimp_GetProcAddress (const char *func)
 }
 #endif
 
+#ifndef _WIN32
 /**
  * @brief
  */
@@ -448,12 +453,14 @@ static void signal_handler (int sig)
 	Rimp_Shutdown();
 	exit(0);
 }
+#endif
 
 /**
  * @brief
  */
 void InitSig (void)
 {
+#ifndef _WIN32
 	signal(SIGHUP, signal_handler);
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
@@ -467,6 +474,7 @@ void InitSig (void)
 	signal(SIGSEGV, signal_handler);
 #endif
 	signal(SIGTERM, signal_handler);
+#endif
 }
 
 /**
@@ -537,8 +545,10 @@ static qboolean Rimp_InitGraphics (qboolean fullscreen)
 	int flags;
 	int stencil_bits;
 #ifndef __APPLE__
+#ifndef _WIN32
 	int width = 0;
 	int height = 0;
+#endif
 #endif
 
 #ifndef __APPLE__
@@ -549,6 +559,7 @@ static qboolean Rimp_InitGraphics (qboolean fullscreen)
 #endif
 
 #ifndef __APPLE__
+#ifndef _WIN32
 	/* turn off DGA mouse support: leaving it makes cursor _slow_ in fullscreen under X11 at least */
 	setenv("SDL_VIDEO_X11_DGAMOUSE", "0", 1);
 
@@ -562,6 +573,7 @@ static qboolean Rimp_InitGraphics (qboolean fullscreen)
 		}
 	}
 #endif
+#endif
 
 	/* Just toggle fullscreen if that's all that has been changed */
 	if (surface && (surface->w == vid.width) && (surface->h == vid.height)) {
@@ -574,7 +586,9 @@ static qboolean Rimp_InitGraphics (qboolean fullscreen)
 			return qtrue;
 	}
 
+#ifndef _WIN32
 	srandom(getpid());
+#endif
 
 	/* free resources in use */
 	if (surface)

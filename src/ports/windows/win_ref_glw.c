@@ -379,7 +379,7 @@ void Rimp_Shutdown (void)
  * @brief This routine is responsible for initializing the OS specific portions of OpenGL.
  * @note Under Win32 this means dealing with the pixelformats and doing the wgl interface stuff.
  */
-qboolean Rimp_Init (HINSTANCE hinstance, WNDPROC wndproc)
+qboolean Rimp_Init (void* hinstance, void* wndproc)
 {
 #define OSR2_BUILD_NUMBER 1111
 

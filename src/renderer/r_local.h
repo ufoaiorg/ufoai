@@ -511,7 +511,7 @@ IMPLEMENTATION SPECIFIC FUNCTIONS
 
 void Rimp_BeginFrame(void);
 void Rimp_EndFrame(void);
-qboolean Rimp_Init(HINSTANCE hinstance, WNDPROC wndproc);
+qboolean Rimp_Init(void* hinstance, void* wndproc);
 void Rimp_Shutdown(void);
 rserr_t Rimp_SetMode(unsigned int *pwidth, unsigned int *pheight, int mode, qboolean fullscreen);
 void Rimp_AppActivate(qboolean active);
