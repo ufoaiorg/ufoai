@@ -1047,6 +1047,7 @@ void Key_Event (int key, qboolean down, unsigned time)
 	}
 }
 
+#ifdef _WIN32
 /**
  * @brief
  */
@@ -1060,3 +1061,4 @@ void Key_ClearStates (void)
 		keydown[i] = 0;
 	}
 }
+#endif

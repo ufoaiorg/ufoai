@@ -246,31 +246,23 @@ MOUSE CONTROL
 */
 
 /* mouse variables */
-cvar_t *m_filter;
-
-int mouse_buttons;
-int mouse_oldbuttonstate;
-POINT current_pos;
-int mouse_x, mouse_y, old_mouse_x, old_mouse_y, mx_accum, my_accum;
-int old_x, old_y;
-
-qboolean mouseactive;	/* false when not focus app */
-
-qboolean restore_spi;
-qboolean mouseinitialized;
-int originalmouseparms[3], newmouseparms[3] = {0, 0, 1};
-qboolean mouseparmsvalid;
-
-int window_center_x, window_center_y;
-RECT window_rect;
-
+static int mouse_oldbuttonstate;
+static POINT current_pos;
+static qboolean mouseactive = qfalse;	/* false when not focus app */
+static qboolean restore_spi = qfalse;
+static qboolean mouseinitialized = qfalse;
+static int originalmouseparms[3], newmouseparms[3] = {0, 0, 1};
+static qboolean mouseparmsvalid = qfalse;
+static RECT window_rect;
 
 /**
  * @brief Called when the window gains focus or changes in some way
+ * @sa IN_DeactivateMouse
  */
 void IN_ActivateMouse (void)
 {
 	int width, height;
+	int window_center_x, window_center_y;
 
 	if (!mouseinitialized)
 		return;
@@ -304,19 +296,17 @@ void IN_ActivateMouse (void)
 
 	SetCursorPos(window_center_x, window_center_y);
 
-	old_x = window_center_x;
-	old_y = window_center_y;
-
 	if (vid_grabmouse->integer) {
 		SetCapture(cl_hwnd);
 		ClipCursor(&window_rect);
 	}
-	while (ShowCursor (FALSE) >= 0);
+	while (ShowCursor(FALSE) >= 0);
 }
 
 
 /**
  * @brief Called when the window loses focus
+ * @sa IN_ActivateMouse
  */
 void IN_DeactivateMouse (void)
 {
@@ -345,7 +335,6 @@ void IN_StartupMouse (void)
 {
 	mouseinitialized = qtrue;
 	mouseparmsvalid = SystemParametersInfo(SPI_GETMOUSE, 0, originalmouseparms, 0);
-	mouse_buttons = 3;
 }
 
 /**
@@ -358,8 +347,8 @@ void IN_MouseEvent (int mstate)
 	if (!mouseinitialized)
 		return;
 
-	/* perform button actions */
-	for (i = 0; i < mouse_buttons; i++) {
+	/* perform button actions for 3 mouse buttons */
+	for (i = 0; i < 3; i++) {
 		if ((mstate & (1<<i)) && !(mouse_oldbuttonstate & (1 << i)))
 			Key_Event(K_MOUSE1 + i, qtrue, sys_msg_time);
 
@@ -387,12 +376,10 @@ void IN_MouseEvent (int mstate)
  */
 void IN_GetMousePos (int *mx, int *my)
 {
-	if (!mouseactive
-	||  !GetCursorPos(&current_pos)
-	||  (window_rect.right == window_rect.left)
-	||  (window_rect.bottom == window_rect.top)) {
-		*mx = VID_NORM_WIDTH/2;
-		*my = VID_NORM_HEIGHT/2;
+	if (!mouseactive || !GetCursorPos(&current_pos)
+	 || (window_rect.right == window_rect.left) || (window_rect.bottom == window_rect.top)) {
+		*mx = VID_NORM_WIDTH / 2;
+		*my = VID_NORM_HEIGHT / 2;
 	} else {
 		*mx = VID_NORM_WIDTH * (current_pos.x - window_rect.left) / (window_rect.right - window_rect.left);
 		*my = VID_NORM_HEIGHT * (current_pos.y - window_rect.top) / (window_rect.bottom - window_rect.top);
@@ -412,7 +399,6 @@ VIEW CENTERING
 void IN_Init (void)
 {
 	/* mouse variables */
-	m_filter = Cvar_Get("m_filter", "0", 0, NULL);
 	in_mouse = Cvar_Get("in_mouse", "1", CVAR_ARCHIVE, NULL);
 
 	IN_StartupMouse();
@@ -421,6 +407,7 @@ void IN_Init (void)
 
 /**
  * @brief
+ * @sa IN_Activate
  */
 void IN_Shutdown (void)
 {
@@ -431,6 +418,7 @@ void IN_Shutdown (void)
 /**
  * @brief Called when the main window gains or loses focus.
  * @note The window may have been destroyed and recreated between a deactivate and an activate.
+ * @sa IN_Shutdown
  */
 void IN_Activate (qboolean active)
 {
@@ -452,33 +440,5 @@ void IN_Frame (void)
 		return;
 	}
 
-#if 0
-	/* @todo: NEEDED? */
-	if (!cl.refresh_prepped || cls.key_dest == key_console) {
-		/* temporarily deactivate if in fullscreen */
-		if (!Cvar_VariableInteger("vid_fullscreen")) {
-			IN_DeactivateMouse();
-			return;
-		}
-	}
-#endif
-
 	IN_ActivateMouse();
-}
-
-/**
- * @brief
- */
-void IN_ClearStates (void)
-{
-	mx_accum = 0;
-	my_accum = 0;
-	mouse_oldbuttonstate = 0;
-}
-
-/**
- * @brief
- */
-void IN_Commands (void)
-{
 }

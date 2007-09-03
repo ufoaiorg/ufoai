@@ -67,7 +67,6 @@ in_state_t in_state;
 void (*RW_IN_Init_fp)(in_state_t *in_state_p);
 void (*RW_IN_Shutdown_fp)(void);
 void (*RW_IN_Activate_fp)(qboolean active);
-void (*RW_IN_Commands_fp)(void);
 void (*RW_IN_GetMousePos_fp)(int *mx, int *my);
 void (*RW_IN_Frame_fp)(void);
 
@@ -142,7 +141,6 @@ static void VID_FreeReflib (void)
 	RW_IN_Init_fp = NULL;
 	RW_IN_Shutdown_fp = NULL;
 	RW_IN_Activate_fp = NULL;
-	RW_IN_Commands_fp = NULL;
 	RW_IN_GetMousePos_fp = NULL;
 	RW_IN_Frame_fp = NULL;
 
@@ -233,7 +231,6 @@ static qboolean VID_LoadRefresh (const char *name)
 	if ((RW_IN_Init_fp = dlsym(reflib_library, "RW_IN_Init")) == NULL ||
 		(RW_IN_Shutdown_fp = dlsym(reflib_library, "RW_IN_Shutdown")) == NULL ||
 		(RW_IN_Activate_fp = dlsym(reflib_library, "RW_IN_Activate")) == NULL ||
-		(RW_IN_Commands_fp = dlsym(reflib_library, "RW_IN_Commands")) == NULL ||
 		(RW_IN_GetMousePos_fp = dlsym(reflib_library, "RW_IN_GetMousePos")) == NULL ||
 		(RW_IN_Frame_fp = dlsym(reflib_library, "RW_IN_Frame")) == NULL)
 		Sys_Error("No RW_IN functions in REF.\n");
@@ -370,15 +367,6 @@ void IN_Shutdown (void)
 {
 	if (RW_IN_Shutdown_fp)
 		RW_IN_Shutdown_fp();
-}
-
-/**
- * @brief
- */
-void IN_Commands (void)
-{
-	if (RW_IN_Commands_fp)
-		RW_IN_Commands_fp();
 }
 
 /**

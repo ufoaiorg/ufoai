@@ -23,6 +23,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#ifndef WIN_LOCAL_H
+#define WIN_LOCAL_H
+
 #ifdef _MSC_VER
 #pragma warning( disable : 4229 )  /* mgraph gets this */
 #endif
@@ -39,15 +42,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define	WINDOW_STYLE	(WS_OVERLAPPED|WS_BORDER|WS_CAPTION|WS_VISIBLE)
 
-extern	HINSTANCE	global_hInstance;
+extern HINSTANCE global_hInstance;
 
-extern HWND			cl_hwnd;
-extern qboolean		ActiveApp, Minimized;
+extern HWND cl_hwnd;
+extern qboolean ActiveApp, Minimized;
 
-void IN_Activate (qboolean active);
-void IN_MouseEvent (int mstate);
+void IN_Activate(qboolean active);
+void IN_MouseEvent(int mstate);
 
-extern int		window_center_x, window_center_y;
-extern RECT		window_rect;
+int IN_MapKey(int wParam, int lParam);
 
-int IN_MapKey (int wParam, int lParam);
+#endif /* WIN_LOCAL_H */

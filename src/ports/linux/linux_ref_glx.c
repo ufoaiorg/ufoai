@@ -95,7 +95,6 @@ static int	mx, my;
 
 static int	win_x, win_y;
 
-static cvar_t	*m_filter;
 static cvar_t	*in_mouse;
 static cvar_t	*in_dgamouse;
 
@@ -226,7 +225,6 @@ void RW_IN_Init (in_state_t *in_state_p)
 	in_state = in_state_p;
 
 	/* mouse variables */
-	m_filter = ri.Cvar_Get("m_filter", "0", 0, NULL);
 	in_mouse = ri.Cvar_Get("in_mouse", "1", CVAR_ARCHIVE, NULL);
 #ifdef HAVE_XF86_DGA
 	in_dgamouse = ri.Cvar_Get("in_dgamouse", "1", CVAR_ARCHIVE, NULL);
@@ -249,13 +247,6 @@ void RW_IN_Shutdown (void)
 
 	if (mouse_avail)
 		mouse_avail = qfalse;
-}
-
-/**
- * @brief
- */
-void RW_IN_Commands (void)
-{
 }
 
 /**
