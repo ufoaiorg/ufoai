@@ -119,41 +119,6 @@ void SV_BroadcastPrintf (int level, const char *fmt, ...)
 }
 
 /**
- * @brief Sends text to all active clients
- * @sa SV_ClientCommand
- */
-void SV_BroadcastCommand (const char *fmt, ...)
-{
-	va_list argptr;
-	struct dbuffer *msg;
-
-	if (Com_ServerState() == ss_dead) {
-		Com_Printf("SV_BroadcastCommand: Server isn't up yet\n");
-		return;
-	}
-
-	msg = new_dbuffer();
-	NET_WriteByte(msg, svc_stufftext);
-
-	va_start(argptr, fmt);
-	NET_VPrintf(msg, fmt, argptr);
-	va_end(argptr);
-
-#ifdef DEBUG
-	{
-		char string[1024];
-		va_start(argptr, fmt);
-		Q_vsnprintf(string, sizeof(string), fmt, argptr);
-		va_end(argptr);
-		string[sizeof(string) - 1] = 0;
-		Com_DPrintf(DEBUG_SERVER, "SV_BroadcastCommand: %s\n", string);
-	}
-#endif
-	SV_Multicast(~0, msg);
-}
-
-
-/**
  * @brief Sends the contents of msg to a subset of the clients,then frees msg
  */
 void SV_Multicast (int mask, struct dbuffer *msg)

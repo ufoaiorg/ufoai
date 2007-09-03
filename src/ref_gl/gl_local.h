@@ -531,9 +531,6 @@ void Draw_3DMapMarkers(vec3_t angles, float zoom, vec3_t position, const char *m
 
 /* end of 3d globe */
 
-void R_InitBloom(void);
-void R_BloomBlend(void);
-
 void R_SetCacheState(mBspSurface_t * surf);
 void R_BuildLightMap(mBspSurface_t * surf, byte * dest, int stride);
 

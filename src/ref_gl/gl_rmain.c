@@ -641,9 +641,6 @@ static void R_RenderView (refdef_t * fd)
 	R_RenderDlights();
 
 	R_Flash();
-
-	/* apply 2d bloom effect */
-	R_BloomBlend();
 }
 
 /**
@@ -1153,7 +1150,6 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 	R_InitImages();
 	R_InitMiscTexture();
 	Draw_InitLocal();
-	R_InitBloom();
 
 	R_CHECK_ERROR
 

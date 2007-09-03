@@ -185,9 +185,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\ref_gl\gl_arb_shader.h" />
-		<Unit filename="..\..\src\ref_gl\gl_bloom.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\ref_gl\gl_draw.c">
 			<Option compilerVar="CC" />
 		</Unit>
