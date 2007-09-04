@@ -2909,7 +2909,6 @@ tech rs_craft_drop_firebird
 	require_AND { tech nothing }
 	time	0
 
-	// TODO should come from craft-definition:
 	mdl_top		drop_firebird
 }
 
@@ -2926,7 +2925,6 @@ tech rs_craft_inter_stiletto
 	require_AND { tech nothing }
 	time	0
 
-	// TODO should come from craft-definition:
 	mdl_top		inter_stiletto
 }
 
@@ -2943,7 +2941,6 @@ tech rs_craft_inter_saracen
 	require_AND { tech nothing }
 	time	0
 
-	// TODO should come from craft-definition:
 	mdl_top		inter_saracen
 }
 
@@ -2965,7 +2962,6 @@ tech rs_craft_inter_dragon
 	}
 	time	0
 
-	// TODO should come from craft-definition:
 	mdl_top		inter_dragon
 }
 
@@ -2982,7 +2978,6 @@ tech rs_craft_inter_stingray
 	require_AND { tech nothing }
 	time	0
 
-	// TODO should come from craft-definition:
 	mdl_top		inter_stingray
 }
 
@@ -3044,7 +3039,6 @@ tech rs_craft_ufo_scout
 	provides	"craft_ufo_scout"
 	time	2500
 
-	// TODO should come from craft-definition:
 	mdl_top		ufo_scout
 }
 
@@ -3086,7 +3080,6 @@ tech rs_craft_ufo_fighter
 	provides	"craft_ufo_fighter"
 	time	2500
 
-	// TODO should come from craft-definition:
 	mdl_top		ufo_fighter
 }
 
@@ -3128,7 +3121,6 @@ tech rs_craft_ufo_supply
 	provides	"craft_ufo_supply"
 	time	2500
 
-	// TODO should come from craft-definition:
 	mdl_top		ufo_supply
 }
 
@@ -3170,7 +3162,6 @@ tech rs_craft_ufo_carrier
 	provides	"craft_ufo_carrier"
 	time	2500
 
-	// TODO should come from craft-definition:
 	mdl_top		ufo_carrier
 }
 
@@ -3212,7 +3203,6 @@ tech rs_craft_ufo_condor
 	provides	"craft_ufo_condor"
 	time	2500
 
-	// TODO should come from craft-definition:
 	mdl_top		ufo_condor
 }
 
@@ -3254,7 +3244,6 @@ tech rs_craft_ufo_harvester
 	provides	"craft_ufo_harvester"
 	time	2500
 
-	// TODO should come from craft-definition:
 	mdl_top		ufo_harvester
 }
 

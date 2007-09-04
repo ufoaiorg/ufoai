@@ -3,15 +3,7 @@
 //=========================================================================
 // aircraft
 //
-//	--vv-- Parameters which can get influenced by craft equipement --vv--
-//	speed - The speed of the aircraft, which tells how fast the aircraft is.
-//	shield - The parameter of aircraft shield, which tells aircraft's protection.
-//	ecm - The parameter of electronic level at aircraft, the bigger, the lower possibility to hit by enemy (in percent).
-//	damage - The parameter of aircraft hit points, which tells how much damage aircraft can suffer.
-//	accuracy - The parameter of accuracy, the bigger, the bigger possibility to hit an enemy (in percent).
-//	fuelsize - Maximum capacity of fuel tank.
-//	wrange - Not defined here for aircrafts (see aircraft items below) - will be set ingame to the biggest wrange of weapons aboard.
-//
+//	model - Model that is displayed on battlescape. For geoscape models (i.e. menu models) see the research.ufo file ("mdl_top").
 //	slot {}	- Any number of entries. Parameters can be the following :
 //		type		- The type of item this slot can contain (See "type "in "craftitem" below)
 //		position	- Slot's position on the aircraft. See cl_aircraft.c for available values.
@@ -19,8 +11,18 @@
 //		contains	- technology of the item in the slot at the beginning of the game.
 //		ammo		- Technology of the ammo loading the weapon (only for weapon slots).
 //
+//	--vv-- Parameters which can get influenced by craft equipement ("craftitem"). --vv--
+//	speed - The speed of the aircraft, which tells how fast the aircraft is.
+//	shield - The parameter of aircraft shield, which tells aircraft's protection.
+//	ecm - The parameter of electronic level at aircraft, the bigger, the lower possibility to hit by enemy (in percent).
+//	damage - The parameter of aircraft hit points, which tells how much damage aircraft can suffer.
+//	accuracy - The parameter of accuracy, the bigger, the bigger possibility to hit an enemy (in percent).
+//	fuelsize - Maximum capacity of fuel tank.
+//	wrange - Not defined here for aircrafts (see aircraft items below) - will be set ingame to the biggest wrange of weapons aboard.
+//	---------------------------------------------------------------------
 //
 // craftitem
+//
 //	crafttype - The type of the item. Possible values:
 //		weapon
 //		ammo
@@ -51,6 +53,8 @@
 //	wrange		- The range of the weapon, which tells the minimum distance of opening fire.
 //	delay		- The delay between 2 shots of this ammunition.
 //	wdamage		- For ammos, it's the parameter which tells how much damage such weapon can do (this one is not V_RELABS).
+//	---------------------------------------------------------------------
+//
 //=========================================================================
 // Don't forget to add mini-models to base/models/geoscape, too.
 // Also read the notes about ufos.
