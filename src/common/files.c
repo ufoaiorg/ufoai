@@ -6,7 +6,6 @@
  * This can be overridden with the "-basedir" command line parm to allow code debugging in a different directory.
  * The base directory is only used during filesystem initialization.
  * The "game directory" is the first tree on the search path and directory that all generated files (savegames, screenshots, config files) will be saved to.
- * This can be overridden with the "-game" command line parameter.
  * The game directory can never be changed while quake is executing.
  * This is a precacution against having a malicious server instruct clients to write files over areas they shouldn't.
  */
@@ -49,48 +48,6 @@ filelink_t *fs_links;
 
 searchpath_t *fs_searchpaths;
 searchpath_t *fs_base_searchpaths;	/* without gamedirs */
-
-/**
- * @brief
- */
-static qboolean strwildcomp (const char *string, const char *pattern)
-{
-	const char *s = 0;
-	char c = '\0';
-
-	s = string;
-
-	while (qtrue) {
-		switch (c = *pattern++) {
-		case 0:
-			return !*s ? qtrue : qfalse;
-		case '?':
-			if (*s == '\0')
-				return qfalse;
-			s++;
-			break;
-		case '*':
-			c = *pattern;
-			while (c == '*')
-				c = *++pattern;
-
-			if (!c)
-				return qtrue;
-
-			while (*s) {
-				if (strwildcomp(s, pattern))
-					return qtrue;
-				s++;
-			}
-			return qfalse;
-		default:
-			if (c != *s)
-				return qfalse;
-			++s;
-			break;
-		}
-	}
-}
 
 /**
  * @brief Called to find where to write a file (savegames, etc)
