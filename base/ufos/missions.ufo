@@ -544,7 +544,7 @@ mission construction
 {
 	location	"_Uppsala"
 	type		"_Alien hideout"
-	text		"_There is a construction site being attacked by aliens. Protect workes and their equipment."
+	text		"_There is a construction site being attacked by aliens. Protect workers and their equipment."
 	pos		"-17 60"
 	aliens		6
 	alienteam	"taman shevaar"
