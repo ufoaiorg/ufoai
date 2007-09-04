@@ -942,7 +942,7 @@ static void CP_CheckLostCondition (qboolean lost, mission_t* mission, int civili
 			XVIRate += nation->XVIRate;
 		}
 		XVIRate /= gd.numNations;
-		if (1 /*XVIRate > curCampaign->maxAllowedXVIRateUntilLost*/) {
+		if (XVIRate > curCampaign->maxAllowedXVIRateUntilLost) {
 			menuText[TEXT_STANDARD] = _("You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory.");
 			endCampaign = qtrue;
 		} else {
