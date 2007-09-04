@@ -820,7 +820,10 @@ static qboolean CM_TestConnection (routing_t * map, int x, int y, byte z, unsign
 	ay = y + dvecs[dir][1];
 	assert((ay >= 0) && (ay < WIDTH));
 	az = z + (h + sh) / 0x10;
-	assert(az < HEIGHT);	/* Well, it just has to be, doesn't it? :) */
+	if (az >= HEIGHT) {
+		Com_Printf("CM_TestConnection: The max has more than %i levels - skipping the higher levels.\n", HEIGHT);
+		return qfalse;
+	}
 	h = (h + sh) % 0x10;
 
 	/* assume blocked */
