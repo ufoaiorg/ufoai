@@ -3919,19 +3919,19 @@ tech rs_alien_materials
 
 tech rs_item_alienmaterials
 {
-        type            weapon
-        name            "_Alien Materials"
+	type	weapon
+	name	"_Alien Materials"
 	description {
 		default "_alien_materials_txt"
 	}
 
-        require_AND
-        {
-                tech rs_alien_materials
-        }
-        provides        alienmaterials
-        time            0
-        producetime     -1
+	require_AND
+	{
+		tech rs_alien_materials
+	}
+	provides	alienmaterials
+	time		0
+	producetime	-1
 }
 
 //========================
