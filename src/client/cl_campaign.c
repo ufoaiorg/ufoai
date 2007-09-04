@@ -399,6 +399,9 @@ static void CL_CampaignActivateStageSets (stage_t *stage)
 			set->event = Date_Add(set->start, Date_Random_Begin(set->def->frame));
 			if (*(set->def->sequence))
 				Cbuf_ExecuteText(EXEC_APPEND, va("seq_start %s;\n", set->def->sequence));
+			/* XVI spreading has started */
+			if (set->def->activateXVI)
+				ccs.XVISpreadActivated = qtrue;
 		}
 }
 
@@ -938,8 +941,7 @@ static void CP_CheckLostCondition (qboolean lost, mission_t* mission, int civili
 
 	/* only if the definition tells us to keep an eye on this lost criteria */
 	if (mission && curCampaign->civiliansKilledUntilLost) {
-		curCampaign->civiliansKilledUntilLost -= civiliansKilled;
-		if (curCampaign->civiliansKilledUntilLost <= 0) {
+		if (ccs.civiliansKilled > curCampaign->civiliansKilledUntilLost) {
 			/* lost the game */
 			menuText[TEXT_STANDARD] = _("Under your command, PHALANX operations have consistently failed to protect innocent civilians. Dozens have lost their lives through your inability to handle the alien threat. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one.");
 			endCampaign = qtrue;
@@ -2075,6 +2077,11 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	/* read credits */
 	CL_UpdateCredits(MSG_ReadLong(sb));
 
+	/* read other campaign data */
+	ccs.civiliansKilled = MSG_ReadShort(sb);
+	ccs.aliensKilled = MSG_ReadShort(sb);
+	ccs.XVISpreadActivated = MSG_ReadByte(sb);
+
 	/* read campaign data */
 	name = MSG_ReadString(sb);
 	while (*name) {
@@ -2268,10 +2275,6 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 		}
 	}
 
-	curCampaign->civiliansKilledUntilLost = MSG_ReadShort(sb);
-	curCampaign->negativeCreditsUntilLost = MSG_ReadLong(sb);
-	curCampaign->maxAllowedXVIRateUntilLost = MSG_ReadByte(sb);
-
 	return qtrue;
 }
 
@@ -2308,6 +2311,11 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 
 	/* store credits */
 	MSG_WriteLong(sb, ccs.credits);
+
+	/* store other campaign data */
+	MSG_WriteShort(sb, ccs.civiliansKilled);
+	MSG_WriteShort(sb, ccs.aliensKilled);
+	MSG_WriteByte(sb, ccs.XVISpreadActivated);
 
 	/* store campaign data */
 	for (i = 0, state = ccs.stage; i < numStages; i++, state++)
@@ -2381,10 +2389,6 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 		MSG_WriteString(sb, selMis->def->name);
 	else
 		MSG_WriteString(sb, "");
-
-	MSG_WriteShort(sb, curCampaign->civiliansKilledUntilLost);
-	MSG_WriteLong(sb, curCampaign->negativeCreditsUntilLost);
-	MSG_WriteByte(sb, curCampaign->maxAllowedXVIRateUntilLost);
 
 	return qtrue;
 }
@@ -3502,6 +3506,7 @@ static const value_t stageset_vals[] = {
 	{"expire", V_DATE, offsetof(stageSet_t, expire), 0},
 	{"number", V_INT, offsetof(stageSet_t, number), MEMBER_SIZEOF(stageSet_t, number)},
 	{"quota", V_INT, offsetof(stageSet_t, quota), MEMBER_SIZEOF(stageSet_t, quota)},
+	{"activexvi", V_INT, offsetof(stageSet_t, activateXVI), MEMBER_SIZEOF(stageSet_t, activateXVI)},
 	{"ufos", V_INT, offsetof(stageSet_t, ufos), MEMBER_SIZEOF(stageSet_t, ufos)},
 	{"sequence", V_STRING, offsetof(stageSet_t, sequence), 0},
 	{"cutscene", V_STRING, offsetof(stageSet_t, cutscene), 0},

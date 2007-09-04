@@ -141,7 +141,8 @@ typedef struct stageSet_s {
 	date_t expire;				/**< date when this mission will expire and will be removed from geoscape */
 	int number;					/**< number of missions until set is deactivated (they only need to appear on geoscape) */
 	int quota;					/**< number of successfully ended missions until set gets deactivated */
-	byte numMissions;			/**< number of missions in this set */
+	qboolean activateXVI;		/**< if this is true the stage will active the global XVI spreading */
+	int numMissions;			/**< number of missions in this set */
 	int missions[MAX_SETMISSIONS];	/**< mission names in this set */
 	int ufos;					/**< how many ufos should appear in this stage */
 } stageSet_t;
@@ -352,6 +353,7 @@ typedef struct ccs_s {
 	int civiliansKilled;	/**< how many civilians were killed already */
 	int aliensKilled;		/**< how many aliens were killed already */
 	date_t date;			/**< current date */
+	qboolean XVISpreadActivated;	/**< should the XVI spread over the globe already */
 	float timer;
 
 	vec3_t angles;			/**< 3d geoscape rotation */
