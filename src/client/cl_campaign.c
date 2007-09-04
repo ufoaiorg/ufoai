@@ -908,13 +908,31 @@ static void CP_EndCampaign (qboolean won)
 }
 
 /**
+ * @brief Return the average XVI rate
+ * @note XVI = eXtraterrestial Viral Infection
+ */
+static int CP_GetAverageXVIRate (void)
+{
+	int XVIRate = 0, i;
+	nation_t* nation;
+
+	assert(gd.numNations);
+
+	/* check for XVI infection rate */
+	for (i = 0, nation = gd.nations; i < gd.numNations; i++, nation++) {
+		XVIRate += nation->XVIRate;
+	}
+	XVIRate /= gd.numNations;
+	return XVIRate;
+}
+
+/**
  * @brief Checks whether the player has lost the campaign
  * @note
  */
 static void CP_CheckLostCondition (qboolean lost, mission_t* mission, int civiliansKilled)
 {
 	qboolean endCampaign = qfalse;
-	nation_t* nation;
 
 	assert(curCampaign);
 
@@ -934,15 +952,7 @@ static void CP_CheckLostCondition (qboolean lost, mission_t* mission, int civili
 	}
 
 	if (!endCampaign) {
-		int XVIRate = 0, i;
-		assert(gd.numNations);
-
-		/* check for XVI infection rate */
-		for (i = 0, nation = gd.nations; i < gd.numNations; i++, nation++) {
-			XVIRate += nation->XVIRate;
-		}
-		XVIRate /= gd.numNations;
-		if (XVIRate > curCampaign->maxAllowedXVIRateUntilLost) {
+		if (CP_GetAverageXVIRate() > curCampaign->maxAllowedXVIRateUntilLost) {
 			menuText[TEXT_STANDARD] = _("You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory.");
 			endCampaign = qtrue;
 		} else {
@@ -1757,6 +1767,16 @@ static void CL_StatsUpdate_f (void)
 		sum += costs;
 	}
 	Q_strcat(pos, va(_("\n\t-------\nSum:\t%i c\n"), sum), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
+
+	/* campaign */
+	pos += (strlen(pos) + 1);
+	menuText[TEXT_GENERIC] = pos;
+	Q_strcat(pos, va(_("Max. allowed debts: %ic\nMax. allowed eXtraterrestial Viral Infection: %i%%\n"
+		"Current eXtraterrestial Viral Infection: %i%%"),
+		curCampaign->negativeCreditsUntilLost,
+		curCampaign->maxAllowedXVIRateUntilLost,
+		CP_GetAverageXVIRate()),
+		(ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 }
 
 static screenPoint_t fundingPts[MAX_NATIONS][MONTHS_PER_YEAR]; /* Space for month-lines with 12 points for each nation. */

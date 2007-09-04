@@ -162,8 +162,6 @@ menu stats
 		format  "22 360"
 		num		"44"
 		height	"5"
-		click
-		mousefx	true
 	}
 
 	func init
