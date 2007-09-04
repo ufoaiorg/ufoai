@@ -404,6 +404,43 @@ tech rs_alien_origins
 	time		2700
 }
 
+// FIXME: This should not be researchable at all - this is marked as
+// researchable as soon as the global xvi spread is activated
+tech rs_alien_xvi
+{
+	type		tech
+	name		"_eXtraterrestial Viral Infection"
+	up_chapter	threat
+	description {
+		default "_alien_xvi_txt"
+	}
+	pre_description {
+		default "_alien_xvi_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"_mail_from_col_falkland"
+		to	"_mail_to_base_commander"
+		subject	"_eXtraterrestial Viral Infection"
+		icon	icons/intelligence
+	}
+
+	mail
+	{
+		from	"_mail_from_col_falkland"
+		to	"_mail_to_base_commander"
+		subject	"_eXtraterrestial Viral Infection"
+		icon	icons/intelligence
+	}
+
+	require_AND
+	{
+		tech nothing // FIXME
+	}
+	time		2700
+}
+
 //=================================
 // weapons and items
 //=================================
