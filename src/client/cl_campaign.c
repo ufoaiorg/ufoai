@@ -999,9 +999,10 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 	float performance = 0.5 + civilianRatio * 0.25 + alienRatio * 0.25;
 	int XVISpread;
 
-	if (lost)
+	if (lost) {
 		stats.missionsLost++;
-	else
+		ccs.civiliansKilled += civiliansKilled;
+	} else
 		stats.missionsWon++;
 
 	for (i = 0; i < gd.numNations; i++) {
@@ -2677,10 +2678,6 @@ static void CL_GameGo (void)
 	CL_ReloadAndRemoveCarried(aircraft, &ccs.eMission);
 	/* remove inventory of any old temporary LEs */
 	LE_Cleanup();
-
-	/* Zero out kill counters */
-	ccs.civiliansKilled = 0;
-	ccs.aliensKilled = 0;
 
 	CP_StartMissionMap(mis);
 }

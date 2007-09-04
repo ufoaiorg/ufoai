@@ -2141,7 +2141,6 @@ void CL_ParseResults (struct dbuffer *msg)
 
 		Q_strcat(resultText, va(_("Civilians killed by your Team\t%i\n"), num_kills[we][TEAM_CIVILIAN]), sizeof(resultText));
 		Q_strcat(resultText, va(_("Civilians saved\t%i\n\n\n"), civilian_surviviurs), sizeof(resultText));
-		ccs.civiliansKilled += civilian_killed;
 
 		MN_PopMenu(qtrue);
 		Cvar_Set("mn_main", "main");
@@ -2174,8 +2173,6 @@ void CL_ParseResults (struct dbuffer *msg)
 		Q_strcat(resultText, va(_("Civilians killed by friendly fire\t%i\n"), num_kills[we][TEAM_CIVILIAN] + num_kills[TEAM_CIVILIAN][TEAM_CIVILIAN]), sizeof(resultText));
 		Q_strcat(resultText, va(_("Civilians saved\t%i\n\n"), civilian_surviviurs), sizeof(resultText));
 		Q_strcat(resultText, va(_("Gathered items (types/all)\t%i/%i\n"), missionresults.itemtypes,  missionresults.itemamount), sizeof(resultText));
-
-		ccs.civiliansKilled += civilian_killed;
 
 		MN_PopMenu(qtrue);
 		Cvar_Set("mn_main", "singleplayerInGame");
