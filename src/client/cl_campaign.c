@@ -945,7 +945,14 @@ static void CP_CheckLostCondition (qboolean lost, mission_t* mission, int civili
 	if (mission && curCampaign->civiliansKilledUntilLost) {
 		if (ccs.civiliansKilled > curCampaign->civiliansKilledUntilLost) {
 			/* lost the game */
-			menuText[TEXT_STANDARD] = _("Under your command, PHALANX operations have consistently failed to protect innocent civilians. Dozens have lost their lives through your inability to handle the alien threat. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one.");
+			menuText[TEXT_STANDARD] = _("Under your command, PHALANX operations have"
+				" consistently failed to protect innocent civilians. Dozens have"
+				" lost their lives through your inability to handle the alien threat."
+				" The UN, highly unsatisfied with your performance, has decided to remove"
+				" you from command and subsequently disbands the PHALANX project as an"
+				" effective task force. No further attempts at global cooperation are made."
+				" Earth's nations each try to stand alone against the aliens, and eventually"
+				" fall one by one.");
 			endCampaign = qtrue;
 		}
 	}
@@ -957,7 +964,12 @@ static void CP_CheckLostCondition (qboolean lost, mission_t* mission, int civili
 
 	if (!endCampaign) {
 		if (CP_GetAverageXVIRate() > curCampaign->maxAllowedXVIRateUntilLost) {
-			menuText[TEXT_STANDARD] = _("You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory.");
+			menuText[TEXT_STANDARD] = _("You have failed in your charter to protect Earth."
+				" Our home and our people have fallen to the alien infection. Only a handful"
+				" of people on Earth remain human, and the remaining few no longer have a"
+				" chance to stem the tide. Your command is no more; PHALANX is no longer"
+				" able to operate as a functioning unit. Nothing stands between the aliens"
+				" and total victory.");
 			endCampaign = qtrue;
 		} else {
 			/* check for nation happyiness */
