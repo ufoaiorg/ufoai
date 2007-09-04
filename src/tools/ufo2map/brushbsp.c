@@ -559,16 +559,16 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 				if (!side->winding)
 					continue;	/* nothing visible, so it can't split */
 				if (side->texinfo == TEXINFO_NODE)
-					continue;	/* allready a node splitter */
+					continue;	/* already a node splitter */
 				if (side->tested)
-					continue;	/* we allready have metrics for this plane */
+					continue;	/* we already have metrics for this plane */
 				if (side->surfaceFlags & SURF_SKIP)
 					continue;	/* skip surfaces are never chosen */
 				if (side->visible ^ (pass < 2))
 					continue;	/* only check visible faces on first pass */
 
 				pnum = side->planenum;
-				pnum &= ~1;	/* allways use positive facing plane */
+				pnum &= ~1;	/* always use positive facing plane */
 
 				CheckPlaneAgainstParents(pnum, node);
 

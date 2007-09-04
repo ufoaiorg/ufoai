@@ -212,7 +212,7 @@ static void TriEdge_r (triangulation_t *trian, triedge_t *e)
 	triangle_t *nt;
 
 	if (e->tri)
-		return;		/* allready connected by someone */
+		return;		/* already connected by someone */
 
 	/* find the point with the best angle */
 	p0 = trian->points[e->p0]->origin;

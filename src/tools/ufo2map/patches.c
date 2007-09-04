@@ -49,14 +49,14 @@ void CalcTextureReflectivity (void)
 	miptex_t *mt;
 	qboolean loaded = qfalse;
 
-	/* allways set index 0 even if no textures */
+	/* always set index 0 even if no textures */
 	texture_reflectivity[0][0] = 0.5;
 	texture_reflectivity[0][1] = 0.5;
 	texture_reflectivity[0][2] = 0.5;
 
 	for (i = 0; i < numtexinfo; i++) {
 		wal = qfalse;
-		/* see if an earlier texinfo allready got the value */
+		/* see if an earlier texinfo already got the value */
 		for (j = 0; j < i; j++) {
 			if (!strcmp(texinfo[i].texture, texinfo[j].texture)) {
 				VectorCopy(texture_reflectivity[j], texture_reflectivity[i]);

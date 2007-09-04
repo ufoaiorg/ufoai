@@ -138,7 +138,7 @@ static int CreateNewFloatPlane (vec3_t normal, vec_t dist)
 
 	nummapplanes += 2;
 
-	/* allways put axial planes facing positive first */
+	/* always put axial planes facing positive first */
 	if (p->type < 3) {
 		if (p->normal[0] < 0 || p->normal[1] < 0 || p->normal[2] < 0) {
 			/* flip order */
@@ -313,7 +313,7 @@ static void AddBrushBevels (mapbrush_t *b)
 	order = 0;
 	for (axis = 0; axis < 3; axis++) {
 		for (dir = -1; dir <= 1; dir += 2, order++) {
-			/* see if the plane is allready present */
+			/* see if the plane is already present */
 			for (i = 0, s = b->original_sides; i < b->numsides; i++, s++) {
 				if (mapplanes[s->planenum].normal[axis] == dir)
 					break;
@@ -389,7 +389,7 @@ static void AddBrushBevels (mapbrush_t *b)
 					for (k = 0; k < b->numsides; k++) {
 						/* FIXME: This leads to different results on different archs
 						 * due to float rounding/precision errors */
-						/* if this plane has allready been used, skip it */
+						/* if this plane has already been used, skip it */
 						if (PlaneEqual(&mapplanes[b->original_sides[k].planenum]
 							, normal, dist) )
 							break;

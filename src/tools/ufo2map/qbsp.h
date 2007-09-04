@@ -67,7 +67,7 @@ typedef struct side_s {
 	int			contentFlags;	/**< from miptex */
 	int			surfaceFlags;	/**< from miptex */
 	qboolean	visible;		/**< choose visible planes first */
-	qboolean	tested;			/**< this plane allready checked as a split */
+	qboolean	tested;			/**< this plane already checked as a split */
 	qboolean	bevel;			/**< don't ever use for bsp splitting */
 } side_t;
 
