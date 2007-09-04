@@ -855,7 +855,7 @@ menu lostgame
 	}
 
 	// reason why you've lost
-	text reason {
+	string reason {
 		color	"0 0.8 0 0.9"
 		align	uc
 		pos		"512 700"
