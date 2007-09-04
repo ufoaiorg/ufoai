@@ -79,19 +79,19 @@ static int centerOnEventIdx = 0;		/**< Current Event centered on 3D geoscape */
 static vec3_t finalGlobeAngle = {0, GLOBE_ROTATE, 0};	/**< value of finale ccs.angles for a smooth change of angle (see MAP_CenterOnPoint)*/
 static vec2_t final2DGeoscapeCenter = {0.5, 0.5};		/**< value of ccs.center for a smooth change of position (see MAP_CenterOnPoint) */
 static qboolean smoothRotation = qfalse;				/**< qtrue if the rotation of 3D geoscape must me smooth */
-static byte *terrainPic = NULL;			/**< this is the terrain mask for seperating the clima
+static byte *terrainPic = NULL;			/**< this is the terrain mask for separating the clima
 											zone and water by different color values */
 static int terrainWidth, terrainHeight;		/**< the width and height for the terrain pic. */
 
-static byte *culturePic = NULL;			/**< this is the mask for seperating the culture
+static byte *culturePic = NULL;			/**< this is the mask for separating the culture
 											zone and water by different color values */
 static int cultureWidth, cultureHeight;		/**< the width and height for the culture pic. */
 
-static byte *populationPic = NULL;			/**< this is the mask for seperating the population rate
+static byte *populationPic = NULL;			/**< this is the mask for separating the population rate
 											zone and water by different color values */
 static int populationWidth, populationHeight;		/**< the width and height for the population pic. */
 
-static byte *nationsPic = NULL;			/**< this is the nation mask - seperated
+static byte *nationsPic = NULL;			/**< this is the nation mask - separated
 											by colors given in nations.ufo. */
 static int nationsWidth, nationsHeight;	/**< the width and height for the nation pic. */
 
@@ -1464,8 +1464,44 @@ nation_t* MAP_GetNation (const vec2_t pos)
 		if (VectorCompare(nation->color, color))
 			return nation;
 	}
-	Com_Printf("MAP_GetNation: No nation found at %.0f:%.0f - color: %i:%i:%i\n", pos[0], pos[1], color[0], color[1], color[2]);
+	Com_DPrintf(DEBUG_CLIENT, "MAP_GetNation: No nation found at %.0f:%.0f - color: %i:%i:%i\n", pos[0], pos[1], color[0], color[1], color[2]);
 	return NULL;
+}
+
+/**
+ * @brief Determine the terrain type under a given position
+ * @sa MAP_GetColor
+ * @param[in] pos Map Coordinates to get the terrain type from
+ * @return returns the zone name
+ */
+const char* MAP_GetTerrainTypeByPos (const vec2_t pos)
+{
+    byte* color = MAP_GetColor(pos, MAPTYPE_TERRAIN);
+    return MAP_GetTerrainType(color);
+}
+
+/**
+ * @brief Determine the culture type under a given position
+ * @sa MAP_GetColor
+ * @param[in] pos Map Coordinates to get the culture type from
+ * @return returns the zone name
+ */
+const char* MAP_GetCultureTypeByPos (const vec2_t pos)
+{
+    byte* color = MAP_GetColor(pos, MAPTYPE_CULTURE);
+    return MAP_GetCultureType(color);
+}
+
+/**
+ * @brief Determine the population type under a given position
+ * @sa MAP_GetColor
+ * @param[in] pos Map Coordinates to get the population type from
+ * @return returns the zone name
+ */
+const char* MAP_GetPopulationTypeByPos (const vec2_t pos)
+{
+    byte* color = MAP_GetColor(pos, MAPTYPE_POPULATION);
+    return MAP_GetPopulationType(color);
 }
 
 /**
@@ -1488,6 +1524,10 @@ const char* MAP_GetTerrainType (byte* color)
 		return "mountain";
 	else if (MapIsTropical(color))
 		return "tropical";
+	else if (MapIsCold(color))
+		return "cold";
+	else if (MapIsWasted(color))
+		return "wasted";
 	else
 		return "grass";
 }
@@ -1496,6 +1536,7 @@ const char* MAP_GetTerrainType (byte* color)
  * @brief Translate color value to culture type
  * @sa MAP_GetColor
  * @param[in] byte the color value from the culture mask
+ * @return returns the zone name
  * @note never may return a null pointer or an empty string
  */
 const char* MAP_GetCultureType (byte* color)
@@ -1518,6 +1559,7 @@ const char* MAP_GetCultureType (byte* color)
  * @brief Translate color value to population type
  * @sa MAP_GetColor
  * @param[in] byte the color value from the population mask
+ * @return returns the zone name
  * @note never may return a null pointer or an empty string
  */
 const char* MAP_GetPopulationType (byte* color)
@@ -1607,7 +1649,7 @@ qboolean MAP_MaskFind (byte * color, vec2_t polar)
 
 	/* get position */
 	num = rand() % num;
-	for (i = 0, c = terrainPic; i <= num; c += 4)
+	for (i = 0, c = terrainPic; i < num; c += 4)
 		if (c[0] == color[0] && c[1] == color[1] && c[2] == color[2])
 			i++;
 
@@ -1621,15 +1663,17 @@ qboolean MAP_MaskFind (byte * color, vec2_t polar)
 
 
 /**
- * @brief Returns the color value from geoscape of terrainPic at a given position.
+ * @brief Returns the color value from geoscape of a certain mask (terrain, culture or population) at a given position.
  * @param[in] pos vec2_t Value of position on map to get the color value from.
  * pos is longitude and latitude
  * @param[in] type determine the map to get the color from (there are different masks)
  * one for the climazone (bases made use of this - there are grass, ice and desert
  * base tiles available) and one for the nations
  * @return Returns the color value at given position.
- * @note terrainPic is a pointer to an rgba image in memory
+ * @note terrainPic, culturePic and populationPic are pointers to an rgba image in memory
  * @sa MAP_GetTerrainType
+ * @sa MAP_GetCultureType
+ * @sa MAP_GetPopulationType
  */
 byte *MAP_GetColor (const vec2_t pos, mapType_t type)
 {
@@ -1675,6 +1719,32 @@ byte *MAP_GetColor (const vec2_t pos, mapType_t type)
 	/* terrainWidth is the width of the image */
 	/* this calulation returns the pixel in col x and in row y */
 	return mask + 4 * (x + y * width);
+}
+
+/**
+ * @brief Checks for a given location, if it fulfills all criteria given via parameters (terrain, culture, population, nation type)
+ * @param[in] pos Location to be tested
+ * @param[in] terrainTypes A linkedList_t containing a list of strings determining the terrain types to be tested for (e.g. "grass")
+ * @param[in] cultureTypes A linkedList_t containing a list of strings determining the culture types to be tested for (e.g. "western")
+ * @param[in] populationTypes A linkedList_t containing a list of strings determining the population types to be tested for (e.g. "suburban")
+ * @param[in] nations A linkedList_t containing a list of strings determining the nations to be tested for (e.g. "asia")
+ * @return true if a location was found, otherwise false
+ * @note The name TCPNTypes comes from terrain, culture, population, nation types
+ */
+qboolean MAP_PositionFitsTCPNTypes (vec2_t pos, linkedList_t* terrainTypes, linkedList_t* cultureTypes, linkedList_t* populationTypes, linkedList_t* nations)
+{
+	if (LIST_ContainsString(terrainTypes,MAP_GetTerrainTypeByPos(pos)) || LIST_ContainsString(terrainTypes,"Any")) {
+		if (LIST_ContainsString(cultureTypes,MAP_GetCultureTypeByPos(pos)) || LIST_ContainsString(cultureTypes,"Any")) {
+			if (LIST_ContainsString(populationTypes,MAP_GetPopulationTypeByPos(pos)) || LIST_ContainsString(populationTypes,"Any")) {
+				nation_t *nationAtPos = MAP_GetNation(pos);
+				if ((nationAtPos && LIST_ContainsString(nations,nationAtPos->id)) || LIST_ContainsString(nations,"Any")) {
+					return qtrue;
+				}
+			}
+		}
+	}
+
+	return qfalse;
 }
 
 /**

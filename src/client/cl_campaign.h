@@ -57,8 +57,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MapIsCold(color)         (color[0] ==   0 && color[1] ==   0 && color[2] == 255)
 
 /* culture types */
-#define MapIsEastern(color)      (color[0] == 128 && color[1] == 255 && color[2] == 255)
-#define MapIsWestern(color)      (color[0] == 255 && color[1] == 128 && color[2] ==   0)
+#define MapIsWestern(color)      (color[0] == 128 && color[1] == 255 && color[2] == 255)
+#define MapIsEastern(color)      (color[0] == 255 && color[1] == 128 && color[2] ==   0)
 #define MapIsOriental(color)     (color[0] == 255 && color[1] ==   0 && color[2] ==   0)
 #define MapIsAfrican(color)      (color[0] == 128 && color[1] == 128 && color[2] == 255)
 
@@ -69,6 +69,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MapIsRural(color)        (color[0] == 128 && color[1] == 128 && color[2] == 255)
 #define MapIsNopopulation(color) (color[0] == 128 && color[1] == 255 && color[2] ==   0)
 
+/* RASTER enables a better performance for CP_GetRandomPosOnGeoscape set it to 1-6
+ * the higher the value the better the performance, but the smaller the coverage */
+#define RASTER 2
 
 /** possible map types */
 typedef enum mapType_s {
@@ -417,6 +420,8 @@ void CL_ParseResearchedCampaignItems(const char *name, const char **text);
 void CL_ParseResearchableCampaignStates(const char *name, const char **text, qboolean researchable);
 void CP_ExecuteMissionTrigger(mission_t * m, qboolean won);
 actMis_t* CL_CampaignAddGroundMission(mission_t* mis);
+
+qboolean CP_GetRandomPosOnGeoscape(vec2_t pos, linkedList_t* terrainTypes, linkedList_t* cultureTypes, linkedList_t* populationTypes, linkedList_t* nations);
 
 campaign_t* CL_GetCampaign(const char* name);
 void CL_GameExit(void);

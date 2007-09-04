@@ -969,8 +969,9 @@ LINKED LIST
 /**
  * @brief Adds an entry to a new or to an already existing linked list
  * @sa LIST_AddString
+ * @return Returns a pointer to the data that has been added, wrapped in a linkedList_t
  */
-void LIST_Add (linkedList_t** listDest, const byte* data, size_t length)
+linkedList_t* LIST_Add (linkedList_t** listDest, const byte* data, size_t length)
 {
 	linkedList_t *newEntry;
 	linkedList_t *list;
@@ -984,7 +985,7 @@ void LIST_Add (linkedList_t** listDest, const byte* data, size_t length)
 		(*listDest)->data = (byte*)Mem_PoolAlloc(length, com_genericPool, 0);
 		memcpy(((*listDest)->data), data, length);
 		(*listDest)->next = NULL; /* not really needed - but for better readability */
-		return;
+		return *listDest;
 	} else
 		list = *listDest;
 
@@ -996,6 +997,27 @@ void LIST_Add (linkedList_t** listDest, const byte* data, size_t length)
 	newEntry->data = (byte*)Mem_PoolAlloc(length, com_genericPool, 0);
 	memcpy(newEntry->data, data, length);
 	newEntry->next = NULL; /* not really needed - but for better readability */
+
+	return newEntry;
+}
+
+/**
+ * @brief Searches for the first occurrence of a given string
+ * @return true if the string is found, otherwise false
+ * @note if string is NULL, the function returns false
+ */
+qboolean LIST_ContainsString (linkedList_t* list, const char* string)
+{
+	assert(list);
+
+	while ((string != NULL) && (list != NULL)) {
+		if (!Q_strcmp((char*)list->data, string))
+			return qtrue;
+			/* Com_Printf("%.0f: %.0f\n", (float)list->data[0], (float)list->data[1]); */
+		list = list->next;
+	}
+
+	return qfalse;
 }
 
 /**
@@ -1043,3 +1065,4 @@ void LIST_Delete (linkedList_t *list)
 		l = list;
 	}
 }
+

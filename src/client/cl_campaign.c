@@ -305,7 +305,7 @@ static date_t Date_Random_Middle (date_t frame)
  */
 qboolean CL_NewBase (base_t* base, vec2_t pos)
 {
-	byte *color;
+	byte *colorTerrain;
 
 	assert(base);
 
@@ -317,18 +317,18 @@ qboolean CL_NewBase (base_t* base, vec2_t pos)
 		return qfalse;
 	}
 
-	color = MAP_GetColor(pos, MAPTYPE_TERRAIN);
+	colorTerrain = MAP_GetColor(pos, MAPTYPE_TERRAIN);
 
-	if (MapIsWater(color)) {
+	if (MapIsWater(colorTerrain)) {
 		/* This should already have been catched in MAP_MapClick (cl_menu.c), but just in case. */
 		MN_AddNewMessage(_("Notice"), _("Could not set up your base at this location"), qfalse, MSG_INFO, NULL);
 		return qfalse;
 	} else {
-		base->mapZone = MAP_GetTerrainType(color);
+		base->mapZone = MAP_GetTerrainType(colorTerrain);
 		Com_DPrintf(DEBUG_CLIENT, "CL_NewBase: zoneType: '%s'\n", base->mapZone);
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "Colorvalues for base: R:%i G:%i B:%i\n", color[0], color[1], color[2]);
+	Com_DPrintf(DEBUG_CLIENT, "Colorvalues for base terrain: R:%i G:%i B:%i\n", colorTerrain[0], colorTerrain[1], colorTerrain[2]);
 
 	/* build base */
 	Vector2Copy(pos, base->pos);
@@ -4990,6 +4990,89 @@ base_t *CP_GetMissionBase (void)
 {
 	assert(cls.missionaircraft && cls.missionaircraft->homebase);
 	return cls.missionaircraft->homebase;
+}
+
+/**
+ * @brief Determines a random position on Geoscape that fulfills certain criteria given via parameters
+ * @param[in] pos The position that will be overwritten with the random point fulfilling the criterias
+ * @param[in] terrainTypes A linkedList_t containing a list of strings determining the acceptable terrain types (e.g. "grass")
+ * @param[in] cultureTypes A linkedList_t containing a list of strings determining the acceptable culture types (e.g. "western")
+ * @param[in] populationTypes A linkedList_t containing a list of strings determining the acceptable population types (e.g. "suburban")
+ * @param[in] nations A linkedList_t containing a list of strings determining the acceptable nations (e.g. "asia")
+ * @return true if a location was found, otherwise false
+ * @sa LIST_AddString
+ * @sa LIST_Delete
+ * @note When all parameters contain the string "Any", the algorithm assumes that it does not need to include "water" terrains when determining a random position
+ * @note The function is nondeterministic when RASTER is set to a value > 1. The amount of possible alternatives is exactly defined by RASTER. I.e. if RASTER is set to 3, there are 3 different lists from which the random positions are chosen. The list is then chosen randomly.
+ */
+qboolean CP_GetRandomPosOnGeoscape (vec2_t pos, linkedList_t* terrainTypes, linkedList_t* cultureTypes, linkedList_t* populationTypes, linkedList_t* nations)
+{
+	float x, y;
+	int num;
+	int randomNum;
+	float posX, posY;
+
+	/* RASTER might reduce amount of tested locations to get a better performance */
+	float maskWidth = 360.0 / RASTER;
+	float maskHeight = 180.0 / RASTER;
+	/* RASTER is minimizing the amount of locations, so an offset is introduced to enable access to all locations, depending on a random factor */
+	float offset = rand() % RASTER;
+	vec2_t posT;
+
+	/* check all locations for suitability in 2 iterations */
+
+	/* prepare 1st iteration */
+	int hits = 0;
+
+	/* ITERATION 1 */
+	for (y = 0; y < maskHeight; y++) {
+		for (x = 0; x < maskWidth; x++) {
+			posX = x * 360.0 / maskWidth - 180.0 + offset;
+			posY = y * 180.0 / maskHeight - 90.0 + offset;
+
+			Vector2Set(posT, posX, posY);
+
+			if (MAP_PositionFitsTCPNTypes(posT, terrainTypes, cultureTypes, populationTypes, nations)) {
+				/* the location given in pos belongs to the terrain, culture, population types and nations
+				 * that are acceptable, so count it */
+				hits++;
+			}
+		}
+	}
+
+	/* if there have been no hits, the function failed to find a position */
+	if (hits == 0)
+		return qfalse;
+
+	/* the 2nd iteration goes through the locations again, but does so only until a random point */
+	/* prepare 2nd iteration */
+	randomNum = num = rand() % hits;
+
+	/* ITERATION 2 */
+	for (y = 0; y < maskHeight; y++) {
+		for (x = 0; x < maskWidth; x++) {
+			posX = x * 360.0 / maskWidth - 180.0 + offset;
+			posY = y * 180.0 / maskHeight - 90.0 + offset;
+
+			Vector2Set(posT,posX,posY);
+
+			if (MAP_PositionFitsTCPNTypes(posT, terrainTypes, cultureTypes, populationTypes, nations)) {
+				num--;
+
+				if (num < 1) {
+					Vector2Set(pos, posX, posY);
+					Com_DPrintf(DEBUG_CLIENT, "CP_GetRandomPosOnGeoscape: New random coords for a mission are %.0f:%.0f, chosen as #%i out of %i possible locations\n",
+						pos[0], pos[1], randomNum, hits);
+					return qtrue;
+				}
+			}
+		}
+	}
+
+	Com_DPrintf(DEBUG_CLIENT, "CP_GetRandomPosOnGeoscape: New random coords for a mission are %.0f:%.0f, chosen as #%i out of %i possible locations\n",
+		pos[0], pos[1], num, hits);
+
+	return qtrue;
 }
 
 /**

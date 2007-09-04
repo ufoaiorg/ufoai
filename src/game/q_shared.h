@@ -259,7 +259,8 @@ typedef struct linkedList_s {
 } linkedList_t;
 
 void LIST_AddString(linkedList_t** list, const char* data);
-void LIST_Add(linkedList_t** list, const byte* data, size_t length);
+linkedList_t* LIST_Add(linkedList_t** list, const byte* data, size_t length);
+qboolean LIST_ContainsString(linkedList_t* list, const char* string);
 void LIST_Delete(linkedList_t *list);
 
 /*
