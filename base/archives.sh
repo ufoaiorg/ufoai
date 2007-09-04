@@ -18,6 +18,9 @@ echo "music..."
 echo "maps..."
 find maps -type f -print | egrep -v '(\/\.svn\/)' | awk '/\.bsp$/||/\.ump$/ {print}' | xargs zip -u9@ 0maps.${EXT}
 #zip -ru9 0maps.zip maps -i \*.bsp
+echo "videos..."
+find videos -type f -print | egrep -v '(\/\.svn\/)' | awk '/\.roq$/ {print}' | xargs zip -u9@ 0videos.${EXT}
+#zip -ru9 0maps.zip maps -i \*.bsp
 echo "media..."
 (find media -type f -print; find shaders -type f -print) | egrep -v '(\/\.svn\/)' | awk '/\.fp$/||/\.vp$/||/\.ttf$/ {print}' | xargs zip -u9@ 0media.${EXT}
 #zip -ru9 0media.zip media shaders -i \*.fp \*.vp \*.ttf COPYING
