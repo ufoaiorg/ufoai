@@ -1187,9 +1187,6 @@ EQUIPMENT DEFINITION INTERPRETER
 ==============================================================================
 */
 
-#define MAX_NAMECATS	64
-#define MAX_INFOSTRING	65536
-
 typedef enum model_script_s {
 	MODEL_PATH,
 	MODEL_BODY,
