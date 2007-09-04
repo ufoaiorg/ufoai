@@ -296,9 +296,6 @@ void CL_Drop (void)
 		Cvar_Set("mn_main", "singleplayerInGame");
 		Cvar_Set("mn_active", "map");
 		MN_PushMenu("map");
-		/* this mission failed to load */
-		if (selMis)
-			CL_GameAutoGo(selMis);
 	} else {
 		Cvar_Set("mn_main", "main");
 		Cvar_Set("mn_active", "");
