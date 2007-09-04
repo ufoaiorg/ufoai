@@ -816,13 +816,12 @@ static qboolean CM_TestConnection (routing_t * map, int x, int y, byte z, unsign
 	VectorSet(end, start[0] + (UNIT_HEIGHT / 2) * dvecs[dir][0], start[1] + (UNIT_HEIGHT / 2) * dvecs[dir][1], start[2]);
 
 	ax = x + dvecs[dir][0];
-	ay = y + dvecs[dir][1];
-	az = z + (h + sh) / 0x10;
-	h = (h + sh) % 0x10;
-
 	assert((ax >= 0) && (ax < WIDTH));
+	ay = y + dvecs[dir][1];
 	assert((ay >= 0) && (ay < WIDTH));
+	az = z + (h + sh) / 0x10;
 	assert(az < HEIGHT);	/* Well, it just has to be, doesn't it? :) */
+	h = (h + sh) % 0x10;
 
 	/* assume blocked */
 	map->route[z][y][x] &= ~((0x10 << dir) & UCHAR_MAX);
