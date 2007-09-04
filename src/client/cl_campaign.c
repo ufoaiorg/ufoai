@@ -400,8 +400,10 @@ static void CL_CampaignActivateStageSets (stage_t *stage)
 			if (*(set->def->sequence))
 				Cbuf_ExecuteText(EXEC_APPEND, va("seq_start %s;\n", set->def->sequence));
 			/* XVI spreading has started */
-			if (set->def->activateXVI)
+			if (set->def->activateXVI) {
 				ccs.XVISpreadActivated = qtrue;
+				RS_MarkOneResearchable(RS_GetTechByID("rs_alien_xvi"));
+			}
 		}
 }
 
