@@ -855,11 +855,16 @@ menu lostgame
 	}
 
 	// reason why you've lost
-	string reason {
+	text reason {
 		color	"0 0.8 0 0.9"
 		align	uc
-		pos		"512 700"
-		font	"f_menu"
+		pos		"512 640"
+		size	"900 100"
+		format	"20 0"
+		height	"5"
+		wheel
+		font	"f_normal"
+		scrollbar true
 	}
 
 	string lostgame_click

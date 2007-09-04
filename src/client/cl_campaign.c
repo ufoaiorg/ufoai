@@ -914,6 +914,7 @@ static void CP_EndCampaign (qboolean won)
 static void CP_CheckLostCondition (qboolean lost, mission_t* mission, int civiliansKilled)
 {
 	qboolean endCampaign = qfalse;
+	nation_t* nation;
 
 	assert(curCampaign);
 
@@ -922,14 +923,32 @@ static void CP_CheckLostCondition (qboolean lost, mission_t* mission, int civili
 		curCampaign->civiliansKilledUntilLost -= civiliansKilled;
 		if (curCampaign->civiliansKilledUntilLost <= 0) {
 			/* lost the game */
-			menuText[TEXT_STANDARD] = _("Too many civilians died under your command.");
+			menuText[TEXT_STANDARD] = _("Under your command, PHALANX operations have caused the deaths of too many innocent civilians.");
 			endCampaign = qtrue;
 		}
 	}
 
 	if (!endCampaign && ccs.credits < -curCampaign->negativeCreditsUntilLost) {
-		menuText[TEXT_STANDARD] = _("Too many civilians died under your command.");
+		menuText[TEXT_STANDARD] = _("You've gone too far into debt.");
 		endCampaign = qtrue;
+	}
+
+	if (!endCampaign) {
+		int XVIRate = 0, i;
+		assert(gd.numNations);
+
+		/* check for XVI infection rate */
+		for (i = 0, nation = gd.nations; i < gd.numNations; i++, nation++) {
+			XVIRate += nation->XVIRate;
+		}
+		XVIRate /= gd.numNations;
+		if (1 /*XVIRate > curCampaign->maxAllowedXVIRateUntilLost*/) {
+			menuText[TEXT_STANDARD] = _("You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory.");
+			endCampaign = qtrue;
+		} else {
+			/* check for nation happyiness */
+			/* @todo */
+		}
 	}
 
 	if (endCampaign) {
@@ -2231,6 +2250,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 
 	curCampaign->civiliansKilledUntilLost = MSG_ReadShort(sb);
 	curCampaign->negativeCreditsUntilLost = MSG_ReadLong(sb);
+	curCampaign->maxAllowedXVIRateUntilLost = MSG_ReadByte(sb);
 
 	return qtrue;
 }
@@ -2344,6 +2364,7 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 
 	MSG_WriteShort(sb, curCampaign->civiliansKilledUntilLost);
 	MSG_WriteLong(sb, curCampaign->negativeCreditsUntilLost);
+	MSG_WriteByte(sb, curCampaign->maxAllowedXVIRateUntilLost);
 
 	return qtrue;
 }
@@ -3777,6 +3798,7 @@ static const value_t campaign_vals[] = {
 	{"soldiers", V_INT, offsetof(campaign_t, soldiers), MEMBER_SIZEOF(campaign_t, soldiers)},
 	{"workers", V_INT, offsetof(campaign_t, workers), MEMBER_SIZEOF(campaign_t, workers)},
 	{"medics", V_INT, offsetof(campaign_t, medics), MEMBER_SIZEOF(campaign_t, medics)},
+	{"xvirate", V_INT, offsetof(campaign_t, maxAllowedXVIRateUntilLost), MEMBER_SIZEOF(campaign_t, maxAllowedXVIRateUntilLost)},
 	{"maxdebts", V_INT, offsetof(campaign_t, negativeCreditsUntilLost), MEMBER_SIZEOF(campaign_t, negativeCreditsUntilLost)},
 	{"killedcivilians", V_INT, offsetof(campaign_t, civiliansKilledUntilLost), MEMBER_SIZEOF(campaign_t, civiliansKilledUntilLost)},
 	{"scientists", V_INT, offsetof(campaign_t, scientists), MEMBER_SIZEOF(campaign_t, scientists)},
@@ -4374,8 +4396,8 @@ static void CP_CampaignsClick_f (void)
 
 	Com_sprintf(campaignDesc, sizeof(campaignDesc), _("Race: %s\nRecruits: %i %s, %i %s, %i %s, %i %s\n"
 		"Credits: %ic\nDifficulty: %s\n"
-		"Civilians die amount: %i\n"
-		"Max. allowed debts: %i\n"
+		"Max. civilians allowed to die: %i\n"
+		"Max. allowed debts: %ic\n"
 		"%s\n"),
 			racetype,
 			campaigns[num].soldiers, ngettext("soldier", "soldiers", campaigns[num].soldiers),

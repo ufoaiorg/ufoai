@@ -161,6 +161,7 @@ campaign veryhard
 	difficulty	4
 	killedcivilians	20
 	maxdebts	20000
+	xvirate		30
 	researched rslist_human
 	equipment	campaign_player
 	market		campaign_market
@@ -184,6 +185,7 @@ campaign hard
 	difficulty	2
 	killedcivilians	30
 	maxdebts	100000
+	xvirate		50
 	character_data {
 		TEAM_PHALANX EMPL_SOLDIER skill 65 80
 		TEAM_PHALANX EMPL_SOLDIER ability 65 80
@@ -216,6 +218,7 @@ campaign main
 	difficulty	0
 	killedcivilians	40
 	maxdebts	150000
+	xvirate		70
 	character_data {
 		TEAM_PHALANX EMPL_SOLDIER skill 75 100
 		TEAM_PHALANX EMPL_SOLDIER ability 15 80
@@ -267,6 +270,7 @@ campaign easy
 	difficulty	-2
 	killedcivilians	50
 	maxdebts	250000
+	xvirate		80
 	character_data {
 		TEAM_PHALANX EMPL_SOLDIER skill 75 100
 		TEAM_PHALANX EMPL_SOLDIER ability 55 100
@@ -299,6 +303,7 @@ campaign veryeasy
 	difficulty	-4
 	killedcivilians	60
 	maxdebts	300000
+	xvirate		90
 	character_data {
 		TEAM_PHALANX EMPL_SOLDIER skill 85 100
 		TEAM_PHALANX EMPL_SOLDIER ability 75 100
