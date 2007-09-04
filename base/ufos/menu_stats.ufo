@@ -146,6 +146,26 @@ menu stats
 		mousefx	true
 	}
 
+	string campaign_string
+	{
+		string	"_Campaign"
+		pos		"754 550"
+		align	uc
+		font	f_small
+	}
+
+	text campaign_stats
+	{
+		pos		"518 574"
+		bgcolor	"0.5 0.5 0.5 0.2"
+		size	"470 110"
+		format  "22 360"
+		num		"44"
+		height	"5"
+		click
+		mousefx	true
+	}
+
 	func init
 	{
 		cmd "stats_update;"
