@@ -305,51 +305,51 @@ menu nations
 	}
 	// todo better display of real month-text (year+month?)
 	string graph_month0	{
-		string "_0"
+		string "0"
 		pos "500 300"	align ul	font f_small
 	}
 	string graph_month1	{
-		string "_-1"
+		string "-1"
 		pos "525 300"	align ul	font f_small
 	}
 	string graph_month2	{
-		string "_-2"
+		string "-2"
 		pos "550 300"	align ul	font f_small
 	}
 	string graph_month3	{
-		string "_-3"
+		string "-3"
 		pos "575 300"	align ul	font f_small
 	}
 	string graph_month4	{
-		string "_-4"
+		string "-4"
 		pos "600 300"	align ul	font f_small
 	}
 	string graph_month5	{
-		string "_-5"
+		string "-5"
 		pos "625 300"	align ul	font f_small
 	}
 	string graph_month6	{
-		string "_-6"
+		string "-6"
 		pos "650 300"	align ul	font f_small
 	}
 	string graph_month7	{
-		string "_-7"
+		string "-7"
 		pos "675 300"	align ul	font f_small
 	}
 	string graph_month8	{
-		string "_-8"
+		string "-8"
 		pos "700 300"	align ul	font f_small
 	}
 	string graph_month9	{
-		string "_-9"
+		string "-9"
 		pos "725 300"	align ul	font f_small
 	}
 	string graph_month10	{
-		string "_-10"
+		string "-10"
 		pos "750 300"	align ul	font f_small
 	}
 	string graph_month11	{
-		string "_-11"
+		string "-11"
 		pos "775 300"	align ul	font f_small
 	}
 
