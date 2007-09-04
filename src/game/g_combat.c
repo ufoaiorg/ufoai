@@ -1085,7 +1085,6 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 	edict_t *ent;
 	item_t *weapon = NULL;
 	vec3_t dir, center, target, shotOrigin;
-	vec3_t tarv;
 	int i, ammo, prev_dir = 0, reaction_leftover, shots;
 	int container = 0, mask;
 	qboolean quiet;
@@ -1129,8 +1128,8 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 	}
 
 	/* check target is not out of range */
-	PosToVec(at, tarv);
-	if (fd->range < VectorDist(ent->origin, tarv)) {
+	gi.GridPosToVec(gi.map, at, target);
+	if (fd->range < VectorDist(ent->origin, target)) {
 		if (!quiet)
 			gi.cprintf(player, PRINT_HUD, _("Can't peform action - target out of range!\n"));
 		return qfalse;
@@ -1167,7 +1166,6 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 	}
 
 	/* calculate visibility */
-	gi.GridPosToVec(gi.map, at, target);
 	target[2] -= z_align;
 	VectorSubtract(target, ent->origin, dir);
 	VectorMA(ent->origin, 0.5, dir, center);
