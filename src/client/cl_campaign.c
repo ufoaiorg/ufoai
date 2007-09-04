@@ -716,7 +716,7 @@ actMis_t* CL_CampaignAddGroundMission (mission_t* mission)
  * @note missions that have the keepAfterFail boolean set should not be removed
  * after the mission failed - but only when the mission was successful
  * @sa CL_CampaignRemoveMission
- * @sa CL_CampaignCheckEvents
+ * @sa CP_CheckEvents
  * @sa CL_AddMission
  * @sa CL_CampaignAddGroundMission
  */
@@ -913,16 +913,27 @@ static void CP_EndCampaign (qboolean won)
  */
 static void CP_CheckLostCondition (qboolean lost, mission_t* mission, int civiliansKilled)
 {
+	qboolean endCampaign = qfalse;
+
 	assert(curCampaign);
 
 	/* only if the definition tells us to keep an eye on this lost criteria */
-	if (curCampaign->civiliansKilledUntilLost) {
+	if (mission && curCampaign->civiliansKilledUntilLost) {
 		curCampaign->civiliansKilledUntilLost -= civiliansKilled;
 		if (curCampaign->civiliansKilledUntilLost <= 0) {
 			/* lost the game */
 			menuText[TEXT_STANDARD] = _("Too many civilians died under your command.");
-			CP_EndCampaign(qfalse);
+			endCampaign = qtrue;
 		}
+	}
+
+	if (!endCampaign && ccs.credits < -curCampaign->negativeCreditsUntilLost) {
+		menuText[TEXT_STANDARD] = _("Too many civilians died under your command.");
+		endCampaign = qtrue;
+	}
+
+	if (endCampaign) {
+		CP_EndCampaign(qfalse);
 	}
 }
 
@@ -1026,7 +1037,7 @@ static void CL_BaseRansacked (base_t *base)
  * @sa CL_CampaignRemoveMission
  * @sa CL_HandleNationData
  */
-static void CL_CampaignCheckEvents (void)
+static void CP_CheckEvents (void)
 {
 	stageState_t *stage = NULL;
 	setState_t *set = NULL;
@@ -1086,7 +1097,7 @@ static void CL_CampaignCheckEvents (void)
 				date_t date = {7, 0};
 				/* FIXME use set->def->expire */
 				mis->expire = Date_Add(ccs.date, Date_Random_Middle(date));
-				return;
+				continue;
 			}
 
 			/* Remove mission from the map. */
@@ -1441,7 +1452,7 @@ static void CL_CampaignRunMarket (void)
  * @sa CL_HandleBudget
  * @sa B_UpdateBaseData
  * @sa CL_CampaignRunAircraft
- * @sa CL_CampaignCheckEvents
+ * @sa CP_CheckEvents
  */
 void CL_CampaignRun (void)
 {
@@ -1481,7 +1492,8 @@ void CL_CampaignRun (void)
 		CL_CampaignRunAircraft(dt);
 		UFO_CampaignRunUfos(dt);
 		AIRFIGHT_CampaignRunBaseDefense(dt);
-		CL_CampaignCheckEvents();
+		CP_CheckEvents();
+		CP_CheckLostCondition(qtrue, NULL, 0);
 		AIRFIGHT_CampaignRunProjectiles(dt);
 
 		/* set time cvars */
@@ -2218,6 +2230,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	}
 
 	curCampaign->civiliansKilledUntilLost = MSG_ReadShort(sb);
+	curCampaign->negativeCreditsUntilLost = MSG_ReadLong(sb);
 
 	return qtrue;
 }
@@ -2330,6 +2343,7 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 		MSG_WriteString(sb, "");
 
 	MSG_WriteShort(sb, curCampaign->civiliansKilledUntilLost);
+	MSG_WriteLong(sb, curCampaign->negativeCreditsUntilLost);
 
 	return qtrue;
 }
@@ -3763,6 +3777,7 @@ static const value_t campaign_vals[] = {
 	{"soldiers", V_INT, offsetof(campaign_t, soldiers), MEMBER_SIZEOF(campaign_t, soldiers)},
 	{"workers", V_INT, offsetof(campaign_t, workers), MEMBER_SIZEOF(campaign_t, workers)},
 	{"medics", V_INT, offsetof(campaign_t, medics), MEMBER_SIZEOF(campaign_t, medics)},
+	{"maxdebts", V_INT, offsetof(campaign_t, negativeCreditsUntilLost), MEMBER_SIZEOF(campaign_t, negativeCreditsUntilLost)},
 	{"killedcivilians", V_INT, offsetof(campaign_t, civiliansKilledUntilLost), MEMBER_SIZEOF(campaign_t, civiliansKilledUntilLost)},
 	{"scientists", V_INT, offsetof(campaign_t, scientists), MEMBER_SIZEOF(campaign_t, scientists)},
 	{"ugvs", V_INT, offsetof(campaign_t, ugvs), MEMBER_SIZEOF(campaign_t, ugvs)},
@@ -4360,6 +4375,7 @@ static void CP_CampaignsClick_f (void)
 	Com_sprintf(campaignDesc, sizeof(campaignDesc), _("Race: %s\nRecruits: %i %s, %i %s, %i %s, %i %s\n"
 		"Credits: %ic\nDifficulty: %s\n"
 		"Civilians die amount: %i\n"
+		"Max. allowed debts: %i\n"
 		"%s\n"),
 			racetype,
 			campaigns[num].soldiers, ngettext("soldier", "soldiers", campaigns[num].soldiers),
@@ -4367,7 +4383,8 @@ static void CP_CampaignsClick_f (void)
 			campaigns[num].workers, ngettext("worker", "workers", campaigns[num].workers),
 			campaigns[num].medics, ngettext("medic", "medics", campaigns[num].medics),
 			campaigns[num].credits, CL_ToDifficultyName(campaigns[num].difficulty),
-			campaigns[num].civiliansKilledUntilLost, _(campaigns[num].text));
+			campaigns[num].civiliansKilledUntilLost, campaigns[num].negativeCreditsUntilLost,
+			_(campaigns[num].text));
 	menuText[TEXT_STANDARD] = campaignDesc;
 }
 

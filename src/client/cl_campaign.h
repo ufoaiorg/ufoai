@@ -217,6 +217,7 @@ typedef struct campaign_s {
 	int num;
 	signed int difficulty;		/**< difficulty level -4 - 4 */
 	int civiliansKilledUntilLost;	/**< how many civilians may be killed until you've lost the game */
+	int negativeCreditsUntilLost;	/**< bankrupt - negative credits until you've lost the game */
 	qboolean visible;			/**< visible in campaign menu? */
 	date_t date;				/**< starting date for this campaign */
 	qboolean finished;
