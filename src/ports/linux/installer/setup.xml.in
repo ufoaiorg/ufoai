@@ -22,7 +22,7 @@
  </readme>
 
  <eula>
-  ../../../../GPL
+  ../../../../COPYING
  </eula>
 
  <component name="UFO:Alien Invasion gamedata" version="@VERSION@" default="yes">
