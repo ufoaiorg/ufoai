@@ -1782,12 +1782,17 @@ static void CL_StatsUpdate_f (void)
 	/* campaign */
 	pos += (strlen(pos) + 1);
 	menuText[TEXT_GENERIC] = pos;
-	Q_strcat(pos, va(_("Max. allowed debts: %ic\nMax. allowed eXtraterrestial Viral Infection: %i%%\n"
-		"Current eXtraterrestial Viral Infection: %i%%"),
-		curCampaign->negativeCreditsUntilLost,
-		curCampaign->maxAllowedXVIRateUntilLost,
-		CP_GetAverageXVIRate()),
+	Q_strcat(pos, va(_("Max. allowed debts: %ic\n"), curCampaign->negativeCreditsUntilLost),
 		(ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
+
+	/* only show the xvi spread data when it's available */
+	if (ccs.XVISpreadActivated) {
+		Q_strcat(pos, va(_("Max. allowed eXtraterrestial Viral Infection: %i%%\n"
+			"Current eXtraterrestial Viral Infection: %i%%"),
+			curCampaign->maxAllowedXVIRateUntilLost,
+			CP_GetAverageXVIRate()),
+			(ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
+	}
 }
 
 static screenPoint_t fundingPts[MAX_NATIONS][MONTHS_PER_YEAR]; /* Space for month-lines with 12 points for each nation. */
