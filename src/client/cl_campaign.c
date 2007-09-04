@@ -2526,9 +2526,9 @@ static void CP_StartMissionMap (mission_t* mission)
 	SAV_QuickSave();
 
 	if (FS_LoadFile(expanded, NULL) != -1)
-		Cbuf_AddText(va("map %s%c %s\n", mission->mapDef->map, timeChar, mission->mapDef->param));
+		Cbuf_AddText(va("map %s%c %s\n", mission->mapDef->map, timeChar, mission->mapDef->param ? mission->mapDef->param : ""));
 	else
-		Cbuf_AddText(va("map %s %s\n", mission->mapDef->map, mission->mapDef->param));
+		Cbuf_AddText(va("map %s %s\n", mission->mapDef->map, mission->mapDef->param ? mission->mapDef->param : ""));
 
 	/* let the (local) server know which map we are running right now */
 	csi.currentMD = mission->mapDef;
