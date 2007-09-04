@@ -2111,7 +2111,7 @@ void CL_ParseResults (struct dbuffer *msg)
 
 	if (!curCampaign || !selMis) {
 		/* the mission was started via console (@todo: or is multiplayer) */
-		/* needs to be cleared and then append to it */
+		/* buffer needs to be cleared and then append to it */
 		if (curCampaign) {
 			Com_sprintf(resultText, sizeof(resultText), _("Aliens killed\t%i\n"), thier_killed);
 			ccs.aliensKilled += thier_killed;
@@ -2203,14 +2203,10 @@ void CL_ParseResults (struct dbuffer *msg)
 		} else
 			MN_PushMenu("lost");
 
-		/* on singleplayer we disconnect the game */
+		/* on singleplayer we disconnect the game and shutdown the server */
 		/* we can safely wipe all mission data now */
-		/* @todo: I don't understand how this works
-		 * and why, when I move this to CL_GameResults_f,
-		 * the "won" menu get's garbled at "killteam 7"
-		 */
-		Cbuf_AddText("disconnect\n");
-		Cbuf_Execute();
+		SV_Shutdown("Mission end", qfalse);
+		CL_Disconnect();
 	} else {
 		Com_sprintf(resultText, sizeof(resultText), _("\n\nEnemies killed:  %i\nTeam survivors:  %i"), thier_killed + thier_stunned, our_surviviurs);
 		if (winner == we) {
