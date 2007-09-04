@@ -11,7 +11,7 @@ DATADIR=data
 #all zip files
 TEMPDIR=tmp
 #get the version of ufo
-VERSION_UC=$(shell grep UFO_VERSION $(ROOTDIR)src/qcommon/qcommon.h | sed -e 's/.*UFO_VERSION\s*\(.*\)/\1/' | sed -e 's/\"//g')
+VERSION_UC=$(shell grep UFO_VERSION $(ROOTDIR)src/common/common.h | sed -e 's/.*UFO_VERSION\s*\(.*\)/\1/' | sed -e 's/\"//g')
 VERSION_LC=$(shell echo $(VERSION_UC) | sed -e 'y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/;')
 #get the size of the zip data archives
 SIZE=$(shell LANG=C; du -sch $(TEMPDIR)/base/*.$(EXT) $(BINARIES) | tail -1 | cut -f1;)
