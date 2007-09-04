@@ -303,6 +303,7 @@ typedef struct nation_s {
 
 	vec4_t color;		/**< The color this nation uses int he color-coded earth-map */
 	vec2_t pos;		/**< Nation name position on geoscape. */
+	int XVIRate;	/**< 0 - 100 - the rate of infection for this nation - starts at 0 */
 
 	nationInfo_t stats[MONTHS_PER_YEAR];	/**< Detailed information about teh history of this nations relationship toward PHALANX and the aliens.
 									 * The first entry [0] is the current month - all following entries are stored older months.
