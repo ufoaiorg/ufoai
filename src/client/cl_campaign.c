@@ -983,6 +983,7 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 	int alienSum = aliensKilled + aliensSurvived;
 	float alienRatio = alienSum ? (float)aliensKilled / (float)alienSum : 0.;
 	float performance = 0.5 + civilianRatio * 0.25 + alienRatio * 0.25;
+	int XVISpread;
 
 	if (lost)
 		stats.missionsLost++;
@@ -1003,6 +1004,7 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 				/* Minor negative reaction */
 				happiness *= 1.0 - pow(1.0 - performance * alienHostile, 5.0);
 			}
+			XVISpread = 5;
 		} else {
 			if (!Q_strcmp(nation->id, mis->def->nation)) {
 				/* Strong positive reaction */
@@ -1016,8 +1018,15 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 				/* Can't be more than 100% happy with you. */
 				happiness = 1.0;
 			}
+			XVISpread = 1;
 		}
 		nation->stats[0].happiness = nation->stats[0].happiness * 0.40 + happiness * 0.60;
+
+		/* ensure 0 - 100 */
+		if (ccs.XVISpreadActivated) {
+			nation->XVIRate += XVISpread;
+			nation->XVIRate %= 100;
+		}
 	}
 	if (!is_on_Earth)
 		Com_DPrintf(DEBUG_CLIENT, "CL_HandleNationData: Warning, mission '%s' located in an unknown country '%s'.\n", mis->def->name, mis->def->nation);
