@@ -2745,6 +2745,7 @@ void CL_DropshipReturned (base_t* base, aircraft_t* aircraft)
 	/* Now empty alien/item cargo just in case. */
 	memset(aircraft->aliencargo, 0, sizeof(aircraft->aliencargo));
 	memset(aircraft->itemcargo, 0, sizeof(aircraft->itemcargo));
+	aircraft->alientypes = 0;
 }
 
 /**
