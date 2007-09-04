@@ -85,6 +85,7 @@ stage ufos_are_coming
 		frame		"0 20 0"
 		expire		"0 5 0"
 		missions	"mine_crash"
+		activatexvi	1
 		quota		1
 		ufos		4
 	}
