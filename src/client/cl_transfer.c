@@ -426,7 +426,7 @@ static void TR_TransferSelect_f (void)
 		} else if (transferBase->hasPower) {
 			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have an Alien Containment."), sizeof(transferList));
 		} else {
-			Q_strcat(transferList, _("Transfer is not possible - the base has not power supplies."), sizeof(transferList));
+			Q_strcat(transferList, _("Transfer is not possible - the base does not have power supplies."), sizeof(transferList));
 		}
 		break;
 	case 3:			/**< aircrafts */
