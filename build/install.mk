@@ -1,6 +1,6 @@
 VERSION=$(shell grep UFO_VERSION src/common/common.h | sed -e 's/.*UFO_VERSION \"\(.*\)\"/\1/')
 
-installer: wininstaller linuxinstaller sourcearchive
+installer: wininstaller linuxinstaller sourcearchive mappack
 
 mappack:
 	$(MAKE) maps
@@ -25,6 +25,7 @@ linuxinstaller:
 	cd base; ./archives.sh
 	cd src/ports/linux/installer; $(MAKE)
 	scp src/ports/linux/installer/ufoai-$(VERSION)-linux.run ufo:~/public_html/download
+	scp src/ports/linux/installer/ufoai-$(VERSION)-linux.run mirror:~/public_html
 
 #
 # Generate a tar archive of the sources.
