@@ -402,7 +402,7 @@ static void CL_CampaignActivateStageSets (stage_t *stage)
 			/* XVI spreading has started */
 			if (set->def->activateXVI) {
 				ccs.XVISpreadActivated = qtrue;
-				RS_MarkOneResearchable(RS_GetTechByID("rs_alien_xvi"));
+				RS_ResearchFinish(RS_GetTechByID("rs_alien_xvi_event")); /* Mark prequesite of "rs_alien_xvi" as met. */
 			}
 		}
 }
