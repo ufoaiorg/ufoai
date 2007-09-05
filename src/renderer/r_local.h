@@ -31,10 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client/ref.h"
 
-/* this was taken from jmorecfg.h */
 #define RGB_PIXELSIZE 3
-
-#include "r_shader.h"
+#define REF_VERSION "GL 0.12"
 
 #include <SDL.h>
 #include <SDL_ttf.h>
@@ -42,7 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "qgl.h"
 
-#define REF_VERSION "GL 0.12"
+#include "r_shader.h"
 
 /* up / down */
 #define PITCH   0
@@ -134,7 +132,6 @@ typedef struct image_s {
 } image_t;
 
 #define TEXNUM_LIGHTMAPS    1024
-#define TEXNUM_SCRAPS       1280
 #define TEXNUM_IMAGES       1281
 
 #define MAX_GLERRORTEX      4096
@@ -179,13 +176,8 @@ typedef enum {
 #define MAX_MODEL_DLIGHTS 3
 int RecursiveLightPoint(model_t* mapTile, mBspNode_t * node, vec3_t start, vec3_t end);
 
-void R_BeginRendering(int *x, int *y, int *width, int *height);
-void R_EndRendering(void);
-
 void R_SetDefaultState(void);
 void R_UpdateSwapInterval(void);
-
-extern float gldepthmin, gldepthmax;
 
 #define BACKFACE_EPSILON    0.01
 

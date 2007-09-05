@@ -35,8 +35,6 @@ refimport_t ri;
 
 GLenum gl_texture0, gl_texture1, gl_texture2, gl_texture3;
 
-float gldepthmin, gldepthmax;
-
 rconfig_t r_config;
 rstate_t r_state;
 
@@ -553,11 +551,9 @@ static void R_SetupFrame (void)
 static void R_Clear (void)
 {
 	qglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	gldepthmin = 0;
-	gldepthmax = 1;
 	qglDepthFunc(GL_LEQUAL);
 
-	qglDepthRange(gldepthmin, gldepthmax);
+	qglDepthRange(0, 1);
 
 	if (r_shadows->integer == 2) {
 		/* set the reference stencil value */
