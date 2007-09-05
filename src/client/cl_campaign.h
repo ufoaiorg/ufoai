@@ -434,4 +434,6 @@ base_t *CP_GetMissionBase(void);
 qboolean CP_SpawnBaseAttackMission(base_t* base, mission_t* mis, setState_t *cause);
 qboolean CP_SpawnCrashSiteMission(aircraft_t* aircraft);
 
+technology_t *CP_IsXVIResearched(void);
+
 #endif /* CLIENT_CL_CAMPAIGN_H */

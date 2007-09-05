@@ -43,6 +43,8 @@ campaign_t *curCampaign;			/**< Current running campaign */
 ccs_t ccs;					/**< Document me. */
 base_t *baseCurrent;				/**< Pointer to current base. */
 
+static technology_t *rs_alien_xvi;
+
 static salary_t salaries[MAX_CAMPAIGNS];
 
 /* extern in client.h */
@@ -402,7 +404,8 @@ static void CL_CampaignActivateStageSets (stage_t *stage)
 			/* XVI spreading has started */
 			if (set->def->activateXVI) {
 				ccs.XVISpreadActivated = qtrue;
-				RS_ResearchFinish(RS_GetTechByID("rs_alien_xvi_event")); /* Mark prequesite of "rs_alien_xvi" as met. */
+				/* Mark prequesite of "rs_alien_xvi" as met. */
+				RS_ResearchFinish(RS_GetTechByID("rs_alien_xvi_event"));
 			}
 		}
 }
@@ -492,6 +495,14 @@ static void CL_CampaignExecute (setState_t * set)
 
 	/* activate new sets in old stage */
 	CL_CampaignActivateStageSets(set->stage);
+}
+
+/**
+ * @brief Returns the alien XVI tech is the tech was already researched
+ */
+technology_t *CP_IsXVIResearched (void)
+{
+	return RS_IsResearched_ptr(rs_alien_xvi) ? rs_alien_xvi : NULL;
 }
 
 #define DETAILSWIDTH 14
@@ -3531,7 +3542,7 @@ static const value_t stageset_vals[] = {
 	{"expire", V_DATE, offsetof(stageSet_t, expire), 0},
 	{"number", V_INT, offsetof(stageSet_t, number), MEMBER_SIZEOF(stageSet_t, number)},
 	{"quota", V_INT, offsetof(stageSet_t, quota), MEMBER_SIZEOF(stageSet_t, quota)},
-	{"activexvi", V_INT, offsetof(stageSet_t, activateXVI), MEMBER_SIZEOF(stageSet_t, activateXVI)},
+	{"activatexvi", V_INT, offsetof(stageSet_t, activateXVI), MEMBER_SIZEOF(stageSet_t, activateXVI)},
 	{"ufos", V_INT, offsetof(stageSet_t, ufos), MEMBER_SIZEOF(stageSet_t, ufos)},
 	{"sequence", V_STRING, offsetof(stageSet_t, sequence), 0},
 	{"cutscene", V_STRING, offsetof(stageSet_t, cutscene), 0},
@@ -4270,6 +4281,10 @@ void CL_GameInit (qboolean load)
 	/* Init popup and map/geoscape */
 	CL_PopupInit();
 	MAP_GameInit();
+
+	rs_alien_xvi = RS_GetTechByID("rs_alien_xvi");
+	if (!rs_alien_xvi)
+		Sys_Error("CL_ResetCampaign: Could not find tech definition for rs_alien_xvi");
 
 	/* now check the parsed values for errors that are not catched at parsing stage */
 	if (!load)

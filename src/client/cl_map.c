@@ -1115,6 +1115,8 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	const vec2_t northPole = {0.0f, 90.0f};
 	float angle = 0.0f;
 	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
+	qboolean showXVI = qfalse;
+	char buffer[512];
 
 	assert(node);
 
@@ -1268,11 +1270,21 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		}
 	}
 
+	showXVI = CP_IsXVIResearched() ? qtrue : qfalse;
+
+
 	/* Draw nation names */
 	for (i = 0; i < gd.numNations; i++) {
 		if (MAP_AllMapToScreen(node, gd.nations[i].pos, &x, &y, NULL))
 			re.FontDrawString("f_verysmall", ALIGN_UC, x , y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], _(gd.nations[i].name), 0, 0, NULL, qfalse);
+		if (showXVI) {
+			Q_strcat(buffer, va(_("%s\t%i%%\n"), _(gd.nations[i].name), gd.nations[i].XVIRate), sizeof(buffer));
+		}
 	}
+	if (showXVI)
+		menuText[TEXT_XVI] = buffer;
+	else
+		menuText[TEXT_XVI] = NULL;
 }
 
 /** @brief geobackground image for 3d globe */
