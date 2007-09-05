@@ -120,7 +120,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\game\q_shared.h" />
-		<Unit filename="..\..\src\ports\linux\linux_qgl.c">
+		<Unit filename="..\..\src\ports\unix\unix_qgl.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 		</Unit>

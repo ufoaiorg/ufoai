@@ -105,7 +105,7 @@ qboolean QR_Init (const char *dllname)
 {
 	if ((glw_state.OpenGLLib = dlopen(dllname, RTLD_LAZY|RTLD_GLOBAL)) == 0) {
 		char libPath[MAX_OSPATH];
-		cvar_t* s_libdir = Cvar_Get("s_libdir", "", CVAR_ARCHIVE, "lib dir for graphic and sound renderer - no game libs");
+		cvar_t* s_libdir = ri.Cvar_Get("s_libdir", "", CVAR_ARCHIVE, "lib dir for graphic and sound renderer - no game libs");
 
 		/* try path given via cvar */
 		if (strlen(s_libdir->string))

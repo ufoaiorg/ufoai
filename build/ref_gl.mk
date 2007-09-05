@@ -30,7 +30,7 @@ REF_GL_SRCS = \
 
 ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux-gnu),)
 	REF_GL_SRCS += \
-			ports/linux/linux_qgl.c
+			ports/unix/unix_qgl.c
 	REF_SDL_SRCS = ports/unix/unix_ref_sdl.c
 	REF_SDL_TARGET=ref_sdl.$(SHARED_EXT)
 	REF_GLX_SRCS = ports/linux/linux_ref_glx.c
@@ -55,7 +55,7 @@ endif
 ifeq ($(TARGET_OS),solaris)
 	#TODO
 	REF_GL_SRCS += \
-			ports/linux/linux_qgl.c
+			ports/unix/unix_qgl.c
 	REF_SDL_SRCS = ports/unix/unix_ref_sdl.c
 	REF_SDL_TARGET=ref_sdl.$(SHARED_EXT)
 endif
