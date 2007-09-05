@@ -46,7 +46,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  endif
 #  if defined _M_IX86 || defined __i386__
 #    define CPUSTRING "x86"
-#  elif defined _M_AMD64 || define _M_X64 || defined __x86_x64__
+#  elif defined _M_AMD64 || define _M_X64 || defined __x86_64__
 #    define CPUSTRING "x86_64"
 #  elif defined _M_IA64 || defined __ia64__
 #    define CPUSTRING "x86_64"
@@ -67,7 +67,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  endif
 #  if defined  __i386__
 #    define CPUSTRING "i386"
-#  elif defined __x86_x64__
+#  elif defined __x86_64__
 #    define CPUSTRING "x86_64"
 #  elif defined __alpha__
 #    define CPUSTRING "axp"
@@ -86,7 +86,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  endif
 #  if defined  __i386__
 #    define CPUSTRING "i386"
-#  elif defined __x86_x64__
+#  elif defined __x86_64__
 #    define CPUSTRING "x86_64"
 #  elif defined __alpha__
 #    define CPUSTRING "axp"
