@@ -270,6 +270,7 @@ tech rs_alien_breathing
 	{
 		tech rs_alien_ortnok_autopsy
 		tech rs_alien_taman_autopsy
+
 		tech rs_alien_shevaar_autopsy
 	}
 
@@ -658,6 +659,7 @@ tech rs_weapon_flamer
 		default "_flamer_txt"
 	}
 	// pre_description	"_flamer_pre_txt"
+
 
 	require_AND
 	{
@@ -2944,6 +2946,7 @@ tech rs_craft_drop_firebird
 	provides	craft_drop_firebird
 	require_AND { tech nothing }
 	time	0
+	producetime	2600
 
 	mdl_top		drop_firebird
 }
@@ -2960,6 +2963,7 @@ tech rs_craft_inter_stiletto
 	provides	craft_inter_stiletto
 	require_AND { tech nothing }
 	time	0
+	producetime	2600
 
 	mdl_top		inter_stiletto
 }
@@ -2976,6 +2980,7 @@ tech rs_craft_inter_saracen
 	provides	craft_inter_saracen
 	require_AND { tech nothing }
 	time	0
+	producetime	2600
 
 	mdl_top		inter_saracen
 }
@@ -2997,6 +3002,7 @@ tech rs_craft_inter_dragon
 		tech rs_craft_ufo_fighter
 	}
 	time	0
+	producetime	2600
 
 	mdl_top		inter_dragon
 }
@@ -3013,6 +3019,7 @@ tech rs_craft_inter_stingray
 	provides	craft_inter_stingray
 	require_AND { tech nothing }
 	time	0
+	producetime	2600
 
 	mdl_top		inter_stingray
 }
@@ -3611,6 +3618,7 @@ tech rs_base_weapon_tr20
 }
 
 tech rs_base_ammo_tr20
+
 {
 	type		tech
 	up_chapter	tech
