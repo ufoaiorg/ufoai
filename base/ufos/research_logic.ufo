@@ -90,3 +90,14 @@ tech rs_ortnok_extra
 		tech rs_alien_shevaar_autopsy
 	}
 }
+
+// Triggered in cl_campaign.c
+tech rs_alien_xvi_event
+{
+	type	logic
+	name	"LOGIC:XVI event"
+	require_AND
+	{
+		// Not marked "researchable" in a normal way
+	}
+}

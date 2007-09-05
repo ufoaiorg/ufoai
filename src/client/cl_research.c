@@ -62,7 +62,7 @@ static void RS_PushNewsWhenResearched (technology_t* tech)
  * @brief Sets a technology status to researched and updates the date.
  * @param[in] tech The technology that was researched.
  */
-static void RS_ResearchFinish (technology_t* tech)
+void RS_ResearchFinish (technology_t* tech)
 {
 	tech->statusResearch = RS_FINISH;
 	CL_DateConvert(&ccs.date, &tech->researchedDateDay, &tech->researchedDateMonth);

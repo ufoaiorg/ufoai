@@ -435,7 +435,7 @@ tech rs_alien_xvi
 
 	require_AND
 	{
-		// Not marked "researchable" in a normal way (See cl_campaign.c)
+		tech rs_alien_xvi_event
 	}
 	time		2700
 }
