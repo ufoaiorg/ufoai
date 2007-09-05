@@ -260,6 +260,21 @@ static production_t *PR_QueueNew (production_queue_t *queue, signed int objID, s
 	} else
 		aircraft = &aircraft_samples[objID];
 
+	/* We cannot queue new aircraft if no free hangar space. */
+	if (produceCategory == 5) {
+		if (!baseCurrent->hasCommand) {
+			MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo command centre in this base.\n"));
+			return NULL;
+		} else if (!baseCurrent->hasHangar && !baseCurrent->hasHangarSmall) {
+			MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo hangars in this base.\n"));
+			return NULL;
+		}
+		if (AIR_CalculateHangarStorage(objID, baseCurrent, 0) <= 0) {
+			MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
+			return NULL;
+		}
+	}
+
 	prod->objID = objID;
 	prod->amount = amount;
 	if (disassembling) {	/* Disassembling. */
@@ -1071,6 +1086,13 @@ static void PR_ProductionIncrease_f (void)
 		assert(selectedIndex >= 0 && selectedIndex < queue->numItems);
 		prod = &queue->items[selectedIndex];
 		if (prod->production) {		/* Production. */
+			if (prod->aircraft) {
+				/* Don't allow to queue more aircrafts if there is no free space. */
+				if (AIR_CalculateHangarStorage(prod->objID, baseCurrent, 0) <= 0) {
+					MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
+					return;
+				}
+			}
 			prod->amount += amount;
 		} else {			/* Disassembling. */
 			/* We can disassembly only as many items as we have in base storage. */
@@ -1121,6 +1143,7 @@ static void PR_ProductionIncrease_f (void)
 					MN_Popup("Not enough material!", "You don't have enough material to produce all (xx) items. Production will continue with a reduced (xx) number.");
 				}
 
+				/* FIXME if (!prod) is true, we are already finished before this point - return few lines above. */
 				if (prod) {
 					if (Cvar_VariableInteger("mn_prod_disassembling") == 0) {
 						Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Production of %s started"), csi.ods[selectedIndex].name);

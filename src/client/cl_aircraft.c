@@ -41,19 +41,17 @@ static const int AIRCRAFT_RADAR_RANGE = 20;
 static const int DISTANCE = 15;
 
 /**
- * @brief Updates base capacities after buying new aircraft.
+ * @brief Updates hangar capacities for one aircraft in given base.
  * @param[in] aircraftID aircraftID Index of aircraft type in aircraft_samples.
- * @param[in] base_idx Index of base in global array.
+ * @param[in] base Pointer to base.
  * @sa AIR_NewAircraft
  * @sa AIR_UpdateHangarCapForAll
  */
-static void AIR_UpdateHangarCapForOne (int aircraftID, int base_idx)
+static void AIR_UpdateHangarCapForOne (int aircraftID, base_t *base)
 {
 	int aircraftSize = 0, freespace = 0;
-	base_t *base = NULL;
 
 	aircraftSize = aircraft_samples[aircraftID].weight;
-	base = &gd.bases[base_idx];
 
 	if (aircraftSize < 1) {
 #ifdef DEBUG
@@ -130,7 +128,7 @@ void AIR_UpdateHangarCapForAll (int base_idx)
 	for (i = 0; i < base->numAircraftInBase; i++) {
 		aircraft = &base->aircraft[i];
 		Com_DPrintf(DEBUG_CLIENT, "AIR_UpdateHangarCapForAll()... base: %s, aircraft: %s\n", base->name, aircraft->id);
-		AIR_UpdateHangarCapForOne(aircraft->idx_sample, base->idx);
+		AIR_UpdateHangarCapForOne(aircraft->idx_sample, base);
 	}
 	Com_DPrintf(DEBUG_CLIENT, "AIR_UpdateHangarCapForAll()... base capacities.cur: small: %i big: %i\n", base->capacities[CAP_AIRCRAFTS_SMALL].cur, base->capacities[CAP_AIRCRAFTS_BIG].cur);
 }
@@ -656,7 +654,7 @@ void AIR_NewAircraft (base_t *base, const char *name)
 		base->numAircraftInBase++;	/**< Increase the number of aircraft in the base. */
 		/* Update base capacities. */
 		Com_DPrintf(DEBUG_CLIENT, "idx_sample: %i name: %s weight: %i\n", aircraft->idx_sample, aircraft->id, aircraft->weight);
-		AIR_UpdateHangarCapForOne(aircraft->idx_sample, base->idx);
+		AIR_UpdateHangarCapForOne(aircraft->idx_sample, base);
 		Com_DPrintf(DEBUG_CLIENT, "Adding new aircraft %s with IDX %i for base %s\n", aircraft->name, aircraft->idx, base->name);
 		/* Now update the aircraft list - maybe there is a popup active */
 		Cbuf_ExecuteText(EXEC_NOW, "aircraft_list");
