@@ -1116,7 +1116,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	float angle = 0.0f;
 	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
 	qboolean showXVI = qfalse;
-	char buffer[512];
+	char buffer[512] = "";
 
 	assert(node);
 
