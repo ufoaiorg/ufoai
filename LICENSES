@@ -1894,6 +1894,7 @@ base/sound/misc/popup.wav | GNU General Public License v2.0 | Karen Rei Pease
 base/sound/misc/roundstart.wav | GNU General Public License v2.0 | Karen Rei Pease
 base/sound/misc/talk.wav | GNU General Public License v2.0 | Karen Rei Pease
 base/sound/weapons/assaultrifle.wav | GNU General Public License v2.0 | Alex Parker
+base/sound/weapons/bloodspider.wav | GNU General Public License 2.0 |  | Nexuiz' GPLed data - weapons/weapon_switch.wav
 base/sound/weapons/bolter2.wav | GNU General Public License v2.0 | Alex Parker
 base/sound/weapons/boltercannonade.wav | GNU General Public License v2.0 | Alex Parker
 base/sound/weapons/deepexplosion.wav | GNU General Public License v2.0 | Alex Parker
