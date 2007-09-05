@@ -50,7 +50,6 @@ void QR_Shutdown (void)
 	/* windows specific */
 	qwglCreateContext            = NULL;
 	qwglDeleteContext            = NULL;
-	qwglGetCurrentDC             = NULL;
 	qwglGetProcAddress           = NULL;
 	qwglMakeCurrent              = NULL;
 	qwglChoosePixelFormat        = NULL;

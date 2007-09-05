@@ -32,7 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <direct.h>
 #include <io.h>
 
-static HMODULE hSh32 = NULL;
 static FARPROC procShell_NotifyIcon = NULL;
 static NOTIFYICONDATA pNdata;
 
@@ -78,9 +77,8 @@ void Sys_Error (const char *error, ...)
 {
 	va_list argptr;
 	char text[1024];
-	int ret;
 
-#ifnded DEDICATED_ONLY
+#ifndef DEDICATED_ONLY
 	CL_Shutdown();
 #endif
 	Qcommon_Shutdown();
