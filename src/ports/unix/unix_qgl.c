@@ -111,7 +111,7 @@ qboolean QR_Init (const char *dllname)
 		if (strlen(s_libdir->string))
 			Com_sprintf(libPath, sizeof(libPath), "%s/%s", s_libdir->string, dllname);
 		else
-			Com_sprintf(libPath, sizeof(libPath), "./%s", dllname);
+			Com_sprintf(libPath, sizeof(libPath), "%s", dllname);
 
 		if ((glw_state.OpenGLLib = dlopen(libPath, RTLD_LAZY)) == 0) {
 			ri.Con_Printf(PRINT_ALL, "LoadLibrary (\"%s\") failed: %s\n", libPath, dlerror());
