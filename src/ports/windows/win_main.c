@@ -32,13 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <direct.h>
 #include <io.h>
 
-#if _MSC_VER >= 1300 /* >= MSVC 7.0 */
-#include <dbghelp.h>
-# ifdef DEBUG
-# include <intrin.h>
-# endif
-#endif
-
 static HMODULE hSh32 = NULL;
 static FARPROC procShell_NotifyIcon = NULL;
 static NOTIFYICONDATA pNdata;
@@ -62,11 +55,9 @@ static byte consoleFullBuffer[16384];
 static sizebuf_t console_buffer;
 static byte console_buff[8192];
 
-static HANDLE		qwclsemaphore;
-
-#define	MAX_NUM_ARGVS	128
-int			argc;
-const char		*argv[MAX_NUM_ARGVS];
+#define MAX_NUM_ARGVS 128
+int argc;
+const char *argv[MAX_NUM_ARGVS];
 
 int SV_CountPlayers(void);
 
@@ -82,67 +73,6 @@ SYSTEM IO
 
 /**
  * @brief
- * @sa Sys_DisableTray
- */
-void Sys_EnableTray (void)
-{
-	memset(&pNdata, 0, sizeof(pNdata));
-
-	pNdata.cbSize = sizeof(NOTIFYICONDATA);
-#ifdef DEDICATED_ONLY
-	pNdata.hWnd = hwnd_Server;
-#else
-	pNdata.hWnd = cl_hwnd;
-#endif
-	pNdata.uID = 0;
-	pNdata.uCallbackMessage = WM_USER + 4;
-	GetWindowText(pNdata.hWnd, pNdata.szTip, sizeof(pNdata.szTip)-1);
-	pNdata.hIcon = LoadIcon(global_hInstance, MAKEINTRESOURCE(IDI_ICON2));
-	pNdata.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
-
-	hSh32 = LoadLibrary("shell32.dll");
-	procShell_NotifyIcon = GetProcAddress(hSh32, "Shell_NotifyIcon");
-
-	procShell_NotifyIcon(NIM_ADD, &pNdata);
-
-	Com_Printf("Minimize to tray enabled.\n");
-}
-
-/**
- * @brief
- * @sa Sys_EnableTray
- */
-void Sys_DisableTray (void)
-{
-#ifdef DEDICATED_ONLY
-	ShowWindow(hwnd_Server, SW_RESTORE);
-#else
-	ShowWindow(cl_hwnd, SW_RESTORE);
-#endif
-	procShell_NotifyIcon(NIM_DELETE, &pNdata);
-
-	if (hSh32)
-		FreeLibrary(hSh32);
-
-	procShell_NotifyIcon = NULL;
-
-	Com_Printf("Minimize to tray disabled.\n");
-}
-
-/**
- * @brief
- */
-void Sys_Minimize (void)
-{
-#ifdef DEDICATED_ONLY
-	SendMessage(hwnd_Server, WM_ACTIVATE, MAKELONG(WA_INACTIVE,1), 0);
-#else
-	SendMessage(cl_hwnd, WM_ACTIVATE, MAKELONG(WA_INACTIVE,1), 0);
-#endif
-}
-
-/**
- * @brief
  */
 void Sys_Error (const char *error, ...)
 {
@@ -150,30 +80,16 @@ void Sys_Error (const char *error, ...)
 	char text[1024];
 	int ret;
 
+#ifnded DEDICATED_ONLY
 	CL_Shutdown();
+#endif
 	Qcommon_Shutdown();
 
 	va_start(argptr, error);
 	Q_vsnprintf(text, sizeof(text), error, argptr);
 	va_end(argptr);
 
-	if (strlen(text) < 900)
-		strcat(text, "\n\nWould you like to debug? (DEVELOPERS ONLY!)\n");
-
-rebox:;
-
-	ret = MessageBox(NULL, text, "UFO:AI Fatal Error", MB_ICONEXCLAMATION | MB_YESNO);
-
-	if (ret == IDYES) {
-		ret = MessageBox(NULL, "Please attach your debugger now to prevent the built in exception handler from catching the breakpoint. When ready, press Yes to cause a breakpoint or No to cancel.", "UFO:AI Fatal Error", MB_ICONEXCLAMATION | MB_YESNO | MB_DEFBUTTON2);
-		if (ret == IDYES)
-			Sys_DebugBreak();
-		else
-			goto rebox;
-	}
-
-	if (qwclsemaphore)
-		CloseHandle(qwclsemaphore);
+	MessageBox(NULL, text, "UFO:AI Fatal Error", MB_ICONEXCLAMATION);
 
 	ExitProcess(0xDEAD);
 }
@@ -187,7 +103,6 @@ void Sys_Quit (void)
 
 	CL_Shutdown();
 	Qcommon_Shutdown();
-	CloseHandle(qwclsemaphore);
 
 	if (procShell_NotifyIcon)
 		procShell_NotifyIcon(NIM_DELETE, &pNdata);
@@ -226,8 +141,8 @@ static void WinError (void)
  */
 static void ServerWindowProcCommandExecute (void)
 {
-	int			ret;
-	char		buff[1024];
+	int ret;
+	char buff[1024];
 
 	*(DWORD *)&buff = sizeof(buff)-2;
 
@@ -321,7 +236,6 @@ static LRESULT CALLBACK ServerWindowProc (HWND hwnd, UINT message, WPARAM wParam
  */
 const char *Sys_GetCurrentUser (void)
 {
-#if _MSC_VER >= 1300 /* >= MSVC 7.0 */
 	static char s_userName[1024];
 	unsigned long size = sizeof(s_userName);
 
@@ -332,9 +246,6 @@ const char *Sys_GetCurrentUser (void)
 		Q_strncpyz(s_userName, "player", sizeof(s_userName));
 
 	return s_userName;
-#else
-	return "player";
-#endif
 }
 
 /**
@@ -435,30 +346,10 @@ char *Sys_GetHomeDirectory (void)
  */
 void Sys_Init (void)
 {
-	OSVERSIONINFO	vinfo;
+	OSVERSIONINFO vinfo;
 
 	sys_affinity = Cvar_Get("sys_affinity", "1", CVAR_ARCHIVE, "Which core to use - 1 = only first, 2 = only second, 3 = both");
 	sys_priority = Cvar_Get("sys_priority", "1", CVAR_ARCHIVE, "Process priority - 0 = normal, 1 = high, 2 = realtime");
-
-#if 0
-	/* allocate a named semaphore on the client so the */
-	/* front end can tell if it is alive */
-
-	/* mutex will fail if semephore already exists */
-	qwclsemaphore = CreateMutex(
-		NULL,         /* Security attributes */
-		0,            /* owner       */
-		"qwcl"); /* Semaphore name      */
-	if (!qwclsemaphore)
-		Sys_Error("QWCL is already running on this system");
-	CloseHandle (qwclsemaphore);
-
-	qwclsemaphore = CreateSemaphore(
-		NULL,         /* Security attributes */
-		0,            /* Initial count       */
-		1,            /* Maximum count       */
-		"qwcl"); /* Semaphore name      */
-#endif
 
 	timeBeginPeriod(1);
 
@@ -538,9 +429,9 @@ void Sys_UpdateConsoleBuffer (void)
 		buflen = console_buffer.cursize + 1024;
 
 		if (consoleBufferPointer + buflen >= sizeof(consoleFullBuffer)) {
-			int		moved;
-			char	*p = consoleFullBuffer + buflen;
-			char	*q;
+			int moved;
+			char *p = consoleFullBuffer + buflen;
+			char *q;
 
 			while (p[0] && p[0] != '\n')
 				p++;
@@ -649,23 +540,6 @@ char *Sys_GetClipboardData (void)
 }
 
 /*
-==============================================================================
-WINDOWS CRAP
-==============================================================================
-*/
-
-/**
- * @brief
- */
-void Sys_AppActivate (void)
-{
-#ifndef DEDICATED_ONLY
-	ShowWindow(cl_hwnd, SW_RESTORE);
-	SetForegroundWindow(cl_hwnd);
-#endif
-}
-
-/*
 ========================================================================
 GAME DLL
 ========================================================================
@@ -689,8 +563,8 @@ void Sys_UnloadGame (void)
 game_export_t *Sys_GetGameAPI (game_import_t *parms)
 {
 	GetGameApi_t GetGameAPI;
-	char	name[MAX_OSPATH];
-	const char	*path;
+	char name[MAX_OSPATH];
+	const char *path;
 
 	if (game_library)
 		Com_Error(ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");
@@ -752,7 +626,6 @@ static void ParseCommandLine (LPSTR lpCmdLine)
 			}
 		}
 	}
-
 }
 
 HINSTANCE global_hInstance;
@@ -762,8 +635,8 @@ HINSTANCE global_hInstance;
  */
 static void FixWorkingDirectory (void)
 {
-	char	*p;
-	char	curDir[MAX_PATH];
+	char *p;
+	char curDir[MAX_PATH];
 
 	GetModuleFileName(NULL, curDir, sizeof(curDir)-1);
 
@@ -846,10 +719,6 @@ void Sys_SetAffinityAndPriority (void)
  */
 int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-#if 0
-	MSG msg;
-#endif
-
 	/* previous instances do not exist in Win32 */
 	if (hPrevInstance)
 		return 0;
@@ -869,21 +738,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 		if (Minimized)
 			Sys_Sleep(1);
 
-#if 1
 		Sys_SendKeyEvents();
-#else
-		while (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) {
-			if (!GetMessage(&msg, NULL, 0, 0))
-				Com_Quit();
-			sys_msg_time = msg.time;
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
-#endif
-
-#ifndef __MINGW32__
-		_controlfp(_PC_24, _MCW_PC);
-#endif
 		Qcommon_Frame();
 	}
 

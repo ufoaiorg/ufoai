@@ -44,13 +44,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  ifndef SHARED_EXT
 #    define SHARED_EXT "dll"
 #  endif
-#  if defined _M_IX86 || defined __i386__
+#  if defined __i386__
 #    define CPUSTRING "x86"
-#  elif defined _M_AMD64 || define _M_X64 || defined __x86_64__
+#  elif defined __x86_64__
 #    define CPUSTRING "x86_64"
-#  elif defined _M_IA64 || defined __ia64__
+#  elif defined __ia64__
 #    define CPUSTRING "x86_64"
-#  elif defined _M_ALPHA || defined __alpha__
+#  elif defined __alpha__
 #    define CPUSTRING "AXP"
 #  else
 #    define CPUSTRING "Unknown"
@@ -344,7 +344,6 @@ void Sys_Init(void);
 void Sys_NormPath(char *path);
 void Sys_OSPath(char* path);
 void Sys_Sleep(int milliseconds);
-void Sys_AppActivate(void);
 const char *Sys_GetCurrentUser(void);
 
 void Sys_UnloadGame(void);
@@ -365,10 +364,6 @@ void Sys_ConsoleInputInit(void);
 void *Sys_LoadLibrary(const char *name, int flags);
 void Sys_FreeLibrary(void *libHandle);
 void *Sys_GetProcAddress(void *libHandle, const char *procName);
-
-void Sys_Minimize(void);
-void Sys_DisableTray(void);
-void Sys_EnableTray(void);
 
 /*
 ==============================================================

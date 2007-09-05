@@ -92,35 +92,6 @@ void Sys_Init (void)
 /**
  * @brief
  */
-void Sys_Error (const char *error, ...)
-{
-	va_list     argptr;
-	char        string[1024];
-
-	/* change stdin to non blocking */
-	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
-
-#ifndef DEDICATED_ONLY
-	CL_Shutdown();
-#endif
-	Qcommon_Shutdown();
-
-	va_start(argptr,error);
-	Q_vsnprintf(string, sizeof(string), error, argptr);
-	va_end(argptr);
-
-	string[sizeof(string)-1] = 0;
-
-	fprintf(stderr, "Error: %s\n", string);
-#if defined DEBUG
-	Sys_DebugBreak();				/* break execution before game shutdown */
-#endif
-	exit(1);
-}
-
-/**
- * @brief
- */
 static void floating_point_exception_handler (int whatever)
 {
 	signal(SIGFPE, floating_point_exception_handler);

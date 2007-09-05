@@ -1443,14 +1443,9 @@ int FS_WriteFile (const void *buffer, size_t len, const char *filename)
 const char *FS_GetCwd (void)
 {
 	static char buf[MAX_QPATH];
-	char *path = Q_getcwd(buf, sizeof(buf));
-
-	if (path != NULL) {
-		FS_NormPath(path);
-		return buf;
-	} else {
-		return "";
-	}
+	Q_strncpyz(buf, Sys_Cwd(), sizeof(buf));
+	FS_NormPath(buf);
+	return buf;
 }
 
 /**

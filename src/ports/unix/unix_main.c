@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <sys/file.h>
 
 #include "../../common/common.h"
+#include "../unix/unix_glob.h"
 
 static void *game_library;
 
@@ -68,6 +69,31 @@ char *Sys_Cwd (void)
 /**
  * @brief
  */
+void Sys_Error (const char *error, ...)
+{
+	va_list argptr;
+	char string[1024];
+
+	/* change stdin to non blocking */
+	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
+
+#ifndef DEDICATED_ONLY
+	CL_Shutdown();
+#endif
+	Qcommon_Shutdown();
+
+	va_start(argptr,error);
+	Q_vsnprintf(string, sizeof(string), error, argptr);
+	va_end(argptr);
+
+	fprintf(stderr, "Error: %s\n", string);
+
+	exit(1);
+}
+
+/**
+ * @brief
+ */
 void Sys_Quit (void)
 {
 	CL_Shutdown();
@@ -89,29 +115,6 @@ void Sys_Sleep (int milliseconds)
 }
 
 /**
- * @brief
- * @sa Sys_DisableTray
- */
-void Sys_EnableTray (void)
-{
-}
-
-/**
- * @brief
- * @sa Sys_EnableTray
- */
-void Sys_DisableTray (void)
-{
-}
-
-/**
- * @brief
- */
-void Sys_Minimize (void)
-{
-}
-
-/**
  * @brief Returns the home environment variable
  * (which hold the path of the user's homedir)
  */
@@ -127,17 +130,118 @@ void Sys_NormPath (char* path)
 {
 }
 
+static	char	findbase[MAX_OSPATH];
+static	char	findpath[MAX_OSPATH];
+static	char	findpattern[MAX_OSPATH];
+static	DIR		*fdir;
+
 /**
  * @brief
  */
-void Sys_OSPath (char* path)
+static qboolean CompareAttributes (const char *path, const char *name, unsigned musthave, unsigned canthave)
 {
+	struct stat st;
+	char fn[MAX_OSPATH];
+
+	/* . and .. never match */
+	if (Q_strcmp(name, ".") == 0 || Q_strcmp(name, "..") == 0)
+		return qfalse;
+
+	Com_sprintf(fn, sizeof(fn), "%s/%s", path, name);
+	if (stat(fn, &st) == -1) {
+		Com_Printf("CompareAttributes: Warning, stat failed: %s\n", name);
+		return qfalse; /* shouldn't happen */
+	}
+
+	if ((st.st_mode & S_IFDIR) && (canthave & SFF_SUBDIR))
+		return qfalse;
+
+	if ((musthave & SFF_SUBDIR) && !(st.st_mode & S_IFDIR))
+		return qfalse;
+
+	return qtrue;
+}
+
+/**
+ * @brief Opens the directory and returns the first file that matches our searchrules
+ * @sa Sys_FindNext
+ * @sa Sys_FindClose
+ */
+char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canhave)
+{
+	struct dirent *d;
+	char *p;
+
+	if (fdir)
+		Sys_Error("Sys_BeginFind without close");
+
+/*	COM_FilePath(path, findbase); */
+	Q_strncpyz(findbase, path, sizeof(findbase));
+
+	if ((p = strrchr(findbase, '/')) != NULL) {
+		*p = 0;
+		Q_strncpyz(findpattern, p + 1, sizeof(findpattern));
+	} else
+		Q_strncpyz(findpattern, "*", sizeof(findpattern));
+
+	if (Q_strcmp(findpattern, "*.*") == 0)
+		Q_strncpyz(findpattern, "*", sizeof(findpattern));
+
+	if ((fdir = opendir(findbase)) == NULL)
+		return NULL;
+
+	while ((d = readdir(fdir)) != NULL) {
+		if (!*findpattern || glob_match(findpattern, d->d_name)) {
+/*			if (*findpattern) */
+/*				printf("%s matched %s\n", findpattern, d->d_name); */
+			if (CompareAttributes(findbase, d->d_name, musthave, canhave)) {
+				Com_sprintf(findpath, sizeof(findpath), "%s/%s", findbase, d->d_name);
+				return findpath;
+			}
+		}
+	}
+	return NULL;
+}
+
+/**
+ * @brief Returns the next file of the already opened directory (Sys_FindFirst) that matches our search mask
+ * @sa Sys_FindClose
+ * @sa Sys_FindFirst
+ * @sa static var findpattern
+ */
+char *Sys_FindNext (unsigned musthave, unsigned canhave)
+{
+	struct dirent *d;
+
+	if (fdir == NULL)
+		return NULL;
+	while ((d = readdir(fdir)) != NULL) {
+		if (!*findpattern || glob_match(findpattern, d->d_name)) {
+/*			if (*findpattern) */
+/*				printf("%s matched %s\n", findpattern, d->d_name); */
+			if (CompareAttributes(findbase, d->d_name, musthave, canhave)) {
+				Com_sprintf(findpath, sizeof(findpath), "%s/%s", findbase, d->d_name);
+				return findpath;
+			}
+		}
+	}
+	return NULL;
 }
 
 /**
  * @brief
  */
-void Sys_AppActivate (void)
+void Sys_FindClose (void)
+{
+	if (fdir != NULL)
+		closedir(fdir);
+	fdir = NULL;
+}
+
+/**
+ * @brief
+ */
+void Sys_OSPath (char* path)
 {
 }
 
@@ -286,4 +390,40 @@ void *Sys_GetProcAddress (void *libHandle, const char *procName)
 	if (!libHandle)
 		Com_Error(ERR_DROP, "Sys_GetProcAddress: No valid libHandle given");
 	return dlsym(libHandle, procName);
+}
+
+
+int curtime;
+
+/**
+ * @brief
+ */
+int Sys_Milliseconds (void)
+{
+	struct timeval tp;
+	struct timezone tzp;
+	static int		secbase;
+
+	gettimeofday(&tp, &tzp);
+
+	if (!secbase) {
+		secbase = tp.tv_sec;
+		return tp.tv_usec/1000;
+	}
+
+	curtime = (tp.tv_sec - secbase)*1000 + tp.tv_usec/1000;
+
+	return curtime;
+}
+
+/**
+ * @brief
+ */
+void Sys_Mkdir (const char *thePath)
+{
+	if (mkdir(thePath, 0777) != -1)
+		return;
+
+	if (errno != EEXIST)
+		Com_Printf("\"mkdir %s\" failed, reason: \"%s\".", thePath, strerror(errno));
 }

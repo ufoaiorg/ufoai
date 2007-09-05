@@ -30,10 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client/client.h"
 #include "win_local.h"
 
-#if defined DEBUG && defined _MSC_VER >= 1300
-#include <intrin.h>
-#endif
-
 /* Structure containing functions exported from refresh DLL */
 refexport_t re;
 

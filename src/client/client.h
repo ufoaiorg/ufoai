@@ -242,14 +242,6 @@ typedef enum {
 /* i18n support via gettext */
 #include <libintl.h>
 
-#if defined(_WIN32)
-# ifdef _MSC_VER
-#  ifndef LC_MESSAGES
-#   define LC_MESSAGES 3
-#  endif /* LC_MESSAGES */
-# endif /* _MSC_VER */
-#endif
-
 /* the used textdomain for gettext */
 #define TEXT_DOMAIN "ufoai"
 #include <locale.h>

@@ -1859,7 +1859,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 		ri.Sys_Error(ERR_DROP, "R_FindImage: NULL name");
 	len = strlen(pname);
 	if (len < 5)
-		return NULL;			/*  ri.Sys_Error (ERR_DROP, "R_FindImage: bad name: %s", name); */
+		return NULL;			/*  ri.Sys_Error(ERR_DROP, "R_FindImage: bad name: %s", name); */
 
 	/* drop extension */
 	Q_strncpyz(lname, pname, MAX_QPATH);

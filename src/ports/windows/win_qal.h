@@ -33,14 +33,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "win_local.h"
 
-#ifdef _MSC_VER
-/* msvc users have to install the OpenAL SDK - which doesn't use the AL/ scheme */
-#include "al.h"
-#include "alc.h"
-#else
 #include <AL/al.h>
 #include <AL/alc.h>
-#endif
 
 /*
 #include <AL/eax.h>

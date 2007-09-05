@@ -31,54 +31,10 @@
 #define COMMON_UFOTYPES_H
 
 #include <stddef.h>
-
-#ifndef _MSC_VER
 #include <inttypes.h>
-#else
-
-#include <limits.h>
-
-typedef   signed __int8  int8_t;
-typedef   signed __int16 int16_t;
-typedef   signed __int32 int32_t;
-typedef   signed __int64 int64_t;
-
-typedef unsigned __int8  uint8_t;
-typedef unsigned __int16 uint16_t;
-typedef unsigned __int32 uint32_t;
-typedef unsigned __int64 uint64_t;
-
-#define INT8_MIN  _I8_MIN
-#define INT16_MIN _I16_MIN
-#define INT32_MIN _I32_MIN
-#define INT64_MIN _I64_MIN
-
-#define INT8_MAX  _I8_MAX
-#define INT16_MAX _I16_MAX
-#define INT32_MAX _I32_MAX
-#define INT64_MAX _I64_MAX
-
-#define UINT8_MAX  _UI8_MAX
-#define UINT16_MAX _UI16_MAX
-#define UINT32_MAX _UI32_MAX
-#define UINT64_MAX _UI64_MAX
-
-/* Windows defines the equivalent SSIZE_T in the platform SDK
- * as the signed equivalent of size_t which is defined as long
- * on WIN32 and long long/__int64 on WIN64
- */
-#if defined (_WIN64)
-# define ssize_t __int64
-#elif defined (_WIN32)
-# define ssize_t long
-#endif
-
-#endif /* _MSC_VER */
 
 typedef float float32_t;
 typedef double double64_t;
-
-/* NOTE: MSVC does NOT properly support 80-bit long doubles. They should NOT be used.*/
 
 typedef enum {qfalse, qtrue} qboolean;
 

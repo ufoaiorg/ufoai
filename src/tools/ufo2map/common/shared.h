@@ -15,29 +15,6 @@
 #  define  __attribute__(x)  /*NOTHING*/
 #endif
 
-#ifdef _MSC_VER
-#  pragma warning(disable : 4244)     /* MIPS */
-#  pragma warning(disable : 4136)     /* X86 */
-#  pragma warning(disable : 4051)     /* ALPHA */
-#  pragma warning(disable : 4018)     /* signed/unsigned mismatch */
-#  pragma warning(disable : 4305)     /* truncate from double to float */
-#endif	/* _MSC_VER */
-
-#if defined __STDC_VERSION__
-#  if __STDC_VERSION__ < 199901L
-#    if defined __GNUC__
-/* if we are using ansi - the compiler doesn't know about inline */
-#      define inline __inline__
-#    elif defined _MSVC
-#      define inline __inline
-#    else
-#      define inline
-#    endif
-#  endif
-#else
-#  define inline
-#endif
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>

@@ -77,150 +77,6 @@ cvar_t* sys_priority;
 cvar_t* sys_affinity;
 cvar_t* sys_os;
 
-#if 0
-/**
- * @brief This resolves any symlinks to the binary. It's disabled for debug
- * builds because there are situations where you are likely to want
- * to symlink to binaries and /not/ have the links resolved.
- * This way you can make a link in /usr/bin and the data-files are still
- * found in e.g. /usr/local/games/ufoai
- */
-char *Sys_BinName (const char *arg0)
-{
-#ifndef DEBUG
-	int	n;
-	char	src[MAX_OSPATH];
-	char	dir[MAX_OSPATH];
-	qboolean	links = qfalse;
-#endif
-
-	static char	dst[MAX_OSPATH];
-	Com_sprintf(dst, MAX_OSPATH, arg0);
-
-#ifndef DEBUG
-	while ((n = readlink(dst, src, MAX_OSPATH)) >= 0) {
-		src[n] = '\0';
-		Com_sprintf(dir, MAX_OSPATH, dirname(dst));
-		Com_sprintf(dst, MAX_OSPATH, dir);
-		Q_strcat(dst, "/", MAX_OSPATH);
-		Q_strcat(dst, src, MAX_OSPATH);
-		links = qtrue;
-	}
-
-	if (links) {
-		Com_sprintf(dst, MAX_OSPATH, Sys_Cwd());
-		Q_strcat(dst, "/", MAX_OSPATH);
-		Q_strcat(dst, dir, MAX_OSPATH);
-		Q_strcat(dst, "/", MAX_OSPATH);
-		Q_strcat(dst, src, MAX_OSPATH);
-	}
-#endif
-	return dst;
-}
-#endif
-
-#ifdef __linux__
-
-/* gcc 2.7.2 has trouble understanding this unfortunately at compile time */
-/* and 2.95.3 won't find it at link time. blah. */
-#define GCC_VERSION (__GNUC__ * 10000 \
-	+ __GNUC_MINOR__ * 100 \
-	+ __GNUC_PATCHLEVEL__)
-#if GCC_VERSION > 30000
-/**
- * @brief
- */
-static int dlcallback (struct dl_phdr_info *info, size_t size, void *data)
-{
-	int j;
-	int end;
-
-	end = 0;
-
-	if (!info->dlpi_name || !info->dlpi_name[0])
-		return 0;
-
-	for (j = 0; j < info->dlpi_phnum; j++) {
-		end += info->dlpi_phdr[j].p_memsz;
-	}
-
-	/* this is terrible. */
-#if __WORDSIZE == 64
-	fprintf(stderr, "[0x%lux-0x%lux] %s\n", info->dlpi_addr, info->dlpi_addr + end, info->dlpi_name);
-#else
-	fprintf(stderr, "[0x%ux-0x%ux] %s\n", info->dlpi_addr, info->dlpi_addr + end, info->dlpi_name);
-#endif
-	return 0;
-}
-#endif
-
-/**
- * @brief Obtain a backtrace and print it to stderr.
- * @note Adapted from http://www.delorie.com/gnu/docs/glibc/libc_665.html
- */
-#if defined(__x86_64__) || defined(__powerpc__)
-static void Sys_Backtrace (int sig)
-#else
-static void Sys_Backtrace (int sig, siginfo_t *siginfo, void *secret)
-#endif
-{
-	void		*array[32];
-	struct utsname	info;
-	size_t		size;
-	size_t		i;
-	char		**strings;
-#ifndef __x86_64__
-#ifndef __powerpc__
-	ucontext_t 	*uc = (ucontext_t *)secret;
-#endif
-#endif
-
-	signal (SIGSEGV, SIG_DFL);
-
-	fprintf (stderr, "=====================================================\n"
-		"Segmentation Fault\n"
-		"=====================================================\n"
-		"A crash has occured within UFO:AI or the Game library\n"
-		"that you are running.\n"
-		"\n"
-		"If possible, re-building UFO:AI to ensure it is not a\n"
-		"compile problem. If the crash still persists,  please\n"
-		"put the following debug info on the UFO:AI forum with\n"
-		"details including the version, Linux distribution and\n"
-		"any other pertinent information.\n"
-		"\n");
-
-	size = backtrace (array, sizeof(array)/sizeof(void*));
-
-#ifndef __x86_64__
-#ifndef __powerpc__
-	array[1] = (void *) uc->uc_mcontext.gregs[REG_EIP];
-#endif
-#endif
-
-	strings = backtrace_symbols(array, size);
-
-	fprintf(stderr, "Stack dump (%zd frames):\n", size);
-
-	for (i = 0; i < size; i++)
-		fprintf(stderr, "%.2zd: %s\n", i, strings[i]);
-
-	fprintf(stderr, "\nVersion: " UFO_VERSION " (" BUILDSTRING " " CPUSTRING ")\n");
-
-	uname(&info);
-	fprintf(stderr, "OS Info: %s %s %s %s %s\n\n", info.sysname, info.nodename, info.release, info.version, info.machine);
-
-#if GCC_VERSION > 30000
-	fprintf(stderr, "Loaded libraries:\n");
-	dl_iterate_phdr(dlcallback, NULL);
-#endif
-
-	free(strings);
-
-	raise(SIGSEGV);
-}
-
-#endif /* __linux__ */
 
 /* ======================================================================= */
 /* General routines */
@@ -236,9 +92,6 @@ void Sys_SetAffinityAndPriority (void)
 	}
 
 	if (sys_priority->modified) {
-		Com_Printf("Change priority to %i\n", sys_priority->integer);
-		if (setpriority(PRIO_PROCESS, 0, sys_priority->integer))
-			Com_Printf("Failed to set nice level of %i\n", sys_priority->integer);
 		sys_priority->modified = qfalse;
 	}
 }
@@ -248,58 +101,9 @@ void Sys_SetAffinityAndPriority (void)
  */
 void Sys_Init (void)
 {
-#ifdef __linux__
-# ifndef __x86_64__
-	struct sigaction sa;
-
-	if (sizeof(uint32_t) != 4)
-		Sys_Error("uint32 != 32 bits");
-	else if (sizeof(uint64_t) != 8)
-		Sys_Error("uint64 != 64 bits");
-	else if (sizeof(uint16_t) != 2)
-		Sys_Error("uint16 != 16 bits");
-
-	sa.sa_handler = (void *)Sys_Backtrace;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_RESTART | SA_SIGINFO;
-
-	sigaction(SIGSEGV, &sa, NULL);
-# else
-	signal(SIGSEGV, Sys_Backtrace);
-# endif
-#endif /* __linux__ */
 	sys_os = Cvar_Get("sys_os", "linux", CVAR_SERVERINFO, NULL);
 	sys_affinity = Cvar_Get("sys_affinity", "0", CVAR_ARCHIVE, NULL);
 	sys_priority = Cvar_Get("sys_priority", "0", CVAR_ARCHIVE, "Process nice level");
-}
-
-/**
- * @brief
- */
-void Sys_Error (const char *error, ...)
-{
-	va_list argptr;
-	char string[1024];
-
-	/* change stdin to non blocking */
-	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
-
-#ifndef DEDICATED_ONLY
-	CL_Shutdown();
-#endif
-	Qcommon_Shutdown();
-
-	va_start(argptr,error);
-	Q_vsnprintf(string, sizeof(string), error, argptr);
-	va_end(argptr);
-
-	string[sizeof(string)-1] = 0;
-
-	fprintf(stderr, "Error: %s\n", string);
-#if defined DEBUG
-	Sys_DebugBreak();				/* break execution before game shutdown */
-#endif
-	exit(1);
 }
 
 /**

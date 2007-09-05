@@ -79,29 +79,6 @@ void Sys_Init (void)
 	sys_priority = Cvar_Get("sys_priority", "0", CVAR_ARCHIVE, "Process nice level");
 }
 
-/**
- * @brief
- */
-void Sys_Error (const char *error, ...)
-{
-	va_list argptr;
-	char string[1024];
-
-	/* change stdin to non blocking */
-	fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
-
-	va_start(argptr,error);
-	Q_vsnprintf(string, sizeof(string), error, argptr);
-	va_end(argptr);
-
-	string[sizeof(string)-1] = 0;
-	fprintf(stderr, "Error: %s\n", string);
-
-	CL_Shutdown ();
-	Qcommon_Shutdown ();
-	exit (0);
-}
-
 static void floating_point_exception_handler (int whatever)
 {
 /*	Sys_Warn("floating point exception\n"); */

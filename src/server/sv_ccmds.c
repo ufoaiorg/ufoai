@@ -421,30 +421,6 @@ static void SV_ListMaps_f (void)
 /**
  * @brief
  */
-static void SV_Trayicon_f (void)
-{
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage tray [on|off]\n");
-		return;
-	}
-
-	if (!Q_stricmp(Cmd_Argv(1), "on"))
-		Sys_EnableTray();
-	else
-		Sys_DisableTray();
-}
-
-/**
- * @brief
- */
-static void SV_Minimize_f (void)
-{
-	Sys_Minimize();
-}
-
-/**
- * @brief
- */
 static void SV_MapcycleList_f (void)
 {
 	int i;
@@ -612,8 +588,6 @@ void SV_InitOperatorCommands (void)
 	Cmd_AddCommand("maplist", SV_ListMaps_f, "List of all available maps");
 
 	Cmd_AddCommand("setmaster", SV_SetMaster_f, "Send ping command to masterserver (see cvars: masterserver_host and masterserver_port)");
-	Cmd_AddCommand("tray", SV_Trayicon_f, "Enable or disable minimize to notifcation area");
-	Cmd_AddCommand("minimize", SV_Minimize_f, "Minimize");
 	Cmd_AddCommand("mapcyclelist", SV_MapcycleList_f, "Print the current mapcycle");
 	Cmd_AddCommand("mapcyclenext", SV_MapcycleNext_f, "Start the next map from the cycle");
 	Cmd_AddCommand("mapcycleclear", SV_MapcycleClear, "Delete the current mapcycle");

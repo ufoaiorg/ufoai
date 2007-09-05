@@ -1322,7 +1322,6 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 			Com_Printf("Command packet from remote host. Ignored.\n");
 			return;
 		}
-		Sys_AppActivate();
 		s = NET_ReadString(msg);
 		Cbuf_AddText(s);
 		Cbuf_AddText("\n");

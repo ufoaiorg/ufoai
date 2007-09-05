@@ -41,23 +41,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/byte.h"
 #include "../shared/shared.h"
 
-#ifdef _MSC_VER
-/* unknown pragmas are SUPPOSED to be ignored, but.... */
-#pragma warning(disable : 4244) /* MIPS */
-#pragma warning(disable : 4136) /* X86 */
-#pragma warning(disable : 4051) /* ALPHA */
-
-#pragma warning(disable : 4018) /* signed/unsigned mismatch */
-#pragma warning(disable : 4305) /* truncation from const double to float */
-#pragma warning(disable : 4152) /* nonstandard extension, function/data pointer conversion in expression */
-#pragma warning(disable : 4201) /* nonstandard extension used : nameless struct/union */
-#pragma warning(disable : 4100) /* unreferenced formal parameter */
-#pragma warning(disable : 4127) /* conditional expression is constant */
-#if defined _M_AMD64
-# pragma warning(disable : 4267) /* conversion from 'size_t' to whatever, possible loss of data */
-#endif
-#endif /* _MSC_VER */
-
 #ifdef HAVE_CONFIG_H
 # include "../../config.h"
 #endif
@@ -384,7 +367,6 @@ void Q_strncpyzDebug(char *dest, const char *src, size_t destsize, const char *f
 void Q_strcat(char *dest, const char *src, size_t size) __attribute__((nonnull));
 char *Q_strlwr(char *str) __attribute__((nonnull));
 int Q_putenv(const char *var, const char *value);
-char *Q_getcwd(char *dest, size_t size) __attribute__((nonnull));
 
 /*============================================= */
 
@@ -461,7 +443,6 @@ void Sys_Mkdir(const char *path);
 char *Sys_FindFirst(const char *path, unsigned musthave, unsigned canthave);
 char *Sys_FindNext(unsigned musthave, unsigned canthave);
 void Sys_FindClose(void);
-void Sys_DebugBreak(void);
 char *Sys_Cwd(void);
 void Sys_SetAffinityAndPriority(void);
 

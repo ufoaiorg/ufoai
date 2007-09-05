@@ -1982,10 +1982,6 @@ static trace_t CM_BoxTrace (vec3_t start, vec3_t end, const vec3_t mins, const v
 	return trace_trace;
 }
 
-#ifdef _MSC_VER
-#pragma optimize("", off )
-#endif
-
 /**
  * @brief Handles offseting and rotation of the end points for moving and rotating entities
  * @sa CM_BoxTrace
@@ -2056,12 +2052,6 @@ trace_t CM_TransformedBoxTrace (vec3_t start, vec3_t end, const vec3_t mins, con
 
 	return trace;
 }
-
-#ifdef _MSC_VER
-#pragma optimize("", on )
-#endif
-
-
 
 /**
  * @brief Handles all 255 level specific submodels too
@@ -2983,9 +2973,6 @@ byte Grid_Height (struct routing_s *map, pos3_t pos)
 	if (pos[2] >= HEIGHT) {
 		Com_Printf("Grid_Height: Warning: z level is bigger than 7: %i\n", pos[2]);
 		pos[2] &= 7;
-#if 0
-		Sys_DebugBreak();
-#endif
 	}
 	return R_HEIGHT(map, pos[0], pos[1], pos[2]) * QUANT;
 }

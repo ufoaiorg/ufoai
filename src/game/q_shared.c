@@ -374,10 +374,6 @@ static inline void R_ConcatRotations (float in1[3][3], float in2[3][3], float ou
 	out[2][2] = in1[2][0] * in2[0][2] + in1[2][1] * in2[1][2] + in1[2][2] * in2[2][2];
 }
 
-#ifdef _MSC_VER
-#pragma optimize( "", off )
-#endif
-
 /**
  * @brief Rotate a point around a given vector
  * @param[in] dir The vector around which to rotate
@@ -440,10 +436,6 @@ void RotatePointAroundVector (vec3_t dst, const vec3_t dir, const vec3_t point, 
 		dst[i] = rot[i][0] * point[0] + rot[i][1] * point[1] + rot[i][2] * point[2];
 	}
 }
-
-#ifdef _MSC_VER
-#pragma optimize( "", on )
-#endif
 
 /**
  * @brief Print a 3D vector
@@ -1033,16 +1025,12 @@ LIBRARY REPLACEMENT FUNCTIONS
  */
 char *Q_strlwr (char *str)
 {
-#ifdef _MSC_VER
-	return _strlwr(str);
-#else
 	char* origs = str;
 	while (*str) {
 		*str = tolower(*str);
 		str++;
 	}
 	return origs;
-#endif
 }
 
 /**
@@ -1058,26 +1046,9 @@ int Q_putenv (const char *var, const char *value)
 	char str[32];
 
 	Com_sprintf(str, sizeof(str), "%s=%s", var, value);
-# ifdef _MSC_VER
-	return _putenv(str);
-# else
-	return putenv((char *) str);
-# endif
-#endif /* __APPLE__ */
-}
 
-/**
- * @brief
- * @param
- * @sa
- */
-char *Q_getcwd (char *dest, size_t size)
-{
-#ifdef _MSC_VER
-	return _getcwd(dest, (int)size);
-#else
-	return getcwd(dest, size);
-#endif
+	return putenv((char *) str);
+#endif /* __APPLE__ */
 }
 
 /**

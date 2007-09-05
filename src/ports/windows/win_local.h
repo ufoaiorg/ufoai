@@ -26,10 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef WIN_LOCAL_H
 #define WIN_LOCAL_H
 
-#ifdef _MSC_VER
-#pragma warning( disable : 4229 )  /* mgraph gets this */
-#endif
-
 #include <windows.h>
 #include <shlobj.h>
 #include "../../client/snd_loc.h"

@@ -29,9 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <direct.h>
 #include <io.h>
 #include <conio.h>
-#if defined DEBUG && defined _MSC_VER >= 1300
-#include <intrin.h>
-#endif
 
 int	curtime;
 /**
@@ -139,7 +136,7 @@ char *Sys_FindNext (unsigned musthave, unsigned canthave)
 		return NULL;
 
 	/* until we found the next entry */
-	while (_findnext (findhandle, &findinfo) != -1) {
+	while (_findnext(findhandle, &findinfo) != -1) {
 		if (strcmp(findinfo.name, ".") && strcmp(findinfo.name, "..") &&
 			CompareAttributes(findinfo.attrib, musthave, canthave)) {
 			Com_sprintf(findpath, sizeof(findpath), "%s/%s", findbase, findinfo.name);
@@ -162,18 +159,4 @@ void Sys_FindClose (void)
 	if (findhandle != -1)
 		_findclose(findhandle);
 	findhandle = 0;
-}
-
-/**
- * @brief Breakpoint for debugger sessions
- */
-void Sys_DebugBreak (void)
-{
-#if defined DEBUG
-# if _MSC_VER >= 1300
-	__debugbreak();	/* break execution before game shutdown */
-# else
-	/*DebugBreak();*/
-# endif
-#endif
 }
