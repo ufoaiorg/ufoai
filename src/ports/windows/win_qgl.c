@@ -23,28 +23,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../renderer/r_local.h"
 #include "win_ref_glw.h"
 
-int ( WINAPI * qwglChoosePixelFormat )(HDC, CONST PIXELFORMATDESCRIPTOR *);
-int ( WINAPI * qwglDescribePixelFormat) (HDC, int, UINT, LPPIXELFORMATDESCRIPTOR);
-BOOL ( WINAPI * qwglSetPixelFormat)(HDC, int, CONST PIXELFORMATDESCRIPTOR *);
-BOOL ( WINAPI * qwglSwapBuffers)(HDC);
-HGLRC ( WINAPI * qwglCreateContext)(HDC);
-BOOL ( WINAPI * qwglDeleteContext)(HGLRC);
-PROC ( WINAPI * qwglGetProcAddress)(LPCSTR);
-BOOL ( WINAPI * qwglMakeCurrent)(HDC, HGLRC);
-BOOL (WINAPI * qwglSwapIntervalEXT) (int interval);
-
-/* not used */
-int ( WINAPI * qwglGetPixelFormat)(HDC);
-BOOL ( WINAPI * qwglCopyContext)(HGLRC, HGLRC, UINT);
-HGLRC ( WINAPI * qwglCreateLayerContext)(HDC, int);
-HGLRC ( WINAPI * qwglGetCurrentContext)(VOID);
-HDC ( WINAPI * qwglGetCurrentDC)(VOID);
-BOOL ( WINAPI * qwglShareLists)(HGLRC, HGLRC);
-int ( WINAPI * qwglSetLayerPaletteEntries)(HDC, int, int, int, CONST COLORREF *);
-int ( WINAPI * qwglGetLayerPaletteEntries)(HDC, int, int, int, COLORREF *);
-BOOL ( WINAPI * qwglRealizeLayerPalette)(HDC, int, BOOL);
-BOOL (WINAPI * qwglGetDeviceGammaRampEXT) (unsigned char *pRed, unsigned char *pGreen, unsigned char *pBlue);
-BOOL (WINAPI * qwglSetDeviceGammaRampEXT) (const unsigned char *pRed, const unsigned char *pGreen, const unsigned char *pBlue);
+int (WINAPI * qwglChoosePixelFormat )(HDC, CONST PIXELFORMATDESCRIPTOR *);
+int (WINAPI * qwglDescribePixelFormat) (HDC, int, UINT, LPPIXELFORMATDESCRIPTOR);
+BOOL (WINAPI * qwglSetPixelFormat)(HDC, int, CONST PIXELFORMATDESCRIPTOR *);
+BOOL (WINAPI * qwglSwapBuffers)(HDC);
+HGLRC (WINAPI * qwglCreateContext)(HDC);
+BOOL (WINAPI * qwglDeleteContext)(HGLRC);
+PROC (WINAPI * qwglGetProcAddress)(LPCSTR);
+BOOL (WINAPI * qwglMakeCurrent)(HDC, HGLRC);
+BOOL (WINAPI * qwglSwapIntervalEXT)(int interval);
 
 /**
  * @brief Unloads the specified DLL then nulls out all the proc pointers.
@@ -61,26 +48,16 @@ void QR_Shutdown (void)
 	/* general pointers */
 	QR_UnLink();
 	/* windows specific */
-	qwglCopyContext              = NULL;
 	qwglCreateContext            = NULL;
-	qwglCreateLayerContext       = NULL;
 	qwglDeleteContext            = NULL;
-	qwglGetCurrentContext        = NULL;
 	qwglGetCurrentDC             = NULL;
-	qwglGetLayerPaletteEntries   = NULL;
 	qwglGetProcAddress           = NULL;
 	qwglMakeCurrent              = NULL;
-	qwglRealizeLayerPalette      = NULL;
-	qwglSetLayerPaletteEntries   = NULL;
-	qwglShareLists               = NULL;
 	qwglChoosePixelFormat        = NULL;
 	qwglDescribePixelFormat      = NULL;
-	qwglGetPixelFormat           = NULL;
 	qwglSetPixelFormat           = NULL;
 	qwglSwapBuffers              = NULL;
 	qwglSwapIntervalEXT          = NULL;
-	qwglGetDeviceGammaRampEXT    = NULL;
-	qwglSetDeviceGammaRampEXT    = NULL;
 }
 
 
@@ -101,26 +78,15 @@ qboolean QR_Init (const char *dllname)
 	/* general qgl bindings */
 	QR_Link();
 	/* windows specific ones */
-	qwglCopyContext              = GPA("wglCopyContext");
 	qwglCreateContext            = GPA("wglCreateContext");
-	qwglCreateLayerContext       = GPA("wglCreateLayerContext");
 	qwglDeleteContext            = GPA("wglDeleteContext");
-	qwglGetCurrentContext        = GPA("wglGetCurrentContext");
-	qwglGetCurrentDC             = GPA("wglGetCurrentDC");
-	qwglGetLayerPaletteEntries   = GPA("wglGetLayerPaletteEntries");
 	qwglGetProcAddress           = GPA("wglGetProcAddress");
 	qwglMakeCurrent              = GPA("wglMakeCurrent");
-	qwglRealizeLayerPalette      = GPA("wglRealizeLayerPalette");
-	qwglSetLayerPaletteEntries   = GPA("wglSetLayerPaletteEntries");
-	qwglShareLists               = GPA("wglShareLists");
 	qwglChoosePixelFormat        = GPA("wglChoosePixelFormat");
 	qwglDescribePixelFormat      = GPA("wglDescribePixelFormat");
-	qwglGetPixelFormat           = GPA("wglGetPixelFormat");
 	qwglSetPixelFormat           = GPA("wglSetPixelFormat");
 	qwglSwapBuffers              = GPA("wglSwapBuffers");
 	qwglSwapIntervalEXT          = NULL;
-	qwglGetDeviceGammaRampEXT    = NULL;
-	qwglSetDeviceGammaRampEXT    = NULL;
 
 	return qtrue;
 }

@@ -487,8 +487,6 @@ extern int (WINAPI * qwglSetLayerPaletteEntries) (HDC, int, int, int, CONST COLO
 extern int (WINAPI * qwglGetLayerPaletteEntries) (HDC, int, int, int, COLORREF *);
 extern BOOL(WINAPI * qwglRealizeLayerPalette) (HDC, int, BOOL);
 extern BOOL(WINAPI * qwglSwapIntervalEXT) (int interval);
-extern BOOL(WINAPI * qwglGetDeviceGammaRampEXT) (unsigned char *pRed, unsigned char *pGreen, unsigned char *pBlue);
-extern BOOL(WINAPI * qwglSetDeviceGammaRampEXT) (const unsigned char *pRed, const unsigned char *pGreen, const unsigned char *pBlue);
 #endif
 
 #if defined (__linux__) || defined (__FreeBSD__) || defined (__NetBSD__)
