@@ -96,37 +96,37 @@ item craft_ufo_supply
 
 item bloodspider_weapon
 {
-        name            "Bloodspider weapon"
-        model           weapons/knife/knife	//FIXME
-        weapon          true
-        type            melee
-        animationindex  2			//FIXME
-        shape           "0 0 1 2"		//FIXME
-        center          "-1 0 3"		//FIXME
-        scale           1.0	
-        price           210
-        size            6
-        buytype weap_sec			//FIXME
+	name	"Bloodspider weapon"
+	model	weapons/knife/knife	//FIXME
+	weapon	true
+	type	melee
+	animationindex	2			//FIXME
+	shape	"0 0 1 2"		//FIXME
+	center	"-1 0 3"		//FIXME
+	scale	1.0
+	price	210
+	size	6
+	buytype weap_sec			//FIXME
 	firetwohanded   true
 
-        weapon_mod bloodspider_weapon
-        {
-                firedef
-                {
-                        name    "_Stab"
-                        skill   close
-                        projtl  null
-                        impact  null
-                        hitbody blood
-                        firesnd weapons/knife.wav	//FIXME
-                        speed   0
-                        range   2
-                        shots   1			//FIXME
-                        time    12			//FIXME
-                        damage  "40 20"			//FIXME
-                        dmgtype steelblade		//FIXME
-                        reaction        true
-                }
+	weapon_mod bloodspider_weapon
+	{
+		firedef
+		{
+			name		"_Stab"
+			skill		close
+			projtl		null
+			impact		null
+			hitbody		blood
+			firesnd		weapons/bloodspider	//FIXME
+			speed		0
+			range		2
+			shots		1			//FIXME
+			time		12			//FIXME
+			damage		"40 20"			//FIXME
+			dmgtype		steelblade		//FIXME
+			reaction	true
+		}
 	}
 }
 
