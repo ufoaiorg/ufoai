@@ -21,25 +21,27 @@ GTKRADIANT_URL=http://mattn.ninex.info/download/gtkradiant.tar.bz2
 
 BINARIES = \
 	$(ROOTDIR)ufo \
+	$(ROOTDIR)ufomaster \
 	$(ROOTDIR)ufoded \
 	$(ROOTDIR)ufo2map \
 	$(ROOTDIR)ref_glx.so \
 	$(ROOTDIR)ref_sdl.so \
 	$(ROOTDIR)snd_alsa.so \
-#	$(ROOTDIR)snd_arts.so \
-#	$(ROOTDIR)snd_jack.so \
+	$(ROOTDIR)snd_arts.so \
+	$(ROOTDIR)snd_jack.so \
 	$(ROOTDIR)snd_oss.so \
 	$(ROOTDIR)snd_sdl.so \
 	$(ROOTDIR)base/game.so
 
 BINARIES_64 = \
 	$(ROOTDIR)ufo.x86_64 \
+	$(ROOTDIR)ufomaster.x86_64 \
 	$(ROOTDIR)ufoded.x86_64 \
 	$(ROOTDIR)ufo2map.x86_64 \
 	$(ROOTDIR)ref_glx_x86_64.so \
 	$(ROOTDIR)ref_sdl_x86_64.so \
-#	$(ROOTDIR)snd_arts_x86_64.so \
-#	$(ROOTDIR)snd_jack_x86_64.so \
+	$(ROOTDIR)snd_arts_x86_64.so \
+	$(ROOTDIR)snd_jack_x86_64.so \
 	$(ROOTDIR)snd_alsa_x86_64.so \
 	$(ROOTDIR)snd_oss_x86_64.so \
 	$(ROOTDIR)snd_sdl_x86_64.so \
