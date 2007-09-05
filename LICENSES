@@ -30,15 +30,14 @@ base/maps/bunker01d.map | GPL version 2
 base/maps/bunker01n.map | GPL version 2
 base/maps/city04d.map | GPL version 2 | 'SparX' Beyeler
 base/maps/city04n.map | GPL version 2 | 'SparX' Beyeler
-base/maps/colon04d.map | GPL version 2 | 'SparX' Beyeler
-base/maps/colon04n.map | GNU General Public License 2.0 | 'SparX' Beyeler
-base/maps/colon_city04d.map | GPL version 2 | Martin Gerhardy
 base/maps/condor04.map | GPL version 2 | 'SparX' Beyeler
 base/maps/condor_crash04d.map | GPL version 2 | Martin Gerhardy
 base/maps/const05d.map | GPL version 2 | 'SparX' Beyeler
 base/maps/const05n.map | GPL version 2 | 'SparX' Beyeler
 base/maps/convoy01d.map | GNU General Public License 2.0 | Martin Gerhardy   Maciej Wierzbicki
 base/maps/convoy01n.map | GNU General Public License 2.0 | Martin Gerhardy   Maciej Wierzbicki
+base/maps/corrupt04.map | GPL version 2 | 'SparX' Beyeler
+base/maps/corrupt_city04d.map | GPL version 2 | Martin Gerhardy
 base/maps/countryd/c_c01.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryd/c_c02.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryd/c_d01.map | GNU General Public License 2.0 | Martin Gerhardy
