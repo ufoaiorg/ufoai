@@ -2205,14 +2205,14 @@
 }
 // brush 236
 {
-( 346 102 12 ) ( 320 102 12 ) ( 346 132 12 ) tex_material/c_yellow 0 0 0 1 1
-( 340 102 28 ) ( 340 132 28 ) ( 340 102 4 ) tex_material/c_yellow 0 0 0 1 1
-( 346 102 28 ) ( 346 102 4 ) ( 320 102 28 ) tex_material/c_yellow 0 0 0 1 1
-( 320 132 4 ) ( 320 102 4 ) ( 346 132 4 ) tex_material/c_yellow 0 0 0 1 1
-( 322 132 4 ) ( 322 132 28 ) ( 322 102 4 ) tex_material/c_yellow 0 0 0 1 1
-( 320 154 4 ) ( 346 154 4 ) ( 320 154 28 ) tex_material/c_yellow 0 0 0 1 1
-( 328 -544 4 ) ( 322 -544 10 ) ( 328 -672 4 ) tex_material/c_yellow 0 0 0 1 1
-( 340 -544 10 ) ( 334 -544 4 ) ( 340 -672 10 ) tex_material/c_yellow 0 0 0 1 1
+( 346 102 12 ) ( 320 102 12 ) ( 346 132 12 ) tex_material/c_yellow 0 0 0 1 1 0 128 0
+( 340 102 28 ) ( 340 132 28 ) ( 340 102 4 ) tex_material/c_yellow 0 0 0 1 1 0 128 0
+( 346 102 28 ) ( 346 102 4 ) ( 320 102 28 ) tex_material/c_yellow 0 0 0 1 1 0 128 0
+( 320 132 4 ) ( 320 102 4 ) ( 346 132 4 ) tex_material/c_yellow 0 0 0 1 1 0 128 0
+( 322 132 4 ) ( 322 132 28 ) ( 322 102 4 ) tex_material/c_yellow 0 0 0 1 1 0 128 0
+( 320 154 4 ) ( 346 154 4 ) ( 320 154 28 ) tex_material/c_yellow 0 0 0 1 1 0 128 0
+( 328 -544 4 ) ( 322 -544 10 ) ( 328 -672 4 ) tex_material/c_yellow 0 0 0 1 1 0 128 0
+( 340 -544 10 ) ( 334 -544 4 ) ( 340 -672 10 ) tex_material/c_yellow 0 0 0 1 1 0 128 0
 }
 }
 // entity 1
