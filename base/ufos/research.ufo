@@ -50,7 +50,6 @@
 //			Another technology that has to be researched.
 //		"item" type	-	e.g "item inv_coolweapon 10"
 //			You need to collect at least 10 items of this thing so it can be researched.
-//		"
 //	require_OR { type id [amount] }
 //		Works the same as require_AND with the difference that ANY of the entries will enable the tech to be researchable.
 //
@@ -436,7 +435,7 @@ tech rs_alien_xvi
 
 	require_AND
 	{
-		tech nothing // FIXME
+		// Not marked "researchable" in a normal way (See cl_campaign.c)
 	}
 	time		2700
 }
