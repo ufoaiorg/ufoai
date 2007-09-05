@@ -224,7 +224,7 @@ static qboolean RS_TechIsResearchable (technology_t * tech, base_t *base)
 
 	if (tech->statusResearchable)
 		return qtrue;
-	
+
 	return RS_RequirementsMet(&tech->require_AND, &tech->require_OR, base);
 }
 
@@ -609,6 +609,7 @@ void RS_InitTree (qboolean load)
 						tech->mdl_top = Mem_PoolStrDup(air_samp->model, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 						Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: aircraft model \"%s\" \n", air_samp->model);
 					}
+					air_samp->tech = tech;
 					/* Should return to CASE RS_xxx. */
 					break;
 				}

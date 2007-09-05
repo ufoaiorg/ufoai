@@ -169,6 +169,8 @@ typedef struct aircraft_s {
 	radar_t	radar;			/**< Radar to track ufos */
 	int stats[AIR_STATS_MAX];	/**< aircraft parameters for speed, damage and so on */
 
+	technology_t* tech;		/**< link to the aircraft tech */
+
 	qboolean visible;		/**< The ufo is visible ? */
 } aircraft_t;
 
