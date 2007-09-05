@@ -37,7 +37,7 @@ typedef struct in_state {
 	vec_t *viewangles;
 } in_state_t;
 
-void InitSig(void);
+extern unsigned sys_frame_time;
 
 void RW_IN_Init(in_state_t *in_state_p);
 void RW_IN_Shutdown(void);

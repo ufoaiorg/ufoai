@@ -130,3 +130,16 @@ void IN_Frame (void)
 void IN_Activate (qboolean active)
 {
 }
+
+/**
+ * @brief
+ */
+void Sys_SendKeyEvents (void)
+{
+#ifndef DEDICATED_ONLY
+	if (KBD_Update_fp)
+		KBD_Update_fp();
+#endif
+	/* grab frame time */
+	sys_frame_time = Sys_Milliseconds();
+}

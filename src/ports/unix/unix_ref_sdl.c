@@ -431,50 +431,6 @@ static void GetEvent (SDL_Event *event)
 
 }
 
-#if 0
-/**
- * @brief
- */
-void *Rimp_GetProcAddress (const char *func)
-{
-	return SDL_GL_GetProcAddress(func);
-}
-#endif
-
-#ifndef _WIN32
-/**
- * @brief
- */
-static void signal_handler (int sig)
-{
-	printf("Received signal %d, exiting...\n", sig);
-	Rimp_Shutdown();
-	exit(0);
-}
-#endif
-
-/**
- * @brief
- */
-void InitSig (void)
-{
-#ifndef _WIN32
-	signal(SIGHUP, signal_handler);
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
-	signal(SIGILL, signal_handler);
-	signal(SIGTRAP, signal_handler);
-	signal(SIGIOT, signal_handler);
-	signal(SIGBUS, signal_handler);
-	signal(SIGFPE, signal_handler);
-#if defined __linux__ || defined __APPLE__
-	/* linux has it's own backtrace handler in sys_linux.c */
-	signal(SIGSEGV, signal_handler);
-#endif
-	signal(SIGTERM, signal_handler);
-#endif
-}
-
 /**
  * @brief
  */
@@ -494,8 +450,6 @@ qboolean Rimp_Init (void *hInstance, void *wndProc)
 
 	SDL_EnableUNICODE(SDL_ENABLE);
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
-
-	InitSig();
 
 	return qtrue;
 }

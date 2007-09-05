@@ -85,47 +85,11 @@ cvar_t* sys_os;
 /**
  * @brief
  */
-void Sys_SetAffinityAndPriority (void)
-{
-	if (sys_affinity->modified) {
-		sys_affinity->modified = qfalse;
-	}
-
-	if (sys_priority->modified) {
-		sys_priority->modified = qfalse;
-	}
-}
-
-/**
- * @brief
- */
 void Sys_Init (void)
 {
 	sys_os = Cvar_Get("sys_os", "linux", CVAR_SERVERINFO, NULL);
 	sys_affinity = Cvar_Get("sys_affinity", "0", CVAR_ARCHIVE, NULL);
 	sys_priority = Cvar_Get("sys_priority", "0", CVAR_ARCHIVE, "Process nice level");
-}
-
-/**
- * @brief
- */
-static void floating_point_exception_handler (int whatever)
-{
-	signal(SIGFPE, floating_point_exception_handler);
-}
-
-/**
- * @brief
- */
-void Sys_SendKeyEvents (void)
-{
-#ifndef DEDICATED_ONLY
-	if (KBD_Update_fp)
-		KBD_Update_fp();
-#endif
-
-	/* grab frame time */
-	sys_frame_time = Sys_Milliseconds();
 }
 
 /**

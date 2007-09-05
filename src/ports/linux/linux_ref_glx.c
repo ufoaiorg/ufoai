@@ -974,43 +974,10 @@ static int qXErrorHandler (Display *display, XErrorEvent *ev)
 }
 
 /**
- * @brief
- * @sa InitSig
- */
-static void signal_handler (int sig)
-{
-	printf("Received signal %d, exiting...\n", sig);
-	Rimp_Shutdown();
-	exit(0);
-}
-
-/**
- * @brief
- */
-void InitSig (void)
-{
-	signal(SIGHUP, signal_handler);
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
-	signal(SIGILL, signal_handler);
-	signal(SIGTRAP, signal_handler);
-	signal(SIGIOT, signal_handler);
-	signal(SIGBUS, signal_handler);
-	signal(SIGFPE, signal_handler);
-#ifdef __linux__
-	/* linux has it's own backtrace handler in sys_linux.c */
-	signal(SIGSEGV, signal_handler);
-#endif
-	signal(SIGTERM, signal_handler);
-}
-
-/**
  * @brief This routine is responsible for initializing the OS specific portions of OpenGL.
  */
 qboolean Rimp_Init (void *hinstance, void *wndproc)
 {
-	InitSig();
-
 	/* set up our custom error handler for X failures */
 	XSetErrorHandler(&qXErrorHandler);
 

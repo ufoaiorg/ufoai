@@ -427,3 +427,17 @@ void Sys_Mkdir (const char *thePath)
 	if (errno != EEXIST)
 		Com_Printf("\"mkdir %s\" failed, reason: \"%s\".", thePath, strerror(errno));
 }
+
+/**
+ * @brief
+ */
+void Sys_SetAffinityAndPriority (void)
+{
+	if (sys_affinity->modified) {
+		sys_affinity->modified = qfalse;
+	}
+
+	if (sys_priority->modified) {
+		sys_priority->modified = qfalse;
+	}
+}

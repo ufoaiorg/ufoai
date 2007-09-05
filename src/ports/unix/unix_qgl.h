@@ -34,8 +34,6 @@ typedef struct {
 
 extern glwstate_t glw_state;
 
-void InitSig(void);
-
 #ifndef __APPLE__
 #define GPA( a ) dlsym(glw_state.OpenGLLib, a)
 #endif
