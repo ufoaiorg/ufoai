@@ -182,17 +182,9 @@
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 		</Unit>
-		<Unit filename="..\..\src\ports\linux\linux_shared.c">
-			<Option compilerVar="CC" />
-			<Option target="linux" />
-		</Unit>
 		<Unit filename="..\..\src\ports\macosx\osx_main.m">
 			<Option compile="1" />
 			<Option link="1" />
-			<Option target="macosx" />
-		</Unit>
-		<Unit filename="..\..\src\ports\macosx\osx_shared.c">
-			<Option compilerVar="CC" />
 			<Option target="macosx" />
 		</Unit>
 		<Unit filename="..\..\src\ports\unix\unix_console.c">
