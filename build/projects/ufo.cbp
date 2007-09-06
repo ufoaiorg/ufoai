@@ -394,7 +394,7 @@
 			<Option target="linux" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="..\..\src\ports\unix\unix_ref_sdl.c">
+		<Unit filename="..\..\src\renderer\r_sdl.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\ports\windows\ufo.ico">

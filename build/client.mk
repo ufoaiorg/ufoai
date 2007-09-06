@@ -99,6 +99,7 @@ CLIENT_SRCS = \
 	renderer/r_particle.c \
 	renderer/r_shadows.c \
 	renderer/qgl.c \
+	renderer/r_sdl_sdl.c \
 	\
 	shared/byte.c \
 	shared/infostring.c \
@@ -113,7 +114,6 @@ endif
 ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux-gnu),)
 	CLIENT_SRCS+= \
 		ports/linux/linux_main.c \
-		ports/unix/unix_ref_sdl.c \
 		ports/unix/unix_console.c \
 		ports/unix/unix_main.c \
 		ports/unix/unix_glob.c
@@ -126,11 +126,8 @@ endif
 
 ifeq ($(TARGET_OS),mingw32)
 	CLIENT_SRCS+=\
-		ports/unix/unix_ref_sdl.c \
 		ports/windows/win_qgl.c \
 		ports/windows/win_shared.c \
-		ports/windows/win_vid.c \
-		ports/windows/win_input.c \
 		ports/windows/win_main.c \
 		ports/windows/ufo.rc
 
@@ -144,7 +141,6 @@ ifeq ($(TARGET_OS),darwin)
 	CLIENT_SRCS+= \
 		ports/macosx/osx_main.m \
 		ports/macosx/osx_qal.c \
-		ports/unix/unix_ref_sdl.c \
 		ports/unix/unix_glob.c \
 		ports/unix/unix_console.c \
 		ports/unix/unix_main.c
@@ -153,7 +149,6 @@ endif
 ifeq ($(TARGET_OS),solaris)
 	CLIENT_SRCS+= \
 		ports/solaris/solaris_main.c \
-		ports/unix/unix_ref_sdl.c \
 		ports/unix/unix_console.c \
 		ports/unix/unix_main.c \
 		ports/unix/unix_glob.c
