@@ -28,12 +28,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief
- * @sa Anim_Change
- * @sa Anim_Append
- * @sa Anim_Run
- * @sa Anim_GetName
+ * @sa R_AnimChange
+ * @sa R_AnimAppend
+ * @sa R_AnimRun
+ * @sa R_AnimGetName
  */
-static mAliasAnim_t *Anim_Get (model_t * mod, const char *name)
+static mAliasAnim_t *R_AnimGet (model_t * mod, const char *name)
 {
 	mAliasAnim_t *anim;
 	int i;
@@ -45,19 +45,19 @@ static mAliasAnim_t *Anim_Get (model_t * mod, const char *name)
 		if (!Q_strncmp(name, anim->name, MAX_ANIMNAME))
 			return anim;
 
-	ri.Con_Printf(PRINT_ALL, "model \"%s\" doesn't have animation \"%s\"\n", mod->name, name);
+	Com_Printf("model \"%s\" doesn't have animation \"%s\"\n", mod->name, name);
 	return NULL;
 }
 
 
 /**
  * @brief
- * @sa Anim_Get
- * @sa Anim_Change
- * @sa Anim_Run
- * @sa Anim_GetName
+ * @sa R_AnimGet
+ * @sa R_AnimChange
+ * @sa R_AnimRun
+ * @sa R_AnimGetName
  */
-void Anim_Append (animState_t * as, model_t * mod, const char *name)
+void R_AnimAppend (animState_t * as, model_t * mod, const char *name)
 {
 	mAliasAnim_t *anim;
 
@@ -67,7 +67,7 @@ void Anim_Append (animState_t * as, model_t * mod, const char *name)
 		return;
 
 	/* get animation */
-	anim = Anim_Get(mod, name);
+	anim = R_AnimGet(mod, name);
 	if (!anim)
 		return;
 
@@ -96,29 +96,29 @@ void Anim_Append (animState_t * as, model_t * mod, const char *name)
 
 /**
  * @brief Changes the animation for md2 models
- * @sa Anim_Get
- * @sa Anim_Append
- * @sa Anim_Run
- * @sa Anim_GetName
+ * @sa R_AnimGet
+ * @sa R_AnimAppend
+ * @sa R_AnimRun
+ * @sa R_AnimGetName
  * @param[in] as Client side animation state of the model
  * @param[in] mod Model structure to change the animation for (md2/mod_alias_md2)
  * @param[in] name Animation state name to switch to
  */
-void Anim_Change (animState_t * as, model_t * mod, const char *name)
+void R_AnimChange (animState_t * as, model_t * mod, const char *name)
 {
 	mAliasAnim_t *anim;
 
 	assert(as->ladd < MAX_ANIMLIST);
 
 	if (!mod || mod->type != mod_alias_md2) {
-		ri.Con_Printf(PRINT_ALL, "Anim_Change: No md2 model - can't set animation (%s) (model: %s)\n", name, mod->name);
+		Com_Printf("R_AnimChange: No md2 model - can't set animation (%s) (model: %s)\n", name, mod->name);
 		return;
 	}
 
 	/* get animation */
-	anim = Anim_Get(mod, name);
+	anim = R_AnimGet(mod, name);
 	if (!anim) {
-		ri.Con_Printf(PRINT_ALL, "Anim_Change: No such animation: %s (model: %s)\n", name, mod->name);
+		Com_Printf("R_AnimChange: No such animation: %s (model: %s)\n", name, mod->name);
 		return;
 	}
 
@@ -156,12 +156,12 @@ void Anim_Change (animState_t * as, model_t * mod, const char *name)
 
 /**
  * @brief Run the animation of the given md2 model
- * @sa Anim_Get
- * @sa Anim_Append
- * @sa Anim_Change
- * @sa Anim_GetName
+ * @sa R_AnimGet
+ * @sa R_AnimAppend
+ * @sa R_AnimChange
+ * @sa R_AnimGetName
  */
-void Anim_Run (animState_t * as, model_t * mod, int msec)
+void R_AnimRun (animState_t * as, model_t * mod, int msec)
 {
 	mAliasAnim_t *anim;
 
@@ -206,12 +206,12 @@ void Anim_Run (animState_t * as, model_t * mod, int msec)
 
 /**
  * @brief
- * @sa Anim_Get
- * @sa Anim_Append
- * @sa Anim_Run
- * @sa Anim_Change
+ * @sa R_AnimGet
+ * @sa R_AnimAppend
+ * @sa R_AnimRun
+ * @sa R_AnimChange
  */
-char *Anim_GetName (animState_t * as, model_t * mod)
+char *R_AnimGetName (animState_t * as, model_t * mod)
 {
 	mAliasAnim_t *anim;
 

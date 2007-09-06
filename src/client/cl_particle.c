@@ -238,12 +238,12 @@ void CL_ParticleRegisterArt (void)
 		switch (a->type) {
 		case ART_PIC:
 			if (*a->name != '+')
-				a->art = (char *) re.RegisterPic(a->name);
+				a->art = (char *) R_RegisterPic(a->name);
 			else
-				a->art = (char *) re.RegisterPic(va("%s%c%c", a->name + 1, a->frame / 10 + '0', a->frame % 10 + '0'));
+				a->art = (char *) R_RegisterPic(va("%s%c%c", a->name + 1, a->frame / 10 + '0', a->frame % 10 + '0'));
 			break;
 		case ART_MODEL:
-			a->art = (char *) re.RegisterModel(a->name);
+			a->art = (char *) R_RegisterModelShort(a->name);
 			break;
 		default:
 			Sys_Error("CL_ParticleRegisterArt: Unknown art type\n");
@@ -276,12 +276,12 @@ static int CL_ParticleGetArt (const char *name, int frame, char type)
 	switch (type) {
 	case ART_PIC:
 		if (*name != '+')
-			a->art = (char *) re.RegisterPic(name);
+			a->art = (char *) R_RegisterPic(name);
 		else
-			a->art = (char *) re.RegisterPic(va("%s%c%c", name + 1, frame / 10 + '0', frame % 10 + '0'));
+			a->art = (char *) R_RegisterPic(va("%s%c%c", name + 1, frame / 10 + '0', frame % 10 + '0'));
 		break;
 	case ART_MODEL:
-		a->art = (char *) re.RegisterModel(name);
+		a->art = (char *) R_RegisterModelShort(name);
 		break;
 	default:
 		Sys_Error("CL_ParticleGetArt: Unknown art type\n");

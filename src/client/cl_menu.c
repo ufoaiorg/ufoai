@@ -651,8 +651,8 @@ static void MN_StartServer_f (void)
 static void MN_DrawDisabled (menuNode_t* node)
 {
 	static vec4_t color = { 0.3f, 0.3f, 0.3f, 0.7f };
-	re.DrawFill(node->pos[0], node->pos[1], node->size[0], node->size[1], ALIGN_UL, color);
-	re.DrawColor(NULL);
+	R_DrawFill(node->pos[0], node->pos[1], node->size[0], node->size[1], ALIGN_UL, color);
+	R_DrawColor(NULL);
 }
 
 /**
@@ -663,13 +663,13 @@ static void MN_DrawFree (int container, menuNode_t * node, int posx, int posy, i
 	static vec4_t color = { 0.0f, 1.0f, 0.0f, 0.7f };
 	invDef_t* inv = &csi.ids[container];
 
-	re.DrawFill(posx, posy, sizex, sizey, ALIGN_UL, color);
-	re.DrawColor(NULL);
+	R_DrawFill(posx, posy, sizex, sizey, ALIGN_UL, color);
+	R_DrawColor(NULL);
 
 	/* if showTUs is true (only the first time in none single containers)
 	 * and we are connected to a game */
 	if (showTUs && cls.state == ca_active)
-		re.FontDrawString("f_verysmall", 0, node->pos[0] + 3, node->pos[1] + 3,
+		R_FontDrawString("f_verysmall", 0, node->pos[0] + 3, node->pos[1] + 3,
 			node->pos[0] + 3, node->pos[1] + 3, node->size[0] - 6, 0, 0,
 			va(_("In: %i Out: %i"), inv->in, inv->out), 0, 0, NULL, qfalse);
 }
@@ -951,16 +951,16 @@ static qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 		if (node->type == MN_CHECKBOX) {
 			/* the checked and unchecked should always have the same dimensions */
 			if (!node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]) {
-				re.DrawGetPicSize(&sx, &sy, "menu/checkbox_checked");
+				R_DrawGetPicSize(&sx, &sy, "menu/checkbox_checked");
 			} else {
-				re.DrawGetPicSize(&sx, &sy, va("%s_checked", (char*)node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]));
+				R_DrawGetPicSize(&sx, &sy, va("%s_checked", (char*)node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]));
 			}
 		} else if (node->type == MN_PIC && node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]) {
 			if (node->texh[0] && node->texh[1]) {
 				sx = node->texh[0] - node->texl[0];
 				sy = node->texh[1] - node->texl[1];
 			} else
-				re.DrawGetPicSize(&sx, &sy, node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]);
+				R_DrawGetPicSize(&sx, &sy, node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]);
 		} else
 			return qfalse;
 #if 0
@@ -1145,7 +1145,7 @@ static void MN_Drag (const menuNode_t* const node, int x, int y)
 			if (CL_OnBattlescape()) {
 				sel = cl_selected->integer; /**@todo is this really the correct index? */
 				if (sel >= 0 && aircraft) {
-					/** @todo checking for (sel < gd.numEmployees[EMPL_SOLDIER]) is kinda tricky/recursive here.
+					/** @todo checking for (sel < gd.numEmployees[EMPL_SOLDIER]) is kinda tricky/recursive heR_
 					 * Is there a better way? */
 					chr = &gd.employees[aircraft->teamTypes[sel]][aircraft->teamIdxs[sel]].chr;
 					assert(chr);
@@ -1878,7 +1878,7 @@ void MN_DrawItem (vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t 
 
 	if (od->image[0]) {
 		/* draw the image */
-		re.DrawNormPic(
+		R_DrawNormPic(
 			org[0] + C_UNIT / 2.0 * sx + C_UNIT * x,
 			org[1] + C_UNIT / 2.0 * sy + C_UNIT * y,
 			C_UNIT * sx, C_UNIT * sy, 0, 0, 0, 0, ALIGN_CC, qtrue, od->image);
@@ -1922,7 +1922,7 @@ void MN_DrawItem (vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t 
 		mi.color = col;
 
 		/* draw the model */
-		re.DrawModelDirect(&mi, NULL, NULL);
+		R_DrawModelDirect(&mi, NULL, NULL);
 	}
 }
 
@@ -1936,7 +1936,7 @@ static int MN_DrawTooltip (const char *font, char *string, int x, int y, int max
 	int height = 0, width = 0;
 	int lines = 5;
 
-	re.FontLength(font, string, &width, &height);
+	R_FontLength(font, string, &width, &height);
 	if (!width)
 		return 0;
 
@@ -1948,10 +1948,10 @@ static int MN_DrawTooltip (const char *font, char *string, int x, int y, int max
 	y += 5;
 	if (x + maxWidth +3 > VID_NORM_WIDTH)
 		x -= (maxWidth + 10);
-	re.DrawFill(x - 1, y - 1, maxWidth + 4, height, 0, tooltipBG);
-	re.DrawColor(tooltipColor);
-	re.FontDrawString(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, maxHeight, height, string, lines, 0, NULL, qfalse);
-	re.DrawColor(NULL);
+	R_DrawFill(x - 1, y - 1, maxWidth + 4, height, 0, tooltipBG);
+	R_DrawColor(tooltipColor);
+	R_FontDrawString(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, maxHeight, height, string, lines, 0, NULL, qfalse);
+	R_DrawColor(NULL);
 	return width;
 }
 
@@ -2146,7 +2146,7 @@ static void MN_DrawTextNode (const char *text, const char* font, menuNode_t* nod
 		/* node->state is the line number to highlight */
 		/* FIXME: what about multiline text that should be highlighted completly? */
 		if (node && node->mousefx && node->textLines + 1 == node->state)
-			re.DrawColor(color);
+			R_DrawColor(color);
 
 		/* we assume all the tabs fit on a single line */
 		do {
@@ -2161,7 +2161,7 @@ static void MN_DrawTextNode (const char *text, const char* font, menuNode_t* nod
 			/*Com_Printf("tab - first part - node->textLines: %i \n", node->textLines);*/
 			if (node)
 				node->textLines++;
-			re.FontDrawString(font, node->align, x1, y1, x, y, width, height, node->texh[0], cur, node->height, node->textScroll, &node->textLines, qfalse);
+			R_FontDrawString(font, node->align, x1, y1, x, y, width, height, node->texh[0], cur, node->height, node->textScroll, &node->textLines, qfalse);
 			if (node)
 				node->textLines--;
 			/* increase the x value as given via menu definition format string */
@@ -2176,12 +2176,12 @@ static void MN_DrawTextNode (const char *text, const char* font, menuNode_t* nod
 
 		/*Com_Printf("until newline - node->textLines: %i\n", node->textLines);*/
 		/* the conditional expression at the end is a hack to draw "/n/n" as a blank line */
-		lineHeight = re.FontDrawString(font, node->align, x1, y1, x, y, width, height, node->texh[0], (*cur ? cur : " "), node->height, node->textScroll, &node->textLines, qtrue);
+		lineHeight = R_FontDrawString(font, node->align, x1, y1, x, y, width, height, node->texh[0], (*cur ? cur : " "), node->height, node->textScroll, &node->textLines, qtrue);
 		if (lineHeight > 0)
 			y1 += lineHeight;
 
 		if (node && node->mousefx)
-			re.DrawColor(node->color); /* restore original color */
+			R_DrawColor(node->color); /* restore original color */
 
 		/* now set cur to the next char after the \n (see above) */
 		cur = end;
@@ -2203,12 +2203,12 @@ static void MN_DrawTextNode (const char *text, const char* font, menuNode_t* nod
 		scrollBarY = node->pos[1];
 
 		/* draw background of scrollbar */
-		re.DrawFill(scrollBarX, scrollBarY, SCROLLBAR_WIDTH, nodePixelHeight, 0, scrollbarColorBG);
+		R_DrawFill(scrollBarX, scrollBarY, SCROLLBAR_WIDTH, nodePixelHeight, 0, scrollbarColorBG);
 
 		/* draw scroll bar */
 		scrollBarHeight = nodePixelHeight * (nodePixelHeight / (node->textLines * node->texh[0]));
 		scrollBarY += node->textScroll * (scrollBarHeight / node->height);
-		re.DrawFill(scrollBarX, scrollBarY, SCROLLBAR_WIDTH, scrollBarHeight, 0, scrollbarColorBar);
+		R_DrawFill(scrollBarX, scrollBarY, SCROLLBAR_WIDTH, scrollBarHeight, 0, scrollbarColorBar);
 	}
 }
 
@@ -2342,21 +2342,21 @@ void MN_DrawMenus (void)
 
 				/* check node size x and y value to check whether they are zero */
 				if (node->bgcolor && node->size[0] && node->size[1] && node->pos) {
-					re.DrawFill(node->pos[0] - node->padding, node->pos[1] - node->padding, node->size[0] + (node->padding*2), node->size[1] + (node->padding*2), 0, node->bgcolor);
+					R_DrawFill(node->pos[0] - node->padding, node->pos[1] - node->padding, node->size[0] + (node->padding*2), node->size[1] + (node->padding*2), 0, node->bgcolor);
 				}
 
 				if (node->border && node->bordercolor && node->size[0] && node->size[1] && node->pos) {
 					/* left */
-					re.DrawFill(node->pos[0] - node->padding - node->border, node->pos[1] - node->padding - node->border,
+					R_DrawFill(node->pos[0] - node->padding - node->border, node->pos[1] - node->padding - node->border,
 						node->border, node->size[1] + (node->padding*2) + (node->border*2), 0, node->bordercolor);
 					/* right */
-					re.DrawFill(node->pos[0] + node->size[0] + node->padding, node->pos[1] - node->padding - node->border,
+					R_DrawFill(node->pos[0] + node->size[0] + node->padding, node->pos[1] - node->padding - node->border,
 						node->border, node->size[1] + (node->padding*2) + (node->border*2), 0, node->bordercolor);
 					/* top */
-					re.DrawFill(node->pos[0] - node->padding, node->pos[1] - node->padding - node->border,
+					R_DrawFill(node->pos[0] - node->padding, node->pos[1] - node->padding - node->border,
 						node->size[0] + (node->padding*2), node->border, 0, node->bordercolor);
 					/* down */
-					re.DrawFill(node->pos[0] - node->padding, node->pos[1] + node->size[1] + node->padding,
+					R_DrawFill(node->pos[0] - node->padding, node->pos[1] + node->size[1] + node->padding,
 						node->size[0] + (node->padding*2), node->border, 0, node->bordercolor);
 				}
 
@@ -2364,9 +2364,9 @@ void MN_DrawMenus (void)
 				VectorScale(node->color, 0.8, color);
 				color[3] = node->color[3];
 				if (node->mousefx && node->type == MN_PIC && mouseOver && sp > pp)
-					re.DrawColor(color);
+					R_DrawColor(color);
 				else if (node->type != MN_SELECTBOX)
-					re.DrawColor(node->color);
+					R_DrawColor(node->color);
 
 				/* get the reference */
 				if (node->type != MN_BAR && node->type != MN_CONTAINER && node->type != MN_BASEMAP
@@ -2403,7 +2403,7 @@ void MN_DrawMenus (void)
 						node->texh[0] = node->texl[0] + node->size[0];
 					}
 					if (ref && *ref)
-						re.DrawNormPic(node->pos[0], node->pos[1], node->size[0], node->size[1],
+						R_DrawNormPic(node->pos[0], node->pos[1], node->size[0], node->size[1],
 								node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, ref);
 					break;
 
@@ -2418,11 +2418,11 @@ void MN_DrawMenus (void)
 						ref = MN_GetReferenceString(menu, node->data[MN_DATA_MODEL_SKIN_OR_CVAR]);
 						switch (*ref) {
 						case '0':
-							re.DrawNormPic(node->pos[0], node->pos[1], node->size[0], node->size[1],
+							R_DrawNormPic(node->pos[0], node->pos[1], node->size[0], node->size[1],
 								node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, va("%s_unchecked", image));
 							break;
 						case '1':
-							re.DrawNormPic(node->pos[0], node->pos[1], node->size[0], node->size[1],
+							R_DrawNormPic(node->pos[0], node->pos[1], node->size[0], node->size[1],
 								node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, va("%s_checked", image));
 							break;
 						default:
@@ -2450,18 +2450,18 @@ void MN_DrawMenus (void)
 						selBoxY = node->pos[1] + SELECTBOX_SPACER;
 
 						/* left border */
-						re.DrawNormPic(node->pos[0], node->pos[1], SELECTBOX_SIDE_WIDTH, node->size[1],
+						R_DrawNormPic(node->pos[0], node->pos[1], SELECTBOX_SIDE_WIDTH, node->size[1],
 							SELECTBOX_SIDE_WIDTH, 20.0f, 0.0f, 0.0f, node->align, node->blend, image);
 						/* stretched middle bar */
-						re.DrawNormPic(node->pos[0] + SELECTBOX_SIDE_WIDTH, node->pos[1], node->size[0], node->size[1],
+						R_DrawNormPic(node->pos[0] + SELECTBOX_SIDE_WIDTH, node->pos[1], node->size[0], node->size[1],
 							12.0f, 20.0f, 7.0f, 0.0f, node->align, node->blend, image);
 						/* right border (arrow) */
-						re.DrawNormPic(node->pos[0] + SELECTBOX_SIDE_WIDTH + node->size[0], node->pos[1], SELECTBOX_DEFAULT_HEIGHT, node->size[1],
+						R_DrawNormPic(node->pos[0] + SELECTBOX_SIDE_WIDTH + node->size[0], node->pos[1], SELECTBOX_DEFAULT_HEIGHT, node->size[1],
 							32.0f, 20.0f, 12.0f, 0.0f, node->align, node->blend, image);
 						/* draw the label for the current selected option */
 						for (selectBoxOption = node->options; selectBoxOption; selectBoxOption = selectBoxOption->next) {
 							if (!Q_strcmp(selectBoxOption->value, ref)) {
-								re.FontDrawString(font, node->align, selBoxX, selBoxY,
+								R_FontDrawString(font, node->align, selBoxX, selBoxY,
 									selBoxX, selBoxY, node->size[0] - 4, 0,
 									node->texh[0], _(selectBoxOption->label), 0, 0, NULL, qfalse);
 							}
@@ -2474,24 +2474,24 @@ void MN_DrawMenus (void)
 
 							/* drop down menu */
 							/* left side */
-							re.DrawNormPic(node->pos[0], node->pos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * node->height,
+							R_DrawNormPic(node->pos[0], node->pos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * node->height,
 								7.0f, 28.0f, 0.0f, 21.0f, node->align, node->blend, image);
 
 							/* stretched middle bar */
-							re.DrawNormPic(node->pos[0] + SELECTBOX_SIDE_WIDTH, node->pos[1] + node->size[1], node->size[0], node->size[1] * node->height,
+							R_DrawNormPic(node->pos[0] + SELECTBOX_SIDE_WIDTH, node->pos[1] + node->size[1], node->size[0], node->size[1] * node->height,
 								16.0f, 28.0f, 7.0f, 21.0f, node->align, node->blend, image);
 
 							/* right side */
-							re.DrawNormPic(node->pos[0] + SELECTBOX_SIDE_WIDTH + node->size[0], node->pos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * node->height,
+							R_DrawNormPic(node->pos[0] + SELECTBOX_SIDE_WIDTH + node->size[0], node->pos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * node->height,
 								23.0f, 28.0f, 16.0f, 21.0f, node->align, node->blend, image);
 
 							/* now draw all available options for this selectbox */
 							for (selectBoxOption = node->options; selectBoxOption; selectBoxOption = selectBoxOption->next) {
 								/* draw the hover effect */
 								if (selectBoxOption->hovered)
-									re.DrawFill(selBoxX, selBoxY, node->size[0], SELECTBOX_DEFAULT_HEIGHT, ALIGN_UL, node->color);
+									R_DrawFill(selBoxX, selBoxY, node->size[0], SELECTBOX_DEFAULT_HEIGHT, ALIGN_UL, node->color);
 								/* print the option label */
-								re.FontDrawString(font, node->align, selBoxX, selBoxY,
+								R_FontDrawString(font, node->align, selBoxX, selBoxY,
 									selBoxX, node->pos[1] + node->size[1], node->size[0] - 4, 0,
 									node->texh[0], _(selectBoxOption->label), 0, 0, NULL, qfalse);
 								/* next entries' position */
@@ -2500,15 +2500,15 @@ void MN_DrawMenus (void)
 								selectBoxOption->hovered = qfalse;
 							}
 							/* left side */
-							re.DrawNormPic(node->pos[0], selBoxY - SELECTBOX_SPACER, SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
+							R_DrawNormPic(node->pos[0], selBoxY - SELECTBOX_SPACER, SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
 								7.0f, 32.0f, 0.0f, 28.0f, node->align, node->blend, image);
 
 							/* stretched middle bar */
-							re.DrawNormPic(node->pos[0] + SELECTBOX_SIDE_WIDTH, selBoxY - SELECTBOX_SPACER, node->size[0], SELECTBOX_BOTTOM_HEIGHT,
+							R_DrawNormPic(node->pos[0] + SELECTBOX_SIDE_WIDTH, selBoxY - SELECTBOX_SPACER, node->size[0], SELECTBOX_BOTTOM_HEIGHT,
 								16.0f, 32.0f, 7.0f, 28.0f, node->align, node->blend, image);
 
 							/* right bottom side */
-							re.DrawNormPic(node->pos[0] + SELECTBOX_SIDE_WIDTH + node->size[0], selBoxY - SELECTBOX_SPACER,
+							R_DrawNormPic(node->pos[0] + SELECTBOX_SIDE_WIDTH + node->size[0], selBoxY - SELECTBOX_SPACER,
 								SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
 								23.0f, 32.0f, 16.0f, 28.0f, node->align, node->blend, image);
 						}
@@ -2520,9 +2520,9 @@ void MN_DrawMenus (void)
 					ref += node->horizontalScroll;
 					/* blinking */
 					if (!node->mousefx || cl.time % 1000 < 500)
-						re.FontDrawString(font, node->align, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], 0, node->texh[0], ref, 0, 0, NULL, qfalse);
+						R_FontDrawString(font, node->align, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], 0, node->texh[0], ref, 0, 0, NULL, qfalse);
 					else
-						re.FontDrawString(font, node->align, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], va("%s*\n", ref), 0, 0, NULL, qfalse);
+						R_FontDrawString(font, node->align, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], va("%s*\n", ref), 0, 0, NULL, qfalse);
 					break;
 
 				case MN_TEXT:
@@ -2551,17 +2551,17 @@ void MN_DrawMenus (void)
 								char text[TIMESTAMP_TEXT + MAX_MESSAGE_TEXT];
 								/* get formatted date text and pixel width of text */
 								MN_TimestampedText(text, message, sizeof(text));
-								re.FontLength(font, text, &offset, &height);
+								R_FontLength(font, text, &offset, &height);
 								/* append remainder of message */
 								Q_strcat(text, message->text, sizeof(text));
-								re.FontLength(font, text, &width, &height);
+								R_FontLength(font, text, &width, &height);
 								if (!width)
 									break;
 								if (width > node->pos[0] + node->size[0]) {
 									int indent = node->pos[0];
 									tab = text;
 									while (qtrue) {
-										y += re.FontDrawString(font, ALIGN_UL, indent, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], tab, 0, 0, NULL, qfalse);
+										y += R_FontDrawString(font, ALIGN_UL, indent, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], tab, 0, 0, NULL, qfalse);
 										/* we use a backslash to determine where to break the line */
 										end = strstr(tab, "\\");
 										if (!end)
@@ -2578,7 +2578,7 @@ void MN_DrawMenus (void)
 									while ((end = strstr(text, "\\")) != NULL)
 										*end = ' ';
 
-									y += re.FontDrawString(font, ALIGN_UL, node->pos[0], y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], text, 0, 0, NULL, qfalse);
+									y += R_FontDrawString(font, ALIGN_UL, node->pos[0], y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->texh[0], text, 0, 0, NULL, qfalse);
 								}
 							}
 
@@ -2594,7 +2594,7 @@ void MN_DrawMenus (void)
 						/* in the case of MN_BAR the first three data array values are float values - see menuDataValues_t */
 						fac = node->size[0] / (MN_GetReferenceFloat(menu, node->data[0]) - MN_GetReferenceFloat(menu, node->data[1]));
 						bar_width = (MN_GetReferenceFloat(menu, node->data[2]) - MN_GetReferenceFloat(menu, node->data[1])) * fac;
-						re.DrawFill(node->pos[0], node->pos[1], bar_width, node->size[1], node->align, mouseOver ? color : node->color);
+						R_DrawFill(node->pos[0], node->pos[1], bar_width, node->size[1], node->align, mouseOver ? color : node->color);
 					}
 					break;
 
@@ -2604,9 +2604,9 @@ void MN_DrawMenus (void)
 						for (i = 0; i < node->linestrips.numStrips; i++) {
 							/* Draw this line if it's valid. */
 							if (node->linestrips.pointList[i] && (node->linestrips.numPoints[i] > 0)) {
-									re.DrawColor(node->linestrips.color[i]);
-									re.DrawLineStrip(node->linestrips.numPoints[i], node->linestrips.pointList[i]);
-									re.DrawColor(NULL);
+									R_DrawColor(node->linestrips.color[i]);
+									R_DrawLineStrip(node->linestrips.numPoints[i], node->linestrips.pointList[i]);
+									R_DrawColor(NULL);
 							}
 						}
 					}
@@ -2694,7 +2694,7 @@ void MN_DrawMenus (void)
 					if (!node->menuModel) {
 						/* prevent the searching for a menumodel def in the next frame */
 						menuModel = NULL;
-						mi.model = re.RegisterModel(source);
+						mi.model = R_RegisterModelShort(source);
 						mi.name = source;
 						if (!mi.model) {
 							Com_Printf("Could not find model '%s'\n", source);
@@ -2728,7 +2728,7 @@ void MN_DrawMenus (void)
 						mi.backlerp = 0;
 						if (menuModel) {
 							assert(menuModel->model);
-							mi.model = re.RegisterModel(menuModel->model);
+							mi.model = R_RegisterModelShort(menuModel->model);
 							if (!mi.model) {
 								menuModel = menuModel->next;
 								/* list end */
@@ -2799,18 +2799,18 @@ void MN_DrawMenus (void)
 								/* only base models have animations */
 								if (ref && *ref) {
 									as = &menuModel->animState;
-									anim = re.AnimGetName(as, mi.model);
+									anim = R_AnimGetName(as, mi.model);
 									/* initial animation or animation change */
 									if (!anim || (anim && Q_strncmp(anim, ref, MAX_VAR)))
-										re.AnimChange(as, mi.model, ref);
+										R_AnimChange(as, mi.model, ref);
 									else
-										re.AnimRun(as, mi.model, cls.frametime * 1000);
+										R_AnimRun(as, mi.model, cls.frametime * 1000);
 
 									mi.frame = as->frame;
 									mi.oldframe = as->oldframe;
 									mi.backlerp = as->backlerp;
 								}
-								re.DrawModelDirect(&mi, NULL, NULL);
+								R_DrawModelDirect(&mi, NULL, NULL);
 							/* tag and parent defined */
 							} else {
 								/* place this menumodel part on an already existing menumodel tag */
@@ -2821,7 +2821,7 @@ void MN_DrawMenus (void)
 									Com_Printf("Menumodel: Could not get the menuModel '%s'\n", menuModel->parent);
 									break;
 								}
-								pmi.model = re.RegisterModel(menuModelParent->model);
+								pmi.model = R_RegisterModelShort(menuModelParent->model);
 								if (!pmi.model) {
 									Com_Printf("Menumodel: Could not get the model '%s'\n", menuModelParent->model);
 									break;
@@ -2845,7 +2845,7 @@ void MN_DrawMenus (void)
 								pmi.oldframe = as->oldframe;
 								pmi.backlerp = as->backlerp;
 
-								re.DrawModelDirect(&mi, &pmi, menuModel->tag);
+								R_DrawModelDirect(&mi, &pmi, menuModel->tag);
 							}
 							menuModel = menuModel->next;
 						} else {
@@ -2867,15 +2867,15 @@ void MN_DrawMenus (void)
 								}
 								if (!node->data[MN_DATA_MODEL_ANIMATION_STATE]) {
 									as = (animState_t *) Mem_PoolAlloc(sizeof(animState_t), cl_genericPool, CL_TAG_NONE);
-									re.AnimChange(as, mi.model, ref);
+									R_AnimChange(as, mi.model, ref);
 									node->data[MN_DATA_MODEL_ANIMATION_STATE] = as;
 								} else {
 									/* change anim if needed */
 									as = node->data[MN_DATA_MODEL_ANIMATION_STATE];
-									anim = re.AnimGetName(as, mi.model);
+									anim = R_AnimGetName(as, mi.model);
 									if (anim && Q_strncmp(anim, ref, MAX_VAR))
-										re.AnimChange(as, mi.model, ref);
-									re.AnimRun(as, mi.model, cls.frametime * 1000);
+										R_AnimChange(as, mi.model, ref);
+									R_AnimRun(as, mi.model, cls.frametime * 1000);
 								}
 
 								mi.frame = as->frame;
@@ -2903,7 +2903,7 @@ void MN_DrawMenus (void)
 
 										Q_strncpyz(model, MN_GetReferenceString(menu, search->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]), MAX_VAR);
 
-										pmi.model = re.RegisterModel(model);
+										pmi.model = R_RegisterModelShort(model);
 										if (!pmi.model)
 											break;
 
@@ -2924,11 +2924,11 @@ void MN_DrawMenus (void)
 										pmi.frame = as->frame;
 										pmi.oldframe = as->oldframe;
 										pmi.backlerp = as->backlerp;
-										re.DrawModelDirect(&mi, &pmi, tag);
+										R_DrawModelDirect(&mi, &pmi, tag);
 										break;
 									}
 							} else
-								re.DrawModelDirect(&mi, NULL, NULL);
+								R_DrawModelDirect(&mi, NULL, NULL);
 						}
 					/* for normal models (normal = no menumodel definition) this
 					 * menuModel pointer is null - the do-while loop is only
@@ -2955,7 +2955,7 @@ void MN_DrawMenus (void)
 
 				if (mn_debugmenu->integer) {
 					MN_DrawTooltip("f_small", node->name, node->pos[0], node->pos[1], node->size[1], 0);
-/*					re.FontDrawString("f_verysmall", ALIGN_UL, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], 0, node->texh[0], node->name, 0, 0, NULL, qfalse);*/
+/*					R_FontDrawString("f_verysmall", ALIGN_UL, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], 0, node->texh[0], node->name, 0, 0, NULL, qfalse);*/
 				}
 			}	/* if */
 
@@ -2988,7 +2988,7 @@ void MN_DrawMenus (void)
 		}
 	}
 
-	re.DrawColor(NULL);
+	R_DrawColor(NULL);
 }
 
 /*
@@ -4347,10 +4347,10 @@ void MN_PrecacheModels (void)
 
 	for (i = 0; i < numMenuModels; i++) {
 		menuModel = &menuModels[i];
-		if (!re.RegisterModel(menuModel->model))
+		if (!R_RegisterModelShort(menuModel->model))
 			Com_Printf("MN_PrecacheModels: Could not register model '%s'\n", menuModel->model);
 		while ((menuModel = menuModel->next) != NULL) {
-			if (!re.RegisterModel(menuModel->model))
+			if (!R_RegisterModelShort(menuModel->model))
 				Com_Printf("MN_PrecacheModels: Could not register model '%s'\n", menuModel->model);
 		}
 		cls.loadingPercent += 20.0f / numMenuModels;
@@ -4935,7 +4935,7 @@ void CL_ParseFont (const char *name, const char **text)
 	if (FS_CheckFile(font->path) == -1)
 		Sys_Error("...font file %s does not exist (font %s)\n", font->path, font->name);
 
-	re.FontRegister(font->name, font->size, _(font->path), font->style);
+	R_FontRegister(font->name, font->size, _(font->path), font->style);
 }
 
 /**
@@ -4947,7 +4947,7 @@ void CL_InitFonts (void)
 
 	Com_Printf("...registering %i fonts\n", numFonts);
 	for (i = 0; i < numFonts; i++)
-		re.FontRegister(fonts[i].name, fonts[i].size, fonts[i].path, fonts[i].style);
+		R_FontRegister(fonts[i].name, fonts[i].size, fonts[i].path, fonts[i].style);
 }
 
 /* ===================== USE_SDL_TTF stuff end ====================== */

@@ -534,7 +534,7 @@ qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, fl
 		}
 
 		/* Draw */
-		re.Draw3DMapMarkers(angles, zoom, screenPos, model);
+		R_Draw3DMapMarkers(angles, zoom, screenPos, model);
 		return qtrue;
 	}
 	return qfalse;
@@ -704,7 +704,7 @@ static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
 	int i, start, old;
 
 	/* draw */
-	re.DrawColor(color);
+	R_DrawColor(color);
 	start = 0;
 	old = 512;
 	for (i = 0, p = pts; i < line->numPoints; i++, p++) {
@@ -722,7 +722,7 @@ static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
 			p->x += diff;
 
 			/* wrap around screen border */
-			re.DrawLineStrip(i - start + 1, (int*)(&pts));
+			R_DrawLineStrip(i - start + 1, (int*)(&pts));
 
 			/* first path of the path is drawn, now we begin the second part of the path */
 			/* shift first point, continue drawing */
@@ -734,8 +734,8 @@ static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
 		old = p->x;
 	}
 
-	re.DrawLineStrip(i - start, (int*)(&pts));
-	re.DrawColor(NULL);
+	R_DrawLineStrip(i - start, (int*)(&pts));
+	R_DrawColor(NULL);
 }
 
 /**
@@ -752,15 +752,15 @@ static void MAP_3DMapDrawLine (const menuNode_t* node, const mapline_t* line)
 	int i, numPoints;
 
 	/* draw only when the point of the path is visible*/
-	re.DrawColor(color);
+	R_DrawColor(color);
 	for (i = 0, numPoints = 0; i < line->numPoints; i++) {
 		if (MAP_3DMapToScreen(node, line->point[i], &pts[i].x, &pts[i].y, NULL)) {
 			 numPoints++;
 		}
 	}
 
-	re.DrawLineStrip(numPoints, (int*)(&pts));
-	re.DrawColor(NULL);
+	R_DrawLineStrip(numPoints, (int*)(&pts));
+	R_DrawColor(NULL);
 }
 
 #define CIRCLE_DRAW_POINTS	60
@@ -784,7 +784,7 @@ void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center, const 
 	vec3_t initialVector, rotationAxis, currentPoint, centerPos;
 
 	/* Set color */
-	re.DrawColor(color);
+	R_DrawColor(color);
 
 	/* Set centerPos corresponding to cartesian coordinates of the center point */
 	PolarToVec(center, centerPos);
@@ -807,7 +807,7 @@ void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center, const 
 		/* if moving from a point of the screen to a distant one, draw the path we already calculated, and begin a new path
 		 * (to avoid unwanted lines) */
 		if (draw != oldDraw && i != 0) {
-			re.DrawLineStrip(numPoints, (int*)(&pts));
+			R_DrawLineStrip(numPoints, (int*)(&pts));
 			numPoints = 0;
 		}
 		/* if the current point is to be drawn, add it to the path */
@@ -821,8 +821,8 @@ void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center, const 
 	}
 
 	/* Draw the last path */
-	re.DrawLineStrip(numPoints, (int*)(&pts));
-	re.DrawColor(NULL);
+	R_DrawLineStrip(numPoints, (int*)(&pts));
+	R_DrawColor(NULL);
 }
 
 /**
@@ -1092,7 +1092,7 @@ static void MAP_DrawBullets (const menuNode_t* node, int bulletIdx)
 
 	for (k = 0; k < BULLETS_PER_SHOT; k++) {
 		if (MAP_AllMapToScreen(node, bulletPos[bulletIdx][k], &x, &y, NULL))
-			re.DrawFill(x, y, BULLET_SIZE, BULLET_SIZE, ALIGN_CC, yellow);
+			R_DrawFill(x, y, BULLET_SIZE, BULLET_SIZE, ALIGN_CC, yellow);
 	}
 }
 
@@ -1121,7 +1121,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	assert(node);
 
 	/* font color on geoscape */
-	re.DrawColor(node->color);
+	R_DrawColor(node->color);
 	/* default font */
 	font = MN_GetFont(NULL, node);
 
@@ -1137,7 +1137,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 					if (!selMis->def->active)
 						MAP_MapDrawEquidistantPoints(node,  ms->realPos, SELECT_CIRCLE_RADIUS, yellow);
 				} else
-					re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, selMis->def->active ? "circleactive" : "circle");
+					R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, selMis->def->active ? "circleactive" : "circle");
 			}
 
 			/* Draw mission model (this must be after drawing 'selected circle' so that the model looks above it)*/
@@ -1145,9 +1145,9 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 				angle = MAP_AngleOfPath(ms->realPos, northPole, NULL, NULL) + 90.0f;
 				MAP_Draw3DMarkerIfVisible(node, ms->realPos, angle, "mission");
 			} else
-				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "cross");
+				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "cross");
 
-			re.FontDrawString("f_verysmall", ALIGN_UL, x + 10, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], _(ms->def->location), 0, 0, NULL, qfalse);
+			R_FontDrawString("f_verysmall", ALIGN_UL, x + 10, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], _(ms->def->location), 0, 0, NULL, qfalse);
 		}
 
 	/* draws projectiles */
@@ -1175,14 +1175,14 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 				MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "base");
 		} else if (MAP_MapToScreen(node, base->pos, &x, &y)) {
 			if (base->baseStatus == BASE_UNDER_ATTACK)
-				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "baseattack");
+				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "baseattack");
 			else
-				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "base");
+				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "base");
 		}
 
 		/* Draw base names */
 		if (MAP_AllMapToScreen(node, base->pos, &x, &y, NULL))
-			re.FontDrawString(font, ALIGN_UL, x, y + 10, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], base->name, 0, 0, NULL, qfalse);
+			R_FontDrawString(font, ALIGN_UL, x, y + 10, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], base->name, 0, 0, NULL, qfalse);
 
 		/* draw aircrafts of base */
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--)
@@ -1215,14 +1215,14 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 					if (cl_3dmap->integer)
 						MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
 					else
-						re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
+						R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
 
 					/* Draw a circle around ufo purchased by selected aircraft */
 					if (aircraft->status == AIR_UFO && MAP_AllMapToScreen(node, aircraft->aircraftTarget->pos, &x, &y, NULL)) {
 						if (cl_3dmap->integer)
 							MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
 						else
-							re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
+							R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "circle");
 					}
 				}
 
@@ -1249,7 +1249,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			if (cl_3dmap->integer)
 				MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
 			else
-				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "circle");
+				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "circle");
 		}
 		angle = MAP_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL);
 		MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model);
@@ -1265,8 +1265,8 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 				borders[j * 2] = x;
 				borders[j * 2 + 1] = y;
 			}
-			re.DrawPolygon(gd.nations[i].numBorders, borders);
-			re.DrawLineLoop(gd.nations[i].numBorders, borders);
+			R_DrawPolygon(gd.nations[i].numBorders, borders);
+			R_DrawLineLoop(gd.nations[i].numBorders, borders);
 		}
 	}
 
@@ -1276,7 +1276,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	/* Draw nation names */
 	for (i = 0; i < gd.numNations; i++) {
 		if (MAP_AllMapToScreen(node, gd.nations[i].pos, &x, &y, NULL))
-			re.FontDrawString("f_verysmall", ALIGN_UC, x , y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], _(gd.nations[i].name), 0, 0, NULL, qfalse);
+			R_FontDrawString("f_verysmall", ALIGN_UC, x , y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], _(gd.nations[i].name), 0, 0, NULL, qfalse);
 		if (showXVI) {
 			Q_strcat(buffer, va(_("%s\t%i%%\n"), _(gd.nations[i].name), gd.nations[i].XVIRate), sizeof(buffer));
 		}
@@ -1313,13 +1313,13 @@ void MAP_DrawMap (const menuNode_t* node)
 		if (smoothRotation)
 			MAP3D_SmoothRotate();
 		q = (ccs.date.day % 365 + (float) (ccs.date.sec / (3600 * 24))) * 2 * M_PI / 365;
-		re.Draw3DGlobe(node->pos[0], node->pos[1], node->size[0], node->size[1],
+		R_Draw3DGlobe(node->pos[0], node->pos[1], node->size[0], node->size[1],
 			(float) (ccs.date.sec / (24 * 3600.0f)) * 2 * M_PI - 0.5f * M_PI, q, ccs.angles, ccs.zoom / 10, curCampaign->map);
 	} else {
 		if (smoothRotation)
 			MAP_SmoothTranslate();
 		q = (ccs.date.day % 365 + (float) (ccs.date.sec / (3600 * 6)) / 4) * 2 * M_PI / 365 - M_PI;
-		re.DrawDayAndNight(node->pos[0], node->pos[1], node->size[0], node->size[1], (float) ccs.date.sec / (3600 * 24), q,
+		R_DrawDayAndNight(node->pos[0], node->pos[1], node->size[0], node->size[1], (float) ccs.date.sec / (3600 * 24), q,
 			ccs.center[0], ccs.center[1], 0.5 / ccs.zoom, curCampaign->map);
 	}
 	MAP_DrawMapMarkers(node);
@@ -1769,7 +1769,7 @@ void MAP_Init (void)
 		Mem_Free(terrainPic);
 		terrainPic = NULL;
 	}
-	re.LoadTGA(va("pics/menu/%s_terrain.tga", curCampaign->map), &terrainPic, &terrainWidth, &terrainHeight);
+	R_LoadTGA(va("pics/menu/%s_terrain.tga", curCampaign->map), &terrainPic, &terrainWidth, &terrainHeight);
 	if (!terrainPic || !terrainWidth || !terrainHeight)
 		Sys_Error("Couldn't load map mask %s_terrain.tga in pics/menu\n", curCampaign->map);
 
@@ -1778,7 +1778,7 @@ void MAP_Init (void)
 		Mem_Free(culturePic);
 		culturePic = NULL;
 	}
-	re.LoadTGA(va("pics/menu/%s_culture.tga", curCampaign->map), &culturePic, &cultureWidth, &cultureHeight);
+	R_LoadTGA(va("pics/menu/%s_culture.tga", curCampaign->map), &culturePic, &cultureWidth, &cultureHeight);
 	if (!culturePic || !cultureWidth || !cultureHeight)
 		Sys_Error("Couldn't load map mask %s_culture.tga in pics/menu\n", curCampaign->map);
 
@@ -1787,7 +1787,7 @@ void MAP_Init (void)
 		Mem_Free(populationPic);
 		populationPic = NULL;
 	}
-	re.LoadTGA(va("pics/menu/%s_population.tga", curCampaign->map), &populationPic, &populationWidth, &populationHeight);
+	R_LoadTGA(va("pics/menu/%s_population.tga", curCampaign->map), &populationPic, &populationWidth, &populationHeight);
 	if (!populationPic || !populationWidth || !populationHeight)
 		Sys_Error("Couldn't load map mask %s_population.tga in pics/menu\n", curCampaign->map);
 
@@ -1796,7 +1796,7 @@ void MAP_Init (void)
 		Mem_Free(nationsPic);
 		nationsPic = NULL;
 	}
-	re.LoadTGA(va("pics/menu/%s_nations.tga", curCampaign->map), &nationsPic, &nationsWidth, &nationsHeight);
+	R_LoadTGA(va("pics/menu/%s_nations.tga", curCampaign->map), &nationsPic, &nationsWidth, &nationsHeight);
 	if (!nationsPic || !nationsWidth || !nationsHeight)
 		Sys_Error("Couldn't load map mask %s_nations.tga in pics/menu\n", curCampaign->map);
 

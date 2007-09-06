@@ -43,11 +43,9 @@ void R_SetDefaultState (void)
 
 	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	R_UpdateSwapInterval();
-
 	/* doesn't really belong here... but works fine */
-	vid.rx = (float) vid.width / VID_NORM_WIDTH;
-	vid.ry = (float) vid.height / VID_NORM_HEIGHT;
+	viddef.rx = (float) viddef.width / VID_NORM_WIDTH;
+	viddef.ry = (float) viddef.height / VID_NORM_HEIGHT;
 }
 
 /**
@@ -80,10 +78,10 @@ void R_SetupGL3D (void)
 	int x, x2, y2, y, w, h;
 
 	/* set up viewport */
-	x = floor(r_newrefdef.x * vid.width / vid.width);
-	x2 = ceil((r_newrefdef.x + r_newrefdef.width) * vid.width / vid.width);
-	y = floor(vid.height - r_newrefdef.y * vid.height / vid.height);
-	y2 = ceil(vid.height - (r_newrefdef.y + r_newrefdef.height) * vid.height / vid.height);
+	x = floor(r_newrefdef.x * viddef.width / viddef.width);
+	x2 = ceil((r_newrefdef.x + r_newrefdef.width) * viddef.width / viddef.width);
+	y = floor(viddef.height - r_newrefdef.y * viddef.height / viddef.height);
+	y2 = ceil(viddef.height - (r_newrefdef.y + r_newrefdef.height) * viddef.height / viddef.height);
 
 	w = x2 - x;
 	h = y - y2;
@@ -139,10 +137,10 @@ void R_SetupGL3D (void)
 void R_SetupGL2D (void)
 {
 	/* set 2D virtual screen size */
-	qglViewport(0, 0, vid.width, vid.height);
+	qglViewport(0, 0, viddef.width, viddef.height);
 	qglMatrixMode(GL_PROJECTION);
 	qglLoadIdentity();
-	qglOrtho(0, vid.width, vid.height, 0, 9999, -9999);
+	qglOrtho(0, viddef.width, viddef.height, 0, 9999, -9999);
 	qglMatrixMode(GL_MODELVIEW);
 	qglLoadIdentity();
 	qglDisable(GL_DEPTH_TEST);
@@ -280,7 +278,7 @@ void R_TextureAlphaMode (const char *string)
 	}
 
 	if (i == NUM_R_ALPHA_MODES) {
-		ri.Con_Printf(PRINT_ALL, "bad alpha texture mode name\n");
+		Com_Printf("bad alpha texture mode name\n");
 		return;
 	}
 
@@ -314,7 +312,7 @@ void R_TextureSolidMode (const char *string)
 	}
 
 	if (i == NUM_R_SOLID_MODES) {
-		ri.Con_Printf(PRINT_ALL, "bad solid texture mode name\n");
+		Com_Printf("bad solid texture mode name\n");
 		return;
 	}
 

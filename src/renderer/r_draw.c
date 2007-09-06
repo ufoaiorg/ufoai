@@ -147,26 +147,26 @@ image_t *draw_chars[2];
 /**
  * @brief
  */
-void Draw_InitLocal (void)
+void R_DrawInitLocal (void)
 {
 	shadow = R_FindImage("pics/sfx/shadow", it_pic);
 	if (!shadow)
-		ri.Con_Printf(PRINT_ALL, "Could not find shadow image in game pics/sfx directory!\n");
+		Com_Printf("Could not find shadow image in game pics/sfx directory!\n");
 	blood = R_FindImage("pics/sfx/blood", it_pic);
 	if (!blood)
-		ri.Con_Printf(PRINT_ALL, "Could not find shadow image in game pics/sfx directory!\n");
+		Com_Printf("Could not find shadow image in game pics/sfx directory!\n");
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	/* load console characters (don't bilerp characters) */
 
 	draw_chars[0] = R_FindImage("pics/conchars", it_pic);
 	if (!draw_chars[0])
-		ri.Sys_Error(ERR_FATAL, "Could not find conchars image in game pics directory!\n");
+		Sys_Error("Could not find conchars image in game pics directory!\n");
 	draw_chars[1] = R_FindImage("pics/conchars_small", it_pic);
 	if (!draw_chars[1])
-		ri.Con_Printf(PRINT_ALL, "Could not find conchars2 image in game pics directory!\n");
+		Com_Printf("Could not find conchars2 image in game pics directory!\n");
 
-	Font_Init();
+	R_FontInit();
 	R_InitGlobeChain();
 	R_DrawSphere();
 }
@@ -177,7 +177,7 @@ void Draw_InitLocal (void)
  * It can be clipped to the top of the screen to allow the console to be
  * smoothly scrolled off.
  */
-void Draw_Char (int x, int y, int num)
+void R_DrawChar (int x, int y, int num)
 {
 	int row, col;
 	float frow, fcol;
@@ -221,7 +221,7 @@ void R_DrawImagePixelData (const char *name, byte *frame, int width, int height)
 
 	img = R_FindImage(name, it_pic);
 	if (!img)
-		ri.Sys_Error(ERR_FATAL, "Could not find the searched image: %s\n", name);
+		Sys_Error("Could not find the searched image: %s\n", name);
 
 	R_Bind(img->texnum);
 
@@ -241,11 +241,11 @@ void R_DrawImagePixelData (const char *name, byte *frame, int width, int height)
 	qglTexCoord2f(0, 0);
 	qglVertex2f(0, 0);
 	qglTexCoord2f(1, 0);
-	qglVertex2f(vid.width, 0);
+	qglVertex2f(viddef.width, 0);
 	qglTexCoord2f(1, 1);
-	qglVertex2f(vid.width, vid.height);
+	qglVertex2f(viddef.width, viddef.height);
 	qglTexCoord2f(0, 1);
-	qglVertex2f(0, vid.height);
+	qglVertex2f(0, viddef.height);
 	qglEnd();
 }
 
@@ -255,7 +255,7 @@ void R_DrawImagePixelData (const char *name, byte *frame, int width, int height)
  * @note To reset the color let rgba be NULL
  * @note Enables openGL blend if alpha value is lower than 1.0
  */
-void Draw_Color (const float *rgba)
+void R_DrawColor (const float *rgba)
 {
 	if (rgba) {
 		if (rgba[3] < 1.0f)
@@ -275,7 +275,7 @@ void Draw_Color (const float *rgba)
  * @return NULL on error or image_t pointer on success
  * @sa R_FindImage
  */
-image_t *Draw_FindPic (const char *name)
+image_t *R_RegisterPic (const char *name)
 {
 	image_t *gl;
 	char fullname[MAX_QPATH];
@@ -298,13 +298,13 @@ image_t *Draw_FindPic (const char *name)
  * @param[out] w Pointer to int value for width
  * @param[out] h Pointer to int value for height
  * @param[in] pic The name of the pic to get the values for
- * @sa Draw_FindPic
+ * @sa R_RegisterPic
  */
-void Draw_GetPicSize (int *w, int *h, const char *pic)
+void R_DrawGetPicSize (int *w, int *h, const char *pic)
 {
 	image_t *gl;
 
-	gl = Draw_FindPic(pic);
+	gl = R_RegisterPic(pic);
 	if (!gl) {
 		*w = *h = -1;
 		return;
@@ -326,34 +326,34 @@ void Draw_GetPicSize (int *w, int *h, const char *pic)
  * @param[in] align The alignment we should use for placing the image onto the screen (see align_t)
  * @param[in] blend Enable the blend mode (for alpha channel images)
  * @param[in] name The name of the image - relative to base/pics
- * @sa Draw_FindPic
+ * @sa R_RegisterPic
  * @note All these parameter are normalized to VID_NORM_WIDTH and VID_NORM_HEIGHT
  * they are adjusted in this function
  */
-void Draw_NormPic (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, const char *name)
+void R_DrawNormPic (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, const char *name)
 {
 	float nx, ny, nw = 0.0, nh = 0.0;
 	image_t *gl;
 
-	gl = Draw_FindPic(name);
+	gl = R_RegisterPic(name);
 	if (!gl) {
-		ri.Con_Printf(PRINT_ALL, "Can't find pic: %s\n", name);
+		Com_Printf("Can't find pic: %s\n", name);
 		return;
 	}
 
 	/* normalize */
-	nx = x * vid.rx;
-	ny = y * vid.ry;
+	nx = x * viddef.rx;
+	ny = y * viddef.ry;
 
 	if (w && h) {
-		nw = w * vid.rx;
-		nh = h * vid.ry;
+		nw = w * viddef.rx;
+		nh = h * viddef.ry;
 	}
 
 	if (sh && th) {
 		if (!w || !h) {
-			nw = (sh - sl) * vid.rx;
-			nh = (th - tl) * vid.ry;
+			nw = (sh - sl) * viddef.rx;
+			nh = (th - tl) * viddef.ry;
 		}
 		sl = sl / (float)gl->width;
 		sh = sh / (float)gl->width;
@@ -361,8 +361,8 @@ void Draw_NormPic (float x, float y, float w, float h, float sh, float th, float
 		th = th / (float)gl->height;
 	} else {
 		if (!w || !h) {
-			nw = (float)gl->width * vid.rx;
-			nh = (float)gl->height * vid.ry;
+			nw = (float)gl->width * viddef.rx;
+			nh = (float)gl->height * viddef.ry;
 		}
 		sh = 1.0f;
 		th = 1.0f;
@@ -423,13 +423,13 @@ void Draw_NormPic (float x, float y, float w, float h, float sh, float th, float
 /**
  * @brief
  */
-void Draw_Pic (int x, int y, const char *pic)
+void R_DrawPic (int x, int y, const char *pic)
 {
 	image_t *gl;
 
-	gl = Draw_FindPic(pic);
+	gl = R_RegisterPic(pic);
 	if (!gl) {
-		ri.Con_Printf(PRINT_ALL, "Can't find pic: %s\n", pic);
+		Com_Printf("Can't find pic: %s\n", pic);
 		return;
 	}
 
@@ -457,16 +457,16 @@ void Draw_Pic (int x, int y, const char *pic)
 /**
  * @brief Fills a box of pixels with a single color
  */
-void Draw_Fill (int x, int y, int w, int h, int align, const vec4_t color)
+void R_DrawFill (int x, int y, int w, int h, int align, const vec4_t color)
 {
 	float nx, ny, nw, nh;
 
-	nx = x * vid.rx;
-	ny = y * vid.ry;
-	nw = w * vid.rx;
-	nh = h * vid.ry;
+	nx = x * viddef.rx;
+	ny = y * viddef.ry;
+	nw = w * viddef.rx;
+	nh = h * viddef.ry;
 
-	Draw_Color(color);
+	R_DrawColor(color);
 
 	qglDisable(GL_TEXTURE_2D);
 	qglBegin(GL_QUADS);
@@ -499,7 +499,7 @@ void Draw_Fill (int x, int y, int w, int h, int align, const vec4_t color)
 	}
 
 	qglEnd();
-	Draw_Color(NULL);
+	R_DrawColor(NULL);
 	qglEnable(GL_TEXTURE_2D);
 }
 
@@ -508,16 +508,16 @@ static float lastQ;
  * @brief Draw the day and night images of a flat geoscape - multitexture feature is used to blend the images
  * @note If no multitexture is available only the day map is drawn
  */
-void Draw_DayAndNight (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map)
+void R_DrawDayAndNight (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map)
 {
 	image_t *gl;
 	float nx, ny, nw, nh;
 
 	/* normalize */
-	nx = x * vid.rx;
-	ny = y * vid.ry;
-	nw = w * vid.rx;
-	nh = h * vid.ry;
+	nx = x * viddef.rx;
+	ny = y * viddef.ry;
+	nw = w * viddef.rx;
+	nh = h * viddef.ry;
 
 	/* load day image */
 	gl = R_FindImage(va("pics/menu/%s_day", map), it_wrappic);
@@ -601,13 +601,13 @@ void Draw_DayAndNight (int x, int y, int w, int h, float p, float q, float cx, f
 
 	RSTATE_DISABLE_BLEND
 	if (r_drawclouds->integer)
-		Draw_Clouds(x, y, w, h, p, q, cx, cy, iz, map);
+		R_DrawClouds(x, y, w, h, p, q, cx, cy, iz, map);
 }
 
 /**
  * @brief Draw the clouds for flat geoscape
  */
-void Draw_Clouds (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map)
+void R_DrawClouds (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map)
 {
 	image_t *gl;
 	float nx, ny, nw, nh;
@@ -619,10 +619,10 @@ void Draw_Clouds (int x, int y, int w, int h, float p, float q, float cx, float 
 		return;
 
 	/* normalize */
-	nx = x * vid.rx;
-	ny = y * vid.ry;
-	nw = w * vid.rx;
-	nh = h * vid.ry;
+	nx = x * viddef.rx;
+	ny = y * viddef.ry;
+	nw = w * viddef.rx;
+	nh = h * viddef.ry;
 
 #ifdef HAVE_SHADERS
 	if (gl->shader)
@@ -664,9 +664,9 @@ void Draw_Clouds (int x, int y, int w, int h, float p, float q, float cx, float 
  * @param[in] radius Radius of the circle
  * @param[in] color The color of the circle lines
  * @sa R_DrawPtlCircle
- * @sa Draw_LineStrip
+ * @sa R_DrawLineStrip
  */
-void Draw_Circle (vec3_t mid, float radius, const vec4_t color, int thickness)
+void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness)
 {
 	float theta;
 	const float accuracy = 5.0f;
@@ -675,13 +675,13 @@ void Draw_Circle (vec3_t mid, float radius, const vec4_t color, int thickness)
 	qglEnable(GL_LINE_SMOOTH);
 	RSTATE_ENABLE_BLEND
 
-	Draw_Color(color);
+	R_DrawColor(color);
 
 	assert(radius > thickness);
 
 	/* scale it */
-	radius *= vid.rx;
-	thickness *= vid.rx;
+	radius *= viddef.rx;
+	thickness *= viddef.rx;
 
 	/* store the matrix - we are using glTranslate */
 	qglPushMatrix();
@@ -708,7 +708,7 @@ void Draw_Circle (vec3_t mid, float radius, const vec4_t color, int thickness)
 
 	qglPopMatrix();
 
-	Draw_Color(NULL);
+	R_DrawColor(NULL);
 
 	RSTATE_DISABLE_BLEND
 	qglDisable(GL_LINE_SMOOTH);
@@ -718,10 +718,10 @@ void Draw_Circle (vec3_t mid, float radius, const vec4_t color, int thickness)
 #define MAX_LINEVERTS 256
 /**
  * @brief
- * @sa Draw_Circle
- * @sa Draw_LineLoop
+ * @sa R_DrawCircle
+ * @sa R_DrawLineLoop
  */
-void Draw_LineStrip (int points, int *verts)
+void R_DrawLineStrip (int points, int *verts)
 {
 	static int vs[MAX_LINEVERTS * 2];
 	int i;
@@ -731,8 +731,8 @@ void Draw_LineStrip (int points, int *verts)
 		points = MAX_LINEVERTS * 2;
 
 	for (i = 0; i < points * 2; i += 2) {
-		vs[i] = verts[i] * vid.rx;
-		vs[i + 1] = verts[i + 1] * vid.ry;
+		vs[i] = verts[i] * viddef.rx;
+		vs[i + 1] = verts[i + 1] * viddef.ry;
 	}
 
 	/* init vertex array */
@@ -750,10 +750,10 @@ void Draw_LineStrip (int points, int *verts)
 
 /**
  * @brief
- * @sa Draw_Circle
- * @sa Draw_LineStrip
+ * @sa R_DrawCircle
+ * @sa R_DrawLineStrip
  */
-void Draw_LineLoop (int points, int *verts)
+void R_DrawLineLoop (int points, int *verts)
 {
 	static int vs[MAX_LINEVERTS * 2];
 	int i;
@@ -763,8 +763,8 @@ void Draw_LineLoop (int points, int *verts)
 		points = MAX_LINEVERTS * 2;
 
 	for (i = 0; i < points * 2; i += 2) {
-		vs[i] = verts[i] * vid.rx;
-		vs[i + 1] = verts[i + 1] * vid.ry;
+		vs[i] = verts[i] * viddef.rx;
+		vs[i + 1] = verts[i + 1] * viddef.ry;
 	}
 
 	/* init vertex array */
@@ -783,11 +783,11 @@ void Draw_LineLoop (int points, int *verts)
 
 /**
  * @brief
- * @sa Draw_Circle
- * @sa Draw_LineStrip
- * @sa Draw_LineLoop
+ * @sa R_DrawCircle
+ * @sa R_DrawLineStrip
+ * @sa R_DrawLineLoop
  */
-void Draw_Polygon (int points, int *verts)
+void R_DrawPolygon (int points, int *verts)
 {
 	static int vs[MAX_LINEVERTS * 2];
 	int i;
@@ -797,8 +797,8 @@ void Draw_Polygon (int points, int *verts)
 		points = MAX_LINEVERTS * 2;
 
 	for (i = 0; i < points * 2; i += 2) {
-		vs[i] = verts[i] * vid.rx;
-		vs[i + 1] = verts[i + 1] * vid.ry;
+		vs[i] = verts[i] * viddef.rx;
+		vs[i + 1] = verts[i + 1] * viddef.ry;
 	}
 
 	/* init vertex array */
@@ -819,7 +819,7 @@ void Draw_Polygon (int points, int *verts)
  * @brief Draw a 3D Marker on the 3D geoscape
  * @sa MAP_Draw3DMarkerIfVisible
  */
-void Draw_3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char *model)
+void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char *model)
 {
 	modelInfo_t mi;
 	char path[MAX_QPATH] = "";
@@ -832,7 +832,7 @@ void Draw_3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char *
 	mi.model = R_RegisterModelShort(path);
 	mi.name = path;
 	if (!mi.model) {
-		ri.Con_Printf(PRINT_ALL, "Could not find model '%s'\n", path);
+		Com_Printf("Could not find model '%s'\n", path);
 		mi.model = R_RegisterModelShort(path);
 		mi.name = path;
 		/*return;*/
@@ -853,7 +853,7 @@ void Draw_3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char *
 /**
  * @brief responsible for drawing the 3d globe on geoscape
  */
-void Draw_3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, float zoom, const char *map)
+void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, float zoom, const char *map)
 {
 	/* globe scaling */
 	float fullscale = zoom / 4.0f;
@@ -865,15 +865,15 @@ void Draw_3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, 
 	float nx, ny, nw, nh;
 
 	/* normalize */
-	nx = x * vid.rx;
-	ny = y * vid.ry;
-	nw = w * vid.rx;
-	nh = h * vid.ry;
+	nx = x * viddef.rx;
+	ny = y * viddef.ry;
+	nw = w * viddef.rx;
+	nh = h * viddef.ry;
 
 	/* load day image */
 	gl = R_FindImage(va("pics/menu/%s_day", map), it_wrappic);
 	if (!gl) {
-		ri.Con_Printf(PRINT_ALL, "Could not find pics/menu/%s_day\n", map);
+		Com_Printf("Could not find pics/menu/%s_day\n", map);
 		return;
 	}
 
@@ -913,7 +913,7 @@ void Draw_3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, 
 
 	/* flatten the sphere */
 	/* this will also scale the normal vectors */
-	qglScalef(fullscale * vid.rx, fullscale * vid.ry, fullscale);
+	qglScalef(fullscale * viddef.rx, fullscale * viddef.ry, fullscale);
 
 #if 0
 	/* call this to rescale the normal vectors */

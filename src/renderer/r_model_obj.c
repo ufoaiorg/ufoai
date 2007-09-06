@@ -108,7 +108,7 @@ static int R_OBJ_FirstPass (model_t *mod, void* buffer)
 				/* Normal vector */
 				mod->numnormals++;
 			} else {
-				ri.Con_Printf(PRINT_ALL, "warning: unknown token \"%s\"! (ignoring)\n", buf);
+				Com_Printf("warning: unknown token \"%s\"! (ignoring)\n", buf);
 			}
 			break;
 		} /* case 'v' */
@@ -133,7 +133,7 @@ static int R_OBJ_FirstPass (model_t *mod, void* buffer)
 				mod->has_normals = 0;
 			} else {
 				/* Should never be there or the model is very crappy. */
-				ri.Con_Printf(PRINT_ALL, "Error: Found face with no vertex!\n");
+				Com_Printf("Error: Found face with no vertex!\n");
 			}
 
 			break;
@@ -153,24 +153,24 @@ static int R_OBJ_FirstPass (model_t *mod, void* buffer)
 	/* Check if informations are valid. */
 	if ((mod->has_texCoords && !mod->num_texCoords) ||
 	    (mod->has_normals && !mod->numnormals)) {
-		ri.Con_Printf(PRINT_ALL, "error: contradiction between collected info!\n");
+		Com_Printf("error: contradiction between collected info!\n");
 		return 0;
 	}
 
 	if (!mod->numvertexes) {
-		ri.Con_Printf(PRINT_ALL, "error: no vertex found!\n");
+		Com_Printf("error: no vertex found!\n");
 		return 0;
 	}
 
 #if 1
 	/* Verbose info */
-	ri.Con_Printf(PRINT_ALL, "first pass results: found\n");
-	ri.Con_Printf(PRINT_ALL, "   * %i vertices\n", mod->numvertexes);
-	ri.Con_Printf(PRINT_ALL, "   * %i texture coords.\n", mod->num_texCoords);
-	ri.Con_Printf(PRINT_ALL, "   * %i normal vectors\n", mod->numnormals);
-	ri.Con_Printf(PRINT_ALL, "   * %i faces\n", mod->num_faces);
-	ri.Con_Printf(PRINT_ALL, "   * has texture coords.: %s\n", mod->has_texCoords ? "yes" : "no");
-	ri.Con_Printf(PRINT_ALL, "   * has normals: %s\n", mod->has_normals ? "yes" : "no");
+	Com_Printf("first pass results: found\n");
+	Com_Printf("   * %i vertices\n", mod->numvertexes);
+	Com_Printf("   * %i texture coords.\n", mod->num_texCoords);
+	Com_Printf("   * %i normal vectors\n", mod->numnormals);
+	Com_Printf("   * %i faces\n", mod->num_faces);
+	Com_Printf("   * has texture coords.: %s\n", mod->has_texCoords ? "yes" : "no");
+	Com_Printf("   * has normals: %s\n", mod->has_normals ? "yes" : "no");
 #endif
 
 #endif /* 0 */
@@ -205,7 +205,7 @@ static int R_OBJ_SecondPass (model_t *mod, void *buffer)
 					if (sscanf(buf + 2, "%f %f %f",
 						&pvert->xyzw[0],
 						&pvert->xyzw[1], &pvert->xyzw[2] ) != 3) {
-						ri.Con_Printf(PRINT_ALL, "error reading vertex data!\n");
+						Com_Printf("error reading vertex data!\n");
 						return 0;
 					} else {
 						pvert->xyzw[3] = 1.0;
@@ -222,7 +222,7 @@ static int R_OBJ_SecondPass (model_t *mod, void *buffer)
 						&puvw->uvw[0],
 						&puvw->uvw[1]) != 2) {
 						if (sscanf(buf + 2, "%f", &puvw->uvw[0]) != 1) {
-							ri.Con_Printf(PRINT_ALL, "error reading texture coordinates!\n");
+							Com_Printf("error reading texture coordinates!\n");
 							return 0;
 						} else {
 							puvw->uvw[1] = 0.0;
@@ -239,7 +239,7 @@ static int R_OBJ_SecondPass (model_t *mod, void *buffer)
 					&pnorm->ijk[0],
 					&pnorm->ijk[1],
 					&pnorm->ijk[2]) != 3) {
-					ri.Con_Printf(PRINT_ALL, "error reading normal vectors!\n");
+					Com_Printf("error reading normal vectors!\n");
 					return 0;
 				}
 				pnorm++;
@@ -261,7 +261,7 @@ static int R_OBJ_SecondPass (model_t *mod, void *buffer)
 
 			/* select primitive type */
 			if (pface->num_elems < 3) {
-				ri.Con_Printf(PRINT_ALL, "error: a face must have at least 3 vertexes!\n");
+				Com_Printf("error: a face must have at least 3 vertexes!\n");
 				return 0;
 			} else if (pface->num_elems == 3) {
 				pface->type = GL_TRIANGLES;
@@ -322,11 +322,11 @@ static int R_OBJ_SecondPass (model_t *mod, void *buffer)
 
 #ifdef DEBUG
 	/* Verbose info */
-	ri.Con_Printf(PRINT_ALL, "second pass results: read\n");
-	ri.Con_Printf(PRINT_ALL, "   * %i vertexes\n", pvert - mod->vertexes);
-	ri.Con_Printf(PRINT_ALL, "   * %i texture coords.\n", puvw - mod->texCoords);
-	ri.Con_Printf(PRINT_ALL, "   * %i normal vectors\n", pnorm - mod->normals);
-	ri.Con_Printf(PRINT_ALL, "   * %i faces\n", pface - mod->faces);
+	Com_Printf("second pass results: read\n");
+	Com_Printf("   * %i vertexes\n", pvert - mod->vertexes);
+	Com_Printf("   * %i texture coords.\n", puvw - mod->texCoords);
+	Com_Printf("   * %i normal vectors\n", pnorm - mod->normals);
+	Com_Printf("   * %i faces\n", pface - mod->faces);
 #endif
 
 #endif /* 0 */
@@ -336,7 +336,7 @@ static int R_OBJ_SecondPass (model_t *mod, void *buffer)
 /**
  * @brief
  */
-int Mod_LoadOBJModel (model_t* mod, void* buffer, int bufSize)
+int R_ModLoadOBJModel (model_t* mod, void* buffer, int bufSize)
 {
 	void *tmp = buffer;
 

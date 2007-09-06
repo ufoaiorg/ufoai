@@ -50,7 +50,7 @@ void R_DrawSpriteModel (entity_t * e)
 
 #if 0
 	if (e->frame < 0 || e->frame >= psprite->numframes) {
-		ri.Con_Printf(PRINT_ALL, "no such sprite frame %i\n", e->frame);
+		Com_Printf("no such sprite frame %i\n", e->frame);
 		e->frame = 0;
 	}
 #endif
@@ -126,23 +126,23 @@ void R_DrawSpriteModel (entity_t * e)
 /**
  * @brief
  */
-void Mod_LoadSpriteModel (model_t * mod, void *buffer, int bufSize)
+void R_ModLoadSpriteModel (model_t * mod, void *buffer, int bufSize)
 {
 	dsprite_t *sprin, *sprout;
 	int i;
 
 	sprin = (dsprite_t *) buffer;
-	sprout = ri.TagMalloc(ri.modelPool, bufSize, 0);
+	sprout = VID_TagAlloc(vid_modelPool, bufSize, 0);
 
 	sprout->ident = LittleLong(sprin->ident);
 	sprout->version = LittleLong(sprin->version);
 	sprout->numframes = LittleLong(sprin->numframes);
 
 	if (sprout->version != SPRITE_VERSION)
-		ri.Sys_Error(ERR_DROP, "%s has wrong version number (%i should be %i)", mod->name, sprout->version, SPRITE_VERSION);
+		Sys_Error("%s has wrong version number (%i should be %i)", mod->name, sprout->version, SPRITE_VERSION);
 
 	if (sprout->numframes > SPRITE_MAX_FRAMES)
-		ri.Sys_Error(ERR_DROP, "%s has too many frames (%i > %i)", mod->name, sprout->numframes, SPRITE_MAX_FRAMES);
+		Sys_Error("%s has too many frames (%i > %i)", mod->name, sprout->numframes, SPRITE_MAX_FRAMES);
 
 	/* byte swap everything */
 	for (i = 0; i < sprout->numframes; i++) {

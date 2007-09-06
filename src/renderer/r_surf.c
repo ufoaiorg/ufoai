@@ -271,7 +271,7 @@ static void R_BlendLightmaps (void)
 
 				/* try uploading the block now */
 				if (!LM_AllocBlock(smax, tmax, &surf->dlight_s, &surf->dlight_t))
-					ri.Sys_Error(ERR_FATAL, "Consecutive calls to LM_AllocBlock(%d,%d) failed (dynamic)\n", smax, tmax);
+					Sys_Error("Consecutive calls to LM_AllocBlock(%d,%d) failed (dynamic)\n", smax, tmax);
 
 				base = gl_lms.lightmap_buffer;
 				base += (surf->dlight_t * BLOCK_WIDTH + surf->dlight_s) * LIGHTMAP_BYTES;
@@ -611,7 +611,7 @@ void R_DrawBrushModel (entity_t * e)
 	int i;
 	qboolean rotated;
 
-/*	ri.Con_Printf(DEBUG_RENDERER, "Brush model %i!\n", currentmodel->nummodelsurfaces); */
+/*	Com_DPrintf(DEBUG_RENDERER, "Brush model %i!\n", currentmodel->nummodelsurfaces); */
 
 	if (currentmodel->bsp.nummodelsurfaces == 0)
 		return;
@@ -892,7 +892,7 @@ static void LM_UploadBlock (qboolean dynamic)
 	} else {
 		qglTexImage2D(GL_TEXTURE_2D, 0, gl_solid_format, BLOCK_WIDTH, BLOCK_HEIGHT, 0, GL_LIGHTMAP_FORMAT, GL_UNSIGNED_BYTE, gl_lms.lightmap_buffer);
 		if (++gl_lms.current_lightmap_texture == MAX_LIGHTMAPS)
-			ri.Sys_Error(ERR_DROP, "LM_UploadBlock() - MAX_LIGHTMAPS exceeded\n");
+			Com_Error(ERR_DROP, "LM_UploadBlock() - MAX_LIGHTMAPS exceeded\n");
 	}
 }
 
@@ -952,7 +952,7 @@ void R_BuildPolygonFromSurface (mBspSurface_t * fa, int shift[3])
 	VectorClear(total);
 
 	/* draw texture */
-	poly = ri.TagMalloc(ri.modelPool, sizeof(mBspPoly_t) + (lnumverts - 4) * VERTEXSIZE * sizeof(float), 0);
+	poly = VID_TagAlloc(vid_modelPool, sizeof(mBspPoly_t) + (lnumverts - 4) * VERTEXSIZE * sizeof(float), 0);
 	poly->next = fa->polys;
 	fa->polys = poly;
 	poly->numverts = lnumverts;
@@ -1000,7 +1000,7 @@ void R_BuildPolygonFromSurface (mBspSurface_t * fa, int shift[3])
 
 /**
  * @brief
- * @sa Mod_LoadFaces
+ * @sa R_ModLoadFaces
  */
 void R_CreateSurfaceLightmap (mBspSurface_t * surf)
 {
@@ -1017,7 +1017,7 @@ void R_CreateSurfaceLightmap (mBspSurface_t * surf)
 		LM_UploadBlock(qfalse);
 		LM_InitBlock();
 		if (!LM_AllocBlock(smax, tmax, &surf->light_s, &surf->light_t))
-			ri.Sys_Error(ERR_FATAL, "Consecutive calls to LM_AllocBlock(%d,%d) failed (lquant: %i)\n", smax, tmax, surf->lquant);
+			Sys_Error("Consecutive calls to LM_AllocBlock(%d,%d) failed (lquant: %i)\n", smax, tmax, surf->lquant);
 	}
 
 	surf->lightmaptexturenum = gl_lms.current_lightmap_texture;
@@ -1032,7 +1032,7 @@ void R_CreateSurfaceLightmap (mBspSurface_t * surf)
 
 /**
  * @brief
- * @sa Mod_BeginLoading
+ * @sa R_ModBeginLoading
  * @sa R_EndBuildingLightmaps
  */
 void R_BeginBuildingLightmaps (void)
@@ -1075,11 +1075,11 @@ void R_BeginBuildingLightmaps (void)
 /**
  * @brief
  * @sa R_BeginBuildingLightmaps
- * @sa Mod_BeginLoading
+ * @sa R_ModBeginLoading
  */
 void R_EndBuildingLightmaps (void)
 {
 	LM_UploadBlock(qfalse);
 	R_EnableMultitexture(qfalse);
-/*	ri.Con_Printf(PRINT_ALL, "lightmaps: %i\n", gl_lms.current_lightmap_texture); */
+/*	Com_Printf("lightmaps: %i\n", gl_lms.current_lightmap_texture); */
 }

@@ -32,7 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client/ref.h"
 
 #define RGB_PIXELSIZE 3
-#define REF_VERSION "GL 0.12"
 
 #include <SDL.h>
 #include <SDL_ttf.h>
@@ -51,38 +50,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* fall over */
 #define ROLL    2
 
-
-#ifndef __VIDDEF_T
-#define __VIDDEF_T
-/**
- * @brief Contains the game screen size and drawing scale
- *
- * This is used to rationalize the GUI system rendering box
- * with the actual screen.
- * The width and height are the dimensions of the actual screen,
- * not just the rendering box.
- * The rx, ry positions are the width and height divided by
- * VID_NORM_WIDTH and VID_NORM_HEIGHT respectively.
- * This allows the GUI system to use a "normalized" coordinate system of
- * system of 1024x768 texels.
- *
-*/
-typedef struct {
-	unsigned width;     /**< game screen/window width */
-	unsigned height;    /**< game screen/window height */
-	float rx;       /**< horizontal screen scale factor */
-	float ry;       /**< vertical screen scale factor */
-} viddef_t;
-#endif
-
-extern viddef_t vid;
-
 #ifdef DEBUG
 # define R_CHECK_ERROR \
 	do { \
 		GLenum error = qglGetError(); \
 		if (error != GL_NO_ERROR) \
-			ri.Con_Printf(PRINT_ALL, "OpenGL err: %s (%d): %s 0x%X\n", \
+			Com_Printf("OpenGL err: %s (%d): %s 0x%X\n", \
 					__FILE__, __LINE__, \
 					__PRETTY_FUNCTION__, error); \
 	} while(0);
@@ -167,7 +140,6 @@ typedef enum {
 int RecursiveLightPoint(model_t* mapTile, mBspNode_t * node, vec3_t start, vec3_t end);
 
 void R_SetDefaultState(void);
-void R_UpdateSwapInterval(void);
 
 #define BACKFACE_EPSILON    0.01
 
@@ -262,6 +234,7 @@ extern cvar_t *r_texturesolidmode;
 extern cvar_t *r_wire;
 extern cvar_t *r_fog;
 extern cvar_t *r_intensity;
+extern cvar_t *r_imagefilter;
 
 extern cvar_t *vid_fullscreen;
 extern cvar_t *vid_gamma;
@@ -308,21 +281,18 @@ extern unsigned d_8to24table[256];
 
 extern int registration_sequence;
 
-struct model_s *R_RegisterModelShort(const char *name);
-
 void R_ScreenShot_f(void);
 void R_InterpolateTransform(animState_t * as, int numframes, float *tag, float *interpolated);
-void R_DrawModelDirect(modelInfo_t * mi, modelInfo_t * pmi, const char *tag);
 void R_DrawModelParticle(modelInfo_t * mi);
 void R_DrawBrushModel(entity_t * e);
 void R_DrawBox(entity_t * e);
 void R_DrawLevelBrushes(void);
 void R_DrawOBJModel(entity_t *e);
-int Mod_LoadOBJModel(model_t* mod, void* buffer, int bufSize);
+int R_ModLoadOBJModel(model_t* mod, void* buffer, int bufSize);
 void R_RenderDlights(void);
 void R_DrawAlphaSurfaces(void);
 void R_InitMiscTexture(void);
-void Draw_InitLocal(void);
+void R_DrawInitLocal(void);
 void R_SubdivideSurface(mBspSurface_t * fa);
 qboolean R_CullBox(vec3_t mins, vec3_t maxs);
 void R_RotateForEntity(entity_t * e);
@@ -334,31 +304,9 @@ void R_EnableLights(qboolean fixed, float *matrix, float *lightparam, float *lig
 
 #include "r_font.h"
 
-void Draw_GetPicSize(int *w, int *h, const char *name);
-void Draw_Pic(int x, int y, const char *name);
-void Draw_NormPic(float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, const char *name);
-void Draw_Char(int x, int y, int c);
-void Draw_Fill(int x, int y, int w, int h, int align, const vec4_t color);
-void Draw_Color(const float *rgba);
-void Draw_DayAndNight(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map);
-void Draw_Clouds(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map);
-void Draw_LineStrip(int points, int *verts);
-void Draw_LineLoop(int points, int *verts);
-void Draw_Circle (vec3_t mid, float radius, const vec4_t color, int thickness);
-void Draw_Polygon(int points, int *verts);
-
 void R_SwapBuffers(int);
 
-struct image_s *Draw_FindPic(const char *name);
-void R_LoadTGA(const char *name, byte ** pic, int *width, int *height);
 void R_SoftenTexture(byte *in, int width, int height, int bpp);
-
-void Anim_Append(animState_t * as, model_t * mod, const char *name);
-void Anim_Change(animState_t * as, model_t * mod, const char *name);
-void Anim_Run(animState_t * as, model_t * mod, int msec);
-char *Anim_GetName(animState_t * as, model_t * mod);
-
-void R_DrawImagePixelData(const char *name, byte *frame, int width, int height);
 
 image_t *R_LoadPic(const char *name, byte * pic, int width, int height, imagetype_t type, int bits);
 #ifdef DEBUG
@@ -472,26 +420,14 @@ extern rstate_t r_state;
 
 /*
 ====================================================================
-IMPORTED FUNCTIONS
-====================================================================
-*/
-
-extern refimport_t ri;
-
-
-/*
-====================================================================
 IMPLEMENTATION SPECIFIC FUNCTIONS
 ====================================================================
 */
 
-void Rimp_BeginFrame(void);
-void Rimp_EndFrame(void);
-qboolean Rimp_Init(void* hinstance, void* wndproc);
+qboolean Rimp_Init(void);
 void Rimp_Shutdown(void);
+qboolean Rimp_InitGraphics(qboolean fullscreen);
 rserr_t Rimp_SetMode(unsigned int *pwidth, unsigned int *pheight, int mode, qboolean fullscreen);
-void Rimp_AppActivate(qboolean active);
-void Rimp_SetGamma(void);
 
 /* 3d globe */
 
@@ -499,9 +435,6 @@ void Rimp_SetGamma(void);
 #define SPEED_OF_LIGHT 299792458        /* The big C, in meters/second. */
 #define PHYSICAL_EARTH_CIRC (2.0 * M_PI * PHYSICAL_EARTH_RADIUS)
 #define NOT_SELECTABLE ~0U              /* For picking reasons, see which_site() */
-
-void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, vec3_t rotate, float zoom, const char *map);
-void Draw_3DMapMarkers(vec3_t angles, float zoom, vec3_t position, const char *model);
 
 /* end of 3d globe */
 

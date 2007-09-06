@@ -114,8 +114,8 @@ void R_ScreenShot_f (void)
 	FILE	*f;
 
 	/* Find out what format to save in */
-	if (ri.Cmd_Argc() > 1)
-		ext = ri.Cmd_Argv(1);
+	if (Cmd_Argc() > 1)
+		ext = Cmd_Argv(1);
 	else
 		ext = r_screenshot->string;
 
@@ -129,101 +129,85 @@ void R_ScreenShot_f (void)
 	/* Set necessary values */
 	switch (type) {
 	case SSHOTTYPE_TGA:
-		ri.Con_Printf(PRINT_ALL, "Taking TGA screenshot...\n");
+		Com_Printf("Taking TGA screenshot...\n");
 		ext = "tga";
 		break;
 
 	case SSHOTTYPE_PNG:
-		ri.Con_Printf(PRINT_ALL, "Taking PNG screenshot...\n");
+		Com_Printf("Taking PNG screenshot...\n");
 		ext = "png";
 		break;
 
 	case SSHOTTYPE_JPG:
-		if (ri.Cmd_Argc() == 3)
-			quality = atoi(ri.Cmd_Argv(2));
+		if (Cmd_Argc() == 3)
+			quality = atoi(Cmd_Argv(2));
 		else
 			quality = r_screenshot_jpeg_quality->integer;
 		if (quality > 100 || quality <= 0)
 			quality = 100;
 
-		ri.Con_Printf(PRINT_ALL, "Taking JPG screenshot (at %i%% quality)...\n", quality);
+		Com_Printf("Taking JPG screenshot (at %i%% quality)...\n", quality);
 		ext = "jpg";
 		break;
 	}
 
 	/* Find a file name to save it to */
 	for (shotNum = 0; shotNum < 1000; shotNum++) {
-		Com_sprintf(checkName, MAX_OSPATH, "%s/scrnshot/ufo%i%i.%s", ri.FS_Gamedir(), shotNum / 10, shotNum % 10, ext);
+		Com_sprintf(checkName, MAX_OSPATH, "%s/scrnshot/ufo%i%i.%s", FS_Gamedir(), shotNum / 10, shotNum % 10, ext);
 		f = fopen(checkName, "rb");
 		if (!f)
 			break;
-		fclose (f);
+		fclose(f);
 	}
 
-	ri.FS_CreatePath(checkName);
+	FS_CreatePath(checkName);
 
 	/* Open it */
 	f = fopen(checkName, "wb");
 
 	if (!f) {
-		ri.Con_Printf(PRINT_ALL, "R_ScreenShot_f: Couldn't create file: %s\n", checkName);
+		Com_Printf("R_ScreenShot_f: Couldn't create file: %s\n", checkName);
 		return;
 	}
 
 	if (shotNum == 1000) {
-		ri.Con_Printf(PRINT_ALL, "R_ScreenShot_f: screenshot limit (of 1000) exceeded!\n");
+		Com_Printf("R_ScreenShot_f: screenshot limit (of 1000) exceeded!\n");
 		fclose(f);
 		return;
 	}
 
 	/* Allocate room for a copy of the framebuffer */
-	buffer = ri.TagMalloc(ri.imagePool, vid.width * vid.height * 3, 0);
+	buffer = VID_TagAlloc(vid_imagePool, viddef.width * viddef.height * 3, 0);
 	if (!buffer) {
-		ri.Con_Printf(PRINT_ALL, "R_ScreenShot_f: Could not allocate %i bytes for screenshot!\n", vid.width * vid.height * 3);
+		Com_Printf("R_ScreenShot_f: Could not allocate %i bytes for screenshot!\n", viddef.width * viddef.height * 3);
 		fclose(f);
 		return;
 	}
 
 	/* Read the framebuffer into our storage */
-	qglReadPixels(0, 0, vid.width, vid.height, GL_RGB, GL_UNSIGNED_BYTE, buffer);
+	qglReadPixels(0, 0, viddef.width, viddef.height, GL_RGB, GL_UNSIGNED_BYTE, buffer);
 
 	/* Write */
 	switch (type) {
 	case SSHOTTYPE_TGA:
-		R_WriteTGA(f, buffer, vid.width, vid.height);
+		R_WriteTGA(f, buffer, viddef.width, viddef.height);
 		break;
 
 	case SSHOTTYPE_PNG:
-		R_WritePNG(f, buffer, vid.width, vid.height);
+		R_WritePNG(f, buffer, viddef.width, viddef.height);
 		break;
 
 	case SSHOTTYPE_JPG:
-		R_WriteJPG(f, buffer, vid.width, vid.height, quality);
+		R_WriteJPG(f, buffer, viddef.width, viddef.height, quality);
 		break;
 	}
 
 	/* Finish */
 	fclose(f);
-	ri.TagFree(buffer);
+	VID_MemFree(buffer);
 
-	ri.Con_Printf(PRINT_ALL, "Wrote %s\n", checkName);
+	Com_Printf("Wrote %s\n", checkName);
 }
-
-/**
- * @brief
- */
-void R_UpdateSwapInterval (void)
-{
-	if (r_swapinterval->modified) {
-		r_swapinterval->modified = qfalse;
-
-#ifdef _WIN32
-		if (qwglSwapIntervalEXT)
-			qwglSwapIntervalEXT(r_swapinterval->value);
-#endif
-	}
-}
-
 
 /*
 ==============================================================================

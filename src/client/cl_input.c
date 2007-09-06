@@ -1309,3 +1309,57 @@ void CL_ParseInput (void)
 		return;
 	}
 }
+
+/**
+ * @brief
+ * @sa IN_Init
+ */
+void IN_Shutdown (void)
+{
+	IN_Activate(qfalse);
+	KBD_Close();
+}
+
+/**
+ * @brief
+ */
+void IN_Frame (void)
+{
+	if (cls.key_dest == key_console)
+		IN_Activate(qfalse);
+	else
+		IN_Activate(qtrue);
+}
+
+/**
+ * @brief
+ * @sa RW_IN_Shutdown
+ */
+void IN_Init (void)
+{
+	/* other cvars */
+	sdl_debug = Cvar_Get("sdl_debug", "0", 0, NULL);
+
+	mx = my = 0.0;
+}
+
+/**
+ * @brief
+ */
+void IN_GetMousePos (int *x, int *y)
+{
+	*x = mx / viddef.rx;
+	*y = my / viddef.ry;
+}
+
+/**
+ * @brief
+ */
+void Sys_SendKeyEvents (void)
+{
+#ifndef DEDICATED_ONLY
+	KBD_Update();
+#endif
+	/* grab frame time */
+	sys_frame_time = Sys_Milliseconds();
+}

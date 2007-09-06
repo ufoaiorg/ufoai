@@ -48,7 +48,7 @@ extern int key_linepos;
 static void DisplayString (int x, int y, const char *s)
 {
 	while (*s) {
-		re.DrawChar(x, y, *s);
+		R_DrawChar(x, y, *s);
 		x += con_fontWidth->integer;
 		s++;
 	}
@@ -517,7 +517,7 @@ static void Con_DrawInput (void)
 	y = con.vislines - con_fontHeight->integer;
 
 	for (i = 0; i < con.linewidth; i++)
-		re.DrawChar((i + 1) << con_fontShift->integer, con.vislines - con_fontHeight->integer - CONSOLE_CHAR_ALIGN, text[i]);
+		R_DrawChar((i + 1) << con_fontShift->integer, con.vislines - con_fontHeight->integer - CONSOLE_CHAR_ALIGN, text[i]);
 }
 
 
@@ -549,7 +549,7 @@ void Con_DrawNotify (void)
 		for (x = 0; x < con.linewidth; x++) {
 			/* only draw chat or check for developer mode */
 			if (developer->integer || text[x] & COLORED_TEXT_MASK) {
-				re.DrawChar(l + (x << con_fontShift->integer), v, text[x]);
+				R_DrawChar(l + (x << con_fontShift->integer), v, text[x]);
 				draw = qtrue;
 			}
 		}
@@ -571,10 +571,10 @@ void Con_DrawNotify (void)
 			s += msg_bufferlen - ((viddef.width >> con_fontShift->integer) - (skip + 1));
 		x = 0;
 		while (s[x]) {
-			re.DrawChar(l + ((x + skip) << con_fontShift->integer), v, s[x]);
+			R_DrawChar(l + ((x + skip) << con_fontShift->integer), v, s[x]);
 			x++;
 		}
-		re.DrawChar(l + ((x + skip) << con_fontShift->integer), v, 10 + ((cls.realtime >> 8) & 1));
+		R_DrawChar(l + ((x + skip) << con_fontShift->integer), v, 10 + ((cls.realtime >> 8) & 1));
 		v += con_fontHeight->integer;
 	}
 }
@@ -599,13 +599,13 @@ void Con_DrawConsole (float frac)
 		lines = viddef.height;
 
 	/* draw the background */
-	/*re.DrawFill(0, 0, viddef.width, viddef.height, ALIGN_UL, consoleBG);*/
-	re.DrawNormPic(0, lines - (int) viddef.height, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0, ALIGN_UL, qfalse, "conback");
+	/*R_DrawFill(0, 0, viddef.width, viddef.height, ALIGN_UL, consoleBG);*/
+	R_DrawNormPic(0, lines - (int) viddef.height, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0, ALIGN_UL, qfalse, "conback");
 
 	Com_sprintf(version, sizeof(version), "v%s", UFO_VERSION);
 	len = strlen(version);
 	for (x = 0; x < len; x++)
-		re.DrawChar(viddef.width - (len * con_fontWidth->integer) + x * con_fontWidth->integer - CONSOLE_CHAR_ALIGN, lines - (con_fontHeight->integer + CONSOLE_CHAR_ALIGN), version[x] | COLORED_TEXT_MASK);
+		R_DrawChar(viddef.width - (len * con_fontWidth->integer) + x * con_fontWidth->integer - CONSOLE_CHAR_ALIGN, lines - (con_fontHeight->integer + CONSOLE_CHAR_ALIGN), version[x] | COLORED_TEXT_MASK);
 
 	/* draw the text */
 	con.vislines = lines;
@@ -618,7 +618,7 @@ void Con_DrawConsole (float frac)
 	if (con.display != con.current) {
 		/* draw arrows to show the buffer is backscrolled */
 		for (x = 0; x < con.linewidth; x += 4)
-			re.DrawChar((x + 1) << con_fontShift->integer, y, '^');
+			R_DrawChar((x + 1) << con_fontShift->integer, y, '^');
 
 		y -= con_fontHeight->integer;
 		rows--;
@@ -634,7 +634,7 @@ void Con_DrawConsole (float frac)
 		text = con.text + (row % con.totallines) * con.linewidth;
 
 		for (x = 0; x < con.linewidth; x++)
-			re.DrawChar((x + 1) << con_fontShift->integer, y, text[x]);
+			R_DrawChar((x + 1) << con_fontShift->integer, y, text[x]);
 	}
 
 	/* draw the input prompt, user text, and cursor if desired */

@@ -265,7 +265,7 @@ void CL_SequenceRender (void)
 			/* advance in time */
 			VectorMA(se->origin, cls.frametime, se->speed, se->origin);
 			VectorMA(se->angles, cls.frametime, se->omega, se->angles);
-			re.AnimRun(&se->as, se->model, seq_animspeed->value * cls.frametime);
+			R_AnimRun(&se->as, se->model, seq_animspeed->value * cls.frametime);
 
 			/* add to scene */
 			memset(&ent, 0, sizeof(ent));
@@ -333,24 +333,24 @@ void CL_Sequence2D (void)
 				continue;*/
 
 			/* render */
-			re.DrawColor(s2d->color);
+			R_DrawColor(s2d->color);
 
 			/* image can be background */
 			if (*s2d->image)
-				re.DrawNormPic(s2d->pos[0], s2d->pos[1], s2d->size[0], s2d->size[1], 0, 0, 0, 0, s2d->align, qtrue, s2d->image);
+				R_DrawNormPic(s2d->pos[0], s2d->pos[1], s2d->size[0], s2d->size[1], 0, 0, 0, 0, s2d->align, qtrue, s2d->image);
 
 			/* bgcolor can be overlay */
 			if (s2d->bgcolor[3] > 0.0)
-				re.DrawFill(s2d->pos[0], s2d->pos[1], s2d->size[0], s2d->size[1], s2d->align, s2d->bgcolor);
+				R_DrawFill(s2d->pos[0], s2d->pos[1], s2d->size[0], s2d->size[1], s2d->align, s2d->bgcolor);
 
 			/* render */
-			re.DrawColor(s2d->color);
+			R_DrawColor(s2d->color);
 
 			/* gettext placeholder */
 			if (*s2d->text)
-				height += re.FontDrawString(s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], s2d->pos[0], s2d->pos[1], (int) s2d->size[0], (int) s2d->size[1], -1 /* @todo: use this for some nice line spacing */, _(s2d->text), 0, 0, NULL, qfalse);
+				height += R_FontDrawString(s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], s2d->pos[0], s2d->pos[1], (int) s2d->size[0], (int) s2d->size[1], -1 /* @todo: use this for some nice line spacing */, _(s2d->text), 0, 0, NULL, qfalse);
 		}
-	re.DrawColor(NULL);
+	R_DrawColor(NULL);
 }
 
 /**
@@ -517,21 +517,21 @@ int SEQ_Wait (const char *name, char *data)
 /**
  * @brief Precaches the models and images for a sequence
  * @return 1 - increase the command position of the sequence by one
- * @sa R_RegisterModel
- * @sa Draw_FindPic
+ * @sa R_RegisterModelShort
+ * @sa R_RegisterPic
  */
 int SEQ_Precache (const char *name, char *data)
 {
 	if (!Q_strncmp(name, "models", 6)) {
 		while (*data) {
 			Com_DPrintf(DEBUG_CLIENT, "Precaching model: %s\n", data);
-			re.RegisterModel(data);
+			R_RegisterModelShort(data);
 			data += strlen(data) + 1;
 		}
 	} else if (!Q_strncmp(name, "pics", 4)) {
 		while (*data) {
 			Com_DPrintf(DEBUG_CLIENT, "Precaching image: %s\n", data);
-			re.RegisterPic(data);
+			R_RegisterPic(data);
 			data += strlen(data) + 1;
 		}
 	} else
@@ -604,11 +604,11 @@ int SEQ_Model (const char *name, char *data)
 			if (!Q_strncmp(data, "model", 5)) {
 				data += strlen(data) + 1;
 				Com_DPrintf(DEBUG_CLIENT, "Registering model: %s\n", data);
-				se->model = re.RegisterModel(data);
+				se->model = R_RegisterModelShort(data);
 			} else if (!Q_strncmp(data, "anim", 4)) {
 				data += strlen(data) + 1;
 				Com_DPrintf(DEBUG_CLIENT, "Change anim to: %s\n", data);
-				re.AnimChange(&se->as, se->model, data);
+				R_AnimChange(&se->as, se->model, data);
 			} else
 				Com_Printf("SEQ_Model: unknown token '%s'\n", data);
 		}
@@ -1376,7 +1376,7 @@ void CL_TakeVideoFrame (void)
 	if (!afd.fileOpen)
 		return;
 
-	re.TakeVideoFrame(afd.width, afd.height, afd.cBuffer, afd.eBuffer, afd.motionJpeg);
+	R_TakeVideoFrame(afd.width, afd.height, afd.cBuffer, afd.eBuffer, afd.motionJpeg);
 }
 
 /**

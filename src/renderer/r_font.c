@@ -34,7 +34,7 @@ static fontCache_t *hash[MAX_FONT_CACHE];
 
 static font_t fonts[MAX_FONTS];
 
-static char *Font_GetLineWrap(font_t * f, char *buffer, int maxWidth, int *width, int *height);
+static char *R_FontGetLineWrap(font_t * f, char *buffer, int maxWidth, int *width, int *height);
 
 /* holds the gettext string */
 static char buf[BUF_SIZE];
@@ -50,18 +50,18 @@ static const fontRenderStyle_t fontStyle[] = {
 
 /**
  * @brief frees the SDL_ttf fonts
- * @sa Font_CleanCache
+ * @sa R_FontCleanCache
  */
-void Font_Shutdown (void)
+void R_FontShutdown (void)
 {
 	int i;
 
-	Font_CleanCache();
+	R_FontCleanCache();
 
 	for (i = 0; i < numFonts; i++)
 		if (fonts[i].font) {
 			TTF_CloseFont(fonts[i].font);
-			ri.FS_FreeFile(fonts[i].buffer);
+			FS_FreeFile(fonts[i].buffer);
 			SDL_RWclose(fonts[i].rw);
 		}
 
@@ -73,7 +73,7 @@ void Font_Shutdown (void)
  * @brief
  * @todo: Check whether font is already loaded
  */
-static font_t *Font_Analyze (const char *name, const char *path, int renderStyle, int size)
+static font_t *R_FontAnalyze (const char *name, const char *path, int renderStyle, int size)
 {
 	font_t *f = NULL;
 	int ttfSize;
@@ -88,13 +88,13 @@ static font_t *Font_Analyze (const char *name, const char *path, int renderStyle
 	/* copy fontname */
 	Q_strncpyz(f->name, name, sizeof(f->name));
 
-	ttfSize = ri.FS_LoadFile(path, &f->buffer);
+	ttfSize = FS_LoadFile(path, &f->buffer);
 
 	f->rw = SDL_RWFromMem(f->buffer, ttfSize);
 
 	f->font = TTF_OpenFontRW(f->rw, 0, size);
 	if (!f->font)
-		ri.Sys_Error(ERR_FATAL, "...could not load font file %s\n", path);
+		Sys_Error("...could not load font file %s\n", path);
 
 	/* font style */
 	f->style = renderStyle;
@@ -113,7 +113,7 @@ static font_t *Font_Analyze (const char *name, const char *path, int renderStyle
  * @brief Searches the array of available fonts (see fonts.ufo)
  * @return font_t pointer or NULL
  */
-static font_t *Font_GetFont (const char *name)
+static font_t *R_FontGetFont (const char *name)
 {
 	int i;
 
@@ -126,9 +126,9 @@ static font_t *Font_GetFont (const char *name)
 
 /**
  * @brief
- * @sa Font_GetFont
+ * @sa R_FontGetFont
  */
-void Font_Length (const char *font, char *c, int *width, int *height)
+void R_FontLength (const char *font, char *c, int *width, int *height)
 {
 	font_t *f = NULL;
 
@@ -139,16 +139,16 @@ void Font_Length (const char *font, char *c, int *width, int *height)
 		return;
 
 	/* get the font */
-	f = Font_GetFont(font);
+	f = R_FontGetFont(font);
 	if (!f)
 		return;
-	Font_GetLineWrap(f, c, VID_NORM_WIDTH, width, height);
+	R_FontGetLineWrap(f, c, VID_NORM_WIDTH, width, height);
 }
 
 /**
  * @brief Clears font cache and frees memory associated with the cache
  */
-void Font_CleanCache (void)
+void R_FontCleanCache (void)
 {
 	int i = 0;
 
@@ -166,19 +166,19 @@ void Font_CleanCache (void)
 /**
  * @brief Console command binding to show the font cache
  */
-void Font_ListCache_f (void)
+void R_FontListCache_f (void)
 {
 	int i = 0;
 	int collCount = 0, collSum = 0;
 	fontCache_t *f = NULL;
 
-	ri.Con_Printf(PRINT_ALL, "Font cache info\n========================\n");
-	ri.Con_Printf(PRINT_ALL, "...font cache size: %i - used %i\n", MAX_FONT_CACHE, numInCache);
+	Com_Printf("Font cache info\n========================\n");
+	Com_Printf("...font cache size: %i - used %i\n", MAX_FONT_CACHE, numInCache);
 
 	for (; i < numInCache; i++) {
 		f = &fontCache[i];
 		if (!f) {
-			ri.Con_Printf(PRINT_ALL, "...hashtable inconsistency at %i\n", i);
+			Com_Printf("...hashtable inconsistency at %i\n", i);
 			continue;
 		}
 		collCount = 0;
@@ -187,10 +187,10 @@ void Font_ListCache_f (void)
 			f = f->next;
 		}
 		if (collCount)
-			ri.Con_Printf(PRINT_ALL, "...%i collisions for %s\n", collCount, f->string);
+			Com_Printf("...%i collisions for %s\n", collCount, f->string);
 		collSum += collCount;
 	}
-	ri.Con_Printf(PRINT_ALL, "...overall collisions %i\n", collSum);
+	Com_Printf("...overall collisions %i\n", collSum);
 }
 
 /**
@@ -199,7 +199,7 @@ void Font_ListCache_f (void)
  * @param[in] maxlen Max length that should be used to calculate the hash value
  * @return hash value for given string
  */
-static int Font_Hash (const char *string, int maxlen)
+static int R_FontHash (const char *string, int maxlen)
 {
 	register int hashValue, i;
 
@@ -214,14 +214,14 @@ static int Font_Hash (const char *string, int maxlen)
 /**
  * @brief Searches the given string in cache
  * @return NULL if not found
- * @sa Font_Hash
+ * @sa R_FontHash
  */
-static fontCache_t *Font_GetFromCache (const char *s)
+static fontCache_t *R_FontGetFromCache (const char *s)
 {
 	fontCache_t *font = NULL;
 	int hashValue;
 
-	hashValue = Font_Hash(s, MAX_HASH_STRING);
+	hashValue = R_FontHash(s, MAX_HASH_STRING);
 	for (font = hash[hashValue]; font; font = font->next)
 		if (!Q_strncmp(s, font->string, MAX_HASH_STRING))
 			return font;
@@ -232,7 +232,7 @@ static fontCache_t *Font_GetFromCache (const char *s)
 /**
  * @brief generate a new opengl texture out of the sdl-surface, bind and cache it
  */
-static void Font_CacheGLSurface (fontCache_t *cache, SDL_Surface *pixel)
+static void R_FontCacheGLSurface (fontCache_t *cache, SDL_Surface *pixel)
 {
 	/* use a fixed texture number allocation scheme, starting offset at TEXNUM_FONTS */
 	cache->texPos = TEXNUM_FONTS + numInCache;
@@ -246,20 +246,20 @@ static void Font_CacheGLSurface (fontCache_t *cache, SDL_Surface *pixel)
  * @brief We add the font string (e.g. f_small) to the beginning
  * of each string (char *s) because we can have the same strings
  * but other fonts.
- * @sa Font_GenerateCache
- * @sa Font_CleanCache
- * @sa Font_Hash
- * @sa Font_CacheGLSurface
+ * @sa R_FontGenerateCache
+ * @sa R_FontCleanCache
+ * @sa R_FontHash
+ * @sa R_FontCacheGLSurface
  */
-static fontCache_t* Font_AddToCache (const char *s, SDL_Surface *pixel, int w, int h)
+static fontCache_t* R_FontAddToCache (const char *s, SDL_Surface *pixel, int w, int h)
 {
 	int hashValue;
 	fontCache_t *font = NULL;
 
 	if (numInCache >= MAX_FONT_CACHE)
-		Font_CleanCache();
+		R_FontCleanCache();
 
-	hashValue = Font_Hash(s, MAX_HASH_STRING);
+	hashValue = R_FontHash(s, MAX_HASH_STRING);
 	if (hash[hashValue]) {
 		font = hash[hashValue];
 		/* go to end of list */
@@ -275,9 +275,9 @@ static fontCache_t* Font_AddToCache (const char *s, SDL_Surface *pixel, int w, i
 		fontCache[numInCache].size[1] = h;
 		fontCache[numInCache].texsize[0] = pixel->w;
 		fontCache[numInCache].texsize[1] = pixel->h;
-		Font_CacheGLSurface(&fontCache[numInCache], pixel);
+		R_FontCacheGLSurface(&fontCache[numInCache], pixel);
 	} else
-		ri.Sys_Error(ERR_FATAL, "...font cache exceeded with %i\n", hashValue);
+		Sys_Error("...font cache exceeded with %i\n", hashValue);
 
 	numInCache++;
 	return &fontCache[numInCache-1];
@@ -286,13 +286,13 @@ static fontCache_t* Font_AddToCache (const char *s, SDL_Surface *pixel, int w, i
 /**
  * @brief Renders the text surface and coverts to 32bit SDL_Surface that is stored in font_t structure
  * @todo maybe 32bit is overkill if the game is only using 16bit?
- * @sa Font_AddToCache
+ * @sa R_FontAddToCache
  * @sa TTF_RenderUTF8_Blended
  * @sa SDL_CreateRGBSurface
  * @sa SDL_LowerBlit
  * @sa SDL_FreeSurface
  */
-static fontCache_t *Font_GenerateCache (const char *s, const char *fontString, font_t * f, int maxWidth)
+static fontCache_t *R_FontGenerateCache (const char *s, const char *fontString, font_t * f, int maxWidth)
 {
 	int w, h;
 	SDL_Surface *textSurface = NULL;
@@ -315,7 +315,7 @@ static fontCache_t *Font_GenerateCache (const char *s, const char *fontString, f
 	textSurface = TTF_RenderUTF8_Blended(f->font, s, color);
 
 	if (!textSurface) {
-		ri.Con_Printf(PRINT_ALL, "%s (%s)\n", TTF_GetError(), fontString);
+		Com_Printf("%s (%s)\n", TTF_GetError(), fontString);
 		return NULL;
 	}
 
@@ -338,7 +338,7 @@ static fontCache_t *Font_GenerateCache (const char *s, const char *fontString, f
 	h = textSurface->h;
 	SDL_FreeSurface(textSurface);
 
-	result = Font_AddToCache(fontString, openGLSurface, w, h);
+	result = R_FontAddToCache(fontString, openGLSurface, w, h);
 	SDL_FreeSurface(openGLSurface);
 	return result;
 }
@@ -348,7 +348,7 @@ static fontCache_t *Font_GenerateCache (const char *s, const char *fontString, f
  * @param[in] maxWidth is a pixel value
  * FIXME: if maxWidth is too small to display even the first word this has bugs
  */
-static char *Font_GetLineWrap (font_t * f, char *buffer, int maxWidth, int *width, int *height)
+static char *R_FontGetLineWrap (font_t * f, char *buffer, int maxWidth, int *width, int *height)
 {
 	char *space = NULL;
 	char *newlineTest = NULL;
@@ -431,7 +431,7 @@ static char *Font_GetLineWrap (font_t * f, char *buffer, int maxWidth, int *widt
  * @return -1 for scrolling down (@todo)
  * @return +1 for scrolling up (@todo)
  */
-static int Font_GenerateGLSurface (fontCache_t *cache, int x, int y, int absX, int absY, int width, int height)
+static int R_FontGenerateGLSurface (fontCache_t *cache, int x, int y, int absX, int absY, int width, int height)
 {
 	int h = cache->size[1];
 	int tw = cache->texsize[0];
@@ -449,13 +449,13 @@ static int Font_GenerateGLSurface (fontCache_t *cache, int x, int y, int absX, i
 
 	qglBegin(GL_TRIANGLE_STRIP);
 	qglTexCoord2f(start[0], start[1]);
-	qglVertex2f(x * vid.rx, y * vid.ry);
+	qglVertex2f(x * viddef.rx, y * viddef.ry);
 	qglTexCoord2f(end[0], start[1]);
-	qglVertex2f((x + tw) * vid.rx, y * vid.ry);
-	qglTexCoord2f(start[0] * vid.rx, end[1]);
-	qglVertex2f(x * vid.rx, (y + th) * vid.ry);
+	qglVertex2f((x + tw) * viddef.rx, y * viddef.ry);
+	qglTexCoord2f(start[0] * viddef.rx, end[1]);
+	qglVertex2f(x * viddef.rx, (y + th) * viddef.ry);
 	qglTexCoord2f(end[0], end[1]);
-	qglVertex2f((x + tw) * vid.rx, (y + th) * vid.ry);
+	qglVertex2f((x + tw) * viddef.rx, (y + th) * viddef.ry);
 	qglEnd();
 
 	RSTATE_DISABLE_BLEND
@@ -466,7 +466,7 @@ static int Font_GenerateGLSurface (fontCache_t *cache, int x, int y, int absX, i
 /**
  * @brief
  */
-static void Font_ConvertChars (char *buffer)
+static void R_FontConvertChars (char *buffer)
 {
 	char *replace = NULL;
 
@@ -508,7 +508,7 @@ static void Font_ConvertChars (char *buffer)
  * viddef settings for drawstring calls - make them all relative to VID_NORM_WIDTH
  * and VID_NORM_HEIGHT
  */
-int Font_DrawString (const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight,
+int R_FontDrawString (const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight,
 	const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine)
 {
 	int w = 0, h = 0, locX;
@@ -527,14 +527,14 @@ int Font_DrawString (const char *fontID, int align, int x, int y, int absX, int 
 	texh0 = lineHeight;
 
 	/* get the font */
-	f = Font_GetFont(fontID);
+	f = R_FontGetFont(fontID);
 	if (!f)
-		ri.Sys_Error(ERR_FATAL, "...could not find font: %s\n", fontID);
+		Sys_Error("...could not find font: %s\n", fontID);
 
-	cache = Font_GetFromCache(c);
+	cache = R_FontGetFromCache(c);
 	if (cache) { /* @todo: check that cache.font = fontID and that texh0 was the same */
 		if (cur_line) {
-			/* ri.Con_Printf(PRINT_ALL, "h %i - s %i - l %i\n", box_height, scroll_pos, *cur_line); */
+			/* Com_Printf("h %i - s %i - l %i\n", box_height, scroll_pos, *cur_line); */
 			if (increaseLine)
 				(*cur_line)++; /* Increment the number of processed lines (overall). */
 			line = *cur_line;
@@ -545,20 +545,20 @@ int Font_DrawString (const char *fontID, int align, int x, int y, int absX, int 
 			}
 		}
 
-		Font_GenerateGLSurface(cache, x, fy, absX, absY, maxWidth, maxHeight);
+		R_FontGenerateGLSurface(cache, x, fy, absX, absY, maxWidth, maxHeight);
 		return lineHeight;
 	}
 
 	Q_strncpyz(buffer, c, BUF_SIZE);
 
-	Font_ConvertChars(buf);
+	R_FontConvertChars(buf);
 	/* for linebreaks */
 	locX = x;
 
 	do {
 		skipline = qfalse;
 		if (cur_line) {
-			/* ri.Con_Printf(PRINT_ALL, "h %i - s %i - l %i\n", box_height, scroll_pos, *cur_line); */
+			/* Com_Printf("h %i - s %i - l %i\n", box_height, scroll_pos, *cur_line); */
 			if (increaseLine)
 				(*cur_line)++; /* Increment the number of processed lines (overall). */
 			line = *cur_line;
@@ -570,7 +570,7 @@ int Font_DrawString (const char *fontID, int align, int x, int y, int absX, int 
 			if (line <= scroll_pos) {
 				/* Due to scrolling this line is not visible. See if (!skipline)" code below.*/
 				skipline = qtrue;
-				/*ri.Con_Printf(PRINT_ALL, "skipline line: %i scroll_pos: %i\n", line, scroll_pos);*/
+				/*Com_Printf("skipline line: %i scroll_pos: %i\n", line, scroll_pos);*/
 			}
 		}
 
@@ -578,14 +578,14 @@ int Font_DrawString (const char *fontID, int align, int x, int y, int absX, int 
 		if (!strlen(buffer))
 			return returnHeight;
 
-		pos = Font_GetLineWrap(f, buffer, maxWidth - (x - absX), &w, &h);
+		pos = R_FontGetLineWrap(f, buffer, maxWidth - (x - absX), &w, &h);
 		fh = h;
 
 		if (texh0 > 0) {
 			/* FIXME: something is broken with that warning, please test */
 #if 0
 			if (fh > texh0)
-				ri.Con_Printf(PRINT_DEVELOPER, "Warning: font %s height=%f bigger than allowed line height=%f.\n", fontID, fh, texh0);
+				Com_DPrintf(DEBUG_RENDERER, "Warning: font %s height=%f bigger than allowed line height=%f.\n", fontID, fh, texh0);
 #endif
 			fh = texh0; /* some extra space below the line */
 		}
@@ -622,19 +622,19 @@ int Font_DrawString (const char *fontID, int align, int x, int y, int absX, int 
 			/* NOTE: There can be a non critical overflow in Com_sprintf */
 			Com_sprintf(searchString, sizeof(searchString), "%s%s", fontID, buffer);
 
-			cache = Font_GetFromCache(searchString);
+			cache = R_FontGetFromCache(searchString);
 			if (!cache)
-				cache = Font_GenerateCache(buffer, searchString, f, maxWidth);
+				cache = R_FontGenerateCache(buffer, searchString, f, maxWidth);
 
 			if (!cache) {
 				/* maybe we are running out of mem */
-				Font_CleanCache();
-				cache = Font_GenerateCache(buffer, searchString, f, maxWidth);
+				R_FontCleanCache();
+				cache = R_FontGenerateCache(buffer, searchString, f, maxWidth);
 			}
 			if (!cache)
-				ri.Sys_Error(ERR_FATAL, "...could not generate font surface '%s'\n", buffer);
+				Sys_Error("...could not generate font surface '%s'\n", buffer);
 
-			Font_GenerateGLSurface(cache, x, fy, absX, absY, maxWidth, maxHeight);
+			R_FontGenerateGLSurface(cache, x, fy, absX, absY, maxWidth, maxHeight);
 			fy += fh;
 			returnHeight += (texh0 > 0) ? texh0 : h;
 		}
@@ -650,18 +650,18 @@ int Font_DrawString (const char *fontID, int align, int x, int y, int absX, int 
 /**
  * @brief
  */
-void Font_Init (void)
+void R_FontInit (void)
 {
 #ifdef SDL_TTF_VERSION
 	SDL_version version;
 
 	SDL_TTF_VERSION(&version);
-	ri.Con_Printf(PRINT_ALL, "...SDL_ttf version %i.%i.%i - we need at least 2.0.7\n",
+	Com_Printf("...SDL_ttf version %i.%i.%i - we need at least 2.0.7\n",
 		version.major,
 		version.minor,
 		version.patch);
 #else
-	ri.Con_Printf(PRINT_ALL, "...could not get SDL_ttf version - we need at least 2.0.7\n");
+	Com_Printf("...could not get SDL_ttf version - we need at least 2.0.7\n");
 #endif
 
 	numFonts = 0;
@@ -674,23 +674,23 @@ void Font_Init (void)
 	/* try and init SDL VIDEO if not previously initialized */
 	if (SDL_WasInit(SDL_INIT_EVERYTHING) == 0) {
 		if (SDL_Init(SDL_INIT_VIDEO) < 0)
-			ri.Con_Printf(PRINT_ALL,"video SDL_Init failed: %s\n", SDL_GetError());
+			Com_Printf("video SDL_Init failed: %s\n", SDL_GetError());
 	} else if (SDL_WasInit(SDL_INIT_VIDEO) == 0) {
 		if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0)
-			ri.Con_Printf(PRINT_ALL,"video SDL_InitSubsystem failed: %s\n", SDL_GetError());
+			Com_Printf("video SDL_InitSubsystem failed: %s\n", SDL_GetError());
 	}
 
 	/* init the truetype font engine */
 	if (TTF_Init() == -1)
-		ri.Sys_Error(ERR_FATAL, "...SDL_ttf error: %s\n", TTF_GetError());
+		Sys_Error("...SDL_ttf error: %s\n", TTF_GetError());
 
-	ri.Con_Printf(PRINT_ALL, "...SDL_ttf inited\n");
+	Com_Printf("...SDL_ttf inited\n");
 }
 
 /**
  * @brief
  */
-void Font_Register (const char *name, int size, const char *path, const char *style)
+void R_FontRegister (const char *name, int size, const char *path, const char *style)
 {
 	int renderstyle = 0;		/* NORMAL is standard */
 	int i;
@@ -702,5 +702,5 @@ void Font_Register (const char *name, int size, const char *path, const char *st
 				break;
 			}
 
-	Font_Analyze(name, path, renderstyle, size);
+	R_FontAnalyze(name, path, renderstyle, size);
 }

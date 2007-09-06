@@ -224,10 +224,6 @@ extern struct memPool_s *cl_genericPool;
 extern struct memPool_s *cl_ircSysPool;
 extern struct memPool_s *cl_menuSysPool;
 extern struct memPool_s *cl_soundSysPool;
-extern struct memPool_s *vid_genericPool;
-extern struct memPool_s *vid_imagePool;
-extern struct memPool_s *vid_lightPool;
-extern struct memPool_s *vid_modelPool;
 
 /* TODO: Made use of the tags */
 typedef enum {
@@ -278,7 +274,6 @@ extern cvar_t *cl_fps;
 extern cvar_t *cl_shownet;
 extern cvar_t *cl_show_tooltips;
 extern cvar_t *cl_show_cursor_tooltips;
-extern cvar_t *sensitivity;
 extern cvar_t *cl_logevents;
 extern cvar_t *cl_centerview;
 extern cvar_t *cl_worldlevel;
@@ -301,6 +296,7 @@ extern cvar_t *snd_ref;
 extern cvar_t *confirm_actions;
 extern cvar_t *mn_inputlength;
 extern cvar_t *log_stats;
+extern cvar_t *sdl_debug;
 
 extern FILE* log_stats_file;
 
@@ -373,7 +369,6 @@ extern int presaveArray[MAX_ARRAYINDEXES];
 /* cl_sequence.c (avi stuff) */
 qboolean CL_OpenAVIForWriting(const char *filename);
 void CL_TakeVideoFrame(void);
-void CL_WriteAVIVideoFrame(const byte * imageBuffer, size_t size);
 void CL_WriteAVIAudioFrame(const byte * pcmBuffer, size_t size);
 qboolean CL_CloseAVI(void);
 qboolean CL_VideoRecording(void);
@@ -398,9 +393,6 @@ void CL_LanguageInit(void);
 qboolean CL_LanguageTryToSet(const char *localeID);
 
 /* cl_main.c */
-/* interface to refresh lib */
-extern refexport_t re;
-
 void CL_SetClientState(int state);
 void CL_Disconnect(void);
 void CL_Init(void);

@@ -33,12 +33,9 @@ typedef struct {
 #define NUM_FONT_STYLES (sizeof(fontStyle) / sizeof (fontRenderStyle_t))
 
 /* public */
-int Font_DrawString(const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine);
-void Font_Length(const char *font, char *c, int *width, int *height);
-void Font_CleanCache(void);
-void Font_Shutdown(void);
-void Font_Init(void);
-void Font_ListCache_f(void);
-void Font_Register(const char *name, int size, const char *path, const char *style);
+void R_FontCleanCache(void);
+void R_FontShutdown(void);
+void R_FontInit(void);
+void R_FontListCache_f(void);
 
 #endif	/* _R_FONTS */

@@ -321,7 +321,7 @@ static void CL_ActorGlobalCVars (void)
  * @param[in] *le Pointer to local entity structure, a soldier.
  * @return R_FIRE_MANY when STATE_REACTION_MANY.
  * @return R_FIRE_ONCE when STATE_REACTION_ONCE.
- * @return R_FIRE_OFF when no reaction fire.
+ * @return R_FIRE_OFF when no reaction fiR_
  * @sa CL_RefreshWeaponButtons
  * @sa CL_ActorUpdateCVars
  * @sa CL_ActorSelect
@@ -523,7 +523,7 @@ static void HideFiremodes (void)
 /**
  * @brief Stores the given firedef index and object index for reaction fire and sends in over the network as well.
  * @param[in] actor_idx Index of an actor.
- * @param[in] handidx Index of hand with item, which will be used for reactionfire. Possible hand indices: 0=right, 1=right, -1=undef
+ * @param[in] handidx Index of hand with item, which will be used for reactionfiR_ Possible hand indices: 0=right, 1=right, -1=undef
  * @param[in] fd_idx Index of firedefinition for an item in given hand.
  */
 static void CL_SetReactionFiremode (int actor_idx, int handidx, int obj_idx, int fd_idx)
@@ -553,7 +553,7 @@ static void CL_SetReactionFiremode (int actor_idx, int handidx, int obj_idx, int
 
 	reactionFiremode[actor_idx][RF_HAND] = handidx;	/* Store the given hand. */
 	reactionFiremode[actor_idx][RF_FM] = fd_idx;	/* Store the given firemode for this hand. */
-	MSG_Write_PA(PA_REACT_SELECT, le->entnum, handidx, fd_idx); /* Send hand and firemode to server-side storage as well. See g_local.h for more. */
+	MSG_Write_PA(PA_REACT_SELECT, le->entnum, handidx, fd_idx); /* Send hand and firemode to server-side storage as well. See g_local.h for moR_ */
 	reactionFiremode[actor_idx][RF_WPIDX] = obj_idx;	/* Store the weapon-idx of the object in the hand (for faster access). */
 }
 
@@ -650,7 +650,7 @@ static void CL_GetWeaponAndAmmo (le_t *actor, char hand, objDef_t **weapon, objD
 }
 
 /**
- * @brief Checks if a there is a weapon in the hand that can be used for reaction fire.
+ * @brief Checks if a there is a weapon in the hand that can be used for reaction fiR_
  * @param[in] actor What actor to check.
  * @param[in] hand Which hand to check: 'l' for left hand, 'r' for right hand.
  */
@@ -780,7 +780,7 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 	/* ammo is definitly set here - otherwise the both checks above would have
 	 * left this function already */
 	if (!RS_ItemIsResearched(csi.ods[ammo->weap_idx[weap_fd_idx]].id)) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: Weapon '%s' not researched, can't use for reaction fire.\n", csi.ods[ammo->weap_idx[weap_fd_idx]].id);
+		Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: Weapon '%s' not researched, can't use for reaction fiR_\n", csi.ods[ammo->weap_idx[weap_fd_idx]].id);
 		return;
 	}
 
@@ -1108,7 +1108,7 @@ void CL_FireWeapon_f (void)
 		return;
 
 	/* Let's check if shooting is possible.
-	 * Don't let the selActor->TU parameter irritate you, it is not checked/used here. */
+	 * Don't let the selActor->TU parameter irritate you, it is not checked/used heR_ */
 	if (hand[0] == 'r') {
 		if (!CL_CheckMenuAction(selActor->TU, RIGHT(selActor), EV_INV_AMMO))
 			return;
@@ -1458,7 +1458,7 @@ void CL_ActorUpdateCVars (void)
 		Cvar_Set("mn_ap", va("%i", selActor->AP));
 
 		/* animation and weapons */
-		name = re.AnimGetName(&selActor->as, selActor->model1);
+		name = R_AnimGetName(&selActor->as, selActor->model1);
 		if (name)
 			Cvar_Set("mn_anim", name);
 		if (RIGHT(selActor))
@@ -1982,7 +1982,7 @@ static void CL_BuildForbiddenList (void)
 			continue;
 		/* Dead ugv will stop walking, too. */
 		/**
-		 * @note Just a note for the future.
+		 * @note Just a note for the futuR_
 		 * If we get any ugv that does not block the map when dead this is the place to look.
 		 */
 		if ((!(le->state & STATE_DEAD) && le->type == ET_ACTOR) || le->type == ET_ACTOR2x2) {
@@ -2676,20 +2676,20 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 		CL_SetLastMoving(le);
 
 	/* Animate - we have to check if it is right or left weapon usage. */
-	/* @todo: FIXME the left/right info for actors in the enemy team/turn has to come from somewhere. */
+	/* @todo: FIXME the left/right info for actors in the enemy team/turn has to come from somewheR_ */
 	if (HEADGEAR(le) && IS_MODE_FIRE_HEADGEAR(cl.cmode)) {
 		/* No animation for this */
 	} else if (RIGHT(le) && IS_MODE_FIRE_RIGHT(cl.cmode)) {
-		re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
-		re.AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
+		R_AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
+		R_AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
 	} else if (LEFT(le) && IS_MODE_FIRE_LEFT(cl.cmode)) {
-		re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->left, le->right, le->state));
-		re.AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->left, le->right, le->state));
+		R_AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->left, le->right, le->state));
+		R_AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->left, le->right, le->state));
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "CL_ActorDoShoot: No information about weapon hand found or left/right info out of sync somehow.\n");
 		/* We use the default (right) animation now. */
-		re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
-		re.AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
+		R_AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
+		R_AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
 	}
 }
 
@@ -2805,15 +2805,15 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 	} */
 
 	/* Animate - we have to check if it is right or left weapon usage. */
-	/* @todo: FIXME the left/right info for actors in the enemy team/turn has to come from somewhere. */
+	/* @todo: FIXME the left/right info for actors in the enemy team/turn has to come from somewheR_ */
 	if (RIGHT(le) && IS_MODE_FIRE_RIGHT(cl.cmode)) {
-		re.AnimChange(&le->as, le->model1, LE_GetAnim("move", le->right, le->left, le->state));
+		R_AnimChange(&le->as, le->model1, LE_GetAnim("move", le->right, le->left, le->state));
 	} else if (LEFT(le) && IS_MODE_FIRE_LEFT(cl.cmode)) {
-		re.AnimChange(&le->as, le->model1, LE_GetAnim("move", le->left, le->right, le->state));
+		R_AnimChange(&le->as, le->model1, LE_GetAnim("move", le->left, le->right, le->state));
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "CL_ActorStartShoot: No information about weapon hand found or left/right info out of sync somehow.\n");
 		/* We use the default (right) animation now. */
-		re.AnimChange(&le->as, le->model1, LE_GetAnim("move", le->right, le->left, le->state));
+		R_AnimChange(&le->as, le->model1, LE_GetAnim("move", le->right, le->left, le->state));
 	}
 }
 
@@ -2864,8 +2864,8 @@ void CL_ActorDie (struct dbuffer *msg)
 
 	/* play animation */
 	le->think = NULL;
-	re.AnimChange(&le->as, le->model1, va("death%i", le->state & STATE_DEAD));
-	re.AnimAppend(&le->as, le->model1, va("dead%i", le->state & STATE_DEAD));
+	R_AnimChange(&le->as, le->model1, va("death%i", le->state & STATE_DEAD));
+	R_AnimAppend(&le->as, le->model1, va("dead%i", le->state & STATE_DEAD));
 
 	/* Print some info about the death or stun. */
 	if (le->team == cls.team) {
@@ -2966,7 +2966,7 @@ static void CL_ActorMoveMouse (void)
 
 			cl.cmode = M_PEND_MOVE;
 		} else {
-			/* Just move there. */
+			/* Just move theR_ */
 			CL_ActorStartMove(selActor, mousePos);
 		}
 	}

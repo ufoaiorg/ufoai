@@ -62,9 +62,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #	define GL_COLOR_INDEX8_EXT GL_COLOR_INDEX
 #endif
 
-qboolean QR_Init(const char *dllname);
-void QR_Shutdown(void);
-
 #ifndef APIENTRY
 #  define APIENTRY
 #endif
@@ -467,49 +464,8 @@ extern void (APIENTRY * qglActiveStencilFaceEXT) (GLenum face);
 extern void (APIENTRY * qglStencilOpSeparateATI) (GLenum face, GLenum sfail, GLenum dpfail, GLenum dppass);
 extern void (APIENTRY * qglStencilFuncSeparateATI) (GLenum frontfunc, GLenum backfunc, GLint red, GLuint mask);
 
-
-#ifdef _WIN32
-extern int (WINAPI * qwglChoosePixelFormat) (HDC, CONST PIXELFORMATDESCRIPTOR *);
-extern int (WINAPI * qwglDescribePixelFormat) (HDC, int, UINT, LPPIXELFORMATDESCRIPTOR);
-extern int (WINAPI * qwglGetPixelFormat) (HDC);
-extern BOOL(WINAPI * qwglSetPixelFormat) (HDC, int, CONST PIXELFORMATDESCRIPTOR *);
-extern BOOL(WINAPI * qwglSwapBuffers) (HDC);
-extern BOOL(WINAPI * qwglCopyContext) (HGLRC, HGLRC, UINT);
-extern HGLRC(WINAPI * qwglCreateContext) (HDC);
-extern HGLRC(WINAPI * qwglCreateLayerContext) (HDC, int);
-extern BOOL(WINAPI * qwglDeleteContext) (HGLRC);
-extern HGLRC(WINAPI * qwglGetCurrentContext) (VOID);
-extern HDC(WINAPI * qwglGetCurrentDC) (VOID);
-extern PROC(WINAPI * qwglGetProcAddress) (LPCSTR);
-extern BOOL(WINAPI * qwglMakeCurrent) (HDC, HGLRC);
-extern BOOL(WINAPI * qwglShareLists) (HGLRC, HGLRC);
-extern int (WINAPI * qwglSetLayerPaletteEntries) (HDC, int, int, int, CONST COLORREF *);
-extern int (WINAPI * qwglGetLayerPaletteEntries) (HDC, int, int, int, COLORREF *);
-extern BOOL(WINAPI * qwglRealizeLayerPalette) (HDC, int, BOOL);
-extern BOOL(WINAPI * qwglSwapIntervalEXT) (int interval);
-#endif
-
-#if defined (__linux__) || defined (__FreeBSD__) || defined (__NetBSD__)
-/* local function in dll */
-extern void *qwglGetProcAddress(const char *symbol);
-/*GLX Functions */
-extern XVisualInfo *(*qglXChooseVisual) (Display * dpy, int screen, int *attribList);
-extern GLXContext(*qglXCreateContext) (Display * dpy, XVisualInfo * vis, GLXContext shareList, Bool direct);
-extern void (*qglXDestroyContext) (Display * dpy, GLXContext ctx);
-extern Bool(*qglXMakeCurrent) (Display * dpy, GLXDrawable drawable, GLXContext ctx);
-extern void (*qglXCopyContext) (Display * dpy, GLXContext src, GLXContext dst, GLuint mask);
-extern void (*qglXSwapBuffers) (Display * dpy, GLXDrawable drawable);
-extern int (*qglXGetConfig) (Display * dpy, XVisualInfo * vis, int attrib, int *value);
-/* 3dfxSetPaletteEXT shunt */
-/*void Fake_glColorTableEXT( GLenum target, GLenum internalformat,
-                             GLsizei width, GLenum format, GLenum type,
-                             const GLvoid *table );*/
-#endif							/* linux */
-
-#if defined (__APPLE__) || defined (MACOSX)
-extern void ( APIENTRY * qglPNTrianglesiATIX) (GLenum pname, GLint param);
-extern void ( APIENTRY * qglPNTrianglesfATIX) (GLenum pname, GLfloat param);
-#endif
+/* vsync */
+extern void (APIENTRY *qglSwapInterval) (GLint interval);
 
 /* extension constants */
 

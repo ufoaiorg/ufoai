@@ -121,6 +121,6 @@ typedef	struct	mAliasModel_s {
 	mAliasNeighbors_t *neighbors;
 } mAliasModel_t;
 
-void Mod_BuildTriangleNeighbors(mAliasNeighbors_t *neighbors, dtriangle_t *tris, int numtris);
-int Mod_FindTriangleWithEdge(mAliasNeighbors_t *neighbors, dtriangle_t *tris, int numtris, int triIndex, int edgeIndex);
-void Mod_LoadAnims(mAliasModel_t * mod, void *buffer);
+void R_ModBuildTriangleNeighbors(mAliasNeighbors_t *neighbors, dtriangle_t *tris, int numtris);
+int R_ModFindTriangleWithEdge(mAliasNeighbors_t *neighbors, dtriangle_t *tris, int numtris, int triIndex, int edgeIndex);
+void R_ModLoadAnims(mAliasModel_t * mod, void *buffer);

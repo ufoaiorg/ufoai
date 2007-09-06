@@ -1594,7 +1594,7 @@ void B_DrawBase (menuNode_t * node)
 			}
 
 			if (*image)
-				re.DrawNormPic(x, y, width, height, 0, 0, 0, 0, 0, qfalse, image);
+				R_DrawNormPic(x, y, width, height, 0, 0, 0, 0, 0, qfalse, image);
 
 			/* check for hovering building name or outline border */
 			if (mouseX > x && mouseX < x + width && mouseY > y && mouseY < y + height - 20) {
@@ -1639,7 +1639,7 @@ void B_DrawBase (menuNode_t * node)
 					break;
 				case B_STATUS_UNDER_CONSTRUCTION:
 					time = building->buildTime - (ccs.date.day - building->timeStart);
-					re.FontDrawString("f_small", 0, x + 10, y + 10, x + 10, y + 10, node->size[0], 0, node->texh[0], va(ngettext("%i day left", "%i days left", time), time), 0, 0, NULL, qfalse);
+					R_FontDrawString("f_small", 0, x + 10, y + 10, x + 10, y + 10, node->size[0], 0, node->texh[0], va(ngettext("%i day left", "%i days left", time), time), 0, 0, NULL, qfalse);
 					break;
 				default:
 					break;
@@ -1648,17 +1648,17 @@ void B_DrawBase (menuNode_t * node)
 		}
 	}
 	if (hoverBuilding) {
-		re.DrawColor(color);
-		re.FontDrawString("f_small", 0, mouseX + 3, mouseY, mouseX + 3, mouseY, node->size[0], 0, node->texh[0], _(hoverBuilding->name), 0, 0, NULL, qfalse);
-		re.DrawColor(NULL);
+		R_DrawColor(color);
+		R_FontDrawString("f_small", 0, mouseX + 3, mouseY, mouseX + 3, mouseY, node->size[0], 0, node->texh[0], _(hoverBuilding->name), 0, 0, NULL, qfalse);
+		R_DrawColor(NULL);
 	}
 	if (xHover != -1) {
 		if (widthHover == 1) {
 			Q_strncpyz(image, "base/hover", sizeof(image));
-			re.DrawNormPic(xHover, yHover, width, height, 0, 0, 0, 0, 0, qfalse, image);
+			R_DrawNormPic(xHover, yHover, width, height, 0, 0, 0, 0, 0, qfalse, image);
 		} else {
 			Com_sprintf(image, sizeof(image), "base/hover%i", widthHover);
-			re.DrawNormPic(xHover, yHover, width * widthHover, height, 0, 0, 0, 0, 0, qfalse, image);
+			R_DrawNormPic(xHover, yHover, width * widthHover, height, 0, 0, 0, 0, 0, qfalse, image);
 		}
 	}
 }
