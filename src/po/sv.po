@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-09-03 20:06+0200\n"
-"PO-Revision-Date: 2007-09-04 17:17+0100\n"
+"PO-Revision-Date: 2007-09-06 14:43+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -1247,7 +1247,7 @@ msgstr "Bygg åtminstone en hangar"
 #: ../base/ufos/research.ufo:101
 #: client/cl_map.c:328
 msgid "Aircraft"
-msgstr "Flygplan"
+msgstr "Farkost"
 
 #: ../base/ufos/menu_bases.ufo:164
 msgid "Buy/Sell equipment"
@@ -1835,9 +1835,8 @@ msgid "Sell craftitem"
 msgstr "Sälj objekt"
 
 #: ../base/ufos/menu_buy.ufo:2252
-#, fuzzy
 msgid "No power supplies in this base."
-msgstr "Ingen lagerbyggnad i den här basen\n"
+msgstr "Ingen strömförsörjning i den här basen.\n"
 
 #: ../base/ufos/menu_buy.ufo:2254
 msgid "No hangars in this base."
@@ -2123,7 +2122,7 @@ msgstr "Hastighet:"
 #: ../base/ufos/menu_team.ufo:873
 #: ../base/ufos/menu_team.ufo:1563
 msgid "Accuracy:"
-msgstr "Träffsäkerhet:"
+msgstr "Precision:"
 
 #: ../base/ufos/menu_hire.ufo:493
 #: ../base/ufos/menu_hospital.ufo:420
@@ -2385,7 +2384,7 @@ msgstr "Radar"
 #: ../base/ufos/menu_inventory.ufo:66
 #: ../base/ufos/menu_team.ufo:1084
 msgid "Holster"
-msgstr "Hulster"
+msgstr "Hölster"
 
 #: ../base/ufos/menu_inventory.ufo:75
 #: ../base/ufos/menu_team.ufo:1093
@@ -2406,9 +2405,8 @@ msgid "Users"
 msgstr "Användare"
 
 #: ../base/ufos/menu_lostwon.ufo:68
-#, fuzzy
 msgid "No UFO hangars or no power supply."
-msgstr "Inga UFO-hangarer eller bärgningsprocess för UFO är färdig"
+msgstr "Inga UFO-hangarer eller ingen strömförsörjning."
 
 #: ../base/ufos/menu_lostwon.ufo:69
 msgid "No nation with accepted level of alien infiltration."
@@ -3236,7 +3234,7 @@ msgstr "Långsam"
 
 #: ../base/ufos/menu_ptleditor.ufo:93
 msgid "Currently loaded:"
-msgstr ""
+msgstr "Aktuell laddning:"
 
 #: ../base/ufos/menu_research.ufo:433
 #: ../base/ufos/menu_research.ufo:455
@@ -9946,7 +9944,7 @@ msgstr "Krypskyttegevär"
 
 #: ../base/ufos/weapons_human.ufo:331
 msgid "Sniper Rifle Magazine"
-msgstr "Magasin till prickskyttegevär"
+msgstr "Magasin till krypskyttegevär"
 
 #: ../base/ufos/weapons_human.ufo:366
 #: ../base/ufos/weapons_human.ufo:484
@@ -10485,6 +10483,9 @@ msgid ""
 "\n"
 "Aircrafts cannot start.\n"
 msgstr ""
+"Ingen kommandocentral är operationell i basen.\n"
+"\n"
+"Farkoster kan inte starta.\n"
 
 #: client/cl_aircraft.c:249
 #: client/cl_aircraft.c:262
@@ -10646,7 +10647,7 @@ msgstr "Jagar"
 
 #: client/cl_airfight.c:446
 msgid "UFO interception successful -- UFO lost to sea."
-msgstr ""
+msgstr "UFO-jakt lyckades -- UFO:t förlorat till havs."
 
 #: client/cl_airfight.c:465
 #: client/cl_campaign.c:2828
@@ -10860,7 +10861,7 @@ msgstr "Kan inte bygga en bas på den här platsen"
 #: client/cl_campaign.c:569
 #: client/cl_campaign.c:612
 msgid "UFO interception successful -- UFO lost."
-msgstr ""
+msgstr "UFO-jakt lyckades -- UFO:t förlorat."
 
 #: client/cl_campaign.c:587
 #: client/cl_campaign.c:2157
@@ -10874,7 +10875,7 @@ msgstr "Ingen nation"
 
 #: client/cl_campaign.c:608
 msgid "UFO interception successful -- New mission available."
-msgstr ""
+msgstr "UFO-jakt lyckades -- Nytt uppdrag tillgängligt."
 
 #: client/cl_campaign.c:788
 #, c-format
@@ -11814,6 +11815,8 @@ msgid ""
 "No power supplies in this base.\n"
 "Hangars are not functional."
 msgstr ""
+"Ingen strömförsörjning i den här basen.\n"
+"Hangarerna är inte funktionella."
 
 #: client/cl_market.c:629
 msgid "Build a hangar first."
@@ -11945,7 +11948,7 @@ msgstr ""
 
 #: client/cl_popup.c:293
 msgid "No craft available, or no weapons loaded on available craft."
-msgstr ""
+msgstr "Ingen farkost är tillgänglig eller inga vapen laddade på tillgänglig farkost."
 
 #: client/cl_popup.c:338
 msgid ""
@@ -12587,11 +12590,12 @@ msgstr ""
 "i utomjordisk förvaring.\n"
 
 #: client/cl_transfer.c:190
-#, fuzzy
 msgid ""
 "Destination base does not have hangars ready.\n"
 "Provide power supplies.\n"
-msgstr "Du har inte tillräckligt utrymme i utomjordisk förvaring. Några utomjordingar dog."
+msgstr ""
+"Destinationsbasen har inga hangarer färdiga.\n"
+"Tillhandahåll strömförsörjning.\n"
 
 #: client/cl_transfer.c:190
 #: client/cl_transfer.c:193
@@ -12612,11 +12616,12 @@ msgid "Destination base does not have any hangar."
 msgstr "Destinationsbasen saknar hangarer."
 
 #: client/cl_transfer.c:201
-#, fuzzy
 msgid ""
 "Destination base does not have enough space\n"
 "in hangars.\n"
-msgstr "Du har inte tillräckligt utrymme i utomjordisk förvaring. Några utomjordingar dog."
+msgstr ""
+"Destinationsbasen har inte tillräckligt mycket\n"
+"utrymme i hangarerna.\n"
 
 #: client/cl_transfer.c:235
 #: client/cl_transfer.c:264
@@ -12663,9 +12668,8 @@ msgid "Transfer is not possible - the base doesn't have a Storage."
 msgstr "Överföring är inte möjlig - basen saknar en lagerbyggnad."
 
 #: client/cl_transfer.c:361
-#, fuzzy
 msgid "Transfer is not possible - the base does not have power supplies."
-msgstr "Överföring är inte möjlig - basen har inget laboratorium"
+msgstr "Överföring är inte möjlig - basen har ingen strömförsörjning."
 
 #: client/cl_transfer.c:394
 msgid "Living Quarters empty.\n"
@@ -12705,7 +12709,7 @@ msgstr "Överföring är inte möjlig - basen saknar utomjordisk förvaring."
 
 #: client/cl_transfer.c:429
 msgid "Transfer is not possible - the base has not power supplies."
-msgstr ""
+msgstr "Överföringen är inte möjlig - basen har ingen strömförsörjning."
 
 #: client/cl_transfer.c:447
 msgid "No aircrafts available for transfer.\n"
@@ -12775,9 +12779,8 @@ msgstr "Ingen lagerbyggnad i den här basen.\n"
 #: client/cl_transfer.c:925
 #: client/cl_transfer.c:933
 #: client/cl_transfer.c:943
-#, fuzzy
 msgid "No power supplies in this base.\n"
-msgstr "Ingen lagerbyggnad i den här basen\n"
+msgstr "Ingen strömförsörjning i den här basen.\n"
 
 #: client/cl_transfer.c:915
 msgid "You can transfer employees - this base has Living Quarters.\n"
@@ -12833,7 +12836,7 @@ msgstr "Närstrid"
 
 #: client/cl_ufopedia.c:155
 msgid "Assault"
-msgstr ""
+msgstr "Angrepp"
 
 #: client/cl_ufopedia.c:158
 msgid "Sniper"
@@ -12863,7 +12866,7 @@ msgstr "Farkosten är inte här"
 
 #: client/cl_ufopedia.c:191
 msgid "Accuracy"
-msgstr "Träffsäkerhet"
+msgstr "Precision"
 
 #: client/cl_ufopedia.c:194
 msgid "Fuel size"
