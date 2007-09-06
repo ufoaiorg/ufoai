@@ -29,7 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /*#include <SDL_opengl.h>*/
 
-qboolean have_stencil = qfalse;
 cvar_t *sdl_debug;
 static SDL_Surface *surface;
 
@@ -479,35 +478,11 @@ qboolean Rimp_InitGraphics (qboolean fullscreen)
 {
 	int flags;
 	int stencil_bits;
-#ifndef __APPLE__
-#ifndef _WIN32
-	int width = 0;
-	int height = 0;
-#endif
-#endif
 
 #ifndef __APPLE__
 	SDL_SysWMinfo info;
 	SDL_VERSION(&info.version);
 	Com_Printf("SDL version: %i.%i.%i\n", info.version.major, info.version.minor, info.version.patch);
-	have_stencil = qfalse;
-#endif
-
-#ifndef __APPLE__
-#ifndef _WIN32
-	/* turn off DGA mouse support: leaving it makes cursor _slow_ in fullscreen under X11 at least */
-	setenv("SDL_VIDEO_X11_DGAMOUSE", "0", 1);
-
-	if (SDL_GetWMInfo(&info) > 0 ) {
-		if (info.subsystem == SDL_SYSWM_X11) {
-			info.info.x11.lock_func();
-			width = DisplayWidth(info.info.x11.display, DefaultScreen(info.info.x11.display));
-			height = DisplayHeight(info.info.x11.display, DefaultScreen(info.info.x11.display));
-			info.info.x11.unlock_func();
-			Com_Printf("Desktop resolution: %i:%i\n", width, height);
-		}
-	}
-#endif
 #endif
 
 	/* Just toggle fullscreen if that's all that has been changed */
@@ -520,10 +495,6 @@ qboolean Rimp_InitGraphics (qboolean fullscreen)
 		if (fullscreen == isfullscreen)
 			return qtrue;
 	}
-
-#ifndef _WIN32
-	srandom(getpid());
-#endif
 
 	/* free resources in use */
 	if (surface)
@@ -556,12 +527,8 @@ qboolean Rimp_InitGraphics (qboolean fullscreen)
 
 	SDL_ShowCursor(SDL_DISABLE);
 
-	if (!SDL_GL_GetAttribute(SDL_GL_STENCIL_SIZE, &stencil_bits)) {
+	if (!SDL_GL_GetAttribute(SDL_GL_STENCIL_SIZE, &stencil_bits))
 		Com_Printf("I: got %d bits of stencil\n", stencil_bits);
-		if (stencil_bits >= 1) {
-			have_stencil = qtrue;
-		}
-	}
 
 	return qtrue;
 }
