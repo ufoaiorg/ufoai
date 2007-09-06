@@ -93,7 +93,7 @@ qboolean VID_GetModeInfo (int *width, int *height, int mode)
 /**
  * @brief Perform a renderer restart
  */
-static void VID_Restart_f (void)
+void VID_Restart_f (void)
 {
 	R_SetMode();
 

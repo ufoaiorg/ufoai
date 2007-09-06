@@ -94,6 +94,8 @@ void VID_FreeTags(struct memPool_s *pool, int tagNum);
 void VID_MemFree(void *ptr);
 int VID_GetModeNums(void);
 
+void VID_Restart_f(void);
+
 void CL_WriteAVIVideoFrame(const byte * imageBuffer, size_t size);
 
 qboolean VID_GetModeInfo(int *width, int *height, int mode);

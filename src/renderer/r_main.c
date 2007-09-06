@@ -1144,8 +1144,12 @@ void R_Shutdown (void)
 void R_BeginFrame (void)
 {
 	/* change modes if necessary */
-	if (r_mode->modified || vid_fullscreen->modified || r_ext_texture_compression->modified)
+	if (r_mode->modified || vid_fullscreen->modified || r_ext_texture_compression->modified) {
 		R_SetMode();
+#ifdef _WIN32
+		VID_Restart_f();
+#endif
+	}
 
 	if (r_anisotropic->modified) {
 		if (r_anisotropic->integer > r_ext_max_anisotropy->integer) {
