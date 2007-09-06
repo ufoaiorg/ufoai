@@ -5,7 +5,7 @@ installer: wininstaller linuxinstaller sourcearchive mappack
 mappack:
 	$(MAKE) maps
 	tar -cvjp --exclude-from=src/ports/linux/tar.ex -f ufoai-$(VERSION)-mappack.tar.bz2 ./base/maps
-	scp ufoai-$(VERSION)-mappack.tar.bz2 ufo:~/public_html/download
+	scp ufoai-$(VERSION)-mappack.tar.bz2 ufo:~/public_html/download &
 
 wininstaller:
 	$(MAKE) lang
@@ -13,8 +13,8 @@ wininstaller:
 	cd base; ./archives.sh
 	makensis src/ports/windows/installer.nsi
 	md5sum src/ports/windows/ufoai-$(VERSION)-win32.exe > src/ports/windows/ufoai-$(VERSION)-win32.md5
-	scp src/ports/windows/ufoai-$(VERSION)-win32.exe src/ports/windows/ufoai-$(VERSION)-win32.md5 ufo:~/public_html/download
-	scp src/ports/windows/ufoai-$(VERSION)-win32.exe src/ports/windows/ufoai-$(VERSION)-win32.md5 mirror:~/public_html
+	scp src/ports/windows/ufoai-$(VERSION)-win32.exe src/ports/windows/ufoai-$(VERSION)-win32.md5 ufo:~/public_html/download &
+	scp src/ports/windows/ufoai-$(VERSION)-win32.exe src/ports/windows/ufoai-$(VERSION)-win32.md5 mirror:~/public_html &
 
 linuxarchive:
 	tar -cvjp --exclude-from=src/ports/linux/tar.ex -f ufoai-$(VERSION)-linux.tar.bz2 ./
@@ -24,8 +24,8 @@ linuxinstaller:
 	$(MAKE) maps
 	cd base; ./archives.sh
 	cd src/ports/linux/installer; $(MAKE)
-	scp src/ports/linux/installer/ufoai-$(VERSION)-linux.run ufo:~/public_html/download
-	scp src/ports/linux/installer/ufoai-$(VERSION)-linux.run mirror:~/public_html
+	scp src/ports/linux/installer/ufoai-$(VERSION)-linux.run ufo:~/public_html/download &
+	scp src/ports/linux/installer/ufoai-$(VERSION)-linux.run mirror:~/public_html &
 
 #
 # Generate a tar archive of the sources.
@@ -48,13 +48,4 @@ sourcearchive:
 	mv ./tarsrc/ufoai-$(VERSION)-source.tar.bz2 ./
 	rm -rf ./tarsrc
 
-# this done by base/archives.sh
-#packfiles:
-#	cd base; zip -r 0textures.zip textures -x \*.svn\*
-#	cd base; zip -r 0sounds.zip sound -x \*.svn\*
-#	cd base; zip -r 0pics.zip pics -x \*.svn\*
-#	cd base; zip -r 0music.zip music -x \*.svn\*
-#	cd base; zip -r 0maps.zip maps -x \*.svn\*
-#	cd base; zip -r 0models.zip models -x \*.svn\*
-#	cd base; zip -r 0ufos.zip ufos -x \*.svn\*
 

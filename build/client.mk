@@ -74,6 +74,32 @@ CLIENT_SRCS = \
 	\
 	game/q_shared.c \
 	game/inv_shared.c \
+	\
+	renderer/r_anim.c \
+	renderer/r_shader.c \
+	renderer/r_draw.c \
+	renderer/r_font.c \
+	renderer/r_image.c \
+	renderer/r_light.c \
+	renderer/r_mesh.c \
+	renderer/r_mesh_md2.c \
+	renderer/r_mesh_md3.c \
+	renderer/r_model.c \
+	renderer/r_model_alias.c \
+	renderer/r_model_brush.c \
+	renderer/r_model_md2.c \
+	renderer/r_model_md3.c \
+	renderer/r_model_obj.c \
+	renderer/r_model_sp2.c \
+	renderer/r_main.c \
+	renderer/r_misc.c \
+	renderer/r_surf.c \
+	renderer/r_state.c \
+	renderer/r_warp.c \
+	renderer/r_particle.c \
+	renderer/r_shadows.c \
+	renderer/qgl.c \
+	\
 	shared/byte.c \
 	shared/infostring.c \
 	shared/shared.c
@@ -87,6 +113,8 @@ endif
 ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux-gnu),)
 	CLIENT_SRCS+= \
 		ports/linux/linux_main.c \
+		ports/unix/unix_ref_sdl.c \
+		ports/unix/unix_qgl.c \
 		ports/unix/unix_input.c \
 		ports/unix/unix_vid.c \
 		ports/unix/unix_console.c \
@@ -101,6 +129,8 @@ endif
 
 ifeq ($(TARGET_OS),mingw32)
 	CLIENT_SRCS+=\
+		ports/unix/unix_ref_sdl.c \
+		ports/windows/win_qgl.c \
 		ports/windows/win_shared.c \
 		ports/windows/win_vid.c \
 		ports/windows/win_input.c \
@@ -117,6 +147,8 @@ ifeq ($(TARGET_OS),darwin)
 	CLIENT_SRCS+= \
 		ports/macosx/osx_main.m \
 		ports/macosx/osx_qal.c \
+		ports/unix/unix_ref_sdl.c \
+		ports/unix/unix_qgl.c \
 		ports/unix/unix_input.c \
 		ports/unix/unix_vid.c \
 		ports/unix/unix_glob.c \
@@ -127,6 +159,8 @@ endif
 ifeq ($(TARGET_OS),solaris)
 	CLIENT_SRCS+= \
 		ports/solaris/solaris_main.c \
+		ports/unix/unix_ref_sdl.c \
+		ports/unix/unix_qgl.c \
 		ports/unix/unix_input.c \
 		ports/unix/unix_vid.c \
 		ports/unix/unix_console.c \
@@ -142,9 +176,7 @@ ifeq ($(HAVE_CURL),1)
 	CLIENT_CFLAGS+=-DHAVE_CURL
 endif
 
-ifeq ($(HAVE_SDL),1)
-	CLIENT_LIBS+=$(SDL_LIBS)
-endif
+CLIENT_LIBS+=$(SDL_LIBS) $(REF_SDL_LIBS)
 
 CLIENT_OBJS= \
 	$(patsubst %.c, $(BUILDDIR)/client/%.o, $(filter %.c, $(CLIENT_SRCS))) \
