@@ -50,9 +50,7 @@ static int keyq_tail = 0;
 /* MOUSE                                                                     */
 /*****************************************************************************/
 
-#define MOUSE_MAX 3000
-#define MOUSE_MIN 40
-qboolean mouse_active;
+static qboolean mouse_active;
 int mx, my;
 
 /* this is inside the renderer shared lib, so these are called from vid_so */

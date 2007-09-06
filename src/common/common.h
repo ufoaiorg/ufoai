@@ -349,7 +349,6 @@ game_export_t *Sys_GetGameAPI(game_import_t * parms);
 
 char *Sys_ConsoleInput(void);
 void Sys_ConsoleOutput(const char *string);
-void Sys_SendKeyEvents(void);
 void Sys_Error(const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
 void Sys_Quit(void);
 char *Sys_GetClipboardData(void);

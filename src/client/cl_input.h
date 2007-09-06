@@ -31,15 +31,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void IN_Init(void);
 void IN_Shutdown(void);
-/* oportunity for devices to stick commands on the script buffer */
 void IN_Frame(void);
 void IN_GetMousePos(int *mx, int *my);
 /* add additional movement on top of the keyboard move cmd */
 void IN_Activate(qboolean active);
-
-
-#define MOUSE_MAX 3000
-#define MOUSE_MIN 40
+void IN_SendKeyEvents(void);
 
 extern unsigned sys_frame_time;
 

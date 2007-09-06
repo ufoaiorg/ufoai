@@ -45,7 +45,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 
-extern unsigned sys_frame_time;
 extern pos3_t mousePendPos;
 extern mouseRepeat_t mouseRepeat;
 
@@ -1355,7 +1354,7 @@ void IN_GetMousePos (int *x, int *y)
 /**
  * @brief
  */
-void Sys_SendKeyEvents (void)
+void IN_SendKeyEvents (void)
 {
 #ifndef DEDICATED_ONLY
 	KBD_Update();

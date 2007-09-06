@@ -310,7 +310,7 @@ void CL_RegisterSounds (void)
 				if (csi.ods[i].fd[j][k].impactSound[0])
 					S_RegisterSound(csi.ods[i].fd[j][k].impactSound);
 				/* pump message loop */
-				Sys_SendKeyEvents();
+				IN_SendKeyEvents();
 			}
 		}
 	}

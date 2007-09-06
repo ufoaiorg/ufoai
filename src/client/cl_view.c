@@ -434,7 +434,7 @@ void CL_PrepRefresh (void)
 				_("loading %s"), (strlen(name) > 40) ? &name[strlen(name) - 40] : name);
 		}
 		SCR_UpdateScreen();
-		Sys_SendKeyEvents();	/* pump message loop */
+		IN_SendKeyEvents();	/* pump message loop */
 		cl.model_draw[i] = R_RegisterModelShort(cl.configstrings[CS_MODELS + i]);
 		if (name[0] == '*')
 			cl.model_clip[i] = CM_InlineModel(cl.configstrings[CS_MODELS + i]);

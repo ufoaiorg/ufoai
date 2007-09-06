@@ -2239,7 +2239,7 @@ static void CL_SendCmd (void)
 static void CL_SendCommand (void)
 {
 	/* get new key events */
-	Sys_SendKeyEvents();
+	IN_SendKeyEvents();
 
 	/* process console commands */
 	Cbuf_Execute();
