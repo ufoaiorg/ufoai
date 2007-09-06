@@ -1103,7 +1103,6 @@ void R_Restart (void)
 
 	R_ShutdownImages();
 
-	R_InitImages();
 	R_InitMiscTexture();
 	R_DrawInitLocal();
 }
