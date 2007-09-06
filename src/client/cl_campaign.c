@@ -1147,8 +1147,7 @@ static void CP_CheckEvents (void)
 			case MIS_TERRORATTACK:
 				/* Normal ground mission. */
 				CL_HandleNationData(qtrue, 0, mis->def->civilians, mis->def->aliens, 0, mis);
-				Q_strncpyz(messageBuffer, va("The mission %s expired ", mis->def->name), MAX_MESSAGE_TEXT);
-				Q_strcat(messageBuffer, va(ngettext("and %i civilian died.", "and %i civilians died.", mis->def->civilians), mis->def->civilians), MAX_MESSAGE_TEXT);
+				Q_strncpyz(messageBuffer, va(ngettext("The mission %s expired and %i civilian died.", "The mission %s expired and %i civilians died.", mis->def->civilians), mis->def->name, mis->def->civilians), MAX_MESSAGE_TEXT);
 				MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 				break;
 			default:
