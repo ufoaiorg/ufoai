@@ -2189,16 +2189,17 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 		if (j >= numStageSets)
 			Com_Printf("......warning: Stage set '%s' not found\n", name);
 
+		/* get mission definition */
+		name = MSG_ReadString(sb);
+
+		misType = MSG_ReadByte(sb);
+
 		/* ignore incomplete info */
 		if (!mis->cause) {
 			Com_Printf("......warning: Incomplete mission info for mission type %i (name: %s)\n", misType, name);
 			return qfalse;
 		}
 
-		/* get mission definition */
-		name = MSG_ReadString(sb);
-
-		misType = MSG_ReadByte(sb);
 		for (j = 0; j < numMissions; j++)
 			if (!Q_strncmp(name, missions[j].name, MAX_VAR)) {
 				mis->def = &missions[j];
