@@ -611,7 +611,7 @@ aircraft_t *AIR_GetAircraft (const char *name)
 /**
  * @brief Places a new aircraft in the given base.
  * @param[in] base Pointer to base where aircraft should be added.
- * @param[in] name Type of the aircraft to add.
+ * @param[in] name Id of aircraft to add (aircraft->id).
  * @sa B_Load
  */
 void AIR_NewAircraft (base_t *base, const char *name)

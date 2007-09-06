@@ -411,8 +411,8 @@ static void PR_QueueNext (int base)
 void PR_ProductionRun (void)
 {
 	int i;
-	objDef_t *od;
-	aircraft_t *aircraft;
+	objDef_t *od = NULL;
+	aircraft_t *aircraft = NULL;
 	production_t *prod;
 	aircraft_t *ufocraft;
 
@@ -447,7 +447,9 @@ void PR_ProductionRun (void)
 				/* Not enough money to produce more items in this base. */
 				if (aircraft->price * PRODUCE_FACTOR/PRODUCE_DIVISOR > ccs.credits)
 					continue;
-				/* todo: check whether there is hangar space left */
+				/* Not enough free space in hangars for this aircraft. */
+				if (AIR_CalculateHangarStorage(prod->objID, &gd.bases[i], 0) <= 0)
+					continue;
 			}
 		} else {		/* This is disassembling. */
 			if (gd.bases[i].capacities[CAP_ITEMS].max - gd.bases[i].capacities[CAP_ITEMS].cur <
@@ -477,10 +479,10 @@ void PR_ProductionRun (void)
 					}
 				} else {
 					CL_UpdateCredits(ccs.credits - (aircraft->price * PRODUCE_FACTOR / PRODUCE_DIVISOR));
-					/* todo: prod->timeLeft = */
+					prod->timeLeft = PR_CalculateProductionTime(&gd.bases[i], aircraft->tech, NULL, qfalse);
 					prod->amount--;
-					/* Now add it to equipment and update capacity. */
-					/* todo: add aircraft */
+					/* Now add new aircraft. */
+					AIR_NewAircraft(&gd.bases[i], aircraft->id);
 					/* queue the next production */
 					if (prod->amount <= 0) {
 						Com_sprintf(messageBuffer, sizeof(messageBuffer), _("The production of %s has finished."),aircraft->name);
