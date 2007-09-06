@@ -33,6 +33,8 @@
 					<Add library="SDL_ttf" />
 					<Add library="z" />
 					<Add library="ws2_32" />
+					<Add library="png" />
+					<Add library="jpeg" />
 					<Add directory="C:\Dev-Cpp\lib" />
 				</Linker>
 			</Target>
@@ -128,78 +130,6 @@
 		</Compiler>
 		<Unit filename="..\..\src\client\anorms.h" />
 		<Unit filename="..\..\src\client\cdaudio.h" />
-		<Unit filename="..\..\src\renderer\r_anim.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\renderer\r_shader.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\renderer\r_draw.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\renderer\r_font.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\renderer\r_image.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\renderer\r_light.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\renderer\r_mesh.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\renderer\r_mesh_md2.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\renderer\r_mesh_md3.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\renderer\r_model.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\renderer\r_model_alias.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\renderer\r_model_brush.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\renderer\r_model_md2.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\renderer\r_model_md3.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\renderer\r_model_obj.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\renderer\r_model_sp2.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\renderer\r_main.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\renderer\r_misc.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\renderer\r_surf.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\renderer\r_state.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\renderer\r_warp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\renderer\r_particle.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\renderer\r_shadows.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\renderer/qgl.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\client\cl_actor.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -459,10 +389,18 @@
 			<Option target="linux" />
 			<Option target="macosx" />
 		</Unit>
+		<Unit filename="..\..\src\ports\unix\unix_input.c">
+			<Option compilerVar="CC" />
+			<Option target="linux" />
+			<Option target="macosx" />
+		</Unit>
 		<Unit filename="..\..\src\ports\unix\unix_main.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 			<Option target="macosx" />
+		</Unit>
+		<Unit filename="..\..\src\ports\unix\unix_vid.c">
+			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\ports\windows\ufo.ico">
 			<Option target="windows" />
@@ -492,10 +430,77 @@
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
-		<Unit filename="..\..\src\ports\windows\win_vid.c">
+		<Unit filename="..\..\src\renderer\qgl.c">
 			<Option compilerVar="CC" />
-			<Option target="windows" />
-			<Option target="windows_debug" />
+		</Unit>
+		<Unit filename="..\..\src\renderer\r_anim.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\renderer\r_draw.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\renderer\r_font.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\renderer\r_image.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\renderer\r_light.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\renderer\r_main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\renderer\r_mesh.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\renderer\r_mesh_md2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\renderer\r_mesh_md3.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\renderer\r_misc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\renderer\r_model.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\renderer\r_model_alias.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\renderer\r_model_brush.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\renderer\r_model_md2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\renderer\r_model_md3.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\renderer\r_model_obj.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\renderer\r_model_sp2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\renderer\r_particle.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\renderer\r_shader.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\renderer\r_shadows.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\renderer\r_state.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\renderer\r_surf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\renderer\r_warp.c">
+			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\server\server.h" />
 		<Unit filename="..\..\src\server\sv_ccmds.c">
