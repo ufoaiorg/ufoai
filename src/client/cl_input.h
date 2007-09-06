@@ -31,7 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void IN_Init(void);
 void IN_Frame(void);
-void IN_GetMousePos(int *mx, int *my);
 void IN_SendKeyEvents(void);
 
 #endif /* CLIENT_INPUT_H */

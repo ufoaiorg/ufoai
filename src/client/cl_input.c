@@ -1696,15 +1696,6 @@ void IN_Init (void)
 /**
  * @brief
  */
-void IN_GetMousePos (int *x, int *y)
-{
-	*x = mousePosX;
-	*y = mousePosY;
-}
-
-/**
- * @brief
- */
 void IN_SendKeyEvents (void)
 {
 	while (keyq_head != keyq_tail) {

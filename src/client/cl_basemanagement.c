@@ -1537,7 +1537,7 @@ void B_ParseBases (const char *name, const char **text)
 void B_DrawBase (menuNode_t * node)
 {
 	int x, y, xHover = -1, yHover = -1, widthHover = 1;
-	int mouseX, mouseY, width, height, row, col, time, colSecond;
+	int width, height, row, col, time, colSecond;
 	static vec4_t color = { 0.5f, 1.0f, 0.5f, 1.0 };
 	char image[MAX_QPATH];
 	building_t *building = NULL, *secondBuilding = NULL, *hoverBuilding = NULL;
@@ -1547,8 +1547,6 @@ void B_DrawBase (menuNode_t * node)
 
 	width = node->size[0] / BASE_SIZE;
 	height = (node->size[1] + BASE_SIZE * 20) / BASE_SIZE;
-
-	IN_GetMousePos(&mouseX, &mouseY);
 
 	for (row = 0; row < BASE_SIZE; row++) {
 		for (col = 0; col < BASE_SIZE; col++) {
@@ -1597,7 +1595,7 @@ void B_DrawBase (menuNode_t * node)
 				R_DrawNormPic(x, y, width, height, 0, 0, 0, 0, 0, qfalse, image);
 
 			/* check for hovering building name or outline border */
-			if (mouseX > x && mouseX < x + width && mouseY > y && mouseY < y + height - 20) {
+			if (mousePosX > x && mousePosX < x + width && mousePosY > y && mousePosY < y + height - 20) {
 				switch (baseCurrent->map[row][col]) {
 				case BASE_FREESLOT:
 					if (gd.baseAction == BA_NEWBUILDING && xHover == -1) {
@@ -1649,7 +1647,7 @@ void B_DrawBase (menuNode_t * node)
 	}
 	if (hoverBuilding) {
 		R_DrawColor(color);
-		R_FontDrawString("f_small", 0, mouseX + 3, mouseY, mouseX + 3, mouseY, node->size[0], 0, node->texh[0], _(hoverBuilding->name), 0, 0, NULL, qfalse);
+		R_FontDrawString("f_small", 0, mousePosX + 3, mousePosY, mousePosX + 3, mousePosY, node->size[0], 0, node->texh[0], _(hoverBuilding->name), 0, 0, NULL, qfalse);
 		R_DrawColor(NULL);
 	}
 	if (xHover != -1) {
