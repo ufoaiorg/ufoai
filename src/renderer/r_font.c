@@ -671,15 +671,6 @@ void R_FontInit (void)
 	memset(fontCache, 0, sizeof(fontCache));
 	memset(hash, 0, sizeof(hash));
 
-	/* try and init SDL VIDEO if not previously initialized */
-	if (SDL_WasInit(SDL_INIT_EVERYTHING) == 0) {
-		if (SDL_Init(SDL_INIT_VIDEO) < 0)
-			Com_Printf("video SDL_Init failed: %s\n", SDL_GetError());
-	} else if (SDL_WasInit(SDL_INIT_VIDEO) == 0) {
-		if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0)
-			Com_Printf("video SDL_InitSubsystem failed: %s\n", SDL_GetError());
-	}
-
 	/* init the truetype font engine */
 	if (TTF_Init() == -1)
 		Sys_Error("...SDL_ttf error: %s\n", TTF_GetError());

@@ -166,7 +166,6 @@ void R_DrawInitLocal (void)
 	if (!draw_chars[1])
 		Com_Printf("Could not find conchars2 image in game pics directory!\n");
 
-	R_FontInit();
 	R_InitGlobeChain();
 	R_DrawSphere();
 }
