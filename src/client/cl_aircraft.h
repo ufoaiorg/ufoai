@@ -125,7 +125,7 @@ typedef struct aircraft_s {
 	char *image;			/**< image on geoscape */
 	char *model;
 	aircraftType_t type;
-	ufoType_t ufotype;			/**< type of UFO (if craft is not UFO - not used) */
+	ufoType_t ufotype;			/**< type of UFO (UFO_MAX if craft is not an UFO) */
 	int status;				/**< see aircraftStatus_t */
 
 	int price;

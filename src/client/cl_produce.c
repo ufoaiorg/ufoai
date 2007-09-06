@@ -604,7 +604,7 @@ static void PR_AircraftInfo (void)
 {
 	aircraft_t *aircraft;
 	static char productionInfo[512];
-	
+
 	if (selectedIndex >= 0) {
 		aircraft = &aircraft_samples[selectedIndex];
 		Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", aircraft->name);
@@ -759,7 +759,7 @@ static void PR_ProductionListClick_f (void)
 						}
 						j++;
 					}
-				}		
+				}
 			}
 		} else {	/* Disassembling. */
 			for (j = 0, i = 0; i < gd.numComponents; i++) {
@@ -847,15 +847,13 @@ static void PR_UpdateProductionList (void)
 	} else {
 		for (i = 0; i < numAircraft_samples; i++) {
 			aircraft = &aircraft_samples[i];
-			/* FIXME: why the list is empty when I uncomment this condition?
-			if (aircraft->ufotype >= 0)
+			if (aircraft->ufotype != UFO_MAX)
 				continue;
-			*/
 			if (!aircraft->tech) {
 				Com_Printf("PR_UpdateProductionList()... no technology for craft %s!\n", aircraft->id);
 				continue;
-			}			
-			Com_Printf("air: %s ufotype: %i tech: %s time: %i\n", aircraft->id, aircraft->ufotype, aircraft->tech->id, aircraft->tech->produceTime);
+			}
+			Com_DPrintf(DEBUG_CLIENT, "air: %s ufotype: %i tech: %s time: %i\n", aircraft->id, aircraft->ufotype, aircraft->tech->id, aircraft->tech->produceTime);
 			if (aircraft->tech->produceTime > 0 && RS_IsResearched_ptr(aircraft->tech)) {
 				Q_strcat(productionList, va("%s\n", aircraft->name), sizeof(productionList));
 				for (j = 0, counter = 0; j < gd.numAircraft; j++) {
@@ -863,10 +861,10 @@ static void PR_UpdateProductionList (void)
 					assert(aircraftbase);
 					if ((aircraftbase->homebase == baseCurrent) && (aircraftbase->idx_sample == i))
 						counter++;
-				}		
+				}
 				Q_strcat(productionAmount, va("%i\n", counter), sizeof(productionAmount));
 				Q_strcat(productionQueued, "\n", sizeof(productionQueued));
-			}			
+			}
 		}
 	}
 	/* bind the menu text to our static char array */
@@ -969,7 +967,7 @@ static void PR_ProductionList_f (void)
 {
 	char tmpbuf[64];
 	int numWorkshops = 0;
-	
+
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: prod_init <type>\n");
 		return;

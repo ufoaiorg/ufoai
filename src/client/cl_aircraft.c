@@ -1122,7 +1122,8 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 		air_samp->idx_sample = numAircraft_samples;
 		air_samp->id = Mem_PoolStrDup(name, cl_genericPool, CL_TAG_NONE);
 		air_samp->status = AIR_HOME;
-		air_samp->ufotype = -1;
+		/* default is no ufo */
+		air_samp->ufotype = UFO_MAX;
 		AII_InitialiseAircraftSlots(air_samp);
 
 		/* TODO: document why do we have two values for this */
