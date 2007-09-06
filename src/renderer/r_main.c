@@ -1087,6 +1087,7 @@ qboolean R_Init (void)
 	R_InitImages();
 	R_InitMiscTexture();
 	R_DrawInitLocal();
+	R_FontInit();
 
 	R_CHECK_ERROR
 
