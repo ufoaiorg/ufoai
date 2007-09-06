@@ -2327,7 +2327,7 @@ void MN_DrawMenus (void)
 					node->state = qfalse;
 				else if (sp > pp) {
 					/* in and out events */
-					mouseOver = MN_CheckNodeZone(node, mx, my);
+					mouseOver = MN_CheckNodeZone(node, mousePosX, mousePosY);
 					if (mouseOver != node->state) {
 						/* maybe we are leaving to another menu */
 						menu->hoverNode = NULL;
@@ -2656,7 +2656,7 @@ void MN_DrawMenus (void)
 						if (mouseSpace != MS_DRAG && node->state && cl_show_tooltips->integer) {
 							/* Find out where the mouse is */
 							itemHover = Com_SearchInInventory(menuInventory,
-								node->mousefx, (mx - node->pos[0]) / C_UNIT, (my - node->pos[1]) / C_UNIT);
+								node->mousefx, (mousePosX - node->pos[0]) / C_UNIT, (mousePosY - node->pos[1]) / C_UNIT);
 						}
 					}
 					break;
@@ -2965,7 +2965,7 @@ void MN_DrawMenus (void)
 	 		 * make sure that we draw this on top of every other node */
 			if (itemHover) {
 				char tooltiptext[MAX_VAR*2] = "";
-				int x = mx, y = my;
+				int x = mousePosX, y = mousePosY;
 				const int itemToolTipWidth = 250;
 				int linenum;
 				int itemToolTipHeight;
@@ -2982,7 +2982,7 @@ void MN_DrawMenus (void)
 				MN_DrawTooltip("f_small", tooltiptext, x, y, itemToolTipWidth, itemToolTipHeight);
 #endif
 			} else {
-				MN_Tooltip(menu, menu->hoverNode, mx, my);
+				MN_Tooltip(menu, menu->hoverNode, mousePosX, mousePosY);
 				menu->hoverNode = NULL;
 			}
 		}

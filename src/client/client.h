@@ -429,7 +429,7 @@ typedef enum {
 } mouseSpace_t;
 
 extern int mouseSpace;
-extern int mx, my;
+extern int mousePosX, mousePosY;
 extern int dragFrom, dragFromX, dragFromY;
 extern item_t dragItem;
 extern float *rotateAngles;

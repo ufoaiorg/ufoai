@@ -438,29 +438,29 @@ static void SCR_DrawCursor (void)
 
 	if (mouseSpace != MS_DRAG) {
 		if (cls.state == ca_active && cls.team != cl.actTeam)
-			R_DrawNormPic(mx, my, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "wait");
+			R_DrawNormPic(mousePosX, mousePosY, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "wait");
 		else
-			R_DrawNormPic(mx, my, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, cursor_pic);
+			R_DrawNormPic(mousePosX, mousePosY, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, cursor_pic);
 
 		if (cls.state == ca_active && mouseSpace == MS_WORLD) {
 			if (selActor) {
 				/* Display 'crouch' icon if actor is crouched. */
 				if (selActor->state & STATE_CROUCHED)
-					R_DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "ducked");
+					R_DrawNormPic(mousePosX + icon_offset_x, mousePosY + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "ducked");
 				icon_offset_y += 16;	/* Height of 'crouched' icon. */
 				icon_offset_y += icon_spacing;
 
 				/* Display 'Reaction shot' icon if actor has it activated. */
 				if (selActor->state & STATE_REACTION_ONCE)
-					R_DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "reactionfire");
+					R_DrawNormPic(mousePosX + icon_offset_x, mousePosY + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "reactionfire");
 				else if (selActor->state & STATE_REACTION_MANY)
-					R_DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "reactionfiremany");
+					R_DrawNormPic(mousePosX + icon_offset_x, mousePosY + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "reactionfiremany");
 				icon_offset_y += 16;	/* Height of 'reaction fire' icon. ... just in case we add further icons below.*/
 				icon_offset_y += icon_spacing;
 
 				/* Display weaponmode (text) heR_ */
 				if (menuText[TEXT_MOUSECURSOR_RIGHT] && cl_show_cursor_tooltips->value)
-					SCR_DrawString(mx + icon_offset_x,my - 16, menuText[TEXT_MOUSECURSOR_RIGHT], qfalse);
+					SCR_DrawString(mousePosX + icon_offset_x, mousePosY - 16, menuText[TEXT_MOUSECURSOR_RIGHT], qfalse);
 			}
 
 			/* playernames */
@@ -469,7 +469,7 @@ static void SCR_DrawCursor (void)
 				R_DrawFill(mx + icon_offset_x - 1, my - 33, 20, 128, 0, cursorBG);
 				R_DrawColor(NULL);
 				*/
-				SCR_DrawString(mx + icon_offset_x, my - 32, menuText[TEXT_MOUSECURSOR_PLAYERNAMES], qfalse);
+				SCR_DrawString(mousePosX + icon_offset_x, mousePosY - 32, menuText[TEXT_MOUSECURSOR_PLAYERNAMES], qfalse);
 				menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = NULL;
 			}
 		}
@@ -478,8 +478,8 @@ static void SCR_DrawCursor (void)
 		vec3_t org;
 		vec4_t color;
 
-		org[0] = mx;
-		org[1] = my;
+		org[0] = mousePosX;
+		org[1] = mousePosY;
 		org[2] = -50;
 		color[0] = color[1] = color[2] = 0.5;
 		color[3] = 1.0;

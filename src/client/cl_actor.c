@@ -3159,8 +3159,8 @@ void CL_ActorMouseTrace (void)
 	le_t *le;
 
 	/* get cursor position as a -1 to +1 range for projection */
-	cur[0] = (mx * viddef.rx - scr_vrect.width * 0.5 - scr_vrect.x) / (scr_vrect.width * 0.5);
-	cur[1] = (my * viddef.ry - scr_vrect.height * 0.5 - scr_vrect.y) / (scr_vrect.height * 0.5);
+	cur[0] = (mousePosX * viddef.rx - scr_vrect.width * 0.5 - scr_vrect.x) / (scr_vrect.width * 0.5);
+	cur[1] = (mousePosY * viddef.ry - scr_vrect.height * 0.5 - scr_vrect.y) / (scr_vrect.height * 0.5);
 
 	/* get trace vectors */
 	if (camera_mode == CAMERA_MODE_FIRSTPERSON) {

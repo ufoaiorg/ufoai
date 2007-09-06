@@ -63,11 +63,11 @@ static int keyq_tail = 0;
 
 static cvar_t *sdl_debug;
 
-static unsigned sys_frame_time;
+static unsigned in_frametime;
 
 int mouseSpace;
-static qboolean mouse_active;
-int mx, my;
+int mousePosX, mousePosY;
+int oldMousePosX, oldMousePosY;
 int dragFrom, dragFromX, dragFromY;
 item_t dragItem = {NONE_AMMO, NONE, NONE}; /* to crash as soon as possible */
 /**
@@ -129,7 +129,7 @@ static void KeyDown (kbutton_t * b)
 	c = Cmd_Argv(2);
 	b->downtime = atoi(c);
 	if (!b->downtime)
-		b->downtime = sys_frame_time - 100;
+		b->downtime = in_frametime - 100;
 
 	/* down + impulse down */
 	b->state |= 1 + 2;
@@ -388,7 +388,7 @@ static void CL_ZoomInQuant_f (void)
 	float quant;
 
 	if (mouseSpace == MS_MENU)
-		MN_MouseWheel(qfalse, mx, my);
+		MN_MouseWheel(qfalse, mousePosX, mousePosY);
 	else {
 		/* no zooming in first person mode */
 		if (camera_mode == CAMERA_MODE_FIRSTPERSON)
@@ -419,7 +419,7 @@ static void CL_ZoomOutQuant_f (void)
 	float quant;
 
 	if (mouseSpace == MS_MENU)
-		MN_MouseWheel(qtrue, mx, my);
+		MN_MouseWheel(qtrue, mousePosX, mousePosY);
 	else {
 		/* no zooming in first person mode */
 		if (camera_mode == CAMERA_MODE_FIRSTPERSON)
@@ -572,7 +572,7 @@ static void CL_RightClickDown_f (void)
 {
 	if (mouseSpace != MS_MENU)
 		return;
-	MN_RightClick(mx, my);
+	MN_RightClick(mousePosX, mousePosY);
 }
 
 /**
@@ -589,7 +589,7 @@ static void CL_RightClickUp_f (void)
 static void CL_MiddleClickDown_f (void)
 {
 	if (mouseSpace == MS_MENU)
-		MN_MiddleClick(mx, my);
+		MN_MiddleClick(mousePosX, mousePosY);
 }
 
 /**
@@ -608,7 +608,7 @@ static void CL_LeftClickDown_f (void)
 	menu_t* menu;
 	switch (mouseSpace) {
 	case MS_MENU:
-		MN_Click(mx, my);
+		MN_Click(mousePosX, mousePosY);
 		break;
 	default:
 		/* we clicked outside the world but not onto a menu */
@@ -743,7 +743,7 @@ static void CL_NextAlienVisibleFromActor_f (void)
 static void CL_LeftClickUp_f (void)
 {
 	if (mouseSpace == MS_DRAG)
-		MN_Click(mx, my);
+		MN_Click(mousePosX, mousePosY);
 	mouseSpace = MS_NULL;
 }
 
@@ -913,10 +913,10 @@ static float CL_GetKeyMouseState (int dir)
 
 	switch (dir) {
 	case STATE_FORWARD:
-		value = (in_shiftup.state & 1) + (my <= SCROLL_BORDER) - (in_shiftdown.state & 1) - (my >= VID_NORM_HEIGHT - SCROLL_BORDER);
+		value = (in_shiftup.state & 1) + (mousePosY <= SCROLL_BORDER) - (in_shiftdown.state & 1) - (mousePosY >= VID_NORM_HEIGHT - SCROLL_BORDER);
 		break;
 	case STATE_RIGHT:
-		value = (in_shiftright.state & 1) + (mx >= VID_NORM_WIDTH - SCROLL_BORDER) - (in_shiftleft.state & 1) - (mx <= SCROLL_BORDER);
+		value = (in_shiftright.state & 1) + (mousePosX >= VID_NORM_WIDTH - SCROLL_BORDER) - (in_shiftleft.state & 1) - (mousePosX <= SCROLL_BORDER);
 		break;
 	case STATE_ZOOM:
 		value = (in_zoomin.state & 1) - (in_zoomout.state & 1);
@@ -1218,18 +1218,13 @@ void CL_CameraRoute (pos3_t from, pos3_t target)
  */
 void CL_ParseInput (void)
 {
-	int i, oldx, oldy;
-
-	/* get new position */
-	oldx = mx;
-	oldy = my;
-	IN_GetMousePos(&mx, &my);
+	int i;
 
 	switch (mouseSpace) {
 	case MS_ROTATE:
 		/* rotate a model */
-		rotateAngles[YAW] -= ROTATE_SPEED * (mx - oldx);
-		rotateAngles[ROLL] += ROTATE_SPEED * (my - oldy);
+		rotateAngles[YAW] -= ROTATE_SPEED * (mousePosX - oldMousePosX);
+		rotateAngles[ROLL] += ROTATE_SPEED * (mousePosY - oldMousePosY);
 		while (rotateAngles[YAW] > 360.0)
 			rotateAngles[YAW] -= 360.0;
 		while (rotateAngles[YAW] < 0.0)
@@ -1243,8 +1238,8 @@ void CL_ParseInput (void)
 
 	case MS_SHIFTMAP:
 		/* shift the map */
-		ccs.center[0] -= (float) (mx - oldx) / (ccs.mapSize[0] * ccs.zoom);
-		ccs.center[1] -= (float) (my - oldy) / (ccs.mapSize[1] * ccs.zoom);
+		ccs.center[0] -= (float) (mousePosX - oldMousePosX) / (ccs.mapSize[0] * ccs.zoom);
+		ccs.center[1] -= (float) (mousePosY - oldMousePosY) / (ccs.mapSize[1] * ccs.zoom);
 		for (i = 0; i < 2; i++) {
 			while (ccs.center[i] < 0.0)
 				ccs.center[i] += 1.0;
@@ -1259,8 +1254,8 @@ void CL_ParseInput (void)
 
 	case MS_SHIFT3DMAP:
 		/* rotate a model */
-		ccs.angles[PITCH] += ROTATE_SPEED3D * (mx - oldx) / ccs.zoom;
-		ccs.angles[YAW] -= ROTATE_SPEED3D * (my - oldy) / ccs.zoom;
+		ccs.angles[PITCH] += ROTATE_SPEED3D * (mousePosX - oldMousePosX) / ccs.zoom;
+		ccs.angles[YAW] -= ROTATE_SPEED3D * (mousePosY - oldMousePosY) / ccs.zoom;
 
 		while (ccs.angles[YAW] > 180.0)
 			ccs.angles[YAW] -= 360.0;
@@ -1275,7 +1270,7 @@ void CL_ParseInput (void)
 
 	case MS_ZOOMMAP:
 		/* zoom the map */
-		ccs.zoom *= pow(0.995, my - oldy);
+		ccs.zoom *= pow(0.995, mousePosY - oldMousePosY);
 		if (ccs.zoom < cl_mapzoommin->value)
 			ccs.zoom = cl_mapzoommin->value;
 		else if (ccs.zoom > cl_mapzoommax->value)
@@ -1303,7 +1298,7 @@ void CL_ParseInput (void)
 	}
 	default:
 		/* standard menu and world mouse handling */
-		if (MN_CursorOnMenu(mx, my)) {
+		if (MN_CursorOnMenu(mousePosX, mousePosY)) {
 			mouseSpace = MS_MENU;
 			return;
 		}
@@ -1572,7 +1567,8 @@ static int IN_TranslateKey (SDL_keysym *keysym, int *key)
 
 #define EVENT_ENQUEUE(keyNum, keyDown) \
 	if (keyNum > 0) { \
-		Com_Printf("Enqueue: %i (down: %i)\n", keyNum, keyDown); \
+		if (sdl_debug->integer) \
+			Com_Printf("Enqueue: %i (down: %i)\n", keyNum, keyDown); \
 		keyq[keyq_head].down = (keyDown); \
 		keyq[keyq_head].key = (keyNum); \
 		keyq_head = (keyq_head + 1) & (MAX_KEYQ - 1); \
@@ -1587,10 +1583,7 @@ void IN_Frame (void)
 	qboolean down;
 	SDL_Event event;
 
-	if (!mx && !my)
-		SDL_GetRelativeMouseState(&mx, &my);
-
-	sys_frame_time = Sys_Milliseconds();
+	in_frametime = cls.realtime;
 
 	if (vid_grabmouse->modified) {
 		vid_grabmouse->modified = qfalse;
@@ -1635,13 +1628,14 @@ void IN_Frame (void)
 				mouse_buttonstate = K_AUX1 + (event.button.button - 8) % 16;
 				break;
 			}
-			EVENT_ENQUEUE(mouse_buttonstate, (event.type == SDL_MOUSEBUTTONDOWN))
+			Key_Event(mouse_buttonstate, (event.type == SDL_MOUSEBUTTONDOWN), in_frametime);
 			break;
 		case SDL_MOUSEMOTION:
-			if (mouse_active) {
-				mx = event.motion.x;
-				my = event.motion.y;
-			}
+			oldMousePosX = mousePosX;
+			oldMousePosY = mousePosY;
+			SDL_GetMouseState(&mousePosX, &mousePosY);
+			mousePosX /= viddef.rx;
+			mousePosY /= viddef.ry;
 			break;
 		case SDL_KEYDOWN:
 			IN_PrintKey(&event, 1);
@@ -1696,7 +1690,7 @@ void IN_Init (void)
 	SDL_EnableUNICODE(SDL_ENABLE);
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 
-	mx = my = 0.0;
+	mousePosX = mousePosY = 0.0;
 }
 
 /**
@@ -1704,8 +1698,8 @@ void IN_Init (void)
  */
 void IN_GetMousePos (int *x, int *y)
 {
-	*x = mx / viddef.rx;
-	*y = my / viddef.ry;
+	*x = mousePosX;
+	*y = mousePosY;
 }
 
 /**
@@ -1714,10 +1708,7 @@ void IN_GetMousePos (int *x, int *y)
 void IN_SendKeyEvents (void)
 {
 	while (keyq_head != keyq_tail) {
-		Key_Event(keyq[keyq_tail].key, keyq[keyq_tail].down, Sys_Milliseconds());
+		Key_Event(keyq[keyq_tail].key, keyq[keyq_tail].down, in_frametime);
 		keyq_tail = (keyq_tail + 1) & (MAX_KEYQ - 1);
 	}
-
-	/* grab frame time */
-	sys_frame_time = Sys_Milliseconds();
 }
