@@ -217,10 +217,8 @@ void R_UpdateSwapInterval (void)
 	if (r_swapinterval->modified) {
 		r_swapinterval->modified = qfalse;
 
-#ifdef _WIN32
-		if (qwglSwapIntervalEXT)
-			qwglSwapIntervalEXT(r_swapinterval->value);
-#endif
+		if (qglSwapInterval)
+			qglSwapInterval(r_swapinterval->value);
 	}
 }
 

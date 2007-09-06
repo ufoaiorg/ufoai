@@ -31,13 +31,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #ifndef _WIN32
 #include <sys/mman.h>
-#include "unix_qgl.h"
 #else
 #include "../windows/win_local.h"
-#include "../windows/win_ref_glw.h"
 #endif
-
-glwstate_t glw_state;
 
 static qboolean SDL_active = qfalse;
 

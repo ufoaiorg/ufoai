@@ -781,25 +781,19 @@ qboolean R_Init (void)
 
 	R_Register();
 
-	/* initialize our QGL dynamic bindings */
-	if (!QR_Init(r_driver->string)) {
-		QR_Shutdown();
-		Com_Printf("renderer::R_Init() - could not load \"%s\"\n", r_driver->string);
-		return qfalse;
-	}
-
 	/* initialize OS-specific parts of OpenGL */
-	if (!Rimp_Init()) {
-		QR_Shutdown();
+	if (!Rimp_Init())
 		return qfalse;
-	}
+
+	/* initialize our QGL dynamic bindings */
+	QR_Link();
 
 	/* set our "safe" modes */
 	r_state.prev_mode = 3;
 
 	/* create the window and set up the context */
 	if (!R_SetMode()) {
-		QR_Shutdown();
+		QR_UnLink();
 		Com_Printf("renderer::R_Init() - could not R_SetMode()\n");
 		return qfalse;
 	}
@@ -856,27 +850,19 @@ qboolean R_Init (void)
 	if (strstr(r_config.extensions_string, "GL_EXT_compiled_vertex_array") || strstr(r_config.extensions_string, "GL_SGI_compiled_vertex_array")) {
 		if (r_ext_lockarrays->integer) {
 			Com_Printf("...enabling GL_EXT_LockArrays\n");
-			qglLockArraysEXT = (void (APIENTRY *) (int, int)) qwglGetProcAddress("glLockArraysEXT");
-			qglUnlockArraysEXT = (void (APIENTRY *) (void)) qwglGetProcAddress("glUnlockArraysEXT");
+			qglLockArraysEXT = SDL_GL_GetProcAddress("glLockArraysEXT");
+			qglUnlockArraysEXT = SDL_GL_GetProcAddress("glUnlockArraysEXT");
 		} else
 			Com_Printf("...ignoring GL_EXT_LockArrays\n");
 	} else
 		Com_Printf("...GL_EXT_compiled_vertex_array not found\n");
 
-#ifdef _WIN32
-	if (strstr(r_config.extensions_string, "WGL_EXT_swap_control")) {
-		qwglSwapIntervalEXT = (BOOL(WINAPI *) (int)) qwglGetProcAddress("wglSwapIntervalEXT");
-		Com_Printf("...enabling WGL_EXT_swap_control\n");
-	} else
-		Com_Printf("...WGL_EXT_swap_control not found\n");
-#endif
-
 	if (strstr(r_config.extensions_string, "GL_ARB_multitexture")) {
 		if (r_ext_multitexture->integer) {
 			Com_Printf("...using GL_ARB_multitexture\n");
-			qglMTexCoord2fSGIS = (void (APIENTRY *) (GLenum, GLfloat, GLfloat)) qwglGetProcAddress("glMultiTexCoord2fARB");
-			qglActiveTextureARB = (void (APIENTRY *) (GLenum)) qwglGetProcAddress("glActiveTextureARB");
-			qglClientActiveTextureARB = (void (APIENTRY *) (GLenum)) qwglGetProcAddress("glClientActiveTextureARB");
+			qglMTexCoord2fSGIS = SDL_GL_GetProcAddress("glMultiTexCoord2fARB");
+			qglActiveTextureARB = SDL_GL_GetProcAddress("glActiveTextureARB");
+			qglClientActiveTextureARB = SDL_GL_GetProcAddress("glClientActiveTextureARB");
 			gl_texture0 = GL_TEXTURE0_ARB;
 			gl_texture1 = GL_TEXTURE1_ARB;
 			gl_texture2 = GL_TEXTURE2_ARB;
@@ -904,8 +890,8 @@ qboolean R_Init (void)
 			Com_Printf("...GL_SGIS_multitexture deprecated in favor of ARB_multitexture\n");
 		else if (r_ext_multitexture->integer) {
 			Com_Printf("...using GL_SGIS_multitexture\n");
-			qglMTexCoord2fSGIS = (void (APIENTRY *) (GLenum, GLfloat, GLfloat)) qwglGetProcAddress("glMTexCoord2fSGIS");
-			qglSelectTextureSGIS = (void (APIENTRY *) (GLenum)) qwglGetProcAddress("glSelectTextureSGIS");
+			qglMTexCoord2fSGIS = SDL_GL_GetProcAddress("glMTexCoord2fSGIS");
+			qglSelectTextureSGIS = SDL_GL_GetProcAddress("glSelectTextureSGIS");
 			gl_texture0 = GL_TEXTURE0_SGIS;
 			gl_texture1 = GL_TEXTURE1_SGIS;
 			gl_texture2 = GL_TEXTURE2_SGIS;
@@ -1004,25 +990,25 @@ qboolean R_Init (void)
 		Com_Printf("...using GL_ARB_fragment_program\n");
 		r_state.arb_fragment_program = qtrue;
 
-		qglProgramStringARB = (void *) qwglGetProcAddress("glProgramStringARB");
-		qglBindProgramARB = (void *) qwglGetProcAddress("glBindProgramARB");
-		qglDeleteProgramsARB = (void *) qwglGetProcAddress("glDeleteProgramsARB");
-		qglGenProgramsARB = (void *) qwglGetProcAddress("glGenProgramsARB");
-		qglProgramEnvParameter4dARB = (void *) qwglGetProcAddress("glProgramEnvParameter4dARB");
-		qglProgramEnvParameter4dvARB = (void *) qwglGetProcAddress("glProgramEnvParameter4dvARB");
-		qglProgramEnvParameter4fARB = (void *) qwglGetProcAddress("glProgramEnvParameter4fARB");
-		qglProgramEnvParameter4fvARB = (void *) qwglGetProcAddress("glProgramEnvParameter4fvARB");
-		qglProgramLocalParameter4dARB = (void *) qwglGetProcAddress("glProgramLocalParameter4dARB");
-		qglProgramLocalParameter4dvARB = (void *) qwglGetProcAddress("glProgramLocalParameter4dvARB");
-		qglProgramLocalParameter4fARB = (void *) qwglGetProcAddress("glProgramLocalParameter4fARB");
-		qglProgramLocalParameter4fvARB = (void *) qwglGetProcAddress("glProgramLocalParameter4fvARB");
-		qglGetProgramEnvParameterdvARB = (void *) qwglGetProcAddress("glGetProgramEnvParameterdvARB");
-		qglGetProgramEnvParameterfvARB = (void *) qwglGetProcAddress("glGetProgramEnvParameterfvARB");
-		qglGetProgramLocalParameterdvARB = (void *) qwglGetProcAddress("glGetProgramLocalParameterdvARB");
-		qglGetProgramLocalParameterfvARB = (void *) qwglGetProcAddress("glGetProgramLocalParameterfvARB");
-		qglGetProgramivARB = (void *) qwglGetProcAddress("glGetProgramivARB");
-		qglGetProgramStringARB = (void *) qwglGetProcAddress("glGetProgramStringARB");
-		qglIsProgramARB = (void *) qwglGetProcAddress("glIsProgramARB");
+		qglProgramStringARB = SDL_GL_GetProcAddress("glProgramStringARB");
+		qglBindProgramARB = SDL_GL_GetProcAddress("glBindProgramARB");
+		qglDeleteProgramsARB = SDL_GL_GetProcAddress("glDeleteProgramsARB");
+		qglGenProgramsARB = SDL_GL_GetProcAddress("glGenProgramsARB");
+		qglProgramEnvParameter4dARB = SDL_GL_GetProcAddress("glProgramEnvParameter4dARB");
+		qglProgramEnvParameter4dvARB = SDL_GL_GetProcAddress("glProgramEnvParameter4dvARB");
+		qglProgramEnvParameter4fARB = SDL_GL_GetProcAddress("glProgramEnvParameter4fARB");
+		qglProgramEnvParameter4fvARB = SDL_GL_GetProcAddress("glProgramEnvParameter4fvARB");
+		qglProgramLocalParameter4dARB = SDL_GL_GetProcAddress("glProgramLocalParameter4dARB");
+		qglProgramLocalParameter4dvARB = SDL_GL_GetProcAddress("glProgramLocalParameter4dvARB");
+		qglProgramLocalParameter4fARB = SDL_GL_GetProcAddress("glProgramLocalParameter4fARB");
+		qglProgramLocalParameter4fvARB = SDL_GL_GetProcAddress("glProgramLocalParameter4fvARB");
+		qglGetProgramEnvParameterdvARB = SDL_GL_GetProcAddress("glGetProgramEnvParameterdvARB");
+		qglGetProgramEnvParameterfvARB = SDL_GL_GetProcAddress("glGetProgramEnvParameterfvARB");
+		qglGetProgramLocalParameterdvARB = SDL_GL_GetProcAddress("glGetProgramLocalParameterdvARB");
+		qglGetProgramLocalParameterfvARB = SDL_GL_GetProcAddress("glGetProgramLocalParameterfvARB");
+		qglGetProgramivARB = SDL_GL_GetProcAddress("glGetProgramivARB");
+		qglGetProgramStringARB = SDL_GL_GetProcAddress("glGetProgramStringARB");
+		qglIsProgramARB = SDL_GL_GetProcAddress("glIsProgramARB");
 	} else {
 		Com_Printf("...GL_ARB_fragment_program not found\n");
 		r_state.arb_fragment_program = qfalse;
@@ -1031,15 +1017,15 @@ qboolean R_Init (void)
 	/* FIXME: Is this the right extension to check for? */
 	if (strstr(r_config.extensions_string, "GL_ARB_shading_language_100")) {
 		Com_Printf("...using GL_ARB_shading_language_100\n");
-		qglCreateShader  = (void *) qwglGetProcAddress("glCreateShaderObjectARB");
-		qglShaderSource  = (void *) qwglGetProcAddress("glShaderSourceARB");
-		qglCompileShader = (void *) qwglGetProcAddress("glCompileShaderARB");
-		qglCreateProgram = (void *) qwglGetProcAddress("glCreateProgramObjectARB");
-		qglAttachShader  = (void *) qwglGetProcAddress("glAttachObjectARB");
-		qglLinkProgram   = (void *) qwglGetProcAddress("glLinkProgramARB");
-		qglUseProgram    = (void *) qwglGetProcAddress("glUseProgramObjectARB");
-		qglDeleteShader  = (void *) qwglGetProcAddress("glDeleteObjectARB");
-		qglDeleteProgram = (void *) qwglGetProcAddress("glDeleteObjectARB");
+		qglCreateShader  = SDL_GL_GetProcAddress("glCreateShaderObjectARB");
+		qglShaderSource  = SDL_GL_GetProcAddress("glShaderSourceARB");
+		qglCompileShader = SDL_GL_GetProcAddress("glCompileShaderARB");
+		qglCreateProgram = SDL_GL_GetProcAddress("glCreateProgramObjectARB");
+		qglAttachShader  = SDL_GL_GetProcAddress("glAttachObjectARB");
+		qglLinkProgram   = SDL_GL_GetProcAddress("glLinkProgramARB");
+		qglUseProgram    = SDL_GL_GetProcAddress("glUseProgramObjectARB");
+		qglDeleteShader  = SDL_GL_GetProcAddress("glDeleteObjectARB");
+		qglDeleteProgram = SDL_GL_GetProcAddress("glDeleteObjectARB");
 		if (!qglCreateShader)
 			Sys_Error("Could not load all needed GLSL functions\n");
 		r_state.glsl_program = qtrue;
@@ -1057,8 +1043,8 @@ qboolean R_Init (void)
 		} else {
 			Com_Printf("...using GL_ATI_separate_stencil\n");
 			r_state.ati_separate_stencil = qtrue;
-			qglStencilOpSeparateATI = (void (APIENTRY *) (GLenum, GLenum, GLenum, GLenum)) qwglGetProcAddress("glStencilOpSeparateATI");
-			qglStencilFuncSeparateATI = (void (APIENTRY *) (GLenum, GLenum, GLint, GLuint)) qwglGetProcAddress("glStencilFuncSeparateATI");
+			qglStencilOpSeparateATI = SDL_GL_GetProcAddress("glStencilOpSeparateATI");
+			qglStencilFuncSeparateATI = SDL_GL_GetProcAddress("glStencilFuncSeparateATI");
 		}
 	} else {
 		Com_Printf("...GL_ATI_separate_stencil not found\n");
@@ -1074,7 +1060,7 @@ qboolean R_Init (void)
 		} else {
 			Com_Printf("...using GL_EXT_stencil_two_side\n");
 			r_state.stencil_two_side = qtrue;
-			qglActiveStencilFaceEXT = (void (APIENTRY *) (GLenum)) qwglGetProcAddress("glActiveStencilFaceEXT");
+			qglActiveStencilFaceEXT = SDL_GL_GetProcAddress("glActiveStencilFaceEXT");
 		}
 	} else {
 		Com_Printf("...GL_EXT_stencil_two_side not found\n");
@@ -1144,7 +1130,7 @@ void R_Shutdown (void)
 	Rimp_Shutdown();
 
 	/* shutdown our QGL subsystem */
-	QR_Shutdown();
+	QR_UnLink();
 }
 
 /**
