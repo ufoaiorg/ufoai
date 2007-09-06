@@ -29,12 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /*#include <SDL_opengl.h>*/
 
-#ifndef _WIN32
-#include <sys/mman.h>
-#else
-#include "../windows/win_local.h"
-#endif
-
 qboolean have_stencil = qfalse;
 cvar_t *sdl_debug;
 static SDL_Surface *surface;
