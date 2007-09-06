@@ -391,8 +391,6 @@ void CL_PrepRefresh (void)
 	/* this is needed to get shaders/image filters in game */
 	/* the renderer needs to know them before the textures get loaded */
 	V_UpdateRefDef();
-	/* set ref def - do this even in non 3d mode - we need shaders at loading time */
-	re.SetRefDef(&cl.refdef);
 
 	if (!cl.configstrings[CS_TILES][0])
 		return;					/* no map loaded */
@@ -408,7 +406,7 @@ void CL_PrepRefresh (void)
 	if (!ccs.singleplayer)
 		SCR_SetLoadingBackground(cl.configstrings[CS_NAME]);
 	SCR_UpdateScreen();
-	re.BeginLoading(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS]);
+	R_ModBeginLoading(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS]);
 	CL_ParseEntitystring(map_entitystring);
 	Com_Printf("                                     \r");
 
@@ -437,7 +435,7 @@ void CL_PrepRefresh (void)
 		}
 		SCR_UpdateScreen();
 		Sys_SendKeyEvents();	/* pump message loop */
-		cl.model_draw[i] = re.RegisterModel(cl.configstrings[CS_MODELS + i]);
+		cl.model_draw[i] = R_RegisterModelShort(cl.configstrings[CS_MODELS + i]);
 		if (name[0] == '*')
 			cl.model_clip[i] = CM_InlineModel(cl.configstrings[CS_MODELS + i]);
 		else
@@ -466,7 +464,7 @@ void CL_PrepRefresh (void)
 			continue;
 		str = csi.ods[i].model;
 		SCR_UpdateScreen();
-		cl.model_weapons[i] = re.RegisterModel(str);
+		cl.model_weapons[i] = R_RegisterModelShort(str);
 		Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages),
 			_("loading %s"), (strlen(str) > 40) ? &str[strlen(str) - 40] : str);
 	}
@@ -475,7 +473,7 @@ void CL_PrepRefresh (void)
 	SCR_UpdateScreen();
 
 	/* the renderer can now free unneeded stuff */
-	re.EndLoading();
+	R_ModEndLoading();
 
 	/* waiting for EV_START */
 	Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages), _("Awaiting game start"));
@@ -603,7 +601,7 @@ void V_RenderView (void)
 	CL_CalcRefdef();
 
 	/* render the frame */
-	re.RenderFrame(&cl.refdef);
+	R_RenderFrame(&cl.refdef);
 	if (cl_stats->integer)
 		Com_Printf("ent:%i  lt:%i\n", r_numentities, r_numdlights);
 	if (log_stats->integer && (log_stats_file != 0))

@@ -71,6 +71,11 @@ typedef struct vidmode_s {
 	int mode;
 } vidmode_t;
 
+extern struct memPool_s *vid_genericPool;
+extern struct memPool_s *vid_imagePool;
+extern struct memPool_s *vid_lightPool;
+extern struct memPool_s *vid_modelPool;
+
 extern const vidmode_t vid_modes[];
 extern int maxVidModes;
 extern viddef_t viddef;			/* global video state */
@@ -79,17 +84,18 @@ extern viddef_t viddef;			/* global video state */
 void VID_Init(void);
 void VID_Shutdown(void);
 void VID_CheckChanges(void);
+void VID_NewWindow(int width, int height);
 
 #include "../common/common.h"
 
-void *VID_TagAlloc(struct memPool_s **pool, int size, int tagNum);
-void VID_FreeTags(struct memPool_s **pool, int tagNum);
+void *VID_TagAlloc(struct memPool_s *pool, int size, int tagNum);
+void VID_FreeTags(struct memPool_s *pool, int tagNum);
 void VID_MemFree(void *ptr);
 
 #define VID_NUM_MODES (sizeof(vid_modes) / sizeof(vidmode_t))
 
-void VID_Error(int err_level, const char *fmt, ...) __attribute__((noreturn));
-void VID_Printf(int print_level, const char *fmt, ...);
+void CL_WriteAVIVideoFrame(const byte * imageBuffer, size_t size);
+
 qboolean VID_GetModeInfo(int *width, int *height, int mode);
 void Sys_Vid_Init(void);
 

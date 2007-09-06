@@ -36,7 +36,7 @@ void RADAR_DrawCoverage (const menuNode_t* node, const radar_t* radar, vec2_t po
 
 	const vec4_t color = {0, 1, 0, 1};
 	/* Set color */
-	re.DrawColor(color);
+	R_DrawColor(color);
 
 	rangeTracking = 1.1f * radar->range;
 
@@ -61,7 +61,7 @@ void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, vec2_t pos)
 	RADAR_DrawCoverage(node,radar,pos);
 
 	/* Set color */
-	re.DrawColor(color);
+	R_DrawColor(color);
 
 	/* Draw lines from radar to ufos sensored */
 	MAP_AllMapToScreen(node, pos, &x, &y, NULL);
@@ -71,10 +71,10 @@ void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, vec2_t pos)
 		if (MAP_AllMapToScreen(node, (gd.ufos + radar->ufos[i])->pos, &x, &y, NULL)) {
 			pts[1].x = x;
 			pts[1].y = y;
-			re.DrawLineStrip(2, (int*)pts); /* FIXME */
+			R_DrawLineStrip(2, (int*)pts); /* FIXME */
 		}
 
-	re.DrawColor(NULL);
+	R_DrawColor(NULL);
 }
 
 /**

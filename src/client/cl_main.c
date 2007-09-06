@@ -1649,7 +1649,7 @@ static void CL_PrecacheModels (void)
 
 	for (i = 0; i < csi.numODs; i++) {
 		if (*csi.ods[i].model)
-			if (!re.RegisterModel(csi.ods[i].model))
+			if (!R_RegisterModelShort(csi.ods[i].model))
 				Com_Printf("CL_PrecacheModels: Could not register object model: '%s'\n", csi.ods[i].model);
 		cls.loadingPercent += percent / csi.numODs;
 		SCR_DrawPrecacheScreen(qtrue);

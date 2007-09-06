@@ -85,7 +85,7 @@ void LM_AddToScene (void)
 		if (lm->animname[0]) {
 			ent.as = lm->as;
 			/* do animation */
-			re.AnimRun(&lm->as, ent.model, cls.frametime * 1000);
+			R_AnimRun(&lm->as, ent.model, cls.frametime * 1000);
 		}
 
 		if (lm->flags & LMF_NOSMOOTH)
@@ -260,9 +260,9 @@ void CL_RegisterLocalModels (void)
 
 	for (i = 0, lm = LMs; i < numLMs; i++, lm++) {
 		/* register the model and recalculate routing info */
-		lm->model = re.RegisterModel(lm->name);
+		lm->model = R_RegisterModelShort(lm->name);
 		if (lm->animname[0])
-			re.AnimChange(&lm->as, lm->model, lm->animname);
+			R_AnimChange(&lm->as, lm->model, lm->animname);
 
 		/* calculate sun lighting and register model if not yet done */
 		VectorMA(lm->origin, 512, sunDir, sunOrigin);
@@ -456,11 +456,11 @@ void LET_PlayAmbientSound (le_t * le)
 void LET_StartIdle (le_t * le)
 {
 	if (le->state & STATE_DEAD)
-		re.AnimChange(&le->as, le->model1, va("dead%i", le->state & STATE_DEAD));
+		R_AnimChange(&le->as, le->model1, va("dead%i", le->state & STATE_DEAD));
 	else if (le->state & STATE_PANIC)
-		re.AnimChange(&le->as, le->model1, "panic0");
+		R_AnimChange(&le->as, le->model1, "panic0");
 	else
-		re.AnimChange(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
+		R_AnimChange(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
 
 	/* keep this animation until something happens */
 	le->think = NULL;
@@ -624,7 +624,7 @@ static void LET_PathMove (le_t * le)
 void LET_StartPathMove (le_t * le)
 {
 	/* initial animation or animation change */
-	re.AnimChange(&le->as, le->model1, LE_GetAnim("walk", le->right, le->left, le->state));
+	R_AnimChange(&le->as, le->model1, LE_GetAnim("walk", le->right, le->left, le->state));
 
 	le->think = LET_PathMove;
 	le->think(le);
@@ -975,7 +975,7 @@ void LE_AddToScene (void)
 			ent.skinnum = le->skinnum;
 
 			/* do animation */
-			re.AnimRun(&le->as, ent.model, cls.frametime * 1000);
+			R_AnimRun(&le->as, ent.model, cls.frametime * 1000);
 			ent.as = le->as;
 
 			/* call add function */

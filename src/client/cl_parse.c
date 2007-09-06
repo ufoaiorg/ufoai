@@ -7,7 +7,7 @@
 All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
 
 Original file from Quake 2 v3.21: quake2-2.31/client/
-Copyright (C) 1997-2001 Id Software, Inc.
+Copyright (C) 1997-2001 Id SoftwaR_ Inc.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -435,7 +435,7 @@ static void CL_ParseConfigString (struct dbuffer *msg)
 		CL_SetLightstyle(i - CS_LIGHTS);
 	else if (i >= CS_MODELS && i < CS_MODELS + MAX_MODELS) {
 		if (cl.refresh_prepped) {
-			cl.model_draw[i-CS_MODELS] = re.RegisterModel(cl.configstrings[i]);
+			cl.model_draw[i-CS_MODELS] = R_RegisterModelShort(cl.configstrings[i]);
 			if (cl.configstrings[i][0] == '*')
 				cl.model_clip[i-CS_MODELS] = CM_InlineModel(cl.configstrings[i]);
 			else

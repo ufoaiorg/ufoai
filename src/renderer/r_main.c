@@ -27,8 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 viddef_t vid;
 
-refimport_t ri;
-
 GLenum gl_texture0, gl_texture1, gl_texture2, gl_texture3;
 
 rconfig_t r_config;
@@ -142,12 +140,12 @@ static void R_Reset_f (void)
  */
 static void R_Strings_f (void)
 {
-	ri.Con_Printf(PRINT_ALL, "GL_VENDOR: %s\n", r_config.vendor_string);
-	ri.Con_Printf(PRINT_ALL, "GL_RENDERER: %s\n", r_config.renderer_string);
-	ri.Con_Printf(PRINT_ALL, "GL_VERSION: %s\n", r_config.version_string);
-	ri.Con_Printf(PRINT_ALL, "MODE: %i, %d x %d FULLSCREEN: %i\n", r_mode->integer, vid.width, vid.height, vid_fullscreen->integer);
-	ri.Con_Printf(PRINT_ALL, "GL_EXTENSIONS: %s\n", r_config.extensions_string);
-	ri.Con_Printf(PRINT_ALL, "GL_MAX_TEXTURE_SIZE: %d\n", r_config.maxTextureSize);
+	Com_Printf("GL_VENDOR: %s\n", r_config.vendor_string);
+	Com_Printf("GL_RENDERER: %s\n", r_config.renderer_string);
+	Com_Printf("GL_VERSION: %s\n", r_config.version_string);
+	Com_Printf("MODE: %i, %d x %d FULLSCREEN: %i\n", r_mode->integer, viddef.width, viddef.height, vid_fullscreen->integer);
+	Com_Printf("GL_EXTENSIONS: %s\n", r_config.extensions_string);
+	Com_Printf("GL_MAX_TEXTURE_SIZE: %d\n", r_config.maxTextureSize);
 }
 
 /**
@@ -264,7 +262,7 @@ static float *R_CalcTransform (entity_t * e)
 	t = &trafo[e - r_newrefdef.entities];
 
 	if (t->processing)
-		ri.Sys_Error(ERR_DROP, "Ring in entity transformations!\n");
+		Sys_Error("Ring in entity transformations!\n");
 
 	if (t->done)
 		return t->matrix;
@@ -386,7 +384,7 @@ static void R_DrawEntitiesOnList (void)
 		else {
 			currentmodel = currententity->model;
 			if (!currentmodel) {
-				Mod_DrawNullModel();
+				R_ModDrawNullModel();
 				continue;
 			}
 			switch (currentmodel->type) {
@@ -409,7 +407,7 @@ static void R_DrawEntitiesOnList (void)
 				R_DrawOBJModel(currententity);
 				break;
 			default:
-				ri.Sys_Error(ERR_DROP, "Bad %s modeltype: %i", currentmodel->name, currentmodel->type);
+				Sys_Error("Bad %s modeltype: %i", currentmodel->name, currentmodel->type);
 				break;
 			}
 		}
@@ -428,7 +426,7 @@ static void R_DrawEntitiesOnList (void)
 		else {
 			currentmodel = currententity->model;
 			if (!currentmodel) {
-				Mod_DrawNullModel();
+				R_ModDrawNullModel();
 				continue;
 			}
 			switch (currentmodel->type) {
@@ -447,7 +445,7 @@ static void R_DrawEntitiesOnList (void)
 				R_DrawSpriteModel(currententity);
 				break;
 			default:
-				ri.Sys_Error(ERR_DROP, "Bad %s modeltype: %i", currentmodel->name, currentmodel->type);
+				Sys_Error("Bad %s modeltype: %i", currentmodel->name, currentmodel->type);
 				break;
 			}
 		}
@@ -535,7 +533,7 @@ static void R_SetupFrame (void)
 	/* clear out the portion of the screen that the NOWORLDMODEL defines */
 	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL) {
 		qglEnable(GL_SCISSOR_TEST);
-		qglScissor(r_newrefdef.x, vid.height - r_newrefdef.height - r_newrefdef.y, r_newrefdef.width, r_newrefdef.height);
+		qglScissor(r_newrefdef.x, viddef.height - r_newrefdef.height - r_newrefdef.y, r_newrefdef.width, r_newrefdef.height);
 		qglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		qglDisable(GL_SCISSOR_TEST);
 	}
@@ -589,7 +587,7 @@ static void R_RenderView (refdef_t * fd)
 	r_newrefdef = *fd;
 
 /*	if (!r_worldmodel && !(r_newrefdef.rdflags & RDF_NOWORLDMODEL)) */
-/*		ri.Sys_Error(ERR_DROP, "R_RenderView: NULL worldmodel"); */
+/*		Sys_Error("R_RenderView: NULL worldmodel"); */
 
 	if (r_speeds->integer) {
 		c_brush_polys = 0;
@@ -636,10 +634,9 @@ static void R_RenderView (refdef_t * fd)
 /**
  * @brief
  * @sa R_BeginFrame
- * @sa Rimp_EndFrame
- * @sa Rimp_StartFrame
+ * @sa R_EndFrame
  */
-static void R_RenderFrame (refdef_t * fd)
+void R_RenderFrame (refdef_t * fd)
 {
 	R_RenderView(fd);
 	R_SetupGL2D();
@@ -652,9 +649,9 @@ static void R_RenderFrame (refdef_t * fd)
 
 static const cmdList_t r_commands[] = {
 	{"imagelist", R_ImageList_f, NULL},
-	{"fontcachelist", Font_ListCache_f, NULL},
+	{"fontcachelist", R_FontListCache_f, NULL},
 	{"screenshot", R_ScreenShot_f, "Take a screenshot"},
-	{"modellist", Mod_Modellist_f, NULL},
+	{"modellist", R_ModModellist_f, NULL},
 	{"r_strings", R_Strings_f, NULL},
 	{"r_reset", R_Reset_f, "Reset to initial state"},
 
@@ -668,83 +665,83 @@ static void R_Register (void)
 {
 	const cmdList_t *commands;
 
-	r_norefresh = ri.Cvar_Get("r_norefresh", "0", 0, "Fix the screen to the last thing you saw. Only used for debugging.");
-	r_drawentities = ri.Cvar_Get("r_drawentities", "1", 0, NULL);
-	r_drawworld = ri.Cvar_Get("r_drawworld", "1", 0, NULL);
-	r_isometric = ri.Cvar_Get("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
-	r_lerpmodels = ri.Cvar_Get("r_lerpmodels", "1", 0, NULL);
-	r_nocull = ri.Cvar_Get("r_nocull", "0", 0, NULL);
-	r_speeds = ri.Cvar_Get("r_speeds", "0", 0, NULL);
-	r_displayrefresh = ri.Cvar_Get("r_displayrefresh", "0", CVAR_ARCHIVE, NULL);
-	r_anisotropic = ri.Cvar_Get("r_anisotropic", "1", CVAR_ARCHIVE, NULL);
-	r_ext_max_anisotropy = ri.Cvar_Get("r_ext_max_anisotropy", "0", 0, NULL);
-	r_texture_lod = ri.Cvar_Get("r_texture_lod", "0", CVAR_ARCHIVE, NULL);
+	r_norefresh = Cvar_Get("r_norefresh", "0", 0, "Fix the screen to the last thing you saw. Only used for debugging.");
+	r_drawentities = Cvar_Get("r_drawentities", "1", 0, NULL);
+	r_drawworld = Cvar_Get("r_drawworld", "1", 0, NULL);
+	r_isometric = Cvar_Get("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
+	r_lerpmodels = Cvar_Get("r_lerpmodels", "1", 0, NULL);
+	r_nocull = Cvar_Get("r_nocull", "0", 0, NULL);
+	r_speeds = Cvar_Get("r_speeds", "0", 0, NULL);
+	r_displayrefresh = Cvar_Get("r_displayrefresh", "0", CVAR_ARCHIVE, NULL);
+	r_anisotropic = Cvar_Get("r_anisotropic", "1", CVAR_ARCHIVE, NULL);
+	r_ext_max_anisotropy = Cvar_Get("r_ext_max_anisotropy", "0", 0, NULL);
+	r_texture_lod = Cvar_Get("r_texture_lod", "0", CVAR_ARCHIVE, NULL);
 
-	r_screenshot = ri.Cvar_Get("r_screenshot", "jpg", CVAR_ARCHIVE, "png, jpg or tga are valid screenshot formats");
-	r_screenshot_jpeg_quality = ri.Cvar_Get("r_screenshot_jpeg_quality", "75", CVAR_ARCHIVE, "jpeg quality in percent for jpeg screenshots");
+	r_screenshot = Cvar_Get("r_screenshot", "jpg", CVAR_ARCHIVE, "png, jpg or tga are valid screenshot formats");
+	r_screenshot_jpeg_quality = Cvar_Get("r_screenshot_jpeg_quality", "75", CVAR_ARCHIVE, "jpeg quality in percent for jpeg screenshots");
 
-	r_modulate = ri.Cvar_Get("r_modulate", "1", CVAR_ARCHIVE, NULL);
-	r_bitdepth = ri.Cvar_Get("r_bitdepth", "0", CVAR_ARCHIVE, NULL);
-	r_mode = ri.Cvar_Get("r_mode", "6", CVAR_ARCHIVE, "Display resolution");
-	r_lightmap = ri.Cvar_Get("r_lightmap", "0", 0, NULL);
-	r_shadows = ri.Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, NULL);
-	r_shadow_debug_volume = ri.Cvar_Get("r_shadow_debug_volume", "0", CVAR_ARCHIVE, NULL);
-	r_shadow_debug_shade = ri.Cvar_Get("r_shadow_debug_shade", "0", CVAR_ARCHIVE, NULL);
-	r_ati_separate_stencil = ri.Cvar_Get("r_ati_separate_stencil", "1", CVAR_ARCHIVE, NULL);
-	r_stencil_two_side = ri.Cvar_Get("r_stencil_two_side", "1", CVAR_ARCHIVE, NULL);
-	r_drawclouds = ri.Cvar_Get("r_drawclouds", "0", CVAR_ARCHIVE, NULL);
-	r_imagefilter = ri.Cvar_Get("r_imagefilter", "1", CVAR_ARCHIVE, NULL);
-	r_dynamic = ri.Cvar_Get("r_dynamic", "1", 0, "Render dynamic lightmaps");
-	r_soften = ri.Cvar_Get("r_soften", "1", 0, "Apply blur to lightmap");
-	r_round_down = ri.Cvar_Get("r_round_down", "1", 0, NULL);
-	r_picmip = ri.Cvar_Get("r_picmip", "0", 0, NULL);
-	r_maxtexres = ri.Cvar_Get("r_maxtexres", "2048", CVAR_ARCHIVE, NULL);
-	r_showtris = ri.Cvar_Get("r_showtris", "0", 0, NULL);
-	r_finish = ri.Cvar_Get("r_finish", "0", CVAR_ARCHIVE, NULL);
-	r_flashblend = ri.Cvar_Get("r_flashblend", "0", 0, "Controls the way dynamic lights are drawn");
+	r_modulate = Cvar_Get("r_modulate", "1", CVAR_ARCHIVE, NULL);
+	r_bitdepth = Cvar_Get("r_bitdepth", "0", CVAR_ARCHIVE, NULL);
+	r_mode = Cvar_Get("r_mode", "6", CVAR_ARCHIVE, "Display resolution");
+	r_lightmap = Cvar_Get("r_lightmap", "0", 0, NULL);
+	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, NULL);
+	r_shadow_debug_volume = Cvar_Get("r_shadow_debug_volume", "0", CVAR_ARCHIVE, NULL);
+	r_shadow_debug_shade = Cvar_Get("r_shadow_debug_shade", "0", CVAR_ARCHIVE, NULL);
+	r_ati_separate_stencil = Cvar_Get("r_ati_separate_stencil", "1", CVAR_ARCHIVE, NULL);
+	r_stencil_two_side = Cvar_Get("r_stencil_two_side", "1", CVAR_ARCHIVE, NULL);
+	r_drawclouds = Cvar_Get("r_drawclouds", "0", CVAR_ARCHIVE, NULL);
+	r_imagefilter = Cvar_Get("r_imagefilter", "1", CVAR_ARCHIVE, NULL);
+	r_dynamic = Cvar_Get("r_dynamic", "1", 0, "Render dynamic lightmaps");
+	r_soften = Cvar_Get("r_soften", "1", 0, "Apply blur to lightmap");
+	r_round_down = Cvar_Get("r_round_down", "1", 0, NULL);
+	r_picmip = Cvar_Get("r_picmip", "0", 0, NULL);
+	r_maxtexres = Cvar_Get("r_maxtexres", "2048", CVAR_ARCHIVE, NULL);
+	r_showtris = Cvar_Get("r_showtris", "0", 0, NULL);
+	r_finish = Cvar_Get("r_finish", "0", CVAR_ARCHIVE, NULL);
+	r_flashblend = Cvar_Get("r_flashblend", "0", 0, "Controls the way dynamic lights are drawn");
 #if defined(_WIN32)
-	r_driver = ri.Cvar_Get("r_driver", "opengl32", CVAR_ARCHIVE, NULL);
+	r_driver = Cvar_Get("r_driver", "opengl32", CVAR_ARCHIVE, NULL);
 #elif defined (__APPLE__) || defined (MACOSX)
-	r_driver = ri.Cvar_Get("r_driver", "/System/Library/Frameworks/OpenGL.framework/Libraries/libGL.dylib", CVAR_ARCHIVE, NULL);
+	r_driver = Cvar_Get("r_driver", "/System/Library/Frameworks/OpenGL.framework/Libraries/libGL.dylib", CVAR_ARCHIVE, NULL);
 #else
-	r_driver = ri.Cvar_Get("r_driver", "libGL.so", CVAR_ARCHIVE, NULL);
+	r_driver = Cvar_Get("r_driver", "libGL.so", CVAR_ARCHIVE, NULL);
 #endif
-	r_texturemode = ri.Cvar_Get("r_texturemode", "GL_LINEAR_MIPMAP_NEAREST", CVAR_ARCHIVE, NULL);
-	r_texturealphamode = ri.Cvar_Get("r_texturealphamode", "default", CVAR_ARCHIVE, NULL);
-	r_texturesolidmode = ri.Cvar_Get("r_texturesolidmode", "default", CVAR_ARCHIVE, NULL);
-	r_wire = ri.Cvar_Get("r_wire", "0", 0, "Draw the scene in wireframe mode");
-	r_fog = ri.Cvar_Get("r_fog", "1", CVAR_ARCHIVE, NULL);
-	r_showbox = ri.Cvar_Get("r_showbox", "0", CVAR_ARCHIVE, "Shows model bounding box");
+	r_texturemode = Cvar_Get("r_texturemode", "GL_LINEAR_MIPMAP_NEAREST", CVAR_ARCHIVE, NULL);
+	r_texturealphamode = Cvar_Get("r_texturealphamode", "default", CVAR_ARCHIVE, NULL);
+	r_texturesolidmode = Cvar_Get("r_texturesolidmode", "default", CVAR_ARCHIVE, NULL);
+	r_wire = Cvar_Get("r_wire", "0", 0, "Draw the scene in wireframe mode");
+	r_fog = Cvar_Get("r_fog", "1", CVAR_ARCHIVE, NULL);
+	r_showbox = Cvar_Get("r_showbox", "0", CVAR_ARCHIVE, "Shows model bounding box");
 
-	r_ext_swapinterval = ri.Cvar_Get("r_ext_swapinterval", "1", CVAR_ARCHIVE, NULL);
-	r_ext_multitexture = ri.Cvar_Get("r_ext_multitexture", "1", CVAR_ARCHIVE, NULL);
-	r_ext_combine = ri.Cvar_Get("r_ext_combine", "1", CVAR_ARCHIVE, NULL);
-	r_ext_lockarrays = ri.Cvar_Get("r_ext_lockarrays", "0", CVAR_ARCHIVE, NULL);
-	r_ext_texture_compression = ri.Cvar_Get("r_ext_texture_compression", "0", CVAR_ARCHIVE, NULL);
-	r_ext_s3tc_compression = ri.Cvar_Get("r_ext_s3tc_compression", "1", CVAR_ARCHIVE, NULL);
+	r_ext_swapinterval = Cvar_Get("r_ext_swapinterval", "1", CVAR_ARCHIVE, NULL);
+	r_ext_multitexture = Cvar_Get("r_ext_multitexture", "1", CVAR_ARCHIVE, NULL);
+	r_ext_combine = Cvar_Get("r_ext_combine", "1", CVAR_ARCHIVE, NULL);
+	r_ext_lockarrays = Cvar_Get("r_ext_lockarrays", "0", CVAR_ARCHIVE, NULL);
+	r_ext_texture_compression = Cvar_Get("r_ext_texture_compression", "0", CVAR_ARCHIVE, NULL);
+	r_ext_s3tc_compression = Cvar_Get("r_ext_s3tc_compression", "1", CVAR_ARCHIVE, NULL);
 
-	r_drawbuffer = ri.Cvar_Get("r_drawbuffer", "GL_BACK", 0, NULL);
-	r_swapinterval = ri.Cvar_Get("r_swapinterval", "1", CVAR_ARCHIVE, NULL);
+	r_drawbuffer = Cvar_Get("r_drawbuffer", "GL_BACK", 0, NULL);
+	r_swapinterval = Cvar_Get("r_swapinterval", "1", CVAR_ARCHIVE, NULL);
 
-	r_3dmapradius = ri.Cvar_Get("r_3dmapradius", "8192.0", CVAR_NOSET, NULL);
+	r_3dmapradius = Cvar_Get("r_3dmapradius", "8192.0", CVAR_NOSET, NULL);
 
-	vid_fullscreen = ri.Cvar_Get("vid_fullscreen", "0", CVAR_ARCHIVE, NULL);
-	vid_gamma = ri.Cvar_Get("vid_gamma", "1.0", CVAR_ARCHIVE, NULL);
+	vid_fullscreen = Cvar_Get("vid_fullscreen", "0", CVAR_ARCHIVE, NULL);
+	vid_gamma = Cvar_Get("vid_gamma", "1.0", CVAR_ARCHIVE, NULL);
 #if defined(_WIN32)
-	vid_ref = ri.Cvar_Get("vid_ref", "gl", CVAR_ARCHIVE, NULL);
+	vid_ref = Cvar_Get("vid_ref", "gl", CVAR_ARCHIVE, NULL);
 #else
-	vid_ref = ri.Cvar_Get("vid_ref", "sdl", CVAR_ARCHIVE, NULL);
+	vid_ref = Cvar_Get("vid_ref", "sdl", CVAR_ARCHIVE, NULL);
 #endif
-	vid_grabmouse = ri.Cvar_Get("vid_grabmouse", "0", CVAR_ARCHIVE, NULL);
+	vid_grabmouse = Cvar_Get("vid_grabmouse", "0", CVAR_ARCHIVE, NULL);
 	vid_grabmouse->modified = qfalse;
 
-	con_font = ri.Cvar_Get("con_font", "0", CVAR_ARCHIVE, NULL);
-	con_fontWidth = ri.Cvar_Get("con_fontWidth", "8", CVAR_NOSET, NULL);
-	con_fontHeight = ri.Cvar_Get("con_fontHeight", "16", CVAR_NOSET, NULL);
-	con_fontShift = ri.Cvar_Get("con_fontShift", "3", CVAR_NOSET, NULL);
+	con_font = Cvar_Get("con_font", "0", CVAR_ARCHIVE, NULL);
+	con_fontWidth = Cvar_Get("con_fontWidth", "8", CVAR_NOSET, NULL);
+	con_fontHeight = Cvar_Get("con_fontHeight", "16", CVAR_NOSET, NULL);
+	con_fontShift = Cvar_Get("con_fontShift", "3", CVAR_NOSET, NULL);
 
 	for (commands = r_commands; commands->name; commands++)
-		ri.Cmd_AddCommand(commands->name, commands->function, commands->description);
+		Cmd_AddCommand(commands->name, commands->function, commands->description);
 }
 
 /**
@@ -761,24 +758,24 @@ static qboolean R_SetMode (void)
 	r_mode->modified = qfalse;
 	r_ext_texture_compression->modified = qfalse;
 
-	if ((err = Rimp_SetMode(&vid.width, &vid.height, r_mode->integer, fullscreen)) == rserr_ok)
+	if ((err = Rimp_SetMode(&viddef.width, &viddef.height, r_mode->integer, fullscreen)) == rserr_ok)
 		r_state.prev_mode = r_mode->integer;
 	else {
 		if (err == rserr_invalid_fullscreen) {
-			ri.Cvar_SetValue("vid_fullscreen", 0);
+			Cvar_SetValue("vid_fullscreen", 0);
 			vid_fullscreen->modified = qfalse;
-			ri.Con_Printf(PRINT_ALL, "renderer::R_SetMode() - fullscreen unavailable in this mode\n");
-			if ((err = Rimp_SetMode(&vid.width, &vid.height, r_mode->integer, qfalse)) == rserr_ok)
+			Com_Printf("renderer::R_SetMode() - fullscreen unavailable in this mode\n");
+			if ((err = Rimp_SetMode(&viddef.width, &viddef.height, r_mode->integer, qfalse)) == rserr_ok)
 				return qtrue;
 		} else if (err == rserr_invalid_mode) {
-			ri.Cvar_SetValue("r_mode", r_state.prev_mode);
+			Cvar_SetValue("r_mode", r_state.prev_mode);
 			r_mode->modified = qfalse;
-			ri.Con_Printf(PRINT_ALL, "renderer::R_SetMode() - invalid mode\n");
+			Com_Printf("renderer::R_SetMode() - invalid mode\n");
 		}
 
 		/* try setting it back to something safe */
-		if ((err = Rimp_SetMode(&vid.width, &vid.height, r_state.prev_mode, qfalse)) != rserr_ok) {
-			ri.Con_Printf(PRINT_ALL, "renderer::R_SetMode() - could not revert to safe mode\n");
+		if ((err = Rimp_SetMode(&viddef.width, &viddef.height, r_state.prev_mode, qfalse)) != rserr_ok) {
+			Com_Printf("renderer::R_SetMode() - could not revert to safe mode\n");
 			return qfalse;
 		}
 	}
@@ -788,7 +785,7 @@ static qboolean R_SetMode (void)
 /**
  * @brief
  */
-static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
+qboolean R_Init (void)
 {
 	char renderer_buffer[1000];
 	char vendor_buffer[1000];
@@ -799,19 +796,17 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 	for (j = 0; j < 256; j++)
 		r_turbsin[j] *= 0.5;
 
-	ri.Con_Printf(PRINT_ALL, "renderer version: "REF_VERSION"\n");
-
 	R_Register();
 
 	/* initialize our QGL dynamic bindings */
 	if (!QR_Init(r_driver->string)) {
 		QR_Shutdown();
-		ri.Con_Printf(PRINT_ALL, "renderer::R_Init() - could not load \"%s\"\n", r_driver->string);
+		Com_Printf("renderer::R_Init() - could not load \"%s\"\n", r_driver->string);
 		return qfalse;
 	}
 
 	/* initialize OS-specific parts of OpenGL */
-	if (!Rimp_Init(hinstance, wndproc)) {
+	if (!Rimp_Init()) {
 		QR_Shutdown();
 		return qfalse;
 	}
@@ -822,19 +817,19 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 	/* create the window and set up the context */
 	if (!R_SetMode()) {
 		QR_Shutdown();
-		ri.Con_Printf(PRINT_ALL, "renderer::R_Init() - could not R_SetMode()\n");
+		Com_Printf("renderer::R_Init() - could not R_SetMode()\n");
 		return qfalse;
 	}
 
 	/* get our various GL strings */
 	r_config.vendor_string = (const char *)qglGetString (GL_VENDOR);
-	ri.Con_Printf(PRINT_ALL, "GL_VENDOR: %s\n", r_config.vendor_string);
+	Com_Printf("GL_VENDOR: %s\n", r_config.vendor_string);
 	r_config.renderer_string = (const char *)qglGetString (GL_RENDERER);
-	ri.Con_Printf(PRINT_ALL, "GL_RENDERER: %s\n", r_config.renderer_string);
+	Com_Printf("GL_RENDERER: %s\n", r_config.renderer_string);
 	r_config.version_string = (const char *)qglGetString (GL_VERSION);
-	ri.Con_Printf(PRINT_ALL, "GL_VERSION: %s\n", r_config.version_string);
+	Com_Printf("GL_VERSION: %s\n", r_config.version_string);
 	r_config.extensions_string = (const char *)qglGetString (GL_EXTENSIONS);
-	ri.Con_Printf(PRINT_ALL, "GL_EXTENSIONS: %s\n", r_config.extensions_string);
+	Com_Printf("GL_EXTENSIONS: %s\n", r_config.extensions_string);
 
 	Q_strncpyz(renderer_buffer, r_config.renderer_string, sizeof(renderer_buffer));
 	renderer_buffer[sizeof(renderer_buffer)-1] = 0;
@@ -867,35 +862,35 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 		r_config.renderer = GL_RENDERER_OTHER;
 
 #if defined (__linux__) || defined (__FreeBSD__) || defined (__NetBSD__)
-	ri.Cvar_SetValue("r_finish", 1);
+	Cvar_SetValue("r_finish", 1);
 #else
 	/* MCD has buffering issues */
 	if (r_config.renderer == GL_RENDERER_MCD)
-		ri.Cvar_SetValue("r_finish", 1);
+		Cvar_SetValue("r_finish", 1);
 #endif
 
 	/* grab extensions */
 	if (strstr(r_config.extensions_string, "GL_EXT_compiled_vertex_array") || strstr(r_config.extensions_string, "GL_SGI_compiled_vertex_array")) {
 		if (r_ext_lockarrays->integer) {
-			ri.Con_Printf(PRINT_ALL, "...enabling GL_EXT_LockArrays\n");
+			Com_Printf("...enabling GL_EXT_LockArrays\n");
 			qglLockArraysEXT = (void (APIENTRY *) (int, int)) qwglGetProcAddress("glLockArraysEXT");
 			qglUnlockArraysEXT = (void (APIENTRY *) (void)) qwglGetProcAddress("glUnlockArraysEXT");
 		} else
-			ri.Con_Printf(PRINT_ALL, "...ignoring GL_EXT_LockArrays\n");
+			Com_Printf("...ignoring GL_EXT_LockArrays\n");
 	} else
-		ri.Con_Printf(PRINT_ALL, "...GL_EXT_compiled_vertex_array not found\n");
+		Com_Printf("...GL_EXT_compiled_vertex_array not found\n");
 
 #ifdef _WIN32
 	if (strstr(r_config.extensions_string, "WGL_EXT_swap_control")) {
 		qwglSwapIntervalEXT = (BOOL(WINAPI *) (int)) qwglGetProcAddress("wglSwapIntervalEXT");
-		ri.Con_Printf(PRINT_ALL, "...enabling WGL_EXT_swap_control\n");
+		Com_Printf("...enabling WGL_EXT_swap_control\n");
 	} else
-		ri.Con_Printf(PRINT_ALL, "...WGL_EXT_swap_control not found\n");
+		Com_Printf("...WGL_EXT_swap_control not found\n");
 #endif
 
 	if (strstr(r_config.extensions_string, "GL_ARB_multitexture")) {
 		if (r_ext_multitexture->integer) {
-			ri.Con_Printf(PRINT_ALL, "...using GL_ARB_multitexture\n");
+			Com_Printf("...using GL_ARB_multitexture\n");
 			qglMTexCoord2fSGIS = (void (APIENTRY *) (GLenum, GLfloat, GLfloat)) qwglGetProcAddress("glMultiTexCoord2fARB");
 			qglActiveTextureARB = (void (APIENTRY *) (GLenum)) qwglGetProcAddress("glActiveTextureARB");
 			qglClientActiveTextureARB = (void (APIENTRY *) (GLenum)) qwglGetProcAddress("glClientActiveTextureARB");
@@ -904,28 +899,28 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 			gl_texture2 = GL_TEXTURE2_ARB;
 			gl_texture3 = GL_TEXTURE3_ARB;
 		} else
-			ri.Con_Printf(PRINT_ALL, "...ignoring GL_ARB_multitexture\n");
+			Com_Printf("...ignoring GL_ARB_multitexture\n");
 	} else
-		ri.Con_Printf(PRINT_ALL, "...GL_ARB_multitexture not found\n");
+		Com_Printf("...GL_ARB_multitexture not found\n");
 
 	if (strstr(r_config.extensions_string, "GL_EXT_texture_env_combine") || strstr(r_config.extensions_string, "GL_ARB_texture_env_combine")) {
 		if (r_ext_combine->integer) {
-			ri.Con_Printf(PRINT_ALL, "...using GL_EXT_texture_env_combine\n");
+			Com_Printf("...using GL_EXT_texture_env_combine\n");
 			r_config.envCombine = GL_COMBINE_EXT;
 		} else {
-			ri.Con_Printf(PRINT_ALL, "...ignoring EXT_texture_env_combine\n");
+			Com_Printf("...ignoring EXT_texture_env_combine\n");
 			r_config.envCombine = 0;
 		}
 	} else {
-		ri.Con_Printf(PRINT_ALL, "...GL_EXT_texture_env_combine not found\n");
+		Com_Printf("...GL_EXT_texture_env_combine not found\n");
 		r_config.envCombine = 0;
 	}
 
 	if (strstr(r_config.extensions_string, "GL_SGIS_multitexture")) {
 		if (qglActiveTextureARB)
-			ri.Con_Printf(PRINT_ALL, "...GL_SGIS_multitexture deprecated in favor of ARB_multitexture\n");
+			Com_Printf("...GL_SGIS_multitexture deprecated in favor of ARB_multitexture\n");
 		else if (r_ext_multitexture->integer) {
-			ri.Con_Printf(PRINT_ALL, "...using GL_SGIS_multitexture\n");
+			Com_Printf("...using GL_SGIS_multitexture\n");
 			qglMTexCoord2fSGIS = (void (APIENTRY *) (GLenum, GLfloat, GLfloat)) qwglGetProcAddress("glMTexCoord2fSGIS");
 			qglSelectTextureSGIS = (void (APIENTRY *) (GLenum)) qwglGetProcAddress("glSelectTextureSGIS");
 			gl_texture0 = GL_TEXTURE0_SGIS;
@@ -933,29 +928,29 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 			gl_texture2 = GL_TEXTURE2_SGIS;
 			gl_texture3 = GL_TEXTURE3_SGIS;
 		} else
-			ri.Con_Printf(PRINT_ALL, "...ignoring GL_SGIS_multitexture\n");
+			Com_Printf("...ignoring GL_SGIS_multitexture\n");
 	} else
-		ri.Con_Printf(PRINT_ALL, "...GL_SGIS_multitexture not found\n");
+		Com_Printf("...GL_SGIS_multitexture not found\n");
 
 	if (strstr(r_config.extensions_string, "GL_ARB_texture_compression")) {
 		if (r_ext_texture_compression->integer) {
-			ri.Con_Printf(PRINT_ALL, "...using GL_ARB_texture_compression\n");
+			Com_Printf("...using GL_ARB_texture_compression\n");
 			if (r_ext_s3tc_compression->integer && strstr(r_config.extensions_string, "GL_EXT_texture_compression_s3tc")) {
-/*				ri.Con_Printf(PRINT_ALL, "   with s3tc compression\n"); */
+/*				Com_Printf("   with s3tc compression\n"); */
 				gl_compressed_solid_format = GL_COMPRESSED_RGB_S3TC_DXT1_EXT;
 				gl_compressed_alpha_format = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
 			} else {
-/*				ri.Con_Printf(PRINT_ALL, "   without s3tc compression\n"); */
+/*				Com_Printf("   without s3tc compression\n"); */
 				gl_compressed_solid_format = GL_COMPRESSED_RGB_ARB;
 				gl_compressed_alpha_format = GL_COMPRESSED_RGBA_ARB;
 			}
 		} else {
-			ri.Con_Printf(PRINT_ALL, "...ignoring GL_ARB_texture_compression\n");
+			Com_Printf("...ignoring GL_ARB_texture_compression\n");
 			gl_compressed_solid_format = 0;
 			gl_compressed_alpha_format = 0;
 		}
 	} else {
-		ri.Con_Printf(PRINT_ALL, "...GL_ARB_texture_compression not found\n");
+		Com_Printf("...GL_ARB_texture_compression not found\n");
 		gl_compressed_solid_format = 0;
 		gl_compressed_alpha_format = 0;
 	}
@@ -964,58 +959,58 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 	r_state.anisotropic = qfalse;
 
 	qglGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &max_aniso);
-	ri.Cvar_SetValue("r_ext_max_anisotropy", max_aniso);
+	Cvar_SetValue("r_ext_max_anisotropy", max_aniso);
 	if (r_anisotropic->integer > r_ext_max_anisotropy->integer) {
-		ri.Con_Printf(PRINT_ALL, "...max GL_EXT_texture_filter_anisotropic value is %i\n", max_aniso);
-		ri.Cvar_SetValue("r_anisotropic", r_ext_max_anisotropy->integer);
+		Com_Printf("...max GL_EXT_texture_filter_anisotropic value is %i\n", max_aniso);
+		Cvar_SetValue("r_anisotropic", r_ext_max_anisotropy->integer);
 	}
 
 	aniso_level = r_anisotropic->integer;
 	if (strstr(r_config.extensions_string, "GL_EXT_texture_filter_anisotropic")) {
 		if (!r_anisotropic->integer)
-			ri.Con_Printf(PRINT_ALL, "...ignoring GL_EXT_texture_filter_anisotropic\n");
+			Com_Printf("...ignoring GL_EXT_texture_filter_anisotropic\n");
 		else {
-			ri.Con_Printf(PRINT_ALL, "...using GL_EXT_texture_filter_anisotropic [%2i max] [%2i selected]\n", max_aniso, aniso_level);
+			Com_Printf("...using GL_EXT_texture_filter_anisotropic [%2i max] [%2i selected]\n", max_aniso, aniso_level);
 			r_state.anisotropic = qtrue;
 		}
 	} else {
-		ri.Con_Printf(PRINT_ALL, "...GL_EXT_texture_filter_anisotropic not found\n");
-		ri.Cvar_Set("r_anisotropic", "0");
-		ri.Cvar_Set("r_ext_max_anisotropy", "0");
+		Com_Printf("...GL_EXT_texture_filter_anisotropic not found\n");
+		Cvar_Set("r_anisotropic", "0");
+		Cvar_Set("r_ext_max_anisotropy", "0");
 	}
 
 	if (strstr(r_config.extensions_string, "GL_EXT_texture_lod_bias")) {
-		ri.Con_Printf(PRINT_ALL, "...using GL_EXT_texture_lod_bias\n");
+		Com_Printf("...using GL_EXT_texture_lod_bias\n");
 		r_state.lod_bias = qtrue;
 	} else {
-		ri.Con_Printf(PRINT_ALL, "...GL_EXT_texture_lod_bias not found\n");
+		Com_Printf("...GL_EXT_texture_lod_bias not found\n");
 		r_state.lod_bias = qfalse;
 	}
 
 #if 0
 	if (strstr(r_config.extensions_string, "GL_SGIS_generate_mipmap")) {
-		ri.Con_Printf(PRINT_ALL, "...using GL_SGIS_generate_mipmap\n");
+		Com_Printf("...using GL_SGIS_generate_mipmap\n");
 		r_state.sgis_mipmap = qtrue;
 	} else {
-		ri.Con_Printf(PRINT_ALL, "...GL_SGIS_generate_mipmap not found\n");
-		ri.Sys_Error(ERR_FATAL, "GL_SGIS_generate_mipmap not found!");
+		Com_Printf("...GL_SGIS_generate_mipmap not found\n");
+		Sys_Error("GL_SGIS_generate_mipmap not found!");
 		r_state.sgis_mipmap = qfalse;
 	}
 #endif
 
 	if (strstr(r_config.extensions_string, "GL_EXT_stencil_wrap")) {
-		ri.Con_Printf(PRINT_ALL, "...using GL_EXT_stencil_wrap\n");
+		Com_Printf("...using GL_EXT_stencil_wrap\n");
 		r_state.stencil_wrap = qtrue;
 	} else {
-		ri.Con_Printf(PRINT_ALL, "...GL_EXT_stencil_wrap not found\n");
+		Com_Printf("...GL_EXT_stencil_wrap not found\n");
 		r_state.stencil_wrap = qfalse;
 	}
 
 	if (strstr(r_config.extensions_string, "GL_EXT_fog_coord")) {
-		ri.Con_Printf(PRINT_ALL, "...using GL_EXT_fog_coord\n");
+		Com_Printf("...using GL_EXT_fog_coord\n");
 		r_state.fog_coord = qtrue;
 	} else {
-		ri.Con_Printf(PRINT_ALL, "...GL_EXT_fog_coord not found\n");
+		Com_Printf("...GL_EXT_fog_coord not found\n");
 		r_state.fog_coord = qfalse;
 	}
 
@@ -1023,7 +1018,7 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 	r_state.arb_fragment_program = qfalse;
 #ifdef HAVE_SHADERS
 	if (strstr(r_config.extensions_string, "GL_ARB_fragment_program")) {
-		ri.Con_Printf(PRINT_ALL, "...using GL_ARB_fragment_program\n");
+		Com_Printf("...using GL_ARB_fragment_program\n");
 		r_state.arb_fragment_program = qtrue;
 
 		qglProgramStringARB = (void *) qwglGetProcAddress("glProgramStringARB");
@@ -1046,13 +1041,13 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 		qglGetProgramStringARB = (void *) qwglGetProcAddress("glGetProgramStringARB");
 		qglIsProgramARB = (void *) qwglGetProcAddress("glIsProgramARB");
 	} else {
-		ri.Con_Printf(PRINT_ALL, "...GL_ARB_fragment_program not found\n");
+		Com_Printf("...GL_ARB_fragment_program not found\n");
 		r_state.arb_fragment_program = qfalse;
 	}
 
 	/* FIXME: Is this the right extension to check for? */
 	if (strstr(r_config.extensions_string, "GL_ARB_shading_language_100")) {
-		ri.Con_Printf(PRINT_ALL, "...using GL_ARB_shading_language_100\n");
+		Com_Printf("...using GL_ARB_shading_language_100\n");
 		qglCreateShader  = (void *) qwglGetProcAddress("glCreateShaderObjectARB");
 		qglShaderSource  = (void *) qwglGetProcAddress("glShaderSourceARB");
 		qglCompileShader = (void *) qwglGetProcAddress("glCompileShaderARB");
@@ -1063,10 +1058,10 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 		qglDeleteShader  = (void *) qwglGetProcAddress("glDeleteObjectARB");
 		qglDeleteProgram = (void *) qwglGetProcAddress("glDeleteObjectARB");
 		if (!qglCreateShader)
-			ri.Sys_Error(ERR_FATAL, "Could not load all needed GLSL functions\n");
+			Sys_Error("Could not load all needed GLSL functions\n");
 		r_state.glsl_program = qtrue;
 	} else {
-		ri.Con_Printf(PRINT_ALL, "...GL_ARB_shading_language_100 not found\n");
+		Com_Printf("...GL_ARB_shading_language_100 not found\n");
 		r_state.glsl_program = qfalse;
 	}
 #endif							/* HAVE_SHADERS */
@@ -1074,41 +1069,41 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 	r_state.ati_separate_stencil = qfalse;
 	if (strstr(r_config.extensions_string, "GL_ATI_separate_stencil")) {
 		if (!r_ati_separate_stencil->integer) {
-			ri.Con_Printf(PRINT_ALL, "...ignoring GL_ATI_separate_stencil\n");
+			Com_Printf("...ignoring GL_ATI_separate_stencil\n");
 			r_state.ati_separate_stencil = qfalse;
 		} else {
-			ri.Con_Printf(PRINT_ALL, "...using GL_ATI_separate_stencil\n");
+			Com_Printf("...using GL_ATI_separate_stencil\n");
 			r_state.ati_separate_stencil = qtrue;
 			qglStencilOpSeparateATI = (void (APIENTRY *) (GLenum, GLenum, GLenum, GLenum)) qwglGetProcAddress("glStencilOpSeparateATI");
 			qglStencilFuncSeparateATI = (void (APIENTRY *) (GLenum, GLenum, GLint, GLuint)) qwglGetProcAddress("glStencilFuncSeparateATI");
 		}
 	} else {
-		ri.Con_Printf(PRINT_ALL, "...GL_ATI_separate_stencil not found\n");
+		Com_Printf("...GL_ATI_separate_stencil not found\n");
 		r_state.ati_separate_stencil = qfalse;
-		ri.Cvar_Set("r_ati_separate_stencil", "0");
+		Cvar_Set("r_ati_separate_stencil", "0");
 	}
 
 	r_state.stencil_two_side = qfalse;
 	if (strstr(r_config.extensions_string, "GL_EXT_stencil_two_side")) {
 		if (!r_stencil_two_side->integer) {
-			ri.Con_Printf(PRINT_ALL, "...ignoring GL_EXT_stencil_two_side\n");
+			Com_Printf("...ignoring GL_EXT_stencil_two_side\n");
 			r_state.stencil_two_side = qfalse;
 		} else {
-			ri.Con_Printf(PRINT_ALL, "...using GL_EXT_stencil_two_side\n");
+			Com_Printf("...using GL_EXT_stencil_two_side\n");
 			r_state.stencil_two_side = qtrue;
 			qglActiveStencilFaceEXT = (void (APIENTRY *) (GLenum)) qwglGetProcAddress("glActiveStencilFaceEXT");
 		}
 	} else {
-		ri.Con_Printf(PRINT_ALL, "...GL_EXT_stencil_two_side not found\n");
+		Com_Printf("...GL_EXT_stencil_two_side not found\n");
 		r_state.stencil_two_side = qfalse;
-		ri.Cvar_Set("r_stencil_two_side", "0");
+		Cvar_Set("r_stencil_two_side", "0");
 	}
 
 	{
 		int size;
 		GLenum err;
 
-		ri.Con_Printf(PRINT_ALL, "...max texture size:\n");
+		Com_Printf("...max texture size:\n");
 
 		qglGetIntegerv(GL_MAX_TEXTURE_SIZE, &size);
 		r_config.maxTextureSize = size;
@@ -1118,14 +1113,14 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 			r_config.maxTextureSize = 0;
 
 		if ((err = qglGetError()) != GL_NO_ERROR) {
-			ri.Con_Printf(PRINT_ALL, "......cannot detect !\n");
+			Com_Printf("......cannot detect !\n");
 		} else {
-			ri.Con_Printf(PRINT_ALL, "......detected %d\n", size);
+			Com_Printf("......detected %d\n", size);
 			if (r_maxtexres->integer > size) {
-				ri.Con_Printf(PRINT_ALL, "......downgrading from %i\n", r_maxtexres->integer);
-				ri.Cvar_SetValue("r_maxtexres", size);
+				Com_Printf("......downgrading from %i\n", r_maxtexres->integer);
+				Cvar_SetValue("r_maxtexres", size);
 			} else if (r_maxtexres->integer < size) {
-				ri.Con_Printf(PRINT_ALL, "......but using %i as requested\n", r_maxtexres->integer);
+				Com_Printf("......but using %i as requested\n", r_maxtexres->integer);
 			}
 		}
 	}
@@ -1134,7 +1129,7 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 
 	R_InitImages();
 	R_InitMiscTexture();
-	Draw_InitLocal();
+	R_DrawInitLocal();
 
 	R_CHECK_ERROR
 
@@ -1145,12 +1140,12 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
  * @brief
  * @sa R_Init
  */
-static void R_Shutdown (void)
+void R_Shutdown (void)
 {
 	const cmdList_t *commands;
 
 	for (commands = r_commands; commands->name; commands++)
-		ri.Cmd_RemoveCommand(commands->name);
+		Cmd_RemoveCommand(commands->name);
 
 	qglDeleteLists(spherelist, 1);
 	spherelist = -1;
@@ -1160,7 +1155,7 @@ static void R_Shutdown (void)
 #ifdef HAVE_SHADERS
 	R_ShutdownShaders();
 #endif
-	Font_Shutdown();
+	R_FontShutdown();
 
 	/* shut down OS specific OpenGL stuff like contexts, etc. */
 	Rimp_Shutdown();
@@ -1172,9 +1167,8 @@ static void R_Shutdown (void)
 /**
  * @brief
  * @sa R_RenderFrame
- * @sa Rimp_BeginFrame
  */
-static void R_BeginFrame (void)
+void R_BeginFrame (void)
 {
 	/* change modes if necessary */
 	/* FIXME: only restart if CDS is required */
@@ -1184,8 +1178,8 @@ static void R_BeginFrame (void)
 
 	if (r_anisotropic->modified) {
 		if (r_anisotropic->integer > r_ext_max_anisotropy->integer) {
-			ri.Con_Printf(PRINT_ALL, "...max GL_EXT_texture_filter_anisotropic value is %i\n", r_ext_max_anisotropy->integer);
-			ri.Cvar_SetValue("r_anisotropic", r_ext_max_anisotropy->value);
+			Com_Printf("...max GL_EXT_texture_filter_anisotropic value is %i\n", r_ext_max_anisotropy->integer);
+			Cvar_SetValue("r_anisotropic", r_ext_max_anisotropy->value);
 		}
 		/*R_UpdateAnisotropy();*/
 		r_anisotropic->modified = qfalse;
@@ -1193,17 +1187,17 @@ static void R_BeginFrame (void)
 
 	if (con_font->modified) {
 		if (con_font->integer == 0) {
-			ri.Cvar_ForceSet("con_fontWidth", "8");
-			ri.Cvar_ForceSet("con_fontHeight", "16");
-			ri.Cvar_ForceSet("con_fontShift", "3");
+			Cvar_ForceSet("con_fontWidth", "8");
+			Cvar_ForceSet("con_fontHeight", "16");
+			Cvar_ForceSet("con_fontShift", "3");
 			con_font->modified = qfalse;
 		} else if (con_font->integer == 1 && draw_chars[1]) {
-			ri.Cvar_ForceSet("con_fontWidth", "8");
-			ri.Cvar_ForceSet("con_fontHeight", "8");
-			ri.Cvar_ForceSet("con_fontShift", "3");
+			Cvar_ForceSet("con_fontWidth", "8");
+			Cvar_ForceSet("con_fontHeight", "8");
+			Cvar_ForceSet("con_fontShift", "3");
 			con_font->modified = qfalse;
 		} else
-			ri.Cvar_ForceSet("con_font", "1");
+			Cvar_ForceSet("con_font", "1");
 	}
 
 	if (vid_gamma->modified) {
@@ -1211,8 +1205,6 @@ static void R_BeginFrame (void)
 		if (r_state.hwgamma)
 			Rimp_SetGamma();
 	}
-
-	Rimp_BeginFrame();
 
 	/* go into 2D mode */
 	R_SetupGL2D();
@@ -1254,7 +1246,7 @@ static void R_BeginFrame (void)
 /**
  * @brief
  */
-static void R_TakeVideoFrame (int w, int h, byte * captureBuffer, byte * encodeBuffer, qboolean motionJpeg)
+void R_TakeVideoFrame (int w, int h, byte * captureBuffer, byte * encodeBuffer, qboolean motionJpeg)
 {
 	size_t frameSize;
 	int i;
@@ -1263,7 +1255,7 @@ static void R_TakeVideoFrame (int w, int h, byte * captureBuffer, byte * encodeB
 
 	if (motionJpeg) {
 		frameSize = R_SaveJPGToBuffer(encodeBuffer, 90, w, h, captureBuffer);
-		ri.CL_WriteAVIVideoFrame(encodeBuffer, frameSize);
+		CL_WriteAVIVideoFrame(encodeBuffer, frameSize);
 	} else {
 		frameSize = w * h;
 
@@ -1273,118 +1265,6 @@ static void R_TakeVideoFrame (int w, int h, byte * captureBuffer, byte * encodeB
 			encodeBuffer[i * 3 + 1] = captureBuffer[i * 4 + 1];
 			encodeBuffer[i * 3 + 2] = captureBuffer[i * 4];
 		}
-		ri.CL_WriteAVIVideoFrame(encodeBuffer, frameSize * 3);
+		CL_WriteAVIVideoFrame(encodeBuffer, frameSize * 3);
 	}
 }
-
-/**
- * @brief
- */
-refexport_t GetRefAPI (refimport_t rimp)
-{
-	refexport_t re;
-
-	ri = rimp;
-
-	re.api_version = API_VERSION;
-
-	re.BeginLoading = Mod_BeginLoading;
-	re.EndLoading = Mod_EndLoading;
-	re.RegisterModel = R_RegisterModelShort;
-	re.RegisterPic = Draw_FindPic;
-
-	re.RenderFrame = R_RenderFrame;
-	re.SetRefDef = R_SetRefreshDefinition;
-	re.DrawPtls = R_DrawPtls;
-
-	re.DrawModelDirect = R_DrawModelDirect;
-	re.DrawGetPicSize = Draw_GetPicSize;
-	re.DrawPic = Draw_Pic;
-	re.DrawNormPic = Draw_NormPic;
-	re.DrawChar = Draw_Char;
-	re.FontDrawString = Font_DrawString;
-	re.FontLength = Font_Length;
-	re.FontRegister = Font_Register;
-	re.DrawFill = Draw_Fill;
-	re.DrawColor = Draw_Color;
-	re.DrawDayAndNight = Draw_DayAndNight;
-	re.DrawLineStrip = Draw_LineStrip;
-	re.DrawLineLoop = Draw_LineLoop;
-	re.DrawPolygon = Draw_Polygon;
-	re.DrawCircle = Draw_Circle;
-	re.Draw3DGlobe = Draw_3DGlobe;
-	re.Draw3DMapMarkers = Draw_3DMapMarkers;
-	re.DrawImagePixelData = R_DrawImagePixelData;
-	re.AnimAppend = Anim_Append;
-	re.AnimChange = Anim_Change;
-	re.AnimRun = Anim_Run;
-	re.AnimGetName = Anim_GetName;
-
-	re.LoadTGA = R_LoadTGA;
-
-	re.Init = R_Init;
-	re.Shutdown = R_Shutdown;
-
-	re.BeginFrame = R_BeginFrame;
-	re.EndFrame = Rimp_EndFrame;
-
-	re.AppActivate = Rimp_AppActivate;
-	re.TakeVideoFrame = R_TakeVideoFrame;
-	Swap_Init();
-
-	return re;
-}
-
-#ifndef REF_HARD_LINKED
-/* this is only here so the functions in q_shared.c and q_shwin.c can link */
-/**
-* @brief
-*/
-void Sys_Error (const char *error, ...)
-{
-	va_list argptr;
-	char text[1024];
-
-	va_start(argptr, error);
-	Q_vsnprintf(text, sizeof(text), error, argptr);
-	va_end(argptr);
-
-	text[sizeof(text)-1] = 0;
-
-	ri.Sys_Error(ERR_FATAL, "%s", text);
-}
-
-/**
-* @brief
-*/
-void Com_Printf (const char *fmt, ...)
-{
-	va_list argptr;
-	char text[1024];
-
-	va_start(argptr, fmt);
-	Q_vsnprintf(text, sizeof(text), fmt, argptr);
-	va_end(argptr);
-
-	text[sizeof(text)-1] = 0;
-
-	ri.Con_Printf(PRINT_ALL, "%s", text);
-}
-
-/**
-* @brief
-*/
-void Com_DPrintf (int level, const char *fmt, ...)
-{
-	va_list argptr;
-	char text[1024];
-
-	va_start(argptr, fmt);
-	Q_vsnprintf(text, sizeof(text), fmt, argptr);
-	va_end(argptr);
-
-	text[sizeof(text)-1] = 0;
-
-	ri.Con_Printf(level, "%s", text);
-}
-#endif /* REF_HARD_LINKED */

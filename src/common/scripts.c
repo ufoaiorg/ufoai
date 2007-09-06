@@ -2356,7 +2356,7 @@ void Com_PrecacheCharacterModels (void)
 				list = list->next;
 				/* register body */
 				Com_sprintf(model, sizeof(model), "%s/%s", path, list->data);
-				if (!re.RegisterModel(model))
+				if (!R_RegisterModelShort(model))
 					Com_Printf("Com_PrecacheCharacterModels: Could not register model %s\n", model);
 #ifdef PARANOID
 				_Mem_CheckPoolIntegrity(vid_modelPool, model, __LINE__);
@@ -2364,7 +2364,7 @@ void Com_PrecacheCharacterModels (void)
 				list = list->next;
 				/* register head */
 				Com_sprintf(model, sizeof(model), "%s/%s", path, list->data);
-				if (!re.RegisterModel(model))
+				if (!R_RegisterModelShort(model))
 					Com_Printf("Com_PrecacheCharacterModels: Could not register model %s\n", model);
 #ifdef PARANOID
 				_Mem_CheckPoolIntegrity(vid_modelPool, model, __LINE__);

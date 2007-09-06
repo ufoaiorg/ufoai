@@ -112,7 +112,7 @@ static void SCR_DrawDebugGraph (void)
 	x = scr_vrect.width - (w + 2) - 1;
 	y = scr_vrect.height - (h + 2) - 1;
 
-	re.DrawFill(x, y, w, h, 0, color);
+	R_DrawFill(x, y, w, h, 0, color);
 
 	for (a = 0; a < GRAPH_WIDTH; a++) {
 		i = (currentPos - 1 - a + GRAPH_WIDTH) & (GRAPH_WIDTH-1);
@@ -134,7 +134,7 @@ static void SCR_DrawDebugGraph (void)
 		if (min + max > y + h)
 			max = y + h - max;
 
-		re.DrawFill(x + w - a, min, 1, max, 0, color);
+		R_DrawFill(x + w - a, min, 1, max, 0, color);
 	}
 
 	if (cls.realtime - lasttime > 50) {
@@ -234,7 +234,7 @@ static void SCR_DrawCenterString (void)
 				break;
 		x = (viddef.width - l * 8) / 2;
 		for (j = 0; j < l; j++, x += 8) {
-			re.DrawChar(x, y, start[j]);
+			R_DrawChar(x, y, start[j]);
 			if (!remaining--)
 				return;
 		}
@@ -299,12 +299,12 @@ static void SCR_DrawLoadingBar (int x, int y, int w, int h, int percent)
 	static vec4_t color = {0.3f, 0.3f, 0.3f, 0.7f};
 	static vec4_t color_bar = {0.8f, 0.8f, 0.8f, 0.7f};
 
-	re.DrawFill(x, y, w, h, ALIGN_UL, color);
-	re.DrawColor(NULL);
+	R_DrawFill(x, y, w, h, ALIGN_UL, color);
+	R_DrawColor(NULL);
 
 	if (percent != 0) {
-		re.DrawFill((int)(x+(h*0.2)), (int)(y+(h*0.2)), (int)((w-(h*0.4))*percent*0.01), (int)(h*0.6), ALIGN_UL, color_bar);
-		re.DrawColor(NULL);
+		R_DrawFill((int)(x+(h*0.2)), (int)(y+(h*0.2)), (int)((w-(h*0.4))*percent*0.01), (int)(h*0.6), ALIGN_UL, color_bar);
+		R_DrawColor(NULL);
 	}
 }
 
@@ -316,24 +316,24 @@ static void SCR_DrawLoadingBar (int x, int y, int w, int h, int percent)
  */
 void SCR_DrawPrecacheScreen (qboolean string)
 {
-	re.BeginFrame();
-	re.DrawNormPic(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0, ALIGN_UL, qfalse, "loading");
+	R_BeginFrame();
+	R_DrawNormPic(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0, ALIGN_UL, qfalse, "loading");
 	if (string) {
-		re.FontDrawString("f_menubig", ALIGN_UC,
+		R_FontDrawString("f_menubig", ALIGN_UC,
 			(int)(VID_NORM_WIDTH / 2),
 			(int)(VID_NORM_HEIGHT / 2 - 60),
 			0, 1, VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, _("Loading game"), 0, 0, NULL, qfalse);
-		re.FontDrawString("f_menubig", ALIGN_UC,
+		R_FontDrawString("f_menubig", ALIGN_UC,
 			(int)(VID_NORM_WIDTH / 2),
 			60,
 			0, 1, VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, _("UFO: Alien Invasion"), 0, 0, NULL, qfalse);
-		re.FontDrawString("f_menubig", ALIGN_UC,
+		R_FontDrawString("f_menubig", ALIGN_UC,
 			(int)(VID_NORM_WIDTH / 2),
 			120,
 			0, 1, VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, "Download this game for free at http://ufoai.sf.net", 0, 0, NULL, qfalse); /* Not used with gettext because it would make removing it too easy. */
 	}
 	SCR_DrawLoadingBar((int)(VID_NORM_WIDTH / 2) - 300, VID_NORM_HEIGHT - 30, 600, 20, (int)cls.loadingPercent);
-	re.EndFrame();
+	R_EndFrame();
 }
 
 /**
@@ -392,12 +392,12 @@ static void SCR_DrawLoading (void)
 		loadingPic = SCR_SetLoadingBackground(selMis ? selMis->def->mapDef->map : cl.configstrings[CS_MAPTITLE]);
 	if (!loadingPic)
 		return;
-	re.DrawNormPic(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0, ALIGN_UL, qfalse, loadingPic);
-	re.DrawColor(color);
+	R_DrawNormPic(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0, ALIGN_UL, qfalse, loadingPic);
+	R_DrawColor(color);
 
 	if (cl.configstrings[CS_TILES][0]) {
 		mapmsg = va(_("Loading Map [%s]"), _(cl.configstrings[CS_MAPTITLE]));
-		re.FontDrawString("f_menubig", ALIGN_UC,
+		R_FontDrawString("f_menubig", ALIGN_UC,
 			(int)(VID_NORM_WIDTH / 2),
 			(int)(VID_NORM_HEIGHT / 2 - 60),
 			(int)(VID_NORM_WIDTH / 2),
@@ -405,7 +405,7 @@ static void SCR_DrawLoading (void)
 			VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, mapmsg, 1, 0, NULL, qfalse);
 	}
 
-	re.FontDrawString("f_menu", ALIGN_UC,
+	R_FontDrawString("f_menu", ALIGN_UC,
 		(int)(VID_NORM_WIDTH / 2),
 		(int)(VID_NORM_HEIGHT / 2),
 		(int)(VID_NORM_WIDTH / 2),
@@ -438,27 +438,27 @@ static void SCR_DrawCursor (void)
 
 	if (mouseSpace != MS_DRAG) {
 		if (cls.state == ca_active && cls.team != cl.actTeam)
-			re.DrawNormPic(mx, my, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "wait");
+			R_DrawNormPic(mx, my, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "wait");
 		else
-			re.DrawNormPic(mx, my, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, cursor_pic);
+			R_DrawNormPic(mx, my, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, cursor_pic);
 
 		if (cls.state == ca_active && mouseSpace == MS_WORLD) {
 			if (selActor) {
 				/* Display 'crouch' icon if actor is crouched. */
 				if (selActor->state & STATE_CROUCHED)
-					re.DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "ducked");
+					R_DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "ducked");
 				icon_offset_y += 16;	/* Height of 'crouched' icon. */
 				icon_offset_y += icon_spacing;
 
 				/* Display 'Reaction shot' icon if actor has it activated. */
 				if (selActor->state & STATE_REACTION_ONCE)
-					re.DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "reactionfire");
+					R_DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "reactionfire");
 				else if (selActor->state & STATE_REACTION_MANY)
-					re.DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "reactionfiremany");
+					R_DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "reactionfiremany");
 				icon_offset_y += 16;	/* Height of 'reaction fire' icon. ... just in case we add further icons below.*/
 				icon_offset_y += icon_spacing;
 
-				/* Display weaponmode (text) here. */
+				/* Display weaponmode (text) heR_ */
 				if (menuText[TEXT_MOUSECURSOR_RIGHT] && cl_show_cursor_tooltips->value)
 					SCR_DrawString(mx + icon_offset_x,my - 16, menuText[TEXT_MOUSECURSOR_RIGHT], qfalse);
 			}
@@ -466,8 +466,8 @@ static void SCR_DrawCursor (void)
 			/* playernames */
 			if (menuText[TEXT_MOUSECURSOR_PLAYERNAMES] && cl_show_cursor_tooltips->value) {
 				/*@todo: activate this:
-				re.DrawFill(mx + icon_offset_x - 1, my - 33, 20, 128, 0, cursorBG);
-				re.DrawColor(NULL);
+				R_DrawFill(mx + icon_offset_x - 1, my - 33, 20, 128, 0, cursorBG);
+				R_DrawColor(NULL);
 				*/
 				SCR_DrawString(mx + icon_offset_x, my - 32, menuText[TEXT_MOUSECURSOR_PLAYERNAMES], qfalse);
 				menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = NULL;
@@ -604,19 +604,19 @@ static void SCR_TimeRefresh_f (void)
 	start = Sys_Milliseconds();
 
 	if (Cmd_Argc() == 2) {		/* run without page flipping */
-		re.BeginFrame();
+		R_BeginFrame();
 		for (i = 0; i < 128; i++) {
 			cl.refdef.viewangles[1] = i / 128.0 * 360.0;
-			re.RenderFrame(&cl.refdef);
+			R_RenderFrame(&cl.refdef);
 		}
-		re.EndFrame();
+		R_EndFrame();
 	} else {
 		for (i = 0; i < 128; i++) {
 			cl.refdef.viewangles[1] = i / 128.0 * 360.0;
 
-			re.BeginFrame();
-			re.RenderFrame(&cl.refdef);
-			re.EndFrame();
+			R_BeginFrame();
+			R_RenderFrame(&cl.refdef);
+			R_EndFrame();
 		}
 	}
 
@@ -634,10 +634,10 @@ void SCR_TouchPics (void)
 		if (cursor->integer > 9 || cursor->integer < 0)
 			Cvar_SetValue("cursor", 1);
 
-		re.RegisterPic("wait");
-		re.RegisterPic("ducked");
+		R_RegisterPic("wait");
+		R_RegisterPic("ducked");
 		Com_sprintf(cursor_pic, sizeof(cursor_pic), "cursor%i", cursor->integer);
-		if (!re.RegisterPic(cursor_pic)) {
+		if (!R_RegisterPic(cursor_pic)) {
 			Com_Printf("SCR_TouchPics: Could not register cursor: %s\n", cursor_pic);
 			cursor_pic[0] = 0;
 		}
@@ -655,12 +655,12 @@ static void SCR_DrawString (int x, int y, const char *string, qboolean bitmapFon
 
 	if (bitmapFont) {
 		while (*string) {
-			re.DrawChar(x, y, *string);
+			R_DrawChar(x, y, *string);
 			x += con_fontWidth->integer;
 			string++;
 		}
 	} else
-		re.FontDrawString("f_verysmall", ALIGN_UL, x, y, 0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 12, string, 0, 0, NULL, qfalse);
+		R_FontDrawString("f_verysmall", ALIGN_UL, x, y, 0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 12, string, 0, 0, NULL, qfalse);
 }
 
 /**
@@ -687,7 +687,7 @@ void SCR_UpdateScreen (void)
 	if (!scr_initialized || !con.initialized)
 		return;
 
-	re.BeginFrame();
+	R_BeginFrame();
 
 	if (cls.state == ca_disconnected && !scr_draw_loading)
 		SCR_EndLoadingPlaque();
@@ -726,5 +726,5 @@ void SCR_UpdateScreen (void)
 			SCR_DrawCursor();
 	}
 
-	re.EndFrame();
+	R_EndFrame();
 }

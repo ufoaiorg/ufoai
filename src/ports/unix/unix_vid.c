@@ -36,9 +36,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "unix_input.h"
 
-/* Structure containing functions exported from refresh DLL */
-refexport_t	re;
-
 /* Console variables that we need to access from this module */
 extern cvar_t *vid_xpos;			/* X coordinate of window position */
 extern cvar_t *vid_ypos;			/* Y coordinate of window position */
@@ -49,7 +46,6 @@ extern cvar_t *vid_ref;			/* Name of Refresh DLL loaded */
 
 /* Global variables used internally by this module */
 extern viddef_t viddef;				/* global video state; used by other modules */
-void		*reflib_library;		/* Handle to refresh DLL */
 qboolean	reflib_active = qfalse;
 
 /*
@@ -91,7 +87,7 @@ const vidmode_t vid_modes[] =
 /**
  * @brief
  */
-static void VID_NewWindow (int width, int height)
+void VID_NewWindow (int width, int height)
 {
 	viddef.width  = width;
 	viddef.height = height;
@@ -101,143 +97,12 @@ static void VID_NewWindow (int width, int height)
 }
 
 /**
- * @brief
- */
-static void VID_FreeReflib (void)
-{
-	if (reflib_library) {
-		IN_Shutdown();
-#ifndef REF_HARD_LINKED
-		Sys_FreeLibrary(reflib_library);
-#endif
-	}
-
-	memset(&re, 0, sizeof(re));
-	reflib_library = NULL;
-	reflib_active = qfalse;
-}
-
-/**
- * @brief
- */
-static qboolean VID_LoadRefresh (const char *name)
-{
-	refimport_t ri;
-	GetRefAPI_t GetRefAPI;
-	qboolean restart = qfalse;
-	extern uid_t saved_euid;
-
-	if (reflib_active) {
-#if 0
-		IN_Shutdown();
-#endif
-		re.Shutdown();
-		VID_FreeReflib();
-		restart = qtrue;
-	}
-
-	Com_Printf("------- Loading %s -------\n", name);
-
-	/*regain root */
-	seteuid(saved_euid);
-
-	if ((reflib_library = Sys_LoadLibrary(name, 0)) == 0)
-		return qfalse;
-
-	Com_Printf("Sys_LoadLibrary (\"%s\")\n", name);
-
-	ri.Cmd_AddCommand = Cmd_AddCommand;
-	ri.Cmd_RemoveCommand = Cmd_RemoveCommand;
-	ri.Cmd_Argc = Cmd_Argc;
-	ri.Cmd_Argv = Cmd_Argv;
-	ri.Cmd_ExecuteText = Cbuf_ExecuteText;
-	ri.Con_Printf = VID_Printf;
-	ri.Sys_Error = VID_Error;
-	ri.FS_CreatePath = FS_CreatePath;
-	ri.FS_LoadFile = FS_LoadFile;
-	ri.FS_WriteFile = FS_WriteFile;
-	ri.FS_FreeFile = FS_FreeFile;
-	ri.FS_CheckFile = FS_CheckFile;
-	ri.FS_ListFiles = FS_ListFiles;
-	ri.FS_Gamedir = FS_Gamedir;
-	ri.Cvar_Get = Cvar_Get;
-	ri.Cvar_Set = Cvar_Set;
-	ri.Cvar_SetValue = Cvar_SetValue;
-	ri.Cvar_ForceSet = Cvar_ForceSet;
-	ri.Vid_GetModeInfo = VID_GetModeInfo;
-	ri.Vid_NewWindow = VID_NewWindow;
-	ri.CL_WriteAVIVideoFrame = CL_WriteAVIVideoFrame;
-	ri.CL_GetFontData = CL_GetFontData;
-
-	ri.genericPool = &vid_genericPool;
-	ri.imagePool = &vid_imagePool;
-	ri.lightPool = &vid_lightPool;
-	ri.modelPool = &vid_modelPool;
-
-	ri.TagMalloc = VID_TagAlloc;
-	ri.TagFree = VID_MemFree;
-	ri.FreeTags = VID_FreeTags;
-
-	if ((GetRefAPI = (void *) dlsym(reflib_library, "GetRefAPI")) == 0)
-		Com_Error(ERR_FATAL, "dlsym failed on %s", name);
-
-	re = GetRefAPI(ri);
-
-	if (re.api_version != API_VERSION) {
-		VID_FreeReflib();
-		Com_Error(ERR_FATAL, "%s has incompatible api_version", name);
-	}
-
-	if (re.Init(0, 0) == qfalse) {
-		re.Shutdown();
-		VID_FreeReflib();
-		return qfalse;
-	}
-
-	Real_IN_Init(reflib_library);
-
-	/* give up root now */
-	setreuid(getuid(), getuid());
-	setegid(getgid());
-
-	/* vid_restart */
-	if (restart)
-		CL_InitFonts();
-
-	Com_Printf("------------------------------------\n");
-
-	reflib_active = qtrue;
-
-	return qtrue;
-}
-
-/**
  * @brief This function gets called once just before drawing each frame, and it's sole purpose in life
  * is to check to see if any of the video mode parameters have changed, and if they have to
  * update the rendering DLL and/or video mode to match.
  */
 void VID_CheckChanges (void)
 {
-	char name[MAX_VAR];
-
-	if (vid_ref->modified)
-		S_StopAllSounds();
-
-	while (vid_ref->modified) {
-		/* refresh has changed */
-		vid_ref->modified = qfalse;
-		vid_fullscreen->modified = qtrue;
-		cl.refresh_prepped = qfalse;
-		cls.disable_screen = qtrue;
-		Com_sprintf(name, sizeof(name), "ref_%s", vid_ref->string);
-
-		if (!VID_LoadRefresh(name)) {
-			Cmd_ExecuteString("condump ref_debug");
-
-			Com_Error(ERR_FATAL, "Couldn't initialize OpenGL renderer!\nConsult ref_debug.txt for further information.");
-		}
-		cls.disable_screen = qfalse;
-	}
 }
 
 /**
@@ -256,12 +121,7 @@ void Sys_Vid_Init (void)
  */
 void VID_Shutdown (void)
 {
-	if (reflib_active) {
-		if (KBD_Close_fp)
-			KBD_Close_fp();
-		KBD_Close_fp = NULL;
-		IN_Shutdown();
-		re.Shutdown();
-		VID_FreeReflib();
-	}
+	KBD_Close();
+	IN_Shutdown();
+	R_Shutdown();
 }

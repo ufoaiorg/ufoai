@@ -34,7 +34,7 @@ ALIAS MODELS
 /**
  * @brief
  */
-void Mod_LoadAnims (mAliasModel_t * mod, void *buffer)
+void R_ModLoadAnims (mAliasModel_t * mod, void *buffer)
 {
 	const char *text, *token;
 	mAliasAnim_t *anim;
@@ -49,7 +49,7 @@ void Mod_LoadAnims (mAliasModel_t * mod, void *buffer)
 	if (n > MAX_ANIMS)
 		n = MAX_ANIMS;
 
-	mod->animdata = (mAliasAnim_t *) ri.TagMalloc(ri.modelPool, n * sizeof(mAliasAnim_t), 0);
+	mod->animdata = (mAliasAnim_t *) VID_TagAlloc(vid_modelPool, n * sizeof(mAliasAnim_t), 0);
 	anim = mod->animdata;
 	text = buffer;
 	mod->numanims = 0;
@@ -67,9 +67,9 @@ void Mod_LoadAnims (mAliasModel_t * mod, void *buffer)
 			break;
 		anim->from = atoi(token);
 		if (anim->from < 0)
-			ri.Sys_Error(ERR_DROP, "Mod_LoadAnims: negative start frame for %s", mod->animname);
+			Sys_Error("R_ModLoadAnims: negative start frame for %s", mod->animname);
 		else if (anim->from > md2->num_frames)
-			ri.Sys_Error(ERR_DROP, "Mod_LoadAnims: start frame is higher than models frame count (%i) (model: %s)", md2->num_frames, mod->animname);
+			Sys_Error("R_ModLoadAnims: start frame is higher than models frame count (%i) (model: %s)", md2->num_frames, mod->animname);
 
 		/* get the end */
 		token = COM_Parse(&text);
@@ -77,9 +77,9 @@ void Mod_LoadAnims (mAliasModel_t * mod, void *buffer)
 			break;
 		anim->to = atoi(token);
 		if (anim->to < 0)
-			ri.Sys_Error(ERR_DROP, "Mod_LoadAnims: negative start frame for %s", mod->animname);
+			Sys_Error("R_ModLoadAnims: negative start frame for %s", mod->animname);
 		else if (anim->to > md2->num_frames)
-			ri.Sys_Error(ERR_DROP, "Mod_LoadAnims: end frame is higher than models frame count (%i) (model: %s)", md2->num_frames, mod->animname);
+			Sys_Error("R_ModLoadAnims: end frame is higher than models frame count (%i) (model: %s)", md2->num_frames, mod->animname);
 
 		/* get the fps */
 		token = COM_Parse(&text);
@@ -91,13 +91,13 @@ void Mod_LoadAnims (mAliasModel_t * mod, void *buffer)
 		mod->numanims++;
 		anim++;
 	} while (mod->numanims < MAX_ANIMS);
-/*	ri.Con_Printf(PRINT_ALL, "anims: %i for model %s\n", mod->numanims, mod->name); */
+/*	Com_Printf("anims: %i for model %s\n", mod->numanims, mod->name); */
 }
 
 /**
  * @brief
  */
-int Mod_FindTriangleWithEdge (mAliasNeighbors_t *neighbors, dtriangle_t *tris, int numtris, int triIndex, int edgeIndex)
+int R_ModFindTriangleWithEdge (mAliasNeighbors_t *neighbors, dtriangle_t *tris, int numtris, int triIndex, int edgeIndex)
 {
 	int			i, j, found = -1, foundj = 0;
 	dtriangle_t	*current = &tris[triIndex];
@@ -135,7 +135,7 @@ int Mod_FindTriangleWithEdge (mAliasNeighbors_t *neighbors, dtriangle_t *tris, i
 /**
  * @brief
  */
-void Mod_BuildTriangleNeighbors (mAliasNeighbors_t *neighbors, dtriangle_t *tris, int numtris)
+void R_ModBuildTriangleNeighbors (mAliasNeighbors_t *neighbors, dtriangle_t *tris, int numtris)
 {
 	int		i, j;
 
@@ -151,7 +151,7 @@ void Mod_BuildTriangleNeighbors (mAliasNeighbors_t *neighbors, dtriangle_t *tris
 	for (i = 0; i < numtris; i++) {
 		for (j = 0; j < 3; j++) {
 			if (neighbors[i].n[j] == -1)
-				neighbors[i].n[j] = Mod_FindTriangleWithEdge(neighbors, tris, numtris, i, j);
+				neighbors[i].n[j] = R_ModFindTriangleWithEdge(neighbors, tris, numtris, i, j);
 		}
 	}
 }

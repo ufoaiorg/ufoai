@@ -258,18 +258,18 @@ void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 
 	/* no rad processing - for map testing */
 	if (!surf->lquant) {
-		ri.Con_Printf(PRINT_ALL, "R_BuildLightMap - no lightmap\n");
+		Com_Printf("R_BuildLightMap - no lightmap\n");
 		return;
 	}
 
 	if (surf->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66 | SURF_WARP))
-		ri.Sys_Error(ERR_DROP, "R_BuildLightMap called for non-lit surface");
+		Com_Error(ERR_DROP, "R_BuildLightMap called for non-lit surface");
 
 	smax = (surf->extents[0] >> surf->lquant) + 1;
 	tmax = (surf->extents[1] >> surf->lquant) + 1;
 	size = smax * tmax;
 	if (size > (sizeof(s_blocklights) >> surf->lquant)) {
-		ri.Sys_Error(ERR_DROP, "Bad s_blocklights size (%i) - should be "UFO_SIZE_T" (lquant: %i) (smax: %i, extents[0]: %i, tmax: %i, extents[1]: %i)\n",
+		Com_Error(ERR_DROP, "Bad s_blocklights size (%i) - should be "UFO_SIZE_T" (lquant: %i) (smax: %i, extents[0]: %i, tmax: %i, extents[1]: %i)\n",
 			size, (sizeof(s_blocklights) >> surf->lquant), surf->lquant, smax, surf->extents[0], tmax, surf->extents[1]);
 	}
 
@@ -321,7 +321,7 @@ void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 	bl = s_blocklights;
 
 	/* first into an rgba linear block for softening */
-	lightmap = (byte *)ri.TagMalloc(ri.lightPool, size * 4, 0);
+	lightmap = (byte *)VID_TagAlloc(vid_lightPool, size * 4, 0);
 	lm = lightmap;
 
 	for (i = 0; i < tmax; i++) {
@@ -391,7 +391,7 @@ void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 		}
 	}
 
-	ri.TagFree(lightmap);
+	VID_MemFree(lightmap);
 }
 
 static vec3_t pointcolor;

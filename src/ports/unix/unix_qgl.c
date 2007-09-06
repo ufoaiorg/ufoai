@@ -105,7 +105,7 @@ qboolean QR_Init (const char *dllname)
 {
 	if ((glw_state.OpenGLLib = dlopen(dllname, RTLD_LAZY|RTLD_GLOBAL)) == 0) {
 		char libPath[MAX_OSPATH];
-		cvar_t* s_libdir = ri.Cvar_Get("s_libdir", "", CVAR_ARCHIVE, "lib dir for graphic and sound renderer - no game libs");
+		cvar_t* s_libdir = Cvar_Get("s_libdir", "", CVAR_ARCHIVE, "lib dir for graphic and sound renderer - no game libs");
 
 		/* try path given via cvar */
 		if (strlen(s_libdir->string))
@@ -114,11 +114,11 @@ qboolean QR_Init (const char *dllname)
 			Com_sprintf(libPath, sizeof(libPath), "%s", dllname);
 
 		if ((glw_state.OpenGLLib = dlopen(libPath, RTLD_LAZY)) == 0) {
-			ri.Con_Printf(PRINT_ALL, "LoadLibrary (\"%s\") failed: %s\n", libPath, dlerror());
+			Com_Printf("LoadLibrary (\"%s\") failed: %s\n", libPath, dlerror());
 			return qfalse;
 		}
 	} else {
-		ri.Con_Printf(PRINT_ALL, "LoadLibrary (\"%s\")\n", dllname);
+		Com_Printf("LoadLibrary (\"%s\")\n", dllname);
 	}
 
 	/* general qgl bindings */

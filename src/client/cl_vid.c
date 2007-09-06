@@ -36,42 +36,6 @@ cvar_t *vid_ypos;
 static cvar_t *vid_height;
 static cvar_t *vid_width;
 
-#define	MAXPRINTMSG	4096
-/**
- * @brief
- */
-void VID_Printf (int print_level, const char *fmt, ...)
-{
-	va_list argptr;
-	char msg[MAXPRINTMSG];
-
-	va_start(argptr, fmt);
-	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
-	va_end(argptr);
-
-	if (print_level == PRINT_ALL)
-		Com_Printf("%s", msg);
-	else
-		Com_DPrintf(DEBUG_CLIENT, "%s", msg);
-}
-
-/**
- * @brief Calls Com_Error with err_level
- * @sa Com_Error
- */
-void VID_Error (int err_level, const char *fmt, ...)
-{
-	va_list argptr;
-	char msg[MAXPRINTMSG];
-
-	va_start(argptr,fmt);
-	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
-	va_end(argptr);
-
-	Cbuf_ExecuteText(EXEC_NOW, "r_reset");
-	Com_Error(err_level, "%s", msg);
-}
-
 /**
  * @brief
  */
@@ -132,13 +96,13 @@ void VID_Init (void)
 /**
  * @brief
  */
-void *VID_TagAlloc (struct memPool_s **pool, int size, int tagNum)
+void *VID_TagAlloc (struct memPool_s *pool, int size, int tagNum)
 {
 	if (tagNum < 0)
 		tagNum *= -1;
 
 	assert(pool);
-	return _Mem_Alloc(size, qtrue, *pool, tagNum, "VID DLL", 0);
+	return _Mem_Alloc(size, qtrue, pool, tagNum, "VID DLL", 0);
 }
 
 /**
@@ -153,12 +117,12 @@ void VID_MemFree (void *ptr)
 /**
  * @brief
  */
-void VID_FreeTags (struct memPool_s **pool, int tagNum)
+void VID_FreeTags (struct memPool_s *pool, int tagNum)
 {
 	assert(pool);
 	if (tagNum < 0)
 		tagNum *= -1;
 
 	assert(pool);
-	_Mem_FreeTag(*pool, tagNum, "VID DLL", 0);
+	_Mem_FreeTag(pool, tagNum, "VID DLL", 0);
 }

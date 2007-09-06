@@ -559,7 +559,7 @@ void CIN_DrawCinematic (void)
 
 	if (!cin.frameBuffer[1])
 		return;
-	re.DrawImagePixelData("***cinematic***", cin.frameBuffer[1], cin.frameWidth, cin.frameHeight);
+	R_DrawImagePixelData("***cinematic***", cin.frameBuffer[1], cin.frameWidth, cin.frameHeight);
 }
 
 /**

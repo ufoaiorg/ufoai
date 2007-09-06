@@ -137,13 +137,13 @@ void R_DrawAliasMD3Model (entity_t *e)
 		RSTATE_ENABLE_BLEND
 
 	if ((e->as.frame >= paliashdr->num_frames) || (e->as.frame < 0)) {
-		ri.Con_Printf(PRINT_ALL, "R_DrawAliasMD3Model %s: no such frame %d\n", currentmodel->name, e->as.frame);
+		Com_Printf("R_DrawAliasMD3Model %s: no such frame %d\n", currentmodel->name, e->as.frame);
 		e->as.frame = 0;
 		e->as.oldframe = 0;
 	}
 
 	if ((e->as.oldframe >= paliashdr->num_frames) || (e->as.oldframe < 0)) {
-		ri.Con_Printf(PRINT_ALL, "R_DrawAliasMD3Model %s: no such oldframe %d\n",
+		Com_Printf("R_DrawAliasMD3Model %s: no such oldframe %d\n",
 			currentmodel->name, e->as.oldframe);
 		e->as.frame = 0;
 		e->as.oldframe = 0;

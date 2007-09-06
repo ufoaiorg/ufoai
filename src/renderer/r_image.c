@@ -112,7 +112,7 @@ void R_TextureMode (const char *string)
 	}
 
 	if (i == NUM_R_MODES) {
-		ri.Con_Printf(PRINT_ALL, "bad filter name\n");
+		Com_Printf("bad filter name\n");
 		return;
 	}
 
@@ -138,7 +138,7 @@ void R_ImageList_f (void)
 	image_t *image;
 	int texels;
 
-	ri.Con_Printf(PRINT_ALL, "------------------\n");
+	Com_Printf("------------------\n");
 	texels = 0;
 
 	for (i = 0, image = gltextures; i < numgltextures; i++, image++) {
@@ -147,28 +147,28 @@ void R_ImageList_f (void)
 		texels += image->upload_width * image->upload_height;
 		switch (image->type) {
 		case it_skin:
-			ri.Con_Printf(PRINT_ALL, "M");
+			Com_Printf("M");
 			break;
 		case it_sprite:
-			ri.Con_Printf(PRINT_ALL, "S");
+			Com_Printf("S");
 			break;
 		case it_wall:
-			ri.Con_Printf(PRINT_ALL, "W");
+			Com_Printf("W");
 			break;
 		case it_pic:
-			ri.Con_Printf(PRINT_ALL, "P");
+			Com_Printf("P");
 			break;
 		default:
-			ri.Con_Printf(PRINT_ALL, " ");
+			Com_Printf(" ");
 			break;
 		}
 
-		ri.Con_Printf(PRINT_ALL, " %3i %3i RGB: %s - shader: %s\n",
+		Com_Printf(" %3i %3i RGB: %s - shader: %s\n",
 				image->upload_width, image->upload_height, image->name,
 				(image->shader ? image->shader->name : "NONE"));
 	}
-	ri.Con_Printf(PRINT_ALL, "Total textures: %i (max textures: %i)\n", numgltextures, MAX_GLTEXTURES);
-	ri.Con_Printf(PRINT_ALL, "Total texel count (not counting mipmaps): %i\n", texels);
+	Com_Printf("Total textures: %i (max textures: %i)\n", numgltextures, MAX_GLTEXTURES);
+	Com_Printf("Total texel count (not counting mipmaps): %i\n", texels);
 }
 
 
@@ -195,13 +195,13 @@ static void R_LoadPCX (const char *filename, byte ** pic, byte ** palette, int *
 	byte *out, *pix;
 
 	if (*pic != NULL)
-		ri.Sys_Error(ERR_FATAL, "possible mem leak in R_LoadPCX\n");
+		Sys_Error("possible mem leak in R_LoadPCX\n");
 	*palette = NULL;
 
 	/* load the file */
-	len = ri.FS_LoadFile(filename, (void **) &raw);
+	len = FS_LoadFile(filename, (void **) &raw);
 	if (!raw) {
-		ri.Con_Printf(PRINT_DEVELOPER, "R_LoadPCX: Could not load pcx file '%s'\n", filename);
+		Com_DPrintf(DEBUG_RENDERER, "R_LoadPCX: Could not load pcx file '%s'\n", filename);
 		return;
 	}
 
@@ -220,28 +220,28 @@ static void R_LoadPCX (const char *filename, byte ** pic, byte ** palette, int *
 	raw = &pcx->data;
 
 	if (pcx->manufacturer != 0x0a || pcx->version != 5 || pcx->encoding != 1 || pcx->bits_per_pixel != 8 || pcx->xmax >= 640 || pcx->ymax >= 480) {
-		ri.Con_Printf(PRINT_ALL, "R_LoadPCX: Bad pcx file %s\n", filename);
-		ri.Con_Printf(PRINT_ALL, "manufacturer: %x, version: %i, encoding: %i, bits_per_pixel: %i, xmax: %i, ymax: %i\n",
+		Com_Printf("R_LoadPCX: Bad pcx file %s\n", filename);
+		Com_Printf("manufacturer: %x, version: %i, encoding: %i, bits_per_pixel: %i, xmax: %i, ymax: %i\n",
 			pcx->manufacturer,
 			pcx->version,
 			pcx->encoding,
 			pcx->bits_per_pixel,
 			pcx->xmax,
 			pcx->ymax);
-		ri.FS_FreeFile(raw);
+		FS_FreeFile(raw);
 		return;
 	}
 
-	out = ri.TagMalloc(ri.imagePool, (pcx->ymax + 1) * (pcx->xmax + 1), 0);
+	out = VID_TagAlloc(vid_imagePool, (pcx->ymax + 1) * (pcx->xmax + 1), 0);
 	if (!out)
-		ri.Sys_Error(ERR_FATAL, "TagMalloc: failed on allocation of %i bytes", (pcx->ymax + 1) * (pcx->xmax + 1));
+		Sys_Error("TagMalloc: failed on allocation of %i bytes", (pcx->ymax + 1) * (pcx->xmax + 1));
 
 	*pic = out;
 
 	pix = out;
 
 	if (palette) {
-		*palette = ri.TagMalloc(ri.imagePool, 768, 0);;
+		*palette = VID_TagAlloc(vid_imagePool, 768, 0);;
 		memcpy(*palette, (byte *) pcx + len - 768, 768);
 	}
 
@@ -266,18 +266,18 @@ static void R_LoadPCX (const char *filename, byte ** pic, byte ** palette, int *
 	}
 
 	if (raw - (byte *) pcx > len) {
-		ri.Con_Printf(PRINT_DEVELOPER, "PCX file %s was malformed", filename);
-		ri.TagFree(out);
+		Com_DPrintf(DEBUG_RENDERER, "PCX file %s was malformed", filename);
+		VID_MemFree(out);
 
 		if (pic)
 			*pic = NULL;
 		if (palette) {
-			ri.TagFree(palette);
+			VID_MemFree(palette);
 			*palette = NULL;
 		}
 	}
 
-	ri.FS_FreeFile(pcx);
+	FS_FreeFile(pcx);
 }
 
 /*
@@ -294,7 +294,7 @@ typedef struct pngBuf_s {
 static void PngReadFunc (png_struct *Png, png_bytep buf, png_size_t size)
 {
 	pngBuf_t *PngFileBuffer = (pngBuf_t*)png_get_io_ptr(Png);
-	memcpy (buf,PngFileBuffer->buffer + PngFileBuffer->pos, size);
+	memcpy(buf,PngFileBuffer->buffer + PngFileBuffer->pos, size);
 	PngFileBuffer->pos += size;
 }
 
@@ -320,17 +320,17 @@ static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 	pngBuf_t		PngFileBuffer = {NULL,0};
 
 	if (*pic != NULL)
-		ri.Sys_Error(ERR_FATAL, "possible mem leak in LoadPNG\n");
+		Sys_Error("possible mem leak in LoadPNG\n");
 
 	/* Load the file */
-	ri.FS_LoadFile(name, (void **)&PngFileBuffer.buffer);
+	FS_LoadFile(name, (void **)&PngFileBuffer.buffer);
 	if (!PngFileBuffer.buffer)
 		return 0;
 
 	/* Parse the PNG file */
 	if ((png_check_sig(PngFileBuffer.buffer, 8)) == 0) {
-		ri.Con_Printf(PRINT_ALL, "LoadPNG: Not a PNG file: %s\n", name);
-		ri.FS_FreeFile(PngFileBuffer.buffer);
+		Com_Printf("LoadPNG: Not a PNG file: %s\n", name);
+		FS_FreeFile(PngFileBuffer.buffer);
 		return 0;
 	}
 
@@ -338,24 +338,24 @@ static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 
 	png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL,  NULL, NULL);
 	if (!png_ptr) {
-		ri.Con_Printf(PRINT_ALL, "LoadPNG: Bad PNG file: %s\n", name);
-		ri.FS_FreeFile(PngFileBuffer.buffer);
+		Com_Printf("LoadPNG: Bad PNG file: %s\n", name);
+		FS_FreeFile(PngFileBuffer.buffer);
 		return 0;
 	}
 
 	info_ptr = png_create_info_struct(png_ptr);
 	if (!info_ptr) {
 		png_destroy_read_struct(&png_ptr, (png_infopp)NULL, (png_infopp)NULL);
-		ri.Con_Printf(PRINT_ALL, "LoadPNG: Bad PNG file: %s\n", name);
-		ri.FS_FreeFile(PngFileBuffer.buffer);
+		Com_Printf("LoadPNG: Bad PNG file: %s\n", name);
+		FS_FreeFile(PngFileBuffer.buffer);
 		return 0;
 	}
 
 	end_info = png_create_info_struct (png_ptr);
 	if (!end_info) {
 		png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
-		ri.Con_Printf(PRINT_ALL, "LoadPNG: Bad PNG file: %s\n", name);
-		ri.FS_FreeFile(PngFileBuffer.buffer);
+		Com_Printf("LoadPNG: Bad PNG file: %s\n", name);
+		FS_FreeFile(PngFileBuffer.buffer);
 		return 0;
 	}
 
@@ -389,7 +389,7 @@ static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 	row_pointers = png_get_rows(png_ptr, info_ptr);
 	rowptr = 0;
 
-	img = ri.TagMalloc(ri.imagePool, info_ptr->width * info_ptr->height * 4, 0);
+	img = VID_TagAlloc(vid_imagePool, info_ptr->width * info_ptr->height * 4, 0);
 	if (pic)
 		*pic = img;
 
@@ -418,7 +418,7 @@ static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 
 	png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
 
-	ri.FS_FreeFile(PngFileBuffer.buffer);
+	FS_FreeFile(PngFileBuffer.buffer);
 	return samples;
 }
 
@@ -438,14 +438,14 @@ void R_WritePNG (FILE *f, byte *buffer, int width, int height)
 
 	png_ptr = png_create_write_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 	if (!png_ptr) {
-		ri.Con_Printf(PRINT_ALL, "R_WritePNG: LibPNG Error!\n");
+		Com_Printf("R_WritePNG: LibPNG Error!\n");
 		return;
 	}
 
 	info_ptr = png_create_info_struct(png_ptr);
 	if (!info_ptr) {
 		png_destroy_write_struct(&png_ptr, (png_infopp)NULL);
-		ri.Con_Printf(PRINT_ALL, "R_WritePNG: LibPNG Error!\n");
+		Com_Printf("R_WritePNG: LibPNG Error!\n");
 		return;
 	}
 
@@ -459,7 +459,7 @@ void R_WritePNG (FILE *f, byte *buffer, int width, int height)
 
 	png_write_info(png_ptr, info_ptr);
 
-	row_pointers = ri.TagMalloc(ri.imagePool, height * sizeof(png_bytep), 0);
+	row_pointers = VID_TagAlloc(vid_imagePool, height * sizeof(png_bytep), 0);
 	for (i = 0; i < height; i++)
 		row_pointers[i] = buffer + (height - 1 - i) * 3 * width;
 
@@ -468,7 +468,7 @@ void R_WritePNG (FILE *f, byte *buffer, int width, int height)
 
 	png_destroy_write_struct(&png_ptr, &info_ptr);
 
-	ri.TagFree(row_pointers);
+	VID_MemFree(row_pointers);
 }
 
 /*
@@ -520,12 +520,12 @@ void R_LoadTGA (const char *name, byte ** pic, int *width, int *height)
 	targaHeader_t targaHeader;
 
 	if (*pic != NULL)
-		ri.Sys_Error(ERR_FATAL, "R_LoadTGA: possible mem leak\n");
+		Sys_Error("R_LoadTGA: possible mem leak\n");
 
 	/* Load the file */
-	length = ri.FS_LoadFile(name, (void **)&buffer);
+	length = FS_LoadFile(name, (void **)&buffer);
 	if (!buffer || length <= 0) {
-		ri.Con_Printf(PRINT_DEVELOPER, "R_LoadTGA: Bad tga file %s\n", name);
+		Com_DPrintf(DEBUG_RENDERER, "R_LoadTGA: Bad tga file %s\n", name);
 		return;
 	}
 
@@ -556,18 +556,18 @@ void R_LoadTGA (const char *name, byte ** pic, int *width, int *height)
 	case TGA_COLMAP_UNCOMP:
 		/* Uncompressed colormapped image */
 		if (targaHeader.pixelSize != 8) {
-			ri.Con_Printf(PRINT_ALL, "R_LoadTGA: Only 8 bit images supported for type 1 and 9 (%s)\n", name);
-			ri.FS_FreeFile(buffer);
+			Com_Printf("R_LoadTGA: Only 8 bit images supported for type 1 and 9 (%s)\n", name);
+			FS_FreeFile(buffer);
 			return;
 		}
 		if (targaHeader.colorMapLength != 256) {
-			ri.Con_Printf(PRINT_ALL, "R_LoadTGA: Only 8 bit colormaps are supported for type 1 and 9 (%s)\n", name);
-			ri.FS_FreeFile(buffer);
+			Com_Printf("R_LoadTGA: Only 8 bit colormaps are supported for type 1 and 9 (%s)\n", name);
+			FS_FreeFile(buffer);
 			return;
 		}
 		if (targaHeader.colorMapIndex) {
-			ri.Con_Printf(PRINT_ALL, "R_LoadTGA: colorMapIndex is not supported for type 1 and 9 (%s)\n", name);
-			ri.FS_FreeFile(buffer);
+			Com_Printf("R_LoadTGA: colorMapIndex is not supported for type 1 and 9 (%s)\n", name);
+			FS_FreeFile(buffer);
 			return;
 		}
 
@@ -591,8 +591,8 @@ void R_LoadTGA (const char *name, byte ** pic, int *width, int *height)
 			break;
 
 		default:
-			ri.Con_Printf(PRINT_ALL, "R_LoadTGA: only 24 and 32 bit colormaps are supported for type 1 and 9 (%s)\n", name);
-			ri.FS_FreeFile(buffer);
+			Com_Printf("R_LoadTGA: only 24 and 32 bit colormaps are supported for type 1 and 9 (%s)\n", name);
+			FS_FreeFile(buffer);
 			return;
 		}
 		break;
@@ -602,8 +602,8 @@ void R_LoadTGA (const char *name, byte ** pic, int *width, int *height)
 	case TGA_UNMAP_UNCOMP:
 		/* Uncompressed or RLE compressed RGB */
 		if (targaHeader.pixelSize != 32 && targaHeader.pixelSize != 24) {
-			ri.Con_Printf(PRINT_ALL, "R_LoadTGA: Only 32 or 24 bit images supported for type 2 and 10 (%s)\n", name);
-			ri.FS_FreeFile(buffer);
+			Com_Printf("R_LoadTGA: Only 32 or 24 bit images supported for type 2 and 10 (%s)\n", name);
+			FS_FreeFile(buffer);
 			return;
 		}
 		break;
@@ -613,14 +613,14 @@ void R_LoadTGA (const char *name, byte ** pic, int *width, int *height)
 	case TGA_GREY_UNCOMP:
 		/* Uncompressed greyscale */
 		if (targaHeader.pixelSize != 8) {
-			ri.Con_Printf(PRINT_ALL, "R_LoadTGA: Only 8 bit images supported for type 3 and 11 (%s)\n", name);
-			ri.FS_FreeFile(buffer);
+			Com_Printf("R_LoadTGA: Only 8 bit images supported for type 3 and 11 (%s)\n", name);
+			FS_FreeFile(buffer);
 			return;
 		}
 		break;
 	default:
-		ri.Con_Printf(PRINT_ALL, "R_LoadTGA: Unknown tga image type: %i for image %s\n", targaHeader.imageType, name);
-ri.FS_FreeFile(buffer);
+		Com_Printf("R_LoadTGA: Unknown tga image type: %i for image %s\n", targaHeader.imageType, name);
+		FS_FreeFile(buffer);
 		return;
 	}
 
@@ -632,7 +632,7 @@ ri.FS_FreeFile(buffer);
 	if (height)
 		*height = rows;
 
-	targaRGBA = ri.TagMalloc(ri.imagePool, columns * rows * 4, 0);
+	targaRGBA = VID_TagAlloc(vid_imagePool, columns * rows * 4, 0);
 	*pic = targaRGBA;
 
 	/* If bit 5 of attributes isn't set, the image has been stored from bottom to top */
@@ -691,7 +691,7 @@ ri.FS_FreeFile(buffer);
 					alpha = 255;
 					break;
 				default:
-					ri.Sys_Error(ERR_FATAL, "R_LoadTGA: Unknown tga image type: %i\n", targaHeader.imageType);
+					Sys_Error("R_LoadTGA: Unknown tga image type: %i\n", targaHeader.imageType);
 				}
 			}
 
@@ -708,7 +708,7 @@ ri.FS_FreeFile(buffer);
 		}
 	}
 
-	ri.FS_FreeFile(buffer);
+	FS_FreeFile(buffer);
 }
 
 
@@ -724,7 +724,7 @@ void R_WriteTGA (FILE *f, byte *buffer, int width, int height)
 
 	/* Allocate an output buffer */
 	size = (width * height * 3) + 18;
-	out = ri.TagMalloc(ri.imagePool, size, 0);
+	out = VID_TagAlloc(vid_imagePool, size, 0);
 
 	/* Fill in header */
 	out[2] = 2;		/* Uncompressed type */
@@ -745,9 +745,9 @@ void R_WriteTGA (FILE *f, byte *buffer, int width, int height)
 	}
 
 	if (fwrite(out, 1, size, f) != size)
-		ri.Con_Printf(PRINT_ALL, "R_WriteTGA: Failed to write the tga file\n");
+		Com_Printf("R_WriteTGA: Failed to write the tga file\n");
 
-	ri.TagFree(out);
+	VID_MemFree(out);
 }
 
 
@@ -770,7 +770,7 @@ static void jpg_null (j_decompress_ptr cinfo)
  */
 static boolean jpg_fill_input_buffer (j_decompress_ptr cinfo)
 {
-	ri.Con_Printf(PRINT_ALL, "Premature end of JPEG data\n");
+	Com_Printf("Premature end of JPEG data\n");
 	return 1;
 }
 
@@ -780,7 +780,7 @@ static boolean jpg_fill_input_buffer (j_decompress_ptr cinfo)
 static void jpg_skip_input_data (j_decompress_ptr cinfo, long num_bytes)
 {
 	if (cinfo->src->bytes_in_buffer < (size_t) num_bytes)
-		ri.Con_Printf(PRINT_ALL, "Premature end of JPEG data\n");
+		Com_Printf("Premature end of JPEG data\n");
 
 	cinfo->src->next_input_byte += (size_t) num_bytes;
 	cinfo->src->bytes_in_buffer -= (size_t) num_bytes;
@@ -816,18 +816,18 @@ static void R_LoadJPG (const char *filename, byte ** pic, int *width, int *heigh
 	int rawsize, i, components;
 
 	if (*pic != NULL)
-		ri.Sys_Error(ERR_FATAL, "possible mem leak in LoadJPG\n");
+		Sys_Error("possible mem leak in LoadJPG\n");
 
 	/* Load JPEG file into memory */
-	rawsize = ri.FS_LoadFile(filename, (void **) &rawdata);
+	rawsize = FS_LoadFile(filename, (void **) &rawdata);
 
 	if (!rawdata)
 		return;
 
 	/* Knightmare- check for bad data */
 	if (rawdata[6] != 'J' || rawdata[7] != 'F' || rawdata[8] != 'I' || rawdata[9] != 'F') {
-		ri.Con_Printf(PRINT_ALL, "Bad jpg file %s\n", filename);
-		ri.FS_FreeFile(rawdata);
+		Com_Printf("Bad jpg file %s\n", filename);
+		FS_FreeFile(rawdata);
 		return;
 	}
 
@@ -846,35 +846,35 @@ static void R_LoadJPG (const char *filename, byte ** pic, int *width, int *heigh
 
 	components = cinfo.output_components;
     if (components != 3 && components != 1) {
-		ri.Con_Printf(PRINT_DEVELOPER, "R_LoadJPG: Bad jpeg components '%s' (%d)\n", filename, components);
+		Com_DPrintf(DEBUG_RENDERER, "R_LoadJPG: Bad jpeg components '%s' (%d)\n", filename, components);
 		jpeg_destroy_decompress(&cinfo);
-		ri.FS_FreeFile(rawdata);
+		FS_FreeFile(rawdata);
 		return;
 	}
 
 	/* Check Colour Components */
 	if (cinfo.output_components != 3 && cinfo.output_components != 4) {
-		ri.Con_Printf(PRINT_ALL, "Invalid JPEG colour components\n");
+		Com_Printf("Invalid JPEG colour components\n");
 		jpeg_destroy_decompress(&cinfo);
-		ri.FS_FreeFile(rawdata);
+		FS_FreeFile(rawdata);
 		return;
 	}
 
 	/* Allocate Memory for decompressed image */
-	rgbadata = ri.TagMalloc(ri.imagePool, cinfo.output_width * cinfo.output_height * 4, 0);
+	rgbadata = VID_TagAlloc(vid_imagePool, cinfo.output_width * cinfo.output_height * 4, 0);
 	if (!rgbadata) {
-		ri.Con_Printf(PRINT_ALL, "Insufficient RAM for JPEG buffer\n");
+		Com_Printf("Insufficient RAM for JPEG buffer\n");
 		jpeg_destroy_decompress(&cinfo);
-		ri.FS_FreeFile(rawdata);
+		FS_FreeFile(rawdata);
 		return;
 	}
 	/* Allocate Scanline buffer */
-	scanline = ri.TagMalloc(ri.imagePool, cinfo.output_width * components, 0);
+	scanline = VID_TagAlloc(vid_imagePool, cinfo.output_width * components, 0);
 	if (!scanline) {
-		ri.Con_Printf(PRINT_ALL, "Insufficient RAM for JPEG scanline buffer\n");
-		ri.TagFree(rgbadata);
+		Com_Printf("Insufficient RAM for JPEG scanline buffer\n");
+		VID_MemFree(rgbadata);
 		jpeg_destroy_decompress(&cinfo);
-		ri.FS_FreeFile(rawdata);
+		FS_FreeFile(rawdata);
 		return;
 	}
 
@@ -902,7 +902,7 @@ static void R_LoadJPG (const char *filename, byte ** pic, int *width, int *heigh
 	}
 
 	/* Free the scanline buffer */
-	ri.TagFree(scanline);
+	VID_MemFree(scanline);
 
 	/* Finish Decompression */
 	jpeg_finish_decompress(&cinfo);
@@ -912,7 +912,7 @@ static void R_LoadJPG (const char *filename, byte ** pic, int *width, int *heigh
 
 	/* Return the 'rgbadata' */
 	*pic = rgbadata;
-	ri.FS_FreeFile(rawdata);
+	FS_FreeFile(rawdata);
 }
 
 /* Expanded data destination object for stdio output */
@@ -1323,9 +1323,9 @@ static void R_FilterTexture (int filterindex, unsigned int *data, int width, int
 	size_t temp_size = width * height * 4;
 
 	/* allocate a temp buffer */
-	temp = ri.TagMalloc(ri.imagePool, temp_size, 0);
+	temp = VID_TagAlloc(vid_imagePool, temp_size, 0);
 	if (!temp)
-		ri.Sys_Error(ERR_FATAL, "TagMalloc: failed on allocation of "UFO_SIZE_T" bytes", temp_size);
+		Sys_Error("TagMalloc: failed on allocation of "UFO_SIZE_T" bytes", temp_size);
 
 	for (x = 0; x < width; x++) {
 		for (y = 0; y < height; y++) {
@@ -1422,7 +1422,7 @@ static void R_FilterTexture (int filterindex, unsigned int *data, int width, int
 	memcpy(data, temp, width * height * 4);
 #endif
 	/* release the temp buffer */
-	ri.TagFree(temp);
+	VID_MemFree(temp);
 }
 
 static int upload_width, upload_height;
@@ -1486,7 +1486,7 @@ static qboolean R_Upload32 (unsigned *data, int width, int height, qboolean mipm
 
 	/* emboss filter */
 	if (r_imagefilter->integer && image && image->shader) {
-		ri.Con_Printf(PRINT_DEVELOPER, "Using image filter %s\n", image->shader->name);
+		Com_DPrintf(DEBUG_RENDERER, "Using image filter %s\n", image->shader->name);
 		if (image->shader->emboss)
 			R_FilterTexture(EMBOSS_FILTER, data, width, height, 1, 128, qtrue, image->shader->glMode);
 		if (image->shader->emboss2)
@@ -1579,12 +1579,12 @@ static qboolean R_Upload8 (byte * data, int width, int height, qboolean mipmap, 
 	int i, p;
 	qboolean ret;
 
-	trans = ri.TagMalloc(ri.imagePool, trans_size, 0);
+	trans = VID_TagAlloc(vid_imagePool, trans_size, 0);
 	if (!trans)
-		ri.Sys_Error(ERR_FATAL, "TagMalloc: failed on allocation of "UFO_SIZE_T" bytes", trans_size);
+		Sys_Error("TagMalloc: failed on allocation of "UFO_SIZE_T" bytes", trans_size);
 
 	if (s > trans_size / 4)
-		ri.Sys_Error(ERR_DROP, "R_Upload8: too large");
+		Com_Error(ERR_DROP, "R_Upload8: too large");
 
 	for (i = 0; i < s; i++) {
 		p = data[i];
@@ -1612,7 +1612,7 @@ static qboolean R_Upload8 (byte * data, int width, int height, qboolean mipmap, 
 	}
 
 	ret = R_Upload32(trans, width, height, mipmap, qtrue, type, image);
-	ri.TagFree(trans);
+	VID_MemFree(trans);
 
 	return ret;
 }
@@ -1628,9 +1628,9 @@ void R_SoftenTexture (byte *in, int width, int height, int bpp)
 	byte *u, *d, *l, *r;
 
 	/* soften into a copy of the original image, as in-place would be incorrect */
-	out = (byte *)ri.TagMalloc(ri.imagePool, width * height * bpp, 0);
+	out = (byte *)VID_TagAlloc(vid_imagePool, width * height * bpp, 0);
 	if (!out)
-		ri.Sys_Error(ERR_FATAL, "TagMalloc: failed on allocation of %i bytes for R_SoftenTexture", width * height * bpp);
+		Sys_Error("TagMalloc: failed on allocation of %i bytes for R_SoftenTexture", width * height * bpp);
 
 	memcpy(out, in, width * height * bpp);
 
@@ -1653,7 +1653,7 @@ void R_SoftenTexture (byte *in, int width, int height, int bpp)
 
 	/* copy the softened image over the input image, and free it */
 	memcpy(in, out, width * height * bpp);
-	ri.TagFree(out);
+	VID_MemFree(out);
 }
 
 #define DAN_WIDTH	512
@@ -1680,7 +1680,7 @@ void R_CalcDayAndNight (float q)
 	/* get image */
 	if (!DaN) {
 		if (numgltextures >= MAX_GLTEXTURES)
-			ri.Sys_Error(ERR_DROP, "MAX_GLTEXTURES");
+			Com_Error(ERR_DROP, "MAX_GLTEXTURES");
 		DaN = &gltextures[numgltextures++];
 		DaN->width = DAN_WIDTH;
 		DaN->height = DAN_HEIGHT;
@@ -1744,7 +1744,7 @@ image_t *R_LoadPic (const char *name, byte * pic, int width, int height, imagety
 
 	if (i == numgltextures) {
 		if (numgltextures == MAX_GLTEXTURES)
-			ri.Sys_Error(ERR_DROP, "MAX_GLTEXTURES");
+			Com_Error(ERR_DROP, "MAX_GLTEXTURES");
 		numgltextures++;
 	}
 	image = &gltextures[i];
@@ -1753,7 +1753,7 @@ image_t *R_LoadPic (const char *name, byte * pic, int width, int height, imagety
 
 	len = strlen(name);
 	if (len >= sizeof(image->name))
-		ri.Sys_Error(ERR_DROP, "Draw_LoadPic: \"%s\" is too long", name);
+		Com_Error(ERR_DROP, "Draw_LoadPic: \"%s\" is too long", name);
 	Q_strncpyz(image->name, name, MAX_QPATH);
 	image->registration_sequence = registration_sequence;
 	/* drop extension */
@@ -1768,7 +1768,7 @@ image_t *R_LoadPic (const char *name, byte * pic, int width, int height, imagety
 
 	image->shader = R_GetShaderForImage(image->name);
 	if (image->shader)
-		ri.Con_Printf(PRINT_DEVELOPER, "R_LoadPic: Shader found: '%s'\n", image->name);
+		Com_DPrintf(DEBUG_RENDERER, "R_LoadPic: Shader found: '%s'\n", image->name);
 
 	image->texnum = TEXNUM_IMAGES + (image - gltextures);
 	if (pic) {
@@ -1797,9 +1797,9 @@ static image_t *R_LoadWal (const char *name, int bpp)
 	int width, height, ofs;
 	image_t *image;
 
-	ri.FS_LoadFile(name, (void **) &mt);
+	FS_LoadFile(name, (void **) &mt);
 	if (!mt) {
-		ri.Con_Printf(PRINT_ALL, "R_LoadWal: can't load %s\n", name);
+		Com_Printf("R_LoadWal: can't load %s\n", name);
 		return r_notexture;
 	}
 
@@ -1809,7 +1809,7 @@ static image_t *R_LoadWal (const char *name, int bpp)
 
 	image = R_LoadPic(name, (byte *) mt + ofs, width, height, it_wall, bpp);
 
-	ri.FS_FreeFile((void *) mt);
+	FS_FreeFile((void *) mt);
 
 	return image;
 }
@@ -1832,13 +1832,13 @@ image_t *R_FindImageForShader (const char *name)
 
 /**
  * @brief Finds or loads the given image
- * @sa Draw_FindPic
+ * @sa R_RegisterPic
  * @param pname Image name
  * @note the image name has to be at least 5 chars long
- * @sa LoadTGA
- * @sa LoadJPG
- * @sa LoadPNG
- * @sa LoadPCX
+ * @sa R_LoadTGA
+ * @sa R_LoadJPG
+ * @sa R_LoadPNG
+ * @sa R_LoadPCX
  */
 #ifdef DEBUG
 image_t *R_FindImageDebug (const char *pname, imagetype_t type, const char *file, int line)
@@ -1856,10 +1856,10 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	int width, height;
 
 	if (!pname)
-		ri.Sys_Error(ERR_DROP, "R_FindImage: NULL name");
+		Sys_Error("R_FindImage: NULL name");
 	len = strlen(pname);
 	if (len < 5)
-		return NULL;			/*  ri.Sys_Error(ERR_DROP, "R_FindImage: bad name: %s", name); */
+		return NULL;
 
 	/* drop extension */
 	Q_strncpyz(lname, pname, MAX_QPATH);
@@ -1891,7 +1891,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	palette = NULL;
 
 	strcpy(ename, ".tga");
-	if (ri.FS_CheckFile(lname) != -1) {
+	if (FS_CheckFile(lname) != -1) {
 		R_LoadTGA(lname, &pic, &width, &height);
 		if (pic) {
 			image = R_LoadPic(lname, pic, width, height, type, 32);
@@ -1900,7 +1900,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	}
 
 	strcpy(ename, ".png");
-	if (ri.FS_CheckFile(lname) != -1) {
+	if (FS_CheckFile(lname) != -1) {
 		R_LoadPNG(lname, &pic, &width, &height);
 		if (pic) {
 			image = R_LoadPic(lname, pic, width, height, type, 32);
@@ -1909,7 +1909,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	}
 
 	strcpy(ename, ".jpg");
-	if (ri.FS_CheckFile(lname) != -1) {
+	if (FS_CheckFile(lname) != -1) {
 		R_LoadJPG(lname, &pic, &width, &height);
 		if (pic) {
 			image = R_LoadPic(lname, pic, width, height, type, 32);
@@ -1918,7 +1918,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	}
 
 	strcpy(ename, ".pcx");
-	if (ri.FS_CheckFile(lname) != -1) {
+	if (FS_CheckFile(lname) != -1) {
 		R_LoadPCX(lname, &pic, &palette, &width, &height);
 		if (pic) {
 			image = R_LoadPic(lname, pic, width, height, type, 8);
@@ -1927,13 +1927,13 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 	}
 
 	strcpy(ename, ".m32");
-	if (ri.FS_CheckFile(lname) != -1) {
+	if (FS_CheckFile(lname) != -1) {
 		image = R_LoadWal(lname, 32);
 		goto end;
 	}
 
 	strcpy(ename, ".wal");
-	if (ri.FS_CheckFile(lname) != -1) {
+	if (FS_CheckFile(lname) != -1) {
 		image = R_LoadWal(lname, 8);
 		goto end;
 	}
@@ -1944,23 +1944,23 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 
 	*ename = 0;
 #ifdef DEBUG
-	ri.Con_Printf(PRINT_ALL, "R_FindImage: Can't find %s (%s) - file: %s, line %i\n", lname, pname, file, line);
+	Com_Printf("R_FindImage: Can't find %s (%s) - file: %s, line %i\n", lname, pname, file, line);
 #else
-	ri.Con_Printf(PRINT_ALL, "R_FindImage: Can't find %s (%s)\n", lname, pname);
+	Com_Printf("R_FindImage: Can't find %s (%s)\n", lname, pname);
 #endif
 
 	if ((glerrortexend - glerrortex) + strlen(lname) < MAX_GLERRORTEX) {
 		Q_strncpyz(glerrortexend, lname, MAX_QPATH);
 		glerrortexend += strlen(lname) + 1;
 	} else {
-		ri.Sys_Error(ERR_DROP, "MAX_GLERRORTEX");
+		Com_Error(ERR_DROP, "MAX_GLERRORTEX");
 	}
 
   end:
 	if (pic)
-		ri.TagFree(pic);
+		VID_MemFree(pic);
 	if (palette)
-		ri.TagFree(palette);
+		VID_MemFree(palette);
 
 	return image;
 }
@@ -2005,7 +2005,7 @@ static int R_GetPalette (void)
 	/* get the palette */
 	R_LoadPCX("pics/colormap.pcx", &pic, &pal, &width, &height);
 	if (!pal)
-		ri.Sys_Error(ERR_FATAL, "Couldn't load pics/colormap.pcx");
+		Sys_Error("Couldn't load pics/colormap.pcx");
 
 	for (i = 0; i < 256; i++) {
 		r = pal[i * 3 + 0];
@@ -2018,8 +2018,8 @@ static int R_GetPalette (void)
 
 	d_8to24table[255] &= LittleLong(0xffffff);	/* 255 is transparent */
 
-	ri.TagFree(pic);
-	ri.TagFree(pal);
+	VID_MemFree(pic);
+	VID_MemFree(pal);
 
 	return 0;
 }
@@ -2039,10 +2039,10 @@ void R_InitImages (void)
 	DaN = NULL;
 
 	/* init intensity conversions */
-	r_intensity = ri.Cvar_Get("r_intensity", "2", CVAR_ARCHIVE, NULL);
+	r_intensity = Cvar_Get("r_intensity", "2", CVAR_ARCHIVE, NULL);
 
 	if (r_intensity->value < 1)
-		ri.Cvar_Set("r_intensity", "1");
+		Cvar_Set("r_intensity", "1");
 
 	r_state.inverse_intensity = 1 / r_intensity->value;
 

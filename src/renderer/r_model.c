@@ -42,33 +42,33 @@ int registration_sequence;
 /**
  * @brief Prints all loaded models
  */
-void Mod_Modellist_f (void)
+void R_ModModellist_f (void)
 {
 	int i;
 	model_t *mod;
 
-	ri.Con_Printf(PRINT_ALL, "Loaded models:\n");
+	Com_Printf("Loaded models:\n");
 	for (i = 0, mod = mod_known; i < mod_numknown; i++, mod++) {
 		if (!mod->name[0])
 			continue;
 		switch(mod->type) {
 		case mod_alias_md3:
-			ri.Con_Printf(PRINT_ALL, "MD3");
+			Com_Printf("MD3");
 			break;
 		case mod_alias_md2:
-			ri.Con_Printf(PRINT_ALL, "MD2");
+			Com_Printf("MD2");
 			break;
 		case mod_sprite:
-			ri.Con_Printf(PRINT_ALL, "SP2");
+			Com_Printf("SP2");
 			break;
 		case mod_obj:
-			ri.Con_Printf(PRINT_ALL, "OBJ");
+			Com_Printf("OBJ");
 			break;
 		default:
-			ri.Con_Printf(PRINT_ALL, "%3i", mod->type);
+			Com_Printf("%3i", mod->type);
 			break;
 		}
-		ri.Con_Printf(PRINT_ALL, " %s\n", mod->name);
+		Com_Printf(" %s\n", mod->name);
 	}
 }
 
@@ -77,20 +77,20 @@ void Mod_Modellist_f (void)
  * @brief Loads in a model for the given name
  * @sa R_RegisterModel
  */
-static model_t *Mod_ForName (const char *name, qboolean crash)
+static model_t *R_ModForName (const char *name, qboolean crash)
 {
 	model_t *mod;
 	unsigned *buf;
 	int i;
 
 	if (!name[0])
-		ri.Sys_Error(ERR_DROP, "Mod_ForName: NULL name");
+		Sys_Error("R_ModForName: NULL name");
 
 	/* inline models are grabbed only from worldmodel */
 	if (name[0] == '*') {
 		i = atoi(name + 1) - 1;
 		if (i < 0 || i >= numInline)
-			ri.Sys_Error(ERR_DROP, "bad inline model number '%s' (%i/%i)", name, i, numInline);
+			Sys_Error("bad inline model number '%s' (%i/%i)", name, i, numInline);
 		return &mod_inline[i];
 	}
 
@@ -110,19 +110,19 @@ static model_t *Mod_ForName (const char *name, qboolean crash)
 
 	if (i == mod_numknown) {
 		if (mod_numknown == MAX_MOD_KNOWN)
-			ri.Sys_Error(ERR_DROP, "mod_numknown == MAX_MOD_KNOWN");
+			Sys_Error("mod_numknown == MAX_MOD_KNOWN");
 		mod_numknown++;
 	}
 
 	memset(mod, 0, sizeof(model_t));
 	Q_strncpyz(mod->name, name, sizeof(mod->name));
-/*	ri.Con_Printf(DEBUG_RENDERER, "name: %s\n", name); */
+/*	Com_DPrintf(DEBUG_RENDERER, "name: %s\n", name); */
 
 	/* load the file */
-	modfilelen = ri.FS_LoadFile(mod->name, (void **) &buf);
+	modfilelen = FS_LoadFile(mod->name, (void **) &buf);
 	if (!buf) {
 		if (crash)
-			ri.Sys_Error(ERR_DROP, "Mod_ForName: %s not found", mod->name);
+			Sys_Error("R_ModForName: %s not found", mod->name);
 		memset(mod->name, 0, sizeof(mod->name));
 		return NULL;
 	}
@@ -136,29 +136,29 @@ static model_t *Mod_ForName (const char *name, qboolean crash)
 	switch (LittleLong(*(unsigned *) buf)) {
 	case IDALIASHEADER:
 		/* MD2 header */
-		Mod_LoadAliasMD2Model(mod, buf, modfilelen);
+		R_ModLoadAliasMD2Model(mod, buf, modfilelen);
 		break;
 
 	case IDMD3HEADER:
 		/* MD3 header */
-		Mod_LoadAliasMD3Model(mod, buf, modfilelen);
+		R_ModLoadAliasMD3Model(mod, buf, modfilelen);
 		break;
 
 	case IDSPRITEHEADER:
-		Mod_LoadSpriteModel(mod, buf, modfilelen);
+		R_ModLoadSpriteModel(mod, buf, modfilelen);
 		break;
 
 	case IDBSPHEADER:
-		ri.Sys_Error(ERR_DROP, "Mod_ForName: don't load BSPs with this function");
+		Sys_Error("R_ModForName: don't load BSPs with this function");
 		break;
 
 	default:
-		if (!Mod_LoadOBJModel(mod, buf, modfilelen))
-			ri.Sys_Error(ERR_DROP, "Mod_ForName: unknown fileid for %s", mod->name);
+		if (!R_ModLoadOBJModel(mod, buf, modfilelen))
+			Sys_Error("R_ModForName: unknown fileid for %s", mod->name);
 		break;
 	}
 
-	ri.FS_FreeFile(buf);
+	FS_FreeFile(buf);
 
 	return mod;
 }
@@ -166,7 +166,7 @@ static model_t *Mod_ForName (const char *name, qboolean crash)
 /**
  * @brief Register model and skins
  * @sa R_RegisterModelShort
- * @sa Mod_ForName
+ * @sa R_ModForName
  */
 static model_t *R_RegisterModel (const char *name)
 {
@@ -176,7 +176,7 @@ static model_t *R_RegisterModel (const char *name)
 	mdl_md2_t *pheader;
 	mAliasModel_t *pheader3;
 
-	mod = Mod_ForName(name, qfalse);
+	mod = R_ModForName(name, qfalse);
 	if (mod) {
 		/* register any images used by the models */
 		switch (mod->type) {
@@ -275,19 +275,19 @@ model_t *R_RegisterModelShort (const char *name)
  * @brief
  * @sa R_ShutdownModels
  */
-static void Mod_Free (model_t * mod)
+static void R_ModFree (model_t * mod)
 {
 	if (mod->alias.extraData)
-		ri.TagFree(mod->alias.extraData);
+		VID_MemFree(mod->alias.extraData);
 
 	memset(mod, 0, sizeof(*mod));
 }
 
 /**
  * @brief
- * @sa Mod_BeginLoading
+ * @sa R_ModBeginLoading
  */
-void Mod_EndLoading (void)
+void R_ModEndLoading (void)
 {
 	int i;
 	model_t *mod;
@@ -297,7 +297,7 @@ void Mod_EndLoading (void)
 			continue;
 		/* don't need this model */
 		if (mod->registration_sequence != registration_sequence)
-			Mod_Free(mod);
+			R_ModFree(mod);
 	}
 
 	R_FreeUnusedImages();
@@ -307,7 +307,7 @@ void Mod_EndLoading (void)
  * @brief Draws the model bounding box
  * @sa R_DrawAliasMD2Model
  */
-void Mod_DrawModelBBox (vec4_t bbox[8], entity_t *e)
+void R_ModDrawModelBBox (vec4_t bbox[8], entity_t *e)
 {
 	if (!r_showbox->integer)
 		return;
@@ -349,7 +349,7 @@ void Mod_DrawModelBBox (vec4_t bbox[8], entity_t *e)
 /**
  * @brief Fallback if entity doesn't have any valid model
  */
-void Mod_DrawNullModel (void)
+void R_ModDrawNullModel (void)
 {
 	vec3_t shadelight;
 	int i;
@@ -388,7 +388,7 @@ void Mod_DrawNullModel (void)
  */
 void R_ShutdownModels (void)
 {
-	ri.FreeTags(ri.modelPool, 0);
-	ri.FreeTags(ri.lightPool, 0);
+	VID_FreeTags(vid_modelPool, 0);
+	VID_FreeTags(vid_lightPool, 0);
 	mod_numknown = 0;
 }

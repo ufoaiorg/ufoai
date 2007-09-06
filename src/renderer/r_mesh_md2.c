@@ -267,11 +267,11 @@ void R_DrawAliasMD2Model (entity_t * e)
 
 	/* check animations */
 	if ((e->as.frame >= paliashdr->num_frames) || (e->as.frame < 0)) {
-		ri.Con_Printf(PRINT_ALL, "R_DrawAliasMD2Model %s: no such frame %d\n", currentmodel->name, e->as.frame);
+		Com_Printf("R_DrawAliasMD2Model %s: no such frame %d\n", currentmodel->name, e->as.frame);
 		e->as.frame = 0;
 	}
 	if ((e->as.oldframe >= paliashdr->num_frames) || (e->as.oldframe < 0)) {
-		ri.Con_Printf(PRINT_ALL, "R_DrawAliasMD2Model %s: no such oldframe %d\n", currentmodel->name, e->as.oldframe);
+		Com_Printf("R_DrawAliasMD2Model %s: no such oldframe %d\n", currentmodel->name, e->as.oldframe);
 		e->as.oldframe = 0;
 	}
 
@@ -427,7 +427,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 	qglPopMatrix();
 
 	/* show model bounding box */
-	Mod_DrawModelBBox(bbox, e);
+	R_ModDrawModelBBox(bbox, e);
 
 	if (r_fog->integer && r_newrefdef.fog)
 		qglEnable(GL_FOG);
@@ -497,7 +497,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 
 	/* check if the model exists */
 	if (!mi->model || mi->model->type != mod_alias_md2) {
-		ri.Con_Printf(PRINT_ALL, "No model given or not in md2 format\n");
+		Com_Printf("No model given or not in md2 format\n");
 		return;
 	}
 
@@ -505,11 +505,11 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 
 	/* check animations */
 	if ((mi->frame >= paliashdr->num_frames) || (mi->frame < 0)) {
-		ri.Con_Printf(PRINT_ALL, "R_DrawModelDirect %s: no such frame %d\n", mi->model->name, mi->frame);
+		Com_Printf("R_DrawModelDirect %s: no such frame %d\n", mi->model->name, mi->frame);
 		mi->frame = 0;
 	}
 	if ((mi->oldframe >= paliashdr->num_frames) || (mi->oldframe < 0)) {
-		ri.Con_Printf(PRINT_ALL, "R_DrawModelDirect %s: no such oldframe %d\n", mi->model->name, mi->oldframe);
+		Com_Printf("R_DrawModelDirect %s: no such oldframe %d\n", mi->model->name, mi->oldframe);
 		mi->oldframe = 0;
 	}
 
@@ -530,7 +530,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 
 	/* draw all the triangles */
 	qglPushMatrix();
-	qglScalef(vid.rx, vid.ry, (vid.rx + vid.ry) / 2);
+	qglScalef(viddef.rx, viddef.ry, (viddef.rx + viddef.ry) / 2);
 
 	if (mi->color[3])
 		qglColor4fv(mi->color);
@@ -625,11 +625,11 @@ void R_DrawModelParticle (modelInfo_t * mi)
 
 	/* check animations */
 	if ((mi->frame >= paliashdr->num_frames) || (mi->frame < 0)) {
-		ri.Con_Printf(PRINT_ALL, "R_DrawModelParticle %s: no such frame %d\n", mi->model->name, mi->frame);
+		Com_Printf("R_DrawModelParticle %s: no such frame %d\n", mi->model->name, mi->frame);
 		mi->frame = 0;
 	}
 	if ((mi->oldframe >= paliashdr->num_frames) || (mi->oldframe < 0)) {
-		ri.Con_Printf(PRINT_ALL, "R_DrawModelParticle %s: no such oldframe %d\n", mi->model->name, mi->oldframe);
+		Com_Printf("R_DrawModelParticle %s: no such oldframe %d\n", mi->model->name, mi->oldframe);
 		mi->oldframe = 0;
 	}
 
@@ -638,7 +638,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
 
 	/* select skin */
 	if (mi->skin >= paliashdr->num_skins) {
-		ri.Con_Printf(PRINT_ALL, "R_DrawModelParticle %s: no such skin %i (found %i skins)\n",
+		Com_Printf("R_DrawModelParticle %s: no such skin %i (found %i skins)\n",
 			mi->model->name, mi->skin, paliashdr->num_skins);
 		mi->skin = 0;
 	}

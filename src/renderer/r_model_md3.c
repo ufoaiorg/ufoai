@@ -35,7 +35,7 @@ MD3 ALIAS MODELS
  * @brief Load MD3 models from file.
  * @note Some Vic code here not fully used
  */
-void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
+void R_ModLoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 {
 	int					version, i, j, l;
 	dmd3_t				*pinmodel;
@@ -62,11 +62,11 @@ void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 	version = LittleLong(pinmodel->version);
 
 	if (version != MD3_ALIAS_VERSION) {
-		ri.Sys_Error(ERR_DROP, "%s has wrong version number (%i should be %i)",
+		Com_Error(ERR_DROP, "%s has wrong version number (%i should be %i)",
 				mod->name, version, MD3_ALIAS_VERSION);
 	}
 
-	poutmodel = ri.TagMalloc(ri.modelPool, sizeof(mAliasModel_t), 0);
+	poutmodel = VID_TagAlloc(vid_modelPool, sizeof(mAliasModel_t), 0);
 
 	/* byte swap the header fields and sanity check */
 	poutmodel->num_frames = LittleLong(pinmodel->num_frames);
@@ -75,23 +75,23 @@ void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 	poutmodel->num_skins = 0;
 
 	if (poutmodel->num_frames <= 0)
-		ri.Sys_Error(ERR_DROP, "model %s has no frames", mod->name);
+		Sys_Error("model %s has no frames", mod->name);
 	else if (poutmodel->num_frames > MD3_MAX_FRAMES)
-		ri.Sys_Error(ERR_DROP, "model %s has too many frames", mod->name);
+		Sys_Error("model %s has too many frames", mod->name);
 
 	if (poutmodel->num_tags > MD3_MAX_TAGS)
-		ri.Sys_Error(ERR_DROP, "model %s has too many tags", mod->name);
+		Sys_Error("model %s has too many tags", mod->name);
 	else if (poutmodel->num_tags < 0)
-		ri.Sys_Error(ERR_DROP, "model %s has invalid number of tags", mod->name);
+		Sys_Error("model %s has invalid number of tags", mod->name);
 
 	if (poutmodel->num_meshes <= 0)
-		ri.Sys_Error(ERR_DROP, "model %s has no meshes", mod->name);
+		Sys_Error("model %s has no meshes", mod->name);
 	else if (poutmodel->num_meshes > MD3_MAX_MESHES)
-		ri.Sys_Error(ERR_DROP, "model %s has too many meshes", mod->name);
+		Sys_Error("model %s has too many meshes", mod->name);
 
 	/* load the frames */
 	pinframe = (dmd3frame_t *)((byte *)pinmodel + LittleLong(pinmodel->ofs_frames));
-	poutframe = poutmodel->frames = ri.TagMalloc(ri.modelPool, sizeof(mAliasFrame_t) * poutmodel->num_frames, 0);
+	poutframe = poutmodel->frames = VID_TagAlloc(vid_modelPool, sizeof(mAliasFrame_t) * poutmodel->num_frames, 0);
 
 	mod->radius = 0;
 	ClearBounds(mod->mins, mod->maxs);
@@ -114,7 +114,7 @@ void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 	/* load the tags */
 	if (poutmodel->num_tags) {
 		pintag = (dmd3tag_t *)((byte *)pinmodel + LittleLong(pinmodel->ofs_tags));
-		pouttag = poutmodel->tags = ri.TagMalloc(ri.modelPool, sizeof(mAliasTag_t) * poutmodel->num_frames * poutmodel->num_tags, 0);
+		pouttag = poutmodel->tags = VID_TagAlloc(vid_modelPool, sizeof(mAliasTag_t) * poutmodel->num_frames * poutmodel->num_tags, 0);
 
 		for (i = 0; i < poutmodel->num_frames; i++) {
 			for (l = 0; l < poutmodel->num_tags; l++, pintag++, pouttag++) {
@@ -125,20 +125,20 @@ void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 					pouttag->orient.axis[1][j] = LittleFloat(pintag->orient.axis[1][j] );
 					pouttag->orient.axis[2][j] = LittleFloat(pintag->orient.axis[2][j] );
 				}
-				ri.Con_Printf(PRINT_ALL, "X: (%f %f %f) Y: (%f %f %f) Z: (%f %f %f)\n", pouttag->orient.axis[0][0], pouttag->orient.axis[0][1], pouttag->orient.axis[0][2], pouttag->orient.axis[1][0], pouttag->orient.axis[1][1], pouttag->orient.axis[1][2], pouttag->orient.axis[2][0], pouttag->orient.axis[2][1], pouttag->orient.axis[2][2]);
+				Com_Printf("X: (%f %f %f) Y: (%f %f %f) Z: (%f %f %f)\n", pouttag->orient.axis[0][0], pouttag->orient.axis[0][1], pouttag->orient.axis[0][2], pouttag->orient.axis[1][0], pouttag->orient.axis[1][1], pouttag->orient.axis[1][2], pouttag->orient.axis[2][0], pouttag->orient.axis[2][1], pouttag->orient.axis[2][2]);
 			}
 		}
 	}
 
 	/* load the meshes */
 	pinmesh = (dmd3mesh_t *)((byte *)pinmodel + LittleLong(pinmodel->ofs_meshes));
-	poutmesh = poutmodel->meshes = ri.TagMalloc(ri.modelPool, sizeof(mAliasMesh_t) * poutmodel->num_meshes, 0);
+	poutmesh = poutmodel->meshes = VID_TagAlloc(vid_modelPool, sizeof(mAliasMesh_t) * poutmodel->num_meshes, 0);
 
 	for (i = 0; i < poutmodel->num_meshes; i++, poutmesh++) {
 		memcpy(poutmesh->name, pinmesh->name, MD3_MAX_PATH);
 
 		if (Q_strncmp(pinmesh->id, "IDP3", 4)) {
-			ri.Sys_Error(ERR_DROP, "mesh %s in model %s has wrong id (%s should be %i)",
+			Sys_Error("mesh %s in model %s has wrong id (%s should be %i)",
 					poutmesh->name, mod->name, pinmesh->id, IDMD3HEADER);
 		}
 
@@ -147,23 +147,23 @@ void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 		poutmesh->num_verts = LittleLong(pinmesh->num_verts);
 
 		if (poutmesh->num_skins <= 0)
-			ri.Sys_Error(ERR_DROP, "mesh %i in model %s has no skins", i, mod->name);
+			Sys_Error("mesh %i in model %s has no skins", i, mod->name);
 		else if (poutmesh->num_skins > MD3_MAX_SHADERS)
-			ri.Sys_Error(ERR_DROP, "mesh %i in model %s has too many skins", i, mod->name);
+			Sys_Error("mesh %i in model %s has too many skins", i, mod->name);
 
 		if (poutmesh->num_tris <= 0)
-			ri.Sys_Error(ERR_DROP, "mesh %i in model %s has no triangles", i, mod->name);
+			Sys_Error("mesh %i in model %s has no triangles", i, mod->name);
 		else if (poutmesh->num_tris > MD3_MAX_TRIANGLES)
-			ri.Sys_Error(ERR_DROP, "mesh %i in model %s has too many triangles", i, mod->name);
+			Sys_Error("mesh %i in model %s has too many triangles", i, mod->name);
 
 		if (poutmesh->num_verts <= 0)
-			ri.Sys_Error(ERR_DROP, "mesh %i in model %s has no vertices", i, mod->name);
+			Sys_Error("mesh %i in model %s has no vertices", i, mod->name);
 		else if (poutmesh->num_verts > MD3_MAX_VERTS)
-			ri.Sys_Error(ERR_DROP, "mesh %i in model %s has too many vertices", i, mod->name);
+			Sys_Error("mesh %i in model %s has too many vertices", i, mod->name);
 
 		/* register all skins */
 		pinskin = (dmd3skin_t *)((byte *)pinmesh + LittleLong(pinmesh->ofs_skins));
-		poutskin = poutmesh->skins = ri.TagMalloc(ri.modelPool, sizeof(mAliasSkin_t) * poutmesh->num_skins, 0);
+		poutskin = poutmesh->skins = VID_TagAlloc(vid_modelPool, sizeof(mAliasSkin_t) * poutmesh->num_skins, 0);
 
 		for (j = 0; j < poutmesh->num_skins; j++, pinskin++, poutskin++) {
 			memcpy(name, pinskin->name, MD3_MAX_PATH);
@@ -187,7 +187,7 @@ void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 
 		/* load the indexes */
 		pinindex = (unsigned int *)((byte *)pinmesh + LittleLong(pinmesh->ofs_tris));
-		poutindex = poutmesh->indexes = ri.TagMalloc(ri.modelPool, sizeof(unsigned int) * poutmesh->num_tris * 3, 0);
+		poutindex = poutmesh->indexes = VID_TagAlloc(vid_modelPool, sizeof(unsigned int) * poutmesh->num_tris * 3, 0);
 
 		for (j = 0; j < poutmesh->num_tris; j++, pinindex += 3, poutindex += 3) {
 			poutindex[0] = (unsigned int)LittleLong(pinindex[0]);
@@ -197,7 +197,7 @@ void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 
 		/* load the texture coordinates */
 		pincoord = (dmd3coord_t *)((byte *)pinmesh + LittleLong(pinmesh->ofs_tcs));
-		poutcoord = poutmesh->stcoords = ri.TagMalloc(ri.modelPool, sizeof(mAliasCoord_t) * poutmesh->num_verts, 0);
+		poutcoord = poutmesh->stcoords = VID_TagAlloc(vid_modelPool, sizeof(mAliasCoord_t) * poutmesh->num_verts, 0);
 
 		for (j = 0; j < poutmesh->num_verts; j++, pincoord++, poutcoord++) {
 			poutcoord->st[0] = LittleFloat(pincoord->st[0]);
@@ -206,7 +206,7 @@ void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 
 		/* load the vertexes and normals */
 		pinvert = (dmd3vertex_t *)((byte *)pinmesh + LittleLong(pinmesh->ofs_verts));
-		poutvert = poutmesh->vertexes = ri.TagMalloc(ri.modelPool, poutmodel->num_frames * poutmesh->num_verts * sizeof(mAliasVertex_t), 0);
+		poutvert = poutmesh->vertexes = VID_TagAlloc(vid_modelPool, poutmodel->num_frames * poutmesh->num_verts * sizeof(mAliasVertex_t), 0);
 
 		for (l = 0; l < poutmodel->num_frames; l++) {
 			for (j = 0; j < poutmesh->num_verts; j++, pinvert++, poutvert++) {
@@ -228,9 +228,9 @@ void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 		pinmesh = (dmd3mesh_t *)((byte *)pinmesh + LittleLong(pinmesh->meshsize));
 
 		/* find neighbours */
-		poutmesh->trneighbors = ri.TagMalloc(ri.modelPool, sizeof(int) * poutmesh->num_tris * 3, 0);
+		poutmesh->trneighbors = VID_TagAlloc(vid_modelPool, sizeof(int) * poutmesh->num_tris * 3, 0);
 		/* FIXME */
-		/*Mod_BuildTriangleNeighbors(poutmesh->trneighbors, poutmesh->indexes, poutmesh->num_tris);*/
+		/*R_ModBuildTriangleNeighbors(poutmesh->trneighbors, poutmesh->indexes, poutmesh->num_tris);*/
 	}
 	mod->type = mod_alias_md3;
 	mod->alias.extraData = poutmodel;

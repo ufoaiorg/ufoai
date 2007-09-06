@@ -253,7 +253,7 @@ static void R_SetBlendMode (int mode)
 			qglBlendFunc(GL_ZERO, GL_ONE_MINUS_SRC_COLOR);
 			break;
 		default:
-			ri.Sys_Error(ERR_DROP, "unknown blend mode");
+			Com_Error(ERR_DROP, "unknown blend mode");
 			break;
 		}
 	}

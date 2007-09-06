@@ -70,13 +70,10 @@ typedef struct model_s {
 
 #define MAX_MOD_KNOWN   512
 
-void Mod_ClearAll(void);
-void Mod_Modellist_f(void);
-void Mod_DrawModelBBox(vec4_t bbox[8], entity_t *e);
-void Mod_DrawNullModel(void);
-
-void Mod_BeginLoading(const char *tiles, const char *pos);
-void Mod_EndLoading(void);
+void R_ModClearAll(void);
+void R_ModModellist_f(void);
+void R_ModDrawModelBBox(vec4_t bbox[8], entity_t *e);
+void R_ModDrawNullModel(void);
 
 extern model_t mod_known[MAX_MOD_KNOWN];
 extern int mod_numknown;

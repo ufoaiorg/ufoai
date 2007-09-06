@@ -41,7 +41,7 @@ void R_ShaderInit (void)
 	int i = 0;
 	shader_t *s;
 
-	ri.Con_Printf(PRINT_DEVELOPER, "Init shaders (num_shaders: %i)\n", r_newrefdef.num_shaders);
+	Com_DPrintf(DEBUG_RENDERER, "Init shaders (num_shaders: %i)\n", r_newrefdef.num_shaders);
 	for (i = 0; i < r_newrefdef.num_shaders; i++) {
 		s = &r_newrefdef.shaders[i];
 		if (s->glsl) {
@@ -79,7 +79,7 @@ shader_t* R_GetShaderForImage (const char* image)
 	for (i = 0; i < r_newrefdef.num_shaders; i++) {
 		s = &r_newrefdef.shaders[i];
 		if (!Q_strcmp(s->name, image)) {
-			ri.Con_Printf(PRINT_DEVELOPER, "shader for '%s' found\n", image);
+			Com_DPrintf(DEBUG_RENDERER, "shader for '%s' found\n", image);
 			return s;
 		}
 	}
@@ -100,7 +100,7 @@ void R_ShutdownShaders (void)
 	if (!shaderInited && r_newrefdef.num_shaders)
 		R_ShaderInit();
 
-	ri.Con_Printf(PRINT_DEVELOPER, "Shader shutdown\n");
+	Com_DPrintf(DEBUG_RENDERER, "Shader shutdown\n");
 	/* search for shader title and check whether it matches an image name */
 	for (i = 0; i < r_newrefdef.num_shaders; i++) {
 		s = &r_newrefdef.shaders[i];
@@ -113,11 +113,11 @@ void R_ShutdownShaders (void)
 			s->fpid = s->vpid = -1;
 		}
 		if (s->fpid > 0) {
-			ri.Con_Printf(PRINT_DEVELOPER, "..unload shader %s\n", s->filename);
+			Com_DPrintf(DEBUG_RENDERER, "..unload shader %s\n", s->filename);
 			qglDeleteProgramsARB(1, &s->fpid);
 		}
 		if (s->vpid > 0) {
-			ri.Con_Printf(PRINT_DEVELOPER, "..unload shader %s\n", s->filename);
+			Com_DPrintf(DEBUG_RENDERER, "..unload shader %s\n", s->filename);
 			qglDeleteProgramsARB(1, &s->vpid);
 		}
 		s->fpid = s->vpid = -1;
@@ -138,16 +138,16 @@ unsigned int SH_LoadProgram_ARB_FP (const char *path)
 	int error_pos;
 	unsigned int fpid;
 
-	size = ri.FS_LoadFile(path, (void **) &fbuf);
+	size = FS_LoadFile(path, (void **) &fbuf);
 
 	if (!fbuf) {
-		ri.Con_Printf(PRINT_ALL, "Could not load shader %s\n", path);
+		Com_Printf("Could not load shader %s\n", path);
 		return -1;
 	}
 
 	if (size < 16) {
-		ri.Con_Printf(PRINT_ALL, "Could not load invalid shader with size %i: %s\n", size, path);
-		ri.FS_FreeFile(fbuf);
+		Com_Printf("Could not load invalid shader with size %i: %s\n", size, path);
+		FS_FreeFile(fbuf);
 		return -1;
 	}
 
@@ -159,14 +159,14 @@ unsigned int SH_LoadProgram_ARB_FP (const char *path)
 
 	qglGetIntegerv(GL_PROGRAM_ERROR_POSITION_ARB, &error_pos);
 	if (error_pos != -1) {
-		ri.Con_Printf(PRINT_ALL, "!! FP error at position %d in %s\n", error_pos, path);
-		ri.Con_Printf(PRINT_ALL, "!! Error: %s\n", errors);
+		Com_Printf("!! FP error at position %d in %s\n", error_pos, path);
+		Com_Printf("!! Error: %s\n", errors);
 		qglDeleteProgramsARB(1, &fpid);
-		ri.FS_FreeFile(fbuf);
+		FS_FreeFile(fbuf);
 		return 0;
 	}
-	ri.FS_FreeFile(fbuf);
-	ri.Con_Printf(PRINT_DEVELOPER, "...loaded fragment shader %s (pid: %i)\n", path, fpid);
+	FS_FreeFile(fbuf);
+	Com_DPrintf(DEBUG_RENDERER, "...loaded fragment shader %s (pid: %i)\n", path, fpid);
 	return fpid;
 }
 
@@ -180,16 +180,16 @@ unsigned int SH_LoadProgram_ARB_VP (const char *path)
 	char *fbuf;
 	unsigned int size, vpid;
 
-	size = ri.FS_LoadFile(path, (void **) &fbuf);
+	size = FS_LoadFile(path, (void **) &fbuf);
 
 	if (!fbuf) {
-		ri.Con_Printf(PRINT_ALL, "Could not load shader %s\n", path);
+		Com_Printf("Could not load shader %s\n", path);
 		return -1;
 	}
 
 	if (size < 16) {
-		ri.Con_Printf(PRINT_ALL, "Could not load invalid shader with size %i: %s\n", size, path);
-		ri.FS_FreeFile(fbuf);
+		Com_Printf("Could not load invalid shader with size %i: %s\n", size, path);
+		FS_FreeFile(fbuf);
 		return -1;
 	}
 
@@ -203,16 +203,16 @@ unsigned int SH_LoadProgram_ARB_VP (const char *path)
 
 		qglGetIntegerv(GL_PROGRAM_ERROR_POSITION_ARB, &error_pos);
 		if (error_pos != -1) {
-			ri.Con_Printf(PRINT_ALL, "!! VP error at position %d in %s\n", error_pos, path);
-			ri.Con_Printf(PRINT_ALL, "!! Error: %s\n", errors);
+			Com_Printf("!! VP error at position %d in %s\n", error_pos, path);
+			Com_Printf("!! Error: %s\n", errors);
 
 			qglDeleteProgramsARB(1, &vpid);
-			ri.FS_FreeFile(fbuf);
+			FS_FreeFile(fbuf);
 			return 0;
 		}
 	}
-	ri.FS_FreeFile(fbuf);
-	ri.Con_Printf(PRINT_DEVELOPER, "...loaded vertex shader %s (pid: %i)\n", path, vpid);
+	FS_FreeFile(fbuf);
+	Com_DPrintf(DEBUG_RENDERER, "...loaded vertex shader %s (pid: %i)\n", path, vpid);
 	return vpid;
 }
 
@@ -226,16 +226,16 @@ unsigned int SH_LoadProgram_GLSL (shader_t* s)
 	char *fbuf;
 	unsigned int size;
 
-	size = ri.FS_LoadFile(s->filename, (void **) &fbuf);
+	size = FS_LoadFile(s->filename, (void **) &fbuf);
 
 	if (!fbuf) {
-		ri.Con_Printf(PRINT_ALL, "Could not load shader %s\n", s->filename);
+		Com_Printf("Could not load shader %s\n", s->filename);
 		return -1;
 	}
 
 	if (size < 16) {
-		ri.Con_Printf(PRINT_ALL, "Could not load invalid shader with size %i: %s\n", size, s->filename);
-		ri.FS_FreeFile(fbuf);
+		Com_Printf("Could not load invalid shader with size %i: %s\n", size, s->filename);
+		FS_FreeFile(fbuf);
 		return -1;
 	}
 
@@ -255,8 +255,8 @@ unsigned int SH_LoadProgram_GLSL (shader_t* s)
 
 	qglLinkProgram(s->glslpid);
 
-	ri.FS_FreeFile(fbuf);
-	ri.Con_Printf(PRINT_DEVELOPER, "...loaded glsl shader %s (pid: %i)\n", s->filename, s->glslpid);
+	FS_FreeFile(fbuf);
+	Com_DPrintf(DEBUG_RENDERER, "...loaded glsl shader %s (pid: %i)\n", s->filename, s->glslpid);
 	return s->glslpid;
 }
 

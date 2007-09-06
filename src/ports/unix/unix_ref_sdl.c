@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../renderer/r_local.h"
 #include "../../client/cl_keys.h"
+#include "../../client/cl_input.h"
 
 #include <signal.h>
 /*#include <SDL_opengl.h>*/
@@ -46,9 +47,6 @@ qboolean have_stencil = qfalse;
 
 static cvar_t	*in_mouse;
 static cvar_t	*sdl_debug;
-
-/* state struct passed in Init */
-static in_state_t *in_state;
 
 static cvar_t *sensitivity;
 static qboolean mouse_avail;
@@ -82,7 +80,7 @@ int mx, my;
 /**
  * @brief
  */
-void RW_IN_Activate (qboolean active)
+void IN_Activate (qboolean active)
 {
 	mouse_active = qtrue;
 }
@@ -311,7 +309,7 @@ static int SDLateKey (SDL_keysym *keysym, int *key)
 			*key = '~'; /* console HACK */
 	}
 	if (sdl_debug->integer)
-		ri.Con_Printf(PRINT_ALL, "unicode: %hx keycode: %i key: %hx\n", keysym->unicode, *key, *key);
+		Com_Printf("unicode: %hx keycode: %i key: %hx\n", keysym->unicode, *key, *key);
 
 	return buf;
 }
@@ -322,13 +320,13 @@ static int SDLateKey (SDL_keysym *keysym, int *key)
 static void printkey (const SDL_Event* event, int down)
 {
 	if (sdl_debug->integer) {
-		ri.Con_Printf(PRINT_ALL, "key name: %s (down: %i)", SDL_GetKeyName(event->key.keysym.sym), down);
+		Com_Printf("key name: %s (down: %i)", SDL_GetKeyName(event->key.keysym.sym), down);
 		if (event->key.keysym.unicode) {
-			ri.Con_Printf(PRINT_ALL, " unicode: %hx", event->key.keysym.unicode);
+			Com_Printf(" unicode: %hx", event->key.keysym.unicode);
 			if (event->key.keysym.unicode >= '0' && event->key.keysym.unicode <= '~')  /* printable? */
-				ri.Con_Printf(PRINT_ALL, " (%c)", (unsigned char)(event->key.keysym.unicode));
+				Com_Printf(" (%c)", (unsigned char)(event->key.keysym.unicode));
 		}
-		ri.Con_Printf(PRINT_ALL, "\n");
+		Com_Printf("\n");
 	}
 }
 
@@ -384,9 +382,9 @@ static void GetEvent (SDL_Event *event)
 			SDL_WM_ToggleFullScreen(surface);
 
 			if (surface->flags & SDL_FULLSCREEN) {
-				ri.Cvar_SetValue("vid_fullscreen", 1);
+				Cvar_SetValue("vid_fullscreen", 1);
 			} else {
-				ri.Cvar_SetValue("vid_fullscreen", 0);
+				Cvar_SetValue("vid_fullscreen", 0);
 			}
 			vid_fullscreen->modified = qfalse; /* we just changed it with SDL. */
 			break; /* ignore this key */
@@ -394,7 +392,7 @@ static void GetEvent (SDL_Event *event)
 
 		if (event->key.keysym.mod & KMOD_CTRL && event->key.keysym.sym == SDLK_g) {
 			SDL_GrabMode gm = SDL_WM_GrabInput(SDL_GRAB_QUERY);
-			ri.Cvar_SetValue("vid_grabmouse", (gm == SDL_GRAB_ON) ? 0 : 1);
+			Cvar_SetValue("vid_grabmouse", (gm == SDL_GRAB_ON) ? 0 : 1);
 			break; /* ignore this key */
 		}
 
@@ -425,7 +423,7 @@ static void GetEvent (SDL_Event *event)
 		}
 		break;
 	case SDL_QUIT:
-		ri.Cmd_ExecuteText(EXEC_NOW, "quit");
+		Cbuf_ExecuteText(EXEC_NOW, "quit");
 		break;
 	}
 
@@ -434,16 +432,16 @@ static void GetEvent (SDL_Event *event)
 /**
  * @brief
  */
-qboolean Rimp_Init (void *hInstance, void *wndProc)
+qboolean Rimp_Init (void)
 {
 	if (SDL_WasInit(SDL_INIT_AUDIO|SDL_INIT_CDROM|SDL_INIT_VIDEO) == 0) {
 		if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-			ri.Sys_Error(ERR_FATAL, "Video SDL_Init failed: %s\n", SDL_GetError());
+			Sys_Error("Video SDL_Init failed: %s\n", SDL_GetError());
 			return qfalse;
 		}
 	} else if (SDL_WasInit(SDL_INIT_VIDEO) == 0) {
 		if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
-			ri.Sys_Error(ERR_FATAL, "Video SDL_InitSubsystem failed: %s\n", SDL_GetError());
+			Sys_Error("Video SDL_InitSubsystem failed: %s\n", SDL_GetError());
 			return qfalse;
 		}
 	}
@@ -492,7 +490,7 @@ static void SetSDLIcon (void)
  * @brief Init the SDL window
  * @param fullscreen Start in fullscreen or not (bool value)
  */
-static qboolean Rimp_InitGraphics (qboolean fullscreen)
+qboolean Rimp_InitGraphics (qboolean fullscreen)
 {
 	int flags;
 	int stencil_bits;
@@ -506,7 +504,7 @@ static qboolean Rimp_InitGraphics (qboolean fullscreen)
 #ifndef __APPLE__
 	SDL_SysWMinfo info;
 	SDL_VERSION(&info.version);
-	ri.Con_Printf(PRINT_ALL, "SDL version: %i.%i.%i\n", info.version.major, info.version.minor, info.version.patch);
+	Com_Printf("SDL version: %i.%i.%i\n", info.version.major, info.version.minor, info.version.patch);
 	have_stencil = qfalse;
 #endif
 
@@ -521,14 +519,14 @@ static qboolean Rimp_InitGraphics (qboolean fullscreen)
 			width = DisplayWidth(info.info.x11.display, DefaultScreen(info.info.x11.display));
 			height = DisplayHeight(info.info.x11.display, DefaultScreen(info.info.x11.display));
 			info.info.x11.unlock_func();
-			ri.Con_Printf(PRINT_ALL, "Desktop resolution: %i:%i\n", width, height);
+			Com_Printf("Desktop resolution: %i:%i\n", width, height);
 		}
 	}
 #endif
 #endif
 
 	/* Just toggle fullscreen if that's all that has been changed */
-	if (surface && (surface->w == vid.width) && (surface->h == vid.height)) {
+	if (surface && (surface->w == viddef.width) && (surface->h == viddef.height)) {
 		qboolean isfullscreen = (surface->flags & SDL_FULLSCREEN) ? qtrue : qfalse;
 		if (fullscreen != isfullscreen)
 			SDL_WM_ToggleFullScreen(surface);
@@ -547,7 +545,7 @@ static qboolean Rimp_InitGraphics (qboolean fullscreen)
 		SDL_FreeSurface(surface);
 
 	/* let the sound and input subsystems know about the new window */
-	ri.Vid_NewWindow(vid.width, vid.height);
+	VID_NewWindow(viddef.width, viddef.height);
 
 	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
 	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 5);
@@ -562,13 +560,13 @@ static qboolean Rimp_InitGraphics (qboolean fullscreen)
 
 	SetSDLIcon(); /* currently uses ufoicon.xbm data */
 #if 0
-	if (!SDL_VideoModeOK(vid.width, vid.height, 0, flags)) {
-		ri.Sys_Error(ERR_FATAL, "(SDLGL) SDL_VideoModeOK failed (%ix%i): %s\n", vid.width, vid.height, SDL_GetError());
+	if (!SDL_VideoModeOK(viddef.width, viddef.height, 0, flags)) {
+		Sys_Error(ERR_FATAL, "(SDLGL) SDL_VideoModeOK failed (%ix%i): %s\n", viddef.width, viddef.height, SDL_GetError());
 		return qfalse;
 	}
 #endif
-	if ((surface = SDL_SetVideoMode(vid.width, vid.height, 0, flags)) == NULL) {
-		ri.Sys_Error(ERR_FATAL, "(SDLGL) SDL SetVideoMode failed: %s\n", SDL_GetError());
+	if ((surface = SDL_SetVideoMode(viddef.width, viddef.height, 0, flags)) == NULL) {
+		Sys_Error("(SDLGL) SDL SetVideoMode failed: %s\n", SDL_GetError());
 		return qfalse;
 	}
 
@@ -577,7 +575,7 @@ static qboolean Rimp_InitGraphics (qboolean fullscreen)
 	SDL_ShowCursor(SDL_DISABLE);
 
 	if (!SDL_GL_GetAttribute(SDL_GL_STENCIL_SIZE, &stencil_bits)) {
-		ri.Con_Printf(PRINT_ALL, "I: got %d bits of stencil\n", stencil_bits);
+		Com_Printf("I: got %d bits of stencil\n", stencil_bits);
 		if (stencil_bits >= 1) {
 			have_stencil = qtrue;
 		}
@@ -591,14 +589,7 @@ static qboolean Rimp_InitGraphics (qboolean fullscreen)
 /**
  * @brief
  */
-void Rimp_BeginFrame (void)
-{
-}
-
-/**
- * @brief
- */
-void Rimp_EndFrame (void)
+void R_EndFrame (void)
 {
 	SDL_GL_SwapBuffers();
 }
@@ -608,14 +599,14 @@ void Rimp_EndFrame (void)
  */
 rserr_t Rimp_SetMode (unsigned int *pwidth, unsigned int *pheight, int mode, qboolean fullscreen)
 {
-	ri.Con_Printf(PRINT_ALL, "setting mode %d:", mode );
+	Com_Printf("setting mode %d:", mode );
 
-	if (!ri.Vid_GetModeInfo((int*)pwidth, (int*)pheight, mode)) {
-		ri.Con_Printf(PRINT_ALL, " invalid mode\n");
+	if (!VID_GetModeInfo((int*)pwidth, (int*)pheight, mode)) {
+		Com_Printf(" invalid mode\n");
 		return rserr_invalid_mode;
 	}
 
-	ri.Con_Printf(PRINT_ALL, " %d %d\n", *pwidth, *pheight);
+	Com_Printf(" %d %d\n", *pwidth, *pheight);
 
 	if (!Rimp_InitGraphics(fullscreen)) {
 		/* failed to set a valid mode in windowed mode */
@@ -632,7 +623,7 @@ void Rimp_SetGamma (void)
 {
 	float g;
 
-	g = ri.Cvar_Get("vid_gamma", "1.0", 0, NULL)->value;
+	g = Cvar_Get("vid_gamma", "1.0", 0, NULL)->value;
 	SDL_SetGamma(g, g, g);
 }
 
@@ -665,17 +656,6 @@ void Rimp_AppActivate (qboolean active)
 /*****************************************************************************/
 /* KEYBOARD                                                                  */
 /*****************************************************************************/
-
-static Key_Event_fp_t Key_Event_fp;
-
-/**
- * @brief
- * @sa KBD_Close
- */
-void KBD_Init (Key_Event_fp_t fp)
-{
-	Key_Event_fp = fp;
-}
 
 /**
  * @brief
@@ -710,11 +690,11 @@ void KBD_Update (void)
 			}
 		}
 		while (keyq_head != keyq_tail) {
-			in_state->Key_Event_fp(keyq[keyq_tail].key, keyq[keyq_tail].down);
+			Key_Event(keyq[keyq_tail].key, keyq[keyq_tail].down, Sys_Milliseconds());
 			keyq_tail = (keyq_tail + 1) & (MAX_KEYQ - 1);
 		}
 	} else
-		ri.Con_Printf(PRINT_ALL, "SDL not active right now\n");
+		Com_Printf("SDL not active right now\n");
 	KBD_Update_Flag = 0;
 }
 
@@ -734,16 +714,14 @@ void KBD_Close (void)
  * @brief
  * @sa RW_IN_Shutdown
  */
-void RW_IN_Init (in_state_t *in_state_p)
+void IN_Init (void)
 {
-	in_state = in_state_p;
-
 	/* mouse variables */
-	in_mouse = ri.Cvar_Get("in_mouse", "1", CVAR_ARCHIVE, NULL);
-	sensitivity = ri.Cvar_Get("sensitivity", "2", CVAR_ARCHIVE, NULL);
+	in_mouse = Cvar_Get("in_mouse", "1", CVAR_ARCHIVE, NULL);
+	sensitivity = Cvar_Get("sensitivity", "2", CVAR_ARCHIVE, NULL);
 
 	/* other cvars */
-	sdl_debug = ri.Cvar_Get("sdl_debug", "0", 0, NULL);
+	sdl_debug = Cvar_Get("sdl_debug", "0", 0, NULL);
 
 	mx = my = 0.0;
 	mouse_avail = qtrue;
@@ -751,21 +729,9 @@ void RW_IN_Init (in_state_t *in_state_p)
 
 /**
  * @brief
- * @sa RW_IN_Init
  */
-void RW_IN_Shutdown (void)
+void IN_GetMousePos (int *x, int *y)
 {
-	RW_IN_Activate(qfalse);
-
-	if (mouse_avail)
-		mouse_avail = qfalse;
-}
-
-/**
- * @brief
- */
-void RW_IN_GetMousePos (int *x, int *y)
-{
-	*x = mx / vid.rx;
-	*y = my / vid.ry;
+	*x = mx / viddef.rx;
+	*y = my / viddef.ry;
 }
