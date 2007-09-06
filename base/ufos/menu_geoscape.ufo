@@ -483,7 +483,6 @@ menu popup_intercept_ready
 		tooltip	"_Automatically finish mission"
 		image	menu/multi_buttons3
 		pos	"530 410"
-		invis	true
 		texh	"180 64"
 		texl	"0 32"
 		out	{ *bt_auto_go image menu/multi_buttons3 *string_auto_go color "0 0.5 0 1" }
@@ -581,7 +580,6 @@ menu popup_base_attack
 		tooltip	"_Automatically finish mission"
 		image	menu/multi_buttons3
 		pos	"530 410"
-		invis	true
 		texh	"180 64"
 		texl	"0 32"
 		out	{ *bt_auto_go image menu/multi_buttons3 *string_auto_go color "0 0.5 0 1" }
