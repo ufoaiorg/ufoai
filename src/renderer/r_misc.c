@@ -209,20 +209,6 @@ void R_ScreenShot_f (void)
 	Com_Printf("Wrote %s\n", checkName);
 }
 
-/**
- * @brief
- */
-void R_UpdateSwapInterval (void)
-{
-	if (r_swapinterval->modified) {
-		r_swapinterval->modified = qfalse;
-
-		if (qglSwapInterval)
-			qglSwapInterval(r_swapinterval->value);
-	}
-}
-
-
 /*
 ==============================================================================
 SOME DRAWING

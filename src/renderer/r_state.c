@@ -43,8 +43,6 @@ void R_SetDefaultState (void)
 
 	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	R_UpdateSwapInterval();
-
 	/* doesn't really belong here... but works fine */
 	viddef.rx = (float) viddef.width / VID_NORM_WIDTH;
 	viddef.ry = (float) viddef.height / VID_NORM_HEIGHT;

@@ -726,7 +726,7 @@ static void R_Register (void)
 /**
  * @brief
  */
-static qboolean R_SetMode (void)
+qboolean R_SetMode (void)
 {
 	rserr_t err;
 	qboolean fullscreen;
@@ -1135,6 +1135,10 @@ void R_Shutdown (void)
  */
 void R_BeginFrame (void)
 {
+	/* change modes if necessary */
+	if (r_mode->modified || vid_fullscreen->modified || r_ext_texture_compression->modified)
+		R_SetMode();
+
 	if (r_anisotropic->modified) {
 		if (r_anisotropic->integer > r_ext_max_anisotropy->integer) {
 			Com_Printf("...max GL_EXT_texture_filter_anisotropic value is %i\n", r_ext_max_anisotropy->integer);
@@ -1189,8 +1193,12 @@ void R_BeginFrame (void)
 		r_texturesolidmode->modified = qfalse;
 	}
 
-	/* swapinterval stuff */
-	R_UpdateSwapInterval();
+	/* vsync stuff */
+	if (r_swapinterval->modified) {
+		if (qglSwapInterval)
+			qglSwapInterval(r_swapinterval->integer);
+		r_swapinterval->modified = qfalse;
+	}
 
 	/* clear screen if desired */
 	R_Clear();

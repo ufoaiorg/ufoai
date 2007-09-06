@@ -91,6 +91,21 @@ qboolean VID_GetModeInfo (int *width, int *height, int mode)
 }
 
 /**
+ * @brief Perform a renderer restart
+ */
+static void VID_Restart_f (void)
+{
+	R_SetMode();
+
+	/* unfortunately gl contexts are destroyed when changing
+	 * video modes on win32 (at least with SDL), so we must
+	 * re-upload all textures to restore our state */
+#ifdef _WIN32
+	/* @todo */
+#endif
+}
+
+/**
  * @brief
  * @sa VID_Shutdown
  */
@@ -103,6 +118,8 @@ void VID_Init (void)
 	vid_width = Cvar_Get("vid_width", "1024", CVAR_ARCHIVE, "Custom video width - set r_mode to -1 to use this");
 	vid_xpos = Cvar_Get("vid_xpos", "3", CVAR_ARCHIVE, "Position of the ufo window");
 	vid_ypos = Cvar_Get("vid_ypos", "22", CVAR_ARCHIVE, "Position of the ufo window");
+
+	Cmd_AddCommand("vid_restart", VID_Restart_f, "Restart the renderer - or change the resolution");
 
 	/* memory pools */
 	vid_genericPool = Mem_CreatePool("Vid: Generic");

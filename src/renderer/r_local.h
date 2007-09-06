@@ -140,7 +140,6 @@ typedef enum {
 int RecursiveLightPoint(model_t* mapTile, mBspNode_t * node, vec3_t start, vec3_t end);
 
 void R_SetDefaultState(void);
-void R_UpdateSwapInterval(void);
 
 #define BACKFACE_EPSILON    0.01
 

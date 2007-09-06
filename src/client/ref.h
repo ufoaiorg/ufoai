@@ -305,6 +305,7 @@ int R_FontDrawString(const char *fontID, int align, int x, int y, int absX, int 
 void R_FontLength(const char *font, char *c, int *width, int *height);
 
 qboolean R_Init(void);
+qboolean R_SetMode(void);
 void R_Shutdown(void);
 
 #endif /* CLIENT_REF_H */
