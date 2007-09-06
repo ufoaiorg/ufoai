@@ -27,14 +27,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
-/* holds the current active production category */
+/** @brief Holds the current active production category (which is buytype). */
 static int produceCategory = 0;
 
-/* holds the current active selected queue index/objID */
+/** @brief Holds the current active selected queue index/objID. */
 static qboolean selectedQueueItem 	= qfalse;
 static int selectedIndex 			= -1;
 
-/* 20060921 LordHavoc: added PRODUCE_DIVISOR to allow reducing prices below 1x */
+/** @brief Used in production costs (to allow reducing prices below 1x). */
 static const int PRODUCE_FACTOR = 1;
 static const int PRODUCE_DIVISOR = 2;
 
@@ -148,7 +148,11 @@ void PR_UpdateProductionTime (base_t *base)
 		/* Don't change anything for first (current) item in queue. (that's why i = 1)*/
 		for (i = 1; i < gd.productions[base->idx].numItems; i++) {
 			timeTemp = gd.productions[base->idx].items[i].timeLeft;
-			tech = RS_GetTechByProvided(csi.ods[gd.productions[base->idx].items[i].objID].id);
+			if (!gd.productions[base->idx].items[i].aircraft)
+				tech = RS_GetTechByProvided(csi.ods[gd.productions[base->idx].items[i].objID].id);
+			else
+				tech = aircraft_samples[gd.productions[base->idx].items[i].objID].tech;
+			assert(tech);
 			time = PR_CalculateProductionTime(base, tech, NULL, qfalse);
 			gd.productions[base->idx].items[i].timeLeft = time;
 			Com_DPrintf(DEBUG_CLIENT, "PR_UpdateProductionTime()... updating production time for %s. Original time: %i, new time: %i\n",
