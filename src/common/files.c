@@ -381,13 +381,17 @@ int FS_Read (void *buffer, int len, qFILE * f)
 			if (!tries) {
 				tries = 1;
 			} else {
+#ifdef DEBUG
 				Com_DPrintf(DEBUG_ENGINE, "FS_Read: %s:%i (%s)\n", file, line, f->name);
+#endif
 				Com_Error(ERR_FATAL, "FS_Read: 0 bytes read");
 			}
 		}
 
 		if (read == -1) {
+#ifdef DEBUG
 			Com_DPrintf(DEBUG_ENGINE, "FS_Read: %s:%i (%s)\n", file, line, f->name);
+#endif
 			Com_Error(ERR_FATAL, "FS_Read: -1 bytes read");
 		}
 
