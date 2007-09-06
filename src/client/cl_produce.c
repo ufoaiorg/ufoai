@@ -473,7 +473,7 @@ void PR_ProductionRun (void)
 
 					/* queue the next production */
 					if (prod->amount <= 0) {
-						Com_sprintf(messageBuffer, sizeof(messageBuffer), _("The production of %s has finished."),od->name);
+						Com_sprintf(messageBuffer, sizeof(messageBuffer), _("The production of %s has finished."), od->name);
 						MN_AddNewMessage(_("Production finished"), messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
 						PR_QueueNext(i);
 					}
@@ -485,7 +485,7 @@ void PR_ProductionRun (void)
 					AIR_NewAircraft(&gd.bases[i], aircraft->id);
 					/* queue the next production */
 					if (prod->amount <= 0) {
-						Com_sprintf(messageBuffer, sizeof(messageBuffer), _("The production of %s has finished."),aircraft->name);
+						Com_sprintf(messageBuffer, sizeof(messageBuffer), _("The production of %s has finished."), aircraft->name);
 						MN_AddNewMessage(_("Production finished"), messageBuffer, qfalse, MSG_PRODUCTION, NULL);
 						PR_QueueNext(i);
 					}
