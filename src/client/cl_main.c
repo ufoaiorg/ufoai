@@ -2660,8 +2660,7 @@ void CL_Shutdown (void)
 	if (CL_VideoRecording())
 		CL_CloseAVI();
 	S_Shutdown();
-	IN_Shutdown();
-	VID_Shutdown();
+	R_Shutdown();
 	MN_Shutdown();
 	CIN_Shutdown();
 	FS_Shutdown();

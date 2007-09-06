@@ -25,8 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_local.h"
 
-viddef_t vid;
-
 GLenum gl_texture0, gl_texture1, gl_texture2, gl_texture3;
 
 rconfig_t r_config;

@@ -603,15 +603,3 @@ void KBD_Update (void)
 		keyq_tail = (keyq_tail + 1) & (MAX_KEYQ - 1);
 	}
 }
-
-/**
- * @brief
- * @sa KBD_Close
- */
-void KBD_Close (void)
-{
-	keyq_head = 0;
-	keyq_tail = 0;
-
-	memset(keyq, 0, sizeof(keyq));
-}

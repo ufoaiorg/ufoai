@@ -107,7 +107,7 @@ static void VID_Restart_f (void)
 
 /**
  * @brief
- * @sa VID_Shutdown
+ * @sa R_Shutdown
  */
 void VID_Init (void)
 {
@@ -176,14 +176,4 @@ void VID_NewWindow (int width, int height)
 
 	viddef.rx = (float)width  / VID_NORM_WIDTH;
 	viddef.ry = (float)height / VID_NORM_HEIGHT;
-}
-
-/**
- * @brief
- */
-void VID_Shutdown (void)
-{
-	KBD_Close();
-	IN_Shutdown();
-	R_Shutdown();
 }

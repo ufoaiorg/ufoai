@@ -1311,16 +1311,6 @@ void CL_ParseInput (void)
 
 /**
  * @brief
- * @sa IN_Init
- */
-void IN_Shutdown (void)
-{
-	IN_Activate(qfalse);
-	KBD_Close();
-}
-
-/**
- * @brief
  */
 void IN_Frame (void)
 {
@@ -1332,7 +1322,6 @@ void IN_Frame (void)
 
 /**
  * @brief
- * @sa RW_IN_Shutdown
  */
 void IN_Init (void)
 {
