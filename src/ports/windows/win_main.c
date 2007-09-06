@@ -493,27 +493,6 @@ void Sys_ConsoleOutput (const char *string)
 	Sys_UpdateConsoleBuffer();
 }
 
-
-/**
- * @brief Send Key_Event calls
- */
-void Sys_SendKeyEvents (void)
-{
-	MSG msg;
-
-	while (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) {
-		if (!GetMessage(&msg, NULL, 0, 0))
-			Sys_Quit();
-		sys_msg_time = msg.time;
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
-	}
-
-	/* grab frame time */
-	sys_frame_time = timeGetTime();	/* FIXME: should this be at start? */
-}
-
-
 /**
  * @brief
  */
@@ -736,7 +715,6 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 		if (Minimized)
 			Sys_Sleep(1);
 
-		Sys_SendKeyEvents();
 		Qcommon_Frame();
 	}
 
