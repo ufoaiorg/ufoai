@@ -254,14 +254,14 @@ static production_t *PR_QueueNew (production_queue_t *queue, signed int objID, s
 
 	/* initialize */
 	prod = &queue->items[queue->numItems];
-	if (produceCategory != 5) {
+	if (produceCategory != BUY_AIRCRAFT) {
 		od = &csi.ods[objID];
 		assert(od->tech);
 	} else
 		aircraft = &aircraft_samples[objID];
 
 	/* We cannot queue new aircraft if no free hangar space. */
-	if (produceCategory == 5) {
+	if (produceCategory == BUY_AIRCRAFT) {
 		if (!baseCurrent->hasCommand) {
 			MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo command centre in this base.\n"));
 			return NULL;
@@ -285,19 +285,18 @@ static production_t *PR_QueueNew (production_queue_t *queue, signed int objID, s
 		prod->timeLeft = PR_CalculateProductionTime(baseCurrent, od->tech, INV_GetComponentsByItemIdx(prod->objID), qtrue);
 	} else {	/* Production. */
 		prod->production = qtrue;
-		if (produceCategory == 5)
+		if (produceCategory == BUY_AIRCRAFT) {
 			prod->aircraft = qtrue;
-		/* Don't try to add to queue an item which is not produceable. */
-		if (produceCategory != 5) {
-			if (od->tech->produceTime < 0)
-				return NULL;
-			else
-				prod->timeLeft = PR_CalculateProductionTime(baseCurrent, od->tech, NULL, qfalse);
-		} else {
 			if (aircraft->tech->produceTime < 0)
 				return NULL;
 			else
 				prod->timeLeft = aircraft->tech->produceTime; /* FIXME: Calculate time here. */
+		} else {
+			/* Don't try to add to queue an item which is not produceable. */
+			if (od->tech->produceTime < 0)
+				return NULL;
+			else
+				prod->timeLeft = PR_CalculateProductionTime(baseCurrent, od->tech, NULL, qfalse);
 		}
 	}
 
@@ -655,7 +654,7 @@ static void PR_ProductionListRightClick_f (void)
 				Sys_Error("PR_ProductionListRightClick_f: No tech pointer for object id %i ('%s')\n", i, od->id);
 #endif
 			/* Open up ufopedia for this entry. */
-			if (BUYTYPE_MATCH(od->buytype,produceCategory) && RS_IsResearched_ptr(od->tech)) {
+			if (BUYTYPE_MATCH(od->buytype, produceCategory) && RS_IsResearched_ptr(od->tech)) {
 				if (j == idx) {
 					UP_OpenWith(od->tech->id);
 					return;
@@ -720,7 +719,7 @@ static void PR_ProductionListClick_f (void)
 		/* Clicked in the item list. */
 		idx = num - queue->numItems - QUEUE_SPACERS;
 		if (Cvar_VariableInteger("mn_prod_disassembling") == 0) {
-			if (produceCategory != 5) {	/* Everything except aircrafts. */
+			if (produceCategory != BUY_AIRCRAFT) {	/* Everything except aircrafts. */
 				for (j = 0, i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 #ifdef DEBUG
 					if (!od->tech)
@@ -830,7 +829,7 @@ static void PR_UpdateProductionList (void)
 	}
 
 	/* then go through all object definitions */
-	if (produceCategory != 5) {	/* Everything except aircrafts. */
+	if (produceCategory != BUY_AIRCRAFT) {	/* Everything except aircrafts. */
 		for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 			/* we will not show items with producetime = -1 - these are not produceable */
 			if (*od->id)
@@ -1120,7 +1119,7 @@ static void PR_ProductionIncrease_f (void)
 		if (!prod)
 			return;
 
-		if (produceCategory != 5) {
+		if (produceCategory != BUY_AIRCRAFT) {
 			/* Get technology of the item in the selected queue-entry. */
 			od = &csi.ods[prod->objID];
 
@@ -1179,7 +1178,7 @@ static void PR_ProductionIncrease_f (void)
 	}
 
 	if (Cvar_VariableInteger("mn_prod_disassembling") == 0) {	/* Production. */
-		if (produceCategory != 5)
+		if (produceCategory != BUY_AIRCRAFT)
 			PR_ProductionInfo(qfalse);
 		else
 			PR_AircraftInfo();
