@@ -435,11 +435,6 @@ extern item_t dragItem;
 extern float *rotateAngles;
 extern const float MIN_ZOOM, MAX_ZOOM;
 
-void CL_InitInput(void);
-void CL_CameraMove(void);
-void CL_CameraRoute(pos3_t from, pos3_t target);
-void CL_ParseInput(void);
-
 void CL_ClearState(void);
 
 const char *Key_KeynumToString(int keynum);

@@ -2036,7 +2036,7 @@ static void CL_InitLocal (void)
 
 	INVSH_InitInventory(invList);
 	Con_CheckResize();
-	CL_InitInput();
+	IN_Init();
 
 	SAV_Init();
 	MN_ResetMenus();
@@ -2444,7 +2444,8 @@ void CL_Frame (int now, void *data)
 
 	CL_SendCommand();
 
-	CL_ParseInput();
+	IN_Frame();
+
 	/* update camera position */
 	CL_CameraMove();
 
@@ -2493,9 +2494,6 @@ void CL_Frame (int now, void *data)
  */
 void CL_SlowFrame (int now, void *data)
 {
-	/* let the mouse activate or deactivate */
-	IN_Frame();
-
 	CL_CvarCheck();
 
 	/* allow rendering DLL change */
@@ -2612,7 +2610,6 @@ void CL_Init (void)
 	SCR_DrawPrecacheScreen(qfalse);
 
 	CL_InitLocal();
-	IN_Init();
 
 	/* FIXME: Maybe we should activate this again when all savegames issues are solved */
 /*	Cbuf_AddText("loadteam current\n"); */

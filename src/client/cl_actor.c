@@ -2004,7 +2004,6 @@ static void CL_BuildForbiddenList (void)
  * @note usage in console: "debug_drawblocked"
  * @todo currently the particles stay a _very_ long time ... so everybody has to stand still in order for the display to be correct.
  * @sa CL_BuildForbiddenList
- * @sa cl_input:CL_InitInput <-- console command init.
  */
 void CL_DisplayBlockedPaths_f (void)
 {
@@ -3138,7 +3137,7 @@ void CL_ResetActorMoveLength (void)
 /**
  * @brief Battlescape cursor positioning.
  * @note Sets global var mouseActor to current selected le
- * @sa CL_ParseInput
+ * @sa IN_Parse
  */
 void CL_ActorMouseTrace (void)
 {

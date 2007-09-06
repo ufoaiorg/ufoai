@@ -33,4 +33,7 @@ void IN_Init(void);
 void IN_Frame(void);
 void IN_SendKeyEvents(void);
 
+void CL_CameraMove(void);
+void CL_CameraRoute(pos3_t from, pos3_t target);
+
 #endif /* CLIENT_INPUT_H */

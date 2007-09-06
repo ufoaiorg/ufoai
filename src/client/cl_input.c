@@ -825,76 +825,6 @@ static void CL_MakeBaseMapShot_f (void)
 	Cbuf_ExecuteText(EXEC_NOW, "screenshot");
 }
 
-/**
- * @brief Init some bindable commands
- * @sa CL_InitLocal
- */
-void CL_InitInput (void)
-{
-	Cmd_AddCommand("+turnleft", IN_TurnLeftDown_f, _("Rotate battlescape camera anti-clockwise"));
-	Cmd_AddCommand("-turnleft", IN_TurnLeftUp_f, NULL);
-	Cmd_AddCommand("+turnright", IN_TurnRightDown_f, _("Rotate battlescape camera clockwise"));
-	Cmd_AddCommand("-turnright", IN_TurnRightUp_f, NULL);
-	Cmd_AddCommand("+turnup", IN_TurnUpDown_f, _("Tilt battlescape camera up"));
-	Cmd_AddCommand("-turnup", IN_TurnUpUp_f, NULL);
-	Cmd_AddCommand("+turndown", IN_TurnDownDown_f, _("Tilt battlescape camera down"));
-	Cmd_AddCommand("-turndown", IN_TurnDownUp_f, NULL);
-	Cmd_AddCommand("+shiftleft", IN_ShiftLeftDown_f, _("Move battlescape camera left"));
-	Cmd_AddCommand("-shiftleft", IN_ShiftLeftUp_f, NULL);
-	Cmd_AddCommand("+shiftright", IN_ShiftRightDown_f, _("Move battlescape camera right"));
-	Cmd_AddCommand("-shiftright", IN_ShiftRightUp_f, NULL);
-	Cmd_AddCommand("+shiftup", IN_ShiftUpDown_f, _("Move battlescape camera forward"));
-	Cmd_AddCommand("-shiftup", IN_ShiftUpUp_f, NULL);
-	Cmd_AddCommand("+shiftdown", IN_ShiftDownDown_f, _("Move battlescape camera backward"));
-	Cmd_AddCommand("-shiftdown", IN_ShiftDownUp_f, NULL);
-	Cmd_AddCommand("+zoomin", IN_ZoomInDown_f, _("Zoom in"));
-	Cmd_AddCommand("-zoomin", IN_ZoomInUp_f, NULL);
-	Cmd_AddCommand("+zoomout", IN_ZoomOutDown_f, _("Zoom out"));
-	Cmd_AddCommand("-zoomout", IN_ZoomOutUp_f, NULL);
-
-	Cmd_AddCommand("+leftmouse", CL_LeftClickDown_f, _("Left mouse button click (menu)"));
-	Cmd_AddCommand("-leftmouse", CL_LeftClickUp_f, NULL);
-	Cmd_AddCommand("+middlemouse", CL_MiddleClickDown_f, _("Middle mouse button click (menu)"));
-	Cmd_AddCommand("-middlemouse", CL_MiddleClickUp_f, NULL);
-	Cmd_AddCommand("+rightmouse", CL_RightClickDown_f, _("Right mouse button click (menu)"));
-	Cmd_AddCommand("-rightmouse", CL_RightClickUp_f, NULL);
-	Cmd_AddCommand("+select", CL_SelectDown_f, _("Select objects/Walk to a square/In fire mode, fire etc"));
-	Cmd_AddCommand("-select", CL_SelectUp_f, NULL);
-	Cmd_AddCommand("+action", CL_ActionDown_f, _("Walk to a square/In fire mode, cancel action"));
-	Cmd_AddCommand("-action", CL_ActionUp_f, NULL);
-	Cmd_AddCommand("+turn", CL_TurnDown_f, _("Turn soldier toward mouse pointer"));
-	Cmd_AddCommand("-turn", CL_TurnUp_f, NULL);
-	Cmd_AddCommand("standcrouch", CL_ActorStandCrouch_f, _("Toggle stand/crounch"));
-	Cmd_AddCommand("togglereaction", CL_ActorToggleReaction_f, _("Toggle reaction fire"));
-	Cmd_AddCommand("useheadgear", CL_ActorUseHeadgear_f, _("Toggle the headgear"));
-	Cmd_AddCommand("nextalien", CL_NextAlien_f, _("Toogle to next alien"));
-	Cmd_AddCommand("drawspottedlines", CL_DrawSpottedLines_f, _("Draw a line to each alien visible to the current actor."));
-	Cmd_AddCommand("nextalienactor", CL_NextAlienVisibleFromActor_f, _("Toogle to next alien visible from selected actor."));
-
-	Cmd_AddCommand("list_firemodes", CL_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
-	Cmd_AddCommand("fireweap", CL_FireWeapon_f, "Start aiming the weapon.");
-	Cmd_AddCommand("sel_reactmode", CL_SelectReactionFiremode_f, "Change/Select firemode used for reaction fire.");
-
-	Cmd_AddCommand("reloadleft", CL_ReloadLeft_f, _("Reload the weapon in the soldiers left hand"));
-	Cmd_AddCommand("reloadright", CL_ReloadRight_f, _("Reload the weapon in the soldiers right hand"));
-	Cmd_AddCommand("nextround", CL_NextRound_f, _("Ends current round"));
-	Cmd_AddCommand("levelup", CL_LevelUp_f, _("Slice through terrain at a higher level"));
-	Cmd_AddCommand("leveldown", CL_LevelDown_f, _("Slice through terrain at a lower level"));
-	Cmd_AddCommand("zoominquant", CL_ZoomInQuant_f, _("Zoom in"));
-	Cmd_AddCommand("zoomoutquant", CL_ZoomOutQuant_f, _("Zoom out"));
-	Cmd_AddCommand("confirmaction", CL_ConfirmAction_f, _("Confirm the current action"));
-
-#ifdef DEBUG
-	Cmd_AddCommand("debug_camangles", CL_CamPrintAngles_f, "Prints current camera angles");
-	Cmd_AddCommand("debug_drawblocked", CL_DisplayBlockedPaths_f, "Draws a marker for all blocked map-positions.");
-#endif /* DEBUG */
-	Cmd_AddCommand("camsetangles", CL_CamSetAngles_f, "Set camera angles to the given values");
-	Cmd_AddCommand("basemapshot", CL_MakeBaseMapShot_f, NULL);
-
-	Cmd_AddCommand("cameramode", CL_CameraMode_f, _("Toggle first-person/third-person camera mode"));
-}
-
-
 #define STATE_FORWARD	1
 #define STATE_RIGHT		2
 #define STATE_ZOOM		3
@@ -1216,7 +1146,7 @@ void CL_CameraRoute (pos3_t from, pos3_t target)
  * @note The geoscape zooming code is in MN_MouseWheel too
  * @sa CL_Frame
  */
-void CL_ParseInput (void)
+static void IN_Parse (void)
 {
 	int i;
 
@@ -1585,6 +1515,8 @@ void IN_Frame (void)
 
 	in_frametime = cls.realtime;
 
+	IN_Parse();
+
 	if (vid_grabmouse->modified) {
 		vid_grabmouse->modified = qfalse;
 
@@ -1689,6 +1621,68 @@ void IN_Init (void)
 
 	SDL_EnableUNICODE(SDL_ENABLE);
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
+
+	Cmd_AddCommand("+turnleft", IN_TurnLeftDown_f, _("Rotate battlescape camera anti-clockwise"));
+	Cmd_AddCommand("-turnleft", IN_TurnLeftUp_f, NULL);
+	Cmd_AddCommand("+turnright", IN_TurnRightDown_f, _("Rotate battlescape camera clockwise"));
+	Cmd_AddCommand("-turnright", IN_TurnRightUp_f, NULL);
+	Cmd_AddCommand("+turnup", IN_TurnUpDown_f, _("Tilt battlescape camera up"));
+	Cmd_AddCommand("-turnup", IN_TurnUpUp_f, NULL);
+	Cmd_AddCommand("+turndown", IN_TurnDownDown_f, _("Tilt battlescape camera down"));
+	Cmd_AddCommand("-turndown", IN_TurnDownUp_f, NULL);
+	Cmd_AddCommand("+shiftleft", IN_ShiftLeftDown_f, _("Move battlescape camera left"));
+	Cmd_AddCommand("-shiftleft", IN_ShiftLeftUp_f, NULL);
+	Cmd_AddCommand("+shiftright", IN_ShiftRightDown_f, _("Move battlescape camera right"));
+	Cmd_AddCommand("-shiftright", IN_ShiftRightUp_f, NULL);
+	Cmd_AddCommand("+shiftup", IN_ShiftUpDown_f, _("Move battlescape camera forward"));
+	Cmd_AddCommand("-shiftup", IN_ShiftUpUp_f, NULL);
+	Cmd_AddCommand("+shiftdown", IN_ShiftDownDown_f, _("Move battlescape camera backward"));
+	Cmd_AddCommand("-shiftdown", IN_ShiftDownUp_f, NULL);
+	Cmd_AddCommand("+zoomin", IN_ZoomInDown_f, _("Zoom in"));
+	Cmd_AddCommand("-zoomin", IN_ZoomInUp_f, NULL);
+	Cmd_AddCommand("+zoomout", IN_ZoomOutDown_f, _("Zoom out"));
+	Cmd_AddCommand("-zoomout", IN_ZoomOutUp_f, NULL);
+
+	Cmd_AddCommand("+leftmouse", CL_LeftClickDown_f, _("Left mouse button click (menu)"));
+	Cmd_AddCommand("-leftmouse", CL_LeftClickUp_f, NULL);
+	Cmd_AddCommand("+middlemouse", CL_MiddleClickDown_f, _("Middle mouse button click (menu)"));
+	Cmd_AddCommand("-middlemouse", CL_MiddleClickUp_f, NULL);
+	Cmd_AddCommand("+rightmouse", CL_RightClickDown_f, _("Right mouse button click (menu)"));
+	Cmd_AddCommand("-rightmouse", CL_RightClickUp_f, NULL);
+	Cmd_AddCommand("+select", CL_SelectDown_f, _("Select objects/Walk to a square/In fire mode, fire etc"));
+	Cmd_AddCommand("-select", CL_SelectUp_f, NULL);
+	Cmd_AddCommand("+action", CL_ActionDown_f, _("Walk to a square/In fire mode, cancel action"));
+	Cmd_AddCommand("-action", CL_ActionUp_f, NULL);
+	Cmd_AddCommand("+turn", CL_TurnDown_f, _("Turn soldier toward mouse pointer"));
+	Cmd_AddCommand("-turn", CL_TurnUp_f, NULL);
+	Cmd_AddCommand("standcrouch", CL_ActorStandCrouch_f, _("Toggle stand/crounch"));
+	Cmd_AddCommand("togglereaction", CL_ActorToggleReaction_f, _("Toggle reaction fire"));
+	Cmd_AddCommand("useheadgear", CL_ActorUseHeadgear_f, _("Toggle the headgear"));
+	Cmd_AddCommand("nextalien", CL_NextAlien_f, _("Toogle to next alien"));
+	Cmd_AddCommand("drawspottedlines", CL_DrawSpottedLines_f, _("Draw a line to each alien visible to the current actor."));
+	Cmd_AddCommand("nextalienactor", CL_NextAlienVisibleFromActor_f, _("Toogle to next alien visible from selected actor."));
+
+	Cmd_AddCommand("list_firemodes", CL_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
+	Cmd_AddCommand("fireweap", CL_FireWeapon_f, "Start aiming the weapon.");
+	Cmd_AddCommand("sel_reactmode", CL_SelectReactionFiremode_f, "Change/Select firemode used for reaction fire.");
+
+	Cmd_AddCommand("reloadleft", CL_ReloadLeft_f, _("Reload the weapon in the soldiers left hand"));
+	Cmd_AddCommand("reloadright", CL_ReloadRight_f, _("Reload the weapon in the soldiers right hand"));
+	Cmd_AddCommand("nextround", CL_NextRound_f, _("Ends current round"));
+	Cmd_AddCommand("levelup", CL_LevelUp_f, _("Slice through terrain at a higher level"));
+	Cmd_AddCommand("leveldown", CL_LevelDown_f, _("Slice through terrain at a lower level"));
+	Cmd_AddCommand("zoominquant", CL_ZoomInQuant_f, _("Zoom in"));
+	Cmd_AddCommand("zoomoutquant", CL_ZoomOutQuant_f, _("Zoom out"));
+	Cmd_AddCommand("confirmaction", CL_ConfirmAction_f, _("Confirm the current action"));
+
+#ifdef DEBUG
+	Cmd_AddCommand("debug_camangles", CL_CamPrintAngles_f, "Prints current camera angles");
+	Cmd_AddCommand("debug_drawblocked", CL_DisplayBlockedPaths_f, "Draws a marker for all blocked map-positions.");
+#endif /* DEBUG */
+	Cmd_AddCommand("camsetangles", CL_CamSetAngles_f, "Set camera angles to the given values");
+	Cmd_AddCommand("basemapshot", CL_MakeBaseMapShot_f, NULL);
+
+	Cmd_AddCommand("cameramode", CL_CameraMode_f, _("Toggle first-person/third-person camera mode"));
 
 	mousePosX = mousePosY = 0.0;
 }
