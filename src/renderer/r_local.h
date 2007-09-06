@@ -235,6 +235,7 @@ extern cvar_t *r_texturesolidmode;
 extern cvar_t *r_wire;
 extern cvar_t *r_fog;
 extern cvar_t *r_intensity;
+extern cvar_t *r_imagefilter;
 
 extern cvar_t *vid_fullscreen;
 extern cvar_t *vid_gamma;

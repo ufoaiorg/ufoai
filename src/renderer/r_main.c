@@ -112,6 +112,7 @@ cvar_t *r_texturesolidmode;
 cvar_t *r_wire;
 cvar_t *r_fog;
 cvar_t *r_showbox;
+cvar_t *r_intensity;
 
 cvar_t *r_3dmapradius;
 
@@ -694,6 +695,7 @@ static void R_Register (void)
 	r_wire = Cvar_Get("r_wire", "0", 0, "Draw the scene in wireframe mode");
 	r_fog = Cvar_Get("r_fog", "1", CVAR_ARCHIVE, NULL);
 	r_showbox = Cvar_Get("r_showbox", "0", CVAR_ARCHIVE, "Shows model bounding box");
+	r_intensity = Cvar_Get("r_intensity", "2", CVAR_ARCHIVE, NULL);
 
 	r_ext_swapinterval = Cvar_Get("r_ext_swapinterval", "1", CVAR_ARCHIVE, NULL);
 	r_ext_multitexture = Cvar_Get("r_ext_multitexture", "1", CVAR_ARCHIVE, NULL);
@@ -1155,12 +1157,6 @@ void R_BeginFrame (void)
 			con_font->modified = qfalse;
 		} else
 			Cvar_ForceSet("con_font", "1");
-	}
-
-	if (vid_gamma->modified) {
-		vid_gamma->modified = qfalse;
-		if (r_state.hwgamma)
-			Rimp_SetGamma();
 	}
 
 	/* go into 2D mode */

@@ -38,10 +38,6 @@ static image_t gltextures[MAX_GLTEXTURES];
 static int numgltextures;
 
 static byte intensitytable[256];
-static byte gammatable[256];
-
-cvar_t *r_intensity;
-extern cvar_t *r_imagefilter;
 
 unsigned d_8to24table[256];
 
@@ -1164,38 +1160,6 @@ static void R_ResampleTexture (unsigned *in, int inwidth, int inheight, unsigned
 }
 
 /**
- * @brief Scale up the pixel values in a texture to increase the lighting range
- */
-static void R_LightScaleTexture (unsigned *in, int inwidth, int inheight, qboolean only_gamma)
-{
-	if (r_config.envCombine || only_gamma) {
-		int i, c;
-		byte *p;
-
-		p = (byte *) in;
-
-		c = inwidth * inheight;
-		for (i = 0; i < c; i++, p += 4) {
-			p[0] = gammatable[p[0]];
-			p[1] = gammatable[p[1]];
-			p[2] = gammatable[p[2]];
-		}
-	} else {
-		int i, c;
-		byte *p;
-
-		p = (byte *) in;
-
-		c = inwidth * inheight;
-		for (i = 0; i < c; i++, p += 4) {
-			p[0] = gammatable[intensitytable[p[0]]];
-			p[1] = gammatable[intensitytable[p[1]]];
-			p[2] = gammatable[intensitytable[p[2]]];
-		}
-	}
-}
-
-/**
  * @brief Operates in place, quartering the size of the texture
  */
 static void R_MipMap (byte * in, int width, int height)
@@ -1528,8 +1492,6 @@ static qboolean R_Upload32 (unsigned *data, int width, int height, qboolean mipm
 		if (r_texture_lod->integer && r_state.lod_bias)
 			qglTexEnvf(GL_TEXTURE_FILTER_CONTROL_EXT, GL_TEXTURE_LOD_BIAS_EXT, r_texture_lod->value);
 	}
-
-	R_LightScaleTexture(scaled, scaled_width, scaled_height, !mipmap);
 
 	qglTexImage2D(GL_TEXTURE_2D, 0, samples, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
 
@@ -2030,7 +1992,6 @@ static int R_GetPalette (void)
 void R_InitImages (void)
 {
 	int i, j;
-	float g = vid_gamma->value;
 
 	registration_sequence = 1;
 	numgltextures = 0;
@@ -2038,40 +1999,17 @@ void R_InitImages (void)
 	glerrortexend = glerrortex;
 	DaN = NULL;
 
-	/* init intensity conversions */
-	r_intensity = Cvar_Get("r_intensity", "2", CVAR_ARCHIVE, NULL);
+	R_GetPalette();
 
-	if (r_intensity->value < 1)
+	if (r_intensity->value <= 1)
 		Cvar_Set("r_intensity", "1");
 
 	r_state.inverse_intensity = 1 / r_intensity->value;
 
-	R_GetPalette();
-
-	if (r_config.renderer & (GL_RENDERER_VOODOO | GL_RENDERER_VOODOO2))
-		g = 1.0F;
-
 	for (i = 0; i < 256; i++) {
-		if (g == 1 || r_state.hwgamma) {
-			gammatable[i] = i;
-		} else {
-			float inf;
-
-			inf = 255 * pow((i + 0.5) / 255.5, g) + 0.5;
-			if (inf < 0)
-				inf = 0;
-			if (inf > 255)
-				inf = 255;
-			gammatable[i] = inf;
-		}
-	}
-
-	for (i = 0; i < 256; i++) {
-		j = i * r_intensity->integer;
-
+		j = i * r_intensity->value;
 		if (j > 255)
 			j = 255;
-
 		intensitytable[i] = j;
 	}
 }
