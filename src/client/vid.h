@@ -77,13 +77,11 @@ extern struct memPool_s *vid_lightPool;
 extern struct memPool_s *vid_modelPool;
 
 extern const vidmode_t vid_modes[];
-extern int maxVidModes;
 extern viddef_t viddef;			/* global video state */
 
 /* Video module initialisation etc */
 void VID_Init(void);
 void VID_Shutdown(void);
-void VID_CheckChanges(void);
 void VID_NewWindow(int width, int height);
 
 #include "../common/common.h"
@@ -91,8 +89,7 @@ void VID_NewWindow(int width, int height);
 void *VID_TagAlloc(struct memPool_s *pool, int size, int tagNum);
 void VID_FreeTags(struct memPool_s *pool, int tagNum);
 void VID_MemFree(void *ptr);
-
-#define VID_NUM_MODES (sizeof(vid_modes) / sizeof(vidmode_t))
+int VID_GetModeNums(void);
 
 void CL_WriteAVIVideoFrame(const byte * imageBuffer, size_t size);
 

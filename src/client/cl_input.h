@@ -37,4 +37,13 @@ void IN_GetMousePos(int *mx, int *my);
 /* add additional movement on top of the keyboard move cmd */
 void IN_Activate(qboolean active);
 
+
+#define MOUSE_MAX 3000
+#define MOUSE_MIN 40
+
+extern unsigned sys_frame_time;
+
+void KBD_Update(void);
+void KBD_Close(void);
+
 #endif /* CLIENT_INPUT_H */

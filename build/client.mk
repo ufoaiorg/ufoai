@@ -115,8 +115,6 @@ ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux-gnu),)
 		ports/linux/linux_main.c \
 		ports/unix/unix_ref_sdl.c \
 		ports/unix/unix_qgl.c \
-		ports/unix/unix_input.c \
-		ports/unix/unix_vid.c \
 		ports/unix/unix_console.c \
 		ports/unix/unix_main.c \
 		ports/unix/unix_glob.c
@@ -149,8 +147,6 @@ ifeq ($(TARGET_OS),darwin)
 		ports/macosx/osx_qal.c \
 		ports/unix/unix_ref_sdl.c \
 		ports/unix/unix_qgl.c \
-		ports/unix/unix_input.c \
-		ports/unix/unix_vid.c \
 		ports/unix/unix_glob.c \
 		ports/unix/unix_console.c \
 		ports/unix/unix_main.c
@@ -161,8 +157,6 @@ ifeq ($(TARGET_OS),solaris)
 		ports/solaris/solaris_main.c \
 		ports/unix/unix_ref_sdl.c \
 		ports/unix/unix_qgl.c \
-		ports/unix/unix_input.c \
-		ports/unix/unix_vid.c \
 		ports/unix/unix_console.c \
 		ports/unix/unix_main.c \
 		ports/unix/unix_glob.c

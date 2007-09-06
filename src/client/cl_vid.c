@@ -30,18 +30,54 @@ viddef_t viddef;	/* global video state; used by other modules */
 cvar_t *vid_fullscreen;
 cvar_t *vid_grabmouse;
 cvar_t *vid_gamma;
-cvar_t *vid_ref;
 cvar_t *vid_xpos;
 cvar_t *vid_ypos;
 static cvar_t *vid_height;
 static cvar_t *vid_width;
 
 /**
+ * @brief All possible video modes
+ */
+const vidmode_t vid_modes[] =
+{
+	{ 320, 240,   0 },
+	{ 400, 300,   1 },
+	{ 512, 384,   2 },
+	{ 640, 480,   3 },
+	{ 800, 600,   4 },
+	{ 960, 720,   5 },
+	{ 1024, 768,  6 },
+	{ 1152, 864,  7 },
+	{ 1280, 1024, 8 },
+	{ 1600, 1200, 9 },
+	{ 2048, 1536, 10 },
+	{ 1024,  480, 11 }, /* Sony VAIO Pocketbook */
+	{ 1152,  768, 12 }, /* Apple TiBook */
+	{ 1280,  854, 13 }, /* Apple TiBook */
+	{ 640,  400, 14 }, /* generic 16:10 widescreen*/
+	{ 800,  500, 15 }, /* as found modern */
+	{ 1024,  640, 16 }, /* notebooks    */
+	{ 1280,  800, 17 },
+	{ 1680, 1050, 18 },
+	{ 1920, 1200, 19 },
+	{ 1400, 1050, 20 }, /* samsung x20 */
+	{ 1440, 900, 21 }
+};
+
+/**
+ * @brief Returns the amount of available video modes
+ */
+int VID_GetModeNums (void)
+{
+	return (sizeof(vid_modes) / sizeof(vidmode_t));
+}
+
+/**
  * @brief
  */
 qboolean VID_GetModeInfo (int *width, int *height, int mode)
 {
-	if (mode >= maxVidModes)
+	if (mode >= VID_GetModeNums())
 		return qfalse;
 	else if (mode < 0) {
 		*width = vid_width->integer;
@@ -52,16 +88,6 @@ qboolean VID_GetModeInfo (int *width, int *height, int mode)
 	}
 
 	return qtrue;
-}
-
-/**
- * @brief Console command to re-start the video mode and refresh DLL. We do this
- * simply by setting the modified flag for the vid_ref variable, which will
- * cause the entire video mode and refresh DLL to be reset on the next frame.
- */
-static void VID_Restart_f (void)
-{
-	vid_ref->modified = qtrue;
 }
 
 /**
@@ -78,10 +104,6 @@ void VID_Init (void)
 	vid_xpos = Cvar_Get("vid_xpos", "3", CVAR_ARCHIVE, "Position of the ufo window");
 	vid_ypos = Cvar_Get("vid_ypos", "22", CVAR_ARCHIVE, "Position of the ufo window");
 
-	/* Add some console commands that we want to handle */
-	Cmd_AddCommand("vid_restart", VID_Restart_f, "Restart the video subsystem");
-	Sys_Vid_Init();
-
 	/* memory pools */
 	vid_genericPool = Mem_CreatePool("Vid: Generic");
 	vid_imagePool = Mem_CreatePool("Vid: Image system");
@@ -89,7 +111,6 @@ void VID_Init (void)
 	vid_modelPool = Mem_CreatePool("Vid: Model system");
 
 	/* Start the graphics mode and load refresh DLL */
-	VID_CheckChanges();
 	R_Init();
 }
 
@@ -126,4 +147,26 @@ void VID_FreeTags (struct memPool_s *pool, int tagNum)
 
 	assert(pool);
 	_Mem_FreeTag(pool, tagNum, "VID DLL", 0);
+}
+
+/**
+ * @brief
+ */
+void VID_NewWindow (int width, int height)
+{
+	viddef.width  = width;
+	viddef.height = height;
+
+	viddef.rx = (float)width  / VID_NORM_WIDTH;
+	viddef.ry = (float)height / VID_NORM_HEIGHT;
+}
+
+/**
+ * @brief
+ */
+void VID_Shutdown (void)
+{
+	KBD_Close();
+	IN_Shutdown();
+	R_Shutdown();
 }

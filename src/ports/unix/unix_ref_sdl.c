@@ -27,10 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client/cl_keys.h"
 #include "../../client/cl_input.h"
 
-#include <signal.h>
 /*#include <SDL_opengl.h>*/
 
-#include "unix_input.h"
 #ifndef _WIN32
 #include <sys/mman.h>
 #include "unix_qgl.h"

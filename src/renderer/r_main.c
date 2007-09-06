@@ -117,7 +117,6 @@ cvar_t *r_3dmapradius;
 
 cvar_t *vid_fullscreen;
 cvar_t *vid_gamma;
-cvar_t *vid_ref;
 cvar_t *vid_grabmouse;
 
 cvar_t *con_font;
@@ -568,17 +567,6 @@ static void R_Flash (void)
 /**
  * @brief r_newrefdef must be set before the first call
  */
-static void R_SetRefreshDefinition (refdef_t * fd)
-{
-	if (r_norefresh->integer)
-		return;
-
-	r_newrefdef = *fd;
-}
-
-/**
- * @brief r_newrefdef must be set before the first call
- */
 static void R_RenderView (refdef_t * fd)
 {
 	if (r_norefresh->integer)
@@ -727,11 +715,6 @@ static void R_Register (void)
 
 	vid_fullscreen = Cvar_Get("vid_fullscreen", "0", CVAR_ARCHIVE, NULL);
 	vid_gamma = Cvar_Get("vid_gamma", "1.0", CVAR_ARCHIVE, NULL);
-#if defined(_WIN32)
-	vid_ref = Cvar_Get("vid_ref", "gl", CVAR_ARCHIVE, NULL);
-#else
-	vid_ref = Cvar_Get("vid_ref", "sdl", CVAR_ARCHIVE, NULL);
-#endif
 	vid_grabmouse = Cvar_Get("vid_grabmouse", "0", CVAR_ARCHIVE, NULL);
 	vid_grabmouse->modified = qfalse;
 
@@ -1170,12 +1153,6 @@ void R_Shutdown (void)
  */
 void R_BeginFrame (void)
 {
-	/* change modes if necessary */
-	/* FIXME: only restart if CDS is required */
-	if (r_mode->modified || vid_fullscreen->modified || r_ext_texture_compression->modified) {
-		vid_ref->modified = qtrue;
-	}
-
 	if (r_anisotropic->modified) {
 		if (r_anisotropic->integer > r_ext_max_anisotropy->integer) {
 			Com_Printf("...max GL_EXT_texture_filter_anisotropic value is %i\n", r_ext_max_anisotropy->integer);

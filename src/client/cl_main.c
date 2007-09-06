@@ -1704,7 +1704,7 @@ void CL_InitAfter (void)
 	vidModesOptions = MN_GetNode(menu, "select_res");
 	if (!vidModesOptions)
 		Sys_Error("Could not find node select_res in menu options_video\n");
-	for (i = 0; i < maxVidModes; i++) {
+	for (i = 0; i < VID_GetModeNums(); i++) {
 		selectBoxOption = MN_AddSelectboxOption(vidModesOptions);
 		if (!selectBoxOption) {
 			return;
@@ -2346,8 +2346,8 @@ static void CL_CvarCheck (void)
 
 	/* r_mode and fullscreen */
 	v = Cvar_VariableInteger("mn_rmode");
-	if (v < -1 || v >= maxVidModes) {
-		Com_Printf("Max r_mode mode is %i (%i)\n", maxVidModes, v);
+	if (v < -1 || v >= VID_GetModeNums()) {
+		Com_Printf("Max r_mode mode is %i (%i)\n", VID_GetModeNums(), v);
 		v = Cvar_VariableInteger("r_mode");
 		Cvar_SetValue("mn_rmode", v);
 	}
@@ -2522,7 +2522,6 @@ void CL_SlowFrame (int now, void *data)
 	CL_CvarCheck();
 
 	/* allow rendering DLL change */
-	VID_CheckChanges();
 	if (!cl.refresh_prepped && cls.state == ca_active)
 		CL_PrepRefresh();
 
