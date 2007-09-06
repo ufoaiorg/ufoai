@@ -2833,11 +2833,11 @@ static void CL_GameAutoCheck_f (void)
 	switch (selMis->def->storyRelated) {
 	case qtrue:
 		Com_DPrintf(DEBUG_CLIENT, "story related - auto mission is disabled\n");
-		Cvar_SetValue("game_autogo", 0.0f);
+		Cvar_Set("game_autogo", "0");
 		break;
 	default:
 		Com_DPrintf(DEBUG_CLIENT, "auto mission is enabled\n");
-		Cvar_SetValue("game_autogo", 1.0f);
+		Cvar_Set("game_autogo", "1");
 		break;
 	}
 }
@@ -2876,6 +2876,8 @@ void CL_GameAutoGo (actMis_t *mission)
 			return;
 		} else if (mis->storyRelated) {
 			Com_DPrintf(DEBUG_CLIENT, "You have to play this mission, because it's story related\n");
+			/* ensure, that the automatic button is no longer visible */
+			Cvar_Set("game_autogo", "0");
 			return;
 		}
 		/* FIXME: This needs work */
@@ -2934,7 +2936,12 @@ void CL_GameAutoGo (actMis_t *mission)
 static void CL_GameAutoGo_f (void)
 {
 	if (!curCampaign || !selMis) {
-		Com_DPrintf(DEBUG_CLIENT, "No update after automission\n");
+		Com_DPrintf(DEBUG_CLIENT, "CL_GameAutoGo_f: No update after automission\n");
+		return;
+	}
+
+	if (!cls.missionaircraft) {
+		Com_Printf("CL_GameAutoGo_f: No aircraft at target pos\n");
 		return;
 	}
 
@@ -4197,8 +4204,8 @@ static const cmdList_t game_commands[] = {
 	{"nation_update", CL_NationStatsUpdate_f, "Shows the current nation list + statistics."},
 	{"nation_select", CL_NationSelect_f, "Select nation and display all relevant information for it."},
 	{"game_go", CL_GameGo, NULL},
-	{"game_auto_check", CL_GameAutoCheck_f, NULL},
-	{"game_auto_go", CL_GameAutoGo_f, NULL},
+	{"game_auto_check", CL_GameAutoCheck_f, "Checks whether this mission can be done automatically"},
+	{"game_auto_go", CL_GameAutoGo_f, "Let the current selection mission be done automatically"},
 	{"game_abort", CL_GameAbort_f, "Abort the game and let the aliens win"},
 	{"game_results", CL_GameResults_f, "Parses and shows the game results"},
 	{"game_timestop", CL_GameTimeStop, NULL},
