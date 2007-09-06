@@ -2023,8 +2023,6 @@ void R_ShutdownImages (void)
 	image_t *image;
 
 	for (i = 0, image = gltextures; i < numgltextures; i++, image++) {
-		if (!image->registration_sequence)
-			continue;			/* free image_t slot */
 		/* free it */
 		qglDeleteTextures(1, (GLuint *) & image->texnum);
 		memset(image, 0, sizeof(*image));
