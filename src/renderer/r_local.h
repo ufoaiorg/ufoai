@@ -428,8 +428,6 @@ qboolean Rimp_Init(void);
 void Rimp_Shutdown(void);
 qboolean Rimp_InitGraphics(qboolean fullscreen);
 rserr_t Rimp_SetMode(unsigned int *pwidth, unsigned int *pheight, int mode, qboolean fullscreen);
-void Rimp_AppActivate(qboolean active);
-void Rimp_SetGamma(void);
 
 /* 3d globe */
 

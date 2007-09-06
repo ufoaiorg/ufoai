@@ -43,29 +43,19 @@ cvar_t *cl_fps;
 cvar_t *cl_shownet;
 cvar_t *cl_show_tooltips;
 cvar_t *cl_show_cursor_tooltips;
-
 cvar_t *cl_aviForceDemo;
 cvar_t *cl_aviMotionJpeg;
 cvar_t *cl_avifreq;
-
 cvar_t *cl_particleWeather;
-
-cvar_t *sensitivity;
-
 cvar_t *cl_logevents;
-
 cvar_t *cl_centerview;
-
 cvar_t *cl_worldlevel;
 cvar_t *cl_selected;
-
 cvar_t *cl_3dmap;
 cvar_t *r_3dmapradius;
-
 cvar_t *cl_numnames;
 
 cvar_t *mn_serverlist;
-
 cvar_t *mn_main;
 cvar_t *mn_sequence;
 cvar_t *mn_active;
@@ -2081,37 +2071,24 @@ static void CL_InitLocal (void)
 	cl_camzoommin = Cvar_Get("cl_camzoommin", "0.7", 0, "Minimum zoom value for tactical missions");
 	cl_camzoommax = Cvar_Get("cl_camzoommax", "3.4", 0, "Maximum zoom value for tactical missions");
 	cl_centerview = Cvar_Get("cl_centerview", "1", CVAR_ARCHIVE, "Center the view when selecting a new soldier");
-
 	cl_mapzoommax = Cvar_Get("cl_mapzoommax", "6.0", CVAR_ARCHIVE, "Maximum geoscape zooming value");
 	cl_mapzoommin = Cvar_Get("cl_mapzoommin", "1.0", CVAR_ARCHIVE, "Minimum geoscape zooming value");
-
-	sensitivity = Cvar_Get("sensitivity", "2", CVAR_ARCHIVE, NULL);
-
 	cl_precache = Cvar_Get("cl_precache", "1", CVAR_ARCHIVE, "Precache models and menus at startup");
-
 	cl_avifreq = Cvar_Get("cl_avifreq", "25", 0, "AVI recording - see video command");
 	cl_aviForceDemo = Cvar_Get("cl_aviForceDemo", "1", CVAR_ARCHIVE, "AVI recording - record even if no game is loaded");
 	cl_aviMotionJpeg = Cvar_Get("cl_aviMotionJpeg", "1", CVAR_ARCHIVE, "AVI recording - see video command");
-
 	cl_particleWeather = Cvar_Get("cl_particleweather", "0", CVAR_ARCHIVE | CVAR_LATCH, "Switch the weather particles on or off");
-
 	cl_fps = Cvar_Get("cl_fps", "0", CVAR_ARCHIVE, "Show frames per second");
 	cl_shownet = Cvar_Get("cl_shownet", "0", CVAR_ARCHIVE, NULL);
-
 	rcon_client_password = Cvar_Get("rcon_password", "", 0, "Remote console password");
-
 	cl_logevents = Cvar_Get("cl_logevents", "0", 0, "Log all events to events.log");
-
 	cl_worldlevel = Cvar_Get("cl_worldlevel", "0", 0, "Current worldlevel in tactical mode");
 	cl_worldlevel->modified = qfalse;
 	cl_selected = Cvar_Get("cl_selected", "0", CVAR_NOSET, "Current selected soldier");
-
 	cl_3dmap = Cvar_Get("cl_3dmap", "0", CVAR_ARCHIVE, "3D geoscape or float geoscape");
 	r_3dmapradius = Cvar_Get("r_3dmapradius", "8192.0", CVAR_NOSET, "3D geoscape radius");
-
 	/* only 19 soldiers in soldier selection list */
 	cl_numnames = Cvar_Get("cl_numnames", "19", CVAR_NOSET, NULL);
-
 	difficulty = Cvar_Get("difficulty", "0", CVAR_NOSET, "Difficulty level");
 	cl_start_employees = Cvar_Get("cl_start_employees", "1", CVAR_ARCHIVE, "Start with hired employees");
 	cl_initial_equipment = Cvar_Get("cl_initial_equipment", "human_phalanx_initial", CVAR_ARCHIVE, "Start with assigned equipment - see cl_start_employees");

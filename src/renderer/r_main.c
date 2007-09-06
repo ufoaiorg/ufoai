@@ -1207,6 +1207,29 @@ void R_BeginFrame (void)
 /**
  * @brief
  */
+void R_EndFrame (void)
+{
+	float g;
+
+	if (vid_gamma->modified) {
+		g = vid_gamma->value;
+
+		if (g < 0.1)
+			g = 0.1;
+		if (g > 3.0)
+			g = 3.0;
+
+		SDL_SetGamma(g, g, g);
+
+		Cvar_SetValue("vid_gamma", g);
+		vid_gamma->modified = qfalse;
+	}
+	SDL_GL_SwapBuffers();
+}
+
+/**
+ * @brief
+ */
 void R_TakeVideoFrame (int w, int h, byte * captureBuffer, byte * encodeBuffer, qboolean motionJpeg)
 {
 	size_t frameSize;

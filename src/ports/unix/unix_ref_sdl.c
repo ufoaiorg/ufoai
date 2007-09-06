@@ -35,16 +35,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../windows/win_local.h"
 #endif
 
-static qboolean SDL_active = qfalse;
-
 qboolean have_stencil = qfalse;
-
-static cvar_t	*in_mouse;
-static cvar_t	*sdl_debug;
-
-static cvar_t *sensitivity;
-static qboolean mouse_avail;
-
+cvar_t *sdl_debug;
 static SDL_Surface *surface;
 
 /* power of two please */
@@ -580,32 +572,7 @@ qboolean Rimp_InitGraphics (qboolean fullscreen)
 		}
 	}
 
-	SDL_active = qtrue;
-
 	return qtrue;
-}
-
-/**
- * @brief
- */
-void R_EndFrame (void)
-{
-	float g;
-
-	if (vid_gamma->modified) {
-		g = vid_gamma->value;
-
-		if (g < 0.1)
-			g = 0.1;
-		if (g > 3.0)
-			g = 3.0;
-
-		SDL_SetGamma(g, g, g);
-
-		Cvar_SetValue("vid_gamma", g);
-		vid_gamma->modified = qfalse;
-	}
-	SDL_GL_SwapBuffers();
 }
 
 /**
@@ -633,17 +600,6 @@ rserr_t Rimp_SetMode (unsigned int *pwidth, unsigned int *pheight, int mode, qbo
 /**
  * @brief
  */
-void Rimp_SetGamma (void)
-{
-	float g;
-
-	g = Cvar_Get("vid_gamma", "1.0", 0, NULL)->value;
-	SDL_SetGamma(g, g, g);
-}
-
-/**
- * @brief
- */
 void Rimp_Shutdown (void)
 {
 	if (surface)
@@ -656,20 +612,8 @@ void Rimp_Shutdown (void)
 		SDL_Quit();
 	else
 		SDL_QuitSubSystem(SDL_INIT_VIDEO);
-
-	SDL_active = qfalse;
 }
 
-/**
- * @brief
- */
-void Rimp_AppActivate (qboolean active)
-{
-}
-
-/*****************************************************************************/
-/* KEYBOARD                                                                  */
-/*****************************************************************************/
 
 /**
  * @brief
@@ -677,39 +621,29 @@ void Rimp_AppActivate (qboolean active)
 void KBD_Update (void)
 {
 	SDL_Event event;
-	static int KBD_Update_Flag = 0;
-
-	if (KBD_Update_Flag == 1)
-		return;
-
-	KBD_Update_Flag = 1;
 
 	/* get events from x server */
-	if (SDL_active) {
-		while (SDL_PollEvent(&event))
-			GetEvent(&event);
+	while (SDL_PollEvent(&event))
+		GetEvent(&event);
 
-		if (!mx && !my)
-			SDL_GetRelativeMouseState(&mx, &my);
+	if (!mx && !my)
+		SDL_GetRelativeMouseState(&mx, &my);
 
-		if (vid_grabmouse->modified) {
-			vid_grabmouse->modified = qfalse;
+	if (vid_grabmouse->modified) {
+		vid_grabmouse->modified = qfalse;
 
-			if (!vid_grabmouse->integer) {
-				/* ungrab the pointer */
-				SDL_WM_GrabInput(SDL_GRAB_OFF);
-			} else {
-				/* grab the pointer */
-				SDL_WM_GrabInput(SDL_GRAB_ON);
-			}
+		if (!vid_grabmouse->integer) {
+			/* ungrab the pointer */
+			SDL_WM_GrabInput(SDL_GRAB_OFF);
+		} else {
+			/* grab the pointer */
+			SDL_WM_GrabInput(SDL_GRAB_ON);
 		}
-		while (keyq_head != keyq_tail) {
-			Key_Event(keyq[keyq_tail].key, keyq[keyq_tail].down, Sys_Milliseconds());
-			keyq_tail = (keyq_tail + 1) & (MAX_KEYQ - 1);
-		}
-	} else
-		Com_Printf("SDL not active right now\n");
-	KBD_Update_Flag = 0;
+	}
+	while (keyq_head != keyq_tail) {
+		Key_Event(keyq[keyq_tail].key, keyq[keyq_tail].down, Sys_Milliseconds());
+		keyq_tail = (keyq_tail + 1) & (MAX_KEYQ - 1);
+	}
 }
 
 /**
@@ -722,30 +656,4 @@ void KBD_Close (void)
 	keyq_tail = 0;
 
 	memset(keyq, 0, sizeof(keyq));
-}
-
-/**
- * @brief
- * @sa RW_IN_Shutdown
- */
-void IN_Init (void)
-{
-	/* mouse variables */
-	in_mouse = Cvar_Get("in_mouse", "1", CVAR_ARCHIVE, NULL);
-	sensitivity = Cvar_Get("sensitivity", "2", CVAR_ARCHIVE, NULL);
-
-	/* other cvars */
-	sdl_debug = Cvar_Get("sdl_debug", "0", 0, NULL);
-
-	mx = my = 0.0;
-	mouse_avail = qtrue;
-}
-
-/**
- * @brief
- */
-void IN_GetMousePos (int *x, int *y)
-{
-	*x = mx / viddef.rx;
-	*y = my / viddef.ry;
 }

@@ -274,7 +274,6 @@ extern cvar_t *cl_fps;
 extern cvar_t *cl_shownet;
 extern cvar_t *cl_show_tooltips;
 extern cvar_t *cl_show_cursor_tooltips;
-extern cvar_t *sensitivity;
 extern cvar_t *cl_logevents;
 extern cvar_t *cl_centerview;
 extern cvar_t *cl_worldlevel;
@@ -297,6 +296,7 @@ extern cvar_t *snd_ref;
 extern cvar_t *confirm_actions;
 extern cvar_t *mn_inputlength;
 extern cvar_t *log_stats;
+extern cvar_t *sdl_debug;
 
 extern FILE* log_stats_file;
 

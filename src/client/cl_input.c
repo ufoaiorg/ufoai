@@ -1333,6 +1333,27 @@ void IN_Frame (void)
 
 /**
  * @brief
+ * @sa RW_IN_Shutdown
+ */
+void IN_Init (void)
+{
+	/* other cvars */
+	sdl_debug = Cvar_Get("sdl_debug", "0", 0, NULL);
+
+	mx = my = 0.0;
+}
+
+/**
+ * @brief
+ */
+void IN_GetMousePos (int *x, int *y)
+{
+	*x = mx / viddef.rx;
+	*y = my / viddef.ry;
+}
+
+/**
+ * @brief
  */
 void Sys_SendKeyEvents (void)
 {
