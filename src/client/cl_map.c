@@ -1778,9 +1778,9 @@ void MAP_Init (void)
 		Mem_Free(culturePic);
 		culturePic = NULL;
 	}
-	R_LoadTGA(va("pics/menu/%s_cultuR_tga", curCampaign->map), &culturePic, &cultureWidth, &cultureHeight);
+	R_LoadTGA(va("pics/menu/%s_culture.tga", curCampaign->map), &culturePic, &cultureWidth, &cultureHeight);
 	if (!culturePic || !cultureWidth || !cultureHeight)
-		Sys_Error("Couldn't load map mask %s_cultuR_tga in pics/menu\n", curCampaign->map);
+		Sys_Error("Couldn't load map mask %s_culture.tga in pics/menu\n", curCampaign->map);
 
 	/* load population mask */
 	if (populationPic) {

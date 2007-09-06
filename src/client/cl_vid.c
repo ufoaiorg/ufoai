@@ -90,6 +90,7 @@ void VID_Init (void)
 
 	/* Start the graphics mode and load refresh DLL */
 	VID_CheckChanges();
+	R_Init();
 }
 
 
