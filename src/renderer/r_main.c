@@ -1103,6 +1103,7 @@ void R_Restart (void)
 	spherelist = -1;
 
 	R_ShutdownImages();
+	R_FontCleanCache();
 
 	R_InitMiscTexture();
 	R_DrawInitLocal();
