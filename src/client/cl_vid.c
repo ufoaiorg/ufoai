@@ -127,7 +127,7 @@ void VID_Init (void)
 	vid_lightPool = Mem_CreatePool("Vid: Light system");
 	vid_modelPool = Mem_CreatePool("Vid: Model system");
 
-	/* Start the graphics mode and load refresh DLL */
+	/* Start the graphics mode */
 	R_Init();
 }
 
@@ -141,7 +141,7 @@ void *VID_TagAlloc (struct memPool_s *pool, int size, int tagNum)
 		tagNum *= -1;
 
 	assert(pool);
-	return _Mem_Alloc(size, qtrue, pool, tagNum, "VID DLL", 0);
+	return _Mem_Alloc(size, qtrue, pool, tagNum, "RENDERER", 0);
 }
 
 /**
@@ -149,7 +149,7 @@ void *VID_TagAlloc (struct memPool_s *pool, int size, int tagNum)
  */
 void VID_MemFree (void *ptr)
 {
-	_Mem_Free(ptr, "VID DLL", -1);
+	_Mem_Free(ptr, "RENDERER", -1);
 }
 
 
@@ -163,7 +163,7 @@ void VID_FreeTags (struct memPool_s *pool, int tagNum)
 		tagNum *= -1;
 
 	assert(pool);
-	_Mem_FreeTag(pool, tagNum, "VID DLL", 0);
+	_Mem_FreeTag(pool, tagNum, "RENDERER", 0);
 }
 
 /**

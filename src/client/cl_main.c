@@ -2496,7 +2496,7 @@ void CL_SlowFrame (int now, void *data)
 {
 	CL_CvarCheck();
 
-	/* allow rendering DLL change */
+	/* allow rendering settings change */
 	if (!cl.refresh_prepped && cls.state == ca_active)
 		CL_PrepRefresh();
 
