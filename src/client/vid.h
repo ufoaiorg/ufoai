@@ -94,6 +94,5 @@ int VID_GetModeNums(void);
 void CL_WriteAVIVideoFrame(const byte * imageBuffer, size_t size);
 
 qboolean VID_GetModeInfo(int *width, int *height, int mode);
-void Sys_Vid_Init(void);
 
 #endif /* CLIENT_VID_H */
