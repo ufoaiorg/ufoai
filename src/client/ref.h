@@ -310,6 +310,7 @@ void R_FontLength(const char *font, char *c, int *width, int *height);
 qboolean R_Init(void);
 qboolean R_SetMode(void);
 void R_Shutdown(void);
+void R_Restart(void);
 
 extern SDL_Surface *r_surface;
 

@@ -29,36 +29,11 @@ SDL_Surface *r_surface;
 
 /*#include <SDL_opengl.h>*/
 
-/**
- * @brief
- */
-qboolean Rimp_Init (void)
-{
-	if (*r_driver->string)
-		SDL_GL_LoadLibrary(r_driver->string);
-
-	if (SDL_WasInit(SDL_INIT_AUDIO|SDL_INIT_CDROM|SDL_INIT_VIDEO) == 0) {
-		if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-			Sys_Error("Video SDL_Init failed: %s\n", SDL_GetError());
-			return qfalse;
-		}
-	} else if (SDL_WasInit(SDL_INIT_VIDEO) == 0) {
-		if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
-			Sys_Error("Video SDL_InitSubsystem failed: %s\n", SDL_GetError());
-			return qfalse;
-		}
-	}
-
-	Rimp_InitGraphics(vid_fullscreen->integer);
-
-	return qtrue;
-}
-
 #ifndef _WIN32
 /**
  * @brief
  */
-static void SetSDLIcon (void)
+static void R_SetSDLIcon (void)
 {
 #include "../ports/linux/ufoicon.xbm"
 	SDL_Surface *icon;
@@ -91,19 +66,68 @@ static void SetSDLIcon (void)
 #endif
 
 /**
+ * @brief
+ */
+qboolean Rimp_Init (void)
+{
+#ifndef __APPLE__
+	SDL_SysWMinfo info;
+#endif
+	int attrValue;
+
+	r_surface = NULL;
+
+	if (*r_driver->string)
+		SDL_GL_LoadLibrary(r_driver->string);
+
+	if (SDL_WasInit(SDL_INIT_AUDIO|SDL_INIT_CDROM|SDL_INIT_VIDEO) == 0) {
+		if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+			Sys_Error("Video SDL_Init failed: %s\n", SDL_GetError());
+			return qfalse;
+		}
+	} else if (SDL_WasInit(SDL_INIT_VIDEO) == 0) {
+		if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
+			Sys_Error("Video SDL_InitSubsystem failed: %s\n", SDL_GetError());
+			return qfalse;
+		}
+	}
+
+#ifndef __APPLE__
+	SDL_VERSION(&info.version);
+	Com_Printf("SDL version: %i.%i.%i\n", info.version.major, info.version.minor, info.version.patch);
+#endif
+
+	Rimp_InitGraphics(vid_fullscreen->integer);
+
+	SDL_WM_SetCaption(GAME_TITLE, GAME_TITLE_LONG);
+
+#ifndef _WIN32
+	R_SetSDLIcon(); /* currently uses ufoicon.xbm data */
+#endif
+
+	if (!SDL_GL_GetAttribute(SDL_GL_STENCIL_SIZE, &attrValue))
+		Com_Printf("I: got %d bits of stencil\n", attrValue);
+	if (!SDL_GL_GetAttribute(SDL_GL_DEPTH_SIZE, &attrValue))
+		Com_Printf("I: got %d bits of depth buffer\n", attrValue);
+	if (!SDL_GL_GetAttribute(SDL_GL_DOUBLEBUFFER, &attrValue))
+		Com_Printf("I: got double buffer\n");
+	if (!SDL_GL_GetAttribute(SDL_GL_RED_SIZE, &attrValue))
+		Com_Printf("I: got %d bits for red\n", attrValue);
+	if (!SDL_GL_GetAttribute(SDL_GL_GREEN_SIZE, &attrValue))
+		Com_Printf("I: got %d bits for green\n", attrValue);
+	if (!SDL_GL_GetAttribute(SDL_GL_BLUE_SIZE, &attrValue))
+		Com_Printf("I: got %d bits for blue\n", attrValue);
+
+	return qtrue;
+}
+
+/**
  * @brief Init the SDL window
  * @param fullscreen Start in fullscreen or not (bool value)
  */
 qboolean Rimp_InitGraphics (qboolean fullscreen)
 {
 	int flags;
-	int stencil_bits;
-
-#ifndef __APPLE__
-	SDL_SysWMinfo info;
-	SDL_VERSION(&info.version);
-	Com_Printf("SDL version: %i.%i.%i\n", info.version.major, info.version.minor, info.version.patch);
-#endif
 
 	/* Just toggle fullscreen if that's all that has been changed */
 	if (r_surface && (r_surface->w == viddef.width) && (r_surface->h == viddef.height)) {
@@ -124,10 +148,9 @@ qboolean Rimp_InitGraphics (qboolean fullscreen)
 	/* let the sound and input subsystems know about the new window */
 	VID_NewWindow(viddef.width, viddef.height);
 
-	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
-	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 5);
-	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
-	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
+	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
+	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
+	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 1);
 
@@ -135,21 +158,12 @@ qboolean Rimp_InitGraphics (qboolean fullscreen)
 	if (fullscreen)
 		flags |= SDL_FULLSCREEN;
 
-#ifndef _WIN32
-	SetSDLIcon(); /* currently uses ufoicon.xbm data */
-#endif
-
 	if ((r_surface = SDL_SetVideoMode(viddef.width, viddef.height, 0, flags)) == NULL) {
-		Sys_Error("(SDLGL) SDL SetVideoMode failed: %s\n", SDL_GetError());
+		Sys_Error("SDL SetVideoMode failed: %s\n", SDL_GetError());
 		return qfalse;
 	}
 
-	SDL_WM_SetCaption(GAME_TITLE, GAME_TITLE_LONG);
-
 	SDL_ShowCursor(SDL_DISABLE);
-
-	if (!SDL_GL_GetAttribute(SDL_GL_STENCIL_SIZE, &stencil_bits))
-		Com_Printf("I: got %d bits of stencil\n", stencil_bits);
 
 	return qtrue;
 }
@@ -159,7 +173,7 @@ qboolean Rimp_InitGraphics (qboolean fullscreen)
  */
 rserr_t Rimp_SetMode (unsigned int *pwidth, unsigned int *pheight, int mode, qboolean fullscreen)
 {
-	Com_Printf("setting mode %d:", mode );
+	Com_Printf("I: setting mode %d:", mode);
 
 	if (!VID_GetModeInfo((int*)pwidth, (int*)pheight, mode)) {
 		Com_Printf(" invalid mode\n");

@@ -101,7 +101,8 @@ static void VID_Restart_f (void)
 	 * video modes on win32 (at least with SDL), so we must
 	 * re-upload all textures to restore our state */
 #ifdef _WIN32
-	/* @todo */
+	R_Restart();
+	CL_PrepRefresh();
 #endif
 }
 

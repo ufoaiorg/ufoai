@@ -1095,6 +1095,34 @@ qboolean R_Init (void)
 
 /**
  * @brief
+ */
+void R_Restart (void)
+{
+	const cmdList_t *commands;
+
+	for (commands = r_commands; commands->name; commands++)
+		Cmd_RemoveCommand(commands->name);
+
+	qglDeleteLists(spherelist, 1);
+	spherelist = -1;
+
+	R_ShutdownModels();
+	R_ShutdownImages();
+
+#ifdef HAVE_SHADERS
+	R_ShutdownShaders();
+#endif
+	R_FontShutdown();
+
+	R_SetDefaultState();
+
+	R_InitImages();
+	R_InitMiscTexture();
+	R_DrawInitLocal();
+}
+
+/**
+ * @brief
  * @sa R_Init
  */
 void R_Shutdown (void)
@@ -1109,6 +1137,7 @@ void R_Shutdown (void)
 
 	R_ShutdownModels();
 	R_ShutdownImages();
+
 #ifdef HAVE_SHADERS
 	R_ShutdownShaders();
 #endif
