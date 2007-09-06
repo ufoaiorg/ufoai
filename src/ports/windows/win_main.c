@@ -37,14 +37,8 @@ static NOTIFYICONDATA pNdata;
 
 qboolean s_win95, s_winxp, s_vista;
 
-qboolean ActiveApp;
 qboolean Minimized;
 
-uint32_t sys_msg_time;
-uint32_t sys_frame_time;
-
-/* Main window handle for life of the client */
-HWND cl_hwnd;
 /* Main server console handle for life of the server */
 static HWND hwnd_Server;
 

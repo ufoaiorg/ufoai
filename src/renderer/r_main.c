@@ -114,10 +114,6 @@ cvar_t *r_intensity;
 
 cvar_t *r_3dmapradius;
 
-cvar_t *vid_fullscreen;
-cvar_t *vid_gamma;
-cvar_t *vid_grabmouse;
-
 cvar_t *con_font;
 cvar_t *con_fontWidth;
 cvar_t *con_fontHeight;
@@ -709,8 +705,6 @@ static void R_Register (void)
 
 	vid_fullscreen = Cvar_Get("vid_fullscreen", "0", CVAR_ARCHIVE, NULL);
 	vid_gamma = Cvar_Get("vid_gamma", "1.0", CVAR_ARCHIVE, NULL);
-	vid_grabmouse = Cvar_Get("vid_grabmouse", "0", CVAR_ARCHIVE, NULL);
-	vid_grabmouse->modified = qfalse;
 
 	con_font = Cvar_Get("con_font", "0", CVAR_ARCHIVE, NULL);
 	con_fontWidth = Cvar_Get("con_fontWidth", "8", CVAR_NOSET, NULL);

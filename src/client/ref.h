@@ -33,6 +33,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../common/common.h"
 
+#include <SDL.h>
+#include <SDL_syswm.h>
+
 #ifdef _WIN32
 #include <windows.h>
 #else
@@ -307,5 +310,7 @@ void R_FontLength(const char *font, char *c, int *width, int *height);
 qboolean R_Init(void);
 qboolean R_SetMode(void);
 void R_Shutdown(void);
+
+extern SDL_Surface *r_surface;
 
 #endif /* CLIENT_REF_H */

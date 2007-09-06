@@ -130,9 +130,6 @@ struct sndinfo {
 	cvar_t* (*Cvar_Get)(const char *var_name, const char *value, int flags, const char *desc);
 	cvar_t* (*Cvar_Set)(const char *var_name, const char *value);
 	int *paintedtime;
-#ifdef _WIN32
-	HWND cl_hwnd;
-#endif
 };
 
 /*

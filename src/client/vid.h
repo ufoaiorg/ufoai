@@ -79,6 +79,10 @@ extern struct memPool_s *vid_modelPool;
 extern const vidmode_t vid_modes[];
 extern viddef_t viddef;			/* global video state */
 
+extern cvar_t *vid_fullscreen;
+extern cvar_t *vid_gamma;
+extern cvar_t *vid_grabmouse;
+
 /* Video module initialisation etc */
 void VID_Init(void);
 void VID_NewWindow(int width, int height);

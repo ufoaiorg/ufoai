@@ -296,7 +296,6 @@ extern cvar_t *snd_ref;
 extern cvar_t *confirm_actions;
 extern cvar_t *mn_inputlength;
 extern cvar_t *log_stats;
-extern cvar_t *sdl_debug;
 
 extern FILE* log_stats_file;
 

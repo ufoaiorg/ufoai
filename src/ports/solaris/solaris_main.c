@@ -43,8 +43,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 extern cvar_t *nostdout;
 
-unsigned sys_frame_time;
-
 uid_t saved_euid;
 
 cvar_t* sys_priority;

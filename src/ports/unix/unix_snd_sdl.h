@@ -17,7 +17,7 @@
 #include <SDL.h>
 #include <SDL_version.h>
 
-#include "../../client/client.h"
+#include "../../common/common.h"
 #include "../../client/snd_loc.h"
 
 /* driver prototypes */

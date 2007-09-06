@@ -333,9 +333,6 @@ void S_Init (void)
 		si.Com_DPrintf = Com_DPrintf;
 		si.S_PaintChannels = S_PaintChannels;
 		si.paintedtime = &paintedtime;
-#ifdef _WIN32
-		si.cl_hwnd = cl_hwnd;
-#endif
 
 		if (!SND_Init(&si)) {
 			Com_Printf("SND_Init failed\n");

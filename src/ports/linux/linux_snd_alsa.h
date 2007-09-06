@@ -16,7 +16,7 @@
 
 #include <alsa/asoundlib.h>
 
-#include "../../client/client.h"
+#include "../../common/common.h"
 #include "../../client/snd_loc.h"
 
 /* driver prototypes */

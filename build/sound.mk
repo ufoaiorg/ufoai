@@ -152,34 +152,6 @@ ifeq ($(TARGET_OS),mingw32)
 endif
 
 ###################################################################################################
-# DirectX
-###################################################################################################
-
-ifeq ($(TARGET_OS),mingw32)
-	SND_DX_SRCS=ports/windows/win_snd_dx.c
-	SND_DX_OBJS=$(SND_DX_SRCS:%.c=$(BUILDDIR)/snd-dx/%.o)
-	SND_DX_TARGET=snd_dx.$(SHARED_EXT)
-
-	ifeq ($(BUILD_CLIENT), 1)
-	ifeq ($(HAVE_SND_DX),1)
-		TARGETS += $(SND_DX_TARGET)
-		ALL_OBJS += $(SND_DX_OBJS)
-	endif
-	endif
-
-	# Say about to build the target
-	$(SND_DX_TARGET) : $(SND_DX_OBJS) $(BUILDDIR)/.dirs
-		@echo " * [DX] ... linking $(LNKFLAGS) ($(SND_DX_LIBS))"; \
-			$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_DX_OBJS) $(SND_DX_LIBS) $(LNKFLAGS)
-
-	# Say how to build .o files from .c files for this module
-	$(BUILDDIR)/snd-dx/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
-		@echo " * [DX] $<"; \
-			$(CC) $(CFLAGS) $(CPPFLAGS) $(SHARED_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
-
-endif
-
-###################################################################################################
 # OSX sound driver
 ###################################################################################################
 ifeq ($(TARGET_OS),darwin)

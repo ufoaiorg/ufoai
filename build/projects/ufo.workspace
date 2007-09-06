@@ -5,7 +5,6 @@
 		<Project filename="ufo2map.cbp" />
 		<Project filename="snd_sdl.cbp" />
 		<Project filename="snd_wapi.cbp" />
-		<Project filename="snd_dx.cbp" />
 		<Project filename="snd_alsa.cbp" />
 		<Project filename="snd_oss.cbp" />
 		<Project filename="ufo.cbp" active="1">
@@ -13,7 +12,6 @@
 			<Depends filename="ufo2map.cbp" />
 			<Depends filename="snd_sdl.cbp" />
 			<Depends filename="snd_wapi.cbp" />
-			<Depends filename="snd_dx.cbp" />
 			<Depends filename="snd_alsa.cbp" />
 			<Depends filename="snd_oss.cbp" />
 			<Depends filename="ufo_ded.cbp" />

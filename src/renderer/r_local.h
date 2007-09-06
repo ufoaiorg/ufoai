@@ -33,9 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define RGB_PIXELSIZE 3
 
-#include <SDL.h>
 #include <SDL_ttf.h>
-#include <SDL_syswm.h>
 
 #include "qgl.h"
 
@@ -235,10 +233,6 @@ extern cvar_t *r_wire;
 extern cvar_t *r_fog;
 extern cvar_t *r_intensity;
 extern cvar_t *r_imagefilter;
-
-extern cvar_t *vid_fullscreen;
-extern cvar_t *vid_gamma;
-extern cvar_t *vid_grabmouse;
 
 extern cvar_t *con_font;
 extern cvar_t *con_fontWidth;

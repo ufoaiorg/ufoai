@@ -32,12 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void IN_Init(void);
 void IN_Frame(void);
 void IN_GetMousePos(int *mx, int *my);
-/* add additional movement on top of the keyboard move cmd */
-void IN_Activate(qboolean active);
 void IN_SendKeyEvents(void);
-
-extern unsigned sys_frame_time;
-
-void KBD_Update(void);
 
 #endif /* CLIENT_INPUT_H */

@@ -45,7 +45,7 @@ extern int key_linepos;
 /**
  * @brief
  */
-static void DisplayString (int x, int y, const char *s)
+static void Con_DisplayString (int x, int y, const char *s)
 {
 	while (*s) {
 		R_DrawChar(x, y, *s);
@@ -559,10 +559,10 @@ void Con_DrawNotify (void)
 
 	if (cls.key_dest == key_message && (msg_mode == MSG_SAY_TEAM || msg_mode == MSG_SAY)) {
 		if (msg_mode == MSG_SAY) {
-			DisplayString(l, v, "say:");
+			Con_DisplayString(l, v, "say:");
 			skip = 4;
 		} else {
-			DisplayString(l, v, "say_team:");
+			Con_DisplayString(l, v, "say_team:");
 			skip = 10;
 		}
 
