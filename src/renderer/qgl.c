@@ -822,7 +822,7 @@ void QR_UnLink (void)
 /**
  * @brief Link the qgl function pointers
  */
-void QR_Link(void)
+void QR_Link (void)
 {
 	qglAccum                     = SDL_GL_GetProcAddress("glAccum");
 	qglAlphaFunc                 = SDL_GL_GetProcAddress("glAlphaFunc");

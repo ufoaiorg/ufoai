@@ -687,13 +687,7 @@ static void R_Register (void)
 	r_showtris = Cvar_Get("r_showtris", "0", 0, NULL);
 	r_finish = Cvar_Get("r_finish", "0", CVAR_ARCHIVE, NULL);
 	r_flashblend = Cvar_Get("r_flashblend", "0", 0, "Controls the way dynamic lights are drawn");
-#if defined(_WIN32)
-	r_driver = Cvar_Get("r_driver", "opengl32", CVAR_ARCHIVE, NULL);
-#elif defined (__APPLE__) || defined (MACOSX)
-	r_driver = Cvar_Get("r_driver", "/System/Library/Frameworks/OpenGL.framework/Libraries/libGL.dylib", CVAR_ARCHIVE, NULL);
-#else
-	r_driver = Cvar_Get("r_driver", "libGL.so", CVAR_ARCHIVE, NULL);
-#endif
+	r_driver = Cvar_Get("r_driver", "", CVAR_ARCHIVE, "You can define the opengl driver you want to use - empty if you want to use the system default");
 	r_texturemode = Cvar_Get("r_texturemode", "GL_LINEAR_MIPMAP_NEAREST", CVAR_ARCHIVE, NULL);
 	r_texturealphamode = Cvar_Get("r_texturealphamode", "default", CVAR_ARCHIVE, NULL);
 	r_texturesolidmode = Cvar_Get("r_texturesolidmode", "default", CVAR_ARCHIVE, NULL);
@@ -799,13 +793,13 @@ qboolean R_Init (void)
 	}
 
 	/* get our various GL strings */
-	r_config.vendor_string = (const char *)qglGetString (GL_VENDOR);
+	r_config.vendor_string = (const char *)qglGetString(GL_VENDOR);
 	Com_Printf("GL_VENDOR: %s\n", r_config.vendor_string);
-	r_config.renderer_string = (const char *)qglGetString (GL_RENDERER);
+	r_config.renderer_string = (const char *)qglGetString(GL_RENDERER);
 	Com_Printf("GL_RENDERER: %s\n", r_config.renderer_string);
-	r_config.version_string = (const char *)qglGetString (GL_VERSION);
+	r_config.version_string = (const char *)qglGetString(GL_VERSION);
 	Com_Printf("GL_VERSION: %s\n", r_config.version_string);
-	r_config.extensions_string = (const char *)qglGetString (GL_EXTENSIONS);
+	r_config.extensions_string = (const char *)qglGetString(GL_EXTENSIONS);
 	Com_Printf("GL_EXTENSIONS: %s\n", r_config.extensions_string);
 
 	Q_strncpyz(renderer_buffer, r_config.renderer_string, sizeof(renderer_buffer));

@@ -428,6 +428,9 @@ static void GetEvent (SDL_Event *event)
  */
 qboolean Rimp_Init (void)
 {
+	if (*r_driver->string)
+		SDL_GL_LoadLibrary(r_driver->string);
+
 	if (SDL_WasInit(SDL_INIT_AUDIO|SDL_INIT_CDROM|SDL_INIT_VIDEO) == 0) {
 		if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 			Sys_Error("Video SDL_Init failed: %s\n", SDL_GetError());
@@ -442,6 +445,8 @@ qboolean Rimp_Init (void)
 
 	SDL_EnableUNICODE(SDL_ENABLE);
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
+
+	Rimp_InitGraphics(vid_fullscreen->integer);
 
 	return qtrue;
 }
