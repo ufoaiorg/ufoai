@@ -109,7 +109,8 @@ qboolean Rimp_InitGraphics (qboolean fullscreen)
 	if (r_surface && (r_surface->w == viddef.width) && (r_surface->h == viddef.height)) {
 		qboolean isfullscreen = (r_surface->flags & SDL_FULLSCREEN) ? qtrue : qfalse;
 		if (fullscreen != isfullscreen)
-			SDL_WM_ToggleFullScreen(r_surface);
+			if (!SDL_WM_ToggleFullScreen(r_surface))
+				Com_Printf("Could not set to fullscreen mode\n");
 
 		isfullscreen = (r_surface->flags & SDL_FULLSCREEN) ? qtrue : qfalse;
 		if (fullscreen == isfullscreen)

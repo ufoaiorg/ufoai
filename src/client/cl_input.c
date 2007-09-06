@@ -67,7 +67,7 @@ static unsigned in_frametime;
 
 int mouseSpace;
 int mousePosX, mousePosY;
-int oldMousePosX, oldMousePosY;
+static int oldMousePosX, oldMousePosY;
 int dragFrom, dragFromX, dragFromY;
 item_t dragItem = {NONE_AMMO, NONE, NONE}; /* to crash as soon as possible */
 /**
@@ -75,7 +75,7 @@ item_t dragItem = {NONE_AMMO, NONE, NONE}; /* to crash as soon as possible */
  * modify the node->angles values to rotate a model
  */
 float *rotateAngles;
-qboolean wasCrouched = qfalse, doCrouch = qfalse;
+static qboolean wasCrouched = qfalse, doCrouch = qfalse;
 float crouchHt = 0;
 
 static qboolean cameraRoute = qfalse;
@@ -1572,7 +1572,8 @@ void IN_Frame (void)
 		case SDL_KEYDOWN:
 			IN_PrintKey(&event, 1);
 			if (event.key.keysym.mod & KMOD_ALT && event.key.keysym.sym == SDLK_RETURN) {
-				SDL_WM_ToggleFullScreen(r_surface);
+				if (!SDL_WM_ToggleFullScreen(r_surface))
+					Com_Printf("Could not toggle fullscreen mode\n");
 
 				if (r_surface->flags & SDL_FULLSCREEN) {
 					Cvar_SetValue("vid_fullscreen", 1);
