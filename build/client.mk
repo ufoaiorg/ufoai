@@ -99,7 +99,7 @@ CLIENT_SRCS = \
 	renderer/r_particle.c \
 	renderer/r_shadows.c \
 	renderer/qgl.c \
-	renderer/r_sdl_sdl.c \
+	renderer/r_sdl.c \
 	\
 	shared/byte.c \
 	shared/infostring.c \

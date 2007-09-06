@@ -23,9 +23,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../../renderer/r_local.h"
-#include "../../client/cl_keys.h"
-#include "../../client/cl_input.h"
+#include "r_local.h"
+#include "../client/cl_keys.h"
+#include "../client/cl_input.h"
 
 /*#include <SDL_opengl.h>*/
 
@@ -443,12 +443,13 @@ qboolean Rimp_Init (void)
 	return qtrue;
 }
 
+#ifndef _WIN32
 /**
  * @brief
  */
 static void SetSDLIcon (void)
 {
-#include "../linux/ufoicon.xbm"
+#include "../ports/linux/ufoicon.xbm"
 	SDL_Surface *icon;
 	SDL_Color color;
 	Uint8 *ptr;
@@ -476,6 +477,7 @@ static void SetSDLIcon (void)
 	SDL_WM_SetIcon(icon, NULL);
 	SDL_FreeSurface(icon);
 }
+#endif
 
 /**
  * @brief Init the SDL window
@@ -549,13 +551,10 @@ qboolean Rimp_InitGraphics (qboolean fullscreen)
 	if (fullscreen)
 		flags |= SDL_FULLSCREEN;
 
+#ifndef _WIN32
 	SetSDLIcon(); /* currently uses ufoicon.xbm data */
-#if 0
-	if (!SDL_VideoModeOK(viddef.width, viddef.height, 0, flags)) {
-		Sys_Error(ERR_FATAL, "(SDLGL) SDL_VideoModeOK failed (%ix%i): %s\n", viddef.width, viddef.height, SDL_GetError());
-		return qfalse;
-	}
 #endif
+
 	if ((surface = SDL_SetVideoMode(viddef.width, viddef.height, 0, flags)) == NULL) {
 		Sys_Error("(SDLGL) SDL SetVideoMode failed: %s\n", SDL_GetError());
 		return qfalse;
