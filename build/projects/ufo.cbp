@@ -389,17 +389,12 @@
 			<Option target="linux" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="..\..\src\ports\unix\unix_input.c">
-			<Option compilerVar="CC" />
-			<Option target="linux" />
-			<Option target="macosx" />
-		</Unit>
 		<Unit filename="..\..\src\ports\unix\unix_main.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="..\..\src\ports\unix\unix_vid.c">
+		<Unit filename="..\..\src\ports\unix\unix_ref_sdl.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\ports\windows\ufo.ico">
