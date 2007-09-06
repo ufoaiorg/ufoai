@@ -20,22 +20,12 @@
 				</Compiler>
 				<Linker>
 					<Add library="intl" />
-					<Add library="vorbisfile" />
-					<Add library="vorbis" />
-					<Add library="ogg" />
 					<Add library="winmm" />
 					<Add library="wsock32" />
 					<Add library="kernel32" />
 					<Add library="user32" />
 					<Add library="gdi32" />
-					<Add library="gmon" />
-					<Add library="SDL" />
-					<Add library="SDL_ttf" />
-					<Add library="z" />
 					<Add library="ws2_32" />
-					<Add library="png" />
-					<Add library="jpeg" />
-					<Add directory="C:\Dev-Cpp\lib" />
 				</Linker>
 			</Target>
 			<Target title="windows_debug">
@@ -57,20 +47,13 @@
 				<Linker>
 					<Add option="-pg -lgmon" />
 					<Add library="intl" />
-					<Add library="vorbisfile" />
-					<Add library="vorbis" />
-					<Add library="ogg" />
 					<Add library="winmm" />
 					<Add library="wsock32" />
 					<Add library="kernel32" />
 					<Add library="user32" />
 					<Add library="gdi32" />
 					<Add library="gmon" />
-					<Add library="SDL" />
-					<Add library="SDL_ttf" />
-					<Add library="z" />
 					<Add library="ws2_32" />
-					<Add directory="C:\Dev-Cpp\lib" />
 				</Linker>
 			</Target>
 			<Target title="linux">
@@ -84,14 +67,6 @@
 				<Compiler>
 					<Add directory="\usr\include\SDL" />
 				</Compiler>
-				<Linker>
-					<Add library="vorbisfile" />
-					<Add library="vorbis" />
-					<Add library="ogg" />
-					<Add library="SDL" />
-					<Add library="SDL_ttf" />
-					<Add library="z" />
-				</Linker>
 				<Environment>
 					<Variable name="sdl_libs" value='&quot;`sdl-config --libs`&quot;' />
 					<Variable name="sdl" value='&quot;`sdl-config --cflags`&quot;' />
@@ -115,11 +90,6 @@
 					<Add option="-framework IOKit" />
 					<Add option="-framework,Cocoa" />
 					<Add option="-framework foundation" />
-					<Add library="vorbisfile" />
-					<Add library="vorbis" />
-					<Add library="ogg" />
-					<Add library="SDL" />
-					<Add library="z" />
 					<Add library="libintl" />
 					<Add directory="\sw\lib" />
 				</Linker>
@@ -128,6 +98,16 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Linker>
+			<Add library="SDL" />
+			<Add library="SDL_ttf" />
+			<Add library="vorbisfile" />
+			<Add library="vorbis" />
+			<Add library="ogg" />
+			<Add library="z" />
+			<Add library="jpeg" />
+			<Add library="png" />
+		</Linker>
 		<Unit filename="..\..\src\client\anorms.h" />
 		<Unit filename="..\..\src\client\cdaudio.h" />
 		<Unit filename="..\..\src\client\cl_actor.c">
@@ -394,9 +374,6 @@
 			<Option target="linux" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\r_sdl.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\ports\windows\ufo.ico">
 			<Option target="windows" />
 			<Option target="windows_debug" />
@@ -475,6 +452,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\renderer\r_particle.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\renderer\r_sdl.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\renderer\r_shader.c">
