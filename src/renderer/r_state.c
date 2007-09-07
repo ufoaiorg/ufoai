@@ -43,9 +43,8 @@ void R_SetDefaultState (void)
 
 	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	/* doesn't really belong here... but works fine */
-	viddef.rx = (float) viddef.width / VID_NORM_WIDTH;
-	viddef.ry = (float) viddef.height / VID_NORM_HEIGHT;
+	RSTATE_DISABLE_BLEND
+	RSTATE_DISABLE_ALPHATEST
 }
 
 /**
@@ -113,11 +112,6 @@ void R_SetupGL3D (void)
 	RSTATE_DISABLE_BLEND
 	RSTATE_DISABLE_ALPHATEST
 	qglEnable(GL_DEPTH_TEST);
-
-#if 0
-	qglHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
-	qglHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_DONT_CARE);
-#endif
 
 	if (r_fog->integer && r_newrefdef.fog && r_state.fog_coord) {
 		qglEnable(GL_FOG);
