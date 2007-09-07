@@ -1147,8 +1147,10 @@ static void CP_CheckEvents (void)
 			case MIS_TERRORATTACK:
 				/* Normal ground mission. */
 				CL_HandleNationData(qtrue, 0, mis->def->civilians, mis->def->aliens, 0, mis);
-				Q_strncpyz(messageBuffer, va(ngettext("The mission %s expired and %i civilian died.", "The mission %s expired and %i civilians died.", mis->def->civilians), mis->def->name, mis->def->civilians), MAX_MESSAGE_TEXT);
-				MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+				if (!mis->def->storyRelated || mis->def->played) {
+					Q_strncpyz(messageBuffer, va(ngettext("The mission %s expired and %i civilian died.", "The mission %s expired and %i civilians died.", mis->def->civilians), mis->def->name, mis->def->civilians), MAX_MESSAGE_TEXT);
+					MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+				}
 				break;
 			default:
 				Sys_Error("Unknown missionType for '%s'\n", mis->def->name);
@@ -1161,8 +1163,11 @@ static void CP_CheckEvents (void)
 			 * (e.g. they expired) and have the storyRelated flag set */
 			if (mis->def->storyRelated && !mis->def->played) {
 				date_t date = {7, 0};
+				Q_strncpyz(messageBuffer, va(ngettext("The aliens had enough time to kill %i civilian at %s.", "The aliens had enough time to kill %i civilians at %s.", mis->def->civilians), mis->def->civilians, mis->def->name), MAX_MESSAGE_TEXT);
+				MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 				/* FIXME use set->def->expire */
 				mis->expire = Date_Add(ccs.date, Date_Random_Middle(date));
+				CL_GameTimeStop();
 				continue;
 			}
 
