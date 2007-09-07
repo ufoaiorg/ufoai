@@ -25,7 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_local.h"
 
-extern cvar_t *r_drawclouds;
 image_t *shadow;
 image_t *blood;
 

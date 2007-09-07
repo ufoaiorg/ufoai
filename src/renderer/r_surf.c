@@ -36,7 +36,7 @@ static mBspSurface_t *r_alpha_surfaces;
 
 #define	MAX_LIGHTMAPS	256
 
-int c_visible_lightmaps;
+static int c_visible_lightmaps;
 
 #define GL_LIGHTMAP_FORMAT GL_RGBA
 

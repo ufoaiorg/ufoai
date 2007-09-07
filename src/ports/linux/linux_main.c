@@ -23,46 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include <unistd.h>
-#include <signal.h>
-#include <stdlib.h>
-#include <limits.h>
-#include <sys/time.h>
-#include <sys/types.h>
 #include <fcntl.h>
-#include <stdarg.h>
-#include <stdio.h>
-#include <sys/ipc.h>
-#include <sys/shm.h>
-#include <sys/select.h>
-#include <string.h>
-#include <ctype.h>
-#include <sys/wait.h>
-#include <sys/mman.h>
-#include <errno.h>
-#include <sys/resource.h>
-
-#ifdef __linux__
-# include <execinfo.h>
-# include <sys/utsname.h>
-# include <link.h>
-# include <sys/ucontext.h>
-
-/* for old headers */
-# ifndef REG_EIP
-#  ifndef EIP
-#   define EIP 12 /* aiee */
-#  endif
-#  define REG_EIP EIP
-# endif
-#endif /* __linux__ */
-
-#if defined(__FreeBSD__) || defined(__NetBSD__)
-#else
-#include <mntent.h>
-#endif
-#include <dirent.h>
-#include <libgen.h> /* dirname */
 
 #include "../../common/common.h"
 

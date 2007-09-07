@@ -172,6 +172,7 @@ extern vec3_t vpn;
 extern vec3_t vright;
 extern vec3_t r_origin;
 
+extern cvar_t *r_drawclouds;
 extern cvar_t *r_drawworld;
 extern cvar_t *r_nocull;
 extern cvar_t *r_isometric;
@@ -236,11 +237,8 @@ extern int gl_alpha_format;
 extern int gl_compressed_solid_format;
 extern int gl_compressed_alpha_format;
 
-extern int c_visible_lightmaps;
-
 extern float r_world_matrix[16];
 
-void R_TranslatePlayerSkin(int playernum);
 void R_Bind(int texnum);
 void R_MBind(GLenum target, int texnum);
 void R_TexEnv(GLenum value);
