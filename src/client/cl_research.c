@@ -1110,8 +1110,6 @@ void RS_UpdateData (void)
 		Cbuf_ExecuteText(EXEC_NOW, va("research_show%i\n", j));
 
 		if (tech->statusCollected && !tech->statusResearchable && (tech->statusResearch != RS_FINISH)) {
-			/* An unresearched collected item that cannot yet be researched. */
-			Q_strcat(name, _(" [not yet researchable]"), sizeof(name));
 			/* Color the item 'unresearchable' */
 			Cbuf_ExecuteText(EXEC_NOW, va("researchunresearchable%i\n", j));
 			/* Display the concated text in the correct list-entry. */
