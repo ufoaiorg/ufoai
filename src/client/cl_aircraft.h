@@ -117,26 +117,32 @@ typedef enum {
 
 /** @brief An aircraft with all it's data */
 typedef struct aircraft_s {
-	int idx;					/**< Global index of this aircraft. See also gd.numAircraft. @todo: is this updated when one aircraft is lost (it is checked agains gd.numAircraft sometimes)? We do not really have a global list of acs do we? */
-	int idx_sample;				/**< self-link in aircraft_sample list */
-	char *id;				/**< internal id from script file */
-	char *name;				/**< translateable name */
-	char *shortname;		/**< translateable shortname */
-	char *image;			/**< image on geoscape */
-	char *model;
-	aircraftType_t type;
-	ufoType_t ufotype;			/**< type of UFO (UFO_MAX if craft is not an UFO) */
-	int status;				/**< see aircraftStatus_t */
+	int idx;			/**< Global index of this aircraft. See also gd.numAircraft. */
+					/* @todo: is this updated when one aircraft is lost (it is checked agains
+					gd.numAircraft sometimes)? We do not really have a global list of acs do we? */
 
-	int price;
-	int fuel;				/**< actual fuel */
-	int size;				/**< how many soldiers max */
-	int weight;				/**< "Size" of the aircraft used in capacity calculations. */
-	vec3_t pos;				/**< actual pos on geoscape */
-	vec3_t direction;		/**< direction in which the aircraft is going on 3D geoscape (used for smoothed rotation)*/
-	int point;
-	int time;
-	int idxInBase;				/**< Index in base. See also base_t->numAircraftInBase. */
+	int idx_sample;			/**< Self-link in aircraft_sample list. */
+	char *id;			/**< Internal id from script file. */
+	char *name;			/**< Translateable name. */
+	char *shortname;		/**< Translateable shortname (being used in small popups). */
+	char *image;			/**< Image on geoscape. */
+	char *model;			/**< @todo: document me. */
+	aircraftType_t type;		/**< Type of aircraft, see aircraftType_t. */
+	ufoType_t ufotype;		/**< Type of UFO, see ufoType_t (UFO_MAX if craft is not an UFO). */
+	int status;			/**< Status of this aircraft, see aircraftStatus_t. */
+
+	int price;			/**< Price of this aircraft type. */
+	int fuel;			/**< Current fuel amount. */
+	int size;			/**< Max amount of soldiers onboard. */	/* @todo: rename me. */
+	int weight;			/**< "Size" of the aircraft used in capacity calculations. */	/* @todo: rename me to size. */
+	vec3_t pos;			/**< Current position on the geoscape. */
+	vec3_t direction;		/**< Direction in which the aircraft is going on 3D geoscape (used for smoothed rotation). */
+	int point;			/**< @todo: document me */
+	int time;			/**< @todo: document me */
+	int idxInBase;			/**< Index in base. See also base_t->numAircraftInBase. */
+	int hangar;			/**< This is the baseCapacities_t enum value which says in which hangar this aircraft
+						is being parked in (CAP_AIRCRAFTS_SMALL/CAP_AIRCRAFTS_BIG). */
+	
 	/* pointer to base->numOnTeam[AIRCRAFT_ID] */
 	int teamSize;				/**< How many soldiers/units are on board (i.e. in the craft-team).
 						 * @note ATTENTION do not use this in "for" loops or similar.
