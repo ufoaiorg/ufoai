@@ -1565,7 +1565,7 @@ static qboolean MN_TextScroll (menuNode_t *node, int offset)
 		return qfalse;
 	}
 
-	if (node->textLines <= node->height ) {
+	if (node->textLines <= node->height) {
 		/* Number of lines are less than the height of the textbox. */
 		node->textScroll = 0;
 		return qfalse;
@@ -1580,7 +1580,7 @@ static qboolean MN_TextScroll (menuNode_t *node, int offset)
 
 	} else if (textScroll_new >= (node->textLines + 1 - node->height)) {
 		/* Goto last possible line, no matter how big the offset was. */
-		node->textScroll = node->textLines + 1 - node->height;
+		node->textScroll = node->textLines - node->height;
 		return qtrue;
 
 	} else {
