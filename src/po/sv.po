@@ -1273,7 +1273,7 @@ msgstr "Kan inte överföra - endast en bas"
 #: ../base/ufos/menu_transfer.ufo:108
 #: ../base/ufos/menu_transfer.ufo:307
 msgid "Transfer"
-msgstr "Överför"
+msgstr "Överföring"
 
 #: ../base/ufos/menu_bases.ufo:236
 msgid "Research new technology"
@@ -4118,7 +4118,7 @@ msgstr "Det utomjordiska hotet"
 #: ../base/ufos/research.ufo:129
 #: ../base/ufos/research.ufo:137
 msgid "Continuous Wave Laser Operation"
-msgstr "Fortskridande våglaserteknologi"
+msgstr "Kontinuerlig våglaserteknologi"
 
 #: ../base/ufos/research.ufo:119
 msgid "laser_txt"
@@ -4233,7 +4233,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:3941
 #: ../base/ufos/research.ufo:3949
 msgid "mail_from_paul_navarre"
-msgstr "Kommendör Paul Navarre, Forskning och utveckling: Utvecklingsavdelningen, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Kommendör Paul Navarre, Forskning och utveckling: Utvecklingsavdelningen, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:128
 #: ../base/ufos/research.ufo:136
@@ -4335,7 +4336,8 @@ msgstr "Kommendör Paul Navarre, Forskning och utveckling: Utvecklingsavdelninge
 #: ../base/ufos/research.ufo:3950
 #: ../base/ufos/research.ufo:4036
 msgid "mail_to_base_commander"
-msgstr "Baskommendör, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Baskommendör, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:153
 #: ../base/ufos/research.ufo:191
@@ -4450,7 +4452,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:3487
 #: ../base/ufos/research.ufo:4035
 msgid "mail_from_dr_connor"
-msgstr "Doktor Connor, Forskning och utveckling: Smittskyddsavdelningen, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Doktor Connor, Forskning och utveckling: Smittskyddsavdelningen, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:247
 #: ../base/ufos/research.ufo:286
@@ -4638,7 +4641,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:423
 #: ../base/ufos/research.ufo:431
 msgid "mail_from_col_falkland"
-msgstr "Överste Ingrid Falkland, Underrättelseavdelningen, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Överste Ingrid Falkland, Underrättelseavdelningen, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:412
 #: ../base/ufos/research.ufo:425
@@ -4649,10 +4653,24 @@ msgstr "utomjordisk virusinfektion (UVI)"
 #: ../base/ufos/research.ufo:415
 msgid "alien_xvi_txt"
 msgstr ""
+"Good morning, Sir.\n"
+"\n"
+"(TO BE COMPLETED)\n"
+"\n"
+"With kind regards,\n"
+"\n"
+"Col. Falkland"
 
 #: ../base/ufos/research.ufo:418
 msgid "alien_xvi_pre_txt"
 msgstr ""
+"Good morning, Sir.\n"
+"\n"
+"(TO BE COMPLETED)\n"
+"\n"
+"With kind regards,\n"
+"\n"
+"Col. Falkland"
 
 #: ../base/ufos/research.ufo:453
 msgid "assault_txt"
@@ -8320,13 +8338,13 @@ msgstr ""
 #: ../base/ufos/research.ufo:3430
 msgid "taman_autopsy_pre_txt"
 msgstr ""
-"Commander,\n"
+"Kommendör,\n"
 "\n"
-"We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.\n"
+"Vi har bärgat ett utomjordiskt lik av en ny okänd ras från slagfältet. Vi bör påbörja dissekering och utvärdering så snart som möjligt.\n"
 "\n"
-"Sincerely,\n"
+"Med vänliga hälsningar,\n"
 "\n"
-"Dr. Connor"
+"Doktor Connor"
 
 #: ../base/ufos/research.ufo:3431
 msgid "taman_autopsy_extra_pre_txt"
@@ -9416,75 +9434,93 @@ msgstr "Till slut: Attacken på den utomjordiska basen ..."
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr "Året är 2084. Jorden, aldrig den mest stabila av platser, njuter av en fredlig tid. Den våldsamma början av 2000-talet är sedan länge över, gamla minnen men inte så länge sedan att den har glömts. För de flesta av jordens befolkning är det andra kalla kriget en mörk skugga från det förflutna, precis som världskrigen var för deras barn."
+msgstr ""
+"Året är 2084. Jorden, aldrig den mest stabila av platser, njuter av en fredlig tid. Den våldsamma början av 2000-talet är sedan länge över, gamla minnen men inte så länge sedan att den har glömts. För de flesta av jordens befolkning är det andra kalla kriget en mörk skugga från det förflutna, precis som världskrigen var för deras barn."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr "Konflikter har blivit mindre vanliga nära slutet av århundradet sedan ny teknologi och hälsovård har blivit tillgänglig för den tredje världen. Även om terrorismen har lugnat ner sig efter det andra kalla kriget, med all dess fruktan och inhumana aktiviteter, finns den fortfarande i tankarna hos folket, från det gamla Amerika till den sargade indiska kontinenten. Klasskamper stiger nu upp mot politiska slagfältet när alla nationer har garanterats en lika representation i FN, och den globala levnadsstandarden stiger sakta även för de mest sargade hörnen av planeten. Länderna har stärkts och stabiliserats runt en omorganiserat Förenade Nationerna som lyckats ena världens regeringar. Fragment av mindre nationer, först skrämda av de kraftfulla nationerna Kina och Europeiska gemenskapen, har själva gått samman till politiskt kraftfulla gemenskaper -- och sedan upptäckt att de inte har några grannar som de kan strida mot. För första gången i människans historia råder lag och ordning över mer än tre fjärdedelar av världen."
+msgstr ""
+"Konflikter har blivit mindre vanliga nära slutet av århundradet sedan ny teknologi och hälsovård har blivit tillgänglig för den tredje världen. Även om terrorismen har lugnat ner sig efter det andra kalla kriget, med all dess fruktan och inhumana aktiviteter, finns den fortfarande i tankarna hos folket, från det gamla Amerika till den sargade indiska kontinenten. Klasskamper stiger nu upp mot politiska slagfältet när alla nationer har garanterats en lika representation i FN, och den globala levnadsstandarden stiger sakta även för de mest sargade hörnen av planeten. Länderna har stärkts och stabiliserats runt en omorganiserat Förenade Nationerna som lyckats ena världens regeringar. Fragment av mindre nationer, först skrämda av de kraftfulla nationerna Kina och Europeiska gemenskapen, har själva gått samman till politiskt kraftfulla gemenskaper -- och sedan upptäckt att de inte har några grannar som de kan strida mot. För första gången i människans historia råder lag och ordning över mer än tre fjärdedelar av världen."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr "För många människor på jorden verkar det äntligen som allt är bra."
+msgstr ""
+"För många människor på jorden verkar det äntligen som allt är bra."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr "Den första attacken sker mot staden Mumbai den 3: e mars 2084. Sex små UFO dyker upp från ingenstans och flyger skrikande ner mot Jorden utan att upptäckas av de stora radarinstallationerna som täcker skyarna över Mumbai och landar i den mest befolkade staden på Jorden. De lämnar inga varningar, ingen förklaring. Tjugotusen oskyldiga civila och tre bataljoner från elittrupperna blir totalt massakerade under tolv brutala timmar innan en stor styrka från samfälligheten får stopp på utomjordingarnas härjningar. Lika snabbt som de kom, retirerar de tillbaka till sina farkoster och försvinner tillbaka ut i rymden och lämnar endast de sargade gatorna i Mumbai som bevis för vad som hänt."
+msgstr ""
+"Den första attacken sker mot staden Mumbai den 3: e mars 2084. Sex små UFO dyker upp från ingenstans och flyger skrikande ner mot Jorden utan att upptäckas av de stora radarinstallationerna som täcker skyarna över Mumbai och landar i den mest befolkade staden på Jorden. De lämnar inga varningar, ingen förklaring. Tjugotusen oskyldiga civila och tre bataljoner från elittrupperna blir totalt massakerade under tolv brutala timmar innan en stor styrka från samfälligheten får stopp på utomjordingarnas härjningar. Lika snabbt som de kom, retirerar de tillbaka till sina farkoster och försvinner tillbaka ut i rymden och lämnar endast de sargade gatorna i Mumbai som bevis för vad som hänt."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr "Ett extrainkallat möte i FN leder inte någonstans. Attackerna fortsätter med kortare mellanrum, större och kraftfullare än tidigare, denna gång i Bonn, Johannesburg och Bangkok. Några nationer försöker med diplomati och skickar meddelanden på tusentals olika språk till utomjordingarna som härjar runt i länderna. Deras ord ignoreras. Inom ett par timmar är alla tre städerna tömda på mänskligt liv. Attacken är över precis när de olika militära styrkorna har fått bekräftelse på att slå tillbaka. Utomjordingarna lämnar ingenting kvar förutom betong och blod. Alla UFO försvinner utan ett spår -- men ingen tvivlar på att de kommer tillbaka."
+msgstr ""
+"Ett extrainkallat möte i FN leder inte någonstans. Attackerna fortsätter med kortare mellanrum, större och kraftfullare än tidigare, denna gång i Bonn, Johannesburg och Bangkok. Några nationer försöker med diplomati och skickar meddelanden på tusentals olika språk till utomjordingarna som härjar runt i länderna. Deras ord ignoreras. Inom ett par timmar är alla tre städerna tömda på mänskligt liv. Attacken är över precis när de olika militära styrkorna har fått bekräftelse på att slå tillbaka. Utomjordingarna lämnar ingenting kvar förutom betong och blod. Alla UFO försvinner utan ett spår -- men ingen tvivlar på att de kommer tillbaka."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr "87 timmar efter den första attacken på Mumbai förklarar Jorden krig mot utomjordingarna. I över två veckor kämpar de mänskliga styrkorna så gott de kan för att avvärja attackerna från de mystiska utomjordingarna. De förlorar oftare än de vinner."
+msgstr ""
+"87 timmar efter den första attacken på Mumbai förklarar Jorden krig mot utomjordingarna. I över två veckor kämpar de mänskliga styrkorna så gott de kan för att avvärja attackerna från de mystiska utomjordingarna. De förlorar oftare än de vinner."
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr "När endast ett alternativ kvarstår tar sig FN ton. Föråldrad utrustning dammas av, några av dem är äldre än ett decennium, och den länge sovande anti-utomjordiska byrån för tidigare Amerika -- PHALANX -- återuppstår under FN: s beskydd. Dess uppdrag är att kämpa mot det utomjordiska hotet och försäkra sig om att den mänskliga rasen överlever, till vilket pris som helst."
+msgstr ""
+"När endast ett alternativ kvarstår tar sig FN ton. Föråldrad utrustning dammas av, några av dem är äldre än ett decennium, och den länge sovande anti-utomjordiska byrån för tidigare Amerika -- PHALANX -- återuppstår under FN: s beskydd. Dess uppdrag är att kämpa mot det utomjordiska hotet och försäkra sig om att den mänskliga rasen överlever, till vilket pris som helst."
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr "Finansierade av alla åtta politiska krafter, och sammanslagningen av dess elitsoldater, är PHALANX det bästa av de bästa. Det är jordens första och enda försvarslinje. De kan inte misslyckas, för att om de gör det, kommer mänskligheten inte att ha en chans att överleva."
+msgstr ""
+"Finansierade av alla åtta politiska krafter, och sammanslagningen av dess elitsoldater, är PHALANX det bästa av de bästa. Det är jordens första och enda försvarslinje. De kan inte misslyckas, för att om de gör det, kommer mänskligheten inte att ha en chans att överleva."
 
 #: ../base/ufos/seq_intro.ufo:100
 msgid "prolog_sentence1"
-msgstr "TILL: Baskommendör, PHALANX, Atlantic Operations Command"
+msgstr ""
+"TILL: Baskommendör, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/seq_intro.ufo:110
 msgid "prolog_sentence2"
-msgstr "FRÅN: Generaldirektör Mahouf Serra, Förenta Nationerna, New York"
+msgstr ""
+"FRÅN: Generaldirektör Mahouf Serra, Förenta Nationerna, New York"
 
 #: ../base/ufos/seq_intro.ufo:119
 msgid "prolog_sentence3"
-msgstr "DATUM: 21 mars 2084"
+msgstr ""
+"DATUM: 21 mars 2084"
 
 #: ../base/ufos/seq_intro.ufo:128
 msgid "prolog_sentence4"
-msgstr "ÄMNE: Lycka till"
+msgstr ""
+"ÄMNE: Lycka till"
 
 #: ../base/ufos/seq_intro.ufo:137
 msgid "prolog_sentence5"
-msgstr "Välkommen till din nya postering, Kommendör. Du har nu fullständig kontroll över PHALANX utomjordiska insatsstyrka. Ditt uppdrag är att skydda jordens befolkning och stoppa det utomjordiska hotet till varje pris. Hur du genomför det är upp till dig, vårt enda krav är att du lyckas."
+msgstr ""
+"Välkommen till din nya postering, Kommendör. Du har nu fullständig kontroll över PHALANX utomjordiska insatsstyrka. Ditt uppdrag är att skydda jordens befolkning och stoppa det utomjordiska hotet till varje pris. Hur du genomför det är upp till dig, vårt enda krav är att du lyckas."
 
 #: ../base/ufos/seq_intro.ufo:146
 msgid "prolog_sentence6"
-msgstr "Ditt första uppdrag är att bygga upp ett huvudkvarter. FN har tillgång till militärbaser över hela värden, så du kan välja vilken region som du vill för ditt huvudkvarter. Välj en plats med omsorg, därför att den kommer att vara en del av framgången för PHALANX-projektet."
+msgstr ""
+"Ditt första uppdrag är att bygga upp ett huvudkvarter. FN har tillgång till militärbaser över hela värden, så du kan välja vilken region som du vill för ditt huvudkvarter. Välj en plats med omsorg, därför att den kommer att vara en del av framgången för PHALANX-projektet."
 
 #: ../base/ufos/seq_intro.ufo:155
 msgid "prolog_sentence7"
-msgstr "En nyligen genomförd analys av attackerna mot Mumbai och Bonn har fastställt att UFO-siktningarna och utomjordisk aktivitet verkar fokusera på de mest befolkade regionerna på Jorden, inklusive kusterna runt Nord- och Sydamerika, Europa, Fjärranöstern, södra och mellersta delarna av Afrika samt Australien. Du bör inkludera dessa territorier i dina operationer."
+msgstr ""
+"En nyligen genomförd analys av attackerna mot Mumbai och Bonn har fastställt att UFO-siktningarna och utomjordisk aktivitet verkar fokusera på de mest befolkade regionerna på Jorden, inklusive kusterna runt Nord- och Sydamerika, Europa, Fjärranöstern, södra och mellersta delarna av Afrika samt Australien. Du bör inkludera dessa territorier i dina operationer."
 
 #: ../base/ufos/seq_intro.ufo:164
 msgid "prolog_sentence8"
-msgstr "När du har byggt upp din första bas så behöver du förbereda dina soldater. Rekryterna som vi har tilldelat till PHALANX måste stationeras på ditt landningsskepp och sedan utrustas för strid."
+msgstr ""
+"När du har byggt upp din första bas så behöver du förbereda dina soldater. Rekryterna som vi har tilldelat till PHALANX måste stationeras på ditt landningsskepp och sedan utrustas för strid."
 
 #: ../base/ufos/seq_intro.ufo:173
 msgid "prolog_sentence9"
-msgstr "Ta hand om dem, Kommendör. Resten av oss räknar med dig, och ber för dig."
+msgstr ""
+"Ta hand om dem, Kommendör. Resten av oss räknar med dig, och ber för dig."
 
 #: ../base/ufos/seq_intro.ufo:182
 msgid "prolog_sentence10"
-msgstr "Det var allt. Lycka till och jag önskar dig en god jakt."
+msgstr ""
+"Det var allt. Lycka till och jag önskar dig en god jakt."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"
