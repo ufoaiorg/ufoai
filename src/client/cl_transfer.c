@@ -314,7 +314,7 @@ static void TR_CargoList (void)
  */
 static void TR_TransferSelect_f (void)
 {
-	static char transferList[1024];
+	static char transferList[2048];
 	int type, empltype;
 	int numempl[MAX_EMPL], trempl[MAX_EMPL];
 	int i, j, cnt = 0;
