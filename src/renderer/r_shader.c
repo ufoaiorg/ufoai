@@ -102,8 +102,9 @@ void R_ShutdownShaders (void)
 				qglDeleteShader(s->fpid);
 			if (s->fpid > 0)
 				qglDeleteShader(s->vpid);
-			qglDeleteProgram(s->glslpid);
-			s->fpid = s->vpid = -1;
+			if (s->glslpid > 0)
+				qglDeleteProgram(s->glslpid);
+			s->glslpid = s->fpid = s->vpid = -1;
 		}
 		if (s->fpid > 0) {
 			Com_DPrintf(DEBUG_RENDERER, "..unload shader %s\n", s->filename);

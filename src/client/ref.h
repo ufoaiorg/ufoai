@@ -131,7 +131,7 @@ typedef struct shader_s {
 	/* @todo: */
 
 	/* vpid and fpid are vertexpid and fragmentpid for binding */
-	unsigned int vpid, fpid, glslpid;
+	int vpid, fpid, glslpid;
 } shader_t;
 
 typedef struct {
