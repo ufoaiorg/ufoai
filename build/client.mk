@@ -161,7 +161,7 @@ ifeq ($(HAVE_CURL),1)
 	CLIENT_CFLAGS+=-DHAVE_CURL
 endif
 
-CLIENT_LIBS+=$(SDL_LIBS) $(REF_SDL_LIBS)
+CLIENT_LIBS+=$(SDL_LIBS)
 
 CLIENT_OBJS= \
 	$(patsubst %.c, $(BUILDDIR)/client/%.o, $(filter %.c, $(CLIENT_SRCS))) \

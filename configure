@@ -10315,6 +10315,7 @@ echo "$as_me: error: You must have the SDL_ttf development libraries" >&2;}
    { (exit 1); exit 1; }; }
 	fi
 fi
+CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check JPEG
@@ -10604,6 +10605,7 @@ echo "$as_me: error: You must have the JPEG development libraries" >&2;}
 	fi
 fi
 TOOLS_LIBS="$TOOLS_LIBS $LIBS"
+CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check PNG
@@ -10892,6 +10894,7 @@ echo "$as_me: error: You must have the PNG development libraries" >&2;}
    { (exit 1); exit 1; }; }
 	fi
 fi
+CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check for opengl headers

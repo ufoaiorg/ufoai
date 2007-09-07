@@ -625,6 +625,7 @@ then
 		AC_MSG_ERROR([You must have the SDL_ttf development libraries])
 	fi
 fi
+CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check JPEG
@@ -649,6 +650,7 @@ then
 	fi
 fi
 TOOLS_LIBS="$TOOLS_LIBS $LIBS"
+CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check PNG
@@ -672,6 +674,7 @@ then
 		AC_MSG_ERROR([You must have the PNG development libraries])
 	fi
 fi
+CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check for opengl headers
