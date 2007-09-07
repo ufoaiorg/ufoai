@@ -69,12 +69,6 @@ shader_t* R_GetShaderForImage (const char* image)
 	int i = 0;
 	shader_t *s;
 
-#ifdef HAVE_SHADERS
-	/* init the shaders */
-	if (!shaderInited && refdef.num_shaders)
-		R_ShaderInit();
-#endif
-
 	/* search for shader title and check whether it matches an image name */
 	for (i = 0; i < refdef.num_shaders; i++) {
 		s = &refdef.shaders[i];
@@ -96,9 +90,8 @@ void R_ShutdownShaders (void)
 	int i = 0;
 	shader_t *s;
 
-	/* init the shaders */
-	if (!shaderInited && refdef.num_shaders)
-		R_ShaderInit();
+	if (!shaderInited)
+		return;
 
 	Com_DPrintf(DEBUG_RENDERER, "Shader shutdown\n");
 	/* search for shader title and check whether it matches an image name */

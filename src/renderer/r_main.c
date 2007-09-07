@@ -927,17 +927,6 @@ qboolean R_Init (void)
 		r_state.lod_bias = qfalse;
 	}
 
-#if 0
-	if (strstr(r_config.extensions_string, "GL_SGIS_generate_mipmap")) {
-		Com_Printf("...using GL_SGIS_generate_mipmap\n");
-		r_state.sgis_mipmap = qtrue;
-	} else {
-		Com_Printf("...GL_SGIS_generate_mipmap not found\n");
-		Sys_Error("GL_SGIS_generate_mipmap not found!");
-		r_state.sgis_mipmap = qfalse;
-	}
-#endif
-
 	if (strstr(r_config.extensions_string, "GL_EXT_stencil_wrap")) {
 		Com_Printf("...using GL_EXT_stencil_wrap\n");
 		r_state.stencil_wrap = qtrue;
@@ -1067,6 +1056,9 @@ qboolean R_Init (void)
 
 	R_SetDefaultState();
 
+#ifdef HAVE_SHADERS
+	R_ShaderInit();
+#endif
 	R_InitImages();
 	R_InitMiscTexture();
 	R_DrawInitLocal();
@@ -1114,12 +1106,15 @@ void R_Shutdown (void)
 void R_BeginFrame (void)
 {
 	/* change modes if necessary */
-	if (r_mode->modified || vid_fullscreen->modified || r_ext_texture_compression->modified) {
+	if (r_mode->modified || vid_fullscreen->modified) {
 		R_SetMode();
 #ifdef _WIN32
 		VID_Restart_f();
 #endif
 	}
+	/* we definitly need a restart here */
+	if (r_ext_texture_compression->modified)
+		VID_Restart_f();
 
 	if (r_anisotropic->modified) {
 		if (r_anisotropic->integer > r_ext_max_anisotropy->integer) {
