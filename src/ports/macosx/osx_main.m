@@ -74,7 +74,7 @@ static void InitCocoa (void)
 /**
  * @brief
  */
-int lenstr (const char *text)
+static int lenstr (const char *text)
 {
 	int count = -1;				/* Character counter */
 
@@ -86,7 +86,7 @@ int lenstr (const char *text)
 /**
  * @brief
  */
-unsigned char CheckForFinderCall (const char **argv, int argc)
+static unsigned char CheckForFinderCall (const char **argv, int argc)
 {
 	unsigned char change = 0;
 
@@ -113,7 +113,7 @@ unsigned char CheckForFinderCall (const char **argv, int argc)
 /**
  * @brief
  */
-void FixWorkingDirectory (const char **argv)
+static void FixWorkingDirectory (const char **argv)
 {
 	char newPath[255];
 
