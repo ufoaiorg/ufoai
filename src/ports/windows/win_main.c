@@ -347,7 +347,7 @@ void Sys_Init (void)
 
 	vinfo.dwOSVersionInfoSize = sizeof(vinfo);
 
-	if (!GetVersionEx (&vinfo))
+	if (!GetVersionEx(&vinfo))
 		Sys_Error("Couldn't get OS info");
 
 	if (vinfo.dwMajorVersion < 4) /* at least win nt 4 */

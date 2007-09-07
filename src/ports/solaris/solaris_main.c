@@ -66,6 +66,7 @@ void Sys_Init (void)
  */
 int main (int argc, const char **argv)
 {
+	Sys_ConsoleInputInit();
 	Qcommon_Init(argc, argv);
 
 	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY);

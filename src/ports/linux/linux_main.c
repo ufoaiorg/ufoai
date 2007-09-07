@@ -57,10 +57,6 @@ void Sys_Init (void)
  */
 int main (int argc, const char **argv)
 {
-	/* go back to real user for config loads */
-	saved_euid = geteuid();
-	seteuid(getuid());
-
 	Sys_ConsoleInputInit();
 	Qcommon_Init(argc, argv);
 
