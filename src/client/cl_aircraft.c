@@ -44,6 +44,7 @@ static const int DISTANCE = 15;
  * @brief Updates hangar capacities for one aircraft in given base.
  * @param[in] aircraftID aircraftID Index of aircraft type in aircraft_samples.
  * @param[in] base Pointer to base.
+ * @return 2 if aircraft was placed in big hangar, 1 if small, -1 if error.
  * @sa AIR_NewAircraft
  * @sa AIR_UpdateHangarCapForAll
  */
@@ -57,45 +58,70 @@ static void AIR_UpdateHangarCapForOne (int aircraftID, base_t *base)
 #ifdef DEBUG
 		Com_Printf("AIR_UpdateHangarCapForOne()... aircraft weight is wrong!\n");
 #endif
-		return;
+		return -1;
 	}
 	if (!base) {
 #ifdef DEBUG
 		Com_Printf("AIR_UpdateHangarCapForOne()... base does not exist!\n");
 #endif
-		return;
+		return -1;
 	}
 	assert(base);
+	if (!base->hasHangar && !base->hasHangarSmall) {
+		Com_Printf("AIR_UpdateHangarCapForOne()... base does not have any hangar - error!\n");
+		return -1;
+	}
 
-	freespace = base->capacities[CAP_AIRCRAFTS_SMALL].max - base->capacities[CAP_AIRCRAFTS_SMALL].cur;
-	Com_DPrintf(DEBUG_CLIENT, "AIR_UpdateHangarCapForOne()... freespace: %i aircraft weight: %i\n", freespace, aircraftSize);
-	/* If the aircraft size is less than 8, we will try to update CAP_AIRCRAFTS_SMALL. */
-	if (aircraftSize < 8) {
-		if (freespace >= aircraftSize) {
-			base->capacities[CAP_AIRCRAFTS_SMALL].cur += aircraftSize;
-		} else {
-			/* Not enough space in small hangar. Aircraft will go to big hangar. */
-			freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur;
-			Com_DPrintf(DEBUG_CLIENT, "AIR_UpdateHangarCapForOne()... freespace: %i aircraft weight: %i\n", freespace, aircraftSize);
-			if (freespace >= aircraftSize) {
-				base->capacities[CAP_AIRCRAFTS_BIG].cur += aircraftSize;
-			} else {
-				/* No free space for this aircraft. This should never happen here. */
-				Com_Printf("AIR_UpdateHangarCapForOne()... no free space!\n");
-			}
+	if (aircraftSize >= 8) {
+		if (!base->hasHangar) {
+			Com_Printf("AIR_UpdateHangarCapForOne()... base does not have big hangar - error!\n");
+			return -1;
 		}
-	} else {
-		/* The aircraft is too big for small hangar. Update big hangar capacities. */
 		freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur;
-		Com_DPrintf(DEBUG_CLIENT, "AIR_UpdateHangarCapForOne()... freespace: %i aircraft weight: %i\n", freespace, aircraftSize);
 		if (freespace >= aircraftSize) {
 			base->capacities[CAP_AIRCRAFTS_BIG].cur += aircraftSize;
+			return 2;
 		} else {
 			/* No free space for this aircraft. This should never happen here. */
 			Com_Printf("AIR_UpdateHangarCapForOne()... no free space!\n");
+			return -1;
 		}
+	} else {
+		/* First we are trying to put small aircraft into small hangar.
+		 * If that fails, we will put it into big hangar. */
+		if (base->hasHangarSmall) {
+			freespace = base->capacities[CAP_AIRCRAFTS_SMALL].max - base->capacities[CAP_AIRCRAFTS_SMALL].cur;
+			if (freespace >= aircraftSize) {
+				base->capacities[CAP_AIRCRAFTS_SMALL].cur += aircraftSize;
+				return 1;
+			} else {
+				if (!base->hasHangar) {
+					Com_Printf("AIR_UpdateHangarCapForOne()... base does not have big hangar - error!\n");
+					return -1;
+				}
+				freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur;
+				if (freespace >= aircraftSize) {
+					base->capacities[CAP_AIRCRAFTS_BIG].cur += aircraftSize;
+					return 2;
+				} else {
+					/* No free space for this aircraft. This should never happen here. */
+					Com_Printf("AIR_UpdateHangarCapForOne()... no free space!\n");
+					return -1;
+				}
+			}
+		} else {
+			freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur;
+			if (freespace >= aircraftSize) {
+				base->capacities[CAP_AIRCRAFTS_BIG].cur += aircraftSize;
+				return 2;
+			} else {
+				/* No free space for this aircraft. This should never happen here. */
+				Com_Printf("AIR_UpdateHangarCapForOne()... no free space!\n");
+				return -1;
+			}
+		}
+
 	}
-	/* @todo: introduce capacities for UFO hangars and do space checks for them here. */
 	Com_DPrintf(DEBUG_CLIENT, "AIR_UpdateHangarCapForOne()... base capacities.cur: small: %i big: %i\n", base->capacities[CAP_AIRCRAFTS_SMALL].cur, base->capacities[CAP_AIRCRAFTS_BIG].cur);
 }
 
@@ -654,7 +680,9 @@ void AIR_NewAircraft (base_t *base, const char *name)
 		base->numAircraftInBase++;	/**< Increase the number of aircraft in the base. */
 		/* Update base capacities. */
 		Com_DPrintf(DEBUG_CLIENT, "idx_sample: %i name: %s weight: %i\n", aircraft->idx_sample, aircraft->id, aircraft->weight);
-		AIR_UpdateHangarCapForOne(aircraft->idx_sample, base);
+		aircraft->hangar = AIR_UpdateHangarCapForOne(aircraft->idx_sample, base);
+		if (aircraft->hangar == -1)
+			Com_Printf("AIR_NewAircraft()... ERROR, new aircraft but no free space in hangars!\n");
 		Com_DPrintf(DEBUG_CLIENT, "Adding new aircraft %s with IDX %i for base %s\n", aircraft->name, aircraft->idx, base->name);
 		/* Now update the aircraft list - maybe there is a popup active */
 		Cbuf_ExecuteText(EXEC_NOW, "aircraft_list");
