@@ -21,32 +21,17 @@
 /* Have curses library */
 #undef HAVE_CURSES
 
-/* Have DGA library */
-#undef HAVE_DGA
-
-/* Have DGA1 library */
-#undef HAVE_DGA1
-
-/* Define to 1 if you have the <dsound.h> header file. */
-#undef HAVE_DSOUND_H
-
 /* Define to 1 if you have the `freeaddrinfo' function. */
 #undef HAVE_FREEADDRINFO
 
 /* Define to 1 if you have the `getaddrinfo' function. */
 #undef HAVE_GETADDRINFO
 
-/* Define to 1 if you have the <glx.h> header file. */
-#undef HAVE_GLX_H
-
 /* Define to 1 if you have the <GL/glext.h> header file. */
 #undef HAVE_GL_GLEXT_H
 
 /* Define to 1 if you have the <GL/glu.h> header file. */
 #undef HAVE_GL_GLU_H
-
-/* Define to 1 if you have the <GL/glx.h> header file. */
-#undef HAVE_GL_GLX_H
 
 /* Define to 1 if you have the <GL/gl.h> header file. */
 #undef HAVE_GL_GL_H
@@ -129,26 +114,11 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
 
-/* Have xf86vmode support */
-#undef HAVE_VIDMODE
-
 /* Define to 1 if you have the <windows.h> header file. */
 #undef HAVE_WINDOWS_H
 
 /* Define to 1 if you have the <winsock2.h> header file. */
 #undef HAVE_WINSOCK2_H
-
-/* Define to 1 if you have the <X11/extensions/xf86dga1.h> header file. */
-#undef HAVE_X11_EXTENSIONS_XF86DGA1_H
-
-/* Define to 1 if you have the <X11/extensions/xf86dga.h> header file. */
-#undef HAVE_X11_EXTENSIONS_XF86DGA_H
-
-/* Define to 1 if you have the <X11/extensions/xf86vmode.h> header file. */
-#undef HAVE_X11_EXTENSIONS_XF86VMODE_H
-
-/* Define to 1 if you have the <X11/Xlib.h> header file. */
-#undef HAVE_X11_XLIB_H
 
 /* Define to 1 if you have the <zlib.h> header file. */
 #undef HAVE_ZLIB_H

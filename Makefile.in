@@ -14,11 +14,8 @@ TARGET_OS=@TARGET_OS@
 TARGET_CPU=@TARGET_CPU@
 EXE_EXT=@EXEEXT@
 
-HAVE_SDL=@HAVE_SDL@
 SDL_CFLAGS=@SDL_CFLAGS@
 SDL_LIBS=@SDL_LIBS@
-
-HAVE_VID_GLX=@HAVE_VID_GLX@
 
 HAVE_OPENAL=@HAVE_OPENAL@
 
@@ -29,10 +26,6 @@ SERVER_LIBS=@SERVER_LIBS@
 GAME_LIBS=@GAME_LIBS@
 TOOLS_LIBS=@TOOLS_LIBS@
 MASTER_LIBS=@MASTER_LIBS@
-REF_GL_LIBS=@REF_GL_LIBS@
-REF_SDL_LIBS=@REF_SDL_LIBS@
-REF_GLX_LIBS=@REF_GLX_LIBS@
-REF_GLX_CFLAGS=@REF_GLX_CFLAGS@
 
 SND_ARTS_CFLAGS=@SND_ARTS_CFLAGS@
 SND_SDL_CFLAGS=@SND_SDL_CFLAGS@
@@ -42,7 +35,6 @@ SND_SDL_LIBS=@SND_SDL_LIBS@
 SND_JACK_LIBS=@SND_JACK_LIBS@
 SND_OSS_LIBS=@SND_OSS_LIBS@
 SND_WAPI_LIBS=@SND_WAPI_LIBS@
-SND_DX_LIBS=@SND_DX_LIBS@
 SND_ALSA_LIBS=@SND_ALSA_LIBS@
 
 HAVE_SND_ARTS=@HAVE_SND_ARTS@
@@ -51,7 +43,6 @@ HAVE_SND_JACK=@HAVE_SND_JACK@
 HAVE_SND_SDL=@HAVE_SND_SDL@
 HAVE_SND_OSS=@HAVE_SND_OSS@
 HAVE_SND_WAPI=@HAVE_SND_WAPI@
-HAVE_SND_DX=@HAVE_SND_DX@
 
 MMX=@MMX@
 
@@ -77,7 +68,7 @@ datarootdir=@datarootdir@
 DATADIR=@datadir@/ufoai
 INSTALL=./install-sh
 
-VERSION=$(shell grep UFO_VERSION src/qcommon/qcommon.h | sed -e 's/.*UFO_VERSION \"\(.*\)\"/\1/')
+VERSION=$(shell grep UFO_VERSION src/common/common.h | sed -e 's/.*UFO_VERSION \"\(.*\)\"/\1/')
 
 #######################################################################################################
 
@@ -89,7 +80,7 @@ include build/defs.mk
 #######################################################################################################
 
 # define all the modules that need to be compiled
-MODULES = client server tools game sound ref_gl masterserver
+MODULES = client server tools game sound masterserver
 
 all: all2
 

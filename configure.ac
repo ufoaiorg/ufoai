@@ -33,17 +33,9 @@ case "$host_os" in
 		;;
 esac
 
-AC_ARG_WITH(sdl,
-	[AS_HELP_STRING([--with-sdl], [with SDL support @<:@default=yes@:>@])],
-	[], [with_sdl=yes])
-
 AC_ARG_WITH(sdl_config,
 	[AC_HELP_STRING([--with-sdl-config=FILE], [using the given sdl-config @<:@default=sdl-config@:>@])],
 	[], [with_sdl_config=sdl-config])
-
-AC_ARG_WITH(vid_glx,
-	[AS_HELP_STRING([--with-vid-glx], [with GLX support @<:@default=check@:>@])],
-	[], [with_vid_glx=check])
 
 AC_ARG_WITH(shaders,
 	[AS_HELP_STRING([--with-shaders], [with OpenGL shader support @<:@default=check@:>@])],
@@ -72,18 +64,6 @@ AC_ARG_WITH(snd_arts,
 AC_ARG_WITH(snd_wapi,
 	[AS_HELP_STRING([--with-snd-wapi], [with wapi sound support @<:@default=check@:>@])],
 	[], [with_snd_wapi=check])
-
-AC_ARG_WITH(snd_dx,
-	[AS_HELP_STRING([--with-snd-dx], [with directX sound support @<:@default=check@:>@])],
-	[], [with_snd_dx=check])
-
-AC_ARG_WITH(vid_dga,
-	[AS_HELP_STRING([--with-vid-dga], [compile with DGA support  @<:@default=check@:>@])],
-	[], [with_vid_dga=check])
-
-AC_ARG_WITH(vid_vidmode,
-	[AS_HELP_STRING([--with-vid-vidmode], [compile with vidmode support @<:@default=check@:>@])],
-	[], [with_vid_vidmode=check])
 
 AC_ARG_WITH(curl,
 	[AS_HELP_STRING([--with-curl], [compile with curl download support @<:@default=check@:>@])],
@@ -308,24 +288,6 @@ then
 fi
 
 #---------------------------------------------------------------------------------------------
-# macos linker flags
-#---------------------------------------------------------------------------------------------
-if test $TARGET_OS = "darwin"
-then
-	#---------------------------------------------------------------------------------------------
-	# Darwin (fink) FIXME
-	#---------------------------------------------------------------------------------------------
-	CFLAGS+="-I/sw/include"
-	CFLAGS+="-I/Developer/SDKs/MacOSX10.4u.sdk/usr/X11R6/include/"
-#	if test -f "/sw/etc/fink.conf"; then
-#	  : ${CFLAGS="-I/sw/include -I/usr/local/include"}
-#	  : ${CPPFLAGS="-I/sw/include -I/usr/local/include"}
-#	  : ${LDFLAGS="-L/sw/lib -L/usr/local/lib"}
-#		AC_MSG_NOTICE([added fink lib and include dir])
-#	fi
-fi
-
-#---------------------------------------------------------------------------------------------
 # CHECK NETWORKING
 #---------------------------------------------------------------------------------------------
 
@@ -344,16 +306,6 @@ AC_CHECK_DECL(AI_NUMERICSERV,
 	[AC_DEFINE(HAVE_AI_NUMERICSERV,1,[AI_NUMERICSERV found in netdb.h])],
 	[AC_DEFINE(HAVE_AI_NUMERICSERV,0,[AI_NUMERICSERV not found in netdb.h])],
 	[#include <netdb.h>])
-
-#---------------------------------------------------------------------------------------------
-# CHECK LIBTOOL
-#---------------------------------------------------------------------------------------------
-
-#AC_CHECK_PROG(HAVE_LIBTOOL,libtool,yes)
-#if test "$HAVE_LIBTOOL" != "yes"
-#then
-#	AC_MSG_ERROR([You must have libtool installed])
-#fi
 
 #---------------------------------------------------------------------------------------------
 # Check for stdint.h
@@ -387,22 +339,6 @@ else
 	AC_MSG_WARN([stdint.h does not define intptr_tm so will not build qdata!])
 	enable_qdata = "no"
 fi
-
-#---------------------------------------------------------------------------------------------
-# Check for X11/Xlib.h
-#---------------------------------------------------------------------------------------------
-
-LIBS=
-AC_CHECK_HEADERS([X11/Xlib.h])
-if test "$ac_cv_header_X11_Xlib_h" = "yes"
-then
-	AC_SEARCH_LIBS([XCreateWindow],[X11])
-	if test "$ac_cv_search_XCreateWindow" = "no"
-	then
-		AC_MSG_WARN([found X11 header but couldn't find library!])
-	fi
-fi
-REF_GLX_LIBS="$REF_GLX_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check how to open a dynamic library ...
@@ -606,16 +542,6 @@ else
 	AC_MSG_WARN([cannot find $sdl_config might fail to find SDL!])
 fi
 
-if test "$with_sdl" = "check" || test "$with_sdl" = "yes" || \
-	test "$with_snd_sdl" = "check" || test "$with_snd_sdl" = "yes"
-then
-	AC_SUBST([HAVE_SDL],1)
-	SND_SDL_LIBS=$SDL_LIBS
-else
-	AC_MSG_NOTICE([Without SDL])
-	AC_SUBST([HAVE_SDL],0)
-fi
-
 if test "$with_snd_sdl" = "check" || test "$with_snd_sdl" = "yes"
 then
 	AC_SUBST([HAVE_SND_SDL],1)
@@ -699,9 +625,6 @@ then
 		AC_MSG_ERROR([You must have the SDL_ttf development libraries])
 	fi
 fi
-REF_GL_LIBS="$REF_GL_LIBS $LIBS"
-REF_GLX_LIBS="$REF_GLX_LIBS $LIBS"
-REF_SDL_LIBS="$REF_SDL_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check JPEG
@@ -726,9 +649,6 @@ then
 	fi
 fi
 TOOLS_LIBS="$TOOLS_LIBS $LIBS"
-REF_GL_LIBS="$REF_GL_LIBS $LIBS"
-REF_GLX_LIBS="$REF_GLX_LIBS $LIBS"
-REF_SDL_LIBS="$REF_SDL_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check PNG
@@ -752,43 +672,6 @@ then
 		AC_MSG_ERROR([You must have the PNG development libraries])
 	fi
 fi
-REF_GL_LIBS="$REF_GL_LIBS $LIBS"
-REF_GLX_LIBS="$REF_GLX_LIBS $LIBS"
-REF_SDL_LIBS="$REF_SDL_LIBS $LIBS"
-
-#---------------------------------------------------------------------------------------------
-# Check GLX
-#---------------------------------------------------------------------------------------------
-
-LIBS=
-AC_SUBST([HAVE_VID_GLX],0)
-if test "$with_vid_glx" = "check" || test "$with_vid_glx" = "yes"
-then
-	if test "$ac_cv_header_X11_Xlib_h" != "no"
-	then
-		AC_CHECK_HEADERS([GL/glx.h glx.h], [], [], [
-				#if HAVE_X11_XLIB_H
-				#include <X11/Xlib.h>
-				#endif
-			])
-	fi
-	if test "$ac_cv_header_GL_glx_h" = "yes"
-	then
-		AC_SEARCH_LIBS([glXCreateContext],[GL MesaGL])
-		if test "$ac_cv_search_glXCreateContext" = "no"
-		then
-			AC_MSG_WARN([found GLX headers but couldn't find GLX libraries, GLX will be disabled!])
-		else
-			AC_SUBST([HAVE_VID_GLX],1)
-		fi
-	elif test "$with_vid_glx" = "yes"
-	then
-		AC_MSG_ERROR([--with-vid-glx specified but failed find GLX header])
-	fi
-else
-	AC_MSG_NOTICE([Without GLX])
-fi
-#REF_GLX_LIBS="$REF_GLX_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check for opengl headers
@@ -972,106 +855,6 @@ else
 fi
 SND_WAPI_LIBS="$SND_WAPI_LIBS $LIBS"
 
-
-#---------------------------------------------------------------------------------------------
-# Check DX
-#---------------------------------------------------------------------------------------------
-
-LIBS=
-if test "$with_snd_dx" = "check" || test "$with_snd_dx" = "yes"
-then
-	AC_CHECK_HEADERS([dsound.h])
-	if test "$ac_cv_header_dsound_h" = "yes"
-	then
-		AC_SUBST([HAVE_SND_DX],1)
-	elif test "$with_snd_dx" = "yes"
-	then
-		AC_MSG_ERROR([specified --with-snd-dx specified but cannot find dsound.h!])
-	fi
-else
-	AC_MSG_NOTICE([Without DX sound])
-fi
-SND_DX_LIBS="$SND_DX_LIBS $LIBS"
-
-#---------------------------------------------------------------------------------------------
-# Check for DGA
-#---------------------------------------------------------------------------------------------
-
-LIBS=
-if test "$with_vid_dga" = "check" || test "$with_vid_dga" = "yes"
-then
-	if test "$ac_cv_header_X11_Xlib_h" = "yes"
-	then
-		AC_CHECK_HEADERS([X11/extensions/xf86dga1.h], [], [], [
-			#if HAVE_X11_XLIB_H
-			#include <X11/Xlib.h>
-			#endif
-			])
-	fi
-
-	if test "$ac_cv_header_X11_extensions_xf86dga1_h" = "no"
-	then
-		if test "$ac_cv_header_X11_Xlib_h" = "yes"
-		then
-			AC_CHECK_HEADERS([X11/extensions/xf86dga.h], [], [], [
-				#if HAVE_X11_XLIB_H
-				#include <X11/Xlib.h>
-				#endif
-				])
-		fi
-		if test "$ac_cv_header_X11_extensions_xf86dga_h" = "yes"
-		then
-			AC_SUBST([HAVE_DGA], 1)
-			AC_DEFINE([HAVE_DGA],[1],[Have DGA library])
-		elif test "$with_vid_dga" = "yes"
-		then
-			AC_MSG_ERROR([--with-vid-dga specified but couldn't find X11/extensions/xf86dga.h])
-		fi
-	else
-		AC_SUBST([HAVE_DGA1], 1)
-		AC_DEFINE([HAVE_DGA1],[1],[Have DGA1 library])
-	fi
-else
-	AC_MSG_NOTICE([Without DGA])
-fi
-REF_GLX_LIBS="$REF_GLX_LIBS $LIBS"
-
-#---------------------------------------------------------------------------------------------
-# Check for vidmode
-#---------------------------------------------------------------------------------------------
-
-LIBS=
-if test "$with_vid_vidmode" = "check" || test "$with_vid_vidmode" = "yes"
-then
-	if test "$ac_cv_header_X11_Xlib_h" = "yes"
-	then
-		AC_CHECK_HEADERS([X11/extensions/xf86vmode.h],[],[],[
-			#if HAVE_X11_XLIB_H
-			#include <X11/Xlib.h>
-			#endif
-			])
-	fi
-
-	if test "$ac_cv_header_X11_extensions_xf86vmode_h" = "yes"
-	then
-		AC_SEARCH_LIBS([XF86VidModeQueryVersion], [Xxf86vm])
-		if test "$ac_cv_search_XF86VidModeQueryVersion" != "no"
-		then
-			AC_SUBST([HAVE_VID_VIDMODE], 1)
-			AC_DEFINE([HAVE_VIDMODE],[1],[Have xf86vmode support])
-		elif test "$with_vid_vidmode" = "yes"
-		then
-			AC_MSG_ERROR([--with-vid-vidmode specified but couldn't find XF86VidModeQueryVersion])
-		fi
-	elif test "$with_vid_vidmode" = "yes"
-	then
-		AC_MSG_ERROR([--with-vid-vidmode specified but couldn't find X11/extensions/xf86vmode.h])
-	fi
-else
-	AC_MSG_NOTICE([Without VIDMODE])
-fi
-REF_GLX_LIBS="$REF_GLX_LIBS $LIBS"
-
 #---------------------------------------------------------------------------------------------
 # Check for curses
 #---------------------------------------------------------------------------------------------
@@ -1252,11 +1035,6 @@ fi
 
 AC_SUBST([EXE_EXT],"$ac_exe_ext")
 
-AC_SUBST([REF_GL_LIBS],"$REF_GL_LIBS")
-AC_SUBST([REF_GLX_LIBS],"$REF_GLX_LIBS")
-AC_SUBST([REF_GLX_CFLAGS],"$REF_GLX_CFLAGS")
-AC_SUBST([REF_GLX_CFLAGS],"$REF_GLX_CFLAGS")
-AC_SUBST([REF_SDL_LIBS],"$REF_SDL_LIBS")
 AC_SUBST([CLIENT_LIBS],"$CLIENT_LIBS")
 AC_SUBST([SERVER_LIBS],"$SERVER_LIBS")
 AC_SUBST([GAME_LIBS],"$GAME_LIBS")
@@ -1267,7 +1045,6 @@ AC_SUBST([SND_SDL_LIBS],"$SND_SDL_LIBS")
 AC_SUBST([SND_JACK_LIBS],"$SND_JACK_LIBS")
 AC_SUBST([SND_OSS_LIBS],"$SND_OSS_LIBS")
 AC_SUBST([SND_WAPI_LIBS],"$SND_WAPI_LIBS")
-AC_SUBST([SND_DX_LIBS],"$SND_DX_LIBS")
 AC_SUBST([SND_ALSA_LIBS],"$SND_ALSA_LIBS")
 
 #AC_MSG_NOTICE(Compiler flags: $CFLAGS)
