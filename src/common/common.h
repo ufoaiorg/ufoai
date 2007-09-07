@@ -351,7 +351,6 @@ char *Sys_ConsoleInput(void);
 void Sys_ConsoleOutput(const char *string);
 void Sys_Error(const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
 void Sys_Quit(void);
-char *Sys_GetClipboardData(void);
 char *Sys_GetHomeDirectory(void);
 
 void Sys_ConsoleInputShutdown(void);

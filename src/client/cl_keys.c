@@ -297,28 +297,6 @@ static void Key_Console (int key)
 		break;
 	}
 
-	/* ctrl-V gets clipboard data */
-	if ((toupper(key) == 'V' && keydown[K_CTRL]) || (((key == K_INS) || (key == K_KP_INS)) && keydown[K_SHIFT])) {
-		char *cbd;
-
-		if ((cbd = Sys_GetClipboardData()) != 0) {
-			strtok(cbd, "\n\r\b");
-
-			i = strlen(cbd);
-			if (i + key_linepos >= MAXCMDLINE)
-				i = MAXCMDLINE - key_linepos;
-
-			if (i > 0) {
-				cbd[i] = 0;
-				Q_strcat(key_lines[edit_line], cbd, MAXCMDLINE);
-				key_linepos += i;
-			}
-			free(cbd);
-		}
-
-		return;
-	}
-
 	if (keydown[K_CTRL]) {
 		switch (toupper(key)) {
 		/* ctrl-L clears screen */

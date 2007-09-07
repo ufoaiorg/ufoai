@@ -66,14 +66,6 @@ void Sys_Init (void)
 /**
  * @brief
  */
-char *Sys_GetClipboardData (void)
-{
-	return NULL;
-}
-
-/**
- * @brief
- */
 int main (int argc, const char **argv)
 {
 	Qcommon_Init(argc, argv);
