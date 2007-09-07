@@ -1349,6 +1349,7 @@ qboolean PR_Save (sizebuf_t* sb, void* data)
 			MSG_WriteLong(sb, pq->items[j].amount);
 			MSG_WriteLong(sb, pq->items[j].timeLeft);
 			MSG_WriteByte(sb, pq->items[j].production);
+			MSG_WriteByte(sb, pq->items[j].aircraft);
 			MSG_WriteByte(sb, pq->items[j].items_cached);
 		}
 	}
@@ -1383,6 +1384,7 @@ qboolean PR_Load (sizebuf_t* sb, void* data)
 				pq->items[j].amount = MSG_ReadLong(sb);
 				pq->items[j].timeLeft = MSG_ReadLong(sb);
 				pq->items[j].production = MSG_ReadByte(sb);
+				pq->items[j].aircraft = MSG_ReadByte(sb);
 				pq->items[j].items_cached = MSG_ReadByte(sb);
 			}
 		}
