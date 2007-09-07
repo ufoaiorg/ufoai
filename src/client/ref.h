@@ -38,9 +38,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #ifdef _WIN32
 #include <windows.h>
-#else
-typedef void* HINSTANCE;
-typedef void* WNDPROC;
 #endif
 
 #include "vid.h"
@@ -314,5 +311,6 @@ qboolean R_SetMode(void);
 void R_Shutdown(void);
 
 extern SDL_Surface *r_surface;
+extern cvar_t *r_3dmapradius;
 
 #endif /* CLIENT_REF_H */

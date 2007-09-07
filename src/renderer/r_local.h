@@ -198,8 +198,6 @@ extern cvar_t *r_lightmap;
 
 extern cvar_t *r_showbox;
 
-extern cvar_t *r_3dmapradius;
-
 /* shadow stuff */
 void R_ShadowBlend(void);
 void R_DrawShadowVolume(entity_t * e);
@@ -230,10 +228,6 @@ extern cvar_t *r_fog;
 extern cvar_t *r_intensity;
 extern cvar_t *r_imagefilter;
 
-extern cvar_t *con_font;
-extern cvar_t *con_fontWidth;
-extern cvar_t *con_fontHeight;
-extern cvar_t *con_fontShift;
 extern image_t *draw_chars[2];
 
 extern int gl_lightmap_format;

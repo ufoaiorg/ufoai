@@ -27,9 +27,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 
 #ifdef HAVE_SHADERS
-static unsigned int SH_LoadProgram_ARB_FP(const char *path);
-static unsigned int SH_LoadProgram_ARB_VP(const char *path);
-static unsigned int SH_LoadProgram_GLSL(shader_t* s);
+static int SH_LoadProgram_ARB_FP(const char *path);
+static int SH_LoadProgram_ARB_VP(const char *path);
+static int SH_LoadProgram_GLSL(shader_t* s);
 static qboolean shaderInited = qfalse;
 
 /**
@@ -108,11 +108,11 @@ void R_ShutdownShaders (void)
 		}
 		if (s->fpid > 0) {
 			Com_DPrintf(DEBUG_RENDERER, "..unload shader %s\n", s->filename);
-			qglDeleteProgramsARB(1, &s->fpid);
+			qglDeleteProgramsARB(1, (unsigned int*)&s->fpid);
 		}
 		if (s->vpid > 0) {
 			Com_DPrintf(DEBUG_RENDERER, "..unload shader %s\n", s->filename);
-			qglDeleteProgramsARB(1, &s->vpid);
+			qglDeleteProgramsARB(1, (unsigned int*)&s->vpid);
 		}
 		s->fpid = s->vpid = -1;
 	}
@@ -123,10 +123,10 @@ void R_ShutdownShaders (void)
  * @param[in] path The shader file path (relative to game-dir)
  * @return fpid - id of shader
  */
-unsigned int SH_LoadProgram_ARB_FP (const char *path)
+int SH_LoadProgram_ARB_FP (const char *path)
 {
 	char *fbuf;
-	unsigned int size;
+	int size;
 
 	const unsigned char *errors;
 	int error_pos;
@@ -169,10 +169,10 @@ unsigned int SH_LoadProgram_ARB_FP (const char *path)
  * @param[in] path The shader file path (relative to game-dir)
  * @return vpid - id of shader
  */
-unsigned int SH_LoadProgram_ARB_VP (const char *path)
+int SH_LoadProgram_ARB_VP (const char *path)
 {
 	char *fbuf;
-	unsigned int size, vpid;
+	int size, vpid;
 
 	size = FS_LoadFile(path, (void **) &fbuf);
 
@@ -187,7 +187,7 @@ unsigned int SH_LoadProgram_ARB_VP (const char *path)
 		return -1;
 	}
 
-	qglGenProgramsARB(1, &vpid);
+	qglGenProgramsARB(1, (unsigned int*)&vpid);
 	qglBindProgramARB(GL_VERTEX_PROGRAM_ARB, vpid);
 	qglProgramStringARB(GL_VERTEX_PROGRAM_ARB, GL_PROGRAM_FORMAT_ASCII_ARB, size, fbuf);
 
@@ -200,7 +200,7 @@ unsigned int SH_LoadProgram_ARB_VP (const char *path)
 			Com_Printf("!! VP error at position %d in %s\n", error_pos, path);
 			Com_Printf("!! Error: %s\n", errors);
 
-			qglDeleteProgramsARB(1, &vpid);
+			qglDeleteProgramsARB(1, (unsigned int*)&vpid);
 			FS_FreeFile(fbuf);
 			return 0;
 		}
@@ -215,10 +215,10 @@ unsigned int SH_LoadProgram_ARB_VP (const char *path)
  * @param[in] path The shader file path (relative to game-dir)
  * @return vpid - id of shader
  */
-unsigned int SH_LoadProgram_GLSL (shader_t* s)
+int SH_LoadProgram_GLSL (shader_t* s)
 {
 	char *fbuf;
-	unsigned int size;
+	int size;
 
 	size = FS_LoadFile(s->filename, (void **) &fbuf);
 
@@ -259,7 +259,7 @@ unsigned int SH_LoadProgram_GLSL (shader_t* s)
  * @param[in] fpid the shader id
  * @sa SH_LoadProgram_ARB_FP
  */
-static void SH_UseProgram_ARB_FP (unsigned int fpid)
+static void SH_UseProgram_ARB_FP (int fpid)
 {
 	if (fpid > 0) {
 		qglEnable(GL_FRAGMENT_PROGRAM_ARB);
@@ -274,7 +274,7 @@ static void SH_UseProgram_ARB_FP (unsigned int fpid)
  * @param[in] vpid the shader id
  * @sa SH_LoadProgram_ARB_VP
  */
-static void SH_UseProgram_ARB_VP (unsigned int vpid)
+static void SH_UseProgram_ARB_VP (int vpid)
 {
 	if (vpid > 0) {
 		qglEnable(GL_VERTEX_PROGRAM_ARB);

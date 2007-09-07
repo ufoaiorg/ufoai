@@ -709,6 +709,8 @@ void SCR_UpdateScreen (void)
 			SCR_CheckDrawCenterString();
 		}
 
+		SCR_DrawConsole();
+
 		if (cl_fps->integer)
 			SCR_DrawString(viddef.width - con_fontWidth->integer * 10, 4, va("fps: %3.1f", cls.framerate), qtrue);
 		if (cls.state == ca_active && scr_rspeed->integer)
@@ -719,8 +721,6 @@ void SCR_UpdateScreen (void)
 
 		if (scr_debuggraph->integer || scr_timegraph->integer)
 			SCR_DrawDebugGraph();
-
-		SCR_DrawConsole();
 
 		if (cls.state != ca_sequence)
 			SCR_DrawCursor();

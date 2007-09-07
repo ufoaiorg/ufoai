@@ -244,7 +244,6 @@ typedef enum {
 #define N_(String) gettext_noop (String)
 
 /* cvars */
-extern cvar_t *s_language;
 #ifdef HAVE_CURL
 extern cvar_t *cl_http_downloads;
 extern cvar_t *cl_http_filelists;
@@ -277,12 +276,11 @@ extern cvar_t *cl_centerview;
 extern cvar_t *cl_worldlevel;
 extern cvar_t *cl_selected;
 extern cvar_t *cl_3dmap;
-extern cvar_t *r_3dmapradius;
 extern cvar_t *cl_numnames;
-extern cvar_t *difficulty;
 extern cvar_t *cl_start_employees;
 extern cvar_t *cl_initial_equipment;
 extern cvar_t *cl_start_buildings;
+
 extern cvar_t *mn_serverlist;
 extern cvar_t *mn_active;
 extern cvar_t *mn_afterdrop;
@@ -290,9 +288,12 @@ extern cvar_t *mn_main;
 extern cvar_t *mn_sequence;
 extern cvar_t *mn_hud;
 extern cvar_t *mn_lastsave;
-extern cvar_t *snd_ref;
-extern cvar_t *confirm_actions;
 extern cvar_t *mn_inputlength;
+
+extern cvar_t *s_language;
+extern cvar_t *snd_ref;
+extern cvar_t *difficulty;
+extern cvar_t *confirm_actions;
 extern cvar_t *log_stats;
 
 extern FILE* log_stats_file;

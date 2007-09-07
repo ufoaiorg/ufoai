@@ -179,6 +179,10 @@ rserr_t Rimp_SetMode (unsigned int *pwidth, unsigned int *pheight, int mode, qbo
 {
 	Com_Printf("I: setting mode %d:", mode);
 
+	vid_fullscreen->modified = qfalse;
+	r_mode->modified = qfalse;
+	r_ext_texture_compression->modified = qfalse;
+
 	if (!VID_GetModeInfo((int*)pwidth, (int*)pheight, mode)) {
 		Com_Printf(" invalid mode\n");
 		return rserr_invalid_mode;

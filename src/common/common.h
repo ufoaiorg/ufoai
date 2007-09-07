@@ -284,6 +284,11 @@ extern cvar_t *cl_avifreq;
 extern cvar_t *teamnum;
 extern cvar_t *gametype;
 
+extern cvar_t *con_fontHeight;
+extern cvar_t *con_font;
+extern cvar_t *con_fontWidth;
+extern cvar_t *con_fontShift;
+
 /* host_speeds times */
 extern int time_before_game;
 extern int time_after_game;

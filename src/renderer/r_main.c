@@ -80,6 +80,8 @@ cvar_t *r_ext_lockarrays;
 cvar_t *r_ext_texture_compression;
 cvar_t *r_ext_s3tc_compression;
 
+cvar_t *r_3dmapradius;
+
 cvar_t *r_bitdepth;
 cvar_t *r_drawbuffer;
 cvar_t *r_driver;
@@ -110,13 +112,6 @@ cvar_t *r_wire;
 cvar_t *r_fog;
 cvar_t *r_showbox;
 cvar_t *r_intensity;
-
-cvar_t *r_3dmapradius;
-
-cvar_t *con_font;
-cvar_t *con_fontWidth;
-cvar_t *con_fontHeight;
-cvar_t *con_fontShift;
 
 /**
  * @brief Prints some OpenGL strings
@@ -646,6 +641,8 @@ static void R_Register (void)
 	r_screenshot = Cvar_Get("r_screenshot", "jpg", CVAR_ARCHIVE, "png, jpg or tga are valid screenshot formats");
 	r_screenshot_jpeg_quality = Cvar_Get("r_screenshot_jpeg_quality", "75", CVAR_ARCHIVE, "jpeg quality in percent for jpeg screenshots");
 
+	r_3dmapradius = Cvar_Get("r_3dmapradius", "8192.0", CVAR_NOSET, "3D geoscape radius");
+
 	r_modulate = Cvar_Get("r_modulate", "1", CVAR_ARCHIVE, NULL);
 	r_bitdepth = Cvar_Get("r_bitdepth", "0", CVAR_ARCHIVE, NULL);
 	r_mode = Cvar_Get("r_mode", "6", CVAR_ARCHIVE, "Display resolution");
@@ -684,16 +681,6 @@ static void R_Register (void)
 	r_drawbuffer = Cvar_Get("r_drawbuffer", "GL_BACK", 0, NULL);
 	r_swapinterval = Cvar_Get("r_swapinterval", "1", CVAR_ARCHIVE, NULL);
 
-	r_3dmapradius = Cvar_Get("r_3dmapradius", "8192.0", CVAR_NOSET, NULL);
-
-	vid_fullscreen = Cvar_Get("vid_fullscreen", "0", CVAR_ARCHIVE, NULL);
-	vid_gamma = Cvar_Get("vid_gamma", "1.0", CVAR_ARCHIVE, NULL);
-
-	con_font = Cvar_Get("con_font", "0", CVAR_ARCHIVE, NULL);
-	con_fontWidth = Cvar_Get("con_fontWidth", "8", CVAR_NOSET, NULL);
-	con_fontHeight = Cvar_Get("con_fontHeight", "16", CVAR_NOSET, NULL);
-	con_fontShift = Cvar_Get("con_fontShift", "3", CVAR_NOSET, NULL);
-
 	for (commands = r_commands; commands->name; commands++)
 		Cmd_AddCommand(commands->name, commands->function, commands->description);
 }
@@ -708,27 +695,21 @@ qboolean R_SetMode (void)
 
 	fullscreen = vid_fullscreen->integer;
 
-	vid_fullscreen->modified = qfalse;
-	r_mode->modified = qfalse;
-	r_ext_texture_compression->modified = qfalse;
-
-	if ((err = Rimp_SetMode(&viddef.width, &viddef.height, r_mode->integer, fullscreen)) == rserr_ok)
+	if ((err = Rimp_SetMode(&viddef.width, &viddef.height, r_mode->integer, vid_fullscreen->integer)) == rserr_ok)
 		r_state.prev_mode = r_mode->integer;
 	else {
 		if (err == rserr_invalid_fullscreen) {
 			Cvar_SetValue("vid_fullscreen", 0);
-			vid_fullscreen->modified = qfalse;
 			Com_Printf("renderer::R_SetMode() - fullscreen unavailable in this mode\n");
-			if ((err = Rimp_SetMode(&viddef.width, &viddef.height, r_mode->integer, qfalse)) == rserr_ok)
+			if ((err = Rimp_SetMode(&viddef.width, &viddef.height, r_mode->integer, vid_fullscreen->integer)) == rserr_ok)
 				return qtrue;
 		} else if (err == rserr_invalid_mode) {
 			Cvar_SetValue("r_mode", r_state.prev_mode);
-			r_mode->modified = qfalse;
 			Com_Printf("renderer::R_SetMode() - invalid mode\n");
 		}
 
 		/* try setting it back to something safe */
-		if ((err = Rimp_SetMode(&viddef.width, &viddef.height, r_state.prev_mode, qfalse)) != rserr_ok) {
+		if ((err = Rimp_SetMode(&viddef.width, &viddef.height, r_state.prev_mode, vid_fullscreen->integer)) != rserr_ok) {
 			Com_Printf("renderer::R_SetMode() - could not revert to safe mode\n");
 			return qfalse;
 		}
@@ -1123,21 +1104,6 @@ void R_BeginFrame (void)
 		}
 		/*R_UpdateAnisotropy();*/
 		r_anisotropic->modified = qfalse;
-	}
-
-	if (con_font->modified) {
-		if (con_font->integer == 0) {
-			Cvar_ForceSet("con_fontWidth", "8");
-			Cvar_ForceSet("con_fontHeight", "16");
-			Cvar_ForceSet("con_fontShift", "3");
-			con_font->modified = qfalse;
-		} else if (con_font->integer == 1 && draw_chars[1]) {
-			Cvar_ForceSet("con_fontWidth", "8");
-			Cvar_ForceSet("con_fontHeight", "8");
-			Cvar_ForceSet("con_fontShift", "3");
-			con_font->modified = qfalse;
-		} else
-			Cvar_ForceSet("con_font", "1");
 	}
 
 	/* go into 2D mode */

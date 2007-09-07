@@ -52,7 +52,6 @@ cvar_t *cl_centerview;
 cvar_t *cl_worldlevel;
 cvar_t *cl_selected;
 cvar_t *cl_3dmap;
-cvar_t *r_3dmapradius;
 cvar_t *cl_numnames;
 
 cvar_t *mn_serverlist;
@@ -2082,7 +2081,6 @@ static void CL_InitLocal (void)
 	cl_worldlevel->modified = qfalse;
 	cl_selected = Cvar_Get("cl_selected", "0", CVAR_NOSET, "Current selected soldier");
 	cl_3dmap = Cvar_Get("cl_3dmap", "0", CVAR_ARCHIVE, "3D geoscape or float geoscape");
-	r_3dmapradius = Cvar_Get("r_3dmapradius", "8192.0", CVAR_NOSET, "3D geoscape radius");
 	/* only 19 soldiers in soldier selection list */
 	cl_numnames = Cvar_Get("cl_numnames", "19", CVAR_NOSET, NULL);
 	difficulty = Cvar_Get("difficulty", "0", CVAR_NOSET, "Difficulty level");
@@ -2105,10 +2103,6 @@ static void CL_InitLocal (void)
 
 	mn_inputlength = Cvar_Get("mn_inputlength", "32", 0, "Limit the input length for messagemenu input");
 	mn_inputlength->modified = qfalse;
-
-	con_fontWidth = Cvar_Get("con_fontWidth", "16", CVAR_NOSET, NULL);
-	con_fontHeight = Cvar_Get("con_fontHeight", "32", CVAR_NOSET, NULL);
-	con_fontShift = Cvar_Get("con_fontShift", "4", CVAR_NOSET, NULL);
 
 	/* userinfo */
 	info_password = Cvar_Get("password", "", CVAR_USERINFO, NULL);

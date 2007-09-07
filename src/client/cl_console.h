@@ -55,10 +55,6 @@ typedef struct {
 
 extern console_t con;
 
-extern cvar_t *con_fontHeight;
-extern cvar_t *con_fontWidth;
-extern cvar_t *con_fontShift;
-
 void Con_DrawCharacter(int cx, int line, int num);
 
 void Con_CheckResize(void);

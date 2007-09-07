@@ -35,6 +35,7 @@ console_t con;
 static cvar_t *con_notifytime;
 static cvar_t *con_history;
 cvar_t *con_fontHeight;
+cvar_t *con_font;
 cvar_t *con_fontWidth;
 cvar_t *con_fontShift;
 
@@ -222,6 +223,21 @@ void Con_CheckResize (void)
 
 	width = (viddef.width >> 3) - 2;
 
+	if (con_font->modified) {
+		if (con_font->integer == 0) {
+			Cvar_ForceSet("con_fontWidth", "8");
+			Cvar_ForceSet("con_fontHeight", "16");
+			Cvar_ForceSet("con_fontShift", "3");
+			con_font->modified = qfalse;
+		} else if (con_font->integer == 1) {
+			Cvar_ForceSet("con_fontWidth", "8");
+			Cvar_ForceSet("con_fontHeight", "8");
+			Cvar_ForceSet("con_fontShift", "3");
+			con_font->modified = qfalse;
+		} else
+			Cvar_ForceSet("con_font", "1");
+	}
+
 	if (width == con.linewidth)
 		return;
 
@@ -361,13 +377,13 @@ void Con_Init (void)
 {
 	con.linewidth = -1;
 
-	Con_CheckResize();
-
-	Com_Printf("Console initialized.\n");
-
 	/* register our commands and cvars */
 	con_notifytime = Cvar_Get("con_notifytime", "10", CVAR_ARCHIVE, "How many seconds console messages should be shown before they fade away");
 	con_history = Cvar_Get("con_history", "1", CVAR_ARCHIVE, "Permanent console history");
+	con_fontWidth = Cvar_Get("con_fontWidth", "16", CVAR_NOSET, NULL);
+	con_fontHeight = Cvar_Get("con_fontHeight", "32", CVAR_NOSET, NULL);
+	con_fontShift = Cvar_Get("con_fontShift", "4", CVAR_NOSET, NULL);
+	con_font = Cvar_Get("con_font", "0", CVAR_ARCHIVE, NULL);
 
 	Cmd_AddCommand("toggleconsole", Con_ToggleConsole_f, _("Bring up the in-game console"));
 	Cmd_AddCommand("togglechat", Con_ToggleChat_f, NULL);
@@ -380,7 +396,10 @@ void Con_Init (void)
 	/* load console history if con_history is true */
 	Con_LoadConsoleHistory(FS_Gamedir());
 
+	Con_CheckResize();
 	con.initialized = qtrue;
+
+	Com_Printf("Console initialized.\n");
 }
 
 
