@@ -48,7 +48,7 @@ static const int DISTANCE = 15;
  * @sa AIR_NewAircraft
  * @sa AIR_UpdateHangarCapForAll
  */
-static void AIR_UpdateHangarCapForOne (int aircraftID, base_t *base)
+static int AIR_UpdateHangarCapForOne (int aircraftID, base_t *base)
 {
 	int aircraftSize = 0, freespace = 0;
 
