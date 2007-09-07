@@ -927,3 +927,17 @@ mission shelter_standard
 	onwin		""
 	storyrelated	false
 }
+
+mission corrupt_city
+{
+	location	"_TODO"
+	type		"_Infection Attack"
+	text		"_The aliens are trying to spread their XVI virus amongst the populace. Prevent them from succeeding at all costs!"
+	pos			"11 12" // FIXME
+	aliens		6
+	nation		"states" // FIXME
+	alienequip	stage4_soldiers
+	onlose		"" //Lose 2.2 campaign
+	onwin		"" //Win 2.2 campaign
+	storyrelated	true
+}

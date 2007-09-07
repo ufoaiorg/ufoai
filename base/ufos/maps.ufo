@@ -448,6 +448,13 @@ mapdef shelter_standard
 	}
 }
 
+mapdef corrupt_city
+{
+	map				corrupt_city04
+	music			PsymongR5
+	multiplayer		true
+}
+
 mapdef ufocrash
 {
 	map				"+ufocrash"
