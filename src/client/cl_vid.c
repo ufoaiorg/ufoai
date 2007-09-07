@@ -95,15 +95,14 @@ qboolean VID_GetModeInfo (int *width, int *height, int mode)
  */
 void VID_Restart_f (void)
 {
-	R_SetMode();
+	if (CL_VideoRecording())
+		CL_CloseAVI();
 
-	/* unfortunately gl contexts are destroyed when changing
-	 * video modes on win32 (at least with SDL), so we must
-	 * re-upload all textures to restore our state */
-#ifdef _WIN32
-	R_Restart();
-	CL_PrepRefresh();
-#endif
+	S_StopAllSounds();
+	R_Shutdown();
+	R_Init();
+	CL_InitFonts();
+
 }
 
 /**

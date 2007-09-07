@@ -2024,7 +2024,7 @@ void R_ShutdownImages (void)
 
 	for (i = 0, image = gltextures; i < numgltextures; i++, image++) {
 		/* free it */
-		qglDeleteTextures(1, (GLuint *) & image->texnum);
+		qglDeleteTextures(1, (GLuint *) &image->texnum);
 		memset(image, 0, sizeof(*image));
 	}
 }

@@ -1620,9 +1620,6 @@ void IN_Init (void)
 	/* other cvars */
 	sdl_debug = Cvar_Get("sdl_debug", "0", 0, NULL);
 
-	SDL_EnableUNICODE(SDL_ENABLE);
-	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
-
 	Cmd_AddCommand("+turnleft", IN_TurnLeftDown_f, _("Rotate battlescape camera anti-clockwise"));
 	Cmd_AddCommand("-turnleft", IN_TurnLeftUp_f, NULL);
 	Cmd_AddCommand("+turnright", IN_TurnRightDown_f, _("Rotate battlescape camera clockwise"));

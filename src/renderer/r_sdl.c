@@ -27,8 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 SDL_Surface *r_surface;
 
-/*#include <SDL_opengl.h>*/
-
 #ifndef _WIN32
 /**
  * @brief
@@ -117,6 +115,11 @@ qboolean Rimp_Init (void)
 		Com_Printf("I: got %d bits for green\n", attrValue);
 	if (!SDL_GL_GetAttribute(SDL_GL_BLUE_SIZE, &attrValue))
 		Com_Printf("I: got %d bits for blue\n", attrValue);
+
+	/* we need this in the renderer because if we issue an vid_restart we have
+	 * to set these values again, too */
+	SDL_EnableUNICODE(SDL_ENABLE);
+	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 
 	return qtrue;
 }

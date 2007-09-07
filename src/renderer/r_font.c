@@ -674,8 +674,6 @@ void R_FontInit (void)
 	/* init the truetype font engine */
 	if (TTF_Init() == -1)
 		Sys_Error("...SDL_ttf error: %s\n", TTF_GetError());
-
-	Com_Printf("...SDL_ttf inited\n");
 }
 
 /**

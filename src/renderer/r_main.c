@@ -120,16 +120,6 @@ cvar_t *con_fontHeight;
 cvar_t *con_fontShift;
 
 /**
- * @brief Reset to initial state
- */
-static void R_Reset_f (void)
-{
-	R_EnableMultitexture(qfalse);
-	RSTATE_DISABLE_ALPHATEST
-	RSTATE_DISABLE_BLEND
-}
-
-/**
  * @brief Prints some OpenGL strings
  */
 static void R_Strings_f (void)
@@ -636,7 +626,6 @@ static const cmdList_t r_commands[] = {
 	{"screenshot", R_ScreenShot_f, "Take a screenshot"},
 	{"modellist", R_ModModellist_f, NULL},
 	{"r_strings", R_Strings_f, NULL},
-	{"r_reset", R_Reset_f, "Reset to initial state"},
 
 	{NULL, NULL, NULL}
 };
@@ -1096,21 +1085,6 @@ qboolean R_Init (void)
 
 /**
  * @brief
- */
-void R_Restart (void)
-{
-	qglDeleteLists(spherelist, 1);
-	spherelist = -1;
-
-	R_ShutdownImages();
-	R_FontCleanCache();
-
-	R_InitMiscTexture();
-	R_DrawInitLocal();
-}
-
-/**
- * @brief
  * @sa R_Init
  */
 void R_Shutdown (void)
@@ -1120,6 +1094,7 @@ void R_Shutdown (void)
 	for (commands = r_commands; commands->name; commands++)
 		Cmd_RemoveCommand(commands->name);
 
+	assert(spherelist != -1);
 	qglDeleteLists(spherelist, 1);
 	spherelist = -1;
 
