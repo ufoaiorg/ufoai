@@ -397,9 +397,6 @@ void (APIENTRY * qglActiveStencilFaceEXT) (GLenum face);
 void (APIENTRY * qglStencilOpSeparateATI) (GLenum face, GLenum sfail, GLenum dpfail, GLenum dppass);
 void (APIENTRY * qglStencilFuncSeparateATI) (GLenum frontfunc, GLenum backfunc, GLint red, GLuint mask);
 
-/* vsync */
-void (APIENTRY *qglSwapInterval) (GLint interval);
-
 #ifdef HAVE_SHADERS
 /* arb shader stuff */
 void (APIENTRY * qglProgramStringARB)  (GLenum, GLenum, GLsizei, const GLvoid *);
@@ -1172,12 +1169,6 @@ void QR_Link (void)
 	qglActiveStencilFaceEXT      = NULL;
 	qglStencilOpSeparateATI      = NULL;
 	qglStencilFuncSeparateATI    = NULL;
-
-#ifdef _WIN32
-	qglSwapInterval              = SDL_GL_GetProcAddress("wglSwapIntervalEXT");
-#else
-	qglSwapInterval              = SDL_GL_GetProcAddress("glXSwapIntervalSGI");
-#endif
 
 #ifdef HAVE_SHADERS
 	qglProgramStringARB          = NULL;

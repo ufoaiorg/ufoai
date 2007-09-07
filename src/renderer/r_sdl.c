@@ -157,6 +157,7 @@ qboolean Rimp_InitGraphics (qboolean fullscreen)
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 1);
 	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+	SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, r_swapinterval->integer);
 
 	flags = SDL_OPENGL;
 	if (fullscreen)

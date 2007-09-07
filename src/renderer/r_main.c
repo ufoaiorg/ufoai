@@ -1136,13 +1136,6 @@ void R_BeginFrame (void)
 		r_texturesolidmode->modified = qfalse;
 	}
 
-	/* vsync stuff */
-	if (r_swapinterval->modified) {
-		if (qglSwapInterval)
-			qglSwapInterval(r_swapinterval->integer);
-		r_swapinterval->modified = qfalse;
-	}
-
 	/* clear screen if desired */
 	R_Clear();
 }

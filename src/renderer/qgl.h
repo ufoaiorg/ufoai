@@ -431,9 +431,6 @@ extern void (APIENTRY * qglActiveStencilFaceEXT) (GLenum face);
 extern void (APIENTRY * qglStencilOpSeparateATI) (GLenum face, GLenum sfail, GLenum dpfail, GLenum dppass);
 extern void (APIENTRY * qglStencilFuncSeparateATI) (GLenum frontfunc, GLenum backfunc, GLint red, GLuint mask);
 
-/* vsync */
-extern void (APIENTRY *qglSwapInterval) (GLint interval);
-
 /* extension constants */
 
 extern GLenum gl_texture0, gl_texture1, gl_texture2, gl_texture3;
