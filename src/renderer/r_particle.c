@@ -81,7 +81,7 @@ static void R_DrawSprite (ptl_t * p)
 	vec3_t pos;
 
 	/* load texture set up coordinates */
-	R_Bind(((image_t *) r_newrefdef.ptl_art[p->pic].art)->texnum);
+	R_Bind(((image_t *) refdef.ptl_art[p->pic].art)->texnum);
 
 	/* calculate main position and normalised up and right vectors */
 	q = p->parent ? p->parent : p;
@@ -148,7 +148,7 @@ static void R_DrawPtlModel (ptl_t * p)
 	mi.color = p->color;
 	mi.origin = p->s;
 	mi.angles = p->angles;
-	mi.model = (model_t *) r_newrefdef.ptl_art[p->model].art;
+	mi.model = (model_t *) refdef.ptl_art[p->model].art;
 	mi.skin = p->skin;
 
 	/* draw it */
@@ -262,7 +262,7 @@ static void R_SetBlendMode (int mode)
 
 /**
  * @brief
- * @note the r_newrefdef.ptls is the ptl array from cl_particle.c
+ * @note the refdef.ptls is the ptl array from cl_particle.c
  * @sa V_UpdateRefDef
  */
 void R_DrawPtls (void)
@@ -270,7 +270,7 @@ void R_DrawPtls (void)
 	ptl_t *p;
 	int i;
 
-	if (r_fog->integer && r_newrefdef.fog)
+	if (r_fog->integer && refdef.fog)
 		qglDisable(GL_FOG);
 	/* no z buffering */
 	qglDepthMask(GL_FALSE);
@@ -279,10 +279,10 @@ void R_DrawPtls (void)
 /*	RSTATE_ENABLE_ALPHATEST*/
 	blend_mode = BLEND_REPLACE;
 
-	for (i = 0, p = r_newrefdef.ptls; i < r_newrefdef.num_ptls; i++, p++)
+	for (i = 0, p = refdef.ptls; i < refdef.num_ptls; i++, p++)
 		if (p->inuse && !p->invis) {
 			/* test for visibility */
-			if (p->levelFlags && !((1 << r_newrefdef.worldlevel) & p->levelFlags))
+			if (p->levelFlags && !((1 << refdef.worldlevel) & p->levelFlags))
 				continue;
 
 			/* set blend mode and draw gfx */
@@ -310,6 +310,6 @@ void R_DrawPtls (void)
 	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	qglEnable(GL_CULL_FACE);
 	qglDepthMask(GL_TRUE);
-	if (r_fog->integer && r_newrefdef.fog)
+	if (r_fog->integer && refdef.fog)
 		qglEnable(GL_FOG);
 }

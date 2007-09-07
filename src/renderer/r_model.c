@@ -358,7 +358,7 @@ void R_ModDrawNullModel (void)
 
 	qglPushMatrix();
 
-	qglMultMatrixf(trafo[currententity - r_newrefdef.entities].matrix);
+	qglMultMatrixf(trafo[currententity - refdef.entities].matrix);
 
 	qglDisable(GL_TEXTURE_2D);
 

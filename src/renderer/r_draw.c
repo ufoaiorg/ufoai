@@ -890,7 +890,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 		qglFogf(GL_FOG_START, 5.0);
 
 		/* must tweak the fog end too!!! */
-		qglFogf(GL_FOG_END, r_newrefdef.fog);
+		qglFogf(GL_FOG_END, refdef.fog);
 		qglEnable(GL_FOG);
 	}
 

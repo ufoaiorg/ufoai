@@ -120,7 +120,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 	if (lightfixed)
 		R_EnableLights(lightfixed, e->lightcolor, e->lightparam, e->lightambient);
 	else
-		R_EnableLights(lightfixed, trafo[e - r_newrefdef.entities].matrix, e->lightparam, NULL);
+		R_EnableLights(lightfixed, trafo[e - refdef.entities].matrix, e->lightparam, NULL);
 
 	for (i = 0; i < paliashdr->num_meshes; i++) {
 		c_alias_polys += paliashdr->meshes[i].num_tris;
@@ -182,7 +182,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 		R_DrawShadowVolume(e);
 	}
 
-	if (r_fog->integer && r_newrefdef.fog)
+	if (r_fog->integer && refdef.fog)
 		qglDisable(GL_FOG);
 
 	for (i = 0; i < paliashdr->num_meshes; i++) {
@@ -200,8 +200,8 @@ void R_DrawAliasMD3Model (entity_t *e)
 
 	qglPopMatrix();
 
-	if (r_fog->integer && r_newrefdef.fog)
+	if (r_fog->integer && refdef.fog)
 		qglEnable(GL_FOG);
 
-	qglColor4f(1,1,1,1);
+	qglColor4f(1, 1, 1, 1);
 }

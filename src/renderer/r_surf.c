@@ -330,7 +330,7 @@ static void R_RenderBrushPoly (mBspSurface_t * fa)
 
 	if (fa->texinfo->flags & SURF_FLOWING) {
 		float scroll;
-		scroll = -64 * ((r_newrefdef.time / 40.0) - (int) (r_newrefdef.time / 40.0));
+		scroll = -64 * ((refdef.time / 40.0) - (int) (refdef.time / 40.0));
 		if (scroll == 0.0)
 			scroll = -64.0;
 		R_DrawPoly(fa, scroll);
@@ -339,7 +339,7 @@ static void R_RenderBrushPoly (mBspSurface_t * fa)
 
 	/* check for lightmap modification */
 	for (maps = 0; maps < MAXLIGHTMAPS && fa->styles[maps] != 255; maps++) {
-		if (r_newrefdef.lightstyles[fa->styles[maps]].white != fa->cached_light[maps])
+		if (refdef.lightstyles[fa->styles[maps]].white != fa->cached_light[maps])
 			goto dynamic;
 	}
 
@@ -425,7 +425,7 @@ void R_DrawAlphaSurfaces (void)
 			R_DrawTurbSurface(s);
 		else if (s->texinfo->flags & SURF_FLOWING) {
 			float scroll;
-			scroll = -64 * ((r_newrefdef.time / 40.0) - (int) (r_newrefdef.time / 40.0));
+			scroll = -64 * ((refdef.time / 40.0) - (int) (refdef.time / 40.0));
 			if (scroll == 0.0)
 				scroll = -64.0;
 			R_DrawPoly(s, scroll);
@@ -461,7 +461,7 @@ static void R_DrawLightmappedSurface (mBspSurface_t * surf)
 		RSTATE_ENABLE_ALPHATEST
 
 	for (map = 0; map < MAXLIGHTMAPS && surf->styles[map] != 255; map++) {
-		if (r_newrefdef.lightstyles[surf->styles[map]].white != surf->cached_light[map])
+		if (refdef.lightstyles[surf->styles[map]].white != surf->cached_light[map])
 			goto dynamic;
 	}
 
@@ -513,7 +513,7 @@ static void R_DrawLightmappedSurface (mBspSurface_t * surf)
 	if (surf->texinfo->flags & SURF_FLOWING) {
 		float scroll;
 
-		scroll = -64 * ((r_newrefdef.time / 40.0) - (int) (r_newrefdef.time / 40.0));
+		scroll = -64 * ((refdef.time / 40.0) - (int) (refdef.time / 40.0));
 		if (scroll == 0.0)
 			scroll = -64.0;
 
@@ -538,8 +538,8 @@ static void R_DrawInlineBModel (void)
 	qboolean duplicate = qfalse;
 	/* calculate dynamic lighting for bmodel */
 	if (!r_flashblend->integer) {
-		lt = r_newrefdef.dlights;
-		for (k = 0; k < r_newrefdef.num_dlights; k++, lt++)
+		lt = refdef.dlights;
+		for (k = 0; k < refdef.num_dlights; k++, lt++)
 			R_MarkLights(lt, 1 << k, currentmodel->bsp.nodes + currentmodel->bsp.firstnode);
 	}
 
@@ -637,7 +637,7 @@ void R_DrawBrushModel (entity_t * e)
 	qglColor3f(1, 1, 1);
 	memset(gl_lms.lightmap_surfaces, 0, sizeof(gl_lms.lightmap_surfaces));
 
-	VectorSubtract(r_newrefdef.vieworg, e->origin, modelorg);
+	VectorSubtract(refdef.vieworg, e->origin, modelorg);
 	if (rotated) {
 		vec3_t temp;
 		vec3_t forward, right, up;
@@ -758,11 +758,11 @@ static void R_DrawWorld (mBspNode_t * nodes)
 {
 	entity_t ent;
 
-	VectorCopy(r_newrefdef.vieworg, modelorg);
+	VectorCopy(refdef.vieworg, modelorg);
 
 	/* auto cycle the world frame for texture animation */
 	memset(&ent, 0, sizeof(ent));
-	ent.as.frame = (int) (r_newrefdef.time * 2);
+	ent.as.frame = (int) (refdef.time * 2);
 	currententity = &ent;
 
 	r_state.currenttextures[0] = r_state.currenttextures[1] = -1;
@@ -818,7 +818,7 @@ void R_DrawLevelBrushes (void)
 	entity_t ent;
 	int i, tile, mask;
 
-	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL)
+	if (refdef.rdflags & RDF_NOWORLDMODEL)
 		return;
 
 	if (!r_drawworld->integer)
@@ -827,7 +827,7 @@ void R_DrawLevelBrushes (void)
 	memset(&ent, 0, sizeof(ent));
 	currententity = &ent;
 
-	mask = 1 << r_newrefdef.worldlevel;
+	mask = 1 << refdef.worldlevel;
 
 	for (tile = 0; tile < rNumTiles; tile++) {
 		currentmodel = rTiles[tile];
@@ -1058,7 +1058,7 @@ void R_BeginBuildingLightmaps (void)
 		lightstyles[i].rgb[2] = 1;
 		lightstyles[i].white = 3;
 	}
-	r_newrefdef.lightstyles = lightstyles;
+	refdef.lightstyles = lightstyles;
 
 	if (!r_state.lightmap_texnum)
 		r_state.lightmap_texnum = TEXNUM_LIGHTMAPS;

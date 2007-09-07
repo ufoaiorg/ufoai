@@ -197,10 +197,10 @@ void R_DrawTurbSurface (mBspSurface_t * fa)
 	int i;
 	float s, t, os, ot;
 	float scroll;
-	float rdt = r_newrefdef.time;
+	float rdt = refdef.time;
 
 	if (fa->texinfo->flags & SURF_FLOWING)
-		scroll = -64 * ((r_newrefdef.time * 0.5) - (int) (r_newrefdef.time * 0.5));
+		scroll = -64 * ((refdef.time * 0.5) - (int) (refdef.time * 0.5));
 	else
 		scroll = 0;
 	for (bp = fa->polys; bp; bp = bp->next) {
@@ -211,7 +211,7 @@ void R_DrawTurbSurface (mBspSurface_t * fa)
 			os = v[3];
 			ot = v[4];
 
-			s = os + r_turbsin[(int) ((ot * 0.125 + r_newrefdef.time) * TURBSCALE) & 255];
+			s = os + r_turbsin[(int) ((ot * 0.125 + refdef.time) * TURBSCALE) & 255];
 			s += scroll;
 			s *= (1.0 / 64);
 

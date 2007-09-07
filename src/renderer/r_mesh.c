@@ -58,9 +58,9 @@ void R_EnableLights (qboolean fixed, float *matrix, float *lightparam, float *li
 	GLVectorTransform(matrix, sumDelta, trorigin);
 
 	if (*lightparam != 0.0) {
-		VectorScale(r_newrefdef.sun->dir, 1.0, sumDelta);
+		VectorScale(refdef.sun->dir, 1.0, sumDelta);
 		sumBright = 0.7;
-		VectorScale(r_newrefdef.sun->color, sumBright, sumColor);
+		VectorScale(refdef.sun->color, sumBright, sumColor);
 	} else {
 		VectorClear(sumDelta);
 		sumBright = 0;
@@ -68,11 +68,11 @@ void R_EnableLights (qboolean fixed, float *matrix, float *lightparam, float *li
 
 	for (j = 0; j < 2; j++) {
 		if (j) {
-			light = r_newrefdef.ll;
-			n = r_newrefdef.num_lights;
+			light = refdef.ll;
+			n = refdef.num_lights;
 		} else {
-			light = r_newrefdef.dlights;
-			n = r_newrefdef.num_dlights;
+			light = refdef.dlights;
+			n = refdef.num_dlights;
 		}
 
 		for (i = 0; i < n; i++, light++) {
@@ -105,7 +105,7 @@ void R_EnableLights (qboolean fixed, float *matrix, float *lightparam, float *li
 	/* add the light */
 	qglLightfv(GL_LIGHT0, GL_POSITION, sumDelta);
 	qglLightfv(GL_LIGHT0, GL_DIFFUSE, sumColor);
-	qglLightfv(GL_LIGHT0, GL_AMBIENT, r_newrefdef.sun->ambient);
+	qglLightfv(GL_LIGHT0, GL_AMBIENT, refdef.sun->ambient);
 
 	/* enable the lighting */
 	qglEnable(GL_LIGHTING);

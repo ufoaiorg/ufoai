@@ -84,8 +84,8 @@ void R_RenderDlights (void)
 	RSTATE_ENABLE_BLEND
 	qglBlendFunc(GL_ONE, GL_ONE);
 
-	l = r_newrefdef.dlights;
-	for (i = 0; i < r_newrefdef.num_dlights; i++, l++)
+	l = refdef.dlights;
+	for (i = 0; i < refdef.num_dlights; i++, l++)
 		R_RenderDlight(l);
 
 	qglColor3f(1, 1, 1);
@@ -181,11 +181,11 @@ static void R_AddDynamicLights (mBspSurface_t * surf)
 	tmax = (surf->extents[1] >> surf->lquant) + 1;
 	tex = surf->texinfo;
 
-	for (lnum = 0; lnum < r_newrefdef.num_dlights; lnum++) {
+	for (lnum = 0; lnum < refdef.num_dlights; lnum++) {
 		if (!(surf->dlightbits & (1 << lnum)))
 			continue;			/* not lit by this light */
 
-		dl = &r_newrefdef.dlights[lnum];
+		dl = &refdef.dlights[lnum];
 		frad = dl->intensity;
 		fdist = DotProduct(dl->origin, surf->plane->normal) - surf->plane->dist;
 		frad -= fabs(fdist);
@@ -238,7 +238,7 @@ void R_SetCacheState (mBspSurface_t * surf)
 	int maps;
 
 	for (maps = 0; maps < MAXLIGHTMAPS && surf->styles[maps] != 255; maps++)
-		surf->cached_light[maps] = r_newrefdef.lightstyles[surf->styles[maps]].white;
+		surf->cached_light[maps] = refdef.lightstyles[surf->styles[maps]].white;
 }
 
 /**
@@ -277,7 +277,7 @@ void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 	if (!surf->samples) {
 		memset(s_blocklights, 255, sizeof(s_blocklights));
 		for (maps = 0; maps < MAXLIGHTMAPS && surf->styles[maps] != 255; maps++)
-			style = &r_newrefdef.lightstyles[surf->styles[maps]];
+			style = &refdef.lightstyles[surf->styles[maps]];
 
 		goto store;
 	}
@@ -295,7 +295,7 @@ void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 		bl = s_blocklights;
 
 		for (i = 0; i < 3; i++)
-			scale[i] = r_modulate->value * r_newrefdef.lightstyles[surf->styles[maps]].rgb[i];
+			scale[i] = r_modulate->value * refdef.lightstyles[surf->styles[maps]].rgb[i];
 
 		for (i = 0; i < size; i++, bl += RGB_PIXELSIZE) {
 			if (maps > 0) {
@@ -484,7 +484,7 @@ int RecursiveLightPoint (model_t* mapTile, mBspNode_t * node, vec3_t start, vec3
 			lightmap += 3 * (dt * ((surf->extents[0] >> 4) + 1) + ds);
 
 			for (maps = 0; maps < MAXLIGHTMAPS && surf->styles[maps] != 255; maps++) {
-				VectorScale(r_newrefdef.lightstyles[surf->styles[maps]].rgb, r_modulate->value, scale);
+				VectorScale(refdef.lightstyles[surf->styles[maps]].rgb, r_modulate->value, scale);
 				for (i = 0; i < 3; i++)
 					pointcolor[i] += lightmap[i] * scale[i] * (1.0f/255.0f);
 
@@ -535,8 +535,8 @@ void R_LightPoint (vec3_t p, vec3_t color)
 
 		/* add dynamic lights */
 		light = 0;
-		dl = r_newrefdef.dlights;
-		for (lnum = 0; lnum < r_newrefdef.num_dlights; lnum++, dl++) {
+		dl = refdef.dlights;
+		for (lnum = 0; lnum < refdef.num_dlights; lnum++, dl++) {
 			VectorSubtract(currententity->origin, dl->origin, dist);
 			add = dl->intensity - VectorLength(dist);
 			add /= 64.0f;

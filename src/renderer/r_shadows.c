@@ -92,12 +92,12 @@ static void R_ShadowLight (vec3_t pos, vec3_t lightAdd)
 	nolight = qfalse;
 	VectorClear(lightAdd);		/* clear planar shadow vector */
 
-	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL)
+	if (refdef.rdflags & RDF_NOWORLDMODEL)
 		return;
 
 	/* add dynamic light shadow angles */
-	dl = r_newrefdef.dlights;
-	for (i = 0; i < r_newrefdef.num_dlights; i++, dl++) {
+	dl = refdef.dlights;
+	for (i = 0; i < refdef.num_dlights; i++, dl++) {
 /*		if (dl->spotlight) // spotlights */
 /*			continue; */
 
@@ -140,7 +140,7 @@ static void R_DrawAliasShadow (entity_t * e, mdl_md2_t * paliashdr, int posenum)
 
 	dAliasFrame_t *frame;
 
-	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL)
+	if (refdef.rdflags & RDF_NOWORLDMODEL)
 		return;
 
 	/* calculate model lighting and setup shadow transparenty */
@@ -372,9 +372,9 @@ static void R_DrawAliasShadowVolume (mdl_md2_t * paliashdr, int posenumm)
 	int projected_distance;
 
 	c_shadow_volumes = 0;
-	l = r_newrefdef.dlights;
+	l = refdef.dlights;
 
-	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL)
+	if (refdef.rdflags & RDF_NOWORLDMODEL)
 		return;
 	if (currentmodel->alias.noshadow)
 		return;
@@ -391,7 +391,7 @@ static void R_DrawAliasShadowVolume (mdl_md2_t * paliashdr, int posenumm)
 
 	cost = cos(-currententity->angles[1] / 180 * M_PI), sint = sin(-currententity->angles[1] / 180 * M_PI);
 
-/*	if (!ri.IsVisible(r_newrefdef.vieworg, currententity->origin)) return; */
+/*	if (!ri.IsVisible(refdef.vieworg, currententity->origin)) return; */
 
 	qglPushAttrib(GL_STENCIL_BUFFER_BIT); /* save stencil buffer */
 
@@ -415,7 +415,7 @@ static void R_DrawAliasShadowVolume (mdl_md2_t * paliashdr, int posenumm)
 
 	qglStencilOp(GL_KEEP, GL_KEEP, (r_state.stencil_wrap ? GL_INCR_WRAP_EXT : GL_INCR));
 
-	for (i = 0; i < r_newrefdef.num_dlights; i++, l++) {
+	for (i = 0; i < refdef.num_dlights; i++, l++) {
 		if ((l->origin[0] == currententity->origin[0]) && (l->origin[1] == currententity->origin[1]) && (l->origin[2] == currententity->origin[2]))
 			continue;
 		VectorSubtract(currententity->origin, l->origin, temp);
@@ -468,7 +468,7 @@ static void R_DrawAliasShadowVolume (mdl_md2_t * paliashdr, int posenumm)
 	qglStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
 	qglDepthMask(GL_TRUE);
 	qglDepthFunc(GL_LEQUAL);
-/*	Com_DPrintf(DEBUG_RENDERER, "worldlight: %i - c_shadow_volumes: %i - dlights: %i\n", worldlight, c_shadow_volumes, r_newrefdef.num_dlights);*/
+/*	Com_DPrintf(DEBUG_RENDERER, "worldlight: %i - c_shadow_volumes: %i - dlights: %i\n", worldlight, c_shadow_volumes, refdef.num_dlights);*/
 }
 
 /**
@@ -488,7 +488,7 @@ void R_DrawShadow (entity_t * e)
 	vec3_t frontv, backv;
 	int i;
 
-	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL)
+	if (refdef.rdflags & RDF_NOWORLDMODEL)
 		return;
 
 	assert(currentmodel->type == mod_alias_md2);
@@ -564,7 +564,7 @@ void R_DrawShadowVolume (entity_t * e)
 	int i;
 	int *order;
 
-	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL)
+	if (refdef.rdflags & RDF_NOWORLDMODEL)
 		return;
 
 	assert(currentmodel->type == mod_alias_md2);
@@ -616,7 +616,7 @@ void R_DrawShadowVolume (entity_t * e)
  */
 void R_ShadowBlend (void)
 {
-	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL)
+	if (refdef.rdflags & RDF_NOWORLDMODEL)
 		return;
 
 	if (r_shadows->integer < 2)

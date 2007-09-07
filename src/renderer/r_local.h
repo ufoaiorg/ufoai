@@ -164,7 +164,6 @@ extern entity_t *currententity;
 extern model_t *currentmodel;
 extern int r_framecount;
 extern cBspPlane_t frustum[4];
-extern int c_brush_polys, c_alias_polys;
 extern int gl_filter_min, gl_filter_max;
 
 /* view origin */
@@ -172,9 +171,6 @@ extern vec3_t vup;
 extern vec3_t vpn;
 extern vec3_t vright;
 extern vec3_t r_origin;
-
-/* screen size info */
-extern refdef_t r_newrefdef;
 
 extern cvar_t *r_drawworld;
 extern cvar_t *r_nocull;

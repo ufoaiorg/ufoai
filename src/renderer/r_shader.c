@@ -41,9 +41,9 @@ void R_ShaderInit (void)
 	int i = 0;
 	shader_t *s;
 
-	Com_DPrintf(DEBUG_RENDERER, "Init shaders (num_shaders: %i)\n", r_newrefdef.num_shaders);
-	for (i = 0; i < r_newrefdef.num_shaders; i++) {
-		s = &r_newrefdef.shaders[i];
+	Com_DPrintf(DEBUG_RENDERER, "Init shaders (num_shaders: %i)\n", refdef.num_shaders);
+	for (i = 0; i < refdef.num_shaders; i++) {
+		s = &refdef.shaders[i];
 		if (s->glsl) {
 			if (r_state.glsl_program) {
 				/* a glsl can be a shader or a vertex program */
@@ -71,13 +71,13 @@ shader_t* R_GetShaderForImage (const char* image)
 
 #ifdef HAVE_SHADERS
 	/* init the shaders */
-	if (!shaderInited && r_newrefdef.num_shaders)
+	if (!shaderInited && refdef.num_shaders)
 		R_ShaderInit();
 #endif
 
 	/* search for shader title and check whether it matches an image name */
-	for (i = 0; i < r_newrefdef.num_shaders; i++) {
-		s = &r_newrefdef.shaders[i];
+	for (i = 0; i < refdef.num_shaders; i++) {
+		s = &refdef.shaders[i];
 		if (!Q_strcmp(s->name, image)) {
 			Com_DPrintf(DEBUG_RENDERER, "shader for '%s' found\n", image);
 			return s;
@@ -97,13 +97,13 @@ void R_ShutdownShaders (void)
 	shader_t *s;
 
 	/* init the shaders */
-	if (!shaderInited && r_newrefdef.num_shaders)
+	if (!shaderInited && refdef.num_shaders)
 		R_ShaderInit();
 
 	Com_DPrintf(DEBUG_RENDERER, "Shader shutdown\n");
 	/* search for shader title and check whether it matches an image name */
-	for (i = 0; i < r_newrefdef.num_shaders; i++) {
-		s = &r_newrefdef.shaders[i];
+	for (i = 0; i < refdef.num_shaders; i++) {
+		s = &refdef.shaders[i];
 		if (s->glsl && r_state.glsl_program) {
 			if (s->fpid > 0)
 				qglDeleteShader(s->fpid);

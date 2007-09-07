@@ -27,6 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 GLenum gl_texture0, gl_texture1, gl_texture2, gl_texture3;
 
+refdef_t refdef;
+
 rconfig_t r_config;
 rstate_t r_state;
 
@@ -55,9 +57,6 @@ vec3_t r_origin;
 
 float r_world_matrix[16];
 float r_base_world_matrix[16];
-
-/* screen size info */
-refdef_t r_newrefdef;
 
 static cvar_t *r_norefresh;
 static cvar_t *r_drawentities;
@@ -145,8 +144,8 @@ static void R_CastShadow (void)
 	if (!r_shadows->integer)
 		return;
 
-	for (i = 0; i < r_newrefdef.num_entities; i++) {
-		currententity = &r_newrefdef.entities[i];
+	for (i = 0; i < refdef.num_entities; i++) {
+		currententity = &refdef.entities[i];
 		currentmodel = currententity->model;
 		if (!currentmodel)
 			continue;
@@ -243,7 +242,7 @@ static float *R_CalcTransform (entity_t * e)
 	int i;
 
 	/* check if this entity is already transformed */
-	t = &trafo[e - r_newrefdef.entities];
+	t = &trafo[e - refdef.entities];
 
 	if (t->processing)
 		Sys_Error("Ring in entity transformations!\n");
@@ -332,15 +331,15 @@ static void R_TransformEntitiesOnList (void)
 		return;
 
 	/* clear flags */
-	for (i = 0; i < r_newrefdef.num_entities; i++) {
+	for (i = 0; i < refdef.num_entities; i++) {
 		trafo[i].done = qfalse;
 		trafo[i].processing = qfalse;
 	}
 
 	/* calculate all transformations */
 	/* possibly recursive */
-	for (i = 0; i < r_newrefdef.num_entities; i++)
-		R_CalcTransform(&r_newrefdef.entities[i]);
+	for (i = 0; i < refdef.num_entities; i++)
+		R_CalcTransform(&refdef.entities[i]);
 }
 
 
@@ -356,8 +355,8 @@ static void R_DrawEntitiesOnList (void)
 
 	/* draw non-transparent first */
 
-	for (i = 0; i < r_newrefdef.num_entities; i++) {
-		currententity = &r_newrefdef.entities[i];
+	for (i = 0; i < refdef.num_entities; i++) {
+		currententity = &refdef.entities[i];
 
 		/* find out if and how an entity should be drawn */
 		if (currententity->flags & RF_TRANSLUCENT)
@@ -400,8 +399,8 @@ static void R_DrawEntitiesOnList (void)
 	/* draw transparent entities */
 	/* we could sort these if it ever becomes a problem... */
 	qglDepthMask(0);			/* no z writes */
-	for (i = 0; i < r_newrefdef.num_entities; i++) {
-		currententity = &r_newrefdef.entities[i];
+	for (i = 0; i < refdef.num_entities; i++) {
+		currententity = &refdef.entities[i];
 		if (!(currententity->flags & RF_TRANSLUCENT))
 			continue;			/* solid */
 
@@ -472,19 +471,19 @@ static void R_SetFrustum (void)
 			frustum[i].dist = DotProduct(r_origin, frustum[i].normal);
 			frustum[i].signbits = SignbitsForPlane(&frustum[i]);
 		}
-		frustum[0].dist -= 10 * r_newrefdef.fov_x;
-		frustum[1].dist -= 10 * r_newrefdef.fov_x;
-		frustum[2].dist -= 10 * r_newrefdef.fov_x * ((float) r_newrefdef.height / r_newrefdef.width);
-		frustum[3].dist -= 10 * r_newrefdef.fov_x * ((float) r_newrefdef.height / r_newrefdef.width);
+		frustum[0].dist -= 10 * refdef.fov_x;
+		frustum[1].dist -= 10 * refdef.fov_x;
+		frustum[2].dist -= 10 * refdef.fov_x * ((float) refdef.height / refdef.width);
+		frustum[3].dist -= 10 * refdef.fov_x * ((float) refdef.height / refdef.width);
 	} else {
 		/* rotate VPN right by FOV_X/2 degrees */
-		RotatePointAroundVector(frustum[0].normal, vup, vpn, -(90 - r_newrefdef.fov_x / 2));
+		RotatePointAroundVector(frustum[0].normal, vup, vpn, -(90 - refdef.fov_x / 2));
 		/* rotate VPN left by FOV_X/2 degrees */
-		RotatePointAroundVector(frustum[1].normal, vup, vpn, 90 - r_newrefdef.fov_x / 2);
+		RotatePointAroundVector(frustum[1].normal, vup, vpn, 90 - refdef.fov_x / 2);
 		/* rotate VPN up by FOV_X/2 degrees */
-		RotatePointAroundVector(frustum[2].normal, vright, vpn, 90 - r_newrefdef.fov_y / 2);
+		RotatePointAroundVector(frustum[2].normal, vright, vpn, 90 - refdef.fov_y / 2);
 		/* rotate VPN down by FOV_X/2 degrees */
-		RotatePointAroundVector(frustum[3].normal, vright, vpn, -(90 - r_newrefdef.fov_y / 2));
+		RotatePointAroundVector(frustum[3].normal, vright, vpn, -(90 - refdef.fov_y / 2));
 
 		for (i = 0; i < 4; i++) {
 			frustum[i].type = PLANE_ANYZ;
@@ -504,20 +503,20 @@ static void R_SetupFrame (void)
 	r_framecount++;
 
 	/* build the transformation matrix for the given view angles */
-	VectorCopy(r_newrefdef.vieworg, r_origin);
+	VectorCopy(refdef.vieworg, r_origin);
 
-	AngleVectors(r_newrefdef.viewangles, vpn, vright, vup);
+	AngleVectors(refdef.viewangles, vpn, vright, vup);
 
 	for (i = 0; i < 4; i++)
-		v_blend[i] = r_newrefdef.blend[i];
+		v_blend[i] = refdef.blend[i];
 
 	c_brush_polys = 0;
 	c_alias_polys = 0;
 
 	/* clear out the portion of the screen that the NOWORLDMODEL defines */
-	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL) {
+	if (refdef.rdflags & RDF_NOWORLDMODEL) {
 		qglEnable(GL_SCISSOR_TEST);
-		qglScissor(r_newrefdef.x, viddef.height - r_newrefdef.height - r_newrefdef.y, r_newrefdef.width, r_newrefdef.height);
+		qglScissor(refdef.x, viddef.height - refdef.height - refdef.y, refdef.width, refdef.height);
 		qglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		qglDisable(GL_SCISSOR_TEST);
 	}
@@ -550,17 +549,17 @@ static void R_Flash (void)
 }
 
 /**
- * @brief r_newrefdef must be set before the first call
+ * @brief
  */
-static void R_RenderView (refdef_t * fd)
+static void R_RenderView (void)
 {
 	if (r_norefresh->integer)
 		return;
 
-	r_newrefdef = *fd;
-
-/*	if (!r_worldmodel && !(r_newrefdef.rdflags & RDF_NOWORLDMODEL)) */
-/*		Sys_Error("R_RenderView: NULL worldmodel"); */
+#if 0
+	if (!r_worldmodel && !(refdef.rdflags & RDF_NOWORLDMODEL))
+		Sys_Error("R_RenderView: NULL worldmodel");
+#endif
 
 	if (r_speeds->integer) {
 		c_brush_polys = 0;
@@ -609,15 +608,10 @@ static void R_RenderView (refdef_t * fd)
  * @sa R_BeginFrame
  * @sa R_EndFrame
  */
-void R_RenderFrame (refdef_t * fd)
+void R_RenderFrame (void)
 {
-	R_RenderView(fd);
+	R_RenderView();
 	R_SetupGL2D();
-
-	if (r_speeds->integer) {
-		fd->c_brush_polys = c_brush_polys;
-		fd->c_alias_polys = c_alias_polys;
-	}
 }
 
 static const cmdList_t r_commands[] = {

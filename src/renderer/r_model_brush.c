@@ -185,8 +185,8 @@ static void R_ModLoadTexinfo (lump_t * l)
 		else
 			out->next = NULL;
 		/* exchange the textures with the ones that are needed for base assembly */
-		if (r_newrefdef.mapZone && strstr(in->texture, "tex_terrain/dummy"))
-			Com_sprintf(name, sizeof(name), "textures/tex_terrain/%s", r_newrefdef.mapZone);
+		if (refdef.mapZone && strstr(in->texture, "tex_terrain/dummy"))
+			Com_sprintf(name, sizeof(name), "textures/tex_terrain/%s", refdef.mapZone);
 		else
 			Com_sprintf(name, sizeof(name), "textures/%s", in->texture);
 

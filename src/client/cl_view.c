@@ -483,7 +483,7 @@ void CL_PrepRefresh (void)
 }
 
 /**
- * @brief Calculates cl.refdef's FOV_X.
+ * @brief Calculates refdef's FOV_X.
  * Should generally be called after any changes are made to the zoom level (via cl.cam.zoom)
  * @sa
  */
@@ -491,9 +491,9 @@ void V_CalcFovX (void)
 {
 	if (cl_isometric->integer) {
 		float zoom =  3.6 * (cl.cam.zoom - cl_camzoommin->value) + 0.3 * cl_camzoommin->value;
-		cl.refdef.fov_x = max(min(FOV / zoom, 140.0), 1.0);
+		refdef.fov_x = max(min(FOV / zoom, 140.0), 1.0);
 	} else {
-		cl.refdef.fov_x = max(min(FOV / cl.cam.zoom, 95.0), 55.0);
+		refdef.fov_x = max(min(FOV / cl.cam.zoom, 95.0), 55.0);
 	}
 }
 
@@ -506,8 +506,8 @@ static void V_CalcFovY (float width, float height)
 {
 	float x;
 
-	x = width / tan(cl.refdef.fov_x / 360.0 * M_PI);
-	cl.refdef.fov_y = atan(height / x) * 360.0 / M_PI;
+	x = width / tan(refdef.fov_x / 360.0 * M_PI);
+	refdef.fov_y = atan(height / x) * 360.0 / M_PI;
 }
 
 /**
@@ -517,47 +517,47 @@ static void V_CalcFovY (float width, float height)
  */
 static void CL_CalcRefdef (void)
 {
-	VectorCopy(cl.cam.camorg, cl.refdef.vieworg);
-	VectorCopy(cl.cam.angles, cl.refdef.viewangles);
+	VectorCopy(cl.cam.camorg, refdef.vieworg);
+	VectorCopy(cl.cam.angles, refdef.viewangles);
 
-	VectorClear(cl.refdef.blend);
+	VectorClear(refdef.blend);
 
 	/* set dependant variables */
 	V_CalcFovY(scr_vrect.width, scr_vrect.height);
-	cl.refdef.x = scr_vrect.x;
-	cl.refdef.y = scr_vrect.y;
-	cl.refdef.width = scr_vrect.width;
-	cl.refdef.height = scr_vrect.height;
-	cl.refdef.time = cl.time * 0.001;
+	refdef.x = scr_vrect.x;
+	refdef.y = scr_vrect.y;
+	refdef.width = scr_vrect.width;
+	refdef.height = scr_vrect.height;
+	refdef.time = cl.time * 0.001;
 }
 
 /**
- * @brief Updates the cl.refdef
+ * @brief Updates the refdef
  */
 void V_UpdateRefDef (void)
 {
 	/* setup refdef */
-	cl.refdef.worldlevel = cl_worldlevel->integer;
-	cl.refdef.num_entities = r_numentities;
-	cl.refdef.entities = r_entities;
-	cl.refdef.num_shaders = r_numshaders;
-	cl.refdef.shaders = r_shaders;
-	cl.refdef.num_dlights = r_numdlights;
-	cl.refdef.dlights = r_dlights;
-	cl.refdef.lightstyles = r_lightstyles;
-	cl.refdef.fog = map_fog;
-	cl.refdef.fogColor = map_fogColor;
+	refdef.worldlevel = cl_worldlevel->integer;
+	refdef.num_entities = r_numentities;
+	refdef.entities = r_entities;
+	refdef.num_shaders = r_numshaders;
+	refdef.shaders = r_shaders;
+	refdef.num_dlights = r_numdlights;
+	refdef.dlights = r_dlights;
+	refdef.lightstyles = r_lightstyles;
+	refdef.fog = map_fog;
+	refdef.fogColor = map_fogColor;
 
-	cl.refdef.num_ptls = numPtls;
-	cl.refdef.ptls = ptl;
-	cl.refdef.ptl_art = ptlArt;
+	refdef.num_ptls = numPtls;
+	refdef.ptls = ptl;
+	refdef.ptl_art = ptlArt;
 
-	cl.refdef.sun = &map_sun;
+	refdef.sun = &map_sun;
 	if (cls.state == ca_sequence || cls.state == ca_ptledit)
-		cl.refdef.num_lights = 0;
+		refdef.num_lights = 0;
 	else {
-		cl.refdef.ll = map_lights;
-		cl.refdef.num_lights = map_numlights;
+		refdef.ll = map_lights;
+		refdef.num_lights = map_numlights;
 	}
 }
 
@@ -582,11 +582,11 @@ void V_RenderView (void)
 	switch (cls.state) {
 	case ca_sequence:
 		CL_SequenceRender();
-		cl.refdef.rdflags |= RDF_NOWORLDMODEL;
+		refdef.rdflags |= RDF_NOWORLDMODEL;
 		break;
 	case ca_ptledit:
 		PE_RenderParticles();
-		cl.refdef.rdflags |= RDF_NOWORLDMODEL;
+		refdef.rdflags |= RDF_NOWORLDMODEL;
 		break;
 	default:
 		LM_AddToScene();
@@ -601,7 +601,7 @@ void V_RenderView (void)
 	CL_CalcRefdef();
 
 	/* render the frame */
-	R_RenderFrame(&cl.refdef);
+	R_RenderFrame();
 	if (cl_stats->integer)
 		Com_Printf("ent:%i  lt:%i\n", r_numentities, r_numdlights);
 	if (log_stats->integer && (log_stats_file != 0))
@@ -632,7 +632,7 @@ void V_CenterView (pos3_t pos)
  */
 static void V_Viewpos_f (void)
 {
-	Com_Printf("(%i %i %i) : %i\n", (int) cl.refdef.vieworg[0], (int) cl.refdef.vieworg[1], (int) cl.refdef.vieworg[2], (int) cl.refdef.viewangles[YAW]);
+	Com_Printf("(%i %i %i) : %i\n", (int) refdef.vieworg[0], (int) refdef.vieworg[1], (int) refdef.vieworg[2], (int) refdef.viewangles[YAW]);
 }
 
 /**

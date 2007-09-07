@@ -449,15 +449,11 @@ static void CL_Rcon_f (void)
  */
 void CL_ClearState (void)
 {
-	const char *mapZone;
-
 	S_StopAllSounds();
 	CL_ClearEffects();
 
 	/* wipe the entire cl structure */
-	mapZone = cl.refdef.mapZone;
 	memset(&cl, 0, sizeof(cl));
-	cl.refdef.mapZone = mapZone;
 	cl.cam.zoom = 1.0;
 	V_CalcFovX();
 
@@ -486,7 +482,7 @@ void CL_Disconnect (void)
 	if (cls.state == ca_disconnected)
 		return;
 
-	VectorClear(cl.refdef.blend);
+	VectorClear(refdef.blend);
 
 	cls.connectRetry = 0;
 
@@ -2457,7 +2453,7 @@ void CL_Frame (int now, void *data)
 	SCR_UpdateScreen();
 
 	/* update audio */
-	S_Update(cl.refdef.vieworg, cl.cam.axis[0], cl.cam.axis[1], cl.cam.axis[2]);
+	S_Update(refdef.vieworg, cl.cam.axis[0], cl.cam.axis[1], cl.cam.axis[2]);
 
 	/* advance local effects for next frame */
 	CL_RunLightStyles();

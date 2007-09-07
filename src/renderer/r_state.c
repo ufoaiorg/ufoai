@@ -53,12 +53,12 @@ void R_SetDefaultState (void)
  */
 static void MYgluPerspective (GLdouble zNear, GLdouble zFar)
 {
-	GLdouble xmin, xmax, ymin, ymax, yaspect = (double) r_newrefdef.height / r_newrefdef.width;
+	GLdouble xmin, xmax, ymin, ymax, yaspect = (double) refdef.height / refdef.width;
 
 	if (r_isometric->integer) {
-		qglOrtho(-10 * r_newrefdef.fov_x, 10 * r_newrefdef.fov_x, -10 * r_newrefdef.fov_x * yaspect, 10 * r_newrefdef.fov_x * yaspect, -zFar, zFar);
+		qglOrtho(-10 * refdef.fov_x, 10 * refdef.fov_x, -10 * refdef.fov_x * yaspect, 10 * refdef.fov_x * yaspect, -zFar, zFar);
 	} else {
-		xmax = zNear * tan(r_newrefdef.fov_x * M_PI / 360.0);
+		xmax = zNear * tan(refdef.fov_x * M_PI / 360.0);
 		xmin = -xmax;
 
 		ymin = xmin * yaspect;
@@ -77,10 +77,10 @@ void R_SetupGL3D (void)
 	int x, x2, y2, y, w, h;
 
 	/* set up viewport */
-	x = floor(r_newrefdef.x * viddef.width / viddef.width);
-	x2 = ceil((r_newrefdef.x + r_newrefdef.width) * viddef.width / viddef.width);
-	y = floor(viddef.height - r_newrefdef.y * viddef.height / viddef.height);
-	y2 = ceil(viddef.height - (r_newrefdef.y + r_newrefdef.height) * viddef.height / viddef.height);
+	x = floor(refdef.x * viddef.width / viddef.width);
+	x2 = ceil((refdef.x + refdef.width) * viddef.width / viddef.width);
+	y = floor(viddef.height - refdef.y * viddef.height / viddef.height);
+	y2 = ceil(viddef.height - (refdef.y + refdef.height) * viddef.height / viddef.height);
 
 	w = x2 - x;
 	h = y - y2;
@@ -99,10 +99,10 @@ void R_SetupGL3D (void)
 
 	qglRotatef(-90, 1, 0, 0);	/* put Z going up */
 	qglRotatef(90, 0, 0, 1);	/* put Z going up */
-	qglRotatef(-r_newrefdef.viewangles[2], 1, 0, 0);
-	qglRotatef(-r_newrefdef.viewangles[0], 0, 1, 0);
-	qglRotatef(-r_newrefdef.viewangles[1], 0, 0, 1);
-	qglTranslatef(-r_newrefdef.vieworg[0], -r_newrefdef.vieworg[1], -r_newrefdef.vieworg[2]);
+	qglRotatef(-refdef.viewangles[2], 1, 0, 0);
+	qglRotatef(-refdef.viewangles[0], 0, 1, 0);
+	qglRotatef(-refdef.viewangles[1], 0, 0, 1);
+	qglTranslatef(-refdef.vieworg[0], -refdef.vieworg[1], -refdef.vieworg[2]);
 
 	qglGetFloatv(GL_MODELVIEW_MATRIX, r_world_matrix);
 
@@ -113,14 +113,14 @@ void R_SetupGL3D (void)
 	RSTATE_DISABLE_ALPHATEST
 	qglEnable(GL_DEPTH_TEST);
 
-	if (r_fog->integer && r_newrefdef.fog && r_state.fog_coord) {
+	if (r_fog->integer && refdef.fog && r_state.fog_coord) {
 		qglEnable(GL_FOG);
 		qglFogi(GL_FOG_MODE, GL_EXP2);
-		qglFogf(GL_FOG_START, 0.1 * r_newrefdef.fog);
-		qglFogf(GL_FOG_END, r_newrefdef.fog);
+		qglFogf(GL_FOG_START, 0.1 * refdef.fog);
+		qglFogf(GL_FOG_END, refdef.fog);
 		qglHint(GL_FOG_HINT, GL_DONT_CARE);
-		qglFogf(GL_FOG_DENSITY, 0.005 * r_newrefdef.fog );
-		qglFogfv(GL_FOG_COLOR, r_newrefdef.fogColor);
+		qglFogf(GL_FOG_DENSITY, 0.005 * refdef.fog );
+		qglFogfv(GL_FOG_COLOR, refdef.fogColor);
 	}
 }
 

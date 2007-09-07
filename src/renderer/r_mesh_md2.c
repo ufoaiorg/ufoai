@@ -225,7 +225,7 @@ static qboolean R_CullAliasMD2Model (vec4_t bbox[8], entity_t * e)
 		vec4_t tmp;
 
 		Vector4Copy(bbox[i], tmp);
-		GLVectorTransform(trafo[e - r_newrefdef.entities].matrix, tmp, bbox[i]);
+		GLVectorTransform(trafo[e - refdef.entities].matrix, tmp, bbox[i]);
 	}
 
 	/* cull */
@@ -309,18 +309,18 @@ void R_DrawAliasMD2Model (entity_t * e)
 	if (lightfixed)
 		R_EnableLights(lightfixed, e->lightcolor, e->lightparam, e->lightambient);
 	else
-		R_EnableLights(lightfixed, trafo[e - r_newrefdef.entities].matrix, e->lightparam, NULL);
+		R_EnableLights(lightfixed, trafo[e - refdef.entities].matrix, e->lightparam, NULL);
 
 	/* FIXME: Does not work */
 	/* IR goggles override color */
-	if (r_newrefdef.rdflags & RDF_IRGOGGLES)
+	if (refdef.rdflags & RDF_IRGOGGLES)
 		qglColor4f(1.0, 0.0, 0.0, e->alpha);
 	else
 		qglColor4f(1.0, 1.0, 1.0, e->alpha);
 
 	qglPushMatrix();
 
-	qglMultMatrixf(trafo[e - r_newrefdef.entities].matrix);
+	qglMultMatrixf(trafo[e - refdef.entities].matrix);
 
 	/* draw it */
 	R_Bind(skin->texnum);
@@ -376,7 +376,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 		R_DrawShadowVolume(e);
 	}
 
-	if (r_fog->integer && r_newrefdef.fog)
+	if (r_fog->integer && refdef.fog)
 		qglDisable(GL_FOG);
 
 	qglDisable(GL_CULL_FACE);
@@ -429,7 +429,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 	/* show model bounding box */
 	R_ModDrawModelBBox(bbox, e);
 
-	if (r_fog->integer && r_newrefdef.fog)
+	if (r_fog->integer && refdef.fog)
 		qglEnable(GL_FOG);
 
 	qglColor4f(1, 1, 1, 1);

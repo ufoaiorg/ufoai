@@ -606,16 +606,16 @@ static void SCR_TimeRefresh_f (void)
 	if (Cmd_Argc() == 2) {		/* run without page flipping */
 		R_BeginFrame();
 		for (i = 0; i < 128; i++) {
-			cl.refdef.viewangles[1] = i / 128.0 * 360.0;
-			R_RenderFrame(&cl.refdef);
+			refdef.viewangles[1] = i / 128.0 * 360.0;
+			R_RenderFrame();
 		}
 		R_EndFrame();
 	} else {
 		for (i = 0; i < 128; i++) {
-			cl.refdef.viewangles[1] = i / 128.0 * 360.0;
+			refdef.viewangles[1] = i / 128.0 * 360.0;
 
 			R_BeginFrame();
-			R_RenderFrame(&cl.refdef);
+			R_RenderFrame();
 			R_EndFrame();
 		}
 	}
@@ -712,7 +712,7 @@ void SCR_UpdateScreen (void)
 		if (cl_fps->integer)
 			SCR_DrawString(viddef.width - con_fontWidth->integer * 10, 4, va("fps: %3.1f", cls.framerate), qtrue);
 		if (cls.state == ca_active && scr_rspeed->integer)
-			SCR_DrawString(viddef.width - con_fontWidth->integer * 30, 20, va("brushes: %6i alias: %6i\n", cl.refdef.c_brush_polys, cl.refdef.c_alias_polys), qtrue);
+			SCR_DrawString(viddef.width - con_fontWidth->integer * 30, 20, va("brushes: %6i alias: %6i\n", c_brush_polys, c_alias_polys), qtrue);
 
 		if (scr_timegraph->integer)
 			SCR_DebugGraph(cls.frametime * 300, 0);

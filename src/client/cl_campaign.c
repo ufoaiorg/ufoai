@@ -2583,7 +2583,7 @@ static void CP_StartMissionMap (mission_t* mission)
 	 * with the suitable terrain texture - just use tex_terrain/dummy for the
 	 * brushes you want the terrain textures on
 	 * @sa Mod_LoadTexinfo */
-	cl.refdef.mapZone = mission->zoneType;
+	refdef.mapZone = mission->zoneType;
 
 	switch (mission->mapDef->map[0]) {
 	case '+':

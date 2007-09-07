@@ -263,13 +263,15 @@ typedef struct {
 	float *fogColor;
 
 	const char *mapZone;	/**< used to replace textures in base assembly */
-
-	int c_brush_polys, c_alias_polys;
 } refdef_t;
+
+extern refdef_t refdef;
+
+extern int c_brush_polys, c_alias_polys;
 
 void R_BeginFrame(void);
 void R_EndFrame(void);
-void R_RenderFrame(refdef_t *fd);
+void R_RenderFrame(void);
 
 void R_AnimAppend(animState_t * as, struct model_s *mod, const char *name);
 void R_AnimChange(animState_t * as, struct model_s *mod, const char *name);

@@ -2646,7 +2646,7 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	firstShot = qfalse;
 
 	if (fd->irgoggles)
-		cl.refdef.rdflags |= RDF_IRGOGGLES;
+		refdef.rdflags |= RDF_IRGOGGLES;
 
 	/* do actor related stuff */
 	if (!le) {
@@ -3090,7 +3090,7 @@ void CL_DoEndRound (struct dbuffer *msg)
 	if (cls.team == cl.actTeam)
 		Cbuf_AddText("endround\n");
 
-	cl.refdef.rdflags &= ~RDF_IRGOGGLES;
+	refdef.rdflags &= ~RDF_IRGOGGLES;
 
 	/* change active player */
 	Com_Printf("Team %i ended round", cl.actTeam);
@@ -3186,9 +3186,9 @@ void CL_ActorMouseTrace (void)
 	}
 
 	if (cl_isometric->integer)
-		frustumslope[0] = 10.0 * cl.refdef.fov_x;
+		frustumslope[0] = 10.0 * refdef.fov_x;
 	else
-		frustumslope[0] = tan(cl.refdef.fov_x * M_PI / 360) * projectiondistance;
+		frustumslope[0] = tan(refdef.fov_x * M_PI / 360) * projectiondistance;
 	frustumslope[1] = frustumslope[0] * ((float)scr_vrect.height / scr_vrect.width);
 
 	/* transform cursor position into perspective space */

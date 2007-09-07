@@ -314,7 +314,7 @@ void CL_CameraModeChange (camera_mode_t new_camera_mode)
 		VectorCopy(selActor->origin, cl.cam.camorg);
 		Cvar_SetValue("cl_worldlevel", map_maxlevel);
 		VectorCopy(selActor->angles, cl.cam.angles);
-		cl.refdef.fov_x = FOV_FPS;
+		refdef.fov_x = FOV_FPS;
 		cl.cam.zoom = 1.0;
 		wasCrouched = selActor->state & STATE_CROUCHED;
 		crouchHt = 0.;

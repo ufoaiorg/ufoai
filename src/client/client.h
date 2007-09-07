@@ -116,8 +116,6 @@ typedef struct client_state_s {
 
 	camera_t cam;
 
-	refdef_t refdef;
-
 	cmodes_t cmode;
 	int cfiremode;
 	cmodes_t oldcmode;
