@@ -23,26 +23,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include <unistd.h>
 #include <stdlib.h>
-#include <limits.h>
-#include <sys/time.h>
-#include <sys/types.h>
 #include <fcntl.h>
 #include <stdarg.h>
 #include <stdio.h>
-#include <sys/ipc.h>
-#include <sys/shm.h>
-#include <sys/stat.h>
-#include <sys/select.h>
 #include <string.h>
-#include <ctype.h>
-#include <sys/wait.h>
-#include <sys/mman.h>
 #include <errno.h>
-
-#include <dirent.h>
-#include <libgen.h> /* dirname */
 
 #include <dlfcn.h>
 
@@ -75,10 +61,10 @@ void Sys_Init (void)
  */
 static void InitCocoa (void)
 {
+	void (*nsappload)(void);
 	void* cocoa_lib;
 	/* @todo: Don't hardcode the path - let configure decide */
 	cocoa_lib = dlopen("/System/Library/Frameworks/Cocoa.framework/Cocoa", RTLD_LAZY);
-	void (*nsappload)(void);
 	if (!cocoa_lib)
 		Sys_Error("InitCocoa: Could not load cocoa framework\n");
 	nsappload = (void(*)()) dlsym(cocoa_lib, "NSApplicationLoad");
