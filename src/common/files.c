@@ -1212,12 +1212,16 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 				token = COM_Parse(text);
 				if (*token == '{') {
 					FS_SkipBlock(text);
-					token = COM_Parse(text);
+					continue;
 				}
 
 				Q_strncpyz(headerType, token, sizeof(headerType));
 				if (*text) {
 					token = COM_Parse(text);
+					if (*token == '{') {
+						FS_SkipBlock(text);
+						continue;
+					}
 					Q_strncpyz(headerName, token, sizeof(headerName));
 					*name = headerName;
 					return headerType;
