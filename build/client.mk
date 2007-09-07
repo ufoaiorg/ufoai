@@ -139,10 +139,15 @@ endif
 ifeq ($(TARGET_OS),darwin)
 	CLIENT_SRCS+= \
 		ports/macosx/osx_main.m \
-		ports/macosx/osx_qal.c \
 		ports/unix/unix_glob.c \
 		ports/unix/unix_console.c \
 		ports/unix/unix_main.c
+	ifeq ($(HAVE_OPENAL),1)
+		CLIENT_SRCS+=\
+			ports/macosx/osx_qal.c \
+	endif
+#	LDFLAGS+=-L/opt/local/lib
+#	CFLAGS+=-I/opt/local/include/SDL -I/opt/local/include
 endif
 
 ifeq ($(TARGET_OS),solaris)
