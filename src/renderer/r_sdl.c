@@ -145,14 +145,15 @@ qboolean Rimp_InitGraphics (qboolean fullscreen)
 	if (r_surface)
 		SDL_FreeSurface(r_surface);
 
-	/* let the sound and input subsystems know about the new window */
-	VID_NewWindow(viddef.width, viddef.height);
+	viddef.rx = (float)viddef.width  / VID_NORM_WIDTH;
+	viddef.ry = (float)viddef.height / VID_NORM_HEIGHT;
 
 	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 1);
+	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 
 	flags = SDL_OPENGL;
 	if (fullscreen)

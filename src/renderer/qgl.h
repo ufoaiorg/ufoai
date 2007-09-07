@@ -26,45 +26,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __QR_H__
 #define __QR_H__
 
-#ifdef _WIN32
-#  include <windows.h>
-#endif
-
-#ifdef USE_OPENGL_FRAMEWORK
-#	include <OpenGL/gl.h>
-#   include <OpenGL/glu.h>
-#else
-#	include <GL/gl.h>
-#	include <GL/glu.h>
-#endif
-
-
-
-#ifdef _WIN32
-#include "glext.h"
-#else							/* use standard glext */
-#ifdef USE_OPENGL_FRAMEWORK
-#	include <OpenGL/glext.h>
-#else
-#	include <GL/glext.h>
-#endif
-#endif
-
-#if defined (__linux__) || defined (__FreeBSD__) || defined (__NetBSD__)
-#ifdef USE_OPENGL_FRAMEWORK
-#	include <OpenGL/glx.h>
-#else
-#	include <GL/glx.h>
-#endif
-#endif
+#include <SDL_opengl.h>
 
 #ifndef GL_COLOR_INDEX8_EXT
 #	define GL_COLOR_INDEX8_EXT GL_COLOR_INDEX
 #endif
 
-#ifndef APIENTRY
-#  define APIENTRY
-#endif
 
 extern void (APIENTRY * qglAccum) (GLenum op, GLfloat value);
 extern void (APIENTRY * qglAlphaFunc) (GLenum func, GLclampf ref);
@@ -471,12 +438,9 @@ extern void (APIENTRY *qglSwapInterval) (GLint interval);
 
 extern GLenum gl_texture0, gl_texture1, gl_texture2, gl_texture3;
 
-/* we use glext.h */
-#ifndef _WIN32
 #define GL_TEXTURE0_SGIS					0x835E
 #define GL_TEXTURE1_SGIS					0x835F
 #define GL_TEXTURE2_SGIS					0x8360
 #define GL_TEXTURE3_SGIS					0x8361
-#endif							/* _WIN32 */
 
 #endif							/* __QR_H__ */

@@ -166,15 +166,3 @@ void VID_FreeTags (struct memPool_s *pool, int tagNum)
 	assert(pool);
 	_Mem_FreeTag(pool, tagNum, "RENDERER", 0);
 }
-
-/**
- * @brief
- */
-void VID_NewWindow (int width, int height)
-{
-	viddef.width  = width;
-	viddef.height = height;
-
-	viddef.rx = (float)width  / VID_NORM_WIDTH;
-	viddef.ry = (float)height / VID_NORM_HEIGHT;
-}

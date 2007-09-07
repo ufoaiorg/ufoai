@@ -85,7 +85,6 @@ extern cvar_t *vid_grabmouse;
 
 /* Video module initialisation etc */
 void VID_Init(void);
-void VID_NewWindow(int width, int height);
 
 #include "../common/common.h"
 
