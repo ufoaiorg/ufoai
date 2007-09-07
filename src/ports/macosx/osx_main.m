@@ -46,7 +46,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <dlfcn.h>
 
-#include "../../qcommon/qcommon.h"
+#include "../../common/common.h"
 #include <Carbon/Carbon.h>
 #include <Cocoa/Cocoa.h>
 
@@ -100,7 +100,7 @@ int lenstr (const char *text)
 /**
  * @brief
  */
-unsigned char CheckForFinderCall (char **argv, int argc)
+unsigned char CheckForFinderCall (const char **argv, int argc)
 {
 	unsigned char change = 0;
 
@@ -127,7 +127,7 @@ unsigned char CheckForFinderCall (char **argv, int argc)
 /**
  * @brief
  */
-void FixWorkingDirectory (char **argv)
+void FixWorkingDirectory (const char **argv)
 {
 	char newPath[255];
 
@@ -157,7 +157,7 @@ int main (int argc, const char **argv)
 
 	InitCocoa();
 
-	if (CheckForFinderCall(argv,argc)) {
+	if (CheckForFinderCall(argv, argc)) {
 		printf("---> Fixing Working Directory, depending on Finder Call ! \n");
 		FixWorkingDirectory(argv);
 	}
