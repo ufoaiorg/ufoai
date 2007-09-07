@@ -32,8 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* global vars */
 cvar_t *cursor;
 
-cvar_t *map_dropship;
-vec3_t map_dropship_coord;
 int map_maxlevel;
 int map_maxlevel_base = 0;
 sun_t map_sun;
@@ -143,7 +141,7 @@ static void CL_ParseEntitystring (const char *es)
 	char particle[MAX_QPATH];
 	char sound[MAX_QPATH];
 	float light;
-	vec3_t color, ambient, origin, angles, lightangles, dropship_coord;
+	vec3_t color, ambient, origin, angles, lightangles;
 	vec2_t wait;
 	int spawnflags;
 	int maxlevel = 8;
@@ -154,19 +152,6 @@ static void CL_ParseEntitystring (const char *es)
 	float volume = 255.0f;
 	/* FIXME: use the  SOUND_LOOPATTENUATE value here as soon as the spatialize function is fixed */
 	float attenuation = 0.0f;
-
-	/* dropship default values */
-	/* -1.0f means - don't use it */
-
-	/*
-	@todo: Implement me: use cvar map_dropship to get the current used dropship
-	this cvar is set at mission start and inited with craft_dropship
-	(e.g. for multiplayer missions)
-
-	This assemble step should be done in sv_init SV_Map (we need to check whether
-	this is syncs over network)
-	*/
-	VectorSet(dropship_coord, -1.0f, -1.0f, -1.0f);
 
 	VectorSet(map_fogColor, 0.5f, 0.5f, 0.5f);
 	map_fogColor[3] = 1.0f;
@@ -265,8 +250,6 @@ static void CL_ParseEntitystring (const char *es)
 				maxlevel = atoi(entity_token);
 			else if (!Q_strcmp(keyname, "maxteams"))
 				maxmultiplayerteams = atoi(entity_token);
-			else if (!Q_strcmp(keyname, "dropship_coord"))
-				Com_ParseValue(dropship_coord, entity_token, V_VECTOR, 0, sizeof(vec3_t));
 			else if (!Q_strcmp(keyname, "fog"))
 				map_fog = atof(entity_token);
 			else if (!Q_strcmp(keyname, "fogcolor"))
@@ -294,7 +277,6 @@ static void CL_ParseEntitystring (const char *es)
 
 			/* maximum level */
 			map_maxlevel = maxlevel;
-			VectorCopy(map_dropship_coord, dropship_coord);
 
 			if (!ccs.singleplayer && (teamnum->integer > maxmultiplayerteams
 									|| teamnum->integer <= TEAM_CIVILIAN)) {

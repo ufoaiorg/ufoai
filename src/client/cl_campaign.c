@@ -2685,10 +2685,6 @@ static void CL_GameGo (void)
 	Cvar_SetValue("mission_homebase", base->idx);
 	Cvar_SetValue("mission_uforecovered", 0);
 
-	/* @todo: Map assembling to get the current used dropship in the map is not fully implemented */
-	/* but can be done via the map assembling part of the random map assembly */
-	Cvar_Set("map_dropship", aircraft->id);
-
 	/* manage inventory */
 	ccs.eMission = base->storage; /* copied, including arrays inside! */
 	CL_CleanTempInventory(base);

@@ -51,7 +51,6 @@ static int cmdbuf_pos = 0;
 #endif /* HAVE_CURSES */
 
 qboolean stdin_active = qtrue;
-cvar_t *nostdout;
 
 #ifdef HAVE_CURSES
 /**
@@ -378,10 +377,10 @@ char *Sys_ConsoleInput (void)
 	FD_SET(0, &fdset); /* stdin */
 	timeout.tv_sec = 0;
 	timeout.tv_usec = 0;
-	if (select (1, &fdset, NULL, NULL, &timeout) == -1 || !FD_ISSET(0, &fdset))
+	if (select(1, &fdset, NULL, NULL, &timeout) == -1 || !FD_ISSET(0, &fdset))
 		return NULL;
 
-	len = read (0, text, sizeof(text));
+	len = read(0, text, sizeof(text));
 	if (len == 0) { /* eof! */
 		stdin_active = qfalse;
 		return NULL;
@@ -389,7 +388,7 @@ char *Sys_ConsoleInput (void)
 
 	if (len < 1)
 		return NULL;
-	text[len-1] = 0;    /* rip off the /n and terminate */
+	text[len - 1] = 0;    /* rip off the /n and terminate */
 
 	return text;
 }
@@ -401,9 +400,6 @@ void Sys_ConsoleOutput (const char *string)
 {
 	char text[2048];
 	int i, j;
-
-	if (nostdout && nostdout->value)
-		return;
 
 	i = j = 0;
 

@@ -68,8 +68,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 uid_t saved_euid;
 
-extern cvar_t *nostdout;
-
 cvar_t* sys_priority;
 cvar_t* sys_affinity;
 cvar_t* sys_os;
@@ -106,11 +104,6 @@ int main (int argc, const char **argv)
 	Qcommon_Init(argc, argv);
 
 	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY);
-
-	nostdout = Cvar_Get("nostdout", "0", 0, NULL);
-	if (!nostdout->integer) {
-		fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY);
-	}
 
 	while (1)
 		Qcommon_Frame();

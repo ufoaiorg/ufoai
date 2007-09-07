@@ -245,8 +245,6 @@ void CL_StartSingleplayer (qboolean singleplayer)
 		AIR_NewAircraft(base, "craft_drop_firebird");
 
 		Com_Printf("Changing to Multiplayer\n");
-		/* no campaign equipment but for multiplayer */
-		Cvar_Set("map_dropship", "craft_drop_firebird");
 		/* disconnect already running session - when entering the
 		 * multiplayer menu while you are still connected */
 		if (cls.state >= ca_connecting)
@@ -2045,8 +2043,6 @@ static void CL_InitLocal (void)
 
 	for (i = 0; i < 16; i++)
 		Cvar_Get(va("adr%i", i), "", CVAR_ARCHIVE, "Bookmark for network ip");
-
-	map_dropship = Cvar_Get("map_dropship", "craft_drop_firebird", 0, "The dropship that is to be used in the map");
 
 	/* register our variables */
 	cl_isometric = Cvar_Get("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
