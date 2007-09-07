@@ -1,6 +1,28 @@
 /**
  * @file csg.c
  * @brief
+ * @note tag all brushes with original contents
+ * brushes may contain multiple contents
+ * there will be no brush overlap after csg phase
+ *
+ * each side has a count of the other sides it splits
+ *
+ * the best split will be the one that minimizes the total split counts
+ * of all remaining sides
+ *
+ * precalc side on plane table
+ *
+ * evaluate split side
+ * @code
+ * {
+ * cost = 0
+ * for all sides
+ *   for all sides
+ *     get
+ *       if side splits side and splitside is on same child
+ *         cost++;
+ * }
+ * @endcode
  */
 
 /*
@@ -24,29 +46,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "qbsp.h"
-
-/**
- * tag all brushes with original contents
- * brushes may contain multiple contents
- * there will be no brush overlap after csg phase
- *
- * each side has a count of the other sides it splits
- *
- * the best split will be the one that minimizes the total split counts
- * of all remaining sides
- *
- * precalc side on plane table
- *
- * evaluate split side
- * {
- * cost = 0
- * for all sides
- *   for all sides
- *     get
- *       if side splits side and splitside is on same child
- *         cost++;
- * }
- */
 
 /**
  * @brief
@@ -165,23 +164,18 @@ static qboolean IsInLevel (int contents, int level)
 	/* special levels */
 
 	/* weaponclip */
-	if (level == LEVEL_WEAPONCLIP) {
+	switch (level) {
+	case LEVEL_WEAPONCLIP:
 		if (contents & CONTENTS_WEAPONCLIP)
 			return qtrue;
 		else
 			return qfalse;
-	}
-
-	/* actorclip */
-	if (level == LEVEL_ACTORCLIP) {
+	case LEVEL_ACTORCLIP:
 		if (contents & CONTENTS_ACTORCLIP)
 			return qtrue;
 		else
 			return qfalse;
-	}
-
-	/* stepon */
-	if (level == LEVEL_STEPON) {
+	case LEVEL_STEPON:
 		if (contents & CONTENTS_STEPON)
 			return qtrue;
 		else
@@ -475,5 +469,3 @@ newlist:
 	Sys_FPrintf(SYS_VRB, "output brushes: %i\n", CountBrushList (keep));
 	return keep;
 }
-
-

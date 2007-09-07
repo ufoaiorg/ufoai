@@ -74,29 +74,6 @@ int VisibleContents (int contentFlags)
 	return 0;
 }
 
-
-/**
- * @brief
- */
-static int ClusterContents (node_t *node)
-{
-	int c1, c2, c;
-
-	if (node->planenum == PLANENUM_LEAF)
-		return node->contentFlags;
-
-	c1 = ClusterContents(node->children[0]);
-	c2 = ClusterContents(node->children[1]);
-	c = c1|c2;
-
-	/* a cluster may include some solid detail areas, but */
-	/* still be seen into */
-	if (!(c1&CONTENTS_SOLID) || !(c2&CONTENTS_SOLID))
-		c &= ~CONTENTS_SOLID;
-	return c;
-}
-
-
 /*============================================================================= */
 
 static int c_tinyportals = 0;

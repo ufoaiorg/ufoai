@@ -65,7 +65,7 @@ PLANE FINDING
  */
 static int PlaneTypeForNormal (vec3_t normal)
 {
-	vec_t	ax, ay, az;
+	vec_t ax, ay, az;
 
 	/* NOTE: should these have an epsilon around 1.0?		 */
 	if (normal[0] == 1.0 || normal[0] == -1.0)
@@ -106,7 +106,7 @@ static qboolean PlaneEqual (plane_t *p, vec3_t normal, vec_t dist)
  */
 static void AddPlaneToHash (plane_t *p)
 {
-	int		hash;
+	int hash;
 
 	hash = (int)fabs(p->dist) / 8;
 	hash &= (PLANE_HASHES-1);
@@ -120,7 +120,7 @@ static void AddPlaneToHash (plane_t *p)
  */
 static int CreateNewFloatPlane (vec3_t normal, vec_t dist)
 {
-	plane_t	*p, temp;
+	plane_t *p, temp;
 
 	if (VectorLength(normal) < 0.5)
 		Error("FloatPlane: bad normal");
@@ -129,12 +129,12 @@ static int CreateNewFloatPlane (vec3_t normal, vec_t dist)
 		Error("MAX_MAP_PLANES (%i)", nummapplanes+2);
 
 	p = &mapplanes[nummapplanes];
-	VectorCopy (normal, p->normal);
+	VectorCopy(normal, p->normal);
 	p->dist = dist;
-	p->type = (p+1)->type = PlaneTypeForNormal (p->normal);
+	p->type = (p + 1)->type = PlaneTypeForNormal (p->normal);
 
-	VectorSubtract (vec3_origin, normal, (p+1)->normal);
-	(p+1)->dist = -dist;
+	VectorSubtract (vec3_origin, normal, (p + 1)->normal);
+	(p + 1)->dist = -dist;
 
 	nummapplanes += 2;
 
@@ -163,7 +163,7 @@ static int CreateNewFloatPlane (vec3_t normal, vec_t dist)
  */
 static void SnapVector (vec3_t normal)
 {
-	int		i;
+	int i;
 
 	for (i = 0; i < 3; i++) {
 		if (fabs(normal[i] - 1) < NORMAL_EPSILON) {
@@ -184,7 +184,7 @@ static void SnapVector (vec3_t normal)
  */
 static void SnapPlane (vec3_t normal, vec_t *dist)
 {
-	SnapVector (normal);
+	SnapVector(normal);
 
 	if (fabs(*dist - Q_rint(*dist)) < DIST_EPSILON)
 		*dist = Q_rint(*dist);
@@ -193,26 +193,11 @@ static void SnapPlane (vec3_t normal, vec_t *dist)
 /**
  * @brief
  */
-#ifndef USE_HASHING
 int FindFloatPlane (vec3_t normal, vec_t dist)
 {
-	int		i;
-	plane_t	*p;
-
-	SnapPlane(normal, &dist);
-	for (i = 0, p = mapplanes; i < nummapplanes; i++, p++) {
-		if (PlaneEqual(p, normal, dist))
-			return i;
-	}
-
-	return CreateNewFloatPlane(normal, dist);
-}
-#else
-int FindFloatPlane (vec3_t normal, vec_t dist)
-{
-	int		i;
-	plane_t	*p;
-	int		hash, h;
+	int i;
+	plane_t *p;
+	int hash, h;
 
 	SnapPlane(normal, &dist);
 	hash = (int)fabs(dist) / 8;
@@ -229,15 +214,14 @@ int FindFloatPlane (vec3_t normal, vec_t dist)
 
 	return CreateNewFloatPlane (normal, dist);
 }
-#endif
 
 /**
  * @brief
  */
 static int PlaneFromPoints (int *p0, int *p1, int *p2)
 {
-	vec3_t	t1, t2, normal;
-	vec_t	dist;
+	vec3_t t1, t2, normal;
+	vec_t dist;
 
 	VectorSubtract(p0, p1, t1);
 	VectorSubtract(p2, p1, t2);
@@ -258,10 +242,8 @@ static int PlaneFromPoints (int *p0, int *p1, int *p2)
  */
 static int BrushContents (mapbrush_t *b)
 {
-	int			contentFlags;
-	side_t		*s;
-	int			i;
-	int			trans;
+	int contentFlags, i, trans;
+	side_t *s;
 
 	s = &b->original_sides[0];
 	contentFlags = s->contentFlags;
@@ -278,7 +260,7 @@ static int BrushContents (mapbrush_t *b)
 
 	/* if any side is translucent, mark the contents */
 	/* and change solid to window */
-	if (trans & (SURF_TRANS33|SURF_TRANS66|SURF_ALPHATEST)) {
+	if (trans & (SURF_TRANS33 | SURF_TRANS66 | SURF_ALPHATEST)) {
 		contentFlags |= CONTENTS_TRANSLUCENT;
 		if (contentFlags & CONTENTS_SOLID) {
 			contentFlags &= ~CONTENTS_SOLID;
@@ -298,16 +280,16 @@ static int BrushContents (mapbrush_t *b)
  */
 static void AddBrushBevels (mapbrush_t *b)
 {
-	int		axis, dir;
-	int		i, j, k, l, order;
-	side_t	sidetemp;
-	brush_texture_t	tdtemp;
-	side_t	*s, *s2;
-	vec3_t	normal;
-	float	dist;
-	winding_t	*w, *w2;
-	vec3_t	vec, vec2;
-	float	d;
+	int axis, dir;
+	int i, j, k, l, order;
+	side_t sidetemp;
+	brush_texture_t tdtemp;
+	side_t *s, *s2;
+	vec3_t normal;
+	float dist;
+	winding_t *w, *w2;
+	vec3_t vec, vec2;
+	float d;
 
 	/* add the axial planes */
 	order = 0;
@@ -431,12 +413,12 @@ static void AddBrushBevels (mapbrush_t *b)
  */
 static qboolean MakeBrushWindings (mapbrush_t *ob)
 {
-	int			i, j;
-	winding_t	*w;
-	side_t		*side;
-	plane_t		*plane;
+	int i, j;
+	winding_t *w;
+	side_t *side;
+	plane_t *plane;
 
-	ClearBounds (ob->mins, ob->maxs);
+	ClearBounds(ob->mins, ob->maxs);
 
 	for (i = 0; i < ob->numsides; i++) {
 		plane = &mapplanes[ob->original_sides[i].planenum];
@@ -475,14 +457,13 @@ static qboolean MakeBrushWindings (mapbrush_t *ob)
  */
 static void ParseBrush (entity_t *mapent)
 {
-	mapbrush_t		*b;
-	int			i,j, k;
-	int			mt;
-	side_t		*side, *s2;
-	int			planenum;
-	brush_texture_t	td;
-	int			planepts[3][3];
-	qboolean		phongShading;
+	mapbrush_t *b;
+	int i, j, k, mt;
+	side_t *side, *s2;
+	int planenum;
+	brush_texture_t td;
+	int planepts[3][3];
+	qboolean phongShading;
 
 	if (nummapbrushes == MAX_MAP_BRUSHES)
 		Error("nummapbrushes == MAX_MAP_BRUSHES (%i)", nummapbrushes);
@@ -565,7 +546,7 @@ static void ParseBrush (entity_t *mapent)
 		}
 
 		/* translucent objects are automatically classified as detail */
-		if (side->surfaceFlags & (SURF_TRANS33|SURF_TRANS66|SURF_ALPHATEST))
+		if (side->surfaceFlags & (SURF_TRANS33 | SURF_TRANS66 | SURF_ALPHATEST))
 			side->contentFlags |= CONTENTS_DETAIL;
 		if (config.fulldetail)
 			side->contentFlags &= ~CONTENTS_DETAIL;
@@ -573,7 +554,7 @@ static void ParseBrush (entity_t *mapent)
 			side->contentFlags |= CONTENTS_SOLID;
 
 		/* hints and skips are never detail, and have no content */
-		if (side->surfaceFlags & (SURF_HINT|SURF_SKIP)) {
+		if (side->surfaceFlags & (SURF_HINT | SURF_SKIP)) {
 			side->contentFlags = 0;
 			side->surfaceFlags &= ~CONTENTS_DETAIL;
 		}
@@ -811,56 +792,6 @@ static qboolean ParseMapEntity (void)
 	return qtrue;
 }
 
-/*#define TESTEXPANDBRUSHES*/
-#ifdef TESTEXPANDBRUSHES
-/**
- * @brief Expands all the brush planes and saves a new map out
- */
-static void TestExpandBrushes (void)
-{
-	FILE	*f;
-	side_t	*s;
-	int		i, j, bn;
-	winding_t	*w;
-	char	*name = "expanded.map";
-	mapbrush_t	*brush;
-	vec_t	dist;
-
-	Com_Printf("writing %s\n", name);
-	f = fopen(name, "wb");
-	if (!f)
-		Error("Can't write %s\b", name);
-
-	fprintf(f, "{\n\"classname\" \"worldspawn\"\n");
-
-	for (bn = 0; bn < nummapbrushes; bn++) {
-		brush = &mapbrushes[bn];
-		fprintf(f, "{\n");
-		for (i = 0; i < brush->numsides; i++) {
-			s = brush->original_sides + i;
-			dist = mapplanes[s->planenum].dist;
-			for (j = 0; j < 3; j++)
-				dist += fabs(16 * mapplanes[s->planenum].normal[j]);
-
-			w = BaseWindingForPlane(mapplanes[s->planenum].normal, dist);
-
-			fprintf(f,"( %i %i %i ) ", (int)w->p[0][0], (int)w->p[0][1], (int)w->p[0][2]);
-			fprintf(f,"( %i %i %i ) ", (int)w->p[1][0], (int)w->p[1][1], (int)w->p[1][2]);
-			fprintf(f,"( %i %i %i ) ", (int)w->p[2][0], (int)w->p[2][1], (int)w->p[2][2]);
-
-			fprintf(f, "%s 0 0 0 1 1\n", texinfo[s->texinfo].texture);
-			FreeWinding(w);
-		}
-		fprintf(f, "}\n");
-	}
-	fprintf(f, "}\n");
-
-	fclose(f);
-
-	Error("can't proceed after expanding brushes");
-}
-#endif /* TESTEXPANDBRUSHES */
-
 /**
  * @brief
  */
@@ -901,8 +832,4 @@ void LoadMapFile (const char *filename)
 	Sys_FPrintf(SYS_VRB, "%5i areaportals\n", c_areaportals);
 	Sys_FPrintf(SYS_VRB, "size: %5.0f,%5.0f,%5.0f to %5.0f,%5.0f,%5.0f\n", map_mins[0],map_mins[1],map_mins[2],
 		map_maxs[0],map_maxs[1],map_maxs[2]);
-
-#ifdef TESTEXPANDBRUSHES
-	TestExpandBrushes();
-#endif
 }

@@ -87,7 +87,7 @@ static void CreateBrushWindings (bspbrush_t *brush)
 /**
  * @brief Creates a new axial brush
  */
-static bspbrush_t *BrushFromBounds(vec3_t mins, vec3_t maxs)
+static bspbrush_t *BrushFromBounds (vec3_t mins, vec3_t maxs)
 {
 	bspbrush_t *b;
 	int i;
@@ -219,7 +219,7 @@ void FreeBrush (bspbrush_t *brushes)
 	for (i = 0; i < brushes->numsides; i++)
 		if (brushes->sides[i].winding)
 			FreeWinding(brushes->sides[i].winding);
-	free (brushes);
+	free(brushes);
 	c_active_brushes--;
 }
 
@@ -240,7 +240,7 @@ void FreeBrushList (bspbrush_t *brushes)
 /**
  * @brief Duplicates the brush, the sides, and the windings
  */
-bspbrush_t *CopyBrush(bspbrush_t *brush)
+bspbrush_t *CopyBrush (bspbrush_t *brush)
 {
 	bspbrush_t *newbrush;
 	ptrdiff_t size;
@@ -259,39 +259,14 @@ bspbrush_t *CopyBrush(bspbrush_t *brush)
 	return newbrush;
 }
 
-
-#if 0
-/**
- * @brief
- * @note Debug code
- */
-static node_t *PointInLeaf(node_t *node, vec3_t point)
-{
-	vec_t d;
-	plane_t *plane;
-
-	while (node->planenum != PLANENUM_LEAF) {
-		plane = &mapplanes[node->planenum];
-		d = DotProduct(point, plane->normal) - plane->dist;
-		if (d > 0)
-			node = node->children[0];
-		else
-			node = node->children[1];
-	}
-
-	return node;
-}
-#endif
-
 /**
  * @brief Returns PSIDE_FRONT, PSIDE_BACK, or PSIDE_BOTH
  */
 static int BoxOnPlaneSide (vec3_t mins, vec3_t maxs, plane_t *plane)
 {
-	int		side;
-	int		i;
-	vec3_t	corners[2];
-	vec_t	dist1, dist2;
+	int side, i;
+	vec3_t corners[2];
+	vec_t dist1, dist2;
 
 	/* axial planes are easy */
 	if (plane->type < 3) {
@@ -397,18 +372,6 @@ static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 		|| (d_back < 0.0 && d_back > -1.0))
 		(*epsilonbrush)++;
 
-#if 0
-	if (*numsplits == 0) {
-		/* didn't really need to be split */
-		if (front)
-			s = PSIDE_FRONT;
-		else if (back)
-			s = PSIDE_BACK;
-		else
-			s = 0;
-	}
-#endif
-
 	return s;
 }
 
@@ -417,13 +380,8 @@ static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 /**
  * @brief Returns true if the winding would be crunched out of existance by the vertex snapping.
  */
-qboolean WindingIsTiny(winding_t *w)
+qboolean WindingIsTiny (winding_t *w)
 {
-#if 0
-	if (WindingArea(w) < 1)
-		return qtrue;
-	return qfalse;
-#else
 	int i, j, edges;
 	vec_t len;
 	vec3_t delta;
@@ -439,7 +397,6 @@ qboolean WindingIsTiny(winding_t *w)
 		}
 	}
 	return qtrue;
-#endif
 }
 
 /**
@@ -469,8 +426,8 @@ static void LeafNode (node_t *node, bspbrush_t *brushes)
 	node->contentFlags = 0;
 
 	for (b = brushes; b; b = b->next) {
-		/* if the brush is solid and all of its sides are on nodes, */
-		/* it eats everything */
+		/* if the brush is solid and all of its sides are on nodes,
+		 * it eats everything */
 		if (b->original->contentFlags & CONTENTS_SOLID) {
 			for (i = 0; i < b->numsides; i++)
 				if (b->sides[i].texinfo != TEXINFO_NODE)
@@ -590,8 +547,8 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 						Error("PSIDE_FACING with splits");
 
 					test->testside = s;
-					/* if the brush shares this face, don't bother */
-					/* testing that facenum as a splitter again */
+					/* if the brush shares this face, don't bother
+					 * testing that facenum as a splitter again */
 					if (s & PSIDE_FACING) {
 						facing++;
 						for (j = 0; j < test->numsides; j++) {
@@ -657,12 +614,11 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 /**
  * @brief
  */
-static int BrushMostlyOnSide(bspbrush_t *brush, plane_t *plane)
+static int BrushMostlyOnSide (bspbrush_t *brush, plane_t *plane)
 {
-	int			i, j;
-	winding_t	*w;
-	vec_t		d, max;
-	int			side;
+	int i, j, side;
+	winding_t *w;
+	vec_t d, max;
 
 	max = 0;
 	side = PSIDE_FRONT;
@@ -726,14 +682,14 @@ void SplitBrush (bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t
 	}
 
 	/* create a new winding from the split plane */
-	w = BaseWindingForPlane (plane->normal, plane->dist);
+	w = BaseWindingForPlane(plane->normal, plane->dist);
 	for (i = 0; i < brush->numsides && w; i++) {
 		plane2 = &mapplanes[brush->sides[i].planenum ^ 1];
-		ChopWindingInPlace (&w, plane2->normal, plane2->dist, 0); /* PLANESIDE_EPSILON); */
+		ChopWindingInPlace(&w, plane2->normal, plane2->dist, 0); /* PLANESIDE_EPSILON); */
 	}
 
 	/* the brush isn't really split */
-	if (!w || WindingIsTiny(w) ) {
+	if (!w || WindingIsTiny(w)) {
 		int side = BrushMostlyOnSide(brush, plane);
 		if (side == PSIDE_FRONT)
 			*front = CopyBrush(brush);
@@ -904,7 +860,7 @@ static void SplitBrushList (bspbrush_t *brushes, node_t *node, bspbrush_t **fron
 /**
  * @brief
  */
-static node_t *BuildTree_r(node_t *node, bspbrush_t *brushes)
+static node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
 {
 	node_t *newnode;
 	side_t *bestside;
@@ -1009,19 +965,6 @@ tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 	Sys_FPrintf(SYS_VRB, "%5i visible nodes\n", c_nodes / 2 - c_nonvis);
 	Sys_FPrintf(SYS_VRB, "%5i nonvis nodes\n", c_nonvis);
 	Sys_FPrintf(SYS_VRB, "%5i leafs\n", (c_nodes + 1) / 2);
-#if 0
-	{	/* debug code */
-		static node_t *tnode;
-		vec3_t p;
-
-		p[0] = -1469;
-		p[1] = -118;
-		p[2] = 119;
-		tnode = PointInLeaf(tree->headnode, p);
-		Com_Printf("contents: %i\n", tnode->contents);
-		p[0] = 0;
-	}
-#endif
 	return tree;
 }
 

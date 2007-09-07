@@ -244,7 +244,7 @@ static void SwapBSPFile (void)
 }
 
 
-dheader_t	*header;
+static dheader_t *header;
 
 /**
  * @brief
@@ -441,7 +441,7 @@ entity_t entities[MAX_MAP_ENTITIES];
  */
 static void StripTrailing (char *e)
 {
-	char	*s;
+	char *s;
 
 	s = e + strlen(e)-1;
 	while (s >= e && *s <= 32) {
@@ -484,8 +484,8 @@ epair_t *ParseEpair (void)
  */
 static qboolean ParseEntity (void)
 {
-	epair_t		*e;
-	entity_t	*mapent;
+	epair_t	 *e;
+	entity_t *mapent;
 
 	if (!GetToken(qtrue))
 		return qfalse;
@@ -533,11 +533,10 @@ void ParseEntities (void)
  */
 void UnparseEntities (void)
 {
-	char	*buf, *end;
-	epair_t	*ep;
-	char	line[2048];
-	int		i;
-	char	key[1024], value[1024];
+	char *buf, *end;
+	epair_t *ep;
+	char line[2048], key[1024], value[1024];
+	int i;
 
 	buf = dentdata;
 	end = buf;

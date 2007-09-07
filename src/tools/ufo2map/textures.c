@@ -109,10 +109,8 @@ static const vec3_t baseaxis[18] =
  */
 static void TextureAxisFromPlane (plane_t *pln, vec3_t xv, vec3_t yv, qboolean isTerrain)
 {
-	int		bestaxis;
-	vec_t	dot,best;
-	int		i;
-	int numaxis;
+	int bestaxis, numaxis, i;
+	vec_t dot, best;
 
 	/* Knightmare- terrain support, use floor/ceiling axis only */
 	numaxis = (isTerrain) ? 2 : 6;

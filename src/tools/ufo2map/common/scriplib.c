@@ -210,7 +210,7 @@ qboolean TokenAvailable (void)
 	if (search_p >= script->end_p)
 		return qfalse;
 
-	while ( *search_p <= 32) {
+	while (*search_p <= 32) {
 		if (*search_p == '\n')
 			return qfalse;
 		search_p++;

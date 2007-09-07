@@ -181,8 +181,8 @@ static int TestLine_r (int node, const vec3_t start, const vec3_t stop)
 	vec3_t mid;
 	int side, r;
 
-	if (node & (1<<31))
-		return node & ~(1<<31);	/* leaf node */
+	if (node & (1 << 31))
+		return node & ~(1 << 31);	/* leaf node */
 
 	tnode = &tnodes[node];
 	switch (tnode->type) {
@@ -240,8 +240,8 @@ static int TestLineDist_r (int node, const vec3_t start, const vec3_t stop)
 	vec3_t mid;
 	int side, r;
 
-	if (node & (1<<31)) {
-		r = node & ~(1<<31);
+	if (node & (1 << 31)) {
+		r = node & ~(1 << 31);
 		if (r)
 			VectorCopy(start, tr_end);
 		return r;	/* leaf node */
@@ -378,8 +378,8 @@ static int TestContents_r (int node, const vec3_t pos)
 	float	front;
 	int		r;
 
-	if (node & (1<<31))
-		return node & ~(1<<31);	/* leaf node */
+	if (node & (1 << 31))
+		return node & ~(1 << 31);	/* leaf node */
 
 	tnode = &tnodes[node];
 	switch (tnode->type) {

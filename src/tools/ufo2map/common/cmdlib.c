@@ -540,7 +540,7 @@ int TryLoadFile (const char *filename, void **bufferptr)
  */
 void DefaultExtension (char *path, const char *extension)
 {
-	char    *src;
+	char *src;
 	/* if path doesnt have a .EXT, append extension
 	 * (extension should include the .) */
 	src = path + strlen(path) - 1;

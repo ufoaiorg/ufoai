@@ -28,9 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "qbsp.h"
 
-/* undefine for dumb linear searches */
-#define	USE_HASHING
-
 #define	INTEGRAL_EPSILON	0.01
 #define	POINT_EPSILON		0.5
 #define	OFF_EPSILON			0.5
@@ -66,7 +63,7 @@ static int hashverts[HASH_SIZE*HASH_SIZE];	/* a vertex number, or 0 for no verts
  */
 static unsigned HashVec (vec3_t vec)
 {
-	int			x, y;
+	int x, y;
 
 	x = (4096 + (int)(vec[0] + 0.5)) >> 7;
 	y = (4096 + (int)(vec[1] + 0.5)) >> 7;
@@ -77,18 +74,15 @@ static unsigned HashVec (vec3_t vec)
 	return y * HASH_SIZE + x;
 }
 
-#ifdef USE_HASHING
 /**
  * @brief
  * @note Uses hashing
  */
 static int GetVertexnum (vec3_t in)
 {
-	int			h;
-	int			i;
-	float		*p;
-	vec3_t		vert;
-	int			vnum;
+	int h, i, vnum;
+	float *p;
+	vec3_t vert;
 
 	c_totalverts++;
 
@@ -126,48 +120,6 @@ static int GetVertexnum (vec3_t in)
 
 	return numvertexes - 1;
 }
-#else
-/**
- * @brief Dumb linear search
- */
-static int GetVertexnum (vec3_t v)
-{
-	int			i, j;
-	dvertex_t	*dv;
-	vec_t		d;
-
-	c_totalverts++;
-
-	/* make really close values exactly integral */
-	for (i = 0; i < 3; i++) {
-		if (fabs(v[i] - (int)(v[i] + 0.5)) < INTEGRAL_EPSILON)
-			v[i] = (int)(v[i] + 0.5);
-		if (v[i] < -4096 || v[i] > 4096)
-			Error("GetVertexnum: outside +/- 4096");
-	}
-
-	/* search for an existing vertex match */
-	for (i = 0, dv = dvertexes; i < numvertexes; i++, dv++) {
-		for (j = 0; j < 3; j++) {
-			d = v[j] - dv->point[j];
-			if (d > POINT_EPSILON || d < -POINT_EPSILON)
-				break;
-		}
-		if (j == 3)
-			return i;		/* a match */
-	}
-
-	/* new point */
-	if (numvertexes == MAX_MAP_VERTS)
-		Error("MAX_MAP_VERTS (%i)", numvertexes);
-	VectorCopy(v, dv->point);
-	numvertexes++;
-	c_uniqueverts++;
-
-	return numvertexes - 1;
-}
-#endif
-
 
 /**
  * @brief The faces vertexes have been added to the superverts[] array,
@@ -182,9 +134,8 @@ static int GetVertexnum (vec3_t v)
  */
 static void FaceFromSuperverts (node_t *node, face_t *f, int base)
 {
-	face_t	*newf;
-	int		remaining;
-	int		i;
+	face_t *newf;
+	int i, remaining;
 
 	remaining = numsuperverts;
 	/* must split into two faces, because of vertex overload */
@@ -215,14 +166,13 @@ static void FaceFromSuperverts (node_t *node, face_t *f, int base)
 		f->vertexnums[i] = superverts[(i + base) % numsuperverts];
 }
 
-
 /**
  * @brief
  */
 static void EmitFaceVertexes (node_t *node, face_t *f)
 {
-	winding_t	*w;
-	int			i;
+	winding_t *w;
+	int i;
 
 	if (f->merged || f->split[0] || f->split[1])
 		return;
@@ -252,8 +202,8 @@ static void EmitFaceVertexes (node_t *node, face_t *f)
  */
 static void EmitVertexes_r (node_t *node)
 {
-	int		i;
-	face_t	*f;
+	int i;
+	face_t *f;
 
 	if (node->planenum == PLANENUM_LEAF)
 		return;
@@ -266,15 +216,13 @@ static void EmitVertexes_r (node_t *node)
 }
 
 
-#ifdef USE_HASHING
 /**
  * @brief Uses the hash tables to cut down to a small number
  */
 static void FindEdgeVerts (vec3_t v1, vec3_t v2)
 {
-	int		x1, x2, y1, y2, t;
-	int		x, y;
-	int		vnum;
+	int x1, x2, y1, y2, t;
+	int x, y, vnum;
 
 	x1 = (4096 + (int)(v1[0] + 0.5)) >> 7;
 	y1 = (4096 + (int)(v1[1] + 0.5)) >> 7;
@@ -298,33 +246,15 @@ static void FindEdgeVerts (vec3_t v1, vec3_t v2)
 				edge_verts[num_edge_verts++] = vnum;
 }
 
-#else
-/**
- * @brief Forced a dumb check of everything
- */
-static void FindEdgeVerts (vec3_t v1, vec3_t v2)
-{
-	int i;
-
-	num_edge_verts = numvertexes - 1;
-	for (i = 0; i < num_edge_verts; i++)
-		edge_verts[i] = i + 1;
-}
-#endif
-
 /**
  * @brief
  * @note Can be recursively reentered
  */
 static void TestEdge (vec_t start, vec_t end, int p1, int p2, int startvert)
 {
-	int		j, k;
-	vec_t	dist;
-	vec3_t	delta;
-	vec3_t	exact;
-	vec3_t	off;
-	vec_t	error;
-	vec3_t	p;
+	int j, k;
+	vec_t dist, error;
+	vec3_t	delta, exact, off, p;
 
 	if (p1 == p2) {
 		c_degenerate++;
@@ -368,12 +298,10 @@ static void TestEdge (vec_t start, vec_t end, int p1, int p2, int startvert)
  */
 static void FixFaceEdges (node_t *node, face_t *f)
 {
-	int		p1, p2;
-	int		i;
-	vec3_t	e2;
-	vec_t	len;
-	int		count[MAX_SUPERVERTS], start[MAX_SUPERVERTS];
-	int		base;
+	int i, p1, p2, base;
+	vec3_t e2;
+	vec_t len;
+	int count[MAX_SUPERVERTS], start[MAX_SUPERVERTS];
 
 	if (f->merged || f->split[0] || f->split[1])
 		return;
@@ -405,9 +333,9 @@ static void FixFaceEdges (node_t *node, face_t *f)
 		return;
 	}
 
-	/* we want to pick a vertex that doesn't have tjunctions */
-	/* on either side, which can cause artifacts on trifans, */
-	/* especially underwater */
+	/* we want to pick a vertex that doesn't have tjunctions
+	 * on either side, which can cause artifacts on trifans,
+	 * especially underwater */
 	for (i = 0; i < f->numpoints; i++) {
 		if (count[i] == 1 && count[(i + f->numpoints - 1) % f->numpoints] == 1)
 			break;
@@ -430,8 +358,8 @@ static void FixFaceEdges (node_t *node, face_t *f)
  */
 static void FixEdges_r (node_t *node)
 {
-	int		i;
-	face_t	*f;
+	int i;
+	face_t *f;
 
 	if (node->planenum == PLANENUM_LEAF)
 		return;
@@ -484,7 +412,7 @@ static int c_faces;
  */
 static face_t *AllocFace (void)
 {
-	face_t	*f;
+	face_t *f;
 
 	f = malloc(sizeof(*f));
 	memset(f, 0, sizeof(*f));

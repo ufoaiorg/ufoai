@@ -56,13 +56,12 @@ static ipos3_t wpMins, wpMaxs;
  */
 static void CheckUnit (unsigned int unitnum)
 {
-	int		x, y, z;
-	int		i;
-	pos3_t	pos;
-	vec3_t	start, end;
-	vec3_t	tr_end;
-	vec3_t	tvs, tve;
-	float	height;
+	int i, x, y, z;
+	pos3_t pos;
+	vec3_t start, end;
+	vec3_t tr_end;
+	vec3_t tvs, tve;
+	float height;
 
 	/* get coordinates of that unit */
 	z = unitnum / WIDTH / WIDTH;
@@ -171,10 +170,10 @@ static void CheckUnit (unsigned int unitnum)
  */
 static void CheckConnections (unsigned int unitnum)
 {
-	int		x, y, z, sz;
-	int		i, h, sh;
-	pos3_t	pos;
-	vec3_t	start, ts, te;
+	int x, y, z, sz;
+	int i, h, sh;
+	pos3_t pos;
+	vec3_t start, ts, te;
 
 	/* get coordinates of that unit */
 	z = unitnum / WIDTH / WIDTH;
@@ -244,8 +243,8 @@ static void CheckConnections (unsigned int unitnum)
  */
 void DoRouting (void)
 {
-	int		i;
-	byte	*data;
+	int i;
+	byte *data;
 
 	PushInfo();
 	nummodels += 1;

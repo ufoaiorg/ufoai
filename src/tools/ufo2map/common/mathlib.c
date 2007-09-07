@@ -159,8 +159,8 @@ void ClearBounds (vec3_t mins, vec3_t maxs)
  */
 void AddPointToBounds (const vec3_t v, vec3_t mins, vec3_t maxs)
 {
-	int		i;
-	vec_t	val;
+	int i;
+	vec_t val;
 
 	for (i = 0; i < 3; i++) {
 		val = v[i];
