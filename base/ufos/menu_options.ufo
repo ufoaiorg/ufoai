@@ -615,12 +615,13 @@ menu options_keys
 	// only show the current binding - no support for changing them atm
 	text keylist
 	{
-		size	"460 580"
+		size	"460 560"
 		pos	"480 110"
-		height	"29"
+		height	"28"
 		num	1
 		wheel
 		format	"20 0"
+		scrollbar	true
 //		bgcolor	"1 1 1 0.4"
 	}
 
@@ -628,7 +629,7 @@ menu options_keys
 	{
 		tooltip "_Scroll up"
 		image menu/buttons_small
-		pos		"930 339"
+		pos		"926 90"
 		texl	"32 32"
 		texh	"48 48"
 		mousefx	true
@@ -642,7 +643,7 @@ menu options_keys
 	{
 		tooltip "_Scroll down"
 		image menu/buttons_small
-		pos		"930 355"
+		pos		"926 680"
 		texl	"32 48"
 		texh	"48 64"
 		mousefx	true
