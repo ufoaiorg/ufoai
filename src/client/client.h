@@ -107,7 +107,7 @@ typedef enum {
  * @sa client_static_t
  */
 typedef struct client_state_s {
-	qboolean refresh_prepped;	/**< false if on new level or new ref dll */
+	qboolean refresh_prepped;	/**< false if on new level or vid restart */
 	qboolean force_refdef;		/**< vid has changed, so we can't use a paused refdef */
 
 	int time;					/**< this is the time value that the client
@@ -320,7 +320,7 @@ void CL_AddLightStyles(void);
 
 /*================================================= */
 
-void CL_PrepRefresh(void);
+void CL_LoadMedia(void);
 void CL_RegisterSounds(void);
 void CL_RegisterLocalModels(void);
 

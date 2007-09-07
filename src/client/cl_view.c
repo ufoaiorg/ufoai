@@ -371,7 +371,7 @@ static void CL_ParseEntitystring (const char *es)
 /**
  * @brief Call before entering a new level, or after changing dlls
  */
-void CL_PrepRefresh (void)
+void CL_LoadMedia (void)
 {
 	le_t *le;
 	int i, max;

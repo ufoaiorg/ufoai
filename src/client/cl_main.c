@@ -1582,7 +1582,7 @@ void CL_RequestNextDownload (void)
 	}
 
 	CL_RegisterSounds();
-	CL_PrepRefresh();
+	CL_LoadMedia();
 
 	soldiersSpawned = qfalse;
 	spawnCountFromServer = atoi(Cmd_Argv(1));
@@ -2491,10 +2491,6 @@ void CL_Frame (int now, void *data)
 void CL_SlowFrame (int now, void *data)
 {
 	CL_CvarCheck();
-
-	/* allow rendering settings change */
-	if (!cl.refresh_prepped && cls.state == ca_active)
-		CL_PrepRefresh();
 
 	CL_ActorUpdateCVars();
 }

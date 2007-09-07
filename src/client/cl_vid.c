@@ -98,11 +98,13 @@ void VID_Restart_f (void)
 	if (CL_VideoRecording())
 		CL_CloseAVI();
 
+	cl.refresh_prepped = qfalse;
+
 	S_StopAllSounds();
 	R_Shutdown();
 	R_Init();
 	CL_InitFonts();
-
+	CL_LoadMedia();
 }
 
 /**
