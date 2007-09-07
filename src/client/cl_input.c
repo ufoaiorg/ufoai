@@ -61,7 +61,7 @@ struct {
 static int keyq_head = 0;
 static int keyq_tail = 0;
 
-static cvar_t *sdl_debug;
+static cvar_t *in_debug;
 
 static unsigned in_frametime;
 
@@ -1257,7 +1257,7 @@ static void IN_Parse (void)
  */
 static void IN_PrintKey (const SDL_Event* event, int down)
 {
-	if (sdl_debug->integer) {
+	if (in_debug->integer) {
 		Com_Printf("key name: %s (down: %i)", SDL_GetKeyName(event->key.keysym.sym), down);
 		if (event->key.keysym.unicode) {
 			Com_Printf(" unicode: %hx", event->key.keysym.unicode);
@@ -1489,7 +1489,7 @@ static int IN_TranslateKey (SDL_keysym *keysym, int *key)
 		if (buf == '~')
 			*key = '~'; /* console HACK */
 	}
-	if (sdl_debug->integer)
+	if (in_debug->integer)
 		Com_Printf("unicode: %hx keycode: %i key: %hx\n", keysym->unicode, *key, *key);
 
 	return buf;
@@ -1497,7 +1497,7 @@ static int IN_TranslateKey (SDL_keysym *keysym, int *key)
 
 #define EVENT_ENQUEUE(keyNum, keyDown) \
 	if (keyNum > 0) { \
-		if (sdl_debug->integer) \
+		if (in_debug->integer) \
 			Com_Printf("Enqueue: %i (down: %i)\n", keyNum, keyDown); \
 		keyq[keyq_head].down = (keyDown); \
 		keyq[keyq_head].key = (keyNum); \
@@ -1618,7 +1618,7 @@ void IN_Frame (void)
 void IN_Init (void)
 {
 	/* other cvars */
-	sdl_debug = Cvar_Get("sdl_debug", "0", 0, NULL);
+	in_debug = Cvar_Get("in_debug", "0", 0, "Show input key codes on game console");
 
 	Cmd_AddCommand("+turnleft", IN_TurnLeftDown_f, _("Rotate battlescape camera anti-clockwise"));
 	Cmd_AddCommand("-turnleft", IN_TurnLeftUp_f, NULL);
