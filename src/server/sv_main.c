@@ -548,10 +548,9 @@ void SV_NextMapcycle (void)
 	}
 
 	/* check whether we want to change the gametype, too */
-	if (gameType) {
-		Com_sprintf(cmd, sizeof(cmd), "gametype %s;", gameType);
-		Cbuf_ExecuteText(EXEC_NOW, cmd);
-	}
+	if (gameType && *gameType)
+		Cvar_Set("gametype", gameType);
+
 	Com_sprintf(cmd, sizeof(cmd), "map %s", map);
 	Cbuf_AddText(cmd);
 	Cbuf_Execute();
