@@ -111,10 +111,12 @@ echo_info:
 	@echo "CFLAGS"
 	@echo "-----------------------"
 	@echo $(CFLAGS)
+	@echo $(CLIENT_CFLAGS) $(SDL_CFLAGS) $(OPENAL_CFLAGS)
 	@echo
 	@echo "LDFLAGS"
 	@echo "-----------------------"
 	@echo $(LDFLAGS)
+	@echo $(CLIENT_LIBS) $(SDL_LIBS) $(OPENAL_LIBS)
 	@echo
 	@echo "Gettext"
 	@echo "-----------------------"

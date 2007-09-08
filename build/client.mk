@@ -1,4 +1,4 @@
-CLIENT_CFLAGS=
+CLIENT_CFLAGS+=
 
 CLIENT_SRCS = \
 	client/cl_actor.c \
@@ -146,8 +146,6 @@ ifeq ($(TARGET_OS),darwin)
 		CLIENT_SRCS+=\
 			ports/macosx/osx_qal.c
 	endif
-#	LDFLAGS+=-L/opt/local/lib
-#	CFLAGS+=-I/opt/local/include/SDL -I/opt/local/include
 endif
 
 ifeq ($(TARGET_OS),solaris)
@@ -166,8 +164,6 @@ ifeq ($(HAVE_CURL),1)
 	CLIENT_CFLAGS+=-DHAVE_CURL
 endif
 
-CLIENT_LIBS+=$(SDL_LIBS)
-
 CLIENT_OBJS= \
 	$(patsubst %.c, $(BUILDDIR)/client/%.o, $(filter %.c, $(CLIENT_SRCS))) \
 	$(patsubst %.m, $(BUILDDIR)/client/%.o, $(filter %.m, $(CLIENT_SRCS))) \
@@ -183,17 +179,17 @@ endif
 # Say how to link the exe
 $(CLIENT_TARGET): $(CLIENT_OBJS) $(BUILDDIR)/.dirs
 	@echo " * [UFO] ... linking $(LNKFLAGS) ($(CLIENT_LIBS))"; \
-		$(CC) $(LDFLAGS) -o $@ $(CLIENT_OBJS) $(LNKFLAGS) $(CLIENT_LIBS)
+		$(CC) $(LDFLAGS) -o $@ $(CLIENT_OBJS) $(LNKFLAGS) $(CLIENT_LIBS) $(SDL_LIBS) $(OPENAL_LIBS)
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/client/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [UFO] $<"; \
-		$(CC) $(CFLAGS) $(CPPFLAGS) $(SDL_CFLAGS) $(CLIENT_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
+		$(CC) $(CFLAGS) $(CPPFLAGS) $(CLIENT_CFLAGS) $(SDL_CFLAGS) $(OPENAL_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
 
 # Say how to build .o files from .m files for this module
 $(BUILDDIR)/client/%.o: $(SRCDIR)/%.m $(BUILDDIR)/.dirs
 	@echo " * [UFO] $<"; \
-		$(CC) $(CFLAGS) $(CPPFLAGS) $(SDL_CFLAGS) $(CLIENT_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
+		$(CC) $(CFLAGS) $(CPPFLAGS) $(CLIENT_CFLAGS) $(SDL_CFLAGS) $(OPENAL_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
 
 ifeq ($(TARGET_OS),mingw32)
 # Say how to build .o files from .rc files for this module
