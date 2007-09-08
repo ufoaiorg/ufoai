@@ -493,33 +493,21 @@ static void V_CalcFovY (float width, float height)
 }
 
 /**
- * @brief
- * @param
- * @sa
- */
-static void CL_CalcRefdef (void)
-{
-	VectorCopy(cl.cam.camorg, refdef.vieworg);
-	VectorCopy(cl.cam.angles, refdef.viewangles);
-
-	VectorClear(refdef.blend);
-
-	/* set dependant variables */
-	V_CalcFovY(scr_vrect.width, scr_vrect.height);
-	refdef.x = scr_vrect.x;
-	refdef.y = scr_vrect.y;
-	refdef.width = scr_vrect.width;
-	refdef.height = scr_vrect.height;
-	refdef.time = cl.time * 0.001;
-}
-
-/**
  * @brief Updates the refdef
  */
 void V_UpdateRefDef (void)
 {
+	VectorCopy(cl.cam.camorg, refdef.vieworg);
+	VectorCopy(cl.cam.angles, refdef.viewangles);
+
+	V_CalcFovY(scr_vrect.width, scr_vrect.height);
+
 	/* setup refdef */
-	refdef.worldlevel = cl_worldlevel->integer;
+	refdef.x = scr_vrect.x;
+	refdef.y = scr_vrect.y;
+	refdef.width = scr_vrect.width;
+	refdef.height = scr_vrect.height;
+	refdef.time = cl.time * 0.001;	refdef.worldlevel = cl_worldlevel->integer;
 	refdef.num_entities = r_numentities;
 	refdef.entities = r_entities;
 	refdef.num_shaders = r_numshaders;
@@ -541,6 +529,7 @@ void V_UpdateRefDef (void)
 		refdef.ll = map_lights;
 		refdef.num_lights = map_numlights;
 	}
+	VectorClear(refdef.blend);
 }
 
 /**
@@ -580,7 +569,6 @@ void V_RenderView (void)
 
 	/* update ref def - do this even in non 3d mode - we need shaders at loading time */
 	V_UpdateRefDef();
-	CL_CalcRefdef();
 
 	/* render the frame */
 	R_RenderFrame();
