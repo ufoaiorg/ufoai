@@ -4577,6 +4577,11 @@ void MN_ParseMenu (const char *name, const char **text)
  */
 static void MN_MapInfo (int step)
 {
+	int i = 0;
+
+	if (!csi.numMDs)
+		return;
+
 	ccs.multiplayerMapDefinitionIndex += step;
 
 	if (ccs.multiplayerMapDefinitionIndex < 0)
@@ -4585,10 +4590,11 @@ static void MN_MapInfo (int step)
 	ccs.multiplayerMapDefinitionIndex %= csi.numMDs;
 
 	if (!ccs.singleplayer) {
-		int i = 0;
 		while (!csi.mds[ccs.multiplayerMapDefinitionIndex].multiplayer) {
 			i++;
 			ccs.multiplayerMapDefinitionIndex += (step ? step : 1);
+			if (ccs.multiplayerMapDefinitionIndex < 0)
+				ccs.multiplayerMapDefinitionIndex = csi.numMDs - 1;
 			ccs.multiplayerMapDefinitionIndex %= csi.numMDs;
 			if (i >= csi.numMDs)
 				Sys_Error("MN_MapInfo: There is no multiplayer map in any mapdef\n");
