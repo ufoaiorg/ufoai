@@ -459,12 +459,6 @@ CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 # Check for gettext
 #---------------------------------------------------------------------------------------------
 
-AC_CHECK_HEADERS([libintl.h])
-if test "$ac_cv_header_libintl_h" != "yes"
-then
-	AC_MSG_ERROR([Couldn't find libintl.h!])
-fi
-
 LIBS=
 AC_SEARCH_LIBS([gettext],[intl])
 if test "$ac_cv_search_gettext" = "no"
@@ -578,15 +572,6 @@ CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 # Check JPEG
 #---------------------------------------------------------------------------------------------
 
-AC_CHECK_HEADERS([jpeglib.h])
-if test "$ac_cv_header_jpeglib_h" = "no"
-then
-	if test "$enable_client" = "yes"
-	then
-		AC_MSG_ERROR([You must have the JPEG development headers])
-	fi
-fi
-
 LIBS=
 AC_CHECK_LIB(jpeg, jpeg_CreateDecompress, LIBS="-ljpeg", AC_MSG_ERROR([You must have libjpeg!!!]))
 TOOLS_LIBS="$TOOLS_LIBS $LIBS"
@@ -595,15 +580,6 @@ CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 #---------------------------------------------------------------------------------------------
 # Check PNG
 #---------------------------------------------------------------------------------------------
-
-AC_CHECK_HEADERS([png.h])
-if test "$ac_cv_header_png_h" = "no"
-then
-	if test "$enable_client" = "yes"
-	then
-		AC_MSG_ERROR([You must have the PNG development headers])
-	fi
-fi
 
 LIBS=
 AC_CHECK_LIB(png, png_create_info_struct, LIBS="-lpng", AC_MSG_ERROR([You must have libpng!!!]))
