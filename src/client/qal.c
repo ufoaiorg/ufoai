@@ -107,17 +107,33 @@ static qboolean alinit_fail = qfalse;
 /**
  * @brief Loads symbols from openal lib
  */
-static void *GPAT (char *str)
+static void *QAL_GetProcAddress (char *str)
 {
 	void *rv;
 
-	rv = GPA(str);
+	rv = Sys_GetProcAddress(oalState.lib, str);
 	if (!rv) {
 		Com_Printf("Can't load symbol %s\n", str);
 		alinit_fail = qtrue;
 		return NULL;
 	}
 	return rv;
+}
+
+
+/**
+ * @brief Unloads the specified DLL then nulls out all the proc pointers
+ * @sa QAL_Init
+ */
+static void QAL_Shutdown (void)
+{
+	if (oalState.lib)
+		Sys_FreeLibrary(oalState.lib);
+
+	oalState.lib = NULL;
+
+	/* general pointers */
+	QAL_Unlink();
 }
 
 /**
@@ -214,77 +230,77 @@ qboolean QAL_Link(void)
 		Com_Printf("OpenAL already active\n");
 		return qtrue;
 	}
-	qalcOpenDevice				= GPAT("alcOpenDevice");
-	qalcCloseDevice				= GPAT("alcCloseDevice");
-	qalcCreateContext			= GPAT("alcCreateContext");
-	qalcDestroyContext			= GPAT("alcDestroyContext");
-	qalcMakeContextCurrent		= GPAT("alcMakeContextCurrent");
-	qalcProcessContext			= GPAT("alcProcessContext");
-	qalcSuspendContext			= GPAT("alcSuspendContext");
-	qalcGetCurrentContext		= GPAT("alcGetCurrentContext");
-	qalcGetContextsDevice		= GPAT("alcGetContextsDevice");
-	qalcGetString				= GPAT("alcGetString");
-	qalcGetIntegerv				= GPAT("alcGetIntegerv");
-	qalcGetError				= GPAT("alcGetError");
-	qalcIsExtensionPresent		= GPAT("alcIsExtensionPresent");
-	qalcGetProcAddress			= GPAT("alcGetProcAddress");
-	qalcGetEnumValue			= GPAT("alcGetEnumValue");
+	qalcOpenDevice				= QAL_GetProcAddress("alcOpenDevice");
+	qalcCloseDevice				= QAL_GetProcAddress("alcCloseDevice");
+	qalcCreateContext			= QAL_GetProcAddress("alcCreateContext");
+	qalcDestroyContext			= QAL_GetProcAddress("alcDestroyContext");
+	qalcMakeContextCurrent		= QAL_GetProcAddress("alcMakeContextCurrent");
+	qalcProcessContext			= QAL_GetProcAddress("alcProcessContext");
+	qalcSuspendContext			= QAL_GetProcAddress("alcSuspendContext");
+	qalcGetCurrentContext		= QAL_GetProcAddress("alcGetCurrentContext");
+	qalcGetContextsDevice		= QAL_GetProcAddress("alcGetContextsDevice");
+	qalcGetString				= QAL_GetProcAddress("alcGetString");
+	qalcGetIntegerv				= QAL_GetProcAddress("alcGetIntegerv");
+	qalcGetError				= QAL_GetProcAddress("alcGetError");
+	qalcIsExtensionPresent		= QAL_GetProcAddress("alcIsExtensionPresent");
+	qalcGetProcAddress			= QAL_GetProcAddress("alcGetProcAddress");
+	qalcGetEnumValue			= QAL_GetProcAddress("alcGetEnumValue");
 
-	qalBufferData				= GPAT("alBufferData");
-	qalDeleteBuffers			= GPAT("alDeleteBuffers");
-	qalDeleteSources			= GPAT("alDeleteSources");
-	qalDisable					= GPAT("alDisable");
-	qalDistanceModel			= GPAT("alDistanceModel");
-	qalDopplerFactor			= GPAT("alDopplerFactor");
-	qalDopplerVelocity			= GPAT("alDopplerVelocity");
-	qalEnable					= GPAT("alEnable");
-	qalGenBuffers				= GPAT("alGenBuffers");
-	qalGenSources				= GPAT("alGenSources");
-	qalGetBoolean				= GPAT("alGetBoolean");
-	qalGetBooleanv				= GPAT("alGetBooleanv");
-	qalGetBufferf				= GPAT("alGetBufferf");
-	qalGetBufferi				= GPAT("alGetBufferi");
-	qalGetDouble				= GPAT("alGetDouble");
-	qalGetDoublev				= GPAT("alGetDoublev");
-	qalGetEnumValue				= GPAT("alGetEnumValue");
-	qalGetError					= GPAT("alGetError");
-	qalGetFloat					= GPAT("alGetFloat");
-	qalGetFloatv				= GPAT("alGetFloatv");
-	qalGetInteger				= GPAT("alGetInteger");
-	qalGetIntegerv				= GPAT("alGetIntegerv");
-	qalGetListener3f			= GPAT("alGetListener3f");
-	qalGetListenerf				= GPAT("alGetListenerf");
-	qalGetListenerfv			= GPAT("alGetListenerfv");
-	qalGetListeneri				= GPAT("alGetListeneri");
-	qalGetProcAddress			= GPAT("alGetProcAddress");
-	qalGetSource3f				= GPAT("alGetSource3f");
-	qalGetSourcef				= GPAT("alGetSourcef");
-	qalGetSourcefv				= GPAT("alGetSourcefv");
-	qalGetSourcei				= GPAT("alGetSourcei");
-	qalGetString				= GPAT("alGetString");
-	/*qalHint						= GPAT("alHint");*/
-	qalIsBuffer					= GPAT("alIsBuffer");
-	qalIsEnabled				= GPAT("alIsEnabled");
-	qalIsExtensionPresent		= GPAT("alIsExtensionPresent");
-	qalIsSource					= GPAT("alIsSource");
-	qalListener3f				= GPAT("alListener3f");
-	qalListenerf				= GPAT("alListenerf");
-	qalListenerfv				= GPAT("alListenerfv");
-	qalListeneri				= GPAT("alListeneri");
-	qalSource3f					= GPAT("alSource3f");
-	qalSourcef					= GPAT("alSourcef");
-	qalSourcefv					= GPAT("alSourcefv");
-	qalSourcei					= GPAT("alSourcei");
-	qalSourcePause				= GPAT("alSourcePause");
-	qalSourcePausev				= GPAT("alSourcePausev");
-	qalSourcePlay				= GPAT("alSourcePlay");
-	qalSourcePlayv				= GPAT("alSourcePlayv");
-	qalSourceQueueBuffers		= GPAT("alSourceQueueBuffers");
-	qalSourceRewind				= GPAT("alSourceRewind");
-	qalSourceRewindv			= GPAT("alSourceRewindv");
-	qalSourceStop				= GPAT("alSourceStop");
-	qalSourceStopv				= GPAT("alSourceStopv");
-	qalSourceUnqueueBuffers		= GPAT("alSourceUnqueueBuffers");
+	qalBufferData				= QAL_GetProcAddress("alBufferData");
+	qalDeleteBuffers			= QAL_GetProcAddress("alDeleteBuffers");
+	qalDeleteSources			= QAL_GetProcAddress("alDeleteSources");
+	qalDisable					= QAL_GetProcAddress("alDisable");
+	qalDistanceModel			= QAL_GetProcAddress("alDistanceModel");
+	qalDopplerFactor			= QAL_GetProcAddress("alDopplerFactor");
+	qalDopplerVelocity			= QAL_GetProcAddress("alDopplerVelocity");
+	qalEnable					= QAL_GetProcAddress("alEnable");
+	qalGenBuffers				= QAL_GetProcAddress("alGenBuffers");
+	qalGenSources				= QAL_GetProcAddress("alGenSources");
+	qalGetBoolean				= QAL_GetProcAddress("alGetBoolean");
+	qalGetBooleanv				= QAL_GetProcAddress("alGetBooleanv");
+	qalGetBufferf				= QAL_GetProcAddress("alGetBufferf");
+	qalGetBufferi				= QAL_GetProcAddress("alGetBufferi");
+	qalGetDouble				= QAL_GetProcAddress("alGetDouble");
+	qalGetDoublev				= QAL_GetProcAddress("alGetDoublev");
+	qalGetEnumValue				= QAL_GetProcAddress("alGetEnumValue");
+	qalGetError					= QAL_GetProcAddress("alGetError");
+	qalGetFloat					= QAL_GetProcAddress("alGetFloat");
+	qalGetFloatv				= QAL_GetProcAddress("alGetFloatv");
+	qalGetInteger				= QAL_GetProcAddress("alGetInteger");
+	qalGetIntegerv				= QAL_GetProcAddress("alGetIntegerv");
+	qalGetListener3f			= QAL_GetProcAddress("alGetListener3f");
+	qalGetListenerf				= QAL_GetProcAddress("alGetListenerf");
+	qalGetListenerfv			= QAL_GetProcAddress("alGetListenerfv");
+	qalGetListeneri				= QAL_GetProcAddress("alGetListeneri");
+	qalGetProcAddress			= QAL_GetProcAddress("alGetProcAddress");
+	qalGetSource3f				= QAL_GetProcAddress("alGetSource3f");
+	qalGetSourcef				= QAL_GetProcAddress("alGetSourcef");
+	qalGetSourcefv				= QAL_GetProcAddress("alGetSourcefv");
+	qalGetSourcei				= QAL_GetProcAddress("alGetSourcei");
+	qalGetString				= QAL_GetProcAddress("alGetString");
+	/*qalHint						= QAL_GetProcAddress("alHint");*/
+	qalIsBuffer					= QAL_GetProcAddress("alIsBuffer");
+	qalIsEnabled				= QAL_GetProcAddress("alIsEnabled");
+	qalIsExtensionPresent		= QAL_GetProcAddress("alIsExtensionPresent");
+	qalIsSource					= QAL_GetProcAddress("alIsSource");
+	qalListener3f				= QAL_GetProcAddress("alListener3f");
+	qalListenerf				= QAL_GetProcAddress("alListenerf");
+	qalListenerfv				= QAL_GetProcAddress("alListenerfv");
+	qalListeneri				= QAL_GetProcAddress("alListeneri");
+	qalSource3f					= QAL_GetProcAddress("alSource3f");
+	qalSourcef					= QAL_GetProcAddress("alSourcef");
+	qalSourcefv					= QAL_GetProcAddress("alSourcefv");
+	qalSourcei					= QAL_GetProcAddress("alSourcei");
+	qalSourcePause				= QAL_GetProcAddress("alSourcePause");
+	qalSourcePausev				= QAL_GetProcAddress("alSourcePausev");
+	qalSourcePlay				= QAL_GetProcAddress("alSourcePlay");
+	qalSourcePlayv				= QAL_GetProcAddress("alSourcePlayv");
+	qalSourceQueueBuffers		= QAL_GetProcAddress("alSourceQueueBuffers");
+	qalSourceRewind				= QAL_GetProcAddress("alSourceRewind");
+	qalSourceRewindv			= QAL_GetProcAddress("alSourceRewindv");
+	qalSourceStop				= QAL_GetProcAddress("alSourceStop");
+	qalSourceStopv				= QAL_GetProcAddress("alSourceStopv");
+	qalSourceUnqueueBuffers		= QAL_GetProcAddress("alSourceUnqueueBuffers");
 
 	if (alinit_fail) {
 		QAL_Shutdown();

@@ -38,12 +38,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <stdio.h>
 #include <stdlib.h>
 
-#define GPA(a)			dlsym(oalState.hInstOpenAL, a);
-
 #define AL_DRIVER_OPENAL	"???"
 
 typedef struct {
-	HINSTANCE	hInstOpenAL;
+	void*	lib;
 
 	ALCdevice	*device;
 	ALCcontext	*context;

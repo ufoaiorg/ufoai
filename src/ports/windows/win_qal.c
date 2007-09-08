@@ -25,14 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifdef HAVE_OPENAL
 
 #include <windows.h>
-#include <float.h>
 #include "../../client/qal.h"
 #include "win_qal.h"
-
-/*
-ALenum	(ALAPIENTRY * qalEAXSet)(const GUID*, ALuint, ALuint, ALvoid *, ALuint);
-ALenum	(ALAPIENTRY * qalEAXGet)(const GUID*, ALuint, ALuint, ALvoid *, ALuint);
-*/
 
 /**
  * @brief Binds our QAL function pointers to the appropriate AL stuff
@@ -42,7 +36,7 @@ qboolean QAL_Init (void)
 {
 	Com_DPrintf(DEBUG_SYSTEM, "...calling LoadLibrary( '%s' ): ", AL_DRIVER_OPENAL);
 
-	if ((oalState.hInstOpenAL = LoadLibrary(AL_DRIVER_OPENAL)) == NULL) {
+	if ((oalState.lib = LoadLibrary(AL_DRIVER_OPENAL)) == NULL) {
 		Com_Printf("OpenAL loading failed\n");
 		return qfalse;
 	}
@@ -50,34 +44,9 @@ qboolean QAL_Init (void)
 	if (!QAL_Link())
 		return qfalse;
 
-/*
-	qalEAXGet					= GPA("alEAXGet");
-	qalEAXSet					= GPA("alEAXSet");
-*/
-
 	openal_active = qtrue;
 
 	return qtrue;
-}
-
-/**
- * @brief Unloads the specified DLL then nulls out all the proc pointers
- * @sa QAL_Init
- */
-void QAL_Shutdown (void)
-{
-	if (oalState.hInstOpenAL)
-		FreeLibrary(oalState.hInstOpenAL);
-
-	oalState.hInstOpenAL = NULL;
-
-	/* general pointers */
-	QAL_Unlink();
-
-/*
-	qalEAXSet					= NULL;
-	qalEAXGet					= NULL;
-*/
 }
 
 #endif /* HAVE_OPENAL */

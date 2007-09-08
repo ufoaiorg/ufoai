@@ -38,7 +38,7 @@ qboolean QAL_Init (void)
 
 	Com_Printf("QAL_Init: Loading \"%s\"...\n", AL_DRIVER_OPENAL);
 
-	if ((oalState.hInstOpenAL = dlopen(AL_DRIVER_OPENAL, RTLD_LAZY|RTLD_GLOBAL)) == 0) {
+	if ((oalState.lib = dlopen(AL_DRIVER_OPENAL, RTLD_LAZY|RTLD_GLOBAL)) == 0) {
 		/* try path given via cvar */
 		if (strlen(s_libdir->string))
 			Q_strncpyz(libPath, s_libdir->string, sizeof(libPath));
@@ -48,7 +48,7 @@ qboolean QAL_Init (void)
 		Q_strcat(libPath, "/", sizeof(libPath));
 		Q_strcat(libPath, AL_DRIVER_OPENAL, sizeof(libPath));
 
-		if ((oalState.hInstOpenAL = dlopen(libPath, RTLD_LAZY)) == 0) {
+		if ((oalState.lib = dlopen(libPath, RTLD_LAZY)) == 0) {
 			Com_Printf("%s\n", dlerror());
 			return qfalse;
 		}
@@ -59,21 +59,6 @@ qboolean QAL_Init (void)
 		return qtrue;
 	} else
 		return qfalse;
-}
-
-/**
- * @brief Unloads the specified DLL then nulls out all the proc pointers
- * @sa QAL_Init
- */
-void QAL_Shutdown (void)
-{
-	if (oalState.hInstOpenAL)
-		dlclose(oalState.hInstOpenAL);
-
-	oalState.hInstOpenAL = NULL;
-
-	/* general pointers */
-	QAL_Unlink();
 }
 
 #endif /* HAVE_OPENAL */

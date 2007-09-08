@@ -40,10 +40,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  define ALCAPIENTRY
 #endif
 
-qboolean	QAL_Init (void);
-void		QAL_Shutdown (void);
-qboolean	QAL_Link(void);
-void		QAL_Unlink(void);
+qboolean QAL_Init(void);
+qboolean QAL_Link(void);
+void QAL_Unlink(void);
 
 extern qboolean					openal_active;
 

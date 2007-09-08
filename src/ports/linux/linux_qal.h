@@ -39,12 +39,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <dlfcn.h>
 
-#define GPA(a)	dlsym(oalState.hInstOpenAL, a);
-
+/* FIXME: make cvar */
 #define AL_DRIVER_OPENAL	"libopenal.so"
 
 typedef struct {
-	void*	hInstOpenAL;
+	void*	lib;
 
 	ALCdevice	*device;
 	ALCcontext	*context;

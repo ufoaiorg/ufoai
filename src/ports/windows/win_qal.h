@@ -36,26 +36,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <AL/al.h>
 #include <AL/alc.h>
 
-/*
-#include <AL/eax.h>
-*/
-
-#define GPA(a)			GetProcAddress(oalState.hInstOpenAL, a);
-
 #define AL_DRIVER_OPENAL	"OpenAL32.dll"
 
 typedef struct {
-	HINSTANCE	hInstOpenAL;
+	HINSTANCE	lib;
 
 	ALCdevice	*device;
 	ALCcontext	*context;
 } oalState_t;
 
 extern oalState_t	oalState;
-
-/*
-extern ALenum			(ALAPIENTRY * qalEAXSet)(const GUID*, ALuint, ALuint, ALvoid *, ALuint);
-extern ALenum			(ALAPIENTRY * qalEAXGet)(const GUID*, ALuint, ALuint, ALvoid *, ALuint);
-*/
 
 #endif	/* __WIN_QAL_H__ */
