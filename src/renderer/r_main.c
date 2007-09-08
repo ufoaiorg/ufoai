@@ -593,13 +593,127 @@ static void R_RenderView (void)
 
 /**
  * @brief
+ * @sa R_RenderFrame
+ * @sa R_EndFrame
+ */
+void R_BeginFrame (void)
+{
+	/* change modes if necessary */
+	if (r_mode->modified || vid_fullscreen->modified) {
+		R_SetMode();
+#ifdef _WIN32
+		VID_Restart_f();
+#endif
+	}
+	/* we definitly need a restart here */
+	if (r_ext_texture_compression->modified)
+		VID_Restart_f();
+
+	if (r_anisotropic->modified) {
+		if (r_anisotropic->integer > r_state.maxAnisotropic) {
+			Com_Printf("...max GL_EXT_texture_filter_anisotropic value is %i\n", r_state.maxAnisotropic);
+			Cvar_SetValue("r_anisotropic", r_state.maxAnisotropic);
+		}
+		/*R_UpdateAnisotropy();*/
+		r_anisotropic->modified = qfalse;
+	}
+
+	/* draw buffer stuff */
+	if (r_drawbuffer->modified) {
+		r_drawbuffer->modified = qfalse;
+
+		if (Q_stricmp(r_drawbuffer->string, "GL_FRONT") == 0)
+			qglDrawBuffer(GL_FRONT);
+		else
+			qglDrawBuffer(GL_BACK);
+	}
+
+	/* texturemode stuff */
+	/* Realtime set level of anisotropy filtering and change texture lod bias */
+	if (r_texturemode->modified) {
+		R_TextureMode(r_texturemode->string);
+		r_texturemode->modified = qfalse;
+	}
+
+	if (r_texturealphamode->modified) {
+		R_TextureAlphaMode(r_texturealphamode->string);
+		r_texturealphamode->modified = qfalse;
+	}
+
+	if (r_texturesolidmode->modified) {
+		R_TextureSolidMode(r_texturesolidmode->string);
+		r_texturesolidmode->modified = qfalse;
+	}
+
+	R_SetupGL2D();
+
+	/* clear screen if desired */
+	R_Clear();
+}
+
+/**
+ * @brief
  * @sa R_BeginFrame
  * @sa R_EndFrame
  */
 void R_RenderFrame (void)
 {
+	/* render the view in 3d mode */
 	R_RenderView();
+
+	/* go back into 2D mode for hud and the like */
 	R_SetupGL2D();
+}
+
+/**
+ * @brief
+ * @sa R_RenderFrame
+ * @sa R_BeginFrame
+ */
+void R_EndFrame (void)
+{
+	float g;
+
+	if (vid_gamma->modified) {
+		g = vid_gamma->value;
+
+		if (g < 0.1)
+			g = 0.1;
+		if (g > 3.0)
+			g = 3.0;
+
+		SDL_SetGamma(g, g, g);
+
+		Cvar_SetValue("vid_gamma", g);
+		vid_gamma->modified = qfalse;
+	}
+	SDL_GL_SwapBuffers();
+}
+
+/**
+ * @brief
+ */
+void R_TakeVideoFrame (int w, int h, byte * captureBuffer, byte * encodeBuffer, qboolean motionJpeg)
+{
+	size_t frameSize;
+	int i;
+
+	qglReadPixels(0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, captureBuffer);
+
+	if (motionJpeg) {
+		frameSize = R_SaveJPGToBuffer(encodeBuffer, 90, w, h, captureBuffer);
+		CL_WriteAVIVideoFrame(encodeBuffer, frameSize);
+	} else {
+		frameSize = w * h;
+
+		/* Pack to 24bpp and swap R and B */
+		for (i = 0; i < frameSize; i++) {
+			encodeBuffer[i * 3]     = captureBuffer[i * 4 + 2];
+			encodeBuffer[i * 3 + 1] = captureBuffer[i * 4 + 1];
+			encodeBuffer[i * 3 + 2] = captureBuffer[i * 4];
+		}
+		CL_WriteAVIVideoFrame(encodeBuffer, frameSize * 3);
+	}
 }
 
 static const cmdList_t r_commands[] = {
@@ -1034,113 +1148,4 @@ void R_Shutdown (void)
 
 	/* shutdown our QGL subsystem */
 	QR_UnLink();
-}
-
-/**
- * @brief
- * @sa R_RenderFrame
- */
-void R_BeginFrame (void)
-{
-	/* change modes if necessary */
-	if (r_mode->modified || vid_fullscreen->modified) {
-		R_SetMode();
-#ifdef _WIN32
-		VID_Restart_f();
-#endif
-	}
-	/* we definitly need a restart here */
-	if (r_ext_texture_compression->modified)
-		VID_Restart_f();
-
-	if (r_anisotropic->modified) {
-		if (r_anisotropic->integer > r_state.maxAnisotropic) {
-			Com_Printf("...max GL_EXT_texture_filter_anisotropic value is %i\n", r_state.maxAnisotropic);
-			Cvar_SetValue("r_anisotropic", r_state.maxAnisotropic);
-		}
-		/*R_UpdateAnisotropy();*/
-		r_anisotropic->modified = qfalse;
-	}
-
-	/* go into 2D mode */
-	R_SetupGL2D();
-
-	/* draw buffer stuff */
-	if (r_drawbuffer->modified) {
-		r_drawbuffer->modified = qfalse;
-
-		if (Q_stricmp(r_drawbuffer->string, "GL_FRONT") == 0)
-			qglDrawBuffer(GL_FRONT);
-		else
-			qglDrawBuffer(GL_BACK);
-	}
-
-	/* texturemode stuff */
-	/* Realtime set level of anisotropy filtering and change texture lod bias */
-	if (r_texturemode->modified) {
-		R_TextureMode(r_texturemode->string);
-		r_texturemode->modified = qfalse;
-	}
-
-	if (r_texturealphamode->modified) {
-		R_TextureAlphaMode(r_texturealphamode->string);
-		r_texturealphamode->modified = qfalse;
-	}
-
-	if (r_texturesolidmode->modified) {
-		R_TextureSolidMode(r_texturesolidmode->string);
-		r_texturesolidmode->modified = qfalse;
-	}
-
-	/* clear screen if desired */
-	R_Clear();
-}
-
-/**
- * @brief
- */
-void R_EndFrame (void)
-{
-	float g;
-
-	if (vid_gamma->modified) {
-		g = vid_gamma->value;
-
-		if (g < 0.1)
-			g = 0.1;
-		if (g > 3.0)
-			g = 3.0;
-
-		SDL_SetGamma(g, g, g);
-
-		Cvar_SetValue("vid_gamma", g);
-		vid_gamma->modified = qfalse;
-	}
-	SDL_GL_SwapBuffers();
-}
-
-/**
- * @brief
- */
-void R_TakeVideoFrame (int w, int h, byte * captureBuffer, byte * encodeBuffer, qboolean motionJpeg)
-{
-	size_t frameSize;
-	int i;
-
-	qglReadPixels(0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, captureBuffer);
-
-	if (motionJpeg) {
-		frameSize = R_SaveJPGToBuffer(encodeBuffer, 90, w, h, captureBuffer);
-		CL_WriteAVIVideoFrame(encodeBuffer, frameSize);
-	} else {
-		frameSize = w * h;
-
-		/* Pack to 24bpp and swap R and B */
-		for (i = 0; i < frameSize; i++) {
-			encodeBuffer[i * 3]     = captureBuffer[i * 4 + 2];
-			encodeBuffer[i * 3 + 1] = captureBuffer[i * 4 + 1];
-			encodeBuffer[i * 3 + 2] = captureBuffer[i * 4];
-		}
-		CL_WriteAVIVideoFrame(encodeBuffer, frameSize * 3);
-	}
 }
