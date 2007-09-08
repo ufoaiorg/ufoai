@@ -684,7 +684,6 @@ SND_ARTS_LIBS
 HAVE_SND_WAPI
 HAVE_CURSES
 HAVE_CURL
-HAVE_IPV6
 BUILD_CLIENT
 BUILD_DEDICATED
 BUILD_MASTER
@@ -696,6 +695,7 @@ PROFILING
 MMX
 EXE_EXT
 CLIENT_LIBS
+CLIENT_CFLAGS
 SERVER_LIBS
 GAME_LIBS
 TOOLS_LIBS
@@ -1311,19 +1311,13 @@ Optional Packages:
   --with-snd-arts         with arts sound support [default=check]
   --with-snd-wapi         with wapi sound support [default=check]
   --with-curl             compile with curl download support [default=check]
-  --with-ipv6             compile with ipv6 support [default=no]
   --with-curses           compile with curses console support [default=check]
-  --with-openal           build openal sound support [default=no]
+  --with-openal           build openal sound support [default=check]
   --with-openal-config=FILE
                           using the given openal-config
                           [default=openal-config]
   --with-opengl-framework compile with given opengl framework
                           [default=/System/Library/Frameworks/OpenGL.framework]
-  --with-sdl-framework    compile with given sdl framework
-                          [default=/Library/Frameworks/SDL.framework]
-  --with-sdl-ttf-framework
-                          compile with given sdl-ttf framework
-                          [default=/Library/Frameworks/SDL_ttf.framework]
   --with-openal-framework compile with given openal framework
                           [default=/System/Library/Frameworks/OpenAL.framework]
 
@@ -2036,15 +2030,6 @@ fi
 
 
 
-# Check whether --with-ipv6 was given.
-if test "${with_ipv6+set}" = set; then
-  withval=$with_ipv6;
-else
-  with_ipv6=no
-fi
-
-
-
 # Check whether --with-curses was given.
 if test "${with_curses+set}" = set; then
   withval=$with_curses;
@@ -2058,7 +2043,7 @@ fi
 if test "${with_openal+set}" = set; then
   withval=$with_openal;
 else
-  with_openal=no
+  with_openal=check
 fi
 
 
@@ -2081,24 +2066,6 @@ fi
 
 
 
-# Check whether --with-sdl_framework was given.
-if test "${with_sdl_framework+set}" = set; then
-  withval=$with_sdl_framework;
-else
-  with_sdl_framework=/Library/Frameworks/SDL.framework
-fi
-
-
-
-# Check whether --with-sdl_ttf_framework was given.
-if test "${with_sdl_ttf_framework+set}" = set; then
-  withval=$with_sdl_ttf_framework;
-else
-  with_sdl_ttf_framework=/Library/Frameworks/SDL_ttf.framework
-fi
-
-
-
 # Check whether --with-openal_framework was given.
 if test "${with_openal_framework+set}" = set; then
   withval=$with_openal_framework;
@@ -2115,7 +2082,6 @@ else
 fi
 
 
-# FIXME: Don't check for client libs if client is disabled
 # Check whether --enable-client was given.
 if test "${enable_client+set}" = set; then
   enableval=$enable_client;
@@ -2298,8 +2264,8 @@ elif test `echo $target_os | sed "s/\(darwin\).*/\1/"` = "darwin"
 then
 	TARGET_OS=darwin
 
-	CFLAGS="$CFLAGS -F$with_opengl_framework -F$with_openal_framework -F$with_sdl_framework -F$with_sdl_ttf_framework"
-	LDFLAGS="$LDFLAGS -framework IOKit -framework Foundation -framework SDL -framework SDL_ttf -framework OpenGL -framework OpenAL"
+	CFLAGS="$CFLAGS -F$with_opengl_framework -F$with_openal_framework"
+	LDFLAGS="$LDFLAGS -framework IOKit -framework Foundation -framework OpenGL -framework OpenAL"
 else
 	{ { echo "$as_me:$LINENO: error: The target operating system '$target_os' is unknown, please contact the developers" >&5
 echo "$as_me: error: The target operating system '$target_os' is unknown, please contact the developers" >&2;}
@@ -6997,8 +6963,8 @@ _ACEOF
   LIBS="-lws2_32 $LIBS"
 
 else
-  { { echo "$as_me:$LINENO: error: Winsock2 is needed for a Win32 mingw build." >&5
-echo "$as_me: error: Winsock2 is needed for a Win32 mingw build." >&2;}
+  { { echo "$as_me:$LINENO: error: Winsock2 is needed for a Windows mingw build." >&5
+echo "$as_me: error: Winsock2 is needed for a Windows mingw build." >&2;}
    { (exit 1); exit 1; }; }
 fi
 
@@ -7493,8 +7459,8 @@ done
 
 if test "$ac_cv_header_stdint_h" != "yes"
 then
-	{ { echo "$as_me:$LINENO: error: Couldn't find stdint.h!" >&5
-echo "$as_me: error: Couldn't find stdint.h!" >&2;}
+	{ { echo "$as_me:$LINENO: error: Could not find stdint.h!" >&5
+echo "$as_me: error: Could not find stdint.h!" >&2;}
    { (exit 1); exit 1; }; }
 fi
 
@@ -8123,16 +8089,17 @@ done
 
 if test "$ac_cv_header_zlib_h" != "yes"
 then
-	{ { echo "$as_me:$LINENO: error: Couldn't find zlib.h!" >&5
-echo "$as_me: error: Couldn't find zlib.h!" >&2;}
+	{ { echo "$as_me:$LINENO: error: Could not find zlib.h!" >&5
+echo "$as_me: error: Could not find zlib.h!" >&2;}
    { (exit 1); exit 1; }; }
 fi
-{ echo "$as_me:$LINENO: checking for library containing compress" >&5
-echo $ECHO_N "checking for library containing compress... $ECHO_C" >&6; }
-if test "${ac_cv_search_compress+set}" = set; then
+{ echo "$as_me:$LINENO: checking for compress in -lz" >&5
+echo $ECHO_N "checking for compress in -lz... $ECHO_C" >&6; }
+if test "${ac_cv_lib_z_compress+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  ac_func_search_save_LIBS=$LIBS
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lz  $LIBS"
 cat >conftest.$ac_ext <<_ACEOF
 /* confdefs.h.  */
 _ACEOF
@@ -8155,14 +8122,7 @@ return compress ();
   return 0;
 }
 _ACEOF
-for ac_lib in '' z; do
-  if test -z "$ac_lib"; then
-    ac_res="none required"
-  else
-    ac_res=-l$ac_lib
-    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
-  fi
-  rm -f conftest.$ac_objext conftest$ac_exeext
+rm -f conftest.$ac_objext conftest$ac_exeext
 if { (ac_try="$ac_link"
 case "(($ac_try" in
   *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
@@ -8196,109 +8156,37 @@ eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
-  ac_cv_search_compress=$ac_res
+  ac_cv_lib_z_compress=yes
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-
+	ac_cv_lib_z_compress=no
 fi
 
 rm -f core conftest.err conftest.$ac_objext \
-      conftest$ac_exeext
-  if test "${ac_cv_search_compress+set}" = set; then
-  break
+      conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
 fi
-done
-if test "${ac_cv_search_compress+set}" = set; then
-  :
+{ echo "$as_me:$LINENO: result: $ac_cv_lib_z_compress" >&5
+echo "${ECHO_T}$ac_cv_lib_z_compress" >&6; }
+if test $ac_cv_lib_z_compress = yes; then
+  LIBS="-lz"
 else
-  ac_cv_search_compress=no
-fi
-rm conftest.$ac_ext
-LIBS=$ac_func_search_save_LIBS
-fi
-{ echo "$as_me:$LINENO: result: $ac_cv_search_compress" >&5
-echo "${ECHO_T}$ac_cv_search_compress" >&6; }
-ac_res=$ac_cv_search_compress
-if test "$ac_res" != no; then
-  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
-
-fi
-
-if test "$ac_cv_search_compress" = "no"
-then
-	{ { echo "$as_me:$LINENO: error: couldn't find zlib!" >&5
-echo "$as_me: error: couldn't find zlib!" >&2;}
+  { { echo "$as_me:$LINENO: error: You must have libz!!!" >&5
+echo "$as_me: error: You must have libz!!!" >&2;}
    { (exit 1); exit 1; }; }
 fi
+
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 SERVER_LIBS="$SERVER_LIBS $LIBS"
 TOOLS_LIBS="$TOOLS_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
-# Check for openal-config
+# Check JPEG
 #---------------------------------------------------------------------------------------------
 
-openal_config=$with_openal_config
-# Extract the first word of "$openal_config", so it can be a program name with args.
-set dummy $openal_config; ac_word=$2
-{ echo "$as_me:$LINENO: checking for $ac_word" >&5
-echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6; }
-if test "${ac_cv_prog_HAVE_OPENAL_CONFIG+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  if test -n "$HAVE_OPENAL_CONFIG"; then
-  ac_cv_prog_HAVE_OPENAL_CONFIG="$HAVE_OPENAL_CONFIG" # Let the user override the test.
-else
-as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in $PATH
-do
-  IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-  for ac_exec_ext in '' $ac_executable_extensions; do
-  if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; }; then
-    ac_cv_prog_HAVE_OPENAL_CONFIG="yes"
-    echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-done
-IFS=$as_save_IFS
-
-fi
-fi
-HAVE_OPENAL_CONFIG=$ac_cv_prog_HAVE_OPENAL_CONFIG
-if test -n "$HAVE_OPENAL_CONFIG"; then
-  { echo "$as_me:$LINENO: result: $HAVE_OPENAL_CONFIG" >&5
-echo "${ECHO_T}$HAVE_OPENAL_CONFIG" >&6; }
-else
-  { echo "$as_me:$LINENO: result: no" >&5
-echo "${ECHO_T}no" >&6; }
-fi
-
-
-if test "$ac_cv_prog_HAVE_OPENAL_CONFIG" = "yes"
-then
-	OPENAL_CFLAGS=`$openal_config --cflags`
-
-	OPENAL_LIBS=`$openal_config --libs`
-
-else
-	{ echo "$as_me:$LINENO: WARNING: cannot find $openal_config might fail to find OpenAL!" >&5
-echo "$as_me: WARNING: cannot find $openal_config might fail to find OpenAL!" >&2;}
-fi
-
-#---------------------------------------------------------------------------------------------
-# Check for OpenAL headers and libraries
-#---------------------------------------------------------------------------------------------
-
-LIBS=
-if test "$with_openal" = "check" || test "$with_openal" = "yes"
-then
-
-
-for ac_header in AL/al.h AL/alc.h
+for ac_header in jpeglib.h
 do
 as_ac_Header=`echo "ac_cv_header_$ac_header" | $as_tr_sh`
 if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
@@ -8461,9 +8349,165 @@ fi
 
 done
 
-	if test "$ac_cv_header_AL_al_h" != "yes" || \
-		test "$ac_cv_header_AL_alc_h" != "yes"
+if test "$ac_cv_header_jpeglib_h" = "no"
+then
+	{ { echo "$as_me:$LINENO: error: You must have the JPEG development headers" >&5
+echo "$as_me: error: You must have the JPEG development headers" >&2;}
+   { (exit 1); exit 1; }; }
+fi
+LIBS=
+{ echo "$as_me:$LINENO: checking for jpeg_CreateDecompress in -ljpeg" >&5
+echo $ECHO_N "checking for jpeg_CreateDecompress in -ljpeg... $ECHO_C" >&6; }
+if test "${ac_cv_lib_jpeg_jpeg_CreateDecompress+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-ljpeg  $LIBS"
+cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char jpeg_CreateDecompress ();
+int
+main ()
+{
+return jpeg_CreateDecompress ();
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (ac_try="$ac_link"
+case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
+  (eval "$ac_link") 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag" || test ! -s conftest.err'
+  { (case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
+  (eval "$ac_try") 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
+  (eval "$ac_try") 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  ac_cv_lib_jpeg_jpeg_CreateDecompress=yes
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+	ac_cv_lib_jpeg_jpeg_CreateDecompress=no
+fi
+
+rm -f core conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ echo "$as_me:$LINENO: result: $ac_cv_lib_jpeg_jpeg_CreateDecompress" >&5
+echo "${ECHO_T}$ac_cv_lib_jpeg_jpeg_CreateDecompress" >&6; }
+if test $ac_cv_lib_jpeg_jpeg_CreateDecompress = yes; then
+  LIBS="-ljpeg"
+else
+  { { echo "$as_me:$LINENO: error: You must have libjpeg!!!" >&5
+echo "$as_me: error: You must have libjpeg!!!" >&2;}
+   { (exit 1); exit 1; }; }
+fi
+
+TOOLS_LIBS="$TOOLS_LIBS $LIBS"
+CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+
+if test "$enable_client" = "yes"
+then
+	CLIENT_CFLAGS=
+	LIBS=
+
+	if test "$with_openal" = "check" || test "$with_openal" = "yes"
 	then
+		#---------------------------------------------------------------------------------------------
+		# Check for openal-config
+		#---------------------------------------------------------------------------------------------
+		openal_config=$with_openal_config
+		OLD_CFLAGS=$CFLAGS
+		OLD_LDFLAGS=$LDFLAGS
+
+		# Extract the first word of "$openal_config", so it can be a program name with args.
+set dummy $openal_config; ac_word=$2
+{ echo "$as_me:$LINENO: checking for $ac_word" >&5
+echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6; }
+if test "${ac_cv_prog_HAVE_OPENAL_CONFIG+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  if test -n "$HAVE_OPENAL_CONFIG"; then
+  ac_cv_prog_HAVE_OPENAL_CONFIG="$HAVE_OPENAL_CONFIG" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+  for ac_exec_ext in '' $ac_executable_extensions; do
+  if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; }; then
+    ac_cv_prog_HAVE_OPENAL_CONFIG="yes"
+    echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+done
+IFS=$as_save_IFS
+
+fi
+fi
+HAVE_OPENAL_CONFIG=$ac_cv_prog_HAVE_OPENAL_CONFIG
+if test -n "$HAVE_OPENAL_CONFIG"; then
+  { echo "$as_me:$LINENO: result: $HAVE_OPENAL_CONFIG" >&5
+echo "${ECHO_T}$HAVE_OPENAL_CONFIG" >&6; }
+else
+  { echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6; }
+fi
+
+
+		if test "$ac_cv_prog_HAVE_OPENAL_CONFIG" = "yes"
+		then
+			CFLAGS=`$openal_config --cflags`
+			LDFLAGS=`$openal_config --libs`
+			OPENAL_CFLAGS=$CFLAGS
+
+			OPENAL_LIBS=$LDFLAGS
+
+		else
+			{ echo "$as_me:$LINENO: WARNING: cannot find $openal_config might fail to find OpenAL!" >&5
+echo "$as_me: WARNING: cannot find $openal_config might fail to find OpenAL!" >&2;}
+		fi
+
 
 
 for ac_header in OpenAL/al.h OpenAL/alc.h
@@ -8637,15 +8681,14 @@ done
 				{ { echo "$as_me:$LINENO: error: --with-openal specified but cannot find OpenAL header!" >&5
 echo "$as_me: error: --with-openal specified but cannot find OpenAL header!" >&2;}
    { (exit 1); exit 1; }; }
+			else
+				HAVE_OPENAL=0
+
 			fi
 		else
 			HAVE_OPENAL=1
 
 		fi
-	elif test "$with_openal" = "yes"
-	then
-		HAVE_OPENAL=1
-
 		{ echo "$as_me:$LINENO: checking for library containing alSourcePlay" >&5
 echo $ECHO_N "checking for library containing alSourcePlay... $ECHO_C" >&6; }
 if test "${ac_cv_search_alSourcePlay+set}" = set; then
@@ -8747,23 +8790,23 @@ fi
 
 		if test "$ac_cv_search_alSourcePlay" = "no"
 		then
-			{ echo "$as_me:$LINENO: WARNING: couldn't find OpenAL library!" >&5
-echo "$as_me: WARNING: couldn't find OpenAL library!" >&2;}
+			{ echo "$as_me:$LINENO: WARNING: Could not find OpenAL library!" >&5
+echo "$as_me: WARNING: Could not find OpenAL library!" >&2;}
 			HAVE_OPENAL=0
 
 		fi
-	fi
-else
-	{ echo "$as_me:$LINENO: Without OpenAL" >&5
+
+		CFLAGS=$OLD_CFLAGS
+		LDFLAGS=$OLD_LDFLAGS
+	else
+		{ echo "$as_me:$LINENO: Without OpenAL" >&5
 echo "$as_me: Without OpenAL" >&6;}
-fi
-#CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+	fi
 
-#---------------------------------------------------------------------------------------------
-# Check for libogg
-#---------------------------------------------------------------------------------------------
+	#---------------------------------------------------------------------------------------------
+	# Check for libogg
+	#---------------------------------------------------------------------------------------------
 
-LIBS=
 { echo "$as_me:$LINENO: checking for ogg_stream_init in -logg" >&5
 echo $ECHO_N "checking for ogg_stream_init in -logg... $ECHO_C" >&6; }
 if test "${ac_cv_lib_ogg_ogg_stream_init+set}" = set; then
@@ -8842,20 +8885,23 @@ fi
 { echo "$as_me:$LINENO: result: $ac_cv_lib_ogg_ogg_stream_init" >&5
 echo "${ECHO_T}$ac_cv_lib_ogg_ogg_stream_init" >&6; }
 if test $ac_cv_lib_ogg_ogg_stream_init = yes; then
-  LIBS="-logg"
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBOGG 1
+_ACEOF
+
+  LIBS="-logg $LIBS"
+
 else
   { { echo "$as_me:$LINENO: error: You must have libogg!!!" >&5
 echo "$as_me: error: You must have libogg!!!" >&2;}
    { (exit 1); exit 1; }; }
 fi
 
-CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
-#---------------------------------------------------------------------------------------------
-# Check for libvorbis
-#---------------------------------------------------------------------------------------------
+	#---------------------------------------------------------------------------------------------
+	# Check for libvorbis
+	#---------------------------------------------------------------------------------------------
 
-LIBS=
 { echo "$as_me:$LINENO: checking for vorbis_info_init in -lvorbis" >&5
 echo $ECHO_N "checking for vorbis_info_init in -lvorbis... $ECHO_C" >&6; }
 if test "${ac_cv_lib_vorbis_vorbis_info_init+set}" = set; then
@@ -8934,20 +8980,23 @@ fi
 { echo "$as_me:$LINENO: result: $ac_cv_lib_vorbis_vorbis_info_init" >&5
 echo "${ECHO_T}$ac_cv_lib_vorbis_vorbis_info_init" >&6; }
 if test $ac_cv_lib_vorbis_vorbis_info_init = yes; then
-  LIBS="-lvorbis"
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBVORBIS 1
+_ACEOF
+
+  LIBS="-lvorbis $LIBS"
+
 else
   { { echo "$as_me:$LINENO: error: You must have libvorbis!!!" >&5
 echo "$as_me: error: You must have libvorbis!!!" >&2;}
    { (exit 1); exit 1; }; }
 fi
 
-CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
-#---------------------------------------------------------------------------------------------
-# Check for libvorbis file
-#---------------------------------------------------------------------------------------------
+	#---------------------------------------------------------------------------------------------
+	# Check for libvorbis file
+	#---------------------------------------------------------------------------------------------
 
-LIBS=
 { echo "$as_me:$LINENO: checking for ov_open in -lvorbisfile" >&5
 echo $ECHO_N "checking for ov_open in -lvorbisfile... $ECHO_C" >&6; }
 if test "${ac_cv_lib_vorbisfile_ov_open+set}" = set; then
@@ -9026,21 +9075,194 @@ fi
 { echo "$as_me:$LINENO: result: $ac_cv_lib_vorbisfile_ov_open" >&5
 echo "${ECHO_T}$ac_cv_lib_vorbisfile_ov_open" >&6; }
 if test $ac_cv_lib_vorbisfile_ov_open = yes; then
-  LIBS="-lvorbisfile"
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBVORBISFILE 1
+_ACEOF
+
+  LIBS="-lvorbisfile $LIBS"
+
 else
   { { echo "$as_me:$LINENO: error: You must have libvorbisfile!!!" >&5
 echo "$as_me: error: You must have libvorbisfile!!!" >&2;}
    { (exit 1); exit 1; }; }
 fi
 
-CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
-#---------------------------------------------------------------------------------------------
-# Check for gettext
-#---------------------------------------------------------------------------------------------
+	#---------------------------------------------------------------------------------------------
+	# Check for gettext
+	#---------------------------------------------------------------------------------------------
 
-LIBS=
-{ echo "$as_me:$LINENO: checking for library containing gettext" >&5
+for ac_header in libintl.h
+do
+as_ac_Header=`echo "ac_cv_header_$ac_header" | $as_tr_sh`
+if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
+  { echo "$as_me:$LINENO: checking for $ac_header" >&5
+echo $ECHO_N "checking for $ac_header... $ECHO_C" >&6; }
+if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+fi
+ac_res=`eval echo '${'$as_ac_Header'}'`
+	       { echo "$as_me:$LINENO: result: $ac_res" >&5
+echo "${ECHO_T}$ac_res" >&6; }
+else
+  # Is the header compilable?
+{ echo "$as_me:$LINENO: checking $ac_header usability" >&5
+echo $ECHO_N "checking $ac_header usability... $ECHO_C" >&6; }
+cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+$ac_includes_default
+#include <$ac_header>
+_ACEOF
+rm -f conftest.$ac_objext
+if { (ac_try="$ac_compile"
+case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
+  (eval "$ac_compile") 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag" || test ! -s conftest.err'
+  { (case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
+  (eval "$ac_try") 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest.$ac_objext'
+  { (case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
+  (eval "$ac_try") 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  ac_header_compiler=yes
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+	ac_header_compiler=no
+fi
+
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+{ echo "$as_me:$LINENO: result: $ac_header_compiler" >&5
+echo "${ECHO_T}$ac_header_compiler" >&6; }
+
+# Is the header present?
+{ echo "$as_me:$LINENO: checking $ac_header presence" >&5
+echo $ECHO_N "checking $ac_header presence... $ECHO_C" >&6; }
+cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+#include <$ac_header>
+_ACEOF
+if { (ac_try="$ac_cpp conftest.$ac_ext"
+case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
+  (eval "$ac_cpp conftest.$ac_ext") 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } >/dev/null; then
+  if test -s conftest.err; then
+    ac_cpp_err=$ac_c_preproc_warn_flag
+    ac_cpp_err=$ac_cpp_err$ac_c_werror_flag
+  else
+    ac_cpp_err=
+  fi
+else
+  ac_cpp_err=yes
+fi
+if test -z "$ac_cpp_err"; then
+  ac_header_preproc=yes
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+  ac_header_preproc=no
+fi
+
+rm -f conftest.err conftest.$ac_ext
+{ echo "$as_me:$LINENO: result: $ac_header_preproc" >&5
+echo "${ECHO_T}$ac_header_preproc" >&6; }
+
+# So?  What about this header?
+case $ac_header_compiler:$ac_header_preproc:$ac_c_preproc_warn_flag in
+  yes:no: )
+    { echo "$as_me:$LINENO: WARNING: $ac_header: accepted by the compiler, rejected by the preprocessor!" >&5
+echo "$as_me: WARNING: $ac_header: accepted by the compiler, rejected by the preprocessor!" >&2;}
+    { echo "$as_me:$LINENO: WARNING: $ac_header: proceeding with the compiler's result" >&5
+echo "$as_me: WARNING: $ac_header: proceeding with the compiler's result" >&2;}
+    ac_header_preproc=yes
+    ;;
+  no:yes:* )
+    { echo "$as_me:$LINENO: WARNING: $ac_header: present but cannot be compiled" >&5
+echo "$as_me: WARNING: $ac_header: present but cannot be compiled" >&2;}
+    { echo "$as_me:$LINENO: WARNING: $ac_header:     check for missing prerequisite headers?" >&5
+echo "$as_me: WARNING: $ac_header:     check for missing prerequisite headers?" >&2;}
+    { echo "$as_me:$LINENO: WARNING: $ac_header: see the Autoconf documentation" >&5
+echo "$as_me: WARNING: $ac_header: see the Autoconf documentation" >&2;}
+    { echo "$as_me:$LINENO: WARNING: $ac_header:     section \"Present But Cannot Be Compiled\"" >&5
+echo "$as_me: WARNING: $ac_header:     section \"Present But Cannot Be Compiled\"" >&2;}
+    { echo "$as_me:$LINENO: WARNING: $ac_header: proceeding with the preprocessor's result" >&5
+echo "$as_me: WARNING: $ac_header: proceeding with the preprocessor's result" >&2;}
+    { echo "$as_me:$LINENO: WARNING: $ac_header: in the future, the compiler will take precedence" >&5
+echo "$as_me: WARNING: $ac_header: in the future, the compiler will take precedence" >&2;}
+
+    ;;
+esac
+{ echo "$as_me:$LINENO: checking for $ac_header" >&5
+echo $ECHO_N "checking for $ac_header... $ECHO_C" >&6; }
+if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  eval "$as_ac_Header=\$ac_header_preproc"
+fi
+ac_res=`eval echo '${'$as_ac_Header'}'`
+	       { echo "$as_me:$LINENO: result: $ac_res" >&5
+echo "${ECHO_T}$ac_res" >&6; }
+
+fi
+if test `eval echo '${'$as_ac_Header'}'` = yes; then
+  cat >>confdefs.h <<_ACEOF
+#define `echo "HAVE_$ac_header" | $as_tr_cpp` 1
+_ACEOF
+
+fi
+
+done
+
+	if test "$ac_cv_header_libintl_h" != "yes"
+	then
+		{ { echo "$as_me:$LINENO: error: Could not find libintl.h!" >&5
+echo "$as_me: error: Could not find libintl.h!" >&2;}
+   { (exit 1); exit 1; }; }
+	fi
+
+	{ echo "$as_me:$LINENO: checking for library containing gettext" >&5
 echo $ECHO_N "checking for library containing gettext... $ECHO_C" >&6; }
 if test "${ac_cv_search_gettext+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -9139,22 +9361,22 @@ if test "$ac_res" != no; then
 
 fi
 
-if test "$ac_cv_search_gettext" = "no"
-then
-	{ { echo "$as_me:$LINENO: error: couldn't find internationalization library with gettext in it" >&5
-echo "$as_me: error: couldn't find internationalization library with gettext in it" >&2;}
+	if test "$ac_cv_search_gettext" = "no"
+	then
+		{ { echo "$as_me:$LINENO: error: Could not find internationalization library with gettext in it" >&5
+echo "$as_me: error: Could not find internationalization library with gettext in it" >&2;}
    { (exit 1); exit 1; }; }
-fi
-#AC_CHECK_LIB(intl, gettext, LIBS="-lintl", AC_MSG_ERROR([You must have libintl!!!]))
-CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+	fi
+	#AC_CHECK_LIB(intl, gettext, [], AC_MSG_ERROR([You must have libintl!!!]))
 
-#---------------------------------------------------------------------------------------------
-# Check SDL
-#---------------------------------------------------------------------------------------------
+	#---------------------------------------------------------------------------------------------
+	# Check SDL
+	#---------------------------------------------------------------------------------------------
+	sdl_config=$with_sdl_config
+	OLD_CFLAGS=$CFLAGS
+	OLD_LDFLAGS=$LDFLAGS
 
-sdl_config=$with_sdl_config
-
-# Extract the first word of "$sdl_config", so it can be a program name with args.
+	# Extract the first word of "$sdl_config", so it can be a program name with args.
 set dummy $sdl_config; ac_word=$2
 { echo "$as_me:$LINENO: checking for $ac_word" >&5
 echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6; }
@@ -9191,35 +9413,33 @@ echo "${ECHO_T}no" >&6; }
 fi
 
 
-if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
-then
-	SDL_CFLAGS=`$sdl_config --cflags`
+	if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
+	then
+		CFLAGS=`$sdl_config --cflags`
+		LDFLAGS=`$sdl_config --libs`
+		SDL_CFLAGS=$CFLAGS
 
-	SDL_LIBS=`$sdl_config --libs`
+		SDL_LIBS=$LDFLAGS
 
-else
-	{ echo "$as_me:$LINENO: WARNING: cannot find $sdl_config might fail to find SDL!" >&5
+	else
+		{ echo "$as_me:$LINENO: WARNING: cannot find $sdl_config might fail to find SDL!" >&5
 echo "$as_me: WARNING: cannot find $sdl_config might fail to find SDL!" >&2;}
-fi
+	fi
 
-if test "$with_snd_sdl" = "check" || test "$with_snd_sdl" = "yes"
-then
-	HAVE_SND_SDL=1
+	if test "$with_snd_sdl" = "check" || test "$with_snd_sdl" = "yes"
+	then
+		HAVE_SND_SDL=1
 
-else
-	{ echo "$as_me:$LINENO: Without SDL sound" >&5
+	else
+		{ echo "$as_me:$LINENO: Without SDL sound" >&5
 echo "$as_me: Without SDL sound" >&6;}
-	HAVE_SND_SDL=0
+		HAVE_SND_SDL=0
 
-fi
+	fi
 
-#---------------------------------------------------------------------------------------------
-# Check for SDL headers and libraries
-#---------------------------------------------------------------------------------------------
-
-OLD_CFLAGS=$CFLAGS
-CFLAGS="$CFLAGS $SDL_CFLAGS"
-
+	#---------------------------------------------------------------------------------------------
+	# Check for SDL headers and libraries
+	#---------------------------------------------------------------------------------------------
 
 for ac_header in SDL.h
 do
@@ -9384,10 +9604,18 @@ fi
 
 done
 
-if test "$ac_cv_header_SDL_h" != "yes"
-then
+	if test "$ac_cv_header_SDL_h" != "yes"
+	then
+		{ { echo "$as_me:$LINENO: error: You must have the SDL development headers" >&5
+echo "$as_me: error: You must have the SDL development headers" >&2;}
+   { (exit 1); exit 1; }; }
+	fi
 
-for ac_header in SDL/SDL.h
+	#---------------------------------------------------------------------------------------------
+	# Check for SDL_ttf
+	#---------------------------------------------------------------------------------------------
+
+for ac_header in SDL_ttf.h
 do
 as_ac_Header=`echo "ac_cv_header_$ac_header" | $as_tr_sh`
 if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
@@ -9550,328 +9778,20 @@ fi
 
 done
 
-	if test "$ac_cv_header_SDL_SDL_h" != "yes"
+	if test "$ac_cv_header_SDL_ttf_h" != "yes"
 	then
-		if test "$enable_client" = "yes"
-		then
-			{ { echo "$as_me:$LINENO: error: You must have the SDL development headers" >&5
-echo "$as_me: error: You must have the SDL development headers" >&2;}
-   { (exit 1); exit 1; }; }
-		fi
-	else
-		SDL_HEADER="SDL/SDL.h"
-
-cat >>confdefs.h <<\_ACEOF
-#define USE_SDL_FRAMEWORK 1
-_ACEOF
-
-	fi
-else
-	SDL_HEADER="SDL.h"
-fi
-
-CFLAGS=$OLD_CFLAGS
-
-OLD_LDFLAGS=$LDFLAGS
-LDFLAGS="$LDFLAGS $SDL_LDFLAGS"
-{ echo "$as_me:$LINENO: checking for library containing SDL_Init" >&5
-echo $ECHO_N "checking for library containing SDL_Init... $ECHO_C" >&6; }
-if test "${ac_cv_search_SDL_Init+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  ac_func_search_save_LIBS=$LIBS
-cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char SDL_Init ();
-int
-main ()
-{
-return SDL_Init ();
-  ;
-  return 0;
-}
-_ACEOF
-for ac_lib in '' SDL; do
-  if test -z "$ac_lib"; then
-    ac_res="none required"
-  else
-    ac_res=-l$ac_lib
-    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
-  fi
-  rm -f conftest.$ac_objext conftest$ac_exeext
-if { (ac_try="$ac_link"
-case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_link") 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-	 { ac_try='test -z "$ac_c_werror_flag" || test ! -s conftest.err'
-  { (case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_try") 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest$ac_exeext'
-  { (case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_try") 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  ac_cv_search_SDL_Init=$ac_res
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-
-fi
-
-rm -f core conftest.err conftest.$ac_objext \
-      conftest$ac_exeext
-  if test "${ac_cv_search_SDL_Init+set}" = set; then
-  break
-fi
-done
-if test "${ac_cv_search_SDL_Init+set}" = set; then
-  :
-else
-  ac_cv_search_SDL_Init=no
-fi
-rm conftest.$ac_ext
-LIBS=$ac_func_search_save_LIBS
-fi
-{ echo "$as_me:$LINENO: result: $ac_cv_search_SDL_Init" >&5
-echo "${ECHO_T}$ac_cv_search_SDL_Init" >&6; }
-ac_res=$ac_cv_search_SDL_Init
-if test "$ac_res" != no; then
-  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
-
-fi
-
-if test "$ac_cv_search_SDL_Init" = "no"
-then
-	if test "$enable_client" = "yes"
-	then
-		{ { echo "$as_me:$LINENO: error: You must have the SDL development libraries" >&5
-echo "$as_me: error: You must have the SDL development libraries" >&2;}
-   { (exit 1); exit 1; }; }
-	fi
-fi
-LDFLAGS=$OLD_LDFLAGS
-
-#---------------------------------------------------------------------------------------------
-# Check for SDL_ttf
-#---------------------------------------------------------------------------------------------
-
-OLD_CFLAGS=$CFLAGS
-CFLAGS="$CFLAGS $SDL_CFLAGS"
-
-
-for ac_header in SDL_ttf.h
-do
-as_ac_Header=`echo "ac_cv_header_$ac_header" | $as_tr_sh`
-{ echo "$as_me:$LINENO: checking for $ac_header" >&5
-echo $ECHO_N "checking for $ac_header... $ECHO_C" >&6; }
-if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-		#include <$SDL_HEADER>
-
-
-#include <$ac_header>
-_ACEOF
-rm -f conftest.$ac_objext
-if { (ac_try="$ac_compile"
-case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_compile") 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-	 { ac_try='test -z "$ac_c_werror_flag" || test ! -s conftest.err'
-  { (case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_try") 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest.$ac_objext'
-  { (case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_try") 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  eval "$as_ac_Header=yes"
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-	eval "$as_ac_Header=no"
-fi
-
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-fi
-ac_res=`eval echo '${'$as_ac_Header'}'`
-	       { echo "$as_me:$LINENO: result: $ac_res" >&5
-echo "${ECHO_T}$ac_res" >&6; }
-if test `eval echo '${'$as_ac_Header'}'` = yes; then
-  cat >>confdefs.h <<_ACEOF
-#define `echo "HAVE_$ac_header" | $as_tr_cpp` 1
-_ACEOF
-
-fi
-
-done
-
-if test "$ac_cv_header_SDL_ttf_h" != "yes"
-then
-
-for ac_header in SDL_ttf/SDL_ttf.h
-do
-as_ac_Header=`echo "ac_cv_header_$ac_header" | $as_tr_sh`
-{ echo "$as_me:$LINENO: checking for $ac_header" >&5
-echo $ECHO_N "checking for $ac_header... $ECHO_C" >&6; }
-if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-			#include <$SDL_HEADER>
-
-
-#include <$ac_header>
-_ACEOF
-rm -f conftest.$ac_objext
-if { (ac_try="$ac_compile"
-case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_compile") 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-	 { ac_try='test -z "$ac_c_werror_flag" || test ! -s conftest.err'
-  { (case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_try") 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest.$ac_objext'
-  { (case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_try") 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  eval "$as_ac_Header=yes"
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-	eval "$as_ac_Header=no"
-fi
-
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-fi
-ac_res=`eval echo '${'$as_ac_Header'}'`
-	       { echo "$as_me:$LINENO: result: $ac_res" >&5
-echo "${ECHO_T}$ac_res" >&6; }
-if test `eval echo '${'$as_ac_Header'}'` = yes; then
-  cat >>confdefs.h <<_ACEOF
-#define `echo "HAVE_$ac_header" | $as_tr_cpp` 1
-_ACEOF
-
-fi
-
-done
-
-	if test "$ac_cv_header_SDL_ttf_SDL_ttf_h" != "yes"
-	then
-		if test "$enable_client" = "yes"
-		then
-			{ { echo "$as_me:$LINENO: error: You must have the SDL_ttf development headers" >&5
+		{ { echo "$as_me:$LINENO: error: You must have the SDL_ttf development headers" >&5
 echo "$as_me: error: You must have the SDL_ttf development headers" >&2;}
    { (exit 1); exit 1; }; }
-		fi
-	else
-
-cat >>confdefs.h <<\_ACEOF
-#define USE_SDL_TTF_FRAMEWORK 1
-_ACEOF
-
 	fi
-fi
-CFLAGS=$OLD_CFLAGS
 
-LIBS=
-{ echo "$as_me:$LINENO: checking for library containing TTF_Init" >&5
-echo $ECHO_N "checking for library containing TTF_Init... $ECHO_C" >&6; }
-if test "${ac_cv_search_TTF_Init+set}" = set; then
+{ echo "$as_me:$LINENO: checking for TTF_Init in -lSDL_ttf" >&5
+echo $ECHO_N "checking for TTF_Init in -lSDL_ttf... $ECHO_C" >&6; }
+if test "${ac_cv_lib_SDL_ttf_TTF_Init+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  ac_func_search_save_LIBS=$LIBS
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lSDL_ttf  $LIBS"
 cat >conftest.$ac_ext <<_ACEOF
 /* confdefs.h.  */
 _ACEOF
@@ -9890,122 +9810,6 @@ int
 main ()
 {
 return TTF_Init ();
-  ;
-  return 0;
-}
-_ACEOF
-for ac_lib in '' SDL_ttf; do
-  if test -z "$ac_lib"; then
-    ac_res="none required"
-  else
-    ac_res=-l$ac_lib
-    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
-  fi
-  rm -f conftest.$ac_objext conftest$ac_exeext
-if { (ac_try="$ac_link"
-case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_link") 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-	 { ac_try='test -z "$ac_c_werror_flag" || test ! -s conftest.err'
-  { (case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_try") 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest$ac_exeext'
-  { (case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_try") 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  ac_cv_search_TTF_Init=$ac_res
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-
-fi
-
-rm -f core conftest.err conftest.$ac_objext \
-      conftest$ac_exeext
-  if test "${ac_cv_search_TTF_Init+set}" = set; then
-  break
-fi
-done
-if test "${ac_cv_search_TTF_Init+set}" = set; then
-  :
-else
-  ac_cv_search_TTF_Init=no
-fi
-rm conftest.$ac_ext
-LIBS=$ac_func_search_save_LIBS
-fi
-{ echo "$as_me:$LINENO: result: $ac_cv_search_TTF_Init" >&5
-echo "${ECHO_T}$ac_cv_search_TTF_Init" >&6; }
-ac_res=$ac_cv_search_TTF_Init
-if test "$ac_res" != no; then
-  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
-
-fi
-
-if test "$ac_cv_search_TTF_Init" = "no"
-then
-	if test "$enable_client" = "yes"
-	then
-		{ { echo "$as_me:$LINENO: error: You must have the SDL_ttf development libraries" >&5
-echo "$as_me: error: You must have the SDL_ttf development libraries" >&2;}
-   { (exit 1); exit 1; }; }
-	fi
-fi
-CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-
-#---------------------------------------------------------------------------------------------
-# Check JPEG
-#---------------------------------------------------------------------------------------------
-
-LIBS=
-{ echo "$as_me:$LINENO: checking for jpeg_CreateDecompress in -ljpeg" >&5
-echo $ECHO_N "checking for jpeg_CreateDecompress in -ljpeg... $ECHO_C" >&6; }
-if test "${ac_cv_lib_jpeg_jpeg_CreateDecompress+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-ljpeg  $LIBS"
-cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char jpeg_CreateDecompress ();
-int
-main ()
-{
-return jpeg_CreateDecompress ();
   ;
   return 0;
 }
@@ -10044,36 +9848,211 @@ eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
-  ac_cv_lib_jpeg_jpeg_CreateDecompress=yes
+  ac_cv_lib_SDL_ttf_TTF_Init=yes
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-	ac_cv_lib_jpeg_jpeg_CreateDecompress=no
+	ac_cv_lib_SDL_ttf_TTF_Init=no
 fi
 
 rm -f core conftest.err conftest.$ac_objext \
       conftest$ac_exeext conftest.$ac_ext
 LIBS=$ac_check_lib_save_LIBS
 fi
-{ echo "$as_me:$LINENO: result: $ac_cv_lib_jpeg_jpeg_CreateDecompress" >&5
-echo "${ECHO_T}$ac_cv_lib_jpeg_jpeg_CreateDecompress" >&6; }
-if test $ac_cv_lib_jpeg_jpeg_CreateDecompress = yes; then
-  LIBS="-ljpeg"
+{ echo "$as_me:$LINENO: result: $ac_cv_lib_SDL_ttf_TTF_Init" >&5
+echo "${ECHO_T}$ac_cv_lib_SDL_ttf_TTF_Init" >&6; }
+if test $ac_cv_lib_SDL_ttf_TTF_Init = yes; then
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBSDL_TTF 1
+_ACEOF
+
+  LIBS="-lSDL_ttf $LIBS"
+
 else
-  { { echo "$as_me:$LINENO: error: You must have libjpeg!!!" >&5
-echo "$as_me: error: You must have libjpeg!!!" >&2;}
+  { { echo "$as_me:$LINENO: error: You must have SDL_ttf!!!" >&5
+echo "$as_me: error: You must have SDL_ttf!!!" >&2;}
    { (exit 1); exit 1; }; }
 fi
 
-TOOLS_LIBS="$TOOLS_LIBS $LIBS"
-CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
-#---------------------------------------------------------------------------------------------
-# Check PNG
-#---------------------------------------------------------------------------------------------
+	CFLAGS=$OLD_CFLAGS
+	LDFLAGS=$OLD_LDFLAGS
 
-LIBS=
+	#---------------------------------------------------------------------------------------------
+	# Check PNG
+	#---------------------------------------------------------------------------------------------
+
+for ac_header in png.h
+do
+as_ac_Header=`echo "ac_cv_header_$ac_header" | $as_tr_sh`
+if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
+  { echo "$as_me:$LINENO: checking for $ac_header" >&5
+echo $ECHO_N "checking for $ac_header... $ECHO_C" >&6; }
+if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+fi
+ac_res=`eval echo '${'$as_ac_Header'}'`
+	       { echo "$as_me:$LINENO: result: $ac_res" >&5
+echo "${ECHO_T}$ac_res" >&6; }
+else
+  # Is the header compilable?
+{ echo "$as_me:$LINENO: checking $ac_header usability" >&5
+echo $ECHO_N "checking $ac_header usability... $ECHO_C" >&6; }
+cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+$ac_includes_default
+#include <$ac_header>
+_ACEOF
+rm -f conftest.$ac_objext
+if { (ac_try="$ac_compile"
+case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
+  (eval "$ac_compile") 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag" || test ! -s conftest.err'
+  { (case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
+  (eval "$ac_try") 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest.$ac_objext'
+  { (case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
+  (eval "$ac_try") 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  ac_header_compiler=yes
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+	ac_header_compiler=no
+fi
+
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+{ echo "$as_me:$LINENO: result: $ac_header_compiler" >&5
+echo "${ECHO_T}$ac_header_compiler" >&6; }
+
+# Is the header present?
+{ echo "$as_me:$LINENO: checking $ac_header presence" >&5
+echo $ECHO_N "checking $ac_header presence... $ECHO_C" >&6; }
+cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+#include <$ac_header>
+_ACEOF
+if { (ac_try="$ac_cpp conftest.$ac_ext"
+case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
+  (eval "$ac_cpp conftest.$ac_ext") 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } >/dev/null; then
+  if test -s conftest.err; then
+    ac_cpp_err=$ac_c_preproc_warn_flag
+    ac_cpp_err=$ac_cpp_err$ac_c_werror_flag
+  else
+    ac_cpp_err=
+  fi
+else
+  ac_cpp_err=yes
+fi
+if test -z "$ac_cpp_err"; then
+  ac_header_preproc=yes
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+  ac_header_preproc=no
+fi
+
+rm -f conftest.err conftest.$ac_ext
+{ echo "$as_me:$LINENO: result: $ac_header_preproc" >&5
+echo "${ECHO_T}$ac_header_preproc" >&6; }
+
+# So?  What about this header?
+case $ac_header_compiler:$ac_header_preproc:$ac_c_preproc_warn_flag in
+  yes:no: )
+    { echo "$as_me:$LINENO: WARNING: $ac_header: accepted by the compiler, rejected by the preprocessor!" >&5
+echo "$as_me: WARNING: $ac_header: accepted by the compiler, rejected by the preprocessor!" >&2;}
+    { echo "$as_me:$LINENO: WARNING: $ac_header: proceeding with the compiler's result" >&5
+echo "$as_me: WARNING: $ac_header: proceeding with the compiler's result" >&2;}
+    ac_header_preproc=yes
+    ;;
+  no:yes:* )
+    { echo "$as_me:$LINENO: WARNING: $ac_header: present but cannot be compiled" >&5
+echo "$as_me: WARNING: $ac_header: present but cannot be compiled" >&2;}
+    { echo "$as_me:$LINENO: WARNING: $ac_header:     check for missing prerequisite headers?" >&5
+echo "$as_me: WARNING: $ac_header:     check for missing prerequisite headers?" >&2;}
+    { echo "$as_me:$LINENO: WARNING: $ac_header: see the Autoconf documentation" >&5
+echo "$as_me: WARNING: $ac_header: see the Autoconf documentation" >&2;}
+    { echo "$as_me:$LINENO: WARNING: $ac_header:     section \"Present But Cannot Be Compiled\"" >&5
+echo "$as_me: WARNING: $ac_header:     section \"Present But Cannot Be Compiled\"" >&2;}
+    { echo "$as_me:$LINENO: WARNING: $ac_header: proceeding with the preprocessor's result" >&5
+echo "$as_me: WARNING: $ac_header: proceeding with the preprocessor's result" >&2;}
+    { echo "$as_me:$LINENO: WARNING: $ac_header: in the future, the compiler will take precedence" >&5
+echo "$as_me: WARNING: $ac_header: in the future, the compiler will take precedence" >&2;}
+
+    ;;
+esac
+{ echo "$as_me:$LINENO: checking for $ac_header" >&5
+echo $ECHO_N "checking for $ac_header... $ECHO_C" >&6; }
+if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  eval "$as_ac_Header=\$ac_header_preproc"
+fi
+ac_res=`eval echo '${'$as_ac_Header'}'`
+	       { echo "$as_me:$LINENO: result: $ac_res" >&5
+echo "${ECHO_T}$ac_res" >&6; }
+
+fi
+if test `eval echo '${'$as_ac_Header'}'` = yes; then
+  cat >>confdefs.h <<_ACEOF
+#define `echo "HAVE_$ac_header" | $as_tr_cpp` 1
+_ACEOF
+
+fi
+
+done
+
+	if test "$ac_cv_header_png_h" = "no"
+	then
+		{ { echo "$as_me:$LINENO: error: You must have the PNG development headers" >&5
+echo "$as_me: error: You must have the PNG development headers" >&2;}
+   { (exit 1); exit 1; }; }
+	fi
+
 { echo "$as_me:$LINENO: checking for png_create_info_struct in -lpng" >&5
 echo $ECHO_N "checking for png_create_info_struct in -lpng... $ECHO_C" >&6; }
 if test "${ac_cv_lib_png_png_create_info_struct+set}" = set; then
@@ -10152,19 +10131,22 @@ fi
 { echo "$as_me:$LINENO: result: $ac_cv_lib_png_png_create_info_struct" >&5
 echo "${ECHO_T}$ac_cv_lib_png_png_create_info_struct" >&6; }
 if test $ac_cv_lib_png_png_create_info_struct = yes; then
-  LIBS="-lpng"
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBPNG 1
+_ACEOF
+
+  LIBS="-lpng $LIBS"
+
 else
   { { echo "$as_me:$LINENO: error: You must have libpng!!!" >&5
 echo "$as_me: error: You must have libpng!!!" >&2;}
    { (exit 1); exit 1; }; }
 fi
 
-CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
-#---------------------------------------------------------------------------------------------
-# Check for opengl headers
-#---------------------------------------------------------------------------------------------
-
+	#---------------------------------------------------------------------------------------------
+	# Check for opengl headers
+	#---------------------------------------------------------------------------------------------
 
 
 for ac_header in GL/gl.h GL/glu.h
@@ -10330,10 +10312,9 @@ fi
 
 done
 
-
-if test "$ac_cv_header_GL_gl_h" != "yes" || \
-	test "$ac_cv_header_GL_glu_h" != "yes"
-then
+	if test "$ac_cv_header_GL_gl_h" != "yes" || \
+		test "$ac_cv_header_GL_glu_h" != "yes"
+	then
 
 
 for ac_header in OpenGL/gl.h OpenGL/glu.h
@@ -10499,215 +10480,51 @@ fi
 
 done
 
-	if test "$ac_cv_header_OpenGL_gl_h" != "yes" || \
-		test "$ac_cv_header_OpenGL_glu_h" != "yes"
-	then
-		if test "$enable_client" = "yes"
+		if test "$ac_cv_header_OpenGL_gl_h" != "yes" || \
+			test "$ac_cv_header_OpenGL_glu_h" != "yes"
 		then
-			{ { echo "$as_me:$LINENO: error: Couldn't find OpenGL development headers!" >&5
-echo "$as_me: error: Couldn't find OpenGL development headers!" >&2;}
+			{ { echo "$as_me:$LINENO: error: Could not find OpenGL development headers!" >&5
+echo "$as_me: error: Could not find OpenGL development headers!" >&2;}
    { (exit 1); exit 1; }; }
-		fi
-	else
+		else
 
 cat >>confdefs.h <<\_ACEOF
 #define GL_H_WITHOUT_GL_DIR 1
 _ACEOF
 
-	fi
-fi
-
-#---------------------------------------------------------------------------------------------
-# Check for shaders
-#---------------------------------------------------------------------------------------------
-
-if test "$with_shaders" = "check" || test "$with_shaders" = "yes"
-then
-	shaders_enabled=no
-
-for ac_header in GL/glext.h
-do
-as_ac_Header=`echo "ac_cv_header_$ac_header" | $as_tr_sh`
-{ echo "$as_me:$LINENO: checking for $ac_header" >&5
-echo $ECHO_N "checking for $ac_header... $ECHO_C" >&6; }
-if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-		#include <GL/gl.h>
-		#include <GL/glu.h>
-
-
-#include <$ac_header>
-_ACEOF
-rm -f conftest.$ac_objext
-if { (ac_try="$ac_compile"
-case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_compile") 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-	 { ac_try='test -z "$ac_c_werror_flag" || test ! -s conftest.err'
-  { (case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_try") 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest.$ac_objext'
-  { (case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_try") 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  eval "$as_ac_Header=yes"
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-	eval "$as_ac_Header=no"
-fi
-
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-fi
-ac_res=`eval echo '${'$as_ac_Header'}'`
-	       { echo "$as_me:$LINENO: result: $ac_res" >&5
-echo "${ECHO_T}$ac_res" >&6; }
-if test `eval echo '${'$as_ac_Header'}'` = yes; then
-  cat >>confdefs.h <<_ACEOF
-#define `echo "HAVE_$ac_header" | $as_tr_cpp` 1
-_ACEOF
-
-fi
-
-done
-
-
-	if test "$ac_cv_header_GL_glext_h" = "yes"
-	then
-		{ echo "$as_me:$LINENO: checking OpenGL shader support" >&5
-echo $ECHO_N "checking OpenGL shader support... $ECHO_C" >&6; }
-		cat >conftest.$ac_ext <<_ACEOF
-
-				/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-					#include <GL/gl.h>
-					#include <GL/glu.h>
-					#include <GL/glext.h>
-
-
-int
-main ()
-{
-glEnable(GL_FRAGMENT_PROGRAM_ARB);
-
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext
-if { (ac_try="$ac_compile"
-case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_compile") 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-	 { ac_try='test -z "$ac_c_werror_flag" || test ! -s conftest.err'
-  { (case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_try") 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest.$ac_objext'
-  { (case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_try") 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  ac_cv_shaders=yes
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-	ac_cv_shaders=
-
-fi
-
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-		if test "$ac_cv_shaders" = "yes"
-		then
-			{ echo "$as_me:$LINENO: result: yes" >&5
-echo "${ECHO_T}yes" >&6; }
-			HAVE_SHADERS=1
-
-
-cat >>confdefs.h <<\_ACEOF
-#define HAVE_SHADERS 1
-_ACEOF
-
-			shaders_enabled=yes
-		else
-			{ echo "$as_me:$LINENO: result: no" >&5
-echo "${ECHO_T}no" >&6; }
-			if test "$with_shaders" = "yes"
-			then
-				{ { echo "$as_me:$LINENO: error: --with-shaders specified but couldn't use OpenGL shaders!" >&5
-echo "$as_me: error: --with-shaders specified but couldn't use OpenGL shaders!" >&2;}
-   { (exit 1); exit 1; }; }
-			fi
 		fi
 	fi
-else
-	{ echo "$as_me:$LINENO: Without shader support" >&5
+
+	#---------------------------------------------------------------------------------------------
+	# Check for shaders
+	#---------------------------------------------------------------------------------------------
+	if test "$with_shaders" = "yes"
+	then
+		HAVE_SHADERS=1
+
+		{ echo "$as_me:$LINENO: With shader support" >&5
+echo "$as_me: With shader support" >&6;}
+	else
+		{ echo "$as_me:$LINENO: Without shader support" >&5
 echo "$as_me: Without shader support" >&6;}
-fi
+	fi
 
-#---------------------------------------------------------------------------------------------
-# Check JACK
-#---------------------------------------------------------------------------------------------
+	#---------------------------------------------------------------------------------------------
+	# Set the client clags and libs - the rest are shared libs
+	#---------------------------------------------------------------------------------------------
+	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+	{ echo "$as_me:$LINENO: CLIENT LIBS: $CLIENT_LIBS $SDL_CFLAGS" >&5
+echo "$as_me: CLIENT LIBS: $CLIENT_LIBS $SDL_CFLAGS" >&6;}
+	CLIENT_CFLAGS="$CFLAGS"
+	{ echo "$as_me:$LINENO: CLIENT CFLAGS: $CLIENT_CFLAGS" >&5
+echo "$as_me: CLIENT CFLAGS: $CLIENT_CFLAGS" >&6;}
 
-LIBS=
-if test "$with_snd_jack" = "check" || test "$with_snd_jack" = "yes"
-then
+	#---------------------------------------------------------------------------------------------
+	# Check JACK
+	#---------------------------------------------------------------------------------------------
+	LIBS=
+	if test "$with_snd_jack" = "check" || test "$with_snd_jack" = "yes"
+	then
 
 for ac_header in jack/jack.h
 do
@@ -10872,9 +10689,9 @@ fi
 
 done
 
-	if test "$ac_cv_header_jack_jack_h" = "yes"
-	then
-		{ echo "$as_me:$LINENO: checking for library containing jack_client_open" >&5
+		if test "$ac_cv_header_jack_jack_h" = "yes"
+		then
+			{ echo "$as_me:$LINENO: checking for library containing jack_client_open" >&5
 echo $ECHO_N "checking for library containing jack_client_open... $ECHO_C" >&6; }
 if test "${ac_cv_search_jack_client_open+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -10973,35 +10790,33 @@ if test "$ac_res" != no; then
 
 fi
 
-		if test "$ac_cv_search_jack_client_open" != "no"
-		then
-			HAVE_SND_JACK=1
+			if test "$ac_cv_search_jack_client_open" != "no"
+			then
+				HAVE_SND_JACK=1
 
-		else
-			{ { echo "$as_me:$LINENO: error: found jack header but couldn't locate jack library!" >&5
-echo "$as_me: error: found jack header but couldn't locate jack library!" >&2;}
+			else
+				{ { echo "$as_me:$LINENO: error: found jack header but could not locate jack library!" >&5
+echo "$as_me: error: found jack header but could not locate jack library!" >&2;}
    { (exit 1); exit 1; }; }
-		fi
-	elif test "$with_snd_jack" = "yes"
-	then
-		{ { echo "$as_me:$LINENO: error: specified --with-snd-jack specified but cannot find jack/jack.h!" >&5
+			fi
+		elif test "$with_snd_jack" = "yes"
+		then
+			{ { echo "$as_me:$LINENO: error: specified --with-snd-jack specified but cannot find jack/jack.h!" >&5
 echo "$as_me: error: specified --with-snd-jack specified but cannot find jack/jack.h!" >&2;}
    { (exit 1); exit 1; }; }
-	fi
-else
-	{ echo "$as_me:$LINENO: Without JACK sound" >&5
+		fi
+	else
+		{ echo "$as_me:$LINENO: Without JACK sound" >&5
 echo "$as_me: Without JACK sound" >&6;}
-fi
-SND_JACK_LIBS="$SND_JACK_LIBS $LIBS"
+	fi
+	SND_JACK_LIBS="$SND_JACK_LIBS $LIBS"
 
-
-#---------------------------------------------------------------------------------------------
-# Check ALSA
-#---------------------------------------------------------------------------------------------
-
-LIBS=
-if test "$with_snd_alsa" = "check" || test "$with_snd_alsa" = "yes"
-then
+	#---------------------------------------------------------------------------------------------
+	# Check ALSA
+	#---------------------------------------------------------------------------------------------
+	LIBS=
+	if test "$with_snd_alsa" = "check" || test "$with_snd_alsa" = "yes"
+	then
 
 for ac_header in alsa/asoundlib.h
 do
@@ -11166,9 +10981,9 @@ fi
 
 done
 
-	if test "$ac_cv_header_alsa_asoundlib_h" = "yes"
-	then
-		{ echo "$as_me:$LINENO: checking for library containing snd_pcm_open" >&5
+		if test "$ac_cv_header_alsa_asoundlib_h" = "yes"
+		then
+			{ echo "$as_me:$LINENO: checking for library containing snd_pcm_open" >&5
 echo $ECHO_N "checking for library containing snd_pcm_open... $ECHO_C" >&6; }
 if test "${ac_cv_search_snd_pcm_open+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -11267,34 +11082,33 @@ if test "$ac_res" != no; then
 
 fi
 
-		if test "$ac_cv_search_snd_pcm_open" != "no"
-		then
-			HAVE_SND_ALSA=1
+			if test "$ac_cv_search_snd_pcm_open" != "no"
+			then
+				HAVE_SND_ALSA=1
 
-		else
-			{ { echo "$as_me:$LINENO: error: found alsa header but couldn't locate alsa library!" >&5
-echo "$as_me: error: found alsa header but couldn't locate alsa library!" >&2;}
+			else
+				{ { echo "$as_me:$LINENO: error: found alsa header but could not locate alsa library!" >&5
+echo "$as_me: error: found alsa header but could not locate alsa library!" >&2;}
    { (exit 1); exit 1; }; }
-		fi
-	elif test "$with_snd_alsa" = "yes"
-	then
-		{ { echo "$as_me:$LINENO: error: specified --with-snd-alsa specified but cannot find alsa/asoundlib.h!" >&5
+			fi
+		elif test "$with_snd_alsa" = "yes"
+		then
+			{ { echo "$as_me:$LINENO: error: specified --with-snd-alsa specified but cannot find alsa/asoundlib.h!" >&5
 echo "$as_me: error: specified --with-snd-alsa specified but cannot find alsa/asoundlib.h!" >&2;}
    { (exit 1); exit 1; }; }
-	fi
-else
-	{ echo "$as_me:$LINENO: Without ALSA sound" >&5
+		fi
+	else
+		{ echo "$as_me:$LINENO: Without ALSA sound" >&5
 echo "$as_me: Without ALSA sound" >&6;}
-fi
-SND_ALSA_LIBS="$SND_ALSA_LIBS $LIBS"
+	fi
+	SND_ALSA_LIBS="$SND_ALSA_LIBS $LIBS"
 
-#---------------------------------------------------------------------------------------------
-# Check OSS
-#---------------------------------------------------------------------------------------------
-
-LIBS=
-if test "$with_snd_alsa" = "check" || test "$with_snd_alsa" = "yes"
-then
+	#---------------------------------------------------------------------------------------------
+	# Check OSS
+	#---------------------------------------------------------------------------------------------
+	LIBS=
+	if test "$with_snd_alsa" = "check" || test "$with_snd_alsa" = "yes"
+	then
 
 for ac_header in linux/soundcard.h
 do
@@ -11459,8 +11273,8 @@ fi
 
 done
 
-	if test "$ac_cv_header_linux_soundcard_h" != "yes"
-	then
+		if test "$ac_cv_header_linux_soundcard_h" != "yes"
+		then
 
 for ac_header in sys/soundcard.h
 do
@@ -11625,34 +11439,33 @@ fi
 
 done
 
-		if test "$ac_cv_header_sys_soundcard_h" = "yes"
-		then
+			if test "$ac_cv_header_sys_soundcard_h" = "yes"
+			then
 
 cat >>confdefs.h <<\_ACEOF
 #define OSS_HEADER_SYS 1
 _ACEOF
 
+			fi
 		fi
-	fi
-	if test "$ac_cv_header_linux_soundcard_h" = "yes" || \
-		test "$ac_cv_header_sys_soundcard_h" = "yes"
-	then
-		HAVE_SND_OSS=1
+		if test "$ac_cv_header_linux_soundcard_h" = "yes" || \
+			test "$ac_cv_header_sys_soundcard_h" = "yes"
+		then
+			HAVE_SND_OSS=1
 
-	fi
-else
-	{ echo "$as_me:$LINENO: Without OSS sound" >&5
+		fi
+	else
+		{ echo "$as_me:$LINENO: Without OSS sound" >&5
 echo "$as_me: Without OSS sound" >&6;}
-fi
-SND_OSS_LIBS="$SND_OSS_LIBS $LIBS"
+	fi
+	SND_OSS_LIBS="$SND_OSS_LIBS $LIBS"
 
-#---------------------------------------------------------------------------------------------
-# Check ARTS
-#---------------------------------------------------------------------------------------------
-
-if (test "$with_snd_arts" = check || test "$with_snd_arts" = yes) && test "$TARGET_OS" != "mingw32"
-then
-	# Extract the first word of "artsc-config", so it can be a program name with args.
+	#---------------------------------------------------------------------------------------------
+	# Check ARTS
+	#---------------------------------------------------------------------------------------------
+	if (test "$with_snd_arts" = check || test "$with_snd_arts" = yes) && test "$TARGET_OS" != "mingw32"
+	then
+		# Extract the first word of "artsc-config", so it can be a program name with args.
 set dummy artsc-config; ac_word=$2
 { echo "$as_me:$LINENO: checking for $ac_word" >&5
 echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6; }
@@ -11689,27 +11502,26 @@ echo "${ECHO_T}no" >&6; }
 fi
 
 
-	if test "$ac_cv_prog_HAVE_ARTSC_CONFIG" = "yes"
-	then
-		HAVE_SND_ARTS=1
+		if test "$ac_cv_prog_HAVE_ARTSC_CONFIG" = "yes"
+		then
+			HAVE_SND_ARTS=1
 
-		SND_ARTS_CFLAGS=`artsc-config --cflags`
+			SND_ARTS_CFLAGS=`artsc-config --cflags`
 
-		SND_ARTS_LIBS=`artsc-config --libs`
+			SND_ARTS_LIBS=`artsc-config --libs`
 
-	fi
-else
-	{ echo "$as_me:$LINENO: Without ARTS sound" >&5
+		fi
+	else
+		{ echo "$as_me:$LINENO: Without ARTS sound" >&5
 echo "$as_me: Without ARTS sound" >&6;}
-fi
+	fi
 
-#---------------------------------------------------------------------------------------------
-# Check WAPI
-#---------------------------------------------------------------------------------------------
-
-LIBS=
-if test "$with_snd_wapi" = "check" || test "$with_snd_wapi" = "yes"
-then
+	#---------------------------------------------------------------------------------------------
+	# Check WAPI
+	#---------------------------------------------------------------------------------------------
+	LIBS=
+	if test "$with_snd_wapi" = "check" || test "$with_snd_wapi" = "yes"
+	then
 
 for ac_header in windows.h
 do
@@ -11874,21 +11686,24 @@ fi
 
 done
 
-	if test "$ac_cv_header_windows_h" = "yes"
-	then
-		HAVE_SND_WAPI=1
+		if test "$ac_cv_header_windows_h" = "yes"
+		then
+			HAVE_SND_WAPI=1
 
-	elif test "$with_snd_wapi" = "yes"
-	then
-		{ { echo "$as_me:$LINENO: error: specified --with-snd-wapi specified but cannot find windows.h!" >&5
+		elif test "$with_snd_wapi" = "yes"
+		then
+			{ { echo "$as_me:$LINENO: error: specified --with-snd-wapi specified but cannot find windows.h!" >&5
 echo "$as_me: error: specified --with-snd-wapi specified but cannot find windows.h!" >&2;}
    { (exit 1); exit 1; }; }
-	fi
-else
-	{ echo "$as_me:$LINENO: Without WAPI sound" >&5
+		fi
+	else
+		{ echo "$as_me:$LINENO: Without WAPI sound" >&5
 echo "$as_me: Without WAPI sound" >&6;}
+	fi
+	SND_WAPI_LIBS="$SND_WAPI_LIBS $LIBS"
+
+# end of client only checks
 fi
-SND_WAPI_LIBS="$SND_WAPI_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check for curses
@@ -12007,8 +11822,8 @@ _ACEOF
 
 	elif test "$with_curses" = "yes"
 	then
-		{ { echo "$as_me:$LINENO: error: --with-curses specified but couldn't find newwin" >&5
-echo "$as_me: error: --with-curses specified but couldn't find newwin" >&2;}
+		{ { echo "$as_me:$LINENO: error: --with-curses specified but could not find newwin" >&5
+echo "$as_me: error: --with-curses specified but could not find newwin" >&2;}
    { (exit 1); exit 1; }; }
 	fi
 else
@@ -12134,8 +11949,8 @@ _ACEOF
 
 	elif test "$with_curl" = "yes"
 	then
-		{ { echo "$as_me:$LINENO: error: --with-curl specified but couldn't find " >&5
-echo "$as_me: error: --with-curl specified but couldn't find " >&2;}
+		{ { echo "$as_me:$LINENO: error: --with-curl specified but could not find " >&5
+echo "$as_me: error: --with-curl specified but could not find " >&2;}
    { (exit 1); exit 1; }; }
 	fi
 else
@@ -12143,28 +11958,6 @@ else
 echo "$as_me: Without cURL" >&6;}
 fi
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-
-#---------------------------------------------------------------------------------------------
-# Check for ipv6
-#---------------------------------------------------------------------------------------------
-
-HAVE_IPV6=0
-
-if test "$with_ipv6" = "yes"
-then
-	{ echo "$as_me:$LINENO: Enabling ipv6 support" >&5
-echo "$as_me: Enabling ipv6 support" >&6;}
-	HAVE_IPV6=1
-
-
-cat >>confdefs.h <<\_ACEOF
-#define HAVE_IPV6 1
-_ACEOF
-
-else
-	{ echo "$as_me:$LINENO: Without IPv6" >&5
-echo "$as_me: Without IPv6" >&6;}
-fi
 
 #---------------------------------------------------------------------------------------------
 # Check for client
@@ -12302,6 +12095,8 @@ EXE_EXT="$ac_exe_ext"
 
 CLIENT_LIBS="$CLIENT_LIBS"
 
+CLIENT_CFLAGS="$CLIENT_CFLAGS"
+
 SERVER_LIBS="$SERVER_LIBS"
 
 GAME_LIBS="$GAME_LIBS"
@@ -12324,6 +12119,7 @@ SND_ALSA_LIBS="$SND_ALSA_LIBS"
 
 
 #AC_MSG_NOTICE(Compiler flags: $CFLAGS)
+#AC_MSG_NOTICE(Compiler flags: $CLIENT_CFLAGS)
 #AC_MSG_NOTICE(Link against:   $LIBS")
 
 ac_config_headers="$ac_config_headers config.h:config.h.in"
@@ -13018,7 +12814,6 @@ SND_ARTS_LIBS!$SND_ARTS_LIBS$ac_delim
 HAVE_SND_WAPI!$HAVE_SND_WAPI$ac_delim
 HAVE_CURSES!$HAVE_CURSES$ac_delim
 HAVE_CURL!$HAVE_CURL$ac_delim
-HAVE_IPV6!$HAVE_IPV6$ac_delim
 BUILD_CLIENT!$BUILD_CLIENT$ac_delim
 BUILD_DEDICATED!$BUILD_DEDICATED$ac_delim
 BUILD_MASTER!$BUILD_MASTER$ac_delim
@@ -13029,6 +12824,7 @@ PARANOID!$PARANOID$ac_delim
 PROFILING!$PROFILING$ac_delim
 MMX!$MMX$ac_delim
 EXE_EXT!$EXE_EXT$ac_delim
+CLIENT_LIBS!$CLIENT_LIBS$ac_delim
 _ACEOF
 
   if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 97; then
@@ -13070,7 +12866,7 @@ _ACEOF
 ac_delim='%!_!# '
 for ac_last_try in false false false false false :; do
   cat >conf$$subs.sed <<_ACEOF
-CLIENT_LIBS!$CLIENT_LIBS$ac_delim
+CLIENT_CFLAGS!$CLIENT_CFLAGS$ac_delim
 SERVER_LIBS!$SERVER_LIBS$ac_delim
 GAME_LIBS!$GAME_LIBS$ac_delim
 TOOLS_LIBS!$TOOLS_LIBS$ac_delim

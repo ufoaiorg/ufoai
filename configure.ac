@@ -69,17 +69,13 @@ AC_ARG_WITH(curl,
 	[AS_HELP_STRING([--with-curl], [compile with curl download support @<:@default=check@:>@])],
 	[], [with_curl=check])
 
-AC_ARG_WITH(ipv6,
-	[AS_HELP_STRING([--with-ipv6], [compile with ipv6 support @<:@default=no@:>@])],
-	[], [with_ipv6=no])
-
 AC_ARG_WITH(curses,
 	[AS_HELP_STRING([--with-curses], [compile with curses console support @<:@default=check@:>@])],
 	[], [with_curses=check])
 
 AC_ARG_WITH(openal,
-	[AS_HELP_STRING([--with-openal], [build openal sound support @<:@default=no@:>@])],
-	[], [with_openal=no])
+	[AS_HELP_STRING([--with-openal], [build openal sound support @<:@default=check@:>@])],
+	[], [with_openal=check])
 
 AC_ARG_WITH(openal_config,
 	[AC_HELP_STRING([--with-openal-config=FILE], [using the given openal-config @<:@default=openal-config@:>@])],
@@ -89,14 +85,6 @@ AC_ARG_WITH(opengl_framework,
 	[AS_HELP_STRING([--with-opengl-framework], [compile with given opengl framework @<:@default=/System/Library/Frameworks/OpenGL.framework@:>@])],
 	[], [with_opengl_framework=/System/Library/Frameworks/OpenGL.framework])
 
-AC_ARG_WITH(sdl_framework,
-	[AS_HELP_STRING([--with-sdl-framework], [compile with given sdl framework @<:@default=/Library/Frameworks/SDL.framework@:>@])],
-	[], [with_sdl_framework=/Library/Frameworks/SDL.framework])
-
-AC_ARG_WITH(sdl_ttf_framework,
-	[AS_HELP_STRING([--with-sdl-ttf-framework], [compile with given sdl-ttf framework @<:@default=/Library/Frameworks/SDL_ttf.framework@:>@])],
-	[], [with_sdl_ttf_framework=/Library/Frameworks/SDL_ttf.framework])
-
 AC_ARG_WITH(openal_framework,
 	[AS_HELP_STRING([--with-openal-framework], [compile with given openal framework @<:@default=/System/Library/Frameworks/OpenAL.framework@:>@])],
 	[], [with_openal_framework=/System/Library/Frameworks/OpenAL.framework])
@@ -105,7 +93,6 @@ AC_ARG_ENABLE(dedicated,
 	[AS_HELP_STRING([--disable-dedicated], [build dedicated server @<:@default=enabled@:>@])],
 	[], [enable_dedicated=yes])
 
-# FIXME: Don't check for client libs if client is disabled
 AC_ARG_ENABLE(client,
 	[AS_HELP_STRING([--disable-client], [build client @<:@default=enabled@:>@])],
 	[], [enable_client=yes])
@@ -177,8 +164,8 @@ then
 elif test `echo $target_os | sed "s/\(darwin\).*/\1/"` = "darwin"
 then
 	AC_SUBST([TARGET_OS],[darwin])
-	CFLAGS="$CFLAGS -F$with_opengl_framework -F$with_openal_framework -F$with_sdl_framework -F$with_sdl_ttf_framework"
-	LDFLAGS="$LDFLAGS -framework IOKit -framework Foundation -framework SDL -framework SDL_ttf -framework OpenGL -framework OpenAL"
+	CFLAGS="$CFLAGS -F$with_opengl_framework -F$with_openal_framework"
+	LDFLAGS="$LDFLAGS -framework IOKit -framework Foundation -framework OpenGL -framework OpenAL"
 else
 	AC_MSG_ERROR([The target operating system '$target_os' is unknown, please contact the developers])
 fi
@@ -276,7 +263,7 @@ if test $TARGET_OS = "mingw32"
 then
 	AC_MSG_RESULT([Mingw32 - Trying to use Winsock2 (WS2_32)])
 	AC_CHECK_HEADERS([winsock2.h])
-	AC_CHECK_LIB(ws2_32, main, , AC_MSG_ERROR([Winsock2 is needed for a Win32 mingw build.]))
+	AC_CHECK_LIB(ws2_32, main, , AC_MSG_ERROR([Winsock2 is needed for a Windows mingw build.]))
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -306,7 +293,7 @@ AC_CHECK_DECL(AI_NUMERICSERV,
 AC_CHECK_HEADERS([stdint.h])
 if test "$ac_cv_header_stdint_h" != "yes"
 then
-	AC_MSG_ERROR([Couldn't find stdint.h!])
+	AC_MSG_ERROR([Could not find stdint.h!])
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -369,42 +356,51 @@ LIBS=
 AC_CHECK_HEADERS([zlib.h])
 if test "$ac_cv_header_zlib_h" != "yes"
 then
-	AC_MSG_ERROR([Couldn't find zlib.h!])
+	AC_MSG_ERROR([Could not find zlib.h!])
 fi
-AC_SEARCH_LIBS([compress],[z])
-if test "$ac_cv_search_compress" = "no"
-then
-	AC_MSG_ERROR([couldn't find zlib!])
-fi
+AC_CHECK_LIB(z, compress, LIBS="-lz", AC_MSG_ERROR([You must have libz!!!]))
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 SERVER_LIBS="$SERVER_LIBS $LIBS"
 TOOLS_LIBS="$TOOLS_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
-# Check for openal-config
+# Check JPEG
 #---------------------------------------------------------------------------------------------
-
-openal_config=$with_openal_config
-AC_CHECK_PROG(HAVE_OPENAL_CONFIG,$openal_config,yes)
-if test "$ac_cv_prog_HAVE_OPENAL_CONFIG" = "yes"
+AC_CHECK_HEADERS([jpeglib.h])
+if test "$ac_cv_header_jpeglib_h" = "no"
 then
-	AC_SUBST([OPENAL_CFLAGS],`$openal_config --cflags`)
-	AC_SUBST([OPENAL_LIBS],`$openal_config --libs`)
-else
-	AC_MSG_WARN([cannot find $openal_config might fail to find OpenAL!])
+	AC_MSG_ERROR([You must have the JPEG development headers])
 fi
-
-#---------------------------------------------------------------------------------------------
-# Check for OpenAL headers and libraries
-#---------------------------------------------------------------------------------------------
-
 LIBS=
-if test "$with_openal" = "check" || test "$with_openal" = "yes"
+AC_CHECK_LIB(jpeg, jpeg_CreateDecompress, LIBS="-ljpeg", AC_MSG_ERROR([You must have libjpeg!!!]))
+TOOLS_LIBS="$TOOLS_LIBS $LIBS"
+CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+
+if test "$enable_client" = "yes"
 then
-	AC_CHECK_HEADERS([AL/al.h AL/alc.h])
-	if test "$ac_cv_header_AL_al_h" != "yes" || \
-		test "$ac_cv_header_AL_alc_h" != "yes"
+	CLIENT_CFLAGS=
+	LIBS=
+
+	if test "$with_openal" = "check" || test "$with_openal" = "yes"
 	then
+		#---------------------------------------------------------------------------------------------
+		# Check for openal-config
+		#---------------------------------------------------------------------------------------------
+		openal_config=$with_openal_config
+		OLD_CFLAGS=$CFLAGS
+		OLD_LDFLAGS=$LDFLAGS
+
+		AC_CHECK_PROG(HAVE_OPENAL_CONFIG,$openal_config,yes)
+		if test "$ac_cv_prog_HAVE_OPENAL_CONFIG" = "yes"
+		then
+			CFLAGS=`$openal_config --cflags`
+			LDFLAGS=`$openal_config --libs`
+			AC_SUBST([OPENAL_CFLAGS],$CFLAGS)
+			AC_SUBST([OPENAL_LIBS],$LDFLAGS)
+		else
+			AC_MSG_WARN([cannot find $openal_config might fail to find OpenAL!])
+		fi
+
 		AC_CHECK_HEADERS([OpenAL/al.h OpenAL/alc.h])
 		if test "$ac_cv_header_OpenAL_al_h" != "yes" || \
 			test "$ac_cv_header_OpenAL_alc_h" != "yes"
@@ -412,360 +408,262 @@ then
 			if test "$with_openal" = "yes"
 			then
 				AC_MSG_ERROR([--with-openal specified but cannot find OpenAL header!])
+			else
+				AC_SUBST([HAVE_OPENAL],0)
 			fi
 		else
 			AC_SUBST([HAVE_OPENAL],1)
 		fi
-	elif test "$with_openal" = "yes"
-	then
-		AC_SUBST([HAVE_OPENAL], 1)
 		AC_SEARCH_LIBS([alSourcePlay],[openal openal32])
 		if test "$ac_cv_search_alSourcePlay" = "no"
 		then
-			AC_MSG_WARN([couldn't find OpenAL library!])
+			AC_MSG_WARN([Could not find OpenAL library!])
 			AC_SUBST([HAVE_OPENAL], 0)
 		fi
-	fi
-else
-	AC_MSG_NOTICE([Without OpenAL])
-fi
-#CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
-#---------------------------------------------------------------------------------------------
-# Check for libogg
-#---------------------------------------------------------------------------------------------
-
-LIBS=
-AC_CHECK_LIB(ogg, ogg_stream_init, LIBS="-logg", AC_MSG_ERROR([You must have libogg!!!]))
-CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-
-#---------------------------------------------------------------------------------------------
-# Check for libvorbis
-#---------------------------------------------------------------------------------------------
-
-LIBS=
-AC_CHECK_LIB(vorbis, vorbis_info_init, LIBS="-lvorbis", AC_MSG_ERROR([You must have libvorbis!!!]))
-CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-
-#---------------------------------------------------------------------------------------------
-# Check for libvorbis file
-#---------------------------------------------------------------------------------------------
-
-LIBS=
-AC_CHECK_LIB(vorbisfile, ov_open, LIBS="-lvorbisfile", AC_MSG_ERROR([You must have libvorbisfile!!!]))
-CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-
-#---------------------------------------------------------------------------------------------
-# Check for gettext
-#---------------------------------------------------------------------------------------------
-
-LIBS=
-AC_SEARCH_LIBS([gettext],[intl])
-if test "$ac_cv_search_gettext" = "no"
-then
-	AC_MSG_ERROR([couldn't find internationalization library with gettext in it])
-fi
-#AC_CHECK_LIB(intl, gettext, LIBS="-lintl", AC_MSG_ERROR([You must have libintl!!!]))
-CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-
-#---------------------------------------------------------------------------------------------
-# Check SDL
-#---------------------------------------------------------------------------------------------
-
-sdl_config=$with_sdl_config
-
-AC_CHECK_PROG(HAVE_SDL_CONFIG,$sdl_config,yes)
-if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
-then
-	AC_SUBST([SDL_CFLAGS],`$sdl_config --cflags`)
-	AC_SUBST([SDL_LIBS],`$sdl_config --libs`)
-else
-	AC_MSG_WARN([cannot find $sdl_config might fail to find SDL!])
-fi
-
-if test "$with_snd_sdl" = "check" || test "$with_snd_sdl" = "yes"
-then
-	AC_SUBST([HAVE_SND_SDL],1)
-else
-	AC_MSG_NOTICE([Without SDL sound])
-	AC_SUBST([HAVE_SND_SDL],0)
-fi
-
-#---------------------------------------------------------------------------------------------
-# Check for SDL headers and libraries
-#---------------------------------------------------------------------------------------------
-
-OLD_CFLAGS=$CFLAGS
-CFLAGS="$CFLAGS $SDL_CFLAGS"
-
-AC_CHECK_HEADERS([SDL.h])
-if test "$ac_cv_header_SDL_h" != "yes"
-then
-	AC_CHECK_HEADERS([SDL/SDL.h])
-	if test "$ac_cv_header_SDL_SDL_h" != "yes"
-	then
-		if test "$enable_client" = "yes"
-		then
-			AC_MSG_ERROR([You must have the SDL development headers])
-		fi
+		CFLAGS=$OLD_CFLAGS
+		LDFLAGS=$OLD_LDFLAGS
 	else
-		SDL_HEADER="SDL/SDL.h"
-		AC_DEFINE([USE_SDL_FRAMEWORK],[1],[Use SDL framework])
+		AC_MSG_NOTICE([Without OpenAL])
 	fi
-else
-	SDL_HEADER="SDL.h"
-fi
 
-CFLAGS=$OLD_CFLAGS
+	#---------------------------------------------------------------------------------------------
+	# Check for libogg
+	#---------------------------------------------------------------------------------------------
+	AC_CHECK_LIB(ogg, ogg_stream_init, , AC_MSG_ERROR([You must have libogg!!!]))
 
-OLD_LDFLAGS=$LDFLAGS
-LDFLAGS="$LDFLAGS $SDL_LDFLAGS"
-AC_SEARCH_LIBS([SDL_Init],[SDL])
-if test "$ac_cv_search_SDL_Init" = "no"
-then
-	if test "$enable_client" = "yes"
+	#---------------------------------------------------------------------------------------------
+	# Check for libvorbis
+	#---------------------------------------------------------------------------------------------
+	AC_CHECK_LIB(vorbis, vorbis_info_init, [], AC_MSG_ERROR([You must have libvorbis!!!]))
+
+	#---------------------------------------------------------------------------------------------
+	# Check for libvorbis file
+	#---------------------------------------------------------------------------------------------
+	AC_CHECK_LIB(vorbisfile, ov_open, [], AC_MSG_ERROR([You must have libvorbisfile!!!]))
+
+	#---------------------------------------------------------------------------------------------
+	# Check for gettext
+	#---------------------------------------------------------------------------------------------
+	AC_CHECK_HEADERS([libintl.h])
+	if test "$ac_cv_header_libintl_h" != "yes"
 	then
-		AC_MSG_ERROR([You must have the SDL development libraries])
+		AC_MSG_ERROR([Could not find libintl.h!])
 	fi
-fi
-LDFLAGS=$OLD_LDFLAGS
 
-#---------------------------------------------------------------------------------------------
-# Check for SDL_ttf
-#---------------------------------------------------------------------------------------------
-
-OLD_CFLAGS=$CFLAGS
-CFLAGS="$CFLAGS $SDL_CFLAGS"
-
-AC_CHECK_HEADERS([SDL_ttf.h],[],[],[
-		#include <$SDL_HEADER>
-	])
-if test "$ac_cv_header_SDL_ttf_h" != "yes"
-then
-	AC_CHECK_HEADERS([SDL_ttf/SDL_ttf.h],[],[],[
-			#include <$SDL_HEADER>
-		])
-	if test "$ac_cv_header_SDL_ttf_SDL_ttf_h" != "yes"
+	AC_SEARCH_LIBS([gettext],[intl])
+	if test "$ac_cv_search_gettext" = "no"
 	then
-		if test "$enable_client" = "yes"
-		then
-			AC_MSG_ERROR([You must have the SDL_ttf development headers])
-		fi
+		AC_MSG_ERROR([Could not find internationalization library with gettext in it])
+	fi
+	#AC_CHECK_LIB(intl, gettext, [], AC_MSG_ERROR([You must have libintl!!!]))
+
+	#---------------------------------------------------------------------------------------------
+	# Check SDL
+	#---------------------------------------------------------------------------------------------
+	sdl_config=$with_sdl_config
+	OLD_CFLAGS=$CFLAGS
+	OLD_LDFLAGS=$LDFLAGS
+
+	AC_CHECK_PROG(HAVE_SDL_CONFIG,$sdl_config,yes)
+	if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
+	then
+		CFLAGS=`$sdl_config --cflags`
+		LDFLAGS=`$sdl_config --libs`
+		AC_SUBST([SDL_CFLAGS],$CFLAGS)
+		AC_SUBST([SDL_LIBS],$LDFLAGS)
 	else
-		AC_DEFINE([USE_SDL_TTF_FRAMEWORK],[1],[Use SDL TTF framework])
+		AC_MSG_WARN([cannot find $sdl_config might fail to find SDL!])
 	fi
-fi
-CFLAGS=$OLD_CFLAGS
 
-LIBS=
-AC_SEARCH_LIBS([TTF_Init],[SDL_ttf])
-if test "$ac_cv_search_TTF_Init" = "no"
-then
-	if test "$enable_client" = "yes"
+	if test "$with_snd_sdl" = "check" || test "$with_snd_sdl" = "yes"
 	then
-		AC_MSG_ERROR([You must have the SDL_ttf development libraries])
-	fi
-fi
-CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-
-#---------------------------------------------------------------------------------------------
-# Check JPEG
-#---------------------------------------------------------------------------------------------
-
-LIBS=
-AC_CHECK_LIB(jpeg, jpeg_CreateDecompress, LIBS="-ljpeg", AC_MSG_ERROR([You must have libjpeg!!!]))
-TOOLS_LIBS="$TOOLS_LIBS $LIBS"
-CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-
-#---------------------------------------------------------------------------------------------
-# Check PNG
-#---------------------------------------------------------------------------------------------
-
-LIBS=
-AC_CHECK_LIB(png, png_create_info_struct, LIBS="-lpng", AC_MSG_ERROR([You must have libpng!!!]))
-CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-
-#---------------------------------------------------------------------------------------------
-# Check for opengl headers
-#---------------------------------------------------------------------------------------------
-
-AC_CHECK_HEADERS([GL/gl.h GL/glu.h])
-
-if test "$ac_cv_header_GL_gl_h" != "yes" || \
-	test "$ac_cv_header_GL_glu_h" != "yes"
-then
-	AC_CHECK_HEADERS([OpenGL/gl.h OpenGL/glu.h])
-	if test "$ac_cv_header_OpenGL_gl_h" != "yes" || \
-		test "$ac_cv_header_OpenGL_glu_h" != "yes"
-	then
-		if test "$enable_client" = "yes"
-		then
-			AC_MSG_ERROR([Couldn't find OpenGL development headers!])
-		fi
+		AC_SUBST([HAVE_SND_SDL],1)
 	else
-		AC_DEFINE([GL_H_WITHOUT_GL_DIR],[1],[OpenGL header path])
+		AC_MSG_NOTICE([Without SDL sound])
+		AC_SUBST([HAVE_SND_SDL],0)
 	fi
-fi
 
-#---------------------------------------------------------------------------------------------
-# Check for shaders
-#---------------------------------------------------------------------------------------------
-
-if test "$with_shaders" = "check" || test "$with_shaders" = "yes"
-then
-	shaders_enabled=no
-	AC_CHECK_HEADERS([GL/glext.h],[],[],[
-		#include <GL/gl.h>
-		#include <GL/glu.h>
-	])
-
-	if test "$ac_cv_header_GL_glext_h" = "yes"
+	#---------------------------------------------------------------------------------------------
+	# Check for SDL headers and libraries
+	#---------------------------------------------------------------------------------------------
+	AC_CHECK_HEADERS([SDL.h])
+	if test "$ac_cv_header_SDL_h" != "yes"
 	then
-		AC_MSG_CHECKING([OpenGL shader support])
-		AC_COMPILE_IFELSE([
-				AC_LANG_PROGRAM([[
-					#include <GL/gl.h>
-					#include <GL/glu.h>
-					#include <GL/glext.h>
-					]]
-					,[[glEnable(GL_FRAGMENT_PROGRAM_ARB);]]
-				)],
-				[ac_cv_shaders=yes],
-				[ac_cv_shaders=]
-			)
-		if test "$ac_cv_shaders" = "yes"
+		AC_MSG_ERROR([You must have the SDL development headers])
+	fi
+
+	#---------------------------------------------------------------------------------------------
+	# Check for SDL_ttf
+	#---------------------------------------------------------------------------------------------
+	AC_CHECK_HEADERS([SDL_ttf.h])
+	if test "$ac_cv_header_SDL_ttf_h" != "yes"
+	then
+		AC_MSG_ERROR([You must have the SDL_ttf development headers])
+	fi
+	AC_CHECK_LIB(SDL_ttf, TTF_Init, [], AC_MSG_ERROR([You must have SDL_ttf!!!]))
+
+	CFLAGS=$OLD_CFLAGS
+	LDFLAGS=$OLD_LDFLAGS
+
+	#---------------------------------------------------------------------------------------------
+	# Check PNG
+	#---------------------------------------------------------------------------------------------
+	AC_CHECK_HEADERS([png.h])
+	if test "$ac_cv_header_png_h" = "no"
+	then
+		AC_MSG_ERROR([You must have the PNG development headers])
+	fi
+	AC_CHECK_LIB(png, png_create_info_struct, [], AC_MSG_ERROR([You must have libpng!!!]))
+
+	#---------------------------------------------------------------------------------------------
+	# Check for opengl headers
+	#---------------------------------------------------------------------------------------------
+	AC_CHECK_HEADERS([GL/gl.h GL/glu.h])
+	if test "$ac_cv_header_GL_gl_h" != "yes" || \
+		test "$ac_cv_header_GL_glu_h" != "yes"
+	then
+		AC_CHECK_HEADERS([OpenGL/gl.h OpenGL/glu.h])
+		if test "$ac_cv_header_OpenGL_gl_h" != "yes" || \
+			test "$ac_cv_header_OpenGL_glu_h" != "yes"
 		then
-			AC_MSG_RESULT([yes])
-			AC_SUBST([HAVE_SHADERS],1)
-			AC_DEFINE([HAVE_SHADERS],[1],[Enable shader support])
-			shaders_enabled=yes
+			AC_MSG_ERROR([Could not find OpenGL development headers!])
 		else
-			AC_MSG_RESULT([no])
-			if test "$with_shaders" = "yes"
+			AC_DEFINE([GL_H_WITHOUT_GL_DIR],[1],[OpenGL header path])
+		fi
+	fi
+
+	#---------------------------------------------------------------------------------------------
+	# Check for shaders
+	#---------------------------------------------------------------------------------------------
+	if test "$with_shaders" = "yes"
+	then
+		AC_SUBST([HAVE_SHADERS],1)
+		AC_MSG_NOTICE([With shader support])
+	else
+		AC_MSG_NOTICE([Without shader support])
+	fi
+
+	#---------------------------------------------------------------------------------------------
+	# Set the client clags and libs - the rest are shared libs
+	#---------------------------------------------------------------------------------------------
+	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+	AC_MSG_NOTICE([CLIENT LIBS: $CLIENT_LIBS $SDL_CFLAGS])
+	CLIENT_CFLAGS="$CFLAGS"
+	AC_MSG_NOTICE([CLIENT CFLAGS: $CLIENT_CFLAGS])
+
+	#---------------------------------------------------------------------------------------------
+	# Check JACK
+	#---------------------------------------------------------------------------------------------
+	LIBS=
+	if test "$with_snd_jack" = "check" || test "$with_snd_jack" = "yes"
+	then
+		AC_CHECK_HEADERS([jack/jack.h])
+		if test "$ac_cv_header_jack_jack_h" = "yes"
+		then
+			AC_SEARCH_LIBS([jack_client_open], [jack])
+			if test "$ac_cv_search_jack_client_open" != "no"
 			then
-				AC_MSG_ERROR([--with-shaders specified but couldn't use OpenGL shaders!])
+				AC_SUBST([HAVE_SND_JACK],1)
+			else
+				AC_MSG_ERROR([found jack header but could not locate jack library!])
+			fi
+		elif test "$with_snd_jack" = "yes"
+		then
+			AC_MSG_ERROR([specified --with-snd-jack specified but cannot find jack/jack.h!])
+		fi
+	else
+		AC_MSG_NOTICE([Without JACK sound])
+	fi
+	SND_JACK_LIBS="$SND_JACK_LIBS $LIBS"
+
+	#---------------------------------------------------------------------------------------------
+	# Check ALSA
+	#---------------------------------------------------------------------------------------------
+	LIBS=
+	if test "$with_snd_alsa" = "check" || test "$with_snd_alsa" = "yes"
+	then
+		AC_CHECK_HEADERS([alsa/asoundlib.h])
+		if test "$ac_cv_header_alsa_asoundlib_h" = "yes"
+		then
+			AC_SEARCH_LIBS([snd_pcm_open], [asound])
+			if test "$ac_cv_search_snd_pcm_open" != "no"
+			then
+				AC_SUBST([HAVE_SND_ALSA],1)
+			else
+				AC_MSG_ERROR([found alsa header but could not locate alsa library!])
+			fi
+		elif test "$with_snd_alsa" = "yes"
+		then
+			AC_MSG_ERROR([specified --with-snd-alsa specified but cannot find alsa/asoundlib.h!])
+		fi
+	else
+		AC_MSG_NOTICE([Without ALSA sound])
+	fi
+	SND_ALSA_LIBS="$SND_ALSA_LIBS $LIBS"
+
+	#---------------------------------------------------------------------------------------------
+	# Check OSS
+	#---------------------------------------------------------------------------------------------
+	LIBS=
+	if test "$with_snd_alsa" = "check" || test "$with_snd_alsa" = "yes"
+	then
+		AC_CHECK_HEADERS([linux/soundcard.h])
+		if test "$ac_cv_header_linux_soundcard_h" != "yes"
+		then
+			AC_CHECK_HEADERS([sys/soundcard.h])
+			if test "$ac_cv_header_sys_soundcard_h" = "yes"
+			then
+				AC_DEFINE([OSS_HEADER_SYS],[1],[OSS headers in sys])
 			fi
 		fi
-	fi
-else
-	AC_MSG_NOTICE([Without shader support])
-fi
-
-#---------------------------------------------------------------------------------------------
-# Check JACK
-#---------------------------------------------------------------------------------------------
-
-LIBS=
-if test "$with_snd_jack" = "check" || test "$with_snd_jack" = "yes"
-then
-	AC_CHECK_HEADERS([jack/jack.h])
-	if test "$ac_cv_header_jack_jack_h" = "yes"
-	then
-		AC_SEARCH_LIBS([jack_client_open], [jack])
-		if test "$ac_cv_search_jack_client_open" != "no"
+		if test "$ac_cv_header_linux_soundcard_h" = "yes" || \
+			test "$ac_cv_header_sys_soundcard_h" = "yes"
 		then
-			AC_SUBST([HAVE_SND_JACK],1)
-		else
-			AC_MSG_ERROR([found jack header but couldn't locate jack library!])
+			AC_SUBST([HAVE_SND_OSS],1)
 		fi
-	elif test "$with_snd_jack" = "yes"
-	then
-		AC_MSG_ERROR([specified --with-snd-jack specified but cannot find jack/jack.h!])
+	else
+		AC_MSG_NOTICE([Without OSS sound])
 	fi
-else
-	AC_MSG_NOTICE([Without JACK sound])
-fi
-SND_JACK_LIBS="$SND_JACK_LIBS $LIBS"
+	SND_OSS_LIBS="$SND_OSS_LIBS $LIBS"
 
-
-#---------------------------------------------------------------------------------------------
-# Check ALSA
-#---------------------------------------------------------------------------------------------
-
-LIBS=
-if test "$with_snd_alsa" = "check" || test "$with_snd_alsa" = "yes"
-then
-	AC_CHECK_HEADERS([alsa/asoundlib.h])
-	if test "$ac_cv_header_alsa_asoundlib_h" = "yes"
+	#---------------------------------------------------------------------------------------------
+	# Check ARTS
+	#---------------------------------------------------------------------------------------------
+	if (test "$with_snd_arts" = check || test "$with_snd_arts" = yes) && test "$TARGET_OS" != "mingw32"
 	then
-		AC_SEARCH_LIBS([snd_pcm_open], [asound])
-		if test "$ac_cv_search_snd_pcm_open" != "no"
+		AC_CHECK_PROG(HAVE_ARTSC_CONFIG,artsc-config,yes)
+		if test "$ac_cv_prog_HAVE_ARTSC_CONFIG" = "yes"
 		then
-			AC_SUBST([HAVE_SND_ALSA],1)
-		else
-			AC_MSG_ERROR([found alsa header but couldn't locate alsa library!])
+			AC_SUBST([HAVE_SND_ARTS],1)
+			AC_SUBST([SND_ARTS_CFLAGS], `artsc-config --cflags`)
+			AC_SUBST([SND_ARTS_LIBS], `artsc-config --libs`)
 		fi
-	elif test "$with_snd_alsa" = "yes"
-	then
-		AC_MSG_ERROR([specified --with-snd-alsa specified but cannot find alsa/asoundlib.h!])
+	else
+		AC_MSG_NOTICE([Without ARTS sound])
 	fi
-else
-	AC_MSG_NOTICE([Without ALSA sound])
-fi
-SND_ALSA_LIBS="$SND_ALSA_LIBS $LIBS"
 
-#---------------------------------------------------------------------------------------------
-# Check OSS
-#---------------------------------------------------------------------------------------------
-
-LIBS=
-if test "$with_snd_alsa" = "check" || test "$with_snd_alsa" = "yes"
-then
-	AC_CHECK_HEADERS([linux/soundcard.h])
-	if test "$ac_cv_header_linux_soundcard_h" != "yes"
+	#---------------------------------------------------------------------------------------------
+	# Check WAPI
+	#---------------------------------------------------------------------------------------------
+	LIBS=
+	if test "$with_snd_wapi" = "check" || test "$with_snd_wapi" = "yes"
 	then
-		AC_CHECK_HEADERS([sys/soundcard.h])
-		if test "$ac_cv_header_sys_soundcard_h" = "yes"
+		AC_CHECK_HEADERS([windows.h])
+		if test "$ac_cv_header_windows_h" = "yes"
 		then
-			AC_DEFINE([OSS_HEADER_SYS],[1],[OSS headers in sys])
+			AC_SUBST([HAVE_SND_WAPI],1)
+		elif test "$with_snd_wapi" = "yes"
+		then
+			AC_MSG_ERROR([specified --with-snd-wapi specified but cannot find windows.h!])
 		fi
+	else
+		AC_MSG_NOTICE([Without WAPI sound])
 	fi
-	if test "$ac_cv_header_linux_soundcard_h" = "yes" || \
-		test "$ac_cv_header_sys_soundcard_h" = "yes"
-	then
-		AC_SUBST([HAVE_SND_OSS],1)
-	fi
-else
-	AC_MSG_NOTICE([Without OSS sound])
+	SND_WAPI_LIBS="$SND_WAPI_LIBS $LIBS"
+
+# end of client only checks
 fi
-SND_OSS_LIBS="$SND_OSS_LIBS $LIBS"
-
-#---------------------------------------------------------------------------------------------
-# Check ARTS
-#---------------------------------------------------------------------------------------------
-
-if (test "$with_snd_arts" = check || test "$with_snd_arts" = yes) && test "$TARGET_OS" != "mingw32"
-then
-	AC_CHECK_PROG(HAVE_ARTSC_CONFIG,artsc-config,yes)
-	if test "$ac_cv_prog_HAVE_ARTSC_CONFIG" = "yes"
-	then
-		AC_SUBST([HAVE_SND_ARTS],1)
-		AC_SUBST([SND_ARTS_CFLAGS], `artsc-config --cflags`)
-		AC_SUBST([SND_ARTS_LIBS], `artsc-config --libs`)
-	fi
-else
-	AC_MSG_NOTICE([Without ARTS sound])
-fi
-
-#---------------------------------------------------------------------------------------------
-# Check WAPI
-#---------------------------------------------------------------------------------------------
-
-LIBS=
-if test "$with_snd_wapi" = "check" || test "$with_snd_wapi" = "yes"
-then
-	AC_CHECK_HEADERS([windows.h])
-	if test "$ac_cv_header_windows_h" = "yes"
-	then
-		AC_SUBST([HAVE_SND_WAPI],1)
-	elif test "$with_snd_wapi" = "yes"
-	then
-		AC_MSG_ERROR([specified --with-snd-wapi specified but cannot find windows.h!])
-	fi
-else
-	AC_MSG_NOTICE([Without WAPI sound])
-fi
-SND_WAPI_LIBS="$SND_WAPI_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check for curses
@@ -781,7 +679,7 @@ then
 		AC_DEFINE([HAVE_CURSES],[1],[Have curses library])
 	elif test "$with_curses" = "yes"
 	then
-		AC_MSG_ERROR([--with-curses specified but couldn't find newwin])
+		AC_MSG_ERROR([--with-curses specified but could not find newwin])
 	fi
 else
 	AC_MSG_NOTICE([Without curses])
@@ -802,26 +700,12 @@ then
 		AC_DEFINE([HAVE_CURL],[1],[Have curl library])
 	elif test "$with_curl" = "yes"
 	then
-		AC_MSG_ERROR([--with-curl specified but couldn't find ])
+		AC_MSG_ERROR([--with-curl specified but could not find ])
 	fi
 else
 	AC_MSG_NOTICE([Without cURL])
 fi
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-
-#---------------------------------------------------------------------------------------------
-# Check for ipv6
-#---------------------------------------------------------------------------------------------
-
-AC_SUBST([HAVE_IPV6],0)
-if test "$with_ipv6" = "yes"
-then
-	AC_MSG_NOTICE([Enabling ipv6 support])
-	AC_SUBST([HAVE_IPV6],1)
-	AC_DEFINE([HAVE_IPV6],[1],[Enable ipv6 support])
-else
-	AC_MSG_NOTICE([Without IPv6])
-fi
 
 #---------------------------------------------------------------------------------------------
 # Check for client
@@ -930,6 +814,7 @@ fi
 AC_SUBST([EXE_EXT],"$ac_exe_ext")
 
 AC_SUBST([CLIENT_LIBS],"$CLIENT_LIBS")
+AC_SUBST([CLIENT_CFLAGS],"$CLIENT_CFLAGS")
 AC_SUBST([SERVER_LIBS],"$SERVER_LIBS")
 AC_SUBST([GAME_LIBS],"$GAME_LIBS")
 AC_SUBST([TOOLS_LIBS],"$TOOLS_LIBS")
@@ -942,6 +827,7 @@ AC_SUBST([SND_WAPI_LIBS],"$SND_WAPI_LIBS")
 AC_SUBST([SND_ALSA_LIBS],"$SND_ALSA_LIBS")
 
 #AC_MSG_NOTICE(Compiler flags: $CFLAGS)
+#AC_MSG_NOTICE(Compiler flags: $CLIENT_CFLAGS)
 #AC_MSG_NOTICE(Link against:   $LIBS")
 
 AC_CONFIG_HEADERS([config.h:config.h.in])
