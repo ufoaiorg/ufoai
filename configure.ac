@@ -480,6 +480,7 @@ then
 	if test "$with_snd_sdl" = "check" || test "$with_snd_sdl" = "yes"
 	then
 		AC_SUBST([HAVE_SND_SDL],1)
+		SND_SDL_LIBS="$SND_SDL_LIBS $LDFLAGS"
 	else
 		AC_MSG_NOTICE([Without SDL sound])
 		AC_SUBST([HAVE_SND_SDL],0)

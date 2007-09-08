@@ -9431,6 +9431,7 @@ echo "$as_me: WARNING: cannot find $sdl_config might fail to find SDL!" >&2;}
 	then
 		HAVE_SND_SDL=1
 
+		SND_SDL_LIBS="$SND_SDL_LIBS $LDFLAGS"
 	else
 		{ echo "$as_me:$LINENO: Without SDL sound" >&5
 echo "$as_me: Without SDL sound" >&6;}

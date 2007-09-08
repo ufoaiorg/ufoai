@@ -16,7 +16,7 @@ endif
 # Say about to build the target
 $(SND_SDL_TARGET) : $(SND_SDL_OBJS) $(BUILDDIR)/.dirs
 	@echo " * [SDL] ... linking $(LNKFLAGS) ($(SND_SDL_LIBS))"; \
-		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_SDL_OBJS) $(SND_LIBS_LIBS) $(LNKFLAGS)
+		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_SDL_OBJS) $(SND_SDL_LIBS) $(LNKFLAGS)
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/snd-sdl/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
