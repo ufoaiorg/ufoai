@@ -25,26 +25,30 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 
 #ifdef _WIN32
-	#include "../ports/windows/win_qal.h"
+#  include "../ports/windows/win_qal.h"
 #endif
 
 #if defined(__linux__) || defined(__FreeBSD__)
-	#include "../ports/linux/linux_qal.h"
+#  include "../ports/linux/linux_qal.h"
 #endif
 
 #ifdef __APPLE__
-	#include "../ports/macosx/osx_qal.h"
+#  include "../ports/macosx/osx_qal.h"
 #endif
 
 #ifndef ALCAPIENTRY
 #  define ALCAPIENTRY
 #endif
 
+#ifndef ALAPIENTRY
+#  define ALAPIENTRY
+#endif
+
 qboolean QAL_Init(void);
 qboolean QAL_Link(void);
 void QAL_Unlink(void);
 
-extern qboolean					openal_active;
+extern qboolean openal_active;
 
 extern ALCdevice *		(ALCAPIENTRY * qalcOpenDevice)(ALCubyte *deviceName);
 extern ALCvoid			(ALCAPIENTRY * qalcCloseDevice)(ALCdevice *device);
@@ -133,9 +137,6 @@ typedef struct
 
 	const char			*deviceList;
 	const char			*deviceName;
-
-	qboolean			eax;
-	unsigned			eaxState;
 } alConfig_t;
 
 extern alConfig_t		alConfig;
