@@ -8455,7 +8455,7 @@ then
 		# Check for openal-config
 		#---------------------------------------------------------------------------------------------
 		openal_config=$with_openal_config
-		OLD_CFLAGS=$CFLAGS
+		OLD_CPPFLAGS=$CPPFLAGS
 		OLD_LDFLAGS=$LDFLAGS
 
 		# Extract the first word of "$openal_config", so it can be a program name with args.
@@ -8497,9 +8497,9 @@ fi
 
 		if test "$ac_cv_prog_HAVE_OPENAL_CONFIG" = "yes"
 		then
-			CFLAGS=`$openal_config --cflags`
+			CPPFLAGS=`$openal_config --cflags`
 			LDFLAGS=`$openal_config --libs`
-			OPENAL_CFLAGS=$CFLAGS
+			OPENAL_CFLAGS=$CPPFLAGS
 
 			OPENAL_LIBS=$LDFLAGS
 
@@ -8796,7 +8796,7 @@ echo "$as_me: WARNING: Could not find OpenAL library!" >&2;}
 
 		fi
 
-		CFLAGS=$OLD_CFLAGS
+		CPPFLAGS=$OLD_CPPFLAGS
 		LDFLAGS=$OLD_LDFLAGS
 	else
 		{ echo "$as_me:$LINENO: Without OpenAL" >&5
@@ -9373,6 +9373,7 @@ echo "$as_me: error: Could not find internationalization library with gettext in
 	# Check SDL
 	#---------------------------------------------------------------------------------------------
 	sdl_config=$with_sdl_config
+
 	OLD_CPPFLAGS=$CPPFLAGS
 	OLD_LDFLAGS=$LDFLAGS
 
@@ -9610,6 +9611,10 @@ done
 echo "$as_me: error: You must have the SDL development headers" >&2;}
    { (exit 1); exit 1; }; }
 	fi
+
+	# multiple main functions error for SDL_ttf otherwise
+	# problem might be that -L<SDL_dir> might be missing then
+	LDFLAGS=$OLD_LDFLAGS
 
 	#---------------------------------------------------------------------------------------------
 	# Check for SDL_ttf
@@ -10513,11 +10518,7 @@ echo "$as_me: Without shader support" >&6;}
 	# Set the client clags and libs - the rest are shared libs
 	#---------------------------------------------------------------------------------------------
 	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-	{ echo "$as_me:$LINENO: CLIENT LIBS: $CLIENT_LIBS $SDL_CFLAGS" >&5
-echo "$as_me: CLIENT LIBS: $CLIENT_LIBS $SDL_CFLAGS" >&6;}
 	CLIENT_CFLAGS="$CFLAGS"
-	{ echo "$as_me:$LINENO: CLIENT CFLAGS: $CLIENT_CFLAGS" >&5
-echo "$as_me: CLIENT CFLAGS: $CLIENT_CFLAGS" >&6;}
 
 	#---------------------------------------------------------------------------------------------
 	# Check JACK

@@ -387,15 +387,15 @@ then
 		# Check for openal-config
 		#---------------------------------------------------------------------------------------------
 		openal_config=$with_openal_config
-		OLD_CFLAGS=$CFLAGS
+		OLD_CPPFLAGS=$CPPFLAGS
 		OLD_LDFLAGS=$LDFLAGS
 
 		AC_CHECK_PROG(HAVE_OPENAL_CONFIG,$openal_config,yes)
 		if test "$ac_cv_prog_HAVE_OPENAL_CONFIG" = "yes"
 		then
-			CFLAGS=`$openal_config --cflags`
+			CPPFLAGS=`$openal_config --cflags`
 			LDFLAGS=`$openal_config --libs`
-			AC_SUBST([OPENAL_CFLAGS],$CFLAGS)
+			AC_SUBST([OPENAL_CFLAGS],$CPPFLAGS)
 			AC_SUBST([OPENAL_LIBS],$LDFLAGS)
 		else
 			AC_MSG_WARN([cannot find $openal_config might fail to find OpenAL!])
@@ -421,7 +421,7 @@ then
 			AC_SUBST([HAVE_OPENAL], 0)
 		fi
 
-		CFLAGS=$OLD_CFLAGS
+		CPPFLAGS=$OLD_CPPFLAGS
 		LDFLAGS=$OLD_LDFLAGS
 	else
 		AC_MSG_NOTICE([Without OpenAL])
@@ -462,6 +462,7 @@ then
 	# Check SDL
 	#---------------------------------------------------------------------------------------------
 	sdl_config=$with_sdl_config
+
 	OLD_CPPFLAGS=$CPPFLAGS
 	OLD_LDFLAGS=$LDFLAGS
 
@@ -492,6 +493,10 @@ then
 	then
 		AC_MSG_ERROR([You must have the SDL development headers])
 	fi
+
+	# multiple main functions error for SDL_ttf otherwise
+	# problem might be that -L<SDL_dir> might be missing then
+	LDFLAGS=$OLD_LDFLAGS
 
 	#---------------------------------------------------------------------------------------------
 	# Check for SDL_ttf
@@ -548,9 +553,7 @@ then
 	# Set the client clags and libs - the rest are shared libs
 	#---------------------------------------------------------------------------------------------
 	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-	AC_MSG_NOTICE([CLIENT LIBS: $CLIENT_LIBS $SDL_CFLAGS])
 	CLIENT_CFLAGS="$CFLAGS"
-	AC_MSG_NOTICE([CLIENT CFLAGS: $CLIENT_CFLAGS])
 
 	#---------------------------------------------------------------------------------------------
 	# Check JACK
