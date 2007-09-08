@@ -215,7 +215,6 @@ extern cvar_t *r_round_down;
 extern cvar_t *r_picmip;
 extern cvar_t *r_maxtexres;
 extern cvar_t *r_showtris;
-extern cvar_t *r_finish;
 extern cvar_t *r_flashblend;
 extern cvar_t *r_modulate;
 extern cvar_t *r_drawbuffer;

@@ -102,7 +102,6 @@ cvar_t *r_round_down;
 cvar_t *r_picmip;
 cvar_t *r_maxtexres;
 cvar_t *r_showtris;
-cvar_t *r_finish;
 cvar_t *r_flashblend;
 cvar_t *r_swapinterval;
 cvar_t *r_texturemode;
@@ -561,9 +560,6 @@ static void R_RenderView (void)
 		c_alias_polys = 0;
 	}
 
-	if (r_finish->integer)
-		qglFinish();
-
 	R_SetupFrame();
 
 	R_SetFrustum();
@@ -660,7 +656,6 @@ static void R_Register (void)
 	r_picmip = Cvar_Get("r_picmip", "0", 0, NULL);
 	r_maxtexres = Cvar_Get("r_maxtexres", "2048", CVAR_ARCHIVE, NULL);
 	r_showtris = Cvar_Get("r_showtris", "0", 0, NULL);
-	r_finish = Cvar_Get("r_finish", "0", CVAR_ARCHIVE, NULL);
 	r_flashblend = Cvar_Get("r_flashblend", "0", 0, "Controls the way dynamic lights are drawn");
 	r_driver = Cvar_Get("r_driver", "", CVAR_ARCHIVE, "You can define the opengl driver you want to use - empty if you want to use the system default");
 	r_texturemode = Cvar_Get("r_texturemode", "GL_LINEAR_MIPMAP_NEAREST", CVAR_ARCHIVE, NULL);
@@ -1001,10 +996,6 @@ qboolean R_Init (void)
 	Com_Printf("GL_VERSION: %s\n", r_config.version_string);
 	r_config.extensions_string = (const char *)qglGetString(GL_EXTENSIONS);
 	Com_Printf("GL_EXTENSIONS: %s\n", r_config.extensions_string);
-
-#if defined (__linux__) || defined (__FreeBSD__) || defined (__NetBSD__)
-	Cvar_SetValue("r_finish", 1);
-#endif
 
 	R_InitExtension();
 	R_SetDefaultState();
