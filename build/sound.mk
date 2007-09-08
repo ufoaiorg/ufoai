@@ -150,30 +150,3 @@ ifeq ($(TARGET_OS),mingw32)
 			$(CC) $(CFLAGS) $(CPPFLAGS) $(SHARED_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
 
 endif
-
-###################################################################################################
-# OSX sound driver
-###################################################################################################
-ifeq ($(TARGET_OS),darwin)
-	SND_OSX_SRCS=ports/macosx/osx_snd_native.c
-	SND_OSX_OBJS=$(SND_OSX_SRCS:%.c=$(BUILDDIR)/snd-osx/%.o)
-	SND_OSX_TARGET=snd_osx.$(SHARED_EXT)
-
-	ifeq ($(BUILD_CLIENT), 1)
-	ifeq ($(HAVE_SND_OSX),1)
-		TARGETS += $(SND_OSX_TARGET)
-		ALL_OBJS += $(SND_OSX_OBJS)
-	endif
-	endif
-
-	# Say about to build the target
-	$(SND_OSX_TARGET) : $(SND_OSX_OBJS) $(BUILDDIR)/.dirs
-		@echo " * [OSX] ... linking $(LNKFLAGS) ($(SND_OSX_LIBS))"; \
-			$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_OSX_OBJS) $(SND_OSX_LIBS) $(LNKFLAGS)
-
-	# Say how to build .o files from .c files for this module
-	$(BUILDDIR)/snd-osx/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
-		@echo " * [OSX] $<"; \
-			$(CC) $(CFLAGS) $(CPPFLAGS) $(SHARED_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
-
-endif

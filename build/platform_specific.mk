@@ -7,7 +7,8 @@ SHARED_EXT=so
 SHARED_LDFLAGS=-shared
 SHARED_CFLAGS=-fPIC
 JPEG_CFLAGS=
-CFLAGS=
+CFLAGS+=
+LDFLAGS+=
 
 # MinGW32
 ifeq ($(TARGET_OS),mingw32)
@@ -24,50 +25,32 @@ endif
 
 # Linux like
 ifeq ($(TARGET_OS),linux-gnu)
-	CFLAGS +=-D_GNU_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE
+	CFLAGS+=-D_GNU_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE
 #	-Wunsafe-loop-optimizations
 endif
 
 # FreeBSD like
 ifeq ($(TARGET_OS),freebsd)
-	CFLAGS +=-D_BSD_SOURCE -D_XOPEN_SOURCE
+	CFLAGS+=-D_BSD_SOURCE -D_XOPEN_SOURCE
 endif
 
 ifeq ($(TARGET_OS),netbsd)
-	CFLAGS +=-I/usr/X11R6/include -D_BSD_SOURCE -D_NETBSD_SOURCE
+	CFLAGS+=-D_BSD_SOURCE -D_NETBSD_SOURCE
 endif
 
 # Darwin
 ifeq ($(TARGET_OS),darwin)
-	#FIXME
-	HAVE_SND_OSX=1
 	SHARED_EXT=dylib
 	SHARED_CFLAGS=-fPIC -fno-common
 	SHARED_LDFLAGS=-dynamiclib
-	LDFLAGS +=  -framework SDL \
-				-framework SDL_ttf \
-				-framework OpenGL \
-				-L/sw/lib \
-				-L/opt/local/lib \
-				#-Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk,-m \
-				#(for intel)-Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk \
-				-F/Developer/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks \
-				-arch ppc \
-				-framework Carbon \
-				-framework Cocoa \
-				-framework OpenGL \
-				-framework IOKit
-
-	CFLAGS += -D_BSD_SOURCE -D_XOPEN_SOURCE
-	#FIXME
-	CLIENT_LIBS+=-lintl
+	CFLAGS+= -D_BSD_SOURCE -D_XOPEN_SOURCE
 	SERVER_LIBS+=
 endif
 
 # Solaris
 ifeq ($(TARGET_OS),solaris)
 	#TODO
-	CFLAGS +=
+	CFLAGS+=
 	CLIENT_LIBS+=-lsocket -lnsl
 	SERVER_LIBS+=-lsocket -lnsl
 	MASTER_LIBS+=-lsocket -lnsl
