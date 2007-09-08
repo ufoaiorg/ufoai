@@ -1293,10 +1293,8 @@ Optional Features:
   --disable-client        build client [default=enabled]
   --enable-master         build masterserver [default=enabled]
   --disable-ufo2map       build ufo2map [default=enabled]
-  --disable-qdata         build qdata [default=enabled]
   --enable-release        build release, if disabled then build debug
                           [default=disabled]
-  --enable-valgrind       enable valgrind support [default=check]
   --enable-paranoid       enable PARANOID checks [default=disabled]
   --enable-profiling      build with profiling for gprof [default=disabled]
   --enable-mmx            use MMX optimisations [default=disabled]
@@ -2142,27 +2140,11 @@ else
 fi
 
 
-# Check whether --enable-qdata was given.
-if test "${enable_qdata+set}" = set; then
-  enableval=$enable_qdata;
-else
-  enable_qdata=yes
-fi
-
-
 # Check whether --enable-release was given.
 if test "${enable_release+set}" = set; then
   enableval=$enable_release;
 else
   enable_release=no
-fi
-
-
-# Check whether --enable-valgrind was given.
-if test "${enable_valgrind+set}" = set; then
-  enableval=$enable_valgrind;
-else
-  enable_valgrind=check
 fi
 
 
@@ -7517,88 +7499,6 @@ echo "$as_me: error: Couldn't find stdint.h!" >&2;}
 fi
 
 #---------------------------------------------------------------------------------------------
-# Check for int_ptr_t
-#---------------------------------------------------------------------------------------------
-
-{ echo "$as_me:$LINENO: checking stdint.h has intptr_t" >&5
-echo $ECHO_N "checking stdint.h has intptr_t... $ECHO_C" >&6; }
-cat >conftest.$ac_ext <<_ACEOF
-
-		/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-			#include <stdint.h>
-
-
-int
-main ()
-{
-intptr_t p = 0;
-
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext
-if { (ac_try="$ac_compile"
-case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_compile") 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-	 { ac_try='test -z "$ac_c_werror_flag" || test ! -s conftest.err'
-  { (case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_try") 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest.$ac_objext'
-  { (case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_try") 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  ac_cv_intptr_t=yes
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-	ac_cv_intptr_t=no
-
-fi
-
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-if test "$ac_cv_intptr_t" = "yes"
-then
-	{ echo "$as_me:$LINENO: result: yes" >&5
-echo "${ECHO_T}yes" >&6; }
-else
-	{ echo "$as_me:$LINENO: result: no" >&5
-echo "${ECHO_T}no" >&6; }
-	{ echo "$as_me:$LINENO: WARNING: stdint.h does not define intptr_tm so will not build qdata!" >&5
-echo "$as_me: WARNING: stdint.h does not define intptr_tm so will not build qdata!" >&2;}
-	enable_qdata = "no"
-fi
-
-#---------------------------------------------------------------------------------------------
 # Check how to open a dynamic library ...
 #---------------------------------------------------------------------------------------------
 
@@ -8334,7 +8234,6 @@ echo "$as_me: error: couldn't find zlib!" >&2;}
 fi
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 SERVER_LIBS="$SERVER_LIBS $LIBS"
-#TODO - they must be able to read pk3 in the future, too
 TOOLS_LIBS="$TOOLS_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
@@ -8865,12 +8764,13 @@ fi
 #---------------------------------------------------------------------------------------------
 
 LIBS=
-{ echo "$as_me:$LINENO: checking for library containing ogg_stream_init" >&5
-echo $ECHO_N "checking for library containing ogg_stream_init... $ECHO_C" >&6; }
-if test "${ac_cv_search_ogg_stream_init+set}" = set; then
+{ echo "$as_me:$LINENO: checking for ogg_stream_init in -logg" >&5
+echo $ECHO_N "checking for ogg_stream_init in -logg... $ECHO_C" >&6; }
+if test "${ac_cv_lib_ogg_ogg_stream_init+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  ac_func_search_save_LIBS=$LIBS
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-logg  $LIBS"
 cat >conftest.$ac_ext <<_ACEOF
 /* confdefs.h.  */
 _ACEOF
@@ -8893,14 +8793,7 @@ return ogg_stream_init ();
   return 0;
 }
 _ACEOF
-for ac_lib in '' ogg; do
-  if test -z "$ac_lib"; then
-    ac_res="none required"
-  else
-    ac_res=-l$ac_lib
-    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
-  fi
-  rm -f conftest.$ac_objext conftest$ac_exeext
+rm -f conftest.$ac_objext conftest$ac_exeext
 if { (ac_try="$ac_link"
 case "(($ac_try" in
   *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
@@ -8934,45 +8827,28 @@ eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
-  ac_cv_search_ogg_stream_init=$ac_res
+  ac_cv_lib_ogg_ogg_stream_init=yes
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-
+	ac_cv_lib_ogg_ogg_stream_init=no
 fi
 
 rm -f core conftest.err conftest.$ac_objext \
-      conftest$ac_exeext
-  if test "${ac_cv_search_ogg_stream_init+set}" = set; then
-  break
+      conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
 fi
-done
-if test "${ac_cv_search_ogg_stream_init+set}" = set; then
-  :
+{ echo "$as_me:$LINENO: result: $ac_cv_lib_ogg_ogg_stream_init" >&5
+echo "${ECHO_T}$ac_cv_lib_ogg_ogg_stream_init" >&6; }
+if test $ac_cv_lib_ogg_ogg_stream_init = yes; then
+  LIBS="-logg"
 else
-  ac_cv_search_ogg_stream_init=no
-fi
-rm conftest.$ac_ext
-LIBS=$ac_func_search_save_LIBS
-fi
-{ echo "$as_me:$LINENO: result: $ac_cv_search_ogg_stream_init" >&5
-echo "${ECHO_T}$ac_cv_search_ogg_stream_init" >&6; }
-ac_res=$ac_cv_search_ogg_stream_init
-if test "$ac_res" != no; then
-  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
-
-fi
-
-if test "$ac_cv_search_ogg_stream_init" = "no"
-then
-	if test "$enable_client" = "yes"
-	then
-		{ { echo "$as_me:$LINENO: error: couldn't find libogg!" >&5
-echo "$as_me: error: couldn't find libogg!" >&2;}
+  { { echo "$as_me:$LINENO: error: You must have libogg!!!" >&5
+echo "$as_me: error: You must have libogg!!!" >&2;}
    { (exit 1); exit 1; }; }
-	fi
 fi
+
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
@@ -8980,12 +8856,13 @@ CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 #---------------------------------------------------------------------------------------------
 
 LIBS=
-{ echo "$as_me:$LINENO: checking for library containing vorbis_info_init" >&5
-echo $ECHO_N "checking for library containing vorbis_info_init... $ECHO_C" >&6; }
-if test "${ac_cv_search_vorbis_info_init+set}" = set; then
+{ echo "$as_me:$LINENO: checking for vorbis_info_init in -lvorbis" >&5
+echo $ECHO_N "checking for vorbis_info_init in -lvorbis... $ECHO_C" >&6; }
+if test "${ac_cv_lib_vorbis_vorbis_info_init+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  ac_func_search_save_LIBS=$LIBS
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lvorbis  $LIBS"
 cat >conftest.$ac_ext <<_ACEOF
 /* confdefs.h.  */
 _ACEOF
@@ -9008,14 +8885,7 @@ return vorbis_info_init ();
   return 0;
 }
 _ACEOF
-for ac_lib in '' vorbis; do
-  if test -z "$ac_lib"; then
-    ac_res="none required"
-  else
-    ac_res=-l$ac_lib
-    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
-  fi
-  rm -f conftest.$ac_objext conftest$ac_exeext
+rm -f conftest.$ac_objext conftest$ac_exeext
 if { (ac_try="$ac_link"
 case "(($ac_try" in
   *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
@@ -9049,45 +8919,28 @@ eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
-  ac_cv_search_vorbis_info_init=$ac_res
+  ac_cv_lib_vorbis_vorbis_info_init=yes
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-
+	ac_cv_lib_vorbis_vorbis_info_init=no
 fi
 
 rm -f core conftest.err conftest.$ac_objext \
-      conftest$ac_exeext
-  if test "${ac_cv_search_vorbis_info_init+set}" = set; then
-  break
+      conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
 fi
-done
-if test "${ac_cv_search_vorbis_info_init+set}" = set; then
-  :
+{ echo "$as_me:$LINENO: result: $ac_cv_lib_vorbis_vorbis_info_init" >&5
+echo "${ECHO_T}$ac_cv_lib_vorbis_vorbis_info_init" >&6; }
+if test $ac_cv_lib_vorbis_vorbis_info_init = yes; then
+  LIBS="-lvorbis"
 else
-  ac_cv_search_vorbis_info_init=no
-fi
-rm conftest.$ac_ext
-LIBS=$ac_func_search_save_LIBS
-fi
-{ echo "$as_me:$LINENO: result: $ac_cv_search_vorbis_info_init" >&5
-echo "${ECHO_T}$ac_cv_search_vorbis_info_init" >&6; }
-ac_res=$ac_cv_search_vorbis_info_init
-if test "$ac_res" != no; then
-  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
-
-fi
-
-if test "$ac_cv_search_ogg_stream_init" = "no"
-then
-	if test "$enable_client" = "yes"
-	then
-		{ { echo "$as_me:$LINENO: error: couldn't find libvorbis!" >&5
-echo "$as_me: error: couldn't find libvorbis!" >&2;}
+  { { echo "$as_me:$LINENO: error: You must have libvorbis!!!" >&5
+echo "$as_me: error: You must have libvorbis!!!" >&2;}
    { (exit 1); exit 1; }; }
-	fi
 fi
+
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
@@ -9095,12 +8948,13 @@ CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 #---------------------------------------------------------------------------------------------
 
 LIBS=
-{ echo "$as_me:$LINENO: checking for library containing ov_open" >&5
-echo $ECHO_N "checking for library containing ov_open... $ECHO_C" >&6; }
-if test "${ac_cv_search_ov_open+set}" = set; then
+{ echo "$as_me:$LINENO: checking for ov_open in -lvorbisfile" >&5
+echo $ECHO_N "checking for ov_open in -lvorbisfile... $ECHO_C" >&6; }
+if test "${ac_cv_lib_vorbisfile_ov_open+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  ac_func_search_save_LIBS=$LIBS
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lvorbisfile  $LIBS"
 cat >conftest.$ac_ext <<_ACEOF
 /* confdefs.h.  */
 _ACEOF
@@ -9123,14 +8977,7 @@ return ov_open ();
   return 0;
 }
 _ACEOF
-for ac_lib in '' vorbisfile; do
-  if test -z "$ac_lib"; then
-    ac_res="none required"
-  else
-    ac_res=-l$ac_lib
-    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
-  fi
-  rm -f conftest.$ac_objext conftest$ac_exeext
+rm -f conftest.$ac_objext conftest$ac_exeext
 if { (ac_try="$ac_link"
 case "(($ac_try" in
   *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
@@ -9164,45 +9011,28 @@ eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
-  ac_cv_search_ov_open=$ac_res
+  ac_cv_lib_vorbisfile_ov_open=yes
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-
+	ac_cv_lib_vorbisfile_ov_open=no
 fi
 
 rm -f core conftest.err conftest.$ac_objext \
-      conftest$ac_exeext
-  if test "${ac_cv_search_ov_open+set}" = set; then
-  break
+      conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
 fi
-done
-if test "${ac_cv_search_ov_open+set}" = set; then
-  :
+{ echo "$as_me:$LINENO: result: $ac_cv_lib_vorbisfile_ov_open" >&5
+echo "${ECHO_T}$ac_cv_lib_vorbisfile_ov_open" >&6; }
+if test $ac_cv_lib_vorbisfile_ov_open = yes; then
+  LIBS="-lvorbisfile"
 else
-  ac_cv_search_ov_open=no
-fi
-rm conftest.$ac_ext
-LIBS=$ac_func_search_save_LIBS
-fi
-{ echo "$as_me:$LINENO: result: $ac_cv_search_ov_open" >&5
-echo "${ECHO_T}$ac_cv_search_ov_open" >&6; }
-ac_res=$ac_cv_search_ov_open
-if test "$ac_res" != no; then
-  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
-
-fi
-
-if test "$ac_cv_search_ov_open" = "no"
-then
-	if test "$enable_client" = "yes"
-	then
-		{ { echo "$as_me:$LINENO: error: couldn't find libvorbisfile!" >&5
-echo "$as_me: error: couldn't find libvorbisfile!" >&2;}
+  { { echo "$as_me:$LINENO: error: You must have libvorbisfile!!!" >&5
+echo "$as_me: error: You must have libvorbisfile!!!" >&2;}
    { (exit 1); exit 1; }; }
-	fi
 fi
+
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
@@ -9486,8 +9316,8 @@ then
 echo "$as_me: error: couldn't find internationalization library with gettext in it" >&2;}
    { (exit 1); exit 1; }; }
 fi
+#AC_CHECK_LIB(intl, gettext, LIBS="-lintl", AC_MSG_ERROR([You must have libintl!!!]))
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-GAME_LIBS="$GAME_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check SDL
@@ -10496,12 +10326,13 @@ echo "$as_me: error: You must have the JPEG development headers" >&2;}
 fi
 
 LIBS=
-{ echo "$as_me:$LINENO: checking for library containing jpeg_CreateDecompress" >&5
-echo $ECHO_N "checking for library containing jpeg_CreateDecompress... $ECHO_C" >&6; }
-if test "${ac_cv_search_jpeg_CreateDecompress+set}" = set; then
+{ echo "$as_me:$LINENO: checking for jpeg_CreateDecompress in -ljpeg" >&5
+echo $ECHO_N "checking for jpeg_CreateDecompress in -ljpeg... $ECHO_C" >&6; }
+if test "${ac_cv_lib_jpeg_jpeg_CreateDecompress+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  ac_func_search_save_LIBS=$LIBS
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-ljpeg  $LIBS"
 cat >conftest.$ac_ext <<_ACEOF
 /* confdefs.h.  */
 _ACEOF
@@ -10524,14 +10355,7 @@ return jpeg_CreateDecompress ();
   return 0;
 }
 _ACEOF
-for ac_lib in '' jpeg; do
-  if test -z "$ac_lib"; then
-    ac_res="none required"
-  else
-    ac_res=-l$ac_lib
-    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
-  fi
-  rm -f conftest.$ac_objext conftest$ac_exeext
+rm -f conftest.$ac_objext conftest$ac_exeext
 if { (ac_try="$ac_link"
 case "(($ac_try" in
   *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
@@ -10565,45 +10389,28 @@ eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
-  ac_cv_search_jpeg_CreateDecompress=$ac_res
+  ac_cv_lib_jpeg_jpeg_CreateDecompress=yes
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-
+	ac_cv_lib_jpeg_jpeg_CreateDecompress=no
 fi
 
 rm -f core conftest.err conftest.$ac_objext \
-      conftest$ac_exeext
-  if test "${ac_cv_search_jpeg_CreateDecompress+set}" = set; then
-  break
+      conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
 fi
-done
-if test "${ac_cv_search_jpeg_CreateDecompress+set}" = set; then
-  :
+{ echo "$as_me:$LINENO: result: $ac_cv_lib_jpeg_jpeg_CreateDecompress" >&5
+echo "${ECHO_T}$ac_cv_lib_jpeg_jpeg_CreateDecompress" >&6; }
+if test $ac_cv_lib_jpeg_jpeg_CreateDecompress = yes; then
+  LIBS="-ljpeg"
 else
-  ac_cv_search_jpeg_CreateDecompress=no
-fi
-rm conftest.$ac_ext
-LIBS=$ac_func_search_save_LIBS
-fi
-{ echo "$as_me:$LINENO: result: $ac_cv_search_jpeg_CreateDecompress" >&5
-echo "${ECHO_T}$ac_cv_search_jpeg_CreateDecompress" >&6; }
-ac_res=$ac_cv_search_jpeg_CreateDecompress
-if test "$ac_res" != no; then
-  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
-
-fi
-
-if test "$ac_cv_search_jpeg_create_decompress" = "no"
-then
-	if test "$enable_client" = "yes"
-	then
-		{ { echo "$as_me:$LINENO: error: You must have the JPEG development libraries" >&5
-echo "$as_me: error: You must have the JPEG development libraries" >&2;}
+  { { echo "$as_me:$LINENO: error: You must have libjpeg!!!" >&5
+echo "$as_me: error: You must have libjpeg!!!" >&2;}
    { (exit 1); exit 1; }; }
-	fi
 fi
+
 TOOLS_LIBS="$TOOLS_LIBS $LIBS"
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
@@ -10786,12 +10593,13 @@ echo "$as_me: error: You must have the PNG development headers" >&2;}
 fi
 
 LIBS=
-{ echo "$as_me:$LINENO: checking for library containing png_create_info_struct" >&5
-echo $ECHO_N "checking for library containing png_create_info_struct... $ECHO_C" >&6; }
-if test "${ac_cv_search_png_create_info_struct+set}" = set; then
+{ echo "$as_me:$LINENO: checking for png_create_info_struct in -lpng" >&5
+echo $ECHO_N "checking for png_create_info_struct in -lpng... $ECHO_C" >&6; }
+if test "${ac_cv_lib_png_png_create_info_struct+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
-  ac_func_search_save_LIBS=$LIBS
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lpng  $LIBS"
 cat >conftest.$ac_ext <<_ACEOF
 /* confdefs.h.  */
 _ACEOF
@@ -10814,14 +10622,7 @@ return png_create_info_struct ();
   return 0;
 }
 _ACEOF
-for ac_lib in '' png; do
-  if test -z "$ac_lib"; then
-    ac_res="none required"
-  else
-    ac_res=-l$ac_lib
-    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
-  fi
-  rm -f conftest.$ac_objext conftest$ac_exeext
+rm -f conftest.$ac_objext conftest$ac_exeext
 if { (ac_try="$ac_link"
 case "(($ac_try" in
   *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
@@ -10855,45 +10656,28 @@ eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
-  ac_cv_search_png_create_info_struct=$ac_res
+  ac_cv_lib_png_png_create_info_struct=yes
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-
+	ac_cv_lib_png_png_create_info_struct=no
 fi
 
 rm -f core conftest.err conftest.$ac_objext \
-      conftest$ac_exeext
-  if test "${ac_cv_search_png_create_info_struct+set}" = set; then
-  break
+      conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
 fi
-done
-if test "${ac_cv_search_png_create_info_struct+set}" = set; then
-  :
+{ echo "$as_me:$LINENO: result: $ac_cv_lib_png_png_create_info_struct" >&5
+echo "${ECHO_T}$ac_cv_lib_png_png_create_info_struct" >&6; }
+if test $ac_cv_lib_png_png_create_info_struct = yes; then
+  LIBS="-lpng"
 else
-  ac_cv_search_png_create_info_struct=no
-fi
-rm conftest.$ac_ext
-LIBS=$ac_func_search_save_LIBS
-fi
-{ echo "$as_me:$LINENO: result: $ac_cv_search_png_create_info_struct" >&5
-echo "${ECHO_T}$ac_cv_search_png_create_info_struct" >&6; }
-ac_res=$ac_cv_search_png_create_info_struct
-if test "$ac_res" != no; then
-  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
-
-fi
-
-if test "$ac_cv_search_png_create_info_struct" = "no"
-then
-	if test "$enable_client" = "yes"
-	then
-		{ { echo "$as_me:$LINENO: error: You must have the PNG development libraries" >&5
-echo "$as_me: error: You must have the PNG development libraries" >&2;}
+  { { echo "$as_me:$LINENO: error: You must have libpng!!!" >&5
+echo "$as_me: error: You must have libpng!!!" >&2;}
    { (exit 1); exit 1; }; }
-	fi
 fi
+
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
@@ -12970,24 +12754,6 @@ echo "$as_me: Enabling qdata" >&6;}
 	BUILD_QDATA=1
 
 fi
-
-#---------------------------------------------------------------------------------------------
-# Check for extra valgrind memory debugging code
-#---------------------------------------------------------------------------------------------
-#LIBS=
-#if test "$enable_valgrind" = "check" || test "$enable_valgrind" = "yes"
-#then
-#	AC_CHECK_HEADERS([valgrind/memcheck.h])
-#	if test "$ac_cv_header_valgrind_memcheck_h" = "yes"
-#	then
-#		AC_SUBST([HAVE_VALGRIND],1)
-#	elif test "$enable_valgrind" = "yes"
-#	then
-#		AC_MSG_ERROR([specified --enable-valgrind but cannot find valgrind/memcheck.h!])
-#	fi
-#else
-#	AC_MSG_NOTICE([Without valgrind])
-#fi
 
 #---------------------------------------------------------------------------------------------
 # Check for debug

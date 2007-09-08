@@ -118,17 +118,9 @@ AC_ARG_ENABLE(ufo2map,
 	[AS_HELP_STRING([--disable-ufo2map], [build ufo2map @<:@default=enabled@:>@])],
 	[], [enable_ufo2map=yes])
 
-AC_ARG_ENABLE(qdata,
-	[AS_HELP_STRING([--disable-qdata], [build qdata @<:@default=enabled@:>@])],
-	[], [enable_qdata=yes])
-
 AC_ARG_ENABLE(release,
 	[AS_HELP_STRING([--enable-release], [build release, if disabled then build debug @<:@default=disabled@:>@])],
 	[], [enable_release=no])
-
-AC_ARG_ENABLE(valgrind,
-	[AS_HELP_STRING([--enable-valgrind], [enable valgrind support @<:@default=check@:>@])],
-	[], [enable_valgrind=check])
 
 AC_ARG_ENABLE(paranoid,
 	[AS_HELP_STRING([--enable-paranoid], [enable PARANOID checks @<:@default=disabled@:>@])],
@@ -318,29 +310,6 @@ then
 fi
 
 #---------------------------------------------------------------------------------------------
-# Check for int_ptr_t
-#---------------------------------------------------------------------------------------------
-
-AC_MSG_CHECKING([stdint.h has intptr_t])
-AC_COMPILE_IFELSE([
-		AC_LANG_PROGRAM([[
-			#include <stdint.h>
-			]]
-			,[[intptr_t p = 0;]]
-		)],
-		[ac_cv_intptr_t=yes],
-		[ac_cv_intptr_t=no]
-	)
-if test "$ac_cv_intptr_t" = "yes"
-then
-	AC_MSG_RESULT([yes])
-else
-	AC_MSG_RESULT([no])
-	AC_MSG_WARN([stdint.h does not define intptr_tm so will not build qdata!])
-	enable_qdata = "no"
-fi
-
-#---------------------------------------------------------------------------------------------
 # Check how to open a dynamic library ...
 #---------------------------------------------------------------------------------------------
 
@@ -409,7 +378,6 @@ then
 fi
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 SERVER_LIBS="$SERVER_LIBS $LIBS"
-#TODO - they must be able to read pk3 in the future, too
 TOOLS_LIBS="$TOOLS_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
@@ -468,14 +436,7 @@ fi
 #---------------------------------------------------------------------------------------------
 
 LIBS=
-AC_SEARCH_LIBS([ogg_stream_init],[ogg])
-if test "$ac_cv_search_ogg_stream_init" = "no"
-then
-	if test "$enable_client" = "yes"
-	then
-		AC_MSG_ERROR([couldn't find libogg!])
-	fi
-fi
+AC_CHECK_LIB(ogg, ogg_stream_init, LIBS="-logg", AC_MSG_ERROR([You must have libogg!!!]))
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
@@ -483,14 +444,7 @@ CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 #---------------------------------------------------------------------------------------------
 
 LIBS=
-AC_SEARCH_LIBS([vorbis_info_init],[vorbis])
-if test "$ac_cv_search_ogg_stream_init" = "no"
-then
-	if test "$enable_client" = "yes"
-	then
-		AC_MSG_ERROR([couldn't find libvorbis!])
-	fi
-fi
+AC_CHECK_LIB(vorbis, vorbis_info_init, LIBS="-lvorbis", AC_MSG_ERROR([You must have libvorbis!!!]))
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
@@ -498,14 +452,7 @@ CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 #---------------------------------------------------------------------------------------------
 
 LIBS=
-AC_SEARCH_LIBS([ov_open],[vorbisfile])
-if test "$ac_cv_search_ov_open" = "no"
-then
-	if test "$enable_client" = "yes"
-	then
-		AC_MSG_ERROR([couldn't find libvorbisfile!])
-	fi
-fi
+AC_CHECK_LIB(vorbisfile, ov_open, LIBS="-lvorbisfile", AC_MSG_ERROR([You must have libvorbisfile!!!]))
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
@@ -524,8 +471,8 @@ if test "$ac_cv_search_gettext" = "no"
 then
 	AC_MSG_ERROR([couldn't find internationalization library with gettext in it])
 fi
+#AC_CHECK_LIB(intl, gettext, LIBS="-lintl", AC_MSG_ERROR([You must have libintl!!!]))
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-GAME_LIBS="$GAME_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check SDL
@@ -641,14 +588,7 @@ then
 fi
 
 LIBS=
-AC_SEARCH_LIBS([jpeg_CreateDecompress],[jpeg])
-if test "$ac_cv_search_jpeg_create_decompress" = "no"
-then
-	if test "$enable_client" = "yes"
-	then
-		AC_MSG_ERROR([You must have the JPEG development libraries])
-	fi
-fi
+AC_CHECK_LIB(jpeg, jpeg_CreateDecompress, LIBS="-ljpeg", AC_MSG_ERROR([You must have libjpeg!!!]))
 TOOLS_LIBS="$TOOLS_LIBS $LIBS"
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
@@ -666,14 +606,7 @@ then
 fi
 
 LIBS=
-AC_SEARCH_LIBS([png_create_info_struct],[png])
-if test "$ac_cv_search_png_create_info_struct" = "no"
-then
-	if test "$enable_client" = "yes"
-	then
-		AC_MSG_ERROR([You must have the PNG development libraries])
-	fi
-fi
+AC_CHECK_LIB(png, png_create_info_struct, LIBS="-lpng", AC_MSG_ERROR([You must have libpng!!!]))
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
@@ -968,24 +901,6 @@ then
 	AC_MSG_NOTICE([Enabling qdata])
 	AC_SUBST([BUILD_QDATA],1)
 fi
-
-#---------------------------------------------------------------------------------------------
-# Check for extra valgrind memory debugging code
-#---------------------------------------------------------------------------------------------
-#LIBS=
-#if test "$enable_valgrind" = "check" || test "$enable_valgrind" = "yes"
-#then
-#	AC_CHECK_HEADERS([valgrind/memcheck.h])
-#	if test "$ac_cv_header_valgrind_memcheck_h" = "yes"
-#	then
-#		AC_SUBST([HAVE_VALGRIND],1)
-#	elif test "$enable_valgrind" = "yes"
-#	then
-#		AC_MSG_ERROR([specified --enable-valgrind but cannot find valgrind/memcheck.h!])
-#	fi
-#else
-#	AC_MSG_NOTICE([Without valgrind])
-#fi
 
 #---------------------------------------------------------------------------------------------
 # Check for debug
