@@ -47,6 +47,14 @@ typedef enum {
 	AIRCRAFT_UFO
 } aircraftType_t;
 
+typedef enum {
+	AIRCRAFT_HANGAR_NONE = 0,
+	AIRCRAFT_HANGAR_SMALL = 1,
+	AIRCRAFT_HANGAR_BIG = 2,
+
+	AIRCRAFT_HANGAR_ERROR
+} aircraftHangarType_t;
+
 /** @brief different weight for aircraft items
  * @note values must go from the lightest to the heaviest item */
 typedef enum {
@@ -142,7 +150,7 @@ typedef struct aircraft_s {
 	int idxInBase;			/**< Index in base. See also base_t->numAircraftInBase. */
 	int hangar;			/**< This is the baseCapacities_t enum value which says in which hangar this aircraft
 						is being parked in (CAP_AIRCRAFTS_SMALL/CAP_AIRCRAFTS_BIG). */
-	
+
 	/* pointer to base->numOnTeam[AIRCRAFT_ID] */
 	int teamSize;				/**< How many soldiers/units are on board (i.e. in the craft-team).
 						 * @note ATTENTION do not use this in "for" loops or similar.

@@ -4753,7 +4753,7 @@ static void CP_UFORecoveredStore_f (void)
 	}
 
 	/* Clear UFObases. */
-	memset (UFObases, -1, sizeof(UFObases));
+	memset(UFObases, -1, sizeof(UFObases));
 
 	recoveryBaseSelectPopup[0] = '\0';
 	/* Check how many bases can store this UFO. */

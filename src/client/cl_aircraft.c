@@ -39,12 +39,15 @@ int numAircraft_samples = 0;
 
 static const int AIRCRAFT_RADAR_RANGE = 20;
 static const int DISTANCE = 15;
+static const int AIRCRAFT_SIZE_FOR_BIG_HANGAR = 8;
 
 /**
  * @brief Updates hangar capacities for one aircraft in given base.
  * @param[in] aircraftID aircraftID Index of aircraft type in aircraft_samples.
  * @param[in] base Pointer to base.
- * @return 2 if aircraft was placed in big hangar, 1 if small, -1 if error.
+ * @return AIRCRAFT_HANGAR_BIG if aircraft was placed in big hangar
+ * @return AIRCRAFT_HANGAR_SMALL if small
+ * @return AIRCRAFT_HANGAR_ERROR if error or not possible
  * @sa AIR_NewAircraft
  * @sa AIR_UpdateHangarCapForAll
  */
@@ -58,33 +61,33 @@ static int AIR_UpdateHangarCapForOne (int aircraftID, base_t *base)
 #ifdef DEBUG
 		Com_Printf("AIR_UpdateHangarCapForOne()... aircraft weight is wrong!\n");
 #endif
-		return -1;
+		return AIRCRAFT_HANGAR_ERROR;
 	}
 	if (!base) {
 #ifdef DEBUG
 		Com_Printf("AIR_UpdateHangarCapForOne()... base does not exist!\n");
 #endif
-		return -1;
+		return AIRCRAFT_HANGAR_ERROR;
 	}
 	assert(base);
 	if (!base->hasHangar && !base->hasHangarSmall) {
 		Com_Printf("AIR_UpdateHangarCapForOne()... base does not have any hangar - error!\n");
-		return -1;
+		return AIRCRAFT_HANGAR_ERROR;
 	}
 
-	if (aircraftSize >= 8) {
+	if (aircraftSize >= AIRCRAFT_SIZE_FOR_BIG_HANGAR) {
 		if (!base->hasHangar) {
 			Com_Printf("AIR_UpdateHangarCapForOne()... base does not have big hangar - error!\n");
-			return -1;
+			return AIRCRAFT_HANGAR_ERROR;
 		}
 		freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur;
 		if (freespace >= aircraftSize) {
 			base->capacities[CAP_AIRCRAFTS_BIG].cur += aircraftSize;
-			return 2;
+			return AIRCRAFT_HANGAR_BIG;
 		} else {
 			/* No free space for this aircraft. This should never happen here. */
 			Com_Printf("AIR_UpdateHangarCapForOne()... no free space!\n");
-			return -1;
+			return AIRCRAFT_HANGAR_ERROR;
 		}
 	} else {
 		/* First we are trying to put small aircraft into small hangar.
@@ -93,31 +96,31 @@ static int AIR_UpdateHangarCapForOne (int aircraftID, base_t *base)
 			freespace = base->capacities[CAP_AIRCRAFTS_SMALL].max - base->capacities[CAP_AIRCRAFTS_SMALL].cur;
 			if (freespace >= aircraftSize) {
 				base->capacities[CAP_AIRCRAFTS_SMALL].cur += aircraftSize;
-				return 1;
+				return AIRCRAFT_HANGAR_SMALL;
 			} else {
 				if (!base->hasHangar) {
 					Com_Printf("AIR_UpdateHangarCapForOne()... base does not have big hangar - error!\n");
-					return -1;
+					return AIRCRAFT_HANGAR_ERROR;
 				}
 				freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur;
 				if (freespace >= aircraftSize) {
 					base->capacities[CAP_AIRCRAFTS_BIG].cur += aircraftSize;
-					return 2;
+					return AIRCRAFT_HANGAR_BIG;
 				} else {
 					/* No free space for this aircraft. This should never happen here. */
 					Com_Printf("AIR_UpdateHangarCapForOne()... no free space!\n");
-					return -1;
+					return AIRCRAFT_HANGAR_ERROR;
 				}
 			}
 		} else {
 			freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur;
 			if (freespace >= aircraftSize) {
 				base->capacities[CAP_AIRCRAFTS_BIG].cur += aircraftSize;
-				return 2;
+				return AIRCRAFT_HANGAR_BIG;
 			} else {
 				/* No free space for this aircraft. This should never happen here. */
 				Com_Printf("AIR_UpdateHangarCapForOne()... no free space!\n");
-				return -1;
+				return AIRCRAFT_HANGAR_ERROR;
 			}
 		}
 
@@ -681,7 +684,7 @@ void AIR_NewAircraft (base_t *base, const char *name)
 		/* Update base capacities. */
 		Com_DPrintf(DEBUG_CLIENT, "idx_sample: %i name: %s weight: %i\n", aircraft->idx_sample, aircraft->id, aircraft->weight);
 		aircraft->hangar = AIR_UpdateHangarCapForOne(aircraft->idx_sample, base);
-		if (aircraft->hangar == -1)
+		if (aircraft->hangar == AIRCRAFT_HANGAR_ERROR)
 			Com_Printf("AIR_NewAircraft()... ERROR, new aircraft but no free space in hangars!\n");
 		Com_DPrintf(DEBUG_CLIENT, "Adding new aircraft %s with IDX %i for base %s\n", aircraft->name, aircraft->idx, base->name);
 		/* Now update the aircraft list - maybe there is a popup active */
