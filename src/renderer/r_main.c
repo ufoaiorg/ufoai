@@ -718,85 +718,14 @@ qboolean R_SetMode (void)
 }
 
 /**
- * @brief
+ * @brief Check and load all needed and supported opengl extensions
+ * @sa R_Init
  */
-qboolean R_Init (void)
+static void R_InitExtension (void)
 {
-	char renderer_buffer[1000];
-	char vendor_buffer[1000];
-	int j;
-	extern float r_turbsin[256];
 	int aniso_level, max_aniso;
-
-	for (j = 0; j < 256; j++)
-		r_turbsin[j] *= 0.5;
-
-	R_Register();
-
-	/* initialize OS-specific parts of OpenGL */
-	if (!Rimp_Init())
-		return qfalse;
-
-	/* initialize our QGL dynamic bindings */
-	QR_Link();
-
-	/* set our "safe" modes */
-	r_state.prev_mode = 3;
-
-	/* create the window and set up the context */
-	if (!R_SetMode()) {
-		QR_UnLink();
-		Com_Printf("renderer::R_Init() - could not R_SetMode()\n");
-		return qfalse;
-	}
-
-	/* get our various GL strings */
-	r_config.vendor_string = (const char *)qglGetString(GL_VENDOR);
-	Com_Printf("GL_VENDOR: %s\n", r_config.vendor_string);
-	r_config.renderer_string = (const char *)qglGetString(GL_RENDERER);
-	Com_Printf("GL_RENDERER: %s\n", r_config.renderer_string);
-	r_config.version_string = (const char *)qglGetString(GL_VERSION);
-	Com_Printf("GL_VERSION: %s\n", r_config.version_string);
-	r_config.extensions_string = (const char *)qglGetString(GL_EXTENSIONS);
-	Com_Printf("GL_EXTENSIONS: %s\n", r_config.extensions_string);
-
-	Q_strncpyz(renderer_buffer, r_config.renderer_string, sizeof(renderer_buffer));
-	renderer_buffer[sizeof(renderer_buffer)-1] = 0;
-	Q_strlwr(renderer_buffer);
-
-	Q_strncpyz(vendor_buffer, r_config.vendor_string, sizeof(vendor_buffer));
-	vendor_buffer[sizeof(vendor_buffer)-1] = 0;
-	Q_strlwr(vendor_buffer);
-
-	if (strstr(renderer_buffer, "voodoo")) {
-		if (!strstr(renderer_buffer, "rush"))
-			r_config.renderer = GL_RENDERER_VOODOO;
-		else
-			r_config.renderer = GL_RENDERER_VOODOO_RUSH;
-	} else if (strstr(vendor_buffer, "sgi"))
-		r_config.renderer = GL_RENDERER_SGI;
-	else if (strstr(renderer_buffer, "permedia"))
-		r_config.renderer = GL_RENDERER_PERMEDIA2;
-	else if (strstr(renderer_buffer, "glint"))
-		r_config.renderer = GL_RENDERER_GLINT_MX;
-	else if (strstr(renderer_buffer, "glzicd"))
-		r_config.renderer = GL_RENDERER_REALIZM;
-	else if (strstr(renderer_buffer, "gdi"))
-		r_config.renderer = GL_RENDERER_MCD;
-	else if (strstr(renderer_buffer, "pcx2"))
-		r_config.renderer = GL_RENDERER_PCX2;
-	else if (strstr(renderer_buffer, "verite"))
-		r_config.renderer = GL_RENDERER_RENDITION;
-	else
-		r_config.renderer = GL_RENDERER_OTHER;
-
-#if defined (__linux__) || defined (__FreeBSD__) || defined (__NetBSD__)
-	Cvar_SetValue("r_finish", 1);
-#else
-	/* MCD has buffering issues */
-	if (r_config.renderer == GL_RENDERER_MCD)
-		Cvar_SetValue("r_finish", 1);
-#endif
+	int size;
+	GLenum err;
 
 	/* grab extensions */
 	if (strstr(r_config.extensions_string, "GL_EXT_compiled_vertex_array") || strstr(r_config.extensions_string, "GL_SGI_compiled_vertex_array")) {
@@ -1010,9 +939,6 @@ qboolean R_Init (void)
 	}
 
 	{
-		int size;
-		GLenum err;
-
 		Com_Printf("...max texture size:\n");
 
 		qglGetIntegerv(GL_MAX_TEXTURE_SIZE, &size);
@@ -1034,9 +960,54 @@ qboolean R_Init (void)
 			}
 		}
 	}
+}
 
+/**
+ * @brief
+ */
+qboolean R_Init (void)
+{
+	int j;
+	extern float r_turbsin[256];
+
+	for (j = 0; j < 256; j++)
+		r_turbsin[j] *= 0.5;
+
+	R_Register();
+
+	/* initialize OS-specific parts of OpenGL */
+	if (!Rimp_Init())
+		return qfalse;
+
+	/* initialize our QGL dynamic bindings */
+	QR_Link();
+
+	/* set our "safe" modes */
+	r_state.prev_mode = 3;
+
+	/* create the window and set up the context */
+	if (!R_SetMode()) {
+		QR_UnLink();
+		Com_Printf("renderer::R_Init() - could not R_SetMode()\n");
+		return qfalse;
+	}
+
+	/* get our various GL strings */
+	r_config.vendor_string = (const char *)qglGetString(GL_VENDOR);
+	Com_Printf("GL_VENDOR: %s\n", r_config.vendor_string);
+	r_config.renderer_string = (const char *)qglGetString(GL_RENDERER);
+	Com_Printf("GL_RENDERER: %s\n", r_config.renderer_string);
+	r_config.version_string = (const char *)qglGetString(GL_VERSION);
+	Com_Printf("GL_VERSION: %s\n", r_config.version_string);
+	r_config.extensions_string = (const char *)qglGetString(GL_EXTENSIONS);
+	Com_Printf("GL_EXTENSIONS: %s\n", r_config.extensions_string);
+
+#if defined (__linux__) || defined (__FreeBSD__) || defined (__NetBSD__)
+	Cvar_SetValue("r_finish", 1);
+#endif
+
+	R_InitExtension();
 	R_SetDefaultState();
-
 #ifdef HAVE_SHADERS
 	R_ShaderInit();
 #endif
