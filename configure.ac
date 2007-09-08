@@ -462,15 +462,15 @@ then
 	# Check SDL
 	#---------------------------------------------------------------------------------------------
 	sdl_config=$with_sdl_config
-	OLD_CFLAGS=$CFLAGS
+	OLD_CPPFLAGS=$CPPFLAGS
 	OLD_LDFLAGS=$LDFLAGS
 
 	AC_CHECK_PROG(HAVE_SDL_CONFIG,$sdl_config,yes)
 	if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
 	then
-		CFLAGS=`$sdl_config --cflags`
+		CPPFLAGS=`$sdl_config --cflags`
 		LDFLAGS=`$sdl_config --libs`
-		AC_SUBST([SDL_CFLAGS],$CFLAGS)
+		AC_SUBST([SDL_CFLAGS],$CPPFLAGS)
 		AC_SUBST([SDL_LIBS],$LDFLAGS)
 	else
 		AC_MSG_WARN([cannot find $sdl_config might fail to find SDL!])
@@ -503,7 +503,7 @@ then
 	fi
 	AC_CHECK_LIB(SDL_ttf, TTF_Init, [], AC_MSG_ERROR([You must have SDL_ttf!!!]))
 
-	CFLAGS=$OLD_CFLAGS
+	CPPFLAGS=$OLD_CPPFLAGS
 	LDFLAGS=$OLD_LDFLAGS
 
 	#---------------------------------------------------------------------------------------------

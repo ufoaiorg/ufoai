@@ -9373,7 +9373,7 @@ echo "$as_me: error: Could not find internationalization library with gettext in
 	# Check SDL
 	#---------------------------------------------------------------------------------------------
 	sdl_config=$with_sdl_config
-	OLD_CFLAGS=$CFLAGS
+	OLD_CPPFLAGS=$CPPFLAGS
 	OLD_LDFLAGS=$LDFLAGS
 
 	# Extract the first word of "$sdl_config", so it can be a program name with args.
@@ -9415,9 +9415,9 @@ fi
 
 	if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
 	then
-		CFLAGS=`$sdl_config --cflags`
+		CPPFLAGS=`$sdl_config --cflags`
 		LDFLAGS=`$sdl_config --libs`
-		SDL_CFLAGS=$CFLAGS
+		SDL_CFLAGS=$CPPFLAGS
 
 		SDL_LIBS=$LDFLAGS
 
@@ -9876,7 +9876,7 @@ echo "$as_me: error: You must have SDL_ttf!!!" >&2;}
 fi
 
 
-	CFLAGS=$OLD_CFLAGS
+	CPPFLAGS=$OLD_CPPFLAGS
 	LDFLAGS=$OLD_LDFLAGS
 
 	#---------------------------------------------------------------------------------------------
