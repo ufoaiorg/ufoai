@@ -65,15 +65,12 @@ cvar_t *r_drawworld;
 cvar_t *r_nocull;
 cvar_t *r_isometric;
 cvar_t *r_lerpmodels;
-cvar_t *r_displayrefresh;
 cvar_t *r_anisotropic;
-cvar_t *r_ext_max_anisotropy;
 cvar_t *r_texture_lod;			/* lod_bias */
 
 cvar_t *r_screenshot;
 cvar_t *r_screenshot_jpeg_quality;
 
-cvar_t *r_ext_swapinterval;
 cvar_t *r_ext_multitexture;
 cvar_t *r_ext_combine;
 cvar_t *r_ext_lockarrays;
@@ -629,9 +626,7 @@ static void R_Register (void)
 	r_lerpmodels = Cvar_Get("r_lerpmodels", "1", 0, NULL);
 	r_nocull = Cvar_Get("r_nocull", "0", 0, NULL);
 	r_speeds = Cvar_Get("r_speeds", "0", 0, NULL);
-	r_displayrefresh = Cvar_Get("r_displayrefresh", "0", CVAR_ARCHIVE, NULL);
 	r_anisotropic = Cvar_Get("r_anisotropic", "1", CVAR_ARCHIVE, NULL);
-	r_ext_max_anisotropy = Cvar_Get("r_ext_max_anisotropy", "0", 0, NULL);
 	r_texture_lod = Cvar_Get("r_texture_lod", "0", CVAR_ARCHIVE, NULL);
 
 	r_screenshot = Cvar_Get("r_screenshot", "jpg", CVAR_ARCHIVE, "png, jpg or tga are valid screenshot formats");
@@ -666,7 +661,6 @@ static void R_Register (void)
 	r_showbox = Cvar_Get("r_showbox", "0", CVAR_ARCHIVE, "Shows model bounding box");
 	r_intensity = Cvar_Get("r_intensity", "2", CVAR_ARCHIVE, NULL);
 
-	r_ext_swapinterval = Cvar_Get("r_ext_swapinterval", "1", CVAR_ARCHIVE, NULL);
 	r_ext_multitexture = Cvar_Get("r_ext_multitexture", "1", CVAR_ARCHIVE, NULL);
 	r_ext_combine = Cvar_Get("r_ext_combine", "1", CVAR_ARCHIVE, NULL);
 	r_ext_lockarrays = Cvar_Get("r_ext_lockarrays", "0", CVAR_ARCHIVE, NULL);
@@ -804,10 +798,10 @@ static void R_InitExtension (void)
 	r_state.anisotropic = qfalse;
 
 	qglGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &max_aniso);
-	Cvar_SetValue("r_ext_max_anisotropy", max_aniso);
-	if (r_anisotropic->integer > r_ext_max_anisotropy->integer) {
+	r_state.maxAnisotropic = max_aniso;
+	if (r_anisotropic->integer > max_aniso) {
 		Com_Printf("...max GL_EXT_texture_filter_anisotropic value is %i\n", max_aniso);
-		Cvar_SetValue("r_anisotropic", r_ext_max_anisotropy->integer);
+		Cvar_SetValue("r_anisotropic", max_aniso);
 	}
 
 	aniso_level = r_anisotropic->integer;
@@ -821,7 +815,7 @@ static void R_InitExtension (void)
 	} else {
 		Com_Printf("...GL_EXT_texture_filter_anisotropic not found\n");
 		Cvar_Set("r_anisotropic", "0");
-		Cvar_Set("r_ext_max_anisotropy", "0");
+		r_state.maxAnisotropic = 0;
 	}
 
 	if (strstr(r_config.extensions_string, "GL_EXT_texture_lod_bias")) {
@@ -1060,9 +1054,9 @@ void R_BeginFrame (void)
 		VID_Restart_f();
 
 	if (r_anisotropic->modified) {
-		if (r_anisotropic->integer > r_ext_max_anisotropy->integer) {
-			Com_Printf("...max GL_EXT_texture_filter_anisotropic value is %i\n", r_ext_max_anisotropy->integer);
-			Cvar_SetValue("r_anisotropic", r_ext_max_anisotropy->value);
+		if (r_anisotropic->integer > r_state.maxAnisotropic) {
+			Com_Printf("...max GL_EXT_texture_filter_anisotropic value is %i\n", r_state.maxAnisotropic);
+			Cvar_SetValue("r_anisotropic", r_state.maxAnisotropic);
 		}
 		/*R_UpdateAnisotropy();*/
 		r_anisotropic->modified = qfalse;

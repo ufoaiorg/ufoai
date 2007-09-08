@@ -467,7 +467,7 @@ void CL_LoadMedia (void)
 /**
  * @brief Calculates refdef's FOV_X.
  * Should generally be called after any changes are made to the zoom level (via cl.cam.zoom)
- * @sa
+ * @sa V_CalcFovY
  */
 void V_CalcFovX (void)
 {
@@ -482,7 +482,7 @@ void V_CalcFovX (void)
 /**
  * @brief
  * @param
- * @sa
+ * @sa V_CalcFovX
  */
 static void V_CalcFovY (float width, float height)
 {

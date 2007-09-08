@@ -179,14 +179,11 @@ extern cvar_t *r_isometric;
 extern cvar_t *r_lerpmodels;
 
 extern cvar_t *r_anisotropic;
-extern cvar_t *r_ext_max_anisotropy;
 extern cvar_t *r_texture_lod;   /* lod_bias */
-extern cvar_t *r_displayrefresh;
 
 extern cvar_t *r_screenshot;
 extern cvar_t *r_screenshot_jpeg_quality;
 
-extern cvar_t *r_ext_swapinterval;
 extern cvar_t *r_ext_multitexture;
 extern cvar_t *r_ext_combine;
 extern cvar_t *r_ext_lockarrays;
@@ -334,6 +331,8 @@ typedef struct {
 
 	int currenttextures[2];
 	int currenttmu;
+
+	int maxAnisotropic;
 
 	qboolean hwgamma;
 	qboolean stencil_two_side;

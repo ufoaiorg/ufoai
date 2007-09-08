@@ -68,7 +68,7 @@ void R_UpdateAnisotropy (void)
 	if (!r_state.anisotropic)
 		value = 0;
 	else
-		value = r_ext_max_anisotropy->value;
+		value = r_state.maxAnisotropic;
 
 	for (i = 0, glt = gltextures; i < numgltextures; i++, glt++) {
 		if (glt->type != it_pic) {
