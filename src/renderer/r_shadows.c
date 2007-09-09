@@ -456,9 +456,6 @@ static void R_DrawAliasShadowVolume (mdl_md2_t * paliashdr, int posenumm)
 
 	qglDisable(GL_STENCIL_TEST);
 
-/* 	if (clamp)
-		qglDisable(GL_DEPTH_CLAMP_NV); */
-
 	if (r_shadow_debug_volume->integer)
 		qglColor3f(1, 1, 1);
 	else

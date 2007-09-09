@@ -293,8 +293,8 @@ void R_DrawAliasMD2Model (entity_t * e)
 	if (!skin)
 		skin = r_notexture;		/* fallback... */
 	else if (skin->has_alpha && !(e->flags & RF_TRANSLUCENT)) {
-		/* it will be drawn in the next entity render pass */
-		/* for the translucent entities */
+		/* it will be drawn in the next entity render pass
+		 * for the translucent entities */
 		e->flags |= RF_TRANSLUCENT;
 		if (!e->alpha)
 			e->alpha = 1.0;
