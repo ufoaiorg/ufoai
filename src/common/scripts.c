@@ -2270,15 +2270,6 @@ void Com_ParseScripts (void)
 	csi.idRight = csi.idLeft = csi.idExtension = csi.idBackpack = csi.idBelt = csi.idHolster = csi.idArmor = csi.idFloor = csi.idEquip = csi.idHeadgear = NONE;
 	csi.damNormal = csi.damBlast = csi.damFire = csi.damShock = csi.damLaser = csi.damPlasma = csi.damParticle = csi.damStun = NONE;
 
-	/* I guess this is needed, too, if not please remove */
-	csi.numODs = 0;
-	csi.numIDs = 0;
-	csi.numEDs = 0;
-	csi.numDTs = 0;
-
-	/* reset name and team def counters */
-	csi.numTeamDefs = 0;
-
 	/* pre-stage parsing */
 	FS_BuildFileList("ufos/*.ufo");
 	text = NULL;

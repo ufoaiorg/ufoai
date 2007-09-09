@@ -88,7 +88,10 @@ void CL_ParseTipsOfTheDay (const char *name, const char **text)
 	const char	*token;
 	tipOfTheDay_t *tip;
 
-	if (!*text || *name != '{') {
+	/* get it's body */
+	token = COM_Parse(text);
+
+	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseTipsOfTheDay: tips without body ignored\n");
 		return;
 	}

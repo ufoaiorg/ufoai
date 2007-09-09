@@ -1,7 +1,7 @@
 // tip of the day tips
 // just put new tips in "" and mark them with _ to be translated
 
-tips {
+tips tiplist {
 	"_Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
 	"_Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
 	"_With multiplayer teams, make sure your best soldiers are at the top of the team list. When the soldier limit is lower than the amount of soldiers in your team, the soldiers at the top of the list will be used for the game."

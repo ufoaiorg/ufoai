@@ -652,8 +652,10 @@ void Qcommon_Init (int argc, const char **argv)
 	if (setjmp(abortframe))
 		Sys_Error("Error during initialization");
 
+	memset(&csi, 0, sizeof(csi));
+
 	/* prepare enough of the subsystems to handle
-	   cvar and command buffer management */
+	 * cvar and command buffer management */
 	COM_InitArgv(argc, argv);
 
 	Swap_Init();
@@ -665,9 +667,9 @@ void Qcommon_Init (int argc, const char **argv)
 	Key_Init();
 
 	/* we need to add the early commands twice, because
-	   a basedir needs to be set before execing
-	   config files, but we want other parms to override
-	   the settings of the config files */
+	 * a basedir needs to be set before execing
+	 * config files, but we want other parms to override
+	 * the settings of the config files */
 	Cbuf_AddEarlyCommands(qfalse);
 	Cbuf_Execute();
 

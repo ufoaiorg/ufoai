@@ -1218,11 +1218,6 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 				Q_strncpyz(headerType, token, sizeof(headerType));
 				if (*text) {
 					token = COM_Parse(text);
-					/* not every header type has an id - e.g. tips { [..] } */
-					if (*token == '{') {
-						FS_SkipBlock(text);
-						continue;
-					}
 					Q_strncpyz(headerName, token, sizeof(headerName));
 					*name = headerName;
 					return headerType;
