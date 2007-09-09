@@ -361,7 +361,7 @@ void CL_LoadMedia (void)
 	char *str;
 
 	/* Prepare environment. This is needed hack to allow /devmap and /map usage.
-	   When an user has base built and calls /devmap or /map, cls.missionaircraft has to be set. */
+	 * When an user has base built and calls /devmap or /map, cls.missionaircraft has to be set. */
 	if (!cls.missionaircraft) {
 		cls.missionaircraft = AIR_AircraftGetFromIdx(0);
 		if (cls.missionaircraft)
@@ -370,8 +370,6 @@ void CL_LoadMedia (void)
 			Com_Printf("Could not set mission aircraft\n");
 	}
 
-	/* this is needed to get shaders/image filters in game */
-	/* the renderer needs to know them before the textures get loaded */
 	V_UpdateRefDef();
 
 	if (!cl.configstrings[CS_TILES][0])
@@ -394,11 +392,7 @@ void CL_LoadMedia (void)
 
 	Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages), _("loading models..."));
 	cls.loadingPercent += 10.0f;
-	/* precache status bar pics */
-	Com_Printf("pics\n");
 	SCR_UpdateScreen();
-	SCR_TouchPics();
-	Com_Printf("                                     \r");
 
 	CL_RegisterLocalModels();
 	CL_ParticleRegisterArt();
@@ -411,7 +405,6 @@ void CL_LoadMedia (void)
 	for (i = 1; i < MAX_MODELS && cl.configstrings[CS_MODELS + i][0]; i++) {
 		Q_strncpyz(name, cl.configstrings[CS_MODELS + i], sizeof(name));
 		if (name[0] != '*') {
-			Com_Printf("%s\r", name);
 			Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages),
 				_("loading %s"), (strlen(name) > 40) ? &name[strlen(name) - 40] : name);
 		}
