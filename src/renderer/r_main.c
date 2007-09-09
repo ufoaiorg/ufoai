@@ -802,12 +802,12 @@ qboolean R_SetMode (void)
 	/* new values */
 	viddef.mode = vid_mode->integer;
 	viddef.fullscreen = vid_fullscreen->integer;
-	viddef.rx = (float)viddef.width / VID_NORM_WIDTH;
-	viddef.ry = (float)viddef.height / VID_NORM_HEIGHT;
 	if (!VID_GetModeInfo()) {
 		Com_Printf(" invalid mode\n");
 		return qfalse;
 	}
+	viddef.rx = (float)viddef.width / VID_NORM_WIDTH;
+	viddef.ry = (float)viddef.height / VID_NORM_HEIGHT;
 	Com_Printf(" %dx%d\n", viddef.width, viddef.height);
 
 	if (R_InitGraphics())
@@ -1088,22 +1088,15 @@ qboolean R_Init (void)
 
 	R_Register();
 
+	/* set our "safe" modes */
+	viddef.prev_mode = 6;
+
 	/* initialize OS-specific parts of OpenGL */
 	if (!Rimp_Init())
 		return qfalse;
 
 	/* initialize our QGL dynamic bindings */
 	QR_Link();
-
-	/* set our "safe" modes */
-	viddef.prev_mode = 6;
-
-	/* create the window and set up the context */
-	if (!R_SetMode()) {
-		QR_UnLink();
-		Com_Printf("renderer::R_Init() - could not R_SetMode()\n");
-		return qfalse;
-	}
 
 	/* get our various GL strings */
 	r_config.vendor_string = (const char *)qglGetString(GL_VENDOR);

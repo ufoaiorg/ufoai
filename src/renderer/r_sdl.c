@@ -95,7 +95,10 @@ qboolean Rimp_Init (void)
 	Com_Printf("SDL version: %i.%i.%i\n", info.version.major, info.version.minor, info.version.patch);
 #endif
 
-	R_SetMode();
+	if (!R_SetMode()) {
+		Sys_Error("Video SDL_InitSubsystem failed: %s\n", SDL_GetError());
+		return qfalse;
+	}
 
 	SDL_WM_SetCaption(GAME_TITLE, GAME_TITLE_LONG);
 
