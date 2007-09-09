@@ -214,9 +214,9 @@ static unsigned long tileMask (const char chr)
 	else if (chr >= '1' && chr <= '5')
 		return 1UL << (chr - '0');
 	else if (chr >= 'a' && chr <= 'z')
-		return 1UL << (chr - ('a' + 6));
+		return 1UL << (chr - 'a' + 6);
 	else if (chr >= 'A' && chr <= 'Z')
-		return 1UL << (chr - ('A' + 6));
+		return 1UL << (chr - 'A' + 6);
 	else
 		Com_Error(ERR_DROP, "SV_ParseMapTile: Invalid tile char '%c'", chr);
 	/* never reached */
@@ -543,6 +543,48 @@ static qboolean SV_TestFilled (void)
 	return qtrue;
 }
 
+#ifdef DEBUG
+/**
+ * @brief Debug fuction to dump the rating of the current map.
+ */
+static void SV_DumpRating (void)
+{
+	int x, y;
+	for (y = mapH; y >= 1; y--) {
+		for (x = 1; x < mapW + 1; x++)
+			Com_Printf(" %2d", (int) curRating[y][x]);
+		Com_Printf("\n");
+	}
+	Com_Printf("\n");
+}
+
+/**
+ * @brief Debug fuction to dump the map location of a placed tile.
+ */
+static void SV_DumpPlaced (mPlaced_t * placed)
+{
+	int x, y, dx, dy;
+	
+	Com_Printf("Placed tile %s at %d %d\n", placed->tile->id, placed->x, placed->y);
+	
+	for (y = mapH; y >= 1; y--) {
+		for (x = 1; x < mapW + 1; x++) {
+			dx = x - placed->x;
+			dy = y - placed->y;
+			
+			if ((dx >= 0) && (dx < placed->tile->w) &&
+					(dy >= 0) && (dy < placed->tile->h) &&
+					IS_SOLID(placed->tile->spec[dy][dx])) 
+				Com_Printf(" X");	
+			else
+				Com_Printf(" .");	
+		}
+		Com_Printf("\n");
+	}
+	Com_Printf("\n");
+}
+#endif
+
 /**
  * @brief Returns the rating of the current map.
  * @return A value which roughly describes the connection quality of the map
@@ -558,14 +600,8 @@ static int SV_CalcRating (void)
 		for (x = 1; x < mapW + 1; x++)
 			rating += curRating[y][x];
 
-#ifdef DEBUG
-	for (y = 1; y < mapH + 1; y++) {
-		for (x = 1; x < mapW + 1; x++)
-			Com_Printf(" %2d", (int) curRating[y][x]);
-		Com_Printf("\n");
-	}
-	Com_Printf("\n");
-#endif
+	/* SV_DumpRating(); */
+	
 	return rating;
 }
 
@@ -702,7 +738,7 @@ static qboolean SV_AddRandomTile (int* idx, int* pos)
  * @brief Number of test alternatives per step in SV_AddMissingTiles
  * @sa SV_AddMissingTiles
  */
-#define CHECK_ALTERNATIVES_COUNT 8 
+#define CHECK_ALTERNATIVES_COUNT 10 
 
 /**
  * @brief Tries to fill the missing tiles of the current map.
@@ -727,8 +763,6 @@ static qboolean SV_AddMissingTiles (void)
 		if (SV_TestFilled())
 			return qtrue;
 
-		Com_Printf("SV_AddMissingTiles: Testing tiles\n");
-		
 		/* try some random tiles at random positions */
 		for (i = 0; i < CHECK_ALTERNATIVES_COUNT; i++) {
 			if (!SV_AddRandomTile(&idx[i], &pos[i])) {
@@ -969,6 +1003,8 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
 
 	/* generate the strings */
 	for (i = 0, pl = mPlaced; i < numPlaced; i++, pl++) {
+		/* SV_DumpPlaced(pl); */
+
 		Q_strcat(asmMap, va(" %s", pl->tile->id), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
 		Q_strcat(asmPos, va(" %i %i", (pl->x - mAsm->w / 2) * 8, (pl->y - mAsm->h / 2) * 8), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
 	}
