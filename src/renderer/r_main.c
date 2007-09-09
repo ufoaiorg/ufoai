@@ -824,6 +824,8 @@ qboolean R_SetMode (void)
 
 	viddef.mode = vid_mode->integer;
 	viddef.fullscreen = vid_fullscreen->integer;
+	if (!VID_GetModeInfo())
+		return qfalse;
 	viddef.rx = (float)viddef.width / VID_NORM_WIDTH;
 	viddef.ry = (float)viddef.height / VID_NORM_HEIGHT;
 
