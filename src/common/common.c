@@ -734,8 +734,10 @@ void Qcommon_Init (int argc, const char **argv)
 		Cbuf_AddText("dedicated_start\n");
 	Cbuf_Execute();
 
+	FS_ExecAutoexec();
+
 	/* add + commands from command line
-	   if the user didn't give any commands, run default action */
+	 * if the user didn't give any commands, run default action */
 	if (Cbuf_AddLateCommands()) {
 		/* the user asked for something explicit
 		 * so drop the loading plaque */
