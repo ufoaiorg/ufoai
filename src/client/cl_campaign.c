@@ -2155,7 +2155,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 			}
 
 			if (!set->def->numMissions)
-				Com_Printf("......warning: Set with no missions\n");
+				Com_Printf("......warning: Set with no missions (%s)\n", set->def->name);
 
 			set->active = MSG_ReadByte(sb);
 			set->num = MSG_ReadShort(sb);
@@ -2315,6 +2315,31 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 				selMis = &ccs.mission[i];
 				if (!selMis->def) {
 					Com_Printf("......warning: incomplete mission data (%s)\n", name);
+					return qfalse;
+				}
+			}
+		}
+	}
+
+	/* and now fix the mission pointers for e.g. ufocrash sites
+	 * this is needed because the base load function which loads the aircraft
+	 * doesn't know anything (at that stage) about the new missions that were
+	 * add in this load function */
+	for (base = gd.bases, i = 0; i < gd.numBases; i++, base++) {
+		for (j = 0; j < base->numAircraftInBase; j++) {
+			if (base->aircraft[j].status == AIR_MISSION) {
+				assert(base->aircraft[j].missionID);
+				for (num = 0; num < ccs.numMissions; num++) {
+					if (!Q_strcmp(ccs.mission[num].def->name, base->aircraft[j].missionID)) {
+						base->aircraft[j].mission = &ccs.mission[num];
+						Mem_Free(base->aircraft[j].missionID);
+						break;
+					}
+				}
+				/* not found */
+				if (num == ccs.numMissions) {
+					Com_Printf("Could not link mission '%s' in aircraft\n", base->aircraft[j].missionID);
+					Mem_Free(base->aircraft[j].missionID);
 					return qfalse;
 				}
 			}

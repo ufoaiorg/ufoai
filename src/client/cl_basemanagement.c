@@ -3290,11 +3290,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 				}
 				break;
 			case AIR_MISSION:
-				s = MSG_ReadString(sb);
-				for (i = 0; i < ccs.numMissions; i++) {
-					if (!Q_strcmp(ccs.mission[i].def->name, s))
-						aircraft->mission = &ccs.mission[i];
-				}
+				aircraft->missionID = Mem_PoolStrDup(MSG_ReadString(sb), cl_localPool, 0);
 			}
 			MSG_ReadPos(sb, aircraft->direction);
 			for (l = 0; l < presaveArray[PRE_AIRSTA]; l++)
