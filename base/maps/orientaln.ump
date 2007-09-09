@@ -30,16 +30,16 @@ tile +h03
 
 0      a      a      0
 a      +a     +a     a
-a      +a     a      a
-0      a      a      0
+a      +a     a      0
+0      a      0      0
 }
 
 tile +h04
 {
 4 4
 
-0      a      a      0
-a      a      +a     a
+0      0      a      0
+0      a      +a     a
 a      +a     +a     a
 0      a      a      0
 }
@@ -161,7 +161,6 @@ title "_Oriental small"
 +h02 "0 1"
 +h03 "1 2"
 +h04 "1 2"
-+h05 "0 2"
 +h05 "0 2"
 +h06 "0 5"
 +h07 "0 3"
