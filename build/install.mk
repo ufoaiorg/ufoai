@@ -27,6 +27,14 @@ linuxinstaller:
 	scp src/ports/linux/installer/ufoai-$(VERSION)-linux.run ufo:~/public_html/download
 	scp src/ports/linux/installer/ufoai-$(VERSION)-linux.run mirror:~/public_html
 
+macinstaller:
+	$(MAKE) lang
+	$(MAKE) maps
+	cd base; ./archives.sh
+	cd src/ports/macosx/installer; $(MAKE)
+	scp src/ports/macosx/installer/ufoai-$(VERSION)-macosx.dmg ufo:~/public_html/download
+	scp src/ports/macosx/installer/ufoai-$(VERSION)-macosx.dmg mirror:~/public_html
+
 #
 # Generate a tar archive of the sources.
 #
