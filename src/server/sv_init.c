@@ -487,15 +487,13 @@ static qboolean SV_TestAlternatives (unsigned long mapAlts, unsigned long tileAl
  * @param[in] tile The tile definition that should be fitted into the map.
  * @param[in] x The x position in the map where the tile is supposed to be placed/checked.
  * @param[in] y The y position in the map where the tile is supposed to be placed/checked.
- * @param[in] force The tiles must touch
  * @return qtrue if the tile fits.
  * @return qfalse if the tile does not fit or an error was encountered.
  * @sa SV_AddMandatoryParts
  * @sa SV_AddRegion
  */
-static qboolean SV_FitTile (mTile_t * tile, int x, int y, qboolean force)
+static qboolean SV_FitTile (mTile_t * tile, int x, int y)
 {
-	qboolean touch;
 	int tx, ty;
 	const unsigned long *spec = NULL;
 	const unsigned long *m = NULL;
@@ -510,12 +508,6 @@ static qboolean SV_FitTile (mTile_t * tile, int x, int y, qboolean force)
 	if (x + tile->w > mapW + 2 || y + tile->h > mapH + 2)
 		return qfalse;
 
-	/* require touching tiles */
-	if (x == 0 || y == 0)
-		touch = qtrue;
-	else
-		touch = qfalse;
-
 	/* test for fit */
 	spec = &tile->spec[0][0];
 	m = &curMap[y][x];
@@ -523,19 +515,12 @@ static qboolean SV_FitTile (mTile_t * tile, int x, int y, qboolean force)
 		for (tx = 0; tx < tile->w; tx++, spec++, m++) {
 			if(!SV_TestAlternatives(*m, *spec))
 				return qfalse;
-
-			if (IS_SOLID(*m) && (*spec)) 
-				touch = qtrue;
 		}
 		spec += (MAX_TILESIZE - tile->w);
 		m += (MAX_RANDOM_MAP_WIDTH - tile->w);
 	}
 
-	/* it fits, check for touch */
-	if (touch || !force)
-		return qtrue;
-	else
-		return qfalse;
+	return qtrue;
 }
 
 /**
@@ -688,41 +673,23 @@ static qboolean SV_AddRandomTile (int* idx, int* pos)
 	int start_idx = *idx = rand() % numToPlace;
 	int start_pos = *pos = rand() % mapSize;
 	
-	(*idx) %= numToPlace;
-	(*pos) %= mapSize;
+	do {
+		if (mToPlace[*idx].cnt < mToPlace[*idx].max) {
+			do {
+				x = (*pos) % mapW;
+				y = (*pos) / mapW;
 
-	do
-	{
-		while (mToPlace[*idx].cnt == mToPlace[*idx].max) {
-			(*idx) += 1;
-			(*idx) %= numToPlace;
+				if (SV_FitTile(mToPlace[*idx].tile, x, y)) {
+					SV_AddTile(mToPlace[*idx].tile, x, y, *idx, *pos);
+					return qtrue;
+				}	 	
 				
-			if ((*idx) == start_idx) 
-				return qfalse;
+				(*pos) += 1;
+				(*pos) %= mapSize;
+				
+			} while ((*pos) != start_pos);
 		}
-
-		x = (*pos) % mapW;
-		y = (*pos) / mapW;
-
-		while (!SV_FitTile(mToPlace[*idx].tile, x, y, qfalse))
-		{
-			(*pos) += 1;
-			(*pos) %= mapSize;
-			
-			if ((*pos) == start_pos) {
-				(*pos) = -1;
-				break;
-			}
-			
-			x = (*pos) % mapW;
-			y = (*pos) / mapW;
-		}
-
-		if ((*pos) != -1) {
-			SV_AddTile(mToPlace[*idx].tile, x, y, *idx, *pos);
-			return qtrue;
-		}
-		
+				
 		(*idx) += 1;
 		(*idx) %= numToPlace;
 				
@@ -762,7 +729,7 @@ static qboolean SV_AddMissingTiles (void)
 
 		Com_Printf("SV_AddMissingTiles: Testing tiles\n");
 		
-		/* find some tiles */
+		/* try some random tiles at random positions */
 		for (i = 0; i < CHECK_ALTERNATIVES_COUNT; i++) {
 			if (!SV_AddRandomTile(&idx[i], &pos[i])) {
 				/* remove all tiles placed by this function */
@@ -782,8 +749,6 @@ static qboolean SV_AddMissingTiles (void)
 			
 			SV_RemoveTile(NULL, NULL);
 		}
-
-		Com_Printf("SV_AddMissingTiles: Select tile\n");
 
 		for (i = 0; i < CHECK_ALTERNATIVES_COUNT; i++) {
 			if (rating[i] == max_rating) {
@@ -817,7 +782,7 @@ static void SV_AddMapTiles (void)
 			for (; pos < mapSize; pos++) {
 				x = prList[pos] % mapW;
 				y = prList[pos] / mapW;
-				if (SV_FitTile(mToPlace[idx].tile, x, y, qfalse)) {
+				if (SV_FitTile(mToPlace[idx].tile, x, y)) {
 					/* add tile */
 					SV_AddTile(mToPlace[idx].tile, x, y, idx, pos);
 					break;
@@ -844,7 +809,7 @@ static void SV_AddMapTiles (void)
 		} else {
 			/* no more retries */
 			if (start == numPlaced) {
-				Com_Error(ERR_DROP, "SV_AddMandatoryParts: Impossible to assemble map\n");
+				Com_Error(ERR_DROP, "SV_AddMapTiles: Impossible to assemble map\n");
 			}
 			SV_RemoveTile(&idx, &pos);
 			pos++;
