@@ -625,7 +625,7 @@ struct dbuffer *NET_ReadMsg (struct net_stream *s)
 	if (stream_peek(s, (char *)&v, 4) < 4)
 		return NULL;
 
-	len = LittleShort(v);
+	len = LittleLong(v);
 	if (stream_length(s) < (4 + len))
 		return NULL;
 
