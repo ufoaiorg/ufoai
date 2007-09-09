@@ -496,7 +496,6 @@ void V_UpdateRefDef (void)
 	V_CalcFovY(scr_vrect.width, scr_vrect.height);
 
 	/* setup refdef */
-	refdef.rdflags &= ~RDF_NOWORLDMODEL;
 	refdef.x = scr_vrect.x;
 	refdef.y = scr_vrect.y;
 	refdef.width = scr_vrect.width;
@@ -554,6 +553,7 @@ void V_RenderView (void)
 		refdef.rdflags |= RDF_NOWORLDMODEL;
 		break;
 	default:
+		refdef.rdflags &= ~RDF_NOWORLDMODEL;
 		LM_AddToScene();
 		LE_AddToScene();
 		CL_AddTargeting();
