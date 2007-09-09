@@ -62,6 +62,12 @@ typedef struct vrect_s {
 typedef struct {
 	unsigned width;		/**< game screen/window width */
 	unsigned height;	/**< game screen/window height */
+	unsigned prev_width;
+	unsigned prev_height;
+	int prev_mode;
+	int mode;
+	qboolean fullscreen;
+	qboolean prev_fullscreen;
 	float rx;		/**< horizontal screen scale factor */
 	float ry;		/**< vertical screen scale factor */
 } viddef_t;
@@ -80,6 +86,7 @@ extern const vidmode_t vid_modes[];
 extern viddef_t viddef;			/* global video state */
 
 extern cvar_t *vid_fullscreen;
+extern cvar_t *vid_mode;
 extern cvar_t *vid_gamma;
 extern cvar_t *vid_grabmouse;
 
@@ -97,6 +104,6 @@ void VID_Restart_f(void);
 
 void CL_WriteAVIVideoFrame(const byte * imageBuffer, size_t size);
 
-qboolean VID_GetModeInfo(int *width, int *height, int mode);
+qboolean VID_GetModeInfo(void);
 
 #endif /* CLIENT_VID_H */

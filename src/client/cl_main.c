@@ -2308,16 +2308,16 @@ static void CL_CvarCheck (void)
 	}
 
 	/* r_mode and fullscreen */
-	v = Cvar_VariableInteger("mn_rmode");
+	v = Cvar_VariableInteger("mn_vidmode");
 	if (v < -1 || v >= VID_GetModeNums()) {
-		Com_Printf("Max r_mode mode is %i (%i)\n", VID_GetModeNums(), v);
-		v = Cvar_VariableInteger("r_mode");
-		Cvar_SetValue("mn_rmode", v);
+		Com_Printf("Max vid_mode value is %i (%i)\n", VID_GetModeNums(), v);
+		v = Cvar_VariableInteger("vid_mode");
+		Cvar_SetValue("mn_vidmode", v);
 	}
 	if (v >= 0)
-		Cvar_Set("mn_rmodestr", va("%i*%i", vid_modes[v].width, vid_modes[v].height));
+		Cvar_Set("mn_vidmodestr", va("%i*%i", vid_modes[v].width, vid_modes[v].height));
 	else
-		Cvar_Set("mn_rmodestr", _("Custom"));
+		Cvar_Set("mn_vidmodestr", _("Custom"));
 }
 
 /**

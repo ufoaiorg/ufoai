@@ -91,7 +91,6 @@ cvar_t *r_stencil_two_side;
 
 cvar_t *r_drawclouds;
 cvar_t *r_imagefilter;
-cvar_t *r_mode;
 cvar_t *r_dynamic;
 cvar_t *r_soften;
 cvar_t *r_modulate;
@@ -117,7 +116,7 @@ static void R_Strings_f (void)
 	Com_Printf("GL_VENDOR: %s\n", r_config.vendor_string);
 	Com_Printf("GL_RENDERER: %s\n", r_config.renderer_string);
 	Com_Printf("GL_VERSION: %s\n", r_config.version_string);
-	Com_Printf("MODE: %i, %d x %d FULLSCREEN: %i\n", r_mode->integer, viddef.width, viddef.height, vid_fullscreen->integer);
+	Com_Printf("MODE: %i, %d x %d FULLSCREEN: %i\n", vid_mode->integer, viddef.width, viddef.height, vid_fullscreen->integer);
 	Com_Printf("GL_EXTENSIONS: %s\n", r_config.extensions_string);
 	Com_Printf("GL_MAX_TEXTURE_SIZE: %d\n", r_config.maxTextureSize);
 }
@@ -599,7 +598,7 @@ static void R_RenderView (void)
 void R_BeginFrame (void)
 {
 	/* change modes if necessary */
-	if (r_mode->modified || vid_fullscreen->modified) {
+	if (vid_mode->modified || vid_fullscreen->modified) {
 		R_SetMode();
 #ifdef _WIN32
 		VID_Restart_f();
@@ -750,7 +749,6 @@ static void R_Register (void)
 
 	r_modulate = Cvar_Get("r_modulate", "1", CVAR_ARCHIVE, NULL);
 	r_bitdepth = Cvar_Get("r_bitdepth", "0", CVAR_ARCHIVE, NULL);
-	r_mode = Cvar_Get("r_mode", "6", CVAR_ARCHIVE, "Display resolution");
 	r_lightmap = Cvar_Get("r_lightmap", "0", 0, NULL);
 	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, NULL);
 	r_shadow_debug_volume = Cvar_Get("r_shadow_debug_volume", "0", CVAR_ARCHIVE, NULL);
@@ -793,31 +791,43 @@ static void R_Register (void)
  */
 qboolean R_SetMode (void)
 {
-	rserr_t err;
-	qboolean fullscreen;
+	Com_Printf("I: setting mode %d:", vid_mode->integer);
 
-	fullscreen = vid_fullscreen->integer;
+	/* store old values if new ones will fail */
+	viddef.prev_width = viddef.width;
+	viddef.prev_height = viddef.height;
+	viddef.prev_fullscreen = viddef.fullscreen;
+	viddef.prev_mode = viddef.mode;
 
-	if ((err = Rimp_SetMode(&viddef.width, &viddef.height, r_mode->integer, vid_fullscreen->integer)) == rserr_ok)
-		r_state.prev_mode = r_mode->integer;
-	else {
-		if (err == rserr_invalid_fullscreen) {
-			Cvar_SetValue("vid_fullscreen", 0);
-			Com_Printf("renderer::R_SetMode() - fullscreen unavailable in this mode\n");
-			if ((err = Rimp_SetMode(&viddef.width, &viddef.height, r_mode->integer, vid_fullscreen->integer)) == rserr_ok)
-				return qtrue;
-		} else if (err == rserr_invalid_mode) {
-			Cvar_SetValue("r_mode", r_state.prev_mode);
-			Com_Printf("renderer::R_SetMode() - invalid mode\n");
-		}
-
-		/* try setting it back to something safe */
-		if ((err = Rimp_SetMode(&viddef.width, &viddef.height, r_state.prev_mode, vid_fullscreen->integer)) != rserr_ok) {
-			Com_Printf("renderer::R_SetMode() - could not revert to safe mode\n");
-			return qfalse;
-		}
+	/* new values */
+	viddef.mode = vid_mode->integer;
+	viddef.fullscreen = vid_fullscreen->integer;
+	viddef.rx = (float)viddef.width / VID_NORM_WIDTH;
+	viddef.ry = (float)viddef.height / VID_NORM_HEIGHT;
+	if (!VID_GetModeInfo()) {
+		Com_Printf(" invalid mode\n");
+		return qfalse;
 	}
-	return qtrue;
+	Com_Printf(" %dx%d\n", viddef.width, viddef.height);
+
+	if (R_InitGraphics())
+		return qtrue;
+
+	Com_Printf("Failed to set video mode %dx%d %s.\n",
+			viddef.width, viddef.height,
+			(vid_fullscreen->integer ? "fullscreen" : "windowed"));
+
+	Cvar_SetValue("vid_width", viddef.prev_width);  /* failed, revert */
+	Cvar_SetValue("vid_height", viddef.prev_height);
+	Cvar_SetValue("vid_mode", viddef.prev_mode);
+	Cvar_SetValue("vid_fullscreen", viddef.prev_fullscreen);
+
+	viddef.mode = vid_mode->integer;
+	viddef.fullscreen = vid_fullscreen->integer;
+	viddef.rx = (float)viddef.width / VID_NORM_WIDTH;
+	viddef.ry = (float)viddef.height / VID_NORM_HEIGHT;
+
+	return R_InitGraphics();
 }
 
 /**
@@ -1086,7 +1096,7 @@ qboolean R_Init (void)
 	QR_Link();
 
 	/* set our "safe" modes */
-	r_state.prev_mode = 3;
+	viddef.prev_mode = 6;
 
 	/* create the window and set up the context */
 	if (!R_SetMode()) {

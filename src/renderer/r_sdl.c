@@ -95,7 +95,7 @@ qboolean Rimp_Init (void)
 	Com_Printf("SDL version: %i.%i.%i\n", info.version.major, info.version.minor, info.version.patch);
 #endif
 
-	Rimp_InitGraphics(vid_fullscreen->integer);
+	R_SetMode();
 
 	SDL_WM_SetCaption(GAME_TITLE, GAME_TITLE_LONG);
 
@@ -128,28 +128,29 @@ qboolean Rimp_Init (void)
  * @brief Init the SDL window
  * @param fullscreen Start in fullscreen or not (bool value)
  */
-qboolean Rimp_InitGraphics (qboolean fullscreen)
+qboolean R_InitGraphics (void)
 {
 	int flags;
+
+	vid_fullscreen->modified = qfalse;
+	vid_mode->modified = qfalse;
+	r_ext_texture_compression->modified = qfalse;
 
 	/* Just toggle fullscreen if that's all that has been changed */
 	if (r_surface && (r_surface->w == viddef.width) && (r_surface->h == viddef.height)) {
 		qboolean isfullscreen = (r_surface->flags & SDL_FULLSCREEN) ? qtrue : qfalse;
-		if (fullscreen != isfullscreen)
+		if (viddef.fullscreen != isfullscreen)
 			if (!SDL_WM_ToggleFullScreen(r_surface))
 				Com_Printf("Could not set to fullscreen mode\n");
 
 		isfullscreen = (r_surface->flags & SDL_FULLSCREEN) ? qtrue : qfalse;
-		if (fullscreen == isfullscreen)
+		if (viddef.fullscreen == isfullscreen)
 			return qtrue;
 	}
 
 	/* free resources in use */
 	if (r_surface)
 		SDL_FreeSurface(r_surface);
-
-	viddef.rx = (float)viddef.width  / VID_NORM_WIDTH;
-	viddef.ry = (float)viddef.height / VID_NORM_HEIGHT;
 
 	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
@@ -160,7 +161,7 @@ qboolean Rimp_InitGraphics (qboolean fullscreen)
 	SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, r_swapinterval->integer);
 
 	flags = SDL_OPENGL;
-	if (fullscreen)
+	if (viddef.fullscreen)
 		flags |= SDL_FULLSCREEN;
 
 	if ((r_surface = SDL_SetVideoMode(viddef.width, viddef.height, 0, flags)) == NULL) {
@@ -171,32 +172,6 @@ qboolean Rimp_InitGraphics (qboolean fullscreen)
 	SDL_ShowCursor(SDL_DISABLE);
 
 	return qtrue;
-}
-
-/**
- * @brief
- */
-rserr_t Rimp_SetMode (unsigned int *pwidth, unsigned int *pheight, int mode, qboolean fullscreen)
-{
-	Com_Printf("I: setting mode %d:", mode);
-
-	vid_fullscreen->modified = qfalse;
-	r_mode->modified = qfalse;
-	r_ext_texture_compression->modified = qfalse;
-
-	if (!VID_GetModeInfo((int*)pwidth, (int*)pheight, mode)) {
-		Com_Printf(" invalid mode\n");
-		return rserr_invalid_mode;
-	}
-
-	Com_Printf(" %d %d\n", *pwidth, *pheight);
-
-	if (!Rimp_InitGraphics(fullscreen)) {
-		/* failed to set a valid mode in windowed mode */
-		return rserr_invalid_mode;
-	}
-
-	return rserr_ok;
 }
 
 /**

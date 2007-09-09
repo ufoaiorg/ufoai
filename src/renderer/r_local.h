@@ -123,18 +123,8 @@ void R_WriteTGA(FILE *f, byte *buffer, int width, int height);
 
 /*=================================================================== */
 
-typedef enum {
-	rserr_ok,
-
-	rserr_invalid_fullscreen,
-	rserr_invalid_mode,
-
-	rserr_unknown
-} rserr_t;
-
 #include "r_model.h"
 
-#define MAX_MODEL_DLIGHTS 3
 int RecursiveLightPoint(model_t* mapTile, mBspNode_t * node, vec3_t start, vec3_t end);
 
 void R_SetDefaultState(void);
@@ -191,7 +181,6 @@ extern cvar_t *r_ext_texture_compression;
 extern cvar_t *r_ext_s3tc_compression;
 
 extern cvar_t *r_bitdepth;
-extern cvar_t *r_mode;
 extern cvar_t *r_lightmap;
 
 extern cvar_t *r_showbox;
@@ -325,8 +314,6 @@ typedef struct {
 	int displayrefresh;
 	qboolean fullscreen;
 
-	int prev_mode;
-
 	int lightmap_texnum;
 
 	int currenttextures[2];
@@ -365,8 +352,7 @@ IMPLEMENTATION SPECIFIC FUNCTIONS
 
 qboolean Rimp_Init(void);
 void Rimp_Shutdown(void);
-qboolean Rimp_InitGraphics(qboolean fullscreen);
-rserr_t Rimp_SetMode(unsigned int *pwidth, unsigned int *pheight, int mode, qboolean fullscreen);
+qboolean R_InitGraphics(void);
 
 /* 3d globe */
 
