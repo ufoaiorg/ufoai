@@ -1279,7 +1279,7 @@ menu mp_create_server
 		pos	"510 475"
 		color	"0 .78 0 1"
 	}
-	confunc hostname_changed { *txt_hostname color "0 .78 0 1" *txt_hostname mousefx false }
+	confunc sv_hostname_changed { *txt_hostname color "0 .78 0 1" *txt_hostname mousefx false }
 
 	// ===================
 	// MAP
