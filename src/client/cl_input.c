@@ -1522,10 +1522,16 @@ void IN_Frame (void)
 
 		if (!vid_grabmouse->integer) {
 			/* ungrab the pointer */
+			Com_Printf("Switch grab input off\n");
 			SDL_WM_GrabInput(SDL_GRAB_OFF);
-		} else {
+		/* don't allow grabbing the input in fullscreen mode */
+		} else if (!vid_fullscreen->integer) {
 			/* grab the pointer */
+			Com_Printf("Switch grab input on\n");
 			SDL_WM_GrabInput(SDL_GRAB_ON);
+		} else {
+			Com_Printf("No input grabbing in fullscreen mode\n");
+			Cvar_SetValue("vid_grabmouse", 0);
 		}
 	}
 
@@ -1577,6 +1583,8 @@ void IN_Frame (void)
 
 				if (r_surface->flags & SDL_FULLSCREEN) {
 					Cvar_SetValue("vid_fullscreen", 1);
+					/* make sure, that input grab is deactivated in fullscreen mode */
+					Cvar_SetValue("vid_grabmouse", 0);
 				} else {
 					Cvar_SetValue("vid_fullscreen", 0);
 				}
