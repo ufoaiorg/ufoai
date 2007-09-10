@@ -94,6 +94,9 @@ language pt_BR {
 		pt.UTF-8
 		pt_BR.UTF-8
 		pt_PT.UTF-8
+		pt.utf8
+		pt_BR.utf8
+		pt_PT.utf8
 	}
 }
 

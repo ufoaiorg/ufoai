@@ -149,7 +149,7 @@ static qboolean CL_LanguageTest (const char *localeID)
 	}
 #else
 	for (i = 0, language = languageList; i < languageCount; language = language->next, i++) {
-		if (!Q_stricmp(localeID, language->localeID))
+		if (!Q_strcmp(localeID, language->localeID))
 			break;
 	}
 	if (i == languageCount) {
