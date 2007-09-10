@@ -507,6 +507,7 @@ tech rs_alien_xvi
 	require_AND
 	{
 		tech rs_alien_xvi_event
+		tech rs_enemy_on_earth
 	}
 	time		2700
 }
@@ -4227,5 +4228,34 @@ tech news_newtwist
 
 	time		0
 	pushnews	true
+}
+
+tech rs_enemy_on_earth
+{
+	type		tech
+	name		"_The Enemy On Earth"
+	description {
+		default "_enemy_on_earth_txt"
+	}
+	pre_description {
+		default "_enemy_on_earth_pre_txt"
+	}
+	up_chapter	tech
+	mail
+	{
+		from	"_mail_from_dr_connor"
+		to	"_mail_to_base_commander"
+		subject	"_The Enemy On Earth"
+		icon	icons/tech
+	}
+	mail_pre
+	{
+		from	"_mail_from_dr_connor"
+		to	"_mail_to_base_commander"
+		subject	"_The Enemy On Earth"
+		icon	icons/tech
+	}
+
+	time		600
 }
 
