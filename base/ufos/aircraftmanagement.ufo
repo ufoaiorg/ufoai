@@ -497,8 +497,8 @@ craftitem craft_weapon_sparrowhawk
 	name		"_Sparrowhawk AA Missile Rack"
 	crafttype	weapon
 	size	40	// light
-	installationTime	2
-	price		2800
+	installationTime	3
+	price		6800
 	buytype		craftitem
 }
 
@@ -524,7 +524,7 @@ craftitem craft_weapon_tr20
 	crafttype	weapon
 	size	90	// medium
 	installationTime	2
-	price		6600
+	price		5600
 	buytype		craftitem
 
 	speed		.9
@@ -535,7 +535,7 @@ craftitem craft_ammo_tr20
 	name		"_TR-20 Rocket"
 	crafttype	ammo
 	craftweapon		craft_weapon_tr20
-	price		310
+	price		210
 	buytype		craftitem
 
 	ammo		12
@@ -551,8 +551,8 @@ craftitem craft_weapon_particle_beam
 	name		"_Particle Beam Weapon"
 	crafttype	weapon
 	size	90	// medium
-	installationTime	2
-	price		9400
+	installationTime	4
+	price		11400
 	buytype		craftitem
 
 	wdamage		35
@@ -599,7 +599,7 @@ craftitem craft_shield_plating
 {
 	name		"_Alien Aircraft Plating"
 	crafttype	shield
-	installationTime	24
+	installationTime	36
 	price		12200
 	buytype		craftitem
 
@@ -611,8 +611,8 @@ craftitem craft_alien_astrogation
 {
 	name		"_Alien Astrogation"
 	crafttype	electronics
-	installationTime	10
-	price		12345
+	installationTime	-1
+	price		8000
 	buytype		craftitem
 }
 
@@ -620,8 +620,8 @@ craftitem craft_alien_propulsion
 {
 	name		"_Alien Propulsion"
 	crafttype	electronics
-	installationTime	20
-	price		12345
+	installationTime	-1
+	price		10000
 	buytype		craftitem
 }
 
@@ -629,8 +629,8 @@ craftitem craft_alien_detection
 {
 	name		"_Alien Detection"
 	crafttype	electronics
-	installationTime	20
-	price		12345
+	installationTime	-1
+	price		8000
 	buytype		craftitem
 }
 
@@ -658,7 +658,7 @@ craftitem base_ammo_tr20
 	price		310
 	buytype		dummy
 
-	ammo		12
+	ammo		24
 	wdamage		28
 	accuracy	0.4
 	wrange		30
