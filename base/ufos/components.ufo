@@ -38,8 +38,9 @@ components craft_ufo_scout {
 	time	2400
 	item	alienmaterials		300	200
 	item	antimatter		200	0
-	//item	alien_propulsion	2	1
-	//item	alien_astrogation	1	0
+	item	craft_alien_propulsion	2	1
+	item	craft_alien_astrogation	1	0
+	item	craft_alien_detection	1	0
 }
 
 // UFO -- Fighter
@@ -47,9 +48,10 @@ components craft_ufo_fighter {
 	time	2600
 	item	alienmaterials		400	300
 	item	antimatter		250	0
-	//item	alien_propulsion	2	1
-	//item	alien_astrogation	1	0
-	//item	particle_beam_weapon	1	0	<-- should we change this to type "craftitem"?
+	item	craft_alien_propulsion	2	1
+	item	craft_alien_astrogation	1	0
+	item	craft_alien_detection	1	0
+	item	craft_weapon_particle_beam	1	0
 }
 
 // UFO -- Harvester
@@ -57,11 +59,12 @@ components craft_ufo_harvester {
 	time	3400
 	item	alienmaterials		800	500
 	item	antimatter		600	0
-	//item	alien_propulsion	4	2
-	//item	alien_astrogation	2	1
-	//item	particle_beam_weapon	2	1	<-- should we change this to type "craftitem"?
-	//item	alien_launcher		1	0	<-- should we change this to type "craftitem"?
-	//item	alien_antimatter_missile	12	3	<-- should we change this to type "craftitem"?
+	item	craft_alien_propulsion	4	2
+	item	craft_alien_astrogation	2	1
+	item	craft_alien_detection	1	0
+	item	craft_weapon_particle_beam	2	1
+	//item	alien_launcher		1	0
+	//item	alien_antimatter_missile	12	3
 }
 
 // UFO -- Supply Transport
@@ -69,7 +72,7 @@ components craft_ufo_harvester {
 components craft_ufo_supply {
 	time	3800
 	item	alienmaterials		0	400
-	//item	alien_propulsion	0	1
+	item	craft_alien_propulsion	0	1
 }
 
 // UFO -- Lander
@@ -78,7 +81,7 @@ components craft_ufo_supply {
 //	time	3200
 //	item	alienmaterials		500	300
 //	item	antimatter		600	0
-	//item	alien_propulsion	2	1
+	//item	craft_alien_propulsion	2	1
 //}
 
 // UFO -- Carrier
@@ -86,7 +89,7 @@ components craft_ufo_supply {
 components craft_ufo_carrier {
 	time	10000
 	item	alienmaterials		0	2000
-	//item	alien_propulsion	0	8
+	//item	craft_alien_propulsion	0	8
 	//item	FTLdrive		0	1
 }
 

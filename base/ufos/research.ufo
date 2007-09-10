@@ -369,6 +369,76 @@ tech rs_alien_oddbehaviour
 	time		1500
 }
 
+tech rs_alien_communication
+{
+	type		tech
+	name		"_Alien Communication"
+	up_chapter	threat
+	description {
+		default "_alien_communication_txt"
+	}
+	pre_description {
+		default "_alien_communication_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"_mail_from_dr_connor"
+		to	"_mail_to_base_commander"
+		subject	"_Alien Communication"
+		icon	icons/alien
+	}
+
+	mail
+	{
+		from	"_mail_from_dr_connor"
+		to	"_mail_to_base_commander"
+		subject	"_Alien Communication"
+		icon	icons/alien
+	}
+
+	require_AND
+	{
+		tech rs_alien_oddbehaviour
+	}
+	time	1600
+}
+
+tech rs_universal_serum
+{
+	type		tech
+	name		"_The Universal Serum"
+	up_chapter	threat
+	description {
+		default "_universal_serum_txt"
+	}
+	pre_description {
+		default "_universal_serum_pre_txt"
+	}
+
+	mail_pre
+	{
+		from	"_mail_from_dr_connor"
+		to	"_mail_to_base_commander"
+		subject	"_The Universal Serum"
+		icon	icons/alien
+	}
+
+	mail
+	{
+		from	"_mail_from_dr_connor"
+		to	"_mail_to_base_commander"
+		subject	"_The Universal Serum"
+		icon	icons/alien
+	}
+
+	require_AND
+	{
+		tech rs_alien_communication
+	}
+	time	1800
+}
+
 tech rs_alien_origins
 {
 	type		tech
@@ -3696,6 +3766,115 @@ tech rs_craft_shield_plating
 	producetime	1940
 
 	image_top	"techs/craft_shield_plating"
+}
+
+tech rs_craft_alien_astrogation
+{
+	type		craftitem
+	up_chapter	crafts
+	name		"_Alien Astrogation"
+	pre_description {
+		default	"_craft_alien_astrogation_pre_txt"
+	}
+	description {
+		default	"_craft_alien_astrogation_txt"
+	}
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		subject	"_Alien Astrogation"
+		icon	icons/tech
+	}
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		subject	"_Alien Astrogation"
+		icon	icons/tech
+	}
+
+	provides	craft_alien_astrogation
+	require_AND {
+		tech	rs_alien_origins
+		item	craft_alien_astrogation 1
+	}
+	time		600
+	producetime	-1
+
+	image_top	"techs/craft_alien_astrogation"
+}
+
+tech rs_craft_alien_propulsion
+{
+	type		craftitem
+	up_chapter	crafts
+	name		"_Alien Propulsion"
+	pre_description {
+		default "_craft_alien_propulsion_pre_txt"
+	}
+	description {
+		default "_craft_alien_propulsion_txt"
+	}
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		subject	"_Alien Propulsion"
+		icon	icons/tech
+	}
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		subject	"_Alien Propulsion"
+		icon	icons/tech
+	}
+	provides	craft_alien_propulsion
+	require_AND {
+		tech	rs_alien_materials
+		item	craft_alien_propulsion 1
+	}
+	time		600
+	producetime	-1
+
+	image_top	"techs/craft_alien_propulsion"
+}
+
+tech rs_craft_alien_detection
+{
+	type		craftitem
+	up_chapter	crafts
+	name		"_Alien Detection"
+	pre_description	{
+		default	"_craft_alien_detection_pre_txt"
+	}
+	description {
+		default	"_craft_alien_detection_txt"
+	}
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		subject	"_Alien Detection"
+		icon	icons/tech
+	}
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		subject	"_Alien Detection"
+		icon	icons/tech
+	}
+	provides	craft_alien_detection
+	require_AND {
+		tech	rs_alien_materials
+		item	craft_alien_detection 1
+	}
+	time		600
+	producetime	-1
+
+	image_top	"techs/craft_alien_detection"
 }
 
 tech rs_craft_weapon_shiva

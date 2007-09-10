@@ -573,7 +573,7 @@ craftitem craft_el_targeting
 
 craftitem craft_el_fuelpod
 {
-	name		"Fuel Pod"
+	name		"_Fuel Pod"
 	crafttype	electronics
 	installationTime	2
 	price		800
@@ -585,7 +585,7 @@ craftitem craft_el_fuelpod
 
 craftitem craft_shield_polymer
 {
-	name		"Polymer Aircraft Armour"
+	name		"_Polymer Aircraft Armour"
 	crafttype	shield
 	installationTime	24
 	price		8400
@@ -597,7 +597,7 @@ craftitem craft_shield_polymer
 
 craftitem craft_shield_plating
 {
-	name		"Alien Aircraft Plating"
+	name		"_Alien Aircraft Plating"
 	crafttype	shield
 	installationTime	24
 	price		12200
@@ -605,6 +605,33 @@ craftitem craft_shield_plating
 
 	shield		+10
 	speed		0.8
+}
+
+craftitem craft_alien_astrogation
+{
+	name		"_Alien Astrogation"
+	crafttype	electronics
+	installationTime	10
+	price		12345
+	buytype		craftitem
+}
+
+craftitem craft_alien_propulsion
+{
+	name		"_Alien Propulsion"
+	crafttype	electronics
+	installationTime	20
+	price		12345
+	buytype		craftitem
+}
+
+craftitem craft_alien_detection
+{
+	name		"_Alien Detection"
+	crafttype	electronics
+	installationTime	20
+	price		12345
+	buytype		craftitem
 }
 
 // *********************************
