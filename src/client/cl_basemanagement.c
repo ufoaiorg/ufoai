@@ -3326,7 +3326,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 					break;
 			}
 			if (l == csi.numTeamDefs) {
-				Com_Printf("B_Load: Could not find teamDesc '%s' - skipping the aliencont (%i)\n", s, csi.numTeamDefs);
+				Com_Printf("B_Load: Could not find teamDef: %s - skipping the aliencont (%i)\n", s, csi.numTeamDefs);
 				MSG_ReadShort(sb);
 				MSG_ReadShort(sb);
 			} else {
