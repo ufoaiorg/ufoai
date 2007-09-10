@@ -1210,7 +1210,7 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
 
 	/* load the file */
 	Com_sprintf(filename, MAX_QPATH, "maps/%s.bsp", name);
-	length = FS_LoadFile(filename, (void **) &buf);
+	length = FS_LoadFile(filename, (byte **) &buf);
 	if (!buf)
 		Com_Error(ERR_DROP, "Couldn't load %s", filename);
 

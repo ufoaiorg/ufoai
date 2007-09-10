@@ -225,7 +225,7 @@ void R_ModLoadAliasMD2Model (model_t * mod, void *buffer, int bufSize)
 	/* try to load the tag file */
 	if (FS_CheckFile(mod->alias.tagname) != -1) {
 		/* load the tags */
-		size = FS_LoadFile(mod->alias.tagname, (void **) &tagbuf);
+		size = FS_LoadFile(mod->alias.tagname, &tagbuf);
 		R_ModLoadTags(mod, tagbuf, size);
 		FS_FreeFile(tagbuf);
 	}
@@ -238,7 +238,7 @@ void R_ModLoadAliasMD2Model (model_t * mod, void *buffer, int bufSize)
 	/* try to load the animation file */
 	if (FS_CheckFile(mod->alias.animname) != -1) {
 		/* load the tags */
-		FS_LoadFile(mod->alias.animname, (void **) &animbuf);
+		FS_LoadFile(mod->alias.animname, &animbuf);
 		R_ModLoadAnims(&mod->alias, animbuf);
 		FS_FreeFile(animbuf);
 	}

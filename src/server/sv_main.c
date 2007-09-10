@@ -612,7 +612,7 @@ void SV_MapcycleAdd (const char* mapName, const char* gameType)
 static void SV_ParseMapcycle (void)
 {
 	int length = 0;
-	char *buffer = NULL;
+	byte *buffer = NULL;
 	const char *token;
 	const char *buf;
 	char map[MAX_VAR], gameType[MAX_VAR];
@@ -620,12 +620,12 @@ static void SV_ParseMapcycle (void)
 	mapcycleCount = 0;
 	mapcycleList = NULL;
 
-	length = FS_LoadFile("mapcycle.txt", (void **) &buffer);
+	length = FS_LoadFile("mapcycle.txt", &buffer);
 	if (length == -1 || !buffer)
 		return;
 
 	if (length != -1) {
-		buf = buffer;
+		buf = (const char*)buffer;
 		do {
 			token = COM_Parse(&buf);
 			if (!buf)

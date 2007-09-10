@@ -132,7 +132,7 @@ int SH_LoadProgram_ARB_FP (const char *path)
 	int error_pos;
 	unsigned int fpid;
 
-	size = FS_LoadFile(path, (void **) &fbuf);
+	size = FS_LoadFile(path, (byte **) &fbuf);
 
 	if (!fbuf) {
 		Com_Printf("Could not load shader %s\n", path);
@@ -174,7 +174,7 @@ int SH_LoadProgram_ARB_VP (const char *path)
 	char *fbuf;
 	int size, vpid;
 
-	size = FS_LoadFile(path, (void **) &fbuf);
+	size = FS_LoadFile(path, (byte **) &fbuf);
 
 	if (!fbuf) {
 		Com_Printf("Could not load shader %s\n", path);
@@ -220,7 +220,7 @@ int SH_LoadProgram_GLSL (shader_t* s)
 	char *fbuf;
 	int size;
 
-	size = FS_LoadFile(s->filename, (void **) &fbuf);
+	size = FS_LoadFile(s->filename, (byte **) &fbuf);
 
 	if (!fbuf) {
 		Com_Printf("Could not load shader %s\n", s->filename);

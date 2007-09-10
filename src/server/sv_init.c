@@ -442,18 +442,18 @@ static void SV_CombineAlternatives (unsigned long *mapAlts, unsigned long tileAl
 		return;
 
 	/* copy if tile is solid */
-	if (IS_SOLID(tileAlts)) { 
+	if (IS_SOLID(tileAlts)) {
 		*mapAlts = tileAlts;
 		*mapRating = 1;
 	/* copy if map is empty */
-	} else if (!(*mapAlts)) { 
+	} else if (!(*mapAlts)) {
 		*mapAlts = tileAlts;
 		*mapRating = -1;
 	/* combine otherways */
 	} else {
 		*mapAlts &= tileAlts;
 		(*mapRating)--;
-	}	
+	}
 }
 
 /**
@@ -474,7 +474,7 @@ static qboolean SV_TestAlternatives (unsigned long mapAlts, unsigned long tileAl
 		return qtrue;
 
 	/* check for equal alternatives */
-	if (tileAlts & mapAlts) 
+	if (tileAlts & mapAlts)
 		return qtrue;
 
 	/* no equal alternatives found*/
@@ -525,8 +525,8 @@ static qboolean SV_FitTile (mTile_t * tile, int x, int y)
 
 /**
  * @brief Checks if the map is completly filled.
- * @return qtrue if the map is filled 
- * @return qfalse if the map has still empty fields 
+ * @return qtrue if the map is filled
+ * @return qfalse if the map has still empty fields
  * @sa SV_AssembleMap
  * @sa SV_AddRegion
  * @sa SV_FitTile
@@ -564,20 +564,20 @@ static void SV_DumpRating (void)
 static void SV_DumpPlaced (mPlaced_t * placed)
 {
 	int x, y, dx, dy;
-	
+
 	Com_Printf("Placed tile %s at %d %d\n", placed->tile->id, placed->x, placed->y);
-	
+
 	for (y = mapH; y >= 1; y--) {
 		for (x = 1; x < mapW + 1; x++) {
 			dx = x - placed->x;
 			dy = y - placed->y;
-			
+
 			if ((dx >= 0) && (dx < placed->tile->w) &&
 					(dy >= 0) && (dy < placed->tile->h) &&
-					IS_SOLID(placed->tile->spec[dy][dx])) 
-				Com_Printf(" X");	
+					IS_SOLID(placed->tile->spec[dy][dx]))
+				Com_Printf(" X");
 			else
-				Com_Printf(" .");	
+				Com_Printf(" .");
 		}
 		Com_Printf("\n");
 	}
@@ -601,18 +601,18 @@ static int SV_CalcRating (void)
 			rating += curRating[y][x];
 
 	/* SV_DumpRating(); */
-	
+
 	return rating;
 }
 
 /**
  * @brief Adds a new map-tile to an assembled map. Also adds the tile to the placed-tiles list.
- * @note The tile must fit at the given position, otherwise an assert will occure! 
+ * @note The tile must fit at the given position, otherwise an assert will occure!
  * @param[in] tile The tile to add to the map.
  * @param[in] x The x position in the map where the tile should be placed.
  * @param[in] y The y position in the map where the tile should be placed.
- * @param[in] idx The index of the placement algorithm. 
- * @param[in] pos The position of the placement algorithm. 
+ * @param[in] idx The index of the placement algorithm.
+ * @param[in] pos The position of the placement algorithm.
  * @sa SV_AssembleMap
  * @sa SV_AddRegion
  * @sa SV_FitTile
@@ -664,7 +664,7 @@ static void SV_RemoveTile (int* idx, int* pos)
 	assert(numPlaced);
 	memset(curMap, 0, sizeof(curMap));
 	memset(curRating, 0, sizeof(curRating));
-	
+
 	numPlaced--;
 	index = mPlaced[numPlaced].idx;
 
@@ -683,7 +683,7 @@ static void SV_RemoveTile (int* idx, int* pos)
 			for (tx = 0; tx < tile->w; tx++) {
 				assert(y + ty < MAX_RANDOM_MAP_HEIGHT);
 				assert(x + tx < MAX_RANDOM_MAP_WIDTH);
-	
+
 				SV_CombineAlternatives(&curMap[y + ty][x + tx], tile->spec[ty][tx], &curRating[y + ty][x + tx]);
 			}
 		}
@@ -708,7 +708,7 @@ static qboolean SV_AddRandomTile (int* idx, int* pos)
 	int x, y;
 	int start_idx = *idx = rand() % numToPlace;
 	int start_pos = *pos = rand() % mapSize;
-	
+
 	do {
 		if (mToPlace[*idx].cnt < mToPlace[*idx].max) {
 			do {
@@ -718,27 +718,27 @@ static qboolean SV_AddRandomTile (int* idx, int* pos)
 				if (SV_FitTile(mToPlace[*idx].tile, x, y)) {
 					SV_AddTile(mToPlace[*idx].tile, x, y, *idx, *pos);
 					return qtrue;
-				}	 	
-				
+				}
+
 				(*pos) += 1;
 				(*pos) %= mapSize;
-				
+
 			} while ((*pos) != start_pos);
 		}
-				
+
 		(*idx) += 1;
 		(*idx) %= numToPlace;
-				
+
 	} while ((*idx) != start_idx);
-	
+
 	return qfalse;
 }
 
-/** 
+/**
  * @brief Number of test alternatives per step in SV_AddMissingTiles
  * @sa SV_AddMissingTiles
  */
-#define CHECK_ALTERNATIVES_COUNT 10 
+#define CHECK_ALTERNATIVES_COUNT 10
 
 /**
  * @brief Tries to fill the missing tiles of the current map.
@@ -755,7 +755,7 @@ static qboolean SV_AddMissingTiles (void)
 	int rating[CHECK_ALTERNATIVES_COUNT];
 	int max_rating;
 	const int startPlaced = numPlaced;
-	
+
 	while (1) {
 		max_rating = -mapW*mapH*4;
 
@@ -769,18 +769,18 @@ static qboolean SV_AddMissingTiles (void)
 				/* remove all tiles placed by this function */
 				while (numPlaced > startPlaced)
 					SV_RemoveTile(NULL, NULL);
-									
+
 				return qfalse;
 			}
-			
+
 			if (SV_TestFilled())
 				return qtrue;
-							
+
 			rating[i] =  SV_CalcRating();
-			
+
 			if (rating[i] > max_rating)
 				max_rating = rating[i];
-			
+
 			SV_RemoveTile(NULL, NULL);
 		}
 
@@ -823,13 +823,13 @@ static void SV_AddMapTiles (void)
 				}
 			}
 			/* tile fits, try next tile */
-			if (pos < mapSize) 
+			if (pos < mapSize)
 				continue;
 
 			/* tile doesnt fit and no try left with this tile*/
-			if (!mToPlace[idx].cnt) 
+			if (!mToPlace[idx].cnt)
 				break;
- 
+
 			/* tile does not fit, restore last status - replace the last tile */
 			assert(idx == mPlaced[numPlaced-1].idx);
 			SV_RemoveTile(&idx, &pos);
@@ -839,7 +839,7 @@ static void SV_AddMapTiles (void)
 		/* tile fits, try next tile */
 		if (pos < mapSize) {
 			pos = 0;
-			idx++; 
+			idx++;
 		} else {
 			/* no more retries */
 			if (start == numPlaced) {
@@ -848,7 +848,7 @@ static void SV_AddMapTiles (void)
 			SV_RemoveTile(&idx, &pos);
 			pos++;
 		}
-		
+
 		if ((idx == numToPlace) && !SV_AddMissingTiles()) {
 			SV_RemoveTile(&idx, &pos);
 			pos++;
@@ -858,13 +858,13 @@ static void SV_AddMapTiles (void)
 
 /**
  * @brief Prepare the list of tiles to place
- * @sa SV_AssembleMap 
+ * @sa SV_AssembleMap
  * @sa SV_AddTile
  */
 static void SV_PrepareTilesToPlace (void)
-{	
+{
 	int i;
-	
+
 	numToPlace = 0;
 	memset(&mToPlace[0], 0, sizeof(mToPlace));
 
@@ -894,18 +894,18 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
 	static char asmPos[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 	char filename[MAX_QPATH];
 	char basePath[MAX_QPATH];
-	char *buf;
+	byte *buf;
 	const char *text, *token;
 	int i;
 
 	/* load the map info */
 	Com_sprintf(filename, sizeof(filename), "maps/%s.ump", name);
-	FS_LoadFile(filename, (void **) &buf);
+	FS_LoadFile(filename, &buf);
 	if (!buf)
 		Com_Error(ERR_DROP, "SV_AssembleMap: Map assembly info '%s' not found", filename);
 
 	/* parse it */
-	text = buf;
+	text = (char*)buf;
 	numTiles = 0;
 	numAssemblies = 0;
 	basePath[0] = 0;
@@ -972,12 +972,12 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
 	assert(mAsm->h <= MAX_RANDOM_MAP_HEIGHT);
 
 	SV_PrepareTilesToPlace();
-	
+
 	/* assemble the map */
 	numPlaced = 0;
 	memset(curMap, 0, sizeof(curMap));
 	memset(curRating, 0, sizeof(curRating));
-	
+
 	/* place fixed parts - defined in ump via fix parameter */
 	for (i = 0; i < mAsm->numFixed; i++)
 		SV_AddTile(&mTile[mAsm->fT[i]], mAsm->fX[i], mAsm->fY[i], -1, -1);

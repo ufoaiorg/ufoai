@@ -257,7 +257,7 @@ sfxcache_t *S_Wave_LoadSFX (sfx_t * s)
 
 	/*Com_Printf("loading %s\n", namebuffer);*/
 
-	size = FS_LoadFile(namebuffer, (void **) (char *) &data);
+	size = FS_LoadFile(namebuffer, &data);
 	if (!data) {
 		s->cache = NULL;
 		Com_Printf("Couldn't load %s\n", namebuffer);

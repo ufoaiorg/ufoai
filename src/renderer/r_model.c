@@ -119,7 +119,7 @@ static model_t *R_ModForName (const char *name, qboolean crash)
 /*	Com_DPrintf(DEBUG_RENDERER, "name: %s\n", name); */
 
 	/* load the file */
-	modfilelen = FS_LoadFile(mod->name, (void **) &buf);
+	modfilelen = FS_LoadFile(mod->name, (byte **) &buf);
 	if (!buf) {
 		if (crash)
 			Sys_Error("R_ModForName: %s not found", mod->name);

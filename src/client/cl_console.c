@@ -284,7 +284,8 @@ void Con_CheckResize (void)
  */
 void Con_LoadConsoleHistory (const char* path)
 {
-	char *f, *f2, *cmdStart, *cmdEnd;
+	byte *buf;
+	char *f2, *cmdStart, *cmdEnd;
 	int len, i = 0;
 	char filename[MAX_OSPATH];
 
@@ -295,15 +296,15 @@ void Con_LoadConsoleHistory (const char* path)
 
 	Com_sprintf(filename, sizeof(filename), "%s", CONSOLE_HISTORY_FILENAME);
 
-	len = FS_LoadFile(filename, (void **) &f);
-	if (!f) {
+	len = FS_LoadFile(filename, &buf);
+	if (!buf) {
 		Com_Printf("couldn't load %s\n", filename);
 		return;
 	}
 
 	/* the file doesn't have a trailing 0, so we need to copy it off */
 	f2 = Mem_Alloc(len + 1);
-	memcpy(f2, f, len);
+	memcpy(f2, buf, len);
 	f2[len] = 0;
 
 	Com_DPrintf(DEBUG_CLIENT, "...load console history\n");
@@ -326,7 +327,7 @@ void Con_LoadConsoleHistory (const char* path)
 	}
 	/* only the do not modify comment */
 	Mem_Free(f2);
-	FS_FreeFile(f);
+	FS_FreeFile(buf);
 	history_line = i;
 	edit_line = i;
 }

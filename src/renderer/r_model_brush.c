@@ -559,7 +559,7 @@ static void R_ModAddMapTile (const char *name, int sX, int sY, int sZ)
 	Com_sprintf(loadmodel->name, sizeof(loadmodel->name), "maps/%s.bsp", name);
 
 	/* load the file */
-	FS_LoadFile(loadmodel->name, (void **) &buffer);
+	FS_LoadFile(loadmodel->name, (byte **) &buffer);
 	if (!buffer)
 		Sys_Error("R_ModAddMapTile: %s not found", loadmodel->name);
 

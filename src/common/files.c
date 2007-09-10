@@ -410,7 +410,7 @@ int FS_Read (void *buffer, int len, qFILE * f)
  * @sa FS_Read
  * @sa FS_FOpenFile
  */
-int FS_LoadFile (const char *path, void **buffer)
+int FS_LoadFile (const char *path, byte **buffer)
 {
 	qFILE h;
 	byte *buf;
@@ -1092,7 +1092,7 @@ const char *FS_GetFileData (const char *files)
 {
 	listBlock_t *block;
 	static char *fileList;
-	static char *buffer = NULL;
+	static byte *buffer = NULL;
 
 	if (!files) {
 		fileList = NULL;
@@ -1134,16 +1134,17 @@ const char *FS_GetFileData (const char *files)
 		Q_strncpyz(filename, block->path, sizeof(filename));
 		strcpy(strrchr(filename, '/') + 1, fileList);
 
-		FS_LoadFile(filename, (void **) &buffer);
+		FS_LoadFile(filename, &buffer);
 		/* search a new file */
 		fileList += strlen(fileList) + 1;
-		return buffer;
+		return (const char*)buffer;
 	}
 
 	/* free the old file */
 	if (buffer) {
 		FS_FreeFile(buffer);
-		fileList = buffer = NULL;
+		fileList = NULL;
+		buffer = NULL;
 	}
 
 	/* finished */
@@ -1177,7 +1178,7 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 	static char lastList[MAX_QPATH] = "";
 	static listBlock_t *lBlock;
 	static char *lFile = NULL;
-	static char *lBuffer = NULL;
+	static byte *lBuffer = NULL;
 
 	static char headerType[32];
 	static char headerName[32];
@@ -1249,8 +1250,8 @@ char *FS_NextScriptHeader (const char *files, const char **name, const char **te
 			Q_strncpyz(filename, lBlock->path, sizeof(filename));
 			strcpy(strrchr(filename, '/') + 1, lFile);
 
-			FS_LoadFile(filename, (void **) &lBuffer);
-			*text = lBuffer;
+			FS_LoadFile(filename, &lBuffer);
+			*text = (char*)lBuffer;
 		}
 	}
 

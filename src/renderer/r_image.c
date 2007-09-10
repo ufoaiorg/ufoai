@@ -195,7 +195,7 @@ static void R_LoadPCX (const char *filename, byte ** pic, byte ** palette, int *
 	*palette = NULL;
 
 	/* load the file */
-	len = FS_LoadFile(filename, (void **) &raw);
+	len = FS_LoadFile(filename, &raw);
 	if (!raw) {
 		Com_DPrintf(DEBUG_RENDERER, "R_LoadPCX: Could not load pcx file '%s'\n", filename);
 		return;
@@ -319,7 +319,7 @@ static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 		Sys_Error("possible mem leak in LoadPNG\n");
 
 	/* Load the file */
-	FS_LoadFile(name, (void **)&PngFileBuffer.buffer);
+	FS_LoadFile(name, (byte **)&PngFileBuffer.buffer);
 	if (!PngFileBuffer.buffer)
 		return 0;
 
@@ -519,7 +519,7 @@ void R_LoadTGA (const char *name, byte ** pic, int *width, int *height)
 		Sys_Error("R_LoadTGA: possible mem leak\n");
 
 	/* Load the file */
-	length = FS_LoadFile(name, (void **)&buffer);
+	length = FS_LoadFile(name, &buffer);
 	if (!buffer || length <= 0) {
 		Com_DPrintf(DEBUG_RENDERER, "R_LoadTGA: Bad tga file %s\n", name);
 		return;
@@ -815,7 +815,7 @@ static void R_LoadJPG (const char *filename, byte ** pic, int *width, int *heigh
 		Sys_Error("possible mem leak in LoadJPG\n");
 
 	/* Load JPEG file into memory */
-	rawsize = FS_LoadFile(filename, (void **) &rawdata);
+	rawsize = FS_LoadFile(filename, &rawdata);
 
 	if (!rawdata)
 		return;
@@ -1746,37 +1746,6 @@ image_t *R_LoadPic (const char *name, byte * pic, int width, int height, imagety
 	return image;
 }
 
-
-/**
- * @brief Loads a ID wall image format
- * basically pcx with 3 midmap levels
- * @sa R_LoadPic
- * @param[in] bpp Should be 8 for wal images, and 32 for m32
- */
-static image_t *R_LoadWal (const char *name, int bpp)
-{
-	miptex_t *mt;
-	int width, height, ofs;
-	image_t *image;
-
-	FS_LoadFile(name, (void **) &mt);
-	if (!mt) {
-		Com_Printf("R_LoadWal: can't load %s\n", name);
-		return r_notexture;
-	}
-
-	width = LittleLong(mt->width);
-	height = LittleLong(mt->height);
-	ofs = LittleLong(mt->offsets[0]);
-
-	image = R_LoadPic(name, (byte *) mt + ofs, width, height, it_wall, bpp);
-
-	FS_FreeFile((void *) mt);
-
-	return image;
-}
-
-
 /**
  * @brief Finds an image for a shader
  */
@@ -1886,18 +1855,6 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 			image = R_LoadPic(lname, pic, width, height, type, 8);
 			goto end;
 		}
-	}
-
-	strcpy(ename, ".m32");
-	if (FS_CheckFile(lname) != -1) {
-		image = R_LoadWal(lname, 32);
-		goto end;
-	}
-
-	strcpy(ename, ".wal");
-	if (FS_CheckFile(lname) != -1) {
-		image = R_LoadWal(lname, 8);
-		goto end;
 	}
 
 	/* no fitting texture found */
