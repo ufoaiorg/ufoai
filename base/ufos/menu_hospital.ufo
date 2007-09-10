@@ -323,7 +323,7 @@ menu hospital
 
 	func init
 	{
-		cmd hosp_init
+		cmd "hosp_init;"
 	}
 }
 

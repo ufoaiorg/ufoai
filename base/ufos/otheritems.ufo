@@ -16,6 +16,7 @@ item brapparatus
 	name		"_Alien Breathing Apparatus"
 	type		dummy
 	buytype		dummy
+	price		300
 	size		4
 	weapon		false
 }
