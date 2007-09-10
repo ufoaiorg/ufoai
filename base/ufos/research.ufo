@@ -3749,7 +3749,7 @@ tech rs_craft_ammo_sparrowhawk
 		tech rs_craft_weapon_sparrowhawk
 	}
 	time		0
-	producetime	10 //Assuming ONE missile, so 80 hours for a full rack!
+	producetime	80 //10 per missile.
 
 	image_top	"techs/craft_ammo_sparrowhawk"
 }
