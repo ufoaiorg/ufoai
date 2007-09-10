@@ -48,7 +48,7 @@ menu transfer
 		mousefx true
 		texl	"0 0"
 		texh	"16 16"
-		click	{ cmd "trans_prevbase" }
+		click	{ cmd "trans_prevbase;" }
 	}
 
 	pic next_base
@@ -59,7 +59,7 @@ menu transfer
 		mousefx	true
 		texl	"16 0"
 		texh	"32 16"
-		click	{ cmd "trans_nextbase" }
+		click	{ cmd "trans_nextbase;" }
 	}
 
 	string s_current_base
