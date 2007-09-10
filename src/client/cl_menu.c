@@ -1964,8 +1964,8 @@ static void MN_Tooltip (menu_t *menu, menuNode_t *node, int x, int y)
 	int width = 0;
 
 	/* tooltips
-	   data[MN_DATA_NODE_TOOLTIP] is a char pointer to the tooltip text
-	   see value_t nps for more info */
+	 * data[MN_DATA_NODE_TOOLTIP] is a char pointer to the tooltip text
+	 * see value_t nps for more info */
 
 	/* maybe not tooltip but a key entity? */
 	if (node->data[MN_DATA_NODE_TOOLTIP]) {

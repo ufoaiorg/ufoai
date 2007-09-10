@@ -156,6 +156,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 	char string2[MAX_VAR];
 	char condition[MAX_VAR];
 	int x, y, w, h;
+	byte num;
 
 	b = (byte *) base + ofs;
 
@@ -264,43 +265,43 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		return ALIGN(w);
 
 	case V_ALIGN:
-		for (w = 0; w < ALIGN_LAST; w++)
-			if (!Q_strcmp(token, align_names[w]))
+		for (num = 0; num < ALIGN_LAST; num++)
+			if (!Q_strcmp(token, align_names[num]))
 				break;
-		if (w == ALIGN_LAST)
-			*b = (byte)0;
+		if (num == ALIGN_LAST)
+			*b = 0;
 		else
-			*b = (byte)w;
+			*b = num;
 		return ALIGN(1);
 
 	case V_BLEND:
-		for (w = 0; w < BLEND_LAST; w++)
-			if (!Q_strcmp(token, blend_names[w]))
+		for (num = 0; num < BLEND_LAST; num++)
+			if (!Q_strcmp(token, blend_names[num]))
 				break;
-		if (w == BLEND_LAST)
-			*b = (byte)0;
+		if (num == BLEND_LAST)
+			*b = 0;
 		else
-			*b = (byte)w;
+			*b = num;
 		return ALIGN(1);
 
 	case V_STYLE:
-		for (w = 0; w < STYLE_LAST; w++)
-			if (!Q_strcmp(token, style_names[w]))
+		for (num = 0; num < STYLE_LAST; num++)
+			if (!Q_strcmp(token, style_names[num]))
 				break;
-		if (w == STYLE_LAST)
-			*b = (byte)0;
+		if (num == STYLE_LAST)
+			*b = 0;
 		else
-			*b = (byte)w;
+			*b = num;
 		return ALIGN(1);
 
 	case V_FADE:
-		for (w = 0; w < FADE_LAST; w++)
-			if (!Q_strcmp(token, fade_names[w]))
+		for (num = 0; num < FADE_LAST; num++)
+			if (!Q_strcmp(token, fade_names[num]))
 				break;
-		if (w == FADE_LAST)
-			*b = (byte)0;
+		if (num == FADE_LAST)
+			*b = 0;
 		else
-			*b = (byte)w;
+			*b = num;
 		return ALIGN(1);
 
 	case V_SHAPE_SMALL:
@@ -329,13 +330,13 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		return ALIGN(SHAPE_BIG_MAX_HEIGHT * SHAPE_SMALL_MAX_HEIGHT);
 
 	case V_DMGTYPE:
-		for (w = 0; w < csi.numDTs; w++)
-			if (!Q_strcmp(token, csi.dts[w]))
+		for (num = 0; num < csi.numDTs; num++)
+			if (!Q_strcmp(token, csi.dts[num]))
 				break;
-		if (w == csi.numDTs)
-			*b = (byte)0;
+		if (num == csi.numDTs)
+			*b = 0;
 		else
-			*b = (byte)w;
+			*b = num;
 		return ALIGN(1);
 
 	case V_DATE:
