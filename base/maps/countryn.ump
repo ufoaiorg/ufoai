@@ -4,14 +4,14 @@
 
 base countryn/c_
 
-// a = everywhere
+// a = empty place
 // b = street horizontal
-// c = street end horizontal left
-// d = street end horizontal right
-// e = street vertical
-// f = street end vertical left
-// g = street end vertical right
-// h = street cross
+// c = street vertical
+// d = street cross/end
+// e = unused
+// f = unused
+// g = unused
+// h = unused
 // i = rock horizontal back
 // j = rock end horizontal back left
 // k = rock end horizontal back right
@@ -29,10 +29,10 @@ base countryn/c_
 // w = cave entry vertical back
 // x = cave entry vertical front
 
-// horizontal first row - abcdlmn
-// horizontal last row - abcdijk
-// vertical first col - acefgrst
-// vertical last col - adefgopq
+// horizontal first row - abdlmn
+// horizontal last row - abdijk
+// vertical first col - acdrst
+// vertical last col - acdopq
 
 //--------------------------------------------------
 // AIRCRAFT
@@ -43,10 +43,10 @@ tile +drop_firebird
 {
 5 4
 
-0         abcdlmn  abcdlmn  abcdlmn  0
-acefgrst  +a       +a       +a       adefgopq
-acefgrst  +a       +a       +a       adefgopq
-0         abcdijk  abcdijk  abcdijk  0
+0       abdlmn   abdlmn   abdlmn   0
+acdrst  +a       +a       +a       acdopq
+acdrst  +a       +a       +a       acdopq
+0       abdijk   abdijk   abdijk   0
 }
 //--
 
@@ -55,12 +55,12 @@ tile +ufo_harvester
 {
 8 6
 
-0         abcdlmn  abcdlmn  abcdlmn  abcdlmn  abcdlmn  abcdlmn  0
-acefgrst  +a       +a       +a       +a       +a       +a       adefgopq
-acefgrst  +a       +a       +a       +a       +a       +a       adefgopq
-acefgrst  +a       +a       +a       +a       +a       +a       adefgopq
-acefgrst  +a       +a       +a       +a       +a       +a       adefgopq
-0         abcdijk  abcdijk  abcdijk  abcdijk  abcdijk  abcdijk  0
+0       abdlmn   abdlmn   abdlmn   abdlmn   abdlmn   abdlmn   0
+acdrst  +a       +a       +a       +a       +a       +a       acdopq
+acdrst  +a       +a       +a       +a       +a       +a       acdopq
+acdrst  +a       +a       +a       +a       +a       +a       acdopq
+acdrst  +a       +a       +a       +a       +a       +a       acdopq
+0       abdijk   abdijk   abdijk   abdijk   abdijk   abdijk   0
 }
 //--
 
@@ -69,10 +69,10 @@ tile +ufo_fighter
 {
 5 4
 
-0         abcdlmn  abcdlmn  abcdlmn  0
-acefgrst  +a       +a       +a       adefgopq
-acefgrst  +a       +a       +a       adefgopq
-0         abcdijk  abcdijk  abcdijk  0
+0       abdlmn   abdlmn  abdlmn  0
+acdrst  +a       +a      +a      acdopq
+acdrst  +a       +a      +a      acdopq
+0       abdijk   abdijk  abdijk  0
 }
 //--
 
@@ -85,11 +85,11 @@ tile +c01
 {
 4 5
 
-0         abcdlmn  abcdlmn  0
-acefgrst  +a       +a       adefgopq
-acefgrst  +a       +a       adefgopq
-acefgrst  +a       +a       adefgopq
-0         abcdijk  abcdijk  0
+0       abdlmn   abdlmn  0
+acdrst  +a       +a      acdopq
+acdrst  +a       +a      acdopq
+acdrst  +a       +a      acdopq
+0       abdijk   abdijk  0
 }
 //--
 
@@ -98,11 +98,11 @@ tile +c02
 {
 4 5
 
-0         abcdlmn  abcdlmn  0
-acefgrst  +a       +a       adefgopq
-acefgrst  +a       +a       adefgopq
-acefgrst  +a       +a       adefgopq
-0         abcdijk  abcdijk  0
+0       abdlmn   abdlmn  0
+acdrst  +a       +a      acdopq
+acdrst  +a       +a      acdopq
+acdrst  +a       +a      acdopq
+0       abdijk   abdijk  0
 }
 //--
 
@@ -111,10 +111,10 @@ tile +d01
 {
 4 4
 
-0         abcdlmn  abcdlmn  0
-acefgrst  +a       +a       adefgopq
-acefgrst  +a       +a       adefgopq
-0         abcdijk  abcdijk  0
+0       abdlmn   abdlmn  0
+acdrst  +a       +a      acdopq
+acdrst  +a       +a      acdopq
+0       abdijk   abdijk  0
 }
 //--
 
@@ -123,9 +123,9 @@ tile +d02
 {
 3 3
 
-0         abcdlmn  0
-acefgrst  +a       adefgopq
-0         abcdijk  0
+0       abdlmn  0
+acdrst  +a      acdopq
+0       abdijk  0
 }
 //--
 
@@ -134,9 +134,9 @@ tile +d03
 {
 3 3
 
-0         abcdlmn  0
-acefgrst  +a       adefgopq
-0         abcdijk  0
+0       abdlmn  0
+acdrst  +a      acdopq
+0       abdijk  0
 }
 //--
 
@@ -145,9 +145,9 @@ tile +d04
 {
 3 3
 
-0         abcdlmn  0
-acefgrst  +a       adefgopq
-0         abcdijk  0
+0       abdlmn  0
+acdrst  +a      acdopq
+0       abdijk  0
 }
 //--
 
@@ -156,11 +156,11 @@ tile +d05
 {
 4 5
 
-0         abcdlmn  abcdlmn  0
-acefgrst  +a       +a       adefgopq
-acefgrst  +a       +a       adefgopq
-acefgrst  +a       +a       adefgopq
-0         abcdijk  abcdijk  0
+0       abdlmn   abdlmn  0
+acdrst  +a       +a      acdopq
+acdrst  +a       +a      acdopq
+acdrst  +a       +a      acdopq
+0       abdijk   abdijk  0
 }
 //--
 
@@ -169,10 +169,10 @@ tile +d06
 {
 4 4
 
-0         abcdlmn  abcdlmn  0
-acefgrst  +a       +a       adefgopq
-acefgrst  +a       +a       adefgopq
-0         abcdijk  abcdijk  0
+0       abdlmn   abdlmn  0
+acdrst  +a       +a      acdopq
+acdrst  +a       +a      acdopq
+0       abdijk   abdijk  0
 }
 //--
 
@@ -181,21 +181,21 @@ tile +d07
 {
 3 3
 
-0         abcdlmn  0
-acefgrst  +a       adefgopq
-0         abcdijk  0
+0       abdlmn  0
+acdrst  +a      acdopq
+0       abdijk  0
 }
 //--
 
-// stroh
+// bales of straw
 tile +d08
 {
 4 4
 
-0         abcdlmn  abcdlmn  0
-acefgrst  +a       +a       adefgopq
-acefgrst  +a       +a       adefgopq
-0         abcdijk  abcdijk  0
+0       abdlmn   abdlmn  0
+acdrst  +a       +a      acdopq
+acdrst  +a       +a      acdopq
+0       abdijk   abdijk  0
 }
 //--
 
@@ -204,10 +204,10 @@ tile +d09
 {
 4 4
 
-0         abcdlmn  abcdlmn  0
-acefgrst  +a       +a       adefgopq
-acefgrst  +a       +a       adefgopq
-0         abcdijk  abcdijk  0
+0       abdlmn   abdlmn  0
+acdrst  +a       +a      acdopq
+acdrst  +a       +a      acdopq
+0       abdijk   abdijk  0
 }
 //--
 
@@ -216,9 +216,9 @@ tile +d10
 {
 3 3
 
-0         abcdlmn  0
-acefgrst  +a       adefgopq
-0         abcdijk  0
+0       abdlmn  0
+acdrst  +a      acdopq
+0       abdijk  0
 }
 //--
 
@@ -231,10 +231,10 @@ tile +v01
 {
 4 4
 
-0   opw  abcdlmn  0
-rx  +w   +a       adefgopq
-rx  +w   +a       adefgopq
-0   oqw  abcdijk  0
+0   opw  abdlmn  0
+rx  +w   +a      acdopq
+rx  +w   +a      acdopq
+0   oqw  abdijk  0
 }
 //--
 
@@ -243,10 +243,10 @@ tile +v01_2
 {
 4 4
 
-0         abcdlmn  rsx  0
-acefgrst  +a       +x   rw
-acefgrst  +a       +x   rw
-0         abcdijk  rtx  0
+0       abdlmn   rsx  0
+acdrst  +a       +x   rw
+acdrst  +a       +x   rw
+0       abdijk   rtx  0
 }
 //--
 
@@ -255,11 +255,11 @@ tile +r01
 {
 4 5
 
-0  opw  abcdlmn  0
-r  +o   +a       adefgopq
-r  +o   +a       adefgopq
-r  +o   +a       adefgopq
-0  opw  abcdijk  0
+0  opw  abdlmn  0
+r  +o   +a      acdopq
+r  +o   +a      acdopq
+r  +o   +a      acdopq
+0  opw  abdijk  0
 }
 //--
 
@@ -268,11 +268,11 @@ tile +r01_2
 {
 4 5
 
-0         abcdlmn  rsx  0
-acefgrst  +a       +r   o
-acefgrst  +a       +r   o
-acefgrst  +a       +r   o
-0         abcdijk  rtx  0
+0       abdlmn   rsx  0
+acdrst  +a       +r   o
+acdrst  +a       +r   o
+acdrst  +a       +r   o
+0       abdijk   rtx  0
 }
 //--
 
@@ -281,11 +281,11 @@ tile +r02
 {
 4 5
 
-0  opw  abcdlmn  0
-r  +o   +a       adefgopq
-r  +o   +a       adefgopq
-r  +o   +a       adefgopq
-0  opw  abcdijk  0
+0  opw  abdlmn  0
+r  +o   +a      acdopq
+r  +o   +a      acdopq
+r  +o   +a      acdopq
+0  opw  abdijk  0
 }
 //--
 
@@ -294,11 +294,11 @@ tile +r02_2
 {
 4 5
 
-0         abcdlmn  rsx  0
-acefgrst  +a       +r   o
-acefgrst  +a       +r   o
-acefgrst  +a       +r   o
-0         abcdijk  rtx  0
+0       abdlmn   rsx  0
+acdrst  +a       +r   o
+acdrst  +a       +r   o
+acdrst  +a       +r   o
+0       abdijk   rtx  0
 }
 //--
 
@@ -307,11 +307,11 @@ tile +r03
 {
 4 5
 
-0  opw  abcdlmn  0
-r  +o   +a       adefgopq
-r  +o   +a       adefgopq
-r  +o   +a       adefgopq
-0  opw  abcdijk  0
+0  opw  abdlmn  0
+r  +o   +a      acdopq
+r  +o   +a      acdopq
+r  +o   +a      acdopq
+0  opw  abdijk  0
 }
 //--
 
@@ -320,11 +320,11 @@ tile +r03_2
 {
 4 5
 
-0         abcdlmn  rsx  0
-acefgrst  +a       +r   o
-acefgrst  +a       +r   o
-acefgrst  +a       +r   o
-0         abcdijk  rtx  0
+0       abdlmn   rsx  0
+acdrst  +a       +r   o
+acdrst  +a       +r   o
+acdrst  +a       +r   o
+0       abdijk   rtx  0
 }
 //--
 
@@ -333,10 +333,10 @@ tile +r04
 {
 4 4
 
-0  opw  abcdlmn  0
-r  +o   +a       adefgopq
-r  +o   +a       adefgopq
-0  opw  abcdijk  0
+0  opw  abdlmn  0
+r  +o   +a      acdopq
+r  +o   +a      acdopq
+0  opw  abdijk  0
 }
 //--
 
@@ -345,10 +345,10 @@ tile +r04_2
 {
 4 4
 
-0         abcdlmn  rsx  0
-acefgrst  +a       +r   o
-acefgrst  +a       +r   o
-0         abcdijk  rtx  0
+0       abdlmn   rsx  0
+acdrst  +a       +r   o
+acdrst  +a       +r   o
+0       abdijk   rtx  0
 }
 //--
 
@@ -357,9 +357,9 @@ tile +r05
 {
 4 3
 
-0  opw  abcdlmn  0
-r  +o   +a       adefgopq
-0  opw  abcdijk  0
+0  opw  abdlmn  0
+r  +o   +a      acdopq
+0  opw  abdijk  0
 }
 //--
 
@@ -368,9 +368,9 @@ tile +r05_2
 {
 4 3
 
-0         abcdlmn  rsx  0
-acefgrst  +a       +r   o
-0         abcdijk  rtx  0
+0       abdlmn   rsx  0
+acdrst  +a       +r   o
+0       abdijk   rtx  0
 }
 //--
 
@@ -379,11 +379,11 @@ tile +re01
 {
 4 5
 
-0         abcdlmn  abcdlmn  0
-acefgrst  +a       +a       adefgopq
-it        +q       +a       adefgopq
-it        +q       +a       adefgopq
-0         po       abcdijk  0
+0         abdlmn   abdlmn  0
+acdrst    +a       +a      acdopq
+it        +q       +a      acdopq
+it        +q       +a      acdopq
+0         po       abdijk  0
 }
 //--
 
@@ -392,11 +392,11 @@ tile +re01_2
 {
 4 5
 
-0         abcdlmn  abcdlmn  0
-acefgrst  +a       +a       adefgopq
-acefgrst  +a       +t       qi
-acefgrst  +a       +t       qi
-0         abcdijk  rs       0
+0       abdlmn   abdlmn   0
+acdrst  +a       +a       acdopq
+acdrst  +a       +t       qi
+acdrst  +a       +t       qi
+0       abdijk   rs       0
 }
 //--
 
@@ -405,11 +405,11 @@ tile +re02
 {
 4 5
 
-0         qo       abcdlmn  0
-sl        +p       +a       adefgopq
-acefgrst  +a       +a       adefgopq
-acefgrst  +a       +a       adefgopq
-0         abcdijk  abcdijk  0
+0       qo       abdlmn  0
+sl      +p       +a      acdopq
+acdrst  +a       +a      acdopq
+acdrst  +a       +a      acdopq
+0       abdijk   abdijk  0
 }
 //--
 
@@ -418,11 +418,11 @@ tile +re02_2
 {
 4 5
 
-0         abcdlmn  rt       0
-acefgrst  +a       +s       pl
-acefgrst  +a       +a       adefgopq
-acefgrst  +a       +a       adefgopq
-0         abcdijk  abcdijk  0
+0       abdlmn   rt       0
+acdrst  +a       +s       pl
+acdrst  +a       +a       acdopq
+acdrst  +a       +a       acdopq
+0       abdijk   abdijk   0
 }
 
 // rock end vertical back right
@@ -430,10 +430,10 @@ tile +re03
 {
 4 4
 
-0         abcdlmn  abcdlmn  0
-acefgrst  +a       +a       adefgopq
-it        +q       +a       adefgopq
-0         po       abcdijk  0
+0         abdlmn   abdlmn  0
+acdrst    +a       +a      acdopq
+it        +q       +a      acdopq
+0         po       abdijk  0
 }
 //--
 
@@ -442,10 +442,10 @@ tile +re03_2
 {
 4 4
 
-0         abcdlmn  abcdlmn  0
-acefgrst  +a       +a       adefgopq
-acefgrst  +a       +t       qi
-0         abcdijk  rs       0
+0       abdlmn   abdlmn   0
+acdrst  +a       +a       acdopq
+acdrst  +a       +t       qi
+0       abdijk   rs       0
 }
 //--
 
@@ -454,10 +454,10 @@ tile +re04
 {
 4 4
 
-0         qo       abcdlmn  0
-sl        +p       +a       adefgopq
-acefgrst  +a       +a       adefgopq
-0         abcdijk  abcdijk  0
+0       qo       abdlmn  0
+sl      +p       +a      acdopq
+acdrst  +a       +a      acdopq
+0       abdijk   abdijk  0
 }
 //--
 
@@ -466,10 +466,10 @@ tile +re04_2
 {
 4 4
 
-0         abcdlmn  rt       0
-acefgrst  +a       +s       pl
-acefgrst  +a       +a       adefgopq
-0         abcdijk  abcdijk  0
+0       abdlmn   rt       0
+acdrst  +a       +s       pl
+acdrst  +a       +a       acdopq
+0       abdijk   abdijk   0
 }
 //--
 
@@ -483,9 +483,9 @@ tile +h01
 {
 4 3
 
-0         abcdlmn  abcdlmn  0
-acefgrst  +a       +a       adefgopq
-0         abcdijk  abcdijk  0
+0       abdlmn   abdlmn  0
+acdrst  +a       +a      acdopq
+0       abdijk   abdijk  0
 }
 //--
 
@@ -494,9 +494,9 @@ tile +h02
 {
 4 3
 
-0         abcdlmn  abcdlmn  0
-acefgrst  +a       +a       adefgopq
-0         abcdijk  abcdijk  0
+0       abdlmn   abdlmn  0
+acdrst  +a       +a      acdopq
+0       abdijk   abdijk  0
 }
 //--
 
@@ -505,10 +505,10 @@ tile +h03
 {
 4 4
 
-0         abcdlmn  abcdlmn  0
-acefgrst  +a       +a       adefgopq
-acefgrst  +a       +a       adefgopq
-0         abcdijk  abcdijk  0
+0         abdlmn  abdlmn  0
+acdrst  +a       +a       acdopq
+acdrst  +a       +a       acdopq
+0         abdijk  abdijk  0
 }
 //--
 
@@ -521,9 +521,9 @@ tile +s01
 {
 3 3
 
-0    abcdlmn  0
-bch  +b       bdh
-0    abcdijk  0
+0    ablmn   0
+bd  +b       bd
+0    abijk   0
 }
 //--
 
@@ -532,53 +532,53 @@ tile +s01_2
 {
 3 3
 
-0         efh  0
-acefgrst  +e   adefgopq
-0         egh  0
-}
-//--
-
-// street end horizontal left
-tile +s02
-{
-3 3
-
-0    abcdlmn  0
-bdh  +c       adefgopq
-0    abcdijk  0
-}
-//--
-
-// street end vertical left
-tile +s02_2
-{
-3 3
-
-0         egh      0
-acefgrst  +f       adefgopq
-0         abcdijk  0
+0      cd   0
+acrst  +c   acopq
+0      cd   0
 }
 //--
 
 // street end horizontal right
+tile +s02
+{
+3 3
+
+0    ablmn  0
+bd  +d       aopq
+0    abijk  0
+}
+//--
+
+// street end vertical up
+tile +s02_2
+{
+3 3
+
+0      almn    0
+acrst  +d      acopq
+0      cd      0
+}
+//--
+
+// street end horizontal left
 tile +s03
 {
 3 3
 
-0         abcdlmn  0
-acefgrst  +d       bch
-0         abcdijk  0
+0      ablmn  0
+arst  +d     bd
+0      abijk  0
 }
 //--
 
-// street end vertical right
+// street end vertical down
 tile +s03_2
 {
 3 3
 
-0         abcdlmn  0
-acefgrst  +g       adefgopq
-0         efh      0
+0      cd     0
+acrst  +d	  acopq
+0      aijk   0
 }
 //--
 
@@ -587,9 +587,9 @@ tile +s04
 {
 4 3
 
-0    abcdlmn  abcdlmn  0
-bch  +b       +b       bdh
-0    abcdijk  abcdijk  0
+0    ablmn  ablmn  0
+bd   +b     +b     bd
+0    abijk  abijk  0
 }
 
 
@@ -598,10 +598,10 @@ tile +s04_2
 {
 3 4
 
-0         cgh  0
-acefgrst  +c   adefgopq
-acefgrst  +c   adefgopq
-0         cfh  0
+0      cd  	0
+acrst  +c   acopq
+acrst  +c   acopq
+0      cd  	0
 }
 
 // street cross 1 (not build in / set up)
@@ -609,9 +609,9 @@ tile +s05
 {
 3 3
 
-0         abcdlmn  0
-acefgrst  +g       adefgopq
-0         efh      0
+0   c  	   0
+b  	+d     b
+0   aijk   0
 }
 
 // street cross 2 (not build in / set up)
@@ -619,9 +619,9 @@ tile +s06
 {
 3 3
 
-0         abcdlmn  0
-acefgrst  +g       adefgopq
-0         efh      0
+0      almn   0
+b  	   +d     b
+0      c      0
 }
 
 // street cross full (4 sides)
@@ -629,9 +629,9 @@ tile +s07
 {
 3 3
 
-0   eg  0
-bc  +h  bd
-0   ef  0
+0   c  0
+b  +d  b
+0   c  0
 }
 
 //--------------------------------------------------
@@ -718,33 +718,33 @@ size "7 7"
 +re03_2 "0 1"
 +re04_2 "0 1"
 *rm_dropship +drop_firebird "1 1"
-+s01 "0 1"
-+s02 "1 1"
-+s03 "0 1"
 }
 
 assembly street
 {
 size "10 10"
 +s01 "1 20"
-+s01_2 "0 20"
++s01_2 "1 20"
 +s02 "0 20"
 +s02_2 "0 20"
 +s03 "0 20"
 +s03_2 "0 20"
 +s04 "0 20"
 +s04_2 "0 20"
-+s07 "0 20"
-+d01 "0 8"
-+d02 "0 8"
-+d03 "0 8"
-+d04 "0 8"
-+d05 "0 8"
-+d06 "0 8"
-+d07 "0 8"
-+d08 "0 8"
-+d09 "0 8"
-+d10 "0 8"
++s05 "1 20"
++s06 "1 20"
++s07 "1 20"
++c01 "0 2"
++d01 "0 4"
++d02 "0 20"
++d03 "0 20"
++d04 "0 20"
++d05 "0 2"
++d06 "0 2"
++d07 "0 2"
++d08 "0 2"
++d09 "0 2"
++d10 "0 20"
 *rm_dropship +drop_firebird "1 1"
 +ufo_fighter "1 1"
 +ufo_harvester "1 1"
