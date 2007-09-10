@@ -291,7 +291,7 @@ void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_
 	case AL_RESEARCH:
 		if (!name) {
 			/* Search for the type of alien, which has max amount
-			   in Alien Containment, then remove (amount). */
+			 * in Alien Containment, then remove (amount). */
 			while (amount > 0) {
 				/* Find the type with maxamount. */
 				for (j = 0; j < csi.numTeamDefs; j++) {
@@ -345,10 +345,10 @@ void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_
 				if (containment[j].amount_alive == 0)
 					return;
 				/* We are killing only one here, so we
-				   don't care about amount param.   */
+				 * don't care about amount param.   */
 				containment[j].amount_alive--;
 				containment[j].amount_dead++;
-				return;
+				break;
 			}
 		}
 		break;
@@ -722,14 +722,14 @@ static void AC_KillAll_f (void)
 	qboolean aliens = qfalse;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent ||!curCampaign || !aliencontCurrent)
+	if (!baseCurrent ||!curCampaign)
 		return;
 
 	/* Are there aliens here at all? */
 	for (i = 0; i < csi.numTeamDefs; i++) {
 		if (!csi.teamDef[i].alien)
 			continue;
-		if (aliencontCurrent[i].amount_alive > 0) {
+		if (baseCurrent->alienscont[i].amount_alive > 0) {
 			aliens = qtrue;
 			break;
 		}
@@ -755,7 +755,7 @@ static void AC_KillOne_f (void)
 	aliensCont_t *containment = NULL;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent ||!curCampaign || !aliencontCurrent)
+	if (!baseCurrent ||!curCampaign)
 		return;
 
 	if (Cmd_Argc() < 2) {

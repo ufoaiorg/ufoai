@@ -119,7 +119,7 @@ void R_SetupGL3D (void)
 		qglFogf(GL_FOG_START, 0.1 * refdef.fog);
 		qglFogf(GL_FOG_END, refdef.fog);
 		qglHint(GL_FOG_HINT, GL_DONT_CARE);
-		qglFogf(GL_FOG_DENSITY, 0.005 * refdef.fog );
+		qglFogf(GL_FOG_DENSITY, 0.005 * refdef.fog);
 		qglFogfv(GL_FOG_COLOR, refdef.fogColor);
 	}
 }
