@@ -122,7 +122,6 @@ static qboolean CL_LanguageTest (const char *localeID)
 	int i;
 	language_t* language;
 	localeMapping_t* mapping;
-	qboolean possible = qtrue;
 #endif
 	char languagePath[MAX_OSPATH];
 	cvar_t *fs_i18ndir;
@@ -172,14 +171,11 @@ static qboolean CL_LanguageTest (const char *localeID)
 		if (setlocale(LC_MESSAGES, mapping->localeMapping)) {
 			Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest()... language %s with locale %s found.\n", localeID, mapping->localeMapping);
 			return qtrue;
-		} else {
-			Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest()... language %s with locale %s not found.\n", localeID, mapping->localeMapping);
-			possible = qfalse;
-		}
+		} else
+			Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest()... language %s with locale %s not found on your system.\n", localeID, mapping->localeMapping);
 		mapping = mapping->next;
 	} while (mapping);
-	if (!possible)
-		Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest()... not possible to use %s language.\n", localeID);
+	Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTest()... not possible to use %s language.\n", localeID);
 	return qfalse;
 #endif
 }
@@ -263,11 +259,7 @@ void CL_LanguageInit (void)
 		}
 	}
 	/* Set to the locale remembered previously. */
-#ifdef _WIN32
 	CL_LanguageTryToSet(deflang);
-#else
-	setlocale(LC_MESSAGES, deflang);
-#endif
 }
 
 /**
@@ -318,5 +310,8 @@ qboolean CL_LanguageTryToSet (const char *localeID)
 #endif
 		mapping = mapping->next;
 	} while (mapping);
+#ifndef _WIN32
+	setlocale(LC_MESSAGES, localeID);
+#endif
 	return qfalse;
 }
