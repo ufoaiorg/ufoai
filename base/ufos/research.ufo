@@ -516,6 +516,86 @@ tech rs_alien_xvi
 // weapons and items
 //=================================
 
+tech rs_weapon_pistol
+{
+	type	weapon
+	up_chapter	equipment
+	description {
+		default "_pistol_txt"
+	}
+	// pre_description	"_pistol_pre_txt"
+
+	require_AND
+	{
+		tech rs_skill_close
+	}
+
+	provides	pistol
+	time	0
+	producetime	40
+}
+
+tech rs_weapon_pistol_ammo
+{
+	type	weapon
+	up_chapter	equipment
+	description {
+		default "_pistol_mag_txt"
+	}
+	// pre_description	"_pistol_mag_pre_txt"
+
+	require_AND
+	{
+		tech rs_damage_normal
+		tech rs_weapon_pistol
+	}
+
+	provides	pistol_ammo
+	time	0
+	producetime	12
+}
+
+// Machine Pistol
+tech rs_weapon_pistol2
+{
+	type	weapon
+	up_chapter	equipment
+	mdl_top	weap_machine_pistol	// Overrides the one from weapons*.ufo
+	description {
+		default "_pistol2_txt"
+	}
+	// pre_description	"_pistol2_pre_txt"
+
+	require_AND
+	{
+		tech rs_skill_close
+	}
+
+	provides	pistol2
+	time	0
+	producetime	60
+}
+
+tech rs_weapon_pistol2_ammo
+{
+	type	weapon
+	up_chapter	equipment
+	description {
+		default "_pistol2_mag_txt"
+	}
+	// pre_description	"_pistol2_mag_pre_txt"
+
+	require_AND
+	{
+		tech rs_damage_normal
+		tech rs_weapon_pistol2
+	}
+
+	provides	pistol2_ammo
+	time	0
+	producetime	12
+}
+
 tech rs_weapon_assault
 {
 	type	weapon
@@ -588,6 +668,152 @@ tech rs_weapon_machinegun_ammo
 	provides	machinegun_ammo
 	time	0
 	producetime	12
+}
+
+tech rs_weapon_rpg
+{
+	type	weapon
+	up_chapter	equipment
+	description {
+		default "_rpg_txt"
+	}
+	// pre_description	"_rpg_pre_txt"
+
+	require_AND
+	{
+		tech rs_skill_explosive
+	}
+
+	provides	rpg
+	time	0
+	producetime	120
+}
+
+tech rs_weapon_rpg_ammo
+{
+	type	weapon
+	up_chapter	equipment
+	description {
+		default "_rpg_ammo_txt"
+	}
+	// pre_description	"_rpg_ammo_pre_txt"
+
+	require_AND
+	{
+		tech rs_damage_blast
+		tech rs_weapon_rpg
+	}
+
+	provides	rpg_ammo
+	time	0
+	producetime	24
+}
+
+tech rs_weapon_rpg_incendiary_ammo
+{
+	type	weapon
+	up_chapter	equipment
+	description {
+		default "_rpg_incendiary_ammo_txt"
+	}
+	// pre_description	"_rpg_incendiary_ammo_pre_txt"
+
+	require_AND
+	{
+		tech rs_damage_fire
+		tech rs_weapon_rpg
+	}
+
+	provides	rpg_incendiary_ammo
+	time	0
+	producetime	30
+}
+
+tech rs_weapon_chaingun
+{
+	// Note: Multiplayer only
+	type	weapon
+	up_chapter	equipment
+	description {
+		default "_chaingun_txt"
+	}
+	pre_description {
+		default "_chaingun_pre_txt"
+	}
+
+//	require_AND
+//	{
+//		tech rs_skill_heavy
+//	}
+
+	provides	chaingun
+	time	0
+	producetime	-1
+}
+
+tech rs_weapon_chaingun_ammo
+{
+	// Note: Multiplayer only
+	type	weapon
+	up_chapter	equipment
+	description {
+		default "_chaingun_ammo_txt"
+	}
+	pre_description {
+		default "_chaingun_ammo_pre_txt"
+	}
+
+	require_AND
+	{
+		tech rs_damage_normal
+		tech rs_weapon_chaingun
+	}
+
+	provides	chaingun_ammo
+	time	0
+	producetime	-1
+}
+
+tech rs_weapon_shotgun
+{
+	// Note: Multiplayer only
+	type	weapon
+	up_chapter	equipment
+	description {
+		default "_shotgun_txt"
+	}
+	// pre_description	"_shotgun_pre_txt"
+
+// multiplayer only thus not needed at production menu
+//	require_AND
+//	{
+//		tech rs_skill_heavy
+//	}
+
+	provides	shotgun
+	time	0
+	producetime	40
+}
+
+tech rs_weapon_shotgun_ammo
+{
+	// Note: Multiplayer only
+	type	weapon
+	up_chapter	equipment
+	description {
+		default "_shotgun_ammo_txt"
+	}
+	// pre_description	"_shotgun_ammo_pre_txt"
+
+	require_AND
+	{
+		tech rs_damage_blast
+		tech rs_weapon_shotgun
+	}
+
+	provides	shotgun_ammo
+	time	0
+	producetime	1
 }
 
 tech rs_weapon_bolterrifle
@@ -927,7 +1153,7 @@ tech rs_weapon_grenl_plasma_ammo
 	}
 	provides	grenl_plasma_ammo
 	time	1250
-	producetime	128
+	producetime	40
 }
 
 // Generic laser ammo
@@ -1009,24 +1235,6 @@ tech rs_weapon_heavylaser
 	time	1500
 	producetime	140
 }
-
-//tech rs_weapon_heavylaser_ammo
-//{
-//	type	weapon
-//	up_chapter	equipment
-//	description	"_heavylaser_ammo_txt"
-//	pre_description	"_heavylaser_ammo_pre_txt"
-//
-//	require_AND
-//	{
-//		weapon rs_weapon_heavylaser
-//		tech rs_weapon_heavylaser
-//		tech rs_damage_laser
-//	}
-//	provides	heavylaser_ammo
-//	time	0
-//	producetime	1
-//}
 
 tech rs_irgoggles
 {
@@ -1120,26 +1328,8 @@ tech rs_weapon_laserpistol
 	}
 	provides	laserpistol
 	time	1000
-	producetime	120
+	producetime	90
 }
-
-//tech rs_weapon_laserpistol_ammo
-//{
-//	type	weapon
-//	up_chapter	equipment
-//	description	"_laserpistol_mag_txt"
-//	pre_description	"_laserpistol_mag_pre_txt"
-//
-//	require_AND
-//	{
-//		weapon rs_weapon_laserpistol
-//		tech rs_damage_laser
-//		tech rs_weapon_laserpistol
-//	}
-//	provides	laserpistol_ammo
-//	time	0
-//	producetime	1
-//}
 
 tech rs_weapon_laserrifle
 {
@@ -1179,24 +1369,6 @@ tech rs_weapon_laserrifle
 	producetime	140
 }
 
-//tech rs_weapon_laserrifle_ammo
-//{
-//	type	weapon
-//	up_chapter	equipment
-//	description	"_laserrifle_mag_txt"
-//	pre_description	"_laserrifle_mag_pre_txt"
-//
-//	require_AND
-//	{
-//		weapon rs_weapon_laserrifle
-//		tech rs_damage_laser
-//		tech rs_weapon_laserrifle
-//	}
-//	provides	laserrifle_ammo
-//	time	0
-//	producetime	1
-//}
-
 tech rs_medikit
 {
 	type	weapon
@@ -1213,86 +1385,6 @@ tech rs_medikit
 	provides	medikit
 	time	0
 	producetime	60
-}
-
-tech rs_weapon_pistol
-{
-	type	weapon
-	up_chapter	equipment
-	description {
-		default "_pistol_txt"
-	}
-	// pre_description	"_pistol_pre_txt"
-
-	require_AND
-	{
-		tech rs_skill_close
-	}
-
-	provides	pistol
-	time	0
-	producetime	40
-}
-
-tech rs_weapon_pistol_ammo
-{
-	type	weapon
-	up_chapter	equipment
-	description {
-		default "_pistol_mag_txt"
-	}
-	// pre_description	"_pistol_mag_pre_txt"
-
-	require_AND
-	{
-		tech rs_damage_normal
-		tech rs_weapon_pistol
-	}
-
-	provides	pistol_ammo
-	time	0
-	producetime	12
-}
-
-// Machine Pistol
-tech rs_weapon_pistol2
-{
-	type	weapon
-	up_chapter	equipment
-	mdl_top	weap_machine_pistol	// Overrides the one from weapons*.ufo
-	description {
-		default "_pistol2_txt"
-	}
-	// pre_description	"_pistol2_pre_txt"
-
-	require_AND
-	{
-		tech rs_skill_close
-	}
-
-	provides	pistol2
-	time	0
-	producetime	60
-}
-
-tech rs_weapon_pistol2_ammo
-{
-	type	weapon
-	up_chapter	equipment
-	description {
-		default "_pistol2_mag_txt"
-	}
-	// pre_description	"_pistol2_mag_pre_txt"
-
-	require_AND
-	{
-		tech rs_damage_normal
-		tech rs_weapon_pistol2
-	}
-
-	provides	pistol2_ammo
-	time	0
-	producetime	12
 }
 
 tech rs_weapon_plasatomizer
@@ -1600,152 +1692,6 @@ tech rs_weapon_plasrifle_ammo
 	producetime	40
 }
 
-tech rs_weapon_rpg
-{
-	type	weapon
-	up_chapter	equipment
-	description {
-		default "_rpg_txt"
-	}
-	// pre_description	"_rpg_pre_txt"
-
-	require_AND
-	{
-		tech rs_skill_explosive
-	}
-
-	provides	rpg
-	time	0
-	producetime	120
-}
-
-tech rs_weapon_rpg_ammo
-{
-	type	weapon
-	up_chapter	equipment
-	description {
-		default "_rpg_ammo_txt"
-	}
-	// pre_description	"_rpg_ammo_pre_txt"
-
-	require_AND
-	{
-		tech rs_damage_blast
-		tech rs_weapon_rpg
-	}
-
-	provides	rpg_ammo
-	time	0
-	producetime	24
-}
-
-tech rs_weapon_rpg_incendiary_ammo
-{
-	type	weapon
-	up_chapter	equipment
-	description {
-		default "_rpg_incendiary_ammo_txt"
-	}
-	// pre_description	"_rpg_incendiary_ammo_pre_txt"
-
-	require_AND
-	{
-		tech rs_damage_fire
-		tech rs_weapon_rpg
-	}
-
-	provides	rpg_incendiary_ammo
-	time	0
-	producetime	30
-}
-
-tech rs_weapon_chaingun
-{
-	// Note: Multiplayer only
-	type	weapon
-	up_chapter	equipment
-	description {
-		default "_chaingun_txt"
-	}
-	pre_description {
-		default "_chaingun_pre_txt"
-	}
-
-//	require_AND
-//	{
-//		tech rs_skill_heavy
-//	}
-
-	provides	chaingun
-	time	0
-	producetime	-1
-}
-
-tech rs_weapon_chaingun_ammo
-{
-	// Note: Multiplayer only
-	type	weapon
-	up_chapter	equipment
-	description {
-		default "_chaingun_ammo_txt"
-	}
-	pre_description {
-		default "_chaingun_ammo_pre_txt"
-	}
-
-	require_AND
-	{
-		tech rs_damage_normal
-		tech rs_weapon_chaingun
-	}
-
-	provides	chaingun_ammo
-	time	0
-	producetime	-1
-}
-
-tech rs_weapon_shotgun
-{
-	// Note: Multiplayer only
-	type	weapon
-	up_chapter	equipment
-	description {
-		default "_shotgun_txt"
-	}
-	// pre_description	"_shotgun_pre_txt"
-
-// multiplayer only thus not needed at production menu
-//	require_AND
-//	{
-//		tech rs_skill_heavy
-//	}
-
-	provides	shotgun
-	time	0
-	producetime	40
-}
-
-tech rs_weapon_shotgun_ammo
-{
-	// Note: Multiplayer only
-	type	weapon
-	up_chapter	equipment
-	description {
-		default "_shotgun_ammo_txt"
-	}
-	// pre_description	"_shotgun_ammo_pre_txt"
-
-	require_AND
-	{
-		tech rs_damage_blast
-		tech rs_weapon_shotgun
-	}
-
-	provides	shotgun_ammo
-	time	0
-	producetime	1
-}
-
 tech rs_weapon_shotgun2
 {
 	// Riot Shotgun
@@ -1765,25 +1711,6 @@ tech rs_weapon_shotgun2
 	time	0
 	producetime	140
 }
-
-//tech rs_weapon_shotgun2_ammo
-//{
-//	type	weapon
-//	up_chapter	equipment
-//	description	"_shotgun2_ammo_txt"
-//	// pre_description	"_shotgun2_ammo_pre_txt"
-//
-//	require_AND
-//	{
-//		weapon rs_weapon_shotgun2
-//		tech rs_damage_blast
-//		tech rs_weapon_shotgun2
-//	}
-//
-//	provides	shotgun2_ammo
-//	time	0
-//	producetime	1
-//}
 
 tech rs_weapon_shotgun2_slug_ammo
 {
@@ -2426,147 +2353,6 @@ tech rs_alien_medium_armour
 	producetime	-1
 }
 
-// tech rs_heavy_nano_armour
-// {
-// 	type	armor
-// 	description	"_nano_heavy_armour_txt"
-// 	pre_description	"_nano_heavy_armour_pre_txt"
-//	up_chapter	equipment
-//
-// 	require_AND { tech rs_advanced_armor }
-// 	provides	heavy
-// 	time	5000
-//	producetime	120
-// }
-
-//========================
-// Damage Types
-//========================
-
-tech rs_damage_blast
-{
-	type	tech
-	name "_Blast Damage Type"
-	up_chapter damage
-	description {
-		default "_none"
-	}
-	require_AND { tech nothing }
-
-	time	0
-//	image_top	techs/blast_damage
-}
-
-tech rs_damage_fire
-{
-	type	tech
-	name "_Fire Damage Type"
-	up_chapter	damage
-	description {
-		default "_none"
-	}
-	require_AND { tech nothing }
-
-	time	0
-//	image_top	techs/fire_damage
-}
-
-tech rs_damage_laser
-{
-	type	tech
-	name "_Laser Damage Type"
-	up_chapter	damage
-	description {
-		default "_none"
-	}
-
-	require_AND
-	{
-		tech rs_laser
-	}
-
-	time	0
-//	image_top	techs/laser_damage
-}
-
-tech rs_damage_normal
-{
-	type	tech
-	name "_Impact Damage Type"
-	up_chapter	damage
-	description {
-		default "_none"
-	}
-	require_AND { tech nothing }
-
-	time	0
-//	image_top	techs/normal_damage
-}
-
-tech rs_damage_shock
-{
-	type	tech
-	name "_Shock Damage Type"
-	up_chapter	damage
-	description {
-		default "_none"
-	}
-	require_AND { tech nothing }
-
-	time	0
-//	image_top	techs/shock_damage
-}
-
-tech rs_damage_plasma
-{
-	type	tech
-	name "_Plasma Damage Type"
-	up_chapter	damage
-	description {
-		default "_none"
-	}
-
-	require_OR
-	{
-		tech rs_weapon_plasatomizer
-		tech rs_weapon_plasblaster
-		tech rs_weapon_plasrifle
-		tech rs_weapon_plasmagren
-	}
-
-	time	0
-//	image_top	techs/plasma_damage
-}
-
-tech rs_damage_stun
-{
-	type	tech
-	name "_Stun Damage Type"
-	up_chapter	damage
-	description {
-		default "_none"
-	}
-	require_AND { tech nothing }
-
-	time	0
-//	image_top	techs/stun_damage
-}
-
-tech rs_damage_pbeam
-{
-	type		tech
-	name 		"_Particle Beam Damage Type"
-	up_chapter	damage
-	description {
-		default "_none"
-	}
-
-	require_AND 	{ tech nothing }
-
-	time	0
-//	image_top	techs/pbeam_damage
-}
-
 //========================
 // Soldier Skills
 //========================
@@ -3003,7 +2789,7 @@ tech rs_building_antimatter
 }
 
 //========================
-// Crafts - Human
+// Craft - Human
 //========================
 tech rs_craft_drop_firebird
 {
@@ -3017,7 +2803,7 @@ tech rs_craft_drop_firebird
 	provides	craft_drop_firebird
 	require_AND { tech nothing }
 	time	0
-	producetime	2600
+	producetime	336 //Two weeks.
 
 	mdl_top		drop_firebird
 }
@@ -3034,7 +2820,7 @@ tech rs_craft_inter_stiletto
 	provides	craft_inter_stiletto
 	require_AND { tech nothing }
 	time	0
-	producetime	2600
+	producetime	336
 
 	mdl_top		inter_stiletto
 }
@@ -3051,7 +2837,7 @@ tech rs_craft_inter_saracen
 	provides	craft_inter_saracen
 	require_AND { tech nothing }
 	time	0
-	producetime	2600
+	producetime	400
 
 	mdl_top		inter_saracen
 }
@@ -3073,7 +2859,7 @@ tech rs_craft_inter_dragon
 		tech rs_craft_ufo_fighter
 	}
 	time	0
-	producetime	2600
+	producetime	600
 
 	mdl_top		inter_dragon
 }
@@ -3090,27 +2876,10 @@ tech rs_craft_inter_stingray
 	provides	craft_inter_stingray
 	require_AND { tech nothing }
 	time	0
-	producetime	2600
+	producetime	800
 
 	mdl_top		inter_stingray
 }
-
-//tech rs_craftupgrade_drop_firebird
-//{
-//	type	tech
-//	name	"_Plasmadrive for H-92 Transport"
-//	description	"_drop_firebird_upgrade_txt"
-//	pre_description	"_drop_firebird_upgrade_pre_txt"
-//	up_chapter	crafts
-//
-//	require_AND
-//	{
-//		tech rs_craft_drop_firebird
-//		tech rs_plasma
-//	}
-//	provides	drop_firebird_plasmadrive
-//	time	0
-//}
 
 //========================
 // Crafts - UFOs
@@ -3152,6 +2921,7 @@ tech rs_craft_ufo_scout
 
 	provides	"craft_ufo_scout"
 	time	2500
+	producetime -1
 
 	mdl_top		ufo_scout
 }
@@ -3193,6 +2963,7 @@ tech rs_craft_ufo_fighter
 
 	provides	"craft_ufo_fighter"
 	time	2500
+	producetime -1
 
 	mdl_top		ufo_fighter
 }
@@ -3234,6 +3005,7 @@ tech rs_craft_ufo_supply
 
 	provides	"craft_ufo_supply"
 	time	2500
+	producetime -1
 
 	mdl_top		ufo_supply
 }
@@ -3275,6 +3047,7 @@ tech rs_craft_ufo_carrier
 
 	provides	"craft_ufo_carrier"
 	time	2500
+	producetime -1
 
 	mdl_top		ufo_carrier
 }
@@ -3316,6 +3089,7 @@ tech rs_craft_ufo_condor
 
 	provides	"craft_ufo_condor"
 	time	2500
+	producetime -1
 
 	mdl_top		ufo_condor
 }
@@ -3357,6 +3131,7 @@ tech rs_craft_ufo_harvester
 
 	provides	"craft_ufo_harvester"
 	time	2500
+	producetime -1
 
 	mdl_top		ufo_harvester
 }
@@ -3643,7 +3418,7 @@ tech rs_ugv_phoenix
 	provides	ugv_phoenix
 	require_AND { tech nothing }
 	time	0
-	producetime	800
+	producetime	400
 }
 
 tech rs_ugv_triax
@@ -3663,7 +3438,7 @@ tech rs_ugv_triax
 	provides	ugv_triax
 	require_AND { tech nothing }
 	time	0
-	producetime	800
+	producetime	200
 }
 
 //========================
@@ -3683,7 +3458,7 @@ tech rs_base_weapon_tr20
 	provides	base_weapon_tr20
 	require_AND { tech nothing }
 	time		0
-	producetime	1221
+	producetime	200
 
 	image_top	"techs/base_weapon_tr20"
 }
@@ -3702,7 +3477,7 @@ tech rs_base_ammo_tr20
 	provides	base_ammo_tr20
 	require_AND { tech nothing }
 	time		0
-	producetime	1221
+	producetime	12
 
 	image_top	"techs/base_ammo_tr20"
 }
@@ -3724,7 +3499,7 @@ tech rs_craft_el_raven
 	provides	craft_el_raven
 	require_AND { tech nothing }
 	time		0
-	producetime	1221
+	producetime	100
 
 	image_top	"techs/craft_electronics_raven"
 }
@@ -3742,7 +3517,7 @@ tech rs_craft_shield_polymer
 	provides	craft_shield_polymer
 	require_AND { tech nothing }
 	time		0
-	producetime	1678
+	producetime	140
 
 	image_top	"techs/craft_shield_light"
 }
@@ -3764,7 +3539,7 @@ tech rs_craft_shield_plating
 		tech	rs_alien_materials
 	}
 	time		620
-	producetime	1940
+	producetime	240
 
 	image_top	"techs/craft_shield_plating"
 }
@@ -3891,7 +3666,7 @@ tech rs_craft_weapon_shiva
 	provides	craft_weapon_shiva
 	require_AND { tech nothing }
 	time		0
-	producetime	1111
+	producetime	100
 
 	mdl_top		"aircraft/craft_weapon_shiva/shiva"
 }
@@ -3912,7 +3687,7 @@ tech rs_craft_ammo_shiva_1
 		tech rs_craft_weapon_shiva
 	}
 	time		0
-	producetime	10
+	producetime	10 //Assuming a full magazine.
 
 	image_top	"techs/craft_ammo_shiva_1"
 }
@@ -3933,7 +3708,7 @@ tech rs_craft_ammo_shiva_2
 		tech rs_craft_weapon_shiva
 	}
 	time		0
-	producetime	10
+	producetime	10 //Assuming a full magazine.
 
 	image_top	"techs/craft_ammo_shiva_2"
 }
@@ -3951,7 +3726,7 @@ tech rs_craft_weapon_sparrowhawk
 	provides	craft_weapon_sparrowhawk
 	require_AND { tech nothing }
 	time		0
-	producetime	1255
+	producetime	100
 
 	// TODO: This model is still missing
 	mdl_top		"aircraft/craft_weapon_sparrowhawk/sparrowhawk"
@@ -3974,7 +3749,7 @@ tech rs_craft_ammo_sparrowhawk
 		tech rs_craft_weapon_sparrowhawk
 	}
 	time		0
-	producetime	200
+	producetime	5 //Assuming ONE missile, so 40 hours for a full rack!
 
 	image_top	"techs/craft_ammo_sparrowhawk"
 }
@@ -3992,7 +3767,7 @@ tech rs_craft_weapon_tr20
 	provides	craft_weapon_tr20
 	require_AND { tech nothing }
 	time		0
-	producetime	1810
+	producetime	100
 
 	mdl_top		"aircraft/craft_weapon_tr20/tr20"
 	image_top	"techs/craft_weapon_tr20"
@@ -4014,7 +3789,7 @@ tech rs_craft_ammo_tr20
 		tech rs_craft_weapon_tr20
 	}
 	time		0
-	producetime	250
+	producetime	24 //Assuming a full 128-rocket batch!
 
 	image_top	"techs/craft_ammo_tr20"
 }
@@ -4058,7 +3833,7 @@ tech rs_craft_weapon_particle
 	}
 
 	time		100
-	producetime	2233
+	producetime	150
 
 	mdl_top		"aircraft/craft_weapon_particle/pbw"
 	image_top	"techs/craft_weapon_particle"
@@ -4096,7 +3871,7 @@ tech rs_craft_el_fuelpod
 	provides	craft_el_fuelpod
 	require_AND	{ tech nothing }
 	time		0
-	producetime	400
+	producetime	80
 
 	image_top	"techs/craft_electronics_fuelpod"
 }
