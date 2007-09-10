@@ -45,7 +45,7 @@ static aliensCont_t* aliencontCurrent;		/**< Current selected Alien Containment.
  */
 void AL_FillInContainment (base_t *base)
 {
-	int i, j;
+	int i, j, counter = 0;
 	aliensCont_t *containment = NULL;
 
 	assert(base);
@@ -54,21 +54,22 @@ void AL_FillInContainment (base_t *base)
 	for (i = 0; i < csi.numTeamDefs; i++) {
 		if (!csi.teamDef[i].alien)
 			continue;
-		containment[i].idx = i;
-		Q_strncpyz(containment[i].alientype, AL_AlienTypeToName(i), sizeof(containment[i].alientype));
-		containment[i].amount_alive = 0;
-		containment[i].amount_dead = 0;
+		containment[counter].idx = counter;
+		Q_strncpyz(containment[counter].alientype, AL_AlienTypeToName(i), sizeof(containment[counter].alientype));
+		containment[counter].amount_alive = 0;
+		containment[counter].amount_dead = 0;
 		/* for sanity checking */
-		containment[i].techIdx = -1;
+		containment[counter].techIdx = -1;
 		for (j = 0; j < csi.numTeamDefs; j++) {
 			if (!csi.teamDef[j].alien)
 				continue;
-			if ((Q_strncmp(containment[i].alientype, csi.teamDef[j].name, MAX_VAR)) == 0) {
-				containment[i].techIdx = RS_GetTechIdxByName(csi.teamDef[j].tech);
+			if ((Q_strncmp(containment[counter].alientype, csi.teamDef[j].name, MAX_VAR)) == 0) {
+				containment[counter].techIdx = RS_GetTechIdxByName(csi.teamDef[j].tech);
 				break;
 			}
 		}
-		if (containment[i].techIdx == -1)
+		counter++;
+		if (containment[counter].techIdx == -1)
 			Sys_Error("Could not find a valid tech for '%s'\n", containment[i].alientype);
 		Com_DPrintf(DEBUG_CLIENT, "AL_FillInContainment()... type: %s techIdx: %i\n", containment[i].alientype, containment[i].techIdx);
 	}

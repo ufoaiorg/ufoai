@@ -3330,8 +3330,8 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 				MSG_ReadShort(sb);
 				MSG_ReadShort(sb);
 			} else {
-				b->alienscont[l].amount_alive = MSG_ReadShort(sb);
-				b->alienscont[l].amount_dead = MSG_ReadShort(sb);
+				b->alienscont[k].amount_alive = MSG_ReadShort(sb);
+				b->alienscont[k].amount_dead = MSG_ReadShort(sb);
 			}
 		}
 
