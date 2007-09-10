@@ -119,6 +119,7 @@ stage invasion
 		frame		"0 30 0"
 		expire		"0 7 0"
 		missions	"africa terrain lake harvestercrash qatar"
+		humanattack	1
 		quota		6
 		nextstage	alienbase
 	}

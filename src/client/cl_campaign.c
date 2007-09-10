@@ -407,6 +407,12 @@ static void CL_CampaignActivateStageSets (stage_t *stage)
 				/* Mark prequesite of "rs_alien_xvi" as met. */
 				RS_ResearchFinish(RS_GetTechByID("rs_alien_xvi_event"));
 			}
+			/* humans start to attacking player */
+			if (set->def->humanAttack) {
+				ccs.humansAttackActivated = qtrue;
+				/* Mark prequesite of "rs_enemy_on_earth" as met. */
+				RS_ResearchFinish(RS_GetTechByID("rs_enemy_on_earth_event"));
+			}
 		}
 }
 
@@ -2126,6 +2132,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	ccs.civiliansKilled = MSG_ReadShort(sb);
 	ccs.aliensKilled = MSG_ReadShort(sb);
 	ccs.XVISpreadActivated = MSG_ReadByte(sb);
+	ccs.humansAttackActivated = MSG_ReadByte(sb);
 
 	/* read campaign data */
 	name = MSG_ReadString(sb);
@@ -2387,6 +2394,7 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 	MSG_WriteShort(sb, ccs.civiliansKilled);
 	MSG_WriteShort(sb, ccs.aliensKilled);
 	MSG_WriteByte(sb, ccs.XVISpreadActivated);
+	MSG_WriteByte(sb, ccs.humansAttackActivated);
 
 	/* store campaign data */
 	for (i = 0, state = ccs.stage; i < numStages; i++, state++)
@@ -3577,6 +3585,7 @@ static const value_t stageset_vals[] = {
 	{"number", V_INT, offsetof(stageSet_t, number), MEMBER_SIZEOF(stageSet_t, number)},
 	{"quota", V_INT, offsetof(stageSet_t, quota), MEMBER_SIZEOF(stageSet_t, quota)},
 	{"activatexvi", V_INT, offsetof(stageSet_t, activateXVI), MEMBER_SIZEOF(stageSet_t, activateXVI)},
+	{"humanattack", V_INT, offsetof(stageSet_t, humanAttack), MEMBER_SIZEOF(stageSet_t, humanAttack)},
 	{"ufos", V_INT, offsetof(stageSet_t, ufos), MEMBER_SIZEOF(stageSet_t, ufos)},
 	{"sequence", V_STRING, offsetof(stageSet_t, sequence), 0},
 	{"cutscene", V_STRING, offsetof(stageSet_t, cutscene), 0},
