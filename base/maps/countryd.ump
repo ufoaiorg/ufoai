@@ -8,7 +8,7 @@ base countryd/c_
 // b = street horizontal
 // c = street vertical
 // d = street cross/end
-// e = unused
+// e = vertical cave
 // f = unused
 // g = unused
 // h = unused
@@ -24,10 +24,7 @@ base countryd/c_
 // r = rock vertical front
 // s = rock end vertical front left
 // t = rock end vertical front right
-// u = cave entry horizontal back
-// v = cave entry horizontal front
-// w = cave entry vertical back
-// x = cave entry vertical front
+
 
 // horizontal first row - abdlmn
 // horizontal last row - abdijk
@@ -231,10 +228,10 @@ tile +v01
 {
 4 4
 
-0   opw  abdlmn  0
-rx  +w   +a      acdopq
-rx  +w   +a      acdopq
-0   oqw  abdijk  0
+0   eo   abdlmn  0
+e   +e   +a      acdopq
+e   +e   +a      acdopq
+0   eo   abdijk  0
 }
 //--
 
@@ -243,10 +240,10 @@ tile +v01_2
 {
 4 4
 
-0       abdlmn   rsx  0
-acdrst  +a       +x   rw
-acdrst  +a       +x   rw
-0       abdijk   rtx  0
+0       abdlmn   er   0
+acdrst  +a       +e   e
+acdrst  +a       +e   e
+0       abdijk   er   0
 }
 //--
 
@@ -255,11 +252,11 @@ tile +r01
 {
 4 5
 
-0  opw  abdlmn  0
+0  eo   abdlmn  0
 r  +o   +a      acdopq
 r  +o   +a      acdopq
 r  +o   +a      acdopq
-0  opw  abdijk  0
+0  eo   abdijk  0
 }
 //--
 
@@ -268,11 +265,11 @@ tile +r01_2
 {
 4 5
 
-0       abdlmn   rsx  0
+0       abdlmn   er   0
 acdrst  +a       +r   o
 acdrst  +a       +r   o
 acdrst  +a       +r   o
-0       abdijk   rtx  0
+0       abdijk   er   0
 }
 //--
 
@@ -281,11 +278,11 @@ tile +r02
 {
 4 5
 
-0  opw  abdlmn  0
+0  eo   abdlmn  0
 r  +o   +a      acdopq
 r  +o   +a      acdopq
 r  +o   +a      acdopq
-0  opw  abdijk  0
+0  eo   abdijk  0
 }
 //--
 
@@ -294,11 +291,11 @@ tile +r02_2
 {
 4 5
 
-0       abdlmn   rsx  0
+0       abdlmn   er   0
 acdrst  +a       +r   o
 acdrst  +a       +r   o
 acdrst  +a       +r   o
-0       abdijk   rtx  0
+0       abdijk   er   0
 }
 //--
 
@@ -307,11 +304,11 @@ tile +r03
 {
 4 5
 
-0  opw  abdlmn  0
+0  eo   abdlmn  0
 r  +o   +a      acdopq
 r  +o   +a      acdopq
 r  +o   +a      acdopq
-0  opw  abdijk  0
+0  eo   abdijk  0
 }
 //--
 
@@ -320,11 +317,11 @@ tile +r03_2
 {
 4 5
 
-0       abdlmn   rsx  0
+0       abdlmn   er   0
 acdrst  +a       +r   o
 acdrst  +a       +r   o
 acdrst  +a       +r   o
-0       abdijk   rtx  0
+0       abdijk   er   0
 }
 //--
 
@@ -333,10 +330,10 @@ tile +r04
 {
 4 4
 
-0  opw  abdlmn  0
+0  eo   abdlmn  0
 r  +o   +a      acdopq
 r  +o   +a      acdopq
-0  opw  abdijk  0
+0  eo   abdijk  0
 }
 //--
 
@@ -345,10 +342,10 @@ tile +r04_2
 {
 4 4
 
-0       abdlmn   rsx  0
+0       abdlmn   er   0
 acdrst  +a       +r   o
 acdrst  +a       +r   o
-0       abdijk   rtx  0
+0       abdijk   er   0
 }
 //--
 
@@ -357,9 +354,9 @@ tile +r05
 {
 4 3
 
-0  opw  abdlmn  0
+0  eo   abdlmn  0
 r  +o   +a      acdopq
-0  opw  abdijk  0
+0  eo   abdijk  0
 }
 //--
 
@@ -368,9 +365,9 @@ tile +r05_2
 {
 4 3
 
-0       abdlmn   rsx  0
+0       abdlmn   er   0
 acdrst  +a       +r   o
-0       abdijk   rtx  0
+0       abdijk   er   0
 }
 //--
 
@@ -382,8 +379,8 @@ tile +re01
 0         abdlmn   abdlmn  0
 acdrst    +a       +a      acdopq
 it        +q       +a      acdopq
-it        +q       +a      acdopq
-0         po       abdijk  0
+r         +o       +a      acdopq
+0         eo       abdijk  0
 }
 //--
 
@@ -395,8 +392,8 @@ tile +re01_2
 0       abdlmn   abdlmn   0
 acdrst  +a       +a       acdopq
 acdrst  +a       +t       qi
-acdrst  +a       +t       qi
-0       abdijk   rs       0
+acdrst  +a       +r       o
+0       abdijk   er       0
 }
 //--
 
@@ -405,9 +402,9 @@ tile +re02
 {
 4 5
 
-0       qo       abdlmn  0
+0       eo        abdlmn  0
+r       +o       +a      acdopq
 sl      +p       +a      acdopq
-acdrst  +a       +a      acdopq
 acdrst  +a       +a      acdopq
 0       abdijk   abdijk  0
 }
@@ -418,9 +415,9 @@ tile +re02_2
 {
 4 5
 
-0       abdlmn   rt       0
+0       abdlmn   er       0
+acdrst  +a       +r       o
 acdrst  +a       +s       pl
-acdrst  +a       +a       acdopq
 acdrst  +a       +a       acdopq
 0       abdijk   abdijk   0
 }
@@ -640,32 +637,32 @@ b  +d  b
 
 assembly cave
 {
-size "7 7"
+size "7 8"
 +c01 "0 1"
 +c02 "0 1"
-+d01 "0 8"
-+d02 "0 8"
-+d03 "0 8"
-+d04 "0 8"
++d01 "0 5"
++d02 "0 5"
++d03 "0 5"
++d04 "0 5"
 +d05 "0 2"
 +d06 "0 3"
 +d07 "0 3"
 +d08 "0 3"
 +d09 "0 3"
-+d10 "0 6"
-+h01 "0 2"
-+h02 "1 2"
-+h03 "1 2"
++d10 "0 8"
++h01 "0 1"
++h02 "1 1"
++h03 "0 1"
 +r01 "0 2"
 +r02 "0 2"
 +r03 "0 2"
 +r04 "0 2"
-+r05 "0 2"
++r05 "0 3"
 +r01_2 "0 2"
 +r02_2 "0 2"
 +r03_2 "0 2"
 +r04_2 "0 2"
-+r05_2 "0 2"
++r05_2 "0 3"
 +v01 "0 1"
 +v01_2 "1 1"
 +re01 "0 1"
