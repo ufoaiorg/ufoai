@@ -101,3 +101,13 @@ tech rs_alien_xvi_event
 		// Not marked "researchable" in a normal way
 	}
 }
+
+tech rs_enemy_on_earth_event
+{
+	type	logic
+	name	"LOGIC:Enemy On Earth event"
+	require_AND
+	{
+		// Not marked "researchable" in a normal way
+	}
+}

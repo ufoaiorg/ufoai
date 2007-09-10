@@ -4255,6 +4255,11 @@ tech rs_enemy_on_earth
 		subject	"_The Enemy On Earth"
 		icon	icons/tech
 	}
+	require_AND
+	{
+		tech rs_enemy_on_earth_event
+		tech news_newtwist
+	}
 
 	time		600
 }
