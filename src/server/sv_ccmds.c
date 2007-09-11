@@ -342,8 +342,9 @@ static void SV_ServerCommand_f (void)
 static int SV_CompleteMapCommand (const char *partial, const char **match)
 {
 	int i, j, matches = 0;
+	char matchChar;
 	const char *localMatch[128];
-	size_t len, lenResult = 0, tmp;
+	size_t len, lenResult = 0;
 	static char matchString[MAX_QPATH];
 
 	FS_GetMaps(qfalse);
@@ -376,11 +377,16 @@ static int SV_CompleteMapCommand (const char *partial, const char **match)
 	/* more than one match */
 	default:
 		/* get the shortest string of the results */
-		lenResult = strlen(localMatch[0]);
-		for (i = 0; i < matches; i++) {
-			tmp = strlen(localMatch[i]);
-			if (tmp < lenResult)
-				lenResult = tmp;
+		lenResult = len;
+		while (qtrue) {
+			matchChar = localMatch[0][lenResult];
+			for (i = 0; i < matches; i++) {
+				if (matchChar != localMatch[i][lenResult])
+					break;
+			}
+			lenResult++;
+			if (i != matches)
+				break;
 		}
 		/* len is >= 1 here */
 		if (len != lenResult) {
