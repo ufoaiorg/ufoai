@@ -16,6 +16,7 @@
 // g: Corridor NORTHWEST
 // h: Corridor NORTHEAST
 // x: Solid
+// z: Outside
 
 
 base sheltern/shelter_
@@ -71,18 +72,18 @@ tile +room_w_a
 {
 4 4
 0      dg      dg      0
-0      +d      +d      bc
-0      +d      +d      bc
-0      0       0       0
+z      +d      +d      bc
+z      +d      +d      bc
+0      dx      dx      0
 }
 
 tile +room_w_b
 {
 4 4
 0      dg      dg      0
-0      +d      +d      bc
-0      +d      +d      bc
-0      0       0       0
+z      +d      +d      bc
+z      +d      +d      bc
+0      dx      dx      0
 }
 
 tile +room_n_a
@@ -107,35 +108,35 @@ tile +room_e_a
 {
 4 4
 0      fh      fh      0
-bc     +f      +f      0
-bc     +f      +f      0
-0      0       0       0
+bc     +f      +f      z
+bc     +f      +f      z
+0      fx      fx     0
 }
 
 tile +room_e_b
 {
 4 4
 0      fh      fh      0
-bc     +f      +f      0
-bc     +f      +f      0
-0      0       0       0
+bc     +f      +f      z
+bc     +f      +f      z
+0      fx      fx      0
 }
 
 tile +corridor_nw
 {
 4 4
-0      0       0       0
-0      +g      +g      e
-0      +g      +g      e
+0      z       z       0
+z      +g      +g      e
+z      +g      +g      e
 0      d       d       0
 }
 
 tile +corridor_ne
 {
 4 4
-0      0       0       0
-e      +h      +h      0
-e      +h      +h      0
+0      z       z       0
+e      +h      +h      z
+e      +h      +h      z
 0      f       f       0
 }
 
@@ -148,13 +149,15 @@ a      +x      +x      a
 0      0       0       0
 }
 
-assembly test
+assembly standard
 {
 size "8 8"
-+solid "2 2"
+grid "2 2"
+fix +solid "0 0"
+fix +solid "6 0"
+fix +entrance "2 0"
 fix +corridor_ne "6 6"
 fix +corridor_nw "0 6"
-+entrance "1 1"
 +room_w_a "0 2"
 +room_w_b "0 2"
 +room_n_a "0 2"
