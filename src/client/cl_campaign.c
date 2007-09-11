@@ -2607,7 +2607,7 @@ static void CP_StartMissionMap (mission_t* mission)
 
 	/* prepare */
 	MN_PopMenu(qtrue);
-	Cvar_Set("mn_main", "singleplayermission");
+	Cvar_Set("mn_main_afterdrop", "singleplayermission");
 
 	/* get appropriate map */
 	if (MAP_IsNight(mission->pos))
@@ -2638,9 +2638,11 @@ static void CP_StartMissionMap (mission_t* mission)
 			Com_Printf("Base is not under attack\n");
 			return;
 		}
-		/* check whether are there founded bases */
+		/* check whether there are founded bases */
 		if (B_GetFoundedBaseCount() > 0)
 			Cbuf_AddText(va("base_assemble %i 1;", bAttack->idx));
+		/* quick save is called when base is really assembled
+		 * @sa B_AssembleMap_f */
 		return;
 	default:
 		Com_sprintf(expanded, sizeof(expanded), "maps/%s%c.bsp", mission->mapDef->map, timeChar);

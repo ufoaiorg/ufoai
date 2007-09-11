@@ -2255,6 +2255,9 @@ static void B_AssembleMap_f (void)
 	/* set maxlevel for base attacks to 5 */
 	map_maxlevel_base = 6;
 
+	if (curCampaign)
+		SAV_QuickSave();
+
 	Cbuf_AddText(va("map \"%s\" \"%s\"\n", maps, coords));
 }
 

@@ -347,7 +347,7 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 	case clc_stringcmd:
 		s = NET_ReadString(msg);
 
-		Com_Printf("stringcmd from client: %s\n", s);
+		Com_DPrintf(DEBUG_SERVER, "stringcmd from client: %s\n", s);
 		/* malicious users may try using too many string commands */
 		if (++stringCmdCount < MAX_STRINGCMDS)
 			SV_ExecuteUserCommand(s);

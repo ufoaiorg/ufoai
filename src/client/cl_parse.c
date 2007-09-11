@@ -1609,7 +1609,6 @@ void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
 		CL_Disconnect();
 		CL_SetClientState(ca_connecting);
 		cls.connectTime = 0;
-		cls.connectRetry = 10;
 		break;
 
 	case svc_print:

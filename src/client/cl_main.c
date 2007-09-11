@@ -59,6 +59,7 @@ cvar_t *mn_main;
 cvar_t *mn_sequence;
 cvar_t *mn_active;
 cvar_t *mn_afterdrop;
+cvar_t *mn_main_afterdrop;
 cvar_t *mn_hud;
 cvar_t *mn_lastsave;
 
@@ -66,6 +67,8 @@ cvar_t *difficulty;
 cvar_t *cl_start_employees;
 cvar_t *cl_initial_equipment;
 cvar_t *cl_start_buildings;
+
+cvar_t *cl_connecttimeout; /* multiplayer connection timeout value (ms) */
 
 /** @brief Confirm actions in tactical mode - valid values are 0, 1 and 2 */
 cvar_t *confirm_actions;
@@ -295,6 +298,10 @@ void CL_Drop (void)
 		MN_PushMenu(mn_afterdrop->string);
 		Cvar_Set("mn_afterdrop", "");
 	}
+	if (*mn_main_afterdrop->string) {
+		Cvar_Set("mn_main", mn_main_afterdrop->string);
+		Cvar_Set("mn_main_afterdrop", "");
+	}
 
 	if (cls.state == ca_uninitialized || cls.state == ca_disconnected)
 		return;
@@ -329,41 +336,6 @@ static void CL_Connect (void)
 }
 
 /**
- * @brief Resend a connect message if the last one has timed out
- */
-static void CL_CheckForResend (void)
-{
-	/* if the local server is running and we aren't connected then connect */
-	if (cls.state == ca_disconnected && Com_ServerState()) {
-		CL_SetClientState(ca_connecting);
-		cls.servername[0] = '\0';
-		CL_Connect();
-		userinfo_modified = qfalse;
-		return;
-	}
-
-	/* resend if we haven't gotten a reply yet */
-	if (cls.state != ca_connecting)
-		return;
-
-	if (cls.realtime - cls.connectTime < 3000)
-		return;
-
-	if (cls.connectRetry <= 0) {
-		Com_Printf("Max. connection attempts hit - don't try any further.");
-		CL_SetClientState(ca_disconnected);
-		return;
-	}
-
-	cls.connectRetry--;
-
-	/* this must be a network server - otherwise Com_ServerState was true */
-	assert(*cls.servername);
-	Com_Printf("Connecting to %s (%i tries left)...\n", cls.servername, cls.connectRetry);
-	CL_Connect();
-}
-
-/**
  * @brief
  */
 static void CL_Connect_f (void)
@@ -373,6 +345,11 @@ static void CL_Connect_f (void)
 
 	if (Cmd_Argc() != 2) {
 		Com_Printf("usage: connect <server>\n");
+		return;
+	}
+
+	if (ccs.singleplayer) {
+		Com_Printf("Start multiplayer first\n");
 		return;
 	}
 
@@ -390,19 +367,14 @@ static void CL_Connect_f (void)
 	CL_Disconnect();
 
 	server = Cmd_Argv(1);
+	Q_strncpyz(cls.servername, server, sizeof(cls.servername));
 
 	CL_SetClientState(ca_connecting);
 
 	/* everything should be reasearched for multiplayer matches */
 /*	RS_MarkResearchedAll(); */
 
-	Q_strncpyz(cls.servername, server, sizeof(cls.servername));
-
-	CL_Connect();
-
 	Cvar_Set("mn_main", "multiplayerInGame");
-
-	cls.connectRetry = 10;
 }
 
 /**
@@ -480,8 +452,6 @@ void CL_Disconnect (void)
 		return;
 
 	VectorClear(refdef.blend);
-
-	cls.connectRetry = 0;
 
 	/* send a disconnect message to the server */
 	if (!Com_ServerState()) {
@@ -578,6 +548,11 @@ static void CL_Reconnect_f (void)
 	if (Com_ServerState())
 		return;
 
+	if (ccs.singleplayer) {
+		Com_Printf("Start multiplayer first\n");
+		return;
+	}
+
 	S_StopAllSounds();
 
 	if (*cls.servername) {
@@ -587,11 +562,9 @@ static void CL_Reconnect_f (void)
 		}
 
 		cls.connectTime = cls.realtime - 1500;
-		cls.connectRetry = 10;
 
 		CL_SetClientState(ca_connecting);
 		Com_Printf("reconnecting...\n");
-		CL_Connect();
 	} else
 		Com_Printf("No server to reconnect to\n");
 }
@@ -2085,6 +2058,7 @@ static void CL_InitLocal (void)
 	cl_start_employees = Cvar_Get("cl_start_employees", "1", CVAR_ARCHIVE, "Start with hired employees");
 	cl_initial_equipment = Cvar_Get("cl_initial_equipment", "human_phalanx_initial", CVAR_ARCHIVE, "Start with assigned equipment - see cl_start_employees");
 	cl_start_buildings = Cvar_Get("cl_start_buildings", "1", CVAR_ARCHIVE, "Start with initial buildings in your first base");
+	cl_connecttimeout = Cvar_Get("cl_connecttimeout", "3000", CVAR_ARCHIVE, "Connection timeout for multiplayer connects");
 
 	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE, "Confirm all actions in tactical mode");
 
@@ -2094,6 +2068,7 @@ static void CL_InitLocal (void)
 	mn_sequence = Cvar_Get("mn_sequence", "sequence", 0, "Which is the sequence menu node to render the sequence in");
 	mn_active = Cvar_Get("mn_active", "", 0, "The active menu can will return to when hitting esc - also see mn_main");
 	mn_afterdrop = Cvar_Get("mn_afterdrop", "", 0, "The menu that should be pushed after the drop function was called");
+	mn_main_afterdrop = Cvar_Get("mn_main_afterdrop", "", 0, "The main menu that should be returned to after the drop function was called - will be the new mn_main value then");
 	mn_hud = Cvar_Get("mn_hud", "hud", CVAR_ARCHIVE, "Which is the current selected hud");
 	mn_lastsave = Cvar_Get("mn_lastsave", "", CVAR_ARCHIVE, "Last saved slot - use for the continue-campaign function");
 
@@ -2238,8 +2213,25 @@ static void CL_SendCommand (void)
 	/* fix any cheating cvars */
 	Cvar_FixCheatVars();
 
-	/* resend a connection request if necessary */
-	CL_CheckForResend();
+	/* if the local server is running and we aren't connected then connect */
+	switch (cls.state) {
+	case ca_disconnected:
+		if (Com_ServerState()) {
+			cls.servername[0] = '\0';
+			CL_SetClientState(ca_connecting);
+			userinfo_modified = qfalse;
+			return;
+		}
+		break;
+	case ca_connecting:
+		if (cls.realtime - cls.connectTime < cl_connecttimeout->integer) {
+			Com_Printf("Server is not reachable\n");
+			CL_SetClientState(ca_disconnected);
+		}
+		break;
+	default:
+		break;
+	}
 }
 
 /**
@@ -2353,8 +2345,11 @@ void CL_SetClientState (int state)
 		break;
 	case ca_active:
 		break;
-	case ca_disconnected:
 	case ca_connecting:
+		Com_Printf("Connecting to %s...\n", *cls.servername ? cls.servername : "localhost");
+		CL_Connect();
+		break;
+	case ca_disconnected:
 	case ca_connected:
 		break;
 	default:

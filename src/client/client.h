@@ -186,7 +186,6 @@ typedef struct client_static_s {
 	/* connection information */
 	char servername[MAX_OSPATH];	/**< name of server from original connect */
 	float connectTime;				/**< for connection retransmits */
-	int connectRetry;				/**< max retries for connection attempts */
 
 	struct datagram_socket *datagram_socket;
 	struct net_stream *stream;
@@ -280,10 +279,12 @@ extern cvar_t *cl_numnames;
 extern cvar_t *cl_start_employees;
 extern cvar_t *cl_initial_equipment;
 extern cvar_t *cl_start_buildings;
+extern cvar_t *cl_connecttimeout;
 
 extern cvar_t *mn_serverlist;
 extern cvar_t *mn_active;
 extern cvar_t *mn_afterdrop;
+extern cvar_t *mn_main_afterdrop;
 extern cvar_t *mn_main;
 extern cvar_t *mn_sequence;
 extern cvar_t *mn_hud;

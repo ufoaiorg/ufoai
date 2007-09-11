@@ -680,7 +680,7 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 	base = aircraft->homebase;
 	assert(base);
 
-	Com_Printf("CL_ReloadAndRemoveCarried()...aircraft idx: %i, team size: %i\n",
+	Com_DPrintf(DEBUG_CLIENT, "CL_ReloadAndRemoveCarried()...aircraft idx: %i, team size: %i\n",
 	aircraft->idx, aircraft->teamSize);
 
 	for (container = 0; container < csi.numIDs; container++) {
