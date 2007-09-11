@@ -255,7 +255,7 @@ void G_AppearPerishEvent (int player_mask, int appear, edict_t * check)
 			if (maxMorale >= MAX_SKILL)
 				maxMorale = MAX_SKILL;
 			gi.WriteByte(maxMorale);
-			gi.WriteShort(GET_HP(check->chr.skills[ABILITY_POWER]));
+			gi.WriteShort(check->chr.maxHP);
 
 			if (player_mask & G_TeamToPM(check->team)) {
 				gi.AddEvent(player_mask & G_TeamToPM(check->team), EV_ACTOR_STATECHANGE);
@@ -1461,13 +1461,13 @@ static void G_ClientTurn (player_t * player, int num, int dv)
 
 
 /**
- * @brief Changes the state of a player/soldier.
- * @param[in,out] player The player who controls the actor.
- * @param[in] num The index of the edict in the global g_edicts array.
- * @param[in] reqState The bit-map of the requested state change.
- * @param[in] checkaction Only activate the events - network stuff is handled in the calling function.
- * Don't even use the G_ActionCheck function.
- * @note Use checkaction true only for e.g. spawning values.
+ * @brief Changes the thate of a player/soldier.
+ * @param[in,out] player The player who controlls the actor
+ * @param[in] num The index of the edict in the global g_edicts array
+ * @param[in] reqState The bit-map of the requested state change
+ * @param[in] checkaction only activate the events - network stuff is handled in the calling function
+ * don't even use the G_ActionCheck function
+ * @note Use checkaction true only for e.g. spawning values
  */
 static void G_ClientStateChange (player_t * player, int num, int reqState, qboolean checkaction)
 {
