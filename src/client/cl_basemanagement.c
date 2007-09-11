@@ -149,8 +149,8 @@ static const value_t valid_building_vars[] = {
 	{"image", V_CLIENT_HUNK_STRING, offsetof(building_t, image), 0},	/**< Identifies the image for the building. */
 	{"visible", V_BOOL, offsetof(building_t, visible), MEMBER_SIZEOF(building_t, visible)}, /**< Determines whether a building should be listed in the construction list. Set the first part of a building to 1 all others to 0 otherwise all building-parts will be on the list */
 	{"needs", V_CLIENT_HUNK_STRING, offsetof(building_t, needs), 0},	/**<  For buildings with more than one part; the other parts of the building needed.*/
-	{"fixcosts", V_FLOAT, offsetof(building_t, fixCosts), MEMBER_SIZEOF(building_t, fixCosts)},	/**< Cost to build. */
-	{"varcosts", V_FLOAT, offsetof(building_t, varCosts), MEMBER_SIZEOF(building_t, varCosts)},	/**< Costs that will come up by using the building. */
+	{"fixcosts", V_INT, offsetof(building_t, fixCosts), MEMBER_SIZEOF(building_t, fixCosts)},	/**< Cost to build. */
+	{"varcosts", V_INT, offsetof(building_t, varCosts), MEMBER_SIZEOF(building_t, varCosts)},	/**< Costs that will come up by using the building. */
 	{"build_time", V_INT, offsetof(building_t, buildTime), MEMBER_SIZEOF(building_t, buildTime)},	/**< How many days it takes to construct the building. */
 	{"max_employees", V_INT, offsetof(building_t, maxEmployees), MEMBER_SIZEOF(building_t, maxEmployees)},	/**< How many employees to hire on construction in the first base. */
 	{"capacity", V_INT, offsetof(building_t, capacity), MEMBER_SIZEOF(building_t, capacity)},	/**< A size value that is used by many buildings in a different way. */
@@ -1008,13 +1008,13 @@ static void B_DrawBuilding (base_t* base, building_t* building)
 	Com_sprintf(buildingText, sizeof(buildingText), "%s\n", _(building->name));
 
 	if (building->buildingStatus < B_STATUS_UNDER_CONSTRUCTION && building->fixCosts)
-		Com_sprintf(buildingText, sizeof(buildingText), _("Costs:\t%1.0f c\n"), building->fixCosts);
+		Com_sprintf(buildingText, sizeof(buildingText), _("Costs:\t%i c\n"), building->fixCosts);
 
 	if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION)
 		Q_strcat(buildingText, va(ngettext("%i Day to build\n", "%i Days to build\n", building->buildTime), building->buildTime), sizeof(buildingText));
 
 	if (building->varCosts)
-		Q_strcat(buildingText, va(_("Running Costs:\t%1.0f c\n"), building->varCosts), sizeof(buildingText));
+		Q_strcat(buildingText, va(_("Running Costs:\t%i c\n"), building->varCosts), sizeof(buildingText));
 
 	if (building->name)
 		Cvar_Set("mn_building_name", _(building->name));

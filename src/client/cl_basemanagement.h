@@ -132,7 +132,7 @@ typedef struct building_s {
 	char *image, *mapPart, *pedia;
 	/** needs determines the second building part */
 	char *needs;		/**< if the buildign has a second part */
-	float fixCosts, varCosts;
+	int fixCosts, varCosts;
 
 	int timeStart, buildTime;
 

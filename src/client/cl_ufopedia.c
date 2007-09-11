@@ -459,9 +459,9 @@ static void UP_BuildingDescription (technology_t* t)
 		Com_sprintf(upBuffer, sizeof(upBuffer), _("Error - could not find building") );
 	} else {
 		Com_sprintf(upBuffer, sizeof(upBuffer), _("Depends:\t%s\n"), b->dependsBuilding >= 0 ? gd.buildingTypes[b->dependsBuilding].name : _("None") );
-		Q_strcat(upBuffer, va(ngettext("Buildtime:\t%i day\n", "Buildtime:\t%i days\n", (int)b->buildTime), (int)b->buildTime ), sizeof(upBuffer));
-		Q_strcat(upBuffer, va(_("Fixcosts:\t%i c\n"), (int)b->fixCosts ), sizeof(upBuffer));
-		Q_strcat(upBuffer, va(_("Running costs:\t%i c\n"), (int)b->varCosts ), sizeof(upBuffer));
+		Q_strcat(upBuffer, va(ngettext("Buildtime:\t%i day\n", "Buildtime:\t%i days\n", b->buildTime), b->buildTime), sizeof(upBuffer));
+		Q_strcat(upBuffer, va(_("Fixcosts:\t%i c\n"), b->fixCosts), sizeof(upBuffer));
+		Q_strcat(upBuffer, va(_("Running costs:\t%i c\n"), b->varCosts), sizeof(upBuffer));
 	}
 	menuText[TEXT_STANDARD] = upBuffer;
 	UP_DisplayTechTree(t);
@@ -1354,12 +1354,12 @@ static void UP_SetMailButtons_f (void)
 			break;
 		}
 		m = m->next;
-	}	
+	}
 	while ( i<MAIL_CLIENT_LINES) {
 		Cvar_Set( va("mn_mail_read%i", i), "-1");
 		Cvar_Set( va("mn_mail_icon%i", i++), "");
-	}	
-}	
+	}
+}
 
 /**
  * @brief Start the mailclient
@@ -1378,7 +1378,7 @@ static void UP_OpenMail_f (void)
 	menu = MN_GetMenu("ufopedia_mail");
 	if (!menu)
 		Sys_Error("Could not find the ufopedia_mail menu\n");
-	
+
 	mailClientListNode = MN_GetNode(menu, "mailclient");
 	if (!mailClientListNode)
 		Sys_Error("Could not find the mailclient node in ufopedia_mail menu\n");
@@ -1389,14 +1389,14 @@ static void UP_OpenMail_f (void)
 			if (!m->pedia->mail[TECHMAIL_PRE].from)
 				break;
 			if (m->pedia->mail[TECHMAIL_PRE].read == qfalse)
-				Com_sprintf(tempBuf, sizeof(tempBuf), _("^BProposal: %s\t%i %s %02i\n"), 
-					_(m->pedia->mail[TECHMAIL_PRE].subject), 
+				Com_sprintf(tempBuf, sizeof(tempBuf), _("^BProposal: %s\t%i %s %02i\n"),
+					_(m->pedia->mail[TECHMAIL_PRE].subject),
 					m->pedia->preResearchedDateYear,
 					CL_DateGetMonthName(m->pedia->preResearchedDateMonth),
 					m->pedia->preResearchedDateDay);
 			else
-				Com_sprintf(tempBuf, sizeof(tempBuf), _("Proposal: %s\t%i %s %02i\n"), 
-					_(m->pedia->mail[TECHMAIL_PRE].subject), 
+				Com_sprintf(tempBuf, sizeof(tempBuf), _("Proposal: %s\t%i %s %02i\n"),
+					_(m->pedia->mail[TECHMAIL_PRE].subject),
 					m->pedia->preResearchedDateYear,
 					CL_DateGetMonthName(m->pedia->preResearchedDateMonth),
 					m->pedia->preResearchedDateDay);
@@ -1407,14 +1407,14 @@ static void UP_OpenMail_f (void)
 			if (!m->pedia->mail[TECHMAIL_RESEARCHED].from)
 				break;
 			if (m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
-				Com_sprintf(tempBuf, sizeof(tempBuf), _("^BRe: %s\t%i %s %02i\n"), 
-					_(m->pedia->mail[TECHMAIL_RESEARCHED].subject), 
+				Com_sprintf(tempBuf, sizeof(tempBuf), _("^BRe: %s\t%i %s %02i\n"),
+					_(m->pedia->mail[TECHMAIL_RESEARCHED].subject),
 					m->pedia->researchedDateYear,
 					CL_DateGetMonthName(m->pedia->researchedDateMonth),
 					m->pedia->researchedDateDay);
 			else
-				Com_sprintf(tempBuf, sizeof(tempBuf), _("Re: %s\t%i %s %02i\n"), 
-					_(m->pedia->mail[TECHMAIL_RESEARCHED].subject), 
+				Com_sprintf(tempBuf, sizeof(tempBuf), _("Re: %s\t%i %s %02i\n"),
+					_(m->pedia->mail[TECHMAIL_RESEARCHED].subject),
 					m->pedia->researchedDateYear,
 					CL_DateGetMonthName(m->pedia->researchedDateMonth),
 					m->pedia->researchedDateDay);
@@ -1424,14 +1424,14 @@ static void UP_OpenMail_f (void)
 		case MSG_NEWS:
 			if (m->pedia->mail[TECHMAIL_PRE].from) {
 				if (m->pedia->mail[TECHMAIL_PRE].read == qfalse)
-					Com_sprintf(tempBuf, sizeof(tempBuf), _("^B%s\t%i %s %02i\n"), 
-						_(m->pedia->mail[TECHMAIL_PRE].subject), 
+					Com_sprintf(tempBuf, sizeof(tempBuf), _("^B%s\t%i %s %02i\n"),
+						_(m->pedia->mail[TECHMAIL_PRE].subject),
 						m->pedia->preResearchedDateYear,
 						CL_DateGetMonthName(m->pedia->preResearchedDateMonth),
 						m->pedia->preResearchedDateDay);
 				else
-					Com_sprintf(tempBuf, sizeof(tempBuf), _("%s\t%i %s %02i\n"), 
-						_(m->pedia->mail[TECHMAIL_PRE].subject), 
+					Com_sprintf(tempBuf, sizeof(tempBuf), _("%s\t%i %s %02i\n"),
+						_(m->pedia->mail[TECHMAIL_PRE].subject),
 						m->pedia->preResearchedDateYear,
 						CL_DateGetMonthName(m->pedia->preResearchedDateMonth),
 						m->pedia->preResearchedDateDay);
@@ -1439,14 +1439,14 @@ static void UP_OpenMail_f (void)
 				Q_strcat(mailBuffer, tempBuf, sizeof(mailBuffer));
 			} else if (m->pedia->mail[TECHMAIL_RESEARCHED].from) {
 				if (m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
-					Com_sprintf(tempBuf, sizeof(tempBuf), _("^B%s\t%i %s %02i\n"), 
+					Com_sprintf(tempBuf, sizeof(tempBuf), _("^B%s\t%i %s %02i\n"),
 						_(m->pedia->mail[TECHMAIL_RESEARCHED].subject),
 						m->pedia->researchedDateYear,
 						CL_DateGetMonthName(m->pedia->researchedDateMonth),
 						m->pedia->researchedDateDay);
 				else
-					Com_sprintf(tempBuf, sizeof(tempBuf), _("%s\t%i %s %02i\n"), 
-						_(m->pedia->mail[TECHMAIL_RESEARCHED].subject), 
+					Com_sprintf(tempBuf, sizeof(tempBuf), _("%s\t%i %s %02i\n"),
+						_(m->pedia->mail[TECHMAIL_RESEARCHED].subject),
 						m->pedia->researchedDateYear,
 						CL_DateGetMonthName(m->pedia->researchedDateMonth),
 						m->pedia->researchedDateDay);
@@ -1464,8 +1464,8 @@ static void UP_OpenMail_f (void)
 		m = m->next;
 	}
 	menuText[TEXT_UFOPEDIA_MAIL] = mailBuffer;
-		
-	UP_SetMailButtons_f();	
+
+	UP_SetMailButtons_f();
 }
 
 /**
