@@ -2354,6 +2354,134 @@ tech rs_alien_medium_armour
 }
 
 //========================
+// Damage Types
+//========================
+
+tech rs_damage_blast
+{
+	type	tech
+	name "_Blast Damage Type"
+	up_chapter damage
+	description {
+		default "_none"
+	}
+	require_AND { tech nothing }
+
+	time	0
+//	image_top	techs/blast_damage
+}
+
+tech rs_damage_fire
+{
+	type	tech
+	name "_Fire Damage Type"
+	up_chapter	damage
+	description {
+		default "_none"
+	}
+	require_AND { tech nothing }
+
+	time	0
+//	image_top	techs/fire_damage
+}
+
+tech rs_damage_laser
+{
+	type	tech
+	name "_Laser Damage Type"
+	up_chapter	damage
+	description {
+		default "_none"
+	}
+
+	require_AND
+	{
+		tech rs_laser
+	}
+
+	time	0
+//	image_top	techs/laser_damage
+}
+
+tech rs_damage_normal
+{
+	type	tech
+	name "_Impact Damage Type"
+	up_chapter	damage
+	description {
+		default "_none"
+	}
+	require_AND { tech nothing }
+
+	time	0
+//	image_top	techs/normal_damage
+}
+
+tech rs_damage_shock
+{
+	type	tech
+	name "_Shock Damage Type"
+	up_chapter	damage
+	description {
+		default "_none"
+	}
+	require_AND { tech nothing }
+
+	time	0
+//	image_top	techs/shock_damage
+}
+
+tech rs_damage_plasma
+{
+	type	tech
+	name "_Plasma Damage Type"
+	up_chapter	damage
+	description {
+		default "_none"
+	}
+
+	require_OR
+	{
+		tech rs_weapon_plasatomizer
+		tech rs_weapon_plasblaster
+		tech rs_weapon_plasrifle
+		tech rs_weapon_plasmagren
+	}
+
+	time	0
+//	image_top	techs/plasma_damage
+}
+
+tech rs_damage_stun
+{
+	type	tech
+	name "_Stun Damage Type"
+	up_chapter	damage
+	description {
+		default "_none"
+	}
+	require_AND { tech nothing }
+
+	time	0
+//	image_top	techs/stun_damage
+}
+
+tech rs_damage_pbeam
+{
+	type		tech
+	name 		"_Particle Beam Damage Type"
+	up_chapter	damage
+	description {
+		default "_none"
+	}
+
+	require_AND 	{ tech nothing }
+
+	time	0
+//	image_top	techs/pbeam_damage
+}
+
+//========================
 // Soldier Skills
 //========================
 
