@@ -664,7 +664,10 @@ static void CIN_Cinematic_f (void)
 		return;
 	}
 
-	Com_sprintf(name, sizeof(name), "videos/%s.roq", Cmd_Argv(1));
+	Com_sprintf(name, sizeof(name), "videos/%s", Cmd_Argv(1));
+	if (name[strlen(name) - 4] == '.')
+		name[strlen(name) - 4] = '\0';
+	Q_strcat(name, ".roq", sizeof(name));
 
 	/* If running a local server, kill it */
 	SV_Shutdown("Server quit", qfalse);
