@@ -255,10 +255,6 @@ MISC
 #define	ERR_DROP	1			/* print to console and disconnect from game */
 #define	ERR_QUIT	2			/* not an error, just a normal exit */
 
-#define	EXEC_NOW	0			/* don't return until completed */
-#define	EXEC_INSERT	1			/* insert at current position, but don't run yet */
-#define	EXEC_APPEND	2			/* add to end of the command buffer */
-
 void Com_BeginRedirect(int target, char *buffer, int buffersize, void (*flush) (int, char *));
 void Com_EndRedirect(void);
 void Com_Printf(const char *msg, ...) __attribute__((format(printf, 1, 2)));
