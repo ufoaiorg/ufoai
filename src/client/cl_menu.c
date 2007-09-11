@@ -3073,6 +3073,22 @@ static menu_t* MN_PushMenuDelete (const char *name, qboolean delete)
 }
 
 /**
+ * @brief Complete function for mn_push
+ * @sa Cmd_AddParamCompleteFunction
+ * @sa MN_PushMenu
+ * @note Does not really complete the input - but shows at least all parsed menus
+ */
+static int MN_CompletePushMenu (const char *partial, const char **match)
+{
+	int i;
+
+	/* list them all */
+	for (i = 0; i <= numMenus; i++)
+		Com_Printf("%s\n", menus[i].name);
+	return numMenus;
+}
+
+/**
  * @brief Push a menu onto the menu stack
  * @param[in] name Name of the menu to push onto menu stack
  * @return pointer to menu_t
@@ -3689,6 +3705,7 @@ void MN_ResetMenus (void)
 	Cmd_AddCommand("mn_nextmap", MN_NextMap_f, "Switch to the next multiplayer map");
 	Cmd_AddCommand("mn_prevmap", MN_PrevMap_f, "Switch to the previous multiplayer map");
 	Cmd_AddCommand("mn_push", MN_PushMenu_f, "Push a menu to the menustack");
+	Cmd_AddParamCompleteFunction("mn_push", MN_CompletePushMenu);
 	Cmd_AddCommand("mn_push_copy", MN_PushCopyMenu_f, NULL);
 	Cmd_AddCommand("mn_pop", MN_PopMenu_f, "Pops the current menu from the stack");
 	Cmd_AddCommand("mn_reinit", MN_ReinitCurrentMenu_f, "This will reinit the current menu (recall the init function)");

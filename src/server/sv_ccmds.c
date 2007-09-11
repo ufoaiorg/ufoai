@@ -350,6 +350,7 @@ static int SV_CompleteMapCommand (const char *partial, const char **match)
 
 	len = strlen(partial);
 	if (!len) {
+		/* list them all if there was no parameter given */
 		for (i = 0; i <= fs_numInstalledMaps; i++)
 			Com_Printf("%s\n", fs_maps[i]);
 		return fs_numInstalledMaps;
@@ -364,11 +365,16 @@ static int SV_CompleteMapCommand (const char *partial, const char **match)
 			localMatch[matches++] = fs_maps[i];
 		}
 
-	/* no matches or exactly one match */
-	if (matches <= 1) {
-		if (matches == 1)
-			*match = localMatch[0];
-	} else {
+	switch (matches) {
+	/* exactly one match */
+	case 1:
+		*match = localMatch[0];
+		break;
+	/* no matches */
+	case 0:
+		break;
+	/* more than one match */
+	default:
 		/* get the shortest string of the results */
 		lenResult = strlen(localMatch[0]);
 		for (i = 0; i < matches; i++) {
@@ -398,6 +404,7 @@ static int SV_CompleteMapCommand (const char *partial, const char **match)
 				matches = 1;
 			}
 		}
+		break;
 	}
 
 	return matches;
