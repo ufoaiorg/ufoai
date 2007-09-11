@@ -3423,7 +3423,6 @@ static void MN_EditMenuNode_f (void)
 {
 	menuNode_t *node;
 	const value_t *val;
-	menu_t *current;
 	const char *nodeID, *var, *value;
 	int np = -1, cnt = 0;
 
@@ -3437,12 +3436,11 @@ static void MN_EditMenuNode_f (void)
 	}
 	Com_Printf("!!WARNING!! This function may be dangerous and should only be used if you know what you are doing\n");
 
-	current = menuStack[menuStackPos-1];
 	nodeID = Cmd_Argv(1);
 	var = Cmd_Argv(2);
 	value = Cmd_Argv(3);
 	/* search the node */
-	node = MN_GetNode(current, nodeID);
+	node = MN_GetNodeFromCurrentMenu(nodeID);
 
 	if (!node) {
 		/* didn't find node -> "kill" action and print error */
@@ -3460,7 +3458,7 @@ static void MN_EditMenuNode_f (void)
 	}
 
 	if (np == -1) {
-		Com_Printf("%s is no variable in menuNode_t\n", var);
+		Com_Printf("%s is not in the list of valid node paramters\n", var);
 		return;
 	}
 
