@@ -2529,11 +2529,13 @@ void CL_ActorToggleReaction_f (void)
 	if (actor_idx == -1)
 		Com_Error(ERR_DROP, "Could not get current selected actor's id");
 
+	selActorReactionState++;
+	if (selActorReactionState > R_FIRE_MANY)
+		selActorReactionState = R_FIRE_OFF;
+
 	/* Check all hands for reaction-enabled ammo-firemodes. */
 	if (CL_WeaponWithReaction(selActor, 'r') || CL_WeaponWithReaction(selActor, 'l')) {
-		selActorReactionState++;
-		if (selActorReactionState > R_FIRE_MANY)
-			selActorReactionState = R_FIRE_OFF;
+		/* At least one weapon is RF capable. */
 
 		switch (selActorReactionState) {
 		case R_FIRE_OFF:
@@ -2566,9 +2568,28 @@ void CL_ActorToggleReaction_f (void)
 		/* Send request to update actor's reaction state to the server. */
 		MSG_Write_PA(PA_STATE, selActor->entnum, state);
 	} else {
-		/* Display "impossible" reaction button or disable button */
-		if (CL_DisplayImpossibleReaction(selActor))
-			return;
+		/* No useable RF weapon. */
+		switch (selActorReactionState) {
+		case R_FIRE_OFF:
+			state = ~STATE_REACTION;
+			break;
+		case R_FIRE_ONCE:
+			state = STATE_REACTION_ONCE;
+			break;
+		case R_FIRE_MANY:
+			state = STATE_REACTION_MANY;
+			break;
+		default:
+			if (CL_DisplayImpossibleReaction(selActor)) {
+				/* Display "impossible" reaction button or disable button. */
+				return;
+			}
+			break;
+		}
+
+		/* Send request to update actor's reaction state to the server. */
+		MSG_Write_PA(PA_STATE, selActor->entnum, state);
+
 		/* Set RF-mode info to undef. */
 		CL_SetReactionFiremode(actor_idx, -1, -1, -1);
 	}
