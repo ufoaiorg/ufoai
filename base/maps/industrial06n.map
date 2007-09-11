@@ -12255,19 +12255,19 @@
 "classname" "light"
 "origin" "616 -248 104"
 "_color" "0 1 0.2"
-"light" "200"
+"light" "150"
 }
 // entity 193
 {
 "classname" "light"
-"light" "200"
+"light" "150"
 "_color" "0 1 0.2"
 "origin" "920 -248 104"
 }
 // entity 194
 {
 "classname" "light"
-"light" "200"
+"light" "150"
 "_color" "0 1 0.2"
 "origin" "768 -24 104"
 }
@@ -12276,12 +12276,12 @@
 "classname" "light"
 "origin" "1000 -368 104"
 "_color" "0 1 0.2"
-"light" "200"
+"light" "150"
 }
 // entity 196
 {
 "classname" "light"
 "origin" "552 -360 104"
 "_color" "0 1 0.2"
-"light" "200"
+"light" "150"
 }
