@@ -146,7 +146,7 @@ stage alienbase
 		needed		first_alienbase
 		delay		"0 12 0"
 		endstage	alienbase
-		commands	"mn_push endgame;"
+		commands	"mn_push endgame"
 	}
 }
 
