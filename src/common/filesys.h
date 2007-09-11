@@ -126,6 +126,7 @@ void FS_FreeFile(void *buffer);
 int FS_CheckFile(const char *path);
 
 void FS_BuildFileList(const char *files);
+const char* FS_NextFileFromFileList(const char *files);
 char *FS_NextScriptHeader(const char *files, const char **name, const char **text);
 void FS_CreatePath(const char *path);
 

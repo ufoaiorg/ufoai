@@ -1007,8 +1007,8 @@ void FS_BuildFileList (const char *fileList)
 	Q_strncpyz(files, fileList, sizeof(files));
 	FS_NormPath(files);
 
-	/* check the blocklist for older searches */
-	/* and do a new one after deleting them */
+	/* check the blocklist for older searches
+	 * and do a new one after deleting them */
 	for (block = fs_blocklist, tblock = NULL; block;) {
 		if (!Q_strncmp(block->path, files, MAX_QPATH)) {
 			/* delete old one */
@@ -1077,6 +1077,56 @@ void FS_BuildFileList (const char *fileList)
 
 	/* terminalize the list */
 	*fl = 0;
+}
+
+/**
+ * @brief
+ */
+const char* FS_NextFileFromFileList (const char *files)
+{
+	static char *fileList = NULL;
+	static listBlock_t *_block = NULL;
+	listBlock_t *block;
+	char *file = NULL;
+
+	/* restart the list? */
+	if (files == NULL) {
+		_block = NULL;
+		return NULL;
+	}
+
+	for (block = fs_blocklist; block; block = block->next)
+		if (!Q_strncmp(files, block->path, MAX_QPATH))
+			break;
+
+	if (!block) {
+		FS_BuildFileList(files);
+		for (block = fs_blocklist; block; block = block->next)
+			if (!Q_strncmp(files, block->path, MAX_QPATH))
+				break;
+		if (!block) {
+			/* still no filelist */
+			Com_Printf("FS_NextFileFromFileList: Could not create filelist for %s\n", files);
+			return NULL;
+		}
+	}
+
+	/* everytime we switch between different blocks we get the
+	 * first file again when we switch back */
+	if (_block != block) {
+		_block = block;
+		fileList = block->files;
+	}
+
+	assert(fileList);
+
+	if (*fileList) {
+		file = fileList;
+		fileList += strlen(fileList) + 1;
+	}
+
+	/* finished */
+	return file;
 }
 
 /**

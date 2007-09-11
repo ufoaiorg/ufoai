@@ -1996,6 +1996,7 @@ static void CL_DumpGlobalDataToFile_f (void)
 /**
  * @brief Autocomplete function for some network functions
  * @sa Cmd_AddParamCompleteFunction
+ * @todo Extend this for all the servers on the server browser list
  */
 static int CL_CompleteNetworkAddress (const char *partial, const char **match)
 {

@@ -1029,38 +1029,19 @@ static void Cmd_List_f (void)
  */
 static int Cmd_CompleteExecCommand (const char *partial, const char **match)
 {
-	int i;
+	const char *filename;
 	size_t len;
-	char findname[MAX_OSPATH];
-	char **dirnames;
-	int ndirs;
-	searchpath_t *search;
+
+	FS_BuildFileList("*.cfg");
 
 	len = strlen(partial);
 	if (!len) {
-		/* search through the path, one element at a time */
-		for (search = fs_searchpaths; search; search = search->next) {
-			/* is the element a pak file? */
-			if (search->pack) {
-				/* look through all the pak file elements */
-				for (i = 0; i < search->pack->numfiles; i++)
-					/* found it! */
-					if (strstr(search->pack->files[i].name, ".cfg")) {
-						Com_Printf("%s\n", search->pack->files[i].name);
-					}
-			} else {
-				Com_sprintf(findname, sizeof(findname), "%s/*.cfg", search->filename);
-				if ((dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM)) != 0) {
-					for (i = 0; i < ndirs - 1; i++) {
-						Com_Printf("%s\n", COM_SkipPath(dirnames[i]));
-						Mem_Free(dirnames[i]);
-					}
-					Mem_Free(dirnames);
-				}
-			}
+		while ((filename = FS_NextFileFromFileList("*.cfg")) != NULL) {
+			Com_Printf("%s\n", filename);
 		}
 	}
 
+	FS_NextFileFromFileList(NULL);
 	return 0;
 }
 
