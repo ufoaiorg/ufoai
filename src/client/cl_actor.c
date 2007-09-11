@@ -714,6 +714,7 @@ static void CL_DisplayPossibleReaction (le_t *actor)
  * @brief Display 'impossible" (red) reaction buttons.
  * @param[in] actor the actor to check for his reaction state.
  * @return qtrue if "turn rf off" message was sent otherwise qfalse.
+ * @todo I think the MSG_Write_PA and return stuff might be unneccesary now after the RPG-multiplayer fix. Nothing urgent though.
  */
 static qboolean CL_DisplayImpossibleReaction (le_t *actor)
 {
@@ -2580,10 +2581,8 @@ void CL_ActorToggleReaction_f (void)
 			state = STATE_REACTION_MANY;
 			break;
 		default:
-			if (CL_DisplayImpossibleReaction(selActor)) {
-				/* Display "impossible" reaction button or disable button. */
-				return;
-			}
+			/* Display "impossible" reaction button or disable button. */
+			CL_DisplayImpossibleReaction(selActor);
 			break;
 		}
 
