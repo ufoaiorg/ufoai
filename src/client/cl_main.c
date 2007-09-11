@@ -107,6 +107,8 @@ char messageBuffer[MAX_MESSAGE_TEXT];
 
 static void CL_SpawnSoldiers_f(void);
 
+#define MAX_BOOKMARKS 16
+
 struct memPool_s *cl_localPool;		/**< reset on every game restart */
 struct memPool_s *cl_genericPool;	/**< permanent client data - menu, fonts */
 struct memPool_s *cl_ircSysPool;	/**< irc pool */
@@ -1052,7 +1054,7 @@ static void CL_BookmarkAdd_f (void)
 	} else
 		newBookmark = Cmd_Argv(1);
 
-	for (i = 0; i < 16; i++) {
+	for (i = 0; i < MAX_BOOKMARKS; i++) {
 		bookmark = Cvar_VariableString(va("adr%i", i));
 		if (!*bookmark) {
 			Cvar_Set(va("adr%i", i), newBookmark);
@@ -1076,7 +1078,11 @@ static void CL_BookmarkListClick_f (void)
 		Com_Printf("usage: bookmarks_click <num>\n");
 		return;
 	}
+
 	num = atoi(Cmd_Argv(1));
+	if (num < 0 || num >= MAX_BOOKMARKS)
+		return;
+
 	bookmark = Cvar_VariableString(va("adr%i", num));
 
 	if (bookmark) {
@@ -1186,7 +1192,7 @@ static void CL_PingServers_f (void)
 		broadcast_datagram(cls.datagram_socket, buf, sizeof(buf), PORT_SERVER);
 	}
 
-	for (i = 0; i < 16; i++) {
+	for (i = 0; i < MAX_BOOKMARKS; i++) {
 		char service[256];
 		const char *p;
 		Com_sprintf(name, sizeof(name), "adr%i", i);
@@ -1988,6 +1994,44 @@ static void CL_DumpGlobalDataToFile_f (void)
 #endif /* DEBUG */
 
 /**
+ * @brief Autocomplete function for some network functions
+ * @sa Cmd_AddParamCompleteFunction
+ */
+static int CL_CompleteNetworkAddress (const char *partial, const char **match)
+{
+	int i, matches = 0;
+	const char *localMatch[MAX_COMPLETE];
+	const char *adrStr;
+	size_t len;
+
+	len = strlen(partial);
+	if (!len) {
+		/* list them all if there was no parameter given */
+		for (i = 0; i < MAX_BOOKMARKS; i++) {
+			adrStr = Cvar_VariableString(va("adr%i", i));
+			if (*adrStr)
+				Com_Printf("%s\n", adrStr);
+		}
+		return 0;
+	}
+
+	localMatch[matches] = NULL;
+
+	/* search all matches and fill the localMatch array */
+	for (i = 0; i < MAX_BOOKMARKS; i++) {
+		adrStr = Cvar_VariableString(va("adr%i", i));
+		if (*adrStr && !Q_strncmp(partial, adrStr, len)) {
+			Com_Printf("%s\n", adrStr);
+			localMatch[matches++] = adrStr;
+			if (matches >= MAX_COMPLETE)
+				break;
+		}
+	}
+
+	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
+}
+
+/**
  * @brief Calls all reset functions for all subsystems like production and research
  * also inits the cvars and commands
  * @sa CL_Init
@@ -2016,7 +2060,7 @@ static void CL_InitLocal (void)
 
 	CL_TipOfTheDayInit();
 
-	for (i = 0; i < 16; i++)
+	for (i = 0; i < MAX_BOOKMARKS; i++)
 		Cvar_Get(va("adr%i", i), "", CVAR_ARCHIVE, "Bookmark for network ip");
 
 	/* register our variables */
@@ -2128,9 +2172,11 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("quit", CL_Quit_f, "Quits the game");
 
 	Cmd_AddCommand("connect", CL_Connect_f, "Connect to given ip");
+	Cmd_AddParamCompleteFunction("connect", CL_CompleteNetworkAddress);
 	Cmd_AddCommand("reconnect", CL_Reconnect_f, "Reconnect to last server");
 
 	Cmd_AddCommand("rcon", CL_Rcon_f, "Execute a rcon command - see rcon_password");
+	Cmd_AddParamCompleteFunction("rcon", CL_CompleteNetworkAddress);
 
 #ifdef ACTIVATE_PACKET_COMMAND
 	/* this is dangerous to leave in */
@@ -2156,10 +2202,10 @@ static void CL_InitLocal (void)
 	/* allow to change the sound renderer even if no sound was initialized */
 	Cmd_AddCommand("snd_modifyref", S_ModifySndRef_f, "Modify sound renderer");
 
-	/* forward to server commands */
-	/* the only thing this does is allow command completion */
-	/* to work -- all unknown commands are automatically */
-	/* forwarded to the server */
+	/* forward to server commands
+	 * the only thing this does is allow command completion
+	 * to work -- all unknown commands are automatically
+	 * forwarded to the server */
 	Cmd_AddCommand("say", NULL, NULL);
 	Cmd_AddCommand("say_team", NULL, NULL);
 	Cmd_AddCommand("info", NULL, NULL);
