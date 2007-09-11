@@ -228,6 +228,8 @@ void Com_Error (int code, const char *fmt, ...)
 
 	msg[sizeof(msg)-1] = 0;
 
+	Com_Printf("%s\n", msg);
+
 	switch (code) {
 	case ERR_DISCONNECT:
 		CL_Drop();
@@ -236,13 +238,13 @@ void Com_Error (int code, const char *fmt, ...)
 		break;
 	case ERR_DROP:
 		Com_Printf("********************\nERROR: %s\n********************\n", msg);
-		SV_Shutdown(va("Server crashed: %s\n", msg), qfalse);
+		SV_Shutdown("Server crashed\n", qfalse);
 		CL_Drop();
 		recursive = qfalse;
 		longjmp(abortframe, -1);
 		break;
 	default:
-		SV_Shutdown(va("Server fatal crashed: %s\n", msg), qfalse);
+		SV_Shutdown("Server fatal crashed: %s\n", qfalse);
 		CL_Shutdown();
 	}
 
@@ -254,7 +256,7 @@ void Com_Error (int code, const char *fmt, ...)
 		logfile = NULL;
 	}
 
-	Sys_Error("%s", msg);
+	Sys_Error("Shutdown");
 }
 
 
