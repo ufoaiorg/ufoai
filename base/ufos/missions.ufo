@@ -261,10 +261,10 @@ mission stadium
 	storyrelated	true
 }
 
-//FIXME - where do we play now?
+//Brazil, Amazon Rainforest
 mission druglord
 {
-	location	"_TODO"
+	location	"_Somewhere in Amazona"
 	type		"_Terror attack"
 	text		"_Protect inhabitants."
 	pos		"59 -6"
@@ -899,14 +899,15 @@ mission aliencolony_small
 	storyrelated	true
 }
 
+//Siberia, Russia
 mission lake2
 {
-	location	"_TODO"
+	location	"_Somewhere in Siberia"
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
-	pos			"11 12" // FIXME
+	pos		"-65 60"
 	aliens		6
-	nation		"states" // FIXME
+	nation		"russia"
 	alienequip	stage4_soldiers
 	onlose		""
 	onwin		""
