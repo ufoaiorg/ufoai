@@ -28,7 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define GLOBE_ROTATE -90
 #define ROTATE_SPEED	0.5
-#define ROTATE_SPEED3D	0.3
 #define MAX_PROJECTILESONGEOSCAPE 16
 nation_t* MAP_GetNation(const vec2_t pos);
 const char* MAP_GetTerrainTypeByPos(const vec2_t pos);

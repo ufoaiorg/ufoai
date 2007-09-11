@@ -1889,8 +1889,8 @@ void MAP_Scroll_f (void)
 	}
 	if (cl_3dmap->integer) {
 		/* rotate a model */
-		ccs.angles[PITCH] += ROTATE_SPEED3D * (scrollX) / ccs.zoom;
-		ccs.angles[YAW] -= ROTATE_SPEED3D * (scrollY) / ccs.zoom;
+		ccs.angles[PITCH] += ROTATE_SPEED * (scrollX) / ccs.zoom;
+		ccs.angles[YAW] -= ROTATE_SPEED * (scrollY) / ccs.zoom;
 
 		while (ccs.angles[YAW] > 180.0)
 			ccs.angles[YAW] -= 360.0;

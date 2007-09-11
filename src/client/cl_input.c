@@ -1184,8 +1184,8 @@ static void IN_Parse (void)
 
 	case MS_SHIFT3DMAP:
 		/* rotate a model */
-		ccs.angles[PITCH] += ROTATE_SPEED3D * (mousePosX - oldMousePosX) / ccs.zoom;
-		ccs.angles[YAW] -= ROTATE_SPEED3D * (mousePosY - oldMousePosY) / ccs.zoom;
+		ccs.angles[PITCH] += ROTATE_SPEED * (mousePosX - oldMousePosX) / ccs.zoom;
+		ccs.angles[YAW] -= ROTATE_SPEED * (mousePosY - oldMousePosY) / ccs.zoom;
 
 		while (ccs.angles[YAW] > 180.0)
 			ccs.angles[YAW] -= 360.0;
