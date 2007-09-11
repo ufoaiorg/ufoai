@@ -192,9 +192,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 	albridx = INVSH_GetItemByID("brapparatus");
 
 	for (i = 0; i < aircraft->alientypes; i++) {
-		for (j = 0; j < csi.numTeamDefs; j++) {
-			if (!csi.teamDef[j].alien)
-				continue;
+		for (j = 0; j < PRE_NUMALI; j++) {
 			assert(*tobase->alienscont[j].alientype);
 			assert(*cargo[i].alientype);
 			if (Q_strncmp(tobase->alienscont[j].alientype, cargo[i].alientype, MAX_VAR) == 0) {
@@ -246,9 +244,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 	/* Set the amount of currently stored in capacities. */
 	tobase->capacities[CAP_ALIENS].cur = AL_CountInBase();
 
-	for (i = 0; i < csi.numTeamDefs; i++ ) {
-		if (!csi.teamDef[i].alien)
-			continue;
+	for (i = 0; i < PRE_NUMALI; i++ ) {
 #ifdef DEBUG
 		if (tobase->alienscont[i].techIdx == -1)
 			Sys_Error("AL_AddAliens: Failed to initialize the tech for '%s'\n", tobase->alienscont[i].alientype);
@@ -295,9 +291,7 @@ void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_
 			 * in Alien Containment, then remove (amount). */
 			while (amount > 0) {
 				/* Find the type with maxamount. */
-				for (j = 0; j < csi.numTeamDefs; j++) {
-					if (!csi.teamDef[j].alien)
-						continue;
+				for (j = 0; j < PRE_NUMALI; j++) {
 					if (maxamount < containment[j].amount_alive) {
 						maxamount = containment[j].amount_alive;
 						maxidx = j;
@@ -327,9 +321,7 @@ void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_
 		break;
 	case AL_KILL:
 		/* We ignore 2nd and 3rd parameter of AL_RemoveAliens() here. */
-		for (j = 0; j < csi.numTeamDefs; j++) {
-			if (!csi.teamDef[j].alien)
-				continue;
+		for (j = 0; j < PRE_NUMALI; j++) {
 			if (containment[j].amount_alive > 0) {
 				containment[j].amount_dead += containment[j].amount_alive;
 				containment[j].amount_alive = 0;
@@ -338,9 +330,7 @@ void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_
 		break;
 	case AL_KILLONE:
 		/* We ignore 3rd parameter of AL_RemoveAliens() here. */
-		for (j = 0; j < csi.numTeamDefs; j++) {
-			if (!csi.teamDef[j].alien)
-				continue;
+		for (j = 0; j < PRE_NUMALI; j++) {
 			assert(*containment[j].alientype);
 			if (Q_strncmp(containment[j].alientype, name, MAX_VAR) == 0) {
 				if (containment[j].amount_alive == 0)
@@ -353,11 +343,40 @@ void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_
 			}
 		}
 		break;
+	case AL_ADDALIVE:
+		/* We ignore 3rd parameter of AL_RemoveAliens() here. */
+		if(AL_CountInBase() == base->capacities[CAP_ALIENS].max ) {
+			return; /* stop because we will else exceed the max of aliens */
+		}
+		for (j = 0; j < PRE_NUMALI; j++) {
+			assert(containment[j].alientype);
+			if (Q_strncmp(containment[j].alientype, name, MAX_VAR) == 0) {
+				containment[j].amount_alive++;
+				break;
+			}
+		}
+		aliencontCurrent = &containment[j];
+		break;
+	case AL_ADDDEAD:
+		/* We ignore 3rd parameter of AL_RemoveAliens() here. */
+		if(AL_CountInBase() == base->capacities[CAP_ALIENS].max ) {
+			return; /* stop because we will else exceed the max of aliens */
+		}
+		for (j = 0; j < PRE_NUMALI; j++) {
+			assert(containment[j].alientype);
+			if (Q_strncmp(containment[j].alientype, name, MAX_VAR) == 0) {
+				containment[j].amount_dead++;
+				break;
+			}
+		}
+		aliencontCurrent = &containment[j];
+		break;
 	default:
 		break;
 	}
 	/* Set the amount of currently stored in capacities. */
 	base->capacities[CAP_ALIENS].cur = AL_CountInBase();
+	Cvar_SetValue("mn_al_globalamount", AL_CountAll());
 	return;
 }
 
@@ -437,9 +456,7 @@ int AL_CountAll (void)
 			continue;
 		if (!base->hasAlienCont)
 			continue;
-		for (j = 0; j < csi.numTeamDefs; j++) {
-			if (!csi.teamDef[j].alien)
-				continue;
+		for (j = 0; j < PRE_NUMALI; j++) {
 			if (base->alienscont[j].alientype)
 				amount += base->alienscont[j].amount_alive;
 		}
@@ -469,9 +486,7 @@ int AL_CountInBase (void)
 	}
 	if (!base->hasAlienCont)
 		return 0;
-	for (j = 0; j < csi.numTeamDefs; j++) {
-		if (!csi.teamDef[j].alien)
-			continue;
+	for (j = 0; j < PRE_NUMALI; j++) {
 		if (base->alienscont[j].alientype)
 			amount += base->alienscont[j].amount_alive;
 	}
@@ -488,7 +503,7 @@ int AL_CountInBase (void)
  */
 static int AL_CountForMenu (int alienidx, qboolean alive)
 {
-	int i, j;
+	int i;
 	int amount = 0;
 	base_t *base;
 
@@ -497,16 +512,11 @@ static int AL_CountForMenu (int alienidx, qboolean alive)
 			continue;
 		if (!base->hasAlienCont)
 			continue;
-		for (j = 0; j < csi.numTeamDefs; j++) {
-			if (!csi.teamDef[j].alien)
-				continue;
-			if ((*base->alienscont[j].alientype) &&
-				(Q_strncmp(base->alienscont[j].alientype, AL_AlienTypeToName(alienidx), MAX_VAR)) == 0) {
-				if (alive == qfalse)
-					amount += base->alienscont[j].amount_dead;
-				else
-					amount += base->alienscont[j].amount_alive;
-			}
+		if (*base->alienscont[alienidx].alientype) {
+			if (alive == qfalse)
+				amount += base->alienscont[alienidx].amount_dead;
+			else
+				amount += base->alienscont[alienidx].amount_alive;
 		}
 	}
 	return amount;
@@ -727,9 +737,7 @@ static void AC_KillAll_f (void)
 		return;
 
 	/* Are there aliens here at all? */
-	for (i = 0; i < csi.numTeamDefs; i++) {
-		if (!csi.teamDef[i].alien)
-			continue;
+	for (i = 0; i < PRE_NUMALI; i++) {
 		if (baseCurrent->alienscont[i].amount_alive > 0) {
 			aliens = qtrue;
 			break;
@@ -776,9 +784,7 @@ static void AC_KillOne_f (void)
 
 	if (baseCurrent->hasAlienCont) {
 		containment = baseCurrent->alienscont;
-		for (i = 0, step = 0; i < csi.numTeamDefs; i++) {
-			if (!csi.teamDef[i].alien)
-				continue;
+		for (i = 0, step = 0; i < PRE_NUMALI; i++) {
 			if (!containment[i].amount_alive && !containment[i].amount_dead)
 				continue;
 			if (step == num) {
@@ -795,6 +801,63 @@ static void AC_KillOne_f (void)
 	AC_SelectAlien_f();
 	Cbuf_AddText("aliencont_init\n");
 }
+
+#ifdef DEBUG
+/**
+ * @brief Add a single alien of a given type.
+ */
+static void AC_AddOne_f (void)
+{
+	int length;
+	const char *alienType; 
+	aliensCont_t *containment = NULL;
+	qboolean updateAlive;
+
+Com_Printf("called\n");
+	/* Can be called from everywhere. */
+	if (!baseCurrent ||!curCampaign) {
+		return;
+	}
+Com_Printf("called\n");
+
+	/* arg parsing */
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <alientype> [1](dead)\n", Cmd_Argv(0));
+		return;
+	}
+Com_Printf("called\n");
+
+/*	alienType[0] = '\0';*/
+	alienType = Cmd_Argv(1);
+	length = strlen(alienType);
+	
+	if ((Cmd_Argc() == 3) && (atoi(Cmd_Argv(2)) == 1)) {
+		updateAlive = qfalse;
+	} else {
+		updateAlive = qtrue;
+	} 
+
+Com_Printf("called\n");
+	/* update alien counter*/
+	if (baseCurrent->hasAlienCont) {
+		containment = baseCurrent->alienscont;
+	} else {
+		return;
+	}
+Com_Printf("called\n");
+	
+	
+	/* call the function that actually changes the persisten datastructure */
+	if(updateAlive) {	
+		AL_RemoveAliens(baseCurrent, alienType, 1, AL_ADDALIVE); 
+	} else {
+		AL_RemoveAliens(baseCurrent, alienType, 1, AL_ADDDEAD); 
+	}
+	/* Reinit menu to display proper values. */
+	AC_SelectAlien_f();
+	Cbuf_AddText("aliencont_init\n");
+}
+#endif
 
 /**
  * @brief Open research menu.
@@ -841,9 +904,7 @@ static void AC_Init (void)
 
 	if (baseCurrent->hasAlienCont) {
 		containment = baseCurrent->alienscont;
-		for (i = 0; i < csi.numTeamDefs; i++) {
-			if (!csi.teamDef[i].alien)
-				continue;
+		for (i = 0; i < PRE_NUMALI; i++) {
 			if (*containment[i].alientype) {
 				tech = RS_GetTechByIDX(containment[i].techIdx);
 				if (tech == NULL) {
@@ -880,9 +941,7 @@ static void AC_Init (void)
 		}
 
 		/* Set state of KillAll button. */
-		for (i = 0; i < csi.numTeamDefs; i++) {
-			if (!csi.teamDef[i].alien)
-				continue;
+		for (i = 0; i < PRE_NUMALI; i++) {
 			if (containment[i].amount_alive > 0) {
 				killall_state = qtrue;
 				break;
@@ -943,9 +1002,8 @@ static void AC_AlienListClick_f (void)
 
 	if (baseCurrent->hasAlienCont) {
 		containment = baseCurrent->alienscont;
-		for (i = 0, step = 0; i < csi.numTeamDefs; i++) {
-			if (!csi.teamDef[i].alien)
-				continue;
+
+		for (i = 0, step = 0; i < PRE_NUMALI; i++) {
 			if (!containment[i].amount_alive && !containment[i].amount_dead)
 				continue;
 			if (step == num) {
@@ -977,7 +1035,9 @@ void AC_Reset (void)
 	Cmd_AddCommand("aliencont_nextbase", AC_NextAC_f, "Opens Alien Containment menu in next base");
 	Cmd_AddCommand("aliencont_prevbase", AC_PrevAC_f, "Opens Alien Containment menu in previous base");
 	Cmd_AddCommand("aliencont_killone", AC_KillOne_f, "Kills one alien of a given type");
-
+#ifdef DEBUG
+	Cmd_AddCommand("aliencont_addone", AC_AddOne_f, "Add one alien of a given type");
+#endif
 	memset(aliencontText, 0, sizeof(aliencontText));
 	aliencontCurrent = NULL;
 }
