@@ -142,7 +142,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 		if (id >= gd.numBases)
 			break;
 		MAP_ResetAction();
-		Cbuf_ExecuteText(EXEC_NOW, va("mn_select_base %i", id));
+		Cmd_ExecuteString(va("mn_select_base %i", id));
 		MN_PushMenu("bases");
 		break;
 

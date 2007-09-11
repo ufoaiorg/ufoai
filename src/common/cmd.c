@@ -68,7 +68,6 @@ static void Cmd_Open_f (void)
 /**
  * @brief Will no longer add any command to command buffer
  * ...until cmd_close is qfalse again
- * Does not affect EXEC_NOW
  * @sa Cmd_Open_f
  */
 static void Cmd_Close_f (void)
@@ -184,32 +183,6 @@ void Cbuf_InsertFromDefer (void)
 {
 	Cbuf_InsertText(defer_text_buf);
 	defer_text_buf[0] = 0;
-}
-
-
-/**
- * @brief Adds a command to the buffer.
- * @param[in] text The command string to execute.
- * @param[in] exec_when Defines when the command should be executed. One of EXEC_NOW, EXEC_INSERT or EXEC_APPEND.
- * @sa EXEC_NOW
- * @sa EXEC_INSERT
- * @sa EXEC_APPEND
- */
-void Cbuf_ExecuteText (int exec_when, const char *text)
-{
-	switch (exec_when) {
-	case EXEC_NOW:
-		Cmd_ExecuteString(text);
-		break;
-	case EXEC_INSERT:
-		Cbuf_InsertText(text);
-		break;
-	case EXEC_APPEND:
-		Cbuf_AddText(text);
-		break;
-	default:
-		Com_Error(ERR_FATAL, "Cbuf_ExecuteText: bad exec_when");
-	}
 }
 
 /**
@@ -1054,7 +1027,7 @@ static void Cmd_Test_f (void)
 
 	for (cmd = cmd_functions; cmd; cmd = cmd->next) {
 		if (Q_strcmp(cmd->name, "quit"))
-			Cbuf_ExecuteText(EXEC_NOW, cmd->name);
+			Cmd_ExecuteString(cmd->name);
 	}
 }
 #endif

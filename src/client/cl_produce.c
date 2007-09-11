@@ -983,9 +983,9 @@ static void PR_ProductionList_f (void)
 		return;
 
 	if (atoi(Cmd_Argv(1)) == 0)
-		Cbuf_ExecuteText(EXEC_NOW, "prod_select 0\n");
+		Cmd_ExecuteString("prod_select 0");
 	else if (atoi(Cmd_Argv(1)) == 1)
-		Cbuf_ExecuteText(EXEC_NOW, "prod_select 5\n");
+		Cmd_ExecuteString("prod_select 5");
 
 	PR_ProductionInfo(qfalse);
 

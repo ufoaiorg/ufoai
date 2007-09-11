@@ -716,7 +716,7 @@ void Qcommon_Init (int argc, const char **argv)
 	Cvar_Get("ver", UFO_VERSION, CVAR_SERVERINFO | CVAR_NOSET, "Version number");
 
 	if (sv_dedicated->integer)
-		Cmd_AddCommand("quit", Com_Quit, NULL);
+		Cmd_AddCommand("quit", Com_Quit, "Quits the game");
 
 	Mem_Init();
 	Sys_Init();
@@ -957,7 +957,7 @@ void Qcommon_Frame (void)
  */
 void Qcommon_Shutdown (void)
 {
-	Cbuf_ExecuteText(EXEC_NOW, "shutdown_alias");
+	Cmd_ExecuteString("shutdown_alias");
 }
 
 /*

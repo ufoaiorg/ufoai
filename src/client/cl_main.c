@@ -761,9 +761,11 @@ static void CL_WaitInit_f (void)
 	if (!*cl.configstrings[CS_NAME]) {
 		if (!reconnect) {
 			reconnect = qtrue;
-			Cbuf_ExecuteText(EXEC_NOW, "reconnect\nmn_pop");
+			CL_Reconnect_f();
+			MN_PopMenu(qfalse);
 		} else {
-			Cbuf_ExecuteText(EXEC_NOW, "disconnect\nmn_pop");
+			CL_Disconnect_f();
+			MN_PopMenu(qfalse);
 			MN_Popup(_("Error"), _("Server needs restarting - something went wrong"));
 		}
 	} else

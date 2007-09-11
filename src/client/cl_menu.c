@@ -609,16 +609,20 @@ static void MN_PrevGametype_f (void)
  */
 static void MN_StartServer_f (void)
 {
-	aircraft_t *aircraft;
 	char map[MAX_VAR];
 	mapDef_t *md;
 	cvar_t* mn_serverday = Cvar_Get("mn_serverday", "1", 0, "Decides whether the server starts the day or the night version of the selected map");
+	aircraft_t *aircraft;
+
+	if (ccs.singleplayer)
+		return;
 
 	aircraft = AIR_AircraftGetFromIdx(0);
+	assert(aircraft);
 
 	if (!sv_dedicated->integer && !B_GetNumOnTeam(aircraft)) {
 		Com_Printf("MN_StartServer_f: Multiplayer team not loaded, please choose your team now.\n");
-		Cbuf_ExecuteText(EXEC_NOW, "assign_initial 1");
+		Cmd_ExecuteString("assign_initial");
 		return;
 	}
 
@@ -638,7 +642,7 @@ static void MN_StartServer_f (void)
 	/* let the (local) server know which map we are running right now */
 	csi.currentMD = md;
 
-	Cbuf_ExecuteText(EXEC_NOW, map);
+	Cmd_ExecuteString(map);
 
 	Cvar_Set("mn_main", "multiplayerInGame");
 	MN_PushMenu("multiplayer_wait");
@@ -737,7 +741,7 @@ void MN_Popup (const char *title, const char *text)
 	menuText[TEXT_POPUP] = title;
 	menuText[TEXT_POPUP_INFO] = text;
 	if (ccs.singleplayer)
-		Cbuf_ExecuteText(EXEC_NOW, "game_timestop");
+		Cmd_ExecuteString("game_timestop");
 	MN_PushMenu("popup");
 }
 
@@ -1293,7 +1297,7 @@ static void MN_BaseMapClick (menuNode_t * node, int x, int y)
 
 				if (*entry->onClick) {
 					baseCurrent->buildingCurrent = entry;
-					Cbuf_ExecuteText(EXEC_NOW, va("%s %i", entry->onClick, baseCurrent->idx));
+					Cmd_ExecuteString(va("%s %i", entry->onClick, baseCurrent->idx));
 					baseCurrent->buildingCurrent = NULL;
 					gd.baseAction = BA_NONE;
 				}
@@ -3374,7 +3378,7 @@ static void MN_TutorialListClick_f (void)
 	if (num < 0 || num >= numTutorials)
 		return;
 
-	Cbuf_ExecuteText(EXEC_NOW, va("seq_start %s", tutorials[num].sequence));
+	Cmd_ExecuteString(va("seq_start %s", tutorials[num].sequence));
 }
 
 /**
@@ -4792,7 +4796,7 @@ void MN_AddChatMessage (const char *text)
 
 	/* maybe the hud doesn't have a chatscreen node - or we don't have a hud */
 	if (chatBufferNode) {
-		Cbuf_ExecuteText(EXEC_NOW, "unhide_chatscreen");
+		Cmd_ExecuteString("unhide_chatscreen");
 		menuStack[menuStackPos]->eventTime = cls.realtime;
 	}
 }

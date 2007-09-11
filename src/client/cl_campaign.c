@@ -400,7 +400,7 @@ static void CL_CampaignActivateStageSets (stage_t *stage)
 			set->start = Date_Add(ccs.date, set->def->delay);
 			set->event = Date_Add(set->start, Date_Random_Begin(set->def->frame));
 			if (*(set->def->sequence))
-				Cbuf_ExecuteText(EXEC_APPEND, va("seq_start %s;\n", set->def->sequence));
+				Cbuf_AddText(va("seq_start %s;\n", set->def->sequence));
 			/* XVI spreading has started */
 			if (set->def->activateXVI) {
 				ccs.XVISpreadActivated = qtrue;
@@ -787,7 +787,7 @@ static void CL_CampaignAddMission (setState_t * set)
 
 	/* execute mission commands */
 	if (*mis->def->cmds)
-		Cbuf_ExecuteText(EXEC_NOW, mis->def->cmds);
+		Cmd_ExecuteString(mis->def->cmds);
 
 	if (set->def->expire.day)
 		mis->expire = Date_Add(ccs.date, Date_Random_Middle(set->def->expire));
@@ -4438,7 +4438,7 @@ static void CL_GameNew_f (void)
 	MN_PushMenu("map");
 
 	/* create a base as first step */
-	Cbuf_ExecuteText(EXEC_NOW, "mn_select_base -1");
+	Cmd_ExecuteString("mn_select_base -1");
 
 	CL_GameInit(qfalse);
 
@@ -4466,10 +4466,10 @@ static void CP_GetCampaigns_f (void)
 	/* select main as default */
 	for (i = 0; i < numCampaigns; i++)
 		if (!Q_strncmp("main", campaigns[i].id, MAX_VAR)) {
-			Cbuf_ExecuteText(EXEC_NOW, va("campaignlist_click %i", i));
+			Cmd_ExecuteString(va("campaignlist_click %i", i));
 			return;
 		}
-	Cbuf_ExecuteText(EXEC_NOW, "campaignlist_click 0");
+	Cmd_ExecuteString("campaignlist_click 0");
 }
 
 /**
@@ -4641,7 +4641,7 @@ static void CP_UFORecovered_f (void)
 	}
 
 	/* At the beginning we enable all UFO recovery options. */
-	Cbuf_ExecuteText(EXEC_NOW, "menuwon_update_buttons\n");
+	Cmd_ExecuteString("menuwon_update_buttons");
 
 	/* Find ufo sample of given ufotype. */
 	for (i = 0; i < numAircraft_samples; i++) {
@@ -4684,7 +4684,7 @@ static void CP_UFORecovered_f (void)
 	/* @todo block Sell button if no nation with requirements */
 	if (!store) {
 		/* Block store option if storing not possible. */
-		Cbuf_ExecuteText(EXEC_NOW, "disufostore\n");
+		Cmd_ExecuteString("disufostore");
 		Cvar_SetValue("mission_noufohangar", 1);
 	} else
 		Cvar_SetValue("mission_noufohangar", 0);
@@ -4853,9 +4853,9 @@ static void CP_UfoRecoveryNationSelectPopup_f (void)
 	assert(nation);
 
 	/* Pop the menu and launch it again - now with updated value of selected nation. */
-	Cbuf_ExecuteText(EXEC_NOW, "mn_pop\n");
+	MN_PopMenu(qfalse);
 	Com_DPrintf(DEBUG_CLIENT, "CP_UfoRecoveryNationSelectPopup_f()... picked nation: %s\n", nation->name);
-	Cbuf_ExecuteText(EXEC_NOW, "cp_uforecoverysell\n");
+	Cmd_ExecuteString("cp_uforecoverysell");
 }
 
 /**

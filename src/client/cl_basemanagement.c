@@ -220,51 +220,51 @@ static void B_BaseInit_f (void)
 	/* activate or deactivate the aircraft button */
 	if (AIR_AircraftAllowed()) {
 		Cvar_SetValue("mn_base_num_aircraft", baseCurrent->numAircraftInBase);
-		Cbuf_ExecuteText(EXEC_NOW, "set_aircraft_enabled");
+		Cmd_ExecuteString("set_aircraft_enabled");
 	} else {
 		Cvar_SetValue("mn_base_num_aircraft", -1);
-		Cbuf_ExecuteText(EXEC_NOW, "set_aircraft_disabled");
+		Cmd_ExecuteString("set_aircraft_disabled");
 	}
 	if (BS_BuySellAllowed()) {
 		Cvar_SetValue("mn_base_buysell_allowed", qtrue);
-		Cbuf_ExecuteText(EXEC_NOW, "set_buysell_enabled");
+		Cmd_ExecuteString("set_buysell_enabled");
 	} else {
 		Cvar_SetValue("mn_base_buysell_allowed", qfalse);
-		Cbuf_ExecuteText(EXEC_NOW, "set_buysell_disabled");
+		Cmd_ExecuteString("set_buysell_disabled");
 	}
 	if (gd.numBases > 1) {
-		Cbuf_ExecuteText(EXEC_NOW, "set_transfer_enabled");
+		Cmd_ExecuteString("set_transfer_enabled");
 	} else {
-		Cbuf_ExecuteText(EXEC_NOW, "set_transfer_disabled");
+		Cmd_ExecuteString("set_transfer_disabled");
 	}
 	if (RS_ResearchAllowed()) {
 		Cvar_SetValue("mn_base_research_allowed", qtrue);
-		Cbuf_ExecuteText(EXEC_NOW, "set_research_enabled");
+		Cmd_ExecuteString("set_research_enabled");
 	} else {
 		Cvar_SetValue("mn_base_research_allowed", qfalse);
-		Cbuf_ExecuteText(EXEC_NOW, "set_research_disabled");
+		Cmd_ExecuteString("set_research_disabled");
 	}
 	Cvar_SetValue("mn_base_prod_allowed", PR_ProductionAllowed());
 	if (E_HireAllowed()) {
 		Cvar_SetValue("mn_base_hire_allowed", qtrue);
-		Cbuf_ExecuteText(EXEC_NOW, "set_hire_enabled");
+		Cmd_ExecuteString("set_hire_enabled");
 	} else {
 		Cvar_SetValue("mn_base_hire_allowed", qfalse);
-		Cbuf_ExecuteText(EXEC_NOW, "set_hire_disabled");
+		Cmd_ExecuteString("set_hire_disabled");
 	}
 	if (AC_ContainmentAllowed()) {
 		Cvar_SetValue("mn_base_containment_allowed", qtrue);
-		Cbuf_ExecuteText(EXEC_NOW, "set_containment_enabled");
+		Cmd_ExecuteString("set_containment_enabled");
 	} else {
 		Cvar_SetValue("mn_base_containment_allowed", qfalse);
-		Cbuf_ExecuteText(EXEC_NOW, "set_containment_disabled");
+		Cmd_ExecuteString("set_containment_disabled");
 	}
 	if (HOS_HospitalAllowed()) {
 		Cvar_SetValue("mn_base_hospital_allowed", qtrue);
-		Cbuf_ExecuteText(EXEC_NOW, "set_hospital_enabled");
+		Cmd_ExecuteString("set_hospital_enabled");
 	} else {
 		Cvar_SetValue("mn_base_hospital_allowed", qfalse);
-		Cbuf_ExecuteText(EXEC_NOW, "set_hospital_disabled");
+		Cmd_ExecuteString("set_hospital_disabled");
 	}
 }
 
@@ -1543,7 +1543,7 @@ void B_DrawBase (menuNode_t * node)
 	building_t *building = NULL, *secondBuilding = NULL, *hoverBuilding = NULL;
 
 	if (!baseCurrent)
-		Cbuf_ExecuteText(EXEC_NOW, "mn_pop");
+		MN_PopMenu(qfalse);
 
 	width = node->size[0] / BASE_SIZE;
 	height = (node->size[1] + BASE_SIZE * 20) / BASE_SIZE;
@@ -1748,7 +1748,7 @@ static void B_SelectBase_f (void)
 			baseCurrent = &gd.bases[baseID];
 			baseCurrent->idx = baseID;
 			Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: baseID is valid for base: %s\n", baseCurrent->name);
-			Cbuf_ExecuteText(EXEC_NOW, "set_base_to_normal");
+			Cmd_ExecuteString("set_base_to_normal");
 		} else {
 			Com_Printf("MaxBases reached\n");
 			/* select the first base in list */
@@ -1765,10 +1765,10 @@ static void B_SelectBase_f (void)
 			switch (baseCurrent->baseStatus) {
 			case BASE_UNDER_ATTACK:
 				Cvar_Set("mn_base_status_name", _("Base is under attack"));
-				Cbuf_ExecuteText(EXEC_NOW, "set_base_under_attack");
+				Cmd_ExecuteString("set_base_under_attack");
 				break;
 			default:
-				Cbuf_ExecuteText(EXEC_NOW, "set_base_to_normal");
+				Cmd_ExecuteString("set_base_to_normal");
 				break;
 			}
 		} else {
@@ -1948,17 +1948,18 @@ static void CL_SwapSkills (chrList_t *team)
 static void B_AssignInitial_f (void)
 {
 	int i;
+	aircraft_t *aircraft;
 
-	/* check syntax */
-	if (Cmd_Argc() > 2) {
-		Com_Printf("Usage: assign_initial [<multiplayer>]\n");
-		return;
+	if (!baseCurrent) {
+		if (ccs.singleplayer)
+			return;
+		aircraft = AIR_AircraftGetFromIdx(0);
+		assert(aircraft);
+		baseCurrent = aircraft->homebase;
 	}
+	assert(baseCurrent);
 
-	if (!baseCurrent)
-		return;
-
-	if (Cmd_Argc() == 2) {
+	if (!ccs.singleplayer) {
 		CL_ResetTeamInBase();
 		Cvar_Set("mn_teamname", _("NewTeam"));
 		Cbuf_AddText("gennames;");
@@ -1968,9 +1969,8 @@ static void B_AssignInitial_f (void)
 		Cbuf_AddText(va("team_hire %i;", i));
 
 	Cbuf_AddText("pack_initial;");
-	if (Cmd_Argc() == 2) {
+	if (!ccs.singleplayer)
 		MN_PushMenu("team");
-	}
 }
 
 /**

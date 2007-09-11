@@ -364,7 +364,7 @@ static void SAV_GameSaveNames_f (void)
 	if (Cmd_Argc() == 2) {
 		/* checks whether we plan to save without a running game */
 		if (!Q_strncmp(Cmd_Argv(1), "save", 4) && !curCampaign) {
-			Cbuf_ExecuteText(EXEC_NOW, "mn_pop");
+			MN_PopMenu(qfalse);
 			return;
 		}
 	}

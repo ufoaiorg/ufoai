@@ -454,7 +454,7 @@ static void PE_ListClick_f (void)
 		if (num >= numPtlDefs)
 			return;
 	}
-	Cbuf_ExecuteText(EXEC_NOW, va("ptledit_load %s", ptlDef[num].name));
+	Cmd_ExecuteString(va("ptledit_load %s", ptlDef[num].name));
 }
 
 /**

@@ -816,13 +816,13 @@ static void CL_CamSetAngles_f (void)
 static void CL_MakeBaseMapShot_f (void)
 {
 	if (Cmd_Argc() > 1)
-		Cbuf_ExecuteText(EXEC_NOW, va("map %s", Cmd_Argv(1)));
+		Cmd_ExecuteString(va("map %s", Cmd_Argv(1)));
 	cl.cam.angles[0] = 60.0f;
 	cl.cam.angles[1] = 90.0f;
 	Cvar_SetValue("r_isometric", 1);
 	MN_PushMenu("nohud");
-	Cbuf_ExecuteText(EXEC_NOW, "toggleconsole");
-	Cbuf_ExecuteText(EXEC_NOW, "screenshot");
+	Cmd_ExecuteString("toggleconsole");
+	Cmd_ExecuteString("screenshot");
 }
 
 #define STATE_FORWARD	1
@@ -1614,7 +1614,7 @@ void IN_Frame (void)
 			EVENT_ENQUEUE(key, qfalse)
 			break;
 		case SDL_QUIT:
-			Cbuf_ExecuteText(EXEC_NOW, "quit");
+			Cmd_ExecuteString("quit");
 			break;
 		}
 	}

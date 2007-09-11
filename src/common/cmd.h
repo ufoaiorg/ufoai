@@ -30,11 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-
-#define	EXEC_NOW	0			/* don't return until completed */
-#define	EXEC_INSERT	1			/* insert at current position, but don't run yet */
-#define	EXEC_APPEND	2			/* add to end of the command buffer */
-
 /**
  * @brief allocates an initial text buffer that will grow as needed
  */
@@ -50,10 +45,6 @@ void Cbuf_AddText(const char *text);
 /* inserted at the beginning of the buffer, before any remaining unexecuted */
 /* commands. */
 void Cbuf_InsertText(const char *text);
-
-/**
- * @brief this can be used in place of either Cbuf_AddText or Cbuf_InsertText */
-void Cbuf_ExecuteText(int exec_when, const char *text);
 
 /**
  * @brief adds all the +set commands from the command line */

@@ -688,7 +688,7 @@ void AIR_NewAircraft (base_t *base, const char *name)
 			Com_Printf("AIR_NewAircraft()... ERROR, new aircraft but no free space in hangars!\n");
 		Com_DPrintf(DEBUG_CLIENT, "Adding new aircraft %s with IDX %i for base %s\n", aircraft->name, aircraft->idx, base->name);
 		/* Now update the aircraft list - maybe there is a popup active */
-		Cbuf_ExecuteText(EXEC_NOW, "aircraft_list");
+		Cmd_ExecuteString("aircraft_list");
 	}
 }
 
@@ -774,7 +774,7 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 	MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);*/
 
 	/* Now update the aircraft list - maybe there is a popup active. */
-	Cbuf_ExecuteText(EXEC_NOW, "aircraft_list");
+	Cmd_ExecuteString("aircraft_list");
 
 	/* @todo: Return successful deletion status here. */
 }
@@ -923,7 +923,7 @@ void CL_CampaignRunAircraft (int dt)
 				if (aircraft->status == AIR_UFO) {
 #if 0
 					/* Display airfight sequence */
-					Cbuf_ExecuteText(EXEC_NOW, "seq_start airfight");
+					Cmd_ExecuteString("seq_start airfight");
 #endif
 					/* Solve the fight */
 					AIRFIGHT_ExecuteActions(aircraft, aircraft->aircraftTarget);

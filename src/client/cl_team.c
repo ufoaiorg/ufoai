@@ -1012,14 +1012,14 @@ static void CL_Select_f (void)
 	if (mode == SELECT_MODE_SOLDIER) {
 		/* HACK */
 		/* deselect current selected soldier and select the new one - these are confuncs */
-		Cbuf_ExecuteText(EXEC_NOW, va("teamdeselect%i", cl_selected->integer));
-		Cbuf_ExecuteText(EXEC_NOW, va("teamselect%i", num));
-		Cbuf_ExecuteText(EXEC_NOW, va("equipdeselect%i", cl_selected->integer));
-		Cbuf_ExecuteText(EXEC_NOW, va("equipselect%i", num));
+		Cmd_ExecuteString(va("teamdeselect%i", cl_selected->integer));
+		Cmd_ExecuteString(va("teamselect%i", num));
+		Cmd_ExecuteString(va("equipdeselect%i", cl_selected->integer));
+		Cmd_ExecuteString(va("equipselect%i", num));
 	} else {
 		/* deselect current selected soldier and select the new one - these are confuncs */
-		Cbuf_ExecuteText(EXEC_NOW, va("%sdeselect%i", command, cl_selected->integer));
-		Cbuf_ExecuteText(EXEC_NOW, va("%sselect%i", command, num));
+		Cmd_ExecuteString(va("%sdeselect%i", command, cl_selected->integer));
+		Cmd_ExecuteString(va("%sselect%i", command, num));
 	}
 	/* now set the cl_selected cvar to the new actor id */
 	Cvar_ForceSet("cl_selected", va("%i", num));
