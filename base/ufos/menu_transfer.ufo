@@ -195,7 +195,7 @@ menu transfer
 		pos	"635 590"
 		texl	"0 0"
 		texh	"128 52"
-		click	{ "trans_items;" }
+		click	{ cmd "trans_items;" }
 	}
 
 	string s_items
@@ -215,7 +215,7 @@ menu transfer
 		pos	"635 650"
 		texl	"0 0"
 		texh	"128 52"
-		click	{ "trans_humans;" }
+		click	{ cmd "trans_humans;" }
 	}
 
 	string s_humans
@@ -235,7 +235,7 @@ menu transfer
 		pos	"820 590"
 		texl	"0 0"
 		texh	"128 52"
-		click	{ "trans_aliens;" }
+		click	{ cmd "trans_aliens;" }
 	}
 
 	string s_aliens
@@ -255,7 +255,7 @@ menu transfer
 		pos	"820 650"
 		texl	"0 0"
 		texh	"128 52"
-		click	{ "trans_crafts;" }
+		click	{ cmd "trans_crafts;" }
 	}
 
 	string s_crafts
