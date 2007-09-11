@@ -492,6 +492,8 @@ static int SV_CompleteServerCommand (const char *partial, const char **match)
 			if (*serverCommandList[i * 2 + 1])
 				Com_Printf("%c      %s\n", 1, serverCommandList[i * 2 + 1]);
 			localMatch[matches++] = serverCommandList[i * 2];
+			if (matches >= MAX_COMPLETE)
+				break;
 		}
 
 	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
