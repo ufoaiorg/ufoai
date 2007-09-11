@@ -741,7 +741,7 @@ void MN_Popup (const char *title, const char *text)
 	menuText[TEXT_POPUP] = title;
 	menuText[TEXT_POPUP_INFO] = text;
 	if (ccs.singleplayer)
-		Cmd_ExecuteString("game_timestop");
+		CL_GameTimeStop();
 	MN_PushMenu("popup");
 }
 
