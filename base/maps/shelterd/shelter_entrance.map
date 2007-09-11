@@ -5,7 +5,7 @@
 "ambient" "0.4 0.4 0.4"
 "_color" "1 0.8 0.8"
 "light" "160"
-"maxteams" "0"
+"maxteams" "4"
 "maxlevel" "6"
 "angles" "30 210"
 // brush 0

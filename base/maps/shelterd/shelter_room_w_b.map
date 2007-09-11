@@ -3,7 +3,7 @@
 {
 "classname" "worldspawn"
 "maxlevel" "6"
-"maxteams" "0"
+"maxteams" "4"
 "light" "160"
 "_color" "1 0.8 0.8"
 "angles" "0 0"
