@@ -1154,7 +1154,7 @@ void Q_strncpyz (char *dest, const char *src, size_t destsize)
 		*dest++ = *src++;
 		destsize--;
 	}
-#ifdef DEBUG
+#ifdef PARANOID
 	if (*src)
 		Com_Printf("Buffer too small: %s: %i (%s)\n", file, line, src);
 #endif
