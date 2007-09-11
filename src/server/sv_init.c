@@ -90,7 +90,7 @@ int SV_ModelIndex (const char *name)
 #define MAX_RANDOM_MAP_HEIGHT 32
 
 /** @brief Stores the alternatives information for the assembled map */
-static unsigned long curMap[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_WIDTH];
+static uLong curMap[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_WIDTH];
 
 /** @brief Stores the map rating for the assembled map */
 static char curRating[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_WIDTH];
@@ -98,7 +98,7 @@ static char curRating[MAX_RANDOM_MAP_HEIGHT][MAX_RANDOM_MAP_WIDTH];
 /** @brief Stores the parsed data fo a map tile. (See *.ump files) */
 typedef struct mTile_s {
 	char id[MAX_VAR];	/**< The id (string) of the tile as defined in the ump file (next to "tile"). */
-	unsigned long spec[MAX_TILESIZE][MAX_TILESIZE];	/**< connection/alternatives info for the tile  */
+	uLong spec[MAX_TILESIZE][MAX_TILESIZE];	/**< connection/alternatives info for the tile  */
 	int w, h;		/**< The width and height of the tile. */
 	int area;	/**< Number of solid parts */
 	struct mTile_s *duplicate;	/**< Pointer to next duplicate **/
@@ -118,6 +118,7 @@ typedef struct mAssembly_s {
 	byte fY[MAX_FIXEDTILES];	/** y position of the used  (fix) tile in fT */
 	int numFixed;	/** Number of fixed tiles. Counts entries of fX, fY and fT */
 	int w, h;	/**< The width and height of the assembly. (size "<w> <h>") */
+	int dx, dy;	/**< The grid steps of the assembly. (grid "<dx> <dx>") */
 } mAssembly_t;
 
 /**
@@ -205,7 +206,7 @@ static void RandomList (int n, short *list)
  * @note If you marked a tile with + the mTile_t->spec at that position will be SOLID
  * @note valid tile characters are 0-5 and a-z
  */
-static unsigned long tileMask (const char chr)
+static uLong tileMask (const char chr)
 {
 	if (chr == '+')
 		return 1UL;
@@ -330,6 +331,8 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 	Q_strncpyz(a->id, token, sizeof(a->id));
 	a->w = 8;
 	a->h = 8;
+	a->dx = 1;
+	a->dy = 1;
 
 	token = COM_EParse(text, errhead, filename);
 	if (!*text || *token != '{') {
@@ -359,6 +362,14 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 				break;
 
 			sscanf(token, "%i %i", &a->w, &a->h);
+			continue;
+		} else if (!Q_strncmp(token, "grid", 4)) {
+			/* get map size */
+			token = COM_EParse(text, errhead, filename);
+			if (!text)
+				break;
+
+			sscanf(token, "%i %i", &a->dx, &a->dy);
 			continue;
 		/* fix tilename x y */
 		} else if (!Q_strncmp(token, "fix", 3)) {
@@ -435,7 +446,7 @@ static void SV_ParseAssembly (const char *filename, const char **text)
  * @sa SV_AddRegion
  * @sa SV_FitTile
  */
-static void SV_CombineAlternatives (unsigned long *mapAlts, unsigned long tileAlts, char *mapRating)
+static void SV_CombineAlternatives (uLong *mapAlts, uLong tileAlts, char *mapRating)
 {
 	/* don't touch solid fields of the map, return if tile has no connection info */
 	if (IS_SOLID(*mapAlts) || !tileAlts)
@@ -464,7 +475,7 @@ static void SV_CombineAlternatives (unsigned long *mapAlts, unsigned long tileAl
  * @return qfalse if the tile does not fit.
  * @sa SV_FitTile
  */
-static qboolean SV_TestAlternatives (unsigned long mapAlts, unsigned long tileAlts)
+static qboolean SV_TestAlternatives (uLong mapAlts, uLong tileAlts)
 {
 	if (IS_SOLID(mapAlts) && IS_SOLID(tileAlts))
 		return qfalse;
@@ -495,9 +506,13 @@ static qboolean SV_TestAlternatives (unsigned long mapAlts, unsigned long tileAl
 static qboolean SV_FitTile (mTile_t * tile, int x, int y)
 {
 	int tx, ty;
-	const unsigned long *spec = NULL;
-	const unsigned long *m = NULL;
+	const uLong *spec = NULL;
+	const uLong *m = NULL;
 
+	/* check vor valid grid positions */
+	assert(x%mAsm->dx == 0);
+	assert(y%mAsm->dy == 0);
+	
 	if (x < 0 || y < 0)
 		return qfalse;
 
@@ -623,6 +638,10 @@ static void SV_AddTile (mTile_t * tile, int x, int y, int idx, int pos)
 {
 	int tx, ty;
 
+	/* check vor valid grid positions */
+	assert(x%mAsm->dx == 0);
+	assert(y%mAsm->dy == 0);
+	
 	/* add the new tile */
 	for (ty = 0; ty < tile->h; ty++)
 		for (tx = 0; tx < tile->w; tx++) {
@@ -717,7 +736,8 @@ static qboolean SV_AddRandomTile (int* idx, int* pos)
 				x = (*pos) % mapW;
 				y = (*pos) / mapW;
 
-				if (SV_FitTile(mToPlace[*idx].tile, x, y)) {
+				if ((x%mAsm->dx == 0) && (y%mAsm->dy == 0) &&
+						SV_FitTile(mToPlace[*idx].tile, x, y)) {
 					SV_AddTile(mToPlace[*idx].tile, x, y, *idx, *pos);
 					return qtrue;
 				}
@@ -818,6 +838,10 @@ static void SV_AddMapTiles (void)
 			for (; pos < mapSize; pos++) {
 				x = prList[pos] % mapW;
 				y = prList[pos] / mapW;
+
+				if ((x%mAsm->dx != 0) || (y%mAsm->dy != 0))
+					continue;
+
 				if (SV_FitTile(mToPlace[idx].tile, x, y)) {
 					/* add tile */
 					SV_AddTile(mToPlace[idx].tile, x, y, idx, pos);
