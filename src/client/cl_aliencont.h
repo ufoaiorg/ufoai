@@ -42,7 +42,9 @@ typedef enum {
 typedef enum {
 	AL_RESEARCH,			/**< When we remove alien(s) because of research topic. */
 	AL_KILL,			/**< When we kill all aliens in base because of base defence mission. */
-	AL_KILLONE			/**< When we kill one alien of given type in AC menu. */
+	AL_KILLONE,			/**< When we kill one alien of given type in AC menu. */
+	AL_ADDALIVE,			/**< When we add one alien by hand. */
+	AL_ADDDEAD			/**< When we kill one alien by hand. */
 } alienCalcType_t;
 
 /** structure of Alien Containment being a member of base_t */
