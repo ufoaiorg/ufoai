@@ -2226,7 +2226,7 @@ static void CL_SendCommand (void)
 	case ca_connecting:
 		if (cls.realtime - cls.connectTime < cl_connecttimeout->integer) {
 			Com_Printf("Server is not reachable\n");
-			CL_SetClientState(ca_disconnected);
+			CL_Disconnect();
 		}
 		break;
 	default:
