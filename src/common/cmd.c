@@ -684,6 +684,53 @@ const char* Cmd_GetCommandDesc (const char* cmd_name)
 
 /**
  * @brief
+ * @sa Cmd_AddParamCompleteFunction
+ */
+int Cmd_GenericCompleteFunction (size_t len, const char **match, int matches, const char **list)
+{
+	static char matchString[MAX_QPATH];
+	char matchChar;
+	int lenResult = 0;
+	int i;
+
+	switch (matches) {
+	/* exactly one match */
+	case 1:
+		*match = list[0];
+		break;
+	/* no matches */
+	case 0:
+		break;
+	/* more than one match */
+	default:
+		/* get the shortest matching string of the results */
+		lenResult = len;
+		while (qtrue) {
+			matchChar = list[0][lenResult];
+			for (i = 0; i < matches; i++) {
+				if (matchChar != list[i][lenResult])
+					break;
+			}
+			lenResult++;
+			if (i != matches)
+				break;
+		}
+		/* len is >= 1 here */
+		if (len != lenResult) {
+			if (lenResult >= MAX_QPATH)
+				lenResult = MAX_QPATH - 1;
+			/* j must be bigger than 0 here */
+			Q_strncpyz(matchString, list[0], lenResult);
+			*match = matchString;
+			matches = 1;
+		}
+		break;
+	}
+	return matches;
+}
+
+/**
+ * @brief
  * @param[in] cmd_name The name the command we want to add the complete function
  * @param[in] function The complete function pointer
  * @sa Cmd_AddCommand
@@ -821,7 +868,7 @@ int Cmd_CompleteCommandParameters (const char *command, const char *partial, con
 	unsigned int hash;
 
 	/* check for partial matches in commands */
-	hash = Com_HashKey (command, CMD_HASH_SIZE);
+	hash = Com_HashKey(command, CMD_HASH_SIZE);
 	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
 		if (!Q_strcasecmp(command, cmd->name)) {
 			if (!cmd->completeParam)
@@ -842,7 +889,7 @@ int Cmd_CompleteCommand (const char *partial, const char **match)
 {
 	cmd_function_t *cmd;
 	cmd_alias_t *a;
-	const char *localMatch = NULL;
+	const char *localMatch[MAX_COMPLETE];
 	int len, matches = 0;
 
 	len = strlen(partial);
@@ -856,23 +903,25 @@ int Cmd_CompleteCommand (const char *partial, const char **match)
 			Com_Printf("[cmd] %s\n", cmd->name);
 			if (cmd->description)
 				Com_Printf("%c      %s\n", 1, cmd->description);
-			localMatch = cmd->name;
-			matches++;
+			localMatch[matches++] = cmd->name;
+			if (matches >= MAX_COMPLETE)
+				break;
 		}
 	}
 
 	/* and then aliases */
-	for (a = cmd_alias; a; a = a->next) {
-		if (strstr(a->name, partial)) {
-			Com_Printf("[ali] %s\n", a->name);
-			localMatch = a->name;
-			matches++;
+	if (matches < MAX_COMPLETE) {
+		for (a = cmd_alias; a; a = a->next) {
+			if (strstr(a->name, partial)) {
+				Com_Printf("[ali] %s\n", a->name);
+				localMatch[matches++] = a->name;
+				if (matches >= MAX_COMPLETE)
+					break;
+			}
 		}
 	}
 
-	if (matches == 1)
-		*match = localMatch;
-	return matches;
+	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
 }
 
 

@@ -3080,12 +3080,29 @@ static menu_t* MN_PushMenuDelete (const char *name, qboolean delete)
  */
 static int MN_CompletePushMenu (const char *partial, const char **match)
 {
-	int i;
+	int i, matches = 0;
+	const char *localMatch[MAX_COMPLETE];
+	size_t len;
 
-	/* list them all */
-	for (i = 0; i <= numMenus; i++)
-		Com_Printf("%s\n", menus[i].name);
-	return numMenus;
+	len = strlen(partial);
+	if (!len) {
+		for (i = 0; i < numMenus; i++)
+			Com_Printf("%s\n", menus[i].name);
+		return 0;
+	}
+
+	localMatch[matches] = NULL;
+
+	/* check for partial matches */
+	for (i = 0; i < numMenus; i++)
+		if (!Q_strncmp(partial, menus[i].name, len)) {
+			Com_Printf("%s\n", menus[i].name);
+			localMatch[matches++] = menus[i].name;
+			if (matches >= MAX_COMPLETE)
+				break;
+		}
+
+	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
 }
 
 /**

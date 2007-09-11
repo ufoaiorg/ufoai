@@ -341,11 +341,9 @@ static void SV_ServerCommand_f (void)
  */
 static int SV_CompleteMapCommand (const char *partial, const char **match)
 {
-	int i, j, matches = 0;
-	char matchChar;
-	const char *localMatch[128];
-	size_t len, lenResult = 0;
-	static char matchString[MAX_QPATH];
+	int i, matches = 0;
+	const char *localMatch[MAX_COMPLETE];
+	size_t len;
 
 	FS_GetMaps(qfalse);
 
@@ -364,56 +362,11 @@ static int SV_CompleteMapCommand (const char *partial, const char **match)
 		if (!Q_strncmp(partial, fs_maps[i], len)) {
 			Com_Printf("%s\n", fs_maps[i]);
 			localMatch[matches++] = fs_maps[i];
-		}
-
-	switch (matches) {
-	/* exactly one match */
-	case 1:
-		*match = localMatch[0];
-		break;
-	/* no matches */
-	case 0:
-		break;
-	/* more than one match */
-	default:
-		/* get the shortest string of the results */
-		lenResult = len;
-		while (qtrue) {
-			matchChar = localMatch[0][lenResult];
-			for (i = 0; i < matches; i++) {
-				if (matchChar != localMatch[i][lenResult])
-					break;
-			}
-			lenResult++;
-			if (i != matches)
+			if (matches >= MAX_COMPLETE)
 				break;
 		}
-		/* len is >= 1 here */
-		if (len != lenResult) {
-			if (lenResult >= MAX_QPATH)
-				lenResult = MAX_QPATH - 1;
-			/* compare up to lenResult chars */
-			for (i = len + 1; i < lenResult; i++) {
-				/* just take the first string */
-				Q_strncpyz(matchString, localMatch[0], i + 1);
-				for (j = 1; j < matches; j++) {
-					if (Q_strncmp(matchString, localMatch[j], i)) {
-						break;
-					}
-				}
-				if (j < matches)
-					break;
 
-				/* j must be bigger than 0 here */
-				Q_strncpyz(matchString, localMatch[0], i + 1);
-				*match = matchString;
-				matches = 1;
-			}
-		}
-		break;
-	}
-
-	return matches;
+	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
 }
 
 /**
@@ -508,11 +461,9 @@ static const char *serverCommandList[] = {
  */
 static int SV_CompleteServerCommand (const char *partial, const char **match)
 {
-	int i, j, matches = 0;
-	const char *localMatch[128]; /* i don't think that there will ever
-								* be more than 128 server command ;-) */
-	size_t len, lenResult = 0, tmp;
-	static char matchString[MAX_QPATH];
+	int i, matches = 0;
+	const char *localMatch[MAX_COMPLETE];
+	size_t len;
 	int numServerCommands;
 
 	len = strlen(partial);
@@ -522,7 +473,7 @@ static int SV_CompleteServerCommand (const char *partial, const char **match)
 				break;
 			Com_Printf("[cmd] %s\n", serverCommandList[i]);
 			if (*serverCommandList[i + 1])
-			Com_Printf("%c      %s\n", 1, serverCommandList[i + 1]);
+				Com_Printf("%c      %s\n", 1, serverCommandList[i + 1]);
 		}
 		return i - 1;
 	}
@@ -543,43 +494,7 @@ static int SV_CompleteServerCommand (const char *partial, const char **match)
 			localMatch[matches++] = serverCommandList[i * 2];
 		}
 
-	/* no matches or exactly one match */
-	if (matches <= 1) {
-		if (matches == 1)
-			*match = localMatch[0];
-	} else {
-		/* get the shortest string of the results */
-		lenResult = strlen(localMatch[0]);
-		for (i = 0; i < matches; i++) {
-			tmp = strlen(localMatch[i]);
-			if (tmp < lenResult)
-				lenResult = tmp;
-		}
-		/* len is >= 1 here */
-		if (len != lenResult) {
-			if (lenResult >= MAX_QPATH)
-				lenResult = MAX_QPATH - 1;
-			/* compare up to lenResult chars */
-			for (i = len + 1; i < lenResult; i++) {
-				/* just take the first string */
-				Q_strncpyz(matchString, localMatch[0], i + 1);
-				for (j = 1; j < matches; j++) {
-					if (Q_strncmp(matchString, localMatch[j], i)) {
-						break;
-					}
-				}
-				if (j < matches)
-					break;
-
-				/* j must be bigger than 0 here */
-				Q_strncpyz(matchString, localMatch[0], i + 1);
-				*match = matchString;
-				matches = 1;
-			}
-		}
-	}
-
-	return matches;
+	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
 }
 
 /**

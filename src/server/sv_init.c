@@ -543,7 +543,7 @@ static qboolean SV_TestFilled (void)
 	return qtrue;
 }
 
-#ifdef DEBUG
+#ifdef PARANOID
 /**
  * @brief Debug fuction to dump the rating of the current map.
  */
@@ -600,7 +600,9 @@ static int SV_CalcRating (void)
 		for (x = 1; x < mapW + 1; x++)
 			rating += curRating[y][x];
 
-	/* SV_DumpRating(); */
+#ifdef PARANOID
+	SV_DumpRating();
+#endif
 
 	return rating;
 }
@@ -1003,7 +1005,9 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
 
 	/* generate the strings */
 	for (i = 0, pl = mPlaced; i < numPlaced; i++, pl++) {
-		/* SV_DumpPlaced(pl); */
+#ifdef PARANOID
+		SV_DumpPlaced(pl);
+#endif
 
 		Q_strcat(asmMap, va(" %s", pl->tile->id), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
 		Q_strcat(asmPos, va(" %i %i", (pl->x - mAsm->w / 2) * 8, (pl->y - mAsm->h / 2) * 8), MAX_TOKEN_CHARS * MAX_TILESTRINGS);

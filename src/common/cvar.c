@@ -245,14 +245,16 @@ const char *Cvar_VariableStringOld (const char *var_name)
  */
 int Cvar_CompleteVariable (const char *partial, const char **match)
 {
-	cvar_t *cvar;
-	const char *localMatch = NULL;
-	int len, matches = 0;
+	int matches = 0;
+	const char *localMatch[MAX_COMPLETE];
+	cvar_t* cvar;
+	size_t len;
 
 	len = strlen(partial);
-
 	if (!len)
 		return 0;
+
+	localMatch[matches] = NULL;
 
 	/* check for partial matches */
 	for (cvar = cvar_vars; cvar; cvar = cvar->next)
@@ -264,13 +266,12 @@ int Cvar_CompleteVariable (const char *partial, const char **match)
 			Com_Printf("[var] %-20s = \"%s\"\n", cvar->name, cvar->string);
 			if (cvar->description)
 				Com_Printf("%c      %s\n", 1, cvar->description);
-			localMatch = cvar->name;
-			matches++;
+			localMatch[matches++] = cvar->name;
+			if (matches >= MAX_COMPLETE)
+				break;
 		}
 
-	if (matches == 1)
-		*match = localMatch;
-	return matches;
+	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
 }
 
 /**

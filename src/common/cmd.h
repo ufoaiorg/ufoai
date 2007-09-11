@@ -97,7 +97,10 @@ void Cmd_AddCommand(const char *cmd_name, xcommand_t function, const char* desc)
 
 void Cmd_RemoveCommand(const char *cmd_name);
 
+#define MAX_COMPLETE 128
 extern void Cmd_AddParamCompleteFunction(const char *cmd_name, int (*function)(const char *partial, const char **match));
+
+int Cmd_GenericCompleteFunction(size_t len, const char **match, int matches, const char **list);
 
 /**
  * @brief used by the cvar code to check for cvar / command name overlap
