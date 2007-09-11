@@ -268,7 +268,6 @@ Section "Source Code" SEC03
   SetOutPath "$INSTDIR\src\renderer"
   File "..\..\renderer\*.h"
   File "..\..\renderer\*.c"
-  File "..\..\renderer\*.def"
   SetOutPath "$INSTDIR\src\server"
   File "..\..\server\*.h"
   File "..\..\server\*.c"
