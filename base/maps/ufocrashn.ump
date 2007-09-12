@@ -6,6 +6,8 @@
 // ----------
 // +: tile contains something
 // a: any
+// b: street horizontal
+// c: street vertical
 
 base ucn/uc_
 
@@ -18,11 +20,11 @@ base ucn/uc_
 // ---------------------------------
 tile +drop_firebird
 {
-4 4
-0      abc     abc     0
-abc     +a     +a      abc
-abc     +a     +a      abc
-0      abc     abc     0
+6 4
+0      ab     ab      ab     ab     0
+ac     +a     +a      +a     +a      ac
+ac     +a     +a      +a     +a      ac
+0      ab     ab      ab     ab     0
 }
 
 // ---------------------------------
@@ -30,11 +32,11 @@ abc     +a     +a      abc
 // ---------------------------------
 tile +inter_stiletto
 {
-4 4
-0      abc     abc     0
-abc     +a     +a      abc
-abc     +a     +a      abc
-0      abc     abc     0
+6 4
+0      ab     ab      ab     ab     0
+ac     +a     +a      +a     +a      ac
+ac     +a     +a      +a     +a      ac
+0      ab     ab      ab     ab     0
 }
 
 // ---------------------------------
@@ -42,11 +44,11 @@ abc     +a     +a      abc
 // ---------------------------------
 tile +inter_saracen
 {
-4 4
-0      abc     abc     0
-abc     +a     +a      abc
-abc     +a     +a      abc
-0      abc     abc     0
+6 4
+0      ab     ab      ab     ab     0
+ac     +a     +a      +a     +a      ac
+ac     +a     +a      +a     +a      ac
+0      ab     ab      ab     ab     0
 }
 
 // ---------------------------------
@@ -54,92 +56,60 @@ abc     +a     +a      abc
 // ---------------------------------
 tile +inter_stingray
 {
-4 4
-0      abc     abc     0
-abc     +a     +a      abc
-abc     +a     +a      abc
-0      abc     abc     0
+6 4
+0      ab     ab      ab     ab     0
+ac     +a     +a      +a     +a      ac
+ac     +a     +a      +a     +a      ac
+0      ab     ab      ab     ab     0
+}
+
+// ---------------------------------
+// house
+// ---------------------------------
+tile +h01
+{
+4 3
+
+0      ab     ab     0
+ac     +a     +a      ac
+0      ab     ab     0
 }
 
 // *********************************
 // Assemblies
 // *********************************
 
-// grass
-
-assembly ufo_carrier-grass
+assembly ufo_harvester
 {
+size "4 2"
++h01 "0 10"
+*rm_dropship +drop_firebird "1 1"
 }
 
-assembly ufo_harvester-grass
+assembly ufo_condor
 {
+size "4 2"
++h01 "0 10"
+*rm_dropship +drop_firebird "1 1"
 }
 
-assembly ufo_condor-grass
+assembly ufo_scout
 {
+size "4 2"
++h01 "0 10"
+*rm_dropship +drop_firebird "1 1"
 }
 
-assembly ufo_scout-grass
+assembly ufo_fighter
 {
+size "4 2"
++h01 "0 10"
+*rm_dropship +drop_firebird "1 1"
 }
 
-assembly ufo_fighter-grass
+assembly ufo_supply
 {
+size "4 2"
++h01 "0 10"
+*rm_dropship +drop_firebird "1 1"
 }
-
-assembly ufo_big-grass
-{
-}
-
-// desert
-
-assembly ufo_carrier-desert
-{
-}
-
-assembly ufo_harvester-desert
-{
-}
-
-assembly ufo_condor-desert
-{
-}
-
-assembly ufo_scout-desert
-{
-}
-
-assembly ufo_fighter-desert
-{
-}
-
-assembly ufo_big-desert
-{
-}
-
-// arctic
-
-assembly ufo_carrier-arctic
-{
-}
-
-assembly ufo_harvester-arctic
-{
-}
-
-assembly ufo_condor-arctic
-{
-}
-
-assembly ufo_scout-arctic
-{
-}
-
-assembly ufo_fighter-arctic
-{
-}
-
-assembly ufo_big-arctic
-{
-}
-

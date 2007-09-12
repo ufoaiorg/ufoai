@@ -64,7 +64,7 @@ ac     +a     +a      +a     +a      ac
 }
 
 // ---------------------------------
-// house (desert)
+// house
 // ---------------------------------
 tile +h01
 {
@@ -78,13 +78,6 @@ ac     +a     +a      ac
 // *********************************
 // Assemblies
 // *********************************
-
-assembly ufo_carrier
-{
-size "4 2"
-+h01 "0 10"
-*rm_dropship +drop_firebird "1 1"
-}
 
 assembly ufo_harvester
 {
