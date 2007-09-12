@@ -461,6 +461,8 @@ void CL_Disconnect (void)
 		NET_WriteByte(msg, clc_stringcmd);
 		NET_WriteString(msg, "disconnect");
 		NET_WriteMsg(cls.stream, msg);
+		/* make sure, that this is send */
+		NET_Wait(0);
 	}
 
 	stream_finished(cls.stream);

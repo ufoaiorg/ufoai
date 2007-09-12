@@ -2646,6 +2646,8 @@ void G_ClientBegin (player_t* player)
 		return;
 	}
 
+	player->began = qtrue;
+
 	level.numplayers++;
 	gi.configstring(CS_PLAYERCOUNT, va("%i", level.numplayers));
 
@@ -2678,6 +2680,12 @@ qboolean G_ClientSpawn (player_t * player)
 	edict_t *ent;
 	int i;
 
+	if (player->spawned) {
+		gi.bprintf(PRINT_CONSOLE, "%s already spawned.\n", player->pers.netname);
+		G_ClientDisconnect(player);
+		return qfalse;
+	}
+
 	/* @todo: Check player->pers.team here */
 	if (level.activeTeam == -1) {
 		/* activate round if in single-player */
@@ -2691,6 +2699,8 @@ qboolean G_ClientSpawn (player_t * player)
 		}
 	}
 
+	player->spawned = qtrue;
+
 	/* do all the init events here... */
 	/* reset the data */
 	gi.AddEvent(P_MASK(player), EV_RESET | EVENT_INSTANTLY);
@@ -2703,13 +2713,10 @@ qboolean G_ClientSpawn (player_t * player)
 	G_CheckVis(NULL, qfalse);
 
 	/* set initial state to reaction fire activated for the other team */
-	if (sv_maxclients->integer > 1 && level.activeTeam != player->pers.team) {
+	if (sv_maxclients->integer > 1 && level.activeTeam != player->pers.team)
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-			if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)) {
-				/* FIXME: What if the current firedef wouldn't allow to use rf */
+			if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2))
 				G_ClientStateChange(player, i, STATE_REACTION_ONCE, qfalse);
-			}
-	}
 
 	/* submit stats */
 	G_SendPlayerStats(player);
@@ -2800,15 +2807,22 @@ qboolean G_ClientConnect (player_t * player, char *userinfo)
  */
 void G_ClientDisconnect (player_t * player)
 {
-	level.numplayers--;
-	gi.configstring(CS_PLAYERCOUNT, va("%i", level.numplayers));
+	/* only if the player already sent his began */
+	if (player->began) {
+		level.numplayers--;
+		gi.configstring(CS_PLAYERCOUNT, va("%i", level.numplayers));
 
-	if (level.activeTeam == player->pers.team)
-		G_ClientEndRound(player, NOISY);
+		if (level.activeTeam == player->pers.team)
+			G_ClientEndRound(player, NOISY);
 
-	/* if no more players are connected - stop the server */
-	if (!level.numplayers)
-		level.intermissionTime = level.time + 10.0f;
+		/* if no more players are connected - stop the server */
+		if (!level.numplayers)
+			level.intermissionTime = level.time + 10.0f;
+	}
+
+	player->began = qfalse;
+	player->spawned = qfalse;
+	player->ready = qfalse;
 
 	gi.bprintf(PRINT_CONSOLE, "%s disconnected.\n", player->pers.netname);
 }

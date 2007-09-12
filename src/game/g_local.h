@@ -476,8 +476,9 @@ struct player_s {
 	int ping;
 
 	/* private to game */
-	qboolean spawned;
-	qboolean ready;
+	qboolean spawned;			/**< already spawned? */
+	qboolean began;				/**< the player sent his 'begin' already */
+	qboolean ready;				/**< ready to end his round */
 	client_persistant_t pers;
 };
 
