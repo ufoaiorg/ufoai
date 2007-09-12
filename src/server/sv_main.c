@@ -74,7 +74,7 @@ void SV_DropClient (client_t * drop, const char *message)
 	NET_WriteByte(msg, svc_disconnect);
 	NET_WriteString(msg, message);
 	NET_WriteMsg(drop->stream, msg);
-	SV_BroadcastPrintf(PRINT_CHAT, va("%s was dropped from the server - reason: %s\n", drop->name, message));
+	SV_BroadcastPrintf(PRINT_CHAT, "%s was dropped from the server - reason: %s\n", drop->name, message);
 
 	if (drop->state == cs_spawned || drop->state == cs_spawning) {
 		/* call the prog function for removing a client */

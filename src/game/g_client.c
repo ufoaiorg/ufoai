@@ -2798,7 +2798,7 @@ qboolean G_ClientConnect (player_t * player, char *userinfo)
 	memset(&player->pers, 0, sizeof(client_persistant_t));
 	G_ClientUserinfoChanged(player, userinfo);
 
-	gi.bprintf(PRINT_CONSOLE, "%s is connecting...\n", Info_ValueForKey(userinfo, "name"));
+	gi.bprintf(PRINT_CHAT, "%s is connecting...\n", player->pers.netname);
 	return qtrue;
 }
 
