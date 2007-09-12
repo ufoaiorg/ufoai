@@ -168,6 +168,7 @@ terrain tex_buildings/floor005 {
 
 // sand
 terrain tex_nature/desert004 {
+	footstepsound "footsteps/sand2"
 }
 
 // dirty sand on the floor
