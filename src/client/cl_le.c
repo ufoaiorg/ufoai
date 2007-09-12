@@ -479,21 +479,25 @@ static void LE_PlaySoundFileForContents (le_t* le, int contents)
 	if (!soundWaterMove)
 		soundWaterOut = S_RegisterSound("footsteps/water_under");
 
-	if (contents & CONTENTS_WATER) {
-		/* were we already in the water? */
-		if (le->positionContents & CONTENTS_WATER) {
-			/* play water moving sound */
-			S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_ACTOR, soundWaterOut, 1, 1, 0);
-		} else {
-			/* play water entering sound */
-			S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_ACTOR, soundWaterIn, 1, 1, 0);
+	/* only play those water sounds when an actor jumps into the water - but not
+	 * if he enters carefully in crouched mode */
+	if (le->state & ~STATE_CROUCHED) {
+		if (contents & CONTENTS_WATER) {
+			/* were we already in the water? */
+			if (le->positionContents & CONTENTS_WATER) {
+				/* play water moving sound */
+				S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_ACTOR, soundWaterOut, 1, 1, 0);
+			} else {
+				/* play water entering sound */
+				S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_ACTOR, soundWaterIn, 1, 1, 0);
+			}
+			return;
 		}
-		return;
-	}
 
-	if (le->positionContents & CONTENTS_WATER) {
-		/* play water leaving sound */
-		S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_ACTOR, soundWaterMove, 1, 1, 0);
+		if (le->positionContents & CONTENTS_WATER) {
+			/* play water leaving sound */
+			S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_ACTOR, soundWaterMove, 1, 1, 0);
+		}
 	}
 }
 

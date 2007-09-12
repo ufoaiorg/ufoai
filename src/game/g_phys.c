@@ -27,6 +27,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief
+ * @todo Use this function to enable footsteps over network
+ * @note Only play the water sounds if actor is not in STATE_CROUCHED mode
+ * we can assume, that moving slower and more carefully would also not produce
+ * the water sounds
  */
 void G_PhysicsStep (edict_t *ent)
 {
@@ -37,18 +41,20 @@ void G_PhysicsStep (edict_t *ent)
 		contentFlags = ent->contentFlags;
 		visflags = ent->moveinfo.visflags[ent->moveinfo.currentStep];
 		/* Send the sound effect to everyone how's not seeing the actor */
-		if (contentFlags & CONTENTS_WATER) {
-			if (ent->moveinfo.contentFlags[ent->moveinfo.currentStep] & CONTENTS_WATER) {
-				/* looks like we already are in the water */
-				/* send water moving sound */
-				gi.PositionedSound(~visflags, ent->origin, ent, "footsteps/water_under", CHAN_BODY, 1, 1, 0);
-			} else {
-				/* send water entering sound */
-				gi.PositionedSound(~visflags, ent->origin, ent, "footsteps/water_in", CHAN_BODY, 1, 1, 0);
+		if (ent->state & ~STATE_CROUCHED) {
+			if (contentFlags & CONTENTS_WATER) {
+				if (ent->moveinfo.contentFlags[ent->moveinfo.currentStep] & CONTENTS_WATER) {
+					/* looks like we already are in the water */
+					/* send water moving sound */
+					gi.PositionedSound(~visflags, ent->origin, ent, "footsteps/water_under", CHAN_BODY, 1, 1, 0);
+				} else {
+					/* send water entering sound */
+					gi.PositionedSound(~visflags, ent->origin, ent, "footsteps/water_in", CHAN_BODY, 1, 1, 0);
+				}
+			} else if (ent->contentFlags & CONTENTS_WATER) {
+				/* send water leaving sound */
+				gi.PositionedSound(~visflags, ent->origin, ent, "footsteps/water_out", CHAN_BODY, 1, 1, 0);
 			}
-		} else if (ent->contentFlags & CONTENTS_WATER) {
-			/* send water leaving sound */
-			gi.PositionedSound(~visflags, ent->origin, ent, "footsteps/water_out", CHAN_BODY, 1, 1, 0);
 		}
 
 		/* and now save the new contents */
