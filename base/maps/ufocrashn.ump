@@ -9,7 +9,7 @@
 // b: street horizontal
 // c: street vertical
 
-base ucd/uc_
+base ucn/uc_
 
 // *********************************
 // Tiles
@@ -113,10 +113,10 @@ tile +ufo_harvester
 8 6
 
 0      ab     ab     ab     ab     ab     ab     0
-ac     +a     +a      +a     +a      +a     +a      ac
-ac     +a     +a      +a     +a      +a     +a      ac
-ac     0      0       0      +a      +a     +a      ac
-ac     0      0       0      +a      +a     +a      ac
+ac     +a     +a      +a     +a      +a     +a      z
+ac     +a     +a      +a     +a      +a     +a      z
+ac     0      0       0      +a      +a     +a      z
+ac     0      0       0      +a      +a     +a      z
 0      ab     ab     ab     ab     ab     ab     0
 }
 
