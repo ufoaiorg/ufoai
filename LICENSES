@@ -364,6 +364,7 @@ base/maps/tropicn/tr_r05.map | GPL version 2
 base/maps/tutorial01.map | GPL version 2
 base/maps/tutorial02.map | GPL version 2
 base/maps/ucd/uc_h02.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/ucd/uc_h03.map | GNU General Public License 2.0 | Martin Gerhardy | Based on city04 house
 base/maps/ucd/uc_ufo_harvester.map | GNU General Public License 2.0 | Martin Gerhardy | harverstercrash map by SparX
 base/maps/village07d.map | GPL version 2 | 'SparX' Beyeler
 base/maps/village07n.map | GPL version 2 | 'SparX' Beyeler
