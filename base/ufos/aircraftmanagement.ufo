@@ -309,6 +309,7 @@ aircraft craft_ufo_carrier
 	building	building_small_ufo_hangar
 	price		3000000
 	image		air_ufo
+	nogeoscape	true
 }
 
 // FIXME

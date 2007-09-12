@@ -1100,6 +1100,7 @@ static const value_t aircraft_vals[] = {
 	{"shortname", V_TRANSLATION_MANUAL_STRING, offsetof(aircraft_t, shortname), 0},
 	{"size", V_INT, offsetof(aircraft_t, size), MEMBER_SIZEOF(aircraft_t, size)},
 	{"weight", V_INT, offsetof(aircraft_t, weight), MEMBER_SIZEOF(aircraft_t, weight)},
+	{"nogeoscape", V_BOOL, offsetof(aircraft_t, notOnGeoscape), MEMBER_SIZEOF(aircraft_t, notOnGeoscape)},
 
 	{"image", V_CLIENT_HUNK_STRING, offsetof(aircraft_t, image), 0},
 	{"model", V_CLIENT_HUNK_STRING, offsetof(aircraft_t, model), 0},

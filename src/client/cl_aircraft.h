@@ -189,6 +189,7 @@ typedef struct aircraft_s {
 	technology_t* tech;		/**< link to the aircraft tech */
 
 	qboolean visible;		/**< The ufo is visible ? */
+	qboolean notOnGeoscape;	/**< don't let this aircraft ever appear on geoscape (e.g. ufo_carrier) */
 } aircraft_t;
 
 /*

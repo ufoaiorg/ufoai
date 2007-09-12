@@ -366,7 +366,8 @@ static void UFO_NewUfoOnGeoscape_f (void)
 	if (newUfoNum == numAircraft_samples)
 		for (newUfoNum = 0; newUfoNum < numAircraft_samples; newUfoNum++)
 			if (aircraft_samples[newUfoNum].type == AIRCRAFT_UFO
-			 && (ufotype == UFO_MAX || ufotype == aircraft_samples[newUfoNum].ufotype))
+			 && (ufotype == UFO_MAX || ufotype == aircraft_samples[newUfoNum].ufotype)
+			 && !aircraft_samples[newUfoNum].notOnGeoscape)
 				break;
 	if (newUfoNum == numAircraft_samples) {
 		if (ufotype != UFO_MAX)
