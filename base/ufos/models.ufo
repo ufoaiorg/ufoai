@@ -533,4 +533,21 @@ menu_model weap_irgoggles
 	}
 }
 
+// ============== ALIEN CRAFT EQUIPMENT =========================
+menu_model craft_item_target
+{
+	model	"aircraft/craft_item_target/craft_item_target"
+	menutransform {
+		ufopedia	"5 5 5"	"-120 120 -30"	"10 0 0"
+	}
+}
+
+menu_model craft_item_astrogation
+{
+	model	"aircraft/craft_item_astro/craft_item_astrogation"
+	menutransform {
+		ufopedia	"6 6 6"	"-120 120 -30"	#
+	}
+}
+
 // ============== EOF =========================

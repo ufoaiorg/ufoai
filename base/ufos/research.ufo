@@ -3705,8 +3705,9 @@ tech rs_craft_alien_astrogation
 	}
 	time		600
 	producetime	-1
+	
+	mdl_top		craft_item_astrogation
 
-	image_top	"techs/craft_alien_astrogation"
 }
 
 tech rs_craft_alien_propulsion
@@ -3982,8 +3983,7 @@ tech rs_craft_el_targeting
 	time		0
 	producetime	571
 
-	mdl_top		"aircraft/craft_item_target/craft_item_target"
-	image_top	"techs/craft_electronics_targeting"
+	mdl_top		craft_item_target
 }
 
 tech rs_craft_el_fuelpod
