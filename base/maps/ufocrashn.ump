@@ -101,8 +101,12 @@ ac     +a      +a      ac
 0      ab     ab     0
 }
 
+// *********************************
+// UFO Tiles
+// *********************************
+
 // ---------------------------------
-// ufos
+// harvester
 // ---------------------------------
 tile +ufo_harvester
 {
@@ -114,6 +118,20 @@ ac     +a     +a      +a     +a      +a     +a      ac
 ac     0      0       0      +a      +a     +a      ac
 ac     0      0       0      +a      +a     +a      ac
 0      ab     ab     ab     ab     ab     ab     0
+}
+
+// ---------------------------------
+// fighter
+// ---------------------------------
+tile +ufo_fighter
+{
+7 5
+
+0      ab     ab     ab     ab     ab     0
+ac     0      0       +a     +a      +a     ac
+ac     +a     +a      +a     +a      +a     ac
+ac     +a     +a      +a     0       0      ac
+0      ab     ab     ab     ab     ab     0
 }
 
 // *********************************
@@ -160,7 +178,7 @@ size "7 5"
 +h01 "0 10"
 +h02 "0 10"
 +h03 "0 10"
-//+ufo_fighter "1 1"
++ufo_fighter "1 1"
 *rm_dropship +drop_firebird "1 1"
 }
 
