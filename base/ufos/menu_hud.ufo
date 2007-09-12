@@ -594,17 +594,18 @@ menu hud
 		out	{
 				*bar_chat image hud/bar_chat
 				*bar_chat size "64 64"
-				cmd "mn_showchatbuttons 0"
+				cmd "mn_showchatbuttons 0;"
 			}
 		in	{
 				*bar_chat image hud/bar_chat_choice
 				*bar_chat size "256 64"
-				cmd "mn_showchatbuttons 1"
+				cmd "mn_showchatbuttons 1;"
 			}
 	}
 	pic bar_chat_all
 	{
 		if	"mn_showchatbuttons == 1"
+		key "*binding messagesay"
 		tooltip	"_Chat"
 		image	hud/button_chat
 		pos		"976 76"
@@ -612,12 +613,13 @@ menu hud
 		texl	"0 0"
 		texh	"32 32"
 		click {
-				cmd	"messagesay"
+				cmd	"messagesay;"
 			}
 	}
 	pic bar_chat_team
 	{
 		if	"mn_showchatbuttons == 1"
+		key "*binding messagesayteam"
 		tooltip	"_Teamchat"
 		image	hud/button_chat
 		pos		"938 76"
@@ -625,12 +627,13 @@ menu hud
 		texl	"32 0"
 		texh	"64 32"
 		click {
-				cmd	"messagesayteam"
+				cmd	"messagesayteam;"
 			}
 	}
 	pic bar_chat_show
 	{
 		if	"mn_showchatbuttons == 1"
+		key "*binding showchat"
 		tooltip	"_Show chat history"
 		image	hud/button_chat
 		pos		"900 76"
@@ -647,7 +650,7 @@ menu hud
 				*chatscreen size "690 400"
 				*chatscreen height "25"
 				*event timeout 0
-				cmd "mn_unhidenode chatscreen"
+				cmd "mn_unhidenode chatscreen;"
 			}
 	}
 
@@ -705,7 +708,7 @@ menu hud
 		pos		"983 139"
 		texl	"165 0"
 		texh	"201 75"
-		click	{ cmd mn_pop }
+		click	{ cmd "mn_pop;" }
 	}
 
 	pic bt_physdata
@@ -716,7 +719,7 @@ menu hud
 		pos		"983 266"
 		texl	"202 0"
 		texh	"238 75"
-		click	{ cmd "mn_push hudphysdat" }
+		click	{ cmd "mn_push hudphysdat;" }
 	}
 
 	pic bt_inventory
@@ -727,7 +730,7 @@ menu hud
 		pos		"983 376"
 		texl	"128 0"
 		texh	"164 75"
-		click	{ cmd "mn_push hudinv" }
+		click	{ cmd "mn_push hudinv;" }
 	}
 
 	// ==================
