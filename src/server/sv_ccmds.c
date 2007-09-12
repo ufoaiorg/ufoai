@@ -141,10 +141,12 @@ static qboolean SV_CheckMap (const char *map, const char *assembly)
  */
 static void SV_Map_f (void)
 {
-	const char *map, *assembly = NULL;
+	const char *assembly = NULL;
+	char bufMap[MAX_QPATH];
+	char bufAssembly[MAX_VAR];
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <mapname>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <mapname> <assembly>\n", Cmd_Argv(0));
 		Com_Printf("Use 'maplist' to get a list of all installed maps\n");
 		return;
 	}
@@ -154,20 +156,22 @@ static void SV_Map_f (void)
 		Cvar_SetValue("sv_ai", 0);
 	}
 
+	/* we copy them to buffers because the command pointers might be invalid soon */
+
 	/* check to make sure the level exists */
-	map = Cmd_Argv(1);
+	Q_strncpyz(bufMap, Cmd_Argv(1), sizeof(sv.assembly));
 	/* random maps uses position strings */
 	if (Cmd_Argc() == 3) {
-		assembly = Cmd_Argv(2);
-		Com_DPrintf(DEBUG_SERVER, "SV_Map_f: assembly: '%s'\n", assembly);
+		assembly = bufAssembly;
+		Q_strncpyz(bufAssembly, Cmd_Argv(2), sizeof(sv.assembly));
 	}
 
-	if (!SV_CheckMap(map, assembly))
+	if (!SV_CheckMap(bufMap, assembly))
 		return;
 
 	/* start up the next map */
 	Com_SetServerState(ss_dead);
-	SV_Map(map, assembly);
+	SV_Map(bufMap, assembly);
 }
 
 /**

@@ -512,7 +512,7 @@ static qboolean SV_FitTile (mTile_t * tile, int x, int y)
 	/* check vor valid grid positions */
 	assert(x%mAsm->dx == 0);
 	assert(y%mAsm->dy == 0);
-	
+
 	if (x < 0 || y < 0)
 		return qfalse;
 
@@ -641,7 +641,7 @@ static void SV_AddTile (mTile_t * tile, int x, int y, int idx, int pos)
 	/* check vor valid grid positions */
 	assert(x%mAsm->dx == 0);
 	assert(y%mAsm->dy == 0);
-	
+
 	/* add the new tile */
 	for (ty = 0; ty < tile->h; ty++)
 		for (tx = 0; tx < tile->w; tx++) {
@@ -1222,13 +1222,7 @@ static void SV_InitGame (void)
  */
 void SV_Map (const char *levelstring, const char *assembly)
 {
-	char level[MAX_QPATH];
-
-	/* we have to copy this, because levelstring might be a pointer
-	 * to the commandbuffer - and thus might be wiped at every time */
-	Q_strncpyz(level, levelstring, sizeof(level));
-
-	assert(*level);
+	assert(*levelstring);
 
 	/* the game is just starting */
 	if (Com_ServerState() == ss_dead)
@@ -1241,6 +1235,6 @@ void SV_Map (const char *levelstring, const char *assembly)
 
 	CL_Drop();
 	SCR_BeginLoadingPlaque();
-	SV_SpawnServer(level, assembly);
+	SV_SpawnServer(levelstring, assembly);
 	Cbuf_CopyToDefer();
 }
