@@ -6,16 +6,17 @@
 
 // normal grass
 terrain tex_nature/grass001 {
-	footstepsound "footsteps/step_1"
+	footstepsound "footsteps/grass2"
 }
 
 // high grass
 terrain tex_nature/jungle002 {
+	footstepsound "footsteps/grass2"
 }
 
 // messy grass with flowers
 terrain exterior/ext_grnd01 {
-	footstepsound "footsteps/step_2"
+	footstepsound "footsteps/grass2"
 }
 
 // ==========================
