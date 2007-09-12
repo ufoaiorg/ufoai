@@ -20,11 +20,11 @@ base ucd/uc_
 // ---------------------------------
 tile +drop_firebird
 {
-6 4
-0      ab     ab      ab     ab     0
-ac     +a     +a      +a     +a      ac
-ac     +a     +a      +a     +a      ac
-0      ab     ab      ab     ab     0
+5 4
+0      ab      ab     ab     0
+ac     +a      +a     +a      ac
+ac     +a      +a     +a      ac
+0      ab      ab     ab     0
 }
 
 // ---------------------------------
@@ -32,11 +32,11 @@ ac     +a     +a      +a     +a      ac
 // ---------------------------------
 tile +inter_stiletto
 {
-6 4
-0      ab     ab      ab     ab     0
-ac     +a     +a      +a     +a      ac
-ac     +a     +a      +a     +a      ac
-0      ab     ab      ab     ab     0
+5 4
+0      ab      ab     ab     0
+ac     +a      +a     +a      ac
+ac     +a      +a     +a      ac
+0      ab      ab     ab     0
 }
 
 // ---------------------------------
@@ -44,11 +44,11 @@ ac     +a     +a      +a     +a      ac
 // ---------------------------------
 tile +inter_saracen
 {
-6 4
-0      ab     ab      ab     ab     0
-ac     +a     +a      +a     +a      ac
-ac     +a     +a      +a     +a      ac
-0      ab     ab      ab     ab     0
+5 4
+0      ab      ab     ab     0
+ac     +a      +a     +a      ac
+ac     +a      +a     +a      ac
+0      ab      ab     ab     0
 }
 
 // ---------------------------------
@@ -56,15 +56,15 @@ ac     +a     +a      +a     +a      ac
 // ---------------------------------
 tile +inter_stingray
 {
-6 4
-0      ab     ab      ab     ab     0
-ac     +a     +a      +a     +a      ac
-ac     +a     +a      +a     +a      ac
-0      ab     ab      ab     ab     0
+5 4
+0      ab      ab     ab     0
+ac     +a      +a     +a      ac
+ac     +a      +a     +a      ac
+0      ab      ab     ab     0
 }
 
 // ---------------------------------
-// house
+// house #1
 // ---------------------------------
 tile +h01
 {
@@ -75,14 +75,44 @@ ac     +a     +a      ac
 0      ab     ab     0
 }
 
+
+// ---------------------------------
+// house #2 (same as house #1 but smaller ground tile)
+// ---------------------------------
+tile +h02
+{
+3 3
+
+0      ab     0
+ac     +a      ac
+0      ab     0
+}
+
+// ---------------------------------
+// ufos
+// ---------------------------------
+tile +ufo_harvester
+{
+8 6
+
+0      ab     ab     ab     ab     ab     ab     0
+ac     +a     +a      +a     +a      +a     +a      ac
+ac     +a     +a      +a     +a      +a     +a      ac
+ac     0      0       0      +a      +a     +a      ac
+ac     0      0       0      +a      +a     +a      ac
+0      ab     ab     ab     ab     ab     ab     0
+}
+
 // *********************************
 // Assemblies
 // *********************************
 
 assembly ufo_harvester
 {
-size "4 2"
+size "7 5"
 +h01 "0 10"
++h02 "0 10"
++ufo_harvester "1 1"
 *rm_dropship +drop_firebird "1 1"
 }
 
