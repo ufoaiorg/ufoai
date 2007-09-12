@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion CVS\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-09-10 13:37+0200\n"
-"PO-Revision-Date: 2007-09-09 13:31+0100\n"
+"PO-Revision-Date: 2007-09-10 13:31+0100\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -31,7 +31,7 @@ msgstr "Rumvæsen landsætning - sne"
 
 #: ../base/maps/frozend.ump:278 ../base/maps/frozenn.ump:244
 msgid "Industrial"
-msgstr ""
+msgstr "Industri"
 
 #: ../base/maps/frozend.ump:296 ../base/maps/frozenn.ump:263
 msgid "Alien landing - Industrial"
@@ -39,7 +39,7 @@ msgstr "Rumvæsen landsætning - industri"
 
 #: ../base/maps/frozend.ump:316 ../base/maps/frozenn.ump:283
 msgid "Multiplayer Coop"
-msgstr ""
+msgstr "Flere sammen"
 
 #: ../base/maps/frozend.ump:336 ../base/maps/frozenn.ump:303
 msgid "Multiplayer Deathmatch"
@@ -227,7 +227,7 @@ msgstr "Brændstofsholder"
 
 #: ../base/ufos/aircraftmanagement.ufo:588 ../base/ufos/research.ufo:3735
 msgid "Polymer Aircraft Armour"
-msgstr ""
+msgstr "Poplymert luftfartøjsbeskyttelse"
 
 #: ../base/ufos/aircraftmanagement.ufo:600 ../base/ufos/research.ufo:3753
 msgid "Alien Aircraft Plating"
@@ -235,21 +235,18 @@ msgstr "Rumvæsenluftfartøjsbeklædning"
 
 #: ../base/ufos/aircraftmanagement.ufo:612 ../base/ufos/research.ufo:3775
 #: ../base/ufos/research.ufo:3786 ../base/ufos/research.ufo:3793
-#, fuzzy
 msgid "Alien Astrogation"
-msgstr "Rumvæsenernes oprindelse"
+msgstr "Rumvæsen rumrejse"
 
 #: ../base/ufos/aircraftmanagement.ufo:621 ../base/ufos/research.ufo:3812
 #: ../base/ufos/research.ufo:3823 ../base/ufos/research.ufo:3830
-#, fuzzy
 msgid "Alien Propulsion"
-msgstr "Rumvæsenkoloni"
+msgstr "Rumvæsen fremdrift"
 
 #: ../base/ufos/aircraftmanagement.ufo:630 ../base/ufos/research.ufo:3848
 #: ../base/ufos/research.ufo:3859 ../base/ufos/research.ufo:3866
-#, fuzzy
 msgid "Alien Detection"
-msgstr "Rumvæsenkoloni"
+msgstr "Rumvæsen opdagelse"
 
 #: ../base/ufos/aircraftmanagement.ufo:643 ../base/ufos/research.ufo:3676
 msgid "Base defence: TR-20 Rocket Pod"
@@ -301,25 +298,26 @@ msgstr "bedøve"
 
 #: ../base/ufos/armor.ufo:24
 msgid "Combat Armour"
-msgstr "Rustning"
+msgstr "Vest"
 
 #: ../base/ufos/armor.ufo:67 ../base/ufos/research.ufo:2335
 #: ../base/ufos/research.ufo:2343
 msgid "Nanocomposite Armour"
-msgstr "Nanosammensat rustning"
+msgstr "Nanosammensatvest"
 
 #: ../base/ufos/armor.ufo:150 ../base/ufos/research.ufo:2371
 #: ../base/ufos/research.ufo:2379
 msgid "Alien Body Armour"
-msgstr "Rumvæsenrustning"
+msgstr "Rumvæsenvest"
 
 #: ../base/ufos/armor.ufo:193
 msgid "Medium Alien Armour"
-msgstr "Mellem rumvæsenrustning"
+msgstr "Mellem rumvæsenvest"
 
+# Opbevaringsrum til rumvæsener er for langt.
 #: ../base/ufos/basemanagement.ufo:62 ../base/ufos/basemanagement.ufo:80
 msgid "Alien Containment Facility"
-msgstr "Opbevaringsrum til rumvæsener"
+msgstr "Opb.rum til rumvæsener"
 
 #: ../base/ufos/basemanagement.ufo:89
 msgid "Entrance"
@@ -359,12 +357,12 @@ msgstr "Lille hangar"
 
 #: ../base/ufos/basemanagement.ufo:241 client/cl_basesummary.c:390
 msgid "Small UFO Hangar"
-msgstr "Lille UFO-hangar"
+msgstr "Lille ufo-hangar"
 
 #: ../base/ufos/basemanagement.ufo:257 ../base/ufos/basemanagement.ufo:274
 #: client/cl_basesummary.c:372 client/cl_basesummary.c:389
 msgid "Large UFO Hangar"
-msgstr "Stor UFO-hangar"
+msgstr "Stor ufo-hangar"
 
 #: ../base/ufos/basemanagement.ufo:283
 msgid "Team Room"
@@ -423,7 +421,7 @@ msgstr "Base #7"
 
 #: ../base/ufos/basemanagement.ufo:400
 msgid "Base #8"
-msgstr "Base #9"
+msgstr "Base #8"
 
 #: ../base/ufos/campaign.ufo:155
 msgid "Very Hard Campaign"
@@ -431,7 +429,9 @@ msgstr "Meget svær kampagne"
 
 #: ../base/ufos/campaign.ufo:156
 msgid "txt_veryhard_campaign"
-msgstr ""
+msgstr "Dette er en særdeles svær udgave af standardkampagnen. I dette scenarie er alt imod dig, du vil modtage færre rekrutter, og nationerne vil være særdeles krævende. Rumvæsenerne viser ingen nåde.\n"
+"\n"
+"Denne indstilling repræsenterer det meget svære niveau, og anbefales for dem som det et lykkedes at vinde over den svære kampagne og stadig har lysten til at straffe dem selv."
 
 #: ../base/ufos/campaign.ufo:179
 msgid "Hard Campaign"
@@ -439,7 +439,9 @@ msgstr "Svær kampagne"
 
 #: ../base/ufos/campaign.ufo:180
 msgid "txt_hard_campaign"
-msgstr ""
+msgstr "Dette er en sværere udgave af standardkampagnen. Du vil have færre soldater til rådighed, ingeniører og videnskabsmænd, nationerne vil være sværere at gøre glade, forskning vil gå langsommere og være mere krævende, og rumvæsenerne vil være stærkere.\n"
+"\n"
+"Denne indstilling repræsenterer det svære niveau og anbefales for erfarne spillere."
 
 #: ../base/ufos/campaign.ufo:212
 msgid "Standard Campaign"
@@ -447,7 +449,9 @@ msgstr "Standard kampagne"
 
 #: ../base/ufos/campaign.ufo:213 ../base/ufos/campaign.ufo:368
 msgid "txt_standard_campaign"
-msgstr ""
+msgstr "Dette er et enkeltspiller, militærorienteret invasionsscenarie. Spilleren har rollen som chef for projekt FALANKS, jordens svar på en trussel fra rumvæsener, og kan spille igennem et dynamisk spil med både væsentlige tilfældige elementer og en stærk historie.\n"
+"\n"
+"Denne kampagne er tilgængelig på flere sværhedsniveauer. Denne indstilling er standardsværhedsgraden, og anbefales for førstegangsspillere som kan lide en udfordring."
 
 #: ../base/ufos/campaign.ufo:264
 msgid "Easy Campaign"
@@ -455,7 +459,9 @@ msgstr "Nem kampagne"
 
 #: ../base/ufos/campaign.ufo:265
 msgid "txt_easy_campaign"
-msgstr ""
+msgstr "Dette er en mere tilgivende udgave af standardkampagnen. Rumvæsenerne vil være mindre seje, ufo-hændelser vil forekomme sjældnere, og du vil modtage flere nye rekrutter som erstatning for dem du har tabt i kamp.\n"
+"\n"
+"Denne kampagne repræsenterer det nemme sværhedsniveau og er en mulighed for førstegangsspillere som foretrækker et mere glidende spil end standardkampagnen kan tilbyde."
 
 #: ../base/ufos/campaign.ufo:297
 msgid "Very Easy Campaign"
@@ -463,7 +469,9 @@ msgstr "Meget nem kampagne"
 
 #: ../base/ufos/campaign.ufo:298
 msgid "txt_veryeasy_campaign"
-msgstr ""
+msgstr "Dette er en meget tilgivende udgave af standardkampagnen. Dine styrker vil være mere magtfulde, rumvæsenerne mindre farlige, og du vil opleve få tab igennem kampagnen.\n"
+"\n"
+"Denne kampagne repræsenterer det meget nemme sværhedsniveau, og er en mulighed for førstegangsspillere som bare lige vil se hvad UFO:AI er for noget."
 
 #: ../base/ufos/campaign.ufo:346
 msgid "Play the aliens"
@@ -471,7 +479,7 @@ msgstr "Spil som rumvæsenerne"
 
 #: ../base/ufos/campaign.ufo:347
 msgid "txt_alien_campaign"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/events.ufo:21
 msgid "Devastating alien terror attack on Mumbai"
@@ -591,7 +599,7 @@ msgstr "Læge"
 #: ../base/ufos/medals.ufo:44 ../base/ufos/team_humans.ufo:502
 #: ../base/ufos/team_humans.ufo:523 client/cl_employee.c:211
 msgid "UGV"
-msgstr ""
+msgstr "UGV"
 
 #: ../base/ufos/medals.ufo:51 client/cl_employee.c:207
 msgid "Worker"
@@ -651,7 +659,7 @@ msgstr "Sekondløjtnant"
 
 #: ../base/ufos/medals.ufo:121
 msgid "2Lt"
-msgstr "Sljt"
+msgstr "2ljt"
 
 #: ../base/ufos/medals.ufo:130
 msgid "Lieutenant"
@@ -727,11 +735,11 @@ msgstr "Køb/sælg luftfartøj"
 
 #: ../base/ufos/menu_aircraft.ufo:146
 msgid "Start your aircraft"
-msgstr "Let dit luftfartøj"
+msgstr "Afsend dit luftfartøj"
 
 #: ../base/ufos/menu_aircraft.ufo:162
 msgid "Start Aircraft"
-msgstr "Let luftfartøj"
+msgstr "Afsend luftfartøj"
 
 #: ../base/ufos/menu_aircraft.ufo:171
 msgid "Call back aircraft"
@@ -755,7 +763,7 @@ msgstr "Byg luftfartøj eller luftfartøjdel"
 
 #: ../base/ufos/menu_aircraft.ufo:245
 msgid "Produce"
-msgstr "Producer"
+msgstr "Byg"
 
 #: ../base/ufos/menu_aircraft.ufo:282 ../base/ufos/menu_aircraft.ufo:875
 #: ../base/ufos/menu_basedefense.ufo:348 ../base/ufos/menu_hospital.ufo:311
@@ -800,7 +808,7 @@ msgstr "Våben"
 #: ../base/ufos/menu_buy.ufo:1397 ../base/ufos/menu_production.ufo:424
 #: ../base/ufos/menu_team.ufo:1384 client/cl_ufopedia.c:182
 msgid "Armour"
-msgstr "Rustning"
+msgstr "Beskyttelse"
 
 #: ../base/ufos/menu_aircraft.ufo:526 ../base/ufos/menu_aircraft.ufo:536
 #: ../base/ufos/menu_production.ufo:845
@@ -848,7 +856,7 @@ msgstr "Vælg denne plads"
 #: ../base/ufos/menu_geoscape.ufo:107 ../base/ufos/menu_production.ufo:49
 #: ../base/ufos/menu_production.ufo:544 ../base/ufos/menu_research.ufo:1137
 msgid "CREDIT"
-msgstr "KREDIT"
+msgstr "FINANSER"
 
 #: ../base/ufos/menu_aliencont.ufo:68 ../base/ufos/menu_basesummary.ufo:67
 #: ../base/ufos/menu_buildings.ufo:74 ../base/ufos/menu_buy.ufo:1423
@@ -996,7 +1004,7 @@ msgstr "Ingen reaktionsild"
 
 #: ../base/ufos/menu_althud.ufo:668 ../base/ufos/menu_hud.ufo:444
 msgid "Use headgear"
-msgstr "Anvend hovedbeklædning"
+msgstr "Anvend hovedbekl."
 
 #: ../base/ufos/menu_althud.ufo:679
 msgid "Reload right hand weapon"
@@ -1184,7 +1192,7 @@ msgstr "Forskning"
 
 #: ../base/ufos/menu_bases.ufo:273
 msgid "Produce new equipment"
-msgstr "Producer nyt udstyr"
+msgstr "Byg nyt udstyr"
 
 #: ../base/ufos/menu_bases.ufo:290
 msgid "Workshop not operational"
@@ -1214,7 +1222,7 @@ msgstr "Byg mindst et rumvæsenopbevaringsrum"
 # rumvæsenopbevaringsbeholder
 #: ../base/ufos/menu_bases.ufo:371
 msgid "Containment"
-msgstr "Rumvæsenopbevaringsrum"
+msgstr "Rumvæsenopb.rum"
 
 #: ../base/ufos/menu_bases.ufo:381
 msgid "Medical and Surgery operations"
@@ -1226,7 +1234,7 @@ msgstr "Byg mindst et hospital"
 
 #: ../base/ufos/menu_bases.ufo:415
 msgid "Base Information"
-msgstr "base information"
+msgstr "Base information"
 
 #: ../base/ufos/menu_bases.ufo:431
 msgid "Base Summary"
@@ -1308,9 +1316,11 @@ msgstr "Navn:"
 msgid "Aircraft:"
 msgstr "Luftfartøj:"
 
+# kan ikke være kortrækkende jagerfly, da det bliver for langt og
+# dermed overskriver antallet til højre for teksten.
 #: ../base/ufos/menu_basesummary.ufo:129
 msgid "Interceptors:"
-msgstr "Kortrækkende jagerfly:"
+msgstr "Kortr. jagerfly:"
 
 #: ../base/ufos/menu_basesummary.ufo:143
 msgid "Transporters:"
@@ -1489,7 +1499,7 @@ msgstr "Blandet"
 
 #: ../base/ufos/menu_buy.ufo:1382 ../base/ufos/menu_production.ufo:409
 msgid "Show armour"
-msgstr "Vis rustning"
+msgstr "Vis beskyttelse"
 
 #: ../base/ufos/menu_buy.ufo:1402 ../base/ufos/menu_production.ufo:429
 msgid "Show other items and materials"
@@ -1542,7 +1552,7 @@ msgstr "Næste ildindstilling"
 #: ../base/ufos/menu_buy.ufo:1628 ../base/ufos/menu_team.ufo:1535
 #: ../base/ufos/menu_ufopedia.ufo:479
 msgid "Firemode:"
-msgstr "Indindstilling:"
+msgstr "Indstilling:"
 
 #: ../base/ufos/menu_buy.ufo:1795 ../base/ufos/menu_buy.ufo:1799
 #: ../base/ufos/menu_buy.ufo:1803 ../base/ufos/menu_buy.ufo:1807
@@ -1636,9 +1646,10 @@ msgstr "Tilbage til hangar"
 msgid "Campaigns"
 msgstr "Kampagner"
 
+# Begynd kampagne er en for langt
 #: ../base/ufos/menu_campaign.ufo:76
 msgid "Start campaign"
-msgstr "Begynd kampagne"
+msgstr "Start kampagne"
 
 #: ../base/ufos/menu_campaign.ufo:96 ../base/ufos/menu_multiplayer.ufo:123
 #: ../base/ufos/menu_options.ufo:123 ../base/ufos/menu_singleplayer.ufo:152
@@ -2073,7 +2084,7 @@ msgstr "Udvidelse"
 
 #: ../base/ufos/menu_inventory.ufo:57 ../base/ufos/menu_team.ufo:1075
 msgid "Headgear"
-msgstr "Hovedbeklædning"
+msgstr "Hovedbekl."
 
 #: ../base/ufos/menu_inventory.ufo:66 ../base/ufos/menu_team.ufo:1084
 msgid "Holster"
@@ -2188,7 +2199,7 @@ msgstr "Sælg"
 
 #: ../base/ufos/menu_main.ufo:70
 msgid "Single-player"
-msgstr "Alenespil"
+msgstr "Spil alene"
 
 #: ../base/ufos/menu_main.ufo:90
 msgid "Multiplayer"
@@ -2385,7 +2396,7 @@ msgstr "Gør denne server offentlig:"
 
 #: ../base/ufos/menu_multiplayer.ufo:965
 msgid "Enable morale states:"
-msgstr ""
+msgstr "Slå moral til:"
 
 #: ../base/ufos/menu_multiplayer.ufo:980
 msgid "Gametype:"
@@ -2401,55 +2412,55 @@ msgstr "Maks klienter:"
 
 #: ../base/ufos/menu_multiplayer.ufo:1036
 msgid "Sets the max allowed clients to connect"
-msgstr ""
+msgstr "Sætter maks tilladte klienter der kan slutte sig til"
 
 #: ../base/ufos/menu_multiplayer.ufo:1068
 msgid "Max. soldiers per team:"
-msgstr ""
+msgstr "Maks soldater per hold:"
 
 #: ../base/ufos/menu_multiplayer.ufo:1070
 msgid "Sets the max allowed soldiers per team"
-msgstr ""
+msgstr "Sætter maks tilladte soldater per hold"
 
 #: ../base/ufos/menu_multiplayer.ufo:1102
 msgid "Max. soldiers per player:"
-msgstr ""
+msgstr "Maks. soldater per spiller:"
 
 #: ../base/ufos/menu_multiplayer.ufo:1104
 msgid "Sets the max allowed soldiers per player when in teamplay"
-msgstr ""
+msgstr "Sætter det tilladte maks soldater per spiller i holdspil"
 
 #: ../base/ufos/menu_multiplayer.ufo:1137
 msgid "Max. human players per team:"
-msgstr ""
+msgstr "Maks spillere per hold:"
 
 #: ../base/ufos/menu_multiplayer.ufo:1170
 msgid "Max. AI actors:"
-msgstr ""
+msgstr "Maks computerespillere:"
 
 #: ../base/ufos/menu_multiplayer.ufo:1172
 msgid "Max AI actors for teamplay mode"
-msgstr ""
+msgstr "Maks computerespillere i holdspil"
 
 #: ../base/ufos/menu_multiplayer.ufo:1204
 msgid "AI autojoin:"
-msgstr ""
+msgstr "Automatisk computere:"
 
 #: ../base/ufos/menu_multiplayer.ufo:1206
 msgid "AI autojoin on free teams"
-msgstr ""
+msgstr "Computere automatisk på ledige hold"
 
 #: ../base/ufos/menu_multiplayer.ufo:1220
 msgid "Server-Password:"
-msgstr ""
+msgstr "Serveradganskode:"
 
 #: ../base/ufos/menu_multiplayer.ufo:1243
 msgid "RCON-Password:"
-msgstr ""
+msgstr "RCON-adgangskode:"
 
 #: ../base/ufos/menu_multiplayer.ufo:1266
 msgid "Hostname:"
-msgstr ""
+msgstr "Værtsnavn:"
 
 #: ../base/ufos/menu_multiplayer.ufo:1289
 msgid "Map"
@@ -2553,15 +2564,15 @@ msgstr "4mod4mod4"
 
 #: ../base/ufos/menu_multiplayer.ufo:1847
 msgid "Coop 2 players"
-msgstr ""
+msgstr "2 samarbejdende"
 
 #: ../base/ufos/menu_multiplayer.ufo:1861
 msgid "Coop 3 players"
-msgstr ""
+msgstr "3 samarbejdende"
 
 #: ../base/ufos/menu_multiplayer.ufo:1875
 msgid "Coop 4 players"
-msgstr ""
+msgstr "4 samarbejdende"
 
 #: ../base/ufos/menu_multiplayeringame.ufo:109
 msgid "Abort Game"
@@ -2589,11 +2600,13 @@ msgstr "Opløsning:"
 
 #: ../base/ufos/menu_options.ufo:171
 msgid "Texture resolution cap:"
-msgstr ""
+msgstr "Teksturopløsningsloft:"
 
+# Translatornote: anisotropy means of unequal physical 
+# properties along different axes.
 #: ../base/ufos/menu_options.ufo:178
 msgid "Texture anisotropy level:"
-msgstr ""
+msgstr "Forskelsteksturniveau:"
 
 # en fuld skærm er det samme som en fyldt skærm. 
 # mens fuldskærm er en visningstilstand.
@@ -2801,7 +2814,7 @@ msgstr "Arbejdere (alle/klar):"
 
 #: ../base/ufos/menu_production.ufo:109 ../base/ufos/menu_production.ufo:604
 msgid "Workshop capacity:"
-msgstr ""
+msgstr "Værkstedskapacitet:"
 
 #: ../base/ufos/menu_production.ufo:129
 msgid "Storage capacity:"
@@ -2809,11 +2822,11 @@ msgstr "Lagerkapacitet:"
 
 #: ../base/ufos/menu_production.ufo:177 ../base/ufos/menu_production.ufo:672
 msgid "Q"
-msgstr ""
+msgstr "K"
 
 #: ../base/ufos/menu_production.ufo:184 ../base/ufos/menu_production.ufo:679
 msgid "Num"
-msgstr ""
+msgstr "Ant"
 
 #: ../base/ufos/menu_production.ufo:229 ../base/ufos/menu_production.ufo:724
 msgid "Increase production by 1"
@@ -2865,7 +2878,7 @@ msgstr "Vis luftfartøjudstyr"
 
 #: ../base/ufos/menu_ptleditor.ufo:16
 msgid "Loop"
-msgstr ""
+msgstr "Gentag"
 
 #: ../base/ufos/menu_ptleditor.ufo:28
 msgid "Show the particle only once"
@@ -2873,7 +2886,7 @@ msgstr "Vis partiklen kun engang"
 
 #: ../base/ufos/menu_ptleditor.ufo:38
 msgid "Loop the particle"
-msgstr ""
+msgstr "Gentag partiklen"
 
 #: ../base/ufos/menu_ptleditor.ufo:55
 msgid "Very slow"
@@ -2924,7 +2937,7 @@ msgstr "Fjern videnskabsmand"
 
 #: ../base/ufos/menu_research.ufo:1053
 msgid "Base Info"
-msgstr ""
+msgstr "Baseinfo"
 
 #: ../base/ufos/menu_research.ufo:1157
 msgid "Stop research"
@@ -3136,7 +3149,7 @@ msgstr "Objektinfo"
 
 #: ../base/ufos/menu_team.ufo:1679
 msgid "Actor Abilities"
-msgstr ""
+msgstr "Soldatevner"
 
 #: ../base/ufos/menu_team.ufo:1723
 msgid "Use current skin with every soldier aboard."
@@ -3196,11 +3209,11 @@ msgstr "Tøm"
 
 #: ../base/ufos/menu_ufopedia.ufo:50
 msgid "Previous entry"
-msgstr ""
+msgstr "Tidligere artikel"
 
 #: ../base/ufos/menu_ufopedia.ufo:61
 msgid "Next entry"
-msgstr ""
+msgstr "Næste artikel"
 
 #: ../base/ufos/menu_ufopedia.ufo:72
 msgid "Back to content"
@@ -3208,7 +3221,7 @@ msgstr "Tilbage til indhold"
 
 #: ../base/ufos/menu_ufopedia.ufo:84
 msgid "Pre research text"
-msgstr ""
+msgstr "Før forskningstekst"
 
 #: ../base/ufos/menu_ufopedia.ufo:98
 msgid "Research results"
@@ -3220,7 +3233,7 @@ msgstr "Forlad UFOpædia"
 
 #: ../base/ufos/menu_ufopedia.ufo:545
 msgid "Mailclient"
-msgstr ""
+msgstr "E-postklient"
 
 #: ../base/ufos/menu_ufopedia.ufo:554
 msgid "Time:"
@@ -3582,19 +3595,20 @@ msgid "Aliens are attacking a shelter. Defend the people inside."
 msgstr "Rumvæsener angriber et beskyttelsesrum. Beskyt folkene indenfor."
 
 #: ../base/ufos/missions.ufo:934
-#, fuzzy
 msgid "Infection Attack"
-msgstr "Sekundær angreb"
+msgstr "Infektionsangreb"
 
 #: ../base/ufos/missions.ufo:935
 msgid ""
 "The aliens are trying to spread their XVI virus amongst the populace. "
 "Prevent them from succeeding at all costs!"
 msgstr ""
+"Rumvæsenerne forsøger at sprede deres XVI-virus blandt befolkningen. "
+"Forhindrer dem i dette uanset prisen!"
 
 #: ../base/ufos/nations.ufo:29
 msgid "The Revolutionary Countries"
-msgstr "De Revolutionærende Lande"
+msgstr "De Revolutionære Lande"
 
 #: ../base/ufos/nations.ufo:41
 msgid "United America"
@@ -3622,7 +3636,7 @@ msgstr "Rusland"
 
 #: ../base/ufos/nations.ufo:123
 msgid "The Commonwealth of Oceania"
-msgstr "Oceanien-sammenslutningen"
+msgstr "Oceanien"
 
 #: ../base/ufos/otheritems.ufo:7 ../base/ufos/research.ufo:150
 #: ../base/ufos/research.ufo:165 ../base/ufos/research.ufo:173
@@ -3665,7 +3679,7 @@ msgstr "Rumvæsenartefakter"
 
 #: ../base/ufos/research.ufo:105
 msgid "Autopsies & Observation"
-msgstr ""
+msgstr "Obduktioner & observation"
 
 #: ../base/ufos/research.ufo:106
 msgid "The Alien Threat"
@@ -3674,15 +3688,39 @@ msgstr "Truslen fra rumvæsener"
 #: ../base/ufos/research.ufo:116 ../base/ufos/research.ufo:129
 #: ../base/ufos/research.ufo:137
 msgid "Continuous Wave Laser Operation"
-msgstr ""
+msgstr "Fortsat bølgelaseroperation"
 
 #: ../base/ufos/research.ufo:119
 msgid "laser_txt"
-msgstr ""
+msgstr "Kommandør, jeg er særdeles glad for at kunne rapportere at vores projekt har været succesfuldt. Jeg har inkluderet billeder af vores laservåbenprototype, som har opnået bølgeenergi i en bærbar version.\n"
+"\n"
+"Den praktiske løsning gik ikke ud på at bygge stadig større batterier, men snarere i at anvende radikale miniature teknologier til at gøre eksisterende kemisk funderede laserkomponenter lettere og mindre. Kemiske lasere har været i anvendelse i meget lang tid, og har været en del af eksperimentelle våbensprogrammer siden det sene 20. århundrede, men de har altid haft mange problemer. De eneste kemiske lasere med brugbar militært potentiale har været for store og besværlige for en infanterist i kamp. Indtil nu har deres muligheder været begrænset til laserkanoner på kampvogne eller antimissil-batterier på skibe.\n"
+"\n"
+"Nu har vi dog her hos FALANKS bygget en konventionel laserkanon i miniatureudgave. På trods af sin lille størrelse er den fuldt ud i stand til at håndtere deuterium-fluoride reaktionen og tilbageholde det giftige biprodukt uden fare for forurening. Lad mig give dig en kort beskrivelse af hvordan den fungerer.\n"
+"\n"
+"Inde i forbrændingskammeret brændes ætyl i kvælstof trifluoride. Denne reaktion producerer opflammede fluorine radikaler, som så bringes i kontakt med en blanding af helium og deuterium gas. Deuteriumet reagerer med fluorinen, og producerer opflammede molekyler af deuterium fluoride. Disse undergår stimulerede udladninger i våbenets optiske udlader hvilket skaber en stråle. En række intelligente linser fokuserer herefter strålen og sender den mod skyttens mål og korrigerer endda for små bevægelser fra skytten eller målets side. Affaldsgassen fra deuteriumet sendes igennem vores specialdesignede filtreringssystem der er under højt tryk. Her fanges alle giftige og radioaktive molekyler før systemet sender den resterende harmløse damp ud i atmosfæren.\n"
+"\n"
+"Filteret skal skiftes efter hver mission, men vi har designet et system som gør det nemt og problemfrit. Hvis filteret af en eller anden grund bliver skadet under missionen, bliver våbnet øjeblikkeligt ufunktionsdygtigt for at forhindre en eventuel forurening.\n"
+"\n"
+"Laseren fungerer i midten af de infrarøde-bølgelængder, så den viser ingen synlig stråle for andre den dem med infrarøde briller.\n"
+"\n"
+"Prototypen vi har bygget er endnu ikke klar til fuld produktion som et infanterivåben, da yderligere raffinering og afbalancering kræves hvis mennesker skal anvende den, men de fremskridt vi har gjort kan også anvendes på køretøjer -- måske endda på fly. Jeg har vedlagt flere nye forslag i din indbakke til yderligere undersøgelser af de ideer vi her har skitseret.\n"
+"\n"
+"Lad mig høre hvornår du ønsker at vi skal begynde arbejdet på dem, øverstbefaldende.\n"
+"\n"
+"--Kommandør Navarre"
 
 #: ../base/ufos/research.ufo:122
 msgid "laser_pre_txt"
-msgstr "<TODO>"
+msgstr "Vores indsamlede FN forskningsfiler har givet en masse værdifuld information vedrørende våbenudvikling på jorden siden begyndelsen af dette århundrede. Et af de mest interessante emner har været produktion af DEV (Dirigerede energivåben), våben som overfører energi til et mål ved brug af andet end et projektil. Vi er især interesseret i filerne omkring udvidet bølgelaserteknologi.\n"
+"\n"
+"En del lande og firmaer har forsøgt at opfinde laservåben igennem årene, men ingen har været i stand til at bygge en laser som kan bæres af en person og som har en styrke der kan konkurrere med gængse våben. Nu har vi fået adgang til den samlede forskning indenfor dette område, såvel som hele biblioteker med den fremmeste teknologi på jorden. Jeg er overbevidst om at vi ikke kun kan bygge et effektivt bærbart laservåben, men at vi også kan gøre den mindre end man tidligere har set en DEV være.\n"
+"\n"
+"Kommandør vi bør forfølge denne forskningsretning så hurtigt som muligt. Variation i vores arsenal vil gøre vores styrker langt sværere at forsvare sig imod, og vores indsamlede viden kan føre os i retning af udvikling af luftvåbenlasere som med større nøjagtighed end gængse våben kan ramme hurtige UFO'er.\n"
+"\n"
+"Som jeg ser det, kan vi her hos FALANKS gøre det umulige, og vi kan gøre det så snart du har godkendt dette forslag.\n"
+"\n"
+"--Kommandør Navarre"
 
 #: ../base/ufos/research.ufo:127 ../base/ufos/research.ufo:135
 #: ../base/ufos/research.ufo:163 ../base/ufos/research.ufo:171
@@ -3727,7 +3765,7 @@ msgstr "<TODO>"
 #: ../base/ufos/research.ufo:4037 ../base/ufos/research.ufo:4045
 #: ../base/ufos/research.ufo:4121 ../base/ufos/research.ufo:4129
 msgid "mail_from_paul_navarre"
-msgstr ""
+msgstr "e-post_fra_paul_navarre"
 
 #: ../base/ufos/research.ufo:128 ../base/ufos/research.ufo:136
 #: ../base/ufos/research.ufo:164 ../base/ufos/research.ufo:172
@@ -3785,19 +3823,35 @@ msgstr ""
 #: ../base/ufos/research.ufo:4122 ../base/ufos/research.ufo:4130
 #: ../base/ufos/research.ufo:4216
 msgid "mail_to_base_commander"
-msgstr ""
+msgstr "e-post_til_øverstkommanderende"
 
 #: ../base/ufos/research.ufo:153 ../base/ufos/research.ufo:191
 msgid "antimatter_txt"
-msgstr ""
+msgstr "Vores forskning omkring antistof er færdig, øverstbefaldende, og vi er klar til at præsentere vores resultater. Jeg er bange for at vores opdagelser hovedsagelig er af dårlig karakter.\n"
+"\n"
+"Rumvæsenerne har stor viden om ting vi intet ved om. Dette er specielt klart i deres omfangsrige brug af antistof. De ser ud til at have stoffet i stor mængde, i det mindste i stor nok mængde til at sende ufo efter ufo til jorden under afbrænding af tankfulde af antiprotoner. Menneskets eksperimenter er på den anden side . . .\n"
+"\n"
+"Det første kunstigt produceret antistof på jorden bestod af 9 atomer af anti-hydrogen og blev skabt på CERNs partikellaboratorium, beliggende nær Geneva på grænsen mellem Frankrig og Schweiz. Ikke lang tid herefter producerede et andet laboratorium cirka 100 atomer. Vi har gjort små fremskridt over årene, men selvom vi nu kan producere antiprotoner i millionvis, er det nemt at glemme hvor lidt det i virkeligheden er.\n"
+"\n"
+"Den største hurdle i vores brug af rumvæsenernes brændstof er tilgængeligheden af antiprotoner. Vi er kommet langt siden 1995, men selv hvis hele verdens partikellaboratoriumer producerer så mange antiprotoner som muligt vil det take 80 millioner år at producere 1 gram antiprotoner. Til sammenligning overgår mængden i et ufo-rekognosceringsfartøj det antistof som er blevet produceret på jorden i de sidste 100 år.\n"
+"\n"
+"Menneskeheden er langt fra at kunne producere antiprotoner i et omfang der er nødvendigt for at drive stof-antistof raketter. Resultatet er at vi ikke kan kopiere rumvæsenernes teknologi. Vi ved ikke hvordan de producerer deres antistof eller hvordan de håndterer at skabe nok elektricitet til at foretage produktionen. Med mindre og indtil vi kan få fat i deres udstyr, vil vores anstrengelser være forgæves.\n"
+"\n"
+"Vores eneste væsentlige succes har været studiet af hvordan rumvæsenerne opbevarer deres antistof. Vi er sikker på at vi kan anvende den samme magnetiske lagringsmetode, oprette specielle faciliteter for sikker opbevaring af op til 10 gram antistof. Jeg har sendt dig en tegning i en separat besked du kan kigge på ved lejlighed. Vi har også designet antistof-brændselstanke som vil passe i vores fly hvis disse fly får en ombygning. Vi har selvfølgelig behov for en fuldstændig forståelse af rumvæsenernes motorer før vi kan begynde at implementere disse.\n"
+"\n"
+"Vi er ikke i stand til at kopiere rumvæsenernes brændstof. Hvis vi anvender antistof i vores egen teknologi vil vi være afhængig af at erobre antistoffet fra rumvæsenerne. Dette kan virke som en farlig vej at gå, men vi har måske ikke noget valg; vi har behov for denne teknologi så hurtigt som muligt, hvis vi skal have mulighed for at standse denne invasion.\n"
+"\n"
+"--Kommandør Navarre"
 
 #: ../base/ufos/research.ufo:154
 msgid "antimatter_extra_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:157
 msgid "antimatter_pre_txt"
-msgstr "<TODO>"
+msgstr "Øverstbefalende, baseret på de meget interessante opdagelser vi gjorde under undersøgelsen af rekognosceringsufoen, ønsker jeg din tilladelse til at anvende laboratorietid til nærmere at analysere rumvæsenernes udbredte brug af antistof og stoffets indvirkning på denne krig.\n"
+"\n"
+"Specielt ønsker jeg at undersøge, om vi kan finde en metode til at kopiere antistof til eget formål. Stof-antistof tilintetgørelse har et overraskende potentiale som brændstof. I energimæssig forstand har det sikkert det bedste størrelse til vægt forhold i sammenligning med ethvert andet stof i universet; evnen til at anvende stoffet på samme måde som rumvæsenerne vil sende vores teknologiniveau med raketfart ind i fremtiden. Vi må forske i dette område snarest muligt!"
 
 #: ../base/ufos/research.ufo:158
 msgid "antimatter_extra_pre_txt"
@@ -3810,7 +3864,7 @@ msgstr "Levende rumvæsen"
 
 #: ../base/ufos/research.ufo:209
 msgid "alien_live_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:212
 msgid "alien_live_pre_txt"
@@ -3828,11 +3882,11 @@ msgstr "<TODO>"
 #: ../base/ufos/research.ufo:3549 ../base/ufos/research.ufo:3557
 #: ../base/ufos/research.ufo:4215
 msgid "mail_from_dr_connor"
-msgstr ""
+msgstr "e-post_fra_dr_connor"
 
 #: ../base/ufos/research.ufo:247 ../base/ufos/research.ufo:286
 msgid "alien_breathing_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:250
 msgid "alien_breathing_pre_txt"
@@ -3845,7 +3899,7 @@ msgstr "Rumvæsenets sind"
 
 #: ../base/ufos/research.ufo:306
 msgid "alien_mind_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:309
 msgid "alien_mind_pre_txt"
@@ -3858,7 +3912,7 @@ msgstr "Mærkelig opførelse"
 
 #: ../base/ufos/research.ufo:342
 msgid "alien_odd_behaviour_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:345
 msgid "alien_odd_behaviour_pre_txt"
@@ -3866,31 +3920,27 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:375 ../base/ufos/research.ufo:388
 #: ../base/ufos/research.ufo:396
-#, fuzzy
 msgid "Alien Communication"
-msgstr "Rumvæsenopbevaringsrum"
+msgstr "Rumvæsenkommunikation"
 
 #: ../base/ufos/research.ufo:378
-#, fuzzy
 msgid "alien_communication_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:381
-#, fuzzy
 msgid "alien_communication_pre_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:410 ../base/ufos/research.ufo:423
 #: ../base/ufos/research.ufo:431
 msgid "The Universal Serum"
-msgstr ""
+msgstr "Almen serum"
 
 #: ../base/ufos/research.ufo:413
 msgid "universal_serum_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:416
-#, fuzzy
 msgid "universal_serum_pre_txt"
 msgstr "<TODO>"
 
@@ -3901,7 +3951,7 @@ msgstr "Rumvæsenernes oprindelse"
 
 #: ../base/ufos/research.ufo:448
 msgid "alien_origins_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:451
 msgid "alien_origins_pre_txt"
@@ -3910,57 +3960,57 @@ msgstr "<TODO>"
 #: ../base/ufos/research.ufo:456 ../base/ufos/research.ufo:464
 #: ../base/ufos/research.ufo:493 ../base/ufos/research.ufo:501
 msgid "mail_from_col_falkland"
-msgstr ""
+msgstr "e-post_fra_oberst_falkland"
 
 #: ../base/ufos/research.ufo:482 ../base/ufos/research.ufo:495
 #: ../base/ufos/research.ufo:503
 msgid "eXtraterrestial Viral Infection"
-msgstr ""
+msgstr "udenjordisk virusinfektion"
 
 #: ../base/ufos/research.ufo:485
 msgid "alien_xvi_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:488
 msgid "alien_xvi_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:523
 msgid "assault_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:541
 msgid "assault_mag_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:560
 msgid "machinegun_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:578
 msgid "machinegun_mag_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:597 ../base/ufos/research.ufo:634
 msgid "bolterrifle_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:600 ../base/ufos/research.ufo:637
 msgid "bolterrifle_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:607 ../base/ufos/research.ufo:615
 #: ../base/ufos/research.ufo:644 ../base/ufos/research.ufo:652
 msgid "Electromagnetic Rifle"
-msgstr ""
+msgstr "Elektromagnetisk gevær"
 
 #: ../base/ufos/research.ufo:671
 msgid "combatknife_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:690
 msgid "monoknife_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:693
 msgid "monoknife_pre_txt"
@@ -3968,47 +4018,47 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:700 ../base/ufos/research.ufo:708
 msgid "Monomolecular Blades"
-msgstr ""
+msgstr "Monomolekulære klinger"
 
 #: ../base/ufos/research.ufo:729
 msgid "flamer_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:748
 msgid "flamer_mag_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:767
 msgid "flashbang_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:786
 msgid "fraggren_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:805
 msgid "incgren_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:824
 msgid "grenl_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:842
 msgid "grenl_ammo_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:861
 msgid "grenl_fle_ammo_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:880
 msgid "grenl_incendiary_ammo_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:899
 msgid "grenl_plasma_ammo_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:902
 msgid "grenl_plasma_ammo_pre_txt"
@@ -4020,7 +4070,7 @@ msgstr "Plasma og granatraketstyr"
 
 #: ../base/ufos/research.ufo:940
 msgid "laser_ammo_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:943
 msgid "laser_ammo_pre_txt"
@@ -4029,11 +4079,11 @@ msgstr "<TODO>"
 #: ../base/ufos/research.ufo:950 ../base/ufos/research.ufo:958
 #: ../base/ufos/weapons_laser.ufo:70
 msgid "D-F Cartridge"
-msgstr ""
+msgstr "D-F patronhylster"
 
 #: ../base/ufos/research.ufo:979
 msgid "heavylaser_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:982
 msgid "heavylaser_pre_txt"
@@ -4046,11 +4096,11 @@ msgstr "Tung laser"
 
 #: ../base/ufos/research.ufo:1037
 msgid "irgoggles_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1055
 msgid "kerrblade_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1058
 msgid "kerrblade_pre_txt"
@@ -4062,7 +4112,7 @@ msgstr "Rumvæsenartefakt - kerrklinge"
 
 #: ../base/ufos/research.ufo:1093
 msgid "laserpistol_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1096
 msgid "laserpistol_pre_txt"
@@ -4075,7 +4125,7 @@ msgstr "Laserpistol"
 
 #: ../base/ufos/research.ufo:1148
 msgid "laserrifle_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1151
 msgid "laserrifle_pre_txt"
@@ -4088,27 +4138,27 @@ msgstr "Laserriffel"
 
 #: ../base/ufos/research.ufo:1204
 msgid "medikit_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1222
 msgid "pistol_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1241
 msgid "pistol_mag_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1263
 msgid "pistol2_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1282
 msgid "pistol2_mag_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1302 ../base/ufos/research.ufo:1342
 msgid "plasatomizer_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1305 ../base/ufos/research.ufo:1345
 msgid "plasatomizer_pre_txt"
@@ -4121,7 +4171,7 @@ msgstr "Rumvæsenartefakt - plasmapistol"
 
 #: ../base/ufos/research.ufo:1379 ../base/ufos/research.ufo:1417
 msgid "plasblaster_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1382 ../base/ufos/research.ufo:1420
 msgid "plasblaster_pre_txt"
@@ -4134,7 +4184,7 @@ msgstr "Rumvæsenartefakt - plasmaspreder"
 
 #: ../base/ufos/research.ufo:1454
 msgid "plasblade_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1457
 msgid "plasblade_pre_txt"
@@ -4146,7 +4196,7 @@ msgstr "Rumvæsenartefakt - plasmaklinge"
 
 #: ../base/ufos/research.ufo:1492
 msgid "plasmagren_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1495
 msgid "plasmagren_pre_txt"
@@ -4158,7 +4208,7 @@ msgstr "Rumvæsenartefakt - plasmagranat"
 
 #: ../base/ufos/research.ufo:1530 ../base/ufos/research.ufo:1570
 msgid "plasrifle_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1533 ../base/ufos/research.ufo:1573
 msgid "plasrifle_pre_txt"
@@ -4171,19 +4221,19 @@ msgstr "Rumvæsenartefakt - plasmariffel"
 
 #: ../base/ufos/research.ufo:1607
 msgid "rpg_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1626
 msgid "rpg_ammo_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1646
 msgid "rpg_incendiary_ammo_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1667
 msgid "chaingun_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1670
 msgid "chaingun_pre_txt"
@@ -4191,7 +4241,7 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1689
 msgid "chaingun_ammo_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1692
 msgid "chaingun_ammo_pre_txt"
@@ -4199,51 +4249,51 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1712
 msgid "shotgun_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1733
 msgid "shotgun_ammo_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1754
 msgid "shotgun2_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1792
 msgid "shotgun2_slug_ammo_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1814
 msgid "shotgun_micro_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1833
 msgid "shotgun_micro_ammo_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1853
 msgid "smg_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1872
 msgid "smg_mag_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1892
 msgid "smokegren_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1911
 msgid "sniper_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1930
 msgid "sniper_mag_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1951
 msgid "stungren_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:1954
 msgid "stungren_pre_txt"
@@ -4255,7 +4305,7 @@ msgstr "Antirumvæsen gas"
 
 #: ../base/ufos/research.ufo:1997
 msgid "stunrod_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2000
 msgid "stunrod_pre_txt"
@@ -4268,7 +4318,7 @@ msgstr "Bedøvelsesstang"
 
 #: ../base/ufos/research.ufo:2036
 msgid "pbeampistol_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2039
 msgid "pbeampistol_pre_txt"
@@ -4282,7 +4332,7 @@ msgstr "Rumvæsenartefakt - Strålepartikelpistol"
 #: ../base/ufos/research.ufo:2074 ../base/ufos/research.ufo:2151
 #: ../base/ufos/research.ufo:2227 ../base/ufos/research.ufo:2267
 msgid "pbeamammo_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2077 ../base/ufos/research.ufo:2154
 #: ../base/ufos/research.ufo:2230 ../base/ufos/research.ufo:2270
@@ -4291,7 +4341,7 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2112
 msgid "pbeamcannon_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2115
 msgid "pbeamcannon_pre_txt"
@@ -4304,7 +4354,7 @@ msgstr "Rumvæsenartefakt - Strålepartikelkanon"
 
 #: ../base/ufos/research.ufo:2189
 msgid "pbeamrifle_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2192
 msgid "pbeamrifle_pre_txt"
@@ -4318,15 +4368,15 @@ msgstr "Rumvæsenartefakt - Strålepartikelriffel"
 #: ../base/ufos/research.ufo:2264 ../base/ufos/research.ufo:2277
 #: ../base/ufos/research.ufo:2285
 msgid "Man-Portable Particle Beams"
-msgstr ""
+msgstr "Bærbar partikelstråler"
 
 #: ../base/ufos/research.ufo:2309
 msgid "combat_armour_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2325
 msgid "nano_armour_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2328
 msgid "nano_armour_pre_txt"
@@ -4334,7 +4384,7 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2361
 msgid "alien_body_armour_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2364
 msgid "alien_body_armour_pre_txt"
@@ -4342,7 +4392,7 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2397
 msgid "alien_medium_armour_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2400
 msgid "alien_medium_armour_pre_txt"
@@ -4354,7 +4404,7 @@ msgstr "Rumvæsen mellemrustning"
 
 #: ../base/ufos/research.ufo:2448
 msgid "Blast Damage Type"
-msgstr ""
+msgstr "Skud skadetype"
 
 #: ../base/ufos/research.ufo:2451 ../base/ufos/research.ufo:2465
 #: ../base/ufos/research.ufo:2479 ../base/ufos/research.ufo:2497
@@ -4378,19 +4428,19 @@ msgstr "Laserskadetype"
 
 #: ../base/ufos/research.ufo:2494
 msgid "Impact Damage Type"
-msgstr ""
+msgstr "Stød skadetype"
 
 #: ../base/ufos/research.ufo:2508
 msgid "Shock Damage Type"
-msgstr ""
+msgstr "Chok skadetype"
 
 #: ../base/ufos/research.ufo:2522
 msgid "Plasma Damage Type"
-msgstr "Plasmaskadetype"
+msgstr "Plasma skadetype"
 
 #: ../base/ufos/research.ufo:2543
 msgid "Stun Damage Type"
-msgstr ""
+msgstr "Bedøvelse skadetype"
 
 #: ../base/ufos/research.ufo:2557
 msgid "Particle Beam Damage Type"
@@ -4398,204 +4448,204 @@ msgstr "Strålepartikelskadetype"
 
 #: ../base/ufos/research.ufo:2576
 msgid "Accuracy Attribute"
-msgstr ""
+msgstr "Egenskab for præcision"
 
 #: ../base/ufos/research.ufo:2590
 msgid "Assault Guns Proficiency"
-msgstr ""
+msgstr "Egenskab for angrebsvåben"
 
 #: ../base/ufos/research.ufo:2604
 msgid "Close Combat Proficiency"
-msgstr ""
+msgstr "Egenskab for nærkamp"
 
 #: ../base/ufos/research.ufo:2618
 msgid "High-Explosives Proficiency"
-msgstr ""
+msgstr "Egenskab for sprængstof"
 
 #: ../base/ufos/research.ufo:2632
 msgid "Heavy Weapons Proficiency"
-msgstr ""
+msgstr "Egenskab for tunge våben"
 
 #: ../base/ufos/research.ufo:2646
 msgid "Mind Attribute"
-msgstr ""
+msgstr "Egenskab for sind"
 
 #: ../base/ufos/research.ufo:2660
 msgid "Power Attribute"
-msgstr ""
+msgstr "Egenskab for styrke"
 
 #: ../base/ufos/research.ufo:2674
 msgid "Sniper Rifles Proficiency"
-msgstr ""
+msgstr "Egenskab for snigskytte"
 
 #: ../base/ufos/research.ufo:2688
 msgid "Speed Attribute"
-msgstr ""
+msgstr "Egenskab for fart"
 
 #: ../base/ufos/research.ufo:2707
 msgid "b_aliencontainment_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2725
 msgid "b_command_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2743
 msgid "b_entrance_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2757
 msgid "b_missile_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2775
 msgid "b_large_hangar_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2793
 msgid "b_hospital_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2811
 msgid "b_small_hangar_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2829
 msgid "b_lab_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2847
 msgid "b_powerplant_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2865
 msgid "b_quarters_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2883
 msgid "b_radar_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2901
 msgid "b_storage_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2919
 msgid "b_teamroom_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2937
 msgid "b_small_ufo_hangar_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2955
 msgid "b_large_ufo_hangar_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2973
 msgid "b_workshop_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:2991
 msgid "b_antimatter_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3011
 msgid "drop_firebird_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3028
 msgid "inter_stiletto_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3045
 msgid "inter_saracen_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3062
 msgid "inter_dragon_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3065
 msgid "inter_dragon_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3084
 msgid "inter_stingray_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3123
 msgid "ufo_scout_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3126
 msgid "ufo_scout_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3163
 msgid "ufo_fighter_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3166
 msgid "ufo_fighter_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3204
 msgid "ufo_supply_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3207
 msgid "ufo_supply_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3245
 msgid "ufo_carrier_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3248
 msgid "ufo_carrier_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3286
 msgid "ufo_condor_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3289
 msgid "ufo_condor_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3327
 msgid "ufo_harvester_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3330
 msgid "ufo_harvester_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3372
 msgid "Live Specimen - Bloodspider"
-msgstr ""
+msgstr "Levende eksemplar - blodedderkop"
 
 #: ../base/ufos/research.ufo:3374
 msgid "bloodspider_notes_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3377
 msgid "bloodspider_notes_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3394 ../base/ufos/research.ufo:3407
 #: ../base/ufos/research.ufo:3415
 msgid "Alien Autopsy - Bloodspider"
-msgstr ""
+msgstr "Rumvæsenobduktion - blodedderkop"
 
 #: ../base/ufos/research.ufo:3396
 msgid "bloodspider_autopsy_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3399
 msgid "bloodspider_autopsy_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3450 ../base/ufos/research.ufo:3465
 #: ../base/ufos/research.ufo:3473
@@ -4604,19 +4654,19 @@ msgstr "Rumvæsenobduktion - ortnok"
 
 #: ../base/ufos/research.ufo:3452
 msgid "ortnok_autopsy_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3453
 msgid "ortnok_autopsy_extra_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3456
 msgid "ortnok_autopsy_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3457
 msgid "ortnok_autopsy_extra_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3494 ../base/ufos/research.ufo:3509
 #: ../base/ufos/research.ufo:3517
@@ -4625,11 +4675,11 @@ msgstr "Rumvæsenobduktion - taman"
 
 #: ../base/ufos/research.ufo:3496
 msgid "taman_autopsy_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3497
 msgid "taman_autopsy_extra_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3500
 msgid "taman_autopsy_pre_txt"
@@ -4646,11 +4696,11 @@ msgstr "Rumvæsenobduktion - shevaar"
 
 #: ../base/ufos/research.ufo:3538
 msgid "shevaar_autopsy_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3539
 msgid "shevaar_autopsy_extra_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3542
 msgid "shevaar_autopsy_pre_txt"
@@ -4662,11 +4712,11 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3634
 msgid "Phoenix UGV"
-msgstr ""
+msgstr "Føniks UGV"
 
 #: ../base/ufos/research.ufo:3636
 msgid "ugv_phoenix_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3639
 msgid "ugv_phoenix_pre_txt"
@@ -4674,11 +4724,11 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3654
 msgid "Triax UGV"
-msgstr ""
+msgstr "Triax UGV"
 
 #: ../base/ufos/research.ufo:3656
 msgid "ugv_triax_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3659
 msgid "ugv_triax_pre_txt"
@@ -4686,11 +4736,11 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3679
 msgid "base_weapon_tr20_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3698
 msgid "base_ammo_tr20_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3717
 msgid "'Raven' ECM Unit"
@@ -4698,47 +4748,43 @@ msgstr "»Raven« ECM-enhed"
 
 #: ../base/ufos/research.ufo:3720
 msgid "craft_electronics_raven_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3738
 msgid "craft_shield_light_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3755
 msgid "craft_shield_plating_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3758
 msgid "craft_shield_plating_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3777
-#, fuzzy
 msgid "craft_alien_astrogation_pre_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3780
-#, fuzzy
 msgid "craft_alien_astrogation_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3814
-#, fuzzy
 msgid "craft_alien_propulsion_pre_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3817
 msgid "craft_alien_propulsion_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3850
-#, fuzzy
 msgid "craft_alien_detection_pre_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3853
 msgid "craft_alien_detection_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3884
 msgid "SHIVA Rotary Cannon"
@@ -4746,39 +4792,39 @@ msgstr "SHIVA roterende kanon"
 
 #: ../base/ufos/research.ufo:3887
 msgid "craft_weapon_shiva_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3905
 msgid "craft_ammo_shiva_1_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3926
 msgid "craft_ammo_shiva_2_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3944
 msgid "'Sparrowhawk' AA Missile Rack"
-msgstr ""
+msgstr "»Spurvehøg« AA missilstativ"
 
 #: ../base/ufos/research.ufo:3947
 msgid "craft_weapon_sparrowhawk_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3964
 msgid "'Sparrowhawk' Missile"
-msgstr ""
+msgstr "»Spurvehøg« missil"
 
 #: ../base/ufos/research.ufo:3967
 msgid "craft_ammo_sparrowhawk_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3988
 msgid "craft_weapon_tr20_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4007
 msgid "craft_ammo_tr20_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4027
 msgid "craft_weapon_particle_beam_pre_txt"
@@ -4786,19 +4832,19 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4030
 msgid "craft_weapon_particle_beam_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4073
 msgid "craft_electronics_targeting_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4092
 msgid "craft_electronics_fuelpod_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4113 ../base/ufos/research.ufo:4149
 msgid "alien_materials_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4116
 msgid "alien_materials_pre_txt"
@@ -4810,7 +4856,7 @@ msgstr "Politisk situation før invasionen"
 
 #: ../base/ufos/research.ufo:4170
 msgid "news_initial_political_situation_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4181
 msgid "After The War"
@@ -4818,7 +4864,7 @@ msgstr "Efter krigen"
 
 #: ../base/ufos/research.ufo:4183
 msgid "news_after_the_war_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4194
 msgid "PHALANX And The Mumbai Aftermath"
@@ -4826,7 +4872,7 @@ msgstr "FALANKS\tog efterfølgerne af Mumbai"
 
 #: ../base/ufos/research.ufo:4196
 msgid "news_phalanx_and_mumbai_aftermath_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4207 ../base/ufos/research.ufo:4217
 msgid "A New Twist"
@@ -4834,7 +4880,7 @@ msgstr "En ny konflikt"
 
 #: ../base/ufos/research.ufo:4209
 msgid "news_newtwist_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/seq_credits.ufo:131 ../base/ufos/seq_credits.ufo:154
 msgid "Project leader"
@@ -4970,7 +5016,7 @@ msgstr "Mattn"
 
 #: ../base/ufos/seq_credits.ufo:467
 msgid "Sitters"
-msgstr ""
+msgstr "Sitters"
 
 #: ../base/ufos/seq_credits.ufo:474
 msgid "The Community"
@@ -5006,83 +5052,83 @@ msgstr "Endelig: Angrebet på rumvæsenernes base ..."
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/seq_intro.ufo:100
 msgid "prolog_sentence1"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/seq_intro.ufo:110
 msgid "prolog_sentence2"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/seq_intro.ufo:119
 msgid "prolog_sentence3"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/seq_intro.ufo:128
 msgid "prolog_sentence4"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/seq_intro.ufo:137
 msgid "prolog_sentence5"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/seq_intro.ufo:146
 msgid "prolog_sentence6"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/seq_intro.ufo:155
 msgid "prolog_sentence7"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/seq_intro.ufo:164
 msgid "prolog_sentence8"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/seq_intro.ufo:173
 msgid "prolog_sentence9"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/seq_intro.ufo:182
 msgid "prolog_sentence10"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"
-msgstr ""
+msgstr "Spillet"
 
 #: ../base/ufos/seq_tutorials.ufo:35
 msgid "Some notes about the gameplay"
-msgstr ""
+msgstr "Enkelte bemærkninger om spillet"
 
 #: ../base/ufos/seq_tutorials.ufo:44
 msgid "Click to exit"
@@ -5231,6 +5277,9 @@ msgid ""
 "8 player teams and so on. This way you can quickly load the right one for a "
 "fast match."
 msgstr ""
+"Saml og gem forskellige hold til flerspiller kampe - 4 spiller hold, 8 spiller "
+"hold og fremdeles. På den måde kan du hurtig hente det rigtige hold til et "
+"hurtigt spil."
 
 #: ../base/ufos/tips.ufo:7
 msgid ""
@@ -5238,44 +5287,57 @@ msgid ""
 "team list. When the soldier limit is lower than the amount of soldiers in "
 "your team, the soldiers at the top of the list will be used for the game."
 msgstr ""
+"I flerspillerhold så husk at have dine bedste soldater øverst på holdlisten. "
+"Når soldatbegrænsningen er mindre end antallet af soldater på dit hold, vil "
+"soldaterne øverst på listen blive anvendt i spillet."
 
 #: ../base/ufos/tips.ufo:8
 msgid ""
 "Always make sure that you have enough Time Units (TUs) left to hide after "
 "you shoot."
 msgstr ""
+"Husk altid at have nok tidsenheder (TE) tilbage så du kan skjule dig efter "
+"du har skudt."
 
 #: ../base/ufos/tips.ufo:9
 msgid ""
 "When using Reaction Fire, remember that you can set which fire mode to use "
 "by enabling the corresponding check box on the fire mode panel."
 msgstr ""
+"Når du anvender reaktionsild, så husk at du kan vælge mellem forskellige "
+"ildinstillinger i ildindstillingspanelet."
 
 #: ../base/ufos/tips.ufo:10
 msgid ""
 "Remember to give your soldiers a varying array of weapons, you never know "
 "when a certain weapon may come in handy."
 msgstr ""
+"Husk at give dine soldater forskellige våben. Du ved aldrig hvornår et "
+"bestemt våben er brugbart."
 
 #: ../base/ufos/tips.ufo:11
 msgid "Don't forget to equip your soldiers with enough ammo."
-msgstr ""
+msgstr "Glem ikke at udstyre dine soldater med nok ammo."
 
 #: ../base/ufos/tips.ufo:12
 msgid "Don't forget to equip your soldiers with armor."
-msgstr ""
+msgstr "Glem ikke at udstyre dine soldater med veste."
 
 #: ../base/ufos/tips.ufo:13
 msgid ""
 "You can use a flashbang to deactivate your opponents Reaction Fire mode or "
 "to take of all his remaining Time Units (TUs) for his next round."
 msgstr ""
+"Du kan anvende en bedøvelsesgranat til at deaktivere din modstanders reaktionsild "
+"eller fjerne alle hans tilbageværende tidsenheder (TE) for den næste runde."
 
 #: ../base/ufos/tips.ufo:14
 msgid ""
 "In multiplayer, you can chat by pressing [k] (to all), [l] (team members "
 "only), or by pressing the chat buttons on the HUD."
 msgstr ""
+"I flerspiller kan du snakke ved at trykke [k] (til alle), [l] (kun "
+"holdmedlemmer), eller ved at trykke på snakknapperne på HUD."
 
 #: ../base/ufos/tips.ufo:15
 msgid ""
@@ -5283,6 +5345,9 @@ msgid ""
 "the cursor and press the right mouse button or the [Ctrl] key. This will "
 "cost you Time Units (TUs)."
 msgstr ""
+"For at få en soldat til at kigge i en bestemt retning (=vende ham/hende) så "
+"placer markøren og tryk på den højre museknap eller [Ctrl] tasten. Dette "
+"koster tidsenheder (TE)."
 
 #: ../base/ufos/tips.ufo:16
 msgid ""
@@ -5297,6 +5362,8 @@ msgid ""
 "Be sure to hire as many engineers as you can. The faster your production "
 "lines, the sooner you can get access to better equipment and resupplies."
 msgstr ""
+"Husk at ansætte så mange ingeniører som du kan. Jo hurtigere din produktion "
+"går, jo hurtigere kan du få adgang til bedre udstyr og erstatte dine tab."
 
 #: ../base/ufos/tips.ufo:18
 msgid ""
@@ -5304,34 +5371,44 @@ msgid ""
 "channel. You can do so by going to the Multiplayer menu and clicking on the "
 "Lobby button."
 msgstr ""
+"Husk at besøge vores internetside http://ufoai.sf.net/ og kig ind i vores "
+"fællesskabskanal. Det kan du gøre ved at gå til flerspillermenuen og taste "
+"på lobby-knappen."
 
 #: ../base/ufos/tips.ufo:19
 msgid ""
 "Remember that you need an active Command Centre in order to launch "
 "interceptors."
 msgstr ""
+"Husk at du skal bruge en aktiv kommandocentral for at sende kortrækkende "
+"jagerfly afsted."
 
 #: ../base/ufos/tips.ufo:20
 msgid ""
 "Never pass up an opportunity to capture a live alien, even one you have "
 "already researched."
 msgstr ""
+"Lad aldrig chancen for at fange et levende rumvæsen gå din næse forbi, "
+"selv en som du allerede har forsket på."
 
 #: ../base/ufos/tips.ufo:21
 msgid ""
 "Watch your back! Your soldiers can only see enemies in an arc in front of "
 "them."
 msgstr ""
+"Hold øje med ryggen! Dine soldater kan kun se fjender i en bue foran dem."
 
 #: ../base/ufos/tips.ufo:22
 msgid "Build a workshop and UFO hangars to be able to disassemble UFOs."
-msgstr ""
+msgstr "Byg et arbejdsrum og ufo-hangarer for at kunne skille ufoer ad."
 
 #: ../base/ufos/tips.ufo:23
 msgid ""
 "You can zoom the geoscape by holding down [Ctrl] and moving the mouse up or "
 "down."
 msgstr ""
+"Du kan zoome geoscapen ved at holde [ctrl] nede og flytte musen op eller "
+"ned."
 
 #: ../base/ufos/tips.ufo:24
 msgid ""
@@ -5339,18 +5416,25 @@ msgid ""
 "remember that crouching and standing up cost Time Units (TUs), and moving "
 "while crouched costs more TUs than walking normally."
 msgstr ""
+"Du kan lade dine soldater knæle for bedre at beskytte dem fra fjendens ild. "
+"Men husk at det at knæle og rette sig op koster tidsender (TE), og bevægelse "
+"i knæ koster flere tidsenheder end normal bevægelse gør."
 
 #: ../base/ufos/tips.ufo:25
 msgid ""
 "Watch out for Reaction Fire! A soldier can fall under Reaction Fire even if "
 "another soldier is moving."
 msgstr ""
+"Pas på reaktionsild! En soldat kan falde i reaktionsild selv hvis en anden "
+"soldat bevæger sig."
 
 #: ../base/ufos/tips.ufo:26
 msgid ""
 "Use [c] to toggle crouching. Crouching makes some weapons considerably more "
 "precise. It also makes your soldier a smaller target."
 msgstr ""
+"Anvend [c] til at knæle. Knælende soldater gør nogle våben meget mere præcise. "
+"Det gør også din soldat til et mindre mål."
 
 #: ../base/ufos/tips.ufo:27
 msgid ""
@@ -5358,36 +5442,49 @@ msgid ""
 "flashbang to incapacitate them until the start of your next round may be the "
 "best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
 msgstr ""
+"Hvis du har få tidenheder (TE) tilbage og har farlige fjender tæt på, kan en "
+"bedøvelsesgranat være den bedste mulighed på kort sigt. 2 TE (ud af oppakning) "
+"+ 12 TE (kast) = 14 TE."
 
 #: ../base/ufos/tips.ufo:28
 msgid ""
 "Use the first-person view (toggle with [v]) to check if moving one square to "
 "the left will make that shoot-through-the-building shot possible."
 msgstr ""
+"Brug personsynsfeltet (skift med [v]) for at undersøge om den et felt flytning "
+"mod venstre vil gøre det skud-igennem-bygningen muligt."
 
 #: ../base/ufos/tips.ufo:29
 msgid ""
 "Use a fast soldier with pistols, one handed melee weapons, grenades, "
 "flashbangs and medikits."
 msgstr ""
+"Anvend en hurtig soldat med pistoler, nærkampsvåben til en hånd, granater, "
+"bedøvelsesgranater og førstehjælpskasser."
 
 #: ../base/ufos/tips.ufo:30
 msgid ""
 "Build a hospital to be able to faster heal your soldiers for the next "
 "mission."
 msgstr ""
+"Byg et hospital for hurtigere at kunne behandle dine soldater før næste "
+"mission."
 
 #: ../base/ufos/tips.ufo:31
 msgid ""
 "Plasma grenades do the most damage, but frag grenades can be useful, as they "
 "can be thrown slightly further."
 msgstr ""
+"Plasmagranater gør mest skade, men fragmentationsgranater kan være brugbare, "
+"da de kan kastes hurtigere."
 
 #: ../base/ufos/tips.ufo:32
 msgid ""
 "Use [x] to cycle through the Reaction Fire settings: none, one shot, "
 "multiple shots."
 msgstr ""
+"Brug [x] til at skifte mellem reaktionsindstillingerne: ingen, et skud, "
+"flere skud."
 
 #: ../base/ufos/tips.ufo:33
 msgid ""
@@ -5395,16 +5492,21 @@ msgid ""
 "shoot when one runs out of Time Units (TUs)). Keep a wall between them at "
 "the end of your round, so that they can't be killed with one grenade."
 msgstr ""
+"Hold dine soldater tæt, så de kan støtte hinanden (helbred hinanden, skyd "
+"når en løber tør for tidsenheder (TE)). Hold en væg imellem dem når du "
+"afslutter din runde, så de ikke kan dræbes med en granat."
 
 #: ../base/ufos/tips.ufo:34
 msgid ""
 "Always have a disposable soldier or two, so you don't have to put your "
 "primary units into very risky situations."
 msgstr ""
+"Hav altid en undværlig soldat eller to, så du ikke skal sætte dine "
+"primære soldater i meget risikofyldte situationer."
 
 #: ../base/ufos/tips.ufo:35
 msgid "Build more radars in the same base to increase the radar range."
-msgstr ""
+msgstr "Byg flere radarer på den samme base for at øge radarens rækkevidde."
 
 #: ../base/ufos/tips.ufo:36
 msgid ""
@@ -5412,6 +5514,9 @@ msgid ""
 "Fire, you cannot turn it back on without enough Time Units (TU). You can, "
 "however, leave it on. Try not to adjust zeroed units until you're sure."
 msgstr ""
+"Reaktionsild kan opbruge dine tidsenheder (TE) til 0. Hvis du fjerner reaktionsild, "
+"kan du ikke sætte den tilbage uden nok tidsenheder (TE). Du kan dog lade den "
+"forblive tændt. Forsøg ikke at ændre enheder uden tidsenheder før du er sikker."
 
 #: ../base/ufos/tips.ufo:37
 msgid ""
@@ -5419,6 +5524,9 @@ msgid ""
 "specific place. Very useful when targetting something near the edge of the "
 "map, or on a ledge."
 msgstr ""
+"Lufttryk fra granataffyreren kan hjælpe dig med at få granaterne til at "
+"eksplodere et specifikt sted. Meget brugbart når du ønsker at ramme noget "
+"tæt på hjørnet af kortet, eller på en kant."
 
 #: ../base/ufos/tips.ufo:38
 msgid ""
@@ -5426,52 +5534,65 @@ msgid ""
 "least a little bit of an angle, the chances of bouncing it back at yourself "
 "becomes much less on a 'missed' throw."
 msgstr ""
+"Når du kaster granater, så forsøg at undgå lige linjer. Selv med en lille "
+"afvigelse, er chancerne for at granater ryger tilbage i hovedet på dig meget "
+"mindre ved et »dårligt« kast."
 
 #: ../base/ufos/tips.ufo:39
 msgid ""
 "Before throwing a grenade, look closely at the shape of the land. A slight "
 "slope will affect the direction that the grenade bounces."
 msgstr ""
+"Før du kaster en granat så kig på landskabet. En hældning vil påvirke hvordan "
+"granaten springer."
 
 #: ../base/ufos/tips.ufo:40
 msgid ""
 "You can include your own maps for multiplayer games or create your own "
 "campaigns. Just have a look at our wiki to read about content creation."
 msgstr ""
+"Du kan inkludere dine egne kort til flerspiller spil eller oprette dine "
+"egne kampagner. Kig på vores wiki for at se mere om egetudviklet indhold."
 
 #: ../base/ufos/tips.ufo:41
 msgid "You can use [space] to cycle between all geoscape items."
-msgstr ""
+msgstr "Du kan anvende [mellemrum] for at skifte mellem geoscape udstyr."
 
 #: ../base/ufos/tips.ufo:42
 msgid ""
 "You can also accelerate/decelerate time on geoscape by using mouse wheel on "
 "the time buttons, or [m], [n]."
 msgstr ""
+"Du kan også øge/formindske tiden på overbliksbilledet ved at anvende musehjulet "
+"på tidsknapper, eller [m}, [n]."
 
 #: ../base/ufos/tips.ufo:43
 msgid "Be sure to equip your interceptor with weapons before launching it."
-msgstr ""
+msgstr "Husk at udstyr dit kortrækkende jagerfly med våben før det letter."
 
 #: ../base/ufos/tips.ufo:44
 msgid ""
 "Remember that items will slow an aircraft. To intercept fast UFOs, you may "
 "prefer to send several aircrafts lightly equiped."
 msgstr ""
+"Husk at udstyr vil sinke et luftfartøj. For at indhente hurtige ufoer kan "
+"det være en fordel at sende flere luftfartøjer der er let udstyret."
 
 #: ../base/ufos/tips.ufo:45
 msgid ""
 "Your attacked aircraft may flee to one of your base to avoid beeing "
 "destroyed by UFOs."
 msgstr ""
+"Dit angrebet luftfartøj kan flygte til en af dine baser for at undgå "
+"ødelæggelse af ufoer."
 
 #: ../base/ufos/tips.ufo:46
 msgid "Build an alien containment to be able to imprison alive aliens."
-msgstr ""
+msgstr "Byg et rumvæsenopbevaringsrum som fængsel for levende rumvæsener."
 
 #: ../base/ufos/weapons.ufo:6
 msgid "Medikit"
-msgstr ""
+msgstr "Førstehjælpskasse"
 
 #: ../base/ufos/weapons.ufo:37 ../base/ufos/weapons.ufo:90
 #: ../base/ufos/weapons_melee.ufo:41 ../base/ufos/weapons_melee.ufo:117
@@ -5485,7 +5606,7 @@ msgstr "Infrarøde briller"
 
 #: ../base/ufos/weapons.ufo:80
 msgid "Scan"
-msgstr ""
+msgstr "Skan"
 
 #: ../base/ufos/weapons.ufo:114
 msgid "Frag Grenade"
@@ -5495,17 +5616,17 @@ msgstr "Fragmationsgranat"
 #: ../base/ufos/weapons.ufo:276 ../base/ufos/weapons.ufo:348
 #: ../base/ufos/weapons.ufo:421 ../base/ufos/weapons.ufo:493
 msgid "Lob"
-msgstr ""
+msgstr "Lob"
 
 #: ../base/ufos/weapons.ufo:155 ../base/ufos/weapons.ufo:228
 #: ../base/ufos/weapons.ufo:300 ../base/ufos/weapons.ufo:372
 #: ../base/ufos/weapons.ufo:445 ../base/ufos/weapons.ufo:517
 msgid "Roll"
-msgstr ""
+msgstr "Rul"
 
 #: ../base/ufos/weapons.ufo:187
 msgid "Flashbang"
-msgstr ""
+msgstr "Bedøvelsesgranat"
 
 #: ../base/ufos/weapons.ufo:259
 msgid "Smoke Grenade"
@@ -5537,59 +5658,59 @@ msgstr "Magasin til angrebsriffel"
 #: ../base/ufos/weapons_human.ufo:1998 ../base/ufos/weapons_particle.ufo:40
 #: ../base/ufos/weapons_particle.ufo:221
 msgid "Snap Shot"
-msgstr ""
+msgstr "Lynskud"
 
 #: ../base/ufos/weapons_human.ufo:60 ../base/ufos/weapons_human.ufo:264
 #: ../base/ufos/weapons_human.ufo:464 ../base/ufos/weapons_human.ufo:563
 #: ../base/ufos/weapons_human.ufo:824 ../base/ufos/weapons_human.ufo:1015
 #: ../base/ufos/weapons_human.ufo:1062 ../base/ufos/weapons_human.ufo:1764
 msgid "3-Round Burst"
-msgstr ""
+msgstr "3-runde salve"
 
 #: ../base/ufos/weapons_human.ufo:81 ../base/ufos/weapons_human.ufo:164
 #: ../base/ufos/weapons_human.ufo:285 ../base/ufos/weapons_human.ufo:583
 #: ../base/ufos/weapons_human.ufo:683 ../base/ufos/weapons_human.ufo:846
 #: ../base/ufos/weapons_human.ufo:1084 ../base/ufos/weapons_ugv.ufo:99
 msgid "Full-Auto"
-msgstr ""
+msgstr "Auto"
 
 #: ../base/ufos/weapons_human.ufo:112
 msgid "Minigun"
-msgstr ""
+msgstr "Minigun"
 
 #: ../base/ufos/weapons_human.ufo:130
 msgid "Minigun Magazine"
-msgstr ""
+msgstr "Minigun magasin"
 
 #: ../base/ufos/weapons_human.ufo:144 ../base/ufos/weapons_human.ufo:663
 msgid "5-Round Burst"
-msgstr ""
+msgstr "5-runde salve"
 
 #: ../base/ufos/weapons_human.ufo:184
 msgid "Full-Auto Sweep"
-msgstr ""
+msgstr "Autosalve"
 
 #: ../base/ufos/weapons_human.ufo:210
 msgid "Machine Gun"
-msgstr ""
+msgstr "Maskinpistol"
 
 #: ../base/ufos/weapons_human.ufo:229
 msgid "Machine Gun Magazine"
-msgstr ""
+msgstr "Maskinpistol magasin"
 
 #: ../base/ufos/weapons_human.ufo:312
 msgid "Sniper Rifle"
-msgstr ""
+msgstr "Snigskytteriffel"
 
 #: ../base/ufos/weapons_human.ufo:331
 msgid "Sniper Rifle Magazine"
-msgstr ""
+msgstr "Snigskytteriffel magasin"
 
 #: ../base/ufos/weapons_human.ufo:366 ../base/ufos/weapons_human.ufo:484
 #: ../base/ufos/weapons_human.ufo:1250 ../base/ufos/weapons_human.ufo:1290
 #: ../base/ufos/weapons_human.ufo:1330 ../base/ufos/weapons_particle.ufo:201
 msgid "Aimed Shot"
-msgstr ""
+msgstr "Sigteskud"
 
 #: ../base/ufos/weapons_human.ufo:385
 msgid "Headshot"
@@ -5613,7 +5734,7 @@ msgstr "4,2 mm mp-magasin"
 
 #: ../base/ufos/weapons_human.ufo:610
 msgid "Submachine Gun"
-msgstr ""
+msgstr "Maskinpistol"
 
 # LMG -> let maskingevær
 #: ../base/ufos/weapons_human.ufo:629
@@ -5626,13 +5747,13 @@ msgstr "Kamphaglgevær"
 
 #: ../base/ufos/weapons_human.ufo:787
 msgid "Saboted Slugs"
-msgstr ""
+msgstr "Sabotede kugler"
 
 #: ../base/ufos/weapons_human.ufo:802 ../base/ufos/weapons_human.ufo:908
 #: ../base/ufos/weapons_human.ufo:993 ../base/ufos/weapons_human.ufo:1040
 #: ../base/ufos/weapons_human.ufo:1745
 msgid "Single Shot"
-msgstr ""
+msgstr "Enkeltskud"
 
 #: ../base/ufos/weapons_human.ufo:874
 msgid "Shotgun"
@@ -5697,32 +5818,32 @@ msgstr "25 mm HIT granater"
 #: ../base/ufos/weapons_human.ufo:1393 ../base/ufos/weapons_human.ufo:1569
 #: ../base/ufos/weapons_human.ufo:1800
 msgid "Snap Shot - Airburst"
-msgstr ""
+msgstr "Lynskud - Luftbrag"
 
 #: ../base/ufos/weapons_human.ufo:1419 ../base/ufos/weapons_human.ufo:1596
 #: ../base/ufos/weapons_human.ufo:1826
 msgid "Aimed Shot - Airburst"
-msgstr ""
+msgstr "Sigtet skud - Luftbrag"
 
 #: ../base/ufos/weapons_human.ufo:1444 ../base/ufos/weapons_human.ufo:1621
 #: ../base/ufos/weapons_human.ufo:1851
 msgid "3-Round Burst - Airburst"
-msgstr ""
+msgstr "3-runde salve - Luftbrag"
 
 #: ../base/ufos/weapons_human.ufo:1470 ../base/ufos/weapons_human.ufo:1647
 #: ../base/ufos/weapons_human.ufo:1877
 msgid "Snap Shot - Timed"
-msgstr ""
+msgstr "Lynskud - på tid"
 
 #: ../base/ufos/weapons_human.ufo:1497 ../base/ufos/weapons_human.ufo:1674
 #: ../base/ufos/weapons_human.ufo:1904
 msgid "Aimed Shot - Timed"
-msgstr ""
+msgstr "Sigtet skud - på tid"
 
 #: ../base/ufos/weapons_human.ufo:1524 ../base/ufos/weapons_human.ufo:1701
 #: ../base/ufos/weapons_human.ufo:1931
 msgid "3-Round Burst - Timed"
-msgstr ""
+msgstr "3-runde salve - på tid"
 
 #: ../base/ufos/weapons_human.ufo:1554
 msgid "25mm IC Grenades"
@@ -5738,15 +5859,15 @@ msgstr "25 mm PB granater"
 
 #: ../base/ufos/weapons_human.ufo:1964
 msgid "Bolter Rifle"
-msgstr ""
+msgstr "Boltriffel"
 
 #: ../base/ufos/weapons_human.ufo:1983
 msgid "Bolter Rifle Magazine"
-msgstr ""
+msgstr "Boltriffel magasin"
 
 #: ../base/ufos/weapons_human.ufo:2018
 msgid "Cannonade"
-msgstr ""
+msgstr "Kannonade"
 
 #: ../base/ufos/weapons_human.ufo:2038
 msgid "Precision Shot"
@@ -5755,12 +5876,12 @@ msgstr "Præcisionsskud"
 #: ../base/ufos/weapons_laser.ufo:86 ../base/ufos/weapons_laser.ufo:128
 #: ../base/ufos/weapons_laser.ufo:170
 msgid "Short Wave"
-msgstr ""
+msgstr "Kort bølge"
 
 #: ../base/ufos/weapons_laser.ufo:105 ../base/ufos/weapons_laser.ufo:147
 #: ../base/ufos/weapons_laser.ufo:189
 msgid "Long Wave"
-msgstr ""
+msgstr "Lang bølge"
 
 #: ../base/ufos/weapons_melee.ufo:8
 msgid "Combat Knife"
@@ -5768,7 +5889,7 @@ msgstr "Kampkniv"
 
 #: ../base/ufos/weapons_melee.ufo:68
 msgid "Monomolecular Knife"
-msgstr ""
+msgstr "Monomolekulær kniv"
 
 #: ../base/ufos/weapons_melee.ufo:101 ../base/ufos/weapons_melee.ufo:239
 msgid "Slash"
@@ -5800,49 +5921,49 @@ msgstr "Lysstrålepistol"
 
 #: ../base/ufos/weapons_particle.ufo:25
 msgid "Pistol Particle Accelerator"
-msgstr ""
+msgstr "Pistolpartikelaccelerator"
 
 #: ../base/ufos/weapons_particle.ufo:59 ../base/ufos/weapons_particle.ufo:140
 #: ../base/ufos/weapons_particle.ufo:240
 msgid "Rapid Shots"
-msgstr ""
+msgstr "Hurtige skud"
 
 #: ../base/ufos/weapons_particle.ufo:85
 msgid "Particle Beam Cannon"
-msgstr ""
+msgstr "Bølgepratikelkanon"
 
 #: ../base/ufos/weapons_particle.ufo:104
 msgid "Cannon Particle Accelerator"
-msgstr ""
+msgstr "Kanonpartikelaccelerator"
 
 #: ../base/ufos/weapons_particle.ufo:119
 msgid "Charged Blast"
-msgstr ""
+msgstr "Eksplosion"
 
 #: ../base/ufos/weapons_particle.ufo:167
 msgid "Particle Beam Rifle"
-msgstr ""
+msgstr "Bølgepartikelriffel"
 
 #: ../base/ufos/weapons_particle.ufo:186
 msgid "Rifle Particle Accelerator"
-msgstr ""
+msgstr "Partikelriffelaccelerator"
 
 #: ../base/ufos/weapons_plasma.ufo:6
 msgid "Plasma Pistol"
-msgstr ""
+msgstr "Plasmapistol"
 
 #: ../base/ufos/weapons_plasma.ufo:25
 msgid "Plasma Pistol Charger"
-msgstr ""
+msgstr "Plasmapistol oplader"
 
 #: ../base/ufos/weapons_plasma.ufo:40 ../base/ufos/weapons_plasma.ufo:141
 #: ../base/ufos/weapons_plasma.ufo:243
 msgid "Ball"
-msgstr ""
+msgstr "Kugle"
 
 #: ../base/ufos/weapons_plasma.ufo:60 ../base/ufos/weapons_plasma.ufo:161
 msgid "Burst"
-msgstr ""
+msgstr "Brag"
 
 #: ../base/ufos/weapons_plasma.ufo:80 ../base/ufos/weapons_plasma.ufo:181
 #: ../base/ufos/weapons_plasma.ufo:265
@@ -5855,31 +5976,31 @@ msgstr "Plasmariffel"
 
 #: ../base/ufos/weapons_plasma.ufo:126
 msgid "Plasma Rifle Charger"
-msgstr ""
+msgstr "Plasmariffel oplader"
 
 #: ../base/ufos/weapons_plasma.ufo:209
 msgid "Plasma Blaster"
-msgstr ""
+msgstr "Plasmaaffyrer"
 
 #: ../base/ufos/weapons_plasma.ufo:228
 msgid "Plasma Blaster Charge"
-msgstr ""
+msgstr "Plasmaaffyrer oplader"
 
 #: ../base/ufos/weapons_plasma.ufo:286
 msgid "Spray Sweep"
-msgstr ""
+msgstr "Skyd spredt"
 
 #: ../base/ufos/weapons_ugv.ufo:46
 msgid "Chaingun"
-msgstr ""
+msgstr "Maskinpistol"
 
 #: ../base/ufos/weapons_ugv.ufo:64
 msgid "Chaingun Belt"
-msgstr ""
+msgstr "Maskinpistolbælte"
 
 #: ../base/ufos/weapons_ugv.ufo:78
 msgid "10-Round Burst"
-msgstr ""
+msgstr "10-runde salve"
 
 #: client/cl_actor.c:135
 msgid "Poor"
@@ -5921,7 +6042,7 @@ msgstr "Overmenneskelig"
 #: client/cl_actor.c:192
 #, c-format
 msgid "Rank: %s"
-msgstr ""
+msgstr "Rang: %s"
 
 #: client/cl_actor.c:585 client/cl_actor.c:603
 #, c-format
@@ -5989,7 +6110,7 @@ msgstr ""
 #: client/cl_actor.c:1537
 #, c-format
 msgid "Armour  %i\tMorale  %i\n"
-msgstr ""
+msgstr "Vest  %i\tMoral  %i\n"
 
 #: client/cl_actor.c:1544
 #, c-format
@@ -5997,6 +6118,8 @@ msgid ""
 "Armour  %i\tMorale  %i\n"
 "Move %i (%i TU left)\n"
 msgstr ""
+"Vest  %i\tMoral  %i\n"
+"Flyt %i (%i TE tilb.)\n"
 
 #: client/cl_actor.c:1563
 msgid ""
@@ -6097,6 +6220,9 @@ msgid ""
 "\n"
 "Aircrafts cannot start.\n"
 msgstr ""
+"Ingen kommandocentral er funktionsdygtig på denne base.\n"
+"\n"
+"Luftfartøjer kan ikke lette.\n"
 
 #: client/cl_aircraft.c:276 client/cl_aircraft.c:289 client/cl_aircraft.c:498
 #: client/cl_aircraft.c:677 client/cl_aircraft.c:918 client/cl_aircraft.c:1016
@@ -6121,7 +6247,7 @@ msgstr ""
 #: client/cl_research.c:1225 client/cl_research.c:1228 client/cl_ufo.c:460
 #: client/cl_ufo.c:463
 msgid "Notice"
-msgstr ""
+msgstr "Meddelelse"
 
 #: client/cl_aircraft.c:289
 msgid "Aircraft started"
@@ -6163,9 +6289,10 @@ msgstr "Forfølger en ufo"
 msgid "Ready for drop down"
 msgstr "Klar til landing"
 
+# Kunne også være imødegåelse, opsnappen, beslaglæggelse, opfangning.
 #: client/cl_aircraft.c:332
 msgid "On interception"
-msgstr ""
+msgstr "På afskæring"
 
 #: client/cl_aircraft.c:334
 msgid "Being transfered"
@@ -6277,7 +6404,7 @@ msgstr "Skal obduceres!"
 
 #: client/cl_basemanagement.c:485
 msgid "Not set"
-msgstr ""
+msgstr "Ikke sat"
 
 #: client/cl_basemanagement.c:491
 #, c-format
@@ -6312,17 +6439,18 @@ msgid_plural "%i Days to build\n"
 msgstr[0] "% dag at bygge\n"
 msgstr[1] "% dage at bygge\n"
 
+# Løbende omkostning: er for langt.
 #: client/cl_basemanagement.c:1017
 #, c-format
 msgid "Running Costs:\t%1.0f c\n"
-msgstr "Løbende omkostning:\t%1.0f c\n"
+msgstr "Løbende omk.:\t%1.0f c\n"
 
 #: client/cl_basemanagement.c:1640
 #, c-format
 msgid "%i day left"
 msgid_plural "%i days left"
 msgstr[0] "%i dag tilbage"
-msgstr[1] "% dage tilbage"
+msgstr[1] "%i dage tilbage"
 
 #: client/cl_basemanagement.c:1963 client/cl_team.c:1531 client/cl_team.c:1739
 msgid "NewTeam"
@@ -6414,11 +6542,12 @@ msgstr "%s - %1.2f%% (%d %s)\n"
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "videnskabsmand"
-msgstr[1] "vidneskabsmænd"
+msgstr[1] "videnskabsmænd"
 
+# Rumvæsenopbevaringsrum er for langt til menuen.
 #: client/cl_basesummary.c:369 client/cl_basesummary.c:387
 msgid "Alien Containment"
-msgstr "Rumvæsenopbevaringsrum"
+msgstr "Rumvæsenopb.rum"
 
 #: client/cl_basesummary.c:380
 msgid "Miscellaneous"
@@ -6467,6 +6596,13 @@ msgid ""
 "cooperation are made. Earth's nations each try to stand alone against the "
 "aliens, and eventually fall one by one."
 msgstr ""
+"Under din kommando har FALANKS operationer konstant fejlet i beskyttelsen af "
+"uskyldige civile. Utallige har mistet deres liv på grund af din manglende "
+"evne til at håndtere truslen fra rumvæsenerne. FN, stærkt utilfreds med din "
+"indsats, har besluttet sig for at fjerne dig fra din kommando og efterfølgende "
+"at opløse FALANKS-projektet som en effektiv styrke. Ingen yderligere forsøg på "
+"international samarbejde vil blive udført. Jordens nationer står nu alene i "
+"kampen mod rumvæsenerne og vil til sidst falde en for en."
 
 #: client/cl_campaign.c:972
 msgid "You've gone too far into debt."
@@ -6480,6 +6616,11 @@ msgid ""
 "command is no more; PHALANX is no longer able to operate as a functioning "
 "unit. Nothing stands between the aliens and total victory."
 msgstr ""
+"Du er mislykkedes i din opgave vedrørende jordens beskyttelse. Vores hjem og "
+"vort folk er faldet for den fremmede infektion. Kun en håndfuld af jordens "
+"folk er stadig mennesker, og de tilbageværende har ingen chance for at stoppe "
+"udviklingen. Din kommando er ophørt; FALANKS kan ikke længere fungere som en "
+"aktiv enhed. Intet står imellem rumvæsenerne og total sejr."
 
 #: client/cl_campaign.c:1092
 #, c-format
@@ -6491,18 +6632,18 @@ msgstr ""
 "ødelagt."
 
 #: client/cl_campaign.c:1151
-#, fuzzy, c-format
+#, c-format
 msgid "The mission %s expired and %i civilian died."
 msgid_plural "The mission %s expired and %i civilians died."
-msgstr[0] "Missionen udløb og %i civil døde."
-msgstr[1] "Missionen udløb og %i civile døde."
+msgstr[0] "Missionen %s udløb og %i civil døde."
+msgstr[1] "Missionen %s udløb og %i civile døde."
 
 #: client/cl_campaign.c:1166
 #, c-format
 msgid "The aliens had enough time to kill %i civilian at %s."
 msgid_plural "The aliens had enough time to kill %i civilians at %s."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Rumvæsenerne havde nok tid til at dræbe %i civil i %s."
+msgstr[1] "Rumvæsenerne havde nok tid til at dræbe %i civile i %s."
 
 # # cl_campaign.c
 #: client/cl_campaign.c:1216
@@ -6630,47 +6771,47 @@ msgstr[1] "arbejdere"
 #: client/cl_campaign.c:1342
 #, c-format
 msgid "Paid %i credits to soldiers"
-msgstr "Betalte %i beløb til soldater"
+msgstr "Betalte %i kr til soldater"
 
 #: client/cl_campaign.c:1352
 #, c-format
 msgid "Paid %i credits to workers"
-msgstr "Betalte %i beløb til arbejdere"
+msgstr "Betalte %i kr til arbejdere"
 
 #: client/cl_campaign.c:1362
 #, c-format
 msgid "Paid %i credits to scientists"
-msgstr "Betalte %i beløb til videnskabsmænd"
+msgstr "Betalte %i kr til videnskabsmænd"
 
 #: client/cl_campaign.c:1372
 #, c-format
 msgid "Paid %i credits to medics"
-msgstr "Betalte %i beløb til læger"
+msgstr "Betalte %i kr til læger"
 
 #: client/cl_campaign.c:1383
 #, c-format
 msgid "Paid %i credits for robots"
-msgstr "Betalte %i beløb til robotter"
+msgstr "Betalte %i kr til robotter"
 
 #: client/cl_campaign.c:1396
 #, c-format
 msgid "Paid %i credits for aircraft"
-msgstr "Betalte %i beløb for luftfartøjer"
+msgstr "Betalte %i kr for luftfartøjer"
 
 #: client/cl_campaign.c:1407
 #, c-format
 msgid "Paid %i credits for upkeep of base %s"
-msgstr "Betalte %i beløb for vedligeholdelse af base %s"
+msgstr "Betalte %i kr for vedligeholdelse af base %s"
 
 #: client/cl_campaign.c:1413
 #, c-format
 msgid "Paid %i credits for administrative overhead."
-msgstr "Betalte %i beløb for administrative omk."
+msgstr "Betalte %i kr for administrative omk."
 
 #: client/cl_campaign.c:1421
 #, c-format
 msgid "Paid %i credits in interest on your debt."
-msgstr "Betalte %i beløb i rente for gælden."
+msgstr "Betalte %i kr i rente for gælden."
 
 #: client/cl_campaign.c:1581 client/cl_save.c:269 client/cl_ufopedia.c:643
 #: client/cl_ufopedia.c:649
@@ -6686,7 +6827,7 @@ msgstr "%02i:%02i"
 #: client/cl_campaign.c:1678
 #, c-format
 msgid "%i c"
-msgstr "%i c"
+msgstr "%i kr"
 
 #: client/cl_campaign.c:1722
 #, c-format
@@ -6723,27 +6864,27 @@ msgstr "%s\t%i\n"
 #: client/cl_campaign.c:1779
 #, c-format
 msgid "Employees:\t%i c\n"
-msgstr "Arbejdere:\t%i c\n"
+msgstr "Arbejdere:\t%i kr\n"
 
 #: client/cl_campaign.c:1788
 #, c-format
 msgid "Aircrafts:\t%i c\n"
-msgstr "Luftfartøjer:\t%i c\n"
+msgstr "Luftfartøjer:\t%i kr\n"
 
 #: client/cl_campaign.c:1796
 #, c-format
 msgid "Base (%s):\t%i c\n"
-msgstr "Base (%s):\t%i c\n"
+msgstr "Base (%s):\t%i kr\n"
 
 #: client/cl_campaign.c:1801
 #, c-format
 msgid "Administrative costs:\t%i c\n"
-msgstr "Administrative omk.:\t%i c\n"
+msgstr "Administrative omk.:\t%i kr\n"
 
 #: client/cl_campaign.c:1808
 #, c-format
 msgid "Debt:\t%i c\n"
-msgstr "Gæld:\t%i c\n"
+msgstr "Gæld:\t%i kr\n"
 
 #: client/cl_campaign.c:1811
 #, c-format
@@ -6754,12 +6895,12 @@ msgid ""
 msgstr ""
 "\n"
 "\t-------\n"
-"Sum:\t%i c\n"
+"Sum:\t%i kr\n"
 
 #: client/cl_campaign.c:1816
 #, c-format
 msgid "Max. allowed debts: %ic\n"
-msgstr "Maksimal tilladt gæld: %ic\n"
+msgstr "Maksimal tilladt gæld: %i kr\n"
 
 #: client/cl_campaign.c:1821
 #, c-format
@@ -6767,6 +6908,8 @@ msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
 "Current eXtraterrestial Viral Infection: %i%%"
 msgstr ""
+"Maks. tilladt udenjordisk virus-infektion: %i%%\n"
+"Nuværende udenjordisk virus-infektion: %i%%"
 
 #: client/cl_campaign.c:2703
 msgid "Assemble or load a team"
@@ -6791,6 +6934,8 @@ msgid ""
 "%s has been awarded the posthumous rank of %s\\for inspirational gallantry "
 "in the face of overwhelming odds.\n"
 msgstr ""
+"%s er posthum blevet tildelt range af %s\\for inspirerende mod i mødet med "
+"overhængende fare.\n"
 
 #: client/cl_campaign.c:3042
 msgid "Soldier promoted"
@@ -6799,11 +6944,11 @@ msgstr "Soldat forfremmet"
 #: client/cl_campaign.c:3262
 #, c-format
 msgid "Defense of base: %s successful!"
-msgstr ""
+msgstr "Baseforsvar: %s succesfuld!"
 
 #: client/cl_campaign.c:4494
 msgid "Human"
-msgstr ""
+msgstr "Menneske"
 
 #: client/cl_campaign.c:4496
 #, c-format
@@ -6816,22 +6961,30 @@ msgid ""
 "Max. allowed debts: %ic\n"
 "%s\n"
 msgstr ""
+"Race: %s\n"
+"Rekrutter: %i %s, %i %s, %i %s, %i %s\n"
+"Finanser: %i kr\n"
+"Sværhedsgrad: %s\n"
+"Maks. civile der må dø: %i\n"
+"Maks tilladt gæld: %i kr\n"
+"%s\n"
 
 #: client/cl_campaign.c:4738
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to base %s."
-msgstr ""
+msgstr "Fandt %s på slagmarken. Ufo transporteres til base %s"
 
 #: client/cl_campaign.c:4740 client/cl_campaign.c:4864
 #: client/cl_campaign.c:4943
 msgid "UFO Recovery"
-msgstr ""
+msgstr "Ufo indsamling"
 
 #: client/cl_campaign.c:4862
 #, c-format
 msgid ""
 "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr ""
+"Fandt %s på slagmarken. Ufo solgt til nation %s, opnåede %i kr."
 
 #: client/cl_campaign.c:4912
 msgid ""
@@ -6850,7 +7003,7 @@ msgstr "Sikret %s blev ødelagt."
 
 #: client/cl_console.c:388
 msgid "Bring up the in-game console"
-msgstr ""
+msgstr "Vis spillets konsol"
 
 #: client/cl_console.c:390
 msgid "Send a message to all players"
@@ -6918,35 +7071,35 @@ msgstr "Ikke nok hospitalssenge"
 
 #: client/cl_input.c:1631
 msgid "Rotate battlescape camera anti-clockwise"
-msgstr ""
+msgstr "Roter kampscenens kamera mod uret"
 
 #: client/cl_input.c:1633
 msgid "Rotate battlescape camera clockwise"
-msgstr ""
+msgstr "Roter kampscenens kamera med uret"
 
 #: client/cl_input.c:1635
 msgid "Tilt battlescape camera up"
-msgstr ""
+msgstr "Ryk kampscenens kamera op"
 
 #: client/cl_input.c:1637
 msgid "Tilt battlescape camera down"
-msgstr ""
+msgstr "Ryk kampscenens kamera ned"
 
 #: client/cl_input.c:1639
 msgid "Move battlescape camera left"
-msgstr ""
+msgstr "Flyt kampscenens kamera mod venstre"
 
 #: client/cl_input.c:1641
 msgid "Move battlescape camera right"
-msgstr ""
+msgstr "Flyt kampscenens kamera mod højre"
 
 #: client/cl_input.c:1643
 msgid "Move battlescape camera forward"
-msgstr ""
+msgstr "Flyt kampscenens kamera fremad"
 
 #: client/cl_input.c:1645
 msgid "Move battlescape camera backward"
-msgstr ""
+msgstr "Flyt kampscenens kamera tilbage"
 
 #: client/cl_input.c:1647 client/cl_input.c:1680
 msgid "Zoom in"
@@ -6970,11 +7123,11 @@ msgstr "Højre museknapklik (menu)"
 
 #: client/cl_input.c:1658
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
-msgstr ""
+msgstr "Vælg objekter/Gå til en firkant/I ildindstilling, ild etc."
 
 #: client/cl_input.c:1660
 msgid "Walk to a square/In fire mode, cancel action"
-msgstr ""
+msgstr "Gå til en firkant/I ildindstilling, afbryd aktion"
 
 #: client/cl_input.c:1662
 msgid "Turn soldier toward mouse pointer"
@@ -6998,11 +7151,11 @@ msgstr "Skift til næste rumvæsen"
 
 #: client/cl_input.c:1668
 msgid "Draw a line to each alien visible to the current actor."
-msgstr "Tegn en linje til alle synlige rumvæsener for nuværende person."
+msgstr "Tegn en linje til alle synlige rumvæsener for nuværende soldat."
 
 #: client/cl_input.c:1669
 msgid "Toogle to next alien visible from selected actor."
-msgstr ""
+msgstr "Skift til næste synlig rumvæsen fra valgt soldat."
 
 #: client/cl_input.c:1675
 msgid "Reload the weapon in the soldiers left hand"
@@ -7018,11 +7171,11 @@ msgstr "Afslutter nuværende runde"
 
 #: client/cl_input.c:1678
 msgid "Slice through terrain at a higher level"
-msgstr ""
+msgstr "Glid igennem terræn på et højere niveau"
 
 #: client/cl_input.c:1679
 msgid "Slice through terrain at a lower level"
-msgstr ""
+msgstr "Glid igennem terræn på et lavere niveau"
 
 #: client/cl_input.c:1682
 msgid "Confirm the current action"
@@ -7030,19 +7183,19 @@ msgstr "Bekræft den nuværende aktion"
 
 #: client/cl_input.c:1691
 msgid "Toggle first-person/third-person camera mode"
-msgstr ""
+msgstr "Skift mellem person/tredjemand kamera"
 
 #: client/cl_inventory.c:291
 #, c-format
 msgid "By selling %s %s"
-msgstr ""
+msgstr "Ved at sælge %s %s"
 
 #: client/cl_inventory.c:292
 #, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
-msgstr[0] "% indsamlet udstyr"
-msgstr[1] "% indsamlet udstyr"
+msgstr[0] "%i indsamlet udstyr"
+msgstr[1] "%i indsamlet udstyr"
 
 #: client/cl_inventory.c:293
 #, c-format
@@ -7067,6 +7220,7 @@ msgid ""
 "Base %s does not have Antimatter Storage Facility. %i units of Antimatter "
 "got removed."
 msgstr ""
+"Base %s har ikke antistof lagerrum. %i enheder af antistof blev fjernet."
 
 #: client/cl_main.c:382 client/cl_main.c:1045
 msgid "Assemble a team first"
@@ -7221,11 +7375,11 @@ msgstr "Send dit skud mod jorden"
 
 #: client/cl_main.c:2135
 msgid "Open the actors inventory while we are in tactical mission"
-msgstr ""
+msgstr "Åben soldatens rygsæk mens vi er på taktisk mission"
 
 #: client/cl_main.c:2251
 msgid "Chicken-hearted"
-msgstr ""
+msgstr "Kylling"
 
 #: client/cl_main.c:2253
 msgid "Very Easy"
@@ -7268,9 +7422,9 @@ msgid "Night"
 msgstr "Nat"
 
 #: client/cl_map.c:1281
-#, fuzzy, c-format
+#, c-format
 msgid "%s\t%i%%\n"
-msgstr "%s:\t%i %%\n"
+msgstr "%s\t%i%%\n"
 
 #: client/cl_map.c:1335
 msgid "Select the desired location of the new base on the map.\n"
@@ -7361,7 +7515,7 @@ msgstr "Intet udstyr er tildelt.\n"
 #: client/cl_mapfightequip.c:861
 #, c-format
 msgid "This slot is for %s or smaller items."
-msgstr "Denne plad er til %s eller mindre udstyr."
+msgstr "Denne plads er til %s eller mindre udstyr."
 
 #: client/cl_mapfightequip.c:866
 msgid "This item is functional.\n"
@@ -7577,6 +7731,10 @@ msgid ""
 "\n"
 "Hire workers."
 msgstr ""
+"Du kan ikke sætte produktion i kø uden ansatte arbejdere\n"
+"på denne base.\n"
+"\n"
+"Ansæt arbejdere."
 
 #: client/cl_produce.c:255
 msgid "Not enough workshops"
@@ -7587,6 +7745,8 @@ msgid ""
 "You cannot queue more items.\n"
 "Build more workshops.\n"
 msgstr ""
+"Du kan ikke sætte mere udstyr i kø.\n"
+"Byg flere værksteder.\n"
 
 #: client/cl_produce.c:270 client/cl_produce.c:273 client/cl_produce.c:277
 #: client/cl_produce.c:1095 client/cl_transfer.c:190 client/cl_transfer.c:193
@@ -7595,31 +7755,28 @@ msgid "Hangars not ready"
 msgstr "Hangarer ikke klar"
 
 #: client/cl_produce.c:270
-#, fuzzy
 msgid ""
 "You cannot queue aircraft.\n"
 "No command centre in this base.\n"
 msgstr ""
-"Du kan ikke købe dette luftfartøj.\n"
-"Ikke nok plads i hangarerne.\n"
+"Du kan ikke sætte luftfartøj i kø.\n"
+"Ikke nogen kommandocentral på denne base.\n"
 
 #: client/cl_produce.c:273
-#, fuzzy
 msgid ""
 "You cannot queue aircraft.\n"
 "No hangars in this base.\n"
 msgstr ""
-"Du kan ikke købe dette luftfartøj.\n"
-"Ikke nok plads i hangarerne.\n"
+"Du kan ikke sætte luftfartøj i kø.\n"
+"Ingen hangarer på denne base..\n"
 
 #: client/cl_produce.c:277 client/cl_produce.c:1095
-#, fuzzy
 msgid ""
 "You cannot queue aircraft.\n"
 "No free space in hangars.\n"
 msgstr ""
-"Du kan ikke købe dette luftfartøj.\n"
-"Ikke nok plads i hangarerne.\n"
+"Du kan ikke sætte luftfartøj i kø.\n"
+"Ingen ledig plads i hangarerne.\n"
 
 #: client/cl_produce.c:398
 #, c-format
@@ -7651,7 +7808,7 @@ msgstr "Intet udstyr valgt"
 #: client/cl_produce.c:549
 #, c-format
 msgid "Costs per item\t%i c\n"
-msgstr "pris per udstyr\t%i c\n"
+msgstr "Pris per udstyr\t%i kr\n"
 
 #: client/cl_produce.c:551 client/cl_produce.c:618
 #, c-format
@@ -7688,14 +7845,13 @@ msgid "Disassembly time\t%ih\n"
 msgstr "Afmonteringstid\t%ih\n"
 
 #: client/cl_produce.c:616
-#, fuzzy, c-format
+#, c-format
 msgid "Production costs\t%i c\n"
-msgstr "Produktionstid\t%ih\n"
+msgstr "Produktionspris\t%i kr\n"
 
 #: client/cl_produce.c:620
-#, fuzzy
 msgid "No aircraft selected."
-msgstr "Intet udstyr valgt"
+msgstr "Intet luftfartøj valgt."
 
 #: client/cl_produce.c:1152 client/cl_produce.c:1178
 #, c-format
@@ -7731,7 +7887,7 @@ msgstr "Forskning afsluttet"
 #: client/cl_research.c:100 client/cl_research.c:286
 #, c-format
 msgid "New research proposal: %s\n"
-msgstr ""
+msgstr "Nyt forskningsforslag: %s\n"
 
 #: client/cl_research.c:101
 msgid "Unknown Technology researchable"
@@ -7744,7 +7900,7 @@ msgstr "Ukendt teknologi fundet"
 #: client/cl_research.c:687
 #, c-format
 msgid "Laboratory space (all/used): %i/%i"
-msgstr ""
+msgstr "Laboratorium plads (alle/anvendt): %i/%i"
 
 #: client/cl_research.c:692
 #, c-format
@@ -7753,69 +7909,73 @@ msgstr "Videnskabsmænd (alle/tilgængelige): %i/%i"
 
 #: client/cl_research.c:696
 msgid "Not researched in any base."
-msgstr ""
+msgstr "Ikke forsket på nogen base."
 
 #: client/cl_research.c:702
 #, c-format
 msgid "Researched in %s"
-msgstr ""
+msgstr "Forsket på %s"
 
 #: client/cl_research.c:704
 msgid "Researched in this base."
-msgstr ""
+msgstr "Forsket på denne base."
 
 #: client/cl_research.c:715
 #, c-format
 msgid "Progress: %.1f%%"
-msgstr ""
+msgstr "Fremskridt: %.1f%%"
 
 #: client/cl_research.c:717
 msgid "Progress: Not available."
-msgstr ""
+msgstr "Fremskridt: Ikke tilgængelig."
 
 #: client/cl_research.c:721
 msgid "Status: Under research"
-msgstr ""
+msgstr "Status: Forskning i gang"
 
 #: client/cl_research.c:724
 msgid "Status: Research paused"
-msgstr ""
+msgstr "Status: Pause i forskning"
 
 #: client/cl_research.c:727
 msgid "Status: Research finished"
-msgstr ""
+msgstr "Status: Forskning afsluttet"
 
 #: client/cl_research.c:730
 msgid "Status: Unknown technology"
-msgstr ""
+msgstr "Status: Ukendt teknologi"
 
 #: client/cl_research.c:814 client/cl_research.c:818
 msgid ""
 "No free space in laboratories left.\n"
 "Build more laboratories.\n"
 msgstr ""
+"Ingen ledig plads i laboratorier.\n"
+"Byg flere laboratorier.\n"
 
 #: client/cl_research.c:814 client/cl_research.c:818
 msgid "Not enough laboratories"
-msgstr ""
+msgstr "Ikke nok laboratorier"
 
 #: client/cl_research.c:981
 msgid "This item is currently under research in another base."
-msgstr ""
+msgstr "Dette udstyr er for nuværende forskningsobjekt på en anden base."
 
 #: client/cl_research.c:999 client/cl_research.c:1043
 msgid "The research on this item is complete."
-msgstr ""
+msgstr "Forskningen på dette udstyr er færdig."
 
 #: client/cl_research.c:1005
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
 msgstr ""
+"Forskning i dette udstyr er endnu ikke tilgængelig.\n"
+"Du må først forske i de grundlæggende teknologier."
 
 #: client/cl_research.c:1074
 msgid "No research proposal available for this project."
-msgstr ""
+msgstr "Intet forskningsforslag tilgængelig til dette projekt."
 
 #: client/cl_research.c:1225
 msgid "Nothing to research"
@@ -7823,7 +7983,7 @@ msgstr "Intet at forske i"
 
 #: client/cl_research.c:1228
 msgid "Build a laboratory first"
-msgstr ""
+msgstr "Byg et laboratorium først"
 
 #: client/cl_research.c:1629
 msgid "No description available."
@@ -7847,7 +8007,7 @@ msgstr "Filen er en nyere version der ikke understøttes"
 
 #: client/cl_save.c:176 client/cl_save.c:183
 msgid "Error in loading a subsystem - see game console for more information"
-msgstr ""
+msgstr "Fejl under hentning af et undersystem - se spilkonsolen for yderligere information"
 
 #: client/cl_save.c:221
 msgid "No campaign active."
@@ -7863,7 +8023,7 @@ msgstr "Kunne ikke tildele nok hukommelse til at gemme spillet"
 
 #: client/cl_save.c:281
 msgid "Memory error compressing save-game data - set save_compressed cvar to 0"
-msgstr ""
+msgstr "Hukommelsesfejl under pakning af gemte spildata - sat gem_pakket cvar til 0"
 
 #: client/cl_save.c:302
 msgid "Size mismatch - failed to save the campaign"
@@ -7892,7 +8052,7 @@ msgstr "Kampagne hentet"
 #: client/cl_screen.c:392
 #, c-format
 msgid "Loading Map [%s]"
-msgstr ""
+msgstr "Henter kort [%s]"
 
 #: client/cl_team.c:61
 msgid "Urban"
@@ -7921,7 +8081,7 @@ msgstr "CCCP"
 #: client/cl_team.c:1065
 #, c-format
 msgid "%i of %i"
-msgstr ""
+msgstr "%i af %i"
 
 #: client/cl_team.c:1579
 msgid "Error saving team. Check free disk space!"
@@ -7989,12 +8149,12 @@ msgstr "Holdtab\t%i\n"
 #: client/cl_team.c:2133
 #, c-format
 msgid "Team missing in action\t%i\n"
-msgstr ""
+msgstr "Hold tabt i aktion\t%i\n"
 
 #: client/cl_team.c:2134
 #, c-format
 msgid "Friendly fire losses\t%i\n"
-msgstr ""
+msgstr "Tab til venlig ild\t%i\n"
 
 #: client/cl_team.c:2135
 #, c-format
@@ -8002,21 +8162,23 @@ msgid ""
 "Team survivors\t%i\n"
 "\n"
 msgstr ""
+"Hold overlevere\t%i\n"
+"\n"
 
 #: client/cl_team.c:2138
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
-msgstr ""
+msgstr "Civile dræbt af rumvæsener\t%i\n"
 
 #: client/cl_team.c:2140
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
-msgstr ""
+msgstr "Civile dræbt af fjender\t%i\n"
 
 #: client/cl_team.c:2142
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
-msgstr ""
+msgstr "Civile dræbt af dit hold\t%i\n"
 
 #: client/cl_team.c:2143
 #, c-format
@@ -8055,6 +8217,8 @@ msgid ""
 "PHALANX survivors\t%i\n"
 "\n"
 msgstr ""
+"FALANKS overlevende\t%i\n"
+"\n"
 
 #: client/cl_team.c:2172
 #, c-format
@@ -8064,7 +8228,7 @@ msgstr "Civile dræbt af rumvæsener\t%i\n"
 #: client/cl_team.c:2173
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
-msgstr ""
+msgstr "Civile dræbt af vendlig ild\t%i\n"
 
 #: client/cl_team.c:2174
 #, c-format
@@ -8078,7 +8242,7 @@ msgstr ""
 #: client/cl_team.c:2175
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
-msgstr ""
+msgstr "Indsamlet udstyr (typer/alle)\t%i/%i\n"
 
 #: client/cl_team.c:2195
 #, c-format
@@ -8086,6 +8250,8 @@ msgid ""
 "\n"
 "Secured crashed %s\n"
 msgstr ""
+"\n"
+"Sikret nedstyrtet %s\n"
 
 #: client/cl_team.c:2197
 #, c-format
@@ -8093,6 +8259,8 @@ msgid ""
 "\n"
 "Secured landed %s\n"
 msgstr ""
+"\n"
+"Sikret landet %s\n"
 
 #: client/cl_team.c:2208
 #, c-format
@@ -8102,14 +8270,18 @@ msgid ""
 "Enemies killed:  %i\n"
 "Team survivors:  %i"
 msgstr ""
+"\n"
+"\n"
+"Fjender dræbt:  %i\n"
+"Holdoverlevende:  %i"
 
 #: client/cl_team.c:2210
 msgid "You won the game!"
-msgstr ""
+msgstr "Du vandt spillet!"
 
 #: client/cl_team.c:2212
 msgid "Congratulations"
-msgstr ""
+msgstr "Tillyke"
 
 #: client/cl_team.c:2214
 msgid ""
@@ -8117,22 +8289,25 @@ msgid ""
 "\n"
 "No survivors left on any side."
 msgstr ""
+"Spillet endte uafgjort!\n"
+"\n"
+"Ingen overlevende tilbage."
 
 #: client/cl_team.c:2215
 msgid "Game Drawn!"
-msgstr ""
+msgstr "Spil uafgjort!"
 
 #: client/cl_team.c:2217
 msgid "You lost the game"
-msgstr ""
+msgstr "Du tabte spillet"
 
 #: client/cl_team.c:2219
 msgid "Better luck next time"
-msgstr ""
+msgstr "Bedre held næste gang"
 
 #: client/cl_transfer.c:78
 msgid "Destination base does not have an Antimatter Storage.\n"
-msgstr ""
+msgstr "Modtagende base har ikke et antistoflagerrum.\n"
 
 #: client/cl_transfer.c:78
 msgid "Missing storage"
@@ -8442,7 +8617,7 @@ msgstr "Fart"
 
 #: client/cl_ufopedia.c:185
 msgid "ECM"
-msgstr ""
+msgstr "ECM"
 
 #: client/cl_ufopedia.c:188
 msgid "Aircraft damage"
@@ -8472,7 +8647,7 @@ msgstr "Størrelse:\t%i\n"
 
 #: client/cl_ufopedia.c:286
 msgid "Type:\tProtection / Hardness:\n"
-msgstr ""
+msgstr "Type:\tBeskyttelse / Styrke:\n"
 
 #: client/cl_ufopedia.c:288
 #, c-format
@@ -8486,11 +8661,11 @@ msgstr "%s våben med\n"
 
 #: client/cl_ufopedia.c:294 client/cl_ufopedia.c:300 client/cl_ufopedia.c:308
 msgid "One-handed"
-msgstr "Til en hånd"
+msgstr "Ethånds"
 
 #: client/cl_ufopedia.c:294 client/cl_ufopedia.c:300 client/cl_ufopedia.c:308
 msgid "Two-handed"
-msgstr "Til to hænder"
+msgstr "Tohånds"
 
 #: client/cl_ufopedia.c:297
 #, c-format
@@ -8500,12 +8675,12 @@ msgstr "Maks ammo:\t%i\n"
 #: client/cl_ufopedia.c:300
 #, c-format
 msgid "%s ammo-less weapon with\n"
-msgstr ""
+msgstr "%s uden ammo-våben med\n"
 
 #: client/cl_ufopedia.c:308
 #, c-format
 msgid "%s auxiliary equipment with\n"
-msgstr ""
+msgstr "%s diverse udstyr med\n"
 
 #: client/cl_ufopedia.c:311
 #, c-format
@@ -8550,7 +8725,7 @@ msgstr "Ukendt - du må forske på dette"
 #: client/cl_ufopedia.c:435
 #, c-format
 msgid "%s:\tProtection: %i\tHardness: %i\n"
-msgstr ""
+msgstr "%s:\tBeskyttelse: %i\tStyrke: %i\n"
 
 #: client/cl_ufopedia.c:459
 msgid "Error - could not find building"
@@ -8576,12 +8751,12 @@ msgstr[1] "Byggetid:\t%i dage\n"
 #: client/cl_ufopedia.c:463
 #, c-format
 msgid "Fixcosts:\t%i c\n"
-msgstr ""
+msgstr "Fasteomk.:\t%i kr\n"
 
 #: client/cl_ufopedia.c:464
 #, c-format
 msgid "Running costs:\t%i c\n"
-msgstr "Løbende omk.:\t%i c\n"
+msgstr "Løbende omk.:\t%i kr\n"
 
 #: client/cl_ufopedia.c:514
 #, c-format
@@ -8625,7 +8800,7 @@ msgstr "Våben:\t%s\n"
 #: client/cl_ufopedia.c:564
 #, c-format
 msgid "Armour:\t%s\n"
-msgstr "Rustning:\t%s\n"
+msgstr "Vest:\t%s\n"
 
 #: client/cl_ufopedia.c:566
 #, c-format
@@ -8843,15 +9018,4 @@ msgstr "5 dage"
 msgid "Take a screenshot"
 msgstr "Tag et skærmbillede"
 
-#, fuzzy
-#~ msgid "Aircrafts"
-#~ msgstr "Luftfartøj"
 
-#~ msgid "Loading game"
-#~ msgstr "Henter spil"
-
-#~ msgid "UFO: Alien Invasion"
-#~ msgstr "UFO: Alien Invasion"
-
-#~ msgid "Transfer is not possible - the base has not power supplies."
-#~ msgstr "Overførsel er ikke mulig - basen har ingen energiforsyning."
