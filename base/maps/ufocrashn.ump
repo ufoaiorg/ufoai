@@ -9,7 +9,7 @@
 // b: street horizontal
 // c: street vertical
 
-base ucn/uc_
+base ucd/uc_
 
 // *********************************
 // Tiles
@@ -89,6 +89,19 @@ ac     +a      ac
 }
 
 // ---------------------------------
+// house #3 (shop)
+// ---------------------------------
+tile +h03
+{
+4 4
+
+0      ab     ab     0
+ac     +a      +a      ac
+ac     +a      +a      ac
+0      ab     ab     0
+}
+
+// ---------------------------------
 // ufos
 // ---------------------------------
 tile +ufo_harvester
@@ -109,37 +122,55 @@ ac     0      0       0      +a      +a     +a      ac
 
 assembly ufo_harvester
 {
+title "_UFO - Harvester"
 size "7 5"
 +h01 "0 10"
 +h02 "0 10"
++h03 "0 10"
 +ufo_harvester "1 1"
 *rm_dropship +drop_firebird "1 1"
 }
 
 assembly ufo_condor
 {
-size "4 2"
+title "_UFO - Condor"
+size "7 5"
 +h01 "0 10"
++h02 "0 10"
++h03 "0 10"
+//+ufo_condor "1 1"
 *rm_dropship +drop_firebird "1 1"
 }
 
 assembly ufo_scout
 {
-size "4 2"
+title "_UFO - Scout"
+size "7 5"
 +h01 "0 10"
++h02 "0 10"
++h03 "0 10"
+//+ufo_scout "1 1"
 *rm_dropship +drop_firebird "1 1"
 }
 
 assembly ufo_fighter
 {
-size "4 2"
+title "_UFO - Figher"
+size "7 5"
 +h01 "0 10"
++h02 "0 10"
++h03 "0 10"
+//+ufo_fighter "1 1"
 *rm_dropship +drop_firebird "1 1"
 }
 
 assembly ufo_supply
 {
-size "4 2"
+title "_UFO - Supply Ship"
+size "7 5"
 +h01 "0 10"
++h02 "0 10"
++h03 "0 10"
+//+ufo_supply "1 1"
 *rm_dropship +drop_firebird "1 1"
 }
