@@ -619,6 +619,8 @@ qboolean CP_SpawnCrashSiteMission (aircraft_t* aircraft)
 	ms->alienTeams[0] = Com_GetTeamDefinitionByID("ortnok");
 	if (ms->alienTeams[0])
 		ms->numAlienTeams++;
+	/* FIXME */
+	Com_sprintf(ms->alienEquipment, sizeof(ms->alienEquipment), "stage%i_%s", 1, "soldiers");
 
 	/* use ufocrash.ump as random tile assembly */
 	ms->mapDef->param = Mem_PoolStrDup(UFO_TypeToShortName(aircraft->ufotype), cl_localPool, CL_TAG_NONE);
