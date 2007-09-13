@@ -1131,7 +1131,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 	gi.GridPosToVec(gi.map, at, target);
 	if (fd->range < VectorDist(ent->origin, target)) {
 		if (!quiet)
-			gi.cprintf(player, PRINT_HUD, _("Can't peform action - target out of range!\n"));
+			gi.cprintf(player, PRINT_HUD, _("Can't perform action - target out of range!\n"));
 		return qfalse;
 	}
 
