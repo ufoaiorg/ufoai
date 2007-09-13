@@ -706,16 +706,16 @@ static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
 	/* draw */
 	R_DrawColor(color);
 	start = 0;
-	old = 512;
+	old = node->size[0] / 2;
 	for (i = 0, p = pts; i < line->numPoints; i++, p++) {
 		MAP_MapToScreen(node, line->point[i], &p->x, &p->y);
 
 		/* If we cross longitude 180 degree (right/left edge of the screen), draw the first part of the path */
-		if (i > start && abs(p->x - old) > 512) {
+		if (i > start && abs(p->x - old) > node->size[0] / 2) {
 			/* shift last point */
 			int diff;
 
-			if (p->x - old > 512)
+			if (p->x - old > node->size[0] / 2)
 				diff = -node->size[0] * ccs.zoom;
 			else
 				diff = node->size[0] * ccs.zoom;
@@ -726,7 +726,8 @@ static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
 
 			/* first path of the path is drawn, now we begin the second part of the path */
 			/* shift first point, continue drawing */
-			start = --i;
+			start = i - 1;
+			assert(i > 0);
 			pts[0].x = p[-1].x - diff;
 			pts[0].y = p[-1].y;
 			p = pts;
@@ -755,7 +756,7 @@ static void MAP_3DMapDrawLine (const menuNode_t* node, const mapline_t* line)
 	R_DrawColor(color);
 	for (i = 0, numPoints = 0; i < line->numPoints; i++) {
 		if (MAP_3DMapToScreen(node, line->point[i], &pts[i].x, &pts[i].y, NULL)) {
-			 numPoints++;
+			numPoints++;
 		}
 	}
 
