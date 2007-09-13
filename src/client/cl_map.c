@@ -402,7 +402,7 @@ static qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int
 	PolarToVec(pos, v);
 
 	/* rotate the vector to switch of reference frame.
-	 *	We switch from the static frame of earth to the local frame of the player (opposite rotation of MAP3D_ScreenToMap) */
+	 * We switch from the static frame of earth to the local frame of the player (opposite rotation of MAP3D_ScreenToMap) */
 	VectorSet(rotationAxis, 0, 0, 1);
 	RotatePointAroundVector(v1, rotationAxis, v, - ccs.angles[PITCH]);
 
@@ -413,7 +413,7 @@ static qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int
 	Vector2Set(mid, (node->pos[0] + node->size[0]) / 2.0f, (node->pos[1] + node->size[1]) / 2.0f);
 
 	/* We now convert those coordinates relative to the center of the globe to coordinates of the screen
-	 *	(which are relative to the upper left side of the screen) */
+	 * (which are relative to the upper left side of the screen) */
 	*x = (int) (mid[0] - radius * v[1]);
 	*y = (int) (mid[1] - radius * v[0]);
 	/* FIXME: I'm not sure of what z should contain (normalized value ? sign ?) */
@@ -460,10 +460,8 @@ static qboolean MAP_MapToScreen (const menuNode_t* node, const vec2_t pos,
 	*y = node->pos[1] + 0.5 * node->size[1] -
 		(pos[1] / 180 + ccs.center[1] - 0.5) * node->size[1] * ccs.zoom;
 
-	if (*x < node->pos[0] &&
-			*y < node->pos[1] &&
-			*x > node->pos[0] + node->size[0] &&
-			*y > node->pos[1] + node->size[1])
+	if (*x < node->pos[0] && *y < node->pos[1] &&
+		*x > node->pos[0] + node->size[0] && *y > node->pos[1] + node->size[1])
 		return qfalse;
 	return qtrue;
 }
@@ -722,12 +720,11 @@ static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
 			p->x += diff;
 
 			/* wrap around screen border */
-			R_DrawLineStrip(i - start + 1, (int*)(&pts));
+			R_DrawLineStrip(i - start, (int*)(&pts));
 
 			/* first path of the path is drawn, now we begin the second part of the path */
 			/* shift first point, continue drawing */
-			start = i - 1;
-			assert(i > 0);
+			start = i;
 			pts[0].x = p[-1].x - diff;
 			pts[0].y = p[-1].y;
 			p = pts;
