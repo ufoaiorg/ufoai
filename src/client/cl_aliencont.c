@@ -388,11 +388,13 @@ void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_
  */
 int AL_GetAlienIdx (const char *id)
 {
-	int i;
+	int i, index = 0;
 
-	for (i = 0; i < gd.numAliensTD; i++) {
+	for (i = 0; i < csi.numTeamDefs; i++) {
 		if (!Q_strncmp(id, AL_AlienTypeToName(i), MAX_VAR))
-			return i;
+			return index;
+		if (csi.teamDef[i].alien)
+			index++;
 	}
 
 	Com_Printf("AL_GetAlien(): Alien \"%s\" not found!\n", id);
