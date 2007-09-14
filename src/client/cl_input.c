@@ -820,8 +820,12 @@ static void CL_MakeBaseMapShot_f (void)
 	cl.cam.angles[0] = 60.0f;
 	cl.cam.angles[1] = 90.0f;
 	Cvar_SetValue("r_isometric", 1);
+	/* we are interested in the second level only */
+	Cvar_SetValue("cl_worldlevel", 2);
 	MN_PushMenu("nohud");
-	Cmd_ExecuteString("toggleconsole");
+	/* hide any active console */
+	Key_SetDest(key_game);
+	Cvar_Set("r_screenshot", "tga");
 	Cmd_ExecuteString("screenshot");
 }
 
@@ -1686,7 +1690,7 @@ void IN_Init (void)
 	Cmd_AddCommand("debug_drawblocked", CL_DisplayBlockedPaths_f, "Draws a marker for all blocked map-positions.");
 #endif /* DEBUG */
 	Cmd_AddCommand("camsetangles", CL_CamSetAngles_f, "Set camera angles to the given values");
-	Cmd_AddCommand("basemapshot", CL_MakeBaseMapShot_f, NULL);
+	Cmd_AddCommand("basemapshot", CL_MakeBaseMapShot_f, "Command to make a screenshot for the baseview with the correct angles");
 
 	Cmd_AddCommand("cameramode", CL_CameraMode_f, _("Toggle first-person/third-person camera mode"));
 
