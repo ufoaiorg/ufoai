@@ -815,13 +815,16 @@ static void CL_CamSetAngles_f (void)
  */
 static void CL_MakeBaseMapShot_f (void)
 {
-	if (Cmd_Argc() > 1)
-		Cmd_ExecuteString(va("map %s", Cmd_Argv(1)));
+	if (cls.state != ca_active) {
+		Com_Printf("Load the base map before you try to use this function\n");
+		return;
+	}
+
 	cl.cam.angles[0] = 60.0f;
 	cl.cam.angles[1] = 90.0f;
 	Cvar_SetValue("r_isometric", 1);
 	/* we are interested in the second level only */
-	Cvar_SetValue("cl_worldlevel", 2);
+	Cvar_SetValue("cl_worldlevel", 1);
 	MN_PushMenu("nohud");
 	/* hide any active console */
 	Key_SetDest(key_game);
