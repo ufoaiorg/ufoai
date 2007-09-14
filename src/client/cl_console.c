@@ -221,13 +221,11 @@ void Con_CheckResize (void)
 	int i, j, width, oldwidth, oldtotallines, numlines, numchars;
 	char tbuf[CON_TEXTSIZE];
 
-	width = (viddef.width >> 3) - 2;
-
 	if (con_font->modified) {
 		if (con_font->integer == 0) {
-			Cvar_ForceSet("con_fontWidth", "8");
-			Cvar_ForceSet("con_fontHeight", "16");
-			Cvar_ForceSet("con_fontShift", "3");
+			Cvar_ForceSet("con_fontWidth", "16");
+			Cvar_ForceSet("con_fontHeight", "32");
+			Cvar_ForceSet("con_fontShift", "4");
 			con_font->modified = qfalse;
 		} else if (con_font->integer == 1) {
 			Cvar_ForceSet("con_fontWidth", "8");
@@ -238,11 +236,13 @@ void Con_CheckResize (void)
 			Cvar_ForceSet("con_font", "1");
 	}
 
+	width = (viddef.width >> con_fontShift->integer);
+
 	if (width == con.linewidth)
 		return;
 
 	if (width < 1) {	/* video hasn't been initialized yet */
-		width = 80;
+		width = VID_NORM_WIDTH / con_fontWidth->integer;
 		con.linewidth = width;
 		con.totallines = sizeof(con.text) / con.linewidth;
 		memset(con.text, ' ', sizeof(con.text));
