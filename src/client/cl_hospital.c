@@ -278,6 +278,7 @@ void HOS_HealAll (const base_t* const base)
 static void HOS_Init_f (void)
 {
 	char name[128];
+	char rank[128];
 	int i, j, k, type;
 	employee_t* employee = NULL;
 
@@ -304,21 +305,19 @@ static void HOS_Init_f (void)
 			if (employee->chr.HP < employee->chr.maxHP) {
 				/* Print rank for soldiers or type for other personel. */
 				if (type == EMPL_SOLDIER)
-					Com_sprintf(name, sizeof(name), _(gd.ranks[employee->chr.rank].shortname));
+					Com_sprintf(rank, sizeof(rank), _(gd.ranks[employee->chr.rank].name));
 				else
-					Com_sprintf(name, sizeof(name), E_GetEmployeeString(employee->type));
-				Q_strcat(name, " ", sizeof(name));
+					Com_sprintf(rank, sizeof(rank), E_GetEmployeeString(employee->type));
 				/* Print name. */
-				Q_strcat(name, employee->chr.name, sizeof(name));
-				Q_strcat(name, " ", sizeof(name));
-				/* Print HP stats. */
-				Q_strcat(name, va("(%i/%i)", employee->chr.HP, employee->chr.maxHP), sizeof(name));
+				Com_sprintf(name, sizeof(name), employee->chr.name);
 				Com_DPrintf(DEBUG_CLIENT, "%s idx: %i j: %i\n", name, employee->idx, j);
 				/* If the employee is seriously wounded (HP <= 50% maxHP), make him red. */
 				if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.5))
 					Cbuf_AddText(va("hospitalserious%i\n", j));
 				/* If the employee is semi-seriously wounded (HP <= 85% maxHP), make him yellow. */
 				else if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.85))
+					Cbuf_AddText(va("hospitalmedium%i\n", j));
+				else
 					Cbuf_AddText(va("hospitallight%i\n", j));
 				/* If the employee is currently being healed, make him blue. */
 				for (k = 0; k < baseCurrent->hospitalListCount[type]; k++) {
@@ -327,8 +326,13 @@ static void HOS_Init_f (void)
 						break;
 					}
 				}
-				/* Display text in the correct list-entry. */
+				/* Display name in the correct list-entry. */
 				Cvar_Set(va("mn_hos_item%i", j), name);
+				/* Display rank in the correct list-entry. */
+				Cvar_Set(va("mn_hos_rank%i", j), rank);
+				/* Prepare the health bar */
+				Cvar_Set(va("mn_hos_hp%i", j), va("%i", employee->chr.HP));
+				Cvar_Set(va("mn_hos_hpmax%i", j), va("%i", employee->chr.maxHP));
 				/* Assign the employee to proper position on the list. */
 				hospitalList[j] = &gd.employees[type][i];
 				/* Increase the counter of list entries. */
@@ -342,6 +346,9 @@ static void HOS_Init_f (void)
 	/* Set rest of the list-entries to have no text at all. */
 	for (; j < baseCurrent->capacities[CAP_HOSPSPACE].max; j++) {
 		Cvar_Set(va("mn_hos_item%i", j), "");
+		Cvar_Set(va("mn_hos_rank%i", j), "");
+		Cvar_Set(va("mn_hos_hp%i", j), "0");
+		Cvar_Set(va("mn_hos_hpmax%i", j), "1");
 	}
 
 	Cvar_SetValue("mn_hosp_medics", E_CountHired(baseCurrent, EMPL_MEDIC));
