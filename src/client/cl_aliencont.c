@@ -390,9 +390,7 @@ int AL_GetAlienIdx (const char *id)
 {
 	int i;
 
-	for (i = 0; i < csi.numTeamDefs; i++) {
-		if (!csi.teamDef[i].alien)
-			continue;
+	for (i = 0; i < gd.numAliensTD; i++) {
 		if (!Q_strncmp(id, AL_AlienTypeToName(i), MAX_VAR))
 			return i;
 	}
@@ -405,23 +403,16 @@ int AL_GetAlienIdx (const char *id)
  * @brief Get amount of live aliens or alien bodies stored in Containment.
  * @param[in] idx Index of alien.
  * @param[in] reqtype Requirement type (RS_LINK_ALIEN/RS_LINK_ALIEN_DEAD).
+ * @param[in] base Pointer to a base where we search aliens.
  * @return Amount of desired alien/body.
  * @sa RS_RequirementsMet
  * @sa RS_CheckCollected
  */
-int AL_GetAlienAmount (int idx, requirementType_t reqtype)
+int AL_GetAlienAmount (int idx, requirementType_t reqtype, base_t *base)
 {
-	base_t *base = NULL;
 	aliensCont_t *containment = NULL;
 
-	if (baseCurrent) {
-		base = baseCurrent;
-	} else {
-		/* Should never happen. */
-		Com_Printf("AL_GetAlienAmount()... No base selected!\n");
-		return -1;
-	}
-
+	assert(base);
 	containment = base->alienscont;
 	switch (reqtype) {
 	case RS_LINK_ALIEN:

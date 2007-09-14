@@ -148,7 +148,7 @@ static qboolean RS_RequirementsMet (requirements_t *required_AND, requirements_t
 				break;
 			case RS_LINK_ALIEN_DEAD:
 			case RS_LINK_ALIEN:
-				if (AL_GetAlienAmount(required_AND->idx[i], required_AND->type[i]) < required_AND->amount[i])
+				if (AL_GetAlienAmount(required_AND->idx[i], required_AND->type[i], base) < required_AND->amount[i])
 					met_AND = qfalse;
 				break;
 			case RS_LINK_ALIEN_GLOBAL:
@@ -181,11 +181,11 @@ static qboolean RS_RequirementsMet (requirements_t *required_AND, requirements_t
 			case RS_LINK_EVENT:
 				break;
 			case RS_LINK_ALIEN:
-				if (AL_GetAlienAmount(required_OR->idx[i], RS_LINK_ALIEN) >= required_OR->amount[i])
+				if (AL_GetAlienAmount(required_OR->idx[i], RS_LINK_ALIEN, base) >= required_OR->amount[i])
 					met_OR = qtrue;
 				break;
 			case RS_LINK_ALIEN_DEAD:
-				if (AL_GetAlienAmount(required_OR->idx[i], RS_LINK_ALIEN_DEAD) >= required_OR->amount[i])
+				if (AL_GetAlienAmount(required_OR->idx[i], RS_LINK_ALIEN_DEAD, base) >= required_OR->amount[i])
 					met_OR = qtrue;
 				break;
 			case RS_LINK_ALIEN_GLOBAL:
@@ -336,7 +336,7 @@ static qboolean RS_CheckCollected (requirements_t *required)
 		case RS_LINK_ALIEN:
 		case RS_LINK_ALIEN_DEAD:
 			/* Use alien=index and RS_LINK_ALIEN (or RS_LINK_ALIEN_DEAD) to get correct amount.*/
-			amount = AL_GetAlienAmount(required->idx[i], required->type[i]);
+			amount = AL_GetAlienAmount(required->idx[i], required->type[i], baseCurrent);
 			if (amount > 0) {
 				required->collected[i] = amount;
 			} else {

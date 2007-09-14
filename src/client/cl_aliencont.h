@@ -73,7 +73,7 @@ void AL_CollectingAliens(struct aircraft_s *aircraft);
 void AL_AddAliens(struct aircraft_s *aircraft);
 void AL_RemoveAliens(struct base_s *base, const char *name, int amount, alienCalcType_t action);
 int AL_GetAlienIdx(const char *id);
-int AL_GetAlienAmount(int idx, requirementType_t reqtype);
+int AL_GetAlienAmount(int idx, requirementType_t reqtype, struct base_s *base);
 
 /**
  * Menu functions
