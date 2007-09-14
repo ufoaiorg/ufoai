@@ -272,7 +272,7 @@ static void TR_CargoList (void)
 	for (i = 0; i < gd.numAliensTD; i++) {
 		if (trAliensTmp[i][1] > 0) {
 			Com_sprintf(str, sizeof(str), _("Corpse of %s (%i for transfer)\n"),
-			_(AL_AlienTypeToName(i)), trAliensTmp[i][1]);
+			_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][1]);
 			Q_strcat(cargoList, str, sizeof(cargoList));
 			cargo[cnt].type = 3;
 			cargo[cnt].itemidx = i;
@@ -282,7 +282,7 @@ static void TR_CargoList (void)
 	for (i = 0; i < gd.numAliensTD; i++) {
 		if (trAliensTmp[i][0] > 0) {
 			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)\n"),
-			_(AL_AlienTypeToName(i)), trAliensTmp[i][0]);
+			_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][0]);
 			Q_strcat(cargoList, str, sizeof(cargoList));
 			cargo[cnt].type = 4;
 			cargo[cnt].itemidx = i;
@@ -401,22 +401,22 @@ static void TR_TransferSelect_f (void)
 				if (*baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_dead > 0) {
 					if (trAliensTmp[i][1] > 0)
 						Com_sprintf(str, sizeof(str), _("Corpse of %s (%i for transfer, %i left)\n"),
-						_(AL_AlienTypeToName(i)), trAliensTmp[i][1],
+						_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][1],
 						baseCurrent->alienscont[i].amount_dead);
 					else
 						Com_sprintf(str, sizeof(str), _("Corpse of %s (%i available)\n"),
-						_(AL_AlienTypeToName(i)), baseCurrent->alienscont[i].amount_dead);
+						_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), baseCurrent->alienscont[i].amount_dead);
 					Q_strcat(transferList, str, sizeof(transferList));
 					cnt++;
 				}
 				if (*baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_alive > 0) {
 					if (trAliensTmp[i][0] > 0)
 						Com_sprintf(str, sizeof(str), _("Alive %s (%i for transfer, %i left)\n"),
-						_(AL_AlienTypeToName(i)), trAliensTmp[i][0],
+						_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][0],
 						baseCurrent->alienscont[i].amount_alive);
 					else
 						Com_sprintf(str, sizeof(str), _("Alive %s (%i available)\n"),
-						_(AL_AlienTypeToName(i)), baseCurrent->alienscont[i].amount_alive);
+						_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), baseCurrent->alienscont[i].amount_alive);
 					Q_strcat(transferList, str, sizeof(transferList));
 					cnt++;
 				}

@@ -49,8 +49,8 @@ typedef enum {
 
 /** structure of Alien Containment being a member of base_t */
 typedef struct aliensCont_s {
-	int idx;			/**< self link */
-	char alientype[MAX_VAR];	/**< type of alien */ /* FIXME: alienType_t here */
+	int idx;			/**< Index of alien race in global csi.teamDef array. */
+	char alientype[MAX_VAR];	/**< type of alien */
 	int amount_alive;		/**< Amount of live captured aliens. */
 	int amount_dead;		/**< Amount of alien corpses. */
 	int techIdx;			/**< Idx of related tech. */
@@ -73,6 +73,7 @@ void AL_CollectingAliens(struct aircraft_s *aircraft);
 void AL_AddAliens(struct aircraft_s *aircraft);
 void AL_RemoveAliens(struct base_s *base, const char *name, int amount, alienCalcType_t action);
 int AL_GetAlienIdx(const char *id);
+int AL_GetAlienGlobalIdx(int idx);
 int AL_GetAlienAmount(int idx, requirementType_t reqtype, struct base_s *base);
 
 /**

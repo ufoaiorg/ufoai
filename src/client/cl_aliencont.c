@@ -54,7 +54,7 @@ void AL_FillInContainment (base_t *base)
 	for (i = 0; i < csi.numTeamDefs; i++) {
 		if (!csi.teamDef[i].alien)
 			continue;
-		containment[counter].idx = counter;
+		containment[counter].idx = i;	/* This is global alien race index. */
 		Q_strncpyz(containment[counter].alientype, AL_AlienTypeToName(i), sizeof(containment[counter].alientype));
 		containment[counter].amount_alive = 0;
 		containment[counter].amount_dead = 0;
@@ -386,6 +386,7 @@ void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_
  * @return Index of alien in alien containment (so < gd.numAliensTD)
  * @note It does not return the global team index from csi.teamDef array.
  * @sa RS_AssignTechIdxs
+ * @sa AL_GetAlienGlobalIdx
  */
 int AL_GetAlienIdx (const char *id)
 {
@@ -398,7 +399,28 @@ int AL_GetAlienIdx (const char *id)
 			index++;
 	}
 
-	Com_Printf("AL_GetAlien(): Alien \"%s\" not found!\n", id);
+	Com_Printf("AL_GetAlienIdx(): Alien \"%s\" not found!\n", id);
+	return -1;
+}
+
+/**
+ * @brief Returns global alien index.
+ * @param[in] idx Alien index in Alien Containment.
+ * @return Global alien index in csi.teamDef array.
+ * @sa AL_GetAlienIdx
+ */
+int AL_GetAlienGlobalIdx (int idx)
+{
+	int i, counter = 0;
+
+	for (i = 0; i < csi.numTeamDefs; i++) {
+		if (csi.teamDef[i].alien) {
+			if (counter == idx)
+				return i;
+			counter++;
+		}
+	}
+	Com_Printf("AL_GetAlienGlobalIdx()... Alien with AC index %i not found!\n", idx);
 	return -1;
 }
 
