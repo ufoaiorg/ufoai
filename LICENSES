@@ -1598,7 +1598,13 @@ base/pics/hud/checkbox.tga | Creative Commons Attribution-Share Alike 3.0 | Wern
 base/pics/hud/firemode.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/icons/alien.tga | GNU General Public License 2.0
 base/pics/icons/artifact.tga | GNU General Public License 2.0
+base/pics/icons/healing.tga | GNU General Public License 2.0
+base/pics/icons/health_critical.tga | GNU General Public License 2.0
+base/pics/icons/health_medium.tga | GNU General Public License 2.0
+base/pics/icons/health_normal.tga | GNU General Public License 2.0
+base/pics/icons/health_unused.tga | GNU General Public License 2.0
 base/pics/icons/intelligence.tga | GNU General Public License 2.0
+base/pics/icons/surgery.tga | GNU General Public License 2.0
 base/pics/icons/tech.tga | GNU General Public License 2.0
 base/pics/maps/loading/README | GPL | Martin Gerhardy
 base/pics/maps/loading/africa04.jpg | GNU General Public License v2.0 | Martin Gerhardy
@@ -1756,6 +1762,7 @@ base/pics/menu/button_equip.tga | GNU General Public License 2.0 | Gerd Heisse
 base/pics/menu/checkbox_green_checked.tga | GNU General Public License 2.0 | Gerd Heisse
 base/pics/menu/checkbox_green_disabled.tga | GNU General Public License 2.0 | Gerd Heisse
 base/pics/menu/checkbox_green_unchecked.tga | GNU General Public License 2.0 | Gerd Heisse
+base/pics/menu/hosp_button_green.tga | GNU General Public License 2.0
 base/pics/menu/mail_button.tga | GNU General Public License 2.0
 base/pics/menu/map_earth_clouds.jpg |  |  | Blue Marble Next generation - NASA's Earth Obervatory (See http://www.iac.ethz.ch/staff/stockli/bmng/#acknowledgements and http://www.nasa.gov/vision/earth/features/blue_marble.html)
 base/pics/menu/map_earth_day.jpg |  |  | Blue Marble Next generation - NASA's Earth Obervatory (See http://www.iac.ethz.ch/staff/stockli/bmng/#acknowledgements and http://www.nasa.gov/vision/earth/features/blue_marble.html)
