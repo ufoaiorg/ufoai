@@ -33,6 +33,12 @@ static employee_t* currentEmployeeInHospital = NULL;
 /** @brief Hospital employee list in Hospital menu. */
 static employee_t *hospitalList[MAX_EMPLOYEES];
 
+/** @brief First line in Hospital menu. */
+static int hospitalFirstEntry;
+
+/** @brief Number of all entries in Hospital menu. */
+static int hospitalNumEntries;
+
 /**
  * @brief Remove an employee from a hospitalList.
  * @param[in] employee Pointer to the employee to remove.
@@ -271,17 +277,95 @@ void HOS_HealAll (const base_t* const base)
 /** @brief Maximal entries in hospital menu. */
 #define HOS_MENU_MAX_ENTRIES 21
 
+/** @brief Number of entries in a line of the hospital menu. */
+#define HOS_MENU_LINE_ENTRIES 3
+
+/**
+ * @brief Updates the hospital menu.
+ * @sa HOS_Init_f
+ */
+static void HOS_UpdateMenu (void)
+{
+	char name[128];
+	char rank[128];
+	int i, j, k, type;
+	int entry;
+	employee_t* employee = NULL;
+
+	/* Reset list. */
+	Cbuf_AddText("hospital_clear\n");
+
+	for (type = 0, j = 0, entry = 0; type < MAX_EMPL; type++) {
+		for (i = 0; i < gd.numEmployees[type]; i++) {
+			employee = &gd.employees[type][i];
+			/* Only show those employees, that are in the current base. */
+			if (!E_IsInBase(employee, baseCurrent))
+				continue;
+			/* Don't show soldiers who are gone in mission */
+			if (CL_SoldierAwayFromBase(employee))
+				continue;
+			/* Don't show healthy employees */
+			if (employee->chr.HP >= employee->chr.maxHP) 
+				continue;
+				
+			if ((j >= hospitalFirstEntry) && (entry < HOS_MENU_MAX_ENTRIES)) {
+				/* Print name. */
+				Com_sprintf(name, sizeof(name), employee->chr.name);
+				/* Print rank for soldiers or type for other personel. */
+				if (type == EMPL_SOLDIER)
+					Com_sprintf(rank, sizeof(rank), _(gd.ranks[employee->chr.rank].name));
+				else
+					Com_sprintf(rank, sizeof(rank), E_GetEmployeeString(employee->type));
+				Com_DPrintf(DEBUG_CLIENT, "%s idx: %i entry: %i\n", name, employee->idx, entry);
+				/* If the employee is seriously wounded (HP <= 50% maxHP), make him red. */
+				if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.5))
+					Cbuf_AddText(va("hospitalserious%i\n", entry));
+				/* If the employee is semi-seriously wounded (HP <= 85% maxHP), make him yellow. */
+				else if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.85))
+					Cbuf_AddText(va("hospitalmedium%i\n", entry));
+				else
+					Cbuf_AddText(va("hospitallight%i\n", entry));
+				/* If the employee is currently being healed, make him blue. */
+				for (k = 0; k < baseCurrent->hospitalListCount[type]; k++) {
+					if (baseCurrent->hospitalList[type][k] == employee->idx) {
+						Cbuf_AddText(va("hospitalheal%i\n", entry));
+						break;
+					}
+				}
+				/* Display name in the correct list-entry. */
+				Cvar_Set(va("mn_hos_item%i", entry), name);
+				/* Display rank in the correct list-entry. */
+				Cvar_Set(va("mn_hos_rank%i", entry), rank);
+				/* Prepare the health bar */
+				Cvar_Set(va("mn_hos_hp%i", entry), va("%i", employee->chr.HP));
+				Cvar_Set(va("mn_hos_hpmax%i", entry), va("%i", employee->chr.maxHP));
+				/* Increase the counter of list entries. */
+				entry++;
+			}
+
+			/* Assign the employee to proper position on the list. */
+			hospitalList[j] = &gd.employees[type][i];
+			j++;
+		}
+	}
+	
+	hospitalNumEntries = j;
+	
+	/* Set rest of the list-entries to have no text at all. */
+	for (; entry < HOS_MENU_MAX_ENTRIES; entry++) {
+		Cvar_Set(va("mn_hos_item%i", entry), "");
+		Cvar_Set(va("mn_hos_rank%i", entry), "");
+		Cvar_Set(va("mn_hos_hp%i", entry), "0");
+		Cvar_Set(va("mn_hos_hpmax%i", entry), "1");
+	}
+}
+
 /**
  * @brief Script command to init the hospital menu.
  * @sa HOS_EmployeeInit_f
  */
 static void HOS_Init_f (void)
 {
-	char name[128];
-	char rank[128];
-	int i, j, k, type;
-	employee_t* employee = NULL;
-
 	if (!baseCurrent)
 		return;
 
@@ -290,64 +374,10 @@ static void HOS_Init_f (void)
 		return;
 	}
 
-	/* Prepare default list in default color. */
-	Cbuf_AddText("hospital_clear\n");
+	hospitalFirstEntry = 0;
+	
+	HOS_UpdateMenu();
 
-	for (type = 0, j = 0; (type < MAX_EMPL) && (j < HOS_MENU_MAX_ENTRIES); type++) {
-		for (i = 0; (i < gd.numEmployees[type]) && (j < HOS_MENU_MAX_ENTRIES); i++) {
-			employee = &gd.employees[type][i];
-			/* Only show those employees, that are in the current base. */
-			if (!E_IsInBase(employee, baseCurrent))
-				continue;
-			/* Don't show soldiers who are gone in mission */
-			if (CL_SoldierAwayFromBase(employee))
-				continue;
-			if (employee->chr.HP < employee->chr.maxHP) {
-				/* Print rank for soldiers or type for other personel. */
-				if (type == EMPL_SOLDIER)
-					Com_sprintf(rank, sizeof(rank), _(gd.ranks[employee->chr.rank].name));
-				else
-					Com_sprintf(rank, sizeof(rank), E_GetEmployeeString(employee->type));
-				/* Print name. */
-				Com_sprintf(name, sizeof(name), employee->chr.name);
-				Com_DPrintf(DEBUG_CLIENT, "%s idx: %i j: %i\n", name, employee->idx, j);
-				/* If the employee is seriously wounded (HP <= 50% maxHP), make him red. */
-				if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.5))
-					Cbuf_AddText(va("hospitalserious%i\n", j));
-				/* If the employee is semi-seriously wounded (HP <= 85% maxHP), make him yellow. */
-				else if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.85))
-					Cbuf_AddText(va("hospitalmedium%i\n", j));
-				else
-					Cbuf_AddText(va("hospitallight%i\n", j));
-				/* If the employee is currently being healed, make him blue. */
-				for (k = 0; k < baseCurrent->hospitalListCount[type]; k++) {
-					if (baseCurrent->hospitalList[type][k] == employee->idx) {
-						Cbuf_AddText(va("hospitalheal%i\n", j));
-						break;
-					}
-				}
-				/* Display name in the correct list-entry. */
-				Cvar_Set(va("mn_hos_item%i", j), name);
-				/* Display rank in the correct list-entry. */
-				Cvar_Set(va("mn_hos_rank%i", j), rank);
-				/* Prepare the health bar */
-				Cvar_Set(va("mn_hos_hp%i", j), va("%i", employee->chr.HP));
-				Cvar_Set(va("mn_hos_hpmax%i", j), va("%i", employee->chr.maxHP));
-				/* Assign the employee to proper position on the list. */
-				hospitalList[j] = &gd.employees[type][i];
-				/* Increase the counter of list entries. */
-				j++;
-			}
-		}
-	}
-
-	/* Set rest of the list-entries to have no text at all. */
-	for (; j < HOS_MENU_MAX_ENTRIES; j++) {
-		Cvar_Set(va("mn_hos_item%i", j), "");
-		Cvar_Set(va("mn_hos_rank%i", j), "");
-		Cvar_Set(va("mn_hos_hp%i", j), "0");
-		Cvar_Set(va("mn_hos_hpmax%i", j), "1");
-	}
 
 	Cvar_SetValue("mn_hosp_medics", E_CountHired(baseCurrent, EMPL_MEDIC));
 	Cvar_SetValue("mn_hosp_heal_limit", baseCurrent->capacities[CAP_HOSPSPACE].max);
@@ -402,6 +432,28 @@ static void HOS_HurtAll_f (void)
 #endif
 
 /**
+ * @brief Click function for scrolling up the employee list.
+ */
+static void HOS_ListUp_f (void)
+{
+	if (hospitalFirstEntry >= HOS_MENU_LINE_ENTRIES)
+		hospitalFirstEntry -= HOS_MENU_LINE_ENTRIES;
+		
+	HOS_UpdateMenu();	
+}
+
+/**
+ * @brief Click function for scrolling down the employee list.
+ */
+static void HOS_ListDown_f (void)
+{
+	if (hospitalFirstEntry + HOS_MENU_MAX_ENTRIES < hospitalNumEntries)
+		hospitalFirstEntry += HOS_MENU_LINE_ENTRIES;
+	
+	HOS_UpdateMenu();	
+}
+
+/**
  * @brief Click function for hospital menu employee list.
  */
 static void HOS_ListClick_f (void)
@@ -420,7 +472,7 @@ static void HOS_ListClick_f (void)
 	}
 
 	/* which employee? */
-	num = atoi(Cmd_Argv(1));
+	num = atoi(Cmd_Argv(1)) + hospitalFirstEntry;
 
 	for (type = 0; type < MAX_EMPL; type++)
 		for (i = 0; i < gd.numEmployees[type]; i++) {
@@ -643,6 +695,8 @@ void HOS_Reset (void)
 	Cmd_AddCommand("hosp_init", HOS_Init_f, "Init function for hospital menu");
 	Cmd_AddCommand("hosp_start_healing", HOS_StartHealing_f, "Start the healing process for the current selected soldier");
 	Cmd_AddCommand("hosp_list_click", HOS_ListClick_f, "Click function for hospital employee list");
+	Cmd_AddCommand("hosp_list_up", HOS_ListUp_f, "Scroll up function for hospital employee list");
+	Cmd_AddCommand("hosp_list_down", HOS_ListDown_f, "Scroll down function for hospital employee list");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_hosp_hurt_all", HOS_HurtAll_f, "Debug function to hurt all employees in the current base by one");
 	Cmd_AddCommand("debug_hosp_heal_all", HOS_HealAll_f, "Debug function to heal all employees in the current base completly");

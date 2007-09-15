@@ -46,6 +46,27 @@ menu hospital
 
 	confunc hospital_clear
 	{
+		*hos_button0	image menu/hosp_button_green 
+		*hos_button1	image menu/hosp_button_green 
+		*hos_button2	image menu/hosp_button_green 
+		*hos_button3	image menu/hosp_button_green 
+		*hos_button4	image menu/hosp_button_green 
+		*hos_button5	image menu/hosp_button_green 
+		*hos_button6	image menu/hosp_button_green 
+		*hos_button7	image menu/hosp_button_green 
+		*hos_button8	image menu/hosp_button_green 
+		*hos_button9	image menu/hosp_button_green 
+		*hos_button10	image menu/hosp_button_green 
+		*hos_button11	image menu/hosp_button_green 
+		*hos_button12	image menu/hosp_button_green 
+		*hos_button13	image menu/hosp_button_green 
+		*hos_button14	image menu/hosp_button_green 
+		*hos_button15	image menu/hosp_button_green 
+		*hos_button16	image menu/hosp_button_green 
+		*hos_button17	image menu/hosp_button_green 
+		*hos_button18	image menu/hosp_button_green 
+		*hos_button19	image menu/hosp_button_green 
+		*hos_button20	image menu/hosp_button_green 
 		*hos_button0	tooltip "_Unused" 
 		*hos_button1	tooltip "_Unused" 
 		*hos_button2	tooltip "_Unused" 
@@ -69,94 +90,102 @@ menu hospital
 		*hos_button20	tooltip "_Unused" 
 	}
 
-	confunc hospitalserious0  { *hos_icon0  image icons/health_critical *hos_button0 tooltip "_Heavily wounded" }
-	confunc hospitalserious1  { *hos_icon1  image icons/health_critical *hos_button1 tooltip "_Heavily wounded" }
-	confunc hospitalserious2  { *hos_icon2  image icons/health_critical *hos_button2 tooltip "_Heavily wounded" }
-	confunc hospitalserious3  { *hos_icon3  image icons/health_critical *hos_button3 tooltip "_Heavily wounded" }
-	confunc hospitalserious4  { *hos_icon4  image icons/health_critical *hos_button4 tooltip "_Heavily wounded" }
-	confunc hospitalserious5  { *hos_icon5  image icons/health_critical *hos_button5 tooltip "_Heavily wounded" }
-	confunc hospitalserious6  { *hos_icon6  image icons/health_critical *hos_button6 tooltip "_Heavily wounded" }
-	confunc hospitalserious7  { *hos_icon7  image icons/health_critical *hos_button7 tooltip "_Heavily wounded" }
-	confunc hospitalserious8  { *hos_icon8  image icons/health_critical *hos_button8 tooltip "_Heavily wounded" }
-	confunc hospitalserious9  { *hos_icon9  image icons/health_critical *hos_button9 tooltip "_Heavily wounded" }
-	confunc hospitalserious10 { *hos_icon10 image icons/health_critical *hos_button10 tooltip "_Heavily wounded" }
-	confunc hospitalserious11 { *hos_icon11 image icons/health_critical *hos_button11 tooltip "_Heavily wounded" }
-	confunc hospitalserious12 { *hos_icon12 image icons/health_critical *hos_button12 tooltip "_Heavily wounded" }
-	confunc hospitalserious13 { *hos_icon13 image icons/health_critical *hos_button13 tooltip "_Heavily wounded" }
-	confunc hospitalserious14 { *hos_icon14 image icons/health_critical *hos_button14 tooltip "_Heavily wounded" }
-	confunc hospitalserious15 { *hos_icon15 image icons/health_critical *hos_button15 tooltip "_Heavily wounded" }
-	confunc hospitalserious16 { *hos_icon16 image icons/health_critical *hos_button16 tooltip "_Heavily wounded" }
-	confunc hospitalserious17 { *hos_icon17 image icons/health_critical *hos_button17 tooltip "_Heavily wounded" }
-	confunc hospitalserious18 { *hos_icon18 image icons/health_critical *hos_button18 tooltip "_Heavily wounded" }
-	confunc hospitalserious19 { *hos_icon19 image icons/health_critical *hos_button19 tooltip "_Heavily wounded" }
-	confunc hospitalserious20 { *hos_icon20 image icons/health_critical *hos_button20 tooltip "_Heavily wounded" }
+	confunc hospitalserious0  { *hos_icon0  image icons/health_critical *hos_button0 image menu/hosp_button_light *hos_button0 tooltip "_Heavily wounded" }
+	confunc hospitalserious1  { *hos_icon1  image icons/health_critical *hos_button1 image menu/hosp_button_light *hos_button1 tooltip "_Heavily wounded" }
+	confunc hospitalserious2  { *hos_icon2  image icons/health_critical *hos_button2 image menu/hosp_button_light *hos_button2 tooltip "_Heavily wounded" }
+	confunc hospitalserious3  { *hos_icon3  image icons/health_critical *hos_button3 image menu/hosp_button_light *hos_button3 tooltip "_Heavily wounded" }
+	confunc hospitalserious4  { *hos_icon4  image icons/health_critical *hos_button4 image menu/hosp_button_light *hos_button4 tooltip "_Heavily wounded" }
+	confunc hospitalserious5  { *hos_icon5  image icons/health_critical *hos_button5 image menu/hosp_button_light *hos_button5 tooltip "_Heavily wounded" }
+	confunc hospitalserious6  { *hos_icon6  image icons/health_critical *hos_button6 image menu/hosp_button_light *hos_button6 tooltip "_Heavily wounded" }
+	confunc hospitalserious7  { *hos_icon7  image icons/health_critical *hos_button7 image menu/hosp_button_light *hos_button7 tooltip "_Heavily wounded" }
+	confunc hospitalserious8  { *hos_icon8  image icons/health_critical *hos_button8 image menu/hosp_button_light *hos_button8 tooltip "_Heavily wounded" }
+	confunc hospitalserious9  { *hos_icon9  image icons/health_critical *hos_button9 image menu/hosp_button_light *hos_button9 tooltip "_Heavily wounded" }
+	confunc hospitalserious10 { *hos_icon10 image icons/health_critical *hos_button10 image menu/hosp_button_light *hos_button10 tooltip "_Heavily wounded" }
+	confunc hospitalserious11 { *hos_icon11 image icons/health_critical *hos_button11 image menu/hosp_button_light *hos_button11 tooltip "_Heavily wounded" }
+	confunc hospitalserious12 { *hos_icon12 image icons/health_critical *hos_button12 image menu/hosp_button_light *hos_button12 tooltip "_Heavily wounded" }
+	confunc hospitalserious13 { *hos_icon13 image icons/health_critical *hos_button13 image menu/hosp_button_light *hos_button13 tooltip "_Heavily wounded" }
+	confunc hospitalserious14 { *hos_icon14 image icons/health_critical *hos_button14 image menu/hosp_button_light *hos_button14 tooltip "_Heavily wounded" }
+	confunc hospitalserious15 { *hos_icon15 image icons/health_critical *hos_button15 image menu/hosp_button_light *hos_button15 tooltip "_Heavily wounded" }
+	confunc hospitalserious16 { *hos_icon16 image icons/health_critical *hos_button16 image menu/hosp_button_light *hos_button16 tooltip "_Heavily wounded" }
+	confunc hospitalserious17 { *hos_icon17 image icons/health_critical *hos_button17 image menu/hosp_button_light *hos_button17 tooltip "_Heavily wounded" }
+	confunc hospitalserious18 { *hos_icon18 image icons/health_critical *hos_button18 image menu/hosp_button_light *hos_button18 tooltip "_Heavily wounded" }
+	confunc hospitalserious19 { *hos_icon19 image icons/health_critical *hos_button19 image menu/hosp_button_light *hos_button19 tooltip "_Heavily wounded" }
+	confunc hospitalserious20 { *hos_icon20 image icons/health_critical *hos_button20 image menu/hosp_button_light *hos_button20 tooltip "_Heavily wounded" }
 
-	confunc hospitalmedium0  { *hos_icon0  image icons/health_medium *hos_button0 tooltip "_Medium wounds" }
-	confunc hospitalmedium1  { *hos_icon1  image icons/health_medium *hos_button1 tooltip "_Medium wounds" }
-	confunc hospitalmedium2  { *hos_icon2  image icons/health_medium *hos_button2 tooltip "_Medium wounds" }
-	confunc hospitalmedium3  { *hos_icon3  image icons/health_medium *hos_button3 tooltip "_Medium wounds" }
-	confunc hospitalmedium4  { *hos_icon4  image icons/health_medium *hos_button4 tooltip "_Medium wounds" }
-	confunc hospitalmedium5  { *hos_icon5  image icons/health_medium *hos_button5 tooltip "_Medium wounds" }
-	confunc hospitalmedium6  { *hos_icon6  image icons/health_medium *hos_button6 tooltip "_Medium wounds" }
-	confunc hospitalmedium7  { *hos_icon7  image icons/health_medium *hos_button7 tooltip "_Medium wounds" }
-	confunc hospitalmedium8  { *hos_icon8  image icons/health_medium *hos_button8 tooltip "_Medium wounds" }
-	confunc hospitalmedium9  { *hos_icon9  image icons/health_medium *hos_button9 tooltip "_Medium wounds" }
-	confunc hospitalmedium10 { *hos_icon10 image icons/health_medium *hos_button10 tooltip "_Medium wounds" }
-	confunc hospitalmedium11 { *hos_icon11 image icons/health_medium *hos_button11 tooltip "_Medium wounds" }
-	confunc hospitalmedium12 { *hos_icon12 image icons/health_medium *hos_button12 tooltip "_Medium wounds" }
-	confunc hospitalmedium13 { *hos_icon13 image icons/health_medium *hos_button13 tooltip "_Medium wounds" }
-	confunc hospitalmedium14 { *hos_icon14 image icons/health_medium *hos_button14 tooltip "_Medium wounds" }
-	confunc hospitalmedium15 { *hos_icon15 image icons/health_medium *hos_button15 tooltip "_Medium wounds" }
-	confunc hospitalmedium16 { *hos_icon16 image icons/health_medium *hos_button16 tooltip "_Medium wounds" }
-	confunc hospitalmedium17 { *hos_icon17 image icons/health_medium *hos_button17 tooltip "_Medium wounds" }
-	confunc hospitalmedium18 { *hos_icon18 image icons/health_medium *hos_button18 tooltip "_Medium wounds" }
-	confunc hospitalmedium19 { *hos_icon19 image icons/health_medium *hos_button19 tooltip "_Medium wounds" }
-	confunc hospitalmedium20 { *hos_icon20 image icons/health_medium *hos_button20 tooltip "_Medium wounds" }
+	confunc hospitalmedium0  { *hos_icon0  image icons/health_medium *hos_button0 image menu/hosp_button_light *hos_button0 tooltip "_Medium wounds" }
+	confunc hospitalmedium1  { *hos_icon1  image icons/health_medium *hos_button1 image menu/hosp_button_light *hos_button1 tooltip "_Medium wounds" }
+	confunc hospitalmedium2  { *hos_icon2  image icons/health_medium *hos_button2 image menu/hosp_button_light *hos_button2 tooltip "_Medium wounds" }
+	confunc hospitalmedium3  { *hos_icon3  image icons/health_medium *hos_button3 image menu/hosp_button_light *hos_button3 tooltip "_Medium wounds" }
+	confunc hospitalmedium4  { *hos_icon4  image icons/health_medium *hos_button4 image menu/hosp_button_light *hos_button4 tooltip "_Medium wounds" }
+	confunc hospitalmedium5  { *hos_icon5  image icons/health_medium *hos_button5 image menu/hosp_button_light *hos_button5 tooltip "_Medium wounds" }
+	confunc hospitalmedium6  { *hos_icon6  image icons/health_medium *hos_button6 image menu/hosp_button_light *hos_button6 tooltip "_Medium wounds" }
+	confunc hospitalmedium7  { *hos_icon7  image icons/health_medium *hos_button7 image menu/hosp_button_light *hos_button7 tooltip "_Medium wounds" }
+	confunc hospitalmedium8  { *hos_icon8  image icons/health_medium *hos_button8 image menu/hosp_button_light *hos_button8 tooltip "_Medium wounds" }
+	confunc hospitalmedium9  { *hos_icon9  image icons/health_medium *hos_button9 image menu/hosp_button_light *hos_button9 tooltip "_Medium wounds" }
+	confunc hospitalmedium10 { *hos_icon10 image icons/health_medium *hos_button10 image menu/hosp_button_light *hos_button10 tooltip "_Medium wounds" }
+	confunc hospitalmedium11 { *hos_icon11 image icons/health_medium *hos_button11 image menu/hosp_button_light *hos_button11 tooltip "_Medium wounds" }
+	confunc hospitalmedium12 { *hos_icon12 image icons/health_medium *hos_button12 image menu/hosp_button_light *hos_button12 tooltip "_Medium wounds" }
+	confunc hospitalmedium13 { *hos_icon13 image icons/health_medium *hos_button13 image menu/hosp_button_light *hos_button13 tooltip "_Medium wounds" }
+	confunc hospitalmedium14 { *hos_icon14 image icons/health_medium *hos_button14 image menu/hosp_button_light *hos_button14 tooltip "_Medium wounds" }
+	confunc hospitalmedium15 { *hos_icon15 image icons/health_medium *hos_button15 image menu/hosp_button_light *hos_button15 tooltip "_Medium wounds" }
+	confunc hospitalmedium16 { *hos_icon16 image icons/health_medium *hos_button16 image menu/hosp_button_light *hos_button16 tooltip "_Medium wounds" }
+	confunc hospitalmedium17 { *hos_icon17 image icons/health_medium *hos_button17 image menu/hosp_button_light *hos_button17 tooltip "_Medium wounds" }
+	confunc hospitalmedium18 { *hos_icon18 image icons/health_medium *hos_button18 image menu/hosp_button_light *hos_button18 tooltip "_Medium wounds" }
+	confunc hospitalmedium19 { *hos_icon19 image icons/health_medium *hos_button19 image menu/hosp_button_light *hos_button19 tooltip "_Medium wounds" }
+	confunc hospitalmedium20 { *hos_icon20 image icons/health_medium *hos_button20 image menu/hosp_button_light *hos_button20 tooltip "_Medium wounds" }
 
-	confunc hospitallight0  { *hos_icon0  image icons/health_normal *hos_button0 tooltip "_Slightly wounded" }
-	confunc hospitallight1  { *hos_icon1  image icons/health_normal *hos_button1 tooltip "_Slightly wounded" }
-	confunc hospitallight2  { *hos_icon2  image icons/health_normal *hos_button2 tooltip "_Slightly wounded" }
-	confunc hospitallight3  { *hos_icon3  image icons/health_normal *hos_button3 tooltip "_Slightly wounded" }
-	confunc hospitallight4  { *hos_icon4  image icons/health_normal *hos_button4 tooltip "_Slightly wounded" }
-	confunc hospitallight5  { *hos_icon5  image icons/health_normal *hos_button5 tooltip "_Slightly wounded" }
-	confunc hospitallight6  { *hos_icon6  image icons/health_normal *hos_button6 tooltip "_Slightly wounded" }
-	confunc hospitallight7  { *hos_icon7  image icons/health_normal *hos_button7 tooltip "_Slightly wounded" }
-	confunc hospitallight8  { *hos_icon8  image icons/health_normal *hos_button8 tooltip "_Slightly wounded" }
-	confunc hospitallight9  { *hos_icon9  image icons/health_normal *hos_button9 tooltip "_Slightly wounded" }
-	confunc hospitallight10 { *hos_icon10 image icons/health_normal *hos_button10 tooltip "_Slightly wounded" }
-	confunc hospitallight11 { *hos_icon11 image icons/health_normal *hos_button11 tooltip "_Slightly wounded" }
-	confunc hospitallight12 { *hos_icon12 image icons/health_normal *hos_button12 tooltip "_Slightly wounded" }
-	confunc hospitallight13 { *hos_icon13 image icons/health_normal *hos_button13 tooltip "_Slightly wounded" }
-	confunc hospitallight14 { *hos_icon14 image icons/health_normal *hos_button14 tooltip "_Slightly wounded" }
-	confunc hospitallight15 { *hos_icon15 image icons/health_normal *hos_button15 tooltip "_Slightly wounded" }
-	confunc hospitallight16 { *hos_icon16 image icons/health_normal *hos_button16 tooltip "_Slightly wounded" }
-	confunc hospitallight17 { *hos_icon17 image icons/health_normal *hos_button17 tooltip "_Slightly wounded" }
-	confunc hospitallight18 { *hos_icon18 image icons/health_normal *hos_button18 tooltip "_Slightly wounded" }
-	confunc hospitallight19 { *hos_icon19 image icons/health_normal *hos_button19 tooltip "_Slightly wounded" }
-	confunc hospitallight20 { *hos_icon20 image icons/health_normal *hos_button20 tooltip "_Slightly wounded" }
+	confunc hospitallight0  { *hos_icon0  image icons/health_normal *hos_button0 image menu/hosp_button_light *hos_button0 tooltip "_Slightly wounded" }
+	confunc hospitallight1  { *hos_icon1  image icons/health_normal *hos_button1 image menu/hosp_button_light *hos_button1 tooltip "_Slightly wounded" }
+	confunc hospitallight2  { *hos_icon2  image icons/health_normal *hos_button2 image menu/hosp_button_light *hos_button2 tooltip "_Slightly wounded" }
+	confunc hospitallight3  { *hos_icon3  image icons/health_normal *hos_button3 image menu/hosp_button_light *hos_button3 tooltip "_Slightly wounded" }
+	confunc hospitallight4  { *hos_icon4  image icons/health_normal *hos_button4 image menu/hosp_button_light *hos_button4 tooltip "_Slightly wounded" }
+	confunc hospitallight5  { *hos_icon5  image icons/health_normal *hos_button5 image menu/hosp_button_light *hos_button5 tooltip "_Slightly wounded" }
+	confunc hospitallight6  { *hos_icon6  image icons/health_normal *hos_button6 image menu/hosp_button_light *hos_button6 tooltip "_Slightly wounded" }
+	confunc hospitallight7  { *hos_icon7  image icons/health_normal *hos_button7 image menu/hosp_button_light *hos_button7 tooltip "_Slightly wounded" }
+	confunc hospitallight8  { *hos_icon8  image icons/health_normal *hos_button8 image menu/hosp_button_light *hos_button8 tooltip "_Slightly wounded" }
+	confunc hospitallight9  { *hos_icon9  image icons/health_normal *hos_button9 image menu/hosp_button_light *hos_button9 tooltip "_Slightly wounded" }
+	confunc hospitallight10 { *hos_icon10 image icons/health_normal *hos_button10 image menu/hosp_button_light *hos_button10 tooltip "_Slightly wounded" }
+	confunc hospitallight11 { *hos_icon11 image icons/health_normal *hos_button11 image menu/hosp_button_light *hos_button11 tooltip "_Slightly wounded" }
+	confunc hospitallight12 { *hos_icon12 image icons/health_normal *hos_button12 image menu/hosp_button_light *hos_button12 tooltip "_Slightly wounded" }
+	confunc hospitallight13 { *hos_icon13 image icons/health_normal *hos_button13 image menu/hosp_button_light *hos_button13 tooltip "_Slightly wounded" }
+	confunc hospitallight14 { *hos_icon14 image icons/health_normal *hos_button14 image menu/hosp_button_light *hos_button14 tooltip "_Slightly wounded" }
+	confunc hospitallight15 { *hos_icon15 image icons/health_normal *hos_button15 image menu/hosp_button_light *hos_button15 tooltip "_Slightly wounded" }
+	confunc hospitallight16 { *hos_icon16 image icons/health_normal *hos_button16 image menu/hosp_button_light *hos_button16 tooltip "_Slightly wounded" }
+	confunc hospitallight17 { *hos_icon17 image icons/health_normal *hos_button17 image menu/hosp_button_light *hos_button17 tooltip "_Slightly wounded" }
+	confunc hospitallight18 { *hos_icon18 image icons/health_normal *hos_button18 image menu/hosp_button_light *hos_button18 tooltip "_Slightly wounded" }
+	confunc hospitallight19 { *hos_icon19 image icons/health_normal *hos_button19 image menu/hosp_button_light *hos_button19 tooltip "_Slightly wounded" }
+	confunc hospitallight20 { *hos_icon20 image icons/health_normal *hos_button20 image menu/hosp_button_light *hos_button20 tooltip "_Slightly wounded" }
 
-	confunc hospitalheal0  { *hos_icon0  image icons/healing *hos_button0 tooltip "_Currently being healed" }
-	confunc hospitalheal1  { *hos_icon1  image icons/healing *hos_button1 tooltip "_Currently being healed" }
-	confunc hospitalheal2  { *hos_icon2  image icons/healing *hos_button2 tooltip "_Currently being healed" }
-	confunc hospitalheal3  { *hos_icon3  image icons/healing *hos_button3 tooltip "_Currently being healed" }
-	confunc hospitalheal4  { *hos_icon4  image icons/healing *hos_button4 tooltip "_Currently being healed" }
-	confunc hospitalheal5  { *hos_icon5  image icons/healing *hos_button5 tooltip "_Currently being healed" }
-	confunc hospitalheal6  { *hos_icon6  image icons/healing *hos_button6 tooltip "_Currently being healed" }
-	confunc hospitalheal7  { *hos_icon7  image icons/healing *hos_button7 tooltip "_Currently being healed" }
-	confunc hospitalheal8  { *hos_icon8  image icons/healing *hos_button8 tooltip "_Currently being healed" }
-	confunc hospitalheal9  { *hos_icon9  image icons/healing *hos_button9 tooltip "_Currently being healed" }
-	confunc hospitalheal10 { *hos_icon10 image icons/healing *hos_button10 tooltip "_Currently being healed" }
-	confunc hospitalheal11 { *hos_icon11 image icons/healing *hos_button11 tooltip "_Currently being healed" }
-	confunc hospitalheal12 { *hos_icon12 image icons/healing *hos_button12 tooltip "_Currently being healed" }
-	confunc hospitalheal13 { *hos_icon13 image icons/healing *hos_button13 tooltip "_Currently being healed" }
-	confunc hospitalheal14 { *hos_icon14 image icons/healing *hos_button14 tooltip "_Currently being healed" }
-	confunc hospitalheal15 { *hos_icon15 image icons/healing *hos_button15 tooltip "_Currently being healed" }
-	confunc hospitalheal16 { *hos_icon16 image icons/healing *hos_button16 tooltip "_Currently being healed" }
-	confunc hospitalheal17 { *hos_icon17 image icons/healing *hos_button17 tooltip "_Currently being healed" }
-	confunc hospitalheal18 { *hos_icon18 image icons/healing *hos_button18 tooltip "_Currently being healed" }
-	confunc hospitalheal19 { *hos_icon19 image icons/healing *hos_button19 tooltip "_Currently being healed" }
-	confunc hospitalheal20 { *hos_icon20 image icons/healing *hos_button20 tooltip "_Currently being healed" }
+	confunc hospitalheal0  { *hos_icon0  image icons/healing *hos_button0 image menu/hosp_button_blue *hos_button0 tooltip "_Currently being healed" }
+	confunc hospitalheal1  { *hos_icon1  image icons/healing *hos_button1 image menu/hosp_button_blue *hos_button1 tooltip "_Currently being healed" }
+	confunc hospitalheal2  { *hos_icon2  image icons/healing *hos_button2 image menu/hosp_button_blue *hos_button2 tooltip "_Currently being healed" }
+	confunc hospitalheal3  { *hos_icon3  image icons/healing *hos_button3 image menu/hosp_button_blue *hos_button3 tooltip "_Currently being healed" }
+	confunc hospitalheal4  { *hos_icon4  image icons/healing *hos_button4 image menu/hosp_button_blue *hos_button4 tooltip "_Currently being healed" }
+	confunc hospitalheal5  { *hos_icon5  image icons/healing *hos_button5 image menu/hosp_button_blue *hos_button5 tooltip "_Currently being healed" }
+	confunc hospitalheal6  { *hos_icon6  image icons/healing *hos_button6 image menu/hosp_button_blue *hos_button6 tooltip "_Currently being healed" }
+	confunc hospitalheal7  { *hos_icon7  image icons/healing *hos_button7 image menu/hosp_button_blue *hos_button7 tooltip "_Currently being healed" }
+	confunc hospitalheal8  { *hos_icon8  image icons/healing *hos_button8 image menu/hosp_button_blue *hos_button8 tooltip "_Currently being healed" }
+	confunc hospitalheal9  { *hos_icon9  image icons/healing *hos_button9 image menu/hosp_button_blue *hos_button9 tooltip "_Currently being healed" }
+	confunc hospitalheal10 { *hos_icon10 image icons/healing *hos_button10 image menu/hosp_button_blue *hos_button10 tooltip "_Currently being healed" }
+	confunc hospitalheal11 { *hos_icon11 image icons/healing *hos_button11 image menu/hosp_button_blue *hos_button11 tooltip "_Currently being healed" }
+	confunc hospitalheal12 { *hos_icon12 image icons/healing *hos_button12 image menu/hosp_button_blue *hos_button12 tooltip "_Currently being healed" }
+	confunc hospitalheal13 { *hos_icon13 image icons/healing *hos_button13 image menu/hosp_button_blue *hos_button13 tooltip "_Currently being healed" }
+	confunc hospitalheal14 { *hos_icon14 image icons/healing *hos_button14 image menu/hosp_button_blue *hos_button14 tooltip "_Currently being healed" }
+	confunc hospitalheal15 { *hos_icon15 image icons/healing *hos_button15 image menu/hosp_button_blue *hos_button15 tooltip "_Currently being healed" }
+	confunc hospitalheal16 { *hos_icon16 image icons/healing *hos_button16 image menu/hosp_button_blue *hos_button16 tooltip "_Currently being healed" }
+	confunc hospitalheal17 { *hos_icon17 image icons/healing *hos_button17 image menu/hosp_button_blue *hos_button17 tooltip "_Currently being healed" }
+	confunc hospitalheal18 { *hos_icon18 image icons/healing *hos_button18 image menu/hosp_button_blue *hos_button18 tooltip "_Currently being healed" }
+	confunc hospitalheal19 { *hos_icon19 image icons/healing *hos_button19 image menu/hosp_button_blue *hos_button19 tooltip "_Currently being healed" }
+	confunc hospitalheal20 { *hos_icon20 image icons/healing *hos_button20 image menu/hosp_button_blue *hos_button20 tooltip "_Currently being healed" }
 
+	zone hos_scroll_zone
+	{
+		pos "0 0"
+		size "1024 700"
+		whup { cmd "hosp_list_up" } 
+		whdown { cmd "hosp_list_down" }
+	}
+	
 	pic hos_button0		{ image menu/hosp_button_green	pos "25  25" 	tooltip "_Unused" click { cmd "hosp_list_click 0" } }
 	pic hos_button1		{ image menu/hosp_button_green	pos "345  25" 	tooltip "_Unused" click { cmd "hosp_list_click 1" } }
 	pic hos_button2		{ image menu/hosp_button_green	pos "665  25" 	tooltip "_Unused" click { cmd "hosp_list_click 2" } }
@@ -267,6 +296,33 @@ menu hospital
 	bar hos_health19    { pos "367 660" current "*cvar mn_hos_hp19" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax19" align uc }
 	bar hos_health20	{ pos "687 660" current "*cvar mn_hos_hp20" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax20" align uc }
 
+	pic hos_button_scrollup
+	{
+		tooltip "_Scroll up"
+		image	menu/buttons_small
+		mousefx true
+		pos		"980 25"
+		texh	"48 48"
+		texl	"32 32"
+		click	{ cmd "hosp_list_up" }
+		repeat	true
+		out		{ *hos_button_scrollup texl "32 32" *hos_button_scrollup texh "48 48" }
+		in		{ *hos_button_scrollup texl "48 32" *hos_button_scrollup texh "64 48" }
+	}
+
+	pic hos_button_scrolldown
+	{
+		tooltip "_Scroll down"
+		image	menu/buttons_small
+		mousefx true
+		pos		"980 663"
+		texl	"32 48"
+		texh	"48 64"
+		click	{ cmd "hosp_list_down" }
+		repeat	true
+		out		{ *hos_button_scrolldown texl "32 48" *hos_button_scrolldown texh "48 64" }
+		in		{ *hos_button_scrolldown texl "48 48" *hos_button_scrolldown texh "64 64" }
+	}
 
 	// ==================
 	// healing limit
