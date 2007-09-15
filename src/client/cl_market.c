@@ -231,8 +231,8 @@ static void BS_UpdateAircraftBSButtons (void)
 	/* We cannot buy aircraft if there is no power in our base. */
 	if (!baseCurrent->hasPower)
 		Cbuf_AddText("abuy_disableaircrafts1\n");
-	else	
-		Cbuf_AddText("abuy_enableaircrafts\n");	
+	else
+		Cbuf_AddText("abuy_enableaircrafts\n");
 	/* We cannot buy any item without storage. */
 	if (!baseCurrent->hasStorage)
 		Cbuf_AddText("abuy_disableitems\n");
@@ -714,17 +714,16 @@ static void BS_SellAircraft_f (void)
 			}
 		}
 		/* ok, we've found an empty aircraft (no team) in a base
-		   so now we can sell it */
-			if (found) {
+		 * so now we can sell it */
+		if (found) {
 			Com_DPrintf(DEBUG_CLIENT, "BS_SellAircraft_f: Selling aircraft with IDX %i\n", aircraft->idx);
+			/* the capacities are also updated here */
 			AIR_DeleteAircraft(aircraft);
 
 			CL_UpdateCredits(ccs.credits + aircraft_samples[aircraftID].price);
 			/* reinit the menu */
 			Cmd_BufClear();
 			BS_BuyType_f();
-			/* Update hangar capacities after selling an aircraft. */
-			AIR_UpdateHangarCapForAll(baseCurrent->idx);
 			return;
 		}
 		if (!found) {

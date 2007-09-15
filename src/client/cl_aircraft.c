@@ -698,6 +698,7 @@ void AIR_NewAircraft (base_t *base, const char *name)
  * @note The assigned soldiers (if any) are removed/unassinged from the aircraft - not fired.
  * @note If you want to do something different (kill, fire, etc...) do it before calling this function.
  * @todo Return status of deletion for better error handling.
+ * @todo also remove the assigned items in the slots - like weapons, armours and so on
  */
 void AIR_DeleteAircraft (aircraft_t *aircraft)
 {
@@ -758,7 +759,7 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 
 		/* Update index of aircraftCurrent in base if it is affected by the index-change. */
 		if (i == previous_aircraftCurrent)
-			baseCurrent->aircraftCurrent--;
+			base->aircraftCurrent--;
 	}
 
 	if (base->numAircraftInBase < 1) {
@@ -767,7 +768,7 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 		Cvar_Set("mn_aircraftinbase", "0");
 		Cvar_Set("mn_aircraftname", "");
 		Cvar_Set("mn_aircraft_model", "");
-		baseCurrent->aircraftCurrent = -1;
+		base->aircraftCurrent = -1;
 	}
 
 	/* Q_strncpyz(messageBuffer, va(_("You've sold your aircraft (a %s) in base %s"), aircraft->name, base->name), MAX_MESSAGE_TEXT);
@@ -777,6 +778,9 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 	Cmd_ExecuteString("aircraft_list");
 
 	/* @todo: Return successful deletion status here. */
+
+	/* update hangar capacities */
+	AIR_UpdateHangarCapForAll(base->idx);
 }
 
 /**

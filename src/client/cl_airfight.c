@@ -158,7 +158,7 @@ static qboolean AIRFIGHT_AddProjectile (base_t* attackingBase, aircraft_t *attac
 	aircraftProjectile_t *projectile;
 
 	if (gd.numProjectiles >= MAX_PROJECTILESONGEOSCAPE) {
-		Com_Printf("Too many projectiles on map\n");
+		Com_DPrintf(DEBUG_CLIENT, "Too many projectiles on map\n");
 		return qfalse;
 	}
 
@@ -420,6 +420,25 @@ static void AIRFIGHT_RemoveProjectileAimingAircraft (aircraft_t * aircraft)
 }
 
 /**
+ * @brief Set all projectile attackingAircraft pointers to NULL
+ * @param[in] aircraft Pointer to the destroyed aircraft.
+ * @note This function is called when @c aircraft is destroyed.
+ */
+static void AIRFIGHT_UpdateProjectileForDestroyedAircraft (aircraft_t * aircraft)
+{
+	aircraftProjectile_t *projectile;
+	aircraft_t *attacker;
+	int idx;
+
+	for (idx = 0, projectile = gd.projectiles; idx < gd.numProjectiles; projectile++, idx++) {
+		attacker = projectile->attackingAircraft;
+
+		if (attacker == aircraft)
+			projectile->attackingAircraft = NULL;
+	}
+}
+
+/**
  * @brief Actions to execute when a fight is done.
  * @param[in] shooter Pointer to the aircraft that fired the projectile.
  * @param[in] aircraft Pointer to the aircraft which was destroyed (alien or phalanx).
@@ -433,6 +452,8 @@ static void AIRFIGHT_RemoveProjectileAimingAircraft (aircraft_t * aircraft)
 void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, qboolean phalanxWon)
 {
 	byte *color;
+	int i, j;
+	base_t* base;
 
 	if (phalanxWon) {
 		/* get the color value of the map at the crash position */
@@ -449,18 +470,34 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 		AIRFIGHT_RemoveProjectileAimingAircraft(aircraft);
 		/* now remove the ufo from geoscape */
 		UFO_RemoveUfoFromGeoscape(aircraft);
-		/* and send our aircraft back to base */
-		/* @todo check that the aircraft that launched the projectile hasn't been destroyed by another aircraft */
+		/* and send our aircraft back to base if it's not destroyed */
 		if (shooter)
 			AIR_AircraftReturnToBase(shooter);
-	} else {
-		/* Destroy the aircraft and everything onboard */
-		/* FIXME: also remove the assigned items in the slots - like weapons, armours and so on
-		 * also make sure that the capacties are updates */
-		AIR_DestroyAircraft(aircraft);
 
+		/* let all the other aircraft return to base that also targetted this
+		 * ufo on the geoscape */
+		for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
+			if (!base->founded)
+				continue;
+			for (j = 0; j < base->numAircraftInBase; j++) {
+				if (base->aircraft[j].status == AIR_UFO
+				 && base->aircraft[j].aircraftTarget == aircraft) {
+					AIR_AircraftReturnToBase(&base->aircraft[j]);
+				}
+			}
+		}
+	} else {
 		/* change destination of other projectiles aiming aircraft */
 		AIRFIGHT_RemoveProjectileAimingAircraft(aircraft);
+
+		/* and now update the projectile pointers (there still might be some in the air
+		 * of the current destroyed aircraft) - this is needed not send the aircraft
+		 * back to base as soon as the projectiles will hit their target */
+		AIRFIGHT_UpdateProjectileForDestroyedAircraft(aircraft);
+
+		/* Destroy the aircraft and everything onboard - the aircraft pointer
+		 * is no longer valid after this point */
+		AIR_DestroyAircraft(aircraft);
 
 		MN_AddNewMessage(_("Interception"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
 	}
