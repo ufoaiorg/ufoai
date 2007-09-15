@@ -23,7 +23,7 @@ linuxinstaller:
 	$(MAKE) lang
 	$(MAKE) maps
 	cd base; ./archives.sh
-	cd src/ports/linux/installer; $(MAKE)
+	cd src/ports/linux/installer; $(MAKE) packdata; $(MAKE)
 	scp src/ports/linux/installer/ufoai-$(VERSION)-linux.run ufo:~/public_html/download
 	scp src/ports/linux/installer/ufoai-$(VERSION)-linux.run mirror:~/public_html
 
