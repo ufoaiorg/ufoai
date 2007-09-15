@@ -3705,9 +3705,8 @@ tech rs_craft_alien_astrogation
 	}
 	time		600
 	producetime	-1
-	
-	mdl_top		craft_item_astrogation
 
+	mdl_top		craft_item_astrogation
 }
 
 tech rs_craft_alien_propulsion
@@ -3779,7 +3778,7 @@ tech rs_craft_alien_detection
 	time		600
 	producetime	-1
 
-	image_top	"techs/craft_alien_detection"
+	mdltop		"craft_item_detector"
 }
 
 tech rs_craft_weapon_shiva
