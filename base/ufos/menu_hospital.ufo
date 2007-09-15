@@ -46,6 +46,27 @@ menu hospital
 
 	confunc hospital_clear
 	{
+		*hos_button0	tooltip "_Unused" 
+		*hos_button1	tooltip "_Unused" 
+		*hos_button2	tooltip "_Unused" 
+		*hos_button3	tooltip "_Unused" 
+		*hos_button4	tooltip "_Unused" 
+		*hos_button5	tooltip "_Unused" 
+		*hos_button6	tooltip "_Unused" 
+		*hos_button7	tooltip "_Unused" 
+		*hos_button8	tooltip "_Unused" 
+		*hos_button9	tooltip "_Unused" 
+		*hos_button10	tooltip "_Unused" 
+		*hos_button11	tooltip "_Unused" 
+		*hos_button12	tooltip "_Unused" 
+		*hos_button13	tooltip "_Unused" 
+		*hos_button14	tooltip "_Unused" 
+		*hos_button15	tooltip "_Unused" 
+		*hos_button16	tooltip "_Unused" 
+		*hos_button17	tooltip "_Unused" 
+		*hos_button18	tooltip "_Unused" 
+		*hos_button19	tooltip "_Unused" 
+		*hos_button20	tooltip "_Unused" 
 	}
 
 	confunc hospitalserious0  { *hos_icon0  image icons/health_critical *hos_button0 tooltip "_Heavily wounded" }
@@ -66,6 +87,9 @@ menu hospital
 	confunc hospitalserious15 { *hos_icon15 image icons/health_critical *hos_button15 tooltip "_Heavily wounded" }
 	confunc hospitalserious16 { *hos_icon16 image icons/health_critical *hos_button16 tooltip "_Heavily wounded" }
 	confunc hospitalserious17 { *hos_icon17 image icons/health_critical *hos_button17 tooltip "_Heavily wounded" }
+	confunc hospitalserious18 { *hos_icon18 image icons/health_critical *hos_button18 tooltip "_Heavily wounded" }
+	confunc hospitalserious19 { *hos_icon19 image icons/health_critical *hos_button19 tooltip "_Heavily wounded" }
+	confunc hospitalserious20 { *hos_icon20 image icons/health_critical *hos_button20 tooltip "_Heavily wounded" }
 
 	confunc hospitalmedium0  { *hos_icon0  image icons/health_medium *hos_button0 tooltip "_Medium wounds" }
 	confunc hospitalmedium1  { *hos_icon1  image icons/health_medium *hos_button1 tooltip "_Medium wounds" }
@@ -85,6 +109,9 @@ menu hospital
 	confunc hospitalmedium15 { *hos_icon15 image icons/health_medium *hos_button15 tooltip "_Medium wounds" }
 	confunc hospitalmedium16 { *hos_icon16 image icons/health_medium *hos_button16 tooltip "_Medium wounds" }
 	confunc hospitalmedium17 { *hos_icon17 image icons/health_medium *hos_button17 tooltip "_Medium wounds" }
+	confunc hospitalmedium18 { *hos_icon18 image icons/health_medium *hos_button18 tooltip "_Medium wounds" }
+	confunc hospitalmedium19 { *hos_icon19 image icons/health_medium *hos_button19 tooltip "_Medium wounds" }
+	confunc hospitalmedium20 { *hos_icon20 image icons/health_medium *hos_button20 tooltip "_Medium wounds" }
 
 	confunc hospitallight0  { *hos_icon0  image icons/health_normal *hos_button0 tooltip "_Slightly wounded" }
 	confunc hospitallight1  { *hos_icon1  image icons/health_normal *hos_button1 tooltip "_Slightly wounded" }
@@ -104,6 +131,9 @@ menu hospital
 	confunc hospitallight15 { *hos_icon15 image icons/health_normal *hos_button15 tooltip "_Slightly wounded" }
 	confunc hospitallight16 { *hos_icon16 image icons/health_normal *hos_button16 tooltip "_Slightly wounded" }
 	confunc hospitallight17 { *hos_icon17 image icons/health_normal *hos_button17 tooltip "_Slightly wounded" }
+	confunc hospitallight18 { *hos_icon18 image icons/health_normal *hos_button18 tooltip "_Slightly wounded" }
+	confunc hospitallight19 { *hos_icon19 image icons/health_normal *hos_button19 tooltip "_Slightly wounded" }
+	confunc hospitallight20 { *hos_icon20 image icons/health_normal *hos_button20 tooltip "_Slightly wounded" }
 
 	confunc hospitalheal0  { *hos_icon0  image icons/healing *hos_button0 tooltip "_Currently being healed" }
 	confunc hospitalheal1  { *hos_icon1  image icons/healing *hos_button1 tooltip "_Currently being healed" }
@@ -123,6 +153,9 @@ menu hospital
 	confunc hospitalheal15 { *hos_icon15 image icons/healing *hos_button15 tooltip "_Currently being healed" }
 	confunc hospitalheal16 { *hos_icon16 image icons/healing *hos_button16 tooltip "_Currently being healed" }
 	confunc hospitalheal17 { *hos_icon17 image icons/healing *hos_button17 tooltip "_Currently being healed" }
+	confunc hospitalheal18 { *hos_icon18 image icons/healing *hos_button18 tooltip "_Currently being healed" }
+	confunc hospitalheal19 { *hos_icon19 image icons/healing *hos_button19 tooltip "_Currently being healed" }
+	confunc hospitalheal20 { *hos_icon20 image icons/healing *hos_button20 tooltip "_Currently being healed" }
 
 	pic hos_button0		{ image menu/hosp_button_green	pos "25  25" 	tooltip "_Unused" click { cmd "hosp_list_click 0" } }
 	pic hos_button1		{ image menu/hosp_button_green	pos "345  25" 	tooltip "_Unused" click { cmd "hosp_list_click 1" } }
@@ -146,27 +179,27 @@ menu hospital
 	pic hos_button19	{ image menu/hosp_button_green	pos "345 595" 	tooltip "_Unused" click { cmd "hosp_list_click 19" } }
 	pic hos_button20	{ image menu/hosp_button_green	pos "665 595" 	tooltip "_Unused" click { cmd "hosp_list_click 20" } }
 
-	pic hos_icon0	{ image icons/health_unused 	pos "270  35" }
-	pic hos_icon1	{ image icons/health_unused 	pos "590  35" }
-	pic hos_icon2	{ image icons/health_unused 	pos "910  35" }
-	pic hos_icon3	{ image icons/health_unused 	pos "270 130" }
-	pic hos_icon4	{ image icons/health_unused 	pos "590 130" }
-	pic hos_icon5	{ image icons/health_unused 	pos "910 130" }
-	pic hos_icon6	{ image icons/health_unused 	pos "270 225" }
-	pic hos_icon7	{ image icons/health_unused 	pos "590 225" }
-	pic hos_icon8	{ image icons/health_unused 	pos "910 225" }
-	pic hos_icon9	{ image icons/health_unused 	pos "270 320" }
-	pic hos_icon10	{ image icons/health_unused 	pos "590 320" }
-	pic hos_icon11	{ image icons/health_unused 	pos "910 320" }
-	pic hos_icon12	{ image icons/health_unused 	pos "270 415" }
-	pic hos_icon13	{ image icons/health_unused 	pos "590 415" }
-	pic hos_icon14	{ image icons/health_unused 	pos "910 415" }
-	pic hos_icon15	{ image icons/health_unused 	pos "270 510" }
-	pic hos_icon16	{ image icons/health_unused 	pos "590 510" }
-	pic hos_icon17	{ image icons/health_unused 	pos "910 510" }
-	pic hos_icon18	{ image icons/health_unused 	pos "270 605" }
-	pic hos_icon19	{ image icons/health_unused 	pos "590 605" }
-	pic hos_icon20	{ image icons/health_unused 	pos "910 605" }
+	pic hos_icon0	{ if "mn_hos_item0"		image icons/health_unused 	pos "272  36" }
+	pic hos_icon1	{ if "mn_hos_item1"		image icons/health_unused 	pos "592  36" }
+	pic hos_icon2	{ if "mn_hos_item2"		image icons/health_unused 	pos "912  36" }
+	pic hos_icon3	{ if "mn_hos_item3"		image icons/health_unused 	pos "272 131" }
+	pic hos_icon4	{ if "mn_hos_item4"		image icons/health_unused 	pos "592 131" }
+	pic hos_icon5	{ if "mn_hos_item5"		image icons/health_unused 	pos "912 131" }
+	pic hos_icon6	{ if "mn_hos_item6"		image icons/health_unused 	pos "272 226" }
+	pic hos_icon7	{ if "mn_hos_item7"		image icons/health_unused 	pos "592 226" }
+	pic hos_icon8	{ if "mn_hos_item8"		image icons/health_unused 	pos "912 226" }
+	pic hos_icon9	{ if "mn_hos_item9"		image icons/health_unused 	pos "272 321" }
+	pic hos_icon10	{ if "mn_hos_item10"	image icons/health_unused 	pos "592 321" }
+	pic hos_icon11	{ if "mn_hos_item11"	image icons/health_unused 	pos "912 321" }
+	pic hos_icon12	{ if "mn_hos_item12"	image icons/health_unused 	pos "272 416" }
+	pic hos_icon13	{ if "mn_hos_item13"	image icons/health_unused 	pos "592 416" }
+	pic hos_icon14	{ if "mn_hos_item14"	image icons/health_unused 	pos "912 416" }
+	pic hos_icon15	{ if "mn_hos_item15"	image icons/health_unused 	pos "272 511" }
+	pic hos_icon16	{ if "mn_hos_item16"	image icons/health_unused 	pos "592 511" }
+	pic hos_icon17	{ if "mn_hos_item17"	image icons/health_unused 	pos "912 511" }
+	pic hos_icon18	{ if "mn_hos_item18"	image icons/health_unused 	pos "272 606" }
+	pic hos_icon19	{ if "mn_hos_item19"	image icons/health_unused 	pos "592 606" }
+	pic hos_icon20	{ if "mn_hos_item20"	image icons/health_unused 	pos "912 606" }
 	
 	string hos_item0	{ string "*cvar mn_hos_item0"		pos "40  35"	color "1 1 1 1"	size "220 16" }
 	string hos_item1	{ string "*cvar mn_hos_item1"		pos "360  35"	color "1 1 1 1"	size "220 16" }
