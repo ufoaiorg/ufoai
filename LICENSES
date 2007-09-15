@@ -439,6 +439,8 @@ base/maps/villagen/vil_s14.map | GPL version 2
 base/maps/villagen/vil_s15.map | GPL version 2
 base/models/aircraft/craft_item_astro/craft_item_astrogation.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/craft_item_astro/craft_item_astrogation.tga | GNU General Public License 2.0 | Willem "Sitters"
+base/models/aircraft/craft_item_det/detection.md2 | GNU General Public License 2.0 | Willem "Sitters"
+base/models/aircraft/craft_item_det/detection.tga | GNU General Public License 2.0 | Willem "Sitters" | High res version in data_source/models/sittes/craft_item_detection
 base/models/aircraft/craft_item_target/craft_item_target.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/craft_item_target/craft_item_target.tga | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/craft_weapon_particle/pbw.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
