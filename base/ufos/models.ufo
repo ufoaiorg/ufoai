@@ -542,6 +542,14 @@ menu_model craft_item_target
 	}
 }
 
+menu_model craft_item_astrogation
+{
+	model	"aircraft/craft_item_astro/craft_item_astrogation"
+	menutransform {
+		ufopedia	"6 6 6"	"-120 120 -30"	#
+	}
+}
+
 menu_model craft_item_detector
 {
 	model	"aircraft/craft_item_det/detector"
