@@ -33,9 +33,6 @@ static employee_t* currentEmployeeInHospital = NULL;
 /** @brief Hospital employee list in Hospital menu. */
 static employee_t *hospitalList[MAX_EMPLOYEES];
 
-/** @brief Length of list in Hospital menu. */
-static int HOSPITAL_LIST_LENGHT;
-
 /**
  * @brief Remove an employee from a hospitalList.
  * @param[in] employee Pointer to the employee to remove.
@@ -271,6 +268,9 @@ void HOS_HealAll (const base_t* const base)
 		}
 }
 
+/** @brief Maximal entries in hospital menu. */
+#define HOS_MENU_MAX_ENTRIES 21
+
 /**
  * @brief Script command to init the hospital menu.
  * @sa HOS_EmployeeInit_f
@@ -293,8 +293,8 @@ static void HOS_Init_f (void)
 	/* Prepare default list in default color. */
 	Cbuf_AddText("hospital_clear\n");
 
-	for (type = 0, j = 0; type < MAX_EMPL; type++) {
-		for (i = 0; i < gd.numEmployees[type]; i++) {
+	for (type = 0, j = 0; (type < MAX_EMPL) && (j < HOS_MENU_MAX_ENTRIES); type++) {
+		for (i = 0; (i < gd.numEmployees[type]) && (j < HOS_MENU_MAX_ENTRIES); i++) {
 			employee = &gd.employees[type][i];
 			/* Only show those employees, that are in the current base. */
 			if (!E_IsInBase(employee, baseCurrent))
@@ -341,10 +341,8 @@ static void HOS_Init_f (void)
 		}
 	}
 
-	HOSPITAL_LIST_LENGHT = j;
-
 	/* Set rest of the list-entries to have no text at all. */
-	for (; j < baseCurrent->capacities[CAP_HOSPSPACE].max; j++) {
+	for (; j < HOS_MENU_MAX_ENTRIES; j++) {
 		Cvar_Set(va("mn_hos_item%i", j), "");
 		Cvar_Set(va("mn_hos_rank%i", j), "");
 		Cvar_Set(va("mn_hos_hp%i", j), "0");
