@@ -558,4 +558,20 @@ menu_model craft_item_detector
 	}
 }
 
+menu_model craft_item_raven_ecm
+{
+	model	"aircraft/craft_item_raven_ecm/ecm"
+	menutransform {
+		ufopedia	"6 6 6"	"-120 120 -30"	#
+	}
+}
+
+menu_model craft_shield_light
+{
+	model	"aircraft/craft_shield_light/light"
+	menutransform {
+		ufopedia	"6 6 6"	"-120 120 -30"	#
+	}
+}
+
 // ============== EOF =========================

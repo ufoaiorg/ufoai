@@ -3629,7 +3629,7 @@ tech rs_craft_el_raven
 	time		0
 	producetime	100
 
-	image_top	"techs/craft_electronics_raven"
+	mdl_top	"craft_item_raven_ecm"
 }
 
 tech rs_craft_shield_polymer
@@ -3647,7 +3647,7 @@ tech rs_craft_shield_polymer
 	time		0
 	producetime	140
 
-	image_top	"techs/craft_shield_light"
+	mdl_top	"craft_shield_light"
 }
 
 tech rs_craft_shield_plating
@@ -3778,7 +3778,7 @@ tech rs_craft_alien_detection
 	time		600
 	producetime	-1
 
-	mdltop		"craft_item_detector"
+	mdl_top		"craft_item_detector"
 }
 
 tech rs_craft_weapon_shiva
