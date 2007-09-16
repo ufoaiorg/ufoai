@@ -246,6 +246,6 @@ typedef struct irc_server_msg_s {
 static qboolean Irc_Net_Connect(const char *host, const char *port);
 static qboolean Irc_Net_Disconnect(void);
 
-static qboolean Irc_Net_Send(const char *msg, size_t msg_len);
+static void Irc_Net_Send(const char *msg, size_t msg_len);
 
 #endif

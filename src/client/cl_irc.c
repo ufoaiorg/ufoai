@@ -139,7 +139,7 @@ static qboolean Irc_Proto_ParseServerMsg(const char *txt, size_t txt_len, irc_se
 
 static qboolean Irc_Proto_Enqueue(const char *msg, size_t msg_len);
 static void Irc_Proto_RefillBucket(void);
-static qboolean Irc_Proto_DrainBucket(void);
+static void Irc_Proto_DrainBucket(void);
 
 static irc_bucket_t irc_bucket;
 
@@ -199,7 +199,8 @@ static qboolean Irc_Proto_Quit (const char *quitmsg)
 	char msg[IRC_SEND_BUF_SIZE];
 	const int msg_len = snprintf(msg, sizeof(msg) - 1, "QUIT %s\r\n", quitmsg);
 	msg[sizeof(msg) - 1] = '\0';
-	return Irc_Net_Send(msg, msg_len);	/* send immediately */
+	Irc_Net_Send(msg, msg_len);	/* send immediately */
+	return qfalse;
 }
 
 /**
@@ -410,9 +411,7 @@ static qboolean Irc_Proto_PollServerMsg (irc_server_msg_t *msg, qboolean *msg_co
 	*msg_complete = qfalse;
 	/* recv packet */
 	recvd = stream_dequeue(irc_stream, last, sizeof(buf) - (last - buf) - 1);
-	if (recvd == 0)
-		return qtrue;
-	{
+	if (recvd >= 0) {
 		/* terminate buf string */
 		const char * const begin = buf;
 		last += recvd;
@@ -439,6 +438,7 @@ static qboolean Irc_Proto_PollServerMsg (irc_server_msg_t *msg, qboolean *msg_co
 			*msg_complete = qfalse;
 		return qfalse;
 	}
+	return qtrue;
 }
 
 /**
@@ -1135,20 +1135,8 @@ static qboolean Irc_Proto_ParseServerMsg (const char *txt, size_t txt_len, irc_s
 
 /**
  * @brief
- * @sa Irc_Proto_Enqueue
- * @sa Irc_Proto_DrainBucket
- */
-static qboolean Irc_Proto_Flush (void)
-{
-	Irc_Proto_RefillBucket();		/* first refill token */
-	return Irc_Proto_DrainBucket();	/* then send messages (if allowed) */
-}
-
-/**
- * @brief
  * @sa Irc_Proto_DrainBucket
  * @sa Irc_Proto_RefillBucket
- * @sa Irc_Proto_Flush
  */
 static qboolean Irc_Proto_Enqueue (const char *msg, size_t msg_len)
 {
@@ -1217,10 +1205,9 @@ static void Irc_Proto_RefillBucket (void)
  * @sa Irc_Proto_Enqueue
  * @sa Irc_Proto_RefillBucket
  */
-static qboolean Irc_Proto_DrainBucket (void)
+static void Irc_Proto_DrainBucket (void)
 {
 	const double characterBucketBurst = irc_characterBucketBurst->value;
-	qboolean status = qfalse;
 	irc_bucket_message_t *msg;
 #if 0
 	Com_DPrintf(DEBUG_CLIENT, "Irc_Proto_DrainBucket: Queue send\n");
@@ -1237,9 +1224,9 @@ static qboolean Irc_Proto_DrainBucket (void)
 		irc_bucket.first_msg = next;
 	}
 	/* send burst of remaining messages */
-	for (msg = irc_bucket.first_msg; msg && !status; msg = irc_bucket.first_msg) {
+	for (msg = irc_bucket.first_msg; msg; msg = irc_bucket.first_msg) {
 		/* send message */
-		status = Irc_Net_Send(msg->msg, msg->msg_len);
+		Irc_Net_Send(msg->msg, msg->msg_len);
 		irc_bucket.character_token -= msg->msg_len;
 		/* dequeue message */
 		irc_bucket.first_msg = msg->next;
@@ -1250,7 +1237,6 @@ static qboolean Irc_Proto_DrainBucket (void)
 		Mem_Free(msg->msg);
 		Mem_Free(msg);
 	}
-	return status;
 }
 
 /*
@@ -1265,11 +1251,8 @@ Logic functions
  */
 static void Irc_Logic_SendMessages (void)
 {
-	if (Irc_Proto_Flush()) {
-		/* flush failed, server closed connection */
-		Com_Printf("Irc_Proto_Flush failed\n");
-		irc_connected = qfalse;
-	}
+	Irc_Proto_RefillBucket();		/* first refill token */
+	Irc_Proto_DrainBucket();	/* then send messages (if allowed) */
 }
 
 /**
@@ -1307,7 +1290,7 @@ static void Irc_Logic_Connect (const char *server, const char *port)
 			Irc_Proto_Password(pass);
 		Irc_Proto_Nick(irc_nick->string);
 		Irc_Proto_User(user, IRC_INVISIBLE, user);
-		irc_connected = !Irc_Proto_Flush();
+		irc_connected = qtrue;
 	}
 }
 
@@ -1414,13 +1397,14 @@ Network functions
 
 /**
  * @brief
+ * @return qtrue if successful - qfalse otherwise
  */
 static qboolean Irc_Net_Connect (const char *host, const char *port)
 {
 	if (irc_stream)
 		free_stream(irc_stream);
 	irc_stream = NET_Connect(host, port);
-	return irc_stream ? qtrue : qfalse;
+	return irc_stream ? qfalse : qtrue;
 }
 
 /**
@@ -1435,11 +1419,10 @@ static qboolean Irc_Net_Disconnect (void)
 /**
  * @brief
  */
-static qboolean Irc_Net_Send (const char *msg, size_t msg_len)
+static void Irc_Net_Send (const char *msg, size_t msg_len)
 {
 	assert(msg);
 	stream_enqueue(irc_stream, msg, msg_len);
-	return qtrue;
 }
 
 /*
