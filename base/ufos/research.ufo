@@ -3857,8 +3857,8 @@ tech rs_craft_weapon_sparrowhawk
 	producetime	100
 
 	// TODO: This model is still missing
-	mdl_top		"aircraft/craft_weapon_sparrowhawk/sparrowhawk"
-//	image_top	"techs/craft_weapon_sparrowhawk"
+//	mdl_top		"aircraft/craft_weapon_sparrowhawk/sparrowhawk"
+	image_top	"techs/craft_weapon_sparrowhawk"
 }
 
 tech rs_craft_ammo_sparrowhawk
