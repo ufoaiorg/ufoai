@@ -489,7 +489,7 @@ menu production
 
 	func init
 	{
-		cmd "prod_init 0;"
+		cmd "prod_init 0;prod_primary;"
 	}
 }
 
