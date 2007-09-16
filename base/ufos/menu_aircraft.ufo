@@ -728,6 +728,7 @@ menu aircraft_equip
 		size	"60 60"
 		origin	"68 68 0"
 //		color	"0.5 0.5 0.5 1"
+		angles	"0 0 180"
 	}
 
 	pic airequip_slot1
@@ -748,6 +749,7 @@ menu aircraft_equip
 		size	"60 60"
 		origin	"226 68 0"
 //		color	"0.5 0.5 0.5 1"
+		angles	"0 0 180"
 	}
 
 	pic airequip_slot2
@@ -768,6 +770,7 @@ menu aircraft_equip
 		size	"60 60"
 		origin	"383 68 0"
 //		color	"0.5 0.5 0.5 1"
+		angles	"0 0 180"
 	}
 
 	pic airequip_slot3
@@ -788,6 +791,7 @@ menu aircraft_equip
 		size	"60 60"
 		origin	"68 331 0"
 //		color	"0.5 0.5 0.5 1"
+		angles	"0 0 180"
 	}
 
 	pic airequip_slot4
@@ -808,6 +812,7 @@ menu aircraft_equip
 		size	"60 60"
 		origin	"383 331 0"
 //		color	"0.5 0.5 0.5 1"
+		angles	"0 0 180"
 	}
 
 	pic airequip_slot5
@@ -828,6 +833,7 @@ menu aircraft_equip
 		size	"60 60"
 		origin	"68 594 0"
 //		color	"0.5 0.5 0.5 1"
+		angles	"0 0 180"
 	}
 
 	pic airequip_slot6
@@ -848,6 +854,7 @@ menu aircraft_equip
 		size	"60 60"
 		origin	"226 594 0"
 //		color	"0.5 0.5 0.5 1"
+		angles	"0 0 180"
 	}
 
 	pic airequip_slot7
@@ -868,6 +875,7 @@ menu aircraft_equip
 		size	"60 60"
 		origin	"383 594 0"
 //		color	"0.5 0.5 0.5 1"
+		angles	"0 0 180"
 	}
 
 	pic airequip_button_leave
