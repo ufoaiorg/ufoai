@@ -3856,7 +3856,7 @@ tech rs_craft_weapon_sparrowhawk
 	time		0
 	producetime	100
 
-	mdl_top		"craft_weapon_sparrow_rack"
+	mdl_top		"aircraft/craft_weapon_sparrow/sparrowhawk_rack"
 }
 
 tech rs_craft_ammo_sparrowhawk
