@@ -451,6 +451,14 @@ base/models/aircraft/craft_weapon_shiva/shiva.blend | Creative Commons License 3
 base/models/aircraft/craft_weapon_shiva/shiva.jpg | Creative Commons License 3.0 Attribution-ShareAlike | Werner Hoehrer (hoehrer) | Shiva Rotary Cannon model based on chaingun model by kaeau, see base/models/weapons/chaingun
 base/models/aircraft/craft_weapon_shiva/shiva.md2 | Creative Commons License 3.0 Attribution-ShareAlike | Werner Hoehrer (hoehrer) | Shiva Rotary Cannon model based on chaingun model by kaeau, see base/models/weapons/chaingun
 base/models/aircraft/craft_weapon_shiva/shiva.xcf | Creative Commons License 3.0 Attribution-ShareAlike | Werner Hoehrer (hoehrer) | Shiva Rotary Cannon model based on chaingun model by kaeau, see base/models/weapons/chaingun
+base/models/aircraft/craft_weapon_sparrow/sparrowhawk.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
+base/models/aircraft/craft_weapon_sparrow/sparrowhawk.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
+base/models/aircraft/craft_weapon_sparrow/sparrowhawk.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
+base/models/aircraft/craft_weapon_sparrow/sparrowhawk.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
+base/models/aircraft/craft_weapon_sparrow/sparrowhawk_full.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
+base/models/aircraft/craft_weapon_sparrow/sparrowhawk_rack.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
+base/models/aircraft/craft_weapon_sparrow/sparrowhawk_rack.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
+base/models/aircraft/craft_weapon_sparrow/sparrowhawk_rack.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
 base/models/aircraft/craft_weapon_tr20/tr20.3ds | GNU General Public License v2.0 | Ryan Span (Winter) - model, Willem Sitters - uvmap + texture
 base/models/aircraft/craft_weapon_tr20/tr20.jpg | GNU General Public License v2.0 | Willem Sitters
 base/models/aircraft/craft_weapon_tr20/tr20.md2 | GNU General Public License v2.0 | Ryan Span (Winter)
@@ -480,14 +488,6 @@ base/models/aircraft/inter_stingray/sources/stingray_texture_hires_release.xcf.b
 base/models/aircraft/inter_stingray/stingray.jpg | GNU General Public License v2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/stingray_flying.md2 | GNU General Public License v2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/stingray_landed.md2 | GNU General Public License v2.0 | David Townsend (Psawhn)
-base/models/aircraft/sparrowhawk/sparrowhawk.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
-base/models/aircraft/sparrowhawk/sparrowhawk.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
-base/models/aircraft/sparrowhawk/sparrowhawk.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
-base/models/aircraft/sparrowhawk/sparrowhawk.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
-base/models/aircraft/sparrowhawk/sparrowhawk_full.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
-base/models/aircraft/sparrowhawk/sparrowhawk_rack.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
-base/models/aircraft/sparrowhawk/sparrowhawk_rack.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
-base/models/aircraft/sparrowhawk/sparrowhawk_rack.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
 base/models/aircraft/ufo_condor/ufo_condor.blend | GNU General Public License v2.0 | Werner Hoehrer (hoehrer) | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
 base/models/aircraft/ufo_condor/ufo_condor.jpg | GNU General Public License v2.0 | Werner Hoehrer (hoehrer) | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
 base/models/aircraft/ufo_condor/ufo_condor.md2 | GNU General Public License v2.0 | Werner Hoehrer (hoehrer) | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
