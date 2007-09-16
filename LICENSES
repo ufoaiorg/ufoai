@@ -367,6 +367,12 @@ base/maps/ucd/uc_h02.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/ucd/uc_h03.map | GNU General Public License 2.0 | Martin Gerhardy | Based on city04 house
 base/maps/ucd/uc_ufo_fighter.map | Martin Gerhardy | GNU General Public License 2.0
 base/maps/ucd/uc_ufo_harvester.map | GNU General Public License 2.0 | Martin Gerhardy | harverstercrash map by SparX
+base/maps/ucn/uc_drop_firebird.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/ucn/uc_h01.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/ucn/uc_h02.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/ucn/uc_h03.map | GNU General Public License 2.0 | Martin Gerhardy | Based on city04 house
+base/maps/ucn/uc_ufo_fighter.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/ucn/uc_ufo_harvester.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/village07d.map | GPL version 2 | 'SparX' Beyeler
 base/maps/village07n.map | GPL version 2 | 'SparX' Beyeler
 base/maps/villaged/vil_c01.map | GPL version 2
