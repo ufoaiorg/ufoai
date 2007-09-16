@@ -539,6 +539,7 @@ menu_model craft_item_target
 	model	"aircraft/craft_item_target/craft_item_target"
 	menutransform {
 		ufopedia	"5 5 5"	"-120 120 -30"	"10 0 0"
+		aircraft_equip	"4 4 4"	"-120 120 -30"	"10 30 0"
 	}
 }
 
@@ -547,6 +548,7 @@ menu_model craft_item_astrogation
 	model	"aircraft/craft_item_astro/craft_item_astrogation"
 	menutransform {
 		ufopedia	"6 6 6"	"-120 120 -30"	#
+		aircraft_equip	"6 6 6"	"-120 120 -30"	#	// fixme?
 	}
 }
 
@@ -556,6 +558,7 @@ menu_model craft_item_detector
 	
 	menutransform {
 		ufopedia	"6 6 6"	"-120 120 -30"	"-40 40 0"
+		aircraft_equip	"6 6 6"	#	#
 	}
 }
 
@@ -564,6 +567,7 @@ menu_model craft_item_raven_ecm
 	model	"aircraft/craft_item_raven_ecm/ecm"
 	menutransform {
 		ufopedia	"6 6 6"	"-120 120 -30"	"0 40 0"
+		aircraft_equip	"4 4 4"	"-120 120 -30"	"20 60 0"
 	}
 }
 
@@ -572,6 +576,7 @@ menu_model craft_shield_light
 	model	"aircraft/craft_shield_light/light"
 	menutransform {
 		ufopedia	"2 2 2"	"-120 120 -30"	"-20 0 0"
+		aircraft_equip	"2 2 2"	"-120 120 -30"	"-20 15 0"
 	}
 }
 
@@ -580,6 +585,7 @@ menu_model craft_weapon_sparrow_missiles
 	model	"aircraft/craft_weapon_sparrow/sparrowhawk_full"
 	menutransform {
 		ufopedia	"40 40 40"	"-120 120 -30"	#
+		aircraft_equip	"40 40 40"	#	"0 -20 0"
 	}
 }
 menu_model craft_weapon_sparrow_rack
@@ -588,6 +594,7 @@ menu_model craft_weapon_sparrow_rack
 	need	"craft_weapon_sparrow_missiles"
 	menutransform {
 		ufopedia	"40 40 40"	"-120 120 -30"	#
+		aircraft_equip	"40 40 40"	#	"0 -20 0"
 	}
 }
 
