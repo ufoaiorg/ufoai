@@ -552,9 +552,10 @@ menu_model craft_item_astrogation
 
 menu_model craft_item_detector
 {
-	model	"aircraft/craft_item_det/detector"
+	model	"aircraft/craft_item_det/detection"
+	
 	menutransform {
-		ufopedia	"6 6 6"	"-120 120 -30"	#
+		ufopedia	"6 6 6"	"-120 120 -30"	"-40 40 0"
 	}
 }
 
@@ -562,7 +563,7 @@ menu_model craft_item_raven_ecm
 {
 	model	"aircraft/craft_item_raven_ecm/ecm"
 	menutransform {
-		ufopedia	"6 6 6"	"-120 120 -30"	#
+		ufopedia	"6 6 6"	"-120 120 -30"	"0 40 0"
 	}
 }
 
@@ -570,7 +571,7 @@ menu_model craft_shield_light
 {
 	model	"aircraft/craft_shield_light/light"
 	menutransform {
-		ufopedia	"6 6 6"	"-120 120 -30"	#
+		ufopedia	"2 2 2"	"-120 120 -30"	"-20 0 0"
 	}
 }
 
