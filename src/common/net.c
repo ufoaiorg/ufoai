@@ -592,7 +592,7 @@ struct net_stream *NET_Connect (const char *node, const char *service)
 	int index;
 
 	memset(&hints, 0, sizeof(hints));
-	hints.ai_flags = AI_NUMERICHOST | AI_ADDRCONFIG | AI_NUMERICSERV;
+	hints.ai_flags = AI_ADDRCONFIG | AI_NUMERICSERV;
 	hints.ai_socktype = SOCK_STREAM;
 	/* force ipv4 */
 	if (net_ipv4->integer)
