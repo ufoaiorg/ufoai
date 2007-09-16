@@ -37,7 +37,8 @@ int Sys_Milliseconds (void)
 {
 	static int base = 0;
 
-	if (!base) {	/* let base retain 16 bits of effectively random data */
+	/* let base retain 16 bits of effectively random data */
+	if (!base)
 		base = timeGetTime() & 0xffff0000;
 
 	return timeGetTime() - base;
