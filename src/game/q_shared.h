@@ -424,8 +424,6 @@ SYSTEM SPECIFIC
 ==============================================================
 */
 
-extern int curtime;             /* time returned by last Sys_Milliseconds */
-
 int Sys_Milliseconds(void);
 void Sys_Mkdir(const char *path);
 

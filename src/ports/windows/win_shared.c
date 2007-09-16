@@ -30,22 +30,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <io.h>
 #include <conio.h>
 
-int	curtime;
 /**
  * @brief
  */
 int Sys_Milliseconds (void)
 {
-	static int		base;
-	static qboolean	initialized = qfalse;
+	static int base = 0;
 
-	if (!initialized) {	/* let base retain 16 bits of effectively random data */
+	if (!base) {	/* let base retain 16 bits of effectively random data */
 		base = timeGetTime() & 0xffff0000;
-		initialized = qtrue;
-	}
-	curtime = timeGetTime() - base;
 
-	return curtime;
+	return timeGetTime() - base;
 }
 
 /**

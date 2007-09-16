@@ -568,8 +568,6 @@ void V_RenderView (void)
 	R_RenderFrame();
 	if (cl_stats->integer)
 		Com_Printf("ent:%i  lt:%i\n", r_numentities, r_numdlights);
-	if (log_stats->integer && (log_stats_file != 0))
-		fprintf(log_stats_file, "%i,%i,", r_numentities, r_numdlights);
 
 	if (cls.state == ca_sequence)
 		CL_Sequence2D();

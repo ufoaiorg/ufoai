@@ -610,7 +610,7 @@ void CIN_PlayCinematic (const char *name)
 
 	cin.frameWidth = 0;
 	cin.frameHeight = 0;
-	cin.frameTime = Sys_Milliseconds();
+	cin.frameTime = cls.realtime;
 	cin.frameRate = (chunk.flags != 0) ? chunk.flags : 30;
 	if (cin.frameBuffer[0]) {
 		Mem_Free(cin.frameBuffer[0]);

@@ -1371,9 +1371,9 @@ static void CL_ExecuteEvent (int now, void *data)
 static void CL_ScheduleEvent (void)
 {
 	/* We need to schedule the first event in the queue. Unfortunately,
-	 events don't run on the master timer (yet - this should change),
-	 so we have to convert from one timescale to the other */
-	int timescale_delta = Sys_Milliseconds() - cl.eventTime;
+	 * events don't run on the master timer (yet - this should change),
+	 * so we have to convert from one timescale to the other */
+	int timescale_delta = cls.realtime - cl.eventTime;
 	if (!events)
 		return;
 	Schedule_Event(events->when + timescale_delta, &CL_ExecuteEvent, NULL);

@@ -1226,10 +1226,9 @@ static void IN_Parse (void)
 	/* repeat the mouse button */
 	case MS_LHOLD:
 	{
-		int now = Sys_Milliseconds();
-		if (now >= mouseRepeat.nexttime) {
+		if (cls.realtime >= mouseRepeat.nexttime) {
 			MN_ExecuteActions(mouseRepeat.menu, mouseRepeat.action);
-			mouseRepeat.nexttime = now + 100;	/* next "event" after 0.1 sec */
+			mouseRepeat.nexttime = cls.realtime + 100;	/* next "event" after 0.1 sec */
 		}
 		return;
 	}

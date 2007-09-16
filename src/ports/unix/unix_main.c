@@ -392,9 +392,6 @@ void *Sys_GetProcAddress (void *libHandle, const char *procName)
 	return dlsym(libHandle, procName);
 }
 
-
-int curtime;
-
 /**
  * @brief
  */
@@ -402,18 +399,16 @@ int Sys_Milliseconds (void)
 {
 	struct timeval tp;
 	struct timezone tzp;
-	static int		secbase;
+	static int secbase = 0;
 
 	gettimeofday(&tp, &tzp);
 
 	if (!secbase) {
 		secbase = tp.tv_sec;
-		return tp.tv_usec/1000;
+		return tp.tv_usec / 1000;
 	}
 
-	curtime = (tp.tv_sec - secbase)*1000 + tp.tv_usec/1000;
-
-	return curtime;
+	return (tp.tv_sec - secbase) * 1000 + tp.tv_usec / 1000;
 }
 
 /**

@@ -30,8 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 #include "../shared/infostring.h"
 
-FILE *log_stats_file;
-
 cvar_t *masterserver_host;
 cvar_t *masterserver_port;
 
@@ -74,7 +72,6 @@ cvar_t *cl_connecttimeout; /* multiplayer connection timeout value (ms) */
 cvar_t *confirm_actions;
 
 static cvar_t *cl_precache;
-cvar_t *log_stats;
 
 /* userinfo */
 static cvar_t *info_password;
@@ -1213,12 +1210,12 @@ static void CL_PingServers_f (void)
 	/* don't query the masterservers with every call */
 	if (serversAlreadyQueried) {
 		menuText[TEXT_LIST] = serverText;
-		if (lastServerQuery + SERVERQUERYTIMEOUT > Sys_Milliseconds())
+		if (lastServerQuery + SERVERQUERYTIMEOUT > cls.realtime)
 			return;
 	} else
 		serversAlreadyQueried = qtrue;
 
-	lastServerQuery = Sys_Milliseconds();
+	lastServerQuery = cls.realtime;
 
 	/* query master server? */
 	/* @todo: Cache this to save bandwidth */
@@ -2138,8 +2135,6 @@ static void CL_InitLocal (void)
 	masterserver_host = Cvar_Get("masterserver_host", MASTER_SERVER, CVAR_ARCHIVE, "IP address of UFO:AI masterserver (Sponsored by NineX)");
 	masterserver_port = Cvar_Get("masterserver_port", "27900", CVAR_ARCHIVE, "Port of UFO:AI masterserver");
 
-	log_stats = Cvar_Get("log_stats", "0", 0, NULL);
-
 #ifdef HAVE_CURL
 	cl_http_proxy = Cvar_Get("cl_http_proxy", "", 0, NULL);
 	cl_http_filelists = Cvar_Get("cl_http_filelists", "1", 0, NULL);
@@ -2412,27 +2407,8 @@ void CL_SetClientState (int state)
  */
 void CL_Frame (int now, void *data)
 {
-	static int lasttimecalled = 0;
 	static int last_frame = 0;
 	int delta;
-
-	if (log_stats->modified) {
-		log_stats->modified = qfalse;
-		if (log_stats->integer) {
-			if (log_stats_file) {
-				fclose(log_stats_file);
-				log_stats_file = NULL;
-			}
-			log_stats_file = fopen("stats.log", "w");
-			if (log_stats_file)
-				fprintf(log_stats_file, "entities,dlights,parts,frame time\n");
-		} else {
-			if (log_stats_file) {
-				fclose(log_stats_file);
-				log_stats_file = NULL;
-			}
-		}
-	}
 
 	if (sv_maxclients->modified) {
 		if (sv_maxclients->integer > 1 && ccs.singleplayer) {
@@ -2454,7 +2430,7 @@ void CL_Frame (int now, void *data)
 		cls.frametime = delta / 1000.0;
 	else
 		cls.frametime = 0;
-	cls.realtime = curtime;
+	cls.realtime = Sys_Milliseconds();
 	cl.time = now;
 	last_frame = now;
 	if (!blockEvents)
@@ -2502,22 +2478,6 @@ void CL_Frame (int now, void *data)
 	CL_SendCommand();
 
 	cls.framecount++;
-
-	if (log_stats->integer) {
-		if (cls.state == ca_active) {
-			if (!lasttimecalled) {
-				lasttimecalled = Sys_Milliseconds();
-				if (log_stats_file)
-					fprintf(log_stats_file, "0\n");
-			} else {
-				int now = Sys_Milliseconds();
-
-				if (log_stats_file)
-					fprintf(log_stats_file, "%d\n", now - lasttimecalled);
-				lasttimecalled = now;
-			}
-		}
-	}
 }
 
 /**

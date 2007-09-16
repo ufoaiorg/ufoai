@@ -295,9 +295,6 @@ extern cvar_t *s_language;
 extern cvar_t *snd_ref;
 extern cvar_t *difficulty;
 extern cvar_t *confirm_actions;
-extern cvar_t *log_stats;
-
-extern FILE* log_stats_file;
 
 /** limit the input for cvar editing (base name, save slots and so on) */
 #define MAX_CVAR_EDITING_LENGTH 256 /* MAXCMDLINE */

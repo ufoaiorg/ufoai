@@ -1465,7 +1465,7 @@ void MN_Click (int x, int y)
 				mouseSpace = MS_LHOLD;
 				mouseRepeat.menu = menu;
 				mouseRepeat.action = execute_node->click;
-				mouseRepeat.nexttime = Sys_Milliseconds() + 500;	/* second "event" after 0.5 sec */
+				mouseRepeat.nexttime = cls.realtime + 500;	/* second "event" after 0.5 sec */
 			}
 		}
 
@@ -3055,7 +3055,7 @@ static menu_t* MN_PushMenuDelete (const char *name, qboolean delete)
 				MN_ExecuteActions(&menus[i], menus[i].initNode->click);
 
 			if (cls.key_dest == key_input && msg_mode == MSG_MENU)
-				Key_Event(K_ENTER, qtrue, Sys_Milliseconds());
+				Key_Event(K_ENTER, qtrue, cls.realtime);
 			Key_SetDest(key_game);
 
 			for (node = menus[i].firstNode; node; node = node->next) {
@@ -3165,7 +3165,7 @@ void MN_PopMenu (qboolean all)
 {
 	/* make sure that we end all input buffers */
 	if (cls.key_dest == key_input && msg_mode == MSG_MENU)
-		Key_Event(K_ENTER, qtrue, Sys_Milliseconds());
+		Key_Event(K_ENTER, qtrue, cls.realtime);
 
 	if (all)
 		while (menuStackPos > 0) {

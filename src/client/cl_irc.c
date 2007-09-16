@@ -161,7 +161,7 @@ static qboolean Irc_Proto_Connect (const char *host, const char *port)
 		irc_bucket.first_msg = NULL;
 		irc_bucket.message_size = 0;
 		irc_bucket.character_size = 0;
-		irc_bucket.last_refill = Sys_Milliseconds();
+		irc_bucket.last_refill = cls.realtime;
 		irc_bucket.character_token = (double)irc_characterBucketBurst->value;
 	}
 	return status;
@@ -1202,14 +1202,14 @@ static void Irc_Proto_RefillBucket (void)
 	/* calculate token refill */
 	const double characterBucketSize = irc_characterBucketSize->value;
 	const double characterBucketRate = irc_characterBucketRate->value;
-	const int micros = Sys_Milliseconds();
-	const int micros_delta = micros - irc_bucket.last_refill;
-	const double char_delta = (micros_delta * characterBucketRate) / 1000000;
+	const int ms = cls.realtime;
+	const int ms_delta = ms - irc_bucket.last_refill;
+	const double char_delta = (ms_delta * characterBucketRate) / 1000;
 	const double char_new = irc_bucket.character_token + char_delta;
 	/* refill token (but do not exceed maximum) */
 	irc_bucket.character_token = min(char_new, characterBucketSize);
 	/* set timestamp so next refill can calculate delta */
-	irc_bucket.last_refill = micros;
+	irc_bucket.last_refill = ms;
 }
 
 /**
