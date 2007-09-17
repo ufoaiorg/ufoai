@@ -46,48 +46,48 @@ menu hospital
 
 	confunc hospital_clear
 	{
-		*hos_button0	image menu/hosp_button_green 
-		*hos_button1	image menu/hosp_button_green 
-		*hos_button2	image menu/hosp_button_green 
-		*hos_button3	image menu/hosp_button_green 
-		*hos_button4	image menu/hosp_button_green 
-		*hos_button5	image menu/hosp_button_green 
-		*hos_button6	image menu/hosp_button_green 
-		*hos_button7	image menu/hosp_button_green 
-		*hos_button8	image menu/hosp_button_green 
-		*hos_button9	image menu/hosp_button_green 
-		*hos_button10	image menu/hosp_button_green 
-		*hos_button11	image menu/hosp_button_green 
-		*hos_button12	image menu/hosp_button_green 
-		*hos_button13	image menu/hosp_button_green 
-		*hos_button14	image menu/hosp_button_green 
-		*hos_button15	image menu/hosp_button_green 
-		*hos_button16	image menu/hosp_button_green 
-		*hos_button17	image menu/hosp_button_green 
-		*hos_button18	image menu/hosp_button_green 
-		*hos_button19	image menu/hosp_button_green 
-		*hos_button20	image menu/hosp_button_green 
-		*hos_button0	tooltip "_Unused" 
-		*hos_button1	tooltip "_Unused" 
-		*hos_button2	tooltip "_Unused" 
-		*hos_button3	tooltip "_Unused" 
-		*hos_button4	tooltip "_Unused" 
-		*hos_button5	tooltip "_Unused" 
-		*hos_button6	tooltip "_Unused" 
-		*hos_button7	tooltip "_Unused" 
-		*hos_button8	tooltip "_Unused" 
-		*hos_button9	tooltip "_Unused" 
-		*hos_button10	tooltip "_Unused" 
-		*hos_button11	tooltip "_Unused" 
-		*hos_button12	tooltip "_Unused" 
-		*hos_button13	tooltip "_Unused" 
-		*hos_button14	tooltip "_Unused" 
-		*hos_button15	tooltip "_Unused" 
-		*hos_button16	tooltip "_Unused" 
-		*hos_button17	tooltip "_Unused" 
-		*hos_button18	tooltip "_Unused" 
-		*hos_button19	tooltip "_Unused" 
-		*hos_button20	tooltip "_Unused" 
+		*hos_button0	image menu/hosp_button_green
+		*hos_button1	image menu/hosp_button_green
+		*hos_button2	image menu/hosp_button_green
+		*hos_button3	image menu/hosp_button_green
+		*hos_button4	image menu/hosp_button_green
+		*hos_button5	image menu/hosp_button_green
+		*hos_button6	image menu/hosp_button_green
+		*hos_button7	image menu/hosp_button_green
+		*hos_button8	image menu/hosp_button_green
+		*hos_button9	image menu/hosp_button_green
+		*hos_button10	image menu/hosp_button_green
+		*hos_button11	image menu/hosp_button_green
+		*hos_button12	image menu/hosp_button_green
+		*hos_button13	image menu/hosp_button_green
+		*hos_button14	image menu/hosp_button_green
+		*hos_button15	image menu/hosp_button_green
+		*hos_button16	image menu/hosp_button_green
+		*hos_button17	image menu/hosp_button_green
+		*hos_button18	image menu/hosp_button_green
+		*hos_button19	image menu/hosp_button_green
+		*hos_button20	image menu/hosp_button_green
+		*hos_button0	tooltip "_Unused"
+		*hos_button1	tooltip "_Unused"
+		*hos_button2	tooltip "_Unused"
+		*hos_button3	tooltip "_Unused"
+		*hos_button4	tooltip "_Unused"
+		*hos_button5	tooltip "_Unused"
+		*hos_button6	tooltip "_Unused"
+		*hos_button7	tooltip "_Unused"
+		*hos_button8	tooltip "_Unused"
+		*hos_button9	tooltip "_Unused"
+		*hos_button10	tooltip "_Unused"
+		*hos_button11	tooltip "_Unused"
+		*hos_button12	tooltip "_Unused"
+		*hos_button13	tooltip "_Unused"
+		*hos_button14	tooltip "_Unused"
+		*hos_button15	tooltip "_Unused"
+		*hos_button16	tooltip "_Unused"
+		*hos_button17	tooltip "_Unused"
+		*hos_button18	tooltip "_Unused"
+		*hos_button19	tooltip "_Unused"
+		*hos_button20	tooltip "_Unused"
 	}
 
 	confunc hospitalserious0  { *hos_icon0  image icons/health_critical *hos_button0 image menu/hosp_button_light *hos_button0 tooltip "_Heavily wounded" }
@@ -182,31 +182,136 @@ menu hospital
 	{
 		pos "0 0"
 		size "1024 700"
-		whup { cmd "hosp_list_up" } 
-		whdown { cmd "hosp_list_down" }
+		whup { cmd "hosp_list_up;" }
+		whdown { cmd "hosp_list_down;" }
 	}
-	
-	pic hos_button0		{ image menu/hosp_button_green	pos "25  25" 	tooltip "_Unused" click { cmd "hosp_list_click 0" } }
-	pic hos_button1		{ image menu/hosp_button_green	pos "345  25" 	tooltip "_Unused" click { cmd "hosp_list_click 1" } }
-	pic hos_button2		{ image menu/hosp_button_green	pos "665  25" 	tooltip "_Unused" click { cmd "hosp_list_click 2" } }
-	pic hos_button3		{ image menu/hosp_button_green	pos "25 120" 	tooltip "_Unused" click { cmd "hosp_list_click 3" } }
-	pic hos_button4		{ image menu/hosp_button_green	pos "345 120" 	tooltip "_Unused" click { cmd "hosp_list_click 4" } }
-	pic hos_button5		{ image menu/hosp_button_green	pos "665 120" 	tooltip "_Unused" click { cmd "hosp_list_click 5" } }
-	pic hos_button6		{ image menu/hosp_button_green	pos "25 215" 	tooltip "_Unused" click { cmd "hosp_list_click 6" } }
-	pic hos_button7		{ image menu/hosp_button_green	pos "345 215" 	tooltip "_Unused" click { cmd "hosp_list_click 7" } }
-	pic hos_button8		{ image menu/hosp_button_green	pos "665 215" 	tooltip "_Unused" click { cmd "hosp_list_click 8" } }
-	pic hos_button9		{ image menu/hosp_button_green	pos "25 310" 	tooltip "_Unused" click { cmd "hosp_list_click 9" } }
-	pic hos_button10	{ image menu/hosp_button_green	pos "345 310" 	tooltip "_Unused" click { cmd "hosp_list_click 10" } }
-	pic hos_button11	{ image menu/hosp_button_green	pos "665 310" 	tooltip "_Unused" click { cmd "hosp_list_click 11" } }
-	pic hos_button12	{ image menu/hosp_button_green	pos "25 405" 	tooltip "_Unused" click { cmd "hosp_list_click 12" } }
-	pic hos_button13	{ image menu/hosp_button_green	pos "345 405" 	tooltip "_Unused" click { cmd "hosp_list_click 13" } }
-	pic hos_button14	{ image menu/hosp_button_green	pos "665 405" 	tooltip "_Unused" click { cmd "hosp_list_click 14" } }
-	pic hos_button15	{ image menu/hosp_button_green	pos "25 500" 	tooltip "_Unused" click { cmd "hosp_list_click 15" } }
-	pic hos_button16	{ image menu/hosp_button_green	pos "345 500" 	tooltip "_Unused" click { cmd "hosp_list_click 16" } }
-	pic hos_button17	{ image menu/hosp_button_green	pos "665 500" 	tooltip "_Unused" click { cmd "hosp_list_click 17" } }
-	pic hos_button18	{ image menu/hosp_button_green	pos "25 595" 	tooltip "_Unused" click { cmd "hosp_list_click 18" } }
-	pic hos_button19	{ image menu/hosp_button_green	pos "345 595" 	tooltip "_Unused" click { cmd "hosp_list_click 19" } }
-	pic hos_button20	{ image menu/hosp_button_green	pos "665 595" 	tooltip "_Unused" click { cmd "hosp_list_click 20" } }
+
+	pic hos_button0 {
+		image menu/hosp_button_green
+		pos "25  25"
+		tooltip "_Unused"
+		click { cmd "hosp_list_click 0;" }
+	}
+	pic hos_button1 {
+		image menu/hosp_button_green
+		pos "345  25"
+		tooltip "_Unused"
+		click { cmd "hosp_list_click 1;" }
+	}
+	pic hos_button2 {
+		image menu/hosp_button_green
+		pos "665  25"
+		tooltip "_Unused"
+		click { cmd "hosp_list_click 2;" }
+	}
+	pic hos_button3 {
+		image menu/hosp_button_green
+		pos "25 120"
+		tooltip "_Unused"
+		click { cmd "hosp_list_click 3;" }
+	}
+	pic hos_button4 {
+		image menu/hosp_button_green
+		pos "345 120"
+		tooltip "_Unused"
+		click { cmd "hosp_list_click 4;" }
+	}
+	pic hos_button5 {
+		image menu/hosp_button_green
+		pos "665 120"
+		tooltip "_Unused"
+		click { cmd "hosp_list_click 5;" }
+	}
+	pic hos_button6 {
+		image menu/hosp_button_green
+		pos "25 215"
+		tooltip "_Unused"
+		click { cmd "hosp_list_click 6;" }
+	}
+	pic hos_button7 {
+		image menu/hosp_button_green
+		pos "345 215"
+		tooltip "_Unused"
+		click { cmd "hosp_list_click 7;" }
+	}
+	pic hos_button8 {
+		image menu/hosp_button_green
+		pos "665 215"
+		tooltip "_Unused"
+		click { cmd "hosp_list_click 8;" }
+	}
+	pic hos_button9 {
+		image menu/hosp_button_green
+		pos "25 310"
+		tooltip "_Unused"
+		click { cmd "hosp_list_click 9;" }
+	}
+	pic hos_button10 {
+		image menu/hosp_button_green
+		pos "345 310"
+		tooltip "_Unused"
+		click { cmd "hosp_list_click 10;" }
+	}
+	pic hos_button11 {
+		image menu/hosp_button_green
+		pos "665 310"
+		tooltip "_Unused"
+		click { cmd "hosp_list_click 11;" }
+	}
+	pic hos_button12 {
+		image menu/hosp_button_green
+		pos "25 405"
+		tooltip "_Unused"
+		click { cmd "hosp_list_click 12;" }
+	}
+	pic hos_button13 {
+		image menu/hosp_button_green
+		pos "345 405"
+		tooltip "_Unused"
+		click { cmd "hosp_list_click 13;" }
+	}
+	pic hos_button14 {
+		image menu/hosp_button_green
+		pos "665 405"
+		tooltip "_Unused"
+		click { cmd "hosp_list_click 14;" }
+	}
+	pic hos_button15 {
+		image menu/hosp_button_green
+		pos "25 500"
+		tooltip "_Unused"
+		click { cmd "hosp_list_click 15;" }
+	}
+	pic hos_button16 {
+		image menu/hosp_button_green
+		pos "345 500"
+		tooltip "_Unused"
+		click { cmd "hosp_list_click 16;" }
+	}
+	pic hos_button17 {
+		image menu/hosp_button_green
+		pos "665 500"
+		tooltip "_Unused"
+		click { cmd "hosp_list_click 17;" }
+	}
+	pic hos_button18 {
+		image menu/hosp_button_green
+		pos "25 595"
+		tooltip "_Unused"
+		click { cmd "hosp_list_click 18;" }
+	}
+	pic hos_button19 {
+		image menu/hosp_button_green
+		pos "345 595"
+		tooltip "_Unused"
+		click { cmd "hosp_list_click 19;" }
+	}
+	pic hos_button20 {
+		image menu/hosp_button_green
+		pos "665 595"
+		tooltip "_Unused"
+		click { cmd "hosp_list_click 20;" }
+	}
 
 	pic hos_icon0	{ if "mn_hos_item0"		image icons/health_unused 	pos "272  36" }
 	pic hos_icon1	{ if "mn_hos_item1"		image icons/health_unused 	pos "592  36" }
@@ -229,7 +334,7 @@ menu hospital
 	pic hos_icon18	{ if "mn_hos_item18"	image icons/health_unused 	pos "272 606" }
 	pic hos_icon19	{ if "mn_hos_item19"	image icons/health_unused 	pos "592 606" }
 	pic hos_icon20	{ if "mn_hos_item20"	image icons/health_unused 	pos "912 606" }
-	
+
 	string hos_item0	{ string "*cvar mn_hos_item0"		pos "40  35"	color "1 1 1 1"	size "220 16" }
 	string hos_item1	{ string "*cvar mn_hos_item1"		pos "360  35"	color "1 1 1 1"	size "220 16" }
 	string hos_item2	{ string "*cvar mn_hos_item2"		pos "680  35"	color "1 1 1 1"	size "220 16" }
@@ -304,7 +409,7 @@ menu hospital
 		pos		"980 25"
 		texh	"48 48"
 		texl	"32 32"
-		click	{ cmd "hosp_list_up" }
+		click	{ cmd "hosp_list_up;" }
 		repeat	true
 		out		{ *hos_button_scrollup texl "32 32" *hos_button_scrollup texh "48 48" }
 		in		{ *hos_button_scrollup texl "48 32" *hos_button_scrollup texh "64 48" }
@@ -318,7 +423,7 @@ menu hospital
 		pos		"980 663"
 		texl	"32 48"
 		texh	"48 64"
-		click	{ cmd "hosp_list_down" }
+		click	{ cmd "hosp_list_down;" }
 		repeat	true
 		out		{ *hos_button_scrolldown texl "32 48" *hos_button_scrolldown texh "48 64" }
 		in		{ *hos_button_scrolldown texl "48 48" *hos_button_scrolldown texh "64 64" }
@@ -396,7 +501,7 @@ menu hospital
 		pos		"940 720"
 		texl	"0 0"
 		texh	"64 37"
-		click	{ cmd "mn_pop"  }
+		click	{ cmd "mn_pop;"  }
 	}
 
 	// ==================
