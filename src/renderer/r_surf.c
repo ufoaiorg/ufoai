@@ -143,7 +143,7 @@ static void R_DrawPoly (const mBspSurface_t * fa, const float scroll)
 /**
  * @brief Used for flowing and non-flowing surfaces
  * @param[in] scroll != 0 for SURF_FLOWING
- * @sa R_DrawLightmappedSurface
+ * @sa R_DrawSurface
  * @sa R_DrawPolyChainOffset
  */
 static void R_DrawPolyChain (const mBspSurface_t *surf, const float scroll)
@@ -188,6 +188,7 @@ static void R_DrawPolyChainOffset (const mBspPoly_t * p, const float soffset, co
 /**
  * @brief This routine takes all the given light mapped surfaces in the world and
  * blends them into the framebuffer.
+ * Only used for inline bmodels or used when no multitexturing is supported
  */
 static void R_BlendLightmaps (void)
 {
@@ -200,10 +201,8 @@ static void R_BlendLightmaps (void)
 	/* don't bother writing Z */
 	qglDepthMask(GL_FALSE);
 
-	/*
-	 ** set the appropriate blending mode unless we're only looking at the
-	 ** lightmaps.
-	 */
+	/* set the appropriate blending mode unless we're only looking at the
+	 * lightmaps. */
 	if (!r_lightmap->integer) {
 		RSTATE_ENABLE_BLEND
 
@@ -447,15 +446,26 @@ void R_DrawAlphaSurfaces (void)
 }
 
 /**
- * @brief
- * @note only called when qglMTexCoord2fSGIS is not null
+ * @brief Draw the lightmapped surface
+ * @note If multitexturing is not supported this function will only draw the
+ * surface without any lightmap
+ * @sa R_RenderBrushPoly
+ * @sa R_DrawPolyChain
+ * @sa R_DrawWorld
  */
-static void R_DrawLightmappedSurface (mBspSurface_t * surf)
+static void R_DrawSurface (mBspSurface_t * surf)
 {
 	int map;
 	image_t *image = R_TextureAnimation(surf->texinfo);
 	qboolean is_dynamic = qfalse;
 	unsigned lmtex = surf->lightmaptexturenum;
+
+	/* no multitexturing supported - draw the poly now and blend the lightmap
+	 * later in R_DrawWorld */
+	if (!qglMTexCoord2fSGIS) {
+		R_RenderBrushPoly(surf);
+		return;
+	}
 
 	if (surf->texinfo->flags & SURF_ALPHATEST)
 		RSTATE_ENABLE_ALPHATEST
@@ -581,8 +591,8 @@ static void R_DrawInlineBModel (void)
 					psurf->texturechain = r_alpha_surfaces;
 					r_alpha_surfaces = psurf;
 				}
-			} else if (qglMTexCoord2fSGIS && !(psurf->flags & SURF_DRAWTURB)) {
-				R_DrawLightmappedSurface(psurf);
+			} else if (!(psurf->flags & SURF_DRAWTURB)) {
+				R_DrawSurface(psurf);
 			} else {
 				R_EnableMultitexture(qfalse);
 				R_RenderBrushPoly(psurf);
@@ -611,7 +621,7 @@ void R_DrawBrushModel (entity_t * e)
 	int i;
 	qboolean rotated;
 
-/*	Com_DPrintf(DEBUG_RENDERER, "Brush model %i!\n", currentmodel->nummodelsurfaces); */
+/*	Com_DPrintf(DEBUG_RENDERER, "Brush model %i!\n", currentmodel->bsp.nummodelsurfaces);*/
 
 	if (currentmodel->bsp.nummodelsurfaces == 0)
 		return;
@@ -731,8 +741,8 @@ static void R_RecursiveWorldNode (mBspNode_t * node)
 			surf->texturechain = r_alpha_surfaces;
 			r_alpha_surfaces = surf;
 		} else {
-			if (qglMTexCoord2fSGIS && !(surf->flags & SURF_DRAWTURB))
-				R_DrawLightmappedSurface(surf);
+			if (!(surf->flags & SURF_DRAWTURB))
+				R_DrawSurface(surf);
 			else {
 				/* the polygon is visible, so add it to the texture */
 				/* sorted chain */
@@ -789,6 +799,7 @@ static void R_DrawWorld (mBspNode_t * nodes)
 		R_EnableMultitexture(qfalse);
 	} else {
 		R_RecursiveWorldNode(nodes);
+		R_BlendLightmaps();
 	}
 }
 
