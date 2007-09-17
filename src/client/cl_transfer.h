@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_CL_TRANSFER_H
 
 #define MAX_TRANSFERS	16
+#define TRANS_LIST_EMPTY_SLOT -1
 
 enum {
 	CARGO_TYPE_INVALID = 0,
@@ -37,6 +38,16 @@ enum {
 	CARGO_TYPE_AIRCRAFT,
 
 	CARGO_TYPE_MAX
+};
+
+enum {
+	TRANS_TYPE_INVALID = -1,
+	TRANS_TYPE_ITEM,
+	TRANS_TYPE_EMPLOYEE,
+	TRANS_TYPE_ALIEN,
+	TRANS_TYPE_AIRCRAFT,
+
+	TRANS_TYPE_MAX
 };
 
 /** @brief Transfer informations (they are being stored in gd.alltransfers[MAX_TRANSFERS]. */

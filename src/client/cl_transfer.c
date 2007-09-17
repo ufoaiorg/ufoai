@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static base_t *transferBase = NULL;
 
 /** @brief Current transfer type (item, employee, alien, aircraft). */
-static int transferType = -1;
+static int transferType = TRANS_TYPE_INVALID;
 
 /** @brief Current cargo onboard. */
 static transferCargo_t cargo[MAX_CARGO];
@@ -114,7 +114,7 @@ static qboolean TR_CheckEmployee (employee_t *employee, base_t *srcbase, base_t 
 	/* Count amount of all employees already on the transfer list. */
 	for (empltype = 0; empltype < MAX_EMPL; empltype++) {
 		for (i = 0; i < gd.numEmployees[empltype]; i++) {
-			if (trEmployeesTmp[empltype][i] > -1)
+			if (trEmployeesTmp[empltype][i] > TRANS_LIST_EMPTY_SLOT)
 				intransfer++;
 		}
 	}
@@ -179,7 +179,7 @@ static qboolean TR_CheckAircraft (aircraft_t *aircraft, base_t *srcbase, base_t 
 
 	/* Count weight of all aircrafts already on the transfer list. */
 	for (i = 0; i < MAX_AIRCRAFT; i++) {
-		if (trAircraftsTmp[i] > -1) {
+		if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
 			aircraftOnList = AIR_AircraftGetFromIdx(i);
 			intransfer += aircraftOnList->weight;
 		}
@@ -235,7 +235,7 @@ static void TR_CargoList (void)
 			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)\n"),
 			csi.ods[i].name, trItemsTmp[i]);
 			Q_strcat(cargoList, str, sizeof(cargoList));
-			cargo[cnt].type = 1;
+			cargo[cnt].type = CARGO_TYPE_ITEM;
 			cargo[cnt].itemidx = i;
 			cnt++;
 		}
@@ -244,12 +244,12 @@ static void TR_CargoList (void)
 	/* Show employees. */
 	for (empltype = 0; empltype < MAX_EMPL; empltype++) {
 		for (i = 0; i < gd.numEmployees[empltype]; i++) {
-			if (trEmployeesTmp[empltype][i] > -1) {
+			if (trEmployeesTmp[empltype][i] > TRANS_LIST_EMPTY_SLOT) {
 				if (empltype == EMPL_SOLDIER) {
 					employee = &gd.employees[empltype][i];
 					Com_sprintf(str, sizeof(str), _("Soldier %s %s\n"), gd.ranks[employee->chr.rank].shortname, employee->chr.name);
 					Q_strcat(cargoList, str, sizeof(cargoList));
-					cargo[cnt].type = 2;
+					cargo[cnt].type = CARGO_TYPE_EMPLOYEE;
 					cargo[cnt].itemidx = employee->idx;
 					cnt++;
 				}
@@ -263,7 +263,7 @@ static void TR_CargoList (void)
 		if (trempl[empltype] > 0) {
 			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)\n"), E_GetEmployeeString(empltype), trempl[empltype]);
 			Q_strcat(cargoList, str, sizeof(cargoList));
-			cargo[cnt].type = 2;
+			cargo[cnt].type = CARGO_TYPE_EMPLOYEE;
 			cnt++;
 		}
 	}
@@ -274,7 +274,7 @@ static void TR_CargoList (void)
 			Com_sprintf(str, sizeof(str), _("Corpse of %s (%i for transfer)\n"),
 			_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][1]);
 			Q_strcat(cargoList, str, sizeof(cargoList));
-			cargo[cnt].type = 3;
+			cargo[cnt].type = CARGO_TYPE_ALIEN_DEAD;
 			cargo[cnt].itemidx = i;
 			cnt++;
 		}
@@ -284,7 +284,7 @@ static void TR_CargoList (void)
 			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)\n"),
 			_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][0]);
 			Q_strcat(cargoList, str, sizeof(cargoList));
-			cargo[cnt].type = 4;
+			cargo[cnt].type = CARGO_TYPE_ALIEN_ALIVE;
 			cargo[cnt].itemidx = i;
 			cnt++;
 		}
@@ -292,12 +292,12 @@ static void TR_CargoList (void)
 
 	/* Show aircrafts. */
 	for (i = 0; i < MAX_AIRCRAFT; i++) {
-		if (trAircraftsTmp[i] > -1) {
+		if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
 			aircraft = AIR_AircraftGetFromIdx(trAircraftsTmp[i]);
 			Com_sprintf(str, sizeof(str), _("Aircraft %s\n"),
 			aircraft->name);
 			Q_strcat(cargoList, str, sizeof(cargoList));
-			cargo[cnt].type = 5;
+			cargo[cnt].type = CARGO_TYPE_AIRCRAFT;
 			cargo[cnt].itemidx = i;
 			cnt++;
 		}
@@ -336,13 +336,13 @@ static void TR_TransferSelect_f (void)
 	for (i = 0; i < MAX_EMPL; i++) {
 		trempl[i] = numempl[i] = 0;
 		for (j = 0; j < MAX_EMPLOYEES; j++) {
-			if (trEmployeesTmp[i][j] > -1)
+			if (trEmployeesTmp[i][j] > TRANS_LIST_EMPTY_SLOT)
 				trempl[i]++;
 		}
 	}
 
-	switch (type) { /**< 0 - items, 1 - employees, 2 - aliens, 3 - aircrafts */
-	case 0:		/**< items */
+	switch (type) {
+	case TRANS_TYPE_ITEM:
 		if (transferBase->hasStorage) {
 			for (i = 0; i < csi.numODs; i++)
 				if (baseCurrent->storage.num[i]) {
@@ -361,15 +361,15 @@ static void TR_TransferSelect_f (void)
 			Q_strcat(transferList, _("Transfer is not possible - the base does not have power supplies."), sizeof(transferList));
 		}
 		break;
-	case 1:		/**< humans */
+	case TRANS_TYPE_EMPLOYEE:
 		if (transferBase->hasQuarters) {
 			for (empltype = 0; empltype < MAX_EMPL; empltype++) {
 				for (i = 0; i < gd.numEmployees[empltype]; i++) {
 					employee = &gd.employees[empltype][i];
 					if (!E_IsInBase(employee, baseCurrent))
 						continue;
-					if (trEmployeesTmp[empltype][i] > -1)	/* Already on transfer list. */
-							continue;
+					if (trEmployeesTmp[empltype][i] > TRANS_LIST_EMPTY_SLOT)	/* Already on transfer list. */
+						continue;
 					if (empltype == EMPL_SOLDIER) {
 						Com_sprintf(str, sizeof(str), _("Soldier %s %s\n"), gd.ranks[employee->chr.rank].shortname, employee->chr.name);
 						Q_strcat(transferList, str, sizeof(transferList));
@@ -395,7 +395,7 @@ static void TR_TransferSelect_f (void)
 		} else
 			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have Living Quarters."), sizeof(transferList));
 		break;
-	case 2:		/**< aliens */
+	case TRANS_TYPE_ALIEN:
 		if (transferBase->hasAlienCont) {
 			for (i = 0; i < gd.numAliensTD; i++) {
 				if (*baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_dead > 0) {
@@ -429,10 +429,10 @@ static void TR_TransferSelect_f (void)
 			Q_strcat(transferList, _("Transfer is not possible - the base does not have power supplies."), sizeof(transferList));
 		}
 		break;
-	case 3:			/**< aircrafts */
+	case TRANS_TYPE_AIRCRAFT:
 		if (transferBase->hasHangar || transferBase->hasHangarSmall) {
 			for (i = 0; i < MAX_AIRCRAFT; i++) {
-				if (trAircraftsTmp[i] > -1)	/* Already on transfer list. */
+				if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT)	/* Already on transfer list. */
 					continue;
 				aircraft = AIR_AircraftGetFromIdx(i);
 				if (aircraft) {
@@ -490,8 +490,8 @@ static void TR_TransferListClear_f (void)
 	/* Clear temporary cargo arrays. */
 	memset(trItemsTmp, 0, sizeof(trItemsTmp));
 	memset(trAliensTmp, 0, sizeof(trAliensTmp));
-	memset(trEmployeesTmp, -1, sizeof(trEmployeesTmp));
-	memset(trAircraftsTmp, -1, sizeof(trAircraftsTmp));
+	memset(trEmployeesTmp, TRANS_LIST_EMPTY_SLOT, sizeof(trEmployeesTmp));
+	memset(trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(trAircraftsTmp));
 	/* Update cargo list and items list. */
 	TR_CargoList();
  	TR_TransferSelect_f();
@@ -545,7 +545,7 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 			}
 			for (i = 0; i < MAX_EMPL; i++) {
 				for (j = 0; j < gd.numEmployees[i]; j++) {
-					if (transfer->employeesArray[i][j] > -1) {
+					if (transfer->employeesArray[i][j] > TRANS_LIST_EMPTY_SLOT) {
 						employee = &gd.employees[i][j];
 						employee->baseIDHired = transfer->srcBase;	/* Restore back the original baseid. */
 						E_UnhireEmployee(employee);
@@ -555,7 +555,7 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 		} else {
 			for (i = 0; i < MAX_EMPL; i++) {
 				for (j = 0; j < gd.numEmployees[i]; j++) {
-					if (transfer->employeesArray[i][j] > -1) {
+					if (transfer->employeesArray[i][j] > TRANS_LIST_EMPTY_SLOT) {
 						employee = &gd.employees[i][j];
 						employee->baseIDHired = transfer->srcBase;	/* Restore back the original baseid. */
 						E_UnhireEmployee(employee);
@@ -585,7 +585,7 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 
 	if (transfer->hasAircrafts && success) {	/* Aircrafts. */
 		for (i = 0; i < MAX_AIRCRAFT; i++) {
-			if (transfer->aircraftsArray[i] > -1) {
+			if (transfer->aircraftsArray[i] > TRANS_LIST_EMPTY_SLOT) {
 				aircraft = AIR_AircraftGetFromIdx(i);
 				assert (aircraft);
 				if (AIR_CalculateHangarStorage(aircraft->idx_sample, destination, 0) > 0) {
@@ -655,7 +655,7 @@ static void TR_TransferStart_f (void)
 	transfer_t *transfer = NULL;
 	char message[256];
 
-	if (transferType < 0) {
+	if (transferType == TRANS_TYPE_INVALID) {
 		Com_Printf("TR_TransferStart_f: transferType is wrong!\n");
  		return;
  	}
@@ -669,9 +669,9 @@ static void TR_TransferStart_f (void)
 	for (i = 0; i < MAX_TRANSFERS; i++) {
 		if (!gd.alltransfers[i].active) {
 			/* Make sure it is empty here. */
-			memset (&gd.alltransfers[i], 0, sizeof(gd.alltransfers[i]));
-			memset (&gd.alltransfers[i].employeesArray, -1, sizeof(gd.alltransfers[i].employeesArray));
-			memset (&gd.alltransfers[i].aircraftsArray, -1, sizeof(gd.alltransfers[i].aircraftsArray));
+			memset(&gd.alltransfers[i], 0, sizeof(gd.alltransfers[i]));
+			memset(&gd.alltransfers[i].employeesArray, TRANS_LIST_EMPTY_SLOT, sizeof(gd.alltransfers[i].employeesArray));
+			memset(&gd.alltransfers[i].aircraftsArray, TRANS_LIST_EMPTY_SLOT, sizeof(gd.alltransfers[i].aircraftsArray));
 			transfer = &gd.alltransfers[i];
 			break;
 		}
@@ -696,13 +696,14 @@ static void TR_TransferStart_f (void)
 	 * it takes Living Quarters capacity, etc, but it cannot be used anywhere. */
 	for (i = 0; i < MAX_EMPL; i++) {		/* Employees. */
 		for (j = 0; j < gd.numEmployees[i]; j++) {
-			if (trEmployeesTmp[i][j] > -1) {
+			if (trEmployeesTmp[i][j] > TRANS_LIST_EMPTY_SLOT) {
 				transfer->hasEmployees = qtrue;
 				employee = &gd.employees[i][j];
 				E_RemoveEmployeeFromBuilding(employee);		/* Remove from building. */
 				INVSH_DestroyInventory(&employee->inv);		/* Remove inventory. */
 				HOS_RemoveFromList(employee, baseCurrent);	/* Remove from hospital. */
 				transfer->employeesArray[i][j] = trEmployeesTmp[i][j];
+				/* FIXME: wouldn't it be better to use MAX_BASES + 1 here? */
 				employee->baseIDHired = 42;	/* Hack to take them as hired but not in any base. */
 			}
 		}
@@ -720,7 +721,7 @@ static void TR_TransferStart_f (void)
 		}
 	}
 	for (i = 0; i < MAX_AIRCRAFT; i++) {	/* Aircrafts. */
-		if (trAircraftsTmp[i] > -1) {
+		if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
 			aircraft = AIR_AircraftGetFromIdx(i);
 			aircraft->status = AIR_TRANSFER;
 			CL_RemoveSoldiersFromAircraft(aircraft->idx, baseCurrent);
@@ -732,8 +733,8 @@ static void TR_TransferStart_f (void)
 	/* Clear temporary cargo arrays. */
 	memset(trItemsTmp, 0, sizeof(trItemsTmp));
 	memset(trAliensTmp, 0, sizeof(trAliensTmp));
-	memset(trEmployeesTmp, -1, sizeof(trEmployeesTmp));
-	memset(trAircraftsTmp, -1, sizeof(trAircraftsTmp));
+	memset(trEmployeesTmp, TRANS_LIST_EMPTY_SLOT, sizeof(trEmployeesTmp));
+	memset(trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(trAircraftsTmp));
 
 	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to base %s"), gd.bases[transfer->destBase].name);
 	MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
@@ -767,9 +768,9 @@ static void TR_TransferListSelect_f (void)
 	num = atoi(Cmd_Argv(1));
 
 	switch (transferType) {
-	case -1:	/**< No list was inited before you call this. */
+	case TRANS_TYPE_INVALID:	/**< No list was inited before you call this. */
 		return;
-	case 0:		/**< items */
+	case TRANS_TYPE_ITEM:
 		for (i = 0; i < csi.numODs; i++) {
 			if (baseCurrent->storage.num[i]) {
 				if (cnt == num) {
@@ -788,12 +789,12 @@ static void TR_TransferListSelect_f (void)
 			}
 		}
 		break;
-	case 1:		/**< employees */
+	case TRANS_TYPE_EMPLOYEE:
 		for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
 			employee = &gd.employees[EMPL_SOLDIER][i];
 			if (!E_IsInBase(employee, baseCurrent))
 				continue;
-			if (trEmployeesTmp[EMPL_SOLDIER][i] > -1)
+			if (trEmployeesTmp[EMPL_SOLDIER][i] > TRANS_LIST_EMPTY_SLOT)
 				continue;
 			if (cnt == num) {
 				if (TR_CheckEmployee(employee, baseCurrent, transferBase)) {
@@ -817,7 +818,7 @@ static void TR_TransferListSelect_f (void)
 					employee = &gd.employees[empltype][i];
 					if (!E_IsInBase(employee, baseCurrent))
 							continue;
-					if (trEmployeesTmp[empltype][employee->idx] > -1)	/* Already on transfer list. */
+					if (trEmployeesTmp[empltype][employee->idx] > TRANS_LIST_EMPTY_SLOT)	/* Already on transfer list. */
 						continue;
 					if (TR_CheckEmployee(employee, baseCurrent, transferBase)) {
 						trEmployeesTmp[empltype][employee->idx] = employee->idx;
@@ -829,7 +830,7 @@ static void TR_TransferListSelect_f (void)
 			cnt++;
 		}
 		break;
-	case 2:		/**< aliens */
+	case TRANS_TYPE_ALIEN:
 		if (!transferBase->hasAlienCont)
 			return;
 		for (i = 0; i < gd.numAliensTD; i++) {
@@ -857,7 +858,7 @@ static void TR_TransferListSelect_f (void)
 			}
 		}
 		break;
-	case 3:		/**< aircrafts */
+	case TRANS_TYPE_AIRCRAFT:
 		if (!transferBase->hasHangar && !transferBase->hasHangarSmall)
 			return;
 		for (i = 0; i < MAX_AIRCRAFT; i++) {
@@ -1063,15 +1064,19 @@ static void TR_CargoListSelect_f (void)
 	case CARGO_TYPE_EMPLOYEE:
 		for (i = 0; i < MAX_CARGO; i++) {
 			/* Count previous types on the list. */
-			if (cargo[i].type == 1)
+			switch (cargo[i].type) {
+			case TRANS_TYPE_EMPLOYEE:
 				entries++;
+			default:
+				break;
+			}
 		}
 		/* Start increasing cnt from the amount of previous entries. */
 		cnt = entries;
 		for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
-			if (trEmployeesTmp[EMPL_SOLDIER][i] > -1) {
+			if (trEmployeesTmp[EMPL_SOLDIER][i] > TRANS_LIST_EMPTY_SLOT) {
 				if (cnt == num) {
-					trEmployeesTmp[EMPL_SOLDIER][i] = -1;
+					trEmployeesTmp[EMPL_SOLDIER][i] = TRANS_LIST_EMPTY_SLOT;
 					removed = qtrue;
 					break;
 				}
@@ -1088,8 +1093,8 @@ static void TR_CargoListSelect_f (void)
 				continue;
 			if (cnt == num) {
 				for (j = 0; j < gd.numEmployees[i]; j++) {
-					if (trEmployeesTmp[i][j] > -1) {
-						trEmployeesTmp[i][j] = -1;
+					if (trEmployeesTmp[i][j] > TRANS_LIST_EMPTY_SLOT) {
+						trEmployeesTmp[i][j] = TRANS_LIST_EMPTY_SLOT;
 						removed = qtrue;
 						break;
 					} else
@@ -1104,8 +1109,13 @@ static void TR_CargoListSelect_f (void)
 	case CARGO_TYPE_ALIEN_DEAD:
 		for (i = 0; i < MAX_CARGO; i++) {
 			/* Count previous types on the list. */
-			if (cargo[i].type == 1 || cargo[i].type == 2)
+			switch (cargo[i].type) {
+			case TRANS_TYPE_EMPLOYEE:
+			case TRANS_TYPE_ALIEN:
 				entries++;
+			default:
+				break;
+			}
 		}
 		/* Start increasing cnt from the amount of previous entries. */
 		cnt = entries;
@@ -1123,8 +1133,14 @@ static void TR_CargoListSelect_f (void)
 	case CARGO_TYPE_ALIEN_ALIVE:
 		for (i = 0; i < MAX_CARGO; i++) {
 			/* Count previous types on the list. */
-			if (cargo[i].type == 1 || cargo[i].type == 2 || cargo[i].type == 3)
+			switch (cargo[i].type) {
+			case TRANS_TYPE_EMPLOYEE:
+			case TRANS_TYPE_ALIEN:
+			case TRANS_TYPE_AIRCRAFT:
 				entries++;
+			default:
+				break;
+			}
 		}
 		/* Start increasing cnt from the amount of previous entries. */
 		cnt = entries;
@@ -1142,15 +1158,22 @@ static void TR_CargoListSelect_f (void)
 	case CARGO_TYPE_AIRCRAFT:
 		for (i = 0; i < MAX_CARGO; i++) {
 			/* Count previous types on the list. */
-			if (cargo[i].type == 1 || cargo[i].type == 2 || cargo[i].type == 3 || cargo[i].type == 4)
+			switch (cargo[i].type) {
+			case TRANS_TYPE_EMPLOYEE:
+			case TRANS_TYPE_ALIEN:
+			case TRANS_TYPE_AIRCRAFT:
+			case 4: /* FIXME: what is 4? */
 				entries++;
+			default:
+				break;
+			}
 		}
 		/* Start increasing cnt from the amount of previous entries. */
 		cnt = entries;
 		for (i = 0; i < MAX_AIRCRAFT; i++) {
-			if (trAircraftsTmp[i] > -1) {
+			if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
 				if (cnt == num) {
-					trAircraftsTmp[i] = -1;
+					trAircraftsTmp[i] = TRANS_LIST_EMPTY_SLOT;
 					break;
 				}
 				cnt++;
@@ -1209,10 +1232,10 @@ static void TR_Init_f (void)
 		Com_Printf("TR_Init_f: warning: you should call trans_init with parameter 0\n");
 
 	/* Clear employees temp array. */
-	memset(trEmployeesTmp, -1, sizeof(trEmployeesTmp));
+	memset(trEmployeesTmp, TRANS_LIST_EMPTY_SLOT, sizeof(trEmployeesTmp));
 
 	/* Clear aircrafts temp array. */
-	memset(trAircraftsTmp, -1, sizeof(trAircraftsTmp));
+	memset(trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(trAircraftsTmp));
 
 	/* Select first available item. */
 	TR_TransferSelect_f();
@@ -1249,8 +1272,8 @@ static void TR_TransferClose_f (void)
 	/* Clear temporary cargo arrays. */
 	memset(trItemsTmp, 0, sizeof(trItemsTmp));
 	memset(trAliensTmp, 0, sizeof(trAliensTmp));
-	memset(trEmployeesTmp, -1, sizeof(trEmployeesTmp));
-	memset(trAircraftsTmp, -1, sizeof(trAircraftsTmp));
+	memset(trEmployeesTmp, TRANS_LIST_EMPTY_SLOT, sizeof(trEmployeesTmp));
+	memset(trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(trAircraftsTmp));
 
 	Cbuf_AddText("mn_pop\n");
 }
