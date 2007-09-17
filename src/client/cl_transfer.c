@@ -693,7 +693,7 @@ static void TR_TransferStart_f (void)
 		}
 	}
 	/* Note that personel remains hired in source base during the transfer, that is
-	   it takes Living Quarters capacity, etc, but it cannot be used anywhere. */
+	 * it takes Living Quarters capacity, etc, but it cannot be used anywhere. */
 	for (i = 0; i < MAX_EMPL; i++) {		/* Employees. */
 		for (j = 0; j < gd.numEmployees[i]; j++) {
 			if (trEmployeesTmp[i][j] > -1) {
@@ -899,7 +899,8 @@ static void TR_TransferBaseSelect (base_t *base)
 
 	if (!baseCurrent)
 		return;
-	assert (base);
+
+	assert(base);
 
 	Com_sprintf(baseInfo, sizeof(baseInfo), "%s\n\n", base->name);
 
@@ -1197,8 +1198,6 @@ void TR_TransferCheck (void)
  */
 static void TR_Init_f (void)
 {
-	int i, j;
-
 	if (!baseCurrent)
 		return;
 
@@ -1208,13 +1207,10 @@ static void TR_Init_f (void)
 		Com_Printf("warning: you should call trans_init with parameter 0\n");
 
 	/* Clear employees temp array. */
-	for (i = 0; i < MAX_EMPL; i++) {
-		for (j = 0; j < MAX_EMPLOYEES; j++)
-			trEmployeesTmp[i][j] = -1;
-	}
+	memset(trEmployeesTmp, -1, sizeof(trEmployeesTmp));
+
 	/* Clear aircrafts temp array. */
-	for (i = 0; i < MAX_AIRCRAFT; i++)
-		trAircraftsTmp[i] = -1;
+	memset(trAircraftsTmp, -1, sizeof(trAircraftsTmp));
 
 	/* Select first available item. */
 	TR_TransferSelect_f();

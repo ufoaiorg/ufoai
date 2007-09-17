@@ -744,7 +744,7 @@ qboolean RADAR_CheckUfoSensored(radar_t* radar, vec2_t posRadar,
 
 /* cl_basemanagment.c */
 /* we need this in cl_aircraft.h */
-#define MAX_EMPLOYEES 256
+#define MAX_EMPLOYEES 512
 
 /* cl_aircraft.c */
 #include "cl_aircraft.h"

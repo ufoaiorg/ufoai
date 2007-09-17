@@ -635,7 +635,7 @@ employee_t* E_CreateEmployee (employeeType_t type)
 		return NULL;
 
 	if (gd.numEmployees[type] >= MAX_EMPLOYEES) {
-		Com_Printf("E_CreateEmployee: MAX_EMPLOYEES exceeded\n");
+		Com_DPrintf(DEBUG_CLIENT, "E_CreateEmployee: MAX_EMPLOYEES exceeded for type %i\n", type);
 		return NULL;
 	}
 
@@ -969,10 +969,10 @@ static void E_EmployeeHire_f (void)
 	}
 
 	employee = E_GetEmployeeByMenuIndex(num);
-	
+
 	/* empty slot selected */
 	if (!employee)
-		return; 
+		return;
 
 	if (employee->hired) {
 		if (!E_UnhireEmployee(employee)) {
