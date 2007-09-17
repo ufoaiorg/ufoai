@@ -728,4 +728,11 @@ menu employees
 		empl_soldiers
 		cmd "employee_init 0"
 	}
+
+	func close
+	{
+		// call base init function because the amount of workers, scientists and
+		// so on can also change the button state in the base view
+		cmd "base_init;"
+	}
 }

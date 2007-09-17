@@ -127,12 +127,12 @@ menu bases
 		tooltip	"_Buy a new aircraft"
 		image	menu/button
 		pos	"755 188"
-		texl	"0 0"
+		texl	"0 8"
 		texh	"230 56"
 		mousefx true
 		click
 		{
-			cmd "mn_push buyaircraft;"
+			cmd "mn_push aircraft_action;"
 		}
 		out		{ *txt_aircraft color "0 0.8 0 1" *aircraft_buy texl "0 8" *aircraft_buy texh "230 56" }
 		in		{ *txt_aircraft color "1 1 1 1" *aircraft_buy texl "230 8" *aircraft_buy texh "460 56" }
