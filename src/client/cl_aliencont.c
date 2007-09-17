@@ -345,11 +345,11 @@ void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_
 		break;
 	case AL_ADDALIVE:
 		/* We ignore 3rd parameter of AL_RemoveAliens() here. */
-		if(AL_CountInBase() == base->capacities[CAP_ALIENS].max ) {
+		if (AL_CountInBase() == base->capacities[CAP_ALIENS].max) {
 			return; /* stop because we will else exceed the max of aliens */
 		}
 		for (j = 0; j < gd.numAliensTD; j++) {
-			assert(containment[j].alientype);
+			assert(*containment[j].alientype);
 			if (Q_strncmp(containment[j].alientype, name, MAX_VAR) == 0) {
 				containment[j].amount_alive++;
 				break;
@@ -359,11 +359,11 @@ void AL_RemoveAliens (base_t *base, const char *name, int amount, alienCalcType_
 		break;
 	case AL_ADDDEAD:
 		/* We ignore 3rd parameter of AL_RemoveAliens() here. */
-		if(AL_CountInBase() == base->capacities[CAP_ALIENS].max ) {
+		if (AL_CountInBase() == base->capacities[CAP_ALIENS].max) {
 			return; /* stop because we will else exceed the max of aliens */
 		}
 		for (j = 0; j < gd.numAliensTD; j++) {
-			assert(containment[j].alientype);
+			assert(*containment[j].alientype);
 			if (Q_strncmp(containment[j].alientype, name, MAX_VAR) == 0) {
 				containment[j].amount_dead++;
 				break;
@@ -473,7 +473,7 @@ int AL_CountAll (void)
 		if (!base->hasAlienCont)
 			continue;
 		for (j = 0; j < gd.numAliensTD; j++) {
-			if (base->alienscont[j].alientype)
+			if (*base->alienscont[j].alientype)
 				amount += base->alienscont[j].amount_alive;
 		}
 	}
@@ -503,7 +503,7 @@ int AL_CountInBase (void)
 	if (!base->hasAlienCont)
 		return 0;
 	for (j = 0; j < gd.numAliensTD; j++) {
-		if (base->alienscont[j].alientype)
+		if (*base->alienscont[j].alientype)
 			amount += base->alienscont[j].amount_alive;
 	}
 
@@ -733,8 +733,10 @@ static void AC_OpenUFOpedia_f (void)
 	tech = RS_GetTechByIDX(aliencontCurrent->techIdx);
 
 	/* Should never happen. */
-	if (!tech)
+	if (!tech) {
+		Com_Printf("AC_OpenUFOpedia_f: No tech for %i\n", aliencontCurrent->techIdx);
 		return;
+	}
 
 	if (RS_IsResearched_ptr(tech))
 		UP_OpenWith(tech->id);
@@ -825,7 +827,7 @@ static void AC_KillOne_f (void)
 static void AC_AddOne_f (void)
 {
 	int length;
-	const char *alienType; 
+	const char *alienType;
 	aliensCont_t *containment = NULL;
 	qboolean updateAlive;
 
@@ -846,12 +848,12 @@ Com_Printf("called\n");
 /*	alienType[0] = '\0';*/
 	alienType = Cmd_Argv(1);
 	length = strlen(alienType);
-	
+
 	if ((Cmd_Argc() == 3) && (atoi(Cmd_Argv(2)) == 1)) {
 		updateAlive = qfalse;
 	} else {
 		updateAlive = qtrue;
-	} 
+	}
 
 Com_Printf("called\n");
 	/* update alien counter*/
@@ -861,13 +863,13 @@ Com_Printf("called\n");
 		return;
 	}
 Com_Printf("called\n");
-	
-	
+
+
 	/* call the function that actually changes the persisten datastructure */
-	if(updateAlive) {	
-		AL_RemoveAliens(baseCurrent, alienType, 1, AL_ADDALIVE); 
+	if(updateAlive) {
+		AL_RemoveAliens(baseCurrent, alienType, 1, AL_ADDALIVE);
 	} else {
-		AL_RemoveAliens(baseCurrent, alienType, 1, AL_ADDDEAD); 
+		AL_RemoveAliens(baseCurrent, alienType, 1, AL_ADDDEAD);
 	}
 	/* Reinit menu to display proper values. */
 	AC_SelectAlien_f();
