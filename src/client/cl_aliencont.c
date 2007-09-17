@@ -556,6 +556,7 @@ static void AC_SelectAlien_f (void)
 	}
 
 	Cvar_Set("mn_al_alienmodel", tech->mdl_top);
+	assert(*aliencontCurrent->alientype);
 	Cvar_Set("mn_al_alientype", _(aliencontCurrent->alientype));
 	Cvar_SetValue("mn_al_techidx", tech->idx);
 	Cvar_SetValue("mn_al_killed", AL_CountForMenu(aliencontCurrent->idx, qfalse));
@@ -831,19 +832,16 @@ static void AC_AddOne_f (void)
 	aliensCont_t *containment = NULL;
 	qboolean updateAlive;
 
-Com_Printf("called\n");
 	/* Can be called from everywhere. */
 	if (!baseCurrent ||!curCampaign) {
 		return;
 	}
-Com_Printf("called\n");
 
 	/* arg parsing */
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <alientype> [1](dead)\n", Cmd_Argv(0));
 		return;
 	}
-Com_Printf("called\n");
 
 /*	alienType[0] = '\0';*/
 	alienType = Cmd_Argv(1);
@@ -855,18 +853,15 @@ Com_Printf("called\n");
 		updateAlive = qtrue;
 	}
 
-Com_Printf("called\n");
 	/* update alien counter*/
 	if (baseCurrent->hasAlienCont) {
 		containment = baseCurrent->alienscont;
 	} else {
 		return;
 	}
-Com_Printf("called\n");
-
 
 	/* call the function that actually changes the persisten datastructure */
-	if(updateAlive) {
+	if (updateAlive) {
 		AL_RemoveAliens(baseCurrent, alienType, 1, AL_ADDALIVE);
 	} else {
 		AL_RemoveAliens(baseCurrent, alienType, 1, AL_ADDDEAD);
