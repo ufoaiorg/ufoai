@@ -689,6 +689,8 @@ void AIR_NewAircraft (base_t *base, const char *name)
 		Com_DPrintf(DEBUG_CLIENT, "Adding new aircraft %s with IDX %i for base %s\n", aircraft->name, aircraft->idx, base->name);
 		/* Now update the aircraft list - maybe there is a popup active */
 		Cmd_ExecuteString("aircraft_list");
+		/* also update the base menu buttons */
+		Cmd_ExecuteString("base_init");
 	}
 }
 
@@ -776,6 +778,9 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 
 	/* Now update the aircraft list - maybe there is a popup active. */
 	Cmd_ExecuteString("aircraft_list");
+
+	/* also update the base menu buttons */
+	Cmd_ExecuteString("base_init");
 
 	/* @todo: Return successful deletion status here. */
 
