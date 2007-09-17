@@ -28,6 +28,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_TRANSFERS	16
 
+enum {
+	CARGO_TYPE_INVALID = 0,
+	CARGO_TYPE_ITEM,
+	CARGO_TYPE_EMPLOYEE,
+	CARGO_TYPE_ALIEN_DEAD,
+	CARGO_TYPE_ALIEN_ALIVE,
+	CARGO_TYPE_AIRCRAFT,
+
+	CARGO_TYPE_MAX
+};
+
 /** @brief Transfer informations (they are being stored in gd.alltransfers[MAX_TRANSFERS]. */
 typedef struct transfer_s {
 	int itemAmount[MAX_OBJDEFS];			/**< Amount of given item [csi.ods[idx]]. */

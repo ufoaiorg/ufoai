@@ -1048,7 +1048,7 @@ static void TR_CargoListSelect_f (void)
 	num = atoi(Cmd_Argv(1));
 
 	switch (cargo[num].type) {
-	case 1:		/**< items */
+	case CARGO_TYPE_ITEM:
 		for (i = 0; i < csi.numODs; i++) {
 			if (trItemsTmp[i] > 0) {
 				if (cnt == num) {
@@ -1060,7 +1060,7 @@ static void TR_CargoListSelect_f (void)
 			}
 		}
 		break;
-	case 2:		/**< employees */
+	case CARGO_TYPE_EMPLOYEE:
 		for (i = 0; i < MAX_CARGO; i++) {
 			/* Count previous types on the list. */
 			if (cargo[i].type == 1)
@@ -1080,7 +1080,9 @@ static void TR_CargoListSelect_f (void)
 		}
 		if (removed)	/* We already removed soldier, break here. */
 			break;
-		Com_Printf("cnt: %i, num: %i\n", cnt, num);
+
+		Com_DPrintf(DEBUG_CLIENT, "TR_CargoListSelect_f: cnt: %i, num: %i\n", cnt, num);
+
 		for (i = 0; i < MAX_EMPL; i++) {
 			if ((E_CountHired(baseCurrent, i) < 1) || (i == EMPL_SOLDIER))
 				continue;
@@ -1099,7 +1101,7 @@ static void TR_CargoListSelect_f (void)
 			cnt++;
 		}
 		break;
-	case 3:		/**< alien bodies */
+	case CARGO_TYPE_ALIEN_DEAD:
 		for (i = 0; i < MAX_CARGO; i++) {
 			/* Count previous types on the list. */
 			if (cargo[i].type == 1 || cargo[i].type == 2)
@@ -1118,7 +1120,7 @@ static void TR_CargoListSelect_f (void)
 			}
 		}
 		break;
-	case 4:		/**< alive aliens */
+	case CARGO_TYPE_ALIEN_ALIVE:
 		for (i = 0; i < MAX_CARGO; i++) {
 			/* Count previous types on the list. */
 			if (cargo[i].type == 1 || cargo[i].type == 2 || cargo[i].type == 3)
@@ -1137,7 +1139,7 @@ static void TR_CargoListSelect_f (void)
 			}
 		}
 		break;
-	case 5:		/**< aircrafts */
+	case CARGO_TYPE_AIRCRAFT:
 		for (i = 0; i < MAX_CARGO; i++) {
 			/* Count previous types on the list. */
 			if (cargo[i].type == 1 || cargo[i].type == 2 || cargo[i].type == 3 || cargo[i].type == 4)
@@ -1204,7 +1206,7 @@ static void TR_Init_f (void)
 	transferBase = NULL;
 
 	if (Cmd_Argc() < 2)
-		Com_Printf("warning: you should call trans_init with parameter 0\n");
+		Com_Printf("TR_Init_f: warning: you should call trans_init with parameter 0\n");
 
 	/* Clear employees temp array. */
 	memset(trEmployeesTmp, -1, sizeof(trEmployeesTmp));
