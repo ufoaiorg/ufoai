@@ -669,8 +669,8 @@ static void TR_TransferStart_f (void)
 		if (!gd.alltransfers[i].active) {
 			/* Make sure it is empty here. */
 			memset(&gd.alltransfers[i], 0, sizeof(gd.alltransfers[i]));
-			memset(&gd.alltransfers[i].employeesArray, TRANS_LIST_EMPTY_SLOT, sizeof(gd.alltransfers[i].employeesArray));
-			memset(&gd.alltransfers[i].aircraftsArray, TRANS_LIST_EMPTY_SLOT, sizeof(gd.alltransfers[i].aircraftsArray));
+			memset(gd.alltransfers[i].employeesArray, TRANS_LIST_EMPTY_SLOT, sizeof(gd.alltransfers[i].employeesArray));
+			memset(gd.alltransfers[i].aircraftsArray, TRANS_LIST_EMPTY_SLOT, sizeof(gd.alltransfers[i].aircraftsArray));
 			transfer = &gd.alltransfers[i];
 			break;
 		}
