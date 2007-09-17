@@ -1162,7 +1162,7 @@ static void TR_CargoListSelect_f (void)
 			case CARGO_TYPE_ITEM:
 			case CARGO_TYPE_EMPLOYEE:
 			case CARGO_TYPE_ALIEN_DEAD:
-			case CARGO_TYPE_AIRCRAFT:
+			case CARGO_TYPE_ALIEN_ALIVE:
 				entries++;
 			default:
 				break;
