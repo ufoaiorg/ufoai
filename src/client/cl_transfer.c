@@ -220,11 +220,10 @@ static void TR_CargoList (void)
 	char str[128];
 
 	cargoList[0] = '\0';
-	memset(&cargo, 0, sizeof(cargo));
+	memset(cargo, 0, sizeof(cargo));
+	memset(trempl, 0, sizeof(trempl));
 
 	menuText[TEXT_CARGO_LIST] = cargoList;
-	for (i = 0; i < MAX_EMPL; i++)
-		trempl[i] = 0;
 
 	if (!baseCurrent)
 		return;
