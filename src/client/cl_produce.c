@@ -1017,9 +1017,10 @@ static void PR_ProductionList_f (void)
  */
 qboolean PR_ProductionAllowed (void)
 {
-	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK &&
-		B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_WORKSHOP) > 0 &&
-		E_CountHired(baseCurrent, EMPL_WORKER) > 0 ) {
+	int workShopCount = B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_WORKSHOP);
+	int hiredWorkerCount = E_CountHired(baseCurrent, EMPL_WORKER);
+
+	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK && workShopCount > 0 && hiredWorkerCount > 0) {
 		Cbuf_AddText("set_prod_enabled;");
 		return qtrue;
 	} else {

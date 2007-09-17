@@ -2060,6 +2060,7 @@ static void B_BuildBase_f (void)
 			baseCurrent->idx = gd.numBases - 1;
 			baseCurrent->founded = qtrue;
 			baseCurrent->numAircraftInBase = 0;
+			baseCurrent->baseStatus = BASE_WORKING;
 			stats.basesBuild++;
 			gd.mapAction = MA_NONE;
 			CL_UpdateCredits(ccs.credits - BASE_COSTS);
