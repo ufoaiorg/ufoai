@@ -40,7 +40,7 @@ static transferCargo_t cargo[MAX_CARGO];
 static int trItemsTmp[MAX_OBJDEFS];
 
 /** @brief Current alien cargo. [0] alive [1] dead */
-static int trAliensTmp[MAX_TEAMDEFS][2];
+static int trAliensTmp[MAX_TEAMDEFS][TRANS_ALIEN_MAX];
 
 /** @brief Current personel cargo. */
 static int trEmployeesTmp[MAX_EMPL][MAX_EMPLOYEES];
@@ -151,8 +151,8 @@ static qboolean TR_CheckAlien (int alienidx, base_t *srcbase, base_t *destbase)
 
 	/* Count amount of alive aliens already on the transfer list. */
 	for (i = 0; i < gd.numAliensTD; i++) {
-		if (trAliensTmp[i][0] > 0)
-			intransfer += trAliensTmp[i][0];
+		if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0)
+			intransfer += trAliensTmp[i][TRANS_ALIEN_ALIVE];
 	}
 
 	/* Does the destination base has enough space in alien containment? */
@@ -270,9 +270,9 @@ static void TR_CargoList (void)
 
 	/* Show aliens. */
 	for (i = 0; i < gd.numAliensTD; i++) {
-		if (trAliensTmp[i][1] > 0) {
+		if (trAliensTmp[i][TRANS_ALIEN_DEAD] > 0) {
 			Com_sprintf(str, sizeof(str), _("Corpse of %s (%i for transfer)\n"),
-			_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][1]);
+			_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][TRANS_ALIEN_DEAD]);
 			Q_strcat(cargoList, str, sizeof(cargoList));
 			cargo[cnt].type = CARGO_TYPE_ALIEN_DEAD;
 			cargo[cnt].itemidx = i;
@@ -280,9 +280,9 @@ static void TR_CargoList (void)
 		}
 	}
 	for (i = 0; i < gd.numAliensTD; i++) {
-		if (trAliensTmp[i][0] > 0) {
+		if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
 			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)\n"),
-			_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][0]);
+			_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][TRANS_ALIEN_ALIVE]);
 			Q_strcat(cargoList, str, sizeof(cargoList));
 			cargo[cnt].type = CARGO_TYPE_ALIEN_ALIVE;
 			cargo[cnt].itemidx = i;
@@ -399,9 +399,9 @@ static void TR_TransferSelect_f (void)
 		if (transferBase->hasAlienCont) {
 			for (i = 0; i < gd.numAliensTD; i++) {
 				if (*baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_dead > 0) {
-					if (trAliensTmp[i][1] > 0)
+					if (trAliensTmp[i][TRANS_ALIEN_DEAD] > 0)
 						Com_sprintf(str, sizeof(str), _("Corpse of %s (%i for transfer, %i left)\n"),
-						_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][1],
+						_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][TRANS_ALIEN_DEAD],
 						baseCurrent->alienscont[i].amount_dead);
 					else
 						Com_sprintf(str, sizeof(str), _("Corpse of %s (%i available)\n"),
@@ -410,9 +410,9 @@ static void TR_TransferSelect_f (void)
 					cnt++;
 				}
 				if (*baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_alive > 0) {
-					if (trAliensTmp[i][0] > 0)
+					if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0)
 						Com_sprintf(str, sizeof(str), _("Alive %s (%i for transfer, %i left)\n"),
-						_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][0],
+						_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][TRANS_ALIEN_ALIVE],
 						baseCurrent->alienscont[i].amount_alive);
 					else
 						Com_sprintf(str, sizeof(str), _("Alive %s (%i available)\n"),
@@ -481,10 +481,10 @@ static void TR_TransferListClear_f (void)
 		}
  	}
 	for (i = 0; i < gd.numAliensTD; i++) {	/* Return aliens. */
-		if (trAliensTmp[i][0] > 0)
-			baseCurrent->alienscont[i].amount_alive += trAliensTmp[i][0];
-		if (trAliensTmp[i][1] > 0)
-			baseCurrent->alienscont[i].amount_dead += trAliensTmp[i][1];
+		if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0)
+			baseCurrent->alienscont[i].amount_alive += trAliensTmp[i][TRANS_ALIEN_ALIVE];
+		if (trAliensTmp[i][TRANS_ALIEN_DEAD] > 0)
+			baseCurrent->alienscont[i].amount_dead += trAliensTmp[i][TRANS_ALIEN_DEAD];
 	}
 
 	/* Clear temporary cargo arrays. */
@@ -573,12 +573,12 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 			/* Aliens cargo is not unloaded, will be destroyed in TR_TransferCheck(). */
 		} else {
 			for (i = 0; i < gd.numAliensTD; i++) {
-				if (transfer->alienAmount[i][0] > 0) {
-					destination->alienscont[i].amount_alive += transfer->alienAmount[i][0];
-					destination->capacities[CAP_ALIENS].cur += transfer->alienAmount[i][0];
+				if (transfer->alienAmount[i][TRANS_ALIEN_ALIVE] > 0) {
+					destination->alienscont[i].amount_alive += transfer->alienAmount[i][TRANS_ALIEN_ALIVE];
+					destination->capacities[CAP_ALIENS].cur += transfer->alienAmount[i][TRANS_ALIEN_ALIVE];
 				}
-				if (transfer->alienAmount[i][1] > 0)
-					destination->alienscont[i].amount_dead += transfer->alienAmount[i][1];
+				if (transfer->alienAmount[i][TRANS_ALIEN_DEAD] > 0)
+					destination->alienscont[i].amount_dead += transfer->alienAmount[i][TRANS_ALIEN_DEAD];
 			}
 		}
 	}
@@ -711,13 +711,13 @@ static void TR_TransferStart_f (void)
 	for (i = 0; i < gd.numAliensTD; i++) {		/* Aliens. */
 		if (!csi.teamDef[i].alien)
 			continue;
-		if (trAliensTmp[i][0] > 0) {
+		if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
 			transfer->hasAliens = qtrue;
-			transfer->alienAmount[i][0] = trAliensTmp[i][0];
+			transfer->alienAmount[i][TRANS_ALIEN_ALIVE] = trAliensTmp[i][TRANS_ALIEN_ALIVE];
 		}
-		if (trAliensTmp[i][1] > 0) {
+		if (trAliensTmp[i][TRANS_ALIEN_DEAD] > 0) {
 			transfer->hasAliens = qtrue;
-			transfer->alienAmount[i][1] = trAliensTmp[i][1];
+			transfer->alienAmount[i][TRANS_ALIEN_DEAD] = trAliensTmp[i][TRANS_ALIEN_DEAD];
 		}
 	}
 	for (i = 0; i < MAX_AIRCRAFT; i++) {	/* Aircrafts. */
@@ -836,7 +836,7 @@ static void TR_TransferListSelect_f (void)
 		for (i = 0; i < gd.numAliensTD; i++) {
 			if (*baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_dead > 0) {
 				if (cnt == num) {
-					trAliensTmp[i][1]++;
+					trAliensTmp[i][TRANS_ALIEN_DEAD]++;
 					/* Remove the corpse from Alien Containment. */
 					baseCurrent->alienscont[i].amount_dead--;
 					break;
@@ -846,7 +846,7 @@ static void TR_TransferListSelect_f (void)
 			if (*baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_alive > 0) {
 				if (cnt == num) {
 					if (TR_CheckAlien(i, baseCurrent, transferBase)) {
-						trAliensTmp[i][0]++;
+						trAliensTmp[i][TRANS_ALIEN_ALIVE]++;
 						/* Remove an alien from Alien Containment. */
 						baseCurrent->alienscont[i].amount_alive--;
 						baseCurrent->capacities[CAP_ALIENS].cur--;
@@ -1065,7 +1065,7 @@ static void TR_CargoListSelect_f (void)
 		for (i = 0; i < MAX_CARGO; i++) {
 			/* Count previous types on the list. */
 			switch (cargo[i].type) {
-			case TRANS_TYPE_EMPLOYEE:
+			case CARGO_TYPE_ITEM:
 				entries++;
 			default:
 				break;
@@ -1110,8 +1110,8 @@ static void TR_CargoListSelect_f (void)
 		for (i = 0; i < MAX_CARGO; i++) {
 			/* Count previous types on the list. */
 			switch (cargo[i].type) {
-			case TRANS_TYPE_EMPLOYEE:
-			case TRANS_TYPE_ALIEN:
+			case CARGO_TYPE_ITEM:
+			case CARGO_TYPE_EMPLOYEE:
 				entries++;
 			default:
 				break;
@@ -1120,9 +1120,9 @@ static void TR_CargoListSelect_f (void)
 		/* Start increasing cnt from the amount of previous entries. */
 		cnt = entries;
 		for (i = 0; i < gd.numAliensTD; i++) {
-			if (trAliensTmp[i][1] > 0) {
+			if (trAliensTmp[i][TRANS_ALIEN_DEAD] > 0) {
 				if (cnt == num) {
-					trAliensTmp[i][1]--;
+					trAliensTmp[i][TRANS_ALIEN_DEAD]--;
 					baseCurrent->alienscont[i].amount_dead++;
 					break;
 				}
@@ -1134,9 +1134,9 @@ static void TR_CargoListSelect_f (void)
 		for (i = 0; i < MAX_CARGO; i++) {
 			/* Count previous types on the list. */
 			switch (cargo[i].type) {
-			case TRANS_TYPE_EMPLOYEE:
-			case TRANS_TYPE_ALIEN:
-			case TRANS_TYPE_AIRCRAFT:
+			case CARGO_TYPE_ITEM:
+			case CARGO_TYPE_EMPLOYEE:
+			case CARGO_TYPE_ALIEN_DEAD:
 				entries++;
 			default:
 				break;
@@ -1145,9 +1145,9 @@ static void TR_CargoListSelect_f (void)
 		/* Start increasing cnt from the amount of previous entries. */
 		cnt = entries;
 		for (i = 0; i < gd.numAliensTD; i++) {
-			if (trAliensTmp[i][0] > 0) {
+			if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
 				if (cnt == num) {
-					trAliensTmp[i][0]--;
+					trAliensTmp[i][TRANS_ALIEN_ALIVE]--;
 					baseCurrent->alienscont[i].amount_alive--;
 					break;
 				}
@@ -1159,10 +1159,10 @@ static void TR_CargoListSelect_f (void)
 		for (i = 0; i < MAX_CARGO; i++) {
 			/* Count previous types on the list. */
 			switch (cargo[i].type) {
-			case TRANS_TYPE_EMPLOYEE:
-			case TRANS_TYPE_ALIEN:
-			case TRANS_TYPE_AIRCRAFT:
-			case 4: /* FIXME: what is 4? */
+			case CARGO_TYPE_ITEM:
+			case CARGO_TYPE_EMPLOYEE:
+			case CARGO_TYPE_ALIEN_DEAD:
+			case CARGO_TYPE_AIRCRAFT:
 				entries++;
 			default:
 				break;
@@ -1264,10 +1264,10 @@ static void TR_TransferClose_f (void)
 			baseCurrent->storage.num[i] += trItemsTmp[i];
 	}
 	for (i = 0; i < gd.numAliensTD; i++) {
-		if (trAliensTmp[i][1] > 0)
-			baseCurrent->alienscont[i].amount_dead += trAliensTmp[i][1];
-		if (trAliensTmp[i][0])
-			baseCurrent->alienscont[i].amount_alive += trAliensTmp[i][0];
+		if (trAliensTmp[i][TRANS_ALIEN_DEAD] > 0)
+			baseCurrent->alienscont[i].amount_dead += trAliensTmp[i][TRANS_ALIEN_DEAD];
+		if (trAliensTmp[i][TRANS_ALIEN_ALIVE])
+			baseCurrent->alienscont[i].amount_alive += trAliensTmp[i][TRANS_ALIEN_ALIVE];
 	}
 	/* Clear temporary cargo arrays. */
 	memset(trItemsTmp, 0, sizeof(trItemsTmp));
@@ -1293,8 +1293,8 @@ qboolean TR_Save (sizebuf_t* sb, void* data)
 		for (j = 0; j < presaveArray[PRE_MAXOBJ]; j++)
 			MSG_WriteByte(sb, transfer->itemAmount[j]);
 		for (j = 0; j < presaveArray[PRE_NUMALI]; j++) {
-			MSG_WriteByte(sb, transfer->alienAmount[j][0]);
-			MSG_WriteByte(sb, transfer->alienAmount[j][1]);
+			MSG_WriteByte(sb, transfer->alienAmount[j][TRANS_ALIEN_ALIVE]);
+			MSG_WriteByte(sb, transfer->alienAmount[j][TRANS_ALIEN_DEAD]);
 		}
 		for (j = 0; j < presaveArray[PRE_EMPTYP]; j++) {
 			for (k = 0; k < presaveArray[PRE_MAXEMP]; k++)
@@ -1330,8 +1330,8 @@ qboolean TR_Load (sizebuf_t* sb, void* data)
 		for (j = 0; j < presaveArray[PRE_MAXOBJ]; j++)
 			transfer->itemAmount[j] = MSG_ReadByte(sb);
 		for (j = 0; j < presaveArray[PRE_NUMALI]; j++) {
-			transfer->alienAmount[j][0] = MSG_ReadByte(sb);
-			transfer->alienAmount[j][1] = MSG_ReadByte(sb);
+			transfer->alienAmount[j][TRANS_ALIEN_ALIVE] = MSG_ReadByte(sb);
+			transfer->alienAmount[j][TRANS_ALIEN_DEAD] = MSG_ReadByte(sb);
 		}
 		for (j = 0; j < presaveArray[PRE_EMPTYP]; j++) {
 			for (k = 0; k < presaveArray[PRE_MAXEMP]; k++)

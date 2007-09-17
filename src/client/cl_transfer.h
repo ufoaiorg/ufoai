@@ -50,10 +50,17 @@ enum {
 	TRANS_TYPE_MAX
 };
 
+enum {
+	TRANS_ALIEN_ALIVE,
+	TRANS_ALIEN_DEAD,
+
+	TRANS_ALIEN_MAX
+};
+
 /** @brief Transfer informations (they are being stored in gd.alltransfers[MAX_TRANSFERS]. */
 typedef struct transfer_s {
 	int itemAmount[MAX_OBJDEFS];			/**< Amount of given item [csi.ods[idx]]. */
-	int alienAmount[MAX_TEAMDEFS][2];		/**< Alien cargo, [0] alive, [1] dead. */
+	int alienAmount[MAX_TEAMDEFS][TRANS_ALIEN_MAX];		/**< Alien cargo, [0] alive, [1] dead. */
 	int employeesArray[MAX_EMPL][MAX_EMPLOYEES];	/**< Array of indexes of personel transfering. */
 	int aircraftsArray[MAX_AIRCRAFT];		/**< Aircrafts being transferred. */
 	int destBase;					/**< Index of destination base. */
