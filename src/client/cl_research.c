@@ -76,7 +76,7 @@ void RS_ResearchFinish (technology_t* tech)
 		RS_PushNewsWhenResearched(tech);
 
 	/* send a new message and add it to the mailclient */
-	if ((tech->mailSent < MAILSENT_FINISHED) && (tech->time != 0)) { /* No mail sent for finished research. */
+	if (tech->mailSent < MAILSENT_FINISHED) { 
 		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("A research project has been completed: %s\n"), _(tech->name));
 		MN_AddNewMessage(_("Research finished"), messageBuffer, qfalse, MSG_RESEARCH_FINISHED, tech);
 		tech->mailSent = MAILSENT_FINISHED;
@@ -96,15 +96,22 @@ void RS_MarkOneResearchable (technology_t* tech)
 
 	Com_DPrintf(DEBUG_CLIENT, "RS_MarkOneResearchable: \"%s\" marked as researchable.\n", tech->id);
 
-	if ((tech->mailSent < MAILSENT_PROPOSAL) && (tech->time != 0)) { /* No mail sent for research proposal. */
+	if (tech->time == 0) /* Don't send mail for automatically completed techs. */
+		tech->mailSent = MAILSENT_FINISHED;
+		
+	if (tech->mailSent < MAILSENT_PROPOSAL) { 
 		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("New research proposal: %s\n"), _(tech->name));
 		MN_AddNewMessage(_("Unknown Technology researchable"), messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
 		tech->mailSent = MAILSENT_PROPOSAL;
 	}
 
 	tech->statusResearchable = qtrue;
-	CL_DateConvert(&ccs.date, &tech->preResearchedDateDay, &tech->preResearchedDateMonth);
-	tech->preResearchedDateYear = ccs.date.day / 365;
+	
+	/* only change the date if it wasn't set before */
+	if (tech->preResearchedDateYear == 0) {
+		CL_DateConvert(&ccs.date, &tech->preResearchedDateDay, &tech->preResearchedDateMonth);
+		tech->preResearchedDateYear = ccs.date.day / 365;
+	}
 }
 
 /**
@@ -281,13 +288,24 @@ char *RS_GetDescription (descriptions_t *desc)
 void RS_MarkCollected (technology_t* tech)
 {
 	assert(tech);
-	if ((tech->mailSent < MAILSENT_PROPOSAL) && (tech->time != 0)) { /* No mail sent for research proposal. */
+
+	if (tech->time == 0) /* Don't send mail for automatically completed techs. */
+		tech->mailSent = MAILSENT_FINISHED;
+
+	if (tech->mailSent < MAILSENT_PROPOSAL) { 
 		if (tech->statusResearch < RS_FINISH) {
 			Com_sprintf(messageBuffer, sizeof(messageBuffer), _("New research proposal: %s\n"), _(tech->name));
 			MN_AddNewMessage(_("Unknown Technology found"), messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
 		}
 		tech->mailSent = MAILSENT_PROPOSAL;
 	}
+	
+	/* only change the date if it wasn't set before */
+	if (tech->preResearchedDateYear == 0) {
+		CL_DateConvert(&ccs.date, &tech->preResearchedDateDay, &tech->preResearchedDateMonth);
+		tech->preResearchedDateYear = ccs.date.day / 365;
+	}
+		
 	tech->statusCollected = qtrue;
 }
 
