@@ -133,7 +133,7 @@ qboolean Rimp_Init (void)
  */
 qboolean R_InitGraphics (void)
 {
-	int flags;
+	uint32_t flags;
 
 	vid_fullscreen->modified = qfalse;
 	vid_mode->modified = qfalse;
@@ -168,7 +168,8 @@ qboolean R_InitGraphics (void)
 		flags |= SDL_FULLSCREEN;
 
 	if ((r_surface = SDL_SetVideoMode(viddef.width, viddef.height, 0, flags)) == NULL) {
-		Sys_Error("SDL SetVideoMode failed: %s\n", SDL_GetError());
+		const char *error = SDL_GetError();
+		Sys_Error("SDL SetVideoMode failed: %s\n", error);
 		return qfalse;
 	}
 
