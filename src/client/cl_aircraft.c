@@ -34,7 +34,7 @@ aircraft_t aircraft_samples[MAX_AIRCRAFT];		/**< Available aircraft types. */
  * @todo: should be reset to 0 each time scripts are read anew; also
  * aircraft_samples memory should be freed at that time,
  * or old memory used for new records
-*/
+ */
 int numAircraft_samples = 0;
 
 static const int AIRCRAFT_RADAR_RANGE = 20;
@@ -1159,6 +1159,9 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 		memset(air_samp, 0, sizeof(aircraft_t));
 
 		Com_DPrintf(DEBUG_CLIENT, "...found aircraft %s\n", name);
+		/* FIXME: is this needed here? I think not, because the index of available aircraft
+		 * are set when we create these aircraft from the samples - but i might be wrong here
+		 * if i'm not wrong, the gd.numAircraft++ from a few lines below can go into trashbin, too */
 		air_samp->idx = gd.numAircraft;
 		air_samp->idx_sample = numAircraft_samples;
 		air_samp->id = Mem_PoolStrDup(name, cl_genericPool, CL_TAG_NONE);
@@ -1167,7 +1170,8 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 		air_samp->ufotype = UFO_MAX;
 		AII_InitialiseAircraftSlots(air_samp);
 
-		/* TODO: document why do we have two values for this */
+		/* TODO: document why do we have two values for this
+		 * gd.numAircraft is reset for every new game */
 		numAircraft_samples++;
 		gd.numAircraft++;
 	} else {
@@ -1480,8 +1484,8 @@ Aircraft functions related to UFOs or missions.
  */
 void AIR_AircraftsNotifyMissionRemoved (const actMis_t *const mission)
 {
-	base_t*		base;
-	aircraft_t*	aircraft;
+	base_t* base;
+	aircraft_t* aircraft;
 
 	/* Aircrafts currently moving to the mission will be redirect to base */
 	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
@@ -1505,8 +1509,8 @@ void AIR_AircraftsNotifyMissionRemoved (const actMis_t *const mission)
  */
 void AIR_AircraftsNotifyUfoRemoved (const aircraft_t *const ufo)
 {
-	base_t*		base;
-	aircraft_t*	aircraft;
+	base_t* base;
+	aircraft_t* aircraft;
 	int i, num;
 
 	num = ufo - gd.ufos;
@@ -1542,8 +1546,8 @@ void AIR_AircraftsNotifyUfoRemoved (const aircraft_t *const ufo)
  */
 void AIR_AircraftsUfoDisappear (const aircraft_t *const ufo)
 {
-	base_t*		base;
-	aircraft_t*	aircraft;
+	base_t* base;
+	aircraft_t* aircraft;
 
 	/* Aircrafts currently pursuing the specified ufo will be redirect to base */
 	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
