@@ -81,7 +81,6 @@ cvar_t *r_ext_s3tc_compression;
 cvar_t *r_3dmapradius;
 
 cvar_t *r_checkerror;
-cvar_t *r_bitdepth;
 cvar_t *r_drawbuffer;
 cvar_t *r_driver;
 cvar_t *r_lightmap;
@@ -760,7 +759,6 @@ static void R_Register (void)
 
 	r_modulate = Cvar_Get("r_modulate", "1", CVAR_ARCHIVE, NULL);
 	r_checkerror = Cvar_Get("r_checkerror", "0", CVAR_ARCHIVE, "Check for opengl errors");
-	r_bitdepth = Cvar_Get("r_bitdepth", "0", CVAR_ARCHIVE, NULL);
 	r_lightmap = Cvar_Get("r_lightmap", "0", 0, NULL);
 	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, NULL);
 	r_shadow_debug_volume = Cvar_Get("r_shadow_debug_volume", "0", CVAR_ARCHIVE, NULL);

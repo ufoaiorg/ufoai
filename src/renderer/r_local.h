@@ -168,7 +168,6 @@ extern cvar_t *r_ext_texture_compression;
 extern cvar_t *r_ext_s3tc_compression;
 
 extern cvar_t *r_checkerror;
-extern cvar_t *r_bitdepth;
 extern cvar_t *r_lightmap;
 
 extern cvar_t *r_showbox;
