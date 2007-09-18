@@ -256,7 +256,7 @@ void S_Init (void)
 {
 	const cmdList_t *commands;
 
-	Com_Printf("\n------- sound initialization -------\n");
+	Com_Printf("------- sound initialization -------\n");
 
 	snd_init = Cvar_Get("snd_init", "1", CVAR_ARCHIVE, "Should the sound renderer get initialized");
 

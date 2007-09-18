@@ -601,7 +601,7 @@ void SAV_Init (void)
 	saveSubsystemsAmount = 0;
 	memset(&saveSubsystems, 0, sizeof(saveSubsystems));
 
-	Com_Printf("Init saving subsystems\n");
+	Com_Printf("--- save subsystem initialization --\n");
 	/* don't mess with the order */
 	SAV_AddSubsystem(&pre_subsystem);
 	SAV_AddSubsystem(&b_subsystem);
