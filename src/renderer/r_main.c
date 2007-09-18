@@ -845,17 +845,17 @@ static void R_InitExtension (void)
 	/* grab extensions */
 	if (strstr(r_config.extensions_string, "GL_EXT_compiled_vertex_array") || strstr(r_config.extensions_string, "GL_SGI_compiled_vertex_array")) {
 		if (r_ext_lockarrays->integer) {
-			Com_Printf("...enabling GL_EXT_LockArrays\n");
+			Com_Printf("enabling GL_EXT_LockArrays\n");
 			qglLockArraysEXT = SDL_GL_GetProcAddress("glLockArraysEXT");
 			qglUnlockArraysEXT = SDL_GL_GetProcAddress("glUnlockArraysEXT");
 		} else
-			Com_Printf("...ignoring GL_EXT_LockArrays\n");
+			Com_Printf("ignoring GL_EXT_LockArrays\n");
 	} else
-		Com_Printf("...GL_EXT_compiled_vertex_array not found\n");
+		Com_Printf("GL_EXT_compiled_vertex_array not found\n");
 
 	if (strstr(r_config.extensions_string, "GL_ARB_multitexture")) {
 		if (r_ext_multitexture->integer) {
-			Com_Printf("...using GL_ARB_multitexture\n");
+			Com_Printf("using GL_ARB_multitexture\n");
 			qglMTexCoord2fSGIS = SDL_GL_GetProcAddress("glMultiTexCoord2fARB");
 			qglActiveTextureARB = SDL_GL_GetProcAddress("glActiveTextureARB");
 			qglClientActiveTextureARB = SDL_GL_GetProcAddress("glClientActiveTextureARB");
@@ -864,28 +864,28 @@ static void R_InitExtension (void)
 			gl_texture2 = GL_TEXTURE2_ARB;
 			gl_texture3 = GL_TEXTURE3_ARB;
 		} else
-			Com_Printf("...ignoring GL_ARB_multitexture\n");
+			Com_Printf("ignoring GL_ARB_multitexture\n");
 	} else
-		Com_Printf("...GL_ARB_multitexture not found\n");
+		Com_Printf("GL_ARB_multitexture not found\n");
 
 	if (strstr(r_config.extensions_string, "GL_EXT_texture_env_combine") || strstr(r_config.extensions_string, "GL_ARB_texture_env_combine")) {
 		if (r_ext_combine->integer) {
-			Com_Printf("...using GL_EXT_texture_env_combine\n");
+			Com_Printf("using GL_EXT_texture_env_combine\n");
 			r_config.envCombine = GL_COMBINE_EXT;
 		} else {
-			Com_Printf("...ignoring EXT_texture_env_combine\n");
+			Com_Printf("ignoring EXT_texture_env_combine\n");
 			r_config.envCombine = 0;
 		}
 	} else {
-		Com_Printf("...GL_EXT_texture_env_combine not found\n");
+		Com_Printf("GL_EXT_texture_env_combine not found\n");
 		r_config.envCombine = 0;
 	}
 
 	if (strstr(r_config.extensions_string, "GL_SGIS_multitexture")) {
 		if (qglActiveTextureARB)
-			Com_Printf("...GL_SGIS_multitexture deprecated in favor of ARB_multitexture\n");
+			Com_Printf("GL_SGIS_multitexture deprecated in favor of ARB_multitexture\n");
 		else if (r_ext_multitexture->integer) {
-			Com_Printf("...using GL_SGIS_multitexture\n");
+			Com_Printf("using GL_SGIS_multitexture\n");
 			qglMTexCoord2fSGIS = SDL_GL_GetProcAddress("glMTexCoord2fSGIS");
 			qglSelectTextureSGIS = SDL_GL_GetProcAddress("glSelectTextureSGIS");
 			gl_texture0 = GL_TEXTURE0_SGIS;
@@ -893,29 +893,29 @@ static void R_InitExtension (void)
 			gl_texture2 = GL_TEXTURE2_SGIS;
 			gl_texture3 = GL_TEXTURE3_SGIS;
 		} else
-			Com_Printf("...ignoring GL_SGIS_multitexture\n");
+			Com_Printf("ignoring GL_SGIS_multitexture\n");
 	} else
-		Com_Printf("...GL_SGIS_multitexture not found\n");
+		Com_Printf("GL_SGIS_multitexture not found\n");
 
 	if (strstr(r_config.extensions_string, "GL_ARB_texture_compression")) {
 		if (r_ext_texture_compression->integer) {
-			Com_Printf("...using GL_ARB_texture_compression\n");
+			Com_Printf("using GL_ARB_texture_compression\n");
 			if (r_ext_s3tc_compression->integer && strstr(r_config.extensions_string, "GL_EXT_texture_compression_s3tc")) {
-/*				Com_Printf("   with s3tc compression\n"); */
+/*				Com_Printf("with s3tc compression\n"); */
 				gl_compressed_solid_format = GL_COMPRESSED_RGB_S3TC_DXT1_EXT;
 				gl_compressed_alpha_format = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
 			} else {
-/*				Com_Printf("   without s3tc compression\n"); */
+/*				Com_Printf("without s3tc compression\n"); */
 				gl_compressed_solid_format = GL_COMPRESSED_RGB_ARB;
 				gl_compressed_alpha_format = GL_COMPRESSED_RGBA_ARB;
 			}
 		} else {
-			Com_Printf("...ignoring GL_ARB_texture_compression\n");
+			Com_Printf("ignoring GL_ARB_texture_compression\n");
 			gl_compressed_solid_format = 0;
 			gl_compressed_alpha_format = 0;
 		}
 	} else {
-		Com_Printf("...GL_ARB_texture_compression not found\n");
+		Com_Printf("GL_ARB_texture_compression not found\n");
 		gl_compressed_solid_format = 0;
 		gl_compressed_alpha_format = 0;
 	}
@@ -926,45 +926,45 @@ static void R_InitExtension (void)
 	qglGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &max_aniso);
 	r_state.maxAnisotropic = max_aniso;
 	if (r_anisotropic->integer > max_aniso) {
-		Com_Printf("...max GL_EXT_texture_filter_anisotropic value is %i\n", max_aniso);
+		Com_Printf("max GL_EXT_texture_filter_anisotropic value is %i\n", max_aniso);
 		Cvar_SetValue("r_anisotropic", max_aniso);
 	}
 
 	aniso_level = r_anisotropic->integer;
 	if (strstr(r_config.extensions_string, "GL_EXT_texture_filter_anisotropic")) {
 		if (!r_anisotropic->integer)
-			Com_Printf("...ignoring GL_EXT_texture_filter_anisotropic\n");
+			Com_Printf("ignoring GL_EXT_texture_filter_anisotropic\n");
 		else {
-			Com_Printf("...using GL_EXT_texture_filter_anisotropic [%2i max] [%2i selected]\n", max_aniso, aniso_level);
+			Com_Printf("using GL_EXT_texture_filter_anisotropic [%2i max] [%2i selected]\n", max_aniso, aniso_level);
 			r_state.anisotropic = qtrue;
 		}
 	} else {
-		Com_Printf("...GL_EXT_texture_filter_anisotropic not found\n");
+		Com_Printf("GL_EXT_texture_filter_anisotropic not found\n");
 		Cvar_Set("r_anisotropic", "0");
 		r_state.maxAnisotropic = 0;
 	}
 
 	if (strstr(r_config.extensions_string, "GL_EXT_texture_lod_bias")) {
-		Com_Printf("...using GL_EXT_texture_lod_bias\n");
+		Com_Printf("using GL_EXT_texture_lod_bias\n");
 		r_state.lod_bias = qtrue;
 	} else {
-		Com_Printf("...GL_EXT_texture_lod_bias not found\n");
+		Com_Printf("GL_EXT_texture_lod_bias not found\n");
 		r_state.lod_bias = qfalse;
 	}
 
 	if (strstr(r_config.extensions_string, "GL_EXT_stencil_wrap")) {
-		Com_Printf("...using GL_EXT_stencil_wrap\n");
+		Com_Printf("using GL_EXT_stencil_wrap\n");
 		r_state.stencil_wrap = qtrue;
 	} else {
-		Com_Printf("...GL_EXT_stencil_wrap not found\n");
+		Com_Printf("GL_EXT_stencil_wrap not found\n");
 		r_state.stencil_wrap = qfalse;
 	}
 
 	if (strstr(r_config.extensions_string, "GL_EXT_fog_coord")) {
-		Com_Printf("...using GL_EXT_fog_coord\n");
+		Com_Printf("using GL_EXT_fog_coord\n");
 		r_state.fog_coord = qtrue;
 	} else {
-		Com_Printf("...GL_EXT_fog_coord not found\n");
+		Com_Printf("GL_EXT_fog_coord not found\n");
 		r_state.fog_coord = qfalse;
 	}
 
@@ -972,7 +972,7 @@ static void R_InitExtension (void)
 	r_state.arb_fragment_program = qfalse;
 #ifdef HAVE_SHADERS
 	if (strstr(r_config.extensions_string, "GL_ARB_fragment_program")) {
-		Com_Printf("...using GL_ARB_fragment_program\n");
+		Com_Printf("using GL_ARB_fragment_program\n");
 		r_state.arb_fragment_program = qtrue;
 
 		qglProgramStringARB = SDL_GL_GetProcAddress("glProgramStringARB");
@@ -995,13 +995,13 @@ static void R_InitExtension (void)
 		qglGetProgramStringARB = SDL_GL_GetProcAddress("glGetProgramStringARB");
 		qglIsProgramARB = SDL_GL_GetProcAddress("glIsProgramARB");
 	} else {
-		Com_Printf("...GL_ARB_fragment_program not found\n");
+		Com_Printf("GL_ARB_fragment_program not found\n");
 		r_state.arb_fragment_program = qfalse;
 	}
 
 	/* FIXME: Is this the right extension to check for? */
 	if (strstr(r_config.extensions_string, "GL_ARB_shading_language_100")) {
-		Com_Printf("...using GL_ARB_shading_language_100\n");
+		Com_Printf("using GL_ARB_shading_language_100\n");
 		qglCreateShader  = SDL_GL_GetProcAddress("glCreateShaderObjectARB");
 		qglShaderSource  = SDL_GL_GetProcAddress("glShaderSourceARB");
 		qglCompileShader = SDL_GL_GetProcAddress("glCompileShaderARB");
@@ -1015,24 +1015,24 @@ static void R_InitExtension (void)
 			Sys_Error("Could not load all needed GLSL functions\n");
 		r_state.glsl_program = qtrue;
 	} else {
-		Com_Printf("...GL_ARB_shading_language_100 not found\n");
+		Com_Printf("GL_ARB_shading_language_100 not found\n");
 		r_state.glsl_program = qfalse;
 	}
-#endif							/* HAVE_SHADERS */
+#endif	/* HAVE_SHADERS */
 
 	r_state.ati_separate_stencil = qfalse;
 	if (strstr(r_config.extensions_string, "GL_ATI_separate_stencil")) {
 		if (!r_ati_separate_stencil->integer) {
-			Com_Printf("...ignoring GL_ATI_separate_stencil\n");
+			Com_Printf("ignoring GL_ATI_separate_stencil\n");
 			r_state.ati_separate_stencil = qfalse;
 		} else {
-			Com_Printf("...using GL_ATI_separate_stencil\n");
+			Com_Printf("using GL_ATI_separate_stencil\n");
 			r_state.ati_separate_stencil = qtrue;
 			qglStencilOpSeparateATI = SDL_GL_GetProcAddress("glStencilOpSeparateATI");
 			qglStencilFuncSeparateATI = SDL_GL_GetProcAddress("glStencilFuncSeparateATI");
 		}
 	} else {
-		Com_Printf("...GL_ATI_separate_stencil not found\n");
+		Com_Printf("GL_ATI_separate_stencil not found\n");
 		r_state.ati_separate_stencil = qfalse;
 		Cvar_Set("r_ati_separate_stencil", "0");
 	}
@@ -1040,21 +1040,21 @@ static void R_InitExtension (void)
 	r_state.stencil_two_side = qfalse;
 	if (strstr(r_config.extensions_string, "GL_EXT_stencil_two_side")) {
 		if (!r_stencil_two_side->integer) {
-			Com_Printf("...ignoring GL_EXT_stencil_two_side\n");
+			Com_Printf("ignoring GL_EXT_stencil_two_side\n");
 			r_state.stencil_two_side = qfalse;
 		} else {
-			Com_Printf("...using GL_EXT_stencil_two_side\n");
+			Com_Printf("using GL_EXT_stencil_two_side\n");
 			r_state.stencil_two_side = qtrue;
 			qglActiveStencilFaceEXT = SDL_GL_GetProcAddress("glActiveStencilFaceEXT");
 		}
 	} else {
-		Com_Printf("...GL_EXT_stencil_two_side not found\n");
+		Com_Printf("GL_EXT_stencil_two_side not found\n");
 		r_state.stencil_two_side = qfalse;
 		Cvar_Set("r_stencil_two_side", "0");
 	}
 
 	{
-		Com_Printf("...max texture size:\n");
+		Com_Printf("max texture size: ");
 
 		qglGetIntegerv(GL_MAX_TEXTURE_SIZE, &size);
 		r_config.maxTextureSize = size;
@@ -1064,14 +1064,14 @@ static void R_InitExtension (void)
 			r_config.maxTextureSize = 0;
 
 		if ((err = qglGetError()) != GL_NO_ERROR) {
-			Com_Printf("......cannot detect !\n");
+			Com_Printf("cannot detect!\n");
 		} else {
-			Com_Printf("......detected %d\n", size);
+			Com_Printf("detected %d\n", size);
 			if (r_maxtexres->integer > size) {
-				Com_Printf("......downgrading from %i\n", r_maxtexres->integer);
+				Com_Printf("downgrading from %i\n", r_maxtexres->integer);
 				Cvar_SetValue("r_maxtexres", size);
 			} else if (r_maxtexres->integer < size) {
-				Com_Printf("......but using %i as requested\n", r_maxtexres->integer);
+				Com_Printf("but using %i as requested\n", r_maxtexres->integer);
 			}
 		}
 	}

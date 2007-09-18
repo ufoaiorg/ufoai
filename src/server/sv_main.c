@@ -639,7 +639,7 @@ static void SV_ParseMapcycle (void)
 			SV_MapcycleAdd(map, gameType);
 		} while (buf);
 
-		Com_Printf("..added %i maps to the mapcycle\n", mapcycleCount);
+		Com_Printf("added %i maps to the mapcycle\n", mapcycleCount);
 	}
 	FS_FreeFile(buffer);
 }
@@ -790,6 +790,8 @@ void SV_UserinfoChanged (client_t * cl)
  */
 void SV_Init (void)
 {
+	Com_Printf("\n------ server initialization -------\n");
+
 	sv_gameSysPool = Mem_CreatePool("Server: Game system");
 	sv_genericPool = Mem_CreatePool("Server: Generic");
 

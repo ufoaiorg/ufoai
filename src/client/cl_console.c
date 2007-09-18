@@ -376,6 +376,7 @@ void Con_SaveConsoleHistory (const char *path)
  */
 void Con_Init (void)
 {
+	Com_Printf("\n----- console initialization -------\n");
 	con.linewidth = -1;
 
 	/* register our commands and cvars */

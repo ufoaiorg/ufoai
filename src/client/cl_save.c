@@ -455,7 +455,7 @@ static qboolean SAV_AddSubsystem (saveSubsystems_t *subsystem)
 	saveSubsystems[saveSubsystemsAmount].check = subsystem->check;
 	saveSubsystemsAmount++;
 
-	Com_Printf("...added %s subsystem (check %x)\n", subsystem->name, subsystem->check);
+	Com_Printf("added %s subsystem (check %x)\n", subsystem->name, subsystem->check);
 	return qtrue;
 }
 
@@ -601,7 +601,8 @@ void SAV_Init (void)
 	saveSubsystemsAmount = 0;
 	memset(&saveSubsystems, 0, sizeof(saveSubsystems));
 
-	Com_Printf("--- save subsystem initialization --\n");
+	Com_Printf("\n--- save subsystem initialization --\n");
+
 	/* don't mess with the order */
 	SAV_AddSubsystem(&pre_subsystem);
 	SAV_AddSubsystem(&b_subsystem);

@@ -75,7 +75,7 @@ qboolean Rimp_Init (void)
 
 	r_surface = NULL;
 
-	Com_Printf("------- video initialization -------\n");
+	Com_Printf("\n------- video initialization -------\n");
 
 	if (*r_driver->string) {
 		Com_Printf("using driver: %s\n", r_driver->string);

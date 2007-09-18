@@ -903,6 +903,8 @@ void FS_InitFilesystem (void)
 	cvar_t* fs_usehomedir;
 	const cmdList_t *commands;
 
+	Com_Printf("\n---- filesystem initialization -----\n");
+
 	for (commands = fs_commands; commands->name; commands++)
 		Cmd_AddCommand(commands->name, commands->function, commands->description);
 	fs_usehomedir = Cvar_Get("fs_usehomedir", "1", CVAR_ARCHIVE, "Use the homedir to store files like savegames and screenshots");

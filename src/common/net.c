@@ -252,7 +252,7 @@ void NET_Init (void)
 	WSADATA winsockdata;
 #endif
 
-	Com_Printf("----- network initialization -------\n");
+	Com_Printf("\n----- network initialization -------\n");
 
 #ifdef _WIN32
 	if (WSAStartup(MAKEWORD(2, 0), &winsockdata) != 0)

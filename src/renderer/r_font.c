@@ -656,12 +656,12 @@ void R_FontInit (void)
 	SDL_version version;
 
 	SDL_TTF_VERSION(&version);
-	Com_Printf("...SDL_ttf version %i.%i.%i - we need at least 2.0.7\n",
+	Com_Printf("SDL_ttf version %i.%i.%i - we need at least 2.0.7\n",
 		version.major,
 		version.minor,
 		version.patch);
 #else
-	Com_Printf("...could not get SDL_ttf version - we need at least 2.0.7\n");
+	Com_Printf("could not get SDL_ttf version - we need at least 2.0.7\n");
 #endif
 
 	numFonts = 0;
@@ -673,7 +673,7 @@ void R_FontInit (void)
 
 	/* init the truetype font engine */
 	if (TTF_Init() == -1)
-		Sys_Error("...SDL_ttf error: %s\n", TTF_GetError());
+		Sys_Error("SDL_ttf error: %s\n", TTF_GetError());
 }
 
 /**
