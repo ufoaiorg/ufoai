@@ -125,10 +125,9 @@ typedef enum {
 
 /** @brief An aircraft with all it's data */
 typedef struct aircraft_s {
-	int idx;			/**< Global index of this aircraft. See also gd.numAircraft. */
-					/* @todo: is this updated when one aircraft is lost (it is checked agains
-					gd.numAircraft sometimes)? We do not really have a global list of acs do we? */
-
+	int idx;			/**< Global index of this aircraft. See also gd.numAircraft.
+						 * this index is also updated when AIR_DeleteAircraft was called
+						 * for all the other aircraft */
 	int idx_sample;			/**< Self-link in aircraft_sample list. */
 	char *id;			/**< Internal id from script file. */
 	char *name;			/**< Translateable name. */

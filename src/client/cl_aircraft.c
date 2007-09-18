@@ -356,7 +356,7 @@ qboolean AIR_IsAircraftInBase (aircraft_t * aircraft)
 
 /**
  * @brief Determines the state of the equip soldier menu button:
- * returns 1 if no aircraft in base else 2 if no soldiers
+ * @returns 1 if no aircraft in base else 2 if no soldiers
  * available otherwise 3
  */
 static int CL_EquipSoldierState (aircraft_t * aircraft)
@@ -495,7 +495,7 @@ qboolean AIR_AircraftHasEnoughFuel (aircraft_t *aircraft, const vec2_t destinati
 		return qtrue;
 	else {
 		/* @todo Should check if another base is closer than homeBase and have a hangar */
-		MN_AddNewMessage(_("Notice"), _("Your aircraft doesn't have enough fuel to go there and then come back to its home base"), qfalse, MSG_STANDARD, NULL);
+		MN_AddNewMessage(_("Notice"), _("Your aircraft doesn't have enough fuel to go there and then come back to its home base."), qfalse, MSG_STANDARD, NULL);
 		Com_DPrintf(DEBUG_CLIENT, "Your aircraft doesn't have enough fuel to go there and then come back to its home base. This distance would be %f, but it can only fly on: %f\n", distance, aircraft->stats[AIR_STATS_SPEED] * aircraft->fuel / 3600.0f);
 	}
 
@@ -773,9 +773,6 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 		base->aircraftCurrent = -1;
 	}
 
-	/* Q_strncpyz(messageBuffer, va(_("You've sold your aircraft (a %s) in base %s"), aircraft->name, base->name), MAX_MESSAGE_TEXT);
-	MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);*/
-
 	/* Now update the aircraft list - maybe there is a popup active. */
 	Cmd_ExecuteString("aircraft_list");
 
@@ -870,6 +867,7 @@ void CL_CampaignRunAircraft (int dt)
 	int i, j, k;
 
 	for (j = 0, base = gd.bases; j < gd.numBases; j++, base++) {
+		/* FIXME: if a base was destroyed, but there are still aircraft on their way... */
 		if (!base->founded)
 			continue;
 
@@ -930,10 +928,6 @@ void CL_CampaignRunAircraft (int dt)
 
 				/* Aircraft purchasing ufo */
 				if (aircraft->status == AIR_UFO) {
-#if 0
-					/* Display airfight sequence */
-					Cmd_ExecuteString("seq_start airfight");
-#endif
 					/* Solve the fight */
 					AIRFIGHT_ExecuteActions(aircraft, aircraft->aircraftTarget);
 				}
@@ -945,6 +939,9 @@ void CL_CampaignRunAircraft (int dt)
 							aircraft->weapons[k].delayNextShot -= dt;
 					}
 				}
+			} else {
+				/* FIXME: Maybe even Sys_Error? */
+				Com_Printf("CL_CampaignRunAircraft: aircraft with no homebase (base: %i, aircraft '%s')\n", j, aircraft->id);
 			}
 	}
 }
@@ -984,8 +981,8 @@ int AII_GetAircraftItemByID (const char *id)
  */
 aircraft_t* AIR_AircraftGetFromIdx (int idx)
 {
-	base_t*		base;
-	aircraft_t*	aircraft;
+	base_t* base;
+	aircraft_t* aircraft;
 
 	if (idx < 0) {
 		Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIdx: bad aircraft index: %i\n", idx);
