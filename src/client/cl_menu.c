@@ -656,7 +656,6 @@ static void MN_DrawDisabled (menuNode_t* node)
 {
 	static vec4_t color = { 0.3f, 0.3f, 0.3f, 0.7f };
 	R_DrawFill(node->pos[0], node->pos[1], node->size[0], node->size[1], ALIGN_UL, color);
-	R_DrawColor(NULL);
 }
 
 /**
@@ -668,7 +667,6 @@ static void MN_DrawFree (int container, menuNode_t * node, int posx, int posy, i
 	invDef_t* inv = &csi.ids[container];
 
 	R_DrawFill(posx, posy, sizex, sizey, ALIGN_UL, color);
-	R_DrawColor(NULL);
 
 	/* if showTUs is true (only the first time in none single containers)
 	 * and we are connected to a game */
@@ -1953,9 +1951,9 @@ static int MN_DrawTooltip (const char *font, char *string, int x, int y, int max
 	if (x + maxWidth +3 > VID_NORM_WIDTH)
 		x -= (maxWidth + 10);
 	R_DrawFill(x - 1, y - 1, maxWidth + 4, height, 0, tooltipBG);
-	R_DrawColor(tooltipColor);
+	R_Color(tooltipColor);
 	R_FontDrawString(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, maxHeight, height, string, lines, 0, NULL, qfalse);
-	R_DrawColor(NULL);
+	R_Color(NULL);
 	return width;
 }
 
@@ -2150,7 +2148,7 @@ static void MN_DrawTextNode (const char *text, const char* font, menuNode_t* nod
 		/* node->state is the line number to highlight */
 		/* FIXME: what about multiline text that should be highlighted completly? */
 		if (node && node->mousefx && node->textLines + 1 == node->state)
-			R_DrawColor(color);
+			R_Color(color);
 
 		/* we assume all the tabs fit on a single line */
 		do {
@@ -2185,7 +2183,7 @@ static void MN_DrawTextNode (const char *text, const char* font, menuNode_t* nod
 			y1 += lineHeight;
 
 		if (node && node->mousefx)
-			R_DrawColor(node->color); /* restore original color */
+			R_Color(node->color); /* restore original color */
 
 		/* now set cur to the next char after the \n (see above) */
 		cur = end;
@@ -2368,9 +2366,9 @@ void MN_DrawMenus (void)
 				VectorScale(node->color, 0.8, color);
 				color[3] = node->color[3];
 				if (node->mousefx && node->type == MN_PIC && mouseOver && sp > pp)
-					R_DrawColor(color);
+					R_Color(color);
 				else if (node->type != MN_SELECTBOX)
-					R_DrawColor(node->color);
+					R_Color(node->color);
 
 				/* get the reference */
 				if (node->type != MN_BAR && node->type != MN_CONTAINER && node->type != MN_BASEMAP
@@ -2608,9 +2606,9 @@ void MN_DrawMenus (void)
 						for (i = 0; i < node->linestrips.numStrips; i++) {
 							/* Draw this line if it's valid. */
 							if (node->linestrips.pointList[i] && (node->linestrips.numPoints[i] > 0)) {
-									R_DrawColor(node->linestrips.color[i]);
-									R_DrawLineStrip(node->linestrips.numPoints[i], node->linestrips.pointList[i]);
-									R_DrawColor(NULL);
+								R_Color(node->linestrips.color[i]);
+								R_DrawLineStrip(node->linestrips.numPoints[i], node->linestrips.pointList[i]);
+								R_Color(NULL);
 							}
 						}
 					}
@@ -2992,7 +2990,7 @@ void MN_DrawMenus (void)
 		}
 	}
 
-	R_DrawColor(NULL);
+	R_Color(NULL);
 }
 
 /*

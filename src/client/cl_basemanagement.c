@@ -1646,9 +1646,9 @@ void B_DrawBase (menuNode_t * node)
 		}
 	}
 	if (hoverBuilding) {
-		R_DrawColor(color);
+		R_Color(color);
 		R_FontDrawString("f_small", 0, mousePosX + 3, mousePosY, mousePosX + 3, mousePosY, node->size[0], 0, node->texh[0], _(hoverBuilding->name), 0, 0, NULL, qfalse);
-		R_DrawColor(NULL);
+		R_Color(NULL);
 	}
 	if (xHover != -1) {
 		if (widthHover == 1) {

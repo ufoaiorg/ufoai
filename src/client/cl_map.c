@@ -702,7 +702,7 @@ static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
 	int i, start, old;
 
 	/* draw */
-	R_DrawColor(color);
+	R_Color(color);
 	start = 0;
 	old = node->size[0] / 2;
 	for (i = 0, p = pts; i < line->numPoints; i++, p++) {
@@ -733,7 +733,7 @@ static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
 	}
 
 	R_DrawLineStrip(i - start, (int*)(&pts));
-	R_DrawColor(NULL);
+	R_Color(NULL);
 }
 
 /**
@@ -750,7 +750,7 @@ static void MAP_3DMapDrawLine (const menuNode_t* node, const mapline_t* line)
 	int i, numPoints;
 
 	/* draw only when the point of the path is visible*/
-	R_DrawColor(color);
+	R_Color(color);
 	for (i = 0, numPoints = 0; i < line->numPoints; i++) {
 		if (MAP_3DMapToScreen(node, line->point[i], &pts[i].x, &pts[i].y, NULL)) {
 			numPoints++;
@@ -758,7 +758,7 @@ static void MAP_3DMapDrawLine (const menuNode_t* node, const mapline_t* line)
 	}
 
 	R_DrawLineStrip(numPoints, (int*)(&pts));
-	R_DrawColor(NULL);
+	R_Color(NULL);
 }
 
 #define CIRCLE_DRAW_POINTS	60
@@ -782,7 +782,7 @@ void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center, const 
 	vec3_t initialVector, rotationAxis, currentPoint, centerPos;
 
 	/* Set color */
-	R_DrawColor(color);
+	R_Color(color);
 
 	/* Set centerPos corresponding to cartesian coordinates of the center point */
 	PolarToVec(center, centerPos);
@@ -820,7 +820,7 @@ void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center, const 
 
 	/* Draw the last path */
 	R_DrawLineStrip(numPoints, (int*)(&pts));
-	R_DrawColor(NULL);
+	R_Color(NULL);
 }
 
 /**
@@ -1119,7 +1119,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	assert(node);
 
 	/* font color on geoscape */
-	R_DrawColor(node->color);
+	R_Color(node->color);
 	/* default font */
 	font = MN_GetFont(NULL, node);
 

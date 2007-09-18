@@ -37,7 +37,7 @@ void R_SetDefaultState (void)
 
 	qglAlphaFunc(GL_GREATER, 0.1f);
 
-	qglColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	R_Color(NULL);
 	qglClearColor(0, 0, 0, 0);
 	R_CheckError();
 
@@ -45,7 +45,6 @@ void R_SetDefaultState (void)
 
 	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	RSTATE_DISABLE_BLEND
 	RSTATE_DISABLE_ALPHATEST
 }
 
@@ -144,12 +143,11 @@ void R_SetupGL2D (void)
 	qglLoadIdentity();
 	qglDisable(GL_DEPTH_TEST);
 	qglDisable(GL_CULL_FACE);
-	RSTATE_DISABLE_BLEND
 	qglDisable(GL_FOG);
 	RSTATE_ENABLE_ALPHATEST
 	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	R_TexEnv(GL_MODULATE);
-	qglColor4f(1, 1, 1, 1);
+	R_Color(NULL);
 	R_CheckError();
 }
 
@@ -322,4 +320,32 @@ void R_TextureSolidMode (const char *string)
 	}
 
 	gl_solid_format = gl_solid_modes[i].mode;
+}
+
+static const vec4_t color_white = {1, 1, 1, 1};
+
+/**
+ * @brief Change the color to given value
+ * @param[in] rgba A pointer to a vec4_t with rgba color value
+ * @note To reset the color let rgba be NULL
+ * @note Enables openGL blend if alpha value is lower than 1.0
+ */
+void R_Color (const float *rgba)
+{
+	const float *color;
+	if (rgba)
+		color = rgba;
+	else {
+		color = color_white;
+		RSTATE_DISABLE_BLEND
+	}
+
+	if (r_state.color[0] != color[0] || r_state.color[1] != color[1]
+	 || r_state.color[2] != color[2] || r_state.color[3] != color[3]) {
+		if (color[3] < 1.0f)
+			RSTATE_ENABLE_BLEND
+		Vector4Copy(color, r_state.color);
+		qglColor4fv(r_state.color);
+		R_CheckError();
+	}
 }

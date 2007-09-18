@@ -304,6 +304,8 @@ typedef struct {
 
 	int lightmap_texnum;
 
+	vec4_t color;
+
 	int currenttextures[2];
 	int currenttmu;
 

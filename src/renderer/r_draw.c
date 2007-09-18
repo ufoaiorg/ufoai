@@ -255,25 +255,6 @@ void R_DrawImagePixelData (const char *name, byte *frame, int width, int height)
 }
 
 /**
- * @brief Change the color to given value
- * @param[in] rgba A pointer to a vec4_t with rgba color value
- * @note To reset the color let rgba be NULL
- * @note Enables openGL blend if alpha value is lower than 1.0
- */
-void R_DrawColor (const float *rgba)
-{
-	if (rgba) {
-		if (rgba[3] < 1.0f)
-			RSTATE_ENABLE_BLEND
-		qglColor4fv(rgba);
-	} else {
-		RSTATE_DISABLE_BLEND
-		qglColor4f(1, 1, 1, 1);
-	}
-	R_CheckError();
-}
-
-/**
  * @brief Searches for an image in the image array
  * @param[in] name The name of the image
  * @note the imagename can contain a / or \ (relative to gamedir/) - otherwise it's relative to gamedir/pics
@@ -472,7 +453,7 @@ void R_DrawFill (int x, int y, int w, int h, int align, const vec4_t color)
 	nw = w * viddef.rx;
 	nh = h * viddef.ry;
 
-	R_DrawColor(color);
+	R_Color(color);
 
 	qglDisable(GL_TEXTURE_2D);
 	qglBegin(GL_QUADS);
@@ -505,7 +486,7 @@ void R_DrawFill (int x, int y, int w, int h, int align, const vec4_t color)
 	}
 
 	qglEnd();
-	R_DrawColor(NULL);
+	R_Color(NULL);
 	qglEnable(GL_TEXTURE_2D);
 }
 
@@ -681,7 +662,7 @@ void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness)
 	qglEnable(GL_LINE_SMOOTH);
 	RSTATE_ENABLE_BLEND
 
-	R_DrawColor(color);
+	R_Color(color);
 
 	assert(radius > thickness);
 
@@ -714,7 +695,7 @@ void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness)
 
 	qglPopMatrix();
 
-	R_DrawColor(NULL);
+	R_Color(NULL);
 
 	RSTATE_DISABLE_BLEND
 	qglDisable(GL_LINE_SMOOTH);

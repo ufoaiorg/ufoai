@@ -300,12 +300,9 @@ static void SCR_DrawLoadingBar (int x, int y, int w, int h, int percent)
 	static vec4_t color_bar = {0.8f, 0.8f, 0.8f, 0.7f};
 
 	R_DrawFill(x, y, w, h, ALIGN_UL, color);
-	R_DrawColor(NULL);
 
-	if (percent != 0) {
+	if (percent != 0)
 		R_DrawFill((int)(x+(h*0.2)), (int)(y+(h*0.2)), (int)((w-(h*0.4))*percent*0.01), (int)(h*0.6), ALIGN_UL, color_bar);
-		R_DrawColor(NULL);
-	}
 }
 
 /**
@@ -386,7 +383,7 @@ static void SCR_DrawLoading (void)
 	if (!loadingPic)
 		return;
 	R_DrawNormPic(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0, ALIGN_UL, qfalse, loadingPic);
-	R_DrawColor(color);
+	R_Color(color);
 
 	if (cl.configstrings[CS_TILES][0]) {
 		mapmsg = va(_("Loading Map [%s]"), _(cl.configstrings[CS_MAPTITLE]));
@@ -460,7 +457,6 @@ static void SCR_DrawCursor (void)
 			if (menuText[TEXT_MOUSECURSOR_PLAYERNAMES] && cl_show_cursor_tooltips->value) {
 				/*@todo: activate this:
 				R_DrawFill(mx + icon_offset_x - 1, my - 33, 20, 128, 0, cursorBG);
-				R_DrawColor(NULL);
 				*/
 				SCR_DrawString(mousePosX + icon_offset_x, mousePosY - 32, menuText[TEXT_MOUSECURSOR_PLAYERNAMES], qfalse);
 				menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = NULL;

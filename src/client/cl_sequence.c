@@ -333,7 +333,7 @@ void CL_Sequence2D (void)
 				continue;*/
 
 			/* render */
-			R_DrawColor(s2d->color);
+			R_Color(s2d->color);
 
 			/* image can be background */
 			if (*s2d->image)
@@ -344,13 +344,13 @@ void CL_Sequence2D (void)
 				R_DrawFill(s2d->pos[0], s2d->pos[1], s2d->size[0], s2d->size[1], s2d->align, s2d->bgcolor);
 
 			/* render */
-			R_DrawColor(s2d->color);
+			R_Color(s2d->color);
 
 			/* gettext placeholder */
 			if (*s2d->text)
 				height += R_FontDrawString(s2d->font, s2d->align, s2d->pos[0], s2d->pos[1], s2d->pos[0], s2d->pos[1], (int) s2d->size[0], (int) s2d->size[1], -1 /* @todo: use this for some nice line spacing */, _(s2d->text), 0, 0, NULL, qfalse);
 		}
-	R_DrawColor(NULL);
+	R_Color(NULL);
 }
 
 /**
