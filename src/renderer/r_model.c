@@ -378,7 +378,7 @@ void R_ModDrawNullModel (void)
 	}
 	qglEnd();
 
-	qglColor3f(1, 1, 1);
+	R_Color(NULL);
 	qglPopMatrix();
 	qglEnable(GL_TEXTURE_2D);
 }

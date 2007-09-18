@@ -111,10 +111,9 @@ static void R_DrawSprite (ptl_t * p)
 	VectorMA(pos, -0.5, up, pos);
 	VectorMA(pos, -0.5, right, pos);
 
+	R_Color(p->color);
 	/* draw it */
 	qglBegin(GL_TRIANGLE_FAN);
-
-	qglColor4fv(p->color);
 
 	qglTexCoord2f(0, 0);
 	qglVertex3fv(pos);
@@ -172,7 +171,7 @@ static void R_DrawPtlCircle (ptl_t* p)
 	qglDisable(GL_TEXTURE_2D);
 	qglEnable(GL_LINE_SMOOTH);
 
-	qglColor4fv(p->color);
+	R_Color(p->color);
 
 	assert(radius > thickness);
 	if (thickness <= 1) {
@@ -205,9 +204,10 @@ static void R_DrawPtlLine (ptl_t * p)
 	qglDisable(GL_TEXTURE_2D);
 	qglEnable(GL_LINE_SMOOTH);
 
+	R_Color(p->color);
+
 	/* draw line from s to v */
 	qglBegin(GL_LINE_STRIP);
-	qglColor4fv(p->color);
 	qglVertex3fv(p->s);
 	qglVertex3fv(p->v);
 	qglEnd();

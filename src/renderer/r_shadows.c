@@ -138,6 +138,7 @@ static void R_DrawAliasShadow (entity_t * e, mdl_md2_t * paliashdr, int posenum)
 	vec3_t point;
 	float height, lheight, alpha;
 	int count;
+	vec4_t color = {0, 0, 0, 0.5};
 
 	dAliasFrame_t *frame;
 
@@ -164,7 +165,8 @@ static void R_DrawAliasShadow (entity_t * e, mdl_md2_t * paliashdr, int posenum)
 	if (nolight)
 		qglScalef(1.1, 1.1, 1);	/* scale  nolight shadow by Kirk Barnes */
 
-	qglColor4f(0, 0, 0, alpha);
+	color[3] = alpha;
+	R_Color(color);
 	qglPolygonOffset(-2.0, 1.0);	/* shadow on the floor c14 */
 	qglEnable(GL_POLYGON_OFFSET_FILL);
 
@@ -203,7 +205,7 @@ static void R_DrawAliasShadow (entity_t * e, mdl_md2_t * paliashdr, int posenum)
 
 	qglDisable(GL_STENCIL_TEST);
 	qglDisable(GL_POLYGON_OFFSET_FILL);
-	qglColor4f(1, 1, 1, 1);
+	R_Color(NULL);
 }
 
 /**
@@ -377,6 +379,7 @@ static void R_DrawAliasShadowVolume (mdl_md2_t * paliashdr, int posenumm)
 	vec3_t light, temp;
 	dtriangle_t *t, *tris;
 	int worldlight = 0;
+	vec4_t color = {1, 0, 0, 1};
 
 	dAliasFrame_t *frame, *oldframe;
 	dtrivertx_t *ov, *verts;
@@ -410,10 +413,11 @@ static void R_DrawAliasShadowVolume (mdl_md2_t * paliashdr, int posenumm)
 	R_CheckError();
 
 	if (r_shadow_debug_volume->integer)
-		qglColor3f(1, 0, 0);
-	else
+		R_Color(color);
+	else {
 		qglColorMask(0, 0, 0, 0);
-	R_CheckError();
+		R_CheckError();
+	}
 
 	if (r_state.stencil_two_side)
 		qglEnable(GL_STENCIL_TEST_TWO_SIDE_EXT);
@@ -475,10 +479,11 @@ static void R_DrawAliasShadowVolume (mdl_md2_t * paliashdr, int posenumm)
 	qglDisable(GL_STENCIL_TEST);
 
 	if (r_shadow_debug_volume->integer)
-		qglColor3f(1, 1, 1);
-	else
+		R_Color(NULL);
+	else {
 		qglColorMask(1, 1, 1, 1);
-	R_CheckError();
+		R_CheckError();
+	}
 
 	qglPopAttrib(); /* restore stencil buffer */
 	R_CheckError();
@@ -634,6 +639,7 @@ void R_DrawShadowVolume (entity_t * e)
  */
 void R_ShadowBlend (void)
 {
+	vec4_t color = {0, 0, 0, 0.5};
 	if (refdef.rdflags & RDF_NOWORLDMODEL)
 		return;
 
@@ -656,7 +662,7 @@ void R_ShadowBlend (void)
 	R_CheckError();
 	qglDepthMask(GL_FALSE);
 	qglDisable(GL_TEXTURE_2D);
-	qglColor4f(0, 0, 0, 0.5);
+	R_Color(color);
 	R_CheckError();
 
 	qglEnable(GL_STENCIL_TEST);

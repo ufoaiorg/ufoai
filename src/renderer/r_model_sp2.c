@@ -37,11 +37,11 @@ SPRITE MODELS
  */
 void R_DrawSpriteModel (entity_t * e)
 {
-	float alpha = 1.0F;
 	vec3_t point;
 	dsprframe_t *frame;
 	float *up, *right;
 	dsprite_t *psprite;
+	vec4_t color = {1, 1, 1, 1};
 
 	/* don't even bother culling, because it's just a single */
 	/* polygon without a surface cache */
@@ -73,18 +73,15 @@ void R_DrawSpriteModel (entity_t * e)
 	}
 
 	if (e->flags & RF_TRANSLUCENT)
-		alpha = e->alpha;
+		color[3] = e->alpha;
 
-	if (alpha != 1.0F)
-		RSTATE_ENABLE_BLEND
-
-	qglColor4f(1, 1, 1, alpha);
+	R_ColorBlend(color);
 
 	R_Bind(currentmodel->alias.skins_img[e->as.frame]->texnum);
 
 	R_TexEnv(GL_MODULATE);
 
-	if (alpha == 1.0) {
+	if (color[3] == 1.0) {
 		RSTATE_ENABLE_ALPHATEST
 	} else {
 		RSTATE_DISABLE_ALPHATEST
@@ -117,10 +114,7 @@ void R_DrawSpriteModel (entity_t * e)
 	RSTATE_DISABLE_ALPHATEST
 	R_TexEnv(GL_REPLACE);
 
-	if (alpha != 1.0F)
-		RSTATE_DISABLE_BLEND
-
-	qglColor4f(1, 1, 1, 1);
+	R_ColorBlend(NULL);
 }
 
 /**

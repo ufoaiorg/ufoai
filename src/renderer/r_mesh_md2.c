@@ -259,6 +259,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 	vec4_t bbox[8];
 	mdl_md2_t *paliashdr;
 	image_t *skin;
+	vec4_t color = {1, 1, 1, 1};
 
 	/* check if model is out of fov */
 	if (R_CullAliasMD2Model(bbox, e))
@@ -316,9 +317,10 @@ void R_DrawAliasMD2Model (entity_t * e)
 	/* FIXME: Does not work */
 	/* IR goggles override color */
 	if (refdef.rdflags & RDF_IRGOGGLES)
-		qglColor4f(1.0, 0.0, 0.0, e->alpha);
-	else
-		qglColor4f(1.0, 1.0, 1.0, e->alpha);
+		color[1] = color[2] = 0.0;
+
+	color[3] = e->alpha;
+	R_Color(color);
 
 	qglPushMatrix();
 
@@ -353,7 +355,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 			qglDepthMask(GL_FALSE);
 		RSTATE_ENABLE_BLEND
 
-		qglColor4f(1, 1, 1, 1);
+		R_Color(NULL);
 		if (e->flags & RF_SHADOW)
 			R_Bind(shadow->texnum);
 		else
@@ -393,16 +395,18 @@ void R_DrawAliasMD2Model (entity_t * e)
 
 		if (e->flags & RF_MEMBER) {
 			if (e->flags & RF_SELECTED)
-				qglColor4f(0, 1, 0, 1);
+				Vector4Set(color, 0, 1, 0, 1);
 			else
-				qglColor4f(0, 1, 0, 0.3);
+				Vector4Set(color, 0, 1, 0, 0.3);
 		} else if (e->flags & RF_ALLIED) {
 			if (e->flags & RF_SELECTED)
-				qglColor4f(0, 0.5, 1, 1);
+				Vector4Set(color, 0, 0.5, 1, 1);
 			else
-				qglColor4f(0, 0.5, 1, 0.3);
+				Vector4Set(color, 0, 0.5, 1, 0.3);
 		} else
-			qglColor4f(0, 1, 0, 1);
+			Vector4Set(color, 0, 1, 0, 1);
+
+		R_Color(color);
 
 		qglBegin(GL_LINE_STRIP);
 
@@ -436,7 +440,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 	if (r_fog->integer && refdef.fog)
 		qglEnable(GL_FOG);
 
-	qglColor4f(1, 1, 1, 1);
+	R_Color(NULL);
 }
 
 /**
@@ -537,10 +541,9 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	qglScalef(viddef.rx, viddef.ry, (viddef.rx + viddef.ry) / 2);
 
 	if (mi->color[3])
-		qglColor4fv(mi->color);
+		R_Color(mi->color);
 	else
-		qglColor4f(1, 1, 1, 1);
-	R_CheckError();
+		R_Color(NULL);
 
 	if (pmi) {
 		/* register the parent model */
@@ -612,8 +615,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 
 	qglPopMatrix();
 
-	qglColor4f(1, 1, 1, 1);
-	R_CheckError();
+	R_Color(NULL);
 }
 
 /**
@@ -657,9 +659,9 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	c_alias_polys += paliashdr->num_tris;
 
 	if (mi->color[3])
-		qglColor4fv(mi->color);
+		R_Color(mi->color);
 	else
-		qglColor4f(1, 1, 1, 1);
+		R_Color(NULL);
 
 	/* draw all the triangles */
 	qglPushMatrix();
@@ -697,7 +699,6 @@ void R_DrawModelParticle (modelInfo_t * mi)
 
 	qglPopMatrix();
 
-	qglColor4f(1, 1, 1, 1);
-	R_CheckError();
+	R_Color(NULL);
 }
 

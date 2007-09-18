@@ -159,7 +159,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 			qglDepthMask(GL_FALSE);
 		RSTATE_ENABLE_BLEND
 
-		qglColor4f(1, 1, 1, 1);
+		R_Color(NULL);
 		if (e->flags & RF_SHADOW)
 			R_Bind(shadow->texnum);
 		else
@@ -205,5 +205,5 @@ void R_DrawAliasMD3Model (entity_t *e)
 	if (r_fog->integer && refdef.fog)
 		qglEnable(GL_FOG);
 
-	qglColor4f(1, 1, 1, 1);
+	R_Color(NULL);
 }

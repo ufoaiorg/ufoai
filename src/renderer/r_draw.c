@@ -240,7 +240,7 @@ void R_DrawImagePixelData (const char *name, byte *frame, int width, int height)
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	R_CheckError();
 
-	qglColor4ub(255, 255, 255, 255);
+	R_Color(NULL);
 	qglBegin(GL_QUADS);
 	qglTexCoord2f(0, 0);
 	qglVertex2f(0, 0);

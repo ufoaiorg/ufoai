@@ -98,7 +98,7 @@ void R_DrawTriangleOutlines (void)
 
 	qglDisable(GL_TEXTURE_2D);
 	qglDisable(GL_DEPTH_TEST);
-	qglColor4f(1, 1, 1, 1);
+	R_Color(NULL);
 
 	for (i = 0; i < MAX_LIGHTMAPS; i++) {
 		mBspSurface_t *surf;
@@ -315,11 +315,12 @@ static void R_RenderBrushPoly (mBspSurface_t * fa)
 #endif
 
 	if (fa->flags & SURF_DRAWTURB) {
+		vec4_t color = {r_state.inverse_intensity, r_state.inverse_intensity, r_state.inverse_intensity, 1.0f};
 		R_Bind(image->texnum);
 
 		/* warp texture, no lightmaps */
 		R_TexEnv(GL_MODULATE);
-		qglColor4f(r_state.inverse_intensity, r_state.inverse_intensity, r_state.inverse_intensity, 1.0F);
+		R_Color(color);
 		R_DrawTurbSurface(fa);
 		R_TexEnv(GL_REPLACE);
 		return;
@@ -395,6 +396,7 @@ void R_DrawAlphaSurfaces (void)
 {
 	mBspSurface_t *s;
 	float intens;
+	vec4_t color = {1, 1, 1, 1};
 
 	/* go back to the world matrix */
 	qglLoadMatrixf(r_world_matrix);
@@ -416,11 +418,13 @@ void R_DrawAlphaSurfaces (void)
 		c_brush_polys++;
 
 		if (s->texinfo->flags & SURF_TRANS33)
-			qglColor4f(intens, intens, intens, 0.33);
+			color[3] = 0.33;
 		else if (s->texinfo->flags & SURF_TRANS66)
-			qglColor4f(intens, intens, intens, 0.66);
+			color[3] = 0.66;
 		else
-			qglColor4f(intens, intens, intens, 1);
+			color[3] = 1.0;
+
+		R_Color(color);
 
 		if (s->flags & SURF_DRAWTURB)
 			R_DrawTurbSurface(s);
@@ -440,9 +444,8 @@ void R_DrawAlphaSurfaces (void)
 	}
 
 	R_TexEnv(GL_REPLACE);
-	qglColor4f(1, 1, 1, 1);
 	qglDepthMask(GL_TRUE); /* reenable depth writing */
-	RSTATE_DISABLE_BLEND
+	R_ColorBlend(NULL);
 
 	r_alpha_surfaces = NULL;
 }
@@ -560,8 +563,8 @@ static void R_DrawInlineBModel (void)
 	psurf = &currentmodel->bsp.surfaces[currentmodel->bsp.firstmodelsurface];
 
 	if (currententity->flags & RF_TRANSLUCENT) {
-		RSTATE_ENABLE_BLEND
-		qglColor4f(1, 1, 1, 0.25);
+		vec4_t color = {1, 1, 1, 0.25};
+		R_ColorBlend(color);
 		R_TexEnv(GL_MODULATE);
 	}
 
@@ -609,8 +612,7 @@ static void R_DrawInlineBModel (void)
 		if (!qglMultiTexCoord2fARB)
 			R_BlendLightmaps();
 	} else {
-		RSTATE_DISABLE_BLEND
-		qglColor4f(1, 1, 1, 1);
+		R_ColorBlend(NULL);
 		R_TexEnv(GL_REPLACE);
 	}
 }
@@ -648,7 +650,7 @@ void R_DrawBrushModel (entity_t * e)
 	if (R_CullBox(mins, maxs))
 		return;
 
-	qglColor3f(1, 1, 1);
+	R_Color(NULL);
 	memset(gl_lms.lightmap_surfaces, 0, sizeof(gl_lms.lightmap_surfaces));
 
 	VectorSubtract(refdef.vieworg, e->origin, modelorg);
@@ -781,7 +783,7 @@ static void R_DrawWorld (mBspNode_t * nodes)
 
 	r_state.currenttextures[0] = r_state.currenttextures[1] = -1;
 
-	qglColor3f(1, 1, 1);
+	R_Color(NULL);
 	memset(gl_lms.lightmap_surfaces, 0, sizeof(gl_lms.lightmap_surfaces));
 
 	if (qglMultiTexCoord2fARB) {

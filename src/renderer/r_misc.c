@@ -226,6 +226,7 @@ void R_DrawBox (entity_t * e)
 {
 	vec3_t upper, lower;
 	float dx, dy;
+	vec4_t color = {e->angles[0], e->angles[1], e->angles[2], e->alpha};
 
 /*	if (R_CullBox(e->origin, e->oldorigin)) */
 /*		return; */
@@ -238,7 +239,7 @@ void R_DrawBox (entity_t * e)
 		qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	qglEnable(GL_LINE_SMOOTH);
 
-	qglColor4f(e->angles[0], e->angles[1], e->angles[2], e->alpha);
+	R_Color(color);
 
 	VectorCopy(e->origin, lower);
 	VectorCopy(e->origin, upper);

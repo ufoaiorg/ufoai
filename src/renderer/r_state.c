@@ -328,22 +328,36 @@ static const vec4_t color_white = {1, 1, 1, 1};
  * @brief Change the color to given value
  * @param[in] rgba A pointer to a vec4_t with rgba color value
  * @note To reset the color let rgba be NULL
+ * @sa R_Color
  * @note Enables openGL blend if alpha value is lower than 1.0
+ */
+void R_ColorBlend (const float *rgba)
+{
+	if (rgba && rgba[3] < 1.0f) {
+		RSTATE_ENABLE_BLEND
+	} else if (!rgba) {
+		RSTATE_DISABLE_BLEND
+	}
+	R_Color(rgba);
+}
+
+/**
+ * @brief Change the color to given value
+ * @param[in] rgba A pointer to a vec4_t with rgba color value
+ * @note To reset the color let rgba be NULL
+ * @sa R_ColorBlend
  */
 void R_Color (const float *rgba)
 {
 	const float *color;
 	if (rgba)
 		color = rgba;
-	else {
+	else
 		color = color_white;
-		RSTATE_DISABLE_BLEND
-	}
 
+	R_CheckError();
 	if (r_state.color[0] != color[0] || r_state.color[1] != color[1]
 	 || r_state.color[2] != color[2] || r_state.color[3] != color[3]) {
-		if (color[3] < 1.0f)
-			RSTATE_ENABLE_BLEND
 		Vector4Copy(color, r_state.color);
 		qglColor4fv(r_state.color);
 		R_CheckError();
