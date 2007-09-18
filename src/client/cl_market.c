@@ -212,7 +212,7 @@ static void BS_AddToList (const char *name, int storage, int market, int price)
 	Com_sprintf(shortName, sizeof(shortName), "%i\n", market);
 	Q_strcat(bsMarketMarket, shortName, sizeof(bsMarketMarket));
 
-	Com_sprintf(shortName, sizeof(shortName), "%i c\n", price);
+	Com_sprintf(shortName, sizeof(shortName), _("%i c\n"), price);
 	Q_strcat(bsMarketPrices, shortName, sizeof(bsMarketPrices));
 }
 
@@ -358,8 +358,9 @@ static void BS_BuyType_f (void)
 		Cvar_SetValue("mn_bfactor", baseCurrent->buyfactor);
 		Cvar_SetValue("mn_sfactor", baseCurrent->sellfactor);
 		/* Set up base capacities. */
+		/* FIXME: reverse the order here? cur/max */
 		Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i", baseCurrent->capacities[CAP_ITEMS].max,
-		baseCurrent->capacities[CAP_ITEMS].cur);
+			baseCurrent->capacities[CAP_ITEMS].cur);
 		Cvar_Set("mn_bs_storage", tmpbuf);
 	}
 

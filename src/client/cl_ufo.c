@@ -43,6 +43,8 @@ typedef struct ufoTypeList_s {
 
 /**
  * @brief Valid ufo types
+ * @note Use the same values for the names as we are already using in the scriptfiles
+ * here, otherwise they are not translateable because they don't appear in the po files
  */
 static const ufoTypeList_t ufoTypeList[] = {
 	{"ufo_scout", "UFO - Scout", UFO_SCOUT},
@@ -317,17 +319,17 @@ static void UFO_ListUfosOnGeoscape_f (void)
 		Com_Printf("..%s (%s) - status: %i - pos: %.0f:%0.f\n", ufo->name, ufo->id, ufo->status, ufo->pos[0], ufo->pos[1]);
 		Com_Printf("...%i weapon slots: ", ufo->maxWeapons);
 		for (k = 0; k < ufo->maxWeapons; k++) {
-				if (ufo->weapons[k].itemIdx > -1) {
-					Com_Printf("%s", csi.ods[ufo->weapons[k].itemIdx].id);
-					if (ufo->weapons[k].ammoIdx > -1 && ufo->weapons[k].ammoLeft > 0)
-						Com_Printf(" (loaded)");
-					else
-						Com_Printf(" (unloaded)");
-				}
+			if (ufo->weapons[k].itemIdx > -1) {
+				Com_Printf("%s", csi.ods[ufo->weapons[k].itemIdx].id);
+				if (ufo->weapons[k].ammoIdx > -1 && ufo->weapons[k].ammoLeft > 0)
+					Com_Printf(" (loaded)");
 				else
-					Com_Printf("empty");
-				Com_Printf(" / ");
+					Com_Printf(" (unloaded)");
 			}
+			else
+				Com_Printf("empty");
+			Com_Printf(" / ");
+		}
 		Com_Printf("\n");
 	}
 }
