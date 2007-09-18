@@ -808,7 +808,7 @@ qboolean R_SetMode (void)
 	}
 	viddef.rx = (float)viddef.width / VID_NORM_WIDTH;
 	viddef.ry = (float)viddef.height / VID_NORM_HEIGHT;
-	Com_Printf(" %dx%d\n", viddef.width, viddef.height);
+	Com_Printf(" %dx%d (fullscreen: %s)\n", viddef.width, viddef.height, viddef.fullscreen ? "yes" : "no");
 
 	if (R_InitGraphics())
 		return qtrue;
@@ -856,7 +856,7 @@ static void R_InitExtension (void)
 	if (strstr(r_config.extensions_string, "GL_ARB_multitexture")) {
 		if (r_ext_multitexture->integer) {
 			Com_Printf("using GL_ARB_multitexture\n");
-			qglMTexCoord2fSGIS = SDL_GL_GetProcAddress("glMultiTexCoord2fARB");
+			qglMultiTexCoord2fARB = SDL_GL_GetProcAddress("glMultiTexCoord2fARB");
 			qglActiveTextureARB = SDL_GL_GetProcAddress("glActiveTextureARB");
 			qglClientActiveTextureARB = SDL_GL_GetProcAddress("glClientActiveTextureARB");
 			gl_texture0 = GL_TEXTURE0_ARB;
@@ -886,7 +886,7 @@ static void R_InitExtension (void)
 			Com_Printf("GL_SGIS_multitexture deprecated in favor of ARB_multitexture\n");
 		else if (r_ext_multitexture->integer) {
 			Com_Printf("using GL_SGIS_multitexture\n");
-			qglMTexCoord2fSGIS = SDL_GL_GetProcAddress("glMTexCoord2fSGIS");
+			qglMultiTexCoord2fARB = SDL_GL_GetProcAddress("glMTexCoord2fSGIS");
 			qglSelectTextureSGIS = SDL_GL_GetProcAddress("glSelectTextureSGIS");
 			gl_texture0 = GL_TEXTURE0_SGIS;
 			gl_texture1 = GL_TEXTURE1_SGIS;

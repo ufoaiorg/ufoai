@@ -380,9 +380,9 @@ extern void (APIENTRY * qglPointParameterfvEXT) (GLenum param, const GLfloat * v
 extern void (APIENTRY * qglLockArraysEXT) (int, int);
 extern void (APIENTRY * qglUnlockArraysEXT) (void);
 
-extern void (APIENTRY * qglMTexCoord2fSGIS) (GLenum, GLfloat, GLfloat);
 extern void (APIENTRY * qglSelectTextureSGIS) (GLenum);
 
+extern void (APIENTRY * qglMultiTexCoord2fARB) (GLenum, GLfloat, GLfloat);
 extern void (APIENTRY * qglActiveTextureARB) (GLenum);
 extern void (APIENTRY * qglClientActiveTextureARB) (GLenum);
 extern void (APIENTRY * qglMultiTexCoord3fARB) (GLenum, GLfloat, GLfloat, GLfloat);

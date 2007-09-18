@@ -157,8 +157,8 @@ static void R_DrawPolyChain (const mBspSurface_t *surf, const float scroll)
 		v = p->verts[0];
 		qglBegin(GL_POLYGON);
 		for (i = 0; i < nv; i++, v += VERTEXSIZE) {
-			qglMTexCoord2fSGIS(gl_texture0, (v[3] + scroll), v[4]);
-			qglMTexCoord2fSGIS(gl_texture1, v[5], v[6]);
+			qglMultiTexCoord2fARB(gl_texture0, (v[3] + scroll), v[4]);
+			qglMultiTexCoord2fARB(gl_texture1, v[5], v[6]);
 			qglVertex3fv(v);
 		}
 		qglEnd();
@@ -462,7 +462,7 @@ static void R_DrawSurface (mBspSurface_t * surf)
 
 	/* no multitexturing supported - draw the poly now and blend the lightmap
 	 * later in R_DrawWorld */
-	if (!qglMTexCoord2fSGIS) {
+	if (!qglMultiTexCoord2fARB) {
 		R_RenderBrushPoly(surf);
 		return;
 	}
@@ -602,7 +602,7 @@ static void R_DrawInlineBModel (void)
 	}
 
 	if (!(currententity->flags & RF_TRANSLUCENT)) {
-		if (!qglMTexCoord2fSGIS)
+		if (!qglMultiTexCoord2fARB)
 			R_BlendLightmaps();
 	} else {
 		RSTATE_DISABLE_BLEND
@@ -780,7 +780,7 @@ static void R_DrawWorld (mBspNode_t * nodes)
 	qglColor3f(1, 1, 1);
 	memset(gl_lms.lightmap_surfaces, 0, sizeof(gl_lms.lightmap_surfaces));
 
-	if (qglMTexCoord2fSGIS) {
+	if (qglMultiTexCoord2fARB) {
 		R_EnableMultitexture(qtrue);
 
 		R_SelectTexture(gl_texture0);

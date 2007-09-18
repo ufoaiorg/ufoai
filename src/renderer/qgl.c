@@ -387,7 +387,7 @@ void (APIENTRY * qglPointParameterfEXT) (GLenum param, GLfloat value);
 void (APIENTRY * qglPointParameterfvEXT) (GLenum param, const GLfloat *value);
 void (APIENTRY * qglColorTableEXT)(int, int, int, int, int, const void *);
 void (APIENTRY * qglSelectTextureSGIS) (GLenum);
-void (APIENTRY * qglMTexCoord2fSGIS) (GLenum, GLfloat, GLfloat);
+void (APIENTRY * qglMultiTexCoord2fARB) (GLenum, GLfloat, GLfloat);
 void (APIENTRY * qglActiveTextureARB) (GLenum);
 void (APIENTRY * qglClientActiveTextureARB) (GLenum);
 void (APIENTRY * qglMultiTexCoord3fARB) (GLenum, GLfloat, GLfloat, GLfloat);
@@ -1161,7 +1161,7 @@ void QR_Link (void)
 	qglPointParameterfEXT        = NULL;
 	qglPointParameterfvEXT       = NULL;
 	qglSelectTextureSGIS         = NULL;
-	qglMTexCoord2fSGIS           = NULL;
+	qglMultiTexCoord2fARB         = NULL;
 	qglActiveTextureARB          = NULL;
 	qglMultiTexCoord3fARB        = NULL;
 	qglMultiTexCoord3fvARB       = NULL;

@@ -574,17 +574,17 @@ void R_DrawDayAndNight (int x, int y, int w, int h, float p, float q, float cx, 
 
 	/* draw night image */
 	qglBegin(GL_QUADS);
-	qglMTexCoord2fSGIS(gl_texture0, cx - iz, cy - iz);
-	qglMTexCoord2fSGIS(gl_texture1, p + cx - iz, cy - iz);
+	qglMultiTexCoord2fARB(gl_texture0, cx - iz, cy - iz);
+	qglMultiTexCoord2fARB(gl_texture1, p + cx - iz, cy - iz);
 	qglVertex2f(nx, ny);
-	qglMTexCoord2fSGIS(gl_texture0, cx + iz, cy - iz);
-	qglMTexCoord2fSGIS(gl_texture1, p + cx + iz, cy - iz);
+	qglMultiTexCoord2fARB(gl_texture0, cx + iz, cy - iz);
+	qglMultiTexCoord2fARB(gl_texture1, p + cx + iz, cy - iz);
 	qglVertex2f(nx + nw, ny);
-	qglMTexCoord2fSGIS(gl_texture0, cx + iz, cy + iz);
-	qglMTexCoord2fSGIS(gl_texture1, p + cx + iz, cy + iz);
+	qglMultiTexCoord2fARB(gl_texture0, cx + iz, cy + iz);
+	qglMultiTexCoord2fARB(gl_texture1, p + cx + iz, cy + iz);
 	qglVertex2f(nx + nw, ny + nh);
-	qglMTexCoord2fSGIS(gl_texture0, cx - iz, cy + iz);
-	qglMTexCoord2fSGIS(gl_texture1, p + cx - iz, cy + iz);
+	qglMultiTexCoord2fARB(gl_texture0, cx - iz, cy + iz);
+	qglMultiTexCoord2fARB(gl_texture1, p + cx - iz, cy + iz);
 	qglVertex2f(nx, ny + nh);
 	qglEnd();
 
