@@ -407,11 +407,11 @@ mapdef vil_shannon
 	multiplayer		false
 }
 
-mapdef aliencolony_small
+mapdef corrupter
 {
-	map				colon04
+	map				corrupt_city04
 	music			PsymongR5
-	multiplayer		false
+	multiplayer		true
 }
 
 mapdef lake2

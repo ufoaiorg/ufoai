@@ -885,7 +885,7 @@ mission vil_shannon
 	storyrelated	false
 }
 
-mission aliencolony_small
+mission corrupter
 {
 	location	"_Alien colony"
 	type		"_Alien colony"

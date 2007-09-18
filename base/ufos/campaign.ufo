@@ -137,8 +137,7 @@ stage alienbase
 	{
 		cutscene	alienbase
 		delay		"0 11 0"
-		// aliencolony missions here
-		missions	"aliencolony_small"
+		missions	"corrupter"
 		quota		1
 	}
 	set stop_alienbase
