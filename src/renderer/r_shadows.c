@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "r_local.h"
+#include "r_error.h"
 
 vec4_t s_lerped[MD2_MAX_VERTS];
 static vec3_t shadevector;
@@ -169,9 +170,12 @@ static void R_DrawAliasShadow (entity_t * e, mdl_md2_t * paliashdr, int posenum)
 
 	qglEnable(GL_STENCIL_TEST);	/* stencil buffered shadow by MrG */
 	qglStencilFunc(GL_EQUAL, 1, 2);
+	R_CheckError();
 	qglStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
+	R_CheckError();
 
 	qglBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE_MINUS_SRC_ALPHA);
+	R_CheckError();
 
 	while (1) {
 		/* get the vertex count and primitive type */
@@ -328,16 +332,23 @@ static void R_RenderVolumes (mdl_md2_t * paliashdr, vec3_t lightdir, int projdis
 	if (r_state.ati_separate_stencil) {	/* ati separate stensil support for r300+ by Kirk Barnes */
 		qglDisable(GL_CULL_FACE);
 		qglStencilOpSeparateATI(GL_BACK, GL_KEEP, incr, GL_KEEP);
+		R_CheckError();
 		qglStencilOpSeparateATI(GL_FRONT, GL_KEEP, decr, GL_KEEP);
+		R_CheckError();
 		BuildShadowVolume(paliashdr, lightdir, projdist);
 		qglEnable(GL_CULL_FACE);
 	} else if (r_state.stencil_two_side) {	/* two side stensil support for nv30+ by Kirk Barnes */
 		qglDisable(GL_CULL_FACE);
 		qglEnable(GL_STENCIL_TEST_TWO_SIDE_EXT);
+		R_CheckError();
 		qglActiveStencilFaceEXT(GL_BACK);
+		R_CheckError();
 		qglStencilOp(GL_KEEP, incr, GL_KEEP);
+		R_CheckError();
 		qglActiveStencilFaceEXT(GL_FRONT);
+		R_CheckError();
 		qglStencilOp(GL_KEEP, decr, GL_KEEP);
+		R_CheckError();
 		BuildShadowVolume(paliashdr, lightdir, projdist);
 		qglDisable(GL_STENCIL_TEST_TWO_SIDE_EXT);
 		qglEnable(GL_CULL_FACE);
@@ -345,11 +356,13 @@ static void R_RenderVolumes (mdl_md2_t * paliashdr, vec3_t lightdir, int projdis
 		/* decrement stencil if backface is behind depthbuffer */
 		qglCullFace(GL_BACK); /* quake is backwards, this culls front faces */
 		qglStencilOp(GL_KEEP, incr, GL_KEEP);
+		R_CheckError();
 		BuildShadowVolume(paliashdr, lightdir, projdist);
 
 		/* increment stencil if frontface is behind depthbuffer */
 		qglCullFace(GL_FRONT); /* quake is backwards, this culls back faces */
 		qglStencilOp(GL_KEEP, decr, GL_KEEP);
+		R_CheckError();
 		BuildShadowVolume(paliashdr, lightdir, projdist);
 	}
 }
@@ -394,16 +407,19 @@ static void R_DrawAliasShadowVolume (mdl_md2_t * paliashdr, int posenumm)
 /*	if (!ri.IsVisible(refdef.vieworg, currententity->origin)) return; */
 
 	qglPushAttrib(GL_STENCIL_BUFFER_BIT); /* save stencil buffer */
+	R_CheckError();
 
 	if (r_shadow_debug_volume->integer)
 		qglColor3f(1, 0, 0);
 	else
 		qglColorMask(0, 0, 0, 0);
+	R_CheckError();
 
 	if (r_state.stencil_two_side)
 		qglEnable(GL_STENCIL_TEST_TWO_SIDE_EXT);
 
 	qglEnable(GL_STENCIL_TEST);
+	R_CheckError();
 
 	qglDepthMask(GL_FALSE);
 	qglDepthFunc(GL_LESS);
@@ -412,8 +428,10 @@ static void R_DrawAliasShadowVolume (mdl_md2_t * paliashdr, int posenumm)
 		qglStencilFuncSeparateATI(GL_EQUAL, GL_EQUAL, 1, 2);
 	else
 		qglStencilFunc(GL_EQUAL, 1, 2);
+	R_CheckError();
 
 	qglStencilOp(GL_KEEP, GL_KEEP, (r_state.stencil_wrap ? GL_INCR_WRAP_EXT : GL_INCR));
+	R_CheckError();
 
 	for (i = 0; i < refdef.num_dlights; i++, l++) {
 		if ((l->origin[0] == currententity->origin[0]) && (l->origin[1] == currententity->origin[1]) && (l->origin[2] == currententity->origin[2]))
@@ -460,9 +478,12 @@ static void R_DrawAliasShadowVolume (mdl_md2_t * paliashdr, int posenumm)
 		qglColor3f(1, 1, 1);
 	else
 		qglColorMask(1, 1, 1, 1);
+	R_CheckError();
 
 	qglPopAttrib(); /* restore stencil buffer */
+	R_CheckError();
 	qglStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+	R_CheckError();
 	qglDepthMask(GL_TRUE);
 	qglDepthFunc(GL_LEQUAL);
 /*	Com_DPrintf(DEBUG_RENDERER, "worldlight: %i - c_shadow_volumes: %i - dlights: %i\n", worldlight, c_shadow_volumes, refdef.num_dlights);*/
@@ -623,6 +644,7 @@ void R_ShadowBlend (void)
 	qglPushMatrix();
 	qglLoadIdentity();
 	qglOrtho(0, 1, 1, 0, -99999, 99999);
+	R_CheckError();
 
 	qglMatrixMode(GL_MODELVIEW);
 	qglPushMatrix();
@@ -631,12 +653,16 @@ void R_ShadowBlend (void)
 	RSTATE_DISABLE_ALPHATEST
 	RSTATE_ENABLE_BLEND
 	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	R_CheckError();
 	qglDepthMask(GL_FALSE);
 	qglDisable(GL_TEXTURE_2D);
 	qglColor4f(0, 0, 0, 0.5);
+	R_CheckError();
 
 	qglEnable(GL_STENCIL_TEST);
+	R_CheckError();
 	qglStencilFunc(GL_EQUAL, 1, 2);
+	R_CheckError();
 
 	qglBegin(GL_TRIANGLES);
 	qglVertex2f(-5, -5);
@@ -648,6 +674,7 @@ void R_ShadowBlend (void)
 	qglEnable(GL_TEXTURE_2D);
 	RSTATE_ENABLE_ALPHATEST
 	qglDisable(GL_STENCIL_TEST);
+	R_CheckError();
 	qglDepthMask(GL_TRUE);
 
 	qglMatrixMode(GL_PROJECTION);

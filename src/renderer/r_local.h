@@ -48,19 +48,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* fall over */
 #define ROLL    2
 
-#ifdef DEBUG
-# define R_CHECK_ERROR \
-	do { \
-		GLenum error = qglGetError(); \
-		if (error != GL_NO_ERROR) \
-			Com_Printf("OpenGL err: %s (%d): %s 0x%X\n", \
-					__FILE__, __LINE__, \
-					__PRETTY_FUNCTION__, error); \
-	} while(0);
-#else
-# define R_CHECK_ERROR
-#endif
-
 /*
 skins will be outline flood filled and mip mapped
 pics and sprites with alpha will be outline flood filled
@@ -180,6 +167,7 @@ extern cvar_t *r_ext_lockarrays;
 extern cvar_t *r_ext_texture_compression;
 extern cvar_t *r_ext_s3tc_compression;
 
+extern cvar_t *r_checkerror;
 extern cvar_t *r_bitdepth;
 extern cvar_t *r_lightmap;
 

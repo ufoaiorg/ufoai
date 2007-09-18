@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "r_local.h"
+#include "r_error.h"
 
 static vec3_t modelorg;			/* relative to viewpoint */
 
@@ -365,6 +366,7 @@ static void R_RenderBrushPoly (mBspSurface_t * fa)
 			R_Bind(r_state.lightmap_texnum + fa->lightmaptexturenum);
 
 			qglTexSubImage2D(GL_TEXTURE_2D, 0, fa->light_s, fa->light_t, smax, tmax, GL_LIGHTMAP_FORMAT, GL_UNSIGNED_BYTE, temp);
+			R_CheckError();
 
 			fa->lightmapchain = gl_lms.lightmap_surfaces[fa->lightmaptexturenum];
 			gl_lms.lightmap_surfaces[fa->lightmaptexturenum] = fa;
@@ -500,6 +502,7 @@ static void R_DrawSurface (mBspSurface_t * surf)
 			lmtex = surf->lightmaptexturenum;
 
 			qglTexSubImage2D(GL_TEXTURE_2D, 0, surf->light_s, surf->light_t, smax, tmax, GL_LIGHTMAP_FORMAT, GL_UNSIGNED_BYTE, temp);
+			R_CheckError();
 
 		} else {
 			smax = (surf->extents[0] >> surf->lquant) + 1;
@@ -512,6 +515,7 @@ static void R_DrawSurface (mBspSurface_t * surf)
 			lmtex = 0;
 
 			qglTexSubImage2D(GL_TEXTURE_2D, 0, surf->light_s, surf->light_t, smax, tmax, GL_LIGHTMAP_FORMAT, GL_UNSIGNED_BYTE, temp);
+			R_CheckError();
 		}
 	}
 
@@ -889,7 +893,9 @@ static void LM_UploadBlock (qboolean dynamic)
 
 	R_Bind(r_state.lightmap_texnum + texture);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	R_CheckError();
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	R_CheckError();
 
 	if (dynamic) {
 		int i;
@@ -900,8 +906,10 @@ static void LM_UploadBlock (qboolean dynamic)
 		}
 
 		qglTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, BLOCK_WIDTH, height, GL_LIGHTMAP_FORMAT, GL_UNSIGNED_BYTE, gl_lms.lightmap_buffer);
+		R_CheckError();
 	} else {
 		qglTexImage2D(GL_TEXTURE_2D, 0, gl_solid_format, BLOCK_WIDTH, BLOCK_HEIGHT, 0, GL_LIGHTMAP_FORMAT, GL_UNSIGNED_BYTE, gl_lms.lightmap_buffer);
+		R_CheckError();
 		if (++gl_lms.current_lightmap_texture == MAX_LIGHTMAPS)
 			Com_Error(ERR_DROP, "LM_UploadBlock() - MAX_LIGHTMAPS exceeded\n");
 	}
@@ -1079,8 +1087,11 @@ void R_BeginBuildingLightmaps (void)
 	/* initialize the dynamic lightmap texture */
 	R_Bind(r_state.lightmap_texnum + 0);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	R_CheckError();
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	R_CheckError();
 	qglTexImage2D(GL_TEXTURE_2D, 0, gl_solid_format, BLOCK_WIDTH, BLOCK_HEIGHT, 0, GL_LIGHTMAP_FORMAT, GL_UNSIGNED_BYTE, dummy);
+	R_CheckError();
 }
 
 /**

@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "r_local.h"
+#include "r_error.h"
 
 image_t *shadow;
 image_t *blood;
@@ -155,7 +156,9 @@ void R_DrawInitLocal (void)
 	if (!blood)
 		Com_Printf("Could not find shadow image in game pics/sfx directory!\n");
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	R_CheckError();
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	R_CheckError();
 	/* load console characters (don't bilerp characters) */
 
 	draw_chars[0] = R_FindImage("pics/conchars", it_pic);
@@ -223,16 +226,19 @@ void R_DrawImagePixelData (const char *name, byte *frame, int width, int height)
 
 	R_Bind(img->texnum);
 
-	if (img->width == width && img->height == height)
+	if (img->width == width && img->height == height) {
 		qglTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, img->width, img->height, GL_RGBA, GL_UNSIGNED_BYTE, frame);
-	else {
+	} else {
 		/* Reallocate the texture */
 		img->width = width;
 		img->height = height;
 		qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, frame);
 	}
+	R_CheckError();
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	R_CheckError();
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	R_CheckError();
 
 	qglColor4ub(255, 255, 255, 255);
 	qglBegin(GL_QUADS);
@@ -245,6 +251,7 @@ void R_DrawImagePixelData (const char *name, byte *frame, int width, int height)
 	qglTexCoord2f(0, 1);
 	qglVertex2f(0, viddef.height);
 	qglEnd();
+	R_CheckError();
 }
 
 /**
@@ -263,6 +270,7 @@ void R_DrawColor (const float *rgba)
 		RSTATE_DISABLE_BLEND
 		qglColor4f(1, 1, 1, 1);
 	}
+	R_CheckError();
 }
 
 /**
@@ -908,10 +916,12 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 
 	/* center it */
 	qglTranslatef((nx+nw)/2, (ny+nh)/2, 0);
+	R_CheckError();
 
 	/* flatten the sphere */
 	/* this will also scale the normal vectors */
 	qglScalef(fullscale * viddef.rx, fullscale * viddef.ry, fullscale);
+	R_CheckError();
 
 #if 0
 	/* call this to rescale the normal vectors */
@@ -925,6 +935,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 
 	/* solid globe texture */
 	qglBindTexture(GL_TEXTURE_2D, gl->texnum);
+	R_CheckError();
 
 	qglEnable(GL_CULL_FACE);
 	qglCullFace(GL_BACK);
@@ -934,15 +945,21 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 	VectorSet(lightPos, cos(p) * sqrt(0.5f * (1 - a * a)), -sin(p) * sqrt(0.5f * (1 - a * a)), a);
 
 	qglLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+	R_CheckError();
 	qglLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor);
+	R_CheckError();
 	qglLightfv(GL_LIGHT0, GL_AMBIENT, lightColor);
+	R_CheckError();
 
 	/* enable the lighting */
 	qglEnable(GL_LIGHTING);
+	R_CheckError();
 	qglEnable(GL_LIGHT0);
+	R_CheckError();
 
 	/* draw the sphere */
 	qglCallList(spherelist);
+	R_CheckError();
 
 #ifdef HAVE_SHADERS
 	if (gl->shader)
@@ -960,6 +977,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 
 	/* disable 3d geoscape lightning */
 	qglDisable(GL_LIGHTING);
+	R_CheckError();
 
 	/* restore the previous matrix */
 	qglPopMatrix();

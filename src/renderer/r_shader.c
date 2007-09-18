@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 
 #ifdef HAVE_SHADERS
+#include "r_error.h"
 static int SH_LoadProgram_ARB_FP(const char *path);
 static int SH_LoadProgram_ARB_VP(const char *path);
 static int SH_LoadProgram_GLSL(shader_t* s);
@@ -320,10 +321,12 @@ void SH_UseShader (shader_t * shader, qboolean deactivate)
 			assert(gl);
 			qglActiveTextureARB(GL_TEXTURE0_ARB);
 			qglBindTexture(GL_TEXTURE_2D, gl->texnum);
+			R_CheckError();
 			if (shader->distort) {
 				distort = R_FindImage(shader->distort, it_pic);
 				qglActiveTextureARB(GL_TEXTURE1_ARB);
 				qglBindTexture(GL_TEXTURE_2D, distort->texnum);
+				R_CheckError();
 				qglEnable(GL_TEXTURE_2D);
 			}
 			if (shader->normal) {
@@ -343,11 +346,13 @@ void SH_UseShader (shader_t * shader, qboolean deactivate)
 			assert(gl);
 			qglActiveTextureARB(GL_TEXTURE0_ARB);
 			qglBindTexture(GL_TEXTURE_2D, gl->texnum);
+			R_CheckError();
 			if (shader->distort) {
 				distort = R_FindImage(shader->distort, it_pic);
 				if (distort) {
 					qglActiveTextureARB(GL_TEXTURE1_ARB);
 					qglBindTexture(GL_TEXTURE_2D, distort->texnum);
+					R_CheckError();
 					qglEnable(GL_TEXTURE_2D);
 				}
 			}

@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "r_local.h"
+#include "r_error.h"
 
 /* Workaround for a warning about redeclaring the macro. jpeglib sets this macro
  * and SDL, too. */
@@ -74,6 +75,7 @@ void R_UpdateAnisotropy (void)
 		if (glt->type != it_pic) {
 			R_Bind(glt->texnum);
 			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, value);
+			R_CheckError();
 		}
 	}
 }
@@ -120,7 +122,9 @@ void R_TextureMode (const char *string)
 		if (glt->type != it_pic) {
 			R_Bind(glt->texnum);
 			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_min);
+			R_CheckError();
 			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
+			R_CheckError();
 		}
 	}
 }
@@ -1470,6 +1474,7 @@ static qboolean R_Upload32 (unsigned *data, int width, int height, qboolean mipm
 	if (scaled_width == width && scaled_height == height) {
 		if (!mipmap) {
 			qglTexImage2D(GL_TEXTURE_2D, 0, samples, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+			R_CheckError();
 			goto done;
 		}
 		/* directly use the incoming data */
@@ -1487,13 +1492,18 @@ static qboolean R_Upload32 (unsigned *data, int width, int height, qboolean mipm
 	}
 
 	if (mipmap) {
-		if (r_anisotropic->integer && r_state.anisotropic)
+		if (r_anisotropic->integer && r_state.anisotropic) {
 			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_anisotropic->value);
-		if (r_texture_lod->integer && r_state.lod_bias)
+			R_CheckError();
+		}
+		if (r_texture_lod->integer && r_state.lod_bias) {
 			qglTexEnvf(GL_TEXTURE_FILTER_CONTROL_EXT, GL_TEXTURE_LOD_BIAS_EXT, r_texture_lod->value);
+			R_CheckError();
+		}
 	}
 
 	qglTexImage2D(GL_TEXTURE_2D, 0, samples, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
+	R_CheckError();
 
 	if (mipmap) {
 		int miplevel;
@@ -1509,22 +1519,31 @@ static qboolean R_Upload32 (unsigned *data, int width, int height, qboolean mipm
 				scaled_height = 1;
 			miplevel++;
 			qglTexImage2D(GL_TEXTURE_2D, miplevel, samples, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
+			R_CheckError();
 		}
 	}
   done:;
 
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, (mipmap) ? gl_filter_min : gl_filter_max);
+	R_CheckError();
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
+	R_CheckError();
 
 	if (clamp) {
 		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+		R_CheckError();
 		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+		R_CheckError();
 	}
 
-	if (r_anisotropic->integer && r_state.anisotropic)
+	if (r_anisotropic->integer && r_state.anisotropic) {
 		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_anisotropic->value);
-	if (r_texture_lod->integer && r_state.lod_bias)
+		R_CheckError();
+	}
+	if (r_texture_lod->integer && r_state.lod_bias) {
 		qglTexEnvf(GL_TEXTURE_FILTER_CONTROL_EXT, GL_TEXTURE_LOD_BIAS_EXT, r_texture_lod->value);
+		R_CheckError();
+	}
 
 	return (samples == gl_alpha_format || samples == gl_compressed_alpha_format);
 }
@@ -1684,9 +1703,13 @@ void R_CalcDayAndNight (float q)
 
 	/* upload alpha map */
 	qglTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, DAN_WIDTH, DAN_HEIGHT, 0, GL_ALPHA, GL_UNSIGNED_BYTE, DaNalpha);
+	R_CheckError();
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_max);
+	R_CheckError();
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
+	R_CheckError();
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	R_CheckError();
 }
 
 
@@ -1896,6 +1919,7 @@ void R_FreeUnusedImages (void)
 	r_notexture->registration_sequence = registration_sequence;
 	r_particletexture->registration_sequence = registration_sequence;
 
+	R_CheckError();
 	for (i = 0, image = gltextures; i < numgltextures; i++, image++) {
 		if (image->registration_sequence == registration_sequence)
 			continue;			/* used this sequence */
@@ -1905,6 +1929,7 @@ void R_FreeUnusedImages (void)
 			continue;			/* fix this! don't free pics */
 		/* free it */
 		qglDeleteTextures(1, (GLuint *) &image->texnum);
+		R_CheckError();
 		memset(image, 0, sizeof(*image));
 	}
 }
@@ -1979,9 +2004,11 @@ void R_ShutdownImages (void)
 	int i;
 	image_t *image;
 
+	R_CheckError();
 	for (i = 0, image = gltextures; i < numgltextures; i++, image++) {
 		/* free it */
 		qglDeleteTextures(1, (GLuint *) &image->texnum);
+		R_CheckError();
 		memset(image, 0, sizeof(*image));
 	}
 }

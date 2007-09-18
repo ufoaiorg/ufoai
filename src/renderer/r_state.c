@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "r_local.h"
+#include "r_error.h"
 
 /**
  * @brief
@@ -38,6 +39,7 @@ void R_SetDefaultState (void)
 
 	qglColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	qglClearColor(0, 0, 0, 0);
+	R_CheckError();
 
 	qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -86,6 +88,7 @@ void R_SetupGL3D (void)
 	h = y - y2;
 
 	qglViewport(x, y2, w, h);
+	R_CheckError();
 
 	/* set up projection matrix */
 	qglMatrixMode(GL_PROJECTION);
@@ -132,9 +135,11 @@ void R_SetupGL2D (void)
 {
 	/* set 2D virtual screen size */
 	qglViewport(0, 0, viddef.width, viddef.height);
+	R_CheckError();
 	qglMatrixMode(GL_PROJECTION);
 	qglLoadIdentity();
 	qglOrtho(0, viddef.width, viddef.height, 0, 9999, -9999);
+	R_CheckError();
 	qglMatrixMode(GL_MODELVIEW);
 	qglLoadIdentity();
 	qglDisable(GL_DEPTH_TEST);
@@ -145,6 +150,7 @@ void R_SetupGL2D (void)
 	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	R_TexEnv(GL_MODULATE);
 	qglColor4f(1, 1, 1, 1);
+	R_CheckError();
 }
 
 /**
@@ -195,9 +201,12 @@ void R_SelectTexture (GLenum texture)
 
 	if (qglSelectTextureSGIS) {
 		qglSelectTextureSGIS(texture);
+		R_CheckError();
 	} else if (qglActiveTextureARB) {
 		qglActiveTextureARB(texture);
+		R_CheckError();
 		qglClientActiveTextureARB(texture);
+		R_CheckError();
 	}
 }
 
@@ -210,6 +219,7 @@ void R_TexEnv (GLenum mode)
 
 	if (mode != lastmodes[r_state.currenttmu]) {
 		qglTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
+		R_CheckError();
 		lastmodes[r_state.currenttmu] = mode;
 	}
 }
@@ -223,6 +233,7 @@ void R_Bind (int texnum)
 		return;
 	r_state.currenttextures[r_state.currenttmu] = texnum;
 	qglBindTexture(GL_TEXTURE_2D, texnum);
+	R_CheckError();
 }
 
 /**

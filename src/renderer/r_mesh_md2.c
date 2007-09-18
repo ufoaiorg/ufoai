@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "r_local.h"
+#include "r_error.h"
 
 #define NUMVERTEXNORMALS	162
 
@@ -92,11 +93,15 @@ static void R_DrawAliasFrameLerp (mdl_md2_t * paliashdr, float backlerp, int fra
 
 	/* setup vertex array */
 	qglEnableClientState(GL_VERTEX_ARRAY);
+	R_CheckError();
 	qglVertexPointer(3, GL_FLOAT, 16, s_lerped);	/* padded for SIMD */
+	R_CheckError();
 
 	/* setup normal array */
 	qglEnableClientState(GL_NORMAL_ARRAY);
+	R_CheckError();
 	qglNormalPointer(GL_FLOAT, 0, normalArray);
+	R_CheckError();
 
 	na = normalArray;
 	if (backlerp == 0.0) {
@@ -141,10 +146,13 @@ static void R_DrawAliasFrameLerp (mdl_md2_t * paliashdr, float backlerp, int fra
 		} while (--count);
 
 		qglEnd();
+		R_CheckError();
 	}
 
 	qglDisableClientState(GL_VERTEX_ARRAY);
+	R_CheckError();
 	qglDisableClientState(GL_NORMAL_ARRAY);
+	R_CheckError();
 }
 
 /**
@@ -166,9 +174,7 @@ static qboolean R_CullAliasMD2Model (vec4_t bbox[8], entity_t * e)
 
 	poldframe = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + e->as.oldframe * paliashdr->framesize);
 
-	/*
-	 ** compute axially aligned mins and maxs
-	 */
+	/* compute axially aligned mins and maxs */
 	if (pframe == poldframe) {
 		for (i = 0; i < 3; i++) {
 			mins[i] = pframe->translate[i];
@@ -194,9 +200,7 @@ static qboolean R_CullAliasMD2Model (vec4_t bbox[8], entity_t * e)
 		}
 	}
 
-	/*
-	** compute a full bounding box
-	*/
+	/* compute a full bounding box */
 	for (i = 0; i < 8; i++) {
 		vec3_t tmp;
 
@@ -218,9 +222,7 @@ static qboolean R_CullAliasMD2Model (vec4_t bbox[8], entity_t * e)
 		VectorCopy(tmp, bbox[i]);
 		bbox[i][3] = 1.0;
 	}
-	/*
-	** transform the bounding box
-	*/
+	/* transform the bounding box */
 	for (i = 0; i < 8; i++) {
 		vec4_t tmp;
 
@@ -368,6 +370,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 		qglVertex3f(-18.0, -14.0, -28.5);
 
 		qglEnd();
+		R_CheckError();
 
 		RSTATE_DISABLE_BLEND
 		if (!(e->flags & RF_TRANSLUCENT))
@@ -415,6 +418,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 		qglVertex3f(10.0, 0.0, -27.0);
 
 		qglEnd();
+		R_CheckError();
 
 		RSTATE_DISABLE_BLEND
 		qglDisable(GL_LINE_SMOOTH);
@@ -536,6 +540,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 		qglColor4fv(mi->color);
 	else
 		qglColor4f(1, 1, 1, 1);
+	R_CheckError();
 
 	if (pmi) {
 		/* register the parent model */
@@ -570,6 +575,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 
 					/* transform */
 					qglMultMatrixf(interpolated);
+					R_CheckError();
 					break;
 				}
 		}
@@ -607,6 +613,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	qglPopMatrix();
 
 	qglColor4f(1, 1, 1, 1);
+	R_CheckError();
 }
 
 /**
@@ -691,5 +698,6 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	qglPopMatrix();
 
 	qglColor4f(1, 1, 1, 1);
+	R_CheckError();
 }
 

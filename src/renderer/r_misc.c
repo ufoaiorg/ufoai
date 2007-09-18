@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "r_local.h"
+#include "r_error.h"
 
 static const byte dottexture[8][8] = {
 	{0, 0, 0, 0, 0, 0, 0, 0},
@@ -186,6 +187,7 @@ void R_ScreenShot_f (void)
 
 	/* Read the framebuffer into our storage */
 	qglReadPixels(0, 0, viddef.width, viddef.height, GL_RGB, GL_UNSIGNED_BYTE, buffer);
+	R_CheckError();
 
 	/* Write */
 	switch (type) {

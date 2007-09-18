@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "r_local.h"
+#include "r_error.h"
 
 #define BUF_SIZE 2048
 static const SDL_Color color = { 255, 255, 255, 0 };	/* The 4. value is unused */
@@ -151,11 +152,13 @@ void R_FontLength (const char *font, char *c, int *width, int *height)
 void R_FontCleanCache (void)
 {
 	int i = 0;
-
+	R_CheckError();
 	/* free the surfaces */
 	for (; i < numInCache; i++) {
-		if (fontCache[i].texPos >= 0)
+		if (fontCache[i].texPos >= 0) {
 			qglDeleteTextures(1, &(fontCache[i].texPos));
+			R_CheckError();
+		}
 	}
 
 	memset(fontCache, 0, sizeof(fontCache));
@@ -238,8 +241,11 @@ static void R_FontCacheGLSurface (fontCache_t *cache, SDL_Surface *pixel)
 	cache->texPos = TEXNUM_FONTS + numInCache;
 	R_Bind(cache->texPos);
 	qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pixel->w, pixel->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixel->pixels);
+	R_CheckError();
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	R_CheckError();
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	R_CheckError();
 }
 
 /**

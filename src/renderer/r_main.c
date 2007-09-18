@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "r_local.h"
+#include "r_error.h"
 
 GLenum gl_texture0, gl_texture1, gl_texture2, gl_texture3;
 
@@ -79,6 +80,7 @@ cvar_t *r_ext_s3tc_compression;
 
 cvar_t *r_3dmapradius;
 
+cvar_t *r_checkerror;
 cvar_t *r_bitdepth;
 cvar_t *r_drawbuffer;
 cvar_t *r_driver;
@@ -507,7 +509,9 @@ static void R_SetupFrame (void)
 	if (refdef.rdflags & RDF_NOWORLDMODEL) {
 		qglEnable(GL_SCISSOR_TEST);
 		qglScissor(refdef.x, viddef.height - refdef.height - refdef.y, refdef.width, refdef.height);
+		R_CheckError();
 		qglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		R_CheckError();
 		qglDisable(GL_SCISSOR_TEST);
 	}
 }
@@ -518,15 +522,20 @@ static void R_SetupFrame (void)
 static void R_Clear (void)
 {
 	qglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	R_CheckError();
 	qglDepthFunc(GL_LEQUAL);
+	R_CheckError();
 
 	qglDepthRange(0, 1);
+	R_CheckError();
 
 	if (r_shadows->integer == 2) {
 		/* set the reference stencil value */
 		qglClearStencil(1);
+		R_CheckError();
 		/* reset stencil buffer */
 		qglClear(GL_STENCIL_BUFFER_BIT);
+		R_CheckError();
 	}
 }
 
@@ -625,6 +634,7 @@ void R_BeginFrame (void)
 			qglDrawBuffer(GL_FRONT);
 		else
 			qglDrawBuffer(GL_BACK);
+		R_CheckError();
 	}
 
 	/* texturemode stuff */
@@ -698,6 +708,7 @@ void R_TakeVideoFrame (int w, int h, byte * captureBuffer, byte * encodeBuffer, 
 	int i;
 
 	qglReadPixels(0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, captureBuffer);
+	R_CheckError();
 
 	if (motionJpeg) {
 		frameSize = R_SaveJPGToBuffer(encodeBuffer, 90, w, h, captureBuffer);
@@ -748,6 +759,7 @@ static void R_Register (void)
 	r_3dmapradius = Cvar_Get("r_3dmapradius", "8192.0", CVAR_NOSET, "3D geoscape radius");
 
 	r_modulate = Cvar_Get("r_modulate", "1", CVAR_ARCHIVE, NULL);
+	r_checkerror = Cvar_Get("r_checkerror", "0", CVAR_ARCHIVE, "Check for opengl errors");
 	r_bitdepth = Cvar_Get("r_bitdepth", "0", CVAR_ARCHIVE, NULL);
 	r_lightmap = Cvar_Get("r_lightmap", "0", 0, NULL);
 	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, NULL);
@@ -924,6 +936,7 @@ static void R_InitExtension (void)
 	r_state.anisotropic = qfalse;
 
 	qglGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &max_aniso);
+	R_CheckError();
 	r_state.maxAnisotropic = max_aniso;
 	if (r_anisotropic->integer > max_aniso) {
 		Com_Printf("max GL_EXT_texture_filter_anisotropic value is %i\n", max_aniso);
@@ -1120,7 +1133,7 @@ qboolean R_Init (void)
 	R_DrawInitLocal();
 	R_FontInit();
 
-	R_CHECK_ERROR
+	R_CheckError();
 
 	return qtrue;
 }
