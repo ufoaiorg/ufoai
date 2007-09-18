@@ -1097,6 +1097,7 @@ menu popup
 //		bgcolor	"1 1 1 0.5"
 		height	8
 		wheel
+		scrollbar true
 	}
 	pic bt_ok
 	{

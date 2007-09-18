@@ -1019,4 +1019,8 @@ menu aircraft_action
 		pos	"618 426"
 		align	cc
 	}
+	func leave
+	{
+		cmd "mn_pop;"
+	}
 }
