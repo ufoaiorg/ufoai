@@ -2200,8 +2200,8 @@ void CL_ParseResults (struct dbuffer *msg)
 		} else
 			MN_PushMenu("lost");
 
-		/* on singleplayer we disconnect the game and shutdown the server */
-		/* we can safely wipe all mission data now */
+		/* on singleplayer we disconnect the game and shutdown the server
+		 * we can safely wipe all mission data now */
 		SV_Shutdown("Mission end", qfalse);
 		CL_Disconnect();
 	} else {
