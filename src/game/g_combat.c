@@ -25,8 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
-#define MAX(a,b) ((a)>(b)?(a):(b))
-
 #define MAX_WALL_THICKNESS_FOR_SHOOTING_THROUGH 8
 
 /* uncomment this to enable debugging the reaction fire */
@@ -341,7 +339,7 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 			G_RecalcRouting(ent);
 			G_FreeEdict(ent);
 		} else {
-			ent->HP = MAX(ent->HP - damage, 0);
+			ent->HP = max(ent->HP - damage, 0);
 		}
 		return;
 	}
@@ -377,7 +375,7 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 				int armorDamage;
 
 				armorDamage = (totalDamage - damage) / ad->hardness[fd->dmgtype];
-				ent->AP = MAX(0, ent->AP - armorDamage);
+				ent->AP = max(0, ent->AP - armorDamage);
 			}
 		}
 	}
@@ -401,7 +399,7 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 				return;
 			}
 		} else {
-			ent->HP = MAX(ent->HP - damage, 0);
+			ent->HP = max(ent->HP - damage, 0);
 		}
 	}
 
@@ -411,7 +409,7 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 	/* HP shouldn't become negative.
 	 * Note: This check needs to be done for every assignment to HP above anyway since a "return" could pop up in between.
 	 * I'll leave this one in here just in case. */
-	ent->HP = MAX(ent->HP, 0);
+	ent->HP = max(ent->HP, 0);
 
 	/* Check death/knockouth. */
 	if (ent->HP == 0 || ent->HP <= ent->STUN) {
@@ -448,7 +446,7 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 			G_Morale(ML_WOUND, ent, attacker, damage);
 		} else { /* medikit, etc. */
 			if (ent->HP > GET_HP(ent->chr.skills[ABILITY_POWER]))
-				ent->HP = MAX(GET_HP(ent->chr.skills[ABILITY_POWER]), 0);
+				ent->HP = max(GET_HP(ent->chr.skills[ABILITY_POWER]), 0);
 		}
 		G_SendStats(ent);
 	}
@@ -1248,7 +1246,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 	if (!mock) {
 		/* send TUs if ent still alive */
 		if (ent->inuse && !(ent->state & STATE_DEAD)) {
-			ent->TU = MAX(ent->TU - fd->time, 0);
+			ent->TU = max(ent->TU - fd->time, 0);
 			G_SendStats(ent);
 		}
 
@@ -1498,7 +1496,7 @@ static qboolean G_CheckRFTrigger (edict_t *target)
 		/* queue a reaction fire to take place */
 		ent->reactionTarget = target;
 		target->reactionAttacker = ent;
-		ent->reactionTUs = MAX(0, target->TU - (tus / 4.0));
+		ent->reactionTUs = max(0, target->TU - (tus / 4.0));
 		ent->reactionNoDraw = qfalse;
 		queued = qtrue;
 
@@ -1718,7 +1716,7 @@ static void G_ReactToPreFire (edict_t *target)
 		/* see who won */
 		if (entTUs >= targTUs) {
 			/* target wins, so delay ent */
-			ent->reactionTUs = MAX(0, target->TU - (entTUs - targTUs)); /* target gets the difference in TUs */
+			ent->reactionTUs = max(0, target->TU - (entTUs - targTUs)); /* target gets the difference in TUs */
 			ent->reactionNoDraw = qtrue; 								/* so ent can't lose the TU battle again */
 #ifdef DEBUG_REACTION
 			Com_Printf("Entity %s was out-drawn\n", ent->chr.name);

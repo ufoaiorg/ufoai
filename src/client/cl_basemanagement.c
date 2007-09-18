@@ -1794,8 +1794,7 @@ static void B_SelectBase_f (void)
 #undef HOLSTER
 #define RIGHT(e) ((e)->inv->c[csi.idRight])
 #define HOLSTER(e) ((e)->inv->c[csi.idHolster])
-#define MAX(a,b) ((a)>(b)?(a):(b))
-#define MIN(a,b) ((a)<(b)?(a):(b))
+
 /**
  * @brief Swaps skills of the initial team of soldiers so that they match inventories
  * @todo This currently always uses exactly the first two firemodes (see fmode1+fmode2) for calculation. This needs to be adapted to support less (1) or more 3+ firemodes. I think the function will even  break on only one firemode .. never tested it.
@@ -1861,21 +1860,21 @@ static void CL_SwapSkills (chrList_t *team)
 								 || (no1 && no1 == no2)) { /* or earlier on list */
 								tmp1 = cp1->skills[skill];
 								tmp2 = cp2->skills[skill];
-								cp1->skills[skill] = MAX(tmp1, tmp2);
-								cp2->skills[skill] = MIN(tmp1, tmp2);
+								cp1->skills[skill] = max(tmp1, tmp2);
+								cp2->skills[skill] = min(tmp1, tmp2);
 
 								switch (skill) {
 								case SKILL_CLOSE:
 									tmp1 = cp1->skills[ABILITY_SPEED];
 									tmp2 = cp2->skills[ABILITY_SPEED];
-									cp1->skills[ABILITY_SPEED] = MAX(tmp1, tmp2);
-									cp2->skills[ABILITY_SPEED] = MIN(tmp1, tmp2);
+									cp1->skills[ABILITY_SPEED] = max(tmp1, tmp2);
+									cp2->skills[ABILITY_SPEED] = min(tmp1, tmp2);
 									break;
 								case SKILL_HEAVY:
 									tmp1 = cp1->skills[ABILITY_POWER];
 									tmp2 = cp2->skills[ABILITY_POWER];
-									cp1->skills[ABILITY_POWER] = MAX(tmp1, tmp2);
-									cp2->skills[ABILITY_POWER] = MIN(tmp1, tmp2);
+									cp1->skills[ABILITY_POWER] = max(tmp1, tmp2);
+									cp2->skills[ABILITY_POWER] = min(tmp1, tmp2);
 									break;
 								case SKILL_ASSAULT:
 									/* no related basic attribute */
@@ -1883,14 +1882,14 @@ static void CL_SwapSkills (chrList_t *team)
 								case SKILL_SNIPER:
 									tmp1 = cp1->skills[ABILITY_ACCURACY];
 									tmp2 = cp2->skills[ABILITY_ACCURACY];
-									cp1->skills[ABILITY_ACCURACY] = MAX(tmp1, tmp2);
-									cp2->skills[ABILITY_ACCURACY] = MIN(tmp1, tmp2);
+									cp1->skills[ABILITY_ACCURACY] = max(tmp1, tmp2);
+									cp2->skills[ABILITY_ACCURACY] = min(tmp1, tmp2);
 									break;
 								case SKILL_EXPLOSIVE:
 									tmp1 = cp1->skills[ABILITY_MIND];
 									tmp2 = cp2->skills[ABILITY_MIND];
-									cp1->skills[ABILITY_MIND] = MAX(tmp1, tmp2);
-									cp2->skills[ABILITY_MIND] = MIN(tmp1, tmp2);
+									cp1->skills[ABILITY_MIND] = max(tmp1, tmp2);
+									cp2->skills[ABILITY_MIND] = min(tmp1, tmp2);
 									break;
 								default:
 									Sys_Error("CL_SwapSkills: illegal skill %i.\n", skill);
@@ -1898,35 +1897,35 @@ static void CL_SwapSkills (chrList_t *team)
 							} else if (no1 < no2) {
 								tmp1 = cp1->skills[skill];
 								tmp2 = cp2->skills[skill];
-								cp2->skills[skill] = MAX(tmp1, tmp2);
-								cp1->skills[skill] = MIN(tmp1, tmp2);
+								cp2->skills[skill] = max(tmp1, tmp2);
+								cp1->skills[skill] = min(tmp1, tmp2);
 
 								switch (skill) {
 								case SKILL_CLOSE:
 									tmp1 = cp1->skills[ABILITY_SPEED];
 									tmp2 = cp2->skills[ABILITY_SPEED];
-									cp2->skills[ABILITY_SPEED] = MAX(tmp1, tmp2);
-									cp1->skills[ABILITY_SPEED] = MIN(tmp1, tmp2);
+									cp2->skills[ABILITY_SPEED] = max(tmp1, tmp2);
+									cp1->skills[ABILITY_SPEED] = min(tmp1, tmp2);
 									break;
 								case SKILL_HEAVY:
 									tmp1 = cp1->skills[ABILITY_POWER];
 									tmp2 = cp2->skills[ABILITY_POWER];
-									cp2->skills[ABILITY_POWER] = MAX(tmp1, tmp2);
-									cp1->skills[ABILITY_POWER] = MIN(tmp1, tmp2);
+									cp2->skills[ABILITY_POWER] = max(tmp1, tmp2);
+									cp1->skills[ABILITY_POWER] = min(tmp1, tmp2);
 									break;
 								case SKILL_ASSAULT:
 									break;
 								case SKILL_SNIPER:
 									tmp1 = cp1->skills[ABILITY_ACCURACY];
 									tmp2 = cp2->skills[ABILITY_ACCURACY];
-									cp2->skills[ABILITY_ACCURACY] = MAX(tmp1, tmp2);
-									cp1->skills[ABILITY_ACCURACY] = MIN(tmp1, tmp2);
+									cp2->skills[ABILITY_ACCURACY] = max(tmp1, tmp2);
+									cp1->skills[ABILITY_ACCURACY] = min(tmp1, tmp2);
 									break;
 								case SKILL_EXPLOSIVE:
 									tmp1 = cp1->skills[ABILITY_MIND];
 									tmp2 = cp2->skills[ABILITY_MIND];
-									cp2->skills[ABILITY_MIND] = MAX(tmp1, tmp2);
-									cp1->skills[ABILITY_MIND] = MIN(tmp1, tmp2);
+									cp2->skills[ABILITY_MIND] = max(tmp1, tmp2);
+									cp1->skills[ABILITY_MIND] = min(tmp1, tmp2);
 									break;
 								default:
 									Sys_Error("CL_SwapSkills: illegal skill %i.\n", skill);
