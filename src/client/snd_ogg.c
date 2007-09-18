@@ -239,7 +239,7 @@ qboolean S_OGG_Open (const char *filename)
 	/* check running music */
 	if (music.ovPlaying[0]) {
 		if (!Q_strcmp(music.ovPlaying, checkFilename)) {
-			Com_DPrintf(DEBUG_CLIENT, "S_OGG_Open: Already playing %s\n", checkFilename);
+			Com_DPrintf(DEBUG_SOUND, "S_OGG_Open: Already playing %s\n", checkFilename);
 			return qtrue;
 		} else {
 			if (!snd_openal->integer && snd_fadingenable->integer) {
@@ -463,7 +463,7 @@ void S_OGG_RandomTrack_f (void)
 	}
 
 	randomID = rand() % musicTrackCount;
-	Com_DPrintf(DEBUG_CLIENT, "S_OGG_RandomTrack_f: random track id: %i/%i\n", randomID, musicTrackCount);
+	Com_DPrintf(DEBUG_SOUND, "S_OGG_RandomTrack_f: random track id: %i/%i\n", randomID, musicTrackCount);
 
 	/* search through the path, one element at a time */
 	for (search = fs_searchpaths; search; search = search->next) {
@@ -550,7 +550,7 @@ sfxcache_t *S_OGG_LoadSFX (sfx_t *s)
 	char *buffer;
 	int bitstream, bytes_read, bytes_read_total, len, samples;
 
-	Com_DPrintf(DEBUG_CLIENT, "loading %s.ogg\n", s->name);
+	Com_DPrintf(DEBUG_SOUND, "loading %s.ogg\n", s->name);
 
 	len = FS_FOpenFile(va("sound/%s.ogg", s->name), &file);
 	if (!file.f && !file.z)

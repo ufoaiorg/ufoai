@@ -406,8 +406,8 @@ static void CL_ParseClientinfo (int player)
  */
 static void CL_ParseConfigString (struct dbuffer *msg)
 {
-	int		i;
-	char	*s;
+	int i;
+	char *s;
 
 	/* which configstring? */
 	i = NET_ReadShort(msg);
@@ -460,14 +460,11 @@ ACTION MESSAGES
  */
 static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 {
-	vec3_t  pos_v;
-	float	*pos;
-	int 	channel, ent;
-	float 	volume;
-	float 	attenuation;
-	int		flags;
-	float	ofs;
-	const char	*sound;
+	vec3_t pos_v;
+	float *pos;
+	int channel, ent, flags;
+	float volume, attenuation, ofs;
+	const char *sound;
 	sfx_t *sfx;
 
 	flags = NET_ReadByte(msg);
@@ -488,7 +485,7 @@ static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 	else
 		ofs = 0;
 
-	/* entity reletive */
+	/* entity relative */
 	if (flags & SND_ENT) {
 		channel = NET_ReadShort(msg);
 		ent = channel >> 3;
@@ -509,7 +506,7 @@ static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 	} else /* use entity number */
 		pos = NULL;
 
-	Com_DPrintf(DEBUG_CLIENT, "startsoundpacket: flags %x, sound %s, volume %.2f, attenuation %.2f, ofs %.2f,"
+	Com_DPrintf(DEBUG_SOUND, "startsoundpacket: flags %x, sound %s, volume %.2f, attenuation %.2f, ofs %.2f,"
 		" channel %d, ent %d, pos %.3f, %.3f, %.3f\n",
 		flags, sound, volume, attenuation, ofs, channel, ent, pos[0], pos[1], pos[2]);
 

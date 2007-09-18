@@ -1022,7 +1022,7 @@ static void S_UpdateMixer (void)
 
 	/* check to make sure that we haven't overshot */
 	if (paintedtime < soundtime) {
-		Com_DPrintf(DEBUG_CLIENT, "S_UpdateMixer: overflow\n");
+		Com_DPrintf(DEBUG_SOUND, "S_UpdateMixer: overflow\n");
 		paintedtime = soundtime;
 	}
 

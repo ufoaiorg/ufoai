@@ -131,6 +131,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define DEBUG_SERVER	(1<<6)
 #define DEBUG_GAME		(1<<7)
 #define DEBUG_RENDERER	(1<<8)
+#define DEBUG_SOUND		(1<<9)
 
 #define NONE		0xFF
 #define NONE_AMMO	0

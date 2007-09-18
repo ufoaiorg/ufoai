@@ -566,6 +566,7 @@ static const debugLevel_t debugLevels[] = {
 	{"DEBUG_SERVER", DEBUG_SERVER},
 	{"DEBUG_GAME", DEBUG_GAME},
 	{"DEBUG_RENDERER", DEBUG_RENDERER},
+	{"DEBUG_SOUND", DEBUG_SOUND},
 
 	{NULL, 0}
 };

@@ -45,16 +45,16 @@ static void S_WriteLinearBlastStereo16 (void)
 
 	for (i = 0; i < snd_linear_count; i += 2) {
 		val = snd_p[i] >> 8;
-		if (val > 0x7fff)
-			snd_out[i] = 0x7fff;
+		if (val > SHRT_MAX)
+			snd_out[i] = SHRT_MAX;
 		else if (val < (short) 0x8000)
 			snd_out[i] = (short) 0x8000;
 		else
 			snd_out[i] = val;
 
 		val = snd_p[i + 1] >> 8;
-		if (val > 0x7fff)
-			snd_out[i + 1] = 0x7fff;
+		if (val > SHRT_MAX)
+			snd_out[i + 1] = SHRT_MAX;
 		else if (val < (short) 0x8000)
 			snd_out[i + 1] = (short) 0x8000;
 		else
@@ -141,8 +141,8 @@ static void S_TransferPaintBuffer (int endtime)
 			while (count--) {
 				val = *p >> 8;
 				p += step;
-				if (val > 0x7fff)
-					val = 0x7fff;
+				if (val > SHRT_MAX)
+					val = SHRT_MAX;
 				else if (val < (short) 0x8000)
 					val = (short) 0x8000;
 				out[out_idx] = val;
@@ -154,8 +154,8 @@ static void S_TransferPaintBuffer (int endtime)
 			while (count--) {
 				val = *p >> 8;
 				p += step;
-				if (val > 0x7fff)
-					val = 0x7fff;
+				if (val > SHRT_MAX)
+					val = SHRT_MAX;
 				else if (val < (short) 0x8000)
 					val = (short) 0x8000;
 				out[out_idx] = (val >> 8) + 128;
@@ -189,8 +189,6 @@ static void S_PaintChannelFrom8 (channel_t * ch, sfxcache_t * sc, int count, int
 	if (ch->rightvol > 255)
 		ch->rightvol = 255;
 
-	/*ZOID-- >>11 has been changed to >>3, >>11 didn't make much sense */
-	/*as it would always be zero. */
 	lscale = snd_scaletable[ch->leftvol >> 3];
 	rscale = snd_scaletable[ch->rightvol >> 3];
 	sfx = (unsigned char *) sc->data + ch->pos;
@@ -248,7 +246,7 @@ void S_PaintChannels (int endtime)
 
 	snd_vol = snd_volume->value * 256;
 
-/*	Com_Printf("%i to %i\n", paintedtime, endtime); */
+/*	Com_DPrintf(DEBUG_SOUND, "%i to %i\n", paintedtime, endtime); */
 	while (paintedtime < endtime) {
 		/* if paintbuffer is smaller than DMA buffer */
 		end = endtime;
@@ -271,10 +269,10 @@ void S_PaintChannels (int endtime)
 		}
 
 		if (++i >= 2)
-			snd_vol *= .75;		/*normalize */
+			snd_vol *= .75;		/* normalize */
 
 		if (s_rawend < paintedtime) {
-/*			Com_Printf("clear\n"); */
+/*			Com_DPrintf(DEBUG_SOUND, "clear\n"); */
 			memset(paintbuffer, 0, (end - paintedtime) * sizeof(portable_samplepair_t));
 		} else {				/* copy from the streaming sound source */
 			int s;
@@ -286,10 +284,12 @@ void S_PaintChannels (int endtime)
 				s = i & (MAX_RAW_SAMPLES - 1);
 				paintbuffer[i - paintedtime] = s_rawsamples[s];
 			}
-/*			if (i != end) */
-/*				Com_Printf("partial stream\n"); */
-/*			else */
-/*				Com_Printf("full stream\n"); */
+#if 0
+			if (i != end)
+				Com_DPrintf(DEBUG_SOUND, "partial stream\n");
+			else
+				Com_DPrintf(DEBUG_SOUND, "full stream\n");
+#endif
 			for (; i < end; i++) {
 				paintbuffer[i - paintedtime].left = paintbuffer[i - paintedtime].right = 0;
 			}
@@ -316,7 +316,7 @@ void S_PaintChannels (int endtime)
 					break;
 
 				if (count > 0 && ch->sfx) {
-					if (sc->width == 1)	/* FIXME; 8 bit asm is wrong now */
+					if (sc->width == 1)
 						S_PaintChannelFrom8(ch, sc, count, ltime - paintedtime);
 					else
 						S_PaintChannelFrom16(ch, sc, count, ltime - paintedtime);
@@ -355,7 +355,7 @@ void S_InitScaletable (void)
 
 	snd_volume->modified = qfalse;
 	for (i = 0; i < 32; i++) {
-		scale = (int)(i * 8 * 256 * snd_volume->value);
+		scale = i * 8 * 256 * snd_volume->integer;
 		for (j = 0; j < 256; j++)
 			/**
 			 * When compiling with gcc-4.1.0 at optimisations O1 and
