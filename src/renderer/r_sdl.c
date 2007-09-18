@@ -100,7 +100,7 @@ qboolean Rimp_Init (void)
 #endif
 
 	if (!R_SetMode()) {
-		Sys_Error("Video SDL_InitSubsystem failed: %s\n", SDL_GetError());
+		Sys_Error("Video subsystem failed to initialize\n");
 		return qfalse;
 	}
 
@@ -173,7 +173,7 @@ qboolean R_InitGraphics (void)
 
 	if ((r_surface = SDL_SetVideoMode(viddef.width, viddef.height, 0, flags)) == NULL) {
 		const char *error = SDL_GetError();
-		Sys_Error("SDL SetVideoMode failed: %s\n", error);
+		Com_Printf("SDL SetVideoMode failed: %s\n", error);
 		return qfalse;
 	}
 
