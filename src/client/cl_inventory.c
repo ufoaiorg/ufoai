@@ -103,8 +103,8 @@ static void INV_CarriedItems (le_t *soldier)
 				ccs.eMission.num[item->item.m]++;
 			}
 			/* The guys keep their weapons (half-)loaded. Auto-reload
-			   will happen at equip screen or at the start of next mission,
-			   but fully loaded weapons will not be reloaded even then. */
+			 * will happen at equip screen or at the start of next mission,
+			 * but fully loaded weapons will not be reloaded even then. */
 		}
 	}
 }
@@ -144,8 +144,8 @@ void INV_CollectingItems (int won)
 
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
 		/* Winner collects everything on the floor, and everything carried
-		   by surviving actors. Loser only gets what their living team
-		   members carry. */
+		 * by surviving actors. Loser only gets what their living team
+		 * members carry. */
 		if (!le->inuse)
 			continue;
 		switch (le->type) {
@@ -206,7 +206,7 @@ void INV_CollectingItems (int won)
 			/* Now, if this is dead or stunned actor, additional check. */
 			if (le->state & STATE_DEAD || le->team != cls.team) {
 				/* The items are already dropped to floor and are available
-				   as ET_ITEM; or the actor is not ours. */
+				 * as ET_ITEM; or the actor is not ours. */
 				break;
 			}
 			/* Finally, the living actor from our team. */
@@ -270,8 +270,8 @@ void INV_SellOrAddItems (aircraft_t *aircraft)
 				eTempCredits += (csi.ods[cargo[i].idx].price * cargo[i].amount);
 				numitems += cargo[i].amount;
 			} else {
-				/* Check whether there is enough space for adding this item. */
-				/* If yes - add. If not - sell. */
+				/* Check whether there is enough space for adding this item.
+				 * If yes - add. If not - sell. */
 				for (j = 0; j < cargo[i].amount; j++) {
 					if (!B_UpdateStorageAndCapacity(base, cargo[i].idx, 1, qfalse, qfalse)) {
 						/* Not enough space, sell item. */
@@ -288,15 +288,13 @@ void INV_SellOrAddItems (aircraft_t *aircraft)
 
 	gained = eTempCredits - ccs.credits;
 	if (gained > 0) {
-		Com_sprintf(str, sizeof(str), _("By selling %s %s"),
-		va(ngettext("%i collected item", "%i collected items", numitems), numitems),
-		va(_("you gathered %i credits."), gained));
+		Com_sprintf(str, sizeof(str), _("By selling %s you gathered %i credits."),
+			va(ngettext("%i collected item", "%i collected items", numitems), numitems), gained);
 		MN_AddNewMessage(_("Notice"), str, qfalse, MSG_STANDARD, NULL);
 	}
 	if (notenoughspace) {
 		Com_sprintf(str, sizeof(str), _("Not enough storage space in base %s. %s"),
-		base->name,
-		va(ngettext("%i item was sold.", "%i items were sold.", sold), sold));
+			base->name, va(ngettext("%i item was sold.", "%i items were sold.", sold), sold));
 		MN_AddNewMessage(_("Notice"), str, qfalse, MSG_STANDARD, NULL);
 	}
 	CL_UpdateCredits(ccs.credits + gained);
@@ -541,8 +539,8 @@ void INV_ManageAntimatter (base_t *base, int amount, qboolean add)
 
 	if (!base->hasAmStorage && add) {
 		Com_sprintf(messageBuffer, sizeof(messageBuffer),
-		_("Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."),
-		base->name, amount);
+			_("Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."),
+			base->name, amount);
 		MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 		return;
 	}
