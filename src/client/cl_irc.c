@@ -468,7 +468,7 @@ static void Irc_AppendToBuffer (const char* const msg)
 	MN_TextScrollBottom("irc_data");
 	menu = MN_GetMenu(NULL); /* get current menu from stack */
 	if (irc_showIfNotInMenu->integer && Q_strncmp(menu->name, "irc", 4)) {
-		S_StartLocalSound("misc/talk.wav");
+		S_StartLocalSound("misc/talk");
 		MN_AddChatMessage(msg);
 	}
 }
