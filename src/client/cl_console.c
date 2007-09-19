@@ -287,7 +287,7 @@ void Con_LoadConsoleHistory (const char* path)
 	byte *buf;
 	char *f2;
 	const char *text, *token;
-	int len, i = 0, j;
+	int len, i = 0;
 	char filename[MAX_OSPATH];
 
 	assert(path);
