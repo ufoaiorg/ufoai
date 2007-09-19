@@ -453,7 +453,7 @@ void R_DrawFill (int x, int y, int w, int h, int align, const vec4_t color)
 	nw = w * viddef.rx;
 	nh = h * viddef.ry;
 
-	R_Color(color);
+	R_ColorBlend(color);
 
 	qglDisable(GL_TEXTURE_2D);
 	qglBegin(GL_QUADS);
@@ -486,7 +486,7 @@ void R_DrawFill (int x, int y, int w, int h, int align, const vec4_t color)
 	}
 
 	qglEnd();
-	R_Color(NULL);
+	R_ColorBlend(NULL);
 	qglEnable(GL_TEXTURE_2D);
 }
 

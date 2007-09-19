@@ -1951,9 +1951,9 @@ static int MN_DrawTooltip (const char *font, char *string, int x, int y, int max
 	if (x + maxWidth +3 > VID_NORM_WIDTH)
 		x -= (maxWidth + 10);
 	R_DrawFill(x - 1, y - 1, maxWidth + 4, height, 0, tooltipBG);
-	R_Color(tooltipColor);
+	R_ColorBlend(tooltipColor);
 	R_FontDrawString(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, maxHeight, height, string, lines, 0, NULL, qfalse);
-	R_Color(NULL);
+	R_ColorBlend(NULL);
 	return width;
 }
 
@@ -2114,10 +2114,10 @@ static void MN_DrawTextNode (const char *text, const char* font, menuNode_t* nod
 	if (node)
 		node->textLines = 0; /* these are lines only in one-line texts! */
 	/* but it's easy to fix, just change FontDrawString
-		so that it returns a pair, #lines and height
-		and add that to variable line; the only other file
-		using FontDrawString result is client/cl_sequence.c
-		and there just ignore #lines */
+	 * so that it returns a pair, #lines and height
+	 * and add that to variable line; the only other file
+	 * using FontDrawString result is client/cl_sequence.c
+	 * and there just ignore #lines */
 	do {
 		/* new line starts from node x position */
 		x1 = x;
@@ -2148,7 +2148,7 @@ static void MN_DrawTextNode (const char *text, const char* font, menuNode_t* nod
 		/* node->state is the line number to highlight */
 		/* FIXME: what about multiline text that should be highlighted completly? */
 		if (node && node->mousefx && node->textLines + 1 == node->state)
-			R_Color(color);
+			R_ColorBlend(color);
 
 		/* we assume all the tabs fit on a single line */
 		do {
@@ -2183,7 +2183,7 @@ static void MN_DrawTextNode (const char *text, const char* font, menuNode_t* nod
 			y1 += lineHeight;
 
 		if (node && node->mousefx)
-			R_Color(node->color); /* restore original color */
+			R_ColorBlend(node->color); /* restore original color */
 
 		/* now set cur to the next char after the \n (see above) */
 		cur = end;
@@ -2366,9 +2366,9 @@ void MN_DrawMenus (void)
 				VectorScale(node->color, 0.8, color);
 				color[3] = node->color[3];
 				if (node->mousefx && node->type == MN_PIC && mouseOver && sp > pp)
-					R_Color(color);
+					R_ColorBlend(color);
 				else if (node->type != MN_SELECTBOX)
-					R_Color(node->color);
+					R_ColorBlend(node->color);
 
 				/* get the reference */
 				if (node->type != MN_BAR && node->type != MN_CONTAINER && node->type != MN_BASEMAP
@@ -2606,9 +2606,8 @@ void MN_DrawMenus (void)
 						for (i = 0; i < node->linestrips.numStrips; i++) {
 							/* Draw this line if it's valid. */
 							if (node->linestrips.pointList[i] && (node->linestrips.numPoints[i] > 0)) {
-								R_Color(node->linestrips.color[i]);
+								R_ColorBlend(node->linestrips.color[i]);
 								R_DrawLineStrip(node->linestrips.numPoints[i], node->linestrips.pointList[i]);
-								R_Color(NULL);
 							}
 						}
 					}
@@ -2990,7 +2989,7 @@ void MN_DrawMenus (void)
 		}
 	}
 
-	R_Color(NULL);
+	R_ColorBlend(NULL);
 }
 
 /*
