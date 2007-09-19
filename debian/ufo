@@ -25,9 +25,4 @@ INSTDIR=/usr/lib/games/ufoai
 
 cd $INSTDIR
 
-if [ $# != 0 -o -r ~/.ufoai/base/config.cfg ]
-then
-    ${INSTDIR}/ufo "$@"
-else
-    ${INSTDIR}/ufo +set vid_ref glx +set gl_driver /usr/lib/libGL.so.1
-fi
+${INSTDIR}/ufo "$@"
