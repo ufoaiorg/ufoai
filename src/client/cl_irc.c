@@ -709,6 +709,7 @@ static void Irc_Client_CmdQuit (const char *prefix, const char *params, const ch
 	irc_nick_prefix_t p;
 	Irc_ParseName(prefix, nick, &p);
 	Irc_AppendToBuffer(va("Quits: %s (%s)", nick, trailing));
+	Irc_Logic_RemoveChannelName(chan, nick);
 }
 
 /**
@@ -720,6 +721,7 @@ static void Irc_Client_CmdKill (const char *prefix, const char *params, const ch
 	irc_nick_prefix_t p;
 	Irc_ParseName(prefix, nick, &p);
 	Irc_AppendToBuffer(va("Killed: %s (%s)", nick, trailing));
+	Irc_Logic_RemoveChannelName(chan, nick);
 }
 
 /**
@@ -1014,7 +1016,7 @@ static qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 	case IRC_COMMAND_STRING:
 		cmd.id.string = msg->id.string;
 #ifdef DEBUG
-		Com_DPrintf(DEBUG_CLIENT, "<%s> [%s] %s : %s", msg->prefix, cmd.id.string, msg->params, msg->trailing);
+		Com_DPrintf(DEBUG_CLIENT, "<%s> [%s] %s : %s\n", msg->prefix, cmd.id.string, msg->params, msg->trailing);
 #endif
 		if (!Q_strncmp(cmd.id.string, "NICK", 4))
 			Irc_Client_CmdNick(msg->prefix, msg->params, msg->trailing);
