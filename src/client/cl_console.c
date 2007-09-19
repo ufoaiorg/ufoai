@@ -285,8 +285,9 @@ void Con_CheckResize (void)
 void Con_LoadConsoleHistory (const char* path)
 {
 	byte *buf;
-	char *f2, *cmdStart, *cmdEnd;
-	int len, i = 0;
+	char *f2;
+	const char *text, *token;
+	int len, i = 0, j;
 	char filename[MAX_OSPATH];
 
 	assert(path);
@@ -306,25 +307,18 @@ void Con_LoadConsoleHistory (const char* path)
 	f2 = Mem_Alloc(len + 1);
 	memcpy(f2, buf, len);
 	f2[len] = 0;
+	text = f2;
 
-	Com_DPrintf(DEBUG_CLIENT, "...load console history\n");
+	Com_DPrintf(DEBUG_COMMANDS, "...load console history\n");
 
-	cmdStart = strstr(f2, "\n");
-	if (cmdStart != NULL) {
-		*cmdStart++ = '\0';
-
-		do {
-			cmdEnd = strstr(cmdStart, "\n");
-			if (cmdEnd)
-				*cmdEnd++ = '\0';
-			if (*cmdStart) {
-				Q_strncpyz(&key_lines[i][1], cmdStart, MAXCMDLINE-1);
-				Com_DPrintf(DEBUG_CLIENT, "....command: '%s'\n", cmdStart);
-				i++;
-			}
-			cmdStart = cmdEnd;
-		} while (cmdEnd && strstr(cmdEnd, "\n"));
-	}
+	do {
+		token = COM_Parse(&text);
+		if (!*token || !text)
+			break;
+		Q_strncpyz(&key_lines[i][i], token, MAXCMDLINE-1);
+		Com_DPrintf(DEBUG_COMMANDS, "....command: '%s'\n", token);
+		i++;
+	} while (token);
 	/* only the do not modify comment */
 	Mem_Free(f2);
 	FS_FreeFile(buf);
@@ -365,7 +359,8 @@ void Con_SaveConsoleHistory (const char *path)
 #endif
 		} else {
 			lastLine = &(key_lines[i][1]);
-			fprintf(f, "%s\n", lastLine);
+			if (*lastLine)
+				fprintf(f, "\"%s\"\n", lastLine);
 		}
 	}
 	fclose(f);
