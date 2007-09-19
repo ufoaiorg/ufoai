@@ -445,8 +445,9 @@ static qboolean Irc_Proto_PollServerMsg (irc_server_msg_t *msg, qboolean *msg_co
  * @brief Append the irc message to the buffer
  * @note the irc_buffer is linked to menuText array to display in the menu
  * @param[in] msg the complete irc message (without \n)
+ * @return true if the message was added to the chatbuffer, too
  */
-static void Irc_AppendToBuffer (const char* const msg)
+static qboolean Irc_AppendToBuffer (const char* const msg)
 {
 	char buf[IRC_RECV_BUF_SIZE];
 	menu_t* menu;
@@ -470,7 +471,9 @@ static void Irc_AppendToBuffer (const char* const msg)
 	if (irc_showIfNotInMenu->integer && Q_strncmp(menu->name, "irc", 4)) {
 		S_StartLocalSound("misc/talk");
 		MN_AddChatMessage(msg);
+		return qtrue;
 	}
+	return qfalse;
 }
 
 /**
@@ -807,16 +810,17 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 	} else {
 		menu = MN_GetMenu(NULL);
 
-		/* check whether this is no message to the channel - but to the user */
-		if (params && Q_strcmp(params, irc_defaultChannel->string)) {
-			S_StartLocalSound("misc/lobbyprivmsg");
-			MN_AddChatMessage(va("<%s> %s", nick, trailing));
+		if (!Irc_AppendToBuffer(va("<%s> %s", nick, trailing))) {
+			/* check whether this is no message to the channel - but to the user */
+			if (params && Q_strcmp(params, irc_defaultChannel->string)) {
+				S_StartLocalSound("misc/lobbyprivmsg");
+				MN_AddChatMessage(va("<%s> %s", nick, trailing));
+			}
 		}
 
 		if (menu && Q_strcmp(menu->name, "irc")) {
 			Com_Printf("%c<%s@lobby> %s\n", 1, nick, trailing);
 		}
-		Irc_AppendToBuffer(va("<%s> %s", nick, trailing));
 	}
 }
 
@@ -1745,7 +1749,7 @@ void Irc_Init (void)
 	irc_topic = Cvar_Get("irc_topic", "", CVAR_NOSET, NULL);
 	irc_defaultChannel = Cvar_Get("irc_defaultChannel", "", CVAR_NOSET, NULL);
 	irc_logConsole = Cvar_Get("irc_logConsole", "0", CVAR_ARCHIVE, NULL);
-	irc_showIfNotInMenu = Cvar_Get("irc_showIfNotInMenu", "1", CVAR_ARCHIVE, "Show chat messages on top of the menu stack if we are not in the irc menu");
+	irc_showIfNotInMenu = Cvar_Get("irc_showIfNotInMenu", "0", CVAR_ARCHIVE, "Show chat messages on top of the menu stack if we are not in the irc menu");
 	irc_send_buffer = Cvar_Get("irc_send_buffer", "", 0, NULL);
 	irc_nick = Cvar_Get("name", "", 0, NULL);
 
