@@ -91,6 +91,28 @@ menu multiplayerInGame
 		align	cc
 	}
 
+	pic button_irc
+	{
+		if "irc_defaultChannel"
+		pos	"640 310"
+		click	{ cmd "mn_push irc;" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_irc color "0 0.5 0 1" *button_irc texl "0 0"  *button_irc texh "256 64" }
+		in	{ *string_irc color "1 1 1 1" *button_irc texl "0 64" *button_irc texh "256 128" }
+	}
+	string string_irc
+	{
+		if "irc_defaultChannel"
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Lobby"
+		pos	"768 342"
+		align	cc
+	}
+
 	pic button_abort
 	{
 		pos	"640 520"

@@ -220,6 +220,7 @@ menu singleplayerInGame extends singleplayer
 		pos	"768 412"
 		align	cc
 	}
+
 	string string_back
 	{
 		font	f_menubig
