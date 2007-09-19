@@ -211,6 +211,11 @@ static LONG WINAPI Sys_ConsoleProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 		break;
 
 	case WM_CLOSE:
+		if (SV_CountPlayers()) {
+			int ays = MessageBox(hwnd_Server, "There are still players on the server! Really shut it down?", "WARNING!", MB_YESNO + MB_ICONEXCLAMATION);
+			if (ays == IDNO)
+				return TRUE;
+		}
 		Sys_Quit();
 		break;
 
@@ -231,8 +236,8 @@ static LONG WINAPI Sys_ConsoleProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 	case WM_CTLCOLOREDIT:
 		if ((HWND)lParam == sys_console.hWndOutput) {
 			SetBkMode((HDC)wParam, TRANSPARENT);
-			SetBkColor((HDC)wParam, RGB(39, 115, 102));
-			SetTextColor((HDC)wParam, RGB(255, 255, 255));
+			SetBkColor((HDC)wParam, RGB(255, 255, 255));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			return (LONG)sys_console.hBrushOutput;
 		} else if ((HWND)lParam == sys_console.hWndInput) {
 			SetBkMode((HDC)wParam, TRANSPARENT);
@@ -402,7 +407,7 @@ void Sys_ConsoleInit (void)
 
 	/* Create brushes */
 	sys_console.hBrushMsg = CreateSolidBrush(RGB(127, 127, 127));
-	sys_console.hBrushOutput = CreateSolidBrush(RGB(39, 115, 102));
+	sys_console.hBrushOutput = CreateSolidBrush(RGB(255, 255, 255));
 	sys_console.hBrushInput = CreateSolidBrush(RGB(255, 255, 255));
 
 	/* Subclass edit boxes */
