@@ -50,8 +50,28 @@ menu irc
 		font	f_big
 	}
 
+	pic button_disconnect
+	{
+		tooltip	"_Close menu and disconnect"
+		image	menu/button_blue2
+		mousefx true
+		pos		"780 720"
+		texl	"0 0"
+		texh	"160 37"
+		click	{ cmd "irc_disconnect; mn_pop;" }
+	}
+
+	string string_disconnect
+	{
+		string	"_Disconnect"
+		pos		"860 726"
+		align	uc
+		font	f_normal
+	}
+
 	pic button_exit
 	{
+		tooltip	"_Close menu but stay connected"
 		image	hud/buttons2
 		mousefx true
 		pos		"950 720"
@@ -176,7 +196,7 @@ menu irc
 	// ==================
 	func init
 	{
-		cmd "mn_escpop 1;irc_send_buffer_clicked;"
+		cmd "mn_escpop 3;irc_send_buffer_clicked;"
 	}
 
 	// ==================
