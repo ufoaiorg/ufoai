@@ -315,7 +315,7 @@ void Con_LoadConsoleHistory (const char* path)
 		token = COM_Parse(&text);
 		if (!*token || !text)
 			break;
-		Q_strncpyz(&key_lines[i][i], token, MAXCMDLINE-1);
+		Q_strncpyz(&key_lines[i][1], token, MAXCMDLINE-1);
 		Com_DPrintf(DEBUG_COMMANDS, "....command: '%s'\n", token);
 		i++;
 	} while (token);
