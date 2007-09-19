@@ -42,8 +42,6 @@ qboolean Minimized;
 int argc;
 const char *argv[MAX_NUM_ARGVS];
 
-int SV_CountPlayers(void);
-
 cvar_t* sys_priority;
 cvar_t* sys_affinity;
 cvar_t* sys_os;
