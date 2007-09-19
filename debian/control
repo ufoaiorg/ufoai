@@ -2,12 +2,12 @@ Source: ufoai
 Section: contrib/games
 Priority: optional
 Maintainer: Yann Dirson <dirson@debian.org>
-Build-Depends: debhelper (>= 4.0.0), dh-buildinfo, libx11-dev, libxext-dev, libjpeg-dev, libvorbis-dev, libglu1-mesa-dev, libgl-dev, libsdl-dev, libsdl-ttf2.0-dev, libarts1-dev, ncurses-dev
+Build-Depends: debhelper (>= 4.0.0), dh-buildinfo, libpng-dev, libjpeg-dev, libvorbis-dev, libgl-dev, libsdl-dev, libsdl-ttf2.0-dev, libarts1-dev, ncurses-dev
 Standards-Version: 3.6.1
 
 Package: ufoai
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, ufoai-data (>= 2.2~~svn), ufoai-vid-glx | ufoai-vid, ufoai-snd-sdl | ufoai-snd
+Depends: ${shlibs:Depends}, ${misc:Depends}, ufoai-data (>= 2.2~~svn), ufoai-snd-sdl | ufoai-snd
 Suggests: ufoai-data-music, ufoai-vid, ufoai-snd
 Description: UFO: Alien Invasion - build your team and stop the aliens
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
