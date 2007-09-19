@@ -1611,21 +1611,33 @@ static void Irc_Client_Topic_f (void)
 		Com_Printf("usage: irc_topic <channel> [<topic>]\n");
 }
 
+#define IRC_MAX_USERLIST 512
 /**
  * @brief
  */
 static void Irc_Client_Names_f (void)
 {
 	int i;
+	char *list[IRC_MAX_USERLIST];
 
 	irc_user_t* user;
 	if (chan) {
 		irc_names_buffer[0] = '\0';
 		user = chan->user;
 		for (i = 0; i < chan->users; i++) {
-			Q_strcat(irc_names_buffer, va("%s\n", user->key), sizeof(irc_names_buffer));
+			if (i >= IRC_MAX_USERLIST)
+				break;
+			list[i] = user->key;
 			user = user->next;
-		};
+		}
+		if (i > 0) {
+			qsort((void *)list, i, sizeof(chan->user->key), Q_StringSort);
+			for (i = 0; i < chan->users; i++) {
+				if (i >= IRC_MAX_USERLIST)
+					break;
+				Q_strcat(irc_names_buffer, va("%s\n", list[i]), sizeof(irc_names_buffer));
+			}
+		}
 	} else
 		Com_Printf("Not joined\n");
 }
