@@ -98,7 +98,7 @@ void Sys_Quit (void)
 {
 	CL_Shutdown();
 	Qcommon_Shutdown();
-	Sys_ConsoleInputShutdown();
+	Sys_ConsoleShutdown();
 
 	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
 	exit(0);

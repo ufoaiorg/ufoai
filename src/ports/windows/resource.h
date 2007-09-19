@@ -2,11 +2,8 @@
 /* Microsoft Developer Studio generated include file. */
 /* Used by ufo.rc */
 #define IDI_ICON1                       101
-#define IDD_SERVER_GUI                  103
-#define IDI_ICON2                       107
-#define IDC_COMMAND                     1001
-#define IDC_EDIT2                       1004
-#define IDC_CONSOLE                     1009
+#define IDD_DIALOG1                     107
+#define IDI_ICON2                       112
 
 /* Next default values for new objects */
 #ifdef APSTUDIO_INVOKED

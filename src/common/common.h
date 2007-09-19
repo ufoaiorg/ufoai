@@ -354,8 +354,9 @@ void Sys_Error(const char *error, ...) __attribute__((noreturn, format(printf, 1
 void Sys_Quit(void);
 char *Sys_GetHomeDirectory(void);
 
-void Sys_ConsoleInputShutdown(void);
-void Sys_ConsoleInputInit(void);
+void Sys_ConsoleShutdown(void);
+void Sys_ConsoleInit(void);
+void Sys_ShowConsole(qboolean show);
 
 void *Sys_LoadLibrary(const char *name, int flags);
 void Sys_FreeLibrary(void *libHandle);

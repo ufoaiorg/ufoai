@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/common.h"
 #include "../../common/msg.h"
 #include "win_local.h"
-#include "resource.h"
 #include <fcntl.h>
 #include <float.h>
 #include <direct.h>
@@ -38,15 +37,6 @@ static NOTIFYICONDATA pNdata;
 qboolean s_win95, s_winxp, s_vista;
 
 qboolean Minimized;
-
-/* Main server console handle for life of the server */
-static HWND hwnd_Server;
-
-static int consoleBufferPointer = 0;
-static byte consoleFullBuffer[16384];
-
-static sizebuf_t console_buffer;
-static byte console_buff[8192];
 
 #define MAX_NUM_ARGVS 128
 int argc;
@@ -67,28 +57,6 @@ SYSTEM IO
 /**
  * @brief
  */
-void Sys_Error (const char *error, ...)
-{
-	va_list argptr;
-	char text[1024];
-
-#ifndef DEDICATED_ONLY
-	CL_Shutdown();
-#endif
-	Qcommon_Shutdown();
-
-	va_start(argptr, error);
-	Q_vsnprintf(text, sizeof(text), error, argptr);
-	va_end(argptr);
-
-	MessageBox(NULL, text, "UFO:AI Fatal Error", MB_ICONEXCLAMATION);
-
-	ExitProcess(0xDEAD);
-}
-
-/**
- * @brief
- */
 void Sys_Quit (void)
 {
 	timeEndPeriod(1);
@@ -101,126 +69,6 @@ void Sys_Quit (void)
 
 	/* exit(0) */
 	ExitProcess(0);
-}
-
-
-/**
- * @brief
- */
-static void WinError (void)
-{
-	LPVOID lpMsgBuf;
-
-	FormatMessage(
-		FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-		NULL,
-		GetLastError(),
-		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), /* Default language */
-		(LPTSTR) &lpMsgBuf,
-		0,
-		NULL
-	);
-
-	/* Display the string. */
-	MessageBox(NULL, (char*)lpMsgBuf, "GetLastError", MB_OK|MB_ICONINFORMATION);
-
-	/* Free the buffer. */
-	LocalFree(lpMsgBuf);
-}
-
-/**
- * @brief
- */
-static void ServerWindowProcCommandExecute (void)
-{
-	int ret;
-	char buff[1024];
-
-	*(DWORD *)&buff = sizeof(buff)-2;
-
-	ret = (int)SendDlgItemMessage(hwnd_Server, IDC_COMMAND, EM_GETLINE, 1, (LPARAM)buff);
-	if (!ret)
-		return;
-
-	buff[ret] = '\n';
-	buff[ret+1] = '\0';
-	Sys_ConsoleOutput(buff);
-	Cbuf_AddText(buff);
-	SendDlgItemMessage(hwnd_Server, IDC_COMMAND, WM_SETTEXT, 0, (LPARAM)"");
-}
-
-/**
- * @brief
- */
-static LRESULT ServerWindowProcCommand (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	UINT idItem = LOWORD(wParam);
-	UINT wNotifyCode = HIWORD(wParam);
-
-	switch (idItem) {
-	case IDOK:
-		switch (wNotifyCode) {
-		case BN_CLICKED:
-			ServerWindowProcCommandExecute();
-			break;
-		}
-	}
-	return FALSE;
-}
-
-/**
- * @brief
- */
-static LRESULT CALLBACK ServerWindowProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	switch (message) {
-	case WM_COMMAND:
-		return ServerWindowProcCommand(hwnd, message, wParam, lParam);
-	case WM_ENDSESSION:
-		Cbuf_AddText ("quit exiting due to Windows shutdown.\n");
-		return TRUE;
-	case WM_CLOSE:
-		if (SV_CountPlayers()) {
-			int ays = MessageBox(hwnd_Server, "There are still players on the server! Really shut it down?", "WARNING!", MB_YESNO + MB_ICONEXCLAMATION);
-			if (ays == IDNO)
-				return TRUE;
-		}
-		Cbuf_AddText ("quit terminated by local request.\n");
-		return FALSE;
-	case WM_CREATE:
-		SetTimer(hwnd_Server, 1, 1000, NULL);
-		break;
-	case WM_ACTIVATE:
-		{
-			int minimized = (BOOL)HIWORD(wParam);
-
-			if (Minimized && !minimized) {
-				int len;
-				SendDlgItemMessage(hwnd_Server, IDC_CONSOLE, WM_SETTEXT, 0, (LPARAM)consoleFullBuffer);
-				len = (int)SendDlgItemMessage (hwnd_Server, IDC_CONSOLE, EM_GETLINECOUNT, 0, 0);
-				SendDlgItemMessage(hwnd_Server, IDC_CONSOLE, EM_LINESCROLL, 0, len);
-			}
-
-			Minimized = minimized;
-			if (procShell_NotifyIcon) {
-				if (minimized && LOWORD(wParam) == WA_INACTIVE) {
-					Minimized = qtrue;
-					ShowWindow(hwnd_Server, SW_HIDE);
-					return FALSE;
-				}
-			}
-			return DefWindowProc(hwnd, message, wParam, lParam);
-		}
-	case WM_USER + 4:
-		if (lParam == WM_LBUTTONDBLCLK) {
-			ShowWindow(hwnd_Server, SW_RESTORE);
-			SetForegroundWindow(hwnd_Server);
-			SetFocus(GetDlgItem(hwnd_Server, IDC_COMMAND));
-		}
-		return FALSE;
-	}
-
-	return FALSE;
 }
 
 /**
@@ -339,6 +187,9 @@ char *Sys_GetHomeDirectory (void)
 void Sys_Init (void)
 {
 	OSVERSIONINFO vinfo;
+#if 0
+	MEMORYSTATUS mem;
+#endif
 
 	sys_affinity = Cvar_Get("sys_affinity", "1", CVAR_ARCHIVE, "Which core to use - 1 = only first, 2 = only second, 3 = both");
 	sys_priority = Cvar_Get("sys_priority", "1", CVAR_ARCHIVE, "Process priority - 0 = normal, 1 = high, 2 = realtime");
@@ -372,119 +223,10 @@ void Sys_Init (void)
 	else
 		sys_os = Cvar_Get("sys_os", "win", CVAR_SERVERINFO, NULL);
 
-	if (sv_dedicated->integer) {
-		HICON hIcon;
-		hwnd_Server = CreateDialog(global_hInstance, MAKEINTRESOURCE(IDD_SERVER_GUI), NULL, (DLGPROC)ServerWindowProc);
-
-		if (!hwnd_Server) {
-			WinError();
-			Sys_Error("Couldn't create dedicated server window. GetLastError() = %d", (int)GetLastError());
-		}
-
-		SendDlgItemMessage(hwnd_Server, IDC_CONSOLE, EM_SETREADONLY, TRUE, 0);
-
-		SZ_Init(&console_buffer, console_buff, sizeof(console_buff));
-		console_buffer.allowoverflow = qtrue;
-
-		hIcon = (HICON)LoadImage(global_hInstance,
-			MAKEINTRESOURCE(IDI_ICON2),
-			IMAGE_ICON,
-			GetSystemMetrics(SM_CXSMICON),
-			GetSystemMetrics(SM_CYSMICON),
-			0);
-
-		if (hIcon)
-			SendMessage(hwnd_Server, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
-
-		UpdateWindow(hwnd_Server);
-		SetForegroundWindow(hwnd_Server);
-		SetFocus(GetDlgItem (hwnd_Server, IDC_COMMAND));
-	}
-}
-
-/**
- * @brief
- */
-char *Sys_ConsoleInput (void)
-{
-	return NULL;
-}
-
-/**
- * @brief
- */
-void Sys_UpdateConsoleBuffer (void)
-{
-	if (console_buffer.cursize) {
-		int len, buflen;
-
-		buflen = console_buffer.cursize + 1024;
-
-		if (consoleBufferPointer + buflen >= sizeof(consoleFullBuffer)) {
-			int moved;
-			char *p = consoleFullBuffer + buflen;
-			char *q;
-
-			while (p[0] && p[0] != '\n')
-				p++;
-			p++;
-			q = (consoleFullBuffer + buflen);
-			moved = (buflen + (int)(p - q));
-			memmove(consoleFullBuffer, consoleFullBuffer + moved, consoleBufferPointer - moved);
-			consoleBufferPointer -= moved;
-			consoleFullBuffer[consoleBufferPointer] = '\0';
-		}
-
-		memcpy(consoleFullBuffer+consoleBufferPointer, console_buffer.data, console_buffer.cursize);
-		consoleBufferPointer += (console_buffer.cursize - 1);
-
-		if (!Minimized) {
-			SendDlgItemMessage(hwnd_Server, IDC_CONSOLE, WM_SETTEXT, 0, (LPARAM)consoleFullBuffer);
-			len = (int)SendDlgItemMessage(hwnd_Server, IDC_CONSOLE, EM_GETLINECOUNT, 0, 0);
-			SendDlgItemMessage(hwnd_Server, IDC_CONSOLE, EM_LINESCROLL, 0, len);
-		}
-
-		SZ_Clear (&console_buffer);
-	}
-}
-
-/**
- * @brief Print text to the dedicated console
- */
-void Sys_ConsoleOutput (const char *string)
-{
-	char text[2048];
-	const char *p;
-	char *s;
-
-	if (!sv_dedicated || !sv_dedicated->integer)
-		return;
-
-	p = string;
-	s = text;
-
-	while (p[0]) {
-		if (p[0] == '\n') {
-			*s++ = '\r';
-		}
-
-		/* r1: strip high bits here */
-		*s = (p[0]) & SCHAR_MAX;
-
-		if (s[0] >= 32 || s[0] == '\n' || s[0] == '\t')
-			s++;
-
-		p++;
-
-		if ((s - text) >= sizeof(text) - 2) {
-			*s++ = '\n';
-			break;
-		}
-	}
-	s[0] = '\0';
-
-	SZ_Print(&console_buffer, text);
-	Sys_UpdateConsoleBuffer();
+#if 0
+	GlobalMemoryStatus(&mem);
+	Com_Printf("Memory: %u MB\n", mem.dwTotalPhys >> 20);
+#endif
 }
 
 /*
@@ -674,6 +416,8 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	global_hInstance = hInstance;
 
 	ParseCommandLine(lpCmdLine);
+
+	Sys_ConsoleInit();
 
 	/* always change to the current working dir */
 	FixWorkingDirectory();

@@ -67,9 +67,16 @@ static void Sys_ConsoleInputReset (void)
 #endif
 
 /**
+ * @brief
+ */
+void Sys_ShowConsole (qboolean show)
+{
+}
+
+/**
  * @brief Shutdown the console
  */
-void Sys_ConsoleInputShutdown (void)
+void Sys_ConsoleShutdown (void)
 {
 #ifdef HAVE_CURSES
 	delwin(win_log);
@@ -81,7 +88,7 @@ void Sys_ConsoleInputShutdown (void)
 /**
  * @brief initialise the console
  */
-void Sys_ConsoleInputInit (void)
+void Sys_ConsoleInit (void)
 {
 #ifdef HAVE_CURSES
 	initscr();

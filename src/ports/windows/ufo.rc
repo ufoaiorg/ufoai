@@ -66,42 +66,6 @@ IDI_ICON2               ICON    DISCARDABLE     "build/projects/ufo_ded.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// Dialog
-//
-
-IDD_SERVER_GUI DIALOGEX 0, 0, 357, 222
-STYLE DS_SETFONT | DS_CENTER | WS_MINIMIZEBOX | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
-EXSTYLE WS_EX_APPWINDOW
-CAPTION "UFO:AI server console"
-FONT 10, "Courier New", 0, 0, 0x0
-BEGIN
-	EDITTEXT        IDC_COMMAND,0,209,305,12,ES_AUTOHSCROLL
-	DEFPUSHBUTTON   "Send",IDOK,307,209,50,12
-	EDITTEXT        IDC_CONSOLE,0,0,354,207,ES_MULTILINE | WS_VSCROLL
-END
-
-
-////////////////////
-/////////////////////////////////////////////////////////
-//
-// DESIGNINFO
-//
-
-#ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO
-BEGIN
-	IDD_SERVER_GUI, DIALOG
-	BEGIN
-		LEFTMARGIN, 7
-		RIGHTMARGIN, 354
-		TOPMARGIN, 7
-		BOTTOMMARGIN, 215
-	END
-END
-#endif    // APSTUDIO_INVOKED
-
-/////////////////////////////////////////////////////////////////////////////
-//
 // Version
 //
 
@@ -120,11 +84,11 @@ BEGIN
 	BEGIN
 		BLOCK "040004b0"
 		BEGIN
-			VALUE "Comments", "http://www.ufoai.net"
+			VALUE "Comments", "http://ufoai.sf.net"
 			VALUE "CompanyName", "UFO:Alien Invasion Team"
 			VALUE "FileDescription", "UFO:Alien Invasion"
 			VALUE "InternalName", "ufoai"
-			VALUE "LegalCopyright", "Copyright (C) 2002-2004"
+			VALUE "LegalCopyright", "Copyright (C) 2002-2007"
 			VALUE "OriginalFilename", "ufo.exe"
 			VALUE "ProductName", "UFO:AI"
 			VALUE "ProductVersion", "Release"
