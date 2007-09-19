@@ -39,9 +39,6 @@ config.status:
 	dh_testdir
 
 	./configure --without-openal --with-curses
- # workaround
-	test -r svnversion.h || \
-	  echo "#define SVN \"unknown\""> svnversion.h
 
 build-arch: stamps/build-arch
 stamps/build-arch: config.status

@@ -1,4 +1,3 @@
 ufo2map /usr/lib/games/ufoai
-qdata /usr/lib/games/ufoai
 .gamedir /usr/lib/games/ufoai
 src/tools/blender/md2tag_export.py /usr/lib/blender/scripts
