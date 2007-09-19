@@ -37,12 +37,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 
 #define MAX_OUTPUT					32768
-#define MAX_INPUT					256
 #define	MAX_PRINTMSG				8192
 
 typedef struct {
 	int			outLen;					/* To keep track of output buffer len */
-	char		cmdBuffer[MAX_INPUT];	/* Buffered input from dedicated console */
+	char		cmdBuffer[MAXCMDLINE];	/* Buffered input from dedicated console */
 	qboolean	timerActive;			/* Timer is active (for fatal errors) */
 	qboolean	flashColor;				/* If true, flash error message to red */
 
@@ -72,7 +71,7 @@ int SV_CountPlayers(void);
  */
 char *Sys_ConsoleInput (void)
 {
-	static char buffer[MAX_INPUT];
+	static char buffer[MAXCMDLINE];
 
 	if (!sys_console.cmdBuffer[0])
 		return NULL;
@@ -91,8 +90,7 @@ void Sys_ConsoleOutput (const char *text)
 	char buffer[MAX_PRINTMSG];
 	int len = 0;
 
-	/* Change \n to \r\n so it displays properly in the edit box and
-	 * remove color escapes */
+	/* Change \n to \r\n so it displays properly in the edit box */
 	while (*text) {
 		if (*text == '\n') {
 			buffer[len++] = '\r';
@@ -287,6 +285,7 @@ static LONG WINAPI Sys_ConsoleEditProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPA
 				}
 				return 0;	/* Keep it from beeping */
 			}
+			/* @todo add command completion here */
 		} else if (hWnd == sys_console.hWndOutput)
 			return 0;	/* Read only */
 		break;
@@ -416,8 +415,8 @@ void Sys_ConsoleInit (void)
 	sys_console.defInputProc = (WNDPROC)SetWindowLong(sys_console.hWndInput, GWL_WNDPROC, (LONG)Sys_ConsoleEditProc);
 
 	/* Set text limit for input edit box */
-	SendMessage(sys_console.hWndInput, EM_SETLIMITTEXT, (WPARAM)(MAX_INPUT-1), 0);
+	SendMessage(sys_console.hWndInput, EM_SETLIMITTEXT, (WPARAM)(MAXCMDLINE-1), 0);
 
-	/* Hide it to start */
+	/* Make visible */
 	Sys_ShowConsole(qtrue);
 }

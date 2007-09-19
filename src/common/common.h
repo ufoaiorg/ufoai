@@ -348,6 +348,7 @@ void Sys_UnloadGame(void);
 /** loads the game dll and calls the api init function */
 game_export_t *Sys_GetGameAPI(game_import_t * parms);
 
+#define MAXCMDLINE 256
 char *Sys_ConsoleInput(void);
 void Sys_ConsoleOutput(const char *string);
 void Sys_Error(const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));

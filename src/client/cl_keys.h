@@ -164,8 +164,6 @@ typedef enum {
 	MSG_MENU
 } msg_mode_t;
 
-#define		MAXCMDLINE	256
-
 typedef enum {
 	KEYSPACE_MENU,
 	KEYSPACE_GAME,
