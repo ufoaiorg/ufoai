@@ -9,13 +9,13 @@
 			<Target title="windows">
 				<Option platforms="Windows;" />
 				<Option output="..\..\ufo_ded.exe" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\.." />
 				<Option object_output=".objs\ufo_ded" />
-				<Option type="1" />
+				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-D__GNUWIN32__" />
 					<Add option="-D_M_IX86=500" />
-					<Add option="-DDEVCPP" />
 				</Compiler>
 				<Linker>
 					<Add library="winmm" />
@@ -31,15 +31,15 @@
 			<Target title="windows_debug">
 				<Option platforms="Windows;" />
 				<Option output="..\..\ufo_ded.exe" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\.." />
 				<Option object_output=".objs\ufo_ded" />
-				<Option type="1" />
+				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-pg" />
 					<Add option="-g" />
 					<Add option="-D__GNUWIN32__" />
 					<Add option="-D_M_IX86=500" />
-					<Add option="-DDEVCPP" />
 					<Add option="-DDEBUG" />
 				</Compiler>
 				<Linker>
@@ -205,8 +205,17 @@
 			<Option target="linux" />
 			<Option target="macosx" />
 		</Unit>
+		<Unit filename="..\..\src\ports\windows\resource.h">
+			<Option target="windows" />
+			<Option target="windows_debug" />
+		</Unit>
 		<Unit filename="..\..\src\ports\windows\ufo.rc">
 			<Option compilerVar="WINDRES" />
+			<Option target="windows" />
+			<Option target="windows_debug" />
+		</Unit>
+		<Unit filename="..\..\src\ports\windows\win_console.c">
+			<Option compilerVar="CC" />
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
