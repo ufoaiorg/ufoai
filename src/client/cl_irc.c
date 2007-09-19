@@ -793,6 +793,7 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 		memcpy(nick, prefix, emph - prefix);
 	else
 		strcpy(nick, prefix);
+
 	if (ctcp) {
 		trailing++;
 		if (!Q_strncmp(trailing, "VERSION", 7)
@@ -805,6 +806,13 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 		}
 	} else {
 		menu = MN_GetMenu(NULL);
+
+		/* check whether this is no message to the channel - but to the user */
+		if (params && Q_strcmp(params, irc_defaultChannel->string)) {
+			S_StartLocalSound("misc/lobbyprivmsg");
+			MN_AddChatMessage(va("<%s> %s", nick, trailing));
+		}
+
 		if (menu && Q_strcmp(menu->name, "irc")) {
 			Com_Printf("%c<%s@lobby> %s\n", 1, nick, trailing);
 		}
