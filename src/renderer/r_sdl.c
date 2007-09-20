@@ -41,7 +41,7 @@ static void R_SetSDLIcon (void)
 
 	icon = SDL_CreateRGBSurface(SDL_SWSURFACE, ufoicon_width, ufoicon_height, 8, 0, 0, 0, 0);
 	if (icon == NULL)
-		return; /* oh well... */
+		return;
 	SDL_SetColorKey(icon, SDL_SRCCOLORKEY, 0);
 
 	color.r = color.g = color.b = 255;

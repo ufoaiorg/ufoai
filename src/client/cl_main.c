@@ -1256,15 +1256,11 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 		for (i = 1; i < Cmd_Argc(); i++) {
 			p = Cmd_Argv(i);
 			if (!Q_strncmp(p, "dlserver=", 9)) {
-#ifdef HAVE_CURL
 				p += 9;
 				Com_sprintf(cls.downloadReferer, sizeof(cls.downloadReferer), "ufo://%s", cls.servername);
 				CL_SetHTTPServer(p);
 				if (cls.downloadServer[0])
 					Com_Printf("HTTP downloading enabled, URL: %s\n", cls.downloadServer);
-#else
-				Com_Printf("HTTP downloading supported by server but this client was built without HAVE_CURL, bad luck.\n");
-#endif /* HAVE_CURL */
 			}
 		}
 		if (cls.state == ca_connected) {
@@ -1522,11 +1518,10 @@ void CL_RequestNextDownload (void)
 			}
 			precache_check = CS_MODELS + 1;
 		}
-#ifdef HAVE_CURL
+
 		/* map might still be downloading? */
 		if (CL_PendingHTTPDownloads())
 			return;
-#endif /* HAVE_CURL */
 
 		/* activate the map loading screen for multiplayer, too */
 		SCR_BeginLoadingPlaque();
@@ -2135,12 +2130,10 @@ static void CL_InitLocal (void)
 	masterserver_host = Cvar_Get("masterserver_host", MASTER_SERVER, CVAR_ARCHIVE, "IP address of UFO:AI masterserver (Sponsored by NineX)");
 	masterserver_port = Cvar_Get("masterserver_port", "27900", CVAR_ARCHIVE, "Port of UFO:AI masterserver");
 
-#ifdef HAVE_CURL
 	cl_http_proxy = Cvar_Get("cl_http_proxy", "", 0, NULL);
 	cl_http_filelists = Cvar_Get("cl_http_filelists", "1", 0, NULL);
 	cl_http_downloads = Cvar_Get("cl_http_downloads", "1", 0, "Try to download files via http");
 	cl_http_max_connections = Cvar_Get("cl_http_max_connections", "1", 0, NULL);
-#endif /* HAVE_CURL */
 
 	/* register our commands */
 	Cmd_AddCommand("cmd", CL_ForwardToServer_f, "Forward to server");
@@ -2440,12 +2433,10 @@ void CL_Frame (int now, void *data)
 	if (delta)
 		cls.framerate = 1000.0 / delta;
 
-#ifdef HAVE_CURL
 	if (cls.state == ca_connected) {
 		/* we run full speed when connecting */
 		CL_RunHTTPDownloads();
 	}
-#endif /* HAVE_CURL */
 
 	/* fetch results from server */
 	CL_ReadPackets();
@@ -2603,9 +2594,7 @@ void CL_Init (void)
 	/* Default to single-player mode */
 	ccs.singleplayer = qtrue;
 
-#ifdef HAVE_CURL
 	CL_InitHTTPDownloads();
-#endif /* HAVE_CURL */
 
 	CL_InitParticles();
 
@@ -2631,9 +2620,7 @@ void CL_Shutdown (void)
 	}
 	isdown = qtrue;
 
-#ifdef HAVE_CURL
 	CL_HTTP_Cleanup(qtrue);
-#endif /* HAVE_CURL */
 	Irc_Shutdown();
 	CL_WriteConfiguration();
 	Con_SaveConsoleHistory(FS_Gamedir());

@@ -285,10 +285,9 @@ qboolean CL_CheckOrDownloadFile (const char *filename)
 		return qtrue;
 	}
 
-#ifdef HAVE_CURL
 	if (CL_QueueHTTPDownload(filename))
 		return qfalse;
-#endif /* HAVE_CURL */
+
 	return qtrue;
 }
 

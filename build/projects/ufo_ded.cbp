@@ -89,45 +89,28 @@
 			<Add option="-DDEDICATED_ONLY" />
 		</Compiler>
 		<Linker>
-			<Add directory="C:\Dev-Cpp\lib" />
+			<Add library="curl" />
 		</Linker>
-		<Unit filename="ufo_ded.ico">
-			<Option compile="1" />
-			<Option link="1" />
-			<Option target="&lt;{~None~}&gt;" />
+		<Unit filename="..\..\src\ports\windows\ufo_ded.ico">
+			<Option target="windows" />
+			<Option target="windows_debug" />
 		</Unit>
 		<Unit filename="..\..\src\common\cmd.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\common\cmd.h">
-			<Option compile="1" />
-			<Option link="1" />
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="..\..\src\common\cmd.h" />
 		<Unit filename="..\..\src\common\cmodel.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\common\cmodel.h">
-			<Option compile="1" />
-			<Option link="1" />
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="..\..\src\common\cmodel.h" />
 		<Unit filename="..\..\src\common\common.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\common\common.h">
-			<Option compile="1" />
-			<Option link="1" />
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="..\..\src\common\common.h" />
 		<Unit filename="..\..\src\common\cvar.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\common\cvar.h">
-			<Option compile="1" />
-			<Option link="1" />
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="..\..\src\common\cvar.h" />
 		<Unit filename="..\..\src\common\dbuffer.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -138,11 +121,7 @@
 		<Unit filename="..\..\src\common\ioapi.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\common\ioapi.h">
-			<Option compile="1" />
-			<Option link="1" />
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="..\..\src\common\ioapi.h" />
 		<Unit filename="..\..\src\common\md4.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -166,11 +145,7 @@
 		<Unit filename="..\..\src\common\unzip.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\common\unzip.h">
-			<Option compile="1" />
-			<Option link="1" />
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="..\..\src\common\unzip.h" />
 		<Unit filename="..\..\src\game\inv_shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -192,13 +167,11 @@
 			<Option target="linux" />
 			<Option target="macosx" />
 		</Unit>
+		<Unit filename="..\..\src\ports\unix\unix_glob.h" />
 		<Unit filename="..\..\src\ports\unix\unix_glob.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 			<Option target="macosx" />
-		</Unit>
-		<Unit filename="..\..\src\ports\unix\unix_glob.h">
-			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="..\..\src\ports\unix\unix_main.c">
 			<Option compilerVar="CC" />

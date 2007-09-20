@@ -7,7 +7,7 @@ Type=0
 Compiler=-D__GNUWIN32__ _@@_-D_M_IX86=500 _@@_-Wall _@@_-DDEBUG_@@_
 CppCompiler=
 Includes=
-Linker=-lvorbisfile_@@_-lvorbis_@@_-logg_@@_-lwinmm _@@_-lwsock32 _@@_-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lgmon_@@_-lintl _@@_-lSDL_@@_-lSDL_ttf_@@_-lz_@@_-lpng_@@_-ljpeg_@@_-lws2_32_@@_
+Linker=-lvorbisfile_@@_-lvorbis_@@_-logg_@@_-lcurl_@@_-lwinmm _@@_-lwsock32 _@@_-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lgmon_@@_-lintl _@@_-lSDL_@@_-lSDL_ttf_@@_-lz_@@_-lpng_@@_-ljpeg_@@_-lws2_32_@@_
 Libs=C:\Dev-Cpp\lib
 UnitCount=172
 Folders="Header Files","Resource Files","Source Files"

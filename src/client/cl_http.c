@@ -18,7 +18,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifdef HAVE_CURL
 #include "client.h"
 
 cvar_t	*cl_http_downloads;
@@ -507,12 +506,12 @@ static void CL_CheckAndQueueDownload (char *path)
 	Q_strlwr(ext);
 
 	if (!strcmp(ext, "pk3")) {
-		Com_Printf("NOTICE: Filelist is requesting a .pak file (%s)\n", path);
+		Com_Printf("NOTICE: Filelist is requesting a .pk3 file (%s)\n", path);
 		pak = qtrue;
 	} else
 		pak = qfalse;
 
-	if (!pak && strcmp(ext, "bsp") && strcmp(ext, "wav") && strcmp(ext, "md2") &&
+	if (!pak && strcmp(ext, "bsp") && strcmp(ext, "wav") && strcmp(ext, "md2") && strcmp(ext, "ogg") &&
 		strcmp(ext, "md3") && strcmp(ext, "tga") && strcmp(ext, "png") && strcmp(ext, "jpg")) {
 		Com_Printf("WARNING: Illegal file type '%s' in filelist.\n", path);
 		return;
@@ -520,7 +519,7 @@ static void CL_CheckAndQueueDownload (char *path)
 
 	if (path[0] == '@') {
 		if (pak) {
-			Com_Printf("WARNING: @ prefix used on a pak file (%s) in filelist.\n", path);
+			Com_Printf("WARNING: @ prefix used on a pk3 file (%s) in filelist.\n", path);
 			return;
 		}
 		gameLocal = qtrue;
@@ -535,7 +534,7 @@ static void CL_CheckAndQueueDownload (char *path)
 		return;
 	}
 
-	/* by definition paks are game-local */
+	/* by definition pk3s are game-local */
 	if (gameLocal || pak) {
 		qboolean exists;
 		FILE *f;
@@ -555,8 +554,8 @@ static void CL_CheckAndQueueDownload (char *path)
 
 		if (!exists) {
 			if (CL_QueueHTTPDownload(path)) {
-				/* paks get bumped to the top and HTTP switches to single downloading.
-				 * this prevents someone on 28k dialup trying to do both the main .pak
+				/* pk3s get bumped to the top and HTTP switches to single downloading.
+				 * this prevents someone on 28k dialup trying to do both the main .pk3
 				 * and referenced configstrings data at once. */
 				if (pak) {
 					dlqueue_t *q, *last;
@@ -610,8 +609,8 @@ static void CL_ParseFileList (dlhandle_t *dl)
 }
 
 /**
- * @brief A pak file just downloaded, let's see if we can remove some stuff from
- * the queue which is in the .pak.
+ * @brief A pk3 file just downloaded, let's see if we can remove some stuff from
+ * the queue which is in the .pk3.
  */
 static void CL_ReVerifyHTTPQueue (void)
 {
@@ -806,7 +805,7 @@ static void CL_FinishHTTPDownload (void)
 			if (!FS_Rename(dl->filePath, tempName, qfalse))
 				Com_Printf("Failed to rename %s for some odd reason...", dl->filePath);
 
-			/* /a pak file is very special... */
+			/* a pk3 file is very special... */
 			i = strlen (tempName);
 			if (!strcmp(tempName + i - 4, ".pk3")) {
 				FS_RestartFilesystem();
@@ -881,7 +880,7 @@ static void CL_StartNextHTTPDownload (void)
 
 			CL_StartHTTPDownload(q, dl);
 
-			/* ugly hack for pak file single downloading */
+			/* ugly hack for pk3 file single downloading */
 			len = strlen(q->ufoPath);
 			if (len > 4 && !Q_stricmp(q->ufoPath + len - 4, ".pk3"))
 				downloading_pak = qtrue;
@@ -931,5 +930,3 @@ void CL_RunHTTPDownloads (void)
 		!downloading_pak && handleCount < cl_http_max_connections->integer)
 		CL_StartNextHTTPDownload();
 }
-
-#endif /* HAVE_CURL */

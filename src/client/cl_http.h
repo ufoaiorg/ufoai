@@ -23,8 +23,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifdef HAVE_CURL
-
 #ifndef __CLIENT_HTTP_H__
 #define __CLIENT_HTTP_H__
 
@@ -61,5 +59,3 @@ typedef struct dlhandle_s {
 } dlhandle_t;
 
 #endif /* __CLIENT_HTTP_H__ */
-
-#endif /* HAVE_CURL */

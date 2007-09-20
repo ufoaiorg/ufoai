@@ -107,6 +107,7 @@
 			<Add library="z" />
 			<Add library="jpeg" />
 			<Add library="png" />
+			<Add library="curl" />
 		</Linker>
 		<Unit filename="..\..\src\client\anorms.h" />
 		<Unit filename="..\..\src\client\cdaudio.h" />

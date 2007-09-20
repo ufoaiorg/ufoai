@@ -42,11 +42,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_menu.h"
 #include "cl_save.h"
 
-#ifdef HAVE_CURL
 #define CURL_STATICLIB
 #include <curl/curl.h>
 #include "cl_http.h"
-#endif /* HAVE_CURL */
 
 /*============================================================================= */
 
@@ -202,7 +200,6 @@ typedef struct client_static_s {
 
 	qboolean playingCinematic;	/**< Set to true when playing a cinematic */
 
-#ifdef HAVE_CURL
 	char downloadName[MAX_OSPATH];
 	size_t downloadPosition;
 	int downloadPercent;
@@ -211,7 +208,6 @@ typedef struct client_static_s {
 	dlhandle_t HTTPHandles[4];	/**< actual download handles */
 	char downloadServer[512];	/**< base url prefix to download from */
 	char downloadReferer[32];	/**< libcurl requires a static string :( */
-#endif
 } client_static_t;
 
 extern client_static_t cls;
@@ -243,12 +239,10 @@ typedef enum {
 #define N_(String) gettext_noop (String)
 
 /* cvars */
-#ifdef HAVE_CURL
 extern cvar_t *cl_http_downloads;
 extern cvar_t *cl_http_filelists;
 extern cvar_t *cl_http_proxy;
 extern cvar_t *cl_http_max_connections;
-#endif /* HAVE_CURL */
 extern cvar_t *cl_isometric;
 extern cvar_t *cl_aviForceDemo;
 extern cvar_t *cl_aviMotionJpeg;
