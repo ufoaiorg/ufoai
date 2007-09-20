@@ -45,8 +45,6 @@ cvar_t *sv_mapname;
 
 static cvar_t *sv_reconnect_limit;		/**< minimum seconds between connect messages */
 
-cvar_t *masterserver_url;
-
 void Master_Shutdown(void);
 
 static qboolean abandon = qfalse;		/**< shutdown server when all clients disconnect and don't accept new connections */
@@ -797,7 +795,6 @@ void SV_Init (void)
 	Cvar_Get("timelimit", "0", CVAR_SERVERINFO, NULL);
 	Cvar_Get("cheats", "0", CVAR_SERVERINFO | CVAR_LATCH, NULL);
 	Cvar_Get("protocol", va("%i", PROTOCOL_VERSION), CVAR_SERVERINFO | CVAR_NOSET, NULL);
-	masterserver_url = Cvar_Get("masterserver_url", MASTER_SERVER, CVAR_ARCHIVE, "URL of UFO:AI masterserver");
 	/* this cvar will become a latched cvar when you start the server */
 	sv_maxclients = Cvar_Get("sv_maxclients", "1", CVAR_SERVERINFO, "Max. connected clients");
 	sv_hostname = Cvar_Get("sv_hostname", "noname", CVAR_SERVERINFO | CVAR_ARCHIVE, "The name of the server that is displayed in the serverlist");

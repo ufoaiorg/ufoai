@@ -30,8 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 #include "../shared/infostring.h"
 
-cvar_t *masterserver_url;
-
 cvar_t *cl_isometric;
 
 cvar_t *rcon_client_password;
@@ -322,7 +320,6 @@ static void CL_Connect (void)
 	assert(!cls.stream);
 
 	if (cls.servername[0]) {
-		cvar_t *port = Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL);
 		cls.stream = NET_Connect(cls.servername, port->string);
 	} else
 		cls.stream = NET_ConnectToLoopBack();

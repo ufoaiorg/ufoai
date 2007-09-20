@@ -46,6 +46,9 @@ cvar_t *sv_dedicated;
 cvar_t *cl_maxfps;
 cvar_t *teamnum;
 cvar_t *gametype;
+cvar_t *masterserver_url;
+cvar_t *port;
+
 static FILE *logfile;
 
 static int server_state;
@@ -701,6 +704,8 @@ void Qcommon_Init (int argc, const char **argv)
 	logfile_active = Cvar_Get("logfile", "1", 0, "0 = deacticate logfile, 1 = write normal logfile, 2 = flush on every new line");
 	gametype = Cvar_Get("gametype", "1on1", CVAR_ARCHIVE | CVAR_SERVERINFO, "Sets the multiplayer gametype - see gametypelist command for a list of all gametypes");
 	http_proxy = Cvar_Get("http_proxy", "", 0, NULL);
+	port = Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL);
+	masterserver_url = Cvar_Get("masterserver_url", MASTER_SERVER, CVAR_ARCHIVE, "URL of UFO:AI masterserver");
 #ifdef DEDICATED_ONLY
 	sv_dedicated = Cvar_Get("sv_dedicated", "1", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
 #else

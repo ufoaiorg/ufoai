@@ -281,6 +281,8 @@ extern cvar_t *cl_maxfps;
 extern cvar_t *cl_avifreq;
 extern cvar_t *teamnum;
 extern cvar_t *gametype;
+extern cvar_t *masterserver_url;
+extern cvar_t *port;
 
 extern cvar_t *con_fontHeight;
 extern cvar_t *con_font;
