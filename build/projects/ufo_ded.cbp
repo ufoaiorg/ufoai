@@ -24,7 +24,6 @@
 					<Add library="user32" />
 					<Add library="gdi32" />
 					<Add library="gmon" />
-					<Add library="z" />
 					<Add library="ws2_32" />
 				</Linker>
 			</Target>
@@ -50,7 +49,6 @@
 					<Add library="user32" />
 					<Add library="gdi32" />
 					<Add library="gmon" />
-					<Add library="z" />
 					<Add library="ws2_32" />
 				</Linker>
 			</Target>
@@ -61,7 +59,6 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Linker>
-					<Add library="z" />
 					<Add library="dl" />
 				</Linker>
 			</Target>
@@ -90,11 +87,8 @@
 		</Compiler>
 		<Linker>
 			<Add library="curl" />
+			<Add library="z" />
 		</Linker>
-		<Unit filename="..\..\src\ports\windows\ufo_ded.ico">
-			<Option target="windows" />
-			<Option target="windows_debug" />
-		</Unit>
 		<Unit filename="..\..\src\common\cmd.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -167,12 +161,12 @@
 			<Option target="linux" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="..\..\src\ports\unix\unix_glob.h" />
 		<Unit filename="..\..\src\ports\unix\unix_glob.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 			<Option target="macosx" />
 		</Unit>
+		<Unit filename="..\..\src\ports\unix\unix_glob.h" />
 		<Unit filename="..\..\src\ports\unix\unix_main.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
@@ -184,6 +178,10 @@
 		</Unit>
 		<Unit filename="..\..\src\ports\windows\ufo.rc">
 			<Option compilerVar="WINDRES" />
+			<Option target="windows" />
+			<Option target="windows_debug" />
+		</Unit>
+		<Unit filename="..\..\src\ports\windows\ufo_ded.ico">
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
