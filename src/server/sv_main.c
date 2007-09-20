@@ -45,8 +45,7 @@ cvar_t *sv_mapname;
 
 static cvar_t *sv_reconnect_limit;		/**< minimum seconds between connect messages */
 
-cvar_t *masterserver_host;
-cvar_t *masterserver_port;
+cvar_t *masterserver_url;
 
 void Master_Shutdown(void);
 
@@ -712,8 +711,6 @@ void SV_Frame (int now, void *data)
 #define	HEARTBEAT_SECONDS	300
 void Master_Heartbeat (void)
 {
-	struct net_stream *s;
-
 	if (!sv_dedicated || !sv_dedicated->integer)
 		return;		/* only dedicated servers send heartbeats */
 
@@ -730,11 +727,13 @@ void Master_Heartbeat (void)
 	svs.last_heartbeat = svs.realtime;
 
 	/* send to master */
+#if 0
 	s = NET_Connect(masterserver_host->string, masterserver_port->string);
 	if (s) {
 		NET_OOB_Printf(s, "heartbeat\n");
 		stream_finished(s);
 	}
+#endif
 }
 
 /**
@@ -742,8 +741,6 @@ void Master_Heartbeat (void)
  */
 void Master_Shutdown (void)
 {
-	struct net_stream *s;
-
 	/* pgm post3.19 change, cvar pointer not validated before dereferencing */
 	if (!sv_dedicated || !sv_dedicated->integer)
 		return;					/* only dedicated servers send heartbeats */
@@ -753,11 +750,13 @@ void Master_Shutdown (void)
 		return;					/* a private dedicated game */
 
 	/* send to master */
+#if 0
 	s = NET_Connect(masterserver_host->string, masterserver_port->string);
 	if (s) {
 		NET_OOB_Printf(s, "shutdown\n");
 		stream_finished(s);
 	}
+#endif
 }
 
 /*============================================================================ */
@@ -804,8 +803,7 @@ void SV_Init (void)
 	Cvar_Get("timelimit", "0", CVAR_SERVERINFO, NULL);
 	Cvar_Get("cheats", "0", CVAR_SERVERINFO | CVAR_LATCH, NULL);
 	Cvar_Get("protocol", va("%i", PROTOCOL_VERSION), CVAR_SERVERINFO | CVAR_NOSET, NULL);
-	masterserver_host = Cvar_Get("masterserver_host", MASTER_SERVER, CVAR_ARCHIVE, "IP address of UFO:AI masterserver (Sponsored by NineX)");
-	masterserver_port = Cvar_Get("masterserver_port", "27900", CVAR_ARCHIVE, "Port of UFO:AI masterserver");
+	masterserver_url = Cvar_Get("masterserver_url", MASTER_SERVER, CVAR_ARCHIVE, "URL of UFO:AI masterserver");
 	/* this cvar will become a latched cvar when you start the server */
 	sv_maxclients = Cvar_Get("sv_maxclients", "1", CVAR_SERVERINFO, "Max. connected clients");
 	sv_hostname = Cvar_Get("sv_hostname", "noname", CVAR_SERVERINFO | CVAR_ARCHIVE, "The name of the server that is displayed in the serverlist");

@@ -22,7 +22,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 cvar_t	*cl_http_downloads;
 cvar_t	*cl_http_filelists;
-cvar_t	*cl_http_proxy;
 cvar_t	*cl_http_max_connections;
 
 enum {
@@ -103,41 +102,6 @@ static int CL_HTTP_Progress (void *clientp, double dltotal, double dlnow, double
 }
 
 /**
- * @brief libcurl callback to update header info.
- */
-static size_t CL_HTTP_Header (void *ptr, size_t size, size_t nmemb, void *stream)
-{
-	char	headerBuff[1024];
-	size_t	bytes;
-	size_t	len;
-
-	bytes = size * nmemb;
-
-	if (bytes <= 16)
-		return bytes;
-
-	/* memset (headerBuff, 0, sizeof(headerBuff)); */
-	/* memcpy (headerBuff, ptr, min(bytes, sizeof(headerBuff)-1)); */
-	if (bytes < sizeof(headerBuff)-1)
-		len = bytes;
-	else
-		len = sizeof(headerBuff)-1;
-
-	Q_strncpyz(headerBuff, ptr, len);
-
-	if (!Q_strncasecmp(headerBuff, "Content-Length: ", 16)) {
-		dlhandle_t	*dl;
-
-		dl = (dlhandle_t *)stream;
-
-		if (dl->file)
-			dl->fileSize = strtoul(headerBuff + 16, NULL, 10);
-	}
-
-	return bytes;
-}
-
-/**
  * @brief Properly escapes a path with HTTP %encoding. libcurl's function
  * seems to treat '/' and such as illegal chars and encodes almost
  * the entire URL...
@@ -178,64 +142,13 @@ static void CL_EscapeHTTPPath (const char *filePath, char *escaped)
 }
 
 /**
- * @brief libcurl callback for filelists.
- */
-static size_t CL_HTTP_Recv (void *ptr, size_t size, size_t nmemb, void *stream)
-{
-	size_t		bytes;
-	dlhandle_t	*dl;
-
-	dl = (dlhandle_t *)stream;
-
-	bytes = size * nmemb;
-
-	if (!dl->fileSize) {
-		dl->fileSize = bytes > 131072 ? bytes : 131072;
-		dl->tempBuffer = Mem_Alloc((int)dl->fileSize);
-	} else if (dl->position + bytes >= dl->fileSize - 1) {
-		char *tmp;
-
-		tmp = dl->tempBuffer;
-
-		dl->tempBuffer = Mem_Alloc((int)(dl->fileSize * 2));
-		memcpy(dl->tempBuffer, tmp, dl->fileSize);
-		Mem_Free(tmp);
-		dl->fileSize *= 2;
-	}
-
-	memcpy(dl->tempBuffer + dl->position, ptr, bytes);
-	dl->position += bytes;
-	dl->tempBuffer[dl->position] = 0;
-
-	return bytes;
-}
-
-#if 0
-/**
- * @brief
- */
-static int CL_CURL_Debug (CURL *c, curl_infotype type, char *data, size_t size, void * ptr)
-{
-	if (type == CURLINFO_TEXT) {
-		char buff[4096];
-		if (size > sizeof(buff)-1)
-			size = sizeof(buff)-1;
-		Q_strncpyz(buff, data, size);
-		Com_Printf("DEBUG: %s\n", buff);
-	}
-
-	return 0;
-}
-#endif
-
-/**
  * @brief Actually starts a download by adding it to the curl multi handle.
  */
 static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 {
-	size_t		len;
-	char		tempFile[MAX_OSPATH];
-	char		escapedFilePath[MAX_QPATH*4];
+	size_t len;
+	char tempFile[MAX_OSPATH];
+	char escapedFilePath[MAX_QPATH*4];
 
 	/* yet another hack to accomodate filelists, how i wish i could push :(
 	 * NULL file handle indicates filelist. */
@@ -285,13 +198,13 @@ static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 		curl_easy_setopt(dl->curl, CURLOPT_WRITEFUNCTION, NULL);
 	} else {
 		curl_easy_setopt(dl->curl, CURLOPT_WRITEDATA, dl);
-		curl_easy_setopt(dl->curl, CURLOPT_WRITEFUNCTION, CL_HTTP_Recv);
+		curl_easy_setopt(dl->curl, CURLOPT_WRITEFUNCTION, HTTP_Recv);
 	}
-	curl_easy_setopt(dl->curl, CURLOPT_PROXY, cl_http_proxy->string);
+	curl_easy_setopt(dl->curl, CURLOPT_PROXY, http_proxy->string);
 	curl_easy_setopt(dl->curl, CURLOPT_FOLLOWLOCATION, 1);
 	curl_easy_setopt(dl->curl, CURLOPT_MAXREDIRS, 5);
 	curl_easy_setopt(dl->curl, CURLOPT_WRITEHEADER, dl);
-	curl_easy_setopt(dl->curl, CURLOPT_HEADERFUNCTION, CL_HTTP_Header);
+	curl_easy_setopt(dl->curl, CURLOPT_HEADERFUNCTION, HTTP_Header);
 	curl_easy_setopt(dl->curl, CURLOPT_PROGRESSFUNCTION, CL_HTTP_Progress);
 	curl_easy_setopt(dl->curl, CURLOPT_PROGRESSDATA, dl);
 	curl_easy_setopt(dl->curl, CURLOPT_USERAGENT, Cvar_VariableString("version"));
@@ -377,8 +290,24 @@ void CL_CancelHTTPDownloads (qboolean permKill)
 }
 
 /**
- * @brief Called from the precache check to queue a download. Return value of
- *qfalse will cause standard UDP downloading to be used instead.
+ * @brief Find a free download handle to start another queue entry on.
+ */
+static dlhandle_t *CL_GetFreeDLHandle (void)
+{
+	dlhandle_t	*dl;
+	int			i;
+
+	for (i = 0; i < 4; i++) {
+		dl = &cls.HTTPHandles[i];
+		if (!dl->queueEntry || dl->queueEntry->state == DLQ_STATE_DONE)
+			return dl;
+	}
+
+	return NULL;
+}
+
+/**
+ * @brief Called from the precache check to queue a download.
  */
 qboolean CL_QueueHTTPDownload (const char *ufoPath)
 {
@@ -392,7 +321,7 @@ qboolean CL_QueueHTTPDownload (const char *ufoPath)
 
 	needList = qfalse;
 
-	/*  first download queued, so we want the mod filelist */
+	/* first download queued, so we want the mod filelist */
 	if (!cls.downloadQueue.next && cl_http_filelists->integer)
 		needList = qtrue;
 
@@ -411,7 +340,7 @@ qboolean CL_QueueHTTPDownload (const char *ufoPath)
 
 	q->next = NULL;
 	q->state = DLQ_STATE_NOT_STARTED;
-	Q_strncpyz(q->ufoPath, ufoPath, sizeof(q->ufoPath) - 1);
+	Q_strncpyz(q->ufoPath, ufoPath, sizeof(q->ufoPath));
 
 	if (needList) {
 		/* grab the filelist */
@@ -420,7 +349,7 @@ qboolean CL_QueueHTTPDownload (const char *ufoPath)
 
 	/* special case for map file lists, i really wanted a server-push mechanism for this, but oh well */
 	len = strlen(ufoPath);
-	if (cl_http_filelists->integer && len > 4 && !Q_stricmp (ufoPath + len - 4, ".bsp")) {
+	if (cl_http_filelists->integer && len > 4 && !Q_stricmp(ufoPath + len - 4, ".bsp")) {
 		char listPath[MAX_OSPATH];
 		char filePath[MAX_OSPATH];
 
@@ -820,23 +749,6 @@ static void CL_FinishHTTPDownload (void)
 	/* done current batch, see if we have more to dl - maybe a .bsp needs downloaded */
 	if (cls.state == ca_connected && !CL_PendingHTTPDownloads())
 		CL_RequestNextDownload();
-}
-
-/**
- * @brief Find a free download handle to start another queue entry on.
- */
-static dlhandle_t *CL_GetFreeDLHandle (void)
-{
-	dlhandle_t	*dl;
-	int			i;
-
-	for (i = 0; i < 4; i++) {
-		dl = &cls.HTTPHandles[i];
-		if (!dl->queueEntry || dl->queueEntry->state == DLQ_STATE_DONE)
-			return dl;
-	}
-
-	return NULL;
 }
 
 /**

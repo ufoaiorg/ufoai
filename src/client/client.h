@@ -205,6 +205,7 @@ typedef struct client_static_s {
 	dlhandle_t HTTPHandles[4];	/**< actual download handles */
 	char downloadServer[512];	/**< base url prefix to download from */
 	char downloadReferer[32];	/**< libcurl requires a static string :( */
+	CURL *curl;
 } client_static_t;
 
 extern client_static_t cls;
@@ -238,7 +239,6 @@ typedef enum {
 /* cvars */
 extern cvar_t *cl_http_downloads;
 extern cvar_t *cl_http_filelists;
-extern cvar_t *cl_http_proxy;
 extern cvar_t *cl_http_max_connections;
 extern cvar_t *cl_isometric;
 extern cvar_t *cl_aviForceDemo;

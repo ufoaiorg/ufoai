@@ -36,20 +36,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void SV_SetMaster_f (void)
 {
-	struct net_stream *s;
 	if (sv_maxclients->integer == 1)
 		return;
 
 	/* make sure the server is listed public */
 	Cvar_Set("public", "1");
 
-	Com_Printf("Master server at [%s]:%s - sending a ping\n", masterserver_host->string, masterserver_port->string);
+	Com_Printf("Master server at [%s] - sending a ping\n", masterserver_url->string);
 
+#if 0
 	s = NET_Connect(masterserver_host->string, masterserver_port->string);
 	if (s) {
 		NET_OOB_Printf(s, "ping\n");
 		stream_finished(s);
 	}
+#endif
 
 	if (!sv_dedicated->integer)
 		return;
@@ -521,7 +522,7 @@ void SV_InitOperatorCommands (void)
 	Cmd_AddParamCompleteFunction("devmap", SV_CompleteMapCommand);
 	Cmd_AddCommand("maplist", SV_ListMaps_f, "List of all available maps");
 
-	Cmd_AddCommand("setmaster", SV_SetMaster_f, "Send ping command to masterserver (see cvars: masterserver_host and masterserver_port)");
+	Cmd_AddCommand("setmaster", SV_SetMaster_f, "Send ping command to masterserver (see cvar masterserver_url)");
 	Cmd_AddCommand("mapcyclelist", SV_MapcycleList_f, "Print the current mapcycle");
 	Cmd_AddCommand("mapcyclenext", SV_MapcycleNext_f, "Start the next map from the cycle");
 	Cmd_AddCommand("mapcycleclear", SV_MapcycleClear, "Delete the current mapcycle");

@@ -30,8 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 #include "../shared/infostring.h"
 
-cvar_t *masterserver_host;
-cvar_t *masterserver_port;
+cvar_t *masterserver_url;
 
 cvar_t *cl_isometric;
 
@@ -939,50 +938,20 @@ static void CL_ServerInfoCallback (struct net_stream *s)
 }
 
 /**
- * @brief Masterserver server list
- * @sa NET_OOB_Printf
- * @sa CL_ConnectionlessPacket
- */
-static void CL_ParseMasterServerResponse (struct dbuffer *buf)
-{
-	byte ip[4];
-	unsigned short port;
-	char node[MAX_VAR];
-	char service[MAX_VAR];
-
-	while (dbuffer_len(buf) >= 6) {
-		/* parse the ip */
-		dbuffer_extract(buf, (char *)ip, sizeof(ip));
-
-		/* parse out port */
-		port = NET_ReadByte(buf) << 8;
-		port += NET_ReadByte(buf);
-		Com_sprintf(node, sizeof(node), "%d.%d.%d.%d", ip[0], ip[1], ip[2], ip[3]);
-		Com_sprintf(service, sizeof(service), "%d", port);
-		Com_DPrintf(DEBUG_CLIENT, "server: [%s]:%s\n", node, service);
-		CL_AddServerToList(node, service);
-	}
-	/* end of stream */
-}
-
-/**
  * @brief
  * @sa CL_PingServers_f
  */
-static void CL_MasterserverCallback (struct net_stream *s)
+static void CL_QueryMasterServer (void)
 {
-	struct dbuffer *buf = NET_ReadMsg(s);
+	const char *serverList;
 
-	if (buf) {
-		int cmd = NET_ReadByte(buf);
-		char *str = NET_ReadStringLine(buf);
-
-		if (cmd == clc_oob && Q_strncmp(str, "servers", 7) == 0) {
-			CL_ParseMasterServerResponse(buf);
-		}
-
-		free_stream(s);
-	}
+	CL_SetHTTPServer(masterserver_url->string);
+	serverList = HTTP_GetURL(va("%s/ufo/masterserver.php", masterserver_url->string));
+	if (!serverList) {
+		Com_Printf("Could not query masterserver\n");
+		return;
+	} else
+		Com_DPrintf(DEBUG_CLIENT, "masterserver response: %s\n", serverList);
 }
 
 /**
@@ -1220,13 +1189,8 @@ static void CL_PingServers_f (void)
 	/* query master server? */
 	/* @todo: Cache this to save bandwidth */
 	if (Cmd_Argc() == 2 || Q_strcmp(Cmd_Argv(1), "local")) {
-		struct net_stream *s = NET_Connect(masterserver_host->string, masterserver_port->string);
-		if (s) {
-			Com_Printf("Query masterserver\n");
-			NET_OOB_Printf(s, "getservers 0\n");
-			stream_callback(s, &CL_MasterserverCallback);
-		} else
-			Com_Printf("Could not connect to masterserver\n");
+		Com_Printf("Query masterserver\n");
+		CL_QueryMasterServer();
 	}
 }
 
@@ -2127,10 +2091,8 @@ static void CL_InitLocal (void)
 	msg = Cvar_Get("msg", "1", CVAR_USERINFO | CVAR_ARCHIVE, "Sets the message level for server messages the client receives");
 	sv_maxclients = Cvar_Get("sv_maxclients", "1", CVAR_SERVERINFO, "If sv_maxclients is 1 we are in singleplayer - otherwise we are mutliplayer mode (see sv_teamplay)");
 
-	masterserver_host = Cvar_Get("masterserver_host", MASTER_SERVER, CVAR_ARCHIVE, "IP address of UFO:AI masterserver (Sponsored by NineX)");
-	masterserver_port = Cvar_Get("masterserver_port", "27900", CVAR_ARCHIVE, "Port of UFO:AI masterserver");
+	masterserver_url = Cvar_Get("masterserver_url", MASTER_SERVER, CVAR_ARCHIVE, "URL of UFO:AI masterserver");
 
-	cl_http_proxy = Cvar_Get("cl_http_proxy", "", 0, NULL);
 	cl_http_filelists = Cvar_Get("cl_http_filelists", "1", 0, NULL);
 	cl_http_downloads = Cvar_Get("cl_http_downloads", "1", 0, "Try to download files via http");
 	cl_http_max_connections = Cvar_Get("cl_http_max_connections", "1", 0, NULL);

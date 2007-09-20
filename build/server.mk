@@ -2,6 +2,7 @@
 
 SERVER_SRCS += \
 	common/cmd.c \
+	common/http.c \
 	common/ioapi.c \
 	common/unzip.c \
 	common/cmodel.c \

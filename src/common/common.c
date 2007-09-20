@@ -40,6 +40,7 @@ jmp_buf abortframe;				/* an ERR_DROP occured, exit the entire frame */
 cvar_t *s_sleep;
 cvar_t *s_language;
 cvar_t *developer;
+cvar_t *http_proxy;
 cvar_t *logfile_active;			/* 1 = buffer log, 2 = flush after each print */
 cvar_t *sv_dedicated;
 cvar_t *cl_maxfps;
@@ -699,6 +700,7 @@ void Qcommon_Init (int argc, const char **argv)
 	developer = Cvar_Get("developer", "0", 0, "Activate developer output to logfile and gameconsole");
 	logfile_active = Cvar_Get("logfile", "1", 0, "0 = deacticate logfile, 1 = write normal logfile, 2 = flush on every new line");
 	gametype = Cvar_Get("gametype", "1on1", CVAR_ARCHIVE | CVAR_SERVERINFO, "Sets the multiplayer gametype - see gametypelist command for a list of all gametypes");
+	http_proxy = Cvar_Get("http_proxy", "", 0, NULL);
 #ifdef DEDICATED_ONLY
 	sv_dedicated = Cvar_Get("sv_dedicated", "1", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
 #else
@@ -966,7 +968,7 @@ void Qcommon_Frame (void)
  */
 void Qcommon_Shutdown (void)
 {
-	curl_global_cleanup();
+	HTTP_Cleanup();
 	Cmd_ExecuteString("shutdown_alias");
 }
 

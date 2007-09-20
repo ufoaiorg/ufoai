@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../game/inv_shared.h"
 #include "../game/game.h"
 #include "mem.h"
+#include "http.h"
 
 #define UFO_VERSION "2.2-dev"
 
@@ -140,7 +141,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "common.h"
 
-#define MASTER_SERVER "ufoai.ninex.info" /* sponsored by NineX */
+#define MASTER_SERVER "http://ufoai.ninex.info/" /* sponsored by NineX */
 
 
 /*
@@ -269,6 +270,7 @@ void Com_SetServerState(int state);
 #include "md4.h"
 char *Com_MD5File(const char *fn, int length);
 
+extern cvar_t *http_proxy;
 extern cvar_t *developer;
 extern cvar_t *sv_dedicated;
 extern cvar_t *host_speeds;

@@ -26,35 +26,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __CLIENT_HTTP_H__
 #define __CLIENT_HTTP_H__
 
+#include "../common/http.h"
+
 void CL_CancelHTTPDownloads(qboolean permKill);
 qboolean CL_QueueHTTPDownload(const char *ufoPath);
 void CL_RunHTTPDownloads(void);
 qboolean CL_PendingHTTPDownloads(void);
 void CL_SetHTTPServer(const char *URL);
 void CL_HTTP_Cleanup(void);
-
-typedef enum {
-	DLQ_STATE_NOT_STARTED,
-	DLQ_STATE_RUNNING,
-	DLQ_STATE_DONE
-} dlq_state;
-
-typedef struct dlqueue_s {
-	struct dlqueue_s	*next;
-	char				ufoPath[MAX_QPATH];
-	dlq_state			state;
-} dlqueue_t;
-
-typedef struct dlhandle_s {
-	CURL		*curl;
-	char		filePath[MAX_OSPATH];
-	FILE		*file;
-	dlqueue_t	*queueEntry;
-	size_t		fileSize;
-	size_t		position;
-	double		speed;
-	char		URL[576];
-	char		*tempBuffer;
-} dlhandle_t;
 
 #endif /* __CLIENT_HTTP_H__ */

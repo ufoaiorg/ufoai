@@ -49,6 +49,7 @@ CLIENT_SRCS = \
 	client/snd_wave.c \
 	\
 	common/cmd.c \
+	common/http.c \
 	common/ioapi.c \
 	common/unzip.c \
 	common/cmodel.c \
