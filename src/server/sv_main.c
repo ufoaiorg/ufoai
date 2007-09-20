@@ -706,7 +706,6 @@ void SV_Frame (int now, void *data)
  * @brief Send a message to the master every few minutes to
  * let it know we are alive, and log information
  */
-#define	HEARTBEAT_SECONDS	300
 void Master_Heartbeat (void)
 {
 	char *responseBuf;
@@ -728,8 +727,10 @@ void Master_Heartbeat (void)
 
 	/* send to master */
 	responseBuf = HTTP_GetURL(va("%s/ufo/masterserver.php?heartbeat&port=%s", masterserver_url->string, port->string));
-	if (responseBuf)
+	if (responseBuf) {
+		Com_DPrintf(DEBUG_SERVER, "response: %s\n", responseBuf);
 		Mem_Free(responseBuf);
+	}
 }
 
 /**
@@ -747,8 +748,10 @@ void Master_Shutdown (void)
 
 	/* send to master */
 	responseBuf = HTTP_GetURL(va("%s/ufo/masterserver.php?shutdown&port=%s", masterserver_url->string, port->string));
-	if (responseBuf)
+	if (responseBuf) {
+		Com_DPrintf(DEBUG_SERVER, "response: %s\n", responseBuf);
 		Mem_Free(responseBuf);
+	}
 }
 
 /*============================================================================ */

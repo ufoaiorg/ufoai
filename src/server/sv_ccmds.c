@@ -36,6 +36,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void SV_SetMaster_f (void)
 {
+	char *responseBuf;
+
 	if (sv_maxclients->integer == 1)
 		return;
 
@@ -43,19 +45,16 @@ void SV_SetMaster_f (void)
 	Cvar_Set("public", "1");
 
 	Com_Printf("Master server at [%s] - sending a ping\n", masterserver_url->string);
-
-#if 0
-	s = NET_Connect(masterserver_host->string, masterserver_port->string);
-	if (s) {
-		NET_OOB_Printf(s, "ping\n");
-		stream_finished(s);
+	responseBuf = HTTP_GetURL(va("%s/ufo/masterserver.php?ping&port=%s", masterserver_url->string, port->string));
+	if (responseBuf) {
+		Com_DPrintf(DEBUG_SERVER, "response: %s\n", responseBuf);
+		Mem_Free(responseBuf);
 	}
-#endif
 
 	if (!sv_dedicated->integer)
 		return;
 
-	svs.last_heartbeat = -9999999;
+	svs.last_heartbeat -= (HEARTBEAT_SECONDS + 1)* 1000;
 }
 
 
@@ -283,7 +282,7 @@ static void SV_ConSay_f (void)
  */
 static void SV_Heartbeat_f (void)
 {
-	svs.last_heartbeat = -9999999;
+	svs.last_heartbeat -= (HEARTBEAT_SECONDS + 1)* 1000;
 }
 
 

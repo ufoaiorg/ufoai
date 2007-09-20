@@ -9,6 +9,10 @@ $serverTimeoutSeconds = "320";
 # NOTES
 # Create a file names serverlist.txt in the same directory as the
 # masterserver.php is. Make sure, that is writeable for the masterserver script
+#
+# The server list is updated with every call, new servers are added with 'ping',
+# updated (otherwise they would time out) with 'heartbeat' and removed with
+# 'shutdown'. The clients query with 'query' to get the hole list.
 ###############################################################################
 # FORMAT OF serverlist.txt
 ###############################################################################
@@ -25,58 +29,71 @@ $serverTimeoutSeconds = "320";
 # Helper functions
 ###############################################################################
 
-function updateServerList ($remove, $ip, $port)
+# Update the server list
+# Checks whether a server timed out, or is going to be removed ($remove == 1)
+# Even new servers are added with this function ($add == 1)
+# TODO FIXME Lock the file in case of more than one query at a time
+function updateServerList ($remove, $add)
 {
 	# seconds since 1970/01/01
 	$time = time();
-	$ip = $HTTP_SERVER_VARS["REMOTE_ADDR"];
+	$ip = $_SERVER["REMOTE_ADDR"];
+	if (!$ip)
+		$ip = $HTTP_SERVER_VARS["REMOTE_ADDR"];
+
 	if (isset($_GET["port"]))
 		$port = $_GET["port"];
 	else
 		$port = $GLOBALS["standardPort"];
 
+	# this string is stored in the serverlist.txt
 	$newListContent = "";
+	# this string is send to a client (if called from sendServerList)
+	$serverListStr = "";
 
-	$file = @fopen($GLOBALS["serverList"], 'r');
-	if (!$file)
-		return "";
-	/* first entry/line in the file is the number of servers in the list */
-	$num = fgets($file, 100);
+	$file = file($GLOBALS["serverList"]);
 
 	$updatedServer = 0;
+	$i = 0;
 
-	while (!feof($file)) {
+	for ($j = 0; $j < sizeof($file); $j++) {
 		$skipThisServer = 0;
-		/* get the hole server line */
-		$server = fgets($file, 100);
 		/* split ip, port, last heartbeat */
-		$data = explode(" ", $server);
+		$data = explode(" ", $file[$j]);
 		if ($time > $data[2] + $GLOBALS["serverTimeoutSeconds"]) {
-			# don't readd this server - time out
+			# don't readd this server - timed out
 		} else if (!strcmp($data[0], $ip) && !strcmp($data[1], $port)) {
 			if (!$remove) {
 				# heartbeat
-				$newListContent = "$data[0] $data[1] " . $time . "\n";
+				$newListContent .= "$data[0] $data[1] $time\n";
+				# the client is only interested in ip and port
+				$serverListStr .= "$data[0] $data[1]\n";
 				$updatedServer = 1;
+				$i++;
 			}
 		} else {
-			$newListContent = "$data[0] $data[1] $data[2]\n";
+			$i++;
+			$newListContent .= "$data[0] $data[1] $data[2]\n";
+			# the client is only interested in ip and port
+			$serverListStr .= "$data[0] $data[1]\n";
 		}
 	}
-
-	fclose($file);
 
 	$file = @fopen($GLOBALS["serverList"], 'w');
 	if (!$file) {
 		echo "Error - could not write " . $GLOBALS["serverList"];
-		exit;
+		return;
+	}
+
+	fwrite($file, "$i\n");
+	# new server
+	if (!$updatedServer && $add) {
+		fwrite($file, "$ip $port $time\n");
+		$serverListStr .= "$ip $port $time\n";
 	}
 	fwrite($file, $newListContent);
-	# new server
-	if (!$updatedServer) {
-		fwrite($file, "$ip $port $time");
-	}
 	fclose($file);
+	return "$i\n$serverListStr";
 }
 
 ###############################################################################
@@ -84,28 +101,34 @@ function updateServerList ($remove, $ip, $port)
 ###############################################################################
 
 # Update the heartbeat entry for the given server
-# Or add a new server to the list of there is no such entry
 function serverHeartbeat ()
 {
-	updateServerList(0);
+	updateServerList(0, 0);
+#	echo "OK";
+}
+
+# add a new server to the list
+function serverPing ()
+{
+	updateServerList(0, 1);
+#	echo "OK";
 }
 
 # Remove the given server from the list
-function serverHeartShutdown ()
+function serverShutdown ()
 {
-	updateServerList(1);
+	updateServerList(1, 0);
+#	echo "OK";
 }
 
 # Send the serverlist to the client
 function sendServerList ()
 {
-	$file = @fopen($GLOBALS["serverList"], 'r');
-	if (!$file) {
-		echo "Error - could not read " . $GLOBALS["serverList"];
-		exit;
-	}
-	echo fread($file, filesize($GLOBALS["serverList"]));
-	fclose($file);
+	$time = time();
+
+	# print the list
+	echo file($GLOBALS["serverList"]);
+#	updateServerList(0, 0);
 }
 
 # entry point
@@ -114,12 +137,14 @@ function main ()
 	/* check which action the caller wants to do */
 	if (isset($_GET["heartbeat"])) {
 		serverHeartbeat();
+	} else if (isset($_GET["ping"])) {
+		serverPing();
 	} else if (isset($_GET["shutdown"])) {
 		serverShutdown();
 	} else if (isset($_GET["query"])) {
 		sendServerList();
 	} else
-		echo 'Invalid command';
+		echo 'Masterserver query: Invalid command';
 }
 
 ###############################################################################

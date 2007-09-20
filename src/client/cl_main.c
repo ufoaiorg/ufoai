@@ -963,12 +963,20 @@ static void CL_QueryMasterServer (void)
 		num = MAX_SERVERLIST;
 	}
 	for (i = 0; i < num; i++) {
+		/* host */
 		token = COM_Parse(&serverList);
 		if (!*token || !serverList) {
 			Com_Printf("Could not finish the masterserver response parsing\n");
 			break;
 		}
 		Q_strncpyz(node, token, sizeof(node));
+		/* port */
+		token = COM_Parse(&serverList);
+		if (!*token || !serverList) {
+			Com_Printf("Could not finish the masterserver response parsing\n");
+			break;
+		}
+		/* timeout - skip this */
 		token = COM_Parse(&serverList);
 		if (!*token || !serverList) {
 			Com_Printf("Could not finish the masterserver response parsing\n");
@@ -1093,10 +1101,17 @@ static void CL_BookmarkListClick_f (void)
 static void CL_ServerInfo_f (void)
 {
 	struct net_stream *s;
-	if (Cmd_Argc() < 2)
-		s = NET_Connect(Cvar_VariableString("mn_server_ip"), va("%d", PORT_SERVER));
-	else
+	switch (Cmd_Argc()) {
+	case 2:
 		s = NET_Connect(Cmd_Argv(1), va("%d", PORT_SERVER));
+		break;
+	case 3:
+		s = NET_Connect(Cmd_Argv(1), Cmd_Argv(2));
+		break;
+	default:
+		s = NET_Connect(Cvar_VariableString("mn_server_ip"), va("%d", PORT_SERVER));
+		break;
+	}
 	if (s) {
 		NET_OOB_Printf(s, "status %i", PROTOCOL_VERSION);
 		stream_callback(s, &CL_ServerInfoCallback);
@@ -1123,8 +1138,7 @@ static void CL_ServerListClick_f (void)
 		for (i = 0; i < serverListLength; i++)
 			if (serverList[i].pinged && serverList[i].serverListPos == num) {
 				/* found the server - grab the infos for this server */
-				Cvar_Set("mn_server_ip", serverList[i].node);
-				Cbuf_AddText("server_info;");
+				Cbuf_AddText(va("server_info %s %s;", serverList[i].node, serverList[i].service));
 				return;
 			}
 }

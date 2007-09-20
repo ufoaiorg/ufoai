@@ -140,8 +140,8 @@ void SV_InitOperatorCommands(void);
 
 void SV_UserinfoChanged(client_t *cl);
 
+#define	HEARTBEAT_SECONDS	300
 void Master_Heartbeat(void);
-void Master_Packet(void);
 
 void SV_NextMapcycle(void);
 void SV_MapcycleClear(void);
