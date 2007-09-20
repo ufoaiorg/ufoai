@@ -363,10 +363,10 @@ TOOLS_LIBS="$TOOLS_LIBS $LIBS"
 # Check for curl
 #---------------------------------------------------------------------------------------------
 LIBS=
-AC_CHECK_HEADERS([libcurl.h])
-if test "$ac_cv_header_libcurl_h" != "yes"
+AC_CHECK_HEADERS([curl/curl.h])
+if test "$ac_cv_header_curl_curl_h" != "yes"
 then
-	AC_MSG_ERROR([Could not find libcurl.h!])
+	AC_MSG_ERROR([Could not find curl/curl.h!])
 fi
 AC_CHECK_LIB(curl, curl_easy_init, LIBS="-lcurl", AC_MSG_ERROR([You must have libcurl!!!]))
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
