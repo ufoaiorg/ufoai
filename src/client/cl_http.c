@@ -36,7 +36,6 @@ static int		handleCount = 0;
 static int		pendingCount = 0;
 static int		abortDownloads = HTTPDL_ABORT_NONE;
 static qboolean	downloading_pak = qfalse;
-static qboolean	httpDown = qfalse;
 
 static void StripHighBits (char *string)
 {
@@ -312,22 +311,13 @@ static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 }
 
 /**
- * @brief Init libcurl and multi handle.
- */
-void CL_InitHTTPDownloads (void)
-{
-	curl_global_init(CURL_GLOBAL_NOTHING);
-	Com_Printf("%s initialized.\n", curl_version());
-}
-
-/**
  * @brief A new server is specified, so we nuke all our state.
  */
 void CL_SetHTTPServer (const char *URL)
 {
 	dlqueue_t *q, *last;
 
-	CL_HTTP_Cleanup(qfalse);
+	CL_HTTP_Cleanup();
 
 	q = &cls.downloadQueue;
 
@@ -634,13 +624,10 @@ static void CL_ReVerifyHTTPQueue (void)
 /**
  * @brief UFO is exiting or we're changing servers. Clean up.
  */
-void CL_HTTP_Cleanup (qboolean fullShutdown)
+void CL_HTTP_Cleanup (void)
 {
 	dlhandle_t *dl;
 	int i;
-
-	if (fullShutdown && httpDown)
-		return;
 
 	for (i = 0; i < 4; i++) {
 		dl = &cls.HTTPHandles[i];
@@ -667,11 +654,6 @@ void CL_HTTP_Cleanup (qboolean fullShutdown)
 	if (multi) {
 		curl_multi_cleanup(multi);
 		multi = NULL;
-	}
-
-	if (fullShutdown) {
-		curl_global_cleanup();
-		httpDown = qtrue;
 	}
 }
 

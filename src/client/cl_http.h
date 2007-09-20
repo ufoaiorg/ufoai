@@ -27,12 +27,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define __CLIENT_HTTP_H__
 
 void CL_CancelHTTPDownloads(qboolean permKill);
-void CL_InitHTTPDownloads(void);
 qboolean CL_QueueHTTPDownload(const char *ufoPath);
 void CL_RunHTTPDownloads(void);
 qboolean CL_PendingHTTPDownloads(void);
 void CL_SetHTTPServer(const char *URL);
-void CL_HTTP_Cleanup(qboolean fullShutdown);
+void CL_HTTP_Cleanup(void);
 
 typedef enum {
 	DLQ_STATE_NOT_STARTED,

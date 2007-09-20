@@ -2594,8 +2594,6 @@ void CL_Init (void)
 	/* Default to single-player mode */
 	ccs.singleplayer = qtrue;
 
-	CL_InitHTTPDownloads();
-
 	CL_InitParticles();
 
 	/* Touch memory */
@@ -2620,7 +2618,7 @@ void CL_Shutdown (void)
 	}
 	isdown = qtrue;
 
-	CL_HTTP_Cleanup(qtrue);
+	CL_HTTP_Cleanup();
 	Irc_Shutdown();
 	CL_WriteConfiguration();
 	Con_SaveConsoleHistory(FS_Gamedir());

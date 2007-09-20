@@ -726,6 +726,9 @@ void Qcommon_Init (int argc, const char **argv)
 
 	NET_Init();
 
+	curl_global_init(CURL_GLOBAL_NOTHING);
+	Com_Printf("%s initialized.\n", curl_version());
+
 	SV_Init();
 
 	/* e.g. init the client hunk that is used in script parsing */
@@ -963,6 +966,7 @@ void Qcommon_Frame (void)
  */
 void Qcommon_Shutdown (void)
 {
+	curl_global_cleanup();
 	Cmd_ExecuteString("shutdown_alias");
 }
 
