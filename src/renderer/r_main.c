@@ -89,6 +89,7 @@ cvar_t *r_shadow_debug_volume;
 cvar_t *r_shadow_debug_shade;
 cvar_t *r_ati_separate_stencil;
 cvar_t *r_stencil_two_side;
+cvar_t *r_bitdepth;
 
 cvar_t *r_drawclouds;
 cvar_t *r_imagefilter;
@@ -751,6 +752,7 @@ static void R_Register (void)
 	r_speeds = Cvar_Get("r_speeds", "0", 0, NULL);
 	r_anisotropic = Cvar_Get("r_anisotropic", "1", CVAR_ARCHIVE, NULL);
 	r_texture_lod = Cvar_Get("r_texture_lod", "0", CVAR_ARCHIVE, NULL);
+	r_bitdepth = Cvar_Get("r_bitdepth", "24", CVAR_ARCHIVE, "16 or 24 - bitdepth of the display");
 
 	r_screenshot = Cvar_Get("r_screenshot", "jpg", CVAR_ARCHIVE, "png, jpg or tga are valid screenshot formats");
 	r_screenshot_jpeg_quality = Cvar_Get("r_screenshot_jpeg_quality", "75", CVAR_ARCHIVE, "jpeg quality in percent for jpeg screenshots");

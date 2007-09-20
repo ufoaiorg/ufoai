@@ -138,6 +138,7 @@ qboolean Rimp_Init (void)
 qboolean R_InitGraphics (void)
 {
 	uint32_t flags;
+	int bits;
 
 	vid_fullscreen->modified = qfalse;
 	vid_mode->modified = qfalse;
@@ -155,13 +156,25 @@ qboolean R_InitGraphics (void)
 			return qtrue;
 	}
 
+	switch (r_bitdepth->integer) {
+	case 24:
+	case 32:
+		bits = 8;
+		break;
+	case 16:
+		bits = 4;
+		break;
+	default:
+		Sys_Error("Invalid r_bitdepth value");
+	}
+
 	/* free resources in use */
 	if (r_surface)
 		SDL_FreeSurface(r_surface);
 
-	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
+	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, bits);
+	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, bits);
+	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, bits);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 1);
 	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
@@ -173,7 +186,7 @@ qboolean R_InitGraphics (void)
 
 	if ((r_surface = SDL_SetVideoMode(viddef.width, viddef.height, 0, flags)) == NULL) {
 		const char *error = SDL_GetError();
-		Com_Printf("SDL SetVideoMode failed: %s\n", error);
+		Com_Printf("SDL SetVideoMode failed: %s - try to reduce the r_bitdepth value\n", error);
 		return qfalse;
 	}
 

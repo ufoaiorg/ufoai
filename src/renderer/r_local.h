@@ -148,6 +148,7 @@ extern cvar_t *r_lerpmodels;
 
 extern cvar_t *r_anisotropic;
 extern cvar_t *r_texture_lod;   /* lod_bias */
+extern cvar_t *r_bitdepth;
 
 extern cvar_t *r_screenshot;
 extern cvar_t *r_screenshot_jpeg_quality;
