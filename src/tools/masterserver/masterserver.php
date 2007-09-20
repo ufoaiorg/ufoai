@@ -85,6 +85,7 @@ function updateServerList ($remove, $add)
 		echo "Error - could not write " . $GLOBALS["serverList"];
 		return;
 	}
+	flock($file, LOCK_EX);
 
 	fwrite($file, "$i\n");
 	# new server
@@ -93,6 +94,7 @@ function updateServerList ($remove, $add)
 		$serverListStr .= "$ip $port $time\n";
 	}
 	fwrite($file, $newListContent);
+	flock($file, LOCK_UN);
 	fclose($file);
 	return "$i\n$serverListStr";
 }
