@@ -96,6 +96,7 @@ static void AIRFIGHT_DestroyBullets (aircraftProjectile_t *projectile)
 	}
 
 	numBullets--;
+	assert(numBullets >= 0);
 }
 
 /**

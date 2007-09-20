@@ -1815,12 +1815,12 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 				/* if there is no ammo MSG_WriteString will write an empty string */
 				MSG_WriteString(sb, csi.ods[gd.ufos[i].weapons[j].ammoIdx].id);
 			} else {
-				MSG_WriteString(sb, "skip");
+				MSG_WriteString(sb, "");
 				MSG_WriteShort(sb, 0);
 				MSG_WriteShort(sb, 0);
 				MSG_WriteShort(sb, 0);
 				/* if there is no ammo MSG_WriteString will write an empty string */
-				MSG_WriteString(sb, "skip");
+				MSG_WriteString(sb, "");
 			}
 		}
 		/* save shield slots - currently only one */
@@ -1829,7 +1829,7 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 			MSG_WriteString(sb, csi.ods[gd.ufos[i].shield.itemIdx].id);
 			MSG_WriteShort(sb, gd.ufos[i].shield.installationTime);
 		} else {
-			MSG_WriteString(sb, "skip");
+			MSG_WriteString(sb, "");
 			MSG_WriteShort(sb, 0);
 		}
 		/* save electronics slots */
@@ -1839,7 +1839,7 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 				MSG_WriteString(sb, csi.ods[gd.ufos[i].electronics[j].itemIdx].id);
 				MSG_WriteShort(sb, gd.ufos[i].electronics[j].installationTime);
 			} else {
-				MSG_WriteString(sb, "skip");
+				MSG_WriteString(sb, "");
 				MSG_WriteShort(sb, 0);
 			}
 		}
@@ -1874,7 +1874,7 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 			MSG_WriteByte(sb, 2);
 		MSG_WriteShort(sb, gd.projectiles[i].time);
 		MSG_WriteFloat(sb, gd.projectiles[i].angle);
-		MSG_WriteByte(sb, gd.projectiles[i].bulletIdx);
+		MSG_WriteShort(sb, gd.projectiles[i].bulletIdx);
 	}
 
 	/* Save bullets. */
@@ -1905,7 +1905,7 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 qboolean AIR_Load (sizebuf_t* sb, void* data)
 {
 	aircraft_t *ufo;
-	int i, j;
+	int i, j, k;
 	const char *s;
 	/* vars, if aircraft wasn't found */
 	vec3_t tmp_vec3t;
@@ -1934,7 +1934,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			for (j = 0; j < presaveArray[PRE_AIRSTA]; j++)
 				MSG_ReadLong(sb);
 			MSG_ReadShort(sb);			/* baseTarget index */
-			MSG_ReadByte(sb);			/* aircraftTarget index */
+			MSG_ReadShort(sb);			/* aircraftTarget index */
 			/* read slots */
 			tmp_int = MSG_ReadByte(sb);
 			for (j = 0; j < tmp_int; j++) {
@@ -1944,18 +1944,45 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 				MSG_ReadShort(sb);
 				MSG_ReadString(sb);
 			}
+			/* shield */
 			tmp_int = MSG_ReadByte(sb);
 			if (tmp_int) {
 				MSG_ReadString(sb);
 				MSG_ReadShort(sb);
 			}
+			/* electro */
+			tmp_int = MSG_ReadByte(sb);
+			if (tmp_int) {
+				MSG_ReadString(sb);
+				MSG_ReadShort(sb);
+			}
+			/* projectiles */
 			tmp_int = MSG_ReadByte(sb);
 			for (j = 0; j < tmp_int; j++) {
 				MSG_ReadString(sb);
+				MSG_ReadPos(sb, tmp_vec3t);
+				MSG_ReadPos(sb, tmp_vec3t);
+				k = MSG_ReadByte(sb);
+				if (k != 2)
+					MSG_ReadShort(sb);
 				MSG_ReadShort(sb);
+				k = MSG_ReadByte(sb);
+				if (k != 2)
+					MSG_ReadShort(sb);
 				MSG_ReadShort(sb);
+				MSG_ReadFloat(sb);
 				MSG_ReadShort(sb);
-				MSG_ReadString(sb);
+			}
+			/* bullets */
+			tmp_int = MSG_ReadByte(sb);
+			for (j = 0; j < tmp_int; j++)
+				MSG_Read2Pos(sb, tmp_vec2t);
+			for (j = 0; j < presaveArray[PRE_MAXREC]; j++) {
+				MSG_ReadByte(sb);
+				MSG_ReadByte(sb);
+				MSG_ReadByte(sb);
+				MSG_ReadLong(sb);
+				MSG_ReadLong(sb);
 			}
 		} else {
 			memcpy(&gd.ufos[i], ufo, sizeof(aircraft_t));
@@ -2008,7 +2035,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			}
 			/* check for shield slot */
 			/* there is only one shield - but who knows - breaking the savegames if this changes
-				 * isn't worth it */
+			 * isn't worth it */
 			tmp_int = MSG_ReadByte(sb);
 			if (tmp_int) {
 				tech = RS_GetTechByProvided(MSG_ReadString(sb));
@@ -2066,7 +2093,8 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 				gd.projectiles[i].aimedAircraft = AIR_AircraftGetFromIdx(MSG_ReadShort(sb));
 			gd.projectiles[i].time = MSG_ReadShort(sb);
 			gd.projectiles[i].angle = MSG_ReadFloat(sb);
-			gd.projectiles[i].bulletIdx = MSG_ReadByte(sb);
+			/* short - might be -1 */
+			gd.projectiles[i].bulletIdx = MSG_ReadShort(sb);
 		} else
 			Sys_Error("AIR_Load()... Could not get technology of projectile %i\n", i);
 	}
