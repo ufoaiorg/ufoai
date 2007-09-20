@@ -73,7 +73,8 @@ function updateServerList ($remove, $add)
 			}
 		} else {
 			$i++;
-			$newListContent .= "$data[0] $data[1] $data[2]\n";
+			# now updates - so write it back
+			$newListContent .= $file[$j];
 			# the client is only interested in ip and port
 			$serverListStr .= "$data[0] $data[1]\n";
 		}
