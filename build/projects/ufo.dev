@@ -9,7 +9,7 @@ CppCompiler=
 Includes=
 Linker=-lvorbisfile_@@_-lvorbis_@@_-logg_@@_-lcurl_@@_-lwinmm _@@_-lwsock32 _@@_-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lgmon_@@_-lintl _@@_-lSDL_@@_-lSDL_ttf_@@_-lz_@@_-lpng_@@_-ljpeg_@@_-lws2_32_@@_
 Libs=C:\Dev-Cpp\lib
-UnitCount=172
+UnitCount=174
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=ufo_private.rc
@@ -1759,6 +1759,26 @@ BuildCmd=
 
 [Unit172]
 FileName=..\..\src\ports\windows\win_console.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit173]
+FileName=..\..\src\common\http.h
+CompileCpp=0
+Folder=Header Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit174]
+FileName=..\..\src\common\http.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
