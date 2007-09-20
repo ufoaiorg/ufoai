@@ -51,7 +51,7 @@ typedef struct dlhandle_s {
 	char		*tempBuffer;
 } dlhandle_t;
 
-const char* HTTP_GetURL(const char *url);
+char* HTTP_GetURL(const char *url);
 size_t HTTP_Recv(void *ptr, size_t size, size_t nmemb, void *stream);
 size_t HTTP_Header(void *ptr, size_t size, size_t nmemb, void *stream);
 void HTTP_Cleanup(void);

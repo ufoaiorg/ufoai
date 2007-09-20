@@ -90,7 +90,7 @@ size_t HTTP_Recv (void *ptr, size_t size, size_t nmemb, void *stream)
  * @brief Gets a specific url and store into
  * @note Make sure, that you free the strings that is returned by this function
  */
-const char* HTTP_GetURL (const char *url)
+char* HTTP_GetURL (const char *url)
 {
 	dlhandle_t dl;
 

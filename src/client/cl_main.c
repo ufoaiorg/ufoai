@@ -943,15 +943,45 @@ static void CL_ServerInfoCallback (struct net_stream *s)
  */
 static void CL_QueryMasterServer (void)
 {
+	char *responseBuf;
 	const char *serverList;
+	const char *token;
+	char node[MAX_VAR], service[MAX_VAR];
+	int i, num;
 
-	CL_SetHTTPServer(masterserver_url->string);
-	serverList = HTTP_GetURL(va("%s/ufo/masterserver.php", masterserver_url->string));
-	if (!serverList) {
+	responseBuf = HTTP_GetURL(va("%s/ufo/masterserver.php?query", masterserver_url->string));
+	if (!responseBuf) {
 		Com_Printf("Could not query masterserver\n");
 		return;
-	} else
-		Com_DPrintf(DEBUG_CLIENT, "masterserver response: %s\n", serverList);
+	}
+
+	serverList = responseBuf;
+
+	Com_DPrintf(DEBUG_CLIENT, "masterserver response: %s\n", serverList);
+	token = COM_Parse(&serverList);
+
+	num = atoi(token);
+	if (num >= MAX_SERVERLIST) {
+		Com_DPrintf(DEBUG_CLIENT, "Too many servers: %i\n", num);
+		num = MAX_SERVERLIST;
+	}
+	for (i = 0; i < num; i++) {
+		token = COM_Parse(&serverList);
+		if (!*token || !serverList) {
+			Com_Printf("Could not finish the masterserver response parsing\n");
+			break;
+		}
+		Q_strncpyz(node, token, sizeof(node));
+		token = COM_Parse(&serverList);
+		if (!*token || !serverList) {
+			Com_Printf("Could not finish the masterserver response parsing\n");
+			break;
+		}
+		Q_strncpyz(service, token, sizeof(service));
+		CL_AddServerToList(node, service);
+	}
+
+	Mem_Free(responseBuf);
 }
 
 /**
@@ -1189,7 +1219,7 @@ static void CL_PingServers_f (void)
 	/* query master server? */
 	/* @todo: Cache this to save bandwidth */
 	if (Cmd_Argc() == 2 || Q_strcmp(Cmd_Argv(1), "local")) {
-		Com_Printf("Query masterserver\n");
+		Com_DPrintf(DEBUG_CLIENT, "Query masterserver\n");
 		CL_QueryMasterServer();
 	}
 }

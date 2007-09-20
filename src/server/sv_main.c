@@ -711,6 +711,8 @@ void SV_Frame (int now, void *data)
 #define	HEARTBEAT_SECONDS	300
 void Master_Heartbeat (void)
 {
+	char *responseBuf;
+
 	if (!sv_dedicated || !sv_dedicated->integer)
 		return;		/* only dedicated servers send heartbeats */
 
@@ -727,13 +729,9 @@ void Master_Heartbeat (void)
 	svs.last_heartbeat = svs.realtime;
 
 	/* send to master */
-#if 0
-	s = NET_Connect(masterserver_host->string, masterserver_port->string);
-	if (s) {
-		NET_OOB_Printf(s, "heartbeat\n");
-		stream_finished(s);
-	}
-#endif
+	responseBuf = HTTP_GetURL(va("%s/ufo/masterserver.php?heartbeat&port=%s", masterserver_url->string, port->string));
+	if (responseBuf)
+		Mem_Free(responseBuf);
 }
 
 /**
@@ -741,22 +739,18 @@ void Master_Heartbeat (void)
  */
 void Master_Shutdown (void)
 {
-	/* pgm post3.19 change, cvar pointer not validated before dereferencing */
+	char *responseBuf;
+
 	if (!sv_dedicated || !sv_dedicated->integer)
 		return;					/* only dedicated servers send heartbeats */
 
-	/* pgm post3.19 change, cvar pointer not validated before dereferencing */
 	if (!sv_public || !sv_public->integer)
 		return;					/* a private dedicated game */
 
 	/* send to master */
-#if 0
-	s = NET_Connect(masterserver_host->string, masterserver_port->string);
-	if (s) {
-		NET_OOB_Printf(s, "shutdown\n");
-		stream_finished(s);
-	}
-#endif
+	responseBuf = HTTP_GetURL(va("%s/ufo/masterserver.php?shutdown&port=%s", masterserver_url->string, port->string));
+	if (responseBuf)
+		Mem_Free(responseBuf);
 }
 
 /*============================================================================ */
