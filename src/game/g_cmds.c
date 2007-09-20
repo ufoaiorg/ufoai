@@ -35,28 +35,28 @@ static void Cmd_Players_f (player_t * player)
 {
 	int i;
 	int count = 0;
-	char small[64];
-	char large[1280];
+	char smallBuf[64];
+	char largeBuf[1280];
 
 	/* print information */
-	large[0] = 0;
+	largeBuf[0] = 0;
 
 	for (i = 0; i < game.sv_maxplayersperteam; i++) {
 		if (!game.players[i].pers.team)
 			continue;
 
-		Com_sprintf(small, sizeof(small), "Team %i %s\n", game.players[i].pers.team, game.players[i].pers.netname);
+		Com_sprintf(smallBuf, sizeof(smallBuf), "Team %i %s\n", game.players[i].pers.team, game.players[i].pers.netname);
 
 		/* can't print all of them in one packet */
-		if (strlen(small) + strlen(large) > sizeof(large) - 100) {
-			Q_strcat(large, "...\n", sizeof(large));
+		if (strlen(smallBuf) + strlen(largeBuf) > sizeof(largeBuf) - 100) {
+			Q_strcat(largeBuf, "...\n", sizeof(largeBuf));
 			break;
 		}
-		Q_strcat(large, small, sizeof(large));
+		Q_strcat(largeBuf, smallBuf, sizeof(largeBuf));
 		count++;
 	}
 
-	gi.cprintf(player, PRINT_CONSOLE, "%s\n%i players\n", large, count);
+	gi.cprintf(player, PRINT_CONSOLE, "%s\n%i players\n", largeBuf, count);
 }
 
 /**
