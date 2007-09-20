@@ -128,7 +128,7 @@ static qboolean AIRFIGHT_RemoveProjectile (int idx)
 	int i = 0;
 
 #ifdef DEBUG
-	if (idx > gd.numProjectiles - 1) {
+	if (idx > gd.numProjectiles - 1 || idx < 0) {
 		Com_Printf("Tried to remove an unexisting idx in array gd.numProjectiles\n");
 		return qfalse;
 	}
