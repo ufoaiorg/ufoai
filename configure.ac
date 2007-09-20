@@ -1,4 +1,4 @@
-AC_INIT(src/server/sv_main.c)
+^AC_INIT(src/server/sv_main.c)
 
 # check build/host/target systems
 # (build  = system we're building on,
@@ -64,10 +64,6 @@ AC_ARG_WITH(snd_arts,
 AC_ARG_WITH(snd_wapi,
 	[AS_HELP_STRING([--with-snd-wapi], [with wapi sound support @<:@default=check@:>@])],
 	[], [with_snd_wapi=check])
-
-AC_ARG_WITH(curl,
-	[AS_HELP_STRING([--with-curl], [compile with curl download support @<:@default=check@:>@])],
-	[], [with_curl=check])
 
 AC_ARG_WITH(curses,
 	[AS_HELP_STRING([--with-curses], [compile with curses console support @<:@default=check@:>@])],
@@ -362,6 +358,19 @@ AC_CHECK_LIB(z, compress, LIBS="-lz", AC_MSG_ERROR([You must have libz!!!]))
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 SERVER_LIBS="$SERVER_LIBS $LIBS"
 TOOLS_LIBS="$TOOLS_LIBS $LIBS"
+
+#---------------------------------------------------------------------------------------------
+# Check for curl
+#---------------------------------------------------------------------------------------------
+LIBS=
+AC_CHECK_HEADERS([libcurl.h])
+if test "$ac_cv_header_libcurl_h" != "yes"
+then
+	AC_MSG_ERROR([Could not find libcurl.h!])
+fi
+AC_CHECK_LIB(curl, curl_easy_init, LIBS="-lcurl", AC_MSG_ERROR([You must have libcurl!!!]))
+CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+SERVER_LIBS="$SERVER_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check JPEG
@@ -691,27 +700,6 @@ fi
 SERVER_LIBS="$SERVER_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
-# Check for curl
-#---------------------------------------------------------------------------------------------
-
-LIBS=
-if test "$with_curl" = "check" || test "$with_curl" = "yes"
-then
-	AC_SEARCH_LIBS([curl_easy_init], [curl])
-	if test "$ac_cv_search_curl_easy_init" != "no"
-	then
-		AC_SUBST([HAVE_CURL],1)
-		AC_DEFINE([HAVE_CURL],[1],[Have curl library])
-	elif test "$with_curl" = "yes"
-	then
-		AC_MSG_ERROR([--with-curl specified but could not find ])
-	fi
-else
-	AC_MSG_NOTICE([Without cURL])
-fi
-CLIENT_LIBS="$CLIENT_LIBS $LIBS"
-
-#---------------------------------------------------------------------------------------------
 # Check for client
 #---------------------------------------------------------------------------------------------
 
@@ -753,17 +741,6 @@ if test "$enable_ufo2map" = "yes"
 then
 	AC_MSG_NOTICE([Enabling ufo2map])
 	AC_SUBST([BUILD_UFO2MAP],1)
-fi
-
-#---------------------------------------------------------------------------------------------
-# Check for qdata
-#---------------------------------------------------------------------------------------------
-
-AC_SUBST([BUILD_QDATA],0)
-if test "$enable_qdata" = "yes"
-then
-	AC_MSG_NOTICE([Enabling qdata])
-	AC_SUBST([BUILD_QDATA],1)
 fi
 
 #---------------------------------------------------------------------------------------------
