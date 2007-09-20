@@ -1147,8 +1147,9 @@ void R_Shutdown (void)
 	for (commands = r_commands; commands->name; commands++)
 		Cmd_RemoveCommand(commands->name);
 
-	assert(spherelist != -1);
-	qglDeleteLists(spherelist, 1);
+	/* in case of a sys error e.g. this value is still -1 */
+	if (spherelist != -1)
+		qglDeleteLists(spherelist, 1);
 	spherelist = -1;
 
 	R_ShutdownModels();
