@@ -25,28 +25,58 @@ $serverTimeoutSeconds = "320";
 # Helper functions
 ###############################################################################
 
-function readServerList ($listArray)
+function updateServerList ($remove, $ip, $port)
 {
+	# seconds since 1970/01/01
+	$time = time();
+	$ip = $HTTP_SERVER_VARS["REMOTE_ADDR"];
+	if (isset($_GET["port"]))
+		$port = $_GET["port"];
+	else
+		$port = $GLOBALS["standardPort"];
+
+	$newListContent = "";
+
 	$file = @fopen($GLOBALS["serverList"], 'r');
 	if (!$file)
 		return "";
 	/* first entry/line in the file is the number of servers in the list */
 	$num = fgets($file, 100);
 
+	$updatedServer = 0;
+
 	while (!feof($file)) {
-		$i++;
+		$skipThisServer = 0;
+		/* get the hole server line */
 		$server = fgets($file, 100);
 		/* split ip, port, last heartbeat */
 		$data = explode(" ", $server);
-		/* TODO */
+		if ($time > $data[2] + $GLOBALS["serverTimeoutSeconds"]) {
+			# don't readd this server - time out
+		} else if (!strcmp($data[0], $ip) && !strcmp($data[1], $port)) {
+			if (!$remove) {
+				# heartbeat
+				$newListContent = "$data[0] $data[1] " . $time . "\n";
+				$updatedServer = 1;
+			}
+		} else {
+			$newListContent = "$data[0] $data[1] $data[2]\n";
+		}
 	}
 
 	fclose($file);
 
-	if ($i != $num) {
-		echo "Error in serverlist";
+	$file = @fopen($GLOBALS["serverList"], 'w');
+	if (!$file) {
+		echo "Error - could not write " . $GLOBALS["serverList"];
 		exit;
 	}
+	fwrite($file, $newListContent);
+	# new server
+	if (!$updatedServer) {
+		fwrite($file, "$ip $port $time");
+	}
+	fclose($file);
 }
 
 ###############################################################################
@@ -57,22 +87,13 @@ function readServerList ($listArray)
 # Or add a new server to the list of there is no such entry
 function serverHeartbeat ()
 {
-	if (isset($_GET["port"]))
-		$port = $_GET["port"];
-	else
-		$port = $GLOBALS["standardPort"];
-
-	# seconds since 1970/01/01
-	$time = time();
+	updateServerList(0);
 }
 
 # Remove the given server from the list
 function serverHeartShutdown ()
 {
-	if (isset($_GET["port"]))
-		$port = $_GET["port"];
-	else
-		$port = $GLOBALS["standardPort"];
+	updateServerList(1);
 }
 
 # Send the serverlist to the client
