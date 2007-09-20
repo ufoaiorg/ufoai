@@ -34,6 +34,59 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define UNIT_SIZE   32
 #define UNIT_HEIGHT 64
 
+
+/* to support the gnuc __attribute__ command */
+#if defined __ICC || !defined __GNUC__
+#  define __attribute__(x)  /*NOTHING*/
+#endif
+
+#ifndef NULL
+#define NULL ((void *)0)
+#endif
+
+#ifndef max
+#define max(a,b) ((a)>(b)?(a):(b))
+#endif
+
+#ifndef min
+#define min(a,b) ((a)<(b)?(a):(b))
+#endif
+
+#ifdef _WIN32
+# ifndef snprintf
+#  define snprintf _snprintf
+# endif
+# define EXPORT __cdecl
+# define IMPORT __cdecl
+#else
+# ifndef stricmp
+#  define stricmp strcasecmp
+# endif
+# define EXPORT
+# define IMPORT
+#endif
+
+#if defined __STDC_VERSION__
+#  if __STDC_VERSION__ < 199901L
+#    if defined __GNUC__
+/* if we are using ansi - the compiler doesn't know about inline */
+#      define inline __inline__
+#    elif defined _MSVC
+#      define inline __inline
+#    else
+#      define inline
+#    endif
+#  endif
+#else
+#  define inline
+#endif
+
+/* angle indexes */
+#define PITCH  0   /* up / down */
+#define YAW    1   /* left / right */
+#define ROLL   2   /* fall over */
+
+
 /** @brief Map boundary is +/- 4096 - to get into the positive area we add the
  * possible max negative value and divide by the size of a grid unit field */
 #define VecToPos(v, p) (                  \

@@ -56,61 +56,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <ctype.h>
 #include <limits.h>
 
+#define CURL_STATICLIB
+#include <curl/curl.h>
+
 /* filesystem stuff */
 #ifdef _WIN32
 # include <direct.h>
 # include <io.h>
-# ifndef snprintf
-#  define snprintf _snprintf
-# endif
-# define EXPORT __cdecl
-# define IMPORT __cdecl
 #else
-# ifndef stricmp
-#  define stricmp strcasecmp
-# endif
 # include <unistd.h>
 # include <dirent.h>
-# define EXPORT
-# define IMPORT
-#endif
-
-#if defined __STDC_VERSION__
-#  if __STDC_VERSION__ < 199901L
-#    if defined __GNUC__
-/* if we are using ansi - the compiler doesn't know about inline */
-#      define inline __inline__
-#    elif defined _MSVC
-#      define inline __inline
-#    else
-#      define inline
-#    endif
-#  endif
-#else
-#  define inline
 #endif
 
 #ifdef DEDICATED_ONLY
 /* no gettext support for dedicated servers */
 # define _(String) String
 # define ngettext(x, y, cnt) x
-#endif
-
-/* to support the gnuc __attribute__ command */
-#if defined __ICC || !defined __GNUC__
-#  define __attribute__(x)  /*NOTHING*/
-#endif
-
-#ifndef NULL
-#define NULL ((void *)0)
-#endif
-
-#ifndef max
-#define max(a,b) ((a)>(b)?(a):(b))
-#endif
-
-#ifndef min
-#define min(a,b) ((a)<(b)?(a):(b))
 #endif
 
 #ifndef logf
@@ -151,11 +112,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define TU_REACTION_MULTI	14	/**< Time units used to activate multi-RF. */
 #define TU_MOVE_STRAIGHT 2	/**< Time units used to move straight to the next field/square. */
 #define TU_MOVE_DIAGONAL 3	/**< Time units used to move to a diagonal field/square. */
-
-/* angle indexes */
-#define PITCH               0   /* up / down */
-#define YAW                 1   /* left / right */
-#define ROLL                2   /* fall over */
 
 #define MAX_STRING_CHARS    1024    /* max length of a string passed to Cmd_TokenizeString */
 #define MAX_STRING_TOKENS   80  /* max tokens resulting from Cmd_TokenizeString */

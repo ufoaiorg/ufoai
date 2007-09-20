@@ -41,9 +41,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_event.h"
 #include "cl_menu.h"
 #include "cl_save.h"
-
-#define CURL_STATICLIB
-#include <curl/curl.h>
 #include "cl_http.h"
 
 /*============================================================================= */

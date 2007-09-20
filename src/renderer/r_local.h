@@ -39,15 +39,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_shader.h"
 
-/* up / down */
-#define PITCH   0
-
-/* left / right */
-#define YAW     1
-
-/* fall over */
-#define ROLL    2
-
 /*
 skins will be outline flood filled and mip mapped
 pics and sprites with alpha will be outline flood filled
