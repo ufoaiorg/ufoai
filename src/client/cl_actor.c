@@ -366,7 +366,7 @@ static int CL_CalcReloadTime (int weapon_id)
 	}
 
 	/* total TU cost is the sum of 3 numbers:
-	   TU for weapon reload + TU to get ammo out + TU to put ammo in hands */
+	 * TU for weapon reload + TU to get ammo out + TU to put ammo in hands */
 	tu += csi.ods[weapon_id].reload + csi.ids[csi.idRight].in;
 	return tu;
 }
@@ -2307,7 +2307,7 @@ void CL_InvCheckHands (struct dbuffer *msg)
 	actor_idx = CL_GetActorNumber(le);
 	if (actor_idx == -1) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_InvCheckHands: Could not get local entity actor id via CL_GetActorNumber\n");
-		Com_Printf("CL_InvCheckHands: DEBUG actor info: team=%i(%s) type=%i inuse=%i\n", le->team, le->teamDef ? le->teamDef->name : "No team", le->type, le->inuse);
+		Com_DPrintf(DEBUG_CLIENT, "CL_InvCheckHands: DEBUG actor info: team=%i(%s) type=%i inuse=%i\n", le->team, le->teamDef ? le->teamDef->name : "No team", le->type, le->inuse);
 		return;
 	}
 
