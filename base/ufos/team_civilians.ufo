@@ -36,12 +36,12 @@ team latin
 
 	actorsounds {
 		female {
-			hurtsound	misc/newmission.wav
-			deathsound	misc/newmission.wav
+			hurtsound 	civilians/female_ah
+			deathsound	civilians/female_scream
 		}
 		male {
-			hurtsound 	misc/newmission.wav
-			deathsound	misc/newmission.wav
+			hurtsound 	civilians/male_ah
+			deathsound	civilians/male_scream
 		}
 	}
 }
@@ -95,13 +95,12 @@ team states
 
 	actorsounds {
 		female {
-			hurtsound	misc/newmission.wav
-			deathsound	misc/newmission.wav
+			hurtsound 	civilians/female_ah
+			deathsound	civilians/female_scream
 		}
-
 		male {
-			hurtsound 	misc/newmission.wav
-			deathsound	misc/newmission.wav
+			hurtsound 	civilians/male_ah
+			deathsound	civilians/male_scream
 		}
 	}
 }
@@ -153,13 +152,12 @@ team europa
 
 	actorsounds {
 		female {
-			hurtsound	misc/newmission.wav
-			deathsound	misc/newmission.wav
+			hurtsound 	civilians/female_ah
+			deathsound	civilians/female_scream
 		}
-
 		male {
-			hurtsound 	misc/newmission.wav
-			deathsound	misc/newmission.wav
+			hurtsound 	civilians/male_ah
+			deathsound	civilians/male_scream
 		}
 	}
 }
@@ -193,12 +191,12 @@ team asia
 
 	actorsounds {
 		female {
-			hurtsound	misc/newmission.wav
-			deathsound	misc/newmission.wav
+			hurtsound 	civilians/female_ah
+			deathsound	civilians/female_scream
 		}
 		male {
-			hurtsound 	misc/newmission.wav
-			deathsound	misc/newmission.wav
+			hurtsound 	civilians/male_ah
+			deathsound	civilians/male_scream
 		}
 	}
 }
@@ -233,12 +231,12 @@ team middle
 
 	actorsounds {
 		female {
-			hurtsound	misc/newmission.wav
-			deathsound	misc/newmission.wav
+			hurtsound 	civilians/female_ah
+			deathsound	civilians/female_scream
 		}
 		male {
-			hurtsound 	misc/newmission.wav
-			deathsound	misc/newmission.wav
+			hurtsound 	civilians/male_ah
+			deathsound	civilians/male_scream
 		}
 	}
 }
@@ -272,12 +270,12 @@ team africa
 
 	actorsounds {
 		female {
-			hurtsound	misc/newmission.wav
-			deathsound	misc/newmission.wav
+			hurtsound 	civilians/female_ah
+			deathsound	civilians/female_scream
 		}
 		male {
-			hurtsound 	misc/newmission.wav
-			deathsound	misc/newmission.wav
+			hurtsound 	civilians/male_ah
+			deathsound	civilians/male_scream
 		}
 	}
 }
@@ -311,12 +309,12 @@ team russia
 
 	actorsounds {
 		female {
-			hurtsound	misc/newmission.wav
-			deathsound	misc/newmission.wav
+			hurtsound 	civilians/female_ah
+			deathsound	civilians/female_scream
 		}
 		male {
-			hurtsound 	misc/newmission.wav
-			deathsound	misc/newmission.wav
+			hurtsound 	civilians/male_ah
+			deathsound	civilians/male_scream
 		}
 	}
 }
@@ -350,12 +348,12 @@ team oceania
 
 	actorsounds {
 		female {
-			hurtsound	misc/newmission.wav
-			deathsound	misc/newmission.wav
+			hurtsound 	civilians/female_ah
+			deathsound	civilians/female_scream
 		}
 		male {
-			hurtsound 	misc/newmission.wav
-			deathsound	misc/newmission.wav
+			hurtsound 	civilians/male_ah
+			deathsound	civilians/male_scream
 		}
 	}
 }
@@ -382,6 +380,17 @@ team armysoldier
 			civilians/male soldier01 soldier01_head 0
 		}
 	}
+
+	actorsounds {
+		female {
+			hurtsound 	civilians/female_ah
+			deathsound	civilians/female_scream
+		}
+		male {
+			hurtsound 	civilians/male_ah
+			deathsound	civilians/male_scream
+		}
+	}
 }
 
 team scientist
@@ -406,6 +415,17 @@ team scientist
 			civilians/male scientist01 sci_head03b 0
 		}
 	}
+
+	actorsounds {
+		female {
+			hurtsound 	civilians/female_ah
+			deathsound	civilians/female_scream
+		}
+		male {
+			hurtsound 	civilians/male_ah
+			deathsound	civilians/male_scream
+		}
+	}
 }
 
 team worker
@@ -427,6 +447,17 @@ team worker
 			civilians/male worker01 worker01_head 1
 		}
 	}
+
+	actorsounds {
+		female {
+			hurtsound 	civilians/female_ah
+			deathsound	civilians/female_scream
+		}
+		male {
+			hurtsound 	civilians/male_ah
+			deathsound	civilians/male_scream
+		}
+	}
 }
 
 team miner
@@ -445,6 +476,17 @@ team miner
 	models {
 		male {
 			civilians/male worker01 worker02_head 1
+		}
+	}
+
+	actorsounds {
+		female {
+			hurtsound 	civilians/female_ah
+			deathsound	civilians/female_scream
+		}
+		male {
+			hurtsound 	civilians/male_ah
+			deathsound	civilians/male_scream
 		}
 	}
 }
