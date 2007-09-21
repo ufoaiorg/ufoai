@@ -253,6 +253,24 @@ aircraft craft_inter_stingray
 	price		48000
 	building	building_intercept
 	image		air_interceptor
+	slot {
+		type		weapon
+		position	wing_left
+		size		medium
+	}
+	slot {
+		type		weapon
+		position	wing_right
+		size		medium
+	}
+	slot {
+		type		electronics
+		position	wing_left
+	}
+	slot {
+		type		electronics
+		position	wing_right
+	}
 }
 
 // *********************************
@@ -284,7 +302,6 @@ aircraft craft_ufo_harvester
 	image		air_ufo
 }
 
-// FIXME - should not be shown on geoscape
 // The carrier UFO does not normally appear on the geoscape. It's used to carry
 // other UFOs to and from the mothership.
 // The only times it shows up on the geoscape is when PHALANX shoots one down
