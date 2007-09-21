@@ -164,13 +164,13 @@
 }
 // brush 17
 {
-( 254 256 74 ) ( 254 416 74 ) ( 254 416 52 ) tex_material/c_gray255 0 8 90 0.5 -0.5 33554432 0 0
-( 224 256 82 ) ( 302 256 82 ) ( 302 256 60 ) tex_material/c_gray255 16 8 90 0.5 -0.5 33554432 0 0
-( 224 416 82 ) ( 224 256 82 ) ( 224 256 60 ) tex_material/c_gray255 16 8 90 0.5 -0.5 33554432 0 0
-( 294 352 82 ) ( 216 352 82 ) ( 216 352 60 ) tex_material/c_gray255 16 8 90 0.5 -0.5 33554432 0 0
-( 222 254 80 ) ( 300 254 80 ) ( 300 414 80 ) tex_material/c_gray255 4 4 -90 0.5 0.5 33554432 0 0
-( 241 320 92 ) ( 253 320 81 ) ( 241 192 92 ) tex_material/c_gray255 -0 -0 0 1 1 33554432 0 0
-( 224 320 83 ) ( 242 320 91 ) ( 224 192 83 ) tex_material/c_gray255 -0 -0 0 1 1 33554432 0 0
+( 228 256 64 ) ( 228 416 64 ) ( 228 416 42 ) tex_material/c_gray255 20 8 90 0.5 -0.5 33554432 0 0
+( 228 256 70 ) ( 196 256 93.25 ) ( 198 256 95 ) tex_material/c_gray255 4 20 90 0.5 -0.5 33554432 0 0
+( 224 256 70 ) ( 196 352 93.25 ) ( 196 256 93.25 ) tex_material/c_gray255 0 8 90 0.5 -0.5 33554432 0 0
+( 228 352 70 ) ( 198 352 95 ) ( 196 352 93.25 ) tex_material/c_gray255 4 20 90 0.5 -0.5 33554432 0 0
+( 228 256 70 ) ( 224 352 70 ) ( 224 256 70 ) tex_material/c_gray255 4 16 -90 0.5 0.5 33554432 0 0
+( 228 352 70.125 ) ( 198 256 95 ) ( 198 352 95 ) tex_material/c_gray255 26 0 0 1 1 33554432 0 0
+( 198 352 95 ) ( 196 256 93.25 ) ( 196 352 93.25 ) tex_material/c_gray255 26 0 0 1 1 33554432 0 0
 }
 // brush 18
 {
@@ -344,16 +344,40 @@
 "origin" "352.334 388.176 48"
 "model" "models/objects/alien/ufo_crashed/ufo_scout_engines.md2"
 "angle" "-32.3199"
+"spawnflags" "255"
 }
 // entity 8
 {
 "classname" "misc_model"
 "origin" "260 416 68"
 "model" "models/objects/alien/ufo_crashed/ufo_scout_hull.md2"
+"spawnflags" "255"
 }
 // entity 9
 {
 "classname" "misc_model"
 "origin" "260 416 68"
 "model" "models/aircraft/ufo_scout/ufo_scout_upper2.md2"
+"spawnflags" "254"
+}
+// entity 10
+{
+"classname" "light"
+"light" "200"
+"_color" "0 1 0.2"
+"origin" "162 298 104"
+}
+// entity 11
+{
+"classname" "light"
+"origin" "356 182 104"
+"_color" "0 1 0.2"
+"light" "200"
+}
+// entity 12
+{
+"classname" "light"
+"origin" "250 462 104"
+"_color" "0 1 0.2"
+"light" "200"
 }
