@@ -1019,7 +1019,7 @@ static void CL_ActorStats (struct dbuffer *msg)
 		return;
 	}
 	if (le->type != ET_ACTOR && le->type != ET_ACTOR2x2) {
-		Com_Printf("CL_ActorStats: LE not an actor (type: %i)\n", le->type);
+		Com_Printf("CL_ActorStats: LE (%i) not an actor (type: %i)\n", number, le->type);
 		return;
 	}
 

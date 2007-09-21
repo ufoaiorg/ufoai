@@ -2808,12 +2808,12 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 		return;
 
 	if (le->type != ET_ACTOR && le->type != ET_ACTOR2x2) {
-		Com_Printf("Can't start shoot, LE not an actor\n");
+		Com_Printf("CL_ActorStartShoot: LE (%i) not an actor (type: %i)\n", number, le->type);
 		return;
 	}
 
 	if (le->state & STATE_DEAD) {
-		Com_Printf("Can't start shoot, actor dead\n");
+		Com_Printf("CL_ActorStartShoot: Can't start shoot, actor (%i) dead\n", number);
 		return;
 	}
 
