@@ -244,7 +244,6 @@ menu aircraft
 		if "mn_base_prod_allowed == 0"
 		tooltip	"_Build at least one workshop"
 		image	menu/button
-		image	menu/button
 		pos	"45 450"
 		texl	"0 72"
 		texh	"230 120"
