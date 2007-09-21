@@ -322,6 +322,6 @@
 {
 "classname" "misc_model"
 "origin" "32 160 64"
-"model" "models/aircraft/ufo_scout/ufo__scout_upper.md2"
+"model" "models/aircraft/ufo_scout/ufo_scout_upper.md2"
 "spawnflags" "254"
 }
