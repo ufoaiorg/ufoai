@@ -135,6 +135,20 @@ ac     +a     +a      +a     0       0      ac
 }
 
 // ---------------------------------
+// scout
+// ---------------------------------
+tile +ufo_scout
+{
+4 5
+
+0      ab     ab     0
+ac     +a     +a      ac
+ac     +a     +a      ac
+ac     +a     +a      ac
+0      ab     ab     0
+}
+
+// ---------------------------------
 // supply
 // ---------------------------------
 tile +ufo_supply
@@ -165,16 +179,16 @@ size "7 5"
 *rm_dropship +drop_firebird "1 1"
 }
 
-assembly ufo_condor
-{
-title "_UFO - Condor"
-size "7 5"
-+h01 "0 10"
-+h02 "0 10"
-+h03 "0 10"
+//assembly ufo_condor
+//{
+//title "_UFO - Condor"
+//size "7 5"
+//+h01 "0 10"
+//+h02 "0 10"
+//+h03 "0 10"
 //+ufo_condor "1 1"
-*rm_dropship +drop_firebird "1 1"
-}
+//*rm_dropship +drop_firebird "1 1"
+//}
 
 assembly ufo_scout
 {
@@ -183,7 +197,7 @@ size "7 5"
 +h01 "0 10"
 +h02 "0 10"
 +h03 "0 10"
-//+ufo_scout "1 1"
++ufo_scout "1 1"
 *rm_dropship +drop_firebird "1 1"
 }
 
