@@ -246,8 +246,8 @@ menu aircraft
 		image	menu/button
 		image	menu/button
 		pos	"45 450"
-		texl	"0 0"
-		texh	"230 64"
+		texl	"0 72"
+		texh	"230 120"
 		in
 	}
 	string txt_produce
@@ -255,6 +255,15 @@ menu aircraft
 		if "mn_base_prod_allowed == 1"
 		string	"_Produce"
 		color	"0 0.8 0 1"
+		pos	"164 483"
+		font	f_menu
+		align	cc
+	}
+	string txt_produce_na
+	{
+		if "mn_base_prod_allowed == 0"
+		string	"_Produce"
+		color	"0.5 0.5 0.5 1"
 		pos	"164 483"
 		font	f_menu
 		align	cc
