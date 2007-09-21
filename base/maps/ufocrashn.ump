@@ -134,6 +134,22 @@ ac     +a     +a      +a     0       0      ac
 0      ab     ab     ab     ab     ab     0
 }
 
+// ---------------------------------
+// supply
+// ---------------------------------
+tile +ufo_supply
+{
+6 7
+
+0      ab     ab     ab     ab     0
+ac     +a     +a      0      0       ac
+ac     +a     +a      +a     0       ac
+ac     +a     +a      +a     0       ac
+ac     +a     +a      +a     +a      ac
+ac     +a     +a      +a     0       ac
+0      ab     ab     ab     ab     0
+}
+
 // *********************************
 // Assemblies
 // *********************************
@@ -189,6 +205,6 @@ size "7 5"
 +h01 "0 10"
 +h02 "0 10"
 +h03 "0 10"
-//+ufo_supply "1 1"
++ufo_supply "1 1"
 *rm_dropship +drop_firebird "1 1"
 }
