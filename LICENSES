@@ -1926,6 +1926,7 @@ base/sound/misc/geoscape_attack.wav | GNU General Public License 2.0 | BlakeD
 base/sound/misc/geoscape_info.wav | GNU General Public License 2.0 | BlakeD
 base/sound/misc/geoscape_standard.wav | GNU General Public License 2.0 | BlakeD
 base/sound/misc/geoscape_ufo_spotted.wav | GNU General Public License 2.0 | BlakeD
+base/sound/misc/lobbyprivmsg.wav | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
 base/sound/misc/newmission.wav | GNU General Public License v2.0 | Karen Rei Pease
 base/sound/misc/popup.wav | GNU General Public License v2.0 | Karen Rei Pease
 base/sound/misc/roundstart.wav | GNU General Public License v2.0 | Karen Rei Pease
