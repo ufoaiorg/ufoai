@@ -2349,7 +2349,8 @@ void CL_ActorDoMove (struct dbuffer *msg)
 	/* get le */
 	le = LE_Get(number);
 	if (!le || (le->type != ET_ACTOR && le->type != ET_ACTOR2x2)) {
-		Com_Printf("Can't move, LE doesn't exist or is not an actor (number: %i)\n", number);
+		Com_Printf("Can't move, LE doesn't exist or is not an actor (number: %i, type: %i)\n",
+			number, le ? le->type : -1);
 		return;
 	}
 
@@ -2431,7 +2432,7 @@ void CL_ActorDoTurn (struct dbuffer *msg)
 	/* get le */
 	le = LE_Get(entnum);
 	if (!le || (le->type != ET_ACTOR && le->type != ET_ACTOR2x2)) {
-		Com_Printf("Can't turn, LE doesn't exist or is not an actor (number: %i)\n", entnum);
+		Com_Printf("Can't turn, LE doesn't exist or is not an actor (number: %i, type: %i)\n", entnum, le ? le->type : -1);
 		return;
 	}
 
@@ -2459,27 +2460,6 @@ void CL_ActorStandCrouch_f (void)
 	/* send a request to toggle crouch to the server */
 	MSG_Write_PA(PA_STATE, selActor->entnum, STATE_CROUCHED);
 }
-
-#if 0
-/**
- * @brief Stuns an actor.
- *
- * Stunning is handled as a dead actor but afterwards in AL_CollectingAliens we only collect aliens with STATE_STUN
- * @note: we can do this because STATE_STUN is 0x43 and STATE_DEAD is 0x03 (checking for STATE_DEAD is also true when STATE_STUN was set)
- * @note: Do we really need this as a script command? Currently there is no binding - but who knows?
- *
- * @note Unused atm
- */
-void CL_ActorStun (void)
-{
-	if (!CL_CheckAction())
-		return;
-
-	/* send a request to the server to stun this actor */
-	/* the server currently will refuse to stun an actor sent via PA_STATE */
-	MSG_Write_PA(PA_STATE, selActor->entnum, STATE_STUN);
-}
-#endif
 
 /**
  * @brief Toggles the headgear for the current selected player
@@ -2607,7 +2587,7 @@ static void CL_ActorHit (le_t *le, vec3_t impact, int normal)
 		Com_DPrintf(DEBUG_CLIENT, "CL_ActorHit: Can't spawn particles, LE doesn't exist\n");
 		return;
 	} else if (le->type != ET_ACTOR2x2 && le->type != ET_ACTOR) {
-		Com_Printf("CL_ActorHit: Can't spawn particles, LE is not an actor\n");
+		Com_Printf("CL_ActorHit: Can't spawn particles, LE is not an actor (type: %i)\n", le->type);
 		return;
 	}
 #if 0
@@ -2676,7 +2656,7 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	}
 
 	if (le->type != ET_ACTOR && le->type != ET_ACTOR2x2) {
-		Com_Printf("Can't shoot, LE is not an actor\n");
+		Com_Printf("Can't shoot, LE not an actor (type: %i)\n", le->type);
 		return;
 	}
 
@@ -2859,7 +2839,7 @@ void CL_ActorDie (struct dbuffer *msg)
 		Com_DPrintf(DEBUG_CLIENT, "CL_ActorDie: Can't kill, LE doesn't exist\n");
 		return;
 	} else if (le->type != ET_ACTOR2x2 && le->type != ET_ACTOR) {
-		Com_Printf("CL_ActorDie: Can't kill, LE is not an actor\n");
+		Com_Printf("CL_ActorDie: Can't kill, LE is not an actor (type: %i)\n", le->type);
 		return;
 	} else if (le->state & STATE_DEAD) {
 		Com_Printf("CL_ActorDie: Can't kill, actor already dead\n");
