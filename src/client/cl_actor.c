@@ -4061,11 +4061,11 @@ void CL_PlayActorSound (le_t* le, actorSound_t soundType)
 
 	actorSound = Com_GetActorSound(le->teamDef, le->gender, soundType);
 
-	Com_DPrintf(DEBUG_CLIENT, "CL_PlayActorSound()... actorSound: %s\n", actorSound);
+	Com_DPrintf(DEBUG_SOUND|DEBUG_CLIENT, "CL_PlayActorSound: ActorSound: '%s'\n", actorSound);
 	if (actorSound) {
 		sfx = S_RegisterSound(actorSound);
 		S_StartSound(NULL, le->entnum, SOUND_CHANNEL_ACTOR, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
 	} else
-		Com_Printf("CL_PlayActorSound()... could not start sound for teamID: %s gender: %i soundType: %i\n",
+		Com_DPrintf(DEBUG_SOUND|DEBUG_CLIENT, "CL_PlayActorSound: Could not start sound for teamID: '%s' gender: %i soundType: %i\n",
 			le->teamDef ? le->teamDef->id : "No team", le->gender, soundType);
 }

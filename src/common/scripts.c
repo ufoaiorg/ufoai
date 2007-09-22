@@ -1379,11 +1379,11 @@ const char* Com_GetActorSound (teamDef_t* td, int gender, actorSound_t soundType
 		return NULL;
 
 	if (gender < 0 || gender >= 3) {
-		Com_Printf("Com_GetActorSound: invalid gender: %i\n", gender);
+		Com_DPrintf(DEBUG_SOUND|DEBUG_CLIENT, "Com_GetActorSound: invalid gender: %i\n", gender);
 		return NULL;
 	}
 	if (td->numSounds[soundType][gender] <= 0) {
-		Com_Printf("Com_GetActorSound: no sound defined for soundtype: %i, teamID: '%s', gender: %i\n", soundType, td->id, gender);
+		Com_DPrintf(DEBUG_SOUND|DEBUG_CLIENT, "Com_GetActorSound: no sound defined for soundtype: %i, teamID: '%s', gender: %i\n", soundType, td->id, gender);
 		return NULL;
 	}
 

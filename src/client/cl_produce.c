@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 
 /** @brief Holds the current active production category (which is buytype). */
-static int produceCategory = 0;
+static int produceCategory = BUY_WEAP_PRI;
 
 /** @brief Holds the current active selected queue index/objID. */
 static qboolean selectedQueueItem 	= qfalse;
@@ -785,7 +785,7 @@ static void PR_ProductionListClick_f (void)
 }
 
 /** @brief update the list of queued and available items */
-static void PR_UpdateProductionList (void)
+static void PR_UpdateProductionList (base_t* base)
 {
 	int i, j, counter;
 	static char productionList[1024];
@@ -797,10 +797,12 @@ static void PR_UpdateProductionList (void)
 	aircraft_t *aircraft, *aircraftbase;
 	technology_t *tech = NULL;
 
+	assert(base);
+
 	Cvar_SetValue("mn_prod_disassembling", 0);
 
 	productionAmount[0] = productionList[0] = productionQueued[0] = '\0';
-	queue = &gd.productions[baseCurrent->idx];
+	queue = &gd.productions[base->idx];
 
 	/* first add all the queue items */
 	for (i = 0; i < queue->numItems; i++) {
@@ -808,15 +810,15 @@ static void PR_UpdateProductionList (void)
 		if (!prod->aircraft) {
 			od = &csi.ods[prod->objID];
 			Q_strcat(productionList, va("%s\n", od->name), sizeof(productionList));
-			Q_strcat(productionAmount, va("%i\n", baseCurrent->storage.num[prod->objID]), sizeof(productionAmount));
+			Q_strcat(productionAmount, va("%i\n", base->storage.num[prod->objID]), sizeof(productionAmount));
 			Q_strcat(productionQueued, va("%i\n", prod->amount), sizeof(productionQueued));
 		} else {
 			aircraft = &aircraft_samples[prod->objID];
-			Q_strcat(productionList, va("%s\n", aircraft->name), sizeof(productionList));
+			Q_strcat(productionList, va("%s\n", _(aircraft->name)), sizeof(productionList));
 			for (j = 0, counter = 0; j < gd.numAircraft; j++) {
 				aircraftbase = AIR_AircraftGetFromIdx(j);
 				assert(aircraftbase);
-				if ((aircraftbase->homebase == baseCurrent) && (aircraftbase->idx_sample == i))
+				if ((aircraftbase->homebase == base) && (aircraftbase->idx_sample == i))
 					counter++;
 			}
 			Q_strcat(productionAmount, va("%i\n", counter), sizeof(productionAmount));
@@ -842,7 +844,7 @@ static void PR_UpdateProductionList (void)
 			if (BUYTYPE_MATCH(od->buytype, produceCategory) && RS_IsResearched_ptr(od->tech)
 			&& *od->name && tech && (tech->produceTime > 0)) {
 				Q_strcat(productionList, va("%s\n", od->name), sizeof(productionList));
-				Q_strcat(productionAmount, va("%i\n", baseCurrent->storage.num[i]), sizeof(productionAmount));
+				Q_strcat(productionAmount, va("%i\n", base->storage.num[i]), sizeof(productionAmount));
 				Q_strcat(productionQueued, "\n", sizeof(productionQueued));
 			}
 		}
@@ -857,11 +859,11 @@ static void PR_UpdateProductionList (void)
 			}
 			Com_DPrintf(DEBUG_CLIENT, "air: %s ufotype: %i tech: %s time: %i\n", aircraft->id, aircraft->ufotype, aircraft->tech->id, aircraft->tech->produceTime);
 			if (aircraft->tech->produceTime > 0 && RS_IsResearched_ptr(aircraft->tech)) {
-				Q_strcat(productionList, va("%s\n", aircraft->name), sizeof(productionList));
+				Q_strcat(productionList, va("%s\n", _(aircraft->name)), sizeof(productionList));
 				for (j = 0, counter = 0; j < gd.numAircraft; j++) {
 					aircraftbase = AIR_AircraftGetFromIdx(j);
 					assert(aircraftbase);
-					if ((aircraftbase->homebase == baseCurrent) && (aircraftbase->idx_sample == i))
+					if ((aircraftbase->homebase == base) && (aircraftbase->idx_sample == i))
 						counter++;
 				}
 				Q_strcat(productionAmount, va("%i\n", counter), sizeof(productionAmount));
@@ -942,6 +944,8 @@ static void PR_UpdateDisassemblingList_f (void)
  */
 static void PR_ProductionSelect_f (void)
 {
+	int cat;
+
 	/* can be called from everywhere without a started game */
 	if (!baseCurrent ||!curCampaign)
 		return;
@@ -950,7 +954,11 @@ static void PR_ProductionSelect_f (void)
 		Com_Printf("Usage: prod_select <category>\n");
 		return;
 	}
-	produceCategory = atoi(Cmd_Argv(1));
+	cat = atoi(Cmd_Argv(1));
+	if (cat < MAX_BUYTYPES && cat >= BUY_WEAP_PRI)
+		produceCategory = cat;
+	else
+		return;
 
 	/* Enable disassembly cvar. */
 	Cvar_SetValue("mn_prod_disassembling", 0);
@@ -958,7 +966,7 @@ static void PR_ProductionSelect_f (void)
 	/* reset scroll values */
 	node1->textScroll = node2->textScroll = prodlist->textScroll = 0;
 
-	PR_UpdateProductionList();
+	PR_UpdateProductionList(baseCurrent);
 }
 
 /**
@@ -1186,7 +1194,7 @@ static void PR_ProductionIncrease_f (void)
 			PR_ProductionInfo(qfalse);
 		else
 			PR_AircraftInfo();
-		PR_UpdateProductionList();
+		PR_UpdateProductionList(baseCurrent);
 	} else {							/* Disassembling. */
 		PR_ProductionInfo(qtrue);
 		PR_UpdateDisassemblingList_f();
@@ -1223,7 +1231,7 @@ static void PR_ProductionStop_f (void)
 	}
 
 	PR_UpdateDisassemblingList_f();
-	PR_UpdateProductionList();
+	PR_UpdateProductionList(baseCurrent);
 }
 
 /**
@@ -1259,7 +1267,7 @@ static void PR_ProductionDecrease_f (void)
 	} else {
 		if (prod->production) {
 			PR_ProductionInfo(qfalse);
-			PR_UpdateProductionList();
+			PR_UpdateProductionList(baseCurrent);
 		} else {
 			PR_ProductionInfo(qtrue);
 			PR_UpdateDisassemblingList_f();
@@ -1284,7 +1292,7 @@ static void PR_ProductionUp_f (void)
 	PR_QueueMove(queue, selectedIndex, -1);
 
 	selectedIndex--;
-	PR_UpdateProductionList();
+	PR_UpdateProductionList(baseCurrent);
 }
 
 /**
@@ -1305,7 +1313,7 @@ static void PR_ProductionDown_f (void)
 	PR_QueueMove(queue, selectedIndex, 1);
 
 	selectedIndex++;
-	PR_UpdateProductionList();
+	PR_UpdateProductionList(baseCurrent);
 }
 
 /**
