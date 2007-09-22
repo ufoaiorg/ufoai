@@ -179,7 +179,7 @@ static void RandomList (int n, short *list)
 	}
 }
 
-
+#define ALL_TILES (0xfffffffeUL)
 #define IS_SOLID(x) ((x)&1UL)
 
 /**
@@ -211,7 +211,7 @@ static uLong tileMask (const char chr)
 	if (chr == '+')
 		return 1UL;
 	else if (chr == '0')
-		return 0UL;
+		return ALL_TILES;
 	else if (chr >= '1' && chr <= '5')
 		return 1UL << (chr - '0');
 	else if (chr >= 'a' && chr <= 'z')
@@ -449,17 +449,16 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 static void SV_CombineAlternatives (uLong *mapAlts, uLong tileAlts, char *mapRating)
 {
 	/* don't touch solid fields of the map, return if tile has no connection info */
-	if (IS_SOLID(*mapAlts) || !tileAlts)
+	if (IS_SOLID(*mapAlts) || (tileAlts==ALL_TILES))
 		return;
+
+	/* for an empty map tile must the rating be zero */
+	assert((*mapAlts!=ALL_TILES) || (*mapRating == 0));
 
 	/* copy if tile is solid */
 	if (IS_SOLID(tileAlts)) {
 		*mapAlts = tileAlts;
 		*mapRating = 1;
-	/* copy if map is empty */
-	} else if (!(*mapAlts)) {
-		*mapAlts = tileAlts;
-		*mapRating = -1;
 	/* combine otherways */
 	} else {
 		*mapAlts &= tileAlts;
@@ -468,28 +467,19 @@ static void SV_CombineAlternatives (uLong *mapAlts, uLong tileAlts, char *mapRat
 }
 
 /**
- * @brief Check the alternatives/connection info of a map with a tile.
- * @param[in] mapAlts Pointer to the alternatives info field of the map which will be updated.
- * @param[in] tileAlts Pointer to the alternatives info field of the tile.
- * @return qtrue if the tile fits.
- * @return qfalse if the tile does not fit.
- * @sa SV_FitTile
+ * @brief Reset the map to empty state.
  */
-static qboolean SV_TestAlternatives (uLong mapAlts, uLong tileAlts)
+static void SV_ClearMap (void)
 {
-	if (IS_SOLID(mapAlts) && IS_SOLID(tileAlts))
-		return qfalse;
-
-	/* no alterntives given - all possible */
-	if (!tileAlts || !mapAlts)
-		return qtrue;
-
-	/* check for equal alternatives */
-	if (tileAlts & mapAlts)
-		return qtrue;
-
-	/* no equal alternatives found*/
-	return qfalse;
+	uLong *mp, *me;
+	
+	memset(curMap, 0, sizeof(curMap));
+	memset(curRating, 0, sizeof(curRating));
+	
+	mp = &curMap[0][0];
+	me = &curMap[MAX_RANDOM_MAP_HEIGHT-1][MAX_RANDOM_MAP_WIDTH-1];
+	while(mp<=me)
+		*(mp++) = ALL_TILES;
 }
 
 /**
@@ -508,15 +498,14 @@ static qboolean SV_FitTile (mTile_t * tile, int x, int y)
 	int tx, ty;
 	const uLong *spec = NULL;
 	const uLong *m = NULL;
-
+	uLong combined;
+	
 	/* check vor valid grid positions */
 	assert(x%mAsm->dx == 0);
 	assert(y%mAsm->dy == 0);
+	assert(tile);
 
 	if (x < 0 || y < 0)
-		return qfalse;
-
-	if (!tile)
 		return qfalse;
 
 	/* check for map border */
@@ -528,7 +517,10 @@ static qboolean SV_FitTile (mTile_t * tile, int x, int y)
 	m = &curMap[y][x];
 	for (ty = 0; ty < tile->h; ty++) {
 		for (tx = 0; tx < tile->w; tx++, spec++, m++) {
-			if(!SV_TestAlternatives(*m, *spec))
+			combined = (*m) & (*spec);
+			
+			/* quit if both are solid or no equal connection is found*/
+			if( IS_SOLID(combined) || !combined)
 				return qfalse;
 		}
 		spec += (MAX_TILESIZE - tile->w);
@@ -549,7 +541,7 @@ static qboolean SV_FitTile (mTile_t * tile, int x, int y)
 static qboolean SV_TestFilled (void)
 {
 	int x, y;
-
+	
 	for (y = 1; y < mapH + 1; y++)
 		for (x = 1; x < mapW + 1; x++)
 			if (!IS_SOLID(curMap[y][x]))
@@ -683,9 +675,8 @@ static void SV_RemoveTile (int* idx, int* pos)
 	mTile_t * tile;
 
 	assert(numPlaced);
-	memset(curMap, 0, sizeof(curMap));
-	memset(curRating, 0, sizeof(curRating));
-
+	SV_ClearMap();
+	
 	numPlaced--;
 	index = mPlaced[numPlaced].idx;
 
@@ -1001,9 +992,8 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
 
 	/* assemble the map */
 	numPlaced = 0;
-	memset(curMap, 0, sizeof(curMap));
-	memset(curRating, 0, sizeof(curRating));
-
+	SV_ClearMap();
+	
 	/* place fixed parts - defined in ump via fix parameter */
 	for (i = 0; i < mAsm->numFixed; i++)
 		SV_AddTile(&mTile[mAsm->fT[i]], mAsm->fX[i], mAsm->fY[i], -1, -1);
