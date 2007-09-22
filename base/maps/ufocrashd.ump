@@ -113,7 +113,7 @@ tile +ufo_harvester
 8 6
 
 0      ab     ab     ab     ab     ab     ab     0
-ac     +a     +a      +a     +a      +a     +a      z
+ac     0      +a      +a     +a      +a     +a      z
 ac     +a     +a      +a     +a      +a     +a      z
 ac     0      0       0      +a      +a     +a      z
 ac     0      0       0      +a      +a     +a      z
