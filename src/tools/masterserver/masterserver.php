@@ -50,52 +50,63 @@ function updateServerList ($remove, $add)
 	$newListContent = "";
 	# this string is send to a client (if called from sendServerList)
 	$serverListStr = "";
+	if ( !file_exists($GLOBALS['serverList']) ) {
+		echo "Error - could not write " . $GLOBALS["serverList"];
+		return;
+		}
+	$i=10; //10 tries to open file
+	while (false=== $fHandle = fopen($GLOBALS['serverList'], "r+" )) {
+		if ( (--$i)<0 ) {
+			echo 'Error - could not open file '.$GLOBALS['serverList'];
+			return;
+			}
+		}
+	flock($fHandle, LOCK_EX);
+//	$file = file($GLOBALS["serverList"]);
 
-	$file = file($GLOBALS["serverList"]);
-
-	$updatedServer = 0;
+	$updatedServer = false;
 	$i = 0;
 
-	for ($j = 0; $j < sizeof($file); $j++) {
+	while (false!== $serverData = fgets($fHandle)) {
 		$skipThisServer = 0;
 		/* split ip, port, last heartbeat */
-		$data = explode(" ", $file[$j]);
-		if ($time > $data[2] + $GLOBALS["serverTimeoutSeconds"]) {
+		$data = explode(" ", trim($serverData));
+		if ( !isset($data[1]) ) {
+			continue;
+			}
+		if (isset($data[2]) && $time > $data[2] + $GLOBALS["serverTimeoutSeconds"]) {
 			# don't readd this server - timed out
 		} else if (!strcmp($data[0], $ip) && !strcmp($data[1], $port)) {
 			if (!$remove) {
 				# heartbeat
-				$newListContent .= "$data[0] $data[1] $time\n";
+				$newListContent .= $data[0].' '.$data[1].' '.$time."\n";
 				# the client is only interested in ip and port
-				$serverListStr .= "$data[0] $data[1]\n";
-				$updatedServer = 1;
+				$serverListStr .= "{$data[0]} {$data[1]}\n";
+				$updatedServer = true;
 				$i++;
 			}
 		} else {
 			$i++;
 			# now updates - so write it back
-			$newListContent .= $file[$j];
+			$newListContent .= $serverData;
 			# the client is only interested in ip and port
 			$serverListStr .= "$data[0] $data[1]\n";
 		}
 	}
-
-	$file = @fopen($GLOBALS["serverList"], 'w');
-	if (!$file) {
-		echo "Error - could not write " . $GLOBALS["serverList"];
-		return;
-	}
-	flock($file, LOCK_EX);
-
-	fwrite($file, "$i\n");
+	rewind($fHandle);
+//	$file = @fopen($GLOBALS["serverList"], 'w');
+//	fwrite($fHandle, "$i\n");
 	# new server
 	if (!$updatedServer && $add) {
-		fwrite($file, "$ip $port $time\n");
-		$serverListStr .= "$ip $port $time\n";
+		$i++;
+		$newListContent = "{$ip} {$port} {$time}\n".$newListContent;
+		$serverListStr .= "$ip $port\n";
 	}
-	fwrite($file, $newListContent);
-	flock($file, LOCK_UN);
-	fclose($file);
+
+	fwrite($fHandle, $i."\n".$newListContent);
+	ftruncate($fHandle,ftell($fHandle));
+	flock($fHandle, LOCK_UN);
+	fclose($fHandle);
 	return "$i\n$serverListStr";
 }
 
@@ -130,8 +141,7 @@ function sendServerList ()
 	$time = time();
 
 	# print the list
-	echo file($GLOBALS["serverList"]);
-#	updateServerList(0, 0);
+	echo updateServerList(0, 0);
 }
 
 # entry point
