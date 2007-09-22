@@ -526,6 +526,7 @@ static void PR_ProductionInfo (qboolean disassembly)
 	assert(baseCurrent);
 
 	if (selectedQueueItem) {
+		assert(selectedIndex >= 0);
 		objID = gd.productions[baseCurrent->idx].items[selectedIndex].objID;
 	} else {
 		objID = selectedIndex;
@@ -644,7 +645,7 @@ static void PR_ProductionListRightClick_f (void)
 	num = atoi(Cmd_Argv(1));
 
 	/* Clicked the production queue or the item list? */
-	if (num < queue->numItems) {
+	if (num < queue->numItems && num >= 0) {
 		od = &csi.ods[queue->items[num].objID];
 		assert(od->tech);
 		UP_OpenWith(od->tech->id);
@@ -707,7 +708,7 @@ static void PR_ProductionListClick_f (void)
 	num = atoi(Cmd_Argv(1));
 
 	/* Clicked the production queue or the item list? */
-	if (num < queue->numItems) {
+	if (num < queue->numItems && num >= 0) {
 		prod = &queue->items[num];
 		selectedQueueItem = qtrue;
 		selectedIndex = num;
