@@ -380,7 +380,7 @@ void Con_Init (void)
 	con_fontWidth = Cvar_Get("con_fontWidth", "16", CVAR_NOSET, NULL);
 	con_fontHeight = Cvar_Get("con_fontHeight", "32", CVAR_NOSET, NULL);
 	con_fontShift = Cvar_Get("con_fontShift", "4", CVAR_NOSET, NULL);
-	con_font = Cvar_Get("con_font", "0", CVAR_ARCHIVE, NULL);
+	con_font = Cvar_Get("con_font", "1", CVAR_ARCHIVE, "Change the console font - 0 and 1 are valid values");
 
 	Cmd_AddCommand("toggleconsole", Con_ToggleConsole_f, _("Bring up the in-game console"));
 	Cmd_AddCommand("togglechat", Con_ToggleChat_f, NULL);
