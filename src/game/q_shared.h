@@ -579,18 +579,6 @@ typedef enum {
 	PA_REACT_SELECT
 } player_action_t;
 
-
-typedef enum {
-	IA_NONE,
-	IA_MOVE,
-	IA_RELOAD,
-	IA_RELOAD_SWAP,
-	IA_NOTIME,
-	IA_NORELOAD,
-	IA_ARMOR
-} inventory_action_t;
-
-
 extern const char *pa_format[128];
 
 /* =========================================================== */

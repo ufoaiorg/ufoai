@@ -1989,7 +1989,7 @@ static void B_PackInitialEquipment_f (void)
 
 	/* check syntax */
 	if (Cmd_Argc() > 1) {
-		Com_Printf("Usage: pack_initial\n");
+		Com_Printf("Usage: %s\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -2011,7 +2011,7 @@ static void B_PackInitialEquipment_f (void)
 				chr = &gd.employees[aircraft->teamTypes[i]][aircraft->teamIdxs[i]].chr;
 				/* pack equipment */
 				Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment_f: Packing initial equipment for %s.\n", chr->name);
-				INVSH_EquipActor(chr->inv, ed->num, name, chr);
+				INVSH_EquipActor(chr->inv, ed->num, MAX_OBJDEFS, name, chr);
 				Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment_f: armor: %i, weapons: %i\n", chr->armor, chr->weapons);
 				chr_list_temp.chr[chr_list_temp.num] = chr;
 				chr_list_temp.num++;

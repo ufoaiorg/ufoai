@@ -678,6 +678,7 @@ static void MN_DrawFree (int container, menuNode_t * node, int posx, int posy, i
 
 /**
  * @brief Draws the free and usable inventory positions when dragging an item.
+ * @note Only call this function in dragging mode (mouseSpace == MS_DRAG)
  */
 static void MN_InvDrawFree (inventory_t * inv, menuNode_t * node)
 {
@@ -693,40 +694,33 @@ static void MN_InvDrawFree (inventory_t * inv, menuNode_t * node)
 	int x, y;
 
 	/* Draw only in dragging-mode and not for the equip-floor */
-	if (mouseSpace == MS_DRAG) {
-		assert(inv);
+	assert(mouseSpace == MS_DRAG);
+	assert(inv);
 
-#if 0
-		/* @todo: add armor support */
-		if (csi.ids[container].armor) {
-		} else
-#endif
-
-		/* if single container (hands, extension, headgear) */
-		if (csi.ids[container].single) {
-			/* if container is free or the dragged-item is in it */
-			if (node->mousefx == dragFrom || Com_CheckToInventory(inv, item, container, 0, 0))
-				MN_DrawFree(container, node, node->pos[0], node->pos[1], node->size[0], node->size[1], qtrue);
-		} else {
-			memset(free, 0, sizeof(free));
-			for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
-				for (x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {
-					/* Check if the current position is usable (topleft of the item) */
-					if (Com_CheckToInventory(inv, item, container, x, y)) {
-						itemshape = csi.ods[dragItem.t].shape;
-						/* add '1's to each position the item is 'blocking' */
-						Com_MergeShapes(free, itemshape, x, y);
+	/* if single container (hands, extension, headgear) */
+	if (csi.ids[container].single) {
+		/* if container is free or the dragged-item is in it */
+		if (node->mousefx == dragFrom || Com_CheckToInventory(inv, item, container, 0, 0))
+			MN_DrawFree(container, node, node->pos[0], node->pos[1], node->size[0], node->size[1], qtrue);
+	} else {
+		memset(free, 0, sizeof(free));
+		for (y = 0; y < SHAPE_BIG_MAX_HEIGHT; y++) {
+			for (x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {
+				/* Check if the current position is usable (topleft of the item) */
+				if (Com_CheckToInventory(inv, item, container, x, y)) {
+					itemshape = csi.ods[dragItem.t].shape;
+					/* add '1's to each position the item is 'blocking' */
+					Com_MergeShapes(free, itemshape, x, y);
+				}
+				/* Only draw on existing positions */
+				if (Com_CheckShape(csi.ids[container].shape, x, y)) {
+					if (Com_CheckShape(free, x, y)) {
+						MN_DrawFree(container, node, node->pos[0] + x * C_UNIT, node->pos[1] + y * C_UNIT, C_UNIT, C_UNIT, showTUs);
+						showTUs = qfalse;
 					}
-					/* Only draw on existing positions */
-					if (Com_CheckShape(csi.ids[container].shape, x, y)) {
-						if (Com_CheckShape(free, x, y)) {
-							MN_DrawFree(container, node, node->pos[0] + x * C_UNIT, node->pos[1] + y * C_UNIT, C_UNIT, C_UNIT, showTUs);
-							showTUs = qfalse;
-						}
-					}
-				}	/* for x */
-			}	/* for y */
-		}
+				}
+			}	/* for x */
+		}	/* for y */
 	}
 }
 
@@ -1069,15 +1063,17 @@ qboolean MN_CursorOnMenu (int x, int y)
  */
 static void MN_Drag (const menuNode_t* const node, int x, int y, qboolean rightClick)
 {
-	int px, py;
-	character_t *chr;
-	aircraft_t *aircraft = cls.missionaircraft;
+	int px, py, sel;
 
 	if (!menuInventory)
 		return;
 
 	/* don't allow this in tactical missions */
 	if (selActor && rightClick)
+		return;
+
+	sel = cl_selected->integer;
+	if (sel < 0)
 		return;
 
 	if (mouseSpace == MS_MENU) {
@@ -1099,7 +1095,59 @@ static void MN_Drag (const menuNode_t* const node, int x, int y, qboolean rightC
 				dragFromX = ic->x;
 				dragFromY = ic->y;
 			} else {
-				INV_MoveItem(baseCurrent, menuInventory, csi.idEquip, -1, -1, node->mousefx, ic->x, ic->y);
+				if (node->mousefx != csi.idEquip) {
+					/* back to idEquip (ground, floor) container */
+					INV_MoveItem(baseCurrent, menuInventory, csi.idEquip, -1, -1, node->mousefx, ic->x, ic->y);
+				} else {
+					qboolean packed;
+
+					assert(ic->item.t >= 0);
+					/* armour can only have one target */
+					if (!Q_strncmp(csi.ods[ic->item.t].type, "armor", MAX_VAR)) {
+						INV_MoveItem(baseCurrent, menuInventory, csi.idArmor, 0, 0, node->mousefx, ic->x, ic->y);
+					/* ammo or item */
+					} else if (!Q_strncmp(csi.ods[ic->item.t].type, "ammo", MAX_VAR)) {
+						Com_FindSpace(menuInventory, &ic->item, csi.idBelt, &px, &py);
+						packed = INV_MoveItem(baseCurrent, menuInventory, csi.idBelt, px, py, node->mousefx, ic->x, ic->y);
+						if (!packed) {
+							Com_FindSpace(menuInventory, &ic->item, csi.idHolster, &px, &py);
+							packed = INV_MoveItem(baseCurrent, menuInventory, csi.idHolster, px, py, node->mousefx, ic->x, ic->y);
+						}
+						if (!packed) {
+							Com_FindSpace(menuInventory, &ic->item, csi.idBackpack, &px, &py);
+							packed = INV_MoveItem(baseCurrent, menuInventory, csi.idBackpack, px, py, node->mousefx, ic->x, ic->y);
+						}
+					} else {
+						if (csi.ods[ic->item.t].headgear) {
+							Com_FindSpace(menuInventory, &ic->item, csi.idHeadgear, &px, &py);
+							INV_MoveItem(baseCurrent, menuInventory, csi.idHeadgear, px, py, node->mousefx, ic->x, ic->y);
+						} else {
+							/* left and right are single containers, but this might change - it's cleaner to check
+							 * for available space here, too */
+							Com_FindSpace(menuInventory, &ic->item, csi.idRight, &px, &py);
+							packed = INV_MoveItem(baseCurrent, menuInventory, csi.idRight, px, py, node->mousefx, ic->x, ic->y);
+							if (!packed) {
+								Com_FindSpace(menuInventory, &ic->item, csi.idLeft, &px, &py);
+								packed = INV_MoveItem(baseCurrent, menuInventory, csi.idLeft, px, py, node->mousefx, ic->x, ic->y);
+							}
+							if (!packed) {
+								Com_FindSpace(menuInventory, &ic->item, csi.idHolster, &px, &py);
+								packed = INV_MoveItem(baseCurrent, menuInventory, csi.idHolster, px, py, node->mousefx, ic->x, ic->y);
+							}
+							if (!packed) {
+								Com_FindSpace(menuInventory, &ic->item, csi.idBelt, &px, &py);
+								packed = INV_MoveItem(baseCurrent, menuInventory, csi.idBelt, px, py, node->mousefx, ic->x, ic->y);
+							}
+							if (!packed) {
+								Com_FindSpace(menuInventory, &ic->item, csi.idBackpack, &px, &py);
+								packed = INV_MoveItem(baseCurrent, menuInventory, csi.idBackpack, px, py, node->mousefx, ic->x, ic->y);
+							}
+						}
+					}
+					/* no need to continue here - placement wasn't successful at all */
+					if (!packed)
+						return;
+				}
 			}
 			UP_ItemDescription(ic->item.t);
 /*			MN_DrawTooltip("f_verysmall", csi.ods[dragItem.t].name, px, py, 0);*/
@@ -1113,41 +1161,21 @@ static void MN_Drag (const menuNode_t* const node, int x, int y, qboolean rightC
 		/* tactical mission */
 		if (selActor) {
 			MSG_Write_PA(PA_INVMOVE, selActor->entnum, dragFrom, dragFromX, dragFromY, node->mousefx, px, py);
+			return;
 		/* menu */
-		} else {
-			int sel;
-
-			INV_MoveItem(baseCurrent, menuInventory, node->mousefx, px, py, dragFrom, dragFromX, dragFromY);
-
-			/* update character info (for armor changes) */
-			if (CL_OnBattlescape()) {
-				/** @todo: Is this ever called? selActor should be true in case of CL_OnBattlescape
-				 * thus we should never reach this, no? */
-				sel = cl_selected->integer; /**@todo is this really the correct index? */
-				if (sel >= 0 && aircraft) {
-					/** @todo checking for (sel < gd.numEmployees[EMPL_SOLDIER]) is kinda tricky/recursive here
-					 * Is there a better way? */
-					chr = &gd.employees[aircraft->teamTypes[sel]][aircraft->teamIdxs[sel]].chr;
-					assert(chr);
-					if (chr->empl_type == EMPL_ROBOT)
-						CL_UGVCvars(chr);
-					else
-						CL_CharacterCvars(chr);
-				}
-			} else {
-				/* We are in the base or multiplayer inventory */
-				sel = cl_selected->integer; /**@todo is this really the correct index? */
-				if (sel >= 0 && sel < chrDisplayList.num) {
-					assert(chrDisplayList.chr[sel]);
-					if (chrDisplayList.chr[sel]->empl_type == EMPL_ROBOT)
-						CL_UGVCvars(chrDisplayList.chr[sel]);
-					else
-						CL_CharacterCvars(chrDisplayList.chr[sel]);
-				}
-			}
 		}
+
+		INV_MoveItem(baseCurrent, menuInventory, node->mousefx, px, py, dragFrom, dragFromX, dragFromY);
 	}
 
+	/* We are in the base or multiplayer inventory */
+	if (sel < chrDisplayList.num) {
+		assert(chrDisplayList.chr[sel]);
+		if (chrDisplayList.chr[sel]->empl_type == EMPL_ROBOT)
+			CL_UGVCvars(chrDisplayList.chr[sel]);
+		else
+			CL_CharacterCvars(chrDisplayList.chr[sel]);
+	}
 }
 
 /**
@@ -2631,7 +2659,7 @@ void MN_DrawMenus (void)
 							}
 						}
 						/* draw free space if dragging - but not for idEquip */
-						if (node->mousefx != csi.idEquip)
+						if (mouseSpace == MS_DRAG && node->mousefx != csi.idEquip)
 							MN_InvDrawFree(menuInventory, node);
 
 						/* Draw tooltip for weapon or ammo */

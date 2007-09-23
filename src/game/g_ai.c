@@ -700,7 +700,7 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 
 			/* pack equipment */
 			if (ent->chr.weapons)	/* actor can handle equipment */
-				INVSH_EquipActor(&ent->i, ed->num, name, &ent->chr);
+				INVSH_EquipActor(&ent->i, ed->num, MAX_OBJDEFS, name, &ent->chr);
 			else if (ent->chr.teamDefIndex >= 0)
 				/* actor cannot handle equipment */
 				INVSH_EquipActorMelee(&ent->i, &ent->chr);

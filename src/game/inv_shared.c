@@ -256,28 +256,29 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, int container
 
 	assert(i);
 
-	/*  What we are doing here.
-		invList_t array looks like that: [u]->next = [w]; [w]->next = [x]; [...]; [z]->next = NULL.
-		i->c[container] as well as ic are such invList_t.
-		Now we want to add new item to this container and that means, we need to create some [t]
-		and make sure, that [t]->next points to [u] (so the [t] will be the first in array).
-		ic = i->c[container];
-		So, we are storing old value of i->c[container] in ic to remember what was in the original
-		container. If the i->c[container]->next pointed to [abc], the ic->next will also point to [abc].
-		The ic is our [u] and [u]->next still points to our [w].
-		i->c[container] = invUnused;
-		Now we are creating new container - the "original" i->c[container] is being set to empty invUnused.
-		This is our [t].
-			invUnused = invUnused->next;
-		Now we need to make sure, that our [t] will point to next free slot in our inventory. Remember, that
-		invUnused was empty before, so invUnused->next will point to next free slot.
-		i->c[container]->next = ic;
-		We assigned our [t]->next to [u] here. Thanks to that we still have the correct ->next chain in our
-		inventory list.
-		ic = i->c[container];
-		And now ic will be our [t], that is the newly added container.
-		After that we can easily add the item (item.t, x and y positions) to our [t] being ic.
-	*/
+	/**
+	 * What we are doing here.
+	 * invList_t array looks like that: [u]->next = [w]; [w]->next = [x]; [...]; [z]->next = NULL.
+	 * i->c[container] as well as ic are such invList_t.
+	 * Now we want to add new item to this container and that means, we need to create some [t]
+	 * and make sure, that [t]->next points to [u] (so the [t] will be the first in array).
+	 * ic = i->c[container];
+	 * So, we are storing old value of i->c[container] in ic to remember what was in the original
+	 * container. If the i->c[container]->next pointed to [abc], the ic->next will also point to [abc].
+	 * The ic is our [u] and [u]->next still points to our [w].
+	 * i->c[container] = invUnused;
+	 * Now we are creating new container - the "original" i->c[container] is being set to empty invUnused.
+	 * This is our [t].
+	 * invUnused = invUnused->next;
+	 * Now we need to make sure, that our [t] will point to next free slot in our inventory. Remember, that
+	 * invUnused was empty before, so invUnused->next will point to next free slot.
+	 * i->c[container]->next = ic;
+	 * We assigned our [t]->next to [u] here. Thanks to that we still have the correct ->next chain in our
+	 * inventory list.
+	 * ic = i->c[container];
+	 * And now ic will be our [t], that is the newly added container.
+	 * After that we can easily add the item (item.t, x and y positions) to our [t] being ic.
+	 */
 
 	/* Temporary store the pointer to the first item in this list. */
 	ic = i->c[container];
@@ -501,7 +502,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 			if (ic->item.a >= CSI->ods[ic->item.t].ammo
 				&& ic->item.m == cacheItem.t) {
 				/* weapon already fully loaded with the same ammunition
-				   --- back to source location */
+				 * --- back to source location */
 				Com_AddToInventory(i, cacheItem, from, fx, fy);
 				return IA_NORELOAD;
 			}
@@ -777,6 +778,7 @@ void INVSH_PrintContainerToConsole (inventory_t* const i)
  * @param[in] weapon The weapon type index in gi.csi->ods
  * @param[in] equip The equipment that shows how many clips to pack
  * @param[in] name The name of the equipment for debug messages
+ * @param[in] missed_primary
  * @sa INVSH_LoadableInWeapon
  */
 static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, const int equip[MAX_OBJDEFS], int missed_primary, const char *name)
@@ -896,7 +898,8 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, co
 /**
  * @brief Fully equip one actor
  * @param[in] inv The inventory that will get the weapon
- * @param[in] equip The equipment that shows what is available
+ * @param[in] equip The equipment that shows what is available - a list of obj ids
+ * @param[in] anzEquip the number of object ids in the field
  * @param[in] name The name of the equipment for debug messages
  * @param[in] chr Pointer to character data - to get the weapon and armor bools
  * @note The code below is a complete implementation
@@ -904,7 +907,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, co
  * Beware: if two weapons in the same category have the same price,
  * only one will be considered for inventory.
  */
-void INVSH_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const char *name, character_t* chr)
+void INVSH_EquipActor (inventory_t* const inv, const int *equip, int anzEquip, const char *name, character_t* chr)
 {
 	int weapon = -1; /* this variable is never used before being set */
 	int i, max_price, prev_price;
@@ -916,7 +919,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], con
 		/* primary weapons */
 		max_price = INT_MAX;
 		do {
-			int lastPos = CSI->numODs - 1;
+			int lastPos = min(CSI->numODs - 1, anzEquip - 1);
 			/* search for the most expensive primary weapon in the equipment */
 			prev_price = max_price;
 			max_price = 0;
@@ -947,17 +950,15 @@ void INVSH_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], con
 
 						/* find the first possible ammo to check damage type */
 						for (ammo = 0; ammo < CSI->numODs; ammo++)
-							if (equip[ammo]
-							&& INVSH_LoadableInWeapon(&CSI->ods[ammo], weapon))
+							if (equip[ammo] && INVSH_LoadableInWeapon(&CSI->ods[ammo], weapon))
 								break;
 						if (ammo < CSI->numODs) {
 							primary =
 								/* to avoid two particle weapons */
-								!(CSI->ods[ammo].fd[0][0].dmgtype
-								== CSI->damParticle)
+								!(CSI->ods[ammo].fd[0][0].dmgtype == CSI->damParticle)
 								/* to avoid SMG + Assault Rifle */
-								&& !(CSI->ods[ammo].fd[0][0].dmgtype
-									== CSI->damNormal); /* fd[0][0] Seems to be ok here since we just check the damage type and they are the same for all fds i've found. */
+								&& !(CSI->ods[ammo].fd[0][0].dmgtype == CSI->damNormal);
+								/* fd[0][0] Seems to be ok here since we just check the damage type and they are the same for all fds i've found. */
 						}
 						max_price = 0; /* one primary weapon is enough */
 						missed_primary = 0;
@@ -978,7 +979,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], con
 			do {
 				prev_price = max_price;
 				/* if primary is a particle or normal damage weapon,
-				we pick cheapest sidearms first */
+				 * we pick cheapest sidearms first */
 				max_price = primary ? 0 : INT_MAX;
 				for (i = 0; i < CSI->numODs; i++) {
 					obj = CSI->ods[i];

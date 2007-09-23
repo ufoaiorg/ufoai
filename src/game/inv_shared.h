@@ -36,6 +36,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_FIREDEFS_PER_WEAPON 8
 #define MAX_DAMAGETYPES 32
 
+typedef enum {
+	IA_NONE,
+	IA_MOVE,
+	IA_RELOAD,
+	IA_RELOAD_SWAP,
+	IA_NOTIME,
+	IA_NORELOAD,
+	IA_ARMOR
+} inventory_action_t;
+
 /** @brief this is a fire definition for our weapons/ammo */
 typedef struct fireDef_s {
 	char name[MAX_VAR];			/**< script id */
@@ -546,7 +556,7 @@ void INVSH_DestroyInventory(inventory_t* const i) __attribute__((nonnull(1)));
 void Com_FindSpace(const inventory_t* const inv, item_t *item, const int container, int * const px, int * const py) __attribute__((nonnull(1)));
 int Com_TryAddToInventory(inventory_t* const inv, item_t item, int container) __attribute__((nonnull(1)));
 int Com_TryAddToBuyType(inventory_t* const inv, item_t item, int container) __attribute__((nonnull(1)));
-void INVSH_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], const char *name, character_t* chr) __attribute__((nonnull(1)));
+void INVSH_EquipActor(inventory_t* const inv, const int *equip, int anzEquip, const char *name, character_t* chr) __attribute__((nonnull(1)));
 void INVSH_EquipActorMelee(inventory_t* const inv, character_t* chr) __attribute__((nonnull(1)));
 void INVSH_PrintContainerToConsole(inventory_t* const i);
 

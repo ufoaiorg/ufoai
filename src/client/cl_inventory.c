@@ -600,19 +600,24 @@ void INV_InventoryList_f (void)
  * @param[in] fromY y position of the item to move (in container fromContainer)
  * @note If you set px or py to -1 the item is automatically placed on a free
  * spot in the targetContainer
+ * @return qtrue if the move was successful
  */
-void INV_MoveItem (base_t* base, inventory_t* inv, int toContainer, int px, int py,
+qboolean INV_MoveItem (base_t* base, inventory_t* inv, int toContainer, int px, int py,
 	int fromContainer, int fromX, int fromY)
 {
 	invList_t *i = NULL;
 	int et = -1;
+	int moved;
 
 	assert(base);
+
+	if (px >= SHAPE_BIG_MAX_WIDTH || py >= SHAPE_BIG_MAX_HEIGHT)
+		return qfalse;
 
 	/* FIXME / @todo: this case should be removed as soon as right clicking in equip container
 	 * will try to put the item in a reasonable container automatically */
 	if ((px == -1 || py == -1) && toContainer == fromContainer)
-		return;
+		return qtrue;
 
 	if (toContainer == csi.idEquip) {
 		/* a hack to add the equipment correctly into buy categories;
@@ -628,14 +633,14 @@ void INV_MoveItem (base_t* base, inventory_t* inv, int toContainer, int px, int 
 				Com_FindSpace(inv, &i->item, csi.idEquip, &px, &py);
 				if (px >= SHAPE_BIG_MAX_WIDTH && py >= SHAPE_BIG_MAX_HEIGHT) {
 					inv->c[csi.idEquip] = base->equipByBuyType.c[base->equipType];
-					return;
+					return qfalse;
 				}
 			}
 		}
 	}
 
 	/* move the item */
-	Com_MoveInInventory(inv, fromContainer, fromX, fromY, toContainer, px, py, NULL, NULL);
+	moved = Com_MoveInInventory(inv, fromContainer, fromX, fromY, toContainer, px, py, NULL, NULL);
 
 	/* end of hack */
 	if (i && !BUYTYPE_MATCH(et, base->equipType)) {
@@ -646,4 +651,9 @@ void INV_MoveItem (base_t* base, inventory_t* inv, int toContainer, int px, int 
 		/* @todo: Check this stuff for BUY_MULTI_AMMO .. this is probably broken now.*/
 		base->equipByBuyType.c[base->equipType] = inv->c[csi.idEquip];
 	}
+
+	if (moved == IA_MOVE)
+		return qtrue;
+	else
+		return qfalse;
 }
