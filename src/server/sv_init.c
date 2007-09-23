@@ -449,11 +449,11 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 static void SV_CombineAlternatives (uLong *mapAlts, uLong tileAlts, char *mapRating)
 {
 	/* don't touch solid fields of the map, return if tile has no connection info */
-	if (IS_SOLID(*mapAlts) || (tileAlts==ALL_TILES))
+	if (IS_SOLID(*mapAlts) || (tileAlts == ALL_TILES))
 		return;
 
 	/* for an empty map tile must the rating be zero */
-	assert((*mapAlts!=ALL_TILES) || (*mapRating == 0));
+	assert((*mapAlts != ALL_TILES) || (*mapRating == 0));
 
 	/* copy if tile is solid */
 	if (IS_SOLID(tileAlts)) {
@@ -472,13 +472,13 @@ static void SV_CombineAlternatives (uLong *mapAlts, uLong tileAlts, char *mapRat
 static void SV_ClearMap (void)
 {
 	uLong *mp, *me;
-	
+
 	memset(curMap, 0, sizeof(curMap));
 	memset(curRating, 0, sizeof(curRating));
-	
+
 	mp = &curMap[0][0];
-	me = &curMap[MAX_RANDOM_MAP_HEIGHT-1][MAX_RANDOM_MAP_WIDTH-1];
-	while(mp<=me)
+	me = &curMap[MAX_RANDOM_MAP_HEIGHT - 1][MAX_RANDOM_MAP_WIDTH - 1];
+	while (mp <= me)
 		*(mp++) = ALL_TILES;
 }
 
@@ -499,7 +499,7 @@ static qboolean SV_FitTile (mTile_t * tile, int x, int y)
 	const uLong *spec = NULL;
 	const uLong *m = NULL;
 	uLong combined;
-	
+
 	/* check vor valid grid positions */
 	assert(x%mAsm->dx == 0);
 	assert(y%mAsm->dy == 0);
@@ -518,9 +518,9 @@ static qboolean SV_FitTile (mTile_t * tile, int x, int y)
 	for (ty = 0; ty < tile->h; ty++) {
 		for (tx = 0; tx < tile->w; tx++, spec++, m++) {
 			combined = (*m) & (*spec);
-			
+
 			/* quit if both are solid or no equal connection is found*/
-			if( IS_SOLID(combined) || !combined)
+			if (IS_SOLID(combined) || !combined)
 				return qfalse;
 		}
 		spec += (MAX_TILESIZE - tile->w);
@@ -541,7 +541,7 @@ static qboolean SV_FitTile (mTile_t * tile, int x, int y)
 static qboolean SV_TestFilled (void)
 {
 	int x, y;
-	
+
 	for (y = 1; y < mapH + 1; y++)
 		for (x = 1; x < mapW + 1; x++)
 			if (!IS_SOLID(curMap[y][x]))
@@ -676,7 +676,7 @@ static void SV_RemoveTile (int* idx, int* pos)
 
 	assert(numPlaced);
 	SV_ClearMap();
-	
+
 	numPlaced--;
 	index = mPlaced[numPlaced].idx;
 
@@ -993,7 +993,7 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
 	/* assemble the map */
 	numPlaced = 0;
 	SV_ClearMap();
-	
+
 	/* place fixed parts - defined in ump via fix parameter */
 	for (i = 0; i < mAsm->numFixed; i++)
 		SV_AddTile(&mTile[mAsm->fT[i]], mAsm->fX[i], mAsm->fY[i], -1, -1);
