@@ -588,3 +588,62 @@ void INV_InventoryList_f (void)
 }
 #endif
 
+/**
+ * @brief
+ * @param[in] base the base all this happens into
+ * @param[in] inv list where the item is currently in
+ * @param[in] toContainer target container to place the item in
+ * @param[in] px target x position in the toContainer container
+ * @param[in] py target y position in the toContainer container
+ * @param[in] fromContainer Container the item is in
+ * @param[in] fromX X position of the item to move (in container fromContainer)
+ * @param[in] fromY y position of the item to move (in container fromContainer)
+ * @note If you set px or py to -1 the item is automatically placed on a free
+ * spot in the targetContainer
+ */
+void INV_MoveItem (base_t* base, inventory_t* inv, int toContainer, int px, int py,
+	int fromContainer, int fromX, int fromY)
+{
+	invList_t *i = NULL;
+	int et = -1;
+
+	assert(base);
+
+	/* FIXME / @todo: this case should be removed as soon as right clicking in equip container
+	 * will try to put the item in a reasonable container automatically */
+	if ((px == -1 || py == -1) && toContainer == fromContainer)
+		return;
+
+	if (toContainer == csi.idEquip) {
+		/* a hack to add the equipment correctly into buy categories;
+		 * it is valid only due to the following property: */
+		assert(MAX_CONTAINERS >= BUY_AIRCRAFT);
+
+		i = Com_SearchInInventory(inv, fromContainer, fromX, fromY);
+		if (i) {
+			et = csi.ods[i->item.t].buytype;
+			if (!BUYTYPE_MATCH(et, base->equipType) || px == -1 || py == -1) {
+				/* @todo: Check this stuff for BUY_MULTI_AMMO .. this is probably broken now.*/
+				inv->c[csi.idEquip] = base->equipByBuyType.c[et];
+				Com_FindSpace(inv, &i->item, csi.idEquip, &px, &py);
+				if (px >= SHAPE_BIG_MAX_WIDTH && py >= SHAPE_BIG_MAX_HEIGHT) {
+					inv->c[csi.idEquip] = base->equipByBuyType.c[base->equipType];
+					return;
+				}
+			}
+		}
+	}
+
+	/* move the item */
+	Com_MoveInInventory(inv, fromContainer, fromX, fromY, toContainer, px, py, NULL, NULL);
+
+	/* end of hack */
+	if (i && !BUYTYPE_MATCH(et, base->equipType)) {
+		/* @todo: Check this stuff for BUY_MULTI_AMMO .. this is probably broken now.*/
+		base->equipByBuyType.c[et] = inv->c[csi.idEquip];
+		inv->c[csi.idEquip] = base->equipByBuyType.c[base->equipType];
+	} else {
+		/* @todo: Check this stuff for BUY_MULTI_AMMO .. this is probably broken now.*/
+		base->equipByBuyType.c[base->equipType] = inv->c[csi.idEquip];
+	}
+}

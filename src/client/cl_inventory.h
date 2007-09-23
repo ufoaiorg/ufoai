@@ -55,6 +55,7 @@ void INV_InitialEquipment(base_t *base, campaign_t* campaign);
 components_t *INV_GetComponentsByItemIdx(int itemIdx);
 int INV_DisassemblyItem(base_t *base, components_t *comp, qboolean calculate);
 void INV_ManageAntimatter(base_t *base, int amount, qboolean add);
+void INV_MoveItem(base_t* base, inventory_t* inv, int toContainer, int px, int py, int fromContainer, int fromX, int fromY);
 
 #ifdef DEBUG
 void INV_InventoryList_f(void);

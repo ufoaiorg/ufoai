@@ -449,12 +449,12 @@ static void SCR_DrawCursor (void)
 				icon_offset_y += icon_spacing;
 
 				/* Display weaponmode (text) heR_ */
-				if (menuText[TEXT_MOUSECURSOR_RIGHT] && cl_show_cursor_tooltips->value)
+				if (menuText[TEXT_MOUSECURSOR_RIGHT] && cl_show_cursor_tooltips->integer)
 					SCR_DrawString(mousePosX + icon_offset_x, mousePosY - 16, menuText[TEXT_MOUSECURSOR_RIGHT], qfalse);
 			}
 
 			/* playernames */
-			if (menuText[TEXT_MOUSECURSOR_PLAYERNAMES] && cl_show_cursor_tooltips->value) {
+			if (menuText[TEXT_MOUSECURSOR_PLAYERNAMES] && cl_show_cursor_tooltips->integer) {
 				/*@todo: activate this:
 				R_DrawFill(mx + icon_offset_x - 1, my - 33, 20, 128, 0, cursorBG);
 				*/
@@ -464,14 +464,8 @@ static void SCR_DrawCursor (void)
 		}
 	} else {
 		vec3_t scale = { 3.5, 3.5, 3.5 };
-		vec3_t org;
-		vec4_t color;
-
-		org[0] = mousePosX;
-		org[1] = mousePosY;
-		org[2] = -50;
-		color[0] = color[1] = color[2] = 0.5;
-		color[3] = 1.0;
+		vec3_t org = { mousePosX, mousePosY, -50 };
+		vec4_t color = { 0.5, 0.5, 0.5, 1.0 };
 		MN_DrawItem(org, dragItem, 0, 0, 0, 0, scale, color);
 	}
 }

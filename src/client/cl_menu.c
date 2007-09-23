@@ -1067,13 +1067,17 @@ qboolean MN_CursorOnMenu (int x, int y)
  * @brief
  * @note: node->mousefx is the container id
  */
-static void MN_Drag (const menuNode_t* const node, int x, int y)
+static void MN_Drag (const menuNode_t* const node, int x, int y, qboolean rightClick)
 {
 	int px, py;
 	character_t *chr;
 	aircraft_t *aircraft = cls.missionaircraft;
 
 	if (!menuInventory)
+		return;
+
+	/* don't allow this in tactical missions */
+	if (selActor && rightClick)
 		return;
 
 	if (mouseSpace == MS_MENU) {
@@ -1086,13 +1090,17 @@ static void MN_Drag (const menuNode_t* const node, int x, int y)
 		/* start drag (mousefx represents container number) */
 		ic = Com_SearchInInventory(menuInventory, node->mousefx, px, py);
 		if (ic) {
-			/* found item to drag */
-			mouseSpace = MS_DRAG;
-			dragItem = ic->item;
-			/* mousefx is the container (see hover code) */
-			dragFrom = node->mousefx;
-			dragFromX = ic->x;
-			dragFromY = ic->y;
+			if (!rightClick) {
+				/* found item to drag */
+				mouseSpace = MS_DRAG;
+				dragItem = ic->item;
+				/* mousefx is the container (see hover code) */
+				dragFrom = node->mousefx;
+				dragFromX = ic->x;
+				dragFromY = ic->y;
+			} else {
+				INV_MoveItem(baseCurrent, menuInventory, csi.idEquip, -1, -1, node->mousefx, ic->x, ic->y);
+			}
 			UP_ItemDescription(ic->item.t);
 /*			MN_DrawTooltip("f_verysmall", csi.ods[dragItem.t].name, px, py, 0);*/
 		}
@@ -1107,47 +1115,17 @@ static void MN_Drag (const menuNode_t* const node, int x, int y)
 			MSG_Write_PA(PA_INVMOVE, selActor->entnum, dragFrom, dragFromX, dragFromY, node->mousefx, px, py);
 		/* menu */
 		} else {
-			invList_t *i = NULL;
-			int et = -1, sel;
+			int sel;
 
-			if (node->mousefx == csi.idEquip) {
-				/* a hack to add the equipment correctly into buy categories;
-				   it is valid only due to the following property: */
-				assert(MAX_CONTAINERS >= BUY_AIRCRAFT);
-
-				i = Com_SearchInInventory(menuInventory, dragFrom, dragFromX, dragFromY);
-				if (i) {
-					et = csi.ods[i->item.t].buytype;
-					if (!BUYTYPE_MATCH(et,baseCurrent->equipType)) {
-						/* @todo: Check this stuff for BUY_MULTI_AMMO .. this is probably broken now.*/
-						menuInventory->c[csi.idEquip] = baseCurrent->equipByBuyType.c[et];
-						Com_FindSpace(menuInventory, &i->item, csi.idEquip, &px, &py);
-						if (px >= SHAPE_BIG_MAX_WIDTH && py >= SHAPE_BIG_MAX_HEIGHT) {
-							menuInventory->c[csi.idEquip] = baseCurrent->equipByBuyType.c[baseCurrent->equipType];
-							return;
-						}
-					}
-				}
-			}
-
-			/* move the item */
-			Com_MoveInInventory(menuInventory, dragFrom, dragFromX, dragFromY, node->mousefx, px, py, NULL, NULL);
-
-			/* end of hack */
-			if (i && !BUYTYPE_MATCH(et,baseCurrent->equipType)) {
-				/* @todo: Check this stuff for BUY_MULTI_AMMO .. this is probably broken now.*/
-				baseCurrent->equipByBuyType.c[et] = menuInventory->c[csi.idEquip];
-				menuInventory->c[csi.idEquip] = baseCurrent->equipByBuyType.c[baseCurrent->equipType];
-			} else {
-				/* @todo: Check this stuff for BUY_MULTI_AMMO .. this is probably broken now.*/
-				baseCurrent->equipByBuyType.c[baseCurrent->equipType] = menuInventory->c[csi.idEquip];
-			}
+			INV_MoveItem(baseCurrent, menuInventory, node->mousefx, px, py, dragFrom, dragFromX, dragFromY);
 
 			/* update character info (for armor changes) */
 			if (CL_OnBattlescape()) {
+				/** @todo: Is this ever called? selActor should be true in case of CL_OnBattlescape
+				 * thus we should never reach this, no? */
 				sel = cl_selected->integer; /**@todo is this really the correct index? */
 				if (sel >= 0 && aircraft) {
-					/** @todo checking for (sel < gd.numEmployees[EMPL_SOLDIER]) is kinda tricky/recursive heR_
+					/** @todo checking for (sel < gd.numEmployees[EMPL_SOLDIER]) is kinda tricky/recursive here
 					 * Is there a better way? */
 					chr = &gd.employees[aircraft->teamTypes[sel]][aircraft->teamIdxs[sel]].chr;
 					assert(chr);
@@ -1422,7 +1400,7 @@ void MN_Click (int x, int y)
 			/* found a node -> do actions */
 			switch (node->type) {
 			case MN_CONTAINER:
-				MN_Drag(node, x, y);
+				MN_Drag(node, x, y, qfalse);
 				break;
 			case MN_BAR:
 				MN_BarClick(menu, node, x);
@@ -1665,7 +1643,7 @@ void MN_RightClick (int x, int y)
 		menu = menuStack[--sp];
 		for (node = menu->firstNode; node; node = node->next) {
 			/* no right click for this node defined */
-			if (!node->rclick)
+			if (node->type != MN_CONTAINER && !node->rclick)
 				continue;
 
 			/* check whether mouse if over this node */
@@ -1675,6 +1653,9 @@ void MN_RightClick (int x, int y)
 
 			/* found a node -> do actions */
 			switch (node->type) {
+			case MN_CONTAINER:
+				MN_Drag(node, x, y, qtrue);
+				break;
 			case MN_BASEMAP:
 				MN_BaseMapRightClick(node, x, y);
 				break;
