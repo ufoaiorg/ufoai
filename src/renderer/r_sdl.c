@@ -138,7 +138,6 @@ qboolean Rimp_Init (void)
 qboolean R_InitGraphics (void)
 {
 	uint32_t flags;
-	int bits;
 
 	vid_fullscreen->modified = qfalse;
 	vid_mode->modified = qfalse;
@@ -156,25 +155,27 @@ qboolean R_InitGraphics (void)
 			return qtrue;
 	}
 
+	/* free resources in use */
+	if (r_surface)
+		SDL_FreeSurface(r_surface);
+
 	switch (r_bitdepth->integer) {
 	case 24:
 	case 32:
-		bits = 8;
+		SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
+		SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
+		SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
 		break;
 	case 16:
-		bits = 4;
+		SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
+		SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 5);
+		SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
+		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
 		break;
 	default:
 		Sys_Error("Invalid r_bitdepth value");
 	}
 
-	/* free resources in use */
-	if (r_surface)
-		SDL_FreeSurface(r_surface);
-
-	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, bits);
-	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, bits);
-	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, bits);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 1);
 	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
