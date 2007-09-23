@@ -330,6 +330,8 @@ static fontCache_t *R_FontGenerateCache (const char *s, const char *fontString, 
 	for (h = 2; h < textSurface->h; h <<= 1);
 
 	openGLSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, 32, rmask, gmask, bmask, amask);
+	if (!openGLSurface)
+		return NULL;
 
 	rect.x = rect.y = 0;
 	rect.w = textSurface->w;
