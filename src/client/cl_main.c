@@ -976,12 +976,6 @@ static void CL_QueryMasterServer (void)
 			Com_Printf("Could not finish the masterserver response parsing\n");
 			break;
 		}
-		/* timeout - skip this */
-		token = COM_Parse(&serverList);
-		if (!*token || !serverList) {
-			Com_Printf("Could not finish the masterserver response parsing\n");
-			break;
-		}
 		Q_strncpyz(service, token, sizeof(service));
 		CL_AddServerToList(node, service);
 	}

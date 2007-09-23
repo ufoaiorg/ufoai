@@ -50,30 +50,30 @@ function updateServerList ($remove, $add)
 	$newListContent = "";
 	# this string is send to a client (if called from sendServerList)
 	$serverListStr = "";
-	if ( !file_exists($GLOBALS['serverList']) ) {
+	if (!file_exists($GLOBALS['serverList'])) {
 		echo "Error - could not write " . $GLOBALS["serverList"];
 		return;
-		}
-	$i=10; //10 tries to open file
-	while (false=== $fHandle = fopen($GLOBALS['serverList'], "r+" )) {
-		if ( (--$i)<0 ) {
+	}
+	$i = 10; //10 tries to open file
+	while (false === $fHandle = fopen($GLOBALS['serverList'], "r+" )) {
+		sleep(1);
+		if ((--$i) < 0) {
 			echo 'Error - could not open file '.$GLOBALS['serverList'];
 			return;
-			}
 		}
+	}
 	flock($fHandle, LOCK_EX);
-//	$file = file($GLOBALS["serverList"]);
 
 	$updatedServer = false;
 	$i = 0;
 
-	while (false!== $serverData = fgets($fHandle)) {
+	while (false !== $serverData = fgets($fHandle)) {
 		$skipThisServer = 0;
 		/* split ip, port, last heartbeat */
 		$data = explode(" ", trim($serverData));
-		if ( !isset($data[1]) ) {
+		if (!isset($data[1])) {
 			continue;
-			}
+		}
 		if (isset($data[2]) && $time > $data[2] + $GLOBALS["serverTimeoutSeconds"]) {
 			# don't readd this server - timed out
 		} else if (!strcmp($data[0], $ip) && !strcmp($data[1], $port)) {
@@ -94,8 +94,6 @@ function updateServerList ($remove, $add)
 		}
 	}
 	rewind($fHandle);
-//	$file = @fopen($GLOBALS["serverList"], 'w');
-//	fwrite($fHandle, "$i\n");
 	# new server
 	if (!$updatedServer && $add) {
 		$i++;
@@ -103,8 +101,8 @@ function updateServerList ($remove, $add)
 		$serverListStr .= "$ip $port\n";
 	}
 
-	fwrite($fHandle, $i."\n".$newListContent);
-	ftruncate($fHandle,ftell($fHandle));
+	fwrite($fHandle, $i . "\n" . $newListContent);
+	ftruncate($fHandle, ftell($fHandle));
 	flock($fHandle, LOCK_UN);
 	fclose($fHandle);
 	return "$i\n$serverListStr";
