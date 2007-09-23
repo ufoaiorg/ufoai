@@ -1630,7 +1630,7 @@ static void Irc_Client_Topic_f (void)
 static void Irc_Client_Names_f (void)
 {
 	int i;
-	char *list[IRC_MAX_USERLIST];
+	char list[IRC_MAX_USERLIST][MAX_VAR];
 
 	irc_user_t* user;
 	if (chan) {
@@ -1639,16 +1639,13 @@ static void Irc_Client_Names_f (void)
 		for (i = 0; i < chan->users; i++) {
 			if (i >= IRC_MAX_USERLIST)
 				break;
-			list[i] = user->key;
+			Q_strncpyz(list[i], user->key, MAX_VAR);
 			user = user->next;
 		}
 		if (i > 0) {
-			qsort((void *)list, i, sizeof(chan->user->key), Q_StringSort);
-			for (i = 0; i < chan->users; i++) {
-				if (i >= IRC_MAX_USERLIST)
-					break;
+			qsort((void *)list, i, MAX_VAR, Q_StringSort);
+			while (i--)
 				Q_strcat(irc_names_buffer, va("%s\n", list[i]), sizeof(irc_names_buffer));
-			}
 		}
 	} else
 		Com_Printf("Not joined\n");

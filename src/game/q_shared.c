@@ -95,7 +95,7 @@ int Q_StringSort (const void *string1, const void *string2)
 		return -1;
 	else if (*s1 == *s2) {
 		while (*s1) {
-		s1++;
+			s1++;
 			s2++;
 			if (*s1 < *s2)
 				return -1;
