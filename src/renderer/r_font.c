@@ -240,11 +240,11 @@ static void R_FontCacheGLSurface (fontCache_t *cache, SDL_Surface *pixel)
 	/* use a fixed texture number allocation scheme, starting offset at TEXNUM_FONTS */
 	cache->texPos = TEXNUM_FONTS + numInCache;
 	R_Bind(cache->texPos);
-	qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pixel->w, pixel->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixel->pixels);
+	qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pixel->w, pixel->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, pixel->pixels);
 	R_CheckError();
-	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	R_CheckError();
-	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	R_CheckError();
 }
 
@@ -337,10 +337,11 @@ static fontCache_t *R_FontGenerateCache (const char *s, const char *fontString, 
 		rect.w = maxWidth;
 	rect.h = textSurface->h;
 
-	SDL_SetAlpha(textSurface, 0, 0);
+	/* ignore alpha when blitting - just copy it over */
+	SDL_SetAlpha(textSurface, 0, 255);
 
 	SDL_LowerBlit(textSurface, &rect, openGLSurface, &rect);
-		w = textSurface->w;
+	w = textSurface->w;
 	h = textSurface->h;
 	SDL_FreeSurface(textSurface);
 
