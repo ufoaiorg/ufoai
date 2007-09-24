@@ -524,7 +524,7 @@ static void CP_MissionList_f (void)
 	if (Cmd_Argc() > 1)
 		details = qtrue;
 	else
-		Com_Printf("Use defails as parameter to get a more detailed list\n");
+		Com_Printf("Use details as parameter to get a more detailed list\n");
 
 	/* detail header */
 	if (details) {
