@@ -2459,9 +2459,9 @@ void CL_Frame (int now, void *data)
 	/* update the screen */
 	SCR_UpdateScreen();
 
-#ifndef WITH_SOUND_THREAD
-	SND_Frame(NULL);
-#endif
+	/* sdl don't need this - handled in the sound thread */
+	if (Q_strncmp(snd_ref->string, "sdl", 3))
+		SND_Frame(NULL);
 
 	/* advance local effects for next frame */
 	CL_RunLightStyles();

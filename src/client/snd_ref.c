@@ -30,11 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "snd_loc.h"
 #include "snd_ogg.h"
 #include "snd_wave.h"
-#ifdef WITH_SOUND_THREAD
-#include <SDL_thread.h>
-static SDL_Thread *soundThread;
-static SDL_mutex *soundMutex;
-#endif
 
 #ifdef _WIN32
 # include "../ports/windows/win_local.h"
@@ -335,6 +330,7 @@ void S_Init (void)
 		si.Com_Printf = Com_Printf;
 		si.Com_DPrintf = Com_DPrintf;
 		si.S_PaintChannels = S_PaintChannels;
+		si.Frame = SND_Frame;
 		si.paintedtime = &paintedtime;
 
 		if (!SND_Init(&si)) {
@@ -362,14 +358,6 @@ void S_Init (void)
 
 	/* Check memory integrity */
 	Mem_CheckPoolIntegrity(cl_soundSysPool);
-
-#ifdef WITH_SOUND_THREAD
-	Com_Printf("using sound thread");
-	soundMutex = SDL_CreateMutex();
-	soundThread = SDL_CreateThread(SND_Frame, NULL);
-	if (!soundThread)
-		Sys_Error("Could not create the sound thread\n");
-#endif
 
 	/* start music again */
 	if (*Cvar_VariableString("music"))
@@ -407,10 +395,6 @@ void S_Shutdown (void)
 	S_OGG_Stop();
 	S_OGG_Shutdown();
 
-#ifdef WITH_SOUND_THREAD
-	SDL_LockMutex(soundMutex);
-#endif
-
 	sound_started = qfalse;
 
 	for (commands = r_commands; commands->name; commands++)
@@ -434,13 +418,6 @@ void S_Shutdown (void)
 		S_FreeLibs();
 
 	num_sfx = 0;
-#ifdef WITH_SOUND_THREAD
-	SDL_KillThread(soundThread);
-	soundThread = NULL;
-	SDL_UnlockMutex(soundMutex);
-	SDL_DestroyMutex(soundMutex);
-	soundMutex = NULL;
-#endif
 }
 
 
@@ -1073,83 +1050,74 @@ int SND_Frame (void *data)
 	channel_t *ch;
 	channel_t *combine;
 
-#ifdef WITH_SOUND_THREAD
-	while (1) {
-		SDL_LockMutex(soundMutex);
-#endif
-		/* rebuild scale tables if volume is modified */
-		if (snd_volume->modified && !snd_openal->integer)
-			S_InitScaletable();
+	/* rebuild scale tables if volume is modified */
+	if (snd_volume->modified && !snd_openal->integer)
+		S_InitScaletable();
 
-		/* re-sync music.fading if music volume modified */
-		if (snd_music_volume->modified) {
-			snd_music_volume->modified = qfalse;
-			music.fading = snd_music_volume->value;
-		}
+	/* re-sync music.fading if music volume modified */
+	if (snd_music_volume->modified) {
+		snd_music_volume->modified = qfalse;
+		music.fading = snd_music_volume->value;
+	}
 
-		VectorCopy(refdef.vieworg, listener_origin);
-		VectorCopy(cl.cam.axis[0], listener_forward);
-		VectorCopy(cl.cam.axis[1], listener_right);
-		VectorCopy(cl.cam.axis[2], listener_up);
+	VectorCopy(refdef.vieworg, listener_origin);
+	VectorCopy(cl.cam.axis[0], listener_forward);
+	VectorCopy(cl.cam.axis[1], listener_right);
+	VectorCopy(cl.cam.axis[2], listener_up);
 #ifdef HAVE_OPENAL
-		if (snd_openal->integer)
-			SND_OAL_UpdateListeners(listener_origin);
+	if (snd_openal->integer)
+		SND_OAL_UpdateListeners(listener_origin);
 #endif
 
-		combine = NULL;
+	combine = NULL;
 
-		/* update spatialization for dynamic sounds */
-		ch = channels;
-		for (i = 0; i < MAX_CHANNELS; i++, ch++) {
-			if (!ch->sfx)
-				continue;
-			if (ch->autosound) {	/* autosounds are regenerated fresh each frame */
-				memset(ch, 0, sizeof(*ch));
-				continue;
-			}
-#ifdef HAVE_OPENAL
-			if (!snd_openal->integer)
-#endif
-				S_Spatialize(ch);		/* respatialize channel */
-			if (!ch->leftvol && !ch->rightvol) {
-				memset(ch, 0, sizeof(*ch));
-				continue;
-			}
+	/* update spatialization for dynamic sounds */
+	ch = channels;
+	for (i = 0; i < MAX_CHANNELS; i++, ch++) {
+		if (!ch->sfx)
+			continue;
+		if (ch->autosound) {	/* autosounds are regenerated fresh each frame */
+			memset(ch, 0, sizeof(*ch));
+			continue;
 		}
-
-		/* debugging output */
-		if (snd_show->integer) {
-			total = 0;
-			ch = channels;
-			for (i = 0; i < MAX_CHANNELS; i++, ch++)
-				if (ch->sfx && (ch->leftvol || ch->rightvol)) {
-					Com_Printf("%3i %3i %s\n", ch->leftvol, ch->rightvol, ch->sfx->name);
-					total++;
-				}
-
-			Com_Printf("----(%i)---- painted: %i\n", total, paintedtime);
-		}
-
-		/* mix some sound */
 #ifdef HAVE_OPENAL
 		if (!snd_openal->integer)
 #endif
-			S_UpdateMixer();
-
-		if (!snd_openal->integer) {
-			while (music.ovPlaying[0] && paintedtime + MAX_RAW_SAMPLES - 2048 > s_rawend)
-				S_OGG_Read();
-		} else if (music.ovPlaying[0]) {
-#ifdef HAVE_OPENAL
-			SND_OAL_Stream(&music);
-#endif
+			S_Spatialize(ch);		/* respatialize channel */
+		if (!ch->leftvol && !ch->rightvol) {
+			memset(ch, 0, sizeof(*ch));
+			continue;
 		}
-
-#ifdef WITH_SOUND_THREAD
-		SDL_UnlockMutex(soundMutex);
-		SDL_Delay(1000/cl_maxfps->integer);
 	}
+
+	/* debugging output */
+	if (snd_show->integer) {
+		total = 0;
+		ch = channels;
+		for (i = 0; i < MAX_CHANNELS; i++, ch++)
+			if (ch->sfx && (ch->leftvol || ch->rightvol)) {
+				Com_Printf("%3i %3i %s\n", ch->leftvol, ch->rightvol, ch->sfx->name);
+				total++;
+			}
+
+		Com_Printf("----(%i)---- painted: %i\n", total, paintedtime);
+	}
+
+	/* mix some sound */
+#ifdef HAVE_OPENAL
+	if (!snd_openal->integer)
 #endif
+		S_UpdateMixer();
+
+	if (!snd_openal->integer) {
+		while (music.ovPlaying[0] && paintedtime + MAX_RAW_SAMPLES - 2048 > s_rawend)
+			S_OGG_Read();
+	} else if (music.ovPlaying[0]) {
+#ifdef HAVE_OPENAL
+		SND_OAL_Stream(&music);
+#endif
+	}
+
 	return 1;
 }
 

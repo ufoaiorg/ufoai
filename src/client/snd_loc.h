@@ -129,6 +129,7 @@ struct sndinfo {
 	void (*S_PaintChannels) (int);
 	cvar_t* (*Cvar_Get)(const char *var_name, const char *value, int flags, const char *desc);
 	cvar_t* (*Cvar_Set)(const char *var_name, const char *value);
+	int (*Frame)(void *data);
 	int *paintedtime;
 };
 

@@ -42,6 +42,8 @@ static void paint_audio (void *unused, Uint8 *stream, int len)
 	if (!si)
 		return;
 
+	si->Frame(NULL);
+
 	si->dma->buffer = stream;
 	si->dma->samplepos += len / (si->dma->samplebits / 4);
 	si->S_PaintChannels(si->dma->samplepos);
