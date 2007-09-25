@@ -66,9 +66,6 @@ static void Sys_ConsoleInputReset (void)
 }
 #endif
 
-/**
- * @brief
- */
 void Sys_ShowConsole (qboolean show)
 {
 }
@@ -131,13 +128,7 @@ static void Sys_ConsoleRefresh (void)
 	wrefresh(win_log);
 	wrefresh(win_cmd);
 }
-#endif /* HAVE_CURSES */
 
-#ifdef HAVE_CURSES
-
-/**
- * @brief
- */
 static void Sys_ConsoleAddHistory (int line)
 {
 	Sys_ConsoleInputReset();
@@ -217,7 +208,6 @@ static void Sys_ConsoleCompleteCommand (void)
 			cmdbuf_pos++;
 		}
 		wrefresh(win_cmd);
-		return;
 	}
 }
 
@@ -364,9 +354,6 @@ void Sys_ConsoleOutput (const char *msg)
 
 #else /* HAVE_CURSES */
 
-/**
- * @brief
- */
 char *Sys_ConsoleInput (void)
 {
 	static char text[256];
@@ -395,14 +382,11 @@ char *Sys_ConsoleInput (void)
 
 	if (len < 1)
 		return NULL;
-	text[len - 1] = 0;    /* rip off the /n and terminate */
+	text[len - 1] = '\0'; /* rip off the \n and terminate */
 
 	return text;
 }
 
-/**
- * @brief
- */
 void Sys_ConsoleOutput (const char *string)
 {
 	char text[2048];
