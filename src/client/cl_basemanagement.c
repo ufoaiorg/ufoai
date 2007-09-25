@@ -2136,8 +2136,10 @@ void B_BaseAttack (base_t* const base)
 		return;
 	}
 
-	if (CP_SpawnBaseAttackMission(base, ms, NULL))
+	if (CP_SpawnBaseAttackMission(base, ms, NULL)) {
 		base->baseStatus = BASE_UNDER_ATTACK;
+		stats.basesAttacked++;
+	}
 
 #if 0							/*@todo: run eventhandler for each building in base */
 	if (b->onAttack)
