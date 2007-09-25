@@ -1577,6 +1577,17 @@ tech rs_weapon_plasblade
 	producetime	150
 }
 
+tech rs_weapon_plasblade_ammo
+{
+	type    logic
+	name    "LOGIC:Plasblade ammo"
+	require_AND
+	{
+		tech rs_weapon_plasblade
+	}
+	provides	plasblade_ammo
+}
+
 tech rs_weapon_plasmagren
 {
 	type	weapon
