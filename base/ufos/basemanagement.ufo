@@ -386,6 +386,8 @@ building building_amstorage
 	map_name	"antimatter"
 	pedia		rs_building_antimatter
 	capacity	10000
+	// TODO: the ondestroy function should destroy the hole base with a 10% chance maybe
+	ondestroy	""
 }
 
 base main
