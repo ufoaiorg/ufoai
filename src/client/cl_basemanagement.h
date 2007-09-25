@@ -191,21 +191,21 @@ typedef struct base_s {
 	 * base or there is not. They are true only if such buildings are operational
 	 * (for example, in some cases, if they are provided with power).
 	 */
-	qboolean hasHangar;		/**< B_HANGAR (Large Hangar) */
-	qboolean hasLab;		/**< B_LAB (Laboratory) */
-	qboolean hasHospital;		/**< B_HOSPITAL (Hospital) */
-	qboolean hasAlienCont;		/**< B_ALIEN_CONTAINMENT (Alien Containment) */
-	qboolean hasStorage;		/**< B_STORAGE (Storage) */
-	qboolean hasQuarters;		/**< B_QUARTERS (Living Quarters) */
-	qboolean hasWorkshop;		/**< B_WORKSHOP (Workshop) */
-	qboolean hasHangarSmall;	/**< B_SMALL_HANGAR (Small Hangar) */
-	qboolean hasUFOHangar;		/**< B_UFO_HANGAR (Large UFO hangar) */
-	qboolean hasUFOHangarSmall;	/**< B_UFO_SMALL_HANGAR (Small UFO Hangar) */
-	qboolean hasPower;		/**< B_POWER (Power Plant) */
-	qboolean hasCommand;		/**< B_COMMAND (Command Centre) */
-	qboolean hasAmStorage;		/**< B_ANTIMATTER (Antimatter Storage) */
-	qboolean hasMissile;		/**< B_DEFENSE_MISSILE (Missile Battery) */
-	qboolean hasLaser;			/**< B_DEFENSE_LASER (Laser defense) */
+	qboolean hasHangar;         /**< B_HANGAR (Large Hangar) */
+	qboolean hasLab;            /**< B_LAB (Laboratory) */
+	qboolean hasHospital;       /**< B_HOSPITAL (Hospital) */
+	qboolean hasAlienCont;      /**< B_ALIEN_CONTAINMENT (Alien Containment) */
+	qboolean hasStorage;        /**< B_STORAGE (Storage) */
+	qboolean hasQuarters;       /**< B_QUARTERS (Living Quarters) */
+	qboolean hasWorkshop;       /**< B_WORKSHOP (Workshop) */
+	qboolean hasHangarSmall;    /**< B_SMALL_HANGAR (Small Hangar) */
+	qboolean hasUFOHangar;      /**< B_UFO_HANGAR (Large UFO hangar) */
+	qboolean hasUFOHangarSmall; /**< B_UFO_SMALL_HANGAR (Small UFO Hangar) */
+	qboolean hasPower;          /**< B_POWER (Power Plant) */
+	qboolean hasCommand;        /**< B_COMMAND (Command Centre) */
+	qboolean hasAmStorage;      /**< B_ANTIMATTER (Antimatter Storage) */
+	qboolean hasMissile;        /**< B_DEFENSE_MISSILE (Missile Battery) */
+	qboolean hasLaser;          /**< B_DEFENSE_LASER (Laser defense) */
 
 	/** this is here to allocate the needed memory for the buildinglist */
 	char allBuildingsList[MAX_LIST_CHAR];
