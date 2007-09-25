@@ -239,6 +239,8 @@ static void S_PaintChannelFrom16 (channel_t * ch, sfxcache_t * sc, int count, in
 /**
  * @brief Write the sound data to the SDL callback buffer
  * @sa S_TransferPaintBuffer
+ * @sa S_RawSamples
+ * @sa S_IssuePlaysound
  */
 void S_PaintChannels (void)
 {
