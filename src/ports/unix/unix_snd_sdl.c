@@ -145,14 +145,9 @@ qboolean SND_Init (struct sndinfo *s)
 	case AUDIO_U8:
 		/* Supported */
 		break;
-	case AUDIO_S16LSB:
-	case AUDIO_S16MSB:
-		if (((obtained.format == AUDIO_S16LSB) && (SDL_BYTEORDER == SDL_LIL_ENDIAN)) ||
-			((obtained.format == AUDIO_S16MSB) && (SDL_BYTEORDER == SDL_BIG_ENDIAN))) {
-			/* Supported */
-			break;
-		}
-		/* Unsupported, fall through */
+	case AUDIO_S16SYS:
+		/* Supported */
+		break;
 	default:
 		/* Not supported -- force SDL to do our bidding */
 		SDL_CloseAudio();
