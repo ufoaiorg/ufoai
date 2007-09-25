@@ -321,6 +321,7 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 			gd.buildings[base->idx][i].idx = i;
 		}
 	}
+	/* don't use the building pointer after this point - it's zeroed or points to a wrong entry now */
 
 	switch (type) {
 	case B_WORKSHOP:
