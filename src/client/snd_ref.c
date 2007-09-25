@@ -80,13 +80,13 @@ playsound_t s_pendingplays;
 
 static int s_beginofs;
 
-cvar_t *snd_init;
 cvar_t *snd_volume;
 cvar_t *snd_testsound;
-cvar_t *snd_loadas8bit;
-cvar_t *snd_khz;
-cvar_t *snd_show;
-cvar_t *snd_mixahead;
+static cvar_t *snd_init;
+static cvar_t *snd_loadas8bit;
+static cvar_t *snd_khz;
+static cvar_t *snd_show;
+static cvar_t *snd_mixahead;
 static cvar_t *snd_bits;
 static cvar_t *snd_channels;
 

@@ -135,11 +135,6 @@ extern playsound_t s_pendingplays;
 extern portable_samplepair_t s_rawsamples[MAX_RAW_SAMPLES];
 
 extern cvar_t *snd_volume;
-extern cvar_t *snd_nosound;
-extern cvar_t *snd_loadas8bit;
-extern cvar_t *snd_khz;
-extern cvar_t *snd_show;
-extern cvar_t *snd_mixahead;
 extern cvar_t *snd_testsound;
 
 void S_InitScaletable(void);
