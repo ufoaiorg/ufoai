@@ -34,9 +34,6 @@ static int snd_inited;
 
 static struct sndinfo *si;
 
-/**
- * @brief
- */
 static void paint_audio (void *unused, Uint8 *stream, int len)
 {
 	if (!si)
@@ -49,9 +46,6 @@ static void paint_audio (void *unused, Uint8 *stream, int len)
 	si->S_PaintChannels(si->dma->samplepos);
 }
 
-/**
- * @brief
- */
 qboolean SND_Init (struct sndinfo *s)
 {
 	SDL_AudioSpec desired, obtained;
@@ -87,7 +81,6 @@ qboolean SND_Init (struct sndinfo *s)
 	si->Com_Printf("SDL audio driver is \"%s\".\n", drivername);
 
 	memset(&desired, '\0', sizeof (desired));
-	memset(&obtained, '\0', sizeof (obtained));
 
 	desired_bits = si->bits->integer;
 
@@ -160,30 +153,24 @@ qboolean SND_Init (struct sndinfo *s)
 	}
 
 	/* Fill the audio DMA information block */
-	si->dma->samplebits = (obtained.format & 0xFF);
-	si->dma->speed = obtained.freq;
-	si->dma->channels = obtained.channels;
-	si->dma->samples = obtained.samples * si->dma->channels;
-	si->dma->samplepos = 0;
+	si->dma->samplebits       = obtained.format & 0xFF;
+	si->dma->speed            = obtained.freq;
+	si->dma->channels         = obtained.channels;
+	si->dma->samples          = obtained.samples * si->dma->channels;
+	si->dma->samplepos        = 0;
 	si->dma->submission_chunk = 1;
-	si->dma->buffer = NULL;
+	si->dma->buffer           = NULL;
 
 	SDL_PauseAudio(0);
 	snd_inited = 1;
 	return qtrue;
 }
 
-/**
- * @brief
- */
 int SND_GetDMAPos (void)
 {
 	return si->dma->dmapos;
 }
 
-/**
- * @brief
- */
 void SND_Shutdown (void)
 {
 	if (snd_inited) {
@@ -206,17 +193,11 @@ void SND_Submit (void)
 /*	SDL_UnlockAudio();*/
 }
 
-/**
- * @brief
- */
 void SND_BeginPainting (void)
 {
 /*	SDL_LockAudio();*/
 }
 
-/**
- * @brief
- */
 void SND_Activate (qboolean active)
 {
 }
