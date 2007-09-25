@@ -305,22 +305,26 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	}
 	building->buildingStatus = B_STATUS_NOT_SET;
 
-	gd.numBuildings[base->idx]--;
+	{
+		building_t* const buildings = gd.buildings[base->idx];
+		const int         cnt_bldgs = gd.numBuildings[base->idx] - 1;
+		const int         idx       = building->idx;
+		int               row;
+		int               col;
 
-	/* last building in the list - just wipe it away */
-	if (building->idx == gd.numBuildings[base->idx]) {
-		memset(building, 0, sizeof(building_t));
-	} else {
-		/* the building is not the last one, so we have to fix some indices and move some mem */
-		int i, row, col;
-		for (i = building->idx; i < gd.numBuildings[base->idx]; i++) {
-			Com_DPrintf(DEBUG_CLIENT, "Move building %i to pos %i (%i)\n", i+1, i, gd.numBuildings[base->idx]);
-			memmove(&gd.buildings[base->idx][i], &gd.buildings[base->idx][i+1], sizeof(building_t));
-			for (row = 0; row < BASE_SIZE; row++)
-				for (col = 0; col < BASE_SIZE; col++)
-					if (base->map[row][col] == gd.buildings[base->idx][i].idx)
-						base->map[row][col] = i;
-			gd.buildings[base->idx][i].idx = i;
+		gd.numBuildings[base->idx] = cnt_bldgs;
+
+		memmove(building, building + 1, (cnt_bldgs - idx) * sizeof(*building));
+		/* wipe the now vacant last slot */
+		memset(&buildings[cnt_bldgs], 0, sizeof(buildings[cnt_bldgs]));
+
+		/* adjust the base map indices for the removed building */
+		for (row = 0; row < BASE_SIZE; ++row) {
+			for (col = 0; col < BASE_SIZE; ++col) {
+				if (base->map[row][col] > idx) {
+					--base->map[row][col];
+				}
+			}
 		}
 	}
 	/* don't use the building pointer after this point - it's zeroed or points to a wrong entry now */
