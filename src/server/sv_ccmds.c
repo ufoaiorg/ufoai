@@ -142,8 +142,8 @@ static qboolean SV_CheckMap (const char *map, const char *assembly)
 static void SV_Map_f (void)
 {
 	const char *assembly = NULL;
-	char bufMap[MAX_QPATH];
-	char bufAssembly[MAX_VAR];
+	char bufMap[MAX_TOKEN_CHARS*MAX_TILESTRINGS];
+	char bufAssembly[MAX_TOKEN_CHARS*MAX_TILESTRINGS];
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <mapname> <assembly>\n", Cmd_Argv(0));
@@ -158,14 +158,14 @@ static void SV_Map_f (void)
 
 	/* we copy them to buffers because the command pointers might be invalid soon */
 
-	/* check to make sure the level exists */
-	Q_strncpyz(bufMap, Cmd_Argv(1), sizeof(sv.assembly));
-	/* random maps uses position strings */
+	Q_strncpyz(bufMap, Cmd_Argv(1), sizeof(bufMap));
+	/* assembled maps uses position strings */
 	if (Cmd_Argc() == 3) {
 		assembly = bufAssembly;
-		Q_strncpyz(bufAssembly, Cmd_Argv(2), sizeof(sv.assembly));
+		Q_strncpyz(bufAssembly, Cmd_Argv(2), sizeof(bufAssembly));
 	}
 
+	/* check to make sure the level exists */
 	if (!SV_CheckMap(bufMap, assembly))
 		return;
 

@@ -671,6 +671,13 @@ qboolean CP_SpawnBaseAttackMission (base_t* base, mission_t* ms, setState_t *cau
 
 	ms->zoneType = base->mapZone;
 
+	ms->mapDef = Com_GetMapDefinitionByID("baseattack");
+	if (!ms->mapDef) {
+		CP_RemoveLastMission();
+		Sys_Error("Could not find mapdef baseattack");
+		return qfalse;
+	}
+
 	if (cause)
 		return qtrue;
 
@@ -692,6 +699,7 @@ qboolean CP_SpawnBaseAttackMission (base_t* base, mission_t* ms, setState_t *cau
  * @brief Add a new ground mission to the ccs.mission array
  * @param[in] mis The mission to add to geoscape
  * @note This mission must already be defined completly
+ * @note If the mapdef is missing, this function will return NULL, too
  * @sa CL_AddMission
  * @sa CL_CampaignAddMission
  * @return NULL if failed - actMis_t pointer (to ccs.mission array) if successful
@@ -706,6 +714,11 @@ actMis_t* CL_CampaignAddGroundMission (mission_t* mission)
 	/* add mission */
 	if (ccs.numMissions >= MAX_ACTMISSIONS) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_CampaignAddGroundMission: Too many active missions!\n");
+		return NULL;
+	}
+
+	if (!mission->mapDef) {
+		Com_Printf("CL_CampaignAddGroundMission: No mapdef pointer for mission: '%s'\n", mission->name);
 		return NULL;
 	}
 
@@ -2563,6 +2576,7 @@ static void CP_SetMissionVars (mission_t* mission)
 	int i;
 
 	assert(mission);
+	assert(mission->mapDef);
 
 	Com_DPrintf(DEBUG_CLIENT, "CP_SetMissionVars:\n");
 
