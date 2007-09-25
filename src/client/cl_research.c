@@ -116,8 +116,9 @@ void RS_MarkOneResearchable (technology_t* tech)
 
 /**
  * @brief Checks if all requirements of a tech have been met so that it becomes researchable.
- * @param[in] require_AND pointer to a list of AND-related requirements.
- * @param[in] require_OR pointer to a list of OR-related requirements.
+ * @param[in] require_AND Pointer to a list of AND-related requirements.
+ * @param[in] require_OR Pointer to a list of OR-related requirements.
+ * @param[in] base In what base to check the "collected" items etc..
  * @return Returns qtrue if all requirements are satisfied otherwise qfalse.
  * @todo Add support for the "delay" value.
  */
@@ -211,6 +212,69 @@ static qboolean RS_RequirementsMet (requirements_t *required_AND, requirements_t
 	return (met_AND || met_OR);
 }
 
+#if 0
+/**
+ * @todo Just here because it might be useful later on. See "note" below.
+ * Winter and me (hoehrer) decided to go the "generic message" way for now.
+ */
+
+/**
+ * @brief Checks if the required techs (no recursive lookup) are researchABLE.
+ * @param[in] require_AND Pointer to a list of AND-related requirements.
+ * @param[in] require_OR Pointer to a list of OR-related requirements.
+ * @param[in] base In what base to check.
+ * @return Returns qtrue if the requitred techs are researchable  otherwise qfalse.
+ * @note The basic use of this function is to prevent "grey" entries in the research-list if no researchable precursor exists.
+ * @sa RS_MarkResearchable
+ */
+static qboolean RS_RequirementsResearchable (requirements_t *required_AND, requirements_t *required_OR, base_t* base)
+{
+	int i;
+	qboolean met_AND = qfalse;
+	qboolean met_OR = qfalse;
+	technology_t *tech = NULL;
+
+	if (!required_AND && !required_OR) {
+		Com_Printf("RS_RequirementsResearchable: No requirement list(s) given as parameter.\n");
+		return qfalse;
+	}
+
+	if (required_AND->numLinks) {
+		met_AND = qtrue;
+		for (i = 0; i < required_AND->numLinks; i++) {
+			if (required_AND->type[i] == RS_LINK_TECH) {
+				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsResearchable: ANDtech: %s / %i\n", required_AND->id[i], required_AND->idx[i]);
+				tech = RS_GetTechByIDX(required_AND->idx[i]);
+
+				if (!RS_TechIsResearchable(tech, base)
+					&& Q_strncmp(required_AND->id[i], "nothing", MAX_VAR)) {
+					Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsResearchable: this tech not researchable ----> %s \n", required_AND->id[i]);
+					met_AND = qfalse;
+				}
+			}
+			if (!met_AND)
+				break;
+		}
+	}
+
+	if (required_OR->numLinks) {
+		for (i = 0; i < required_OR->numLinks; i++) {
+			if (required_OR->type[i] == RS_LINK_TECH) {
+				Com_DPrintf(DEBUG_CLIENT, "RS_RequirementsResearchable: ORtech: %s / %i\n", required_OR->id[i], required_OR->idx[i]);
+				tech = RS_GetTechByIDX(required_OR->idx[i]);
+				if (RS_TechIsResearchable(tech, base))
+					met_OR = qtrue;
+			}
+
+			if (met_OR)
+				break;
+		}
+	}
+	/* Com_DPrintf(DEBUG_CLIENT, "met_AND is %i, met_OR is %i\n", met_AND, met_OR); */
+
+	return (met_AND || met_OR);
+}
+#endif
 
 /**
  * @brief Checks if the technology (tech-id) is researchable.
@@ -407,9 +471,10 @@ void RS_CheckAllCollected (void)
 
 /**
  * @brief Marks all the techs that can be researched.
- * Automatically researches 'free' techs such as ammo for a weapon.
+ * Automatically researches 'free' techs such as ammo for a weapon. Not "researchable"-related.
  * Should be called when a new item is researched (RS_MarkResearched) and after
  * the tree-initialisation (RS_InitTree)
+ * @sa RS_MarkResearched
  */
 void RS_MarkResearchable (qboolean init)
 {
@@ -747,7 +812,7 @@ static void RS_ResearchDisplayInfo (void)
 		Cvar_Set("mn_research_selstatus", _("Status: Research finished"));
 		break;
 	case RS_NONE:
-		Cvar_Set("mn_research_selstatus", _("Status: Unknown technology"));
+		Cvar_Set("mn_research_selstatus", _("Status: We don't currently have all the materials or background knowledge needed to research this topic."));
 		break;
 	default:
 		break;
@@ -1126,10 +1191,12 @@ void RS_UpdateData (void)
 
 		/* @todo: add check for collected items */
 
-		/* Make icons vivible for this entry */
+		/* Make icons visible for this entry */
 		Cmd_ExecuteString(va("research_show%i", j));
 
 		if (tech->statusCollected && !tech->statusResearchable && (tech->statusResearch != RS_FINISH)) {
+			/* Item is collected but not yet researchable. */
+
 			/* Color the item 'unresearchable' */
 			Cmd_ExecuteString(va("researchunresearchable%i", j));
 			/* Display the concated text in the correct list-entry. */
@@ -1145,6 +1212,7 @@ void RS_UpdateData (void)
 			j++;
 		} else if ((tech->statusResearch != RS_FINISH) && (tech->statusResearchable)) {
 			/* An item that can be researched. */
+
 			/* How many scis are assigned to this tech. */
 			Cvar_SetValue(va("mn_researchassigned%i", j), tech->scientists);
 			if ((tech->base_idx == baseCurrent->idx) || (tech->base_idx < 0) ) {
@@ -1278,8 +1346,8 @@ static qboolean RS_DependsOn (char *id1, char *id2)
 #endif
 
 /**
- * @brief Mark technologies as researched. This includes techs that depends in "id" and have time=0
- * @param[in] id Unique id of a technology_t
+ * @brief Mark technologies as researched. This includes techs that depends on "tech" and have time=0
+ * @param[in] tech Pointer to a technology_t struct.
  * @sa CL_CheckResearchStatus
  */
 static void RS_MarkResearched (technology_t *tech)
@@ -2153,7 +2221,7 @@ technology_t *RS_GetTechByProvided (const char *id_provided)
 }
 
 #if 0
-/* Not really used anywhere, but i'll just leave it in here if it is needed again*/
+/* Not really used anywhere, but I'll just leave it in here if it is needed again*/
  /**
  * @brief Returns a list of technologies for the given type
  * @note This list is terminated by a NULL pointer.
