@@ -571,9 +571,18 @@ menu_model craft_item_raven_ecm
 	}
 }
 
-menu_model craft_shield_light
+menu_model craft_armour_polymer
 {
-	model	"aircraft/craft_shield_light/light"
+	model	"aircraft/craft_arm_poly/polymer"
+	menutransform {
+		ufopedia	"2 2 2"	"-120 120 -30"	"-20 0 0"
+		aircraft_equip	"2 2 2"	"-120 120 -30"	"-20 15 0"
+	}
+}
+
+menu_model craft_armour_plating
+{
+	model	"aircraft/craft_arm_plate/plating"
 	menutransform {
 		ufopedia	"2 2 2"	"-120 120 -30"	"-20 0 0"
 		aircraft_equip	"2 2 2"	"-120 120 -30"	"-20 15 0"

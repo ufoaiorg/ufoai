@@ -3658,7 +3658,7 @@ tech rs_craft_shield_polymer
 	time		0
 	producetime	140
 
-	mdl_top	"craft_shield_light"
+	mdl_top	"craft_armour_polymer"
 }
 
 tech rs_craft_shield_plating
@@ -3680,7 +3680,7 @@ tech rs_craft_shield_plating
 	time		620
 	producetime	240
 
-	image_top	"techs/craft_shield_plating"
+	mdl_top	"craft_armour_plating"
 }
 
 tech rs_craft_alien_astrogation
