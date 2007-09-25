@@ -76,7 +76,7 @@ void RS_ResearchFinish (technology_t* tech)
 		RS_PushNewsWhenResearched(tech);
 
 	/* send a new message and add it to the mailclient */
-	if (tech->mailSent < MAILSENT_FINISHED) { 
+	if (tech->mailSent < MAILSENT_FINISHED) {
 		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("A research project has been completed: %s\n"), _(tech->name));
 		MN_AddNewMessage(_("Research finished"), messageBuffer, qfalse, MSG_RESEARCH_FINISHED, tech);
 		tech->mailSent = MAILSENT_FINISHED;
@@ -98,15 +98,15 @@ void RS_MarkOneResearchable (technology_t* tech)
 
 	if (tech->time == 0) /* Don't send mail for automatically completed techs. */
 		tech->mailSent = MAILSENT_FINISHED;
-		
-	if (tech->mailSent < MAILSENT_PROPOSAL) { 
+
+	if (tech->mailSent < MAILSENT_PROPOSAL) {
 		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("New research proposal: %s\n"), _(tech->name));
 		MN_AddNewMessage(_("Unknown Technology researchable"), messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
 		tech->mailSent = MAILSENT_PROPOSAL;
 	}
 
 	tech->statusResearchable = qtrue;
-	
+
 	/* only change the date if it wasn't set before */
 	if (tech->preResearchedDateYear == 0) {
 		CL_DateConvert(&ccs.date, &tech->preResearchedDateDay, &tech->preResearchedDateMonth);
@@ -292,20 +292,20 @@ void RS_MarkCollected (technology_t* tech)
 	if (tech->time == 0) /* Don't send mail for automatically completed techs. */
 		tech->mailSent = MAILSENT_FINISHED;
 
-	if (tech->mailSent < MAILSENT_PROPOSAL) { 
+	if (tech->mailSent < MAILSENT_PROPOSAL) {
 		if (tech->statusResearch < RS_FINISH) {
 			Com_sprintf(messageBuffer, sizeof(messageBuffer), _("New research proposal: %s\n"), _(tech->name));
 			MN_AddNewMessage(_("Unknown Technology found"), messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
 		}
 		tech->mailSent = MAILSENT_PROPOSAL;
 	}
-	
+
 	/* only change the date if it wasn't set before */
 	if (tech->preResearchedDateYear == 0) {
 		CL_DateConvert(&ccs.date, &tech->preResearchedDateDay, &tech->preResearchedDateMonth);
 		tech->preResearchedDateYear = ccs.date.day / 365;
 	}
-		
+
 	tech->statusCollected = qtrue;
 }
 
@@ -449,8 +449,8 @@ void RS_MarkResearchable (qboolean init)
 				}
 
 				/* If the tech is a 'free' one (such as ammo for a weapon),
-				   mark it as researched and loop back to see if it unlocks
-				   any other techs */
+				 * mark it as researched and loop back to see if it unlocks
+				 * any other techs */
 				if (tech->statusResearchable && tech->time <= 0) {
 					if (init)
 						tech->mailSent = MAILSENT_FINISHED;
@@ -702,11 +702,13 @@ static void RS_ResearchDisplayInfo (void)
 	tech = researchList[researchListPos];
 
 	/* Display laboratories limits. */
+	/* FIXME: used/all - not all/used */
 	Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Laboratory space (all/used): %i/%i"),
 	baseCurrent->capacities[CAP_LABSPACE].max, baseCurrent->capacities[CAP_LABSPACE].cur);
 	Cvar_Set("mn_research_labs", tmpbuf);
 
 	/* Display scientists amounts. */
+	/* FIXME: used/all - not all/used */
 	Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Scientists (all/available): %i/%i"),
 	E_CountHired(baseCurrent, EMPL_SCIENTIST), E_CountUnassigned(baseCurrent, EMPL_SCIENTIST));
 	Cvar_Set("mn_research_scis", tmpbuf);
@@ -1254,7 +1256,7 @@ static void CL_ResearchType_f (void)
  * @param[in] id2 Unique id of a technology_t
  * @return qboolean
  */
-static qboolean RS_DependsOn(char *id1, char *id2)
+static qboolean RS_DependsOn (char *id1, char *id2)
 {
 	int i;
 	technology_t *tech = NULL;
@@ -2151,7 +2153,7 @@ technology_t *RS_GetTechByProvided (const char *id_provided)
 }
 
 #if 0
-/* Not really used anywhere, but i;ll just leave it in here if it is needed again*/
+/* Not really used anywhere, but i'll just leave it in here if it is needed again*/
  /**
  * @brief Returns a list of technologies for the given type
  * @note This list is terminated by a NULL pointer.
