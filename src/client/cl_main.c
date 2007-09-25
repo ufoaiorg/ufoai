@@ -2370,12 +2370,6 @@ void CL_Frame (int now, void *data)
 	if (sys_priority->modified || sys_affinity->modified)
 		Sys_SetAffinityAndPriority();
 
-	/* did we switch the sound renderer */
-	if (snd_openal->modified) {
-		snd_openal->modified = qfalse;
-		CL_Snd_Restart_f();
-	}
-
 	/* decide the simulation time */
 	delta = now - last_frame;
 	if (last_frame)

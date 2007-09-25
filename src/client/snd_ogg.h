@@ -37,10 +37,6 @@ typedef struct music_s {
 	float fading;					/**< current volume - if le zero play newFilename */
 	char ovPlaying[MAX_QPATH];		/**< currently playing ogg tracks basename */
 	unsigned format;				/**< sterep/mono */
-#ifdef HAVE_OPENAL
-	unsigned int buffers[2];				/**< front and back buffers */
-	unsigned int source;					/**< audio source */
-#endif
 } music_t;
 
 extern music_t music;

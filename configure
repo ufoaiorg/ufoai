@@ -665,10 +665,6 @@ HAVE_RM
 HAVE_MKDIR
 HAVE_WINDRES
 WINDRES
-HAVE_OPENAL_CONFIG
-OPENAL_CFLAGS
-OPENAL_LIBS
-HAVE_OPENAL
 HAVE_SDL_CONFIG
 SDL_CFLAGS
 SDL_LIBS
@@ -689,12 +685,6 @@ SERVER_LIBS
 GAME_LIBS
 TOOLS_LIBS
 MASTER_LIBS
-SND_ARTS_LIBS
-SND_SDL_LIBS
-SND_JACK_LIBS
-SND_OSS_LIBS
-SND_WAPI_LIBS
-SND_ALSA_LIBS
 LIBOBJS
 LTLIBOBJS'
 ac_subst_files=''
@@ -1295,14 +1285,8 @@ Optional Packages:
   --with-sdl-config=FILE  using the given sdl-config [default=sdl-config]
   --with-shaders          with OpenGL shader support [default=check]
   --with-curses           compile with curses console support [default=check]
-  --with-openal           build openal sound support [default=check]
-  --with-openal-config=FILE
-                          using the given openal-config
-                          [default=openal-config]
   --with-opengl-framework compile with given opengl framework
                           [default=/System/Library/Frameworks/OpenGL.framework]
-  --with-openal-framework compile with given openal framework
-                          [default=/System/Library/Frameworks/OpenAL.framework]
 
 Some influential environment variables:
   CC          C compiler command
@@ -1959,38 +1943,11 @@ fi
 
 
 
-# Check whether --with-openal was given.
-if test "${with_openal+set}" = set; then
-  withval=$with_openal;
-else
-  with_openal=check
-fi
-
-
-
-# Check whether --with-openal_config was given.
-if test "${with_openal_config+set}" = set; then
-  withval=$with_openal_config;
-else
-  with_openal_config=openal-config
-fi
-
-
-
 # Check whether --with-opengl_framework was given.
 if test "${with_opengl_framework+set}" = set; then
   withval=$with_opengl_framework;
 else
   with_opengl_framework=/System/Library/Frameworks/OpenGL.framework
-fi
-
-
-
-# Check whether --with-openal_framework was given.
-if test "${with_openal_framework+set}" = set; then
-  withval=$with_openal_framework;
-else
-  with_openal_framework=/System/Library/Frameworks/OpenAL.framework
 fi
 
 
@@ -2184,8 +2141,8 @@ elif test `echo $target_os | sed "s/\(darwin\).*/\1/"` = "darwin"
 then
 	TARGET_OS=darwin
 
-	CFLAGS="$CFLAGS -F$with_opengl_framework -F$with_openal_framework"
-	LDFLAGS="$LDFLAGS -framework IOKit -framework Foundation -framework OpenGL -framework OpenAL"
+	CFLAGS="$CFLAGS -F$with_opengl_framework"
+	LDFLAGS="$LDFLAGS -framework IOKit -framework Foundation -framework OpenGL"
 else
 	{ { echo "$as_me:$LINENO: error: The target operating system '$target_os' is unknown, please contact the developers" >&5
 echo "$as_me: error: The target operating system '$target_os' is unknown, please contact the developers" >&2;}
@@ -8631,360 +8588,6 @@ then
 	CLIENT_CFLAGS=
 	LIBS=
 
-	if test "$with_openal" = "check" || test "$with_openal" = "yes"
-	then
-		#---------------------------------------------------------------------------------------------
-		# Check for openal-config
-		#---------------------------------------------------------------------------------------------
-		openal_config=$with_openal_config
-		OLD_CPPFLAGS=$CPPFLAGS
-		OLD_LDFLAGS=$LDFLAGS
-
-		# Extract the first word of "$openal_config", so it can be a program name with args.
-set dummy $openal_config; ac_word=$2
-{ echo "$as_me:$LINENO: checking for $ac_word" >&5
-echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6; }
-if test "${ac_cv_prog_HAVE_OPENAL_CONFIG+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  if test -n "$HAVE_OPENAL_CONFIG"; then
-  ac_cv_prog_HAVE_OPENAL_CONFIG="$HAVE_OPENAL_CONFIG" # Let the user override the test.
-else
-as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in $PATH
-do
-  IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-  for ac_exec_ext in '' $ac_executable_extensions; do
-  if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; }; then
-    ac_cv_prog_HAVE_OPENAL_CONFIG="yes"
-    echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-done
-IFS=$as_save_IFS
-
-fi
-fi
-HAVE_OPENAL_CONFIG=$ac_cv_prog_HAVE_OPENAL_CONFIG
-if test -n "$HAVE_OPENAL_CONFIG"; then
-  { echo "$as_me:$LINENO: result: $HAVE_OPENAL_CONFIG" >&5
-echo "${ECHO_T}$HAVE_OPENAL_CONFIG" >&6; }
-else
-  { echo "$as_me:$LINENO: result: no" >&5
-echo "${ECHO_T}no" >&6; }
-fi
-
-
-		if test "$ac_cv_prog_HAVE_OPENAL_CONFIG" = "yes"
-		then
-			CPPFLAGS=`$openal_config --cflags`
-			LDFLAGS=`$openal_config --libs`
-			OPENAL_CFLAGS=$CPPFLAGS
-
-			OPENAL_LIBS=$LDFLAGS
-
-		else
-			{ echo "$as_me:$LINENO: WARNING: cannot find $openal_config might fail to find OpenAL!" >&5
-echo "$as_me: WARNING: cannot find $openal_config might fail to find OpenAL!" >&2;}
-		fi
-
-
-
-for ac_header in OpenAL/al.h OpenAL/alc.h
-do
-as_ac_Header=`echo "ac_cv_header_$ac_header" | $as_tr_sh`
-if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
-  { echo "$as_me:$LINENO: checking for $ac_header" >&5
-echo $ECHO_N "checking for $ac_header... $ECHO_C" >&6; }
-if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-fi
-ac_res=`eval echo '${'$as_ac_Header'}'`
-	       { echo "$as_me:$LINENO: result: $ac_res" >&5
-echo "${ECHO_T}$ac_res" >&6; }
-else
-  # Is the header compilable?
-{ echo "$as_me:$LINENO: checking $ac_header usability" >&5
-echo $ECHO_N "checking $ac_header usability... $ECHO_C" >&6; }
-cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-$ac_includes_default
-#include <$ac_header>
-_ACEOF
-rm -f conftest.$ac_objext
-if { (ac_try="$ac_compile"
-case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_compile") 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-	 { ac_try='test -z "$ac_c_werror_flag" || test ! -s conftest.err'
-  { (case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_try") 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest.$ac_objext'
-  { (case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_try") 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  ac_header_compiler=yes
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-	ac_header_compiler=no
-fi
-
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-{ echo "$as_me:$LINENO: result: $ac_header_compiler" >&5
-echo "${ECHO_T}$ac_header_compiler" >&6; }
-
-# Is the header present?
-{ echo "$as_me:$LINENO: checking $ac_header presence" >&5
-echo $ECHO_N "checking $ac_header presence... $ECHO_C" >&6; }
-cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-#include <$ac_header>
-_ACEOF
-if { (ac_try="$ac_cpp conftest.$ac_ext"
-case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_cpp conftest.$ac_ext") 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } >/dev/null; then
-  if test -s conftest.err; then
-    ac_cpp_err=$ac_c_preproc_warn_flag
-    ac_cpp_err=$ac_cpp_err$ac_c_werror_flag
-  else
-    ac_cpp_err=
-  fi
-else
-  ac_cpp_err=yes
-fi
-if test -z "$ac_cpp_err"; then
-  ac_header_preproc=yes
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-  ac_header_preproc=no
-fi
-
-rm -f conftest.err conftest.$ac_ext
-{ echo "$as_me:$LINENO: result: $ac_header_preproc" >&5
-echo "${ECHO_T}$ac_header_preproc" >&6; }
-
-# So?  What about this header?
-case $ac_header_compiler:$ac_header_preproc:$ac_c_preproc_warn_flag in
-  yes:no: )
-    { echo "$as_me:$LINENO: WARNING: $ac_header: accepted by the compiler, rejected by the preprocessor!" >&5
-echo "$as_me: WARNING: $ac_header: accepted by the compiler, rejected by the preprocessor!" >&2;}
-    { echo "$as_me:$LINENO: WARNING: $ac_header: proceeding with the compiler's result" >&5
-echo "$as_me: WARNING: $ac_header: proceeding with the compiler's result" >&2;}
-    ac_header_preproc=yes
-    ;;
-  no:yes:* )
-    { echo "$as_me:$LINENO: WARNING: $ac_header: present but cannot be compiled" >&5
-echo "$as_me: WARNING: $ac_header: present but cannot be compiled" >&2;}
-    { echo "$as_me:$LINENO: WARNING: $ac_header:     check for missing prerequisite headers?" >&5
-echo "$as_me: WARNING: $ac_header:     check for missing prerequisite headers?" >&2;}
-    { echo "$as_me:$LINENO: WARNING: $ac_header: see the Autoconf documentation" >&5
-echo "$as_me: WARNING: $ac_header: see the Autoconf documentation" >&2;}
-    { echo "$as_me:$LINENO: WARNING: $ac_header:     section \"Present But Cannot Be Compiled\"" >&5
-echo "$as_me: WARNING: $ac_header:     section \"Present But Cannot Be Compiled\"" >&2;}
-    { echo "$as_me:$LINENO: WARNING: $ac_header: proceeding with the preprocessor's result" >&5
-echo "$as_me: WARNING: $ac_header: proceeding with the preprocessor's result" >&2;}
-    { echo "$as_me:$LINENO: WARNING: $ac_header: in the future, the compiler will take precedence" >&5
-echo "$as_me: WARNING: $ac_header: in the future, the compiler will take precedence" >&2;}
-
-    ;;
-esac
-{ echo "$as_me:$LINENO: checking for $ac_header" >&5
-echo $ECHO_N "checking for $ac_header... $ECHO_C" >&6; }
-if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  eval "$as_ac_Header=\$ac_header_preproc"
-fi
-ac_res=`eval echo '${'$as_ac_Header'}'`
-	       { echo "$as_me:$LINENO: result: $ac_res" >&5
-echo "${ECHO_T}$ac_res" >&6; }
-
-fi
-if test `eval echo '${'$as_ac_Header'}'` = yes; then
-  cat >>confdefs.h <<_ACEOF
-#define `echo "HAVE_$ac_header" | $as_tr_cpp` 1
-_ACEOF
-
-fi
-
-done
-
-		if test "$ac_cv_header_OpenAL_al_h" != "yes" || \
-			test "$ac_cv_header_OpenAL_alc_h" != "yes"
-		then
-			if test "$with_openal" = "yes"
-			then
-				{ { echo "$as_me:$LINENO: error: --with-openal specified but cannot find OpenAL header!" >&5
-echo "$as_me: error: --with-openal specified but cannot find OpenAL header!" >&2;}
-   { (exit 1); exit 1; }; }
-			else
-				HAVE_OPENAL=0
-
-			fi
-		else
-			HAVE_OPENAL=1
-
-		fi
-		{ echo "$as_me:$LINENO: checking for library containing alSourcePlay" >&5
-echo $ECHO_N "checking for library containing alSourcePlay... $ECHO_C" >&6; }
-if test "${ac_cv_search_alSourcePlay+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  ac_func_search_save_LIBS=$LIBS
-cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char alSourcePlay ();
-int
-main ()
-{
-return alSourcePlay ();
-  ;
-  return 0;
-}
-_ACEOF
-for ac_lib in '' openal openal32; do
-  if test -z "$ac_lib"; then
-    ac_res="none required"
-  else
-    ac_res=-l$ac_lib
-    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
-  fi
-  rm -f conftest.$ac_objext conftest$ac_exeext
-if { (ac_try="$ac_link"
-case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_link") 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } &&
-	 { ac_try='test -z "$ac_c_werror_flag" || test ! -s conftest.err'
-  { (case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_try") 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; } &&
-	 { ac_try='test -s conftest$ac_exeext'
-  { (case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-  (eval "$ac_try") 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  ac_cv_search_alSourcePlay=$ac_res
-else
-  echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-
-fi
-
-rm -f core conftest.err conftest.$ac_objext \
-      conftest$ac_exeext
-  if test "${ac_cv_search_alSourcePlay+set}" = set; then
-  break
-fi
-done
-if test "${ac_cv_search_alSourcePlay+set}" = set; then
-  :
-else
-  ac_cv_search_alSourcePlay=no
-fi
-rm conftest.$ac_ext
-LIBS=$ac_func_search_save_LIBS
-fi
-{ echo "$as_me:$LINENO: result: $ac_cv_search_alSourcePlay" >&5
-echo "${ECHO_T}$ac_cv_search_alSourcePlay" >&6; }
-ac_res=$ac_cv_search_alSourcePlay
-if test "$ac_res" != no; then
-  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
-
-fi
-
-		if test "$ac_cv_search_alSourcePlay" = "no"
-		then
-			{ echo "$as_me:$LINENO: WARNING: Could not find OpenAL library!" >&5
-echo "$as_me: WARNING: Could not find OpenAL library!" >&2;}
-			HAVE_OPENAL=0
-
-		fi
-
-		CPPFLAGS=$OLD_CPPFLAGS
-		LDFLAGS=$OLD_LDFLAGS
-	else
-		{ echo "$as_me:$LINENO: Without OpenAL" >&5
-echo "$as_me: Without OpenAL" >&6;}
-	fi
-
 	#---------------------------------------------------------------------------------------------
 	# Check for libogg
 	#---------------------------------------------------------------------------------------------
@@ -10953,18 +10556,6 @@ TOOLS_LIBS="$TOOLS_LIBS"
 
 MASTER_LIBS="$MASTER_LIBS"
 
-SND_ARTS_LIBS="$SND_ARTS_LIBS"
-
-SND_SDL_LIBS="$SND_SDL_LIBS"
-
-SND_JACK_LIBS="$SND_JACK_LIBS"
-
-SND_OSS_LIBS="$SND_OSS_LIBS"
-
-SND_WAPI_LIBS="$SND_WAPI_LIBS"
-
-SND_ALSA_LIBS="$SND_ALSA_LIBS"
-
 
 #AC_MSG_NOTICE(Compiler flags: $CFLAGS)
 #AC_MSG_NOTICE(Compiler flags: $CLIENT_CFLAGS)
@@ -11643,10 +11234,6 @@ HAVE_RM!$HAVE_RM$ac_delim
 HAVE_MKDIR!$HAVE_MKDIR$ac_delim
 HAVE_WINDRES!$HAVE_WINDRES$ac_delim
 WINDRES!$WINDRES$ac_delim
-HAVE_OPENAL_CONFIG!$HAVE_OPENAL_CONFIG$ac_delim
-OPENAL_CFLAGS!$OPENAL_CFLAGS$ac_delim
-OPENAL_LIBS!$OPENAL_LIBS$ac_delim
-HAVE_OPENAL!$HAVE_OPENAL$ac_delim
 HAVE_SDL_CONFIG!$HAVE_SDL_CONFIG$ac_delim
 SDL_CFLAGS!$SDL_CFLAGS$ac_delim
 SDL_LIBS!$SDL_LIBS$ac_delim
@@ -11667,15 +11254,11 @@ SERVER_LIBS!$SERVER_LIBS$ac_delim
 GAME_LIBS!$GAME_LIBS$ac_delim
 TOOLS_LIBS!$TOOLS_LIBS$ac_delim
 MASTER_LIBS!$MASTER_LIBS$ac_delim
-SND_ARTS_LIBS!$SND_ARTS_LIBS$ac_delim
-SND_SDL_LIBS!$SND_SDL_LIBS$ac_delim
-SND_JACK_LIBS!$SND_JACK_LIBS$ac_delim
-SND_OSS_LIBS!$SND_OSS_LIBS$ac_delim
-SND_WAPI_LIBS!$SND_WAPI_LIBS$ac_delim
-SND_ALSA_LIBS!$SND_ALSA_LIBS$ac_delim
+LIBOBJS!$LIBOBJS$ac_delim
+LTLIBOBJS!$LTLIBOBJS$ac_delim
 _ACEOF
 
-  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 97; then
+  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 89; then
     break
   elif $ac_last_try; then
     { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5
@@ -11694,49 +11277,6 @@ fi
 
 cat >>$CONFIG_STATUS <<_ACEOF
 cat >"\$tmp/subs-1.sed" <<\CEOF$ac_eof
-/@[a-zA-Z_][a-zA-Z_0-9]*@/!b
-_ACEOF
-sed '
-s/[,\\&]/\\&/g; s/@/@|#_!!_#|/g
-s/^/s,@/; s/!/@,|#_!!_#|/
-:n
-t n
-s/'"$ac_delim"'$/,g/; t
-s/$/\\/; p
-N; s/^.*\n//; s/[,\\&]/\\&/g; s/@/@|#_!!_#|/g; b n
-' >>$CONFIG_STATUS <conf$$subs.sed
-rm -f conf$$subs.sed
-cat >>$CONFIG_STATUS <<_ACEOF
-CEOF$ac_eof
-_ACEOF
-
-
-ac_delim='%!_!# '
-for ac_last_try in false false false false false :; do
-  cat >conf$$subs.sed <<_ACEOF
-LIBOBJS!$LIBOBJS$ac_delim
-LTLIBOBJS!$LTLIBOBJS$ac_delim
-_ACEOF
-
-  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 2; then
-    break
-  elif $ac_last_try; then
-    { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5
-echo "$as_me: error: could not make $CONFIG_STATUS" >&2;}
-   { (exit 1); exit 1; }; }
-  else
-    ac_delim="$ac_delim!$ac_delim _$ac_delim!! "
-  fi
-done
-
-ac_eof=`sed -n '/^CEOF[0-9]*$/s/CEOF/0/p' conf$$subs.sed`
-if test -n "$ac_eof"; then
-  ac_eof=`echo "$ac_eof" | sort -nru | sed 1q`
-  ac_eof=`expr $ac_eof + 1`
-fi
-
-cat >>$CONFIG_STATUS <<_ACEOF
-cat >"\$tmp/subs-2.sed" <<\CEOF$ac_eof
 /@[a-zA-Z_][a-zA-Z_0-9]*@/!b end
 _ACEOF
 sed '
@@ -11994,7 +11534,7 @@ s&@builddir@&$ac_builddir&;t t
 s&@abs_builddir@&$ac_abs_builddir&;t t
 s&@abs_top_builddir@&$ac_abs_top_builddir&;t t
 $ac_datarootdir_hack
-" $ac_file_inputs | sed -f "$tmp/subs-1.sed" | sed -f "$tmp/subs-2.sed" >$tmp/out
+" $ac_file_inputs | sed -f "$tmp/subs-1.sed" >$tmp/out
 
 test -z "$ac_datarootdir_hack$ac_datarootdir_seen" &&
   { ac_out=`sed -n '/\${datarootdir}/p' "$tmp/out"`; test -n "$ac_out"; } &&

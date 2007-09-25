@@ -106,23 +106,12 @@ CLIENT_SRCS = \
 	shared/infostring.c \
 	shared/shared.c
 
-ifeq ($(HAVE_OPENAL),1)
-	CLIENT_SRCS+= \
-		client/snd_openal.c \
-		client/qal.c
-endif
-
 ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux-gnu),)
 	CLIENT_SRCS+= \
 		ports/linux/linux_main.c \
 		ports/unix/unix_console.c \
 		ports/unix/unix_main.c \
 		ports/unix/unix_glob.c
-
-	ifeq ($(HAVE_OPENAL),1)
-		CLIENT_SRCS+= \
-			ports/linux/linux_qal.c
-	endif
 endif
 
 ifeq ($(TARGET_OS),mingw32)
@@ -130,11 +119,6 @@ ifeq ($(TARGET_OS),mingw32)
 		ports/windows/win_shared.c \
 		ports/windows/win_main.c \
 		ports/windows/ufo.rc
-
-	ifeq ($(HAVE_OPENAL),1)
-		CLIENT_SRCS+=\
-			ports/windows/win_qal.c
-	endif
 endif
 
 ifeq ($(TARGET_OS),darwin)
@@ -143,10 +127,6 @@ ifeq ($(TARGET_OS),darwin)
 		ports/unix/unix_glob.c \
 		ports/unix/unix_console.c \
 		ports/unix/unix_main.c
-	ifeq ($(HAVE_OPENAL),1)
-		CLIENT_SRCS+=\
-			ports/macosx/osx_qal.c
-	endif
 endif
 
 ifeq ($(TARGET_OS),solaris)
@@ -155,14 +135,6 @@ ifeq ($(TARGET_OS),solaris)
 		ports/unix/unix_console.c \
 		ports/unix/unix_main.c \
 		ports/unix/unix_glob.c
-	ifeq ($(HAVE_OPENAL),1)
-		CLIENT_SRCS+=\
-			ports/linux/linux_qal.c
-	endif
-endif
-
-ifeq ($(HAVE_CURL),1)
-	CLIENT_CFLAGS+=-DHAVE_CURL
 endif
 
 CLIENT_OBJS= \

@@ -50,8 +50,6 @@ typedef struct snd_stream_s {
 	int pos;
 } snd_stream_t;
 
-extern cvar_t* snd_openal;
-
 void S_Init(void);
 void S_Shutdown(void);
 
@@ -65,12 +63,5 @@ void S_StopAllSounds(void);
 void S_BeginRegistration(void);
 struct sfx_s *S_RegisterSound(const char *sample);
 void S_EndRegistration(void);
-
-#ifdef HAVE_OPENAL
-	#ifndef DEDICATED_ONLY
-		#include "qal.h"
-		#include "snd_openal.h"
-	#endif
-#endif
 
 #endif /* CLIENT_SOUND_H */

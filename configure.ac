@@ -45,21 +45,9 @@ AC_ARG_WITH(curses,
 	[AS_HELP_STRING([--with-curses], [compile with curses console support @<:@default=check@:>@])],
 	[], [with_curses=check])
 
-AC_ARG_WITH(openal,
-	[AS_HELP_STRING([--with-openal], [build openal sound support @<:@default=check@:>@])],
-	[], [with_openal=check])
-
-AC_ARG_WITH(openal_config,
-	[AC_HELP_STRING([--with-openal-config=FILE], [using the given openal-config @<:@default=openal-config@:>@])],
-	[], [with_openal_config=openal-config])
-
 AC_ARG_WITH(opengl_framework,
 	[AS_HELP_STRING([--with-opengl-framework], [compile with given opengl framework @<:@default=/System/Library/Frameworks/OpenGL.framework@:>@])],
 	[], [with_opengl_framework=/System/Library/Frameworks/OpenGL.framework])
-
-AC_ARG_WITH(openal_framework,
-	[AS_HELP_STRING([--with-openal-framework], [compile with given openal framework @<:@default=/System/Library/Frameworks/OpenAL.framework@:>@])],
-	[], [with_openal_framework=/System/Library/Frameworks/OpenAL.framework])
 
 AC_ARG_ENABLE(dedicated,
 	[AS_HELP_STRING([--disable-dedicated], [build dedicated server @<:@default=enabled@:>@])],
@@ -136,8 +124,8 @@ then
 elif test `echo $target_os | sed "s/\(darwin\).*/\1/"` = "darwin"
 then
 	AC_SUBST([TARGET_OS],[darwin])
-	CFLAGS="$CFLAGS -F$with_opengl_framework -F$with_openal_framework"
-	LDFLAGS="$LDFLAGS -framework IOKit -framework Foundation -framework OpenGL -framework OpenAL"
+	CFLAGS="$CFLAGS -F$with_opengl_framework"
+	LDFLAGS="$LDFLAGS -framework IOKit -framework Foundation -framework OpenGL"
 else
 	AC_MSG_ERROR([The target operating system '$target_os' is unknown, please contact the developers])
 fi
@@ -365,52 +353,6 @@ if test "$enable_client" = "yes"
 then
 	CLIENT_CFLAGS=
 	LIBS=
-
-	if test "$with_openal" = "check" || test "$with_openal" = "yes"
-	then
-		#---------------------------------------------------------------------------------------------
-		# Check for openal-config
-		#---------------------------------------------------------------------------------------------
-		openal_config=$with_openal_config
-		OLD_CPPFLAGS=$CPPFLAGS
-		OLD_LDFLAGS=$LDFLAGS
-
-		AC_CHECK_PROG(HAVE_OPENAL_CONFIG,$openal_config,yes)
-		if test "$ac_cv_prog_HAVE_OPENAL_CONFIG" = "yes"
-		then
-			CPPFLAGS=`$openal_config --cflags`
-			LDFLAGS=`$openal_config --libs`
-			AC_SUBST([OPENAL_CFLAGS],$CPPFLAGS)
-			AC_SUBST([OPENAL_LIBS],$LDFLAGS)
-		else
-			AC_MSG_WARN([cannot find $openal_config might fail to find OpenAL!])
-		fi
-
-		AC_CHECK_HEADERS([OpenAL/al.h OpenAL/alc.h])
-		if test "$ac_cv_header_OpenAL_al_h" != "yes" || \
-			test "$ac_cv_header_OpenAL_alc_h" != "yes"
-		then
-			if test "$with_openal" = "yes"
-			then
-				AC_MSG_ERROR([--with-openal specified but cannot find OpenAL header!])
-			else
-				AC_SUBST([HAVE_OPENAL],0)
-			fi
-		else
-			AC_SUBST([HAVE_OPENAL],1)
-		fi
-		AC_SEARCH_LIBS([alSourcePlay],[openal openal32])
-		if test "$ac_cv_search_alSourcePlay" = "no"
-		then
-			AC_MSG_WARN([Could not find OpenAL library!])
-			AC_SUBST([HAVE_OPENAL], 0)
-		fi
-
-		CPPFLAGS=$OLD_CPPFLAGS
-		LDFLAGS=$OLD_LDFLAGS
-	else
-		AC_MSG_NOTICE([Without OpenAL])
-	fi
 
 	#---------------------------------------------------------------------------------------------
 	# Check for libogg
@@ -657,12 +599,6 @@ AC_SUBST([SERVER_LIBS],"$SERVER_LIBS")
 AC_SUBST([GAME_LIBS],"$GAME_LIBS")
 AC_SUBST([TOOLS_LIBS],"$TOOLS_LIBS")
 AC_SUBST([MASTER_LIBS],"$MASTER_LIBS")
-AC_SUBST([SND_ARTS_LIBS],"$SND_ARTS_LIBS")
-AC_SUBST([SND_SDL_LIBS],"$SND_SDL_LIBS")
-AC_SUBST([SND_JACK_LIBS],"$SND_JACK_LIBS")
-AC_SUBST([SND_OSS_LIBS],"$SND_OSS_LIBS")
-AC_SUBST([SND_WAPI_LIBS],"$SND_WAPI_LIBS")
-AC_SUBST([SND_ALSA_LIBS],"$SND_ALSA_LIBS")
 
 #AC_MSG_NOTICE(Compiler flags: $CFLAGS)
 #AC_MSG_NOTICE(Compiler flags: $CLIENT_CFLAGS)

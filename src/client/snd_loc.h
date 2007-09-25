@@ -57,9 +57,6 @@ typedef struct sfx_s {
 	int					rate;
 	unsigned			format;
 	unsigned			bufferNum;
-#ifdef HAVE_OPENAL
-	unsigned			source;
-#endif
 } sfx_t;
 
 /**

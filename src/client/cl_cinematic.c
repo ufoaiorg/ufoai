@@ -438,7 +438,9 @@ static void CIN_DecodeSoundMono (const byte *data)
 	}
 
 	/* Send samples to mixer */
+	SDL_LockAudio();
 	S_RawSamples(cin.chunk.size, 22050, 2, 1, (byte*)samples, 1.0f);
+	SDL_UnlockAudio();
 }
 
 /**
@@ -463,7 +465,9 @@ static void CIN_DecodeSoundStereo (const byte *data)
 	}
 
 	/* Send samples to mixer */
+	SDL_LockAudio();
 	S_RawSamples(cin.chunk.size / 2, 22050, 2, 2, (byte*)samples, 1.0f);
+	SDL_UnlockAudio();
 }
 
 static qboolean CIN_DecodeChunk (void)

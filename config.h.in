@@ -54,12 +54,6 @@
 /* Define to 1 if you have the <memory.h> header file. */
 #undef HAVE_MEMORY_H
 
-/* Define to 1 if you have the <OpenAL/alc.h> header file. */
-#undef HAVE_OPENAL_ALC_H
-
-/* Define to 1 if you have the <OpenAL/al.h> header file. */
-#undef HAVE_OPENAL_AL_H
-
 /* Define to 1 if you have the <OpenGL/glu.h> header file. */
 #undef HAVE_OPENGL_GLU_H
 

@@ -242,7 +242,7 @@ qboolean S_OGG_Open (const char *filename)
 			Com_DPrintf(DEBUG_SOUND, "S_OGG_Open: Already playing %s\n", checkFilename);
 			return qtrue;
 		} else {
-			if (!snd_openal->integer && snd_fadingenable->integer) {
+			if (snd_fadingenable->integer) {
 				Q_strncpyz(music.newFilename, checkFilename, sizeof(music.newFilename));
 				return qtrue;
 			} else
@@ -287,10 +287,7 @@ qboolean S_OGG_Open (const char *filename)
 
 	Q_strncpyz(music.ovPlaying, checkFilename, sizeof(music.ovPlaying));
 	music.ovSection = 0;
-#ifdef HAVE_OPENAL
-	if (snd_openal->integer)
-		SND_OAL_StartStream(&music);
-#endif
+
 	return qtrue;
 }
 
@@ -304,10 +301,6 @@ void S_OGG_Stop (void)
 {
 	if (!stream)
 		return;
-
-#ifdef HAVE_OPENAL
-	SND_OAL_StopStream(&music);
-#endif
 
 	music.ovPlaying[0] = 0;
 	/* reset fading value */
@@ -351,7 +344,9 @@ int S_OGG_Read (void)
 		break;
 	}
 
+	SDL_LockAudio();
 	S_RawSamples(res >> 2, 44100, 2, 2, (byte *) music.ovBuf, music.fading);
+	SDL_UnlockAudio();
 
 	if (*music.newFilename)
 		music.fading -= snd_fadingspeed->value;

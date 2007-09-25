@@ -87,8 +87,6 @@ static cvar_t *snd_mixahead;
 static cvar_t *snd_bits;
 static cvar_t *snd_channels;
 
-cvar_t *snd_openal;
-
 int s_rawend;
 portable_samplepair_t s_rawsamples[MAX_RAW_SAMPLES];
 
@@ -335,36 +333,15 @@ void S_Init (void)
 	snd_mixahead = Cvar_Get("snd_mixahead", "0.2", CVAR_ARCHIVE, NULL);
 	snd_show = Cvar_Get("snd_show", "0", 0, "Sound debugging output");
 	snd_testsound = Cvar_Get("snd_testsound", "0", 0, "Write a fixed sine wave");
-	/* @todo: make openal the default when it is working (i.e. change 0 below to a 1) */
-	snd_openal = Cvar_Get("snd_openal", "0", CVAR_ARCHIVE, "use OpenAL");
 
 	S_OGG_Init();
 
-	if (snd_openal->integer) {
-#ifdef HAVE_OPENAL
-		/* bindings */
-		QAL_Init();
-		/* client side init */
-		if (!SND_OAL_Init(NULL)) {
-			Cvar_SetValue("snd_openal", 0);
-		}
-#else
-		Cvar_SetValue("snd_openal", 0);
-		Com_Printf("No OpenAL support compiled into this binary\n");
-#endif
+	if (!SND_Init()) {
+		Com_Printf("SND_Init failed\n");
+		sound_started = qfalse;
+		return;
 	}
-
-	/* don't restart right again */
-	snd_openal->modified = qfalse;
-
-	if (!snd_openal->integer) {
-		if (!SND_Init()) {
-			Com_Printf("SND_Init failed\n");
-			sound_started = qfalse;
-			return;
-		}
-		S_InitScaletable();
-	}
+	S_InitScaletable();
 
 	for (commands = r_commands; commands->name; commands++)
 		Cmd_AddCommand(commands->name, commands->function, commands->description);
@@ -408,12 +385,7 @@ void S_Shutdown (void)
 	if (!sound_started)
 		return;
 
-#ifdef HAVE_OPENAL
-	if (!SND_Shutdown || snd_openal->integer) {
-		SND_OAL_Shutdown();
-	} else
-#endif
-		SND_Shutdown();
+	SND_Shutdown();
 	S_OGG_Stop();
 	S_OGG_Shutdown();
 
@@ -729,8 +701,7 @@ void S_IssuePlaysound (playsound_t * ps)
 	VectorCopy(ps->origin, ch->origin);
 	ch->fixed_origin = ps->fixed_origin;
 
-	if (!snd_openal->integer)
-		S_Spatialize(ch);
+	S_Spatialize(ch);
 
 	ch->pos = 0;
 	sc = S_LoadSound(ch->sfx);
@@ -973,7 +944,7 @@ static int SND_Frame (void)
 	channel_t *combine;
 
 	/* rebuild scale tables if volume is modified */
-	if (snd_volume->modified && !snd_openal->integer)
+	if (snd_volume->modified)
 		S_InitScaletable();
 
 	/* re-sync music.fading if music volume modified */
@@ -986,10 +957,6 @@ static int SND_Frame (void)
 	VectorCopy(cl.cam.axis[0], listener_forward);
 	VectorCopy(cl.cam.axis[1], listener_right);
 	VectorCopy(cl.cam.axis[2], listener_up);
-#ifdef HAVE_OPENAL
-	if (snd_openal->integer)
-		SND_OAL_UpdateListeners(listener_origin);
-#endif
 
 	combine = NULL;
 
@@ -1002,10 +969,7 @@ static int SND_Frame (void)
 			memset(ch, 0, sizeof(*ch));
 			continue;
 		}
-#ifdef HAVE_OPENAL
-		if (!snd_openal->integer)
-#endif
-			S_Spatialize(ch);		/* respatialize channel */
+		S_Spatialize(ch);		/* respatialize channel */
 		if (!ch->leftvol && !ch->rightvol) {
 			memset(ch, 0, sizeof(*ch));
 			continue;
@@ -1025,14 +989,8 @@ static int SND_Frame (void)
 		Com_Printf("----(%i)---- painted: %i\n", total, paintedtime);
 	}
 
-	if (!snd_openal->integer) {
-		while (music.ovPlaying[0] && paintedtime + MAX_RAW_SAMPLES - 2048 > s_rawend)
-			S_OGG_Read();
-	} else if (music.ovPlaying[0]) {
-#ifdef HAVE_OPENAL
-		SND_OAL_Stream(&music);
-#endif
-	}
+	while (music.ovPlaying[0] && paintedtime + MAX_RAW_SAMPLES - 2048 > s_rawend)
+		S_OGG_Read();
 
 	return 1;
 }
