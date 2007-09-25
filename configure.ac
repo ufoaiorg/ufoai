@@ -41,6 +41,10 @@ AC_ARG_WITH(shaders,
 	[AS_HELP_STRING([--with-shaders], [with OpenGL shader support @<:@default=check@:>@])],
 	[], [with_shaders=check])
 
+AC_ARG_WITH(snd_thread,
+	[AS_HELP_STRING([--with-snd-thread], [with sound system thread support @<:@default=no@:>@])],
+	[], [with_snd_thread=no])
+
 AC_ARG_WITH(snd_sdl,
 	[AS_HELP_STRING([--with-snd-sdl], [with SDL sound support @<:@default=check@:>@])],
 	[], [with_snd_sdl=check])
@@ -546,6 +550,17 @@ then
 		else
 			AC_DEFINE([GL_H_WITHOUT_GL_DIR],[1],[OpenGL header path])
 		fi
+	fi
+
+	#---------------------------------------------------------------------------------------------
+	# Check for sound system thread support
+	#---------------------------------------------------------------------------------------------
+	if test "$with_snd_thread" = "yes"
+	then
+		AC_SUBST([WITH_SOUND_THREAD],1)
+		AC_MSG_NOTICE([With sound system thread support])
+	else
+		AC_MSG_NOTICE([Without sound system thread support])
 	fi
 
 	#---------------------------------------------------------------------------------------------

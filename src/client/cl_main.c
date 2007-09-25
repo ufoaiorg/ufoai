@@ -2414,6 +2414,13 @@ void CL_Frame (int now, void *data)
 	if (sys_priority->modified || sys_affinity->modified)
 		Sys_SetAffinityAndPriority();
 
+	/* did we switch the sound renderer */
+	if (snd_ref->modified || snd_openal->modified) {
+		snd_ref->modified = qfalse;
+		snd_openal->modified = qfalse;
+		CL_Snd_Restart_f();
+	}
+
 	/* decide the simulation time */
 	delta = now - last_frame;
 	if (last_frame)
@@ -2452,8 +2459,9 @@ void CL_Frame (int now, void *data)
 	/* update the screen */
 	SCR_UpdateScreen();
 
-	/* update audio */
-	S_Update(refdef.vieworg, cl.cam.axis[0], cl.cam.axis[1], cl.cam.axis[2]);
+#ifndef WITH_SOUND_THREAD
+	SND_Frame(NULL);
+#endif
 
 	/* advance local effects for next frame */
 	CL_RunLightStyles();

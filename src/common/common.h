@@ -376,13 +376,14 @@ CLIENT / SERVER SYSTEMS
 void CL_Init(void);
 void CL_Drop(void);
 void CL_Shutdown(void);
-void CL_Frame(int now, void *);
-void CL_AVIRecord(int now, void *);
-void CL_SlowFrame(int now, void *);
+void CL_Frame(int now, void *data);
+void CL_AVIRecord(int now, void *data);
+void CL_SlowFrame(int now, void *data);
 void CL_ParseClientData(const char *type, const char *name, const char **text);
 void CIN_RunCinematic(int now, void *data);
 void SCR_BeginLoadingPlaque(void);
 void CL_InitAfter(void);
+int SND_Frame(void *data);
 
 void SV_Init(void);
 void SV_Clear(void);
