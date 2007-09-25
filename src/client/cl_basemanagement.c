@@ -277,11 +277,15 @@ static void B_BaseInit_f (void)
  */
 qboolean B_BuildingDestroy (base_t* base, building_t* building)
 {
+	buildingType_t type = building->buildingType;
 	baseCapacities_t cap = MAX_CAP; /* init but don't set to first value of enum */
+	char onDestroy[MAX_VAR];
 
 	/* Don't allow to destroy an entrance. */
-	if (building->buildingType == B_ENTRANCE)
+	if (type == B_ENTRANCE)
 		return qfalse;
+
+	Q_strncpyz(onDestroy, building->onDestroy, sizeof(onDestroy));
 
 	switch (base->map[(int)building->pos[0]][(int)building->pos[1]]) {
 	case BASE_FREESLOT:
@@ -318,45 +322,45 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 		}
 	}
 
-	switch (building->buildingType) {
+	switch (type) {
 	case B_WORKSHOP:
 		cap = CAP_WORKSPACE;
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0)
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0)
 			base->hasWorkshop = qfalse;
 		break;
 	case B_STORAGE:
 		cap = CAP_ITEMS;
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0)
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0)
 			base->hasStorage = qfalse;
 		break;
 	case B_ALIEN_CONTAINMENT:
 		cap = CAP_ALIENS;
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0)
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0)
 			base->hasAlienCont = qfalse;
 		break;
 	case B_LAB:
 		cap = CAP_LABSPACE;
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0)
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0)
 			base->hasLab = qfalse;
 		break;
 	case B_HOSPITAL:
 		cap = CAP_HOSPSPACE;
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0)
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0)
 			base->hasHospital = qfalse;
 		break;
 	case B_HANGAR: /* the Dropship Hangar */
 		cap = CAP_AIRCRAFTS_BIG;
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0)
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0)
 			base->hasHangar = qfalse;
 		break;
 	case B_QUARTERS:
 		cap = CAP_EMPLOYEES;
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0)
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0)
 			base->hasQuarters = qfalse;
 		break;
 	case B_SMALL_HANGAR:
 		cap = CAP_AIRCRAFTS_SMALL;
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0)
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0)
 			base->hasHangarSmall = qfalse;
 		break;
 	case B_UFO_HANGAR:
@@ -368,41 +372,41 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 			base->hasUFOHangarSmall = qfalse;
 		break;
 	case B_POWER:
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0)
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0)
 			base->hasPower = qfalse;
 		B_UpdateStatusWithPower(base);
 		break;
 	case B_COMMAND:
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0)
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0)
 			base->hasCommand = qfalse;
 		break;
 	case B_ANTIMATTER:
 		cap = CAP_ANTIMATTER;
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0) {
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0) {
 			base->hasAmStorage = qfalse;
 			/* Remove antimatter. */
 			INV_ManageAntimatter(base, 0, qfalse);
 		}
 		break;
 	case B_DEFENSE_MISSILE:
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0)
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0)
 			base->hasMissile = qfalse;
 		break;
 	case B_DEFENSE_LASER:
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) <= 0)
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0)
 			base->hasLaser = qfalse;
 		break;
 	case B_MISC:
 		break;
 	default:
-		Com_Printf("B_BuildingDestroy: Unknown building type: %i.\n", building->buildingType);
+		Com_Printf("B_BuildingDestroy: Unknown building type: %i.\n", type);
 		break;
 	}
 
 	/* call ondestroy trigger */
-	if (*building->onDestroy) {
-		Com_DPrintf(DEBUG_CLIENT, "B_BuildingDestroy: %s %i;\n", building->onDestroy, base->idx);
-		Cbuf_AddText(va("%s %i;", building->onDestroy, base->idx));
+	if (*onDestroy) {
+		Com_DPrintf(DEBUG_CLIENT, "B_BuildingDestroy: %s %i;\n", onDestroy, base->idx);
+		Cbuf_AddText(va("%s %i;", onDestroy, base->idx));
 	}
 
 	B_BaseInit_f();
@@ -412,11 +416,11 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 		B_UpdateBaseCapacities(cap, base);
 
 	/* Update production times in queue if we destroyed B_WORKSHOP. */
-	if (building->buildingType == B_WORKSHOP) {
+	if (type == B_WORKSHOP) {
 		PR_UpdateProductionTime(base);
 	}
 	/* Remove aliens if needed. */
-	if (building->buildingType == B_ALIEN_CONTAINMENT) {
+	if (type == B_ALIEN_CONTAINMENT) {
 		if (!base->hasAlienCont) {	/* Just clean containment. */
 			AL_FillInContainment(base);
 		} else {	/* Check capacities and remove needed amount. */
