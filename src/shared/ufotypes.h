@@ -51,4 +51,3 @@ typedef uint8_t byte;
 #endif
 
 #endif /* COMMON_UFOTYPES_H */
-

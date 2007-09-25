@@ -2,8 +2,8 @@
 # This program uses wget to download the wiki page List_of_msgid.
 # It scans all the entries in the language .po file and search for any
 #   available translation on the wiki.
-# It creates a file (name given by the variable output_file) which contains 
-#   the updated .po file. 
+# It creates a file (name given by the variable output_file) which contains
+#   the updated .po file.
 # It also generates a log file which allows to check the differences.
 #
 # For each translation found on the wiki, a file 'sed_commands_${language0}' containing all the sed
@@ -54,7 +54,7 @@ then
 	else
 		printf "Sorry, but this program needs a version of gnu sed and gnu awk to run (named sed or gsed and awk or gawk).\nPlease install gsed and gawk(this is different from sed and awk for other Unixes than Linux).\n"
 		exit
-	fi	
+	fi
 fi
 
 find_line()
@@ -63,7 +63,7 @@ find_line()
 	while read l_line
 	do
 		declare -i begin
-		declare -i end 
+		declare -i end
 		begin=`echo "$l_line" | cut -d " " -f 1`
 		end=`echo "$l_line" | cut -d " " -f 2`
 		if [ $1 -ge $begin ] && [ $1 -le $end ]
@@ -89,7 +89,7 @@ find_line()
 apply_sed()
 {
 # Procedure to apply the modifications to the .po file if there is any.
-	
+
 	if [ "$debug" = "1" ]
 	then
 		printf "___________________\n" >> $log_file
@@ -140,7 +140,7 @@ apply_sed()
 			diff $output_file $output_file.tmp >> $log_file
 			mv -f $output_file.tmp $output_file
 			printf "__________________________________________\n\n" >> $log_file
-		else 
+		else
 			echo "   found same translation in wiki than in $input_file"
 			fi
 		return 1
@@ -169,14 +169,14 @@ clean_html()
 
 set_BEGIN_END()
 {
-# Initialisation of BEGIN and END values to the first and last line of the concerned msgid in the .po file 
+# Initialisation of BEGIN and END values to the first and last line of the concerned msgid in the .po file
 # The first argument is 1 if this is a long description which need several lines of msgstr.
 	BEGIN=`grep -n "msgid \"$english\"" $output_file |
 	cut -d : -f 1`
 	END=`$awk_soft 'NR > '$BEGIN' && $0 ~ /^#:[ \t]/ {print NR;exit}' $output_file`
-	BEGIN=$BEGIN+1    
+	BEGIN=$BEGIN+1
 	END=$END-2
-	 
+
 	echo "${BEGIN},${END}d" > sed_commands_${language0}
 	END=$END+1
 	echo -n "${END}imsgstr " >> sed_commands_${language0}
@@ -220,7 +220,7 @@ download_description()
 				if [ $? -ne 0 ]
 				then
 					echo "Error whith wget" > $log_file
-					return 1	
+					return 1
 				fi
 				return 0
 			else
@@ -229,12 +229,12 @@ download_description()
 			fi
 		fi
     fi
-    return 1	
+    return 1
 }
 
 update_sentences()
 {
-# Procedure to update all the sentences. It takes the base name as input (intro_sentence or prolog_sentence) 
+# Procedure to update all the sentences. It takes the base name as input (intro_sentence or prolog_sentence)
 	declare -i i
 	i=1
 	english=$*$i
@@ -313,8 +313,8 @@ update_news()
 				if (test) {printf "\\n\n\\n\n"}
 				printf "%s",$0
 				test=1}
-			END {printf "\n"}  
-		' downloaded_page_${language0} | 
+			END {printf "\n"}
+		' downloaded_page_${language0} |
 		$sed_soft 's/^[ \t]*//g;/^[ \t]*$/d;s/\"/\\\"/g;s/\\/\\\\/g' |
 		$awk_soft '$0 !~ /^[ \t]*$/ {
 			printf "'$END'i\"%s\"\n",$0}' >> sed_commands_${language0}
@@ -369,14 +369,14 @@ update_txt()
 			line++
 			already_written_test=1;
 			exit_test=0}
-	' downloaded_page_${language0} | 
-	$sed_soft 's/[[:space:]]*<.*>[[:space:]]*//g;/^[[:space:]]*$/d;s/^[ \t]*//g;s/\"/\\\"/g' | 
-	$awk_soft '{printf "'$END'i\"%s\"\n",$0}' |	
+	' downloaded_page_${language0} |
+	$sed_soft 's/[[:space:]]*<.*>[[:space:]]*//g;/^[[:space:]]*$/d;s/^[ \t]*//g;s/\"/\\\"/g' |
+	$awk_soft '{printf "'$END'i\"%s\"\n",$0}' |
 	$sed_soft 's/\\/\\\\/g'>> sed_commands_${language0}
 	apply_sed $english
 	return $?
 }
- 
+
 
 
 
@@ -389,7 +389,7 @@ printf "__________________________________________\n\n" >> $log_file
 
 
 # Generation of a file '$index' which contains the chapters pages on the wiki.
-for i in `echo $chapters`; do 
+for i in `echo $chapters`; do
 	wget -O ${i}"_"${language} "${url}${wiki_url}${i}";
 	if [ $? -ne 0 ]
 	then
@@ -414,7 +414,7 @@ $awk_soft ' BEGIN {FS="</th><th>"}
 		if (begin > 0) {print begin" "NR-1" en"language}
 		begin=NR
 		language=""
-		for (i=4; i<=NF; i++) {language=language$i} 
+		for (i=4; i<=NF; i++) {language=language$i}
 		gsub (/[ \t][ \t]*/," ",language)
 		}
 	END {print begin" "NR" en"language}
@@ -442,12 +442,12 @@ declare -i FIRST_LINE  # Contains the first interesting line of the wiki index. 
 
 
 
-# Copy of $input_file to $output_file. 
+# Copy of $input_file to $output_file.
 # $output_file is converted from dos to unix if needed
 # Each input of msgstr (i.e. the part before any \n) is put on only 1 line
 BEGIN=`grep -nm 1 "#: " $input_file | cut -d : -f 1`
 END=`wc -l $input_file | $sed_soft 's/^[ \t]*//g' | cut -d " " -f 1`
-$sed_soft $BEGIN','$END's/^\"\(.*\)\"$/\1/g;s/\r//g' $input_file | 
+$sed_soft $BEGIN','$END's/^\"\(.*\)\"$/\1/g;s/\r//g' $input_file |
 $awk_soft 'BEGIN {FS=" ";test=0}
 	$0 ~ /^[ \t]*$/ {if (test) {printf "\"\n";}; printf "\n"; test=0; next}
     $0 ~ /^#/ || $0 ~ /^\"/ || $0 ~ /^msgid/ || $0 ~ /^msgstr/ {
@@ -532,7 +532,7 @@ then
 	i=1
 	english=$base_sentence$i
 	update_sentences $base_sentence
-  
+
 	if [[ "$debug" = "1" ]]
 	then
 		echo "Checking introduction sentences : done." >> $log_file
@@ -546,7 +546,7 @@ then
 
 	english="news_phalanx_and_mumbai_aftermath_txt"
 	update_news "3" "3" "1"
-  
+
 	english="news_newtwist_txt"
 	download_description
 	test=$?
@@ -587,7 +587,7 @@ if [[ $? -eq 0 ]]
 then
 	clean_html
 
-	for english in `echo $headers`; do 
+	for english in `echo $headers`; do
 		update_one_sentence "1"
 	done
 	if [[ "$debug" = "1" ]]
@@ -723,7 +723,7 @@ do
 					test_artifact="1"
 					number=`grep -inm 1 " -- $english</a>" ${index} | cut -d : -f 1`
 				fi
-				
+
 				if [[ $number -ge $FIRST_LINE ]]
 				then
 				# This is case 4. (short entry)
@@ -745,8 +745,8 @@ do
 								}
 							n > $loc {exit}
 						' ${index} |
-						$sed_soft 's/>\(.*\)<\/a>/\1/;s/--/-/g' | 
-						$awk_soft ' 
+						$sed_soft 's/>\(.*\)<\/a>/\1/;s/--/-/g' |
+						$awk_soft '
 							'$test_artifact' == 1 {gsub(/^.* -/,"")}
 							{print $0}' |
 						$sed_soft 's/\"/\\\"/g;s/\\/\\\\/g;s/^[ \t]*/"/g;s/[ \t]*$/"/g;s/[ \t][ \t]*/ /g' >> sed_commands_${language0}
@@ -798,4 +798,3 @@ rm -f downloaded_page_${language0}
 rm -f ${index}
 rm -f sed_commands_${language0}
 echo "Deleting files : done." >> $log_file
-

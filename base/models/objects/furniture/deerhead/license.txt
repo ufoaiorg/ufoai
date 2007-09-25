@@ -23,5 +23,3 @@ This file comes from the Worldforge Media Repository, for details check out:
 http://www.worldforge.org/media/
 
 https://svn.worldforge.org:886/
-
-

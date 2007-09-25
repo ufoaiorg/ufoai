@@ -87,4 +87,3 @@ void AC_Reset(void);
 extern qboolean AC_ContainmentAllowed(void);
 
 #endif /* CLIENT_CL_ALIENCONT_H */
-

@@ -65,4 +65,3 @@ sourcearchive:
 #	cd base; zip -r 0maps.zip maps -x \*.svn\*
 #	cd base; zip -r 0models.zip models -x \*.svn\*
 #	cd base; zip -r 0ufos.zip ufos -x \*.svn\*
-

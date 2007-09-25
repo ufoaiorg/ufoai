@@ -42,7 +42,7 @@ DetectARCH()
 	    i?86 | i86*)
 		echo "x86"
 		status=0;;
-	    90*/*) 
+	    90*/*)
 		echo "hppa"
 		status=0;;
 	    *)
@@ -171,7 +171,7 @@ try_run()
 
     setup=$1
     shift
-    
+
     # First find the binary we want to run
     failed=0
     if [ "$absolute" -eq 0 ]
@@ -201,7 +201,7 @@ __EOF__
       # NOTE TTimo: this is dangerous, we also use $setup to store the name of the try_run
       setup="$HOME/.setup$$"
       rm -f "$setup"
-      cp "$setup_bin" "$setup"    
+      cp "$setup_bin" "$setup"
       chmod 700 "$setup"
 	  trap "rm -f $setup" 1 2 3 15
     fi
@@ -270,8 +270,8 @@ fi
 # Try to run the setup program - first look for a GTK2 binary
 try_run setup.gtk2 $args $* 2> /dev/null
 status=$?
-if [ $status -ne 0 ] && [ $status -ne 2 ] && [ $status -ne 3 ] ; then 
-	try_run setup.gtk $args $* 
+if [ $status -ne 0 ] && [ $status -ne 2 ] && [ $status -ne 3 ] ; then
+	try_run setup.gtk $args $*
 	status=$?
 	if [ $status -ne 0 ] && [ $status -ne 2 ] && [ $status -ne 3 ] ; then  # setup.gtk couldn't connect to X11 server - ignore
 		try_run setup $args $*

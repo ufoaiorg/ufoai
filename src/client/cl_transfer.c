@@ -1368,5 +1368,3 @@ void TR_Reset (void)
 	Cmd_AddCommand("trans_nextbase", TR_NextBase_f, "Callback for selecting next base");
 	Cmd_AddCommand("trans_prevbase", TR_PrevBase_f, "Callback for selecting previous base");
 }
-
-

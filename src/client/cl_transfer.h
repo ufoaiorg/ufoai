@@ -87,4 +87,3 @@ void TR_TransferCheck(void);
 void TR_Reset(void);
 
 #endif /* CLIENT_CL_TRANSFER_H */
-

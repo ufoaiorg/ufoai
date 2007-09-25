@@ -255,4 +255,3 @@ void ProcessLevel (unsigned int levelnum)
 		Com_Printf("level: %i -> %i : f %i\n", levelnum, dm->headnode, dm->numfaces);
 */
 }
-

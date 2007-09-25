@@ -6,4 +6,3 @@ Source:
 http://undone.clanlib.org/~grumbel/mediarepo/show.cgi?md5=eadd9d5937d5374e55f001e4689e2d2e
 
 Any modifications made so far are by Werner Hoehrer and under the same licenses.
-

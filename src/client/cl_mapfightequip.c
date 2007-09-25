@@ -1429,6 +1429,3 @@ const char* AII_WeightToName (itemWeight_t weight)
 		break;
 	}
 }
-
-
-

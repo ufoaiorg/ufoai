@@ -504,4 +504,3 @@ void EndModel (void)
 
 	nummodels++;
 }
-

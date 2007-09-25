@@ -2248,4 +2248,3 @@ int AIR_CalculateHangarStorage (int aircraftID, base_t *base, int used)
 		}
 	}
 }
-

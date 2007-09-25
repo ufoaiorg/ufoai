@@ -921,4 +921,3 @@ tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 	Sys_FPrintf(SYS_VRB, "%5i leafs\n", (c_nodes + 1) / 2);
 	return tree;
 }
-

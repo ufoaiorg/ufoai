@@ -305,9 +305,9 @@ static void HOS_UpdateMenu (void)
 			if (CL_SoldierAwayFromBase(employee))
 				continue;
 			/* Don't show healthy employees */
-			if (employee->chr.HP >= employee->chr.maxHP) 
+			if (employee->chr.HP >= employee->chr.maxHP)
 				continue;
-				
+
 			if ((j >= hospitalFirstEntry) && (entry < HOS_MENU_MAX_ENTRIES)) {
 				/* Print name. */
 				Com_sprintf(name, sizeof(name), employee->chr.name);
@@ -348,9 +348,9 @@ static void HOS_UpdateMenu (void)
 			j++;
 		}
 	}
-	
+
 	hospitalNumEntries = j;
-	
+
 	/* Set rest of the list-entries to have no text at all. */
 	for (; entry < HOS_MENU_MAX_ENTRIES; entry++) {
 		Cvar_Set(va("mn_hos_item%i", entry), "");
@@ -375,7 +375,7 @@ static void HOS_Init_f (void)
 	}
 
 	hospitalFirstEntry = 0;
-	
+
 	HOS_UpdateMenu();
 
 
@@ -438,8 +438,8 @@ static void HOS_ListUp_f (void)
 {
 	if (hospitalFirstEntry >= HOS_MENU_LINE_ENTRIES)
 		hospitalFirstEntry -= HOS_MENU_LINE_ENTRIES;
-		
-	HOS_UpdateMenu();	
+
+	HOS_UpdateMenu();
 }
 
 /**
@@ -449,8 +449,8 @@ static void HOS_ListDown_f (void)
 {
 	if (hospitalFirstEntry + HOS_MENU_MAX_ENTRIES < hospitalNumEntries)
 		hospitalFirstEntry += HOS_MENU_LINE_ENTRIES;
-	
-	HOS_UpdateMenu();	
+
+	HOS_UpdateMenu();
 }
 
 /**

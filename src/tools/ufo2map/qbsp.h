@@ -277,4 +277,3 @@ void DoRouting(void);
 /* qbsp3.c */
 
 void ProcessModels(const char *filename);
-

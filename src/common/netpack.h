@@ -4,12 +4,12 @@
 #include "dbuffer.h"
 
 /***
- ____ _____ ___  ____  
-/ ___|_   _/ _ \|  _ \ 
+ ____ _____ ___  ____
+/ ___|_   _/ _ \|  _ \
 \___ \ | || | | | |_) |
- ___) || || |_| |  __/ 
-|____/ |_| \___/|_|    
-                       
+ ___) || || |_| |  __/
+|____/ |_| \___/|_|
+
 This is a temporary hack until the network protocol can be
 rewritten. It will go away. Do not expect it to be here next time you
 look.

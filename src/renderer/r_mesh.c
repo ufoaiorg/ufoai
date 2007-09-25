@@ -110,4 +110,3 @@ void R_EnableLights (qboolean fixed, float *matrix, float *lightparam, float *li
 	qglEnable(GL_LIGHTING);
 	qglEnable(GL_LIGHT0);
 }
-

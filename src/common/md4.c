@@ -216,4 +216,3 @@ unsigned Com_BlockChecksum (const void *buffer, int length)
 
 	return val;
 }
-

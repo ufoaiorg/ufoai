@@ -62,4 +62,3 @@ void INV_InventoryList_f(void);
 #endif
 
 #endif /* CLIENT_CL_INVENTORY_H */
-

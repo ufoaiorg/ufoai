@@ -1206,4 +1206,3 @@ void QR_Link (void)
 	qglDeleteProgram = NULL;
 #endif
 }
-

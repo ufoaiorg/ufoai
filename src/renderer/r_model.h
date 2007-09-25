@@ -82,4 +82,3 @@ extern model_t mod_inline[MAX_MOD_KNOWN];
 extern int numInline;
 
 extern model_t *loadmodel;
-

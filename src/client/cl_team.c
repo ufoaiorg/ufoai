@@ -2469,4 +2469,3 @@ void CL_UpdateCharacterSkills (character_t *chr)
 	if (changed)
 		CL_UpdateCharacterSkills(chr);
 }
-

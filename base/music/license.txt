@@ -35,4 +35,3 @@ Additional info
    under the Creative Commons Sampling Plus License 1.0; contributors:
    RHumphries: 2523_RHumphries_rbh_thunder_storm.wav
    Acutescream: 24716_acutescream_file0084edit_LANightAlarm.wav
-

@@ -502,4 +502,3 @@ void MarkVisibleSides (tree_t *tree, int startbrush, int endbrush)
 	/* set visible flags on the sides that are used by portals */
 	MarkVisibleSides_r(tree->headnode);
 }
-

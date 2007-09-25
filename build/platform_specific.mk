@@ -97,5 +97,3 @@ ifeq ($(TARGET_CPU),x86_64)
 		RELEASE_CFLAGS+=-O2 -fomit-frame-pointer -fexpensive-optimizations -fno-strict-aliasing
 	endif
 endif
-
-

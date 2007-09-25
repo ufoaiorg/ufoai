@@ -1046,4 +1046,3 @@ void LIST_Delete (linkedList_t *list)
 		l = list;
 	}
 }
-

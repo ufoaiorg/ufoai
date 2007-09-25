@@ -75,7 +75,7 @@ static void BaseSummary_BuildingCount (const char* cvarName, const char* desc, b
 {
 	char buffer[128];
 	int num = B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, buildingType);
-	
+
 	Com_sprintf(buffer, sizeof(buffer), _("%s: %i"),
 		desc,
 		(num >= 0) ? num : 0);	/* Use 0 if an error occured. */

@@ -3453,4 +3453,3 @@ qboolean B_ScriptSanityCheck (void)
 	else
 		return qfalse;
 }
-

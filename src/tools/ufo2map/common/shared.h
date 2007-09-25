@@ -110,4 +110,3 @@ void Com_Printf(const char *format, ...) __attribute__((format(printf, 1, 2)));
 void Sys_FPrintf(int flag, const char *text, ...) __attribute__((format(printf, 2, 3)));
 
 #endif /* _SHARED_H */
-

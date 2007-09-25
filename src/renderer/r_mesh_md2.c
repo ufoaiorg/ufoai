@@ -687,4 +687,3 @@ void R_DrawModelParticle (modelInfo_t * mi)
 
 	R_Color(NULL);
 }
-

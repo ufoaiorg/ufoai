@@ -48,4 +48,3 @@ struct mdfour {
 unsigned Com_BlockChecksum(const void *buffer, int length);
 
 #endif	/* _MDFOUR_H */
-

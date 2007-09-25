@@ -28,4 +28,3 @@ void SH_UseShader(shader_t * shader, qboolean deactivate);
 #endif							/* HAVE_SHADERS */
 
 #endif
-

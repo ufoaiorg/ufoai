@@ -38,4 +38,3 @@ packdata:
 
 update_installer_data:
 	@sed 's/@VERSION@/$(VERSION_UC)/g' UfoApp.app/Contents/Info.plist.in > UfoApp.app/Contents/Info.plist
-

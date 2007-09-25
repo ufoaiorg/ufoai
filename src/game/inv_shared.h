@@ -584,5 +584,3 @@ void Com_ShapePrint(uint32_t shape);
 #define INV_INVENTORY_BYTES 7
 
 #endif /* GAME_INV_SHARED_H */
-
-
