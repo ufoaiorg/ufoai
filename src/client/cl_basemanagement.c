@@ -111,6 +111,8 @@ int B_GetAvailableQuarterSpace (const base_t* const base)
 
 /**
  * @brief
+ * @note Make sure you are not doing anything with the buildingCurrent pointer
+ * in this function, the pointer might already be invalid
  */
 static void B_ResetBuildingCurrent (base_t* base)
 {
@@ -440,12 +442,8 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
  */
 static void B_BuildingDestroy_f (void)
 {
-	building_t *b1 = NULL;
-
 	if (!baseCurrent || !baseCurrent->buildingCurrent)
 		return;
-
-	b1 = baseCurrent->buildingCurrent;
 
 	B_BuildingDestroy(baseCurrent, baseCurrent->buildingCurrent);
 
