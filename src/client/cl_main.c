@@ -413,7 +413,6 @@ static void CL_Rcon_f (void)
  */
 void CL_ClearState (void)
 {
-	S_StopAllSounds();
 	CL_ClearEffects();
 
 	/* wipe the entire cl structure */
@@ -549,8 +548,6 @@ static void CL_Reconnect_f (void)
 		Com_Printf("Start multiplayer first\n");
 		return;
 	}
-
-	S_StopAllSounds();
 
 	if (*cls.servername) {
 		if (cls.state >= ca_connecting) {
@@ -1583,8 +1580,6 @@ static void CL_Precache_f (void)
 {
 	precache_check = CS_MODELS;
 
-	/* stop sound */
-	S_StopAllSounds();
 	CL_RequestNextDownload();
 }
 

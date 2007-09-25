@@ -538,8 +538,6 @@ static void SCR_DrawConsole (void)
  */
 void SCR_BeginLoadingPlaque (void)
 {
-	S_StopAllSounds();
-
 	if (developer->integer)
 		return;
 
