@@ -1028,40 +1028,6 @@ static void GetSoundtime (void)
 }
 
 /**
- * @brief Mix some sound
- * @note Not called for OpenAL
- */
-static void S_UpdateMixer (void)
-{
-	unsigned int samps, endtime;
-
-	if (!dma.buffer)
-		return;
-
-	/* Updates DMA time */
-	GetSoundtime();
-
-	/* check to make sure that we haven't overshot */
-	if (paintedtime < soundtime) {
-		Com_DPrintf(DEBUG_SOUND, "S_UpdateMixer: overflow\n");
-		paintedtime = soundtime;
-	}
-
-	/* mix ahead of current position */
-	endtime = soundtime + snd_mixahead->value * dma.speed;
-	/*endtime = (soundtime + 4096) & ~4095; */
-
-	/* mix to an even submission block size */
-	endtime = (endtime + dma.submission_chunk - 1)
-		& ~(dma.submission_chunk - 1);
-	samps = dma.samples >> (dma.channels - 1);
-	if (endtime - soundtime > samps)
-		endtime = soundtime + samps;
-
-	S_PaintChannels(endtime);
-}
-
-/**
  * @brief Called once each time through the main loop
  */
 int SND_Frame (void *data)
@@ -1123,12 +1089,6 @@ int SND_Frame (void *data)
 
 		Com_Printf("----(%i)---- painted: %i\n", total, paintedtime);
 	}
-
-	/* mix some sound */
-#ifdef HAVE_OPENAL
-	if (!snd_openal->integer)
-#endif
-		S_UpdateMixer();
 
 	if (!snd_openal->integer) {
 		while (music.ovPlaying[0] && paintedtime + MAX_RAW_SAMPLES - 2048 > s_rawend)
