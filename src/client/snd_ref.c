@@ -62,7 +62,6 @@ static vec3_t listener_up;
 
 static qboolean s_registering;
 
-static int soundtime;					/* sample PAIRS */
 int paintedtime;				/* sample PAIRS */
 
 /* during registration it is possible to have more sounds */
@@ -382,7 +381,6 @@ void S_Init (void)
 	num_sfx = 0;
 
 	music.ovPlaying[0] = 0;
-	soundtime = 0;
 	paintedtime = 0;
 
 	Com_Printf("sound sampling rate: %i\n", dma.speed);
@@ -944,7 +942,6 @@ void S_RawSamples (int samples, int rate, int width, int channels, byte * data, 
 
 	scale = (float) rate / dma.speed;
 
-/*	Com_Printf("%i < %i < %i\n", soundtime, paintedtime, s_rawend); */
 	if (channels == 2 && width == 2) {
 		if (scale == 1.0) {		/* optimized case */
 			for (i = 0; i < samples; i++) {
@@ -995,36 +992,6 @@ void S_RawSamples (int samples, int rate, int width, int channels, byte * data, 
 			s_rawsamples[dst].right = (int) (volume * (((byte *) data)[src] - 128)) << 16;
 		}
 	}
-}
-
-/**
- * @brief
- */
-static void GetSoundtime (void)
-{
-	int samplepos;
-	static int buffers;
-	static int oldsamplepos;
-	int fullsamples;
-
-	fullsamples = dma.samples / dma.channels;
-
-	/* it is possible to miscount buffers if it has wrapped twice between
-	 * calls to SND_Frame. */
-	samplepos = dma.dmapos;
-
-	if (samplepos < oldsamplepos) {
-		buffers++;				/* buffer wrapped */
-
-		if (paintedtime > 0x40000000) {	/* time to chop things off to avoid 32 bit limits */
-			buffers = 0;
-			paintedtime = fullsamples;
-			S_StopAllSounds();
-		}
-	}
-	oldsamplepos = samplepos;
-
-	soundtime = buffers * fullsamples + samplepos / dma.channels;
 }
 
 /**
