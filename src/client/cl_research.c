@@ -812,7 +812,12 @@ static void RS_ResearchDisplayInfo (void)
 		Cvar_Set("mn_research_selstatus", _("Status: Research finished"));
 		break;
 	case RS_NONE:
-		Cvar_Set("mn_research_selstatus", _("Status: We don't currently have all the materials or background knowledge needed to research this topic."));
+		if (tech->statusCollected && !tech->statusResearchable) {
+			/** @sa RS_UpdateData -> "--" */
+			Cvar_Set("mn_research_selstatus", _("Status: We don't currently have all the materials or background knowledge needed to research this topic."));
+		} else {
+			Cvar_Set("mn_research_selstatus", _("Status: Unknown technology"));
+		}
 		break;
 	default:
 		break;
