@@ -140,7 +140,7 @@ extern cvar_t *snd_testsound;
 void S_InitScaletable(void);
 sfxcache_t *S_LoadSound(sfx_t * s);
 void S_IssuePlaysound(playsound_t * ps);
-void S_PaintChannels(int endtime);
+void S_PaintChannels(void);
 void S_ClearBuffer(void);
 void S_ResampleSfx(sfx_t * sfx, int inrate, int inwidth, byte * data);
 channel_t *S_PickChannel(int entnum, int entchannel);

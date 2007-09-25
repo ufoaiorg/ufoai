@@ -64,6 +64,7 @@ static void S_WriteLinearBlastStereo16 (void)
 
 /**
  * @brief
+ * @sa S_TransferPaintBuffer
  */
 static void S_TransferStereo16 (unsigned long *pbuf, int endtime)
 {
@@ -102,6 +103,7 @@ static void S_TransferStereo16 (unsigned long *pbuf, int endtime)
 /**
  * @brief
  * @sa S_TransferStereo16
+ * @sa S_PaintChannels
  */
 static void S_TransferPaintBuffer (int endtime)
 {
@@ -175,6 +177,7 @@ CHANNEL MIXING
 
 /**
  * @brief
+ * @sa S_PaintChannelFrom16
  */
 static void S_PaintChannelFrom8 (channel_t * ch, sfxcache_t * sc, int count, int offset)
 {
@@ -206,6 +209,7 @@ static void S_PaintChannelFrom8 (channel_t * ch, sfxcache_t * sc, int count, int
 
 /**
  * @brief
+ * @sa S_PaintChannelFrom8
  */
 static void S_PaintChannelFrom16 (channel_t * ch, sfxcache_t * sc, int count, int offset)
 {
@@ -233,10 +237,10 @@ static void S_PaintChannelFrom16 (channel_t * ch, sfxcache_t * sc, int count, in
 }
 
 /**
- * @brief
+ * @brief Write the sound data to the SDL callback buffer
  * @sa S_TransferPaintBuffer
  */
-void S_PaintChannels (int endtime)
+void S_PaintChannels (void)
 {
 	int i = 0;
 	int end;
@@ -244,6 +248,7 @@ void S_PaintChannels (int endtime)
 	sfxcache_t *sc;
 	int ltime, count;
 	playsound_t *ps;
+	int endtime = dma.samplepos;
 
 	snd_vol = snd_volume->value * 256;
 

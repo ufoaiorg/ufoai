@@ -37,9 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static void S_Play_f(void);
 static void S_SoundList_f(void);
-void S_StopAllSounds(void);
-
-channel_t* s_streamingChannel;
+static int SND_Frame(void);
 
 /*
 =======================================================================
@@ -127,11 +125,11 @@ static void S_SoundInfo_f (void)
  */
 static void SND_SDL_Callback (void *unused, Uint8 *stream, int len)
 {
-	SND_Frame(NULL);
+	SND_Frame();
 
 	dma.buffer = stream;
 	dma.samplepos += len / (dma.samplebits / 4);
-	S_PaintChannels(dma.samplepos);
+	S_PaintChannels();
 }
 
 /**
@@ -926,7 +924,7 @@ void S_StopAllSounds (void)
 }
 
 /**
- * @brief Cinematic streaming and voice over network
+ * @brief Cinematic streaming and ogg background sound
  */
 void S_RawSamples (int samples, int rate, int width, int channels, byte * data, float volume)
 {
@@ -997,7 +995,7 @@ void S_RawSamples (int samples, int rate, int width, int channels, byte * data, 
 /**
  * @brief Called once each time through the main loop
  */
-int SND_Frame (void *data)
+static int SND_Frame (void)
 {
 	int i;
 	int total;

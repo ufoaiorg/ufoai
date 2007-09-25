@@ -383,7 +383,6 @@ void CL_ParseClientData(const char *type, const char *name, const char **text);
 void CIN_RunCinematic(int now, void *data);
 void SCR_BeginLoadingPlaque(void);
 void CL_InitAfter(void);
-int SND_Frame(void *data);
 
 void SV_Init(void);
 void SV_Clear(void);
