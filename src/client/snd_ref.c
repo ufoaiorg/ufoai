@@ -87,17 +87,13 @@ cvar_t *snd_loadas8bit;
 cvar_t *snd_khz;
 cvar_t *snd_show;
 cvar_t *snd_mixahead;
+static cvar_t *snd_bits;
+static cvar_t *snd_channels;
 
-cvar_t *snd_ref;
 cvar_t *snd_openal;
-
-static qboolean snd_ref_active;
 
 int s_rawend;
 portable_samplepair_t s_rawsamples[MAX_RAW_SAMPLES];
-
-struct sndinfo si;
-static void* snd_ref_lib = NULL;
 
 /*
 ==========================================================
@@ -106,26 +102,6 @@ OGG Vorbis stuff
 */
 
 music_t music;
-
-/*
-==========================================================
-Sound renderer function pointers
-==========================================================
-*/
-
-typedef qboolean (*SND_Init_t)(struct sndinfo* si);
-typedef int (*SND_GetDMAPos_t)(void);
-typedef void (*SND_Shutdown_t)(void);
-typedef void (*SND_BeginPainting_t)(void);
-typedef void (*SND_Submit_t)(void);
-typedef void (*SND_Activate_t)(qboolean active);
-
-SND_Init_t SND_Init;
-SND_GetDMAPos_t SND_GetDMAPos;
-SND_Shutdown_t SND_Shutdown;
-SND_BeginPainting_t SND_BeginPainting;
-SND_Submit_t SND_Submit;
-SND_Activate_t SND_Activate;
 
 /**
  * @brief Prints sound variables
@@ -148,25 +124,15 @@ static void S_SoundInfo_f (void)
 }
 
 /**
- * @brief Lists all sound renderers for options menu - and cycles between them
- * @note Sound renderer differers from os to os
+ * @brief
  */
-void S_ModifySndRef_f (void)
+static void SND_SDL_Callback (void *unused, Uint8 *stream, int len)
 {
-	if (!Q_strcmp(snd_ref->string, "sdl")) {
-#ifdef _WIN32
-		Cvar_Set("snd_ref", "wapi");
-	} else if (!Q_strcmp(snd_ref->string, "wapi")) {
-#else
-		Cvar_Set("snd_ref", "alsa");
-	} else if (!Q_strcmp(snd_ref->string, "alsa")) {
-		Cvar_Set("snd_ref", "oss");
-	} else if (!Q_strcmp(snd_ref->string, "oss")) {
-		Cvar_Set("snd_ref", "arts");
-	} else if (!Q_strcmp(snd_ref->string, "arts")) {
-#endif
-		Cvar_Set("snd_ref", "sdl");
-	}
+	SND_Frame(NULL);
+
+	dma.buffer = stream;
+	dma.samplepos += len / (dma.samplebits / 4);
+	S_PaintChannels(dma.samplepos);
 }
 
 /**
@@ -207,27 +173,6 @@ static void S_ModifyKhz_f (void)
 		Cbuf_AddText("snd_restart\n");
 }
 
-/**
- * @brief Make sure that all pointers are set to null
- * @note Call this in case of failed initialization - otherwise S_Activate
- * might produce a segfault
- */
-static void S_FreeLibs (void)
-{
-	SND_Init = NULL;
-	SND_Shutdown = NULL;
-	SND_Submit = NULL;
-	SND_GetDMAPos = NULL;
-	SND_BeginPainting = NULL;
-	SND_Activate = NULL;
-	Sys_FreeLibrary(snd_ref_lib);
-
-	memset(&si, 0, sizeof(struct sndinfo));
-	snd_ref_lib = NULL;
-	snd_ref_active = qfalse;
-	memset(&dma, 0, sizeof(dma_t));
-}
-
 /** @brief sound renderer commands */
 static const cmdList_t r_commands[] = {
 	{"musiclist", S_OGG_List_f, "List all available music files"},
@@ -243,6 +188,134 @@ static const cmdList_t r_commands[] = {
 
 	{NULL, NULL, NULL}
 };
+
+/**
+ * @brief
+ * @sa SND_Init
+ */
+static void SND_Shutdown (void)
+{
+	if (sound_started) {
+		SDL_PauseAudio(1);
+		SDL_CloseAudio();
+		dma.buffer = NULL;
+		dma.samplepos = 0;
+	}
+
+	SDL_QuitSubSystem(SDL_INIT_AUDIO);
+	Com_Printf("SDL audio device shut down.\n");
+}
+
+
+/**
+ * @brief
+ * @sa SND_Shutdown
+ */
+static qboolean SND_Init (void)
+{
+	SDL_AudioSpec desired, obtained;
+	int desired_bits;
+	char drivername[128];
+
+	if (SDL_WasInit(SDL_INIT_EVERYTHING) == 0) {
+		if (SDL_Init(SDL_INIT_AUDIO) == -1) {
+			Com_Printf("Couldn't init SDL audio: %s\n", SDL_GetError());
+			return qfalse;
+		}
+	} else if (SDL_WasInit(SDL_INIT_AUDIO) == 0) {
+		if (SDL_InitSubSystem(SDL_INIT_AUDIO) == -1) {
+			Com_Printf("Couldn't init SDL audio subsystem: %s\n", SDL_GetError());
+			return qfalse;
+		}
+	}
+
+	if (SDL_AudioDriverName(drivername, sizeof(drivername)) == NULL)
+		Q_strncpyz(drivername, "(UNKNOWN)", sizeof(drivername));
+	Com_Printf("SDL audio driver is \"%s\".\n", drivername);
+
+	memset(&desired, '\0', sizeof(desired));
+
+	desired_bits = snd_bits->integer;
+
+	/* Set up the desired format */
+	/* set buffer based on rate */
+	if (snd_khz->integer == 48) {
+		desired.freq = 48000;
+		desired.samples = 4096;
+	} else if (snd_khz->integer == 44) {
+		desired.freq = 44100;
+		desired.samples = 4096;
+	} else if (snd_khz->integer == 22) {
+		desired.freq = 22050;
+		desired.samples = 2048;
+	} else {
+		desired.freq = 48000;
+		desired.samples = 4096;
+	}
+
+	desired.callback = SND_SDL_Callback;
+
+	desired_bits = snd_bits->integer;
+	switch (desired_bits) {
+	case 8:
+		desired.format = AUDIO_U8;
+		break;
+	case 16:
+		desired.format = AUDIO_S16SYS;
+		break;
+	default:
+		Com_Printf("Unknown number of audio bits: %d\n", desired_bits);
+		return qfalse;
+	}
+
+	desired.channels = snd_channels->integer;
+	if (desired.channels < 1)
+		desired.channels = 1;
+	else if (desired.channels > 2)
+		desired.channels = 2;
+
+	Com_Printf("Bits: %i\n", desired_bits);
+	Com_Printf("Frequency: %i\n", desired.freq);
+	Com_Printf("Samples: %i\n", desired.samples);
+	Com_Printf("Channels: %i\n", desired.channels);
+
+	/* Open the audio device */
+	if (SDL_OpenAudio(&desired, &obtained) == -1) {
+		Com_Printf("Couldn't open SDL audio: %s\n", SDL_GetError());
+		SDL_QuitSubSystem(SDL_INIT_AUDIO);
+		return qfalse;
+	}
+
+	/* Make sure we can support the audio format */
+	switch (obtained.format) {
+	/* Supported */
+	case AUDIO_U8:
+		break;
+	case AUDIO_S16SYS:
+		break;
+	/* Not supported -- force SDL to do our bidding */
+	default:
+		SDL_CloseAudio();
+		if (SDL_OpenAudio(&desired, NULL) == -1) {
+			Com_Printf("Couldn't open SDL audio (format): %s\n", SDL_GetError());
+			return qfalse;
+		}
+		memcpy(&obtained, &desired, sizeof(desired));
+		break;
+	}
+
+	/* Fill the audio DMA information block */
+	dma.samplebits = obtained.format & 0xFF;
+	dma.speed = obtained.freq;
+	dma.channels = obtained.channels;
+	dma.samples = obtained.samples * dma.channels;
+	dma.samplepos = 0;
+	dma.submission_chunk = 1;
+	dma.buffer = NULL;
+
+	SDL_PauseAudio(0);
+	return qtrue;
+}
 
 /**
  * @brief
@@ -263,6 +336,8 @@ void S_Init (void)
 		return;
 	}
 
+	snd_bits = Cvar_Get("snd_bits", "16", CVAR_ARCHIVE, "Sound bits");
+	snd_channels = Cvar_Get("snd_channels", "2", CVAR_ARCHIVE, "Sound channels");
 	snd_volume = Cvar_Get("snd_volume", "0.7", CVAR_ARCHIVE, "Sound volume - default is 0.7");
 	snd_khz = Cvar_Get("snd_khz", "48", CVAR_ARCHIVE, "Khz value for sound renderer - default is 48");
 	snd_loadas8bit = Cvar_Get("snd_loadas8bit", "0", CVAR_ARCHIVE, NULL);
@@ -271,8 +346,6 @@ void S_Init (void)
 	snd_testsound = Cvar_Get("snd_testsound", "0", 0, "Write a fixed sine wave");
 	/* @todo: make openal the default when it is working (i.e. change 0 below to a 1) */
 	snd_openal = Cvar_Get("snd_openal", "0", CVAR_ARCHIVE, "use OpenAL");
-	/* FIXME Why done twice? snd_ref is already inited */
-	snd_ref = Cvar_Get("snd_ref", "sdl", CVAR_ARCHIVE, "Sound renderer libary name - default is sdl");
 
 	S_OGG_Init();
 
@@ -291,51 +364,11 @@ void S_Init (void)
 	}
 
 	/* don't restart right again */
-	snd_ref->modified = qfalse;
 	snd_openal->modified = qfalse;
 
 	if (!snd_openal->integer) {
-		char lib[MAX_OSPATH];
-
-		Com_Printf("Loading snd_%s sound driver\n", snd_ref->string);
-		Com_sprintf(lib, sizeof(lib), "snd_%s", snd_ref->string);
-		snd_ref_lib = Sys_LoadLibrary(lib, 0);
-		if (snd_ref_lib == NULL) {
-			Com_Printf("Load library (%s) failed - no sound available\n", lib);
-			return;
-		}
-
-		if ((SND_Init = (SND_Init_t) Sys_GetProcAddress(snd_ref_lib, "SND_Init")) == 0)
-			Com_Error(ERR_FATAL, "Sys_GetProcAddress failed loading SND_Init");
-		if ((SND_Shutdown = (SND_Shutdown_t) Sys_GetProcAddress(snd_ref_lib, "SND_Shutdown")) == 0)
-			Com_Error(ERR_FATAL, "Sys_GetProcAddress failed loading SND_Shutdown");
-		if ((SND_GetDMAPos = (SND_GetDMAPos_t) Sys_GetProcAddress(snd_ref_lib, "SND_GetDMAPos")) == 0)
-			Com_Error(ERR_FATAL, "Sys_GetProcAddress failed loading SND_GetDMAPos");
-		if ((SND_BeginPainting = (SND_BeginPainting_t) Sys_GetProcAddress(snd_ref_lib, "SND_BeginPainting")) == 0)
-			Com_Error(ERR_FATAL, "Sys_GetProcAddress failed loading SND_BeginPainting");
-		if ((SND_Submit = (SND_Submit_t) Sys_GetProcAddress(snd_ref_lib, "SND_Submit")) == 0)
-			Com_Error(ERR_FATAL, "Sys_GetProcAddress failed loading SND_Submit");
-		if ((SND_Activate = (SND_Activate_t) Sys_GetProcAddress(snd_ref_lib, "SND_Activate")) == 0)
-			Com_Error(ERR_FATAL, "Sys_GetProcAddress failed loading SND_Activate");
-
-		snd_ref_active = qtrue;
-
-		si.dma = &dma;
-		si.bits = Cvar_Get("snd_bits", "16", CVAR_ARCHIVE, "Sound bits");
-		si.channels = Cvar_Get("snd_channels", "2", CVAR_ARCHIVE, "Sound channels");
-		si.device = Cvar_Get("snd_device", "default", CVAR_ARCHIVE, "Default sound device");
-		si.khz = snd_khz;
-		si.Cvar_Get = Cvar_Get;
-		si.Cvar_Set = Cvar_Set;
-		si.Com_Printf = Com_Printf;
-		si.Com_DPrintf = Com_DPrintf;
-		si.S_PaintChannels = S_PaintChannels;
-		si.Frame = SND_Frame;
-		si.paintedtime = &paintedtime;
-
-		if (!SND_Init(&si)) {
+		if (!SND_Init()) {
 			Com_Printf("SND_Init failed\n");
-			S_FreeLibs();
 			sound_started = qfalse;
 			return;
 		}
@@ -413,9 +446,6 @@ void S_Shutdown (void)
 	size = Mem_PoolSize(cl_soundSysPool);
 	Com_Printf("...releasing %u bytes\n", size);
 	Mem_FreePool(cl_soundSysPool);
-
-	if (snd_ref_lib)
-		S_FreeLibs();
 
 	num_sfx = 0;
 }
@@ -859,14 +889,8 @@ void S_ClearBuffer (void)
 	else
 		clear = 0;
 
-	if (!snd_openal->integer)
-		SND_BeginPainting();
-
 	if (dma.buffer)
 		memset(dma.buffer, clear, dma.samples * dma.samplebits / 8);
-
-	if (!snd_openal->integer)
-		SND_Submit();
 }
 
 /**
@@ -987,7 +1011,7 @@ static void GetSoundtime (void)
 
 	/* it is possible to miscount buffers if it has wrapped twice between
 	 * calls to SND_Frame. */
-	samplepos = SND_GetDMAPos();
+	samplepos = dma.dmapos;
 
 	if (samplepos < oldsamplepos) {
 		buffers++;				/* buffer wrapped */
@@ -1010,8 +1034,6 @@ static void GetSoundtime (void)
 static void S_UpdateMixer (void)
 {
 	unsigned int samps, endtime;
-
-	SND_BeginPainting();
 
 	if (!dma.buffer)
 		return;
@@ -1037,7 +1059,6 @@ static void S_UpdateMixer (void)
 		endtime = soundtime + samps;
 
 	S_PaintChannels(endtime);
-	SND_Submit();
 }
 
 /**
@@ -1173,15 +1194,6 @@ static void S_SoundList_f (void)
 		}
 	}
 	Com_Printf("Total resident: %i\n", total);
-}
-
-/**
- * @brief
- */
-void S_Activate (qboolean active)
-{
-	if (SND_Activate)
-		SND_Activate(active);
 }
 
 /**

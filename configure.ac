@@ -41,30 +41,6 @@ AC_ARG_WITH(shaders,
 	[AS_HELP_STRING([--with-shaders], [with OpenGL shader support @<:@default=check@:>@])],
 	[], [with_shaders=check])
 
-AC_ARG_WITH(snd_sdl,
-	[AS_HELP_STRING([--with-snd-sdl], [with SDL sound support @<:@default=check@:>@])],
-	[], [with_snd_sdl=check])
-
-AC_ARG_WITH(snd_alsa,
-	[AS_HELP_STRING([--with-snd-alsa], [with ALSA sound support @<:@default=check@:>@])],
-	[], [with_snd_alsa=check])
-
-AC_ARG_WITH(snd_jack,
-	[AS_HELP_STRING([--with-snd-jack], [with JACK sound support @<:@default=check@:>@])],
-	[], [with_snd_jack=check])
-
-AC_ARG_WITH(snd_oss,
-	[AS_HELP_STRING([--with-snd-oss], [with OSS sound support @<:@default=check@:>@])],
-	[], [with_snd_oss=check])
-
-AC_ARG_WITH(snd_arts,
-	[AS_HELP_STRING([--with-snd-arts], [with arts sound support @<:@default=check@:>@])],
-	[], [with_snd_arts=check])
-
-AC_ARG_WITH(snd_wapi,
-	[AS_HELP_STRING([--with-snd-wapi], [with wapi sound support @<:@default=check@:>@])],
-	[], [with_snd_wapi=check])
-
 AC_ARG_WITH(curses,
 	[AS_HELP_STRING([--with-curses], [compile with curses console support @<:@default=check@:>@])],
 	[], [with_curses=check])
@@ -486,15 +462,6 @@ then
 		AC_MSG_WARN([cannot find $sdl_config might fail to find SDL!])
 	fi
 
-	if test "$with_snd_sdl" = "check" || test "$with_snd_sdl" = "yes"
-	then
-		AC_SUBST([HAVE_SND_SDL],1)
-		SND_SDL_LIBS="$SND_SDL_LIBS $LDFLAGS"
-	else
-		AC_MSG_NOTICE([Without SDL sound])
-		AC_SUBST([HAVE_SND_SDL],0)
-	fi
-
 	#---------------------------------------------------------------------------------------------
 	# Check for SDL headers and libraries
 	#---------------------------------------------------------------------------------------------
@@ -564,116 +531,6 @@ then
 	#---------------------------------------------------------------------------------------------
 	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 	CLIENT_CFLAGS="$CFLAGS"
-
-	#---------------------------------------------------------------------------------------------
-	# Check JACK
-	#---------------------------------------------------------------------------------------------
-	LIBS=
-	if test "$with_snd_jack" = "check" || test "$with_snd_jack" = "yes"
-	then
-		AC_CHECK_HEADERS([jack/jack.h])
-		if test "$ac_cv_header_jack_jack_h" = "yes"
-		then
-			AC_SEARCH_LIBS([jack_client_open], [jack])
-			if test "$ac_cv_search_jack_client_open" != "no"
-			then
-				AC_SUBST([HAVE_SND_JACK],1)
-			else
-				AC_MSG_ERROR([found jack header but could not locate jack library!])
-			fi
-		elif test "$with_snd_jack" = "yes"
-		then
-			AC_MSG_ERROR([specified --with-snd-jack specified but cannot find jack/jack.h!])
-		fi
-	else
-		AC_MSG_NOTICE([Without JACK sound])
-	fi
-	SND_JACK_LIBS="$SND_JACK_LIBS $LIBS"
-
-	#---------------------------------------------------------------------------------------------
-	# Check ALSA
-	#---------------------------------------------------------------------------------------------
-	LIBS=
-	if test "$with_snd_alsa" = "check" || test "$with_snd_alsa" = "yes"
-	then
-		AC_CHECK_HEADERS([alsa/asoundlib.h])
-		if test "$ac_cv_header_alsa_asoundlib_h" = "yes"
-		then
-			AC_SEARCH_LIBS([snd_pcm_open], [asound])
-			if test "$ac_cv_search_snd_pcm_open" != "no"
-			then
-				AC_SUBST([HAVE_SND_ALSA],1)
-			else
-				AC_MSG_ERROR([found alsa header but could not locate alsa library!])
-			fi
-		elif test "$with_snd_alsa" = "yes"
-		then
-			AC_MSG_ERROR([specified --with-snd-alsa specified but cannot find alsa/asoundlib.h!])
-		fi
-	else
-		AC_MSG_NOTICE([Without ALSA sound])
-	fi
-	SND_ALSA_LIBS="$SND_ALSA_LIBS $LIBS"
-
-	#---------------------------------------------------------------------------------------------
-	# Check OSS
-	#---------------------------------------------------------------------------------------------
-	LIBS=
-	if test "$with_snd_alsa" = "check" || test "$with_snd_alsa" = "yes"
-	then
-		AC_CHECK_HEADERS([linux/soundcard.h])
-		if test "$ac_cv_header_linux_soundcard_h" != "yes"
-		then
-			AC_CHECK_HEADERS([sys/soundcard.h])
-			if test "$ac_cv_header_sys_soundcard_h" = "yes"
-			then
-				AC_DEFINE([OSS_HEADER_SYS],[1],[OSS headers in sys])
-			fi
-		fi
-		if test "$ac_cv_header_linux_soundcard_h" = "yes" || \
-			test "$ac_cv_header_sys_soundcard_h" = "yes"
-		then
-			AC_SUBST([HAVE_SND_OSS],1)
-		fi
-	else
-		AC_MSG_NOTICE([Without OSS sound])
-	fi
-	SND_OSS_LIBS="$SND_OSS_LIBS $LIBS"
-
-	#---------------------------------------------------------------------------------------------
-	# Check ARTS
-	#---------------------------------------------------------------------------------------------
-	if (test "$with_snd_arts" = check || test "$with_snd_arts" = yes) && test "$TARGET_OS" != "mingw32"
-	then
-		AC_CHECK_PROG(HAVE_ARTSC_CONFIG,artsc-config,yes)
-		if test "$ac_cv_prog_HAVE_ARTSC_CONFIG" = "yes"
-		then
-			AC_SUBST([HAVE_SND_ARTS],1)
-			AC_SUBST([SND_ARTS_CFLAGS], `artsc-config --cflags`)
-			AC_SUBST([SND_ARTS_LIBS], `artsc-config --libs`)
-		fi
-	else
-		AC_MSG_NOTICE([Without ARTS sound])
-	fi
-
-	#---------------------------------------------------------------------------------------------
-	# Check WAPI
-	#---------------------------------------------------------------------------------------------
-	LIBS=
-	if test "$with_snd_wapi" = "check" || test "$with_snd_wapi" = "yes"
-	then
-		AC_CHECK_HEADERS([windows.h])
-		if test "$ac_cv_header_windows_h" = "yes"
-		then
-			AC_SUBST([HAVE_SND_WAPI],1)
-		elif test "$with_snd_wapi" = "yes"
-		then
-			AC_MSG_ERROR([specified --with-snd-wapi specified but cannot find windows.h!])
-		fi
-	else
-		AC_MSG_NOTICE([Without WAPI sound])
-	fi
-	SND_WAPI_LIBS="$SND_WAPI_LIBS $LIBS"
 
 # end of client only checks
 fi

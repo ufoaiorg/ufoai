@@ -54,14 +54,12 @@ extern cvar_t* snd_openal;
 
 void S_Init(void);
 void S_Shutdown(void);
-void S_Activate(qboolean active);
 
 /* if origin is NULL, the sound will be dynamically sourced from the entity */
 void S_StartSound(vec3_t origin, int entnum, int entchannel, struct sfx_s *sfx, float fvol, float attenuation, float timeofs);
 void S_StartLocalSound(const char *s);
 
 void S_RawSamples(int samples, int rate, int width, int channels, byte * data, float volume);
-void S_ModifySndRef_f(void);
 void S_StopAllSounds(void);
 
 void S_BeginRegistration(void);

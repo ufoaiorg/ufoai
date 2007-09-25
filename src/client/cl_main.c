@@ -2118,7 +2118,6 @@ static void CL_InitLocal (void)
 	/* userinfo */
 	info_password = Cvar_Get("password", "", CVAR_USERINFO, NULL);
 	name = Cvar_Get("name", "", CVAR_USERINFO | CVAR_ARCHIVE, "Playername");
-	snd_ref = Cvar_Get("snd_ref", "sdl", CVAR_ARCHIVE, "Sound renderer");
 	team = Cvar_Get("team", "human", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
 	equip = Cvar_Get("equip", "multiplayer_initial", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
 	teamnum = Cvar_Get("teamnum", "1", CVAR_USERINFO | CVAR_ARCHIVE, "Teamnum for multiplayer teamplay games");
@@ -2186,9 +2185,6 @@ static void CL_InitLocal (void)
 
 	Cmd_AddCommand("video", CL_Video_f, "Enable AVI recording - see stopvideo");
 	Cmd_AddCommand("stopvideo", CL_StopVideo_f, "Disable AVI recording - see video");
-
-	/* allow to change the sound renderer even if no sound was initialized */
-	Cmd_AddCommand("snd_modifyref", S_ModifySndRef_f, "Modify sound renderer");
 
 	/* forward to server commands
 	 * the only thing this does is allow command completion
@@ -2415,8 +2411,7 @@ void CL_Frame (int now, void *data)
 		Sys_SetAffinityAndPriority();
 
 	/* did we switch the sound renderer */
-	if (snd_ref->modified || snd_openal->modified) {
-		snd_ref->modified = qfalse;
+	if (snd_openal->modified) {
 		snd_openal->modified = qfalse;
 		CL_Snd_Restart_f();
 	}
@@ -2458,10 +2453,6 @@ void CL_Frame (int now, void *data)
 
 	/* update the screen */
 	SCR_UpdateScreen();
-
-	/* sdl don't need this - handled in the sound thread */
-	if (Q_strncmp(snd_ref->string, "sdl", 3))
-		SND_Frame(NULL);
 
 	/* advance local effects for next frame */
 	CL_RunLightStyles();

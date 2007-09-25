@@ -283,7 +283,6 @@ extern cvar_t *mn_lastsave;
 extern cvar_t *mn_inputlength;
 
 extern cvar_t *s_language;
-extern cvar_t *snd_ref;
 extern cvar_t *difficulty;
 extern cvar_t *confirm_actions;
 
