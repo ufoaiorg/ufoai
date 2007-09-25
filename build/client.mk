@@ -151,18 +151,18 @@ endif
 
 # Say how to link the exe
 $(CLIENT_TARGET): $(CLIENT_OBJS) $(BUILDDIR)/.dirs
-	@echo " * [UFO] ... linking $(LNKFLAGS) ($(CLIENT_LIBS) $(SDL_LIBS) $(OPENAL_LIBS))"; \
-		$(CC) $(LDFLAGS) -o $@ $(CLIENT_OBJS) $(LNKFLAGS) $(CLIENT_LIBS) $(SDL_LIBS) $(OPENAL_LIBS)
+	@echo " * [UFO] ... linking $(LNKFLAGS) ($(CLIENT_LIBS) $(SDL_LIBS))"; \
+		$(CC) $(LDFLAGS) -o $@ $(CLIENT_OBJS) $(LNKFLAGS) $(CLIENT_LIBS) $(SDL_LIBS)
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/client/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [UFO] $<"; \
-		$(CC) $(CFLAGS) $(CPPFLAGS) $(CLIENT_CFLAGS) $(SDL_CFLAGS) $(OPENAL_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
+		$(CC) $(CFLAGS) $(CPPFLAGS) $(CLIENT_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
 
 # Say how to build .o files from .m files for this module
 $(BUILDDIR)/client/%.o: $(SRCDIR)/%.m $(BUILDDIR)/.dirs
 	@echo " * [UFO] $<"; \
-		$(CC) $(CFLAGS) $(CPPFLAGS) $(CLIENT_CFLAGS) $(SDL_CFLAGS) $(OPENAL_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
+		$(CC) $(CFLAGS) $(CPPFLAGS) $(CLIENT_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
 
 ifeq ($(TARGET_OS),mingw32)
 # Say how to build .o files from .rc files for this module
