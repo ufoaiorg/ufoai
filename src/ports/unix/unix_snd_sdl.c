@@ -115,10 +115,7 @@ qboolean SND_Init (struct sndinfo *s)
 		desired.format = AUDIO_U8;
 		break;
 	case 16:
-		if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
-			desired.format = AUDIO_S16MSB;
-		else
-			desired.format = AUDIO_S16LSB;
+		desired.format = AUDIO_S16SYS;
 		break;
 	default:
 		si->Com_Printf("Unknown number of audio bits: %d\n", desired_bits);

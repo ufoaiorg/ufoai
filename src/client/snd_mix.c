@@ -234,6 +234,7 @@ static void S_PaintChannelFrom16 (channel_t * ch, sfxcache_t * sc, int count, in
 
 /**
  * @brief
+ * @sa S_TransferPaintBuffer
  */
 void S_PaintChannels (int endtime)
 {
