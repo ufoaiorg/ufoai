@@ -29,7 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief Returns just the filename from a given path
- * @param
  * @sa COM_StripExtension
  */
 const char *COM_SkipPath (char *pathname)
@@ -47,7 +46,6 @@ const char *COM_SkipPath (char *pathname)
 
 /**
  * @brief Removed the file extension from a filename
- * @param
  * @sa COM_SkipPath
  */
 void COM_StripExtension (const char *in, char *out)
@@ -77,11 +75,6 @@ void COM_StripExtension (const char *in, char *out)
 	}
 }
 
-/**
- * @brief
- * @param
- * @sa
- */
 void COM_FileBase (const char *in, char *out)
 {
 	const char *s, *s2;

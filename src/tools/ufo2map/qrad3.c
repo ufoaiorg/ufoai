@@ -1,6 +1,5 @@
 /**
  * @file qrad3.c
- * @brief
  * @note every surface must be divided into at least two patches each axis
  */
 
@@ -50,9 +49,6 @@ MISC
 */
 
 
-/**
- * @brief
- */
 static void MakeBackplanes (void)
 {
 	int i;
@@ -66,9 +62,6 @@ static void MakeBackplanes (void)
 #if 0
 static vec3_t vnormals[MAX_MAP_VERTS];
 
-/**
- * @brief
- */
 static void CalcVertexNormals (unsigned int vnum)
 {
 	qboolean	found;
@@ -122,9 +115,6 @@ TRANSFER SCALES
 ===================================================================
 */
 
-/**
- * @brief
- */
 static int PointInLeafnum (vec3_t point)
 {
 	int nodenum;
@@ -147,9 +137,6 @@ static int PointInLeafnum (vec3_t point)
 }
 
 
-/**
- * @brief
- */
 dleaf_t *Rad_PointInLeaf (vec3_t point)
 {
 	int num;
@@ -160,9 +147,6 @@ dleaf_t *Rad_PointInLeaf (vec3_t point)
 
 
 static int total_transfer;
-/**
- * @brief
- */
 static void MakeTransfers (unsigned int i)
 {
 	unsigned int			j;
@@ -263,9 +247,6 @@ static void MakeTransfers (unsigned int i)
 }
 
 
-/**
- * @brief
- */
 static void FreeTransfers (void)
 {
 	unsigned int i;
@@ -277,9 +258,6 @@ static void FreeTransfers (void)
 	}
 }
 
-/**
- * @brief
- */
 static void WriteWorld (const char *name)
 {
 	unsigned int j;
@@ -306,9 +284,6 @@ static void WriteWorld (const char *name)
 	fclose(out);
 }
 
-/**
- * @brief
- */
 static float CollectLight (void)
 {
 	unsigned int i, j;
@@ -358,9 +333,6 @@ static void ShootLight (unsigned int patchnum)
 	}
 }
 
-/**
- * @brief
- */
 static void BounceLight (void)
 {
 	unsigned int i, j;
@@ -394,9 +366,6 @@ static void BounceLight (void)
 
 /*============================================================== */
 
-/**
- * @brief
- */
 static void CheckPatches (void)
 {
 	unsigned int i;
@@ -409,9 +378,6 @@ static void CheckPatches (void)
 	}
 }
 
-/**
- * @brief
- */
 void RadWorld (void)
 {
 	if (numnodes == 0 || numfaces == 0)

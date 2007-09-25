@@ -1,6 +1,5 @@
 /**
  * @file bspinfo3.c
- * @brief
  */
 
 /*
@@ -29,7 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "common/bspfile.h"
 
 /**
- * @brief
  * @sa LoadBSPFile
  * @sa PrintBSPFileSizes
  */

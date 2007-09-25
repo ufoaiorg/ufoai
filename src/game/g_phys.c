@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_local.h"
 
 /**
- * @brief
  * @todo Use this function to enable footsteps over network
  * @note Only play the water sounds if actor is not in STATE_CROUCHED mode
  * we can assume, that moving slower and more carefully would also not produce

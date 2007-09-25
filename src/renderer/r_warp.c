@@ -30,9 +30,6 @@ static mBspSurface_t *warpface;
 #define	SUBDIVIDE_SIZE	64
 /*#define	SUBDIVIDE_SIZE	1024 */
 
-/**
- * @brief
- */
 static void BoundPoly (int numverts, float *verts, vec3_t mins, vec3_t maxs)
 {
 	int i, j;
@@ -50,9 +47,6 @@ static void BoundPoly (int numverts, float *verts, vec3_t mins, vec3_t maxs)
 		}
 }
 
-/**
- * @brief
- */
 static void SubdividePolygon (int numverts, float *verts)
 {
 	int i, j, k;

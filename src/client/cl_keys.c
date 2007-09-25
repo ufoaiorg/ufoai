@@ -840,7 +840,6 @@ static void Key_Bindlist_f (void)
 
 
 /**
- * @brief
  * @todo Fix this crappy shift key assignment for win32 and sdl (no _)
  */
 void Key_Init (void)
@@ -1025,9 +1024,6 @@ void Key_Event (int key, qboolean down, unsigned time)
 }
 
 #ifdef _WIN32
-/**
- * @brief
- */
 void Key_ClearStates (void)
 {
 	int i;

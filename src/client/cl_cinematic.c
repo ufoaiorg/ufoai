@@ -111,7 +111,6 @@ static byte CIN_ClampByte (int value)
 }
 
 /**
- * @brief
  * @sa CIN_DecodeVideo
  */
 static void CIN_ApplyVector2x2 (int x, int y, const byte *indices)
@@ -138,7 +137,6 @@ static void CIN_ApplyVector2x2 (int x, int y, const byte *indices)
 }
 
 /**
- * @brief
  * @sa CIN_DecodeVideo
  */
 static void CIN_ApplyVector4x4 (int x, int y, const byte *indices)
@@ -183,7 +181,6 @@ static void CIN_ApplyVector4x4 (int x, int y, const byte *indices)
 }
 
 /**
- * @brief
  * @sa CIN_DecodeVideo
  */
 static void CIN_ApplyMotion4x4 (int x, int y, int mx, int my, int mv)
@@ -207,7 +204,6 @@ static void CIN_ApplyMotion4x4 (int x, int y, int mx, int my, int mv)
 }
 
 /**
- * @brief
  * @sa CIN_DecodeVideo
  */
 static void CIN_ApplyMotion8x8 (int x, int y, int mx, int my, int mv)
@@ -235,7 +231,6 @@ static void CIN_ApplyMotion8x8 (int x, int y, int mx, int my, int mv)
 }
 
 /**
- * @brief
  * @sa CIN_DecodeChunk
  */
 static void CIN_DecodeInfo (const byte *data)
@@ -258,7 +253,6 @@ static void CIN_DecodeInfo (const byte *data)
 }
 
 /**
- * @brief
  * @sa CIN_DecodeChunk
  */
 static void CIN_DecodeCodeBook (const byte *data)
@@ -319,7 +313,6 @@ static void CIN_DecodeCodeBook (const byte *data)
 }
 
 /**
- * @brief
  * @sa CIN_DecodeChunk
  */
 static void CIN_DecodeVideo (const byte *data)
@@ -428,7 +421,6 @@ static void CIN_DecodeVideo (const byte *data)
 }
 
 /**
- * @brief
  * @sa CIN_DecodeSoundStereo
  * @sa CIN_DecodeChunk
  */
@@ -450,7 +442,6 @@ static void CIN_DecodeSoundMono (const byte *data)
 }
 
 /**
- * @brief
  * @sa CIN_DecodeSoundMono
  * @sa CIN_DecodeChunk
  */
@@ -475,9 +466,6 @@ static void CIN_DecodeSoundStereo (const byte *data)
 	S_RawSamples(cin.chunk.size / 2, 22050, 2, 2, (byte*)samples, 1.0f);
 }
 
-/**
- * @brief
- */
 static qboolean CIN_DecodeChunk (void)
 {
 	int frame;
@@ -533,7 +521,6 @@ static qboolean CIN_DecodeChunk (void)
 }
 
 /**
- * @brief
  * @sa CL_Frame
  */
 void CIN_RunCinematic (int now, void *data)
@@ -550,7 +537,6 @@ void CIN_RunCinematic (int now, void *data)
 }
 
 /**
- * @brief
  * @sa R_DrawImagePixelData
  */
 void CIN_DrawCinematic (void)
@@ -563,7 +549,6 @@ void CIN_DrawCinematic (void)
 }
 
 /**
- * @brief
  * @sa CIN_StopCinematic
  */
 void CIN_PlayCinematic (const char *name)
@@ -634,7 +619,6 @@ void CIN_PlayCinematic (const char *name)
 }
 
 /**
- * @brief
  * @sa CIN_PlayCinematic
  */
 void CIN_StopCinematic (void)
@@ -652,9 +636,6 @@ void CIN_StopCinematic (void)
 	memset(&cin, 0, sizeof(cinematic_t));
 }
 
-/**
- * @brief
- */
 static void CIN_Cinematic_f (void)
 {
 	char name[MAX_OSPATH];
@@ -691,9 +672,6 @@ static void CIN_CinematicStop_f (void)
 	CIN_StopCinematic();
 }
 
-/**
- * @brief
- */
 static int CIN_CompleteCommand (const char *partial, const char **match)
 {
 	const char *filename;
@@ -729,9 +707,6 @@ static int CIN_CompleteCommand (const char *partial, const char **match)
 	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
 }
 
-/**
- * @brief
- */
 void CIN_Init (void)
 {
 	float f;
@@ -770,9 +745,6 @@ void CIN_Init (void)
 	}
 }
 
-/**
- * @brief
- */
 void CIN_Shutdown (void)
 {
 	/* Unregister our commands */

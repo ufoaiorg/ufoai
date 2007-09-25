@@ -561,7 +561,6 @@ void G_CheckEndGame (void)
 }
 
 /**
- * @brief
  * @sa SV_RunGameFrame
  * @sa G_EndGame
  * @sa AI_Run

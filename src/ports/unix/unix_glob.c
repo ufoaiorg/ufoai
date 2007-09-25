@@ -1,6 +1,5 @@
 /**
  * @file unix_glob.c
- * @brief
  */
 
 /*

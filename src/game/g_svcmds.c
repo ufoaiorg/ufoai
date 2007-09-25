@@ -29,9 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
-/**
- * @brief
- */
 static void SVCmd_Test_f (void)
 {
 	gi.cprintf(NULL, PRINT_CONSOLE, "Svcmd_Test_f()\n");
@@ -67,9 +64,6 @@ typedef struct {
 static ipfilter_t ipfilters[MAX_IPFILTERS];
 static int numipfilters;
 
-/**
- * @brief
- */
 static qboolean StringToFilter (const char *s, ipfilter_t * f)
 {
 	char num[128];
@@ -108,9 +102,6 @@ static qboolean StringToFilter (const char *s, ipfilter_t * f)
 	return qtrue;
 }
 
-/**
- * @brief
- */
 qboolean SV_FilterPacket (const char *from)
 {
 	int i;
@@ -142,7 +133,6 @@ qboolean SV_FilterPacket (const char *from)
 
 
 /**
- * @brief
  * @sa SVCmd_RemoveIP_f
  */
 static void SVCmd_AddIP_f (void)
@@ -170,7 +160,6 @@ static void SVCmd_AddIP_f (void)
 }
 
 /**
- * @brief
  * @sa SVCmd_AddIP_f
  */
 static void SVCmd_RemoveIP_f (void)
@@ -285,9 +274,6 @@ static void SVCmd_Win_f (void)
 }
 
 #ifdef DEBUG
-/**
- * @brief
- */
 static void SVCmd_ShowAll_f (void)
 {
 	edict_t *ent;

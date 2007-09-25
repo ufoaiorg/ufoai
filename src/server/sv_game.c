@@ -150,7 +150,6 @@ static void PF_error (const char *fmt, ...)
 
 
 /**
- * @brief
  * @note Also sets mins and maxs for inline bmodels
  * @sa CM_InlineModel
  */
@@ -175,7 +174,6 @@ static void PF_SetModel (edict_t * ent, const char *name)
 }
 
 /**
- * @brief
  * @sa CL_ParseConfigString
  */
 static void PF_Configstring (int index, const char *val)
@@ -209,17 +207,11 @@ static void PF_Configstring (int index, const char *val)
 	}
 }
 
-/**
- * @brief
- */
 static void PF_WriteChar (char c)
 {
 	NET_WriteChar(pfe_msg, c);
 }
 
-/**
- * @brief
- */
 static void PF_WriteByte (unsigned char c)
 {
 	NET_WriteByte(pfe_msg, c);
@@ -235,57 +227,36 @@ static char* PF_WriteDummyByte (unsigned char c)
 	return pos;
 }
 
-/**
- * @brief
- */
 static void PF_WriteShort (int c)
 {
 	NET_WriteShort(pfe_msg, c);
 }
 
-/**
- * @brief
- */
 static void PF_WriteLong (int c)
 {
 	NET_WriteLong(pfe_msg, c);
 }
 
-/**
- * @brief
- */
 static void PF_WriteString (const char *s)
 {
 	NET_WriteString(pfe_msg, s);
 }
 
-/**
- * @brief
- */
 static void PF_WritePos (vec3_t pos)
 {
 	NET_WritePos(pfe_msg, pos);
 }
 
-/**
- * @brief
- */
 static void PF_WriteGPos (pos3_t pos)
 {
 	NET_WriteGPos(pfe_msg, pos);
 }
 
-/**
- * @brief
- */
 static void PF_WriteDir (vec3_t dir)
 {
 	NET_WriteDir(pfe_msg, dir);
 }
 
-/**
- * @brief
- */
 static void PF_WriteAngle (float f)
 {
 	NET_WriteAngle(pfe_msg, f);
@@ -299,88 +270,57 @@ static void PF_WriteFormat (const char *format, ...)
 	va_end(ap);
 }
 
-/**
- * @brief
- */
 static int PF_ReadChar (void)
 {
 	return NET_ReadChar(sv_msg);
 }
 
-/**
- * @brief
- */
 static int PF_ReadByte (void)
 {
 	return NET_ReadByte(sv_msg);
 }
 
-/**
- * @brief
- */
 static int PF_ReadShort (void)
 {
 	return NET_ReadShort(sv_msg);
 }
 
-/**
- * @brief
- */
 static int PF_ReadLong (void)
 {
 	return NET_ReadLong(sv_msg);
 }
 
-/**
- * @brief
- */
 static char *PF_ReadString (void)
 {
 	return NET_ReadString(sv_msg);
 }
 
-/**
- * @brief
- */
 static void PF_ReadPos (vec3_t pos)
 {
 	NET_ReadPos(sv_msg, pos);
 }
 
-/**
- * @brief
- */
 static void PF_ReadGPos (pos3_t pos)
 {
 	NET_ReadGPos(sv_msg, pos);
 }
 
-/**
- * @brief
- */
 static void PF_ReadDir (vec3_t vector)
 {
 	NET_ReadDir(sv_msg, vector);
 }
 
-/**
- * @brief
- */
 static float PF_ReadAngle (void)
 {
 	return NET_ReadAngle(sv_msg);
 }
 
-/**
- * @brief
- */
 static void PF_ReadData (void *buffer, int size)
 {
 	NET_ReadData(sv_msg, buffer, size);
 }
 
 /**
- * @brief
  * @sa NET_V_ReadFormat
  */
 static void PF_ReadFormat (const char *format, ...)
@@ -395,9 +335,6 @@ static void PF_ReadFormat (const char *format, ...)
 	va_end(ap);
 }
 
-/**
- * @brief
- */
 static void PF_EndEvents (void)
 {
 	if (!pfe_pending)
@@ -410,9 +347,6 @@ static void PF_EndEvents (void)
 	pfe_msg = NULL;
 }
 
-/**
- * @brief
- */
 static void PF_AddEvent (int mask, int eType)
 {
 	/* finish the last event */
@@ -440,9 +374,6 @@ static void *GI_TagAlloc (int size, int tagNum)
 	return _Mem_Alloc(size, qtrue, sv_gameSysPool, tagNum, "GAME DLL", 0);
 }
 
-/**
- * @brief
- */
 static void GI_MemFree (void *ptr)
 {
 	_Mem_Free(ptr, "GAME DLL", -1);
@@ -478,9 +409,6 @@ void SV_ShutdownGameProgs (void)
 	ge = NULL;
 }
 
-/**
- * @brief
- */
 void SCR_DebugGraph(float value, int color);
 
 /**

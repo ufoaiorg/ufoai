@@ -94,9 +94,6 @@ static kbutton_t in_shiftup, in_shiftdown;
 static kbutton_t in_zoomin, in_zoomout;
 static kbutton_t in_turnup, in_turndown;
 
-/**
- * @brief
- */
 static void KeyDown (kbutton_t * b)
 {
 	int k;
@@ -135,9 +132,6 @@ static void KeyDown (kbutton_t * b)
 	b->state |= 1 + 2;
 }
 
-/**
- * @brief
- */
 static void KeyUp (kbutton_t * b)
 {
 	int k;
@@ -278,9 +272,6 @@ static void CL_CameraMode_f (void)
 		CL_CameraModeChange(CAMERA_MODE_FIRSTPERSON);
 }
 
-/**
- * @brief
- */
 void CL_CameraModeChange (camera_mode_t new_camera_mode)
 {
 	static vec3_t save_camorg, save_camangles;
@@ -380,9 +371,6 @@ static void CL_LevelDown_f (void)
 }
 
 
-/**
- * @brief
- */
 static void CL_ZoomInQuant_f (void)
 {
 	float quant;
@@ -411,9 +399,6 @@ static void CL_ZoomInQuant_f (void)
 	}
 }
 
-/**
- * @brief
- */
 static void CL_ZoomOutQuant_f (void)
 {
 	float quant;
@@ -519,9 +504,6 @@ static void CL_SelectDown_f (void)
 		MN_ExecuteActions(menu, menu->leaveNode->click);
 }
 
-/**
- * @brief
- */
 static void CL_SelectUp_f (void)
 {
 	mouseSpace = MS_NULL;
@@ -537,9 +519,6 @@ static void CL_ActionDown_f (void)
 	CL_ActorActionMouse();
 }
 
-/**
- * @brief
- */
 static void CL_ActionUp_f (void)
 {
 	mouseSpace = MS_NULL;
@@ -554,9 +533,6 @@ static void CL_TurnDown_f (void)
 		CL_ActorTurnMouse();
 }
 
-/**
- * @brief
- */
 static void CL_TurnUp_f (void)
 {
 	mouseSpace = MS_NULL;
@@ -674,9 +650,6 @@ static void CL_DrawSpottedLines_f (void)
 	}
 }
 
-/**
- * @brief
- */
 static int lastAlien = 0;
 
 /**
@@ -789,9 +762,6 @@ static void CL_CamPrintAngles_f (void)
 }
 #endif /* DEBUG */
 
-/**
- * @brief
- */
 static void CL_CamSetAngles_f (void)
 {
 	int c = Cmd_Argc();
@@ -841,7 +811,6 @@ static void CL_MakeBaseMapShot_f (void)
 #define SCROLL_BORDER	4
 
 /**
- * @brief
  * @note see SCROLL_BORDER define
  */
 static float CL_GetKeyMouseState (int dir)
@@ -873,9 +842,6 @@ static float CL_GetKeyMouseState (int dir)
 }
 
 
-/**
- * @brief
- */
 static void CL_CameraMoveFirstPerson (void)
 {
 	float rotation_speed;
@@ -958,9 +924,6 @@ static void CL_ClampCamToMap (float border)
 }
 
 
-/**
- * @brief
- */
 static void CL_CameraMoveRemote (void)
 {
 	float angle, frac;
@@ -1108,9 +1071,6 @@ static void CL_CameraMoveRemote (void)
 
 }
 
-/**
- * @brief
- */
 void CL_CameraMove (void)
 {
 	if (cls.state != ca_active)
@@ -1125,9 +1085,6 @@ void CL_CameraMove (void)
 		CL_CameraMoveRemote();
 }
 
-/**
- * @brief
- */
 void CL_CameraRoute (pos3_t from, pos3_t target)
 {
 	/* initialize the camera route variables */
@@ -1510,9 +1467,6 @@ static int IN_TranslateKey (SDL_keysym *keysym, int *key)
 		keyq_head = (keyq_head + 1) & (MAX_KEYQ - 1); \
 	}
 
-/**
- * @brief
- */
 void IN_Frame (void)
 {
 	int key = -1, mouse_buttonstate, p = 0;
@@ -1626,9 +1580,6 @@ void IN_Frame (void)
 	}
 }
 
-/**
- * @brief
- */
 void IN_Init (void)
 {
 	/* other cvars */
@@ -1699,9 +1650,6 @@ void IN_Init (void)
 	mousePosX = mousePosY = 0.0;
 }
 
-/**
- * @brief
- */
 void IN_SendKeyEvents (void)
 {
 	while (keyq_head != keyq_tail) {

@@ -32,9 +32,6 @@ SPRITE MODELS
 */
 
 
-/**
- * @brief
- */
 void R_DrawSpriteModel (entity_t * e)
 {
 	vec3_t point;
@@ -117,9 +114,6 @@ void R_DrawSpriteModel (entity_t * e)
 	R_ColorBlend(NULL);
 }
 
-/**
- * @brief
- */
 void R_ModLoadSpriteModel (model_t * mod, void *buffer, int bufSize)
 {
 	dsprite_t *sprin, *sprout;

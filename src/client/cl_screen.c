@@ -80,7 +80,6 @@ static int currentPos = 0;
 static graphsamp_t values[GRAPH_WIDTH];
 
 /**
- * @brief
  * @sa SCR_DrawDebugGraph
  */
 void SCR_DebugGraph (float value, int color)
@@ -91,7 +90,6 @@ void SCR_DebugGraph (float value, int color)
 }
 
 /**
- * @brief
  * @sa SCR_DebugGraph
  */
 static void SCR_DrawDebugGraph (void)
@@ -205,9 +203,6 @@ void SCR_CenterPrint (const char *str)
 	Con_ClearNotify();
 }
 
-/**
- * @brief
- */
 static void SCR_DrawCenterString (void)
 {
 	char *start;
@@ -250,9 +245,6 @@ static void SCR_DrawCenterString (void)
 	} while (1);
 }
 
-/**
- * @brief
- */
 static void SCR_CheckDrawCenterString (void)
 {
 	scr_centertime_off -= cls.frametime;
@@ -263,9 +255,6 @@ static void SCR_CheckDrawCenterString (void)
 	SCR_DrawCenterString();
 }
 
-/**
- * @brief
- */
 void SCR_Init (void)
 {
 	scr_conspeed = Cvar_Get("scr_conspeed", "3", 0, NULL);
@@ -291,7 +280,6 @@ void SCR_Init (void)
 
 
 /**
- * @brief
  * @sa SCR_DrawLoading
  */
 static void SCR_DrawLoadingBar (int x, int y, int w, int h, int percent)
@@ -495,7 +483,6 @@ void SCR_RunConsole (void)
 }
 
 /**
- * @brief
  * @sa SCR_UpdateScreen
  * @sa Con_DrawConsole
  * @sa Con_DrawNotify
@@ -531,7 +518,6 @@ static void SCR_DrawConsole (void)
 }
 
 /**
- * @brief
  * @sa SCR_UpdateScreen
  * @sa SCR_EndLoadingPlaque
  * @sa SCR_DrawLoading
@@ -548,7 +534,6 @@ void SCR_BeginLoadingPlaque (void)
 }
 
 /**
- * @brief
  * @sa SCR_BeginLoadingPlaque
  */
 void SCR_EndLoadingPlaque (void)
@@ -561,7 +546,6 @@ void SCR_EndLoadingPlaque (void)
 }
 
 /**
- * @brief
  * @sa SCR_BeginLoadingPlaque
  * @sa SCR_EndLoadingPlaque
  */
@@ -570,9 +554,6 @@ static void SCR_Loading_f (void)
 	SCR_BeginLoadingPlaque();
 }
 
-/**
- * @brief
- */
 static void SCR_TimeRefresh_f (void)
 {
 	int i;
@@ -626,7 +607,6 @@ void SCR_TouchPics (void)
 }
 
 /**
- * @brief
  * @sa Font_DrawString
  */
 static void SCR_DrawString (int x, int y, const char *string, qboolean bitmapFont)

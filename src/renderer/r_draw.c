@@ -1,6 +1,5 @@
 /**
  * @file r_draw.c
- * @brief
  */
 
 /*
@@ -144,9 +143,6 @@ static void R_InitGlobeChain (void)
 /* console font */
 image_t *draw_chars[2];
 
-/**
- * @brief
- */
 void R_DrawInitLocal (void)
 {
 	shadow = R_FindImage("pics/sfx/shadow", it_pic);
@@ -213,9 +209,6 @@ void R_DrawChar (int x, int y, int num)
 	qglEnd();
 }
 
-/**
- * @brief
- */
 void R_DrawImagePixelData (const char *name, byte *frame, int width, int height)
 {
 	image_t *img;
@@ -407,9 +400,6 @@ void R_DrawNormPic (float x, float y, float w, float h, float sh, float th, floa
 }
 
 
-/**
- * @brief
- */
 void R_DrawPic (int x, int y, const char *pic)
 {
 	image_t *gl;
@@ -704,7 +694,6 @@ void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness)
 
 #define MAX_LINEVERTS 256
 /**
- * @brief
  * @sa R_DrawCircle
  * @sa R_DrawLineLoop
  */
@@ -736,7 +725,6 @@ void R_DrawLineStrip (int points, int *verts)
 }
 
 /**
- * @brief
  * @sa R_DrawCircle
  * @sa R_DrawLineStrip
  */
@@ -769,7 +757,6 @@ void R_DrawLineLoop (int points, int *verts)
 
 
 /**
- * @brief
  * @sa R_DrawCircle
  * @sa R_DrawLineStrip
  * @sa R_DrawLineLoop

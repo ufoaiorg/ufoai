@@ -99,7 +99,6 @@ static byte cmd_text_buf[8192];
 static char defer_text_buf[8192];
 
 /**
- * @brief
  * @note The initial buffer will grow as needed.
  */
 void Cbuf_Init (void)
@@ -186,7 +185,6 @@ void Cbuf_InsertFromDefer (void)
 }
 
 /**
- * @brief
  * @sa Cmd_ExecuteString
  * Pulls off \n terminated lines of text from the command buffer and sends them through Cmd_ExecuteString, stopping when the buffer is empty.
  * Normally called once per frame, but may be explicitly invoked.
@@ -342,9 +340,6 @@ SCRIPT COMMANDS
 ==============================================================================
 */
 
-/**
- * @brief
- */
 static void Cmd_Exec_f (void)
 {
 	byte *f;
@@ -474,7 +469,6 @@ static cmd_function_t *cmd_functions;	/* possible commands to execute */
 static cmd_function_t *cmd_functions_hash[CMD_HASH_SIZE];
 
 /**
- * @brief
  * @return the number of arguments
  * @sa Cmd_Argv
  */
@@ -506,7 +500,6 @@ const char *Cmd_Args (void)
 
 
 /**
- * @brief
  * @sa Cmd_TokenizeString
  */
 static const char *Cmd_MacroExpandString (const char *text)
@@ -683,7 +676,6 @@ const char* Cmd_GetCommandDesc (const char* cmd_name)
 }
 
 /**
- * @brief
  * @sa Cmd_AddParamCompleteFunction
  */
 int Cmd_GenericCompleteFunction (size_t len, const char **match, int matches, const char **list)
@@ -730,7 +722,6 @@ int Cmd_GenericCompleteFunction (size_t len, const char **match, int matches, co
 }
 
 /**
- * @brief
  * @param[in] cmd_name The name the command we want to add the complete function
  * @param[in] function The complete function pointer
  * @sa Cmd_AddCommand
@@ -1062,9 +1053,6 @@ static void Cmd_Test_f (void)
 }
 #endif
 
-/**
- * @brief
- */
 void Cmd_Init (void)
 {
 	/* register our commands */

@@ -153,9 +153,6 @@ static void ED_CallSpawn (edict_t * ent)
 	ent->inuse = qfalse;
 }
 
-/**
- * @brief
- */
 static char *ED_NewString (const char *string)
 {
 	char *newb, *new_p;
@@ -354,9 +351,6 @@ static void SP_light (edict_t * self)
 	G_FreeEdict(self);
 }
 
-/**
- * @brief
- */
 static void G_ActorSpawn (edict_t * ent)
 {
 	/* set properties */
@@ -623,25 +617,16 @@ DOOR FUNCTIONS
 #define STATE_UP			2
 #define STATE_DOWN			3
 
-/**
- * @brief
- */
 static void door_hit_top (edict_t *self)
 {
 	self->moveinfo.state = STATE_TOP;
 }
 
-/**
- * @brief
- */
 static void door_hit_bottom (edict_t *self)
 {
 	self->moveinfo.state = STATE_BOTTOM;
 }
 
-/**
- * @brief
- */
 static void door_go_down (edict_t *self)
 {
 	if (self->moveinfo.state == STATE_BOTTOM)
@@ -657,9 +642,6 @@ static void door_go_down (edict_t *self)
 	gi.WritePos(self->moveinfo.dir);
 }
 
-/**
- * @brief
- */
 static void door_go_up (edict_t *self)
 {
 	if (self->moveinfo.state == STATE_TOP)
@@ -707,7 +689,6 @@ static void Touch_DoorTrigger (edict_t *self)
 }
 
 /**
- * @brief
  * @sa Think_SpawnDoorTrigger
  */
 static void Think_CalcMoveSpeed (edict_t *self)

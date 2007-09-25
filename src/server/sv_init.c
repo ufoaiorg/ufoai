@@ -32,9 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 server_static_t svs;			/* persistant server info */
 server_t sv;					/* local server */
 
-/**
- * @brief
- */
 static int SV_FindIndex (const char *name, int start, int max, qboolean create)
 {
 	int i;
@@ -66,9 +63,6 @@ static int SV_FindIndex (const char *name, int start, int max, qboolean create)
 }
 
 
-/**
- * @brief
- */
 int SV_ModelIndex (const char *name)
 {
 	return SV_FindIndex(name, CS_MODELS, MAX_MODELS, qtrue);
@@ -161,9 +155,6 @@ static mAssembly_t *mAsm;	/**< the selected assembly */
 static int mapSize;		/**< the size of the current map */
 static int mapW, mapH;		/**< the width and heigth of the current map */
 
-/**
- * @brief
- */
 static void RandomList (int n, short *list)
 {
 	short i, r, t;
@@ -1154,7 +1145,6 @@ static void SV_SpawnServer (const char *server, const char *param)
 }
 
 /**
- * @brief
  * @sa CL_ServerListDiscoveryCallback
  */
 static void SV_DiscoveryCallback (struct datagram_socket *s, const char *buf, int len, struct sockaddr *from)

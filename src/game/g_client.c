@@ -150,9 +150,6 @@ void G_GiveTimeUnits (int team)
 }
 
 
-/**
- * @brief
- */
 static void G_SendState (int player_mask, edict_t * ent)
 {
 	gi.AddEvent(player_mask & G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
@@ -166,7 +163,6 @@ static void G_SendState (int player_mask, edict_t * ent)
 
 
 /**
- * @brief
  * @sa G_EndGame
  * @sa G_AppearPerishEvent
  * @sa CL_InvAdd
@@ -731,7 +727,6 @@ edict_t *G_SpawnFloor (pos3_t pos)
 }
 
 /**
- * @brief
  * @sa G_GetFloorItems
  */
 static edict_t *G_GetFloorItemsFromPos (pos3_t pos)
@@ -1598,7 +1593,6 @@ static void G_ClientStateChange (player_t * player, int num, int reqState, qbool
 }
 
 /**
- * @brief
  * @sa G_MoraleStopPanic
  * @sa G_MoraleRage
  * @sa G_MoraleStopRage
@@ -1652,7 +1646,6 @@ static void G_MoraleStopPanic (edict_t * ent, qboolean quiet)
 }
 
 /**
- * @brief
  * @sa G_MoralePanic
  * @sa G_MoraleStopPanic
  * @sa G_MoraleStopRage
@@ -2479,7 +2472,6 @@ void G_ForceEndRound (void)
 }
 
 /**
- * @brief
  * @sa G_PlayerSoldiersCount
  */
 void G_ClientEndRound (player_t * player, qboolean quiet)
@@ -2599,7 +2591,6 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 }
 
 /**
- * @brief
  * @sa CL_EntEdict
  */
 static void G_SendVisibleEdicts (int team)
@@ -2767,9 +2758,6 @@ void G_ClientUserinfoChanged (player_t * player, char *userinfo)
 }
 
 
-/**
- * @brief
- */
 qboolean G_ClientConnect (player_t * player, char *userinfo)
 {
 	const char *value;
@@ -2802,9 +2790,6 @@ qboolean G_ClientConnect (player_t * player, char *userinfo)
 	return qtrue;
 }
 
-/**
- * @brief
- */
 void G_ClientDisconnect (player_t * player)
 {
 	/* only if the player already sent his began */

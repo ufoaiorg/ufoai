@@ -248,7 +248,6 @@ static void SV_Status_f (void)
 
 #ifdef DEDICATED_ONLY
 /**
- * @brief
  * @sa SV_BroadcastPrintf
  */
 static void SV_ConSay_f (void)
@@ -277,9 +276,6 @@ static void SV_ConSay_f (void)
 }
 #endif
 
-/**
- * @brief
- */
 static void SV_Heartbeat_f (void)
 {
 	svs.last_heartbeat -= (HEARTBEAT_SECONDS + 1)* 1000;
@@ -388,9 +384,6 @@ static void SV_ListMaps_f (void)
 	Com_Printf("-----\n %i installed maps\n", fs_numInstalledMaps + 1);
 }
 
-/**
- * @brief
- */
 static void SV_MapcycleList_f (void)
 {
 	int i;
@@ -404,9 +397,6 @@ static void SV_MapcycleList_f (void)
 	}
 }
 
-/**
- * @brief
- */
 static void SV_MapcycleAdd_f (void)
 {
 	const char *map;
@@ -428,9 +418,6 @@ static void SV_MapcycleAdd_f (void)
 	}
 }
 
-/**
- * @brief
- */
 static void SV_MapcycleNext_f (void)
 {
 	if (mapcycleCount > 0)
@@ -504,7 +491,6 @@ static int SV_CompleteServerCommand (const char *partial, const char **match)
 }
 
 /**
- * @brief
  * @sa SV_Init
  */
 void SV_InitOperatorCommands (void)

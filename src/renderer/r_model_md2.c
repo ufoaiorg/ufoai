@@ -33,9 +33,6 @@ MD2 ALIAS MODELS
 ==============================================================================
 */
 
-/**
- * @brief
- */
 static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
 {
 	dtag_t *pintag, *pheader;

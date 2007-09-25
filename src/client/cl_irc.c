@@ -79,18 +79,12 @@ Common functions
 ===============================================================
 */
 
-/**
- * @brief
- */
 static qboolean Irc_IsChannel (const char *target)
 {
 	assert(target);
 	return (*target == '#' || *target == '&');
 }
 
-/**
- * @brief
- */
 static void Irc_ParseName (const char *mask, char *nick, irc_nick_prefix_t *prefix)
 {
 	const char *emph;
@@ -144,7 +138,6 @@ static void Irc_Proto_DrainBucket(void);
 static irc_bucket_t irc_bucket;
 
 /**
- * @brief
  * @sa Irc_Proto_Disconnect
  */
 static qboolean Irc_Proto_Connect (const char *host, const char *port)
@@ -168,7 +161,6 @@ static qboolean Irc_Proto_Connect (const char *host, const char *port)
 }
 
 /**
- * @brief
  * @sa Irc_Proto_Connect
  */
 static qboolean Irc_Proto_Disconnect (void)
@@ -191,7 +183,6 @@ static qboolean Irc_Proto_Disconnect (void)
 }
 
 /**
- * @brief
  * @sa Irc_Net_Send
  */
 static qboolean Irc_Proto_Quit (const char *quitmsg)
@@ -204,7 +195,6 @@ static qboolean Irc_Proto_Quit (const char *quitmsg)
 }
 
 /**
- * @brief
  * @sa Irc_Proto_Enqueue
  */
 static qboolean Irc_Proto_Nick (const char *nick)
@@ -216,7 +206,6 @@ static qboolean Irc_Proto_Nick (const char *nick)
 }
 
 /**
- * @brief
  * @sa Irc_Proto_Enqueue
  */
 static qboolean Irc_Proto_User (const char *user, qboolean invisible, const char *name)
@@ -228,7 +217,6 @@ static qboolean Irc_Proto_User (const char *user, qboolean invisible, const char
 }
 
 /**
- * @brief
  * @sa Irc_Proto_Enqueue
  */
 static qboolean Irc_Proto_Password (const char *password)
@@ -240,7 +228,6 @@ static qboolean Irc_Proto_Password (const char *password)
 }
 
 /**
- * @brief
  * @sa Irc_Proto_Enqueue
  */
 static qboolean Irc_Proto_Join (const char *channel, const char *password)
@@ -262,7 +249,6 @@ static qboolean Irc_Proto_Join (const char *channel, const char *password)
 }
 
 /**
- * @brief
  * @sa Irc_Proto_Enqueue
  */
 static qboolean Irc_Proto_Part (const char *channel)
@@ -274,7 +260,6 @@ static qboolean Irc_Proto_Part (const char *channel)
 }
 
 /**
- * @brief
  * @sa Irc_Proto_Enqueue
  */
 static qboolean Irc_Proto_Mode (const char *target, const char *modes, const char *params)
@@ -288,7 +273,6 @@ static qboolean Irc_Proto_Mode (const char *target, const char *modes, const cha
 }
 
 /**
- * @brief
  * @sa Irc_Proto_Enqueue
  */
 static qboolean Irc_Proto_Topic (const char *channel, const char *topic)
@@ -302,7 +286,6 @@ static qboolean Irc_Proto_Topic (const char *channel, const char *topic)
 }
 
 /**
- * @brief
  * @sa Irc_Proto_Enqueue
  * @return qtrue on failure
  */
@@ -321,7 +304,6 @@ static qboolean Irc_Proto_Msg (const char *target, const char *text)
 
 #if 0
 /**
- * @brief
  * @sa Irc_Proto_Enqueue
  */
 static qboolean Irc_Proto_Notice (const char *target, const char *text)
@@ -335,7 +317,6 @@ static qboolean Irc_Proto_Notice (const char *target, const char *text)
 
 #if 0
 /**
- * @brief
  * @sa Irc_Net_Send
  */
 static qboolean Irc_Proto_Pong (const char *nick, const char *server, const char *cookie)
@@ -350,7 +331,6 @@ static qboolean Irc_Proto_Pong (const char *nick, const char *server, const char
 #endif
 
 /**
- * @brief
  * @sa Irc_Proto_Enqueue
  */
 static qboolean Irc_Proto_Kick (const char *channel, const char *nick, const char *reason)
@@ -364,7 +344,6 @@ static qboolean Irc_Proto_Kick (const char *channel, const char *nick, const cha
 }
 
 /**
- * @brief
  * @sa Irc_Proto_Enqueue
  */
 static qboolean Irc_Proto_Who (const char *nick)
@@ -376,7 +355,6 @@ static qboolean Irc_Proto_Who (const char *nick)
 }
 
 /**
- * @brief
  * @sa Irc_Proto_Enqueue
  */
 static qboolean Irc_Proto_Whois (const char *nick)
@@ -388,7 +366,6 @@ static qboolean Irc_Proto_Whois (const char *nick)
 }
 
 /**
- * @brief
  * @sa Irc_Proto_Enqueue
  */
 static qboolean Irc_Proto_Whowas (const char *nick)
@@ -400,7 +377,6 @@ static qboolean Irc_Proto_Whowas (const char *nick)
 }
 
 /**
- * @brief
  * @sa Irc_Logic_ReadMessages
  */
 static qboolean Irc_Proto_PollServerMsg (irc_server_msg_t *msg, qboolean *msg_complete)
@@ -476,9 +452,6 @@ static qboolean Irc_AppendToBuffer (const char* const msg)
 	return qfalse;
 }
 
-/**
- * @brief
- */
 static void Irc_Client_CmdRplWhowasuser (const char *params, const char *trailing)
 {
 	char buf[IRC_SEND_BUF_SIZE];
@@ -504,9 +477,6 @@ static void Irc_Client_CmdRplWhowasuser (const char *params, const char *trailin
 	Irc_AppendToBuffer(va("%s was %s@%s : %s", nick, user, host, real_name));
 }
 
-/**
- * @brief
- */
 static void Irc_Client_CmdRplTopic (const char *params, const char *trailing)
 {
 	const char *channel = strchr(params, ' ');
@@ -516,9 +486,6 @@ static void Irc_Client_CmdRplTopic (const char *params, const char *trailing)
 	}
 }
 
-/**
- * @brief
- */
 static void Irc_Client_CmdRplNotopic (const char *params)
 {
 	const char *channel = strchr(params, ' ');
@@ -528,9 +495,6 @@ static void Irc_Client_CmdRplNotopic (const char *params)
 	}
 }
 
-/**
- * @brief
- */
 static void Irc_Client_CmdRplWhoisuser (const char *params, const char *trailing)
 {
 	char buf[IRC_SEND_BUF_SIZE];
@@ -556,9 +520,6 @@ static void Irc_Client_CmdRplWhoisuser (const char *params, const char *trailing
 	Irc_AppendToBuffer(va("%s is %s@%s : %s", nick, user, host, real_name));
 }
 
-/**
- * @brief
- */
 static void Irc_Client_CmdRplWhoisserver (const char *params, const char *trailing)
 {
 	char buf[IRC_SEND_BUF_SIZE];
@@ -581,9 +542,6 @@ static void Irc_Client_CmdRplWhoisserver (const char *params, const char *traili
 	Irc_AppendToBuffer(va("%s using %s : %s", nick, server, server_info));
 }
 
-/**
- * @brief
- */
 static void Irc_Client_CmdRplWhoisaccount (const char *params, const char *trailing)
 {
 	char buf[IRC_SEND_BUF_SIZE];
@@ -606,9 +564,6 @@ static void Irc_Client_CmdRplWhoisaccount (const char *params, const char *trail
 	Irc_AppendToBuffer(va("%s %s %s", nick, trailing, account));
 }
 
-/**
- * @brief
- */
 static void Irc_Client_CmdRplWhoisidle (const char *params, const char *trailing)
 {
 	char buf[IRC_SEND_BUF_SIZE];
@@ -631,9 +586,6 @@ static void Irc_Client_CmdRplWhoisidle (const char *params, const char *trailing
 	Irc_AppendToBuffer(va("%s is %s %s", nick, idle, trailing));
 }
 
-/**
- * @brief
- */
 static void Irc_Client_CmdRplWhoreply (const char *params, const char *trailing)
 {
 	char buf[IRC_SEND_BUF_SIZE];
@@ -668,9 +620,6 @@ static void Irc_Client_CmdRplWhoreply (const char *params, const char *trailing)
 	Irc_AppendToBuffer(va("%s %s %s %s %s %s : %s", channel, user, host, server, nick, hg, trailing));
 }
 
-/**
- * @brief
- */
 static void Irc_Client_CmdMode (const char *prefix, const char *params, const char *trailing)
 {
 	char nick[MAX_VAR];
@@ -679,9 +628,6 @@ static void Irc_Client_CmdMode (const char *prefix, const char *params, const ch
 	Irc_AppendToBuffer(va("%s sets mode %s", nick, params));
 }
 
-/**
- * @brief
- */
 static void Irc_Client_CmdJoin (const char *prefix, const char *params, const char *trailing)
 {
 	char nick[MAX_VAR];
@@ -691,9 +637,6 @@ static void Irc_Client_CmdJoin (const char *prefix, const char *params, const ch
 	Irc_Logic_AddChannelName(chan, p, nick);
 }
 
-/**
- * @brief
- */
 static void Irc_Client_CmdPart (const char *prefix, const char *trailing)
 {
 	char nick[MAX_VAR];
@@ -703,9 +646,6 @@ static void Irc_Client_CmdPart (const char *prefix, const char *trailing)
 	Irc_Logic_RemoveChannelName(chan, nick);
 }
 
-/**
- * @brief
- */
 static void Irc_Client_CmdQuit (const char *prefix, const char *params, const char *trailing)
 {
 	char nick[MAX_VAR];
@@ -715,9 +655,6 @@ static void Irc_Client_CmdQuit (const char *prefix, const char *params, const ch
 	Irc_Logic_RemoveChannelName(chan, nick);
 }
 
-/**
- * @brief
- */
 static void Irc_Client_CmdKill (const char *prefix, const char *params, const char *trailing)
 {
 	char nick[MAX_VAR];
@@ -727,9 +664,6 @@ static void Irc_Client_CmdKill (const char *prefix, const char *params, const ch
 	Irc_Logic_RemoveChannelName(chan, nick);
 }
 
-/**
- * @brief
- */
 static void Irc_Client_CmdKick (const char *prefix, const char *params, const char *trailing)
 {
 	char buf[IRC_SEND_BUF_SIZE];
@@ -750,9 +684,6 @@ static void Irc_Client_CmdKick (const char *prefix, const char *params, const ch
 	Irc_Logic_RemoveChannelName(chan, nick);
 }
 
-/**
- * @brief
- */
 static void Irc_Client_CmdTopic (const char *prefix, const char *trailing)
 {
 	char nick[MAX_VAR];
@@ -782,9 +713,6 @@ static void Irc_Client_CmdNick (const char *prefix, const char *params, const ch
 	Irc_Logic_AddChannelName(chan, p, trailing);
 }
 
-/**
- * @brief
- */
 static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const char *trailing)
 {
 	char nick[MAX_VAR];
@@ -825,7 +753,6 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 }
 
 /**
- * @brief
  * @todo: Implement me
  */
 static void Irc_Client_CmdRplNamreply (const char *params, const char *trailing)
@@ -863,7 +790,6 @@ static void Irc_Client_CmdRplNamreply (const char *params, const char *trailing)
 }
 
 /**
- * @brief
  * @todo: Implement me
  */
 static void Irc_Client_CmdRplEndofnames (const char *params, const char *trailing)
@@ -871,7 +797,6 @@ static void Irc_Client_CmdRplEndofnames (const char *params, const char *trailin
 }
 
 /**
- * @brief
  * @sa Irc_Logic_ReadMessages
  */
 static qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
@@ -1061,9 +986,6 @@ static qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 	return qfalse;
 }
 
-/**
- * @brief
- */
 static qboolean Irc_Proto_ParseServerMsg (const char *txt, size_t txt_len, irc_server_msg_t *msg)
 {
 	const char *c = txt;
@@ -1148,7 +1070,6 @@ static qboolean Irc_Proto_ParseServerMsg (const char *txt, size_t txt_len, irc_s
 }
 
 /**
- * @brief
  * @sa Irc_Proto_DrainBucket
  * @sa Irc_Proto_RefillBucket
  */
@@ -1195,7 +1116,6 @@ static qboolean Irc_Proto_Enqueue (const char *msg, size_t msg_len)
 }
 
 /**
- * @brief
  * @sa Irc_Proto_Enqueue
  * @sa Irc_Proto_DrainBucket
  */
@@ -1260,7 +1180,6 @@ Logic functions
 */
 
 /**
- * @brief
  * @sa Irc_Logic_Frame
  */
 static void Irc_Logic_SendMessages (void)
@@ -1270,7 +1189,6 @@ static void Irc_Logic_SendMessages (void)
 }
 
 /**
- * @brief
  * @sa Irc_Logic_Frame
  * @sa Irc_Logic_Disconnect
  * @sa Irc_Proto_ProcessServerMsg
@@ -1291,9 +1209,6 @@ static void Irc_Logic_ReadMessages (void)
 	} while (msg_complete);
 }
 
-/**
- * @brief
- */
 static void Irc_Logic_Connect (const char *server, const char *port)
 {
 	if (!Irc_Proto_Connect(server, port)) {
@@ -1308,9 +1223,6 @@ static void Irc_Logic_Connect (const char *server, const char *port)
 	}
 }
 
-/**
- * @brief
- */
 static void Irc_Logic_Disconnect (const char *reason)
 {
 	if (irc_connected) {
@@ -1327,7 +1239,6 @@ static void Irc_Logic_Disconnect (const char *reason)
 }
 
 /**
- * @brief
  * @sa Irc_Logic_ReadMessages
  * @sa Irc_Logic_SendMessages
  */
@@ -1346,18 +1257,12 @@ void Irc_Logic_Frame (int now, void *data)
 	irc_channel->modified = qfalse;
 }
 
-/**
- * @brief
- */
 static const char *Irc_Logic_GetChannelTopic (const irc_channel_t *channel)
 {
 	assert(channel);
 	return channel->topic;
 }
 
-/**
- * @brief
- */
 static void Irc_Logic_AddChannelName (irc_channel_t *channel, irc_nick_prefix_t prefix, const char *nick)
 {
 	int i;
@@ -1377,9 +1282,6 @@ static void Irc_Logic_AddChannelName (irc_channel_t *channel, irc_nick_prefix_t 
 	Irc_Client_Names_f();
 }
 
-/**
- * @brief
- */
 static void Irc_Logic_RemoveChannelName (irc_channel_t *channel, const char *nick)
 {
 	int i;
@@ -1410,7 +1312,6 @@ Network functions
 */
 
 /**
- * @brief
  * @return qtrue if successful - qfalse otherwise
  */
 static qboolean Irc_Net_Connect (const char *host, const char *port)
@@ -1421,18 +1322,12 @@ static qboolean Irc_Net_Connect (const char *host, const char *port)
 	return irc_stream ? qfalse : qtrue;
 }
 
-/**
- * @brief
- */
 static qboolean Irc_Net_Disconnect (void)
 {
 	free_stream(irc_stream);
 	return qtrue;
 }
 
-/**
- * @brief
- */
 static void Irc_Net_Send (const char *msg, size_t msg_len)
 {
 	assert(msg);
@@ -1445,9 +1340,6 @@ Bindings
 ===============================================================
 */
 
-/**
- * @brief
- */
 static void Irc_Connect_f (void)
 {
 	const int argc = Cmd_Argc();
@@ -1479,17 +1371,11 @@ static void Irc_Connect_f (void)
 			Com_Printf("usage: irc_connect [<server>] [<port>] [<channel>]");
 }
 
-/**
- * @brief
- */
 static void Irc_Disconnect_f (void)
 {
 	Irc_Logic_Disconnect("normal exit");
 }
 
-/**
- * @brief
- */
 static void Irc_Client_Join_f (void)
 {
 	const int argc = Cmd_Argc();
@@ -1508,9 +1394,6 @@ static void Irc_Client_Join_f (void)
 		Com_Printf("usage: irc_join <channel> [<password>]\n");
 }
 
-/**
- * @brief
- */
 static void Irc_Client_Part_f (void)
 {
 	const int argc = Cmd_Argc();
@@ -1553,9 +1436,6 @@ static void Irc_Client_Msg_f (void)
 	}
 }
 
-/**
- * @brief
- */
 static void Irc_Client_PrivMsg_f (void)
 {
 	if (Cmd_Argc() >= 3) {
@@ -1573,9 +1453,6 @@ static void Irc_Client_PrivMsg_f (void)
 		Com_Printf("usage: irc_privmsg <target> {<msg>}\n");
 }
 
-/**
- * @brief
- */
 static void Irc_Client_Mode_f (void)
 {
 	const int argc = Cmd_Argc();
@@ -1590,9 +1467,6 @@ static void Irc_Client_Mode_f (void)
 		Com_Printf("usage: irc_mode <target> <modes> {<param>}\n");
 }
 
-/**
- * @brief
- */
 static void Irc_Client_Topic_f (void)
 {
 	const int argc = Cmd_Argc();
@@ -1624,9 +1498,6 @@ static void Irc_Client_Topic_f (void)
 }
 
 #define IRC_MAX_USERLIST 512
-/**
- * @brief
- */
 static void Irc_Client_Names_f (void)
 {
 	int i;
@@ -1651,9 +1522,6 @@ static void Irc_Client_Names_f (void)
 		Com_Printf("Not joined\n");
 }
 
-/**
- * @brief
- */
 static void Irc_Client_Kick_f (void)
 {
 	const int argc = Cmd_Argc();
@@ -1673,9 +1541,6 @@ static void Irc_Client_Kick_f (void)
 		Com_Printf("usage: irc_kick <channel> <nick> [<reason>]\n");
 }
 
-/**
- * @brief
- */
 static void Irc_Client_Who_f (void)
 {
 	if (Cmd_Argc() == 2) {
@@ -1684,9 +1549,6 @@ static void Irc_Client_Who_f (void)
 		Com_Printf("usage: irc_who <usermask>");
 }
 
-/**
- * @brief
- */
 static void Irc_Client_Whois_f (void)
 {
 	if (Cmd_Argc() == 2) {
@@ -1695,9 +1557,6 @@ static void Irc_Client_Whois_f (void)
 		Com_Printf("usage: irc_whois <nick>");
 }
 
-/**
- * @brief
- */
 static void Irc_Client_Whowas_f (void)
 {
 	if (Cmd_Argc() == 2) {
@@ -1713,9 +1572,6 @@ Init and Shutdown functions
 ===============================================================
 */
 
-/**
- * @brief
- */
 void Irc_Init (void)
 {
 	/* commands */
@@ -1754,9 +1610,6 @@ void Irc_Init (void)
 	memset(irc_buffer, 0, sizeof(irc_buffer));
 }
 
-/**
- * @brief
- */
 void Irc_Shutdown (void)
 {
 	if (irc_connected)
@@ -1764,7 +1617,6 @@ void Irc_Shutdown (void)
 }
 
 /**
- * @brief
  * @sa Irc_Input_Deactivate
  */
 void Irc_Input_Activate (void)
@@ -1787,7 +1639,6 @@ void Irc_Input_Activate (void)
 }
 
 /**
- * @brief
  * @sa Irc_Input_Activate
  */
 void Irc_Input_Deactivate (void)

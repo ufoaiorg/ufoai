@@ -128,9 +128,6 @@ static stream_callback_func *server_func = NULL;
 static int server_socket = INVALID_SOCKET;
 static int server_family, server_addrlen;
 
-/**
- * @brief
- */
 static int find_free_stream (void)
 {
 	static int start = 0;
@@ -161,9 +158,6 @@ static int find_free_datagram_socket (void)
 	return -1;
 }
 
-/**
- * @brief
- */
 static struct net_stream *new_stream (int index)
 {
 	struct net_stream *s = malloc(sizeof(*s));
@@ -187,9 +181,6 @@ static struct net_stream *new_stream (int index)
 }
 
 #ifdef _WIN32
-/**
- * @brief
- */
 static const char *netStringErrorWin (int code)
 {
 	switch (code) {
@@ -244,7 +235,6 @@ static const char *netStringErrorWin (int code)
 #endif
 
 /**
- * @brief
  * @sa NET_Shutdown
  * @sa Qcommon_Init
  */
@@ -279,7 +269,6 @@ void NET_Init (void)
 }
 
 /**
- * @brief
  * @sa NET_Init
  */
 void NET_Shutdown (void)
@@ -290,7 +279,6 @@ void NET_Shutdown (void)
 }
 
 /**
- * @brief
  * @sa stream_finished
  */
 static void close_stream (struct net_stream *s)
@@ -336,9 +324,6 @@ static void close_stream (struct net_stream *s)
 		s->func(s);
 }
 
-/**
- * @brief
- */
 static void do_accept (int sock)
 {
 	int index = find_free_stream();
@@ -364,7 +349,6 @@ static void do_accept (int sock)
 }
 
 /**
- * @brief
  * @sa Qcommon_Frame
  */
 void NET_Wait (int timeout)
@@ -520,9 +504,6 @@ void NET_Wait (int timeout)
 	loopback_ready = qfalse;
 }
 
-/**
- * @brief
- */
 static qboolean set_non_blocking (int socket)
 {
 #ifdef _WIN32
@@ -540,9 +521,6 @@ static qboolean set_non_blocking (int socket)
 	return qtrue;
 }
 
-/**
- * @brief
- */
 static struct net_stream *NET_DoConnect (const char *node, const char *service, const struct addrinfo *addr, int i)
 {
 	struct net_stream *s;
@@ -583,9 +561,6 @@ static struct net_stream *NET_DoConnect (const char *node, const char *service, 
 	return s;
 }
 
-/**
- * @brief
- */
 struct net_stream *NET_Connect (const char *node, const char *service)
 {
 	struct addrinfo *res;
@@ -620,9 +595,6 @@ struct net_stream *NET_Connect (const char *node, const char *service)
 	return s;
 }
 
-/**
- * @brief
- */
 struct net_stream *NET_ConnectToLoopBack (void)
 {
 	struct net_stream *client, *server;
@@ -680,17 +652,11 @@ void stream_enqueue (struct net_stream *s, const char *data, int len)
 	}
 }
 
-/**
- * @brief
- */
 qboolean stream_closed (struct net_stream *s)
 {
 	return s ? (s->closed || s->finished) : qtrue;
 }
 
-/**
- * @brief
- */
 int stream_length (struct net_stream *s)
 {
 	return s ? dbuffer_len(s->inbound) : 0;
@@ -712,7 +678,6 @@ int stream_peek (struct net_stream *s, char *data, int len)
 }
 
 /**
- * @brief
  * @sa stream_enqueue
  * @sa dbuffer_extract
  */
@@ -724,17 +689,11 @@ int stream_dequeue (struct net_stream *s, char *data, int len)
 	return dbuffer_extract(s->inbound, data, len);
 }
 
-/**
- * @brief
- */
 void *stream_data (struct net_stream *s)
 {
 	return s ? s->data : NULL;
 }
 
-/**
- * @brief
- */
 void set_stream_data (struct net_stream *s, void *data)
 {
 	if (!s)
@@ -743,7 +702,6 @@ void set_stream_data (struct net_stream *s, void *data)
 }
 
 /**
- * @brief
  * @sa close_stream
  * @sa stream_finished
  */
@@ -755,9 +713,6 @@ void free_stream (struct net_stream *s)
 	close_stream(s);
 }
 
-/**
- * @brief
- */
 void stream_finished (struct net_stream *s)
 {
 	if (!s)
@@ -787,9 +742,6 @@ void stream_finished (struct net_stream *s)
  * displaying data to the user
  */
 
-/**
- * @brief
- */
 const char * stream_peer_name (struct net_stream *s, char *dst, int len, qboolean ip_hack)
 {
 	if (!s)
@@ -822,9 +774,6 @@ const char * stream_peer_name (struct net_stream *s, char *dst, int len, qboolea
 	}
 }
 
-/**
- * @brief
- */
 void stream_callback (struct net_stream *s, stream_callback_func *func)
 {
 	if (!s)
@@ -832,17 +781,11 @@ void stream_callback (struct net_stream *s, stream_callback_func *func)
 	s->func = func;
 }
 
-/**
- * @brief
- */
 qboolean stream_is_loopback (struct net_stream *s)
 {
 	return s && s->loopback;
 }
 
-/**
- * @brief
- */
 static int do_start_server (const struct addrinfo *addr)
 {
 	SOCKET sock = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
@@ -888,9 +831,6 @@ static int do_start_server (const struct addrinfo *addr)
 	return sock;
 }
 
-/**
- * @brief
- */
 qboolean SV_Start (const char *node, const char *service, stream_callback_func *func)
 {
 	if (!func)
@@ -938,9 +878,6 @@ qboolean SV_Start (const char *node, const char *service, stream_callback_func *
 	return server_running;
 }
 
-/**
- * @brief
- */
 void SV_Stop (void)
 {
 	server_running = qfalse;
@@ -953,7 +890,6 @@ void SV_Stop (void)
 }
 
 /**
- * @brief
  * @sa new_datagram_socket
  */
 static struct datagram_socket *do_new_datagram_socket (const struct addrinfo *addr)
@@ -1049,7 +985,6 @@ struct datagram_socket *new_datagram_socket (const char *node, const char *servi
 }
 
 /**
- * @brief
  * @sa new_datagram_socket
  */
 void send_datagram (struct datagram_socket *s, const char *buf, int len, struct sockaddr *to)
@@ -1073,7 +1008,6 @@ void send_datagram (struct datagram_socket *s, const char *buf, int len, struct 
 }
 
 /**
- * @brief
  * @sa send_datagram
  * @sa new_datagram_socket
  */
@@ -1097,7 +1031,6 @@ void broadcast_datagram (struct datagram_socket *s, const char *buf, int len, in
 }
 
 /**
- * @brief
  * @sa new_datagram_socket
  * @sa do_new_datagram_socket
  */

@@ -26,9 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
-/**
- * @brief
- */
 static int BaseSummary_AircraftCount (aircraftType_t aircraftType)
 {
 	int i, count = 0;
@@ -40,9 +37,6 @@ static int BaseSummary_AircraftCount (aircraftType_t aircraftType)
 	return count;
 }
 
-/**
- * @brief
- */
 static void BaseSummary_BuildingConstruction (const char* cvarNameBase)
 {
 	int i, cvarIndex, daysLeft;
@@ -77,9 +71,6 @@ static void BaseSummary_BuildingConstruction (const char* cvarNameBase)
 	}
 }
 
-/**
- * @brief
- */
 static void BaseSummary_BuildingCount (const char* cvarName, const char* desc, buildingType_t buildingType)
 {
 	char buffer[128];
@@ -92,9 +83,6 @@ static void BaseSummary_BuildingCount (const char* cvarName, const char* desc, b
 	Cvar_Set(cvarName, buffer);
 }
 
-/**
- * @brief
- */
 static void BaseSummary_BuildingUsage (const char* cvarName, const char* desc, baseCapacities_t baseCapacity, buildingType_t buildingType)
 {
 	char buffer[128];
@@ -139,9 +127,6 @@ static int BaseSummary_EmployeeTotal (void)
 	return cnt;
 }
 
-/**
- * @brief
- */
 static void BaseSummary_ProductionCurrent (const char* cvarName)
 {
 	production_queue_t queue;
@@ -165,9 +150,6 @@ static void BaseSummary_ProductionCurrent (const char* cvarName)
 	}
 }
 
-/**
- * @brief
- */
 static void BaseSummary_ResearchCurrent (const char* cvarNameBase)
 {
 	int i,cvarIndex;

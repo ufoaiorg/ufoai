@@ -126,8 +126,6 @@ void Info_RemoveKey (char *s, const char *key)
 
 /**
  * @brief Some characters are illegal in info strings because they can mess up the server's parsing
- * @param
- * @sa
  */
 qboolean Info_Validate (const char *s)
 {
@@ -178,9 +176,6 @@ void Info_SetValueForKey (char *s, const char *key, const char *value)
 }
 
 
-/**
- * @brief
- */
 void Info_Print (const char *s)
 {
 	char key[512];

@@ -46,9 +46,6 @@ cvar_t* sys_os;
 /* General routines */
 /* ======================================================================= */
 
-/**
- * @brief
- */
 void Sys_Init (void)
 {
 	sys_os = Cvar_Get("sys_os", "macosx", CVAR_SERVERINFO, NULL);
@@ -56,9 +53,6 @@ void Sys_Init (void)
 	sys_priority = Cvar_Get("sys_priority", "0", CVAR_ARCHIVE, "Process nice level");
 }
 
-/**
- * @brief
- */
 static void InitCocoa (void)
 {
 	void (*nsappload)(void);
@@ -71,9 +65,6 @@ static void InitCocoa (void)
 	nsappload();
 }
 
-/**
- * @brief
- */
 static int lenstr (const char *text)
 {
 	int count = -1;				/* Character counter */
@@ -83,9 +74,6 @@ static int lenstr (const char *text)
 	return (count);				/* Return the position of the NULL-1 */
 }
 
-/**
- * @brief
- */
 static unsigned char CheckForFinderCall (const char **argv, int argc)
 {
 	unsigned char change = 0;
@@ -110,9 +98,6 @@ static unsigned char CheckForFinderCall (const char **argv, int argc)
 	return change;
 }
 
-/**
- * @brief
- */
 static void FixWorkingDirectory (const char **argv)
 {
 	char newPath[255];

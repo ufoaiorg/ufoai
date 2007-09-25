@@ -28,9 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 SDL_Surface *r_surface;
 
 #ifndef _WIN32
-/**
- * @brief
- */
 static void R_SetSDLIcon (void)
 {
 #include "../ports/linux/ufoicon.xbm"
@@ -63,9 +60,6 @@ static void R_SetSDLIcon (void)
 }
 #endif
 
-/**
- * @brief
- */
 qboolean Rimp_Init (void)
 {
 #ifndef __APPLE__
@@ -196,9 +190,6 @@ qboolean R_InitGraphics (void)
 	return qtrue;
 }
 
-/**
- * @brief
- */
 void Rimp_Shutdown (void)
 {
 	if (r_surface)

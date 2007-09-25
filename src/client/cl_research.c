@@ -2107,7 +2107,6 @@ qboolean RS_ItemIsResearched (const char *id_provided)
 }
 
 /**
- * @brief
  * @sa RS_ItemCollected
  * Call this function if you already hold a tech pointer.
  */
@@ -2304,9 +2303,6 @@ int RS_GetTechIdxByName (const char *name)
 	return -1;
 }
 
-/**
- * @brief
- */
 qboolean RS_Save (sizebuf_t* sb, void* data)
 {
 	int i, j;
@@ -2338,9 +2334,6 @@ qboolean RS_Save (sizebuf_t* sb, void* data)
 	return qtrue;
 }
 
-/**
- * @brief
- */
 qboolean RS_Load (sizebuf_t* sb, void* data)
 {
 	int i, j;

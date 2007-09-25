@@ -137,7 +137,6 @@ static const size_t vt_sizes[V_NUM_TYPES] = {
 };
 
 /**
- * @brief
  * @note translateable string are marked with _ at the beginning
  * @code menu exampleName
  * {
@@ -386,7 +385,6 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 
 /**
- * @brief
  * @param[in] base The start pointer to a given data type (typedef, struct)
  * @param[in] set The data which should be parsed
  * @param[in] type The data type that should be parsed
@@ -519,7 +517,6 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 }
 
 /**
- * @brief
  * @param[in] base The start pointer to a given data type (typedef, struct)
  * @param[in] type The data type that should be parsed
  * @param[in] ofs The offset for the value
@@ -763,9 +760,6 @@ static const value_t fdps[] = {
 };
 
 
-/**
- * @brief
- */
 static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 {
 	const value_t *fdp;
@@ -831,7 +825,6 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 
 
 /**
- * @brief
  * @sa Com_ParseItem
  */
 static void Com_ParseArmor (const char *name, const char **text, short *ad)
@@ -887,9 +880,6 @@ const char *air_slot_type_strings[MAX_ACITEMS] = {
 	"base_ammo_laser"
 };
 
-/**
- * @brief
- */
 static void Com_ParseItem (const char *name, const char **text, qboolean craftitem)
 {
 	const char *errhead = "Com_ParseItem: unexpected end of file (weapon ";
@@ -1094,9 +1084,6 @@ static const value_t idps[] = {
 	{NULL, 0, 0, 0}
 };
 
-/**
- * @brief
- */
 static void Com_ParseInventory (const char *name, const char **text)
 {
 	const char *errhead = "Com_ParseInventory: unexpected end of file (inventory ";
@@ -1206,9 +1193,6 @@ const char *name_strings[NAME_NUM_TYPES] = {
 	"male_lastname"
 };
 
-/**
- * @brief
- */
 static void Com_ParseEquipment (const char *name, const char **text)
 {
 	const char *errhead = "Com_ParseEquipment: unexpected end of file (equipment ";
@@ -1276,7 +1260,6 @@ NAME AND TEAM DEFINITION INTERPRETER
 */
 
 /**
- * @brief
  * @param[in] gender 1 (female) or 2 (male)
  * @param[in] team Country strings like: spanish_italian, german, russian and so on
  * @sa Com_GetCharacterValues
@@ -1323,7 +1306,6 @@ const char *Com_GiveName (int gender, const char *team)
 }
 
 /**
- * @brief
  * @param[in] type MODEL_PATH, MODEL_BODY, MODEL_HEAD, MODEL_SKIN (path, body, head, skin - see team_*.ufo)
  * @param[in] gender 1 (female) or 2 (male)
  * @param[in] category country strings like: spanish_italian, german, russian and so on
@@ -1727,9 +1709,6 @@ static const value_t teamDefValues[] = {
 	{NULL, 0, 0, 0}
 };
 
-/**
- * @brief
- */
 static void Com_ParseTeam (const char *name, const char **text)
 {
 	teamDef_t *td;
@@ -2012,9 +1991,6 @@ DAMAGE TYPES INTERPRETER
 ==============================================================================
 */
 
-/**
- * @brief
- */
 static void Com_ParseDamageTypes (const char *name, const char **text)
 {
 	const char *errhead = "Com_ParseDamageTypes: unexpected end of file (damagetype ";
@@ -2134,9 +2110,6 @@ void Com_AddObjectLinks (void)
 	}
 }
 
-/**
- * @brief
- */
 mapDef_t* Com_GetMapDefinitionByID (const char *mapDefID)
 {
 	int i;
@@ -2168,9 +2141,6 @@ static const value_t mapdef_vals[] = {
 	{NULL, 0, 0, 0}
 };
 
-/**
- * @brief
- */
 static void Com_ParseMapDefinition (const char *name, const char **text)
 {
 	const char *errhead = "Com_ParseMapDefinition: unexpected end of file (mapdef ";
@@ -2256,7 +2226,6 @@ static void Com_ParseMapDefinition (const char *name, const char **text)
 }
 
 /**
- * @brief
  * @sa CL_ParseClientData
  * @sa CL_ParseScriptFirst
  * @sa CL_ParseScriptSecond

@@ -38,7 +38,6 @@ static clightstyle_t cl_lightstyle[MAX_LIGHTSTYLES];
 static int lastofs;
 
 /**
- * @brief
  * @sa CL_Frame
  */
 void CL_RunLightStyles (void)
@@ -90,7 +89,6 @@ void CL_SetLightstyle (int i)
 }
 
 /**
- * @brief
  * @sa V_AddLightStyle
  * @sa V_RenderView
  */

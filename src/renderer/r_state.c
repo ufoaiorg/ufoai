@@ -1,6 +1,5 @@
 /**
  * @file r_image.c
- * @brief
  */
 
 /*
@@ -26,9 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 #include "r_error.h"
 
-/**
- * @brief
- */
 void R_SetDefaultState (void)
 {
 	qglCullFace(GL_FRONT);
@@ -49,7 +45,6 @@ void R_SetDefaultState (void)
 }
 
 /**
- * @brief
  * @sa R_SetupGL3D
  */
 static void MYgluPerspective (GLdouble zNear, GLdouble zFar)
@@ -70,7 +65,6 @@ static void MYgluPerspective (GLdouble zNear, GLdouble zFar)
 }
 
 /**
- * @brief
  * @sa R_SetupGL2D
  */
 void R_SetupGL3D (void)
@@ -127,7 +121,6 @@ void R_SetupGL3D (void)
 }
 
 /**
- * @brief
  * @sa R_SetupGL3D
  */
 void R_SetupGL2D (void)
@@ -151,9 +144,6 @@ void R_SetupGL2D (void)
 	R_CheckError();
 }
 
-/**
- * @brief
- */
 void R_EnableMultitexture (qboolean enable)
 {
 	if (!qglSelectTextureSGIS && !qglActiveTextureARB)
@@ -177,9 +167,6 @@ void R_EnableMultitexture (qboolean enable)
 	R_TexEnv(GL_REPLACE);
 }
 
-/**
- * @brief
- */
 void R_SelectTexture (GLenum texture)
 {
 	int tmu;
@@ -208,9 +195,6 @@ void R_SelectTexture (GLenum texture)
 	}
 }
 
-/**
- * @brief
- */
 void R_TexEnv (GLenum mode)
 {
 	static GLenum lastmodes[2] = { (GLenum) - 1, (GLenum) - 1 };
@@ -222,9 +206,6 @@ void R_TexEnv (GLenum mode)
 	}
 }
 
-/**
- * @brief
- */
 void R_Bind (int texnum)
 {
 	if (r_state.currenttextures[r_state.currenttmu] == texnum)
@@ -234,9 +215,6 @@ void R_Bind (int texnum)
 	R_CheckError();
 }
 
-/**
- * @brief
- */
 void R_MBind (GLenum target, int texnum)
 {
 	R_SelectTexture(target);
@@ -268,9 +246,6 @@ static const gltmode_t gl_alpha_modes[] = {
 
 #define NUM_R_ALPHA_MODES (sizeof(gl_alpha_modes) / sizeof (gltmode_t))
 
-/**
- * @brief
- */
 void R_TextureAlphaMode (const char *string)
 {
 	int i;
@@ -302,9 +277,6 @@ static const gltmode_t gl_solid_modes[] = {
 
 #define NUM_R_SOLID_MODES (sizeof(gl_solid_modes) / sizeof (gltmode_t))
 
-/**
- * @brief
- */
 void R_TextureSolidMode (const char *string)
 {
 	int i;

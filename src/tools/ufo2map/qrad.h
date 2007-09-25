@@ -1,6 +1,5 @@
 /**
  * @file qrad.h
- * @brief
  */
 
 /*

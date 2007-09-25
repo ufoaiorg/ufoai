@@ -1,6 +1,5 @@
 /**
  * @file faces.c
- * @brief
  * @note some faces will be removed before saving, but still form nodes:
  * meeting planes of different water current volumes
  */
@@ -58,9 +57,6 @@ static int vertexchain[MAX_MAP_VERTS];		/* the next vertex in a hash chain */
 static int hashverts[HASH_SIZE*HASH_SIZE];	/* a vertex number, or 0 for no verts */
 
 
-/**
- * @brief
- */
 static unsigned HashVec (vec3_t vec)
 {
 	int x, y;
@@ -75,7 +71,6 @@ static unsigned HashVec (vec3_t vec)
 }
 
 /**
- * @brief
  * @note Uses hashing
  */
 static int GetVertexnum (vec3_t in)
@@ -166,9 +161,6 @@ static void FaceFromSuperverts (node_t *node, face_t *f, int base)
 		f->vertexnums[i] = superverts[(i + base) % numsuperverts];
 }
 
-/**
- * @brief
- */
 static void EmitFaceVertexes (node_t *node, face_t *f)
 {
 	winding_t *w;
@@ -197,9 +189,6 @@ static void EmitFaceVertexes (node_t *node, face_t *f)
 	FaceFromSuperverts(node, f, 0);
 }
 
-/**
- * @brief
- */
 static void EmitVertexes_r (node_t *node)
 {
 	int i;
@@ -247,7 +236,6 @@ static void FindEdgeVerts (vec3_t v1, vec3_t v2)
 }
 
 /**
- * @brief
  * @note Can be recursively reentered
  */
 static void TestEdge (vec_t start, vec_t end, int p1, int p2, int startvert)
@@ -293,9 +281,6 @@ static void TestEdge (vec_t start, vec_t end, int p1, int p2, int startvert)
 	numsuperverts++;
 }
 
-/**
- * @brief
- */
 static void FixFaceEdges (node_t *node, face_t *f)
 {
 	int i, p1, p2, base;
@@ -353,9 +338,6 @@ static void FixFaceEdges (node_t *node, face_t *f)
 	FaceFromSuperverts(node, f, base);
 }
 
-/**
- * @brief
- */
 static void FixEdges_r (node_t *node)
 {
 	int i;
@@ -372,7 +354,6 @@ static void FixEdges_r (node_t *node)
 }
 
 /**
- * @brief
  * @sa ProcessSubModel
  * @sa ConstructLevelNodes_r
  */
@@ -407,9 +388,6 @@ void FixTjuncs (node_t *headnode)
 
 static int c_faces;
 
-/**
- * @brief
- */
 static face_t *AllocFace (void)
 {
 	face_t *f;
@@ -421,9 +399,6 @@ static face_t *AllocFace (void)
 	return f;
 }
 
-/**
- * @brief
- */
 static face_t *NewFaceFromFace (face_t *f)
 {
 	face_t	*newf;
@@ -436,9 +411,6 @@ static face_t *NewFaceFromFace (face_t *f)
 	return newf;
 }
 
-/**
- * @brief
- */
 void FreeFace (face_t *f)
 {
 	if (f->w)
@@ -448,8 +420,6 @@ void FreeFace (face_t *f)
 }
 
 /**
- * @brief
- *
  * @note Called by writebsp.
  * @note Don't allow four way edges
  */
@@ -622,9 +592,6 @@ static face_t *TryMerge (face_t *f1, face_t *f2, vec3_t planenormal)
 	return newf;
 }
 
-/**
- * @brief
- */
 static void MergeNodeFaces (node_t *node)
 {
 	face_t *f1, *f2, *end;
@@ -728,9 +695,6 @@ static void SubdivideFace (node_t *node, face_t *f)
 	}
 }
 
-/**
- * @brief
- */
 static void SubdivideNodeFaces (node_t *node)
 {
 	face_t *f;
@@ -741,9 +705,6 @@ static void SubdivideNodeFaces (node_t *node)
 
 static int c_nodefaces;
 
-/**
- * @brief
- */
 static face_t *FaceFromPortal (portal_t *p, int pside)
 {
 	face_t *f;
@@ -832,9 +793,6 @@ static void MakeFaces_r (node_t *node)
 	}
 }
 
-/**
- * @brief
- */
 void MakeFaces (node_t *node)
 {
 	Sys_FPrintf(SYS_VRB, "--- MakeFaces ---\n");

@@ -1,6 +1,5 @@
 /**
  * @file brushbsp.c
- * @brief
  */
 
 /*
@@ -55,9 +54,6 @@ static void BoundBrush (bspbrush_t *brush)
 	}
 }
 
-/**
- * @brief
- */
 static void CreateBrushWindings (bspbrush_t *brush)
 {
 	int i, j;
@@ -112,9 +108,6 @@ static bspbrush_t *BrushFromBounds (vec3_t mins, vec3_t maxs)
 	return b;
 }
 
-/**
- * @brief
- */
 static vec_t BrushVolume (bspbrush_t *brush)
 {
 	int i;
@@ -153,9 +146,6 @@ static vec_t BrushVolume (bspbrush_t *brush)
 	return volume;
 }
 
-/**
- * @brief
- */
 int CountBrushList (bspbrush_t *brushes)
 {
 	int c;
@@ -166,9 +156,6 @@ int CountBrushList (bspbrush_t *brushes)
 	return c;
 }
 
-/**
- * @brief
- */
 static tree_t *AllocTree (void)
 {
 	tree_t *tree;
@@ -180,9 +167,6 @@ static tree_t *AllocTree (void)
 	return tree;
 }
 
-/**
- * @brief
- */
 static node_t *AllocNode(void)
 {
 	node_t *node;
@@ -194,9 +178,6 @@ static node_t *AllocNode(void)
 }
 
 
-/**
- * @brief
- */
 bspbrush_t *AllocBrush (int numsides)
 {
 	bspbrush_t *bb;
@@ -209,9 +190,6 @@ bspbrush_t *AllocBrush (int numsides)
 	return bb;
 }
 
-/**
- * @brief
- */
 void FreeBrush (bspbrush_t *brushes)
 {
 	int i;
@@ -224,9 +202,6 @@ void FreeBrush (bspbrush_t *brushes)
 }
 
 
-/**
- * @brief
- */
 void FreeBrushList (bspbrush_t *brushes)
 {
 	bspbrush_t *next;
@@ -301,9 +276,6 @@ static int BoxOnPlaneSide (vec3_t mins, vec3_t maxs, plane_t *plane)
 	return side;
 }
 
-/**
- * @brief
- */
 static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 			int *numsplits, qboolean *hintsplit, int *epsilonbrush)
 {
@@ -414,9 +386,6 @@ static qboolean WindingIsHuge(winding_t *w)
 	return qfalse;
 }
 
-/**
- * @brief
- */
 static void LeafNode (node_t *node, bspbrush_t *brushes)
 {
 	bspbrush_t *b;
@@ -444,9 +413,6 @@ static void LeafNode (node_t *node, bspbrush_t *brushes)
 }
 
 
-/**
- * @brief
- */
 static void CheckPlaneAgainstParents (int pnum, node_t *node)
 {
 	node_t *p;
@@ -457,9 +423,6 @@ static void CheckPlaneAgainstParents (int pnum, node_t *node)
 	}
 }
 
-/**
- * @brief
- */
 static qboolean CheckPlaneAgainstVolume (int pnum, node_t *node)
 {
 	bspbrush_t *front, *back;
@@ -611,9 +574,6 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 }
 
 
-/**
- * @brief
- */
 static int BrushMostlyOnSide (bspbrush_t *brush, plane_t *plane)
 {
 	int i, j, side;
@@ -803,9 +763,6 @@ void SplitBrush (bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t
 	*back = b[1];
 }
 
-/**
- * @brief
- */
 static void SplitBrushList (bspbrush_t *brushes, node_t *node, bspbrush_t **front, bspbrush_t **back)
 {
 	bspbrush_t *brush, *newbrush, *newbrush2;
@@ -857,9 +814,6 @@ static void SplitBrushList (bspbrush_t *brushes, node_t *node, bspbrush_t **fron
 }
 
 
-/**
- * @brief
- */
 static node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
 {
 	node_t *newnode;

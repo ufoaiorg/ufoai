@@ -83,7 +83,6 @@ char* CL_GetTeamSkinName (int id)
 }
 
 /**
- * @brief
  * @sa CL_LoadItem
  */
 static void CL_SaveItem (sizebuf_t *buf, item_t item, int container, int x, int y)
@@ -97,7 +96,6 @@ static void CL_SaveItem (sizebuf_t *buf, item_t item, int container, int x, int 
 }
 
 /**
- * @brief
  * @sa CL_SaveItem
  * @sa CL_LoadInventory
  */
@@ -118,7 +116,6 @@ void CL_SaveInventory (sizebuf_t *buf, inventory_t *i)
 }
 
 /**
- * @brief
  * @sa CL_SaveItem
  */
 static void CL_LoadItem (sizebuf_t *buf, item_t *item, int *container, int *x, int *y)
@@ -139,7 +136,6 @@ static void CL_LoadItem (sizebuf_t *buf, item_t *item, int *container, int *x, i
 }
 
 /**
- * @brief
  * @sa CL_SaveInventory
  * @sa CL_LoadItem
  * @sa Com_AddToInventory
@@ -158,7 +154,6 @@ void CL_LoadInventory (sizebuf_t *buf, inventory_t *i)
 }
 
 /**
- * @brief
  * @sa G_WriteItem
  * @sa G_ReadItem
  */
@@ -170,7 +165,6 @@ static void CL_NetSendItem (struct dbuffer *buf, item_t item, int container, int
 }
 
 /**
- * @brief
  * @sa G_SendInventory
  */
 static void CL_NetSendInventory (struct dbuffer *buf, inventory_t *i)
@@ -189,7 +183,6 @@ static void CL_NetSendInventory (struct dbuffer *buf, inventory_t *i)
 }
 
 /**
- * @brief
  * @sa G_WriteItem
  * @sa G_ReadItem
  */
@@ -553,7 +546,6 @@ void CL_AddCarriedToEq (aircraft_t *aircraft, equipDef_t * ed)
 }
 
 /**
- * @brief
  * @sa CL_ReloadAndRemoveCarried
  */
 static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
@@ -922,7 +914,6 @@ typedef enum {
 } selectSoldierModes_t;
 
 /**
- * @brief
  * @note This function has various console commands:
  * team_select, soldier_select, equip_select
  */
@@ -1415,9 +1406,6 @@ static qboolean CL_AssignSoldierToAircraft (int employee_idx, employeeType_t emp
 
 
 #ifdef DEBUG
-/**
- * @brief
- */
 static void CL_TeamListDebug_f (void)
 {
 	int i;
@@ -1741,9 +1729,6 @@ static void CL_GenerateNewTeam_f (void)
 	MN_PushMenu("team");
 }
 
-/**
- * @brief
- */
 void CL_ResetTeams (void)
 {
 	Cmd_AddCommand("new_team", CL_GenerateNewTeam_f, NULL);

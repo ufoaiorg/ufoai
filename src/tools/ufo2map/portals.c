@@ -1,6 +1,5 @@
 /**
  * @file portals.c
- * @brief
  */
 
 /*
@@ -30,9 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int c_active_portals = 0;
 static int c_peak_portals = 0;
 
-/**
- * @brief
- */
 static portal_t *AllocPortal (void)
 {
 	portal_t	*p;
@@ -47,9 +43,6 @@ static portal_t *AllocPortal (void)
 	return p;
 }
 
-/**
- * @brief
- */
 void FreePortal (portal_t *p)
 {
 	if (p->winding)
@@ -78,9 +71,6 @@ int VisibleContents (int contentFlags)
 
 static int c_tinyportals = 0;
 
-/**
- * @brief
- */
 static void AddPortalToNodes (portal_t *p, node_t *front, node_t *back)
 {
 	if (p->nodes[0] || p->nodes[1])
@@ -96,9 +86,6 @@ static void AddPortalToNodes (portal_t *p, node_t *front, node_t *back)
 }
 
 
-/**
- * @brief
- */
 void RemovePortalFromNode (portal_t *portal, node_t *l)
 {
 	portal_t	**pp, *t;
@@ -192,9 +179,6 @@ static void MakeHeadnodePortals (tree_t *tree)
 #define	BASE_WINDING_EPSILON	0.001
 #define	SPLIT_WINDING_EPSILON	0.001
 
-/**
- * @brief
- */
 static winding_t *BaseWindingForNode (node_t *node)
 {
 	winding_t *w;
@@ -359,9 +343,6 @@ static void SplitNodePortals (node_t *node)
 }
 
 
-/**
- * @brief
- */
 static void CalcNodeBounds (node_t *node)
 {
 	portal_t *p;
@@ -379,9 +360,6 @@ static void CalcNodeBounds (node_t *node)
 }
 
 
-/**
- * @brief
- */
 static void MakeTreePortals_r (node_t *node)
 {
 	int i;
@@ -407,9 +385,6 @@ static void MakeTreePortals_r (node_t *node)
 	MakeTreePortals_r(node->children[1]);
 }
 
-/**
- * @brief
- */
 void MakeTreePortals (tree_t *tree)
 {
 	MakeHeadnodePortals(tree);
@@ -481,9 +456,6 @@ gotit:
 }
 
 
-/**
- * @brief
- */
 static void MarkVisibleSides_r (node_t *node)
 {
 	portal_t *p;
@@ -512,9 +484,6 @@ static void MarkVisibleSides_r (node_t *node)
 
 }
 
-/**
- * @brief
- */
 void MarkVisibleSides (tree_t *tree, int startbrush, int endbrush)
 {
 	int i, j, numsides;

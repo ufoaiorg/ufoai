@@ -133,8 +133,6 @@ void Com_EndRedirect (void)
 }
 
 /**
- * @brief
- *
  * Both client and server can use this, and it will output
  * to the apropriate place.
  */
@@ -211,8 +209,6 @@ void Com_DPrintf (int level, const char *fmt, ...)
 
 
 /**
- * @brief
- *
  * Both client and server can use this, and it will
  * do the apropriate things.
  */
@@ -264,9 +260,6 @@ void Com_Error (int code, const char *fmt, ...)
 }
 
 
-/**
- * @brief
- */
 void Com_Drop (void)
 {
 	SV_Shutdown("Server disconnected\n", qfalse);
@@ -276,8 +269,6 @@ void Com_Drop (void)
 
 
 /**
- * @brief
- *
  * Both client and server can use this, and it will
  * do the apropriate things.
  */
@@ -311,7 +302,6 @@ int Com_ServerState (void)
 }
 
 /**
- * @brief
  * @sa SV_SpawnServer
  * @sa Com_ServerState
  */
@@ -396,7 +386,6 @@ void COM_ClearArgv (int arg)
 
 
 /**
- * @brief
  * @sa COM_CheckParm
  */
 void COM_InitArgv (int argc, const char **argv)
@@ -427,9 +416,6 @@ void COM_AddParm (const char *parm)
 
 /*======================================================== */
 
-/**
- * @brief
- */
 void Com_SetGameType (void)
 {
 	int i, j;
@@ -455,9 +441,6 @@ void Com_SetGameType (void)
 		Com_Printf("Can't set the gametype - unknown value for cvar gametype: '%s'\n", gametype->string);
 }
 
-/**
- * @brief
- */
 static void Com_GameTypeList_f (void)
 {
 	int i, j;
@@ -574,9 +557,7 @@ static const debugLevel_t debugLevels[] = {
 
 	{NULL, 0}
 };
-/**
- * @brief
- */
+
 static void Com_DeveloperSet_f (void)
 {
 	int oldValue = Cvar_VariableInteger("developer");
@@ -628,9 +609,6 @@ static qboolean Com_CvarCheckMaxFPS (cvar_t *cvar)
 }
 #endif
 
-/**
- * @brief
- */
 static void Cbuf_Execute_timer (int now, void *data)
 {
 	Cbuf_Execute();
@@ -797,9 +775,6 @@ void Qcommon_Init (int argc, const char **argv)
 	Com_Printf("====== UFO Initialized ======\n\n");
 }
 
-/**
- * @brief
- */
 static void tick_timer (int now, void *data)
 {
 	struct timer *timer = data;
@@ -859,9 +834,6 @@ static void tick_timer (int now, void *data)
 	Schedule_Event(now + lateness + timer->interval, &tick_timer, timer);
 }
 
-/**
- * @brief
- */
 void Schedule_Timer (cvar_t *freq, event_func *func, void *data)
 {
 	struct timer *timer = malloc(sizeof(*timer));
@@ -881,9 +853,6 @@ void Schedule_Timer (cvar_t *freq, event_func *func, void *data)
 	Schedule_Event(Sys_Milliseconds() + timer->interval, &tick_timer, timer);
 }
 
-/**
- * @brief
- */
 void Schedule_Event (int when, event_func *func, void *data)
 {
 	struct event *event = malloc(sizeof(*event));
@@ -967,9 +936,6 @@ void Qcommon_Frame (void)
 	} while (time_to_next > 0);
 }
 
-/**
- * @brief
- */
 void Qcommon_Shutdown (void)
 {
 	HTTP_Cleanup();
@@ -1067,7 +1033,6 @@ void LIST_AddString (linkedList_t** listDest, const char* data)
 }
 
 /**
- * @brief
  * @sa LIST_Add
  */
 void LIST_Delete (linkedList_t *list)

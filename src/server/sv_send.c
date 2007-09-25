@@ -35,7 +35,6 @@ EVENT MESSAGES
 */
 
 /**
- * @brief
  * @sa SV_BroadcastCommand
  */
 void SV_ClientCommand (client_t *client, const char *fmt, ...)

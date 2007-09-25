@@ -43,9 +43,6 @@ extern char key_lines[MAXKEYLINES][MAXCMDLINE];
 extern int edit_line;
 extern int key_linepos;
 
-/**
- * @brief
- */
 static void Con_DisplayString (int x, int y, const char *s)
 {
 	while (*s) {
@@ -55,18 +52,12 @@ static void Con_DisplayString (int x, int y, const char *s)
 	}
 }
 
-/**
- * @brief
- */
 static void Key_ClearTyping (void)
 {
 	key_lines[edit_line][1] = 0;	/* clear any typing */
 	key_linepos = 1;
 }
 
-/**
- * @brief
- */
 void Con_ToggleConsole_f (void)
 {
 	Key_ClearTyping();
@@ -82,9 +73,6 @@ void Con_ToggleConsole_f (void)
 	}
 }
 
-/**
- * @brief
- */
 static void Con_ToggleChat_f (void)
 {
 	Key_ClearTyping();
@@ -164,9 +152,6 @@ static void Con_Dump_f (void)
 }
 
 
-/**
- * @brief
- */
 void Con_ClearNotify (void)
 {
 	int i;
@@ -176,9 +161,6 @@ void Con_ClearNotify (void)
 }
 
 
-/**
- * @brief
- */
 static void Con_MessageModeSay_f (void)
 {
 	/* chatting makes only sense in battle field mode */
@@ -189,9 +171,6 @@ static void Con_MessageModeSay_f (void)
 	Key_SetDest(key_message);
 }
 
-/**
- * @brief
- */
 static void Con_MessageModeSayTeam_f (void)
 {
 	/* chatting makes only sense in battle field mode */
@@ -366,9 +345,6 @@ void Con_SaveConsoleHistory (const char *path)
 	fclose(f);
 }
 
-/**
- * @brief
- */
 void Con_Init (void)
 {
 	Com_Printf("\n----- console initialization -------\n");
@@ -400,9 +376,6 @@ void Con_Init (void)
 }
 
 
-/**
- * @brief
- */
 static void Con_Linefeed (void)
 {
 	con.x = 0;

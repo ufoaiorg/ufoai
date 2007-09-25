@@ -44,9 +44,6 @@ static sfx_t* soundWaterMove;
 static const char *lmList[MAX_LOCALMODELS + 1];
 
 
-/**
- * @brief
- */
 static void LM_GenerateList (void)
 {
 	localModel_t *lm;
@@ -60,9 +57,6 @@ static void LM_GenerateList (void)
 }
 
 
-/**
- * @brief
- */
 void LM_AddToScene (void)
 {
 	localModel_t *lm;
@@ -104,9 +98,6 @@ void LM_AddToScene (void)
 }
 
 
-/**
- * @brief
- */
 static localModel_t *LM_Find (int num)
 {
 	int i;
@@ -119,9 +110,6 @@ static localModel_t *LM_Find (int num)
 }
 
 
-/**
- * @brief
- */
 static void LM_Delete (localModel_t * lm)
 {
 	localModel_t backup;
@@ -196,9 +184,6 @@ void LM_DoorOpen (struct dbuffer *msg)
 	/*Print3Vector(lm->origin);*/
 }
 
-/**
- * @brief
- */
 void LM_Perish (struct dbuffer *msg)
 {
 	localModel_t *lm;
@@ -212,7 +197,6 @@ void LM_Perish (struct dbuffer *msg)
 
 
 /**
- * @brief
  * @note e.g. func_breakable or func_door with health
  */
 void LM_Explode (struct dbuffer *msg)
@@ -247,9 +231,6 @@ void LM_Explode (struct dbuffer *msg)
 }
 
 
-/**
- * @brief
- */
 void CL_RegisterLocalModels (void)
 {
 	localModel_t *lm;
@@ -275,7 +256,6 @@ void CL_RegisterLocalModels (void)
 
 
 /**
- * @brief
  * @sa CL_ParseEntitystring
  */
 localModel_t *CL_AddLocalModel (const char *model, const char *particle, vec3_t origin, vec3_t angles, int num, int levelflags)
@@ -393,7 +373,6 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
 }
 
 /**
- * @brief
  * @sa LE_AddAmbientSound
  */
 void LET_PlayAmbientSound (le_t * le)
@@ -467,7 +446,6 @@ void LET_StartIdle (le_t * le)
 }
 
 /**
- * @brief
  * @param[in] contents The contents flash of the brush we are currently in
  */
 static void LE_PlaySoundFileForContents (le_t* le, int contents)
@@ -622,7 +600,6 @@ static void LET_PathMove (le_t * le)
 }
 
 /**
- * @brief
  * @note Think function
  */
 void LET_StartPathMove (le_t * le)
@@ -678,7 +655,6 @@ void LET_ProjectileAutoHide (le_t *le)
 }
 
 /**
- * @brief
  * @note Think function
  */
 static void LET_Projectile (le_t * le)
@@ -705,9 +681,6 @@ static void LET_Projectile (le_t * le)
  LE Special Effects
 =========================================================================== */
 
-/**
- * @brief
- */
 void LE_AddProjectile (fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, int normal, qboolean autohide)
 {
 	le_t *le;
@@ -784,9 +757,6 @@ void LE_AddProjectile (fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, 
 }
 
 
-/**
- * @brief
- */
 void LE_AddGrenade (fireDef_t * fd, int flags, vec3_t muzzle, vec3_t v0, int dt)
 {
 	le_t *le;
@@ -826,9 +796,6 @@ void LE_AddGrenade (fireDef_t * fd, int flags, vec3_t muzzle, vec3_t v0, int dt)
 	le->think(le);
 }
 
-/**
- * @brief
- */
 void LE_AddAmbientSound (const char *sound, vec3_t origin, float volume, float attenuation)
 {
 	le_t* le;
@@ -857,9 +824,6 @@ void LE_AddAmbientSound (const char *sound, vec3_t origin, float volume, float a
 =========================================================================== */
 
 
-/**
- * @brief
- */
 le_t *LE_Add (int entnum)
 {
 	int i;
@@ -908,9 +872,6 @@ le_t *LE_Get (int entnum)
 }
 
 
-/**
- * @brief
- */
 le_t *LE_Find (int type, pos3_t pos)
 {
 	int i;
@@ -928,9 +889,6 @@ le_t *LE_Find (int type, pos3_t pos)
 /** @sa BoxOffset in cl_actor.c */
 #define ModelOffset(i, target) (target[0]=(i-1)*(UNIT_SIZE+BOX_DELTA_WIDTH)/2, target[1]=(i-1)*(UNIT_SIZE+BOX_DELTA_LENGTH)/2, target[2]=0)
 
-/**
- * @brief
- */
 void LE_AddToScene (void)
 {
 	le_t *le;
@@ -1128,7 +1086,6 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 
 
 /**
- * @brief
  * @sa CL_Trace
  */
 static void CL_TraceBounds (const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t end, vec3_t boxmins, vec3_t boxmaxs)

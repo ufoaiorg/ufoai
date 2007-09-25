@@ -81,9 +81,6 @@ memPool_t *m_genericPool;
 POOL MANAGEMENT
 ==============================================================================*/
 
-/**
- * @brief
- */
 static memPool_t *Mem_FindPool (const char *name)
 {
 	memPool_t *pool;
@@ -102,9 +99,6 @@ static memPool_t *Mem_FindPool (const char *name)
 }
 
 
-/**
- * @brief
- */
 memPool_t *_Mem_CreatePool (const char *name, const char *fileName, const int fileLine)
 {
 	memPool_t *pool;
@@ -144,9 +138,6 @@ memPool_t *_Mem_CreatePool (const char *name, const char *fileName, const int fi
 }
 
 
-/**
- * @brief
- */
 uint32_t _Mem_DeletePool (struct memPool_s *pool, const char *fileName, const int fileLine)
 {
 	uint32_t size;
@@ -169,9 +160,6 @@ uint32_t _Mem_DeletePool (struct memPool_s *pool, const char *fileName, const in
 POOL AND TAG MEMORY ALLOCATION
 ==============================================================================*/
 
-/**
- * @brief
- */
 uint32_t _Mem_Free (void *ptr, const char *fileName, const int fileLine)
 {
 	memBlock_t *mem;
@@ -369,9 +357,6 @@ char *_Mem_PoolStrDup (const char *in, struct memPool_s *pool, const int tagNum,
 }
 
 
-/**
- * @brief
- */
 uint32_t _Mem_PoolSize (struct memPool_s *pool)
 {
 	if (!pool)
@@ -381,9 +366,6 @@ uint32_t _Mem_PoolSize (struct memPool_s *pool)
 }
 
 
-/**
- * @brief
- */
 uint32_t _Mem_TagSize (struct memPool_s *pool, const int tagNum)
 {
 	memBlock_t *mem;
@@ -402,9 +384,6 @@ uint32_t _Mem_TagSize (struct memPool_s *pool, const int tagNum)
 }
 
 
-/**
- * @brief
- */
 uint32_t _Mem_ChangeTag (struct memPool_s *pool, const int tagFrom, const int tagTo)
 {
 	memBlock_t *mem;
@@ -425,9 +404,6 @@ uint32_t _Mem_ChangeTag (struct memPool_s *pool, const int tagFrom, const int ta
 }
 
 
-/**
- * @brief
- */
 void _Mem_CheckPoolIntegrity (struct memPool_s *pool, const char *fileName, const int fileLine)
 {
 	memBlock_t *mem;
@@ -476,9 +452,6 @@ void _Mem_CheckPoolIntegrity (struct memPool_s *pool, const char *fileName, cons
 }
 
 
-/**
- * @brief
- */
 void _Mem_CheckGlobalIntegrity (const char *fileName, const int fileLine)
 {
 	memPool_t *pool;
@@ -496,9 +469,6 @@ void _Mem_CheckGlobalIntegrity (const char *fileName, const int fileLine)
 }
 
 
-/**
- * @brief
- */
 void _Mem_TouchPool (struct memPool_s *pool, const char *fileName, const int fileLine)
 {
 	memBlock_t *mem;
@@ -524,9 +494,6 @@ void _Mem_TouchPool (struct memPool_s *pool, const char *fileName, const int fil
 }
 
 
-/**
- * @brief
- */
 void _Mem_TouchGlobal (const char *fileName, const int fileLine)
 {
 	memPool_t *pool;
@@ -551,18 +518,12 @@ void _Mem_TouchGlobal (const char *fileName, const int fileLine)
 CONSOLE COMMANDS
 ==============================================================================*/
 
-/**
- * @brief
- */
 static void Mem_Check_f (void)
 {
 	Mem_CheckGlobalIntegrity();
 }
 
 
-/**
- * @brief
- */
 static void Mem_Stats_f (void)
 {
 	uint32_t totalBlocks, totalBytes;
@@ -635,7 +596,6 @@ static void Mem_Stats_f (void)
 }
 
 /**
- * @brief
  * @sa Qcommon_Init
  */
 void Mem_Init (void)

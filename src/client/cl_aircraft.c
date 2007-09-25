@@ -856,8 +856,6 @@ qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 }
 
 /**
- * @brief
- * @param[in] dt
  * @todo: Fuel
  */
 void CL_CampaignRunAircraft (int dt)

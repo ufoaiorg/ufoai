@@ -110,7 +110,6 @@ int B_GetAvailableQuarterSpace (const base_t* const base)
 }
 
 /**
- * @brief
  * @note Make sure you are not doing anything with the buildingCurrent pointer
  * in this function, the pointer might already be invalid
  */

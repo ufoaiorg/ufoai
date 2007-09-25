@@ -1,6 +1,5 @@
 /**
  * @file r_rmisc.c
- * @brief
  */
 
 /*
@@ -48,9 +47,6 @@ static const byte gridtexture[8][8] = {
 	{1, 1, 1, 1, 1, 1, 1, 1},
 };
 
-/**
- * @brief
- */
 void R_InitMiscTexture (void)
 {
 	int x, y;
@@ -103,9 +99,6 @@ enum {
 	SSHOTTYPE_TGA,
 };
 
-/**
- * @brief
- */
 void R_ScreenShot_f (void)
 {
 	char	checkName[MAX_OSPATH];

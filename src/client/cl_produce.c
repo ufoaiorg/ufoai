@@ -1058,7 +1058,6 @@ void PR_ProductionInit (void)
 }
 
 /**
- * @brief
  * @sa CL_InitAfter
  */
 void PR_Init (void)

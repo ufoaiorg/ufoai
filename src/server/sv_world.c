@@ -68,18 +68,12 @@ static void ClearLink (link_t * l)
 	l->prev = l->next = l;
 }
 
-/**
- * @brief
- */
 static void RemoveLink (link_t * l)
 {
 	l->next->prev = l->prev;
 	l->prev->next = l->next;
 }
 
-/**
- * @brief
- */
 static void InsertLinkBefore (link_t * l, link_t * before)
 {
 	l->next = before;
@@ -262,7 +256,6 @@ static void SV_AreaEdicts_r (areanode_t * node, int area_type)
 }
 
 /**
- * @brief
  * @sa SV_AreaEdicts_r
  */
 static int SV_AreaEdicts (vec3_t mins, vec3_t maxs, edict_t ** list, int maxcount, int areatype)
@@ -322,7 +315,6 @@ static int SV_HullForEntity (edict_t * ent, int *tile)
 
 
 /**
- * @brief
  * @sa SV_Trace
  * @sa SV_AreaEdicts
  * @sa CL_ClipMoveToLEs
@@ -415,7 +407,6 @@ int SV_PointContents (vec3_t p)
 }
 
 /**
- * @brief
  * @param[in] mins and maxs are relative
  * @param[in] passedict is explicitly excluded from clipping checks (normally NULL)
  * if the entire move stays in a solid volume, trace.allsolid will be set,

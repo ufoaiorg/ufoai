@@ -73,9 +73,6 @@ int VID_GetModeNums (void)
 	return (sizeof(vid_modes) / sizeof(vidmode_t));
 }
 
-/**
- * @brief
- */
 qboolean VID_GetModeInfo (void)
 {
 	if (viddef.mode >= VID_GetModeNums())
@@ -109,7 +106,6 @@ void VID_Restart_f (void)
 }
 
 /**
- * @brief
  * @sa R_Shutdown
  */
 void VID_Init (void)
@@ -136,9 +132,6 @@ void VID_Init (void)
 }
 
 
-/**
- * @brief
- */
 void *VID_TagAlloc (struct memPool_s *pool, int size, int tagNum)
 {
 	if (tagNum < 0)
@@ -148,18 +141,12 @@ void *VID_TagAlloc (struct memPool_s *pool, int size, int tagNum)
 	return _Mem_Alloc(size, qtrue, pool, tagNum, "RENDERER", 0);
 }
 
-/**
- * @brief
- */
 void VID_MemFree (void *ptr)
 {
 	_Mem_Free(ptr, "RENDERER", -1);
 }
 
 
-/**
- * @brief
- */
 void VID_FreeTags (struct memPool_s *pool, int tagNum)
 {
 	assert(pool);

@@ -1631,12 +1631,6 @@ qboolean MAP_IsNight (vec2_t pos)
 }
 
 
-/**
- * @brief
- * @param[in] *color
- * @param[in] polar
- * @return
- */
 qboolean MAP_MaskFind (byte * color, vec2_t polar)
 {
 	byte *c;
@@ -1757,9 +1751,6 @@ qboolean MAP_PositionFitsTCPNTypes (vec2_t pos, linkedList_t* terrainTypes, link
 	return qfalse;
 }
 
-/**
- * @brief
- */
 void MAP_Init (void)
 {
 	/* load terrain mask */

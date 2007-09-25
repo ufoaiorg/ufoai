@@ -390,9 +390,6 @@ static void SVC_RemoteCommand (struct net_stream *stream)
 	}
 }
 
-/**
- * @brief
- */
 static void SV_ConnectionlessPacket (struct net_stream *stream, struct dbuffer *msg)
 {
 	const char *s, *c;
@@ -420,7 +417,6 @@ static void SV_ConnectionlessPacket (struct net_stream *stream, struct dbuffer *
 }
 
 /**
- * @brief
  * @sa CL_ReadPacket
  * @sa NET_ReadMsg
  * @sa SV_Start
@@ -666,7 +662,6 @@ static qboolean SV_RunGameFrame (void)
 }
 
 /**
- * @brief
  * @sa Qcommon_Frame
  */
 void SV_Frame (int now, void *data)

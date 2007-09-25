@@ -372,7 +372,6 @@ static int CL_CalcReloadTime (int weapon_id)
 }
 
 /**
- * @brief
  * @sa HighlightWeaponButton
  */
 static void ClearHighlights (void)
@@ -390,7 +389,6 @@ static void ClearHighlights (void)
 
 #if 0
 /**
- * @brief
  * @sa ClearHighlights
  */
 static void HighlightWeaponButton (int button)
@@ -407,9 +405,6 @@ static void HighlightWeaponButton (int button)
 }
 #endif
 
-/**
- * @brief
- */
 void CL_ResetWeaponButtons (void)
 {
 	memset(weaponButtonState, -1, sizeof(weaponButtonState));

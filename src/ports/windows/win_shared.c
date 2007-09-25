@@ -30,9 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <io.h>
 #include <conio.h>
 
-/**
- * @brief
- */
 int Sys_Milliseconds (void)
 {
 	static int base = 0;
@@ -44,9 +41,6 @@ int Sys_Milliseconds (void)
 	return timeGetTime() - base;
 }
 
-/**
- * @brief
- */
 void Sys_Mkdir (const char *path)
 {
 	_mkdir(path);
@@ -56,9 +50,6 @@ static char findbase[MAX_OSPATH];
 static char findpath[MAX_OSPATH];
 static int findhandle;
 
-/**
- * @brief
- */
 static qboolean CompareAttributes (unsigned found, unsigned musthave, unsigned canthave)
 {
 	if ((found & _A_RDONLY) && (canthave & SFF_RDONLY))
@@ -87,7 +78,6 @@ static qboolean CompareAttributes (unsigned found, unsigned musthave, unsigned c
 }
 
 /**
- * @brief
  * @sa Sys_FindNext
  * @sa Sys_FindClose
  */
@@ -120,7 +110,6 @@ char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canthave)
 }
 
 /**
- * @brief
  * @sa Sys_FindFirst
  * @sa Sys_FindClose
  */

@@ -43,9 +43,6 @@ static byte *last_chunk;
 static byte *iff_data;
 static int iff_chunk_len;
 
-/**
- * @brief
- */
 static short GetLittleShort (void)
 {
 	short val = 0;
@@ -60,9 +57,6 @@ static short GetLittleShort (void)
 	return val;
 }
 
-/**
- * @brief
- */
 static int GetLittleLong (void)
 {
 	int val = 0;
@@ -80,7 +74,6 @@ static int GetLittleLong (void)
 }
 
 /**
- * @brief
  * @sa FindChunk
  */
 static void FindNextChunk (const char *name)
@@ -110,7 +103,6 @@ static void FindNextChunk (const char *name)
 }
 
 /**
- * @brief
  * @sa FindNextChunk
  */
 static void FindChunk (const char *name)
@@ -120,9 +112,6 @@ static void FindChunk (const char *name)
 }
 
 #ifdef DUMPCHUNKS
-/**
- * @brief
- */
 static void DumpChunks (void)
 {
 	char str[5];
@@ -139,9 +128,6 @@ static void DumpChunks (void)
 }
 #endif
 
-/**
- * @brief
- */
 static wavinfo_t GetWavinfo (char *name, byte * wav, int wavlength)
 {
 	wavinfo_t info;
@@ -229,7 +215,6 @@ static wavinfo_t GetWavinfo (char *name, byte * wav, int wavlength)
 }
 
 /**
- * @brief
  * @sa S_OGG_LoadSFX
  */
 sfxcache_t *S_Wave_LoadSFX (sfx_t * s)

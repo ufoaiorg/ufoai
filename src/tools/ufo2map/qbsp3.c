@@ -1,6 +1,5 @@
 /**
  * @file qbsp3.c
- * @brief
  */
 
 /*
@@ -30,7 +29,6 @@ int entity_num;
 
 
 /**
- * @brief
  * @sa ProcessModels
  */
 static void ProcessWorldModel (void)
@@ -54,7 +52,6 @@ static void ProcessWorldModel (void)
 
 
 /**
- * @brief
  * @sa ProcessModels
  */
 static void ProcessSubModel (int entityNum)
@@ -97,7 +94,6 @@ static void ProcessSubModel (int entityNum)
 
 
 /**
- * @brief
  * @sa ProcessWorldModel
  * @sa ProcessSubModel
  */

@@ -52,7 +52,6 @@ static int free_dbuffers = 0, allocated_dbuffers = 0;
 static struct dbuffer *free_dbuffer_list = NULL;
 
 /**
- * @brief
  * @sa free_element
  */
 static struct dbuffer_element * allocate_element (void)
@@ -79,7 +78,6 @@ static struct dbuffer_element * allocate_element (void)
 }
 
 /**
- * @brief
  * @sa allocate_element
  */
 static void free_element (struct dbuffer_element *e)

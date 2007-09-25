@@ -1,6 +1,5 @@
 /**
  * @file textures.c
- * @brief
  */
 
 /*
@@ -30,9 +29,6 @@ static int nummiptex = 0;
 textureref_t textureref[MAX_MAP_TEXTURES];
 
 
-/**
- * @brief
- */
 int FindMiptex (const char *name)
 {
 	int i;
@@ -91,9 +87,6 @@ int FindMiptex (const char *name)
 }
 
 
-/**
- * @brief
- */
 static const vec3_t baseaxis[18] =
 {
 {0,0,1}, {1,0,0}, {0,-1,0},			/* floor */
@@ -104,9 +97,6 @@ static const vec3_t baseaxis[18] =
 {0,-1,0}, {1,0,0}, {0,0,-1}			/* north wall */
 };
 
-/**
- * @brief
- */
 static void TextureAxisFromPlane (plane_t *pln, vec3_t xv, vec3_t yv, qboolean isTerrain)
 {
 	int bestaxis, numaxis, i;
@@ -132,7 +122,6 @@ static void TextureAxisFromPlane (plane_t *pln, vec3_t xv, vec3_t yv, qboolean i
 
 
 /**
- * @brief
  * @sa BaseLightForFace
  */
 int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, const vec3_t origin, qboolean isTerrain)

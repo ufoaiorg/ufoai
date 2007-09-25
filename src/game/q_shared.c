@@ -357,10 +357,6 @@ void CrossProduct (const vec3_t v1, const vec3_t v2, vec3_t cross)
 	cross[2] = v1[0] * v2[1] - v1[1] * v2[0];
 }
 
-/**
- * @brief
- * @param
- */
 static inline void R_ConcatRotations (float in1[3][3], float in2[3][3], float out[3][3])
 {
 	out[0][0] = in1[0][0] * in2[0][0] + in1[0][1] * in2[1][0] + in1[0][2] * in2[2][0];
@@ -535,8 +531,6 @@ qboolean Q_IsPowerOfTwo (int i)
 /**
  * @brief Returns the angle resulting from turning fraction * angle
  * from angle1 to angle2
- * @param
- * @sa
  */
 float LerpAngle (float a2, float a1, float frac)
 {
@@ -569,9 +563,6 @@ float AngleNormalize180 (float angle)
 	return angle;
 }
 
-/**
- * @brief
- */
 int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cBspPlane_s *p)
 {
 	float dist1, dist2;
@@ -637,11 +628,6 @@ int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cBspPlane_s *p)
 	return sides;
 }
 
-/**
- * @brief
- * @param[in] mins
- * @param[in] maxs
- */
 void ClearBounds (vec3_t mins, vec3_t maxs)
 {
 	mins[0] = mins[1] = mins[2] = 99999;
@@ -650,9 +636,6 @@ void ClearBounds (vec3_t mins, vec3_t maxs)
 
 /**
  * @brief If the point is outside the box defined by mins and maxs, expand
- * @param[in] v
- * @param[in] mins
- * @param[in] maxs
  */
 void AddPointToBounds (const vec3_t v, vec3_t mins, vec3_t maxs)
 {
@@ -668,13 +651,6 @@ void AddPointToBounds (const vec3_t v, vec3_t mins, vec3_t maxs)
 	}
 }
 
-/**
- * @brief
- * @param[in] v1
- * @param[in] v2
- * @param[in] comp
- * @return qboolean
- */
 qboolean VectorNearer (const vec3_t v1, const vec3_t v2, const vec3_t comp)
 {
 	vec3_t d1, d2;
@@ -724,11 +700,6 @@ void VectorMA (const vec3_t veca, const float scale, const vec3_t vecb, vec3_t v
 	vecc[2] = veca[2] + scale * vecb[2];
 }
 
-/**
- * @brief
- * @param
- * @sa
- */
 void VectorClampMA (vec3_t veca, float scale, const vec3_t vecb, vec3_t vecc)
 {
 	float test, newScale;
@@ -763,8 +734,6 @@ void VectorClampMA (vec3_t veca, float scale, const vec3_t vecb, vec3_t vecc)
 }
 
 /**
- * @brief
- * @param
  * @sa GLMatrixMultiply
  */
 void MatrixMultiply (const vec3_t a[3], const vec3_t b[3], vec3_t c[3])
@@ -784,8 +753,6 @@ void MatrixMultiply (const vec3_t a[3], const vec3_t b[3], vec3_t c[3])
 
 
 /**
- * @brief
- * @param
  * @sa MatrixMultiply
  */
 void GLMatrixMultiply (const float a[16], const float b[16], float c[16])
@@ -800,11 +767,6 @@ void GLMatrixMultiply (const float a[16], const float b[16], float c[16])
 }
 
 
-/**
- * @brief
- * @param
- * @sa
- */
 void GLVectorTransform (const float m[16], const vec4_t in, vec4_t out)
 {
 	int i;
@@ -814,11 +776,6 @@ void GLVectorTransform (const float m[16], const vec4_t in, vec4_t out)
 }
 
 
-/**
- * @brief
- * @param
- * @sa
- */
 void VectorRotate (const vec3_t m[3], const vec3_t va, vec3_t vb)
 {
 	vb[0] = m[0][0] * va[0] + m[1][0] * va[1] + m[2][0] * va[2];
@@ -869,11 +826,6 @@ vec_t VectorLength (const vec3_t v)
 	return length;
 }
 
-/**
- * @brief
- * @param
- * @sa
- */
 void VectorInverse (vec3_t v)
 {
 	v[0] = -v[0];
@@ -881,11 +833,6 @@ void VectorInverse (vec3_t v)
 	v[2] = -v[2];
 }
 
-/**
- * @brief
- * @param
- * @sa
- */
 void VectorScale (const vec3_t in, const vec_t scale, vec3_t out)
 {
 #ifdef UFO_MMX_ENABLED
@@ -914,11 +861,6 @@ void VectorScale (const vec3_t in, const vec_t scale, vec3_t out)
 }
 
 
-/**
- * @brief
- * @param
- * @sa
- */
 int Q_log2 (int val)
 {
 	int answer = 0;
@@ -991,8 +933,6 @@ char *va (const char *format, ...)
 }
 
 /**
- * @brief
- * @param
  * @sa Com_Parse
  */
 const char *COM_EParse (const char **text, const char *errhead, const char *errinfo)
@@ -1018,11 +958,6 @@ LIBRARY REPLACEMENT FUNCTIONS
 ============================================================================
 */
 
-/**
- * @brief
- * @param
- * @sa
- */
 char *Q_strlwr (char *str)
 {
 	char* origs = str;
@@ -1033,11 +968,6 @@ char *Q_strlwr (char *str)
 	return origs;
 }
 
-/**
- * @brief
- * @param
- * @sa
- */
 int Q_putenv (const char *var, const char *value)
 {
 #ifdef __APPLE__
@@ -1052,8 +982,6 @@ int Q_putenv (const char *var, const char *value)
 }
 
 /**
- * @brief
- * @param
  * @sa Q_strncmp
  */
 int Q_strcmp (const char *s1, const char *s2)
@@ -1062,8 +990,6 @@ int Q_strcmp (const char *s1, const char *s2)
 }
 
 /**
- * @brief
- * @param
  * @sa Q_strcmp
  */
 int Q_strncmp (const char *s1, const char *s2, size_t n)
@@ -1077,11 +1003,6 @@ int Q_strncmp (const char *s1, const char *s2, size_t n)
 
 #define Q_strncasecmp(s1, s2, n) (strncasecmp(s1, s2, n))
 
-/**
- * @brief
- * @param
- * @sa
- */
 int Q_stricmp (const char *s1, const char *s2)
 {
 	return strcasecmp(s1, s2);
@@ -1098,11 +1019,6 @@ int Q_stricmp (const char *s1, const char *s2)
 #endif
 }
 
-/**
- * @brief
- * @param
- * @sa
- */
 int Q_strncasecmp (const char *s1, const char *s2, size_t n)
 {
 	int c1, c2;
@@ -1179,21 +1095,13 @@ void Q_strcat (char *dest, const char *src, size_t destsize)
 	Q_strncpyz(dest + dest_length, src, destsize - dest_length);
 }
 
-/**
- * @brief
- * @param
- * @sa
- */
 int Q_strcasecmp (const char *s1, const char *s2)
 {
 	return Q_strncasecmp(s1, s2, 99999);
 }
 
 /**
- * @brief
- * @param
  * @return false if overflowed - true otherwise
- * @sa
  */
 qboolean Com_sprintf (char *dest, size_t size, const char *fmt, ...)
 {

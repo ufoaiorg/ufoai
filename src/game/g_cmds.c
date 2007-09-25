@@ -28,9 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
-/**
- * @brief
- */
 static void Cmd_Players_f (player_t * player)
 {
 	int i;
@@ -88,9 +85,6 @@ static qboolean G_CheckFlood (player_t *player)
 	return qfalse;
 }
 
-/**
- * @brief
- */
 static void G_Say (player_t *player, qboolean arg0, qboolean team)
 {
 	int j;
@@ -138,9 +132,6 @@ static void G_Say (player_t *player, qboolean arg0, qboolean team)
 	}
 }
 
-/**
- * @brief
- */
 static void Cmd_PlayerList_f (player_t * player)
 {
 	int i;
@@ -185,9 +176,6 @@ void Cmd_InvList (player_t *player)
 }
 #endif
 
-/**
- * @brief
- */
 void G_ClientCommand (player_t * player)
 {
 	const char *cmd;

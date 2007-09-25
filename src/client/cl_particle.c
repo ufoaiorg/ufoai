@@ -225,9 +225,6 @@ void CL_AddMapParticle (const char *ptl, vec3_t origin, vec2_t wait, const char 
 	Com_DPrintf(DEBUG_CLIENT, "Adding map particle %s (%i) with levelflags %i\n", ptl, numMPs, levelflags);
 }
 
-/**
- * @brief
- */
 void CL_ParticleRegisterArt (void)
 {
 	ptlArt_t *a;
@@ -339,9 +336,6 @@ static void PE_SetCamera (void)
 	V_CalcFovX();
 }
 
-/**
- * @brief
- */
 void PE_RenderParticles (void)
 {
 	PE_SetCamera();
@@ -375,9 +369,6 @@ static void PE_UpdateMenu (ptlDef_t* p)
 }
 
 
-/**
- * @brief
- */
 static void PE_LoadParticle_f (void)
 {
 	int i;
@@ -431,9 +422,6 @@ static void PE_Frame_f (void)
 	}
 }
 
-/**
- * @brief
- */
 static void PE_ListClick_f (void)
 {
 	int num, i;
@@ -513,7 +501,6 @@ static void CL_ParticleEditor_f (void)
 }
 
 /**
- * @brief
  * @sa CL_InitLocal
  */
 void CL_ResetParticles (void)
@@ -530,9 +517,6 @@ void CL_ResetParticles (void)
 }
 
 
-/**
- * @brief
- */
 static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 {
 	int s, e;
@@ -956,9 +940,6 @@ void CL_ParticleSpawnFromSizeBuf (struct dbuffer *msg)
 	}
 }
 
-/**
- * @brief
- */
 static void CL_Fading (vec4_t color, byte fade, float frac, qboolean onlyAlpha)
 {
 	int i;
@@ -1014,7 +995,6 @@ void CL_ParticleCheckRounds (void)
 }
 
 /**
- * @brief
  * @sa CL_ParticleRun
  */
 static void CL_ParticleRun2 (ptl_t *p)
@@ -1128,7 +1108,6 @@ static void CL_ParticleRun2 (ptl_t *p)
 }
 
 /**
- * @brief
  * @sa CL_Frame
  */
 void CL_ParticleRun (void)
@@ -1148,7 +1127,6 @@ void CL_ParticleRun (void)
 /* =========================================================== */
 
 /**
- * @brief
  * @param[in] es Entity string to parse the particle from
  * @param[in] afterwards If this is true you can modify the particle after the init
  * function for the particle was already called
@@ -1204,9 +1182,6 @@ static void CL_ParseMapParticle (ptl_t * ptl, const char *es, qboolean afterward
 }
 
 
-/**
- * @brief
- */
 void CL_RunMapParticles (void)
 {
 	mapParticle_t *mp;
@@ -1242,9 +1217,6 @@ void CL_RunMapParticles (void)
 /* =========================================================== */
 
 
-/**
- * @brief
- */
 static void CL_ParsePtlCmds (const char *name, const char **text)
 {
 	ptlCmd_t *pc;

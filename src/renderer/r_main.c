@@ -1,6 +1,5 @@
 /**
  * @file r_main.c
- * @brief
  */
 
 /*
@@ -124,7 +123,6 @@ static void R_Strings_f (void)
 }
 
 /**
- * @brief
  * @sa R_DrawShadowVolume
  * @sa R_DrawShadow
  */
@@ -168,9 +166,6 @@ qboolean R_CullBox (vec3_t mins, vec3_t maxs)
 }
 
 
-/**
- * @brief
- */
 void R_RotateForEntity (entity_t * e)
 {
 	qglTranslatef(e->origin[0], e->origin[1], e->origin[2]);
@@ -181,9 +176,6 @@ void R_RotateForEntity (entity_t * e)
 }
 
 
-/**
- * @brief
- */
 void R_InterpolateTransform (animState_t * as, int numframes, float *tag, float *interpolated)
 {
 	float *current, *old;
@@ -222,9 +214,6 @@ void R_InterpolateTransform (animState_t * as, int numframes, float *tag, float 
 }
 
 
-/**
- * @brief
- */
 static float *R_CalcTransform (entity_t * e)
 {
 	vec3_t angles;
@@ -312,9 +301,6 @@ static float *R_CalcTransform (entity_t * e)
 }
 
 
-/**
- * @brief
- */
 static void R_TransformEntitiesOnList (void)
 {
 	int i;
@@ -335,9 +321,6 @@ static void R_TransformEntitiesOnList (void)
 }
 
 
-/**
- * @brief
- */
 static void R_DrawEntitiesOnList (void)
 {
 	int i;
@@ -428,9 +411,6 @@ static void R_DrawEntitiesOnList (void)
 	qglDepthMask(1);			/* back to writing */
 }
 
-/**
- * @brief
- */
 static int SignbitsForPlane (cBspPlane_t * out)
 {
 	int bits, j;
@@ -444,9 +424,6 @@ static int SignbitsForPlane (cBspPlane_t * out)
 	return bits;
 }
 
-/**
- * @brief
- */
 static void R_SetFrustum (void)
 {
 	int i;
@@ -485,9 +462,6 @@ static void R_SetFrustum (void)
 	}
 }
 
-/**
- * @brief
- */
 static void R_SetupFrame (void)
 {
 	int i;
@@ -516,9 +490,6 @@ static void R_SetupFrame (void)
 	}
 }
 
-/**
- * @brief
- */
 static void R_Clear (void)
 {
 	qglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -539,17 +510,11 @@ static void R_Clear (void)
 	}
 }
 
-/**
- * @brief
- */
 static void R_Flash (void)
 {
 	R_ShadowBlend();
 }
 
-/**
- * @brief
- */
 static void R_RenderView (void)
 {
 	if (r_norefresh->integer)
@@ -600,7 +565,6 @@ static void R_RenderView (void)
 }
 
 /**
- * @brief
  * @sa R_RenderFrame
  * @sa R_EndFrame
  */
@@ -661,7 +625,6 @@ void R_BeginFrame (void)
 }
 
 /**
- * @brief
  * @sa R_BeginFrame
  * @sa R_EndFrame
  */
@@ -675,7 +638,6 @@ void R_RenderFrame (void)
 }
 
 /**
- * @brief
  * @sa R_RenderFrame
  * @sa R_BeginFrame
  */
@@ -699,9 +661,6 @@ void R_EndFrame (void)
 	SDL_GL_SwapBuffers();
 }
 
-/**
- * @brief
- */
 void R_TakeVideoFrame (int w, int h, byte * captureBuffer, byte * encodeBuffer, qboolean motionJpeg)
 {
 	size_t frameSize;
@@ -736,9 +695,6 @@ static const cmdList_t r_commands[] = {
 	{NULL, NULL, NULL}
 };
 
-/**
- * @brief
- */
 static void R_Register (void)
 {
 	const cmdList_t *commands;
@@ -798,9 +754,6 @@ static void R_Register (void)
 		Cmd_AddCommand(commands->name, commands->function, commands->description);
 }
 
-/**
- * @brief
- */
 qboolean R_SetMode (void)
 {
 	Com_Printf("I: setting mode %d:", vid_mode->integer);
@@ -1090,9 +1043,6 @@ static void R_InitExtension (void)
 	}
 }
 
-/**
- * @brief
- */
 qboolean R_Init (void)
 {
 	int j;
@@ -1139,7 +1089,6 @@ qboolean R_Init (void)
 }
 
 /**
- * @brief
  * @sa R_Init
  */
 void R_Shutdown (void)

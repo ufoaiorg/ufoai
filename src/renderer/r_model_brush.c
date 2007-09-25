@@ -50,9 +50,6 @@ static void R_ModLoadLighting (lump_t * l)
 	memcpy(loadmodel->bsp.lightdata, mod_base + l->fileofs, l->filelen);
 }
 
-/**
- * @brief
- */
 static void R_ModLoadVertexes (lump_t * l)
 {
 	dvertex_t *in;
@@ -76,9 +73,6 @@ static void R_ModLoadVertexes (lump_t * l)
 	}
 }
 
-/**
- * @brief
- */
 static float RadiusFromBounds (vec3_t mins, vec3_t maxs)
 {
 	int i;
@@ -92,7 +86,6 @@ static float RadiusFromBounds (vec3_t mins, vec3_t maxs)
 
 
 /**
- * @brief
  * @sa CR_ModLoadSubmodels
  */
 static void R_ModLoadSubmodels (lump_t * l)
@@ -125,9 +118,6 @@ static void R_ModLoadSubmodels (lump_t * l)
 	}
 }
 
-/**
- * @brief
- */
 static void R_ModLoadEdges (lump_t * l)
 {
 	dedge_t *in;
@@ -151,7 +141,6 @@ static void R_ModLoadEdges (lump_t * l)
 }
 
 /**
- * @brief
  * @sa CP_StartMissionMap
  */
 static void R_ModLoadTexinfo (lump_t * l)
@@ -250,9 +239,6 @@ static void CalcSurfaceExtents (mBspSurface_t * s)
 	}
 }
 
-/**
- * @brief
- */
 static void R_ModLoadFaces (lump_t * l)
 {
 	dface_t *in;
@@ -324,9 +310,6 @@ static void R_ModLoadFaces (lump_t * l)
 }
 
 
-/**
- * @brief
- */
 static void R_ModSetParent (mBspNode_t * node, mBspNode_t * parent)
 {
 	node->parent = parent;
@@ -336,9 +319,6 @@ static void R_ModSetParent (mBspNode_t * node, mBspNode_t * parent)
 	R_ModSetParent(node->children[1], node);
 }
 
-/**
- * @brief
- */
 static void R_ModLoadNodes (lump_t * l)
 {
 	int i, j, count, p;
@@ -385,9 +365,6 @@ static void R_ModLoadNodes (lump_t * l)
 	R_ModSetParent(loadmodel->bsp.nodes, NULL);
 }
 
-/**
- * @brief
- */
 static void R_ModLoadLeafs (lump_t * l)
 {
 	dleaf_t *in;
@@ -423,9 +400,6 @@ static void R_ModLoadLeafs (lump_t * l)
 	}
 }
 
-/**
- * @brief
- */
 static void R_ModLoadMarksurfaces (lump_t * l)
 {
 	int i, j, count;
@@ -450,9 +424,6 @@ static void R_ModLoadMarksurfaces (lump_t * l)
 	}
 }
 
-/**
- * @brief
- */
 static void R_ModLoadSurfedges (lump_t * l)
 {
 	int i, count;
@@ -476,9 +447,6 @@ static void R_ModLoadSurfedges (lump_t * l)
 }
 
 
-/**
- * @brief
- */
 static void R_ModLoadPlanes (lump_t * l)
 {
 	int i, j;
@@ -512,9 +480,6 @@ static void R_ModLoadPlanes (lump_t * l)
 }
 
 
-/**
- * @brief
- */
 static void R_ModShiftTile (void)
 {
 	mBspVertex_t *vert;
@@ -535,7 +500,6 @@ static void R_ModShiftTile (void)
 
 
 /**
- * @brief
  * @sa CM_AddMapTile
  */
 static void R_ModAddMapTile (const char *name, int sX, int sY, int sZ)

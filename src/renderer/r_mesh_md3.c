@@ -28,9 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 #include "r_error.h"
 
-/**
- * @brief
- */
 static void R_DrawAliasMD3FrameLerp (mAliasModel_t *paliashdr, mAliasMesh_t mesh, float backlerp)
 {
 	int i,j;
@@ -103,7 +100,6 @@ static void R_DrawAliasMD3FrameLerp (mAliasModel_t *paliashdr, mAliasMesh_t mesh
 }
 
 /**
- * @brief
  * @sa R_DrawAliasMD2Model
  */
 void R_DrawAliasMD3Model (entity_t *e)

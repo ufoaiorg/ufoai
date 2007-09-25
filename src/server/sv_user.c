@@ -170,7 +170,6 @@ int SV_CountPlayers (void)
 }
 
 /**
- * @brief
  * @sa SV_Spawn_f
  */
 static void SV_Begin_f (void)
@@ -222,7 +221,6 @@ static void SV_SpawnAllPending (void)
 }
 
 /**
- * @brief
  * @sa SV_Begin_f
  */
 static void SV_Spawn_f (void)
@@ -284,7 +282,6 @@ static const ucmd_t ucmds[] = {
 };
 
 /**
- * @brief
  * @sa SV_ExecuteClientMessage
  */
 static void SV_ExecuteUserCommand (char *s)

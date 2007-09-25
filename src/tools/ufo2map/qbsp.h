@@ -1,6 +1,5 @@
 /**
  * @file qbsp.h
- * @brief
  */
 
 /*

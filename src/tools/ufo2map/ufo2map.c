@@ -221,9 +221,6 @@ static void U2M_SetDefaultConfigValues (void)
 	config.entity_scale = 1.0f;
 }
 
-/**
- * @brief
- */
 int main (int argc, char **argv)
 {
 	double begin, start, end;

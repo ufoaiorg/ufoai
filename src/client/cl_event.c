@@ -54,7 +54,6 @@ static const value_t eventMail_vals[] = {
 };
 
 /**
- * @brief
  * @sa CL_ParseScriptFirst
  * @note write into cl_localPool - free on every game restart and reparse
  */
@@ -121,9 +120,6 @@ void CL_ParseEventMails (const char *name, const char **text)
 	} while (*text);
 }
 
-/**
- * @brief
- */
 void CL_EventAddMail_f (void)
 {
 	const char *eventMailId;

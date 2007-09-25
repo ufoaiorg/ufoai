@@ -31,7 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #if 0
 /**
- * @brief
  * @note unused
  */
 void G_ProjectSource(vec3_t point, vec3_t distance, vec3_t forward, vec3_t right, vec3_t result)
@@ -327,9 +326,6 @@ char *vtos (vec3_t v)
 	return s;
 }
 
-/**
- * @brief
- */
 static void Move_Final (edict_t *ent)
 {
 	if (ent->moveinfo.remaining_distance == 0) {
@@ -341,9 +337,6 @@ static void Move_Final (edict_t *ent)
 	VectorScale (ent->moveinfo.dir, ent->moveinfo.remaining_distance / FRAMETIME, ent->moveinfo.velocity);
 }
 
-/**
- * @brief
- */
 static void Move_Begin (edict_t *ent)
 {
 	float	frames;
@@ -357,9 +350,6 @@ static void Move_Begin (edict_t *ent)
 	ent->moveinfo.remaining_distance -= frames * ent->moveinfo.speed * FRAMETIME;
 }
 
-/**
- * @brief
- */
 void Move_Calc (edict_t *ent, vec3_t dest, void(*func)(edict_t*))
 {
 	VectorClear (ent->moveinfo.velocity);
@@ -377,7 +367,6 @@ static const vec3_t VEC_DOWN = { 0, -2, 0 };
 static const vec3_t MOVEDIR_DOWN = { 0, 0, -1 };
 
 /**
- * @brief
  * @note unused
  */
 void G_SetMovedir (vec3_t angles, vec3_t movedir)
@@ -428,7 +417,6 @@ char *G_CopyString (const char *in)
 }
 
 /**
- * @brief
  * @sa G_Spawn
  */
 static void G_InitEdict (edict_t * e)
@@ -472,7 +460,6 @@ edict_t *G_Spawn (void)
 static const char *entList[ENTLIST_LENGTH];
 
 /**
- * @brief
  * @sa G_CompleteRecalcRouting
  * @sa Grid_RecalcRouting
  */
@@ -492,7 +479,6 @@ void G_RecalcRouting (edict_t * self)
 }
 
 /**
- * @brief
  * @sa G_RecalcRouting
  */
 void G_CompleteRecalcRouting (void)

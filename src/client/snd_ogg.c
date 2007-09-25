@@ -318,7 +318,6 @@ void S_OGG_Stop (void)
 }
 
 /**
- * @brief
  * @sa OGG_Stop
  * @sa S_RawSamples
  */
@@ -396,7 +395,6 @@ void S_OGG_Start (void)
 }
 
 /**
- * @brief
  * @sa S_SoundInfo_f
  */
 void S_OGG_Info (void)
@@ -539,9 +537,6 @@ void S_OGG_List_f (void)
 	}
 }
 
-/**
- * @brief
- */
 sfxcache_t *S_OGG_LoadSFX (sfx_t *s)
 {
 	OggVorbis_File vorbisFile;

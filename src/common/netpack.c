@@ -26,43 +26,28 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* writing functions */
 
-/**
- * @brief
- */
 void NET_WriteChar (struct dbuffer *buf, char c)
 {
 	dbuffer_add(buf, &c, 1);
 }
 
-/**
- * @brief
- */
 void NET_WriteByte (struct dbuffer *buf, unsigned char c)
 {
 	dbuffer_add(buf, (char *)&c, 1);
 }
 
-/**
- * @brief
- */
 void NET_WriteShort (struct dbuffer *buf, int c)
 {
 	unsigned short v = LittleShort(c);
 	dbuffer_add(buf, (char *)&v, 2);
 }
 
-/**
- * @brief
- */
 void NET_WriteLong (struct dbuffer *buf, int c)
 {
 	int v = LittleLong(c);
 	dbuffer_add(buf, (char *)&v, 4);
 }
 
-/**
- * @brief
- */
 void NET_WriteString (struct dbuffer *buf, const char *str)
 {
 	if (!str)
@@ -77,16 +62,12 @@ void NET_WriteRawString (struct dbuffer *buf, const char *str)
 		dbuffer_add(buf, str, strlen(str));
 }
 
-/**
- * @brief
- */
 void NET_WriteCoord (struct dbuffer *buf, float f)
 {
 		NET_WriteLong(buf, (int) (f * 32));
 }
 
 /**
- * @brief
  * @sa NET_Read2Pos
  */
 void NET_Write2Pos (struct dbuffer *buf, vec2_t pos)
@@ -96,7 +77,6 @@ void NET_Write2Pos (struct dbuffer *buf, vec2_t pos)
 }
 
 /**
- * @brief
  * @sa NET_ReadPos
  */
 void NET_WritePos (struct dbuffer *buf, vec3_t pos)
@@ -106,9 +86,6 @@ void NET_WritePos (struct dbuffer *buf, vec3_t pos)
 	NET_WriteLong(buf, (long) (pos[2] * 32.));
 }
 
-/**
-  * @brief
-  */
 void NET_WriteGPos (struct dbuffer *buf, pos3_t pos)
 {
 	NET_WriteByte(buf, pos[0]);
@@ -116,26 +93,17 @@ void NET_WriteGPos (struct dbuffer *buf, pos3_t pos)
 	NET_WriteByte(buf, pos[2]);
 }
 
-/**
- * @brief
- */
 void NET_WriteAngle (struct dbuffer *buf, float f)
 {
 	NET_WriteByte(buf, (int) (f * 256 / 360) & 255);
 }
 
-/**
- * @brief
- */
 void NET_WriteAngle16 (struct dbuffer *buf, float f)
 {
 	NET_WriteShort(buf, ANGLE2SHORT(f));
 }
 
 
-/**
- * @brief
- */
 void NET_WriteDir (struct dbuffer *buf, vec3_t dir)
 {
 	int i, best;
@@ -241,8 +209,6 @@ void NET_WriteFormat (struct dbuffer *buf, const char *format, ...)
 /* reading functions */
 
 /**
- * @brief
- *
  * returns -1 if no more characters are available
  */
 int NET_ReadChar (struct dbuffer *buf)
@@ -268,9 +234,6 @@ int NET_ReadByte (struct dbuffer *buf)
 		return c;
 }
 
-/**
- * @brief
- */
 int NET_ReadShort (struct dbuffer *buf)
 {
 	unsigned short v;
@@ -280,9 +243,6 @@ int NET_ReadShort (struct dbuffer *buf)
 	return LittleShort(v);
 }
 
-/**
- * @brief
- */
 int NET_ReadLong (struct dbuffer *buf)
 {
 	unsigned int v;
@@ -323,7 +283,6 @@ char *NET_ReadStringRaw (struct dbuffer *buf)
 }
 
 /**
- * @brief
  * @note Don't use this function in a way like
  * <code> char *s = NET_ReadStringRaw(sb);
  * char *t = NET_ReadStringRaw(sb);</code>
@@ -358,7 +317,6 @@ char *NET_ReadString (struct dbuffer *buf)
 }
 
 /**
- * @brief
  * @sa NET_ReadString
  * @sa NET_ReadStringRaw
  */
@@ -386,16 +344,12 @@ char *NET_ReadStringLine (struct dbuffer *buf)
 	return string;
 }
 
-/**
- * @brief
- */
 float NET_ReadCoord (struct dbuffer *buf)
 {
 	return (float) NET_ReadLong(buf) * (1.0 / 32);
 }
 
 /**
- * @brief
  * @sa NET_Write2Pos
  */
 void NET_Read2Pos (struct dbuffer *buf, vec2_t pos)
@@ -405,7 +359,6 @@ void NET_Read2Pos (struct dbuffer *buf, vec2_t pos)
 }
 
 /**
- * @brief
  * @sa NET_WritePos
  */
 void NET_ReadPos (struct dbuffer *buf, vec3_t pos)
@@ -416,7 +369,6 @@ void NET_ReadPos (struct dbuffer *buf, vec3_t pos)
 }
 
 /**
- * @brief
  * @sa NET_WriteGPos
  * @sa NET_ReadByte
  * @note pos3_t are byte values
@@ -428,17 +380,11 @@ void NET_ReadGPos (struct dbuffer *buf, pos3_t pos)
 	pos[2] = NET_ReadByte(buf);
 }
 
-/**
- * @brief
- */
 float NET_ReadAngle (struct dbuffer *buf)
 {
 	return (float) NET_ReadChar(buf) * (360.0 / 256);
 }
 
-/**
- * @brief
- */
 float NET_ReadAngle16 (struct dbuffer *buf)
 {
 	short s;
@@ -447,9 +393,6 @@ float NET_ReadAngle16 (struct dbuffer *buf)
 	return (float) SHORT2ANGLE(s);
 }
 
-/**
- * @brief
- */
 void NET_ReadData (struct dbuffer *buf, void *data, int len)
 {
 	int i;
@@ -458,9 +401,6 @@ void NET_ReadData (struct dbuffer *buf, void *data, int len)
 		((byte *) data)[i] = NET_ReadByte(buf);
 }
 
-/**
- * @brief
- */
 void NET_ReadDir (struct dbuffer *buf, vec3_t dir)
 {
 	int b;
@@ -641,9 +581,6 @@ struct dbuffer *NET_ReadMsg (struct net_stream *s)
 	return buf;
 }
 
-/**
- * @brief
- */
 void NET_VPrintf (struct dbuffer *buf, const char *format, va_list ap)
 {
 	static char str[32768];
@@ -651,9 +588,6 @@ void NET_VPrintf (struct dbuffer *buf, const char *format, va_list ap)
 	dbuffer_add(buf, str, len);
 }
 
-/**
- * @brief
- */
 void NET_Printf (struct dbuffer *buf, const char *format, ...)
 {
 	va_list ap;

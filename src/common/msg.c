@@ -33,9 +33,6 @@ const vec3_t bytedirs[NUMVERTEXNORMALS] = {
 /* writing functions */
 
 
-/**
- * @brief
- */
 void SZ_Init (sizebuf_t * buf, byte * data, int length)
 {
 	memset(buf, 0, sizeof(*buf));
@@ -43,18 +40,12 @@ void SZ_Init (sizebuf_t * buf, byte * data, int length)
 	buf->maxsize = length;
 }
 
-/**
- * @brief
- */
 void SZ_Clear (sizebuf_t * buf)
 {
 	buf->cursize = 0;
 	buf->overflowed = qfalse;
 }
 
-/**
- * @brief
- */
 void *SZ_GetSpace (sizebuf_t * buf, int length)
 {
 	void *data;
@@ -77,17 +68,11 @@ void *SZ_GetSpace (sizebuf_t * buf, int length)
 	return data;
 }
 
-/**
- * @brief
- */
 void SZ_Write (sizebuf_t * buf, const void *data, int length)
 {
 	memcpy(SZ_GetSpace(buf, length), data, length);
 }
 
-/**
- * @brief
- */
 void SZ_Print (sizebuf_t * buf, const char *data)
 {
 	int len;
@@ -105,9 +90,6 @@ void SZ_Print (sizebuf_t * buf, const char *data)
 
 /*=========================================================================== */
 
-/**
- * @brief
- */
 void MSG_WriteChar (sizebuf_t * sb, int c)
 {
 	byte *buf;
@@ -121,9 +103,6 @@ void MSG_WriteChar (sizebuf_t * sb, int c)
 	buf[0] = (char)c;
 }
 
-/**
- * @brief
- */
 #ifdef DEBUG
 void MSG_WriteByteDebug (sizebuf_t * sb, int c, const char *file, int line)
 #else
@@ -142,9 +121,6 @@ void MSG_WriteByte (sizebuf_t * sb, int c)
 	buf[0] = c & UCHAR_MAX;
 }
 
-/**
- * @brief
- */
 #ifdef DEBUG
 void MSG_WriteShortDebug (sizebuf_t * sb, int c, const char* file, int line)
 #else
@@ -168,9 +144,6 @@ void MSG_WriteShort (sizebuf_t * sb, int c)
 #endif
 }
 
-/**
- * @brief
- */
 void MSG_WriteLong (sizebuf_t * sb, int c)
 {
 #if 1
@@ -187,9 +160,6 @@ void MSG_WriteLong (sizebuf_t * sb, int c)
 #endif
 }
 
-/**
- * @brief
- */
 void MSG_WriteFloat (sizebuf_t * sb, float f)
 {
 	union {
@@ -204,9 +174,6 @@ void MSG_WriteFloat (sizebuf_t * sb, float f)
 	SZ_Write(sb, &dat.l, 4);
 }
 
-/**
- * @brief
- */
 void MSG_WriteString (sizebuf_t * sb, const char *s)
 {
 	if (!s)
@@ -215,16 +182,12 @@ void MSG_WriteString (sizebuf_t * sb, const char *s)
 		SZ_Write(sb, s, strlen(s) + 1);
 }
 
-/**
- * @brief
- */
 void MSG_WriteCoord (sizebuf_t * sb, float f)
 {
 	MSG_WriteLong(sb, (int) (f * 32));
 }
 
 /**
- * @brief
  * @sa MSG_Read2Pos
  */
 void MSG_Write2Pos (sizebuf_t * sb, vec2_t pos)
@@ -234,7 +197,6 @@ void MSG_Write2Pos (sizebuf_t * sb, vec2_t pos)
 }
 
 /**
- * @brief
  * @sa MSG_ReadPos
  */
 void MSG_WritePos (sizebuf_t * sb, vec3_t pos)
@@ -244,9 +206,6 @@ void MSG_WritePos (sizebuf_t * sb, vec3_t pos)
 	MSG_WriteLong(sb, (long) (pos[2] * 32.));
 }
 
-/**
-  * @brief
-  */
 void MSG_WriteGPos (sizebuf_t * sb, pos3_t pos)
 {
 	MSG_WriteByte(sb, pos[0]);
@@ -254,26 +213,17 @@ void MSG_WriteGPos (sizebuf_t * sb, pos3_t pos)
 	MSG_WriteByte(sb, pos[2]);
 }
 
-/**
- * @brief
- */
 void MSG_WriteAngle (sizebuf_t * sb, float f)
 {
 	MSG_WriteByte(sb, (int) (f * 256 / 360) & 255);
 }
 
-/**
- * @brief
- */
 void MSG_WriteAngle16 (sizebuf_t * sb, float f)
 {
 	MSG_WriteShort(sb, ANGLE2SHORT(f));
 }
 
 
-/**
- * @brief
- */
 void MSG_WriteDir (sizebuf_t * sb, vec3_t dir)
 {
 	int i, best;
@@ -385,17 +335,12 @@ void MSG_WriteFormat (sizebuf_t * sb, const char *format, ...)
 
 /* reading functions */
 
-/**
- * @brief
- */
 void MSG_BeginReading (sizebuf_t * msg)
 {
 	msg->readcount = 0;
 }
 
 /**
- * @brief
- *
  * returns -1 if no more characters are available
  */
 int MSG_ReadChar (sizebuf_t * msg_read)
@@ -429,9 +374,6 @@ int MSG_ReadByte (sizebuf_t * msg_read)
 	return c;
 }
 
-/**
- * @brief
- */
 int MSG_ReadShort (sizebuf_t * msg_read)
 {
 	int c;
@@ -453,9 +395,6 @@ int MSG_ReadShort (sizebuf_t * msg_read)
 	return c;
 }
 
-/**
- * @brief
- */
 int MSG_ReadLong (sizebuf_t * msg_read)
 {
 	int c;
@@ -479,9 +418,6 @@ int MSG_ReadLong (sizebuf_t * msg_read)
 	return c;
 }
 
-/**
- * @brief
- */
 float MSG_ReadFloat (sizebuf_t * msg_read)
 {
 	union {
@@ -536,7 +472,6 @@ char *MSG_ReadStringRaw (sizebuf_t * msg_read)
 }
 
 /**
- * @brief
  * @note Don't use this function in a way like
  * <code> char *s = MSG_ReadStringRaw(sb);
  * char *t = MSG_ReadStringRaw(sb);</code>
@@ -571,7 +506,6 @@ char *MSG_ReadString (sizebuf_t * msg_read)
 }
 
 /**
- * @brief
  * @sa MSG_ReadString
  * @sa MSG_ReadStringRaw
  */
@@ -599,16 +533,12 @@ char *MSG_ReadStringLine (sizebuf_t * msg_read)
 	return string;
 }
 
-/**
- * @brief
- */
 float MSG_ReadCoord (sizebuf_t * msg_read)
 {
 	return (float) MSG_ReadLong(msg_read) * (1.0 / 32);
 }
 
 /**
- * @brief
  * @sa MSG_Write2Pos
  */
 void MSG_Read2Pos (sizebuf_t * msg_read, vec2_t pos)
@@ -618,7 +548,6 @@ void MSG_Read2Pos (sizebuf_t * msg_read, vec2_t pos)
 }
 
 /**
- * @brief
  * @sa MSG_WritePos
  */
 void MSG_ReadPos (sizebuf_t * msg_read, vec3_t pos)
@@ -629,7 +558,6 @@ void MSG_ReadPos (sizebuf_t * msg_read, vec3_t pos)
 }
 
 /**
- * @brief
  * @sa MSG_WriteGPos
  * @sa MSG_ReadByte
  * @note pos3_t are byte values
@@ -641,17 +569,11 @@ void MSG_ReadGPos (sizebuf_t * msg_read, pos3_t pos)
 	pos[2] = MSG_ReadByte(msg_read);
 }
 
-/**
- * @brief
- */
 float MSG_ReadAngle (sizebuf_t * msg_read)
 {
 	return (float) MSG_ReadChar(msg_read) * (360.0 / 256);
 }
 
-/**
- * @brief
- */
 float MSG_ReadAngle16 (sizebuf_t * msg_read)
 {
 	short s;
@@ -660,9 +582,6 @@ float MSG_ReadAngle16 (sizebuf_t * msg_read)
 	return (float) SHORT2ANGLE(s);
 }
 
-/**
- * @brief
- */
 void MSG_ReadData (sizebuf_t * msg_read, void *data, int len)
 {
 	int i;
@@ -671,9 +590,6 @@ void MSG_ReadData (sizebuf_t * msg_read, void *data, int len)
 		((byte *) data)[i] = MSG_ReadByte(msg_read);
 }
 
-/**
- * @brief
- */
 void MSG_ReadDir (sizebuf_t * sb, vec3_t dir)
 {
 	int b;

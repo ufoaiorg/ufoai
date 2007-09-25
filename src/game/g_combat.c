@@ -190,11 +190,7 @@ void G_ResetReactionFire (int team)
 }
 
 /**
- * @brief
  * @param[in] mock pseudo action - only for calculating mock values - NULL for real action
- * @param[in] shooter
- * @param[in] struck
- * @param[in] damage
  * @sa G_Damage
  */
 static void G_UpdateShotMock (shot_mock_t *mock, edict_t *shooter, edict_t *struck, int damage)
@@ -575,7 +571,6 @@ static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_m
 #define GRENADE_DT			0.1
 #define GRENADE_STOPSPEED	60.0
 /**
- * @brief
  * @sa G_ShootSingle
  * @sa Com_GrenadeTarget
  * @param[in] player The shooting player
@@ -978,13 +973,6 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 	}
 }
 
-/**
- * @brief
- * @param[in] shooter
- * @param[in] fd
- * @param[in] dir
- * @param[in] shotOrigin
- */
 static void G_GetShotOrigin (edict_t *shooter, fireDef_t *fd, vec3_t dir, vec3_t shotOrigin)
 {
 	/* get weapon position */
@@ -1006,14 +994,7 @@ static void G_GetShotOrigin (edict_t *shooter, fireDef_t *fd, vec3_t dir, vec3_t
 }
 
 /**
- * @brief
  * @sa G_ClientShoot
- * @param[in] ent
- * @param[in] type
- * @param[in] firemode
- * @param[in] weapon
- * @param[in] container
- * @param[in] fd
  */
 static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t **weapon, int *container, fireDef_t **fd)
 {

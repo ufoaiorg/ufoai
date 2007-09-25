@@ -418,9 +418,6 @@ void MN_SetNewNodePos (menuNode_t* node, int x, int y)
 	}
 }
 
-/**
- * @brief
- */
 static const char *MN_GetReferenceString (const menu_t* const menu, char *ref)
 {
 	if (!ref)
@@ -491,9 +488,6 @@ static const char *MN_GetReferenceString (const menu_t* const menu, char *ref)
 }
 
 
-/**
- * @brief
- */
 static float MN_GetReferenceFloat (const menu_t* const menu, void *ref)
 {
 	if (!ref)
@@ -737,9 +731,6 @@ void MN_Popup (const char *title, const char *text)
 	MN_PushMenu("popup");
 }
 
-/**
- * @brief
- */
 void MN_ExecuteActions (const menu_t* const menu, menuAction_t* const first)
 {
 	menuAction_t *action;
@@ -794,9 +785,6 @@ void MN_ExecuteActions (const menu_t* const menu, menuAction_t* const first)
 }
 
 
-/**
- * @brief
- */
 static void MN_Command_f (void)
 {
 	menuNode_t *node;
@@ -835,9 +823,6 @@ MENU ZONE DETECTION
 ==============================================================
 */
 
-/**
- * @brief
- */
 static void MN_FindContainer (menuNode_t* const node)
 {
 	invDef_t *id;
@@ -870,7 +855,6 @@ static void MN_FindContainer (menuNode_t* const node)
 }
 
 /**
- * @brief
  * @sa MN_Click
  */
 static qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
@@ -1025,9 +1009,6 @@ static qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 }
 
 
-/**
- * @brief
- */
 qboolean MN_CursorOnMenu (int x, int y)
 {
 	menuNode_t *node;
@@ -1058,7 +1039,6 @@ qboolean MN_CursorOnMenu (int x, int y)
 
 
 /**
- * @brief
  * @note: node->mousefx is the container id
  */
 static void MN_Drag (const menuNode_t* const node, int x, int y, qboolean rightClick)
@@ -1651,7 +1631,6 @@ void MN_TextScrollBottom (const char* nodeName)
 }
 
 /**
- * @brief
  * @sa MAP_ResetAction
  * @sa MN_TextRightClick
  * @sa MN_ExecuteActions
@@ -1710,7 +1689,6 @@ void MN_RightClick (int x, int y)
 }
 
 /**
- * @brief
  * @sa MN_Click
  * @sa MN_RightClick
  * @sa MN_MouseWheel
@@ -3007,9 +2985,6 @@ GENERIC MENU FUNCTIONS
 ==============================================================
 */
 
-/**
- * @brief
- */
 static void MN_DeleteMenu (menu_t * menu)
 {
 	int i;
@@ -3224,9 +3199,6 @@ static void MN_PopMenu_f (void)
 }
 
 
-/**
- * @brief
- */
 static void MN_Modify_f (void)
 {
 	float value;
@@ -3245,9 +3217,6 @@ static void MN_Modify_f (void)
 }
 
 
-/**
- * @brief
- */
 static void MN_ModifyWrap_f (void)
 {
 	float value;
@@ -3266,9 +3235,6 @@ static void MN_ModifyWrap_f (void)
 }
 
 
-/**
- * @brief
- */
 static void MN_ModifyString_f (void)
 {
 	qboolean next;
@@ -3327,8 +3293,6 @@ static void MN_ModifyString_f (void)
 
 
 /**
- * @brief
- *
  * Shows the corresponding strings in menu
  * Example: Optionsmenu - fullscreen: yes
  */
@@ -3371,9 +3335,7 @@ static void MN_Translate_f (void)
 
 #define MAX_TUTORIALLIST 512
 static char tutorialList[MAX_TUTORIALLIST];
-/**
- * @brief
- */
+
 static void MN_GetTutorials_f (void)
 {
 	int i;
@@ -3387,9 +3349,6 @@ static void MN_GetTutorials_f (void)
 	}
 }
 
-/**
- * @brief
- */
 static void MN_ListTutorials_f (void)
 {
 	int i;
@@ -3420,9 +3379,6 @@ static void MN_TutorialListClick_f (void)
 	Cmd_ExecuteString(va("seq_start %s", tutorials[num].sequence));
 }
 
-/**
- * @brief
- */
 static void MN_ListMenuModels_f (void)
 {
 	int i;
@@ -3789,9 +3745,6 @@ MENU PARSING
 ==============================================================
 */
 
-/**
- * @brief
- */
 static qboolean MN_ParseAction (menuNode_t * menuNode, menuAction_t * action, const char **text, const const char **token)
 {
 	const char *errhead = "MN_ParseAction: unexpected end of file (in event)";
@@ -3970,7 +3923,6 @@ static qboolean MN_ParseAction (menuNode_t * menuNode, menuAction_t * action, co
 }
 
 /**
- * @brief
  * @sa MN_ParseMenuBody
  */
 static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const char **token)
@@ -4157,7 +4109,6 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 			 * if you select the 'string', the 'cvarname' will be set to 'value'
 			 * and if action is defined (which is a console/script command string)
 			 * this one is executed on each selection
-			 * @sa
 			 */
 
 			do {
@@ -4189,7 +4140,6 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 }
 
 /**
- * @brief
  * @sa MN_ParseNodeBody
  */
 static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
@@ -4548,7 +4498,6 @@ void MN_ParseMenuModel (const char *name, const char **text)
 }
 
 /**
- * @brief
  * @sa CL_ParseClientData
  */
 void MN_ParseMenu (const char *name, const char **text)
@@ -4654,25 +4603,16 @@ static void MN_MapInfo (int step)
 		Cvar_Set("mn_mappic3", va("maps/shots/%s_3.jpg", csi.mds[ccs.multiplayerMapDefinitionIndex].map));
 }
 
-/**
- * @brief
- */
 static void MN_GetMaps_f (void)
 {
 	MN_MapInfo(0);
 }
 
-/**
- * @brief
- */
 static void MN_NextMap_f (void)
 {
 	MN_MapInfo(1);
 }
 
-/**
- * @brief
- */
 static void MN_PrevMap_f (void)
 {
 	MN_MapInfo(-1);
@@ -4773,9 +4713,6 @@ static void MN_TimestampedText (char *text, message_t *message, size_t textsize)
 	Com_sprintf(text, textsize, _("%i %s %02i, %02i:%02i: "), message->y, CL_DateGetMonthName(message->m), message->d, message->h, message->min);
 }
 
-/**
- * @brief
- */
 void MN_RemoveMessage (char *title)
 {
 	message_t *m = messageStack;
@@ -4881,9 +4818,6 @@ static const value_t fontValues[] = {
 	{NULL, V_NULL, 0},
 };
 
-/**
- * @brief
- */
 void CL_GetFontData (const char *name, int *size, const char *path)
 {
 	int i;
@@ -4899,7 +4833,6 @@ void CL_GetFontData (const char *name, int *size, const char *path)
 }
 
 /**
- * @brief
  * @sa CL_ParseClientData
  */
 void CL_ParseFont (const char *name, const char **text)
@@ -5007,7 +4940,6 @@ static const value_t tutValues[] = {
 };
 
 /**
- * @brief
  * @sa CL_ParseClientData
  */
 void MN_ParseTutorials (const char *name, const char **text)
@@ -5096,9 +5028,6 @@ static void MS_MessageSave (sizebuf_t * sb, message_t * message)
 	MSG_WriteLong(sb, message->s);
 }
 
-/**
- * @brief
- */
 qboolean MS_Save (sizebuf_t* sb, void* data)
 {
 	int i = 0;
@@ -5115,9 +5044,6 @@ qboolean MS_Save (sizebuf_t* sb, void* data)
 	return qtrue;
 }
 
-/**
- * @brief
- */
 qboolean MS_Load (sizebuf_t* sb, void* data)
 {
 	int i, mtype, idx;

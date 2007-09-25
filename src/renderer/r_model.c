@@ -272,7 +272,6 @@ model_t *R_RegisterModelShort (const char *name)
 }
 
 /**
- * @brief
  * @sa R_ShutdownModels
  */
 static void R_ModFree (model_t * mod)
@@ -284,7 +283,6 @@ static void R_ModFree (model_t * mod)
 }
 
 /**
- * @brief
  * @sa R_ModBeginLoading
  */
 void R_ModEndLoading (void)

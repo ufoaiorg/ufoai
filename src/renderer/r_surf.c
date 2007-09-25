@@ -85,9 +85,6 @@ static image_t *R_TextureAnimation (mBspTexInfo_t * tex)
 	return tex->image;
 }
 
-/**
- * @brief
- */
 void R_DrawTriangleOutlines (void)
 {
 	int i, j;
@@ -123,7 +120,6 @@ void R_DrawTriangleOutlines (void)
 }
 
 /**
- * @brief
  * @param[in] scroll != 0 for SURF_FLOWING
  */
 static void R_DrawPoly (const mBspSurface_t * fa, const float scroll)
@@ -167,7 +163,6 @@ static void R_DrawPolyChain (const mBspSurface_t *surf, const float scroll)
 }
 
 /**
- * @brief
  * @sa R_DrawPolyChain
  */
 static void R_DrawPolyChainOffset (const mBspPoly_t * p, const float soffset, const float toffset)
@@ -296,9 +291,6 @@ static void R_BlendLightmaps (void)
 	qglDepthMask(GL_TRUE);
 }
 
-/**
- * @brief
- */
 static void R_RenderBrushPoly (mBspSurface_t * fa)
 {
 	int maps;
@@ -542,9 +534,6 @@ static void R_DrawSurface (mBspSurface_t * surf)
 	RSTATE_DISABLE_ALPHATEST
 }
 
-/**
- * @brief
- */
 static void R_DrawInlineBModel (void)
 {
 	int i, k;
@@ -692,7 +681,6 @@ WORLD MODEL
 */
 
 /**
- * @brief
  * @sa R_DrawWorld
  */
 static void R_RecursiveWorldNode (mBspNode_t * node)
@@ -766,7 +754,6 @@ static void R_RecursiveWorldNode (mBspNode_t * node)
 
 
 /**
- * @brief
  * @sa R_RecursiveWorldNode
  * @sa R_DrawLevelBrushes
  */
@@ -811,7 +798,6 @@ static void R_DrawWorld (mBspNode_t * nodes)
 
 
 /**
- * @brief
  * @sa R_DrawLevelBrushes
  */
 static void R_FindModelNodes_r (mBspNode_t * node)
@@ -872,17 +858,11 @@ LIGHTMAP ALLOCATION
 =============================================================================
 */
 
-/**
- * @brief
- */
 static void LM_InitBlock (void)
 {
 	memset(gl_lms.allocated, 0, sizeof(gl_lms.allocated));
 }
 
-/**
- * @brief
- */
 static void LM_UploadBlock (qboolean dynamic)
 {
 	int texture;
@@ -952,9 +932,6 @@ static qboolean LM_AllocBlock (int w, int h, int *x, int *y)
 	return qtrue;
 }
 
-/**
- * @brief
- */
 void R_BuildPolygonFromSurface (mBspSurface_t * fa, int shift[3])
 {
 	int i, lindex, lnumverts;
@@ -1020,7 +997,6 @@ void R_BuildPolygonFromSurface (mBspSurface_t * fa, int shift[3])
 }
 
 /**
- * @brief
  * @sa R_ModLoadFaces
  */
 void R_CreateSurfaceLightmap (mBspSurface_t * surf)
@@ -1052,7 +1028,6 @@ void R_CreateSurfaceLightmap (mBspSurface_t * surf)
 
 
 /**
- * @brief
  * @sa R_ModBeginLoading
  * @sa R_EndBuildingLightmaps
  */
@@ -1097,7 +1072,6 @@ void R_BeginBuildingLightmaps (void)
 }
 
 /**
- * @brief
  * @sa R_BeginBuildingLightmaps
  * @sa R_ModBeginLoading
  */

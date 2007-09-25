@@ -1,6 +1,5 @@
 /**
  * @file r_main.c
- * @brief
  */
 
 /*
@@ -70,7 +69,6 @@ static void R_GetSpriteVectors (ptl_t *p, vec3_t right, vec3_t up)
 }
 
 /**
- * @brief
  * @sa R_DrawPtls
  */
 static void R_DrawSprite (ptl_t * p)
@@ -135,7 +133,6 @@ static void R_DrawSprite (ptl_t * p)
 
 
 /**
- * @brief
  * @sa R_DrawPtls
  */
 static void R_DrawPtlModel (ptl_t * p)
@@ -196,7 +193,6 @@ static void R_DrawPtlCircle (ptl_t* p)
 }
 
 /**
- * @brief
  * @sa R_DrawPtls
  */
 static void R_DrawPtlLine (ptl_t * p)
@@ -225,7 +221,6 @@ GENERIC PARTICLE FUNCTIONS
 
 static int blend_mode;
 /**
- * @brief
  * @sa R_DrawPtls
  */
 static void R_SetBlendMode (int mode)
@@ -261,7 +256,6 @@ static void R_SetBlendMode (int mode)
 
 
 /**
- * @brief
  * @note the refdef.ptls is the ptl array from cl_particle.c
  * @sa V_UpdateRefDef
  */

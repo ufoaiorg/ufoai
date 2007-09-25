@@ -103,9 +103,6 @@ static ALint SND_OAL_PickChannel (void)
 	return -1;
 }
 
-/**
- * @brief
- */
 void SND_OAL_StartSound (ALuint bufferNum)
 {
 	if (snd_openal_numChannels && bufferNum) {
@@ -127,9 +124,6 @@ void SND_OAL_StartSound (ALuint bufferNum)
 	}
 }
 
-/**
- * @brief
- */
 static void SND_OAL_AllocateChannels (void)
 {
 	if (qalGenSources) {
@@ -203,7 +197,6 @@ qboolean SND_OAL_Init (char* device)
  *=====================================================*/
 
 /**
- * @brief
  * @sa SND_OAL_Stream
  */
 static qboolean SND_OAL_ReadOGG (music_t* music, ALuint buffer)
@@ -238,9 +231,6 @@ static qboolean SND_OAL_ReadOGG (music_t* music, ALuint buffer)
 	return qtrue;
 }
 
-/**
- * @brief
- */
 static qboolean SND_OAL_StreamPlaying (music_t *music)
 {
 	ALenum state;
@@ -301,7 +291,6 @@ qboolean SND_OAL_Stream (music_t* music)
 }
 
 /**
- * @brief
  * @sa SND_OAL_Stream
  * @sa SND_OAL_StopStream
  */
@@ -328,7 +317,6 @@ void SND_OAL_StartStream (music_t* music)
 }
 
 /**
- * @brief
  * @sa SND_OAL_StartStream
  */
 void SND_OAL_StopStream (music_t* music)
@@ -365,7 +353,6 @@ void SND_OAL_UpdateListeners (vec3_t listener_origin)
 }
 
 /**
- * @brief
  * @sa SND_OAL_LoadSound
  */
 static qboolean SND_OAL_LoadFile (sfx_t* sfx, ALboolean loop)
@@ -417,9 +404,6 @@ qboolean SND_OAL_LoadSound (sfx_t* sfx, qboolean looping)
 	return qtrue;
 }
 
-/**
- * @brief
- */
 void SND_OAL_PlaySound (sfx_t* sfx, vec3_t origin)
 {
 	if (!openal_active)
@@ -431,9 +415,6 @@ void SND_OAL_PlaySound (sfx_t* sfx, vec3_t origin)
 	qalSourcePlay(sfx->source);
 }
 
-/**
- * @brief
- */
 void SND_OAL_StopSound (void)
 {
 	int i;
@@ -449,9 +430,6 @@ void SND_OAL_StopSound (void)
 	}
 }
 
-/**
- * @brief
- */
 void SND_OAL_DestroySound (void)
 {
 	if (!openal_active)

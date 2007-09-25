@@ -66,9 +66,6 @@ static sysConsole_t sys_console;
 
 int SV_CountPlayers(void);
 
-/**
- * @brief
- */
 char *Sys_ConsoleInput (void)
 {
 	static char buffer[MAXCMDLINE];
@@ -82,9 +79,6 @@ char *Sys_ConsoleInput (void)
 }
 
 
-/**
- * @brief
- */
 void Sys_ConsoleOutput (const char *text)
 {
 	char buffer[MAX_PRINTMSG];
@@ -120,9 +114,6 @@ void Sys_ConsoleOutput (const char *text)
 }
 
 
-/**
- * @brief
- */
 void Sys_Error (const char *error, ...)
 {
 	va_list argptr;
@@ -170,9 +161,6 @@ void Sys_Error (const char *error, ...)
 }
 
 
-/**
- * @brief
- */
 void Sys_ShowConsole (qboolean show)
 {
 	if (!show) {
@@ -270,9 +258,6 @@ static LONG WINAPI Sys_ConsoleProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM 
 }
 
 
-/**
- * @brief
- */
 static LONG WINAPI Sys_ConsoleEditProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (uMsg) {
@@ -334,9 +319,6 @@ void Sys_ConsoleShutdown (void)
 	UnregisterClass(CONSOLE_WINDOW_CLASS_NAME, global_hInstance);
 }
 
-/**
- * @brief
- */
 void Sys_ConsoleInit (void)
 {
 	WNDCLASSEX wc;

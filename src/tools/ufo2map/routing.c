@@ -1,6 +1,5 @@
 /**
  * @file routing.c
- * @brief
  */
 
 /*
@@ -51,7 +50,6 @@ byte	filled[WIDTH][WIDTH];	/**< totally blocked units */
 static ipos3_t wpMins, wpMaxs;
 
 /**
- * @brief
  * @sa DoRouting
  */
 static void CheckUnit (unsigned int unitnum)
@@ -165,7 +163,6 @@ static void CheckUnit (unsigned int unitnum)
 
 
 /**
- * @brief
  * @sa DoRouting
  */
 static void CheckConnections (unsigned int unitnum)

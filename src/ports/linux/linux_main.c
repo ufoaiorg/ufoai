@@ -38,9 +38,6 @@ cvar_t* sys_os;
 /* General routines */
 /* ======================================================================= */
 
-/**
- * @brief
- */
 void Sys_Init (void)
 {
 	sys_os = Cvar_Get("sys_os", "linux", CVAR_SERVERINFO, NULL);

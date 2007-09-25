@@ -1,6 +1,5 @@
 /**
  * @file r_image.c
- * @brief
  */
 
 /*
@@ -96,9 +95,6 @@ static const glTextureMode_t gl_texture_modes[] = {
 };
 #define NUM_R_MODES (sizeof(gl_texture_modes) / sizeof(glTextureMode_t))
 
-/**
- * @brief
- */
 void R_TextureMode (const char *string)
 {
 	int i;
@@ -179,7 +175,6 @@ PCX LOADING
 */
 
 /**
- * @brief
  * @sa R_LoadTGA
  * @sa R_LoadJPG
  * @sa R_LoadPNG
@@ -300,7 +295,6 @@ static void PngReadFunc (png_struct *Png, png_bytep buf, png_size_t size)
 
 
 /**
- * @brief
  * @sa R_LoadPCX
  * @sa R_LoadTGA
  * @sa R_LoadJPG
@@ -423,7 +417,6 @@ static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 }
 
 /**
- * @brief
  * @sa R_LoadTGA
  * @sa R_LoadJPG
  * @sa R_LoadPCX
@@ -504,7 +497,6 @@ typedef struct targaHeader_s {
 #define TGA_GREY_COMP			11
 
 /**
- * @brief
  * @sa R_LoadPCX
  * @sa R_LoadJPG
  * @sa R_LoadPNG
@@ -713,7 +705,6 @@ void R_LoadTGA (const char *name, byte ** pic, int *width, int *height)
 
 
 /**
- * @brief
  * @sa R_LoadTGA
  */
 void R_WriteTGA (FILE *f, byte *buffer, int width, int height)
@@ -758,25 +749,16 @@ By Robert 'Heffo' Heffernan
 =================================================================
 */
 
-/**
- * @brief
- */
 static void jpg_null (j_decompress_ptr cinfo)
 {
 }
 
-/**
- * @brief
- */
 static boolean jpg_fill_input_buffer (j_decompress_ptr cinfo)
 {
 	Com_Printf("Premature end of JPEG data\n");
 	return 1;
 }
 
-/**
- * @brief
- */
 static void jpg_skip_input_data (j_decompress_ptr cinfo, long num_bytes)
 {
 	if (cinfo->src->bytes_in_buffer < (size_t) num_bytes)
@@ -786,9 +768,6 @@ static void jpg_skip_input_data (j_decompress_ptr cinfo, long num_bytes)
 	cinfo->src->bytes_in_buffer -= (size_t) num_bytes;
 }
 
-/**
- * @brief
- */
 static void jpeg_mem_src (j_decompress_ptr cinfo, byte * mem, int len)
 {
 	cinfo->src = (struct jpeg_source_mgr *) (*cinfo->mem->alloc_small) ((j_common_ptr) cinfo, JPOOL_PERMANENT, sizeof(struct jpeg_source_mgr));
@@ -802,7 +781,6 @@ static void jpeg_mem_src (j_decompress_ptr cinfo, byte * mem, int len)
 }
 
 /**
- * @brief
  * @sa R_LoadPCX
  * @sa R_LoadTGA
  * @sa R_LoadPNG
@@ -1010,7 +988,6 @@ static void jpegDest (j_compress_ptr cinfo, byte * outfile, int size)
 }
 
 /**
- * @brief
  * @sa R_LoadJPG
  */
 size_t R_SaveJPGToBuffer (byte * buffer, int quality, int image_width, int image_height, byte * image_buffer)
@@ -1081,7 +1058,6 @@ size_t R_SaveJPGToBuffer (byte * buffer, int quality, int image_width, int image
 }
 
 /**
- * @brief
  * @sa R_ScreenShot_f
  * @sa R_LoadJPG
  */
@@ -1122,9 +1098,6 @@ void R_WriteJPG (FILE *f, byte *buffer, int width, int height, int quality)
 	jpeg_destroy_compress(&cinfo);
 }
 
-/**
- * @brief
- */
 static void R_ResampleTexture (unsigned *in, int inwidth, int inheight, unsigned *out, int outwidth, int outheight)
 {
 	int i, j;
@@ -1194,9 +1167,6 @@ static void R_MipMap (byte * in, int width, int height)
 #define DARKEN_FILTER 7
 #define SHARPEN_FILTER 8
 
-/**
- * @brief
- */
 static const float FilterMatrix[][FILTER_SIZE][FILTER_SIZE] = {
 	/* regular blur */
 	{
@@ -1397,7 +1367,6 @@ static int upload_width, upload_height;
 static unsigned scaled_buffer[1024 * 1024];
 
 /**
- * @brief
  * @return has_alpha
  */
 static qboolean R_Upload32 (unsigned *data, int width, int height, qboolean mipmap, qboolean clamp, imagetype_t type, image_t* image)
@@ -1549,7 +1518,6 @@ static qboolean R_Upload32 (unsigned *data, int width, int height, qboolean mipm
 }
 
 /**
- * @brief
  * @return has_alpha
  */
 static qboolean R_Upload8 (byte * data, int width, int height, qboolean mipmap, imagetype_t type, image_t* image)
@@ -1598,9 +1566,6 @@ static qboolean R_Upload8 (byte * data, int width, int height, qboolean mipmap, 
 	return ret;
 }
 
-/**
- * @brief
- */
 void R_SoftenTexture (byte *in, int width, int height, int bpp)
 {
 	byte *out;
@@ -1935,9 +1900,6 @@ void R_FreeUnusedImages (void)
 }
 
 
-/**
- * @brief
- */
 static int R_GetPalette (void)
 {
 	int i;
@@ -1968,9 +1930,6 @@ static int R_GetPalette (void)
 	return 0;
 }
 
-/**
- * @brief
- */
 void R_InitImages (void)
 {
 	int i, j;
@@ -1996,9 +1955,6 @@ void R_InitImages (void)
 	}
 }
 
-/**
- * @brief
- */
 void R_ShutdownImages (void)
 {
 	int i;

@@ -54,7 +54,6 @@ static float map_fog;
 static vec4_t map_fogColor;
 
 /**
- * @brief
  * @sa V_RenderView
  */
 static void V_ClearScene (void)
@@ -64,21 +63,12 @@ static void V_ClearScene (void)
 }
 
 
-/**
- * @brief
- * @sa
- */
 entity_t *V_GetEntity (void)
 {
 	return r_entities + r_numentities;
 }
 
 
-/**
- * @brief
- * @param[in] ent
- * @sa
- */
 void V_AddEntity (entity_t * ent)
 {
 	if (r_numentities >= MAX_ENTITIES)
@@ -89,9 +79,7 @@ void V_AddEntity (entity_t * ent)
 
 
 /**
- * @brief
  * @param[in] intensity The radius of the light
- * @sa
  */
 void V_AddLight (vec3_t org, float intensity, vec3_t color)
 {
@@ -107,8 +95,6 @@ void V_AddLight (vec3_t org, float intensity, vec3_t color)
 
 
 /**
- * @brief
- * @param
  * @sa CL_AddLightStyles
  */
 void V_AddLightStyle (int style, float r, float g, float b)
@@ -125,11 +111,6 @@ void V_AddLightStyle (int style, float r, float g, float b)
 	ls->rgb[2] = b;
 }
 
-/**
- * @brief
- * @param
- * @sa
- */
 static void CL_ParseEntitystring (const char *es)
 {
 	const char *strstart, *entity_token;
@@ -473,8 +454,6 @@ void V_CalcFovX (void)
 }
 
 /**
- * @brief
- * @param
  * @sa V_CalcFovX
  */
 static void V_CalcFovY (float width, float height)
@@ -526,7 +505,6 @@ void V_UpdateRefDef (void)
 }
 
 /**
- * @brief
  * @sa SCR_UpdateScreen
  */
 void V_RenderView (void)
@@ -574,11 +552,6 @@ void V_RenderView (void)
 }
 
 
-/**
- * @brief
- * @param pos
- * @sa
- */
 void V_CenterView (pos3_t pos)
 {
 	vec3_t vec;
@@ -598,8 +571,6 @@ static void V_Viewpos_f (void)
 }
 
 /**
- * @brief
- * @param
  * @sa CL_Init
  */
 void V_Init (void)

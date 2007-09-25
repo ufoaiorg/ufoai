@@ -1,6 +1,5 @@
 /**
  * @file levels.c
- * @brief
  */
 
 /*
@@ -33,9 +32,6 @@ vec3_t worldMins, worldMaxs;
 
 static int oldleafs, oldleaffaces, oldleafbrushes, oldplanes, oldvertexes, oldnodes, oldtexinfo, oldfaces, oldedges, oldsurfedges;
 
-/**
- * @brief
- */
 void PushInfo (void)
 {
 	oldleafs = numleafs;
@@ -50,9 +46,6 @@ void PushInfo (void)
 	oldsurfedges = numsurfedges;
 }
 
-/**
- * @brief
- */
 void PopInfo (void)
 {
 	numleafs = oldleafs;
@@ -68,9 +61,6 @@ void PopInfo (void)
 }
 
 
-/**
- * @brief
- */
 static int BuildNodeChildren (vec3_t mins, vec3_t maxs, int n[3])
 {
 	int node = -1, i;
@@ -128,7 +118,6 @@ static int BuildNodeChildren (vec3_t mins, vec3_t maxs, int n[3])
 #define SPLIT_BRUSH_SIZE 256
 
 /**
- * @brief
  * @sa ProcessLevel
  */
 static int ConstructLevelNodes_r (int levelnum, vec3_t cmins, vec3_t cmaxs)

@@ -52,9 +52,6 @@ SYSTEM IO
 ===============================================================================
 */
 
-/**
- * @brief
- */
 void Sys_Quit (void)
 {
 	timeEndPeriod(1);
@@ -179,9 +176,6 @@ char *Sys_GetHomeDirectory (void)
 	return path;
 }
 
-/**
- * @brief
- */
 void Sys_Init (void)
 {
 	OSVERSIONINFO vinfo;
@@ -235,9 +229,6 @@ GAME DLL
 
 static HINSTANCE game_library;
 
-/**
- * @brief
- */
 void Sys_UnloadGame (void)
 {
 	if (!FreeLibrary(game_library))
@@ -289,9 +280,6 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 }
 
 
-/**
- * @brief
- */
 static void ParseCommandLine (LPSTR lpCmdLine)
 {
 	argc = 1;
@@ -318,9 +306,6 @@ static void ParseCommandLine (LPSTR lpCmdLine)
 
 HINSTANCE global_hInstance;
 
-/**
- * @brief
- */
 static void FixWorkingDirectory (void)
 {
 	char *p;
@@ -402,9 +387,6 @@ void Sys_SetAffinityAndPriority (void)
 	CloseHandle(proc);
 }
 
-/**
- * @brief
- */
 int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	/* previous instances do not exist in Win32 */
@@ -446,7 +428,6 @@ void Sys_Sleep (int milliseconds)
 }
 
 /**
- * @brief
  * @sa Sys_FreeLibrary
  * @sa Sys_GetProcAddress
  */
@@ -472,7 +453,6 @@ void *Sys_LoadLibrary (const char *name, int flags)
 }
 
 /**
- * @brief
  * @sa Sys_LoadLibrary
  */
 void Sys_FreeLibrary (void *libHandle)
@@ -484,7 +464,6 @@ void Sys_FreeLibrary (void *libHandle)
 }
 
 /**
- * @brief
  * @sa Sys_LoadLibrary
  */
 void *Sys_GetProcAddress (void *libHandle, const char *procName)

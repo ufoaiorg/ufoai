@@ -161,9 +161,6 @@ static void CL_Env_f (void)
 }
 
 
-/**
- * @brief
- */
 static void CL_ForwardToServer_f (void)
 {
 	if (cls.state != ca_connected && cls.state != ca_active) {
@@ -181,9 +178,6 @@ static void CL_ForwardToServer_f (void)
 	}
 }
 
-/**
- * @brief
- */
 static void CL_Quit_f (void)
 {
 	CL_Disconnect();
@@ -265,7 +259,6 @@ void CL_StartSingleplayer (qboolean singleplayer)
 }
 
 /**
- * @brief
  * @note Called after an ERR_DROP was thrown
  * @sa CL_Disconnect
  */
@@ -306,7 +299,6 @@ void CL_Drop (void)
 }
 
 /**
- * @brief
  * @note Only call CL_Connect if there is no connection yet (cls.stream is NULL)
  * @sa CL_Disconnect
  */
@@ -330,9 +322,6 @@ static void CL_Connect (void)
 		Com_Printf("Could not connect\n");
 }
 
-/**
- * @brief
- */
 static void CL_Connect_f (void)
 {
 	const char *server;
@@ -373,8 +362,6 @@ static void CL_Connect_f (void)
 }
 
 /**
- * @brief
- *
  * Send the rest of the command line over as
  * an unconnected command.
  */
@@ -407,7 +394,6 @@ static void CL_Rcon_f (void)
 }
 
 /**
- * @brief
  * @sa CL_ParseServerData
  * @sa CL_Disconnect
  */
@@ -584,7 +570,6 @@ static int serverListPos = 0;
 static serverList_t serverList[MAX_SERVERLIST];
 
 /**
- * @brief
  * @sa CL_PingServerCallback
  */
 static void CL_ProcessPingReply (serverList_t *server, const char *msg)
@@ -907,7 +892,6 @@ static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 }
 
 /**
- * @brief
  * @sa CL_ServerInfo_f
  * @sa CL_ParseServerInfoMessage
  */
@@ -932,7 +916,6 @@ static void CL_ServerInfoCallback (struct net_stream *s)
 }
 
 /**
- * @brief
  * @sa CL_PingServers_f
  */
 static void CL_QueryMasterServer (void)
@@ -981,7 +964,6 @@ static void CL_QueryMasterServer (void)
 }
 
 /**
- * @brief
  * @sa SV_DiscoveryCallback
  */
 static void CL_ServerListDiscoveryCallback (struct datagram_socket *s, const char *buf, int len, struct sockaddr *from)
@@ -1060,7 +1042,6 @@ static void CL_BookmarkAdd_f (void)
 }
 
 /**
- * @brief
  * @sa CL_ParseServerInfoMessage
  */
 static void CL_BookmarkListClick_f (void)
@@ -1086,7 +1067,6 @@ static void CL_BookmarkListClick_f (void)
 }
 
 /**
- * @brief
  * @sa CL_ServerInfoCallback
  */
 static void CL_ServerInfo_f (void)
@@ -1305,7 +1285,6 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 }
 
 /**
- * @brief
  * @sa CL_ConnectionlessPacket
  * @sa CL_Frame
  * @sa CL_ParseServerMessage
@@ -1326,9 +1305,6 @@ static void CL_ReadPackets (void)
 }
 
 
-/**
- * @brief
- */
 static void CL_Userinfo_f (void)
 {
 	Com_Printf("User info settings:\n");
@@ -1488,9 +1464,6 @@ static void CL_SpawnSoldiers_f (void)
 	}
 }
 
-/**
- * @brief
- */
 void CL_RequestNextDownload (void)
 {
 	unsigned map_checksum = 0;
@@ -2202,9 +2175,6 @@ static void CL_InitLocal (void)
 #endif
 }
 
-/**
- * @brief
- */
 static void CL_SendCmd (void)
 {
 	/* send a userinfo update if needed */
@@ -2221,7 +2191,6 @@ static void CL_SendCmd (void)
 
 
 /**
- * @brief
  * @sa CL_Frame
  */
 static void CL_SendCommand (void)
@@ -2289,9 +2258,6 @@ const char* CL_ToDifficultyName (int difficulty)
 	return NULL;
 }
 
-/**
- * @brief
- */
 static void CL_CvarCheck (void)
 {
 	int v;
@@ -2383,7 +2349,6 @@ void CL_SetClientState (int state)
 }
 
 /**
- * @brief
  * @sa Qcommon_Frame
  */
 void CL_Frame (int now, void *data)
@@ -2463,7 +2428,6 @@ void CL_Frame (int now, void *data)
 }
 
 /**
- * @brief
  * @sa CL_Frame
  */
 void CL_SlowFrame (int now, void *data)
@@ -2523,7 +2487,6 @@ static qboolean CL_LocaleSet (void)
 }
 
 /**
- * @brief
  * @sa CL_Shutdown
  * @sa CL_InitAfter
  */

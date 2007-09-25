@@ -40,9 +40,6 @@ static int c_shadow_volumes = 0;
 =============================================
 */
 
-/**
- * @brief
- */
 static void vectoangles (vec3_t value1, vec3_t angles)
 {
 	float forward;
@@ -78,9 +75,6 @@ static void vectoangles (vec3_t value1, vec3_t angles)
 }
 
 static qboolean nolight;
-/**
- * @brief
- */
 static void R_ShadowLight (vec3_t pos, vec3_t lightAdd)
 {
 	int i;
@@ -128,9 +122,6 @@ static void R_ShadowLight (vec3_t pos, vec3_t lightAdd)
 	VectorScale(dist, shadowdist, lightAdd);
 }
 
-/**
- * @brief
- */
 static void R_DrawAliasShadow (entity_t * e, mdl_md2_t * paliashdr, int posenum)
 {
 	dtrivertx_t *verts;
@@ -209,7 +200,6 @@ static void R_DrawAliasShadow (entity_t * e, mdl_md2_t * paliashdr, int posenum)
 }
 
 /**
- * @brief
  * @sa R_RenderVolumes
  */
 static void BuildShadowVolume (mdl_md2_t * hdr, vec3_t light, float projectdistance)
@@ -322,7 +312,6 @@ static void BuildShadowVolume (mdl_md2_t * hdr, vec3_t light, float projectdista
 }
 
 /**
- * @brief
  * @sa R_DrawAliasShadowVolume
  * @sa BuildShadowVolume
  */
@@ -370,7 +359,6 @@ static void R_RenderVolumes (mdl_md2_t * paliashdr, vec3_t lightdir, int projdis
 }
 
 /**
- * @brief
  * @sa R_DrawShadowVolume
  */
 static void R_DrawAliasShadowVolume (mdl_md2_t * paliashdr, int posenumm)
@@ -495,7 +483,6 @@ static void R_DrawAliasShadowVolume (mdl_md2_t * paliashdr, int posenumm)
 }
 
 /**
- * @brief
  * @sa R_DrawShadowVolume
  * @sa R_CastShadow
  */
@@ -571,7 +558,6 @@ void R_DrawShadow (entity_t * e)
 }
 
 /**
- * @brief
  * @sa R_DrawAliasMD2Model
  * @sa R_DrawAliasMD3Model
  * @sa R_CastShadow
@@ -634,7 +620,6 @@ void R_DrawShadowVolume (entity_t * e)
 }
 
 /**
- * @brief
  * @sa R_Flash
  */
 void R_ShadowBlend (void)

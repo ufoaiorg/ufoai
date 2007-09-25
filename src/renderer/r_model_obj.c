@@ -83,7 +83,6 @@ typedef struct obj_model_s {
 } obj_model_t;
 
 /**
- * @brief
  * @sa R_OBJ_SecondPass
  */
 static int R_OBJ_FirstPass (model_t *mod, void* buffer)
@@ -178,7 +177,6 @@ static int R_OBJ_FirstPass (model_t *mod, void* buffer)
 }
 
 /**
- * @brief
  * @sa R_OBJ_FirstPass
  */
 static int R_OBJ_SecondPass (model_t *mod, void *buffer)
@@ -333,9 +331,6 @@ static int R_OBJ_SecondPass (model_t *mod, void *buffer)
 	return 1;
 }
 
-/**
- * @brief
- */
 int R_ModLoadOBJModel (model_t* mod, void* buffer, int bufSize)
 {
 	void *tmp = buffer;
@@ -355,9 +350,6 @@ int R_ModLoadOBJModel (model_t* mod, void* buffer, int bufSize)
 	return 1;
 }
 
-/**
- * @brief
- */
 static void R_OBJ_Render (model_t *mod)
 {
 #if 0
@@ -380,7 +372,6 @@ static void R_OBJ_Render (model_t *mod)
 }
 
 /**
- * @brief
  * @s R_OBJ_Render
  */
 void R_DrawOBJModel (entity_t *e)

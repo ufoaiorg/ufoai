@@ -87,9 +87,6 @@ static char *FS_BuildOSPath (const char *base, const char *qpath, char *buffer, 
 	return buffer;
 }
 
-/**
- * @brief
- */
 int FS_FileLength (qFILE * f)
 {
 	int pos;
@@ -218,9 +215,6 @@ static int FS_FOpenFileSingle (const char *filename, qFILE * file)
 }
 
 #define PK3_SEEK_BUFFER_SIZE 65536
-/**
- * @brief
- */
 int FS_Seek (qFILE * f, long offset, int origin)
 {
 	int _origin;
@@ -276,7 +270,6 @@ int FS_Seek (qFILE * f, long offset, int origin)
 }
 
 /**
- * @brief
  * @returns filesize
  * @sa FS_FOpenFileSingle
  * @sa FS_LoadFile
@@ -295,9 +288,6 @@ int FS_FOpenFile (const char *filename, qFILE * file)
 	return result;
 }
 
-/**
- * @brief
- */
 void FS_FOpenFileWrite (const char *filename, qFILE * f)
 {
 	if (f->z)
@@ -444,9 +434,6 @@ int FS_LoadFile (const char *path, byte **buffer)
 	return len;
 }
 
-/**
- * @brief
- */
 void FS_FreeFile (void *buffer)
 {
 	_Mem_Free(buffer, "FS_FreeFile", 0);
@@ -599,7 +586,6 @@ static void FS_AddGameDirectory (const char *dir)
 }
 
 /**
- * @brief
  * @note e.g. *nix: Use ~/.ufoai/dir as gamedir
  * @sa Sys_GetHomeDirectory
  */
@@ -623,9 +609,6 @@ static void FS_AddHomeAsGameDirectory (const char *dir)
 	}
 }
 
-/**
- * @brief
- */
 void FS_ExecAutoexec (void)
 {
 	const char *dir;
@@ -894,7 +877,6 @@ static const cmdList_t fs_commands[] = {
 };
 
 /**
- * @brief
  * @sa FS_Shutdown
  * @sa FS_RestartFilesystem
  */
@@ -1081,9 +1063,6 @@ void FS_BuildFileList (const char *fileList)
 	*fl = 0;
 }
 
-/**
- * @brief
- */
 const char* FS_NextFileFromFileList (const char *files)
 {
 	static char *fileList = NULL;
@@ -1203,9 +1182,6 @@ const char *FS_GetFileData (const char *files)
 	return NULL;
 }
 
-/**
- * @brief
- */
 void FS_SkipBlock (const char **text)
 {
 	const char *token;
@@ -1222,9 +1198,6 @@ void FS_SkipBlock (const char **text)
 	} while (depth && *text);
 }
 
-/**
- * @brief
- */
 char *FS_NextScriptHeader (const char *files, const char **name, const char **text)
 {
 	static char lastList[MAX_QPATH] = "";
@@ -1323,7 +1296,6 @@ int fs_numInstalledMaps = -1;
 static qboolean fs_mapsInstalledInit = qfalse;
 
 /**
- * @brief
  * @param[in] reset If true the directory is scanned everytime for new maps (useful for dedicated servers).
  * If false we only use the maps array (for clients e.g.)
  */
@@ -1462,9 +1434,6 @@ int FS_Write (const void *buffer, int len, qFILE * f)
 }
 
 
-/**
- * @brief
- */
 int FS_WriteFile (const void *buffer, size_t len, const char *filename)
 {
 	qFILE f;
@@ -1618,7 +1587,6 @@ void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
 }
 
 /**
- * @brief
  * @sa FS_CopyFile
  */
 void FS_Remove (const char *osPath)

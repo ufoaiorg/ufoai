@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 
 /**
- * @brief
  * @sa R_DrawAliasMD2Model
  * @sa R_DrawAliasMD3Model
  * @param[in] lightambient May not be null for fixed lightning

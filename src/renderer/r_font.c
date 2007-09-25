@@ -71,7 +71,6 @@ void R_FontShutdown (void)
 }
 
 /**
- * @brief
  * @todo: Check whether font is already loaded
  */
 static font_t *R_FontAnalyze (const char *name, const char *path, int renderStyle, int size)
@@ -126,7 +125,6 @@ static font_t *R_FontGetFont (const char *name)
 }
 
 /**
- * @brief
  * @sa R_FontGetFont
  */
 void R_FontLength (const char *font, char *c, int *width, int *height)
@@ -197,7 +195,6 @@ void R_FontListCache_f (void)
 }
 
 /**
- * @brief
  * @param[in] string String to build the hash value for
  * @param[in] maxlen Max length that should be used to calculate the hash value
  * @return hash value for given string
@@ -353,7 +350,6 @@ static fontCache_t *R_FontGenerateCache (const char *s, const char *fontString, 
 }
 
 /**
- * @brief
  * @param[in] maxWidth is a pixel value
  * FIXME: if maxWidth is too small to display even the first word this has bugs
  */
@@ -472,9 +468,6 @@ static int R_FontGenerateGLSurface (fontCache_t *cache, int x, int y, int absX, 
 	return 0;
 }
 
-/**
- * @brief
- */
 static void R_FontConvertChars (char *buffer)
 {
 	char *replace = NULL;
@@ -498,9 +491,7 @@ static void R_FontConvertChars (char *buffer)
 }
 
 /**
- * @brief
  * @param[in] fontID the font id (defined in ufos/fonts.ufo)
- * @param[in] align
  * @param[in] x Current x position (may differ from absX due to tabs e.g.)
  * @param[in] y Current y position (may differ from absY due to linebreaks)
  * @param[in] absX Absolute x value for this string
@@ -509,7 +500,6 @@ static void R_FontConvertChars (char *buffer)
  * @param[in] maxHeight Max height - relative from absY
  * @param[in] lineHeight The lineheight of that node
  * @param[in] c The string to draw
- * @param[in] box_height
  * @param[in] scroll_pos Starting line in this node (due to scrolling)
  * @param[in] cur_line Current line (see lineHeight)
  * @param[in] increaseLine If true cur_line is increased with every linebreak
@@ -656,9 +646,6 @@ int R_FontDrawString (const char *fontID, int align, int x, int y, int absX, int
 	return returnHeight;
 }
 
-/**
- * @brief
- */
 void R_FontInit (void)
 {
 #ifdef SDL_TTF_VERSION
@@ -685,9 +672,6 @@ void R_FontInit (void)
 		Sys_Error("SDL_ttf error: %s\n", TTF_GetError());
 }
 
-/**
- * @brief
- */
 void R_FontRegister (const char *name, int size, const char *path, const char *style)
 {
 	int renderstyle = 0;		/* NORMAL is standard */

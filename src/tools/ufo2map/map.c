@@ -1,6 +1,5 @@
 /**
  * @file map.c
- * @brief
  */
 
 /*
@@ -60,9 +59,6 @@ PLANE FINDING
 */
 
 
-/**
- * @brief
- */
 static int PlaneTypeForNormal (vec3_t normal)
 {
 	vec_t ax, ay, az;
@@ -88,9 +84,6 @@ static int PlaneTypeForNormal (vec3_t normal)
 
 #define	NORMAL_EPSILON	0.00001
 #define	DIST_EPSILON	0.01
-/**
- * @brief
- */
 static qboolean PlaneEqual (plane_t *p, vec3_t normal, vec_t dist)
 {
 	if (fabs(p->normal[0] - normal[0]) < NORMAL_EPSILON
@@ -101,9 +94,6 @@ static qboolean PlaneEqual (plane_t *p, vec3_t normal, vec_t dist)
 	return qfalse;
 }
 
-/**
- * @brief
- */
 static void AddPlaneToHash (plane_t *p)
 {
 	int hash;
@@ -115,9 +105,6 @@ static void AddPlaneToHash (plane_t *p)
 	planehash[hash] = p;
 }
 
-/**
- * @brief
- */
 static int CreateNewFloatPlane (vec3_t normal, vec_t dist)
 {
 	plane_t *p, temp;
@@ -179,9 +166,6 @@ static void SnapVector (vec3_t normal)
 	}
 }
 
-/**
- * @brief
- */
 static void SnapPlane (vec3_t normal, vec_t *dist)
 {
 	SnapVector(normal);
@@ -190,9 +174,6 @@ static void SnapPlane (vec3_t normal, vec_t *dist)
 		*dist = Q_rint(*dist);
 }
 
-/**
- * @brief
- */
 int FindFloatPlane (vec3_t normal, vec_t dist)
 {
 	int i;
@@ -215,9 +196,6 @@ int FindFloatPlane (vec3_t normal, vec_t dist)
 	return CreateNewFloatPlane (normal, dist);
 }
 
-/**
- * @brief
- */
 static int PlaneFromPoints (int *p0, int *p1, int *p2)
 {
 	vec3_t t1, t2, normal;
@@ -237,9 +215,6 @@ static int PlaneFromPoints (int *p0, int *p1, int *p2)
 /*==================================================================== */
 
 
-/**
- * @brief
- */
 static int BrushContents (mapbrush_t *b)
 {
 	int contentFlags, i, trans;
@@ -452,9 +427,6 @@ static qboolean MakeBrushWindings (mapbrush_t *ob)
 }
 
 
-/**
- * @brief
- */
 static void ParseBrush (entity_t *mapent)
 {
 	mapbrush_t *b;
@@ -716,9 +688,6 @@ static void MoveBrushesToWorld (entity_t *mapent)
 	mapent->numbrushes = 0;
 }
 
-/**
- * @brief
- */
 static qboolean ParseMapEntity (void)
 {
 	entity_t *mapent;
@@ -792,9 +761,6 @@ static qboolean ParseMapEntity (void)
 	return qtrue;
 }
 
-/**
- * @brief
- */
 void LoadMapFile (const char *filename)
 {
 	int i;

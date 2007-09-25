@@ -37,9 +37,6 @@ static float r_avertexnormals[NUMVERTEXNORMALS][3] = {
 static vec4_t s_lerped[MD2_MAX_VERTS];
 static float normalArray[MD2_MAX_VERTS * 3];
 
-/**
- * @brief
- */
 static void R_LerpVerts (int nverts, dtrivertx_t * v, dtrivertx_t * ov, float *lerp, float move[3], float frontv[3], float backv[3])
 {
 	int i;
@@ -155,9 +152,6 @@ static void R_DrawAliasFrameLerp (mdl_md2_t * paliashdr, float backlerp, int fra
 	R_CheckError();
 }
 
-/**
- * @brief
- */
 static qboolean R_CullAliasMD2Model (vec4_t bbox[8], entity_t * e)
 {
 	int i, p, mask, f, aggregatemask = ~0;
@@ -250,7 +244,6 @@ static qboolean R_CullAliasMD2Model (vec4_t bbox[8], entity_t * e)
 }
 
 /**
- * @brief
  * @sa R_DrawAliasMD2Model
  */
 void R_DrawAliasMD2Model (entity_t * e)
@@ -443,9 +436,6 @@ void R_DrawAliasMD2Model (entity_t * e)
 	R_Color(NULL);
 }
 
-/**
- * @brief
- */
 static void R_TransformModelDirect (modelInfo_t * mi)
 {
 	/* translate and rotate */
@@ -490,7 +480,6 @@ static void R_TransformModelDirect (modelInfo_t * mi)
 }
 
 /**
- * @brief
  * @sa R_DrawAliasMD2Model
  * @sa R_DrawAliasMD3Model
  */
@@ -618,9 +607,6 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	R_Color(NULL);
 }
 
-/**
- * @brief
- */
 void R_DrawModelParticle (modelInfo_t * mi)
 {
 	mdl_md2_t *paliashdr;

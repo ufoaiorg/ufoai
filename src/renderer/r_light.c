@@ -1,6 +1,5 @@
 /**
  * @file r_light.c
- * @brief
  */
 
 /*
@@ -36,7 +35,6 @@ DYNAMIC LIGHTS BLEND RENDERING
 */
 
 /**
- * @brief
  * @sa R_RenderDlights
  */
 static void R_RenderDlight (const dlight_t const* light)
@@ -102,9 +100,6 @@ DYNAMIC LIGHTS
 =============================================================================
 */
 
-/**
- * @brief
- */
 void R_MarkLights (dlight_t * light, int bit, mBspNode_t * node)
 {
 	cBspPlane_t *splitplane;
@@ -160,9 +155,6 @@ LIGHT SAMPLING
 
 static float s_blocklights[256 * 256 * 4];
 
-/**
- * @brief
- */
 static void R_AddDynamicLights (mBspSurface_t * surf)
 {
 	int lnum;
@@ -230,9 +222,6 @@ static void R_AddDynamicLights (mBspSurface_t * surf)
 }
 
 
-/**
- * @brief
- */
 void R_SetCacheState (mBspSurface_t * surf)
 {
 	int maps;
@@ -398,9 +387,6 @@ static vec3_t pointcolor;
 static cBspPlane_t *lightplane;			/* used as shadow plane */
 static vec3_t lightspot;
 
-/**
- * @brief
- */
 int RecursiveLightPoint (model_t* mapTile, mBspNode_t * node, vec3_t start, vec3_t end)
 {
 	float front, back, frac;
@@ -499,9 +485,6 @@ int RecursiveLightPoint (model_t* mapTile, mBspNode_t * node, vec3_t start, vec3
 	return RecursiveLightPoint(mapTile, node->children[!side], mid, end);
 }
 
-/**
- * @brief
- */
 void R_LightPoint (vec3_t p, vec3_t color)
 {
 	vec3_t end;

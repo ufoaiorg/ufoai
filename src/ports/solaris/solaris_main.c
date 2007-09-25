@@ -51,9 +51,6 @@ cvar_t* sys_os;
 /* General routines */
 /* ======================================================================= */
 
-/**
- * @brief
- */
 void Sys_Init (void)
 {
 	sys_os = Cvar_Get("sys_os", "solaris", CVAR_SERVERINFO, NULL);
@@ -61,9 +58,6 @@ void Sys_Init (void)
 	sys_priority = Cvar_Get("sys_priority", "0", CVAR_ARCHIVE, "Process nice level");
 }
 
-/**
- * @brief
- */
 int main (int argc, const char **argv)
 {
 	Sys_ConsoleInit();

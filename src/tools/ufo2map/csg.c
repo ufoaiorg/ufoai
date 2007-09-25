@@ -1,6 +1,5 @@
 /**
  * @file csg.c
- * @brief
  * @note tag all brushes with original contents
  * brushes may contain multiple contents
  * there will be no brush overlap after csg phase
@@ -47,16 +46,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "qbsp.h"
 
-/**
- * @brief
- */
 static void SplitBrush2 (bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t **back)
 {
 	SplitBrush(brush, planenum, front, back);
 }
 
 /**
- * @brief
  * @return a list of brushes that remain after B is subtracted from A.
  * @note Return may by empty if A is contained inside B.
  * @note The originals are undisturbed.
@@ -89,7 +84,6 @@ static bspbrush_t *SubtractBrush (bspbrush_t *a, bspbrush_t *b)
 }
 
 /**
- * @brief
  * @return true if the two brushes definately do not intersect.
  * @note There will be false negatives for some non-axial combinations.
  */
@@ -156,9 +150,6 @@ static bspbrush_t *ClipBrushToBox (bspbrush_t *brush, vec3_t clipmins, vec3_t cl
 }
 
 
-/**
- * @brief
- */
 static qboolean IsInLevel (int contents, int level)
 {
 	/* special levels */
@@ -202,9 +193,6 @@ static qboolean IsInLevel (int contents, int level)
 }
 
 
-/**
- * @brief
- */
 int MapBrushesBounds (int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs, vec3_t mins, vec3_t maxs)
 {
 	mapbrush_t *b;
@@ -240,9 +228,6 @@ int MapBrushesBounds (int startbrush, int endbrush, int level, vec3_t clipmins, 
 }
 
 
-/**
- * @brief
- */
 bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs)
 {
 	mapbrush_t *mb;
@@ -321,9 +306,6 @@ bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, vec3_t cl
 	return brushlist;
 }
 
-/**
- * @brief
- */
 static bspbrush_t *AddBrushListToTail (bspbrush_t *list, bspbrush_t *tail)
 {
 	bspbrush_t *walk, *next;

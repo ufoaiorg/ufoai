@@ -64,9 +64,6 @@ static void BS_MarketAircraftDescription (int aircraftID)
 	Cvar_Set("mn_aircraftname", aircraft->name);
 }
 
-/**
- * @brief
- */
 static void BS_MarketScroll_f (void)
 {
 	menuNode_t* node;
@@ -195,9 +192,6 @@ static char bsMarketStorage[256];
 static char bsMarketMarket[256];
 static char bsMarketPrices[256];
 
-/**
- * @brief
- */
 static void BS_AddToList (const char *name, int storage, int market, int price)
 {
 	/* MAX_MARKET_MENU_ENTRIES items in the list (of length 1024) */

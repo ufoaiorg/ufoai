@@ -140,10 +140,6 @@ static int Com_CheckToInventory_shape (const inventory_t * const i, const int co
 }
 
 /**
- * @brief
- * @param[in] i
- * @param[in] item
- * @param[in] container
  * @param[in] x The x value in the container (1 << x in the shape bitmask)
  * @param[in] y The x value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
  * @sa Com_CheckToInventory_mask
@@ -305,7 +301,6 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, int container
 }
 
 /**
- * @brief
  * @param[in] i The inventory the container is in.
  * @param[in] container The container where the item should be removed.
  * @param[in] x The x position of the item (container?) to be removed. @todo: is this correct?
@@ -320,7 +315,6 @@ qboolean Com_RemoveFromInventory (inventory_t* const i, int container, int x, in
 }
 
 /**
- * @brief
  * @param[in] i The inventory the container is in.
  * @param[in] container The container where the item should be removed.
  * @param[in] x The x position of the item (container?) to be removed. @todo: is this correct?
@@ -388,7 +382,6 @@ qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, int container, int
  * @return IA_RELOAD when reloading
  * @return IA_ARMOR when placing an armour on the actor
  * @return IA_MOVE when just moving an item
- * @sa
  */
 int Com_MoveInInventory (inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp)
 {

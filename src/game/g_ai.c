@@ -89,7 +89,6 @@ static qboolean AI_CheckFF (edict_t * ent, vec3_t target, float spread)
 #define HIDE_DIST			7
 
 /**
- * @brief
  * @sa AI_ActorThink
  * @todo fix firedef stuff
  */
@@ -353,7 +352,6 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 
 
 /**
- * @brief
  * @sa AI_ActorThink
  * @note Even civilians can use weapons if the teamdef allows this
  */

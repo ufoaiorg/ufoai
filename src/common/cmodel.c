@@ -305,8 +305,6 @@ static void CMod_LoadSubmodels (lump_t * l, vec3_t shift)
 
 
 /**
- * @brief
- * @param[in] l
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
@@ -344,8 +342,6 @@ static void CMod_LoadSurfaces (lump_t * l, vec3_t shift)
 
 
 /**
- * @brief
- * @param[in] l
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
@@ -394,8 +390,6 @@ static void CMod_LoadNodes (lump_t * l, vec3_t shift)
 }
 
 /**
- * @brief
- * @param[in] l
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
@@ -431,8 +425,6 @@ static void CMod_LoadBrushes (lump_t * l, vec3_t shift)
 }
 
 /**
- * @brief
- * @param[in] l
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
@@ -485,8 +477,6 @@ static void CMod_LoadLeafs (lump_t * l, vec3_t shift)
 }
 
 /**
- * @brief
- * @param[in] l
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
@@ -538,8 +528,6 @@ static void CMod_LoadPlanes (lump_t * l, vec3_t shift)
 }
 
 /**
- * @brief
- * @param[in] l
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
@@ -576,8 +564,6 @@ static void CMod_LoadLeafBrushes (lump_t * l, vec3_t shift)
 }
 
 /**
- * @brief
- * @param[in] l
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
@@ -619,7 +605,6 @@ static void CMod_LoadBrushSides (lump_t * l, vec3_t shift)
 }
 
 /**
- * @brief
  * @param[in] source Source will be set to the end of the compressed data block!
  * @sa CompressRouting (ufo2map)
  */
@@ -736,10 +721,6 @@ static int CM_EntTestLine (vec3_t start, vec3_t stop)
 
 
 /**
- * @brief
- * @param[in] start
- * @param[in] stop
- * @param[in] end
  * @sa CM_TestLineDM
  * @sa CM_TransformedBoxTrace
  */
@@ -857,8 +838,6 @@ static qboolean CM_TestConnection (routing_t * map, int x, int y, byte z, unsign
 
 
 /**
- * @brief
- * @param[in] map
  * @param[in] x The x position in the routing arrays (0 - WIDTH-1)
  * @param[in] y The y position in the routing arrays (0 - WIDTH-1)
  * @param[in] z The z position in the routing arrays (0 - HEIGHT-1)
@@ -961,10 +940,6 @@ static void CM_CheckUnit (routing_t * map, int x, int y, byte z)
 }
 
 
-/**
- * @brief
- * @param[in] map
- */
 static void CMod_GetMapSize (routing_t * map)
 {
 	const vec3_t offset = {100, 100, 100};
@@ -1002,7 +977,6 @@ static void CMod_GetMapSize (routing_t * map)
 
 
 /**
- * @brief
  * @param[in] l Routing lump ... (routing data lump from bsp file)
  * @param[in] sX The x position on the world plane (grid position) - values from -(WIDTH/2) up to WIDTH/2 are allowed
  * @param[in] sY The y position on the world plane (grid position) - values from -(WIDTH/2) up to WIDTH/2 are allowed
@@ -1099,9 +1073,7 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 
 
 /**
- * @brief
  * @note Transforms coordinates and stuff for assembled maps
- * @param[in] l
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
  */
@@ -1366,27 +1338,17 @@ cBspModel_t *CM_InlineModel (const char *name)
 	return NULL;
 }
 
-/**
- * @brief
- */
 int CM_NumInlineModels (void)
 {
 	return numInline;
 }
 
-/**
- * @brief
- */
 char *CM_EntityString (void)
 {
 	return map_entitystring;
 }
 
 #if 0
-/**
- * @brief
- * @param[in] leafnum
- */
 static int CM_LeafContents (int leafnum)
 {
 	if (leafnum < 0 || leafnum >= curTile->numleafs)
@@ -1534,9 +1496,7 @@ static void CM_BoxLeafnums_r (int nodenum)
 }
 
 /**
- * @brief
  * @param[in] headnode if < 0 we are in a leaf node
- * @sa
  */
 static int CM_BoxLeafnums_headnode (vec3_t mins, vec3_t maxs, int *list, int listsize, int headnode, int *topnode)
 {
@@ -1559,10 +1519,8 @@ static int CM_BoxLeafnums_headnode (vec3_t mins, vec3_t maxs, int *list, int lis
 
 
 /**
- * @brief
  * @param[in] p1 Startpoint
  * @param[in] p1 Endpoint
- * @sa
  */
 static void CM_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, trace_t * trace, cBspBrush_t * brush)
 {
@@ -1661,8 +1619,6 @@ static void CM_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, t
 }
 
 /**
- * @brief
- * @param
  * @sa CM_TraceToLeaf
  */
 static void CM_TestBoxInBrush (vec3_t mins, vec3_t maxs, vec3_t p1, trace_t * trace, cBspBrush_t * brush)
@@ -1713,8 +1669,6 @@ static void CM_TestBoxInBrush (vec3_t mins, vec3_t maxs, vec3_t p1, trace_t * tr
 
 
 /**
- * @brief
- * @param[in] leafnum
  * @sa CM_ClipBoxToBrush
  */
 static void CM_TraceToLeaf (int leafnum)
@@ -1748,8 +1702,6 @@ static void CM_TraceToLeaf (int leafnum)
 
 
 /**
- * @brief
- * @param[in] leafnum
  * @sa CM_TestBoxInBrush
  */
 static void CM_TestInLeaf (int leafnum)
@@ -1782,10 +1734,6 @@ static void CM_TestInLeaf (int leafnum)
 
 
 /**
- * @brief
- * @param[in] num
- * @param[in] p1f
- * @param[in] p2f
  * @param[in] p1 start vector
  * @param[in] p2 end vector
  * @sa CM_BoxTrace
@@ -1895,7 +1843,6 @@ static void CM_RecursiveHullCheck (int num, float p1f, float p2f, vec3_t p1, vec
 
 #define MAX_LEAFS 1024
 /**
- * @brief
  * @param[in] start trace start vector
  * @param[in] end trace end vector
  * @param[in] mins box mins
@@ -2122,11 +2069,6 @@ static void MakeTnode (int nodenum)
 }
 
 
-/**
- * @brief
- * @param
- * @sa
- */
 static void BuildTnode_r (int node, int level)
 {
 	assert(node < curTile->numnodes + 6); /* +6 => bbox */
@@ -2220,10 +2162,7 @@ static void CM_MakeTnodes (void)
 /*========================================================== */
 
 /**
- * @brief
  * @param[in] node Node index
- * @param[in] start
- * @param[in] stop
  * @sa TestLineDist_r
  * @sa CM_TestLine
  */
@@ -2287,10 +2226,7 @@ static int TestLine_r (int node, vec3_t start, vec3_t stop)
 }
 
 /**
- * @brief
  * @param[in] node Node index
- * @param[in] start
- * @param[in] stop
  * @sa TestLine_r
  * @sa CM_TestLineDM
  */
@@ -2374,9 +2310,6 @@ static int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 }
 
 /**
- * @brief
- * @param[in] start
- * @param[in] stop
  * @sa TestLine_r
  * @sa CL_TargetingToHit
  */
@@ -2395,10 +2328,6 @@ int CM_TestLine (vec3_t start, vec3_t stop)
 }
 
 /**
- * @brief
- * @param[in] start
- * @param[in] stop
- * @param[in] end
  * @sa CM_TestLine
  * @sa CL_ActorMouseTrace
  * @return 0 if no connection between start and stop - 1 otherwise
@@ -2485,7 +2414,6 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, byte 
 static int poslistNew[4][2];
 
 /**
- * @brief
  * @param[in|out] map Pointer to client or server side routing table (clMap, svMap)
  * @param[in] x Current x location in the map.
  * @param[in] y Current y location in the map.
@@ -2687,7 +2615,6 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dir,
 
 
 /**
- * @brief
  * @param[in|out] map Pointer to client or server side routing table (clMap, svMap)
  * @param[in] xl (Guess: Lower x limit?)
  * @param[in] yl (Guess: Lower y limit?)
@@ -2728,7 +2655,6 @@ static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, i
 }
 
 /**
- * @brief
  * @param[in|out] map Pointer to client or server side routing table (clMap, svMap)
  * @param[in] from The position to start the calculation from.
  * @param[in] actor_size The size of thing to calc the move for (e.g. size=2 means 2x2).
@@ -2842,11 +2768,7 @@ byte Grid_MoveLength (struct routing_s *map, pos3_t to, qboolean stored)
 
 
 /**
- * @brief
  * @param[in] map Pointer to client or server side routing table (clMap, svMap)
- * @param[in] pos
- * @param[in] sz
- * @param[in] l
  * @sa Grid_MoveNext
  * @todo add 2x2 unit support
  */
@@ -2962,11 +2884,6 @@ byte Grid_MoveNext (struct routing_s *map, pos3_t from)
 }
 
 
-/**
- * @brief
- * @param
- * @sa
- */
 byte Grid_Height (struct routing_s *map, pos3_t pos)
 {
 	/* max 8 levels */
@@ -3029,7 +2946,6 @@ byte Grid_Fall (struct routing_s *map, pos3_t pos, int actor_size)
 }
 
 /**
- * @brief
  * @sa Grid_Height
  */
 void Grid_PosToVec (struct routing_s *map, pos3_t pos, vec3_t vec)
@@ -3043,7 +2959,6 @@ void Grid_PosToVec (struct routing_s *map, pos3_t pos, vec3_t vec)
 }
 
 /**
- * @brief
  * @sa CM_InlineModel
  * @sa CM_CheckUnit
  * @sa CM_TestConnection
@@ -3216,7 +3131,6 @@ TARGETING FUNCTIONS
  *        \/  \/ h  + d   - h
  *
  * as the minimum launch velocity for that angle.
- * @brief
  */
 float Com_GrenadeTarget (vec3_t from, vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0)
 {

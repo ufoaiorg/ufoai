@@ -1,6 +1,5 @@
 /**
  * @file tree.c
- * @brief
  */
 
 /*
@@ -27,9 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 extern int c_nodes;
 
-/**
- * @brief
- */
 static void FreeTreePortals_r (node_t *node)
 {
 	portal_t *p, *nextp;
@@ -52,9 +48,6 @@ static void FreeTreePortals_r (node_t *node)
 	node->portals = NULL;
 }
 
-/**
- * @brief
- */
 static void FreeTree_r (node_t *node)
 {
 	face_t *f, *nextf;
@@ -83,9 +76,6 @@ static void FreeTree_r (node_t *node)
 }
 
 
-/**
- * @brief
- */
 void FreeTree (tree_t *tree)
 {
 	FreeTreePortals_r(tree->headnode);
@@ -100,7 +90,6 @@ NODES THAT DON'T SEPERATE DIFFERENT CONTENTS CAN BE PRUNED
 static int c_pruned;
 
 /**
- * @brief
  * @sa PruneNodes
  */
 static void PruneNodes_r (node_t *node)
@@ -141,7 +130,6 @@ static void PruneNodes_r (node_t *node)
 }
 
 /**
- * @brief
  * @sa PruneNodes_r
  */
 void PruneNodes (node_t *node)

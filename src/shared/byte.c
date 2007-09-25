@@ -64,8 +64,6 @@ float LittleFloat (float l)
 }
 
 /**
- * @brief
- * @param[in] l
  * @sa ShortNoSwap
  */
 static short ShortSwap (short l)
@@ -79,8 +77,6 @@ static short ShortSwap (short l)
 }
 
 /**
- * @brief
- * @param[in] l
  * @sa ShortSwap
  */
 static short ShortNoSwap (short l)
@@ -89,8 +85,6 @@ static short ShortNoSwap (short l)
 }
 
 /**
- * @brief
- * @param[in] l
  * @sa LongNoSwap
  */
 static int LongSwap (int l)
@@ -106,8 +100,6 @@ static int LongSwap (int l)
 }
 
 /**
- * @brief
- * @param[in] l
  * @sa LongSwap
  */
 static int LongNoSwap (int l)
@@ -116,8 +108,6 @@ static int LongNoSwap (int l)
 }
 
 /**
- * @brief
- * @param[in] l
  * @sa FloatNoSwap
  */
 static float FloatSwap (float f)
@@ -136,8 +126,6 @@ static float FloatSwap (float f)
 }
 
 /**
- * @brief
- * @param[in] l
  * @sa FloatSwap
  */
 static float FloatNoSwap (float f)
@@ -145,11 +133,6 @@ static float FloatNoSwap (float f)
 	return f;
 }
 
-/**
- * @brief
- * @param
- * @sa
- */
 void Swap_Init (void)
 {
 	byte swaptest[2] = { 1, 0 };

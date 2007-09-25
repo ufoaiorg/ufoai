@@ -35,9 +35,6 @@ static int snd_scaletable[32][256];
 static int *snd_p, snd_linear_count, snd_vol;
 static short *snd_out;
 
-/**
- * @brief
- */
 static void S_WriteLinearBlastStereo16 (void)
 {
 	int i;
@@ -63,7 +60,6 @@ static void S_WriteLinearBlastStereo16 (void)
 }
 
 /**
- * @brief
  * @sa S_TransferPaintBuffer
  */
 static void S_TransferStereo16 (unsigned long *pbuf, int endtime)
@@ -101,7 +97,6 @@ static void S_TransferStereo16 (unsigned long *pbuf, int endtime)
 }
 
 /**
- * @brief
  * @sa S_TransferStereo16
  * @sa S_PaintChannels
  */
@@ -176,7 +171,6 @@ CHANNEL MIXING
 
 
 /**
- * @brief
  * @sa S_PaintChannelFrom16
  */
 static void S_PaintChannelFrom8 (channel_t * ch, sfxcache_t * sc, int count, int offset)
@@ -208,7 +202,6 @@ static void S_PaintChannelFrom8 (channel_t * ch, sfxcache_t * sc, int count, int
 }
 
 /**
- * @brief
  * @sa S_PaintChannelFrom8
  */
 static void S_PaintChannelFrom16 (channel_t * ch, sfxcache_t * sc, int count, int offset)
@@ -353,9 +346,6 @@ void S_PaintChannels (void)
 	}
 }
 
-/**
- * @brief
- */
 void S_InitScaletable (void)
 {
 	int i, j;

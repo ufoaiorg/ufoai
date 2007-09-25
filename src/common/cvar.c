@@ -46,9 +46,6 @@ qboolean userinfo_modified;
  */
 static cvar_t *cvar_vars;
 
-/**
- * @brief
- */
 static qboolean Cvar_InfoValidate (const char *s)
 {
 	if (strstr(s, "\\"))

@@ -49,9 +49,6 @@ cvar_t *Cvar_Set(const char *var_name, const char *value);
  */
 cvar_t *Cvar_ForceSet(const char *var_name, const char *value);
 
-/**
- * @brief
- */
 cvar_t *Cvar_FullSet(const char *var_name, const char *value, int flags);
 
 /**
@@ -103,9 +100,6 @@ qboolean Cvar_Command(void);
  */
 void Cvar_WriteVariables(const char *path);
 
-/**
- * @brief
- */
 void Cvar_Init(void);
 
 /**

@@ -38,9 +38,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static void *game_library;
 
-/**
- * @brief
- */
 const char *Sys_GetCurrentUser (void)
 {
 	struct passwd *p;
@@ -52,7 +49,6 @@ const char *Sys_GetCurrentUser (void)
 }
 
 /**
- * @brief
  * @return NULL if getcwd failed
  */
 char *Sys_Cwd (void)
@@ -66,9 +62,6 @@ char *Sys_Cwd (void)
 	return cwd;
 }
 
-/**
- * @brief
- */
 void Sys_Error (const char *error, ...)
 {
 	va_list argptr;
@@ -91,9 +84,6 @@ void Sys_Error (const char *error, ...)
 	exit(1);
 }
 
-/**
- * @brief
- */
 void Sys_Quit (void)
 {
 	CL_Shutdown();
@@ -104,9 +94,6 @@ void Sys_Quit (void)
 	exit(0);
 }
 
-/**
- * @brief
- */
 void Sys_Sleep (int milliseconds)
 {
 	if (milliseconds < 1)
@@ -123,9 +110,6 @@ char *Sys_GetHomeDirectory (void)
 	return getenv("HOME");
 }
 
-/**
- * @brief
- */
 void Sys_NormPath (char* path)
 {
 }
@@ -135,9 +119,6 @@ static	char	findpath[MAX_OSPATH];
 static	char	findpattern[MAX_OSPATH];
 static	DIR		*fdir;
 
-/**
- * @brief
- */
 static qboolean CompareAttributes (const char *path, const char *name, unsigned musthave, unsigned canthave)
 {
 	struct stat st;
@@ -228,9 +209,6 @@ char *Sys_FindNext (unsigned musthave, unsigned canhave)
 	return NULL;
 }
 
-/**
- * @brief
- */
 void Sys_FindClose (void)
 {
 	if (fdir != NULL)
@@ -238,16 +216,10 @@ void Sys_FindClose (void)
 	fdir = NULL;
 }
 
-/**
- * @brief
- */
 void Sys_OSPath (char* path)
 {
 }
 
-/**
- * @brief
- */
 void Sys_UnloadGame (void)
 {
 	if (game_library)
@@ -307,7 +279,6 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 }
 
 /**
- * @brief
  * @sa Sys_FreeLibrary
  * @sa Sys_GetProcAddress
  */
@@ -370,7 +341,6 @@ void *Sys_LoadLibrary (const char *name, int flags)
 }
 
 /**
- * @brief
  * @sa Sys_LoadLibrary
  */
 void Sys_FreeLibrary (void *libHandle)
@@ -382,7 +352,6 @@ void Sys_FreeLibrary (void *libHandle)
 }
 
 /**
- * @brief
  * @sa Sys_LoadLibrary
  */
 void *Sys_GetProcAddress (void *libHandle, const char *procName)
@@ -392,9 +361,6 @@ void *Sys_GetProcAddress (void *libHandle, const char *procName)
 	return dlsym(libHandle, procName);
 }
 
-/**
- * @brief
- */
 int Sys_Milliseconds (void)
 {
 	struct timeval tp;
@@ -411,9 +377,6 @@ int Sys_Milliseconds (void)
 	return (tp.tv_sec - secbase) * 1000 + tp.tv_usec / 1000;
 }
 
-/**
- * @brief
- */
 void Sys_Mkdir (const char *thePath)
 {
 	if (mkdir(thePath, 0777) != -1)
@@ -423,9 +386,6 @@ void Sys_Mkdir (const char *thePath)
 		Com_Printf("\"mkdir %s\" failed, reason: \"%s\".", thePath, strerror(errno));
 }
 
-/**
- * @brief
- */
 void Sys_SetAffinityAndPriority (void)
 {
 	if (sys_affinity->modified) {

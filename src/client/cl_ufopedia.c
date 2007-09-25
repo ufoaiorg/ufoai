@@ -1087,7 +1087,6 @@ static void UP_Next_f (void)
 
 
 /**
- * @brief
  * @sa UP_Click_f
  */
 static void UP_RightClick_f (void)
@@ -1102,7 +1101,6 @@ static void UP_RightClick_f (void)
 }
 
 /**
- * @brief
  * @sa UP_RightClick_f
  */
 static void UP_Click_f (void)
@@ -1161,8 +1159,6 @@ static void UP_Click_f (void)
 }
 
 /**
- * @brief
- * @sa
  * @todo The "num" value and the link-index will most probably not match.
  */
 static void UP_TechTreeClick_f (void)
@@ -1609,7 +1605,6 @@ static void UP_DecreaseFiremode_f (void)
 }
 
 /**
- * @brief
  * @sa CL_ResetMenus
  */
 void UP_ResetUfopedia (void)

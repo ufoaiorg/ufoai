@@ -68,18 +68,12 @@ static char varName[MAX_VAR];			/**< Document me. */
 static qboolean(*varFunc)(char *var);
 static qboolean CheckAND(char **s);
 
-/**
- * @brief
- */
 static void SkipWhiteSpaces (char **s)
 {
 	while (**s == ' ')
 		(*s)++;
 }
 
-/**
- * @brief
- */
 static void NextChar (char **s)
 {
 	(*s)++;
@@ -87,9 +81,6 @@ static void NextChar (char **s)
 	SkipWhiteSpaces(s);
 }
 
-/**
- * @brief
- */
 static char *GetSwitchName (char **s)
 {
 	int pos = 0;
@@ -103,9 +94,6 @@ static char *GetSwitchName (char **s)
 	return varName;
 }
 
-/**
- * @brief
- */
 static qboolean CheckOR (char **s)
 {
 	qboolean result = qfalse;
@@ -132,9 +120,6 @@ static qboolean CheckOR (char **s)
 	return result;
 }
 
-/**
- * @brief
- */
 static qboolean CheckAND (char **s)
 {
 	qboolean result = qtrue;
@@ -254,9 +239,6 @@ static date_t Date_Add (date_t a, date_t b)
 }
 
 #if (0)
-/**
- * @brief
- */
 static date_t Date_Random (date_t frame)
 {
 	frame.sec = (frame.day * 3600 * 24 + frame.sec) * frand();
@@ -266,11 +248,6 @@ static date_t Date_Random (date_t frame)
 }
 #endif
 
-/**
- * @brief
- * @param[in] frame
- * @return
- */
 static date_t Date_Random_Begin (date_t frame)
 {
 	int sec = frame.day * 3600 * 24 + frame.sec;
@@ -283,11 +260,6 @@ static date_t Date_Random_Begin (date_t frame)
 }
 
 
-/**
- * @brief
- * @param[in] frame
- * @return
- */
 static date_t Date_Random_Middle (date_t frame)
 {
 	int sec = frame.day * 3600 * 24 + frame.sec;
@@ -368,8 +340,6 @@ static qboolean CL_StageSetDone (char *name)
 
 
 /**
- * @brief
- * @param[in] *stage
  * @sa CL_CampaignExecute
  */
 static void CL_CampaignActivateStageSets (stage_t *stage)
@@ -418,7 +388,6 @@ static void CL_CampaignActivateStageSets (stage_t *stage)
 
 
 /**
- * @brief
  * @sa CL_CampaignActivateStageSets
  * @sa CL_CampaignExecute
  */
@@ -457,7 +426,6 @@ static stageState_t *CL_CampaignActivateStage (const char *name, qboolean setsTo
 
 
 /**
- * @brief
  * @sa CL_CampaignExecute
  */
 static void CL_CampaignEndStage (const char *name)
@@ -478,7 +446,6 @@ static void CL_CampaignEndStage (const char *name)
 
 
 /**
- * @brief
  * @sa CL_CampaignActivateStage
  * @sa CL_CampaignEndStage
  * @sa CL_CampaignActivateStageSets
@@ -559,7 +526,6 @@ static void CP_MissionList_f (void)
 }
 
 /**
- * @brief
  * @sa CP_SpawnBaseAttackMission
  */
 qboolean CP_SpawnCrashSiteMission (aircraft_t* aircraft)
@@ -640,7 +606,6 @@ qboolean CP_SpawnCrashSiteMission (aircraft_t* aircraft)
 }
 
 /**
- * @brief
  * @sa B_BaseAttack
  * @sa CP_Load
  * @sa CP_SpawnCrashSiteMission
@@ -749,7 +714,6 @@ actMis_t* CL_CampaignAddGroundMission (mission_t* mission)
 
 #define DIST_MIN_BASE_MISSION 4
 /**
- * @brief
  * @note missions that have the keepAfterFail boolean set should not be removed
  * after the mission failed - but only when the mission was successful
  * @sa CL_CampaignRemoveMission
@@ -1117,7 +1081,6 @@ static void CL_BaseRansacked (base_t *base)
 
 
 /**
- * @brief
  * @sa CL_CampaignAddMission
  * @sa CL_CampaignExecute
  * @sa UFO_CampaignCheckEvents
@@ -1699,9 +1662,6 @@ void CL_UpdateCredits (int credits)
 	Cvar_Set("mn_credits", va(_("%i c"), ccs.credits));
 }
 
-/**
- * @brief
- */
 static void CP_NationStatsClick_f (void)
 {
 	int num;
@@ -2488,9 +2448,6 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 }
 
 
-/**
- * @brief
- */
 qboolean STATS_Save (sizebuf_t* sb, void* data)
 {
 	MSG_WriteShort(sb, stats.missionsWon);
@@ -2510,9 +2467,6 @@ qboolean STATS_Save (sizebuf_t* sb, void* data)
 	return qtrue;
 }
 
-/**
- * @brief
- */
 qboolean STATS_Load (sizebuf_t* sb, void* data)
 {
 	stats.missionsWon = MSG_ReadShort(sb);
@@ -2981,8 +2935,6 @@ void CL_GameAutoGo (actMis_t *mission)
 }
 
 /**
- * @brief
- *
  * @sa CL_GameAutoCheck_f
  * @sa CL_GameGo
  */
@@ -3172,7 +3124,6 @@ static void CL_DebugChangeCharacterStats_f (void)
 #endif
 
 /**
- * @brief
  * @sa CL_ParseResults
  * @sa CL_ParseCharacterData
  * @sa CL_GameAbort_f
@@ -3376,7 +3327,6 @@ mission_t *CL_AddMission (const char *name)
 }
 
 /**
- * @brief
  * @sa CL_ParseScriptFirst
  * @note write into cl_localPool - free on every game restart and reparse
  */
@@ -3614,7 +3564,6 @@ static const value_t stageset_vals[] = {
 };
 
 /**
- * @brief
  * @sa CL_ParseScriptSecond
  * @sa CL_ParseStage
  */
@@ -3706,7 +3655,6 @@ static void CL_ParseStageSet (const char *name, const char **text)
 
 
 /**
- * @brief
  * @sa CL_ParseStageSet
  * @sa CL_ParseScriptSecond
  */
@@ -3940,7 +3888,6 @@ static const value_t campaign_vals[] = {
 };
 
 /**
- * @brief
  * @sa CL_ParseClientData
  */
 void CL_ParseCampaign (const char *name, const char **text)
@@ -4288,7 +4235,6 @@ static const cmdList_t game_commands[] = {
 };
 
 /**
- * @brief
  * @sa CL_GameNew_f
  * @sa SAV_GameLoad
  */
@@ -5151,9 +5097,6 @@ qboolean CP_GetRandomPosOnGeoscape (vec2_t pos, linkedList_t* terrainTypes, link
 	return qtrue;
 }
 
-/**
- * @brief
- */
 void CL_ResetCampaign (void)
 {
 	/* reset some vars */

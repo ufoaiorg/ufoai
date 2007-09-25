@@ -1,6 +1,5 @@
 /**
  * @file writebsp.c
- * @brief
  */
 
 /*
@@ -86,9 +85,6 @@ void EmitPlanes (void)
 }
 
 
-/**
- * @brief
- */
 static void EmitMarkFace (dleaf_t *leaf_p, face_t *f)
 {
 	int i, facenum;
@@ -121,9 +117,6 @@ static void EmitMarkFace (dleaf_t *leaf_p, face_t *f)
 }
 
 
-/**
- * @brief
- */
 static void EmitLeaf (node_t *node)
 {
 	dleaf_t *leaf_p;
@@ -184,7 +177,6 @@ static void EmitLeaf (node_t *node)
 
 
 /**
- * @brief
  * @sa EmitDrawNode_r
  * @note Called for every node face
  */
@@ -226,9 +218,6 @@ static void EmitFace (face_t *f)
 	}
 }
 
-/**
- * @brief
- */
 static int EmitDrawNode_r (node_t *node)
 {
 	dnode_t *n;
@@ -281,9 +270,6 @@ static int EmitDrawNode_r (node_t *node)
 	return n - dnodes;
 }
 
-/**
- * @brief
- */
 void WriteBSP (node_t *headnode)
 {
 	int oldfaces;
@@ -301,9 +287,6 @@ void WriteBSP (node_t *headnode)
 	Sys_FPrintf(SYS_VRB, "%5i faces\n", numfaces-oldfaces);
 }
 
-/**
- * @brief
- */
 void SetModelNumbers (void)
 {
 	int i, models;
@@ -321,9 +304,6 @@ void SetModelNumbers (void)
 }
 
 #define	MAX_SWITCHED_LIGHTS	32
-/**
- * @brief
- */
 void SetLightStyles (void)
 {
 	int stylenum;
@@ -364,7 +344,6 @@ void SetLightStyles (void)
 }
 
 /**
- * @brief
  * @note routing.c - commented out
  */
 static void EmitBrushes (void)
@@ -425,7 +404,6 @@ static void EmitBrushes (void)
 }
 
 /**
- * @brief
  * @sa EndBSPFile
  */
 void BeginBSPFile (void)
@@ -454,7 +432,6 @@ void BeginBSPFile (void)
 
 
 /**
- * @brief
  * @sa BeginBSPFile
  */
 void EndBSPFile (const char *filename)
@@ -475,7 +452,6 @@ extern int firstmodeledge;
 extern int firstmodelface;
 
 /**
- * @brief
  * @sa EndModel
  */
 void BeginModel (int entityNum)
@@ -517,7 +493,6 @@ void BeginModel (int entityNum)
 
 
 /**
- * @brief
  * @sa BeginModel
  */
 void EndModel (void)

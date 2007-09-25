@@ -291,9 +291,6 @@ qboolean CL_CheckOrDownloadFile (const char *filename)
 	return qtrue;
 }
 
-/**
- * @brief
- */
 void CL_RegisterSounds (void)
 {
 	int i, j, k;
@@ -400,7 +397,6 @@ static void CL_ParseClientinfo (int player)
 }
 
 /**
- * @brief
  * @sa PF_Configstring
  */
 static void CL_ParseConfigString (struct dbuffer *msg)
@@ -530,7 +526,6 @@ static void CL_EventReset (void)
 }
 
 /**
- * @brief
  * @sa G_ClientSpawn
  */
 static void CL_Reset (struct dbuffer *msg)
@@ -625,9 +620,6 @@ static void CL_StartGame (struct dbuffer *msg)
 }
 
 
-/**
- * @brief
- */
 static void CL_CenterView (struct dbuffer *msg)
 {
 	pos3_t pos;
@@ -637,9 +629,6 @@ static void CL_CenterView (struct dbuffer *msg)
 }
 
 
-/**
- * @brief
- */
 static void CL_EntAppear (struct dbuffer *msg)
 {
 	le_t	*le;
@@ -803,7 +792,6 @@ void CL_SetLastMoving (le_t *le)
 }
 
 /**
- * @brief
  * @sa EV_ACTOR_START_MOVE
  */
 static void CL_ActorDoStartMove (struct dbuffer *msg)
@@ -880,7 +868,6 @@ static void CL_ActorAdd (struct dbuffer *msg)
 }
 
 /**
- * @brief
  * @sa CL_AddActorToTeamList
  * @sa G_AppearPerishEvent
  * @sa CL_ActorAdd
@@ -1043,9 +1030,6 @@ static void CL_ActorStats (struct dbuffer *msg)
 }
 
 
-/**
- * @brief
- */
 static void CL_ActorStateChange (struct dbuffer *msg)
 {
 	le_t	*le;
@@ -1108,7 +1092,6 @@ static int CL_BiggestItem (invList_t *ic)
 
 
 /**
- * @brief
  * @sa CL_BiggestItem
  */
 static void CL_PlaceItem (le_t *le)
@@ -1150,7 +1133,6 @@ static void CL_PlaceItem (le_t *le)
 
 
 /**
- * @brief
  * @sa CL_InvDel
  * @sa G_SendInventory
  */
@@ -1204,7 +1186,6 @@ static void CL_InvAdd (struct dbuffer *msg)
 
 
 /**
- * @brief
  * @sa CL_InvAdd
  */
 static void CL_InvDel (struct dbuffer *msg)
@@ -1242,9 +1223,6 @@ static void CL_InvDel (struct dbuffer *msg)
 }
 
 
-/**
- * @brief
- */
 static void CL_InvAmmo (struct dbuffer *msg)
 {
 	invList_t	*ic;
@@ -1274,9 +1252,6 @@ static void CL_InvAmmo (struct dbuffer *msg)
 }
 
 
-/**
- * @brief
- */
 static void CL_InvReload (struct dbuffer *msg)
 {
 	invList_t	*ic;
@@ -1322,7 +1297,6 @@ static void CL_InvReload (struct dbuffer *msg)
 }
 
 /**
- * @brief
  * @sa CL_Events
  */
 static void CL_LogEvent (int num)
@@ -1339,9 +1313,6 @@ static void CL_LogEvent (int num)
 
 static void CL_ScheduleEvent(void);
 
-/**
- * @brief
- */
 static void CL_ExecuteEvent (int now, void *data)
 {
 	while (events && !blockEvents) {
@@ -1573,7 +1544,6 @@ static void CL_ParseEvent (struct dbuffer *msg)
 }
 
 /**
- * @brief
  * @sa CL_ReadPackets
  * @param[in] msg The client stream message buffer to read from
  */

@@ -31,9 +31,6 @@ ALIAS MODELS
 ==============================================================================
 */
 
-/**
- * @brief
- */
 void R_ModLoadAnims (mAliasModel_t * mod, void *buffer)
 {
 	const char *text, *token;
@@ -94,9 +91,6 @@ void R_ModLoadAnims (mAliasModel_t * mod, void *buffer)
 /*	Com_Printf("anims: %i for model %s\n", mod->numanims, mod->name); */
 }
 
-/**
- * @brief
- */
 int R_ModFindTriangleWithEdge (mAliasNeighbors_t *neighbors, dtriangle_t *tris, int numtris, int triIndex, int edgeIndex)
 {
 	int			i, j, found = -1, foundj = 0;
@@ -132,9 +126,6 @@ int R_ModFindTriangleWithEdge (mAliasNeighbors_t *neighbors, dtriangle_t *tris, 
 	return -1;
 }
 
-/**
- * @brief
- */
 void R_ModBuildTriangleNeighbors (mAliasNeighbors_t *neighbors, dtriangle_t *tris, int numtris)
 {
 	int		i, j;

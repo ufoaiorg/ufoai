@@ -616,7 +616,6 @@ static void UFO_DestroyAllUFOsOnGeoscape_f (void)
 #endif
 
 /**
- * @brief
  * @sa MN_ResetMenus
  */
 void UFO_Reset (void)

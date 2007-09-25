@@ -1,6 +1,5 @@
 /**
  * @file patches.c
- * @brief
  */
 
 /*
@@ -33,9 +32,6 @@ TEXTURE LIGHT VALUES
 ===================================================================
 */
 
-/**
- * @brief
- */
 void CalcTextureReflectivity (void)
 {
 	int i, j, k, texels = 0, texel;
@@ -160,9 +156,6 @@ MAKE FACES
 =======================================================================
 */
 
-/**
- *	@brief
- */
 static winding_t *WindingFromFace (dface_t *f)
 {
 	int i, se, v;
@@ -210,9 +203,7 @@ static void BaseLightForFace (dface_t *f, vec3_t color)
 }
 
 static float totalarea;
-/**
- *	@brief
- */
+
 static void MakePatchForFace (int fn, winding_t *w)
 {
 	dface_t *f;
@@ -279,9 +270,6 @@ static void MakePatchForFace (int fn, winding_t *w)
 	num_patches++;
 }
 
-/**
- *	@brief
- */
 static entity_t *EntityForModel (int modnum)
 {
 	int i;
@@ -299,9 +287,6 @@ static entity_t *EntityForModel (int modnum)
 	return &entities[0];
 }
 
-/**
- * @brief
- */
 void MakePatches (void)
 {
 	int i, j, k;
@@ -341,9 +326,6 @@ SUBDIVIDE
 =======================================================================
 */
 
-/**
- *	@brief
- */
 static void FinishSplit (patch_t *patch, patch_t *newp)
 {
 	dleaf_t *leaf;
@@ -479,9 +461,6 @@ static void DicePatch (patch_t *patch)
 }
 
 
-/**
- *	@brief
- */
 void SubdividePatches (void)
 {
 	int i, num;

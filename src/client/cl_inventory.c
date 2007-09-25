@@ -589,7 +589,6 @@ void INV_InventoryList_f (void)
 #endif
 
 /**
- * @brief
  * @param[in] base the base all this happens into
  * @param[in] inv list where the item is currently in
  * @param[in] toContainer target container to place the item in

@@ -120,9 +120,6 @@ static void S_SoundInfo_f (void)
 	S_OGG_Info();
 }
 
-/**
- * @brief
- */
 static void SND_SDL_Callback (void *unused, Uint8 *stream, int len)
 {
 	SND_Frame();
@@ -187,7 +184,6 @@ static const cmdList_t r_commands[] = {
 };
 
 /**
- * @brief
  * @sa SND_Init
  */
 static void SND_Shutdown (void)
@@ -205,7 +201,6 @@ static void SND_Shutdown (void)
 
 
 /**
- * @brief
  * @sa SND_Shutdown
  */
 static qboolean SND_Init (void)
@@ -315,7 +310,6 @@ static qboolean SND_Init (void)
 }
 
 /**
- * @brief
  * @sa S_Shutdown
  * @sa CL_Snd_Restart_f
  * @todo: openal should be an replacement for the 'normal' snd_ref
@@ -401,7 +395,6 @@ Shutdown sound engine
 */
 
 /**
- * @brief
  * @sa S_Init
  * @sa CL_Snd_Restart_f
  */
@@ -453,9 +446,6 @@ Load a sound
 =======================================================================
 */
 
-/**
- * @brief
- */
 static sfx_t *S_FindName (const char *name, qboolean create)
 {
 	int i;
@@ -509,9 +499,6 @@ static sfx_t *S_FindName (const char *name, qboolean create)
 	return sfx;
 }
 
-/**
- * @brief
- */
 void S_BeginRegistration (void)
 {
 	s_registration_sequence++;
@@ -519,7 +506,6 @@ void S_BeginRegistration (void)
 }
 
 /**
- * @brief
  * @param[in] name Sound path - relative to gameDir/sound
  */
 sfx_t *S_RegisterSound (const char *name)
@@ -545,9 +531,6 @@ sfx_t *S_RegisterSound (const char *name)
 }
 
 
-/**
- * @brief
- */
 void S_EndRegistration (void)
 {
 	int i;
@@ -688,9 +671,6 @@ static void S_Spatialize (channel_t * ch)
 }
 
 
-/**
- * @brief
- */
 static playsound_t *S_AllocPlaysound (void)
 {
 	playsound_t *ps;
@@ -707,9 +687,6 @@ static playsound_t *S_AllocPlaysound (void)
 }
 
 
-/**
- * @brief
- */
 static void S_FreePlaysound (playsound_t * ps)
 {
 	/* unlink from channel */
@@ -847,7 +824,6 @@ void S_StartSound (vec3_t origin, int entnum, int entchannel, sfx_t * sfx, float
 
 
 /**
- * @brief
  * @sa S_StartSound
  */
 void S_StartLocalSound (const char *sound)
@@ -868,9 +844,6 @@ void S_StartLocalSound (const char *sound)
 }
 
 
-/**
- * @brief
- */
 void S_ClearBuffer (void)
 {
 	int clear;
@@ -889,9 +862,6 @@ void S_ClearBuffer (void)
 		memset(dma.buffer, clear, dma.samples * dma.samplebits / 8);
 }
 
-/**
- * @brief
- */
 void S_StopAllSounds (void)
 {
 	int i;
@@ -1073,9 +1043,6 @@ console functions
 ===============================================================================
 */
 
-/**
- * @brief
- */
 static void S_Play_f (void)
 {
 	int i = 1;
@@ -1088,9 +1055,6 @@ static void S_Play_f (void)
 	}
 }
 
-/**
- * @brief
- */
 static void S_SoundList_f (void)
 {
 	int i;
@@ -1121,9 +1085,6 @@ static void S_SoundList_f (void)
 	Com_Printf("Total resident: %i\n", total);
 }
 
-/**
- * @brief
- */
 void S_ResampleSfx (sfx_t * sfx, int inrate, int inwidth, byte * data)
 {
 	int outcount;
@@ -1186,7 +1147,6 @@ void S_ResampleSfx (sfx_t * sfx, int inrate, int inwidth, byte * data)
 }
 
 /**
- * @brief
  * @sa S_OGG_LoadSFX
  * @sa S_Wave_LoadSFX
  */

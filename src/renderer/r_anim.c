@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define LNEXT(x)	((x+1 < MAX_ANIMLIST) ? x+1 : 0)
 
 /**
- * @brief
  * @sa R_AnimChange
  * @sa R_AnimAppend
  * @sa R_AnimRun
@@ -51,7 +50,6 @@ static mAliasAnim_t *R_AnimGet (model_t * mod, const char *name)
 
 
 /**
- * @brief
  * @sa R_AnimGet
  * @sa R_AnimChange
  * @sa R_AnimRun
@@ -205,7 +203,6 @@ void R_AnimRun (animState_t * as, model_t * mod, int msec)
 
 
 /**
- * @brief
  * @sa R_AnimGet
  * @sa R_AnimAppend
  * @sa R_AnimRun

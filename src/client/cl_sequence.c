@@ -227,7 +227,6 @@ static seq2D_t *CL_SequenceFind2D (const char *name)
 
 
 /**
- * @brief
  * @sa CL_Sequence2D
  * @sa V_RenderView
  * @sa CL_SequenceEnd_f
@@ -422,9 +421,6 @@ void CL_SequenceStart_f (void)
 }
 
 
-/**
- * @brief
- */
 void CL_ResetSequences (void)
 {
 	/* reset counters */
@@ -865,12 +861,6 @@ static aviFileData_t afd;
 static byte buffer[MAX_AVI_BUFFER];
 static int bufIndex;
 
-/**
- * @brief
- *
- * video
- * video [filename]
- */
 void CL_Video_f (void)
 {
 	char filename[MAX_OSPATH];
@@ -910,17 +900,11 @@ void CL_Video_f (void)
 	CL_OpenAVIForWriting(filename);
 }
 
-/**
- * @brief
- */
 void CL_StopVideo_f (void)
 {
 	CL_CloseAVI();
 }
 
-/**
- * @brief
- */
 static inline void SafeFS_Write (const void *buffer, int len, qFILE * f)
 {
 	int write = FS_Write(buffer, len, f);
@@ -929,18 +913,12 @@ static inline void SafeFS_Write (const void *buffer, int len, qFILE * f)
 		Com_Printf("Failed to write avi file %p - %i:%i\n", (void*)f->f, write, len);
 }
 
-/**
- * @brief
- */
 static inline void WRITE_STRING (const char *s)
 {
 	memcpy(&buffer[bufIndex], s, strlen(s));
 	bufIndex += strlen(s);
 }
 
-/**
- * @brief
- */
 static inline void WRITE_4BYTES (int x)
 {
 	buffer[bufIndex + 0] = (byte) ((x >> 0) & 0xFF);
@@ -950,9 +928,6 @@ static inline void WRITE_4BYTES (int x)
 	bufIndex += 4;
 }
 
-/**
- * @brief
- */
 static inline void WRITE_2BYTES (int x)
 {
 	buffer[bufIndex + 0] = (byte) ((x >> 0) & 0xFF);
@@ -961,9 +936,6 @@ static inline void WRITE_2BYTES (int x)
 }
 
 #if 0
-/**
- * @brief
- */
 static inline void WRITE_1BYTES (int x)
 {
 	buffer[bufIndex] = x;
@@ -971,9 +943,6 @@ static inline void WRITE_1BYTES (int x)
 }
 #endif
 
-/**
- * @brief
- */
 static inline void START_CHUNK (const char *s)
 {
 	if (afd.chunkStackTop == MAX_RIFF_CHUNKS)
@@ -985,9 +954,6 @@ static inline void START_CHUNK (const char *s)
 	WRITE_4BYTES(0);
 }
 
-/**
- * @brief
- */
 static inline void END_CHUNK (void)
 {
 	int endIndex = bufIndex;
@@ -1003,9 +969,6 @@ static inline void END_CHUNK (void)
 	bufIndex = PAD(bufIndex, 2);
 }
 
-/**
- * @brief
- */
 static void CL_WriteAVIHeader (void)
 {
 	bufIndex = 0;
@@ -1237,9 +1200,6 @@ qboolean CL_OpenAVIForWriting (const char *fileName)
 	return qtrue;
 }
 
-/**
- * @brief
- */
 static qboolean CL_CheckFileSize (int bytesToAdd)
 {
 	unsigned int newFileSize;
@@ -1265,7 +1225,6 @@ static qboolean CL_CheckFileSize (int bytesToAdd)
 }
 
 /**
- * @brief
  * @sa R_TakeVideoFrame
  */
 void CL_WriteAVIVideoFrame (const byte * imageBuffer, size_t size)
@@ -1310,9 +1269,6 @@ void CL_WriteAVIVideoFrame (const byte * imageBuffer, size_t size)
 
 #define PCM_BUFFER_SIZE 44100
 
-/**
- * @brief
- */
 void CL_WriteAVIAudioFrame (const byte * pcmBuffer, size_t size)
 {
 	static byte pcmCaptureBuffer[PCM_BUFFER_SIZE] = { 0 };

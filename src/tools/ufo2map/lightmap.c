@@ -1,6 +1,5 @@
 /**
  * @file lightmap.c
- * @brief
  */
 
 /*
@@ -38,7 +37,6 @@ static int facelinks[MAX_MAP_FACES];
 static int planelinks[2][MAX_MAP_PLANES];
 
 /**
- * @brief
  * @sa RadWorld
  */
 void LinkPlaneFaces (void)
@@ -53,9 +51,6 @@ void LinkPlaneFaces (void)
 	}
 }
 
-/**
- * @brief
- */
 void PairEdges (void)
 {
 	int i, j, k;
@@ -115,9 +110,6 @@ typedef struct {
 	triangle_t	tris[MAX_TRI_TRIS];
 } triangulation_t;
 
-/**
- * @brief
- */
 static triangulation_t *AllocTriangulation (dplane_t *plane)
 {
 	triangulation_t *t;
@@ -134,18 +126,12 @@ static triangulation_t *AllocTriangulation (dplane_t *plane)
 	return t;
 }
 
-/**
- * @brief
- */
 static void FreeTriangulation (triangulation_t *tr)
 {
 	free(tr);
 }
 
 
-/**
- * @brief
- */
 static triedge_t *FindEdge (triangulation_t *trian, int p0, int p1)
 {
 	triedge_t *e, *be;
@@ -184,9 +170,6 @@ static triedge_t *FindEdge (triangulation_t *trian, int p0, int p1)
 	return e;
 }
 
-/**
- * @brief
- */
 static triangle_t *AllocTriangle (triangulation_t *trian)
 {
 	triangle_t *t;
@@ -200,9 +183,6 @@ static triangle_t *AllocTriangle (triangulation_t *trian)
 	return t;
 }
 
-/**
- * @brief
- */
 static void TriEdge_r (triangulation_t *trian, triedge_t *e)
 {
 	int i, bestp = 0;
@@ -249,9 +229,6 @@ static void TriEdge_r (triangulation_t *trian, triedge_t *e)
 	TriEdge_r(trian, FindEdge(trian, e->p0, bestp));
 }
 
-/**
- * @brief
- */
 static void TriangulatePoints (triangulation_t *trian)
 {
 	vec_t d, bestd;
@@ -285,9 +262,6 @@ static void TriangulatePoints (triangulation_t *trian)
 	TriEdge_r(trian, e2);
 }
 
-/**
- * @brief
- */
 static void AddPointToTriangulation (patch_t *patch, triangulation_t *trian)
 {
 	int pnum;
@@ -299,9 +273,6 @@ static void AddPointToTriangulation (patch_t *patch, triangulation_t *trian)
 	trian->numpoints++;
 }
 
-/**
- * @brief
- */
 static void LerpTriangle (triangulation_t *trian, triangle_t *t, vec3_t point, vec3_t color)
 {
 	patch_t *p1, *p2, *p3;
@@ -334,9 +305,6 @@ static void LerpTriangle (triangulation_t *trian, triangle_t *t, vec3_t point, v
 	VectorMA(color, y / y1, d1, color);
 }
 
-/**
- * @brief
- */
 static qboolean PointInTriangle (vec3_t point, triangle_t *t)
 {
 	int i;
@@ -353,9 +321,6 @@ static qboolean PointInTriangle (vec3_t point, triangle_t *t)
 	return qtrue;
 }
 
-/**
- * @brief
- */
 static void SampleTriangulation (vec3_t point, triangulation_t *trian, vec3_t color)
 {
 	triangle_t *t;
@@ -668,9 +633,6 @@ static float sun_intensity;
 static float sun_pitch, sun_yaw;
 static vec3_t sun_dir;
 
-/**
- * @brief
- */
 static entity_t *FindTargetEntity (const char *target)
 {
 	int i;
@@ -689,7 +651,6 @@ static entity_t *FindTargetEntity (const char *target)
 #define	DIRECT_LIGHT	3
 
 /**
- * @brief
  * @sa RadWorld
  */
 void CreateDirectLights (void)
@@ -841,7 +802,6 @@ void CreateDirectLights (void)
 
 
 /**
- * @brief
  * @param[in] lightscale is the normalizer for multisampling
  */
 static void GatherSampleLight (vec3_t pos, vec3_t normal,
@@ -969,9 +929,6 @@ nextpatch:;
 #define MAX_SAMPLES 5
 static const float sampleofs[MAX_SAMPLES][2] = { {0,0}, {-0.4, -0.4}, {0.4, -0.4}, {0.4, 0.4}, {-0.4, 0.4} };
 
-/**
- * @brief
- */
 void BuildFacelights (unsigned int facenum)
 {
 	dface_t *f;
