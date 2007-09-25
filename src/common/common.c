@@ -792,7 +792,6 @@ void Qcommon_Init (int argc, const char **argv)
 	Schedule_Timer(Cvar_Get("irc_freq", "10", 0, NULL), &Irc_Logic_Frame, NULL);
 #endif
 
-	/* Horrible hack: cbuf system wants rethinking */
 	Schedule_Timer(Cvar_Get("cbuf_freq", "10", 0, NULL), &Cbuf_Execute_timer, NULL);
 
 	Com_Printf("====== UFO Initialized ======\n\n");
@@ -840,8 +839,8 @@ static void tick_timer (int now, void *data)
 			timer->interval -= 1;
 
 		/* Note that we slow the timer more quickly than we speed it up,
-		so it should tend to settle down in the vicinity of the low
-		water mark */
+		 * so it should tend to settle down in the vicinity of the low
+		 * water mark */
 
 		timer->next_check = TIMER_CHECK_INTERVAL;
 	}
@@ -855,8 +854,8 @@ static void tick_timer (int now, void *data)
 		timer->func(now, timer->data);
 
 	/* We correct for the lateness of this frame. We do not correct for
-		the time consumed by this frame - that's billed to the lateness
-		of future frames (so that the automagic slowdown can work) */
+	 * the time consumed by this frame - that's billed to the lateness
+	 * of future frames (so that the automagic slowdown can work) */
 	Schedule_Event(now + lateness + timer->interval, &tick_timer, timer);
 }
 
