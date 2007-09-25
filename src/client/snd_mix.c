@@ -40,6 +40,7 @@ static void S_WriteLinearBlastStereo16 (void)
 	int i;
 	int val;
 
+	SDL_LockAudio();
 	for (i = 0; i < snd_linear_count; i += 2) {
 		val = snd_p[i] >> 8;
 		if (val > SHRT_MAX)
@@ -57,6 +58,7 @@ static void S_WriteLinearBlastStereo16 (void)
 		else
 			snd_out[i + 1] = val;
 	}
+	SDL_UnlockAudio();
 }
 
 /**
@@ -132,6 +134,7 @@ static void S_TransferPaintBuffer (int endtime)
 		out_idx = paintedtime * dma.channels & out_mask;
 		step = 3 - dma.channels;
 
+		SDL_LockAudio();
 		if (dma.samplebits == 16) {
 			short *out = (short *) pbuf;
 
@@ -159,6 +162,7 @@ static void S_TransferPaintBuffer (int endtime)
 				out_idx = (out_idx + 1) & out_mask;
 			}
 		}
+		SDL_UnlockAudio();
 	}
 }
 
