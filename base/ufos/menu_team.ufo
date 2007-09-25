@@ -1404,7 +1404,7 @@ menu equipment
 
 	text description
 	{
-		pos		"40 550"
+		pos		"40 530"
 		size	"326 160"
 		format	"20 190"
 		height	"8"
@@ -1422,7 +1422,7 @@ menu equipment
 		mousefx	true
 		click
 		{
-			cmd mn_decreaseweapon
+			cmd "mn_decreaseweapon;"
 		}
 	}
 
@@ -1437,10 +1437,9 @@ menu equipment
 		mousefx	true
 		click
 		{
-			cmd mn_decreaseweapon
+			cmd "mn_decreaseweapon;"
 		}
 	}
-
 
 	pic weapon_inc
 	{
@@ -1453,7 +1452,7 @@ menu equipment
 		mousefx	true
 		click
 		{
-			cmd mn_increaseweapon
+			cmd "mn_increaseweapon;"
 		}
 	}
 
@@ -1468,7 +1467,7 @@ menu equipment
 		mousefx	true
 		click
 		{
-			cmd mn_increaseweapon
+			cmd "mn_increaseweapon;"
 		}
 	}
 
@@ -1510,7 +1509,7 @@ menu equipment
 		mousefx	true
 		click
 		{
-			cmd mn_decreasefiremode
+			cmd "mn_decreasefiremode;"
 		}
 	}
 
@@ -1525,7 +1524,7 @@ menu equipment
 		mousefx	true
 		click
 		{
-			cmd mn_increasefiremode
+			cmd "mn_increasefiremode;"
 		}
 	}
 
