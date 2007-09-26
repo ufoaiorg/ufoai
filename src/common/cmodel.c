@@ -1061,7 +1061,7 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 
 #ifdef DEBUG
 	if (!route_count)
-		Com_Error(ERR_DROP, "CMod_LoadRouting: Map has NO reachable field");
+		Com_Error(ERR_DROP, "CMod_LoadRouting: Map '%s' has NO reachable field", curTile->name);
 #endif
 
 	/* calculate new border */
