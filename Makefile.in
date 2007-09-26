@@ -17,9 +17,6 @@ EXE_EXT=@EXEEXT@
 SDL_CFLAGS=@SDL_CFLAGS@
 SDL_LIBS=@SDL_LIBS@
 
-OPENAL_CFLAGS=@OPENAL_CFLAGS@
-OPENAL_LIBS=@OPENAL_LIBS@
-
 CLIENT_LIBS=@CLIENT_LIBS@
 SERVER_LIBS=@SERVER_LIBS@
 GAME_LIBS=@GAME_LIBS@
@@ -87,12 +84,12 @@ echo_info:
 	@echo "CFLAGS"
 	@echo "-----------------------"
 	@echo $(CFLAGS)
-	@echo $(CLIENT_CFLAGS) $(SDL_CFLAGS) $(OPENAL_CFLAGS)
+	@echo $(CLIENT_CFLAGS) $(SDL_CFLAGS)
 	@echo
 	@echo "LDFLAGS"
 	@echo "-----------------------"
 	@echo $(LDFLAGS)
-	@echo $(CLIENT_LIBS) $(SDL_LIBS) $(OPENAL_LIBS)
+	@echo $(CLIENT_LIBS) $(SDL_LIBS)
 	@echo
 	@echo "Gettext"
 	@echo "-----------------------"
