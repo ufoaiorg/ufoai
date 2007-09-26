@@ -356,6 +356,8 @@ void R_ModDrawNullModel (entity_t* e)
 	qglEnable(GL_TEXTURE_2D);
 }
 
+static int static_mod_numknown;
+
 /**
  * @brief
  * @sa R_ShutdownModels
@@ -366,6 +368,7 @@ void R_InitModels (void)
 	/* this is for loading all the static models into the generic pool
 	 * because the vid_modelPool is wiped with every new map */
 	r_modelPoolPtr = vid_genericPool;
+	static_mod_numknown = 0;
 }
 
 /**
@@ -376,6 +379,7 @@ void R_InitModels (void)
 void R_InitModelsDynamic (void)
 {
 	r_modelPoolPtr = vid_modelPool;
+	static_mod_numknown = mod_numknown;
 }
 
 /**
@@ -387,5 +391,5 @@ void R_ShutdownModels (void)
 		Com_Printf("R_ShutdownModels: Warning, pool pointer mismatch\n");
 	VID_FreeTags(vid_modelPool, 0);
 	VID_FreeTags(vid_lightPool, 0);
-	mod_numknown = 0;
+	mod_numknown = static_mod_numknown;
 }
