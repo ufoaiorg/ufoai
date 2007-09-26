@@ -4328,32 +4328,6 @@ void MN_LinkMenuModels (void)
 }
 
 /**
- * @brief Precache all menu models for faster access
- * @sa CL_PrecacheModels
- */
-void MN_PrecacheModels (void)
-{
-	int i;
-	menuModel_t *menuModel;
-	float loading = cls.loadingPercent;
-
-	for (i = 0; i < numMenuModels; i++) {
-		menuModel = &menuModels[i];
-		if (!R_RegisterModelShort(menuModel->model))
-			Com_Printf("MN_PrecacheModels: Could not register model '%s'\n", menuModel->model);
-		while ((menuModel = menuModel->next) != NULL) {
-			if (!R_RegisterModelShort(menuModel->model))
-				Com_Printf("MN_PrecacheModels: Could not register model '%s'\n", menuModel->model);
-		}
-		cls.loadingPercent += 20.0f / numMenuModels;
-		SCR_DrawPrecacheScreen(qtrue);
-	}
-	/* ensure 20% */
-	cls.loadingPercent = loading + 20.0f;
-	SCR_DrawPrecacheScreen(qtrue);
-}
-
-/**
  * @brief parses the models.ufo and all files where menu_models are defined
  * @sa CL_ParseClientData
  */

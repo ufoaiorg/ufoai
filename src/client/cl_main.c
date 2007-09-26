@@ -1559,9 +1559,6 @@ static void CL_Precache_f (void)
 
 /**
  * @brief Precaches all models at game startup - for faster access
- * @note only called when cl_precache was set to 1
- * @sa MN_PrecacheModels
- * @sa E_PrecacheModels
  */
 static void CL_PrecacheModels (void)
 {
