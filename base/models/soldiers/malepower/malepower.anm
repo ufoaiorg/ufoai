@@ -18,7 +18,7 @@ walk1				97		112		22
 cstand1				115		116		1
 cwalk1				118		133		15
 
-move_rifle			82		101		4
+move_rifle			82		101		22
 shoot_rifle			119		133		10
 //cmove_rifle			163		164		10
 //cshoot_rifle		165		169		10
