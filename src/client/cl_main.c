@@ -513,17 +513,6 @@ static void CL_Packet_f (void)
 #endif
 
 /**
- * @brief Just sent as a hint to the client that they should drop to full console
- */
-static void CL_Changing_f (void)
-{
-	SCR_BeginLoadingPlaque();
-	CL_SetClientState(ca_connected);	/* not active anymore, but not disconnected */
-	Com_Printf("\nChanging map...\n");
-}
-
-
-/**
  * @brief The server is changing levels
  */
 static void CL_Reconnect_f (void)
@@ -1476,13 +1465,12 @@ void CL_RequestNextDownload (void)
 		return;
 	}
 
-	/* for singleplayer game this is already loaded in our local server */
-	/* and if we are the server we don't have to reload the map here, too */
+	/* for singleplayer game this is already loaded in our local server
+	 * and if we are the server we don't have to reload the map here, too */
 	if (!Com_ServerState()) {
 		/* check download */
 		if (precache_check == CS_MODELS) { /* confirm map */
-			if (*cl.configstrings[CS_TILES] == '+') {
-			} else {
+			if (*cl.configstrings[CS_TILES] != '+') {
 				if (!CL_CheckOrDownloadFile(va("maps/%s.bsp", cl.configstrings[CS_TILES])))
 					return; /* started a download */
 			}
@@ -2123,7 +2111,6 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("userinfo", CL_Userinfo_f, "Prints your userinfo string");
 	Cmd_AddCommand("snd_restart", CL_Snd_Restart_f, "Restart the sound renderer");
 
-	Cmd_AddCommand("changing", CL_Changing_f, "Change level without disconnecting completly");
 	Cmd_AddCommand("disconnect", CL_Disconnect_f, "Disconnect from the current server");
 
 	Cmd_AddCommand("quit", CL_Quit_f, "Quits the game");

@@ -332,7 +332,7 @@ static void CL_ParseEntitystring (const char *es)
 }
 
 /**
- * @brief Call before entering a new level, or after changing dlls
+ * @brief Call before entering a new level, or after vid_restart
  */
 void CL_LoadMedia (void)
 {

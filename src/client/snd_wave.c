@@ -228,7 +228,7 @@ sfxcache_t *S_Wave_LoadSFX (sfx_t * s)
 	int size;
 	char *name;
 
-	/*Com_Printf("S_Wave_LoadSFX: %x\n", (int)stackbuf); */
+	/*Com_DPrintf(DEBUG_SOUND, "S_Wave_LoadSFX: %x\n", (int)stackbuf); */
 	/* load it in */
 	if (s->truename)
 		name = s->truename;
@@ -240,7 +240,7 @@ sfxcache_t *S_Wave_LoadSFX (sfx_t * s)
 	else
 		Com_sprintf(namebuffer, sizeof(namebuffer), "sound/%s.wav", name);
 
-	/*Com_Printf("loading %s\n", namebuffer);*/
+	/*Com_DPrintf(DEBUG_SOUND, "loading %s\n", namebuffer);*/
 
 	size = FS_LoadFile(namebuffer, &data);
 	if (!data) {

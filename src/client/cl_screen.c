@@ -59,7 +59,6 @@ static cvar_t *scr_rspeed;
 static char cursor_pic[MAX_QPATH];
 
 static void SCR_TimeRefresh_f(void);
-static void SCR_Loading_f(void);
 static void SCR_DrawString(int x, int y, const char *string, qboolean bitmapFont);
 
 /*
@@ -271,7 +270,6 @@ void SCR_Init (void)
 
 	/* register our commands */
 	Cmd_AddCommand("timerefresh", SCR_TimeRefresh_f, NULL);
-	Cmd_AddCommand("loading", SCR_Loading_f, NULL);
 
 	SCR_TouchPics();
 
@@ -543,15 +541,6 @@ void SCR_EndLoadingPlaque (void)
 	SCR_DrawLoading(); /* reset the loadingPic pointer */
 	/* clear any lines of console text */
 	Con_ClearNotify();
-}
-
-/**
- * @sa SCR_BeginLoadingPlaque
- * @sa SCR_EndLoadingPlaque
- */
-static void SCR_Loading_f (void)
-{
-	SCR_BeginLoadingPlaque();
 }
 
 static void SCR_TimeRefresh_f (void)
