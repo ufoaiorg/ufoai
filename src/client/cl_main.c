@@ -2544,6 +2544,8 @@ void CL_Init (void)
 
 	CL_InitParticles();
 
+	CL_ClearState();
+
 	/* Touch memory */
 	Mem_TouchGlobal();
 }
