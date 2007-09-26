@@ -161,8 +161,8 @@ static qboolean R_CullAliasMD2Model (vec4_t bbox[8], entity_t * e)
 	dAliasFrame_t *pframe, *poldframe;
 	float dp;
 
-	assert(currentmodel->type == mod_alias_md2);
-	paliashdr = (mdl_md2_t *) currentmodel->alias.extraData;
+	assert(e->model->type == mod_alias_md2);
+	paliashdr = (mdl_md2_t *) e->model->alias.extraData;
 
 	pframe = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + e->as.frame * paliashdr->framesize);
 
@@ -258,16 +258,16 @@ void R_DrawAliasMD2Model (entity_t * e)
 	if (R_CullAliasMD2Model(bbox, e))
 		return;
 
-	assert(currentmodel->type == mod_alias_md2);
-	paliashdr = (mdl_md2_t *) currentmodel->alias.extraData;
+	assert(e->model->type == mod_alias_md2);
+	paliashdr = (mdl_md2_t *) e->model->alias.extraData;
 
 	/* check animations */
 	if ((e->as.frame >= paliashdr->num_frames) || (e->as.frame < 0)) {
-		Com_Printf("R_DrawAliasMD2Model %s: no such frame %d\n", currentmodel->name, e->as.frame);
+		Com_Printf("R_DrawAliasMD2Model %s: no such frame %d\n", e->model->name, e->as.frame);
 		e->as.frame = 0;
 	}
 	if ((e->as.oldframe >= paliashdr->num_frames) || (e->as.oldframe < 0)) {
-		Com_Printf("R_DrawAliasMD2Model %s: no such oldframe %d\n", currentmodel->name, e->as.oldframe);
+		Com_Printf("R_DrawAliasMD2Model %s: no such oldframe %d\n", e->model->name, e->as.oldframe);
 		e->as.oldframe = 0;
 	}
 
@@ -279,11 +279,11 @@ void R_DrawAliasMD2Model (entity_t * e)
 		skin = e->skin;			/* custom player skin */
 	else {
 		if (e->skinnum >= MD2_MAX_SKINS)
-			skin = currentmodel->alias.skins_img[0];
+			skin = e->model->alias.skins_img[0];
 		else {
-			skin = currentmodel->alias.skins_img[e->skinnum];
+			skin = e->model->alias.skins_img[e->skinnum];
 			if (!skin)
-				skin = currentmodel->alias.skins_img[0];
+				skin = e->model->alias.skins_img[0];
 		}
 	}
 	if (!skin)

@@ -135,17 +135,16 @@ static void R_CastShadow (void)
 		return;
 
 	for (i = 0; i < refdef.num_entities; i++) {
-		currententity = &refdef.entities[i];
-		currentmodel = currententity->model;
-		if (!currentmodel)
+		if (!refdef.entities[i].model)
 			continue;
-		if (currentmodel->type != mod_alias_md2 && currentmodel->type != mod_alias_md3)
+		if (refdef.entities[i].model->type != mod_alias_md2
+		 && refdef.entities[i].model->type != mod_alias_md3)
 			continue;
 
 		if (r_shadows->integer == 2)
-			R_DrawShadowVolume(currententity);
+			R_DrawShadowVolume(&refdef.entities[i]);
 		else if (r_shadows->integer == 1)
-			R_DrawShadow(currententity);
+			R_DrawShadow(&refdef.entities[i]);
 	}
 }
 
@@ -342,7 +341,7 @@ static void R_DrawEntitiesOnList (void)
 		else {
 			currentmodel = currententity->model;
 			if (!currentmodel) {
-				R_ModDrawNullModel();
+				R_ModDrawNullModel(currententity);
 				continue;
 			}
 			switch (currentmodel->type) {
@@ -384,7 +383,7 @@ static void R_DrawEntitiesOnList (void)
 		else {
 			currentmodel = currententity->model;
 			if (!currentmodel) {
-				R_ModDrawNullModel();
+				R_ModDrawNullModel(currententity);
 				continue;
 			}
 			switch (currentmodel->type) {

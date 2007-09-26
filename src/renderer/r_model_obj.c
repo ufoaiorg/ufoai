@@ -376,7 +376,6 @@ static void R_OBJ_Render (model_t *mod)
  */
 void R_DrawOBJModel (entity_t *e)
 {
-	currentmodel = e->model;
-	assert(currentmodel->type == mod_obj);
-	R_OBJ_Render(currentmodel);
+	assert(e->model->type == mod_obj);
+	R_OBJ_Render(e->model);
 }

@@ -137,16 +137,16 @@ static void R_DrawAliasShadow (entity_t * e, mdl_md2_t * paliashdr, int posenum)
 		return;
 
 	/* calculate model lighting and setup shadow transparenty */
-	R_LightPoint(currententity->origin, shadelight);
+	R_LightPoint(e->origin, shadelight);
 
 	alpha = 1 - (shadelight[0] + shadelight[1] + shadelight[2]);
 
 	if (alpha <= 0.3)
 		alpha = 0.3;
 
-	lheight = currententity->origin[2];
+	lheight = e->origin[2];
 
-	frame = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.frame * paliashdr->framesize);
+	frame = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + e->as.frame * paliashdr->framesize);
 
 	verts = frame->verts;
 	height = 0;
@@ -501,22 +501,22 @@ void R_DrawShadow (entity_t * e)
 	if (refdef.rdflags & RDF_NOWORLDMODEL)
 		return;
 
-	assert(currentmodel->type == mod_alias_md2);
-	paliashdr = (mdl_md2_t *) currentmodel->alias.extraData;
+	assert(e->model->type == mod_alias_md2);
+	paliashdr = (mdl_md2_t *) e->model->alias.extraData;
 
-	frame = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.frame * paliashdr->framesize);
+	frame = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + e->as.frame * paliashdr->framesize);
 	verts = v = frame->verts;
 
-	oldframe = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.oldframe * paliashdr->framesize);
+	oldframe = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + e->as.oldframe * paliashdr->framesize);
 	ov = oldframe->verts;
 
 	order = (int *) ((byte *) paliashdr + paliashdr->ofs_glcmds);
 
-	frontlerp = 1.0 - currententity->as.backlerp;
+	frontlerp = 1.0 - e->as.backlerp;
 
 	/* move should be the delta back to the previous frame * backlerp */
-	VectorSubtract(currententity->oldorigin, currententity->origin, delta);
-	AngleVectors(currententity->angles, vectors[0], vectors[1], vectors[2]);
+	VectorSubtract(e->oldorigin, e->origin, delta);
+	AngleVectors(e->angles, vectors[0], vectors[1], vectors[2]);
 
 	move[0] = DotProduct(delta, vectors[0]);	/* forward */
 	move[1] = -DotProduct(delta, vectors[1]);	/* left */
@@ -525,15 +525,15 @@ void R_DrawShadow (entity_t * e)
 	VectorAdd(move, oldframe->translate, move);
 
 	for (i = 0; i < 3; i++) {
-		move[i] = currententity->as.backlerp * move[i] + frontlerp * frame->translate[i];
+		move[i] = e->as.backlerp * move[i] + frontlerp * frame->translate[i];
 		frontv[i] = frontlerp * frame->scale[i];
-		backv[i] = currententity->as.backlerp * oldframe->scale[i];
+		backv[i] = e->as.backlerp * oldframe->scale[i];
 	}
 
 /*	R_LerpVerts(paliashdr->num_xyz, v, ov, s_lerped[0], move, frontv, backv, 0); */
 
 	/*|RF_NOSHADOW */
-	if (!(currententity->flags & RF_TRANSLUCENT)) {
+	if (!(e->flags & RF_TRANSLUCENT)) {
 		qglPushMatrix();
 		{
 			vec3_t end;
@@ -544,11 +544,11 @@ void R_DrawShadow (entity_t * e)
 			qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			qglTranslatef(e->origin[0], e->origin[1], e->origin[2]);
 			qglRotatef(e->angles[1], 0, 0, 1);
-			VectorSet(end, currententity->origin[0], currententity->origin[1], currententity->origin[2] - 2048);
+			VectorSet(end, e->origin[0], e->origin[1], e->origin[2] - 2048);
 			/* FIXME: go through other rTiles, too */
-			RecursiveLightPoint(rTiles[0], rTiles[0]->bsp.nodes, currententity->origin, end);
-			R_ShadowLight(currententity->origin, shadevector);
-			R_DrawAliasShadow(e, paliashdr, currententity->as.frame);
+			RecursiveLightPoint(rTiles[0], rTiles[0]->bsp.nodes, e->origin, end);
+			R_ShadowLight(e->origin, shadevector);
+			R_DrawAliasShadow(e, paliashdr, e->as.frame);
 			qglDepthMask(GL_TRUE);
 		}
 		qglEnable(GL_TEXTURE_2D);
@@ -576,22 +576,22 @@ void R_DrawShadowVolume (entity_t * e)
 	if (refdef.rdflags & RDF_NOWORLDMODEL)
 		return;
 
-	assert(currentmodel->type == mod_alias_md2);
-	paliashdr = (mdl_md2_t *) currentmodel->alias.extraData;
+	assert(e->model->type == mod_alias_md2);
+	paliashdr = (mdl_md2_t *) e->model->alias.extraData;
 
-	frame = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.frame * paliashdr->framesize);
+	frame = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + e->as.frame * paliashdr->framesize);
 	verts = v = frame->verts;
 
-	oldframe = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.oldframe * paliashdr->framesize);
+	oldframe = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + e->as.oldframe * paliashdr->framesize);
 	ov = oldframe->verts;
 
 	order = (int *) ((byte *) paliashdr + paliashdr->ofs_glcmds);
 
-	frontlerp = 1.0 - currententity->as.backlerp;
+	frontlerp = 1.0 - e->as.backlerp;
 
 	/* move should be the delta back to the previous frame * backlerp */
-	VectorSubtract(currententity->oldorigin, currententity->origin, delta);
-	AngleVectors(currententity->angles, vectors[0], vectors[1], vectors[2]);
+	VectorSubtract(e->oldorigin, e->origin, delta);
+	AngleVectors(e->angles, vectors[0], vectors[1], vectors[2]);
 
 	move[0] = DotProduct(delta, vectors[0]);	/* forward */
 	move[1] = -DotProduct(delta, vectors[1]);	/* left */
@@ -600,20 +600,20 @@ void R_DrawShadowVolume (entity_t * e)
 	VectorAdd(move, oldframe->translate, move);
 
 	for (i = 0; i < 3; i++) {
-		move[i] = currententity->as.backlerp * move[i] + frontlerp * frame->translate[i];
+		move[i] = e->as.backlerp * move[i] + frontlerp * frame->translate[i];
 		frontv[i] = frontlerp * frame->scale[i];
-		backv[i] = currententity->as.backlerp * oldframe->scale[i];
+		backv[i] = e->as.backlerp * oldframe->scale[i];
 	}
 
 /*	R_LerpVerts(paliashdr->num_xyz, v, ov, s_lerped[0], move, frontv, backv, 0); */
 
 /*	|RF_NOSHADOW|RF_NOSHADOW2 */
-	if (!(currententity->flags & RF_TRANSLUCENT)) {
+	if (!(e->flags & RF_TRANSLUCENT)) {
 		qglPushMatrix();
 		qglDisable(GL_TEXTURE_2D);
 		qglTranslatef(e->origin[0], e->origin[1], e->origin[2]);
 		qglRotatef(e->angles[1], 0, 0, 1);
-		R_DrawAliasShadowVolume(paliashdr, currententity->as.frame);
+		R_DrawAliasShadowVolume(paliashdr, e->as.frame);
 		qglEnable(GL_TEXTURE_2D);
 		qglPopMatrix();
 	}

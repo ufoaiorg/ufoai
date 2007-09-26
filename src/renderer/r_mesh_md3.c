@@ -109,9 +109,9 @@ void R_DrawAliasMD3Model (entity_t *e)
 	int	i;
 	qboolean lightfixed;
 
-	assert(currentmodel->type == mod_alias_md3);
+	assert(e->model->type == mod_alias_md3);
 
-	paliashdr = (mAliasModel_t *)currentmodel->alias.extraData;
+	paliashdr = (mAliasModel_t *)e->model->alias.extraData;
 
 	/* set-up lighting */
 	lightfixed = e->flags & RF_LIGHTFIXED ? qtrue : qfalse;
@@ -135,14 +135,14 @@ void R_DrawAliasMD3Model (entity_t *e)
 		RSTATE_ENABLE_BLEND
 
 	if ((e->as.frame >= paliashdr->num_frames) || (e->as.frame < 0)) {
-		Com_Printf("R_DrawAliasMD3Model %s: no such frame %d\n", currentmodel->name, e->as.frame);
+		Com_Printf("R_DrawAliasMD3Model %s: no such frame %d\n", e->model->name, e->as.frame);
 		e->as.frame = 0;
 		e->as.oldframe = 0;
 	}
 
 	if ((e->as.oldframe >= paliashdr->num_frames) || (e->as.oldframe < 0)) {
 		Com_Printf("R_DrawAliasMD3Model %s: no such oldframe %d\n",
-			currentmodel->name, e->as.oldframe);
+			e->model->name, e->as.oldframe);
 		e->as.frame = 0;
 		e->as.oldframe = 0;
 	}
@@ -184,7 +184,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 		qglDisable(GL_FOG);
 
 	for (i = 0; i < paliashdr->num_meshes; i++) {
-		skin = currentmodel->alias.skins_img[e->skinnum];
+		skin = e->model->alias.skins_img[e->skinnum];
 		if (!skin)
 			skin = r_notexture;
 		R_Bind(skin->texnum);

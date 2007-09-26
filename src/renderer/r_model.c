@@ -322,16 +322,16 @@ void R_ModDrawModelBBox (vec4_t bbox[8], entity_t *e)
 /**
  * @brief Fallback if entity doesn't have any valid model
  */
-void R_ModDrawNullModel (void)
+void R_ModDrawNullModel (entity_t* e)
 {
 	vec3_t shadelight;
 	int i;
 
-	R_LightPoint(currententity->origin, shadelight);
+	R_LightPoint(e->origin, shadelight);
 
 	qglPushMatrix();
 
-	qglMultMatrixf(trafo[currententity - refdef.entities].matrix);
+	qglMultMatrixf(trafo[e - refdef.entities].matrix);
 
 	qglDisable(GL_TEXTURE_2D);
 

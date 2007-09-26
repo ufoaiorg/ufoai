@@ -42,8 +42,8 @@ void R_DrawSpriteModel (entity_t * e)
 
 	/* don't even bother culling, because it's just a single */
 	/* polygon without a surface cache */
-	assert(currentmodel->type == mod_sprite);
-	psprite = (dsprite_t *) currentmodel->alias.extraData;
+	assert(e->model->type == mod_sprite);
+	psprite = (dsprite_t *) e->model->alias.extraData;
 
 #if 0
 	if (e->frame < 0 || e->frame >= psprite->numframes) {
@@ -59,7 +59,7 @@ void R_DrawSpriteModel (entity_t * e)
 	if (psprite->type == SPR_ORIENTED) {	/* bullet marks on walls */
 		vec3_t v_forward, v_right, v_up;
 
-		AngleVectors(currententity->angles, v_forward, v_right, v_up);
+		AngleVectors(e->angles, v_forward, v_right, v_up);
 		up = v_up;
 		right = v_right;
 	} else
@@ -74,7 +74,7 @@ void R_DrawSpriteModel (entity_t * e)
 
 	R_ColorBlend(color);
 
-	R_Bind(currentmodel->alias.skins_img[e->as.frame]->texnum);
+	R_Bind(e->model->alias.skins_img[e->as.frame]->texnum);
 
 	R_TexEnv(GL_MODULATE);
 
