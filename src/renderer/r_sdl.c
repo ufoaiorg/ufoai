@@ -154,6 +154,7 @@ qboolean R_InitGraphics (void)
 		SDL_FreeSurface(r_surface);
 
 	switch (r_bitdepth->integer) {
+	case 0:
 	case 24:
 	case 32:
 		SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
