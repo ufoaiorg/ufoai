@@ -238,7 +238,7 @@ Section "Source Code" SEC03
   SetOutPath "$INSTDIR\src\ports\macosx"
 ;  File "..\..\ports\macosx\*.h"
   File "..\..\ports\macosx\*.m"
-  File "..\..\ports\macosx\*.c"
+;  File "..\..\ports\macosx\*.c"
   SetOutPath "$INSTDIR\src\ports\linux"
   File "..\..\ports\linux\*.h"
   File "..\..\ports\linux\*.c"
