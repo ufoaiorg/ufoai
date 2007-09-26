@@ -4,7 +4,7 @@ ufoai (2.2~~svn11980) unstable; urgency=low
   * Removed openal
   * Added libcurl
 
- -- Martin Gerhardy <martin.gerhardy@gmail.com>  Wed, 19 Sep 2007 22:09:13 +0100
+ -- Martin Gerhardy <martin.gerhardy@gmail.com>  Wed, 26 Sep 2007 07:54:13 +0100
 
 ufoai (2.2~~svn11864) unstable; urgency=low
 
