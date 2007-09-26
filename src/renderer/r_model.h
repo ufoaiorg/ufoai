@@ -51,8 +51,6 @@ typedef struct model_s {
 	/** the name needs to be the first entry in the struct */
 	char name[MAX_QPATH];
 
-	int registration_sequence;
-
 	modtype_t type;	/**< model type */
 	int numframes;
 

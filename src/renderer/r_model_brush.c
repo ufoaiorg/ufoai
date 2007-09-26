@@ -528,7 +528,6 @@ static void R_ModAddMapTile (const char *name, int sX, int sY, int sZ)
 		Sys_Error("R_ModAddMapTile: %s not found", loadmodel->name);
 
 	/* init */
-	loadmodel->registration_sequence = registration_sequence;
 	loadmodel->type = mod_brush;
 
 	/* prepare shifting */

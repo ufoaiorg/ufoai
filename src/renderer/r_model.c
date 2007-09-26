@@ -129,9 +129,6 @@ static model_t *R_ModForName (const char *name, qboolean crash)
 
 	loadmodel = mod;
 
-	/* register */
-	mod->registration_sequence = registration_sequence;
-
 	/* call the apropriate loader */
 	switch (LittleLong(*(unsigned *) buf)) {
 	case IDALIASHEADER:
@@ -272,32 +269,10 @@ model_t *R_RegisterModelShort (const char *name)
 }
 
 /**
- * @sa R_ShutdownModels
- */
-static void R_ModFree (model_t * mod)
-{
-	if (mod->alias.extraData)
-		VID_MemFree(mod->alias.extraData);
-
-	memset(mod, 0, sizeof(*mod));
-}
-
-/**
  * @sa R_ModBeginLoading
  */
 void R_ModEndLoading (void)
 {
-	int i;
-	model_t *mod;
-
-	for (i = 0, mod = mod_known; i < mod_numknown; i++, mod++) {
-		if (!mod->name[0])
-			continue;
-		/* don't need this model */
-		if (mod->registration_sequence != registration_sequence)
-			R_ModFree(mod);
-	}
-
 	R_FreeUnusedImages();
 }
 
