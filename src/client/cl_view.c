@@ -338,8 +338,7 @@ void CL_LoadMedia (void)
 {
 	le_t *le;
 	int i, max;
-	char name[37];
-	char *str;
+	char name[32];
 
 	/* Prepare environment. This is needed hack to allow /devmap and /map usage.
 	 * When an user has base built and calls /devmap or /map, cls.missionaircraft has to be set. */
@@ -369,7 +368,6 @@ void CL_LoadMedia (void)
 	SCR_UpdateScreen();
 	R_ModBeginLoading(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS]);
 	CL_ParseEntitystring(map_entitystring);
-	Com_Printf("                                     \r");
 
 	Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages), _("loading models..."));
 	cls.loadingPercent += 10.0f;
@@ -387,7 +385,7 @@ void CL_LoadMedia (void)
 		Q_strncpyz(name, cl.configstrings[CS_MODELS + i], sizeof(name));
 		if (name[0] != '*') {
 			Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages),
-				_("loading %s"), (strlen(name) > 40) ? &name[strlen(name) - 40] : name);
+				_("loading %s"), name);
 		}
 		SCR_UpdateScreen();
 		IN_SendKeyEvents();	/* pump message loop */
@@ -396,10 +394,8 @@ void CL_LoadMedia (void)
 			cl.model_clip[i] = CM_InlineModel(cl.configstrings[CS_MODELS + i]);
 		else
 			cl.model_clip[i] = NULL;
-		if (name[0] != '*')
-			Com_Printf("                                     \r");
 
-		cls.loadingPercent += 80.0f / (float)max;
+		cls.loadingPercent += 100.0f / (float)max;
 	}
 
 	/* update le model references */
