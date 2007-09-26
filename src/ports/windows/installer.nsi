@@ -94,7 +94,6 @@ SectionGroup /e "Game" SECGROUP01
     SetOutPath "$INSTDIR"
     File /nonfatal "..\..\..\src\docs\tex\*.pdf"
     File "..\..\..\contrib\*.dll"
-    File "..\..\..\*.dll"
     File "..\..\..\*.exe"
     File "..\..\..\.gamedir"
     SetOutPath "$INSTDIR\base"
