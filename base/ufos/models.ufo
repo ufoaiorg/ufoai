@@ -163,21 +163,21 @@ menu_model civ_female
 	need	"civ_female_head"
 }
 // ================== Tanks ======================
-// TRIAX
-menu_model ugv_triax_turret
+// ARES
+menu_model ugv_ares_w_turret
 {
-	model	"models/soldiers/ugv_triax/triax_wheels_turret.md2"
+	model	"models/soldiers/ugv_aresa/ares_w_turret.md2"
 	tag	"tag_head"
-	parent	"ugv_triax"
+	parent	"ugv_ares_w"
 	scale	"1.0 1.0 1.0"
 	menutransform {
 		ufopedia "6 6 6" "0 0 120"	"-70 0 0"
 	}
 }
-menu_model ugv_triax
+menu_model ugv_ares_w
 {
-	model	"models/soldiers/ugv_triax/triax_wheels.md2"
-	need	"ugv_triax_turret"
+	model	"models/soldiers/ugv_ares/ares_w.md2"
+	need	"ugv_ares_w_turret"
 //	anim	"stand2"
 	menutransform {
 		ufopedia "6 6 6" "0 0 120"	"-70 0 0"
@@ -185,7 +185,7 @@ menu_model ugv_triax
 }
 
 // PHOENIX
-menu_model ugv_triax_phoenix
+menu_model ugv_phoenix_turret
 {
 	model	"models/soldiers/ugv_phoenix/phoenix_turret.md2"
 	tag	"tag_head"
@@ -198,7 +198,7 @@ menu_model ugv_triax_phoenix
 menu_model ugv_phoenix
 {
 	model	"models/soldiers/ugv_phoenix/phoenix.md2"
-	need	"ugv_triax_phoenix"
+	need	"ugv_phoenix_turret"
 //	anim	"stand2"
 	menutransform {
 		ufopedia "6 6 6" "0 0 120"	"-70 0 0"

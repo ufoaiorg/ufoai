@@ -3560,13 +3560,13 @@ tech rs_ugv_phoenix
 	producetime	400
 }
 
-tech rs_ugv_triax
+tech rs_ugv_ares
 {
 	type	ugv
 	mdl_top	ugv_triax
 
 	up_chapter	equipment
-	name	"_Triax UGV"
+	name	"_Ares UGV"
 	description {
 		default "_ugv_triax_txt"
 	}
@@ -3574,7 +3574,7 @@ tech rs_ugv_triax
 		default "_ugv_triax_pre_txt"
 	}
 
-	provides	ugv_triax
+	provides	ugv_ares
 	require_AND { tech nothing }
 	time	0
 	producetime	200

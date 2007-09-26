@@ -513,7 +513,7 @@ team human_ugv_phoenix
 	}
 }
 
-team human_ugv_triax
+team human_ugv_ares_w
 {
 	size 2
 	//hit_particle none
@@ -523,13 +523,13 @@ team human_ugv_triax
 			"_UGV"
 		}
 		lastname {
-			"_Triax"
+			"_Ares W"
 		}
 	}
 
 	models {
 		neutral {
-			soldiers/ugv_triax triax_wheels triax_wheels_turret 0
+			soldiers/ugv_ares ares_w ares_w_turret 0
 		}
 	}
 }
