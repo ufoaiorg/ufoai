@@ -102,6 +102,10 @@ void VID_Restart_f (void)
 	R_Shutdown();
 	R_Init();
 	CL_InitFonts();
+
+	/* make sure, that the current loaded map is stored in the vid_modelPool pool */
+	R_InitModelsDynamic();
+
 	CL_LoadMedia();
 }
 

@@ -1559,6 +1559,8 @@ static void CL_Precache_f (void)
 
 /**
  * @brief Precaches all models at game startup - for faster access
+ * @todo In case of vid restart due to changed settings the vid_genericPool is
+ * wiped away, too. So the models has to be reloaded with every map change
  */
 static void CL_PrecacheModels (void)
 {
