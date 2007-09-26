@@ -1309,6 +1309,21 @@ base/models/soldiers/malepower/malepower.blend | Creative Commons Attribution-Sh
 base/models/soldiers/malepower/malepower.tga | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
 base/models/soldiers/malepower/malepower.xcf | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer) | malepower.tga texture by David Dallaston (PikkaBird)
 base/models/soldiers/malepower/old/powersuitmale.wings | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Ryan Span (Winter)
+base/models/soldiers/ugv_ares/Readme.txt | GNU General Public License 2.0 | Willem "Sitters"
+base/models/soldiers/ugv_ares/ares.anm | GNU General Public License 2.0 | Werner (hoehrer) Höhrer
+base/models/soldiers/ugv_ares/ares.blend | GNU General Public License 2.0 | Models: Willem "Sitters", Aniamtions: Werner (hoehrer) Höhrer
+base/models/soldiers/ugv_ares/ares_h.md2 | GNU General Public License 2.0 | Models: Willem "Sitters", Aniamtions: Werner (hoehrer) Höhrer
+base/models/soldiers/ugv_ares/ares_h.obj | GNU General Public License 2.0 | Willem "Sitters"
+base/models/soldiers/ugv_ares/ares_h.tga | GNU General Public License 2.0 | Willem "Sitters"
+base/models/soldiers/ugv_ares/ares_t.md2 | GNU General Public License 2.0 | Models: Willem "Sitters", Aniamtions: Werner (hoehrer) Höhrer
+base/models/soldiers/ugv_ares/ares_t.obj | GNU General Public License 2.0 | Willem "Sitters"
+base/models/soldiers/ugv_ares/ares_t.tga | GNU General Public License 2.0 | Willem "Sitters"
+base/models/soldiers/ugv_ares/ares_w.anm | GNU General Public License 2.0 | Werner (hoehrer) Höhrer
+base/models/soldiers/ugv_ares/ares_w.md2 | GNU General Public License 2.0 | Models: Willem "Sitters", Aniamtions: Werner (hoehrer) Höhrer
+base/models/soldiers/ugv_ares/ares_w.obj | GNU General Public License 2.0 | Willem "Sitters"
+base/models/soldiers/ugv_ares/ares_w.tag | GNU General Public License 2.0 | Werner (hoehrer) Höhrer
+base/models/soldiers/ugv_ares/ares_w.tga | GNU General Public License 2.0 | Willem "Sitters"
+base/models/soldiers/ugv_ares/ares_w_turret.md2 | GNU General Public License 2.0 | Models: Willem "Sitters", Aniamtions: Werner (hoehrer) Höhrer
 base/models/weapons/assault/assault.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/assault/assault.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/assault/assault_clip.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
