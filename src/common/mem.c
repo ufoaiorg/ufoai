@@ -597,9 +597,31 @@ static void Mem_Stats_f (void)
 
 /**
  * @sa Qcommon_Init
+ * @sa Mem_Shutdown
  */
 void Mem_Init (void)
 {
 	Cmd_AddCommand("mem_stats", Mem_Stats_f, "Prints out current internal memory statistics");
 	Cmd_AddCommand("mem_check", Mem_Check_f, "Checks global memory integrity");
+}
+
+/**
+ * @sa Mem_Init
+ * @sa Mem_CreatePool
+ * @sa Qcommon_Shutdown
+ */
+void Mem_Shutdown (void)
+{
+	uint32_t totalBlocks, totalBytes;
+	memPool_t *pool;
+	int i;
+
+	for (i = 0, pool = &m_poolList[0]; i < m_numPools; pool++, i++) {
+		if (!pool->inUse)
+			continue;
+		totalBlocks += pool->blockCount;
+		totalBytes += pool->byteCount;
+		Com_DPrintf(DEBUG_ENGINE, "Free %6i %9iB (%6.3fMB) %s\n", pool->blockCount, pool->byteCount, pool->byteCount/1048576.0f, pool->name);
+		Mem_FreePool(pool);
+	}
 }

@@ -616,10 +616,10 @@ static void Cbuf_Execute_timer (int now, void *data)
 
 /**
  * @brief Init function
- *
  * @param[in] argc int
  * @param[in] argv char**
  * @sa Com_ParseScripts
+ * @sa Qcommon_Shutdown
  * @sa Sys_Init
  * @sa CL_Init
  */
@@ -936,10 +936,17 @@ void Qcommon_Frame (void)
 	} while (time_to_next > 0);
 }
 
+/**
+ * @brief
+ * @sa Qcommon_Init
+ * @sa Sys_Quit
+ */
 void Qcommon_Shutdown (void)
 {
 	HTTP_Cleanup();
 	Cmd_ExecuteString("shutdown_alias");
+
+	Mem_Shutdown();
 }
 
 /*

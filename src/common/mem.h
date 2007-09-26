@@ -73,5 +73,6 @@ void _Mem_TouchPool(struct memPool_s *pool, const char *fileName, const int file
 void _Mem_TouchGlobal(const char *fileName, const int fileLine);
 
 void Mem_Init(void);
+void Mem_Shutdown(void);
 
 #endif /* _QCOMMON_MEM_H */

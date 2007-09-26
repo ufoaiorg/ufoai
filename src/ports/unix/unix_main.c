@@ -84,6 +84,10 @@ void Sys_Error (const char *error, ...)
 	exit(1);
 }
 
+/**
+ * @brief
+ * @sa Qcommon_Shutdown
+ */
 void Sys_Quit (void)
 {
 	CL_Shutdown();

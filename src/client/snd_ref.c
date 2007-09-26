@@ -378,7 +378,6 @@ Shutdown sound engine
 void S_Shutdown (void)
 {
 	int i;
-	uint32_t size;
 	sfx_t *sfx;
 	const cmdList_t *commands;
 
@@ -404,9 +403,7 @@ void S_Shutdown (void)
 	}
 
 	/* Free all memory */
-	size = Mem_PoolSize(cl_soundSysPool);
-	Com_Printf("...releasing %u bytes\n", size);
-	Mem_FreePool(cl_soundSysPool);
+	Com_Printf("...releasing %u bytes\n", Mem_FreePool(cl_soundSysPool));
 
 	num_sfx = 0;
 }
