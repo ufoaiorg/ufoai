@@ -8,7 +8,7 @@ Tooltip: 'Export to Quake2 tag file format for UFO:AI (.tag).'
 """
 
 __author__ = 'Werner Hoehrer'
-__version__ = '0.0.10'
+__version__ = '0.0.11'
 __url__ = ["UFO: Alien Invasion, http://ufoai.sourceforge.net",
      "Support forum, http://ufoai.ninex.info/phpBB2/index.php", "blender", "ufoai"]
 __email__ = ["Werner Hoehrer, bill_spam2:yahoo*de", "scripts"]
@@ -41,7 +41,7 @@ Base code taken from the md2 exporter by Bob Holcomb. Many thanks.
 # ***** END GPL LICENCE BLOCK *****
 # --------------------------------------------------------------------------
 # Changelog
-#
+# 	0.0.11	Hoehrer	Some cleanup, updated status messages + palyed around a bit to get tag-rotation to work (with no success yet)
 # 	0.0.10	Hoehrer	changed getLocation() to getLocation('worldspace').
 # --------------------------------------------------------------------------
 
@@ -291,20 +291,35 @@ class md2_tag:
 	def save(self, file):
 		# Prepare temp data for export with transformed axes.
 		temp_data=(
-		self.axis1[0], self.axis1[1], self.axis1[2],
-		self.axis2[0], self.axis2[1], self.axis2[2],
-		self.axis3[0], self.axis3[1], self.axis3[2],
-		-self.origin[1], self.origin[0], self.origin[2]
+		#float(-self.axis1[1]), float(self.axis1[0]), float(self.axis1[2]),
+		#float(-self.axis2[1]), float(self.axis2[0]), float(self.axis2[2]),
+		#float(-self.axis3[1]), float(self.axis3[0]), float(self.axis3[2]),
+		#float(-self.origin[1]), float(self.origin[0]), float(self.origin[2])
+
+		# ok but inverted:
+		#float(-self.axis2[1]), float(self.axis2[0]), float(self.axis2[2]),
+		#float(-self.axis1[1]), float(self.axis1[0]), float(self.axis1[2]),
+		#float(-self.axis3[1]), float(self.axis3[0]), float(self.axis3[2]),
+		#float(-self.origin[1]), float(self.origin[0]), float(self.origin[2])
+
+		# 90 degree rotated to the 'left' (z axis?)
+		#float(-self.axis1[1]), float(self.axis1[0]), float(self.axis1[2]),
+		#float(-self.axis2[1]), float(self.axis2[0]), float(self.axis2[2]),
+		#float(-self.axis3[1]), float(self.axis3[0]), float(self.axis3[2]),
+		#float(-self.origin[1]), float(self.origin[0]), float(self.origin[2])
+
+		# 180 degrees rotated around the 'forward axis 
+		float(self.axis2[1]), -float(self.axis2[0]), -float(self.axis2[2]),
+		float(self.axis1[1]), -float(self.axis1[0]), -float(self.axis1[2]),
+		float(self.axis3[1]), -float(self.axis3[0]), -float(self.axis3[2]),
+		float(-self.origin[1]), float(self.origin[0]), float(self.origin[2])
 		)
 
 		# Apply scale to tempdata if it was set in the dialog.
 		if (g_scale.val != 1.0):
-			temp_data[9:12] = [
-				temp_data[9] * g_scale.val,
-				temp_data[10] * g_scale.val,
-				temp_data[11] * g_scale.val
-				]
-			# TODO: scaling of axes needed as well?
+			temp_data[9] = temp_data[9] * g_scale.val
+			temp_data[10] = temp_data[10] * g_scale.val
+			temp_data[11] = temp_data[11] * g_scale.val
 
 		# Prepare serialised data for writing.
 		data=struct.pack(self.binary_format,
@@ -342,7 +357,6 @@ class md2_tag:
 				self.origin[1] * g_scale.val,
 				self.origin[2] * g_scale.val
 				)
-			# TODO: scaling of axes needed as well?
 
 		return self
 
@@ -472,7 +486,7 @@ class md2_tags_obj:
 ######################################################
 def fill_md2_tags(md2_tags, object):
 	global g_scale
-	Blender.Window.DrawProgressBar(0.25,"Filling MD2 Data")
+	Blender.Window.DrawProgressBar(0.0, "Filling MD2 Data")
 
 	# Set header information.
 	md2_tags.ident=844121162
@@ -485,8 +499,8 @@ def fill_md2_tags(md2_tags, object):
 	# Add a (empty) list of tags-positions (for each frame).
 	tag_frames = []
 
-	progress=0.5
-	progressIncrement=0.25 / md2_tags.num_frames
+	progress = 0.0
+	progressIncrement = 1.0 / md2_tags.num_frames
 
 	# Store currently set frame
 	previous_curframe = Blender.Get("curframe")
@@ -498,7 +512,7 @@ def fill_md2_tags(md2_tags, object):
 	for current_frame in range(Blender.Get('staframe') , Blender.Get('endframe') + 1):
 		#print current_frame, "(", frame_counter, ")" # DEBUG
 		progress+=progressIncrement
-		Blender.Window.DrawProgressBar(progress, "Calculating Frame: " + str(frame_counter))
+		Blender.Window.DrawProgressBar(progress, "Tag:"+ str(md2_tags.num_tags) +" Frame:" + str(frame_counter))
 
 		#add a frame
 		tag_frames.append(md2_tag())
@@ -508,10 +522,9 @@ def fill_md2_tags(md2_tags, object):
 
 		# Set first coordiantes to the location of the empty.
 		tag_frames[frame_counter].origin = object.getLocation('worldspace')
-		print tag_frames[frame_counter].origin[0], " ",tag_frames[frame_counter].origin[1]," ",tag_frames[frame_counter].origin[2]
-		# Calculate local axes ... starting from 'loc' (see http://wiki.blenderpython.org/index.php/Python_Cookbook#Apply_Matrix)
-		# The scale of the empty is ignored right now.
-		matrix = object.getMatrix()
+		# print tag_frames[frame_counter].origin[0], " ",tag_frames[frame_counter].origin[1]," ",tag_frames[frame_counter].origin[2] # Useful for DEBUG (slowdown!)
+
+		matrix = object.getMatrix('worldspace')
 		tag_frames[frame_counter].axis1 = (matrix[0][0], matrix[0][1], matrix[0][2])
 		tag_frames[frame_counter].axis2 = (matrix[1][0], matrix[1][1], matrix[1][2])
 		tag_frames[frame_counter].axis3 = (matrix[2][0], matrix[2][1], matrix[2][2])
@@ -566,12 +579,13 @@ def save_md2_tags(filename):
 
 	for object in mesh_objs:
 		#check if it's an "Empty" mesh object
-		if object.getType()!="Empty":
+		if object.getType() != "Empty":
 			print "Ignoring non-'Empty' object: ", object.getType()
 		else:
-			print "Found Empty with name ",object.name
+			print "Found Empty: ",object.name
 			fill_md2_tags(md2_tags, object)
-			Blender.Window.DrawProgressBar(1.0, "Writing to Disk")
+
+	Blender.Window.DrawProgressBar(0.0, "Writing to Disk")
 
 	# Set offset of names
 	temp_header = md2_tags_obj();
@@ -597,8 +611,8 @@ def save_md2_tags(filename):
 	# Cleanup
 	md2_tags=0
 
-	Blender.Window.DrawProgressBar(1.0,"MD2 TAG Export")
-	print "Closed the file"
+	Blender.Window.DrawProgressBar(1.0,"") # clear progressbar
+	print "Done Writing. Closed the file"
 
 ######################################################
 # Load&animate MD2 TAGs Format
