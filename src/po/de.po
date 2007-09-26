@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-09-17 14:31+0200\n"
-"PO-Revision-Date: 2007-09-17 14:38+0100\n"
-"Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
+"PO-Revision-Date: 2007-09-22 05:05+0100\n"
+"Last-Translator: Xaver Wurzenberger <xaver.xn@web.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -188,7 +188,7 @@ msgstr "UFO - Transporter"
 
 #: ../base/ufos/aircraftmanagement.ufo:327
 msgid "Supply U"
-msgstr ""
+msgstr "Vers.-UFO"
 
 #: ../base/ufos/aircraftmanagement.ufo:350
 msgid "Condor U"
@@ -642,11 +642,11 @@ msgstr "Keine Sprache"
 
 #: ../base/ufos/maps.ufo:156
 msgid "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
-msgstr ""
+msgstr "Ein von Äckern und Scheunen umgebenes Bauernhaus. Ein UFO ist auf einem der Felder gelandet. "
 
 #: ../base/ufos/maps.ufo:427
 msgid "A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
-msgstr ""
+msgstr "Ein Bunker, gebaut um Menschen in Zeiten großer Katastrophen unterzubringen. Einige Schutztüren im Inneren sind vielleicht geschlossen worden."
 
 #: ../base/ufos/medals.ufo:3
 msgid "Cross"
@@ -1198,8 +1198,9 @@ msgstr "Kein Reaktionsfeuer"
 
 #: ../base/ufos/menu_althud.ufo:671
 #: ../base/ufos/menu_hud.ufo:444
+#, fuzzy
 msgid "Use headgear"
-msgstr ""
+msgstr "Kopfschutz benutzen"
 
 #: ../base/ufos/menu_althud.ufo:682
 msgid "Reload right hand weapon"
@@ -3522,11 +3523,11 @@ msgstr "Lade die Kampagne neu"
 
 #: ../base/ufos/menu_singleplayer.ufo:412
 msgid "Are you sure that you really want to reload the last automatically saved campaign state?"
-msgstr ""
+msgstr "Sind Sie sich sicher, das letzte Kampagnen-Autosave laden zu wollen?"
 
 #: ../base/ufos/menu_singleplayer.ufo:441
 msgid "Reload the last automatically saved campaign state."
-msgstr ""
+msgstr "Das letzte Kampagnen-Autosave laden."
 
 #: ../base/ufos/menu_singleplayer.ufo:454
 msgid "Reload"
@@ -4039,8 +4040,9 @@ msgid "The aliens have attacked a military convoy. Go and secure that area."
 msgstr "Die Außerirdischen haben einen militärischen Konvoi angegriffen. Machen Sie sich auf den Weg um das Gebiet zu sichern."
 
 #: ../base/ufos/missions.ufo:493
+#, fuzzy
 msgid "Because convoy was not secured, happiness of United America falls dramaticaly."
-msgstr ""
+msgstr "Weil der Konvoi nicht gesichert war, fällt die Zufriedenheit in den USA dramatisch."
 
 #: ../base/ufos/missions.ufo:505
 msgid "Wajir"
@@ -4067,7 +4069,7 @@ msgstr "Uppsala"
 
 #: ../base/ufos/missions.ufo:547
 msgid "There is a construction site being attacked by aliens. Protect workers and their equipment."
-msgstr ""
+msgstr "Eine Baustelle wird von Aliens angegriffen. Schützen Sie die Arbeiter und ihre Ausrüstung."
 
 #: ../base/ufos/missions.ufo:563
 msgid "Busan"
@@ -4194,7 +4196,7 @@ msgstr "Außerirdische Kolonie"
 
 #: ../base/ufos/missions.ufo:892
 msgid "We located the alien colony, go there and destroy it."
-msgstr ""
+msgstr "Wir haben die Außerirdischen-Kolonie lokalisiert, begeben Sie sich dort hin und zerstören Sie sie."
 
 #: ../base/ufos/missions.ufo:905
 #, fuzzy
@@ -4221,7 +4223,7 @@ msgstr "Infektionsattacke"
 
 #: ../base/ufos/missions.ufo:936
 msgid "The aliens are trying to spread their XVI virus amongst the populace. Prevent them from succeeding at all costs!"
-msgstr ""
+msgstr "Die Außerirdischen versuchen, ihr XVI-Virus unter der Bevölkerung zu verbreiten. Verhindern Sie dies unter allen Umständen!"
 
 #: ../base/ufos/nations.ufo:29
 msgid "The Revolutionary Countries"
@@ -10195,11 +10197,11 @@ msgstr "Benutze die [Shift]-Taste um die Zielhöhe anzupassen - das ist beispiel
 
 #: ../base/ufos/tips.ufo:6
 msgid "Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
-msgstr ""
+msgstr "Stellen Sie verschiedene Teams für Multiplayer-Partien - 4-Spieler-Teams, 8-Spieler-Teams und so weiter - zusammen und speichern Sie diese. So können Sie schnell das passende für eine Partie laden."
 
 #: ../base/ufos/tips.ufo:7
 msgid "With multiplayer teams, make sure your best soldiers are at the top of the team list. When the soldier limit is lower than the amount of soldiers in your team, the soldiers at the top of the list will be used for the game."
-msgstr ""
+msgstr "Versichern Sie sich, dass bei Multiplayerteams Ihre besten Soldaten ganz oben auf der Teamliste stehen. Wenn die Soldatenbegrenzung niedriger als Ihre Soldatenanzahl ist, werden die oben auf der Liste stehenden verwendet."
 
 #: ../base/ufos/tips.ufo:8
 msgid "Always make sure that you have enough Time Units (TUs) left to hide after you shoot."
@@ -10207,7 +10209,7 @@ msgstr "Stelle immer sicher, dass du noch genug Zeiteinheiten übrig hast um nac
 
 #: ../base/ufos/tips.ufo:9
 msgid "When using Reaction Fire, remember that you can set which fire mode to use by enabling the corresponding check box on the fire mode panel."
-msgstr ""
+msgstr "Wenn Sie Reaktionsfeuer verwenden, denken Sie daran dass sie den Feuermodus durch Klicken auf das passende Kästchen wählen können."
 
 #: ../base/ufos/tips.ufo:10
 msgid "Remember to give your soldiers a varying array of weapons, you never know when a certain weapon may come in handy."
@@ -10223,11 +10225,11 @@ msgstr "Vergiss nicht deinen Soldaten eine Rüstung anzulegen bevor sie zu einem
 
 #: ../base/ufos/tips.ufo:13
 msgid "You can use a flashbang to deactivate your opponents Reaction Fire mode or to take of all his remaining Time Units (TUs) for his next round."
-msgstr ""
+msgstr "Sie können Blendgranaten verwenden, um das gegnerische Reaktionsfeuer auszuschalten oder ihm alle verbleibenden Zeiteinheiten seiner nächsten Runde zu wegzunehmen."
 
 #: ../base/ufos/tips.ufo:14
 msgid "In multiplayer, you can chat by pressing [k] (to all), [l] (team members only), or by pressing the chat buttons on the HUD."
-msgstr ""
+msgstr "In Multiplayerpartien können sie durch Drücken von [k] ('an alle'), [l] ('nur Teammitglieder') oder mit Hilfe der HUD-Knöpfe chatten."
 
 #: ../base/ufos/tips.ufo:15
 msgid "To make a soldier look into a certain direction (i.e. to turn him/her) place the cursor and press the right mouse button or the [Ctrl] key. This will cost you Time Units (TUs)."
@@ -10243,7 +10245,7 @@ msgstr "Stelle so viele Arbeiter wie möglich ein. Um so schneller deine Produkt
 
 #: ../base/ufos/tips.ufo:18
 msgid "Be sure to visit our website, http://ufoai.sf.net/ and drop by our community channel. You can do so by going to the Multiplayer menu and clicking on the Lobby button."
-msgstr ""
+msgstr "Bitte besuchen Sie auch unsere Webseite http://ufoai.sf.net/ und den 'community channel'. Dorthin kommen Sie, wenn Sie im Multiplayer-Menü auf den Lobby-Knopf klicken."
 
 #: ../base/ufos/tips.ufo:19
 msgid "Remember that you need an active Command Centre in order to launch interceptors."
@@ -10271,7 +10273,7 @@ msgstr "Man kann Soldaten kriechen lassen um sie besser vor feindlichem Feuer zu
 
 #: ../base/ufos/tips.ufo:25
 msgid "Watch out for Reaction Fire! A soldier can fall under Reaction Fire even if another soldier is moving."
-msgstr ""
+msgstr "Achten Sie auf Reaktionsfeuer! Ein Soldat kann unter Beschuss geraten, selbst wenn ein Anderer sich gerade bewegt."
 
 #: ../base/ufos/tips.ufo:26
 msgid "Use [c] to toggle crouching. Crouching makes some weapons considerably more precise. It also makes your soldier a smaller target."
@@ -10279,15 +10281,15 @@ msgstr "Benutze [c] um zwischen Kriechen und Laufen umzuschalten. Beim Kriechen 
 
 #: ../base/ufos/tips.ufo:27
 msgid "If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
-msgstr ""
+msgstr "Wenn Sie knappe Zeiteinheiten und gefähriche Gegner haben, könnte es die beste Option sein diese mit einer Blendgranate bis zum Anfang Ihrer nächsten Runde außer Gefecht setzen. 2 ZE (aus dem Holster nehmen) + 12 ZE (werfen) = 14 ZE."
 
 #: ../base/ufos/tips.ufo:28
 msgid "Use the first-person view (toggle with [v]) to check if moving one square to the left will make that shoot-through-the-building shot possible."
-msgstr ""
+msgstr "In der Ego-Perspektive (Umschalten mit [v]) können Sie überprüfen, ob ein Schritt nach links einen Schuss durch das Gebäude ermöglicht."
 
 #: ../base/ufos/tips.ufo:29
 msgid "Use a fast soldier with pistols, one handed melee weapons, grenades, flashbangs and medikits."
-msgstr ""
+msgstr "Setzen Sie einen schnellen Soldaten mit Pistolen, einhändigen Nahkampfwaffen, (Blend-)Granaten und Medikits ein. "
 
 #: ../base/ufos/tips.ufo:30
 msgid "Build a hospital to be able to faster heal your soldiers for the next mission."
@@ -10303,11 +10305,11 @@ msgstr "Mit [x] kann zwischen den Einstellungen für Reaktionsfeuer umgeschaltet
 
 #: ../base/ufos/tips.ufo:33
 msgid "Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your round, so that they can't be killed with one grenade."
-msgstr ""
+msgstr "Halten Sie ihre Soldaten nah beisammen, so dass diese sich unterstützen können (heilen, schießen wenn der Andere keine ZE mehr hat). Positionieren Sie sie auf unterschiedlichen Seiten einer Mauer, damit nicht Beide durch eine Granate getötet werden können."
 
 #: ../base/ufos/tips.ufo:34
 msgid "Always have a disposable soldier or two, so you don't have to put your primary units into very risky situations."
-msgstr ""
+msgstr "Halten Sie immer einen oder zwei entbehrliche Soldaten bereit, damit Sie ihre wichtigsten Einheiten nicht in riskante Situationen begeben müssen."
 
 #: ../base/ufos/tips.ufo:35
 msgid "Build more radars in the same base to increase the radar range."
@@ -10315,15 +10317,15 @@ msgstr "Baue mehrere Radars in einer Basis um den Radarbereich zu erweitern"
 
 #: ../base/ufos/tips.ufo:36
 msgid "Reaction Fire can drain your Time Units (TUs) to 0. If you turn off Reaction Fire, you cannot turn it back on without enough Time Units (TU). You can, however, leave it on. Try not to adjust zeroed units until you're sure."
-msgstr ""
+msgstr "Reaktionsfeuer kann Ihre Zeiteinheiten (ZE) auf null mindern. Wenn Sie es ausschalten, können Sie es nicht ohne genügend ZE wieder aktivieren; Sie können es allerdings aktiviert lassen. Ändern Sie die Einstellung nicht, wenn Sie sich nicht sicher sind."
 
 #: ../base/ufos/tips.ufo:37
 msgid "Air Burst from the Grenade Launcher lets you explode those grenades in a specific place. Very useful when targetting something near the edge of the map, or on a ledge."
-msgstr ""
+msgstr "Airburst-Schüsse aus dem Granatwerfer lassen Sie die Granaten an definierten Orten explodieren. Dies kann etwa in der Nähe des Kartenrandes oder an Vorsprüngen nützlich sein."
 
 #: ../base/ufos/tips.ufo:38
 msgid "When throwing grenades, try to avoid straight throws along the grid. With at least a little bit of an angle, the chances of bouncing it back at yourself becomes much less on a 'missed' throw."
-msgstr ""
+msgstr "Vermeiden Sie, Granaten genau geradeaus zu werfen. Schon bei einem kleinen Winkel zum Kartennetz verringert sich die Wahrscheinlichkeit des Zurückrollens der Granate drastisch."
 
 #: ../base/ufos/tips.ufo:39
 msgid "Before throwing a grenade, look closely at the shape of the land. A slight slope will affect the direction that the grenade bounces."
@@ -10612,19 +10614,19 @@ msgstr "25mm Thermische Granate"
 #: ../base/ufos/weapons_human.ufo:1569
 #: ../base/ufos/weapons_human.ufo:1800
 msgid "Snap Shot - Airburst"
-msgstr "Schnellschuss"
+msgstr "Schnellschuss - Airburst"
 
 #: ../base/ufos/weapons_human.ufo:1419
 #: ../base/ufos/weapons_human.ufo:1596
 #: ../base/ufos/weapons_human.ufo:1826
 msgid "Aimed Shot - Airburst"
-msgstr "Gezielter Schuss"
+msgstr "Gezielter Schuss - Airburst"
 
 #: ../base/ufos/weapons_human.ufo:1444
 #: ../base/ufos/weapons_human.ufo:1621
 #: ../base/ufos/weapons_human.ufo:1851
 msgid "3-Round Burst - Airburst"
-msgstr "3-Schuss-Salve"
+msgstr "3-Schuss-Salve - Airburst"
 
 #: ../base/ufos/weapons_human.ufo:1470
 #: ../base/ufos/weapons_human.ufo:1647
@@ -11130,7 +11132,7 @@ msgstr "Auf Abfangkurs"
 
 #: client/cl_aircraft.c:334
 msgid "Being transfered"
-msgstr ""
+msgstr "Wird transferiert"
 
 #: client/cl_aircraft.c:336
 msgid "Back to base"
@@ -11433,7 +11435,7 @@ msgstr "Alien Aktivitäten"
 
 #: client/cl_campaign.c:967
 msgid "Under your command, PHALANX operations have consistently failed to protect innocent civilians. Dozens have lost their lives through your inability to handle the alien threat. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
-msgstr ""
+msgstr "Unter Ihrem Kommando haben PHALANX-Einheiten ständig dabei versagt, unschuldige Zivilisten zu retten. Dutzende haben durch Ihre Unfähigkeit, der außerirdischen Bedrohung beizukommen, ihr Leben verloren. Die UN hat Sie, in höchstem Maße unzufrieden mit ihrer Leistung, von Ihrem Posten entbunden und daraufhin PHALANX als effektive Eingreiftruppe aufgelöst. Keine weiteren Anstrengungen zur globalen Kooperation werden unternommen. Die Nationen der Erde versuchen, jede für sich gegen die Außerirdischen zu kämpfen, und werden eine nach der Anderen vernichtet."
 
 #: client/cl_campaign.c:980
 msgid "You've gone too far into debt."
@@ -11441,7 +11443,7 @@ msgstr "Sie haben sich zu sehr verschuldet."
 
 #: client/cl_campaign.c:986
 msgid "You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory."
-msgstr ""
+msgstr "Sie haben in Ihrer Charta, die Erde zu beschützen, versagt. Unsere Heimat und unser Volk sind der außerirdischen Infektion zum Opfer gefallen. Nur eine Handvoll Menschen auf der Erde bleibt menschlich, und die wenigen Übrigen  haben keine Chance mehr, die Flut aufzuhalten. Ihr Kommando existiert nicht mehr; PHALANX kann nicht mehr als Einheit fungieren. Nicht steht mehr zwischen den Außerirdischen und dem totalen Sieg."
 
 #: client/cl_campaign.c:1100
 #, c-format
@@ -11459,8 +11461,8 @@ msgstr[1] "Die Mission %s wurde nicht erfüllt. Die Aliens haben %i Zivilisten g
 #, c-format
 msgid "The aliens had enough time to kill %i civilian at %s."
 msgid_plural "The aliens had enough time to kill %i civilians at %s."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Die Außerirdischen hatten genug Zeit um %i Zivilisten in %s zu töten."
+msgstr[1] "Die Außerirdischen hatten genug Zeit um %i Zivilisten in %s zu töten."
 
 #: client/cl_campaign.c:1224
 msgid "Jan"
@@ -11728,6 +11730,8 @@ msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
 "Current eXtraterrestial Viral Infection: %i%%"
 msgstr ""
+"Maximal erlaubte extraterrestrische Virusinfektion: %i%%\n"
+"Momentane extraterrestrische Visusinfektion: %i%%"
 
 #: client/cl_campaign.c:2715
 msgid "Assemble or load a team"
@@ -12191,7 +12195,7 @@ msgstr "Ziele auf den Boden"
 
 #: client/cl_main.c:2154
 msgid "Open the actors inventory while we are in tactical mission"
-msgstr ""
+msgstr "Inventar des Spielers während einer taktischen Mission öffnen"
 
 #: client/cl_main.c:2289
 msgid "Chicken-hearted"
@@ -13347,7 +13351,7 @@ msgstr "Die Basis %s hat keine Quarantänestation, die Außerirdischen werden en
 #: client/cl_transfer.c:598
 #, c-format
 msgid "Base %s does not have enough free space in hangars. Aircraft is lost!"
-msgstr ""
+msgstr "Basis %s hat nicht genügend freien Platz in den Hangars.Flugzeug verloren!"
 
 #: client/cl_transfer.c:641
 #, c-format
@@ -13456,6 +13460,7 @@ msgid "Speed"
 msgstr "Geschwindigkeit"
 
 #: client/cl_ufopedia.c:185
+#, fuzzy
 msgid "ECM"
 msgstr ""
 
@@ -13468,8 +13473,9 @@ msgid "Accuracy"
 msgstr "Genauigkeit"
 
 #: client/cl_ufopedia.c:194
+#, fuzzy
 msgid "Fuel size"
-msgstr ""
+msgstr "Tankgröße"
 
 #: client/cl_ufopedia.c:197
 msgid "Weapon range"
@@ -13878,7 +13884,7 @@ msgstr "Basis wird angegriffen."
 
 #: po/OTHER_STRINGS:14
 msgid "Crashed Alien Ship. Secure the area."
-msgstr ""
+msgstr "Abgestürztes Alienschiff. Umgebung sichern."
 
 #~ msgid "Legend"
 #~ msgstr "Legende"
