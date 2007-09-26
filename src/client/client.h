@@ -134,7 +134,6 @@ typedef struct client_state_s {
 	/** locally derived information from server state */
 	struct model_s *model_draw[MAX_MODELS];
 	struct cBspModel_s *model_clip[MAX_MODELS];
-	struct model_s *model_weapons[MAX_OBJDEFS];
 
 	clientinfo_t clientinfo[MAX_CLIENTS]; /* client info of all connected clients */
 } client_state_t;
@@ -206,6 +205,9 @@ typedef struct client_static_s {
 	char downloadServer[512];	/**< base url prefix to download from */
 	char downloadReferer[32];	/**< libcurl requires a static string :( */
 	CURL *curl;
+
+	/* these models must only be loaded once */
+	struct model_s *model_weapons[MAX_OBJDEFS];
 } client_static_t;
 
 extern client_static_t cls;

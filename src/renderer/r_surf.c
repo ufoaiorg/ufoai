@@ -950,7 +950,7 @@ void R_BuildPolygonFromSurface (mBspSurface_t * fa, int shift[3])
 	VectorClear(total);
 
 	/* draw texture */
-	poly = VID_TagAlloc(vid_modelPool, sizeof(mBspPoly_t) + (lnumverts - 4) * VERTEXSIZE * sizeof(float), 0);
+	poly = VID_TagAlloc(r_modelPoolPtr, sizeof(mBspPoly_t) + (lnumverts - 4) * VERTEXSIZE * sizeof(float), 0);
 	poly->next = fa->polys;
 	fa->polys = poly;
 	poly->numverts = lnumverts;

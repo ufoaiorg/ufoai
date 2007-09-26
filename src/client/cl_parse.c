@@ -1114,7 +1114,7 @@ static void CL_PlaceItem (le_t *le)
 
 	if (FLOOR(le)) {
 		biggest = CL_BiggestItem(FLOOR(le));
-		le->model1 = cl.model_weapons[biggest];
+		le->model1 = cls.model_weapons[biggest];
 		Grid_PosToVec(&clMap, le->pos, le->origin);
 		VectorSubtract(le->origin, csi.ods[biggest].center, le->origin);
 		/* fall to ground */

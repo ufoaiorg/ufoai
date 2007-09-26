@@ -411,20 +411,6 @@ void CL_LoadMedia (void)
 				le->model2 = cl.model_draw[le->modelnum2];
 		}
 
-	/* load weapons stuff */
-	for (i = 0; i < csi.numODs; i++) {
-		cls.loadingPercent += 90.0f / (float)max;
-
-		/* don't load any other item models */
-		if (csi.ods[i].buytype > MAX_SOLDIER_EQU_BUYTYPES)
-			continue;
-		str = csi.ods[i].model;
-		SCR_UpdateScreen();
-		cl.model_weapons[i] = R_RegisterModelShort(str);
-		Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages),
-			_("loading %s"), (strlen(str) > 40) ? &str[strlen(str) - 40] : str);
-	}
-
 	cls.loadingPercent = 100.0f;
 	SCR_UpdateScreen();
 

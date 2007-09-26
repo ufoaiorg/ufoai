@@ -382,10 +382,34 @@ void R_ModDrawNullModel (void)
 }
 
 /**
+ * @brief
+ * @sa R_ShutdownModels
+ * @sa R_InitModelsDynamic
+ */
+void R_InitModels (void)
+{
+	/* this is for loading all the static models into the generic pool
+	 * because the vid_modelPool is wiped with every new map */
+	r_modelPoolPtr = vid_genericPool;
+}
+
+/**
+ * @brief This function set the r_modelPoolPtr to vid_modelPool once all the
+ * static models are loaded
+ * @sa R_InitModels
+ */
+void R_InitModelsDynamic (void)
+{
+	r_modelPoolPtr = vid_modelPool;
+}
+
+/**
  * @brief Frees the model pool
  */
 void R_ShutdownModels (void)
 {
+	if (vid_modelPool != r_modelPoolPtr)
+		Com_Printf("R_ShutdownModels: Warning, pool pointer mismatch\n");
 	VID_FreeTags(vid_modelPool, 0);
 	VID_FreeTags(vid_lightPool, 0);
 	mod_numknown = 0;

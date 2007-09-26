@@ -2864,6 +2864,7 @@ void CL_ActorDie (struct dbuffer *msg)
 	/* Print some info about the death or stun. */
 	if (le->team == cls.team) {
 		chr = CL_GetActorChr(le);
+		assert(chr->rank >= 0);
 		if (chr && ((le->state & STATE_STUN) & ~STATE_DEAD)) {
 			Com_sprintf(tmpbuf, sizeof(tmpbuf), "%s %s %s\n",
 			gd.ranks[chr->rank].shortname,
@@ -3316,7 +3317,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 			memset(&add, 0, sizeof(entity_t));
 
 			add.lightparam = &le->sunfrac;
-			add.model = cl.model_weapons[le->left];
+			add.model = cls.model_weapons[le->left];
 
 			add.tagent = V_GetEntity() + 2 + (le->right != NONE);
 			add.tagname = "tag_lweapon";
@@ -3330,7 +3331,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 
 			add.lightparam = &le->sunfrac;
 			add.alpha = le->alpha;
-			add.model = cl.model_weapons[le->right];
+			add.model = cls.model_weapons[le->right];
 
 			add.tagent = V_GetEntity() + 2;
 			add.tagname = "tag_rweapon";
@@ -3388,7 +3389,7 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 			memset(&add, 0, sizeof(entity_t));
 
 			add.lightparam = &le->sunfrac;
-			add.model = cl.model_weapons[le->left];
+			add.model = cls.model_weapons[le->left];
 
 			add.tagent = V_GetEntity() + 2 + (le->right != NONE);
 			add.tagname = "tag_lweapon";
@@ -3402,7 +3403,7 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 
 			add.lightparam = &le->sunfrac;
 			add.alpha = le->alpha;
-			add.model = cl.model_weapons[le->right];
+			add.model = cls.model_weapons[le->right];
 
 			add.tagent = V_GetEntity() + 2;
 			add.tagname = "tag_rweapon";

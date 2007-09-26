@@ -701,7 +701,7 @@ menu options_game
 	// ===================
 	string precache_str
 	{
-		string	"_Precache images and models:"
+		string	"_Precache models:"
 		pos		"500 455"
 	}
 	checkbox precache
@@ -709,7 +709,7 @@ menu options_game
 		cvar	"*cvar cl_precache"
 		pos		"840 455"
 		align	ur
-		tooltip	"_Precache images and models (faster menus)"
+		tooltip	"_Precache models (faster menus)"
 	}
 
 	// ===================

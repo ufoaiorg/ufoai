@@ -50,7 +50,7 @@ static void R_ModLoadTags (model_t * mod, void *buffer, int bufSize)
 		Sys_Error("R_ModLoadTags: %s has wrong version number (%i should be %i)", mod->alias.tagname, version, TAG_VERSION);
 
 	size = LittleLong(pintag->ofs_extractend);
-	mod->alias.tagdata = VID_TagAlloc(vid_modelPool, size, 0);
+	mod->alias.tagdata = VID_TagAlloc(r_modelPoolPtr, size, 0);
 	pheader = mod->alias.tagdata;
 
 	/* byte swap the header fields and sanity check */
@@ -128,7 +128,7 @@ void R_ModLoadAliasMD2Model (model_t * mod, void *buffer, int bufSize)
 	if (version != MD2_ALIAS_VERSION)
 		Sys_Error("%s has wrong version number (%i should be %i)", mod->name, version, MD2_ALIAS_VERSION);
 
-	pheader = VID_TagAlloc(vid_modelPool, LittleLong(pinmodel->ofs_end), 0);
+	pheader = VID_TagAlloc(r_modelPoolPtr, LittleLong(pinmodel->ofs_end), 0);
 	mod->alias.extraData = pheader;
 
 	/* byte swap the header fields and sanity check */
@@ -241,6 +241,6 @@ void R_ModLoadAliasMD2Model (model_t * mod, void *buffer, int bufSize)
 	}
 
 	/* find neighbours */
-	mod->alias.neighbors = VID_TagAlloc(vid_modelPool, pheader->num_tris * sizeof(mAliasNeighbors_t), 0);
+	mod->alias.neighbors = VID_TagAlloc(r_modelPoolPtr, pheader->num_tris * sizeof(mAliasNeighbors_t), 0);
 	R_ModBuildTriangleNeighbors(mod->alias.neighbors, pouttri, pheader->num_tris);
 }

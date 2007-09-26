@@ -120,7 +120,7 @@ void R_ModLoadSpriteModel (model_t * mod, void *buffer, int bufSize)
 	int i;
 
 	sprin = (dsprite_t *) buffer;
-	sprout = VID_TagAlloc(vid_modelPool, bufSize, 0);
+	sprout = VID_TagAlloc(r_modelPoolPtr, bufSize, 0);
 
 	sprout->ident = LittleLong(sprin->ident);
 	sprout->version = LittleLong(sprin->version);

@@ -108,10 +108,11 @@ struct memPool_s *cl_genericPool;	/**< permanent client data - menu, fonts */
 struct memPool_s *cl_ircSysPool;	/**< irc pool */
 struct memPool_s *cl_soundSysPool;
 struct memPool_s *cl_menuSysPool;
-struct memPool_s *vid_genericPool;
+struct memPool_s *vid_genericPool;	/**< also holds all the static models */
 struct memPool_s *vid_imagePool;
 struct memPool_s *vid_lightPool;	/**< lightmap - wiped with every new map */
 struct memPool_s *vid_modelPool;	/**< modeldata - wiped with every new map */
+struct memPool_s *r_modelPoolPtr;	/**< for loading static and map models into differnet pools @sa R_InitModels */
 /*====================================================================== */
 
 /**
@@ -1566,22 +1567,24 @@ static void CL_PrecacheModels (void)
 {
 	int i;
 	float loading;
-	const float percent = 40.0f;
+	float percent = 40.0f;
 
-	Com_PrecacheCharacterModels(); /* 55% */
+	if (cl_precache->integer)
+		Com_PrecacheCharacterModels(); /* 55% */
+	else
+		percent = 95.0f;
 
 	loading = cls.loadingPercent;
 
 	for (i = 0; i < csi.numODs; i++) {
-		if (*csi.ods[i].model)
-			if (!R_RegisterModelShort(csi.ods[i].model))
+		if (*csi.ods[i].model) {
+			cls.model_weapons[i] = R_RegisterModelShort(csi.ods[i].model);
+			if (!cls.model_weapons[i])
 				Com_Printf("CL_PrecacheModels: Could not register object model: '%s'\n", csi.ods[i].model);
+		}
 		cls.loadingPercent += percent / csi.numODs;
 		SCR_DrawPrecacheScreen(qtrue);
 	}
-	/* ensure 40% */
-	cls.loadingPercent = loading + percent;
-	SCR_DrawPrecacheScreen(qtrue);
 }
 
 /**
@@ -1613,9 +1616,7 @@ void CL_InitAfter (void)
 	SCR_DrawPrecacheScreen(qtrue);
 
 	/* preload all models for faster access */
-	if (cl_precache->integer) {
-		CL_PrecacheModels(); /* 95% */
-	}
+	CL_PrecacheModels(); /* 95% */
 
 	cls.loadingPercent = 100.0f;
 	SCR_DrawPrecacheScreen(qtrue);
@@ -1639,6 +1640,8 @@ void CL_InitAfter (void)
 	}
 
 	CL_LanguageInit();
+
+	R_InitModelsDynamic();
 }
 
 /**
@@ -2045,7 +2048,7 @@ static void CL_InitLocal (void)
 	cl_centerview = Cvar_Get("cl_centerview", "1", CVAR_ARCHIVE, "Center the view when selecting a new soldier");
 	cl_mapzoommax = Cvar_Get("cl_mapzoommax", "6.0", CVAR_ARCHIVE, "Maximum geoscape zooming value");
 	cl_mapzoommin = Cvar_Get("cl_mapzoommin", "1.0", CVAR_ARCHIVE, "Minimum geoscape zooming value");
-	cl_precache = Cvar_Get("cl_precache", "1", CVAR_ARCHIVE, "Precache models and menus at startup");
+	cl_precache = Cvar_Get("cl_precache", "1", CVAR_ARCHIVE, "Precache character models at startup - more memory usage but smaller loading times in the game");
 	cl_avifreq = Cvar_Get("cl_avifreq", "25", 0, "AVI recording - see video command");
 	cl_aviForceDemo = Cvar_Get("cl_aviForceDemo", "1", CVAR_ARCHIVE, "AVI recording - record even if no game is loaded");
 	cl_aviMotionJpeg = Cvar_Get("cl_aviMotionJpeg", "1", CVAR_ARCHIVE, "AVI recording - see video command");
