@@ -1,4 +1,12 @@
-ufoai (2.2~~svn11853) unstable; urgency=low
+ufoai (2.2~~svn11980) unstable; urgency=low
+
+  * Removed snd_* (SDL sound is merged into the ufo binary)
+  * Removed openal
+  * Added libcurl
+
+ -- Martin Gerhardy <martin.gerhardy@gmail.com>  Wed, 19 Sep 2007 22:09:13 +0100
+
+ufoai (2.2~~svn11864) unstable; urgency=low
 
   * Removed vid_glx and vid_sdl (only SDL is used now, and that's merged
     into the ufo binary)
