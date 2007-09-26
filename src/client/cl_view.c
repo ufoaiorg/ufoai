@@ -355,7 +355,6 @@ void CL_LoadMedia (void)
 	if (!cl.configstrings[CS_TILES][0])
 		return;					/* no map loaded */
 
-	cls.loadingMessage = qtrue;
 	Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages), _("loading %s"), _(cl.configstrings[CS_MAPTITLE]));
 	cls.loadingPercent = 0;
 

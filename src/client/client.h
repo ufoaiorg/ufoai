@@ -191,7 +191,6 @@ typedef struct client_static_s {
 	struct aircraft_s *missionaircraft;	/**< aircraft pointer for mission handling */
 
 	float loadingPercent;
-	qboolean loadingMessage;
 	char loadingMessages[96];
 
 	qboolean playingCinematic;	/**< Set to true when playing a cinematic */
