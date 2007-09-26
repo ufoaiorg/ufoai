@@ -19,7 +19,7 @@
 ugv ugv_ares
 {
 	tu	24
-	weapon	triax_weapon	// todo: rename (where is thislocated?)
+	weapon	ares_weapon
 	armour	medium
 	size	1	// 2x2
 	actors	ugv_ares

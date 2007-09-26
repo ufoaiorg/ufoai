@@ -166,7 +166,7 @@ menu_model civ_female
 // ARES
 menu_model ugv_ares_w_turret
 {
-	model	"models/soldiers/ugv_aresa/ares_w_turret.md2"
+	model	"models/soldiers/ugv_ares/ares_w_turret.md2"
 	tag	"tag_head"
 	parent	"ugv_ares_w"
 	scale	"1.0 1.0 1.0"
@@ -174,6 +174,7 @@ menu_model ugv_ares_w_turret
 		ufopedia "6 6 6" "0 0 120"	"-70 0 0"
 	}
 }
+
 menu_model ugv_ares_w
 {
 	model	"models/soldiers/ugv_ares/ares_w.md2"
@@ -555,7 +556,7 @@ menu_model craft_item_astrogation
 menu_model craft_item_detector
 {
 	model	"aircraft/craft_item_det/detection"
-	
+
 	menutransform {
 		ufopedia	"6 6 6"	"-120 120 -30"	"-40 40 0"
 		aircraft_equip	"6 6 6"	#	#
