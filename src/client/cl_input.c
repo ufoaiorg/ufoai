@@ -1495,6 +1495,9 @@ void IN_Frame (void)
 		}
 	}
 
+	oldMousePosX = mousePosX;
+	oldMousePosY = mousePosY;
+
 	/* get events from x server */
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
@@ -1529,8 +1532,6 @@ void IN_Frame (void)
 			Key_Event(mouse_buttonstate, (event.type == SDL_MOUSEBUTTONDOWN), in_frametime);
 			break;
 		case SDL_MOUSEMOTION:
-			oldMousePosX = mousePosX;
-			oldMousePosY = mousePosY;
 			SDL_GetMouseState(&mousePosX, &mousePosY);
 			mousePosX /= viddef.rx;
 			mousePosY /= viddef.ry;
