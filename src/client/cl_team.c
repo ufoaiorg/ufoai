@@ -324,7 +324,15 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 		chr->rank = CL_GetRank("ugv");
 		/* Create attributes. */
 		CHRSH_CharGenAbilitySkills(chr, teamValue);
-		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_ugv_phoenix", team);
+
+		/**
+		 * generate 50/50 Phoenix/Ares UGVs
+		 * @todo: Define this in campaign file (with a way specify the "human_ugv_xxxxx" for easier modding)?
+		 */
+		if (frand() > 0.5)
+            Com_sprintf(teamDefName, sizeof(teamDefName), "%s_ugv_ares_w", team);
+		else
+            Com_sprintf(teamDefName, sizeof(teamDefName), "%s_ugv_phoenix", team);
 		break;
 	default:
 		Sys_Error("Unknown employee type\n");

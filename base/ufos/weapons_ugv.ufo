@@ -16,22 +16,22 @@
 // ========================================================
 // UGVs a.k.a. tanks
 // ========================================================
-ugv ugv_ares
+ugv ugv_ares_w
 {
 	tu	24
-	weapon	ares_weapon
+	weapon	ares_weapon // todo: rename (is this even defined anywhere yet?)
 	armour	medium
 	size	1	// 2x2
-	actors	ugv_ares
+	actors	human_ugv_ares_w
 }
 
 ugv ugv_phoenix
 {
 	tu	20
-	weapon	phoenix_weapon
+	weapon	phoenix_weapon // todo: rename (is this even defined anywhere yet?)
 	armour	medium
 	size	1	// 2x2
-	actors	ugv_phoenix
+	actors	human_ugv_phoenix
 }
 
 // ========================================================

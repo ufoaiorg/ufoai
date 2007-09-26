@@ -3560,21 +3560,21 @@ tech rs_ugv_phoenix
 	producetime	400
 }
 
-tech rs_ugv_ares
+tech rs_ugv_ares_w
 {
 	type	ugv
 	mdl_top	ugv_ares_w
 
 	up_chapter	equipment
-	name	"_Ares UGV"
+	name	"_Ares W (UGV)"
 	description {
-		default "_ugv_ares_txt"
+		default "_ugv_ares_w_txt"
 	}
 	pre_description {
-		default "_ugv_ares_pre_txt"
+		default "_ugv_ares_w_pre_txt"
 	}
 
-	provides	ugv_ares
+	provides	ugv_ares_w
 	require_AND { tech nothing }
 	time	0
 	producetime	200
