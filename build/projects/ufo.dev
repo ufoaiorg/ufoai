@@ -9,7 +9,7 @@ CppCompiler=
 Includes=
 Linker=-lvorbisfile_@@_-lvorbis_@@_-logg_@@_-lcurl_@@_-lwinmm _@@_-lwsock32 _@@_-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lgmon_@@_-lintl _@@_-lSDL_@@_-lSDL_ttf_@@_-lz_@@_-lpng_@@_-ljpeg_@@_-lws2_32_@@_
 Libs=C:\Dev-Cpp\lib
-UnitCount=174
+UnitCount=169
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=ufo_private.rc
@@ -828,36 +828,6 @@ BuildCmd=
 CompileCpp=0
 
 [Unit79]
-FileName=..\..\src\client\snd_openal.h
-CompileCpp=0
-Folder=Header Files
-Compile=0
-Link=0
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit80]
-FileName=..\..\src\client\qal.h
-CompileCpp=0
-Folder=Header Files
-Compile=0
-Link=0
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit81]
-FileName=..\..\src\ports\windows\win_qal.h
-CompileCpp=0
-Folder=Header Files
-Compile=0
-Link=0
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit82]
 FileName=..\..\src\client\cl_event.c
 CompileCpp=0
 Folder=Source Files
@@ -867,7 +837,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit83]
+[Unit80]
 FileName=..\..\src\client\cl_event.h
 CompileCpp=0
 Folder=Header Files
@@ -877,7 +847,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit84]
+[Unit81]
 FileName=..\..\src\client\cl_irc.c
 CompileCpp=0
 Folder=Source Files
@@ -887,7 +857,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit85]
+[Unit82]
 FileName=..\..\src\client\cl_irc.h
 CompileCpp=0
 Folder=Header Files
@@ -897,27 +867,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit86]
-FileName=..\..\src\client\snd_openal.c
-CompileCpp=0
-Folder=Source Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit87]
-FileName=..\..\src\client\qal.c
-CompileCpp=0
-Folder=Source Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit88]
+[Unit83]
 FileName=..\..\src\client\cl_aliencont.c
 CompileCpp=0
 Folder=Source Files
@@ -927,7 +877,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit89]
+[Unit84]
 FileName=..\..\src\client\cl_aliencont.h
 CompileCpp=0
 Folder=Header Files
@@ -937,7 +887,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit90]
+[Unit85]
 FileName=..\..\src\ports\windows\ufo.rc
 CompileCpp=0
 Folder=Resource Files
@@ -947,7 +897,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit91]
+[Unit86]
 FileName=..\..\src\common\md5.c
 CompileCpp=0
 Folder=Source Files
@@ -957,7 +907,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit92]
+[Unit87]
 FileName=..\..\src\client\cl_campaign.h
 CompileCpp=0
 Folder=Header Files
@@ -967,7 +917,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit93]
+[Unit88]
 FileName=..\..\src\client\cl_global.h
 CompileCpp=0
 Folder=Header Files
@@ -977,7 +927,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit94]
+[Unit89]
 FileName=..\..\src\client\cl_transfer.c
 CompileCpp=0
 Folder=Source Files
@@ -987,7 +937,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit95]
+[Unit90]
 FileName=..\..\src\client\cl_transfer.h
 CompileCpp=0
 Folder=Header Files
@@ -997,7 +947,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit96]
+[Unit91]
 FileName=..\..\src\client\cl_produce.h
 CompileCpp=0
 Folder=Header Files
@@ -1007,7 +957,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit97]
+[Unit92]
 FileName=..\..\src\client\cl_save.h
 CompileCpp=0
 Folder=Header Files
@@ -1017,7 +967,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit98]
+[Unit93]
 FileName=..\..\src\client\cl_save.c
 CompileCpp=0
 Folder=Source Files
@@ -1027,7 +977,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit99]
+[Unit94]
 FileName=..\..\src\client\cl_inventory.h
 CompileCpp=0
 Folder=Header Files
@@ -1037,7 +987,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit100]
+[Unit95]
 FileName=..\..\src\client\cl_inventory.c
 CompileCpp=0
 Folder=Source Files
@@ -1047,7 +997,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit101]
+[Unit96]
 FileName=..\..\src\client\cl_console.h
 CompileCpp=0
 Folder=Header Files
@@ -1057,7 +1007,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit102]
+[Unit97]
 FileName=..\..\src\common\msg.c
 CompileCpp=0
 Folder=Source Files
@@ -1067,7 +1017,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit103]
+[Unit98]
 FileName=..\..\src\client\cl_http.h
 CompileCpp=0
 Folder=Header Files
@@ -1077,7 +1027,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit104]
+[Unit99]
 FileName=..\..\src\client\cl_http.c
 CompileCpp=0
 Folder=Source Files
@@ -1087,7 +1037,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit105]
+[Unit100]
 FileName=..\..\src\client\cl_vid.c
 CompileCpp=0
 Folder=Source Files
@@ -1097,17 +1047,17 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit106]
+[Unit101]
 FileName=..\..\src\client\cl_airfight.c
+CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
-CompileCpp=0
 
-[Unit107]
+[Unit102]
 FileName=..\..\src\common\mem.c
 CompileCpp=0
 Folder=Source Files
@@ -1117,7 +1067,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit108]
+[Unit103]
 FileName=..\..\src\client\cl_cinematic.c
 CompileCpp=0
 Folder=Source Files
@@ -1127,7 +1077,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit109]
+[Unit104]
 FileName=..\..\src\client\cl_tip.c
 CompileCpp=0
 Folder=Source Files
@@ -1137,7 +1087,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit110]
+[Unit105]
 FileName=..\..\src\client\cl_language.c
 CompileCpp=0
 Folder=Source Files
@@ -1147,17 +1097,17 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit111]
+[Unit106]
 FileName=..\..\src\game\inv_shared.h
-CompileCpp=0
 Folder=Header Files
 Compile=0
 Link=0
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
+CompileCpp=0
 
-[Unit112]
+[Unit107]
 FileName=..\..\src\game\inv_shared.c
 CompileCpp=0
 Folder=Source Files
@@ -1167,7 +1117,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit113]
+[Unit108]
 FileName=..\..\src\client\snd_ogg.c
 CompileCpp=0
 Folder=Source Files
@@ -1177,7 +1127,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit114]
+[Unit109]
 FileName=..\..\src\client\snd_ogg.h
 CompileCpp=0
 Folder=Header Files
@@ -1187,7 +1137,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit115]
+[Unit110]
 FileName=..\..\src\client\snd_wave.c
 CompileCpp=0
 Folder=Source Files
@@ -1197,7 +1147,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit116]
+[Unit111]
 FileName=..\..\src\client\snd_wave.h
 CompileCpp=0
 Folder=Header Files
@@ -1207,7 +1157,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit117]
+[Unit112]
 FileName=..\..\src\client\cl_basesummary.h
 CompileCpp=0
 Folder=Header Files
@@ -1217,7 +1167,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit118]
+[Unit113]
 FileName=..\..\src\client\cl_basesummary.c
 CompileCpp=0
 Folder=Source Files
@@ -1227,7 +1177,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit119]
+[Unit114]
 FileName=..\..\src\common\dbuffer.c
 CompileCpp=0
 Folder=Source Files
@@ -1237,7 +1187,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit120]
+[Unit115]
 FileName=..\..\src\common\net.c
 CompileCpp=0
 Folder=Source Files
@@ -1247,7 +1197,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit121]
+[Unit116]
 FileName=..\..\src\common\netpack.c
 CompileCpp=0
 Folder=Source Files
@@ -1257,7 +1207,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit122]
+[Unit117]
 FileName=..\..\src\common\net.h
 CompileCpp=0
 Folder=Header Files
@@ -1267,7 +1217,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit123]
+[Unit118]
 FileName=..\..\src\common\netpack.h
 CompileCpp=0
 Folder=Header Files
@@ -1277,7 +1227,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit124]
+[Unit119]
 FileName=..\..\src\common\dbuffer.h
 CompileCpp=0
 Folder=Header Files
@@ -1287,7 +1237,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit125]
+[Unit120]
 FileName=..\..\src\common\dbuffer.h
 CompileCpp=0
 Folder=Header Files
@@ -1297,7 +1247,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit126]
+[Unit121]
 FileName=..\..\src\client\cl_mapfightequip.h
 CompileCpp=0
 Folder=Header Files
@@ -1307,7 +1257,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit127]
+[Unit122]
 FileName=..\..\src\client\cl_mapfightequip.c
 CompileCpp=0
 Folder=Source Files
@@ -1317,7 +1267,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit128]
+[Unit123]
 FileName=..\..\src\shared\ufotypes.h
 CompileCpp=0
 Folder=Header Files
@@ -1327,7 +1277,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit129]
+[Unit124]
 FileName=..\..\src\shared\shared.h
 CompileCpp=0
 Folder=Header Files
@@ -1337,7 +1287,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit130]
+[Unit125]
 FileName=..\..\src\shared\infostring.h
 CompileCpp=0
 Folder=Header Files
@@ -1347,7 +1297,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit131]
+[Unit126]
 FileName=..\..\src\shared\infostring.c
 CompileCpp=0
 Folder=Source Files
@@ -1357,7 +1307,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit132]
+[Unit127]
 FileName=..\..\src\shared\shared.c
 CompileCpp=0
 Folder=Source Files
@@ -1367,7 +1317,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit133]
+[Unit128]
 FileName=..\..\src\shared\byte.h
 CompileCpp=0
 Folder=Header Files
@@ -1377,7 +1327,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit134]
+[Unit129]
 FileName=..\..\src\shared\byte.c
 CompileCpp=0
 Folder=Source Files
@@ -1387,7 +1337,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit135]
+[Unit130]
 FileName=..\..\src\renderer\r_misc.c
 CompileCpp=0
 Folder=Source Files
@@ -1397,7 +1347,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit136]
+[Unit131]
 FileName=..\..\src\renderer\r_model.c
 CompileCpp=0
 Folder=Source Files
@@ -1407,7 +1357,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit137]
+[Unit132]
 FileName=..\..\src\renderer\r_model.h
 CompileCpp=0
 Folder=Source Files
@@ -1417,7 +1367,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit138]
+[Unit133]
 FileName=..\..\src\renderer\r_model_alias.c
 CompileCpp=0
 Folder=Source Files
@@ -1427,7 +1377,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit139]
+[Unit134]
 FileName=..\..\src\renderer\r_model_alias.h
 CompileCpp=0
 Folder=Source Files
@@ -1437,7 +1387,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit140]
+[Unit135]
 FileName=..\..\src\renderer\r_model_brush.c
 CompileCpp=0
 Folder=Source Files
@@ -1447,7 +1397,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit141]
+[Unit136]
 FileName=..\..\src\renderer\r_model_brush.h
 CompileCpp=0
 Folder=Source Files
@@ -1457,7 +1407,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit142]
+[Unit137]
 FileName=..\..\src\renderer\r_model_md2.c
 CompileCpp=0
 Folder=Source Files
@@ -1467,7 +1417,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit143]
+[Unit138]
 FileName=..\..\src\renderer\r_model_md2.h
 CompileCpp=0
 Folder=Source Files
@@ -1477,7 +1427,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit144]
+[Unit139]
 FileName=..\..\src\renderer\r_model_md3.c
 CompileCpp=0
 Folder=Source Files
@@ -1487,7 +1437,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit145]
+[Unit140]
 FileName=..\..\src\renderer\r_model_md3.h
 CompileCpp=0
 Folder=Source Files
@@ -1497,7 +1447,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit146]
+[Unit141]
 FileName=..\..\src\renderer\r_model_obj.c
 CompileCpp=0
 Folder=Source Files
@@ -1507,7 +1457,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit147]
+[Unit142]
 FileName=..\..\src\renderer\r_model_sp2.c
 CompileCpp=0
 Folder=Source Files
@@ -1517,7 +1467,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit148]
+[Unit143]
 FileName=..\..\src\renderer\r_model_sp2.h
 CompileCpp=0
 Folder=Source Files
@@ -1527,7 +1477,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit149]
+[Unit144]
 FileName=..\..\src\renderer\r_particle.c
 CompileCpp=0
 Folder=Source Files
@@ -1537,7 +1487,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit150]
+[Unit145]
 FileName=..\..\src\renderer\r_sdl.c
 CompileCpp=0
 Folder=Source Files
@@ -1547,7 +1497,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit151]
+[Unit146]
 FileName=..\..\src\renderer\r_shader.c
 CompileCpp=0
 Folder=Source Files
@@ -1557,7 +1507,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit152]
+[Unit147]
 FileName=..\..\src\renderer\r_shader.h
 CompileCpp=0
 Folder=Source Files
@@ -1567,7 +1517,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit153]
+[Unit148]
 FileName=..\..\src\renderer\r_shadows.c
 CompileCpp=0
 Folder=Source Files
@@ -1577,7 +1527,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit154]
+[Unit149]
 FileName=..\..\src\renderer\r_state.c
 CompileCpp=0
 Folder=Source Files
@@ -1587,7 +1537,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit155]
+[Unit150]
 FileName=..\..\src\renderer\r_surf.c
 CompileCpp=0
 Folder=Source Files
@@ -1597,7 +1547,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit156]
+[Unit151]
 FileName=..\..\src\renderer\r_warp.c
 CompileCpp=0
 Folder=Source Files
@@ -1607,7 +1557,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit157]
+[Unit152]
 FileName=..\..\src\renderer\r_warpsin.h
 CompileCpp=0
 Folder=Source Files
@@ -1617,7 +1567,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit158]
+[Unit153]
 FileName=..\..\src\renderer\anormtab.h
 CompileCpp=0
 Folder=Source Files
@@ -1627,7 +1577,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit159]
+[Unit154]
 FileName=..\..\src\renderer\qgl.c
 CompileCpp=0
 Folder=Source Files
@@ -1637,7 +1587,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit160]
+[Unit155]
 FileName=..\..\src\renderer\qgl.h
 CompileCpp=0
 Folder=Source Files
@@ -1647,7 +1597,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit161]
+[Unit156]
 FileName=..\..\src\renderer\r_anim.c
 CompileCpp=0
 Folder=Source Files
@@ -1657,7 +1607,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit162]
+[Unit157]
 FileName=..\..\src\renderer\r_draw.c
 CompileCpp=0
 Folder=Source Files
@@ -1667,7 +1617,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit163]
+[Unit158]
 FileName=..\..\src\renderer\r_font.c
 CompileCpp=0
 Folder=Source Files
@@ -1677,7 +1627,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit164]
+[Unit159]
 FileName=..\..\src\renderer\r_font.h
 CompileCpp=0
 Folder=Source Files
@@ -1687,7 +1637,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit165]
+[Unit160]
 FileName=..\..\src\renderer\r_image.c
 CompileCpp=0
 Folder=Source Files
@@ -1697,7 +1647,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit166]
+[Unit161]
 FileName=..\..\src\renderer\r_light.c
 CompileCpp=0
 Folder=Source Files
@@ -1707,7 +1657,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit167]
+[Unit162]
 FileName=..\..\src\renderer\r_local.h
 CompileCpp=0
 Folder=Source Files
@@ -1717,7 +1667,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit168]
+[Unit163]
 FileName=..\..\src\renderer\r_main.c
 CompileCpp=0
 Folder=Source Files
@@ -1727,8 +1677,58 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit169]
+[Unit164]
 FileName=..\..\src\renderer\r_mesh.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit165]
+FileName=..\..\src\renderer\r_mesh_md2.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit166]
+FileName=..\..\src\renderer\r_mesh_md3.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit167]
+FileName=..\..\src\ports\windows\win_console.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit168]
+FileName=..\..\src\common\http.h
+CompileCpp=0
+Folder=Header Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit169]
+FileName=..\..\src\common\http.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
