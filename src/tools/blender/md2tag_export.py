@@ -8,7 +8,7 @@ Tooltip: 'Export to Quake2 tag file format for UFO:AI (.tag).'
 """
 
 __author__ = 'Werner Hoehrer'
-__version__ = '0.0.9'
+__version__ = '0.0.10'
 __url__ = ["UFO: Alien Invasion, http://ufoai.sourceforge.net",
      "Support forum, http://ufoai.ninex.info/phpBB2/index.php", "blender", "ufoai"]
 __email__ = ["Werner Hoehrer, bill_spam2:yahoo*de", "scripts"]
@@ -40,7 +40,10 @@ Base code taken from the md2 exporter by Bob Holcomb. Many thanks.
 #
 # ***** END GPL LICENCE BLOCK *****
 # --------------------------------------------------------------------------
-
+# Changelog
+#
+# 	0.0.10	Hoehrer	changed getLocation() to getLocation('worldspace').
+# --------------------------------------------------------------------------
 
 import Blender
 from Blender import *
@@ -112,7 +115,6 @@ def MatrixSetupTransform(forward, left, up, origin):
 		[0.0,	0.0,		0.0,		1.0]
 	]
 
-	
 
 ######################################################
 # Additional functions used by Ex- and Importer
@@ -268,7 +270,7 @@ class md2_tag:
 	origin	= []
 
 	binary_format="<12f"	#little-endian (<), 12 floats (12f)	| See http://docs.python.org/lib/module-struct.html for more info.
-	
+
 
 	def __init__(self):
 		origin	= Mathutils.Vector(0.0, 0.0, 0.0)
@@ -326,7 +328,7 @@ class md2_tag:
 		self.axis2	= (data[3], data[4], data[5])
 		self.axis3	= (data[6], data[7], data[8])
 		self.origin	= (data[9], data[10], data[11])
-		
+
 		# Convert the orientation of the axes to the blender format.
 		self.origin = (self.origin[1], -self.origin[0], self.origin[2])
 		#self.axis1 = (self.axis1[1], -self.axis1[0], self.axis1[2])
@@ -505,7 +507,7 @@ def fill_md2_tags(md2_tags, object):
 		Blender.Set("curframe", current_frame)
 
 		# Set first coordiantes to the location of the empty.
-		tag_frames[frame_counter].origin = object.getLocation()
+		tag_frames[frame_counter].origin = object.getLocation('worldspace')
 		print tag_frames[frame_counter].origin[0], " ",tag_frames[frame_counter].origin[1]," ",tag_frames[frame_counter].origin[2]
 		# Calculate local axes ... starting from 'loc' (see http://wiki.blenderpython.org/index.php/Python_Cookbook#Apply_Matrix)
 		# The scale of the empty is ignored right now.
@@ -529,7 +531,7 @@ def num_tags():
 	for object in mesh_objs:
 		if object.getType()=="Empty":
 			num_tags += 1
-			
+
 	return num_tags
 
 ######################################################
@@ -632,7 +634,7 @@ def load_md2_tags(filename):
 
 	# Store currently set frame
 	previous_curframe = Blender.Get("curframe")
-	
+
 	for tag in range(0,md2_tags.num_tags):
 		# Get name & frame-data of current tag.
 		tag_name = md2_tags.names[tag]
@@ -641,7 +643,7 @@ def load_md2_tags(filename):
 		# Create object.
 		blender_tag = Object.New('Empty')
 		blender_tag.setName(tag_name.name)
-		
+
 		# Activate name-visibility for this object.
 		blender_tag.setDrawMode(blender_tag.getDrawMode() | 8)   # 8="drawname"
 
@@ -674,7 +676,7 @@ def load_md2_tags(filename):
 			blender_tag.insertIpoKey(LOCROTSIZE)
 
 	Blender.Window.DrawProgressBar(1.0, "MD2 TAG Import")
-	
+
 	# Restore curframe from before the calculation.
 	Blender.Set("curframe", previous_curframe)
 
