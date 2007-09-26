@@ -16,19 +16,11 @@ VERSION_LC=$(shell echo $(VERSION_UC) | sed -e 'y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abc
 #get the size of the zip data archives
 SIZE=$(shell LANG=C; du -sch $(TEMPDIR)/base/*.$(EXT) $(BINARIES) | tail -1 | cut -f1;)
 
-#grab the gtkradiant 1.5 archive from this url
-
 BINARIES = \
 	$(ROOTDIR)ufo \
-	$(ROOTDIR)ufomaster \
 	$(ROOTDIR)ufoded \
 	$(ROOTDIR)ufo2map \
-	$(ROOTDIR)snd_alsa.so \
-	$(ROOTDIR)snd_arts.so \
-	$(ROOTDIR)snd_jack.so \
-	$(ROOTDIR)snd_oss.so \
-	$(ROOTDIR)snd_sdl.so \
-	$(ROOTDIR)base/game.so
+	$(ROOTDIR)base/game.dylib
 
 packdata:
 	@mkdir -p $(TEMPDIR)/base
