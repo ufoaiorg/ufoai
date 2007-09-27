@@ -147,7 +147,6 @@ static int Com_CheckToInventory_shape (const inventory_t * const i, const int co
  */
 int Com_CheckToInventory (const inventory_t * const i, const int item, const int container, int x, int y)
 {
-
 	assert(i);
 	assert((container >= 0) && (container < CSI->numIDs));
 
@@ -322,8 +321,8 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, int container
 /**
  * @param[in] i The inventory the container is in.
  * @param[in] container The container where the item should be removed.
- * @param[in] x The x position of the item (container?) to be removed. @todo: is this correct?
- * @param[in] y The y position of the item (container?) to be removed. @todo: is this correct?
+ * @param[in] x The x position of the item to be removed.
+ * @param[in] y The y position of the item to be removed.
  * @return qtrue If removal was successful.
  * @return qfalse If nothing was removed or an error occured.
  * @sa Com_RemoveFromInventoryIgnore
@@ -336,9 +335,9 @@ qboolean Com_RemoveFromInventory (inventory_t* const i, int container, int x, in
 /**
  * @param[in] i The inventory the container is in.
  * @param[in] container The container where the item should be removed.
- * @param[in] x The x position of the item (container?) to be removed. @todo: is this correct?
- * @param[in] y The y position of the item (container?) to be removed. @todo: is this correct?
- * @param[in] ignore_type Ignroes teh type of container (only used for a workaround in the base-equipemnt see CL_MoveMultiEquipment) HACKHACK
+ * @param[in] x The x position of the item to be removed.
+ * @param[in] y The y position of the item to be removed.
+ * @param[in] ignore_type Ignroes teh type of container (only used for a workaround in the base-equipment see CL_MoveMultiEquipment) HACKHACK
  * @return qtrue If removal was successful.
  * @return qfalse If nothing was removed or an error occured.
  * @sa Com_RemoveFromInventory
