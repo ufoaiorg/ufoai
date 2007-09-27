@@ -157,6 +157,8 @@ void CL_LoadInventory (sizebuf_t *buf, inventory_t *i)
 /**
  * @sa G_WriteItem
  * @sa G_ReadItem
+ * @note The amount of the item_t struct should not be needed here - because
+ * the amount is only valid for idFloor and idEquip
  */
 static void CL_NetSendItem (struct dbuffer *buf, item_t item, int container, int x, int y)
 {
@@ -186,6 +188,8 @@ static void CL_NetSendInventory (struct dbuffer *buf, inventory_t *i)
 /**
  * @sa G_WriteItem
  * @sa G_ReadItem
+ * @note The amount of the item_t struct should not be needed here - because
+ * the amount is only valid for idFloor and idEquip
  */
 void CL_NetReceiveItem (struct dbuffer *buf, item_t *item, int *container, int *x, int *y)
 {
