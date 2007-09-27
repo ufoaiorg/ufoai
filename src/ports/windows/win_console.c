@@ -120,9 +120,7 @@ void Sys_Error (const char *error, ...)
 	char text[1024];
 	MSG msg;
 
-#ifndef DEDICATED_ONLY
 	CL_Shutdown();
-#endif
 	Qcommon_Shutdown();
 
 	va_start(argptr, error);

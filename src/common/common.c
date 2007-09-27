@@ -276,9 +276,8 @@ void Com_Quit (void)
 {
 	SV_Shutdown("Server quit\n", qfalse);
 	SV_Clear();
-#ifndef DEDICATED_ONLY
 	CL_Shutdown();
-#else
+#ifdef DEDICATED_ONLY
 	Cvar_WriteVariables(va("%s/config.cfg", FS_Gamedir()));
 #endif
 	/* send an receive net messages a last time */
@@ -944,7 +943,6 @@ void Qcommon_Frame (void)
 void Qcommon_Shutdown (void)
 {
 	HTTP_Cleanup();
-	Cmd_ExecuteString("shutdown_alias");
 
 	Mem_Shutdown();
 }
