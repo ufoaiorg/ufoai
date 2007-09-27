@@ -8,7 +8,7 @@ Tooltip: 'Export to Quake2 tag file format for UFO:AI (.tag).'
 """
 
 __author__ = 'Werner Hoehrer'
-__version__ = '0.0.11'
+__version__ = '0.0.12'
 __url__ = ["UFO: Alien Invasion, http://ufoai.sourceforge.net",
      "Support forum, http://ufoai.ninex.info/phpBB2/index.php", "blender", "ufoai"]
 __email__ = ["Werner Hoehrer, bill_spam2:yahoo*de", "scripts"]
@@ -41,6 +41,7 @@ Base code taken from the md2 exporter by Bob Holcomb. Many thanks.
 # ***** END GPL LICENCE BLOCK *****
 # --------------------------------------------------------------------------
 # Changelog
+# 	0.0.12	Hoehrer	matrix transfomration for rotation matrix seems to be ok now. Importing still needs to be fixed/synced though!
 # 	0.0.11	Hoehrer	Some cleanup, updated status messages + palyed around a bit to get tag-rotation to work (with no success yet)
 # 	0.0.10	Hoehrer	changed getLocation() to getLocation('worldspace').
 # --------------------------------------------------------------------------
@@ -289,29 +290,13 @@ class md2_tag:
 		return vet
 
 	def save(self, file):
-		# Prepare temp data for export with transformed axes.
+		# Prepare temp data for export with transformed axes (matrix transform)
 		temp_data=(
-		#float(-self.axis1[1]), float(self.axis1[0]), float(self.axis1[2]),
-		#float(-self.axis2[1]), float(self.axis2[0]), float(self.axis2[2]),
-		#float(-self.axis3[1]), float(self.axis3[0]), float(self.axis3[2]),
-		#float(-self.origin[1]), float(self.origin[0]), float(self.origin[2])
-
-		# ok but inverted:
-		#float(-self.axis2[1]), float(self.axis2[0]), float(self.axis2[2]),
-		#float(-self.axis1[1]), float(self.axis1[0]), float(self.axis1[2]),
-		#float(-self.axis3[1]), float(self.axis3[0]), float(self.axis3[2]),
-		#float(-self.origin[1]), float(self.origin[0]), float(self.origin[2])
-
-		# 90 degree rotated to the 'left' (z axis?)
-		#float(-self.axis1[1]), float(self.axis1[0]), float(self.axis1[2]),
-		#float(-self.axis2[1]), float(self.axis2[0]), float(self.axis2[2]),
-		#float(-self.axis3[1]), float(self.axis3[0]), float(self.axis3[2]),
-		#float(-self.origin[1]), float(self.origin[0]), float(self.origin[2])
-
-		# 180 degrees rotated around the 'forward axis 
+		# rotation matrix
 		float(self.axis2[1]), -float(self.axis2[0]), -float(self.axis2[2]),
-		float(self.axis1[1]), -float(self.axis1[0]), -float(self.axis1[2]),
-		float(self.axis3[1]), -float(self.axis3[0]), -float(self.axis3[2]),
+		float(-self.axis1[1]), float(self.axis1[0]), float(self.axis1[2]),
+		float(-self.axis3[1]), float(self.axis3[0]), float(self.axis3[2]),
+		# position
 		float(-self.origin[1]), float(self.origin[0]), float(self.origin[2])
 		)
 
@@ -345,6 +330,7 @@ class md2_tag:
 		self.origin	= (data[9], data[10], data[11])
 
 		# Convert the orientation of the axes to the blender format.
+		# TODO: fix transform to match the one for saving!
 		self.origin = (self.origin[1], -self.origin[0], self.origin[2])
 		#self.axis1 = (self.axis1[1], -self.axis1[0], self.axis1[2])
 		#self.axis2 = (self.axis2[1], -self.axis2[0], self.axis2[2])
