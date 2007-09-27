@@ -612,16 +612,14 @@ void Mem_Init (void)
  */
 void Mem_Shutdown (void)
 {
-	uint32_t totalBlocks, totalBytes;
 	memPool_t *pool;
 	int i;
 
+	/* don't use cvars, debug print or anything else inside of this loop
+	 * the mem you are trying to use here might already be wiped away */
 	for (i = 0, pool = &m_poolList[0]; i < m_numPools; pool++, i++) {
 		if (!pool->inUse)
 			continue;
-		totalBlocks += pool->blockCount;
-		totalBytes += pool->byteCount;
-		Com_DPrintf(DEBUG_ENGINE, "Free %6i %9iB (%6.3fMB) %s\n", pool->blockCount, pool->byteCount, pool->byteCount/1048576.0f, pool->name);
 		Mem_FreePool(pool);
 	}
 }
