@@ -141,6 +141,7 @@ POPUP_AIRCRAFT
 
 /**
  * @brief Display the popup_aircraft
+ * @sa CL_DisplayPopupIntercept
  */
 void CL_DisplayPopupAircraft (const aircraft_t* aircraft)
 {
@@ -242,6 +243,7 @@ POPUP_INTERCEPT
 
 /**
  * @brief Display the popup_intercept
+ * @sa CL_DisplayPopupAircraft
  */
 void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 {
@@ -267,7 +269,7 @@ void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 			air = &gd.bases[j].aircraft[i];
 
 			/* if aircraft is empty we can't send it on a ground mission */
-			if (mission && air->teamSize <= 0)
+			if (mission && (air->teamSize <= 0 || air->type != AIRCRAFT_TRANSPORTER))
 				continue;
 			/* don't show aircraft with no weapons */
 			if (ufo && air->weapons[0].itemIdx < 0)
