@@ -2,6 +2,7 @@
 // name				start	end		fps
 
 // Showcase: All animations - mostly for checking.
+//showcase			0		225		22
 showcase			0		168		22
 
 death1				0		27		18
@@ -51,10 +52,10 @@ cshoot_rifle			154		168		22
 //cmove_pistol_d		280		281		10
 //cshoot_pistol_d		282		290		10
 
-//move_grenade		253		253		4
-//shoot_grenade		254		259		10
-//cmove_grenade		293		294		10
-//cshoot_grenade		295		300		10
+////move_grenade		253		253		22
+//shoot_grenade		188		197		22
+////cmove_grenade		293		294		22
+//cshoot_grenade		216		225		22
 
 //move_item			263		263		4
 //shoot_item			264		268		10
