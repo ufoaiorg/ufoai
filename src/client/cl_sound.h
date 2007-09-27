@@ -30,9 +30,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_SOUND_H
 
 /** only begin attenuating sound volumes when outside the FULLVOLUME range */
-#define SOUND_FULLVOLUME 80
+#define SOUND_FULLVOLUME 200
 
-#define SOUND_LOOPATTENUATE 0.003
+#define SOUND_DEFAULTATTENUATE 0.002
 
 
 struct sfx_s;
@@ -54,7 +54,7 @@ void S_Init(void);
 void S_Shutdown(void);
 
 /* if origin is NULL, the sound will be dynamically sourced from the entity */
-void S_StartSound(vec3_t origin, int entnum, int entchannel, struct sfx_s *sfx, float fvol, float attenuation, float timeofs);
+void S_StartSound(const vec3_t origin, int entnum, int entchannel, struct sfx_s *sfx, float fvol, float attenuation, float timeofs);
 void S_StartLocalSound(const char *s);
 
 void S_RawSamples(int samples, int rate, int width, int channels, byte * data, float volume);

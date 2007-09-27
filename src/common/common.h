@@ -225,7 +225,7 @@ enum clc_ops_e {
 #define	SND_OFFSET		(1<<4)	/* a byte, msec offset from frame start */
 
 #define DEFAULT_SOUND_PACKET_VOLUME	1.0
-#define DEFAULT_SOUND_PACKET_ATTENUATION 1.0
+#define DEFAULT_SOUND_PACKET_ATTENUATION 0.02
 
 /*============================================== */
 

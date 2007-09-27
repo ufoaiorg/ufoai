@@ -141,6 +141,6 @@ void S_PaintChannels(void);
 void S_ClearBuffer(void);
 void S_ResampleSfx(sfx_t * sfx, int inrate, int inwidth, byte * data);
 channel_t *S_PickChannel(int entnum, int entchannel);
-void S_SpatializeOrigin(vec3_t origin, float master_vol, float dist_mult, int *left_vol, int *right_vol);
+void S_SpatializeOrigin(const vec3_t origin, float master_vol, float dist_mult, int *left_vol, int *right_vol);
 
 #endif /* CLIENT_SND_LOC_H */

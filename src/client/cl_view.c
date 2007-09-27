@@ -131,8 +131,7 @@ static void CL_ParseEntitystring (const char *es)
 	int skin;
 	int frame;
 	float volume = 255.0f;
-	/* FIXME: use the  SOUND_LOOPATTENUATE value here as soon as the spatialize function is fixed */
-	float attenuation = 0.0f;
+	float attenuation = SOUND_DEFAULTATTENUATE;
 
 	VectorSet(map_fogColor, 0.5f, 0.5f, 0.5f);
 	map_fogColor[3] = 1.0f;

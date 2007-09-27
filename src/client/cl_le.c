@@ -383,11 +383,12 @@ void LET_PlayAmbientSound (le_t * le)
 
 	if (!le->sfx) {
 		le->think = NULL;
+		Com_Printf("LET_PlayAmbientSound: no sound loaded\n");
 		return;
 	}
 
 	if (!le->sfx->cache) {
-		Com_Printf("LET_PlayAmbientSound: no sound loaded\n");
+		Com_Printf("LET_PlayAmbientSound: no sound cached\n");
 		return;
 	}
 
@@ -395,7 +396,7 @@ void LET_PlayAmbientSound (le_t * le)
 	S_SpatializeOrigin(le->origin, le->volume, le->attenuation, &left_total, &right_total);
 
 	if (left_total == 0 && right_total == 0) {
-		/*Com_Printf("LET_PlayAmbientSound: nothing to play - not audible\n");*/
+		Com_DPrintf(DEBUG_SOUND, "LET_PlayAmbientSound: nothing to play - not audible\n");
 		return;  /* not audible */
 	}
 
@@ -410,9 +411,10 @@ void LET_PlayAmbientSound (le_t * le)
 		left_total = 255;
 	if (right_total > 255)
 		right_total = 255;
+	ch->master_vol = max(right_total, left_total);
 	ch->leftvol = left_total;
 	ch->rightvol = right_total;
-	ch->autosound = qtrue;  /* remove next frame */
+
 	ch->sfx = le->sfx;
 	sc = ch->sfx->cache;
 	assert(sc);
@@ -464,17 +466,17 @@ static void LE_PlaySoundFileForContents (le_t* le, int contents)
 			/* were we already in the water? */
 			if (le->positionContents & CONTENTS_WATER) {
 				/* play water moving sound */
-				S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_ACTOR, soundWaterOut, 1, 1, 0);
+				S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_ACTOR, soundWaterOut, 1, SOUND_DEFAULTATTENUATE, 0);
 			} else {
 				/* play water entering sound */
-				S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_ACTOR, soundWaterIn, 1, 1, 0);
+				S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_ACTOR, soundWaterIn, 1, SOUND_DEFAULTATTENUATE, 0);
 			}
 			return;
 		}
 
 		if (le->positionContents & CONTENTS_WATER) {
 			/* play water leaving sound */
-			S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_ACTOR, soundWaterMove, 1, 1, 0);
+			S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_ACTOR, soundWaterMove, 1, SOUND_DEFAULTATTENUATE, 0);
 		}
 	}
 }
@@ -660,19 +662,19 @@ void LET_ProjectileAutoHide (le_t *le)
 static void LET_Projectile (le_t * le)
 {
 	if (cl.time >= le->endTime) {
+		vec3_t impact;
+		VectorCopy(le->origin, impact);
 		CL_ParticleFree(le->ptl);
 		/* don't run the think function again */
 		le->inuse = qfalse;
 		if (le->ref1 && le->ref1[0]) {
-			vec3_t impact;
-
 			VectorCopy(le->ptl->s, impact);
 			le->ptl = CL_ParticleSpawn(le->ref1, 0, impact, bytedirs[le->state], NULL);
 			VecToAngles(bytedirs[le->state], le->ptl->angles);
 		}
 		if (le->ref2 && le->ref2[0]) {
 			sfx_t *sfx = S_RegisterSound(le->ref2);
-			S_StartSound(NULL, le->entnum, SOUND_CHANNEL_WEAPON, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
+			S_StartSound(impact, le->entnum, SOUND_CHANNEL_WEAPON, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
 		}
 	}
 }
@@ -796,27 +798,34 @@ void LE_AddGrenade (fireDef_t * fd, int flags, vec3_t muzzle, vec3_t v0, int dt)
 	le->think(le);
 }
 
+/**
+ * @brief Adds ambient sounds from misc_sound entities
+ * @sa CL_ParseEntitystring
+ */
 void LE_AddAmbientSound (const char *sound, vec3_t origin, float volume, float attenuation)
 {
 	le_t* le;
-	char soundPath[MAX_QPATH];
 	sfx_t* sfx;
 
-	Com_sprintf(soundPath, sizeof(soundPath), "ambience/%s", sound);
-	sfx = S_RegisterSound(soundPath);
+	sfx = S_RegisterSound(sound);
 	if (!sfx) {
-		Com_Printf("LE_AddAmbientSound: can't cache %s\n", soundPath);
+		Com_Printf("LE_AddAmbientSound: can't cache %s\n", sound);
 		return;
 	}
 
 	le = LE_Add(0);
-	if (!le)
+	if (!le) {
+		Com_Printf("Could not add ambient sound entity\n");
 		return;
+	}
 	le->sfx = sfx;
 	le->attenuation = attenuation;
 	le->volume = volume;
 	le->inuse = qtrue;
+	VectorCopy(origin, le->origin);
+	le->invis = qtrue;
 	le->think = LET_PlayAmbientSound;
+	Com_DPrintf(DEBUG_SOUND, "Add ambient sound '%s'\n", sound);
 }
 
 /*===========================================================================

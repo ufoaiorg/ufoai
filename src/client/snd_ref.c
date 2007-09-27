@@ -573,11 +573,10 @@ channel_t *S_PickChannel (int entnum, int entchannel)
 
 /**
  * @brief Used for spatializing channels and autosounds
- * @todo Fix this function for birds view
+ * @sa S_Spatialize
  */
-void S_SpatializeOrigin (vec3_t origin, float master_vol, float dist_mult, int *left_vol, int *right_vol)
+void S_SpatializeOrigin (const vec3_t origin, float master_vol, float dist_mult, int *left_vol, int *right_vol)
 {
-	vec_t dot;
 	vec_t dist;
 	vec_t lscale, rscale, scale;
 	vec3_t source_vec;
@@ -598,12 +597,10 @@ void S_SpatializeOrigin (vec3_t origin, float master_vol, float dist_mult, int *
 	else
 		dist *= dist_mult;			/* different attenuation levels */
 
-	dot = DotProduct(listener_right, source_vec);
-
 	if (dma.channels == 1 || !dist_mult) {	/* no attenuation = no spatialization */
 		rscale = 1.0;
-		lscale = 1.0;
 	} else {
+		vec_t dot = DotProduct(listener_right, source_vec);
 		rscale = 0.5 * (1.0 + dot);
 		lscale = 0.5 * (1.0 - dot);
 	}
@@ -611,6 +608,8 @@ void S_SpatializeOrigin (vec3_t origin, float master_vol, float dist_mult, int *
 	/* add in distance effect */
 	scale = (1.0 - dist) * rscale;
 	*right_vol = (int) (master_vol * scale);
+	/*Com_DPrintf(DEBUG_SOUND, "S_SpatializeOrigin: dist: %.5f - master_vol: %.3f - scale: %.3f - rscale: %.3f - volume: %i\n",
+		dist, master_vol, scale, rscale, *right_vol);*/
 	if (*right_vol < 0)
 		*right_vol = 0;
 
@@ -622,21 +621,20 @@ void S_SpatializeOrigin (vec3_t origin, float master_vol, float dist_mult, int *
 
 /**
  * @brief spatializes a channel
+ * @sa S_SpatializeOrigin
  */
 static void S_Spatialize (channel_t * ch)
 {
-	vec3_t origin;
-
+#if 0 /* TODO: needed? */
 	/* anything coming from the view entity will always be full volume */
 	if (ch->entnum == cl.pnum) {
 		ch->leftvol = ch->master_vol;
 		ch->rightvol = ch->master_vol;
 		return;
 	}
+#endif
 
-	VectorCopy(ch->origin, origin);
-
-	S_SpatializeOrigin(origin, ch->master_vol, ch->dist_mult, &ch->leftvol, &ch->rightvol);
+	S_SpatializeOrigin(ch->origin, ch->master_vol, ch->dist_mult, &ch->leftvol, &ch->rightvol);
 }
 
 
@@ -729,7 +727,7 @@ Start a sound effect
  * @param[in] timeofs
  * @sa S_StartLocalSound
  */
-void S_StartSound (vec3_t origin, int entnum, int entchannel, sfx_t * sfx, float fvol, float attenuation, float timeofs)
+void S_StartSound (const vec3_t origin, int entnum, int entchannel, sfx_t * sfx, float fvol, float attenuation, float timeofs)
 {
 	sfxcache_t *sc;
 	int vol;
