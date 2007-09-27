@@ -166,7 +166,6 @@ typedef struct client_static_s {
 	keydest_t key_dest;
 	keydest_t key_dest_old;
 
-	int framecount;				/**< increased with every CL_Frame call */
 	int realtime;				/**< always increasing, no clamping, etc */
 	float frametime;			/**< seconds since last frame */
 

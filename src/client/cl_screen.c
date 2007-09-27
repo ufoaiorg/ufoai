@@ -350,6 +350,25 @@ const char* SCR_SetLoadingBackground (const char *mapString)
 }
 
 /**
+ * @brief Draws the current downloading status
+ * @sa SCR_DrawLoadingBar
+ * @sa CL_StartHTTPDownload
+ * @sa CL_HTTP_Progress
+ */
+static void SCR_DrawDownloading (void)
+{
+	const char *dlmsg = va(_("Downloading [%s]"), cls.downloadName);
+	R_FontDrawString("f_menubig", ALIGN_UC,
+		(int)(VID_NORM_WIDTH / 2),
+		(int)(VID_NORM_HEIGHT / 2 - 60),
+		(int)(VID_NORM_WIDTH / 2),
+		(int)(VID_NORM_HEIGHT / 2 - 60),
+		VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, dlmsg, 1, 0, NULL, qfalse);
+
+	SCR_DrawLoadingBar((int)(VID_NORM_WIDTH / 2) - 300, VID_NORM_HEIGHT - 30, 600, 20, (int)cls.downloadPercent);
+}
+
+/**
  * @brief Draws the current loading pic of the map from base/pics/maps/loading
  * @sa SCR_DrawLoadingBar
  */
@@ -358,6 +377,11 @@ static void SCR_DrawLoading (void)
 	static const char *loadingPic;
 	const vec4_t color = {0.0, 0.7, 0.0, 0.8};
 	char *mapmsg;
+
+	if (cls.downloadName[0]) {
+		SCR_DrawDownloading();
+		return;
+	}
 
 	if (!scr_draw_loading) {
 		loadingPic = NULL;

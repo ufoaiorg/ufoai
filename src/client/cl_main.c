@@ -842,8 +842,7 @@ static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
 		else {
 			char filename[MAX_QPATH];
 			Q_strncpyz(filename, "pics/maps/shots/", sizeof(filename));
-			/* strip off the day or night char */
-			Q_strncpyz(&filename[strlen(filename)], value, strlen(value) - 1);
+			Q_strcat(filename, buf, sizeof(filename));
 			if (FS_CheckFile(filename) != -1)
 				Cvar_Set("mn_mappic", filename);
 		}
@@ -1468,6 +1467,9 @@ void CL_RequestNextDownload (void)
 	/* for singleplayer game this is already loaded in our local server
 	 * and if we are the server we don't have to reload the map here, too */
 	if (!Com_ServerState()) {
+		/* activate the map loading screen for multiplayer, too */
+		SCR_BeginLoadingPlaque();
+
 		/* check download */
 		if (precache_check == CS_MODELS) { /* confirm map */
 			if (*cl.configstrings[CS_TILES] != '+') {
@@ -1480,9 +1482,6 @@ void CL_RequestNextDownload (void)
 		/* map might still be downloading? */
 		if (CL_PendingHTTPDownloads())
 			return;
-
-		/* activate the map loading screen for multiplayer, too */
-		SCR_BeginLoadingPlaque();
 
 		while ((buf = FS_GetFileData("ufos/*.ufo")) != NULL)
 			ufoScript_checksum += LittleLong(Com_BlockChecksum(buf, strlen(buf)));
@@ -2406,8 +2405,6 @@ void CL_Frame (int now, void *data)
 
 	/* send a new command message to the server */
 	CL_SendCommand();
-
-	cls.framecount++;
 }
 
 /**

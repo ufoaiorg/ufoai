@@ -308,22 +308,16 @@ static dlhandle_t *CL_GetFreeDLHandle (void)
 
 /**
  * @brief Called from the precache check to queue a download.
+ * @sa CL_CheckOrDownloadFile
  */
 qboolean CL_QueueHTTPDownload (const char *ufoPath)
 {
 	size_t		len;
 	dlqueue_t	*q;
-	qboolean	needList;
 
 	/* no http server (or we got booted) */
 	if (!cls.downloadServer[0] || abortDownloads || !cl_http_downloads->integer)
 		return qfalse;
-
-	needList = qfalse;
-
-	/* first download queued, so we want the mod filelist */
-	if (!cls.downloadQueue.next && cl_http_filelists->integer)
-		needList = qtrue;
 
 	q = &cls.downloadQueue;
 
@@ -341,11 +335,6 @@ qboolean CL_QueueHTTPDownload (const char *ufoPath)
 	q->next = NULL;
 	q->state = DLQ_STATE_NOT_STARTED;
 	Q_strncpyz(q->ufoPath, ufoPath, sizeof(q->ufoPath));
-
-	if (needList) {
-		/* grab the filelist */
-		CL_QueueHTTPDownload(va("%s.filelist", cl.gamedir));
-	}
 
 	/* special case for map file lists, i really wanted a server-push mechanism for this, but oh well */
 	len = strlen(ufoPath);
@@ -397,6 +386,8 @@ qboolean CL_PendingHTTPDownloads (void)
 
 /**
  * @brief Validate a path supplied by a filelist.
+ * @sa CL_QueueHTTPDownload
+ * @sa CL_ParseFileList
  */
 static void CL_CheckAndQueueDownload (char *path)
 {
@@ -542,7 +533,7 @@ static void CL_ReVerifyHTTPQueue (void)
 	while (q->next) {
 		q = q->next;
 		if (q->state == DLQ_STATE_NOT_STARTED) {
-			if (FS_LoadFile (q->ufoPath, NULL) != -1)
+			if (FS_LoadFile(q->ufoPath, NULL) != -1)
 				q->state = DLQ_STATE_DONE;
 			else
 				pendingCount++;
@@ -753,6 +744,7 @@ static void CL_FinishHTTPDownload (void)
 
 /**
  * @brief Start another HTTP download if possible.
+ * @sa CL_RunHTTPDownloads
  */
 static void CL_StartNextHTTPDownload (void)
 {
@@ -788,6 +780,7 @@ static void CL_StartNextHTTPDownload (void)
  * @brief This calls curl_multi_perform do actually do stuff. Called every frame while
  * connecting to minimise latency. Also starts new downloads if we're not doing
  * the maximum already.
+ * @sa CL_Frame
  */
 void CL_RunHTTPDownloads (void)
 {
