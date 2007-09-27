@@ -457,9 +457,9 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 		return IA_NONE;
 	}
 
-	/* if non-armor moved to an armor slot then */
-	/* move item back to source location and break */
-	/* same for non extension items when moved to an extension slot */
+	/* if non-armor moved to an armor slot then
+	 * move item back to source location and break
+	 * same for non extension items when moved to an extension slot */
 	if ((CSI->ids[to].armor && Q_strcmp(CSI->ods[cacheItem.t].type, "armor"))
 	 || (CSI->ids[to].extension && !CSI->ods[cacheItem.t].extension)
 	 || (CSI->ids[to].headgear && !CSI->ods[cacheItem.t].headgear)) {

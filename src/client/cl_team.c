@@ -147,6 +147,7 @@ void CL_LoadInventory (sizebuf_t *buf, inventory_t *i)
 	int nr = MSG_ReadShort(buf) / INV_INVENTORY_BYTES;
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_LoadInventory: Read %i items\n", nr);
+	assert(nr < MAX_INVLIST);
 	for (; nr-- > 0;) {
 		CL_LoadItem(buf, &item, &container, &x, &y);
 		Com_AddToInventory(i, item, container, x, y);
@@ -809,8 +810,8 @@ static void CL_GenerateEquipment_f (void)
 	CL_ReloadAndRemoveCarried(aircraft, &unused);
 
 	/* a 'tiny hack' to add the remaining equipment (not carried)
-	   correctly into buy categories, reloading at the same time;
-	   it is valid only due to the following property: */
+	 * correctly into buy categories, reloading at the same time;
+	 * it is valid only due to the following property: */
 	assert(MAX_CONTAINERS >= BUY_AIRCRAFT);
 
 	for (i = 0; i < csi.numODs; i++) {
