@@ -380,7 +380,7 @@ qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, int container, int
 		 && ic->item.amount > 1) {
 			ic->item.amount--;
 			Com_DPrintf(DEBUG_SHARED, "Com_RemoveFromInventoryIgnore: Amount of '%s': %i\n",
-				CSI->ods[ic->next->item.t].name, ic->next->item.amount);
+				CSI->ods[ic->item.t].name, ic->item.amount);
 			return qtrue;
 		}
 		/* an item in other containers as idFloor and idEquip should always
