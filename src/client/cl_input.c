@@ -1552,7 +1552,7 @@ void IN_Frame (void)
 			IN_PrintKey(&event, 1);
 			if (event.key.keysym.mod & KMOD_ALT && event.key.keysym.sym == SDLK_RETURN) {
 				if (!SDL_WM_ToggleFullScreen(r_surface))
-					Com_Printf("Could not toggle fullscreen mode\n");
+					Com_Printf("IN_Frame: Could not toggle fullscreen mode\n");
 
 				if (r_surface->flags & SDL_FULLSCREEN) {
 					Cvar_SetValue("vid_fullscreen", 1);

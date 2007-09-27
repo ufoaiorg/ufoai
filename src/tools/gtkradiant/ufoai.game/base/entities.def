@@ -116,7 +116,7 @@ Used as a target where civilians try to get in a mission (TODO: Implement me)
 
 /*QUAKED misc_sound (0.5 1 0.5) (-4 -4 -4) (4 4 4)
 Used to play ambient sounds (looped sounds)
-"sound"		sound file name relative to sound/ambience
+"noise"		sound file name relative to sound/ambience
 "attenuation"	sound volume falloff - default is 0.03
 "volume"	0 - 255
 */

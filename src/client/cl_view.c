@@ -202,7 +202,7 @@ static void CL_ParseEntitystring (const char *es)
 				Q_strncpyz(animname, entity_token, sizeof(animname));
 			else if (!Q_strcmp(keyname, "particle"))
 				Q_strncpyz(particle, entity_token, sizeof(particle));
-			else if (!Q_strcmp(keyname, "sound"))
+			else if (!Q_strcmp(keyname, "noise"))
 				Q_strncpyz(sound, entity_token, sizeof(sound));
 			else if (!Q_strcmp(keyname, "attenuation"))
 				attenuation = atof(entity_token);

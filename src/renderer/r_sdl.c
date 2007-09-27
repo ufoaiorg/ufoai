@@ -142,7 +142,7 @@ qboolean R_InitGraphics (void)
 		qboolean isfullscreen = (r_surface->flags & SDL_FULLSCREEN) ? qtrue : qfalse;
 		if (viddef.fullscreen != isfullscreen)
 			if (!SDL_WM_ToggleFullScreen(r_surface))
-				Com_Printf("Could not set to fullscreen mode\n");
+				Com_Printf("R_InitGraphics: Could not set to fullscreen mode\n");
 
 		isfullscreen = (r_surface->flags & SDL_FULLSCREEN) ? qtrue : qfalse;
 		if (viddef.fullscreen == isfullscreen)
