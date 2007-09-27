@@ -672,7 +672,7 @@ static void LET_Projectile (le_t * le)
 		}
 		if (le->ref2 && le->ref2[0]) {
 			sfx_t *sfx = S_RegisterSound(le->ref2);
-			S_StartSound(NULL, le->entnum, SOUND_CHANNEL_OVERRIDE, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
+			S_StartSound(NULL, le->entnum, SOUND_CHANNEL_WEAPON, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
 		}
 	}
 }

@@ -94,6 +94,12 @@ static kbutton_t in_shiftup, in_shiftdown;
 static kbutton_t in_zoomin, in_zoomout;
 static kbutton_t in_turnup, in_turndown;
 
+/**
+ * @brief
+ * @sa KeyUp
+ * @sa CL_GetKeyMouseState
+ * @sa CL_CameraMoveFirstPerson
+ */
 static void KeyDown (kbutton_t * b)
 {
 	int k;
@@ -132,6 +138,12 @@ static void KeyDown (kbutton_t * b)
 	b->state |= 1 + 2;
 }
 
+/**
+ * @brief
+ * @sa KeyDown
+ * @sa CL_GetKeyMouseState
+ * @sa CL_CameraMoveFirstPerson
+ */
 static void KeyUp (kbutton_t * b)
 {
 	int k;
