@@ -97,7 +97,7 @@ void INVSH_InitInventory (invList_t * invList)
 	}
 }
 
-static int cache_Com_CheckToInventory = 0;
+static int cache_Com_CheckToInventory = INV_DOES_NOT_FIT;
 
 /**
  * @brief Checks if an item-shape can be put into a container at a certain position... ignores any 'special' types.
@@ -154,54 +154,71 @@ int Com_CheckToInventory (const inventory_t * const i, const int item, const int
 	/* armor vs item */
 	if (!Q_strncmp(CSI->ods[item].type, "armor", MAX_VAR)) {
 		if (!CSI->ids[container].armor && !CSI->ids[container].all) {
-			return 0;
+			return INV_DOES_NOT_FIT;
 		}
 	} else if (!CSI->ods[item].extension && CSI->ids[container].extension) {
-		return 0;
+		return INV_DOES_NOT_FIT;
 	} else if (!CSI->ods[item].headgear && CSI->ids[container].headgear) {
-		return 0;
+		return INV_DOES_NOT_FIT;
 	} else if (CSI->ids[container].armor) {
-		return 0;
+		return INV_DOES_NOT_FIT;
 	}
 
 	/* twohanded item */
 	if (CSI->ods[item].holdTwoHanded) {
 		if ((container == CSI->idRight && i->c[CSI->idLeft])
 			 || container == CSI->idLeft)
-			return 0;
+			return INV_DOES_NOT_FIT;
 	}
 
 	/* left hand is busy if right wields twohanded */
 	if (container == CSI->idLeft) {
 		if (i->c[CSI->idRight] && CSI->ods[i->c[CSI->idRight]->item.t].holdTwoHanded)
-			return 0;
+			return INV_DOES_NOT_FIT;
 
 		/* can't put an item that is 'fireTwoHanded' into the left hand */
 		if (CSI->ods[item].fireTwoHanded)
-			return 0;
+			return INV_DOES_NOT_FIT;
 	}
 
 	/* Single item containers, e.g. hands, extension or headgear. */
 	if (CSI->ids[container].single) {
 		if (i->c[container]) {
 			/* There is already an item. */
-			return 0;
+			return INV_DOES_NOT_FIT;
 		} else {
 			if (Com_CheckToInventory_shape(i, container,CSI->ods[item].shape, x, y)) {
 				/* Looks good. */
-				return 1;
+				return INV_FITS;
 			} else if (Com_CheckToInventory_shape(i, container, Com_ShapeRotate(CSI->ods[item].shape), x, y)) {
-				return 2;	/* Return status "fits, but only rotated". */
+				return INV_FITS_ONLY_ROTATED;	/* Return status "fits, but only rotated". */
 			}
 
 			Com_DPrintf(DEBUG_SHARED, "Com_CheckToInventory: INFO: Moving to 'single' container but item would not fit normally.\n");
-			return 1; /* We are returning with status qtrue (1) if the item does not fit at all - unlikely but not impossible. */
+			return INV_FITS; /* We are returning with status qtrue (1) if the item does not fit at all - unlikely but not impossible. */
 		}
 	}
 
 	return Com_CheckToInventory_shape(i, container,CSI->ods[item].shape, x, y);
 }
 
+#if 0
+/**
+ * @brief Check if the (physical) information of 2 items is exactly the same.
+ * @param[in] item1 First item to compare.
+ * @param[in] item2 Second item to compare.
+ * @return qtrue if they are identical or qfalse otherwise.
+ */
+static qboolean Com_CompareItem (item_t *item1, item_t *item2)
+{
+	if ((item1->t == item2->t)
+	 && (item1->m == item2->m)
+	 && (item1->a == item2->a))
+		return qtrue;
+
+	return qfalse;
+}
+#endif
 
 /**
  * @brief Searches a suitable place in given inventory with given container.
@@ -239,6 +256,8 @@ invList_t *Com_SearchInInventory (const inventory_t* const i, int container, int
  * @param[in] container Container in given inventory definition, where the new item will be stored.
  * @param[in] x The x location in the container.
  * @param[in] y The x location in the container.
+ * @sa Com_RemoveFromInventory
+ * @sa Com_RemoveFromInventoryIgnore
  */
 invList_t *Com_AddToInventory (inventory_t * const i, item_t item, int container, int x, int y)
 {
@@ -248,7 +267,7 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, int container
 		return NULL;
 
 	if (!invUnused)
-		Sys_Error("No free inventory space!\n");
+		Sys_Error("Com_AddToInventory: No free inventory space!\n");
 
 	assert(i);
 
@@ -399,7 +418,7 @@ int Com_MoveInInventory (inventory_t* const i, int from, int fx, int fy, int to,
  * @param[in] ty y for destination container
  * @param[in] TU amount of TU needed to move an item
  * @param[in] icp
- * @param[in] ignore_type Ignroes teh type of container (only used for a workaround in the base-equipemnt see CL_MoveMultiEquipment) HACKHACK
+ * @param[in] ignore_type Ignores the type of container (only used for a workaround in the base-equipemnt see CL_MoveMultiEquipment) HACKHACK
  * @return IA_NOTIME when not enough TU
  * @return IA_NONE if no action possible
  * @return IA_NORELOAD if you cannot reload a weapon
@@ -412,7 +431,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 {
 	invList_t *ic;
 	int time;
-	int checkedTo = 0;
+	int checkedTo = INV_DOES_NOT_FIT;
 
 	assert(to >= 0 && to < CSI->numIDs);
 	assert(from >= 0 && from < CSI->numIDs);
@@ -559,7 +578,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 	if (TU)
 		*TU -= time;
 
-	if (checkedTo == 2) {
+	if (checkedTo == INV_FITS_ONLY_ROTATED) {
 		/* Set rotated tag */
 		/** @todo remove this again when moving out of a container. */
 		Com_DPrintf(DEBUG_SHARED, "Com_MoveInInventoryIgnore: setting rotate tag.\n");
@@ -570,6 +589,9 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 		cacheItem.rotated = 0;
 	}
 
+	/* FIXME: Why is the item removed again? This didn't do any harm
+	 * because x and y was already empty at this stage - but it will produce
+	 * trouble when we begin to pack the same items together */
 	Com_RemoveFromInventory(i, from, fx, fy);
 	ic = Com_AddToInventory(i, cacheItem, to, tx, ty);
 
@@ -664,22 +686,22 @@ void Com_FindSpace (const inventory_t* const inv, item_t *item, const int contai
 		for (x = 0; x < SHAPE_BIG_MAX_WIDTH; x++) {
 			checkedTo = Com_CheckToInventory(inv, item->t, container, x, y);
 			if (checkedTo) {
-				if (checkedTo == 2) {
+				if (checkedTo == INV_FITS_ONLY_ROTATED) {
 					/* Set rotated tag */
 					/** @todo remove this again when moving out of a container. */
 					Com_DPrintf(DEBUG_SHARED, "Com_FindSpace: setting rotate tag (%s: %s in %s)\n", CSI->ods[item->t].type, CSI->ods[item->t].id, CSI->ids[container].name);
 					item->rotated = 1;
 				}
-				cache_Com_CheckToInventory = 0;
+				cache_Com_CheckToInventory = INV_DOES_NOT_FIT;
 				*px = x;
 				*py = y;
 				return;
 			} else {
-				cache_Com_CheckToInventory = 1;
+				cache_Com_CheckToInventory = INV_FITS;
 			}
 		}
 	}
-	cache_Com_CheckToInventory = 0;
+	cache_Com_CheckToInventory = INV_DOES_NOT_FIT;
 
 #ifdef PARANOID
 	Com_DPrintf(DEBUG_SHARED, "Com_FindSpace: no space for %s: %s in %s\n", CSI->ods[item->t].type, CSI->ods[item->t].id, CSI->ids[container].name);

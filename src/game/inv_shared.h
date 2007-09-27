@@ -266,6 +266,12 @@ typedef struct objDef_s {
 	craftitem_t craftitem;
 } objDef_t;
 
+enum {
+	INV_DOES_NOT_FIT,
+	INV_FITS,
+	INV_FITS_ONLY_ROTATED
+};
+
 #define MAX_INVDEFS     16
 
 /** @brief inventory definition for our menus */
@@ -290,7 +296,7 @@ typedef struct item_s {
 	int a;	/**< number of ammo rounds left - see NONE_AMMO */
 	int m;	/**< unique index of ammo type on csi->ods - see NONE */
 	int t;	/**< unique index of weapon in csi.ods array - see NONE */
-	int rotated; /**< If the item is curerntly displayed rotated (1) or not (0) */
+	int rotated; /**< If the item is currently displayed rotated (1) or not (0) */
 } item_t;
 
 /** @brief container/inventory list (linked list) with items */
