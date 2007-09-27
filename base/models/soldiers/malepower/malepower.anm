@@ -1,6 +1,9 @@
 // character animations
 // name				start	end		fps
 
+// Showcase: All animations - mostly for checking.
+showcase			0		168		22
+
 death1				0		27		18
 dead1				27		27		1
 death2				28		46		18
@@ -11,7 +14,7 @@ dead3				59		59		1
 stand0				60		60		1
 walk0				63		81		22
 cstand0				62		62		1
-cwalk0				101		119		15
+cwalk0				101		118		15
 
 stand1				95		96		1
 walk1				97		112		22
@@ -19,9 +22,9 @@ cstand1				115		116		1
 cwalk1				118		133		15
 
 move_rifle			82		101		22
-shoot_rifle			119		133		10
-//cmove_rifle			163		164		10
-//cshoot_rifle		165		169		10
+shoot_rifle			119		133		22
+cmove_rifle			136		153		22
+cshoot_rifle			154		168		22
 
 //move_biggun			146		146		4
 //shoot_biggun		147		151		10
