@@ -2021,7 +2021,10 @@ static int INV_GetItemTooltip (item_t item, char *tooltiptext, size_t string_max
 	int i;
 	int weapon_idx;
 	int linenum = 0;
-	Q_strncpyz(tooltiptext, va("%s\n", csi.ods[item.t].name), string_maxlength);
+	if (item.amount > 1)
+		Q_strncpyz(tooltiptext, va("%i x %s\n", item.amount, csi.ods[item.t].name), string_maxlength);
+	else
+		Q_strncpyz(tooltiptext, va("%s\n", csi.ods[item.t].name), string_maxlength);
 	linenum++;
 	/* Only display further info if item.t is researched */
 	if (RS_ItemIsResearched(csi.ods[item.t].id)) {
@@ -2217,7 +2220,7 @@ void MN_DrawMenus (void)
 	char *anim;					/* model anim state */
 	char source[MAX_VAR] = "";
 	int sp, pp;
-	item_t item = {1, NONE, NONE, 0}; /* 1 so it's not reddish; fake item anyway */
+	item_t item = {1, NONE, NONE, 0, 0}; /* 1 so it's not reddish; fake item anyway */
 	vec4_t color;
 	int mouseOver = 0;
 	int y, i;

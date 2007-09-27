@@ -69,7 +69,7 @@ int mouseSpace;
 int mousePosX, mousePosY;
 static int oldMousePosX, oldMousePosY;
 int dragFrom, dragFromX, dragFromY;
-item_t dragItem = {NONE_AMMO, NONE, NONE}; /* to crash as soon as possible */
+item_t dragItem = {NONE_AMMO, NONE, NONE, 1, 0}; /* to crash as soon as possible */
 /**
  * rotate angles for menu models - pointer to menu node angles vec3_t
  * modify the node->angles values to rotate a model

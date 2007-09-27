@@ -2073,7 +2073,6 @@ void Com_AddObjectLinks (void)
 #endif
 
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-
 #ifndef DEDICATED_ONLY
 		/* Add links to technologies. */
 		tech = RS_GetTechByProvided(od->id);

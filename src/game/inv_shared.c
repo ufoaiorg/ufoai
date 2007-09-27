@@ -34,7 +34,7 @@ INVENTORY MANAGEMENT FUNCTIONS
 
 static csi_t *CSI;
 static invList_t *invUnused;
-static item_t cacheItem = {NONE,NONE,NONE, 0}; /* to crash as soon as possible */
+static item_t cacheItem = {NONE_AMMO, NONE, NONE, 0, 0}; /* to crash as soon as possible */
 
 /**
  * @brief Initializes csi_t *CSI pointer.
@@ -201,7 +201,6 @@ int Com_CheckToInventory (const inventory_t * const i, const int item, const int
 	return Com_CheckToInventory_shape(i, container,CSI->ods[item].shape, x, y);
 }
 
-#if 0
 /**
  * @brief Check if the (physical) information of 2 items is exactly the same.
  * @param[in] item1 First item to compare.
@@ -217,7 +216,6 @@ static qboolean Com_CompareItem (item_t *item1, item_t *item2)
 
 	return qfalse;
 }
-#endif
 
 /**
  * @brief Searches a suitable place in given inventory with given container.
@@ -294,7 +292,19 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, int container
 	 * After that we can easily add the item (item.t, x and y positions) to our [t] being ic.
 	 */
 
+	if (container == CSI->idEquip || container == CSI->idFloor) {
+		ic = i->c[container];
+		for (; ic; ic = ic->next)
+			if (Com_CompareItem(&ic->item, &item)) {
+				ic->item.amount++;
+				Com_DPrintf(DEBUG_SHARED, "Com_AddToInventory: Amount of '%s': %i\n",
+					CSI->ods[ic->item.t].name, ic->item.amount);
+				return ic;
+		}
+	}
+
 	/* Temporary store the pointer to the first item in this list. */
+	/* not found - add a new one */
 	ic = i->c[container];
 
 	/* Set/overwrite first item-entry in the container to a yet empty one. */
@@ -313,6 +323,7 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, int container
 
 	/* Set the data in the new entry to the data we got via function-parameters.*/
 	ic->item = item;
+	ic->item.amount = 1;
 	ic->x = x;
 	ic->y = y;
 	return ic;
@@ -326,6 +337,7 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, int container
  * @return qtrue If removal was successful.
  * @return qfalse If nothing was removed or an error occured.
  * @sa Com_RemoveFromInventoryIgnore
+ * @sa Com_AddToInventory
  */
 qboolean Com_RemoveFromInventory (inventory_t* const i, int container, int x, int y)
 {
@@ -357,10 +369,25 @@ qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, int container, int
 		return qfalse;
 	}
 
+	/* FIXME: the problem here is, that in case of a move inside the same container
+	 * the item don't just get updated x and y values but it is tried to remove
+	 * one of the items => crap - maybe we have to change the inv move function
+	 * to check for this case of move and only update the x and y coords instead
+	 * of calling the add and remove functions */
 	if (!ignore_type && (CSI->ids[container].single || (ic->x == x && ic->y == y))) {
+		cacheItem = ic->item;
+		if ((container == CSI->idFloor || container == CSI->idEquip)
+		 && ic->item.amount > 1) {
+			ic->item.amount--;
+			Com_DPrintf(DEBUG_SHARED, "Com_RemoveFromInventoryIgnore: Amount of '%s': %i\n",
+				CSI->ods[ic->next->item.t].name, ic->next->item.amount);
+			return qtrue;
+		}
+		/* an item in other containers as idFloor and idEquip should always
+		 * have an amount value of 1 */
+		assert(ic->item.amount == 1);
 		old = invUnused;
 		invUnused = ic;
-		cacheItem = ic->item;
 		i->c[container] = ic->next;
 
 		if (CSI->ids[container].single && ic->next)
@@ -372,9 +399,16 @@ qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, int container, int
 
 	for (; ic->next; ic = ic->next)
 		if (ic->next->x == x && ic->next->y == y) {
+			cacheItem = ic->next->item;
+			if ((container == CSI->idFloor || container == CSI->idEquip)
+			 && ic->next->item.amount > 1) {
+				ic->next->item.amount--;
+				Com_DPrintf(DEBUG_SHARED, "Com_RemoveFromInventoryIgnore: Amount of '%s': %i\n",
+					CSI->ods[ic->next->item.t].name, ic->next->item.amount);
+				return qtrue;
+			}
 			old = invUnused;
 			invUnused = ic->next;
-			cacheItem = ic->next->item;
 			ic->next = ic->next->next;
 			invUnused->next = old;
 			return qtrue;
@@ -450,6 +484,27 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 	assert(i);
 
 	/* break if source item is not removeable */
+
+	/* FIXME imo in tactical missions (idFloor) there should be not packing of items
+	 * they should be available one by one */
+
+	/* special case for moving an item within the same container */
+	if (from == to) {
+		ic = i->c[from];
+		for (; ic; ic = ic->next) {
+			if (ic->x == fx && ic->y == fy) {
+				if (ic->item.amount > 1) {
+					checkedTo = Com_CheckToInventory(i, ic->item.t, to, tx, ty);
+					if (checkedTo == INV_FITS) {
+						ic->x = tx;
+						ic->y = ty;
+						return IA_MOVE;
+					}
+					return IA_NONE;
+				}
+			}
+		}
+	}
 
 	if (!Com_RemoveFromInventoryIgnore(i, from, fx, fy, ignore_type))
 		return IA_NONE;
@@ -591,7 +646,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 	/* FIXME: Why is the item removed again? This didn't do any harm
 	 * because x and y was already empty at this stage - but it will produce
 	 * trouble when we begin to pack the same items together */
-	Com_RemoveFromInventory(i, from, fx, fy);
+	/*Com_RemoveFromInventory(i, from, fx, fy);*/
 	ic = Com_AddToInventory(i, cacheItem, to, tx, ty);
 
 	/* return data */
@@ -798,7 +853,7 @@ void INVSH_PrintContainerToConsole (inventory_t* const i)
 static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, const int equip[MAX_OBJDEFS], int missed_primary, const char *name)
 {
 	int ammo = -1; /* this variable is never used before being set */
-	item_t item = {NONE_AMMO, NONE, NONE, 0};
+	item_t item = {NONE_AMMO, NONE, NONE, 0, 0};
 	int i, max_price, prev_price;
 	objDef_t obj;
 	qboolean allowLeft;
@@ -893,7 +948,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, co
 			assert(num >= 0);
 			/* pack some more ammo */
 			while (num--) {
-				item_t mun = {NONE_AMMO, NONE, NONE, 0};
+				item_t mun = {NONE_AMMO, NONE, NONE, 0, 0};
 
 				mun.t = ammo;
 				/* ammo to backpack; belt is for knives and grenades */
@@ -1104,7 +1159,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int anzEquip, c
 			}
 			if (max_price) {
 				if (equip[weapon] >= 40 * frand()) {
-					item_t item = {NONE_AMMO, NONE, NONE, 0};
+					item_t item = {NONE_AMMO, NONE, NONE, 0, 0};
 
 					item.t = weapon;
 					if (Com_TryAddToInventory(inv, item, CSI->idArmor)) {

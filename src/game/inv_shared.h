@@ -296,6 +296,7 @@ typedef struct item_s {
 	int a;	/**< number of ammo rounds left - see NONE_AMMO */
 	int m;	/**< unique index of ammo type on csi->ods - see NONE */
 	int t;	/**< unique index of weapon in csi.ods array - see NONE */
+	int amount;	/**< the amount of items of this type on the same x and y location in the container */
 	int rotated; /**< If the item is currently displayed rotated (1) or not (0) */
 } item_t;
 

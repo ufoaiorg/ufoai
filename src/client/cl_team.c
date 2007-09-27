@@ -89,7 +89,7 @@ static void CL_SaveItem (sizebuf_t *buf, item_t item, int container, int x, int 
 {
 	assert(item.t != NONE);
 /*	Com_Printf("Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n", csi.ods[item.t].id, container, item.t, item.a, item.m, x, y);*/
-	MSG_WriteFormat(buf, "bbbbb", item.a, container, x, y, item.rotated);
+	MSG_WriteFormat(buf, "bbbbbl", item.a, container, x, y, item.rotated, item.amount);
 	MSG_WriteString(buf, csi.ods[item.t].id);
 	if (item.a > NONE_AMMO)
 		MSG_WriteString(buf, csi.ods[item.m].id);
@@ -126,7 +126,7 @@ static void CL_LoadItem (sizebuf_t *buf, item_t *item, int *container, int *x, i
 	item->t = item->m = NONE;
 	item->a = NONE_AMMO;
 
-	MSG_ReadFormat(buf, "bbbbb", &item->a, container, x, y, &item->rotated);
+	MSG_ReadFormat(buf, "bbbbbl", &item->a, container, x, y, &item->rotated, &item->amount);
 	itemID = MSG_ReadString(buf);
 	item->t = INVSH_GetItemByID(itemID);
 	if (item->a > NONE_AMMO) {
@@ -740,7 +740,7 @@ static void CL_GenerateEquipment_f (void)
 	int i, p;
 	aircraft_t *aircraft;
 	/* t value will be set below - a and m are not changed here */
-	item_t item = {NONE_AMMO, NONE, NONE};
+	item_t item = {NONE_AMMO, NONE, NONE, 0, 0};
 	int team = 0;
 
 	assert(baseCurrent);
