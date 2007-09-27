@@ -60,7 +60,7 @@ static void R_ModLoadVertexes (lump_t * l)
 	if (l->filelen % sizeof(*in))
 		Sys_Error("R_ModLoadVertexes: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
-	out = VID_TagAlloc(r_modelPoolPtr, count * sizeof(*out), 0);
+	out = VID_TagAlloc(vid_modelPool, count * sizeof(*out), 0);
 	Com_DPrintf(DEBUG_RENDERER, "...verts: %i\n", count);
 
 	loadmodel->bsp.vertexes = out;
@@ -98,7 +98,7 @@ static void R_ModLoadSubmodels (lump_t * l)
 	if (l->filelen % sizeof(*in))
 		Sys_Error("R_ModLoadSubmodels: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
-	out = VID_TagAlloc(r_modelPoolPtr, count * sizeof(*out), 0);
+	out = VID_TagAlloc(vid_modelPool, count * sizeof(*out), 0);
 	Com_DPrintf(DEBUG_RENDERER, "...submodels: %i\n", count);
 
 	loadmodel->bsp.submodels = out;
@@ -128,7 +128,7 @@ static void R_ModLoadEdges (lump_t * l)
 	if (l->filelen % sizeof(*in))
 		Sys_Error("R_ModLoadEdges: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
-	out = VID_TagAlloc(r_modelPoolPtr, (count + 1) * sizeof(*out), 0);
+	out = VID_TagAlloc(vid_modelPool, (count + 1) * sizeof(*out), 0);
 	Com_DPrintf(DEBUG_RENDERER, "...edges: %i\n", count);
 
 	loadmodel->bsp.edges = out;
@@ -155,7 +155,7 @@ static void R_ModLoadTexinfo (lump_t * l)
 	if (l->filelen % sizeof(*in))
 		Sys_Error("R_ModLoadTexinfo: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
-	out = VID_TagAlloc(r_modelPoolPtr, count * sizeof(*out), 0);
+	out = VID_TagAlloc(vid_modelPool, count * sizeof(*out), 0);
 	Com_DPrintf(DEBUG_RENDERER, "...texinfo: %i\n", count);
 
 	loadmodel->bsp.texinfo = out;
@@ -251,7 +251,7 @@ static void R_ModLoadFaces (lump_t * l)
 	if (l->filelen % sizeof(*in))
 		Sys_Error("R_ModLoadFaces: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
-	out = VID_TagAlloc(r_modelPoolPtr, count * sizeof(*out), 0);
+	out = VID_TagAlloc(vid_modelPool, count * sizeof(*out), 0);
 	Com_DPrintf(DEBUG_RENDERER, "...faces: %i\n", count);
 
 	loadmodel->bsp.surfaces = out;
@@ -329,7 +329,7 @@ static void R_ModLoadNodes (lump_t * l)
 	if (l->filelen % sizeof(*in))
 		Sys_Error("R_ModLoadNodes: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
-	out = VID_TagAlloc(r_modelPoolPtr, count * sizeof(*out), 0);
+	out = VID_TagAlloc(vid_modelPool, count * sizeof(*out), 0);
 	Com_DPrintf(DEBUG_RENDERER, "...nodes: %i\n", count);
 
 	loadmodel->bsp.nodes = out;
@@ -377,7 +377,7 @@ static void R_ModLoadLeafs (lump_t * l)
 	if (l->filelen % sizeof(*in))
 		Sys_Error("R_ModLoadLeafs: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
-	out = VID_TagAlloc(r_modelPoolPtr, count * sizeof(*out), 0);
+	out = VID_TagAlloc(vid_modelPool, count * sizeof(*out), 0);
 	Com_DPrintf(DEBUG_RENDERER, "...leafs: %i\n", count);
 
 	loadmodel->bsp.leafs = out;
@@ -410,7 +410,7 @@ static void R_ModLoadMarksurfaces (lump_t * l)
 	if (l->filelen % sizeof(*in))
 		Sys_Error("R_ModLoadMarksurfaces: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
-	out = VID_TagAlloc(r_modelPoolPtr, count * sizeof(*out), 0);
+	out = VID_TagAlloc(vid_modelPool, count * sizeof(*out), 0);
 	Com_DPrintf(DEBUG_RENDERER, "...marksurfaces: %i\n", count);
 
 	loadmodel->bsp.marksurfaces = out;
@@ -436,7 +436,7 @@ static void R_ModLoadSurfedges (lump_t * l)
 	if (count < 1 || count >= MAX_MAP_SURFEDGES)
 		Sys_Error("R_ModLoadSurfedges: bad surfedges count in %s: %i", loadmodel->name, count);
 
-	out = VID_TagAlloc(r_modelPoolPtr, count * sizeof(*out), 0);
+	out = VID_TagAlloc(vid_modelPool, count * sizeof(*out), 0);
 	Com_DPrintf(DEBUG_RENDERER, "...surface edges: %i\n", count);
 
 	loadmodel->bsp.surfedges = out;
@@ -459,7 +459,7 @@ static void R_ModLoadPlanes (lump_t * l)
 	if (l->filelen % sizeof(*in))
 		Sys_Error("R_ModLoadPlanes: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
-	out = VID_TagAlloc(r_modelPoolPtr, count * 2 * sizeof(*out), 0);
+	out = VID_TagAlloc(vid_modelPool, count * 2 * sizeof(*out), 0);
 	Com_DPrintf(DEBUG_RENDERER, "...planes: %i\n", count);
 
 	loadmodel->bsp.planes = out;

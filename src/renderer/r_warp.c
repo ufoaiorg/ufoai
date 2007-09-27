@@ -114,7 +114,7 @@ static void SubdividePolygon (int numverts, float *verts)
 	}
 
 	/* add a point in the center to help keep warp valid */
-	poly = VID_TagAlloc(r_modelPoolPtr, sizeof(mBspPoly_t) + ((numverts - 4) + 2) * VERTEXSIZE * sizeof(float), 0);
+	poly = VID_TagAlloc(vid_modelPool, sizeof(mBspPoly_t) + ((numverts - 4) + 2) * VERTEXSIZE * sizeof(float), 0);
 	poly->next = warpface->polys;
 	warpface->polys = poly;
 	poly->numverts = numverts + 2;

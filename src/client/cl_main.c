@@ -112,7 +112,6 @@ struct memPool_s *vid_genericPool;	/**< also holds all the static models */
 struct memPool_s *vid_imagePool;
 struct memPool_s *vid_lightPool;	/**< lightmap - wiped with every new map */
 struct memPool_s *vid_modelPool;	/**< modeldata - wiped with every new map */
-struct memPool_s *r_modelPoolPtr;	/**< for loading static and map models into differnet pools @sa R_InitModels */
 /*====================================================================== */
 
 /**
@@ -1627,7 +1626,9 @@ void CL_InitAfter (void)
 
 	CL_LanguageInit();
 
-	R_InitModelsDynamic();
+	/* now make sure that all the precached models are stored until we quit the game
+	 * otherwise they would be freed with every map change */
+	R_SwitchModelMemPoolTag();
 }
 
 /**

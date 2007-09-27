@@ -357,38 +357,26 @@ void R_ModDrawNullModel (entity_t* e)
 }
 
 static int static_mod_numknown;
-
+#define MEM_TAG_STATIC_MODELS 1
 /**
- * @brief
- * @sa R_ShutdownModels
- * @sa R_InitModelsDynamic
+ * @brief After all static models are loaded, switch the pool tag for these models
+ * to not free them everytime R_ShutdownModels is called
+ * @sa CL_InitAfter
  */
-void R_InitModels (void)
+void R_SwitchModelMemPoolTag (void)
 {
-	/* this is for loading all the static models into the generic pool
-	 * because the vid_modelPool is wiped with every new map */
-	r_modelPoolPtr = vid_genericPool;
-	static_mod_numknown = 0;
-}
-
-/**
- * @brief This function set the r_modelPoolPtr to vid_modelPool once all the
- * static models are loaded
- * @sa R_InitModels
- */
-void R_InitModelsDynamic (void)
-{
-	r_modelPoolPtr = vid_modelPool;
 	static_mod_numknown = mod_numknown;
+	Mem_ChangeTag(vid_modelPool, 0, MEM_TAG_STATIC_MODELS);
+	Com_Printf("%i static models loaded\n", mod_numknown);
 }
 
 /**
- * @brief Frees the model pool
+ * @brief Frees the model pool (but only tag 0)
+ * @sa R_SwitchModelMemPoolTag
  */
 void R_ShutdownModels (void)
 {
-	if (vid_modelPool != r_modelPoolPtr)
-		Com_Printf("R_ShutdownModels: Warning, pool pointer mismatch\n");
+	/* don't free the static models with the tag MEM_TAG_STATIC_MODELS */
 	VID_FreeTags(vid_modelPool, 0);
 	VID_FreeTags(vid_lightPool, 0);
 	mod_numknown = static_mod_numknown;

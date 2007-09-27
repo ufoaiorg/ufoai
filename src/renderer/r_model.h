@@ -33,12 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_model_md3.h"
 #include "r_model_sp2.h"
 
-/** @brief This pool pointer is used to allocate model memory
- * @note This pointer first points to vid_genericPool - and after all the
- * static models are loaded, the pointer is switched to vid_modelPool that is
- * wiped with every new map */
-extern struct memPool_s *r_modelPoolPtr;
-
 /* Whole model */
 
 /**

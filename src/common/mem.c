@@ -98,7 +98,9 @@ static memPool_t *Mem_FindPool (const char *name)
 	return NULL;
 }
 
-
+/**
+ * @sa _Mem_DeletePool
+ */
 memPool_t *_Mem_CreatePool (const char *name, const char *fileName, const int fileLine)
 {
 	memPool_t *pool;
@@ -137,7 +139,11 @@ memPool_t *_Mem_CreatePool (const char *name, const char *fileName, const int fi
 	return pool;
 }
 
-
+/**
+ * @brief
+ * @sa _Mem_CreatePool
+ * @sa _Mem_FreePool
+ */
 uint32_t _Mem_DeletePool (struct memPool_s *pool, const char *fileName, const int fileLine)
 {
 	uint32_t size;
@@ -160,6 +166,9 @@ uint32_t _Mem_DeletePool (struct memPool_s *pool, const char *fileName, const in
 POOL AND TAG MEMORY ALLOCATION
 ==============================================================================*/
 
+/**
+ * @sa _Mem_FreePool
+ */
 uint32_t _Mem_Free (void *ptr, const char *fileName, const int fileLine)
 {
 	memBlock_t *mem;
@@ -247,6 +256,8 @@ uint32_t _Mem_FreeTag (struct memPool_s *pool, const int tagNum, const char *fil
 
 /**
  * @brief Free all items within a pool
+ * @sa _Mem_CreatePool
+ * @sa _Mem_DeletePool
  */
 uint32_t _Mem_FreePool (struct memPool_s *pool, const char *fileName, const int fileLine)
 {

@@ -270,13 +270,13 @@ static int R_OBJ_SecondPass (model_t *mod, void *buffer)
 			}
 
 			/* Memory allocation for vertexes. */
-			pface->vert_indices = (int *)VID_TagAlloc(r_modelPoolPtr, sizeof(int) * pface->num_elems, 0);
+			pface->vert_indices = (int *)VID_TagAlloc(vid_modelPool, sizeof(int) * pface->num_elems, 0);
 
 			if (mod->has_texCoords)
-				pface->uvw_indices = (int *)VID_TagAlloc(r_modelPoolPtr, sizeof(int) * pface->num_elems, 0);
+				pface->uvw_indices = (int *)VID_TagAlloc(vid_modelPool, sizeof(int) * pface->num_elems, 0);
 
 			if (mod->has_normals)
-				pface->norm_indices = (int *)VID_TagAlloc(r_modelPoolPtr, sizeof(int) * pface->num_elems, 0);
+				pface->norm_indices = (int *)VID_TagAlloc(vid_modelPool, sizeof(int) * pface->num_elems, 0);
 
 			/* Read face data. */
 			pbuf = buf;
