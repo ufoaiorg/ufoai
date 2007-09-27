@@ -998,6 +998,10 @@ console functions
 ===============================================================================
 */
 
+/**
+ * @brief Plays given soundfiles from console input
+ * @note Soundfiles override each other
+ */
 static void S_Play_f (void)
 {
 	int i = 1;
@@ -1010,6 +1014,9 @@ static void S_Play_f (void)
 	}
 }
 
+/**
+ * @brief Print all the loaded sound files to game console
+ */
 static void S_SoundList_f (void)
 {
 	int i;
