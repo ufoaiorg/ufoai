@@ -939,6 +939,8 @@ void Qcommon_Frame (void)
  * @brief
  * @sa Qcommon_Init
  * @sa Sys_Quit
+ * @note Don't call anything that depends on cvars, command system, or any other
+ * subsystem that is allocated in the mem pools and maybe already freed
  */
 void Qcommon_Shutdown (void)
 {
