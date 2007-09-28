@@ -466,10 +466,8 @@ base/models/aircraft/craft_weapon_sparrow/sparrowhawk.jpg | Creative Commons Att
 base/models/aircraft/craft_weapon_sparrow/sparrowhawk.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
 base/models/aircraft/craft_weapon_sparrow/sparrowhawk_rack.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
 base/models/aircraft/craft_weapon_sparrow/sparrowhawk_rack.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
-base/models/aircraft/craft_weapon_tr20/tr20.3ds | GNU General Public License v2.0 | Ryan Span (Winter) - model, Willem Sitters - uvmap + texture
 base/models/aircraft/craft_weapon_tr20/tr20.jpg | GNU General Public License v2.0 | Willem Sitters
 base/models/aircraft/craft_weapon_tr20/tr20.md2 | GNU General Public License v2.0 | Ryan Span (Winter)
-base/models/aircraft/craft_weapon_tr20/tr20.obj | GNU General Public License v2.0 | Ryan Span (Winter) - model, Willem Sitters - uvmap + texture
 base/models/aircraft/craft_weapon_tr20/tr20_1.jpg | GNU General Public License v2.0 | Willem Sitters
 base/models/aircraft/drop_firebird/firebird.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/drop_firebird/firebird.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
@@ -587,15 +585,12 @@ base/models/aliens/tamanmedium/body01.tag | GPL version 2 | Lukas "rastaman_bey"
 base/models/aliens/tamanmedium/head01.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/tamanmedium/head01.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/animals/crocodile/Readme.txt | GPL | Willem "Sitters"
-base/models/animals/crocodile/croc.3ds | GPL | Willem "Sitters"
 base/models/animals/crocodile/croc.jpg | GPL | Willem "Sitters"
 base/models/animals/crocodile/croc.md2 | GPL | Willem "Sitters"
-base/models/animals/crocodile/croc.obj | GPL | Willem "Sitters"
 base/models/animals/crocodile/croc.tga | GPL | Willem "Sitters"
 base/models/animals/rat/rat.jpg | GPL | Willen "sitters"
 base/models/animals/rat/rat.md2 | GPL | Willen "sitters"
 base/models/animals/rat/rat.mtl | GPL | Willen "sitters"
-base/models/animals/rat/rat.obj | GPL | Willen "sitters"
 base/models/civilians/female/body01.anm | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/civilians/female/body01.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/civilians/female/body01.tag | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
