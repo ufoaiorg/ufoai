@@ -3907,7 +3907,7 @@ tech rs_craft_weapon_tr20
 	producetime	100
 
 	mdl_top		"aircraft/craft_weapon_tr20/tr20"
-	image_top	"techs/craft_weapon_tr20"
+	//image_top	"techs/craft_weapon_tr20"
 }
 
 tech rs_craft_ammo_tr20
@@ -4009,7 +4009,8 @@ tech rs_craft_el_fuelpod
 	time		0
 	producetime	80
 
-	image_top	"techs/craft_electronics_fuelpod"
+	mdl_top		"aircraft/craft_item_fuel/fuel"
+	//image_top	"techs/craft_electronics_fuelpod"
 }
 
 //========================
