@@ -404,28 +404,19 @@ qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, int container, int
 	for (; ic->next; ic = ic->next)
 		if (ic->next->x == x && ic->next->y == y) {
 			cacheItem = ic->next->item;
-			
-			if (ignore_type && ic->next->item.amount > 1) {
-				/* Remove 'em all */
-				old = invUnused;
-				invUnused = ic->next;
-				ic->next = ic->next->next;
-				invUnused->next = old;
-				return qtrue;
-			} else {
-				if ((container == CSI->idFloor || container == CSI->idEquip)
-				 && ic->next->item.amount > 1) {
-					ic->next->item.amount--;
-					Com_DPrintf(DEBUG_SHARED, "Com_RemoveFromInventoryIgnore: Amount of '%s': %i\n",
-						CSI->ods[ic->next->item.t].name, ic->next->item.amount);
-					return qtrue;
-				}
-				old = invUnused;
-				invUnused = ic->next;
-				ic->next = ic->next->next;
-				invUnused->next = old;
+			if ((container == CSI->idFloor || container == CSI->idEquip)
+			 && ic->next->item.amount > 1
+			 && !ignore_type) {
+				ic->next->item.amount--;
+				Com_DPrintf(DEBUG_SHARED, "Com_RemoveFromInventoryIgnore: Amount of '%s': %i\n",
+					CSI->ods[ic->next->item.t].name, ic->next->item.amount);
 				return qtrue;
 			}
+			old = invUnused;
+			invUnused = ic->next;
+			ic->next = ic->next->next;
+			invUnused->next = old;
+			return qtrue;
 		}
 	return qfalse;
 }
