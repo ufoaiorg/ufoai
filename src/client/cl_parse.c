@@ -1000,12 +1000,17 @@ static void CL_ActorStats (struct dbuffer *msg)
 
 	number = NET_ReadShort(msg);
 	le = LE_Get(number);
-
 	if (!le) {
 		Com_Printf("CL_ActorStats: LE with number %i not found\n", number);
 		return;
 	}
-	if (le->type != ET_ACTOR && le->type != ET_ACTOR2x2) {
+
+	switch (le->type) {
+	case ET_ACTORHIDDEN:
+	case ET_ACTOR:
+	case ET_ACTOR2x2:
+		break;
+	default:
 		Com_Printf("CL_ActorStats: LE (%i) not an actor (type: %i)\n", number, le->type);
 		return;
 	}
@@ -1038,9 +1043,19 @@ static void CL_ActorStateChange (struct dbuffer *msg)
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_STATECHANGE], &number, &state);
 
 	le = LE_Get(number);
-	if (!le || (le->type != ET_ACTOR && le->type != ET_ACTOR2x2)) {
+	if (!le) {
+		Com_Printf("Could not get le with id %i\n", number);
+		return;
+	}
+
+	switch (le->type) {
+	case ET_ACTORHIDDEN:
+	case ET_ACTOR:
+	case ET_ACTOR2x2:
+		break;
+	default:
 		Com_Printf("StateChange message ignored... LE not found or not an actor (number: %i, state: %i, type: %i)\n",
-			number, state, le ? le->type : -1);
+			number, state, le->type);
 		return;
 	}
 

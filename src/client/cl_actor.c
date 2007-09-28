@@ -2343,7 +2343,17 @@ void CL_ActorDoMove (struct dbuffer *msg)
 	number = NET_ReadShort(msg);
 	/* get le */
 	le = LE_Get(number);
-	if (!le || (le->type != ET_ACTOR && le->type != ET_ACTOR2x2)) {
+	if (!le) {
+		Com_Printf("CL_ActorDoMove: Could not get LE with id %i\n", number);
+		return;
+	}
+
+	switch (le->type) {
+	case ET_ACTORHIDDEN:
+	case ET_ACTOR:
+	case ET_ACTOR2x2:
+		break;
+	default:
 		Com_Printf("Can't move, LE doesn't exist or is not an actor (number: %i, type: %i)\n",
 			number, le ? le->type : -1);
 		return;
@@ -2426,7 +2436,17 @@ void CL_ActorDoTurn (struct dbuffer *msg)
 
 	/* get le */
 	le = LE_Get(entnum);
-	if (!le || (le->type != ET_ACTOR && le->type != ET_ACTOR2x2)) {
+	if (!le) {
+		Com_Printf("CL_ActorDoTurn: Could not get LE with id %i\n", entnum);
+		return;
+	}
+
+	switch (le->type) {
+	case ET_ACTORHIDDEN:
+	case ET_ACTOR:
+	case ET_ACTOR2x2:
+		break;
+	default:
 		Com_Printf("Can't turn, LE doesn't exist or is not an actor (number: %i, type: %i)\n", entnum, le ? le->type : -1);
 		return;
 	}
@@ -2581,7 +2601,14 @@ static void CL_ActorHit (le_t *le, vec3_t impact, int normal)
 	if (!le) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_ActorHit: Can't spawn particles, LE doesn't exist\n");
 		return;
-	} else if (le->type != ET_ACTOR2x2 && le->type != ET_ACTOR) {
+	}
+
+	switch (le->type) {
+	case ET_ACTORHIDDEN:
+	case ET_ACTOR:
+	case ET_ACTOR2x2:
+		break;
+	default:
 		Com_Printf("CL_ActorHit: Can't spawn particles, LE is not an actor (type: %i)\n", le->type);
 		return;
 	}
@@ -2645,12 +2672,16 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 
 	/* do actor related stuff */
 	if (!le) {
-		/* it's OK, the actor is not visible */
-		/* FIXME: Really? What about EV_ACTOR_SHOOT_HIDDEN */
+		Com_Printf("CL_ActorDoShoot: Could not get LE with id: %i\n", number);
 		return;
 	}
 
-	if (le->type != ET_ACTOR && le->type != ET_ACTOR2x2) {
+	switch (le->type) {
+	case ET_ACTORHIDDEN:
+	case ET_ACTOR:
+	case ET_ACTOR2x2:
+		break;
+	default:
 		Com_Printf("Can't shoot, LE not an actor (type: %i)\n", le->type);
 		return;
 	}
@@ -2782,7 +2813,12 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 		/* it's OK, the actor not visible */
 		return;
 
-	if (le->type != ET_ACTOR && le->type != ET_ACTOR2x2) {
+	switch (le->type) {
+	case ET_ACTORHIDDEN:
+	case ET_ACTOR:
+	case ET_ACTOR2x2:
+		break;
+	default:
 		Com_Printf("CL_ActorStartShoot: LE (%i) not an actor (type: %i)\n", number, le->type);
 		return;
 	}
@@ -2833,13 +2869,23 @@ void CL_ActorDie (struct dbuffer *msg)
 	if (le->entnum != number) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_ActorDie: Can't kill, LE doesn't exist\n");
 		return;
-	} else if (le->type != ET_ACTOR2x2 && le->type != ET_ACTOR) {
+	}
+
+	switch (le->type) {
+	case ET_ACTORHIDDEN:
+	case ET_ACTOR:
+	case ET_ACTOR2x2:
+		break;
+	default:
 		Com_Printf("CL_ActorDie: Can't kill, LE is not an actor (type: %i)\n", le->type);
 		return;
-	} else if (le->state & STATE_DEAD) {
+	}
+
+	if (le->state & STATE_DEAD) {
 		Com_Printf("CL_ActorDie: Can't kill, actor already dead\n");
 		return;
-	}/* else if (!le->inuse) {
+	}
+	/* else if (!le->inuse) {
 		* LE not in use condition normally arises when CL_EntPerish has been
 		* called on the le to hide it from the client's sight.
 		* Probably can return without killing unused LEs, but testing reveals
