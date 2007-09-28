@@ -491,9 +491,6 @@ base/models/aircraft/inter_saracen/saracen.md2 | GNU General Public License v2.0
 base/models/aircraft/inter_saracen/saracen_highpoly.blend | GNU General Public License v2.0 | David Townsend (Psawhn) - High-detailed model based on 'saracen' model and texture by Ryan Span (Winter) and  Daniel Holden (Yoshiboy).
 base/models/aircraft/inter_saracen/saracen_interceptor_flying.md2 | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
 base/models/aircraft/inter_saracen/saracen_lowpoly.blend | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
-base/models/aircraft/inter_stingray/sources/stingray_hi_detail_texture_FINAL.blend | GNU General Public License v2.0 | David Townsend (Psawhn)
-base/models/aircraft/inter_stingray/sources/stingray_lopo_flightmodel.blend | GNU General Public License v2.0 | David Townsend (Psawhn)
-base/models/aircraft/inter_stingray/sources/stingray_texture_hires_release.xcf.bz2 | GNU General Public License v2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/stingray.jpg | GNU General Public License v2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/stingray_flying.md2 | GNU General Public License v2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/stingray_landed.md2 | GNU General Public License v2.0 | David Townsend (Psawhn)
@@ -532,7 +529,6 @@ base/models/aircraft/ufo_supply/ufo_supply_wing.jpg | GNU General Public License
 base/models/aircraft/ufo_supply/ufo_supply_wing_left.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/ufo_supply/ufo_supply_wing_right.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aliens/bloodspider/bloodspider.anm | Creative Commons Attribution-Share Alike 3.0 | Basic model+all animations: Werner Höhrer (hoehrer); Model fixups: Ryan Span (Winter)
-base/models/aliens/bloodspider/bloodspider.blend | Creative Commons Attribution-Share Alike 3.0 | Basic model+all animations: Werner Höhrer (hoehrer); Model fixups: Ryan Span (Winter)
 base/models/aliens/bloodspider/bloodspider.jpg | Creative Commons Attribution-Share Alike 3.0 | Jake Gustafson (ProtoArmor)
 base/models/aliens/bloodspider/bloodspider.md2 | Creative Commons Attribution-Share Alike 3.0 | Basic model+all animations: Werner Höhrer (hoehrer); Model fixups: Ryan Span (Winter)
 base/models/aliens/bloodspider/bloodspider.tag | Creative Commons Attribution-Share Alike 3.0 | Basic model+all animations: Werner Höhrer (hoehrer); Model fixups: Ryan Span (Winter)
@@ -736,7 +732,6 @@ base/models/geoscape/ufo_scout.md2 | GNU General Public License 2.0 | Willem Sit
 base/models/geoscape/ufo_scout.tga | GNU General Public License 2.0 | Willem Sitters | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
 base/models/geoscape/ufo_supply.md2 | GNU General Public License 2.0 | Willem Sitters | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
 base/models/geoscape/ufo_supply.tga | GNU General Public License 2.0 | Willem Sitters | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
-base/models/objects/base/minicrane/minicrane.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/base/minicrane/minicrane.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/base/minicrane/minicrane.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/base/minicrane/minicrane_UVW.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
@@ -744,7 +739,6 @@ base/models/objects/boat/canoe.md2 | GPL | Willem "Sitters"
 base/models/objects/boat/canoe.tga | GPL | Willem "Sitters"
 base/models/objects/cars/4x4/4x4.jpg |  | Olivier "Kracken" Alloschery
 base/models/objects/cars/4x4/4x4.md2 |  | Olivier "Kracken" Alloschery
-base/models/objects/cars/4x4/4x4_avecailes.blend |  | Olivier "Kracken" Alloschery
 base/models/objects/cars/4x4/4x4_t.md2 |  | Olivier "Kracken" Alloschery
 base/models/objects/cars/4x4/cars_tires.jpg |  | Olivier "Kracken" Alloschery
 base/models/objects/cars/car4/Readme.txt | GPL | Willem "Sitters"
@@ -782,10 +776,8 @@ base/models/objects/city/lantern/lantern.md2 | GPL | Willem "Sitters"
 base/models/objects/city/lantern/lantern.png | GPL | Willem "Sitters"
 base/models/objects/city/mailbox/mailbox.md2 | GPL | Willem "Sitters"
 base/models/objects/city/mailbox/mailbox.png | GPL | Willem "Sitters"
-base/models/objects/city/parkbench/parkbench.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/parkbench/parkbench.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/parkbench/parkbench.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/city/parktable/parktable.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/parktable/parktable.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/parktable/parktable.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/statues/dragon.md2 | GPL | Willem "Sitters"
@@ -804,7 +796,6 @@ base/models/objects/city/trafficsign/sign2.png | GPL | Willem "Sitters"
 base/models/objects/city/trafficsign/sign2_1.png | GPL | Willem "Sitters"
 base/models/objects/city/trafficsign/sign3.png | GPL | Willem "Sitters"
 base/models/objects/city/trafficsign/sign4.png | GPL | Willem "Sitters"
-base/models/objects/city/watertower/watertower.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/watertower/watertower.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/watertower/watertower.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/watertower/watertower1.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
@@ -824,54 +815,41 @@ base/models/objects/construct/mixer/mixer.md2 | GPL | Willem "Sitters"
 base/models/objects/construct/mixer/mixer.tga | GPL | Willem "Sitters"
 base/models/objects/furniture/campbed/campbed.md2 | GPL | Willem "Sitters"
 base/models/objects/furniture/campbed/campbed.tga | GPL | Willem "Sitters"
-base/models/objects/furniture/coffeemaker/coffeemaker.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/coffeemaker/coffeemaker.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/coffeemaker/coffeemaker.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/comptable/comptable.md2 | GPL | Willem "Sitters"
 base/models/objects/furniture/comptable/comptable.png | GPL | Willem "Sitters"
 base/models/objects/furniture/curtains/curtain.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/curtains/curtain_long.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/furniture/curtains/curtains.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/curtains/curtains.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/curtains/curtains.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/furniture/deerhead/deerhead.blend | GNU GPL - see License.txt for details | Werner Höhrer (hoehrer) | photo by Heinz Seehagel (22.9.2004) http://species.wikimedia.org/wiki/Image:Rothirsch.jpg, model by grumbel http://undone.clanlib.org/~grumbel/mediarepo/show.cgi?md5=c14eb42d4d1f0be06277a7221bf6db62. See License.txt for details
 base/models/objects/furniture/deerhead/deerhead.jpg | GNU GPL - see License.txt for details | Werner Höhrer (hoehrer) | photo by Heinz Seehagel (22.9.2004) http://species.wikimedia.org/wiki/Image:Rothirsch.jpg, model by grumbel http://undone.clanlib.org/~grumbel/mediarepo/show.cgi?md5=c14eb42d4d1f0be06277a7221bf6db62. See License.txt for details
 base/models/objects/furniture/deerhead/deerhead.md2 | GNU GPL - see License.txt for details | Werner Höhrer (hoehrer) | photo by Heinz Seehagel (22.9.2004) http://species.wikimedia.org/wiki/Image:Rothirsch.jpg, model by grumbel http://undone.clanlib.org/~grumbel/mediarepo/show.cgi?md5=c14eb42d4d1f0be06277a7221bf6db62. See License.txt for details
 base/models/objects/furniture/deerhead/deerhead_UVW.tga | GNU GPL - see License.txt for details | Werner Höhrer (hoehrer) | photo by Heinz Seehagel (22.9.2004) http://species.wikimedia.org/wiki/Image:Rothirsch.jpg, model by grumbel http://undone.clanlib.org/~grumbel/mediarepo/show.cgi?md5=c14eb42d4d1f0be06277a7221bf6db62. See License.txt for details
 base/models/objects/furniture/deerhead/license.txt | GNU GPL - see License.txt for details | Werner Höhrer (hoehrer) | photo by Heinz Seehagel (22.9.2004) http://species.wikimedia.org/wiki/Image:Rothirsch.jpg, model by grumbel http://undone.clanlib.org/~grumbel/mediarepo/show.cgi?md5=c14eb42d4d1f0be06277a7221bf6db62. See License.txt for details
-base/models/objects/furniture/desk/desk.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/desk/desk.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/desk/desk.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/furniture/desklamp/desklamp.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/desklamp/desklamp.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/desklamp/desklamp.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/dishes/cup.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/furniture/dishes/dishes.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/dishes/dishes.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/dishes/fork.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/dishes/knive.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/dishes/plate.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/furniture/emergencyexit/emergencyexit.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/emergencyexit/emergencyexit.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/emergencyexit/emergencyexit.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/furniture/fireext/fireext.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/fireext/fireext.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/fireext/fireext.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/furniture/fireext2/fireext2.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/fireext2/fireext2.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/fireext2/fireext2.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/fireext3/fireext3.md2 | GPL | Willem "Sitters"
 base/models/objects/furniture/fireext3/fireext3.png | GPL | Willem "Sitters"
-base/models/objects/furniture/fireplace/fireplace.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/fireplace/fireplace.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/fireplace/fireplace.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/furniture/flowerpot2/flowerpot2.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/flowerpot2/flowerpot2.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/flowerpot2/flowerpot2.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/furniture/pitchfork/pitchfork.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/pitchfork/pitchfork.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/pitchfork/pitchfork.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/furniture/radiator/radiator.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/radiator/radiator.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/radiator/radiator.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/gascylinder/gascylinder.md2 | GPL | Willem "Sitters"
