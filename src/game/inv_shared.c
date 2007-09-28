@@ -253,7 +253,7 @@ invList_t *Com_SearchInInventory (const inventory_t* const i, int container, int
  * @param[in] container Container in given inventory definition, where the new item will be stored.
  * @param[in] x The x location in the container.
  * @param[in] y The x location in the container.
- * @param[in] amount How many items of this type shoult be added.
+ * @param[in] amount How many items of this type should be added.
  * @sa Com_RemoveFromInventory
  * @sa Com_RemoveFromInventoryIgnore
  */
@@ -266,7 +266,7 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, int container
 
 	if (!invUnused)
 		Sys_Error("Com_AddToInventory: No free inventory space!\n");
-	
+
 	if (amount <= 0)
 		return NULL;
 
