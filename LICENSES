@@ -1316,14 +1316,6 @@ base/models/weapons/bolterrifle/bolterrifle_clip.blend | GNU General Public Lice
 base/models/weapons/bolterrifle/bolterrifle_clip.jpg | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | clip model based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/bolterrifle/bolterrifle_clip.md2 | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | clip model based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/bolterrifle/bolterrifle_v2_UVW.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/bolterrifle/old/bolterrifle.3DS | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/bolterrifle/old/bolterrifle.max | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/bolterrifle/old/bolterrifle_UVW.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/bolterrifle/old/bolterrifle_v2.max | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/bolterrifle/old/clip.3DS | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/bolterrifle/old/clip.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/bolterrifle/old/clip.max | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/bolterrifle/old/clip_UVW.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/chaingun/chaingun.jpg | Creative Commons Attribution-ShareAlike 3.0 | Nathan : INC (Kaeau)
 base/models/weapons/chaingun/chaingun.md2 | Creative Commons Attribution-ShareAlike 3.0 | Nathan : INC (Kaeau)
 base/models/weapons/chaingun/chaingun_ammo.jpg | Creative Commons Attribution-ShareAlike 3.0 | Nathan : INC (Kaeau)
@@ -1381,10 +1373,6 @@ base/models/weapons/laserheavy/laserheavy.blend | GNU General Public License v2.
 base/models/weapons/laserheavy/laserheavy.jpg | GNU General Public License v2.0 | Jake Gustafson (ProtoArmor)
 base/models/weapons/laserheavy/laserheavy.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/laserheavy/laserheavy_UVW.tga | GNU General Public License v2.0 | Jake Gustafson (ProtoArmor)
-base/models/weapons/laserheavy/old/heavylaser.obj | GNU General Public License v2.0 | Lukas Beyeler (Rasta), modified by Ceobohga
-base/models/weapons/laserheavy/old/laserheavy.jpg | GNU General Public License v2.0 | Ceobohga | texture based on base/models/weapons/laserrifle/ texture by Lukas Beyeler (Rasta)
-base/models/weapons/laserheavy/old/laserheavy.max | GNU General Public License v2.0 | Lukas Beyeler (Rasta), modified by Ceobohga
-base/models/weapons/laserheavy/old/laserheavy.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta), modified by Ceobohga
 base/models/weapons/laserpistol/laserpistol.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/laserpistol/laserpistol.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/laserpistol/laserpistol_clip.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
@@ -1437,8 +1425,6 @@ base/models/weapons/pistol2/pistol2.psd | GNU General Public License v2.0 | Dani
 base/models/weapons/pistol2/pistol2_clip.jpg | GNU General Public License v2.0 | Daniel Holden (Yoshiboy)
 base/models/weapons/pistol2/pistol2_clip.md2 | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
 base/models/weapons/pistol2/pistol2_clip_UVW.tga | GNU General Public License v2.0 | Daniel Holden (Yoshiboy)
-base/models/weapons/plasblade/old/plasblade.3DS | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/plasblade/old/plasblade.max | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/plasblade/plasblade.blend | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/plasblade/plasblade.jpg | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/plasblade/plasblade.md2 | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
