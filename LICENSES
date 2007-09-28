@@ -549,14 +549,10 @@ base/models/aliens/ortnok/head02.jpg | GPL version 2 | Lukas "rastaman_bey" Beye
 base/models/aliens/ortnok/head02.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/ortnok/head03.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/ortnok/head03.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnoklight/alien2_light.max | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/ortnoklight/alien2_light_body_UVW.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/ortnoklight/alien2_light_body_UVWv2.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/ortnoklight/alien2_light_bodyv2.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnoklight/alien2_light_rig.max | GPL version 2 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnoklight/alien2_lightv2.max | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/ortnoklight/armor.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnoklight/armor.max | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/ortnoklight/body.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/ortnoklight/body01.anm | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/ortnoklight/body01.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
@@ -567,12 +563,8 @@ base/models/aliens/ortnoklight/head02.jpg | GPL version 2 | Lukas "rastaman_bey"
 base/models/aliens/ortnoklight/head02.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/ortnoklight/head03.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/ortnoklight/head03.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnokmedium/alien2_medium.max | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/ortnokmedium/alien2_medium_UVW.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnokmedium/alien2_medium_UVW.max | GPL version 2 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnokmedium/alien2_medium_rig.max | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/ortnokmedium/armor.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnokmedium/armor.max | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/ortnokmedium/body.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/ortnokmedium/body01.anm | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/ortnokmedium/body01.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
@@ -583,7 +575,6 @@ base/models/aliens/ortnokmedium/head02.jpg | GPL version 2 | Lukas "rastaman_bey
 base/models/aliens/ortnokmedium/head02.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/ortnokmedium/head03.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/ortnokmedium/head03.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/ortnokmedium/head1.max | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/ortnokmedium/head1_UVW.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/shevaar/body01.anm | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/shevaar/body01.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
@@ -600,22 +591,15 @@ base/models/aliens/taman/body01b.jpg | GPL version 2 | Lukas "rastaman_bey" Beye
 base/models/aliens/taman/head01.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/taman/head01a.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/tamanlight/alien4_UVW.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/tamanlight/alien4_light.max | GPL version 2 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/tamanlight/alien4_light_rig.max | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/tamanlight/armor.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/tamanlight/armor.max | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/tamanlight/body.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/tamanlight/body01.anm | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/tamanlight/body01.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/tamanlight/body01.tag | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/tamanlight/head01.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/tamanlight/head01.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/tamanlight/head1.max | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/tamanlight/head1_UVW.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/tamanmedium/alien4_medium.max | GPL version 2 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/tamanmedium/alien4_medium_rig.max | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/tamanmedium/armor.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/tamanmedium/armor.max | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/tamanmedium/body.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/tamanmedium/body01.anm | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/tamanmedium/body01.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
@@ -623,7 +607,6 @@ base/models/aliens/tamanmedium/body01.tag | GPL version 2 | Lukas "rastaman_bey"
 base/models/aliens/tamanmedium/body_UVW.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/tamanmedium/head01.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/tamanmedium/head01.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
-base/models/aliens/tamanmedium/head1.max | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/tamanmedium/head1_UVW.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/animals/crocodile/Readme.txt | GPL | Willem "Sitters"
 base/models/animals/crocodile/croc.3ds | GPL | Willem "Sitters"
