@@ -458,13 +458,10 @@ base/models/aircraft/craft_item_fuel/fuel.md2 | GNU General Public License v2.0 
 base/models/aircraft/craft_item_fuel/fuel.tga | GNU General Public License v2.0 | David Townsend (Psawhn)
 base/models/aircraft/craft_item_target/craft_item_target.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/craft_item_target/craft_item_target.tga | GNU General Public License 2.0 | Willem "Sitters"
-base/models/aircraft/craft_weapon_particle/pbw.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
 base/models/aircraft/craft_weapon_particle/pbw.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
 base/models/aircraft/craft_weapon_particle/pbw.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
-base/models/aircraft/craft_weapon_shiva/shiva.blend | Creative Commons License 3.0 Attribution-ShareAlike | Werner Hoehrer (hoehrer) | Shiva Rotary Cannon model based on chaingun model by kaeau, see base/models/weapons/chaingun
 base/models/aircraft/craft_weapon_shiva/shiva.jpg | Creative Commons License 3.0 Attribution-ShareAlike | Werner Hoehrer (hoehrer) | Shiva Rotary Cannon model based on chaingun model by kaeau, see base/models/weapons/chaingun
 base/models/aircraft/craft_weapon_shiva/shiva.md2 | Creative Commons License 3.0 Attribution-ShareAlike | Werner Hoehrer (hoehrer) | Shiva Rotary Cannon model based on chaingun model by kaeau, see base/models/weapons/chaingun
-base/models/aircraft/craft_weapon_sparrow/sparrowhawk.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
 base/models/aircraft/craft_weapon_sparrow/sparrowhawk.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
 base/models/aircraft/craft_weapon_sparrow/sparrowhawk.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
 base/models/aircraft/craft_weapon_sparrow/sparrowhawk_rack.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
@@ -480,7 +477,6 @@ base/models/aircraft/drop_firebird/firebird_glass.jpg | GNU General Public Licen
 base/models/aircraft/drop_firebird/firebird_glass.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/drop_firebird/firebird_top.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/drop_firebird/firebird_top.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/inter_dragon/inter_dragon.blend | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/inter_dragon/inter_dragon.jpg | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/inter_dragon/inter_dragon.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/inter_dragon/inter_dragon_gear.jpg | GNU General Public License 2.0 | Willem "Sitters"
@@ -488,13 +484,10 @@ base/models/aircraft/inter_dragon/inter_dragon_gear.md2 | GNU General Public Lic
 base/models/aircraft/inter_saracen/old/interceptor.rar | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
 base/models/aircraft/inter_saracen/saracen.jpg | GNU General Public License v2.0 | Daniel Holden (Yoshiboy) - minor modifications by David Townsend (Psawhn)
 base/models/aircraft/inter_saracen/saracen.md2 | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
-base/models/aircraft/inter_saracen/saracen_highpoly.blend | GNU General Public License v2.0 | David Townsend (Psawhn) - High-detailed model based on 'saracen' model and texture by Ryan Span (Winter) and  Daniel Holden (Yoshiboy).
 base/models/aircraft/inter_saracen/saracen_interceptor_flying.md2 | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
-base/models/aircraft/inter_saracen/saracen_lowpoly.blend | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
 base/models/aircraft/inter_stingray/stingray.jpg | GNU General Public License v2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/stingray_flying.md2 | GNU General Public License v2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/stingray_landed.md2 | GNU General Public License v2.0 | David Townsend (Psawhn)
-base/models/aircraft/ufo_condor/ufo_condor.blend | GNU General Public License v2.0 | Werner Hoehrer (hoehrer) | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
 base/models/aircraft/ufo_condor/ufo_condor.jpg | GNU General Public License v2.0 | Werner Hoehrer (hoehrer) | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
 base/models/aircraft/ufo_condor/ufo_condor.md2 | GNU General Public License v2.0 | Werner Hoehrer (hoehrer) | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
 base/models/aircraft/ufo_fighter/ufo_fighter_closed.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
@@ -507,7 +500,6 @@ base/models/aircraft/ufo_fighter/ufo_fighter_upper.jpg | GNU General Public Lice
 base/models/aircraft/ufo_fighter/ufo_fighter_upper.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/ufo_fighter/ufo_fighter_wings.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/ufo_fighter/ufo_fighter_wings.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/ufo_harvester/ufo_harvester.blend | GNU General Public License v2.0 | Werner Hoehrer (hoehrer) | Model based on the harvester05.map made by SparX Beyler, see base/maps/harvester05.map
 base/models/aircraft/ufo_harvester/ufo_harvester.jpg | GNU General Public License v2.0 | Werner Hoehrer (hoehrer) | Model based on the harvester05.map made by SparX Beyler, see base/maps/harvester05.map
 base/models/aircraft/ufo_harvester/ufo_harvester.md2 | GNU General Public License v2.0 | Werner Hoehrer (hoehrer) | Model based on the harvester05.map made by SparX Beyler, see base/maps/harvester05.map
 base/models/aircraft/ufo_harvester/ufo_harvester.xcf.bz2 | GNU General Public License v2.0 | Werner Hoehrer (hoehrer) | Model based on the harvester05.map made by SparX Beyler, see base/maps/harvester05.map
@@ -610,7 +602,6 @@ base/models/animals/crocodile/croc.jpg | GPL | Willem "Sitters"
 base/models/animals/crocodile/croc.md2 | GPL | Willem "Sitters"
 base/models/animals/crocodile/croc.obj | GPL | Willem "Sitters"
 base/models/animals/crocodile/croc.tga | GPL | Willem "Sitters"
-base/models/animals/rat/rat.blend | GPL | Animations: Werner Höhrer (hoehrer) Model+Texture: Willem (sitters) | Model+Textures: Willem (sitters)
 base/models/animals/rat/rat.jpg | GPL | Willen "sitters"
 base/models/animals/rat/rat.md2 | GPL | Willen "sitters"
 base/models/animals/rat/rat.mtl | GPL | Willen "sitters"
@@ -909,7 +900,6 @@ base/models/objects/trucks/watertruck/watertruck.tga | GPL | Willem "Sitters"
 base/models/objects/vegi/banana/Readme.txt | GPL | Willem "Sitters"
 base/models/objects/vegi/banana/banana.md2 | GPL | Willem "Sitters"
 base/models/objects/vegi/banana/banana.tga | GPL | Willem "Sitters"
-base/models/objects/vegi/buxus/buxus.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/vegi/buxus/buxus.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/vegi/buxus/buxus.png |  | Original by  Jerzy Opiola, transparency by Werner Höhrer (hoehrer) | photo by Jerzy Opiola http://commons.wikimedia.org/wiki/Image:Buxus_sempervirens_2.jpg
 base/models/objects/vegi/fern/Readme.txt | GPL | Willem "Sitters"
@@ -1269,11 +1259,8 @@ base/models/weapons/assault/assault_clip.jpg | GNU General Public License v2.0 |
 base/models/weapons/assault/assault_clip.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/binocs/binocs.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/binocs/binocs.md2 | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/models/weapons/binocs/ir_device_07_unwrapped_2.blend | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/models/weapons/binocs/ir_device_08_baked_6.blend | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/bolterrifle/bolterrifle.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/bolterrifle/bolterrifle.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/bolterrifle/bolterrifle_clip.blend | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | clip model based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/bolterrifle/bolterrifle_clip.jpg | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | clip model based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/bolterrifle/bolterrifle_clip.md2 | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | clip model based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/bolterrifle/bolterrifle_v2_UVW.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
@@ -1281,7 +1268,6 @@ base/models/weapons/chaingun/chaingun.jpg | Creative Commons Attribution-ShareAl
 base/models/weapons/chaingun/chaingun.md2 | Creative Commons Attribution-ShareAlike 3.0 | Nathan : INC (Kaeau)
 base/models/weapons/chaingun/chaingun_ammo.jpg | Creative Commons Attribution-ShareAlike 3.0 | Nathan : INC (Kaeau)
 base/models/weapons/chaingun/chaingun_ammo.md2 | Creative Commons Attribution-ShareAlike 3.0 | Nathan : INC (Kaeau)
-base/models/weapons/electrolaser/electrolaser.blend | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/electrolaser/electrolaser.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/electrolaser/electrolaser.md2 | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/flamer/flamer.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
@@ -1314,7 +1300,6 @@ base/models/weapons/grenl/grenl_plasma_clip.md2 | GNU General Public License v2.
 base/models/weapons/incgren/incgren.md2 | GNU General Public License v2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/incgren/incgren.obj | GNU General Public License v2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/incgren/incgren.tga | GNU General Public License v2.0 | Denis (De_Nis / tdtv / Денис)
-base/models/weapons/irgoggles/irgoggles.blend | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/irgoggles/irgoggles.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/irgoggles/irgoggles.md2 | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/kerrblade/kerrblade.3DS | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
@@ -1323,11 +1308,9 @@ base/models/weapons/kerrblade/kerrblade.md2 | GNU General Public License v2.0 | 
 base/models/weapons/kerrblade/kerrblade_UVW.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/knife/knife.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/knife/knife.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/knifemono/knifemono.blend | GNU General Public License v2.0 | Ryan Span (Winter), Lukas Beyeler (Rasta) | Texture is a mix of base/models/weapons/knife/ texture by Lukas Beyler (Rasta) and base/models/weapons/kerrblade/ texture by Ryan Span (Winter)
 base/models/weapons/knifemono/knifemono.jpg | GNU General Public License v2.0 | Ryan Span (Winter), Lukas Beyeler (Rasta) | Texture is a mix of base/models/weapons/knife/ texture by Lukas Beyler (Rasta) and base/models/weapons/kerrblade/ texture by Ryan Span (Winter)
 base/models/weapons/knifemono/knifemono.md2 | GNU General Public License v2.0 | Ryan Span (Winter), Lukas Beyeler (Rasta) | Texture is a mix of base/models/weapons/knife/ texture by Lukas Beyler (Rasta) and base/models/weapons/kerrblade/ texture by Ryan Span (Winter)
 base/models/weapons/knifemono/old/knife5.wings | GNU General Public License v2.0 | Ryan Span (Winter), Lukas Beyeler (Rasta) | Texture is a mix of base/models/weapons/knife/ texture by Lukas Beyler (Rasta) and base/models/weapons/kerrblade/ texture by Ryan Span (Winter)
-base/models/weapons/laserheavy/laserheavy.blend | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/laserheavy/laserheavy.jpg | GNU General Public License v2.0 | Jake Gustafson (ProtoArmor)
 base/models/weapons/laserheavy/laserheavy.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/laserheavy/laserheavy_UVW.tga | GNU General Public License v2.0 | Jake Gustafson (ProtoArmor)
@@ -1339,7 +1322,6 @@ base/models/weapons/laserrifle/laserrifle.jpg | GNU General Public License v2.0 
 base/models/weapons/laserrifle/laserrifle.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/laserrifle/laserrifle_clip.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/laserrifle/laserrifle_clip.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/machinegun/machinegun.blend | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
 base/models/weapons/machinegun/machinegun.jpg | Creative Commons Attribution-ShareAlike 3.0 | Daniel Holden (Yoshiboy)
 base/models/weapons/machinegun/machinegun.md2 | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
 base/models/weapons/machinegun/machinegun_clip.md2 | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
@@ -1372,14 +1354,12 @@ base/models/weapons/pistol/pistol.md2 | GNU General Public License v2.0 | Lukas 
 base/models/weapons/pistol/pistol_clip.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/pistol/pistol_clip.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/pistol2/old/pistol2.wings | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
-base/models/weapons/pistol2/pistol2.blend | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
 base/models/weapons/pistol2/pistol2.jpg | GNU General Public License v2.0 | Daniel Holden (Yoshiboy)
 base/models/weapons/pistol2/pistol2.md2 | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
 base/models/weapons/pistol2/pistol2.psd | GNU General Public License v2.0 | Daniel Holden (Yoshiboy)
 base/models/weapons/pistol2/pistol2_clip.jpg | GNU General Public License v2.0 | Daniel Holden (Yoshiboy)
 base/models/weapons/pistol2/pistol2_clip.md2 | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
 base/models/weapons/pistol2/pistol2_clip_UVW.tga | GNU General Public License v2.0 | Daniel Holden (Yoshiboy)
-base/models/weapons/plasblade/plasblade.blend | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/plasblade/plasblade.jpg | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/plasblade/plasblade.md2 | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/plasblade/plasblade_UVW.jpg | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
@@ -1393,7 +1373,6 @@ base/models/weapons/plasblaster/plasblaster_clip.md2 | GNU General Public Licens
 base/models/weapons/plasblaster/plasblaster_v2UVW.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/plasmagren/old/plasgren.jpg | GNU General Public License v2.0 | Daniel Holden (Yoshiboy)
 base/models/weapons/plasmagren/old/plasmagren3.wings | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
-base/models/weapons/plasmagren/plasmagren.blend | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
 base/models/weapons/plasmagren/plasmagren.jpg | GNU General Public License v2.0 | Daniel Holden (Yoshiboy)
 base/models/weapons/plasmagren/plasmagren.md2 | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
 base/models/weapons/plaspistol/plaspistol.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
@@ -1422,14 +1401,11 @@ base/models/weapons/shotgun/shotgun_clip_green.jpg | GNU General Public License 
 base/models/weapons/shotgun/shotgun_clip_green.md2 | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on shotgun_clip by Lukas Beyeler (Rasta)
 base/models/weapons/shotgun2/shotgun.jpg | Creative Commons Attribution-ShareAlike 3.0 | Nathan : INC (Kaeau)
 base/models/weapons/shotgun2/shotgun.md2 | Creative Commons Attribution-ShareAlike 3.0 | Nathan : INC (Kaeau)
-base/models/weapons/shotgun2/shotgun2.blend | Creative Commons Attribution-ShareAlike 3.0 | Nathan : INC (Kaeau)
-base/models/weapons/shotgun2/shotgun_clip.blend | Creative Commons Attribution-ShareAlike 3.0 | Werner Hoehrer (hoehrer) | model based on microshotgun clip model by Werner Hoehrer and Ryan Span, see base/models/weapons/shotgunmicro/
 base/models/weapons/shotgun2/shotgun_clip.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Hoehrer (hoehrer) | model based on microshotgun clip model by Werner Hoehrer and Ryan Span, see base/models/weapons/shotgunmicro/
 base/models/weapons/shotgun2/shotgun_clip.md2 | Creative Commons Attribution-ShareAlike 3.0 | Werner Hoehrer (hoehrer) | model based on microshotgun clip model by Werner Hoehrer and Ryan Span, see base/models/weapons/shotgunmicro/
 base/models/weapons/shotgunmicro/old/pistolshotgun.mtl | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
 base/models/weapons/shotgunmicro/old/pistolshotgun.obj | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
 base/models/weapons/shotgunmicro/old/pistolshotgun.wings | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
-base/models/weapons/shotgunmicro/shotgunmicro.blend | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
 base/models/weapons/shotgunmicro/shotgunmicro.jpg | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
 base/models/weapons/shotgunmicro/shotgunmicro.md2 | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
 base/models/weapons/shotgunmicro/shotgunmicro_UVW.tga | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
@@ -1451,12 +1427,10 @@ base/models/weapons/sniper/sniper_clip.md2 | GNU General Public License v2.0 | L
 base/models/weapons/stungren/old/canister2.mtl | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter)
 base/models/weapons/stungren/old/canister2.obj | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter)
 base/models/weapons/stungren/old/canister2.wings | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter)
-base/models/weapons/stungren/stungren.blend | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter)
 base/models/weapons/stungren/stungren.jpg | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter), texture modified by Werner Hoehrer (hoehrer)
 base/models/weapons/stungren/stungren.md2 | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter)
 base/models/weapons/stunrod/old/stunrod.wings | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter)
 base/models/weapons/stunrod/old/stunrodskin.png | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter)
-base/models/weapons/stunrod/stunrod.blend | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some minor fixes made by Werner Höhrer (hoehrer)
 base/models/weapons/stunrod/stunrod.jpg | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some minor fixes made by Werner Höhrer (hoehrer)
 base/models/weapons/stunrod/stunrod.md2 | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some minor fixes made by Werner Höhrer (hoehrer)
 base/music/AlexFightmare.ogg | GNU General Public License v2.0 | Alex Parker
