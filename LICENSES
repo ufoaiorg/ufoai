@@ -1307,7 +1307,6 @@ base/models/weapons/knifemono/knifemono.md2 | GNU General Public License v2.0 | 
 base/models/weapons/knifemono/old/knife5.wings | GNU General Public License v2.0 | Ryan Span (Winter), Lukas Beyeler (Rasta) | Texture is a mix of base/models/weapons/knife/ texture by Lukas Beyler (Rasta) and base/models/weapons/kerrblade/ texture by Ryan Span (Winter)
 base/models/weapons/laserheavy/laserheavy.jpg | GNU General Public License v2.0 | Jake Gustafson (ProtoArmor)
 base/models/weapons/laserheavy/laserheavy.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/laserheavy/laserheavy_UVW.tga | GNU General Public License v2.0 | Jake Gustafson (ProtoArmor)
 base/models/weapons/laserpistol/laserpistol.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/laserpistol/laserpistol.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/laserpistol/laserpistol_clip.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
@@ -1335,11 +1334,9 @@ base/models/weapons/pbeampistol/pbeampistol_UVW.jpg | GNU General Public License
 base/models/weapons/pbeampistol/pbeampistol_clip.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/pbeamrifle/clip.3DS | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/pbeamrifle/clip.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/pbeamrifle/clip_UVW.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/pbeamrifle/pbeamrifle.3DS | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/pbeamrifle/pbeamrifle.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/pbeamrifle/pbeamrifle.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/pbeamrifle/pbeamrifle_UVW.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/pbeamrifle/pbeamrifle_big.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/pbeamrifle/pbeamrifle_clip.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/pbeamrifle/pbeamrifle_clip.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
@@ -1353,7 +1350,6 @@ base/models/weapons/pistol2/pistol2.md2 | GNU General Public License v2.0 | Ryan
 base/models/weapons/pistol2/pistol2.psd | GNU General Public License v2.0 | Daniel Holden (Yoshiboy)
 base/models/weapons/pistol2/pistol2_clip.jpg | GNU General Public License v2.0 | Daniel Holden (Yoshiboy)
 base/models/weapons/pistol2/pistol2_clip.md2 | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
-base/models/weapons/pistol2/pistol2_clip_UVW.tga | GNU General Public License v2.0 | Daniel Holden (Yoshiboy)
 base/models/weapons/plasblade/plasblade.jpg | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/plasblade/plasblade.md2 | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/plasblade/plasblade_UVW.jpg | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
