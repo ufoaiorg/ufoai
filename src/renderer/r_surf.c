@@ -291,6 +291,18 @@ static void R_BlendLightmaps (void)
 	qglDepthMask(GL_TRUE);
 }
 
+/**
+ * @brief
+ * @sa R_BuildLightMap
+ */
+static void R_SetCacheState (mBspSurface_t * surf)
+{
+	int maps;
+
+	for (maps = 0; maps < MAXLIGHTMAPS && surf->styles[maps] != 255; maps++)
+		surf->cached_light[maps] = refdef.lightstyles[surf->styles[maps]].white;
+}
+
 static void R_RenderBrushPoly (mBspSurface_t * fa)
 {
 	int maps;

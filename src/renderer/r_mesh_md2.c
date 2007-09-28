@@ -152,6 +152,9 @@ static void R_DrawAliasFrameLerp (mdl_md2_t * paliashdr, float backlerp, int fra
 	R_CheckError();
 }
 
+/**
+ * @brief Check if model is out of view
+ */
 static qboolean R_CullAliasMD2Model (vec4_t bbox[8], entity_t * e)
 {
 	int i, p, mask, f, aggregatemask = ~0;

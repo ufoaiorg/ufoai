@@ -221,15 +221,6 @@ static void R_AddDynamicLights (mBspSurface_t * surf)
 	}
 }
 
-
-void R_SetCacheState (mBspSurface_t * surf)
-{
-	int maps;
-
-	for (maps = 0; maps < MAXLIGHTMAPS && surf->styles[maps] != 255; maps++)
-		surf->cached_light[maps] = refdef.lightstyles[surf->styles[maps]].white;
-}
-
 /**
  * @brief Combine and scale multiple lightmaps into the floating format in blocklights
  */

@@ -344,7 +344,6 @@ qboolean R_InitGraphics(void);
 
 /* end of 3d globe */
 
-void R_SetCacheState(mBspSurface_t * surf);
 void R_BuildLightMap(mBspSurface_t * surf, byte * dest, int stride);
 
 void R_SetupGL2D(void);

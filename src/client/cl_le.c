@@ -343,7 +343,7 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
 		if (left == NONE)
 			type = "item";
 		else {
-			/* left hand grenades look OK with deafult anim; others don't */
+			/* left hand grenades look OK with default anim; others don't */
 			if (Q_strncmp(csi.ods[left].type, "grenade", 7))
 				akimbo = qtrue;
 			type = csi.ods[left].type;
