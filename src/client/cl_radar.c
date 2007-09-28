@@ -157,6 +157,7 @@ void Radar_Initialise (radar_t* radar, int range)
 /**
  * @brief Check if the specified ufo is inside the sensor range of base
  * Return true if the aircraft is inside sensor
+ * @sa UFO_CampaignCheckEvents
  */
 qboolean RADAR_CheckUfoSensored (radar_t* radar, vec2_t posRadar,
 	const aircraft_t* ufo, qboolean wasUfoSensored)

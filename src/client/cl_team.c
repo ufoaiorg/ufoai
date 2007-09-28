@@ -2258,7 +2258,7 @@ static const value_t rankValues[] = {
 void CL_ParseMedalsAndRanks (const char *name, const char **text, byte parserank)
 {
 	rank_t *rank = NULL;
-	const char *errhead = "Com_ParseMedalsAndRanks: unexpected end of file (medal/rank ";
+	const char *errhead = "CL_ParseMedalsAndRanks: unexpected end of file (medal/rank ";
 	const char *token;
 	const value_t	*v;
 
@@ -2266,14 +2266,14 @@ void CL_ParseMedalsAndRanks (const char *name, const char **text, byte parserank
 	token = COM_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("Com_ParseMedalsAndRanks: rank/medal \"%s\" without body ignored\n", name);
+		Com_Printf("CL_ParseMedalsAndRanks: rank/medal \"%s\" without body ignored\n", name);
 		return;
 	}
 
 	if (parserank) {
 		/* parse ranks */
 		if (gd.numRanks >= MAX_RANKS) {
-			Com_Printf("Too many rank descriptions, '%s' ignored.\n", name);
+			Com_Printf("CL_ParseMedalsAndRanks: Too many rank descriptions, '%s' ignored.\n", name);
 			gd.numRanks = MAX_RANKS;
 			return;
 		}
@@ -2313,9 +2313,10 @@ void CL_ParseMedalsAndRanks (const char *name, const char **text, byte parserank
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
+				/* error check is performed in E_GetEmployeeType function */
 				rank->type = E_GetEmployeeType(token);
 			} else if (!v->string)
-				Com_Printf("Com_ParseMedalsAndRanks: unknown token \"%s\" ignored (medal/rank %s)\n", token, name);
+				Com_Printf("CL_ParseMedalsAndRanks: unknown token \"%s\" ignored (medal/rank %s)\n", token, name);
 		} while (*text);
 	} else {
 		/* parse medals */
