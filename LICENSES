@@ -850,10 +850,8 @@ base/models/objects/hovercraft/hover_down.obj | GPL | Willem "Sitters"
 base/models/objects/hovercraft/hover_up.md2 | GPL | Willem "Sitters"
 base/models/objects/hovercraft/hover_up.obj | GPL | Willem "Sitters"
 base/models/objects/hovercraft/hovercraft.tga | GPL | Willem "Sitters"
-base/models/objects/industrial/lamp/lamp.blend | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
 base/models/objects/industrial/lamp/lamp.md2 | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
 base/models/objects/industrial/lamp/lamp.tga | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
-base/models/objects/industrial/valve/valve.blend | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
 base/models/objects/industrial/valve/valve.md2 | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
 base/models/objects/industrial/valve/valve.tga | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
 base/models/objects/rubbish/gravel/gravel.md2 | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
@@ -985,7 +983,6 @@ base/models/soldiers/female/head03b.md2 | GNU General Public License v2.0 | Luka
 base/models/soldiers/female/head04.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/soldiers/female/head04a.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/soldiers/female/head04b.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/female/headhunt.blend | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/soldiers/female/headhunt.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/soldiers/femalelight/body.anm | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/soldiers/femalelight/body.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
@@ -1123,9 +1120,7 @@ base/models/soldiers/male/head05b_urban.jpg | GNU General Public License v2.0 | 
 base/models/soldiers/male/head05c.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/soldiers/male/head06.jpg | GNU General Public License 2.0 | Willem "Sitters"
 base/models/soldiers/male/head06a.md2 | GNU General Public License 2.0 | Willem "Sitters"
-base/models/soldiers/male/headhunt.blend | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/soldiers/male/headhunt.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/male/heads.blend | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/soldiers/male/humanmale_light_body.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/soldiers/malelight/body.anm | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/soldiers/malelight/body.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
