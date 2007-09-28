@@ -626,8 +626,14 @@ qboolean INV_MoveItem (base_t* base, inventory_t* inv, int toContainer, int px, 
 		i = Com_SearchInInventory(inv, fromContainer, fromX, fromY);
 		if (i) {
 			et = csi.ods[i->item.t].buytype;
+			if (et == BUY_MULTI_AMMO) {
+				et = (base->equipType == BUY_WEAP_SEC)
+					? BUY_WEAP_SEC
+					: BUY_WEAP_PRI;
+			}
+				
+			/* If the 'to'-container is not the one that is currently shown or auto-placement is wanted ...*/
 			if (!BUYTYPE_MATCH(et, base->equipType) || px == -1 || py == -1) {
-				/* @todo: Check this stuff for BUY_MULTI_AMMO .. this is probably broken now.*/
 				inv->c[csi.idEquip] = base->equipByBuyType.c[et];
 				Com_FindSpace(inv, &i->item, csi.idEquip, &px, &py);
 				if (px >= SHAPE_BIG_MAX_WIDTH && py >= SHAPE_BIG_MAX_HEIGHT) {
@@ -643,11 +649,9 @@ qboolean INV_MoveItem (base_t* base, inventory_t* inv, int toContainer, int px, 
 
 	/* end of hack */
 	if (i && !BUYTYPE_MATCH(et, base->equipType)) {
-		/* @todo: Check this stuff for BUY_MULTI_AMMO .. this is probably broken now.*/
 		base->equipByBuyType.c[et] = inv->c[csi.idEquip];
 		inv->c[csi.idEquip] = base->equipByBuyType.c[base->equipType];
 	} else {
-		/* @todo: Check this stuff for BUY_MULTI_AMMO .. this is probably broken now.*/
 		base->equipByBuyType.c[base->equipType] = inv->c[csi.idEquip];
 	}
 
