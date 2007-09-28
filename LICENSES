@@ -724,7 +724,6 @@ base/models/geoscape/ufo_supply.md2 | GNU General Public License 2.0 | Willem Si
 base/models/geoscape/ufo_supply.tga | GNU General Public License 2.0 | Willem Sitters | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
 base/models/objects/base/minicrane/minicrane.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/base/minicrane/minicrane.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/base/minicrane/minicrane_UVW.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/boat/canoe.md2 | GPL | Willem "Sitters"
 base/models/objects/boat/canoe.tga | GPL | Willem "Sitters"
 base/models/objects/cars/4x4/4x4.jpg |  | Olivier "Kracken" Alloschery
@@ -815,7 +814,6 @@ base/models/objects/furniture/curtains/curtains.jpg | Creative Commons Attributi
 base/models/objects/furniture/curtains/curtains.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/deerhead/deerhead.jpg | GNU GPL - see License.txt for details | Werner Höhrer (hoehrer) | photo by Heinz Seehagel (22.9.2004) http://species.wikimedia.org/wiki/Image:Rothirsch.jpg, model by grumbel http://undone.clanlib.org/~grumbel/mediarepo/show.cgi?md5=c14eb42d4d1f0be06277a7221bf6db62. See License.txt for details
 base/models/objects/furniture/deerhead/deerhead.md2 | GNU GPL - see License.txt for details | Werner Höhrer (hoehrer) | photo by Heinz Seehagel (22.9.2004) http://species.wikimedia.org/wiki/Image:Rothirsch.jpg, model by grumbel http://undone.clanlib.org/~grumbel/mediarepo/show.cgi?md5=c14eb42d4d1f0be06277a7221bf6db62. See License.txt for details
-base/models/objects/furniture/deerhead/deerhead_UVW.tga | GNU GPL - see License.txt for details | Werner Höhrer (hoehrer) | photo by Heinz Seehagel (22.9.2004) http://species.wikimedia.org/wiki/Image:Rothirsch.jpg, model by grumbel http://undone.clanlib.org/~grumbel/mediarepo/show.cgi?md5=c14eb42d4d1f0be06277a7221bf6db62. See License.txt for details
 base/models/objects/furniture/deerhead/license.txt | GNU GPL - see License.txt for details | Werner Höhrer (hoehrer) | photo by Heinz Seehagel (22.9.2004) http://species.wikimedia.org/wiki/Image:Rothirsch.jpg, model by grumbel http://undone.clanlib.org/~grumbel/mediarepo/show.cgi?md5=c14eb42d4d1f0be06277a7221bf6db62. See License.txt for details
 base/models/objects/furniture/desk/desk.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/desk/desk.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
@@ -1257,7 +1255,6 @@ base/models/weapons/bolterrifle/bolterrifle.jpg | GNU General Public License v2.
 base/models/weapons/bolterrifle/bolterrifle.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/bolterrifle/bolterrifle_clip.jpg | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | clip model based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/bolterrifle/bolterrifle_clip.md2 | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | clip model based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
-base/models/weapons/bolterrifle/bolterrifle_v2_UVW.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/chaingun/chaingun.jpg | Creative Commons Attribution-ShareAlike 3.0 | Nathan : INC (Kaeau)
 base/models/weapons/chaingun/chaingun.md2 | Creative Commons Attribution-ShareAlike 3.0 | Nathan : INC (Kaeau)
 base/models/weapons/chaingun/chaingun_ammo.jpg | Creative Commons Attribution-ShareAlike 3.0 | Nathan : INC (Kaeau)
@@ -1278,11 +1275,9 @@ base/models/weapons/fraggren/fraggren.jpg | GNU General Public License v2.0 | Lu
 base/models/weapons/fraggren/fraggren.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/grenl/clip.3DS | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/grenl/clip.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/grenl/clip_UVW.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/grenl/grenl.3DS | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/grenl/grenl.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/grenl/grenl.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/grenl/grenl_UVW.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/grenl/grenl_clip.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/grenl/grenl_clip2.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/grenl/grenl_flechette_clip.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
@@ -1355,12 +1350,10 @@ base/models/weapons/plasblade/plasblade.md2 | GNU General Public License v2.0 | 
 base/models/weapons/plasblade/plasblade_UVW.jpg | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/plasblaster/clip.3DS | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/plasblaster/clip.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/plasblaster/clip_UVW.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/plasblaster/plasblaster.3DS | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/plasblaster/plasblaster.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/plasblaster/plasblaster.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/plasblaster/plasblaster_clip.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/plasblaster/plasblaster_v2UVW.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/plasmagren/old/plasgren.jpg | GNU General Public License v2.0 | Daniel Holden (Yoshiboy)
 base/models/weapons/plasmagren/old/plasmagren3.wings | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
 base/models/weapons/plasmagren/plasmagren.jpg | GNU General Public License v2.0 | Daniel Holden (Yoshiboy)
