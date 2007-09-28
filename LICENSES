@@ -461,18 +461,14 @@ base/models/aircraft/craft_item_target/craft_item_target.tga | GNU General Publi
 base/models/aircraft/craft_weapon_particle/pbw.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
 base/models/aircraft/craft_weapon_particle/pbw.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
 base/models/aircraft/craft_weapon_particle/pbw.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
-base/models/aircraft/craft_weapon_particle/pbw.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
 base/models/aircraft/craft_weapon_shiva/shiva.blend | Creative Commons License 3.0 Attribution-ShareAlike | Werner Hoehrer (hoehrer) | Shiva Rotary Cannon model based on chaingun model by kaeau, see base/models/weapons/chaingun
 base/models/aircraft/craft_weapon_shiva/shiva.jpg | Creative Commons License 3.0 Attribution-ShareAlike | Werner Hoehrer (hoehrer) | Shiva Rotary Cannon model based on chaingun model by kaeau, see base/models/weapons/chaingun
 base/models/aircraft/craft_weapon_shiva/shiva.md2 | Creative Commons License 3.0 Attribution-ShareAlike | Werner Hoehrer (hoehrer) | Shiva Rotary Cannon model based on chaingun model by kaeau, see base/models/weapons/chaingun
-base/models/aircraft/craft_weapon_shiva/shiva.xcf | Creative Commons License 3.0 Attribution-ShareAlike | Werner Hoehrer (hoehrer) | Shiva Rotary Cannon model based on chaingun model by kaeau, see base/models/weapons/chaingun
 base/models/aircraft/craft_weapon_sparrow/sparrowhawk.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
 base/models/aircraft/craft_weapon_sparrow/sparrowhawk.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
 base/models/aircraft/craft_weapon_sparrow/sparrowhawk.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
-base/models/aircraft/craft_weapon_sparrow/sparrowhawk.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
 base/models/aircraft/craft_weapon_sparrow/sparrowhawk_rack.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
 base/models/aircraft/craft_weapon_sparrow/sparrowhawk_rack.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
-base/models/aircraft/craft_weapon_sparrow/sparrowhawk_rack.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
 base/models/aircraft/craft_weapon_tr20/tr20.3ds | GNU General Public License v2.0 | Ryan Span (Winter) - model, Willem Sitters - uvmap + texture
 base/models/aircraft/craft_weapon_tr20/tr20.jpg | GNU General Public License v2.0 | Willem Sitters
 base/models/aircraft/craft_weapon_tr20/tr20.md2 | GNU General Public License v2.0 | Ryan Span (Winter)
@@ -493,7 +489,6 @@ base/models/aircraft/inter_saracen/old/interceptor.rar | GNU General Public Lice
 base/models/aircraft/inter_saracen/saracen.jpg | GNU General Public License v2.0 | Daniel Holden (Yoshiboy) - minor modifications by David Townsend (Psawhn)
 base/models/aircraft/inter_saracen/saracen.md2 | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
 base/models/aircraft/inter_saracen/saracen_highpoly.blend | GNU General Public License v2.0 | David Townsend (Psawhn) - High-detailed model based on 'saracen' model and texture by Ryan Span (Winter) and  Daniel Holden (Yoshiboy).
-base/models/aircraft/inter_saracen/saracen_interceptor.xcf | GNU General Public License v2.0 | Daniel Holden (Yoshiboy) - minor modifications by David Townsend (Psawhn)
 base/models/aircraft/inter_saracen/saracen_interceptor_flying.md2 | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
 base/models/aircraft/inter_saracen/saracen_lowpoly.blend | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uwmap + texture
 base/models/aircraft/inter_stingray/sources/stingray_hi_detail_texture_FINAL.blend | GNU General Public License v2.0 | David Townsend (Psawhn)
@@ -528,15 +523,12 @@ base/models/aircraft/ufo_scout/ufo_scout_upper.md2 | GNU General Public License 
 base/models/aircraft/ufo_supply/ufo_supply.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/ufo_supply/ufo_supply.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/ufo_supply/ufo_supply_body.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/ufo_supply/ufo_supply_body.xcf | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/ufo_supply/ufo_supply_body_closed.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/ufo_supply/ufo_supply_body_open.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/ufo_supply/ufo_supply_engine.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/ufo_supply/ufo_supply_engine.xcf | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/ufo_supply/ufo_supply_engine_left.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/ufo_supply/ufo_supply_engine_right.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/ufo_supply/ufo_supply_wing.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/aircraft/ufo_supply/ufo_supply_wing.xcf | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/ufo_supply/ufo_supply_wing_left.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/ufo_supply/ufo_supply_wing_right.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aliens/bloodspider/bloodspider.anm | Creative Commons Attribution-Share Alike 3.0 | Basic model+all animations: Werner Höhrer (hoehrer); Model fixups: Ryan Span (Winter)
@@ -764,13 +756,11 @@ base/models/geoscape/ufo_supply.tga | GNU General Public License 2.0 | Willem Si
 base/models/objects/base/minicrane/minicrane.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/base/minicrane/minicrane.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/base/minicrane/minicrane.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/base/minicrane/minicrane.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/base/minicrane/minicrane_UVW.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/boat/canoe.md2 | GPL | Willem "Sitters"
 base/models/objects/boat/canoe.tga | GPL | Willem "Sitters"
 base/models/objects/cars/4x4/4x4.jpg |  | Olivier "Kracken" Alloschery
 base/models/objects/cars/4x4/4x4.md2 |  | Olivier "Kracken" Alloschery
-base/models/objects/cars/4x4/4x4.xcf |  | Olivier "Kracken" Alloschery
 base/models/objects/cars/4x4/4x4_avecailes.blend |  | Olivier "Kracken" Alloschery
 base/models/objects/cars/4x4/4x4_t.md2 |  | Olivier "Kracken" Alloschery
 base/models/objects/cars/4x4/cars_tires.jpg |  | Olivier "Kracken" Alloschery
@@ -812,11 +802,9 @@ base/models/objects/city/mailbox/mailbox.png | GPL | Willem "Sitters"
 base/models/objects/city/parkbench/parkbench.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/parkbench/parkbench.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/parkbench/parkbench.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/city/parkbench/parkbench.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/parktable/parktable.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/parktable/parktable.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/parktable/parktable.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/city/parktable/parktable.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/statues/dragon.md2 | GPL | Willem "Sitters"
 base/models/objects/city/statues/statue.md2 | GPL | Willem "Sitters"
 base/models/objects/city/statues/statue.png | GPL | Willem "Sitters"
@@ -836,7 +824,6 @@ base/models/objects/city/trafficsign/sign4.png | GPL | Willem "Sitters"
 base/models/objects/city/watertower/watertower.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/watertower/watertower.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/watertower/watertower.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/city/watertower/watertower.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/watertower/watertower1.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/watertower/watertower2.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/construct/container/Readme.txt | GPL | Willem "Sitters"
@@ -857,7 +844,6 @@ base/models/objects/furniture/campbed/campbed.tga | GPL | Willem "Sitters"
 base/models/objects/furniture/coffeemaker/coffeemaker.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/coffeemaker/coffeemaker.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/coffeemaker/coffeemaker.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/furniture/coffeemaker/coffeemaker.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/comptable/comptable.md2 | GPL | Willem "Sitters"
 base/models/objects/furniture/comptable/comptable.png | GPL | Willem "Sitters"
 base/models/objects/furniture/curtains/curtain.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
@@ -865,7 +851,6 @@ base/models/objects/furniture/curtains/curtain_long.md2 | Creative Commons Attri
 base/models/objects/furniture/curtains/curtains.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/curtains/curtains.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/curtains/curtains.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/furniture/curtains/curtains.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/deerhead/deerhead.blend | GNU GPL - see License.txt for details | Werner Höhrer (hoehrer) | photo by Heinz Seehagel (22.9.2004) http://species.wikimedia.org/wiki/Image:Rothirsch.jpg, model by grumbel http://undone.clanlib.org/~grumbel/mediarepo/show.cgi?md5=c14eb42d4d1f0be06277a7221bf6db62. See License.txt for details
 base/models/objects/furniture/deerhead/deerhead.jpg | GNU GPL - see License.txt for details | Werner Höhrer (hoehrer) | photo by Heinz Seehagel (22.9.2004) http://species.wikimedia.org/wiki/Image:Rothirsch.jpg, model by grumbel http://undone.clanlib.org/~grumbel/mediarepo/show.cgi?md5=c14eb42d4d1f0be06277a7221bf6db62. See License.txt for details
 base/models/objects/furniture/deerhead/deerhead.md2 | GNU GPL - see License.txt for details | Werner Höhrer (hoehrer) | photo by Heinz Seehagel (22.9.2004) http://species.wikimedia.org/wiki/Image:Rothirsch.jpg, model by grumbel http://undone.clanlib.org/~grumbel/mediarepo/show.cgi?md5=c14eb42d4d1f0be06277a7221bf6db62. See License.txt for details
@@ -874,47 +859,38 @@ base/models/objects/furniture/deerhead/license.txt | GNU GPL - see License.txt f
 base/models/objects/furniture/desk/desk.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/desk/desk.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/desk/desk.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/furniture/desk/desk.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/desklamp/desklamp.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/desklamp/desklamp.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/desklamp/desklamp.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/furniture/desklamp/desklamp.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/dishes/cup.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/dishes/dishes.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/dishes/dishes.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/furniture/dishes/dishes.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/dishes/fork.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/dishes/knive.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/dishes/plate.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/emergencyexit/emergencyexit.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/emergencyexit/emergencyexit.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/emergencyexit/emergencyexit.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/furniture/emergencyexit/emergencyexit.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/fireext/fireext.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/fireext/fireext.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/fireext/fireext.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/furniture/fireext/fireext.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/fireext2/fireext2.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/fireext2/fireext2.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/fireext2/fireext2.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/furniture/fireext2/fireext2.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/fireext3/fireext3.md2 | GPL | Willem "Sitters"
 base/models/objects/furniture/fireext3/fireext3.png | GPL | Willem "Sitters"
 base/models/objects/furniture/fireplace/fireplace.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/fireplace/fireplace.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/fireplace/fireplace.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/furniture/fireplace/fireplace.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/flowerpot2/flowerpot2.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/flowerpot2/flowerpot2.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/flowerpot2/flowerpot2.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/furniture/flowerpot2/flowerpot2.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/pitchfork/pitchfork.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/pitchfork/pitchfork.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/pitchfork/pitchfork.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/radiator/radiator.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/radiator/radiator.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/radiator/radiator.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/furniture/radiator/radiator.xcf | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/gascylinder/gascylinder.md2 | GPL | Willem "Sitters"
 base/models/objects/gascylinder/gascylinder.png | GPL | Willem "Sitters"
 base/models/objects/hovercraft/Readme.txt | GPL | Willem "Sitters"
@@ -1339,7 +1315,6 @@ base/models/weapons/bolterrifle/bolterrifle.md2 | GNU General Public License v2.
 base/models/weapons/bolterrifle/bolterrifle_clip.blend | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | clip model based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/bolterrifle/bolterrifle_clip.jpg | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | clip model based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/bolterrifle/bolterrifle_clip.md2 | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | clip model based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
-base/models/weapons/bolterrifle/bolterrifle_clip.xcf | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | clip model based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/bolterrifle/bolterrifle_v2_UVW.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/bolterrifle/old/bolterrifle.3DS | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/bolterrifle/old/bolterrifle.max | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
@@ -1356,7 +1331,6 @@ base/models/weapons/chaingun/chaingun_ammo.md2 | Creative Commons Attribution-Sh
 base/models/weapons/electrolaser/electrolaser.blend | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/electrolaser/electrolaser.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/electrolaser/electrolaser.md2 | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/models/weapons/electrolaser/electrolaser.xcf | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/flamer/flamer.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/flamer/flamer.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/flamer/flamer_ammo.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
@@ -1372,7 +1346,6 @@ base/models/weapons/fraggren/fraggren.md2 | GNU General Public License v2.0 | Lu
 base/models/weapons/grenl/clip.3DS | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/grenl/clip.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/grenl/clip.max | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/grenl/clip.xcf | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/grenl/clip_UVW.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/grenl/grenl.3DS | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/grenl/grenl.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
@@ -1393,7 +1366,6 @@ base/models/weapons/incgren/incgren.tga | GNU General Public License v2.0 | Deni
 base/models/weapons/irgoggles/irgoggles.blend | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/irgoggles/irgoggles.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/irgoggles/irgoggles.md2 | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/models/weapons/irgoggles/irgoggles.xcf | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/kerrblade/kerrblade.3DS | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/kerrblade/kerrblade.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/kerrblade/kerrblade.max | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
@@ -1408,7 +1380,6 @@ base/models/weapons/knifemono/old/knife5.wings | GNU General Public License v2.0
 base/models/weapons/laserheavy/laserheavy.blend | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/laserheavy/laserheavy.jpg | GNU General Public License v2.0 | Jake Gustafson (ProtoArmor)
 base/models/weapons/laserheavy/laserheavy.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/laserheavy/laserheavy.xcf | GNU General Public License v2.0 | Jake Gustafson (ProtoArmor)
 base/models/weapons/laserheavy/laserheavy_UVW.tga | GNU General Public License v2.0 | Jake Gustafson (ProtoArmor)
 base/models/weapons/laserheavy/old/heavylaser.obj | GNU General Public License v2.0 | Lukas Beyeler (Rasta), modified by Ceobohga
 base/models/weapons/laserheavy/old/laserheavy.jpg | GNU General Public License v2.0 | Ceobohga | texture based on base/models/weapons/laserrifle/ texture by Lukas Beyeler (Rasta)
@@ -1471,7 +1442,6 @@ base/models/weapons/plasblade/old/plasblade.max | GNU General Public License v2.
 base/models/weapons/plasblade/plasblade.blend | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/plasblade/plasblade.jpg | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/plasblade/plasblade.md2 | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
-base/models/weapons/plasblade/plasblade.xcf | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/plasblade/plasblade_UVW.jpg | GNU General Public License v2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/plasblaster/clip.3DS | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/plasblaster/clip.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
@@ -1489,7 +1459,6 @@ base/models/weapons/plasmagren/old/plasmagren3.wings | GNU General Public Licens
 base/models/weapons/plasmagren/plasmagren.blend | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
 base/models/weapons/plasmagren/plasmagren.jpg | GNU General Public License v2.0 | Daniel Holden (Yoshiboy)
 base/models/weapons/plasmagren/plasmagren.md2 | GNU General Public License v2.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
-base/models/weapons/plasmagren/plasmagren.xcf | GNU General Public License v2.0 | Daniel Holden (Yoshiboy)
 base/models/weapons/plaspistol/plaspistol.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/plaspistol/plaspistol.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/plaspistol/plaspistol_clip.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
@@ -1526,11 +1495,9 @@ base/models/weapons/shotgunmicro/old/pistolshotgun.wings | Creative Commons Attr
 base/models/weapons/shotgunmicro/shotgunmicro.blend | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
 base/models/weapons/shotgunmicro/shotgunmicro.jpg | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
 base/models/weapons/shotgunmicro/shotgunmicro.md2 | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
-base/models/weapons/shotgunmicro/shotgunmicro.xcf | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
 base/models/weapons/shotgunmicro/shotgunmicro_UVW.tga | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
 base/models/weapons/shotgunmicro/shotgunmicro_clip.jpg | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
 base/models/weapons/shotgunmicro/shotgunmicro_clip.md2 | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
-base/models/weapons/shotgunmicro/shotgunmicro_clip.xcf | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
 base/models/weapons/smg/smg.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/smg/smg.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/smg/smg_clip.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
@@ -1550,13 +1517,11 @@ base/models/weapons/stungren/old/canister2.wings | Creative Commons Attribution-
 base/models/weapons/stungren/stungren.blend | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter)
 base/models/weapons/stungren/stungren.jpg | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter), texture modified by Werner Hoehrer (hoehrer)
 base/models/weapons/stungren/stungren.md2 | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter)
-base/models/weapons/stungren/stungren.xcf | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter), texture modified by Werner Hoehrer (hoehrer)
 base/models/weapons/stunrod/old/stunrod.wings | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter)
 base/models/weapons/stunrod/old/stunrodskin.png | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter)
 base/models/weapons/stunrod/stunrod.blend | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some minor fixes made by Werner Höhrer (hoehrer)
 base/models/weapons/stunrod/stunrod.jpg | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some minor fixes made by Werner Höhrer (hoehrer)
 base/models/weapons/stunrod/stunrod.md2 | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some minor fixes made by Werner Höhrer (hoehrer)
-base/models/weapons/stunrod/stunrod.xcf | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some minor fixes made by Werner Höhrer (hoehrer)
 base/music/AlexFightmare.ogg | GNU General Public License v2.0 | Alex Parker
 base/music/AlexForest.ogg | Creative Commons Sampling Plus 1.0 License | Alex Parker | contains sounds sourced from thefreesoundproject.com and released under the creative commons sampling plus license (1.0).   These sounds and their authors are:   Odayam sounds (night time).wav - "genghis attenborough"   winter woods junkyard.wav - "offthesky (www.offthesky.com)"
 base/music/AlexSullencity.ogg | Creative Commons Sampling Plus 1.0 License | Alex Parker | background sounds taken from The Free Sound Project, under the Creative Commons Sampling Plus License 1.0; contributors:   RHumphries: 2523_RHumphries_rbh_thunder_storm.wav   Acutescream: 24716_acutescream_file0084edit_LANightAlarm.wav
