@@ -2910,15 +2910,14 @@ void CL_ActorDie (struct dbuffer *msg)
 	/* Print some info about the death or stun. */
 	if (le->team == cls.team) {
 		chr = CL_GetActorChr(le);
-		assert(chr->rank >= 0);
 		if (chr && ((le->state & STATE_STUN) & ~STATE_DEAD)) {
 			Com_sprintf(tmpbuf, sizeof(tmpbuf), "%s %s %s\n",
-			gd.ranks[chr->rank].shortname,
+			chr->rank >= 0 ? gd.ranks[chr->rank].shortname : "",
 			chr->name, _("was stunned.\n"));
 			CL_DisplayHudMessage(tmpbuf, 2000);
 		} else if (chr) {
 			Com_sprintf(tmpbuf, sizeof(tmpbuf), "%s %s %s\n",
-			gd.ranks[chr->rank].shortname,
+			chr->rank >= 0 ? gd.ranks[chr->rank].shortname : "",
 			chr->name, _("was killed.\n"));
 			CL_DisplayHudMessage(tmpbuf, 2000);
 		}
