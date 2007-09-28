@@ -150,7 +150,7 @@ void CL_LoadInventory (sizebuf_t *buf, inventory_t *i)
 	assert(nr < MAX_INVLIST);
 	for (; nr-- > 0;) {
 		CL_LoadItem(buf, &item, &container, &x, &y);
-		Com_AddToInventory(i, item, container, x, y);
+		Com_AddToInventory(i, item, container, x, y, 1);
 	}
 }
 
@@ -837,10 +837,10 @@ static void CL_GenerateEquipment_f (void)
 			 * HACKHACK
 			 */
 			if (BUY_PRI(csi.ods[i].buytype)) {
-				if (!Com_TryAddToBuyType(&baseCurrent->equipByBuyType, CL_AddWeaponAmmo(&unused, item), BUY_WEAP_PRI))
+				if (!Com_TryAddToBuyType(&baseCurrent->equipByBuyType, CL_AddWeaponAmmo(&unused, item), BUY_WEAP_PRI, 1))
 					break; /* no space left in menu */
 			} else {
-				if (!Com_TryAddToBuyType(&baseCurrent->equipByBuyType, CL_AddWeaponAmmo(&unused, item), csi.ods[i].buytype))
+				if (!Com_TryAddToBuyType(&baseCurrent->equipByBuyType, CL_AddWeaponAmmo(&unused, item), csi.ods[i].buytype, 1))
 					break; /* no space left in menu */
 			}
 		}

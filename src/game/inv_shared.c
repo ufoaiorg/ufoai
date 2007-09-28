@@ -253,10 +253,11 @@ invList_t *Com_SearchInInventory (const inventory_t* const i, int container, int
  * @param[in] container Container in given inventory definition, where the new item will be stored.
  * @param[in] x The x location in the container.
  * @param[in] y The x location in the container.
+ * @param[in] amount How many items of this type shoult be added.
  * @sa Com_RemoveFromInventory
  * @sa Com_RemoveFromInventoryIgnore
  */
-invList_t *Com_AddToInventory (inventory_t * const i, item_t item, int container, int x, int y)
+invList_t *Com_AddToInventory (inventory_t * const i, item_t item, int container, int x, int y, int amount)
 {
 	invList_t *ic;
 
@@ -265,6 +266,9 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, int container
 
 	if (!invUnused)
 		Sys_Error("Com_AddToInventory: No free inventory space!\n");
+	
+	if (amount <= 0)
+		return NULL;
 
 	assert(i);
 
@@ -296,7 +300,7 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, int container
 		ic = i->c[container];
 		for (; ic; ic = ic->next)
 			if (Com_CompareItem(&ic->item, &item)) {
-				ic->item.amount++;
+				ic->item.amount += amount;
 				Com_DPrintf(DEBUG_SHARED, "Com_AddToInventory: Amount of '%s': %i\n",
 					CSI->ods[ic->item.t].name, ic->item.amount);
 				return ic;
@@ -323,7 +327,7 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, int container
 
 	/* Set the data in the new entry to the data we got via function-parameters.*/
 	ic->item = item;
-	ic->item.amount = 1;
+	ic->item.amount = amount;
 	ic->x = x;
 	ic->y = y;
 	return ic;
@@ -400,18 +404,28 @@ qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, int container, int
 	for (; ic->next; ic = ic->next)
 		if (ic->next->x == x && ic->next->y == y) {
 			cacheItem = ic->next->item;
-			if ((container == CSI->idFloor || container == CSI->idEquip)
-			 && ic->next->item.amount > 1) {
-				ic->next->item.amount--;
-				Com_DPrintf(DEBUG_SHARED, "Com_RemoveFromInventoryIgnore: Amount of '%s': %i\n",
-					CSI->ods[ic->next->item.t].name, ic->next->item.amount);
+			
+			if (ignore_type && ic->next->item.amount > 1) {
+				/* Remove 'em all */
+				old = invUnused;
+				invUnused = ic->next;
+				ic->next = ic->next->next;
+				invUnused->next = old;
+				return qtrue;
+			} else {
+				if ((container == CSI->idFloor || container == CSI->idEquip)
+				 && ic->next->item.amount > 1) {
+					ic->next->item.amount--;
+					Com_DPrintf(DEBUG_SHARED, "Com_RemoveFromInventoryIgnore: Amount of '%s': %i\n",
+						CSI->ods[ic->next->item.t].name, ic->next->item.amount);
+					return qtrue;
+				}
+				old = invUnused;
+				invUnused = ic->next;
+				ic->next = ic->next->next;
+				invUnused->next = old;
 				return qtrue;
 			}
-			old = invUnused;
-			invUnused = ic->next;
-			ic->next = ic->next->next;
-			invUnused->next = old;
-			return qtrue;
 		}
 	return qfalse;
 }
@@ -516,7 +530,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 
 	/* We are in base-equip screen (multi-ammo workaround) and can skip a lot of checks. */
 	if (ignore_type) {
-		Com_TryAddToBuyType(i, cacheItem, to); /* get target coordinates */
+		Com_TryAddToBuyType(i, cacheItem, to, cacheItem.amount); /* get target coordinates */
 		/* return data */
 		/*if (icp)
 			*icp = ic;*/
@@ -526,7 +540,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 	/* if weapon is twohanded and is moved from hand to hand do nothing. */
 	/* twohanded weapon are only in CSI->idRight */
 	if (CSI->ods[cacheItem.t].fireTwoHanded && to == CSI->idLeft && from == CSI->idRight) {
-		Com_AddToInventory(i, cacheItem, from, fx, fy);
+		Com_AddToInventory(i, cacheItem, from, fx, fy, 1);
 		return IA_NONE;
 	}
 
@@ -536,7 +550,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 	if ((CSI->ids[to].armor && Q_strcmp(CSI->ods[cacheItem.t].type, "armor"))
 	 || (CSI->ids[to].extension && !CSI->ods[cacheItem.t].extension)
 	 || (CSI->ids[to].headgear && !CSI->ods[cacheItem.t].headgear)) {
-		Com_AddToInventory(i, cacheItem, from, fx, fy);
+		Com_AddToInventory(i, cacheItem, from, fx, fy, 1);
 		return IA_NONE;
 	}
 
@@ -554,7 +568,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 		/* move the destination item to the source */
 		Com_MoveInInventory(i, to, tx, ty, from, fx, fy, TU, icp);
 		/* reset the cached item (source) and move it to the container emptied by destination item */
-		Com_AddToInventory(i, cacheItem2, from, fx, fy);
+		Com_AddToInventory(i, cacheItem2, from, fx, fy, 1);
 		cacheItem = cacheItem2;
 	} else if (!checkedTo) {
 		ic = Com_SearchInInventory(i, to, tx, ty);
@@ -569,7 +583,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 				&& ic->item.m == cacheItem.t) {
 				/* weapon already fully loaded with the same ammunition
 				 * --- back to source location */
-				Com_AddToInventory(i, cacheItem, from, fx, fy);
+				Com_AddToInventory(i, cacheItem, from, fx, fy, 1);
 				return IA_NORELOAD;
 			}
 			time += CSI->ods[ic->item.t].reload;
@@ -580,7 +594,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 					/* exchange ammo */
 					item_t item = {NONE_AMMO, NONE, ic->item.m, 0};
 
-					Com_AddToInventory(i, item, from, fx, fy);
+					Com_AddToInventory(i, item, from, fx, fy, 1);
 
 					ic->item.m = cacheItem.t;
 					if (icp)
@@ -596,7 +610,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 				}
 			}
 			/* not enough time - back to source location */
-			Com_AddToInventory(i, cacheItem, from, fx, fy);
+			Com_AddToInventory(i, cacheItem, from, fx, fy, 1);
 			return IA_NOTIME;
 		}
 
@@ -611,7 +625,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 			}
 		} else {
 			/* impossible move - back to source location */
-			Com_AddToInventory(i, cacheItem, from, fx, fy);
+			Com_AddToInventory(i, cacheItem, from, fx, fy, 1);
 			return IA_NONE;
 		}
 	}
@@ -647,7 +661,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 	 * because x and y was already empty at this stage - but it will produce
 	 * trouble when we begin to pack the same items together */
 	/*Com_RemoveFromInventory(i, from, fx, fy);*/
-	ic = Com_AddToInventory(i, cacheItem, to, tx, ty);
+	ic = Com_AddToInventory(i, cacheItem, to, tx, ty, 1);
 
 	/* return data */
 	if (icp)
@@ -780,7 +794,7 @@ int Com_TryAddToInventory (inventory_t* const inv, item_t item, int container)
 		assert(y == NONE);
 		return 0;
 	} else {
-		Com_AddToInventory(inv, item, container, x, y);
+		Com_AddToInventory(inv, item, container, x, y, 1);
 		return 1;
 	}
 }
@@ -790,13 +804,17 @@ int Com_TryAddToInventory (inventory_t* const inv, item_t item, int container)
  * @param[in] inv Inventory pointer to add the item
  * @param[in] item Item to add to inventory
  * @param[in] container Container id
+ * @param[in] amount How many items to add.
  * @sa Com_FindSpace
  * @sa Com_AddToInventory
  */
-int Com_TryAddToBuyType (inventory_t* const inv, item_t item, int container)
+int Com_TryAddToBuyType (inventory_t* const inv, item_t item, int container, int amount)
 {
 	int x, y;
 	inventory_t hackInv;
+
+	if (amount <= 0)
+		return 0;
 
 	/* link the temp container */
 	hackInv.c[CSI->idEquip] = inv->c[container];
@@ -806,7 +824,7 @@ int Com_TryAddToBuyType (inventory_t* const inv, item_t item, int container)
 		assert(y == NONE);
 		return 0;
 	} else {
-		Com_AddToInventory(&hackInv, item, CSI->idEquip, x, y);
+		Com_AddToInventory(&hackInv, item, CSI->idEquip, x, y, amount);
 		inv->c[container] = hackInv.c[CSI->idEquip];
 		return 1;
 	}

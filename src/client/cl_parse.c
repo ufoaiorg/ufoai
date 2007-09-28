@@ -1178,7 +1178,7 @@ static void CL_InvAdd (struct dbuffer *msg)
 
 	for (; nr-- > 0;) {
 		CL_NetReceiveItem(msg, &item, &container, &x, &y);
-		Com_AddToInventory(&le->i, item, container, x, y);
+		Com_AddToInventory(&le->i, item, container, x, y, 1);
 
 		if (container == csi.idRight)
 			le->right = item.t;

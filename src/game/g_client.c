@@ -2375,7 +2375,7 @@ void G_ClientTeamInfo (player_t * player)
 					G_ReadItem(&item, &container, &x, &y);
 					/* gi.dprintf("G_ClientTeamInfo: t=%i:a=%i:m=%i (x=%i:y=%i)\n", item.t, item.a, item.m, x, y); */
 
-					Com_AddToInventory(&ent->i, item, container, x, y);
+					Com_AddToInventory(&ent->i, item, container, x, y, 1);
 					/* gi.dprintf("G_ClientTeamInfo: add %s to inventory (container %i - idArmor: %i)\n", gi.csi->ods[ent->i.c[container]->item.t].id, container, gi.csi->idArmor); */
 				}
 			}
