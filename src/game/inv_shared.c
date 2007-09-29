@@ -272,6 +272,11 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, int container
 
 	assert(i);
 
+	if (x < 0 || y < 0) { /** @todo max values? */
+		/* No (sane) position in container given as parameter - find free space on our own. */
+		Com_FindSpace(i, &item, container, &x, &y);
+	}
+
 	/**
 	 * What we are doing here.
 	 * invList_t array looks like that: [u]->next = [w]; [w]->next = [x]; [...]; [z]->next = NULL.
@@ -583,9 +588,16 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 					*TU -= time;
 				if (ic->item.a >= CSI->ods[ic->item.t].ammo) {
 					/* exchange ammo */
-					item_t item = {NONE_AMMO, NONE, ic->item.m, 0};
+					item_t item = {NONE_AMMO, NONE, ic->item.m, 0}; 
 
-					Com_AddToInventory(i, item, from, fx, fy, 1);
+					/* Add the currently used ammo in a free place of the "from" container. */
+					/**
+					 * @todo If 'from' is idEquip OR idFloor AND the item is of buytype BUY_MULTI_AMMO:
+					 * We need to make sure it must go into the correct display: PRIMARY _OR_ SECONDARY only (e.g. no saboted slugs in SEC).
+					 * But we would need to know the corect inventory for that :-/ 
+					 * @sa The BUY_MULTI_AMMO stuff in cl_inventory.c:INV_MoveItem 
+					 */
+					Com_AddToInventory(i, item, from, -1, -1, 1);
 
 					ic->item.m = cacheItem.t;
 					if (icp)
