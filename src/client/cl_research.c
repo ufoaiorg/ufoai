@@ -767,14 +767,12 @@ static void RS_ResearchDisplayInfo (void)
 	tech = researchList[researchListPos];
 
 	/* Display laboratories limits. */
-	/* FIXME: used/all - not all/used */
-	Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Laboratory space (all/used): %i/%i"),
+	Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Laboratory space (used/all): %i/%i"),
 	baseCurrent->capacities[CAP_LABSPACE].max, baseCurrent->capacities[CAP_LABSPACE].cur);
 	Cvar_Set("mn_research_labs", tmpbuf);
 
 	/* Display scientists amounts. */
-	/* FIXME: used/all - not all/used */
-	Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Scientists (all/available): %i/%i"),
+	Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Scientists (available/all): %i/%i"),
 	E_CountHired(baseCurrent, EMPL_SCIENTIST), E_CountUnassigned(baseCurrent, EMPL_SCIENTIST));
 	Cvar_Set("mn_research_scis", tmpbuf);
 

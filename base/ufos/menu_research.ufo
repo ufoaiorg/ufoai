@@ -113,7 +113,7 @@ menu research
 	confunc research_hide25 { *img_status25 invis true	*bt_rs_add25 invis true	*bt_rs_remove25 invis true }
 	confunc research_hide26 { *img_status26 invis true	*bt_rs_add26 invis true	*bt_rs_remove26 invis true }
 	confunc research_hide27 { *img_status27 invis true	*bt_rs_add27 invis true	*bt_rs_remove27 invis true }
-	
+
 	// Functions to make a single entry visible again in the list (icons only right now)
 	confunc research_show0 { *img_status0 invis false	*bt_rs_add0 invis false	*bt_rs_remove0 invis false }
 	confunc research_show1 { *img_status1 invis false	*bt_rs_add1 invis false	*bt_rs_remove1 invis false }
@@ -434,10 +434,10 @@ menu research
 		image	menu/buttons_small
 		pos		"376 40"	mousefx true
 		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 0; mn_rs_add 0" }
+		click	{ cmd "research_select 0; mn_rs_add 0;" }
 		repeat	true
-		whup	{ cmd "research_select 0; mn_rs_add 0" }
-		whdown	{ cmd "research_select 0; mn_rs_remove 0" }
+		whup	{ cmd "research_select 0; mn_rs_add 0;" }
+		whdown	{ cmd "research_select 0; mn_rs_remove 0;" }
 	}
 	pic bt_rs_remove0
 	{
@@ -445,10 +445,10 @@ menu research
 		image	menu/buttons_small
 		pos		"392 40"	mousefx	true
 		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 0; mn_rs_remove 0" }
+		click	{ cmd "research_select 0; mn_rs_remove 0;" }
 		repeat	true
-		whup	{ cmd "research_select 0; mn_rs_add 0" }
-		whdown	{ cmd "research_select 0; mn_rs_remove 0" }
+		whup	{ cmd "research_select 0; mn_rs_add 0;" }
+		whdown	{ cmd "research_select 0; mn_rs_remove 0;" }
 	}
 	pic bt_rs_add1
 	{
@@ -456,10 +456,10 @@ menu research
 		image	menu/buttons_small
 		pos		"376 65"	mousefx true
 		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 1; mn_rs_add 1" }
+		click	{ cmd "research_select 1; mn_rs_add 1;" }
 		repeat	true
-		whup	{ cmd "research_select 1; mn_rs_add 1" }
-		whdown	{ cmd "research_select 1; mn_rs_remove 1" }
+		whup	{ cmd "research_select 1; mn_rs_add 1;" }
+		whdown	{ cmd "research_select 1; mn_rs_remove 1;" }
 	}
 	pic bt_rs_remove1
 	{
@@ -467,10 +467,10 @@ menu research
 		image	menu/buttons_small
 		pos		"392 65"	mousefx	true
 		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 1; mn_rs_remove 1" }
+		click	{ cmd "research_select 1; mn_rs_remove 1;" }
 		repeat	true
-		whup	{ cmd "research_select 1; mn_rs_add 1" }
-		whdown	{ cmd "research_select 1; mn_rs_remove 1" }
+		whup	{ cmd "research_select 1; mn_rs_add 1;" }
+		whdown	{ cmd "research_select 1; mn_rs_remove 1;" }
 	}
 	pic bt_rs_add2
 	{
@@ -478,10 +478,10 @@ menu research
 		image	menu/buttons_small
 		pos		"376 90"	mousefx true
 		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 2; mn_rs_add 2" }
+		click	{ cmd "research_select 2; mn_rs_add 2;" }
 		repeat	true
-		whup	{ cmd "research_select 2; mn_rs_add 2" }
-		whdown	{ cmd "research_select 2; mn_rs_remove 2" }
+		whup	{ cmd "research_select 2; mn_rs_add 2;" }
+		whdown	{ cmd "research_select 2; mn_rs_remove 2;" }
 	}
 	pic bt_rs_remove2
 	{
@@ -489,10 +489,10 @@ menu research
 		image	menu/buttons_small
 		pos		"392 90"	mousefx	true
 		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 2; mn_rs_remove 2" }
+		click	{ cmd "research_select 2; mn_rs_remove 2;" }
 		repeat	true
-		whup	{ cmd "research_select 2; mn_rs_add 2" }
-		whdown	{ cmd "research_select 2; mn_rs_remove 2" }
+		whup	{ cmd "research_select 2; mn_rs_add 2;" }
+		whdown	{ cmd "research_select 2; mn_rs_remove 2;" }
 	}
 	pic bt_rs_add3
 	{
@@ -500,10 +500,10 @@ menu research
 		image	menu/buttons_small
 		pos		"376 115"	mousefx true
 		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 3; mn_rs_add 3" }
+		click	{ cmd "research_select 3; mn_rs_add 3;" }
 		repeat	true
-		whup	{ cmd "research_select 3; mn_rs_add 3" }
-		whdown	{ cmd "research_select 3; mn_rs_remove 3" }
+		whup	{ cmd "research_select 3; mn_rs_add 3;" }
+		whdown	{ cmd "research_select 3; mn_rs_remove 3;" }
 	}
 	pic bt_rs_remove3
 	{
@@ -511,10 +511,10 @@ menu research
 		image	menu/buttons_small
 		pos		"392 115"	mousefx	true
 		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 3; mn_rs_remove 3" }
+		click	{ cmd "research_select 3; mn_rs_remove 3;" }
 		repeat	true
-		whup	{ cmd "research_select 3; mn_rs_add 3" }
-		whdown	{ cmd "research_select 3; mn_rs_remove 3" }
+		whup	{ cmd "research_select 3; mn_rs_add 3;" }
+		whdown	{ cmd "research_select 3; mn_rs_remove 3;" }
 	}
 	pic bt_rs_add4
 	{
@@ -522,10 +522,10 @@ menu research
 		image	menu/buttons_small
 		pos		"376 140"	mousefx true
 		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 4; mn_rs_add 4" }
+		click	{ cmd "research_select 4; mn_rs_add 4;" }
 		repeat	true
-		whup	{ cmd "research_select 4; mn_rs_add 4" }
-		whdown	{ cmd "research_select 4; mn_rs_remove 4" }
+		whup	{ cmd "research_select 4; mn_rs_add 4;" }
+		whdown	{ cmd "research_select 4; mn_rs_remove 4;" }
 	}
 	pic bt_rs_remove4
 	{
@@ -533,10 +533,10 @@ menu research
 		image	menu/buttons_small
 		pos		"392 140"	mousefx	true
 		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 4; mn_rs_remove 4" }
+		click	{ cmd "research_select 4; mn_rs_remove 4;" }
 		repeat	true
-		whup	{ cmd "research_select 4; mn_rs_add 4" }
-		whdown	{ cmd "research_select 4; mn_rs_remove 4" }
+		whup	{ cmd "research_select 4; mn_rs_add 4;" }
+		whdown	{ cmd "research_select 4; mn_rs_remove 4;" }
 	}
 	pic bt_rs_add5
 	{
@@ -544,10 +544,10 @@ menu research
 		image	menu/buttons_small
 		pos		"376 165"	mousefx true
 		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 5; mn_rs_add 5" }
+		click	{ cmd "research_select 5; mn_rs_add 5;" }
 		repeat	true
-		whup	{ cmd "research_select 5; mn_rs_add 5" }
-		whdown	{ cmd "research_select 5; mn_rs_remove 5" }
+		whup	{ cmd "research_select 5; mn_rs_add 5;" }
+		whdown	{ cmd "research_select 5; mn_rs_remove 5;" }
 	}
 	pic bt_rs_remove5
 	{
@@ -555,10 +555,10 @@ menu research
 		image	menu/buttons_small
 		pos		"392 165"	mousefx	true
 		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 5; mn_rs_remove 5" }
+		click	{ cmd "research_select 5; mn_rs_remove 5;" }
 		repeat	true
-		whup	{ cmd "research_select 5; mn_rs_add 5" }
-		whdown	{ cmd "research_select 5; mn_rs_remove 5" }
+		whup	{ cmd "research_select 5; mn_rs_add 5;" }
+		whdown	{ cmd "research_select 5; mn_rs_remove 5;" }
 	}
 	pic bt_rs_add6
 	{
@@ -566,10 +566,10 @@ menu research
 		image	menu/buttons_small
 		pos		"376 190"	mousefx true
 		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 6; mn_rs_add 6" }
+		click	{ cmd "research_select 6; mn_rs_add 6;" }
 		repeat	true
-		whup	{ cmd "research_select 6; mn_rs_add 6" }
-		whdown	{ cmd "research_select 6; mn_rs_remove 6" }
+		whup	{ cmd "research_select 6; mn_rs_add 6;" }
+		whdown	{ cmd "research_select 6; mn_rs_remove 6;" }
 	}
 	pic bt_rs_remove6
 	{
@@ -577,10 +577,10 @@ menu research
 		image	menu/buttons_small
 		pos		"392 190"	mousefx	true
 		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 6; mn_rs_remove 6" }
+		click	{ cmd "research_select 6; mn_rs_remove 6;" }
 		repeat	true
-		whup	{ cmd "research_select 6; mn_rs_add 6" }
-		whdown	{ cmd "research_select 6; mn_rs_remove 6" }
+		whup	{ cmd "research_select 6; mn_rs_add 6;" }
+		whdown	{ cmd "research_select 6; mn_rs_remove 6;" }
 	}
 	pic bt_rs_add7
 	{
@@ -588,10 +588,10 @@ menu research
 		image	menu/buttons_small
 		pos		"376 215"	mousefx true
 		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 7; mn_rs_add 7" }
+		click	{ cmd "research_select 7; mn_rs_add 7;" }
 		repeat	true
-		whup	{ cmd "research_select 7; mn_rs_add 7" }
-		whdown	{ cmd "research_select 7; mn_rs_remove 7" }
+		whup	{ cmd "research_select 7; mn_rs_add 7;" }
+		whdown	{ cmd "research_select 7; mn_rs_remove 7;" }
 	}
 	pic bt_rs_remove7
 	{
@@ -599,10 +599,10 @@ menu research
 		image	menu/buttons_small
 		pos		"392 215"	mousefx	true
 		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 7; mn_rs_remove 7" }
+		click	{ cmd "research_select 7; mn_rs_remove 7;" }
 		repeat	true
-		whup	{ cmd "research_select 7; mn_rs_add 7" }
-		whdown	{ cmd "research_select 7; mn_rs_remove 7" }
+		whup	{ cmd "research_select 7; mn_rs_add 7;" }
+		whdown	{ cmd "research_select 7; mn_rs_remove 7;" }
 	}
 	pic bt_rs_add8
 	{
@@ -610,10 +610,10 @@ menu research
 		image	menu/buttons_small
 		pos		"376 240"	mousefx true
 		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 8; mn_rs_add 8" }
+		click	{ cmd "research_select 8; mn_rs_add 8;" }
 		repeat	true
-		whup	{ cmd "research_select 8; mn_rs_add 8" }
-		whdown	{ cmd "research_select 8; mn_rs_remove 8" }
+		whup	{ cmd "research_select 8; mn_rs_add 8;" }
+		whdown	{ cmd "research_select 8; mn_rs_remove 8;" }
 	}
 	pic bt_rs_remove8
 	{
@@ -621,10 +621,10 @@ menu research
 		image	menu/buttons_small
 		pos		"392 240"	mousefx	true
 		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 8; mn_rs_remove 8" }
+		click	{ cmd "research_select 8; mn_rs_remove 8;" }
 		repeat	true
-		whup	{ cmd "research_select 8; mn_rs_add 8" }
-		whdown	{ cmd "research_select 8; mn_rs_remove 8" }
+		whup	{ cmd "research_select 8; mn_rs_add 8;" }
+		whdown	{ cmd "research_select 8; mn_rs_remove 8;" }
 	}
 	pic bt_rs_add9
 	{
@@ -632,10 +632,10 @@ menu research
 		image	menu/buttons_small
 		pos		"376 265"	mousefx true
 		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 9; mn_rs_add 9" }
+		click	{ cmd "research_select 9; mn_rs_add 9;" }
 		repeat	true
-		whup	{ cmd "research_select 9; mn_rs_add 9" }
-		whdown	{ cmd "research_select 9; mn_rs_remove 9" }
+		whup	{ cmd "research_select 9; mn_rs_add 9;" }
+		whdown	{ cmd "research_select 9; mn_rs_remove 9;" }
 	}
 	pic bt_rs_remove9
 	{
@@ -643,10 +643,10 @@ menu research
 		image	menu/buttons_small
 		pos		"392 265"	mousefx	true
 		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 9; mn_rs_remove 9" }
+		click	{ cmd "research_select 9; mn_rs_remove 9;" }
 		repeat	true
-		whup	{ cmd "research_select 9; mn_rs_add 9" }
-		whdown	{ cmd "research_select 9; mn_rs_remove 9" }
+		whup	{ cmd "research_select 9; mn_rs_add 9;" }
+		whdown	{ cmd "research_select 9; mn_rs_remove 9;" }
 	}
 	pic bt_rs_add10
 	{
@@ -654,10 +654,10 @@ menu research
 		image	menu/buttons_small
 		pos		"376 290"	mousefx true
 		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 10; mn_rs_add 10" }
+		click	{ cmd "research_select 10; mn_rs_add 10;" }
 		repeat	true
-		whup	{ cmd "research_select 10; mn_rs_add 10" }
-		whdown	{ cmd "research_select 10; mn_rs_remove 10" }
+		whup	{ cmd "research_select 10; mn_rs_add 10;" }
+		whdown	{ cmd "research_select 10; mn_rs_remove 10;" }
 	}
 	pic bt_rs_remove10
 	{
@@ -665,10 +665,10 @@ menu research
 		image	menu/buttons_small
 		pos		"392 290"	mousefx	true
 		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 10; mn_rs_remove 10" }
+		click	{ cmd "research_select 10; mn_rs_remove 10;" }
 		repeat	true
-		whup	{ cmd "research_select 10; mn_rs_add 10" }
-		whdown	{ cmd "research_select 10; mn_rs_remove 10" }
+		whup	{ cmd "research_select 10; mn_rs_add 10;" }
+		whdown	{ cmd "research_select 10; mn_rs_remove 10;" }
 	}
 	pic bt_rs_add11
 	{
@@ -676,10 +676,10 @@ menu research
 		image	menu/buttons_small
 		pos		"376 315"	mousefx true
 		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 11; mn_rs_add 11" }
+		click	{ cmd "research_select 11; mn_rs_add 11;" }
 		repeat	true
-		whup	{ cmd "research_select 11; mn_rs_add 11" }
-		whdown	{ cmd "research_select 11; mn_rs_remove 11" }
+		whup	{ cmd "research_select 11; mn_rs_add 11;" }
+		whdown	{ cmd "research_select 11; mn_rs_remove 11;" }
 	}
 	pic bt_rs_remove11
 	{
@@ -687,10 +687,10 @@ menu research
 		image	menu/buttons_small
 		pos		"392 315"	mousefx	true
 		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 11; mn_rs_remove 11" }
+		click	{ cmd "research_select 11; mn_rs_remove 11;" }
 		repeat	true
-		whup	{ cmd "research_select 11; mn_rs_add 11" }
-		whdown	{ cmd "research_select 11; mn_rs_remove 11" }
+		whup	{ cmd "research_select 11; mn_rs_add 11;" }
+		whdown	{ cmd "research_select 11; mn_rs_remove 11;" }
 	}
 	pic bt_rs_add12
 	{
@@ -698,10 +698,10 @@ menu research
 		image	menu/buttons_small
 		pos		"376 340"	mousefx true
 		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 12; mn_rs_add 12" }
+		click	{ cmd "research_select 12; mn_rs_add 12;" }
 		repeat	true
-		whup	{ cmd "research_select 12; mn_rs_add 12" }
-		whdown	{ cmd "research_select 12; mn_rs_remove 12" }
+		whup	{ cmd "research_select 12; mn_rs_add 12;" }
+		whdown	{ cmd "research_select 12; mn_rs_remove 12;" }
 	}
 	pic bt_rs_remove12
 	{
@@ -709,10 +709,10 @@ menu research
 		image	menu/buttons_small
 		pos		"392 340"	mousefx	true
 		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 12; mn_rs_remove 12" }
+		click	{ cmd "research_select 12; mn_rs_remove 12;" }
 		repeat	true
-		whup	{ cmd "research_select 12; mn_rs_add 12" }
-		whdown	{ cmd "research_select 12; mn_rs_remove 12" }
+		whup	{ cmd "research_select 12; mn_rs_add 12;" }
+		whdown	{ cmd "research_select 12; mn_rs_remove 12;" }
 	}
 	pic bt_rs_add13
 	{
@@ -720,10 +720,10 @@ menu research
 		image	menu/buttons_small
 		pos		"376 365"	mousefx true
 		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 13; mn_rs_add 13" }
+		click	{ cmd "research_select 13; mn_rs_add 13;" }
 		repeat	true
-		whup	{ cmd "research_select 13; mn_rs_add 13" }
-		whdown	{ cmd "research_select 13; mn_rs_remove 13" }
+		whup	{ cmd "research_select 13; mn_rs_add 13;" }
+		whdown	{ cmd "research_select 13; mn_rs_remove 13;" }
 	}
 	pic bt_rs_remove13
 	{
@@ -731,10 +731,10 @@ menu research
 		image	menu/buttons_small
 		pos		"392 365"	mousefx	true
 		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 13; mn_rs_remove 13" }
+		click	{ cmd "research_select 13; mn_rs_remove 13;" }
 		repeat	true
-		whup	{ cmd "research_select 13; mn_rs_add 13" }
-		whdown	{ cmd "research_select 13; mn_rs_remove 13" }
+		whup	{ cmd "research_select 13; mn_rs_add 13;" }
+		whdown	{ cmd "research_select 13; mn_rs_remove 13;" }
 	}
 	pic bt_rs_add14
 	{
@@ -742,10 +742,10 @@ menu research
 		image	menu/buttons_small
 		pos		"376 390"	mousefx true
 		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 14; mn_rs_add 14" }
+		click	{ cmd "research_select 14; mn_rs_add 14;" }
 		repeat	true
-		whup	{ cmd "research_select 14; mn_rs_add 14" }
-		whdown	{ cmd "research_select 14; mn_rs_remove 14" }
+		whup	{ cmd "research_select 14; mn_rs_add 14;" }
+		whdown	{ cmd "research_select 14; mn_rs_remove 14;" }
 	}
 	pic bt_rs_remove14
 	{
@@ -753,10 +753,10 @@ menu research
 		image	menu/buttons_small
 		pos		"392 390"	mousefx	true
 		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 14; mn_rs_remove 14" }
+		click	{ cmd "research_select 14; mn_rs_remove 14;" }
 		repeat	true
-		whup	{ cmd "research_select 14; mn_rs_add 14" }
-		whdown	{ cmd "research_select 14; mn_rs_remove 14" }
+		whup	{ cmd "research_select 14; mn_rs_add 14;" }
+		whdown	{ cmd "research_select 14; mn_rs_remove 14;" }
 	}
 	pic bt_rs_add15
 	{
@@ -764,10 +764,10 @@ menu research
 		image	menu/buttons_small
 		pos		"376 415"	mousefx true
 		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 15; mn_rs_add 15" }
+		click	{ cmd "research_select 15; mn_rs_add 15;" }
 		repeat	true
-		whup	{ cmd "research_select 15; mn_rs_add 15" }
-		whdown	{ cmd "research_select 15; mn_rs_remove 15" }
+		whup	{ cmd "research_select 15; mn_rs_add 15;" }
+		whdown	{ cmd "research_select 15; mn_rs_remove 15;" }
 	}
 	pic bt_rs_remove15
 	{
@@ -775,10 +775,10 @@ menu research
 		image	menu/buttons_small
 		pos		"392 415"	mousefx	true
 		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 15; mn_rs_remove 15" }
+		click	{ cmd "research_select 15; mn_rs_remove 15;" }
 		repeat	true
-		whup	{ cmd "research_select 15; mn_rs_add 15" }
-		whdown	{ cmd "research_select 15; mn_rs_remove 15" }
+		whup	{ cmd "research_select 15; mn_rs_add 15;" }
+		whdown	{ cmd "research_select 15; mn_rs_remove 15;" }
 	}
 	pic bt_rs_add16
 	{
@@ -786,10 +786,10 @@ menu research
 		image	menu/buttons_small
 		pos		"376 440"	mousefx true
 		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 16; mn_rs_add 16" }
+		click	{ cmd "research_select 16; mn_rs_add 16;" }
 		repeat	true
-		whup	{ cmd "research_select 16; mn_rs_add 16" }
-		whdown	{ cmd "research_select 16; mn_rs_remove 16" }
+		whup	{ cmd "research_select 16; mn_rs_add 16;" }
+		whdown	{ cmd "research_select 16; mn_rs_remove 16;" }
 	}
 	pic bt_rs_remove16
 	{
@@ -797,10 +797,10 @@ menu research
 		image	menu/buttons_small
 		pos		"392 440"	mousefx	true
 		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 16; mn_rs_remove 16" }
+		click	{ cmd "research_select 16; mn_rs_remove 16;" }
 		repeat	true
-		whup	{ cmd "research_select 16; mn_rs_add 16" }
-		whdown	{ cmd "research_select 16; mn_rs_remove 16" }
+		whup	{ cmd "research_select 16; mn_rs_add 16;" }
+		whdown	{ cmd "research_select 16; mn_rs_remove 16;" }
 	}
 	pic bt_rs_add17
 	{
@@ -808,10 +808,10 @@ menu research
 		image	menu/buttons_small
 		pos		"376 465"	mousefx true
 		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 17; mn_rs_add 17" }
+		click	{ cmd "research_select 17; mn_rs_add 17;" }
 		repeat	true
-		whup	{ cmd "research_select 17; mn_rs_add 17" }
-		whdown	{ cmd "research_select 17; mn_rs_remove 17" }
+		whup	{ cmd "research_select 17; mn_rs_add 17;" }
+		whdown	{ cmd "research_select 17; mn_rs_remove 17;" }
 	}
 	pic bt_rs_remove17
 	{
@@ -819,10 +819,10 @@ menu research
 		image	menu/buttons_small
 		pos		"392 465"	mousefx	true
 		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 17; mn_rs_remove 17" }
+		click	{ cmd "research_select 17; mn_rs_remove 17;" }
 		repeat	true
-		whup	{ cmd "research_select 17; mn_rs_add 17" }
-		whdown	{ cmd "research_select 17; mn_rs_remove 17" }
+		whup	{ cmd "research_select 17; mn_rs_add 17;" }
+		whdown	{ cmd "research_select 17; mn_rs_remove 17;" }
 	}
 	pic bt_rs_add18
 	{
@@ -830,10 +830,10 @@ menu research
 		image	menu/buttons_small
 		pos		"376 490"	mousefx true
 		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 18; mn_rs_add 18" }
+		click	{ cmd "research_select 18; mn_rs_add 18;" }
 		repeat	true
-		whup	{ cmd "research_select 18; mn_rs_add 18" }
-		whdown	{ cmd "research_select 18; mn_rs_remove 18" }
+		whup	{ cmd "research_select 18; mn_rs_add 18;" }
+		whdown	{ cmd "research_select 18; mn_rs_remove 18;" }
 	}
 	pic bt_rs_remove18
 	{
@@ -841,10 +841,10 @@ menu research
 		image	menu/buttons_small
 		pos		"392 490"	mousefx	true
 		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 18; mn_rs_remove 18" }
+		click	{ cmd "research_select 18; mn_rs_remove 18;" }
 		repeat	true
-		whup	{ cmd "research_select 18; mn_rs_add 18" }
-		whdown	{ cmd "research_select 18; mn_rs_remove 18" }
+		whup	{ cmd "research_select 18; mn_rs_add 18;" }
+		whdown	{ cmd "research_select 18; mn_rs_remove 18;" }
 	}
 	pic bt_rs_add19
 	{
@@ -852,10 +852,10 @@ menu research
 		image	menu/buttons_small
 		pos		"376 515"	mousefx true
 		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 19; mn_rs_add 19" }
+		click	{ cmd "research_select 19; mn_rs_add 19;" }
 		repeat	true
-		whup	{ cmd "research_select 19; mn_rs_add 19" }
-		whdown	{ cmd "research_select 19; mn_rs_remove 19" }
+		whup	{ cmd "research_select 19; mn_rs_add 19;" }
+		whdown	{ cmd "research_select 19; mn_rs_remove 19;" }
 	}
 	pic bt_rs_remove19
 	{
@@ -863,10 +863,10 @@ menu research
 		image	menu/buttons_small
 		pos		"392 515"	mousefx	true
 		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 19; mn_rs_remove 19" }
+		click	{ cmd "research_select 19; mn_rs_remove 19;" }
 		repeat	true
-		whup	{ cmd "research_select 19; mn_rs_add 19" }
-		whdown	{ cmd "research_select 19; mn_rs_remove 19" }
+		whup	{ cmd "research_select 19; mn_rs_add 19;" }
+		whdown	{ cmd "research_select 19; mn_rs_remove 19;" }
 	}
 	pic bt_rs_add20
 	{
@@ -874,10 +874,10 @@ menu research
 		image	menu/buttons_small
 		pos		"376 540"	mousefx true
 		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 20; mn_rs_add 20" }
+		click	{ cmd "research_select 20; mn_rs_add 20;" }
 		repeat	true
-		whup	{ cmd "research_select 20; mn_rs_add 20" }
-		whdown	{ cmd "research_select 20; mn_rs_remove 20" }
+		whup	{ cmd "research_select 20; mn_rs_add 20;" }
+		whdown	{ cmd "research_select 20; mn_rs_remove 20;" }
 	}
 	pic bt_rs_remove20
 	{
@@ -885,10 +885,10 @@ menu research
 		image	menu/buttons_small
 		pos		"392 540"	mousefx	true
 		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 20; mn_rs_remove 20" }
+		click	{ cmd "research_select 20; mn_rs_remove 20;" }
 		repeat	true
-		whup	{ cmd "research_select 20; mn_rs_add 20" }
-		whdown	{ cmd "research_select 20; mn_rs_remove 20" }
+		whup	{ cmd "research_select 20; mn_rs_add 20;" }
+		whdown	{ cmd "research_select 20; mn_rs_remove 20;" }
 	}
 	pic bt_rs_add21
 	{
@@ -896,10 +896,10 @@ menu research
 		image	menu/buttons_small
 		pos		"376 565"	mousefx true
 		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 21; mn_rs_add 21" }
+		click	{ cmd "research_select 21; mn_rs_add 21;" }
 		repeat	true
-		whup	{ cmd "research_select 21; mn_rs_add 21" }
-		whdown	{ cmd "research_select 21; mn_rs_remove 21" }
+		whup	{ cmd "research_select 21; mn_rs_add 21;" }
+		whdown	{ cmd "research_select 21; mn_rs_remove 21;" }
 	}
 	pic bt_rs_remove21
 	{
@@ -907,10 +907,10 @@ menu research
 		image	menu/buttons_small
 		pos		"392 565"	mousefx	true
 		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 21; mn_rs_remove 21" }
+		click	{ cmd "research_select 21; mn_rs_remove 21;" }
 		repeat	true
-		whup	{ cmd "research_select 21; mn_rs_add 21" }
-		whdown	{ cmd "research_select 21; mn_rs_remove 21" }
+		whup	{ cmd "research_select 21; mn_rs_add 21;" }
+		whdown	{ cmd "research_select 21; mn_rs_remove 21;" }
 	}
 	pic bt_rs_add22
 	{
@@ -918,10 +918,10 @@ menu research
 		image	menu/buttons_small
 		pos		"376 590"	mousefx true
 		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 22; mn_rs_add 22" }
+		click	{ cmd "research_select 22; mn_rs_add 22;" }
 		repeat	true
-		whup	{ cmd "research_select 22; mn_rs_add 22" }
-		whdown	{ cmd "research_select 22; mn_rs_remove 22" }
+		whup	{ cmd "research_select 22; mn_rs_add 22;" }
+		whdown	{ cmd "research_select 22; mn_rs_remove 22;" }
 	}
 	pic bt_rs_remove22
 	{
@@ -929,10 +929,10 @@ menu research
 		image	menu/buttons_small
 		pos		"392 590"	mousefx	true
 		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 22; mn_rs_remove 22" }
+		click	{ cmd "research_select 22; mn_rs_remove 22;" }
 		repeat	true
-		whup	{ cmd "research_select 22; mn_rs_add 22" }
-		whdown	{ cmd "research_select 22; mn_rs_remove 22" }
+		whup	{ cmd "research_select 22; mn_rs_add 22;" }
+		whdown	{ cmd "research_select 22; mn_rs_remove 22;" }
 	}
 	pic bt_rs_add23
 	{
@@ -940,10 +940,10 @@ menu research
 		image	menu/buttons_small
 		pos		"376 615"	mousefx true
 		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 23; mn_rs_add 23" }
+		click	{ cmd "research_select 23; mn_rs_add 23;" }
 		repeat	true
-		whup	{ cmd "research_select 23; mn_rs_add 23" }
-		whdown	{ cmd "research_select 23; mn_rs_remove 23" }
+		whup	{ cmd "research_select 23; mn_rs_add 23;" }
+		whdown	{ cmd "research_select 23; mn_rs_remove 23;" }
 	}
 	pic bt_rs_remove23
 	{
@@ -951,10 +951,10 @@ menu research
 		image	menu/buttons_small
 		pos		"392 615"	mousefx	true
 		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 23; mn_rs_remove 23" }
+		click	{ cmd "research_select 23; mn_rs_remove 23;" }
 		repeat	true
-		whup	{ cmd "research_select 23; mn_rs_add 23" }
-		whdown	{ cmd "research_select 23; mn_rs_remove 23" }
+		whup	{ cmd "research_select 23; mn_rs_add 23;" }
+		whdown	{ cmd "research_select 23; mn_rs_remove 23;" }
 	}
 	pic bt_rs_add24
 	{
@@ -962,10 +962,10 @@ menu research
 		image	menu/buttons_small
 		pos		"376 640"	mousefx true
 		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 24; mn_rs_add 24" }
+		click	{ cmd "research_select 24; mn_rs_add 24;" }
 		repeat	true
-		whup	{ cmd "research_select 24; mn_rs_add 24" }
-		whdown	{ cmd "research_select 24; mn_rs_remove 24" }
+		whup	{ cmd "research_select 24; mn_rs_add 24;" }
+		whdown	{ cmd "research_select 24; mn_rs_remove 24;" }
 	}
 	pic bt_rs_remove24
 	{
@@ -973,10 +973,10 @@ menu research
 		image	menu/buttons_small
 		pos		"392 640"	mousefx	true
 		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 24; mn_rs_remove 24" }
+		click	{ cmd "research_select 24; mn_rs_remove 24;" }
 		repeat	true
-		whup	{ cmd "research_select 24; mn_rs_add 24" }
-		whdown	{ cmd "research_select 24; mn_rs_remove 24" }
+		whup	{ cmd "research_select 24; mn_rs_add 24;" }
+		whdown	{ cmd "research_select 24; mn_rs_remove 24;" }
 	}
 	pic bt_rs_add25
 	{
@@ -984,10 +984,10 @@ menu research
 		image	menu/buttons_small
 		pos		"376 665"	mousefx true
 		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 25; mn_rs_add 25" }
+		click	{ cmd "research_select 25; mn_rs_add 25;" }
 		repeat	true
-		whup	{ cmd "research_select 25; mn_rs_add 25" }
-		whdown	{ cmd "research_select 25; mn_rs_remove 25" }
+		whup	{ cmd "research_select 25; mn_rs_add 25;" }
+		whdown	{ cmd "research_select 25; mn_rs_remove 25;" }
 	}
 	pic bt_rs_remove25
 	{
@@ -995,10 +995,10 @@ menu research
 		image	menu/buttons_small
 		pos		"392 665"	mousefx	true
 		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 25; mn_rs_remove 25" }
+		click	{ cmd "research_select 25; mn_rs_remove 25;" }
 		repeat	true
-		whup	{ cmd "research_select 25; mn_rs_add 25" }
-		whdown	{ cmd "research_select 25; mn_rs_remove 25" }
+		whup	{ cmd "research_select 25; mn_rs_add 25;" }
+		whdown	{ cmd "research_select 25; mn_rs_remove 25;" }
 	}
 	pic bt_rs_add26
 	{
@@ -1006,10 +1006,10 @@ menu research
 		image	menu/buttons_small
 		pos		"376 690"	mousefx true
 		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 26; mn_rs_add 26" }
+		click	{ cmd "research_select 26; mn_rs_add 26;" }
 		repeat	true
-		whup	{ cmd "research_select 26; mn_rs_add 26" }
-		whdown	{ cmd "research_select 26; mn_rs_remove 26" }
+		whup	{ cmd "research_select 26; mn_rs_add 26;" }
+		whdown	{ cmd "research_select 26; mn_rs_remove 26;" }
 	}
 	pic bt_rs_remove26
 	{
@@ -1019,8 +1019,8 @@ menu research
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 26; mn_rs_remove 26" }
 		repeat	true
-		whup	{ cmd "research_select 26; mn_rs_add 26" }
-		whdown	{ cmd "research_select 26; mn_rs_remove 26" }
+		whup	{ cmd "research_select 26; mn_rs_add 26;" }
+		whdown	{ cmd "research_select 26; mn_rs_remove 26;" }
 	}
 	pic bt_rs_add27
 	{
@@ -1028,10 +1028,10 @@ menu research
 		image	menu/buttons_small
 		pos		"376 715"	mousefx true
 		texl	"0 0"		texh	"16 16"
-		click	{ cmd "research_select 27; mn_rs_add 27" }
+		click	{ cmd "research_select 27; mn_rs_add 27;" }
 		repeat	true
-		whup	{ cmd "research_select 27; mn_rs_add 27" }
-		whdown	{ cmd "research_select 27; mn_rs_remove 27" }
+		whup	{ cmd "research_select 27; mn_rs_add 27;" }
+		whdown	{ cmd "research_select 27; mn_rs_remove 27;" }
 	}
 	pic bt_rs_remove27
 	{
@@ -1039,10 +1039,10 @@ menu research
 		image	menu/buttons_small
 		pos		"392 715"	mousefx	true
 		texl	"16 0"		texh	"32 16"
-		click	{ cmd "research_select 27; mn_rs_remove 27" }
+		click	{ cmd "research_select 27; mn_rs_remove 27;" }
 		repeat	true
-		whup	{ cmd "research_select 27; mn_rs_add 27" }
-		whdown	{ cmd "research_select 27; mn_rs_remove 27" }
+		whup	{ cmd "research_select 27; mn_rs_add 27;" }
+		whdown	{ cmd "research_select 27; mn_rs_remove 27;" }
 	}
 
 	// ==================
@@ -1160,7 +1160,7 @@ menu research
 		pos		"720 700"
 		texl    "0 0"
 		texh    "64 64"
-		click	{ cmd mn_stop_research }
+		click	{ cmd "mn_stop_research;" }
 	}
 
 	pic bt_start
@@ -1171,7 +1171,7 @@ menu research
 		pos		"650 696"
 		texl	"0 64"
 		texh	"64 128"
-		click	{ cmd mn_start_research }
+		click	{ cmd "mn_start_research;" }
 	}
 
 	pic bt_pedia
@@ -1182,7 +1182,7 @@ menu research
 		pos		"790 696"
 		texl	"64 64"
 		texh	"128 128"
-		click	{ cmd mn_show_ufopedia }
+		click	{ cmd "mn_show_ufopedia;" }
 	}
 
 	// ==================
@@ -1196,7 +1196,7 @@ menu research
 		pos		"920 630"
 		texl	"0 0"
 		texh	"64 37"
-		click	{ cmd mn_pop }
+		click	{ cmd "mn_pop;" }
 	}
 
 	// ==================
@@ -1235,6 +1235,6 @@ menu research
 	// ==================
 	func init
 	{
-		cmd research_init;
+		cmd "research_init;"
 	}
 }

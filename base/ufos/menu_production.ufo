@@ -86,7 +86,7 @@ menu production
 
 	string txt_prod_workers_caption
 	{
-		string	"_Workers (all/ready):"
+		string	"_Workers (ready/all):"
 		pos	"610 95"
 		font	f_small
 		align	ul
@@ -581,7 +581,7 @@ menu air_production
 
 	string txt_prod_workers_caption
 	{
-		string	"_Workers (all/ready):"
+		string	"_Workers (ready/all):"
 		pos	"610 95"
 		font	f_small
 		align	ul

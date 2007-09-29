@@ -1009,15 +1009,14 @@ static void PR_ProductionList_f (void)
 	else
 		baseCurrent->capacities[CAP_WORKSPACE].cur = baseCurrent->capacities[CAP_WORKSPACE].max;
 
-	/* FIXME: turn this around? cur/max? */
 	Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i",
-		E_CountHired(baseCurrent, EMPL_WORKER),
-		baseCurrent->capacities[CAP_WORKSPACE].cur);
+		baseCurrent->capacities[CAP_WORKSPACE].cur,
+		E_CountHired(baseCurrent, EMPL_WORKER));
 	Cvar_Set("mn_production_workers", tmpbuf);
 
 	Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i",
-		baseCurrent->capacities[CAP_ITEMS].max,
-		baseCurrent->capacities[CAP_ITEMS].cur);
+		baseCurrent->capacities[CAP_ITEMS].cur,
+		baseCurrent->capacities[CAP_ITEMS].max);
 	Cvar_Set("mn_production_storage", tmpbuf);
 }
 
