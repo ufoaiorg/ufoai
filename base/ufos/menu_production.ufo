@@ -647,7 +647,7 @@ menu air_production
 		pos		"430 68"
 		texh	"48 48"
 		texl	"32 32"
-		click	{ cmd "mn_textscroll prodlist -1;mn_textscroll prodlist_amount -1" }
+		click	{ cmd "mn_textscroll prodlist -1;mn_textscroll prodlist_amount -1;" }
 		repeat	true
 		out		{ *button_scrollup texl "32 32" *button_scrollup texh "48 48" }
 		in		{ *button_scrollup texl "48 32" *button_scrollup texh "64 48" }
@@ -661,7 +661,7 @@ menu air_production
 		pos		"430 715"
 		texl	"32 48"
 		texh	"48 64"
-		click	{ cmd "mn_textscroll prodlist 1;mn_textscroll prodlist_amount 1" }
+		click	{ cmd "mn_textscroll prodlist 1;mn_textscroll prodlist_amount 1;" }
 		repeat	true
 		out		{ *button_scrolldown texl "32 48" *button_scrolldown texh "48 64" }
 		in		{ *button_scrolldown texl "48 48" *button_scrolldown texh "64 64" }
@@ -724,10 +724,10 @@ menu air_production
 		tooltip "_Increase production by 1"
 		texl	"16 0"
 		texh	"32 16"
-		click	{ cmd "prod_inc" }
+		click	{ cmd "prod_inc;" }
 		repeat	true
-		whup	{ cmd "prod_inc" }
-		whdown	{ cmd "prod_dec" }
+		whup	{ cmd "prod_inc;" }
+		whdown	{ cmd "prod_dec;" }
 	}
 
 	pic prod_stop
@@ -737,7 +737,7 @@ menu air_production
 		tooltip "_Stop production"
 		texl	"48 16"
 		texh	"64 32"
-		click	{ cmd "prod_stop" }
+		click	{ cmd "prod_stop;" }
 	}
 
 	pic prod_dec
@@ -747,10 +747,10 @@ menu air_production
 		tooltip "_Decrease production by 1"
 		texl	"0 0"
 		texh	"16 16"
-		click	{ cmd "prod_dec" }
+		click	{ cmd "prod_dec;" }
 		repeat	true
-		whup	{ cmd "prod_inc" }
-		whdown	{ cmd "prod_dec" }
+		whup	{ cmd "prod_inc;" }
+		whdown	{ cmd "prod_dec;" }
 	}
 
 	pic prod_up
@@ -760,10 +760,10 @@ menu air_production
 		tooltip "_Increase priority"
 		texl	"0 0"
 		texh	"16 16"
-		click	{ cmd "prod_up" }
+		click	{ cmd "prod_up;" }
 		repeat	true
-		whup	{ cmd "prod_up" }
-		whdown	{ cmd "prod_down" }
+		whup	{ cmd "prod_up;" }
+		whdown	{ cmd "prod_down;" }
 	}
 
 	pic prod_down
@@ -773,10 +773,10 @@ menu air_production
 		tooltip "_Decrease priority"
 		texl	"0 16"
 		texh	"16 32"
-		click	{ cmd "prod_down" }
+		click	{ cmd "prod_down;" }
 		repeat	true
-		whup	{ cmd "prod_up" }
-		whdown	{ cmd "prod_down" }
+		whup	{ cmd "prod_up;" }
+		whdown	{ cmd "prod_down;" }
 	}
 
 	// ==================
@@ -855,13 +855,13 @@ menu air_production
 
 	pic bt_continue
 	{
-		tooltip	"_Back to baseview"
+		tooltip	"_Back to hangar"
 		image	hud/buttons2
 		mousefx	true
 		pos		"940 686"
 		texl	"0 0"
 		texh	"64 37"
-		click	{ cmd mn_pop }
+		click	{ cmd "mn_pop;" }
 	}
 
 	// ==================
