@@ -476,6 +476,7 @@ title "_Village recreational"
 +drop "1 1"
 }
 
+/*
 assembly big
 {
 size "10 10"
@@ -511,4 +512,4 @@ title "_Village big"
 +c04 "0 2"
 +drop "1 1"
 }
-
+*/
