@@ -305,9 +305,9 @@ tile +r03
 4 5
 
 0  eo   abdlmn  0
-r  +o   +a      acdopq
-r  +o   +a      acdopq
-r  +o   +a      acdopq
+z  +o   +a      acdopq
+z  +o   +a      acdopq
+z  +o   +a      acdopq
 0  eo   abdijk  0
 }
 //--
@@ -318,9 +318,9 @@ tile +r03_2
 4 5
 
 0       abdlmn   er   0
-acdrst  +a       +r   o
-acdrst  +a       +r   o
-acdrst  +a       +r   o
+acdrst  +a       +r   z
+acdrst  +a       +r   z
+acdrst  +a       +r   z
 0       abdijk   er   0
 }
 //--
