@@ -5112,7 +5112,7 @@ static void CP_CampaignActivateStage_f (void)
 }
 
 /**
- * @brief Autocomplete function for some network functions
+ * @brief Autocomplete function the debug_campaignactivatestage function
  * @sa Cmd_AddParamCompleteFunction
  * @sa CP_CampaignActivateStage_f
  */
