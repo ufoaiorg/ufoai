@@ -164,7 +164,7 @@ typedef struct routing_s {
 	byte areaStored[HEIGHT][WIDTH][WIDTH];
 
 	/* forbidden list */
-	byte **fblist;	/**< pointer to forbidden list (entities are standing here) */
+	pos_t **fblist;	/**< pointer to forbidden list (entities are standing here) */
 	int fblength;	/**< length of forbidden list (amount of entries) */
 } routing_t;
 
@@ -843,7 +843,7 @@ static qboolean CM_TestConnection (routing_t * map, int x, int y, byte z, unsign
  * @param[in] z The z position in the routing arrays (0 - HEIGHT-1)
  * @sa Grid_RecalcRouting
  */
-static void CM_CheckUnit (routing_t * map, int x, int y, byte z)
+static void CM_CheckUnit (routing_t * map, int x, int y, pos_t z)
 {
 	vec3_t start, end;
 	vec3_t tend, tvs, tve;
@@ -990,7 +990,8 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 	static byte temp_step[WIDTH][WIDTH];
 	byte *source;
 	int length;
-	int x, y, z;
+	int x, y;
+	pos_t z;
 	int maxX, maxY;
 	int ax, ay;
 	unsigned int i;
@@ -2370,7 +2371,7 @@ int CM_TestLineDM (vec3_t start, vec3_t stop, vec3_t end)
  */
 static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, byte z)
 {
-	byte **p;
+	pos_t **p;
 	int i;
 	byte *forbidden_size;
 
@@ -2425,13 +2426,13 @@ static int poslistNew[4][2];
  * @sa Grid_CheckForbidden
  * @todo Add height/fall checks for actor size (2x2).
  */
-static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dir, int h, byte ol, int actor_size)
+static void Grid_MoveMark (struct routing_s *map, int x, int y, pos_t z, int dir, int h, byte ol, int actor_size)
 {
-	int nx, ny, sh;
+	int nx, ny;
+	pos_t sh;
 	int dx, dy;
 	pos3_t dummy;
-	byte l;
-
+	pos_t l;
 	pos3_t poslist[4];	/**< All positions of a 2x2 unit (at the original location). @sa poslistNew */
 
 #ifdef PARANOID
@@ -2452,8 +2453,8 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, byte z, int dir,
 
 	dx = dvecs[dir][0];	/**< Get the difference value for x for this direction. (can be pos or neg) */
 	dy = dvecs[dir][1];	/**< Get the difference value for y for this direction. (can be pos or neg) */
-	nx = x + dx;		/**< "new" x value = starting x value + difference from shoosen direction */
-	ny = y + dy;		/**< "new" y value = starting y value + difference from shoosen direction */
+	nx = x + dx;		/**< "new" x value = starting x value + difference from choosen direction */
+	ny = y + dy;		/**< "new" y value = starting y value + difference from choosen direction */
 
 
 	/* Connection checks  (Guess: Abort if any of the 'straight' directions are not connected to the original position.) */
@@ -2627,7 +2628,7 @@ static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, i
 {
 	int x, y;
 	int dir;	/**< Direction vector index */
-	byte l, z, h;
+	pos_t l, z, h;
 
 	for (z = 0; z < HEIGHT; z++)
 		for (y = yl; y <= yh; y++)
@@ -2668,7 +2669,7 @@ static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, i
  */
 void Grid_MoveCalc (struct routing_s *map, pos3_t from, int actor_size, int distance, byte ** fb_list, int fb_length)
 {
-	int xl, xh, yl, yh;	/* Guess: _h_igh/upper and _l_ow end of the exptending rectangle - see below. */
+	int xl, xh, yl, yh;	/* Guess: _h_igh/upper and _l_ow end of the extending rectangle - see below. */
 	int i;			/* Distance counter */
 
 	/* reset move data */
@@ -2678,7 +2679,7 @@ void Grid_MoveCalc (struct routing_s *map, pos3_t from, int actor_size, int dist
 	map->fblist = fb_list;
 	map->fblength = fb_length;
 
-	VectorCopy(from, exclude_from_forbiddenlist); /**< Prepare exclusion of starting-location (i.e. tzhis should be ent-pos or le-pos) in Grid_CheckForbidden */
+	VectorCopy(from, exclude_from_forbiddenlist); /**< Prepare exclusion of starting-location (i.e. this should be ent-pos or le-pos) in Grid_CheckForbidden */
 
 	xl = xh = from[0];	/**< Guess: set minimum and maximum x value to start value? See Grid_MoveMarkRoute. */
 	yl = yh = from[1];	/**< Guess: set minimum and maximum y value to start value? See Grid_MoveMarkRoute. */
@@ -2739,7 +2740,7 @@ void Grid_MoveCalc (struct routing_s *map, pos3_t from, int actor_size, int dist
  */
 void Grid_MoveStore (struct routing_s *map)
 {
-	memcpy(map->areaStored, map->area, WIDTH * WIDTH * HEIGHT);
+	memcpy(map->areaStored, map->area, sizeof(map->areaStored));
 }
 
 
@@ -2751,7 +2752,7 @@ void Grid_MoveStore (struct routing_s *map)
  * @return ROUTING_NOT_REACHABLE if the move isn't possible
  * @return length of move otherwise (TUs)
  */
-byte Grid_MoveLength (struct routing_s *map, pos3_t to, qboolean stored)
+pos_t Grid_MoveLength (struct routing_s *map, pos3_t to, qboolean stored)
 {
 #ifdef PARANOID
 	if (to[2] >= HEIGHT) {
@@ -2770,14 +2771,18 @@ byte Grid_MoveLength (struct routing_s *map, pos3_t to, qboolean stored)
 /**
  * @param[in] map Pointer to client or server side routing table (clMap, svMap)
  * @sa Grid_MoveNext
+ * @param[in] map The routing table of the current loaded map
+ * @param[in] pos
+ * @param[in] sz
+ * @param[in] l
  * @todo add 2x2 unit support
  */
-static byte Grid_MoveCheck (struct routing_s *map, pos3_t pos, byte sz, byte l)
+static byte Grid_MoveCheck (struct routing_s *map, pos3_t pos, pos_t sz, byte l)
 {
 	int x, y, sh;
-	int dir; /**< Direction vector index */
+	byte dir; /**< Direction vector index */
 	int dx, dy;
-	byte z;
+	pos_t z;
 	pos3_t dummy;
 
 #ifdef PARANOID
@@ -2852,10 +2857,10 @@ static byte Grid_MoveCheck (struct routing_s *map, pos3_t pos, byte sz, byte l)
  * @return (Guess: a direction index (see dvecs and DIRECTIONS))
  * @sa Grid_MoveCheck
  */
-byte Grid_MoveNext (struct routing_s *map, pos3_t from)
+pos_t Grid_MoveNext (struct routing_s *map, pos3_t from)
 {
-	int x, y, dv;
-	byte l, z;
+	byte dv;
+	pos_t l, z;
 
 	l = R_AREA(map, from[0], from[1], from[2]); /**< Get TUs for this square */
 
@@ -2864,10 +2869,6 @@ byte Grid_MoveNext (struct routing_s *map, pos3_t from)
 		/* ROUTING_NOT_REACHABLE means, not possible/reachable */
 		return ROUTING_NOT_REACHABLE;
 	}
-
-	/* initialize tests */
-	x = from[0];
-	y = from[1];
 
 	/* do tests */
 	for (z = 0; z < HEIGHT; z++) {
@@ -2884,7 +2885,7 @@ byte Grid_MoveNext (struct routing_s *map, pos3_t from)
 }
 
 
-byte Grid_Height (struct routing_s *map, pos3_t pos)
+pos_t Grid_Height (struct routing_s *map, pos3_t pos)
 {
 	/* max 8 levels */
 	if (pos[2] >= HEIGHT) {
@@ -2903,9 +2904,9 @@ byte Grid_Height (struct routing_s *map, pos3_t pos)
  * @return New z (height) value.
  * @return 0xFF if an error occured.
  */
-byte Grid_Fall (struct routing_s *map, pos3_t pos, int actor_size)
+pos_t Grid_Fall (struct routing_s *map, pos3_t pos, int actor_size)
 {
-	byte z = pos[2];
+	pos_t z = pos[2];
 
 	/* is z off-map? */
 	if (z >= HEIGHT) {
@@ -2970,7 +2971,7 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **l
 	cBspModel_t *model;
 	pos3_t min, max;
 	int x, y;
-	byte z;
+	pos_t z;
 	unsigned int i;
 
 	/* get inline model, if it is one */

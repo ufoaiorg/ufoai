@@ -62,10 +62,10 @@ extern struct routing_s svMap, clMap;
 void Grid_RecalcRouting(struct routing_s *map, const char *name, const char **list);
 void Grid_MoveCalc(struct routing_s *map, pos3_t from, int size, int distance, byte ** fb_list, int fb_length);
 void Grid_MoveStore(struct routing_s *map);
-byte Grid_MoveLength(struct routing_s *map, pos3_t to, qboolean stored);
-byte Grid_MoveNext(struct routing_s *map, pos3_t from);
-byte Grid_Height(struct routing_s *map, pos3_t pos);
-byte Grid_Fall(struct routing_s *map, pos3_t pos, int actor_size);
+pos_t Grid_MoveLength(struct routing_s *map, pos3_t to, qboolean stored);
+pos_t Grid_MoveNext(struct routing_s *map, pos3_t from);
+pos_t Grid_Height(struct routing_s *map, pos3_t pos);
+pos_t Grid_Fall(struct routing_s *map, pos3_t pos, int actor_size);
 void Grid_PosToVec(struct routing_s *map, pos3_t pos, vec3_t vec);
 
 

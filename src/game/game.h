@@ -158,12 +158,12 @@ typedef struct {
 	int (IMPORT *TestLine) (vec3_t start, vec3_t stop);
 	float (IMPORT *GrenadeTarget) (vec3_t from, vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0);
 
-	void (IMPORT *MoveCalc) (struct routing_s * map, pos3_t from, int size, int distance, byte ** fb_list, int fb_length);
+	void (IMPORT *MoveCalc) (struct routing_s * map, pos3_t from, int size, int distance, pos_t ** fb_list, int fb_length);
 	void (IMPORT *MoveStore) (struct routing_s * map);
-	byte (IMPORT *MoveLength) (struct routing_s * map, pos3_t to, qboolean stored);
-	byte (IMPORT *MoveNext) (struct routing_s * map, pos3_t from);
-	byte (IMPORT *GridHeight) (struct routing_s * map, pos3_t pos);
-	byte (IMPORT *GridFall) (struct routing_s * map, pos3_t pos, int actor_size);
+	pos_t (IMPORT *MoveLength) (struct routing_s * map, pos3_t to, qboolean stored);
+	pos_t (IMPORT *MoveNext) (struct routing_s * map, pos3_t from);
+	pos_t (IMPORT *GridHeight) (struct routing_s * map, pos3_t pos);
+	pos_t (IMPORT *GridFall) (struct routing_s * map, pos3_t pos, int actor_size);
 	void (IMPORT *GridPosToVec) (struct routing_s * map, pos3_t pos, vec3_t vec);
 	void (IMPORT *GridRecalcRouting) (struct routing_s * map, const char *name, const char **list);
 

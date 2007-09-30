@@ -1949,7 +1949,7 @@ ACTOR MOVEMENT AND SHOOTING
  * @note Pointer to le->pos or edict->pos followed by le->fieldSize or edict->fieldSize
  * @see CL_BuildForbiddenList
  */
-byte *fb_list[MAX_FORBIDDENLIST];
+pos_t *fb_list[MAX_FORBIDDENLIST];
 /**
  * @brief Current length of fb_list.
  * @note all byte pointers in the fb_list list (pos + fieldSize)
@@ -3277,11 +3277,20 @@ void CL_ActorMouseTrace (void)
 	restingLevel = Grid_Fall(&clMap, testPos, fieldSize);
 
 	/* hack to prevent cursor from getting stuck on the top of an invisible
-	   playerclip surface (in most cases anyway) */
+	 * playerclip surface (in most cases anyway) */
 	PosToVec(testPos, pA);
 	VectorCopy(pA, pB);
 	pA[2] += UNIT_HEIGHT;
 	pB[2] -= UNIT_HEIGHT;
+	/* FIXME: The next three lines are not endian safe - the min call returns
+	 * 0 (restingLevel is correct here after the first Grid_Fall call) and thus
+	 * the cursor is invisible on every other level than 1
+	 * This bug is most likly related to the see-through-walls bug - so maybe
+	 * some of the trace functions are the not endian safe and the result is
+	 * seen here */
+	/* FIXME: Shouldn't we check the return value of CM_TestLineDM here - maybe
+	 * we don't have to do the second Grid_Fall call at all and can safe a lot
+	 * of traces */
 	CM_TestLineDM(pA, pB, pC);
 	VecToPos(pC, testPos);
 	restingLevel = min(restingLevel, Grid_Fall(&clMap, testPos, fieldSize));

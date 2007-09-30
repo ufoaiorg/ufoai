@@ -616,7 +616,7 @@ extern le_t *selActor;
 extern int actorMoveLength;
 extern invList_t invList[MAX_INVLIST];
 
-extern byte *fb_list[MAX_FORBIDDENLIST];
+extern pos_t *fb_list[MAX_FORBIDDENLIST];
 extern int fb_length;
 
 void MSG_Write_PA(player_action_t player_action, int num, ...);

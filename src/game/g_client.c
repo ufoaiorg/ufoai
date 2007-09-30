@@ -1131,7 +1131,7 @@ static void G_InventoryToFloor (edict_t * ent)
 }
 
 
-byte *fb_list[MAX_FORBIDDENLIST];
+pos_t *fb_list[MAX_FORBIDDENLIST];
 int fb_length;
 
 /**
