@@ -4645,6 +4645,7 @@ static void CP_UFORecovered_f (void)
 	Cvar_SetValue("mission_uforecoverydone", 0);	/* This is used in menus to block UFO Recovery nodes. */
 	Cvar_SetValue("mission_ufotype", UFOtype);
 	Cvar_SetValue("mission_recoverynation", -1);
+        Cvar_SetValue("mission_recoverybase", -1);
 	/* @todo block Sell button if no nation with requirements */
 	if (!store) {
 		/* Block store option if storing not possible. */
@@ -4693,8 +4694,11 @@ static void CP_UfoRecoveryBaseSelectPopup_f (void)
 
 	assert(base);
 
+	/* Pop the menu and launch it again - now with updated value of selected base. */
 	Cvar_SetValue("mission_recoverybase", base->idx);
 	Com_DPrintf(DEBUG_CLIENT, "CP_UfoRecoveryBaseSelectPopup_f()... picked base: %s\n", base->name);
+	MN_PopMenu(qfalse);
+	Cmd_ExecuteString("cp_uforecoverystore");
 }
 
 /**
@@ -4765,6 +4769,15 @@ static void CP_UFORecoveredStore_f (void)
 			Q_strcat(recoveryBaseSelectPopup, "\n", sizeof(recoveryBaseSelectPopup));
 			UFObases[j] = i;
 			j++;
+		}
+	}
+	Q_strcat(recoveryBaseSelectPopup, _("\n\nSelected base:\t\t\t"), sizeof(recoveryBaseSelectPopup));
+	if (Cvar_VariableInteger("mission_recoverybase") != -1) {
+		for (i = 0; i < MAX_BASES; i++) {
+			if (UFObases[i] == Cvar_VariableInteger("mission_recoverybase")) {
+				Q_strcat(recoveryBaseSelectPopup, gd.bases[UFObases[i]].name, sizeof(recoveryBaseSelectPopup));
+				break;
+			}
 		}
 	}
 	/* Do nothing without any base. */
@@ -4884,7 +4897,6 @@ static void CP_UFORecoveredSell_f (void)
 	}
 	Q_strcat(recoveryNationSelectPopup, _("\n\nSelected nation:\t\t\t"), sizeof(recoveryNationSelectPopup));
 	if (Cvar_VariableInteger("mission_recoverynation") != -1) {
-		Com_Printf("cvar: %i\n", Cvar_VariableInteger("mission_recoverynation"));
 		for (i = 0; i < gd.numNations; i++) {
 			if (i == Cvar_VariableInteger("mission_recoverynation")) {
 				Q_strcat(recoveryNationSelectPopup, _(gd.nations[i].name), sizeof(recoveryNationSelectPopup));
