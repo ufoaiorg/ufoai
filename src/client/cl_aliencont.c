@@ -915,6 +915,11 @@ static void AC_Init (void)
 		return;
 	}
 
+	Cvar_Set("mn_al_alientype", "");
+	Cvar_Set("mn_al_alienmodel", "");
+	Cvar_Set("mn_al_killed", "");
+	Cvar_Set("mn_al_alive", "");
+
 	if (baseCurrent->hasAlienCont) {
 		containment = baseCurrent->alienscont;
 		for (i = 0; i < gd.numAliensTD; i++) {
