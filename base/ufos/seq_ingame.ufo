@@ -22,15 +22,14 @@ sequence invasion
 	rem inv_sentence1
 }
 
-sequence ufos_are_coming
+sequence activate_xvi
 {
 	cmd "music space;music_start;"
 	cmd "seq_animspeed 100;"
 
 	2dobj uac_sentence1
 	{
-//		text	"_ufos_sentence1"
-		text	"_UFOs appear in the sky around the world ..."
+		text	"_xvi_seq_sentence1"
 		pos		"512 485"		align	uc
 		color	"0 1 0 1"
 		speed	"0 -30"
@@ -38,8 +37,7 @@ sequence ufos_are_coming
 	}
 	2dobj uac_sentence2
 	{
-//		text	"_ufos_sentence2"
-		text	"_(Catch them with your Interceptor to shoot them down.)"
+		text	"_xvi_seq_sentence2"
 		pos		"512 510"		align	uc
 		color	"0 1 0 1"
 		speed	"0 -30"

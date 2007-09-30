@@ -79,7 +79,7 @@ stage ufos_are_coming
 {
 	set first_coming	// set names have to be unique for game saving
 	{
-		sequence	ufos_are_coming
+		sequence	activate_xvi
 		delay		"0 2 7"
 //		frame		"0 12 0"
 		frame		"0 20 0"
