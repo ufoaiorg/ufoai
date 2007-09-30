@@ -467,7 +467,7 @@ menu aliencont
 	// ==================
 	func init
 	{
-		cmd aliencont_init;
+		cmd "aliencont_init;"
 	}
 	func close
 	{

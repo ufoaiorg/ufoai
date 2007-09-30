@@ -41,7 +41,7 @@ mission or_tabelbala
 	alienteam	taman
 	alienequip	stage1_workers
 	civilians	3
-	nation		"middle"
+	nation		"middle" // FIXME: Shouldn't this be africa not middle?
 	onlose		""
 	onwin		""
 	storyrelated	true
