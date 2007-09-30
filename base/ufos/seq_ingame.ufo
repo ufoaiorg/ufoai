@@ -11,8 +11,8 @@ sequence invasion
 	2dobj continue_txt
 	{
 		text	"_Click to continue"
-		pos	"950 750"
-		align	uc
+		pos	"1020 750"
+		align	ur
 		color	"0 0.6 0 1"
 		font	f_small
 	}
@@ -40,8 +40,8 @@ sequence activate_xvi
 	2dobj continue_txt
 	{
 		text	"_Click to continue"
-		pos	"950 750"
-		align	uc
+		pos	"1020 750"
+		align	ur
 		color	"0 0.6 0 1"
 		font	f_small
 	}
@@ -78,8 +78,8 @@ sequence alienbase
 	2dobj continue_txt
 	{
 		text	"_Click to continue"
-		pos	"950 750"
-		align	uc
+		pos	"1020 750"
+		align	ur
 		color	"0 0.6 0 1"
 		font	f_small
 	}
