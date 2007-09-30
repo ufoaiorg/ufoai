@@ -2997,7 +2997,7 @@ tech rs_craft_inter_dragon
 		tech rs_craft_ufo_scout
 		tech rs_craft_ufo_fighter
 	}
-	time	0
+	time	3000
 	producetime	600
 
 	mdl_top		inter_dragon
@@ -3009,12 +3009,17 @@ tech rs_craft_inter_stingray
 	description {
 		default "_inter_stingray_txt"
 	}
-	// pre_description	"_inter_stingray_pre_txt"
+	pre_description {
+		default "_inter_stingray_pre_txt"
+	}
 	up_chapter	crafts
 
 	provides	craft_inter_stingray
-	require_AND { tech nothing }
-	time	0
+	require_OR {
+		tech rs_craft_ufo_scout
+		tech rs_craft_ufo_fighter
+	}
+	time	3000
 	producetime	800
 
 	mdl_top		inter_stingray

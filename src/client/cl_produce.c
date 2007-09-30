@@ -783,7 +783,7 @@ static void PR_ProductionListClick_f (void)
 			} else {	/* Aircrafts. */
 				for (j = 0, i = 0; i < numAircraft_samples; i++) {
 					aircraft = &aircraft_samples[j];
-					if (aircraft->tech->produceTime >= 0) {
+					if ((aircraft->tech->produceTime >= 0) && RS_IsResearched_ptr(aircraft->tech)) {
 						if (j == idx) {
 							selectedQueueItem = qfalse;
 							selectedIndex = i;
