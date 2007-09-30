@@ -1147,7 +1147,7 @@ static void CP_CheckEvents (void)
 			 * (e.g. they expired) and have the storyRelated flag set */
 			if (mis->def->storyRelated && !mis->def->played) {
 				date_t date = {7, 0};
-				Q_strncpyz(messageBuffer, va(ngettext("The aliens had enough time to kill %i civilian at %s.", "The aliens had enough time to kill %i civilians at %s.", mis->def->civilians), mis->def->civilians, mis->def->name), MAX_MESSAGE_TEXT);
+				Q_strncpyz(messageBuffer, va(ngettext("The aliens had enough time to kill %i civilian at %s.", "The aliens had enough time to kill %i civilians at %s.", mis->def->civilians), mis->def->civilians, mis->def->location), MAX_MESSAGE_TEXT);
 				MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 				/* FIXME use set->def->expire */
 				mis->expire = Date_Add(ccs.date, Date_Random_Middle(date));
