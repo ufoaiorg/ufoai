@@ -190,8 +190,8 @@ sequence prolog
 	2dobj p_continue_txt
 	{
 		text	"_Click to continue"
-		pos	"950 750"
-		align	uc
+		pos	"1020 750"
+		align	ur
 		color	"0 0.6 0 1"
 		font	f_small
 	}
