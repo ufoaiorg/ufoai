@@ -438,23 +438,53 @@ void PR_ProductionRun (void)
 		if (prod->production) {	/* This is production, not disassembling. */
 			if (!prod->aircraft) {
 				/* Not enough money to produce more items in this base. */
-				if (od->price * PRODUCE_FACTOR/PRODUCE_DIVISOR > ccs.credits)
+				if (od->price * PRODUCE_FACTOR/PRODUCE_DIVISOR > ccs.credits) {
+					if (!prod->creditmessage) {
+						Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Not enough credits to finish production in base %s.\n"), gd.bases[i].name);
+						MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+						prod->creditmessage = qtrue;
+					}
 					continue;
+				}
 				/* Not enough free space in base storage for this item. */
-				if (gd.bases[i].capacities[CAP_ITEMS].max - gd.bases[i].capacities[CAP_ITEMS].cur < od->size)
+				if (gd.bases[i].capacities[CAP_ITEMS].max - gd.bases[i].capacities[CAP_ITEMS].cur < od->size) {
+					if (!prod->spacemessage) {
+						Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Not enough free storage space in base %s. Production paused.\n"), gd.bases[i].name);
+						MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+						prod->spacemessage = qtrue;
+					} 
 					continue;
+				}
 			} else {
 				/* Not enough money to produce more items in this base. */
-				if (aircraft->price * PRODUCE_FACTOR/PRODUCE_DIVISOR > ccs.credits)
+				if (aircraft->price * PRODUCE_FACTOR/PRODUCE_DIVISOR > ccs.credits) {
+					if (!prod->creditmessage) {
+						Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Not enough credits to finish production in base %s.\n"), gd.bases[i].name);
+						MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+						prod->creditmessage = qtrue;
+					}
 					continue;
+				}
 				/* Not enough free space in hangars for this aircraft. */
-				if (AIR_CalculateHangarStorage(prod->objID, &gd.bases[i], 0) <= 0)
+				if (AIR_CalculateHangarStorage(prod->objID, &gd.bases[i], 0) <= 0) {
+					if (!prod->spacemessage) {
+						Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Not enough free hangar space in base %s. Production paused.\n"), gd.bases[i].name);
+						MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+						prod->spacemessage = qtrue;
+					}
 					continue;
+				}
 			}
 		} else {		/* This is disassembling. */
 			if (gd.bases[i].capacities[CAP_ITEMS].max - gd.bases[i].capacities[CAP_ITEMS].cur <
-			INV_DisassemblyItem(NULL, INV_GetComponentsByItemIdx(prod->objID), qtrue))
+			INV_DisassemblyItem(NULL, INV_GetComponentsByItemIdx(prod->objID), qtrue)) {
+				if (!prod->spacemessage) {
+					Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Not enough free storage space in base %s. Disassembling paused.\n"), gd.bases[i].name);
+					MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+					prod->spacemessage = qtrue;
+				}
 				continue;
+			}
 		}
 
 #ifdef DEBUG

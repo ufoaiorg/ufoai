@@ -43,6 +43,8 @@ typedef struct production_s
 	signed int amount;	/**< How much are we producing. */
 	int timeLeft;		/**< Get this from tech. */
 	/**int workers;		Amount of workers assigned to the production. @todo unused? */
+	qboolean spacemessage;	/**< Used in No Free Space message adding. */
+	qboolean creditmessage;	/**< Used in No Credits message adding. */
 	qboolean production;	/**< True if this is real production, false when disassembling. */
 	qboolean aircraft;	/**< True if this is aircraft production. */
 	qboolean items_cached;	/**< If true the items required for production (of _one_ objID item) have been removed from production.
