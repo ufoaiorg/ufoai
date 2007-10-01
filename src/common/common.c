@@ -1043,7 +1043,7 @@ void LIST_AddString (linkedList_t** listDest, const char* data)
  * @brief Adds just a pointer to a new or to an already existing linked list
  * @sa LIST_Add
  */
-void LIST_AddPointer (linkedList_t** listDest, const char* data)
+void LIST_AddPointer (linkedList_t** listDest, void* data)
 {
 	linkedList_t *newEntry;
 	linkedList_t *list;
@@ -1055,6 +1055,7 @@ void LIST_AddPointer (linkedList_t** listDest, const char* data)
 	if (!*listDest) {
 		*listDest = (linkedList_t*)Mem_PoolAlloc(sizeof(linkedList_t), com_genericPool, 0);
 		(*listDest)->data = data;
+		(*listDest)->ptr = qtrue;
 		(*listDest)->next = NULL; /* not really needed - but for better readability */
 		return;
 	} else
@@ -1066,6 +1067,7 @@ void LIST_AddPointer (linkedList_t** listDest, const char* data)
 	newEntry = (linkedList_t*)Mem_PoolAlloc(sizeof(linkedList_t), com_genericPool, 0);
 	list->next = newEntry;
 	newEntry->data = data;
+	newEntry->ptr = qtrue;
 	newEntry->next = NULL; /* not really needed - but for better readability */
 }
 
@@ -1078,7 +1080,8 @@ void LIST_Delete (linkedList_t *list)
 
 	while (l) {
 		list = list->next;
-		Mem_Free(l->data);
+		if (!l->ptr)
+			Mem_Free(l->data);
 		Mem_Free(l);
 		l = list;
 	}

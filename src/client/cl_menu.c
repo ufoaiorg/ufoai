@@ -263,6 +263,7 @@ static int menuStackPos = -1;
 
 inventory_t *menuInventory = NULL;
 const char *menuText[MAX_MENUTEXTS];
+linkedList_t *menuTextLinkedList[MAX_MENUTEXTS];
 
 static selectBoxOptions_t menuSelectBoxes[MAX_SELECT_BOX_OPTIONS];
 static int numSelectBoxes;
@@ -2074,7 +2075,7 @@ static int INV_GetItemTooltip (item_t item, char *tooltiptext, size_t string_max
  * @param[in] y The fixed y position the text node starts
  * @todo The node pointer can be NULL
  */
-static void MN_DrawTextNode (const char *text, const char* font, menuNode_t* node, int x, int y, int width, int height)
+static void MN_DrawTextNode (const char *text, const linkedList_t* list, const char* font, menuNode_t* node, int x, int y, int width, int height)
 {
 	char textCopy[MAX_MENUTEXTLEN];
 	int lineHeight = 0;
@@ -2086,7 +2087,12 @@ static void MN_DrawTextNode (const char *text, const char* font, menuNode_t* nod
 	static const vec4_t scrollbarColorBG = {0.03, 0.41, 0.05, 0.5};
 	static const vec4_t scrollbarColorBar = {0.03, 0.41, 0.05, 1.0};
 
-	Q_strncpyz(textCopy, text, MAX_MENUTEXTLEN);
+	if (text) {
+		Q_strncpyz(textCopy, text, sizeof(textCopy));
+	} else if (list) {
+		Q_strncpyz(textCopy, (char*)list->data, sizeof(textCopy));
+	} else
+		Sys_Error("MN_DrawTextNode: Called without text or linkedList pointer");
 	cur = textCopy;
 
 	/* hover darkening effect for text lines */
@@ -2177,6 +2183,13 @@ static void MN_DrawTextNode (const char *text, const char* font, menuNode_t* nod
 
 		/* now set cur to the next char after the \n (see above) */
 		cur = end;
+		if (!cur && list) {
+			list = list->next;
+			if (list) {
+				Q_strncpyz(textCopy, (char*)list->data, MAX_MENUTEXTLEN);
+				cur = textCopy;
+			}
+		}
 	} while (cur);
 
 	/* draw scrollbars */
@@ -2520,7 +2533,10 @@ void MN_DrawMenus (void)
 				case MN_TEXT:
 					if (menuText[node->num]) {
 						font = MN_GetFont(menu, node);
-						MN_DrawTextNode(menuText[node->num], font, node, node->pos[0], node->pos[1], node->size[0], node->size[1]);
+						MN_DrawTextNode(menuText[node->num], NULL, font, node, node->pos[0], node->pos[1], node->size[0], node->size[1]);
+					} else if (menuTextLinkedList[node->num]) {
+						font = MN_GetFont(menu, node);
+						MN_DrawTextNode(NULL, menuTextLinkedList[node->num], font, node, node->pos[0], node->pos[1], node->size[0], node->size[1]);
 					} else if (node->num == TEXT_MESSAGESYSTEM) {
 						if (node->data[MN_DATA_ANIM_OR_FONT])
 							font = MN_GetReferenceString(menu, node->data[MN_DATA_ANIM_OR_FONT]);
@@ -2968,7 +2984,7 @@ void MN_DrawMenus (void)
 					x = VID_NORM_WIDTH - itemToolTipWidth;
 				if (y + itemToolTipHeight > VID_NORM_HEIGHT)
 					y = VID_NORM_HEIGHT - itemToolTipHeight;
-				MN_DrawTextNode(tooltiptext, "f_small", menu->hoverNode, x, y, itemToolTipWidth, itemToolTipHeight);
+				MN_DrawTextNode(tooltiptext, NULL, "f_small", menu->hoverNode, x, y, itemToolTipWidth, itemToolTipHeight);
 #else
 				MN_DrawTooltip("f_small", tooltiptext, x, y, itemToolTipWidth, itemToolTipHeight);
 #endif
@@ -3709,9 +3725,11 @@ void MN_ResetMenus (void)
 	adataize = MENU_HUNK_SIZE;
 	curadata = adata;
 
-	/* reset menu texts */
-	for (i = 0; i < MAX_MENUTEXTS; i++)
+	/* reset menu texts and lists */
+	for (i = 0; i < MAX_MENUTEXTS; i++) {
 		menuText[i] = NULL;
+		menuTextLinkedList[i] = NULL;
+	}
 
 	/* reset ufopedia, basemanagement and other subsystems */
 	UP_ResetUfopedia();

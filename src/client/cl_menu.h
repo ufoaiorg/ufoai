@@ -235,6 +235,7 @@ typedef enum {
 
 extern inventory_t *menuInventory;
 extern const char *menuText[MAX_MENUTEXTS];
+extern linkedList_t *menuTextLinkedList[MAX_MENUTEXTS];
 extern char popupText[MAX_SMALLMENUTEXTLEN];
 
 /* this is the function where all the sdl_ttf fonts are parsed */

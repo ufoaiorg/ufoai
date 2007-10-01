@@ -109,7 +109,6 @@ static void E_EmployeeList_f (void)
 {
 	int i, j;
 	employee_t* employee = NULL;
-	static char hirelist[2048];
 
 	/* can be called from everywhere without a started game */
 	if (!baseCurrent || !curCampaign)
@@ -124,21 +123,22 @@ static void E_EmployeeList_f (void)
 	if (employeeCategory >= MAX_EMPL || employeeCategory < 0)
 		employeeCategory = EMPL_SOLDIER;
 
-	/* clear current hirelist */
-	hirelist[0] = '\0';
-
 	/* reset the employee count */
 	employeesInCurrentList = 0;
 
 	/* reset scrolling */
 	employeeListNode->textScroll = 0;
 
+	/* make sure, that we are using the linked list */
+	menuText[TEXT_LIST] = NULL;
+	LIST_Delete(menuTextLinkedList[TEXT_LIST]);
+
 	for (j = 0, employee = gd.employees[employeeCategory]; j < gd.numEmployees[employeeCategory]; j++, employee++) {
 		/* don't show employees of other bases */
 		if (employee->baseIDHired != baseCurrent->idx && employee->hired)
 			continue;
 
-		Q_strcat(hirelist, va("%s\n", employee->chr.name), sizeof(hirelist));
+		LIST_AddPointer(&menuTextLinkedList[TEXT_LIST], employee->chr.name);
 		/* change the buttons */
 		if (employeesInCurrentList < cl_numnames->integer) {
 			if (employee->hired) {
@@ -171,9 +171,6 @@ static void E_EmployeeList_f (void)
 		Cbuf_AddText(va("employee_select %i;", Cvar_VariableInteger("mn_employee_idx")));
 	/* And finally reset mn_employee_namechange. */
 	Cvar_SetValue("mn_employee_namechange", 0);
-
-	/* bind to menu text array */
-	menuText[TEXT_LIST] = hirelist;
 }
 
 
