@@ -542,7 +542,7 @@ void UP_AircraftItemDescription (int idx)
 /**
  * @brief Prints the ufopedia description for aircraft
  * @note Also checks whether the aircraft tech is already researched or collected
- *
+ * @sa BS_MarketAircraftDescription
  * @sa UP_DrawEntry
  */
 void UP_AircraftDescription (technology_t* t)

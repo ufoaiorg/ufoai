@@ -45,6 +45,8 @@ static const int MAX_BS_FACTORS = 10;
 /**
  * @brief Prints general information about aircraft for Buy/Sell menu.
  * @param[in] aircraftID Index of aircraft type in aircraft_samples.
+ * @sa UP_AircraftDescription
+ * @sa UP_AircraftItemDescription
  */
 static void BS_MarketAircraftDescription (int aircraftID)
 {
@@ -63,7 +65,11 @@ static void BS_MarketAircraftDescription (int aircraftID)
 	UP_AircraftDescription(tech);
 	Cvar_Set("mn_aircraftname", aircraft->name);
 }
-
+/**
+ * @brief
+ * @sa BS_MarketClick_f
+ * @sa BS_AddToList
+ */
 static void BS_MarketScroll_f (void)
 {
 	menuNode_t* node;
@@ -117,6 +123,8 @@ static void BS_MarketScroll_f (void)
 
 /**
  * @brief Select one entry on the list.
+ * @sa BS_MarketScroll_f
+ * @sa BS_AddToList
  */
 static void BS_MarketClick_f (void)
 {
@@ -187,11 +195,17 @@ static int AIR_GetStorageSupply (const char *airCharId, qboolean inbase)
 		return supply;
 }
 
+/** @brief Market text nodes buffers */
 static char bsMarketNames[1024];
 static char bsMarketStorage[256];
 static char bsMarketMarket[256];
 static char bsMarketPrices[256];
 
+/**
+ * @brief Appends a new entry to the market buffers
+ * @sa BS_MarketScroll_f
+ * @sa BS_MarketClick_f
+ */
 static void BS_AddToList (const char *name, int storage, int market, int price)
 {
 	/* MAX_MARKET_MENU_ENTRIES items in the list (of length 1024) */
