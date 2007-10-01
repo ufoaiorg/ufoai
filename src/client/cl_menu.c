@@ -2186,7 +2186,7 @@ static void MN_DrawTextNode (const char *text, const linkedList_t* list, const c
 		if (!cur && list) {
 			list = list->next;
 			if (list) {
-				Q_strncpyz(textCopy, (char*)list->data, MAX_MENUTEXTLEN);
+				Q_strncpyz(textCopy, (char*)list->data, sizeof(textCopy));
 				cur = textCopy;
 			}
 		}
