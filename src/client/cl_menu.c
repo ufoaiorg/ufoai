@@ -1080,7 +1080,7 @@ static void MN_Drag (const menuNode_t* const node, int x, int y, qboolean rightC
 					/* back to idEquip (ground, floor) container */
 					INV_MoveItem(baseCurrent, menuInventory, csi.idEquip, -1, -1, node->mousefx, ic->x, ic->y);
 				} else {
-					qboolean packed;
+					qboolean packed = qfalse;
 
 					assert(ic->item.t >= 0);
 					/* armour can only have one target */
