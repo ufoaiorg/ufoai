@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_SOUND_H
 
 /** only begin attenuating sound volumes when outside the FULLVOLUME range */
-#define SOUND_FULLVOLUME 200
+#define SOUND_FULLVOLUME 50
 
 #define SOUND_DEFAULTATTENUATE 0.002
 

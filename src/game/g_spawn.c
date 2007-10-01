@@ -787,12 +787,12 @@ void SP_func_door (edict_t *self)
 		self->dmg = 2;
 
 	/* calculate second position */
-	VectorCopy (self->origin, self->moveinfo.pos1);
+	VectorCopy(self->origin, self->moveinfo.pos1);
 	abs_movedir[0] = fabs(self->moveinfo.movedir[0]);
 	abs_movedir[1] = fabs(self->moveinfo.movedir[1]);
 	abs_movedir[2] = fabs(self->moveinfo.movedir[2]);
 	self->moveinfo.distance = abs_movedir[0] * self->size[0] + abs_movedir[1] * self->size[1] + abs_movedir[2] * self->size[2] - st.lip;
-	VectorMA (self->moveinfo.pos1, self->moveinfo.distance, self->moveinfo.movedir, self->moveinfo.pos2);
+	VectorMA(self->moveinfo.pos1, self->moveinfo.distance, self->moveinfo.movedir, self->moveinfo.pos2);
 
 	self->moveinfo.state = STATE_BOTTOM;
 
