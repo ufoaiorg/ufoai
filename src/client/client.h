@@ -552,19 +552,21 @@ static const vec3_t player_mins = { -PLAYER_WIDTH, -PLAYER_WIDTH, PLAYER_MIN };
 static const vec3_t player_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND };
 static const vec3_t player_dead_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD };
 
-void LE_Think(void);
 const char *LE_GetAnim(const char *anim, int right, int left, int state);
-
 void LE_AddProjectile(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, int normal, qboolean autohide);
 void LE_AddGrenade(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t v0, int dt);
 void LE_AddAmbientSound(const char *sound, vec3_t origin, float volume, float attenuation);
+le_t *LE_GetClosestActor(const vec3_t origin);
 
+void LE_Think(void);
+/* think functions */
 void LET_StartIdle(le_t * le);
 void LET_Appear(le_t * le);
 void LET_StartPathMove(le_t * le);
 void LET_ProjectileAutoHide(le_t *le);
 void LET_PlayAmbientSound(le_t * le);
 
+/* local model functions */
 void LM_Perish(struct dbuffer *msg);
 void LM_Explode(struct dbuffer *msg);
 void LM_DoorOpen(struct dbuffer *msg);

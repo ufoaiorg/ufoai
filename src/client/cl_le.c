@@ -515,6 +515,37 @@ static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
 }
 
 /**
+ * @brief Searches the closest actor to the given world vector
+ * @param[in] World position to get the closest actor to
+ */
+le_t* LE_GetClosestActor (const vec3_t origin)
+{
+	int i, tmp;
+	int dist = 999999;
+	le_t *actor = NULL, *le;
+	vec3_t leOrigin;
+
+	for (i = 0, le = LEs; i < numLEs; i++, le++) {
+		if (!le->inuse || le->pnum != cl.pnum)
+			continue;
+		switch (le->type) {
+		/* only visible actors */
+		case ET_ACTOR:
+		case ET_ACTOR2x2:
+			VectorSubtract(origin, le->origin, leOrigin);
+			tmp = VectorLength(leOrigin);
+			if (tmp < dist) {
+				actor = le;
+				dist = tmp;
+			}
+			break;
+		}
+	}
+
+	return actor;
+}
+
+/**
  * @brief Move the actor along the path to the given location
  * @note Think function
  * @sa CL_ActorDoMove
