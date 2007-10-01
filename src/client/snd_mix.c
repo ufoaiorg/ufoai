@@ -149,7 +149,7 @@ static void S_TransferPaintBuffer (int endtime)
 				out_idx = (out_idx + 1) & out_mask;
 			}
 		} else if (dma.samplebits == 8) {
-			unsigned char *out = (unsigned char *) pbuf;
+			byte *out = (byte *) pbuf;
 
 			while (count--) {
 				val = *p >> 8;
@@ -248,8 +248,6 @@ void S_PaintChannels (void)
 	int ltime, count;
 	playsound_t *ps;
 	int endtime = dma.samplepos;
-
-	snd_vol = snd_volume->value * 256;
 
 /*	Com_DPrintf(DEBUG_SOUND, "%i to %i\n", paintedtime, endtime); */
 	while (paintedtime < endtime) {
@@ -355,19 +353,15 @@ void S_InitScaletable (void)
 	int i, j;
 	int scale;
 
-	snd_volume->modified = qfalse;
+	if (snd_volume->value > 1)  /* cap volume */
+		snd_volume->value = 1;
+
 	for (i = 0; i < 32; i++) {
-		scale = i * 8 * 256 * snd_volume->integer;
+		scale = i * 8 * 256 * snd_volume->value;
 		for (j = 0; j < 256; j++)
-			/**
-			 * When compiling with gcc-4.1.0 at optimisations O1 and
-			 * higher, the tricky signed char type conversion is not
-			 * guaranteed. Therefore we explicity calculate the signed
-			 * value from the index as required. From Kevin Shanahan.
-			 * Also see: http://gcc.gnu.org/bugzilla/show_bug.cgi?id=26719
-			 * Note: should already be fixed in gcc
-			 */
-			snd_scaletable[i][j] = ((signed char) j) * scale;
-			/* snd_scaletable[i][j] = ((j < 128) ? j : j - 0xff) * i * 8; */
+			snd_scaletable[i][j] = ((signed char)j) * scale;
 	}
+
+	snd_vol = snd_volume->value * 256;
+	snd_volume->modified = qfalse;
 }
