@@ -149,6 +149,7 @@ typedef struct {
 	trace_t (IMPORT *trace) (vec3_t start, const vec3_t mins, const vec3_t maxs, vec3_t end, edict_t * passent, int contentmask);
 
 	int (IMPORT *PointContents) (vec3_t point);
+	const char* (IMPORT *GetFootstepSound) (const char* texture);
 
 	/** links entity into the world - so that it is sent to the client and used for
 	 * collision detection, etc. Must be relinked if its size, position or solidarity changes */

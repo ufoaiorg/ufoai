@@ -475,3 +475,13 @@ trace_t SV_Trace (vec3_t start, const vec3_t mins, const vec3_t maxs, vec3_t end
 
 	return clip.trace;
 }
+
+/**
+ * @brief
+ * @sa Com_GetTerrainType
+ */
+const char *SV_GetFootstepSound (const char *texture)
+{
+	const terrainType_t *t = Com_GetTerrainType(texture);
+	return t ? t->footStepSound : NULL;
+}

@@ -1554,7 +1554,7 @@ void CL_ActorUpdateCVars (void)
 		} else {
 			menuText[TEXT_MOUSECURSOR_RIGHT] = NULL;
 			/* in multiplayer RS_ItemIsResearched always returns true,
-			so we are able to use the aliens weapons */
+			 * so we are able to use the aliens weapons */
 			if (selWeapon && !RS_ItemIsResearched(csi.ods[selWeapon->item.t].id)) {
 				CL_DisplayHudMessage(_("You cannot use this unknown item.\nYou need to research it first.\n"), 2000);
 				cl.cmode = M_MOVE;
@@ -2333,6 +2333,7 @@ void CL_InvCheckHands (struct dbuffer *msg)
 /**
  * @brief Moves actor.
  * @param[in] msg
+ * @sa LET_PathMove
  * @note EV_ACTOR_MOVE
  */
 void CL_ActorDoMove (struct dbuffer *msg)

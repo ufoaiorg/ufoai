@@ -453,6 +453,7 @@ void SV_InitGameProgs (void)
 	import.PositionedSound = SV_StartSound;
 
 	import.PointContents = SV_PointContents;
+	import.GetFootstepSound = SV_GetFootstepSound;
 
 	import.FS_Gamedir = FS_Gamedir;
 

@@ -53,6 +53,22 @@ void G_PhysicsStep (edict_t *ent)
 			} else if (ent->contentFlags & CONTENTS_WATER) {
 				/* send water leaving sound */
 				gi.PositionedSound(~visflags, ent->origin, ent, "footsteps/water_out", CHAN_BODY, 1, 1, 0);
+			} else {
+				trace_t trace;
+				vec3_t from, to;
+
+				VectorCopy(ent->origin, to);
+				VectorCopy(ent->origin, from);
+				/* between these two we should really hit the ground */
+				from[2] += UNIT_HEIGHT;
+				to[2] -= UNIT_HEIGHT;
+
+				trace = gi.trace(from, vec3_origin, vec3_origin, to, NULL, MASK_SOLID);
+				if (trace.surface) {
+					const char *snd = gi.GetFootstepSound(trace.surface->name);
+					if (snd)
+						gi.PositionedSound(~visflags, ent->origin, ent, snd, CHAN_BODY, 1, 1, 0);
+				}
 			}
 		}
 

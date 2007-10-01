@@ -1291,10 +1291,10 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 			FLOOR(ent) = NULL;
 
 			/* BEWARE: do not print anything (even with DPrintf)
-			   in functions called in this loop
-			   without setting 'steps = 0' afterwards;
-			   also do not send events except G_AppearPerishEvent
-			   without manually setting 'steps = 0' */
+			 * in functions called in this loop
+			 * without setting 'steps = 0' afterwards;
+			 * also do not send events except G_AppearPerishEvent
+			 * without manually setting 'steps = 0' */
 			while (numdv > 0) {
 				/* get next dv */
 				numdv--;
