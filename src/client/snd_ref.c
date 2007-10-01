@@ -580,6 +580,7 @@ void S_SpatializeOrigin (const vec3_t origin, float master_vol, float dist_mult,
 	vec_t dist;
 	vec_t lscale, rscale, scale;
 	vec3_t source_vec;
+	le_t *le;
 
 	/* full volumn when we are not in mission view */
 	if (cls.state != ca_active) {
@@ -587,8 +588,14 @@ void S_SpatializeOrigin (const vec3_t origin, float master_vol, float dist_mult,
 		return;
 	}
 
+	le = LE_GetClosestActor(origin);
+	if (!le) {
+		*left_vol = *right_vol = 0;
+		return;
+	}
+
 	/* calculate stereo seperation and distance attenuation */
-	VectorSubtract(origin, listener_origin, source_vec);
+	VectorSubtract(origin, le->origin, source_vec);
 
 	dist = VectorNormalize(source_vec);
 	dist -= SOUND_FULLVOLUME;
@@ -599,6 +606,7 @@ void S_SpatializeOrigin (const vec3_t origin, float master_vol, float dist_mult,
 
 	if (dma.channels == 1 || !dist_mult) {	/* no attenuation = no spatialization */
 		rscale = 1.0;
+		lscale = 1.0;
 	} else {
 		vec_t dot = DotProduct(listener_right, source_vec);
 		rscale = 0.5 * (1.0 + dot);
@@ -608,8 +616,8 @@ void S_SpatializeOrigin (const vec3_t origin, float master_vol, float dist_mult,
 	/* add in distance effect */
 	scale = (1.0 - dist) * rscale;
 	*right_vol = (int) (master_vol * scale);
-	/*Com_DPrintf(DEBUG_SOUND, "S_SpatializeOrigin: dist: %.5f - master_vol: %.3f - scale: %.3f - rscale: %.3f - volume: %i\n",
-		dist, master_vol, scale, rscale, *right_vol);*/
+	Com_DPrintf(DEBUG_SOUND, "S_SpatializeOrigin: dist: %.5f - master_vol: %.3f - scale: %.3f - rscale: %.3f - volume: %i\n",
+		dist, master_vol, scale, rscale, *right_vol);
 	if (*right_vol < 0)
 		*right_vol = 0;
 
