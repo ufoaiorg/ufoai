@@ -561,7 +561,7 @@ qboolean CP_SpawnCrashSiteMission (aircraft_t* aircraft)
 	ms->missionType = MIS_CRASHSITE;
 	/* the size if somewhat random, because not all map tiles would have
 		* alien spawn points */
-	ms->aliens = aircraft->size;
+	ms->aliens = aircraft->maxTeamSize;
 	/* 1-4 civilians */
 	ms->civilians = (frand() * 10);
 	ms->civilians %= 4;
@@ -862,7 +862,8 @@ static void CL_AircraftList_f (void)
 
 		for (i = 0; i < gd.bases[j].numAircraftInBase; i++) {
 			aircraft = &gd.bases[j].aircraft[i];
-			s = va("%s (%i/%i)\t%s\t%s\n", aircraft->name, aircraft->teamSize, aircraft->size, AIR_AircraftStatusToName(aircraft), gd.bases[j].name);
+			s = va("%s (%i/%i)\t%s\t%s\n", aircraft->name, aircraft->teamSize,
+				aircraft->maxTeamSize, AIR_AircraftStatusToName(aircraft), gd.bases[j].name);
 			Q_strcat(aircraftListText, s, sizeof(aircraftListText));
 		}
 	}

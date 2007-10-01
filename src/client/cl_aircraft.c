@@ -235,12 +235,12 @@ void AIR_ListAircraft_f (void)
 			Com_Printf("\n");
 			Com_Printf("...name %s\n", aircraft->id);
 			Com_Printf("...type %i\n", aircraft->type);
-			Com_Printf("...size %i\n", aircraft->size);
+			Com_Printf("...size %i\n", aircraft->maxTeamSize);
 			Com_Printf("...fuel %i\n", aircraft->fuel);
 			Com_Printf("...status %s\n", AIR_AircraftStatusToName(aircraft));
 			Com_Printf("...pos %.0f:%.0f\n", aircraft->pos[0], aircraft->pos[1]);
-			Com_Printf("...team: (%i/%i)\n", aircraft->teamSize, aircraft->size);
-			for (k = 0; k < aircraft->size; k++)
+			Com_Printf("...team: (%i/%i)\n", aircraft->teamSize, aircraft->maxTeamSize);
+			for (k = 0; k < aircraft->maxTeamSize; k++)
 				if (aircraft->teamIdxs[k] != -1) {
 					Com_Printf("......idx (in global array): %i\n", aircraft->teamIdxs[k]);
 					chr = E_GetHiredCharacter(base, aircraft->teamTypes[k] , aircraft->teamIdxs[k]);
@@ -796,7 +796,7 @@ void AIR_DestroyAircraft (aircraft_t *aircraft)
 	int i;
 	employee_t *employee;
 
-	for (i = 0; i < aircraft->size; i++) {
+	for (i = 0; i < aircraft->maxTeamSize; i++) {
 		if (aircraft->teamIdxs[i] > -1) {
 			employee = &(gd.employees[aircraft->teamTypes[i]][aircraft->teamIdxs[i]]);
 			assert(employee);
@@ -1102,7 +1102,7 @@ static const value_t aircraft_param_vals[] = {
 static const value_t aircraft_vals[] = {
 	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(aircraft_t, name), 0},
 	{"shortname", V_TRANSLATION_MANUAL_STRING, offsetof(aircraft_t, shortname), 0},
-	{"size", V_INT, offsetof(aircraft_t, size), MEMBER_SIZEOF(aircraft_t, size)},
+	{"size", V_INT, offsetof(aircraft_t, maxTeamSize), MEMBER_SIZEOF(aircraft_t, maxTeamSize)},
 	{"weight", V_INT, offsetof(aircraft_t, weight), MEMBER_SIZEOF(aircraft_t, weight)},
 	{"nogeoscape", V_BOOL, offsetof(aircraft_t, notOnGeoscape), MEMBER_SIZEOF(aircraft_t, notOnGeoscape)},
 
@@ -1347,9 +1347,9 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 				}
 
 			if (vp->string && !Q_strncmp(vp->string, "size", 4)) {
-				if (air_samp->size > MAX_ACTIVETEAM) {
+				if (air_samp->maxTeamSize > MAX_ACTIVETEAM) {
 					Com_DPrintf(DEBUG_CLIENT, "AIR_ParseAircraft: Set size for aircraft to the max value of %i\n", MAX_ACTIVETEAM);
-					air_samp->size = MAX_ACTIVETEAM;
+					air_samp->maxTeamSize = MAX_ACTIVETEAM;
 				}
 			}
 
@@ -1652,10 +1652,10 @@ void AIR_AddToAircraftTeam (aircraft_t *aircraft, int employee_idx, employeeType
 		Com_DPrintf(DEBUG_CLIENT, "AIR_AddToAircraftTeam: null aircraft \n");
 		return;
 	}
-	if (aircraft->teamSize < aircraft->size) {
+	if (aircraft->teamSize < aircraft->maxTeamSize) {
 		/* Search for unused place in aircraft and fill it with  employee-data. */
 		/** @todo  do we need to update aircraft->teamSize here as well? */
-		for (i = 0; i < aircraft->size; i++)
+		for (i = 0; i < aircraft->maxTeamSize; i++)
 			if (aircraft->teamIdxs[i] == -1) {
 				aircraft->teamIdxs[i] = employee_idx;
 				aircraft->teamTypes[i] = employeeType;
@@ -1663,7 +1663,7 @@ void AIR_AddToAircraftTeam (aircraft_t *aircraft, int employee_idx, employeeType
 				aircraft->teamSize++;
 				break;
 			}
-		if (i >= aircraft->size)
+		if (i >= aircraft->maxTeamSize)
 			Com_DPrintf(DEBUG_CLIENT, "AIR_AddToAircraftTeam: couldnt find space\n");
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "AIR_AddToAircraftTeam: error: no space in aircraft\n");
@@ -1689,7 +1689,7 @@ void AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, int employee_idx, employe
 		return;
 	}
 
-	for (i = 0; i < aircraft->size; i++) {
+	for (i = 0; i < aircraft->maxTeamSize; i++) {
 		/* Search for this exact employee in the aircraft and make his place "unused". */
 		/** @todo  do we need to update aircraft->teamSize here as well? */
 		if (aircraft->teamIdxs[i] != -1 && aircraft->teamIdxs[i] == employee_idx && aircraft->teamTypes[i] == employeeType)	{
@@ -1719,7 +1719,7 @@ void AIR_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft, int employee_
 	if (aircraft == NULL)
 		return;
 
-	for (i = 0; i < aircraft->size; i++)
+	for (i = 0; i < aircraft->maxTeamSize; i++)
 		if (aircraft->teamIdxs[i] > employee_idx && aircraft->teamTypes[i] == employeeType) {
 			aircraft->teamIdxs[i]--;
 			Com_DPrintf(DEBUG_CLIENT, "AIR_DecreaseAircraftTeamIdxGreaterThan: decreased idx '%d' \n", aircraft->teamIdxs[i]+1);
@@ -1753,7 +1753,7 @@ qboolean AIR_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx, employeeT
 	}
 #endif
 
-	for (i = 0; i < aircraft->size; i++) {
+	for (i = 0; i < aircraft->maxTeamSize; i++) {
 		if (aircraft->teamIdxs[i] == employee_idx && aircraft->teamTypes[i] == employeeType) {
 			/** @note This also skips the -1 entries in teamIdxs. */
 #ifdef DEBUG

@@ -531,7 +531,7 @@ void CL_AddCarriedToEq (aircraft_t *aircraft, equipDef_t * ed)
 	}
 
 	for (container = 0; container < csi.numIDs; container++) {
-		for (p= 0; p < aircraft->size; p++) {
+		for (p= 0; p < aircraft->maxTeamSize; p++) {
 			if (aircraft->teamIdxs[p] != -1) {
 				chr = &gd.employees[aircraft->teamTypes[p]][aircraft->teamIdxs[p]].chr;
 				ic = chr->inv->c[container];
@@ -689,7 +689,7 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 	aircraft->idx, aircraft->teamSize);
 
 	for (container = 0; container < csi.numIDs; container++) {
-		for (p = 0; p < aircraft->size; p++) {
+		for (p = 0; p < aircraft->maxTeamSize; p++) {
 			if (aircraft->teamIdxs[p] != -1) {
 				cp = &gd.employees[aircraft->teamTypes[p]][aircraft->teamIdxs[p]].chr;
 				assert(cp);
@@ -769,7 +769,7 @@ static void CL_GenerateEquipment_f (void)
 	/* Store hired names. */
 	Cvar_ForceSet("cl_selected", "0");
 	chrDisplayList.num = 0;
-	for (i = 0; i < aircraft->size; i++) {
+	for (i = 0; i < aircraft->maxTeamSize; i++) {
 		assert(chrDisplayList.num < MAX_ACTIVETEAM);
 
 		if (aircraft->teamIdxs[i] <= -1)
@@ -1066,7 +1066,7 @@ void CL_UpdateHireVar (aircraft_t *aircraft, employeeType_t employeeType)
 	base = aircraft->homebase;
 	assert(base);
 
-	Cvar_Set("mn_hired", va(_("%i of %i"), aircraft->teamSize, aircraft->size));
+	Cvar_Set("mn_hired", va(_("%i of %i"), aircraft->teamSize, aircraft->maxTeamSize));
 	hired_in_base = E_CountHired(base, employeeType);
 
 	/* Uncomment this Com_Printf here for better output in case of problems. */
@@ -1367,7 +1367,7 @@ void CL_RemoveSoldiersFromAircraft (int aircraft_idx, base_t *base)
 		return;
 
 	/* Counting backwards because aircraft->teamIdxs and teamTypes are changed in CL_RemoveSoldierFromAircraft */
-	for (i = aircraft->size; i >= 0; i--) {
+	for (i = aircraft->maxTeamSize; i >= 0; i--) {
 		if (aircraft->teamIdxs[i] != -1) {
 			/* use global aircraft index here */
 			CL_RemoveSoldierFromAircraft(aircraft->teamIdxs[i], aircraft->teamTypes[i], aircraft_idx, base);
@@ -1404,7 +1404,7 @@ static qboolean CL_AssignSoldierToAircraft (int employee_idx, employeeType_t emp
 		}
 
 		/* Assign the soldier to the aircraft. */
-		if (aircraft->teamSize < aircraft->size) {
+		if (aircraft->teamSize < aircraft->maxTeamSize) {
 			Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldierToAircraft: attempting to add idx '%d' \n",employee_idx);
 			AIR_AddToAircraftTeam(aircraft, employee_idx, employeeType);
 			return qtrue;
@@ -1441,7 +1441,7 @@ static void CL_TeamListDebug_f (void)
 	}
 
 	Com_Printf("%i members in the current team", aircraft->teamSize);
-	for (i = 0; i < aircraft->size; i++) {
+	for (i = 0; i < aircraft->maxTeamSize; i++) {
 		if (aircraft->teamIdxs[i] != -1) {
 			employee = E_GetEmployeeFromChrUCN(chr->ucn);
 			if (!employee)
@@ -1540,8 +1540,8 @@ static qboolean CL_SaveTeamMultiplayer (const char *filename)
 	MSG_WriteByte(&sb, aircraft->teamSize);
 
 	/* store aircraft soldier content for multi-player */
-	MSG_WriteByte(&sb, aircraft->size);
-	for (i = 0; i < aircraft->size; i++) {
+	MSG_WriteByte(&sb, aircraft->maxTeamSize);
+	for (i = 0; i < aircraft->maxTeamSize; i++) {
 		/* We save them all, even unused ones (->size). */
 		MSG_WriteShort(&sb, aircraft->teamIdxs[i]);
 		MSG_WriteShort(&sb, aircraft->teamTypes[i]);
@@ -1687,9 +1687,9 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 
 	/* get aircraft soldier content for multi-player */
 	Com_DPrintf(DEBUG_CLIENT, "Multiplayer aircraft IDX = %i\n", aircraft->idx);
-	aircraft->size = MSG_ReadByte(&sb);
+	aircraft->maxTeamSize = MSG_ReadByte(&sb);
 	chrDisplayList.num = 0;
-	for (i = 0; i < aircraft->size; i++) {
+	for (i = 0; i < aircraft->maxTeamSize; i++) {
 		aircraft->teamIdxs[i] = MSG_ReadShort(&sb);
 		aircraft->teamTypes[i] = MSG_ReadShort(&sb);
 		if (aircraft->teamIdxs[i] >= 0) { /** @todo remove this? */

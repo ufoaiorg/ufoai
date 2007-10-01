@@ -2012,7 +2012,7 @@ static void B_PackInitialEquipment_f (void)
 	} else if ((aircraft_idxInBase >= 0) && (aircraft_idxInBase < base->numAircraftInBase)) {
 		aircraft = &base->aircraft[base->aircraftCurrent];
 		chr_list_temp.num = 0;
-		for (i = 0; i < aircraft->size; i++) {
+		for (i = 0; i < aircraft->maxTeamSize; i++) {
 			if (aircraft->teamIdxs[i] != -1) {
 				chr = &gd.employees[aircraft->teamTypes[i]][aircraft->teamIdxs[i]].chr;
 				/* pack equipment */
@@ -2028,7 +2028,7 @@ static void B_PackInitialEquipment_f (void)
 
 		/* pay for the initial equipment */
 		for (container = 0; container < csi.numIDs; container++) {
-			for (p = 0; p < aircraft->size; p++) {
+			for (p = 0; p < aircraft->maxTeamSize; p++) {
 				if (aircraft->teamIdxs[p] != -1) {
 					chr = &gd.employees[aircraft->teamTypes[i]][aircraft->teamIdxs[i]].chr;
 					for (ic = chr->inv->c[container]; ic; ic = next) {

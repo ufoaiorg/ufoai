@@ -586,7 +586,7 @@ void HOS_RemoveEmployeesInHospital (aircraft_t *aircraft)
 	base->hospitalMissionListCount = 0;
 */
 	/* select all soldiers from aircraft who are healing in an hospital */
-	for (i = 0; i < aircraft->size; i++) {
+	for (i = 0; i < aircraft->maxTeamSize; i++) {
 		if (aircraft->teamIdxs[i] > -1) {
 			/* Check whether any team member is in base->hospitalList. */
 			employee = &(gd.employees[EMPL_SOLDIER][aircraft->teamIdxs[i]]);
@@ -622,7 +622,7 @@ void HOS_ReaddEmployeesInHospital (aircraft_t *aircraft)
 	if (!base->hasHospital)
 		return;
 
-	for (i = 0; i < aircraft->size; i++) {
+	for (i = 0; i < aircraft->maxTeamSize; i++) {
 		if (aircraft->teamIdxs[i] > -1) {
 			for (j = 0; j < base->hospitalMissionListCount; j++) {
 				if ((aircraft->teamIdxs[i] == base->hospitalMissionList[j])) {

@@ -275,7 +275,7 @@ void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 			if (ufo && air->weapons[0].itemIdx < 0)
 				continue;
 
-			s = va("%s (%i/%i)\t%s\t%s\n", air->shortname, air->teamSize, air->size, AIR_AircraftStatusToName(air), gd.bases[j].name);
+			s = va("%s (%i/%i)\t%s\t%s\n", air->shortname, air->teamSize, air->maxTeamSize, AIR_AircraftStatusToName(air), gd.bases[j].name);
 			Q_strcat(aircraftListText, s, sizeof(aircraftListText));
 			popupIntercept.idBaseAircraft[popupIntercept.numAircraft] = j;
 			popupIntercept.idInBaseAircraft[popupIntercept.numAircraft] = i;

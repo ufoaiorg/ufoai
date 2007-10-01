@@ -520,11 +520,11 @@ void UP_AircraftItemDescription (int idx)
 			Q_strcat(itemText, va(_("Reloading time:\t%i\n"),  (int) item->craftitem.weaponDelay),  sizeof(itemText));
 		}
 		/* We write the range of the weapon */
-		if (item->craftitem.stats[AIR_STATS_MAX - 1] > UFO_EPSILON)
-			Q_strcat(itemText, va("%s:\t%i\n", CL_AircraftStatToName(AIR_STATS_MAX - 1), (int) item->craftitem.stats[AIR_STATS_MAX - 1]), sizeof(itemText));
+		if (item->craftitem.stats[AIR_STATS_WRANGE] > UFO_EPSILON)
+			Q_strcat(itemText, va("%s:\t%i\n", CL_AircraftStatToName(AIR_STATS_WRANGE), (int) item->craftitem.stats[AIR_STATS_WRANGE]), sizeof(itemText));
 
 		/* we scan all stats except last one which is range */
-		for (i = 0 ; i < AIR_STATS_MAX - 1 ; i++) {
+		for (i = 0; i < AIR_STATS_WRANGE; i++) {
 			if (item->craftitem.stats[i] > 2.0f)
 				Q_strcat(itemText, va("%s:\t+%i\n", CL_AircraftStatToName(i), (int) item->craftitem.stats[i]), sizeof(itemText));
 			else if (item->craftitem.stats[i] < -2.0f)
@@ -548,30 +548,33 @@ void UP_AircraftItemDescription (int idx)
 void UP_AircraftDescription (technology_t* t)
 {
 	aircraft_t* aircraft;
-	int idx;
+	int i;
 
 	if (RS_IsResearched_ptr(t)) {
 		aircraft = AIR_GetAircraft(t->provides);
 		if (!aircraft) {
 			Com_sprintf(upBuffer, sizeof(upBuffer), _("Error - could not find aircraft") );
 		} else {
-			Com_sprintf(upBuffer, sizeof(upBuffer), _("Speed:\t%i\n"), aircraft->stats[AIR_STATS_SPEED]);
-			Q_strcat(upBuffer, va(_("Fuel:\t%i\n"), aircraft->stats[AIR_STATS_FUELSIZE] ), sizeof(upBuffer));
-			/* Maybe there are standard equipments given */
-			idx = aircraft->weapons[0].itemIdx;
-			Q_strcat(upBuffer, va(_("Weapon:\t%s\n"), idx >= 0 ? _(csi.ods[idx].tech->name) : _("None") ), sizeof(upBuffer));
-			idx = aircraft->shield.itemIdx;
-			Q_strcat(upBuffer, va(_("Armour:\t%s\n"), idx >= 0 ? _(csi.ods[idx].tech->name) : _("None") ), sizeof(upBuffer));
-			idx = aircraft->electronics[0].itemIdx;
-			Q_strcat(upBuffer, va(_("Equipment:\t%s\n"), idx >= 0 ? _(csi.ods[idx].tech->name) : _("None") ), sizeof(upBuffer));
+			upBuffer[0] = '\0';
+			for (i = 0; i < AIR_STATS_MAX; i++) {
+				switch (i) {
+				case AIR_STATS_SPEED:
+				case AIR_STATS_ACCURACY:
+				case AIR_STATS_FUELSIZE:
+					Q_strcat(upBuffer, va(_("%s:\t%i\n"), CL_AircraftStatToName(i), aircraft->stats[AIR_STATS_FUELSIZE] ), sizeof(upBuffer));
+					break;
+				default:
+					break;
+				}
+			}
+			if (aircraft->type == AIRCRAFT_TRANSPORTER) {
+				Q_strcat(upBuffer, va(_("Max. soldiers:\t%i\n"), aircraft->maxTeamSize), sizeof(upBuffer));
+			}
 		}
-	}
-#if 0
-	else if RS_Collected_(t) {
-		/* Display crippled info and pre-research text here */
-	}
-#endif
-	else {
+	} else if (RS_Collected_(t)) {
+		/* @todo Display crippled info and pre-research text here */
+		Com_sprintf(upBuffer, sizeof(upBuffer), _("Unknown - need to research this"));
+	} else {
 		Com_sprintf(upBuffer, sizeof(upBuffer), _("Unknown - need to research this"));
 	}
 	menuText[TEXT_STANDARD] = upBuffer;

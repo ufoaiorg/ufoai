@@ -140,7 +140,7 @@ typedef struct aircraft_s {
 
 	int price;			/**< Price of this aircraft type. */
 	int fuel;			/**< Current fuel amount. */
-	int size;			/**< Max amount of soldiers onboard. */	/* @todo: rename me. */
+	int maxTeamSize;	/**< Max amount of soldiers onboard. */
 	int weight;			/**< "Size" of the aircraft used in capacity calculations. */	/* @todo: rename me to size. */
 	vec3_t pos;			/**< Current position on the geoscape. */
 	vec3_t direction;		/**< Direction in which the aircraft is going on 3D geoscape (used for smoothed rotation). */

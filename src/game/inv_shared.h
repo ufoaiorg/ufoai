@@ -154,7 +154,7 @@ typedef enum {
 	AIR_STATS_DAMAGE,	/**< Aircraft damage points (= hit points of the aircraft). */
 	AIR_STATS_ACCURACY,	/**< Aircraft accuracy - base accuracy (without weapon). */
 	AIR_STATS_FUELSIZE,	/**< Aircraft fuel capacity. */
-	AIR_STATS_WRANGE,	/**< Aircraft weapon range - the maximum distance aircraft can open fire. */
+	AIR_STATS_WRANGE,	/**< Aircraft weapon range - the maximum distance aircraft can open fire. @note: Should be the last one */
 
 	AIR_STATS_MAX
 } aircraftParams_t;

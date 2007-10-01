@@ -486,7 +486,7 @@ static character_t *CL_GetActorChr (le_t * le)
 	}
 
 	/* Search in the aircraft team (we skip unused entries) for this actor. */
-	for (i = 0, p = 0; i < aircraft->size ;i++) {
+	for (i = 0, p = 0; i < aircraft->maxTeamSize; i++) {
 		if (aircraft->teamIdxs[i] != -1) {
 			if (actor_idx == p) {
 				return &gd.employees[aircraft->teamTypes[actor_idx]][aircraft->teamIdxs[actor_idx]].chr;

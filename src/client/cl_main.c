@@ -1416,7 +1416,7 @@ static void CL_SpawnSoldiers_f (void)
 	/* maybe we start the map directly from commandline for testing */
 	if (base) {
 		/* convert aircraft team to chr_list */
-		for (i = 0, chr_list_temp.num = 0; i < aircraft->size; i++) {
+		for (i = 0, chr_list_temp.num = 0; i < aircraft->maxTeamSize; i++) {
 			if (aircraft->teamIdxs[i] != -1) {
 				chr_list_temp.chr[chr_list_temp.num] = &gd.employees[aircraft->teamTypes[i]][aircraft->teamIdxs[i]].chr;
 				chr_list_temp.num++;
