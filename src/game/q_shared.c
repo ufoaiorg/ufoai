@@ -1073,9 +1073,12 @@ void Q_strncpyz (char *dest, const char *src, size_t destsize)
 #ifdef PARANOID
 	if (*src)
 		Com_Printf("Buffer too small: %s: %i (%s)\n", file, line, src);
-#endif
 	/* the rest is filled with null */
 	memset(dest, 0, destsize);
+#else
+	/* terminate the string */
+	*dest = '\0';
+#endif
 }
 
 /**

@@ -1040,6 +1040,36 @@ void LIST_AddString (linkedList_t** listDest, const char* data)
 }
 
 /**
+ * @brief Adds just a pointer to a new or to an already existing linked list
+ * @sa LIST_Add
+ */
+void LIST_AddPointer (linkedList_t** listDest, const char* data)
+{
+	linkedList_t *newEntry;
+	linkedList_t *list;
+
+	assert(listDest);
+	assert(data);
+
+	/* create the list */
+	if (!*listDest) {
+		*listDest = (linkedList_t*)Mem_PoolAlloc(sizeof(linkedList_t), com_genericPool, 0);
+		(*listDest)->data = data;
+		(*listDest)->next = NULL; /* not really needed - but for better readability */
+		return;
+	} else
+		list = *listDest;
+
+	while (list->next)
+		list = list->next;
+
+	newEntry = (linkedList_t*)Mem_PoolAlloc(sizeof(linkedList_t), com_genericPool, 0);
+	list->next = newEntry;
+	newEntry->data = data;
+	newEntry->next = NULL; /* not really needed - but for better readability */
+}
+
+/**
  * @sa LIST_Add
  */
 void LIST_Delete (linkedList_t *list)
