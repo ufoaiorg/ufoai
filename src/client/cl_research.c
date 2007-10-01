@@ -76,7 +76,7 @@ void RS_ResearchFinish (technology_t* tech)
 		RS_PushNewsWhenResearched(tech);
 
 	/* send a new message and add it to the mailclient */
-	if (tech->mailSent < MAILSENT_FINISHED) {
+	if ((tech->mailSent < MAILSENT_FINISHED) && (tech->type != RS_LOGIC)) {
 		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("A research project has been completed: %s\n"), _(tech->name));
 		MN_AddNewMessage(_("Research finished"), messageBuffer, qfalse, MSG_RESEARCH_FINISHED, tech);
 		tech->mailSent = MAILSENT_FINISHED;
