@@ -2213,6 +2213,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 						Com_Printf("......warning: could not spawn base attack mission on geoscape '%s'!\n", name);
 						return qfalse;
 					}
+					mis->def->missionText = "Base is under attack.";
 				}
 				break;
 			case MIS_CRASHSITE:
@@ -2249,6 +2250,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 						Com_sprintf(mis->def->location, sizeof(mis->def->location), _("No nation"));
 						Q_strncpyz(mis->def->civTeam, "europa", sizeof(mis->def->civTeam));
 					}
+					mis->def->missionText = "Crashed Alien Ship. Secure the area.";
 				}
 				break;
 			case MIS_TERRORATTACK:
