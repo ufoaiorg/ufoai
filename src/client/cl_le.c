@@ -419,17 +419,17 @@ static void LE_PlaySoundFileForContents (le_t* le, int contents)
 			/* were we already in the water? */
 			if (le->positionContents & CONTENTS_WATER) {
 				/* play water moving sound */
-				S_StartSound(le->origin, soundWaterOut, 1, SOUND_DEFAULTATTENUATE);
+				S_StartSound(le->origin, soundWaterOut, DEFAULT_SOUND_PACKET_VOLUME, SOUND_DEFAULTATTENUATE);
 			} else {
 				/* play water entering sound */
-				S_StartSound(le->origin, soundWaterIn, 1, SOUND_DEFAULTATTENUATE);
+				S_StartSound(le->origin, soundWaterIn, DEFAULT_SOUND_PACKET_VOLUME, SOUND_DEFAULTATTENUATE);
 			}
 			return;
 		}
 
 		if (le->positionContents & CONTENTS_WATER) {
 			/* play water leaving sound */
-			S_StartSound(le->origin, soundWaterMove, 1, SOUND_DEFAULTATTENUATE);
+			S_StartSound(le->origin, soundWaterMove, DEFAULT_SOUND_PACKET_VOLUME, SOUND_DEFAULTATTENUATE);
 		}
 	}
 }

@@ -62,7 +62,7 @@ void S_Shutdown(void);
 void S_Frame(void);
 
 void S_StopAllSounds(void);
-void S_StartSound(const vec3_t origin, sfx_t* sfx, int volume, float attenuation);
+void S_StartSound(const vec3_t origin, sfx_t* sfx, float relVolume, float attenuation);
 void S_StartLocalSound(const char *s);
 sfx_t *S_RegisterSound(const char *s);
 

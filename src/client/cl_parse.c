@@ -452,7 +452,7 @@ static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 	vec3_t pos_v;
 	float *pos;
 	int channel, ent, flags;
-	int volume;
+	float volume;
 	float attenuation;
 	const char *sound;
 	sfx_t *sfx;
@@ -461,9 +461,9 @@ static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 	sound = NET_ReadString(msg);
 
 	if (flags & SND_VOLUME)
-		volume = NET_ReadByte(msg);
+		volume = NET_ReadByte(msg) / 128.0;
 	else
-		volume = MIX_MAX_VOLUME;
+		volume = DEFAULT_SOUND_PACKET_VOLUME;
 
 	if (flags & SND_ATTENUATION)
 		attenuation = NET_ReadByte(msg) / 64.0;

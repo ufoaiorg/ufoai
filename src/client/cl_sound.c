@@ -49,7 +49,7 @@ static cvar_t *snd_volume;
 static cvar_t *snd_init;
 static cvar_t *snd_bits;
 static cvar_t *snd_channels;
-static cvar_t *snd_khz;
+static cvar_t *snd_rate;
 static cvar_t *snd_music;
 static cvar_t *snd_music_volume;
 
@@ -178,7 +178,7 @@ static void S_Music_RandomTrack_f (void)
 	}
 
 	randomID = rand() % musicTrackCount;
-	Com_DPrintf(DEBUG_SOUND, "S_OGG_RandomTrack_f: random track id: %i/%i\n", randomID, musicTrackCount);
+	Com_DPrintf(DEBUG_SOUND, "S_Music_RandomTrack_f: random track id: %i/%i\n", randomID, musicTrackCount);
 
 	/* search through the path, one element at a time */
 	for (search = fs_searchpaths; search; search = search->next) {
@@ -291,26 +291,33 @@ sfx_t *S_RegisterSound (const char *name)
  * @brief Validates the parms and ques the sound up
  * @param[in] origin if is NULL, the sound will be dynamically sourced from the entity
  * @param[in] name The soundfile to play
- * @param[in] volume - 0 - 128; -1 means, don't change the volume
+ * @param[in] relVolume - 0 - 1
  * @param[in] attenuation the reduction in amplitude and intensity of a signal
  * @sa S_StartLocalSound
  */
-void S_StartSound (const vec3_t origin, sfx_t* sfx, int volume, float attenuation)
+void S_StartSound (const vec3_t origin, sfx_t* sfx, float relVolume, float attenuation)
 {
+	int volume = MIX_MAX_VOLUME * volume;
+
 	if (!sound_started) {
-		Com_Printf("S_StartSound: no sound started\n");
+		Com_DPrintf(DEBUG_SOUND, "S_StartSound: no sound started\n");
 		return;
 	}
+
+	sfx->channel = Mix_PlayChannel(sfx->channel, sfx->data, sfx->loops);
+#ifdef DEBUG
+	if (volume > MIX_MAX_VOLUME) {
+		Com_DPrintf(DEBUG_SOUND, "Mixer volume is too high: %i - max value is %i\n", MIX_MAX_VOLUME, volume);
+		volume = MIX_MAX_VOLUME;
+	}
+#endif
+	Mix_VolumeChunk(sfx->data, volume);
 	if (origin) {
 		le_t* le = LE_GetClosestActor(origin);
 		if (le)
 			Mix_SetDistance(sfx->channel, VectorDist(origin, le->origin));
 	}
-	if (volume >= 0)
-		Mix_VolumeChunk(sfx->data, volume);
-	sfx->channel = Mix_PlayChannel(sfx->channel, sfx->data, sfx->loops);
-	Mix_Volume(sfx->channel, volume);
-	Com_Printf("Mix '%s' (volume: %i, channel: %i)\n", sfx->name, volume, sfx->channel);
+	Com_DPrintf(DEBUG_SOUND, "Mix '%s' (volume: %i, channel: %i)\n", sfx->name, volume, sfx->channel);
 }
 
 /**
@@ -321,21 +328,24 @@ void S_StartLocalSound (const char *sound)
 	sfx_t *sfx;
 
 	if (!sound_started) {
-		Com_Printf("S_StartLocalSound: no sound started\n");
+		Com_DPrintf(DEBUG_SOUND, "S_StartLocalSound: no sound started\n");
 		return;
 	}
 
 	sfx = S_RegisterSound(sound);
 	if (!sfx) {
-		Com_Printf("S_StartLocalSound: can't load %s\n", sound);
+		Com_DPrintf(DEBUG_SOUND, "S_StartLocalSound: can't load %s\n", sound);
 		return;
 	}
-	S_StartSound(NULL, sfx, -1, DEFAULT_SOUND_PACKET_ATTENUATION);
+	S_StartSound(NULL, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION);
 }
 
+/**
+ * @brief Stop all channels
+ */
 void S_StopAllSounds (void)
 {
-
+	Mix_HaltChannel(-1);
 }
 
 /**
@@ -368,7 +378,7 @@ void S_Frame (void)
 		snd_music->modified = qfalse;
 	}
 	if (snd_music_volume->modified) {
-	/*	Mix_VolumeMusic(snd_music->integer);*/
+		Mix_VolumeMusic(snd_music_volume->integer);
 		snd_music_volume->modified = qfalse;
 	}
 	if (music.nextMusicTrack) {
@@ -386,10 +396,11 @@ void S_Frame (void)
  */
 static qboolean SND_Init (void)
 {
-	int audio_rate = snd_khz->integer;
+	int audio_rate = snd_rate->integer;
 	Uint16 audio_format = MIX_DEFAULT_FORMAT; /* 16-bit stereo */
 	int audio_channels = snd_channels->integer;
 	int audio_buffers = 1024;
+	SDL_version version;
 
 	if (SDL_WasInit(SDL_INIT_EVERYTHING) == 0) {
 		if (SDL_Init(SDL_INIT_AUDIO) == -1) {
@@ -402,6 +413,9 @@ static qboolean SND_Init (void)
 			return qfalse;
 		}
 	}
+
+	MIX_VERSION(&version);
+	Com_Printf("SDL_mixer version: %d.%d.%d\n", version.major, version.minor, version.patch);
 
 	if (Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers) == -1) {
 		Com_Printf("Unable to open audio\n");
@@ -433,7 +447,7 @@ void S_Init (void)
 	snd_bits = Cvar_Get("snd_bits", "16", CVAR_ARCHIVE, "Sound bits");
 	snd_channels = Cvar_Get("snd_channels", "2", CVAR_ARCHIVE, "Sound channels");
 	snd_volume = Cvar_Get("snd_volume", "128", CVAR_ARCHIVE, "Sound volume - default is 128");
-	snd_khz = Cvar_Get("snd_khz", "22050", CVAR_ARCHIVE, "Khz value for sound renderer - default is 22050");
+	snd_rate = Cvar_Get("snd_rate", "44100", CVAR_ARCHIVE, "Hz value for sound renderer - default is 44100");
 	snd_music = Cvar_Get("snd_music", "PsymongN3", 0, "Background music track");
 	snd_music_volume = Cvar_Get("snd_music_volume", "128", CVAR_ARCHIVE, "Music volume - default is 128");
 
