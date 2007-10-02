@@ -2213,7 +2213,6 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 						Com_Printf("......warning: could not spawn base attack mission on geoscape '%s'!\n", name);
 						return qfalse;
 					}
-					mis->def->missionText = "Base is under attack.";
 				}
 				break;
 			case MIS_CRASHSITE:
