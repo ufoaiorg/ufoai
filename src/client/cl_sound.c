@@ -302,7 +302,7 @@ sfx_t *S_RegisterSound (const char *name)
  */
 void S_StartSound (const vec3_t origin, sfx_t* sfx, float relVolume, float attenuation)
 {
-	int volume = MIX_MAX_VOLUME * volume;
+	int volume = MIX_MAX_VOLUME * relVolume;
 
 	if (!sound_started) {
 		Com_DPrintf(DEBUG_SOUND, "S_StartSound: no sound started\n");
