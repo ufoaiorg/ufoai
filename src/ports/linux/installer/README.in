@@ -24,6 +24,7 @@ SYSTEM REQUIREMENTS
 	SDL_mixer >= 1.2.7
 	libjpeg >= 6.2
 	zlib >= 1.2.3
+	libcurl
 	libpng
 
 RUNNING THE GAME
