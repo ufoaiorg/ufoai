@@ -52,6 +52,7 @@ typedef struct sfx_s {
 } sfx_t;
 
 typedef struct music_s {
+	char currentlyPlaying[MAX_QPATH];
 	Mix_Music *data;
 	SDL_RWops *musicSrc;
 	char *nextMusicTrack;

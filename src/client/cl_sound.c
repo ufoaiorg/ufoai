@@ -92,14 +92,18 @@ void S_Music_Start (const char *file)
 		return;
 	}
 
-	S_Music_Stop();
-
 	Q_strncpyz(name, file, sizeof(name));
 	len = strlen(name);
 	if (len + 4 >= MAX_QPATH) {
 		Com_Printf("S_Music_Start: MAX_QPATH exceeded: "UFO_SIZE_T"\n", len + 4);
 		return;
 	}
+
+	/* we are already playing that track */
+	if (!Q_strcmp(name, music.currentlyPlaying))
+		return;
+
+	S_Music_Stop();
 
 	/* load it in */
 	if ((size = FS_LoadFile(va("music/%s.ogg", name), (byte **)&musicBuf)) != -1) {
@@ -114,6 +118,7 @@ void S_Music_Start (const char *file)
 
 	if (music.data) {
 		Com_Printf("S_Music_Start: Playing music: 'music/%s.ogg'\n", file);
+		Q_strncpyz(music.currentlyPlaying, name, sizeof(music.currentlyPlaying));
 		if (Mix_PlayMusic(music.data, 1500) == -1)
 			Com_Printf("S_Music_Start: Could not play music: 'music/%s.ogg'\n", file);
 	} else {
@@ -467,9 +472,6 @@ void S_Init (void)
 	sound_started = qtrue;
 
 	memset(&music, 0, sizeof(music_t));
-
-	/* start music again */
-	S_Music_Start(snd_music->string);
 }
 
 /**

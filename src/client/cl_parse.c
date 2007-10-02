@@ -491,7 +491,7 @@ static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 	} else /* use entity number */
 		pos = NULL;
 
-	Com_DPrintf(DEBUG_SOUND, "startsoundpacket: flags %x, sound %s, volume %i, attenuation %.2f,"
+	Com_DPrintf(DEBUG_SOUND, "startsoundpacket: flags %x, sound %s, volume %.3f, attenuation %.2f,"
 		" channel %d, ent %d, pos %.3f, %.3f, %.3f\n",
 		flags, sound, volume, attenuation, channel, ent, pos[0], pos[1], pos[2]);
 
