@@ -27,7 +27,7 @@ item knife
 			projtl	null
 			impact	null
 			hitbody blood
-			firesnd	weapons/knife.wav
+			firesnd	weapons/knife
 			speed	0
 			range	1.5
 			shots	1
@@ -43,8 +43,8 @@ item knife
 			projtl	knife
 			impact	null
 			hitbody blood
-			impsnd	misc/klonk03.wav
-			bodysnd misc/klonk01.wav
+			impsnd	misc/klonk03
+			bodysnd misc/klonk01
 			speed	320
 			range	7
 			spread	"1 4"
@@ -87,7 +87,7 @@ item knifemono
 			projtl	null
 			impact	null
 			hitbody blood
-			firesnd	weapons/knife.wav
+			firesnd	weapons/knife
 			speed	0
 			range	1.5
 			shots	1
@@ -103,7 +103,7 @@ item knifemono
 			projtl	null
 			impact	null
 			hitbody blood
-			firesnd	weapons/kerrblade_swip.wav
+			firesnd	weapons/kerrblade_swip
 			speed	0
 			range	1.5
 			shots	1
@@ -119,8 +119,8 @@ item knifemono
 			projtl	knife
 			impact	null
 			hitbody blood
-			impsnd	misc/klonk03.wav
-			bodysnd misc/klonk01.wav
+			impsnd	misc/klonk03
+			bodysnd misc/klonk01
 			speed	320
 			range	7
 			spread	"1 4"
@@ -163,7 +163,7 @@ item stunrod
 			projtl	null
 			impact	null
 			hitbody	blood
-			firesnd	weapons/stun.wav
+			firesnd	weapons/stun
 			speed	0
 			range	1.5
 			shots	1
@@ -181,7 +181,7 @@ item stunrod
 			projtl	null
 			impact	null
 			hitbody	blood
-			firesnd	weapons/stun.wav
+			firesnd	weapons/stun
 			speed	0
 			range	1.5
 			shots	2
@@ -225,7 +225,7 @@ item kerrblade
 			projtl	null
 			impact	null
 			hitbody blood
-			firesnd	weapons/knife.wav
+			firesnd	weapons/knife
 			speed	0
 			range	1.5
 			shots	1
@@ -241,7 +241,7 @@ item kerrblade
 			projtl	null
 			impact	null
 			hitbody blood
-			firesnd	weapons/kerrblade_swip.wav
+			firesnd	weapons/kerrblade_swip
 			speed	0
 			range	1.5
 			shots	1
@@ -298,7 +298,7 @@ item plasblade_ammo
 			projtl	null
 			impact	plasmaImpactCharged
 			hitbody	plasmaImpactCharged
-			firesnd	weapons/plasmablade.wav
+			firesnd	weapons/plasmablade
 			speed	0
 			range	1.5
 			spread	"1 4"
@@ -316,8 +316,8 @@ item plasblade_ammo
 			projtl	plasblade
 			impact	plasmaImpactCharged
 			hitbody	plasmaImpactCharged
-			impsnd	misc/klonk03.wav
-			bodysnd weapons/plasmablade.wav
+			impsnd	misc/klonk03
+			bodysnd weapons/plasmablade
 			speed	320
 			range	7
 			spread	"2 5"

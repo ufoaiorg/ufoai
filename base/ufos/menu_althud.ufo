@@ -1118,7 +1118,6 @@ menu althud
 	func init
 	{
 		cmd "set hud_refresh 1;"
-		cmd "music_start;"
 		show_rightweapon
 		cmd "set mn_showchatbuttons 0;"
 	}

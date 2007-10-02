@@ -24,7 +24,7 @@ item medikit
 			projtl	null
 			impact	null
 			hitbody null
-			firesnd	weapons/medikit.wav
+			firesnd	weapons/medikit
 			speed	0
 			range	1.5
 			shots	1
@@ -37,8 +37,8 @@ item medikit
 			name	"_Throw"
 			skill	close
 			projtl	medikit
-			impsnd	misc/klonk03.wav
-			bodysnd misc/klonk01.wav
+			impsnd	misc/klonk03
+			bodysnd misc/klonk01
 			gravity	true
 			speed	220
 			range	8
@@ -78,7 +78,7 @@ item irgoggles
 		firedef
 		{
 			name	"_Scan"
-			firesnd	misc/plopp03.wav
+			firesnd	misc/plopp03
 			splrad	10
 			range	9.5
 			time	12
@@ -90,8 +90,8 @@ item irgoggles
 			name	"_Throw"
 			skill	close
 			projtl	irgoggles
-			impsnd	misc/klonk03.wav
-			bodysnd misc/klonk01.wav
+			impsnd	misc/klonk03
+			bodysnd misc/klonk01
 			gravity	true
 			speed	220
 			range	10
@@ -133,9 +133,9 @@ item fraggrenade
 			projtl	fraggren
 			impact	frag_explosion
 			hitbody frag_explosion
-			impsnd	weapons/grenade.wav
-			bodysnd	weapons/grenade.wav
-			bncsnd	misc/klonk03.wav
+			impsnd	weapons/grenade
+			bodysnd	weapons/grenade
+			bncsnd	misc/klonk03
 			gravity	true
 			delay	1
 			bounce	10
@@ -157,9 +157,9 @@ item fraggrenade
 			projtl	fraggren
 			impact	frag_explosion
 			hitbody frag_explosion
-			impsnd	weapons/grenade.wav
-			bodysnd	weapons/grenade.wav
-			bncsnd	misc/klonk03.wav
+			impsnd	weapons/grenade
+			bodysnd	weapons/grenade
+			bncsnd	misc/klonk03
 			gravity	true
 			rolled true
 			delay	1
@@ -206,9 +206,9 @@ item flashbang
 			projtl	flashgren
 			impact	flash_explosion
 			hitbody flash_explosion
-			impsnd	weapons/flashbang.wav
-			bodysnd	weapons/flashbang.wav
-			bncsnd	misc/klonk03.wav
+			impsnd	weapons/flashbang
+			bodysnd	weapons/flashbang
+			bncsnd	misc/klonk03
 			gravity	true
 			delay	1
 			bounce	10
@@ -230,9 +230,9 @@ item flashbang
 			projtl	flashgren
 			impact	flash_explosion
 			hitbody flash_explosion
-			impsnd	weapons/flashbang.wav
-			bodysnd	weapons/flashbang.wav
-			bncsnd	misc/klonk03.wav
+			impsnd	weapons/flashbang
+			bodysnd	weapons/flashbang
+			bncsnd	misc/klonk03
 			gravity	true
 			rolled true
 			delay	1
@@ -278,9 +278,9 @@ item smokegrenade
 			projtl	smokegren
 			impact	smoke_explosion
 			hitbody smoke_explosion
-			impsnd	weapons/smokeexplosion.wav
-			bodysnd	weapons/smokeexplosion.wav
-			bncsnd	misc/klonk03.wav
+			impsnd	weapons/smokeexplosion
+			bodysnd	weapons/smokeexplosion
+			bncsnd	misc/klonk03
 			gravity	true
 			delay	1
 			bounce	10
@@ -302,9 +302,9 @@ item smokegrenade
 			projtl	smokegren
 			impact	smoke_explosion
 			hitbody smoke_explosion
-			impsnd	weapons/smokeexplosion.wav
-			bodysnd	weapons/smokeexplosion.wav
-			bncsnd	misc/klonk03.wav
+			impsnd	weapons/smokeexplosion
+			bodysnd	weapons/smokeexplosion
+			bncsnd	misc/klonk03
 			gravity	true
 			rolled true
 			delay	1
@@ -350,9 +350,9 @@ item stungrenade
 			projtl	stungren
 			impact	coronaImpact
 			hitbody	coronaImpact
-			impsnd	weapons/smokeexplosion.wav
-			bodysnd	weapons/smokeexplosion.wav
-			bncsnd	misc/klonk03.wav
+			impsnd	weapons/smokeexplosion
+			bodysnd	weapons/smokeexplosion
+			bncsnd	misc/klonk03
 			gravity	true
 			delay	1
 			bounce	10
@@ -374,9 +374,9 @@ item stungrenade
 			projtl	stungren
 			impact	coronaImpact
 			hitbody	coronaImpact
-			impsnd	weapons/smokeexplosion.wav
-			bodysnd	weapons/smokeexplosion.wav
-			bncsnd	misc/klonk03.wav
+			impsnd	weapons/smokeexplosion
+			bodysnd	weapons/smokeexplosion
+			bncsnd	misc/klonk03
 			gravity	true
 			rolled true
 			delay	1
@@ -423,9 +423,9 @@ item incgrenade
 			projtl	incgren
 			impact	fire_explosion
 			hitbody fire_explosion
-			impsnd	weapons/fireexplosion.wav
-			bodysnd	weapons/fireexplosion.wav
-			bncsnd	misc/klonk03.wav
+			impsnd	weapons/fireexplosion
+			bodysnd	weapons/fireexplosion
+			bncsnd	misc/klonk03
 			gravity	true
 			delay	1
 			bounce	10
@@ -447,9 +447,9 @@ item incgrenade
 			projtl	incgren
 			impact	fire_explosion
 			hitbody fire_explosion
-			impsnd	weapons/fireexplosion.wav
-			bodysnd	weapons/fireexplosion.wav
-			bncsnd	misc/klonk03.wav
+			impsnd	weapons/fireexplosion
+			bodysnd	weapons/fireexplosion
+			bncsnd	misc/klonk03
 			gravity	true
 			rolled true
 			delay	1
@@ -495,9 +495,9 @@ item plasmagrenade
 			projtl	plasmagren
 			impact	plasmaBigExplosion
 			hitbody	plasmaBigExplosion
-			impsnd	weapons/plasma_grenade.wav
-			bodysnd	weapons/plasma_grenade.wav
-			bncsnd	misc/klonk03.wav
+			impsnd	weapons/plasma_grenade
+			bodysnd	weapons/plasma_grenade
+			bncsnd	misc/klonk03
 			gravity	true
 			delay	1
 			bounce	10
@@ -519,9 +519,9 @@ item plasmagrenade
 			projtl	plasmagren
 			impact	plasmaBigExplosion
 			hitbody	plasmaBigExplosion
-			impsnd	weapons/plasma_grenade.wav
-			bodysnd	weapons/plasma_grenade.wav
-			bncsnd	misc/klonk03.wav
+			impsnd	weapons/plasma_grenade
+			bodysnd	weapons/plasma_grenade
+			bncsnd	misc/klonk03
 			gravity	true
 			rolled true
 			delay	1

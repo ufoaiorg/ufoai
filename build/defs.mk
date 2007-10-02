@@ -2,10 +2,13 @@
 SRCDIR=src
 
 CFLAGS+=-DHAVE_CONFIG_H -Wall -pipe -Winline -Wcast-qual -Wcast-align -ansi \
-	-Wdeclaration-after-statement -Wmissing-prototypes -Wmissing-declarations
-#	-fstack-protector-all -Wstack-protector
+	-Wdeclaration-after-statement -Wmissing-prototypes -Wmissing-declarations \
+	-Wpointer-arith -Wcast-align -Wunsafe-loop-optimizations \
+	-Wimplicit-int -Wpacked -Wparentheses \
+	-Wunused -Wunused-function -Wunused-label -Wunused-value -Wunused-variable -Wvariadic-macros
+#	-fstack-protector-all -Wstack-protector -Wpadded
 #	-Wfloat-equal -Wconversion -Wunreachable-code -Wbad-function-cast \
-#	-Wshadow -Wpointer-arith  \
+#	-Wshadow -Wpointer-arith
 #	-Wbad-function-cast -pedantic -std=c99
 #-combine -fwhole-program
 

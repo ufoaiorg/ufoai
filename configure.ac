@@ -412,14 +412,25 @@ then
 	then
 		AC_MSG_ERROR([You must have the SDL development headers])
 	fi
+	AC_CHECK_LIB(SDL, SDL_Init, [], AC_MSG_ERROR([You must have SDL!!!]))
 
-	# multiple main functions error for SDL_ttf otherwise
-	# problem might be that -L<SDL_dir> might be missing then
-	LDFLAGS=$OLD_LDFLAGS
+	#---------------------------------------------------------------------------------------------
+	# Check for SDL mixer headers and libraries
+	#---------------------------------------------------------------------------------------------
+	AC_CHECK_HEADERS([SDL_mixer.h])
+	if test "$ac_cv_header_SDL_mixer_h" != "yes"
+	then
+		AC_MSG_ERROR([You must have the SDL_mixer development headers])
+	fi
+	AC_CHECK_LIB(SDL_mixer, Mix_OpenAudio, [], AC_MSG_ERROR([You must have SDL_mixer!!!]))
 
 	#---------------------------------------------------------------------------------------------
 	# Check for SDL_ttf
 	#---------------------------------------------------------------------------------------------
+	# multiple main functions error for SDL_ttf otherwise
+	# problem might be that -L<SDL_dir> might be missing then
+	LDFLAGS=$OLD_LDFLAGS
+
 	AC_CHECK_HEADERS([SDL_ttf.h])
 	if test "$ac_cv_header_SDL_ttf_h" != "yes"
 	then

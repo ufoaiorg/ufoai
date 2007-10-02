@@ -88,7 +88,7 @@ item laserrifle_ammo
 			projtl	laserPulse
 			impact	laserImpact
 			hitbody	laserImpact
-			firesnd	weapons/laser.wav
+			firesnd	weapons/laser
 			speed	0
 			spread	"0 0.8"
 			crouch	0.3
@@ -107,7 +107,7 @@ item laserrifle_ammo
 			projtl	laserPulse
 			impact	laserImpact
 			hitbody	laserImpact
-			firesnd	weapons/laser.wav
+			firesnd	weapons/laser
 			speed	0
 			spread	"0 0.8"
 			crouch	0.3
@@ -130,7 +130,7 @@ item laserrifle_ammo
 			projtl	laserPulse
 			impact	laserImpact
 			hitbody	laserImpact
-			firesnd	weapons/laser.wav
+			firesnd	weapons/laser
 			speed	0
 			spread	"0 0.4"
 			crouch	0.6
@@ -149,7 +149,7 @@ item laserrifle_ammo
 			projtl	laserPulse
 			impact	laserImpact
 			hitbody	laserImpact
-			firesnd	weapons/laser.wav
+			firesnd	weapons/laser
 			speed	0
 			spread	"0 0.4"
 			crouch	0.6
@@ -172,7 +172,7 @@ item laserrifle_ammo
 			projtl	laserPulse
 			impact	laserImpact
 			hitbody	laserImpact
-			firesnd	weapons/laser.wav
+			firesnd	weapons/laser
 			speed	0
 			spread	"0 0.2"
 			crouch	0.8
@@ -191,7 +191,7 @@ item laserrifle_ammo
 			projtl	laserOverload
 			impact	laserImpact
 			hitbody	laserImpact
-			firesnd	weapons/heavy_laser.wav
+			firesnd	weapons/heavy_laser
 			speed	0
 			spread	"0 0.2"
 			crouch	0.8

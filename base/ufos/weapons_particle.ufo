@@ -42,7 +42,7 @@ item pbeampistol_ammo
 			projtl	pbeamBeam
 			impact	pbeamImpact
 			hitbody	pbeamImpact
-			firesnd	weapons/pbeampistol.wav
+			firesnd	weapons/pbeampistol
 			speed	0
 			spread	"0 1"
 			crouch	0.9
@@ -61,7 +61,7 @@ item pbeampistol_ammo
 			projtl	pbeamMiniBeam
 			impact	pbeamImpact
 			hitbody	pbeamImpact
-			firesnd	weapons/pbeampistol.wav
+			firesnd	weapons/pbeampistol
 			speed	0
 			spread	"1 2"
 			crouch	0.9
@@ -121,7 +121,7 @@ item pbeamcannon_ammo
 			projtl	pbeamBigBeam
 			impact	pbeamBigImpact
 			hitbody pbeamBigImpact
-			firesnd	weapons/pbeamcannon_explosive.wav
+			firesnd	weapons/pbeamcannon_explosive
 			speed	0
 			spread	"0 1"
 			crouch	0.8
@@ -142,7 +142,7 @@ item pbeamcannon_ammo
 			projtl	pbeamMiniBeam
 			impact	pbeamImpact
 			hitbody pbeamImpact
-			firesnd	weapons/pbeamcannon.wav
+			firesnd	weapons/pbeamcannon
 			speed	0
 			spread	"1 2"
 			crouch	0.6
@@ -203,7 +203,7 @@ item pbeamrifle_ammo
 			projtl	pbeamBeam
 			impact	pbeamImpact
 			hitbody pbeamImpact
-			firesnd	weapons/pbeamrifle.wav
+			firesnd	weapons/pbeamrifle
 			speed	0
 			spread	"0 0.2"
 			modif	0.4
@@ -223,7 +223,7 @@ item pbeamrifle_ammo
 			projtl	pbeamBeam
 			impact	pbeamImpact
 			hitbody pbeamImpact
-			firesnd	weapons/pbeamrifle.wav
+			firesnd	weapons/pbeamrifle
 			speed	0
 			spread	"0.4 0.8"
 			crouch	0.8
@@ -242,7 +242,7 @@ item pbeamrifle_ammo
 			projtl	pbeamMiniBeam
 			impact	pbeamImpact
 			hitbody pbeamImpact
-			firesnd	weapons/pbeamrifle.wav
+			firesnd	weapons/pbeamrifle
 			speed	0
 			spread	"1 2"
 			crouch	0.8

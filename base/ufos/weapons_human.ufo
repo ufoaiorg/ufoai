@@ -42,7 +42,7 @@ item assault_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/assaultrifle.wav
+			firesnd	weapons/assaultrifle
 			speed	0
 			spread	"1.0 1.0"
 			modif	0.7
@@ -62,7 +62,7 @@ item assault_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/assaultrifle.wav
+			firesnd	weapons/assaultrifle
 			speed	0
 			spread	"1.4 1.4"
 			modif	0.7
@@ -83,7 +83,7 @@ item assault_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/assaultrifle.wav
+			firesnd	weapons/assaultrifle
 			speed	0
 			spread	"1.8 1.8"
 			modif	0.7
@@ -146,7 +146,7 @@ item chaingun_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/chaingun.wav
+			firesnd	weapons/chaingun
 			speed	0
 			spread	"1 4"
 			crouch	1.0
@@ -166,7 +166,7 @@ item chaingun_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/chaingun.wav
+			firesnd	weapons/chaingun
 			speed	0
 			spread	"3 6"
 			crouch	1.0
@@ -186,7 +186,7 @@ item chaingun_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/chaingun.wav
+			firesnd	weapons/chaingun
 			speed	0
 			spread	"3 15"
 			crouch	1.0
@@ -246,7 +246,7 @@ item machinegun_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/machinegun.wav
+			firesnd	weapons/machinegun
 			speed	0
 			spread	"1.0 1.0"
 			modif	0.7
@@ -266,7 +266,7 @@ item machinegun_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/machinegun.wav
+			firesnd	weapons/machinegun
 			speed	0
 			spread	"1.4 1.4"
 			modif	0.7
@@ -287,7 +287,7 @@ item machinegun_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/machinegun.wav
+			firesnd	weapons/machinegun
 			speed	0
 			spread	"1.8 1.8"
 			modif	0.7
@@ -348,7 +348,7 @@ item sniper_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/sniperrifle.wav
+			firesnd	weapons/sniperrifle
 			speed	0
 			spread	"0.3 0.3"
 			modif	1.7
@@ -368,7 +368,7 @@ item sniper_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/sniperrifle.wav
+			firesnd	weapons/sniperrifle
 			speed	0
 			spread	"0.1 0.1"
 			modif	1.7
@@ -387,7 +387,7 @@ item sniper_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/sniperrifle.wav
+			firesnd	weapons/sniperrifle
 			speed	0
 			spread	"0.3 0.3"
 			modif	1.7
@@ -447,7 +447,7 @@ item pistol_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/pistol2.wav
+			firesnd	weapons/pistol2
 			speed	0
 			spread	"2.2 2.2"
 			crouch	0.9
@@ -466,7 +466,7 @@ item pistol_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/pistol2.wav
+			firesnd	weapons/pistol2
 			speed	0
 			spread	"3.2 3.2"
 			crouch	0.9
@@ -486,7 +486,7 @@ item pistol_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/pistol2.wav
+			firesnd	weapons/pistol2
 			speed	0
 			spread	"1.2 1.2"
 			modif	0.7
@@ -546,7 +546,7 @@ item pistol2_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/machinepistol.wav
+			firesnd	weapons/machinepistol
 			speed	0
 			spread	"0 1"
 			crouch	0.9
@@ -565,7 +565,7 @@ item pistol2_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/machinepistol.wav
+			firesnd	weapons/machinepistol
 			speed	0
 			spread	"1 2"
 			crouch	0.9
@@ -585,7 +585,7 @@ item pistol2_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/machinepistol.wav
+			firesnd	weapons/machinepistol
 			speed	0
 			spread	"2 2"
 			crouch	0.9
@@ -646,7 +646,7 @@ item smg_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/smg2.wav
+			firesnd	weapons/smg2
 			speed	0
 			spread	"1.5 1.5"
 			crouch	0.7
@@ -665,7 +665,7 @@ item smg_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/smg2.wav
+			firesnd	weapons/smg2
 			speed	0
 			spread	"2.5 2.5"
 			crouch	0.7
@@ -685,7 +685,7 @@ item smg_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/smg2.wav
+			firesnd	weapons/smg2
 			speed	0
 			spread	"3.0 3.0"
 			modif	0.1
@@ -746,7 +746,7 @@ item shotgun2
 //		projtl	null
 //		impact	bulletImpact
 //		hitbody null
-//		firesnd	weapons/shotgun.wav
+//		firesnd	weapons/shotgun
 //		sndonce true
 //		speed	0
 //		spread	"3.6 3.6"
@@ -767,7 +767,7 @@ item shotgun2
 //		projtl	null
 //		impact	bulletImpact
 //		hitbody null
-//		firesnd	weapons/shotgun.wav
+//		firesnd	weapons/shotgun
 //		sndonce true
 //		speed	0
 //		spread	"5.5 5.5"
@@ -804,7 +804,7 @@ item shotgun2_slug_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/riotshotgun.wav
+			firesnd	weapons/riotshotgun
 			sndonce true
 			speed	0
 			spread	"1.6 1.6"
@@ -826,7 +826,7 @@ item shotgun2_slug_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/riotshotgun.wav
+			firesnd	weapons/riotshotgun
 			sndonce false
 			speed	0
 			spread	"2.7 2.7"
@@ -848,7 +848,7 @@ item shotgun2_slug_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/riotshotgun.wav
+			firesnd	weapons/riotshotgun
 			sndonce false
 			speed	0
 			spread	"3.5 3.5"
@@ -910,7 +910,7 @@ item shotgun_ammo
 			projtl	null
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/riotshotgun.wav
+			firesnd	weapons/riotshotgun
 			sndonce true
 			speed	0
 			spread	"3.6 3.6"
@@ -932,7 +932,7 @@ item shotgun_ammo
 			projtl	null
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/riotshotgun.wav
+			firesnd	weapons/riotshotgun
 			sndonce true
 			speed	0
 			spread	"5.5 5.5"
@@ -995,7 +995,7 @@ item shotgun_micro_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/microshotgun2.wav
+			firesnd	weapons/microshotgun2
 			sndonce true
 			speed	0
 			spread	"4 0"
@@ -1017,7 +1017,7 @@ item shotgun_micro_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/microshotgun2.wav
+			firesnd	weapons/microshotgun2
 			sndonce false
 			speed	0
 			spread	"5.5 5.5"
@@ -1042,7 +1042,7 @@ item shotgun_micro_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/riotshotgun.wav
+			firesnd	weapons/riotshotgun
 			sndonce true
 			speed	0
 			spread	"3.6 3.6"
@@ -1064,7 +1064,7 @@ item shotgun_micro_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/riotshotgun.wav
+			firesnd	weapons/riotshotgun
 			sndonce false
 			speed	0
 			spread	"5.5 5.5"
@@ -1086,7 +1086,7 @@ item shotgun_micro_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/riotshotgun.wav
+			firesnd	weapons/riotshotgun
 			sndonce false
 			speed	0
 			spread	"6.0 6.0"
@@ -1147,7 +1147,7 @@ item flamer_ammo
 			projtl	fireBall
 			impact	fireImpact
 			hitbody burning
-			firesnd	weapons/flamer_s.wav
+			firesnd	weapons/flamer_s
 			sndonce true
 			speed	400
 			spread	"3 1"
@@ -1168,7 +1168,7 @@ item flamer_ammo
 			projtl	fireBall
 			impact	fireImpact
 			hitbody burning
-			firesnd	weapons/flamer_l.wav
+			firesnd	weapons/flamer_l
 			sndonce true
 			speed	400
 			spread	"4 1"
@@ -1189,7 +1189,7 @@ item flamer_ammo
 			projtl	fireBall
 			impact	fireImpact
 			hitbody burning
-			firesnd	weapons/flamer_l.wav
+			firesnd	weapons/flamer_l
 			sndonce true
 			speed	400
 			spread	"1 27"
@@ -1252,9 +1252,9 @@ item rpg_ammo
 			projtl	rocket
 			impact	explosion
 			hitbody explosion
-			firesnd	weapons/rpg.wav
-			impsnd	misc/big_boom.wav
-			bodysnd	misc/big_boom.wav
+			firesnd	weapons/rpg
+			impsnd	misc/big_boom
+			bodysnd	misc/big_boom
 			speed	250
 			spread	"0.2 0.6"
 			crouch	0.6
@@ -1292,9 +1292,9 @@ item rpg_incendiary_ammo
 			projtl	rocket_inc
 			impact	fire_explosion
 			hitbody fire_explosion
-			firesnd	weapons/rpg.wav
-			impsnd	weapons/incendiary_rocket.wav
-			bodysnd	weapons/incendiary_rocket.wav
+			firesnd	weapons/rpg
+			impsnd	weapons/incendiary_rocket
+			bodysnd	weapons/incendiary_rocket
 			speed	250
 			spread	"0.2 0.6"
 			crouch	0.6
@@ -1332,9 +1332,9 @@ item rpg_particle_ammo
 			projtl	rocket_particle
 			impact	pbeamBigImpact
 			hitbody	pbeamBigImpact
-			firesnd	weapons/rpg.wav
-			impsnd	weapons/pbeam_rocket.wav
-			bodysnd	weapons/pbeam_rocket.wav
+			firesnd	weapons/rpg
+			impsnd	weapons/pbeam_rocket
+			bodysnd	weapons/pbeam_rocket
 			speed	250
 			spread	"0.2 0.6"
 			crouch	0.6
@@ -1395,10 +1395,10 @@ item grenl_ammo
 			projtl	grenl_ammo
 			impact	frag_explosion
 			hitbody frag_explosion
-			firesnd	weapons/grenade_launcher.wav
-			impsnd	weapons/deepexplosion.wav
-			bodysnd	weapons/deepexplosion.wav
-			bncsnd	misc/klonk03.wav
+			firesnd	weapons/grenade_launcher
+			impsnd	weapons/deepexplosion
+			bodysnd	weapons/deepexplosion
+			bncsnd	misc/klonk03
 			gravity	true
 			launched true
 			spread	"0 3"
@@ -1421,10 +1421,10 @@ item grenl_ammo
 			projtl	grenl_ammo
 			impact	frag_explosion
 			hitbody frag_explosion
-			firesnd	weapons/grenade_launcher.wav
-			impsnd	weapons/deepexplosion.wav
-			bodysnd	weapons/deepexplosion.wav
-			bncsnd	misc/klonk03.wav
+			firesnd	weapons/grenade_launcher
+			impsnd	weapons/deepexplosion
+			bodysnd	weapons/deepexplosion
+			bncsnd	misc/klonk03
 			gravity	true
 			launched true
 			spread	"0 1"
@@ -1446,10 +1446,10 @@ item grenl_ammo
 			projtl	grenl_ammo
 			impact	frag_explosion
 			hitbody frag_explosion
-			firesnd	weapons/grenade_launcher.wav
-			impsnd	weapons/deepexplosion.wav
-			bodysnd	weapons/deepexplosion.wav
-			bncsnd	misc/klonk03.wav
+			firesnd	weapons/grenade_launcher
+			impsnd	weapons/deepexplosion
+			bodysnd	weapons/deepexplosion
+			bncsnd	misc/klonk03
 			gravity	true
 			launched true
 			spread	"0 6"
@@ -1472,10 +1472,10 @@ item grenl_ammo
 			projtl	grenl_ammo
 			impact	frag_explosion
 			hitbody frag_explosion
-			firesnd	weapons/grenade_launcher.wav
-			impsnd	weapons/deepexplosion.wav
-			bodysnd	weapons/deepexplosion.wav
-			bncsnd	misc/klonk03.wav
+			firesnd	weapons/grenade_launcher
+			impsnd	weapons/deepexplosion
+			bodysnd	weapons/deepexplosion
+			bncsnd	misc/klonk03
 			gravity	true
 			launched true
 			delay	1
@@ -1499,10 +1499,10 @@ item grenl_ammo
 			projtl	grenl_ammo
 			impact	frag_explosion
 			hitbody frag_explosion
-			firesnd	weapons/grenade_launcher.wav
-			impsnd	weapons/deepexplosion.wav
-			bodysnd	weapons/deepexplosion.wav
-			bncsnd	misc/klonk03.wav
+			firesnd	weapons/grenade_launcher
+			impsnd	weapons/deepexplosion
+			bodysnd	weapons/deepexplosion
+			bncsnd	misc/klonk03
 			gravity	true
 			launched true
 			delay	1
@@ -1526,10 +1526,10 @@ item grenl_ammo
 			projtl	grenl_ammo
 			impact	frag_explosion
 			hitbody frag_explosion
-			firesnd	weapons/grenade_launcher.wav
-			impsnd	weapons/deepexplosion.wav
-			bodysnd	weapons/deepexplosion.wav
-			bncsnd	misc/klonk03.wav
+			firesnd	weapons/grenade_launcher
+			impsnd	weapons/deepexplosion
+			bodysnd	weapons/deepexplosion
+			bncsnd	misc/klonk03
 			gravity	true
 			launched true
 			delay	1
@@ -1571,10 +1571,10 @@ item grenl_incendiary_ammo
 			projtl	grenl_ic_ammo
 			impact	frag_explosion
 			hitbody frag_explosion
-			firesnd	weapons/grenade_launcher.wav
-			impsnd	weapons/fireexplosion.wav
-			bodysnd	weapons/fireexplosion.wav
-			bncsnd	misc/klonk03.wav
+			firesnd	weapons/grenade_launcher
+			impsnd	weapons/fireexplosion
+			bodysnd	weapons/fireexplosion
+			bncsnd	misc/klonk03
 			gravity	true
 			launched true
 			spread	"0 3"
@@ -1598,10 +1598,10 @@ item grenl_incendiary_ammo
 			projtl	grenl_ic_ammo
 			impact	frag_explosion
 			hitbody frag_explosion
-			firesnd	weapons/grenade_launcher.wav
-			impsnd	weapons/fireexplosion.wav
-			bodysnd	weapons/fireexplosion.wav
-			bncsnd	misc/klonk03.wav
+			firesnd	weapons/grenade_launcher
+			impsnd	weapons/fireexplosion
+			bodysnd	weapons/fireexplosion
+			bncsnd	misc/klonk03
 			gravity	true
 			launched true
 			spread	"0 1"
@@ -1623,10 +1623,10 @@ item grenl_incendiary_ammo
 			projtl	grenl_ic_ammo
 			impact	frag_explosion
 			hitbody frag_explosion
-			firesnd	weapons/grenade_launcher.wav
-			impsnd	weapons/fireexplosion.wav
-			bodysnd	weapons/fireexplosion.wav
-			bncsnd	misc/klonk03.wav
+			firesnd	weapons/grenade_launcher
+			impsnd	weapons/fireexplosion
+			bodysnd	weapons/fireexplosion
+			bncsnd	misc/klonk03
 			gravity	true
 			launched true
 			spread	"0 6"
@@ -1649,10 +1649,10 @@ item grenl_incendiary_ammo
 			projtl	grenl_ic_ammo
 			impact	frag_explosion
 			hitbody frag_explosion
-			firesnd	weapons/grenade_launcher.wav
-			impsnd	weapons/fireexplosion.wav
-			bodysnd	weapons/fireexplosion.wav
-			bncsnd	misc/klonk03.wav
+			firesnd	weapons/grenade_launcher
+			impsnd	weapons/fireexplosion
+			bodysnd	weapons/fireexplosion
+			bncsnd	misc/klonk03
 			gravity	true
 			launched true
 			delay	1
@@ -1676,10 +1676,10 @@ item grenl_incendiary_ammo
 			projtl	grenl_ic_ammo
 			impact	frag_explosion
 			hitbody frag_explosion
-			firesnd	weapons/grenade_launcher.wav
-			impsnd	weapons/fireexplosion.wav
-			bodysnd	weapons/fireexplosion.wav
-			bncsnd	misc/klonk03.wav
+			firesnd	weapons/grenade_launcher
+			impsnd	weapons/fireexplosion
+			bodysnd	weapons/fireexplosion
+			bncsnd	misc/klonk03
 			gravity	true
 			launched true
 			delay	1
@@ -1703,10 +1703,10 @@ item grenl_incendiary_ammo
 			projtl	grenl_ic_ammo
 			impact	frag_explosion
 			hitbody frag_explosion
-			firesnd	weapons/grenade_launcher.wav
-			impsnd	weapons/fireexplosion.wav
-			bodysnd	weapons/fireexplosion.wav
-			bncsnd	misc/klonk03.wav
+			firesnd	weapons/grenade_launcher
+			impsnd	weapons/fireexplosion
+			bodysnd	weapons/fireexplosion
+			bncsnd	misc/klonk03
 			gravity	true
 			launched true
 			delay	1
@@ -1747,7 +1747,7 @@ item grenl_fle_ammo
 			projtl	grenl_fle_ammo
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/shotgun.wav
+			firesnd	weapons/shotgun
 			spread	"8 9"
 			range	10
 			shots	24
@@ -1766,7 +1766,7 @@ item grenl_fle_ammo
 			projtl	grenl_fle_ammo
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/shotgun.wav
+			firesnd	weapons/shotgun
 			spread	"10 2"
 			range	10
 			shots	72
@@ -1802,10 +1802,10 @@ item grenl_plasma_ammo
 			projtl	grenl_plasma_ammo
 			impact	plasmaBigExplosion
 			hitbody plasmaBigExplosion
-			firesnd	weapons/grenade_launcher.wav
-			impsnd	weapons/plasma_grenade.wav
-			bodysnd	weapons/plasma_grenade.wav
-			bncsnd	misc/klonk03.wav
+			firesnd	weapons/grenade_launcher
+			impsnd	weapons/plasma_grenade
+			bodysnd	weapons/plasma_grenade
+			bncsnd	misc/klonk03
 			gravity	true
 			launched true
 			spread	"0 3"
@@ -1828,10 +1828,10 @@ item grenl_plasma_ammo
 			projtl	grenl_plasma_ammo
 			impact	plasmaBigExplosion
 			hitbody plasmaBigExplosion
-			firesnd	weapons/grenade_launcher.wav
-			impsnd	weapons/plasma_grenade.wav
-			bodysnd	weapons/plasma_grenade.wav
-			bncsnd	misc/klonk03.wav
+			firesnd	weapons/grenade_launcher
+			impsnd	weapons/plasma_grenade
+			bodysnd	weapons/plasma_grenade
+			bncsnd	misc/klonk03
 			gravity	true
 			launched true
 			spread	"0 1"
@@ -1853,10 +1853,10 @@ item grenl_plasma_ammo
 			projtl	grenl_plasma_ammo
 			impact	plasmaBigExplosion
 			hitbody plasmaBigExplosion
-			firesnd	weapons/grenade_launcher.wav
-			impsnd	weapons/plasma_grenade.wav
-			bodysnd	weapons/plasma_grenade.wav
-			bncsnd	misc/klonk03.wav
+			firesnd	weapons/grenade_launcher
+			impsnd	weapons/plasma_grenade
+			bodysnd	weapons/plasma_grenade
+			bncsnd	misc/klonk03
 			gravity	true
 			launched true
 			spread	"0 6"
@@ -1879,10 +1879,10 @@ item grenl_plasma_ammo
 			projtl	grenl_plasma_ammo
 			impact	plasmaBigExplosion
 			hitbody plasmaBigExplosion
-			firesnd	weapons/grenade_launcher.wav
-			impsnd	weapons/plasma_grenade.wav
-			bodysnd	weapons/plasma_grenade.wav
-			bncsnd	misc/klonk03.wav
+			firesnd	weapons/grenade_launcher
+			impsnd	weapons/plasma_grenade
+			bodysnd	weapons/plasma_grenade
+			bncsnd	misc/klonk03
 			gravity	true
 			launched true
 			delay	1
@@ -1906,10 +1906,10 @@ item grenl_plasma_ammo
 			projtl	grenl_plasma_ammo
 			impact	plasmaBigExplosion
 			hitbody plasmaBigExplosion
-			firesnd	weapons/grenade_launcher.wav
-			impsnd	weapons/plasma_grenade.wav
-			bodysnd	weapons/plasma_grenade.wav
-			bncsnd	misc/klonk03.wav
+			firesnd	weapons/grenade_launcher
+			impsnd	weapons/plasma_grenade
+			bodysnd	weapons/plasma_grenade
+			bncsnd	misc/klonk03
 			gravity	true
 			launched true
 			delay	1
@@ -1933,10 +1933,10 @@ item grenl_plasma_ammo
 			projtl	grenl_plasma_ammo
 			impact	plasmaBigExplosion
 			hitbody plasmaBigExplosion
-			firesnd	weapons/grenade_launcher.wav
-			impsnd	weapons/plasma_grenade.wav
-			bodysnd	weapons/plasma_grenade.wav
-			bncsnd	misc/klonk03.wav
+			firesnd	weapons/grenade_launcher
+			impsnd	weapons/plasma_grenade
+			bodysnd	weapons/plasma_grenade
+			bncsnd	misc/klonk03
 			gravity	true
 			launched true
 			delay	1
@@ -2000,7 +2000,7 @@ item bolterrifle_ammo
 			projtl  bolter
 			impact  bolterImpact
 			hitbody null
-			firesnd weapons/bolter2.wav
+			firesnd weapons/bolter2
 			speed   0
 			spread  "0 2"
 			crouch  0.8
@@ -2020,7 +2020,7 @@ item bolterrifle_ammo
 			projtl  bolterCannonade
 			impact  bolterImpact
 			hitbody null
-			firesnd weapons/boltercannonade.wav
+			firesnd weapons/boltercannonade
 			speed   0
 			spread  "3 2"
 			crouch  0.8
@@ -2040,7 +2040,7 @@ item bolterrifle_ammo
 			projtl  bolter
 			impact  bolterImpact
 			hitbody null
-			firesnd weapons/bolter2.wav
+			firesnd weapons/bolter2
 			speed   0
 			spread  "0 1"
 			crouch  0.5

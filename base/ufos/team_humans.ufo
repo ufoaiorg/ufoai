@@ -163,12 +163,12 @@ team human
 
 	actorsounds {
 		female {
-			hurtsound	misc/newmission.wav
-			deathsound	misc/newmission.wav
+			hurtsound	misc/newmission
+			deathsound	misc/newmission
 		}
 		male {
-			hurtsound 	misc/newmission.wav
-			deathsound	misc/newmission.wav
+			hurtsound 	misc/newmission
+			deathsound	misc/newmission
 		}
 	}
 }

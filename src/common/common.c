@@ -751,7 +751,6 @@ void Qcommon_Init (int argc, const char **argv)
 #ifndef DEDICATED_ONLY
 	if (!sv_dedicated->integer) {
 		Schedule_Timer(Cvar_Get("cl_cinfreq", "30", CVAR_NOSET, NULL), &CIN_RunCinematic, NULL);
-		Schedule_Timer(cl_avifreq, &CL_AVIRecord, NULL);
 		Schedule_Timer(cl_maxfps, &CL_Frame, NULL);
 		Schedule_Timer(Cvar_Get("cl_slowfreq", "10", 0, NULL), &CL_SlowFrame, NULL);
 	}

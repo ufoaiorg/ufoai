@@ -499,7 +499,7 @@ menu options_sound
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar snd_volume"
-		max		1.0
+		max		128
 		align	ul
 		mousefx	true
 		click	{ }
@@ -520,46 +520,10 @@ menu options_sound
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar snd_music_volume"
-		max		1.0
+		max		128
 		align	ul
 		mousefx true
 		click	{ }
-	}
-
-	string mix_str
-	{
-		string	"_Mixing Rate:"
-		pos		"500 240"
-	}
-	string mix_valuestr
-	{
-		string	"kHz"
-		pos		"840 240"
-		align	ur
-	}
-	string mix_value
-	{
-		string	"*cvar snd_khz"
-		pos		"790 240"
-		align	ur
-	}
-	pic mix_dec
-	{
-		image	menu/buttons_small
-		pos		"868 244"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click	{ cmd "snd_modifykhz -;" }
-	}
-	pic mix_inc
-	{
-		image	menu/buttons_small
-		pos		"884 244"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click	{ cmd "snd_modifykhz +;" }
 	}
 
 	func init

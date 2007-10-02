@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 #include "client.h"
 #include "cl_global.h"
-#include "snd_loc.h"
+#include "cl_sound.h"
 
 /* public */
 le_t *selActor;
@@ -2660,12 +2660,10 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	LE_AddProjectile(fd, flags, muzzle, impact, normal, qtrue);
 
 	/* start the sound */
-	if ((!fd->soundOnce || firstShot) && fd->fireSound[0]
-		&& !(flags & SF_BOUNCED)) {
-		sfx_t *sfx = S_RegisterSound(fd->fireSound);
-		/* le might be null here - because the actor is invisible */
-		S_StartSound(muzzle, le ? le->entnum : cl.pnum, SOUND_CHANNEL_WEAPON, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
+	if ((!fd->soundOnce || firstShot) && fd->fireSound[0] && !(flags & SF_BOUNCED)) {
+		S_StartLocalSound(fd->fireSound);
 	}
+
 	firstShot = qfalse;
 
 	if (fd->irgoggles)
@@ -2737,9 +2735,9 @@ void CL_ActorShootHidden (struct dbuffer *msg)
 	fd = FIRESH_GetFiredef(obj_idx, weap_fds_idx, fd_idx);
 
 	/* start the sound; @todo: is check for SF_BOUNCED needed? */
-	if (((first && fd->soundOnce) || (!first && !fd->soundOnce)) && fd->fireSound[0])
-		/* FIXME: use S_StartSound */
+	if (((first && fd->soundOnce) || (!first && !fd->soundOnce)) && fd->fireSound[0]) {
 		S_StartLocalSound(fd->fireSound);
+	}
 
 	/* if the shooting becomes visible, don't repeat sounds! */
 	firstShot = qfalse;
@@ -4107,16 +4105,13 @@ void CL_AddTargeting (void)
  */
 void CL_PlayActorSound (le_t* le, actorSound_t soundType)
 {
-	const char *actorSound;
 	sfx_t* sfx;
-
-	actorSound = Com_GetActorSound(le->teamDef, le->gender, soundType);
-
-	Com_DPrintf(DEBUG_SOUND|DEBUG_CLIENT, "CL_PlayActorSound: ActorSound: '%s'\n", actorSound);
+	const char *actorSound = Com_GetActorSound(le->teamDef, le->gender, soundType);
 	if (actorSound) {
 		sfx = S_RegisterSound(actorSound);
-		S_StartSound(NULL, le->entnum, SOUND_CHANNEL_ACTOR, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
-	} else
-		Com_DPrintf(DEBUG_SOUND|DEBUG_CLIENT, "CL_PlayActorSound: Could not start sound for teamID: '%s' gender: %i soundType: %i\n",
-			le->teamDef ? le->teamDef->id : "No team", le->gender, soundType);
+		if (sfx) {
+			Com_DPrintf(DEBUG_SOUND|DEBUG_CLIENT, "CL_PlayActorSound: ActorSound: '%s'\n", actorSound);
+			S_StartSound(le->origin, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION);
+		}
+	}
 }

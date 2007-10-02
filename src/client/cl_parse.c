@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "client.h"
-#include "snd_loc.h"
+#include "cl_sound.h"
 
 extern cvar_t *fs_gamedir;
 
@@ -295,8 +295,6 @@ void CL_RegisterSounds (void)
 {
 	int i, j, k;
 
-	S_BeginRegistration();
-
 	/* load weapon sounds */
 	for (i = 0; i < csi.numODs; i++) { /* i = obj */
 		for (j = 0; j < csi.ods[i].numWeapons; j++) {	/* j = weapon-entry per obj */
@@ -305,13 +303,9 @@ void CL_RegisterSounds (void)
 					S_RegisterSound(csi.ods[i].fd[j][k].fireSound);
 				if (csi.ods[i].fd[j][k].impactSound[0])
 					S_RegisterSound(csi.ods[i].fd[j][k].impactSound);
-				/* pump message loop */
-				IN_SendKeyEvents();
 			}
 		}
 	}
-
-	S_EndRegistration();
 }
 
 /*
@@ -458,7 +452,8 @@ static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 	vec3_t pos_v;
 	float *pos;
 	int channel, ent, flags;
-	float volume, attenuation, ofs;
+	int volume;
+	float attenuation;
 	const char *sound;
 	sfx_t *sfx;
 
@@ -466,19 +461,14 @@ static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 	sound = NET_ReadString(msg);
 
 	if (flags & SND_VOLUME)
-		volume = NET_ReadByte(msg) / 255.0;
+		volume = NET_ReadByte(msg);
 	else
-		volume = DEFAULT_SOUND_PACKET_VOLUME;
+		volume = MIX_MAX_VOLUME;
 
 	if (flags & SND_ATTENUATION)
 		attenuation = NET_ReadByte(msg) / 64.0;
 	else
 		attenuation = DEFAULT_SOUND_PACKET_ATTENUATION;
-
-	if (flags & SND_OFFSET)
-		ofs = NET_ReadByte(msg) / 1000.0;
-	else
-		ofs = 0;
 
 	/* entity relative */
 	if (flags & SND_ENT) {
@@ -501,12 +491,12 @@ static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 	} else /* use entity number */
 		pos = NULL;
 
-	Com_DPrintf(DEBUG_SOUND, "startsoundpacket: flags %x, sound %s, volume %.2f, attenuation %.2f, ofs %.2f,"
+	Com_DPrintf(DEBUG_SOUND, "startsoundpacket: flags %x, sound %s, volume %i, attenuation %.2f,"
 		" channel %d, ent %d, pos %.3f, %.3f, %.3f\n",
-		flags, sound, volume, attenuation, ofs, channel, ent, pos[0], pos[1], pos[2]);
+		flags, sound, volume, attenuation, channel, ent, pos[0], pos[1], pos[2]);
 
 	sfx = S_RegisterSound(sound);
-	S_StartSound(pos, ent, channel, sfx, volume, attenuation, ofs);
+	S_StartSound(pos, sfx, volume, attenuation);
 }
 
 /**

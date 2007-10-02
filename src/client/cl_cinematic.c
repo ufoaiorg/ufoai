@@ -27,8 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 #include "client.h"
-#include "snd_loc.h"
-#include "snd_ogg.h"
+#include "cl_sound.h"
 
 #include <assert.h>
 
@@ -438,9 +437,8 @@ static void CIN_DecodeSoundMono (const byte *data)
 	}
 
 	/* Send samples to mixer */
-	SDL_LockAudio();
-	S_RawSamples(cin.chunk.size, 22050, 2, 1, (byte*)samples, 1.0f);
-	SDL_UnlockAudio();
+	/* FIXME */
+/*	S_RawSamples(cin.chunk.size, 22050, 2, 1, (byte*)samples, 1.0f);*/
 }
 
 /**
@@ -465,9 +463,8 @@ static void CIN_DecodeSoundStereo (const byte *data)
 	}
 
 	/* Send samples to mixer */
-	SDL_LockAudio();
-	S_RawSamples(cin.chunk.size / 2, 22050, 2, 2, (byte*)samples, 1.0f);
-	SDL_UnlockAudio();
+	/* FIXME */
+/*	S_RawSamples(cin.chunk.size / 2, 22050, 2, 2, (byte*)samples, 1.0f);*/
 }
 
 static qboolean CIN_DecodeChunk (void)
@@ -564,7 +561,7 @@ void CIN_PlayCinematic (const char *name)
 	/* Make sure sounds aren't playing */
 	S_StopAllSounds();
 	/* also stop the background music */
-	S_OGG_Stop();
+	S_Music_Stop();
 
 	/* If already playing a cinematic, stop it */
 	CIN_StopCinematic();

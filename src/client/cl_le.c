@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "client.h"
-#include "snd_loc.h"
+#include "cl_sound.h"
 
 localModel_t LMs[MAX_LOCALMODELS];
 int numLMs;
@@ -377,56 +377,9 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
  */
 void LET_PlayAmbientSound (le_t * le)
 {
-	int left_total, right_total;
-	channel_t *ch;
-	sfxcache_t *sc;
-
-	if (!le->sfx) {
-		le->think = NULL;
-		Com_Printf("LET_PlayAmbientSound: no sound loaded\n");
-		return;
-	}
-
-	if (!le->sfx->cache) {
-		Com_Printf("LET_PlayAmbientSound: no sound cached\n");
-		return;
-	}
-
 	/* find the total contribution of all sounds of this type */
-	S_SpatializeOrigin(le->origin, le->volume, le->attenuation, &left_total, &right_total);
+	/*int volume = S_SpatializeOrigin(le->origin, le->volume, le->attenuation);*/
 
-	if (left_total == 0 && right_total == 0) {
-		Com_DPrintf(DEBUG_SOUND, "LET_PlayAmbientSound: nothing to play - not audible\n");
-		return;  /* not audible */
-	}
-
-	/* allocate a channel */
-	ch = S_PickChannel(0, SOUND_CHANNEL_AMBIENT);
-	if (!ch) {
-		Com_Printf("LET_PlayAmbientSound: Could not allocate sound channel\n");
-		return;
-	}
-
-	if (left_total > 255)
-		left_total = 255;
-	if (right_total > 255)
-		right_total = 255;
-	ch->master_vol = max(right_total, left_total);
-	ch->leftvol = left_total;
-	ch->rightvol = right_total;
-
-	ch->sfx = le->sfx;
-	sc = ch->sfx->cache;
-	assert(sc);
-	/* sometimes, the sc->length argument can become 0, and in that
-	 * case we get a SIGFPE in the next modulo.  The workaround checks
-	 * for this situation and sets the pos and end to zero if true */
-	if (sc->length == 0) {
-		ch->pos = ch->end = 0;
-	} else {
-		ch->pos = paintedtime % sc->length;
-		ch->end = paintedtime + sc->length - ch->pos;
-	}
 }
 
 /**
@@ -466,17 +419,17 @@ static void LE_PlaySoundFileForContents (le_t* le, int contents)
 			/* were we already in the water? */
 			if (le->positionContents & CONTENTS_WATER) {
 				/* play water moving sound */
-				S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_ACTOR, soundWaterOut, 1, SOUND_DEFAULTATTENUATE, 0);
+				S_StartSound(le->origin, soundWaterOut, 1, SOUND_DEFAULTATTENUATE);
 			} else {
 				/* play water entering sound */
-				S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_ACTOR, soundWaterIn, 1, SOUND_DEFAULTATTENUATE, 0);
+				S_StartSound(le->origin, soundWaterIn, 1, SOUND_DEFAULTATTENUATE);
 			}
 			return;
 		}
 
 		if (le->positionContents & CONTENTS_WATER) {
 			/* play water leaving sound */
-			S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_ACTOR, soundWaterMove, 1, SOUND_DEFAULTATTENUATE, 0);
+			S_StartSound(le->origin, soundWaterMove, 1, SOUND_DEFAULTATTENUATE);
 		}
 	}
 }
@@ -490,7 +443,6 @@ static void LE_PlaySoundFileForContents (le_t* le, int contents)
 static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char *textureName)
 {
 	sfx_t *sfx;
-	int entchannel = SOUND_CHANNEL_ACTOR;
 	const terrainType_t *t;
 	vec3_t origin;
 
@@ -510,7 +462,7 @@ static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
 	}
 	if (t->footStepSound) {
 		sfx = S_RegisterSound(t->footStepSound);
-		S_StartSound(origin, le->entnum, entchannel, sfx, t->footStepVolume, t->footStepAttenuation, 0);
+		S_StartSound(origin, sfx, t->footStepVolume, t->footStepAttenuation);
 	}
 }
 
@@ -705,7 +657,7 @@ static void LET_Projectile (le_t * le)
 		}
 		if (le->ref2 && le->ref2[0]) {
 			sfx_t *sfx = S_RegisterSound(le->ref2);
-			S_StartSound(impact, le->entnum, SOUND_CHANNEL_WEAPON, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
+			S_StartSound(impact, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION);
 		}
 	}
 }
@@ -751,14 +703,14 @@ void LE_AddProjectile (fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, 
 			if (flags & SF_BODY) {
 				if (fd->hitBodySound[0]) {
 					sfx = S_RegisterSound(fd->hitBodySound);
-					S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_WEAPON, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
+					S_StartSound(le->origin, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION);
 				}
 				if (fd->hitBody[0])
 					ptl = CL_ParticleSpawn(fd->hitBody, 0, impact, bytedirs[normal], NULL);
 			} else {
 				if (fd->impactSound[0]) {
 					sfx = S_RegisterSound(fd->impactSound);
-					S_StartSound(le->origin, le->entnum, SOUND_CHANNEL_WEAPON, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION, 0);
+					S_StartSound(le->origin, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION);
 				}
 				if (fd->impact[0])
 					ptl = CL_ParticleSpawn(fd->impact, 0, impact, bytedirs[normal], NULL);

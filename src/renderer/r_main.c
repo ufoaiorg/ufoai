@@ -660,30 +660,6 @@ void R_EndFrame (void)
 	SDL_GL_SwapBuffers();
 }
 
-void R_TakeVideoFrame (int w, int h, byte * captureBuffer, byte * encodeBuffer, qboolean motionJpeg)
-{
-	size_t frameSize;
-	int i;
-
-	qglReadPixels(0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, captureBuffer);
-	R_CheckError();
-
-	if (motionJpeg) {
-		frameSize = R_SaveJPGToBuffer(encodeBuffer, 90, w, h, captureBuffer);
-		CL_WriteAVIVideoFrame(encodeBuffer, frameSize);
-	} else {
-		frameSize = w * h;
-
-		/* Pack to 24bpp and swap R and B */
-		for (i = 0; i < frameSize; i++) {
-			encodeBuffer[i * 3]     = captureBuffer[i * 4 + 2];
-			encodeBuffer[i * 3 + 1] = captureBuffer[i * 4 + 1];
-			encodeBuffer[i * 3 + 2] = captureBuffer[i * 4];
-		}
-		CL_WriteAVIVideoFrame(encodeBuffer, frameSize * 3);
-	}
-}
-
 static const cmdList_t r_commands[] = {
 	{"imagelist", R_ImageList_f, NULL},
 	{"fontcachelist", R_FontListCache_f, NULL},

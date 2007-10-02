@@ -29,13 +29,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_SOUND_H
 #define CLIENT_SOUND_H
 
+#include <SDL_mixer.h>
+
 /** only begin attenuating sound volumes when outside the FULLVOLUME range */
 #define SOUND_FULLVOLUME 50
 
 #define SOUND_DEFAULTATTENUATE 0.002
-
-
-struct sfx_s;
 
 enum {
 	SOUND_CHANNEL_OVERRIDE,	/**< entchannel 0 is always overwritten */
@@ -44,24 +43,32 @@ enum {
 	SOUND_CHANNEL_AMBIENT
 };
 
-typedef struct snd_stream_s {
-	qFILE file;
-	int length;
-	int pos;
-} snd_stream_t;
+typedef struct sfx_s {
+	char *name;
+	int loops;					/**< how many loops - 0 = play only once, -1 = infinite */
+	Mix_Chunk* data;
+	int channel;				/**< the channel the sfx is played on */
+	struct sfx_s* hash_next;	/**< next hash entry */
+} sfx_t;
+
+typedef struct music_s {
+	Mix_Music *data;
+	SDL_RWops *musicSrc;
+	char *nextMusicTrack;
+} music_t;
 
 void S_Init(void);
 void S_Shutdown(void);
+void S_Frame(void);
 
-/* if origin is NULL, the sound will be dynamically sourced from the entity */
-void S_StartSound(const vec3_t origin, int entnum, int entchannel, struct sfx_s *sfx, float fvol, float attenuation, float timeofs);
-void S_StartLocalSound(const char *s);
-
-void S_RawSamples(int samples, int rate, int width, int channels, byte * data, float volume);
 void S_StopAllSounds(void);
+void S_StartSound(const vec3_t origin, sfx_t* sfx, int volume, float attenuation);
+void S_StartLocalSound(const char *s);
+sfx_t *S_RegisterSound(const char *s);
 
-void S_BeginRegistration(void);
-struct sfx_s *S_RegisterSound(const char *sample);
-void S_EndRegistration(void);
+int S_SpatializeOrigin(const vec3_t origin, int master_vol, float dist_mult);
+
+void S_Music_Stop(void);
+void S_Music_Start(const char *file);
 
 #endif /* CLIENT_SOUND_H */

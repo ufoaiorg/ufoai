@@ -154,12 +154,9 @@ FRAME UPDATES
  * Timeofs can range from 0.0 to 0.1 to cause sounds to be started later in the frame than they normally would.
  * If origin is NULL, the origin is determined from the entity origin or the midpoint of the entity box for bmodels.
  */
-void SV_StartSound (int mask, vec3_t origin, edict_t *entity, const char *sound, int channel, float volume, float attenuation, float timeofs)
+void SV_StartSound (int mask, vec3_t origin, edict_t *entity, const char *sound, int channel, float volume, float attenuation)
 {
-	int sendchan;
-	int flags;
-	int i;
-	int ent;
+	int sendchan, flags, i, ent;
 	vec3_t origin_v;
 	struct dbuffer *msg;
 
@@ -168,9 +165,6 @@ void SV_StartSound (int mask, vec3_t origin, edict_t *entity, const char *sound,
 
 	if (attenuation < 0 || attenuation > 4)
 		Com_Error(ERR_FATAL, "SV_StartSound: attenuation = %f", attenuation);
-
-	if (timeofs < 0 || timeofs > 0.255)
-		Com_Error(ERR_FATAL, "SV_StartSound: timeofs = %f", timeofs);
 
 	ent = NUM_FOR_EDICT(entity);
 
@@ -195,9 +189,6 @@ void SV_StartSound (int mask, vec3_t origin, edict_t *entity, const char *sound,
 	/* always send the entity number for channel overrides */
 	flags |= SND_ENT;
 
-	if (timeofs)
-		flags |= SND_OFFSET;
-
 	/* use the entity origin unless it is a bmodel or explicitly specified */
 	if (!origin) {
 		origin = origin_v;
@@ -216,11 +207,9 @@ void SV_StartSound (int mask, vec3_t origin, edict_t *entity, const char *sound,
 	NET_WriteString(msg, sound);
 
 	if (flags & SND_VOLUME)
-		NET_WriteByte(msg, volume * 255);
+		NET_WriteByte(msg, volume * 128);
 	if (flags & SND_ATTENUATION)
 		NET_WriteByte(msg, attenuation * 64);
-	if (flags & SND_OFFSET)
-		NET_WriteByte(msg, timeofs * 1000);
 
 	if (flags & SND_ENT)
 		NET_WriteShort(msg, sendchan);

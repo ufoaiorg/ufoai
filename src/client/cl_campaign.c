@@ -2540,9 +2540,9 @@ static void CP_SetMissionVars (mission_t* mission)
 	Cvar_SetValue("ai_numcivilians", (float) mission->civilians);
 	Cvar_Set("ai_civilian", mission->civTeam);
 	Cvar_Set("ai_equipment", mission->alienEquipment);
-	if (mission->mapDef->music)
-		Cvar_Set("music", mission->mapDef->music);
-	else {
+	if (mission->mapDef->music) {
+		Cvar_Set("snd_music", mission->mapDef->music);
+	} else {
 		Com_DPrintf(DEBUG_CLIENT, "..mission '%s' doesn't have a music track assigned\n", mission->name);
 		Cbuf_AddText("music_randomtrack;");
 	}

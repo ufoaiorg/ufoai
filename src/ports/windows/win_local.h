@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <windows.h>
 #include <shlobj.h>
-#include "../../client/snd_loc.h"
+#include "cl_sound.h"
 
 #ifndef DWORD_PTR
 # ifndef _WIN64

@@ -35,6 +35,7 @@ CLIENT_SRCS = \
 	client/cl_save.c \
 	client/cl_shader.c \
 	client/cl_screen.c \
+	client/cl_sound.c \
 	client/cl_sequence.c \
 	client/cl_team.c \
 	client/cl_tip.c \
@@ -43,10 +44,6 @@ CLIENT_SRCS = \
 	client/cl_ufopedia.c \
 	client/cl_vid.c \
 	client/cl_view.c \
-	client/snd_ogg.c \
-	client/snd_ref.c \
-	client/snd_mix.c \
-	client/snd_wave.c \
 	\
 	common/cmd.c \
 	common/http.c \

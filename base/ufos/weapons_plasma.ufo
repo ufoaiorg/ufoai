@@ -42,7 +42,7 @@ item plaspistol_ammo
 			projtl	plasmaMiniPulse
 			impact	plasmaImpactCharged
 			hitbody	plasmaImpactCharged
-			firesnd	weapons/plasma_s.wav
+			firesnd	weapons/plasma_s
 			speed	1800
 			spread	"0 3"
 			crouch	0.8
@@ -62,7 +62,7 @@ item plaspistol_ammo
 			projtl	plasmaMiniPulse
 			impact	plasmaImpactCharged
 			hitbody	plasmaImpactCharged
-			firesnd	weapons/plasma_s.wav
+			firesnd	weapons/plasma_s
 			speed	1800
 			spread	"0 3"
 			crouch	0.8
@@ -82,7 +82,7 @@ item plaspistol_ammo
 			projtl	plasmaContinuous
 			impact	plasmaImpact
 			hitbody	plasmaImpact
-			firesnd	weapons/plasma_c.wav
+			firesnd	weapons/plasma_c
 			sndonce true
 			speed	0
 			spread	"1 5"
@@ -143,7 +143,7 @@ item plasrifle_ammo
 			projtl	plasmaPulse
 			impact	plasmaImpactCharged
 			hitbody	plasmaImpactCharged
-			firesnd	weapons/plasma_s.wav
+			firesnd	weapons/plasma_s
 			speed	1700
 			spread	"0 2"
 			crouch	0.7
@@ -163,7 +163,7 @@ item plasrifle_ammo
 			projtl	plasmaPulse
 			impact	plasmaImpactCharged
 			hitbody	plasmaImpactCharged
-			firesnd	weapons/plasma_s.wav
+			firesnd	weapons/plasma_s
 			speed	1700
 			spread	"0 2"
 			crouch	0.7
@@ -183,7 +183,7 @@ item plasrifle_ammo
 			projtl	plasmaContinuous
 			impact	plasmaImpact
 			hitbody	plasmaImpact
-			firesnd	weapons/plasma_big.wav
+			firesnd	weapons/plasma_big
 			sndonce true
 			speed	0
 			spread	"1 4"
@@ -245,7 +245,7 @@ item plasblaster_ammo
 			projtl	plasmaBigBall
 			impact	plasmaBigImpact
 			hitbody	plasmaBigImpact
-			firesnd	weapons/plasma_s.wav
+			firesnd	weapons/plasma_s
 			speed	2000
 			spread	"1 3"
 			crouch 	1.0
@@ -267,7 +267,7 @@ item plasblaster_ammo
 			projtl	plasmaContinuous
 			impact	plasmaImpact
 			hitbody	plasmaImpact
-			firesnd	weapons/plasma_big.wav
+			firesnd	weapons/plasma_big
 			sndonce true
 			speed	0
 			spread	"3 5"
@@ -288,7 +288,7 @@ item plasblaster_ammo
 			projtl	plasmaContinuous
 			impact	plasmaImpact
 			hitbody	plasmaImpact
-			firesnd	weapons/plasma_big.wav
+			firesnd	weapons/plasma_big
 			sndonce true
 			speed	0
 			spread	"3 15"

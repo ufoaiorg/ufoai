@@ -39,6 +39,12 @@
 /* Define to 1 if you have the `png' library (-lpng). */
 #undef HAVE_LIBPNG
 
+/* Define to 1 if you have the `SDL' library (-lSDL). */
+#undef HAVE_LIBSDL
+
+/* Define to 1 if you have the `SDL_mixer' library (-lSDL_mixer). */
+#undef HAVE_LIBSDL_MIXER
+
 /* Define to 1 if you have the `SDL_ttf' library (-lSDL_ttf). */
 #undef HAVE_LIBSDL_TTF
 
@@ -65,6 +71,9 @@
 
 /* Define to 1 if you have the <SDL.h> header file. */
 #undef HAVE_SDL_H
+
+/* Define to 1 if you have the <SDL_mixer.h> header file. */
+#undef HAVE_SDL_MIXER_H
 
 /* Define to 1 if you have the <SDL_ttf.h> header file. */
 #undef HAVE_SDL_TTF_H

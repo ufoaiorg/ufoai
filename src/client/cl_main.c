@@ -38,9 +38,6 @@ cvar_t *cl_fps;
 cvar_t *cl_shownet;
 cvar_t *cl_show_tooltips;
 cvar_t *cl_show_cursor_tooltips;
-cvar_t *cl_aviForceDemo;
-cvar_t *cl_aviMotionJpeg;
-cvar_t *cl_avifreq;
 cvar_t *cl_particleWeather;
 cvar_t *cl_logevents;
 cvar_t *cl_centerview;
@@ -415,7 +412,6 @@ void CL_ClearState (void)
 /**
  * @brief Sets the cls.state to ca_disconnected and informs the server
  * @sa CL_Disconnect_f
- * @sa CL_CloseAVI
  * @sa CL_Drop
  * @note Goes from a connected state to full screen console state
  * Sends a disconnect message to the server
@@ -448,9 +444,7 @@ void CL_Disconnect (void)
 
 	CL_ClearState();
 
-	/* Stop recording any video */
-	if (CL_VideoRecording())
-		CL_CloseAVI();
+	S_StopAllSounds();
 
 	CL_SetClientState(ca_disconnected);
 }
@@ -2036,9 +2030,6 @@ static void CL_InitLocal (void)
 	cl_mapzoommax = Cvar_Get("cl_mapzoommax", "6.0", CVAR_ARCHIVE, "Maximum geoscape zooming value");
 	cl_mapzoommin = Cvar_Get("cl_mapzoommin", "1.0", CVAR_ARCHIVE, "Minimum geoscape zooming value");
 	cl_precache = Cvar_Get("cl_precache", "1", CVAR_ARCHIVE, "Precache character models at startup - more memory usage but smaller loading times in the game");
-	cl_avifreq = Cvar_Get("cl_avifreq", "25", 0, "AVI recording - see video command");
-	cl_aviForceDemo = Cvar_Get("cl_aviForceDemo", "1", CVAR_ARCHIVE, "AVI recording - record even if no game is loaded");
-	cl_aviMotionJpeg = Cvar_Get("cl_aviMotionJpeg", "1", CVAR_ARCHIVE, "AVI recording - see video command");
 	cl_particleWeather = Cvar_Get("cl_particleweather", "0", CVAR_ARCHIVE | CVAR_LATCH, "Switch the weather particles on or off");
 	cl_fps = Cvar_Get("cl_fps", "0", CVAR_ARCHIVE, "Show frames per second");
 	cl_shownet = Cvar_Get("cl_shownet", "0", CVAR_ARCHIVE, NULL);
@@ -2057,8 +2048,6 @@ static void CL_InitLocal (void)
 	cl_connecttimeout = Cvar_Get("cl_connecttimeout", "3000", CVAR_ARCHIVE, "Connection timeout for multiplayer connects");
 
 	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE, "Confirm all actions in tactical mode");
-
-	Cvar_Set("music", "");
 
 	mn_main = Cvar_Get("mn_main", "main", 0, "Which is the main menu id to return to - also see mn_active");
 	mn_sequence = Cvar_Get("mn_sequence", "sequence", 0, "Which is the sequence menu node to render the sequence in");
@@ -2139,9 +2128,6 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("seq_click", CL_SequenceClick_f, NULL);
 	Cmd_AddCommand("seq_start", CL_SequenceStart_f, NULL);
 	Cmd_AddCommand("seq_end", CL_SequenceEnd_f, NULL);
-
-	Cmd_AddCommand("video", CL_Video_f, "Enable AVI recording - see stopvideo");
-	Cmd_AddCommand("stopvideo", CL_StopVideo_f, "Disable AVI recording - see video");
 
 	/* forward to server commands
 	 * the only thing this does is allow command completion
@@ -2295,19 +2281,6 @@ static void CL_CvarCheck (void)
 }
 
 /**
- * @brief Timer function for avi recording
- */
-void CL_AVIRecord (int now, void *data)
-{
-	/* if recording an avi, lock to a fixed fps */
-	if (CL_VideoRecording()) {
-		/* save the current screen */
-		if (cls.state == ca_active || cl_aviForceDemo->integer)
-			CL_TakeVideoFrame();
-	}
-}
-
-/**
  * @brief Sets the client state
  */
 void CL_SetClientState (int state)
@@ -2403,6 +2376,9 @@ void CL_Frame (int now, void *data)
 
 	/* LE updates */
 	LE_Think();
+
+	/* sound frame */
+	S_Frame();
 
 	/* send a new command message to the server */
 	CL_SendCommand();
@@ -2508,14 +2484,8 @@ void CL_Init (void)
 
 	CIN_Init();
 
-#ifdef _WIN32
-	/* sound must be initialized after window is created */
 	VID_Init();
 	S_Init();
-#else
-	S_Init();
-	VID_Init();
-#endif
 
 	V_Init();
 
@@ -2559,8 +2529,6 @@ void CL_Shutdown (void)
 	Irc_Shutdown();
 	CL_WriteConfiguration();
 	Con_SaveConsoleHistory(FS_Gamedir());
-	if (CL_VideoRecording())
-		CL_CloseAVI();
 	S_Shutdown();
 	R_Shutdown();
 	MN_Shutdown();

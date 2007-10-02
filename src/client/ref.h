@@ -300,8 +300,6 @@ void R_ModBeginLoading(const char *tiles, const char *pos);
 void R_ModEndLoading(void);
 void R_SwitchModelMemPoolTag(void);
 
-void R_TakeVideoFrame(int w, int h, byte * captureBuffer, byte * encodeBuffer, qboolean motionJpeg);
-
 void R_LoadTGA(const char *name, byte ** pic, int *width, int *height);
 
 void R_FontRegister(const char *name, int size, const char *path, const char *style);

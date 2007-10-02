@@ -80,8 +80,8 @@ team taman
 
 	actorsounds {
 		neutral {
-			hurtsound aliens/echovoice1.wav
-			deathsound aliens/echovoice3.wav
+			hurtsound aliens/echovoice1
+			deathsound aliens/echovoice3
 		}
 	}
 }
@@ -153,8 +153,8 @@ team ortnok
 
 	actorsounds {
 		neutral {
-			hurtsound aliens/big_angry.wav
-			deathsound aliens/ortnok.wav
+			hurtsound aliens/big_angry
+			deathsound aliens/ortnok
 		}
 	}
 }
@@ -189,8 +189,8 @@ team shevaar
 
 	actorsounds {
 		neutral {
-			hurtsound aliens/gurgle.wav
-			deathsound aliens/shevaar.wav
+			hurtsound aliens/gurgle
+			deathsound aliens/shevaar
 		}
 	}
 }
@@ -223,8 +223,8 @@ team bloodspider
 
 	actorsounds {
 		neutral {
-			hurtsound aliens/big_angry.wav
-			deathsound aliens/ortnok.wav
+			hurtsound aliens/big_angry
+			deathsound aliens/ortnok
 		}
 	}
 }

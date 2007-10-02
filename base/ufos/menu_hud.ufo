@@ -832,7 +832,6 @@ menu hud
 	func init
 	{
 		cmd "set hud_refresh 1;"
-		cmd "music_start;"
 		cmd "set mn_showchatbuttons 0;"
 	}
 

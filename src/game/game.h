@@ -120,7 +120,7 @@ typedef struct {
 	/** sends message to one entity and displays message on center of the screen */
 	void (IMPORT *centerprintf) (player_t * player, const char *fmt, ...) __attribute__((format(printf, 2, 3)));
 
-	void (IMPORT *PositionedSound) (int mask, vec3_t origin, edict_t *ent, const char *sound, int channel, float volume, float attenuation, float timeofs);
+	void (IMPORT *PositionedSound) (int mask, vec3_t origin, edict_t *ent, const char *sound, int channel, float volume, float attenuation);
 
 	/* config strings hold all the index strings, the lightstyles, */
 	/* and misc data like the cdtrack. */

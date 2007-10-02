@@ -208,12 +208,12 @@ menu won
 
 	func init
 	{
-		cmd "music ufo2;music_start;"
+		cmd "snd_music ufo2;"
 	}
 
 	func close
 	{
-		cmd "game_results 1; music PsymongN3; music_start;"
+		cmd "game_results 1;snd_music PsymongN3;"
 	}
 }
 
@@ -338,7 +338,7 @@ menu lost
 
 	func init
 	{
-		cmd "music ufo2;music_start;"
+		cmd "snd_music ufo2;"
 	}
 
 	func close

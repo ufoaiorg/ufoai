@@ -241,8 +241,6 @@ extern cvar_t *cl_http_downloads;
 extern cvar_t *cl_http_filelists;
 extern cvar_t *cl_http_max_connections;
 extern cvar_t *cl_isometric;
-extern cvar_t *cl_aviForceDemo;
-extern cvar_t *cl_aviMotionJpeg;
 extern cvar_t *cl_particleWeather;
 extern cvar_t *cl_camrotspeed;
 extern cvar_t *cl_camrotaccel;
@@ -351,15 +349,6 @@ typedef enum {
  * @note Needs to be loaded first, values from here should be used in every loops.
  */
 extern int presaveArray[MAX_ARRAYINDEXES];
-
-/* cl_sequence.c (avi stuff) */
-qboolean CL_OpenAVIForWriting(const char *filename);
-void CL_TakeVideoFrame(void);
-void CL_WriteAVIAudioFrame(const byte * pcmBuffer, size_t size);
-qboolean CL_CloseAVI(void);
-qboolean CL_VideoRecording(void);
-void CL_StopVideo_f(void);
-void CL_Video_f(void);
 
 /* cl_cinematic.c */
 void CIN_StopCinematic(void);

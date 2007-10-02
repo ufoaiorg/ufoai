@@ -5,7 +5,7 @@
 
 sequence invasion
 {
-	cmd "music ufo2;music_start;"
+	cmd "snd_music ufo2;"
 	cmd "seq_animspeed 100;"
 
 	2dobj continue_txt
@@ -34,7 +34,7 @@ sequence invasion
 
 sequence activate_xvi
 {
-	cmd "music space;music_start;"
+	cmd "snd_music space;"
 	cmd "seq_animspeed 100;"
 
 	2dobj continue_txt
@@ -72,7 +72,7 @@ sequence activate_xvi
 
 sequence alienbase
 {
-	cmd "music PsymongO2;music_start;"
+	cmd "snd_music PsymongO2;"
 	cmd "seq_animspeed 100;"
 
 	2dobj continue_txt
