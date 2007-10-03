@@ -358,14 +358,14 @@ qboolean Com_RemoveFromInventory (inventory_t* const i, int container, int x, in
  * @param[in] container The container where the item should be removed.
  * @param[in] x The x position of the item to be removed.
  * @param[in] y The y position of the item to be removed.
- * @param[in] ignore_type Ignroes teh type of container (only used for a workaround in the base-equipment see CL_MoveMultiEquipment) HACKHACK
+ * @param[in] ignore_type Ignores the type of container (only used for a workaround in the base-equipment see CL_MoveMultiEquipment) HACKHACK
  * @return qtrue If removal was successful.
  * @return qfalse If nothing was removed or an error occured.
  * @sa Com_RemoveFromInventory
  */
 qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, int container, int x, int y, qboolean ignore_type)
 {
-	invList_t *ic, *old;
+	invList_t *ic, *oldUnused, *previous;
 
 	assert(i);
 	assert(container < MAX_CONTAINERS);
@@ -395,34 +395,40 @@ qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, int container, int
 		/* an item in other containers as idFloor and idEquip should always
 		 * have an amount value of 1 */
 		assert(ic->item.amount == 1);
-		old = invUnused;
+		oldUnused = invUnused;
 		invUnused = ic;
 		i->c[container] = ic->next;
 
 		if (CSI->ids[container].single && ic->next)
 			Com_Printf("Com_RemoveFromInventoryIgnore: Error: single container %s has many items.\n", CSI->ids[container].name);
 
-		invUnused->next = old;
+		invUnused->next = oldUnused;
 		return qtrue;
 	}
 
-	for (; ic->next; ic = ic->next)
-		if (ic->next->x == x && ic->next->y == y) {
-			cacheItem = ic->next->item;
+	for (previous = i->c[container]; ic; ic = ic->next) {
+		if (ic->x == x && ic->y == y) {
+			cacheItem = ic->item;
 			if ((container == CSI->idFloor || container == CSI->idEquip)
-			 && ic->next->item.amount > 1
+			 && ic->item.amount > 1
 			 && !ignore_type) {
-				ic->next->item.amount--;
+				ic->item.amount--;
 				Com_DPrintf(DEBUG_SHARED, "Com_RemoveFromInventoryIgnore: Amount of '%s': %i\n",
-					CSI->ods[ic->next->item.t].name, ic->next->item.amount);
+					CSI->ods[ic->item.t].name, ic->item.amount);
 				return qtrue;
 			}
-			old = invUnused;
-			invUnused = ic->next;
-			ic->next = ic->next->next;
-			invUnused->next = old;
+			oldUnused = invUnused;
+			invUnused = ic;
+			if (ic == i->c[container]) {
+				i->c[container] = i->c[container]->next;
+			} else {
+				previous->next = ic->next;
+			}
+			invUnused->next = oldUnused;
 			return qtrue;
 		}
+		previous = ic;
+	}
 	return qfalse;
 }
 
@@ -567,9 +573,11 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 		Com_AddToInventory(i, cacheItem2, from, fx, fy, 1);
 		cacheItem = cacheItem2;
 	} else if (!checkedTo) {
-		ic = Com_SearchInInventory(i, to, tx, ty);
+		ic = Com_SearchInInventory(i, to, tx, ty);	/* Get the target-invlist (e.g. a weapon) */
 
 		if (ic && INVSH_LoadableInWeapon(&CSI->ods[cacheItem.t], ic->item.t)) {
+			/* A target-item was found and the dragged item (implicitly ammo) can be loaded in it (impliciticly weapon). */
+
 			/* @todo (or do this in two places in cl_menu.c):
 			if (!RS_ItemIsResearched(CSI->ods[ic->item.t].id)
 				 || !RS_ItemIsResearched(CSI->ods[cacheItem.t].id)) {

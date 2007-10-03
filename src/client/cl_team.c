@@ -855,7 +855,7 @@ static void CL_GenerateEquipment_f (void)
  * @param[in] buytype_container The container we just switched to (where all the items should be moved to).
  * @sa CL_GenerateEquipment_f
  * @sa Com_MoveInInventoryIgnore
- * @note Some ic->next and ic will be modivied by Com_MoveInInventoryIgnore.
+ * @note Some ic->next and ic will be modified by Com_MoveInInventoryIgnore.
  * @note HACKHACK
  */
 static void CL_MoveMultiEquipment (inventory_t* const inv, int buytype_container)
