@@ -2,7 +2,7 @@
 // name				start	end		fps
 
 // Showcase: All animations - mostly for checking.
-showcase			0		225		22
+showcase			0		296		22
 
 death1				0		27		18
 dead1				27		27		1
@@ -31,6 +31,16 @@ move_grenade		169		187		22
 shoot_grenade		188		197		22
 cmove_grenade		198		215		22
 cshoot_grenade		216		225		22
+
+stand3				226		226		1
+//walk3				313		328		22
+cstand3				262		262		1
+//cwalk3				334		349		15
+
+move_rpg			228		246		22
+shoot_rpg			247		261		22
+cmove_rpg			264		281		22
+cshoot_rpg			282		296		22
 
 // todo: how is this different to rifle?
 //move_biggun			146		146		4
@@ -64,16 +74,6 @@ cshoot_grenade		216		225		22
 //shoot_item			264		268		10
 //cmove_item			303		304		10
 //cshoot_item			305		309		10
-
-//stand3				311		312		1
-//walk3				313		328		22
-//cstand3				331		332		1
-//cwalk3				334		349		15
-
-//move_rpg			353		353		4
-//shoot_rpg			354		358		10
-//cmove_rpg			361		362		10
-//cshoot_rpg			363		367		10
 
 stand_menu			60		60		1
 //panic0				370		371		1
