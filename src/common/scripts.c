@@ -733,6 +733,8 @@ static const value_t fdps[] = {
 	{"impsnd", V_STRING, offsetof(fireDef_t, impactSound), 0},
 	{"bodysnd", V_STRING, offsetof(fireDef_t, hitBodySound), 0},
 	{"bncsnd", V_STRING, offsetof(fireDef_t, bounceSound), 0},
+	{"firevolume", V_FLOAT, offsetof(fireDef_t, relFireVolume), MEMBER_SIZEOF(fireDef_t, relFireVolume)},
+	{"impactvolume", V_FLOAT, offsetof(fireDef_t, relImpactVolume), MEMBER_SIZEOF(fireDef_t, relImpactVolume)},
 	{"throughwall", V_INT, offsetof(fireDef_t, throughWall), MEMBER_SIZEOF(fireDef_t, throughWall)},
 	{"sndonce", V_BOOL, offsetof(fireDef_t, soundOnce), MEMBER_SIZEOF(fireDef_t, soundOnce)},
 	{"gravity", V_BOOL, offsetof(fireDef_t, gravity), MEMBER_SIZEOF(fireDef_t, gravity)},
@@ -968,6 +970,8 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 								if (!Q_strncmp(token, "firedef", MAX_VAR)) {
 									if (od->numFiredefs[weap_fds_idx] < MAX_FIREDEFS_PER_WEAPON) {
 										fd_idx = od->numFiredefs[weap_fds_idx];
+										od->fd[weap_fds_idx][fd_idx].relFireVolume = DEFAULT_SOUND_PACKET_VOLUME;
+										od->fd[weap_fds_idx][fd_idx].relImpactVolume = DEFAULT_SOUND_PACKET_VOLUME;
 										/* Parse firemode into fd[IDXweapon][IDXfiremode] */
 										Com_ParseFire(name, text, &od->fd[weap_fds_idx][fd_idx]);
 										/* Self-link fd */

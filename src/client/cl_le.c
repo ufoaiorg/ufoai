@@ -663,7 +663,7 @@ static void LET_Projectile (le_t * le)
 		}
 		if (le->ref2 && le->ref2[0]) {
 			sfx_t *sfx = S_RegisterSound(le->ref2);
-			S_StartSound(impact, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION);
+			S_StartSound(impact, sfx, le->fd->relImpactVolume, DEFAULT_SOUND_PACKET_ATTENUATION);
 		}
 	}
 }
@@ -695,6 +695,7 @@ void LE_AddProjectile (fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, 
 
 	VecToAngles(delta, le->ptl->angles);
 	le->state = normal;
+	le->fd = fd;
 
 	if (!fd->speed) {
 		/* infinite speed projectile */
@@ -709,14 +710,14 @@ void LE_AddProjectile (fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, 
 			if (flags & SF_BODY) {
 				if (fd->hitBodySound[0]) {
 					sfx = S_RegisterSound(fd->hitBodySound);
-					S_StartSound(le->origin, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION);
+					S_StartSound(le->origin, sfx, le->fd->relImpactVolume, DEFAULT_SOUND_PACKET_ATTENUATION);
 				}
 				if (fd->hitBody[0])
 					ptl = CL_ParticleSpawn(fd->hitBody, 0, impact, bytedirs[normal], NULL);
 			} else {
 				if (fd->impactSound[0]) {
 					sfx = S_RegisterSound(fd->impactSound);
-					S_StartSound(le->origin, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION);
+					S_StartSound(le->origin, sfx, le->fd->relImpactVolume, DEFAULT_SOUND_PACKET_ATTENUATION);
 				}
 				if (fd->impact[0])
 					ptl = CL_ParticleSpawn(fd->impact, 0, impact, bytedirs[normal], NULL);
@@ -783,6 +784,8 @@ void LE_AddGrenade (fireDef_t * fd, int flags, vec3_t muzzle, vec3_t v0, int dt)
 
 	le->endTime = cl.time + dt;
 	le->state = 5;				/* direction (0,0,1) */
+	le->fd = fd;
+	assert(fd);
 	le->think = LET_Projectile;
 	le->think(le);
 }

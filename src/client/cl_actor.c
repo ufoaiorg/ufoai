@@ -2767,10 +2767,9 @@ void CL_ActorDoThrow (struct dbuffer *msg)
 	LE_AddGrenade(fd, flags, muzzle, v0, dtime);
 
 	/* start the sound */
-	if ((!fd->soundOnce || firstShot) && fd->fireSound[0]
-		&& !(flags & SF_BOUNCED)) {
-		/** @todo  FIXME: use S_StartSound */
-		S_StartLocalSound(fd->fireSound);
+	if ((!fd->soundOnce || firstShot) && fd->fireSound[0] && !(flags & SF_BOUNCED)) {
+		sfx_t *sfx = S_RegisterSound(fd->fireSound);
+		S_StartSound(muzzle, sfx, DEFAULT_SOUND_PACKET_VOLUME, DEFAULT_SOUND_PACKET_ATTENUATION);
 	}
 
 	firstShot = qfalse;
@@ -3401,6 +3400,13 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 
 	/* add head */
 	memset(&add, 0, sizeof(entity_t));
+
+	/* the actor is hearing a sound */
+	if (le->hearTime && le->hearTime - cls.realtime > 3000) {
+		le->hearTime = 0;
+	} else {
+		add.flags |= RF_HIGHLIGHT;
+	}
 
 	add.lightparam = &le->sunfrac;
 	add.alpha = le->alpha;

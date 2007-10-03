@@ -316,29 +316,35 @@ void S_StartSound (const vec3_t origin, sfx_t* sfx, float relVolume, float atten
 		volume = MIX_MAX_VOLUME;
 	}
 #endif
-	Mix_VolumeChunk(sfx->data, volume);
 	if (origin) {
 		le_t* le = LE_GetClosestActor(origin);
 		if (le) {
-			vec3_t normal;
-			float dist;
-
-			VectorNormalize2(origin, normal);
-			dist = DotProduct(normal, le->origin);
+			float dist = VectorDist(origin, le->origin);
 			Com_DPrintf(DEBUG_SOUND, "S_StartSound: world coord distance: %.2f\n", dist);
 			if (dist >= SOUND_FULLVOLUME) {
+				/* @todo: use attenuation value */
 				dist = 1.0 - (dist / SOUND_MAX_DISTANCE);
 				if (dist < 0.)
 					/* too far away */
-					Mix_VolumeChunk(sfx->data, 0);
-				else
+					volume = 0;
+				else {
 					/* close enough to hear it, but apply a distance effect though
 					 * because it's farer than SOUND_FULLVOLUME */
-					Mix_SetDistance(sfx->channel, dist * 255);
+					volume *= dist;
+					le->hearTime = cls.realtime;
+					/* center view (if wanted) */
+					if (cl_centerview->integer) {
+						pos3_t from;
+						VecToPos(cl.cam.reforg, from);
+						CL_CameraRoute(from, le->pos);
+					}
+				}
 				Com_DPrintf(DEBUG_SOUND, "S_StartSound: dist: %.2f\n", dist);
 			}
 		}
 	}
+
+	Mix_VolumeChunk(sfx->data, volume);
 	Com_DPrintf(DEBUG_SOUND, "Mix '%s' (volume: %i, channel: %i)\n", sfx->name, volume, sfx->channel);
 }
 

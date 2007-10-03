@@ -1108,8 +1108,8 @@ static void CL_PlaceItem (le_t *le)
 	/* search owners (there can be many, some of them dead) */
 	for (i = 0, actor = LEs; i < numLEs; i++, actor++)
 		if (actor->inuse
-			 && (actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
-			 && VectorCompare(actor->pos, le->pos) ) {
+		 && (actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
+		 && VectorCompare(actor->pos, le->pos) ) {
 #if PARANOID
 			Com_DPrintf(DEBUG_CLIENT, "CL_PlaceItem: shared container: '%p'\n", FLOOR(le));
 #endif

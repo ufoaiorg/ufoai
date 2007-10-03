@@ -935,7 +935,9 @@ static void CL_ClampCamToMap (float border)
 		cl.cam.reforg[1] = map_max[1] + border;
 }
 
-
+/**
+ * @sa CL_CameraMove
+ */
 static void CL_CameraMoveRemote (void)
 {
 	float angle, frac;
@@ -1083,6 +1085,10 @@ static void CL_CameraMoveRemote (void)
 
 }
 
+/**
+ * @sa CL_CameraMoveRemote
+ * @sa CL_CameraMoveFirstPerson
+ */
 void CL_CameraMove (void)
 {
 	if (cls.state != ca_active)
@@ -1097,6 +1103,10 @@ void CL_CameraMove (void)
 		CL_CameraMoveRemote();
 }
 
+/**
+ * @sa CL_BlockEvents
+ * @sa CL_CameraMove
+ */
 void CL_CameraRoute (pos3_t from, pos3_t target)
 {
 	/* initialize the camera route variables */

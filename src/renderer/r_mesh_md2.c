@@ -383,6 +383,11 @@ void R_DrawAliasMD2Model (entity_t * e)
 	qglDisable(GL_CULL_FACE);
 	qglDisable(GL_DEPTH_TEST);
 
+	/* draw a highlight icon over this entity */
+	if (e->flags & RF_HIGHLIGHT) {
+
+	}
+
 	/* draw the circles for team-members and allied troops */
 	if (e->flags & (RF_SELECTED | RF_ALLIED | RF_MEMBER)) {
 		qglDisable(GL_TEXTURE_2D);

@@ -461,8 +461,6 @@ static void R_SetFrustum (void)
 
 static void R_SetupFrame (void)
 {
-	int i;
-
 	r_framecount++;
 
 	/* build the transformation matrix for the given view angles */

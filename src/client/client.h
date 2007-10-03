@@ -426,6 +426,7 @@ typedef struct le_s {
 	qboolean invis;
 	qboolean autohide;
 	qboolean selected;
+	int hearTime;		/**< draw a marker over the entity if its an actor and he heard something */
 	int type;				/**< the local entity type */
 	int entnum;				/**< the server side edict num this le belongs to */
 
@@ -489,6 +490,7 @@ typedef struct le_s {
 	int fieldSize;				/**< ACTOR_SIZE_* */
 	teamDef_t* teamDef;
 	int gender;
+	fireDef_t *fd;	/**< in case this is a projectile */
 
 	/** is called before adding a le to scene */
 	qboolean(*addFunc) (struct le_s * le, entity_t * ent);
