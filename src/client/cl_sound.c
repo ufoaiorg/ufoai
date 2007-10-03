@@ -312,15 +312,32 @@ void S_StartSound (const vec3_t origin, sfx_t* sfx, float relVolume, float atten
 	sfx->channel = Mix_PlayChannel(sfx->channel, sfx->data, sfx->loops);
 #ifdef DEBUG
 	if (volume > MIX_MAX_VOLUME) {
-		Com_DPrintf(DEBUG_SOUND, "Mixer volume is too high: %i - max value is %i\n", MIX_MAX_VOLUME, volume);
+		Com_DPrintf(DEBUG_SOUND, "S_StartSound: Mixer volume is too high: %i - max value is %i\n", MIX_MAX_VOLUME, volume);
 		volume = MIX_MAX_VOLUME;
 	}
 #endif
 	Mix_VolumeChunk(sfx->data, volume);
 	if (origin) {
 		le_t* le = LE_GetClosestActor(origin);
-		if (le)
-			Mix_SetDistance(sfx->channel, VectorDist(origin, le->origin));
+		if (le) {
+			vec3_t normal;
+			float dist;
+
+			VectorNormalize2(origin, normal);
+			dist = DotProduct(normal, le->origin);
+			Com_DPrintf(DEBUG_SOUND, "S_StartSound: world coord distance: %.2f\n", dist);
+			if (dist >= SOUND_FULLVOLUME) {
+				dist = 1.0 - (dist / SOUND_MAX_DISTANCE);
+				if (dist < 0.)
+					/* too far away */
+					Mix_VolumeChunk(sfx->data, 0);
+				else
+					/* close enough to hear it, but apply a distance effect though
+					 * because it's farer than SOUND_FULLVOLUME */
+					Mix_SetDistance(sfx->channel, dist * 255);
+				Com_DPrintf(DEBUG_SOUND, "S_StartSound: dist: %.2f\n", dist);
+			}
+		}
 	}
 	Com_DPrintf(DEBUG_SOUND, "Mix '%s' (volume: %i, channel: %i)\n", sfx->name, volume, sfx->channel);
 }

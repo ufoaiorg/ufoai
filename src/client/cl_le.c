@@ -462,6 +462,7 @@ static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
 	}
 	if (t->footStepSound) {
 		sfx = S_RegisterSound(t->footStepSound);
+		Com_DPrintf(DEBUG_SOUND, "LE_PlaySoundFileAndParticleForSurface: volume %.2f\n", t->footStepVolume);
 		S_StartSound(origin, sfx, t->footStepVolume, t->footStepAttenuation);
 	}
 }
@@ -469,6 +470,7 @@ static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
 /**
  * @brief Searches the closest actor to the given world vector
  * @param[in] World position to get the closest actor to
+ * @note Only your own team is searched
  */
 le_t* LE_GetClosestActor (const vec3_t origin)
 {

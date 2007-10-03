@@ -31,8 +31,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <SDL_mixer.h>
 
-/** only begin attenuating sound volumes when outside the FULLVOLUME range */
-#define SOUND_FULLVOLUME 50
+/** @brief only begin attenuating sound volumes when outside the FULLVOLUME range */
+#define SOUND_FULLVOLUME 100
+/** @brief A sound is only hearable when not farer than this value */
+#define SOUND_MAX_DISTANCE 800
 
 #define SOUND_DEFAULTATTENUATE 0.002
 
