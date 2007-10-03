@@ -213,7 +213,7 @@ menu won
 
 	func close
 	{
-		cmd "game_results 1;snd_music PsymongN3;"
+		cmd "game_results 1;"
 	}
 }
 

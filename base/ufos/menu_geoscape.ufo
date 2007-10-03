@@ -385,7 +385,7 @@ menu map
 
 	func init
 	{
-		cmd "snd_music PsymongN3;"
+		cmd "snd_music van_geoscape;"
 	}
 }
 
