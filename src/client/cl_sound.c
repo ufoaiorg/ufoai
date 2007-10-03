@@ -76,12 +76,15 @@ void S_Music_Stop (void)
  * @brief
  * @sa S_Music_Stop
  */
-void S_Music_Start (const char *file)
+static void S_Music_Start (const char *file)
 {
 	char name[MAX_QPATH];
 	size_t len;
 	byte *musicBuf;
 	int size;
+
+	if (!sound_started)
+		return;
 
 	if (!file || !*file)
 		return;
@@ -131,12 +134,17 @@ void S_Music_Start (const char *file)
  */
 static void S_Music_Play_f (void)
 {
+	if (!sound_started) {
+		Com_Printf("No audio activated\n");
+		return;
+	}
+
 	if (Cmd_Argc() == 2) {
 		if (Mix_PlayingMusic()) {
 			Mix_FadeOutMusic(3000);
 			music.nextMusicTrack = Mem_PoolStrDup(Cmd_Argv(1), cl_soundSysPool, CL_TAG_NONE);
 		} else {
-			S_Music_Start(Cmd_Argv(1));
+			Cvar_Set("snd_music", Cmd_Argv(1));
 		}
 	}
 }
@@ -156,6 +164,9 @@ static void S_Music_RandomTrack_f (void)
 	searchpath_t *search;
 	pack_t *pak;
 	int count = 0;
+
+	if (!sound_started)
+		return;
 
 	if (musicTrackCount == 0) {
 		/* search through the path, one element at a time */
@@ -373,6 +384,8 @@ void S_StartLocalSound (const char *sound)
  */
 void S_StopAllSounds (void)
 {
+	if (!sound_started)
+		return;
 	Mix_HaltChannel(-1);
 }
 
@@ -385,6 +398,11 @@ static void S_Play_f (void)
 
 	if (Cmd_Argc() != 2) {
 		Com_Printf("usage: %s <filename>\n", Cmd_Argv(0));
+		return;
+	}
+
+	if (!sound_started) {
+		Com_Printf("No audio activated\n");
 		return;
 	}
 
@@ -401,6 +419,9 @@ INIT AND SHUTDOWN
  */
 void S_Frame (void)
 {
+	if (!sound_started)
+		return;
+
 	if (snd_music->modified) {
 		S_Music_Start(snd_music->string);
 		snd_music->modified = qfalse;

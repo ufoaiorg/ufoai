@@ -72,6 +72,5 @@ sfx_t *S_RegisterSound(const char *s);
 int S_SpatializeOrigin(const vec3_t origin, int master_vol, float dist_mult);
 
 void S_Music_Stop(void);
-void S_Music_Start(const char *file);
 
 #endif /* CLIENT_SOUND_H */
