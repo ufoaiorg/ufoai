@@ -1045,24 +1045,28 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 					clMap.step[y + sY][x + sX] |= temp_step[y][x];
 				}
 				
-				/* copy routing info */
+				/** @todo only copy the height information here and calculate the whole routing from scratch
+				 *  after the map is build completely
+				 */
+
+				/* copy or combine routing info */
 				for (z = 0; z < HEIGHT; z++) {
-					if (overwrite || !(clMap.route[z][y + sY][x + sX] & 0xf0)) {
+					if (overwrite) {
 						clMap.route[z][y + sY][x + sX] = temp_route[z][y][x];
-					} else if (temp_route[z][y][x] & 0xf0) {
-						if ((clMap.route[z][y + sY][x + sX] & 0x0f) != (temp_route[z][y][x] & 0x0f))
-							Com_Printf("CMod_LoadRouting: different height information in overlapping tiles at %d,%d,%d!\n", x + sX, y + sY, z);
-							
-						clMap.route[z][y + sY][x + sX] |= (temp_route[z][y][x] & 0xf0);
+					} else if ((clMap.route[z][y + sY][x + sX] & 0x0f) == (temp_route[z][y][x] & 0x0f)) {
+						/* Combine the routing info if the height is equal */
+						clMap.route[z][y + sY][x + sX] |= temp_route[z][y][x];
+					} else if ((clMap.route[z][y + sY][x + sX] & 0x0f) < (temp_route[z][y][x] & 0x0f)) {
+						/* or use the heigher one */
+						clMap.route[z][y + sY][x + sX] = temp_route[z][y][x];
 					}										
 				}
+				
 				/* check border connections */
 				for (i = 0; i < BASE_DIRECTIONS; i++) {
 					/* test for border */
 					ax = x + dvecs[i][0];
 					ay = y + dvecs[i][1];
-					if (overwrite && (temp_fall[ay][ax] != ROUTING_NOT_REACHABLE))
-						continue;
 
 					/* check for walls */
 					for (z = 0; z < HEIGHT; z++) {
