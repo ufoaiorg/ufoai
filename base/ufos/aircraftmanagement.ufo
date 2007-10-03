@@ -125,13 +125,10 @@ aircraft craft_inter_stiletto
 	price		20000
 	building	building_intercept
 	image		air_interceptor
-	shield		rs_craft_shield_polymer
 	slot {
 		type		weapon
 		position	nose_center
 		size		light
-		contains	rs_craft_weapon_shiva
-		ammo		rs_craft_ammo_shiva_1
 	}
 	slot {
 		type		weapon
@@ -146,7 +143,6 @@ aircraft craft_inter_stiletto
 	slot {
 		type		electronics
 		position	wing_left
-		contains	rs_craft_el_fuelpod
 	}
 	slot {
 		type		electronics
@@ -173,8 +169,6 @@ aircraft craft_inter_saracen
 	price		26000
 	building	building_intercept
 	image		air_interceptor
-	// FIXME: This is just testing
-	shield		rs_craft_shield_polymer
 	slot {
 		type		weapon
 		position	wing_left
