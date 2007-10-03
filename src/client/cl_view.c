@@ -487,7 +487,6 @@ void V_UpdateRefDef (void)
 		refdef.ll = map_lights;
 		refdef.num_lights = map_numlights;
 	}
-	VectorClear(refdef.blend);
 }
 
 /**

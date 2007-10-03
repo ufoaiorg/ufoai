@@ -44,8 +44,6 @@ int r_framecount;				/* used for dlight push checking */
 
 int c_brush_polys, c_alias_polys;
 
-float v_blend[4];				/* final blending color */
-
 /* entity transform */
 transform_t trafo[MAX_ENTITIES];
 
@@ -471,9 +469,6 @@ static void R_SetupFrame (void)
 	VectorCopy(refdef.vieworg, r_origin);
 
 	AngleVectors(refdef.viewangles, vpn, vright, vup);
-
-	for (i = 0; i < 4; i++)
-		v_blend[i] = refdef.blend[i];
 
 	c_brush_polys = 0;
 	c_alias_polys = 0;

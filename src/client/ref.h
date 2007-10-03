@@ -68,10 +68,10 @@ typedef struct animState_s {
 
 typedef struct entity_s {
 	struct model_s *model;		/**< opaque type outside refresh */
-	float angles[3];
+	vec3_t angles;
 
-	float origin[3];
-	float oldorigin[3];
+	vec3_t origin;
+	vec3_t oldorigin;
 
 	/*
 	 ** tag positioning
@@ -232,7 +232,6 @@ typedef struct {
 	float fov_x, fov_y;
 	float vieworg[3];
 	float viewangles[3];
-	float blend[4];				/**< rgba 0-1 full screen blend */
 	float time;					/**< time is used to auto animate */
 	int rdflags;				/**< RDF_NOWORLDMODEL, etc */
 	int worldlevel;

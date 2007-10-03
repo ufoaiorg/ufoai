@@ -427,8 +427,6 @@ void CL_Disconnect (void)
 	if (cls.state == ca_disconnected)
 		return;
 
-	VectorClear(refdef.blend);
-
 	/* send a disconnect message to the server */
 	if (!Com_ServerState()) {
 		msg = new_dbuffer();
