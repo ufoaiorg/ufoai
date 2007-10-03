@@ -426,33 +426,37 @@ typedef struct le_s {
 	qboolean invis;
 	qboolean autohide;
 	qboolean selected;
-	int type;
-	int entnum;
+	int type;				/**< the local entity type */
+	int entnum;				/**< the server side edict num this le belongs to */
 
-	vec3_t origin, oldOrigin;
-	pos3_t pos, oldPos;
-	int dir;
+	vec3_t origin, oldOrigin;	/**< position given via world coordinates */
+	pos3_t pos, oldPos;		/**< position on the grid */
+	int dir;				/**< the current dir the le is facing into */
 
-	int TU, maxTU;
-	int morale, maxMorale;
-	int HP, maxHP;
+	int TU, maxTU;				/**< time units */
+	int morale, maxMorale;		/**< morale value - used for soldier panic and the like */
+	int HP, maxHP;				/**< health points */
 	int STUN;					/**< if stunned - state STATE_STUN */
-	int AP;
-	int state;
+	int AP;						/**< armour points */
+	int state;					/**< rf states, dead, crouched and so on */
 	int reaction_minhit;
 
 	float angles[3];
 	float sunfrac;
 	float alpha;
 
-	int team;
-	int pnum;
+	int team;		/**< the team number this local entity belongs to */
+	int pnum;		/**< the player number this local entity belongs to */
 
 	int contents;			/**< content flags for this LE - used for tracing */
 	vec3_t mins, maxs;
 
-	int modelnum1, modelnum2, skinnum;
-	struct model_s *model1, *model2;
+	int modelnum1;	/**< the number of the body model in the cl.draw_model array */
+	int modelnum2;	/**< the number of the head model in the cl.draw_model array */
+	int skinnum;	/**< the skin number of the body and head model */
+	struct model_s *model1, *model2;	/**< pointers to the cl.draw_model array
+					 * that holds the models for body and head - model1 is body,
+					 * model2 is head */
 
 /* 	character_t	*chr; */
 
@@ -467,7 +471,7 @@ typedef struct le_s {
 	int positionContents;					/**< content flags for the current brush the actor is standing in */
 	int pathLength, pathPos;
 	int startTime, endTime;
-	int speed;
+	int speed;			/**< the speed the le is moving with */
 
 	/** sound effects */
 	struct sfx_s* sfx;
@@ -475,10 +479,10 @@ typedef struct le_s {
 	float volume;
 
 	/** gfx */
-	animState_t as;
+	animState_t as;	/**< holds things like the current active frame and so on */
 	const char *particleID;
-	int particleLevelFlags;
-	ptl_t *ptl;
+	int particleLevelFlags;	/**< the levels this particle should be visible at */
+	ptl_t *ptl;				/**< particle pointer to display */
 	char *ref1, *ref2;
 	inventory_t i;
 	int left, right, extension;
