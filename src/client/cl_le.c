@@ -56,7 +56,11 @@ static void LM_GenerateList (void)
 	lmList[l] = NULL;
 }
 
-
+/**
+ * @brief Add the local models (misc_model) to the scene
+ * @sa V_RenderView
+ * @sa LE_AddToScene
+ */
 void LM_AddToScene (void)
 {
 	localModel_t *lm;
@@ -883,6 +887,11 @@ le_t *LE_Find (int type, pos3_t pos)
 /** @sa BoxOffset in cl_actor.c */
 #define ModelOffset(i, target) (target[0]=(i-1)*(UNIT_SIZE+BOX_DELTA_WIDTH)/2, target[1]=(i-1)*(UNIT_SIZE+BOX_DELTA_LENGTH)/2, target[2]=0)
 
+/**
+ * @sa V_RenderView
+ * @sa CL_AddUGV
+ * @sa CL_AddActor
+ */
 void LE_AddToScene (void)
 {
 	le_t *le;

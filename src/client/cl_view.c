@@ -62,13 +62,19 @@ static void V_ClearScene (void)
 	r_numentities = 0;
 }
 
-
+/**
+ * @brief Get the next free entry in the entity list (the last one)
+ * @note This can't overflow, because V_AddEntity checks the bounds
+ * @sa V_AddEntity
+ */
 entity_t *V_GetEntity (void)
 {
 	return r_entities + r_numentities;
 }
 
-
+/**
+ * @sa V_GetEntity
+ */
 void V_AddEntity (entity_t * ent)
 {
 	if (r_numentities >= MAX_ENTITIES)

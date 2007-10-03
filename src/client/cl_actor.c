@@ -3356,9 +3356,10 @@ ACTOR GRAPHICS
 
 /**
  * @brief Adds an actor.
- * @param[in] le
- * @param[in] ent
+ * @param[in] le The local entity to get the values from
+ * @param[in] ent The body entity
  * @sa CL_AddUGV
+ * @sa LE_AddToScene
  */
 qboolean CL_AddActor (le_t * le, entity_t * ent)
 {
@@ -3372,6 +3373,9 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 			add.lightparam = &le->sunfrac;
 			add.model = cls.model_weapons[le->left];
 
+			/* +2 (resp. +3) because the body and the head are already
+			 * (and maybe the right weapon will be)
+			 * at the previous location */
 			add.tagent = V_GetEntity() + 2 + (le->right != NONE);
 			add.tagname = "tag_lweapon";
 
@@ -3386,6 +3390,8 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 			add.alpha = le->alpha;
 			add.model = cls.model_weapons[le->right];
 
+			/* +2 because the body and the head are already
+			 * at the previous location */
 			add.tagent = V_GetEntity() + 2;
 			add.tagname = "tag_rweapon";
 
@@ -3401,6 +3407,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 	add.model = le->model2;
 	add.skinnum = le->skinnum;
 
+	/* +1 because the body is already at the previous location */
 	add.tagent = V_GetEntity() + 1;
 	add.tagname = "tag_head";
 
