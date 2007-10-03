@@ -995,6 +995,7 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 	int maxX, maxY;
 	int ax, ay;
 	unsigned int i;
+	qboolean overwrite;
 #ifdef DEBUG
 	/* count all reachable fields of the map for debugging */
 	unsigned long route_count = 0;
@@ -1033,20 +1034,34 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 	for (y = sY < 0 ? -sY : 0; y < maxY; y++)
 		for (x = sX < 0 ? -sX : 0; x < maxX; x++)
 			if (temp_fall[y][x] != ROUTING_NOT_REACHABLE) {
-				/* add new quant */
-				clMap.fall[y + sY][x + sX] = temp_fall[y][x];
-				clMap.step[y + sY][x + sX] = temp_step[y][x];
-
+				overwrite = (clMap.fall[y + sY][x + sX] == ROUTING_NOT_REACHABLE);
+				
+				/* add or combine new quant */
+				if (overwrite) {
+					clMap.fall[y + sY][x + sX] = temp_fall[y][x];
+					clMap.step[y + sY][x + sX] = temp_step[y][x];
+				} else {
+					clMap.fall[y + sY][x + sX] &= temp_fall[y][x];
+					clMap.step[y + sY][x + sX] |= temp_step[y][x];
+				}
+				
 				/* copy routing info */
-				for (z = 0; z < HEIGHT; z++)
-					clMap.route[z][y + sY][x + sX] = temp_route[z][y][x];
-
+				for (z = 0; z < HEIGHT; z++) {
+					if (overwrite || !(clMap.route[z][y + sY][x + sX] & 0xf0)) {
+						clMap.route[z][y + sY][x + sX] = temp_route[z][y][x];
+					} else if (temp_route[z][y][x] & 0xf0) {
+						if ((clMap.route[z][y + sY][x + sX] & 0x0f) != (temp_route[z][y][x] & 0x0f))
+							Com_Printf("CMod_LoadRouting: different height information in overlapping tiles at %d,%d,%d!\n", x + sX, y + sY, z);
+							
+						clMap.route[z][y + sY][x + sX] |= (temp_route[z][y][x] & 0xf0);
+					}										
+				}
 				/* check border connections */
 				for (i = 0; i < BASE_DIRECTIONS; i++) {
 					/* test for border */
 					ax = x + dvecs[i][0];
 					ay = y + dvecs[i][1];
-					if (temp_fall[ay][ax] != ROUTING_NOT_REACHABLE)
+					if (overwrite && (temp_fall[ay][ax] != ROUTING_NOT_REACHABLE))
 						continue;
 
 					/* check for walls */
