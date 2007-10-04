@@ -88,7 +88,6 @@ static void S_Music_Start (const char *file)
 
 	if (!file || !*file)
 		return;
-	/*Mix_FadeOutMusic();*/
 
 	if (!sound_started) {
 		Com_Printf("S_Music_Start: no sound started\n");
@@ -106,7 +105,12 @@ static void S_Music_Start (const char *file)
 	if (!Q_strcmp(name, music.currentlyPlaying))
 		return;
 
-	S_Music_Stop();
+	/* we are still playing some background track - fade it out @sa S_Frame */
+	if (Mix_PlayingMusic()) {
+		Mix_FadeOutMusic(3000);
+		music.nextMusicTrack = Mem_PoolStrDup(name, cl_soundSysPool, CL_TAG_NONE);
+		return;
+	}
 
 	/* load it in */
 	if ((size = FS_LoadFile(va("music/%s.ogg", name), (byte **)&musicBuf)) != -1) {
@@ -122,10 +126,10 @@ static void S_Music_Start (const char *file)
 	if (music.data) {
 		Com_Printf("S_Music_Start: Playing music: 'music/%s.ogg'\n", file);
 		Q_strncpyz(music.currentlyPlaying, name, sizeof(music.currentlyPlaying));
-		if (Mix_PlayMusic(music.data, 1500) == -1)
-			Com_Printf("S_Music_Start: Could not play music: 'music/%s.ogg'\n", file);
+		if (Mix_FadeInMusic(music.data, -1, 1500) == -1)
+			Com_Printf("S_Music_Start: Could not play music: 'music/%s.ogg' (%s)\n", file, Mix_GetError());
 	} else {
-		Com_Printf("S_Music_Start: Could not load music: 'music/%s.ogg'\n", file);
+		Com_Printf("S_Music_Start: Could not load music: 'music/%s.ogg' (%s)\n", file, Mix_GetError());
 	}
 }
 
@@ -146,7 +150,8 @@ static void S_Music_Play_f (void)
 		} else {
 			Cvar_Set("snd_music", Cmd_Argv(1));
 		}
-	}
+	} else
+		snd_music->modified = qtrue;
 }
 
 static int musicTrackCount = 0;
@@ -528,7 +533,7 @@ void S_Init (void)
 
 	Cmd_AddCommand("snd_play", S_Play_f, "Plays a sound fx file");
 	Cmd_AddCommand("music_play", S_Music_Play_f, "Plays a background sound track");
-	Cmd_AddCommand("music_start", S_Music_Play_f, "Starts the background music track from cvar music");
+	Cmd_AddCommand("music_start", S_Music_Play_f, "Starts the background music track from cvar snd_music");
 	Cmd_AddCommand("music_stop", S_Music_Stop, "Stops currently playing music tracks");
 	Cmd_AddCommand("music_randomtrack", S_Music_RandomTrack_f, "Plays a random background track");
 	/* @todo: Complete functions */
