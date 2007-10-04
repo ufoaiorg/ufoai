@@ -114,7 +114,7 @@ item medium
 //	center		"0 0 -5"
 //	scale		0.7
 //	price		18000
-//	buytype		3
+//	buytype		armour
 //
 //	protection
 //	{
@@ -143,6 +143,47 @@ item medium
 //		stun	100
 //	}
 //}
+
+//weights ???
+item power
+{
+	name		"Power Armour" // todo: make translateable
+	image		armor/power
+	model		soldiers/malepower/malepower
+	type		armor
+	shape		"0 0 3 4"
+	center		"0 0 -5"
+	scale		0.7
+	price		32000
+	buytype		armour
+
+	protection	// todo: fixme
+	{
+		normal	50
+		steelblade	100
+		monomolecularblade	40
+		blast	70
+		fire	75
+		shock	35
+		laser	50
+		plasma	70
+		particlebeam	28
+		stun	97
+	}
+	hardness	// todo: fixme
+	{
+		normal	18
+		steelblade	100
+		monomolecularblade	40
+		blast	30
+		fire	30
+		shock	30
+		laser	48
+		plasma	6
+		particlebeam	100
+		stun	100
+	}
+}
 
 //weights 100
 item light_alien

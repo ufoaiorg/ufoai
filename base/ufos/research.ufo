@@ -2292,6 +2292,42 @@ tech rs_nano_armour
 	producetime	168
 }
 
+tech rs_power_armour
+{
+	type	armor
+	up_chapter	equipment
+	//description {
+	//	default "TODO_power_armour_txt"
+	//}
+	//pre_description {
+	//	default "TODO_power_armour_pre_txt"
+	//}
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		subject	"TODO_Power Armour"
+		icon	icons/tech
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to	"_mail_to_base_commander"
+		subject	"TODO_Power Armour"
+		icon	icons/tech
+	}
+
+	require_AND	// todo:fixme
+	{
+		tech rs_nano_armour
+	}
+	provides	power
+	time	3000
+	producetime	180
+}
+
 tech rs_alien_body_armour
 {
 	type		armor
