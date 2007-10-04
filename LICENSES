@@ -1050,7 +1050,7 @@ base/models/soldiers/femalemedium/head04_jungle.jpg | GNU General Public License
 base/models/soldiers/femalemedium/head04_yellow.jpg | GNU General Public License v2.0 | Kohli | Work based on original textures in base/models/soldiers/femalemedium/ by Lukas Beyeler (Rasta)
 base/models/soldiers/femalemedium/head04a.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/soldiers/femalemedium/head04b.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
-base/models/soldiers/femalepower/femalepower.tga | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
+base/models/soldiers/femalepower/body.tga | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
 base/models/soldiers/femalepower/old/powersuitfemale.wings | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Ryan Span (Winter)
 base/models/soldiers/male/body.anm | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/soldiers/male/body.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
@@ -1212,8 +1212,8 @@ base/models/soldiers/malemedium/head05_yellow.jpg | GNU General Public License v
 base/models/soldiers/malemedium/head05a.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/soldiers/malemedium/head05b.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/soldiers/malemedium/head05c.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/soldiers/malepower/body.tga | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
 base/models/soldiers/malepower/malepower.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer) | powersuitmale by David Dallaston (PikkaBird) - some modifications by Ryan Span (Winter)
-base/models/soldiers/malepower/malepower.tga | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer)
 base/models/soldiers/malepower/malepower.xcf | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some UV-modifications by Werner Höhrer (hoehrer) | malepower.tga texture by David Dallaston (PikkaBird)
 base/models/soldiers/malepower/old/powersuitmale.wings | Creative Commons Attribution-Share Alike 3.0 | David Dallaston (PikkaBird) - some modifications by Ryan Span (Winter)
 base/models/soldiers/ugv_ares/Readme.txt | GNU General Public License 2.0 | Willem "Sitters"

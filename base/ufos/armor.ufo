@@ -149,7 +149,7 @@ item power
 {
 	name		"Power Armour" // todo: make translateable
 	image		armor/power
-	model		soldiers/malepower/malepower
+	model		soldiers/malepower/body
 	type		armor
 	shape		"0 0 3 4"
 	center		"0 0 -5"
