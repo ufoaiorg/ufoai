@@ -276,6 +276,23 @@ static Mix_Chunk *S_LoadSound (const char *sound)
 }
 
 /**
+ * @brief Loads a buffer from memory into the mixer
+ */
+void S_PlaySoundFromMem (byte* mem, size_t size)
+{
+    Mix_Chunk *sample;
+    SDL_RWops* data;
+
+    data = SDL_RWFromMem(mem, size);
+    sample = Mix_LoadWAV_RW(data, 1);
+    if (!sample) {
+        Com_Printf("Could not load sound chunk from memory\n");
+        return;
+    }
+    Mix_PlayChannel(-1, sample, 0);
+}
+
+/**
  * @brief
  * @sa S_LoadSound
  */

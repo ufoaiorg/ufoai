@@ -437,8 +437,7 @@ static void CIN_DecodeSoundMono (const byte *data)
 	}
 
 	/* Send samples to mixer */
-	/* FIXME */
-/*	S_RawSamples(cin.chunk.size, 22050, 2, 1, (byte*)samples, 1.0f);*/
+	S_PlaySoundFromMem((byte*)samples, cin.chunk.size);
 }
 
 /**
@@ -463,8 +462,7 @@ static void CIN_DecodeSoundStereo (const byte *data)
 	}
 
 	/* Send samples to mixer */
-	/* FIXME */
-/*	S_RawSamples(cin.chunk.size / 2, 22050, 2, 2, (byte*)samples, 1.0f);*/
+	S_PlaySoundFromMem((byte*)samples, cin.chunk.size);
 }
 
 static qboolean CIN_DecodeChunk (void)

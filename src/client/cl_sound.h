@@ -68,6 +68,7 @@ void S_StopAllSounds(void);
 void S_StartSound(const vec3_t origin, sfx_t* sfx, float relVolume, float attenuation);
 void S_StartLocalSound(const char *s);
 sfx_t *S_RegisterSound(const char *s);
+void S_PlaySoundFromMem(byte* mem, size_t size);
 
 int S_SpatializeOrigin(const vec3_t origin, int master_vol, float dist_mult);
 
