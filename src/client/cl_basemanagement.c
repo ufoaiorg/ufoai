@@ -3103,7 +3103,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
  * @sa B_Load
  * @sa B_SaveItemSlots
  */
-static void B_LoadItemSlots (aircraftSlot_t* slot, int num, int* targets, sizebuf_t* sb)
+static void B_LoadItemSlots (base_t* base, aircraftSlot_t* slot, int num, int* targets, sizebuf_t* sb)
 {
 	int i;
 	technology_t *tech;
@@ -3111,7 +3111,7 @@ static void B_LoadItemSlots (aircraftSlot_t* slot, int num, int* targets, sizebu
 	for (i = 0; i < num; i++) {
 		tech = RS_GetTechByProvided(MSG_ReadString(sb));
 		if (tech)
-			AII_AddItemToSlot(tech, slot + i);
+			AII_AddItemToSlot(base, tech, slot + i);
 		slot[i].ammoLeft = MSG_ReadShort(sb);
 		slot[i].delayNextShot = MSG_ReadShort(sb);
 		slot[i].installationTime = MSG_ReadShort(sb);
@@ -3192,11 +3192,11 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 
 		/* read missile battery slots */
 		b->maxBatteries = MSG_ReadByte(sb);
-		B_LoadItemSlots(b->batteries, b->maxBatteries, b->targetMissileIdx, sb);
+		B_LoadItemSlots(b, b->batteries, b->maxBatteries, b->targetMissileIdx, sb);
 
 		/* read laser battery slots */
 		b->maxLasers = MSG_ReadByte(sb);
-		B_LoadItemSlots(b->lasers, b->maxLasers, b->targetLaserIdx, sb);
+		B_LoadItemSlots(b, b->lasers, b->maxLasers, b->targetLaserIdx, sb);
 
 		b->aircraftCurrent = MSG_ReadShort(sb);
 		b->numAircraftInBase = MSG_ReadByte(sb);
@@ -3225,7 +3225,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			/* read weapon slot */
 			amount = MSG_ReadByte(sb);
 			/* only read aircraft->maxWeapons here - skip the rest in the following loop */
-			B_LoadItemSlots(aircraft->weapons, min(amount, aircraft->maxWeapons), NULL, sb);
+			B_LoadItemSlots(b, aircraft->weapons, min(amount, aircraft->maxWeapons), NULL, sb);
 			/* just in case there are less slots in new game that in saved one */
 			for (l = aircraft->maxWeapons; l < amount; l++) {
 				MSG_ReadString(sb);
@@ -3241,7 +3241,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			if (amount) {
 				tech = RS_GetTechByProvided(MSG_ReadString(sb));
 				if (tech)
-					AII_AddItemToSlot(tech, &aircraft->shield);
+					AII_AddItemToSlot(b, tech, &aircraft->shield);
 				aircraft->shield.installationTime = MSG_ReadShort(sb);
 			}
 			/* read electronics slot */
@@ -3251,7 +3251,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 				if (l < aircraft->maxElectronics) {
 					tech = RS_GetTechByProvided(MSG_ReadString(sb));
 					if (tech)
-						AII_AddItemToSlot(tech, aircraft->electronics + l);
+						AII_AddItemToSlot(b, tech, aircraft->electronics + l);
 					aircraft->electronics[l].installationTime = MSG_ReadShort(sb);
 				} else {
 					MSG_ReadString(sb);

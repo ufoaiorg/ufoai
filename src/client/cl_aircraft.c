@@ -2015,7 +2015,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 				if (j < ufo->maxWeapons) {
 					tech = RS_GetTechByProvided(MSG_ReadString(sb));
 					if (tech)
-						AII_AddItemToSlot(tech, ufo->weapons + j);
+						AII_AddItemToSlot(NULL, tech, ufo->weapons + j);
 					ufo->weapons[j].ammoLeft = MSG_ReadShort(sb);
 					ufo->weapons[j].delayNextShot = MSG_ReadShort(sb);
 					ufo->weapons[j].installationTime = MSG_ReadShort(sb);
@@ -2038,7 +2038,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			if (tmp_int) {
 				tech = RS_GetTechByProvided(MSG_ReadString(sb));
 				if (tech)
-					AII_AddItemToSlot(tech, &ufo->shield);
+					AII_AddItemToSlot(NULL, tech, &ufo->shield);
 				ufo->shield.installationTime = MSG_ReadShort(sb);
 			}
 			/* read electronics slot */
@@ -2048,7 +2048,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 				if (j < ufo->maxElectronics) {
 					tech = RS_GetTechByProvided(MSG_ReadString(sb));
 					if (tech)
-						AII_AddItemToSlot(tech, ufo->electronics + j);
+						AII_AddItemToSlot(NULL, tech, ufo->electronics + j);
 					ufo->electronics[j].installationTime = MSG_ReadShort(sb);
 				} else {
 					MSG_ReadString(sb);

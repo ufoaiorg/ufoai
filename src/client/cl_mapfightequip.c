@@ -637,6 +637,7 @@ static void AII_UpdateOneInstallationDelay (aircraft_t *aircraft, aircraftSlot_t
 		/* the item is being removed */
 		slot->installationTime++;
 		if (slot->installationTime >= 0) {
+			/* FIXME: readd to the storage and update capacity - use aircraft->homebase */
 			/* the removal is over */
 			if (slot->nextItemIdx > -1) {
 				/* there is anoter item to install after this one */
@@ -1038,13 +1039,35 @@ void AIM_AircraftEquipzoneSelect_f (void)
  * @brief Add an item to an aircraft slot
  * @todo Check that the item has a weight small enough to fit the slot.
  */
-qboolean AII_AddItemToSlot (technology_t *tech, aircraftSlot_t *slot)
+qboolean AII_AddItemToSlot (base_t* base, technology_t *tech, aircraftSlot_t *slot)
 {
+	int itemIdx;
+
 	assert(slot);
 	assert(tech);
 
-	slot->itemIdx = AII_GetAircraftItemByID(tech->provides);
-	slot->installationTime = csi.ods[slot->itemIdx].craftitem.installationTime;
+	itemIdx = AII_GetAircraftItemByID(tech->provides);
+
+	/* the base pointer can be null here - e.g. in case you are equipping an ufo */
+	if (base) {
+		if (base->storage.num[itemIdx] <= 0) {
+			Com_Printf("AII_AddItemToSlot: No more item of this type to equip (%s)\n", csi.ods[itemIdx].id);
+			return qfalse;
+		}
+	}
+
+	if (csi.ods[itemIdx].size <= slot->size) {
+		slot->itemIdx = itemIdx;
+		slot->installationTime = csi.ods[slot->itemIdx].craftitem.installationTime;
+		/* the base pointer can be null here - e.g. in case you are equipping an ufo */
+		if (base) {
+			base->storage.num[itemIdx]--;
+			/* @todo: Update capacity */
+		}
+	} else {
+		Com_Printf("AII_AddItemToSlot: Could not add item '%s' to slot %i (slot-size: %i - item-weight: %i)\n",
+			csi.ods[itemIdx].id, slot->idx, slot->size, csi.ods[itemIdx].size);
+	}
 
 	return qtrue;
 }
@@ -1060,6 +1083,7 @@ void AIM_AircraftEquipAddItem_f (void)
 	aircraft_t *aircraft;
 	menu_t *activeMenu = NULL;
 	qboolean aircraftMenu;
+	base_t* base;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: airequip_add_item <arg>\n");
@@ -1080,9 +1104,11 @@ void AIM_AircraftEquipAddItem_f (void)
 	if (aircraftMenu) {
 		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 		assert(aircraft);
+		base = aircraft->homebase;
 		slot = AII_SelectAircraftSlot(aircraft);
 	} else {
 		slot = BDEF_SelectBaseSlot(baseCurrent);
+		base = baseCurrent;
 		aircraft = NULL;
 	}
 
@@ -1097,7 +1123,7 @@ void AIM_AircraftEquipAddItem_f (void)
 	/* select the slot we are changing */
 	/* update the new item to slot */
 	if (num == 1) {
-		AII_AddItemToSlot(airequipSelectedTechnology, slot);
+		AII_AddItemToSlot(base, airequipSelectedTechnology, slot);
 		slot->ammoIdx = -1;
 	}
 	else if (num == 2)
