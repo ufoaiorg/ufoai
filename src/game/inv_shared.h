@@ -509,15 +509,6 @@ typedef struct character_s {
 
 	int teamDefIndex;			/**< teamDef array index. */
 	int gender;					/**< Gender index. */
-
-/* @todo: remove me, if this is not needed. */
-/*  int     destroyed_objects; */
-/*  int     hit_ratio; */
-/*  int     inflicted_damage; */
-/*  int     damage_taken; */
-/*  int     crossed_distance; */
-	/* date     joined_edc; */
-	/* date     died; */
 } character_t;
 
 /** @brief The types of employees. */
