@@ -3318,7 +3318,7 @@ static void MN_ModifyString_f (void)
 
 
 /**
- * Shows the corresponding strings in menu
+ * @brief Shows the corresponding strings in menu
  * Example: Optionsmenu - fullscreen: yes
  */
 static void MN_Translate_f (void)
@@ -3328,8 +3328,10 @@ static void MN_Translate_f (void)
 	char *orig, *trans;
 	char original[MAX_VAR], translation[MAX_VAR];
 
-	if (Cmd_Argc() < 4)
+	if (Cmd_Argc() < 4) {
 		Com_Printf("usage: mn_translate <source> <dest> <list>\n");
+		return;
+	}
 
 	current = Cvar_VariableString(Cmd_Argv(1));
 	list = Cmd_Argv(3);
