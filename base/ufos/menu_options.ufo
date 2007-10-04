@@ -67,6 +67,7 @@ menu options
 
 	pic button_sound
 	{
+		if "snd_init == 1"
 		pos	"80 290"
 		click	{ cmd "mn_pop;mn_push options_sound;" }
 		image	menu/button_big
@@ -78,8 +79,29 @@ menu options
 	}
 	string string_sound
 	{
+		if "snd_init == 1"
 		font	f_menubig
 		color	"0 0.5 0 1"
+		string	"_Sound"
+		pos	"208 322"
+		align	cc
+	}
+
+	pic button_sound_na
+	{
+		if "snd_init == 0"
+		tooltip	"_Sound is not activated"
+		pos	"80 290"
+		image	menu/button_big
+		texl	"0 128"
+		texh	"256 192"
+		in
+	}
+	string string_sound_na
+	{
+		if "snd_init == 0"
+		font	f_menubig
+		color	"0.5 0.5 0.5 1"
 		string	"_Sound"
 		pos	"208 322"
 		align	cc
