@@ -35,12 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <SDL.h>
 
-#ifdef _WIN32
-#include <windows.h>
-#endif
-
-#include "vid.h"
-
 #define GAME_TITLE "UFO:AI"
 #define GAME_TITLE_LONG "UFO:Alien Invasion"
 
