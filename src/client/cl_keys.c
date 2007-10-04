@@ -799,7 +799,7 @@ static void Key_Bind_f (void)
  * @brief Writes lines containing "bind key value"
  * @param[in] path path to print the keybinding too
  */
-void Key_WriteBindings (char* path)
+void Key_WriteBindings (const char* path)
 {
 	int i;
 	FILE *f;
@@ -821,6 +821,7 @@ void Key_WriteBindings (char* path)
 }
 #endif
 
+
 /**
  * @brief List all binded keys with its function
  */
@@ -837,7 +838,6 @@ static void Key_Bindlist_f (void)
 		if (menukeybindings[i] && menukeybindings[i][0])
 			Com_Printf("- %s \"%s\"\n", Key_KeynumToString(i), menukeybindings[i]);
 }
-
 
 /**
  * @todo Fix this crappy shift key assignment for win32 and sdl (no _)
@@ -957,11 +957,11 @@ void Key_Event (int key, qboolean down, unsigned time)
 	/* track if any key is down for BUTTON_ANY */
 	keydown[key] = down;
 	if (!down) {
-		/* key up events only generate commands if the game key binding is */
-		/* a button command (leading + sign).  These will occur even in console mode, */
-		/* to keep the character from continuing an action started before a console */
-		/* switch.  Button commands include the kenum as a parameter, so multiple */
-		/* downs can be matched with ups */
+		/* key up events only generate commands if the game key binding is
+		 * a button command (leading + sign).  These will occur even in console mode,
+		 * to keep the character from continuing an action started before a console
+		 * switch.  Button commands include the kenum as a parameter, so multiple
+		 * downs can be matched with ups */
 		if (mouseSpace != MS_WORLD)
 			kb = menukeybindings[key];
 		if (!kb)
@@ -1022,16 +1022,3 @@ void Key_Event (int key, qboolean down, unsigned time)
 		Com_Error(ERR_FATAL, "Bad cls.key_dest");
 	}
 }
-
-#ifdef _WIN32
-void Key_ClearStates (void)
-{
-	int i;
-
-	for (i = 0; i < K_LAST_KEY; i++) {
-		if (keydown[i])
-			Key_Event(i, qfalse, 0);
-		keydown[i] = 0;
-	}
-}
-#endif
