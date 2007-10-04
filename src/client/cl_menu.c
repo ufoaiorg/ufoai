@@ -3917,7 +3917,7 @@ static qboolean MN_ParseAction (menuNode_t * menuNode, menuAction_t * action, co
 
 					action->data = curadata;
 					*(menuAction_t ***) curadata = &node->click;
-					curadata += sizeof(menuAction_t *);
+					curadata += ALIGN(sizeof(menuAction_t *));
 
 					/* get next token */
 					*token = COM_EParse(text, errhead, NULL);
