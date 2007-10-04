@@ -38,6 +38,7 @@ static technology_t *airequipSelectedTechnology = NULL;		/**< Selected technolgy
  * @brief Returns craftitem weight based on size.
  * @param[in] od Pointer to objDef_t object being craftitem.
  * @return itemWeight_t
+ * @sa AII_WeightToName
  */
 itemWeight_t AII_GetItemWeightBySize (objDef_t *od)
 {
@@ -297,7 +298,7 @@ static void AIM_UpdateAircraftItemList (base_t* base, aircraft_t* aircraft)
 
 /**
  * @brief Highlight selected zone
-  */
+ */
 static void AIM_DrawSelectedZone (void)
 {
 	menuNode_t *node;
@@ -661,11 +662,12 @@ static void AII_UpdateOneInstallationDelay (base_t* base, aircraft_t *aircraft, 
 }
 
 /**
-* @brief Update the installation delay of all slots of a given aircraft.
-* @note hourly called
-* @sa CL_CampaignRun
-* @param[in] aircraft Pointer to the aircraft
-*/
+ * @brief Update the installation delay of all slots of a given aircraft.
+ * @note hourly called
+ * @sa CL_CampaignRun
+ * @sa AII_UpdateOneInstallationDelay
+ * @param[in] aircraft Pointer to the aircraft
+ */
 void AII_UpdateInstallationDelay (void)
 {
 	int i, j, k;
@@ -1281,9 +1283,9 @@ void AII_InitialiseSlot (aircraftSlot_t *slot, int aircraftIdx)
 }
 
 /**
-* @brief Update the value of stats array of an aircraft.
-* @param[in] aircraft Pointer to the aircraft
-*/
+ * @brief Update the value of stats array of an aircraft.
+ * @param[in] aircraft Pointer to the aircraft
+ */
 void AII_UpdateAircraftStats (aircraft_t *aircraft)
 {
 	int i, currentStat;
@@ -1360,11 +1362,11 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 }
 
 /**
-* @brief Returns the amount of assigned items for a given slot of a given aircraft
-* @param[in] type This is the slot type to get the amount of assigned items for
-* @param[in] aircraft The aircraft to count the items for (may not be NULL)
-* @return The amount of assigned items for the given slot
-*/
+ * @brief Returns the amount of assigned items for a given slot of a given aircraft
+ * @param[in] type This is the slot type to get the amount of assigned items for
+ * @param[in] aircraft The aircraft to count the items for (may not be NULL)
+ * @return The amount of assigned items for the given slot
+ */
 int AII_GetSlotItems (aircraftItemType_t type, aircraft_t *aircraft)
 {
 	int i, max, cnt = 0;
@@ -1400,10 +1402,10 @@ int AII_GetSlotItems (aircraftItemType_t type, aircraft_t *aircraft)
 }
 
 /**
-* @brief Check if the aircraft has weapon and ammo
-* @param[in] aircraft The aircraft to count the items for (may not be NULL)
-* @return qtrue if the aircraft can fight, qflase else
-*/
+ * @brief Check if the aircraft has weapon and ammo
+ * @param[in] aircraft The aircraft to count the items for (may not be NULL)
+ * @return qtrue if the aircraft can fight, qflase else
+ */
 int AII_AircraftCanShoot (aircraft_t *aircraft)
 {
 	int i;
@@ -1418,10 +1420,10 @@ int AII_AircraftCanShoot (aircraft_t *aircraft)
 }
 
 /**
-* @brief Check if the base has weapon and ammo
-* @param[in] base Pointer to the base you want to check (may not be NULL)
-* @return qtrue if the base can shoot, qflase else
-*/
+ * @brief Check if the base has weapon and ammo
+ * @param[in] base Pointer to the base you want to check (may not be NULL)
+ * @return qtrue if the base can shoot, qflase else
+ */
 int AII_BaseCanShoot (base_t *base)
 {
 	int i;
@@ -1441,8 +1443,8 @@ int AII_BaseCanShoot (base_t *base)
 
 /**
  * @brief Translate a weight int to a translated string
- *
  * @sa itemWeight_t
+ * @sa AII_GetItemWeightBySize
  */
 const char* AII_WeightToName (itemWeight_t weight)
 {
