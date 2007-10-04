@@ -615,12 +615,15 @@ void BDEF_ListClick_f (void)
 
 /**
  * @brief Update the installation delay of one slot.
+ * @param[in] base Pointer to the base to update the storage and capacity for
  * @param[in] aircraft Pointer to the aircraft (NULL if a base is updated)
  * @param[in] slot Pointer to the slot to update
  * @sa AII_AddItemToSlot
  */
 static void AII_UpdateOneInstallationDelay (base_t* base, aircraft_t *aircraft, aircraftSlot_t *slot)
 {
+	assert(base);
+
 	/* if the item is already installed, nothing to do */
 	if (slot->installationTime == 0)
 		return;
