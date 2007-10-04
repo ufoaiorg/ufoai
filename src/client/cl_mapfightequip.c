@@ -641,6 +641,10 @@ static void AII_UpdateOneInstallationDelay (base_t* base, aircraft_t *aircraft, 
 		/* the item is being removed */
 		slot->installationTime++;
 		if (slot->installationTime >= 0) {
+#ifdef DEBUG
+			if (aircraft && aircraft->homebase != base)
+				Sys_Error("AII_UpdateOneInstallationDelay: aircraft->homebase and base pointers are out of sync\n");
+#endif
 			B_UpdateStorageAndCapacity(base, slot->itemIdx, 1, qfalse, qfalse);
 			/* the removal is over */
 			if (slot->nextItemIdx > -1) {
@@ -681,6 +685,7 @@ void AII_UpdateInstallationDelay (void)
 		/* Update each aircraft */
 		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++)
 			if (aircraft->homebase) {
+				assert(aircraft->homebase == base);
 				if (AIR_IsAircraftInBase(aircraft)) {
 					/* Update electronics delay */
 					for (k = 0; k < aircraft->maxElectronics; k++)
