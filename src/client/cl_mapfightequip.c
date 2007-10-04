@@ -614,11 +614,12 @@ void BDEF_ListClick_f (void)
 }
 
 /**
-* @brief Update the installation delay of one slot.
-* @param[in] aircraft Pointer to the aircraft (NULL if a base is updated)
-* @param[in] slot Pointer to the slot to update
-*/
-static void AII_UpdateOneInstallationDelay (aircraft_t *aircraft, aircraftSlot_t *slot)
+ * @brief Update the installation delay of one slot.
+ * @param[in] aircraft Pointer to the aircraft (NULL if a base is updated)
+ * @param[in] slot Pointer to the slot to update
+ * @sa AII_AddItemToSlot
+ */
+static void AII_UpdateOneInstallationDelay (base_t* base, aircraft_t *aircraft, aircraftSlot_t *slot)
 {
 	/* if the item is already installed, nothing to do */
 	if (slot->installationTime == 0)
@@ -637,7 +638,7 @@ static void AII_UpdateOneInstallationDelay (aircraft_t *aircraft, aircraftSlot_t
 		/* the item is being removed */
 		slot->installationTime++;
 		if (slot->installationTime >= 0) {
-			/* FIXME: readd to the storage and update capacity - use aircraft->homebase */
+			B_UpdateStorageAndCapacity(base, slot->itemIdx, 1, qfalse, qfalse);
 			/* the removal is over */
 			if (slot->nextItemIdx > -1) {
 				/* there is anoter item to install after this one */
@@ -670,9 +671,9 @@ void AII_UpdateInstallationDelay (void)
 
 		/* Update base */
 		for (k = 0; k < base->maxBatteries; k++)
-			AII_UpdateOneInstallationDelay(NULL, base->batteries + k);
+			AII_UpdateOneInstallationDelay(base, NULL, base->batteries + k);
 		for (k = 0; k < base->maxLasers; k++)
-			AII_UpdateOneInstallationDelay(NULL, base->lasers + k);
+			AII_UpdateOneInstallationDelay(base, NULL, base->lasers + k);
 
 		/* Update each aircraft */
 		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++)
@@ -680,14 +681,14 @@ void AII_UpdateInstallationDelay (void)
 				if (AIR_IsAircraftInBase(aircraft)) {
 					/* Update electronics delay */
 					for (k = 0; k < aircraft->maxElectronics; k++)
-						AII_UpdateOneInstallationDelay(aircraft, aircraft->electronics + k);
+						AII_UpdateOneInstallationDelay(base, aircraft, aircraft->electronics + k);
 
 					/* Update weapons delay */
 					for (k = 0; k < aircraft->maxWeapons; k++)
-						AII_UpdateOneInstallationDelay(aircraft, aircraft->weapons + k);
+						AII_UpdateOneInstallationDelay(base, aircraft, aircraft->weapons + k);
 
 					/* Update shield delay */
-					AII_UpdateOneInstallationDelay(aircraft, &aircraft->shield);
+					AII_UpdateOneInstallationDelay(base, aircraft, &aircraft->shield);
 				}
 			}
 	}
@@ -1037,7 +1038,7 @@ void AIM_AircraftEquipzoneSelect_f (void)
 
 /**
  * @brief Add an item to an aircraft slot
- * @todo Check that the item has a weight small enough to fit the slot.
+ * @sa AII_UpdateOneInstallationDelay
  */
 qboolean AII_AddItemToSlot (base_t* base, technology_t *tech, aircraftSlot_t *slot)
 {
@@ -1056,14 +1057,12 @@ qboolean AII_AddItemToSlot (base_t* base, technology_t *tech, aircraftSlot_t *sl
 		}
 	}
 
-	if (csi.ods[itemIdx].size <= slot->size) {
+	if (slot->size >= AII_GetItemWeightBySize(&csi.ods[slot->itemIdx])) {
 		slot->itemIdx = itemIdx;
 		slot->installationTime = csi.ods[slot->itemIdx].craftitem.installationTime;
 		/* the base pointer can be null here - e.g. in case you are equipping an ufo */
-		if (base) {
-			base->storage.num[itemIdx]--;
-			/* @todo: Update capacity */
-		}
+		if (base)
+			B_UpdateStorageAndCapacity(base, itemIdx, -1, qfalse, qfalse);
 	} else {
 		Com_Printf("AII_AddItemToSlot: Could not add item '%s' to slot %i (slot-size: %i - item-weight: %i)\n",
 			csi.ods[itemIdx].id, slot->idx, slot->size, csi.ods[itemIdx].size);
