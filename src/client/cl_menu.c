@@ -763,7 +763,7 @@ void MN_ExecuteActions (const menu_t* const menu, menuAction_t* const first)
 				data = action->data;
 				data += ALIGN(strlen(action->data) + 1);
 				np = *((int *) data);
-				data += sizeof(int);
+				data += ALIGN(sizeof(int));
 
 				assert(np >= 0);
 				assert(np <= sizeof(nps) / sizeof(value_t));
@@ -3887,7 +3887,7 @@ static qboolean MN_ParseAction (menuNode_t * menuNode, menuAction_t * action, co
 
 /*				Com_Printf(" %s\n", *token); */
 
-				curadata += sizeof(int);
+				curadata += ALIGN(sizeof(int));
 				curadata += Com_ParseValue(curadata, *token, val->type, 0, val->size);
 
 				/* get next token */
