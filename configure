@@ -9104,6 +9104,10 @@ echo "$as_me: error: You must have the SDL development headers" >&2;}
 	#---------------------------------------------------------------------------------------------
 	# Check for SDL mixer headers and libraries
 	#---------------------------------------------------------------------------------------------
+	# multiple main functions error for SDL_mixer and SDL_ttf otherwise
+	# problem might be that -L<SDL_dir> might be missing then
+	LDFLAGS=$OLD_LDFLAGS
+
 
 for ac_header in SDL_mixer.h
 do
@@ -9369,9 +9373,6 @@ fi
 	#---------------------------------------------------------------------------------------------
 	# Check for SDL_ttf
 	#---------------------------------------------------------------------------------------------
-	# multiple main functions error for SDL_ttf otherwise
-	# problem might be that -L<SDL_dir> might be missing then
-	LDFLAGS=$OLD_LDFLAGS
 
 
 for ac_header in SDL_ttf.h

@@ -401,6 +401,10 @@ then
 	#---------------------------------------------------------------------------------------------
 	# Check for SDL mixer headers and libraries
 	#---------------------------------------------------------------------------------------------
+	# multiple main functions error for SDL_mixer and SDL_ttf otherwise
+	# problem might be that -L<SDL_dir> might be missing then
+	LDFLAGS=$OLD_LDFLAGS
+
 	AC_CHECK_HEADERS([SDL_mixer.h])
 	if test "$ac_cv_header_SDL_mixer_h" != "yes"
 	then
@@ -411,9 +415,6 @@ then
 	#---------------------------------------------------------------------------------------------
 	# Check for SDL_ttf
 	#---------------------------------------------------------------------------------------------
-	# multiple main functions error for SDL_ttf otherwise
-	# problem might be that -L<SDL_dir> might be missing then
-	LDFLAGS=$OLD_LDFLAGS
 
 	AC_CHECK_HEADERS([SDL_ttf.h])
 	if test "$ac_cv_header_SDL_ttf_h" != "yes"
