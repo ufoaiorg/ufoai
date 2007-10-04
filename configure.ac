@@ -406,7 +406,7 @@ then
 	then
 		AC_MSG_ERROR([You must have the SDL_mixer development headers])
 	fi
-	#AC_CHECK_LIB(SDL_mixer, Mix_OpenAudio, [], AC_MSG_ERROR([You must have SDL_mixer!!!]))
+	AC_CHECK_LIB(SDL_mixer, Mix_OpenAudio, [], AC_MSG_ERROR([You must have SDL_mixer!!!]))
 
 	#---------------------------------------------------------------------------------------------
 	# Check for SDL_ttf
