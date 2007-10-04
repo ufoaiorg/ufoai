@@ -208,7 +208,7 @@ void CL_StartSingleplayer (qboolean singleplayer)
 			Cvar_SetValue("sv_maxsoldiersperplayer", 8);
 
 		/* this is needed to let 'soldier_select 0' do
-		   the right thing while we are on geoscape */
+		 * the right thing while we are on geoscape */
 		sv_maxclients->modified = qtrue;
 	} else {
 		const char *max_s, *max_spp;

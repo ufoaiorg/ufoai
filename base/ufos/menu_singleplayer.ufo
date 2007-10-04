@@ -114,7 +114,7 @@ menu singleplayer
 	pic button_continue
 	{
 		if "mn_lastsave"
-		click	{ cmd game_continue }
+		click	{ cmd "game_continue;" }
 		pos	"640 380"
 		image	menu/button_big
 		texl	"0 0"
@@ -137,7 +137,7 @@ menu singleplayer
 	pic button_back
 	{
 		pos	"640 520"
-		click	{ cmd "game_exit;mn_pop" }
+		click	{ cmd "game_exit;mn_pop;" }
 		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"
@@ -165,7 +165,7 @@ menu singleplayerInGame extends singleplayer
 	// over-ride button_new with a continue button
 	pic button_new
 	{
-		click	{ cmd game_continue }
+		click	{ cmd "game_continue;" }
 		pos	"640 170"
 		image	menu/button_big
 		texl	"0 0"
@@ -286,7 +286,7 @@ menu singleplayermission
 
 	pic button_continue
 	{
-		click	{ cmd game_continue }
+		click	{ cmd "game_continue;" }
 		pos	"640 170"
 		image	menu/button_big
 		texl	"0 0"
@@ -529,7 +529,7 @@ menu load
 		pos		"640 200"
 		out		{ *slot0 image menu/save_slot }
 		in		{ *slot0 image menu/save_slota }
-		click	{ cmd "game_load slot0" }
+		click	{ cmd "game_load slot0;" }
 	}
 	pic slot1
 	{
@@ -537,7 +537,7 @@ menu load
 		pos		"640 235"
 		out		{ *slot1 image menu/save_slot }
 		in		{ *slot1 image menu/save_slota }
-		click	{ cmd "game_load slot1" }
+		click	{ cmd "game_load slot1;" }
 	}
 	pic slot2
 	{
@@ -545,7 +545,7 @@ menu load
 		pos		"640 270"
 		out		{ *slot2 image menu/save_slot }
 		in		{ *slot2 image menu/save_slota }
-		click	{ cmd "game_load slot2" }
+		click	{ cmd "game_load slot2;" }
 	}
 	pic slot3
 	{
@@ -553,7 +553,7 @@ menu load
 		pos		"640 305"
 		out		{ *slot3 image menu/save_slot }
 		in		{ *slot3 image menu/save_slota }
-		click	{ cmd "game_load slot3" }
+		click	{ cmd "game_load slot3;" }
 	}
 	pic slot4
 	{
@@ -561,7 +561,7 @@ menu load
 		pos		"640 340"
 		out		{ *slot4 image menu/save_slot }
 		in		{ *slot4 image menu/save_slota }
-		click	{ cmd "game_load slot4" }
+		click	{ cmd "game_load slot4;" }
 	}
 	pic slot5
 	{
@@ -569,7 +569,7 @@ menu load
 		pos		"640 375"
 		out		{ *slot5 image menu/save_slot }
 		in		{ *slot5 image menu/save_slota }
-		click	{ cmd "game_load slot5" }
+		click	{ cmd "game_load slot5;" }
 	}
 	pic slot6
 	{
@@ -577,7 +577,7 @@ menu load
 		pos		"640 410"
 		out		{ *slot6 image menu/save_slot }
 		in		{ *slot6 image menu/save_slota }
-		click	{ cmd "game_load slot6" }
+		click	{ cmd "game_load slot6;" }
 	}
 	pic slot7
 	{
@@ -585,7 +585,7 @@ menu load
 		pos		"640 445"
 		out		{ *slot7 image menu/save_slot }
 		in		{ *slot7 image menu/save_slota }
-		click	{ cmd "game_load slot7" }
+		click	{ cmd "game_load slot7;" }
 	}
 
 	string txt_slot0 { font "f_verysmall" string "*cvar mn_slot0" pos "648 210" size "240 11" color "0 .78 0 1" }
@@ -623,7 +623,7 @@ menu load
 
 	func init
 	{
-		cmd game_comments
+		cmd "game_comments;"
 	}
 }
 
@@ -806,7 +806,7 @@ menu save
 
 	func init
 	{
-		cmd game_comments
+		cmd "game_comments;"
 	}
 }
 

@@ -1,6 +1,6 @@
 sequence intro
 {
-	cmd "snd_music PsymongN3;"
+//	cmd "snd_music PsymongN3;"
 	cmd "seq_animspeed 100;"
 
 	2dobj i_sentence1
