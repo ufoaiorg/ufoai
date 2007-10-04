@@ -939,7 +939,13 @@ static void CM_CheckUnit (routing_t * map, int x, int y, pos_t z)
 	}
 }
 
-
+/**
+ * @brief Calculate the map size via routing data and store grid size
+ * in map_min and map_max. This is done with every new map load
+ * @sa map_min
+ * @sa map_max
+ * @sa CMod_LoadRouting
+ */
 static void CMod_GetMapSize (routing_t * map)
 {
 	const vec3_t offset = {100, 100, 100};
@@ -1035,7 +1041,7 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 		for (x = sX < 0 ? -sX : 0; x < maxX; x++)
 			if (temp_fall[y][x] != ROUTING_NOT_REACHABLE) {
 				overwrite = (clMap.fall[y + sY][x + sX] == ROUTING_NOT_REACHABLE);
-				
+
 				/* add or combine new quant */
 				if (overwrite) {
 					clMap.fall[y + sY][x + sX] = temp_fall[y][x];
@@ -1044,7 +1050,7 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 					clMap.fall[y + sY][x + sX] &= temp_fall[y][x];
 					clMap.step[y + sY][x + sX] |= temp_step[y][x];
 				}
-				
+
 				/** @todo only copy the height information here and calculate the whole routing from scratch
 				 *  after the map is build completely
 				 */
@@ -1059,9 +1065,9 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 					} else if ((clMap.route[z][y + sY][x + sX] & 0x0f) < (temp_route[z][y][x] & 0x0f)) {
 						/* or use the heigher one */
 						clMap.route[z][y + sY][x + sX] = temp_route[z][y][x];
-					}										
+					}
 				}
-				
+
 				/* check border connections */
 				for (i = 0; i < BASE_DIRECTIONS; i++) {
 					/* test for border */
