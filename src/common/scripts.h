@@ -45,10 +45,14 @@ typedef struct menuDepends_s {
 
 /* end of V_IF */
 
-#ifndef ALIGN_BYTES
-#define ALIGN_BYTES 1
+#ifndef ALIGNBYTES
+#define ALIGNBYTES 1
 #endif
-#define ALIGN(size)  ((size) + ((ALIGN_BYTES - ((size) % ALIGN_BYTES)) % ALIGN_BYTES))
+/* darwin defines this in /usr/include/ppc/param.h */
+#ifndef ALIGN
+#define ALIGN(size)  size
+/*((size) + ((ALIGN_BYTES - ((size) % ALIGN_BYTES)) % ALIGN_BYTES))*/
+#endif
 
 #define MEMBER_SIZEOF(TYPE, MEMBER) sizeof(((TYPE *)0)->MEMBER)
 

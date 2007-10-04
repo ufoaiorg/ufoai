@@ -74,12 +74,12 @@ CFLAGS+=-DSHARED_EXT=\"$(SHARED_EXT)\"
 
 ifeq ($(TARGET_CPU),powerpc64)
 	RELEASE_CFLAGS+=-O2 -fomit-frame-pointer -fexpensive-optimizations
-	CFLAGS+=-DALIGN_BYTES=1
+#	CFLAGS+=-DALIGNBYTES=1
 endif
 
 ifeq ($(TARGET_CPU),powerpc)
 	RELEASE_CFLAGS+=-O2 -fomit-frame-pointer -fexpensive-optimizations
-	CFLAGS+=-DALIGN_BYTES=1
+#	CFLAGS+=-DALIGNBYTES=1
 endif
 
 ifeq ($(TARGET_CPU),i386)
