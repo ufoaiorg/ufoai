@@ -62,9 +62,7 @@ static void R_SetSDLIcon (void)
 
 qboolean Rimp_Init (void)
 {
-#ifndef __APPLE__
-	SDL_SysWMinfo info;
-#endif
+	SDL_version version;
 	int attrValue;
 
 	r_surface = NULL;
@@ -88,10 +86,8 @@ qboolean Rimp_Init (void)
 		}
 	}
 
-#ifndef __APPLE__
-	SDL_VERSION(&info.version);
-	Com_Printf("SDL version: %i.%i.%i\n", info.version.major, info.version.minor, info.version.patch);
-#endif
+	SDL_VERSION(&version);
+	Com_Printf("SDL version: %i.%i.%i\n", version.major, version.minor, version.patch);
 
 	if (!R_SetMode()) {
 		Sys_Error("Video subsystem failed to initialize\n");
