@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define R_LOCAL_H
 
 #include "../client/ref.h"
+#include "../client/vid.h"
 
 #define RGB_PIXELSIZE 3
 
