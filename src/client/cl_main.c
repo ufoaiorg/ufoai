@@ -1292,19 +1292,6 @@ static void CL_Userinfo_f (void)
 }
 
 /**
- * @brief Restart the sound subsystem so it can pick up new parameters and flush all sounds
- * @sa S_Shutdown
- * @sa S_Init
- * @sa CL_RegisterSounds
- */
-void CL_Snd_Restart_f (void)
-{
-	S_Shutdown();
-	S_Init();
-	CL_RegisterSounds();
-}
-
-/**
  * @brief Increase or decrease the teamnum
  * @sa CL_SelectTeam_Init_f
  */
@@ -1444,6 +1431,12 @@ static void CL_SpawnSoldiers_f (void)
 	}
 }
 
+/**
+ * @brief
+ * @note Called after precache was sent from the server
+ * @sa SV_Configstrings_f
+ * @sa CL_Precache_f
+ */
 void CL_RequestNextDownload (void)
 {
 	unsigned map_checksum = 0;
@@ -1527,6 +1520,7 @@ void CL_RequestNextDownload (void)
  * @brief The server will send this command right before allowing the client into the server
  * @sa CL_StartGame
  * @todo recheck the checksum server side
+ * @sa SV_Configstrings_f
  */
 static void CL_Precache_f (void)
 {
@@ -2096,7 +2090,6 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("bookmark_add", CL_BookmarkAdd_f, "Add a new bookmark - see adrX cvars");
 
 	Cmd_AddCommand("userinfo", CL_Userinfo_f, "Prints your userinfo string");
-	Cmd_AddCommand("snd_restart", CL_Snd_Restart_f, "Restart the sound renderer");
 
 	Cmd_AddCommand("disconnect", CL_Disconnect_f, "Disconnect from the current server");
 

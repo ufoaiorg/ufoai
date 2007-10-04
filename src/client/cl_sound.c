@@ -410,6 +410,25 @@ static void S_Play_f (void)
 	S_StartLocalSound(filename);
 }
 
+/**
+ * @brief Restart the sound subsystem so it can pick up new parameters and flush all sounds
+ * @sa S_Shutdown
+ * @sa S_Init
+ * @sa CL_RegisterSounds
+ */
+static void S_Restart_f (void)
+{
+	S_Shutdown();
+	S_Init();
+
+	if (!sound_started)
+		return;
+
+	CL_RegisterSounds();
+	/* restart the music, too */
+	snd_music->modified = qtrue;
+}
+
 /*
 INIT AND SHUTDOWN
 */
@@ -479,7 +498,7 @@ static qboolean SND_Init (void)
 
 /**
  * @sa S_Shutdown
- * @sa CL_Snd_Restart_f
+ * @sa S_Restart_f
  * @todo: openal should be an replacement for the 'normal' snd_ref
  */
 void S_Init (void)
@@ -487,6 +506,7 @@ void S_Init (void)
 	Com_Printf("\n------- sound initialization -------\n");
 
 	snd_init = Cvar_Get("snd_init", "1", CVAR_ARCHIVE, "Should the sound renderer get initialized");
+	Cmd_AddCommand("snd_restart", S_Restart_f, "Restart the sound renderer");
 
 	if (!snd_init->integer) {
 		Com_Printf("not initializing.\n");
@@ -520,7 +540,7 @@ void S_Init (void)
 
 /**
  * @sa S_Init
- * @sa CL_Snd_Restart_f
+ * @sa S_Restart_f
  */
 void S_Shutdown (void)
 {
@@ -531,5 +551,6 @@ void S_Shutdown (void)
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
 
 	Mem_FreePool(cl_soundSysPool);
+	memset(sfx_hash, 0, sizeof(sfx_hash));
 	sound_started = qfalse;
 }

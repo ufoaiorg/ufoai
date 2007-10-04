@@ -291,6 +291,12 @@ qboolean CL_CheckOrDownloadFile (const char *filename)
 	return qtrue;
 }
 
+/**
+ * @sa Call before entering a new level, or after snd_restart
+ * @sa CL_LoadMedia
+ * @sa S_Restart_f
+ * @sa CL_RequestNextDownload
+ */
 void CL_RegisterSounds (void)
 {
 	int i, j, k;
@@ -303,6 +309,10 @@ void CL_RegisterSounds (void)
 					S_RegisterSound(csi.ods[i].fd[j][k].fireSound);
 				if (csi.ods[i].fd[j][k].impactSound[0])
 					S_RegisterSound(csi.ods[i].fd[j][k].impactSound);
+				if (csi.ods[i].fd[j][k].hitBodySound[0])
+					S_RegisterSound(csi.ods[i].fd[j][k].hitBodySound);
+				if (csi.ods[i].fd[j][k].bounceSound[0])
+					S_RegisterSound(csi.ods[i].fd[j][k].bounceSound);
 			}
 		}
 	}

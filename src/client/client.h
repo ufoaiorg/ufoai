@@ -375,7 +375,6 @@ void CL_ReadSinglePlayerData(void);
 void CL_RequestNextDownload(void);
 void CL_StartSingleplayer(qboolean singleplayer);
 void CL_GetChallengePacket(void);
-void CL_Snd_Restart_f(void);
 void CL_ParseMedalsAndRanks(const char *name, const char **text, byte parserank);
 void CL_ParseUGVs(const char *name, const char **text);
 void CL_UpdateCharacterSkills(character_t *chr);	/* cl_team.c */
