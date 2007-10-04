@@ -327,7 +327,6 @@ static void AIM_DrawSelectedZone (void)
  */
 static void BDEF_AddBattery (int type)
 {
-
 	switch (type) {
 	case 0:
 		if (baseCurrent->maxBatteries >= MAX_BASE_SLOT) {
@@ -362,7 +361,6 @@ static void BDEF_AddBattery (int type)
 void BDEF_AddBattery_f (void)
 {
 	int num;
-
 
 	if (Cmd_Argc() < 2)
 		num = rand() % 2;

@@ -325,13 +325,13 @@ void S_StartSound (const vec3_t origin, sfx_t* sfx, float relVolume, float atten
 		return;
 	}
 
-	sfx->channel = Mix_PlayChannel(sfx->channel, sfx->data, sfx->loops);
 #ifdef DEBUG
 	if (volume > MIX_MAX_VOLUME) {
 		Com_DPrintf(DEBUG_SOUND, "S_StartSound: Mixer volume is too high: %i - max value is %i\n", MIX_MAX_VOLUME, volume);
 		volume = MIX_MAX_VOLUME;
 	}
 #endif
+
 	if (origin) {
 		le_t* le = LE_GetClosestActor(origin);
 		if (le) {
@@ -362,6 +362,12 @@ void S_StartSound (const vec3_t origin, sfx_t* sfx, float relVolume, float atten
 
 	Mix_VolumeChunk(sfx->data, volume);
 	Com_DPrintf(DEBUG_SOUND, "Mix '%s' (volume: %i, channel: %i)\n", sfx->name, volume, sfx->channel);
+
+	sfx->channel = Mix_PlayChannel(sfx->channel, sfx->data, sfx->loops);
+	if (sfx->channel == -1) {
+		Com_Printf("S_StartSound: could not play '%s' (%s)\n", sfx->name, Mix_GetError());
+		return;
+	}
 }
 
 /**
