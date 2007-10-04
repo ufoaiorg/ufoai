@@ -39,6 +39,8 @@ void AIM_AircraftEquipmenuInit_f(void);
 void AIM_AircraftEquipSlotSelect_f(void);
 void AIM_AircraftEquipzoneSelect_f(void);
 qboolean AII_AddItemToSlot(base_t* base, technology_t *tech, aircraftSlot_t *slot);
+qboolean AII_AddAmmoToSlot(base_t* base, technology_t *tech, aircraftSlot_t *slot);
+void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo);
 void AIM_AircraftEquipAddItem_f(void);
 void AIM_AircraftEquipDeleteItem_f(void);
 void AIM_AircraftEquipmenuClick_f(void);

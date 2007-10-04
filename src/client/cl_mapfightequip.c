@@ -646,17 +646,7 @@ static void AII_UpdateOneInstallationDelay (base_t* base, aircraft_t *aircraft, 
 			if (aircraft && aircraft->homebase != base)
 				Sys_Error("AII_UpdateOneInstallationDelay: aircraft->homebase and base pointers are out of sync\n");
 #endif
-			B_UpdateStorageAndCapacity(base, slot->itemIdx, 1, qfalse, qfalse);
-			/* the removal is over */
-			if (slot->nextItemIdx > -1) {
-				/* there is anoter item to install after this one */
-				slot->itemIdx = slot->nextItemIdx;
-				slot->nextItemIdx = -1;
-				slot->installationTime = csi.ods[slot->itemIdx].craftitem.installationTime;
-			} else {
-				slot->itemIdx = -1;
-				slot->installationTime = 0;
-			}
+			AII_RemoveItemFromSlot(base, slot, qfalse);
 		}
 	}
 }
@@ -1047,8 +1037,75 @@ void AIM_AircraftEquipzoneSelect_f (void)
 }
 
 /**
+ * @sa AII_AddItemToSlot
+ * @sa AII_AddAmmoToSlot
+ */
+void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
+{
+	assert(base);
+	assert(slot);
+
+	if (ammo) {
+		/* only remove the ammo */
+		if (slot->ammoIdx != -1) {
+			B_UpdateStorageAndCapacity(base, slot->ammoIdx, 1, qfalse, qfalse);
+			slot->ammoIdx = -1;
+		}
+	} else if (slot->itemIdx != -1) {
+		B_UpdateStorageAndCapacity(base, slot->itemIdx, 1, qfalse, qfalse);
+		/* the removal is over */
+		if (slot->nextItemIdx > -1) {
+			/* there is anoter item to install after this one */
+			slot->itemIdx = slot->nextItemIdx;
+			slot->nextItemIdx = -1;
+			slot->installationTime = csi.ods[slot->itemIdx].craftitem.installationTime;
+		} else {
+			slot->itemIdx = -1;
+			slot->installationTime = 0;
+		}
+		/* also remove ammo */
+		if (slot->ammoIdx != -1) {
+			B_UpdateStorageAndCapacity(base, slot->ammoIdx, 1, qfalse, qfalse);
+			slot->ammoIdx = -1;
+		}
+	}
+}
+
+/**
+ * @brief
+ * @sa AII_AddItemToSlot
+ */
+qboolean AII_AddAmmoToSlot (base_t* base, technology_t *tech, aircraftSlot_t *slot)
+{
+	int ammoIdx;
+
+	assert(slot);
+	assert(tech);
+
+	ammoIdx = AII_GetAircraftItemByID(tech->provides);
+
+	/* the base pointer can be null here - e.g. in case you are equipping an ufo */
+	if (base) {
+		if (base->storage.num[ammoIdx] <= 0) {
+			Com_Printf("AII_AddItemToSlot: No more ammo of this type to equip (%s)\n", csi.ods[ammoIdx].id);
+			return qfalse;
+		}
+	}
+
+	/* remove any applied ammo in the current slot */
+	AII_RemoveItemFromSlot(base, slot, qtrue);
+	slot->ammoIdx = ammoIdx;
+	/* the base pointer can be null here - e.g. in case you are equipping an ufo */
+	if (base)
+		B_UpdateStorageAndCapacity(base, ammoIdx, -1, qfalse, qfalse);
+
+	return qtrue;
+}
+
+/**
  * @brief Add an item to an aircraft slot
  * @sa AII_UpdateOneInstallationDelay
+ * @sa AII_AddAmmoToSlot
  */
 qboolean AII_AddItemToSlot (base_t* base, technology_t *tech, aircraftSlot_t *slot)
 {
@@ -1133,13 +1190,13 @@ void AIM_AircraftEquipAddItem_f (void)
 	/* select the slot we are changing */
 	/* update the new item to slot */
 	if (num == 1) {
+		AII_RemoveItemFromSlot(base, slot, qfalse);
 		AII_AddItemToSlot(base, airequipSelectedTechnology, slot);
-		slot->ammoIdx = -1;
-	}
-	else if (num == 2)
+	} else if (num == 2)
 		slot->nextItemIdx = AII_GetAircraftItemByID(airequipSelectedTechnology->provides);
-	else if (airequipID >= AC_ITEM_AMMO)
-		slot->ammoIdx = AII_GetAircraftItemByID(airequipSelectedTechnology->provides);
+	else if (airequipID >= AC_ITEM_AMMO) {
+		AII_AddAmmoToSlot(base, airequipSelectedTechnology, slot);
+	}
 
 	if (aircraftMenu) {
 		/* Update the values of aircraft stats (just in case an item has an installationTime of 0) */
@@ -1187,15 +1244,16 @@ void AIM_AircraftEquipDeleteItem_f (void)
 	/* update the new item to slot */
 	if (num == 1) {
 		/* if the item has been installed since less than 1 hour, you don't need time to remove it */
-		if (slot->installationTime < csi.ods[slot->itemIdx].craftitem.installationTime)
+		if (slot->installationTime < csi.ods[slot->itemIdx].craftitem.installationTime) {
 			slot->installationTime = -csi.ods[slot->itemIdx].craftitem.installationTime;
-		else
-			slot->itemIdx = -1;
-		slot->ammoIdx = -1;
+			AII_RemoveItemFromSlot(baseCurrent, slot, qtrue);
+		} else {
+			AII_RemoveItemFromSlot(baseCurrent, slot, qfalse);
+		}
 	} else if (num == 2)
 		slot->nextItemIdx = -1;
 	else if (airequipID >= AC_ITEM_AMMO)
-		slot->ammoIdx = -1;
+		AII_RemoveItemFromSlot(baseCurrent, slot, qtrue);
 
 	if (aircraftMenu) {
 		/* Update the values of aircraft stats */
