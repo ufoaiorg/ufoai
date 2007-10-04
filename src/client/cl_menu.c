@@ -732,6 +732,9 @@ void MN_Popup (const char *title, const char *text)
 	MN_PushMenu("popup");
 }
 
+/**
+ * @sa MN_ParseAction
+ */
 void MN_ExecuteActions (const menu_t* const menu, menuAction_t* const first)
 {
 	menuAction_t *action;
@@ -758,7 +761,7 @@ void MN_ExecuteActions (const menu_t* const menu, menuAction_t* const first)
 				int np;
 
 				data = action->data;
-				data += strlen(action->data) + 1;
+				data += ALIGN(strlen(action->data) + 1);
 				np = *((int *) data);
 				data += sizeof(int);
 
@@ -3769,6 +3772,10 @@ MENU PARSING
 ==============================================================
 */
 
+/**
+ * @brief
+ * @sa MN_ExecuteActions
+ */
 static qboolean MN_ParseAction (menuNode_t * menuNode, menuAction_t * action, const char **text, const const char **token)
 {
 	const char *errhead = "MN_ParseAction: unexpected end of file (in event)";
