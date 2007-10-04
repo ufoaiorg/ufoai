@@ -762,6 +762,9 @@ void MN_ExecuteActions (const menu_t* const menu, menuAction_t* const first)
 				np = *((int *) data);
 				data += sizeof(int);
 
+				assert(np >= 0);
+				assert(np <= sizeof(nps) / sizeof(value_t));
+
 				/* search the node */
 				node = MN_GetNode(menu, (char *) action->data);
 
