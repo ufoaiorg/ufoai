@@ -1067,6 +1067,7 @@ qboolean AII_AddItemToSlot (base_t* base, technology_t *tech, aircraftSlot_t *sl
 	} else {
 		Com_Printf("AII_AddItemToSlot: Could not add item '%s' to slot %i (slot-size: %i - item-weight: %i)\n",
 			csi.ods[itemIdx].id, slot->idx, slot->size, csi.ods[itemIdx].size);
+		return qfalse;
 	}
 
 	return qtrue;
