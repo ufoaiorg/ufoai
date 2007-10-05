@@ -925,6 +925,23 @@ void Key_Event (int key, qboolean down, unsigned time)
 		return;
 	}
 
+	if (cls.key_dest != key_console && down) {
+		switch (key) {
+		case K_ESCAPE:
+			MN_FocusRemove();
+			break;
+		case K_TAB:
+			if (MN_FocusNextActionNode())
+				return;
+			break;
+		case K_ENTER:
+		case K_KP_ENTER:
+			if (MN_FocusExecuteActionNode())
+				return;
+			break;
+		}
+	}
+
 	/* any key (except F1-F12) during the sequence mode will bring up the menu */
 	if (cls.state == ca_sequence && !(key >= K_F1 && key <= K_F12))
 		key = K_ESCAPE;

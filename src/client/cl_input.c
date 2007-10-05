@@ -1517,6 +1517,11 @@ void IN_Frame (void)
 		}
 	}
 
+#if 1
+	if (oldMousePosX != mousePosX || oldMousePosY != mousePosY)
+		MN_FocusRemove();
+#endif
+
 	oldMousePosX = mousePosX;
 	oldMousePosY = mousePosY;
 

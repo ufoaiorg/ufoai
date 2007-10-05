@@ -38,6 +38,8 @@ typedef struct chatMessage_s {
 
 static chatMessage_t *chatMessageStack = NULL;
 
+static menuNode_t *focusNode;
+
 static void CL_ShowChatMessagesOnStack_f(void);
 
 static const vec4_t tooltipBG = { 0.0f, 0.0f, 0.0f, 0.7f };
@@ -406,6 +408,113 @@ static void MN_ReinitCurrentMenu_f (void)
 menuNode_t* MN_GetNodeFromCurrentMenu (const char *name)
 {
 	return MN_GetNode(menuStack[menuStackPos-1], name);
+}
+
+/**
+ * @sa MN_FocusExecuteActionNode
+ * @note node must not be in menu
+ */
+static menuNode_t *MN_GetNextActionNode (menuNode_t* node)
+{
+	if (node)
+		node = node->next;
+	while (node) {
+		if (node->click)
+			return node;
+		node = node->next;
+	}
+	return NULL;
+}
+
+/**
+ * @sa MN_FocusExecuteActionNode
+ * @sa MN_FocusNextActionNode
+ * @sa IN_Frame
+ * @sa Key_Event
+ */
+void MN_FocusRemove (void)
+{
+	if (mouseSpace != MS_MENU)
+		return;
+
+	if (focusNode)
+		MN_ExecuteActions(focusNode->menu, focusNode->mouseOut);
+	focusNode = NULL;
+}
+
+/**
+ * @brief Execute the current focused action node
+ * @note Action nodes are nodes with click defined
+ * @sa Key_Event
+ * @sa MN_FocusNextActionNode
+ */
+qboolean MN_FocusExecuteActionNode (void)
+{
+	if (mouseSpace != MS_MENU)
+		return qfalse;
+
+	if (focusNode) {
+		MN_ExecuteActions(focusNode->menu, focusNode->click);
+		MN_ExecuteActions(focusNode->menu, focusNode->mouseOut);
+		focusNode = NULL;
+	}
+
+	return qtrue;
+}
+
+/**
+ * @sa MN_FocusRemove
+ */
+static qboolean MN_FocusSetNode (menuNode_t* node)
+{
+	if (!node) {
+		MN_FocusRemove();
+		return qfalse;
+	}
+
+	/* reset already focused node */
+	MN_FocusRemove();
+
+	focusNode = node;
+	MN_ExecuteActions(node->menu, node->mouseIn);
+
+	return qtrue;
+}
+
+/**
+ * @brief Set the focus to the next action node
+ * @note Action nodes are nodes with click defined
+ * @sa Key_Event
+ * @sa MN_FocusExecuteActionNode
+ */
+qboolean MN_FocusNextActionNode (void)
+{
+	menu_t* menu;
+	static int i = 0;	/* to cycle between all menus */
+
+	if (mouseSpace != MS_MENU)
+		return qfalse;
+
+	if (i >= menuStackPos)
+		i = 0;
+
+	if (focusNode) {
+		menuNode_t *node = MN_GetNextActionNode(focusNode);
+		if (node)
+			return MN_FocusSetNode(node);
+	}
+
+	while (i < menuStackPos) {
+		menu = menuStack[i++];
+		if (MN_FocusSetNode(MN_GetNextActionNode(menu->firstNode)))
+			return qtrue;
+	}
+	i = 0;
+
+	/* no node to focus */
+	MN_FocusRemove();
+
+	return qfalse;
 }
 
 /**
@@ -873,6 +982,9 @@ static qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	if (mouseSpace >= MS_ROTATE && mouseSpace <= MS_SHIFT3DMAP)
 		return qfalse;
 
+	if (focusNode)
+		return qfalse;
+
 	if (*node->depends.var) {
 		/* menuIfCondition_t */
 		switch (node->depends.cond) {
@@ -1015,7 +1127,9 @@ static qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 		return qtrue;
 }
 
-
+/**
+ * @sa IN_Parse
+ */
 qboolean MN_CursorOnMenu (int x, int y)
 {
 	menuNode_t *node;
@@ -1029,6 +1143,7 @@ qboolean MN_CursorOnMenu (int x, int y)
 		for (node = menu->firstNode; node; node = node->next)
 			if (MN_CheckNodeZone(node, x, y)) {
 				/* found an element */
+				/*MN_FocusSetNode(node);*/
 				return qtrue;
 			}
 
@@ -3045,6 +3160,8 @@ static menu_t* MN_PushMenuDelete (const char *name, qboolean delete)
 	int i;
 	menuNode_t *node;
 
+	MN_FocusRemove();
+
 	for (i = 0; i < numMenus; i++)
 		if (!Q_strncmp(menus[i].name, name, MAX_VAR)) {
 			/* found the correct add it to stack or bring it on top */
@@ -3172,6 +3289,8 @@ void MN_PopMenu (qboolean all)
 	/* make sure that we end all input buffers */
 	if (cls.key_dest == key_input && msg_mode == MSG_MENU)
 		Key_Event(K_ENTER, qtrue, cls.realtime);
+
+	MN_FocusRemove();
 
 	if (all)
 		while (menuStackPos > 0) {
