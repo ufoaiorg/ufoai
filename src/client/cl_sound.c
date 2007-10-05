@@ -275,24 +275,80 @@ static Mix_Chunk *S_LoadSound (const char *sound)
 	return mix;
 }
 
+#define WAVE_HEADER_SIZE 44
 /**
  * @brief Loads a buffer from memory into the mixer
  */
-void S_PlaySoundFromMem (byte* mem, size_t size)
+void S_PlaySoundFromMem (short* mem, size_t size, int rate, int channel)
 {
+	SDL_RWops *data;
 	Mix_Chunk *sample;
-	SDL_RWops* data;
+	byte *buf;
+	int blockAlign = 16 / 8 * channel; /* 16 == short */
+	int avgBytesPerSec = rate * blockAlign;
 
 	if (!sound_started)
 		return;
 
-	data = SDL_RWFromMem(mem, size);
+	/* contruct the wave header */
+	buf = Mem_PoolAlloc(size + WAVE_HEADER_SIZE, cl_soundSysPool, CL_TAG_NONE);
+	buf[0] = 'R';
+	buf[1] = 'I';
+	buf[2] = 'F';
+	buf[3] = 'F';
+	buf[4] = 8;	/* 8 bytes of riff header */
+	buf[5] = 0;
+	buf[6] = 0;
+	buf[7] = 0;
+	buf[8] = 'W';
+	buf[9] = 'A';
+	buf[10] = 'V';
+	buf[11] = 'E';
+	/* format header */
+	buf[12] = 'f';
+	buf[13] = 'm';
+	buf[14] = 't';
+	buf[15] = ' ';
+	buf[16] = 0x10;	/* 16 bytes 'fmt ' header size*/
+	buf[17] = 0;
+	buf[18] = 0;
+	buf[19] = 0;
+	buf[20] = 1; /* uncompressed */
+	buf[21] = 0;
+	buf[22] = channel & UCHAR_MAX;
+	buf[23] = (channel >> 8) & UCHAR_MAX;
+	buf[24] = rate & UCHAR_MAX;
+	buf[25] = (rate >> 8) & UCHAR_MAX;
+	buf[26] = (rate >> 16) & UCHAR_MAX;
+	buf[27] = (rate >> 24) & UCHAR_MAX;
+	buf[28] = avgBytesPerSec & UCHAR_MAX;
+	buf[29] = (avgBytesPerSec >> 8) & UCHAR_MAX;
+	buf[30] = (avgBytesPerSec >> 16) & UCHAR_MAX;
+	buf[31] = (avgBytesPerSec >> 24) & UCHAR_MAX;
+	buf[32] = blockAlign & UCHAR_MAX;
+	buf[33] = (blockAlign >> 8) & UCHAR_MAX;
+	buf[34] = 0x10; /* short */
+	buf[35] = 0;
+	/* data header */
+	buf[36] = 'd';
+	buf[37] = 'a';
+	buf[38] = 't';
+	buf[39] = 'a';
+	buf[40] = size & UCHAR_MAX;
+	buf[41] = (size >> 8) & UCHAR_MAX;
+	buf[42] = (size >> 16) & UCHAR_MAX;
+	buf[43] = (size >> 24) & UCHAR_MAX;
+	/* and now add the data */
+	memcpy(&buf[WAVE_HEADER_SIZE], mem, size);
+
+	data = SDL_RWFromMem(buf, size + WAVE_HEADER_SIZE);
 	sample = Mix_LoadWAV_RW(data, size);
 	if (!sample) {
 		Com_Printf("Could not load sound chunk from memory (%s)\n", Mix_GetError());
 		return;
 	}
 	Mix_PlayChannel(-1, sample, 0);
+	Mem_Free(buf);
 }
 
 /**

@@ -437,7 +437,7 @@ static void CIN_DecodeSoundMono (const byte *data)
 	}
 
 	/* Send samples to mixer */
-	S_PlaySoundFromMem((byte*)samples, cin.chunk.size);
+	S_PlaySoundFromMem(samples, cin.chunk.size, 22050, 1);
 }
 
 /**
@@ -449,7 +449,6 @@ static void CIN_DecodeSoundStereo (const byte *data)
 	short	samples[ROQ_MAX_CHUNK_SIZE];
 	int		prevL, prevR;
 	int		i;
-
 	prevL = (cin.chunk.flags & 0xFF00) << 0;
 	prevR = (cin.chunk.flags & 0x00FF) << 8;
 
@@ -462,7 +461,7 @@ static void CIN_DecodeSoundStereo (const byte *data)
 	}
 
 	/* Send samples to mixer */
-	S_PlaySoundFromMem((byte*)samples, cin.chunk.size);
+	S_PlaySoundFromMem(samples, cin.chunk.size, 22050, 2);
 }
 
 static qboolean CIN_DecodeChunk (void)
