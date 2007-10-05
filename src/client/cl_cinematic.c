@@ -631,6 +631,8 @@ void CIN_StopCinematic (void)
 	else
 		Com_Printf("CIN_StopCinematic: Warning no opened file\n");
 
+	Mem_Free(cin.frameBuffer[0]);
+	Mem_Free(cin.frameBuffer[1]);
 	memset(&cin, 0, sizeof(cinematic_t));
 }
 
