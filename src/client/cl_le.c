@@ -303,6 +303,9 @@ void LE_Think (void)
 	le_t *le;
 	int i;
 
+	if (cls.state != ca_active)
+		return;
+
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
 		if (le->inuse && le->think)
 			/* call think function */
