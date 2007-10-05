@@ -647,6 +647,29 @@ qboolean INV_MoveItem (base_t* base, inventory_t* inv, int toContainer, int px, 
 	/* move the item */
 	moved = Com_MoveInInventory(inv, fromContainer, fromX, fromY, toContainer, px, py, NULL, NULL);
 
+	if (moved == IA_RELOAD_SWAP) {
+		/**
+		 * The ammo in the target-weapon was swapped out of it and added to the current container.
+		 * If the container is of type idEquip and the last added (by the swap) item in it has a wrong buytype then move it to the correct one.
+		 * Currently it assumes that there is only ONE item of this type (since weapons can only use one ammo which is swapped out).
+		 * @sa Com_MoveInInventoryIgnore (return IA_RELOAD_SWAP)
+		 */
+		if (fromContainer == csi.idEquip) {
+			/* Check buytype of first (last added) item */
+			if (!BUYTYPE_MATCH(et, base->equipType)) {
+				item_t item_temp = {NONE_AMMO, NONE,inv->c[csi.idEquip]->item.t, 0}; 
+				et = csi.ods[inv->c[csi.idEquip]->item.t].buytype;
+				if (BUY_PRI(et)) {
+					Com_RemoveFromInventory(inv, fromContainer, inv->c[csi.idEquip]->x, inv->c[csi.idEquip]->y);
+					Com_TryAddToBuyType(&base->equipByBuyType, item_temp, BUY_WEAP_PRI, 1);
+				} else if (BUY_SEC(et)) {
+					Com_RemoveFromInventory(inv, fromContainer, inv->c[csi.idEquip]->x, inv->c[csi.idEquip]->y);
+					Com_TryAddToBuyType(&base->equipByBuyType, item_temp, BUY_WEAP_SEC, 1);
+				}
+			}
+		}
+	}
+
 	/* end of hack */
 	if (i && !BUYTYPE_MATCH(et, base->equipType)) {
 		base->equipByBuyType.c[et] = inv->c[csi.idEquip];
@@ -655,8 +678,10 @@ qboolean INV_MoveItem (base_t* base, inventory_t* inv, int toContainer, int px, 
 		base->equipByBuyType.c[base->equipType] = inv->c[csi.idEquip];
 	}
 
-	if (moved == IA_MOVE)
+	switch (moved) {
+	case IA_MOVE:
 		return qtrue;
-	else
+	default:
 		return qfalse;
+	}
 }

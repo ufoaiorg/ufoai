@@ -576,17 +576,18 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 		ic = Com_SearchInInventory(i, to, tx, ty);	/* Get the target-invlist (e.g. a weapon) */
 
 		if (ic && INVSH_LoadableInWeapon(&CSI->ods[cacheItem.t], ic->item.t)) {
-			/* A target-item was found and the dragged item (implicitly ammo) can be loaded in it (impliciticly weapon). */
+			/* A target-item was found and the dragged item (implicitly ammo)
+			 * can be loaded in it (implicitly weapon). */
 
-			/* @todo (or do this in two places in cl_menu.c):
+			/** @todo (or do this in two places in cl_menu.c):
 			if (!RS_ItemIsResearched(CSI->ods[ic->item.t].id)
 				 || !RS_ItemIsResearched(CSI->ods[cacheItem.t].id)) {
 				return IA_NORELOAD;
 			} */
 			if (ic->item.a >= CSI->ods[ic->item.t].ammo
 				&& ic->item.m == cacheItem.t) {
-				/* weapon already fully loaded with the same ammunition
-				 * --- back to source location */
+				/* Weapon already fully loaded with the same ammunition.
+				 * => back to source location. */
 				Com_AddToInventory(i, cacheItem, from, fx, fy, 1);
 				return IA_NORELOAD;
 			}
@@ -600,10 +601,11 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 
 					/* Add the currently used ammo in a free place of the "from" container. */
 					/**
-					 * @todo If 'from' is idEquip OR idFloor AND the item is of buytype BUY_MULTI_AMMO:
-					 * We need to make sure it must go into the correct display: PRIMARY _OR_ SECONDARY only (e.g. no saboted slugs in SEC).
-					 * But we would need to know the corect inventory for that :-/ 
-					 * @sa The BUY_MULTI_AMMO stuff in cl_inventory.c:INV_MoveItem 
+					 * @note If 'from' is idEquip OR idFloor AND the item is of buytype BUY_MULTI_AMMO:
+					 * We need to make sure it goes into the correct display: PRIMARY _OR_ SECONDARY only (e.g. no saboted slugs in SEC).
+					 * This is currently done via the IA_RELOAD_SWAP return-value in cl_inventory.c:INV_MoveItem (ONLY there).
+					 * It checks and moved the last-added item (1 item) only.
+					 * @sa The BUY_MULTI_AMMO stuff in cl_inventory.c:INV_MoveItem.
 					 */
 					Com_AddToInventory(i, item, from, -1, -1, 1);
 
