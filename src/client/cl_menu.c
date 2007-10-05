@@ -419,7 +419,7 @@ static menuNode_t *MN_GetNextActionNode (menuNode_t* node)
 	if (node)
 		node = node->next;
 	while (node) {
-		if (node->click)
+		if (!node->invis && ((node->click && node->mouseIn) || node->mouseIn))
 			return node;
 		node = node->next;
 	}
@@ -454,7 +454,9 @@ qboolean MN_FocusExecuteActionNode (void)
 		return qfalse;
 
 	if (focusNode) {
-		MN_ExecuteActions(focusNode->menu, focusNode->click);
+		if (focusNode->click) {
+			MN_ExecuteActions(focusNode->menu, focusNode->click);
+		}
 		MN_ExecuteActions(focusNode->menu, focusNode->mouseOut);
 		focusNode = NULL;
 	}
