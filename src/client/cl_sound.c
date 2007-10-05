@@ -369,6 +369,10 @@ void S_StartSound (const vec3_t origin, sfx_t* sfx, float relVolume, float atten
 		return;
 	}
 
+	/* maybe the sound file couldn't be loaded */
+	if (!sfx)
+		return;
+
 #ifdef DEBUG
 	if (volume > MIX_MAX_VOLUME) {
 		Com_DPrintf(DEBUG_SOUND, "S_StartSound: Mixer volume is too high: %i - max value is %i\n", MIX_MAX_VOLUME, volume);
