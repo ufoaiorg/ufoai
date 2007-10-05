@@ -280,16 +280,19 @@ static Mix_Chunk *S_LoadSound (const char *sound)
  */
 void S_PlaySoundFromMem (byte* mem, size_t size)
 {
-    Mix_Chunk *sample;
-    SDL_RWops* data;
+	Mix_Chunk *sample;
+	SDL_RWops* data;
 
-    data = SDL_RWFromMem(mem, size);
-    sample = Mix_LoadWAV_RW(data, 1);
-    if (!sample) {
-        Com_Printf("Could not load sound chunk from memory\n");
-        return;
-    }
-    Mix_PlayChannel(-1, sample, 0);
+	if (!sound_started)
+		return;
+
+	data = SDL_RWFromMem(mem, size);
+	sample = Mix_LoadWAV_RW(data, size);
+	if (!sample) {
+		Com_Printf("Could not load sound chunk from memory (%s)\n", Mix_GetError());
+		return;
+	}
+	Mix_PlayChannel(-1, sample, 0);
 }
 
 /**
@@ -466,6 +469,11 @@ INIT AND SHUTDOWN
  */
 void S_Frame (void)
 {
+	if (snd_init && snd_init->modified) {
+		S_Restart_f();
+		snd_init->modified = qfalse;
+	}
+
 	if (!sound_started)
 		return;
 
@@ -520,6 +528,10 @@ static qboolean SND_Init (void)
 
 	Mix_QuerySpec(&audio_rate, &audio_format, &audio_channels);
 	Com_Printf("...audio rate: %i\n...audio channels: %i\n", audio_rate, audio_channels);
+	if (audio_rate != snd_rate->integer)
+		Cvar_SetValue("snd_rate", audio_rate);
+	if (audio_channels != snd_channels->integer)
+		Cvar_SetValue("snd_channels", audio_channels);
 
 	return qtrue;
 }
@@ -572,8 +584,16 @@ void S_Init (void)
  */
 void S_Shutdown (void)
 {
+	int i;
+	sfx_t* sfx;
+
 	if (!sound_started)
 		return;
+
+	for (i = 0; i < SFX_HASH_SIZE; i++)
+		for (sfx = sfx_hash[i]; sfx; sfx = sfx->hash_next) {
+			Mix_FreeChunk(sfx->data);
+		}
 
 	Mix_CloseAudio();
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
