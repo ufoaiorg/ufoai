@@ -53,6 +53,9 @@ static cvar_t *snd_rate;
 static cvar_t *snd_music;
 static cvar_t *snd_music_volume;
 
+static int audio_rate, audio_channels;
+uint16_t audio_format;
+
 /*
 MUSIC FUNCTIONS
 */
@@ -278,77 +281,42 @@ static Mix_Chunk *S_LoadSound (const char *sound)
 #define WAVE_HEADER_SIZE 44
 /**
  * @brief Loads a buffer from memory into the mixer
+ * @param[in] mem 16 byte (short) buffer with data
  */
 void S_PlaySoundFromMem (short* mem, size_t size, int rate, int channel)
 {
-	SDL_RWops *data;
-	Mix_Chunk *sample;
-	byte *buf;
-	int blockAlign = 16 / 8 * channel; /* 16 == short */
-	int avgBytesPerSec = rate * blockAlign;
+	SDL_AudioCVT wavecvt;
+	Mix_Chunk sample;
+	const int samplesize = 2 * channel;
 
 	if (!sound_started)
 		return;
 
-	/* contruct the wave header */
-	buf = Mem_PoolAlloc(size + WAVE_HEADER_SIZE, cl_soundSysPool, CL_TAG_NONE);
-	buf[0] = 'R';
-	buf[1] = 'I';
-	buf[2] = 'F';
-	buf[3] = 'F';
-	buf[4] = 8;	/* 8 bytes of riff header */
-	buf[5] = 0;
-	buf[6] = 0;
-	buf[7] = 0;
-	buf[8] = 'W';
-	buf[9] = 'A';
-	buf[10] = 'V';
-	buf[11] = 'E';
-	/* format header */
-	buf[12] = 'f';
-	buf[13] = 'm';
-	buf[14] = 't';
-	buf[15] = ' ';
-	buf[16] = 0x10;	/* 16 bytes 'fmt ' header size*/
-	buf[17] = 0;
-	buf[18] = 0;
-	buf[19] = 0;
-	buf[20] = 1; /* uncompressed */
-	buf[21] = 0;
-	buf[22] = channel & UCHAR_MAX;
-	buf[23] = (channel >> 8) & UCHAR_MAX;
-	buf[24] = rate & UCHAR_MAX;
-	buf[25] = (rate >> 8) & UCHAR_MAX;
-	buf[26] = (rate >> 16) & UCHAR_MAX;
-	buf[27] = (rate >> 24) & UCHAR_MAX;
-	buf[28] = avgBytesPerSec & UCHAR_MAX;
-	buf[29] = (avgBytesPerSec >> 8) & UCHAR_MAX;
-	buf[30] = (avgBytesPerSec >> 16) & UCHAR_MAX;
-	buf[31] = (avgBytesPerSec >> 24) & UCHAR_MAX;
-	buf[32] = blockAlign & UCHAR_MAX;
-	buf[33] = (blockAlign >> 8) & UCHAR_MAX;
-	buf[34] = 0x10; /* short */
-	buf[35] = 0;
-	/* data header */
-	buf[36] = 'd';
-	buf[37] = 'a';
-	buf[38] = 't';
-	buf[39] = 'a';
-	buf[40] = size & UCHAR_MAX;
-	buf[41] = (size >> 8) & UCHAR_MAX;
-	buf[42] = (size >> 16) & UCHAR_MAX;
-	buf[43] = (size >> 24) & UCHAR_MAX;
-	/* and now add the data */
-	memcpy(&buf[WAVE_HEADER_SIZE], mem, size);
-
-	data = SDL_RWFromMem(buf, size + WAVE_HEADER_SIZE);
-	sample = Mix_LoadWAV_RW(data, size);
-	if (!sample) {
-		Com_Printf("Could not load sound chunk from memory (%s)\n", Mix_GetError());
+	/* Build the audio converter and create conversion buffers */
+	if (SDL_BuildAudioCVT(&wavecvt, AUDIO_S16, channel, rate,
+			audio_format, audio_channels, audio_rate) < 0) {
 		return;
 	}
-	Mix_PlayChannel(-1, sample, 0);
-	Mem_Free(buf);
+
+	wavecvt.len = size & ~(samplesize - 1);
+	wavecvt.buf = (byte *)Mem_PoolAlloc(wavecvt.len * wavecvt.len_mult, cl_soundSysPool, CL_TAG_NONE);
+	if (wavecvt.buf == NULL)
+		return;
+	memcpy(wavecvt.buf, mem, size);
+
+	/* Run the audio converter */
+	if (SDL_ConvertAudio(&wavecvt) < 0) {
+		Mem_Free(wavecvt.buf);
+		return;
+	}
+
+	sample.allocated = 0;
+	sample.abuf = wavecvt.buf;
+	sample.alen = wavecvt.len_cvt;
+	sample.volume = MIX_MAX_VOLUME;
+
+	Mix_PlayChannel(-1, &sample, 0);
+	Mem_Free(sample.abuf);
 }
 
 /**
@@ -556,10 +524,6 @@ void S_Frame (void)
  */
 static qboolean SND_Init (void)
 {
-	int audio_rate = snd_rate->integer;
-	Uint16 audio_format = MIX_DEFAULT_FORMAT; /* 16-bit stereo */
-	int audio_channels = snd_channels->integer;
-	int audio_buffers = 1024;
 	SDL_version version;
 
 	if (SDL_WasInit(SDL_INIT_EVERYTHING) == 0) {
@@ -577,7 +541,7 @@ static qboolean SND_Init (void)
 	MIX_VERSION(&version);
 	Com_Printf("SDL_mixer version: %d.%d.%d\n", version.major, version.minor, version.patch);
 
-	if (Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers) == -1) {
+	if (Mix_OpenAudio(snd_rate->integer, MIX_DEFAULT_FORMAT, snd_channels->integer, 1024) == -1) {
 		Com_Printf("Unable to open audio\n");
 		return qfalse;
 	}
