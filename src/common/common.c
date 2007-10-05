@@ -957,6 +957,7 @@ LINKED LIST
 /**
  * @brief Adds an entry to a new or to an already existing linked list
  * @sa LIST_AddString
+ * @sa LIST_Remove
  * @return Returns a pointer to the data that has been added, wrapped in a linkedList_t
  */
 linkedList_t* LIST_Add (linkedList_t** listDest, const byte* data, size_t length)
@@ -993,6 +994,7 @@ linkedList_t* LIST_Add (linkedList_t** listDest, const byte* data, size_t length
  * @brief Searches for the first occurrence of a given string
  * @return true if the string is found, otherwise false
  * @note if string is NULL, the function returns false
+ * @sa LIST_AddString
  */
 qboolean LIST_ContainsString (linkedList_t* list, const char* string)
 {
@@ -1011,6 +1013,7 @@ qboolean LIST_ContainsString (linkedList_t* list, const char* string)
 /**
  * @brief Adds an string to a new or to an already existing linked list
  * @sa LIST_Add
+ * @sa LIST_Remove
  */
 void LIST_AddString (linkedList_t** listDest, const char* data)
 {
@@ -1041,6 +1044,7 @@ void LIST_AddString (linkedList_t** listDest, const char* data)
 /**
  * @brief Adds just a pointer to a new or to an already existing linked list
  * @sa LIST_Add
+ * @sa LIST_Remove
  */
 void LIST_AddPointer (linkedList_t** listDest, void* data)
 {
@@ -1071,7 +1075,47 @@ void LIST_AddPointer (linkedList_t** listDest, void* data)
 }
 
 /**
+ * @brief Removes one entry from the linked list
+ * @sa LIST_AddString
  * @sa LIST_Add
+ * @sa LIST_AddPointer
+ * @sa LIST_Delete
+ */
+void LIST_Remove (linkedList_t **list, linkedList_t *entry)
+{
+	linkedList_t* prev, *listPos;
+
+	assert(list);
+	assert(entry);
+
+	prev = *list;
+	listPos = *list;
+
+	/* first entry */
+	if (*list == entry) {
+		if (!(*list)->ptr)
+			Mem_Free((*list)->data);
+		listPos = (*list)->next;
+		Mem_Free(*list);
+		*list = listPos;
+	} else {
+		while (listPos) {
+			if (listPos == entry) {
+				prev->next = listPos->next;
+				if (!listPos->ptr)
+					Mem_Free(listPos->data);
+				Mem_Free(listPos);
+				break;
+			}
+			prev = listPos;
+			listPos = listPos->next;
+		}
+	}
+}
+
+/**
+ * @sa LIST_Add
+ * @sa LIST_Remove
  */
 void LIST_Delete (linkedList_t *list)
 {
