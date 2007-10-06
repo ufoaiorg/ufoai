@@ -387,6 +387,55 @@ menuNode_t *MN_GetNode (const menu_t* const menu, const char *name)
 }
 
 /**
+ * @brief Check the if conditions for a given node
+ * @sa MN_DrawMenus
+ * @sa V_IF
+ * @returns qfalse if the node is not drawn due to not meet if conditions
+ */
+static qboolean MN_CheckCondition (menuNode_t *node)
+{
+	if (*node->depends.var) {
+		const char* cond;
+		/* menuIfCondition_t */
+		switch (node->depends.cond) {
+		case IF_EQ:
+			if (atof(node->depends.value) != Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value)
+				return qfalse;
+			break;
+		case IF_LE:
+			if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value > atof(node->depends.value))
+				return qfalse;
+			break;
+		case IF_GE:
+			if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value < atof(node->depends.value))
+				return qfalse;
+			break;
+		case IF_GT:
+			if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value <= atof(node->depends.value))
+				return qfalse;
+			break;
+		case IF_LT:
+			if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value >= atof(node->depends.value))
+				return qfalse;
+			break;
+		case IF_NE:
+			if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value == atof(node->depends.value))
+				return qfalse;
+			break;
+		case IF_EXISTS:
+			cond = Cvar_VariableString(node->depends.var);
+			if (!*cond)
+				return qfalse;
+			break;
+		default:
+			Sys_Error("Unknown condition for if statement: %i\n", node->depends.cond);
+			break;
+		}
+	}
+	return qtrue;
+}
+
+/**
  * @brief This will reinit the current visible menu
  * @note also available as script command mn_reinit
  */
@@ -419,7 +468,8 @@ static menuNode_t *MN_GetNextActionNode (menuNode_t* node)
 	if (node)
 		node = node->next;
 	while (node) {
-		if (!node->invis && ((node->click && node->mouseIn) || node->mouseIn))
+		if (MN_CheckCondition(node) && !node->invis
+		&& ((node->click && node->mouseIn) || node->mouseIn))
 			return node;
 		node = node->next;
 	}
@@ -997,52 +1047,13 @@ static void MN_FindContainer (menuNode_t* const node)
 static qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 {
 	int sx, sy, tx, ty, i;
-	const char *cond;
 
 	/* don't hover nodes if we are executing an action on geoscape like rotating or moving */
 	if (mouseSpace >= MS_ROTATE && mouseSpace <= MS_SHIFT3DMAP)
 		return qfalse;
 
-	if (focusNode)
+	if (focusNode && mouseSpace != MS_NULL)
 		return qfalse;
-
-	if (*node->depends.var) {
-		/* menuIfCondition_t */
-		switch (node->depends.cond) {
-		case IF_EQ:
-			if (atof(node->depends.value) != Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value)
-				return qfalse;
-			break;
-		case IF_LE:
-			if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value > atof(node->depends.value))
-				return qfalse;
-			break;
-		case IF_GE:
-			if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value < atof(node->depends.value))
-				return qfalse;
-			break;
-		case IF_GT:
-			if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value <= atof(node->depends.value))
-				return qfalse;
-			break;
-		case IF_LT:
-			if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value >= atof(node->depends.value))
-				return qfalse;
-			break;
-		case IF_NE:
-			if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value == atof(node->depends.value))
-				return qfalse;
-			break;
-		case IF_EXISTS:
-			cond = Cvar_VariableString(node->depends.var);
-			if (!*cond)
-				return qfalse;
-			break;
-		default:
-			Sys_Error("Unknown condition for if statement: %i\n", node->depends.cond);
-			break;
-		}
-	}
 
 	switch (node->type) {
 	case MN_CONTAINER:
@@ -2382,7 +2393,6 @@ void MN_DrawMenus (void)
 	message_t *message;
 	menuModel_t *menuModel = NULL, *menuModelParent = NULL;
 	int width, height;
-	const char* cond;
 	invList_t *itemHover = NULL;
 	char *tab, *end;
 	static menuNode_t *selectBoxNode = NULL;
@@ -2417,43 +2427,8 @@ void MN_DrawMenus (void)
 					|| node->type == MN_CHECKBOX || node->type == MN_SELECTBOX || node->type == MN_LINESTRIP
 					|| ((node->type == MN_ZONE || node->type == MN_CONTAINER) && node->bgcolor[3]))) {
 				/* if construct */
-				if (*node->depends.var) {
-					/* menuIfCondition_t */
-					switch (node->depends.cond) {
-					case IF_EQ:
-						if (atof(node->depends.value) != Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value)
-							continue;
-						break;
-					case IF_LE:
-						if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value > atof(node->depends.value))
-							continue;
-						break;
-					case IF_GE:
-						if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value < atof(node->depends.value))
-							continue;
-						break;
-					case IF_GT:
-						if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value <= atof(node->depends.value))
-							continue;
-						break;
-					case IF_LT:
-						if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value >= atof(node->depends.value))
-							continue;
-						break;
-					case IF_NE:
-						if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value == atof(node->depends.value))
-							continue;
-						break;
-					case IF_EXISTS:
-						cond = Cvar_VariableString(node->depends.var);
-						if (!*cond)
-							continue;
-						break;
-					default:
-						Sys_Error("Unknown condition for if statement: %i\n", node->depends.cond);
-						break;
-					}
-				}
+				if (!MN_CheckCondition(node))
+					continue;
 
 				/* timeout? */
 				if (node->timePushed) {

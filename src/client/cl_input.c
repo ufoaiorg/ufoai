@@ -1212,13 +1212,13 @@ static void IN_Parse (void)
 		return;
 	}
 	default:
+		mouseSpace = MS_NULL;
+
 		/* standard menu and world mouse handling */
 		if (MN_CursorOnMenu(mousePosX, mousePosY)) {
 			mouseSpace = MS_MENU;
 			return;
 		}
-
-		mouseSpace = MS_NULL;
 
 		if (cls.state != ca_active)
 			return;
@@ -1233,6 +1233,7 @@ static void IN_Parse (void)
 		if (cl.cmode > M_PEND_MOVE)
 			mouseSpace = MS_WORLD;
 
+		MN_FocusRemove();
 		return;
 	}
 }
