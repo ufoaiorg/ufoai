@@ -596,7 +596,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 					*TU -= time;
 				if (ic->item.a >= CSI->ods[ic->item.t].ammo) {
 					/* exchange ammo */
-					item_t item = {NONE_AMMO, NONE, ic->item.m, 0};
+					item_t item = {NONE_AMMO, NONE, ic->item.m, 0, 0};
 
 					/* Add the currently used ammo in a free place of the "from" container. */
 					/**

@@ -36,14 +36,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_FIREDEFS_PER_WEAPON 8
 #define MAX_DAMAGETYPES 32
 
+/** @brief Possible inventory actions for moving items between containers */
 typedef enum {
-	IA_NONE,
-	IA_MOVE,
-	IA_RELOAD,
-	IA_RELOAD_SWAP,
-	IA_NOTIME,
-	IA_NORELOAD,
-	IA_ARMOUR
+	IA_NONE,			/**< no move possible */
+
+	IA_MOVE,			/**< normal inventory item move */
+	IA_ARMOUR,			/**< move or swap armour */
+	IA_RELOAD,			/**< reload weapon */
+	IA_RELOAD_SWAP,		/**< switch loaded ammo */
+
+	IA_NOTIME,			/**< not enough TUs to make this inv move */
+	IA_NORELOAD			/**< not loadable or already fully loaded */
 } inventory_action_t;
 
 /** @brief this is a fire definition for our weapons/ammo */

@@ -912,8 +912,8 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 		/* send ammo message to all --- it's fun to hear that sound */
 		gi.AddEvent(PM_ALL, EV_INV_RELOAD);
 		/* is this condition below needed? or is 'num' enough?
-		   probably needed so that red rifle on the floor changes color,
-		   but this needs testing. */
+		 * probably needed so that red rifle on the floor changes color,
+		 * but this needs testing. */
 		gi.WriteShort(to == gi.csi->idFloor ? floor->number : num);
 		gi.WriteByte(gi.csi->ods[item.t].ammo);
 		gi.WriteByte(item.m);
