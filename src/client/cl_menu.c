@@ -459,9 +459,10 @@ qboolean MN_FocusExecuteActionNode (void)
 		}
 		MN_ExecuteActions(focusNode->menu, focusNode->mouseOut);
 		focusNode = NULL;
+		return qtrue;
 	}
 
-	return qtrue;
+	return qfalse;
 }
 
 /**
