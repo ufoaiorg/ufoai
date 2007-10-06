@@ -223,13 +223,10 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 						if (nspread && dist > nspread)
 							dmg *= nspread / dist;
 
-						/* take into account armor */
-						if (check->i.c[gi.csi->idArmor]) {
-							ad = &gi.csi->ods[check->i.c[gi.csi->idArmor]->item.t];
-							if (ad->protection[fd->dmgtype] > 0)
-								dmg *= 1.0 - ad->protection[fd->dmgtype] * check->AP * 0.0001;
-							else
-								dmg *= 1.0 - ad->protection[fd->dmgtype] * 0.01;
+						/* take into account armour */
+						if (check->i.c[gi.csi->idArmour]) {
+							ad = &gi.csi->ods[check->i.c[gi.csi->idArmour]->item.t];
+							dmg *= 1.0 - ad->protection[fd->dmgtype] * 0.01;
 						}
 
 						if (dmg > check->HP
@@ -243,7 +240,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 
 						/* ammo is limited and shooting gives away your position */
 						if ((dmg < 25.0 && vis < 0.2) /* too hard to hit */
-							|| (dmg < 10.0 && vis < 0.6) /* uber-armor */
+							|| (dmg < 10.0 && vis < 0.6) /* uber-armour */
 							|| dmg < 0.1) /* at point blank hit even with a stick*/
 							continue;
 
@@ -693,7 +690,6 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 			if (ent->chr.morale >= MAX_SKILL)
 				ent->chr.morale = MAX_SKILL;
 			ent->morale = ent->chr.morale;
-			ent->AP = 100;
 			ent->STUN = 0;
 
 			/* pack equipment */
@@ -716,12 +712,11 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 			ent->HP = ent->chr.HP;
 			ent->chr.morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);
 			ent->morale = (ent->chr.morale > 45 ? 45 : ent->chr.morale); /* low morale for civilians */
-			ent->AP = 100;
 			ent->STUN = 0;
 
 			ent->chr.skin = gi.GetCharacterValues(gi.cvar_string("ai_civilian"), &ent->chr);
 			ent->chr.inv = &ent->i;
-			/* FIXME: Maybe we have civilians with armor, too - police and so on */
+			/* FIXME: Maybe we have civilians with armour, too - police and so on */
 			ent->body = gi.modelindex(CHRSH_CharGetBody(&ent->chr));
 			ent->head = gi.modelindex(CHRSH_CharGetHead(&ent->chr));
 			ent->skin = ent->chr.skin;

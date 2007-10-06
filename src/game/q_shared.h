@@ -734,8 +734,8 @@ typedef struct teamDef_s {
 	qboolean alien;
 	/** is this a civilian teamdesc definition */
 	qboolean civilian;
-	/** able to use weapons/armor */
-	qboolean armor, weapons;
+	/** able to use weapons/armour */
+	qboolean armour, weapons;
 	/** if this team is not able to use 'normal' weapons, we have to assign a weapon to it
 	 * The default value is -1 for every 'normal' actor - but e.g. bloodspiders only have
 	 * the ability to melee attack their victims. They get a weapon assigned with several

@@ -422,7 +422,6 @@ static void SP_player_start (edict_t * ent)
 	if (sv_maxsoldiersperteam->integer > level.num_spawnpoints[ent->team]) {
 		ent->STUN = 0;
 		ent->HP = MAX_HP;
-		ent->AP = 100;
 		G_ActorSpawn(ent);
 	} else
 		G_FreeEdict(ent);
@@ -442,7 +441,6 @@ static void SP_human_start (edict_t * ent)
 	ent->team = TEAM_PHALANX;
 	ent->STUN = 0;
 	ent->HP = MAX_HP;
-	ent->AP = 100;
 	G_ActorSpawn(ent);
 }
 
@@ -461,7 +459,6 @@ static void SP_2x2_start (edict_t * ent)
 	/* set stats */
 	ent->STUN = 0;
 	ent->HP = MAX_HP;
-	ent->AP = 100;
 
 	/* these units are bigger */
 	VectorSet(ent->maxs, PLAYER_WIDTH * 2, PLAYER_WIDTH * 2, PLAYER_STAND);
@@ -486,7 +483,6 @@ static void SP_alien_start (edict_t * ent)
 	/* set stats */
 	ent->STUN = 0;
 	ent->HP = MAX_HP;
-	ent->AP = 100;
 
 	G_ActorSpawn(ent);
 }
@@ -507,7 +503,6 @@ static void SP_civilian_start (edict_t * ent)
 	/* set stats */
 	ent->STUN = 99;
 	ent->HP = MAX_HP;
-	ent->AP = 100;
 	ent->count = 100; /* current waypoint */
 	G_ActorSpawn(ent);
 }

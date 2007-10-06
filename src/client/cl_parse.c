@@ -102,7 +102,7 @@ const char *ev_format[] =
 	"ssbbbpp",			/* EV_ACTOR_THROW */
 
 	"ss",				/* EV_ACTOR_DIE */
-	"!sbsbbb",			/* EV_ACTOR_STATS; beware of the '!' */
+	"!sbsbb",			/* EV_ACTOR_STATS; beware of the '!' */
 	"ss",				/* EV_ACTOR_STATECHANGE */
 
 	"s*",				/* EV_INV_ADD */

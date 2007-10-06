@@ -4465,8 +4465,10 @@ static void CP_CampaignsClick_f (void)
 		return;
 
 	Cvar_Set("campaign", campaigns[num].id);
-	racetype = campaigns[num].team;
-	(!Q_strncmp(racetype, "human", 5)) ? (racetype = _("Human")) : (racetype = _("Aliens"));
+	if (!Q_strncmp(campaigns[num].team, "human", 5))
+		racetype = _("Human");
+	else
+		racetype = _("Aliens");
 
 	Com_sprintf(campaignDesc, sizeof(campaignDesc), _("Race: %s\nRecruits: %i %s, %i %s, %i %s, %i %s\n"
 		"Credits: %ic\nDifficulty: %s\n"

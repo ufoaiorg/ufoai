@@ -47,7 +47,7 @@ typedef enum researchStatus_s {
 typedef enum researchType_s {
 	RS_TECH,
 	RS_WEAPON,
-	RS_ARMOR,
+	RS_ARMOUR,
 	RS_CRAFT,
 	RS_CRAFTITEM,
 	RS_BUILDING,

@@ -12,7 +12,7 @@ team latin
 	size	1
 	hit_particle	blood
 	weapons false
-	armor false
+	armour false
 	civilian true
 
 	names {
@@ -51,7 +51,7 @@ team states
 	size	1
 	hit_particle	blood
 	weapons false
-	armor false
+ armour false
 	civilian true
 
 	names {
@@ -110,7 +110,7 @@ team europa
 	size	1
 	hit_particle	blood
 	weapons false
-	armor false
+ armour false
 	civilian true
 
 	names {
@@ -167,7 +167,7 @@ team asia
 	size	1
 	hit_particle	blood
 	weapons false
-	armor false
+ armour false
 	civilian true
 
 	names {
@@ -206,7 +206,7 @@ team middle
 	size	1
 	hit_particle	blood
 	weapons false
-	armor false
+ armour false
 	civilian true
 
 	names {
@@ -246,7 +246,7 @@ team africa
 	size	1
 	hit_particle	blood
 	weapons false
-	armor false
+ armour false
 	civilian true
 
 	names {
@@ -285,7 +285,7 @@ team russia
 	size	1
 	hit_particle	blood
 	weapons false
-	armor false
+ armour false
 	civilian true
 
 	names {
@@ -324,7 +324,7 @@ team oceania
 	size	1
 	hit_particle	blood
 	weapons false
-	armor false
+ armour false
 	civilian true
 
 	names {
@@ -367,7 +367,7 @@ team armysoldier
 	size	1
 	hit_particle	blood
 	weapons true
-	armor false
+ armour false
 	civilian true
 
 	names {
@@ -398,7 +398,7 @@ team scientist
 	size	1
 	hit_particle	blood
 	weapons false
-	armor false
+ armour false
 	civilian true
 
 	names {
@@ -433,7 +433,7 @@ team worker
 	size	1
 	hit_particle	blood
 	weapons false
-	armor false
+ armour false
 	civilian true
 
 	names {
@@ -465,7 +465,7 @@ team miner
 	size	1
 	hit_particle	blood
 	weapons false
-	armor false
+ armour false
 	civilian true
 
 	names {

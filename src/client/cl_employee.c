@@ -1071,7 +1071,7 @@ qboolean E_Save (sizebuf_t* sb, void* data)
 			MSG_WriteString(sb, e->chr.path);
 			MSG_WriteString(sb, e->chr.head);
 			MSG_WriteByte(sb, e->chr.skin);
-			MSG_WriteByte(sb, e->chr.armor);
+			MSG_WriteByte(sb, e->chr.armour);
 			MSG_WriteByte(sb, e->chr.weapons);
 			MSG_WriteByte(sb, e->chr.teamDefIndex);
 			MSG_WriteByte(sb, e->chr.gender);
@@ -1079,7 +1079,6 @@ qboolean E_Save (sizebuf_t* sb, void* data)
 			MSG_WriteShort(sb, e->chr.maxHP);
 			MSG_WriteShort(sb, e->chr.HP);
 			MSG_WriteByte(sb, e->chr.STUN);
-			MSG_WriteByte(sb, e->chr.AP);
 			MSG_WriteByte(sb, e->chr.morale);
 			MSG_WriteByte(sb, e->chr.rank);
 			MSG_WriteByte(sb, e->chr.fieldSize);
@@ -1142,7 +1141,7 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			e->chr.skin = MSG_ReadByte(sb);
 			e->chr.empl_idx = i;
 			e->chr.empl_type = j;
-			e->chr.armor = MSG_ReadByte(sb);
+			e->chr.armour = MSG_ReadByte(sb);
 			e->chr.weapons = MSG_ReadByte(sb);
 			e->chr.teamDefIndex = MSG_ReadByte(sb);
 			e->chr.gender = MSG_ReadByte(sb);
@@ -1150,7 +1149,6 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			e->chr.maxHP = MSG_ReadShort(sb);
 			e->chr.HP = MSG_ReadShort(sb);
 			e->chr.STUN = MSG_ReadByte(sb);
-			e->chr.AP = MSG_ReadByte(sb);
 			e->chr.morale = MSG_ReadByte(sb);
 			e->chr.rank = MSG_ReadByte(sb);
 			e->chr.fieldSize = MSG_ReadByte(sb);

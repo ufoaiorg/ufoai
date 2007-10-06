@@ -352,28 +352,16 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 			damage *= pow(1.3, -difficulty->integer);
 	}
 
-	/* Apply armor effects. */
-	if (damage > 0 && ent->i.c[gi.csi->idArmor]) {
+	/* Apply armour effects. */
+	if (damage > 0 && ent->i.c[gi.csi->idArmour]) {
 		objDef_t *ad;
 		int totalDamage;
 
-		ad = &gi.csi->ods[ent->i.c[gi.csi->idArmor]->item.t];
+		ad = &gi.csi->ods[ent->i.c[gi.csi->idArmour]->item.t];
 
 		totalDamage = damage;
 
-		if (ad->protection[fd->dmgtype] > 0)
-			damage *= 1.0 - ad->protection[fd->dmgtype] * ent->AP * 0.0001;
-		else
-			damage *= 1.0 - ad->protection[fd->dmgtype] * 0.01;
-
-		if (!mock) {
-			if (ad->hardness[fd->dmgtype]) {
-				int armorDamage;
-
-				armorDamage = (totalDamage - damage) / ad->hardness[fd->dmgtype];
-				ent->AP = max(0, ent->AP - armorDamage);
-			}
-		}
+		damage *= 1.0 - ad->protection[fd->dmgtype] * 0.01;
 	}
 
 	assert((attacker->team >= 0) && (attacker->team < MAX_TEAMS));

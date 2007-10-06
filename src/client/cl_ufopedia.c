@@ -234,7 +234,7 @@ static void UP_DisplayTechTree (technology_t* t)
 }
 
 /**
- * @brief Prints the (ufopedia and other) description for items (weapons, armor, ...)
+ * @brief Prints the (ufopedia and other) description for items (weapons, armour, ...)
  * @param item Index in object definition array ods for the item
  * @sa UP_DrawEntry
  * @sa BS_BuySelect_f
@@ -277,7 +277,7 @@ void UP_ItemDescription (int item)
 	/* set description text */
 	if (RS_IsResearched_ptr(od->tech)) {
 		*itemText = '\0';
-		if (!Q_strncmp(od->type, "armor", 5)) {
+		if (!Q_strncmp(od->type, "armour", 5)) {
 			if (Q_strncmp(activeMenu->name, "equipment", 9)) {
 				/* next two lines are not merge in one to avoid to have several entries in .po files (first line will be used again) */
 				Q_strcat(itemText, va(_("Size:\t%i\n"),od->size), sizeof(itemText));
@@ -285,7 +285,7 @@ void UP_ItemDescription (int item)
 			}
 			Q_strcat(itemText, _("Type:\tProtection / Hardness:\n"), sizeof(itemText));
 			for (i = 0; i < csi.numDTs; i++)
-				Q_strcat(itemText, va(_("%s\t%i / %i\n"), _(csi.dts[i]), od->protection[i], od->hardness[i]), sizeof(itemText));
+				Q_strcat(itemText, va(_("%s\t%i\n"), _(csi.dts[i]), od->protection[i]), sizeof(itemText));
 		} else if (!Q_strncmp(od->type, "ammo", 4)) {
 			if (Q_strncmp(activeMenu->name, "equipment", 9))
 				Q_strcat(itemText, va(_("Size:\t%i\n"),od->size), sizeof(itemText));
@@ -405,10 +405,10 @@ void UP_ItemDescription (int item)
 }
 
 /**
- * @brief Prints the ufopedia description for armors
+ * @brief Prints the ufopedia description for armours
  * @sa UP_DrawEntry
  */
-static void UP_ArmorDescription (technology_t* t)
+static void UP_ArmourDescription (technology_t* t)
 {
 	objDef_t	*od = NULL;
 	int	i;
@@ -419,9 +419,9 @@ static void UP_ArmorDescription (technology_t* t)
 
 #ifdef DEBUG
 	if (od == NULL)
-		Com_sprintf(upBuffer, sizeof(upBuffer), "Could not find armor definition");
-	else if (Q_strncmp(od->type, "armor", MAX_VAR))
-		Com_sprintf(upBuffer, sizeof(upBuffer), "Item %s is no armor but %s", od->id, od->type);
+		Com_sprintf(upBuffer, sizeof(upBuffer), "Could not find armour definition");
+	else if (Q_strncmp(od->type, "armour", MAX_VAR))
+		Com_sprintf(upBuffer, sizeof(upBuffer), "Item %s is no armour but %s", od->id, od->type);
 	else
 #endif
 	{
@@ -432,7 +432,7 @@ static void UP_ArmorDescription (technology_t* t)
 		Q_strcat(upBuffer, va(_("Size:\t%i\n"),od->size), sizeof(upBuffer));
 		Q_strcat(upBuffer, "\n", sizeof(upBuffer));
 		for (i = 0; i < csi.numDTs; i++)
-			Q_strcat(upBuffer, va(_("%s:\tProtection: %i\tHardness: %i\n"), _(csi.dts[i]), od->protection[i], od->hardness[i]), sizeof(upBuffer));
+			Q_strcat(upBuffer, va(_("%s:\tProtection: %i\n"), _(csi.dts[i]), od->protection[i]), sizeof(upBuffer));
 	}
 	menuText[TEXT_STANDARD] = upBuffer;
 	UP_DisplayTechTree(t);
@@ -727,8 +727,8 @@ void UP_Article (technology_t* tech)
 
 		if (upCurrent) {
 			switch (tech->type) {
-			case RS_ARMOR:
-				UP_ArmorDescription(tech);
+			case RS_ARMOUR:
+				UP_ArmourDescription(tech);
 				break;
 			case RS_WEAPON:
 				for (i = 0; i < csi.numODs; i++) {
@@ -806,7 +806,7 @@ static void UP_DrawAssociatedAmmo (technology_t* tech)
  * @sa UP_AircraftDescription
  * @sa UP_BuildingDescription
  * @sa UP_TechDescription
- * @sa UP_ArmorDescription
+ * @sa UP_ArmourDescription
  * @sa UP_ItemDescription
  */
 static void UP_DrawEntry (technology_t* tech)

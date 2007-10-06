@@ -820,7 +820,7 @@ static void CL_GenerateEquipment_f (void)
 
 	for (i = 0; i < csi.numODs; i++) {
 		/* Don't allow to show armours for other teams in the menu. */
-		if ((Q_strncmp(csi.ods[i].type, "armor", MAX_VAR) == 0) && (csi.ods[i].useable != team))
+		if ((Q_strncmp(csi.ods[i].type, "armour", MAX_VAR) == 0) && (csi.ods[i].useable != team))
 			continue;
 
 		/* Don't allow to show unresearched items. */
@@ -1607,7 +1607,6 @@ static void CL_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr, int
 	chr->teamDefIndex = MSG_ReadByte(sb);
 	chr->gender = MSG_ReadByte(sb);
 	chr->STUN = MSG_ReadByte(sb);
-	chr->AP = MSG_ReadByte(sb);
 	chr->morale = MSG_ReadByte(sb);
 
 	/* new attributes */
@@ -1811,7 +1810,6 @@ static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
 		MSG_WriteByte(buf, chr->teamDefIndex);
 		MSG_WriteByte(buf, chr->gender);
 		MSG_WriteByte(buf, chr->STUN);
-		MSG_WriteByte(buf, chr->AP);
 		MSG_WriteByte(buf, chr->morale);
 
 		/* even new attributes */
@@ -1871,7 +1869,6 @@ void CL_SendCurTeamInfo (struct dbuffer * buf, chrList_t *team)
 		NET_WriteByte(buf, chr->teamDefIndex);
 		NET_WriteByte(buf, chr->gender);
 		NET_WriteByte(buf, chr->STUN);
-		NET_WriteByte(buf, chr->AP);
 		NET_WriteByte(buf, chr->morale);
 
 		/* even new attributes */
@@ -1893,7 +1890,7 @@ void CL_SendCurTeamInfo (struct dbuffer * buf, chrList_t *team)
 typedef struct updateCharacter_s {
 	int ucn;
 	int kills[KILLED_NUM_TYPES];
-	int HP, AP, STUN;
+	int HP, STUN;
 	int morale;
 
 	/* Those are chrScore_t. */
@@ -1939,7 +1936,6 @@ void CL_ParseCharacterData (struct dbuffer *msg, qboolean updateCharacter)
 			}
 			chr->HP = updateCharacterArray[i].HP;
 			chr->STUN = updateCharacterArray[i].STUN;
-			chr->AP = updateCharacterArray[i].AP;
 			chr->morale = updateCharacterArray[i].morale;
 
 			for (j = 0; j < KILLED_NUM_TYPES; j++)
@@ -1971,7 +1967,7 @@ void CL_ParseCharacterData (struct dbuffer *msg, qboolean updateCharacter)
 		 * KILLED_NUM_TYPES => size of kills array
 		 * +2 => HP and ucn
 		 * *2 => for shorts
-		 * +16 => STUN, AP and chrScore_t
+		 * +16 => STUN and chrScore_t
 		 */
 		num = NET_ReadShort(msg) / ((KILLED_NUM_TYPES + 2) * 2 + 16);
 		if (num > MAX_EMPLOYEES)
@@ -1982,7 +1978,6 @@ void CL_ParseCharacterData (struct dbuffer *msg, qboolean updateCharacter)
 			updateCharacterArray[i].ucn = NET_ReadShort(msg);
 			updateCharacterArray[i].HP = NET_ReadShort(msg);
 			updateCharacterArray[i].STUN = NET_ReadByte(msg);
-			updateCharacterArray[i].AP = NET_ReadByte(msg);
 			updateCharacterArray[i].morale = NET_ReadByte(msg);
 
 			for (j = 0; j < KILLED_NUM_TYPES; j++)

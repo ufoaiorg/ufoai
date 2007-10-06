@@ -634,7 +634,7 @@ void RS_InitTree (qboolean load)
 				Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: \"%s\" A 'type tech' item needs to have a 'name\txxx' defined.", tech->id);
 			break;
 		case RS_WEAPON:
-		case RS_ARMOR:
+		case RS_ARMOUR:
 			found = qfalse;
 			for (j = 0; j < csi.numODs; j++) {	/* j = item index */
 				item = &csi.ods[j];
@@ -655,7 +655,7 @@ void RS_InitTree (qboolean load)
 			/* No id found in csi.ods */
 			if (!found) {
 				tech->name = Mem_PoolStrDup(tech->id, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
-				Com_Printf("RS_InitTree: \"%s\" - Linked weapon or armor (provided=\"%s\") not found. Tech-id used as name.\n", tech->id, tech->provides);
+				Com_Printf("RS_InitTree: \"%s\" - Linked weapon or armour (provided=\"%s\") not found. Tech-id used as name.\n", tech->id, tech->provides);
 			}
 			break;
 		case RS_BUILDING:
@@ -1418,8 +1418,8 @@ static const char *RS_TechTypeToName (researchType_t type)
 		return "tech";
 	case RS_WEAPON:
 		return "weapon";
-	case RS_ARMOR:
-		return "armor";
+	case RS_ARMOUR:
+		return "armour";
 	case RS_CRAFT:
 		return "craft";
 	case RS_CRAFTITEM:
@@ -1764,8 +1764,8 @@ void RS_ParseTechnologies (const char *name, const char **text)
 				tech->type = RS_WEAPON;
 			else if (!Q_strncmp(token, "news", MAX_VAR))
 				tech->type = RS_NEWS;
-			else if (!Q_strncmp(token, "armor", MAX_VAR))
-				tech->type = RS_ARMOR;
+			else if (!Q_strncmp(token, "armour", MAX_VAR))
+				tech->type = RS_ARMOUR;
 			else if (!Q_strncmp(token, "craft", MAX_VAR))
 				tech->type = RS_CRAFT;
 			else if (!Q_strncmp(token, "craftitem", MAX_VAR))

@@ -2018,7 +2018,7 @@ static void B_PackInitialEquipment_f (void)
 				/* pack equipment */
 				Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment_f: Packing initial equipment for %s.\n", chr->name);
 				INVSH_EquipActor(chr->inv, ed->num, MAX_OBJDEFS, name, chr);
-				Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment_f: armor: %i, weapons: %i\n", chr->armor, chr->weapons);
+				Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment_f: armour: %i, weapons: %i\n", chr->armour, chr->weapons);
 				chr_list_temp.chr[chr_list_temp.num] = chr;
 				chr_list_temp.num++;
 			}

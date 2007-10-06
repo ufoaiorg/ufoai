@@ -1308,13 +1308,13 @@ menu buy
 		*s_primary		color "1 1 1 0.6"
 		*s_secondary	color "1 1 1 0.6"
 		*s_misc			color "1 1 1 0.6"
-		*s_armor		color "1 1 1 0.6"
+		*s_armour		color "1 1 1 0.6"
 		*s_other		color "1 1 1 0.6"
 	}
 	confunc buy_primary		{ cmd "buy_type 0;" buy_reset *s_primary	color "1 1 1 1" }
 	confunc buy_secondary	{ cmd "buy_type 1;" buy_reset *s_secondary	color "1 1 1 1" }
 	confunc buy_misc		{ cmd "buy_type 2;" buy_reset *s_misc	color "1 1 1 1" }
-	confunc buy_armor		{ cmd "buy_type 3;" buy_reset *s_armor	color "1 1 1 1" }
+	confunc buy_armour		{ cmd "buy_type 3;" buy_reset *s_armour	color "1 1 1 1" }
 	confunc buy_other		{ cmd "buy_type 6;" buy_reset *s_other	color "1 1 1 1" }
 
 	pic bt_primary
@@ -1377,7 +1377,7 @@ menu buy
 		string	"_Misc"
 	}
 
-	pic bt_armor
+	pic bt_armour
 	{
 		tooltip	"_Show armour"
 		image	menu/button_blue
@@ -1385,10 +1385,10 @@ menu buy
 		pos		"765 622"
 		texl	"0 0"
 		texh	"128 52"
-		click	{ buy_armor }
+		click	{ buy_armour }
 	}
 
-	string s_armor
+	string s_armour
 	{
 		pos	"829 648"
 		align	cc

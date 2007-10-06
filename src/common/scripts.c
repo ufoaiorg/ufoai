@@ -129,6 +129,7 @@ static const size_t vt_sizes[V_NUM_TYPES] = {
 	sizeof(int),	/* V_SHAPE_SMALL */
 	0,	/* V_SHAPE_BIG */
 	sizeof(byte),	/* V_DMGTYPE */
+	sizeof(byte),	/* V_DMGWEIGHT */
 	0,	/* V_DATE */
 	0,	/* V_IF */
 	sizeof(float),	/* V_RELABS */
@@ -328,6 +329,10 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			((uint32_t *) b)[y] |= w;
 		return ALIGN(SHAPE_BIG_MAX_HEIGHT * SHAPE_SMALL_MAX_HEIGHT);
 
+	case V_DMGWEIGHT:
+		/* @todo */
+		return ALIGN(1);
+
 	case V_DMGTYPE:
 		for (num = 0; num < csi.numDTs; num++)
 			if (!Q_strcmp(token, csi.dts[num]))
@@ -502,6 +507,11 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 		memcpy(b, set, 64);
 		return ALIGN(SHAPE_BIG_MAX_HEIGHT * 4);
 
+	case V_DMGWEIGHT:
+		*b = *(const byte *) set;
+		return ALIGN(1);
+		break;
+
 	case V_DMGTYPE:
 		*b = *(const byte *) set;
 		return ALIGN(1);
@@ -612,6 +622,10 @@ const char *Com_ValueToStr (void *base, valueTypes_t type, int ofs)
 	case V_SHAPE_BIG:
 		return "";
 
+	case V_DMGWEIGHT:
+		/* @todo */
+		return 0;
+
 	case V_DMGTYPE:
 		assert(*(int *)b < MAX_DAMAGETYPES);
 		return csi.dts[*(int *)b];
@@ -658,8 +672,7 @@ static const char *skillNames[SKILL_NUM_TYPES - ABILITY_NUM_TYPES] = {
 
 enum {
 	OD_WEAPON,			/**< parse a weapon */
-	OD_PROTECTION,		/**< parse armour protection values */
-	OD_HARDNESS			/**< parse armour hardness values */
+	OD_PROTECTION		/**< parse armour protection values */
 };
 
 
@@ -678,7 +691,6 @@ static const char *buytypeNames[MAX_BUYTYPES] = {
 static const value_t od_vals[] = {
 	{"weapon_mod", V_NULL, 0, 0},
 	{"protection", V_NULL, 0, 0},
-	{"hardness", V_NULL, 0, 0},
 
 	{"name", V_TRANSLATION_STRING, offsetof(objDef_t, name), 0},
 	{"model", V_STRING, offsetof(objDef_t, model), 0},
@@ -757,6 +769,7 @@ static const value_t fdps[] = {
 	{"spldmg", V_POS, offsetof(fireDef_t, spldmg), MEMBER_SIZEOF(fireDef_t, spldmg)},
 /*	{"splrad", V_FLOAT, offsetof(fireDef_t, splrad), MEMBER_SIZEOF(fireDef_t, splrad)},*/
 	{"dmgtype", V_DMGTYPE, offsetof(fireDef_t, dmgtype), MEMBER_SIZEOF(fireDef_t, dmgtype)},
+	{"dmgweight", V_DMGWEIGHT, offsetof(fireDef_t, dmgweight), MEMBER_SIZEOF(fireDef_t, dmgweight)},
 	{"irgoggles", V_BOOL, offsetof(fireDef_t, irgoggles), MEMBER_SIZEOF(fireDef_t, irgoggles)},
 	{NULL, 0, 0, 0}
 };
@@ -829,9 +842,9 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 /**
  * @sa Com_ParseItem
  */
-static void Com_ParseArmor (const char *name, const char **text, short *ad)
+static void Com_ParseArmour (const char *name, const char **text, short *ad)
 {
-	const char *errhead = "Com_ParseArmor: unexpected end of file";
+	const char *errhead = "Com_ParseArmour: unexpected end of file";
 	const char *token;
 	int i;
 
@@ -839,7 +852,7 @@ static void Com_ParseArmor (const char *name, const char **text, short *ad)
 	token = COM_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("Com_ParseArmor: armor definition \"%s\" without body ignored\n", name);
+		Com_Printf("Com_ParseArmour: armour definition \"%s\" without body ignored\n", name);
 		return;
 	}
 
@@ -862,7 +875,7 @@ static void Com_ParseArmor (const char *name, const char **text, short *ad)
 			}
 
 		if (i >= csi.numDTs)
-			Com_Printf("Com_ParseArmor: unknown damage type \"%s\" ignored (in %s)\n", token, name);
+			Com_Printf("Com_ParseArmour: unknown damage type \"%s\" ignored (in %s)\n", token, name);
 	} while (*text);
 }
 
@@ -995,10 +1008,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 						}
 						break;
 					case OD_PROTECTION:
-						Com_ParseArmor(name, text, od->protection);
-						break;
-					case OD_HARDNESS:
-						Com_ParseArmor(name, text, od->hardness);
+						Com_ParseArmour(name, text, od->protection);
 						break;
 					default:
 						break;
@@ -1073,11 +1083,11 @@ static const value_t idps[] = {
 	{"single", V_BOOL, offsetof(invDef_t, single), MEMBER_SIZEOF(invDef_t, single)},
 	/* only a single item as weapon extension - single should be set, too */
 	{"extension", V_BOOL, offsetof(invDef_t, extension), MEMBER_SIZEOF(invDef_t, extension)},
-	/* this is the armor container */
-	{"armor", V_BOOL, offsetof(invDef_t, armor), MEMBER_SIZEOF(invDef_t, armor)},
+	/* this is the armour container */
+	{"armour", V_BOOL, offsetof(invDef_t, armour), MEMBER_SIZEOF(invDef_t, armour)},
 	/* this is the headgear container */
 	{"headgear", V_BOOL, offsetof(invDef_t, headgear), MEMBER_SIZEOF(invDef_t, headgear)},
-	/* allow everything to be stored in this container (e.g armor and weapons) */
+	/* allow everything to be stored in this container (e.g armour and weapons) */
 	{"all", V_BOOL, offsetof(invDef_t, all), MEMBER_SIZEOF(invDef_t, all)},
 	{"temp", V_BOOL, offsetof(invDef_t, temp), MEMBER_SIZEOF(invDef_t, temp)},
 	/* time units for moving something in */
@@ -1139,8 +1149,8 @@ static void Com_ParseInventory (const char *name, const char **text)
 		csi.idHolster = id - csi.ids;
 	else if (!Q_strncmp(name, "backpack", 8))
 		csi.idBackpack = id - csi.ids;
-	else if (!Q_strncmp(name, "armor", 5))
-		csi.idArmor = id - csi.ids;
+	else if (!Q_strncmp(name, "armour", 5))
+		csi.idArmour = id - csi.ids;
 	else if (!Q_strncmp(name, "floor", 5))
 		csi.idFloor = id - csi.ids;
 	else if (!Q_strncmp(name, "equip", 5))
@@ -1435,7 +1445,7 @@ int Com_GetCharacterValues (const char *team, character_t * chr)
 	/* default values for human characters */
 	chr->fieldSize = ACTOR_SIZE_NORMAL; /* Default value is 1x1 */
 	chr->weapons = td->weapons;
-	chr->armor = td->armor;
+	chr->armour = td->armour;
 	chr->teamDefIndex = i;
 
 	/* get the models */
@@ -1705,7 +1715,7 @@ static const value_t teamDefValues[] = {
 	{"tech", V_STRING, offsetof(teamDef_t, tech), 0}, /**< tech id from research.ufo */
 	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(teamDef_t, name), 0}, /**< internal team name */
 	{"alien", V_BOOL, offsetof(teamDef_t, alien), MEMBER_SIZEOF(teamDef_t, alien)}, /**< is this an alien? */
-	{"armor", V_BOOL, offsetof(teamDef_t, armor), MEMBER_SIZEOF(teamDef_t, armor)}, /**< are these team members able to wear armor? */
+	{"armour", V_BOOL, offsetof(teamDef_t, armour), MEMBER_SIZEOF(teamDef_t, armour)}, /**< are these team members able to wear armour? */
 	{"weapons", V_BOOL, offsetof(teamDef_t, weapons), MEMBER_SIZEOF(teamDef_t, weapons)}, /**< are these team members able to use weapons? */
 	{"civilian", V_BOOL, offsetof(teamDef_t, civilian), MEMBER_SIZEOF(teamDef_t, civilian)}, /**< is this a civilian? */
 	{"size", V_INT, offsetof(teamDef_t, size), MEMBER_SIZEOF(teamDef_t, size)}, /**< What size is this unit on the field (1=1x1 or 2=2x2)? */
@@ -1744,7 +1754,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 	}
 
 	Q_strncpyz(td->id, name, sizeof(td->id));
-	td->armor = td->weapons = qtrue; /* default values */
+	td->armour = td->weapons = qtrue; /* default values */
 	td->onlyWeaponIndex = -1;
 
 	/* get name list body body */
@@ -2240,7 +2250,7 @@ void Com_ParseScripts (void)
 
 	/* reset csi basic info */
 	INVSH_InitCSI(&csi);
-	csi.idRight = csi.idLeft = csi.idExtension = csi.idBackpack = csi.idBelt = csi.idHolster = csi.idArmor = csi.idFloor = csi.idEquip = csi.idHeadgear = NONE;
+	csi.idRight = csi.idLeft = csi.idExtension = csi.idBackpack = csi.idBelt = csi.idHolster = csi.idArmour = csi.idFloor = csi.idEquip = csi.idHeadgear = NONE;
 	csi.damNormal = csi.damBlast = csi.damFire = csi.damShock = csi.damLaser = csi.damPlasma = csi.damParticle = csi.damStun = NONE;
 
 	/* pre-stage parsing */

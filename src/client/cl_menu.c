@@ -1207,8 +1207,8 @@ static void MN_Drag (const menuNode_t* const node, int x, int y, qboolean rightC
 
 					assert(ic->item.t >= 0);
 					/* armour can only have one target */
-					if (!Q_strncmp(csi.ods[ic->item.t].type, "armor", MAX_VAR)) {
-						INV_MoveItem(baseCurrent, menuInventory, csi.idArmor, 0, 0, node->mousefx, ic->x, ic->y);
+					if (!Q_strncmp(csi.ods[ic->item.t].type, "armour", MAX_VAR)) {
+						INV_MoveItem(baseCurrent, menuInventory, csi.idArmour, 0, 0, node->mousefx, ic->x, ic->y);
 					/* ammo or item */
 					} else if (!Q_strncmp(csi.ods[ic->item.t].type, "ammo", MAX_VAR)) {
 						Com_FindSpace(menuInventory, &ic->item, csi.idBelt, &px, &py);

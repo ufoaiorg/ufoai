@@ -99,7 +99,7 @@ equipment campaign_market
 //=================
 // alien campaign
 // FIXME: Items are not researched at this time
-// FIXME: Armor is only for blue aliens
+// FIXME: Armour is only for blue aliens
 //=================
 
 equipment campaign_player_aliens
@@ -233,7 +233,7 @@ equipment multiplayer
 	light_alien			2
 	medium_alien			2
 //	heavy				1
-//	power	2
+	power	2
 }
 
 //=============================

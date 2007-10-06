@@ -76,6 +76,7 @@ typedef struct fireDef_s {
 	qboolean reaction;			/**< This firemode can be used/selected for reaction fire.*/
 	int throughWall;		/**< allow the shooting through a wall */
 	byte dmgtype;
+	byte dmgweight;
 	float speed;
 	vec2_t shotOrg;
 	vec2_t spread;
@@ -211,7 +212,7 @@ typedef struct objDef_s {
 	char id[MAX_VAR];		/**< Identifier of the item being item definition in scriptfile. */
 	char model[MAX_VAR];		/**< Model name - relative to game dir. */
 	char image[MAX_VAR];		/**< Object image file - relative to game dir. */
-	char type[MAX_VAR];		/**< melee, rifle, ammo, armor @todo: clarify how this is being used */
+	char type[MAX_VAR];		/**< melee, rifle, ammo, armour @todo: clarify how this is being used */
 	char extends_item[MAX_VAR];	/**< @todo: document me */
 	uint32_t shape;			/**< The shape in inventory. */
 
@@ -259,9 +260,8 @@ typedef struct objDef_s {
 	struct technology_s *tech;	/**< Technology link to item. */
 	struct technology_s *extension_tech;	/**< Technology link to item to use this extension for (if this is an extension). @todo: is this used anywhere? */
 
-	/* Armor specific */
-	short protection[MAX_DAMAGETYPES];	/**< @todo: document me. */
-	short hardness[MAX_DAMAGETYPES];	/**< @todo: document me. */
+	/* Armour specific */
+	short protection[MAX_DAMAGETYPES];	/**< Protection values for each armour and every damage type. */
 
 	/* Aircraft specific */
 	qboolean aircraft;			/**< True if this item is dummy aircraft - used in disassembling. */
@@ -281,7 +281,7 @@ typedef struct invDef_s {
 	char name[MAX_VAR];	/**< id from script files */
 	/** type of this container or inventory */
 	qboolean single;	/**< just a single item can be stored in this container */
-	qboolean armor;	/**< only armour can be stored in this container */
+	qboolean armour;	/**< only armour can be stored in this container */
 	qboolean extension;	/**< only extension items can be stored in this container */
 	qboolean headgear;	/**< only headgear items can be stored in this container */
 	qboolean all;	/**< every item type can be stored in this container */
@@ -370,7 +370,7 @@ typedef struct csi_s {
 	/** Special container ids */
 	int idRight, idLeft, idExtension;
 	int idHeadgear, idBackpack, idBelt, idHolster;
-	int idArmor, idFloor, idEquip;
+	int idArmour, idFloor, idEquip;
 
 	/** Damage type ids */
 	int damNormal, damBlast, damFire, damShock;
@@ -488,7 +488,7 @@ typedef struct character_s {
 
 	int HP;						/**< Health points (current ones). */
 	int maxHP;					/**< Maximum health points (as in: 100% == fully healed). */
-	int STUN, AP, morale;		/**< @todo: document me. */
+	int STUN, morale;			/**< @todo: document me. */
 
 	chrScore_t chrscore;		/**< Array of scores. */
 
@@ -504,7 +504,7 @@ typedef struct character_s {
 	int empl_idx;				/**< Backlink to employee-struct - global employee index. */
 	int empl_type;				/**< Employee type. */
 
-	qboolean armor;				/**< Able to use armour. */
+	qboolean armour;			/**< Able to use armour. */
 	qboolean weapons;			/**< Able to use weapons. */
 
 	int teamDefIndex;			/**< teamDef array index. */

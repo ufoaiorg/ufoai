@@ -8,7 +8,7 @@
 // ==================
 // TEAM DESCRIPTIONS
 // weapons	Team may carry and use weapons
-// armor	Team may carry armour
+// armour	Team may carry armour
 // alien	Team is an alien team
 // civilian	Team is a civilian team
 // tech		Tech id to link
@@ -164,7 +164,7 @@ team shevaar
 	name	"_Shevaar"
 	tech	"rs_alien_shevaar_autopsy"
 	alien	true
-	armor	false
+	armour	false
 	size	1
 	hit_particle	blood
 
@@ -200,7 +200,7 @@ team bloodspider
 	name	"_Bloodspider"
 	tech	"rs_alien_bloodspider_autopsy"
 	alien	true
-	armor	false
+	armour	false
 	weapons	false
 	onlyWeapon	bloodspider_weapon
 	size	1

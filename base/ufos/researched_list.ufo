@@ -110,7 +110,7 @@ researched rslist_aliens
 	rs_weapon_plasblade
 	rs_weapon_pbeamrifle
 	rs_weapon_pbeamrifle_ammo
-	// FIXME: Armor
+	// FIXME: Armour
 	rs_damage_normal
 	rs_damage_blast
 	rs_damage_fire
@@ -142,7 +142,7 @@ researchable rslist_alien
 	rs_weapon_plasblade
 	rs_weapon_pbeamrifle
 	rs_weapon_pbeamrifle_ammo
-	// FIXME: Armor
+	// FIXME: Armour
 	rs_damage_normal
 	rs_damage_blast
 	rs_damage_fire

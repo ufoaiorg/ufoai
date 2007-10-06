@@ -184,8 +184,8 @@ void INV_CollectingItems (int won)
 			if (won) {
 				/* (le->state & STATE_DEAD) includes STATE_STUN */
 				if (le->state & STATE_DEAD) {
-					if (le->i.c[csi.idArmor]) {
-						item = le->i.c[csi.idArmor];
+					if (le->i.c[csi.idArmour]) {
+						item = le->i.c[csi.idArmour];
 						for (j = 0; j < aircraft->itemtypes; j++) {
 							if (cargo[j].idx == item->item.t) {
 								cargo[j].amount++;
@@ -311,7 +311,7 @@ void INV_EnableAutosell (technology_t *tech)
 	technology_t *ammotech = NULL;
 
 	/* If the tech leads to weapon or armour, find related item and enable autosell. */
-	if ((tech->type == RS_WEAPON) || (tech->type == RS_ARMOR)) {
+	if ((tech->type == RS_WEAPON) || (tech->type == RS_ARMOUR)) {
 		for (i = 0; i < csi.numODs; i++) {
 			if (!Q_strncmp(tech->provides, csi.ods[i].id, MAX_VAR)) {
 				gd.autosell[i] = qtrue;
@@ -631,7 +631,7 @@ qboolean INV_MoveItem (base_t* base, inventory_t* inv, int toContainer, int px, 
 					? BUY_WEAP_SEC
 					: BUY_WEAP_PRI;
 			}
-				
+
 			/* If the 'to'-container is not the one that is currently shown or auto-placement is wanted ...*/
 			if (!BUYTYPE_MATCH(et, base->equipType) || px == -1 || py == -1) {
 				inv->c[csi.idEquip] = base->equipByBuyType.c[et];
@@ -657,7 +657,7 @@ qboolean INV_MoveItem (base_t* base, inventory_t* inv, int toContainer, int px, 
 		if (fromContainer == csi.idEquip) {
 			/* Check buytype of first (last added) item */
 			if (!BUYTYPE_MATCH(et, base->equipType)) {
-				item_t item_temp = {NONE_AMMO, NONE,inv->c[csi.idEquip]->item.t, 0}; 
+				item_t item_temp = {NONE_AMMO, NONE,inv->c[csi.idEquip]->item.t, 0};
 				et = csi.ods[inv->c[csi.idEquip]->item.t].buytype;
 				if (BUY_PRI(et)) {
 					Com_RemoveFromInventory(inv, fromContainer, inv->c[csi.idEquip]->x, inv->c[csi.idEquip]->y);

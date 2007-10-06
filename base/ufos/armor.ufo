@@ -22,9 +22,9 @@ damagetypes standard
 item light
 {
 	name		"_Combat Armour"
-	image		armor/light
+	image		armour/light
 	model		soldiers/malelight/body
-	type		armor
+	type		armour
 	shape		"0 0 3 4"
 	center		"0 0 -5"
 	scale		0.7
@@ -46,28 +46,15 @@ item light
 		particlebeam	1
 		stun	20
 	}
-	hardness
-	{
-		normal	3
-		steelblade	90
-		monomolecularblade	10
-		blast	5
-		fire	2
-		shock	8
-		laser	8
-		plasma	2
-		particlebeam	100
-		stun	100
-	}
 }
 
 //weights 120
 item medium
 {
 	name		"_Nanocomposite Armour"
-	image		armor/medium
+	image		armour/medium
 	model		soldiers/malemedium/body
-	type		armor
+	type		armour
 	shape		"0 0 3 4"
 	center		"0 0 -5"
 	scale		0.7
@@ -89,27 +76,14 @@ item medium
 		particlebeam	3
 		stun	35
 	}
-	hardness
-	{
-		normal	6
-		steelblade	95
-		monomolecularblade	15
-		blast	10
-		fire	10
-		shock	10
-		laser	16
-		plasma	2
-		particlebeam	100
-		stun	100
-	}
 }
 //weights 320
 //item heavy
 //{
-//	name		"_Heavy Nano Armor"
-//	image		armor/heavy
+//	name		"_Heavy Nano Armour"
+//	image		armour/heavy
 //	model		soldiers/maleheavy/body
-//	type		armor
+//	type		armour
 //	shape		"0 0 3 4"
 //	center		"0 0 -5"
 //	scale		0.7
@@ -129,28 +103,15 @@ item medium
 //		particlebeam	28
 //		stun	97
 //	}
-//	hardness
-//	{
-//		normal	18
-//		steelblade	100
-//		monomolecularblade	40
-//		blast	30
-//		fire	30
-//		shock	30
-//		laser	48
-//		plasma	6
-//		particlebeam	100
-//		stun	100
-//	}
 //}
 
 //weights ???
 item power
 {
 	name		"Power Armour" // todo: make translateable
-	image		armor/power
+	image		armour/power
 	model		soldiers/malepower/body
-	type		armor
+	type		armour
 	shape		"0 0 3 4"
 	center		"0 0 -5"
 	scale		0.7
@@ -170,28 +131,15 @@ item power
 		particlebeam	28
 		stun	97
 	}
-	hardness	// todo: fixme
-	{
-		normal	18
-		steelblade	100
-		monomolecularblade	40
-		blast	30
-		fire	30
-		shock	30
-		laser	48
-		plasma	6
-		particlebeam	100
-		stun	100
-	}
 }
 
 //weights 100
 item light_alien
 {
 	name		"_Alien Body Armour"
-	image		armor/taman_light
+	image		armour/taman_light
 	model		aliens/tamanlight/body01
-	type		armor
+	type		armour
 	shape		"0 0 3 4"
 	center		"0 0 -5"
 	scale		0.7
@@ -213,28 +161,15 @@ item light_alien
 		particlebeam	23
 		stun	27
 	}
-	hardness
-	{
-		normal	4
-		steelblade	100
-		monomolecularblade	40
-		blast	7
-		fire	6
-		shock	9
-		laser	15
-		plasma	4
-		particlebeam	100
-		stun	100
-	}
 }
 
 //weights 120
 item medium_alien
 {
 	name		"_Medium Alien Armour"
-	image		armor/taman_medium
+	image		armour/taman_medium
 	model		aliens/tamanmedium/body01
-	type		armor
+	type		armour
 	shape		"0 0 3 4"
 	center		"0 0 -5"
 	scale		0.7
@@ -255,18 +190,5 @@ item medium_alien
 		plasma	62
 		particlebeam	27
 		stun	42
-	}
-	hardness
-	{
-		normal	12
-		steelblade	100
-		monomolecularblade	40
-		blast	20
-		fire	20
-		shock	20
-		laser	20
-		plasma	8
-		particlebeam	100
-		stun	100
 	}
 }

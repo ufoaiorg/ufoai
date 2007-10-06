@@ -150,16 +150,16 @@ int Com_CheckToInventory (const inventory_t * const i, const int item, const int
 	assert(i);
 	assert((container >= 0) && (container < CSI->numIDs));
 
-	/* armor vs item */
-	if (!Q_strncmp(CSI->ods[item].type, "armor", MAX_VAR)) {
-		if (!CSI->ids[container].armor && !CSI->ids[container].all) {
+	/* armour vs item */
+	if (!Q_strncmp(CSI->ods[item].type, "armour", MAX_VAR)) {
+		if (!CSI->ids[container].armour && !CSI->ids[container].all) {
 			return INV_DOES_NOT_FIT;
 		}
 	} else if (!CSI->ods[item].extension && CSI->ids[container].extension) {
 		return INV_DOES_NOT_FIT;
 	} else if (!CSI->ods[item].headgear && CSI->ids[container].headgear) {
 		return INV_DOES_NOT_FIT;
-	} else if (CSI->ids[container].armor) {
+	} else if (CSI->ids[container].armour) {
 		return INV_DOES_NOT_FIT;
 	}
 
@@ -546,23 +546,23 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 		return IA_NONE;
 	}
 
-	/* if non-armor moved to an armor slot then
+	/* if non-armour moved to an armour slot then
 	 * move item back to source location and break
 	 * same for non extension items when moved to an extension slot */
-	if ((CSI->ids[to].armor && Q_strcmp(CSI->ods[cacheItem.t].type, "armor"))
+	if ((CSI->ids[to].armour && Q_strcmp(CSI->ods[cacheItem.t].type, "armour"))
 	 || (CSI->ids[to].extension && !CSI->ods[cacheItem.t].extension)
 	 || (CSI->ids[to].headgear && !CSI->ods[cacheItem.t].headgear)) {
 		Com_AddToInventory(i, cacheItem, from, fx, fy, 1);
 		return IA_NONE;
 	}
 
-	/* check if the target is a blocked inv-armor and source!=dest */
+	/* check if the target is a blocked inv-armour and source!=dest */
 	if (CSI->ids[to].single)
 		checkedTo = Com_CheckToInventory(i, cacheItem.t, to, 0, 0);
 	else
 		checkedTo = Com_CheckToInventory(i, cacheItem.t, to, tx, ty);
 
-	if (CSI->ids[to].armor && from != to && !checkedTo) {
+	if (CSI->ids[to].armour && from != to && !checkedTo) {
 		item_t cacheItem2;
 
 		/* save/cache (source) item */
@@ -597,7 +597,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 					*TU -= time;
 				if (ic->item.a >= CSI->ods[ic->item.t].ammo) {
 					/* exchange ammo */
-					item_t item = {NONE_AMMO, NONE, ic->item.m, 0}; 
+					item_t item = {NONE_AMMO, NONE, ic->item.m, 0};
 
 					/* Add the currently used ammo in a free place of the "from" container. */
 					/**
@@ -680,8 +680,8 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 	if (icp)
 		*icp = ic;
 
-	if (to == CSI->idArmor) {
-		assert(!Q_strcmp(CSI->ods[cacheItem.t].type, "armor"));
+	if (to == CSI->idArmour) {
+		assert(!Q_strcmp(CSI->ods[cacheItem.t].type, "armour"));
 		return IA_ARMOR;
 	} else
 		return IA_MOVE;
@@ -897,7 +897,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, co
 	}
 #endif
 
-	assert(Q_strcmp(CSI->ods[weapon].type, "armor"));
+	assert(Q_strcmp(CSI->ods[weapon].type, "armour"));
 	item.t = weapon;
 
 	/* are we going to allow trying the left hand */
@@ -1001,7 +1001,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, co
  * @param[in] equip The equipment that shows what is available - a list of obj ids
  * @param[in] anzEquip the number of object ids in the field
  * @param[in] name The name of the equipment for debug messages
- * @param[in] chr Pointer to character data - to get the weapon and armor bools
+ * @param[in] chr Pointer to character data - to get the weapon and armour bools
  * @note The code below is a complete implementation
  * of the scheme sketched at the beginning of equipment_missions.ufo.
  * Beware: if two weapons in the same category have the same price,
@@ -1011,7 +1011,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int anzEquip, c
 {
 	int weapon = -1; /* this variable is never used before being set */
 	int i, max_price, prev_price;
-	int has_weapon = 0, has_armor = 0, repeat = 0, missed_primary = 0;
+	int has_weapon = 0, has_armour = 0, repeat = 0, missed_primary = 0;
 	int primary = 2; /* 0 particle or normal, 1 other, 2 no primary weapon */
 	objDef_t obj;
 
@@ -1161,7 +1161,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int anzEquip, c
 		if (!has_weapon)
 			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: cannot add any weapon; no secondary weapon without reload detected for equipment '%s'.\n", name);
 
-		/* armor; especially for those without primary weapons */
+		/* armour; especially for those without primary weapons */
 		repeat = (float) missed_primary * (1 + frand() * PROB_COMPENSATION) / 40.0;
 	} else {
 		/* @todo: for melee actors we should not be able to get into this function, this can be removed */
@@ -1169,8 +1169,8 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int anzEquip, c
 		return;
 	}
 
-	if (!chr->armor) {
-		Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: character '%s' may not carry armor\n", chr->name);
+	if (!chr->armour) {
+		Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: character '%s' may not carry armour\n", chr->name);
 		return;
 	}
 
@@ -1193,14 +1193,14 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int anzEquip, c
 					item_t item = {NONE_AMMO, NONE, NONE, 0, 0};
 
 					item.t = weapon;
-					if (Com_TryAddToInventory(inv, item, CSI->idArmor)) {
-						has_armor++;
-						max_price = 0; /* one armor is enough */
+					if (Com_TryAddToInventory(inv, item, CSI->idArmour)) {
+						has_armour++;
+						max_price = 0; /* one armour is enough */
 					}
 				}
 			}
 		} while (max_price);
-	} while (!has_armor && repeat--);
+	} while (!has_armour && repeat--);
 }
 
 /**
@@ -1481,7 +1481,7 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, int team)
 static char CHRSH_returnModel[MAX_VAR];
 
 /**
- * @brief Returns the body model for the soldiers for armored and non armored soldiers
+ * @brief Returns the body model for the soldiers for armoured and non armoured soldiers
  * @param chr Pointer to character struct
  * @sa CHRSH_CharGetBody
  */
@@ -1493,13 +1493,13 @@ char *CHRSH_CharGetBody (character_t * const chr)
 	assert(chr);
 	assert(chr->inv);
 
-	/* models of UGVs don't change - because they are already armored */
-	if (chr->inv->c[CSI->idArmor] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
-		assert(!Q_strcmp(CSI->ods[chr->inv->c[CSI->idArmor]->item.t].type, "armor"));
-/*		Com_Printf("CHRSH_CharGetBody: Use '%s' as armor\n", CSI->ods[chr->inv->c[CSI->idArmor]->item.t].id);*/
+	/* models of UGVs don't change - because they are already armoured */
+	if (chr->inv->c[CSI->idArmour] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
+		assert(!Q_strcmp(CSI->ods[chr->inv->c[CSI->idArmour]->item.t].type, "armour"));
+/*		Com_Printf("CHRSH_CharGetBody: Use '%s' as armour\n", CSI->ods[chr->inv->c[CSI->idArmour]->item.t].id);*/
 
 		/* check for the underline */
-		Q_strncpyz(id, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].id, sizeof(id));
+		Q_strncpyz(id, CSI->ods[chr->inv->c[CSI->idArmour]->item.t].id, sizeof(id));
 		underline = strchr(id, '_');
 		if (underline)
 			*underline = '\0';
@@ -1511,7 +1511,7 @@ char *CHRSH_CharGetBody (character_t * const chr)
 }
 
 /**
- * @brief Returns the head model for the soldiers for armored and non armored soldiers
+ * @brief Returns the head model for the soldiers for armoured and non armoured soldiers
  * @param chr Pointer to character struct
  * @sa CHRSH_CharGetBody
  */
@@ -1523,13 +1523,13 @@ char *CHRSH_CharGetHead (character_t * const chr)
 	assert(chr);
 	assert(chr->inv);
 
-	/* models of UGVs don't change - because they are already armored */
-	if (chr->inv->c[CSI->idArmor] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
-		assert(!Q_strcmp(CSI->ods[chr->inv->c[CSI->idArmor]->item.t].type, "armor"));
-/*		Com_Printf("CHRSH_CharGetHead: Use '%s' as armor\n", CSI->ods[chr->inv->c[CSI->idArmor]->item.t].id);*/
+	/* models of UGVs don't change - because they are already armoured */
+	if (chr->inv->c[CSI->idArmour] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
+		assert(!Q_strcmp(CSI->ods[chr->inv->c[CSI->idArmour]->item.t].type, "armour"));
+/*		Com_Printf("CHRSH_CharGetHead: Use '%s' as armour\n", CSI->ods[chr->inv->c[CSI->idArmour]->item.t].id);*/
 
 		/* check for the underline */
-		Q_strncpyz(id, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].id, sizeof(id));
+		Q_strncpyz(id, CSI->ods[chr->inv->c[CSI->idArmour]->item.t].id, sizeof(id));
 		underline = strchr(id, '_');
 		if (underline)
 			*underline = '\0';

@@ -83,7 +83,6 @@ void G_SendStats (edict_t * ent)
 	/* extra sanity checks */
 	ent->TU = max(ent->TU, 0);
 	ent->HP = max(ent->HP, 0);
-	ent->AP = max(ent->AP, 0);
 	ent->STUN = min(ent->STUN, 255);
 	ent->morale = max(ent->morale, 0);
 
@@ -92,7 +91,6 @@ void G_SendStats (edict_t * ent)
 	gi.WriteByte(ent->TU);
 	gi.WriteShort(ent->HP);
 	gi.WriteByte(ent->STUN);
-	gi.WriteByte(ent->AP);
 	gi.WriteByte(ent->morale);
 }
 
@@ -1037,11 +1035,11 @@ static void G_InventoryToFloor (edict_t * ent)
 		/* skip floor - we want to drop to floor */
 		if (k == gi.csi->idFloor)
 			continue;
-		/* skip csi->idArmor, we will collect armours using idArmor container,
+		/* skip csi->idArmour, we will collect armours using idArmour container,
 		   not idFloor */
-		if (k == gi.csi->idArmor) {
-			if (ent->i.c[gi.csi->idArmor])
-				Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor()... this actor has armour: %s\n", gi.csi->ods[ent->i.c[gi.csi->idArmor]->item.t].name);
+		if (k == gi.csi->idArmour) {
+			if (ent->i.c[gi.csi->idArmour])
+				Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor()... this actor has armour: %s\n", gi.csi->ods[ent->i.c[gi.csi->idArmour]->item.t].name);
 			continue;
 		}
 		/* now cycle through all items for the container of the character (or the entity) */
@@ -1058,7 +1056,7 @@ static void G_InventoryToFloor (edict_t * ent)
 			Com_FindSpace(&floor->i, &ic->item, gi.csi->idFloor, &x, &y);
 			if (x == NONE) {
 				assert(y == NONE);
-				/* Run out of space on the floor or the item is armor
+				/* Run out of space on the floor or the item is armour
 				   destroy the offending item if no adjacent places are free */
 				/* store pos for later restoring the original value */
 #ifdef ADJACENT
@@ -1096,7 +1094,7 @@ static void G_InventoryToFloor (edict_t * ent)
 					continue;
 				}
 #endif
-				if (Q_strncmp(gi.csi->ods[ic->item.t].type, "armor", MAX_VAR))
+				if (Q_strncmp(gi.csi->ods[ic->item.t].type, "armour", MAX_VAR))
 					gi.dprintf("G_InventoryToFloor: Warning: could not drop item to floor: %s\n", gi.csi->ods[ic->item.t].id);
 				if (!Com_RemoveFromInventory(&ent->i, k, ic->x, ic->y))
 					gi.dprintf("G_InventoryToFloor: Error: could not remove item: %s\n", gi.csi->ods[ic->item.t].id);
@@ -1117,10 +1115,10 @@ static void G_InventoryToFloor (edict_t * ent)
 
 	FLOOR(ent) = FLOOR(floor);
 
-	if (ent->i.c[gi.csi->idArmor])
-		Com_DPrintf(DEBUG_GAME, "At the end of G_InventoryToFloor()... this actor has armor in idArmor container: %s\n", gi.csi->ods[ent->i.c[gi.csi->idArmor]->item.t].name);
+	if (ent->i.c[gi.csi->idArmour])
+		Com_DPrintf(DEBUG_GAME, "At the end of G_InventoryToFloor()... this actor has armour in idArmour container: %s\n", gi.csi->ods[ent->i.c[gi.csi->idArmour]->item.t].name);
 	else
-		Com_DPrintf(DEBUG_GAME, "At the end of G_InventoryToFloor()... this actor has NOT armor in idArmor container\n");
+		Com_DPrintf(DEBUG_GAME, "At the end of G_InventoryToFloor()... this actor has NOT armour in idArmour container\n");
 
 	/* send item info to the clients */
 	G_CheckVis(floor, qtrue);
@@ -1920,7 +1918,7 @@ void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
 	gi.WriteShort(ent->number);
 	gi.WriteShort(ent->state);
 
-	/* handle inventory - drop everything to floor edict (but not the armor) if actor can handle equipment */
+	/* handle inventory - drop everything to floor edict (but not the armour) if actor can handle equipment */
 	if (ent->chr.weapons)
 		G_InventoryToFloor(ent);
 
@@ -2248,7 +2246,6 @@ static inline void G_ClientSkipActorInfo (void)
 	gi.ReadByte(); /* teamDefIndex */
 	gi.ReadByte(); /* gender */
 	gi.ReadByte(); /* STUN */
-	gi.ReadByte(); /* AP */
 	gi.ReadByte(); /* morale */
 	for (k = 0; k < SKILL_NUM_TYPES; k++)
 		gi.ReadByte(); /* skills */
@@ -2355,7 +2352,6 @@ void G_ClientTeamInfo (player_t * player)
 			ent->chr.teamDefIndex = gi.ReadByte();
 			ent->chr.gender = gi.ReadByte();
 			ent->chr.STUN = gi.ReadByte();
-			ent->chr.AP = gi.ReadByte();
 			ent->chr.morale = gi.ReadByte();
 
 			/* new attributes */
@@ -2376,7 +2372,7 @@ void G_ClientTeamInfo (player_t * player)
 					/* gi.dprintf("G_ClientTeamInfo: t=%i:a=%i:m=%i (x=%i:y=%i)\n", item.t, item.a, item.m, x, y); */
 
 					Com_AddToInventory(&ent->i, item, container, x, y, 1);
-					/* gi.dprintf("G_ClientTeamInfo: add %s to inventory (container %i - idArmor: %i)\n", gi.csi->ods[ent->i.c[container]->item.t].id, container, gi.csi->idArmor); */
+					/* gi.dprintf("G_ClientTeamInfo: add %s to inventory (container %i - idArmour: %i)\n", gi.csi->ods[ent->i.c[container]->item.t].id, container, gi.csi->idArmour); */
 				}
 			}
 
