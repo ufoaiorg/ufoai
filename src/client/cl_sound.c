@@ -584,18 +584,18 @@ void S_Init (void)
 	snd_music = Cvar_Get("snd_music", "PsymongN3", 0, "Background music track");
 	snd_music_volume = Cvar_Get("snd_music_volume", "128", CVAR_ARCHIVE, "Music volume - default is 128");
 
-	if (!SND_Init()) {
-		Com_Printf("SND_Init failed\n");
-		sound_started = qfalse;
-		return;
-	}
-
 	Cmd_AddCommand("snd_play", S_Play_f, "Plays a sound fx file");
 	Cmd_AddCommand("music_play", S_Music_Play_f, "Plays a background sound track");
 	Cmd_AddCommand("music_start", S_Music_Play_f, "Starts the background music track from cvar snd_music");
 	Cmd_AddCommand("music_stop", S_Music_Stop, "Stops currently playing music tracks");
 	Cmd_AddCommand("music_randomtrack", S_Music_RandomTrack_f, "Plays a random background track");
 	/* @todo: Complete functions */
+
+	if (!SND_Init()) {
+		Com_Printf("SND_Init failed\n");
+		sound_started = qfalse;
+		return;
+	}
 
 	sound_started = qtrue;
 
