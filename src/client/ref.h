@@ -196,13 +196,20 @@ typedef struct ptl_s {
 	ptlDef_t *ctrl;
 	int startTime;
 	int frame, endFrame;
-	float fps, lastFrame;
-	float tps, lastThink;
+	float fps;	/**< how many frames per second (animate) */
+	float lastFrame;	/**< time (in seconds) when the think function was last executed (perhaps this can be used to delay or speed up particle actions). */
+	float tps; /**< think per second - call the think function tps times each second, the first call at 1/tps seconds */
+	float lastThink;
 	byte thinkFade, frameFade;
-	float t, dt, life;
-	int rounds, roundsCnt;
-	vec3_t a, v, omega;
-	int light;
+	float t;	/**< time that the particle has been active already */
+	float dt;	/**< time increment for rendering this particle (delta time) */
+	float life;	/**< specifies how long a particle will be active (seconds) */
+	int rounds;	/**< specifies how many rounds a particle will be active */
+	int roundsCnt;
+	vec3_t a;	/**< acceleration vector */
+	vec3_t v;	/**< velocity vector */
+	vec3_t omega;	/**< the rotation vector for the particle (newAngles = oldAngles + frametime * omega) */
+	int light;		/**< specifies light intensity of dlight (dynamic light) (see also the color vector to define the light color) */
 	qboolean physics;	/**< basic physics */
 	qboolean autohide;	/**< only draw the particle if the current position is
 						 * not higher than the current level (useful for weather
