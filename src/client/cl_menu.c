@@ -485,6 +485,22 @@ static qboolean MN_FocusSetNode (menuNode_t* node)
 }
 
 /**
+ * @brief Returns the number of currently renderer menus on the menustack
+ * @note Checks for a render node - if invis is true there, it's the last
+ * visible menu
+ */
+static int MN_GetVisibleMenuCount (void)
+{
+	/* stack pos */
+	int sp = menuStackPos;
+	while (sp > 0)
+		if (menuStack[--sp]->renderNode)
+			break;
+	/*Com_DPrintf(DEBUG_CLIENT, "visible menus on stacks: %i\n", sp);*/
+	return sp;
+}
+
+/**
  * @brief Set the focus to the next action node
  * @note Action nodes are nodes with click defined
  * @sa Key_Event
@@ -493,13 +509,15 @@ static qboolean MN_FocusSetNode (menuNode_t* node)
 qboolean MN_FocusNextActionNode (void)
 {
 	menu_t* menu;
-	static int i = 0;	/* to cycle between all menus */
+	static int i = MAX_MENUSTACK + 1;	/* to cycle between all menus */
 
 	if (mouseSpace != MS_MENU)
 		return qfalse;
 
 	if (i >= menuStackPos)
-		i = 0;
+		i = MN_GetVisibleMenuCount();
+
+	assert(i >= 0);
 
 	if (focusNode) {
 		menuNode_t *node = MN_GetNextActionNode(focusNode);
@@ -512,7 +530,7 @@ qboolean MN_FocusNextActionNode (void)
 		if (MN_FocusSetNode(MN_GetNextActionNode(menu->firstNode)))
 			return qtrue;
 	}
-	i = 0;
+	i = MN_GetVisibleMenuCount();
 
 	/* no node to focus */
 	MN_FocusRemove();
