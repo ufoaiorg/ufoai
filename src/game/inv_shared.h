@@ -43,7 +43,7 @@ typedef enum {
 	IA_RELOAD_SWAP,
 	IA_NOTIME,
 	IA_NORELOAD,
-	IA_ARMOR
+	IA_ARMOUR
 } inventory_action_t;
 
 /** @brief this is a fire definition for our weapons/ammo */

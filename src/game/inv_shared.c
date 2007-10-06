@@ -409,9 +409,8 @@ qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, int container, int
 	for (previous = i->c[container]; ic; ic = ic->next) {
 		if (ic->x == x && ic->y == y) {
 			cacheItem = ic->item;
-			if ((container == CSI->idFloor || container == CSI->idEquip)
-			 && ic->item.amount > 1
-			 && !ignore_type) {
+			if (!ignore_type && ic->item.amount > 1
+			 && (container == CSI->idFloor || container == CSI->idEquip)) {
 				ic->item.amount--;
 				Com_DPrintf(DEBUG_SHARED, "Com_RemoveFromInventoryIgnore: Amount of '%s': %i\n",
 					CSI->ods[ic->item.t].name, ic->item.amount);
@@ -448,7 +447,7 @@ qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, int container, int
  * @return IA_NORELOAD if you cannot reload a weapon
  * @return IA_RELOAD_SWAP in case of exchange of ammo in a weapon
  * @return IA_RELOAD when reloading
- * @return IA_ARMOR when placing an armour on the actor
+ * @return IA_ARMOUR when placing an armour on the actor
  * @return IA_MOVE when just moving an item
  */
 int Com_MoveInInventory (inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp)
@@ -473,7 +472,7 @@ int Com_MoveInInventory (inventory_t* const i, int from, int fx, int fy, int to,
  * @return IA_NORELOAD if you cannot reload a weapon
  * @return IA_RELOAD_SWAP in case of exchange of ammo in a weapon
  * @return IA_RELOAD when reloading
- * @return IA_ARMOR when placing an armour on the actor
+ * @return IA_ARMOUR when placing an armour on the actor
  * @return IA_MOVE when just moving an item
  */
 int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp, qboolean ignore_type)
@@ -682,7 +681,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 
 	if (to == CSI->idArmour) {
 		assert(!Q_strcmp(CSI->ods[cacheItem.t].type, "armour"));
-		return IA_ARMOR;
+		return IA_ARMOUR;
 	} else
 		return IA_MOVE;
 }
