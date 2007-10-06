@@ -286,6 +286,20 @@ localModel_t *CL_AddLocalModel (const char *model, const char *particle, vec3_t 
 	return lm;
 }
 
+/**
+ * @brief Checks whether give position is still inside the map borders
+ */
+static qboolean LE_OutsideMap (vec3_t impact)
+{
+	if (impact[0] < map_min[0] || impact[0] > map_max[0])
+		return qtrue;
+
+	if (impact[1] < map_min[1] || impact[1] > map_max[1])
+		return qtrue;
+
+	/* still inside the map borders */
+	return qfalse;
+}
 
 /*===========================================================================
 LE thinking
@@ -668,6 +682,13 @@ static void LET_Projectile (le_t * le)
 			sfx_t *sfx = S_RegisterSound(le->ref2);
 			S_StartSound(impact, sfx, le->fd->relImpactVolume, DEFAULT_SOUND_PACKET_ATTENUATION);
 		}
+	} else if (LE_OutsideMap(le->ptl->s)) {
+		le->endTime = cl.time;
+		CL_ParticleFree(le->ptl);
+		/* don't run the think function again */
+		le->inuse = qfalse;
+		/* we have to reset impact time here */
+		CL_UnblockEvents();
 	}
 }
 
