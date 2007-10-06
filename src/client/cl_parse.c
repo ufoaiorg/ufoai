@@ -1380,6 +1380,7 @@ void CL_UnblockEvents (void)
 {
 	blockEvents = qfalse;
 	CL_ScheduleEvent();
+	nextTime = impactTime = 0;
 }
 
 /**
