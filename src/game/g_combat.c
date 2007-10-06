@@ -545,7 +545,7 @@ static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_m
 		gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
 		gi.WriteShort(tr->contentFlags >> 8);
 		gi.WritePos(impact);
-		gi.WriteShort(4);
+		gi.WriteShort(7);
 		gi.WriteString("burning");
 	}
 }
