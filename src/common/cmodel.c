@@ -58,6 +58,9 @@ typedef struct {
 	int checkcount;				/**< to avoid repeated testings */
 } cBspBrush_t;
 
+/**
+ * @brief Data for line tracing (?)
+ */
 typedef struct tnode_s {
 	int type;
 	vec3_t normal;
@@ -71,6 +74,9 @@ typedef struct chead_s {
 	int level;
 } cBspHead_t;
 
+/**
+ * @brief Stores the data of a map tile
+ */
 typedef struct {
 	char name[MAX_QPATH];
 
@@ -130,7 +136,7 @@ typedef struct {
  * 	0x40	0100 0000	connection to +y	(height ignored?)
  * 	0x80	1000 0000	connection to -y	(height ignored?)
  *
- * 	See "h = map->route[z][y][x] & 0x0F;" and "if (map->route[az][ay][ax] & 0x0F) > h)" in CM_TestConnection
+ * 	See "h = map->route[z][y][x] & 0x0F;" and "if (map->route[az][ay][ax] & 0x0F) > h)" in CM_UpdateConnection
  * 	0x0F	0000 1111	some height info?
  *
  * FALL
@@ -679,7 +685,7 @@ int CheckBSPFile (const char *filename)
 }
 
 /**
- * @brief Checks traces against all inline models
+ * @brief Checks traces against the world and all inline models
  * @param[in] start The position to start the trace.
  * @param[in] stop The position where the trace ends.
  * @sa CM_TestLine
@@ -721,6 +727,10 @@ static int CM_EntTestLine (vec3_t start, vec3_t stop)
 
 
 /**
+ * @brief Checks traces against the world and all inline models, gives the hit position back
+ * @param[in] start The position to start the trace.
+ * @param[in] stop The position where the trace ends.
+ * @param[out] end The position where the line hits a object or the stop position if nothing is in the line
  * @sa CM_TestLineDM
  * @sa CM_TransformedBoxTrace
  */
@@ -762,31 +772,39 @@ static int CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end)
 
 
 /**
- * @brief Routing function to check the connection between two fields
+ * @brief Routing Function to update the connection between two fields
  * @param[in] map Routing field of the current loaded map
  * @param[in] x The x position in the routing arrays (0 - WIDTH-1)
  * @param[in] y The y position in the routing arrays (0 - WIDTH-1)
  * @param[in] z The z position in the routing arrays (0 - HEIGHT-1)
- * @param[in] dir Direction to check the connection into (0 - DIRECTIONS-1)
+ * @param[in] dir Direction to check the connection into (0 - BASE_DIRECTIONS-1)
  * @sa dvecs
  * @param[in] fill
  */
-static qboolean CM_TestConnection (routing_t * map, int x, int y, byte z, unsigned int dir, qboolean fill)
+static void CM_UpdateConnection (routing_t * map, int x, int y, byte z, unsigned int dir, qboolean fill)
 {
 	vec3_t start, end;
 	pos3_t pos;
 	int h, sh, ax, ay;
 	byte az;
+	const byte fall_through[] = {0x01, 0x03, 0x07, 0x0f, 0x1f, 0x3f, 0x7f, 0xff};
 
 	assert(map);
 	assert((x >= 0) && (x < WIDTH));
 	assert((y >= 0) && (y < WIDTH));
 	assert(z < HEIGHT);
-	assert(dir < DIRECTIONS);
+	assert(dir < BASE_DIRECTIONS);
 
-	/* totally blocked unit */
-	if ((fill && (filled[y][x] & (1 << z))) || (map->fall[y][x] == ROUTING_NOT_REACHABLE))
-		return qfalse;
+	/* assume no connection */
+	map->route[z][y][x] &= ~((0x10 << dir) & UCHAR_MAX);
+
+	/* test if the unit is blocked by an actor */
+	if (fill && (filled[y][x] & (1 << z)))
+		return;
+
+	/* no ground under the position */
+	if ((map->fall[y][x] & fall_through[z]) == fall_through[z])
+		return;
 
 	/* get step height and trace vectors */
 	sh = R_STEP(map, x, y, z) ? sh_big : sh_low;
@@ -802,38 +820,34 @@ static qboolean CM_TestConnection (routing_t * map, int x, int y, byte z, unsign
 	assert((ay >= 0) && (ay < WIDTH));
 	az = z + (h + sh) / 0x10;
 	if (az >= HEIGHT) {
-		Com_Printf("CM_TestConnection: The max has more than %i levels - skipping the higher levels.\n", HEIGHT);
-		return qfalse;
+		Com_Printf("CM_UpdateConnection: The max has more than %i levels - skipping the higher levels.\n", HEIGHT);
+		return;
 	}
 	h = (h + sh) % 0x10;
 
-	/* assume blocked */
-	map->route[z][y][x] &= ~((0x10 << dir) & UCHAR_MAX);
-
 	/* test filled */
 	if (fill && (filled[ay][ax] & (1 << az)))
-		return qfalse;
+		return;
 
-	/* test not reachable */
-	if (map->fall[ay][ax] == ROUTING_NOT_REACHABLE)
-		return qfalse;
+	/* test ground under the neighbor position */
+	if (((map->fall[ay][ax] & fall_through[az]) == fall_through[az]))
+		return;
 
-	/* test height */
+	/* test if the neighbor field is to high to step on */
 	if (R_HEIGHT(map, ax, ay, az) > h)
-		return qfalse;
+		return;
 
 	/* center check */
 	if (CM_EntTestLine(start, end))
-		return qfalse;
+		return;
 
 	/* lower check */
 	start[2] = end[2] -= UNIT_HEIGHT / 2 - sh * 4 - 2;
 	if (CM_EntTestLine(start, end))
-		return qfalse;
+		return;
 
-	/* no wall */
+	/* allow connection to neighbor field */
 	map->route[z][y][x] |= (0x10 << dir) & UCHAR_MAX;
-	return qtrue;
 }
 
 
@@ -994,6 +1008,7 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 	static byte temp_route[HEIGHT][WIDTH][WIDTH];
 	static byte temp_fall[WIDTH][WIDTH];
 	static byte temp_step[WIDTH][WIDTH];
+	static byte route_again[WIDTH][WIDTH];
 	byte *source;
 	int length;
 	int x, y;
@@ -1019,6 +1034,9 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 	assert((sY > -(WIDTH/2)) && (sY < (WIDTH/2)));
 	assert((sZ >= 0) && (sZ < HEIGHT));
 
+	/* routing must be redone for overlapping tiles and borders */
+	memset(&(route_again[0][0]), 0, WIDTH * WIDTH);
+
 	source = cmod_base + l->fileofs;
 	sh_low = *source++;
 	sh_big = *source++;
@@ -1037,6 +1055,36 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 	/* no z movement */
 	sZ = 0;
 
+	/* find borders and overlapping parts for reroute */
+	for (y = sY < 0 ? -sY : 0; y < maxY; y++)
+		for (x = sX < 0 ? -sX : 0; x < maxX; x++)
+			if (temp_fall[y][x] != ROUTING_NOT_REACHABLE) {
+				if (clMap.fall[y + sY][x + sX] != ROUTING_NOT_REACHABLE) {
+					/* reroute all directions for overlapping locations*/
+					route_again[y][x] = 0xf0; 
+				} else {
+					/* check borders */
+					for (i = 0; i < BASE_DIRECTIONS; i++) {
+						ax = x + dvecs[i][0];
+						ay = y + dvecs[i][1];
+
+						/* reroute if a border is found */
+						if (ax < 0 || ax >= WIDTH || ay < 0 || ay >= WIDTH || 
+							temp_fall[ay][ax] == ROUTING_NOT_REACHABLE) 
+								route_again[y][x] |= ((0x10 << i) & UCHAR_MAX); 									
+					}
+				}
+#ifdef DEBUG
+				route_count++;
+#endif
+			}
+			
+#ifdef DEBUG
+	if (!route_count)
+		Com_Error(ERR_DROP, "CMod_LoadRouting: Map '%s' has NO reachable field", curTile->name);
+#endif
+
+	/* copy or combine the routing information */
 	for (y = sY < 0 ? -sY : 0; y < maxY; y++)
 		for (x = sX < 0 ? -sX : 0; x < maxX; x++)
 			if (temp_fall[y][x] != ROUTING_NOT_REACHABLE) {
@@ -1051,10 +1099,6 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 					clMap.step[y + sY][x + sX] |= temp_step[y][x];
 				}
 
-				/** @todo only copy the height information here and calculate the whole routing from scratch
-				 *  after the map is build completely
-				 */
-
 				/* copy or combine routing info */
 				for (z = 0; z < HEIGHT; z++) {
 					if (overwrite) {
@@ -1067,28 +1111,24 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 						clMap.route[z][y + sY][x + sX] = temp_route[z][y][x];
 					}
 				}
-
-				/* check border connections */
-				for (i = 0; i < BASE_DIRECTIONS; i++) {
-					/* test for border */
-					ax = x + dvecs[i][0];
-					ay = y + dvecs[i][1];
-
-					/* check for walls */
-					for (z = 0; z < HEIGHT; z++) {
-						CM_TestConnection(&clMap, x + sX, y + sY, z, i, qfalse);
-						CM_TestConnection(&clMap, ax + sX, ay + sY, z, i ^ 1, qfalse);
-					}
-				}
-#ifdef DEBUG
-				route_count++;
-#endif
 			}
 
-#ifdef DEBUG
-	if (!route_count)
-		Com_Error(ERR_DROP, "CMod_LoadRouting: Map '%s' has NO reachable field", curTile->name);
-#endif
+	/* reroute borders and overlapping */
+	for (y = sY < 0 ? -sY : 0; y < maxY; y++)
+		for (x = sX < 0 ? -sX : 0; x < maxX; x++)
+			if (route_again[y][x]) 
+				for (i = 0; i < BASE_DIRECTIONS; i++) {
+					if (route_again[y][x] & (0x10 << i)) {
+						ax = x + dvecs[i][0];
+						ay = y + dvecs[i][1];
+
+						/* reroute */
+						for (z = 0; z < HEIGHT; z++) {
+							CM_UpdateConnection(&clMap, x + sX, y + sY, z, i, qfalse);
+							CM_UpdateConnection(&clMap, ax + sX, ay + sY, z, i ^ 1, qfalse);
+						}
+					}
+				}
 
 	/* calculate new border */
 	CMod_GetMapSize(&clMap);
@@ -2166,14 +2206,14 @@ static void CM_MakeTnodes (void)
 {
 	int i;
 
-	curTile->tnodes = Mem_PoolAlloc((curTile->numnodes + 1) * sizeof(tnode_t), com_cmodelSysPool, 0);
+	curTile->tnodes = Mem_PoolAlloc((curTile->numnodes + 6) * sizeof(tnode_t), com_cmodelSysPool, 0);
 	tnode_p = curTile->tnodes;
 
 	curTile->numtheads = 0;
 	curTile->numcheads = 0;
 
-	for (i = 0; i <= LEVEL_LASTVISIBLE; i++) {
-		if (curTile->cmodels[i].headnode == -1)
+	for (i = 0; i < curTile->numcmodels; i++) {
+		if (curTile->cmodels[i].headnode == -1 || curTile->cmodels[i].headnode >= curTile->numnodes + 6)
 			continue;
 
 		curTile->thead[curTile->numtheads] = tnode_p - curTile->tnodes;
@@ -2336,6 +2376,9 @@ static int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 }
 
 /**
+ * @brief Checks traces against the world
+ * @param[in] start The position to start the trace.
+ * @param[in] stop The position where the trace ends.
  * @sa TestLine_r
  * @sa CL_TargetingToHit
  */
@@ -2354,6 +2397,10 @@ int CM_TestLine (vec3_t start, vec3_t stop)
 }
 
 /**
+ * @brief Checks traces against the world, gives hit position back
+ * @param[in] start The position to start the trace.
+ * @param[in] stop The position where the trace ends.
+ * @param[out] end The position where the trace hits a object or the stop position if nothing is in the line.
  * @sa CM_TestLine
  * @sa CL_ActorMouseTrace
  * @return 0 if no connection between start and stop - 1 otherwise
@@ -2987,7 +3034,7 @@ void Grid_PosToVec (struct routing_s *map, pos3_t pos, vec3_t vec)
 /**
  * @sa CM_InlineModel
  * @sa CM_CheckUnit
- * @sa CM_TestConnection
+ * @sa CM_UpdateConnection
  * @sa CMod_LoadSubmodels
  * @param[in] list The local models list
  */
@@ -3013,9 +3060,7 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **l
 
 	memset(filled, 0, WIDTH * WIDTH);
 
-	/**
-	 * FIXME: what's this?
-	 */
+	/* fit min/max into the world size */
 #if 1
 	max[0] = min(max[0] + 2, WIDTH - 1);
 	max[1] = min(max[1] + 2, WIDTH - 1);
@@ -3041,8 +3086,8 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **l
 		for (y = min[1]; y < max[1]; y++)
 			for (x = min[0]; x < max[0]; x++)
 				/* check all directions */
-				for (i = 0; i < DIRECTIONS; i++)
-					CM_TestConnection(map, x, y, z, i, qtrue);
+				for (i = 0; i < BASE_DIRECTIONS; i++)
+					CM_UpdateConnection(map, x, y, z, i, qtrue);
 
 	inlineList = NULL;
 }
