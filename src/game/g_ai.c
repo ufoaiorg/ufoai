@@ -226,7 +226,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, aiAction_t * aia)
 						/* take into account armour */
 						if (check->i.c[gi.csi->idArmour]) {
 							ad = &gi.csi->ods[check->i.c[gi.csi->idArmour]->item.t];
-							dmg *= 1.0 - ad->protection[fd->dmgtype] * 0.01;
+							dmg *= 1.0 - ad->protection[ad->dmgtype] * 0.01;
 						}
 
 						if (dmg > check->HP

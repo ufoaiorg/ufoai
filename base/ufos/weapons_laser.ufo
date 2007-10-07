@@ -78,6 +78,7 @@ item laserrifle_ammo
 	size		7
 	buytype	multi_ammo
 //	buytype	weap_pri
+    dmgtype laser
 
 	weapon_mod laserpistol	// weap_fds_idx=0
 	{
@@ -97,7 +98,7 @@ item laserrifle_ammo
 			ammo	1
 			time	2
 			damage	"10 5"
-			dmgtype laser
+			dmgweight laser_light
 			reaction	true
 		}
 		firedef
@@ -116,7 +117,7 @@ item laserrifle_ammo
 			ammo	3
 			time	3
 			damage	"20 6"
-			dmgtype laser
+			dmgweight laser_light
 			reaction	true
 		}
 	}
@@ -139,7 +140,7 @@ item laserrifle_ammo
 			ammo	1
 			time	3
 			damage	"24 6"
-			dmgtype laser
+			dmgweight laser_medium
 			reaction	true
 		}
 		firedef
@@ -158,7 +159,7 @@ item laserrifle_ammo
 			ammo	3
 			time	5
 			damage	"50 6"
-			dmgtype laser
+			dmgweight laser_medium
 			reaction	true
 		}
 	}
@@ -181,7 +182,7 @@ item laserrifle_ammo
 			ammo	1
 			time	5
 			damage	"60 6"
-			dmgtype laser
+			dmgweight laser_heavy
 			reaction	true
 		}
 		firedef
@@ -200,7 +201,7 @@ item laserrifle_ammo
 			ammo	3
 			time	7
 			damage	"100 6"
-			dmgtype laser
+			dmgweight laser_heavy
 			reaction	true
 		}
 	}

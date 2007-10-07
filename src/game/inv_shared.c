@@ -1054,9 +1054,9 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int anzEquip, c
 						if (ammo < CSI->numODs) {
 							primary =
 								/* to avoid two particle weapons */
-								!(CSI->ods[ammo].fd[0][0].dmgtype == CSI->damParticle)
+								!(CSI->ods[ammo].dmgtype == CSI->damParticle)
 								/* to avoid SMG + Assault Rifle */
-								&& !(CSI->ods[ammo].fd[0][0].dmgtype == CSI->damNormal);
+								&& !(CSI->ods[ammo].dmgtype == CSI->damNormal);
 								/* fd[0][0] Seems to be ok here since we just check the damage type and they are the same for all fds i've found. */
 						}
 						max_price = 0; /* one primary weapon is enough */

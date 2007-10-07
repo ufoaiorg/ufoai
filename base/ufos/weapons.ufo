@@ -15,6 +15,7 @@ item medikit
 	size		15
 	buytype	misc
 	thrown		true
+	dmgtype 	normal
 
 	weapon_mod medikit
 	{
@@ -47,7 +48,7 @@ item medikit
 			ammo	1
 			time	10
 			damage	"1 1"
-			dmgtype normal
+			dmgweight normal_medium
 			reaction	false
 		}
 	}
@@ -72,6 +73,7 @@ item irgoggles
 	buytype	misc
 	thrown		true
 	headgear		true
+	dmgtype normal
 
 	weapon_mod irgoggles
 	{
@@ -100,7 +102,7 @@ item irgoggles
 			ammo	1
 			time	10
 			damage	"1 2"
-			dmgtype normal
+			dmgweight normal_medium
 		}
 	}
 }
@@ -123,6 +125,7 @@ item fraggrenade
 	size		5
 	buytype	misc
 	thrown		true
+	dmgtype blast
 
 	weapon_mod fraggrenade
 	{
@@ -149,7 +152,7 @@ item fraggrenade
 			time	8
 			spldmg	"200 90"
 			splrad	4
-			dmgtype blast
+			dmgweight blast
 		}
 		firedef
 		{
@@ -175,7 +178,7 @@ item fraggrenade
 			time	8
 			spldmg	"200 90"
 			splrad	4
-			dmgtype blast
+			dmgweight blast
 		}
 	}
 }
@@ -198,6 +201,7 @@ item flashbang
 	size		4
 	buytype	misc
 	thrown		true
+	dmgtype shock
 
 	weapon_mod flashbang
 	{
@@ -224,7 +228,7 @@ item flashbang
 			time	12
 			spldmg	"999 0"	// TODO: needed at all?
 			splrad	4
-			dmgtype shock
+			dmgweight shock
 		}
 		firedef
 		{
@@ -250,7 +254,7 @@ item flashbang
 			time	12
 			spldmg	"999 0"	// TODO: needed at all?
 			splrad	4
-			dmgtype shock
+			dmgweight shock
 		}
 	}
 }
@@ -272,6 +276,7 @@ item smokegrenade
 	size		5
 	buytype	misc
 	thrown		true
+	dmgtype normal
 
 	weapon_mod smokegrenade
 	{
@@ -298,7 +303,7 @@ item smokegrenade
 			time	8
 			spldmg	"5 5"
 			splrad	6
-			dmgtype normal
+			dmgweight normal_light
 		}
 		firedef
 		{
@@ -324,7 +329,7 @@ item smokegrenade
 			time	8
 			spldmg	"5 5"
 			splrad	6
-			dmgtype normal
+			dmgweight normal_light
 		}
 	}
 }
@@ -346,6 +351,7 @@ item stungrenade
 	size		7
 	buytype	misc
 	thrown		true
+	dmgtype stun
 
 	weapon_mod stungrenade
 	{
@@ -372,7 +378,7 @@ item stungrenade
 			time	8
 			spldmg	"150 60"
 			splrad	6
-			dmgtype stun
+			dmgweight stun
 		}
 		firedef
 		{
@@ -398,7 +404,7 @@ item stungrenade
 			time	8
 			spldmg	"150 60"
 			splrad	6
-			dmgtype stun
+			dmgweight stun
 		}
 	}
 }
@@ -421,6 +427,7 @@ item incgrenade
 	size		5
 	buytype	misc
 	thrown		true
+	dmgtype fire
 
 	weapon_mod incgrenade
 	{
@@ -447,7 +454,7 @@ item incgrenade
 			time	8
 			spldmg	"160 60"
 			splrad	3
-			dmgtype "fire"
+			dmgweight fire_medium
 		}
 		firedef
 		{
@@ -473,7 +480,7 @@ item incgrenade
 			time	8
 			spldmg	"160 60"
 			splrad	3
-			dmgtype "fire"
+			dmgweight fire_medium
 		}
 	}
 }
@@ -495,6 +502,7 @@ item plasmagrenade
 	size		10
 	buytype	misc
 	thrown		true
+	dmgtype plasma
 
 	weapon_mod plasmagrenade
 	{
@@ -521,7 +529,7 @@ item plasmagrenade
 			time	8
 			spldmg	"320 60"
 			splrad	6
-			dmgtype "plasma"
+			dmgweight plasma_medium
 		}
 		firedef
 		{
@@ -547,7 +555,7 @@ item plasmagrenade
 			time	8
 			spldmg	"320 60"
 			splrad	6
-			dmgtype "plasma"
+			dmgweight plasma_medium
 		}
 	}
 }

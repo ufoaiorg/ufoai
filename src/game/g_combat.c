@@ -287,8 +287,8 @@ static void G_UpdateCharacterScore (edict_t *attacker, fireDef_t *fd, edict_t *t
 static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attacker, shot_mock_t *mock)
 {
 	player_t *player = NULL;
-	qboolean stun = (fd->dmgtype == gi.csi->damStun);
-	qboolean shock = (fd->dmgtype == gi.csi->damShock);
+	qboolean stun = (gi.csi->ods[fd->obj_idx].dmgtype == gi.csi->damStun);
+	qboolean shock = (gi.csi->ods[fd->obj_idx].dmgtype == gi.csi->damShock);
 
 	assert(ent);
 	assert(ent->type == ET_ACTOR
@@ -355,7 +355,7 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 	/* Apply armour effects. */
 	if (damage > 0 && ent->i.c[gi.csi->idArmour]) {
 		objDef_t *ad = &gi.csi->ods[ent->i.c[gi.csi->idArmour]->item.t];
-		damage = max(0, damage - ad->protection[fd->dmgtype]);
+		damage = max(0, damage - ad->protection[ad->dmgtype]);
 	}
 
 	assert((attacker->team >= 0) && (attacker->team < MAX_TEAMS));
@@ -481,7 +481,7 @@ static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_m
 	int damage;
 	int i;
 
-	qboolean shock = (fd->dmgtype == gi.csi->damShock);
+	qboolean shock = (gi.csi->ods[fd->obj_idx].dmgtype == gi.csi->damShock);
 
 	assert(fd->splrad);
 
@@ -540,7 +540,7 @@ static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_m
 	}
 
 	/* FIXME: splash might also hit other surfaces */
-	if (tr && fd->dmgtype == gi.csi->damFire && tr->contentFlags & CONTENTS_BURN) {
+	if (tr && gi.csi->ods[fd->obj_idx].dmgtype == gi.csi->damFire && tr->contentFlags & CONTENTS_BURN) {
 		/* sent particle to all players */
 		gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
 		gi.WriteShort(tr->contentFlags >> 8);
@@ -865,8 +865,8 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 			gi.WriteByte(fd->weap_fds_idx);
 			gi.WriteByte(fd->fd_idx);
 
-			if (i == 0 && (fd->dmgtype == gi.csi->damFire
-			 || fd->dmgtype == gi.csi->damBlast) && tr.contentFlags & CONTENTS_BURN) {
+			if (i == 0 && (gi.csi->ods[fd->obj_idx].dmgtype == gi.csi->damFire
+			 || gi.csi->ods[fd->obj_idx].dmgtype == gi.csi->damBlast) && tr.contentFlags & CONTENTS_BURN) {
 				/* sent particle to all players */
 				gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
 				gi.WriteShort(tr.contentFlags >> 8);

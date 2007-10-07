@@ -32,6 +32,7 @@ item pbeampistol_ammo
 	price		2500
 	size		3
 	buytype	weap_sec
+	dmgtype particlebeam
 
 	weapon_mod pbeampistol
 	{
@@ -51,7 +52,7 @@ item pbeampistol_ammo
 			ammo	1
 			time	4
 			damage	"45 5"
-			dmgtype particlebeam
+			dmgweight particlebeam_light
 			reaction	true
 		}
 		firedef
@@ -71,7 +72,7 @@ item pbeampistol_ammo
 			delaybetweenshots		5
 			time	7
 			damage	"28 3"
-			dmgtype particlebeam
+			dmgweight particlebeam_light
 		}
 	}
 }
@@ -111,6 +112,7 @@ item pbeamcannon_ammo
 	price		3000
 	size		8
 	buytype	weap_pri
+	dmgtype particlebeam
 
 	weapon_mod pbeamcannon
 	{
@@ -132,7 +134,7 @@ item pbeamcannon_ammo
 			damage	"100 20"
 			spldmg	"100 20"
 			splrad	3
-			dmgtype particlebeam
+			dmgweight particlebeam_heavy
 			reaction	true
 		}
 		firedef
@@ -152,7 +154,7 @@ item pbeamcannon_ammo
 			delaybetweenshots		5
 			time	9
 			damage	"38 5"
-			dmgtype particlebeam
+			dmgweight particlebeam_heavy
 			reaction	true
 		}
 	}
@@ -193,6 +195,7 @@ item pbeamrifle_ammo
 	price		3500
 	size		5
 	buytype	weap_pri
+	dmgtype particlebeam
 
 	weapon_mod pbeamrifle
 	{
@@ -213,7 +216,7 @@ item pbeamrifle_ammo
 			ammo	2
 			time	15
 			damage	"95 10"
-			dmgtype particlebeam
+			dmgweight particlebeam_medium
 			reaction	true
 		}
 		firedef
@@ -232,7 +235,7 @@ item pbeamrifle_ammo
 			ammo	2
 			time	11
 			damage	"95 10"
-			dmgtype particlebeam
+			dmgweight particlebeam_medium
 			reaction	true
 		}
 		firedef
@@ -252,7 +255,7 @@ item pbeamrifle_ammo
 			delaybetweenshots		5
 			time	12
 			damage	"40 4"
-			dmgtype particlebeam
+			dmgweight particlebeam_medium
 			reaction true
 		}
 	}

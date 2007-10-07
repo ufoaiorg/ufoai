@@ -672,7 +672,8 @@ static const char *skillNames[SKILL_NUM_TYPES - ABILITY_NUM_TYPES] = {
 
 enum {
 	OD_WEAPON,			/**< parse a weapon */
-	OD_PROTECTION		/**< parse armour protection values */
+	OD_PROTECTION,		/**< parse armour protection values */
+	OD_RATINGS			/**< parse rating values for displaying in the menus */
 };
 
 
@@ -691,6 +692,7 @@ static const char *buytypeNames[MAX_BUYTYPES] = {
 static const value_t od_vals[] = {
 	{"weapon_mod", V_NULL, 0, 0},
 	{"protection", V_NULL, 0, 0},
+	{"rating", V_NULL, 0, 0},
 
 	{"name", V_TRANSLATION_STRING, offsetof(objDef_t, name), 0},
 	{"model", V_STRING, offsetof(objDef_t, model), 0},
@@ -729,6 +731,7 @@ static const value_t od_vals[] = {
 	{"ecm", V_RELABS, offsetof(objDef_t, craftitem.stats[AIR_STATS_ECM]), MEMBER_SIZEOF(objDef_t, craftitem.stats[AIR_STATS_ECM])},
 	{"speed", V_RELABS, offsetof(objDef_t, craftitem.stats[AIR_STATS_SPEED]), MEMBER_SIZEOF(objDef_t, craftitem.stats[AIR_STATS_SPEED])},
 	{"fuelsize", V_RELABS, offsetof(objDef_t, craftitem.stats[AIR_STATS_FUELSIZE]), MEMBER_SIZEOF(objDef_t, craftitem.stats[AIR_STATS_FUELSIZE])},
+	{"dmgtype", V_DMGTYPE, offsetof(objDef_t, dmgtype), MEMBER_SIZEOF(objDef_t, dmgtype)},
 
 	{NULL, V_NULL, 0, 0}
 };
@@ -768,7 +771,6 @@ static const value_t fdps[] = {
 	{"damage", V_POS, offsetof(fireDef_t, damage), MEMBER_SIZEOF(fireDef_t, damage)},
 	{"spldmg", V_POS, offsetof(fireDef_t, spldmg), MEMBER_SIZEOF(fireDef_t, spldmg)},
 /*	{"splrad", V_FLOAT, offsetof(fireDef_t, splrad), MEMBER_SIZEOF(fireDef_t, splrad)},*/
-	{"dmgtype", V_DMGTYPE, offsetof(fireDef_t, dmgtype), MEMBER_SIZEOF(fireDef_t, dmgtype)},
 	{"dmgweight", V_DMGWEIGHT, offsetof(fireDef_t, dmgweight), MEMBER_SIZEOF(fireDef_t, dmgweight)},
 	{"irgoggles", V_BOOL, offsetof(fireDef_t, irgoggles), MEMBER_SIZEOF(fireDef_t, irgoggles)},
 	{NULL, 0, 0, 0}
@@ -1009,6 +1011,9 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 						break;
 					case OD_PROTECTION:
 						Com_ParseArmour(name, text, od->protection);
+						break;
+					case OD_RATINGS:
+						Com_ParseArmour(name, text, od->ratings);
 						break;
 					default:
 						break;
@@ -2034,8 +2039,9 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 		/* not found in the for loop */
 		if (i == csi.numDTs) {
 			/* gettext marker */
-			if (*token == '_')
+			if (*token == '_') {
 				token++;
+			}
 			Q_strncpyz(csi.dts[csi.numDTs], token, sizeof(csi.dts[csi.numDTs]));
 
 			/* special IDs */

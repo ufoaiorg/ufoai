@@ -32,6 +32,7 @@ item assault_ammo
 	price		130
 	size		3
 	buytype	weap_pri
+	dmgtype normal
 
 	weapon_mod assault
 	{
@@ -52,7 +53,7 @@ item assault_ammo
 			ammo	1
 			time	8
 			damage	"37 0"
-			dmgtype normal
+			dmgweight normal_medium
 			reaction	true
 		}
 		firedef
@@ -73,7 +74,7 @@ item assault_ammo
 			delaybetweenshots		5
 			time	12
 			damage	"37 0"
-			dmgtype normal
+			dmgweight normal_medium
 			reaction	true
 		}
 		firedef
@@ -94,7 +95,7 @@ item assault_ammo
 			delaybetweenshots		10
 			time	18
 			damage	"37 0"
-			dmgtype normal
+			dmgweight normal_medium
 			reaction 	true
 		}
 	}
@@ -136,6 +137,7 @@ item chaingun_ammo
 	scale		1.6
 	price		300
 	buytype	weap_pri
+	dmgtype normal
 
 	weapon_mod chaingun
 	{
@@ -156,7 +158,7 @@ item chaingun_ammo
 			delaybetweenshots		10
 			time	10
 			damage	"20 5"
-			dmgtype normal
+			dmgweight normal_heavy
 			reaction 	true
 		}
 		firedef
@@ -176,7 +178,7 @@ item chaingun_ammo
 			delaybetweenshots		20
 			time	20
 			damage	"20 5"
-			dmgtype normal
+			dmgweight normal_heavy
 			reaction 	true
 		}
 		firedef
@@ -196,7 +198,7 @@ item chaingun_ammo
 			delaybetweenshots		20
 			time	20
 			damage	"20 5"
-			dmgtype normal
+			dmgweight normal_heavy
 			reaction 	true
 		}
 	}
@@ -236,6 +238,7 @@ item machinegun_ammo
 	price		130
 	size		3
 	buytype	weap_pri
+	dmgtype normal
 
 	weapon_mod machinegun
 	{
@@ -256,7 +259,7 @@ item machinegun_ammo
 			ammo	1
 			time	8
 			damage	"37 0"
-			dmgtype normal
+			dmgweight normal_medium
 			reaction	true
 		}
 		firedef
@@ -277,7 +280,7 @@ item machinegun_ammo
 			delaybetweenshots		5
 			time	12
 			damage	"37 0"
-			dmgtype normal
+			dmgweight normal_medium
 			reaction	true
 		}
 		firedef
@@ -298,7 +301,7 @@ item machinegun_ammo
 			delaybetweenshots		10
 			time	18
 			damage	"37 0"
-			dmgtype normal
+			dmgweight normal_medium
 			reaction 	true
 		}
 	}
@@ -338,6 +341,7 @@ item sniper_ammo
 	price		190
 	size		5
 	buytype	weap_pri
+	dmgtype normal
 
 	weapon_mod sniper
 	{
@@ -358,7 +362,7 @@ item sniper_ammo
 			ammo	1
 			time	12
 			damage	"95 0"
-			dmgtype normal
+			dmgweight normal_heavy
 			reaction	true
 		}
 		firedef
@@ -378,7 +382,7 @@ item sniper_ammo
 			ammo	1
 			time	18
 			damage	"105 0"
-			dmgtype normal
+			dmgweight normal_heavy
 		}
 		firedef
 		{
@@ -397,7 +401,7 @@ item sniper_ammo
 			ammo	1
 			time	24
 			damage	"150 0"
-			dmgtype normal
+			dmgweight normal_heavy
 		}
 	}
 }
@@ -437,6 +441,7 @@ item pistol_ammo
 	price		20
 	size		1
 	buytype	weap_sec
+	dmgtype normal
 
 	weapon_mod pistol
 	{
@@ -456,7 +461,7 @@ item pistol_ammo
 			ammo	1
 			time	6
 			damage	"37 0"
-			dmgtype normal
+			dmgweight normal_light
 			reaction	true
 		}
 		firedef
@@ -476,7 +481,7 @@ item pistol_ammo
 			delaybetweenshots		10
 			time	8
 			damage	"37 5"
-			dmgtype normal
+			dmgweight normal_light
 			reaction true
 		}
 		firedef
@@ -497,7 +502,7 @@ item pistol_ammo
 			delaybetweenshots		10
 			time	8
 			damage	"37 0"
-			dmgtype normal
+			dmgweight normal_light
 		}
 	}
 }
@@ -536,6 +541,7 @@ item pistol2_ammo
 	price		20
 	size		2
 	buytype	weap_sec
+	dmgtype normal
 
 	weapon_mod pistol2
 	{
@@ -557,6 +563,7 @@ item pistol2_ammo
 			damage	"20 5"
 			dmgtype normal
 			reaction	true
+			dmgweight normal_light
 		}
 		firedef
 		{
@@ -575,7 +582,7 @@ item pistol2_ammo
 			delaybetweenshots		10
 			time	7
 			damage	"20 5"
-			dmgtype normal
+			dmgweight normal_light
 			reaction true
 		}
 		firedef
@@ -595,7 +602,7 @@ item pistol2_ammo
 			delaybetweenshots		10
 			time	14
 			damage	"20 5"
-			dmgtype normal
+			dmgweight normal_light
 			reaction true
 		}
 	}
@@ -636,6 +643,7 @@ item smg_ammo
 	price		40
 	size		3
 	buytype	weap_sec
+	dmgtype normal
 
 	weapon_mod smg
 	{
@@ -655,7 +663,7 @@ item smg_ammo
 			ammo	1
 			time	6
 			damage	"25 0"
-			dmgtype normal
+			dmgweight normal_light
 			reaction	true
 		}
 		firedef
@@ -675,7 +683,7 @@ item smg_ammo
 			delaybetweenshots		10
 			time	14
 			damage	"25 0"
-			dmgtype normal
+			dmgweight normal_light
 			reaction	true
 		}
 		firedef
@@ -696,7 +704,7 @@ item smg_ammo
 			delaybetweenshots		20
 			time	20
 			damage	"25 0"
-			dmgtype normal
+			dmgweight normal_light
 			reaction	true
 		}
 	}
@@ -794,6 +802,7 @@ item shotgun2_slug_ammo
 	price		35
 	size		5
 	buytype	weap_pri
+	dmgtype normal
 
 	weapon_mod shotgun2
 	{
@@ -815,7 +824,7 @@ item shotgun2_slug_ammo
 			delaybetweenshots		0
 			time	8
 			damage	"51 0"
-			dmgtype normal
+			dmgweight normal_heavy
 			reaction true
 		}
 
@@ -837,7 +846,7 @@ item shotgun2_slug_ammo
 			delaybetweenshots		5
 			time	12
 			damage	"51 0"
-			dmgtype normal
+			dmgweight normal_heavy
 			reaction	true
 		}
 
@@ -859,7 +868,7 @@ item shotgun2_slug_ammo
 			delaybetweenshots		7
 			time	20
 			damage	"51 0"
-			dmgtype normal
+			dmgweight normal_heavy
 			reaction	true
 		}
 	}
@@ -900,6 +909,7 @@ item shotgun_ammo
 	price		35
 	size		4
 	buytype	weap_pri
+	dmgtype blast
 
 	weapon_mod shotgun
 	{
@@ -921,7 +931,7 @@ item shotgun_ammo
 			delaybetweenshots		0
 			time	8
 			damage	"11 0"
-			dmgtype blast
+			dmgweight blast
 			reaction true
 		}
 
@@ -943,7 +953,7 @@ item shotgun_ammo
 			delaybetweenshots		0
 			time	12
 			damage	"11 0"
-			dmgtype blast
+			dmgweight blast
 			reaction true
 		}
 	}
@@ -985,6 +995,7 @@ item shotgun_micro_ammo
 	size		4
 	buytype	multi_ammo
 //	buytype	weap_pri
+    dmgtype blast
 
 	weapon_mod shotgun_micro	// weap_fds_idx=0
 	{
@@ -1006,7 +1017,7 @@ item shotgun_micro_ammo
 			delaybetweenshots		0
 			time	6
 			damage	"7 2"
-			dmgtype blast
+			dmgweight blast
 			reaction	true
 		}
 
@@ -1028,7 +1039,7 @@ item shotgun_micro_ammo
 			delaybetweenshots		15
 			time	10
 			damage	"7 2"
-			dmgtype blast
+			dmgweight blast
 			reaction	true
 		}
 	}
@@ -1053,7 +1064,7 @@ item shotgun_micro_ammo
 			delaybetweenshots		0
 			time	8
 			damage	"11 0"
-			dmgtype blast
+			dmgweight blast
 			reaction	true
 		}
 
@@ -1075,7 +1086,7 @@ item shotgun_micro_ammo
 			delaybetweenshots		15
 			time	12
 			damage	"11 0"
-			dmgtype blast
+			dmgweight blast
 			reaction	true
 		}
 
@@ -1097,7 +1108,7 @@ item shotgun_micro_ammo
 			delaybetweenshots		30
 			time	20
 			damage	"11 0"
-			dmgtype blast
+			dmgweight blast
 			reaction	true
 		}
 	}
@@ -1137,6 +1148,7 @@ item flamer_ammo
 	price		270
 	size		10
 	buytype	weap_pri
+	dmgtype fire
 
 	weapon_mod flamer
 	{
@@ -1158,7 +1170,7 @@ item flamer_ammo
 			delaybetweenshots		25
 			time	8
 			damage	"6 2"
-			dmgtype fire
+			dmgweight fire_medium
 			reaction	true
 		}
 		firedef
@@ -1179,7 +1191,7 @@ item flamer_ammo
 			delaybetweenshots		25
 			time	12
 			damage	"6 2"
-			dmgtype fire
+			dmgweight fire_heavy
 			reaction	true
 		}
 		firedef
@@ -1200,7 +1212,7 @@ item flamer_ammo
 			delaybetweenshots		25
 			time	12
 			damage	"6 2"
-			dmgtype fire
+			dmgweight fire_heavy
 			reaction	true
 		}
 	}
@@ -1242,6 +1254,7 @@ item rpg_ammo
 	price		430
 	size		6
 	buytype	weap_pri
+	dmgtype blast
 
 	weapon_mod rpg
 	{
@@ -1266,7 +1279,7 @@ item rpg_ammo
 			damage	"120 30"
 			spldmg	"240 60"
 			splrad	4
-			dmgtype blast
+			dmgweight blast
 		}
 	}
 }
@@ -1283,6 +1296,7 @@ item rpg_incendiary_ammo
 	price		630
 	size		6
 	buytype	weap_pri
+	dmgtype fire
 
 	weapon_mod rpg
 	{
@@ -1307,52 +1321,10 @@ item rpg_incendiary_ammo
 			damage	"60 30"
 			spldmg	"120 30"
 			splrad	2
-			dmgtype fire
+			dmgweight fire_medium
 		}
 	}
 }
-
-/*
-item rpg_particle_ammo
-{
-	name	"_Particle-Beam Rocket"
-	model	weapons/rpg/rpg_particle_ammo
-	type	ammo
-	animationindex	0
-	shape	"0 0 1 2"
-	center	"0 0 0"
-	scale	1.1
-	price	2740
-	buytype	weap_pri
-
-	weapon_mod rpg
-	{
-		firedef
-		{
-			name	"_Aimed Shot"
-			skill	explosive
-			projtl	rocket_particle
-			impact	pbeamBigImpact
-			hitbody	pbeamBigImpact
-			firesnd	weapons/rpg
-			impsnd	weapons/pbeam_rocket
-			bodysnd	weapons/pbeam_rocket
-			impactvolume 1.0
-			speed	250
-			spread	"0.2 0.6"
-			crouch	0.6
-			range	250
-			shots	1
-			ammo	1
-			time	14
-			damage	"60 60"
-			spldmg	"420 30"
-			splrad	3
-			dmgtype	particlebeam
-		}
-	}
-}
-*/
 
 // =======================
 // GRENADE LAUNCHER
@@ -1388,6 +1360,7 @@ item grenl_ammo
 	price		135
 	size		6
 	buytype	weap_pri
+	dmgtype blast
 
 	weapon_mod grenl
 	{
@@ -1414,7 +1387,7 @@ item grenl_ammo
 			damage	"20 10"
 			spldmg	"70 20"
 			splrad	4
-			dmgtype blast
+			dmgweight blast
 			reaction	true
 		}
 
@@ -1441,7 +1414,7 @@ item grenl_ammo
 			damage	"20 10"
 			spldmg	"70 20"
 			splrad	4
-			dmgtype blast
+			dmgweight blast
 		}
 
 		firedef
@@ -1467,8 +1440,7 @@ item grenl_ammo
 			damage	"20 10"
 			spldmg	"70 20"
 			splrad	4
-			dmgtype blast
-			reaction	true
+			dmgweight blast
 		}
 
 		firedef
@@ -1496,7 +1468,7 @@ item grenl_ammo
 			time	8
 			spldmg	"70 20"
 			splrad	4
-			dmgtype blast
+			dmgweight blast
 		}
 
 		firedef
@@ -1524,7 +1496,7 @@ item grenl_ammo
 			time	12
 			spldmg	"70 20"
 			splrad	4
-			dmgtype blast
+			dmgweight blast
 		}
 
 		firedef
@@ -1552,8 +1524,7 @@ item grenl_ammo
 			time	15
 			spldmg	"70 20"
 			splrad	4
-			dmgtype blast
-			reaction	true
+			dmgweight blast
 		}
 	}
 }
@@ -1570,6 +1541,7 @@ item grenl_incendiary_ammo
 	price		135
 	size		6
 	buytype	weap_pri
+	dmgtype fire
 
 	weapon_mod grenl
 	{
@@ -1596,7 +1568,7 @@ item grenl_incendiary_ammo
 			damage	"20 10"
 			spldmg	"70 20"
 			splrad	4
-			dmgtype fire
+			dmgweight fire_medium
 			reaction	true
 		}
 
@@ -1624,7 +1596,7 @@ item grenl_incendiary_ammo
 			damage	"20 10"
 			spldmg	"70 20"
 			splrad	4
-			dmgtype fire
+			dmgweight fire_medium
 		}
 
 		firedef
@@ -1650,8 +1622,7 @@ item grenl_incendiary_ammo
 			damage	"20 10"
 			spldmg	"70 20"
 			splrad	4
-			dmgtype fire
-			reaction	true
+			dmgweight fire_medium
 		}
 
 		firedef
@@ -1679,7 +1650,7 @@ item grenl_incendiary_ammo
 			time	8
 			spldmg	"70 20"
 			splrad	4
-			dmgtype fire
+			dmgweight fire_medium
 		}
 
 		firedef
@@ -1707,7 +1678,7 @@ item grenl_incendiary_ammo
 			time	12
 			spldmg	"70 20"
 			splrad	4
-			dmgtype fire
+			dmgweight fire_medium
 		}
 
 		firedef
@@ -1735,7 +1706,7 @@ item grenl_incendiary_ammo
 			time	15
 			spldmg	"70 20"
 			splrad	4
-			dmgtype fire
+			dmgweight fire_medium
 		}
 	}
 }
@@ -1752,6 +1723,7 @@ item grenl_fle_ammo
 	price		135
 	size		6
 	buytype	weap_pri
+	dmgtype normal
 
 	weapon_mod grenl
 	{
@@ -1770,7 +1742,7 @@ item grenl_fle_ammo
 			delaybetweenshots		15
 			time	8
 			damage	"6 2"
-			dmgtype blast
+			dmgweight normal_light
 			reaction	true
 		}
 
@@ -1789,7 +1761,7 @@ item grenl_fle_ammo
 			delaybetweenshots		72
 			time	14
 			damage	"6 2"
-			dmgtype blast
+			dmgweight normal_light
 			reaction	true
 		}
 	}
@@ -1807,6 +1779,7 @@ item grenl_plasma_ammo
 	price		530
 	size		6
 	buytype	weap_pri
+	dmgtype plasma
 
 	weapon_mod grenl
 	{
@@ -1833,7 +1806,7 @@ item grenl_plasma_ammo
 			damage	"20 10"
 			spldmg	"100 20"
 			splrad	5
-			dmgtype plasma
+			dmgweight plasma_medium
 			reaction	true
 		}
 
@@ -1860,7 +1833,7 @@ item grenl_plasma_ammo
 			damage	"20 10"
 			spldmg	"100 20"
 			splrad	5
-			dmgtype plasma
+			dmgweight plasma_medium
 		}
 
 		firedef
@@ -1886,8 +1859,7 @@ item grenl_plasma_ammo
 			damage	"20 10"
 			spldmg	"100 20"
 			splrad	5
-			dmgtype plasma
-			reaction	true
+			dmgweight plasma_medium
 		}
 
 		firedef
@@ -1915,7 +1887,7 @@ item grenl_plasma_ammo
 			time	8
 			spldmg	"100 20"
 			splrad	5
-			dmgtype plasma
+			dmgweight plasma_medium
 		}
 
 		firedef
@@ -1943,7 +1915,7 @@ item grenl_plasma_ammo
 			time	12
 			spldmg	"100 20"
 			splrad	5
-			dmgtype plasma
+			dmgweight plasma_medium
 		}
 
 		firedef
@@ -1971,7 +1943,7 @@ item grenl_plasma_ammo
 			time	15
 			spldmg	"100 20"
 			splrad	5
-			dmgtype plasma
+			dmgweight plasma_medium
 		}
 	}
 }
@@ -2011,6 +1983,7 @@ item bolterrifle_ammo
 	price           930
 	size		9
 	buytype	weap_pri
+	dmgtype normal
 
 	weapon_mod bolterrifle
 	{
@@ -2030,7 +2003,7 @@ item bolterrifle_ammo
 			ammo    1
 			time    8
 			damage  "80 5"
-			dmgtype normal
+			dmgweight normal_heavy
 			reaction	true
 		}
 
@@ -2050,7 +2023,7 @@ item bolterrifle_ammo
 			ammo    3
 			time    13
 			damage  "80 5"
-			dmgtype normal
+			dmgweight normal_heavy
 			reaction	true
 		}
 
@@ -2071,7 +2044,7 @@ item bolterrifle_ammo
 			delaybetweenshots     2
 			time    16
 			damage  "100 5"
-			dmgtype normal
+			dmgweight normal_heavy
 		}
 	}
 }

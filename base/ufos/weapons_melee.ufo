@@ -17,6 +17,7 @@ item knife
 	size		6
 	buytype	weap_sec
 	thrown		true
+	dmgtype steelblade
 
 	weapon_mod knife
 	{
@@ -33,7 +34,7 @@ item knife
 			shots	1
 			time	4
 			damage	"40 20"
-			dmgtype steelblade
+			dmgweight steelblade
 			reaction	true
 		}
 		firedef
@@ -52,7 +53,7 @@ item knife
 			ammo	1
 			time	8
 			damage	"35 15"
-			dmgtype steelblade
+			dmgweight steelblade
 			reaction	true
 		}
 	}
@@ -77,6 +78,7 @@ item knifemono
 	size		12
 	buytype	weap_sec
 	thrown		true
+	dmgtype monomolecularblade
 
 	weapon_mod knifemono
 	{
@@ -93,7 +95,7 @@ item knifemono
 			shots	1
 			time	6
 			damage	"70 35"
-			dmgtype monomolecularblade
+			dmgweight monomolecularblade
 			reaction	true
 		}
 		firedef
@@ -109,7 +111,7 @@ item knifemono
 			shots	1
 			time	12
 			damage	"140 35"
-			dmgtype monomolecularblade
+			dmgweight monomolecularblade
 			reaction	true
 		}
 		firedef
@@ -128,7 +130,7 @@ item knifemono
 			ammo	1
 			time	8
 			damage	"60 30"
-			dmgtype monomolecularblade
+			dmgweight monomolecularblade
 			reaction	true
 		}
 	}
@@ -153,6 +155,7 @@ item stunrod
 	thrown	false
 	oneshot true
 	ammo 4
+	dmgtype stun
 
 	weapon_mod stunrod
 	{
@@ -170,7 +173,7 @@ item stunrod
 			ammo	1
 			time	7
 			damage	"60 20"
-			dmgtype stun
+			dmgweight stun
 			reaction	true
 		}
 
@@ -189,7 +192,7 @@ item stunrod
 			delaybetweenshots		5
 			time	11
 			damage	"60 20"
-			dmgtype stun
+			dmgweight stun
 			reaction	true
 		}
 	}
@@ -215,6 +218,7 @@ item kerrblade
 	size		20
 	buytype	weap_sec
 	thrown		true
+	dmgtype monomolecularblade
 
 	weapon_mod kerrblade
 	{
@@ -231,7 +235,7 @@ item kerrblade
 			shots	1
 			time	8
 			damage	"95 45"
-			dmgtype monomolecularblade
+			dmgweight monomolecularblade
 			reaction	true
 		}
 		firedef
@@ -247,7 +251,7 @@ item kerrblade
 			shots	1
 			time	14
 			damage	"180 45"
-			dmgtype monomolecularblade
+			dmgweight monomolecularblade
 			reaction	true
 		}
 	}
@@ -288,6 +292,7 @@ item plasblade_ammo
 	scale  		1.5
 	size		5
 	buytype	weap_sec
+	dmgtype plasma
 
 	weapon_mod plasblade
 	{
@@ -306,7 +311,7 @@ item plasblade_ammo
 			ammo 1
 			time	7
 			damage	"300 5"
-			dmgtype plasma
+			dmgtype plasma_heavy
 			reaction	true
 		}
 		firedef
@@ -325,7 +330,7 @@ item plasblade_ammo
 			ammo	1
 			time	12
 			damage	"300 5"
-			dmgtype plasma
+			dmgtype plasma_heavy
 			reaction	true
 		}
 	}

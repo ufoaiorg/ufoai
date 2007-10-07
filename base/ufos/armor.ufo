@@ -7,14 +7,34 @@
 damagetypes standard
 {
 	"_normal"
+	"normal_light"
+	"normal_medium"
+	"normal_heavy"
+	"normal_power"
 	"_steelblade"
 	"_monomolecularblade"
 	"_blast"
 	"_fire"
+	"fire_light"
+	"fire_medium"
+	"fire_heavy"
+	"fire_power"
 	"_shock"
 	"_laser"
+	"laser_light"
+	"laser_medium"
+	"laser_heavy"
+	"laser_power"
 	"_plasma"
+	"plasma_light"
+	"plasma_medium"
+	"plasma_heavy"
+	"plasma_power"
 	"_particlebeam"
+	"particlebeam_light"
+	"particlebeam_medium"
+	"particlebeam_heavy"
+	"particlebeam_power"
 	"_stun"
 }
 
@@ -32,19 +52,51 @@ item light
 	size		60
 	buytype		armour
 	useable		0
+	//TODO: TU penalty value. No support for this yet.
 
-	protection
-	{
-		normal	20
-		steelblade	80
+	protection {
+		normal_light		10
+		normal_medium		8
+		normal_heavy		5
+
+		steelblade			10
+
+		monomolecularblade	0
+
+		blast				10
+
+		fire_medium			10
+		fire_heavy			10
+
+		shock				0
+
+		plasma_light		7
+		plasma_medium		6
+		plasma_heavy		5
+
+		laser_light			12
+		laser_medium		10
+		laser_heavy			10
+
+		particlebeam_light	7
+		particlebeam_medium	6
+		particlebeam_heavy	5
+
+		stun				0
+	}
+
+	//FIXME
+	rating {
+		normal				30
+		steelblade			20
 		monomolecularblade	10
-		blast	40
-		fire	5
-		shock	5
-		laser	5
-		plasma	30
-		particlebeam	1
-		stun	20
+		blast				10
+		fire				10
+		shock				10
+		plasma				10
+		laser				25
+		particlebeam		10
+		stun				10
 	}
 }
 
@@ -62,21 +114,54 @@ item medium
 	size		120
 	buytype		armour
 	useable		0
+	//TODO: TU penalty value. No support for this yet.
 
-	protection
-	{
-		normal	35
-		steelblade	90
-		monomolecularblade	20
-		blast	55
-		fire	20
-		shock	20
-		laser	35
-		plasma	50
-		particlebeam	3
-		stun	35
+	protection {
+		normal_light		15
+		normal_medium		12
+		normal_heavy		8
+
+		steelblade			20
+
+		monomolecularblade	3
+
+		blast				15
+
+		fire_medium			17
+		fire_heavy			11
+
+		shock				5
+
+		plasma_light		17
+		plasma_medium		12
+		plasma_heavy		8
+
+		laser_light			15
+		laser_medium		15
+		laser_heavy			10
+
+		particlebeam_light	18
+		particlebeam_medium	16
+		particlebeam_heavy	14
+
+		stun				10
+	}
+
+	//FIXME
+	rating {
+		normal				30
+		steelblade			20
+		monomolecularblade	10
+		blast				10
+		fire				10
+		shock				10
+		plasma				10
+		laser				25
+		particlebeam		10
+		stun				10
 	}
 }
+
 //weights 320
 //item heavy
 //{
@@ -90,8 +175,7 @@ item medium
 //	price		18000
 //	buytype		armour
 //
-//	protection
-//	{
+//	protection {
 //		normal	50
 //		steelblade	100
 //		monomolecularblade	40
@@ -117,19 +201,51 @@ item power
 	scale		0.7
 	price		32000
 	buytype		armour
+	//TODO: TU penalty value. No support for this yet.
 
-	protection	// todo: fixme
-	{
-		normal	50
-		steelblade	100
-		monomolecularblade	40
-		blast	70
-		fire	75
-		shock	35
-		laser	50
-		plasma	70
-		particlebeam	28
-		stun	97
+	protection {
+		normal_light		25
+		normal_medium		22
+		normal_heavy		20
+
+		steelblade			40
+
+		monomolecularblade	10
+
+		blast				15
+
+		fire_medium			27
+		fire_heavy			21
+
+		shock				18
+
+		plasma_light		20
+		plasma_medium		20
+		plasma_heavy		18
+
+		laser_light			22
+		laser_medium		15
+		laser_heavy			15
+
+		particlebeam_light	18
+		particlebeam_medium	16
+		particlebeam_heavy	14
+
+		stun				20
+	}
+
+    //FIXME
+	rating {
+		normal				30
+		steelblade			20
+		monomolecularblade	10
+		blast				10
+		fire				10
+		shock				10
+		plasma				10
+		laser				25
+		particlebeam		10
+		stun				10
 	}
 }
 
@@ -147,19 +263,51 @@ item light_alien
 	size		50
 	buytype		armour
 	useable		1
+	//TODO: TU penalty value. No support for this yet.
 
-	protection
-	{
-		normal	27
-		steelblade	100
-		monomolecularblade	40
-		blast	47
-		fire	15
-		shock	15
-		laser	22
-		plasma	45
-		particlebeam	23
-		stun	27
+	protection {
+		normal_light		10
+		normal_medium		8
+		normal_heavy		5
+
+		steelblade			10
+
+		monomolecularblade	0
+
+		blast				10
+
+		fire_medium			10
+		fire_heavy			10
+
+		shock				0
+
+		plasma_light		7
+		plasma_medium		6
+		plasma_heavy		5
+
+		laser_light			12
+		laser_medium		10
+		laser_heavy			10
+
+		particlebeam_light	7
+		particlebeam_medium	6
+		particlebeam_heavy	5
+
+		stun				0
+	}
+
+    //FIXME
+	rating {
+		normal				30
+		steelblade			20
+		monomolecularblade	10
+		blast				10
+		fire				10
+		shock				10
+		plasma				10
+		laser				25
+		particlebeam		10
+		stun				10
 	}
 }
 
@@ -177,18 +325,50 @@ item medium_alien
 	size		75
 	buytype		armour
 	useable		1
+	//TODO: TU penalty value. No support for this yet.
 
-	protection
-	{
-		normal	42
-		steelblade	100
-		monomolecularblade	40
-		blast	62
-		fire	30
-		shock	30
-		laser	37
-		plasma	62
-		particlebeam	27
-		stun	42
+	protection {
+		normal_light		15
+		normal_medium		12
+		normal_heavy		8
+
+		steelblade			20
+
+		monomolecularblade	3
+
+		blast				15
+
+		fire_medium			17
+		fire_heavy			11
+
+		shock				5
+
+		plasma_light		17
+		plasma_medium		12
+		plasma_heavy		8
+
+		laser_light			15
+		laser_medium		15
+		laser_heavy			10
+
+		particlebeam_light	18
+		particlebeam_medium	16
+		particlebeam_heavy	14
+
+		stun				10
+	}
+
+    //FIXME
+	rating {
+		normal				30
+		steelblade			20
+		monomolecularblade	10
+		blast				10
+		fire				10
+		shock				10
+		plasma				10
+		laser				25
+		particlebeam		10
+		stun				10
 	}
 }

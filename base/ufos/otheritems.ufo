@@ -109,6 +109,7 @@ item bloodspider_weapon
 	size	6
 	buytype weap_sec			//FIXME
 	firetwohanded   true
+	dmgtype		monomolecularblade
 
 	weapon_mod bloodspider_weapon
 	{
@@ -125,8 +126,9 @@ item bloodspider_weapon
 			shots		1			//FIXME
 			time		12			//FIXME
 			damage		"40 20"			//FIXME
-			dmgtype		steelblade		//FIXME
+			dmgtype		steelblade
 			reaction	true
+			dmgweight   monomolecularblade
 		}
 	}
 }

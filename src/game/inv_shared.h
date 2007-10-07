@@ -78,7 +78,6 @@ typedef struct fireDef_s {
 	qboolean rolled;			/**< Can it be rolled - e.g. grenades */
 	qboolean reaction;			/**< This firemode can be used/selected for reaction fire.*/
 	int throughWall;		/**< allow the shooting through a wall */
-	byte dmgtype;
 	byte dmgweight;
 	float speed;
 	vec2_t shotOrg;
@@ -265,9 +264,11 @@ typedef struct objDef_s {
 
 	/* Armour specific */
 	short protection[MAX_DAMAGETYPES];	/**< Protection values for each armour and every damage type. */
+	short ratings[MAX_DAMAGETYPES];		/**< Rating values for each armour and every damage type to display in the menus. */
 
 	/* Aircraft specific */
 	qboolean aircraft;			/**< True if this item is dummy aircraft - used in disassembling. */
+	byte dmgtype;
 	craftitem_t craftitem;
 } objDef_t;
 

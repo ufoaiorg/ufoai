@@ -32,6 +32,7 @@ item plaspistol_ammo
 	price		1700
 	size		3
 	buytype	weap_sec
+	dmgtype plasma
 
 	weapon_mod plaspistol
 	{
@@ -52,7 +53,7 @@ item plaspistol_ammo
 			delaybetweenshots		6
 			time	6
 			damage	"16 6"
-			dmgtype plasma
+			dmgweight plasma_light
 			reaction	true
 		}
 		firedef
@@ -72,7 +73,7 @@ item plaspistol_ammo
 			delaybetweenshots		6
 			time	15
 			damage	"16 6"
-			dmgtype plasma
+			dmgweight plasma_light
 			reaction	true
 		}
 		firedef
@@ -93,7 +94,7 @@ item plaspistol_ammo
 			delaybetweenshots		32
 			time	15
 			damage	"6 2"
-			dmgtype plasma
+			dmgweight plasma_light
 		}
 	}
 }
@@ -133,6 +134,7 @@ item plasrifle_ammo
 	price		2000
 	size		4
 	buytype	weap_pri
+	dmgtype plasma
 
 	weapon_mod plasrifle
 	{
@@ -153,7 +155,7 @@ item plasrifle_ammo
 			delaybetweenshots		5
 			time	9
 			damage	"20 5"
-			dmgtype plasma
+			dmgweight plasma_medium
 			reaction	true
 		}
 		firedef
@@ -173,7 +175,7 @@ item plasrifle_ammo
 			delaybetweenshots		5
 			time	14
 			damage	"20 5"
-			dmgtype plasma
+			dmgweight plasma_medium
 			reaction	true
 		}
 		firedef
@@ -194,7 +196,7 @@ item plasrifle_ammo
 			delaybetweenshots		21
 			time	14
 			damage	"12 2"
-			dmgtype plasma
+			dmgweight plasma_medium
 			reaction	true
 		}
 	}
@@ -235,6 +237,7 @@ item plasblaster_ammo
 	price		4000
 	size		7
 	buytype	weap_pri
+	dmgtype plasma
 
 	weapon_mod plasblaster
 	{
@@ -257,7 +260,7 @@ item plasblaster_ammo
 			damage	"10 5"
 			spldmg	"10 5"
 			splrad	5
-			dmgtype plasma
+			dmgweight plasma_heavy
 			reaction	true
 		}
 		firedef
@@ -278,7 +281,7 @@ item plasblaster_ammo
 			delaybetweenshots		38
 			time	20
 			damage	"15 6"
-			dmgtype plasma
+			dmgweight plasma_heavy
 			reaction	true
 		}
 		firedef
@@ -299,7 +302,7 @@ item plasblaster_ammo
 			delaybetweenshots		38
 			time	20
 			damage	"15 6"
-			dmgtype plasma
+			dmgweight plasma_heavy
 			reaction	true
 		}
 	}

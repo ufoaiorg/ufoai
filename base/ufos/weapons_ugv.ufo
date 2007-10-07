@@ -70,6 +70,7 @@ item ugv_chaingun_belt
 	scale		1.6
 	price		2500
 	buytype	dummy			// todo: extra "heavy equipment" buytype?
+	dmgtype normal
 
 	weapon_mod ugv_chaingun
 	{
@@ -90,7 +91,7 @@ item ugv_chaingun_belt
 			delaybetweenshots		10
 			time	10
 			damage	"25 5"
-			dmgtype normal
+			dmgweight normal_heavy
 			//reaction 	true
 			reaction 	false // do we allow RF for remove-controlled (or are they autonomous?) tanks?
 		}
@@ -111,7 +112,7 @@ item ugv_chaingun_belt
 			delaybetweenshots		20
 			time	20
 			damage	"25 5"
-			dmgtype normal
+			dmgweight normal_heavy
 			//reaction 	true
 			reaction 	false	// do we allow RF for remove-controlled (or are they autonomous?) tanks?
 		}
@@ -133,7 +134,7 @@ item ugv_chaingun_belt
 //			delaybetweenshots		20
 //			time	20
 //			damage	"25 5"
-//			dmgtype normal
+//			dmgweight normal_heavy
 //			reaction 	true
 //		}
 	}
