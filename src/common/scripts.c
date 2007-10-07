@@ -660,6 +660,7 @@ static const char *skillNames[SKILL_NUM_TYPES - ABILITY_NUM_TYPES] = {
 	"explosive"
 };
 
+/** @brief The order here must be the same as in od_vals */
 enum {
 	OD_WEAPON,			/**< parse a weapon */
 	OD_PROTECTION,		/**< parse armour protection values */
@@ -679,6 +680,10 @@ static const char *buytypeNames[MAX_BUYTYPES] = {
 	"craftitem"
 };
 
+/**
+ * @note Make sure, that you don't change the order of the first entries
+ * or you have the change the enum values OD_*, too
+ */
 static const value_t od_vals[] = {
 	{"weapon_mod", V_NULL, 0, 0},
 	{"protection", V_NULL, 0, 0},
@@ -834,7 +839,7 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 /**
  * @sa Com_ParseItem
  */
-static void Com_ParseArmour (const char *name, const char **text, short *ad)
+static void Com_ParseArmour (const char *name, const char **text, short *ad, qboolean rating)
 {
 	const char *errhead = "Com_ParseArmour: unexpected end of file";
 	const char *token;
@@ -860,8 +865,9 @@ static void Com_ParseArmour (const char *name, const char **text, short *ad)
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
-
-				/* protection or damage type values */
+				if (rating && !csi.dts[i].showInMenu)
+					Sys_Error("Com_ParseArmour: You try to set a rating value for a none menu displayed damage type '%s'", csi.dts[i].id);
+				/* protection or rating values */
 				ad[i] = atoi(token);
 				break;
 			}
@@ -1000,10 +1006,10 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 						}
 						break;
 					case OD_PROTECTION:
-						Com_ParseArmour(name, text, od->protection);
+						Com_ParseArmour(name, text, od->protection, qfalse);
 						break;
 					case OD_RATINGS:
-						Com_ParseArmour(name, text, od->ratings);
+						Com_ParseArmour(name, text, od->ratings, qtrue);
 						break;
 					default:
 						break;
