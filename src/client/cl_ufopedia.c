@@ -1184,12 +1184,11 @@ static void UP_TechTreeClick_f (void)
 		return;
 
 	required_AND = &upCurrent->require_AND;
+	if (num < 0 || num >= required_AND->numLinks)
+		return;
 
 	if (!Q_strncmp(required_AND->id[num], "nothing", MAX_VAR)
 		|| !Q_strncmp(required_AND->id[num], "initial", MAX_VAR))
-		return;
-
-	if (num >= required_AND->numLinks)
 		return;
 
 	techRequired = RS_GetTechByIDX(required_AND->idx[num]);
