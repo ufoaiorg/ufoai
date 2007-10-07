@@ -837,6 +837,8 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 
 
 /**
+ * @brief Parses the armour definitions from script files. The protection and rating values
+ * @note The rating values are just for menu displaying
  * @sa Com_ParseItem
  */
 static void Com_ParseArmour (const char *name, const char **text, short *ad, qboolean rating)
@@ -893,6 +895,10 @@ const char *air_slot_type_strings[MAX_ACITEMS] = {
 	"base_ammo_laser"
 };
 
+/**
+ * @brief Parses weapon, equipment, craft items and armour
+ * @sa Com_ParseArmour
+ */
 static void Com_ParseItem (const char *name, const char **text, qboolean craftitem)
 {
 	const char *errhead = "Com_ParseItem: unexpected end of file (weapon ";
@@ -2040,7 +2046,7 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 
 		/* not found in the for loop */
 		if (i == csi.numDTs) {
-			Q_strncpyz(csi.dts[csi.numDTs].id, token, sizeof(csi.dts[csi.numDTs]));
+			Q_strncpyz(csi.dts[csi.numDTs].id, token, sizeof(csi.dts[csi.numDTs].id));
 
 			/* special IDs */
 			if (!Q_strncmp(token, "normal", 6))
@@ -2064,9 +2070,7 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 			if (csi.numDTs >= MAX_DAMAGETYPES)
 				Sys_Error("Com_ParseDamageTypes: Too many damage types.\n");
 		} else {
-			Com_Printf("Com_ParseDamageTypes: damage type list \"%s\" with same already exists - ignore the second one\n", name);
-			FS_SkipBlock(text);
-			return;
+			Com_Printf("Com_ParseDamageTypes: damage type \"%s\" in list \"%s\" with same already exists - ignore the second one (#%i)\n", token, name, csi.numDTs);
 		}
 	} while (*text);
 }

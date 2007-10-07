@@ -291,7 +291,7 @@ void UP_ItemDescription (int item)
 			}
 		} else if (!Q_strncmp(od->type, "ammo", 4)) {
 			if (Q_strncmp(activeMenu->name, "equipment", 9))
-				Q_strcat(itemText, va(_("Size:\t%i\n"),od->size), sizeof(itemText));
+				Q_strcat(itemText, va(_("Size:\t%i\n"), od->size), sizeof(itemText));
 			/* more will be written below */
 		} else if (od->weapon && (od->reload || od->thrown)) {
 			Com_sprintf(itemText, sizeof(itemText), _("%s weapon with\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
@@ -302,7 +302,7 @@ void UP_ItemDescription (int item)
 		} else if (od->weapon) {
 			Com_sprintf(itemText, sizeof(itemText), _("%s ammo-less weapon with\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
 			if (Q_strncmp(activeMenu->name, "equipment", 9))
-				Q_strcat(itemText, va(_("Size:\t%i\n"),od->size), sizeof(itemText));
+				Q_strcat(itemText, va(_("Size:\t%i\n"), od->size), sizeof(itemText));
 			/* more will be written below */
 		} else {
 			/* just an item */
@@ -310,7 +310,7 @@ void UP_ItemDescription (int item)
 			/* @todo: We use the default firemodes here. We might need some change the "fd[0]" below to FIRESH_FiredefsIDXForWeapon(od,weapon_idx) on future changes. */
 			Com_sprintf(itemText, sizeof(itemText), _("%s auxiliary equipment with\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
 			if (Q_strncmp(activeMenu->name, "equipment", 9))
-				Q_strcat(itemText, va(_("Size:\t%i\n"),od->size), sizeof(itemText));
+				Q_strcat(itemText, va(_("Size:\t%i\n"), od->size), sizeof(itemText));
 			Q_strcat(itemText, va(_("Action:\t%s\n"), od->fd[0][0].name), sizeof(itemText));
 			Q_strcat(itemText, va(_("Time units:\t%i\n"), od->fd[0][0].time), sizeof(itemText));
 			Q_strcat(itemText, va(_("Range:\t%g\n"), od->fd[0][0].range / UNIT_SIZE), sizeof(itemText));
