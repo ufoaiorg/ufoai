@@ -330,9 +330,6 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		return ALIGN(SHAPE_BIG_MAX_HEIGHT * SHAPE_SMALL_MAX_HEIGHT);
 
 	case V_DMGWEIGHT:
-		/* @todo */
-		return ALIGN(1);
-
 	case V_DMGTYPE:
 		for (num = 0; num < csi.numDTs; num++)
 			if (!Q_strcmp(token, csi.dts[num]))
@@ -508,10 +505,6 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 		return ALIGN(SHAPE_BIG_MAX_HEIGHT * 4);
 
 	case V_DMGWEIGHT:
-		*b = *(const byte *) set;
-		return ALIGN(1);
-		break;
-
 	case V_DMGTYPE:
 		*b = *(const byte *) set;
 		return ALIGN(1);
@@ -623,9 +616,6 @@ const char *Com_ValueToStr (void *base, valueTypes_t type, int ofs)
 		return "";
 
 	case V_DMGWEIGHT:
-		/* @todo */
-		return 0;
-
 	case V_DMGTYPE:
 		assert(*(int *)b < MAX_DAMAGETYPES);
 		return csi.dts[*(int *)b];
