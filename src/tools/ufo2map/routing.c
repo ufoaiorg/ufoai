@@ -167,10 +167,12 @@ static void CheckUnit (unsigned int unitnum)
  */
 static void CheckConnections (unsigned int unitnum)
 {
-	int x, y, z, sz;
+	int x, y, z, sz, ax, ay;
 	int i, h, sh;
 	pos3_t pos;
 	vec3_t start, ts, te;
+	/* falling deeper than one level or falling through the map is forbidden */
+	const byte deep_fall[] = {0x01, 0x03, 0x06, 0x0c, 0x18, 0x30, 0x60, 0xc0};
 
 	/* get coordinates of that unit */
 	z = unitnum / WIDTH / WIDTH;
@@ -205,14 +207,36 @@ static void CheckConnections (unsigned int unitnum)
 
 	/* test connections in all 4 directions */
 	for (i = 0; i < 4; i++) {
-		/* range check and test height */
-		if (i == 0 && (x >= ROUTING_NOT_REACHABLE || (filled[y][x+1] & (1<<sz)) || (route[sz][y][x+1]&0x0F) > h))
+		/* target coordinates */
+		switch (i) {
+		case 0:
+			ax = x + 1;
+			ay = y;
+			break;
+		case 1:
+			ax = x - 1;
+			ay = y;
+			break;
+		case 2:
+			ax = x;
+			ay = y + 1;
+			break;
+		case 3:
+			ax = x;
+			ay = y - 1;
+			break;
+		} 
+		/* range check*/
+		if ( x < 0 || x >= WIDTH || y < 0 || y >= WIDTH)
 			continue;
-		if (i == 1 && (x <= 0 || (filled[y][x-1] & (1<<sz)) || (route[sz][y][x-1] & 0x0F) > h))
+		/* height check */
+		if ((route[sz][ay][ax] & 0x0F) > h)
 			continue;
-		if (i == 2 && (y >= ROUTING_NOT_REACHABLE || (filled[y+1][x] & (1<<sz)) || (route[sz][y+1][x]&0x0F) > h))
+		/* filled check */
+		if (filled[ay][ax] & (1<<sz))
 			continue;
-		if (i == 3 && (y <= 0 || (filled[y-1][x] & (1<<sz)) || (route[sz][y-1][x] & 0x0F) > h))
+		/* deep fall check */
+		if ((fall[ay][ax] & deep_fall[sz]) == deep_fall[sz])
 			continue;
 
 		/* test for walls */

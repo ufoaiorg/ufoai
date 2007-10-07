@@ -787,7 +787,8 @@ static void CM_UpdateConnection (routing_t * map, int x, int y, byte z, unsigned
 	pos3_t pos;
 	int h, sh, ax, ay;
 	byte az;
-	const byte fall_through[] = {0x01, 0x03, 0x07, 0x0f, 0x1f, 0x3f, 0x7f, 0xff};
+	/* falling deeper than one level or falling through the map is forbidden */
+	const byte deep_fall[] = {0x01, 0x03, 0x06, 0x0c, 0x18, 0x30, 0x60, 0xc0};
 
 	assert(map);
 	assert((x >= 0) && (x < WIDTH));
@@ -798,12 +799,12 @@ static void CM_UpdateConnection (routing_t * map, int x, int y, byte z, unsigned
 	/* assume no connection */
 	map->route[z][y][x] &= ~((0x10 << dir) & UCHAR_MAX);
 
-	/* test if the unit is blocked by an actor */
+	/* test if the unit is blocked by a loaded model */
 	if (fill && (filled[y][x] & (1 << z)))
 		return;
 
 	/* no ground under the position */
-	if ((map->fall[y][x] & fall_through[z]) == fall_through[z])
+	if ((map->fall[y][x] & deep_fall[z]) == deep_fall[z])
 		return;
 
 	/* get step height and trace vectors */
@@ -830,7 +831,7 @@ static void CM_UpdateConnection (routing_t * map, int x, int y, byte z, unsigned
 		return;
 
 	/* test ground under the neighbor position */
-	if (((map->fall[ay][ax] & fall_through[az]) == fall_through[az]))
+	if (((map->fall[ay][ax] & deep_fall[az]) == deep_fall[az]))
 		return;
 
 	/* test if the neighbor field is to high to step on */
