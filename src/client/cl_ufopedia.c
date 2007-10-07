@@ -283,9 +283,12 @@ void UP_ItemDescription (int item)
 				Q_strcat(itemText, va(_("Size:\t%i\n"),od->size), sizeof(itemText));
 				Q_strcat(itemText, "\n", sizeof(itemText));
 			}
-			Q_strcat(itemText, _("Type:\tProtection / Hardness:\n"), sizeof(itemText));
-			for (i = 0; i < csi.numDTs; i++)
-				Q_strcat(itemText, va(_("%s\t%i\n"), _(csi.dts[i]), od->protection[i]), sizeof(itemText));
+			Q_strcat(itemText, _("Type:\tProtection:\n"), sizeof(itemText));
+			for (i = 0; i < csi.numDTs; i++) {
+				if (!csi.dts[i].showInMenu)
+					continue;
+				Q_strcat(itemText, va(_("%s\t%i\n"), _(csi.dts[i].id), od->protection[i]), sizeof(itemText));
+			}
 		} else if (!Q_strncmp(od->type, "ammo", 4)) {
 			if (Q_strncmp(activeMenu->name, "equipment", 9))
 				Q_strcat(itemText, va(_("Size:\t%i\n"),od->size), sizeof(itemText));
@@ -431,8 +434,11 @@ static void UP_ArmourDescription (technology_t* t)
 		upBuffer[0] = '\0';
 		Q_strcat(upBuffer, va(_("Size:\t%i\n"),od->size), sizeof(upBuffer));
 		Q_strcat(upBuffer, "\n", sizeof(upBuffer));
-		for (i = 0; i < csi.numDTs; i++)
-			Q_strcat(upBuffer, va(_("%s:\tProtection: %i\n"), _(csi.dts[i]), od->protection[i]), sizeof(upBuffer));
+		for (i = 0; i < csi.numDTs; i++) {
+			if (!csi.dts[i].showInMenu)
+				continue;
+			Q_strcat(upBuffer, va(_("%s:\tProtection: %i\n"), _(csi.dts[i].id), od->protection[i]), sizeof(upBuffer));
+		}
 	}
 	menuText[TEXT_STANDARD] = upBuffer;
 	UP_DisplayTechTree(t);

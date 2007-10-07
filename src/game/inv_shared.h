@@ -352,6 +352,11 @@ typedef struct mapDef_s {
 	linkedList_t *cultures;		/**< culture strings this map is useable for */
 } mapDef_t;
 
+typedef struct damageType_s {
+	char id[MAX_VAR];
+	qboolean showInMenu;
+} damageType_t;
+
 /**
  * @brief The csi structure is the client-server-information structure
  * which contains all the UFO info needed by the server and the client.
@@ -386,7 +391,7 @@ typedef struct csi_s {
 	int numEDs;
 
 	/** Damage types */
-	char dts[MAX_DAMAGETYPES][MAX_VAR];
+	damageType_t dts[MAX_DAMAGETYPES];
 	int numDTs;
 
 	/** team definitions */

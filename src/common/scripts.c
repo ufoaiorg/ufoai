@@ -332,7 +332,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 	case V_DMGWEIGHT:
 	case V_DMGTYPE:
 		for (num = 0; num < csi.numDTs; num++)
-			if (!Q_strcmp(token, csi.dts[num]))
+			if (!Q_strcmp(token, csi.dts[num].id))
 				break;
 		if (num == csi.numDTs)
 			*b = 0;
@@ -618,7 +618,7 @@ const char *Com_ValueToStr (void *base, valueTypes_t type, int ofs)
 	case V_DMGWEIGHT:
 	case V_DMGTYPE:
 		assert(*(int *)b < MAX_DAMAGETYPES);
-		return csi.dts[*(int *)b];
+		return csi.dts[*(int *)b].id;
 
 	case V_DATE:
 		Com_sprintf(valuestr, sizeof(valuestr), "%i %i %i", ((date_t *) b)->day / 365, ((date_t *) b)->day % 365, ((date_t *) b)->sec);
@@ -856,7 +856,7 @@ static void Com_ParseArmour (const char *name, const char **text, short *ad)
 			return;
 
 		for (i = 0; i < csi.numDTs; i++)
-			if (!Q_strncmp(token, csi.dts[i], MAX_VAR)) {
+			if (!Q_strncmp(token, csi.dts[i].id, MAX_VAR)) {
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
@@ -2023,7 +2023,7 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 
 		/* search for damage types with same name */
 		for (i = 0; i < csi.numDTs; i++)
-			if (!Q_strncmp(token, csi.dts[i], MAX_VAR))
+			if (!Q_strncmp(token, csi.dts[i].id, MAX_VAR))
 				break;
 
 		/* not found in the for loop */
@@ -2031,8 +2031,9 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 			/* gettext marker */
 			if (*token == '_') {
 				token++;
+				csi.dts[csi.numDTs].showInMenu = qtrue;
 			}
-			Q_strncpyz(csi.dts[csi.numDTs], token, sizeof(csi.dts[csi.numDTs]));
+			Q_strncpyz(csi.dts[csi.numDTs].id, token, sizeof(csi.dts[csi.numDTs]));
 
 			/* special IDs */
 			if (!Q_strncmp(token, "normal", 6))
