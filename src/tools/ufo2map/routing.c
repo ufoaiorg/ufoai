@@ -171,7 +171,9 @@ static void CheckConnections (unsigned int unitnum)
 	int i, h, sh;
 	pos3_t pos;
 	vec3_t start, ts, te;
-	/* falling deeper than one level or falling through the map is forbidden */
+	/* Falling deeper than one level or falling through the map is forbidden. This array */
+	/* includes the critical bit mask for every level: the bit for the current level and */
+	/* the level below, for the lowest level falling is completely forbidden */
 	const byte deep_fall[] = {0x01, 0x03, 0x06, 0x0c, 0x18, 0x30, 0x60, 0xc0};
 
 	/* get coordinates of that unit */

@@ -787,7 +787,9 @@ static void CM_UpdateConnection (routing_t * map, int x, int y, byte z, unsigned
 	pos3_t pos;
 	int h, sh, ax, ay;
 	byte az;
-	/* falling deeper than one level or falling through the map is forbidden */
+	/* Falling deeper than one level or falling through the map is forbidden. This array */
+	/* includes the critical bit mask for every level: the bit for the current level and */
+	/* the level below, for the lowest level falling is completely forbidden */
 	const byte deep_fall[] = {0x01, 0x03, 0x06, 0x0c, 0x18, 0x30, 0x60, 0xc0};
 
 	assert(map);
