@@ -437,7 +437,7 @@ static void UP_ArmourDescription (technology_t* t)
 		for (i = 0; i < csi.numDTs; i++) {
 			if (!csi.dts[i].showInMenu)
 				continue;
-			Q_strcat(upBuffer, va(_("%s:\tProtection: %i\n"), _(csi.dts[i].id), od->protection[i]), sizeof(upBuffer));
+			Q_strcat(upBuffer, va(_("%s:\tProtection: %i\n"), _(csi.dts[i].id), od->ratings[i]), sizeof(upBuffer));
 		}
 	}
 	menuText[TEXT_STANDARD] = upBuffer;
