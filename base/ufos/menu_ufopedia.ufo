@@ -181,7 +181,7 @@ menu ufopedia
 	{
 		pos		"30 495"
 		size	"495 200"
-		format	"20 0"
+		format	"20 230"
 //		bgcolor	" 1 0.5 0.5 0.3"
 		wheel
 		height	"10"

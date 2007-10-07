@@ -4,6 +4,9 @@
 	it ensures that the superior tech blades are much better against armour
 	and keeps the kerrblade scary
 */
+
+// if the damage type starts with _ it is marked at translateable and thus shown
+// in the menus, if there is no such character the damagetype will not be shown.
 damagetypes standard
 {
 	"_normal"
