@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 vec3_t newBasePos;
 static cvar_t *mn_base_title;
 static cvar_t *mn_base_count;
+static cvar_t *mn_base_id;
 
 static int BuildingConstructionList[MAX_BUILDINGS];
 static int numBuildingConstructionList;
@@ -208,13 +209,16 @@ void B_SetSensor_f (void)
  */
 static void B_BaseInit_f (void)
 {
-	int baseID = Cvar_VariableInteger("mn_base_id");
-
-	/* sanity check */
-	if (baseID < 0 || baseID > B_GetFoundedBaseCount())
+	if (!mn_base_id)
 		return;
 
-	baseCurrent = &gd.bases[baseID];
+	/* sanity check */
+	if (mn_base_id->integer < 0 || mn_base_id->integer > B_GetFoundedBaseCount()) {
+		Com_Printf("B_BaseInit_f: mn_base_id value is invalid: %i\n", mn_base_id->integer);
+		return;
+	}
+
+	baseCurrent = &gd.bases[mn_base_id->integer];
 
 	CL_UpdateCredits(ccs.credits);
 
@@ -1688,7 +1692,12 @@ static void B_RenameBase_f (void)
  */
 static void B_NextBase_f (void)
 {
-	int baseID = Cvar_VariableInteger("mn_base_id");
+	int baseID;
+
+	if (!mn_base_id)
+		return;
+
+	baseID = mn_base_id->integer;
 
 	Com_DPrintf(DEBUG_CLIENT, "cur-base=%i num-base=%i\n", baseID, gd.numBases);
 	if (baseID < gd.numBases - 1)
@@ -1698,10 +1707,8 @@ static void B_NextBase_f (void)
 	Com_DPrintf(DEBUG_CLIENT, "new-base=%i\n", baseID);
 	if (!gd.bases[baseID].founded)
 		return;
-	else {
-		Cbuf_AddText(va("mn_select_base %i\n", baseID));
-		Cbuf_Execute(); /* FIXME: Why is this needed? */
-	}
+	else
+		Cmd_ExecuteString(va("mn_select_base %i", baseID));
 }
 
 /**
@@ -1711,7 +1718,12 @@ static void B_NextBase_f (void)
  */
 static void B_PrevBase_f (void)
 {
-	int baseID = Cvar_VariableInteger("mn_base_id");
+	int baseID;
+
+	if (!mn_base_id)
+		return;
+
+	baseID = mn_base_id->integer;
 
 	Com_DPrintf(DEBUG_CLIENT, "cur-base=%i num-base=%i\n", baseID, gd.numBases);
 	if (baseID > 0)
@@ -1723,10 +1735,8 @@ static void B_PrevBase_f (void)
 	/* this must be false - but i'm paranoid' */
 	if (!gd.bases[baseID].founded)
 		return;
-	else {
-		Cbuf_AddText(va("mn_select_base %i\n", baseID));
-		Cbuf_Execute(); /* FIXME: Why is this needed? */
-	}
+	else
+		Cmd_ExecuteString(va("mn_select_base %i", baseID));
 }
 
 /**
@@ -2598,7 +2608,8 @@ void B_ResetBaseManagement (void)
 	Cmd_AddCommand("debug_capacities", B_PrintCapacities_f, "Debug function to show all capacities in given base");
 #endif
 
-	mn_base_count = Cvar_Get("mn_base_count", "0", 0, NULL);
+	mn_base_count = Cvar_Get("mn_base_count", "0", 0, "Current amount of build bases");
+	mn_base_id = Cvar_Get("mn_base_id", "-1", 0, "Internal id of the current selected base");
 }
 
 /**
