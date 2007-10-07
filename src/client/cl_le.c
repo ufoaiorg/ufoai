@@ -286,15 +286,24 @@ localModel_t *CL_AddLocalModel (const char *model, const char *particle, vec3_t 
 	return lm;
 }
 
+static const float mapBorder = UNIT_SIZE * 10;
+static const float mapZBorder = -(UNIT_HEIGHT * 5);
 /**
  * @brief Checks whether give position is still inside the map borders
  */
 static qboolean LE_OutsideMap (vec3_t impact)
 {
-	if (impact[0] < map_min[0] || impact[0] > map_max[0])
+	if (impact[0] < map_min[0] + mapBorder || impact[0] > map_max[0] + mapBorder)
 		return qtrue;
 
-	if (impact[1] < map_min[1] || impact[1] > map_max[1])
+	if (impact[1] < map_min[1] + mapBorder || impact[1] > map_max[1] + mapBorder)
+		return qtrue;
+
+	/* if a le is deeper than 5 levels below the latest walkable level (0) then
+	 * we can assume that it is outside the world
+	 * This is needed because some maps (e.g. the dam map) has unwalkable levels
+	 * that just exists for detail reasons */
+	if (impact[2] < mapZBorder)
 		return qtrue;
 
 	/* still inside the map borders */
