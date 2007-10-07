@@ -280,14 +280,14 @@ void UP_ItemDescription (int item)
 		if (!Q_strncmp(od->type, "armour", 5)) {
 			if (Q_strncmp(activeMenu->name, "equipment", 9)) {
 				/* next two lines are not merge in one to avoid to have several entries in .po files (first line will be used again) */
-				Q_strcat(itemText, va(_("Size:\t%i\n"),od->size), sizeof(itemText));
+				Q_strcat(itemText, va(_("Size:\t%i\n"), od->size), sizeof(itemText));
 				Q_strcat(itemText, "\n", sizeof(itemText));
 			}
 			Q_strcat(itemText, _("Type:\tProtection:\n"), sizeof(itemText));
 			for (i = 0; i < csi.numDTs; i++) {
 				if (!csi.dts[i].showInMenu)
 					continue;
-				Q_strcat(itemText, va(_("%s\t%i\n"), _(csi.dts[i].id), od->protection[i]), sizeof(itemText));
+				Q_strcat(itemText, va(_("%s\t%i\n"), _(csi.dts[i].id), od->ratings[i]), sizeof(itemText));
 			}
 		} else if (!Q_strncmp(od->type, "ammo", 4)) {
 			if (Q_strncmp(activeMenu->name, "equipment", 9))

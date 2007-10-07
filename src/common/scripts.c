@@ -2021,6 +2021,12 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 		if (*token == '}')
 			break;
 
+		/* gettext marker */
+		if (*token == '_') {
+			token++;
+			csi.dts[csi.numDTs].showInMenu = qtrue;
+		}
+
 		/* search for damage types with same name */
 		for (i = 0; i < csi.numDTs; i++)
 			if (!Q_strncmp(token, csi.dts[i].id, MAX_VAR))
@@ -2028,11 +2034,6 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 
 		/* not found in the for loop */
 		if (i == csi.numDTs) {
-			/* gettext marker */
-			if (*token == '_') {
-				token++;
-				csi.dts[csi.numDTs].showInMenu = qtrue;
-			}
 			Q_strncpyz(csi.dts[csi.numDTs].id, token, sizeof(csi.dts[csi.numDTs]));
 
 			/* special IDs */
