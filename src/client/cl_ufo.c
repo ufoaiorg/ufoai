@@ -451,9 +451,12 @@ void UFO_CampaignCheckEvents (void)
 		ufo->visible = qfalse;
 
 		/* Check for ufo detection by bases */
-		for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
+		for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
+			if (!base->founded || !base->hasPower)
+				continue;
 			/* maybe the ufo is already visible, don't reset it */
 			ufo->visible |= RADAR_CheckUfoSensored(&(base->radar), base->pos, ufo, visible);
+		}
 
 		/* Check for ufo tracking by aircrafts */
 		if (visible || ufo->visible)
