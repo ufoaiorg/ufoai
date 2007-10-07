@@ -126,7 +126,6 @@ item bloodspider_weapon
 			shots		1			//FIXME
 			time		12			//FIXME
 			damage		"40 20"			//FIXME
-			dmgtype		steelblade
 			reaction	true
 			dmgweight   monomolecularblade
 		}

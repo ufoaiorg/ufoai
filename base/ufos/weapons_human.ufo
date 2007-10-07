@@ -561,7 +561,6 @@ item pistol2_ammo
 			ammo	1
 			time	5
 			damage	"20 5"
-			dmgtype normal
 			reaction	true
 			dmgweight normal_light
 		}

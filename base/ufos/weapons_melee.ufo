@@ -311,7 +311,7 @@ item plasblade_ammo
 			ammo 1
 			time	7
 			damage	"300 5"
-			dmgtype plasma_heavy
+			dmgweight plasma_heavy
 			reaction	true
 		}
 		firedef
@@ -330,7 +330,7 @@ item plasblade_ammo
 			ammo	1
 			time	12
 			damage	"300 5"
-			dmgtype plasma_heavy
+			dmgweight plasma_heavy
 			reaction	true
 		}
 	}
