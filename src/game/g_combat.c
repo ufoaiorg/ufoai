@@ -355,7 +355,7 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 	/* Apply armour effects. */
 	if (damage > 0 && ent->i.c[gi.csi->idArmour]) {
 		objDef_t *ad = &gi.csi->ods[ent->i.c[gi.csi->idArmour]->item.t];
-		damage = max(0, damage - ad->protection[ad->dmgtype]);
+		damage = max(1, damage - ad->protection[fd->dmgweight]);
 	}
 
 	assert((attacker->team >= 0) && (attacker->team < MAX_TEAMS));
