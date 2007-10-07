@@ -291,7 +291,7 @@ static const float mapZBorder = -(UNIT_HEIGHT * 5);
 /**
  * @brief Checks whether give position is still inside the map borders
  */
-static qboolean LE_OutsideMap (vec3_t impact)
+qboolean CL_OutsideMap (vec3_t impact)
 {
 	if (impact[0] < map_min[0] + mapBorder || impact[0] > map_max[0] + mapBorder)
 		return qtrue;
@@ -691,7 +691,7 @@ static void LET_Projectile (le_t * le)
 			sfx_t *sfx = S_RegisterSound(le->ref2);
 			S_StartSound(impact, sfx, le->fd->relImpactVolume, DEFAULT_SOUND_PACKET_ATTENUATION);
 		}
-	} else if (LE_OutsideMap(le->ptl->s)) {
+	} else if (CL_OutsideMap(le->ptl->s)) {
 		le->endTime = cl.time;
 		CL_ParticleFree(le->ptl);
 		/* don't run the think function again */

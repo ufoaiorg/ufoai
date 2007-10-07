@@ -257,6 +257,7 @@ typedef struct {
 	int (EXPORT *ClientGetTeamNum) (player_t * client);
 	int (EXPORT *ClientGetTeamNumPref) (player_t * client);
 
+	int (EXPORT *ClientGetActiveTeam) (void);
 	const char* (EXPORT *ClientGetName) (int pnum);
 
 	qboolean (EXPORT *RunFrame) (void);

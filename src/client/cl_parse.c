@@ -1380,7 +1380,6 @@ void CL_UnblockEvents (void)
 {
 	blockEvents = qfalse;
 	CL_ScheduleEvent();
-	nextTime = impactTime = 0;
 }
 
 /**
@@ -1481,7 +1480,7 @@ static void CL_ParseEvent (struct dbuffer *msg)
 #if 0
 					@todo: not needed? and SF_BOUNCED?
 					if (fd->speed)
-						impactTime = shootTime + 1000 * VectorDist( muzzle, impact ) / fd->speed;
+						impactTime = shootTime + 1000 * VectorDist(muzzle, impact) / fd->speed;
 					else
 #endif
 						impactTime = shootTime;
@@ -1507,9 +1506,12 @@ static void CL_ParseEvent (struct dbuffer *msg)
 
 				if (!(flags & SF_BOUNCED)) {
 					/* shooting */
-					if (fd->speed)
-						impactTime = shootTime + 1000 * VectorDist(muzzle, impact) / fd->speed;
-					else
+					if (!CL_OutsideMap(impact)) {
+						if (fd->speed)
+							impactTime = shootTime + 1000 * VectorDist(muzzle, impact) / fd->speed;
+						else
+							impactTime = shootTime;
+					} else
 						impactTime = shootTime;
 					if (cl.actTeam != cls.team)
 						nextTime = impactTime + 1400;

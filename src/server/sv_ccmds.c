@@ -215,6 +215,7 @@ static void SV_Status_f (void)
 		return;
 	}
 	Com_Printf("map              : %s\n", sv.name);
+	Com_Printf("active team      : %i\n", ge->ClientGetActiveTeam());
 
 	Com_Printf("num status  name            address              \n");
 	Com_Printf("--- ------- --------------- ---------------------\n");

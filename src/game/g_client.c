@@ -645,6 +645,13 @@ static int G_DoTurn (edict_t * ent, byte toDV)
 	return status;
 }
 
+/**
+ * @brief Returns the current active team to the server
+ */
+int G_GetActiveTeam (void)
+{
+	return level.activeTeam;
+}
 
 /**
  * @brief Checks whether the the requested action is possible
