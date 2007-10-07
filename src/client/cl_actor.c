@@ -2699,6 +2699,10 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	if (le->team == cls.team)
 		CL_SetLastMoving(le);
 
+	/* no animations for hidden actors */
+	if (le->type == ET_ACTORHIDDEN)
+		return;
+
 	/* Animate - we have to check if it is right or left weapon usage. */
 	/* @todo: FIXME the left/right info for actors in the enemy team/turn has to come from somewheR_ */
 	if (HEADGEAR(le) && IS_MODE_FIRE_HEADGEAR(cl.cmode)) {
