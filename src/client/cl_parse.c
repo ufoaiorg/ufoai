@@ -1506,13 +1506,11 @@ static void CL_ParseEvent (struct dbuffer *msg)
 
 				if (!(flags & SF_BOUNCED)) {
 					/* shooting */
-					if (!CL_OutsideMap(impact)) {
-						if (fd->speed)
-							impactTime = shootTime + 1000 * VectorDist(muzzle, impact) / fd->speed;
-						else
-							impactTime = shootTime;
-					} else
+					if (fd->speed && !CL_OutsideMap(impact)) {
+						impactTime = shootTime + 1000 * VectorDist(muzzle, impact) / fd->speed;
+					} else {
 						impactTime = shootTime;
+					}
 					if (cl.actTeam != cls.team)
 						nextTime = impactTime + 1400;
 					else
