@@ -97,7 +97,7 @@ static void S_Music_Start (const char *file)
 		return;
 	}
 
-	Q_strncpyz(name, file, sizeof(name));
+	COM_StripExtension(file, name);
 	len = strlen(name);
 	if (len + 4 >= MAX_QPATH) {
 		Com_Printf("S_Music_Start: MAX_QPATH exceeded: "UFO_SIZE_T"\n", len + 4);
@@ -121,7 +121,7 @@ static void S_Music_Start (const char *file)
 	} else if ((size = FS_LoadFile(va("music/%s.mp3", name), (byte **)&musicBuf)) != -1) {
 		music.musicSrc = SDL_RWFromMem(musicBuf, size);
 	} else {
-		Com_Printf("Could not load %s background track\n", name);
+		Com_Printf("Could not load '%s' background track\n", name);
 		return;
 	}
 	music.data = Mix_LoadMUS_RW(music.musicSrc);
