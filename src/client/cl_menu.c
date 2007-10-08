@@ -1074,7 +1074,8 @@ static qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 		break;
 	default:
 		/* check for click action */
-		if (node->invis || (!node->click && !node->rclick && !node->mclick && !node->wheel && !node->mouseIn && !node->mouseOut && !node->wheelUp && !node->wheelDown))
+		if (node->invis || (!node->click && !node->rclick && !node->mclick && !node->wheel && !node->mouseIn && !node->mouseOut && !node->wheelUp && !node->wheelDown)
+		 || !MN_CheckCondition(node))
 			return qfalse;
 	}
 
