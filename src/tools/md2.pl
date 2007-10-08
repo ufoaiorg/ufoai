@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #######################################
-# Copyright (C) 2006 Werner Höhrer
+# Copyright (C) 2006 Werner Hoehrer
 #
 #This program is free software; you can redistribute it and/or
 #modify it under the terms of the GNU General Public License
@@ -106,7 +106,7 @@ sub md2_read ($) {
 
 	die "File has wrong format version \"".$md2_file->Version."\".\n"
 		unless ($md2_file->Version == 8);
-	
+
 	return $md2_file;
 }
 
@@ -138,10 +138,11 @@ if ( $#ARGV < 0 ) {
 	unless (
 		($param_action eq 'skinedit') ||
 		($param_action eq 'skinnum') ||
-		($param_action eq 'skinsize')
+		($param_action eq 'skinsize') ||
+		($param_action eq 'info')
 		) {
 		print "Unknown action: '", $param_action, "'\n";
-		die "Usage:\tmd2.pl [skinedit|skinnum] [options...]\n";
+		die "Usage:\tmd2.pl [skinedit|skinnum|skinsize|info] [options...]\n";
 	}
 }
 
@@ -210,7 +211,7 @@ if ($param_action eq 'skinedit') {
 			}
 
 			print "Skin ",$i," new: \"", $md2_file->Path->[$i][0],"\"\n";
-			
+
 		}
 
 		# save as another .md2 file
@@ -238,8 +239,8 @@ if ($param_action eq 'skinedit') {
 		}
 		print "IN = \"$MD2IN\"\n";
 		print "OUT= \"$MD2OUT\"\n";
-	} 
-	
+	}
+
 	# read .md2 file
 	my $md2_file = md2_read($MD2IN);
 
@@ -248,10 +249,10 @@ if ($param_action eq 'skinedit') {
 	# DEBUG
 	#use Data::Dumper;
 	#print Dumper($md2_file->struct);
-	
+
 	# Print Skins
 	md2_skins_list($md2_file);
-	
+
 	# Ask for new skin-number
 	#use Scalar::Util::Numeric qw(isint);
 	use Term::ReadKey;
@@ -267,10 +268,10 @@ if ($param_action eq 'skinedit') {
 		} while ($key ne "\n");
 
 		chomp($NumSkins_new);
-		
+
 	#} while (!isint($NumSkins_new));
 	} while (($NumSkins_new == $md2_file->NumSkins) || ($NumSkins_new <= 0) || ($NumSkins_new eq ''));
-	
+
 	if ($NumSkins_new == $md2_file->NumSkins) {
 		print "No change in skin-number.\n";
 		return;
@@ -304,7 +305,7 @@ if ($param_action eq 'skinedit') {
 		$md2_file->struct->{OffsetFrames} += $data_offset_delta;	# update offset to frame data
 		$md2_file->struct->{OffsetGLcmds} += $data_offset_delta;	# update offset to opengl commands
 		$md2_file->struct->{OffsetEnd} += $data_offset_delta;		# update offset to end of file
-		
+
 		$md2_file->struct->{NumSkins} = $NumSkins_new;
 	} else {
 		# TODO: do the magic (remove skins and update offsets correctly)
@@ -334,12 +335,12 @@ if ($param_action eq 'skinedit') {
 		print "IN = \"$MD2IN\"\n";
 		print "OUT= \"$MD2OUT\"\n";
 	}
-	
+
 	my $md2_file = md2_read($MD2IN);
 
 	print "Changing skin sizes ...\n";
 	print "Current size: ", $md2_file->SkinWidth, "w x ", $md2_file->SkinHeight, "h\n";
-	
+
 	# Ask for new skin width
 	use Term::ReadKey;
 	my $SkinWidth_new = $md2_file->SkinWidth;
@@ -356,7 +357,7 @@ if ($param_action eq 'skinedit') {
 
 		chomp($SkinWidth_new);
 	} while (($SkinWidth_new == $md2_file->SkinWidth) || ($SkinWidth_new <= 0) || ($SkinWidth_new eq ''));
-	
+
 	# Ask for new skin height
 	do { # TODO: as until we get a sane number (integer)
 		print "Enter new height in pixel (",$md2_file->SkinHeight ,"):";
@@ -370,19 +371,27 @@ if ($param_action eq 'skinedit') {
 
 		chomp($SkinHeight_new);
 	} while (($SkinHeight_new == $md2_file->SkinHeight) || ($SkinHeight_new <= 0) || ($SkinHeight_new eq ''));
-	
-	
+
+
 	if (($SkinHeight_new == $md2_file->SkinHeight)
 	&& ($SkinWidth_new == $md2_file->SkinWidth)) {
 		print "No change in skin size.\n";
 		return;
 	}
-	
+
 	$md2_file->struct->{SkinWidth} = $SkinWidth_new;
 	$md2_file->struct->{SkinHeight} = $SkinHeight_new;
-	
+
 	md2_save($md2_file, $MD2OUT);
-	
+
+} elsif ($param_action eq 'info') {
+	my $md2_file = md2_read($ARGV[1]);
+	print "Numframes: ", $md2_file->NumFrames, "\n";
+	print "NumSkins: ", $md2_file->NumSkins, "\n";
+	print "NumXYZ: ", $md2_file->NumXYZ, "\n";
+	print "NumST: ", $md2_file->NumST, "\n";
+	print "NumTris: ", $md2_file->NumTris, "\n";
+	print "NumGLcmds: ", $md2_file->NumGLcmds, "\n";
 } else {
 	print "Unknown action: '", $param_action, "'\n";
 }
