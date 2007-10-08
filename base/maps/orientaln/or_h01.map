@@ -2,7 +2,7 @@
 // entity 0
 {
 "classname" "worldspawn"
-"light" "15"
+"light" "35"
 "_color" "0.8 0.8 1"
 "ambient" "0 0 0"
 "angles" "15 60"
