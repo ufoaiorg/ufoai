@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define UNIT_SIZE   32
 #define UNIT_HEIGHT 64
 
+#include <stddef.h>
 
 /* to support the gnuc __attribute__ command */
 #if defined __ICC || !defined __GNUC__
