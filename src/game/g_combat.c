@@ -355,6 +355,8 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 	/* Apply armour effects. */
 	if (damage > 0 && ent->i.c[gi.csi->idArmour]) {
 		objDef_t *ad = &gi.csi->ods[ent->i.c[gi.csi->idArmour]->item.t];
+		Com_DPrintf(DEBUG_GAME, "G_Damage: damage: %i, dmgweight (%i) protection: %i\n",
+			damage, fd->dmgweight, ad->protection[fd->dmgweight]);
 		damage = max(1, damage - ad->protection[fd->dmgweight]);
 	}
 
