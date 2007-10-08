@@ -6,7 +6,7 @@
 "angles" "15 60"
 "maxlevel" "5"
 "maxteams" "2"
-"light" "15"
+"light" "35"
 "ambient" "0 0 0"
 // brush 0
 {

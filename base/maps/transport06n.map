@@ -4,7 +4,7 @@
 "classname" "worldspawn"
 "angles" "15 60"
 "_color" "0.8 0.8 1"
-"light" "15"
+"light" "35"
 "ambient" "0 0 0"
 "maxlevel" "3"
 "maxteams" "2"

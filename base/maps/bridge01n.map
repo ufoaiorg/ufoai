@@ -6,7 +6,7 @@
 "_color" "0.8 0.8 1"
 "maxlevel" "5"
 "maxteams" "3"
-"light" "15"
+"light" "35"
 "ambient" "0 0 0"
 // brush 0
 {
