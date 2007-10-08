@@ -52,7 +52,7 @@ item plaspistol_ammo
 			ammo	1
 			delaybetweenshots		6
 			time	6
-			damage	"16 6"
+			damage	"40 7"
 			dmgweight plasma_light
 			reaction	true
 		}
@@ -71,8 +71,8 @@ item plaspistol_ammo
 			shots	4
 			ammo	4
 			delaybetweenshots		6
-			time	15
-			damage	"16 6"
+			time	10
+			damage	"40 7"
 			dmgweight plasma_light
 			reaction	true
 		}
@@ -90,10 +90,10 @@ item plaspistol_ammo
 			crouch	1.0
 			range	10
 			shots	30
-			ammo	3
+			ammo	6
 			delaybetweenshots		32
-			time	15
-			damage	"6 2"
+			time	16
+			damage	"40 7"
 			dmgweight plasma_light
 		}
 	}
@@ -154,7 +154,7 @@ item plasrifle_ammo
 			ammo	1
 			delaybetweenshots		5
 			time	9
-			damage	"20 5"
+			damage	"50 10"
 			dmgweight plasma_medium
 			reaction	true
 		}
@@ -170,11 +170,11 @@ item plasrifle_ammo
 			spread	"0 2"
 			crouch	0.7
 			range	22
-			shots	5
+			shots	3
 			ammo	5
 			delaybetweenshots		5
-			time	14
-			damage	"20 5"
+			time	16
+			damage	"50 10"
 			dmgweight plasma_medium
 			reaction	true
 		}
@@ -194,8 +194,8 @@ item plasrifle_ammo
 			shots	30
 			ammo	3
 			delaybetweenshots		21
-			time	14
-			damage	"12 2"
+			time	22
+			damage	"40 8"
 			dmgweight plasma_medium
 			reaction	true
 		}
@@ -256,9 +256,9 @@ item plasblaster_ammo
 			shots	10
 			ammo	2
 			delaybetweenshots		10
-			time	12
-			damage	"10 5"
-			spldmg	"10 5"
+			time	16
+			damage	"0 5"
+			spldmg	"70 15"
 			splrad	5
 			dmgweight plasma_heavy
 			reaction	true
@@ -275,12 +275,12 @@ item plasblaster_ammo
 			speed	0
 			spread	"3 5"
 			crouch	1.0
-			range	30
-			shots	50
+			range	20
+			shots	10
 			ammo	10
 			delaybetweenshots		38
-			time	20
-			damage	"15 6"
+			time	32
+			damage	"70 15"
 			dmgweight plasma_heavy
 			reaction	true
 		}
@@ -297,11 +297,11 @@ item plasblaster_ammo
 			spread	"3 15"
 			crouch	1.0
 			range	30
-			shots	50
+			shots	20
 			ammo	10
 			delaybetweenshots		38
-			time	20
-			damage	"15 6"
+			time	40
+			damage	"70 15"
 			dmgweight plasma_heavy
 			reaction	true
 		}

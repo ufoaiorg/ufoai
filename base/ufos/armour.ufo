@@ -11,6 +11,7 @@ damagetypes standard
 {
 	"_normal"
 	"normal_light"
+	"normal_spray"
 	"normal_medium"
 	"normal_heavy"
 	"normal_power"
@@ -21,7 +22,7 @@ damagetypes standard
 	"fire_light"
 	"fire_medium"
 	"fire_heavy"
-	"fire_power"
+	"fire_flamer"
 	"_shock"
 	"_laser"
 	"laser_light"
@@ -41,6 +42,10 @@ damagetypes standard
 	"_stun"
 }
 
+// =======================
+// PHALANX ARMOURS
+// =======================
+
 //weights 100
 item light
 {
@@ -58,20 +63,22 @@ item light
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
-		normal_light		10
-		normal_medium		8
-		normal_heavy		5
+		normal_light		20 //Fire modes of a light calibre that rely on single or burst fire
+		normal_medium		18 //Fire modes of a medium calibre that rely on single or burst fire
+		normal_heavy		11 //Fire modes of a heavy calibre that rely on single fire mostly
+		normal_spray        9 //Fire modes that rely on hitting often rather than hitting hard
 
-		steelblade			10
+		steelblade			10 //Basically only the combat knife
 
-		monomolecularblade	0
+		monomolecularblade	5 //All monomolecular blade weapons, including the needler gun
 
-		blast				10
+		blast				25 //Explosives. Note that this gets applied to both splash and impact damage!
 
-		fire_medium			10
-		fire_heavy			10
+		fire_medium			15 //Fire modes of a medium calibre that do fire damage
+		fire_heavy			15 //Fire modes of a heavy calibre that do fire damage
+		fire_flamer         2 //Fire modes that do little damage (1-10), but do so many times in a row.
 
-		shock				0
+		shock				0 //Flashbang. Does this value even matter?
 
 		plasma_light		7
 		plasma_medium		6
@@ -120,31 +127,33 @@ item medium
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
-		normal_light		15
-		normal_medium		12
-		normal_heavy		8
+		normal_light		31 //Fire modes of a light calibre that rely on single or burst fire
+		normal_medium		29 //Fire modes of a medium calibre that rely on single or burst fire
+		normal_heavy		16 //Fire modes of a heavy calibre that rely on single fire mostly
+		normal_spray        12 //Fire modes that rely on hitting often rather than hitting hard
 
-		steelblade			20
+		steelblade			20 //Basically only the combat knife
 
-		monomolecularblade	3
+		monomolecularblade	12 //All monomolecular blade weapons, including the needler gun
 
-		blast				15
+		blast				38 //Explosives. Note that this gets applied to both splash and impact damage!
 
-		fire_medium			17
-		fire_heavy			11
+		fire_medium			22 //Fire modes of a medium calibre that do fire damage
+		fire_heavy			22 //Fire modes of a heavy calibre that do fire damage
+		fire_flamer         3 //Fire modes that do little damage (1-10), but do so many times in a row.
 
-		shock				5
+		shock				10 //Flashbang. Does this value even matter?
 
-		plasma_light		17
-		plasma_medium		12
-		plasma_heavy		8
+		plasma_light		26
+		plasma_medium		25
+		plasma_heavy		20
 
-		laser_light			15
-		laser_medium		15
-		laser_heavy			10
+		laser_light			29
+		laser_medium		26
+		laser_heavy			25
 
-		particlebeam_light	18
-		particlebeam_medium	16
+		particlebeam_light	21
+		particlebeam_medium	17
 		particlebeam_heavy	14
 
 		stun				10
@@ -165,37 +174,11 @@ item medium
 	}
 }
 
-//weights 320
-//item heavy
-//{
-//	name		"_Heavy Nano Armour"
-//	image		armour/heavy
-//	model		soldiers/maleheavy/body
-//	type		armour
-//	shape		"0 0 3 4"
-//	center		"0 0 -5"
-//	scale		0.7
-//	price		18000
-//	buytype		armour
-//
-//	protection {
-//		normal	50
-//		steelblade	100
-//		monomolecularblade	40
-//		blast	70
-//		fire	75
-//		shock	35
-//		laser	50
-//		plasma	70
-//		particlebeam	28
-//		stun	97
-//	}
-//}
 
 //weights ???
 item power
 {
-	name		"Power Armour" // todo: make translateable
+	name		"_Power Armour"
 	image		armour/power
 	model		soldiers/malepower/body
 	type		armour
@@ -207,32 +190,34 @@ item power
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
-		normal_light		25
-		normal_medium		22
-		normal_heavy		20
+		normal_light		41 //Fire modes of a light calibre that rely on single or burst fire
+		normal_medium		41 //Fire modes of a medium calibre that rely on single or burst fire
+		normal_heavy		41 //Fire modes of a heavy calibre that rely on single fire mostly
+		normal_spray        19 //Fire modes that rely on hitting often rather than hitting hard
 
-		steelblade			40
+		steelblade			25 //Basically only the combat knife
 
-		monomolecularblade	10
+		monomolecularblade	19 //All monomolecular blade weapons, including the needler gun
 
-		blast				15
+		blast				49 //Explosives. Note that this gets applied to both splash and impact damage!
 
-		fire_medium			27
-		fire_heavy			21
+		fire_medium			35 //Fire modes of a medium calibre that do fire damage
+		fire_heavy			35 //Fire modes of a heavy calibre that do fire damage
+		fire_flamer         4 //Fire modes that do little damage (1-10), but do so many times in a row.
 
-		shock				18
+		shock				20 //Flashbang. Does this value even matter?
 
-		plasma_light		20
-		plasma_medium		20
-		plasma_heavy		18
+		plasma_light		32
+		plasma_medium		35
+		plasma_heavy		40
 
 		laser_light			22
-		laser_medium		15
+		laser_medium		21
 		laser_heavy			15
 
-		particlebeam_light	18
-		particlebeam_medium	16
-		particlebeam_heavy	14
+		particlebeam_light	40
+		particlebeam_medium	50
+		particlebeam_heavy	50
 
 		stun				20
 	}
@@ -251,6 +236,250 @@ item power
 		stun				10
 	}
 }
+
+//TODO
+//item light2
+//{
+//	name		"_Advanced Combat Armour"
+//	image		armour/power
+//	model		soldiers/malepower/body
+//	type		armour
+//	shape		"0 0 3 4"
+//	center		"0 0 -5"
+//	scale		0.7
+//	price		32000
+//	buytype		armour
+//	//TODO: TU penalty value. No support for this yet.
+//
+//	protection {
+//		normal_light		25
+//		normal_medium		22
+//		normal_heavy		20
+//
+//		steelblade			40
+//
+//		monomolecularblade	10
+//
+//		blast				15
+//
+//		fire_medium			27
+//		fire_heavy			21
+//
+//		shock				18
+//
+//		plasma_light		20
+//		plasma_medium		20
+//		plasma_heavy		18
+//
+//		laser_light			22
+//		laser_medium		15
+//		laser_heavy			15
+//
+//		particlebeam_light	18
+//		particlebeam_medium	16
+//		particlebeam_heavy	14
+//
+//		stun				20
+//	}
+//
+//    //FIXME
+//	rating {
+//		normal				30
+//		steelblade			20
+//		monomolecularblade	10
+//		blast				10
+//		fire				10
+//		shock				10
+//		plasma				10
+//		laser				25
+//		particlebeam		10
+//		stun				10
+//	}
+//}
+
+//TODO
+//item medium2
+//{
+//	name		"_Advanced Nanocomposite Armour"
+//	image		armour/power
+//	model		soldiers/malepower/body
+//	type		armour
+//	shape		"0 0 3 4"
+//	center		"0 0 -5"
+//	scale		0.7
+//	price		32000
+//	buytype		armour
+//	//TODO: TU penalty value. No support for this yet.
+//
+//	protection {
+//		normal_light		25
+//		normal_medium		22
+//		normal_heavy		20
+//
+//		steelblade			40
+//
+//		monomolecularblade	10
+//
+//		blast				15
+//
+//		fire_medium			27
+//		fire_heavy			21
+//
+//		shock				18
+//
+//		plasma_light		20
+//		plasma_medium		20
+//		plasma_heavy		18
+//
+//		laser_light			22
+//		laser_medium		15
+//		laser_heavy			15
+//
+//		particlebeam_light	18
+//		particlebeam_medium	16
+//		particlebeam_heavy	14
+//
+//		stun				20
+//	}
+//
+//    //FIXME
+//	rating {
+//		normal				30
+//		steelblade			20
+//		monomolecularblade	10
+//		blast				10
+//		fire				10
+//		shock				10
+//		plasma				10
+//		laser				25
+//		particlebeam		10
+//		stun				10
+//	}
+//}
+
+//TODO
+//item power2
+//{
+//	name		"_Advanced Power Armour"
+//	image		armour/power
+//	model		soldiers/malepower/body
+//	type		armour
+//	shape		"0 0 3 4"
+//	center		"0 0 -5"
+//	scale		0.7
+//	price		32000
+//	buytype		armour
+//	//TODO: TU penalty value. No support for this yet.
+//
+//	protection {
+//		normal_light		25
+//		normal_medium		22
+//		normal_heavy		20
+//
+//		steelblade			40
+//
+//		monomolecularblade	10
+//
+//		blast				15
+//
+//		fire_medium			27
+//		fire_heavy			21
+//
+//		shock				18
+//
+//		plasma_light		20
+//		plasma_medium		20
+//		plasma_heavy		18
+//
+//		laser_light			22
+//		laser_medium		15
+//		laser_heavy			15
+//
+//		particlebeam_light	18
+//		particlebeam_medium	16
+//		particlebeam_heavy	14
+//
+//		stun				20
+//	}
+//
+//    //FIXME
+//	rating {
+//		normal				30
+//		steelblade			20
+//		monomolecularblade	10
+//		blast				10
+//		fire				10
+//		shock				10
+//		plasma				10
+//		laser				25
+//		particlebeam		10
+//		stun				10
+//	}
+//}
+
+//TODO
+//item power3
+//{
+//	name		"_Jumpsuit"
+//	image		armour/power
+//	model		soldiers/malepower/body
+//	type		armour
+//	shape		"0 0 3 4"
+//	center		"0 0 -5"
+//	scale		0.7
+//	price		32000
+//	buytype		armour
+//	//TODO: TU penalty value. No support for this yet.
+//
+//	protection {
+//		normal_light		25
+//		normal_medium		22
+//		normal_heavy		20
+//
+//		steelblade			40
+//
+//		monomolecularblade	10
+//
+//		blast				15
+//
+//		fire_medium			27
+//		fire_heavy			21
+//
+//		shock				18
+//
+//		plasma_light		20
+//		plasma_medium		20
+//		plasma_heavy		18
+//
+//		laser_light			22
+//		laser_medium		15
+//		laser_heavy			15
+//
+//		particlebeam_light	18
+//		particlebeam_medium	16
+//		particlebeam_heavy	14
+//
+//		stun				20
+//	}
+//
+//    //FIXME
+//	rating {
+//		normal				30
+//		steelblade			20
+//		monomolecularblade	10
+//		blast				10
+//		fire				10
+//		shock				10
+//		plasma				10
+//		laser				25
+//		particlebeam		10
+//		stun				10
+//	}
+//}
+
+// =======================
+// ALIEN ARMOURS
+// =======================
 
 //weights 100
 item light_alien

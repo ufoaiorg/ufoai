@@ -96,8 +96,8 @@ item laserrifle_ammo
 			range	60
 			shots	1
 			ammo	1
-			time	2
-			damage	"10 5"
+			time	8
+			damage	"30 5"
 			dmgweight laser_light
 			reaction	true
 		}
@@ -115,8 +115,8 @@ item laserrifle_ammo
 			range	60
 			shots	1
 			ammo	3
-			time	3
-			damage	"20 6"
+			time	12
+			damage	"50 10"
 			dmgweight laser_light
 			reaction	true
 		}
@@ -138,8 +138,8 @@ item laserrifle_ammo
 			range	90
 			shots	1
 			ammo	1
-			time	3
-			damage	"24 6"
+			time	11
+			damage	"40 10"
 			dmgweight laser_medium
 			reaction	true
 		}
@@ -157,8 +157,8 @@ item laserrifle_ammo
 			range	90
 			shots	1
 			ammo	3
-			time	5
-			damage	"50 6"
+			time	17
+			damage	"60 15"
 			dmgweight laser_medium
 			reaction	true
 		}
@@ -180,7 +180,7 @@ item laserrifle_ammo
 			range	120
 			shots	1
 			ammo	1
-			time	5
+			time	18
 			damage	"60 6"
 			dmgweight laser_heavy
 			reaction	true
@@ -199,7 +199,7 @@ item laserrifle_ammo
 			range	120
 			shots	1
 			ammo	3
-			time	7
+			time	23
 			damage	"100 6"
 			dmgweight laser_heavy
 			reaction	true

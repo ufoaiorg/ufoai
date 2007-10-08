@@ -94,26 +94,26 @@ item knifemono
 			range	1.5
 			shots	1
 			time	6
-			damage	"70 35"
+			damage	"70 18"
 			dmgweight monomolecularblade
 			reaction	true
 		}
-		firedef
-		{
-			name	"_Slash"
-			skill	close
-			projtl	null
-			impact	null
-			hitbody blood
-			firesnd	weapons/kerrblade_swip
-			speed	0
-			range	1.5
-			shots	1
-			time	12
-			damage	"140 35"
-			dmgweight monomolecularblade
-			reaction	true
-		}
+//		firedef
+//		{
+//			name	"_Slash"
+//			skill	close
+//			projtl	null
+//			impact	null
+//			hitbody blood
+//			firesnd	weapons/kerrblade_swip
+//			speed	0
+//			range	1.5
+//			shots	1
+//			time	12
+//			damage	"140 35"
+//			dmgweight monomolecularblade
+//			reaction	true
+//		}
 		firedef
 		{
 			name	"_Throw"
@@ -129,7 +129,7 @@ item knifemono
 			shots	1
 			ammo	1
 			time	8
-			damage	"60 30"
+			damage	"60 15"
 			dmgweight monomolecularblade
 			reaction	true
 		}
@@ -234,7 +234,7 @@ item kerrblade
 			range	1.5
 			shots	1
 			time	8
-			damage	"95 45"
+			damage	"95 25"
 			dmgweight monomolecularblade
 			reaction	true
 		}
