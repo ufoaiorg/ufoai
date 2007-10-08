@@ -120,11 +120,11 @@ menu bases
 		out		{ *txt_aircraft color "0 0.8 0 1" *aircraft texl "0 8" *aircraft texh "230 56" }
 		in		{ *txt_aircraft color "1 1 1 1" *aircraft texl "230 8" *aircraft texh "460 56" }
 	}
-	pic aircraft_buy
+	pic aircraft_action
 	{
 		// only if base has no aircraft but can handle them
 		if "mn_base_num_aircraft == 0"
-		tooltip	"_Buy a new aircraft"
+		tooltip	"_Buy or produce a new aircraft"
 		image	menu/button
 		pos	"755 188"
 		texl	"0 8"
@@ -134,8 +134,8 @@ menu bases
 		{
 			cmd "mn_push aircraft_action;"
 		}
-		out		{ *txt_aircraft color "0 0.8 0 1" *aircraft_buy texl "0 8" *aircraft_buy texh "230 56" }
-		in		{ *txt_aircraft color "1 1 1 1" *aircraft_buy texl "230 8" *aircraft_buy texh "460 56" }
+		out		{ *txt_aircraft color "0 0.8 0 1" *aircraft_action texl "0 8" *aircraft_action texh "230 56" }
+		in		{ *txt_aircraft color "1 1 1 1" *aircraft_action texl "230 8" *aircraft_action texh "460 56" }
 	}
 	pic aircraft_na
 	{

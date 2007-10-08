@@ -365,7 +365,7 @@ menu aircraft
 
 	func init
 	{
-		cmd "aircraft_select"
+		cmd "aircraft_select;"
 	}
 }
 
@@ -995,7 +995,7 @@ menu aircraft_action
 		texl	"0 32"
 		out	{ *bt_buy image menu/multi_buttons3 *string_buy color "0 0.5 0 1" }
 		in	{ *bt_buy image menu/multi_buttons3a *string_buy color "1 1 1 1" }
-		click	{ cmd "mn_push buyaircraft;" }
+		click	{ cmd "mn_pop;mn_push buyaircraft;" }
 	}
 	string string_buy
 	{
@@ -1016,7 +1016,7 @@ menu aircraft_action
 		texl	"0 32"
 		out	{ *bt_prod image menu/multi_buttons3 *string_prod color "0 0.5 0 1" }
 		in	{ *bt_prod image menu/multi_buttons3a *string_prod color "1 1 1 1" }
-		click	{ cmd "mn_push air_production;" }
+		click	{ cmd "mn_pop;mn_push air_production;" }
 	}
 	string string_prod
 	{
