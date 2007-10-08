@@ -498,48 +498,50 @@ item light_alien
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
-		normal_light		10
-		normal_medium		8
+		normal_light		7
+		normal_medium		6
 		normal_heavy		5
+		normal_spray        9
 
 		steelblade			10
 
-		monomolecularblade	0
+		monomolecularblade	5
 
-		blast				10
+		blast				25
 
-		fire_medium			10
-		fire_heavy			10
+		fire_medium			15
+		fire_heavy			15
+		fire_flamer         2
 
 		shock				0
 
-		plasma_light		7
-		plasma_medium		6
-		plasma_heavy		5
+		plasma_light		20
+		plasma_medium		17
+		plasma_heavy		15
 
 		laser_light			12
 		laser_medium		10
 		laser_heavy			10
 
-		particlebeam_light	7
-		particlebeam_medium	6
-		particlebeam_heavy	5
+		particlebeam_light	21
+		particlebeam_medium	19
+		particlebeam_heavy	17
 
 		stun				0
 	}
 
-    //FIXME
+    //Not needed for alien armour
 	rating {
-		normal				30
-		steelblade			20
-		monomolecularblade	10
-		blast				10
-		fire				10
-		shock				10
-		plasma				10
-		laser				25
-		particlebeam		10
-		stun				10
+		normal				0
+		steelblade			0
+		monomolecularblade	0
+		blast				0
+		fire				0
+		shock				0
+		plasma				0
+		laser				0
+		particlebeam		0
+		stun				0
 	}
 }
 
@@ -560,47 +562,49 @@ item medium_alien
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
-		normal_light		15
-		normal_medium		12
-		normal_heavy		8
+		normal_light		21
+		normal_medium		19
+		normal_heavy		16
+		normal_spray        12
 
 		steelblade			20
 
-		monomolecularblade	3
+		monomolecularblade	12
 
-		blast				15
+		blast				38
 
-		fire_medium			17
-		fire_heavy			11
+		fire_medium			22
+		fire_heavy			22
+		fire_flamer         3
 
-		shock				5
+		shock				10
 
-		plasma_light		17
-		plasma_medium		12
-		plasma_heavy		8
+		plasma_light		35
+		plasma_medium		29
+		plasma_heavy		26
 
-		laser_light			15
-		laser_medium		15
-		laser_heavy			10
+		laser_light			26
+		laser_medium		25
+		laser_heavy			22
 
-		particlebeam_light	18
-		particlebeam_medium	16
-		particlebeam_heavy	14
+		particlebeam_light	31
+		particlebeam_medium	27
+		particlebeam_heavy	24
 
 		stun				10
 	}
 
-    //FIXME
+    //Not needed for alien armour
 	rating {
-		normal				30
-		steelblade			20
-		monomolecularblade	10
-		blast				10
-		fire				10
-		shock				10
-		plasma				10
-		laser				25
-		particlebeam		10
-		stun				10
+		normal				0
+		steelblade			0
+		monomolecularblade	0
+		blast				0
+		fire				0
+		shock				0
+		plasma				0
+		laser				0
+		particlebeam		0
+		stun				0
 	}
 }
