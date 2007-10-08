@@ -95,16 +95,15 @@ item light
 		stun				0
 	}
 
-	//FIXME
 	rating {
 		normal				30
 		steelblade			20
 		monomolecularblade	10
-		blast				10
-		fire				10
+		blast				30
+		fire				20
 		shock				10
 		plasma				10
-		laser				25
+		laser				20
 		particlebeam		10
 		stun				10
 	}
@@ -159,18 +158,17 @@ item medium
 		stun				10
 	}
 
-	//FIXME
 	rating {
-		normal				30
-		steelblade			20
-		monomolecularblade	10
-		blast				10
-		fire				10
-		shock				10
-		plasma				10
-		laser				25
-		particlebeam		10
-		stun				10
+		normal				50
+		steelblade			40
+		monomolecularblade	30
+		blast				50
+		fire				40
+		shock				30
+		plasma				40
+		laser				50
+		particlebeam		30
+		stun				30
 	}
 }
 
@@ -222,18 +220,17 @@ item power
 		stun				20
 	}
 
-    //FIXME
 	rating {
-		normal				30
-		steelblade			20
-		monomolecularblade	10
-		blast				10
-		fire				10
-		shock				10
-		plasma				10
-		laser				25
-		particlebeam		10
-		stun				10
+		normal				80
+		steelblade			60
+		monomolecularblade	50
+		blast				60
+		fire				50
+		shock				40
+		plasma				60
+		laser				40
+		particlebeam		70
+		stun				50
 	}
 }
 
@@ -282,18 +279,17 @@ item power
 //		stun				20
 //	}
 //
-//    //FIXME
 //	rating {
-//		normal				30
-//		steelblade			20
-//		monomolecularblade	10
-//		blast				10
-//		fire				10
-//		shock				10
-//		plasma				10
-//		laser				25
-//		particlebeam		10
-//		stun				10
+//		normal				50
+//		steelblade			50
+//		monomolecularblade	30
+//		blast				40
+//		fire				40
+//		shock				40
+//		plasma				50
+//		laser				60
+//		particlebeam		40
+//		stun				40
 //	}
 //}
 
@@ -342,18 +338,17 @@ item power
 //		stun				20
 //	}
 //
-//    //FIXME
 //	rating {
-//		normal				30
-//		steelblade			20
-//		monomolecularblade	10
-//		blast				10
-//		fire				10
-//		shock				10
-//		plasma				10
-//		laser				25
-//		particlebeam		10
-//		stun				10
+//		normal				60
+//		steelblade			70
+//		monomolecularblade	70
+//		blast				100
+//		fire				70
+//		shock				70
+//		plasma				100
+//		laser				70
+//		particlebeam		60
+//		stun				80
 //	}
 //}
 
@@ -402,18 +397,17 @@ item power
 //		stun				20
 //	}
 //
-//    //FIXME
 //	rating {
-//		normal				30
-//		steelblade			20
-//		monomolecularblade	10
-//		blast				10
-//		fire				10
-//		shock				10
-//		plasma				10
-//		laser				25
-//		particlebeam		10
-//		stun				10
+//		normal				100
+//		steelblade			100
+//		monomolecularblade	100
+//		blast				60
+//		fire				100
+//		shock				100
+//		plasma				80
+//		laser				100
+//		particlebeam		100
+//		stun				100
 //	}
 //}
 
@@ -462,18 +456,17 @@ item power
 //		stun				20
 //	}
 //
-//    //FIXME
 //	rating {
-//		normal				30
-//		steelblade			20
-//		monomolecularblade	10
-//		blast				10
-//		fire				10
-//		shock				10
-//		plasma				10
-//		laser				25
-//		particlebeam		10
-//		stun				10
+//		normal				80
+//		steelblade			80
+//		monomolecularblade	80
+//		blast				40
+//		fire				80
+//		shock				80
+//		plasma				60
+//		laser				80
+//		particlebeam		80
+//		stun				80
 //	}
 //}
 
