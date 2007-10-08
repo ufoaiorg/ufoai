@@ -63,22 +63,22 @@ item light
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
-		normal_light		20 //Fire modes of a light calibre that rely on single or burst fire
-		normal_medium		18 //Fire modes of a medium calibre that rely on single or burst fire
-		normal_heavy		11 //Fire modes of a heavy calibre that rely on single fire mostly
-		normal_spray        9 //Fire modes that rely on hitting often rather than hitting hard
+		normal_light		20
+		normal_medium		18
+		normal_heavy		11
+		normal_spray        9
 
-		steelblade			10 //Basically only the combat knife
+		steelblade			10
 
-		monomolecularblade	5 //All monomolecular blade weapons, including the needler gun
+		monomolecularblade	5
 
-		blast				25 //Explosives. Note that this gets applied to both splash and impact damage!
+		blast				25
 
-		fire_medium			15 //Fire modes of a medium calibre that do fire damage
-		fire_heavy			15 //Fire modes of a heavy calibre that do fire damage
-		fire_flamer         2 //Fire modes that do little damage (1-10), but do so many times in a row.
+		fire_medium			15
+		fire_heavy			15
+		fire_flamer         2
 
-		shock				0 //Flashbang. Does this value even matter?
+		shock				0
 
 		plasma_light		7
 		plasma_medium		6
@@ -127,22 +127,22 @@ item medium
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
-		normal_light		31 //Fire modes of a light calibre that rely on single or burst fire
-		normal_medium		29 //Fire modes of a medium calibre that rely on single or burst fire
-		normal_heavy		16 //Fire modes of a heavy calibre that rely on single fire mostly
-		normal_spray        12 //Fire modes that rely on hitting often rather than hitting hard
+		normal_light		31
+		normal_medium		29
+		normal_heavy		16
+		normal_spray        12
 
-		steelblade			20 //Basically only the combat knife
+		steelblade			20
 
-		monomolecularblade	12 //All monomolecular blade weapons, including the needler gun
+		monomolecularblade	12
 
-		blast				38 //Explosives. Note that this gets applied to both splash and impact damage!
+		blast				38
 
-		fire_medium			22 //Fire modes of a medium calibre that do fire damage
-		fire_heavy			22 //Fire modes of a heavy calibre that do fire damage
-		fire_flamer         3 //Fire modes that do little damage (1-10), but do so many times in a row.
+		fire_medium			22
+		fire_heavy			22
+		fire_flamer         3
 
-		shock				10 //Flashbang. Does this value even matter?
+		shock				10
 
 		plasma_light		26
 		plasma_medium		25
@@ -190,22 +190,22 @@ item power
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
-		normal_light		41 //Fire modes of a light calibre that rely on single or burst fire
-		normal_medium		41 //Fire modes of a medium calibre that rely on single or burst fire
-		normal_heavy		41 //Fire modes of a heavy calibre that rely on single fire mostly
-		normal_spray        19 //Fire modes that rely on hitting often rather than hitting hard
+		normal_light		41
+		normal_medium		41
+		normal_heavy		41
+		normal_spray        19
 
-		steelblade			25 //Basically only the combat knife
+		steelblade			25
 
-		monomolecularblade	19 //All monomolecular blade weapons, including the needler gun
+		monomolecularblade	19
 
-		blast				49 //Explosives. Note that this gets applied to both splash and impact damage!
+		blast				49
 
-		fire_medium			35 //Fire modes of a medium calibre that do fire damage
-		fire_heavy			35 //Fire modes of a heavy calibre that do fire damage
-		fire_flamer         4 //Fire modes that do little damage (1-10), but do so many times in a row.
+		fire_medium			35
+		fire_heavy			35
+		fire_flamer         4
 
-		shock				20 //Flashbang. Does this value even matter?
+		shock				20
 
 		plasma_light		32
 		plasma_medium		35
