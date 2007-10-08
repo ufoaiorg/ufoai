@@ -477,6 +477,7 @@ static void S_Play_f (void)
  */
 static void S_Restart_f (void)
 {
+	Com_Printf("Restarting sound\n");
 	S_Shutdown();
 	S_Init();
 
@@ -570,6 +571,7 @@ void S_Init (void)
 	Com_Printf("\n------- sound initialization -------\n");
 
 	snd_init = Cvar_Get("snd_init", "1", CVAR_ARCHIVE, "Should the sound renderer get initialized");
+	snd_init->modified = qfalse; /* don't restart right away */
 	Cmd_AddCommand("snd_restart", S_Restart_f, "Restart the sound renderer");
 
 	if (!snd_init->integer) {
