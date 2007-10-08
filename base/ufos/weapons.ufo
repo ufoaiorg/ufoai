@@ -150,7 +150,7 @@ item fraggrenade
 			ammo	1
 			delaybetweenshots		1
 			time	8
-			spldmg	"200 90"
+			spldmg	"110 30"
 			splrad	4
 			dmgweight blast
 		}
@@ -176,7 +176,7 @@ item fraggrenade
 			ammo	1
 			delaybetweenshots		1
 			time	8
-			spldmg	"200 90"
+			spldmg	"110 30"
 			splrad	4
 			dmgweight blast
 		}
@@ -452,7 +452,7 @@ item incgrenade
 			ammo	1
 			delaybetweenshots		1
 			time	8
-			spldmg	"160 60"
+			spldmg	"80 30"
 			splrad	3
 			dmgweight fire_medium
 		}
@@ -478,7 +478,7 @@ item incgrenade
 			ammo	1
 			delaybetweenshots		1
 			time	8
-			spldmg	"160 60"
+			spldmg	"80 30"
 			splrad	3
 			dmgweight fire_medium
 		}
@@ -502,7 +502,7 @@ item plasmagrenade
 	size		10
 	buytype	misc
 	thrown		true
-	dmgtype plasma
+	dmgtype blast
 
 	weapon_mod plasmagrenade
 	{
@@ -527,9 +527,9 @@ item plasmagrenade
 			ammo	1
 			delaybetweenshots		1
 			time	8
-			spldmg	"320 60"
+			spldmg	"150 30"
 			splrad	6
-			dmgweight plasma_medium
+			dmgweight blast
 		}
 		firedef
 		{
@@ -553,9 +553,9 @@ item plasmagrenade
 			ammo	1
 			delaybetweenshots		1
 			time	8
-			spldmg	"320 60"
+			spldmg	"150 30"
 			splrad	6
-			dmgweight plasma_medium
+			dmgweight blast
 		}
 	}
 }
