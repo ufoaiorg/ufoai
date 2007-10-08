@@ -282,7 +282,7 @@ int main (int argc, char **argv)
 	SetQdirFromPath(argv[argc - 1]);
 
 	strcpy(name, ExpandArg(argv[argc - 1]));
-	COM_StripExtension(name, source);
+	COM_StripExtension(name, source, sizeof(source));
 	DefaultExtension(name, ".map");
 
 	snprintf(out, sizeof(out), "%s.bsp", source);

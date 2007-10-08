@@ -1352,7 +1352,7 @@ void FS_GetMaps (qboolean reset)
 					Q_strncpyz(findname, pak->files[i].name, sizeof(findname));
 					FS_NormPath(findname);
 					baseMapName = COM_SkipPath(findname);
-					COM_StripExtension(baseMapName, filename);
+					COM_StripExtension(baseMapName, filename, sizeof(filename));
 					Q_strncpyz(fs_maps[fs_numInstalledMaps + 1], filename, MAX_QPATH);
 					fs_numInstalledMaps++;
 				}
@@ -1365,7 +1365,7 @@ void FS_GetMaps (qboolean reset)
 				for (i = 0; i < ndirs - 1; i++) {
 					Com_DPrintf(DEBUG_ENGINE, "... found map: '%s' (pos %i out of %i)\n", dirnames[i], i + 1, ndirs);
 					baseMapName = COM_SkipPath(dirnames[i]);
-					COM_StripExtension(baseMapName, filename);
+					COM_StripExtension(baseMapName, filename, sizeof(filename));
 					status = CheckBSPFile(filename);
 					if (!status) {
 						if (fs_numInstalledMaps + 1 >= MAX_MAPS) {

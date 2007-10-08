@@ -47,32 +47,25 @@ const char *COM_SkipPath (char *pathname)
 /**
  * @brief Removed the file extension from a filename
  * @sa COM_SkipPath
+ * @param[in] size The size of the output buffer
  */
-void COM_StripExtension (const char *in, char *out)
+void COM_StripExtension (const char *in, char *out, size_t size)
 {
-	const char* end = NULL;
-	const char* i;
+	char *out_ext = NULL;
+	int i = 1;
 
-	for (i = in;; ++i) {
-		switch (*i) {
-		case '.':
-			end = i;
-			break;
+	while (*in && i < size) {
+		*out++ = *in++;
+		i++;
 
-		case '/':
-		case '\\':
-			end = NULL;
-			break;
-
-		case '\0':
-			if (end == NULL)
-				end = i;
-			while (in != end)
-				*out++ = *in++;
-			*out = '\0';
-			return;
-		}
+		if (*in == '.')
+			out_ext = out;
 	}
+
+	if (out_ext)
+		*out_ext = 0;
+	else
+		*out = 0;
 }
 
 void COM_FileBase (const char *in, char *out)

@@ -105,7 +105,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 )
 
 const char *COM_SkipPath(char *pathname);
-void COM_StripExtension(const char *in, char *out);
+void COM_StripExtension(const char *in, char *out, size_t size);
 void COM_FileBase(const char *in, char *out);
 void COM_FilePath(const char *in, char *out);
 

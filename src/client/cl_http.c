@@ -344,7 +344,7 @@ qboolean CL_QueueHTTPDownload (const char *ufoPath)
 
 		Com_sprintf(filePath, sizeof(filePath), "%s/%s", cl.gamedir, ufoPath);
 
-		COM_StripExtension(filePath, listPath);
+		COM_StripExtension(filePath, listPath, sizeof(listPath));
 		strcat(listPath, ".filelist");
 
 		CL_QueueHTTPDownload(listPath);
