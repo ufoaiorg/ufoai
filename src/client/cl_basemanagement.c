@@ -1977,7 +1977,6 @@ static void B_AssignInitial_f (void)
 	if (!ccs.singleplayer) {
 		CL_ResetTeamInBase();
 		Cvar_Set("mn_teamname", _("NewTeam"));
-		Cbuf_AddText("gennames;");
 	}
 
 	for (i = MAX_TEAMLIST; --i >= 0;)
