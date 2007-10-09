@@ -912,7 +912,7 @@ void FS_InitFilesystem (void)
 }
 
 
-#define FL_BLOCKSIZE	1024
+#define FL_BLOCKSIZE	2048
 typedef struct listBlock_s {
 	char path[MAX_QPATH];
 	char files[FL_BLOCKSIZE];
