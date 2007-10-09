@@ -436,7 +436,7 @@ void NET_Wait (int timeout)
 				continue;
 			}
 
-			Com_Printf("wrote %d bytes to stream %d (%s)\n", len, i, stream_peer_name(s, buf, sizeof(buf), qfalse));
+			Com_DPrintf(DEBUG_SERVER, "wrote %d bytes to stream %d (%s)\n", len, i, stream_peer_name(s, buf, sizeof(buf), qfalse));
 
 			dbuffer_remove(s->outbound, len);
 		}
@@ -453,7 +453,7 @@ void NET_Wait (int timeout)
 				if (s->inbound) {
 					dbuffer_add(s->inbound, buf, len);
 
-					Com_Printf("read %d bytes from stream %d (%s)\n", len, i, stream_peer_name(s, buf, sizeof(buf), qfalse));
+					Com_DPrintf(DEBUG_SERVER, "read %d bytes from stream %d (%s)\n", len, i, stream_peer_name(s, buf, sizeof(buf), qfalse));
 
 					/* Note that s is potentially invalid after the callback returns */
 					if (s->func)
