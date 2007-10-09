@@ -908,7 +908,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 	int i,j;
 	int weap_fds_idx, fd_idx;
 
-	/* search for menus with same name */
+	/* search for items with same name */
 	for (i = 0; i < csi.numODs; i++)
 		if (!Q_strncmp(name, csi.ods[i].name, sizeof(csi.ods[i].name)))
 			break;
