@@ -665,6 +665,7 @@ typedef enum {
 #define CS_PLAYERCOUNT		8		/**< amount of already connected players */
 #define CS_VERSION			9		/**< what is the servers version */
 #define CS_UFOCHECKSUM		10		/**< checksum of ufo files */
+#define CS_OBJECTAMOUNT		11		/**< amount of defined objects in the script files */
 
 #define CS_TILES			16
 #define CS_POSITIONS		(CS_TILES+MAX_TILESTRINGS)

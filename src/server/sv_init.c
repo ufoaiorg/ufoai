@@ -1117,6 +1117,7 @@ static void SV_SpawnServer (const char *server, const char *param)
 	FS_GetFileData(NULL);
 	Com_Printf("ufo script checksum %u\n", checksum);
 	Com_sprintf(sv.configstrings[CS_UFOCHECKSUM], sizeof(sv.configstrings[CS_UFOCHECKSUM]), "%i", checksum);
+	Com_sprintf(sv.configstrings[CS_OBJECTAMOUNT], sizeof(sv.configstrings[CS_OBJECTAMOUNT]), "%i", csi.numODs);
 
 	Com_sprintf(sv.configstrings[CS_VERSION], sizeof(sv.configstrings[CS_VERSION]), UFO_VERSION);
 

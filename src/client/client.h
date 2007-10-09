@@ -178,7 +178,8 @@ typedef struct client_static_s {
 
 	/* connection information */
 	char servername[MAX_OSPATH];	/**< name of server from original connect */
-	float connectTime;				/**< for connection retransmits */
+	int connectTime;				/**< for connection retransmits */
+	int waitingForStart;			/**< waiting for EV_START or timeout */
 
 	struct datagram_socket *datagram_socket;
 	struct net_stream *stream;

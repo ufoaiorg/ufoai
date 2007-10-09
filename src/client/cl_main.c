@@ -1472,7 +1472,8 @@ void CL_RequestNextDownload (void)
 		FS_GetFileData(NULL);
 
 		CM_LoadMap(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS], &map_checksum);
-		if (!*cl.configstrings[CS_VERSION] || !*cl.configstrings[CS_MAPCHECKSUM] || !*cl.configstrings[CS_UFOCHECKSUM]) {
+		if (!*cl.configstrings[CS_VERSION] || !*cl.configstrings[CS_MAPCHECKSUM]
+		 || !*cl.configstrings[CS_UFOCHECKSUM] || !*cl.configstrings[CS_OBJECTAMOUNT]) {
 			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the servers"), UFO_VERSION);
 			MN_Popup(_("Error"), popupText);
 			Com_Error(ERR_DISCONNECT, "Local game version (%s) differs from the servers", UFO_VERSION);
@@ -1482,6 +1483,11 @@ void CL_RequestNextDownload (void)
 			MN_Popup(_("Error"), _("Local map version differs from server"));
 			Com_Error(ERR_DISCONNECT, "Local map version differs from server: %u != '%s'",
 				map_checksum, cl.configstrings[CS_MAPCHECKSUM]);
+			return;
+		/* amount of objects from script files doensn't match */
+		} else if (csi.numODs != atoi(cl.configstrings[CS_OBJECTAMOUNT])) {
+			MN_Popup(_("Error"), _("Script files are not the same"));
+			Com_Error(ERR_DISCONNECT, "Script files are not the same");
 			return;
 		/* checksum doesn't match with the one the server gave us via configstring */
 		} else if (atoi(cl.configstrings[CS_UFOCHECKSUM]) && ufoScript_checksum != atoi(cl.configstrings[CS_UFOCHECKSUM])) {
@@ -1513,6 +1519,8 @@ void CL_RequestNextDownload (void)
 	/* for singleplayer the soldiers get spawned here */
 	if (ccs.singleplayer && cls.missionaircraft)
 		CL_SpawnSoldiers_f();
+
+	cls.waitingForStart = cls.realtime;
 }
 
 
@@ -2037,7 +2045,7 @@ static void CL_InitLocal (void)
 	cl_start_employees = Cvar_Get("cl_start_employees", "1", CVAR_ARCHIVE, "Start with hired employees");
 	cl_initial_equipment = Cvar_Get("cl_initial_equipment", "human_phalanx_initial", CVAR_ARCHIVE, "Start with assigned equipment - see cl_start_employees");
 	cl_start_buildings = Cvar_Get("cl_start_buildings", "1", CVAR_ARCHIVE, "Start with initial buildings in your first base");
-	cl_connecttimeout = Cvar_Get("cl_connecttimeout", "3000", CVAR_ARCHIVE, "Connection timeout for multiplayer connects");
+	cl_connecttimeout = Cvar_Get("cl_connecttimeout", "8000", CVAR_ARCHIVE, "Connection timeout for multiplayer connects");
 
 	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE, "Confirm all actions in tactical mode");
 
@@ -2185,8 +2193,18 @@ static void CL_SendCommand (void)
 		break;
 	case ca_connecting:
 		if (cls.realtime - cls.connectTime > cl_connecttimeout->integer) {
-			Com_Printf("Server is not reachable\n");
-			CL_Disconnect();
+			Com_Error(ERR_DROP, "Server is not reachable");
+		}
+		break;
+	case ca_connected:
+		if (cls.waitingForStart) {
+			if (cls.realtime - cls.waitingForStart > cl_connecttimeout->integer) {
+				Com_Error(ERR_DROP, "Server is not reachable");
+			} else {
+				Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages),
+					"%s (%i)", _("Awaiting game start"), (cls.realtime - cls.waitingForStart) / 1000);
+				SCR_UpdateScreen();
+			}
 		}
 		break;
 	default:
