@@ -911,6 +911,11 @@ void FS_InitFilesystem (void)
 		FS_SetGamedir(fs_gamedir->string);
 }
 
+/* FIXME: This block list code is broken in terms of filename order
+ * To see the bug reduce the FL_BLOCKSIZE to 1024 and verify the order of the
+ * filenames FS_NextScriptHeader gives you - you will see that the last files
+ * will be in reversed order
+ */
 
 #define FL_BLOCKSIZE	2048
 typedef struct listBlock_s {

@@ -1595,7 +1595,8 @@ void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
 		Com_Printf("%s\n", s);
 		CL_Disconnect();
 		CL_SetClientState(ca_connecting);
-		cls.connectTime = 0;
+		/* otherwise we would time out */
+		cls.connectTime = cls.realtime - 1500;
 		break;
 
 	case svc_print:
