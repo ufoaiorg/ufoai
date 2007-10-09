@@ -469,6 +469,8 @@ static void BS_SellItem_f (void)
 	Cbuf_AddText(va("market_click %i\n", num + buyListScrollPos));
 
 	item = buyList[num + buyListScrollPos];
+	assert(item >= 0);
+	assert(item < csi.numODs);
 	Cvar_SetValue("mn_bs_current", item);
 	UP_ItemDescription(item);
 	for (i = 0; i < baseCurrent->sellfactor; i++) {
@@ -513,6 +515,9 @@ static void BS_Autosell_f (void)
 	if (num < 0 || num >= buyListLength)
 		return;
 	item = buyList[num + buyListScrollPos];
+
+	assert(item >= 0);
+	assert(item < csi.numODs);
 
 	if (gd.autosell[item]) {
 		gd.autosell[item] = qfalse;

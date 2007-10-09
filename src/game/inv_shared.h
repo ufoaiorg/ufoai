@@ -361,6 +361,7 @@ typedef struct damageType_s {
  * @brief The csi structure is the client-server-information structure
  * which contains all the UFO info needed by the server and the client.
  * @sa ccs_t
+ * @note Most of this comes from the script files
  */
 typedef struct csi_s {
 	/** Object definitions */

@@ -3007,6 +3007,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			/* save shield slots - currently only one */
 			MSG_WriteByte(sb, 1);
 			if (aircraft->shield.itemIdx >= 0) {
+				assert(aircraft->shield.itemIdx < csi.numODs);
 				MSG_WriteString(sb, csi.ods[aircraft->shield.itemIdx].id);
 				MSG_WriteShort(sb, aircraft->shield.installationTime);
 			} else {
@@ -3017,6 +3018,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteByte(sb, aircraft->maxElectronics);
 			for (l = 0; l < aircraft->maxElectronics; l++) {
 				if (aircraft->electronics[l].itemIdx >= 0) {
+					assert(aircraft->electronics[l].itemIdx < csi.numODs);
 					MSG_WriteString(sb, csi.ods[aircraft->electronics[l].itemIdx].id);
 					MSG_WriteShort(sb, aircraft->electronics[l].installationTime);
 				} else {
@@ -3403,6 +3405,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 qboolean B_UpdateStorageAndCapacity (base_t* base, int objIDX, int amount, qboolean reset, qboolean ignorecap)
 {
 	assert(base);
+	assert(objIDX < csi.numODs);
 	if (reset) {
 		base->storage.num[objIDX] = 0;
 		base->storage.num_loose[objIDX] = 0; /* FIXME: needed? */

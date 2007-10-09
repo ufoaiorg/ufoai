@@ -245,13 +245,15 @@ void CL_StartSingleplayer (qboolean singleplayer)
 		FS_NextScriptHeader(NULL, NULL, NULL);
 		text = NULL;
 
-		while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0)
-			if (!Q_strncmp(type, "tech", 4))
-				RS_ParseTechnologies(name, &text);
+		if (!gd.numTechnologies) {
+			while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0)
+				if (!Q_strncmp(type, "tech", 4))
+					RS_ParseTechnologies(name, &text);
 
-		/* fill in IDXs for required research techs */
-		RS_RequiredIdxAssign();
-		Com_AddObjectLinks();	/* Add tech links + ammo<->weapon links to items.*/
+			/* fill in IDXs for required research techs */
+			RS_RequiredIdxAssign();
+			Com_AddObjectLinks();	/* Add tech links + ammo<->weapon links to items.*/
+		}
 	}
 }
 

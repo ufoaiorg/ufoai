@@ -2304,6 +2304,12 @@ void Com_ParseScripts (void)
 	}
 
 	Com_Printf("Shared Client/Server Info loaded\n");
+	Com_Printf("...%3i items parsed\n", csi.numODs);
+	Com_Printf("...%3i damage types parsed\n", csi.numDTs);
+	Com_Printf("...%3i map definitions parsed\n", csi.numMDs);
+	Com_Printf("...%3i equipment definitions parsed\n", csi.numEDs);
+	Com_Printf("...%3i inventory definitions parsed\n", csi.numIDs);
+	Com_Printf("...%3i team definitions parsed\n", csi.numTeamDefs);
 }
 
 /* FIXME: a mess - but i don't want to make the variables non static */
