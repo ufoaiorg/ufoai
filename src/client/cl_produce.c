@@ -452,7 +452,7 @@ void PR_ProductionRun (void)
 						Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Not enough free storage space in base %s. Production paused.\n"), gd.bases[i].name);
 						MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 						prod->spacemessage = qtrue;
-					} 
+					}
 					continue;
 				}
 			} else {
@@ -982,7 +982,7 @@ static void PR_ProductionSelect_f (void)
 		return;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: prod_select <category>\n");
+		Com_Printf("Usage: %s <category>\n", Cmd_Argv(0));
 		return;
 	}
 	cat = atoi(Cmd_Argv(1));
@@ -1010,7 +1010,7 @@ static void PR_ProductionList_f (void)
 	int numWorkshops = 0;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: prod_init <type>\n");
+		Com_Printf("Usage: %s <type>\n", Cmd_Argv(0));
 		return;
 	}
 

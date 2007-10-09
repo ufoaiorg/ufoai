@@ -327,7 +327,7 @@ static void CL_Connect_f (void)
 	aircraft_t *aircraft;
 
 	if (Cmd_Argc() != 2) {
-		Com_Printf("usage: connect <server>\n");
+		Com_Printf("Usage: %s <server>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -370,7 +370,7 @@ static void CL_Rcon_f (void)
 	int i;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("usage: %s <command>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <command>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -479,7 +479,7 @@ static void CL_Packet_f (void)
 	struct net_stream *s;
 
 	if (Cmd_Argc() != 4) {
-		Com_Printf("Usage: packet <destination> <port> <contents>\n");
+		Com_Printf("Usage: %s <destination> <port> <contents>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -1006,7 +1006,7 @@ static void CL_BookmarkAdd_f (void)
 	if (Cmd_Argc() < 2) {
 		newBookmark = Cvar_VariableString("mn_server_ip");
 		if (!newBookmark) {
-			Com_Printf("usage: bookmark_add <ip>\n");
+			Com_Printf("Usage: %s <ip>\n", Cmd_Argv(0));
 			return;
 		}
 	} else
@@ -1032,7 +1032,7 @@ static void CL_BookmarkListClick_f (void)
 	const char *bookmark = NULL;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("usage: bookmarks_click <num>\n");
+		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -1081,7 +1081,7 @@ static void CL_ServerListClick_f (void)
 	int num, i;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("usage: servers_click <num>\n");
+		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 		return;
 	}
 	num = atoi(Cmd_Argv(1));

@@ -1368,7 +1368,7 @@ static void Irc_Connect_f (void)
 		else
 			Com_Printf("Already connected.\n");
 	} else
-			Com_Printf("usage: irc_connect [<server>] [<port>] [<channel>]");
+			Com_Printf("Usage: %s [<server>] [<port>] [<channel>]", Cmd_Argv(0));
 }
 
 static void Irc_Disconnect_f (void)
@@ -1391,7 +1391,7 @@ static void Irc_Client_Join_f (void)
 		Irc_Proto_Join(channel, channel_pass);	/* join desired channel */
 		Cvar_ForceSet("irc_defaultChannel", channel);
 	} else
-		Com_Printf("usage: irc_join <channel> [<password>]\n");
+		Com_Printf("Usage: %s <channel> [<password>]\n", Cmd_Argv(0));
 }
 
 static void Irc_Client_Part_f (void)
@@ -1401,7 +1401,7 @@ static void Irc_Client_Part_f (void)
 		const char * const channel = Cmd_Argv(1);
 		Irc_Proto_Part(channel);
 	} else
-		Com_Printf("usage: irc_part <channel>\n");
+		Com_Printf("Usage: %s <channel>\n", Cmd_Argv(0));
 }
 
 /**
@@ -1450,7 +1450,7 @@ static void Irc_Client_PrivMsg_f (void)
 		}
 		Irc_Proto_Msg(target, msg);
 	} else
-		Com_Printf("usage: irc_privmsg <target> {<msg>}\n");
+		Com_Printf("Usage: %s <target> {<msg>}\n", Cmd_Argv(0));
 }
 
 static void Irc_Client_Mode_f (void)
@@ -1464,7 +1464,7 @@ static void Irc_Client_Mode_f (void)
 			: NULL;
 		Irc_Proto_Mode(target, modes, params);
 	} else
-		Com_Printf("usage: irc_mode <target> <modes> {<param>}\n");
+		Com_Printf("Usage: %s <target> <modes> {<param>}\n", Cmd_Argv(0));
 }
 
 static void Irc_Client_Topic_f (void)
@@ -1494,7 +1494,7 @@ static void Irc_Client_Topic_f (void)
 		} else
 			Com_Printf("Not joined: %s\n", channel);
 	} else
-		Com_Printf("usage: irc_topic <channel> [<topic>]\n");
+		Com_Printf("Usage: %s <channel> [<topic>]\n", Cmd_Argv(0));
 }
 
 #define IRC_MAX_USERLIST 512
@@ -1538,7 +1538,7 @@ static void Irc_Client_Kick_f (void)
 		} else
 			Com_Printf("Not joined: %s.", channel);
 	} else
-		Com_Printf("usage: irc_kick <channel> <nick> [<reason>]\n");
+		Com_Printf("Usage: %s <channel> <nick> [<reason>]\n", Cmd_Argv(0));
 }
 
 static void Irc_Client_Who_f (void)
@@ -1546,7 +1546,7 @@ static void Irc_Client_Who_f (void)
 	if (Cmd_Argc() == 2) {
 		Irc_Proto_Who(Cmd_Argv(1));
 	} else
-		Com_Printf("usage: irc_who <usermask>");
+		Com_Printf("Usage: %s <usermask>\n", Cmd_Argv(0));
 }
 
 static void Irc_Client_Whois_f (void)
@@ -1554,7 +1554,7 @@ static void Irc_Client_Whois_f (void)
 	if (Cmd_Argc() == 2) {
 		Irc_Proto_Whois(Cmd_Argv(1));
 	} else
-		Com_Printf("usage: irc_whois <nick>");
+		Com_Printf("Usage: %s <nick>\n", Cmd_Argv(0));
 }
 
 static void Irc_Client_Whowas_f (void)
@@ -1562,7 +1562,7 @@ static void Irc_Client_Whowas_f (void)
 	if (Cmd_Argc() == 2) {
 		Irc_Proto_Whowas(Cmd_Argv(1));
 	} else
-		Com_Printf("usage: irc_whowas <nick>");
+		Com_Printf("Usage: %s <nick>\n", Cmd_Argv(0));
 }
 
 

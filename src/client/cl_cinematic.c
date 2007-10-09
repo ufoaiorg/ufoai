@@ -643,7 +643,7 @@ static void CIN_Cinematic_f (void)
 	char name[MAX_OSPATH];
 
 	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: cinematic <videoName>\n");
+		Com_Printf("Usage: %s <videoName>\n", Cmd_Argv(0));
 		return;
 	}
 

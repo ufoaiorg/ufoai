@@ -381,7 +381,7 @@ void AIR_NewAircraft_f (void)
 	base_t *b = NULL;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: aircraft_new <type> <baseID>\n");
+		Com_Printf("Usage: %s <type> <baseID>\n", Cmd_Argv(0));
 		return;
 	}
 

@@ -2023,7 +2023,7 @@ static void CL_NationSelect_f (void)
 	int nat;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: nation_select <nat_idx>\n");
+		Com_Printf("Usage: %s <nat_idx>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -3154,7 +3154,7 @@ static void CL_GameResults_f (void)
 	}
 	/* check for win */
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: game_results <won>\n");
+		Com_Printf("Usage: %s <won>\n", Cmd_Argv(0));
 		return;
 	}
 	won = atoi(Cmd_Argv(1));
@@ -4144,7 +4144,7 @@ static void CL_StartMission_f (void)
 	mission_t* mission = NULL;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: mission <missionID>\n");
+		Com_Printf("Usage: %s <missionID>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -4689,7 +4689,7 @@ static void CP_UfoRecoveryBaseSelectPopup_f (void)
 	base_t* base;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("usage: %s <baseid>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <baseid>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -4818,7 +4818,7 @@ static void CP_UfoRecoveryNationSelectPopup_f (void)
 	nation_t *nation;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("usage: %s <nationid>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <nationid>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -5121,7 +5121,7 @@ qboolean CP_GetRandomPosOnGeoscape (vec2_t pos, linkedList_t* terrainTypes, link
 static void CP_CampaignActivateStage_f (void)
 {
 	if (Cmd_Argc() != 2) {
-		Com_Printf("usage: %s <stage-id>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <stage-id>\n", Cmd_Argv(0));
 		return;
 	}
 	CL_CampaignActivateStage(Cmd_Argv(1), qtrue);

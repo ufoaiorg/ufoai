@@ -131,7 +131,7 @@ static void BS_MarketClick_f (void)
 	int num;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: market_click <num>\n");
+		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -403,7 +403,7 @@ static void BS_BuyItem_f (void)
 	int num, item, i;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: mn_buy <num>\n");
+		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -453,7 +453,7 @@ static void BS_SellItem_f (void)
 	int num, item, i, j;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: mn_sell <num>\n");
+		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -621,7 +621,7 @@ static void BS_BuyAircraft_f (void)
 	int num, aircraftID, craftitemID, freeSpace;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: mn_buy_aircraft <num>\n");
+		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -699,7 +699,7 @@ static void BS_SellAircraft_f (void)
 	qboolean teamNote = qfalse;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: mn_sell_aircraft <num>\n");
+		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 		return;
 	}
 

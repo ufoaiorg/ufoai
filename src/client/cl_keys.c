@@ -702,7 +702,7 @@ static void Key_Unbind_f (void)
 	int b;
 
 	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: unbind <key> : remove commands from a key\n");
+		Com_Printf("Usage: %s <key> : remove commands from a key\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -763,7 +763,7 @@ static void Key_Bind_f (void)
 	c = Cmd_Argc();
 
 	if (c < 2) {
-		Com_Printf("Usage: bind <key> [command] : attach a command to a key\n");
+		Com_Printf("Usage: %s <key> [command] : attach a command to a key\n", Cmd_Argv(0));
 		return;
 	}
 	b = Key_StringToKeynum(Cmd_Argv(1));

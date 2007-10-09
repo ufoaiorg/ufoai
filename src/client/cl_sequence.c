@@ -378,7 +378,7 @@ void CL_SequenceStart_f (void)
 	menu_t* menu;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: seq_start <name> [<menu>]\n");
+		Com_Printf("Usage: %s <name> [<menu>]\n", Cmd_Argv(0));
 		return;
 	}
 	name = Cmd_Argv(1);

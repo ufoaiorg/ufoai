@@ -473,7 +473,7 @@ void BDEF_Init_f (void)
 
 	if (Cmd_Argc() != 2 || noparams) {
 		if (airequipID == -1) {
-			Com_Printf("Usage: basedef_init <num>\n");
+			Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 			return;
 		}
 		AIM_CheckAirequipID();
@@ -799,7 +799,7 @@ void AIM_AircraftEquipmenuInit_f (void)
 
 	if (Cmd_Argc() != 2 || noparams) {
 		if (airequipID == -1) {
-			Com_Printf("Usage: airequip_init <num>\n");
+			Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 			return;
 		}
 		AIM_CheckAirequipID();
@@ -911,7 +911,7 @@ void AIM_AircraftEquipSlotSelect_f (void)
 	aircraft_t *aircraft;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: airequip_slot_select <arg>\n");
+		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -966,7 +966,7 @@ void AIM_AircraftEquipzoneSelect_f (void)
 	qboolean aircraftMenu;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: airequip_zone_select <arg>\n");
+		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -1087,7 +1087,7 @@ qboolean AII_AddAmmoToSlot (base_t* base, technology_t *tech, aircraftSlot_t *sl
 	/* the base pointer can be null here - e.g. in case you are equipping an ufo */
 	if (base) {
 		if (base->storage.num[ammoIdx] <= 0) {
-			Com_Printf("AII_AddItemToSlot: No more ammo of this type to equip (%s)\n", csi.ods[ammoIdx].id);
+			Com_Printf("AII_AddAmmoToSlot: No more ammo of this type to equip (%s)\n", csi.ods[ammoIdx].id);
 			return qfalse;
 		}
 	}
@@ -1153,7 +1153,7 @@ void AIM_AircraftEquipAddItem_f (void)
 	base_t* base;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: airequip_add_item <arg>\n");
+		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -1222,7 +1222,7 @@ void AIM_AircraftEquipDeleteItem_f (void)
 	qboolean aircraftMenu;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: airequip_del_item <arg>\n");
+		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
 		return;
 	}
 	num = atoi(Cmd_Argv(1));

@@ -317,7 +317,7 @@ static void SAV_GameSave_f (void)
 
 	/* get argument */
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: game_save <filename> <comment|*cvar>\n");
+		Com_Printf("Usage: %s <filename> <comment|*cvar>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -396,7 +396,7 @@ static void SAV_GameLoad_f (void)
 
 	/* get argument */
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: game_load <filename>\n");
+		Com_Printf("Usage: %s <filename>\n", Cmd_Argv(0));
 		return;
 	}
 

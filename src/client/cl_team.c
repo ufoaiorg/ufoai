@@ -213,7 +213,7 @@ static void CL_GiveName_f (void)
 	int i, j, num;
 
 	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: givename <gender> <teamid> [num]\n");
+		Com_Printf("Usage: %s <gender> <teamid> [num]\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -900,7 +900,7 @@ static void CL_EquipType_f (void)
 	int num;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: equip_type <category>\n");
+		Com_Printf("Usage: %s <category>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -1466,7 +1466,7 @@ static void CL_AssignSoldier_f (void)
 
 	/* check syntax */
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: team_hire <num>\n");
+		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 		return;
 	}
 	num = atoi(Cmd_Argv(1));

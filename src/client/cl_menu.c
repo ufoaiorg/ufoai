@@ -1635,7 +1635,7 @@ static void CL_MessageMenu_f (void)
 	const char *msg;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: msgmenu <msg>\n");
+		Com_Printf("Usage: %s <msg>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -3244,7 +3244,7 @@ static void MN_PushMenu_f (void)
 	if (Cmd_Argc() > 1)
 		MN_PushMenu(Cmd_Argv(1));
 	else
-		Com_Printf("usage: mn_push <name>\n");
+		Com_Printf("Usage: %s <name>\n", Cmd_Argv(0));
 }
 
 /**
@@ -3271,7 +3271,7 @@ static void MN_PushCopyMenu_f (void)
 		Cvar_SetValue("mn_escpop", mn_escpop->value + 1);
 		MN_PushMenuDelete(Cmd_Argv(1), qfalse);
 	} else {
-		Com_Printf("usage: mn_push_copy <name>\n");
+		Com_Printf("Usage: %s <name>\n", Cmd_Argv(0));
 	}
 }
 
@@ -3345,7 +3345,7 @@ static void MN_Modify_f (void)
 	float value;
 
 	if (Cmd_Argc() < 5)
-		Com_Printf("usage: mn_modify <name> <amount> <min> <max>\n");
+		Com_Printf("Usage: %s <name> <amount> <min> <max>\n", Cmd_Argv(0));
 
 	value = Cvar_VariableValue(Cmd_Argv(1));
 	value += atof(Cmd_Argv(2));
@@ -3363,7 +3363,7 @@ static void MN_ModifyWrap_f (void)
 	float value;
 
 	if (Cmd_Argc() < 5)
-		Com_Printf("usage: mn_modifywrap <name> <amount> <min> <max>\n");
+		Com_Printf("Usage: %s <name> <amount> <min> <max>\n", Cmd_Argv(0));
 
 	value = Cvar_VariableValue(Cmd_Argv(1));
 	value += atof(Cmd_Argv(2));
@@ -3385,7 +3385,7 @@ static void MN_ModifyString_f (void)
 	int add;
 
 	if (Cmd_Argc() < 4)
-		Com_Printf("usage: mn_modifystring <name> <amount> <list>\n");
+		Com_Printf("Usage: %s <name> <amount> <list>\n", Cmd_Argv(0));
 
 	current = Cvar_VariableString(Cmd_Argv(1));
 	add = atoi(Cmd_Argv(2));
@@ -3445,7 +3445,7 @@ static void MN_Translate_f (void)
 	char original[MAX_VAR], translation[MAX_VAR];
 
 	if (Cmd_Argc() < 4) {
-		Com_Printf("usage: mn_translate <source> <dest> <list>\n");
+		Com_Printf("Usage: %s <source> <dest> <list>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -3511,7 +3511,7 @@ static void MN_TutorialListClick_f (void)
 	int num;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: tutoriallist_click <num>\n");
+		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -3569,7 +3569,7 @@ static void MN_EditMenuNode_f (void)
 		return;
 
 	if (Cmd_Argc() < 4) {
-		Com_Printf("usage: mn_editnode <node> <var> <value>\n");
+		Com_Printf("Usage: %s <node> <var> <value>\n", Cmd_Argv(0));
 		return;
 	}
 	Com_Printf("!!WARNING!! This function may be dangerous and should only be used if you know what you are doing\n");
@@ -3626,7 +3626,7 @@ static void MN_SetModelTransform_f (void)
 		return;
 
 	if (Cmd_Argc() < 5) {
-		Com_Printf("usage: debug_mn[scale|angles] <node> <x> <y> <z>\n");
+		Com_Printf("Usage: %s <node> <x> <y> <z>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -3747,7 +3747,7 @@ static void MN_HideNode_f (void)
 	if (Cmd_Argc() == 2)
 		MN_HideNode(MN_GetNodeFromCurrentMenu(Cmd_Argv(1)));
 	else
-		Com_Printf("usage: %s <node>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <node>\n", Cmd_Argv(0));
 }
 
 /**
@@ -3770,7 +3770,7 @@ static void MN_UnHideNode_f (void)
 	if (Cmd_Argc() == 2)
 		MN_UnHideNode(MN_GetNodeFromCurrentMenu(Cmd_Argv(1)));
 	else
-		Com_Printf("usage: %s <node>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <node>\n", Cmd_Argv(0));
 }
 
 /**

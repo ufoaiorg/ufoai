@@ -115,7 +115,7 @@ static void E_EmployeeList_f (void)
 		return;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: employee_init <category>\n");
+		Com_Printf("Usage: %s <category>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -946,7 +946,7 @@ static void E_EmployeeHire_f (void)
 
 	/* Check syntax. */
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: employee_hire <+num>\n");
+		Com_Printf("Usage: %s <+num>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -997,7 +997,7 @@ static void E_EmployeeSelect_f (void)
 
 	/* Check syntax. */
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: employee_select <num>\n");
+		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 		return;
 	}
 	num = atoi(Cmd_Argv(1));

@@ -881,7 +881,7 @@ static void UP_FindEntry_f (void)
 	technology_t *tech = NULL;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: ufopedia <id>\n");
+		Com_Printf("Usage: %s <id>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -968,7 +968,7 @@ static void UP_Index_f (void)
 	int chapter = 0;
 
 	if (Cmd_Argc() < 2 && currentChapter == -1) {
-		Com_Printf("Usage: mn_upindex <chapter-id>\n");
+		Com_Printf("Usage: %s <chapter-id>\n", Cmd_Argv(0));
 		return;
 	} else if (Cmd_Argc() == 2) {
 		chapter = atoi(Cmd_Argv(1));

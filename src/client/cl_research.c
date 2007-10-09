@@ -835,7 +835,7 @@ static void CL_ResearchSelect_f (void)
 	int num;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: research_select <num>\n");
+		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -925,7 +925,7 @@ static void RS_AssignScientist_f (void)
 	int num;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: mn_rs_add <num_in_list>\n");
+		Com_Printf("Usage: %s <num_in_list>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -1009,7 +1009,7 @@ static void RS_RemoveScientist_f (void)
 	int num;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: mn_rs_remove <num_in_list>\n");
+		Com_Printf("Usage: %s <num_in_list>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -1584,7 +1584,7 @@ static void RS_DependenciesClick_f (void)
 	int num;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: research_dependencies_click <num>\n");
+		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 		return;
 	}
 

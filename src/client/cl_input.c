@@ -779,7 +779,7 @@ static void CL_CamSetAngles_f (void)
 	int c = Cmd_Argc();
 
 	if (c < 3) {
-		Com_Printf("Usage camsetangles <value> <value>\n");
+		Com_Printf("Usage %s <value> <value>\n", Cmd_Argv(0));
 		return;
 	}
 

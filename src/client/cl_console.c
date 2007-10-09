@@ -107,7 +107,7 @@ static void Con_Dump_f (void)
 	char name[MAX_OSPATH];
 
 	if (Cmd_Argc() != 2) {
-		Com_Printf("usage: condump <filename>\n");
+		Com_Printf("Usage: %s <filename>\n", Cmd_Argv(0));
 		return;
 	}
 

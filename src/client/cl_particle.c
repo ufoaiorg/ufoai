@@ -374,7 +374,7 @@ static void PE_LoadParticle_f (void)
 	int i;
 
 	if (Cmd_Argc() != 2) {
-		Com_Printf("usage: ptledit_load <particleid>\n");
+		Com_Printf("Usage: %s <particleid>\n", Cmd_Argv(0));
 		return;
 	}
 

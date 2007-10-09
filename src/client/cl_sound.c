@@ -456,7 +456,7 @@ static void S_Play_f (void)
 	const char *filename;
 
 	if (Cmd_Argc() != 2) {
-		Com_Printf("usage: %s <filename>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <filename>\n", Cmd_Argv(0));
 		return;
 	}
 

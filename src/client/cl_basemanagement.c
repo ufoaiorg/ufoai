@@ -974,7 +974,7 @@ static void B_SetBuilding_f (void)
 	int row, col;
 
 	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: set_building <x> <y>\n");
+		Com_Printf("Usage: %s <x> <y>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -1677,7 +1677,7 @@ void B_DrawBase (menuNode_t * node)
 static void B_RenameBase_f (void)
 {
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: rename_base <name>\n");
+		Com_Printf("Usage: %s <name>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -1749,7 +1749,7 @@ static void B_SelectBase_f (void)
 	int baseID;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: mn_select_base <baseID>\n");
+		Com_Printf("Usage: %s <baseID>\n", Cmd_Argv(0));
 		return;
 	}
 	baseID = atoi(Cmd_Argv(1));
@@ -2165,7 +2165,7 @@ static void B_BaseAttack_f (void)
 	int whichBaseID;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: base_attack <baseID>\n");
+		Com_Printf("Usage: %s <baseID>\n", Cmd_Argv(0));
 		return;
 	}
 

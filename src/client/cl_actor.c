@@ -917,7 +917,7 @@ void CL_DisplayFiremodes_f (void)
 	}
 
 	if (hand[0] != 'r' && hand[0] != 'l') {
-		Com_Printf("Usage: list_firemodes [l|r]\n");
+		Com_Printf("Usage: %s [l|r]\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -1030,14 +1030,14 @@ void CL_SelectReactionFiremode_f (void)
 	int actor_idx = -1;
 
 	if (Cmd_Argc() < 3) { /* no argument given */
-		Com_Printf("Usage: sel_reactmode [l|r] <num>   num=firemode number\n");
+		Com_Printf("Usage: %s [l|r] <num>   num=firemode number\n", Cmd_Argv(0));
 		return;
 	}
 
 	hand = Cmd_Argv(1);
 
 	if (hand[0] != 'r' && hand[0] != 'l') {
-		Com_Printf("Usage: sel_reactmode [l|r] <num>   num=firemode number\n");
+		Com_Printf("Usage: %s [l|r] <num>   num=firemode number\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -1078,14 +1078,14 @@ void CL_FireWeapon_f (void)
 	int weap_fd_idx = -1;
 
 	if (Cmd_Argc() < 3) { /* no argument given */
-		Com_Printf("Usage: fireweap [l|r] <num>   num=firemode number\n");
+		Com_Printf("Usage: %s [l|r] <num>   num=firemode number\n", Cmd_Argv(0));
 		return;
 	}
 
 	hand = Cmd_Argv(1);
 
 	if (hand[0] != 'r' && hand[0] != 'l') {
-		Com_Printf("Usage: fireweap [l|r] <num>   num=firemode number\n");
+		Com_Printf("Usage: %s [l|r] <num>   num=firemode number\n", Cmd_Argv(0));
 		return;
 	}
 
