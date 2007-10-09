@@ -527,6 +527,7 @@ static void CL_EventReset (void)
 
 /**
  * @sa G_ClientSpawn
+ * @sa EV_RESET
  */
 static void CL_Reset (struct dbuffer *msg)
 {

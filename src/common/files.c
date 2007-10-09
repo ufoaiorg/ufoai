@@ -931,11 +931,13 @@ static void _AddToListBlock (char** fl, listBlock_t* block, listBlock_t* tblock,
 	char *f, *tl = NULL;
 	int len;
 
+	/* strip path */
 	f = strrchr(name, '/');
 	if (!f)
 		f = name;
 	else
 		f++;
+	Com_Printf("_AddToListBlock: %s\n", name);
 
 	/* check for double occurences */
 	for (tblock = block; tblock; tblock = tblock->next) {

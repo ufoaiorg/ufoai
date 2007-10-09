@@ -622,13 +622,13 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 	}
 
 	/* @todo: on return from a mission with no clips left
-	   and one weapon half-loaded wielded by soldier
-	   and one empty in equip, on the first opening of equip,
-	   the empty weapon will be in soldier hands, the half-full in equip;
-	   this should be the other way around. */
+	 * and one weapon half-loaded wielded by soldier
+	 * and one empty in equip, on the first opening of equip,
+	 * the empty weapon will be in soldier hands, the half-full in equip;
+	 * this should be the other way around. */
 
 	/* Failed to find a complete clip - see if there's any loose ammo
-	   of the same kind; if so, gather it all in this weapon. */
+	 * of the same kind; if so, gather it all in this weapon. */
 	if (item.m != NONE && ed->num_loose[item.m] > 0) {
 		item.a = ed->num_loose[item.m];
 		ed->num_loose[item.m] = 0;
@@ -641,10 +641,10 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 		if (INVSH_LoadableInWeapon(&csi.ods[i], type)
 		&& (ed->num_loose[i] > item.a) ) {
 			if (item.a > 0) {
-				/* We previously found some ammo, but we've now found other */
-				/* loose ammo of a different (but appropriate) type with */
-				/* more bullets.  Put the previously found ammo back, so */
-				/* we'll take the new type. */
+				/* We previously found some ammo, but we've now found other
+				 * loose ammo of a different (but appropriate) type with
+				 * more bullets.  Put the previously found ammo back, so
+				 * we'll take the new type. */
 				assert(item.m != NONE);
 				ed->num_loose[item.m] = item.a;
 				/* We don't have to accumulate loose ammo into clips
@@ -834,8 +834,7 @@ static void CL_GenerateEquipment_f (void)
 
 			/* Check if there are any "multi_ammo" items and move them to the PRI container (along with PRI items of course).
 			 * Otherwise just use the container-buytype of the item.
-			 * HACKHACK
-			 */
+			 * HACKHACK */
 			if (BUY_PRI(csi.ods[i].buytype)) {
 				if (!Com_TryAddToBuyType(&baseCurrent->equipByBuyType, CL_AddWeaponAmmo(&unused, item), BUY_WEAP_PRI, 1))
 					break; /* no space left in menu */
@@ -877,8 +876,7 @@ static void CL_MoveMultiEquipment (inventory_t* const inv, int buytype_container
 		: BUY_WEAP_PRI;
 
 	/* This is a container that might hold some of the affected items.
-	 * Move'em to the target (buytype_container) container (if there are any)
-	 */
+	 * Move'em to the target (buytype_container) container (if there are any) */
 	Com_DPrintf(DEBUG_CLIENT, "CL_MoveMultiEquipment: buytype_container:%i\n", buytype_container);
 	Com_DPrintf(DEBUG_CLIENT, "CL_MoveMultiEquipment: container:%i\n", container);
 	ic = inv->c[container];
