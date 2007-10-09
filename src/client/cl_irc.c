@@ -1368,7 +1368,7 @@ static void Irc_Connect_f (void)
 		else
 			Com_Printf("Already connected.\n");
 	} else
-			Com_Printf("Usage: %s [<server>] [<port>] [<channel>]", Cmd_Argv(0));
+			Com_Printf("Usage: %s [<server>] [<port>] [<channel>]\n", Cmd_Argv(0));
 }
 
 static void Irc_Disconnect_f (void)
@@ -1601,7 +1601,7 @@ void Irc_Init (void)
 	irc_password = Cvar_Get("irc_password", "", CVAR_ARCHIVE, NULL);
 	irc_topic = Cvar_Get("irc_topic", "", CVAR_NOSET, NULL);
 	irc_defaultChannel = Cvar_Get("irc_defaultChannel", "", CVAR_NOSET, NULL);
-	irc_logConsole = Cvar_Get("irc_logConsole", "0", CVAR_ARCHIVE, NULL);
+	irc_logConsole = Cvar_Get("irc_logConsole", "0", CVAR_ARCHIVE, "Log all irc conversations to game console, too");
 	irc_showIfNotInMenu = Cvar_Get("irc_showIfNotInMenu", "0", CVAR_ARCHIVE, "Show chat messages on top of the menu stack if we are not in the irc menu");
 	irc_send_buffer = Cvar_Get("irc_send_buffer", "", 0, NULL);
 	irc_nick = Cvar_Get("name", "", 0, NULL);
