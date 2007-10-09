@@ -724,7 +724,7 @@ static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
 
 			/* first path of the path is drawn, now we begin the second part of the path */
 			/* shift first point, continue drawing */
-			start = i;
+			start = i - 1;
 			pts[0].x = p[-1].x - diff;
 			pts[0].y = p[-1].y;
 			p = pts;
