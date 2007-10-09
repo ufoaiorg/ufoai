@@ -523,7 +523,7 @@ item light_alien
 		stun				0
 	}
 
-    //Not needed for alien armour
+    //FIXME
 	rating {
 		normal				0
 		steelblade			0
@@ -587,7 +587,7 @@ item medium_alien
 		stun				10
 	}
 
-    //Not needed for alien armour
+    //FIXME
 	rating {
 		normal				0
 		steelblade			0
