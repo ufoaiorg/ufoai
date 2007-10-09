@@ -808,16 +808,16 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 	range = fd->range;
 	bounce = 0;
 	flags = 0;
-	damage = fd->damage[0];
+	damage = fd->damage[0] + (fd->damage[1] * frand());
 	VectorCopy(cur_loc, tracefrom);
 	for (;;) {
 		/* Calc 'impact' vector that is located at the end of the range
-		   defined by the fireDef_t. This is not really the impact location,
-		   but rather the 'endofrange' location, see below for another use.*/
+		 * defined by the fireDef_t. This is not really the impact location,
+		 * but rather the 'endofrange' location, see below for another use.*/
 		VectorMA(cur_loc, range, dir, impact);
 
 		/* Do the trace from current position of the projectile
-		   to the end_of_range location.*/
+		 * to the end_of_range location.*/
 		/* mins and maxs should be set via localModel_t don't they? */
 		tr = gi.trace(tracefrom, NULL, NULL, impact, ent, MASK_SHOT);
 

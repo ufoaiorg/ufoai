@@ -1681,7 +1681,6 @@ void RS_ParseTechnologies (const char *name, const char **text)
 	const char *token = NULL;
 	requirements_t *required_temp = NULL;
 	descriptions_t *desc_temp = NULL;
-
 	int i;
 
 	for (i = 0; i < gd.numTechnologies; i++) {
