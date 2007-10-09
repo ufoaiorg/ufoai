@@ -937,7 +937,7 @@ static void _AddToListBlock (char** fl, listBlock_t* block, listBlock_t* tblock,
 		f = name;
 	else
 		f++;
-	Com_Printf("_AddToListBlock: %s\n", name);
+/*	Com_Printf("_AddToListBlock: %s\n", name);*/
 
 	/* check for double occurences */
 	for (tblock = block; tblock; tblock = tblock->next) {
