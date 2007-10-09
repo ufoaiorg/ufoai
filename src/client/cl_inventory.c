@@ -680,6 +680,7 @@ qboolean INV_MoveItem (base_t* base, inventory_t* inv, int toContainer, int px, 
 
 	switch (moved) {
 	case IA_MOVE:
+	case IA_ARMOUR:
 		return qtrue;
 	default:
 		return qfalse;

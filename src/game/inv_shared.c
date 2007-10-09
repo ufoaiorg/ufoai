@@ -335,6 +335,10 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, int container
 	ic->item.amount = amount;
 	ic->x = x;
 	ic->y = y;
+	
+	if (CSI->ids[container].single && i->c[container]->next)
+		Com_Printf("Com_AddToInventory: Error: single container %s has many items.\n", CSI->ids[container].name);
+		
 	return ic;
 }
 
@@ -568,8 +572,8 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 		cacheItem2 = cacheItem;
 		/* move the destination item to the source */
 		Com_MoveInInventory(i, to, tx, ty, from, fx, fy, TU, icp);
-		/* reset the cached item (source) and move it to the container emptied by destination item */
-		Com_AddToInventory(i, cacheItem2, from, fx, fy, 1);
+		
+		/* Reset the cached item (source) (It'll be move to container emptied by destination item later.) */
 		cacheItem = cacheItem2;
 	} else if (!checkedTo) {
 		ic = Com_SearchInInventory(i, to, tx, ty);	/* Get the target-invlist (e.g. a weapon) */

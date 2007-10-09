@@ -1239,7 +1239,7 @@ static void MN_Drag (const menuNode_t* const node, int x, int y, qboolean rightC
 					assert(ic->item.t >= 0);
 					/* armour can only have one target */
 					if (!Q_strncmp(csi.ods[ic->item.t].type, "armour", MAX_VAR)) {
-						INV_MoveItem(baseCurrent, menuInventory, csi.idArmour, 0, 0, node->mousefx, ic->x, ic->y);
+						packed = INV_MoveItem(baseCurrent, menuInventory, csi.idArmour, 0, 0, node->mousefx, ic->x, ic->y);
 					/* ammo or item */
 					} else if (!Q_strncmp(csi.ods[ic->item.t].type, "ammo", MAX_VAR)) {
 						Com_FindSpace(menuInventory, &ic->item, csi.idBelt, &px, &py);
@@ -1255,7 +1255,7 @@ static void MN_Drag (const menuNode_t* const node, int x, int y, qboolean rightC
 					} else {
 						if (csi.ods[ic->item.t].headgear) {
 							Com_FindSpace(menuInventory, &ic->item, csi.idHeadgear, &px, &py);
-							INV_MoveItem(baseCurrent, menuInventory, csi.idHeadgear, px, py, node->mousefx, ic->x, ic->y);
+							packed = INV_MoveItem(baseCurrent, menuInventory, csi.idHeadgear, px, py, node->mousefx, ic->x, ic->y);
 						} else {
 							/* left and right are single containers, but this might change - it's cleaner to check
 							 * for available space here, too */
