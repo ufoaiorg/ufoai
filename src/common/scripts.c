@@ -921,6 +921,8 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 	if (i >= MAX_OBJDEFS)
 		Sys_Error("Com_ParseItem: MAX_OBJDEFS exceeded\n");
 
+	Com_DPrintf(DEBUG_SHARED, "...found item: '%s' (%i)\n", name, csi.numODs);
+
 	/* initialize the object definition */
 	od = &csi.ods[csi.numODs++];
 	memset(od, 0, sizeof(objDef_t));
