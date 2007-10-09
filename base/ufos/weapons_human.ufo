@@ -219,7 +219,7 @@ item machinegun
 	shape		"0 0 5 2"
 	center		"5.9 0 2"
 	scale		1.1
-	ammo		30
+	ammo		100
 	reload		12
 	price		8400
 	size		20
@@ -244,43 +244,23 @@ item machinegun_ammo
 	{
 		firedef
 		{
-			name	"_Snap Shot"
+			name	"_Short Burst"
 			skill	assault
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
 			firesnd	weapons/machinegun
 			speed	0
-			spread	"1.0 1.0"
-			modif	0.7
-			crouch	0.7
-			range	80
-			shots	1
-			ammo	1
-			time	8
-			damage	"37 10"
-			dmgweight normal_medium
-			reaction	true
-		}
-		firedef
-		{
-			name	"_3-Round Burst"
-			skill	assault
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/machinegun
-			speed	0
-			spread	"1.4 1.4"
+			spread	"1 2"
 			modif	0.7
 			crouch	0.7
 			range	70
-			shots	3
-			ammo	3
+			shots	10
+			ammo	10
 			delaybetweenshots		5
 			time	12
-			damage	"37 10"
-			dmgweight normal_medium
+			damage	"17 5"
+			dmgweight normal_spray
 			reaction	true
 		}
 		firedef
@@ -292,16 +272,16 @@ item machinegun_ammo
 			hitbody null
 			firesnd	weapons/machinegun
 			speed	0
-			spread	"1.8 1.8"
+			spread	"1 3"
 			modif	0.7
 			crouch	0.6
 			range	70
-			shots	8
-			ammo	8
+			shots	20
+			ammo	20
 			delaybetweenshots		10
-			time	18
-			damage	"37 10"
-			dmgweight normal_medium
+			time	20
+			damage	"17 5"
+			dmgweight normal_spray
 			reaction 	true
 		}
 	}
