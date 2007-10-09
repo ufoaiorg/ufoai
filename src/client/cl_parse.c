@@ -617,8 +617,6 @@ static void CL_StartGame (struct dbuffer *msg)
 		Cvar_Set("mn_active", mn_hud->string);
 	}
 	SCR_EndLoadingPlaque();	/* get rid of loading plaque */
-
-	cls.waitingForStart = 0;
 }
 
 

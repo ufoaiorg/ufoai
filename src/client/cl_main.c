@@ -2306,12 +2306,14 @@ void CL_SetClientState (int state)
 		cl.refresh_prepped = qtrue;
 		break;
 	case ca_active:
+		cls.waitingForStart = 0;
 		break;
 	case ca_connecting:
 		Com_Printf("Connecting to %s...\n", *cls.servername ? cls.servername : "localhost");
 		CL_Connect();
 		break;
 	case ca_disconnected:
+		cls.waitingForStart = 0;
 	case ca_connected:
 		break;
 	default:
