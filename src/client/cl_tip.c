@@ -58,7 +58,6 @@ static void CL_GetTipOfTheDay_f (void)
 
 	if (!cl_showTipOfTheDay->integer) {
 		MN_PopMenu(qfalse);
-		Com_Printf("Set cl_showTipOfTheDay to 1 if you want to see the tip of the day\n");
 		return;
 	}
 
