@@ -3122,8 +3122,13 @@ static void B_LoadItemSlots (base_t* base, aircraftSlot_t* slot, int num, int* t
 
 	for (i = 0; i < num; i++) {
 		tech = RS_GetTechByProvided(MSG_ReadString(sb));
+		/* base is NULL here to not check against the storage amounts - they
+		 * are already loaded in the campaign load function and set to the value
+		 * after the craftitem was already removed from the initial game - thus
+		 * there might not be any of these items in the storage at this point */
+		/* @todo: Check whether storage and capacities needs updating now */
 		if (tech)
-			AII_AddItemToSlot(base, tech, slot + i);
+			AII_AddItemToSlot(NULL, tech, slot + i);
 		slot[i].ammoLeft = MSG_ReadShort(sb);
 		slot[i].delayNextShot = MSG_ReadShort(sb);
 		slot[i].installationTime = MSG_ReadShort(sb);
@@ -3398,7 +3403,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
  * @param[in] amount Amount to be added to removed
  * @param[in] reset Set this to true (amount is not needed) if you want to reset the
  * storage amount and capacities (e.g. in case of a base ransack)
- * @param[in] ignorecap Qtrue if we won't check freespace but will just add items.
+ * @param[in] ignorecap qtrue if we won't check freespace but will just add items.
  * @sa CL_BaseRansacked
  */
 qboolean B_UpdateStorageAndCapacity (base_t* base, int objIDX, int amount, qboolean reset, qboolean ignorecap)
