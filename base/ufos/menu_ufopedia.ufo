@@ -163,18 +163,20 @@ menu ufopedia
 
 	confunc mn_upfbig
 	{
-		*ufopedia format  "24 0"
-		*ufopedia font    f_big
-		*ufopedia mousefx true
+		*ufopedia format	"24 0"
+		*ufopedia height	"21"
+		*ufopedia font		f_big
+		*ufopedia mousefx	true
 		cmd "mn_textscroll ufopedia reset;"
 	}
 
 	confunc mn_upfsmall
 	{
-		*ufopedia	format	"18 0"
-		*ufopedia	font	f_small
-		*ufopedia	mousefx	false
-		cmd		"mn_textscroll ufopedia reset;"
+		*ufopedia format	"18 0"
+		*ufopedia height	"28"
+		*ufopedia font		f_small
+		*ufopedia mousefx	false
+		cmd "mn_textscroll ufopedia reset;"
 	}
 
 	text description
@@ -353,7 +355,7 @@ menu ufopedia
 		mousefx	true
 		click
 		{
-			cmd mn_decreaseweapon
+			cmd "mn_decreaseweapon;"
 		}
 	}
 
@@ -368,7 +370,7 @@ menu ufopedia
 		mousefx	true
 		click
 		{
-			cmd mn_decreaseweapon
+			cmd "mn_decreaseweapon;"
 		}
 	}
 
@@ -383,7 +385,7 @@ menu ufopedia
 		mousefx	true
 		click
 		{
-			cmd mn_increaseweapon
+			cmd "mn_increaseweapon;"
 		}
 	}
 
@@ -398,7 +400,7 @@ menu ufopedia
 		mousefx	true
 		click
 		{
-			cmd mn_increaseweapon
+			cmd "mn_increaseweapon;"
 		}
 	}
 
@@ -439,7 +441,7 @@ menu ufopedia
 		size	"220 20"
 		click
 		{
-			cmd mn_upgotoresearchedlink
+			cmd "mn_upgotoresearchedlink;"
 		}
 	}
 
@@ -454,7 +456,7 @@ menu ufopedia
 		mousefx	true
 		click
 		{
-			cmd mn_decreasefiremode
+			cmd "mn_decreasefiremode;"
 		}
 	}
 
@@ -469,7 +471,7 @@ menu ufopedia
 		mousefx	true
 		click
 		{
-			cmd mn_increasefiremode
+			cmd "mn_increasefiremode;"
 		}
 	}
 
@@ -493,7 +495,7 @@ menu ufopedia
 
 	func init
 	{
-		cmd "mn_upcontent"
+		cmd "mn_upcontent;"
 	}
 }
 
@@ -955,7 +957,7 @@ menu ufopedia_mail
 		texl	"0 0"
 		texh	"64 37"
 		click	{
-			cmd "mn_pop"
+			cmd "mn_pop;"
 		}
 	}
 
