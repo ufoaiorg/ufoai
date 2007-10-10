@@ -378,6 +378,7 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 			/* Only do this if it's not one from our own team ... they should known that there is a flashbang coming. */
 			if (ent->team != attacker->team) {
 				player = game.players + ent->pnum;
+				/* FIXME: there should be a possible protection, too */
 				ent->TU = 0; /* flashbangs kill TUs */
 				ent->state |= STATE_DAZED; /* entity is dazed */
 				gi.cprintf(player, PRINT_HUD, _("Soldier is dazed!\nEnemy used flashbang!\n"));
@@ -385,6 +386,10 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 			}
 		} else {
 			ent->HP = max(ent->HP - damage, 0);
+			if (damage < 0) {
+				/* @todo: also increase the morale a little bit when
+				 * soldier gets healing and morale is lower than max possible */
+			}
 		}
 	}
 
@@ -407,7 +412,7 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 		G_ActorDie(ent, ent->HP == 0 ? STATE_DEAD : STATE_STUN, attacker);
 
 		/* apply morale changes */
-		if (mor_panic->value)
+		if (mor_panic->integer)
 			G_Morale(ML_DEATH, ent, attacker, damage);
 
 		/* count kills */
@@ -808,7 +813,11 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 	range = fd->range;
 	bounce = 0;
 	flags = 0;
-	damage = max(0, fd->damage[0] + (fd->damage[1] * crand()));
+	/* healing */
+	if (fd->damage[0] < 0)
+		damage = fd->damage[0] + (fd->damage[1] * crand());
+	else
+		damage = max(0, fd->damage[0] + (fd->damage[1] * crand()));
 	VectorCopy(cur_loc, tracefrom);
 	for (;;) {
 		/* Calc 'impact' vector that is located at the end of the range
