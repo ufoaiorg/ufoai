@@ -3922,8 +3922,8 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 	/* color */
 	if (mouseActor && (mouseActor != selActor)) {
 		ent.alpha = 0.4 + 0.2 * sin((float) cl.time / 80);
-		/* paint the box red if the soldiers under the cursor is */
-		/* not in our team and no civilian, too */
+		/* paint the box red if the soldiers under the cursor is
+		 * not in our team and no civilian, too */
 		if (mouseActor->team != cls.team) {
 			switch (mouseActor->team) {
 			case TEAM_CIVILIAN:
@@ -3932,7 +3932,12 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 				break;
 			default:
 				if (mouseActor->team == TEAM_ALIEN) {
-					/* @todo: print alien team */
+					if (mouseActor->teamDef) {
+						if (RS_IsResearched_idx(RS_GetTechIdxByName(mouseActor->teamDef->tech)))
+							menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = _(mouseActor->teamDef->name);
+						else
+							menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = _("Unknown alien race");
+					}
 				} else {
 					/* multiplayer names */
 					/* see CL_ParseClientinfo */
