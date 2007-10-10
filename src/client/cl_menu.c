@@ -730,51 +730,81 @@ static void MN_UpdateGametype_f (void)
 
 /**
  * @brief Switch to the next multiplayer game type
+ * @sa MN_PrevGametype_f
  */
-static void MN_NextGametype_f (void)
+static void MN_ChangeGametype_f (void)
 {
 	int i, newType;
 	gametype_t* gt;
+	mapDef_t *md;
+	const char *newGameTypeID = NULL;
+	qboolean next = qtrue;
 
 	/* no types defined or parsed */
 	if (numGTs == 0)
 		return;
 
-	for (i = 0; i < numGTs; i++) {
-		gt = &gts[i];
-		if (!Q_strncmp(gt->id, gametype->string, MAX_VAR)) {
-			newType = (i + 1);
-			if (newType >= numGTs)
-				newType = 0;
-			Cvar_Set("gametype", gts[newType].id);
-			Com_SetGameType();
-			break;
+	md = &csi.mds[ccs.multiplayerMapDefinitionIndex];
+	if (!md || !md->multiplayer) {
+		Com_Printf("MN_ChangeGametype_f: No mapdef for the map\n");
+		return;
+	}
+
+	/* previous? */
+	if (!Q_strcmp(Cmd_Argv(0), "mn_prevgametype")) {
+		next = qfalse;
+	}
+
+	if (md->gameTypes) {
+		linkedList_t *list = md->gameTypes;
+		linkedList_t *old = NULL;
+		while (list) {
+			if (!Q_strcmp((const char*)list->data, gametype->string)) {
+				if (next) {
+					if (list->next)
+						newGameTypeID = (const char *)list->next->data;
+					else
+						newGameTypeID = (const char *)md->gameTypes->data;
+				} else {
+					/* only one or the first entry */
+					if (old) {
+						newGameTypeID = (const char *)old->data;
+					} else {
+						while (list->next)
+							list = list->next;
+						newGameTypeID = (const char *)list->data;
+					}
+				}
+				break;
+			}
+			old = list;
+			list = list->next;
+		}
+		/* current value is not valid for this map, set to first valid gametype */
+		if (!list)
+			newGameTypeID = (const char *)md->gameTypes->data;
+	} else {
+		for (i = 0; i < numGTs; i++) {
+			gt = &gts[i];
+			if (!Q_strncmp(gt->id, gametype->string, MAX_VAR)) {
+				if (next) {
+					newType = (i + 1);
+					if (newType >= numGTs)
+						newType = 0;
+				} else {
+					newType = (i - 1);
+					if (newType < 0)
+						newType = numGTs - 1;
+				}
+
+				newGameTypeID = gts[newType].id;
+				break;
+			}
 		}
 	}
-}
-
-/**
- * @brief Switch to the previous multiplayer game type
- */
-static void MN_PrevGametype_f (void)
-{
-	int i, newType;
-	gametype_t* gt;
-
-	/* no types defined or parsed */
-	if (numGTs == 0)
-		return;
-
-	for (i = 0; i < numGTs; i++) {
-		gt = &gts[i];
-		if (!Q_strncmp(gt->id, gametype->string, MAX_VAR)) {
-			newType = (i - 1);
-			if (newType < 0)
-				newType = numGTs - 1;
-			Cvar_Set("gametype", gts[newType].id);
-			Com_SetGameType();
-			break;
-		}
+	if (newGameTypeID) {
+		Cvar_Set("gametype", newGameTypeID);
+		Com_SetGameType();
 	}
 }
 
@@ -3821,8 +3851,8 @@ void MN_ResetMenus (void)
 	Cmd_AddCommand("messagelist", CL_ShowMessagesOnStack_f, "Print all messages to the game console");
 	Cmd_AddCommand("mn_startserver", MN_StartServer_f, NULL);
 	Cmd_AddCommand("mn_updategametype", MN_UpdateGametype_f, "Update the menu values with current gametype values");
-	Cmd_AddCommand("mn_nextgametype", MN_NextGametype_f, "Switch to the next multiplayer game type");
-	Cmd_AddCommand("mn_prevgametype", MN_PrevGametype_f, "Switch to the previous multiplayer game type");
+	Cmd_AddCommand("mn_nextgametype", MN_ChangeGametype_f, "Switch to the next multiplayer game type");
+	Cmd_AddCommand("mn_prevgametype", MN_ChangeGametype_f, "Switch to the previous multiplayer game type");
 	Cmd_AddCommand("mn_getmaps", MN_GetMaps_f, "The initial map to show");
 	Cmd_AddCommand("mn_nextmap", MN_NextMap_f, "Switch to the next multiplayer map");
 	Cmd_AddCommand("mn_prevmap", MN_PrevMap_f, "Switch to the previous multiplayer map");
@@ -4692,6 +4722,7 @@ void MN_ParseMenu (const char *name, const char **text)
 static void MN_MapInfo (int step)
 {
 	int i = 0;
+	mapDef_t *md;
 
 	if (!csi.numMDs)
 		return;
@@ -4715,15 +4746,37 @@ static void MN_MapInfo (int step)
 		}
 	}
 
-	Cvar_Set("mn_svmapname", csi.mds[ccs.multiplayerMapDefinitionIndex].map);
-	if (FS_CheckFile(va("pics/maps/shots/%s.jpg", csi.mds[ccs.multiplayerMapDefinitionIndex].map)) != -1)
-		Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", csi.mds[ccs.multiplayerMapDefinitionIndex].map));
+	md = &csi.mds[ccs.multiplayerMapDefinitionIndex];
 
-	if (FS_CheckFile(va("pics/maps/shots/%s_2.jpg", csi.mds[ccs.multiplayerMapDefinitionIndex].map)) != -1)
-		Cvar_Set("mn_mappic2", va("maps/shots/%s_2.jpg", csi.mds[ccs.multiplayerMapDefinitionIndex].map));
+	Cvar_Set("mn_svmapname", md->map);
+	if (FS_CheckFile(va("pics/maps/shots/%s.jpg", md->map)) != -1)
+		Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", md->map));
+	else
+		Cvar_Set("mn_mappic", va("maps/shots/na.jpg"));
 
-	if (FS_CheckFile(va("pics/maps/shots/%s_3.jpg", csi.mds[ccs.multiplayerMapDefinitionIndex].map)) != -1)
-		Cvar_Set("mn_mappic3", va("maps/shots/%s_3.jpg", csi.mds[ccs.multiplayerMapDefinitionIndex].map));
+	if (FS_CheckFile(va("pics/maps/shots/%s_2.jpg", md->map)) != -1)
+		Cvar_Set("mn_mappic2", va("maps/shots/%s_2.jpg", md->map));
+	else
+		Cvar_Set("mn_mappic2", va("maps/shots/na.jpg"));
+
+	if (FS_CheckFile(va("pics/maps/shots/%s_3.jpg", md->map)) != -1)
+		Cvar_Set("mn_mappic3", va("maps/shots/%s_3.jpg", md->map));
+	else
+		Cvar_Set("mn_mappic3", va("maps/shots/na.jpg"));
+
+	if (md->gameTypes) {
+		linkedList_t *list = md->gameTypes;
+		while (list) {
+			/* check whether current selected gametype is a valid one */
+			if (!Q_strcmp((const char*)list->data, gametype->string)) {
+				break;
+			}
+			list = list->next;
+		}
+		if (!list)
+			MN_ChangeGametype_f();
+	}
+
 }
 
 static void MN_GetMaps_f (void)

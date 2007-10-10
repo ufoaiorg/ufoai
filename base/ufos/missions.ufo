@@ -885,20 +885,6 @@ mission vil_shannon
 	storyrelated	false
 }
 
-mission corrupter
-{
-	location	"_Alien colony"
-	type		"_Alien colony"
-	text		"_We located the alien colony, go there and destroy it."
-	pos			"11 12" // FIXME
-	aliens		12
-	nation		"states" // FIXME
-	alienequip	stage4_soldiers
-	onlose		""
-	onwin		""
-	storyrelated	true
-}
-
 //Siberia, Russia
 mission lake2
 {

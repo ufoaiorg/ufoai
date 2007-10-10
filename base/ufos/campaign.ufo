@@ -137,7 +137,7 @@ stage alienbase
 	{
 		cutscene	alienbase
 		delay		"0 11 0"
-		missions	"corrupter"
+		missions	"corrupt_city"
 		quota		1
 	}
 	set stop_alienbase

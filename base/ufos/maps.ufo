@@ -19,6 +19,15 @@ mapdef africa_excavation
 	map				excavation06
 	music			PsymongN1
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef estate
@@ -26,6 +35,15 @@ mapdef estate
 	map				estate01
 	music			PsymongO3
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef italy
@@ -34,8 +52,16 @@ mapdef italy
 	loadingscreen	italy05
 	teams			2
 	music			PsymongO2
-	coop			true
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 
 	terrains
 	{
@@ -59,6 +85,15 @@ mapdef mart
 	map			mart05
 	music		PsymongO4
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef mine
@@ -66,6 +101,17 @@ mapdef mine
 	map				mine01
 	music			alBasrahM
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		3on3
+		3on3on3
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef transport
@@ -73,6 +119,15 @@ mapdef transport
 	map				transport06
 	music			dbsea
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef or_asyut
@@ -80,6 +135,15 @@ mapdef or_asyut
 	map				"+oriental"
 	music			PsymongO6
 	multiplayer		false
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef bunker
@@ -87,6 +151,15 @@ mapdef bunker
 	map				bunker01
 	music			greecei
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef dam
@@ -94,6 +167,15 @@ mapdef dam
 	map				dam01
 	music			PsymongO1
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef japan
@@ -102,8 +184,16 @@ mapdef japan
 	loadingscreen	japan06
 	teams			2
 	music			PsymongR5
-	coop			true
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 
 	terrains
 	{
@@ -127,6 +217,15 @@ mapdef spedition
 	map				spedition06
 	music			AlexForest
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef stadium
@@ -134,6 +233,15 @@ mapdef stadium
 	map				stadium06
 	music			PsymongR4
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef druglord
@@ -141,6 +249,15 @@ mapdef druglord
 	map				druglord07
 	music			van_mission4
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef rzeszow
@@ -148,6 +265,15 @@ mapdef rzeszow
 	map				terrain02
 	music			van_mission
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef farm
@@ -157,9 +283,17 @@ mapdef farm
 	size			"medium"
 	teams			2
 	music			PsymongN2
-	coop			true
 	multiplayer		true
 	loadingscreen	farm08
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 
 	terrains
 	{
@@ -185,6 +319,15 @@ mapdef industrial
 	map				industrial06
 	music			AlexFightmare
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef rivertown
@@ -192,6 +335,19 @@ mapdef rivertown
 	map				rivertown01
 	music			van_mission3
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		3on3
+		3on3on3
+		4on4
+		4on4on4
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef frozen_alienlandingindustrial
@@ -206,6 +362,15 @@ mapdef city
 	map				city04
 	music			ufo1
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef gasstation
@@ -213,6 +378,15 @@ mapdef gasstation
 	map				gasstation05
 	music			AlexFightmare
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef oriental
@@ -220,6 +394,15 @@ mapdef oriental
 	map				oriental06
 	music			PsymongO4
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef subway
@@ -227,6 +410,15 @@ mapdef subway
 	map				subway07
 	music			PsymongN4
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef tower
@@ -234,6 +426,17 @@ mapdef tower
 	map				tower06
 	music			greecei		//FIXME: AlexSullencity	here?
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		3on3
+		3on3on3
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef village
@@ -241,6 +444,15 @@ mapdef village
 	map				village07
 	music			PsymongO3
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef convoy
@@ -248,6 +460,15 @@ mapdef convoy
 	map				convoy01
 	music			van_mission2
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef mine_crash
@@ -255,6 +476,15 @@ mapdef mine_crash
 	map				mine_crash05
 	music			PsymongR2
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef bridge
@@ -262,6 +492,17 @@ mapdef bridge
 	map				bridge01
 	music			PsymongR2
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		3on3
+		3on3on3
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef construction
@@ -269,6 +510,15 @@ mapdef construction
 	map				const05
 	music			PsymongR1
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef harbor
@@ -276,6 +526,15 @@ mapdef harbor
 	map				harbor07
 	music			AlexFightmare
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef office
@@ -283,6 +542,15 @@ mapdef office
 	map				office06
 	music			dawn
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef pdi
@@ -290,6 +558,15 @@ mapdef pdi
 	map				pdi08
 	music			PsymongO5
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef tropic_river
@@ -305,6 +582,15 @@ mapdef africa
 	map				africa04
 	music			PsymongR4
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef harvestercrash
@@ -312,6 +598,15 @@ mapdef harvestercrash
 	map				harvestercrash04
 	music			PsymongR3
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef lake
@@ -319,6 +614,15 @@ mapdef lake
 	map				lake03
 	music			AlexForest
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef qatar
@@ -326,6 +630,15 @@ mapdef qatar
 	map				oriental05
 	music			PsymongN3
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef terrain
@@ -333,6 +646,15 @@ mapdef terrain
 	map				terrain08
 	music			PsymongO6
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef vil_lille
@@ -349,6 +671,15 @@ mapdef frozen_groenland
 	param			small
 	music			AlexFightmare
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef frozen_small
@@ -407,18 +738,22 @@ mapdef vil_shannon
 	multiplayer		false
 }
 
-mapdef corrupter
-{
-	map				corrupt_city04
-	music			PsymongR5
-	multiplayer		true
-}
-
 mapdef lake2
 {
 	map				lake02
 	music			PsymongR5
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		3on3
+		3on3on3
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef shelter_standard
@@ -429,7 +764,19 @@ mapdef shelter_standard
 	teams			4
 	music			PsymongO6
 	multiplayer		true
-	coop			true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		3on3
+		3on3on3
+		4on4
+		4on4on4
+		coop2
+		coop3
+		coop4
+	}
 
 	terrains
 	{
@@ -453,6 +800,19 @@ mapdef corrupt_city
 	map				corrupt_city04
 	music			PsymongR5
 	multiplayer		true
+	gametypes {
+		1on1
+		1on1on1
+		2on2
+		2on2on2
+		3on3
+		3on3on3
+		4on4
+		4on4on4
+		coop2
+		coop3
+		coop4
+	}
 }
 
 mapdef ufocrash

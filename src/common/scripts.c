@@ -2158,7 +2158,6 @@ static const value_t mapdef_vals[] = {
 	{"size", V_STRING, offsetof(mapDef_t, size), 0},
 
 	{"teams", V_INT, offsetof(mapDef_t, teams), MEMBER_SIZEOF(mapDef_t, teams)},
-	{"coop", V_BOOL, offsetof(mapDef_t, coop), MEMBER_SIZEOF(mapDef_t, coop)},
 	{"multiplayer", V_BOOL, offsetof(mapDef_t, multiplayer), MEMBER_SIZEOF(mapDef_t, multiplayer)},
 
 	{NULL, 0, 0, 0}

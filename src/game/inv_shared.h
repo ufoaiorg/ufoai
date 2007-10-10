@@ -344,7 +344,6 @@ typedef struct mapDef_s {
 	/* multiplayer */
 	qboolean multiplayer;	/**< is this map multiplayer ready at all */
 	int teams;				/**< multiplayer teams */
-	qboolean coop;			/**< is this map multiplayer coop ready */
 	linkedList_t *gameTypes;	/**< gametype strings this map is useable for */
 
 	/* singleplayer */
