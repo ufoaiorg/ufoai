@@ -3949,8 +3949,14 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 			}
 		} else {
 			/* coop multiplayer games */
-			if (mouseActor->pnum != cl.pnum)
+			if (mouseActor->pnum != cl.pnum) {
 				menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = cl.configstrings[CS_PLAYERNAMES + mouseActor->pnum];
+			} else {
+				/* we know the names of our own actors */
+				character_t* chr = CL_GetActorChr(mouseActor);
+				assert(chr);
+				menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = chr->name;
+			}
 			/* paint a light blue box if on our team */
 			VectorSet(ent.angles, 0.2, 0.3, 1);
 		}
