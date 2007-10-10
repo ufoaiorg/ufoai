@@ -184,7 +184,9 @@ item power
 	center		"0 0 -5"
 	scale		0.7
 	price		32000
+	size		160
 	buytype		armour
+	useable		0
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {

@@ -2158,7 +2158,6 @@ static const value_t mapdef_vals[] = {
 	{"size", V_STRING, offsetof(mapDef_t, size), 0},
 
 	{"teams", V_INT, offsetof(mapDef_t, teams), MEMBER_SIZEOF(mapDef_t, teams)},
-	{"coop", V_BOOL, offsetof(mapDef_t, coop), MEMBER_SIZEOF(mapDef_t, coop)},
 	{"multiplayer", V_BOOL, offsetof(mapDef_t, multiplayer), MEMBER_SIZEOF(mapDef_t, multiplayer)},
 
 	{NULL, 0, 0, 0}
@@ -2214,27 +2213,29 @@ static void Com_ParseMapDefinition (const char *name, const char **text)
 			}
 
 		if (!vp->string) {
-			linkedList_t *list;
+			linkedList_t **list;
 			if (!Q_strcmp(token, "terrains")) {
-				list = md->terrains;
+				list = &md->terrains;
 			} else if (!Q_strcmp(token, "populations")) {
-				list = md->populations;
+				list = &md->populations;
 			} else if (!Q_strcmp(token, "cultures")) {
-				list = md->cultures;
+				list = &md->cultures;
+			} else if (!Q_strcmp(token, "gametypes")) {
+				list = &md->gameTypes;
 			} else {
 				Com_Printf("Com_ParseMapDefinition: unknown token \"%s\" ignored (mapdef %s)\n", token, name);
 				continue;
 			}
 			token = COM_EParse(text, errhead, name);
 			if (!*text || *token != '{') {
-				Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" has terrains, populations or cultures block with no opening brace\n", name);
+				Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" has gametypes, terrains, populations or cultures block with no opening brace\n", name);
 				break;
 			}
 			do {
 				token = COM_EParse(text, errhead, name);
 				if (!*text || *token == '}')
 					break;
-				LIST_AddString(&list, token);
+				LIST_AddString(list, token);
 			} while (*text);
 		}
 	} while (*text);
