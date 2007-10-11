@@ -45,49 +45,9 @@ menu multiplayer
 	// buttons
 	// ==================
 
-	pic button_join
-	{
-		pos	"80 220"
-		click	{ cmd "mn_pop;mn_push mp_serverbrowser;" }
-		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_join color "0 0.5 0 1" *button_join texl "0 0"  *button_join texh "256 64" }
-		in	{ *string_join color "1 1 1 1" *button_join texl "0 64" *button_join texh "256 128" }
-	}
-	string string_join
-	{
-		font	f_menubig
-		color	"0 0.5 0 1"
-		string	"_Join"
-		pos	"208 252"
-		align	cc
-	}
-
-	pic button_create
-	{
-		pos	"80 290"
-		click	{ cmd "mn_pop;mn_push mp_create_server;" }
-		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_create color "0 0.5 0 1" *button_create texl "0 0"  *button_create texh "256 64" }
-		in	{ *string_create color "1 1 1 1" *button_create texl "0 64" *button_create texh "256 128" }
-	}
-	string string_create
-	{
-		font	f_menubig
-		color	"0 0.5 0 1"
-		string	"_Create"
-		pos	"208 322"
-		align	cc
-	}
-
 	pic button_team
 	{
-		pos	"80 360"
+		pos	"80 220"
 		click	{ cmd "mn_pop;mn_push mp_team;" }
 		image	menu/button_big
 		texl	"0 0"
@@ -101,6 +61,46 @@ menu multiplayer
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Team"
+		pos	"208 252"
+		align	cc
+	}
+
+	pic button_join
+	{
+		pos	"80 290"
+		click	{ cmd "mn_pop;mn_push mp_serverbrowser;" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_join color "0 0.5 0 1" *button_join texl "0 0"  *button_join texh "256 64" }
+		in	{ *string_join color "1 1 1 1" *button_join texl "0 64" *button_join texh "256 128" }
+	}
+	string string_join
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Join"
+		pos	"208 322"
+		align	cc
+	}
+
+	pic button_create
+	{
+		pos	"80 360"
+		click	{ cmd "mn_pop;mn_push mp_create_server;" }
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		out	{ *string_create color "0 0.5 0 1" *button_create texl "0 0"  *button_create texh "256 64" }
+		in	{ *string_create color "1 1 1 1" *button_create texl "0 64" *button_create texh "256 128" }
+	}
+	string string_create
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Create"
 		pos	"208 392"
 		align	cc
 	}
@@ -127,7 +127,9 @@ menu multiplayer
 
 	func init
 	{
-		cmd "mn_escpop 5;mn_push mp_serverbrowser;sv_maxclients 2;"
+		// first switch to multiplayer - otherwise we will crash
+		cmd "sv_maxclients 2;mn_escpop 5;mn_push mp_serverbrowser;"
+		// mn_slot 0; loadteamslot;
 	}
 }
 
@@ -407,8 +409,7 @@ menu mp_team
 
 	func init
 	{
-		cmd	"mn_escpop 5;set mn_slot 0;mp_env;team_comments;set team human;"
-		teamslot0
+		cmd	"mn_escpop 5;set mn_slot 0;mp_env;team_comments;set team human;teamslot0;"
 	}
 }
 

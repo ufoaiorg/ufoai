@@ -44,8 +44,16 @@ static void CL_MultiplayerEnvironment_f (void)
 {
 	base_t *base = &gd.bases[0];
 
+	/* multiplayer is not ready yet */
+	if (!gd.numBases)
+		CL_StartSingleplayer(qfalse);
+
+	assert(gd.numBases == 1);
 	baseCurrent = base;
 	cls.missionaircraft = AIR_AircraftGetFromIdx(0);
+	if (!cls.missionaircraft) {
+		Sys_Error("Make sure that you've set sv_maxclients to a value higher than 1");
+	}
 	baseCurrent->aircraftCurrent = cls.missionaircraft->idxInBase;
 }
 
