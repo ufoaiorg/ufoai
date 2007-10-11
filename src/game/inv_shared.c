@@ -301,15 +301,15 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, int container
 	 * After that we can easily add the item (item.t, x and y positions) to our [t] being ic.
 	 */
 
-	if (container == CSI->idEquip || container == CSI->idFloor) {
-		ic = i->c[container];
-		for (; ic; ic = ic->next)
+	/* idEquip and idFloor */
+	if (CSI->ids[container].temp) {
+		for (ic = i->c[container]; ic; ic = ic->next)
 			if (Com_CompareItem(&ic->item, &item)) {
 				ic->item.amount += amount;
 				Com_DPrintf(DEBUG_SHARED, "Com_AddToInventory: Amount of '%s': %i\n",
 					CSI->ods[ic->item.t].name, ic->item.amount);
 				return ic;
-		}
+			}
 	}
 
 	/* Temporary store the pointer to the first item in this list. */
@@ -335,10 +335,10 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, int container
 	ic->item.amount = amount;
 	ic->x = x;
 	ic->y = y;
-	
+
 	if (CSI->ids[container].single && i->c[container]->next)
 		Com_Printf("Com_AddToInventory: Error: single container %s has many items.\n", CSI->ids[container].name);
-		
+
 	return ic;
 }
 
@@ -389,8 +389,8 @@ qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, int container, int
 	 * of calling the add and remove functions */
 	if (!ignore_type && (CSI->ids[container].single || (ic->x == x && ic->y == y))) {
 		cacheItem = ic->item;
-		if ((container == CSI->idFloor || container == CSI->idEquip)
-		 && ic->item.amount > 1) {
+		/* temp container like idEquip and idFloor */
+		if (CSI->ids[container].temp && ic->item.amount > 1) {
 			ic->item.amount--;
 			Com_DPrintf(DEBUG_SHARED, "Com_RemoveFromInventoryIgnore: Amount of '%s': %i\n",
 				CSI->ods[ic->item.t].name, ic->item.amount);
@@ -413,8 +413,8 @@ qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, int container, int
 	for (previous = i->c[container]; ic; ic = ic->next) {
 		if (ic->x == x && ic->y == y) {
 			cacheItem = ic->item;
-			if (!ignore_type && ic->item.amount > 1
-			 && (container == CSI->idFloor || container == CSI->idEquip)) {
+			/* temp container like idEquip and idFloor */
+			if (!ignore_type && ic->item.amount > 1 && CSI->ids[container].temp) {
 				ic->item.amount--;
 				Com_DPrintf(DEBUG_SHARED, "Com_RemoveFromInventoryIgnore: Amount of '%s': %i\n",
 					CSI->ods[ic->item.t].name, ic->item.amount);
@@ -572,7 +572,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 		cacheItem2 = cacheItem;
 		/* move the destination item to the source */
 		Com_MoveInInventory(i, to, tx, ty, from, fx, fy, TU, icp);
-		
+
 		/* Reset the cached item (source) (It'll be move to container emptied by destination item later.) */
 		cacheItem = cacheItem2;
 	} else if (!checkedTo) {
@@ -630,7 +630,8 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 			return IA_NOTIME;
 		}
 
-		if (ic && (to== CSI->idEquip || to == CSI->idFloor)) {
+		/* temp container like idEquip and idFloor */
+		if (ic && CSI->ids[to].temp) {
 			/* We are moving to a blocked location container but it's the base-equipment loor of a battlsecape floor
 			 * We add the item anyway but it'll not be displayed (yet)
 			 * @todo change the other code to browse trough these things. */
