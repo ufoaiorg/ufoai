@@ -748,7 +748,7 @@ static void Cvar_List_f (void)
 #ifndef DEBUG
 		/* don't show developer cvars in release mode */
 		if (var->flags & CVAR_DEVELOPER)
-			continue;;
+			continue;
 #endif
 
 		if (var->flags & CVAR_ARCHIVE)
