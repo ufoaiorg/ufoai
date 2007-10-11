@@ -4766,6 +4766,13 @@ static void MN_MapInfo (int step)
 
 	if (md->gameTypes) {
 		linkedList_t *list = md->gameTypes;
+		char buf[256] = "";
+		while (list) {
+			Q_strcat(buf, va("%s ", (const char *)list->data), sizeof(buf));
+			list = list->next;
+		}
+		Cvar_Set("mn_mapgametypes", buf);
+		list = md->gameTypes;
 		while (list) {
 			/* check whether current selected gametype is a valid one */
 			if (!Q_strcmp((const char*)list->data, gametype->string)) {
@@ -4775,8 +4782,9 @@ static void MN_MapInfo (int step)
 		}
 		if (!list)
 			MN_ChangeGametype_f();
+	} else {
+		Cvar_Set("mn_mapgametypes", _("all"));
 	}
-
 }
 
 static void MN_GetMaps_f (void)

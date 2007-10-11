@@ -199,6 +199,7 @@ void CL_StartSingleplayer (qboolean singleplayer)
 			CL_Disconnect();
 		}
 		Cvar_ForceSet("sv_maxclients", "1");
+		Com_Printf("Changing to Singleplayer\n");
 
 		/* reset sv_maxsoldiersperplayer and sv_maxsoldiersperteam to default values */
 		/* FIXME: these should probably default to something bigger */
@@ -2334,10 +2335,8 @@ void CL_Frame (int now, void *data)
 	if (sv_maxclients->modified) {
 		if (sv_maxclients->integer > 1 && ccs.singleplayer) {
 			CL_StartSingleplayer(qfalse);
-			Com_Printf("Changing to Multiplayer\n");
 		} else if (sv_maxclients->integer == 1) {
 			CL_StartSingleplayer(qtrue);
-			Com_Printf("Changing to Singleplayer\n");
 		}
 		sv_maxclients->modified = qfalse;
 	}
