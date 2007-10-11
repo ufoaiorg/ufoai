@@ -1304,6 +1304,15 @@ menu mp_create_server
 		whdown	{ cmd "mn_nextmap;" }
 		size "256 32"
 	}
+
+	string string_gametypes
+	{
+		pos	"500 570"
+		font "f_verysmall"
+		string	"*cvar mn_mapgametypes"
+		size "256 32"
+	}
+
 	pic prev_map
 	{
 		image	menu/buttons_small
@@ -1653,7 +1662,7 @@ menu multiplayer_wait
 	func event
 	{
 		timeout 2000
-		cmd "mp_wait_init"
+		cmd "mp_wait_init;"
 	}
 }
 
