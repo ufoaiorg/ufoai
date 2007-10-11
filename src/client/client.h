@@ -452,10 +452,10 @@ typedef struct le_s {
 	int contents;			/**< content flags for this LE - used for tracing */
 	vec3_t mins, maxs;
 
-	int modelnum1;	/**< the number of the body model in the cl.draw_model array */
-	int modelnum2;	/**< the number of the head model in the cl.draw_model array */
+	int modelnum1;	/**< the number of the body model in the cl.model_draw array */
+	int modelnum2;	/**< the number of the head model in the cl.model_draw array */
 	int skinnum;	/**< the skin number of the body and head model */
-	struct model_s *model1, *model2;	/**< pointers to the cl.draw_model array
+	struct model_s *model1, *model2;	/**< pointers to the cl.model_draw array
 					 * that holds the models for body and head - model1 is body,
 					 * model2 is head */
 
