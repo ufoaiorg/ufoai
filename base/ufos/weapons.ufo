@@ -80,7 +80,7 @@ item irgoggles
 		firedef
 		{
 			name	"_Scan"
-			firesnd	misc/plopp03
+			firesnd	weapons/irgoggles
 			splrad	10
 			range	9.5
 			time	12
