@@ -153,11 +153,22 @@ static void E_EmployeeList_f (void)
 		employeesInCurrentList++;
 	}
 
-	/* if the list is empty don't show the model*/
+	/* If the list is empty OR we are in medics/scientists/workers-mode: don't show the model&stats. */
+	/** @note
+	 * 0 == nothing is displayed
+	 * 1 == all is displayed
+	 * 2 == only stuff wanted for scientists/workers/medics are displayed
+	 */
 	if (employeesInCurrentList == 0) {
 		Cvar_Set("mn_show_employee", "0");
 	} else {
-		Cvar_Set("mn_show_employee", "1");
+		if ((employeeCategory == EMPL_MEDIC)
+		 || (employeeCategory == EMPL_SCIENTIST)
+		 || (employeeCategory == EMPL_WORKER)) {
+			Cvar_Set("mn_show_employee", "2");
+		} else {
+			Cvar_Set("mn_show_employee", "1");
+		}
 	}
 
 	i = employeesInCurrentList;
