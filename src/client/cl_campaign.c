@@ -5042,6 +5042,7 @@ base_t *CP_GetMissionBase (void)
  * @sa LIST_Delete
  * @note When all parameters contain the string "Any", the algorithm assumes that it does not need to include "water" terrains when determining a random position
  * @note The function is nondeterministic when RASTER is set to a value > 1. The amount of possible alternatives is exactly defined by RASTER. I.e. if RASTER is set to 3, there are 3 different lists from which the random positions are chosen. The list is then chosen randomly.
+ * @sa CP_GetRandomPosForAircraft
  */
 qboolean CP_GetRandomPosOnGeoscape (vec2_t pos, linkedList_t* terrainTypes, linkedList_t* cultureTypes, linkedList_t* populationTypes, linkedList_t* nations)
 {
@@ -5056,11 +5057,10 @@ qboolean CP_GetRandomPosOnGeoscape (vec2_t pos, linkedList_t* terrainTypes, link
 	/* RASTER is minimizing the amount of locations, so an offset is introduced to enable access to all locations, depending on a random factor */
 	float offset = rand() % RASTER;
 	vec2_t posT;
+	int hits = 0;
 
 	/* check all locations for suitability in 2 iterations */
-
 	/* prepare 1st iteration */
-	int hits = 0;
 
 	/* ITERATION 1 */
 	for (y = 0; y < maskHeight; y++) {

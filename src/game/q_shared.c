@@ -871,8 +871,10 @@ int Q_log2 (int val)
 }
 
 /**
-  * @brief Return random values between 0 and 1
-  */
+ * @brief Return random values between 0 and 1
+ * @sa crand
+ * @sa gaussrand
+ */
 float frand (void)
 {
 	return (rand() & 32767) * (1.0 / 32767);
@@ -880,8 +882,10 @@ float frand (void)
 
 
 /**
-  * @brief Return random values between -1 and 1
-  */
+ * @brief Return random values between -1 and 1
+ * @sa frand
+ * @sa gaussrand
+ */
 float crand (void)
 {
 	return (rand() & 32767) * (2.0 / 32767) - 1;
@@ -890,6 +894,8 @@ float crand (void)
 /**
  * @brief generate two gaussian distributed random numbers with median at 0 and stdev of 1
  * @param pointers to two floats that need to be set. both have to be provided.
+ * @sa crand
+ * @sa frand
  */
 void gaussrand (float *gauss1, float *gauss2)
 {

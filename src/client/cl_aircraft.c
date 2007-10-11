@@ -816,6 +816,7 @@ void AIR_DestroyAircraft (aircraft_t *aircraft)
  * @param[in] pos Pointer to vec2_t for aircraft position
  * @note Used to place UFOs on geoscape
  * @todo move this to cl_ufo.c - only ufos will get "random position"
+ * @sa CP_GetRandomPosOnGeoscape
  */
 void CP_GetRandomPosForAircraft (float *pos)
 {
@@ -826,7 +827,7 @@ void CP_GetRandomPosForAircraft (float *pos)
 
 /**
  * @brief Moves given aircraft.
- * @param[in] dt
+ * @param[in] dt time delta
  * @param[in] aircraft Pointer to aircraft on its way.
  * @return true if the aircraft reached its destination.
  */
@@ -865,9 +866,13 @@ void CL_CampaignRunAircraft (int dt)
 	int i, j, k;
 
 	for (j = 0, base = gd.bases; j < gd.numBases; j++, base++) {
-		/* FIXME: if a base was destroyed, but there are still aircraft on their way... */
-		if (!base->founded)
+		if (!base->founded) {
+			if (base->numAircraftInBase) {
+				/* @todo if a base was destroyed, but there are still
+				 * aircraft on their way... */
+			}
 			continue;
+		}
 
 		/* Run each aircraft */
 		for (i = 0, aircraft = base->aircraft; i < base->numAircraftInBase; i++, aircraft++)

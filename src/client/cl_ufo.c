@@ -268,6 +268,7 @@ static void UFO_SearchTarget (aircraft_t *ufo)
 
 /**
  * @brief Make the UFOs run
+ * @param[in] dt time delta
  */
 void UFO_CampaignRunUfos (int dt)
 {
