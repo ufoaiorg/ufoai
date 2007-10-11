@@ -102,12 +102,9 @@ item bloodspider_weapon
 	weapon	true
 	type	melee
 	animationindex	2			//FIXME
-	shape	"0 0 1 2"		//FIXME
-	center	"-1 0 3"		//FIXME
 	scale	1.0
-	price	210
 	size	6
-	buytype weap_sec			//FIXME
+	buytype dummy
 	firetwohanded   true
 	dmgtype		monomolecularblade
 
@@ -120,7 +117,7 @@ item bloodspider_weapon
 			projtl		null
 			impact		null
 			hitbody		blood
-			firesnd		weapons/bloodspider	//FIXME
+			firesnd		weapons/bloodspider
 			speed		0
 			range		2
 			shots		1			//FIXME
