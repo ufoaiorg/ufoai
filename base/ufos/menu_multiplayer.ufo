@@ -156,14 +156,14 @@ menu mp_team
 		*slot6 image menu/save_slot
 		*slot7 image menu/save_slot
 	}
-	func teamslot0 { teamslotclear *slot0 image menu/save_slota cmd "mn_slot 0" }
-	func teamslot1 { teamslotclear *slot1 image menu/save_slota cmd "mn_slot 1" }
-	func teamslot2 { teamslotclear *slot2 image menu/save_slota cmd "mn_slot 2" }
-	func teamslot3 { teamslotclear *slot3 image menu/save_slota cmd "mn_slot 3" }
-	func teamslot4 { teamslotclear *slot4 image menu/save_slota cmd "mn_slot 4" }
-	func teamslot5 { teamslotclear *slot5 image menu/save_slota cmd "mn_slot 5" }
-	func teamslot6 { teamslotclear *slot6 image menu/save_slota cmd "mn_slot 6" }
-	func teamslot7 { teamslotclear *slot7 image menu/save_slota cmd "mn_slot 7" }
+	func teamslot0 { teamslotclear *slot0 image menu/save_slota cmd "mn_slot 0;" }
+	func teamslot1 { teamslotclear *slot1 image menu/save_slota cmd "mn_slot 1;" }
+	func teamslot2 { teamslotclear *slot2 image menu/save_slota cmd "mn_slot 2;" }
+	func teamslot3 { teamslotclear *slot3 image menu/save_slota cmd "mn_slot 3;" }
+	func teamslot4 { teamslotclear *slot4 image menu/save_slota cmd "mn_slot 4;" }
+	func teamslot5 { teamslotclear *slot5 image menu/save_slota cmd "mn_slot 5;" }
+	func teamslot6 { teamslotclear *slot6 image menu/save_slota cmd "mn_slot 6;" }
+	func teamslot7 { teamslotclear *slot7 image menu/save_slota cmd "mn_slot 7;" }
 
 	pic slot0
 	{
