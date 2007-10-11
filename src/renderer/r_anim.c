@@ -109,7 +109,7 @@ void R_AnimChange (animState_t * as, model_t * mod, const char *name)
 	assert(as->ladd < MAX_ANIMLIST);
 
 	if (!mod || mod->type != mod_alias_md2) {
-		Com_Printf("R_AnimChange: No md2 model - can't set animation (%s) (model: %s)\n", name, mod->name);
+		Com_Printf("R_AnimChange: No md2 model - can't set animation (%s) (model: %s)\n", name, mod ? mod->name : "(null)");
 		return;
 	}
 
