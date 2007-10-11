@@ -19,6 +19,7 @@ mapdef africa_excavation
 	map				excavation06
 	music			PsymongN1
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -35,6 +36,7 @@ mapdef estate
 	map				estate01
 	music			PsymongO3
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -85,6 +87,7 @@ mapdef mart
 	map			mart05
 	music		PsymongO4
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -101,6 +104,7 @@ mapdef mine
 	map				mine01
 	music			alBasrahM
 	multiplayer		true
+	teams			3
 	gametypes {
 		1on1
 		1on1on1
@@ -119,6 +123,7 @@ mapdef transport
 	map				transport06
 	music			dbsea
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -135,6 +140,7 @@ mapdef or_asyut
 	map				"+oriental"
 	music			PsymongO6
 	multiplayer		false
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -151,6 +157,7 @@ mapdef bunker
 	map				bunker01
 	music			greecei
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -167,6 +174,7 @@ mapdef dam
 	map				dam01
 	music			PsymongO1
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -185,6 +193,7 @@ mapdef japan
 	teams			2
 	music			PsymongR5
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -217,6 +226,7 @@ mapdef spedition
 	map				spedition06
 	music			AlexForest
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -233,6 +243,7 @@ mapdef stadium
 	map				stadium06
 	music			PsymongR4
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -249,6 +260,7 @@ mapdef druglord
 	map				druglord07
 	music			van_mission4
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -265,6 +277,7 @@ mapdef rzeszow
 	map				terrain02
 	music			van_mission
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -319,6 +332,7 @@ mapdef industrial
 	map				industrial06
 	music			AlexFightmare
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -335,6 +349,7 @@ mapdef rivertown
 	map				rivertown01
 	music			van_mission3
 	multiplayer		true
+	teams			4
 	gametypes {
 		1on1
 		1on1on1
@@ -362,6 +377,7 @@ mapdef city
 	map				city04
 	music			ufo1
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -378,6 +394,7 @@ mapdef gasstation
 	map				gasstation05
 	music			AlexFightmare
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -394,6 +411,7 @@ mapdef oriental
 	map				oriental06
 	music			PsymongO4
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -410,6 +428,7 @@ mapdef subway
 	map				subway07
 	music			PsymongN4
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -426,6 +445,7 @@ mapdef tower
 	map				tower06
 	music			greecei		//FIXME: AlexSullencity	here?
 	multiplayer		true
+	teams			3
 	gametypes {
 		1on1
 		1on1on1
@@ -444,6 +464,7 @@ mapdef village
 	map				village07
 	music			PsymongO3
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -460,6 +481,7 @@ mapdef convoy
 	map				convoy01
 	music			van_mission2
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -476,6 +498,7 @@ mapdef mine_crash
 	map				mine_crash05
 	music			PsymongR2
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -492,6 +515,7 @@ mapdef bridge
 	map				bridge01
 	music			PsymongR2
 	multiplayer		true
+	teams			3
 	gametypes {
 		1on1
 		1on1on1
@@ -510,6 +534,7 @@ mapdef construction
 	map				const05
 	music			PsymongR1
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -526,6 +551,7 @@ mapdef harbor
 	map				harbor07
 	music			AlexFightmare
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -542,6 +568,7 @@ mapdef office
 	map				office06
 	music			dawn
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -558,6 +585,7 @@ mapdef pdi
 	map				pdi08
 	music			PsymongO5
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -582,6 +610,7 @@ mapdef africa
 	map				africa04
 	music			PsymongR4
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -598,6 +627,7 @@ mapdef harvestercrash
 	map				harvestercrash04
 	music			PsymongR3
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -614,6 +644,7 @@ mapdef lake
 	map				lake03
 	music			AlexForest
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -630,6 +661,7 @@ mapdef qatar
 	map				oriental05
 	music			PsymongN3
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -646,6 +678,7 @@ mapdef terrain
 	map				terrain08
 	music			PsymongO6
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -671,6 +704,7 @@ mapdef frozen_groenland
 	param			small
 	music			AlexFightmare
 	multiplayer		true
+	teams			2
 	gametypes {
 		1on1
 		1on1on1
@@ -743,6 +777,7 @@ mapdef lake2
 	map				lake02
 	music			PsymongR5
 	multiplayer		true
+	teams			3
 	gametypes {
 		1on1
 		1on1on1
@@ -800,6 +835,7 @@ mapdef corrupt_city
 	map				corrupt_city04
 	music			PsymongR5
 	multiplayer		true
+	teams			4
 	gametypes {
 		1on1
 		1on1on1
