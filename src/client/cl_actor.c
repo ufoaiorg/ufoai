@@ -3051,6 +3051,9 @@ void CL_ActorSelectMouse (void)
 		}
 		break;
 	case M_FIRE_R:
+		if (mouseActor == selActor)
+			break;
+
 		/* We either switch to "pending" fire-mode or fire the gun. */
 		if (confirm_actions->integer == 1) {
 			cl.cmode = M_PEND_FIRE_R;
@@ -3060,6 +3063,9 @@ void CL_ActorSelectMouse (void)
 		}
 		break;
 	case M_FIRE_L:
+		if (mouseActor == selActor)
+			break;
+
 		/* We either switch to "pending" fire-mode or fire the gun. */
 		if (confirm_actions->integer == 1) {
 			cl.cmode = M_PEND_FIRE_L;

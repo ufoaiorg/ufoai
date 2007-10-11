@@ -1082,13 +1082,9 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 	if (!G_ActionCheck(player, ent, fd->time + reaction_leftover, quiet))
 		return qfalse;
 
-	/* Don't allow to use medikit on itself. */
-	if (Q_strncmp(gi.csi->ods[weapon->t].id, "medikit", MAX_VAR) == 0) {
-		if (VectorCompare(ent->pos, at)) {
-			gi.cprintf(player, PRINT_HUD, _("You cannot use medikit on yourself.\n"));
-			return qfalse;
-		}
-	}
+	/* Don't allow to shoot yourself */
+	if (VectorCompare(ent->pos, at))
+		return qfalse;
 
 	/* check that we're not firing a twohanded weapon with one hand! */
 	if (gi.csi->ods[weapon->t].fireTwoHanded &&	LEFT(ent)) {
