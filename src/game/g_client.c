@@ -2346,13 +2346,9 @@ void G_ClientTeamInfo (player_t * player)
 			Q_strncpyz(ent->chr.body, gi.ReadString(), sizeof(ent->chr.body));
 			Q_strncpyz(ent->chr.head, gi.ReadString(), sizeof(ent->chr.head));
 			ent->chr.skin = gi.ReadByte();
-#if 0
-			gi.dprintf("G_ClientTeamInfo: name: %s\n", ent->chr.name);
-			gi.dprintf("G_ClientTeamInfo: path: %s\n", ent->chr.path);
-			gi.dprintf("G_ClientTeamInfo: body: %s\n", ent->chr.body);
-			gi.dprintf("G_ClientTeamInfo: head: %s\n", ent->chr.head);
-			gi.dprintf("G_ClientTeamInfo: skin: %i\n", ent->chr.skin);
-#endif
+
+			Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: name: %s, path: %s, body: %s, head: %s, skin: %i\n",
+				ent->chr.name, ent->chr.path, ent->chr.body, ent->chr.head, ent->chr.skin);
 
 			ent->chr.HP = gi.ReadShort();
 			ent->chr.maxHP = gi.ReadShort();
@@ -2376,10 +2372,10 @@ void G_ClientTeamInfo (player_t * player)
 
 				for (; nr-- > 0;) {
 					G_ReadItem(&item, &container, &x, &y);
-					/* gi.dprintf("G_ClientTeamInfo: t=%i:a=%i:m=%i (x=%i:y=%i)\n", item.t, item.a, item.m, x, y); */
+					Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: t=%i:a=%i:m=%i (x=%i:y=%i)\n", item.t, item.a, item.m, x, y);
 
 					Com_AddToInventory(&ent->i, item, container, x, y, 1);
-					/* gi.dprintf("G_ClientTeamInfo: add %s to inventory (container %i - idArmour: %i)\n", gi.csi->ods[ent->i.c[container]->item.t].id, container, gi.csi->idArmour); */
+					Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: add %s to inventory (container %i - idArmour: %i)\n", gi.csi->ods[ent->i.c[container]->item.t].id, container, gi.csi->idArmour);
 				}
 			}
 
