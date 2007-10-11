@@ -246,8 +246,12 @@ void CL_RegisterLocalModels (void)
 	for (i = 0, lm = LMs; i < numLMs; i++, lm++) {
 		/* register the model and recalculate routing info */
 		lm->model = R_RegisterModelShort(lm->name);
-		if (lm->animname[0])
+		if (lm->animname[0]) {
 			R_AnimChange(&lm->as, lm->model, lm->animname);
+			if (!lm->as.change)
+				Com_Printf("CL_RegisterLocalModels: Could not change anim of model '%s'\n",
+					lm->animname);
+		}
 
 		/* calculate sun lighting and register model if not yet done */
 		VectorMA(lm->origin, 512, sunDir, sunOrigin);
