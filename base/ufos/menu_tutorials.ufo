@@ -75,6 +75,9 @@ menu tutorials
 		size	"260 390"
 		num	1
 		height	"19"
+		mousefx true
+		wheel
+		scrollbar true
 		click	{ }
 	}
 	func init
