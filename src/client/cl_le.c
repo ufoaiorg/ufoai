@@ -599,7 +599,7 @@ static void LET_PathMove (le_t * le)
 				VectorCopy(gridPos, le->pos);
 			}
 
-			CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
+			CL_ConditionalMoveCalc(&clMap, le, MAX_ROUTE);
 
 			/* link any floor container into the actor temp floor container */
 			floor = LE_Find(ET_ITEM, le->pos);
