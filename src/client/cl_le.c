@@ -425,6 +425,9 @@ void LET_StartIdle (le_t * le)
 		R_AnimChange(&le->as, le->model1, "panic0");
 	else
 		R_AnimChange(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
+	if (!le->as.change)
+		Com_Printf("LET_StartIdle: Could not change anim of le: %i, team: %i, pnum: %i\n",
+			le->entnum, le->team, le->pnum);
 
 	/* keep this animation until something happens */
 	le->think = NULL;
@@ -633,6 +636,9 @@ void LET_StartPathMove (le_t * le)
 {
 	/* initial animation or animation change */
 	R_AnimChange(&le->as, le->model1, LE_GetAnim("walk", le->right, le->left, le->state));
+	if (!le->as.change)
+		Com_Printf("LET_StartPathMove: Could not change anim of le: %i, team: %i, pnum: %i\n",
+			le->entnum, le->team, le->pnum);
 
 	le->think = LET_PathMove;
 	le->think(le);
