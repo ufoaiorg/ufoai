@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion CVS\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-10-10 11:03+0200\n"
-"PO-Revision-Date: 2007-09-10 13:31+0100\n"
+"PO-Revision-Date: 2007-10-10 13:31+0100\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -81,9 +81,8 @@ msgid "UFO - Scout"
 msgstr "Ufo - rekognoscering"
 
 #: ../base/maps/ufocrashd.ump:207 ../base/maps/ufocrashn.ump:206
-#, fuzzy
 msgid "UFO - Figher"
-msgstr "Ufo - Jager"
+msgstr "Ufo - jager"
 
 #: ../base/maps/ufocrashd.ump:218 ../base/maps/ufocrashn.ump:217
 #: ../base/ufos/aircraftmanagement.ufo:337 ../base/ufos/otheritems.ufo:88
@@ -315,9 +314,8 @@ msgid "Nanocomposite Armour"
 msgstr "Nanosammensatvest"
 
 #: ../base/ufos/armour.ufo:179
-#, fuzzy
 msgid "Power Armour"
-msgstr "Vis beskyttelse"
+msgstr "Styrkevest"
 
 #: ../base/ufos/armour.ufo:480 ../base/ufos/research.ufo:2346
 #: ../base/ufos/research.ufo:2354
@@ -802,9 +800,8 @@ msgid "Produce aircraft or aircraft components"
 msgstr "Byg luftfartøj eller luftfartøjdel"
 
 #: ../base/ufos/menu_aircraft.ufo:245
-#, fuzzy
 msgid "Build at least one workshop"
-msgstr "Byg mindst et hospital"
+msgstr "Byg mindst et værksted"
 
 #: ../base/ufos/menu_aircraft.ufo:255 ../base/ufos/menu_aircraft.ufo:264
 #: ../base/ufos/menu_aircraft.ufo:1026
@@ -897,9 +894,8 @@ msgid "Select this slot"
 msgstr "Vælg denne plads"
 
 #: ../base/ufos/menu_aircraft.ufo:955
-#, fuzzy
 msgid "Action"
-msgstr "Aktion:"
+msgstr "Aktion"
 
 #: ../base/ufos/menu_aircraft.ufo:962 ../base/ufos/menu_bases.ufo:656
 #: ../base/ufos/menu_geoscape.ufo:442 ../base/ufos/menu_geoscape.ufo:540
@@ -924,7 +920,7 @@ msgstr "Afbryd"
 
 #: ../base/ufos/menu_aircraft.ufo:983
 msgid "You don't have any aircraft in the base - what do you want to do?"
-msgstr ""
+msgstr "Du har ingen luftfartøjer på basen - hvad vil du gøre?"
 
 #: ../base/ufos/menu_aircraft.ufo:991 ../base/ufos/menu_buy.ufo:1795
 #: ../base/ufos/menu_buy.ufo:1799 ../base/ufos/menu_buy.ufo:1803
@@ -941,12 +937,11 @@ msgstr "Køb luftfartøj"
 
 #: ../base/ufos/menu_aircraft.ufo:1004
 msgid "Buy"
-msgstr ""
+msgstr "Køb"
 
 #: ../base/ufos/menu_aircraft.ufo:1012
-#, fuzzy
 msgid "Produce aircraft"
-msgstr "Tidligere luftfartøj"
+msgstr "Producer luftfartøj"
 
 #: ../base/ufos/menu_aliencont.ufo:48 ../base/ufos/menu_bases.ufo:444
 #: ../base/ufos/menu_basesummary.ufo:48 ../base/ufos/menu_buildings.ufo:100
@@ -1236,9 +1231,8 @@ msgid "Manage your aircraft"
 msgstr "Håndter dit luftfartøj"
 
 #: ../base/ufos/menu_bases.ufo:127
-#, fuzzy
 msgid "Buy or produce a new aircraft"
-msgstr "Køb et nyt luftfartøj"
+msgstr "Køb eller producer et nyt luftfartøj"
 
 #: ../base/ufos/menu_bases.ufo:144
 msgid "Build at least one Hangar"
@@ -1544,9 +1538,8 @@ msgid "Increase the amount of items you want to sell"
 msgstr "Øg antallet af udstyr du ønsker at sælge"
 
 #: ../base/ufos/menu_buy.ufo:1288
-#, fuzzy
 msgid "Storage (used/all):"
-msgstr "Lager (total/anvendt):"
+msgstr "Lager (anvendt/total):"
 
 #: ../base/ufos/menu_buy.ufo:1322 ../base/ufos/menu_production.ufo:349
 msgid "Show primary weapons"
@@ -2024,7 +2017,7 @@ msgstr "Læger"
 #: ../base/ufos/menu_hospital.ufo:294 ../base/ufos/menu_hospital.ufo:300
 #: ../base/ufos/menu_hospital.ufo:306 ../base/ufos/menu_hospital.ufo:312
 msgid "Unused"
-msgstr ""
+msgstr "Ubrugt"
 
 #: ../base/ufos/menu_hospital.ufo:93 ../base/ufos/menu_hospital.ufo:94
 #: ../base/ufos/menu_hospital.ufo:95 ../base/ufos/menu_hospital.ufo:96
@@ -2038,7 +2031,7 @@ msgstr ""
 #: ../base/ufos/menu_hospital.ufo:111 ../base/ufos/menu_hospital.ufo:112
 #: ../base/ufos/menu_hospital.ufo:113
 msgid "Heavily wounded"
-msgstr ""
+msgstr "Hårdt såret"
 
 #: ../base/ufos/menu_hospital.ufo:115 ../base/ufos/menu_hospital.ufo:116
 #: ../base/ufos/menu_hospital.ufo:117 ../base/ufos/menu_hospital.ufo:118
@@ -2051,9 +2044,8 @@ msgstr ""
 #: ../base/ufos/menu_hospital.ufo:131 ../base/ufos/menu_hospital.ufo:132
 #: ../base/ufos/menu_hospital.ufo:133 ../base/ufos/menu_hospital.ufo:134
 #: ../base/ufos/menu_hospital.ufo:135
-#, fuzzy
 msgid "Medium wounds"
-msgstr "Mellem"
+msgstr "Mellem såret"
 
 #: ../base/ufos/menu_hospital.ufo:137 ../base/ufos/menu_hospital.ufo:138
 #: ../base/ufos/menu_hospital.ufo:139 ../base/ufos/menu_hospital.ufo:140
@@ -2067,7 +2059,7 @@ msgstr "Mellem"
 #: ../base/ufos/menu_hospital.ufo:155 ../base/ufos/menu_hospital.ufo:156
 #: ../base/ufos/menu_hospital.ufo:157
 msgid "Slightly wounded"
-msgstr ""
+msgstr "Let såret"
 
 # # in game
 #: ../base/ufos/menu_hospital.ufo:159 ../base/ufos/menu_hospital.ufo:160
@@ -2081,7 +2073,6 @@ msgstr ""
 #: ../base/ufos/menu_hospital.ufo:175 ../base/ufos/menu_hospital.ufo:176
 #: ../base/ufos/menu_hospital.ufo:177 ../base/ufos/menu_hospital.ufo:178
 #: ../base/ufos/menu_hospital.ufo:179
-#, fuzzy
 msgid "Currently being healed"
 msgstr "Under sygepleje"
 
@@ -2233,16 +2224,15 @@ msgstr "Forhal"
 
 #: ../base/ufos/menu_irc.ufo:55
 msgid "Close menu and disconnect"
-msgstr ""
+msgstr "Luk menu og afbryd"
 
 #: ../base/ufos/menu_irc.ufo:66
-#, fuzzy
 msgid "Disconnect"
-msgstr "Forbind"
+msgstr "Afbryd"
 
 #: ../base/ufos/menu_irc.ufo:74
 msgid "Close menu but stay connected"
-msgstr ""
+msgstr "Luk menu men forbliv forbundet"
 
 #: ../base/ufos/menu_irc.ufo:85
 msgid "Users"
@@ -2730,7 +2720,7 @@ msgstr "Lyd"
 
 #: ../base/ufos/menu_options.ufo:93
 msgid "Sound is not activated"
-msgstr ""
+msgstr "Lyd er ikke aktiveret"
 
 #: ../base/ufos/menu_options.ufo:125
 msgid "Game"
@@ -2854,14 +2844,12 @@ msgid "Camera Rotation:"
 msgstr "Kamerarotation:"
 
 #: ../base/ufos/menu_options.ufo:690
-#, fuzzy
 msgid "Precache models:"
-msgstr "Læg billeder og modeller i mellemlager:"
+msgstr "Læg modeller i mellemlager:"
 
 #: ../base/ufos/menu_options.ufo:698
-#, fuzzy
 msgid "Precache models (faster menus)"
-msgstr "Læg billder og modeller i mellemlager (hurtigere menuer)"
+msgstr "Læg modeller i mellemlager (hurtigere menuer)"
 
 #: ../base/ufos/menu_options.ufo:706
 msgid "Tooltips:"
@@ -2949,9 +2937,8 @@ msgid "Productionlimit:"
 msgstr "Produktionsgrænse:"
 
 #: ../base/ufos/menu_production.ufo:89 ../base/ufos/menu_production.ufo:584
-#, fuzzy
 msgid "Workers (ready/all):"
-msgstr "Arbejdere (alle/klar):"
+msgstr "Arbejdere (klar/alle):"
 
 #: ../base/ufos/menu_production.ufo:109 ../base/ufos/menu_production.ufo:604
 msgid "Workshop capacity:"
@@ -3513,9 +3500,8 @@ msgid "New York"
 msgstr "New York"
 
 #: ../base/ufos/missions.ufo:267
-#, fuzzy
 msgid "Somewhere in Amazona"
-msgstr "Et sted i Antarktis"
+msgstr "Et sted i Amazona"
 
 #: ../base/ufos/missions.ufo:284
 msgid "Rzeszow"
@@ -3729,9 +3715,8 @@ msgid "We located the alien colony, go there and destroy it."
 msgstr "Vi har lokaliseret rumvæsenkolonien, ødelæg den."
 
 #: ../base/ufos/missions.ufo:905
-#, fuzzy
 msgid "Somewhere in Siberia"
-msgstr "Et sted i Antarktis"
+msgstr "Et sted i Sibirien"
 
 #: ../base/ufos/missions.ufo:919
 msgid "Rocky Mountains"
@@ -4824,7 +4809,6 @@ msgid "inter_stingray_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3049
-#, fuzzy
 msgid "inter_stingray_pre_txt"
 msgstr "<TODO>"
 
@@ -4978,15 +4962,13 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3610
 msgid "Ares W (UGV)"
-msgstr ""
+msgstr "Ares W (UGV)"
 
 #: ../base/ufos/research.ufo:3612
-#, fuzzy
 msgid "ugv_ares_w_txt"
 msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:3615
-#, fuzzy
 msgid "ugv_ares_w_pre_txt"
 msgstr "<TODO>"
 
@@ -5108,11 +5090,25 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4122
 msgid "Political Situation Before The Invasion"
-msgstr "Politisk situation før invasionen"
+msgstr "Den politiske situation før invasionen"
 
 #: ../base/ufos/research.ufo:4124
 msgid "news_initial_political_situation_txt"
-msgstr "<TODO>"
+msgstr "I året 2084 er jorden i bedre form end den har været i et århundrede. For første gang er fred og samarbejde normen fremfor undtagelsen. Den nuværende situation kan kun forklares ud fra den brutale historie i det 21. århundrede.\n"
+"\n"
+"I det første årti af det 21. århundrede var Mellemøsten den største bekymring i verden. Spændingen øgedes da Iran, Syrien, Jordan og Afghanistan dannede Mellemøsten-alliancen, en politisk gruppering der skulle forene den islamiske verden. Snart efter gjorde valg i Irak at USA mistede indflydelse i landet, og Irak blev en del af Mellemøsten-alliancen sammen med Pakistan og Libanon senere det år. Som modspil tilsluttede Israel sig den udvidet Europæiske Union, og kom derfor ind under den mere strikse EU-lovgivning vedrørende menneskerettigheder og krigsførsel. Dets militære tilstedeværelse i regionen blev markant reduceret over årene som en følge deraf.\n"
+"\n"
+"Da 2009 blev til 2010 blev fokus dog fjernet fra Mellemøsten da Kinas øgede styrke begyndte at vise sig. Folkets republik havde bidt af sine naboer i flere år, men i december 2010, efter årtier med hårde ord og truende attituder, blev Taiwan erobret i en omfangsrig kinesisk militær invasion. FN udsendte flere reprimander som blev ignoreret. Det internationale samfund debaterede sagen men gjorde intet.\n"
+"\n"
+"Den 2. kolde krig mellem USA og Kina begyndte da Kina besatte Nord- og Sydkorea i 2012, efter at hemmelige agenter var lykkedes med at afkoble hele Nordkoreas atomarsenal under den 3-dage lange invasion. Den veltrænede og veludrustede folkets hær var langt større end de koreanske divisioner; de besatte begge lande lang tid før koreanerne kunne få hjælp fra andre. Invasionen blev endnu et nederlag for FN og kølige diplomatiske forbindelser mellem Kina og Rusland varede i årtier.\n"
+"\n"
+"Spændingerne omkring i verden forblev store under den 2. kolde krig, med oprør som en del af hverdagen i de af Kina netop besatte områder, men i enden var hverken Kina eller USA klar til at bruge atomvåben.\n"
+"\n"
+"Krigen endte teknisk i 2031, da den amerikanske økonomi styrtede sammen på grund af et ekstremt stort militærbudget og renterne til dækning af underskuddet på handelsbalancen overgik hele landets bruttonationalprodukt. I mellemtiden tog Kina førertrøjen i verden uden helt at vide hvad eller hvordan de skulle bruge den. Landets ledere blev bedøvet af magten, en smule for sulten, og en smule for stolt. De brugte hæren til at gennemføre deres beslutninger og forsøgte at føre landet tilbage til et stalinistisk styre fra det 20. århundrede. Folket var ikke enig.\n"
+"\n"
+"Den følgende borgerkrig var den største jorden havde set. Officerer henviste ofte til den som et barn af Vietnam og 1. verdenskrig. Der var bombninger af hele befolkningsområder, massehenrettelser af krigsfanger, og taktiske atomvåbenangreb på flere byer -- inklusiv Shanghai, Seoul og Ny Delhi -- den 7. juni 2034. Regeringsloyalister smed i alt seks 50-tons bomber på stærkt befæstet oprørspositioner, inklusiv de civile befolkningsgrupper som oprørerne beskyttede.\n"
+"\n"
+"Loyalisthæren fik massive deserteringer i de følgende dage; det var den enkel begivenhed som til sidst førte til regeringens afgang. Mere end seks millioner liv blev tabt før loyaliststyrkerne overgav sig den 15. august 2036; efter hårde kampe hvor de anvendte den brændte jords taktik, mens oprørerne langsomt tvang dem ud i Det Indiske Ocean. Dette blev den officielle afslutning på den 2. kolde krig."
 
 #: ../base/ufos/research.ufo:4135
 msgid "After The War"
@@ -5124,7 +5120,7 @@ msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4148
 msgid "PHALANX And The Mumbai Aftermath"
-msgstr "FALANKS\tog efterfølgerne af Mumbai"
+msgstr "FALANKS og efterdønningerne af Mumbai"
 
 #: ../base/ufos/research.ufo:4150
 msgid "news_phalanx_and_mumbai_aftermath_txt"
@@ -5141,14 +5137,13 @@ msgstr "<TODO>"
 #: ../base/ufos/research.ufo:4189 ../base/ufos/research.ufo:4201
 #: ../base/ufos/research.ufo:4208
 msgid "The Enemy On Earth"
-msgstr ""
+msgstr "Fjenden på jorden"
 
 #: ../base/ufos/research.ufo:4191
 msgid "enemy_on_earth_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:4194
-#, fuzzy
 msgid "enemy_on_earth_pre_txt"
 msgstr "<TODO>"
 
@@ -5305,106 +5300,100 @@ msgid "Copyright 2004-2007 by UFO: AI Team"
 msgstr "Ophavsret 2004-2007 UFO: AI-holdet"
 
 #: ../base/ufos/seq_ingame.ufo:22
-#, fuzzy
 msgid "seq_invasion_sentence1"
 msgstr "<TODO>"
 
 #: ../base/ufos/seq_ingame.ufo:51
-#, fuzzy
 msgid "seq_xvi_sentence1"
 msgstr "<TODO>"
 
 #: ../base/ufos/seq_ingame.ufo:59
-#, fuzzy
 msgid "seq_xvi_sentence2"
 msgstr "<TODO>"
 
 #: ../base/ufos/seq_ingame.ufo:89
-#, fuzzy
 msgid "seq_alienbase_sentence1"
 msgstr "<TODO>"
 
 #: ../base/ufos/seq_ingame.ufo:97
-#, fuzzy
 msgid "seq_alienbase_sentence2"
 msgstr "<TODO>"
 
 #: ../base/ufos/seq_ingame.ufo:105
-#, fuzzy
 msgid "seq_alienbase_sentence3"
 msgstr "<TODO>"
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr "<TODO>"
+msgstr "Året er 2084. Jorden, aldrig det mest stabile sted, oplever en fredelig tid. Den voldsomme start på 2000-tallet er for længst forbi, gamle minder men ikke så langt væk, at den er blevet glemt. For de fleste af jordens befolkning er den 2. kolde krig en mørk skygge i det forgangne, præcis som verdenskrigen var for deres børn."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr "<TODO>"
+msgstr "Konflikter er blevet mindre udbredte nær slutningen af århundredet da ny teknologi og medicin er blevet tilgængelig for den tredje verden. Selv om terrorismen er blevet mindre efter de. 2. kolde krig, med al dens smerte og umenneskelige gerninger, findes den stadig i tankerna hos folket, fra det gamle Amerika til det indiske kontinent. Klassekampen stiger nu igennem den politiske magtkamp da alle nationer er garanteret en lige repræsentation i FN, og den globale levestandard stiger langsomt selv for de mest udsatte hjørner af planeten. Landene er styrket og har stabiliseret sig omkring et omorganiseret Forenede Nationer som det er lykkedes at få verdens lande til at enes om. Mindre nationer, først skræmte af de magtfulde nationer Kina og Den Europæiske Union, er selv gået sammen til magtfulde politiske fællesskaber -- og har siden opdaget at de ikke har nogle naboer som de kan slås imod. For første gang i menneskenes historie er der lov og orden i mere end 3/4 af af verden."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr "<TODO>"
+msgstr "For mange mennesker ser verden lys ud."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr "<TODO>"
+msgstr "Det første angreb sker mod byen Mumbai den 3. marts 2084. Seks små ufoer dukker op ud af ingenting og flyver skrigende mod jorden uden, at de bliver opdaget af de store radarinstallationer som dækker skyerne over Mumbai og lander i den højest befolket by på jorden. De giver ingen advarsler, ingen forklaring. 20.000 uskyldige civile og tre bataljoner fra elitetropperne bliver massakreret igennem tolv brutale timer inden en stor fælles styrke får stoppet de udenjordiske raseringer. Lige så hurtigt som de kom, lige så hurtigt trækker de deres fartøjer tilbage og forsvinder ud i rummet igen og efterlader kun de stille gader i Mumbai som bevis for hvad der er sket."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr "<TODO>"
+msgstr "Et ekstraordinært møde i FN fører ikke til noget. Angrebene fortsætter med kortere og kortere mellemrum, større og kraftigere end tidligere, denne gang i Bonn, Johannesburg og Bangkok. Nogen nationer forsøger med diplomati og sender beskeder på tusindtals forskellig sprog til de fremmede som hærger i de forskellige lande. Deres beskeder ignoreres. Inden for et par timer er alle tre byer tømt for menneskeligt liv. Angrebene er ovre præcis når de forskellige militære styrker har fået bekræftelse på at slå igen. Rumvæsenerne efterlader intet uden beton og blod. Alle uofer forsvinder uden et sport -- men ingen tvivler på, at de kommer tilbage."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr "<TODO>"
+msgstr "87 timer efter det første angreb på Mumbai erklærer jorden krig mod rumvæsenerne. I over to uger kæmper menneskenes styrker så godt de kan for at afværge de angribende rumvæsener. De taber oftere end de vinder."
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr "<TODO>"
+msgstr "Da kun et alternativ står tilbage tager FN aktion. Forældet udstyr hentes frem, noget af det ældre end et århundrede, og det tidligere sovende antirumvæsen bureau fra det tidligere Amerika -- FALANKS -- genopstår under FN's auspicier. Dets opgave er at kæmpe mod truslen fra rumvæsenerne og sikre, at den menneskelige race kan overleve, uanset prisen."
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr "<TODO>"
+msgstr "Finansieret af alle otte politiske kræfter, og sammenlægningen af disses elitesoldater, er FALANKS det bedste af de bedste. Det er jordens første og eneste forsvarslinje. De må ikke fejle, for hvis de gør, vil menneskeheden ikke overleve."
 
 #: ../base/ufos/seq_intro.ufo:100
 msgid "prolog_sentence1"
-msgstr "<TODO>"
+msgstr "TIL: Øverstbefalende, FALANKS, Atlanterhavskommandoen"
 
 #: ../base/ufos/seq_intro.ufo:110
 msgid "prolog_sentence2"
-msgstr "<TODO>"
+msgstr "FRA: Generaldirektør Mahouf Serra, Forenede Nationer, New York"
 
 #: ../base/ufos/seq_intro.ufo:119
 msgid "prolog_sentence3"
-msgstr "<TODO>"
+msgstr "DATO: 21. marts 2084"
 
 #: ../base/ufos/seq_intro.ufo:128
 msgid "prolog_sentence4"
-msgstr "<TODO>"
+msgstr "EMNE: Held og lykke"
 
 #: ../base/ufos/seq_intro.ufo:137
 msgid "prolog_sentence5"
-msgstr "<TODO>"
+msgstr "Velkommen til din nye post, øverstbefalende. Du har nu fuldstændig kontrol over FALANKS indsatsstyrker mod rumvæsenerne. Din opgave er at beskytte jordens befolkning og stoppe rumvæsenernes trussel uanset prisen. Hvordan du gennemfører dette er helt op til dig, vores eneste krav er at du har held med opgaven."
 
 #: ../base/ufos/seq_intro.ufo:146
 msgid "prolog_sentence6"
-msgstr "<TODO>"
+msgstr "Din første opgave er at opbygge et hovedkvarter. FN har adgang til militærbaser over hele verden, så du kan vælge hvilken region du vil som base for dit hovedkvarter. Vælg placeringen med omhu, da den bliver en del af udviklingen for FALANKS-projektet."
 
 #: ../base/ufos/seq_intro.ufo:155
 msgid "prolog_sentence7"
-msgstr "<TODO>"
+msgstr "En nylig gennemført analyse af angrebene mod Mumbai og Bonn har fastslået at ufo-observationerne og rumvæsenernes aktiviteter fokuserer på de mest befolkede regioner på jorden, inklusive kysterne af Nord- og Sydamerika, Europa, Fjernøsten, den sydlige og mellemeste del af Afrika samt Australien. Du bør inkludere disse territorier i dine operationer."
 
 #: ../base/ufos/seq_intro.ufo:164
 msgid "prolog_sentence8"
-msgstr "<TODO>"
+msgstr "Når du har bygget op din første base så skal du forberede dine soldater. Rekrutterne som vi har tildelt til FALANKS skal stationeres på dit luftfartøj og siden udrustes før indsættelse i kamp."
 
 #: ../base/ufos/seq_intro.ufo:173
 msgid "prolog_sentence9"
-msgstr "<TODO>"
+msgstr "Tag hånd om dem, øverstbefalende. Resten af os regner med dig."
 
 #: ../base/ufos/seq_intro.ufo:182
 msgid "prolog_sentence10"
-msgstr "<TODO>"
+msgstr "Det var alt. Held og lykke og jeg ønsker dig en god jagt."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"
@@ -5545,7 +5534,7 @@ msgstr "Føniks"
 
 #: ../base/ufos/team_humans.ufo:526
 msgid "Ares W"
-msgstr ""
+msgstr "Ares W"
 
 #: ../base/ufos/tips.ufo:5
 msgid ""
@@ -5604,7 +5593,6 @@ msgid "Don't forget to equip your soldiers with enough ammo."
 msgstr "Glem ikke at udstyre dine soldater med nok ammo."
 
 #: ../base/ufos/tips.ufo:12
-#, fuzzy
 msgid "Don't forget to equip your soldiers with armour."
 msgstr "Glem ikke at udstyre dine soldater med veste."
 
@@ -5985,9 +5973,8 @@ msgid "Machine Gun Magazine"
 msgstr "Maskinpistol magasin"
 
 #: ../base/ufos/weapons_human.ufo:247
-#, fuzzy
 msgid "Short Burst"
-msgstr "Brag"
+msgstr "Kort salve"
 
 #: ../base/ufos/weapons_human.ufo:295
 msgid "Sniper Rifle"
@@ -6588,7 +6575,6 @@ msgid "Back to base"
 msgstr "Tilbage til base"
 
 #: client/cl_aircraft.c:498
-#, fuzzy
 msgid ""
 "Your aircraft doesn't have enough fuel to go there and then come back to its "
 "home base."
@@ -6714,9 +6700,9 @@ msgid "Not enough credits to build this\n"
 msgstr "Ikke nok penge til at bygge denne\n"
 
 #: client/cl_basemanagement.c:1021
-#, fuzzy, c-format
+#, c-format
 msgid "Costs:\t%i c\n"
-msgstr "Pris:\t%1.0f c\n"
+msgstr "Pris:\t%i kr\n"
 
 #: client/cl_basemanagement.c:1024
 #, c-format
@@ -6726,7 +6712,7 @@ msgstr[0] "% dag at bygge\n"
 msgstr[1] "% dage at bygge\n"
 
 #: client/cl_basemanagement.c:1027
-#, fuzzy, c-format
+#, c-format
 msgid "Running Costs:\t%i c\n"
 msgstr "Løbende omk.:\t%i kr\n"
 
@@ -7266,18 +7252,21 @@ msgid "UFO Recovery"
 msgstr "Ufo indsamling"
 
 #: client/cl_campaign.c:4778
-#, fuzzy
 msgid ""
 "\n"
 "\n"
 "Selected base:\t\t\t"
-msgstr "Valgt base"
+msgstr ""
+"\n"
+"\n"
+"Valgt base:\t\t\t"
 
 #: client/cl_campaign.c:4852
 #, c-format
 msgid ""
 "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
-msgstr "Fandt %s på slagmarken. Ufo solgt til nation %s, opnåede %i kr."
+msgstr ""
+"Fandt %s på slagmarken. Ufo solgt til nation %s, opnåede %i kr."
 
 #: client/cl_campaign.c:4902
 msgid ""
@@ -7479,9 +7468,9 @@ msgid "Toggle first-person/third-person camera mode"
 msgstr "Skift mellem person/tredjemand kamera"
 
 #: client/cl_inventory.c:291
-#, fuzzy, c-format
+#, c-format
 msgid "By selling %s you gathered %i credits."
-msgstr "du indsamlede %i kr."
+msgstr "Ved salg af %s fik du %i kr."
 
 #: client/cl_inventory.c:292
 #, c-format
@@ -7655,7 +7644,7 @@ msgstr "Lokal kortversion afviger fra serveren"
 
 #: client/cl_main.c:1491
 msgid "Script files are not the same"
-msgstr ""
+msgstr "Skript filer er ikke de samme"
 
 #: client/cl_main.c:1498
 #, c-format
@@ -7854,9 +7843,9 @@ msgid "Unknown weight"
 msgstr "Ukendt vægt"
 
 #: client/cl_market.c:223
-#, fuzzy, c-format
+#, c-format
 msgid "%i c\n"
-msgstr "%i kr"
+msgstr "%i kr\n"
 
 #: client/cl_market.c:436 client/cl_market.c:683
 msgid "Not enough storage space"
@@ -8027,7 +8016,6 @@ msgid "Not enough workers"
 msgstr "Ikke nok arbejdere"
 
 #: client/cl_produce.c:247
-#, fuzzy
 msgid ""
 "You cannot queue productions without workers hired in this base.\n"
 "\n"
@@ -8090,29 +8078,29 @@ msgid "Production queue empty"
 msgstr "Produktionskø tom"
 
 #: client/cl_produce.c:443 client/cl_produce.c:462
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough credits to finish production in base %s.\n"
-msgstr "Ikke nok penge til en ny base."
+msgstr "Ikke nok penge til at afslutte produktion på base %s.\n"
 
 #: client/cl_produce.c:452
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough free storage space in base %s. Production paused.\n"
-msgstr "Ikke nok lagerrum på base %s. %s"
+msgstr "Ikke nok lagerrum på base %s. Produktion sat i stå.\n"
 
 #: client/cl_produce.c:471
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough free hangar space in base %s. Production paused.\n"
-msgstr "Ikke nok lagerrum på base %s. %s"
+msgstr "Ikke nok ledig hangarplads på base %s. Produktion sat i stå.\n"
 
 #: client/cl_produce.c:482
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough free storage space in base %s. Disassembling paused.\n"
-msgstr "Ikke nok lagerrum på base %s. %s"
+msgstr "Ikke nok lagerrum på base %s. Afmontering sat i stå.\n"
 
 #: client/cl_produce.c:506 client/cl_produce.c:518
 #, c-format
 msgid "The production of %s has finished."
-msgstr "Produktinen af %s er færdig."
+msgstr "Produktionen af %s er færdig."
 
 #: client/cl_produce.c:507 client/cl_produce.c:519 client/cl_produce.c:535
 msgid "Production finished"
@@ -8184,9 +8172,8 @@ msgid "You cannot queue any more items!"
 msgstr "Du kan ikke sætte mere udstyr i kø!"
 
 #: client/cl_produce.c:1187 client/cl_produce.c:1203
-#, fuzzy
 msgid "Not enough material!"
-msgstr "Ikke nok beboelseskvarter"
+msgstr "Ikke nok materiale!"
 
 #: client/cl_produce.c:1187
 #, c-format
@@ -8194,6 +8181,8 @@ msgid ""
 "You don't have enough material to produce all (%i) items. Production will "
 "continue with a reduced (%i) number."
 msgstr ""
+"Du har ikke nok materiale til at producere alle (%i) enheder. Produktionen vil "
+"fortsætte med et nedsat antal (%i) enheder."
 
 #: client/cl_produce.c:1191 client/cl_produce.c:1213
 #, c-format
@@ -8210,9 +8199,8 @@ msgid "Disassembling of %s started"
 msgstr "Afmontering af %s påbegyndt"
 
 #: client/cl_produce.c:1203
-#, fuzzy
 msgid "You don't have enough of the needed material to produce this item."
-msgstr "Du har ikke nok beboelsesrum til dine ansatte."
+msgstr "Du har ikke nok af det krævede materiale til at producere dette udstyr."
 
 #: client/cl_research.c:80
 #, c-format
@@ -8237,14 +8225,14 @@ msgid "Unknown Technology found"
 msgstr "Ukendt teknologi fundet"
 
 #: client/cl_research.c:770
-#, fuzzy, c-format
+#, c-format
 msgid "Laboratory space (used/all): %i/%i"
-msgstr "Laboratorium plads (alle/anvendt): %i/%i"
+msgstr "Laboratorium plads (anvendt/alle): %i/%i"
 
 #: client/cl_research.c:775
-#, fuzzy, c-format
+#, c-format
 msgid "Scientists (available/all): %i/%i"
-msgstr "Videnskabsmænd (alle/tilgængelige): %i/%i"
+msgstr "Videnskabsmænd (tilgængelige/alle): %i/%i"
 
 #: client/cl_research.c:779
 msgid "Not researched in any base."
@@ -8285,6 +8273,8 @@ msgid ""
 "Status: We don't currently have all the materials or background knowledge "
 "needed to research this topic."
 msgstr ""
+"Status: Vi har på nuværende tidspunkt ikke al det materiale eller baggrundsviden "
+"vi skal bruge for at kunne forske i dette emne."
 
 #: client/cl_research.c:817
 msgid "Status: Unknown technology"
@@ -8398,9 +8388,9 @@ msgid "Campaign loaded"
 msgstr "Kampagne hentet"
 
 #: client/cl_screen.c:360
-#, fuzzy, c-format
+#, c-format
 msgid "Downloading [%s]"
-msgstr "henter %s"
+msgstr "Henter [%s]"
 
 #: client/cl_screen.c:399
 #, c-format
@@ -8999,9 +8989,8 @@ msgid "Size:\t%i\n"
 msgstr "Størrelse:\t%i\n"
 
 #: client/cl_ufopedia.c:286
-#, fuzzy
 msgid "Type:\tProtection:\n"
-msgstr "Type:\tBeskyttelse / Styrke:\n"
+msgstr "Type:\tBeskyttelse:\n"
 
 #: client/cl_ufopedia.c:297
 #, c-format
@@ -9072,9 +9061,9 @@ msgid "Unknown - need to research this"
 msgstr "Ukendt - du må forske på dette"
 
 #: client/cl_ufopedia.c:440
-#, fuzzy, c-format
+#, c-format
 msgid "%s:\tProtection: %i\n"
-msgstr "%s:\tBeskyttelse: %i\tStyrke: %i\n"
+msgstr "%s:\tBeskyttelse: %i\n"
 
 #: client/cl_ufopedia.c:465
 msgid "Error - could not find building"
@@ -9136,14 +9125,14 @@ msgid "Error - could not find aircraft"
 msgstr "Fejl - kunne ikke finde luftfartøj"
 
 #: client/cl_ufopedia.c:570
-#, fuzzy, c-format
+#, c-format
 msgid "%s:\t%i\n"
-msgstr "%s\t%i\n"
+msgstr "%s:\t%i\n"
 
 #: client/cl_ufopedia.c:577
-#, fuzzy, c-format
+#, c-format
 msgid "Max. soldiers:\t%i\n"
-msgstr "Maks soldater per hold:\t%s\n"
+msgstr "Maks soldater::\t%i\n"
 
 #: client/cl_ufopedia.c:677
 msgid "Proposal: "
@@ -9353,16 +9342,13 @@ msgid "Take a screenshot"
 msgstr "Tag et skærmbillede"
 
 #: po/OTHER_STRINGS:13
-#, fuzzy
 msgid "Base is under attack."
-msgstr "Base er under angreb"
+msgstr "Base er under angreb."
 
 #: po/OTHER_STRINGS:14
 msgid "Crashed Alien Ship. Secure the area."
-msgstr ""
+msgstr "Nedstyrtet rumvæsenfly. Gør området sikkert."
 
-#~ msgid "Mixing Rate:"
-#~ msgstr "Mixrate:"
 
 #~ msgid "The aliens begin their invasion ..."
 #~ msgstr "Rumvæsenerne begynder deres invasion ..."
@@ -9384,30 +9370,6 @@ msgstr ""
 
 #~ msgid "%s\t%i / %i\n"
 #~ msgstr "%s\t%i / %i\n"
-
-#~ msgid "Fuel:\t%i\n"
-#~ msgstr "Brændstof:\t%i\n"
-
-#~ msgid "Weapon:\t%s\n"
-#~ msgstr "Våben:\t%s\n"
-
-#~ msgid "Armour:\t%s\n"
-#~ msgstr "Vest:\t%s\n"
-
-#~ msgid "Equipment:\t%s\n"
-#~ msgstr "Udstyr:\t%s\n"
-
-#~ msgid "Sound renderer:"
-#~ msgstr "Lydgengiver:"
-
-#~ msgid "Triax UGV"
-#~ msgstr "Triax UGV"
-
-#~ msgid "ugv_triax_txt"
-#~ msgstr "<TODO>"
-
-#~ msgid "Triax"
-#~ msgstr "Triax"
 
 #~ msgid "By selling %s %s"
 #~ msgstr "Ved at sælge %s %s"
