@@ -618,7 +618,7 @@ typedef enum {
 
 /* state flags - transfered as short (so max 16 bits please) */
 /* public */
-#define STATE_PUBLIC		0x00FF
+#define STATE_PUBLIC		0x00FF	/**< mask to seperate private flags from events */
 #define STATE_DEAD			0x0003	/**< 0 alive, 1-3 different deaths @sa MAX_DEATH*/
 #define STATE_CROUCHED		0x0004
 #define STATE_PANIC			0x0008

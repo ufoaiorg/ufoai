@@ -829,10 +829,11 @@ void CL_DrawLineOfSight (le_t *watcher, le_t *target)
 }
 
 /**
- * @brief Adds an actor to the list of le's
+ * @brief Adds an hidden actor to the list of le's
  * @sa CL_ActorAppear
  * @note Actor is invisible until CL_ActorAppear (EV_ACTOR_APPEAR) was triggered
  * @note EV_ACTOR_ADD
+ * @sa G_SendInvisible
  */
 static void CL_ActorAdd (struct dbuffer *msg)
 {
@@ -856,7 +857,7 @@ static void CL_ActorAdd (struct dbuffer *msg)
 				&le->state, &le->fieldSize);
 
 	if (teamDefID < 0 || teamDefID > csi.numTeamDefs)
-		Com_Printf("CL_ActorAppear: Invalid teamDef index\n");
+		Com_Printf("CL_ActorAdd: Invalid teamDef index\n");
 	else
 		le->teamDef = &csi.teamDef[teamDefID];
 

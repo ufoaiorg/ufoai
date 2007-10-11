@@ -466,6 +466,7 @@ int G_TestVis (int team, edict_t * check, int flags)
  * send over the net
  * @note Call this for the first G_CheckVis call for every new actor or player
  * @sa G_CheckVis
+ * @sa CL_ActorAdd
  */
 void G_SendInvisible (int team)
 {
@@ -475,13 +476,16 @@ void G_SendInvisible (int team)
 	if (level.num_alive[team]) {
 		/* check visibility */
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
-			if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)) {
+			if (ent->inuse && ent->team != team
+			&& (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)) {
 				/* check if he's visible */
 				vis = G_TestVis(team, ent, qfalse);
 
 				/* not visible for this team - so add the le only */
 				if (!(vis & VIS_YES)) {
-					/* parsed in CL_ActorAppear */
+					/* parsed in CL_ActorAdd */
+					Com_DPrintf(DEBUG_GAME, "G_SendInvisible: team: %i - ent->team: %i, ent->pnum: %i\n",
+						team, ent->team, ent->pnum);
 					gi.AddEvent(G_TeamToPM(team), EV_ACTOR_ADD);
 					gi.WriteShort(ent->number);
 					gi.WriteByte(ent->team);
