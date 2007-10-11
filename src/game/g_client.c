@@ -466,6 +466,7 @@ int G_TestVis (int team, edict_t * check, int flags)
  * send over the net
  * @note Call this for the first G_CheckVis call for every new actor or player
  * @sa G_CheckVis
+ * @sa CL_ActorAdd
  */
 void G_SendInvisible (int team)
 {
