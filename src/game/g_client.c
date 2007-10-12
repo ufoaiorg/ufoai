@@ -482,8 +482,8 @@ void G_SendInvisible (player_t* player)
 				/* not visible for this team - so add the le only */
 				if (!(ent->visflags & (1 << team))) {
 					/* parsed in CL_ActorAdd */
-					Com_DPrintf(DEBUG_GAME, "G_SendInvisible: team: %i - ent->team: %i, ent->pnum: %i\n",
-						team, ent->team, ent->pnum);
+					Com_DPrintf(DEBUG_GAME, "G_SendInvisible: ent->player: %i - ent->team: %i (%s)\n",
+						ent->pnum, ent->team, ent->chr.name);
 					gi.AddEvent(P_MASK(player), EV_ACTOR_ADD);
 					gi.WriteShort(ent->number);
 					gi.WriteByte(ent->team);
@@ -2603,9 +2603,9 @@ static void G_SendVisibleEdicts (int team)
 
 	/* make every edict visible thats not an actor or a 2x2 unit */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++) {
-		/* don't add actors here */
 		if (!ent->inuse)
 			continue;
+		/* don't add actors here */
 		if (ent->type == ET_BREAKABLE || ent->type == ET_DOOR) {
 			gi.AddEvent(G_TeamToPM(team), EV_ENT_EDICT);
 			gi.WriteShort(ent->type);
@@ -2702,8 +2702,8 @@ qboolean G_ClientSpawn (player_t * player)
 
 	/* show visible actors and add invisible actor */
 	G_ClearVisFlags(player->pers.team);
-	G_SendInvisible(player);
 	G_CheckVis(NULL, qfalse);
+	G_SendInvisible(player);
 
 	/* set initial state to reaction fire activated for the other team */
 	if (sv_maxclients->integer > 1 && level.activeTeam != player->pers.team)
