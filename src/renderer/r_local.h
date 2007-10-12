@@ -56,7 +56,8 @@ typedef enum {
 	it_sprite,
 	it_wall,
 	it_pic,
-	it_wrappic
+	it_wrappic,
+	it_static
 } imagetype_t;
 
 typedef struct image_s {

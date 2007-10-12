@@ -1878,6 +1878,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 
 /**
  * @brief Any image that was not touched on this registration sequence will be freed
+ * @sa R_ShutdownImages
  */
 void R_FreeUnusedImages (void)
 {
@@ -1894,7 +1895,7 @@ void R_FreeUnusedImages (void)
 			continue;			/* used this sequence */
 		if (!image->registration_sequence)
 			continue;			/* free image_t slot */
-		if (image->type == it_pic || image->type == it_wrappic)
+		if (image->type == it_pic || image->type == it_wrappic || image->type == it_static)
 			continue;			/* fix this! don't free pics */
 		/* free it */
 		qglDeleteTextures(1, (GLuint *) &image->texnum);
@@ -1959,6 +1960,9 @@ void R_InitImages (void)
 	}
 }
 
+/**
+ * @sa R_FreeUnusedImages
+ */
 void R_ShutdownImages (void)
 {
 	int i;
@@ -1966,6 +1970,8 @@ void R_ShutdownImages (void)
 
 	R_CheckError();
 	for (i = 0, image = gltextures; i < numgltextures; i++, image++) {
+		if (!image->registration_sequence)
+			continue;			/* free image_t slot */
 		/* free it */
 		qglDeleteTextures(1, (GLuint *) &image->texnum);
 		R_CheckError();

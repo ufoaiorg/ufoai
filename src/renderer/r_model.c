@@ -362,11 +362,29 @@ static int static_mod_numknown;
  * @brief After all static models are loaded, switch the pool tag for these models
  * to not free them everytime R_ShutdownModels is called
  * @sa CL_InitAfter
+ * @sa R_FreeUnusedImages
  */
 void R_SwitchModelMemPoolTag (void)
 {
+	int i, j;
+	model_t* mod;
+
 	static_mod_numknown = mod_numknown;
 	Mem_ChangeTag(vid_modelPool, 0, MEM_TAG_STATIC_MODELS);
+
+	/* mark the static model textures as it_statis, thus R_FreeUnusedImages
+	 * won't free them */
+	for (i = 0, mod = mod_known; i < static_mod_numknown; i++, mod++) {
+		if (!mod->alias.num_skins)
+			Com_Printf("Model '%s' has no skins\n", mod->name);
+		for (j = 0; j < mod->alias.num_skins; j++) {
+			if (mod->alias.skins_img[j])
+				mod->alias.skins_img[j]->type = it_static;
+			else
+				Com_Printf("No skin for #%i of '%s'\n", j, mod->name);
+		}
+	}
+
 	Com_Printf("%i static models loaded\n", mod_numknown);
 }
 
