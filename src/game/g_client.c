@@ -2498,9 +2498,10 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 		/* don't send this for alien and civilian teams */
 		if (player->pers.team != TEAM_CIVILIAN
 		 && player->pers.team != TEAM_ALIEN) {
-			gi.AddEvent(PM_ALL, EV_ENDROUNDANNOUNCE);
+			gi.AddEvent(PM_ALL, EV_ENDROUNDANNOUNCE | EVENT_INSTANTLY);
 			gi.WriteByte(player->num);
 			gi.WriteByte(player->pers.team);
+			gi.EndEvents();
 		}
 	}
 	for (i = 0, p = game.players; i < game.sv_maxplayersperteam * 2; i++, p++)
