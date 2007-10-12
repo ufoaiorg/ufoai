@@ -500,6 +500,41 @@ void G_SendInvisible (player_t* player)
 }
 
 /**
+ * @brief
+ * @sa G_ClientSpawn
+ * @sa G_CheckVisTeam
+ * @sa G_AppearPerishEvent
+ */
+static int G_CheckVisPlayer (player_t* player, qboolean perish)
+{
+	int vis, i;
+	int status = 0;
+	edict_t* ent;
+
+	/* check visibility */
+	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+		if (ent->inuse) {
+			/* check if he's visible */
+			vis = G_TestVis(player->pers.team, ent, perish);
+
+			if (vis & VIS_CHANGE) {
+				ent->visflags ^= (1 << player->pers.team);
+				G_AppearPerishEvent(P_MASK(player), vis & VIS_YES, ent);
+
+				if (vis & VIS_YES) {
+					status |= VIS_APPEAR;
+					if ((ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)
+					&& !(ent->state & STATE_DEAD) && ent->team != TEAM_CIVILIAN)
+						status |= VIS_STOP;
+				} else
+					status |= VIS_PERISH;
+			}
+		}
+
+	return status;
+}
+
+/**
  * @brief Checks whether an edict appear/perishes for a specific team - also
  * updates the visflags each edict carries
  * @sa G_TestVis
@@ -517,6 +552,7 @@ void G_SendInvisible (player_t* player)
  * @sa G_TeamToPM
  * @sa G_TestVis
  * @sa G_AppearPerishEvent
+ * @sa G_CheckVisPlayer
  */
 int G_CheckVisTeam (int team, edict_t * check, qboolean perish)
 {
@@ -2702,7 +2738,7 @@ qboolean G_ClientSpawn (player_t * player)
 
 	/* show visible actors and add invisible actor */
 	G_ClearVisFlags(player->pers.team);
-	G_CheckVis(NULL, qfalse);
+	G_CheckVisPlayer(player, qfalse);
 	G_SendInvisible(player);
 
 	/* set initial state to reaction fire activated for the other team */

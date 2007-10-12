@@ -646,10 +646,10 @@ static qboolean SV_RunGameFrame (void)
 {
 	qboolean gameEnd = qfalse;
 
-	/* we always need to bump framenum, even if we */
-	/* don't run the world, otherwise the delta */
-	/* compression can get confused when a client */
-	/* has the "current" frame */
+	/* we always need to bump framenum, even if we
+	 * don't run the world, otherwise the delta
+	 * compression can get confused when a client
+	 * has the "current" frame */
 	sv.framenum++;
 
 	gameEnd = ge->RunFrame();
