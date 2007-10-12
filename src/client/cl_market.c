@@ -63,7 +63,7 @@ static void BS_MarketAircraftDescription (int aircraftID)
 	tech = RS_GetTechByProvided(aircraft->id);
 	assert(tech);
 	UP_AircraftDescription(tech);
-	Cvar_Set("mn_aircraftname", aircraft->name);
+	Cvar_Set("mn_aircraftname", _(aircraft->name));
 }
 /**
  * @brief

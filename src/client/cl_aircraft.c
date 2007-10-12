@@ -586,7 +586,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	Cvar_SetValue("mn_equipsoldierstate", CL_EquipSoldierState(aircraft));
 	Cvar_Set("mn_aircraftstatus", AIR_AircraftStatusToName(aircraft));
 	Cvar_Set("mn_aircraftinbase", AIR_IsAircraftInBase(aircraft) ? "1" : "0");
-	Cvar_Set("mn_aircraftname", va("%s (%i/%i)", aircraft->name, (aircraftID + 1), baseCurrent->numAircraftInBase));
+	Cvar_Set("mn_aircraftname", va("%s (%i/%i)", _(aircraft->name), (aircraftID + 1), baseCurrent->numAircraftInBase));
 	Cvar_Set("mn_aircraft_model", aircraft->model);
 
 	/* generate aircraft info text */
@@ -673,7 +673,7 @@ void AIR_NewAircraft (base_t *base, const char *name)
 
 		AIR_ResetAircraftTeam(aircraft);
 
-		Q_strncpyz(messageBuffer, va(_("You've got a new aircraft (a %s) in base %s"), aircraft->name, base->name), MAX_MESSAGE_TEXT);
+		Q_strncpyz(messageBuffer, va(_("You've got a new aircraft (a %s) in base %s"), _(aircraft->name), base->name), MAX_MESSAGE_TEXT);
 		MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 		Com_DPrintf(DEBUG_CLIENT, "Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
 		Vector2Copy(base->pos, aircraft->pos);
