@@ -326,7 +326,7 @@ qboolean G_FrustumVis(edict_t * from, vec3_t point);
 float G_ActorVis(vec3_t from, edict_t * check, qboolean full);
 void G_ClearVisFlags(int team);
 int G_CheckVis(edict_t * check, qboolean perish);
-void G_SendInvisible(int team);
+void G_SendInvisible(player_t* player);
 void G_GiveTimeUnits(int team);
 
 void G_AppearPerishEvent(int player_mask, int appear, edict_t * check);

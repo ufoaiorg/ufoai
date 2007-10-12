@@ -468,25 +468,23 @@ int G_TestVis (int team, edict_t * check, int flags)
  * @sa G_CheckVis
  * @sa CL_ActorAdd
  */
-void G_SendInvisible (int team)
+void G_SendInvisible (player_t* player)
 {
-	int i, vis;
+	int i;
 	edict_t* ent;
+	int team = player->pers.team;
 
 	if (level.num_alive[team]) {
 		/* check visibility */
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
 			if (ent->inuse && ent->team != team
 			&& (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)) {
-				/* check if he's visible */
-				vis = G_TestVis(team, ent, qfalse);
-
 				/* not visible for this team - so add the le only */
-				if (!(vis & VIS_YES)) {
+				if (!(ent->visflags & (1 << team))) {
 					/* parsed in CL_ActorAdd */
 					Com_DPrintf(DEBUG_GAME, "G_SendInvisible: team: %i - ent->team: %i, ent->pnum: %i\n",
 						team, ent->team, ent->pnum);
-					gi.AddEvent(G_TeamToPM(team), EV_ACTOR_ADD);
+					gi.AddEvent(P_MASK(player), EV_ACTOR_ADD);
 					gi.WriteShort(ent->number);
 					gi.WriteByte(ent->team);
 					gi.WriteByte(ent->chr.teamDefIndex);
@@ -2704,7 +2702,7 @@ qboolean G_ClientSpawn (player_t * player)
 
 	/* show visible actors and add invisible actor */
 	G_ClearVisFlags(player->pers.team);
-	G_SendInvisible(player->pers.team);
+	G_SendInvisible(player);
 	G_CheckVis(NULL, qfalse);
 
 	/* set initial state to reaction fire activated for the other team */

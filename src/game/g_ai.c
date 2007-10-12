@@ -727,8 +727,6 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 	}
 	/* show visible actors */
 	G_ClearVisFlags(team);
-	/* FIXME: Send this to every connected human player */
-	/*G_SendInvisible(team); */
 	G_CheckVis(NULL, qfalse);
 
 	/* give time */
