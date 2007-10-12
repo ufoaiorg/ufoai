@@ -2,7 +2,7 @@
 // name				start	end		fps
 
 // Showcase: All animations - mostly for checking.
-showcase			0		296		22
+showcase			0		367		22
 
 // The death aniamtions that are choosen randomly
 death1				0		27		18
@@ -44,9 +44,9 @@ cshoot_grenade		216		225		22
 
 // RPG (and blaster) animations
 stand3				226		226		1
-//walk3				313		328		22
+walk3				228		246		22
 cstand3				262		262		1
-//cwalk3				334		349		15
+cwalk3				264		281		22
 
 move_rpg			228		246		22
 shoot_rpg			247		261		22
@@ -54,15 +54,15 @@ cmove_rpg			264		281		22
 cshoot_rpg			282		296		22
 
 // Pistol shoot and move animations.
-//BLEND stand2				297		297		1
-//BLEND walk2				299		318		22
-//cstand2				209		210		1
-//cwalk2				212		227		15
+stand2				297		297		1
+walk2				299		318		22
+cstand2				333		333		1
+cwalk2				335		352		22
 
-//BLEND move_pistol			299		318		22
-//BLEND shoot_pistol		318		332		22
-//cmove_pistol		271		272		5
-//cshoot_pistol		273		277		5
+move_pistol			299		318		22
+shoot_pistol		318		332		22
+cmove_pistol		335		352		22
+cshoot_pistol		353		367		5
 
 // Akimbo pistols (xxx_pistol_d)
 //move_pistol_d		240		240		4
@@ -70,11 +70,11 @@ cshoot_rpg			282		296		22
 //cmove_pistol_d		280		281		10
 //cshoot_pistol_d		282		290		10
 
-// todo: how is this different to rifle?
-//move_biggun			146		146		4
-//shoot_biggun		147		151		10
-//cmove_biggun		172		173		10
-//cshoot_biggun		174		178		10
+// todo: right now we use the "rifle" animations (how is this different to rifle?)
+move_biggun			82		101		22
+shoot_biggun		119		133		22
+cmove_biggun		136		153		22
+cshoot_biggun		154		168		22
 
 // Melee attack and move animations.
 //move_melee			155		155		4
