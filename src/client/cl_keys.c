@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 char key_lines[MAXKEYLINES][MAXCMDLINE];
 int key_linepos;
-static qboolean shift_down = qfalse;
+qboolean shift_down;
 
 static int key_insert = 1;
 

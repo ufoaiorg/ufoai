@@ -49,6 +49,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 extern pos3_t mousePendPos;
 extern mouseRepeat_t mouseRepeat;
+extern qboolean shift_down;
 
 /* power of two please */
 #define MAX_KEYQ 64
@@ -1490,6 +1491,9 @@ static int IN_TranslateKey (SDL_keysym *keysym, int *key)
 		keyq_head = (keyq_head + 1) & (MAX_KEYQ - 1); \
 	}
 
+/**
+ * @sa CL_Frame
+ */
 void IN_Frame (void)
 {
 	int key = -1, mouse_buttonstate, p = 0;
@@ -1581,6 +1585,11 @@ void IN_Frame (void)
 				break; /* ignore this key */
 			}
 
+			if (event.key.keysym.mod & KMOD_CAPS)
+				shift_down = qtrue;
+			else
+				shift_down = qfalse;
+
 			if (event.key.keysym.mod & KMOD_CTRL && event.key.keysym.sym == SDLK_g) {
 				SDL_GrabMode gm = SDL_WM_GrabInput(SDL_GRAB_QUERY);
 				Cvar_SetValue("vid_grabmouse", (gm == SDL_GRAB_ON) ? 0 : 1);
@@ -1609,6 +1618,9 @@ void IN_Frame (void)
 	}
 }
 
+/**
+ * @sa CL_InitLocal
+ */
 void IN_Init (void)
 {
 	/* other cvars */
@@ -1677,8 +1689,12 @@ void IN_Init (void)
 	Cmd_AddCommand("cameramode", CL_CameraMode_f, _("Toggle first-person/third-person camera mode"));
 
 	mousePosX = mousePosY = 0.0;
+	shift_down = qfalse;
 }
 
+/**
+ * @sa CL_SendCommand
+ */
 void IN_SendKeyEvents (void)
 {
 	while (keyq_head != keyq_tail) {
