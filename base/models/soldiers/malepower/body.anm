@@ -4,6 +4,7 @@
 // Showcase: All animations - mostly for checking.
 showcase			0		296		22
 
+// The death aniamtions that are choosen randomly
 death1				0		27		18
 dead1				27		27		1
 death2				28		46		18
@@ -11,11 +12,19 @@ dead2				46		46		1
 death3				47		59		18
 dead3				59		59		1
 
+// Standing and walking with nothing in hands (sometime used for grenades and similar stuff)
 stand0				60		60		1
 walk0				63		81		22
 cstand0				62		62		1
 cwalk0				101		118		15
 
+// Item use&move animations
+//move_item			263		263		4
+//shoot_item			264		268		10
+//cmove_item			303		304		10
+//cshoot_item			305		309		10
+
+// Rifle animations
 stand1				61		61		1
 walk1				82		101		22
 cstand1				115		116		1
@@ -26,12 +35,14 @@ shoot_rifle			119		133		22
 cmove_rifle			136		153		22
 cshoot_rifle			154		168		22
 
-// Throw and walk aniamtions for grenades and similar items.
+// Throw and walk animations for grenades and similar items.
+// "Standing" with grenades uses stand0 etc...
 move_grenade		169		187		22
 shoot_grenade		188		197		22
 cmove_grenade		198		215		22
 cshoot_grenade		216		225		22
 
+// RPG (and blaster) animations
 stand3				226		226		1
 //walk3				313		328		22
 cstand3				262		262		1
@@ -41,6 +52,23 @@ move_rpg			228		246		22
 shoot_rpg			247		261		22
 cmove_rpg			264		281		22
 cshoot_rpg			282		296		22
+
+// Pistol shoot and move animations.
+//BLEND stand2				297		297		1
+//BLEND walk2				299		318		22
+//cstand2				209		210		1
+//cwalk2				212		227		15
+
+//BLEND move_pistol			299		318		22
+//BLEND shoot_pistol		318		332		22
+//cmove_pistol		271		272		5
+//cshoot_pistol		273		277		5
+
+// Akimbo pistols (xxx_pistol_d)
+//move_pistol_d		240		240		4
+//shoot_pistol_d		241		249		10
+//cmove_pistol_d		280		281		10
+//cshoot_pistol_d		282		290		10
 
 // todo: how is this different to rifle?
 //move_biggun			146		146		4
@@ -54,26 +82,7 @@ cshoot_rpg			282		296		22
 //cmove_melee			181		182		10
 //cshoot_melee		183		187		10
 
-//stand2				189		190		1
-//walk2				191		206		22
-//cstand2				209		210		1
-//cwalk2				212		227		15
 
-//move_pistol			231		231		10
-//shoot_pistol		232		236		5
-//cmove_pistol		271		272		5
-//cshoot_pistol		273		277		5
-
-// Akimbo pistols (xxx_pistol_d)
-//move_pistol_d		240		240		4
-//shoot_pistol_d		241		249		10
-//cmove_pistol_d		280		281		10
-//cshoot_pistol_d		282		290		10
-
-//move_item			263		263		4
-//shoot_item			264		268		10
-//cmove_item			303		304		10
-//cshoot_item			305		309		10
 
 stand_menu			60		60		1
 //panic0				370		371		1
