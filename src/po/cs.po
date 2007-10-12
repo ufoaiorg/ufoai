@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-10-12 20:21+0200\n"
-"PO-Revision-Date: 2007-10-12 20:17+0100\n"
+"POT-Creation-Date: 2007-10-12 21:49+0200\n"
+"PO-Revision-Date: 2007-10-12 21:41+0100\n"
 "Last-Translator: Lubomír Bláha <tritol@trilogic.cz>\n"
 "Language-Team: čeština <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -263,7 +263,7 @@ msgstr "Obrana základny: Raketa TR-20"
 
 #: ../base/ufos/armour.ufo:12
 msgid "normal"
-msgstr "Normální"
+msgstr "normální"
 
 #: ../base/ufos/armour.ufo:18
 msgid "steelblade"
@@ -275,31 +275,31 @@ msgstr "monomolekulární čepel"
 
 #: ../base/ufos/armour.ufo:20
 msgid "blast"
-msgstr "Výbušný"
+msgstr "výbušnina"
 
 #: ../base/ufos/armour.ufo:21
 msgid "fire"
-msgstr "Oheň"
+msgstr "oheň"
 
 #: ../base/ufos/armour.ufo:26
 msgid "shock"
-msgstr "Úder"
+msgstr "náraz"
 
 #: ../base/ufos/armour.ufo:27
 msgid "laser"
-msgstr "Laser"
+msgstr "laser"
 
 #: ../base/ufos/armour.ufo:32
 msgid "plasma"
-msgstr "Plasma"
+msgstr "plasma"
 
 #: ../base/ufos/armour.ufo:37
 msgid "particlebeam"
-msgstr "Částice"
+msgstr "částice"
 
 #: ../base/ufos/armour.ufo:42
 msgid "stun"
-msgstr "Omráčení"
+msgstr "omráčení"
 
 #: ../base/ufos/armour.ufo:52
 msgid "Combat Armour"
@@ -1372,7 +1372,7 @@ msgstr "Jméno:"
 
 #: ../base/ufos/menu_basesummary.ufo:122 ../base/ufos/menu_basesummary.ufo:433
 msgid "Aircraft:"
-msgstr "Letoun:"
+msgstr "Letouny:"
 
 #: ../base/ufos/menu_basesummary.ufo:129
 msgid "Interceptors:"
@@ -1384,7 +1384,7 @@ msgstr "Transportéry:"
 
 #: ../base/ufos/menu_basesummary.ufo:157
 msgid "Personnel"
-msgstr "Zaměstnanci"
+msgstr "Pracovníci"
 
 #: ../base/ufos/menu_basesummary.ufo:163
 msgid "Soldiers:"
@@ -1424,11 +1424,11 @@ msgstr "Celkem"
 
 #: ../base/ufos/menu_basesummary.ufo:407
 msgid "Bases:"
-msgstr "Základen:"
+msgstr "Základny:"
 
 #: ../base/ufos/menu_basesummary.ufo:420
 msgid "Personnel:"
-msgstr "Zaměstnanci:"
+msgstr "Pracovníci:"
 
 #: ../base/ufos/menu_buy.ufo:98 ../base/ufos/menu_buy.ufo:104
 #: ../base/ufos/menu_buy.ufo:110 ../base/ufos/menu_buy.ufo:116
@@ -1548,12 +1548,12 @@ msgstr "Záložní"
 
 #: ../base/ufos/menu_buy.ufo:1362 ../base/ufos/menu_production.ufo:389
 msgid "Show miscellaneous equipment"
-msgstr "Ukázat ostatní vybavení"
+msgstr "Ukázat různé vybavení"
 
 #: ../base/ufos/menu_buy.ufo:1377 ../base/ufos/menu_production.ufo:404
 #: ../base/ufos/menu_team.ufo:1364
 msgid "Misc"
-msgstr "Ostatní"
+msgstr "Různé"
 
 #: ../base/ufos/menu_buy.ufo:1382 ../base/ufos/menu_production.ufo:409
 msgid "Show armour"
@@ -3142,7 +3142,7 @@ msgstr "Základen"
 
 #: ../base/ufos/menu_stats.ufo:97 ../base/ufos/menu_transfer.ufo:227
 msgid "Employees"
-msgstr "Zaměstnanců"
+msgstr "Zaměstnanci"
 
 #: ../base/ufos/menu_stats.ufo:114
 msgid "Costs"
@@ -3248,7 +3248,7 @@ msgstr "Ukázat záložní zbraně na skladě"
 
 #: ../base/ufos/menu_team.ufo:1349
 msgid "Show miscellaneous equipment in store"
-msgstr "Ukázat ostatní vybavení na skladě"
+msgstr "Ukázat různé vybavení na skladě"
 
 #: ../base/ufos/menu_team.ufo:1369
 msgid "Show armour in store"
@@ -15205,7 +15205,7 @@ msgstr "Komplex cizáckých cel"
 
 #: client/cl_basesummary.c:362
 msgid "Miscellaneous"
-msgstr "Ostatní"
+msgstr "Různé"
 
 #: client/cl_basesummary.c:374
 msgid "Command Center"
@@ -16189,7 +16189,7 @@ msgstr "Není přiřazena žádná položka.\n"
 #: client/cl_mapfightequip.c:861
 #, c-format
 msgid "This slot is for %s or smaller items."
-msgstr "Tato pozice je pro %s nebo menší položky."
+msgstr "Položka vhodná do této pozice: %s nebo menší."
 
 #: client/cl_mapfightequip.c:866
 msgid "This item is functional.\n"
@@ -17368,7 +17368,7 @@ msgstr "Přesnost"
 
 #: client/cl_ufopedia.c:194
 msgid "Fuel size"
-msgstr "Velikost palivové nádrže"
+msgstr "Objem paliva"
 
 #: client/cl_ufopedia.c:197
 msgid "Weapon range"
@@ -17467,11 +17467,11 @@ msgstr "Chyba - budovu nelze najít"
 #: client/cl_ufopedia.c:467
 #, c-format
 msgid "Depends:\t%s\n"
-msgstr "Závisí na:\t%s\n"
+msgstr "Závislosti:\t%s\n"
 
 #: client/cl_ufopedia.c:467
 msgid "None"
-msgstr "Žádný"
+msgstr "Žádné"
 
 #: client/cl_ufopedia.c:468
 #, c-format
