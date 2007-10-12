@@ -340,7 +340,7 @@ menu checkcvars
 		pos		"320 480"
 		cvar	"*cvar s_language"
 		image	"menu/selectbox_green"
-		size	"100 20"
+		size	"130 20"
 		color	"0.6 0.6 0.6 0.3"
 		// will be filled in CL_LanguageInit
 	}
