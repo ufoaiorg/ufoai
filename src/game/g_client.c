@@ -468,25 +468,23 @@ int G_TestVis (int team, edict_t * check, int flags)
  * @sa G_CheckVis
  * @sa CL_ActorAdd
  */
-void G_SendInvisible (int team)
+void G_SendInvisible (player_t* player)
 {
-	int i, vis;
+	int i;
 	edict_t* ent;
+	int team = player->pers.team;
 
 	if (level.num_alive[team]) {
 		/* check visibility */
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
 			if (ent->inuse && ent->team != team
 			&& (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)) {
-				/* check if he's visible */
-				vis = G_TestVis(team, ent, qfalse);
-
 				/* not visible for this team - so add the le only */
-				if (!(vis & VIS_YES)) {
+				if (!(ent->visflags & (1 << team))) {
 					/* parsed in CL_ActorAdd */
-					Com_DPrintf(DEBUG_GAME, "G_SendInvisible: team: %i - ent->team: %i, ent->pnum: %i\n",
-						team, ent->team, ent->pnum);
-					gi.AddEvent(G_TeamToPM(team), EV_ACTOR_ADD);
+					Com_DPrintf(DEBUG_GAME, "G_SendInvisible: ent->player: %i - ent->team: %i (%s)\n",
+						ent->pnum, ent->team, ent->chr.name);
+					gi.AddEvent(P_MASK(player), EV_ACTOR_ADD);
 					gi.WriteShort(ent->number);
 					gi.WriteByte(ent->team);
 					gi.WriteByte(ent->chr.teamDefIndex);
@@ -499,6 +497,41 @@ void G_SendInvisible (int team)
 			}
 		}
 	}
+}
+
+/**
+ * @brief
+ * @sa G_ClientSpawn
+ * @sa G_CheckVisTeam
+ * @sa G_AppearPerishEvent
+ */
+static int G_CheckVisPlayer (player_t* player, qboolean perish)
+{
+	int vis, i;
+	int status = 0;
+	edict_t* ent;
+
+	/* check visibility */
+	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+		if (ent->inuse) {
+			/* check if he's visible */
+			vis = G_TestVis(player->pers.team, ent, perish);
+
+			if (vis & VIS_CHANGE) {
+				ent->visflags ^= (1 << player->pers.team);
+				G_AppearPerishEvent(P_MASK(player), vis & VIS_YES, ent);
+
+				if (vis & VIS_YES) {
+					status |= VIS_APPEAR;
+					if ((ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)
+					&& !(ent->state & STATE_DEAD) && ent->team != TEAM_CIVILIAN)
+						status |= VIS_STOP;
+				} else
+					status |= VIS_PERISH;
+			}
+		}
+
+	return status;
 }
 
 /**
@@ -519,6 +552,7 @@ void G_SendInvisible (int team)
  * @sa G_TeamToPM
  * @sa G_TestVis
  * @sa G_AppearPerishEvent
+ * @sa G_CheckVisPlayer
  */
 int G_CheckVisTeam (int team, edict_t * check, qboolean perish)
 {
@@ -2605,9 +2639,9 @@ static void G_SendVisibleEdicts (int team)
 
 	/* make every edict visible thats not an actor or a 2x2 unit */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++) {
-		/* don't add actors here */
 		if (!ent->inuse)
 			continue;
+		/* don't add actors here */
 		if (ent->type == ET_BREAKABLE || ent->type == ET_DOOR) {
 			gi.AddEvent(G_TeamToPM(team), EV_ENT_EDICT);
 			gi.WriteShort(ent->type);
@@ -2704,8 +2738,8 @@ qboolean G_ClientSpawn (player_t * player)
 
 	/* show visible actors and add invisible actor */
 	G_ClearVisFlags(player->pers.team);
-	G_SendInvisible(player->pers.team);
-	G_CheckVis(NULL, qfalse);
+	G_CheckVisPlayer(player, qfalse);
+	G_SendInvisible(player);
 
 	/* set initial state to reaction fire activated for the other team */
 	if (sv_maxclients->integer > 1 && level.activeTeam != player->pers.team)

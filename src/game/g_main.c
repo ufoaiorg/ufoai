@@ -604,8 +604,8 @@ qboolean G_RunFrame (void)
 		/* It still happens that game results are send twice --- dangerous */
 
 		/* if the message gets lost, the game will not end
-		   until you kill someone else, so we'll try again later,
-		   but much later, so that the intermission animations can end */
+		 * until you kill someone else, so we'll try again later,
+		 * but much later, so that the intermission animations can end */
 		level.intermissionTime = level.time + 10.0;
 #endif
 		level.intermissionTime = 0.0;

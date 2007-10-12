@@ -1345,8 +1345,8 @@ static qboolean G_CanReactionFire (edict_t *ent, edict_t *target, char *reason)
 	}
 
 	/* If reaction fire is triggered by a friendly unit
-		and the shooter is still sane, don't shoot;
-		well, if the shooter isn't sane anymore... */
+	 * and the shooter is still sane, don't shoot;
+	 * well, if the shooter isn't sane anymore... */
 	if (target->team == TEAM_CIVILIAN || target->team == ent->team)
 		if (!(ent->state & STATE_SHAKEN) || (float) ent->morale / mor_shaken->value > frand()) {
 #ifdef DEBUG_REACTION
@@ -1357,7 +1357,7 @@ static qboolean G_CanReactionFire (edict_t *ent, edict_t *target, char *reason)
 		}
 
 	/* Don't react in your own turn, trust your commander. Can't use
-		level.activeTeam, because this function touches it recursively. */
+	 * level.activeTeam, because this function touches it recursively. */
 	if (ent->team == turnTeam) {
 #ifdef DEBUG_REACTION
 		if (reason)

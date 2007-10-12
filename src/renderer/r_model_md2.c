@@ -161,6 +161,9 @@ void R_ModLoadAliasMD2Model (model_t * mod, void *buffer, int bufSize)
 	else if (pheader->num_frames > MD2_MAX_FRAMES)
 		Sys_Error("model %s has too many frames", mod->name);
 
+	mod->alias.num_frames = pheader->num_frames;
+	mod->alias.num_skins = pheader->num_skins;
+
 	/* load base s and t vertices (not used in gl version) */
 	pinst = (dstvert_t *) ((byte *) pinmodel + pheader->ofs_st);
 	poutst = (dstvert_t *) ((byte *) pheader + pheader->ofs_st);
