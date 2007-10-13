@@ -152,7 +152,7 @@ static int server_family, server_addrlen;
  */
 static inline void Sys_FreeAddrInfo (struct addrinfo *res)
 {
-	if (win98 || win2k) {
+	if (s_win95 || s_win2k) {
 		struct addrinfo *list;
 		for (list = res; list != NULL;) {
 			if (list->ai_addr)
@@ -184,7 +184,7 @@ static inline void Sys_FreeAddrInfo (struct addrinfo *res)
 static inline int Sys_GetAddrInfo (const char *node, const char *service,
 	const struct addrinfo *hints, struct addrinfo **res)
 {
-	if (win98 || win2k) { /* dirty implementation for windows <= w2k */
+	if (s_win95 || s_win2k) { /* dirty implementation for windows <= w2k */
 		struct addrinfo Result; /*inet_addr*/
 		struct sockaddr_in Saddr_in;
 
@@ -303,7 +303,7 @@ static inline int Sys_GetNameInfo (const struct sockaddr *sa, socklen_t salen,
 	char *host, size_t hostlen, char *serv, size_t servlen, int flags)
 {
 	/* dirty implementation for windows <= w2k */
-	if (win98 || win2k) {
+	if (s_win95 || s_win2k) {
 		struct sockaddr_in * ptsock = (struct sockaddr_in *)sa;
 
 		/*we don't handle those flags (laziness issue)*/
