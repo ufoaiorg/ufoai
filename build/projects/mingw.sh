@@ -1,4 +1,4 @@
-#!/bin/bash
+ff#!/bin/bash
 
 stop_on_error=1
 init=1
@@ -149,7 +149,7 @@ fi
 echo "========================================"
 echo " FREETYPE"
 echo "========================================"
-version="2.1.8"
+version="2.3.5"
 download http://heanet.dl.sourceforge.net/sourceforge/gnuwin32/ freetype-$version-lib.zip
 any2deb mingw32-freetype-dev $version freetype-$version-lib.zip /usr/i586-mingw32msvc >> /dev/null
 if [ "$dont_install" -ne "1" ]
@@ -168,7 +168,7 @@ fi
 echo "========================================"
 echo " SDL"
 echo "========================================"
-version="1.2.11"
+version="1.2.12"
 download http://www.libsdl.org/release/ SDL-devel-$version-mingw32.tar.gz
 tar -xz -f SDL-devel-$version-mingw32.tar.gz
 mkdir -p build-sdl/usr/i586-mingw32msvc
@@ -197,7 +197,7 @@ fi
 echo "========================================"
 echo " SDLTTF"
 echo "========================================"
-version="2.0.8"
+version="2.0.9"
 #beware the -1
 #needed for dpkg version string - otherwise the package name would be wrong
 download http://cefiro.homelinux.org/resources/files/SDL_ttf/ SDL_ttf-$version-1-i386-mingw32.tar.gz
@@ -216,36 +216,19 @@ then
 fi
 
 echo "========================================"
-echo " LIBOGG"
+echo " SDLMIXER"
 echo "========================================"
-version="1.1.3"
-download http://oss.netfarm.it/mplayer/pkgs/ libogg-mingw32-$version.tar.gz
-any2deb mingw32-libogg-dev $version libogg-mingw32-$version.tar.gz /usr/i586-mingw32msvc >> /dev/null
+version="1.2.8"
+#beware the -1
+#needed for dpkg version string - otherwise the package name would be wrong
+download http://cefiro.homelinux.org/resources/files/SDL_mixer/ SDL_mixer-$version-1-i386-mingw32.tar.gz
+any2deb mingw32-libsdl-mixer-dev $version SDL_mixer-$version-1-i386-mingw32.tar.gz /usr/i586-mingw32msvc >> /dev/null
 if [ "$dont_install" -ne "1" ]
 then
-	dpkg -i mingw32-libogg-dev_$version-2_all.deb
+	dpkg -i mingw32-libsdl-mixer-dev_$version-2_all.deb
 	if [ $? -ne 0 ]
 	then
-		echo "Fatal error with dpkg (libogg)"
-		if [ "$stop_on_error" -eq "1" ]
-		then
-			exit 1
-		fi
-	fi
-fi
-
-echo "========================================"
-echo " LIBVORBIS"
-echo "========================================"
-version="1.1.2"
-download http://oss.netfarm.it/mplayer/pkgs/ libvorbis-mingw32-$version.tar.gz
-any2deb mingw32-libvorbis-dev $version libvorbis-mingw32-$version.tar.gz /usr/i586-mingw32msvc >> /dev/null
-if [ "$dont_install" -ne "1" ]
-then
-	dpkg -i mingw32-libvorbis-dev_$version-2_all.deb
-	if [ $? -ne 0 ]
-	then
-		echo "Fatal error with dpkg (libvorbis)"
+		echo "Fatal error with dpkg (libsdl-mixer)"
 		if [ "$stop_on_error" -eq "1" ]
 		then
 			exit 1
@@ -256,10 +239,9 @@ fi
 echo "========================================"
 echo " LIBCURL"
 echo "========================================"
-version="7.16.2"
+version="7.17.0"
 download http://curl.haxx.se/download/libcurl-$version-win32-nossl.zip
-#FIXME convert into tar.gz
-any2deb mingw32-libcurl-dev $version libcurl-mingw32-$version.tar.gz /usr/i586-mingw32msvc >> /dev/null
+any2deb mingw32-libcurl-dev $version libcurl-mingw32-$version.zip /usr/i586-mingw32msvc >> /dev/null
 if [ "$dont_install" -ne "1" ]
 then
 	dpkg -i mingw32-libcurl-dev_$version-2_all.deb
