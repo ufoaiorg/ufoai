@@ -768,7 +768,8 @@ static void RS_ResearchDisplayInfo (void)
 
 	/* Display laboratories limits. */
 	Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Laboratory space (used/all): %i/%i"),
-	baseCurrent->capacities[CAP_LABSPACE].max, baseCurrent->capacities[CAP_LABSPACE].cur);
+		baseCurrent->capacities[CAP_LABSPACE].cur,
+		baseCurrent->capacities[CAP_LABSPACE].max);
 	Cvar_Set("mn_research_labs", tmpbuf);
 
 	/* Display scientists amounts. */
