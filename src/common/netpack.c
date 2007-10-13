@@ -64,7 +64,7 @@ void NET_WriteRawString (struct dbuffer *buf, const char *str)
 
 void NET_WriteCoord (struct dbuffer *buf, float f)
 {
-		NET_WriteLong(buf, (int) (f * 32));
+	NET_WriteLong(buf, (int) (f * 32));
 }
 
 /**
@@ -72,8 +72,8 @@ void NET_WriteCoord (struct dbuffer *buf, float f)
  */
 void NET_Write2Pos (struct dbuffer *buf, vec2_t pos)
 {
-		NET_WriteLong(buf, (long) (pos[0] * 32.));
-		NET_WriteLong(buf, (long) (pos[1] * 32.));
+	NET_WriteLong(buf, (long) (pos[0] * 32.));
+	NET_WriteLong(buf, (long) (pos[1] * 32.));
 }
 
 /**
