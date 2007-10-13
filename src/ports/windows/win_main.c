@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static FARPROC procShell_NotifyIcon = NULL;
 static NOTIFYICONDATA pNdata;
 
-qboolean s_win95, s_winxp, s_vista;
+qboolean s_win95, s_win2k, s_winxp, s_vista;
 
 qboolean Minimized;
 
@@ -200,7 +200,9 @@ void Sys_Init (void)
 	else if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS) /* win95, 98, me */
 		s_win95 = qtrue;
 	else if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_NT) { /* win nt, xp */
-		if (vinfo.dwMajorVersion == 5)
+		if (vinfo.dwMajorVersion == 5 && vinfo.dwMinorVersion == 0)
+			s_win2k = qtrue;
+		else if (vinfo.dwMajorVersion == 5)
 			s_winxp = qtrue;
 		else if (vinfo.dwMajorVersion == 6)
 			s_vista = qtrue;
@@ -208,6 +210,8 @@ void Sys_Init (void)
 
 	if (s_win95)
 		sys_os = Cvar_Get("sys_os", "win95", CVAR_SERVERINFO, NULL);
+	else if (s_win2k)
+		sys_os = Cvar_Get("sys_os", "win2K", CVAR_SERVERINFO, NULL);
 	else if (s_winxp)
 		sys_os = Cvar_Get("sys_os", "winXP", CVAR_SERVERINFO, NULL);
 	else if (s_vista)

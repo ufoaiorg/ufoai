@@ -4,6 +4,8 @@
  * compatible with the getaddrinfo interface, with the exception of
  * broadcast_datagram() which must be amended for each protocol (and
  * currently supports only ipv4)
+ * This file includes partial implementation of freeaddrinfo, getaddrinfo and
+ * getnameinfo for windows 2k
  */
 
 /*
@@ -47,7 +49,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # define netStringError netStringErrorWin
 # define netCloseSocket closesocket
 # define gai_strerrorA netStringErrorWin
+extern qboolean s_win95, s_win2k; /* from win_main.c */
+static HINSTANCE netLib = NULL;
+typedef void (*PFreeAddrInfo)(struct addrinfo* res);
+typedef int (*PGetAddrInfo)(const char *node, const char *service,
+	const struct addrinfo *hints,struct addrinfo **res);
+typedef int (*PGetNameInfo)(const struct sockaddr *sa, socklen_t salen,
+	char *host, size_t hostlen, char *serv, size_t servlen, int flags);
+
+static PFreeAddrInfo FreeAddrInfo = NULL;
+static PGetAddrInfo GetAddrInfo = NULL;
+static PGetNameInfo GetNameInfo = NULL;
 #else
+# define Sys_GetAddrInfo getaddrinfo
+# define Sys_FreeAddrInfo freeaddrinfo
+# define Sys_GetNameInfo getnameinfo
 # define INVALID_SOCKET (-1)
 typedef int SOCKET;
 # include <sys/select.h>
@@ -77,6 +93,7 @@ typedef int SOCKET;
 #ifndef AI_ADDRCONFIG
 #define AI_ADDRCONFIG 0
 #endif
+
 
 static cvar_t* net_ipv4;
 
@@ -128,59 +145,264 @@ static stream_callback_func *server_func = NULL;
 static int server_socket = INVALID_SOCKET;
 static int server_family, server_addrlen;
 
-static int find_free_stream (void)
-{
-	static int start = 0;
-	int i;
-
-	for (i = 0; i < MAX_STREAMS; i++) {
-		int pos = (i + start) % MAX_STREAMS;
-		if (streams[pos] == NULL) {
-			start = (pos + 1) % MAX_STREAMS;
-			return pos;
-		}
-	}
-	return -1;
-}
-
-static int find_free_datagram_socket (void)
-{
-	static int start = 0;
-	int i;
-
-	for (i = 0; i < MAX_DATAGRAM_SOCKETS; i++) {
-		int pos = (i + start) % MAX_DATAGRAM_SOCKETS;
-		if (datagram_sockets[pos] == NULL) {
-			start = (pos + 1) % MAX_DATAGRAM_SOCKETS;
-			return pos;
-		}
-	}
-	return -1;
-}
-
-static struct net_stream *new_stream (int index)
-{
-	struct net_stream *s = malloc(sizeof(*s));
-	s->data = NULL;
-	s->loopback_peer = NULL;
-	s->loopback = qfalse;
-	s->closed = qfalse;
-	s->finished = qfalse;
-	s->ready = qfalse;
-	s->socket = INVALID_SOCKET;
-	s->inbound = NULL;
-	s->outbound = NULL;
-	s->index = index;
-	s->family = 0;
-	s->addrlen = 0;
-	s->func = NULL;
-	if (streams[index])
-		free_stream(streams[index]);
-	streams[index] = s;
-	return s;
-}
-
 #ifdef _WIN32
+/**
+ * @brief This function implements a freeaddrinfo function for
+ * windows systems which don't have it (other than vista and XP)
+ */
+static inline void Sys_FreeAddrInfo (struct addrinfo *res)
+{
+	if (s_win95 || s_win2k) {
+		struct addrinfo *list;
+		for (list = res; list != NULL;) {
+			if (list->ai_addr)
+				free(list->ai_addr);
+			if (list->ai_canonname)
+				free(list->ai_canonname);
+			res = list;
+			list = list->ai_next;
+			free(res);
+		}
+	} else {
+		/* need to dynamicly get the function adress otherwise binary
+		 * won't start under w2k and previous */
+		if(!netLib);
+			netLib = LoadLibrary("ws2_32.dll");
+		if (!FreeAddrInfo)
+			FreeAddrInfo = (PFreeAddrInfo)GetProcAddress(netLib, "freeaddrinfo");
+		if (!FreeAddrInfo)
+			Com_Printf("...couldn't find freeaddrinfo\n");
+		FreeAddrInfo(res);
+		return;
+	}
+}
+
+/**
+ * @brief This function implements a getaddrinfo function for
+ * windows systems which don't have it (like win2k)
+ */
+static inline int Sys_GetAddrInfo (const char *node, const char *service,
+	const struct addrinfo *hints, struct addrinfo **res)
+{
+	if (s_win95 || s_win2k) { /* dirty implementation for windows <= w2k */
+		struct addrinfo Result; /*inet_addr*/
+		struct sockaddr_in Saddr_in;
+
+		/*check that parameters are right ie those handled */
+		if (hints->ai_family != AF_INET) /*only IPV4 handled */
+			return EAI_FAIL;
+
+		/* General init */
+		Result.ai_flags = 0;
+		Result.ai_family = AF_INET;
+		Result.ai_addrlen = 0;
+		Result.ai_addr = NULL;
+		Result.ai_canonname = NULL;
+		Result.ai_next = NULL; /*only one address returned*/
+		Saddr_in.sin_family = AF_INET;
+
+		if (hints->ai_socktype == SOCK_STREAM) {
+			Result.ai_socktype = SOCK_STREAM;
+			Result.ai_protocol = IPPROTO_TCP;
+		} else if (hints->ai_socktype == SOCK_DGRAM) {
+			Result.ai_socktype = SOCK_DGRAM;
+			Result.ai_protocol = IPPROTO_UDP;
+		} else {
+			Com_Printf("Sys_GetAddrInfo : bad socktype requested\n");
+			return EAI_FAIL;
+		}
+
+		/* node address management */
+		if (node == NULL) { /* No nodename/ip specified */
+			if (hints->ai_flags & AI_PASSIVE)
+				Saddr_in.sin_addr.s_addr = INADDR_ANY; /* all local ip */
+			else
+				Saddr_in.sin_addr.s_addr = INADDR_LOOPBACK; /* Or loopback */
+		} else if (hints->ai_flags & AI_NUMERICHOST) { /* Node is ip address */
+			Saddr_in.sin_addr.s_addr = inet_addr(node);
+			if (INADDR_NONE == Saddr_in.sin_addr.s_addr) {
+				Com_Printf("Sys_GetAddrInfo : bad ip address\n");
+				return EAI_FAIL;
+			}
+		} else {/* node is an ip or nodename */
+			/* inet_addr is checking if it's a legitimate ip */
+			Saddr_in.sin_addr.s_addr = inet_addr(node);
+			if (INADDR_NONE == Saddr_in.sin_addr.s_addr) {
+				/* node is not an ip and inet_addr has failed */
+				struct hostent* host_info = NULL;
+				host_info = gethostbyname(node);
+				if (host_info == NULL) {
+					Com_Printf("Sys_GetAddrInfo : unable to resolve hostname %s\n",node);
+					return EAI_FAIL;
+				}
+				if (host_info->h_addrtype != AF_INET) {
+					/*paranoid check*/
+					Com_Printf("Sys_GetAddrInfo: only IPV4 is handled !\n");
+					return EAI_FAIL;
+				}
+
+				Saddr_in.sin_addr.s_addr = ((struct in_addr *)(host_info->h_addr_list[0]))->s_addr;
+				/* don't touch host_info, it's allocated&freed by windows */
+			}
+		}
+
+		/* Port management */
+		if (service == NULL)
+			Saddr_in.sin_port = 0; /* system will choose the port*/
+		else { /* AI_NUMERICSERV flag is unknown in windows so we have to test */
+			char * endpt = NULL;
+			Saddr_in.sin_port = strtoul(service, &endpt, 10);
+			if (endpt == NULL) /* should never happen */
+				return EAI_FAIL;
+			else if((*endpt == '\0') && (Saddr_in.sin_port != 0))
+				Saddr_in.sin_port = htons(Saddr_in.sin_port);
+			else { /* service is a name */
+				struct servent * servinfopt = NULL;
+				if (hints->ai_socktype == SOCK_STREAM)
+					servinfopt = getservbyname(service, "tcp");
+				else if (hints->ai_socktype == SOCK_DGRAM)
+					servinfopt = getservbyname(service, "udp");
+
+				if (servinfopt == NULL) {
+					Com_Printf("Sys_GetAddrInfo : unable to resolve port from service\n");
+					return EAI_FAIL;
+				} else
+					Saddr_in.sin_port = servinfopt->s_port;
+				/* don't touch servinfopt, it's allocated & freed by windows */
+			}
+		}
+
+		/* Copy of results */
+		*res = malloc(sizeof (struct addrinfo));
+		memcpy(*res, &Result, sizeof(struct addrinfo));
+		(*res)->ai_addrlen = sizeof(struct sockaddr_in);
+		(*res)->ai_addr = malloc(sizeof(struct sockaddr_in));
+		memcpy((*res)->ai_addr, &Saddr_in, sizeof(struct sockaddr_in));
+		return 0;
+	/* end of dirty implementation for windows <= w2k */
+	} else {
+		/* need to dynamicly get the function adress otherwise binary
+		 * won't start under w2k and previous */
+		if (!netLib);
+			netLib = LoadLibrary("ws2_32.dll");
+		if (!GetAddrInfo)
+			GetAddrInfo = (PGetAddrInfo)GetProcAddress(netLib, "getaddrinfo");
+		if (!GetAddrInfo) {
+			Com_Printf("...couldn't find getaddrinfo\n");
+			return EAI_FAIL;
+		}
+		return GetAddrInfo(node, service, hints, res);
+	}
+}
+
+/**
+ * @brief This function implements a GetNameInfo function for
+ * windows systems which don't have it (other than vista and XP)
+ */
+static inline int Sys_GetNameInfo (const struct sockaddr *sa, socklen_t salen,
+	char *host, size_t hostlen, char *serv, size_t servlen, int flags)
+{
+	/* dirty implementation for windows <= w2k */
+	if (s_win95 || s_win2k) {
+		struct sockaddr_in * ptsock = (struct sockaddr_in *)sa;
+
+		/*we don't handle those flags (laziness issue)*/
+		if ((flags & NI_NOFQDN) || (flags & NI_NAMEREQD)) {
+			Com_Printf("Sys_GetNameInfo: flags not handled\n");
+			return WSANO_RECOVERY;
+		}
+
+		if ((salen != sizeof(struct sockaddr_in)) || (ptsock->sin_family != AF_INET)) {
+			Com_Printf("Sys_GetNameInfo: Error only IPV4 is handled\n");
+			return WSANO_RECOVERY;
+		}
+
+		/* Build host string */
+		if (host != NULL) {/* otherwise nothing to do */
+			char * sipaddr = NULL;
+			if ((flags & NI_NUMERICHOST)){
+				/* we need to fill ip in host string */
+				sipaddr = inet_ntoa(ptsock->sin_addr);
+				if ((sipaddr == NULL) || (strlen(sipaddr) >= hostlen)) {
+					Com_Printf("Sys_GetNameInfo: host string too small or bad ip given\n");
+					return WSANO_RECOVERY;
+				}
+				strcpy(host,sipaddr);
+			} else {
+				/* we need the hostname */
+				PHOSTENT phostinfo = NULL;
+				phostinfo = gethostbyaddr((const char*) &(ptsock->sin_addr),
+					sizeof(struct in_addr), AF_INET);
+				if (phostinfo != NULL) {
+					if(strlen(phostinfo->h_name)>= hostlen) {
+						Com_Printf("Sys_GetNameInfo: host string too small\n");
+						return WSANO_RECOVERY;
+					}
+					strcpy(host,phostinfo->h_name);
+				} else {
+					/* let's put the ip in host string */
+					sipaddr = inet_ntoa(ptsock->sin_addr);
+					if ((sipaddr == NULL) || (strlen(sipaddr)>= hostlen)) {
+						Com_Printf("Sys_GetNameInfo: host string too small or bad ip given\n");
+						return WSANO_RECOVERY;
+					}
+					strcpy(host,sipaddr);
+				}
+			}
+		}/* End of Build host string */
+
+		/* Build serv string */
+		if (serv != NULL) {/* otherwise nothing to do */
+			if (flags & NI_NUMERICSERV){
+				/* we need to fill port number in serv string */
+				if(servlen < 6) {/* too small */
+					Com_Printf("Sys_GetNameInfo: service string too small\n");
+					return WSANO_RECOVERY;
+				}
+
+				sprintf(serv, "%u", ntohs(ptsock->sin_port));
+			} else {
+				struct servent * pservinfo = NULL;
+				if (NI_DGRAM & flags)
+					pservinfo = getservbyport(ptsock->sin_port, "udp");
+				else
+					pservinfo = getservbyport(ptsock->sin_port, "tcp");
+
+				if (pservinfo != NULL) {
+					if (servlen <= strlen(pservinfo->s_name)) {/* too small */
+						Com_Printf("Sys_GetNameInfo: service string too small\n");
+						return WSANO_RECOVERY;
+					}
+
+					strcpy(serv, pservinfo->s_name);
+				}
+				else {
+					/* we need to fill port number in serv string */
+					if (servlen < 6) { /* too small */
+						Com_Printf("Sys_GetNameInfo: service string too small\n");
+						return WSANO_RECOVERY;
+					}
+					sprintf(serv, "%u", ntohs(ptsock->sin_port));
+				}
+			}
+		}
+
+		return 0;
+	} else {
+		/* need to dynamicly get the function adress otherwise binary
+		 * won't start under w2k and previous */
+		if (!netLib);
+			netLib = LoadLibrary("ws2_32.dll");
+		if (!GetNameInfo)
+			GetNameInfo = (PGetNameInfo)GetProcAddress(netLib, "getnameinfo");
+		if (!GetNameInfo) {
+			Com_Printf("...couldn't find getnameinfo\n");
+			return EAI_FAIL;
+		}
+		return GetNameInfo(sa, salen, host, hostlen, serv, servlen, flags);
+	}
+}
+
 static const char *netStringErrorWin (int code)
 {
 	switch (code) {
@@ -233,6 +455,58 @@ static const char *netStringErrorWin (int code)
 	}
 }
 #endif
+
+static int find_free_stream (void)
+{
+	static int start = 0;
+	int i;
+
+	for (i = 0; i < MAX_STREAMS; i++) {
+		int pos = (i + start) % MAX_STREAMS;
+		if (streams[pos] == NULL) {
+			start = (pos + 1) % MAX_STREAMS;
+			return pos;
+		}
+	}
+	return -1;
+}
+
+static int find_free_datagram_socket (void)
+{
+	static int start = 0;
+	int i;
+
+	for (i = 0; i < MAX_DATAGRAM_SOCKETS; i++) {
+		int pos = (i + start) % MAX_DATAGRAM_SOCKETS;
+		if (datagram_sockets[pos] == NULL) {
+			start = (pos + 1) % MAX_DATAGRAM_SOCKETS;
+			return pos;
+		}
+	}
+	return -1;
+}
+
+static struct net_stream *new_stream (int index)
+{
+	struct net_stream *s = malloc(sizeof(*s));
+	s->data = NULL;
+	s->loopback_peer = NULL;
+	s->loopback = qfalse;
+	s->closed = qfalse;
+	s->finished = qfalse;
+	s->ready = qfalse;
+	s->socket = INVALID_SOCKET;
+	s->inbound = NULL;
+	s->outbound = NULL;
+	s->index = index;
+	s->family = 0;
+	s->addrlen = 0;
+	s->func = NULL;
+	if (streams[index])
+		free_stream(streams[index]);
+	streams[index] = s;
+	return s;
+}
 
 /**
  * @sa NET_Shutdown
@@ -364,7 +638,7 @@ void NET_Wait (int timeout)
 	memcpy(&write_fds_out, &write_fds, sizeof(write_fds_out));
 
 	/* select() won't notice that loopback streams are ready, so we'll
-	* eliminate the delay directly */
+	 * eliminate the delay directly */
 	if (loopback_ready)
 		timeout = 0;
 
@@ -576,7 +850,7 @@ struct net_stream *NET_Connect (const char *node, const char *service)
 	if (net_ipv4->integer)
 		hints.ai_family = AF_INET;
 
-	rc = getaddrinfo(node, service, &hints, &res);
+	rc = Sys_GetAddrInfo(node, service, &hints, &res);
 
 	if (rc != 0) {
 		Com_Printf("Failed to resolve host %s:%s: %s\n", node, service, gai_strerror(rc));
@@ -591,7 +865,7 @@ struct net_stream *NET_Connect (const char *node, const char *service)
 
 	s = NET_DoConnect(node, service, res, index);
 
-	freeaddrinfo(res);
+	Sys_FreeAddrInfo(res);
 	return s;
 }
 
@@ -757,7 +1031,7 @@ const char * stream_peer_name (struct net_stream *s, char *dst, int len, qboolea
 		if (getpeername(s->socket, (struct sockaddr *)buf, &addrlen) != 0)
 			return "(error)";
 
-		rc = getnameinfo((struct sockaddr *)buf, addrlen, node, sizeof(node), service, sizeof(service),
+		rc = Sys_GetNameInfo((struct sockaddr *)buf, addrlen, node, sizeof(node), service, sizeof(service),
 				NI_NUMERICHOST | NI_NUMERICSERV);
 		if (rc != 0) {
 			Com_Printf("Failed to convert sockaddr to string: %s\n", gai_strerror(rc));
@@ -853,7 +1127,7 @@ qboolean SV_Start (const char *node, const char *service, stream_callback_func *
 		if (net_ipv4->integer)
 			hints.ai_family = AF_INET;
 
-		rc = getaddrinfo(node, service, &hints, &res);
+		rc = Sys_GetAddrInfo(node, service, &hints, &res);
 
 		if (rc != 0) {
 			Com_Printf("Failed to resolve host %s:%s: %s\n", node ? node : "*", service, gai_strerror(rc));
@@ -867,8 +1141,7 @@ qboolean SV_Start (const char *node, const char *service, stream_callback_func *
 			server_running = qtrue;
 			server_func = func;
 		}
-
-		freeaddrinfo(res);
+		Sys_FreeAddrInfo(res);
 	} else {
 		/* Loopback server only */
 		server_running = qtrue;
@@ -969,7 +1242,7 @@ struct datagram_socket *new_datagram_socket (const char *node, const char *servi
 	if (net_ipv4->integer)
 		hints.ai_family = AF_INET;
 
-	rc = getaddrinfo(node, service, &hints, &res);
+	rc = Sys_GetAddrInfo(node, service, &hints, &res);
 
 	if (rc != 0) {
 		Com_Printf("Failed to resolve host %s:%s: %s\n", node ? node : "*", service, gai_strerror(rc));
@@ -980,7 +1253,7 @@ struct datagram_socket *new_datagram_socket (const char *node, const char *servi
 	if (s)
 		s->func = func;
 
-	freeaddrinfo(res);
+	Sys_FreeAddrInfo(res);
 	return s;
 }
 
@@ -1061,7 +1334,7 @@ void close_datagram_socket (struct datagram_socket *s)
  */
 void sockaddr_to_strings (struct datagram_socket *s, struct sockaddr *addr, char *node, size_t nodelen, char *service, size_t servicelen)
 {
-	int rc = getnameinfo(addr, s->addrlen, node, nodelen, service, servicelen,
+	int rc = Sys_GetNameInfo(addr, s->addrlen, node, nodelen, service, servicelen,
 			NI_NUMERICHOST | NI_NUMERICSERV | NI_DGRAM);
 	if (rc != 0) {
 		Com_Printf("Failed to convert sockaddr to string: %s\n", gai_strerror(rc));
