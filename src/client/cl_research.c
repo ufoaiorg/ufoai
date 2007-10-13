@@ -773,7 +773,8 @@ static void RS_ResearchDisplayInfo (void)
 
 	/* Display scientists amounts. */
 	Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Scientists (available/all): %i/%i"),
-	E_CountHired(baseCurrent, EMPL_SCIENTIST), E_CountUnassigned(baseCurrent, EMPL_SCIENTIST));
+		E_CountUnassigned(baseCurrent, EMPL_SCIENTIST),
+		E_CountHired(baseCurrent, EMPL_SCIENTIST));
 	Cvar_Set("mn_research_scis", tmpbuf);
 
 	Cvar_Set("mn_research_selbase", _("Not researched in any base."));
