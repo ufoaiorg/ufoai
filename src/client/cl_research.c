@@ -797,8 +797,10 @@ static void RS_ResearchDisplayInfo (void)
 			/* just in case the values got messed up */
 			tech->time = tech->overalltime;
 		}
+		Cvar_SetValue("mn_research_seltimebar", 100 - (tech->time * 100 / tech->overalltime));
 		Cvar_Set("mn_research_seltime", va(_("Progress: %.1f%%"), 100 - (tech->time * 100 / tech->overalltime)));
 	} else
+		Cvar_SetValue("mn_research_seltimebar", 0);
 		Cvar_Set("mn_research_seltime", _("Progress: Not available."));
 
 	switch (tech->statusResearch) {
