@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion CVS\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-10-10 11:03+0200\n"
+"POT-Creation-Date: 2007-10-14 12:22+0200\n"
 "PO-Revision-Date: 2007-10-10 13:31+0100\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
@@ -81,8 +81,11 @@ msgid "UFO - Scout"
 msgstr "Ufo - rekognoscering"
 
 #: ../base/maps/ufocrashd.ump:207 ../base/maps/ufocrashn.ump:206
-msgid "UFO - Figher"
-msgstr "Ufo - jager"
+#: ../base/ufos/aircraftmanagement.ufo:432 ../base/ufos/otheritems.ufo:50
+#: ../base/ufos/research.ufo:3112 ../base/ufos/research.ufo:3125
+#: ../base/ufos/research.ufo:3133
+msgid "UFO - Fighter"
+msgstr "Ufo - Jager"
 
 #: ../base/maps/ufocrashd.ump:218 ../base/maps/ufocrashn.ump:217
 #: ../base/ufos/aircraftmanagement.ufo:337 ../base/ufos/otheritems.ufo:88
@@ -177,12 +180,6 @@ msgstr "Condor U"
 #: ../base/ufos/aircraftmanagement.ufo:390
 msgid "Scout U"
 msgstr "Rekognosceringsfly U"
-
-#: ../base/ufos/aircraftmanagement.ufo:432 ../base/ufos/otheritems.ufo:50
-#: ../base/ufos/research.ufo:3112 ../base/ufos/research.ufo:3125
-#: ../base/ufos/research.ufo:3133
-msgid "UFO - Fighter"
-msgstr "Ufo - Jager"
 
 #: ../base/ufos/aircraftmanagement.ufo:433
 msgid "Fighter U"
@@ -317,12 +314,12 @@ msgstr "Nanosammensatvest"
 msgid "Power Armour"
 msgstr "Styrkevest"
 
-#: ../base/ufos/armour.ufo:480 ../base/ufos/research.ufo:2346
+#: ../base/ufos/armour.ufo:482 ../base/ufos/research.ufo:2346
 #: ../base/ufos/research.ufo:2354
 msgid "Alien Body Armour"
 msgstr "Rumvæsenvest"
 
-#: ../base/ufos/armour.ufo:544
+#: ../base/ufos/armour.ufo:546
 msgid "Medium Alien Armour"
 msgstr "Mellem rumvæsenvest"
 
@@ -603,14 +600,14 @@ msgstr "Thailandsk"
 msgid "No language"
 msgstr "Intet sprog"
 
-#: ../base/ufos/maps.ufo:160
+#: ../base/ufos/maps.ufo:295
 msgid ""
 "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the "
 "fields."
 msgstr ""
 "En bondegård omringet af marker og skure. En ufo er landet på en af markerne."
 
-#: ../base/ufos/maps.ufo:431
+#: ../base/ufos/maps.ufo:797
 msgid ""
 "A shelter that was built to house people in times of major disasters. Some "
 "internal blast doors may have been closed."
@@ -626,20 +623,20 @@ msgstr "Kors"
 msgid "Coin"
 msgstr "Mønt"
 
-#: ../base/ufos/medals.ufo:30 client/cl_employee.c:203
+#: ../base/ufos/medals.ufo:30 client/cl_employee.c:214
 msgid "Scientist"
 msgstr "Videnskabsmand"
 
-#: ../base/ufos/medals.ufo:37 client/cl_employee.c:207
+#: ../base/ufos/medals.ufo:37 client/cl_employee.c:218
 msgid "Medic"
 msgstr "Læge"
 
 #: ../base/ufos/medals.ufo:44 ../base/ufos/team_humans.ufo:502
-#: ../base/ufos/team_humans.ufo:523 client/cl_employee.c:209
+#: ../base/ufos/team_humans.ufo:523 client/cl_employee.c:220
 msgid "UGV"
 msgstr "UGV"
 
-#: ../base/ufos/medals.ufo:51 client/cl_employee.c:205
+#: ../base/ufos/medals.ufo:51 client/cl_employee.c:216
 msgid "Worker"
 msgstr "Arbejder"
 
@@ -903,7 +900,7 @@ msgstr "Aktion"
 #: ../base/ufos/menu_geoscape.ufo:829 ../base/ufos/menu_geoscape.ufo:879
 #: ../base/ufos/menu_geoscape.ufo:973 ../base/ufos/menu_geoscape.ufo:1043
 #: ../base/ufos/menu_geoscape.ufo:1104 ../base/ufos/menu_lostwon.ufo:387
-#: ../base/ufos/menu_lostwon.ufo:484 ../base/ufos/menu_multiplayer.ufo:1714
+#: ../base/ufos/menu_lostwon.ufo:484 ../base/ufos/menu_multiplayer.ufo:1725
 #: ../base/ufos/menu_options.ufo:438 ../base/ufos/menu_singleplayer.ufo:422
 msgid "Close this dialogue"
 msgstr "Luk denne besked"
@@ -947,14 +944,14 @@ msgstr "Producer luftfartøj"
 #: ../base/ufos/menu_basesummary.ufo:48 ../base/ufos/menu_buildings.ufo:100
 #: ../base/ufos/menu_buy.ufo:1176 ../base/ufos/menu_buy.ufo:2225
 #: ../base/ufos/menu_geoscape.ufo:107 ../base/ufos/menu_production.ufo:49
-#: ../base/ufos/menu_production.ufo:544 ../base/ufos/menu_research.ufo:1137
+#: ../base/ufos/menu_production.ufo:544 ../base/ufos/menu_research.ufo:1135
 msgid "CREDIT"
 msgstr "FINANSER"
 
 #: ../base/ufos/menu_aliencont.ufo:68 ../base/ufos/menu_basesummary.ufo:67
 #: ../base/ufos/menu_buildings.ufo:74 ../base/ufos/menu_buy.ufo:1423
-#: ../base/ufos/menu_hire.ufo:712 ../base/ufos/menu_production.ufo:477
-#: ../base/ufos/menu_research.ufo:1193 ../base/ufos/menu_transfer.ufo:312
+#: ../base/ufos/menu_hire.ufo:800 ../base/ufos/menu_production.ufo:477
+#: ../base/ufos/menu_research.ufo:1191 ../base/ufos/menu_transfer.ufo:312
 msgid "Back to baseview"
 msgstr "Tilbage til baseoverblik"
 
@@ -1241,7 +1238,7 @@ msgstr "Byg mindst en hangar"
 #: ../base/ufos/menu_bases.ufo:153 ../base/ufos/menu_buy.ufo:2283
 #: ../base/ufos/menu_geoscape.ufo:1012 ../base/ufos/menu_production.ufo:825
 #: ../base/ufos/menu_transfer.ufo:267 ../base/ufos/research.ufo:100
-#: client/cl_map.c:328
+#: client/cl_map.c:327
 msgid "Aircraft"
 msgstr "Luftfartøj"
 
@@ -1378,7 +1375,7 @@ msgstr "Næste base"
 
 #: ../base/ufos/menu_basesummary.ufo:108 ../base/ufos/menu_geoscape.ufo:704
 #: ../base/ufos/menu_geoscape.ufo:798 ../base/ufos/menu_geoscape.ufo:955
-#: ../base/ufos/menu_main.ufo:244 ../base/ufos/menu_multiplayer.ufo:692
+#: ../base/ufos/menu_main.ufo:244 ../base/ufos/menu_multiplayer.ufo:694
 #: ../base/ufos/menu_options.ufo:819
 msgid "Name:"
 msgstr "Navn:"
@@ -1875,7 +1872,7 @@ msgid "Description:"
 msgstr "Beskrivelse:"
 
 #: ../base/ufos/menu_geoscape.ufo:1117 ../base/ufos/menu_main.ufo:234
-#: ../base/ufos/menu_multiplayer.ufo:1727
+#: ../base/ufos/menu_multiplayer.ufo:1738
 msgid "OK"
 msgstr "Ok"
 
@@ -1896,102 +1893,102 @@ msgstr "Ansæt/Fyr"
 msgid "Rename your employee"
 msgstr "Giv nyt navn"
 
-#: ../base/ufos/menu_hire.ufo:452 ../base/ufos/menu_hospital.ufo:592
+#: ../base/ufos/menu_hire.ufo:455 ../base/ufos/menu_hospital.ufo:592
 #: ../base/ufos/menu_physdat.ufo:52 ../base/ufos/menu_team.ufo:863
 #: ../base/ufos/menu_team.ufo:1553
 msgid "Strength:"
 msgstr "Styrke:"
 
-#: ../base/ufos/menu_hire.ufo:465 ../base/ufos/menu_hospital.ufo:597
+#: ../base/ufos/menu_hire.ufo:476 ../base/ufos/menu_hospital.ufo:597
 #: ../base/ufos/menu_physdat.ufo:57 ../base/ufos/menu_ptleditor.ufo:48
 #: ../base/ufos/menu_team.ufo:868 ../base/ufos/menu_team.ufo:1558
 msgid "Speed:"
 msgstr "Fart:"
 
-#: ../base/ufos/menu_hire.ufo:479 ../base/ufos/menu_hospital.ufo:602
+#: ../base/ufos/menu_hire.ufo:498 ../base/ufos/menu_hospital.ufo:602
 #: ../base/ufos/menu_physdat.ufo:62 ../base/ufos/menu_team.ufo:873
 #: ../base/ufos/menu_team.ufo:1563
 msgid "Accuracy:"
 msgstr "Nøjagtighed:"
 
-#: ../base/ufos/menu_hire.ufo:493 ../base/ufos/menu_hospital.ufo:607
+#: ../base/ufos/menu_hire.ufo:520 ../base/ufos/menu_hospital.ufo:607
 #: ../base/ufos/menu_physdat.ufo:67 ../base/ufos/menu_team.ufo:878
 #: ../base/ufos/menu_team.ufo:1568
 msgid "Mind:"
 msgstr "Sind:"
 
-#: ../base/ufos/menu_hire.ufo:506 ../base/ufos/menu_hospital.ufo:612
+#: ../base/ufos/menu_hire.ufo:541 ../base/ufos/menu_hospital.ufo:612
 #: ../base/ufos/menu_physdat.ufo:72 ../base/ufos/menu_team.ufo:883
 #: ../base/ufos/menu_team.ufo:1573
 msgid "Close Combat:"
 msgstr "Nærkamp:"
 
-#: ../base/ufos/menu_hire.ufo:519 ../base/ufos/menu_hospital.ufo:617
+#: ../base/ufos/menu_hire.ufo:562 ../base/ufos/menu_hospital.ufo:617
 #: ../base/ufos/menu_physdat.ufo:77 ../base/ufos/menu_team.ufo:888
 #: ../base/ufos/menu_team.ufo:1578
 msgid "Heavy Weapons:"
 msgstr "Tunge våben:"
 
-#: ../base/ufos/menu_hire.ufo:532 ../base/ufos/menu_hospital.ufo:622
+#: ../base/ufos/menu_hire.ufo:583 ../base/ufos/menu_hospital.ufo:622
 #: ../base/ufos/menu_physdat.ufo:82 ../base/ufos/menu_team.ufo:893
 #: ../base/ufos/menu_team.ufo:1583
 msgid "Assault Weapons:"
 msgstr "Angrebsvåben:"
 
-#: ../base/ufos/menu_hire.ufo:545 ../base/ufos/menu_hospital.ufo:627
+#: ../base/ufos/menu_hire.ufo:604 ../base/ufos/menu_hospital.ufo:627
 #: ../base/ufos/menu_physdat.ufo:87 ../base/ufos/menu_team.ufo:898
 #: ../base/ufos/menu_team.ufo:1588
 msgid "Sniper Rifles:"
 msgstr "Snigskytterifler:"
 
-#: ../base/ufos/menu_hire.ufo:558 ../base/ufos/menu_hospital.ufo:632
+#: ../base/ufos/menu_hire.ufo:625 ../base/ufos/menu_hospital.ufo:632
 #: ../base/ufos/menu_physdat.ufo:92 ../base/ufos/menu_team.ufo:903
 #: ../base/ufos/menu_team.ufo:1593
 msgid "High-Explosives:"
 msgstr "Sprængladninger:"
 
-#: ../base/ufos/menu_hire.ufo:572 ../base/ufos/menu_hospital.ufo:637
+#: ../base/ufos/menu_hire.ufo:647 ../base/ufos/menu_hospital.ufo:637
 #: ../base/ufos/menu_team.ufo:908
 msgid "Health:"
 msgstr "Liv:"
 
-#: ../base/ufos/menu_hire.ufo:586 ../base/ufos/menu_team.ufo:922
+#: ../base/ufos/menu_hire.ufo:669 ../base/ufos/menu_team.ufo:922
 msgid "Missions Performed:"
 msgstr "Udførte missioner:"
 
-#: ../base/ufos/menu_hire.ufo:593 ../base/ufos/menu_team.ufo:928
+#: ../base/ufos/menu_hire.ufo:680 ../base/ufos/menu_team.ufo:928
 msgid "Enemies Killed:"
 msgstr "Fjender dræbt:"
 
-#: ../base/ufos/menu_hire.ufo:632
+#: ../base/ufos/menu_hire.ufo:720
 msgid "Hire soldiers"
 msgstr "Ansæt soldater"
 
-#: ../base/ufos/menu_hire.ufo:647
+#: ../base/ufos/menu_hire.ufo:735
 msgid "Soldiers"
 msgstr "Soldater"
 
-#: ../base/ufos/menu_hire.ufo:652
+#: ../base/ufos/menu_hire.ufo:740
 msgid "Hire scientists"
 msgstr "Ansæt videnskabsmænd"
 
-#: ../base/ufos/menu_hire.ufo:667
+#: ../base/ufos/menu_hire.ufo:755
 msgid "Scientists"
 msgstr "Videnskabsmænd"
 
-#: ../base/ufos/menu_hire.ufo:672
+#: ../base/ufos/menu_hire.ufo:760
 msgid "Hire workers"
 msgstr "Ansæt arbejdere"
 
-#: ../base/ufos/menu_hire.ufo:687
+#: ../base/ufos/menu_hire.ufo:775
 msgid "Workers"
 msgstr "Arbejdere"
 
-#: ../base/ufos/menu_hire.ufo:692
+#: ../base/ufos/menu_hire.ufo:780
 msgid "Hire medics"
 msgstr "Ansæt læger"
 
-#: ../base/ufos/menu_hire.ufo:707 ../base/ufos/menu_hospital.ufo:478
+#: ../base/ufos/menu_hire.ufo:795 ../base/ufos/menu_hospital.ufo:478
 msgid "Medics"
 msgstr "Læger"
 
@@ -2217,7 +2214,7 @@ msgstr "Bælte"
 msgid "Floor"
 msgstr "Gulv"
 
-#: ../base/ufos/menu_irc.ufo:47 ../base/ufos/menu_multiplayer.ufo:748
+#: ../base/ufos/menu_irc.ufo:47 ../base/ufos/menu_multiplayer.ufo:750
 #: ../base/ufos/menu_multiplayeringame.ufo:111
 msgid "Lobby"
 msgstr "Forhal"
@@ -2402,307 +2399,307 @@ msgstr "Vis dagens tip"
 msgid "Next"
 msgstr "Næste"
 
-#: ../base/ufos/menu_multiplayer.ufo:63
-msgid "Join"
-msgstr "Forbind"
-
-#: ../base/ufos/menu_multiplayer.ufo:83
-msgid "Create"
-msgstr "Opret"
-
-#: ../base/ufos/menu_multiplayer.ufo:103 ../base/ufos/menu_multiplayer.ufo:477
+#: ../base/ufos/menu_multiplayer.ufo:63 ../base/ufos/menu_multiplayer.ufo:479
 msgid "Team"
 msgstr "Hold"
 
-#: ../base/ufos/menu_multiplayer.ufo:236
+#: ../base/ufos/menu_multiplayer.ufo:83
+msgid "Join"
+msgstr "Forbind"
+
+#: ../base/ufos/menu_multiplayer.ufo:103
+msgid "Create"
+msgstr "Opret"
+
+#: ../base/ufos/menu_multiplayer.ufo:238
 msgid "Load team from current selected slot"
 msgstr "Hent hold fra den nuværende valgte plads"
 
-#: ../base/ufos/menu_multiplayer.ufo:247 ../base/ufos/menu_singleplayer.ufo:89
+#: ../base/ufos/menu_multiplayer.ufo:249 ../base/ufos/menu_singleplayer.ufo:89
 #: ../base/ufos/menu_singleplayer.ufo:516
 msgid "Load"
 msgstr "Hent"
 
-#: ../base/ufos/menu_multiplayer.ufo:256
+#: ../base/ufos/menu_multiplayer.ufo:258
 msgid "Save team to current selected slot"
 msgstr "Gem hold til nuværende valgt plads"
 
-#: ../base/ufos/menu_multiplayer.ufo:267
+#: ../base/ufos/menu_multiplayer.ufo:269
 #: ../base/ufos/menu_singleplayer.ufo:109
 #: ../base/ufos/menu_singleplayer.ufo:682
 msgid "Save"
 msgstr "Gem"
 
 # # in game
-#: ../base/ufos/menu_multiplayer.ufo:279
+#: ../base/ufos/menu_multiplayer.ufo:281
 msgid "Current Team"
 msgstr "Nuværende hold"
 
-#: ../base/ufos/menu_multiplayer.ufo:288
+#: ../base/ufos/menu_multiplayer.ufo:290
 msgid "Edit your team after loading"
 msgstr "Ændr dit hold efter hentning"
 
-#: ../base/ufos/menu_multiplayer.ufo:302
+#: ../base/ufos/menu_multiplayer.ufo:304
 msgid "Edit"
 msgstr "Ændr"
 
-#: ../base/ufos/menu_multiplayer.ufo:311
+#: ../base/ufos/menu_multiplayer.ufo:313
 msgid "Generate a new team"
 msgstr "Opret et nyt hold"
 
-#: ../base/ufos/menu_multiplayer.ufo:325
+#: ../base/ufos/menu_multiplayer.ufo:327
 msgid "New"
 msgstr "Nyt"
 
-#: ../base/ufos/menu_multiplayer.ufo:334
+#: ../base/ufos/menu_multiplayer.ufo:336
 msgid "Generate a team automatically"
 msgstr "Opret automatisk et hold"
 
-#: ../base/ufos/menu_multiplayer.ufo:349
+#: ../base/ufos/menu_multiplayer.ufo:351
 msgid "Auto"
 msgstr "Auto"
 
-#: ../base/ufos/menu_multiplayer.ufo:356
+#: ../base/ufos/menu_multiplayer.ufo:358
 msgid "Race:"
 msgstr "Race:"
 
-#: ../base/ufos/menu_multiplayer.ufo:386 ../base/ufos/menu_multiplayer.ufo:469
+#: ../base/ufos/menu_multiplayer.ufo:388 ../base/ufos/menu_multiplayer.ufo:471
 msgid "Name"
 msgstr "Navn"
 
-#: ../base/ufos/menu_multiplayer.ufo:461
+#: ../base/ufos/menu_multiplayer.ufo:463
 msgid "Userlist"
 msgstr "Brugerliste"
 
-#: ../base/ufos/menu_multiplayer.ufo:528 ../base/ufos/menu_multiplayer.ufo:793
+#: ../base/ufos/menu_multiplayer.ufo:530 ../base/ufos/menu_multiplayer.ufo:795
 msgid "Connect"
 msgstr "Forbind"
 
-#: ../base/ufos/menu_multiplayer.ufo:535
+#: ../base/ufos/menu_multiplayer.ufo:537
 msgid "Leave Serverbrowser"
 msgstr "Forlad servernetlæser"
 
-#: ../base/ufos/menu_multiplayer.ufo:560
+#: ../base/ufos/menu_multiplayer.ufo:562
 msgid "Bookmark"
 msgstr "Bogmærke"
 
-#: ../base/ufos/menu_multiplayer.ufo:583
+#: ../base/ufos/menu_multiplayer.ufo:585
 msgid "Serverfilter:"
 msgstr "Serverfilter:"
 
-#: ../base/ufos/menu_multiplayer.ufo:636 ../base/ufos/menu_multiplayer.ufo:846
+#: ../base/ufos/menu_multiplayer.ufo:638 ../base/ufos/menu_multiplayer.ufo:848
 msgid "Serverbrowser"
 msgstr "Servernetlæser"
 
-#: ../base/ufos/menu_multiplayer.ufo:662 ../base/ufos/menu_multiplayer.ufo:854
-#: ../base/ufos/menu_multiplayer.ufo:863
+#: ../base/ufos/menu_multiplayer.ufo:664 ../base/ufos/menu_multiplayer.ufo:856
+#: ../base/ufos/menu_multiplayer.ufo:865
 msgid "Bookmarks"
 msgstr "Bogmærker"
 
-#: ../base/ufos/menu_multiplayer.ufo:728
+#: ../base/ufos/menu_multiplayer.ufo:730
 msgid "Refresh"
 msgstr "Opdater"
 
-#: ../base/ufos/menu_multiplayer.ufo:760
+#: ../base/ufos/menu_multiplayer.ufo:762
 msgid "Connect to IP"
 msgstr "Forbind til IP"
 
-#: ../base/ufos/menu_multiplayer.ufo:869 ../base/ufos/menu_multiplayer.ufo:872
-#: ../base/ufos/menu_multiplayer.ufo:875 ../base/ufos/menu_multiplayer.ufo:878
-#: ../base/ufos/menu_multiplayer.ufo:881 ../base/ufos/menu_multiplayer.ufo:884
-#: ../base/ufos/menu_multiplayer.ufo:887 ../base/ufos/menu_multiplayer.ufo:890
-#: ../base/ufos/menu_multiplayer.ufo:893 ../base/ufos/menu_multiplayer.ufo:896
-#: ../base/ufos/menu_multiplayer.ufo:899 ../base/ufos/menu_multiplayer.ufo:902
-#: ../base/ufos/menu_multiplayer.ufo:905 ../base/ufos/menu_multiplayer.ufo:908
-#: ../base/ufos/menu_multiplayer.ufo:911 ../base/ufos/menu_multiplayer.ufo:914
+#: ../base/ufos/menu_multiplayer.ufo:871 ../base/ufos/menu_multiplayer.ufo:874
+#: ../base/ufos/menu_multiplayer.ufo:877 ../base/ufos/menu_multiplayer.ufo:880
+#: ../base/ufos/menu_multiplayer.ufo:883 ../base/ufos/menu_multiplayer.ufo:886
+#: ../base/ufos/menu_multiplayer.ufo:889 ../base/ufos/menu_multiplayer.ufo:892
+#: ../base/ufos/menu_multiplayer.ufo:895 ../base/ufos/menu_multiplayer.ufo:898
+#: ../base/ufos/menu_multiplayer.ufo:901 ../base/ufos/menu_multiplayer.ufo:904
+#: ../base/ufos/menu_multiplayer.ufo:907 ../base/ufos/menu_multiplayer.ufo:910
+#: ../base/ufos/menu_multiplayer.ufo:913 ../base/ufos/menu_multiplayer.ufo:916
 msgid "Delete this bookmark"
 msgstr "Slet dette bogmærke"
 
-#: ../base/ufos/menu_multiplayer.ufo:934
+#: ../base/ufos/menu_multiplayer.ufo:936
 msgid "Day version:"
 msgstr "Dag version:"
 
-#: ../base/ufos/menu_multiplayer.ufo:949
+#: ../base/ufos/menu_multiplayer.ufo:951
 msgid "Make this server public:"
 msgstr "Gør denne server offentlig:"
 
-#: ../base/ufos/menu_multiplayer.ufo:965
+#: ../base/ufos/menu_multiplayer.ufo:967
 msgid "Enable morale states:"
 msgstr "Slå moral til:"
 
-#: ../base/ufos/menu_multiplayer.ufo:980
+#: ../base/ufos/menu_multiplayer.ufo:982
 msgid "Gametype:"
 msgstr "Spiltype:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1019
+#: ../base/ufos/menu_multiplayer.ufo:1021
 msgid "Teamplay:"
 msgstr "Holdspil:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1034
+#: ../base/ufos/menu_multiplayer.ufo:1036
 msgid "Max. clients:"
 msgstr "Maks klienter:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1036
+#: ../base/ufos/menu_multiplayer.ufo:1038
 msgid "Sets the max allowed clients to connect"
 msgstr "Sætter maks tilladte klienter der kan slutte sig til"
 
-#: ../base/ufos/menu_multiplayer.ufo:1068
+#: ../base/ufos/menu_multiplayer.ufo:1070
 msgid "Max. soldiers per team:"
 msgstr "Maks soldater per hold:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1070
+#: ../base/ufos/menu_multiplayer.ufo:1072
 msgid "Sets the max allowed soldiers per team"
 msgstr "Sætter maks tilladte soldater per hold"
 
-#: ../base/ufos/menu_multiplayer.ufo:1102
+#: ../base/ufos/menu_multiplayer.ufo:1104
 msgid "Max. soldiers per player:"
 msgstr "Maks. soldater per spiller:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1104
+#: ../base/ufos/menu_multiplayer.ufo:1106
 msgid "Sets the max allowed soldiers per player when in teamplay"
 msgstr "Sætter det tilladte maks soldater per spiller i holdspil"
 
-#: ../base/ufos/menu_multiplayer.ufo:1137
+#: ../base/ufos/menu_multiplayer.ufo:1139
 msgid "Max. human players per team:"
 msgstr "Maks spillere per hold:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1170
+#: ../base/ufos/menu_multiplayer.ufo:1172
 msgid "Max. AI actors:"
 msgstr "Maks computerespillere:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1172
+#: ../base/ufos/menu_multiplayer.ufo:1174
 msgid "Max AI actors for teamplay mode"
 msgstr "Maks computerespillere i holdspil"
 
-#: ../base/ufos/menu_multiplayer.ufo:1204
+#: ../base/ufos/menu_multiplayer.ufo:1206
 msgid "AI autojoin:"
 msgstr "Automatisk computere:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1206
+#: ../base/ufos/menu_multiplayer.ufo:1208
 msgid "AI autojoin on free teams"
 msgstr "Computere automatisk på ledige hold"
 
-#: ../base/ufos/menu_multiplayer.ufo:1220
+#: ../base/ufos/menu_multiplayer.ufo:1222
 msgid "Server-Password:"
 msgstr "Serveradganskode:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1243
+#: ../base/ufos/menu_multiplayer.ufo:1245
 msgid "RCON-Password:"
 msgstr "RCON-adgangskode:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1266
+#: ../base/ufos/menu_multiplayer.ufo:1268
 msgid "Hostname:"
 msgstr "Værtsnavn:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1289
+#: ../base/ufos/menu_multiplayer.ufo:1291
 msgid "Map"
 msgstr "Kort"
 
-#: ../base/ufos/menu_multiplayer.ufo:1382
+#: ../base/ufos/menu_multiplayer.ufo:1393
 msgid "Start server"
 msgstr "Start server"
 
-#: ../base/ufos/menu_multiplayer.ufo:1432
+#: ../base/ufos/menu_multiplayer.ufo:1443
 msgid "Team selection"
 msgstr "Hold udvælgelse"
 
-#: ../base/ufos/menu_multiplayer.ufo:1441
+#: ../base/ufos/menu_multiplayer.ufo:1452
 msgid "Click the big button in the lower right corner when ready"
 msgstr "Klik på den store knap i det nederste højre hjørne når klar"
 
-#: ../base/ufos/menu_multiplayer.ufo:1477
+#: ../base/ufos/menu_multiplayer.ufo:1488
 msgid "Max. players per team"
 msgstr "Maks. spillere per hold"
 
-#: ../base/ufos/menu_multiplayer.ufo:1489
+#: ../base/ufos/menu_multiplayer.ufo:1500
 msgid "Max. teams for this map"
 msgstr "Maks hold til dette kort"
 
-#: ../base/ufos/menu_multiplayer.ufo:1501
+#: ../base/ufos/menu_multiplayer.ufo:1512
 msgid "Team preference:"
 msgstr "Hold indstillinger:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1512
+#: ../base/ufos/menu_multiplayer.ufo:1523
 msgid "Next free team"
 msgstr "Næste ledige hold"
 
-#: ../base/ufos/menu_multiplayer.ufo:1522
+#: ../base/ufos/menu_multiplayer.ufo:1533
 msgid "Previous free team"
 msgstr "Tidligere ledige hold"
 
-#: ../base/ufos/menu_multiplayer.ufo:1533
+#: ../base/ufos/menu_multiplayer.ufo:1544
 msgid "Finish the teamselection and start the game"
 msgstr "Afslut holdudvælgelsen og begynd spillet"
 
-#: ../base/ufos/menu_multiplayer.ufo:1551
+#: ../base/ufos/menu_multiplayer.ufo:1562
 msgid "Activate chat"
 msgstr "Aktiver snak"
 
-#: ../base/ufos/menu_multiplayer.ufo:1614
+#: ../base/ufos/menu_multiplayer.ufo:1625
 msgid "Please wait"
 msgstr "Vent venligst"
 
-#: ../base/ufos/menu_multiplayer.ufo:1621
+#: ../base/ufos/menu_multiplayer.ufo:1632
 msgid "Players connected, waiting for others"
 msgstr "Spillere forbundet, venter på de andre"
 
-#: ../base/ufos/menu_multiplayer.ufo:1634
+#: ../base/ufos/menu_multiplayer.ufo:1645
 msgid "Start the game even if not all teams have joined"
 msgstr "Start spillet selv om ikke alle hold er tilsluttet"
 
-#: ../base/ufos/menu_multiplayer.ufo:1648
+#: ../base/ufos/menu_multiplayer.ufo:1659
 msgid "Force start"
 msgstr "Fremprovoker start"
 
-#: ../base/ufos/menu_multiplayer.ufo:1686
+#: ../base/ufos/menu_multiplayer.ufo:1697
 msgid "Enter server password"
 msgstr "Indtast serveradgangskode"
 
-#: ../base/ufos/menu_multiplayer.ufo:1694
+#: ../base/ufos/menu_multiplayer.ufo:1705
 msgid "Password:"
 msgstr "Adgangskode:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1735
+#: ../base/ufos/menu_multiplayer.ufo:1746
 msgid "1on1"
 msgstr "1mod1"
 
-#: ../base/ufos/menu_multiplayer.ufo:1749
+#: ../base/ufos/menu_multiplayer.ufo:1760
 msgid "1on1on1"
 msgstr "1mod1mod1"
 
-#: ../base/ufos/menu_multiplayer.ufo:1763
+#: ../base/ufos/menu_multiplayer.ufo:1774
 msgid "2on2"
 msgstr "2mod2"
 
-#: ../base/ufos/menu_multiplayer.ufo:1777
+#: ../base/ufos/menu_multiplayer.ufo:1788
 msgid "2on2on2"
 msgstr "2mod2mod2"
 
-#: ../base/ufos/menu_multiplayer.ufo:1791
+#: ../base/ufos/menu_multiplayer.ufo:1802
 msgid "3on3"
 msgstr "3mod3"
 
-#: ../base/ufos/menu_multiplayer.ufo:1805
+#: ../base/ufos/menu_multiplayer.ufo:1816
 msgid "3on3on3"
 msgstr "3mod3mod3"
 
-#: ../base/ufos/menu_multiplayer.ufo:1819
+#: ../base/ufos/menu_multiplayer.ufo:1830
 msgid "4on4"
 msgstr "4mod4"
 
-#: ../base/ufos/menu_multiplayer.ufo:1833
+#: ../base/ufos/menu_multiplayer.ufo:1844
 msgid "4on4on4"
 msgstr "4mod4mod4"
 
-#: ../base/ufos/menu_multiplayer.ufo:1847
+#: ../base/ufos/menu_multiplayer.ufo:1858
 msgid "Coop 2 players"
 msgstr "2 samarbejdende"
 
-#: ../base/ufos/menu_multiplayer.ufo:1861
+#: ../base/ufos/menu_multiplayer.ufo:1872
 msgid "Coop 3 players"
 msgstr "3 samarbejdende"
 
-#: ../base/ufos/menu_multiplayer.ufo:1875
+#: ../base/ufos/menu_multiplayer.ufo:1886
 msgid "Coop 4 players"
 msgstr "4 samarbejdende"
 
@@ -2786,12 +2783,12 @@ msgstr "Gamma:"
 msgid "Low"
 msgstr "Lav"
 
-#: ../base/ufos/menu_options.ufo:360 client/cl_mapfightequip.c:1514
+#: ../base/ufos/menu_options.ufo:360 client/cl_mapfightequip.c:1518
 msgid "Medium"
 msgstr "Mellem"
 
 #: ../base/ufos/menu_options.ufo:365 ../base/ufos/menu_ptleditor.ufo:74
-#: client/cl_main.c:2232
+#: client/cl_main.c:2233
 msgid "Normal"
 msgstr "Normal"
 
@@ -3067,15 +3064,15 @@ msgstr "Fjern videnskabsmand"
 msgid "Base Info"
 msgstr "Baseinfo"
 
-#: ../base/ufos/menu_research.ufo:1157
+#: ../base/ufos/menu_research.ufo:1155
 msgid "Stop research"
 msgstr "Stop forskning"
 
-#: ../base/ufos/menu_research.ufo:1168
+#: ../base/ufos/menu_research.ufo:1166
 msgid "Start research"
 msgstr "Begynd forskning"
 
-#: ../base/ufos/menu_research.ufo:1179
+#: ../base/ufos/menu_research.ufo:1177
 msgid "Show research proposal"
 msgstr "Vis forskningsforslag"
 
@@ -3611,7 +3608,7 @@ msgstr "Mackay"
 #: ../base/ufos/missions.ufo:746 ../base/ufos/missions.ufo:762
 #: ../base/ufos/missions.ufo:794 ../base/ufos/missions.ufo:827
 #: ../base/ufos/missions.ufo:843 ../base/ufos/missions.ufo:859
-#: ../base/ufos/missions.ufo:906 ../base/ufos/missions.ufo:920
+#: ../base/ufos/missions.ufo:892 ../base/ufos/missions.ufo:906
 msgid "Terror Attack"
 msgstr "Terrorangreb"
 
@@ -3658,7 +3655,7 @@ msgstr "Lille"
 #: ../base/ufos/missions.ufo:731 ../base/ufos/missions.ufo:747
 #: ../base/ufos/missions.ufo:763 ../base/ufos/missions.ufo:795
 #: ../base/ufos/missions.ufo:844 ../base/ufos/missions.ufo:860
-#: ../base/ufos/missions.ufo:907
+#: ../base/ufos/missions.ufo:893
 msgid "Protect inhabitants"
 msgstr "Beskyt indbyggere"
 
@@ -3706,35 +3703,27 @@ msgstr "Omfattende rumvæsenangreb"
 msgid "Stop them"
 msgstr "Stop dem"
 
-#: ../base/ufos/missions.ufo:890 ../base/ufos/missions.ufo:891
-msgid "Alien colony"
-msgstr "Rumvæsenkoloni"
-
-#: ../base/ufos/missions.ufo:892
-msgid "We located the alien colony, go there and destroy it."
-msgstr "Vi har lokaliseret rumvæsenkolonien, ødelæg den."
-
-#: ../base/ufos/missions.ufo:905
+#: ../base/ufos/missions.ufo:891
 msgid "Somewhere in Siberia"
 msgstr "Et sted i Sibirien"
 
-#: ../base/ufos/missions.ufo:919
+#: ../base/ufos/missions.ufo:905
 msgid "Rocky Mountains"
 msgstr "Rocky Mountains"
 
-#: ../base/ufos/missions.ufo:921
+#: ../base/ufos/missions.ufo:907
 msgid "Aliens are attacking a shelter. Defend the people inside."
 msgstr "Rumvæsener angriber et beskyttelsesrum. Beskyt folkene indenfor."
 
-#: ../base/ufos/missions.ufo:934
+#: ../base/ufos/missions.ufo:920
 msgid "TODO"
 msgstr "ATGØRE"
 
-#: ../base/ufos/missions.ufo:935
+#: ../base/ufos/missions.ufo:921
 msgid "Infection Attack"
 msgstr "Infektionsangreb"
 
-#: ../base/ufos/missions.ufo:936
+#: ../base/ufos/missions.ufo:922
 msgid ""
 "The aliens are trying to spread their XVI virus amongst the populace. "
 "Prevent them from succeeding at all costs!"
@@ -3792,7 +3781,7 @@ msgstr "Rumvæsen-åndedrætapparat"
 msgid "Alien Materials"
 msgstr "Rumvæsen-materialer"
 
-#: ../base/ufos/otheritems.ufo:118 ../base/ufos/weapons_melee.ufo:26
+#: ../base/ufos/otheritems.ufo:115 ../base/ufos/weapons_melee.ufo:26
 #: ../base/ufos/weapons_melee.ufo:87 ../base/ufos/weapons_melee.ufo:227
 msgid "Stab"
 msgstr "Stik"
@@ -5094,21 +5083,64 @@ msgstr "Den politiske situation før invasionen"
 
 #: ../base/ufos/research.ufo:4124
 msgid "news_initial_political_situation_txt"
-msgstr "I året 2084 er jorden i bedre form end den har været i et århundrede. For første gang er fred og samarbejde normen fremfor undtagelsen. Den nuværende situation kan kun forklares ud fra den brutale historie i det 21. århundrede.\n"
+msgstr ""
+"I året 2084 er jorden i bedre form end den har været i et århundrede. For "
+"første gang er fred og samarbejde normen fremfor undtagelsen. Den nuværende "
+"situation kan kun forklares ud fra den brutale historie i det 21. "
+"århundrede.\n"
 "\n"
-"I det første årti af det 21. århundrede var Mellemøsten den største bekymring i verden. Spændingen øgedes da Iran, Syrien, Jordan og Afghanistan dannede Mellemøsten-alliancen, en politisk gruppering der skulle forene den islamiske verden. Snart efter gjorde valg i Irak at USA mistede indflydelse i landet, og Irak blev en del af Mellemøsten-alliancen sammen med Pakistan og Libanon senere det år. Som modspil tilsluttede Israel sig den udvidet Europæiske Union, og kom derfor ind under den mere strikse EU-lovgivning vedrørende menneskerettigheder og krigsførsel. Dets militære tilstedeværelse i regionen blev markant reduceret over årene som en følge deraf.\n"
+"I det første årti af det 21. århundrede var Mellemøsten den største "
+"bekymring i verden. Spændingen øgedes da Iran, Syrien, Jordan og Afghanistan "
+"dannede Mellemøsten-alliancen, en politisk gruppering der skulle forene den "
+"islamiske verden. Snart efter gjorde valg i Irak at USA mistede indflydelse "
+"i landet, og Irak blev en del af Mellemøsten-alliancen sammen med Pakistan "
+"og Libanon senere det år. Som modspil tilsluttede Israel sig den udvidet "
+"Europæiske Union, og kom derfor ind under den mere strikse EU-lovgivning "
+"vedrørende menneskerettigheder og krigsførsel. Dets militære tilstedeværelse "
+"i regionen blev markant reduceret over årene som en følge deraf.\n"
 "\n"
-"Da 2009 blev til 2010 blev fokus dog fjernet fra Mellemøsten da Kinas øgede styrke begyndte at vise sig. Folkets republik havde bidt af sine naboer i flere år, men i december 2010, efter årtier med hårde ord og truende attituder, blev Taiwan erobret i en omfangsrig kinesisk militær invasion. FN udsendte flere reprimander som blev ignoreret. Det internationale samfund debaterede sagen men gjorde intet.\n"
+"Da 2009 blev til 2010 blev fokus dog fjernet fra Mellemøsten da Kinas øgede "
+"styrke begyndte at vise sig. Folkets republik havde bidt af sine naboer i "
+"flere år, men i december 2010, efter årtier med hårde ord og truende "
+"attituder, blev Taiwan erobret i en omfangsrig kinesisk militær invasion. FN "
+"udsendte flere reprimander som blev ignoreret. Det internationale samfund "
+"debaterede sagen men gjorde intet.\n"
 "\n"
-"Den 2. kolde krig mellem USA og Kina begyndte da Kina besatte Nord- og Sydkorea i 2012, efter at hemmelige agenter var lykkedes med at afkoble hele Nordkoreas atomarsenal under den 3-dage lange invasion. Den veltrænede og veludrustede folkets hær var langt større end de koreanske divisioner; de besatte begge lande lang tid før koreanerne kunne få hjælp fra andre. Invasionen blev endnu et nederlag for FN og kølige diplomatiske forbindelser mellem Kina og Rusland varede i årtier.\n"
+"Den 2. kolde krig mellem USA og Kina begyndte da Kina besatte Nord- og "
+"Sydkorea i 2012, efter at hemmelige agenter var lykkedes med at afkoble hele "
+"Nordkoreas atomarsenal under den 3-dage lange invasion. Den veltrænede og "
+"veludrustede folkets hær var langt større end de koreanske divisioner; de "
+"besatte begge lande lang tid før koreanerne kunne få hjælp fra andre. "
+"Invasionen blev endnu et nederlag for FN og kølige diplomatiske forbindelser "
+"mellem Kina og Rusland varede i årtier.\n"
 "\n"
-"Spændingerne omkring i verden forblev store under den 2. kolde krig, med oprør som en del af hverdagen i de af Kina netop besatte områder, men i enden var hverken Kina eller USA klar til at bruge atomvåben.\n"
+"Spændingerne omkring i verden forblev store under den 2. kolde krig, med "
+"oprør som en del af hverdagen i de af Kina netop besatte områder, men i "
+"enden var hverken Kina eller USA klar til at bruge atomvåben.\n"
 "\n"
-"Krigen endte teknisk i 2031, da den amerikanske økonomi styrtede sammen på grund af et ekstremt stort militærbudget og renterne til dækning af underskuddet på handelsbalancen overgik hele landets bruttonationalprodukt. I mellemtiden tog Kina førertrøjen i verden uden helt at vide hvad eller hvordan de skulle bruge den. Landets ledere blev bedøvet af magten, en smule for sulten, og en smule for stolt. De brugte hæren til at gennemføre deres beslutninger og forsøgte at føre landet tilbage til et stalinistisk styre fra det 20. århundrede. Folket var ikke enig.\n"
+"Krigen endte teknisk i 2031, da den amerikanske økonomi styrtede sammen på "
+"grund af et ekstremt stort militærbudget og renterne til dækning af "
+"underskuddet på handelsbalancen overgik hele landets bruttonationalprodukt. "
+"I mellemtiden tog Kina førertrøjen i verden uden helt at vide hvad eller "
+"hvordan de skulle bruge den. Landets ledere blev bedøvet af magten, en smule "
+"for sulten, og en smule for stolt. De brugte hæren til at gennemføre deres "
+"beslutninger og forsøgte at føre landet tilbage til et stalinistisk styre "
+"fra det 20. århundrede. Folket var ikke enig.\n"
 "\n"
-"Den følgende borgerkrig var den største jorden havde set. Officerer henviste ofte til den som et barn af Vietnam og 1. verdenskrig. Der var bombninger af hele befolkningsområder, massehenrettelser af krigsfanger, og taktiske atomvåbenangreb på flere byer -- inklusiv Shanghai, Seoul og Ny Delhi -- den 7. juni 2034. Regeringsloyalister smed i alt seks 50-tons bomber på stærkt befæstet oprørspositioner, inklusiv de civile befolkningsgrupper som oprørerne beskyttede.\n"
+"Den følgende borgerkrig var den største jorden havde set. Officerer henviste "
+"ofte til den som et barn af Vietnam og 1. verdenskrig. Der var bombninger af "
+"hele befolkningsområder, massehenrettelser af krigsfanger, og taktiske "
+"atomvåbenangreb på flere byer -- inklusiv Shanghai, Seoul og Ny Delhi -- den "
+"7. juni 2034. Regeringsloyalister smed i alt seks 50-tons bomber på stærkt "
+"befæstet oprørspositioner, inklusiv de civile befolkningsgrupper som "
+"oprørerne beskyttede.\n"
 "\n"
-"Loyalisthæren fik massive deserteringer i de følgende dage; det var den enkel begivenhed som til sidst førte til regeringens afgang. Mere end seks millioner liv blev tabt før loyaliststyrkerne overgav sig den 15. august 2036; efter hårde kampe hvor de anvendte den brændte jords taktik, mens oprørerne langsomt tvang dem ud i Det Indiske Ocean. Dette blev den officielle afslutning på den 2. kolde krig."
+"Loyalisthæren fik massive deserteringer i de følgende dage; det var den "
+"enkel begivenhed som til sidst førte til regeringens afgang. Mere end seks "
+"millioner liv blev tabt før loyaliststyrkerne overgav sig den 15. august "
+"2036; efter hårde kampe hvor de anvendte den brændte jords taktik, mens "
+"oprørerne langsomt tvang dem ud i Det Indiske Ocean. Dette blev den "
+"officielle afslutning på den 2. kolde krig."
 
 #: ../base/ufos/research.ufo:4135
 msgid "After The War"
@@ -5325,11 +5357,30 @@ msgstr "<TODO>"
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr "Året er 2084. Jorden, aldrig det mest stabile sted, oplever en fredelig tid. Den voldsomme start på 2000-tallet er for længst forbi, gamle minder men ikke så langt væk, at den er blevet glemt. For de fleste af jordens befolkning er den 2. kolde krig en mørk skygge i det forgangne, præcis som verdenskrigen var for deres børn."
+msgstr ""
+"Året er 2084. Jorden, aldrig det mest stabile sted, oplever en fredelig tid. "
+"Den voldsomme start på 2000-tallet er for længst forbi, gamle minder men "
+"ikke så langt væk, at den er blevet glemt. For de fleste af jordens "
+"befolkning er den 2. kolde krig en mørk skygge i det forgangne, præcis som "
+"verdenskrigen var for deres børn."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr "Konflikter er blevet mindre udbredte nær slutningen af århundredet da ny teknologi og medicin er blevet tilgængelig for den tredje verden. Selv om terrorismen er blevet mindre efter de. 2. kolde krig, med al dens smerte og umenneskelige gerninger, findes den stadig i tankerna hos folket, fra det gamle Amerika til det indiske kontinent. Klassekampen stiger nu igennem den politiske magtkamp da alle nationer er garanteret en lige repræsentation i FN, og den globale levestandard stiger langsomt selv for de mest udsatte hjørner af planeten. Landene er styrket og har stabiliseret sig omkring et omorganiseret Forenede Nationer som det er lykkedes at få verdens lande til at enes om. Mindre nationer, først skræmte af de magtfulde nationer Kina og Den Europæiske Union, er selv gået sammen til magtfulde politiske fællesskaber -- og har siden opdaget at de ikke har nogle naboer som de kan slås imod. For første gang i menneskenes historie er der lov og orden i mere end 3/4 af af verden."
+msgstr ""
+"Konflikter er blevet mindre udbredte nær slutningen af århundredet da ny "
+"teknologi og medicin er blevet tilgængelig for den tredje verden. Selv om "
+"terrorismen er blevet mindre efter de. 2. kolde krig, med al dens smerte og "
+"umenneskelige gerninger, findes den stadig i tankerna hos folket, fra det "
+"gamle Amerika til det indiske kontinent. Klassekampen stiger nu igennem den "
+"politiske magtkamp da alle nationer er garanteret en lige repræsentation i "
+"FN, og den globale levestandard stiger langsomt selv for de mest udsatte "
+"hjørner af planeten. Landene er styrket og har stabiliseret sig omkring et "
+"omorganiseret Forenede Nationer som det er lykkedes at få verdens lande til "
+"at enes om. Mindre nationer, først skræmte af de magtfulde nationer Kina og "
+"Den Europæiske Union, er selv gået sammen til magtfulde politiske "
+"fællesskaber -- og har siden opdaget at de ikke har nogle naboer som de kan "
+"slås imod. For første gang i menneskenes historie er der lov og orden i mere "
+"end 3/4 af af verden."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
@@ -5337,23 +5388,53 @@ msgstr "For mange mennesker ser verden lys ud."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr "Det første angreb sker mod byen Mumbai den 3. marts 2084. Seks små ufoer dukker op ud af ingenting og flyver skrigende mod jorden uden, at de bliver opdaget af de store radarinstallationer som dækker skyerne over Mumbai og lander i den højest befolket by på jorden. De giver ingen advarsler, ingen forklaring. 20.000 uskyldige civile og tre bataljoner fra elitetropperne bliver massakreret igennem tolv brutale timer inden en stor fælles styrke får stoppet de udenjordiske raseringer. Lige så hurtigt som de kom, lige så hurtigt trækker de deres fartøjer tilbage og forsvinder ud i rummet igen og efterlader kun de stille gader i Mumbai som bevis for hvad der er sket."
+msgstr ""
+"Det første angreb sker mod byen Mumbai den 3. marts 2084. Seks små ufoer "
+"dukker op ud af ingenting og flyver skrigende mod jorden uden, at de bliver "
+"opdaget af de store radarinstallationer som dækker skyerne over Mumbai og "
+"lander i den højest befolket by på jorden. De giver ingen advarsler, ingen "
+"forklaring. 20.000 uskyldige civile og tre bataljoner fra elitetropperne "
+"bliver massakreret igennem tolv brutale timer inden en stor fælles styrke "
+"får stoppet de udenjordiske raseringer. Lige så hurtigt som de kom, lige så "
+"hurtigt trækker de deres fartøjer tilbage og forsvinder ud i rummet igen og "
+"efterlader kun de stille gader i Mumbai som bevis for hvad der er sket."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr "Et ekstraordinært møde i FN fører ikke til noget. Angrebene fortsætter med kortere og kortere mellemrum, større og kraftigere end tidligere, denne gang i Bonn, Johannesburg og Bangkok. Nogen nationer forsøger med diplomati og sender beskeder på tusindtals forskellig sprog til de fremmede som hærger i de forskellige lande. Deres beskeder ignoreres. Inden for et par timer er alle tre byer tømt for menneskeligt liv. Angrebene er ovre præcis når de forskellige militære styrker har fået bekræftelse på at slå igen. Rumvæsenerne efterlader intet uden beton og blod. Alle uofer forsvinder uden et sport -- men ingen tvivler på, at de kommer tilbage."
+msgstr ""
+"Et ekstraordinært møde i FN fører ikke til noget. Angrebene fortsætter med "
+"kortere og kortere mellemrum, større og kraftigere end tidligere, denne gang "
+"i Bonn, Johannesburg og Bangkok. Nogen nationer forsøger med diplomati og "
+"sender beskeder på tusindtals forskellig sprog til de fremmede som hærger i "
+"de forskellige lande. Deres beskeder ignoreres. Inden for et par timer er "
+"alle tre byer tømt for menneskeligt liv. Angrebene er ovre præcis når de "
+"forskellige militære styrker har fået bekræftelse på at slå igen. "
+"Rumvæsenerne efterlader intet uden beton og blod. Alle uofer forsvinder uden "
+"et sport -- men ingen tvivler på, at de kommer tilbage."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr "87 timer efter det første angreb på Mumbai erklærer jorden krig mod rumvæsenerne. I over to uger kæmper menneskenes styrker så godt de kan for at afværge de angribende rumvæsener. De taber oftere end de vinder."
+msgstr ""
+"87 timer efter det første angreb på Mumbai erklærer jorden krig mod "
+"rumvæsenerne. I over to uger kæmper menneskenes styrker så godt de kan for "
+"at afværge de angribende rumvæsener. De taber oftere end de vinder."
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr "Da kun et alternativ står tilbage tager FN aktion. Forældet udstyr hentes frem, noget af det ældre end et århundrede, og det tidligere sovende antirumvæsen bureau fra det tidligere Amerika -- FALANKS -- genopstår under FN's auspicier. Dets opgave er at kæmpe mod truslen fra rumvæsenerne og sikre, at den menneskelige race kan overleve, uanset prisen."
+msgstr ""
+"Da kun et alternativ står tilbage tager FN aktion. Forældet udstyr hentes "
+"frem, noget af det ældre end et århundrede, og det tidligere sovende "
+"antirumvæsen bureau fra det tidligere Amerika -- FALANKS -- genopstår under "
+"FN's auspicier. Dets opgave er at kæmpe mod truslen fra rumvæsenerne og "
+"sikre, at den menneskelige race kan overleve, uanset prisen."
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr "Finansieret af alle otte politiske kræfter, og sammenlægningen af disses elitesoldater, er FALANKS det bedste af de bedste. Det er jordens første og eneste forsvarslinje. De må ikke fejle, for hvis de gør, vil menneskeheden ikke overleve."
+msgstr ""
+"Finansieret af alle otte politiske kræfter, og sammenlægningen af disses "
+"elitesoldater, er FALANKS det bedste af de bedste. Det er jordens første og "
+"eneste forsvarslinje. De må ikke fejle, for hvis de gør, vil menneskeheden "
+"ikke overleve."
 
 #: ../base/ufos/seq_intro.ufo:100
 msgid "prolog_sentence1"
@@ -5373,19 +5454,36 @@ msgstr "EMNE: Held og lykke"
 
 #: ../base/ufos/seq_intro.ufo:137
 msgid "prolog_sentence5"
-msgstr "Velkommen til din nye post, øverstbefalende. Du har nu fuldstændig kontrol over FALANKS indsatsstyrker mod rumvæsenerne. Din opgave er at beskytte jordens befolkning og stoppe rumvæsenernes trussel uanset prisen. Hvordan du gennemfører dette er helt op til dig, vores eneste krav er at du har held med opgaven."
+msgstr ""
+"Velkommen til din nye post, øverstbefalende. Du har nu fuldstændig kontrol "
+"over FALANKS indsatsstyrker mod rumvæsenerne. Din opgave er at beskytte "
+"jordens befolkning og stoppe rumvæsenernes trussel uanset prisen. Hvordan du "
+"gennemfører dette er helt op til dig, vores eneste krav er at du har held "
+"med opgaven."
 
 #: ../base/ufos/seq_intro.ufo:146
 msgid "prolog_sentence6"
-msgstr "Din første opgave er at opbygge et hovedkvarter. FN har adgang til militærbaser over hele verden, så du kan vælge hvilken region du vil som base for dit hovedkvarter. Vælg placeringen med omhu, da den bliver en del af udviklingen for FALANKS-projektet."
+msgstr ""
+"Din første opgave er at opbygge et hovedkvarter. FN har adgang til "
+"militærbaser over hele verden, så du kan vælge hvilken region du vil som "
+"base for dit hovedkvarter. Vælg placeringen med omhu, da den bliver en del "
+"af udviklingen for FALANKS-projektet."
 
 #: ../base/ufos/seq_intro.ufo:155
 msgid "prolog_sentence7"
-msgstr "En nylig gennemført analyse af angrebene mod Mumbai og Bonn har fastslået at ufo-observationerne og rumvæsenernes aktiviteter fokuserer på de mest befolkede regioner på jorden, inklusive kysterne af Nord- og Sydamerika, Europa, Fjernøsten, den sydlige og mellemeste del af Afrika samt Australien. Du bør inkludere disse territorier i dine operationer."
+msgstr ""
+"En nylig gennemført analyse af angrebene mod Mumbai og Bonn har fastslået at "
+"ufo-observationerne og rumvæsenernes aktiviteter fokuserer på de mest "
+"befolkede regioner på jorden, inklusive kysterne af Nord- og Sydamerika, "
+"Europa, Fjernøsten, den sydlige og mellemeste del af Afrika samt Australien. "
+"Du bør inkludere disse territorier i dine operationer."
 
 #: ../base/ufos/seq_intro.ufo:164
 msgid "prolog_sentence8"
-msgstr "Når du har bygget op din første base så skal du forberede dine soldater. Rekrutterne som vi har tildelt til FALANKS skal stationeres på dit luftfartøj og siden udrustes før indsættelse i kamp."
+msgstr ""
+"Når du har bygget op din første base så skal du forberede dine soldater. "
+"Rekrutterne som vi har tildelt til FALANKS skal stationeres på dit "
+"luftfartøj og siden udrustes før indsættelse i kamp."
 
 #: ../base/ufos/seq_intro.ufo:173
 msgid "prolog_sentence9"
@@ -5597,9 +5695,10 @@ msgid "Don't forget to equip your soldiers with armour."
 msgstr "Glem ikke at udstyre dine soldater med veste."
 
 #: ../base/ufos/tips.ufo:13
+#, fuzzy
 msgid ""
 "You can use a flashbang to deactivate your opponents Reaction Fire mode or "
-"to take of all his remaining Time Units (TUs) for his next round."
+"to take all of his remaining Time Units (TUs) for his next round."
 msgstr ""
 "Du kan anvende en bedøvelsesgranat til at deaktivere din modstanders "
 "reaktionsild eller fjerne alle hans tilbageværende tidsenheder (TE) for den "
@@ -5624,8 +5723,9 @@ msgstr ""
 "koster tidsenheder (TE)."
 
 #: ../base/ufos/tips.ufo:16
+#, fuzzy
 msgid ""
-"Be sure to hire as many scientists as you can. The faster you know your "
+"Be sure to hire as many scientists as you can. The earlier you know your "
 "enemy, the easier he is to defeat."
 msgstr ""
 "Husk at ansætte så mange videnskabsmænd som du kan. Jo hurtigere du kender "
@@ -5678,13 +5778,6 @@ msgstr "Byg et arbejdsrum og ufo-hangarer for at kunne skille ufoer ad."
 
 #: ../base/ufos/tips.ufo:23
 msgid ""
-"You can zoom the geoscape by holding down [Ctrl] and moving the mouse up or "
-"down."
-msgstr ""
-"Du kan zoome geoscapen ved at holde [ctrl] nede og flytte musen op eller ned."
-
-#: ../base/ufos/tips.ufo:24
-msgid ""
 "You can make soldiers crouch to better protect them from enemy fire. But "
 "remember that crouching and standing up cost Time Units (TUs), and moving "
 "while crouched costs more TUs than walking normally."
@@ -5693,7 +5786,7 @@ msgstr ""
 "Men husk at det at knæle og rette sig op koster tidsender (TE), og bevægelse "
 "i knæ koster flere tidsenheder end normal bevægelse gør."
 
-#: ../base/ufos/tips.ufo:25
+#: ../base/ufos/tips.ufo:24
 msgid ""
 "Watch out for Reaction Fire! A soldier can fall under Reaction Fire even if "
 "another soldier is moving."
@@ -5701,7 +5794,7 @@ msgstr ""
 "Pas på reaktionsild! En soldat kan falde i reaktionsild selv hvis en anden "
 "soldat bevæger sig."
 
-#: ../base/ufos/tips.ufo:26
+#: ../base/ufos/tips.ufo:25
 msgid ""
 "Use [c] to toggle crouching. Crouching makes some weapons considerably more "
 "precise. It also makes your soldier a smaller target."
@@ -5709,7 +5802,7 @@ msgstr ""
 "Anvend [c] til at knæle. Knælende soldater gør nogle våben meget mere "
 "præcise. Det gør også din soldat til et mindre mål."
 
-#: ../base/ufos/tips.ufo:27
+#: ../base/ufos/tips.ufo:26
 msgid ""
 "If you are short of Time Units (TUs) and have dangerous enemies, using a "
 "flashbang to incapacitate them until the start of your next round may be the "
@@ -5719,7 +5812,7 @@ msgstr ""
 "bedøvelsesgranat være den bedste mulighed på kort sigt. 2 TE (ud af "
 "oppakning) + 12 TE (kast) = 14 TE."
 
-#: ../base/ufos/tips.ufo:28
+#: ../base/ufos/tips.ufo:27
 msgid ""
 "Use the first-person view (toggle with [v]) to check if moving one square to "
 "the left will make that shoot-through-the-building shot possible."
@@ -5727,7 +5820,7 @@ msgstr ""
 "Brug personsynsfeltet (skift med [v]) for at undersøge om den et felt "
 "flytning mod venstre vil gøre det skud-igennem-bygningen muligt."
 
-#: ../base/ufos/tips.ufo:29
+#: ../base/ufos/tips.ufo:28
 msgid ""
 "Use a fast soldier with pistols, one handed melee weapons, grenades, "
 "flashbangs and medikits."
@@ -5735,7 +5828,7 @@ msgstr ""
 "Anvend en hurtig soldat med pistoler, nærkampsvåben til en hånd, granater, "
 "bedøvelsesgranater og førstehjælpskasser."
 
-#: ../base/ufos/tips.ufo:30
+#: ../base/ufos/tips.ufo:29
 msgid ""
 "Build a hospital to be able to faster heal your soldiers for the next "
 "mission."
@@ -5743,7 +5836,7 @@ msgstr ""
 "Byg et hospital for hurtigere at kunne behandle dine soldater før næste "
 "mission."
 
-#: ../base/ufos/tips.ufo:31
+#: ../base/ufos/tips.ufo:30
 msgid ""
 "Plasma grenades do the most damage, but frag grenades can be useful, as they "
 "can be thrown slightly further."
@@ -5751,7 +5844,7 @@ msgstr ""
 "Plasmagranater gør mest skade, men fragmentationsgranater kan være brugbare, "
 "da de kan kastes hurtigere."
 
-#: ../base/ufos/tips.ufo:32
+#: ../base/ufos/tips.ufo:31
 msgid ""
 "Use [x] to cycle through the Reaction Fire settings: none, one shot, "
 "multiple shots."
@@ -5759,17 +5852,18 @@ msgstr ""
 "Brug [x] til at skifte mellem reaktionsindstillingerne: ingen, et skud, "
 "flere skud."
 
-#: ../base/ufos/tips.ufo:33
+#: ../base/ufos/tips.ufo:32
+#, fuzzy
 msgid ""
 "Keep soldiers close, so that they can support each other (heal each other, "
 "shoot when one runs out of Time Units (TUs)). Keep a wall between them at "
-"the end of your round, so that they can't be killed with one grenade."
+"the end of your turn, so that they can't be killed with one grenade."
 msgstr ""
 "Hold dine soldater tæt, så de kan støtte hinanden (helbred hinanden, skyd "
 "når en løber tør for tidsenheder (TE)). Hold en væg imellem dem når du "
 "afslutter din runde, så de ikke kan dræbes med en granat."
 
-#: ../base/ufos/tips.ufo:34
+#: ../base/ufos/tips.ufo:33
 msgid ""
 "Always have a disposable soldier or two, so you don't have to put your "
 "primary units into very risky situations."
@@ -5777,11 +5871,11 @@ msgstr ""
 "Hav altid en undværlig soldat eller to, så du ikke skal sætte dine primære "
 "soldater i meget risikofyldte situationer."
 
-#: ../base/ufos/tips.ufo:35
+#: ../base/ufos/tips.ufo:34
 msgid "Build more radars in the same base to increase the radar range."
 msgstr "Byg flere radarer på den samme base for at øge radarens rækkevidde."
 
-#: ../base/ufos/tips.ufo:36
+#: ../base/ufos/tips.ufo:35
 msgid ""
 "Reaction Fire can drain your Time Units (TUs) to 0. If you turn off Reaction "
 "Fire, you cannot turn it back on without enough Time Units (TU). You can, "
@@ -5792,7 +5886,7 @@ msgstr ""
 "kan dog lade den forblive tændt. Forsøg ikke at ændre enheder uden "
 "tidsenheder før du er sikker."
 
-#: ../base/ufos/tips.ufo:37
+#: ../base/ufos/tips.ufo:36
 msgid ""
 "Air Burst from the Grenade Launcher lets you explode those grenades in a "
 "specific place. Very useful when targetting something near the edge of the "
@@ -5802,7 +5896,7 @@ msgstr ""
 "eksplodere et specifikt sted. Meget brugbart når du ønsker at ramme noget "
 "tæt på hjørnet af kortet, eller på en kant."
 
-#: ../base/ufos/tips.ufo:38
+#: ../base/ufos/tips.ufo:37
 msgid ""
 "When throwing grenades, try to avoid straight throws along the grid. With at "
 "least a little bit of an angle, the chances of bouncing it back at yourself "
@@ -5812,7 +5906,7 @@ msgstr ""
 "afvigelse, er chancerne for at granater ryger tilbage i hovedet på dig meget "
 "mindre ved et »dårligt« kast."
 
-#: ../base/ufos/tips.ufo:39
+#: ../base/ufos/tips.ufo:38
 msgid ""
 "Before throwing a grenade, look closely at the shape of the land. A slight "
 "slope will affect the direction that the grenade bounces."
@@ -5820,7 +5914,7 @@ msgstr ""
 "Før du kaster en granat så kig på landskabet. En hældning vil påvirke "
 "hvordan granaten springer."
 
-#: ../base/ufos/tips.ufo:40
+#: ../base/ufos/tips.ufo:39
 msgid ""
 "You can include your own maps for multiplayer games or create your own "
 "campaigns. Just have a look at our wiki to read about content creation."
@@ -5828,11 +5922,11 @@ msgstr ""
 "Du kan inkludere dine egne kort til flerspiller spil eller oprette dine egne "
 "kampagner. Kig på vores wiki for at se mere om egetudviklet indhold."
 
-#: ../base/ufos/tips.ufo:41
+#: ../base/ufos/tips.ufo:40
 msgid "You can use [space] to cycle between all geoscape items."
 msgstr "Du kan anvende [mellemrum] for at skifte mellem geoscape udstyr."
 
-#: ../base/ufos/tips.ufo:42
+#: ../base/ufos/tips.ufo:41
 msgid ""
 "You can also accelerate/decelerate time on geoscape by using mouse wheel on "
 "the time buttons, or [m], [n]."
@@ -5840,29 +5934,46 @@ msgstr ""
 "Du kan også øge/formindske tiden på overbliksbilledet ved at anvende "
 "musehjulet på tidsknapper, eller [m}, [n]."
 
-#: ../base/ufos/tips.ufo:43
+#: ../base/ufos/tips.ufo:42
 msgid "Be sure to equip your interceptor with weapons before launching it."
 msgstr "Husk at udstyr dit kortrækkende jagerfly med våben før det letter."
 
-#: ../base/ufos/tips.ufo:44
+#: ../base/ufos/tips.ufo:43
+#, fuzzy
 msgid ""
 "Remember that items will slow an aircraft. To intercept fast UFOs, you may "
-"prefer to send several aircrafts lightly equiped."
+"prefer to send several lightly equipped aircraft."
 msgstr ""
 "Husk at udstyr vil sinke et luftfartøj. For at indhente hurtige ufoer kan "
 "det være en fordel at sende flere luftfartøjer der er let udstyret."
 
-#: ../base/ufos/tips.ufo:45
+#: ../base/ufos/tips.ufo:44
+#, fuzzy
 msgid ""
-"Your attacked aircraft may flee to one of your base to avoid beeing "
+"Your attacked aircraft may flee to one of your bases to avoid being "
 "destroyed by UFOs."
 msgstr ""
 "Dit angrebet luftfartøj kan flygte til en af dine baser for at undgå "
 "ødelæggelse af ufoer."
 
-#: ../base/ufos/tips.ufo:46
-msgid "Build an alien containment to be able to imprison alive aliens."
+#: ../base/ufos/tips.ufo:45
+#, fuzzy
+msgid "Build an alien containment to be able to imprison aliens alive."
 msgstr "Byg et rumvæsenopbevaringsrum som fængsel for levende rumvæsener."
+
+#: ../base/ufos/tips.ufo:46
+msgid ""
+"Spotted enemies: While on a ground mission you can press [Space] to cycle "
+"through all spotted enemies. Pressing [t] key will draw a line to each enemy "
+"the selected soldier can see."
+msgstr ""
+
+#: ../base/ufos/tips.ufo:47
+msgid ""
+"You can use the right mouse button in the soldier equipment screen to equip "
+"or unequip weapons, ammo and armour. This only works in the base equipment, "
+"not in the tactical missions where such an action would cost TUs."
+msgstr ""
 
 #: ../base/ufos/weapons.ufo:6
 msgid "Medikit"
@@ -6481,9 +6592,14 @@ msgid "A member of team %i was killed.\n"
 msgstr "Et medlem af holdet %i blev dræbt.\n"
 
 # # in-game (hud)
-#: client/cl_actor.c:3148
+#: client/cl_actor.c:3154
 msgid "Your round started!\n"
 msgstr "Din tur er begyndt!\n"
+
+#: client/cl_actor.c:3945
+#, fuzzy
+msgid "Unknown alien race"
+msgstr "Ukendt teknologi kan undersøges"
 
 #: client/cl_aircraft.c:276
 msgid ""
@@ -6496,28 +6612,30 @@ msgstr ""
 "Luftfartøjer kan ikke lette.\n"
 
 #: client/cl_aircraft.c:276 client/cl_aircraft.c:289 client/cl_aircraft.c:498
-#: client/cl_aircraft.c:677 client/cl_aircraft.c:923 client/cl_aircraft.c:1020
-#: client/cl_aliencont.c:185 client/cl_aliencont.c:211
-#: client/cl_aliencont.c:224 client/cl_aliencont.c:237
-#: client/cl_basemanagement.c:897 client/cl_basemanagement.c:2411
-#: client/cl_campaign.c:298 client/cl_campaign.c:1079
-#: client/cl_campaign.c:1137 client/cl_campaign.c:1152
-#: client/cl_campaign.c:1318 client/cl_campaign.c:1329
-#: client/cl_campaign.c:1339 client/cl_campaign.c:1349
-#: client/cl_campaign.c:1359 client/cl_campaign.c:1370
-#: client/cl_campaign.c:1383 client/cl_campaign.c:1393
-#: client/cl_campaign.c:1400 client/cl_campaign.c:1408
-#: client/cl_campaign.c:2773 client/cl_campaign.c:2884
-#: client/cl_campaign.c:2932 client/cl_campaign.c:2934
-#: client/cl_campaign.c:3242 client/cl_inventory.c:293
-#: client/cl_inventory.c:298 client/cl_inventory.c:544 client/cl_main.c:1023
-#: client/cl_map.c:295 client/cl_market.c:656 client/cl_market.c:660
-#: client/cl_parse.c:1590 client/cl_popup.c:340 client/cl_produce.c:444
-#: client/cl_produce.c:453 client/cl_produce.c:463 client/cl_produce.c:472
-#: client/cl_produce.c:483 client/cl_research.c:1069 client/cl_research.c:1087
-#: client/cl_research.c:1093 client/cl_research.c:1131
-#: client/cl_research.c:1162 client/cl_research.c:1316
-#: client/cl_research.c:1319 client/cl_ufo.c:471 client/cl_ufo.c:474
+#: client/cl_aircraft.c:677 client/cl_aircraft.c:928 client/cl_aircraft.c:1025
+#: client/cl_airfight.c:395 client/cl_aliencont.c:185
+#: client/cl_aliencont.c:211 client/cl_aliencont.c:224
+#: client/cl_aliencont.c:237 client/cl_basemanagement.c:897
+#: client/cl_basemanagement.c:2411 client/cl_campaign.c:298
+#: client/cl_campaign.c:1079 client/cl_campaign.c:1137
+#: client/cl_campaign.c:1152 client/cl_campaign.c:1318
+#: client/cl_campaign.c:1329 client/cl_campaign.c:1339
+#: client/cl_campaign.c:1349 client/cl_campaign.c:1359
+#: client/cl_campaign.c:1370 client/cl_campaign.c:1383
+#: client/cl_campaign.c:1393 client/cl_campaign.c:1400
+#: client/cl_campaign.c:1408 client/cl_campaign.c:2773
+#: client/cl_campaign.c:2884 client/cl_campaign.c:2932
+#: client/cl_campaign.c:2934 client/cl_campaign.c:3242
+#: client/cl_inventory.c:293 client/cl_inventory.c:298
+#: client/cl_inventory.c:544 client/cl_main.c:1024 client/cl_map.c:295
+#: client/cl_mapfightequip.c:640 client/cl_mapfightequip.c:642
+#: client/cl_market.c:656 client/cl_market.c:660 client/cl_parse.c:1591
+#: client/cl_popup.c:341 client/cl_produce.c:444 client/cl_produce.c:453
+#: client/cl_produce.c:463 client/cl_produce.c:472 client/cl_produce.c:483
+#: client/cl_research.c:1074 client/cl_research.c:1092
+#: client/cl_research.c:1098 client/cl_research.c:1136
+#: client/cl_research.c:1167 client/cl_research.c:1321
+#: client/cl_research.c:1324 client/cl_ufo.c:472 client/cl_ufo.c:475
 msgid "Notice"
 msgstr "Meddelelse"
 
@@ -6581,12 +6699,12 @@ msgid ""
 msgstr ""
 "Dit luftfartøj har ikke nok brændstof til destinationen og tilbage igen."
 
-#: client/cl_aircraft.c:593 client/cl_map.c:1372
+#: client/cl_aircraft.c:593 client/cl_map.c:1371
 #, c-format
 msgid "Speed:\t%i\n"
 msgstr "Fart:\t%i\n"
 
-#: client/cl_aircraft.c:594 client/cl_map.c:1373
+#: client/cl_aircraft.c:594 client/cl_map.c:1372
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "Brændstof:\t%i/%i\n"
@@ -6611,40 +6729,44 @@ msgstr "Elektronik:\t%i på %i"
 msgid "You've got a new aircraft (a %s) in base %s"
 msgstr "Du har et nyt luftfartøj (en/et %s) på base %s"
 
-#: client/cl_aircraft.c:923
+#: client/cl_aircraft.c:928
 msgid "Your dropship is low on fuel and returns to base"
 msgstr "Dit landingsfly er næsten tomt og returnerer til basen"
 
-#: client/cl_aircraft.c:1020
+#: client/cl_aircraft.c:1025
 msgid "Assign a team to aircraft"
 msgstr "Tildel et hold til luftfartøj"
 
-#: client/cl_airfight.c:468 client/cl_airfight.c:503 client/cl_campaign.c:551
+#: client/cl_airfight.c:395
+msgid "Our aircraft has no more ammo left - returning to home base now."
+msgstr ""
+
+#: client/cl_airfight.c:466 client/cl_airfight.c:501 client/cl_campaign.c:551
 #: client/cl_campaign.c:557 client/cl_campaign.c:598 client/cl_campaign.c:602
 msgid "Interception"
 msgstr "Forfølgelse"
 
-#: client/cl_airfight.c:468
+#: client/cl_airfight.c:466
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "Ufo forfølgelse succesfuld -- ufo tabt over havet."
 
-#: client/cl_airfight.c:503 client/cl_campaign.c:2934
+#: client/cl_airfight.c:501 client/cl_campaign.c:2934
 msgid "You've lost the battle"
 msgstr "Du har tabt slaget"
 
-#: client/cl_airfight.c:609 client/cl_airfight.c:621 client/cl_airfight.c:640
+#: client/cl_airfight.c:607 client/cl_airfight.c:619 client/cl_airfight.c:638
 msgid "Base facility destroyed"
 msgstr "Basefacilitet ødelagt"
 
-#: client/cl_airfight.c:609
+#: client/cl_airfight.c:607
 msgid "You've lost a missile battery system."
 msgstr "Du har mistet et missilbatteri-system."
 
-#: client/cl_airfight.c:621
+#: client/cl_airfight.c:619
 msgid "You've lost a laser battery system."
 msgstr "Du har mistet et laserbatteri-system."
 
-#: client/cl_airfight.c:639
+#: client/cl_airfight.c:637
 #, c-format
 msgid "You've lost a base facility (%s)."
 msgstr "Du har mistet en basefacilitet (%s)."
@@ -6723,7 +6845,7 @@ msgid_plural "%i days left"
 msgstr[0] "%i dag tilbage"
 msgstr[1] "%i dage tilbage"
 
-#: client/cl_basemanagement.c:1979 client/cl_team.c:1530 client/cl_team.c:1737
+#: client/cl_basemanagement.c:1979 client/cl_team.c:1538 client/cl_team.c:1745
 msgid "NewTeam"
 msgstr "Nythold"
 
@@ -6760,7 +6882,7 @@ msgstr ""
 #: client/cl_basemanagement.c:2470 client/cl_basemanagement.c:2472
 #: client/cl_campaign.c:2685 client/cl_market.c:638 client/cl_market.c:643
 #: client/cl_market.c:670 client/cl_market.c:745 client/cl_save.c:345
-#: client/cl_team.c:1578
+#: client/cl_team.c:1586
 msgid "Note"
 msgstr "Bemærk"
 
@@ -7265,8 +7387,7 @@ msgstr ""
 #, c-format
 msgid ""
 "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
-msgstr ""
-"Fandt %s på slagmarken. Ufo solgt til nation %s, opnåede %i kr."
+msgstr "Fandt %s på slagmarken. Ufo solgt til nation %s, opnåede %i kr."
 
 #: client/cl_campaign.c:4902
 msgid ""
@@ -7295,15 +7416,15 @@ msgstr "Send en besked til alle spillere"
 msgid "Send a message to allied team members"
 msgstr "Send en besked til allierede holdmedlemmer"
 
-#: client/cl_employee.c:201
+#: client/cl_employee.c:212
 msgid "Soldier"
 msgstr "Soldat"
 
-#: client/cl_employee.c:491 client/cl_employee.c:496 client/cl_employee.c:501
+#: client/cl_employee.c:502 client/cl_employee.c:507 client/cl_employee.c:512
 msgid "Not enough quarters"
 msgstr "Ikke nok beboelseskvarter"
 
-#: client/cl_employee.c:492
+#: client/cl_employee.c:503
 #, c-format
 msgid ""
 "You don't have enough living quarters to house all of your personnel. You "
@@ -7312,11 +7433,11 @@ msgstr ""
 "Du har ikke nok beboelseskvarterer til alle dine ansatte. Du må fyre %i "
 "indtil yderligere kvarterer er tilgængelige."
 
-#: client/cl_employee.c:496
+#: client/cl_employee.c:507
 msgid "You don't have enough quarters for your employees."
 msgstr "Du har ikke nok beboelsesrum til dine ansatte."
 
-#: client/cl_employee.c:501
+#: client/cl_employee.c:512
 msgid ""
 "You don't have enough quarters for your employees.\n"
 "Build more quarters."
@@ -7351,119 +7472,119 @@ msgstr ""
 msgid "Not enough hospital space"
 msgstr "Ikke nok hospitalssenge"
 
-#: client/cl_input.c:1617
+#: client/cl_input.c:1629
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr "Roter kampscenens kamera mod uret"
 
-#: client/cl_input.c:1619
+#: client/cl_input.c:1631
 msgid "Rotate battlescape camera clockwise"
 msgstr "Roter kampscenens kamera med uret"
 
-#: client/cl_input.c:1621
+#: client/cl_input.c:1633
 msgid "Tilt battlescape camera up"
 msgstr "Ryk kampscenens kamera op"
 
-#: client/cl_input.c:1623
+#: client/cl_input.c:1635
 msgid "Tilt battlescape camera down"
 msgstr "Ryk kampscenens kamera ned"
 
-#: client/cl_input.c:1625
+#: client/cl_input.c:1637
 msgid "Move battlescape camera left"
 msgstr "Flyt kampscenens kamera mod venstre"
 
-#: client/cl_input.c:1627
+#: client/cl_input.c:1639
 msgid "Move battlescape camera right"
 msgstr "Flyt kampscenens kamera mod højre"
 
-#: client/cl_input.c:1629
+#: client/cl_input.c:1641
 msgid "Move battlescape camera forward"
 msgstr "Flyt kampscenens kamera fremad"
 
-#: client/cl_input.c:1631
+#: client/cl_input.c:1643
 msgid "Move battlescape camera backward"
 msgstr "Flyt kampscenens kamera tilbage"
 
-#: client/cl_input.c:1633 client/cl_input.c:1666
+#: client/cl_input.c:1645 client/cl_input.c:1678
 msgid "Zoom in"
 msgstr "Zoom ind"
 
-#: client/cl_input.c:1635 client/cl_input.c:1667
+#: client/cl_input.c:1647 client/cl_input.c:1679
 msgid "Zoom out"
 msgstr "Zoom ud"
 
-#: client/cl_input.c:1638
+#: client/cl_input.c:1650
 msgid "Left mouse button click (menu)"
 msgstr "Venstre museknapklik (menu)"
 
-#: client/cl_input.c:1640
+#: client/cl_input.c:1652
 msgid "Middle mouse button click (menu)"
 msgstr "Midt museknapklik (menu)"
 
-#: client/cl_input.c:1642
+#: client/cl_input.c:1654
 msgid "Right mouse button click (menu)"
 msgstr "Højre museknapklik (menu)"
 
-#: client/cl_input.c:1644
+#: client/cl_input.c:1656
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr "Vælg objekter/Gå til en firkant/I ildindstilling, ild etc."
 
-#: client/cl_input.c:1646
+#: client/cl_input.c:1658
 msgid "Walk to a square/In fire mode, cancel action"
 msgstr "Gå til en firkant/I ildindstilling, afbryd aktion"
 
-#: client/cl_input.c:1648
+#: client/cl_input.c:1660
 msgid "Turn soldier toward mouse pointer"
 msgstr "Vend soldat mod musen"
 
-#: client/cl_input.c:1650
+#: client/cl_input.c:1662
 msgid "Toggle stand/crounch"
 msgstr "Skift stå/knæl"
 
-#: client/cl_input.c:1651
+#: client/cl_input.c:1663
 msgid "Toggle reaction fire"
 msgstr "Skift reaktionsild"
 
-#: client/cl_input.c:1652
+#: client/cl_input.c:1664
 msgid "Toggle the headgear"
 msgstr "Skift hovedtøj"
 
-#: client/cl_input.c:1653
+#: client/cl_input.c:1665
 msgid "Toogle to next alien"
 msgstr "Skift til næste rumvæsen"
 
-#: client/cl_input.c:1654
+#: client/cl_input.c:1666
 msgid "Draw a line to each alien visible to the current actor."
 msgstr "Tegn en linje til alle synlige rumvæsener for nuværende soldat."
 
-#: client/cl_input.c:1655
+#: client/cl_input.c:1667
 msgid "Toogle to next alien visible from selected actor."
 msgstr "Skift til næste synlig rumvæsen fra valgt soldat."
 
-#: client/cl_input.c:1661
+#: client/cl_input.c:1673
 msgid "Reload the weapon in the soldiers left hand"
 msgstr "Genlad våbenet i soldatens venstre hånd"
 
-#: client/cl_input.c:1662
+#: client/cl_input.c:1674
 msgid "Reload the weapon in the soldiers right hand"
 msgstr "Genlad våbenet i soldatens højre hånd"
 
-#: client/cl_input.c:1663
+#: client/cl_input.c:1675
 msgid "Ends current round"
 msgstr "Afslutter nuværende runde"
 
-#: client/cl_input.c:1664
+#: client/cl_input.c:1676
 msgid "Slice through terrain at a higher level"
 msgstr "Glid igennem terræn på et højere niveau"
 
-#: client/cl_input.c:1665
+#: client/cl_input.c:1677
 msgid "Slice through terrain at a lower level"
 msgstr "Glid igennem terræn på et lavere niveau"
 
-#: client/cl_input.c:1668
+#: client/cl_input.c:1680
 msgid "Confirm the current action"
 msgstr "Bekræft den nuværende aktion"
 
-#: client/cl_input.c:1677
+#: client/cl_input.c:1689
 msgid "Toggle first-person/third-person camera mode"
 msgstr "Skift mellem person/tredjemand kamera"
 
@@ -7499,26 +7620,26 @@ msgid ""
 msgstr ""
 "Base %s har ikke antistof lagerrum. %i enheder af antistof blev fjernet."
 
-#: client/cl_main.c:342 client/cl_main.c:980
+#: client/cl_main.c:343 client/cl_main.c:981
 msgid "Assemble a team first"
 msgstr "Saml et hold først"
 
-#: client/cl_main.c:342 client/cl_main.c:704 client/cl_main.c:980
-#: client/cl_main.c:1480 client/cl_main.c:1485 client/cl_main.c:1491
-#: client/cl_main.c:1499 client/cl_save.c:409 client/cl_save.c:432
+#: client/cl_main.c:343 client/cl_main.c:705 client/cl_main.c:981
+#: client/cl_main.c:1481 client/cl_main.c:1486 client/cl_main.c:1492
+#: client/cl_main.c:1500 client/cl_save.c:409 client/cl_save.c:432
 #: client/cl_save.c:573
 msgid "Error"
 msgstr "Fejl"
 
-#: client/cl_main.c:704
+#: client/cl_main.c:705
 msgid "Server needs restarting - something went wrong"
 msgstr "Server har behov for genstart - noget gik galt"
 
-#: client/cl_main.c:777
+#: client/cl_main.c:778
 msgid "No player connected\n"
 msgstr "Ingen spillere forbundet\n"
 
-#: client/cl_main.c:825
+#: client/cl_main.c:826
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -7527,87 +7648,87 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:832
+#: client/cl_main.c:833
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Kort:\t%s\n"
 
-#: client/cl_main.c:842
+#: client/cl_main.c:843
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Servernavn:\t%s\n"
 
-#: client/cl_main.c:843
+#: client/cl_main.c:844
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Moralstatus:\t%s\n"
 
-#: client/cl_main.c:844
+#: client/cl_main.c:845
 #, c-format
 msgid "Gametype:\t%s\n"
 msgstr "Spiltype:\t%s\n"
 
-#: client/cl_main.c:845
+#: client/cl_main.c:846
 #, c-format
 msgid "Gameversion:\t%s\n"
 msgstr "Spilversion:\t%s\n"
 
-#: client/cl_main.c:846
+#: client/cl_main.c:847
 #, c-format
 msgid "Dedicated server:\t%s\n"
 msgstr "Dedikeret server:\t%s\n"
 
-#: client/cl_main.c:847
+#: client/cl_main.c:848
 #, c-format
 msgid "Operating system:\t%s\n"
 msgstr "Operativsystem:\t%s\n"
 
-#: client/cl_main.c:848
+#: client/cl_main.c:849
 #, c-format
 msgid "Network protocol:\t%s\n"
 msgstr "Netværksprotokol:\t%s\n"
 
-#: client/cl_main.c:849
+#: client/cl_main.c:850
 #, c-format
 msgid "Roundtime:\t%s\n"
 msgstr "Rundetid:\t%s\n"
 
-#: client/cl_main.c:850
+#: client/cl_main.c:851
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Holdspil:\t%s\n"
 
-#: client/cl_main.c:851
+#: client/cl_main.c:852
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Maks spillere per hold:\t%s\n"
 
-#: client/cl_main.c:852
+#: client/cl_main.c:853
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr "Maks hold tilladt på dette kort:\t%s\n"
 
-#: client/cl_main.c:853
+#: client/cl_main.c:854
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Maks klienter:\t%s\n"
 
-#: client/cl_main.c:854
+#: client/cl_main.c:855
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Maks soldater per spiller:\t%s\n"
 
-#: client/cl_main.c:855
+#: client/cl_main.c:856
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Maks soldater per hold:\t%s\n"
 
-#: client/cl_main.c:856
+#: client/cl_main.c:857
 #, c-format
 msgid "Password protected:\t%s\n"
 msgstr "Adgangskode beskyttet:\t%s\n"
 
-#: client/cl_main.c:1023
+#: client/cl_main.c:1024
 msgid ""
 "All bookmark slots are used - please removed unused entries and repeat this "
 "step"
@@ -7615,120 +7736,120 @@ msgstr ""
 "Alle bogmærkepladser er anvendt - fjern venligst ubrugte henvisninger og "
 "forsøg igen"
 
-#: client/cl_main.c:1109
+#: client/cl_main.c:1110
 msgid "Select a free team or your coop team"
 msgstr "Vælg et ledigt hold eller dit samabejdshold"
 
 # # in game
-#: client/cl_main.c:1323 client/cl_main.c:1337
+#: client/cl_main.c:1324 client/cl_main.c:1338
 #, c-format
 msgid "Current team: %i"
 msgstr "Nuværende hold: %i"
 
-#: client/cl_main.c:1327 client/cl_main.c:1341
+#: client/cl_main.c:1328 client/cl_main.c:1342
 msgid "Team is already in use"
 msgstr "Hold er allerede i brug"
 
-#: client/cl_main.c:1351 client/cl_main.c:1389
+#: client/cl_main.c:1352 client/cl_main.c:1390
 msgid "Invalid or full team"
 msgstr "Ugyldig eller fyldt hold"
 
-#: client/cl_main.c:1479
+#: client/cl_main.c:1480
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr "Lokal spilversion (%s) afviger fra serveren"
 
-#: client/cl_main.c:1485
+#: client/cl_main.c:1486
 msgid "Local map version differs from server"
 msgstr "Lokal kortversion afviger fra serveren"
 
-#: client/cl_main.c:1491
+#: client/cl_main.c:1492
 msgid "Script files are not the same"
 msgstr "Skript filer er ikke de samme"
 
-#: client/cl_main.c:1498
+#: client/cl_main.c:1499
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr "Lokal spilversion (%s) afviger fra serverne (%s)"
 
-#: client/cl_main.c:2091
+#: client/cl_main.c:2092
 msgid "Target your shot to the ground"
 msgstr "Send dit skud mod jorden"
 
-#: client/cl_main.c:2092
+#: client/cl_main.c:2093
 msgid "Open the actors inventory while we are in tactical mission"
 msgstr "Åben soldatens rygsæk mens vi er på taktisk mission"
 
-#: client/cl_main.c:2207 client/cl_view.c:422
+#: client/cl_main.c:2208 client/cl_view.c:422
 msgid "Awaiting game start"
 msgstr "Afventer spilstart"
 
-#: client/cl_main.c:2225
+#: client/cl_main.c:2226
 msgid "Chicken-hearted"
 msgstr "Kylling"
 
-#: client/cl_main.c:2227
+#: client/cl_main.c:2228
 msgid "Very Easy"
 msgstr "Meget nem"
 
-#: client/cl_main.c:2230
+#: client/cl_main.c:2231
 msgid "Easy"
 msgstr "Nem"
 
-#: client/cl_main.c:2235
+#: client/cl_main.c:2236
 msgid "Hard"
 msgstr "Svær"
 
-#: client/cl_main.c:2237
+#: client/cl_main.c:2238
 msgid "Very Hard"
 msgstr "Meget svær"
 
-#: client/cl_main.c:2239
+#: client/cl_main.c:2240
 msgid "Insane"
 msgstr "Vanvittig"
 
-#: client/cl_main.c:2291
+#: client/cl_main.c:2292
 msgid "Custom"
 msgstr "Bruger"
 
-#: client/cl_map.c:322
+#: client/cl_map.c:321
 msgid "Base"
 msgstr "Base"
 
-#: client/cl_map.c:339
+#: client/cl_map.c:338
 msgid "UFO"
 msgstr "Ufo"
 
-#: client/cl_map.c:1131
+#: client/cl_map.c:1130
 msgid "Day"
 msgstr "Dag"
 
-#: client/cl_map.c:1131
+#: client/cl_map.c:1130
 msgid "Night"
 msgstr "Nat"
 
-#: client/cl_map.c:1279
+#: client/cl_map.c:1278
 #, c-format
 msgid "%s\t%i%%\n"
 msgstr "%s\t%i%%\n"
 
-#: client/cl_map.c:1333
+#: client/cl_map.c:1332
 msgid "Select the desired location of the new base on the map.\n"
 msgstr "Vælg den ønskede placering for den nye base på kortet.\n"
 
-#: client/cl_map.c:1338
+#: client/cl_map.c:1337
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr "Rumvæsenere angriber vores base på dette tidspunkt.\n"
 
-#: client/cl_map.c:1343
+#: client/cl_map.c:1342
 msgid "Select ufo or mission on map\n"
 msgstr "Vælg ufo eller mission på kortet\n"
 
-#: client/cl_map.c:1348
+#: client/cl_map.c:1347
 msgid "UFO in radar range\n"
 msgstr "Ufo indenfor rangerafstand\n"
 
-#: client/cl_map.c:1365
+#: client/cl_map.c:1364
 #, c-format
 msgid ""
 "Location: %s\n"
@@ -7739,12 +7860,12 @@ msgstr ""
 "Type: %s\n"
 "Mål: %s\n"
 
-#: client/cl_map.c:1370
+#: client/cl_map.c:1369
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "Navn:\t%s (%i/%i)\n"
 
-#: client/cl_map.c:1371
+#: client/cl_map.c:1370
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Status:\t%s\n"
@@ -7794,51 +7915,61 @@ msgstr "Dette forsvarssystem vil være operationelt om %i timer.\n"
 msgid "No ammo assigned to this defense system."
 msgstr "Intet ammo er tildelt dette forsvarssystem."
 
-#: client/cl_mapfightequip.c:860
+#: client/cl_mapfightequip.c:640
+#, fuzzy
+msgid "Aircraft item was successfully installed."
+msgstr "Kampagne blev gemt med succes."
+
+#: client/cl_mapfightequip.c:642
+#, fuzzy
+msgid "Base defense item was successfully installed."
+msgstr "Kampagne blev gemt med succes."
+
+#: client/cl_mapfightequip.c:864
 msgid "No item assigned.\n"
 msgstr "Intet udstyr er tildelt.\n"
 
-#: client/cl_mapfightequip.c:861
+#: client/cl_mapfightequip.c:865
 #, c-format
 msgid "This slot is for %s or smaller items."
 msgstr "Denne plads er til %s eller mindre udstyr."
 
-#: client/cl_mapfightequip.c:866
+#: client/cl_mapfightequip.c:870
 msgid "This item is functional.\n"
 msgstr "Dette udstyr er funktionelt.\n"
 
-#: client/cl_mapfightequip.c:868
+#: client/cl_mapfightequip.c:872
 #, c-format
 msgid "This item will be installed in %i hours.\n"
 msgstr "Dette udstyr vil være installeret om %i timer.\n"
 
-#: client/cl_mapfightequip.c:870
+#: client/cl_mapfightequip.c:874
 #, c-format
 msgid "This item will be removed in %i hours.\n"
 msgstr "Dette udstyr vil blive fjernet om %i timer.\n"
 
-#: client/cl_mapfightequip.c:877
+#: client/cl_mapfightequip.c:881
 msgid "No item assigned."
 msgstr "Intet udstyr tildelt."
 
-#: client/cl_mapfightequip.c:881
+#: client/cl_mapfightequip.c:885
 #, c-format
 msgid "This item will be operational in %i hours.\n"
 msgstr "Dette udstyr vil være operationelt om %i timer.\n"
 
-#: client/cl_mapfightequip.c:890
+#: client/cl_mapfightequip.c:894
 msgid "No ammo assigned to this weapon."
 msgstr "Intet ammo tildelt dette våben."
 
-#: client/cl_mapfightequip.c:1511
+#: client/cl_mapfightequip.c:1515
 msgid "Light"
 msgstr "Let"
 
-#: client/cl_mapfightequip.c:1517 client/cl_ufopedia.c:152
+#: client/cl_mapfightequip.c:1521 client/cl_ufopedia.c:152
 msgid "Heavy"
 msgstr "Tung"
 
-#: client/cl_mapfightequip.c:1520
+#: client/cl_mapfightequip.c:1524
 msgid "Unknown weight"
 msgstr "Ukendt vægt"
 
@@ -7901,43 +8032,48 @@ msgstr "ja"
 msgid "no"
 msgstr "nej"
 
-#: client/cl_menu.c:844
+#: client/cl_menu.c:836
 msgid "Set soldiers per player lower than soldiers per team"
 msgstr "Sæt soldater per spiller lavere end soldater per hold"
 
-#: client/cl_menu.c:844
+#: client/cl_menu.c:836
 msgid "Settings doesn't make sense"
 msgstr "Indstillinger giver ikke mening"
 
-#: client/cl_menu.c:889
+#: client/cl_menu.c:881
 #, c-format
 msgid "In: %i Out: %i"
 msgstr "Ind: %i Ud: %i"
 
-#: client/cl_menu.c:2164
+#: client/cl_menu.c:2156
 #, c-format
 msgid "Key: %s"
 msgstr "Nøgle: %s"
 
-#: client/cl_menu.c:2229 client/cl_menu.c:2236
+#: client/cl_menu.c:2221 client/cl_menu.c:2228
 #, c-format
 msgid "Ammo: %i\n"
 msgstr "Ammo: %i\n"
 
-#: client/cl_menu.c:2234
+#: client/cl_menu.c:2226
 #, c-format
 msgid "%s loaded\n"
 msgstr "%s hentet\n"
 
-#: client/cl_menu.c:2243
+#: client/cl_menu.c:2235
 msgid "Usable in:\n"
 msgstr "Brugbar i:\n"
 
-#: client/cl_menu.c:3884
+#: client/cl_menu.c:3876
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "Gem HUD'en (tryk ESC for at genaktivere HUD)"
 
-#: client/cl_menu.c:4874
+#: client/cl_menu.c:4786
+#, fuzzy
+msgid "all"
+msgstr "Kugle"
+
+#: client/cl_menu.c:4897
 #, c-format
 msgid "%i %s %02i, %02i:%02i: "
 msgstr "%i %s %02i, %02i:%02i: "
@@ -7951,24 +8087,24 @@ msgstr "Du har afsluttet din runde\n"
 msgid "%s ended his round (team %i)\n"
 msgstr "%s afsluttede sin runde (hold %i)\n"
 
-#: client/cl_parse.c:966
+#: client/cl_parse.c:967
 #, c-format
 msgid "Alien spotted: %s!"
 msgstr "Rumvæsen set: %s!"
 
-#: client/cl_parse.c:969 client/cl_parse.c:971
+#: client/cl_parse.c:970 client/cl_parse.c:972
 msgid "Alien spotted!\n"
 msgstr "Rumvæsen set!\n"
 
-#: client/cl_parse.c:973
+#: client/cl_parse.c:974
 msgid "Enemy spotted!\n"
 msgstr "Fjende set!\n"
 
-#: client/cl_parse.c:975
+#: client/cl_parse.c:976
 msgid "Civilian spotted!\n"
 msgstr "Civil set!\n"
 
-#: client/cl_parse.c:1590
+#: client/cl_parse.c:1591
 msgid "The server has disconnected.\n"
 msgstr "Serveren er blevet afbrudt.\n"
 
@@ -7990,16 +8126,17 @@ msgstr "Stop\n"
 msgid "Mission\t%s (%s)\n"
 msgstr "Mission\t%s (%s)\n"
 
-#: client/cl_popup.c:293
+#: client/cl_popup.c:294
 msgid "No craft available, or no tactical teams assigned to available craft."
 msgstr ""
 "Intet fly tilgængelig, eller intet taktisk hold tildelt et tilgængelig fly."
 
-#: client/cl_popup.c:295
-msgid "No craft available, or no weapons loaded on available craft."
+#: client/cl_popup.c:296
+#, fuzzy
+msgid "No craft available, no weapon or ammo equipped or target out of reach."
 msgstr "Intet fly tilgængelig, eller ingen våben påført tilgængelig fly."
 
-#: client/cl_popup.c:340
+#: client/cl_popup.c:341
 msgid ""
 "No Command Centre operational in homebase\n"
 "of this aircraft.\n"
@@ -8181,8 +8318,8 @@ msgid ""
 "You don't have enough material to produce all (%i) items. Production will "
 "continue with a reduced (%i) number."
 msgstr ""
-"Du har ikke nok materiale til at producere alle (%i) enheder. Produktionen vil "
-"fortsætte med et nedsat antal (%i) enheder."
+"Du har ikke nok materiale til at producere alle (%i) enheder. Produktionen "
+"vil fortsætte med et nedsat antal (%i) enheder."
 
 #: client/cl_produce.c:1191 client/cl_produce.c:1213
 #, c-format
@@ -8200,7 +8337,8 @@ msgstr "Afmontering af %s påbegyndt"
 
 #: client/cl_produce.c:1203
 msgid "You don't have enough of the needed material to produce this item."
-msgstr "Du har ikke nok af det krævede materiale til at producere dette udstyr."
+msgstr ""
+"Du har ikke nok af det krævede materiale til at producere dette udstyr."
 
 #: client/cl_research.c:80
 #, c-format
@@ -8229,58 +8367,58 @@ msgstr "Ukendt teknologi fundet"
 msgid "Laboratory space (used/all): %i/%i"
 msgstr "Laboratorium plads (anvendt/alle): %i/%i"
 
-#: client/cl_research.c:775
+#: client/cl_research.c:776
 #, c-format
 msgid "Scientists (available/all): %i/%i"
 msgstr "Videnskabsmænd (tilgængelige/alle): %i/%i"
 
-#: client/cl_research.c:779
+#: client/cl_research.c:781
 msgid "Not researched in any base."
 msgstr "Ikke forsket på nogen base."
 
-#: client/cl_research.c:785
+#: client/cl_research.c:787
 #, c-format
 msgid "Researched in %s"
 msgstr "Forsket på %s"
 
-#: client/cl_research.c:787
+#: client/cl_research.c:789
 msgid "Researched in this base."
 msgstr "Forsket på denne base."
 
-#: client/cl_research.c:798
+#: client/cl_research.c:801
 #, c-format
 msgid "Progress: %.1f%%"
 msgstr "Fremskridt: %.1f%%"
 
-#: client/cl_research.c:800
+#: client/cl_research.c:804
 msgid "Progress: Not available."
 msgstr "Fremskridt: Ikke tilgængelig."
 
-#: client/cl_research.c:804
+#: client/cl_research.c:809
 msgid "Status: Under research"
 msgstr "Status: Forskning i gang"
 
-#: client/cl_research.c:807
+#: client/cl_research.c:812
 msgid "Status: Research paused"
 msgstr "Status: Pause i forskning"
 
-#: client/cl_research.c:810
+#: client/cl_research.c:815
 msgid "Status: Research finished"
 msgstr "Status: Forskning afsluttet"
 
-#: client/cl_research.c:815
+#: client/cl_research.c:820
 msgid ""
 "Status: We don't currently have all the materials or background knowledge "
 "needed to research this topic."
 msgstr ""
-"Status: Vi har på nuværende tidspunkt ikke al det materiale eller baggrundsviden "
-"vi skal bruge for at kunne forske i dette emne."
+"Status: Vi har på nuværende tidspunkt ikke al det materiale eller "
+"baggrundsviden vi skal bruge for at kunne forske i dette emne."
 
-#: client/cl_research.c:817
+#: client/cl_research.c:822
 msgid "Status: Unknown technology"
 msgstr "Status: Ukendt teknologi"
 
-#: client/cl_research.c:902 client/cl_research.c:906
+#: client/cl_research.c:907 client/cl_research.c:911
 msgid ""
 "No free space in laboratories left.\n"
 "Build more laboratories.\n"
@@ -8288,19 +8426,19 @@ msgstr ""
 "Ingen ledig plads i laboratorier.\n"
 "Byg flere laboratorier.\n"
 
-#: client/cl_research.c:902 client/cl_research.c:906
+#: client/cl_research.c:907 client/cl_research.c:911
 msgid "Not enough laboratories"
 msgstr "Ikke nok laboratorier"
 
-#: client/cl_research.c:1069
+#: client/cl_research.c:1074
 msgid "This item is currently under research in another base."
 msgstr "Dette udstyr er for nuværende forskningsobjekt på en anden base."
 
-#: client/cl_research.c:1087 client/cl_research.c:1131
+#: client/cl_research.c:1092 client/cl_research.c:1136
 msgid "The research on this item is complete."
 msgstr "Forskningen på dette udstyr er færdig."
 
-#: client/cl_research.c:1093
+#: client/cl_research.c:1098
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
@@ -8308,23 +8446,23 @@ msgstr ""
 "Forskning i dette udstyr er endnu ikke tilgængelig.\n"
 "Du må først forske i de grundlæggende teknologier."
 
-#: client/cl_research.c:1162
+#: client/cl_research.c:1167
 msgid "No research proposal available for this project."
 msgstr "Intet forskningsforslag tilgængelig til dette projekt."
 
-#: client/cl_research.c:1316
+#: client/cl_research.c:1321
 msgid "Nothing to research"
 msgstr "Intet at forske i"
 
-#: client/cl_research.c:1319
+#: client/cl_research.c:1324
 msgid "Build a laboratory first"
 msgstr "Byg et laboratorium først"
 
-#: client/cl_research.c:1719
+#: client/cl_research.c:1724
 msgid "No description available."
 msgstr "Ingen beskrivelse tilgængelig."
 
-#: client/cl_research.c:1720
+#: client/cl_research.c:1725
 msgid "No research proposal available."
 msgstr "Intet forskningsforslag tilgængelig."
 
@@ -8397,58 +8535,58 @@ msgstr "Henter [%s]"
 msgid "Loading Map [%s]"
 msgstr "Henter kort [%s]"
 
-#: client/cl_team.c:61
+#: client/cl_team.c:69
 msgid "Urban"
 msgstr "By"
 
-#: client/cl_team.c:64
+#: client/cl_team.c:72
 msgid "Jungle"
 msgstr "Jungle"
 
-#: client/cl_team.c:67
+#: client/cl_team.c:75
 msgid "Desert"
 msgstr "Ørken"
 
-#: client/cl_team.c:70
+#: client/cl_team.c:78
 msgid "Arctic"
 msgstr "Arktisk"
 
-#: client/cl_team.c:73
+#: client/cl_team.c:81
 msgid "Yellow"
 msgstr "Gul"
 
-#: client/cl_team.c:76
+#: client/cl_team.c:84
 msgid "CCCP"
 msgstr "CCCP"
 
-#: client/cl_team.c:1067
+#: client/cl_team.c:1075
 #, c-format
 msgid "%i of %i"
 msgstr "%i af %i"
 
-#: client/cl_team.c:1578
+#: client/cl_team.c:1586
 msgid "Error saving team. Check free disk space!"
 msgstr "Fejl gem hold. Undersøg ledig plads på harddisk!"
 
-#: client/cl_team.c:1757
+#: client/cl_team.c:1765
 msgid "Select a soldier from list"
 msgstr "Vælg en soldat fra listen"
 
-#: client/cl_team.c:1758
+#: client/cl_team.c:1766
 msgid "Toggle to next soldier"
 msgstr "Skift til næste soldat"
 
-#: client/cl_team.c:2107 client/cl_team.c:2151
+#: client/cl_team.c:2115 client/cl_team.c:2159
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Rumvæsener dræbt\t%i\n"
 
-#: client/cl_team.c:2110
+#: client/cl_team.c:2118
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "Fjender dræbt\t%i\n"
 
-#: client/cl_team.c:2115
+#: client/cl_team.c:2123
 #, c-format
 msgid ""
 "Aliens captured\t%i\n"
@@ -8457,7 +8595,7 @@ msgstr ""
 "Rumvæsener fanget\t%i\n"
 "\n"
 
-#: client/cl_team.c:2116 client/cl_team.c:2155
+#: client/cl_team.c:2124 client/cl_team.c:2163
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -8466,7 +8604,7 @@ msgstr ""
 "Overlevende rumvæsener\t%i\n"
 "\n"
 
-#: client/cl_team.c:2118
+#: client/cl_team.c:2126
 #, c-format
 msgid ""
 "Enemies captured\t%i\n"
@@ -8475,7 +8613,7 @@ msgstr ""
 "Fjender fanget\t%i\n"
 "\n"
 
-#: client/cl_team.c:2119
+#: client/cl_team.c:2127
 #, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -8484,22 +8622,22 @@ msgstr ""
 "Overlevende fjender\t%i\n"
 "\n"
 
-#: client/cl_team.c:2123
+#: client/cl_team.c:2131
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Holdtab\t%i\n"
 
-#: client/cl_team.c:2124
+#: client/cl_team.c:2132
 #, c-format
 msgid "Team missing in action\t%i\n"
 msgstr "Hold tabt i aktion\t%i\n"
 
-#: client/cl_team.c:2125
+#: client/cl_team.c:2133
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "Tab til venlig ild\t%i\n"
 
-#: client/cl_team.c:2126
+#: client/cl_team.c:2134
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -8508,22 +8646,22 @@ msgstr ""
 "Hold overlevere\t%i\n"
 "\n"
 
-#: client/cl_team.c:2129
+#: client/cl_team.c:2137
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Civile dræbt af rumvæsener\t%i\n"
 
-#: client/cl_team.c:2131
+#: client/cl_team.c:2139
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Civile dræbt af fjender\t%i\n"
 
-#: client/cl_team.c:2133
+#: client/cl_team.c:2141
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Civile dræbt af dit hold\t%i\n"
 
-#: client/cl_team.c:2134
+#: client/cl_team.c:2142
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -8534,27 +8672,27 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:2154
+#: client/cl_team.c:2162
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Rumvæsener fanget\t%i\n"
 
-#: client/cl_team.c:2158
+#: client/cl_team.c:2166
 #, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "FALANKS soldater dræbt af rumvæsener\t%i\n"
 
-#: client/cl_team.c:2159
+#: client/cl_team.c:2167
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "FALANKS soldater forsvundet i aktion\t%i\n"
 
-#: client/cl_team.c:2160
+#: client/cl_team.c:2168
 #, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "FALANKS døde under venlig ild\t%i\n"
 
-#: client/cl_team.c:2161
+#: client/cl_team.c:2169
 #, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -8563,17 +8701,17 @@ msgstr ""
 "FALANKS overlevende\t%i\n"
 "\n"
 
-#: client/cl_team.c:2163
+#: client/cl_team.c:2171
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Civile dræbt af rumvæsener\t%i\n"
 
-#: client/cl_team.c:2164
+#: client/cl_team.c:2172
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Civile dræbt af vendlig ild\t%i\n"
 
-#: client/cl_team.c:2165
+#: client/cl_team.c:2173
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -8582,12 +8720,12 @@ msgstr ""
 "Civile reddet\t%i\n"
 "\n"
 
-#: client/cl_team.c:2166
+#: client/cl_team.c:2174
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr "Indsamlet udstyr (typer/alle)\t%i/%i\n"
 
-#: client/cl_team.c:2186
+#: client/cl_team.c:2194
 #, c-format
 msgid ""
 "\n"
@@ -8596,7 +8734,7 @@ msgstr ""
 "\n"
 "Sikret nedstyrtet %s\n"
 
-#: client/cl_team.c:2188
+#: client/cl_team.c:2196
 #, c-format
 msgid ""
 "\n"
@@ -8605,7 +8743,7 @@ msgstr ""
 "\n"
 "Sikret landet %s\n"
 
-#: client/cl_team.c:2199
+#: client/cl_team.c:2207
 #, c-format
 msgid ""
 "\n"
@@ -8618,15 +8756,15 @@ msgstr ""
 "Fjender dræbt:  %i\n"
 "Holdoverlevende:  %i"
 
-#: client/cl_team.c:2201
+#: client/cl_team.c:2209
 msgid "You won the game!"
 msgstr "Du vandt spillet!"
 
-#: client/cl_team.c:2203
+#: client/cl_team.c:2211
 msgid "Congratulations"
 msgstr "Tillyke"
 
-#: client/cl_team.c:2205
+#: client/cl_team.c:2213
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -8636,15 +8774,15 @@ msgstr ""
 "\n"
 "Ingen overlevende tilbage."
 
-#: client/cl_team.c:2206
+#: client/cl_team.c:2214
 msgid "Game Drawn!"
 msgstr "Spil uafgjort!"
 
-#: client/cl_team.c:2208
+#: client/cl_team.c:2216
 msgid "You lost the game"
 msgstr "Du tabte spillet"
 
-#: client/cl_team.c:2210
+#: client/cl_team.c:2218
 msgid "Better luck next time"
 msgstr "Bedre held næste gang"
 
@@ -8926,11 +9064,11 @@ msgstr ""
 "Den modtagende base eksisterer ikke længere! Overførselslast er tabt, "
 "ansatte blev fritstillet."
 
-#: client/cl_ufo.c:471
+#: client/cl_ufo.c:472
 msgid "Our radar detected a new UFO"
 msgstr "Vores radar opdagede en ny ufo"
 
-#: client/cl_ufo.c:474
+#: client/cl_ufo.c:475
 msgid "Our radar has lost the tracking on a UFO"
 msgstr "Vores radar har mistet sporingen af en ufo"
 
@@ -9209,99 +9347,99 @@ msgstr "henter %s"
 msgid "loading models..."
 msgstr "henter modeller..."
 
-#: game/g_client.c:671
+#: game/g_client.c:709
 msgid "Can't perform action - this isn't your round!\n"
 msgstr "Kan ikke udføre aktion - det er ikke din runde!\n"
 
-#: game/g_client.c:678
+#: game/g_client.c:716
 msgid "Can't perform action - object not present!\n"
 msgstr "Kan ikke udføre aktion - genstand er ikke til stede!\n"
 
-#: game/g_client.c:683
+#: game/g_client.c:721
 msgid "Can't perform action - not an actor!\n"
 msgstr "Kan ikke udføre aktion - ikke en spiller!\n"
 
-#: game/g_client.c:688
+#: game/g_client.c:726
 msgid "Can't perform action - actor is stunned!\n"
 msgstr "Kan ikke udføre aktion - spiller er passiveret!\n"
 
-#: game/g_client.c:693
+#: game/g_client.c:731
 msgid "Can't perform action - actor is dead!\n"
 msgstr "Kan ikke udføre aktion - spiller er død!\n"
 
-#: game/g_client.c:698
+#: game/g_client.c:736
 msgid "Can't perform action - not on same team!\n"
 msgstr "Kan ikke udføre aktion - er ikke på samme hold!\n"
 
-#: game/g_client.c:703
+#: game/g_client.c:741
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr "Kan ikke udføre aktion - ingen kontrol over allierede spillere!\n"
 
-#: game/g_client.c:861
+#: game/g_client.c:899
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "Kan ikke udføre aktion - ikke nok tidsenheder!\n"
 
-#: game/g_client.c:864
+#: game/g_client.c:902
 msgid ""
 "Can't perform action - weapon already fully loaded with the same "
 "ammunition!\n"
 msgstr ""
 "Kan ikke udføre aktion - våben er allerede ladt med den samme ammunition!\n"
 
-#: game/g_client.c:1502
+#: game/g_client.c:1540
 msgid "Currently shaken, won't let their guard down.\n"
 msgstr "Rystet for nuværende, får ikke vagten ned.\n"
 
-#: game/g_client.c:1608
+#: game/g_client.c:1646
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s går i panik!\n"
 
-#: game/g_client.c:1668
+#: game/g_client.c:1706
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s er gået amok.\n"
 
-#: game/g_client.c:1670
+#: game/g_client.c:1708
 #, c-format
 msgid "%s is consumed by mad rage!\n"
 msgstr "%s er gået bærserk!\n"
 
-#: game/g_client.c:1731
+#: game/g_client.c:1769
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s er rystet.\n"
 
-#: game/g_client.c:2211 game/g_svcmds.c:353
+#: game/g_client.c:2249 game/g_svcmds.c:353
 #, c-format
 msgid "Team %i (%s) will get the first turn.\n"
 msgstr "Hold %i (%s) får den første runde.\n"
 
-#: game/g_client.c:2442
+#: game/g_client.c:2476
 msgid "4 minutes left until forced round end\n"
 msgstr "4 minutter tilbage før runden afsluttes\n"
 
-#: game/g_client.c:2445
+#: game/g_client.c:2479
 msgid "3 minutes left until forced round end\n"
 msgstr "3 minutter tilbage før runden afsluttes\n"
 
-#: game/g_client.c:2448
+#: game/g_client.c:2482
 msgid "2 minutes left until forced round end\n"
 msgstr "2 minutter tilbage før runden afsluttes\n"
 
-#: game/g_client.c:2451
+#: game/g_client.c:2485
 msgid "1 minute left until forced round end\n"
 msgstr "1 minut tilbage før runden afsluttes\n"
 
-#: game/g_client.c:2454
+#: game/g_client.c:2488
 msgid "30 seconds left until forced round end\n"
 msgstr "30 sekunder tilbage før runden afsluttes\n"
 
-#: game/g_client.c:2457
+#: game/g_client.c:2491
 msgid "15 seconds left until forced round end\n"
 msgstr "15 sekunder tilbage før runden afsluttes\n"
 
-#: game/g_client.c:2465
+#: game/g_client.c:2499
 msgid "Current active team hit the max round time\n"
 msgstr "Nuværende aktive hold rammer maks rundetiden\n"
 
@@ -9349,6 +9487,21 @@ msgstr "Base er under angreb."
 msgid "Crashed Alien Ship. Secure the area."
 msgstr "Nedstyrtet rumvæsenfly. Gør området sikkert."
 
+#~ msgid "UFO - Figher"
+#~ msgstr "Ufo - jager"
+
+#~ msgid "Alien colony"
+#~ msgstr "Rumvæsenkoloni"
+
+#~ msgid "We located the alien colony, go there and destroy it."
+#~ msgstr "Vi har lokaliseret rumvæsenkolonien, ødelæg den."
+
+#~ msgid ""
+#~ "You can zoom the geoscape by holding down [Ctrl] and moving the mouse up "
+#~ "or down."
+#~ msgstr ""
+#~ "Du kan zoome geoscapen ved at holde [ctrl] nede og flytte musen op eller "
+#~ "ned."
 
 #~ msgid "The aliens begin their invasion ..."
 #~ msgstr "Rumvæsenerne begynder deres invasion ..."
