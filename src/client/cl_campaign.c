@@ -575,10 +575,11 @@ qboolean CP_SpawnCrashSiteMission (aircraft_t* aircraft)
 	Com_sprintf(ms->type, sizeof(ms->type), _("UFO crash site"));
 	if (nation) {
 		Com_sprintf(ms->location, sizeof(ms->location), _(nation->name));
+		Q_strncpyz(ms->civTeam, nation->id, sizeof(ms->civTeam));
 	} else {
 		Com_sprintf(ms->location, sizeof(ms->location), _("No nation"));
+		Q_strncpyz(ms->civTeam, "europa", sizeof(ms->civTeam));
 	}
-	Q_strncpyz(ms->civTeam, nation->id, sizeof(ms->civTeam));
 	ms->missionText = "Crashed Alien Ship. Secure the area.";
 
 	/* FIXME */
