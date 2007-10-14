@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-10-12 21:49+0200\n"
+"POT-Creation-Date: 2007-10-14 12:22+0200\n"
 "PO-Revision-Date: 2007-10-12 21:41+0100\n"
 "Last-Translator: Lubomír Bláha <tritol@trilogic.cz>\n"
 "Language-Team: čeština <cs@li.org>\n"
@@ -938,14 +938,14 @@ msgstr "Vyrobit letoun"
 #: ../base/ufos/menu_basesummary.ufo:48 ../base/ufos/menu_buildings.ufo:100
 #: ../base/ufos/menu_buy.ufo:1176 ../base/ufos/menu_buy.ufo:2225
 #: ../base/ufos/menu_geoscape.ufo:107 ../base/ufos/menu_production.ufo:49
-#: ../base/ufos/menu_production.ufo:544 ../base/ufos/menu_research.ufo:1137
+#: ../base/ufos/menu_production.ufo:544 ../base/ufos/menu_research.ufo:1135
 msgid "CREDIT"
 msgstr "ZŮSTATEK"
 
 #: ../base/ufos/menu_aliencont.ufo:68 ../base/ufos/menu_basesummary.ufo:67
 #: ../base/ufos/menu_buildings.ufo:74 ../base/ufos/menu_buy.ufo:1423
 #: ../base/ufos/menu_hire.ufo:800 ../base/ufos/menu_production.ufo:477
-#: ../base/ufos/menu_research.ufo:1193 ../base/ufos/menu_transfer.ufo:312
+#: ../base/ufos/menu_research.ufo:1191 ../base/ufos/menu_transfer.ufo:312
 msgid "Back to baseview"
 msgstr "Zpět na zobrazení základny"
 
@@ -1229,7 +1229,7 @@ msgstr "Vybudujte alespoň jednen hangár"
 #: ../base/ufos/menu_bases.ufo:153 ../base/ufos/menu_buy.ufo:2283
 #: ../base/ufos/menu_geoscape.ufo:1012 ../base/ufos/menu_production.ufo:825
 #: ../base/ufos/menu_transfer.ufo:267 ../base/ufos/research.ufo:100
-#: client/cl_map.c:328
+#: client/cl_map.c:327
 msgid "Aircraft"
 msgstr "Letoun"
 
@@ -2766,7 +2766,7 @@ msgstr "Gama:"
 msgid "Low"
 msgstr "Nízké"
 
-#: ../base/ufos/menu_options.ufo:360 client/cl_mapfightequip.c:1514
+#: ../base/ufos/menu_options.ufo:360 client/cl_mapfightequip.c:1518
 msgid "Medium"
 msgstr "Střední"
 
@@ -3049,15 +3049,15 @@ msgstr "Odebrat vědce"
 msgid "Base Info"
 msgstr "Informace o základně"
 
-#: ../base/ufos/menu_research.ufo:1157
+#: ../base/ufos/menu_research.ufo:1155
 msgid "Stop research"
 msgstr "Zastavit výzkum"
 
-#: ../base/ufos/menu_research.ufo:1168
+#: ../base/ufos/menu_research.ufo:1166
 msgid "Start research"
 msgstr "Zahájit výzkum"
 
-#: ../base/ufos/menu_research.ufo:1179
+#: ../base/ufos/menu_research.ufo:1177
 msgid "Show research proposal"
 msgstr "Zobrazit návrh výzkumu"
 
@@ -14877,27 +14877,29 @@ msgstr ""
 
 #: client/cl_aircraft.c:276 client/cl_aircraft.c:289 client/cl_aircraft.c:498
 #: client/cl_aircraft.c:677 client/cl_aircraft.c:928 client/cl_aircraft.c:1025
-#: client/cl_aliencont.c:185 client/cl_aliencont.c:211
-#: client/cl_aliencont.c:224 client/cl_aliencont.c:237
-#: client/cl_basemanagement.c:897 client/cl_basemanagement.c:2411
-#: client/cl_campaign.c:298 client/cl_campaign.c:1079
-#: client/cl_campaign.c:1137 client/cl_campaign.c:1152
-#: client/cl_campaign.c:1318 client/cl_campaign.c:1329
-#: client/cl_campaign.c:1339 client/cl_campaign.c:1349
-#: client/cl_campaign.c:1359 client/cl_campaign.c:1370
-#: client/cl_campaign.c:1383 client/cl_campaign.c:1393
-#: client/cl_campaign.c:1400 client/cl_campaign.c:1408
-#: client/cl_campaign.c:2773 client/cl_campaign.c:2884
-#: client/cl_campaign.c:2932 client/cl_campaign.c:2934
-#: client/cl_campaign.c:3242 client/cl_inventory.c:293
-#: client/cl_inventory.c:298 client/cl_inventory.c:544 client/cl_main.c:1024
-#: client/cl_map.c:295 client/cl_market.c:656 client/cl_market.c:660
-#: client/cl_parse.c:1591 client/cl_popup.c:340 client/cl_produce.c:444
-#: client/cl_produce.c:453 client/cl_produce.c:463 client/cl_produce.c:472
-#: client/cl_produce.c:483 client/cl_research.c:1069 client/cl_research.c:1087
-#: client/cl_research.c:1093 client/cl_research.c:1131
-#: client/cl_research.c:1162 client/cl_research.c:1316
-#: client/cl_research.c:1319 client/cl_ufo.c:472 client/cl_ufo.c:475
+#: client/cl_airfight.c:395 client/cl_aliencont.c:185
+#: client/cl_aliencont.c:211 client/cl_aliencont.c:224
+#: client/cl_aliencont.c:237 client/cl_basemanagement.c:897
+#: client/cl_basemanagement.c:2411 client/cl_campaign.c:298
+#: client/cl_campaign.c:1079 client/cl_campaign.c:1137
+#: client/cl_campaign.c:1152 client/cl_campaign.c:1318
+#: client/cl_campaign.c:1329 client/cl_campaign.c:1339
+#: client/cl_campaign.c:1349 client/cl_campaign.c:1359
+#: client/cl_campaign.c:1370 client/cl_campaign.c:1383
+#: client/cl_campaign.c:1393 client/cl_campaign.c:1400
+#: client/cl_campaign.c:1408 client/cl_campaign.c:2773
+#: client/cl_campaign.c:2884 client/cl_campaign.c:2932
+#: client/cl_campaign.c:2934 client/cl_campaign.c:3242
+#: client/cl_inventory.c:293 client/cl_inventory.c:298
+#: client/cl_inventory.c:544 client/cl_main.c:1024 client/cl_map.c:295
+#: client/cl_mapfightequip.c:640 client/cl_mapfightequip.c:642
+#: client/cl_market.c:656 client/cl_market.c:660 client/cl_parse.c:1591
+#: client/cl_popup.c:341 client/cl_produce.c:444 client/cl_produce.c:453
+#: client/cl_produce.c:463 client/cl_produce.c:472 client/cl_produce.c:483
+#: client/cl_research.c:1074 client/cl_research.c:1092
+#: client/cl_research.c:1098 client/cl_research.c:1136
+#: client/cl_research.c:1167 client/cl_research.c:1321
+#: client/cl_research.c:1324 client/cl_ufo.c:472 client/cl_ufo.c:475
 msgid "Notice"
 msgstr "Poznámka"
 
@@ -14962,12 +14964,12 @@ msgstr ""
 "Váš letoun nemá dostatek paliva pro cestu tam a zpět na svoji domovskou "
 "základnu."
 
-#: client/cl_aircraft.c:593 client/cl_map.c:1372
+#: client/cl_aircraft.c:593 client/cl_map.c:1371
 #, c-format
 msgid "Speed:\t%i\n"
 msgstr "Rychlost:\t%i\n"
 
-#: client/cl_aircraft.c:594 client/cl_map.c:1373
+#: client/cl_aircraft.c:594 client/cl_map.c:1372
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "Palivo:\t%i/%i\n"
@@ -15000,32 +15002,37 @@ msgstr "Transportér má málo paliva a vrací se na základnu"
 msgid "Assign a team to aircraft"
 msgstr "Přidělit tým k letounu"
 
-#: client/cl_airfight.c:468 client/cl_airfight.c:503 client/cl_campaign.c:551
+#: client/cl_airfight.c:395
+#, fuzzy
+msgid "Our aircraft has no more ammo left - returning to home base now."
+msgstr "Přepravní mise ukončena, vrací se na základnu."
+
+#: client/cl_airfight.c:466 client/cl_airfight.c:501 client/cl_campaign.c:551
 #: client/cl_campaign.c:557 client/cl_campaign.c:598 client/cl_campaign.c:602
 msgid "Interception"
 msgstr "Stíhání"
 
-#: client/cl_airfight.c:468
+#: client/cl_airfight.c:466
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "Stíhání UFO bylo úspěšné -- UFO bylo ztraceno v moři."
 
-#: client/cl_airfight.c:503 client/cl_campaign.c:2934
+#: client/cl_airfight.c:501 client/cl_campaign.c:2934
 msgid "You've lost the battle"
 msgstr "Prohrál jste bitvu"
 
-#: client/cl_airfight.c:609 client/cl_airfight.c:621 client/cl_airfight.c:640
+#: client/cl_airfight.c:607 client/cl_airfight.c:619 client/cl_airfight.c:638
 msgid "Base facility destroyed"
 msgstr "Zařízení základny bylo zničeno"
 
-#: client/cl_airfight.c:609
+#: client/cl_airfight.c:607
 msgid "You've lost a missile battery system."
 msgstr "Přišel jste o soustavu raketových baterií."
 
-#: client/cl_airfight.c:621
+#: client/cl_airfight.c:619
 msgid "You've lost a laser battery system."
 msgstr "Přišel jste o soustavu laserových baterií."
 
-#: client/cl_airfight.c:639
+#: client/cl_airfight.c:637
 #, c-format
 msgid "You've lost a base facility (%s)."
 msgstr "Přišel jste o zařízení základny (%s)."
@@ -16079,44 +16086,44 @@ msgstr "Nemožné"
 msgid "Custom"
 msgstr "Uživatelský"
 
-#: client/cl_map.c:322
+#: client/cl_map.c:321
 msgid "Base"
 msgstr "Základna"
 
-#: client/cl_map.c:339
+#: client/cl_map.c:338
 msgid "UFO"
 msgstr "UFO"
 
-#: client/cl_map.c:1131
+#: client/cl_map.c:1130
 msgid "Day"
 msgstr "Den"
 
-#: client/cl_map.c:1131
+#: client/cl_map.c:1130
 msgid "Night"
 msgstr "Noc"
 
-#: client/cl_map.c:1279
+#: client/cl_map.c:1278
 #, c-format
 msgid "%s\t%i%%\n"
 msgstr "%s\t%i%%\n"
 
-#: client/cl_map.c:1333
+#: client/cl_map.c:1332
 msgid "Select the desired location of the new base on the map.\n"
 msgstr "Vyberte na mapě umístění nové základny.\n"
 
-#: client/cl_map.c:1338
+#: client/cl_map.c:1337
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr "Cizáci právě teď útočí na naši základnu.\n"
 
-#: client/cl_map.c:1343
+#: client/cl_map.c:1342
 msgid "Select ufo or mission on map\n"
 msgstr "Vyberte na mapě UFO nebo misi\n"
 
-#: client/cl_map.c:1348
+#: client/cl_map.c:1347
 msgid "UFO in radar range\n"
 msgstr "UFO v dosahu radaru\n"
 
-#: client/cl_map.c:1365
+#: client/cl_map.c:1364
 #, c-format
 msgid ""
 "Location: %s\n"
@@ -16127,12 +16134,12 @@ msgstr ""
 "Druh: %s\n"
 "Úkol: %s\n"
 
-#: client/cl_map.c:1370
+#: client/cl_map.c:1369
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "Jméno:\t%s (%i/%i)\n"
 
-#: client/cl_map.c:1371
+#: client/cl_map.c:1370
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Stav:\t%s\n"
@@ -16182,51 +16189,61 @@ msgstr "Tato obranná soustava bude v provozu během %d hodin.\n"
 msgid "No ammo assigned to this defense system."
 msgstr "K této obranné soustavě není přiřazena žádná munice."
 
-#: client/cl_mapfightequip.c:860
+#: client/cl_mapfightequip.c:640
+#, fuzzy
+msgid "Aircraft item was successfully installed."
+msgstr "Kampaň byla úspěšně uložena."
+
+#: client/cl_mapfightequip.c:642
+#, fuzzy
+msgid "Base defense item was successfully installed."
+msgstr "Kampaň byla úspěšně uložena."
+
+#: client/cl_mapfightequip.c:864
 msgid "No item assigned.\n"
 msgstr "Není přiřazena žádná položka.\n"
 
-#: client/cl_mapfightequip.c:861
+#: client/cl_mapfightequip.c:865
 #, c-format
 msgid "This slot is for %s or smaller items."
 msgstr "Položka vhodná do této pozice: %s nebo menší."
 
-#: client/cl_mapfightequip.c:866
+#: client/cl_mapfightequip.c:870
 msgid "This item is functional.\n"
 msgstr "Tato položka funguje.\n"
 
-#: client/cl_mapfightequip.c:868
+#: client/cl_mapfightequip.c:872
 #, c-format
 msgid "This item will be installed in %i hours.\n"
 msgstr "Tato položka bude namontována během %d hodin.\n"
 
-#: client/cl_mapfightequip.c:870
+#: client/cl_mapfightequip.c:874
 #, c-format
 msgid "This item will be removed in %i hours.\n"
 msgstr "Tato položka bude demontována během %d hodin.\n"
 
-#: client/cl_mapfightequip.c:877
+#: client/cl_mapfightequip.c:881
 msgid "No item assigned."
 msgstr "Není přiřazena žádná položka."
 
-#: client/cl_mapfightequip.c:881
+#: client/cl_mapfightequip.c:885
 #, c-format
 msgid "This item will be operational in %i hours.\n"
 msgstr "Tato položka bude v provozu během %d hodin.\n"
 
-#: client/cl_mapfightequip.c:890
+#: client/cl_mapfightequip.c:894
 msgid "No ammo assigned to this weapon."
 msgstr "K této zbrani není přiřazena žádná munice."
 
-#: client/cl_mapfightequip.c:1511
+#: client/cl_mapfightequip.c:1515
 msgid "Light"
 msgstr "Lehká"
 
-#: client/cl_mapfightequip.c:1517 client/cl_ufopedia.c:152
+#: client/cl_mapfightequip.c:1521 client/cl_ufopedia.c:152
 msgid "Heavy"
 msgstr "Těžká"
 
-#: client/cl_mapfightequip.c:1520
+#: client/cl_mapfightequip.c:1524
 msgid "Unknown weight"
 msgstr "Neznámá hmotnost"
 
@@ -16382,17 +16399,18 @@ msgstr "Zastavit\n"
 msgid "Mission\t%s (%s)\n"
 msgstr "Mise\t%s (%s)\n"
 
-#: client/cl_popup.c:293
+#: client/cl_popup.c:294
 msgid "No craft available, or no tactical teams assigned to available craft."
 msgstr ""
 "Letoun není k dispozici nebo není přiřazen bojový tým k dostupnému letounu."
 
-#: client/cl_popup.c:295
-msgid "No craft available, or no weapons loaded on available craft."
+#: client/cl_popup.c:296
+#, fuzzy
+msgid "No craft available, no weapon or ammo equipped or target out of reach."
 msgstr ""
 "Letoun není k dispozici nebo nejsou namontované zbraně na dostupném letounu."
 
-#: client/cl_popup.c:340
+#: client/cl_popup.c:341
 msgid ""
 "No Command Centre operational in homebase\n"
 "of this aircraft.\n"
@@ -16625,46 +16643,46 @@ msgstr "Nalezena neznámá technologie"
 msgid "Laboratory space (used/all): %i/%i"
 msgstr "Kapacita laboratoří (použito/celkem): %i/%i"
 
-#: client/cl_research.c:775
+#: client/cl_research.c:776
 #, c-format
 msgid "Scientists (available/all): %i/%i"
 msgstr "Vědci (k dispozici/celkem): %i/%i"
 
-#: client/cl_research.c:779
+#: client/cl_research.c:781
 msgid "Not researched in any base."
 msgstr "Nezkoumáno na žádné základně."
 
-#: client/cl_research.c:785
+#: client/cl_research.c:787
 #, c-format
 msgid "Researched in %s"
 msgstr "Zkoumáno na základně %s"
 
-#: client/cl_research.c:787
+#: client/cl_research.c:789
 msgid "Researched in this base."
 msgstr "Zkoumáno na této základně."
 
-#: client/cl_research.c:798
+#: client/cl_research.c:801
 #, c-format
 msgid "Progress: %.1f%%"
 msgstr "Pokrok: %.1f%%"
 
-#: client/cl_research.c:800
+#: client/cl_research.c:804
 msgid "Progress: Not available."
 msgstr "Pokrok: Není k dispozici."
 
-#: client/cl_research.c:804
+#: client/cl_research.c:809
 msgid "Status: Under research"
 msgstr "Stav: Zkoumáno"
 
-#: client/cl_research.c:807
+#: client/cl_research.c:812
 msgid "Status: Research paused"
 msgstr "Stav: Výzkum pozastaven"
 
-#: client/cl_research.c:810
+#: client/cl_research.c:815
 msgid "Status: Research finished"
 msgstr "Stav: Výzkum dokončen"
 
-#: client/cl_research.c:815
+#: client/cl_research.c:820
 msgid ""
 "Status: We don't currently have all the materials or background knowledge "
 "needed to research this topic."
@@ -16672,11 +16690,11 @@ msgstr ""
 "Stav: V současné chvíli nemáme veškerý materiál nebo základní znalosti "
 "potřebné k výzkumu tohoto tématu."
 
-#: client/cl_research.c:817
+#: client/cl_research.c:822
 msgid "Status: Unknown technology"
 msgstr "Stav: Neznámá technologie"
 
-#: client/cl_research.c:902 client/cl_research.c:906
+#: client/cl_research.c:907 client/cl_research.c:911
 msgid ""
 "No free space in laboratories left.\n"
 "Build more laboratories.\n"
@@ -16684,19 +16702,19 @@ msgstr ""
 "V laboratořích již není volné místo.\n"
 "Postavte více laboratoří.\n"
 
-#: client/cl_research.c:902 client/cl_research.c:906
+#: client/cl_research.c:907 client/cl_research.c:911
 msgid "Not enough laboratories"
 msgstr "Nedostatek laboratoří"
 
-#: client/cl_research.c:1069
+#: client/cl_research.c:1074
 msgid "This item is currently under research in another base."
 msgstr "Tato položka je již zkoumána na jiné základně."
 
-#: client/cl_research.c:1087 client/cl_research.c:1131
+#: client/cl_research.c:1092 client/cl_research.c:1136
 msgid "The research on this item is complete."
 msgstr "Výzkum této položky je dokončen."
 
-#: client/cl_research.c:1093
+#: client/cl_research.c:1098
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
@@ -16704,23 +16722,23 @@ msgstr ""
 "Výzkum této položky zatím není možný.\n"
 "Nejprve je třeba vyzkoumat technologie, na kterých je založena."
 
-#: client/cl_research.c:1162
+#: client/cl_research.c:1167
 msgid "No research proposal available for this project."
 msgstr "K tomuto projektu není k dispozici návrh výzkumu."
 
-#: client/cl_research.c:1316
+#: client/cl_research.c:1321
 msgid "Nothing to research"
 msgstr "Nic ke zkoumání"
 
-#: client/cl_research.c:1319
+#: client/cl_research.c:1324
 msgid "Build a laboratory first"
 msgstr "Nejprve vybudujte laboratoř"
 
-#: client/cl_research.c:1719
+#: client/cl_research.c:1724
 msgid "No description available."
 msgstr "Popis není k dispozici."
 
-#: client/cl_research.c:1720
+#: client/cl_research.c:1725
 msgid "No research proposal available."
 msgstr "Návrh výzkumu není k dispozici."
 
@@ -17988,9 +18006,6 @@ msgstr "Místo havárie cizáků. Zabezpečte oblast."
 
 #~ msgid "The base does not exist anymore."
 #~ msgstr "Základna již neexistuje."
-
-#~ msgid "Transport mission ended, returning to homebase now."
-#~ msgstr "Přepravní mise ukončena, vrací se na základnu."
 
 #~ msgid "Can't start a transport mission while not at base"
 #~ msgstr "Nelze zahájit přepravní misi dokud není na základně "
