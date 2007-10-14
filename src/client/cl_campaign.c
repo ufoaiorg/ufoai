@@ -862,7 +862,7 @@ static void CL_AircraftList_f (void)
 
 		for (i = 0; i < gd.bases[j].numAircraftInBase; i++) {
 			aircraft = &gd.bases[j].aircraft[i];
-			s = va("%s (%i/%i)\t%s\t%s\n", aircraft->name, aircraft->teamSize,
+			s = va("%s (%i/%i)\t%s\t%s\n", _(aircraft->name), aircraft->teamSize,
 				aircraft->maxTeamSize, AIR_AircraftStatusToName(aircraft), gd.bases[j].name);
 			Q_strcat(aircraftListText, s, sizeof(aircraftListText));
 		}
