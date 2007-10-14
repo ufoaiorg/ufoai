@@ -326,33 +326,33 @@ static void AIM_DrawSelectedZone (void)
  * @brief Adds a defense system to base.
  * @param[in] type 0 if the battery is missile, 1 if the battery is laser
  */
-static void BDEF_AddBattery (int type)
+static void BDEF_AddBattery (int type, base_t* base)
 {
 	switch (type) {
 	case 0:
-		if (baseCurrent->maxBatteries >= MAX_BASE_SLOT) {
-			Com_Printf("BDEF_AddBattery_f: too many missile batteries in base\n");
+		if (base->maxBatteries >= MAX_BASE_SLOT) {
+			Com_Printf("BDEF_AddBattery: too many missile batteries in base\n");
 			return;
 		}
 		/* slots has a lot of ammo for now */
 		/* FIXME: ammo should be taken in base storage when buying base defense ammos will be implemented */
-		baseCurrent->batteries[baseCurrent->maxBatteries].ammoLeft = 9999;
+		base->batteries[base->maxBatteries].ammoLeft = 9999;
 
-		baseCurrent->maxBatteries++;
+		base->maxBatteries++;
 		break;
 	case 1:
-		if (baseCurrent->maxLasers >= MAX_BASE_SLOT) {
-			Com_Printf("BDEF_AddBattery_f: too many laser batteries in base\n");
+		if (base->maxLasers >= MAX_BASE_SLOT) {
+			Com_Printf("BDEF_AddBattery: too many laser batteries in base\n");
 			return;
 		}
 		/* slots has a lot of ammo for now */
 		/* FIXME: ammo should be taken in base storage when buying base defense ammos will be implemented */
-		baseCurrent->batteries[baseCurrent->maxBatteries].ammoLeft = 9999;
+		base->batteries[base->maxBatteries].ammoLeft = 9999;
 
-		baseCurrent->maxBatteries++;
+		base->maxBatteries++;
 		break;
 	default:
-		Com_Printf("BDEF_AddBattery_f: unknown type of base defense system.\n");
+		Com_Printf("BDEF_AddBattery: unknown type of base defense system.\n");
 	}
 }
 
@@ -363,12 +363,15 @@ void BDEF_AddBattery_f (void)
 {
 	int num;
 
+	if (!baseCurrent)
+		return;
+
 	if (Cmd_Argc() < 2)
 		num = rand() % 2;
 	else
 		num = atoi(Cmd_Argv(1));
 
-	BDEF_AddBattery(num);
+	BDEF_AddBattery(num, baseCurrent);
 }
 
 /**
@@ -1099,6 +1102,7 @@ qboolean AII_AddAmmoToSlot (base_t* base, technology_t *tech, aircraftSlot_t *sl
 	/* remove any applied ammo in the current slot */
 	AII_RemoveItemFromSlot(base, slot, qtrue);
 	slot->ammoIdx = ammoIdx;
+
 	/* the base pointer can be null here - e.g. in case you are equipping an ufo */
 	if (base)
 		B_UpdateStorageAndCapacity(base, ammoIdx, -1, qfalse, qfalse);
@@ -1200,6 +1204,9 @@ void AIM_AircraftEquipAddItem_f (void)
 		slot->nextItemIdx = AII_GetAircraftItemByID(airequipSelectedTechnology->provides);
 	else if (airequipID >= AC_ITEM_AMMO) {
 		AII_AddAmmoToSlot(base, airequipSelectedTechnology, slot);
+		/* reload its ammunition */
+		if (aircraft)
+			AII_ReloadWeapon(aircraft);
 	}
 
 	if (aircraftMenu) {

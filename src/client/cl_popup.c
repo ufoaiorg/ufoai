@@ -273,8 +273,19 @@ void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 				continue;
 			/* don't show aircraft with no weapons or no ammo, or crafts that
 			 * can't even reach the target */
-			if (ufo && !AIRFIGHT_ChooseWeapon(air->weapons, air->maxWeapons, ufo->pos, air->pos));
-				continue;
+			if (ufo) {
+				/* use twice the ufo pos here, the weapon range says nothing about
+				 * the aircraft range */
+				if (AIRFIGHT_ChooseWeapon(air->weapons, air->maxWeapons, air->pos, air->pos) < 0) {
+					Com_DPrintf(DEBUG_CLIENT, "CL_DisplayPopupIntercept: No useable weapon found in craft '%s' (%i)\n", air->id, air->maxWeapons);
+					continue;
+				}
+				/* now check the aircraft range */
+				if (MAP_GetDistance(ufo->pos, air->pos) > air->stats[AIR_STATS_SPEED] * air->fuel / 3600.0f) {
+					Com_DPrintf(DEBUG_CLIENT, "CL_DisplayPopupIntercept: Target out of reach for craft '%s'\n", air->id);
+					continue;
+				}
+			}
 
 			s = va("%s (%i/%i)\t%s\t%s\n", _(air->shortname), air->teamSize, air->maxTeamSize, AIR_AircraftStatusToName(air), gd.bases[j].name);
 			Q_strcat(aircraftListText, s, sizeof(aircraftListText));
