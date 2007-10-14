@@ -271,11 +271,12 @@ void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 			/* if aircraft is empty we can't send it on a ground mission */
 			if (mission && (air->teamSize <= 0 || air->type != AIRCRAFT_TRANSPORTER))
 				continue;
-			/* don't show aircraft with no weapons */
-			if (ufo && air->weapons[0].itemIdx < 0)
+			/* don't show aircraft with no weapons or no ammo, or crafts that
+			 * can't even reach the target */
+			if (ufo && !AIRFIGHT_ChooseWeapon(air->weapons, air->maxWeapons, ufo->pos, air->pos));
 				continue;
 
-			s = va("%s (%i/%i)\t%s\t%s\n", air->shortname, air->teamSize, air->maxTeamSize, AIR_AircraftStatusToName(air), gd.bases[j].name);
+			s = va("%s (%i/%i)\t%s\t%s\n", _(air->shortname), air->teamSize, air->maxTeamSize, AIR_AircraftStatusToName(air), gd.bases[j].name);
 			Q_strcat(aircraftListText, s, sizeof(aircraftListText));
 			popupIntercept.idBaseAircraft[popupIntercept.numAircraft] = j;
 			popupIntercept.idInBaseAircraft[popupIntercept.numAircraft] = i;
@@ -292,7 +293,7 @@ void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 	else if (mission)
 		menuText[TEXT_AIRCRAFT_LIST] = _("No craft available, or no tactical teams assigned to available craft.");
 	else if (ufo)
-		menuText[TEXT_AIRCRAFT_LIST] = _("No craft available, or no weapons loaded on available craft.");
+		menuText[TEXT_AIRCRAFT_LIST] = _("No craft available, no weapon or ammo equipped or target out of reach.");
 
 	/* Display the popup */
 	MN_PushMenu("popup_intercept");
