@@ -54,5 +54,6 @@ void AIRFIGHT_ExecuteActions(aircraft_t* air, aircraft_t* ufo);
 void AIRFIGHT_ActionsAfterAirfight(aircraft_t* shooter, aircraft_t* aircraft, qboolean phalanxWon);
 void AIRFIGHT_CampaignRunProjectiles(int dt);
 void AIRFIGHT_CampaignRunBaseDefense(int dt);
+int AIRFIGHT_ChooseWeapon(aircraftSlot_t *slot, int maxSlot, vec3_t pos, vec3_t targetPos);
 
 #endif /* CLIENT_CL_AIRFIGHT_H */

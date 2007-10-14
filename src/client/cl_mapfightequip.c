@@ -635,8 +635,12 @@ static void AII_UpdateOneInstallationDelay (base_t* base, aircraft_t *aircraft, 
 		if (slot->installationTime <= 0) {
 			slot->installationTime = 0;
 			/* Update stats values */
-			if (aircraft)
+			if (aircraft) {
 				AII_UpdateAircraftStats(aircraft);
+				MN_AddNewMessage(_("Notice"), _("Aircraft item was successfully installed."), qfalse, MSG_STANDARD, NULL);
+			} else {
+				MN_AddNewMessage(_("Notice"), _("Base defense item was successfully installed."), qfalse, MSG_STANDARD, NULL);
+			}
 		}
 	} else if (slot->installationTime < 0) {
 		/* the item is being removed */

@@ -297,7 +297,6 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
 		break;
 	case MA_UFORADAR:
 		MN_PushMenu("popup_intercept_ufo");
-		/* @todo: Select aircraft - follow ufo - fight */
 		/* if shoot down - we have a new crashsite mission if color != water */
 		break;
 	case MA_BASEATTACK:

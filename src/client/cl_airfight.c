@@ -267,20 +267,16 @@ static int AIRFIGHT_CheckWeapon (const aircraftSlot_t *slot, float distance)
  * -2 AIRFIGHT_SLOT_NO_WEAPON_TO_USE_NO_AMMO_LEFT if no weapon to use at all.
  * @sa AIRFIGHT_CheckWeapon
  */
-static int AIRFIGHT_ChooseWeapon (aircraftSlot_t *slot, int maxSlot, vec3_t pos, vec3_t targetPos)
+int AIRFIGHT_ChooseWeapon (aircraftSlot_t *slot, int maxSlot, vec3_t pos, vec3_t targetPos)
 {
 	int slotIdx = AIRFIGHT_SLOT_NO_WEAPON_TO_USE_NO_AMMO_LEFT;
 	int i, weapon_status;
-	float distance0, distance = 99999.9f;
-
-	distance0 = distance;
-
-	assert(slot);
-
-	distance = MAP_GetDistance(pos, targetPos);
+	float distance0 = 99999.9f;
+	float distance = MAP_GetDistance(pos, targetPos);
 
 	/* We choose the usable weapon with the smallest range */
 	for (i = 0; i < maxSlot; i++) {
+		assert(slot);
 		weapon_status = AIRFIGHT_CheckWeapon(slot + i, distance);
 
 		/* set slotIdx to AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT if needed */
@@ -367,7 +363,7 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 		slotIdx = AIRFIGHT_ChooseWeapon(shooter->weapons, shooter->maxWeapons, shooter->pos, shooter->baseTarget->pos);
 
 	/* if weapon found that can shoot */
-	if (slotIdx > AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT) {
+	if (slotIdx >= AIRFIGHT_WEAPON_CAN_SHOOT) {
 		ammoIdx = shooter->weapons[slotIdx].ammoIdx;
 
 		/* shoot */
@@ -378,7 +374,7 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 			if (probability > AIRFIGHT_ProbabilityToHit(shooter, target, shooter->weapons + slotIdx))
 				AIRFIGHT_MissTarget(gd.numProjectiles - 1);
 		}
-	} else if (slotIdx > AIRFIGHT_SLOT_NO_WEAPON_TO_USE_NO_AMMO_LEFT) {
+	} else if (slotIdx == AIRFIGHT_SLOT_NO_WEAPON_TO_USE_AT_THE_MOMENT) {
 		/* no ammo to fire atm (too far or reloading), pursue target */
 		if (shooter->type == AIRCRAFT_UFO) {
 			if (!shooter->baseTarget)
@@ -395,8 +391,10 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 				UFO_FleePhalanxAircraft(shooter, target->pos);
 			else
 				UFO_FleePhalanxAircraft(shooter, shooter->baseTarget->pos);
-		} else
+		} else {
+			MN_AddNewMessage(_("Notice"), _("Our aircraft has no more ammo left - returning to home base now."), qfalse, MSG_STANDARD, NULL);
 			AIR_AircraftReturnToBase(shooter);
+		}
 	}
 }
 
@@ -464,7 +462,7 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 		if (!MapIsWater(color)) {
 			CP_SpawnCrashSiteMission(aircraft);
 		} else {
-			Com_Printf("zone: %s (%i:%i:%i)\n", MAP_GetTerrainType(color), color[0], color[1], color[2]);
+			Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ActionsAfterAirfight: zone: %s (%i:%i:%i)\n", MAP_GetTerrainType(color), color[0], color[1], color[2]);
 			MN_AddNewMessage(_("Interception"), _("UFO interception successful -- UFO lost to sea."), qfalse, MSG_STANDARD, NULL);
 		}
 		/* change destination of other projectiles aiming aircraft */
