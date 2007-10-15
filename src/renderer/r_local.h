@@ -224,9 +224,6 @@ void QR_Link(void);
 
 extern model_t *rTiles[MAX_MAPTILES];
 extern int rNumTiles;
-
-extern unsigned d_8to24table[256];
-
 extern int registration_sequence;
 
 void R_ScreenShot_f(void);
