@@ -603,15 +603,19 @@ static void CL_PingServerCallback (struct net_stream *s)
 		return;
 
 	menuText[TEXT_LIST] = serverText;
-	Com_sprintf(string, sizeof(string), "%s\t\t\t%s\t\t\t%s\t\t%i/%i\n",
-		server->sv_hostname,
-		server->mapname,
-		server->gametype,
-		server->clients,
-		server->sv_maxclients);
-	server->serverListPos = serverListPos;
-	serverListPos++;
-	Q_strcat(serverText, string, sizeof(serverText));
+	if (mn_serverlist->integer == 0
+	|| (mn_serverlist->integer == 1 && server->clients < server->sv_maxclients)
+	|| (mn_serverlist->integer == 2 && server->clients)) {
+		Com_sprintf(string, sizeof(string), "%s\t\t\t%s\t\t\t%s\t\t%i/%i\n",
+			server->sv_hostname,
+			server->mapname,
+			server->gametype,
+			server->clients,
+			server->sv_maxclients);
+		server->serverListPos = serverListPos;
+		serverListPos++;
+		Q_strcat(serverText, string, sizeof(serverText));
+	}
 	free_stream(s);
 }
 
