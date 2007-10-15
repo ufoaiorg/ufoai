@@ -26,11 +26,11 @@ cwalk0				101		118		15
 
 // Rifle animations
 stand1				61		61		1
-walk1				82		101		22
-cstand1				115		116		1
+walk1				82		100		22
+cstand1				134		134		1
 cwalk1				118		133		15
 
-move_rifle			82		101		22
+move_rifle			82		100		22
 shoot_rifle			119		133		22
 cmove_rifle			136		153		22
 cshoot_rifle			154		168		22
@@ -59,32 +59,32 @@ walk2				299		318		22
 cstand2				333		333		1
 cwalk2				335		352		22
 
-move_pistol			299		318		22
+move_pistol			299		317		22
 shoot_pistol		318		332		22
 cmove_pistol		335		352		22
-cshoot_pistol		353		367		5
+cshoot_pistol		353		367		22
 
 // Akimbo pistols (xxx_pistol_d)
-//move_pistol_d		240		240		4
-//shoot_pistol_d		241		249		10
-//cmove_pistol_d		280		281		10
-//cshoot_pistol_d		282		290		10
+//BLEND move_pistol_d		368		386		22
+//BLEND shoot_pistol_d		387		401		22
+//BLEND cmove_pistol_d		402		419		22
+//BLEND cshoot_pistol_d		420		434		22
 
 // todo: right now we use the "rifle" animations (how is this different to rifle?)
-move_biggun			82		101		22
+move_biggun			82		100		22
 shoot_biggun		119		133		22
 cmove_biggun		136		153		22
 cshoot_biggun		154		168		22
 
 // Melee attack and move animations.
-//move_melee			155		155		4
-//shoot_melee			156		160		10
-//cmove_melee			181		182		10
-//cshoot_melee		183		187		10
+//TODO move_melee			155		155		4
+//TODO shoot_melee			156		160		10
+//TODO cmove_melee			181		182		10
+//TODO cshoot_melee		183		187		10
 
 
 
 stand_menu			60		60		1
-//panic0				370		371		1
+//TODO panic0				370		371		1
 
 stand_still			60		60		1
