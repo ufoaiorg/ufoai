@@ -4956,7 +4956,7 @@ void MN_AddChatMessage (const char *text)
 	/* maybe the hud doesn't have a chatscreen node - or we don't have a hud */
 	if (chatBufferNode) {
 		Cmd_ExecuteString("unhide_chatscreen");
-		menuStack[menuStackPos-1]->eventTime = cls.realtime;
+		chatBufferNode->menu->eventTime = cls.realtime;
 	}
 }
 

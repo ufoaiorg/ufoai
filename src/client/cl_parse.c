@@ -1567,8 +1567,8 @@ static void CL_ParseEvent (struct dbuffer *msg)
  */
 void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
 {
-	char		*s;
-	int			i;
+	char *s;
+	int i;
 
 	/* parse the message */
 	if (cmd == -1)
