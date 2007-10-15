@@ -25,7 +25,7 @@ cshoot_rifle		165		169		10
 
 move_biggun			146		146		4
 shoot_biggun		147		151		10
-cmove_biggun		172		173		10
+cmove_biggun		172		173		1
 cshoot_biggun		174		178		10
 
 move_melee			155		155		4
