@@ -1390,7 +1390,7 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, i
 	/* Fire the weapon in the right hand if everything is ok. */
 	if (RIGHT(ent) && (RIGHT(ent)->item.m != NONE)
 	 && gi.csi->ods[RIGHT(ent)->item.t].weapon
-	 && (!gi.csi->ods[RIGHT(ent)->item.t].reload || RIGHT(ent)->item.a > 0) ) {
+	 && (!gi.csi->ods[RIGHT(ent)->item.t].reload || RIGHT(ent)->item.a > 0)) {
 		weapon_fd_idx = FIRESH_FiredefsIDXForWeapon(&gi.csi->ods[RIGHT(ent)->item.m], RIGHT(ent)->item.t);
 		assert(weapon_fd_idx >= 0);
 
