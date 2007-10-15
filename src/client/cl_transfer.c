@@ -293,8 +293,8 @@ static void TR_CargoList (void)
 	for (i = 0; i < MAX_AIRCRAFT; i++) {
 		if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
 			aircraft = AIR_AircraftGetFromIdx(trAircraftsTmp[i]);
-			Com_sprintf(str, sizeof(str), _("Aircraft %s\n"),
-			aircraft->name);
+			assert(aircraft);
+			Com_sprintf(str, sizeof(str), _("Aircraft %s\n"), _(aircraft->name));
 			Q_strcat(cargoList, str, sizeof(cargoList));
 			cargo[cnt].type = CARGO_TYPE_AIRCRAFT;
 			cargo[cnt].itemidx = i;

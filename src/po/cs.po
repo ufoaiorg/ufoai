@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-10-14 12:22+0200\n"
-"PO-Revision-Date: 2007-10-12 21:41+0100\n"
+"POT-Creation-Date: 2007-10-14 21:32+0200\n"
+"PO-Revision-Date: 2007-10-14 21:15+0100\n"
 "Last-Translator: Lubomír Bláha <tritol@trilogic.cz>\n"
 "Language-Team: čeština <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -781,7 +781,7 @@ msgstr "Návrat na základnu"
 
 #: ../base/ufos/menu_aircraft.ufo:200
 msgid "Equip aircraft components"
-msgstr "Vybavit součásti letounu"
+msgstr "Spravovat vybavení letounu"
 
 #: ../base/ufos/menu_aircraft.ufo:216
 msgid "Equip"
@@ -833,7 +833,7 @@ msgstr "Dostupné vybavení"
 
 #: ../base/ufos/menu_aircraft.ufo:503
 msgid "Selected item:"
-msgstr "Vybraná položka:"
+msgstr "Vybrané vybavení:"
 
 #: ../base/ufos/menu_aircraft.ufo:511 ../base/ufos/menu_aircraft.ufo:521
 msgid "Weapons"
@@ -853,12 +853,12 @@ msgstr "Vybavení"
 #: ../base/ufos/menu_aircraft.ufo:575 ../base/ufos/menu_aircraft.ufo:597
 #: ../base/ufos/menu_aircraft.ufo:619
 msgid "Add selected item"
-msgstr "Přidat vybranou položku"
+msgstr "Přidat zvolené vybavení"
 
 #: ../base/ufos/menu_aircraft.ufo:586 ../base/ufos/menu_aircraft.ufo:608
 #: ../base/ufos/menu_aircraft.ufo:630
 msgid "Remove item from slot"
-msgstr "Odebrat položku z pozice"
+msgstr "Odebrat vybavení z pozice"
 
 #: ../base/ufos/menu_aircraft.ufo:642 ../base/ufos/menu_aircraft.ufo:664
 #: ../base/ufos/menu_aircraft.ufo:686
@@ -867,11 +867,11 @@ msgstr "Vybrat tuto oblast"
 
 #: ../base/ufos/menu_aircraft.ufo:707
 msgid "Current item in slot"
-msgstr "Současná položka v pozici"
+msgstr "Nynější vybavení v pozici"
 
 #: ../base/ufos/menu_aircraft.ufo:716
 msgid "Item to install after removal"
-msgstr "Položka k namontování po demontáži"
+msgstr "Vybavení k namontování po demontáži"
 
 #: ../base/ufos/menu_aircraft.ufo:725
 msgid "Ammo fitting this weapon"
@@ -1061,7 +1061,7 @@ msgstr "Ukončit tah"
 #: ../base/ufos/menu_althud.ufo:606 ../base/ufos/menu_althud.ufo:616
 #: ../base/ufos/menu_hud.ufo:420 ../base/ufos/menu_hud.ufo:430
 msgid "Use Item"
-msgstr "Použít položku"
+msgstr "Použít předmět"
 
 #: ../base/ufos/menu_althud.ufo:628 ../base/ufos/menu_hud.ufo:515
 msgid "Multiple-shot reaction fire"
@@ -1184,7 +1184,7 @@ msgstr "Zvolte jako obrannou soustavu vybudovat"
 
 #: ../base/ufos/menu_basedefense.ufo:274
 msgid "Choose defense system to build after removing current one"
-msgstr "Zvolte jako obrannou soustavu vybudovat po zrušení té současné"
+msgstr "Zvolte jako obrannou soustavu vybudovat po zrušení té nynější"
 
 #: ../base/ufos/menu_basedefense.ufo:296
 msgid "Change ammo in the defense system"
@@ -1192,7 +1192,7 @@ msgstr "Vyměnit munici obranné soustavy"
 
 #: ../base/ufos/menu_basedefense.ufo:317
 msgid "Current defense system"
-msgstr "Současná obranná soustava"
+msgstr "Nynější obranná soustava"
 
 #: ../base/ufos/menu_basedefense.ufo:326
 msgid "System to install after removal"
@@ -1479,7 +1479,7 @@ msgstr "Automatický prodej předmětu zakázán."
 #: ../base/ufos/menu_buy.ufo:1051 ../base/ufos/menu_buy.ufo:1081
 #: ../base/ufos/menu_buy.ufo:1111 ../base/ufos/menu_buy.ufo:1141
 msgid "Buy item"
-msgstr "Koupit položku"
+msgstr "Koupit předmět"
 
 #: ../base/ufos/menu_buy.ufo:342 ../base/ufos/menu_buy.ufo:372
 #: ../base/ufos/menu_buy.ufo:402 ../base/ufos/menu_buy.ufo:432
@@ -1496,7 +1496,7 @@ msgstr "Koupit položku"
 #: ../base/ufos/menu_buy.ufo:1062 ../base/ufos/menu_buy.ufo:1092
 #: ../base/ufos/menu_buy.ufo:1122 ../base/ufos/menu_buy.ufo:1152
 msgid "Sell item"
-msgstr "Prodat položku"
+msgstr "Prodat předmět"
 
 # Faktor
 #: ../base/ufos/menu_buy.ufo:1196
@@ -1505,11 +1505,11 @@ msgstr "Fa. nákupu:"
 
 #: ../base/ufos/menu_buy.ufo:1212
 msgid "Decrease the amount of items you want to buy"
-msgstr "Snížit počet položek které koupíte najednou"
+msgstr "Snížit počet předmětů které koupíte najednou"
 
 #: ../base/ufos/menu_buy.ufo:1226
 msgid "Increase the amount of items you want to buy"
-msgstr "Zvýšit počet položek které koupíte najednou"
+msgstr "Zvýšit počet předmětů které koupíte najednou"
 
 # Faktor
 #: ../base/ufos/menu_buy.ufo:1240
@@ -1518,11 +1518,11 @@ msgstr "Fa. prodeje:"
 
 #: ../base/ufos/menu_buy.ufo:1256
 msgid "Decrease the amount of items you want to sell"
-msgstr "Snížit počet položek které prodáte najednou"
+msgstr "Snížit počet předmětů které prodáte najednou"
 
 #: ../base/ufos/menu_buy.ufo:1270
 msgid "Increase the amount of items you want to sell"
-msgstr "Zvýšit počet položek které prodáte najednou"
+msgstr "Zvýšit počet předmětů které prodáte najednou"
 
 #: ../base/ufos/menu_buy.ufo:1288
 msgid "Storage (used/all):"
@@ -1561,7 +1561,7 @@ msgstr "Ukázat zbroj"
 
 #: ../base/ufos/menu_buy.ufo:1402 ../base/ufos/menu_production.ufo:429
 msgid "Show other items and materials"
-msgstr "Ukázat ostatní položky a součástky"
+msgstr "Ukázat ostatní předměty a součásti"
 
 #: ../base/ufos/menu_buy.ufo:1417 ../base/ufos/menu_production.ufo:444
 msgid "Other"
@@ -1636,7 +1636,7 @@ msgstr "Prodat letoun"
 #: ../base/ufos/menu_buy.ufo:1935 ../base/ufos/menu_buy.ufo:1939
 #: ../base/ufos/menu_buy.ufo:1943
 msgid "Buy craftitem"
-msgstr "Koupit součást letounu"
+msgstr "Koupit vybavení letounu"
 
 #: ../base/ufos/menu_buy.ufo:1872 ../base/ufos/menu_buy.ufo:1876
 #: ../base/ufos/menu_buy.ufo:1880 ../base/ufos/menu_buy.ufo:1884
@@ -1649,7 +1649,7 @@ msgstr "Koupit součást letounu"
 #: ../base/ufos/menu_buy.ufo:1936 ../base/ufos/menu_buy.ufo:1940
 #: ../base/ufos/menu_buy.ufo:1944
 msgid "Sell craftitem"
-msgstr "Prodat součást letounu"
+msgstr "Prodat vybavení letounu"
 
 #: ../base/ufos/menu_buy.ufo:2252
 msgid "No power supplies in this base."
@@ -1669,7 +1669,7 @@ msgstr "Koupit nebo prodat letouny."
 
 #: ../base/ufos/menu_buy.ufo:2263
 msgid "Buy or sell craftitems."
-msgstr "Koupit nebo prodat součásti letounu."
+msgstr "Koupit nebo prodat vybavení letounu."
 
 #: ../base/ufos/menu_buy.ufo:2268
 msgid "Show aircrafts"
@@ -1677,11 +1677,11 @@ msgstr "Ukázat letouny"
 
 #: ../base/ufos/menu_buy.ufo:2288
 msgid "Show craftitems"
-msgstr "Ukázat součásti letounu"
+msgstr "Ukázat vybavení letounu"
 
 #: ../base/ufos/menu_buy.ufo:2303
 msgid "Craftitems"
-msgstr "Součásti letounu"
+msgstr "Vybavení"
 
 #: ../base/ufos/menu_buy.ufo:2308 ../base/ufos/menu_production.ufo:858
 msgid "Back to hangar"
@@ -1825,7 +1825,7 @@ msgstr "Postavit"
 
 #: ../base/ufos/menu_geoscape.ufo:790
 msgid "Select aircraft"
-msgstr "Vybrat letoun"
+msgstr "Zvolte letoun"
 
 #: ../base/ufos/menu_geoscape.ufo:804
 msgid "Status:"
@@ -1845,7 +1845,7 @@ msgstr "Co dělat?"
 
 #: ../base/ufos/menu_geoscape.ufo:942
 msgid "Select item"
-msgstr "Vybrat položku"
+msgstr "Zvolte položku"
 
 #: ../base/ufos/menu_geoscape.ufo:949
 msgid "Type:"
@@ -2279,7 +2279,7 @@ msgstr "Pokračovat"
 
 #: ../base/ufos/menu_lostwon.ufo:367
 msgid "Select base for UFO recovery"
-msgstr "Vybrat základnu pro zpracování"
+msgstr "Zvolte základnu pro zpracování"
 
 #: ../base/ufos/menu_lostwon.ufo:407
 msgid "Begin UFO recovery process"
@@ -2291,7 +2291,7 @@ msgstr "Zpracování"
 
 #: ../base/ufos/menu_lostwon.ufo:444
 msgid "Select nation for UFO recovery"
-msgstr "Vybrat stát pro kterému UFO prodat"
+msgstr "Zvolte stát kterému UFO prodat"
 
 #: ../base/ufos/menu_lostwon.ufo:452
 msgid "Nation:"
@@ -2307,7 +2307,7 @@ msgstr "Vztahy:"
 
 #: ../base/ufos/menu_lostwon.ufo:504
 msgid "Begin UFO sell process"
-msgstr "Zahájit prodejní postup"
+msgstr "Zahájit proces prodeje"
 
 #: ../base/ufos/menu_lostwon.ufo:517
 msgid "Sell"
@@ -2419,7 +2419,7 @@ msgstr "Uložit"
 
 #: ../base/ufos/menu_multiplayer.ufo:281
 msgid "Current Team"
-msgstr "Současný tým"
+msgstr "Nynější tým"
 
 #: ../base/ufos/menu_multiplayer.ufo:290
 msgid "Edit your team after loading"
@@ -2766,7 +2766,7 @@ msgstr "Gama:"
 msgid "Low"
 msgstr "Nízké"
 
-#: ../base/ufos/menu_options.ufo:360 client/cl_mapfightequip.c:1518
+#: ../base/ufos/menu_options.ufo:360 client/cl_mapfightequip.c:1525
 msgid "Medium"
 msgstr "Střední"
 
@@ -2969,7 +2969,7 @@ msgstr "Snížit důležitost"
 
 #: ../base/ufos/menu_production.ufo:449
 msgid "Disassembling items"
-msgstr "Rozebírání položek"
+msgstr "Rozebírání předmětů"
 
 #: ../base/ufos/menu_production.ufo:464
 msgid "Disassembling"
@@ -2985,7 +2985,7 @@ msgstr "Ukázat letoun"
 
 #: ../base/ufos/menu_production.ufo:830
 msgid "Show aircraft items"
-msgstr "Ukázat součásti letounu"
+msgstr "Ukázat vybavení letounu"
 
 #: ../base/ufos/menu_ptleditor.ufo:16
 msgid "Loop"
@@ -3166,7 +3166,7 @@ msgstr "Stát"
 
 #: ../base/ufos/menu_stats.ufo:275
 msgid "Current Funding"
-msgstr "Současné financování"
+msgstr "Nynější financování"
 
 #: ../base/ufos/menu_stats.ufo:301
 msgid "Month (Relative to current)"
@@ -3321,11 +3321,11 @@ msgstr "Vyložit"
 
 #: ../base/ufos/menu_ufopedia.ufo:50
 msgid "Previous entry"
-msgstr "Předchozí položka"
+msgstr "Předchozí záznam"
 
 #: ../base/ufos/menu_ufopedia.ufo:61
 msgid "Next entry"
-msgstr "Další položka"
+msgstr "Další záznam"
 
 #: ../base/ufos/menu_ufopedia.ufo:72
 msgid "Back to content"
@@ -14187,7 +14187,7 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:40
 msgid "You can use [space] to cycle between all geoscape items."
-msgstr "Můžete použít [mezerník] k procházení všech položek mapy světa."
+msgstr "Můžete použít [mezerník] k procházení všech součástí mapy světa."
 
 #: ../base/ufos/tips.ufo:41
 msgid ""
@@ -14776,7 +14776,7 @@ msgid ""
 "You need to research it first.\n"
 msgstr ""
 "Tento neznámý předmět nelze použít.\n"
-"Nejprve je třeba jej zkoumat.\n"
+"Nejprve je třeba zkoumat jej.\n"
 
 #: client/cl_actor.c:1576
 #, c-format
@@ -14892,9 +14892,9 @@ msgstr ""
 #: client/cl_campaign.c:2934 client/cl_campaign.c:3242
 #: client/cl_inventory.c:293 client/cl_inventory.c:298
 #: client/cl_inventory.c:544 client/cl_main.c:1024 client/cl_map.c:295
-#: client/cl_mapfightequip.c:640 client/cl_mapfightequip.c:642
+#: client/cl_mapfightequip.c:643 client/cl_mapfightequip.c:645
 #: client/cl_market.c:656 client/cl_market.c:660 client/cl_parse.c:1591
-#: client/cl_popup.c:341 client/cl_produce.c:444 client/cl_produce.c:453
+#: client/cl_popup.c:352 client/cl_produce.c:444 client/cl_produce.c:453
 #: client/cl_produce.c:463 client/cl_produce.c:472 client/cl_produce.c:483
 #: client/cl_research.c:1074 client/cl_research.c:1092
 #: client/cl_research.c:1098 client/cl_research.c:1136
@@ -15003,9 +15003,8 @@ msgid "Assign a team to aircraft"
 msgstr "Přidělit tým k letounu"
 
 #: client/cl_airfight.c:395
-#, fuzzy
 msgid "Our aircraft has no more ammo left - returning to home base now."
-msgstr "Přepravní mise ukončena, vrací se na základnu."
+msgstr "Našemu letounu došla munice - nyní se vrací se na základnu."
 
 #: client/cl_airfight.c:466 client/cl_airfight.c:501 client/cl_campaign.c:551
 #: client/cl_campaign.c:557 client/cl_campaign.c:598 client/cl_campaign.c:602
@@ -15574,7 +15573,7 @@ msgid ""
 "Current eXtraterrestial Viral Infection: %i%%"
 msgstr ""
 "Max. tolerovaná úroveň Mimozemské Virové Infekce: %i%%\n"
-"Současná úroveň Mimozemské Virové Infekce: %i%%"
+"Nynější úroveň Mimozemské Virové Infekce: %i%%"
 
 #: client/cl_campaign.c:2685
 msgid "Assemble or load a team"
@@ -15882,9 +15881,9 @@ msgstr "Nedostatek skladovacího prostoru na základně %s. %s"
 #, c-format
 msgid "%i item was sold."
 msgid_plural "%i items were sold."
-msgstr[0] "%i položka byla prodána"
-msgstr[1] "%i položky byly prodány"
-msgstr[2] "%i položek bylo prodáno"
+msgstr[0] "%i předmět byl prodán"
+msgstr[1] "%i předměty byly prodány"
+msgstr[2] "%i předmětů bylo prodáno"
 
 #: client/cl_inventory.c:542
 #, c-format
@@ -16017,7 +16016,7 @@ msgstr "Zvolte volný tým nebo tým pro spolupráci"
 #: client/cl_main.c:1324 client/cl_main.c:1338
 #, c-format
 msgid "Current team: %i"
-msgstr "Současný tým: %i"
+msgstr "Nynější tým: %i"
 
 #: client/cl_main.c:1328 client/cl_main.c:1342
 msgid "Team is already in use"
@@ -16144,106 +16143,104 @@ msgstr "Jméno:\t%s (%i/%i)\n"
 msgid "Status:\t%s\n"
 msgstr "Stav:\t%s\n"
 
-#: client/cl_mapfightequip.c:531
+#: client/cl_mapfightequip.c:534
 msgid "No defense of this type in this base\n"
 msgstr "Na této základně není obranná soustava.\n"
 
-#: client/cl_mapfightequip.c:535
+#: client/cl_mapfightequip.c:538
 #, c-format
 msgid "Slot %i:\tempty\n"
 msgstr "Pozice %i:\tprázdná\n"
 
-#: client/cl_mapfightequip.c:538
+#: client/cl_mapfightequip.c:541
 #, c-format
 msgid "Slot %i:\t%s\n"
 msgstr "Pozice %i:\t%s\n"
 
-#: client/cl_mapfightequip.c:547
+#: client/cl_mapfightequip.c:550
 msgid "No defense system assigned.\n"
 msgstr "Není přiřazena žádná obranná soustava.\n"
 
-#: client/cl_mapfightequip.c:554
+#: client/cl_mapfightequip.c:557
 msgid "This defense system is functional.\n"
 msgstr "Tato obranná soustava funguje.\n"
 
-#: client/cl_mapfightequip.c:556
+#: client/cl_mapfightequip.c:559
 #, c-format
 msgid "This defense system will be installed in %i hours.\n"
 msgstr "Tato obranná soustava bude namontována během %d hodin.\n"
 
-#: client/cl_mapfightequip.c:558
+#: client/cl_mapfightequip.c:561
 #, c-format
 msgid "This defense system will be removed in %i hours.\n"
 msgstr "Tato obranná soustava bude demontována během %d hodin.\n"
 
-#: client/cl_mapfightequip.c:565
+#: client/cl_mapfightequip.c:568
 msgid "No defense system assigned."
 msgstr "Není přiřazena žádná obranná soustava."
 
-#: client/cl_mapfightequip.c:569
+#: client/cl_mapfightequip.c:572
 #, c-format
 msgid "This defense system will be operational in %i hours.\n"
 msgstr "Tato obranná soustava bude v provozu během %d hodin.\n"
 
-#: client/cl_mapfightequip.c:578
+#: client/cl_mapfightequip.c:581
 msgid "No ammo assigned to this defense system."
 msgstr "K této obranné soustavě není přiřazena žádná munice."
 
-#: client/cl_mapfightequip.c:640
-#, fuzzy
+#: client/cl_mapfightequip.c:643
 msgid "Aircraft item was successfully installed."
-msgstr "Kampaň byla úspěšně uložena."
+msgstr "Vybavení letounu bylo úspěšně nainstalováno."
 
-#: client/cl_mapfightequip.c:642
-#, fuzzy
+#: client/cl_mapfightequip.c:645
 msgid "Base defense item was successfully installed."
-msgstr "Kampaň byla úspěšně uložena."
+msgstr "Součást obrany základny byla úspěšně nainstalována."
 
-#: client/cl_mapfightequip.c:864
+#: client/cl_mapfightequip.c:867
 msgid "No item assigned.\n"
-msgstr "Není přiřazena žádná položka.\n"
+msgstr "Není přiřazeno žádné vybavení.\n"
 
-#: client/cl_mapfightequip.c:865
+#: client/cl_mapfightequip.c:868
 #, c-format
 msgid "This slot is for %s or smaller items."
-msgstr "Položka vhodná do této pozice: %s nebo menší."
+msgstr "Hmotnost vybavení pro tuto pozici: %s nebo menší."
 
-#: client/cl_mapfightequip.c:870
+#: client/cl_mapfightequip.c:873
 msgid "This item is functional.\n"
-msgstr "Tato položka funguje.\n"
+msgstr "Toto vybavení funguje.\n"
 
-#: client/cl_mapfightequip.c:872
+#: client/cl_mapfightequip.c:875
 #, c-format
 msgid "This item will be installed in %i hours.\n"
-msgstr "Tato položka bude namontována během %d hodin.\n"
+msgstr "Toto vybavení bude namontováno během %d hodin.\n"
 
-#: client/cl_mapfightequip.c:874
+#: client/cl_mapfightequip.c:877
 #, c-format
 msgid "This item will be removed in %i hours.\n"
-msgstr "Tato položka bude demontována během %d hodin.\n"
+msgstr "Toto vybavení bude demontováno během %d hodin.\n"
 
-#: client/cl_mapfightequip.c:881
+#: client/cl_mapfightequip.c:884
 msgid "No item assigned."
-msgstr "Není přiřazena žádná položka."
+msgstr "Není přiřazeno žádné vybavení."
 
-#: client/cl_mapfightequip.c:885
+#: client/cl_mapfightequip.c:888
 #, c-format
 msgid "This item will be operational in %i hours.\n"
-msgstr "Tato položka bude v provozu během %d hodin.\n"
+msgstr "Toto vybavení bude v provozu během %d hodin.\n"
 
-#: client/cl_mapfightequip.c:894
+#: client/cl_mapfightequip.c:897
 msgid "No ammo assigned to this weapon."
 msgstr "K této zbrani není přiřazena žádná munice."
 
-#: client/cl_mapfightequip.c:1515
+#: client/cl_mapfightequip.c:1522
 msgid "Light"
 msgstr "Lehká"
 
-#: client/cl_mapfightequip.c:1521 client/cl_ufopedia.c:152
+#: client/cl_mapfightequip.c:1528 client/cl_ufopedia.c:152
 msgid "Heavy"
 msgstr "Těžká"
 
-#: client/cl_mapfightequip.c:1524
+#: client/cl_mapfightequip.c:1531
 msgid "Unknown weight"
 msgstr "Neznámá hmotnost"
 
@@ -16262,7 +16259,7 @@ msgid ""
 "Not enough space in storage.\n"
 "Build more storage facilities."
 msgstr ""
-"Nemůžete koupit tuto položku.\n"
+"Nemůžete koupit tento předmět.\n"
 "Není dostatek skladovacího prostoru.\n"
 "Vybudujte více skladů."
 
@@ -16399,18 +16396,18 @@ msgstr "Zastavit\n"
 msgid "Mission\t%s (%s)\n"
 msgstr "Mise\t%s (%s)\n"
 
-#: client/cl_popup.c:294
+#: client/cl_popup.c:305
 msgid "No craft available, or no tactical teams assigned to available craft."
 msgstr ""
-"Letoun není k dispozici nebo není přiřazen bojový tým k dostupnému letounu."
+"Letoun není k dispozici nebo není k dostupnému letounu přiřazen bojový tým."
 
-#: client/cl_popup.c:296
-#, fuzzy
+#: client/cl_popup.c:307
 msgid "No craft available, no weapon or ammo equipped or target out of reach."
 msgstr ""
-"Letoun není k dispozici nebo nejsou namontované zbraně na dostupném letounu."
+"Letoun není k dispozici, nejsou nainstalované zbraně nebo munice, případně "
+"je cíl mimo dosah."
 
-#: client/cl_popup.c:341
+#: client/cl_popup.c:352
 msgid ""
 "No Command Centre operational in homebase\n"
 "of this aircraft.\n"
@@ -16445,7 +16442,7 @@ msgid ""
 "You cannot queue more items.\n"
 "Build more workshops.\n"
 msgstr ""
-"Nemůžete do fronty přidat další položku.\n"
+"Nemůžete do fronty přidat další předmět.\n"
 "Postavte více dílen.\n"
 
 #: client/cl_produce.c:270 client/cl_produce.c:273 client/cl_produce.c:277
@@ -16528,7 +16525,7 @@ msgstr "Bylo dokončeno rozebírání položky \"%s\"."
 
 #: client/cl_produce.c:571 client/cl_produce.c:587
 msgid "No item selected"
-msgstr "Není vybrána žádná položka"
+msgstr "Není vybrán žádný předmět"
 
 #: client/cl_produce.c:580
 #, c-format
@@ -16543,7 +16540,7 @@ msgstr "Doba výroby\t%ih\n"
 #: client/cl_produce.c:583
 #, c-format
 msgid "Item size\t%i\n"
-msgstr "Velikost položky\t%i\n"
+msgstr "Velikost předmětu\t%i\n"
 
 #: client/cl_produce.c:604
 msgid "No disassembly selected"
@@ -16583,7 +16580,7 @@ msgstr "Fronta je plná!"
 
 #: client/cl_produce.c:1165
 msgid "You cannot queue any more items!"
-msgstr "Nemůžete do fronty přidat další položku!"
+msgstr "Nemůžete do fronty přidat další předmět!"
 
 #: client/cl_produce.c:1187 client/cl_produce.c:1203
 msgid "Not enough material!"
@@ -16595,8 +16592,8 @@ msgid ""
 "You don't have enough material to produce all (%i) items. Production will "
 "continue with a reduced (%i) number."
 msgstr ""
-"Nemáte dostatek materiálu pro všechny položky (%i). Výroba bude pokračovat "
-"se sníženým počtem položek (%i)."
+"Nemáte dostatek materiálu pro všechny předměty (%i). Výroba bude pokračovat "
+"se sníženým počtem předmětů (%i)."
 
 #: client/cl_produce.c:1191 client/cl_produce.c:1213
 #, c-format
@@ -16614,7 +16611,7 @@ msgstr "Bylo zahájeno rozebírání položky \"%s\"."
 
 #: client/cl_produce.c:1203
 msgid "You don't have enough of the needed material to produce this item."
-msgstr "Nemáte dostatek potřebného materiálu k výrobě této položky."
+msgstr "Nemáte dostatek potřebného materiálu k výrobě tohoto předmětu."
 
 #: client/cl_research.c:80
 #, c-format
@@ -16708,19 +16705,19 @@ msgstr "Nedostatek laboratoří"
 
 #: client/cl_research.c:1074
 msgid "This item is currently under research in another base."
-msgstr "Tato položka je již zkoumána na jiné základně."
+msgstr "Tento předmět je již zkoumán na jiné základně."
 
 #: client/cl_research.c:1092 client/cl_research.c:1136
 msgid "The research on this item is complete."
-msgstr "Výzkum této položky je dokončen."
+msgstr "Výzkum tohoto předmětu je dokončen."
 
 #: client/cl_research.c:1098
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
 msgstr ""
-"Výzkum této položky zatím není možný.\n"
-"Nejprve je třeba vyzkoumat technologie, na kterých je založena."
+"Výzkum tohoto předmětu zatím není možný.\n"
+"Nejprve je třeba vyzkoumat technologie, na kterých je založen."
 
 #: client/cl_research.c:1167
 msgid "No research proposal available for this project."
@@ -17090,7 +17087,7 @@ msgid ""
 "Destination base does not have enough\n"
 "Storage space to store this item.\n"
 msgstr ""
-"Cílová základna nemá pro tuto položku\n"
+"Cílová základna nemá pro tento předmět\n"
 "dostatek místa ve skladech.\n"
 
 #: client/cl_transfer.c:124
@@ -17239,7 +17236,7 @@ msgstr "Přeprava není možná - základna nemá v provozu hangár."
 #: client/cl_transfer.c:524
 #, c-format
 msgid "Base %s does not have Storage, items are removed!"
-msgstr "Základna %s nemá sklady, položky byly odebrány!"
+msgstr "Základna %s nemá sklady, předměty byly odebrány!"
 
 #: client/cl_transfer.c:525 client/cl_transfer.c:543 client/cl_transfer.c:571
 #: client/cl_transfer.c:598 client/cl_transfer.c:641 client/cl_transfer.c:739
@@ -17512,7 +17509,7 @@ msgstr "Provozní náklady:\t%i k\n"
 #: client/cl_ufopedia.c:520
 #, c-format
 msgid "Weight:\t%s\n"
-msgstr "Váha:\t%s\n"
+msgstr "Hmotnost:\t%s\n"
 
 #: client/cl_ufopedia.c:523
 #, c-format

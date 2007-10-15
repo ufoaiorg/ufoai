@@ -515,7 +515,7 @@ void PR_ProductionRun (void)
 					AIR_NewAircraft(&gd.bases[i], aircraft->id);
 					/* queue the next production */
 					if (prod->amount <= 0) {
-						Com_sprintf(messageBuffer, sizeof(messageBuffer), _("The production of %s has finished."), aircraft->name);
+						Com_sprintf(messageBuffer, sizeof(messageBuffer), _("The production of %s has finished."), _(aircraft->name));
 						MN_AddNewMessage(_("Production finished"), messageBuffer, qfalse, MSG_PRODUCTION, NULL);
 						PR_QueueNext(i);
 					}
@@ -640,7 +640,7 @@ static void PR_AircraftInfo (void)
 
 	if (selectedIndex >= 0) {
 		aircraft = &aircraft_samples[selectedIndex];
-		Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", aircraft->name);
+		Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", _(aircraft->name));
 		Q_strcat(productionInfo, va(_("Production costs\t%i c\n"), (aircraft->price * PRODUCE_FACTOR / PRODUCE_DIVISOR)),
 			sizeof(productionInfo));
 		Q_strcat(productionInfo, va(_("Productiontime\t%ih\n"), aircraft->tech->produceTime), sizeof(productionInfo));
@@ -1210,7 +1210,7 @@ static void PR_ProductionIncrease_f (void)
 			prod->aircraft = qtrue;
 			aircraft = &aircraft_samples[prod->objID];
 			Com_DPrintf(DEBUG_CLIENT, "Increasing %s\n", aircraft->name);
-			Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Production of %s started"), aircraft->name);
+			Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Production of %s started"), _(aircraft->name));
 			MN_AddNewMessage(_("Production started"), messageBuffer, qfalse, MSG_PRODUCTION, NULL);
 			/* Now we select the item we just created. */
 			selectedQueueItem = qtrue;

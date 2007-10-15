@@ -1295,7 +1295,7 @@ static void Irc_Logic_RemoveChannelName (irc_channel_t *channel, const char *nic
 				channel->user = user->next;
 			/* point to the descendant */
 			else
-				predecessor = user->next;
+				predecessor->next = user->next;
 			Mem_Free(user);
 			chan->users--;
 			Irc_Client_Names_f();

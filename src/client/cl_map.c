@@ -324,7 +324,7 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
 		aircraft = gd.bases[i].aircraft + gd.bases[i].numAircraftInBase - 1;
 		for (; aircraft >= gd.bases[i].aircraft; aircraft--)
 			if (aircraft->status > AIR_HOME && aircraft->fuel > 0 && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
-				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_AIRCRAFT, aircraft->idx, _("Aircraft"), aircraft->name);
+				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_AIRCRAFT, aircraft->idx, _("Aircraft"), _(aircraft->name));
 	}
 
 	/* Get selected ufos */
@@ -335,7 +335,7 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
 #endif
 		)
 			if (aircraft->status > AIR_HOME && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
-				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_UFO, aircraft - gd.ufos, _("UFO"), aircraft->name);
+				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_UFO, aircraft - gd.ufos, _("UFO"), _(aircraft->name));
 
 	if (multiSelect.nbSelect == 1) {
 		/* Execute directly action for the only one element selected */
