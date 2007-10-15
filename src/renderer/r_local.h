@@ -249,8 +249,6 @@ void R_EnableLights(qboolean fixed, float *matrix, float *lightparam, float *lig
 
 #include "r_font.h"
 
-void R_SwapBuffers(int);
-
 void R_SoftenTexture(byte *in, int width, int height, int bpp);
 
 image_t *R_LoadPic(const char *name, byte * pic, int width, int height, imagetype_t type, int bits);
@@ -333,15 +331,6 @@ IMPLEMENTATION SPECIFIC FUNCTIONS
 qboolean Rimp_Init(void);
 void Rimp_Shutdown(void);
 qboolean R_InitGraphics(void);
-
-/* 3d globe */
-
-#define PHYSICAL_EARTH_RADIUS 6378137   /* Earth's radius, in meters. (From RFC1876) */
-#define SPEED_OF_LIGHT 299792458        /* The big C, in meters/second. */
-#define PHYSICAL_EARTH_CIRC (2.0 * M_PI * PHYSICAL_EARTH_RADIUS)
-#define NOT_SELECTABLE ~0U              /* For picking reasons, see which_site() */
-
-/* end of 3d globe */
 
 void R_BuildLightMap(mBspSurface_t * surf, byte * dest, int stride);
 
