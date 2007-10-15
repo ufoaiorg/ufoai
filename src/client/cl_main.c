@@ -602,7 +602,6 @@ static void CL_PingServerCallback (struct net_stream *s)
 	} else
 		return;
 
-	menuText[TEXT_LIST] = serverText;
 	if (mn_serverlist->integer == 0
 	|| (mn_serverlist->integer == 1 && server->clients < server->sv_maxclients)
 	|| (mn_serverlist->integer == 2 && server->clients)) {
@@ -627,6 +626,7 @@ static void CL_PingServerCallback (struct net_stream *s)
 static void CL_PingServer (serverList_t *server)
 {
 	struct net_stream *s = NET_Connect(server->node, server->service);
+
 	if (s) {
 		Com_DPrintf(DEBUG_CLIENT, "pinging [%s]:%s...\n", server->node, server->service);
 		NET_OOB_Printf(s, "info %i", PROTOCOL_VERSION);
@@ -1144,10 +1144,10 @@ static void CL_PingServers_f (void)
 			free(serverList[i].service);
 		}
 		memset(serverList, 0, sizeof(serverList_t) * MAX_SERVERLIST);
+	} else {
+		menuText[TEXT_LIST] = serverText;
+		return;
 	}
-
-/*	menuText[TEXT_STANDARD] = NULL;*/
-	menuText[TEXT_LIST] = serverText;
 
 	if (!cls.datagram_socket)
 		cls.datagram_socket = new_datagram_socket(NULL, va("%d", PORT_CLIENT), &CL_ServerListDiscoveryCallback);
@@ -1174,9 +1174,10 @@ static void CL_PingServers_f (void)
 		CL_AddServerToList(adrstring, service);
 	}
 
+	menuText[TEXT_LIST] = serverText;
+
 	/* don't query the masterservers with every call */
 	if (serversAlreadyQueried) {
-		menuText[TEXT_LIST] = serverText;
 		if (lastServerQuery + SERVERQUERYTIMEOUT > cls.realtime)
 			return;
 	} else
@@ -1185,8 +1186,7 @@ static void CL_PingServers_f (void)
 	lastServerQuery = cls.realtime;
 
 	/* query master server? */
-	/* @todo: Cache this to save bandwidth */
-	if (Cmd_Argc() == 2 || Q_strcmp(Cmd_Argv(1), "local")) {
+	if (Cmd_Argc() == 2 && Q_strcmp(Cmd_Argv(1), "local")) {
 		Com_DPrintf(DEBUG_CLIENT, "Query masterserver\n");
 		CL_QueryMasterServer();
 	}
@@ -1267,7 +1267,14 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 		return;
 	}
 
-	Com_Printf("Unknown command.\n");
+	/* print */
+	if (!Q_strncmp(c, "print", 4)) {
+		s = NET_ReadString(msg);
+		MN_Popup(_("Notice"), _(s));
+		return;
+	}
+
+	Com_Printf("Unknown command '%s'.\n", c);
 }
 
 /**
