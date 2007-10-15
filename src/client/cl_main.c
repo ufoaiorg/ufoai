@@ -603,11 +603,10 @@ static void CL_PingServerCallback (struct net_stream *s)
 		return;
 
 	menuText[TEXT_LIST] = serverText;
-	Com_sprintf(string, sizeof(string), "%s\t\t\t%s\t\t\t%s\t(%s)\t%i/%i\n",
+	Com_sprintf(string, sizeof(string), "%s\t\t\t%s\t\t\t%s\t\t%i/%i\n",
 		server->sv_hostname,
 		server->mapname,
 		server->gametype,
-		server->version,
 		server->clients,
 		server->sv_maxclients);
 	server->serverListPos = serverListPos;
