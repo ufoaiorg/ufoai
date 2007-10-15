@@ -1317,7 +1317,7 @@ static qboolean G_CanReactionFire (edict_t *ent, edict_t *target, char *reason)
 
 	/* check ent has reaction fire enabled */
 	if (!(ent->state & STATE_SHAKEN) && !(ent->state & STATE_REACTION_MANY) &&
-			(!(ent->state & STATE_REACTION_ONCE) || reactionTUs[ent->number][REACT_FIRED])) {
+		(!(ent->state & STATE_REACTION_ONCE) || reactionTUs[ent->number][REACT_FIRED])) {
 #ifdef DEBUG_REACTION
 		if (reason)
 			Com_sprintf(reason, sizeof(reason), "Shooter does not have reaction fire enabled, or has already fired too often");
@@ -1374,9 +1374,10 @@ static qboolean G_CanReactionFire (edict_t *ent, edict_t *target, char *reason)
  * @brief Get the number of TUs that ent needs to fire at target, also optionally return the firing hand. Used for reaction fire.
  * @param[in] ent The shooter entity.
  * @param[in] target The target entity.
- * @param[out] fire_hand_type If not NULL then this stores the hand (combind with the 'reaction' info) that the shooter will fire with.
+ * @param[out] fire_hand_type If not NULL then this stores the hand (combined with the 'reaction' info) that the shooter will fire with.
  * @param[out] firemode The firemode that will be used for the shot.
  * @returns The number of TUs required to fire or -1 if firing is not possible
+ * @sa G_CheckRFTrigger
  */
 static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, int *firemode)
 {
@@ -1400,7 +1401,7 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, i
 			*firemode = reactionFiremode[ent->number][RF_FM]; /* Get selected (if any) firemode for the weapon in the right hand. */
 
 			if (gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer <= ent->TU
-			 && gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].range > VectorDist(ent->origin, target->origin) ) {
+			 && gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].range > VectorDist(ent->origin, target->origin)) {
 				if (fire_hand_type) {
 					*fire_hand_type = ST_RIGHT_REACTION;
 				}
@@ -1414,7 +1415,7 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, i
 	/* Fire the weapon in the left hand if everything is ok. */
 	if (LEFT(ent) && (LEFT(ent)->item.m != NONE)
 	 && gi.csi->ods[LEFT(ent)->item.t].weapon
-	 && (!gi.csi->ods[LEFT(ent)->item.t].reload || LEFT(ent)->item.a > 0) ) {
+	 && (!gi.csi->ods[LEFT(ent)->item.t].reload || LEFT(ent)->item.a > 0)) {
 		weapon_fd_idx = FIRESH_FiredefsIDXForWeapon(&gi.csi->ods[LEFT(ent)->item.m], LEFT(ent)->item.t);
 		assert(weapon_fd_idx >= 0);
 
@@ -1441,6 +1442,8 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, i
  * @brief Check whether 'target' has just triggered any new reaction fire
  * @param[in] target The entity triggering fire
  * @returns qtrue if some entity initiated firing
+ * @sa G_CanReactionFire
+ * @sa G_GetFiringTUs
  */
 static qboolean G_CheckRFTrigger (edict_t *target)
 {
