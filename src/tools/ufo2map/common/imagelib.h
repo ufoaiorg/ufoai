@@ -5,9 +5,6 @@
 #ifndef _IMAGELIB_HEADER_H
 #define _IMAGELIB_HEADER_H
 
-/* loads a pcx */
-void LoadPCX(const char *filename, byte **picture, byte **palette, int *width, int *height);
-
 /*==============================================================================
 JPEG
 ==============================================================================*/

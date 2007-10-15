@@ -67,17 +67,6 @@ int FindMiptex (const char *name)
 		}
 	}
 
-	if (!loaded) {	/* fall back to wal */
-		sprintf(path, "%stextures/%s.wal", gamedir, name);
-		if (TryLoadFile(path, (void **)&mt) != -1) {
-			textureref[i].value = LittleLong(mt->value);
-			textureref[i].surfaceFlags = LittleLong(mt->surfaceFlagsFromFile);
-			textureref[i].contentFlags = LittleLong(mt->contentFlagsFromFile);
-			strcpy(textureref[i].animname, mt->animname);
-			free(mt);
-			loaded = qtrue;
-		}
-	}
 	nummiptex++;
 
 	if (textureref[i].animname[0])

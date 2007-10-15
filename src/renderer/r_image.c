@@ -39,10 +39,7 @@ static int numgltextures;
 
 static byte intensitytable[256];
 
-unsigned d_8to24table[256];
-
-static qboolean R_Upload8(byte * data, int width, int height, qboolean mipmap, imagetype_t type, image_t* image);
-static qboolean R_Upload32(unsigned *data, int width, int height, qboolean mipmap, qboolean clamp, imagetype_t type, image_t* image);
+static qboolean R_UploadTexture(unsigned *data, int width, int height, qboolean mipmap, qboolean clamp, imagetype_t type, image_t* image);
 
 int gl_solid_format = GL_RGB;
 int gl_alpha_format = GL_RGBA;
@@ -167,114 +164,6 @@ void R_ImageList_f (void)
 	Com_Printf("Total texel count (not counting mipmaps): %i\n", texels);
 }
 
-
-/*
-=================================================================
-PCX LOADING
-=================================================================
-*/
-
-/**
- * @sa R_LoadTGA
- * @sa R_LoadJPG
- * @sa R_LoadPNG
- * @sa R_FindImage
- */
-static void R_LoadPCX (const char *filename, byte ** pic, byte ** palette, int *width, int *height)
-{
-	byte *raw;
-	pcx_t *pcx;
-	int x, y;
-	int len;
-	int dataByte, runLength;
-	byte *out, *pix;
-
-	if (*pic != NULL)
-		Sys_Error("possible mem leak in R_LoadPCX\n");
-	*palette = NULL;
-
-	/* load the file */
-	len = FS_LoadFile(filename, &raw);
-	if (!raw) {
-		Com_DPrintf(DEBUG_RENDERER, "R_LoadPCX: Could not load pcx file '%s'\n", filename);
-		return;
-	}
-
-	/* parse the PCX file */
-	pcx = (pcx_t *) raw;
-
-	pcx->xmin = LittleShort(pcx->xmin);
-	pcx->ymin = LittleShort(pcx->ymin);
-	pcx->xmax = LittleShort(pcx->xmax);
-	pcx->ymax = LittleShort(pcx->ymax);
-	pcx->hres = LittleShort(pcx->hres);
-	pcx->vres = LittleShort(pcx->vres);
-	pcx->bytes_per_line = LittleShort(pcx->bytes_per_line);
-	pcx->palette_type = LittleShort(pcx->palette_type);
-
-	raw = &pcx->data;
-
-	if (pcx->manufacturer != 0x0a || pcx->version != 5 || pcx->encoding != 1 || pcx->bits_per_pixel != 8 || pcx->xmax >= 640 || pcx->ymax >= 480) {
-		Com_Printf("R_LoadPCX: Bad pcx file %s\n", filename);
-		Com_Printf("manufacturer: %x, version: %i, encoding: %i, bits_per_pixel: %i, xmax: %i, ymax: %i\n",
-			pcx->manufacturer,
-			pcx->version,
-			pcx->encoding,
-			pcx->bits_per_pixel,
-			pcx->xmax,
-			pcx->ymax);
-		FS_FreeFile(raw);
-		return;
-	}
-
-	out = VID_TagAlloc(vid_imagePool, (pcx->ymax + 1) * (pcx->xmax + 1), 0);
-	if (!out)
-		Sys_Error("TagMalloc: failed on allocation of %i bytes", (pcx->ymax + 1) * (pcx->xmax + 1));
-
-	*pic = out;
-
-	pix = out;
-
-	if (palette) {
-		*palette = VID_TagAlloc(vid_imagePool, 768, 0);;
-		memcpy(*palette, (byte *) pcx + len - 768, 768);
-	}
-
-	if (width)
-		*width = pcx->xmax + 1;
-	if (height)
-		*height = pcx->ymax + 1;
-
-	for (y = 0; y <= pcx->ymax; y++, pix += pcx->xmax + 1) {
-		for (x = 0; x <= pcx->xmax;) {
-			dataByte = *raw++;
-
-			if ((dataByte & 0xC0) == 0xC0) {
-				runLength = dataByte & 0x3F;
-				dataByte = *raw++;
-			} else
-				runLength = 1;
-
-			while (runLength-- > 0)
-				pix[x++] = dataByte;
-		}
-	}
-
-	if (raw - (byte *) pcx > len) {
-		Com_DPrintf(DEBUG_RENDERER, "PCX file %s was malformed", filename);
-		VID_MemFree(out);
-
-		if (pic)
-			*pic = NULL;
-		if (palette) {
-			VID_MemFree(palette);
-			*palette = NULL;
-		}
-	}
-
-	FS_FreeFile(pcx);
-}
-
 /*
 ==============================================================================
 PNG LOADING
@@ -295,7 +184,6 @@ static void PngReadFunc (png_struct *Png, png_bytep buf, png_size_t size)
 
 
 /**
- * @sa R_LoadPCX
  * @sa R_LoadTGA
  * @sa R_LoadJPG
  * @sa R_FindImage
@@ -419,7 +307,6 @@ static int R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 /**
  * @sa R_LoadTGA
  * @sa R_LoadJPG
- * @sa R_LoadPCX
  * @sa R_FindImage
  */
 void R_WritePNG (FILE *f, byte *buffer, int width, int height)
@@ -497,7 +384,6 @@ typedef struct targaHeader_s {
 #define TGA_GREY_COMP			11
 
 /**
- * @sa R_LoadPCX
  * @sa R_LoadJPG
  * @sa R_LoadPNG
  * @sa R_FindImage
@@ -781,7 +667,6 @@ static void jpeg_mem_src (j_decompress_ptr cinfo, byte * mem, int len)
 }
 
 /**
- * @sa R_LoadPCX
  * @sa R_LoadTGA
  * @sa R_LoadPNG
  * @sa R_FindImage
@@ -1369,7 +1254,7 @@ static unsigned scaled_buffer[1024 * 1024];
 /**
  * @return has_alpha
  */
-static qboolean R_Upload32 (unsigned *data, int width, int height, qboolean mipmap, qboolean clamp, imagetype_t type, image_t* image)
+static qboolean R_UploadTexture (unsigned *data, int width, int height, qboolean mipmap, qboolean clamp, imagetype_t type, image_t* image)
 {
 	unsigned *scaled;
 	int samples;
@@ -1515,55 +1400,6 @@ static qboolean R_Upload32 (unsigned *data, int width, int height, qboolean mipm
 	}
 
 	return (samples == gl_alpha_format || samples == gl_compressed_alpha_format);
-}
-
-/**
- * @return has_alpha
- */
-static qboolean R_Upload8 (byte * data, int width, int height, qboolean mipmap, imagetype_t type, image_t* image)
-{
-	unsigned *trans;
-	size_t trans_size = 512 * 256 * sizeof(trans[0]);
-	int s = width * height;
-	int i, p;
-	qboolean ret;
-
-	trans = VID_TagAlloc(vid_imagePool, trans_size, 0);
-	if (!trans)
-		Sys_Error("TagMalloc: failed on allocation of "UFO_SIZE_T" bytes", trans_size);
-
-	if (s > trans_size / 4)
-		Com_Error(ERR_DROP, "R_Upload8: too large");
-
-	for (i = 0; i < s; i++) {
-		p = data[i];
-		trans[i] = d_8to24table[p];
-
-		if (p == 255) {
-			/* transparent, so scan around for another color */
-			/* to avoid alpha fringes */
-			/* FIXME: do a full flood fill so mips work... */
-			if (i > width && data[i - width] != 255)
-				p = data[i - width];
-			else if (i < s - width && data[i + width] != 255)
-				p = data[i + width];
-			else if (i > 0 && data[i - 1] != 255)
-				p = data[i - 1];
-			else if (i < s - 1 && data[i + 1] != 255)
-				p = data[i + 1];
-			else
-				p = 0;
-			/* copy rgb components */
-			((byte *) & trans[i])[0] = ((byte *) & d_8to24table[p])[0];
-			((byte *) & trans[i])[1] = ((byte *) & d_8to24table[p])[1];
-			((byte *) & trans[i])[2] = ((byte *) & d_8to24table[p])[2];
-		}
-	}
-
-	ret = R_Upload32(trans, width, height, mipmap, qtrue, type, image);
-	VID_MemFree(trans);
-
-	return ret;
 }
 
 /**
@@ -1727,11 +1563,8 @@ image_t *R_LoadPic (const char *name, byte * pic, int width, int height, imagety
 	image->texnum = TEXNUM_IMAGES + (image - gltextures);
 	if (pic) {
 		R_Bind(image->texnum);
-		if (bits == 8) {
-			image->has_alpha = R_Upload8(pic, width, height, (image->type != it_pic), image->type, image);
-		} else
-			image->has_alpha = R_Upload32((unsigned *) pic, width, height,
-				(image->type != it_pic), (image->type == it_pic), image->type, image);
+		image->has_alpha = R_UploadTexture((unsigned *) pic, width, height,
+			(image->type != it_pic), (image->type == it_pic), image->type, image);
 		image->upload_width = upload_width;	/* after power of 2 and scales */
 		image->upload_height = upload_height;
 	}
@@ -1761,7 +1594,6 @@ image_t *R_FindImageForShader (const char *name)
  * @sa R_LoadTGA
  * @sa R_LoadJPG
  * @sa R_LoadPNG
- * @sa R_LoadPCX
  */
 #ifdef DEBUG
 image_t *R_FindImageDebug (const char *pname, imagetype_t type, const char *file, int line)
@@ -1840,15 +1672,6 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 		}
 	}
 
-	strcpy(ename, ".pcx");
-	if (FS_CheckFile(lname) != -1) {
-		R_LoadPCX(lname, &pic, &palette, &width, &height);
-		if (pic) {
-			image = R_LoadPic(lname, pic, width, height, type, 8);
-			goto end;
-		}
-	}
-
 	/* no fitting texture found */
 	/* add to error list */
 	image = r_notexture;
@@ -1904,37 +1727,6 @@ void R_FreeUnusedImages (void)
 	}
 }
 
-
-static int R_GetPalette (void)
-{
-	int i;
-	int r, g, b;
-	unsigned v;
-	byte *pic = NULL, *pal;
-	int width, height;
-
-	/* get the palette */
-	R_LoadPCX("pics/colormap.pcx", &pic, &pal, &width, &height);
-	if (!pal)
-		Sys_Error("Couldn't load pics/colormap.pcx");
-
-	for (i = 0; i < 256; i++) {
-		r = pal[i * 3 + 0];
-		g = pal[i * 3 + 1];
-		b = pal[i * 3 + 2];
-
-		v = (255 << 24) + (r << 0) + (g << 8) + (b << 16);
-		d_8to24table[i] = LittleLong(v);
-	}
-
-	d_8to24table[255] &= LittleLong(0xffffff);	/* 255 is transparent */
-
-	VID_MemFree(pic);
-	VID_MemFree(pal);
-
-	return 0;
-}
-
 void R_InitImages (void)
 {
 	int i, j;
@@ -1944,8 +1736,6 @@ void R_InitImages (void)
 	glerrortex[0] = 0;
 	glerrortexend = glerrortex;
 	DaN = NULL;
-
-	R_GetPalette();
 
 	if (r_intensity->value <= 1)
 		Cvar_Set("r_intensity", "1");

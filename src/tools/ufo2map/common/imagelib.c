@@ -29,93 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /*
 ============================================================================
-LOAD PCX
-============================================================================
-*/
-
-/**
- * @brief
- * @sa WritePCXfile
- */
-void LoadPCX (const char *filename, byte **pic, byte **palette, int *width, int *height)
-{
-	byte	*raw;
-	pcx_t	*pcx;
-	int		x, y;
-	int		len;
-	int		dataByte, runLength;
-	byte	*out, *pix;
-
-	/* load the file */
-	len = LoadFile(filename, (void **)&raw);
-
-	/* parse the PCX file */
-	pcx = (pcx_t *)raw;
-	raw = &pcx->data;
-
-	pcx->xmin = LittleShort(pcx->xmin);
-	pcx->ymin = LittleShort(pcx->ymin);
-	pcx->xmax = LittleShort(pcx->xmax);
-	pcx->ymax = LittleShort(pcx->ymax);
-	pcx->hres = LittleShort(pcx->hres);
-	pcx->vres = LittleShort(pcx->vres);
-	pcx->bytes_per_line = LittleShort(pcx->bytes_per_line);
-	pcx->palette_type = LittleShort(pcx->palette_type);
-
-	if (pcx->manufacturer != 0x0a
-		|| pcx->version != 5
-		|| pcx->encoding != 1
-		|| pcx->bits_per_pixel != 8
-		|| pcx->xmax >= 640
-		|| pcx->ymax >= 480)
-		Error("Bad pcx file %s", filename);
-
-	if (palette) {
-		*palette = malloc(768);
-		memcpy(*palette, (byte *)pcx + len - 768, 768);
-	}
-
-	if (width)
-		*width = pcx->xmax+1;
-	if (height)
-		*height = pcx->ymax+1;
-
-	if (!pic) {
-		/* free palette in CalcTextureReflectivity */
-		return;
-	}
-
-	out = malloc((pcx->ymax + 1) * (pcx->xmax + 1));
-	if (!out)
-		Error("Skin_Cache: couldn't allocate");
-
-	*pic = out;
-
-	pix = out;
-
-	for (y = 0; y <= pcx->ymax; y++, pix += pcx->xmax + 1) {
-		for (x = 0; x <= pcx->xmax; ) {
-			dataByte = *raw++;
-
-			if ((dataByte & 0xC0) == 0xC0) {
-				runLength = dataByte & 0x3F;
-				dataByte = *raw++;
-			} else
-				runLength = 1;
-
-			while (runLength-- > 0)
-				pix[x++] = dataByte;
-		}
-	}
-
-	if (raw - (byte *)pcx > len)
-		Error("PCX file %s was malformed", filename);
-
-	free(pcx);
-}
-
-/*
-============================================================================
 TARGA IMAGE
 ============================================================================
 */
@@ -403,7 +316,6 @@ static void jpeg_mem_src (j_decompress_ptr cinfo, byte * mem, int len)
 
 /**
  * @brief
- * @sa LoadPCX
  * @sa LoadTGA
  * @sa LoadPNG
  * @sa R_FindImage

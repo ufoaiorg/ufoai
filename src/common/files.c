@@ -893,7 +893,7 @@ void FS_InitFilesystem (void)
 
 	/* basedir <path> */
 	/* allows the game to run from outside the data tree */
-	fs_basedir = Cvar_Get("fs_basedir", ".", CVAR_NOSET, NULL);
+	fs_basedir = Cvar_Get("fs_basedir", ".", CVAR_NOSET, "Allows the game to run from outside the data tree");
 
 	/* start up with base by default */
 	FS_AddGameDirectory(va("%s/" BASEDIRNAME, fs_basedir->string));
@@ -906,7 +906,7 @@ void FS_InitFilesystem (void)
 	fs_base_searchpaths = fs_searchpaths;
 
 	/* check for game override */
-	fs_gamedir = Cvar_Get("fs_gamedir", "", CVAR_LATCH | CVAR_SERVERINFO, NULL);
+	fs_gamedir = Cvar_Get("fs_gamedir", "", CVAR_LATCH | CVAR_SERVERINFO, "If you want to start a mod not located in "BASEDIRNAME);
 	if (fs_gamedir->string[0])
 		FS_SetGamedir(fs_gamedir->string);
 }

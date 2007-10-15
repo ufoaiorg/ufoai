@@ -34,14 +34,11 @@ TEXTURE LIGHT VALUES
 
 void CalcTextureReflectivity (void)
 {
-	int i, j, k, texels = 0, texel;
-
-	byte *palette = NULL;
+	int i, j, texels = 0;
 	char path[1024];
 	int color[3];
 	byte *pos;
-	float r, scale;
-	qboolean wal;
+	float r;
 	miptex_t *mt;
 	qboolean loaded = qfalse;
 
@@ -51,7 +48,6 @@ void CalcTextureReflectivity (void)
 	texture_reflectivity[0][2] = 0.5;
 
 	for (i = 0; i < numtexinfo; i++) {
-		wal = qfalse;
 		/* see if an earlier texinfo already got the value */
 		for (j = 0; j < i; j++) {
 			if (!strcmp(texinfo[i].texture, texinfo[j].texture)) {
@@ -100,35 +96,6 @@ void CalcTextureReflectivity (void)
 			}
 		}
 
-		if (!loaded) { /* wal fallback */
-			sprintf(path, "%stextures/%s.wal", gamedir, texinfo[i].texture);
-			if (TryLoadFile(path, (void **)&mt) == -1) {
-				Sys_FPrintf(SYS_VRB, "Couldn't load %s\n", path);
-				continue;
-			}
-			wal = qtrue;
-			texels = LittleLong(mt->width) * LittleLong(mt->height);
-			color[0] = color[1] = color[2] = 0;
-
-			/* moved this into the loop - we are not using wal textures in general
-			 * so overall this might be faster */
-			sprintf(path, "%spics/colormap.pcx", gamedir);
-
-			/* get the game palette */
-			LoadPCX(path, NULL, &palette, NULL, NULL);
-
-			for (j = 0; j < texels; j++) {
-				texel = ((byte *) mt)[LittleLong(mt->offsets[0]) + j];
-				for(k = 0; k < 3; k++)
-					color[k] += palette[texel * 3 + k];
-			}
-			Sys_FPrintf(SYS_VRB, "...path: %s (%i) - use wal colors: %i:%i:%i\n", path, texels, color[0], color[1], color[2]);
-			loaded = qtrue;
-			if (palette)
-				free(palette);
-			free(mt);
-		}
-
 		if (!loaded) {
 			texture_reflectivity[i][0] = 0.5;
 			texture_reflectivity[i][1] = 0.5;
@@ -137,14 +104,6 @@ void CalcTextureReflectivity (void)
 			for (j = 0; j < 3; j++) {
 				r = color[j] / texels / 255.0;
 				texture_reflectivity[i][j] = r;
-			}
-		}
-		if (wal) {  /* tgas and jpegs do not need to be scaled */
-			/* scale the reflectivity up, because the textures are so dim */
-			scale = ColorNormalize(texture_reflectivity[i], texture_reflectivity[i]);
-			if (scale < 0.5) {
-				scale *= 2;
-				VectorScale(texture_reflectivity[i], scale, texture_reflectivity[i]);
 			}
 		}
 	}
