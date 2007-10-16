@@ -347,23 +347,24 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 	/* Apply difficulty settings. */
 	if (sv_maxclients->integer == 1) {
 		if (attacker->team == TEAM_ALIEN && ent->team < TEAM_ALIEN)
-			damage *= pow(1.3, difficulty->integer);
+			damage *= pow(1.18, difficulty->integer);
 		else if (attacker->team < TEAM_ALIEN && ent->team == TEAM_ALIEN)
-			damage *= pow(1.3, -difficulty->integer);
+			damage *= pow(1.18, -difficulty->integer);
 	}
 
 	/* Apply armour effects. */
 	if (damage > 0) {
 		if (ent->i.c[gi.csi->idArmour]) {
 			objDef_t *ad = &gi.csi->ods[ent->i.c[gi.csi->idArmour]->item.t];
-			Com_DPrintf(DEBUG_GAME, "G_Damage: damage for '%s': %i, dmgweight (%i) protection: %i\n",
+			Com_Printf("G_Damage: damage for '%s': %i, dmgweight (%i) protection: %i",
 				ent->chr.name, damage, fd->dmgweight, ad->protection[fd->dmgweight]);
 			damage = max(1, damage - ad->protection[fd->dmgweight]);
 		} else {
-			Com_DPrintf(DEBUG_GAME, "G_Damage: damage for '%s': %i, dmgweight (%i) protection: 0\n",
+			Com_Printf("G_Damage: damage for '%s': %i, dmgweight (%i) protection: 0",
 				ent->chr.name, damage, fd->dmgweight);
 		}
 	}
+	Com_Printf(" Total damage: %d\n", damage);
 
 	assert((attacker->team >= 0) && (attacker->team < MAX_TEAMS));
 	assert((ent->team >= 0) && (ent->team < MAX_TEAMS));
