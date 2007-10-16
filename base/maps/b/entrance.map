@@ -1609,13 +1609,13 @@
 // entity 18
 {
 "classname" "info_alien_start"
-"origin" "80 48 160"
+"origin" "80 144 160"
 "angle" "90"
 }
 // entity 19
 {
 "classname" "info_alien_start"
-"origin" "176 144 160"
+"origin" "304 144 160"
 }
 // entity 20
 {
@@ -1626,5 +1626,31 @@
 // entity 21
 {
 "classname" "info_alien_start"
+"origin" "240 240 128"
+}
+// entity 22
+{
+"classname" "info_alien_start"
 "origin" "80 272 160"
+}
+// entity 23
+{
+"classname" "info_alien_start"
+"origin" "240 304 128"
+}
+// entity 24
+{
+"classname" "info_alien_start"
+"origin" "144 240 160"
+}
+// entity 25
+{
+"classname" "info_alien_start"
+"origin" "80 48 160"
+"angle" "90"
+}
+// entity 26
+{
+"classname" "info_alien_start"
+"origin" "176 144 160"
 }
