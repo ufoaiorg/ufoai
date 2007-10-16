@@ -158,6 +158,7 @@ item plasrifle_ammo
 			dmgweight plasma_medium
 			reaction	true
 		}
+		firedef
 		{
 			name	"_Burst"
 			skill 	assault
