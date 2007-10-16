@@ -2294,38 +2294,42 @@ tech rs_nano_armour
 
 tech rs_power_armour
 {
+	// Multiplayer only right now
 	type	armour
 	up_chapter	equipment
-	//description {
-	//	default "TODO_power_armour_txt"
-	//}
-	//pre_description {
-	//	default "TODO_power_armour_pre_txt"
-	//}
+//	description {
+//		default "TODO_power_armour_txt"
+//	}
+//	pre_description {
+//		default "TODO_power_armour_pre_txt"
+//	}
 
-	mail_pre
-	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
-		subject	"TODO_Power Armour"
-		icon	icons/tech
-	}
+//	mail_pre
+//	{
+//		from	"_mail_from_paul_navarre"
+//		to	"_mail_to_base_commander"
+//		subject	"TODO_Power Armour"
+//		icon	icons/tech
+//	}
 
-	mail
-	{
-		from	"_mail_from_paul_navarre"
-		to	"_mail_to_base_commander"
-		subject	"TODO_Power Armour"
-		icon	icons/tech
-	}
+//	mail
+//	{
+//		from	"_mail_from_paul_navarre"
+//		to	"_mail_to_base_commander"
+//		subject	"TODO_Power Armour"
+//		icon	icons/tech
+//	}
 
-	require_AND	// todo:fixme
-	{
-		tech rs_nano_armour
-	}
+//	require_AND	// todo:fixme
+//	{
+//		tech rs_nano_armour
+//	}
 	provides	power
-	time	3000
-	producetime	180
+
+//	time	3000
+	time	0
+//	producetime	180
+	producetime	-1
 }
 
 tech rs_alien_body_armour
