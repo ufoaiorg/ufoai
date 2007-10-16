@@ -126,13 +126,13 @@ menu ufopedia
 	text ufopedia
 	{
 		if "mn_up_mail == 0"
-		pos		"50 80"
-		size	"660 504"
+		pos		"40 85"
+		size	"670 368"
 		num		2
-		format	"24 0"
+		format	"23 0"
 		click rclick wheel
 //		bgcolor " 0.5 1 0.5 0.3"
-		height	"21"
+		height	"16"
 		scrollbar true
 	}
 
@@ -163,19 +163,21 @@ menu ufopedia
 
 	confunc mn_upfbig
 	{
-		*ufopedia format	"24 0"
-		*ufopedia height	"21"
+		*ufopedia format	"23 0"
+		*ufopedia height	"16"
 		*ufopedia font		f_big
 		*ufopedia mousefx	true
+		*ufopedia size		"670 368"
 		cmd "mn_textscroll ufopedia reset;"
 	}
 
 	confunc mn_upfsmall
 	{
 		*ufopedia format	"18 0"
-		*ufopedia height	"28"
+		*ufopedia height	"20"
 		*ufopedia font		f_small
 		*ufopedia mousefx	false
+		*ufopedia size		"670 360"
 		cmd "mn_textscroll ufopedia reset;"
 	}
 

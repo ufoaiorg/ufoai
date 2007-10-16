@@ -597,14 +597,16 @@ static void LET_PathMove (le_t * le)
 			le_t *floor;
 			pos3_t gridPos;
 
+#ifdef DEBUG
 			/* HACK: Attempt to correct actor positions */
 			VecToPos(le->origin, gridPos);
 			if (!Vector2Compare(gridPos, le->pos)) {
-				Com_Printf("LET_PathMove: Warning: Actor positions doesn't match "
+				Com_DPrintf(DEBUG_CLIENT, "LET_PathMove: Warning: Actor positions doesn't match "
 					"(origin grid: %i:%i:%i, le->pos: %i:%i:%i)\n",
 					gridPos[0], gridPos[1], gridPos[2], le->pos[0], le->pos[1], le->pos[2]);
 				VectorCopy(gridPos, le->pos);
 			}
+#endif
 
 			CL_ConditionalMoveCalc(&clMap, le, MAX_ROUTE);
 

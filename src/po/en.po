@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-10-14 12:22+0200\n"
-"PO-Revision-Date: 2007-10-14 12:27+0100\n"
+"PO-Revision-Date: 2007-10-16 10:14+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -332,7 +332,7 @@ msgstr "Plasma"
 
 #: ../base/ufos/armour.ufo:37
 msgid "particlebeam"
-msgstr "particlebeam"
+msgstr "Particlebeam"
 
 #: ../base/ufos/armour.ufo:42
 msgid "stun"

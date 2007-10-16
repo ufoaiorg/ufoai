@@ -292,6 +292,7 @@ static void SVC_DirectConnect (struct net_stream *stream)
 	if (!newcl) {
 		NET_OOB_Printf(stream, "print\nServer is full.\n");
 		Com_Printf("Rejected a connection - server is full.\n");
+
 		return;
 	}
 
