@@ -1111,6 +1111,14 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 	/* fire shots */
 	shots = fd->shots;
 	if (fd->ammo && !gi.csi->ods[weapon->t].thrown) {
+		/**
+		 * If loaded ammo is less than needed ammo from firedef
+		 * then reduce shot-number relative to the difference.
+		 * @todo This really needs an overhaul.And it might get dumped completely when
+		 * Feature Request "[1814158] Extended shot-definitions in firedef"
+		 * https://sourceforge.net/tracker/?func=detail&atid=805245&aid=1814158&group_id=157793
+		 * gets implemented.
+		 */
 		if (ammo < fd->ammo) {
 			shots = fd->shots * ammo / fd->ammo;
 			ammo = 0;
