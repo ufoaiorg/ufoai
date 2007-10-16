@@ -62,6 +62,15 @@ particle water_drop
 	think { kill }
 }
 
+// this should be the particle for the aliencontainment map
+// FIXME
+particle bubble
+{
+	init {
+		kill
+	}
+}
+
 particle corona
 {
 	init
