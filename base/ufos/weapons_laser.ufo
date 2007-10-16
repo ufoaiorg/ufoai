@@ -84,39 +84,39 @@ item laserrifle_ammo
 	{
 		firedef
 		{
-			name	"_Short Wave"
+			name	"_Long Wave Beam"
 			skill 	close
 			projtl	laserPulse
 			impact	laserImpact
 			hitbody	laserImpact
 			firesnd	weapons/laser
 			speed	0
-			spread	"0 0.8"
-			crouch	0.3
+			spread	"0.5 0.5"
+			crouch	1
 			range	60
 			shots	1
-			ammo	1
-			time	8
-			damage	"30 5"
+			ammo	2
+			time	7
+			damage	"60 20"
 			dmgweight laser_light
 			reaction	true
 		}
 		firedef
 		{
-			name	"_Long Wave"
+			name	"_Short Wave Pulsed"
 			skill 	close
 			projtl	laserPulse
 			impact	laserImpact
 			hitbody	laserImpact
 			firesnd	weapons/laser
 			speed	0
-			spread	"0 0.8"
-			crouch	0.3
+			spread	"0 0"
+			crouch	1
 			range	60
-			shots	1
+			shots	3
 			ammo	3
-			time	12
-			damage	"50 10"
+			time	10
+			damage	"30 10"
 			dmgweight laser_light
 			reaction	true
 		}
@@ -126,39 +126,39 @@ item laserrifle_ammo
 	{
 		firedef
 		{
-			name	"_Short Wave"
+			name	"_Long Wave Beam"
 			skill 	assault
 			projtl	laserPulse
 			impact	laserImpact
 			hitbody	laserImpact
 			firesnd	weapons/laser
 			speed	0
-			spread	"0 0.4"
-			crouch	0.6
+			spread	"0 0"
+			crouch	1
 			range	90
 			shots	1
-			ammo	1
-			time	11
-			damage	"40 10"
+			ammo	2
+			time	9
+			damage	"75 20"
 			dmgweight laser_medium
 			reaction	true
 		}
 		firedef
 		{
-			name	"_Long Wave"
+			name	"_Short Wave Pulsed"
 			skill 	assault
 			projtl	laserPulse
 			impact	laserImpact
 			hitbody	laserImpact
 			firesnd	weapons/laser
 			speed	0
-			spread	"0 0.4"
-			crouch	0.6
+			spread	"0 0"
+			crouch	1
 			range	90
-			shots	1
+			shots	3
 			ammo	3
-			time	17
-			damage	"60 15"
+			time	13
+			damage	"40 10"
 			dmgweight laser_medium
 			reaction	true
 		}
@@ -168,39 +168,39 @@ item laserrifle_ammo
 	{
 		firedef
 		{
-			name	"_Short Wave"
-			skill	heavy
-			projtl	laserPulse
-			impact	laserImpact
-			hitbody	laserImpact
-			firesnd	weapons/laser
-			speed	0
-			spread	"0 0.2"
-			crouch	0.8
-			range	120
-			shots	1
-			ammo	1
-			time	18
-			damage	"60 6"
-			dmgweight laser_heavy
-			reaction	true
-		}
-		firedef
-		{
-			name	"_Long Wave"
+			name	"_Long Wave Beam"
 			skill	heavy
 			projtl	laserOverload
 			impact	laserImpact
 			hitbody	laserImpact
 			firesnd	weapons/heavy_laser
 			speed	0
-			spread	"0 0.2"
-			crouch	0.8
+			spread	"0 0"
+			crouch	1
 			range	120
 			shots	1
+			ammo	2
+			time	12
+			damage	"90 25"
+			dmgweight laser_heavy
+			reaction	true
+		}
+		firedef
+		{
+			name	"_Short Wave Pulsed"
+			skill	heavy
+			projtl	laserPulse
+			impact	laserImpact
+			hitbody	laserImpact
+			firesnd	weapons/laser
+			speed	0
+			spread	"0 0"
+			crouch	1
+			range	120
+			shots	3
 			ammo	3
-			time	23
-			damage	"100 6"
+			time	18
+			damage	"50 15"
 			dmgweight laser_heavy
 			reaction	true
 		}
