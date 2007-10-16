@@ -286,6 +286,7 @@ equipment multiplayer_initial
 	plasmagrenade		3
 	kerrblade           2 // bulky, will rarely get into the backpack
 	plasblade			3
+	plasblade_ammo      6
 	light				10
 	medium				10
 //	heavy				5
