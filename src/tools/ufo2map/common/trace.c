@@ -103,7 +103,7 @@ static void BuildTnode_r (int node)
 		t = tnode_p++;
 
 		if (n->children[0] < 0 || n->children[1] < 0)
-			Error("Unexpected leaf");
+			Sys_Error("Unexpected leaf");
 
 		VectorCopy(dnodes[n->children[0]].maxs, c0maxs);
 		VectorCopy(dnodes[n->children[1]].mins, c1mins);

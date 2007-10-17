@@ -180,7 +180,7 @@ static void MakePatchForFace (int fn, winding_t *w)
 
 	patch = &patches[num_patches];
 	if (num_patches == MAX_PATCHES)
-		Error("num_patches == MAX_PATCHES");
+		Sys_Error("num_patches == MAX_PATCHES");
 	patch->next = face_patches[fn];
 	face_patches[fn] = patch;
 
@@ -193,7 +193,7 @@ static void MakePatchForFace (int fn, winding_t *w)
 	/* origin offset faces must create new planes */
 	if (face_offset[fn][0] || face_offset[fn][1] || face_offset[fn][2] ) {
 		if (numplanes + fakeplanes >= MAX_MAP_PLANES)
-			Error("numplanes + fakeplanes >= MAX_MAP_PLANES");
+			Sys_Error("numplanes + fakeplanes >= MAX_MAP_PLANES");
 		pl = &dplanes[numplanes + fakeplanes];
 		fakeplanes++;
 
@@ -357,7 +357,7 @@ static void SubdividePatch (patch_t *patch)
 
 	/* create a new patch */
 	if (num_patches == MAX_PATCHES)
-		Error("MAX_PATCHES (%i)", num_patches);
+		Sys_Error("MAX_PATCHES (%i)", num_patches);
 	newp = &patches[num_patches];
 	num_patches++;
 
@@ -403,7 +403,7 @@ static void DicePatch (patch_t *patch)
 
 	/* create a new patch */
 	if (num_patches == MAX_PATCHES)
-		Error("MAX_PATCHES (%i)", num_patches);
+		Sys_Error("MAX_PATCHES (%i)", num_patches);
 	newp = &patches[num_patches];
 	num_patches++;
 

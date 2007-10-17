@@ -293,7 +293,7 @@ static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 	for (i = 0; i < brush->numsides; i++) {
 		num = brush->sides[i].planenum;
 		if (num >= 0x10000)
-			Error("bad planenum");
+			Sys_Error("bad planenum");
 		if (num == planenum)
 			return PSIDE_BACK|PSIDE_FACING;
 		if (num == (planenum ^ 1) )
@@ -419,7 +419,7 @@ static void CheckPlaneAgainstParents (int pnum, node_t *node)
 
 	for (p = node->parent; p; p = p->parent) {
 		if (p->planenum == pnum)
-			Error("Tried parent");
+			Sys_Error("Tried parent");
 	}
 }
 
@@ -507,7 +507,7 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 
 					splits += bsplits;
 					if (bsplits && (s & PSIDE_FACING))
-						Error("PSIDE_FACING with splits");
+						Sys_Error("PSIDE_FACING with splits");
 
 					test->testside = s;
 					/* if the brush shares this face, don't bother

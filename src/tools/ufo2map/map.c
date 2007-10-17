@@ -110,10 +110,10 @@ static int CreateNewFloatPlane (vec3_t normal, vec_t dist)
 	plane_t *p, temp;
 
 	if (VectorLength(normal) < 0.5)
-		Error("FloatPlane: bad normal");
+		Sys_Error("FloatPlane: bad normal");
 	/* create a new plane */
 	if (nummapplanes+2 > MAX_MAP_PLANES)
-		Error("MAX_MAP_PLANES (%i)", nummapplanes+2);
+		Sys_Error("MAX_MAP_PLANES (%i)", nummapplanes+2);
 
 	p = &mapplanes[nummapplanes];
 	VectorCopy(normal, p->normal);
@@ -278,7 +278,7 @@ static void AddBrushBevels (mapbrush_t *b)
 
 			if (i == b->numsides) {	/* add a new side */
 				if (nummapbrushsides == MAX_MAP_BRUSHSIDES)
-					Error("MAX_MAP_BRUSHSIDES (%i)", nummapbrushsides);
+					Sys_Error("MAX_MAP_BRUSHSIDES (%i)", nummapbrushsides);
 				nummapbrushsides++;
 				b->numsides++;
 				VectorClear (normal);
@@ -367,7 +367,7 @@ static void AddBrushBevels (mapbrush_t *b)
 						continue;	/* wasn't part of the outer hull */
 					/* add this plane */
 					if (nummapbrushsides == MAX_MAP_BRUSHSIDES)
-						Error("MAX_MAP_BRUSHSIDES (%i)", nummapbrushsides);
+						Sys_Error("MAX_MAP_BRUSHSIDES (%i)", nummapbrushsides);
 					nummapbrushsides++;
 					s2 = &b->original_sides[b->numsides];
 					s2->planenum = FindFloatPlane(normal, dist);
@@ -438,7 +438,7 @@ static void ParseBrush (entity_t *mapent)
 	qboolean phongShading;
 
 	if (nummapbrushes == MAX_MAP_BRUSHES)
-		Error("nummapbrushes == MAX_MAP_BRUSHES (%i)", nummapbrushes);
+		Sys_Error("nummapbrushes == MAX_MAP_BRUSHES (%i)", nummapbrushes);
 
 	b = &mapbrushes[nummapbrushes];
 	b->original_sides = &brushsides[nummapbrushsides];
@@ -466,7 +466,7 @@ static void ParseBrush (entity_t *mapent)
 			break;
 
 		if (nummapbrushsides == MAX_MAP_BRUSHSIDES)
-			Error("nummapbrushsides == MAX_MAP_BRUSHSIDES (%i)", nummapbrushsides);
+			Sys_Error("nummapbrushsides == MAX_MAP_BRUSHSIDES (%i)", nummapbrushsides);
 		side = &brushsides[nummapbrushsides];
 
 		/* read the three point plane definition */
@@ -474,7 +474,7 @@ static void ParseBrush (entity_t *mapent)
 			if (i != 0)
 				GetToken(qtrue);
 			if (*token != '(')
-				Error("parsing brush");
+				Sys_Error("parsing brush");
 
 			for (j = 0; j < 3; j++) {
 				GetToken(qfalse);
@@ -483,7 +483,7 @@ static void ParseBrush (entity_t *mapent)
 
 			GetToken(qfalse);
 			if (*token != ')')
-				Error("parsing brush");
+				Sys_Error("parsing brush");
 		}
 
 		/* read the texturedef */
@@ -622,7 +622,7 @@ static void ParseBrush (entity_t *mapent)
 		vec3_t origin;
 
 		if (num_entities == 1) {
-			Error("Entity %i, Brush %i: origin brushes not allowed in world"
+			Sys_Error("Entity %i, Brush %i: origin brushes not allowed in world"
 				, b->entitynum, b->brushnum);
 			return;
 		}
@@ -701,10 +701,10 @@ static qboolean ParseMapEntity (void)
 		return qfalse;
 
 	if (*token != '{')
-		Error("ParseMapEntity: { not found");
+		Sys_Error("ParseMapEntity: { not found");
 
 	if (num_entities == MAX_MAP_ENTITIES)
-		Error("num_entities == MAX_MAP_ENTITIES (%i)", num_entities);
+		Sys_Error("num_entities == MAX_MAP_ENTITIES (%i)", num_entities);
 
 	startbrush = nummapbrushes;
 	startsides = nummapbrushsides;
@@ -719,7 +719,7 @@ static qboolean ParseMapEntity (void)
 
 	do {
 		if (!GetToken(qtrue))
-			Error("ParseMapEntity: EOF without closing brace");
+			Sys_Error("ParseMapEntity: EOF without closing brace");
 		if (*token == '}')
 			break;
 		if (*token == '{')

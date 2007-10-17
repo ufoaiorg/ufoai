@@ -259,7 +259,7 @@ static int CopyLump (int lump, void *dest, int size)
 	if (length == 0)
 		return 0;
 	if (length % size)
-		Error("LoadBSPFile: odd lump size");
+		Sys_Error("LoadBSPFile: odd lump size");
 
 	memcpy(dest, (byte *)header + ofs, length);
 
@@ -281,9 +281,9 @@ void LoadBSPFile (const char *filename)
 		((int *)header)[i] = LittleLong(((int *)header)[i]);
 
 	if (header->ident != IDBSPHEADER)
-		Error("%s is not a IBSP file", filename);
+		Sys_Error("%s is not a IBSP file", filename);
 	if (header->version != BSPVERSION)
-		Error("%s is version %i, not %i", filename, header->version, BSPVERSION);
+		Sys_Error("%s is version %i, not %i", filename, header->version, BSPVERSION);
 
 	nummodels = CopyLump(LUMP_MODELS, dmodels, sizeof(dmodel_t));
 	numvertexes = CopyLump(LUMP_VERTEXES, dvertexes, sizeof(dvertex_t));
@@ -463,11 +463,11 @@ epair_t *ParseEpair (void)
 	memset(e, 0, sizeof(epair_t));
 
 	if (strlen(token) >= MAX_KEY - 1)
-		Error("ParseEpar: token too long");
+		Sys_Error("ParseEpar: token too long");
 	e->key = copystring(token);
 	GetToken(qfalse);
 	if (strlen(token) >= MAX_VALUE - 1)
-		Error("ParseEpar: token too long");
+		Sys_Error("ParseEpar: token too long");
 	e->value = copystring(token);
 
 	/* strip trailing spaces */
@@ -491,17 +491,17 @@ static qboolean ParseEntity (void)
 		return qfalse;
 
 	if (strcmp(token, "{"))
-		Error("ParseEntity: { not found");
+		Sys_Error("ParseEntity: { not found");
 
 	if (num_entities >= MAX_MAP_ENTITIES)
-		Error("num_entities >= MAX_MAP_ENTITIES (%i)", num_entities);
+		Sys_Error("num_entities >= MAX_MAP_ENTITIES (%i)", num_entities);
 
 	mapent = &entities[num_entities];
 	num_entities++;
 
 	do {
 		if (!GetToken(qtrue))
-			Error("ParseEntity: EOF without closing brace");
+			Sys_Error("ParseEntity: EOF without closing brace");
 		if (!strcmp(token, "}") )
 			break;
 		e = ParseEpair ();
@@ -564,7 +564,7 @@ void UnparseEntities (void)
 		end += 2;
 
 		if (end > buf + MAX_MAP_ENTSTRING)
-			Error("Entity text too long");
+			Sys_Error("Entity text too long");
 	}
 	entdatasize = end - buf + 1;
 }

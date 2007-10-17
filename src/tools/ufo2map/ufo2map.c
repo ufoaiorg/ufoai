@@ -235,7 +235,7 @@ int main (int argc, char **argv)
 	U2M_RAD_Parameter(argc, argv);
 
 	if (argc < 2)
-		Error("Usage: ufo2map <parameter> [map]\n"
+		Sys_Error("Usage: ufo2map <parameter> [map]\n"
 		" -bounce <num>            : light bounces\n"
 		" -block num num           : \n"
 		" -blocks num num num num  : \n"

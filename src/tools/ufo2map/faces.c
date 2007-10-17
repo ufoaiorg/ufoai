@@ -65,7 +65,7 @@ static unsigned HashVec (vec3_t vec)
 	y = (4096 + (int)(vec[1] + 0.5)) >> 7;
 
 	if ( x < 0 || x >= HASH_SIZE || y < 0 || y >= HASH_SIZE )
-		Error("HashVec: point outside valid range");
+		Sys_Error("HashVec: point outside valid range");
 
 	return y * HASH_SIZE + x;
 }
@@ -100,7 +100,7 @@ static int GetVertexnum (vec3_t in)
 
 	/* emit a vertex */
 	if (numvertexes == MAX_MAP_VERTS)
-		Error("numvertexes == MAX_MAP_VERTS");
+		Sys_Error("numvertexes == MAX_MAP_VERTS");
 
 	dvertexes[numvertexes].point[0] = vert[0];
 	dvertexes[numvertexes].point[1] = vert[1];
@@ -174,7 +174,7 @@ static void EmitFaceVertexes (node_t *node, face_t *f)
 		/* make every point unique */
 		if (config.noweld) {
 			if (numvertexes == MAX_MAP_VERTS)
-				Error("MAX_MAP_VERTS (%i)", numvertexes);
+				Sys_Error("MAX_MAP_VERTS (%i)", numvertexes);
 			superverts[i] = numvertexes;
 			VectorCopy(w->p[i], dvertexes[numvertexes].point);
 			numvertexes++;
@@ -276,7 +276,7 @@ static void TestEdge (vec_t start, vec_t end, int p1, int p2, int startvert)
 
 	/* the edge p1 to p2 is now free of tjunctions */
 	if (numsuperverts >= MAX_SUPERVERTS)
-		Error("MAX_SUPERVERTS (%i)", numsuperverts);
+		Sys_Error("MAX_SUPERVERTS (%i)", numsuperverts);
 	superverts[numsuperverts] = p1;
 	numsuperverts++;
 }
@@ -445,7 +445,7 @@ int GetEdge (int v1, int v2, face_t *f)
 
 	/* emit an edge */
 	if (numedges >= MAX_MAP_EDGES)
-		Error("numedges >= MAX_MAP_EDGES (%i)", numedges);
+		Sys_Error("numedges >= MAX_MAP_EDGES (%i)", numedges);
 	edge = &dedges[numedges];
 	numedges++;
 	edge->v[0] = v1;
@@ -676,7 +676,7 @@ static void SubdivideFace (node_t *node, face_t *f)
 
 			ClipWindingEpsilon(w, temp, dist, ON_EPSILON, &frontw, &backw);
 			if (!frontw || !backw)
-				Error("SubdivideFace: didn't split the polygon");
+				Sys_Error("SubdivideFace: didn't split the polygon");
 
 			f->split[0] = NewFaceFromFace(f);
 			f->split[0]->w = frontw;

@@ -105,7 +105,7 @@ extern qboolean verbose;
 extern char qdir[1024];
 extern char gamedir[1024];
 
-void Error(const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
+void Sys_Error(const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
 void Com_Printf(const char *format, ...) __attribute__((format(printf, 1, 2)));
 void Sys_FPrintf(int flag, const char *text, ...) __attribute__((format(printf, 2, 3)));
 

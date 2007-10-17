@@ -41,7 +41,7 @@ int FindMiptex (const char *name)
 			return i;
 		}
 	if (nummiptex == MAX_MAP_TEXTURES)
-		Error("MAX_MAP_TEXTURES");
+		Sys_Error("MAX_MAP_TEXTURES");
 	strcpy(textureref[i].name, name);
 
 	/* load the miptex to get the flags and values */

@@ -57,7 +57,7 @@ static void AddScriptToStack (const char *filename)
 
 	script++;
 	if (script == &scriptstack[MAX_INCLUDES])
-		Error("script file exceeded MAX_INCLUDES");
+		Sys_Error("script file exceeded MAX_INCLUDES");
 	strncpy(script->filename, ExpandPath(filename), sizeof(script->filename));
 
 	size = LoadFile(script->filename, (void **)&script->buffer);
@@ -89,7 +89,7 @@ void ParseFromMemory (char *buffer, int size)
 	script = scriptstack;
 	script++;
 	if (script == &scriptstack[MAX_INCLUDES])
-		Error("script file exceeded MAX_INCLUDES");
+		Sys_Error("script file exceeded MAX_INCLUDES");
 	strncpy(script->filename, "memory buffer", sizeof(script->filename));
 
 	script->buffer = buffer;
@@ -104,7 +104,7 @@ void ParseFromMemory (char *buffer, int size)
 static qboolean EndOfScript (qboolean crossline)
 {
 	if (!crossline)
-		Error("Line %i is incomplete\n",scriptline);
+		Sys_Error("Line %i is incomplete\n",scriptline);
 
 	if (!strcmp(script->filename, "memory buffer"))
 		return qfalse;
@@ -136,7 +136,7 @@ skipspace:
 			return EndOfScript(crossline);
 		if (*script->script_p++ == '\n') {
 			if (!crossline)
-				Error("Line %i is incomplete\n",scriptline);
+				Sys_Error("Line %i is incomplete\n",scriptline);
 			scriptline = script->line++;
 		}
 	}
@@ -148,7 +148,7 @@ skipspace:
 	if (*script->script_p == ';' || *script->script_p == '#'
 		|| ( script->script_p[0] == '/' && script->script_p[1] == '/') ) {
 		if (!crossline)
-			Error("Line %i is incomplete\n",scriptline);
+			Sys_Error("Line %i is incomplete\n",scriptline);
 		while (*script->script_p++ != '\n')
 			if (script->script_p >= script->end_p)
 				return EndOfScript(crossline);
@@ -158,7 +158,7 @@ skipspace:
 	/* c-style comments */
 	if (script->script_p[0] == '/' && script->script_p[1] == '*') {
 		if (!crossline)
-			Error("Line %i is incomplete\n",scriptline);
+			Sys_Error("Line %i is incomplete\n",scriptline);
 		script->script_p += 2;
 		while (script->script_p[0] != '*' && script->script_p[1] != '/') {
 			script->script_p++;
@@ -180,7 +180,7 @@ skipspace:
 			if (script->script_p == script->end_p)
 				break;
 			if (token_p == &token[MAXTOKEN])
-				Error("Token too large on line %i\n",scriptline);
+				Sys_Error("Token too large on line %i\n",scriptline);
 		}
 		script->script_p++;
 	} else	/* regular token */
@@ -189,7 +189,7 @@ skipspace:
 			if (script->script_p == script->end_p)
 				break;
 			if (token_p == &token[MAXTOKEN])
-				Error("Token too large on line %i\n",scriptline);
+				Sys_Error("Token too large on line %i\n",scriptline);
 		}
 
 	*token_p = 0;

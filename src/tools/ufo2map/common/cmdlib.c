@@ -63,7 +63,7 @@ static pack_t *FS_LoadPackFile(const char *packfile);
 /**
  * @brief For abnormal program terminations in windowed apps
  */
-void Error (const char *error, ...)
+void Sys_Error (const char *error, ...)
 {
 	va_list argptr;
 	char text[2048];
@@ -90,7 +90,7 @@ void Error (const char *error, ...)
 /**
  * @brief For abnormal program terminations in console apps
  */
-void Error (const char *error, ...)
+void Sys_Error (const char *error, ...)
 {
 	va_list argptr;
 	char text[2048];
@@ -165,7 +165,7 @@ void SetQdirFromPath (char *path)
 			return;
 		}
 	}
-	Error("SetQdirFromPath: No file '%s' found in any directory of the path %s", BASEDIR_ID_FILE, path);
+	Sys_Error("SetQdirFromPath: No file '%s' found in any directory of the path %s", BASEDIR_ID_FILE, path);
 }
 
 /**
@@ -191,7 +191,7 @@ char *ExpandPath (const char *path)
 {
 	static char full[1024];
 	if (!qdir)
-		Error("ExpandPath called without qdir set");
+		Sys_Error("ExpandPath called without qdir set");
 	if (path[0] == '/' || path[0] == '\\' || path[1] == ':') {
 		strncpy(full, path, sizeof(full));
 		return full;
@@ -319,7 +319,7 @@ qFILE *SafeOpenWrite (const char *filename, qFILE* f)
 	memset(f, 0, sizeof(qFILE));
 	f->f = fopen(filename, "wb");
 	if (!f->f)
-		Error("Error opening %s for writing: %s", filename, strerror(errno));
+		Sys_Error("Error opening %s for writing: %s", filename, strerror(errno));
 
 	return f;
 }
@@ -420,7 +420,7 @@ qFILE *SafeOpenRead (const char *filename, qFILE *f)
 				unz_file_info info;
 				Com_Printf("PackFile: %s : %s\n", pak->filename, filename);
 				if (unzGetCurrentFileInfo(pak->handle.z, &info, NULL, 0, NULL, 0, NULL, 0) != UNZ_OK)
-					Error("Couldn't get size of %s in %s", filename, pak->filename);
+					Sys_Error("Couldn't get size of %s in %s", filename, pak->filename);
 				unzGetCurrentFileInfoPosition(pak->handle.z, &f->filepos);
 				f->z = pak->handle.z;
 				f->size = info.uncompressed_size;
@@ -442,12 +442,12 @@ void SafeRead (qFILE *f, void *buffer, int count)
 {
 	if (f->f) {
 		if (fread(buffer, 1, count, f->f) != (size_t)count)
-			Error("SafeRead: File read failure");
+			Sys_Error("SafeRead: File read failure");
 	} else if (f->z) {
 		if (unzReadCurrentFile(f->z, buffer, count) == -1)
-			Error("SafeRead: unzReadCurrentFile error");
+			Sys_Error("SafeRead: unzReadCurrentFile error");
 	} else
-		Error("SafeRead: No filehandle given");
+		Sys_Error("SafeRead: No filehandle given");
 }
 
 
@@ -458,11 +458,11 @@ void SafeRead (qFILE *f, void *buffer, int count)
 void SafeWrite (qFILE *f, void *buffer, int count)
 {
 	if (f->z)
-		Error("SafeWrite: Could not write into zip files");
+		Sys_Error("SafeWrite: Could not write into zip files");
 	if (!f->f)
-		Error("SafeWrite: No file handle given");
+		Sys_Error("SafeWrite: No file handle given");
 	if (fwrite(buffer, 1, count, f->f) != (size_t)count)
-		Error("SafeWrite: File write failure");
+		Sys_Error("SafeWrite: File write failure");
 }
 
 /**
@@ -485,7 +485,7 @@ int LoadFile (const char *filename, void **bufferptr)
 
 	SafeOpenRead(filename, &f);
 	if (!f.f && !f.z)
-		Error("Could not load %s", filename);
+		Sys_Error("Could not load %s", filename);
 	length = Q_filelength(&f);
 	buffer = malloc(length + 1);
 	((char *)buffer)[length] = 0;
