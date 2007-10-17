@@ -68,7 +68,7 @@ void LoadPCX (const char *filename, byte **pic, byte **palette, int *width, int 
 		|| pcx->bits_per_pixel != 8
 		|| pcx->xmax >= 640
 		|| pcx->ymax >= 480)
-		Error("Bad pcx file %s", filename);
+		Sys_Error("Bad pcx file %s", filename);
 
 	if (palette) {
 		*palette = malloc(768);
@@ -87,7 +87,7 @@ void LoadPCX (const char *filename, byte **pic, byte **palette, int *width, int 
 
 	out = malloc((pcx->ymax + 1) * (pcx->xmax + 1));
 	if (!out)
-		Error("Skin_Cache: couldn't allocate");
+		Sys_Error("Skin_Cache: couldn't allocate");
 
 	*pic = out;
 
@@ -109,7 +109,7 @@ void LoadPCX (const char *filename, byte **pic, byte **palette, int *width, int 
 	}
 
 	if (raw - (byte *)pcx > len)
-		Error("PCX file %s was malformed", filename);
+		Sys_Error("PCX file %s was malformed", filename);
 
 	free(pcx);
 }
