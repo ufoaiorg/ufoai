@@ -142,7 +142,7 @@ static triedge_t *FindEdge (triangulation_t *trian, int p0, int p1)
 		return trian->edgematrix[p0][p1];
 
 	if (trian->numedges > MAX_TRI_EDGES - 2)
-		Error("trian->numedges > MAX_TRI_EDGES-2");
+		Sys_Error("trian->numedges > MAX_TRI_EDGES-2");
 
 	VectorSubtract(trian->points[p1]->origin, trian->points[p0]->origin, v1);
 	VectorNormalize(v1);
@@ -175,7 +175,7 @@ static triangle_t *AllocTriangle (triangulation_t *trian)
 	triangle_t *t;
 
 	if (trian->numtris >= MAX_TRI_TRIS)
-		Error("trian->numtris >= MAX_TRI_TRIS");
+		Sys_Error("trian->numtris >= MAX_TRI_TRIS");
 
 	t = &trian->tris[trian->numtris];
 	trian->numtris++;
@@ -268,7 +268,7 @@ static void AddPointToTriangulation (patch_t *patch, triangulation_t *trian)
 
 	pnum = trian->numpoints;
 	if (pnum == MAX_TRI_POINTS)
-		Error("trian->numpoints == MAX_TRI_POINTS (%i)", pnum);
+		Sys_Error("trian->numpoints == MAX_TRI_POINTS (%i)", pnum);
 	trian->points[pnum] = patch;
 	trian->numpoints++;
 }
@@ -388,7 +388,7 @@ static void SampleTriangulation (vec3_t point, triangulation_t *trian, vec3_t co
 	}
 
 	if (!p1)
-		Error("SampleTriangulation: no points");
+		Sys_Error("SampleTriangulation: no points");
 
 	VectorCopy(p1->totallight, color);
 }
@@ -471,7 +471,7 @@ static void CalcFaceExtents (lightinfo_t *l)
 		l->texmins[i] = mins[i];
 		l->texsize[i] = maxs[i] - mins[i];
 		if (l->texsize[0] * l->texsize[1] > SINGLEMAP)
-			Error("Surface too large to light %i - %i (%i)", l->texsize[0], l->texsize[1], SINGLEMAP);
+			Sys_Error("Surface too large to light %i - %i (%i)", l->texsize[0], l->texsize[1], SINGLEMAP);
 	}
 }
 
@@ -842,7 +842,7 @@ static void GatherSampleLight (vec3_t pos, vec3_t normal,
 			scale = (l->intensity - dist) * dot;
 			break;
 		default:
-			Error("Bad l->type");
+			Sys_Error("Bad l->type");
 		}
 
 		if (scale <= 0)
@@ -1060,7 +1060,7 @@ void FinalLightFace (unsigned int facenum)
 #endif
 
 	if (lightdatasize > MAX_MAP_LIGHTING)
-		Error("MAX_MAP_LIGHTING (%i)", lightdatasize);
+		Sys_Error("MAX_MAP_LIGHTING (%i)", lightdatasize);
 
 	f->styles[0] = 0;
 	f->styles[1] = f->styles[2] = f->styles[3] = 0xff;

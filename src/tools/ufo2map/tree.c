@@ -104,9 +104,9 @@ static void PruneNodes_r (node_t *node)
 	if ((node->children[0]->contentFlags & CONTENTS_SOLID)
 		&& (node->children[1]->contentFlags & CONTENTS_SOLID)) {
 		if (node->faces)
-			Error("node->faces seperating CONTENTS_SOLID");
+			Sys_Error("node->faces seperating CONTENTS_SOLID");
 		if (node->children[0]->faces || node->children[1]->faces)
-			Error("!node->faces with children");
+			Sys_Error("!node->faces with children");
 
 		/* FIXME: free stuff */
 		node->planenum = PLANENUM_LEAF;
@@ -114,7 +114,7 @@ static void PruneNodes_r (node_t *node)
 		node->detail_seperator = qfalse;
 
 		if (node->brushlist)
-			Error("PruneNodes: node->brushlist");
+			Sys_Error("PruneNodes: node->brushlist");
 
 		/* combine brush lists */
 		node->brushlist = node->children[1]->brushlist;

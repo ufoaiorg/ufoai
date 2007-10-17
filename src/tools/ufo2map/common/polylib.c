@@ -53,7 +53,7 @@ winding_t *AllocWinding(int points)
 	s = sizeof(vec_t) * 3 * points + sizeof(int);
 	w = malloc(s);
 	if (!w) {
-		Error("could not allocate winding of size: "UFO_SIZE_T"\n", s);
+		Sys_Error("could not allocate winding of size: "UFO_SIZE_T"\n", s);
 		return NULL;
 	}
 	memset(w, 0, s);
@@ -67,7 +67,7 @@ winding_t *AllocWinding(int points)
 void FreeWinding (winding_t *w)
 {
 	if (*(unsigned *)w == 0xdeaddead)
-		Error("FreeWinding: freed a freed winding");
+		Sys_Error("FreeWinding: freed a freed winding");
 	*(unsigned *)w = 0xdeaddead;
 
 	c_active_windings--;
@@ -184,7 +184,7 @@ winding_t *BaseWindingForPlane (vec3_t normal, vec_t dist)
 		}
 	}
 	if (x == -1)
-		Error("BaseWindingForPlane: no axis found");
+		Sys_Error("BaseWindingForPlane: no axis found");
 
 	VectorCopy(vec3_origin, vup);
 	switch (x) {
@@ -356,9 +356,9 @@ void ClipWindingEpsilon (winding_t *in, vec3_t normal, vec_t dist,
 	}
 
 	if (f->numpoints > maxpts || b->numpoints > maxpts)
-		Error("ClipWinding: points exceeded estimate");
+		Sys_Error("ClipWinding: points exceeded estimate");
 	if (f->numpoints > MAX_POINTS_ON_WINDING || b->numpoints > MAX_POINTS_ON_WINDING)
-		Error("ClipWinding: MAX_POINTS_ON_WINDING");
+		Sys_Error("ClipWinding: MAX_POINTS_ON_WINDING");
 }
 
 
@@ -450,9 +450,9 @@ void ChopWindingInPlace (winding_t **inout, vec3_t normal, vec_t dist, vec_t eps
 	}
 
 	if (f->numpoints > maxpts)
-		Error("ClipWinding: points exceeded estimate");
+		Sys_Error("ClipWinding: points exceeded estimate");
 	if (f->numpoints > MAX_POINTS_ON_WINDING)
-		Error("ClipWinding: MAX_POINTS_ON_WINDING");
+		Sys_Error("ClipWinding: MAX_POINTS_ON_WINDING");
 
 	FreeWinding(in);
 	*inout = f;

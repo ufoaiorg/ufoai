@@ -221,11 +221,11 @@ static void MakeTransfers (unsigned int i)
 		transfer_t *t;
 
 		if (patch->numtransfers < 0 || patch->numtransfers > MAX_PATCHES)
-			Error("Weird numtransfers");
+			Sys_Error("Weird numtransfers");
 		s = patch->numtransfers * sizeof(transfer_t);
 		patch->transfers = malloc(s);
 		if (!patch->transfers)
-			Error("Memory allocation failure");
+			Sys_Error("Memory allocation failure");
 
 		/* normalize all transfers so all of the light */
 		/* is transfered to the surroundings */
@@ -268,7 +268,7 @@ static void WriteWorld (const char *name)
 
 	out = fopen(name, "w");
 	if (!out)
-		Error("Couldn't open %s", name);
+		Sys_Error("Couldn't open %s", name);
 
 	for (j = 0, patch = patches; j < num_patches; j++, patch++) {
 		w = patch->winding;
@@ -374,14 +374,14 @@ static void CheckPatches (void)
 	for (i = 0; i < num_patches; i++) {
 		patch = &patches[i];
 		if (patch->totallight[0] < 0 || patch->totallight[1] < 0 || patch->totallight[2] < 0)
-			Error("negative patch totallight\n");
+			Sys_Error("negative patch totallight\n");
 	}
 }
 
 void RadWorld (void)
 {
 	if (numnodes == 0 || numfaces == 0)
-		Error("Empty map");
+		Sys_Error("Empty map");
 
 	MakeBackplanes();
 

@@ -74,7 +74,7 @@ static int c_tinyportals = 0;
 static void AddPortalToNodes (portal_t *p, node_t *front, node_t *back)
 {
 	if (p->nodes[0] || p->nodes[1])
-		Error("AddPortalToNode: already included");
+		Sys_Error("AddPortalToNode: already included");
 
 	p->nodes[0] = front;
 	p->next[0] = front->portals;
@@ -95,7 +95,7 @@ void RemovePortalFromNode (portal_t *portal, node_t *l)
 	while (1) {
 		t = *pp;
 		if (!t)
-			Error("RemovePortalFromNode: portal not in leaf");
+			Sys_Error("RemovePortalFromNode: portal not in leaf");
 
 		if (t == portal)
 			break;
@@ -105,7 +105,7 @@ void RemovePortalFromNode (portal_t *portal, node_t *l)
 		else if (t->nodes[1] == l)
 			pp = &t->next[1];
 		else
-			Error("RemovePortalFromNode: portal not bounding leaf");
+			Sys_Error("RemovePortalFromNode: portal not bounding leaf");
 	}
 
 	if (portal->nodes[0] == l) {
@@ -235,7 +235,7 @@ static void MakeNodePortal (node_t *node)
 			VectorSubtract(vec3_origin, p->plane.normal, normal);
 			dist = -p->plane.dist;
 		} else
-			Error("CutNodePortals_r: mislinked portal");
+			Sys_Error("CutNodePortals_r: mislinked portal");
 
 		ChopWindingInPlace(&w, normal, dist, 0.1);
 	}
@@ -279,7 +279,7 @@ static void SplitNodePortals (node_t *node)
 		else if (p->nodes[1] == node)
 			side = 1;
 		else
-			Error("CutNodePortals_r: mislinked portal");
+			Sys_Error("CutNodePortals_r: mislinked portal");
 		next_portal = p->next[side];
 
 		other_node = p->nodes[!side];

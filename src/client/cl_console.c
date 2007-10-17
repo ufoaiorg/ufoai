@@ -316,7 +316,9 @@ void Con_SaveConsoleHistory (const char *path)
 	char filename[MAX_OSPATH];
 	const char *lastLine = NULL;
 
-	assert(path);
+	/* in case of a very early sys error */
+	if (!path)
+		return;
 
 	/* maybe con_history is not initialized here (early Sys_Error) */
 	if (!con_history || !con_history->integer)
