@@ -1090,6 +1090,10 @@ qboolean AII_AddAmmoToSlot (base_t* base, technology_t *tech, aircraftSlot_t *sl
 	assert(tech);
 
 	ammoIdx = AII_GetAircraftItemByID(tech->provides);
+	if (ammoIdx == NONE) {
+		Com_Printf("AII_AddAmmoToSlot: Could not add item (%s) to slot\n", tech->provides);
+		return qfalse;
+	}
 
 	/* the base pointer can be null here - e.g. in case you are equipping an ufo */
 	if (base) {
