@@ -478,7 +478,7 @@ static void UP_BuildingDescription (technology_t* t)
 
 /**
  * @brief Prints the (ufopedia and other) description for aircraft items
- * @param item Index in object definition array ods for the item
+ * @param idx Index in object definition array ods for the item
  * @sa UP_DrawEntry
  * Not only called from Ufopedia but also from other places to display
  * @todo Don't display things like speed for base defense items - a missile
@@ -935,7 +935,7 @@ static void UP_Content_f (void)
 				researched_entries = qtrue;
 				break;
 			}
-			if (upCurrent->idx != upCurrent->next && upCurrent->next >= 0 )
+			if (upCurrent->idx != upCurrent->next && upCurrent->next != TECH_INVALID)
 				upCurrent = &gd.technologies[upCurrent->next];
 			else {
 				upCurrent = NULL;
@@ -1229,7 +1229,8 @@ static void UP_List_f (void)
 static void UP_MailClientClick_f (void)
 {
 	message_t *m = messageStack;
-	int num, cnt = -1;
+	int num;
+	int cnt = -1;
 
 	if (Cmd_Argc() < 2)
 		return;

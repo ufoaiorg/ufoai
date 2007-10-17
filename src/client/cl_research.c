@@ -49,7 +49,7 @@ static stringlist_t curRequiredList;
 
 /**
  * @brief Push a news about this tech when researched.
- * @param[in] tech_idx Technology index in global data.
+ * @param[in] tech Technology pointer.
  * @sa RS_ResearchFinish
  */
 static void RS_PushNewsWhenResearched (technology_t* tech)
@@ -1745,8 +1745,8 @@ void RS_ParseTechnologies (const char *name, const char **text)
 	tech->time = 0;
 	tech->overalltime = 0;
 	tech->scientists = 0;
-	tech->prev = -1;
-	tech->next = -1;
+	tech->prev = TECH_INVALID;
+	tech->next = TECH_INVALID;
 	tech->base_idx = -1;
 	tech->up_chapter = -1;
 
@@ -1946,15 +1946,15 @@ void RS_ParseTechnologies (const char *name, const char **text)
 							if (!gd.upChapters[i].first) {
 								gd.upChapters[i].first = tech->idx;
 								gd.upChapters[i].last = tech->idx;
-								tech->prev = -1;
-								tech->next = -1;
+								tech->prev = TECH_INVALID;
+								tech->next = TECH_INVALID;
 							} else {
 								/* get "last entry" in chapter */
 								tech_old = gd.upChapters[i].last;
 								gd.upChapters[i].last = tech->idx;
 								gd.technologies[tech_old].next = tech->idx;
 								gd.technologies[gd.upChapters[i].last].prev = tech_old;
-								gd.technologies[gd.upChapters[i].last].next = -1;
+								gd.technologies[gd.upChapters[i].last].next = TECH_INVALID;
 							}
 							break;
 						}
@@ -2070,7 +2070,7 @@ qboolean RS_IsResearched_idx (int idx)
 {
 	if (ccs.singleplayer == qfalse)
 		return qtrue;
-	if (idx >= 0 && gd.technologies[idx].statusResearch == RS_FINISH)
+	if (idx != TECH_INVALID && idx >= 0 && gd.technologies[idx].statusResearch == RS_FINISH)
 		return qtrue;
 	return qfalse;
 }
@@ -2130,7 +2130,7 @@ int RS_Collected_ (technology_t * tech)
  */
 qboolean RS_TechIsResearched (int tech_idx)
 {
-	if (tech_idx < 0)
+	if (tech_idx == TECH_INVALID)
 		return qfalse;
 
 	/* research item found */
@@ -2174,7 +2174,7 @@ void RS_GetProvided (char *id, char *provided)
  */
 technology_t* RS_GetTechByIDX (int tech_idx)
 {
-	if (tech_idx < 0 || tech_idx >= gd.numTechnologies)
+	if (tech_idx == TECH_INVALID || tech_idx >= gd.numTechnologies)
 		return NULL;
 	else
 		return &gd.technologies[tech_idx];
@@ -2293,9 +2293,9 @@ int RS_GetTechIdxByName (const char *name)
 	technology_t *tech;
 	unsigned hash;
 
-	/* return -1 if tech matches "nothing" */
+	/* return TECH_INVALID if tech matches "nothing" */
 	if (!Q_strncmp(name, "nothing", MAX_VAR))
-		return -1;
+		return TECH_INVALID;
 
 	hash = Com_HashKey(name, TECH_HASH_SIZE);
 	for (tech = tech_hash[hash]; tech; tech = tech->hash_next)
@@ -2303,8 +2303,8 @@ int RS_GetTechIdxByName (const char *name)
 			return tech->idx;
 
 	Com_Printf("RS_GetTechIdxByName: Could not find tech '%s'\n", name);
-	/* return -1 if not found */
-	return -1;
+	/* return TECH_INVALID if not found */
+	return TECH_INVALID;
 }
 
 qboolean RS_Save (sizebuf_t* sb, void* data)

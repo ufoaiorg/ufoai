@@ -33,7 +33,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_TECHNOLOGIES 256	/**< Maximum number of technologies overall. */
 #define MAX_TECHLINKS 16	/**< Maximum number of requirements in a technology (i.e in require_AND and require_OR).
 				 *   Needs to be synced with MAX_TECHLINKS in q_shared.h */
-#define MAX_DESCRIPTIONS 8	/** < Maximum number of descriptions (per tech and description-type). */
+#define MAX_DESCRIPTIONS 8	/**< Maximum number of descriptions (per tech and description-type). */
+
+#define TECH_INVALID -1	/**< The value for an "undef" tech-index. */
 
 /** @brief The status of a research (per tech) */
 typedef enum researchStatus_s {
