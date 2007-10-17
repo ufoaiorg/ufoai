@@ -1077,7 +1077,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 	}
 
 	ammo = weapon->a;
-	reaction_leftover = IS_SHOT_REACTION(type) ? sv_reaction_leftover->value : 0;
+	reaction_leftover = IS_SHOT_REACTION(type) ? sv_reaction_leftover->integer : 0;
 
 	/* check if action is possible */
 	if (!G_ActionCheck(player, ent, fd->time + reaction_leftover, quiet))
@@ -1128,7 +1128,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 		}
 		if (shots < 1) {
 			if (!quiet)
-				gi.cprintf(player, PRINT_CONSOLE, _("Can't perform action - not enough ammo!\n"));
+				gi.cprintf(player, PRINT_HUD, _("Can't perform action - not enough ammo!\n"));
 			return qfalse;
 		}
 	}
