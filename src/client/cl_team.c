@@ -1647,7 +1647,6 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	byte buf[MAX_TEAMDATASIZE];
 	FILE *f;
 	int version;
-	character_t *chr;
 	employee_t *employee;
 	aircraft_t *aircraft;
 	int i, p, num;
@@ -1667,6 +1666,10 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	fclose(f);
 
 	version = MSG_ReadByte(&sb);
+	if (version != MPTEAM_SAVE_FILE_VERSION) {
+		Com_Printf("Could not load multiplayer team '%s' - version differs.\n", filename);
+		return;
+	}
 
 	/* load the teamname */
 	Cvar_Set("mn_teamname", MSG_ReadString(&sb));
@@ -1684,8 +1687,7 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 		employee = E_CreateEmployee(EMPL_SOLDIER);
 		employee->hired = qtrue;
 		employee->baseIDHired = gd.bases[0].idx;
-		chr = &employee->chr;
-		CL_LoadTeamMultiplayerMember(&sb, chr, version);
+		CL_LoadTeamMultiplayerMember(&sb, &employee->chr, version);
 	}
 
 	aircraft = &gd.bases[0].aircraft[0];
