@@ -379,14 +379,18 @@ static void CMod_LoadNodes (lump_t * l, vec3_t shift)
 	curTile->nodes = out;
 
 	for (i = 0; i < count; i++, out++, in++) {
-		if (in->planenum == -1)
+		if (LittleLong(in->planenum) == -1)
 			out->plane = NULL;
 		else
 			out->plane = curTile->planes + LittleLong(in->planenum);
 
 		/* in case this is a map assemble */
-		VectorAdd(in->mins, shift, out->mins);
-		VectorAdd(in->maxs, shift, out->maxs);
+		out->mins[0] = LittleFloat(in->mins[0]) + shift[0];
+		out->mins[1] = LittleFloat(in->mins[1]) + shift[1];
+		out->mins[2] = LittleFloat(in->mins[2]) + shift[2];
+		out->maxs[0] = LittleFloat(in->maxs[0]) + shift[0];
+		out->maxs[1] = LittleFloat(in->maxs[1]) + shift[1];
+		out->maxs[2] = LittleFloat(in->maxs[2]) + shift[2];
 
 		for (j = 0; j < 2; j++) {
 			child = LittleLong(in->children[j]);
@@ -1064,7 +1068,7 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 			if (temp_fall[y][x] != ROUTING_NOT_REACHABLE) {
 				if (clMap.fall[y + sY][x + sX] != ROUTING_NOT_REACHABLE) {
 					/* reroute all directions for overlapping locations*/
-					route_again[y][x] = 0xf0; 
+					route_again[y][x] = 0xf0;
 				} else {
 					/* check borders */
 					for (i = 0; i < BASE_DIRECTIONS; i++) {
@@ -1072,16 +1076,16 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 						ay = y + dvecs[i][1];
 
 						/* reroute if a border is found */
-						if (ax < 0 || ax >= WIDTH || ay < 0 || ay >= WIDTH || 
-							temp_fall[ay][ax] == ROUTING_NOT_REACHABLE) 
-								route_again[y][x] |= ((0x10 << i) & UCHAR_MAX); 									
+						if (ax < 0 || ax >= WIDTH || ay < 0 || ay >= WIDTH ||
+							temp_fall[ay][ax] == ROUTING_NOT_REACHABLE)
+								route_again[y][x] |= ((0x10 << i) & UCHAR_MAX);
 					}
 				}
 #ifdef DEBUG
 				route_count++;
 #endif
 			}
-			
+
 #ifdef DEBUG
 	if (!route_count)
 		Com_Error(ERR_DROP, "CMod_LoadRouting: Map '%s' has NO reachable field", curTile->name);
@@ -1119,7 +1123,7 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 	/* reroute borders and overlapping */
 	for (y = sY < 0 ? -sY : 0; y < maxY; y++)
 		for (x = sX < 0 ? -sX : 0; x < maxX; x++)
-			if (route_again[y][x]) 
+			if (route_again[y][x])
 				for (i = 0; i < BASE_DIRECTIONS; i++) {
 					if (route_again[y][x] & (0x10 << i)) {
 						ax = x + dvecs[i][0];
