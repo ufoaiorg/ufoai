@@ -395,7 +395,9 @@ void R_SwitchModelMemPoolTag (void)
 void R_ShutdownModels (void)
 {
 	/* don't free the static models with the tag MEM_TAG_STATIC_MODELS */
-	VID_FreeTags(vid_modelPool, 0);
-	VID_FreeTags(vid_lightPool, 0);
+	if (vid_modelPool)
+		VID_FreeTags(vid_modelPool, 0);
+	if (vid_lightPool)
+		VID_FreeTags(vid_lightPool, 0);
 	mod_numknown = static_mod_numknown;
 }
