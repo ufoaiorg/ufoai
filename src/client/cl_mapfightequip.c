@@ -248,12 +248,12 @@ static qboolean AIM_SelectableAircraftItem (base_t* base, aircraft_t *aircraft, 
 
 	/* you can choose an ammo only if it fits the weapons installed in this slot */
 	if (airequipID >= AC_ITEM_AMMO) {
-		if (itemIdx < 0 || csi.ods[itemIdx].weap_idx[0] != slot->itemIdx)
+		if (itemIdx == NONE || csi.ods[itemIdx].weap_idx[0] != slot->itemIdx)
 			return qfalse;
 	}
 
 	/* you can install an item only if its weight is small enough for the slot */
-	if (itemIdx < 0 || AII_GetItemWeightBySize(&csi.ods[itemIdx]) > slot->size)
+	if (itemIdx == NONE || AII_GetItemWeightBySize(&csi.ods[itemIdx]) > slot->size)
 		return qfalse;
 
 	return qtrue;

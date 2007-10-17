@@ -90,7 +90,7 @@ const char *ev_format[] =
 	"s",				/* EV_ENT_PERISH */
 	"sss",				/* EV_ENT_EDICT */
 
-	"!sbbbbgbbbssbsbbbs",	/* EV_ACTOR_APPEAR; beware of the '!' */
+	"!sbbbbgbssssbsbbbs",	/* EV_ACTOR_APPEAR; beware of the '!' */
 	"!sbbbbgsb",		/* EV_ACTOR_ADD; beware of the '!' */
 	"s",				/* EV_ACTOR_START_MOVE */
 	"sb",				/* EV_ACTOR_TURN */

@@ -452,7 +452,7 @@ void INV_ParseComponents (const char *name, const char **text)
 				token = COM_Parse(text);
 				comp->item_amount2[comp->numItemtypes] = atoi(token);
 
-				/** @todo Set item links to -1 if needed */
+				/** @todo Set item links to NONE if needed */
 				/* comp->item_idx[comp->numItemtypes] = xxx */
 
 				comp->numItemtypes++;
@@ -657,7 +657,7 @@ qboolean INV_MoveItem (base_t* base, inventory_t* inv, int toContainer, int px, 
 		if (fromContainer == csi.idEquip) {
 			/* Check buytype of first (last added) item */
 			if (!BUYTYPE_MATCH(et, base->equipType)) {
-				item_t item_temp = {NONE_AMMO, NONE,inv->c[csi.idEquip]->item.t, 0};
+				item_t item_temp = {NONE_AMMO, NONE, inv->c[csi.idEquip]->item.t, 0, 0};
 				et = csi.ods[inv->c[csi.idEquip]->item.t].buytype;
 				if (BUY_PRI(et)) {
 					Com_RemoveFromInventory(inv, fromContainer, inv->c[csi.idEquip]->x, inv->c[csi.idEquip]->y);

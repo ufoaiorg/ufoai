@@ -1044,7 +1044,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 				token = COM_EParse(text, errhead, name);
 
 				od->weap_idx[0] = INVSH_GetItemByID(token);
-				if (od->weap_idx[0] == -1)
+				if (od->weap_idx[0] == NONE)
 					Sys_Error("Com_ParseItem: could not find craft weapon useable for this ammo: %s (ammo: %s)\n", token, od->id);
 			} else if (!Q_strcmp(token, "crafttype")) {
 				/* Craftitem type definition. */
@@ -1801,6 +1801,8 @@ static void Com_ParseTeam (const char *name, const char **text)
 				if (!*text)
 					return;
 				td->onlyWeaponIndex = INVSH_GetItemByID(token);
+				if (!td->onlyWeaponIndex)
+					Sys_Error("Com_ParseTeam: Could not get item definition for '%s'", token);
 			} else if (!Q_strcmp(token, "models"))
 				Com_ParseActorModels(name, text, td);
 			else if (!Q_strcmp(token, "names"))
@@ -2109,7 +2111,7 @@ void Com_AddObjectLinks (void)
 		/* Add links to weapons. */
 		for (j = 0; j < od->numWeapons; j++ ) {
 			od->weap_idx[j] = INVSH_GetItemByID(od->weap_id[j]);
-			if (od->weap_idx[j] == -1) {
+			if (od->weap_idx[j] == NONE) {
 				Sys_Error("Com_AddObjectLinks: Could not get item '%s' for linking into item '%s'\n",
 					od->weap_id[j], od->id);
 			}

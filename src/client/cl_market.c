@@ -815,7 +815,7 @@ qboolean BS_Load (sizebuf_t* sb, void* data)
 	for (i = 0; i < presaveArray[PRE_NUMODS]; i++) {
 		s = MSG_ReadString(sb);
 		j = INVSH_GetItemByID(s);
-		if (j == -1 || j >= MAX_OBJDEFS) {
+		if (j == NONE || j >= MAX_OBJDEFS) {
 			Com_Printf("BS_Load: Could not find item '%s'\n", s);
 			MSG_ReadLong(sb);
 			MSG_ReadLong(sb);

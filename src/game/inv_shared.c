@@ -1013,7 +1013,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, co
  */
 void INVSH_EquipActor (inventory_t* const inv, const int *equip, int anzEquip, const char *name, character_t* chr)
 {
-	int weapon = -1; /* this variable is never used before being set */
+	int weapon = NONE; /* this variable is never used before being set */
 	int i, max_price, prev_price;
 	int has_weapon = 0, has_armour = 0, repeat = 0, missed_primary = 0;
 	int primary = 2; /* 0 particle or normal, 1 other, 2 no primary weapon */
@@ -1563,7 +1563,7 @@ void INVSH_PrintItemDescription (int i)
 	Com_Printf("... thrown        -> %i\n", ods_temp->thrown);
 	Com_Printf("... usable for weapon (if type is ammo):\n");
 	for (i = 0; i < ods_temp->numWeapons; i++) {
-		if (ods_temp->weap_idx[i] >= 0)
+		if (ods_temp->weap_idx[i] != NONE)
 			Com_Printf("    ... %s\n", CSI->ods[ods_temp->weap_idx[i]].name);
 	}
 	Com_Printf("\n");
@@ -1613,7 +1613,7 @@ qboolean INVSH_LoadableInWeapon (objDef_t *od, int weapon_idx)
 
 	for (i = 0; i < od->numWeapons; i++) {
 #ifdef DEBUG
-		if (od->weap_idx[i] < 0) {
+		if (od->weap_idx[i] == NONE) {
 			Com_DPrintf(DEBUG_SHARED, "INVSH_LoadableInWeapon: negative weap_idx entry (%s) found in item '%s'.\n", od->weap_id[i], od->id );
 			break;
 		}

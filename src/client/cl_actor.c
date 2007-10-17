@@ -2229,12 +2229,15 @@ void CL_ActorReload (int hand)
 	if (inv->c[hand]) {
 		weapon = inv->c[hand]->item.t;
 	} else if (hand == csi.idLeft
-			   && csi.ods[inv->c[csi.idRight]->item.t].holdTwoHanded) {
+		&& csi.ods[inv->c[csi.idRight]->item.t].holdTwoHanded) {
 		/* Check for two-handed weapon */
 		hand = csi.idRight;
 		weapon = inv->c[hand]->item.t;
 	} else
 		/* otherwise we could use weapon uninitialized */
+		return;
+
+	if (weapon == NONE)
 		return;
 
 	/* return if the weapon is not reloadable */
@@ -2285,7 +2288,7 @@ void CL_InvCheckHands (struct dbuffer *msg)
 
 	objDef_t *weapon = NULL;
 	objDef_t *ammo = NULL;
-	int weap_fd_idx = -1;
+	int weap_fd_idx = NONE;
 
 	NET_ReadFormat(msg, ev_format[EV_INV_HANDS_CHANGED], &entnum, &hand);
 
@@ -2311,7 +2314,7 @@ void CL_InvCheckHands (struct dbuffer *msg)
 		CL_GetWeaponAndAmmo(le, reactionFiremode[actor_idx][RF_HAND], &weapon, &ammo, &weap_fd_idx); /* get info about other hand */
 
 		/* Break if the currently selected RF mode is ok. */
-		if (weapon && (weap_fd_idx >= 0)) {
+		if (weapon && (weap_fd_idx != NONE)) {
 			firemode_idx = reactionFiremode[actor_idx][RF_FM];
 			if (ammo->fd[weap_fd_idx][firemode_idx].reaction)
 				return;

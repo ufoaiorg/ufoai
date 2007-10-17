@@ -297,7 +297,12 @@ typedef struct invDef_s {
 #define MAX_CONTAINERS  MAX_INVDEFS
 #define MAX_INVLIST     1024
 
-/** @brief item definition */
+/**
+ * @brief item definition
+ * @note m and t are transfered as shorts over the net - a value of NONE means
+ * that there is no item - e.g. a value of NONE for m means, that there is no
+ * ammo loaded or assigned to this weapon
+ */
 typedef struct item_s {
 	int a;	/**< number of ammo rounds left - see NONE_AMMO */
 	int m;	/**< unique index of ammo type on csi->ods - see NONE */
@@ -592,6 +597,6 @@ void Com_ShapePrint(uint32_t shape);
 #endif
 
 /** @brief Number of bytes that is read and written via inventory transfer functions */
-#define INV_INVENTORY_BYTES 7
+#define INV_INVENTORY_BYTES 9
 
 #endif /* GAME_INV_SHARED_H */

@@ -32,7 +32,7 @@ static int produceCategory = BUY_WEAP_PRI;
 
 /** @brief Holds the current active selected queue index/objID. */
 static qboolean selectedQueueItem 	= qfalse;
-static int selectedIndex 			= -1;
+static int selectedIndex 			= NONE;
 
 /** @brief Used in production costs (to allow reducing prices below 1x). */
 static const int PRODUCE_FACTOR = 1;
@@ -394,7 +394,7 @@ static void PR_QueueNext (int base)
 	PR_QueueDelete(queue, 0, base);
 	if (queue->numItems == 0) {
 		selectedQueueItem = qfalse;
-		selectedIndex = -1;
+		selectedIndex = NONE;
 		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Production queue for base %s is empty"), gd.bases[base].name);
 		MN_AddNewMessage(_("Production queue empty"), messageBuffer, qfalse, MSG_PRODUCTION, NULL);
 		CL_GameTimeStop();
@@ -556,7 +556,7 @@ static void PR_ProductionInfo (qboolean disassembly)
 	assert(baseCurrent);
 
 	if (selectedQueueItem) {
-		assert(selectedIndex >= 0);
+		assert(selectedIndex != NONE);
 		objID = gd.productions[baseCurrent->idx].items[selectedIndex].objID;
 	} else {
 		objID = selectedIndex;
@@ -638,7 +638,7 @@ static void PR_AircraftInfo (void)
 	aircraft_t *aircraft;
 	static char productionInfo[512];
 
-	if (selectedIndex >= 0) {
+	if (selectedIndex != NONE) {
 		aircraft = &aircraft_samples[selectedIndex];
 		Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", _(aircraft->name));
 		Q_strcat(productionInfo, va(_("Production costs\t%i c\n"), (aircraft->price * PRODUCE_FACTOR / PRODUCE_DIVISOR)),
@@ -1147,7 +1147,7 @@ static void PR_ProductionIncrease_f (void)
 			prod->amount += amount_temp;
 		}
 	} else {
-		if (selectedIndex < 0)
+		if (selectedIndex == NONE)
 			return;
 		if (Cvar_VariableInteger("mn_prod_disassembling") == 0) {
 			prod = PR_QueueNew(queue, selectedIndex, amount, qfalse);	/* Production. */
@@ -1249,7 +1249,7 @@ static void PR_ProductionStop_f (void)
 
 	if (queue->numItems == 0) {
 		selectedQueueItem = qfalse;
-		selectedIndex = -1;
+		selectedIndex = NONE;
 		PR_ProductionInfo(qfalse);
 	} else if (selectedIndex >= queue->numItems) {
 		selectedIndex = queue->numItems - 1;
@@ -1314,6 +1314,7 @@ static void PR_ProductionUp_f (void)
 	if (!baseCurrent || !selectedQueueItem)
 		return;
 
+	/* first position already */
 	if (selectedIndex == 0)
 		return;
 
@@ -1336,7 +1337,7 @@ static void PR_ProductionDown_f (void)
 
 	queue = &gd.productions[baseCurrent->idx];
 
-	if (selectedIndex >= queue->numItems-1)
+	if (selectedIndex >= queue->numItems - 1)
 		return;
 
 	PR_QueueMove(queue, selectedIndex, 1);
@@ -1408,7 +1409,7 @@ qboolean PR_Load (sizebuf_t* sb, void* data)
 		for (j = 0; j < pq->numItems; j++) {
 			s = MSG_ReadString(sb);
 			k = INVSH_GetItemByID(s);
-			if (k == -1 || k >= MAX_OBJDEFS) {
+			if (k == NONE || k >= MAX_OBJDEFS) {
 				Com_Printf("PR_Load: Could not find item '%s'\n", s);
 				MSG_ReadLong(sb); /* amount */
 				MSG_ReadLong(sb); /* timeLeft */
