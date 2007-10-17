@@ -91,8 +91,8 @@ item laserrifle_ammo
 			hitbody	laserImpact
 			firesnd	weapons/laser
 			speed	0
-			spread	"0.5 0.5"
-			crouch	1
+			spread	"1 1"
+			crouch	0.7
 			range	60
 			shots	1
 			ammo	2
@@ -109,9 +109,10 @@ item laserrifle_ammo
 			impact	laserImpact
 			hitbody	laserImpact
 			firesnd	weapons/laser
+			delaybetweenshots		8
 			speed	0
-			spread	"0 0"
-			crouch	1
+			spread	"1 1"
+			crouch	0.7
 			range	60
 			shots	3
 			ammo	3
@@ -133,8 +134,8 @@ item laserrifle_ammo
 			hitbody	laserImpact
 			firesnd	weapons/laser
 			speed	0
-			spread	"0 0"
-			crouch	1
+			spread	"1 1"
+			crouch	0.7
 			range	90
 			shots	1
 			ammo	2
@@ -151,9 +152,10 @@ item laserrifle_ammo
 			impact	laserImpact
 			hitbody	laserImpact
 			firesnd	weapons/laser
+			delaybetweenshots		8
 			speed	0
-			spread	"0 0"
-			crouch	1
+			spread	"1 1"
+			crouch	0.7
 			range	90
 			shots	3
 			ammo	3
@@ -175,10 +177,10 @@ item laserrifle_ammo
 			hitbody	laserImpact
 			firesnd	weapons/heavy_laser
 			speed	0
-			spread	"0 0"
+			spread	"1 1"
 			crouch	1
 			range	120
-			shots	1
+			shots	0.7
 			ammo	2
 			time	12
 			damage	"90 25"
@@ -193,9 +195,10 @@ item laserrifle_ammo
 			impact	laserImpact
 			hitbody	laserImpact
 			firesnd	weapons/laser
+			delaybetweenshots		8
 			speed	0
-			spread	"0 0"
-			crouch	1
+			spread	"1 1"
+			crouch	0.7
 			range	120
 			shots	3
 			ammo	3
