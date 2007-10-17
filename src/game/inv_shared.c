@@ -1584,7 +1584,7 @@ int INVSH_GetItemByID (const char *id)
 #ifdef DEBUG
 	if (!id || !*id) {
 		Com_Printf("INVSH_GetItemByID: Called with empty id\n");
-		return -1;
+		return NONE;
 	}
 #endif
 
@@ -1596,7 +1596,7 @@ int INVSH_GetItemByID (const char *id)
 	}
 
 	Com_Printf("INVSH_GetItemByID: Item \"%s\" not found.\n", id);
-	return -1;
+	return NONE;
 }
 
 /**
