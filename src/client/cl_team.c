@@ -116,10 +116,8 @@ void CL_SaveInventory (sizebuf_t *buf, inventory_t *i)
 		for (ic = i->c[j]; ic; ic = ic->next)
 			nr++;
 
-	/* FIXME: INV_INVENTORY_BYTES is not needed here - but is it worth to break
-	 * savegames again? */
 	Com_DPrintf(DEBUG_CLIENT, "CL_SaveInventory: Send %i items\n", nr);
-	MSG_WriteShort(buf, nr * INV_INVENTORY_BYTES);
+	MSG_WriteShort(buf, nr);
 	for (j = 0; j < csi.numIDs; j++)
 		for (ic = i->c[j]; ic; ic = ic->next)
 			CL_SaveItem(buf, ic->item, j, ic->x, ic->y);
@@ -154,9 +152,7 @@ void CL_LoadInventory (sizebuf_t *buf, inventory_t *i)
 {
 	item_t item;
 	int container, x, y;
-	/* FIXME: INV_INVENTORY_BYTES is not needed here - but is it worth to break
-	 * savegames again? */
-	int nr = MSG_ReadShort(buf) / INV_INVENTORY_BYTES;
+	int nr = MSG_ReadShort(buf);
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_LoadInventory: Read %i items\n", nr);
 	assert(nr < MAX_INVLIST);
