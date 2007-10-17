@@ -347,23 +347,24 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 	/* Apply difficulty settings. */
 	if (sv_maxclients->integer == 1) {
 		if (attacker->team == TEAM_ALIEN && ent->team < TEAM_ALIEN)
-			damage *= pow(1.3, difficulty->integer);
+			damage *= pow(1.18, difficulty->integer);
 		else if (attacker->team < TEAM_ALIEN && ent->team == TEAM_ALIEN)
-			damage *= pow(1.3, -difficulty->integer);
+			damage *= pow(1.18, -difficulty->integer);
 	}
 
 	/* Apply armour effects. */
 	if (damage > 0) {
 		if (ent->i.c[gi.csi->idArmour]) {
 			objDef_t *ad = &gi.csi->ods[ent->i.c[gi.csi->idArmour]->item.t];
-			Com_DPrintf(DEBUG_GAME, "G_Damage: damage for '%s': %i, dmgweight (%i) protection: %i\n",
+			Com_DPrintf(DEBUG_GAME, "G_Damage: damage for '%s': %i, dmgweight (%i) protection: %i",
 				ent->chr.name, damage, fd->dmgweight, ad->protection[fd->dmgweight]);
 			damage = max(1, damage - ad->protection[fd->dmgweight]);
 		} else {
-			Com_DPrintf(DEBUG_GAME, "G_Damage: damage for '%s': %i, dmgweight (%i) protection: 0\n",
+			Com_DPrintf(DEBUG_GAME, "G_Damage: damage for '%s': %i, dmgweight (%i) protection: 0",
 				ent->chr.name, damage, fd->dmgweight);
 		}
 	}
+	Com_DPrintf(DEBUG_GAME, " Total damage: %d\n", damage);
 
 	assert((attacker->team >= 0) && (attacker->team < MAX_TEAMS));
 	assert((ent->team >= 0) && (ent->team < MAX_TEAMS));
@@ -1111,6 +1112,14 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 	/* fire shots */
 	shots = fd->shots;
 	if (fd->ammo && !gi.csi->ods[weapon->t].thrown) {
+		/**
+		 * If loaded ammo is less than needed ammo from firedef
+		 * then reduce shot-number relative to the difference.
+		 * @todo This really needs an overhaul.And it might get dumped completely when
+		 * Feature Request "[1814158] Extended shot-definitions in firedef"
+		 * https://sourceforge.net/tracker/?func=detail&atid=805245&aid=1814158&group_id=157793
+		 * gets implemented.
+		 */
 		if (ammo < fd->ammo) {
 			shots = fd->shots * ammo / fd->ammo;
 			ammo = 0;

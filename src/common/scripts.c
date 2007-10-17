@@ -2109,7 +2109,10 @@ void Com_AddObjectLinks (void)
 		/* Add links to weapons. */
 		for (j = 0; j < od->numWeapons; j++ ) {
 			od->weap_idx[j] = INVSH_GetItemByID(od->weap_id[j]);
-			assert(od->weap_idx[j] != -1);
+			if (od->weap_idx[j] == -1) {
+				Sys_Error("Com_AddObjectLinks: Could not get item '%s' for linking into item '%s'\n",
+					od->weap_id[j], od->id);
+			}
 			/* Back-link the obj-idx inside the fds */
 			for (k = 0; k < od->numFiredefs[j]; k++ ) {
 				od->fd[j][k].obj_idx = i;

@@ -51,7 +51,7 @@ item pbeampistol_ammo
 			shots	1
 			ammo	1
 			time	7
-			damage	"50 10"
+			damage	"60 10"
 			dmgweight particlebeam_light
 			reaction	true
 		}
@@ -71,7 +71,7 @@ item pbeampistol_ammo
 			ammo	3
 			delaybetweenshots		5
 			time	11
-			damage	"50 10"
+			damage	"60 10"
 			dmgweight particlebeam_light
 		}
 	}
@@ -132,7 +132,7 @@ item pbeamrifle_ammo
 			shots	1
 			ammo	1
 			time	17
-			damage	"70 15"
+			damage	"90 15"
 			dmgweight particlebeam_medium
 			reaction	true
 		}
@@ -151,7 +151,7 @@ item pbeamrifle_ammo
 			shots	1
 			ammo	1
 			time	10
-			damage	"70 15"
+			damage	"90 15"
 			dmgweight particlebeam_medium
 			reaction	true
 		}
@@ -171,7 +171,7 @@ item pbeamrifle_ammo
 			ammo	4
 			delaybetweenshots		5
 			time	19
-			damage	"70 15"
+			damage	"90 15"
 			dmgweight particlebeam_medium
 			reaction true
 		}
@@ -226,37 +226,16 @@ item pbeamcannon_ammo
 			hitbody pbeamImpact
 			firesnd	weapons/pbeamcannon
 			speed	0
-			spread	"0 1"
+			spread	"1 2"
 			crouch	0.6
 			range	50
 			shots	1
 			ammo	1
 			delaybetweenshots		5
 			time	19
-			damage	"90 20"
+			damage	"150 20"
 			dmgweight particlebeam_heavy
-			reaction	true
-		}
-		firedef
-		{
-			name	"_Charged Blast"
-			skill	explosive
-			projtl	pbeamBigBeam
-			impact	pbeamBigImpact
-			hitbody pbeamBigImpact
-			firesnd	weapons/pbeamcannon_explosive
-			speed	0
-			spread	"0 1"
-			crouch	0.8
-			range	100
-			shots	1
-			ammo	8
-			time	30
-			damage	"0 20"
-			spldmg	"150 30"
-			splrad	3
-			dmgweight particlebeam_heavy
-			reaction	true
+			reaction	false
 		}
 		firedef
 		{
@@ -267,16 +246,37 @@ item pbeamcannon_ammo
 			hitbody pbeamImpact
 			firesnd	weapons/pbeamcannon
 			speed	0
-			spread	"1 2"
+			spread	"2 3"
 			crouch	0.6
 			range	50
 			shots	4
 			ammo	4
 			delaybetweenshots		5
 			time	24
-			damage	"90 20"
+			damage	"150 20"
 			dmgweight particlebeam_heavy
-			reaction	true
+			reaction	false
+		}
+		firedef
+		{
+			name	"_Charged Blast"
+			skill	explosive
+			projtl	pbeamBigBeam
+			impact	pbeamBigImpact
+			hitbody pbeamBigImpact
+			firesnd	weapons/pbeamcannon_explosive
+			speed	0
+			spread	"1 2"
+			crouch	0.8
+			range	100
+			shots	1
+			ammo	8
+			time	30
+			damage	"0 20"
+			spldmg	"210 0"
+			splrad	3
+			dmgweight particlebeam_heavy
+			reaction	false
 		}
 	}
 }
