@@ -565,7 +565,7 @@ void R_BeginFrame (void)
 	/* change modes if necessary */
 	if (vid_mode->modified || vid_fullscreen->modified) {
 		R_SetMode();
-#ifdef _WIN32
+#if defined(_WIN32) || defined(__APPLE__)
 		VID_Restart_f();
 #endif
 	}

@@ -491,7 +491,7 @@ void UP_AircraftItemDescription (int idx)
 	int i;
 
 	/* no valid item id given */
-	if (idx == -1) {
+	if (idx == NONE) {
 		/* set menu text node content to null */
 		menuText[TEXT_STANDARD] = NULL;
 		return;

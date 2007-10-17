@@ -374,7 +374,7 @@ item sniper_ammo
 			hitbody null
 			firesnd	weapons/sniperrifle
 			speed	0
-			spread	"2 2"
+			spread	"1.8 1.8"
 			modif	1.7
 			crouch	0.3
 			range	250
@@ -393,7 +393,7 @@ item sniper_ammo
 			hitbody null
 			firesnd	weapons/sniperrifle
 			speed	0
-			spread	"1.5 1.5"
+			spread	"1.8 1.8"
 			modif	1.7
 			crouch	0.3
 			range	250
