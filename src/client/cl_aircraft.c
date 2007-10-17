@@ -190,7 +190,7 @@ void AIR_ListAircraft_f (void)
 			Com_Printf("Aircraft %s\n", aircraft->name);
 			Com_Printf("...idx cur=base/global %i=%i/%i\n", i, aircraft->idxInBase, aircraft->idx);
 			for (k = 0; k < aircraft->maxWeapons; k++) {
-				if (aircraft->weapons[k].itemIdx > -1) {
+				if (aircraft->weapons[k].itemIdx != NONE) {
 					Com_Printf("...weapon slot %i contains %s", k, csi.ods[aircraft->weapons[k].itemIdx].id);
 					if (!aircraft->weapons[k].installationTime)
 						Com_Printf(" (functional)\n");
@@ -198,7 +198,7 @@ void AIR_ListAircraft_f (void)
 						Com_Printf(" (%i hours before installation is finished)\n",aircraft->weapons[k].installationTime);
 					else
 						Com_Printf(" (%i hours before removing is finished)\n",aircraft->weapons[k].installationTime);
-					if (aircraft->weapons[k].ammoIdx > -1)
+					if (aircraft->weapons[k].ammoIdx != NONE)
 						Com_Printf("......this weapon is loaded with ammo %s\n", csi.ods[aircraft->weapons[k].ammoIdx].id);
 					else
 						Com_Printf("......this weapon isn't loaded with ammo\n");
@@ -206,7 +206,7 @@ void AIR_ListAircraft_f (void)
 				else
 					Com_Printf("...weapon slot %i is empty\n", k);
 			}
-			if (aircraft->shield.itemIdx > -1) {
+			if (aircraft->shield.itemIdx != NONE) {
 				Com_Printf("...armour slot contains %s", csi.ods[aircraft->shield.itemIdx].id);
 				if (!aircraft->shield.installationTime)
 						Com_Printf(" (functional)\n");
@@ -217,7 +217,7 @@ void AIR_ListAircraft_f (void)
 			} else
 				Com_Printf("...armour slot is empty\n");
 			for (k = 0; k < aircraft->maxElectronics; k++) {
-				if (aircraft->electronics[k].itemIdx > -1) {
+				if (aircraft->electronics[k].itemIdx != NONE) {
 					Com_Printf("...electronics slot %i contains %s", k, csi.ods[aircraft->electronics[k].itemIdx].id);
 					if (!aircraft->electronics[k].installationTime)
 						Com_Printf(" (functional)\n");
@@ -961,7 +961,7 @@ int AII_GetAircraftItemByID (const char *id)
 #ifdef DEBUG
 	if (!id || !*id) {
 		Com_Printf("AII_GetAircraftItemByID: Called with empty id\n");
-		return -1;
+		return NONE;
 	}
 #endif
 
@@ -974,7 +974,7 @@ int AII_GetAircraftItemByID (const char *id)
 	}
 
 	Com_Printf("AII_GetAircraftItemByID: Aircraft Item \"%s\" not found.\n", id);
-	return -1;
+	return NONE;
 }
 
 /**
@@ -1467,7 +1467,7 @@ void AII_ReloadWeapon (aircraft_t *aircraft)
 
 	/* Reload all ammos of aircraft */
 	for (i = 0; i < aircraft->maxWeapons; i++) {
-		if (aircraft->weapons[i].ammoIdx > -1) {
+		if (aircraft->weapons[i].ammoIdx != NONE) {
 			idx = aircraft->weapons[i].ammoIdx;
 			aircraft->weapons[i].ammoLeft = csi.ods[idx].ammo;
 		}
@@ -1810,7 +1810,7 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 		/* save weapon slots */
 		MSG_WriteByte(sb, gd.ufos[i].maxWeapons);
 		for (j = 0; j < gd.ufos[i].maxWeapons; j++) {
-			if (gd.ufos[i].weapons[j].itemIdx >= 0) {
+			if (gd.ufos[i].weapons[j].itemIdx != NONE) {
 				MSG_WriteString(sb, csi.ods[gd.ufos[i].weapons[j].itemIdx].id);
 				MSG_WriteShort(sb, gd.ufos[i].weapons[j].ammoLeft);
 				MSG_WriteShort(sb, gd.ufos[i].weapons[j].delayNextShot);
@@ -1828,7 +1828,7 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 		}
 		/* save shield slots - currently only one */
 		MSG_WriteByte(sb, 1);
-		if (gd.ufos[i].shield.itemIdx >= 0) {
+		if (gd.ufos[i].shield.itemIdx != NONE) {
 			MSG_WriteString(sb, csi.ods[gd.ufos[i].shield.itemIdx].id);
 			MSG_WriteShort(sb, gd.ufos[i].shield.installationTime);
 		} else {
@@ -1838,7 +1838,7 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 		/* save electronics slots */
 		MSG_WriteByte(sb, gd.ufos[i].maxElectronics);
 		for (j = 0; j < gd.ufos[i].maxElectronics; j++) {
-			if (gd.ufos[i].electronics[j].itemIdx >= 0) {
+			if (gd.ufos[i].electronics[j].itemIdx != NONE) {
 				MSG_WriteString(sb, csi.ods[gd.ufos[i].electronics[j].itemIdx].id);
 				MSG_WriteShort(sb, gd.ufos[i].electronics[j].installationTime);
 			} else {
@@ -2161,7 +2161,7 @@ qboolean AIR_ScriptSanityCheck (void)
 
 		/* check that every weapons fits slot */
 		for (j = 0; j < a->maxWeapons - 1; j++)
-			if (a->weapons[j].itemIdx > -1 && AII_GetItemWeightBySize(&csi.ods[a->weapons[j].itemIdx]) > a->weapons[j].size) {
+			if (a->weapons[j].itemIdx != NONE && AII_GetItemWeightBySize(&csi.ods[a->weapons[j].itemIdx]) > a->weapons[j].size) {
 				error++;
 				Com_Printf("...... aircraft '%s' has an item (%s) too heavy for its slot\n", a->id, csi.ods[a->weapons[j].itemIdx].id);
 			}

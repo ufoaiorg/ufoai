@@ -1266,7 +1266,7 @@ static void MN_Drag (const menuNode_t* const node, int x, int y, qboolean rightC
 				} else {
 					qboolean packed = qfalse;
 
-					assert(ic->item.t >= 0);
+					assert(ic->item.t != NONE);
 					/* armour can only have one target */
 					if (!Q_strncmp(csi.ods[ic->item.t].type, "armour", MAX_VAR)) {
 						packed = INV_MoveItem(baseCurrent, menuInventory, csi.idArmour, 0, 0, node->mousefx, ic->x, ic->y);

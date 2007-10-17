@@ -2900,14 +2900,14 @@ static void B_SaveItemSlots (aircraftSlot_t* slot, int num, int* targets, sizebu
 	int ammoIdx;
 
 	for (i = 0; i < num; i++) {
-		if (slot[i].itemIdx >= 0) {
+		if (slot[i].itemIdx != NONE) {
 			ammoIdx = slot[i].ammoIdx;
 			MSG_WriteString(sb, csi.ods[slot[i].itemIdx].id);
 			MSG_WriteShort(sb, slot[i].ammoLeft);
 			MSG_WriteShort(sb, slot[i].delayNextShot);
 			MSG_WriteShort(sb, slot[i].installationTime);
 			/* if there is no ammo MSG_WriteString will write an empty string */
-			MSG_WriteString(sb, ammoIdx >= 0 ? csi.ods[ammoIdx].id : "");
+			MSG_WriteString(sb, ammoIdx != NONE ? csi.ods[ammoIdx].id : "");
 		} else {
 			MSG_WriteString(sb, "");
 			MSG_WriteShort(sb, 0);
@@ -3005,7 +3005,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 
 			/* save shield slots - currently only one */
 			MSG_WriteByte(sb, 1);
-			if (aircraft->shield.itemIdx >= 0) {
+			if (aircraft->shield.itemIdx != NONE) {
 				assert(aircraft->shield.itemIdx < csi.numODs);
 				MSG_WriteString(sb, csi.ods[aircraft->shield.itemIdx].id);
 				MSG_WriteShort(sb, aircraft->shield.installationTime);
@@ -3016,7 +3016,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			/* save electronics slots */
 			MSG_WriteByte(sb, aircraft->maxElectronics);
 			for (l = 0; l < aircraft->maxElectronics; l++) {
-				if (aircraft->electronics[l].itemIdx >= 0) {
+				if (aircraft->electronics[l].itemIdx != NONE) {
 					assert(aircraft->electronics[l].itemIdx < csi.numODs);
 					MSG_WriteString(sb, csi.ods[aircraft->electronics[l].itemIdx].id);
 					MSG_WriteShort(sb, aircraft->electronics[l].installationTime);
@@ -3136,7 +3136,7 @@ static void B_LoadItemSlots (base_t* base, aircraftSlot_t* slot, int num, int* t
 		if (tech)
 			slot[i].ammoIdx = AII_GetAircraftItemByID(tech->provides);
 		else
-			slot[i].ammoIdx = -1;
+			slot[i].ammoIdx = NONE;
 		if (targets) {
 			/* read target of this weapon */
 			targets[i] = MSG_ReadShort(sb);
@@ -3255,10 +3255,10 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			/* there is only one shield - but who knows - breaking the savegames if this changes
 			 * isn't worth it */
 			amount = MSG_ReadByte(sb);
-			if (amount) {
+			for (l = 0; l < amount; l++) {
 				tech = RS_GetTechByProvided(MSG_ReadString(sb));
 				if (tech)
-					AII_AddItemToSlot(b, tech, &aircraft->shield);
+					AII_AddItemToSlot(NULL, tech, &aircraft->shield);
 				aircraft->shield.installationTime = MSG_ReadShort(sb);
 			}
 			/* read electronics slot */
@@ -3268,7 +3268,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 				if (l < aircraft->maxElectronics) {
 					tech = RS_GetTechByProvided(MSG_ReadString(sb));
 					if (tech)
-						AII_AddItemToSlot(b, tech, aircraft->electronics + l);
+						AII_AddItemToSlot(NULL, tech, aircraft->electronics + l);
 					aircraft->electronics[l].installationTime = MSG_ReadShort(sb);
 				} else {
 					MSG_ReadString(sb);
@@ -3308,7 +3308,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 				for (l = 0; l < aircraft->itemtypes; l++) {
 					s = MSG_ReadString(sb);
 					m = INVSH_GetItemByID(s);
-					if (m == -1 || m >= MAX_OBJDEFS) {
+					if (m == NONE || m >= MAX_OBJDEFS) {
 						Com_Printf("B_Load: Could not find item '%s'\n", s);
 						MSG_ReadShort(sb);
 					} else {
@@ -3331,7 +3331,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		for (k = 0; k < presaveArray[PRE_NUMODS]; k++) {
 			s = MSG_ReadString(sb);
 			l = INVSH_GetItemByID(s);
-			if (l == -1 || l >= MAX_OBJDEFS) {
+			if (l == NONE || l >= MAX_OBJDEFS) {
 				Com_Printf("B_Load: Could not find item '%s'\n", s);
 				MSG_ReadShort(sb);
 				MSG_ReadByte(sb);

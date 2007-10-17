@@ -102,7 +102,7 @@ void G_SendStats (edict_t * ent)
 static void G_WriteItem (item_t item, int container, int x, int y)
 {
 	assert(item.t != NONE);
-	gi.WriteFormat("bbbbbbb", item.t, item.a, item.m, container, x, y, item.rotated);
+	gi.WriteFormat("sbsbbbb", item.t, item.a, item.m, container, x, y, item.rotated);
 }
 
 /**
@@ -111,7 +111,7 @@ static void G_WriteItem (item_t item, int container, int x, int y)
  */
 static void G_ReadItem (item_t * item, int * container, int * x, int * y)
 {
-	gi.ReadFormat("bbbbbbb", &item->t, &item->a, &item->m, container, x, y, &item->rotated);
+	gi.ReadFormat("sbsbbbb", &item->t, &item->a, &item->m, container, x, y, &item->rotated);
 }
 
 
@@ -228,15 +228,15 @@ void G_AppearPerishEvent (int player_mask, int appear, edict_t * check)
 			gi.WriteGPos(check->pos);
 			gi.WriteByte(check->dir);
 			if (RIGHT(check)) {
-				gi.WriteByte(RIGHT(check)->item.t);
+				gi.WriteShort(RIGHT(check)->item.t);
 			} else {
-				gi.WriteByte(NONE);
+				gi.WriteShort(NONE);
 			}
 
 			if (LEFT(check)) {
-				gi.WriteByte(LEFT(check)->item.t);
+				gi.WriteShort(LEFT(check)->item.t);
 			} else {
-				gi.WriteByte(NONE);
+				gi.WriteShort(NONE);
 			}
 
 			gi.WriteShort(check->body);
@@ -1827,16 +1827,18 @@ void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean qu
 	else
 		return;
 
+	assert(weapon != NONE);
+
 	/* LordHavoc: Check if item is researched when in singleplayer? I don't think this is really a
 	 * cheat issue as in singleplayer there is no way to inject fake client commands in the virtual
 	 * network buffer, and in multiplayer everything is researched */
 
 	for (container = 0; container < gi.csi->numIDs; container++) {
 		if (gi.csi->ids[container].out < tu) {
-			/* Once we've found at least one clip, there's no point */
-			/* searching other containers if it would take longer */
-			/* to retrieve the ammo from them than the one */
-			/* we've already found. */
+			/* Once we've found at least one clip, there's no point
+			 * searching other containers if it would take longer
+			 * to retrieve the ammo from them than the one
+			 * we've already found. */
 			for (ic = ent->i.c[container]; ic; ic = ic->next)
 				if (INVSH_LoadableInWeapon(&gi.csi->ods[ic->item.t], weapon)) {
 					x = ic->x;
@@ -1873,12 +1875,14 @@ qboolean G_ClientCanReload (player_t *player, int entnum, shoot_types_t st)
 	if (ent->i.c[hand]) {
 		weapon = ent->i.c[hand]->item.t;
 	} else if (hand == gi.csi->idLeft
-			   && gi.csi->ods[ent->i.c[gi.csi->idRight]->item.t].holdTwoHanded) {
+	 && gi.csi->ods[ent->i.c[gi.csi->idRight]->item.t].holdTwoHanded) {
 		/* Check for two-handed weapon */
 		hand = gi.csi->idRight;
 		weapon = ent->i.c[hand]->item.t;
 	} else
 		return qfalse;
+
+	assert(weapon != NONE);
 
 	for (container = 0; container < gi.csi->numIDs; container++)
 		for (ic = ent->i.c[container]; ic; ic = ic->next)
@@ -1919,7 +1923,8 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 			 * searching other containers if it would take longer
 			 * to retrieve the ammo from them than the one
 			 * we've already found. */
-			for (ic = ent->i.c[container]; ic; ic = ic->next)
+			for (ic = ent->i.c[container]; ic; ic = ic->next) {
+				assert(ic->item.t != NONE);
 				if (gi.csi->ods[ic->item.t].weapon && (ic->item.a > 0 || !gi.csi->ods[ic->item.t].reload)) {
 					x = ic->x;
 					y = ic->y;
@@ -1927,6 +1932,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 					bestContainer = container;
 					break;
 				}
+			}
 		}
 	}
 

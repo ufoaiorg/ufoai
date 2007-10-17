@@ -566,6 +566,7 @@ void UFO_Recovery (void)
 			/* Get item. */
 			/* We can do this because aircraft id is the same as dummy item id. */
 			item = INVSH_GetItemByID(ufocraft->id);
+			assert(item != NONE);
 			od = &csi.ods[item];
 			assert(od);
 			/* Process UFO recovery. */

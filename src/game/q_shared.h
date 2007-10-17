@@ -94,7 +94,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define DEBUG_RENDERER	(1<<8)
 #define DEBUG_SOUND		(1<<9)
 
-#define NONE		0xFF
+#define NONE		-1
 #define NONE_AMMO	0
 
 /* Battlescape map dimensions (WIDTH*WIDTH*HEIGHT) */
@@ -737,8 +737,8 @@ typedef struct teamDef_s {
 	qboolean civilian;
 	/** able to use weapons/armour */
 	qboolean armour, weapons;
-	/** if this team is not able to use 'normal' weapons, we have to assign a weapon to it
-	 * The default value is -1 for every 'normal' actor - but e.g. bloodspiders only have
+	/** ods[] index - If this team is not able to use 'normal' weapons, we have to assign a weapon to it
+	 * The default value is NONE for every 'normal' actor - but e.g. bloodspiders only have
 	 * the ability to melee attack their victims. They get a weapon assigned with several
 	 * bloodspider melee attack firedefitions */
 	int onlyWeaponIndex;

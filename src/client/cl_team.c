@@ -116,6 +116,8 @@ void CL_SaveInventory (sizebuf_t *buf, inventory_t *i)
 		for (ic = i->c[j]; ic; ic = ic->next)
 			nr++;
 
+	/* FIXME: INV_INVENTORY_BYTES is not needed here - but is it worth to break
+	 * savegames again? */
 	Com_DPrintf(DEBUG_CLIENT, "CL_SaveInventory: Send %i items\n", nr);
 	MSG_WriteShort(buf, nr * INV_INVENTORY_BYTES);
 	for (j = 0; j < csi.numIDs; j++)
@@ -152,6 +154,8 @@ void CL_LoadInventory (sizebuf_t *buf, inventory_t *i)
 {
 	item_t item;
 	int container, x, y;
+	/* FIXME: INV_INVENTORY_BYTES is not needed here - but is it worth to break
+	 * savegames again? */
 	int nr = MSG_ReadShort(buf) / INV_INVENTORY_BYTES;
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_LoadInventory: Read %i items\n", nr);
@@ -172,7 +176,7 @@ static void CL_NetSendItem (struct dbuffer *buf, item_t item, int container, int
 {
 	assert(item.t != NONE);
 /*	Com_Printf("Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n", csi.ods[item.t].id, container, item.t, item.a, item.m, x, y);*/
-	NET_WriteFormat(buf, "bbbbbbb", item.t, item.a, item.m, container, x, y, item.rotated);
+	NET_WriteFormat(buf, "sbsbbbb", item.t, item.a, item.m, container, x, y, item.rotated);
 }
 
 /**
@@ -205,7 +209,7 @@ void CL_NetReceiveItem (struct dbuffer *buf, item_t *item, int *container, int *
 	item->t = item->m = NONE;
 	item->a = NONE_AMMO;
 
-	NET_ReadFormat(buf, "bbbbbbb", &item->t, &item->a, &item->m, container, x, y, &item->rotated);
+	NET_ReadFormat(buf, "sbsbbbb", &item->t, &item->a, &item->m, container, x, y, &item->rotated);
 }
 
 /**
@@ -576,7 +580,7 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 	assert(ed->num[type] > 0);
 	ed->num[type]--;
 
-	if (csi.ods[type].weap_idx[0] >= 0) {
+	if (csi.ods[type].weap_idx[0] != NONE) {
 		/* The given item is ammo or self-contained weapon (i.e. It has firedefinitions. */
 		if (csi.ods[type].oneshot) {
 			/* "Recharge" the oneshot weapon. */
@@ -1643,7 +1647,6 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	byte buf[MAX_TEAMDATASIZE];
 	FILE *f;
 	int version;
-	character_t *chr;
 	employee_t *employee;
 	aircraft_t *aircraft;
 	int i, p, num;
@@ -1663,6 +1666,10 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	fclose(f);
 
 	version = MSG_ReadByte(&sb);
+	if (version != MPTEAM_SAVE_FILE_VERSION) {
+		Com_Printf("Could not load multiplayer team '%s' - version differs.\n", filename);
+		return;
+	}
 
 	/* load the teamname */
 	Cvar_Set("mn_teamname", MSG_ReadString(&sb));
@@ -1680,8 +1687,7 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 		employee = E_CreateEmployee(EMPL_SOLDIER);
 		employee->hired = qtrue;
 		employee->baseIDHired = gd.bases[0].idx;
-		chr = &employee->chr;
-		CL_LoadTeamMultiplayerMember(&sb, chr, version);
+		CL_LoadTeamMultiplayerMember(&sb, &employee->chr, version);
 	}
 
 	aircraft = &gd.bases[0].aircraft[0];

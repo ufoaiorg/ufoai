@@ -57,7 +57,7 @@ void INVSH_InitCSI (csi_t * import)
 inline fireDef_t* FIRESH_GetFiredef (int objIdx, int weapFdsIdx, int fdIdx)
 {
 #ifdef DEBUG
-	if (objIdx < 0 || objIdx >= MAX_OBJDEFS) \
+	if (objIdx == NONE || objIdx >= MAX_OBJDEFS) \
 		Sys_Error("FIRESH_GetFiredef: objIdx out of bounds [%i]\n", objIdx);
 	if (weapFdsIdx < 0 || weapFdsIdx >= MAX_WEAPONS_PER_OBJDEF)
 		Sys_Error("FIRESH_GetFiredef: weapFdsIdx out of bounds [%i]\n", weapFdsIdx);
@@ -887,7 +887,7 @@ void INVSH_PrintContainerToConsole (inventory_t* const i)
  */
 static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, const int equip[MAX_OBJDEFS], int missed_primary, const char *name)
 {
-	int ammo = -1; /* this variable is never used before being set */
+	int ammo = NONE; /* this variable is never used before being set */
 	item_t item = {NONE_AMMO, NONE, NONE, 0, 0};
 	int i, max_price, prev_price;
 	objDef_t obj;
@@ -1013,7 +1013,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, co
  */
 void INVSH_EquipActor (inventory_t* const inv, const int *equip, int anzEquip, const char *name, character_t* chr)
 {
-	int weapon = -1; /* this variable is never used before being set */
+	int weapon = NONE; /* this variable is never used before being set */
 	int i, max_price, prev_price;
 	int has_weapon = 0, has_armour = 0, repeat = 0, missed_primary = 0;
 	int primary = 2; /* 0 particle or normal, 1 other, 2 no primary weapon */
@@ -1221,7 +1221,7 @@ void INVSH_EquipActorMelee (inventory_t* const inv, character_t* chr)
 	assert(chr);
 	assert(!chr->weapons);
 	assert(chr->teamDefIndex >= 0);
-	assert(CSI->teamDef[chr->teamDefIndex].onlyWeaponIndex > -1);
+	assert(CSI->teamDef[chr->teamDefIndex].onlyWeaponIndex != NONE);
 	assert(CSI->teamDef[chr->teamDefIndex].onlyWeaponIndex < CSI->numODs);
 
 	/* Get weapon */
@@ -1563,7 +1563,7 @@ void INVSH_PrintItemDescription (int i)
 	Com_Printf("... thrown        -> %i\n", ods_temp->thrown);
 	Com_Printf("... usable for weapon (if type is ammo):\n");
 	for (i = 0; i < ods_temp->numWeapons; i++) {
-		if (ods_temp->weap_idx[i] >= 0)
+		if (ods_temp->weap_idx[i] != NONE)
 			Com_Printf("    ... %s\n", CSI->ods[ods_temp->weap_idx[i]].name);
 	}
 	Com_Printf("\n");
@@ -1584,7 +1584,7 @@ int INVSH_GetItemByID (const char *id)
 #ifdef DEBUG
 	if (!id || !*id) {
 		Com_Printf("INVSH_GetItemByID: Called with empty id\n");
-		return -1;
+		return NONE;
 	}
 #endif
 
@@ -1596,7 +1596,7 @@ int INVSH_GetItemByID (const char *id)
 	}
 
 	Com_Printf("INVSH_GetItemByID: Item \"%s\" not found.\n", id);
-	return -1;
+	return NONE;
 }
 
 /**
@@ -1613,7 +1613,7 @@ qboolean INVSH_LoadableInWeapon (objDef_t *od, int weapon_idx)
 
 	for (i = 0; i < od->numWeapons; i++) {
 #ifdef DEBUG
-		if (od->weap_idx[i] < 0) {
+		if (od->weap_idx[i] == NONE) {
 			Com_DPrintf(DEBUG_SHARED, "INVSH_LoadableInWeapon: negative weap_idx entry (%s) found in item '%s'.\n", od->weap_id[i], od->id );
 			break;
 		}

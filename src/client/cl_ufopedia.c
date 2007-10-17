@@ -252,8 +252,10 @@ void UP_ItemDescription (int item)
 	objDef_t *od;
 	int i;
 	int up_numresearchedlink = 0;
-	int up_weapon_id = 0;
+	int up_weapon_id = NONE;
 	menu_t *activeMenu = NULL;
+
+	assert(item != NONE);
 
 	activeMenu = MN_ActiveMenu();
 
@@ -413,11 +415,12 @@ void UP_ItemDescription (int item)
  */
 static void UP_ArmourDescription (technology_t* t)
 {
-	objDef_t	*od = NULL;
-	int	i;
+	objDef_t *od = NULL;
+	int i;
 
 	/* select item */
 	i = INVSH_GetItemByID(t->provides);
+	assert(i != NONE);
 	od = &csi.ods[i];
 
 #ifdef DEBUG
@@ -796,7 +799,7 @@ static void UP_DrawAssociatedAmmo (technology_t* tech)
 
 	/* select item */
 	idx = INVSH_GetItemByID(tech->provides);
-
+	assert(idx != NONE);
 	/* If this is a weapon, we display the model of the associated ammunition in the lower right */
 	if (csi.ods[idx].numAmmos > 0) {
 		/* We set t_associated to ammo to display */
@@ -1282,8 +1285,8 @@ static void UP_ResearchedLinkClick_f (void)
 		return;
 
 	t = upCurrent;
-
 	i = INVSH_GetItemByID(t->provides);
+	assert(i != NONE);
 
 	if (!Q_strncmp(csi.ods[i].type, "ammo", 4)) {
 		t = csi.ods[csi.ods[i].weap_idx[up_researchedlink]].tech;
@@ -1489,6 +1492,7 @@ static void UP_IncreaseWeapon_f (void)
 
 	/* select item */
 	i = INVSH_GetItemByID(t->provides);
+	assert(i != NONE);
 
 	up_researchedlink_temp = up_researchedlink;
 	up_researchedlink_temp++;
@@ -1538,6 +1542,7 @@ static void UP_DecreaseWeapon_f (void)
 
 	/* select item */
 	i = INVSH_GetItemByID(t->provides);
+	assert(i != NONE);
 
 	up_researchedlink_temp = up_researchedlink;
 	up_researchedlink_temp--;
@@ -1587,7 +1592,7 @@ static void UP_IncreaseFiremode_f (void)
 	up_firemode++;
 
 	i = INVSH_GetItemByID(t->provides);
-	if (i > -1)
+	if (i != NONE)
 		UP_ItemDescription(i);
 }
 
@@ -1608,7 +1613,7 @@ static void UP_DecreaseFiremode_f (void)
 	up_firemode--;
 
 	i = INVSH_GetItemByID(t->provides);
-	if (i > -1)
+	if (i != NONE)
 		UP_ItemDescription(i);
 }
 

@@ -928,8 +928,9 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 	memset(od, 0, sizeof(objDef_t));
 
 	/* default value is no ammo */
-	memset(od->weap_idx, -1, sizeof(od->weap_idx));
-	od->craftitem.type = -1; /* default is no craftitem */
+	memset(od->weap_idx, NONE, sizeof(od->weap_idx));
+	memset(od->ammo_idx, NONE, sizeof(od->ammo_idx));
+	od->craftitem.type = MAX_ACITEMS; /* default is no craftitem */
 
 	Q_strncpyz(od->id, name, sizeof(od->id));
 
@@ -1044,7 +1045,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 				token = COM_EParse(text, errhead, name);
 
 				od->weap_idx[0] = INVSH_GetItemByID(token);
-				if (od->weap_idx[0] == -1)
+				if (od->weap_idx[0] == NONE)
 					Sys_Error("Com_ParseItem: could not find craft weapon useable for this ammo: %s (ammo: %s)\n", token, od->id);
 			} else if (!Q_strcmp(token, "crafttype")) {
 				/* Craftitem type definition. */
@@ -1764,7 +1765,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 
 	Q_strncpyz(td->id, name, sizeof(td->id));
 	td->armour = td->weapons = qtrue; /* default values */
-	td->onlyWeaponIndex = -1;
+	td->onlyWeaponIndex = NONE;
 
 	/* get name list body body */
 	token = COM_Parse(text);
@@ -1801,6 +1802,8 @@ static void Com_ParseTeam (const char *name, const char **text)
 				if (!*text)
 					return;
 				td->onlyWeaponIndex = INVSH_GetItemByID(token);
+				if (td->onlyWeaponIndex == NONE)
+					Sys_Error("Com_ParseTeam: Could not get item definition for '%s'", token);
 			} else if (!Q_strcmp(token, "models"))
 				Com_ParseActorModels(name, text, td);
 			else if (!Q_strcmp(token, "names"))
@@ -2109,7 +2112,7 @@ void Com_AddObjectLinks (void)
 		/* Add links to weapons. */
 		for (j = 0; j < od->numWeapons; j++ ) {
 			od->weap_idx[j] = INVSH_GetItemByID(od->weap_id[j]);
-			if (od->weap_idx[j] == -1) {
+			if (od->weap_idx[j] == NONE) {
 				Sys_Error("Com_AddObjectLinks: Could not get item '%s' for linking into item '%s'\n",
 					od->weap_id[j], od->id);
 			}
