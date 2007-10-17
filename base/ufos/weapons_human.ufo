@@ -1957,7 +1957,7 @@ item bolterrifle
 	model           weapons/bolterrifle/bolterrifle
 	weapon          true
 	type            biggun
-	animationindex        3
+	animationindex        1
 	holdtwohanded   false
 	firetwohanded	true
 	shape           "0 0 5 2"

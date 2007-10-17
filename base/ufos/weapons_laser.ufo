@@ -52,7 +52,7 @@ item heavylaser
 	model		weapons/laserheavy/laserheavy
 	weapon		true
 	type		biggun
-	animationindex	3
+	animationindex	1
 	holdtwohanded	false
 	firetwohanded	true
 	shape		"0 0 5 2"
@@ -179,9 +179,9 @@ item laserrifle_ammo
 			firesnd	weapons/heavy_laser
 			speed	0
 			spread	"2 2"
-			crouch	1
+			crouch	0.5
 			range	120
-			shots	0.4
+			shots	1
 			ammo	2
 			time	12
 			damage	"90 25"
@@ -199,7 +199,7 @@ item laserrifle_ammo
 			delaybetweenshots		8
 			speed	0
 			spread	"2 2"
-			crouch	0.4
+			crouch	0.5
 			range	120
 			shots	3
 			ammo	3

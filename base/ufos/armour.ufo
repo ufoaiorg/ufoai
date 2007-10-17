@@ -184,9 +184,7 @@ item power
 	center		"0 0 -5"
 	scale		0.7
 	price		32000
-	size		160
 	buytype		armour
-	useable		0
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
@@ -525,18 +523,17 @@ item light_alien
 		stun				0
 	}
 
-    //FIXME
 	rating {
-		normal				0
-		steelblade			0
-		monomolecularblade	0
-		blast				0
-		fire				0
-		shock				0
-		plasma				0
-		laser				0
-		particlebeam		0
-		stun				0
+		normal				10
+		steelblade			20
+		monomolecularblade	10
+		blast				30
+		fire				20
+		shock				10
+		plasma				30
+		laser				20
+		particlebeam		30
+		stun				10
 	}
 }
 
@@ -589,17 +586,16 @@ item medium_alien
 		stun				10
 	}
 
-    //FIXME
 	rating {
-		normal				0
-		steelblade			0
-		monomolecularblade	0
-		blast				0
-		fire				0
-		shock				0
-		plasma				0
-		laser				0
-		particlebeam		0
-		stun				0
+		normal				40
+		steelblade			40
+		monomolecularblade	30
+		blast				50
+		fire				40
+		shock				30
+		plasma				50
+		laser				40
+		particlebeam		50
+		stun				30
 	}
 }
