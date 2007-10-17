@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "qbsp.h"
 #include "../../shared/shared.h"
 
-#if defined(__linux__) || defined(__NetBSD__) || defined(__FreeBSD__)
+#if defined(__linux__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
 #include <sys/time.h>
 #include <sys/resource.h>
 #endif
@@ -68,13 +68,12 @@ static void U2M_BSP_Parameter (int argc, char **argv)
 			Com_Printf("nowater = true\n");
 			config.nowater = qtrue;
 		} else if (!strcmp(argv[i], "-nice")) {
-#if defined(__linux__) || defined(__FreeBSD__) || defined(__NetBSD__)
+#if defined(__linux__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
 			config.nice = atoi(argv[i+1]);
 			Com_Printf("nice = %i\n", config.nice);
 			if (setpriority(PRIO_PROCESS, 0, config.nice))
 				Com_Printf("failed to set nice level of %i\n", config.nice);
-#else
-#ifdef _WIN32
+#elif defined _WIN32
 			HANDLE proc = GetCurrentProcess();
 			config.nice = atoi(argv[i+1]);
 			Com_Printf("nice = %i\n", config.nice);
@@ -95,7 +94,6 @@ static void U2M_BSP_Parameter (int argc, char **argv)
 			CloseHandle(proc);
 #else
 			Com_Printf("nice not implemented for this arch\n");
-#endif
 #endif
 			i++;
 		} else if (!strcmp(argv[i], "-noprune")) {

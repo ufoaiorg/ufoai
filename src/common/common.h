@@ -76,7 +76,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #    define CPUSTRING "Unknown"
 #  endif
 
-#elif defined __FreeBSD__ || defined __NetBSD__
+#elif defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
 #  ifdef DEBUG
 #    define BUILDSTRING "FreeBSD DEBUG"
 #  else
