@@ -385,12 +385,12 @@ static void CMod_LoadNodes (lump_t * l, vec3_t shift)
 			out->plane = curTile->planes + LittleLong(in->planenum);
 
 		/* in case this is a map assemble */
-		out->mins[0] = LittleFloat(in->mins[0]) + shift[0];
-		out->mins[1] = LittleFloat(in->mins[1]) + shift[1];
-		out->mins[2] = LittleFloat(in->mins[2]) + shift[2];
-		out->maxs[0] = LittleFloat(in->maxs[0]) + shift[0];
-		out->maxs[1] = LittleFloat(in->maxs[1]) + shift[1];
-		out->maxs[2] = LittleFloat(in->maxs[2]) + shift[2];
+		out->mins[0] = LittleShort(in->mins[0]) + shift[0];
+		out->mins[1] = LittleShort(in->mins[1]) + shift[1];
+		out->mins[2] = LittleShort(in->mins[2]) + shift[2];
+		out->maxs[0] = LittleShort(in->maxs[0]) + shift[0];
+		out->maxs[1] = LittleShort(in->maxs[1]) + shift[1];
+		out->maxs[2] = LittleShort(in->maxs[2]) + shift[2];
 
 		for (j = 0; j < 2; j++) {
 			child = LittleLong(in->children[j]);
