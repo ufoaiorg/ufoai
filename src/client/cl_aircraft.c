@@ -55,6 +55,8 @@ static int AIR_UpdateHangarCapForOne (int aircraftID, base_t *base)
 {
 	int aircraftSize = 0, freespace = 0;
 
+	assert(aircraftID != AIRCRAFT_INBASE_INVALID);
+
 	aircraftSize = aircraft_samples[aircraftID].weight;
 
 	if (aircraftSize < 1) {
@@ -264,7 +266,7 @@ void AIM_AircraftStart_f (void)
 	if (!baseCurrent)
 		return;
 
-	if (baseCurrent->aircraftCurrent < 0 || baseCurrent->aircraftCurrent >= baseCurrent->numAircraftInBase) {
+	if (baseCurrent->aircraftCurrent == AIRCRAFT_INBASE_INVALID || baseCurrent->aircraftCurrent >= baseCurrent->numAircraftInBase) {
 #ifdef DEBUG
 		Com_Printf("Error - there is no aircraftCurrent in this base\n");
 #endif
@@ -423,7 +425,7 @@ void AIM_NextAircraft_f (void)
 
 	aircraftID = Cvar_VariableInteger("mn_aircraft_idx");
 
-	if ((aircraftID < 0) || (aircraftID >= baseCurrent->numAircraftInBase)) {
+	if ((aircraftID == AIRCRAFT_INBASE_INVALID) || (aircraftID >= baseCurrent->numAircraftInBase)) {
 		/* Bad aircraft idx found (no or no sane aircraft).
 		 * Setting it to the first aircraft since numAircraftInBase has been checked to be at least 1. */
 		Com_DPrintf(DEBUG_CLIENT, "AIM_NextAircraft_f: bad aircraft idx found.\n");
@@ -451,7 +453,7 @@ void AIM_PrevAircraft_f (void)
 
 	aircraftID = Cvar_VariableInteger("mn_aircraft_idx");
 
-	if ((aircraftID < 0) || (aircraftID >= baseCurrent->numAircraftInBase)) {
+	if ((aircraftID == AIRCRAFT_INBASE_INVALID) || (aircraftID >= baseCurrent->numAircraftInBase)) {
 		/* Bad aircraft idx found (no or no sane aircraft).
 		 * Setting it to the first aircraft since numAircraftInBase has been checked to be at least 1. */
 		Com_DPrintf(DEBUG_CLIENT, "AIM_PrevAircraft_f: bad aircraft idx found.\n");
@@ -534,7 +536,7 @@ void AIR_AircraftReturnToBase_f (void)
 {
 	aircraft_t *aircraft;
 
-	if (baseCurrent && (baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase)) {
+	if (baseCurrent && (baseCurrent->aircraftCurrent != AIRCRAFT_INBASE_INVALID) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase)) {
 		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 		AIR_AircraftReturnToBase(aircraft);
 		AIR_AircraftSelect(aircraft);
@@ -565,7 +567,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 		 * aircraft at this point because baseCurrent->numAircraftInBase was zero)
 		 * if a non-sane idx was found.
 		 */
-		if ((aircraftID < 0) || (aircraftID >= baseCurrent->numAircraftInBase)) {
+		if ((aircraftID == AIRCRAFT_INBASE_INVALID) || (aircraftID >= baseCurrent->numAircraftInBase)) {
 			aircraftID = 0;
 			Cvar_SetValue("mn_aircraft_idx", aircraftID);
 		}
@@ -612,9 +614,9 @@ void AIR_AircraftSelect_f (void)
 		return;
 	}
 
-	baseCurrent->aircraftCurrent = -1;
+	baseCurrent->aircraftCurrent = AIRCRAFT_INBASE_INVALID;
 	AIR_AircraftSelect(NULL);
-	if (baseCurrent->aircraftCurrent == -1)
+	if (baseCurrent->aircraftCurrent == AIRCRAFT_INBASE_INVALID)
 		MN_PopMenu(qfalse);
 }
 
@@ -770,7 +772,7 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 		Cvar_Set("mn_aircraftinbase", "0");
 		Cvar_Set("mn_aircraftname", "");
 		Cvar_Set("mn_aircraft_model", "");
-		base->aircraftCurrent = -1;
+		base->aircraftCurrent = AIRCRAFT_INBASE_INVALID;
 	}
 
 	/* Now update the aircraft list - maybe there is a popup active. */
@@ -987,7 +989,7 @@ aircraft_t* AIR_AircraftGetFromIdx (int idx)
 	base_t* base;
 	aircraft_t* aircraft;
 
-	if (idx < 0) {
+	if (idx == AIRCRAFT_INVALID) {
 		Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIdx: bad aircraft index: %i\n", idx);
 		return NULL;
 	}
@@ -2204,6 +2206,8 @@ qboolean AIR_ScriptSanityCheck (void)
 int AIR_CalculateHangarStorage (int aircraftID, base_t *base, int used)
 {
 	int aircraftSize = 0, freespace = 0;
+
+	assert(aircraftID != AIRCRAFT_INBASE_INVALID);
 
 	aircraftSize = aircraft_samples[aircraftID].weight;
 

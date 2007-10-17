@@ -2835,7 +2835,7 @@ void CP_ExecuteMissionTrigger (mission_t * m, qboolean won)
  */
 static void CL_GameAutoCheck_f (void)
 {
-	if (!curCampaign || !selMis || gd.interceptAircraft < 0 || gd.interceptAircraft >= gd.numAircraft) {
+	if (!curCampaign || !selMis || gd.interceptAircraft == AIRCRAFT_INVALID || gd.interceptAircraft >= gd.numAircraft) {
 		Com_DPrintf(DEBUG_CLIENT, "No update after automission\n");
 		return;
 	}
@@ -2870,7 +2870,7 @@ void CL_GameAutoGo (actMis_t *mission)
 	assert(mis);
 
 	if (mis->missionType != MIS_BASEATTACK) {
-		if (gd.interceptAircraft < 0 || gd.interceptAircraft >= gd.numAircraft) {
+		if (gd.interceptAircraft == AIRCRAFT_INVALID || gd.interceptAircraft >= gd.numAircraft) {
 			Com_DPrintf(DEBUG_CLIENT, "No update after automission\n");
 			return;
 		}
@@ -3163,7 +3163,7 @@ static void CL_GameResults_f (void)
 	if (selMis->def->missionType == MIS_BASEATTACK) {
 		baseCurrent = (base_t*)selMis->def->data;
 	} else {
-		assert(gd.interceptAircraft >= 0);
+		assert(gd.interceptAircraft != AIRCRAFT_INVALID);
 		baseCurrent = AIR_AircraftGetFromIdx(gd.interceptAircraft)->homebase;
 		baseCurrent->aircraftCurrent = AIR_AircraftGetFromIdx(gd.interceptAircraft)->idxInBase;
 	}

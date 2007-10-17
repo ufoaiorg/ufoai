@@ -2018,7 +2018,7 @@ static void B_PackInitialEquipment_f (void)
 
 	if (i == csi.numEDs) {
 		Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment_f: Initial Phalanx equipment %s not found.\n", name);
-	} else if ((aircraft_idxInBase >= 0) && (aircraft_idxInBase < base->numAircraftInBase)) {
+	} else if ((aircraft_idxInBase != AIRCRAFT_INVALID) && (aircraft_idxInBase < base->numAircraftInBase)) {
 		aircraft = &base->aircraft[base->aircraftCurrent];
 		chr_list_temp.num = 0;
 		for (i = 0; i < aircraft->maxTeamSize; i++) {
@@ -2982,7 +2982,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 		MSG_WriteByte(sb, b->maxLasers);
 		B_SaveItemSlots(b->lasers, b->maxLasers, b->targetLaserIdx, sb);
 
-		MSG_WriteShort(sb, b->aircraftCurrent); /* might be -1 */
+		MSG_WriteShort(sb, b->aircraftCurrent); /* Might be AIRCRAFT_INBASE_INVALID (-1) */
 		MSG_WriteByte(sb, b->numAircraftInBase);
 		for (k = 0; k < b->numAircraftInBase; k++) {
 			aircraft = &b->aircraft[k];
@@ -2998,7 +2998,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			if (aircraft->aircraftTarget)
 				MSG_WriteShort(sb, aircraft->aircraftTarget - gd.ufos);
 			else
-				MSG_WriteShort(sb, -1);
+				MSG_WriteShort(sb, -1); /** @todo use AIRCRAFT_INVALID here? */
 			/* save weapon slots */
 			MSG_WriteByte(sb, aircraft->maxWeapons);
 			B_SaveItemSlots(aircraft->weapons, aircraft->maxWeapons, NULL, sb);
@@ -3235,7 +3235,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			aircraft->hangar = MSG_ReadByte(sb);
 			/* load aircraft target */
 			amount = MSG_ReadShort(sb);
-			if (amount == -1)
+			if (amount == -1) /** @todo use AIRCRAFT_INVALID here? Isn't "amount" the wrong name for this? */
 				aircraft->aircraftTarget = NULL;
 			else
 				aircraft->aircraftTarget = gd.ufos + amount;

@@ -455,7 +455,7 @@ static void CL_ChangeSkinOnBoard_f (void)
 		return;
 
 	/** @todo Do we really need to check aircraftcurrent here? */
-	if ((baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase)) {
+	if ((baseCurrent->aircraftCurrent != AIRCRAFT_INBASE_INVALID) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase)) {
 		/* aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent]; */
 	} else {
 #ifdef DEBUG
@@ -756,7 +756,7 @@ static void CL_GenerateEquipment_f (void)
 	int team = 0;
 
 	assert(baseCurrent);
-	assert((baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase));
+	assert((baseCurrent->aircraftCurrent != AIRCRAFT_INBASE_INVALID) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase));
 	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 
 	/* Popup if no soldiers are assigned to the current aircraft. */
@@ -981,7 +981,7 @@ static void CL_Select_f (void)
 		/* we are still in the menu - so fall through */
 	case SELECT_MODE_EQUIP:
 		/* no base or no aircraft selected */
-		if (!baseCurrent || baseCurrent->aircraftCurrent < 0)
+		if (!baseCurrent || baseCurrent->aircraftCurrent == AIRCRAFT_INBASE_INVALID)
 			return;
 		/* no soldiers in the current aircraft */
 		if (chrDisplayList.num <= 0) {
@@ -1171,7 +1171,7 @@ static void CL_MarkTeam_f (void)
 		MN_PopMenu(qfalse);
 		return;
 	}
-	if (baseCurrent->aircraftCurrent < 0) {
+	if (baseCurrent->aircraftCurrent == AIRCRAFT_INBASE_INVALID) {
 		Com_Printf("No aircraft selected\n");
 		MN_PopMenu(qfalse);
 		return;

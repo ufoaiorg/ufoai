@@ -31,7 +31,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define LINE_MAXPTS (LINE_MAXSEG+2)
 #define LINE_DPHI	(M_PI/LINE_MAXSEG)
 
-#define AIRFIGHT_TARGET_IS_AIRCRAFT -1
+#define AIRCRAFT_INVALID -1		/**< Invalid aircraft index (global index). */
+#define AIRCRAFT_INBASE_INVALID -1	/**< Invalid aircraft index in base-list of aircrafts. */
+#define AIRFIGHT_TARGET_IS_AIRCRAFT -1	/**< @todo Is this used (or planned for something) anywhere? If not please delete. */
 
 /** @brief A path on the map described by 2D points */
 typedef struct mapline_s {
@@ -125,9 +127,9 @@ typedef enum {
 
 /** @brief An aircraft with all it's data */
 typedef struct aircraft_s {
-	int idx;			/**< Global index of this aircraft. See also gd.numAircraft.
+	int idx;			/**< Global index of this aircraft. See also gd.numAircraft and AIRCRAFT_INVALID
 						 * this index is also updated when AIR_DeleteAircraft was called
-						 * for all the other aircraft */
+						 * for all the other aircraft.  */
 	int idx_sample;			/**< Self-link in aircraft_sample list. */
 	char *id;			/**< Internal id from script file. */
 	char *name;			/**< Translateable name. */
