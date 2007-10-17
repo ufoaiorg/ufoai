@@ -928,8 +928,9 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 	memset(od, 0, sizeof(objDef_t));
 
 	/* default value is no ammo */
-	memset(od->weap_idx, -1, sizeof(od->weap_idx));
-	od->craftitem.type = -1; /* default is no craftitem */
+	memset(od->weap_idx, NONE, sizeof(od->weap_idx));
+	memset(od->ammo_idx, NONE, sizeof(od->ammo_idx));
+	od->craftitem.type = MAX_ACITEMS; /* default is no craftitem */
 
 	Q_strncpyz(od->id, name, sizeof(od->id));
 

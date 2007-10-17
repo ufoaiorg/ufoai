@@ -887,7 +887,7 @@ void INVSH_PrintContainerToConsole (inventory_t* const i)
  */
 static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, const int equip[MAX_OBJDEFS], int missed_primary, const char *name)
 {
-	int ammo = -1; /* this variable is never used before being set */
+	int ammo = NONE; /* this variable is never used before being set */
 	item_t item = {NONE_AMMO, NONE, NONE, 0, 0};
 	int i, max_price, prev_price;
 	objDef_t obj;

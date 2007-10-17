@@ -813,7 +813,7 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 				/* Display "impossible" (red) reaction button or disable button. */
 				CL_DisplayImpossibleReaction(cl.teamList[actor_idx]);
 				/* Set RF-mode info to undef. */
-				CL_SetReactionFiremode(actor_idx, -1, -1, -1);
+				CL_SetReactionFiremode(actor_idx, -1, NONE, -1);
 			}
 		}
 		/* The rest of this function assumes that active_firemode is bigger than -1 ->  finish. */
@@ -834,7 +834,7 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 	}
 
 	/* Search for a (reaction) firemode with the given index and store/send it. */
-	CL_SetReactionFiremode(actor_idx, -1, -1, -1);
+	CL_SetReactionFiremode(actor_idx, -1, NONE, -1);
 	for (i = 0; i < ammo->numFiredefs[weap_fd_idx]; i++) {
 		if (ammo->fd[weap_fd_idx][i].reaction) {
 			if (i == active_firemode) {
@@ -867,7 +867,7 @@ void CL_SetDefaultReactionFiremode (int actor_idx, char hand)
 #if 0
 			if (!SANE_REACTION(actor_idx)) {
 				/* If that fails as well set firemode to undef. */
-				CL_SetReactionFiremode (actor_idx, -1, -1, -1);
+				CL_SetReactionFiremode (actor_idx, -1, NONE, -1);
 			}
 #endif
 		}
@@ -881,7 +881,7 @@ void CL_SetDefaultReactionFiremode (int actor_idx, char hand)
 #if 0
 			if (!SANE_REACTION(actor_idx)) {
 				/* If that fails as well set firemode to undef. */
-				CL_SetReactionFiremode (actor_idx, -1, -1, -1);
+				CL_SetReactionFiremode (actor_idx, -1, NONE, -1);
 			}
 #endif
 		}
@@ -1747,7 +1747,7 @@ void CL_AddActorToTeamList (le_t * le)
 #if 0
 		/* @todo: remove this if the above works (this should fix the wrong setting of the default firemode on re-try or next mission) */
 		/* Initialize reactionmode (with undefined firemode) ... this will be checked for in CL_DoEndRound. */
-		CL_SetReactionFiremode(i, -1, -1, -1);
+		CL_SetReactionFiremode(i, -1, NONE, -1);
 #endif
 	}
 }
@@ -2589,7 +2589,7 @@ void CL_ActorToggleReaction_f (void)
 		MSG_Write_PA(PA_STATE, selActor->entnum, state);
 
 		/* Set RF-mode info to undef. */
-		CL_SetReactionFiremode(actor_idx, -1, -1, -1);
+		CL_SetReactionFiremode(actor_idx, -1, NONE, -1);
 	}
 }
 
