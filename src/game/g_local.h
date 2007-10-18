@@ -521,9 +521,9 @@ struct edict_s {
 
 	int mapNum;
 	const char *model;
-	float freetime;				/* sv.time when the object was freed */
+	float freetime;				/**< sv.time when the object was freed */
 
-	/* only used locally in game, not by server */
+	/** only used locally in game, not by server */
 
 	int type;
 	int visflags;
@@ -531,66 +531,67 @@ struct edict_s {
 	int contentFlags;			/**< contents flags of the brush the actor is walking in */
 
 	pos3_t pos;
-	byte dir;					/* direction the player looks at */
+	byte dir;					/**< direction the player looks at */
 
-	int TU;						/* remaining timeunits */
-	int HP;						/* remaining healthpoints */
+	int TU;						/**< remaining timeunits */
+	int HP;						/**< remaining healthpoints */
 	int STUN;
-	int morale;					/* the current morale value */
+	int morale;					/**< the current morale value */
 
-	int state;					/* the player state - dead, shaken.... */
+	int state;					/**< the player state - dead, shaken.... */
 
-	int reaction_minhit;		/* acceptable odds for reaction shots */
+	int reaction_minhit;		/**< acceptable odds for reaction shots */
 
-	int team;					/* player of which team? */
-	int pnum;					/* the actual player slot */
-	/* the models (hud) */
+	int team;					/**< player of which team? */
+	int pnum;					/**< the actual player slot */
+	/** the models (hud) */
 	int body;
 	int head;
 	int skin;
 
-	/* delayed reaction fire */
+	/** delayed reaction fire */
 	edict_t *reactionTarget;
 	float	reactionTUs;
 	qboolean reactionNoDraw;
 
-	/* only set this for the attacked edict - to know who's shooting */
+	/** only set this for the attacked edict - to know who's shooting */
 	edict_t *reactionAttacker;
 
-	/* here are the character values */
+	/** here are the character values */
 	character_t chr;
 
-	/* this is the inventory */
+	/** this is the inventory */
 	inventory_t i;
 
-	int spawnflags;	/* set via mapeditor */
+	int spawnflags;	/**< set via mapeditor */
 	const char *classname;
 
-	float angle;	/* entity yaw - set via mapeditor - -1=up; -2=down */
+	float angle;	/**< entity yaw - set via mapeditor - -1=up; -2=down */
 
-	float speed;	/* speed of entities - e.g. doors */
-	float accel;	/* acceleration of plattforms/doors */
-	float decel;	/* deceleration of plattforms/doors */
-	const char *target;	/* name of the entity to trigger or move towards */
-	const char *targetname;	/* name pointed to by target */
-	const char *message;	/* message when entity is activated - set via mapeditor */
+	float speed;	/**< speed of entities - e.g. doors */
+	float accel;	/**< acceleration of plattforms/doors */
+	float decel;	/**< deceleration of plattforms/doors */
+	const char *target;	/**< name of the entity to trigger or move towards */
+	const char *targetname;	/**< name pointed to by target */
+	const char *message;	/**< message when entity is activated - set via mapeditor */
 	const char *particle;
-	float wait;		/* time to wait before platform moves to the next point on its path */
-	float delay;	/* time between triggering switch and effect activating */
-	float random;	/* used to add a bit of time variation of func_timer */
-	int style;		/* type of entities */
-	edictMaterial_t material;	/* material value (e.g. for func_breakable) */
-	int count;		/* general purpose 'amount' variable - set via mapeditor often */
-	int sounds;		/* type of sounds to play - e.g. doors */
-	int dmg;		/* damage done by entity */
+	float wait;		/**< time to wait before platform moves to the next point on its path */
+	float delay;	/**< time between triggering switch and effect activating */
+	float random;	/**< used to add a bit of time variation of func_timer */
+	int style;		/**< type of entities */
+	edictMaterial_t material;	/**< material value (e.g. for func_breakable) */
+	int count;		/**< general purpose 'amount' variable - set via mapeditor often */
+	int sounds;		/**< type of sounds to play - e.g. doors */
+	int dmg;		/**< damage done by entity */
+	/** @sa memcpy in Grid_CheckForbidden */
 	int fieldSize;	/* ACTOR_SIZE_* */
 
-	/* function to call when used */
+	/** function to call when used */
 	void (*use) (edict_t * self, edict_t * other, edict_t * activator);
 	float nextthink;
 	void (*think)(edict_t *self);
 
-	/* e.g. doors */
+	/** e.g. doors */
 	moveinfo_t		moveinfo;
 };
 

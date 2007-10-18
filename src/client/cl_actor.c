@@ -1976,12 +1976,11 @@ pos_t *fb_list[MAX_FORBIDDENLIST];
 int fb_length;
 
 /**
- * @brief Builds a list of locations that cannot be moved to.
+ * @brief Builds a list of locations that cannot be moved to (client side).
  * @sa G_MoveCalc
- * @sa g_client:G_BuildForbiddenList <- shares quite some code
- *
- * @todo This probably belongs in the core logic.
- * This is used for pathfinding.
+ * @sa G_BuildForbiddenList <- server side
+ * @sa Grid_CheckForbidden
+ * @note This is used for pathfinding.
  * It is a list of where the selected unit can not move to because others are standing there already.
  */
 static void CL_BuildForbiddenList (void)

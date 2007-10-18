@@ -513,6 +513,7 @@ typedef struct character_s {
 
 	int rank;					/**< Index of rank (in gd.ranks). */
 
+	/** @sa memcpy in Grid_CheckForbidden */
 	int fieldSize;				/**< ACTOR_SIZE_* */
 
 	inventory_t *inv;			/**< Inventory definition. */
