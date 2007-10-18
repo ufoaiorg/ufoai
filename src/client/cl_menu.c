@@ -1073,16 +1073,33 @@ static void MN_FindContainer (menuNode_t* const node)
 
 #if 0
 /** @todo to be integrated into MN_CheckNodeZone */
+/**
+ * @brief Check if the ndoe is an iamge and if it is transparent ont he given (global) position.
+ * @param[in] node A menunode pointer to be checked.
+ * @param[in] x X position on screen.
+ * @param[in] y Y position on screen.
+ */
 static qboolean MN_NodeWithVisibleImage (menuNode_t* const node, int x, int y)
 {
-	byte *picture = NULL;
-	int width, height;		/**< Width and height for the pic. */
-	int pic_x, pic_y;
-	R_LoadTGA(va("pics/menu/%s",path), &picture, &width, &height);
-	
-	if (!picture || !width || !height)
-		Sys_Error("Couldn't load image %s in pics/menu\n", path);
-	
+	byte *picture = NULL;	/**< Pointer to image (4 bytes == 1 pixel) */
+	int width, height;	/**< Width and height for the pic. */
+	int pic_x, pic_y;	/**< Position inside image */
+	byte *color = NULL;	/**< Pointer to specific pixel in image. */
+
+	if (!node || node->type != MN_PIC || !node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL])
+		return qfalse;
+
+	R_LoadTGA(va("pics/menu/%s.tga",path), &picture, &width, &height);
+
+	if (!picture || !width || !height) {
+		R_LoadPNG(va("pics/menu/%s.png",path), &picture, &width, &height);
+		
+		if (!picture || !width || !height) {
+			Com_DPrintf(DEBUG_CLIENT, "Couldn't load image %s in pics/menu\n", path);
+			return qfalse;
+		}
+	}
+
 	/* todo: Get current location _inside_ image from global position. */
 	pic_x = x - node->pos[0];
 	pic_y = y - node->pos[1];
@@ -1093,7 +1110,7 @@ static qboolean MN_NodeWithVisibleImage (menuNode_t* const node, int x, int y)
 	/* Get pixel at current location. */
 	color = picture + (4 * height * pic_y + 4 * pic_x); /* 4 means 4 values for each point */
 
-	/* Return qtrue if pixel is visible. */
+	/* Return qtrue if pixel is visible (we check the alpha value here). */
 	if (color[3] == 0)
 		return qtrue;
 
