@@ -1071,6 +1071,36 @@ static void MN_FindContainer (menuNode_t* const node)
 	node->size[1] = C_UNIT * (i + 1) + 0.01;
 }
 
+#if 0
+/** @todo to be integrated into MN_CheckNodeZone */
+static qboolean MN_NodeWithVisibleImage (menuNode_t* const node, int x, int y)
+{
+	byte *picture = NULL;
+	int width, height;		/**< Width and height for the pic. */
+	int pic_x, pic_y;
+	R_LoadTGA(va("pics/menu/%s",path), &picture, &width, &height);
+	
+	if (!picture || !width || !height)
+		Sys_Error("Couldn't load image %s in pics/menu\n", path);
+	
+	/* todo: Get current location _inside_ image from global position. */
+	pic_x = x - node->pos[0];
+	pic_y = y - node->pos[1];
+
+	if (pic_x < 0 || pic_y < 0)
+		return qfalse;
+
+	/* Get pixel at current location. */
+	color = picture + (4 * height * pic_y + 4 * pic_x); /* 4 means 4 values for each point */
+
+	/* Return qtrue if pixel is visible. */
+	if (color[3] == 0)
+		return qtrue;
+
+	return qfalse;
+}
+#endif
+
 /**
  * @sa MN_Click
  */

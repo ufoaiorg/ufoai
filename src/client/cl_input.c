@@ -1667,6 +1667,7 @@ void IN_Init (void)
 	Cmd_AddCommand("nextalienactor", CL_NextAlienVisibleFromActor_f, _("Toogle to next alien visible from selected actor."));
 
 	Cmd_AddCommand("list_firemodes", CL_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
+	Cmd_AddCommand("switch_firemode_list", CL_SwitchFiremodeList_f, "Switch firemode-list to one for the given hand, but only if the list is visible already.");
 	Cmd_AddCommand("fireweap", CL_FireWeapon_f, "Start aiming the weapon.");
 	Cmd_AddCommand("sel_reactmode", CL_SelectReactionFiremode_f, "Change/Select firemode used for reaction fire.");
 
