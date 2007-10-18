@@ -300,6 +300,7 @@ void R_ModEndLoading(void);
 void R_SwitchModelMemPoolTag(void);
 
 void R_LoadTGA(const char *name, byte ** pic, int *width, int *height);
+void R_LoadImage(const char *name, byte **pic, int *width, int *height);
 
 void R_FontRegister(const char *name, int size, const char *path, const char *style);
 int R_FontDrawString(const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine);

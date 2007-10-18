@@ -1090,17 +1090,12 @@ static qboolean MN_NodeWithVisibleImage (menuNode_t* const node, int x, int y)
 	if (!node || node->type != MN_PIC || !node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL])
 		return qfalse;
 
-	R_LoadTGA(va("pics/menu/%s.tga",path), &picture, &width, &height);
+	R_LoadImage(va("pics/menu/%s",path), &picture, &width, &height);
 
-	/* @todo JPEG */
 	if (!picture || !width || !height) {
-		R_LoadPNG(va("pics/menu/%s.png",path), &picture, &width, &height);
-
-		if (!picture || !width || !height) {
-			Com_DPrintf(DEBUG_CLIENT, "Couldn't load image %s in pics/menu\n", path);
-			/* We return true here because we do not know if there is another image (withouth transparency) */
-			return qtrue;
-		}
+		Com_DPrintf(DEBUG_CLIENT, "Couldn't load image %s in pics/menu\n", path);
+		/* We return true here because we do not know if there is another image (withouth transparency) or another reason it might still be valid. */
+		return qtrue;
 	}
 
 	/** @todo Get current location _inside_ image from global position. CHECKME */
