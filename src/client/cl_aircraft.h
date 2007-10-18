@@ -33,7 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define AIRCRAFT_INVALID -1		/**< Invalid aircraft index (global index). */
 #define AIRCRAFT_INBASE_INVALID -1	/**< Invalid aircraft index in base-list of aircrafts. */
-#define AIRFIGHT_TARGET_IS_AIRCRAFT -1	/**< @todo Is this used (or planned for something) anywhere? If not please delete. */
 
 /** @brief A path on the map described by 2D points */
 typedef struct mapline_s {
