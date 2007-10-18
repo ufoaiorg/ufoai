@@ -1074,7 +1074,7 @@ static void MN_FindContainer (menuNode_t* const node)
 #if 0
 /** @todo to be integrated into MN_CheckNodeZone */
 /**
- * @brief Check if the ndoe is an iamge and if it is transparent ont he given (global) position.
+ * @brief Check if the node is an image and if it is transparent on the given (global) position.
  * @param[in] node A menunode pointer to be checked.
  * @param[in] x X position on screen.
  * @param[in] y Y position on screen.
@@ -1092,9 +1092,10 @@ static qboolean MN_NodeWithVisibleImage (menuNode_t* const node, int x, int y)
 
 	R_LoadTGA(va("pics/menu/%s.tga",path), &picture, &width, &height);
 
+	/* @todo JPEG */
 	if (!picture || !width || !height) {
 		R_LoadPNG(va("pics/menu/%s.png",path), &picture, &width, &height);
-		
+
 		if (!picture || !width || !height) {
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't load image %s in pics/menu\n", path);
 			/* We return true here because we do not know if there is another image (withouth transparency) */
