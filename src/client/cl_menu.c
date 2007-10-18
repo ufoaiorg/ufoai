@@ -1113,7 +1113,7 @@ static qboolean MN_NodeWithVisibleImage (menuNode_t* const node, int x, int y)
 	color = picture + (4 * height * pic_y + 4 * pic_x); /* 4 means 4 values for each point */
 
 	/* Return qtrue if pixel is visible (we check the alpha value here). */
-	if (color[3] == 0)
+	if (color[3] != 0)
 		return qtrue;
 
 	/* Image is transparent at this position. */
