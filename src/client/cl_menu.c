@@ -1078,6 +1078,7 @@ static void MN_FindContainer (menuNode_t* const node)
  * @param[in] node A menunode pointer to be checked.
  * @param[in] x X position on screen.
  * @param[in] y Y position on screen.
+ * @return qtrue if an image is used and it is on transparent on the current position.
  */
 static qboolean MN_NodeWithVisibleImage (menuNode_t* const node, int x, int y)
 {
@@ -1096,11 +1097,12 @@ static qboolean MN_NodeWithVisibleImage (menuNode_t* const node, int x, int y)
 		
 		if (!picture || !width || !height) {
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't load image %s in pics/menu\n", path);
-			return qfalse;
+			/* We return true here because we do not know if there is another image (withouth transparency) */
+			return qtrue;
 		}
 	}
 
-	/* todo: Get current location _inside_ image from global position. */
+	/** @todo Get current location _inside_ image from global position. CHECKME */
 	pic_x = x - node->pos[0];
 	pic_y = y - node->pos[1];
 
@@ -1114,6 +1116,7 @@ static qboolean MN_NodeWithVisibleImage (menuNode_t* const node, int x, int y)
 	if (color[3] == 0)
 		return qtrue;
 
+	/* Image is transparent at this position. */
 	return qfalse;
 }
 #endif
