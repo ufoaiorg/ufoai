@@ -2446,6 +2446,8 @@ int CM_TestLineDM (vec3_t start, vec3_t stop, vec3_t end)
  * @param[in] y Field in y direction
  * @param[in] z Field in z direction
  * @sa Grid_MoveMark
+ * @sa G_BuildForbiddenList
+ * @sa CL_BuildForbiddenList
  * @return qtrue if one can't walk there (i.e. the field [and attached fields for e.g. 2x2 units] is/are blocked by entries in the forbidden list) otherwise false.
  */
 static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, byte z)
@@ -2464,17 +2466,17 @@ static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, byte 
 		forbidden_size = *(p + 1);
 		switch (*forbidden_size) {
 		case ACTOR_SIZE_NORMAL:
-			if (x == (*p)[0] && y == (*p)[1] && z ==(*p)[2])
+			if (x == (*p)[0] && y == (*p)[1] && z == (*p)[2])
 				return qtrue;
 			break;
 		case ACTOR_SIZE_2x2:
-			if (x == (*p)[0] && y == (*p)[1] && z ==(*p)[2]) {
+			if (x == (*p)[0] && y == (*p)[1] && z == (*p)[2]) {
 				return qtrue;
-			} else if ((x == (*p)[0] + 1) && (y == (*p)[1]) && (z ==(*p)[2])) {
+			} else if ((x == (*p)[0] + 1) && (y == (*p)[1]) && (z == (*p)[2])) {
 				return qtrue;
-			} else if ((x == (*p)[0]) && (y == (*p)[1] + 1) && (z ==(*p)[2])) {
+			} else if ((x == (*p)[0]) && (y == (*p)[1] + 1) && (z == (*p)[2])) {
 				return qtrue;
-			} else if ((x == (*p)[0] + 1) && (y == (*p)[1] + 1) && (z ==(*p)[2])) {
+			} else if ((x == (*p)[0] + 1) && (y == (*p)[1] + 1) && (z == (*p)[2])) {
 				return qtrue;
 			}
 			break;

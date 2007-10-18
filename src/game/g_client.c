@@ -1178,15 +1178,15 @@ pos_t *fb_list[MAX_FORBIDDENLIST];
 int fb_length;
 
 /**
- * @brief Build the forbidden list for the pathfinding.
+ * @brief Build the forbidden list for the pathfinding (server side).
  * @param[in] team The team number if the list should be calculated from the eyes of that team. Use 0 to ignore team.
  * @note The forbidden list (fb_list and fb_length) is a
  * list of entity positions that are occupied by an entity.
  * This list is checked everytime an actor wants to walk there.
  * @sa G_MoveCalc
- * @sa cl_actor.c:CL_BuildForbiddenList <- shares quite some code
- * @todo This probably belongs in the core logic.
- * This is used for pathfinding.
+ * @sa Grid_CheckForbidden
+ * @sa CL_BuildForbiddenList <- shares quite some code
+ * @note This is used for pathfinding.
  * It is a list of where the selected unit can not move to because others are standing there already.
  */
 static void G_BuildForbiddenList (int team)
