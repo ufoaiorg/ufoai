@@ -247,7 +247,6 @@ static void SV_Spawn_f (void)
  */
 static void SV_Disconnect_f (void)
 {
-/*	SV_EndRedirect(); */
 	SV_DropClient(sv_client, "Disconnect\n");
 }
 
@@ -291,8 +290,6 @@ static void SV_ExecuteUserCommand (char *s)
 	Cmd_TokenizeString(s, qfalse);
 	sv_player = sv_client->player;
 
-/*	SV_BeginRedirect(RD_CLIENT); */
-
 	for (u = ucmds; u->name; u++)
 		if (!Q_strncmp(Cmd_Argv(0), u->name, MAX_VAR)) {
 			Com_DPrintf(DEBUG_SERVER, "SV_ExecuteUserCommand: %s\n", s);
@@ -304,8 +301,6 @@ static void SV_ExecuteUserCommand (char *s)
 		Com_DPrintf(DEBUG_SERVER, "SV_ExecuteUserCommand: client command: %s\n", s);
 		ge->ClientCommand(sv_player);
 	}
-
-/*	SV_EndRedirect(); */
 }
 
 
