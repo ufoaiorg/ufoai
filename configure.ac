@@ -488,6 +488,9 @@ then
 	elif test "$with_curses" = "yes"
 	then
 		AC_MSG_ERROR([--with-curses specified but could not find newwin])
+	else
+		AC_SUBST([HAVE_CURSES],0)
+		AC_MSG_NOTICE([Without curses])
 	fi
 else
 	AC_MSG_NOTICE([Without curses])
