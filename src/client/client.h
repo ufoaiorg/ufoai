@@ -628,6 +628,7 @@ void CL_DisplayHudMessage(const char *text, int time);
 void CL_ResetWeaponButtons(void);
 void CL_SetDefaultReactionFiremode(int actor_idx, char hand);
 void CL_DisplayFiremodes_f(void);
+void CL_SwitchFiremodeList_f(void);
 void CL_FireWeapon_f(void);
 void CL_SelectReactionFiremode_f(void);
 

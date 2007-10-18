@@ -634,6 +634,10 @@ qboolean CP_SpawnBaseAttackMission (base_t* base, mission_t* ms, setState_t *cau
 	ms->alienTeams[0] = Com_GetTeamDefinitionByID("ortnok");
 	if (ms->alienTeams[0])
 		ms->numAlienTeams++;
+	/* FIXME */
+	Com_sprintf(ms->alienEquipment, sizeof(ms->alienEquipment), "stage%i_%s", 1, "soldiers");
+	ms->aliens = 8;
+	ms->civilians = 8;
 
 	ms->zoneType = base->mapZone;
 

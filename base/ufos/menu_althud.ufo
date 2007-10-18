@@ -601,27 +601,6 @@ menu althud
 		*nextround image althud/buttons_althud1g
 	}
 
-	pic bt_primaryright
-	{
-		tooltip	"_Use Item"
-		image	althud/buttons_althud1
-		pos		"870 497"
-		texl	"0 74"
-		texh	"25 107"
-		mousefx	true
-		click { cmd "list_firemodes r;" }
-	}
-	pic bt_primaryleft
-	{
-		tooltip	"_Use Item"
-		image	althud/buttons_althud1
-		pos		"870 497"
-		texl	"0 74"
-		texh	"25 107"
-		mousefx	true
-		click { cmd "list_firemodes l;" }
-	}
-
 	confunc startreactionmanya
 	{
 		*bt_reaction_a image althud/buttons_althud1b
@@ -784,9 +763,9 @@ menu althud
 		pos		"964 464"
 		texl	"0 0"		texh	"16 16"
 		mousefx	true
-		whup	{ show_rightweapon }
-		whdown	{ show_leftweapon }
-		click	{ show_rightweapon }
+		whup	{ show_rightweapon cmd "switch_firemode_list r;" }
+		whdown	{ show_leftweapon cmd "switch_firemode_list l;" }
+		click	{ show_rightweapon cmd "switch_firemode_list r;" }
 	}
 	pic switch_to_left_hand
 	{
@@ -795,9 +774,9 @@ menu althud
 		pos		"980 464"
 		texl	"16 0"		texh	"32 16"
 		mousefx	true
-		whup	{ show_rightweapon }
-		whdown	{ show_leftweapon }
-		click	{ show_leftweapon }
+		whup	{ show_rightweapon cmd "switch_firemode_list r;" }
+		whdown	{ show_leftweapon cmd "switch_firemode_list l;" }
+		click	{ show_leftweapon cmd "switch_firemode_list l;" }
 	}
 
 	// ==================
@@ -1708,4 +1687,27 @@ menu althud
 	string right_fm_shot5 { string "*cvar mn_r_fm_shot5"	pos "753 218"	invis true }
 	string right_fm_shot6 { string "*cvar mn_r_fm_shot6"	pos "753 154"	invis true }
 	string right_fm_shot7 { string "*cvar mn_r_fm_shot7"	pos "753 90"	invis true }
+	
+	/* These two need to be _after_ the firemode-nodes so they can be toggled correctly. (z-depth/orer of menu node)
+	 * The alpha value (i.e. image overlaps but is not visible) in the firemode-images would prevent clicking them in some cases. */
+	pic bt_primaryright
+	{
+		tooltip	"_Use Item"
+		image	althud/buttons_althud1
+		pos		"870 497"
+		texl	"0 74"
+		texh	"25 107"
+		mousefx	true
+		click { cmd "list_firemodes r;" }
+	}
+	pic bt_primaryleft
+	{
+		tooltip	"_Use Item"
+		image	althud/buttons_althud1
+		pos		"870 497"
+		texl	"0 74"
+		texh	"25 107"
+		mousefx	true
+		click { cmd "list_firemodes l;" }
+	}
 }

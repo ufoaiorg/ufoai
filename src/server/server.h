@@ -152,9 +152,6 @@ void SV_ReadPacket(struct net_stream *s);
 /* sv_init.c */
 void SV_Map(const char *levelstring, const char *assembly);
 
-/* sv_send.c */
-typedef enum { RD_NONE, RD_CLIENT, RD_PACKET } redirect_t;
-
 void SV_Multicast(int mask, struct dbuffer *msg);
 void SV_StartSound(int mask, vec3_t origin, edict_t *entity, const char* sound, int channel, float volume, float attenuation);
 void SV_ClientCommand(client_t *client, const char *fmt, ...) __attribute__((format(printf,2,3)));

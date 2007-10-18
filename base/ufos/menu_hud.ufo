@@ -64,7 +64,7 @@ menu hud
 		texl	"0 0"
 		texh	"28 36"
 		mousefx true
-		click { cmd "cl_worldlevel 0" }
+		click { cmd "cl_worldlevel 0;" }
 	}
 	pic bt_floor2
 	{
@@ -73,7 +73,7 @@ menu hud
 		texl	"32 0"
 		texh	"60 36"
 		mousefx true
-		click { cmd "cl_worldlevel 1" }
+		click { cmd "cl_worldlevel 1;" }
 	}
 	pic bt_floor3
 	{
@@ -82,7 +82,7 @@ menu hud
 		texl	"64 0"
 		texh	"92 36"
 		mousefx true
-		click { cmd "cl_worldlevel 2" }
+		click { cmd "cl_worldlevel 2;" }
 	}
 	pic bt_floor4
 	{
@@ -91,7 +91,7 @@ menu hud
 		texl	"96 0"
 		texh	"124 36"
 		mousefx true
-		click { cmd "cl_worldlevel 3" }
+		click { cmd "cl_worldlevel 3;" }
 	}
 	pic bt_floor5
 	{
@@ -100,7 +100,7 @@ menu hud
 		texl	"0 38"
 		texh	"28 74"
 		mousefx true
-		click { cmd "cl_worldlevel 4" }
+		click { cmd "cl_worldlevel 4;" }
 	}
 	pic bt_floor6
 	{
@@ -109,7 +109,7 @@ menu hud
 		texl	"32 38"
 		texh	"60 74"
 		mousefx true
-		click { cmd "cl_worldlevel 5" }
+		click { cmd "cl_worldlevel 5;" }
 	}
 	pic bt_floor7
 	{
@@ -118,7 +118,7 @@ menu hud
 		texl	"64 38"
 		texh	"92 74"
 		mousefx true
-		click { cmd "cl_worldlevel 6" }
+		click { cmd "cl_worldlevel 6;" }
 	}
 	pic bt_floor8
 	{
@@ -127,7 +127,7 @@ menu hud
 		texl	"96 38"
 		texh	"124 74"
 		mousefx true
-		click { cmd "cl_worldlevel 7" }
+		click { cmd "cl_worldlevel 7;" }
 	}
 
 	// ==================
@@ -216,7 +216,7 @@ menu hud
 		pos		"950 10"
 		texl	"0 0"
 		texh	"64 37"
-		click	{ cmd nextround; }
+		click	{ cmd "nextround;" }
 	}
 
 	zone spotted
@@ -225,7 +225,7 @@ menu hud
 		tooltip	"_Enemy spotted"
 		pos		"816 12"
 		size	"48 34"
-		click	{ cmd nextalien; }
+		click	{ cmd "nextalien;" }
 	}
 	string numspotted
 	{
@@ -273,7 +273,7 @@ menu hud
 		texl	"0 0"
 		texh	"28 36"
 		mousefx true
-		click { cmd "soldier_select 0" }
+		click { cmd "soldier_select 0;" }
 	}
 	pic bt_actor1
 	{
@@ -283,7 +283,7 @@ menu hud
 		texl	"32 0"
 		texh	"60 36"
 		mousefx true
-		click { cmd "soldier_select 1" }
+		click { cmd "soldier_select 1;" }
 	}
 	pic bt_actor2
 	{
@@ -293,7 +293,7 @@ menu hud
 		texl	"64 0"
 		texh	"92 36"
 		mousefx true
-		click { cmd "soldier_select 2" }
+		click { cmd "soldier_select 2;" }
 	}
 	pic bt_actor3
 	{
@@ -303,7 +303,7 @@ menu hud
 		texl	"96 0"
 		texh	"124 36"
 		mousefx true
-		click { cmd "soldier_select 3" }
+		click { cmd "soldier_select 3;" }
 	}
 	pic bt_actor4
 	{
@@ -313,7 +313,7 @@ menu hud
 		texl	"0 38"
 		texh	"28 74"
 		mousefx true
-		click { cmd "soldier_select 4" }
+		click { cmd "soldier_select 4;" }
 	}
 	pic bt_actor5
 	{
@@ -323,7 +323,7 @@ menu hud
 		texl	"32 38"
 		texh	"60 74"
 		mousefx true
-		click { cmd "soldier_select 5" }
+		click { cmd "soldier_select 5;" }
 	}
 	pic bt_actor6
 	{
@@ -333,7 +333,7 @@ menu hud
 		texl	"64 38"
 		texh	"92 74"
 		mousefx true
-		click { cmd "soldier_select 6" }
+		click { cmd "soldier_select 6;" }
 	}
 	pic bt_actor7
 	{
@@ -343,7 +343,7 @@ menu hud
 		texl	"96 38"
 		texh	"124 74"
 		mousefx true
-		click { cmd "soldier_select 7" }
+		click { cmd "soldier_select 7;" }
 	}
 
 	// ==================
@@ -433,7 +433,7 @@ menu hud
 		pos		"857 720"
 		texl	"0 38"
 		texh	"64 74"
-		click	{ cmd reloadleft }
+		click	{ cmd "reloadleft;" }
 	}
 
 	confunc hud_deselheadgear { *hud_bt_use_headgear image hud/buttons2 }
@@ -458,7 +458,7 @@ menu hud
 		pos		"103 720"
 		texl	"0 38"
 		texh	"64 74"
-		click	{ cmd reloadright }
+		click	{ cmd "reloadright;" }
 	}
 
 	string ammoleft
@@ -505,7 +505,7 @@ menu hud
 		pos		"303 723"
 		texl	"0 75"
 		texh	"52 112"
-		click	{ cmd standcrouch }
+		click	{ cmd "standcrouch;" }
 	}
 
 	confunc startreactionmanys
@@ -549,7 +549,7 @@ menu hud
 		key "*binding togglereaction"
 		mousefx true
 		pos		"303 686"
-		click	{ cmd togglereaction }
+		click	{ cmd "togglereaction;" }
 	}
 
 	// ==================

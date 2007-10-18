@@ -293,7 +293,6 @@ static void PngReadFunc (png_struct *Png, png_bytep buf, png_size_t size)
 	PngFileBuffer->pos += size;
 }
 
-
 /**
  * @sa R_LoadPCX
  * @sa R_LoadTGA
@@ -891,6 +890,55 @@ static void R_LoadJPG (const char *filename, byte ** pic, int *width, int *heigh
 	/* Return the 'rgbadata' */
 	*pic = rgbadata;
 	FS_FreeFile(rawdata);
+}
+
+/**
+ * @brief Generic image-data loading fucntion.
+ * @param[in] name (Full) pathname to the image to load. Extension (if given) will be ignored.
+ * @param[out] pic Image data.
+ * @param[out] width Width of the loaded image.
+ * @param[out] height Height of the loaded image.
+ */
+void R_LoadImage (const char *name, byte **pic, int *width, int *height)
+{
+	char filename_temp[MAX_QPATH];
+	char *ename;
+	int len;
+
+	if (!name)
+		Sys_Error("R_LoadImage: NULL name");
+	len = strlen(name);
+
+	if (len >= 5) {
+		/* Drop extension */
+		Q_strncpyz(filename_temp, name, MAX_QPATH);
+		if (filename_temp[len - 4] == '.')
+			len -= 4;
+	}
+
+	ename = &(filename_temp[len]);
+	*ename = 0;
+
+	/* Check if there is any image at this path. */
+
+	strcpy(ename, ".tga");
+	if (FS_CheckFile(filename_temp) != -1) {
+		R_LoadTGA (filename_temp, pic, width, height);
+		if (pic)
+			return;
+	}
+
+	strcpy(ename, ".jpg");
+	if (FS_CheckFile(filename_temp) != -1) {
+		R_LoadJPG (filename_temp, pic, width, height);
+		if (pic)
+			return;
+	}
+
+	strcpy(ename, ".png");
+	if (FS_CheckFile(filename_temp) != -1) {
+		R_LoadPNG (filename_temp, pic, width, height);
+	}
 }
 
 /* Expanded data destination object for stdio output */

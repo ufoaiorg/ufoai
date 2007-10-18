@@ -1071,6 +1071,52 @@ static void MN_FindContainer (menuNode_t* const node)
 	node->size[1] = C_UNIT * (i + 1) + 0.01;
 }
 
+#if 0
+/** @todo to be integrated into MN_CheckNodeZone */
+/**
+ * @brief Check if the node is an image and if it is transparent on the given (global) position.
+ * @param[in] node A menunode pointer to be checked.
+ * @param[in] x X position on screen.
+ * @param[in] y Y position on screen.
+ * @return qtrue if an image is used and it is on transparent on the current position.
+ */
+static qboolean MN_NodeWithVisibleImage (menuNode_t* const node, int x, int y)
+{
+	byte *picture = NULL;	/**< Pointer to image (4 bytes == 1 pixel) */
+	int width, height;	/**< Width and height for the pic. */
+	int pic_x, pic_y;	/**< Position inside image */
+	byte *color = NULL;	/**< Pointer to specific pixel in image. */
+
+	if (!node || node->type != MN_PIC || !node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL])
+		return qfalse;
+
+	R_LoadImage(va("pics/menu/%s",path), &picture, &width, &height);
+
+	if (!picture || !width || !height) {
+		Com_DPrintf(DEBUG_CLIENT, "Couldn't load image %s in pics/menu\n", path);
+		/* We return true here because we do not know if there is another image (withouth transparency) or another reason it might still be valid. */
+		return qtrue;
+	}
+
+	/** @todo Get current location _inside_ image from global position. CHECKME */
+	pic_x = x - node->pos[0];
+	pic_y = y - node->pos[1];
+
+	if (pic_x < 0 || pic_y < 0)
+		return qfalse;
+
+	/* Get pixel at current location. */
+	color = picture + (4 * height * pic_y + 4 * pic_x); /* 4 means 4 values for each point */
+
+	/* Return qtrue if pixel is visible (we check the alpha value here). */
+	if (color[3] != 0)
+		return qtrue;
+
+	/* Image is transparent at this position. */
+	return qfalse;
+}
+#endif
+
 /**
  * @sa MN_Click
  */

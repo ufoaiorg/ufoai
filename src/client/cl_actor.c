@@ -890,6 +890,7 @@ void CL_SetDefaultReactionFiremode (int actor_idx, char hand)
 
 /**
  * @brief Displays the firemodes for the given hand.
+ * @note Console command: list_firemodes
  */
 void CL_DisplayFiremodes_f (void)
 {
@@ -1017,6 +1018,23 @@ void CL_DisplayFiremodes_f (void)
 			else
 				Cbuf_AddText(va("set_left_inv%i\n", i)); /* Hide this entry */
 		}
+	}
+}
+
+/**
+ * @brief Changes the display of the firemode-list to a given hand, but only if the list is visible already.
+ * @note Console command: switch_firemode_list
+ */
+void CL_SwitchFiremodeList_f (void)
+{
+	/* Cmd_Argv(1) ... = hand */
+	if (Cmd_Argc() < 2 || (Cmd_Argv(1)[0] != 'r' && Cmd_Argv(1)[0] != 'l')) { /* no argument given */
+		Com_Printf("Usage: %s [l|r]\n", Cmd_Argv(0));
+		return;
+	}
+
+	if (visible_firemode_list_right || visible_firemode_list_left) {
+		Cbuf_AddText(va("list_firemodes %s\n", Cmd_Argv(1)));
 	}
 }
 
@@ -1958,12 +1976,11 @@ pos_t *fb_list[MAX_FORBIDDENLIST];
 int fb_length;
 
 /**
- * @brief Builds a list of locations that cannot be moved to.
+ * @brief Builds a list of locations that cannot be moved to (client side).
  * @sa G_MoveCalc
- * @sa g_client:G_BuildForbiddenList <- shares quite some code
- *
- * @todo This probably belongs in the core logic.
- * This is used for pathfinding.
+ * @sa G_BuildForbiddenList <- server side
+ * @sa Grid_CheckForbidden
+ * @note This is used for pathfinding.
  * It is a list of where the selected unit can not move to because others are standing there already.
  */
 static void CL_BuildForbiddenList (void)
