@@ -261,10 +261,6 @@ item kerrblade
 // =======================
 // PLASMA BLADE
 // =======================
-// TODO:
-// "oneshot" and "deplete" where only introduced because of the plasma-blade which HAD NO AMMO itself but needed to be fired & thrown.
-// It now HAS AMMO, thus these settings (and some of the code) are mostly unused (need to check the stunrod though, it uses at least "oneshot" => no ammo)
-// Concerning the plasma-blade: These 2 settings can be removed again I think.
 item plasblade
 {
 	name		"_Plasma Blade"
@@ -283,20 +279,6 @@ item plasblade
 	oneshot true
 	deplete true
 	ammo 1
-}
-
-item plasblade_ammo
-{
-	name		"_Plasma Blade"
-	model		weapons/plasblade/plasblade
-	type		ammo
-	animationindex	0
-	shape		"0 0 1 2"
-	center		"1 4.5 0"
-	scale  		1.5
-	size		5
-	buytype	weap_sec
-	dmgtype plasma
 
 	weapon_mod plasblade
 	{
