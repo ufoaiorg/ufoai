@@ -171,13 +171,13 @@ item chaingun_ammo
 			firesnd	weapons/chaingun
 			speed	0
 			spread	"1 4"
-			crouch	1.0
+			crouch	1.3
 			range	60
 			shots	5
 			ammo	5
 			delaybetweenshots		10
 			time	15
-			damage	"20 5"
+			damage	"20 3"
 			dmgweight normal_spray
 			reaction 	true
 		}
@@ -191,13 +191,13 @@ item chaingun_ammo
 			firesnd	weapons/chaingun
 			speed	0
 			spread	"3 6"
-			crouch	1.0
+			crouch	1.3
 			range	60
 			shots	40
 			ammo	40
 			delaybetweenshots		20
 			time	30
-			damage	"20 5"
+			damage	"20 3"
 			dmgweight normal_spray
 			reaction 	true
 		}
@@ -211,13 +211,13 @@ item chaingun_ammo
 			firesnd	weapons/chaingun
 			speed	0
 			spread	"3 15"
-			crouch	1.0
+			crouch	1.3
 			range	60
 			shots	40
 			ammo	40
 			delaybetweenshots		20
 			time	30
-			damage	"20 5"
+			damage	"20 3"
 			dmgweight normal_spray
 			reaction 	true
 		}
@@ -454,13 +454,13 @@ item pistol_ammo
 			hitbody null
 			firesnd	weapons/pistol2
 			speed	0
-			spread	"2.2 2.2"
+			spread	"2.8 2.8"
 			crouch	0.9
 			range	40
 			shots	1
 			ammo	1
 			time	6
-			damage	"37 0"
+			damage	"35 5"
 			dmgweight normal_light
 			reaction	true
 		}
@@ -479,8 +479,8 @@ item pistol_ammo
 			shots	3
 			ammo	3
 			delaybetweenshots		10
-			time	8
-			damage	"37 5"
+			time	10
+			damage	"35 5"
 			dmgweight normal_light
 			reaction true
 		}
@@ -493,7 +493,7 @@ item pistol_ammo
 			hitbody null
 			firesnd	weapons/pistol2
 			speed	0
-			spread	"1.2 1.2"
+			spread	"2.3 2.3"
 			modif	0.7
 			crouch	0.9
 			range	40
@@ -501,7 +501,7 @@ item pistol_ammo
 			ammo	1
 			delaybetweenshots		10
 			time	8
-			damage	"37 0"
+			damage	"35 5"
 			dmgweight normal_light
 		}
 	}
@@ -554,7 +554,7 @@ item pistol2_ammo
 			hitbody null
 			firesnd	weapons/machinepistol
 			speed	0
-			spread	"0 1"
+			spread	"3 3"
 			crouch	0.9
 			range	40
 			shots	1
@@ -573,7 +573,7 @@ item pistol2_ammo
 			hitbody null
 			firesnd	weapons/machinepistol
 			speed	0
-			spread	"1 2"
+			spread	"3.2 3.2"
 			crouch	0.9
 			range	40
 			shots	3
@@ -593,7 +593,7 @@ item pistol2_ammo
 			hitbody null
 			firesnd	weapons/machinepistol
 			speed	0
-			spread	"2 2"
+			spread	"3.4 3.4"
 			crouch	0.9
 			range	40
 			shots	8
@@ -655,14 +655,14 @@ item smg_ammo
 			hitbody null
 			firesnd	weapons/smg2
 			speed	0
-			spread	"1.5 1.5"
+			spread	"3 3"
 			crouch	0.7
 			range	45
 			shots	1
 			ammo	1
 			time	6
-			damage	"25 0"
-			dmgweight normal_light
+			damage	"20 3"
+			dmgweight normal_spray
 			reaction	true
 		}
 		firedef
@@ -674,15 +674,15 @@ item smg_ammo
 			hitbody null
 			firesnd	weapons/smg2
 			speed	0
-			spread	"2.5 2.5"
+			spread	"3.3 3.3"
 			crouch	0.7
 			range	45
 			shots	5
 			ammo	5
 			delaybetweenshots		10
 			time	14
-			damage	"25 0"
-			dmgweight normal_light
+			damage	"20 3"
+			dmgweight normal_spray
 			reaction	true
 		}
 		firedef
@@ -694,7 +694,7 @@ item smg_ammo
 			hitbody null
 			firesnd	weapons/smg2
 			speed	0
-			spread	"3.0 3.0"
+			spread	"3.6 3.6"
 			modif	0.1
 			crouch	0.7
 			range	45
@@ -702,8 +702,8 @@ item smg_ammo
 			ammo	15
 			delaybetweenshots		20
 			time	20
-			damage	"25 0"
-			dmgweight normal_light
+			damage	"20 3"
+			dmgweight normal_spray
 			reaction	true
 		}
 	}
@@ -731,64 +731,6 @@ item shotgun2
 	buytype	weap_pri
 }
 
-// shotgun2 uses the "shotgun_micro_ammo" flechett magazine as well.
-// TODO: Check if further changes need to be done to shotgun2 or shotgun_micro_ammo, then remove the stuff below.
-//
-//item shotgun2_ammo
-//{
-//	name		"_Flechette Shells"
-//	model		weapons/shotgun/shotgun_clip
-//	type		ammo
-//	animationindex	0
-//	shape		"0 0 1 1"
-//	center		"0 0 0"
-//	scale		1.5
-//	price		35
-//	buytype	weap_pri
-//
-//	primary
-//	{
-//		name	"_Single Shot"
-//		skill	heavy
-//		projtl	null
-//		impact	bulletImpact
-//		hitbody null
-//		firesnd	weapons/shotgun
-//		sndonce true
-//		speed	0
-//		spread	"3.6 3.6"
-//		crouch	1.0
-//		range	60
-//		shots	10
-//		ammo	1
-//		delaybetweenshots		0
-//		time	8
-//		damage	"11 0"
-//		dmgtype blast
-//	}
-//
-//	secondary
-//	{
-//		name	"_Double Shot"
-//		skill	heavy
-//		projtl	null
-//		impact	bulletImpact
-//		hitbody null
-//		firesnd	weapons/shotgun
-//		sndonce true
-//		speed	0
-//		spread	"5.5 5.5"
-//		crouch	1.0
-//		range	60
-//		shots	20
-//		ammo	2
-//		delaybetweenshots		0
-//		time	12
-//		damage	"11 0"
-//		dmgtype blast
-//	}
-//}
-
 item shotgun2_slug_ammo
 {
 	name		"_Saboted Slugs"
@@ -815,14 +757,14 @@ item shotgun2_slug_ammo
 			firesnd	weapons/riotshotgun
 			sndonce true
 			speed	0
-			spread	"1.6 1.6"
+			spread	"3 3"
 			crouch	1.0
-			range	60
+			range	10
 			shots	1
 			ammo	1
 			delaybetweenshots		0
 			time	8
-			damage	"51 0"
+			damage	"50 10"
 			dmgweight normal_heavy
 			reaction true
 		}
@@ -837,39 +779,39 @@ item shotgun2_slug_ammo
 			firesnd	weapons/riotshotgun
 			sndonce false
 			speed	0
-			spread	"2.7 2.7"
+			spread	"5 5"
 			crouch	1.0
-			range	60
+			range	10
 			shots	3
 			ammo	3
 			delaybetweenshots		5
 			time	12
-			damage	"51 10"
+			damage	"50 10"
 			dmgweight normal_heavy
 			reaction	true
 		}
 
-		firedef
-		{
-			name	"_Full-Auto"
-			skill	assault
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/riotshotgun
-			sndonce false
-			speed	0
-			spread	"3.5 3.5"
-			crouch	1.0
-			range	60
-			shots	7
-			ammo	7
-			delaybetweenshots		7
-			time	20
-			damage	"51 20"
-			dmgweight normal_heavy
-			reaction	true
-		}
+//		firedef
+//		{
+//			name	"_Full-Auto"
+//			skill	assault
+//			projtl	bullet
+//			impact	bulletImpact
+//			hitbody null
+//			firesnd	weapons/riotshotgun
+//			sndonce false
+//			speed	0
+//			spread	"6 6"
+//			crouch	1.0
+//			range	60
+//			shots	7
+//			ammo	7
+//			delaybetweenshots		7
+//			time	20
+//			damage	"50 10"
+//			dmgweight normal_heavy
+//			reaction	true
+//		}
 	}
 }
 
@@ -1729,18 +1671,16 @@ item grenl_fle_ammo
 		firedef
 		{
 			name	"_Single Shot"
-			skill	heavy
-			projtl	bullet
+			skill	explosive
+			projtl	grenl_fle_ammo
 			impact	bulletImpact
 			hitbody null
 			firesnd	weapons/shotgun
-			sndonce true
-			speed	0
 			spread	"8 9"
 			range	10
 			shots	24
 			ammo	1
-			delaybetweenshots		0
+			delaybetweenshots		15
 			time	8
 			damage	"6 2"
 			dmgweight normal_light
@@ -1750,18 +1690,16 @@ item grenl_fle_ammo
 		firedef
 		{
 			name	"_3-Round Burst"
-			skill	heavy
-			projtl	bullet
+			skill	explosive
+			projtl	grenl_fle_ammo
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/grenl_fle_3shot
-			sndonce true
-			speed	0
+			firesnd	weapons/shotgun
 			spread	"10 2"
 			range	10
 			shots	72
 			ammo	3
-			delaybetweenshots		0
+			delaybetweenshots		72
 			time	14
 			damage	"6 2"
 			dmgweight normal_light
