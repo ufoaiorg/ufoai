@@ -758,8 +758,8 @@ item shotgun2_slug_ammo
 			sndonce true
 			speed	0
 			spread	"3 3"
-			crouch	1.0
-			range	15
+			crouch	0.8
+			range	30
 			shots	1
 			ammo	1
 			delaybetweenshots		0
@@ -780,8 +780,8 @@ item shotgun2_slug_ammo
 			sndonce false
 			speed	0
 			spread	"5 5"
-			crouch	1.0
-			range	15
+			crouch	0.8
+			range	30
 			shots	3
 			ammo	3
 			delaybetweenshots		5
@@ -999,12 +999,12 @@ item shotgun_micro_ammo
 			speed	0
 			spread	"3.6 3.6"
 			crouch	1.0
-			range	60
+			range	15
 			shots	8
 			ammo	1
 			delaybetweenshots		0
 			time	8
-			damage	"11 0"
+			damage	"15 5"
 			dmgweight blast
 			reaction	true
 		}
@@ -1021,12 +1021,12 @@ item shotgun_micro_ammo
 			speed	0
 			spread	"5.5 5.5"
 			crouch	1.0
-			range	60
+			range	15
 			shots	24
 			ammo	3
 			delaybetweenshots		15
 			time	12
-			damage	"11 0"
+			damage	"15 5"
 			dmgweight blast
 			reaction	true
 		}
@@ -1043,12 +1043,12 @@ item shotgun_micro_ammo
 			speed	0
 			spread	"6.0 6.0"
 			crouch	1.0
-			range	60
+			range	15
 			shots	56
 			ammo	7
 			delaybetweenshots		30
 			time	20
-			damage	"11 0"
+			damage	"15 5"
 			dmgweight blast
 			reaction	true
 		}
