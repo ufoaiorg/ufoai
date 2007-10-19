@@ -64,6 +64,7 @@ qboolean Rimp_Init (void)
 {
 	SDL_version version;
 	int attrValue;
+	const SDL_VideoInfo* info;
 
 	r_surface = NULL;
 
@@ -88,6 +89,10 @@ qboolean Rimp_Init (void)
 
 	SDL_VERSION(&version);
 	Com_Printf("SDL version: %i.%i.%i\n", version.major, version.minor, version.patch);
+
+	info = SDL_GetVideoInfo();
+	if (info)
+		Com_Printf("I: desktop depth: %ibpp\n", info->vfmt->BitsPerPixel);
 
 	if (!R_SetMode()) {
 		Sys_Error("Video subsystem failed to initialize\n");
