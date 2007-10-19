@@ -303,17 +303,12 @@ static void SV_ExecuteUserCommand (char *s)
 	}
 }
 
-
-#define	MAX_STRINGCMDS	8
 /**
  * @brief The current net_message is parsed for the given client
  */
 void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 {
 	char *s;
-
-	/* only allow one move command */
-	int stringCmdCount = 0;
 
 	sv_client = cl;
 	sv_player = sv_client->player;
@@ -332,7 +327,7 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 
 	case clc_userinfo:
 		Q_strncpyz(cl->userinfo, NET_ReadString(msg), sizeof(cl->userinfo));
-		Com_Printf("userinfo from client: %s\n", cl->userinfo);
+		Com_DPrintf(DEBUG_SERVER, "userinfo from client: %s\n", cl->userinfo);
 		SV_UserinfoChanged(cl);
 		break;
 
@@ -340,9 +335,7 @@ void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 		s = NET_ReadString(msg);
 
 		Com_DPrintf(DEBUG_SERVER, "stringcmd from client: %s\n", s);
-		/* malicious users may try using too many string commands */
-		if (++stringCmdCount < MAX_STRINGCMDS)
-			SV_ExecuteUserCommand(s);
+		SV_ExecuteUserCommand(s);
 
 		if (cl->state == cs_free)
 			return;			/* disconnect command */
