@@ -315,7 +315,7 @@ item plasblaster_ammo
 			sndonce true
 			speed	0
 			spread	"6 6"
-			crouch	1.0
+			crouch	0.6
 			range	30
 			shots	5
 			ammo	5
