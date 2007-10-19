@@ -45,7 +45,7 @@ item pbeampistol_ammo
 			hitbody	pbeamImpact
 			firesnd	weapons/pbeampistol
 			speed	0
-			spread	"0 1"
+			spread	"2 2"
 			crouch	0.9
 			range	30
 			shots	1
@@ -64,7 +64,7 @@ item pbeampistol_ammo
 			hitbody	pbeamImpact
 			firesnd	weapons/pbeampistol
 			speed	0
-			spread	"1 2"
+			spread	"3.5 3.5"
 			crouch	0.9
 			range	30
 			shots	3
@@ -118,26 +118,6 @@ item pbeamrifle_ammo
 	{
 		firedef
 		{
-			name	"_Aimed Shot"
-			skill	sniper
-			projtl	pbeamBeam
-			impact	pbeamImpact
-			hitbody pbeamImpact
-			firesnd	weapons/pbeamrifle
-			speed	0
-			spread	"0 0.2"
-			modif	0.4
-			crouch	0.6
-			range	150
-			shots	1
-			ammo	1
-			time	17
-			damage	"90 15"
-			dmgweight particlebeam_medium
-			reaction	true
-		}
-		firedef
-		{
 			name	"_Snap Shot"
 			skill	close
 			projtl	pbeamBeam
@@ -145,12 +125,32 @@ item pbeamrifle_ammo
 			hitbody pbeamImpact
 			firesnd	weapons/pbeamrifle
 			speed	0
-			spread	"0.4 0.8"
-			crouch	0.8
+			spread	"3 3"
+			crouch	0.7
 			range	150
 			shots	1
 			ammo	1
 			time	10
+			damage	"90 15"
+			dmgweight particlebeam_medium
+			reaction	true
+		}
+		firedef
+		{
+			name	"_Aimed Shot"
+			skill	sniper
+			projtl	pbeamBeam
+			impact	pbeamImpact
+			hitbody pbeamImpact
+			firesnd	weapons/pbeamrifle
+			speed	0
+			spread	"2 2"
+			modif	0.4
+			crouch	0.7
+			range	150
+			shots	1
+			ammo	1
+			time	15
 			damage	"90 15"
 			dmgweight particlebeam_medium
 			reaction	true
@@ -164,13 +164,13 @@ item pbeamrifle_ammo
 			hitbody pbeamImpact
 			firesnd	weapons/pbeamrifle
 			speed	0
-			spread	"1 2"
-			crouch	0.8
+			spread	"4 4"
+			crouch	0.7
 			range	90
-			shots	4
-			ammo	4
+			shots	3
+			ammo	3
 			delaybetweenshots		5
-			time	19
+			time	16
 			damage	"90 15"
 			dmgweight particlebeam_medium
 			reaction true
@@ -226,16 +226,16 @@ item pbeamcannon_ammo
 			hitbody pbeamImpact
 			firesnd	weapons/pbeamcannon
 			speed	0
-			spread	"1 2"
+			spread	"3.5 3.5"
 			crouch	0.6
 			range	50
 			shots	1
 			ammo	1
 			delaybetweenshots		5
-			time	19
+			time	17
 			damage	"150 20"
 			dmgweight particlebeam_heavy
-			reaction	false
+			reaction	true
 		}
 		firedef
 		{
@@ -246,7 +246,7 @@ item pbeamcannon_ammo
 			hitbody pbeamImpact
 			firesnd	weapons/pbeamcannon
 			speed	0
-			spread	"2 3"
+			spread	"5 5"
 			crouch	0.6
 			range	50
 			shots	4
@@ -266,15 +266,15 @@ item pbeamcannon_ammo
 			hitbody pbeamBigImpact
 			firesnd	weapons/pbeamcannon_explosive
 			speed	0
-			spread	"1 2"
+			spread	"3 3"
 			crouch	0.8
 			range	100
 			shots	1
 			ammo	8
-			time	30
-			damage	"0 20"
-			spldmg	"210 0"
-			splrad	3
+			time	28
+			damage	"0 0"
+			spldmg	"210 20"
+			splrad	4
 			dmgweight particlebeam_heavy
 			reaction	false
 		}
