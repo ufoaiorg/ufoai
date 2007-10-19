@@ -454,7 +454,7 @@ item pistol_ammo
 			hitbody null
 			firesnd	weapons/pistol2
 			speed	0
-			spread	"2.8 2.8"
+			spread	"2.2 2.2"
 			crouch	0.9
 			range	40
 			shots	1
@@ -473,13 +473,13 @@ item pistol_ammo
 			hitbody null
 			firesnd	weapons/pistol2
 			speed	0
-			spread	"3.2 3.2"
+			spread	"2.6 2.6"
 			crouch	0.9
 			range	40
 			shots	3
 			ammo	3
 			delaybetweenshots		10
-			time	10
+			time	8
 			damage	"35 5"
 			dmgweight normal_light
 			reaction true
@@ -493,7 +493,7 @@ item pistol_ammo
 			hitbody null
 			firesnd	weapons/pistol2
 			speed	0
-			spread	"2.3 2.3"
+			spread	"2 2"
 			modif	0.7
 			crouch	0.9
 			range	40
@@ -646,25 +646,25 @@ item smg_ammo
 
 	weapon_mod smg
 	{
-		firedef
-		{
-			name	"_Snap Shot"
-			skill	assault
-			projtl	bullet
-			impact	bulletImpact
-			hitbody null
-			firesnd	weapons/smg2
-			speed	0
-			spread	"3 3"
-			crouch	0.7
-			range	45
-			shots	1
-			ammo	1
-			time	6
-			damage	"20 3"
-			dmgweight normal_spray
-			reaction	true
-		}
+//		firedef
+//		{
+//			name	"_Snap Shot"
+//			skill	assault
+//			projtl	bullet
+//			impact	bulletImpact
+//			hitbody null
+//			firesnd	weapons/smg2
+//			speed	0
+//			spread	"3 3"
+//			crouch	0.7
+//			range	45
+//			shots	1
+//			ammo	1
+//			time	4
+//			damage	"20 3"
+//			dmgweight normal_spray
+//			reaction	true
+//		}
 		firedef
 		{
 			name	"_5-Round Burst"
@@ -680,7 +680,7 @@ item smg_ammo
 			shots	5
 			ammo	5
 			delaybetweenshots		10
-			time	14
+			time	7
 			damage	"20 3"
 			dmgweight normal_spray
 			reaction	true
@@ -701,7 +701,7 @@ item smg_ammo
 			shots	15
 			ammo	15
 			delaybetweenshots		20
-			time	20
+			time	12
 			damage	"20 3"
 			dmgweight normal_spray
 			reaction	true
@@ -759,7 +759,7 @@ item shotgun2_slug_ammo
 			speed	0
 			spread	"3 3"
 			crouch	1.0
-			range	10
+			range	15
 			shots	1
 			ammo	1
 			delaybetweenshots		0
@@ -781,7 +781,7 @@ item shotgun2_slug_ammo
 			speed	0
 			spread	"5 5"
 			crouch	1.0
-			range	10
+			range	15
 			shots	3
 			ammo	3
 			delaybetweenshots		5
@@ -803,7 +803,7 @@ item shotgun2_slug_ammo
 //			speed	0
 //			spread	"6 6"
 //			crouch	1.0
-//			range	60
+//			range	15
 //			shots	7
 //			ammo	7
 //			delaybetweenshots		7
@@ -950,15 +950,15 @@ item shotgun_micro_ammo
 			firesnd	weapons/microshotgun2
 			sndonce true
 			speed	0
-			spread	"4 0"
-			crouch	1.0
-			range	60
-			shots	8
+			spread	"2.5 2.5"
+			crouch	0.9
+			range	10
+			shots	7
 			ammo	1
 			delaybetweenshots		0
 			time	6
-			damage	"7 2"
-			dmgweight blast
+			damage	"15 5"
+			dmgweight normal_spray
 			reaction	true
 		}
 
@@ -973,14 +973,14 @@ item shotgun_micro_ammo
 			sndonce false
 			speed	0
 			spread	"5.5 5.5"
-			crouch	1.0
-			range	60
-			shots	24
+			crouch	0.9
+			range	10
+			shots	21
 			ammo	3
 			delaybetweenshots		15
 			time	10
-			damage	"7 2"
-			dmgweight blast
+			damage	"15 5"
+			dmgweight normal_spray
 			reaction	true
 		}
 	}
