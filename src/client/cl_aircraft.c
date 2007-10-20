@@ -859,7 +859,9 @@ qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 }
 
 /**
- * @todo: Fuel
+ * @brief Handles aircraft movement and actions in geoscape mode
+ * @sa CL_CampaignRun
+ * @param[in] dt time delta
  */
 void CL_CampaignRunAircraft (int dt)
 {
@@ -890,7 +892,7 @@ void CL_CampaignRunAircraft (int dt)
 
 						switch (aircraft->status) {
 						case AIR_MISSION:
-							/* Aircraft reach its mission */
+							/* Aircraft reached its mission */
 							assert(aircraft->mission);
 							assert(aircraft->mission->def);
 							aircraft->mission->def->active = qtrue;
@@ -902,7 +904,7 @@ void CL_CampaignRunAircraft (int dt)
 							MN_PushMenu("popup_intercept_ready");
 							break;
 						case AIR_RETURNING:
-							/* aircraft enter in  homebase */
+							/* aircraft entered in homebase */
 							CL_DropshipReturned(aircraft->homebase, aircraft);
 							aircraft->status = AIR_REFUEL;
 							break;
@@ -917,7 +919,7 @@ void CL_CampaignRunAircraft (int dt)
 					/* Aircraft idle out of base */
 					aircraft->fuel -= dt;
 				} else if (aircraft->status == AIR_REFUEL) {
-					/* Aircraft is refluing at base */
+					/* Aircraft is refueling at base */
 					aircraft->fuel += dt;
 					if (aircraft->fuel >= aircraft->stats[AIR_STATS_FUELSIZE]) {
 						aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
@@ -1993,7 +1995,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 				MSG_Read2Pos(sb, ufo->route.point[j]);
 			MSG_ReadPos(sb, ufo->direction);
 			for (j = 0; j < presaveArray[PRE_AIRSTA]; j++)
-				ufo->stats[i] = MSG_ReadLong(sb);
+				ufo->stats[j] = MSG_ReadLong(sb);
 			tmp_int = MSG_ReadShort(sb);
 			if (tmp_int == -1)
 				ufo->baseTarget = NULL;
@@ -2114,8 +2116,11 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 	}
 
 	for (i = gd.numUfos - 1; i >= 0; i--) {
-		if (gd.ufos[i].time < 0 || gd.ufos[i].stats[AIR_STATS_SPEED] <= 0)
+		if (gd.ufos[i].time < 0 || gd.ufos[i].stats[AIR_STATS_SPEED] <= 0) {
+			Com_Printf("AIR_Load: Found invalid ufo entry - remove it - time: %i - speed: %i\n",
+				gd.ufos[i].time, gd.ufos[i].stats[AIR_STATS_SPEED]);
 			UFO_RemoveUfoFromGeoscape(&gd.ufos[i]);
+		}
 	}
 
 	return qtrue;
