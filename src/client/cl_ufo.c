@@ -186,7 +186,6 @@ static int UFO_IsTargetOfBase (int num, base_t *base)
 static void UFO_FoundNewBase (aircraft_t *ufo, int dt)
 {
 	base_t* base;
-	int test;
 	float baseProbability;
 	float distance;
 
@@ -200,7 +199,6 @@ static void UFO_FoundNewBase (aircraft_t *ufo, int dt)
 		if (distance > max_detecting_range)
 			continue;
 
-		test = UFO_IsTargetOfBase(ufo - gd.ufos, base);
 		switch (UFO_IsTargetOfBase(ufo - gd.ufos, base)) {
 		case UFO_IS_TARGET_OF_MISSILE:
 			baseProbability = 0.001f;
@@ -233,6 +231,7 @@ static void UFO_SearchTarget (aircraft_t *ufo)
 {
 	base_t* base;
 	aircraft_t* phalanxAircraft;
+	float distance = 999999., dist;
 
 	if (ufo->status != AIR_FLEEING) {
 		/* check if the ufo is already attacking a base */
@@ -251,14 +250,24 @@ static void UFO_SearchTarget (aircraft_t *ufo)
 				/* check if the ufo can attack a base (if it's not too far) */
 				if (base->isDiscovered && (MAP_GetDistance(ufo->pos, base->pos) < max_detecting_range)) {
 					AIR_SendUfoPurchasingBase(ufo, base);
+					/* don't check for aircraft if we can destroy a base */
 					continue;
 				}
 
 				/* check if the ufo can attack an aircraft */
 				for (phalanxAircraft = base->aircraft + base->numAircraftInBase - 1; phalanxAircraft >= base->aircraft; phalanxAircraft--) {
 					/* check that aircraft is flying */
-					if (phalanxAircraft->status > AIR_HOME && MAP_GetDistance(ufo->pos, phalanxAircraft->pos) < max_detecting_range)  {
-						AIR_SendUfoPurchasingAircraft(ufo, phalanxAircraft);
+					if (phalanxAircraft->status > AIR_HOME) {
+						/* get the distance from ufo to aircraft */
+						dist = MAP_GetDistance(ufo->pos, phalanxAircraft->pos);
+						/* check out of reach */
+						if (dist > max_detecting_range)
+							continue;
+						/* choose the nearest target */
+						if (dist < distance) {
+							distance = dist;
+							AIR_SendUfoPurchasingAircraft(ufo, phalanxAircraft);
+						}
 					}
 				}
 			}
@@ -293,7 +302,7 @@ void UFO_CampaignRunUfos (int dt)
 
 		UFO_SearchTarget(ufo);
 
-		/* @todo: Crash */
+		/* antimatter tanks */
 		if (ufo->fuel <= 0)
 			ufo->fuel = ufo->stats[AIR_STATS_FUELSIZE];
 

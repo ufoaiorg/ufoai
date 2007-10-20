@@ -703,7 +703,7 @@ void CL_RemoveSoldierFromAircraft(int employee_idx, employeeType_t employeeType,
 void CL_RemoveSoldiersFromAircraft(int aircraft_idx, struct base_s *base);
 
 /* cl_radar.c */
-#define MAX_UFOONGEOSCAPE	8
+#define MAX_UFOONGEOSCAPE	4
 struct aircraft_s;
 struct menuNode_s;
 

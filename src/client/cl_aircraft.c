@@ -1597,6 +1597,7 @@ void AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
  * @brief Make the specified UFO purchasing a phalanx aircraft.
  * @param[in] ufo Pointer to the UFO.
  * @param[in] aircraft Pointer to the target aircraft.
+ * @sa AIR_SendUfoPurchasingBase
  */
 void AIR_SendUfoPurchasingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 {
@@ -1615,6 +1616,7 @@ void AIR_SendUfoPurchasingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
  * @brief Make the specified UFO attack a base.
  * @param[in] ufo Pointer to the UFO.
  * @param[in] base Pointer to the target base.
+ * @sa AIR_SendAircraftPurchasingUfo
  */
 void AIR_SendUfoPurchasingBase (aircraft_t* ufo, base_t* base)
 {

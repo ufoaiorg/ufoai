@@ -58,7 +58,7 @@ static void AIRFIGHT_CreateBullets (aircraftProjectile_t *projectile)
 	int i;
 
 	if (numBullets >= MAX_BULLETS_ON_GEOSCAPE) {
-		Com_Printf("AIRFIGHT_CreateBullets: array bulletPos is full, no more bullets can be added on geoscape\n");
+		Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_CreateBullets: array bulletPos is full, no more bullets can be added on geoscape\n");
 		return;
 	}
 
