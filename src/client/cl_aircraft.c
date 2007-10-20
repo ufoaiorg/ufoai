@@ -1926,7 +1926,7 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 qboolean AIR_Load (sizebuf_t* sb, void* data)
 {
 	aircraft_t *ufo;
-	int i, j, k;
+	int i, j;
 	const char *s;
 	/* vars, if aircraft wasn't found */
 	vec3_t tmp_vec3t;
@@ -1977,35 +1977,6 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			if (tmp_int) {
 				MSG_ReadString(sb);
 				MSG_ReadShort(sb);
-			}
-			/* projectiles */
-			tmp_int = MSG_ReadByte(sb);
-			for (j = 0; j < tmp_int; j++) {
-				MSG_ReadString(sb);
-				MSG_ReadPos(sb, tmp_vec3t);
-				MSG_ReadPos(sb, tmp_vec3t);
-				k = MSG_ReadByte(sb);
-				if (k != 2)
-					MSG_ReadShort(sb);
-				MSG_ReadShort(sb);
-				k = MSG_ReadByte(sb);
-				if (k != 2)
-					MSG_ReadShort(sb);
-				MSG_ReadShort(sb);
-				MSG_ReadFloat(sb);
-				MSG_ReadShort(sb);
-			}
-			/* bullets */
-			tmp_int = MSG_ReadByte(sb);
-			for (j = 0; j < tmp_int; j++)
-				for (k = 0; k < BULLETS_PER_SHOT; k++)
-					MSG_Read2Pos(sb, tmp_vec2t);
-			for (j = 0; j < presaveArray[PRE_MAXREC]; j++) {
-				MSG_ReadByte(sb);
-				MSG_ReadByte(sb);
-				MSG_ReadByte(sb);
-				MSG_ReadLong(sb);
-				MSG_ReadLong(sb);
 			}
 		} else {
 			memcpy(&gd.ufos[i], ufo, sizeof(aircraft_t));
