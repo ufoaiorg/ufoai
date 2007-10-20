@@ -1941,6 +1941,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 		s = MSG_ReadString(sb);
 		ufo = AIR_GetAircraft(s);
 		if (!ufo) {
+			Com_Printf("AIR_Load: Could not find ufo '%s'\n", s);
 			MSG_ReadByte(sb); 			/* visible */
 			MSG_ReadPos(sb, tmp_vec3t);		/* pos */
 			MSG_ReadByte(sb);			/* status */
@@ -1997,7 +1998,8 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			/* bullets */
 			tmp_int = MSG_ReadByte(sb);
 			for (j = 0; j < tmp_int; j++)
-				MSG_Read2Pos(sb, tmp_vec2t);
+				for (k = 0; k < BULLETS_PER_SHOT; k++)
+					MSG_Read2Pos(sb, tmp_vec2t);
 			for (j = 0; j < presaveArray[PRE_MAXREC]; j++) {
 				MSG_ReadByte(sb);
 				MSG_ReadByte(sb);
