@@ -1601,8 +1601,15 @@ void AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
  */
 void AIR_SendUfoPurchasingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 {
+	int slotIdx;
+
 	assert(ufo);
 	assert(aircraft);
+
+	/* check whether the ufo can shoot the aircraft - if not, don't try it even */
+	slotIdx = AIRFIGHT_ChooseWeapon(ufo->weapons, ufo->maxWeapons, ufo->pos, aircraft->pos);
+	if (slotIdx != AIRFIGHT_WEAPON_CAN_SHOOT)
+		return;
 
 	MAP_MapCalcLine(ufo->pos, aircraft->pos, &(ufo->route));
 	ufo->status = AIR_UFO;
@@ -1620,8 +1627,15 @@ void AIR_SendUfoPurchasingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
  */
 void AIR_SendUfoPurchasingBase (aircraft_t* ufo, base_t* base)
 {
+	int slotIdx;
+
 	assert(ufo);
 	assert(base);
+
+	/* check whether the ufo can shoot the base - if not, don't try it even */
+	slotIdx = AIRFIGHT_ChooseWeapon(ufo->weapons, ufo->maxWeapons, ufo->pos, base->pos);
+	if (slotIdx != AIRFIGHT_WEAPON_CAN_SHOOT)
+		return;
 
 	MAP_MapCalcLine(ufo->pos, base->pos, &(ufo->route));
 	ufo->baseTarget = base;

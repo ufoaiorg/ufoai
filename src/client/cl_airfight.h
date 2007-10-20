@@ -29,6 +29,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_BULLETS_ON_GEOSCAPE	32
 #define BULLETS_PER_SHOT	16
 
+/**
+ * @note 0 if the weapon can shoot
+ * @note -1 if it can't shoot atm
+ * @note -2 if it will never be able to shoot
+ */
+#define AIRFIGHT_WEAPON_CAN_SHOOT 0
+#define AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT -1
+#define AIRFIGHT_WEAPON_CAN_NOT_SHOOT -2
+
 extern int numBullets;			/**< Number of bunch of bullets on geoscape */
 extern vec2_t bulletPos[MAX_BULLETS_ON_GEOSCAPE][BULLETS_PER_SHOT];	/**< Position of every bullets on geoscape */
 

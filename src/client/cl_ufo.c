@@ -149,9 +149,11 @@ void UFO_FleePhalanxAircraft (aircraft_t *ufo, vec2_t v)
 	RotatePointAroundVector(dest, rotationAxis, initialVector, -15.0f);
 
 	VecToPolar(dest, pos);
+Com_Printf("flee\n");
 
 	MAP_MapCalcLine(ufo->pos, pos, &(ufo->route));
 	ufo->aircraftTarget = NULL;
+	ufo->baseTarget = NULL;
 	ufo->status = AIR_FLEEING;
 }
 
@@ -289,16 +291,9 @@ void UFO_CampaignRunUfos (int dt)
 		/* Check if the UFO found a new base */
 		UFO_FoundNewBase(ufo, dt);
 
-		if (AIR_AircraftMakeMove(dt, ufo)) {
-			if (ufo->status != AIR_UFO) {
-				/* check if a fleeing UFO is still in danger */
-				if (ufo->status == AIR_FLEEING && !ufo->visible)
-					ufo->status = AIR_TRANSIT;
-
-				UFO_SetUfoRandomDest(ufo);
-			} else
-				Com_DPrintf(DEBUG_CLIENT, "UFO_CampaignRunUfos: UFO status: %i\n", ufo->status);
-		}
+		/* reached target and not following a ufo? then we need a new target */
+		if (AIR_AircraftMakeMove(dt, ufo) && ufo->status != AIR_UFO)
+			UFO_SetUfoRandomDest(ufo);
 
 		UFO_SearchTarget(ufo);
 
