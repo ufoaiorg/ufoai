@@ -366,9 +366,8 @@ static void BS_BuyType_f (void)
 		Cvar_SetValue("mn_bfactor", baseCurrent->buyfactor);
 		Cvar_SetValue("mn_sfactor", baseCurrent->sellfactor);
 		/* Set up base capacities. */
-		/* FIXME: reverse the order here? cur/max */
-		Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i", baseCurrent->capacities[CAP_ITEMS].max,
-			baseCurrent->capacities[CAP_ITEMS].cur);
+		Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i", baseCurrent->capacities[CAP_ITEMS].cur,
+			baseCurrent->capacities[CAP_ITEMS].max);
 		Cvar_Set("mn_bs_storage", tmpbuf);
 	}
 

@@ -842,7 +842,7 @@ qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 	dist = (float) aircraft->stats[AIR_STATS_SPEED] * aircraft->time / 3600.0f;
 
 	/* Check if destination reached */
-	if (dist >= aircraft->route.distance * (aircraft->route.numPoints - 1))
+	if (dist <= 0.01 || dist >= aircraft->route.distance * (aircraft->route.numPoints - 1))
 		return qtrue;
 
 	/* calc new position */
@@ -1595,11 +1595,19 @@ void AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
  * @brief Make the specified UFO purchasing a phalanx aircraft.
  * @param[in] ufo Pointer to the UFO.
  * @param[in] aircraft Pointer to the target aircraft.
+ * @sa AIR_SendUfoPurchasingBase
  */
 void AIR_SendUfoPurchasingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 {
+	int slotIdx;
+
 	assert(ufo);
 	assert(aircraft);
+
+	/* check whether the ufo can shoot the aircraft - if not, don't try it even */
+	slotIdx = AIRFIGHT_ChooseWeapon(ufo->weapons, ufo->maxWeapons, ufo->pos, aircraft->pos);
+	if (slotIdx != AIRFIGHT_WEAPON_CAN_SHOOT)
+		return;
 
 	MAP_MapCalcLine(ufo->pos, aircraft->pos, &(ufo->route));
 	ufo->status = AIR_UFO;
@@ -1613,11 +1621,19 @@ void AIR_SendUfoPurchasingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
  * @brief Make the specified UFO attack a base.
  * @param[in] ufo Pointer to the UFO.
  * @param[in] base Pointer to the target base.
+ * @sa AIR_SendAircraftPurchasingUfo
  */
 void AIR_SendUfoPurchasingBase (aircraft_t* ufo, base_t* base)
 {
+	int slotIdx;
+
 	assert(ufo);
 	assert(base);
+
+	/* check whether the ufo can shoot the base - if not, don't try it even */
+	slotIdx = AIRFIGHT_ChooseWeapon(ufo->weapons, ufo->maxWeapons, ufo->pos, base->pos);
+	if (slotIdx != AIRFIGHT_WEAPON_CAN_SHOOT)
+		return;
 
 	MAP_MapCalcLine(ufo->pos, base->pos, &(ufo->route));
 	ufo->baseTarget = base;
@@ -2118,6 +2134,11 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 		gd.recoveries[i].ufotype = MSG_ReadByte(sb);
 		gd.recoveries[i].event.day = MSG_ReadLong(sb);
 		gd.recoveries[i].event.sec = MSG_ReadLong(sb);
+	}
+
+	for (i = gd.numUfos - 1; i >= 0; i--) {
+		if (gd.ufos[i].time < 0 || gd.ufos[i].stats[AIR_STATS_SPEED] <= 0)
+			UFO_RemoveUfoFromGeoscape(&gd.ufos[i]);
 	}
 
 	return qtrue;

@@ -32,15 +32,6 @@ int numBullets = 0;			/**< Number of bunch of bullets on geoscape */
 vec2_t bulletPos[MAX_BULLETS_ON_GEOSCAPE][BULLETS_PER_SHOT];	/**< Position of every bullets on geoscape */
 
 /**
- * @note 0 if the weapon can shoot
- * @note -1 if it can't shoot atm
- * @note -2 if it will never be able to shoot
- */
-static const int AIRFIGHT_WEAPON_CAN_SHOOT = 0;
-static const int AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT = -1;
-static const int AIRFIGHT_WEAPON_CAN_NOT_SHOOT = -2;
-
-/**
  * @note -1 if no weapon to use atm
  * @note -2 if no weapon to use at all (no ammo left)
  */
@@ -58,7 +49,7 @@ static void AIRFIGHT_CreateBullets (aircraftProjectile_t *projectile)
 	int i;
 
 	if (numBullets >= MAX_BULLETS_ON_GEOSCAPE) {
-		Com_Printf("AIRFIGHT_CreateBullets: array bulletPos is full, no more bullets can be added on geoscape\n");
+		Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_CreateBullets: array bulletPos is full, no more bullets can be added on geoscape\n");
 		return;
 	}
 
@@ -124,23 +115,20 @@ static void AIRFIGHT_RunBullets (aircraftProjectile_t *projectile, vec3_t ortogo
  * @brief Remove a projectile from gd.projectiles
  * @param[in] idx of the projectile to remove in array gd.projectiles[]
  */
-static qboolean AIRFIGHT_RemoveProjectile (int idx)
+static qboolean AIRFIGHT_RemoveProjectile (aircraftProjectile_t *projectile)
 {
-	int i = 0;
+	int i;
+	int idx = projectile->idx;
+	AIRFIGHT_DestroyBullets(projectile);
 
-#ifdef DEBUG
-	if (idx > gd.numProjectiles - 1 || idx < 0) {
-		Com_Printf("Tried to remove an unexisting idx in array gd.numProjectiles\n");
-		return qfalse;
-	}
-#endif
-
-	AIRFIGHT_DestroyBullets(gd.projectiles + idx);
-
-	for (i = idx; i < gd.numProjectiles; i++) {
-		gd.projectiles[i] = gd.projectiles[i+1];
-	}
 	gd.numProjectiles--;
+	assert(gd.numProjectiles >= idx);
+	memmove(projectile, projectile + 1, (gd.numProjectiles - idx) * sizeof(*projectile));
+	/* wipe the now vacant last slot */
+	memset(&gd.projectiles[gd.numProjectiles], 0, sizeof(gd.projectiles[gd.numProjectiles]));
+
+	for (i = idx; i < gd.numProjectiles; i++)
+		gd.projectiles[i].idx--;
 
 	return qtrue;
 }
@@ -467,8 +455,12 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 		}
 		/* change destination of other projectiles aiming aircraft */
 		AIRFIGHT_RemoveProjectileAimingAircraft(aircraft);
-		/* now remove the ufo from geoscape */
+		/* now update the projectile for the destroyed aircraft, too */
+		AIRFIGHT_UpdateProjectileForDestroyedAircraft(aircraft);
+		/* now remove the ufo from geoscape - the aircraft pointer is no longer
+		 * valid after this call */
 		UFO_RemoveUfoFromGeoscape(aircraft);
+		aircraft = NULL;
 		/* and send our aircraft back to base if it's not destroyed */
 		if (shooter)
 			AIR_AircraftReturnToBase(shooter);
@@ -642,12 +634,16 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 
 	/* set the base under attack */
 	if (baseAttack) {
-		B_BaseAttack(base);
-		/* @todo: when entering base defense missing, all projectiles should be destroyed on geoscape
-		 * we can saftly assume, that they reached the base while we defended it - otherwise
-		 * - with bad luck - the projectile hits the base and may set it under attack right after
-		 * we defended it
-		 * @sa CL_GameResults_f */
+		int idx;
+		/* if we shoot the attacking craft down, we won't set the base under attack */
+		if (projectile->attackingAircraft)
+			B_BaseAttack(base);
+
+		/* FIXME: Not the correct place - should be done after you freed your base from the invasion and
+		 * return back to geoscape to prevent another base attack just after you've secured it */
+		for (idx = gd.numProjectiles - 1; idx >= 0; idx--)
+			if (gd.projectiles[idx].aimedBase == base)
+				AIRFIGHT_RemoveProjectile(&gd.projectiles[idx]);
 	}
 }
 
@@ -663,7 +659,9 @@ void AIRFIGHT_CampaignRunProjectiles (int dt)
 	float movement;
 	vec3_t ortogonalVector, finalPoint, startPoint;
 
-	for (idx = 0, projectile = gd.projectiles; idx < gd.numProjectiles; projectile++, idx++) {
+	/* gd.numProjectiles is changed in AIRFIGHT_RemoveProjectile */
+	for (idx = gd.numProjectiles - 1; idx >= 0; idx--) {
+		projectile = &gd.projectiles[idx];
 		projectile->time += dt;
 		movement = (float) dt * csi.ods[projectile->aircraftItemsIdx].craftitem.weaponSpeed / 3600.0f;
 		/* Check if the projectile reached its destination (aircraft or idle point) */
@@ -675,7 +673,7 @@ void AIRFIGHT_CampaignRunProjectiles (int dt)
 				AIRFIGHT_ProjectileHits(projectile);
 
 			/* remove the missile from gd.projectiles[] */
-			AIRFIGHT_RemoveProjectile(idx);
+			AIRFIGHT_RemoveProjectile(projectile);
 		} else {
 			/* missile is moving towards its target */
 			if (projectile->aimedAircraft)

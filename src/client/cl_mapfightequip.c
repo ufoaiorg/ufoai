@@ -538,7 +538,7 @@ void BDEF_Init_f (void)
 				Q_strcat(defBuffer, va(_("Slot %i:\tempty\n"), i), sizeof(defBuffer));
 			else {
 				item = csi.ods + baseCurrent->batteries[i].itemIdx;
-				Q_strcat(defBuffer, va(_("Slot %i:\t%s\n"), i, item->tech->name), sizeof(defBuffer));
+				Q_strcat(defBuffer, va(_("Slot %i:\t%s\n"), i, _(item->tech->name)), sizeof(defBuffer));
 			}
 		}
 	}

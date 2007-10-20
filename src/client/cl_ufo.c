@@ -152,6 +152,7 @@ void UFO_FleePhalanxAircraft (aircraft_t *ufo, vec2_t v)
 
 	MAP_MapCalcLine(ufo->pos, pos, &(ufo->route));
 	ufo->aircraftTarget = NULL;
+	ufo->baseTarget = NULL;
 	ufo->status = AIR_FLEEING;
 }
 
@@ -186,7 +187,6 @@ static int UFO_IsTargetOfBase (int num, base_t *base)
 static void UFO_FoundNewBase (aircraft_t *ufo, int dt)
 {
 	base_t* base;
-	int test;
 	float baseProbability;
 	float distance;
 
@@ -200,7 +200,6 @@ static void UFO_FoundNewBase (aircraft_t *ufo, int dt)
 		if (distance > max_detecting_range)
 			continue;
 
-		test = UFO_IsTargetOfBase(ufo - gd.ufos, base);
 		switch (UFO_IsTargetOfBase(ufo - gd.ufos, base)) {
 		case UFO_IS_TARGET_OF_MISSILE:
 			baseProbability = 0.001f;
@@ -233,6 +232,7 @@ static void UFO_SearchTarget (aircraft_t *ufo)
 {
 	base_t* base;
 	aircraft_t* phalanxAircraft;
+	float distance = 999999., dist;
 
 	if (ufo->status != AIR_FLEEING) {
 		/* check if the ufo is already attacking a base */
@@ -251,14 +251,24 @@ static void UFO_SearchTarget (aircraft_t *ufo)
 				/* check if the ufo can attack a base (if it's not too far) */
 				if (base->isDiscovered && (MAP_GetDistance(ufo->pos, base->pos) < max_detecting_range)) {
 					AIR_SendUfoPurchasingBase(ufo, base);
+					/* don't check for aircraft if we can destroy a base */
 					continue;
 				}
 
 				/* check if the ufo can attack an aircraft */
 				for (phalanxAircraft = base->aircraft + base->numAircraftInBase - 1; phalanxAircraft >= base->aircraft; phalanxAircraft--) {
 					/* check that aircraft is flying */
-					if (phalanxAircraft->status > AIR_HOME && MAP_GetDistance(ufo->pos, phalanxAircraft->pos) < max_detecting_range)  {
-						AIR_SendUfoPurchasingAircraft(ufo, phalanxAircraft);
+					if (phalanxAircraft->status > AIR_HOME) {
+						/* get the distance from ufo to aircraft */
+						dist = MAP_GetDistance(ufo->pos, phalanxAircraft->pos);
+						/* check out of reach */
+						if (dist > max_detecting_range)
+							continue;
+						/* choose the nearest target */
+						if (dist < distance) {
+							distance = dist;
+							AIR_SendUfoPurchasingAircraft(ufo, phalanxAircraft);
+						}
 					}
 				}
 			}
@@ -275,25 +285,18 @@ void UFO_CampaignRunUfos (int dt)
 	aircraft_t*	ufo;
 	int k;
 
-	/* now the ufos are flying around, too */
+	/* now the ufos are flying around, too - cycle backward - ufo might be destroyed */
 	for (ufo = gd.ufos + gd.numUfos - 1; ufo >= gd.ufos; ufo--) {
 		/* Check if the UFO found a new base */
 		UFO_FoundNewBase(ufo, dt);
 
-		if (AIR_AircraftMakeMove(dt, ufo)) {
-			if (ufo->status != AIR_UFO) {
-				/* check if a fleeing UFO is still in danger */
-				if (ufo->status == AIR_FLEEING && !ufo->visible)
-					ufo->status = AIR_TRANSIT;
-
-				UFO_SetUfoRandomDest(ufo);
-			} else
-				Com_DPrintf(DEBUG_CLIENT, "UFO_CampaignRunUfos: UFO status: %i\n", ufo->status);
-		}
+		/* reached target and not following a ufo? then we need a new target */
+		if (AIR_AircraftMakeMove(dt, ufo) && ufo->status != AIR_UFO)
+			UFO_SetUfoRandomDest(ufo);
 
 		UFO_SearchTarget(ufo);
 
-		/* @todo: Crash */
+		/* antimatter tanks */
 		if (ufo->fuel <= 0)
 			ufo->fuel = ufo->stats[AIR_STATS_FUELSIZE];
 
@@ -320,6 +323,8 @@ static void UFO_ListUfosOnGeoscape_f (void)
 	Com_Printf("There are %i ufos on geoscape\n", gd.numUfos);
 	for (ufo = gd.ufos + gd.numUfos - 1; ufo >= gd.ufos; ufo--) {
 		Com_Printf("..%s (%s) - status: %i - pos: %.0f:%0.f\n", ufo->name, ufo->id, ufo->status, ufo->pos[0], ufo->pos[1]);
+		Com_Printf("...route length: %i (current: %i), time: %i, distance: %.2f, speed: %i\n",
+			ufo->route.numPoints, ufo->point, ufo->time, ufo->route.distance, ufo->stats[AIR_STATS_SPEED]);
 		Com_Printf("...%i weapon slots: ", ufo->maxWeapons);
 		for (k = 0; k < ufo->maxWeapons; k++) {
 			if (ufo->weapons[k].itemIdx > -1) {

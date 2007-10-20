@@ -314,12 +314,17 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 		const int         idx       = building->idx;
 		int               row;
 		int               col;
+		int               i;
 
 		gd.numBuildings[base->idx] = cnt_bldgs;
 
+		assert(idx <= cnt_bldgs);
 		memmove(building, building + 1, (cnt_bldgs - idx) * sizeof(*building));
 		/* wipe the now vacant last slot */
 		memset(&buildings[cnt_bldgs], 0, sizeof(buildings[cnt_bldgs]));
+		for (i = 0; i < cnt_bldgs; i++)
+			if (buildings[i].idx >= idx)
+				buildings[i].idx--;
 
 		/* adjust the base map indices for the removed building */
 		for (row = 0; row < BASE_SIZE; ++row) {

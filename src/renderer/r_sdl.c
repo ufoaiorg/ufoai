@@ -90,10 +90,16 @@ qboolean Rimp_Init (void)
 	SDL_VERSION(&version);
 	Com_Printf("SDL version: %i.%i.%i\n", version.major, version.minor, version.patch);
 
+<<<<<<< .mine
+	info = SDL_GetVideoInfo();
+	Com_Printf("I: desktop depth: %i\n", info->vfmt->BitsPerPixel);
+
+=======
 	info = SDL_GetVideoInfo();
 	if (info)
 		Com_Printf("I: desktop depth: %ibpp\n", info->vfmt->BitsPerPixel);
 
+>>>>>>> .r12562
 	if (!R_SetMode()) {
 		Sys_Error("Video subsystem failed to initialize\n");
 		return qfalse;
