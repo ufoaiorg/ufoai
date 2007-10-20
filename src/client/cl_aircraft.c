@@ -844,7 +844,7 @@ qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 	dist = (float) aircraft->stats[AIR_STATS_SPEED] * aircraft->time / 3600.0f;
 
 	/* Check if destination reached */
-	if (dist <= 0.01 || dist >= aircraft->route.distance * (aircraft->route.numPoints - 1))
+	if (dist >= aircraft->route.distance * (aircraft->route.numPoints - 1))
 		return qtrue;
 
 	/* calc new position */
@@ -2019,7 +2019,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 					if (tech)
 						ufo->weapons[j].ammoIdx = AII_GetAircraftItemByID(tech->provides);
 				} else {
-					/* just in case there are less slots in new game that in saved one */
+					/* just in case there are less slots in new game than in saved one */
 					MSG_ReadString(sb);
 					MSG_ReadShort(sb);
 					MSG_ReadShort(sb);
@@ -2059,6 +2059,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 	gd.numProjectiles = MSG_ReadByte(sb);
 	if (gd.numProjectiles > MAX_PROJECTILESONGEOSCAPE)
 		Sys_Error("AIR_Load()... Too many projectiles on map (%i)\n", gd.numProjectiles);
+
 	for (i = 0; i < gd.numProjectiles; i++) {
 		tech = RS_GetTechByProvided(MSG_ReadString(sb));
 		if (tech) {
@@ -2097,6 +2098,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 	numBullets = MSG_ReadByte(sb);
 	if (numBullets > MAX_BULLETS_ON_GEOSCAPE)
 		Sys_Error("AIR_Load()... Too many bullets on map (%i)\n", numBullets);
+
 	for (i = 0; i < numBullets; i++) {
 		for (j = 0; j < BULLETS_PER_SHOT; j++)
 			MSG_Read2Pos(sb, bulletPos[i][j]);
