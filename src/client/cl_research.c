@@ -1210,7 +1210,7 @@ void RS_UpdateData (void)
 			/* Color the item 'unresearchable' */
 			Cmd_ExecuteString(va("researchunresearchable%i", j));
 			/* Display the concated text in the correct list-entry. */
-			Cvar_Set(va("mn_researchitem%i", j), name);
+			Cvar_Set(va("mn_researchitem%i", j), _(name));
 
 			Cvar_Set(va("mn_researchassigned%i", j), "--");
 			Cvar_Set(va("mn_researchavailable%i", j), "--");
