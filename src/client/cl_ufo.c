@@ -149,7 +149,6 @@ void UFO_FleePhalanxAircraft (aircraft_t *ufo, vec2_t v)
 	RotatePointAroundVector(dest, rotationAxis, initialVector, -15.0f);
 
 	VecToPolar(dest, pos);
-Com_Printf("flee\n");
 
 	MAP_MapCalcLine(ufo->pos, pos, &(ufo->route));
 	ufo->aircraftTarget = NULL;
@@ -286,7 +285,7 @@ void UFO_CampaignRunUfos (int dt)
 	aircraft_t*	ufo;
 	int k;
 
-	/* now the ufos are flying around, too */
+	/* now the ufos are flying around, too - cycle backward - ufo might be destroyed */
 	for (ufo = gd.ufos + gd.numUfos - 1; ufo >= gd.ufos; ufo--) {
 		/* Check if the UFO found a new base */
 		UFO_FoundNewBase(ufo, dt);
@@ -324,6 +323,8 @@ static void UFO_ListUfosOnGeoscape_f (void)
 	Com_Printf("There are %i ufos on geoscape\n", gd.numUfos);
 	for (ufo = gd.ufos + gd.numUfos - 1; ufo >= gd.ufos; ufo--) {
 		Com_Printf("..%s (%s) - status: %i - pos: %.0f:%0.f\n", ufo->name, ufo->id, ufo->status, ufo->pos[0], ufo->pos[1]);
+		Com_Printf("...route length: %i (current: %i), time: %i, distance: %.2f, speed: %i\n",
+			ufo->route.numPoints, ufo->point, ufo->time, ufo->route.distance, ufo->stats[AIR_STATS_SPEED]);
 		Com_Printf("...%i weapon slots: ", ufo->maxWeapons);
 		for (k = 0; k < ufo->maxWeapons; k++) {
 			if (ufo->weapons[k].itemIdx > -1) {

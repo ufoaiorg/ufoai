@@ -844,7 +844,7 @@ qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 	dist = (float) aircraft->stats[AIR_STATS_SPEED] * aircraft->time / 3600.0f;
 
 	/* Check if destination reached */
-	if (dist >= aircraft->route.distance * (aircraft->route.numPoints - 1))
+	if (dist <= 0.01 || dist >= aircraft->route.distance * (aircraft->route.numPoints - 1))
 		return qtrue;
 
 	/* calc new position */
@@ -2136,6 +2136,11 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 		gd.recoveries[i].ufotype = MSG_ReadByte(sb);
 		gd.recoveries[i].event.day = MSG_ReadLong(sb);
 		gd.recoveries[i].event.sec = MSG_ReadLong(sb);
+	}
+
+	for (i = gd.numUfos - 1; i >= 0; i--) {
+		if (gd.ufos[i].time < 0 || gd.ufos[i].stats[AIR_STATS_SPEED] <= 0)
+			UFO_RemoveUfoFromGeoscape(&gd.ufos[i]);
 	}
 
 	return qtrue;
