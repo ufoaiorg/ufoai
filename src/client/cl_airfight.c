@@ -126,12 +126,18 @@ static void AIRFIGHT_RunBullets (aircraftProjectile_t *projectile, vec3_t ortogo
  */
 static qboolean AIRFIGHT_RemoveProjectile (aircraftProjectile_t *projectile)
 {
+	int i;
+	int idx = projectile->idx;
 	AIRFIGHT_DestroyBullets(projectile);
 
 	gd.numProjectiles--;
-	memmove(projectile, projectile + 1, (gd.numProjectiles - projectile->idx) * sizeof(*projectile));
+	assert(gd.numProjectiles >= idx);
+	memmove(projectile, projectile + 1, (gd.numProjectiles - idx) * sizeof(*projectile));
 	/* wipe the now vacant last slot */
 	memset(&gd.projectiles[gd.numProjectiles], 0, sizeof(gd.projectiles[gd.numProjectiles]));
+
+	for (i = idx; i < gd.numProjectiles; i++)
+		gd.projectiles[i].idx--;
 
 	return qtrue;
 }

@@ -383,7 +383,7 @@ typedef enum aircraftStatus_s {
 	AIR_IDLE,				/**< just sit there on geoscape */
 	AIR_TRANSIT,				/**< moving */
 	AIR_MISSION,				/**< moving to a mission */
-	AIR_UFO,				/**< purchasing an ufo */
+	AIR_UFO,				/**< purchasing an ufo - also used for ufos that are purchasing an aircraft */
 	AIR_DROP,				/**< ready to drop down */
 	AIR_INTERCEPT,				/**< ready to intercept */
 	AIR_TRANSFER,				/**< being transfered */
