@@ -842,7 +842,7 @@ qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 	dist = (float) aircraft->stats[AIR_STATS_SPEED] * aircraft->time / 3600.0f;
 
 	/* Check if destination reached */
-	if (dist <= 0.01 || dist >= aircraft->route.distance * (aircraft->route.numPoints - 1))
+	if (dist >= aircraft->route.distance * (aircraft->route.numPoints - 1))
 		return qtrue;
 
 	/* calc new position */
@@ -857,7 +857,9 @@ qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 }
 
 /**
- * @todo: Fuel
+ * @brief Handles aircraft movement and actions in geoscape mode
+ * @sa CL_CampaignRun
+ * @param[in] dt time delta
  */
 void CL_CampaignRunAircraft (int dt)
 {
@@ -888,7 +890,7 @@ void CL_CampaignRunAircraft (int dt)
 
 						switch (aircraft->status) {
 						case AIR_MISSION:
-							/* Aircraft reach its mission */
+							/* Aircraft reached its mission */
 							assert(aircraft->mission);
 							assert(aircraft->mission->def);
 							aircraft->mission->def->active = qtrue;
@@ -900,7 +902,7 @@ void CL_CampaignRunAircraft (int dt)
 							MN_PushMenu("popup_intercept_ready");
 							break;
 						case AIR_RETURNING:
-							/* aircraft enter in  homebase */
+							/* aircraft entered in homebase */
 							CL_DropshipReturned(aircraft->homebase, aircraft);
 							aircraft->status = AIR_REFUEL;
 							break;
@@ -915,7 +917,7 @@ void CL_CampaignRunAircraft (int dt)
 					/* Aircraft idle out of base */
 					aircraft->fuel -= dt;
 				} else if (aircraft->status == AIR_REFUEL) {
-					/* Aircraft is refluing at base */
+					/* Aircraft is refueling at base */
 					aircraft->fuel += dt;
 					if (aircraft->fuel >= aircraft->stats[AIR_STATS_FUELSIZE]) {
 						aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
@@ -1924,7 +1926,7 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 qboolean AIR_Load (sizebuf_t* sb, void* data)
 {
 	aircraft_t *ufo;
-	int i, j, k;
+	int i, j;
 	const char *s;
 	/* vars, if aircraft wasn't found */
 	vec3_t tmp_vec3t;
@@ -1939,6 +1941,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 		s = MSG_ReadString(sb);
 		ufo = AIR_GetAircraft(s);
 		if (!ufo) {
+			Com_Printf("AIR_Load: Could not find ufo '%s'\n", s);
 			MSG_ReadByte(sb); 			/* visible */
 			MSG_ReadPos(sb, tmp_vec3t);		/* pos */
 			MSG_ReadByte(sb);			/* status */
@@ -1975,34 +1978,6 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 				MSG_ReadString(sb);
 				MSG_ReadShort(sb);
 			}
-			/* projectiles */
-			tmp_int = MSG_ReadByte(sb);
-			for (j = 0; j < tmp_int; j++) {
-				MSG_ReadString(sb);
-				MSG_ReadPos(sb, tmp_vec3t);
-				MSG_ReadPos(sb, tmp_vec3t);
-				k = MSG_ReadByte(sb);
-				if (k != 2)
-					MSG_ReadShort(sb);
-				MSG_ReadShort(sb);
-				k = MSG_ReadByte(sb);
-				if (k != 2)
-					MSG_ReadShort(sb);
-				MSG_ReadShort(sb);
-				MSG_ReadFloat(sb);
-				MSG_ReadShort(sb);
-			}
-			/* bullets */
-			tmp_int = MSG_ReadByte(sb);
-			for (j = 0; j < tmp_int; j++)
-				MSG_Read2Pos(sb, tmp_vec2t);
-			for (j = 0; j < presaveArray[PRE_MAXREC]; j++) {
-				MSG_ReadByte(sb);
-				MSG_ReadByte(sb);
-				MSG_ReadByte(sb);
-				MSG_ReadLong(sb);
-				MSG_ReadLong(sb);
-			}
 		} else {
 			memcpy(&gd.ufos[i], ufo, sizeof(aircraft_t));
 			ufo = &gd.ufos[i];
@@ -2018,7 +1993,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 				MSG_Read2Pos(sb, ufo->route.point[j]);
 			MSG_ReadPos(sb, ufo->direction);
 			for (j = 0; j < presaveArray[PRE_AIRSTA]; j++)
-				ufo->stats[i] = MSG_ReadLong(sb);
+				ufo->stats[j] = MSG_ReadLong(sb);
 			tmp_int = MSG_ReadShort(sb);
 			if (tmp_int == -1)
 				ufo->baseTarget = NULL;
@@ -2044,7 +2019,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 					if (tech)
 						ufo->weapons[j].ammoIdx = AII_GetAircraftItemByID(tech->provides);
 				} else {
-					/* just in case there are less slots in new game that in saved one */
+					/* just in case there are less slots in new game than in saved one */
 					MSG_ReadString(sb);
 					MSG_ReadShort(sb);
 					MSG_ReadShort(sb);
@@ -2084,6 +2059,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 	gd.numProjectiles = MSG_ReadByte(sb);
 	if (gd.numProjectiles > MAX_PROJECTILESONGEOSCAPE)
 		Sys_Error("AIR_Load()... Too many projectiles on map (%i)\n", gd.numProjectiles);
+
 	for (i = 0; i < gd.numProjectiles; i++) {
 		tech = RS_GetTechByProvided(MSG_ReadString(sb));
 		if (tech) {
@@ -2122,6 +2098,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 	numBullets = MSG_ReadByte(sb);
 	if (numBullets > MAX_BULLETS_ON_GEOSCAPE)
 		Sys_Error("AIR_Load()... Too many bullets on map (%i)\n", numBullets);
+
 	for (i = 0; i < numBullets; i++) {
 		for (j = 0; j < BULLETS_PER_SHOT; j++)
 			MSG_Read2Pos(sb, bulletPos[i][j]);
@@ -2137,8 +2114,11 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 	}
 
 	for (i = gd.numUfos - 1; i >= 0; i--) {
-		if (gd.ufos[i].time < 0 || gd.ufos[i].stats[AIR_STATS_SPEED] <= 0)
+		if (gd.ufos[i].time < 0 || gd.ufos[i].stats[AIR_STATS_SPEED] <= 0) {
+			Com_Printf("AIR_Load: Found invalid ufo entry - remove it - time: %i - speed: %i\n",
+				gd.ufos[i].time, gd.ufos[i].stats[AIR_STATS_SPEED]);
 			UFO_RemoveUfoFromGeoscape(&gd.ufos[i]);
+		}
 	}
 
 	return qtrue;

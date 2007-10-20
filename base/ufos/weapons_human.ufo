@@ -1671,16 +1671,18 @@ item grenl_fle_ammo
 		firedef
 		{
 			name	"_Single Shot"
-			skill	explosive
-			projtl	grenl_fle_ammo
+			skill	heavy
+			projtl	bullet
 			impact	bulletImpact
 			hitbody null
 			firesnd	weapons/shotgun
+			sndonce true
+			speed   0
 			spread	"8 9"
 			range	10
 			shots	24
 			ammo	1
-			delaybetweenshots		15
+			delaybetweenshots		0
 			time	8
 			damage	"6 2"
 			dmgweight normal_light
@@ -1690,16 +1692,18 @@ item grenl_fle_ammo
 		firedef
 		{
 			name	"_3-Round Burst"
-			skill	explosive
-			projtl	grenl_fle_ammo
+			skill	heavy
+			projtl	bullet
 			impact	bulletImpact
 			hitbody null
-			firesnd	weapons/shotgun
+			firesnd	weapons/gren_fle_3shot
+			sndonce true
+			speed   0
 			spread	"10 2"
 			range	10
 			shots	72
 			ammo	3
-			delaybetweenshots		72
+			delaybetweenshots		0
 			time	14
 			damage	"6 2"
 			dmgweight normal_light

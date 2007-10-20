@@ -173,15 +173,18 @@ static qboolean SAV_GameLoad (const char *filename, char **error)
 	for (i = 0; i < saveSubsystemsAmount; i++) {
 		diff = sb.readcount;
 		if (!saveSubsystems[i].load(&sb, &header)) {
-			*error = _("Error in loading a subsystem - see game console for more information");
+			*error = _("Error in loading a subsystem.\n\nSee game console for more information.");
 			Com_Printf("...subsystem '%s' returned false - savegame could not be loaded\n", saveSubsystems[i].name);
 			return qfalse;
 		} else
 			Com_Printf("...subsystem '%s' - loaded %i bytes\n", saveSubsystems[i].name, sb.readcount - diff);
 		check = MSG_ReadByte(&sb);
 		if (check != saveSubsystems[i].check) {
-			*error = _("Error in loading a subsystem - see game console for more information");
-			Com_Printf("...subsystem '%s' could not be loaded correctly - savegame might be broken (%x)\n", saveSubsystems[i].name, check);
+			*error = _("Error in loading a subsystem. Sentinel doesn't match.\n\n"
+				"This might be due to an old savegame or a bug in the game.\n\n"
+				"See game console for more information.");
+			Com_Printf("...subsystem '%s' could not be loaded correctly - savegame might be broken (is %x, should be %x)\n",
+				saveSubsystems[i].name, check, saveSubsystems[i].check);
 			return qfalse;
 		}
 	}
