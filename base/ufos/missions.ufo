@@ -30,7 +30,6 @@
 // STAGE 1, SUBSTAGE 1 - first
 //----------------------------
 
-//FIXME - where do we play now?
 mission or_tabelbala
 {
 	location	"_Tabelbala"

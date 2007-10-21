@@ -115,6 +115,9 @@ char* HTTP_GetURL (const char *url)
 	/* get it */
 	curl_easy_perform(dl.curl);
 
+	/* clean up */
+	curl_easy_cleanup(dl.curl);
+
 	return dl.tempBuffer;
 }
 
