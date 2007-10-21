@@ -10,11 +10,6 @@
 #include "../../../shared/shared.h"
 #include "../../../shared/ufotypes.h"
 
-/* to support the gnuc __attribute__ command */
-#ifndef __GNUC__
-#  define  __attribute__(x)  /*NOTHING*/
-#endif
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -22,7 +17,6 @@
 #include <ctype.h>
 #include <time.h>
 #include <stdarg.h>
-#include <stddef.h>
 #include <assert.h>
 #include <limits.h>
 
