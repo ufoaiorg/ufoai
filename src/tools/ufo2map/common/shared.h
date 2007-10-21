@@ -86,12 +86,6 @@ void U2M_ProgressBar(void (*func) (unsigned int cnt), unsigned int count, qboole
 
 #include "../../../common/qfiles.h"
 
-#if defined(_WIN32)
-# ifndef snprintf
-#  define snprintf _snprintf
-# endif
-#endif
-
 extern qboolean verbose;
 
 #define SYS_VRB 0 /* verbose support (on/off) */
