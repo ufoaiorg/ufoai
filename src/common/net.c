@@ -652,8 +652,10 @@ void NET_Wait (int timeout)
 #endif
 		ready = select(maxfd, &read_fds_out, &write_fds_out, NULL, &tv);
 
-	if (ready == -1)
-		Sys_Error("select failed: %s\n", netStringError(netError));
+	if (ready == -1) {
+		Com_Printf("select failed: %s\n", netStringError(netError));
+		return;
+	}
 
 	if (ready == 0 && !loopback_ready)
 		return;
