@@ -687,7 +687,6 @@ HAVE_SHADERS
 HAVE_CURSES
 BUILD_CLIENT
 BUILD_DEDICATED
-BUILD_MASTER
 BUILD_UFO2MAP
 BUILD_DEBUG
 PARANOID
@@ -1287,7 +1286,6 @@ Optional Features:
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
   --disable-dedicated     build dedicated server [default=enabled]
   --disable-client        build client [default=enabled]
-  --enable-master         build masterserver [default=enabled]
   --disable-ufo2map       build ufo2map [default=enabled]
   --enable-release        build release, if disabled then build debug
                           [default=disabled]
@@ -1981,14 +1979,6 @@ if test "${enable_client+set}" = set; then
   enableval=$enable_client;
 else
   enable_client=yes
-fi
-
-
-# Check whether --enable-master was given.
-if test "${enable_master+set}" = set; then
-  enableval=$enable_master;
-else
-  enable_master=yes
 fi
 
 
@@ -9292,20 +9282,6 @@ echo "$as_me: Enabling dedicated server" >&6;}
 fi
 
 #---------------------------------------------------------------------------------------------
-# Check for master
-#---------------------------------------------------------------------------------------------
-
-BUILD_MASTER=0
-
-if test "$enable_master" = "yes"
-then
-	{ echo "$as_me:$LINENO: Enabling masterserver" >&5
-echo "$as_me: Enabling masterserver" >&6;}
-	BUILD_MASTER=1
-
-fi
-
-#---------------------------------------------------------------------------------------------
 # Check for ufo2map
 #---------------------------------------------------------------------------------------------
 
@@ -10093,7 +10069,6 @@ HAVE_SHADERS!$HAVE_SHADERS$ac_delim
 HAVE_CURSES!$HAVE_CURSES$ac_delim
 BUILD_CLIENT!$BUILD_CLIENT$ac_delim
 BUILD_DEDICATED!$BUILD_DEDICATED$ac_delim
-BUILD_MASTER!$BUILD_MASTER$ac_delim
 BUILD_UFO2MAP!$BUILD_UFO2MAP$ac_delim
 BUILD_DEBUG!$BUILD_DEBUG$ac_delim
 PARANOID!$PARANOID$ac_delim
@@ -10110,7 +10085,7 @@ LIBOBJS!$LIBOBJS$ac_delim
 LTLIBOBJS!$LTLIBOBJS$ac_delim
 _ACEOF
 
-  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 89; then
+  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 88; then
     break
   elif $ac_last_try; then
     { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5
