@@ -1835,6 +1835,18 @@ base/sound/weapons/riotshotgun.wav | GNU General Public License v2.0 | Alex Park
 base/sound/weapons/smg2.wav | GNU General Public License v2.0 | Alex Parker
 base/sound/weapons/smokeexplosion.wav | GNU General Public License v2.0 | Alex Parker
 base/sound/weapons/sniperrifle.wav | GNU General Public License v2.0 | Alex Parker
+base/textures/tex_base/9hangwires01b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/9basetrim01.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/9darktrim02b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/9floorbasic01b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/9gratefloor01b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/9gratefloor02.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/9screen01.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/9techwall01.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/9techwall03b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/9techwall05b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/9techwall06.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/9techwall07.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/e8_mtlwall1.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/e8_mtlwall1b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/e8_mtlwall2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
