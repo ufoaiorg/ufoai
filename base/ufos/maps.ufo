@@ -12,6 +12,21 @@ mapdef or_tabelbala
 	map				"+oriental"
 	music			van_mission
 	multiplayer		false
+
+	terrains
+	{
+		desert
+	}
+
+	cultures
+	{
+		oriental
+	}
+
+	populations
+	{
+		village
+	}
 }
 
 mapdef africa_excavation
@@ -29,6 +44,21 @@ mapdef africa_excavation
 		coop3
 		coop4
 	}
+
+	terrains
+	{
+		desert
+	}
+
+	cultures
+	{
+		african
+	}
+
+	populations
+	{
+		village
+	}
 }
 
 mapdef estate
@@ -45,6 +75,21 @@ mapdef estate
 		coop2
 		coop3
 		coop4
+	}
+	terrains
+	{
+		grass
+		mountain
+	}
+
+	cultures
+	{
+		western
+	}
+
+	populations
+	{
+		village
 	}
 }
 
@@ -97,6 +142,22 @@ mapdef mart
 		coop3
 		coop4
 	}
+
+	terrains
+	{
+		grass
+	}
+
+	cultures
+	{
+		western
+	}
+
+	populations
+	{
+		village
+		suburban
+	}
 }
 
 mapdef mine
@@ -133,6 +194,22 @@ mapdef transport
 		coop3
 		coop4
 	}
+
+	terrains
+	{
+		grass
+	}
+
+	cultures
+	{
+		western
+	}
+
+	populations
+	{
+		village
+		suburban
+	}
 }
 
 mapdef or_asyut
@@ -149,6 +226,21 @@ mapdef or_asyut
 		coop2
 		coop3
 		coop4
+	}
+
+	terrains
+	{
+		desert
+	}
+
+	cultures
+	{
+		oriental
+	}
+
+	populations
+	{
+		village
 	}
 }
 
@@ -421,6 +513,21 @@ mapdef oriental
 		coop3
 		coop4
 	}
+
+	terrains
+	{
+		desert
+	}
+
+	cultures
+	{
+		oriental
+	}
+
+	populations
+	{
+		village
+	}
 }
 
 mapdef subway
@@ -620,6 +727,21 @@ mapdef africa
 		coop3
 		coop4
 	}
+
+	terrains
+	{
+		desert
+	}
+
+	cultures
+	{
+		african
+	}
+
+	populations
+	{
+		village
+	}
 }
 
 mapdef harvestercrash
@@ -670,6 +792,21 @@ mapdef qatar
 		coop2
 		coop3
 		coop4
+	}
+
+	terrains
+	{
+		desert
+	}
+
+	cultures
+	{
+		oriental
+	}
+
+	populations
+	{
+		village
 	}
 }
 
