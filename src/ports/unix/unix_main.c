@@ -158,7 +158,6 @@ char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canhave)
 	if (fdir)
 		Sys_Error("Sys_BeginFind without close");
 
-/*	COM_FilePath(path, findbase); */
 	Q_strncpyz(findbase, path, sizeof(findbase));
 
 	if ((p = strrchr(findbase, '/')) != NULL) {

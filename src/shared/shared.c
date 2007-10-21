@@ -68,26 +68,6 @@ void COM_StripExtension (const char *in, char *out, size_t size)
 		*out = 0;
 }
 
-void COM_FileBase (const char *in, char *out)
-{
-	const char *s, *s2;
-
-	s = in + strlen(in) - 1;
-
-	while (s != in && *s != '.')
-		s--;
-
-	for (s2 = s; s2 != in && *s2 != '/'; s2--);
-
-	if (s - s2 < 2)
-		out[0] = 0;
-	else {
-		s--;
-		strncpy(out, s2 + 1, s - s2);
-		out[s - s2] = 0;
-	}
-}
-
 /**
   * @brief Returns the path up to, but not including the last /
   */

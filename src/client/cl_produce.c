@@ -488,7 +488,7 @@ void PR_ProductionRun (void)
 		}
 
 #ifdef DEBUG
-		if (!od->tech && !prod->aircraft)
+		if (!prod->aircraft && !od->tech)
 			Sys_Error("PR_ProductionRun: No tech pointer for object id %i ('%s')\n", prod->objID, od->id);
 #endif
 		prod->timeLeft--;

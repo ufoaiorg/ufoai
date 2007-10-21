@@ -554,8 +554,10 @@ static void AIRFIGHT_ProjectileHits (aircraftProjectile_t *projectile)
 	/* apply resulting damages */
 	if (damage > 0) {
 		target->stats[AIR_STATS_DAMAGE] -= damage;
-		if (target->stats[AIR_STATS_DAMAGE] <= 0)
-			AIRFIGHT_ActionsAfterAirfight(projectile->attackingAircraft, projectile->aimedAircraft, target->type == AIRCRAFT_UFO);
+		if (target->stats[AIR_STATS_DAMAGE] <= 0) {
+			AIRFIGHT_ActionsAfterAirfight(projectile->attackingAircraft, target, target->type == AIRCRAFT_UFO);
+			AIRFIGHT_RemoveProjectileAimingAircraft(target);
+		}
 	}
 }
 
