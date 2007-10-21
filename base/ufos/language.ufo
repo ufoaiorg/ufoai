@@ -104,6 +104,11 @@ language ru {
 	"_Russian"
 	{
 		ru.UTF-8
+		ru_RU.UTF8
+		ru_UA.UTF8
+		ru.utf-8
+		ru_RU.utf8
+		ru_UA.utf8
 	}
 }
 
