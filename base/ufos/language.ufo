@@ -1,19 +1,52 @@
 language en {
 	"_English"
 	{
-		en_CA.UTF-8
+		en.UTF-8
 		en_AU.UTF-8
-		en_US.UTF-8
+		en_BW.UTF-8
+		en_CA.UTF-8
+		en_DK.UTF-8
 		en_GB.UTF-8
+		en_HK.UTF-8
+		en_IE.UTF-8
+		en_NZ.UTF-8
+		en_PH.UTF-8
+		en_SG.UTF-8
+		en_US.UTF-8
+		en_ZA.UTF-8
+		en_ZW.UTF-8
+		en.utf8
+		en_AU.utf8
+		en_BW.utf8
+		en_CA.utf8
+		en_DK.utf8
+		en_GB.utf8
+		en_HK.utf8
+		en_IE.utf8
+		en_NZ.utf8
+		en_PH.utf8
+		en_SG.utf8
+		en_US.utf8
+		en_ZA.utf8
+		en_ZW.utf8
 	}
 }
 
 language de {
 	"_German"
 	{
+		de.UTF-8
 		de_DE.UTF-8
 		de_AT.UTF-8
 		de_CH.UTF-8
+		de_BE.UTF-8
+		de_LU.UTF-8
+		de.utf8
+		de_DE.utf8
+		de_AT.utf8
+		de_CH.utf8
+		de_BE.utf8
+		de_LU.utf8
 	}
 }
 
@@ -22,6 +55,8 @@ language pl {
 	{
 		pl.UTF-8
 		pl_PL.UTF-8
+		pl.utf8
+		pl_PL.utf8
 	}
 }
 
@@ -30,11 +65,42 @@ language es {
 	{
 		es.UTF-8
 		es_AR.UTF-8
+		es_BO.UTF-8
+		es_CL.UTF-8
 		es_CO.UTF-8
 		es_CR.UTF-8
+		es_DO.UTF-8
+		es_EC.UTF-8
 		es_ES.UTF-8	/* FIXME: This should go in a seperate column */
+		es_GT.UTF-8
+		es_HN.UTF-8
 		es_MX.UTF-8
+		es_NI.UTF-8
 		es_PR.UTF-8
+		es_PY.UTF-8
+		es_SV.UTF-8
+		es_US.UTF-8
+		es_UY.UTF-8
+		es_VE.UTF-8
+		es.utf8
+		es_AR.utf8
+		es_BO.utf8
+		es_CL.utf8
+		es_CO.utf8
+		es_CR.utf8
+		es_DO.utf8
+		es_EC.utf8
+		es_ES.utf8	/* FIXME: This should go in a seperate column */
+		es_GT.utf8
+		es_HN.utf8
+		es_MX.utf8
+		es_NI.utf8
+		es_PR.utf8
+		es_PY.utf8
+		es_SV.utf8
+		es_US.utf8
+		es_UY.utf8
+		es_VE.utf8
 	}
 }
 
@@ -43,6 +109,8 @@ language cs {
 	{
 		cs.UTF-8
 		cs_CZ.UTF-8
+		cs.utf8
+		cs_CZ.utf8
 	}
 }
 
@@ -51,6 +119,8 @@ language da {
 	{
 		da.UTF-8
 		da_DK.UTF-8
+		da.utf8
+		da_DK.utf8
 	}
 }
 
@@ -59,6 +129,8 @@ language est {
 	{
 		est.UTF-8
 		et_EE.UTF-8
+		est.utf8
+		et_EE.utf8
 	}
 }
 
@@ -67,6 +139,8 @@ language fi {
 	{
 		fi.UTF-8
 		fi_FI.UTF-8
+		fi.utf8
+		fi_FI.utf8
 	}
 }
 
@@ -74,8 +148,17 @@ language fr {
 	"_French"
 	{
 		fr.UTF-8
+		fr_BE.UTF-8
+		fr_CA.UTF-8
 		fr_CH.UTF-8
 		fr_FR.UTF-8
+		fr_LU.UTF-8
+		fr.utf8
+		fr_BE.utf8
+		fr_CA.utf8
+		fr_CH.utf8
+		fr_FR.utf8
+		fr_LU.utf8
 	}
 }
 
@@ -85,6 +168,9 @@ language it {
 		it.UTF-8
 		it_CH.UTF-8
 		it_IT.UTF-8
+		it.utf8
+		it_CH.utf8
+		it_IT.utf8
 	}
 }
 
@@ -104,6 +190,11 @@ language ru {
 	"_Russian"
 	{
 		ru.UTF-8
+		ru_RU.UTF8
+		ru_UA.UTF8
+		ru.utf8
+		ru_RU.utf8
+		ru_UA.utf8
 	}
 }
 
@@ -112,6 +203,8 @@ language sl {
 	{
 		sl.UTF-8
 		sl_SI.UTF-8
+		sl.utf8
+		sl_SI.utf8
 	}
 }
 
@@ -120,6 +213,10 @@ language sv {
 	{
 		sv.UTF-8
 		sv_SE.UTF-8
+		sv_FI.UTF-8
+		sv.utf8
+		sv_SE.utf8
+		sv_FI.utf8
 	}
 }
 
@@ -127,6 +224,9 @@ language th {
 	"_Thai"
 	{
 		th.UTF-8
+		th.uft8
+		th_TH.UTF-8
+		th_TH.uft8
 	}
 }
 
