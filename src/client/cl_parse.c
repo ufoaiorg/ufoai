@@ -260,17 +260,17 @@ qboolean CL_CheckOrDownloadFile (const char *filename)
 
 	strcpy(lastfilename, filename);
 
-	if (strstr (filename, "..")) {
+	if (strstr(filename, "..")) {
 		Com_Printf("Refusing to check a path with .. (%s)\n",  filename);
 		return qtrue;
 	}
 
-	if (strchr (filename, ' ')) {
+	if (strchr(filename, ' ')) {
 		Com_Printf("Refusing to check a path containing spaces (%s)\n", filename);
 		return qtrue;
 	}
 
-	if (strchr (filename, ':')) {
+	if (strchr(filename, ':')) {
 		Com_Printf("Refusing to check a path containing a colon (%s)\n", filename);
 		return qtrue;
 	}
@@ -1442,7 +1442,7 @@ static void CL_ParseEvent (struct dbuffer *msg)
 		if ((eType == EV_ENT_APPEAR || eType == EV_INV_ADD)) {
 			if (parsedDeath) { /* drop items after death (caused by impact) */
 				event_time = impactTime + 400;
-				/* EV_INV_ADD messages are the last event sent after a death */
+				/* EV_INV_ADD messages are the last events sent after a death */
 				if (eType == EV_INV_ADD)
 					parsedDeath = qfalse;
 			} else if (impactTime > cl.eventTime) { /* item thrown on the ground */
@@ -1479,13 +1479,9 @@ static void CL_ParseEvent (struct dbuffer *msg)
 					impactTime = shootTime = nextTime;
 				} else {
 					fd = FIRESH_GetFiredef(obj_idx, weap_fds_idx, fd_idx);
-#if 0
-					@todo: not needed? and SF_BOUNCED?
-					if (fd->speed)
-						impactTime = shootTime + 1000 * VectorDist(muzzle, impact) / fd->speed;
-					else
-#endif
-						impactTime = shootTime;
+					/* impact right away - we don't see it at all
+					 * bouncing is not needed here, too (we still don't see it) */
+					impactTime = shootTime;
 					nextTime = shootTime + 1400;
 					if (fd->delayBetweenShots)
 						shootTime += 1000 / fd->delayBetweenShots;
@@ -1536,7 +1532,6 @@ static void CL_ParseEvent (struct dbuffer *msg)
 			parsedDeath = qfalse;
 			break;
 		default:
-/*			nextTime += 300;*/ /* mattn - for testing */
 			break;
 		}
 
