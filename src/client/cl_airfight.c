@@ -199,12 +199,9 @@ static qboolean AIRFIGHT_AddProjectile (base_t* attackingBase, aircraft_t *attac
  * @brief Change destination of projectile to an idle point of the map, close to its former target.
  * @param[in] idx idx of the projectile to update in gd.projectiles[].
  */
-static void AIRFIGHT_MissTarget (int idx)
+static void AIRFIGHT_MissTarget (aircraftProjectile_t *projectile, qboolean returnToBase)
 {
 	aircraft_t *oldTarget;
-	aircraftProjectile_t *projectile;
-
-	projectile = &gd.projectiles[idx];
 	assert(projectile);
 
 	oldTarget = projectile->aimedAircraft;
@@ -215,6 +212,8 @@ static void AIRFIGHT_MissTarget (int idx)
 		VectorSet(projectile->idleTarget, projectile->idleTarget[0] + 10 * frand() - 5, projectile->idleTarget[1] + 10 * frand() - 5, 0);
 		projectile->aimedBase = NULL;
 	}
+	if (returnToBase && projectile->attackingAircraft)
+		AIR_AircraftReturnToBase(projectile->attackingAircraft);
 }
 
 /**
@@ -367,7 +366,7 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 			/* will we miss the target ? */
 			probability = frand();
 			if (probability > AIRFIGHT_ProbabilityToHit(shooter, target, shooter->weapons + slotIdx))
-				AIRFIGHT_MissTarget(gd.numProjectiles - 1);
+				AIRFIGHT_MissTarget(&gd.projectiles[gd.numProjectiles - 1], qfalse);
 		}
 	} else if (slotIdx == AIRFIGHT_SLOT_NO_WEAPON_TO_USE_AT_THE_MOMENT) {
 		/* no ammo to fire atm (too far or reloading), pursue target */
@@ -409,7 +408,7 @@ static void AIRFIGHT_RemoveProjectileAimingAircraft (aircraft_t * aircraft)
 
 	for (projectile = gd.projectiles; idx < gd.numProjectiles; projectile++, idx++) {
 		if (projectile->aimedAircraft == aircraft)
-			AIRFIGHT_MissTarget(idx);
+			AIRFIGHT_MissTarget(projectile, qtrue);
 	}
 }
 
@@ -450,6 +449,7 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 	base_t* base;
 
 	if (phalanxWon) {
+		assert(aircraft);
 		/* get the color value of the map at the crash position */
 		color = MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN);
 		/* if this color value is not the value for water ...
@@ -558,6 +558,7 @@ static void AIRFIGHT_ProjectileHits (aircraftProjectile_t *projectile)
 
 	/* apply resulting damages */
 	if (damage > 0) {
+		assert(target->stats[AIR_STATS_DAMAGE] > 0);
 		target->stats[AIR_STATS_DAMAGE] -= damage;
 		if (target->stats[AIR_STATS_DAMAGE] <= 0)
 			AIRFIGHT_ActionsAfterAirfight(projectile->attackingAircraft, target, target->type == AIRCRAFT_UFO);
@@ -802,7 +803,7 @@ static void AIRFIGHT_BaseShoot (base_t *base, aircraftSlot_t *slot, int maxSlot,
 					slot[i].delayNextShot = csi.ods[slot[i].ammoIdx].craftitem.weaponDelay;
 					/* will we miss the target ? */
 					if (frand() > AIRFIGHT_ProbabilityToHit(NULL, gd.ufos + targetIdx[i], slot + i))
-						AIRFIGHT_MissTarget(gd.numProjectiles - 1);
+						AIRFIGHT_MissTarget(&gd.projectiles[gd.numProjectiles - 1], qfalse);
 				}
 			}
 		}
