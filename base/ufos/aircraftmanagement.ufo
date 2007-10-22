@@ -460,6 +460,7 @@ craftitem craft_weapon_shiva
 	installationTime	2
 	price		3000
 	buytype		craftitem
+	bullets		true
 }
 
 craftitem craft_ammo_shiva_API
