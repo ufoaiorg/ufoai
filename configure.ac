@@ -100,7 +100,6 @@ fi
 #---------------------------------------------------------------------------------------------
 # CHECK TARGET_OS
 #---------------------------------------------------------------------------------------------
-
 AC_MSG_CHECKING([target OS])
 if test `echo $target_os | sed "s/\(linux\).*/\1/"` = "linux"
 then
@@ -122,6 +121,37 @@ then
 	AC_SUBST([TARGET_OS],[darwin])
 	CFLAGS="$CFLAGS -F$with_opengl_framework"
 	LDFLAGS="$LDFLAGS -framework IOKit -framework Foundation -framework OpenGL"
+	# fix this darn SDL stuff....
+	if test -d /Library/Frameworks/SDL.framework
+	then
+		sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL.framework/Headers"
+		sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL"
+	else
+		# should test for different framework locations, like /System/Library/Frameworks
+		# and ~/Library/Frameworks..... later....
+		AC_MSG_ERROR([Could not find SDL Framework at /Library/Frameworks.])
+	fi
+	if test -d /Library/Frameworks/SDL_mixer.framework
+	then
+		sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL_mixer.framework/Headers"
+		sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL_mixer"
+	else
+		AC_MSG_ERROR([Could not find SDL_mixer Framework at /Library/Frameworks.])
+	fi
+	if test -d /Library/Frameworks/SDL_ttf.framework
+	then
+		sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL_ttf.framework/Headers"
+		sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL_ttf"
+	else
+		AC_MSG_ERROR([Could not find SDL_ttf Framework at /Library/Frameworks.])
+	fi
+	### most mac users will have their additional libs and headers under /opt/local,
+	### check for that, and if present, add to CFLAGS/LDFLAGS (really convenient!)
+	if test -d /opt/local
+	then
+		CFLAGS="$CFLAGS -I/opt/local/include"
+		LDFLAGS="$LDFLAGS -L/opt/local/lib"
+	fi
 else
 	AC_MSG_ERROR([The target operating system '$target_os' is unknown, please contact the developers])
 fi
@@ -372,6 +402,7 @@ then
 	sdl_config=$with_sdl_config
 
 	OLD_CPPFLAGS=$CPPFLAGS
+	OLD_CFLAGS=$CFLAGS
 	OLD_LDFLAGS=$LDFLAGS
 
 	AC_CHECK_PROG(HAVE_SDL_CONFIG,$sdl_config,yes)
@@ -383,6 +414,14 @@ then
 		AC_SUBST([SDL_LIBS],$LDFLAGS)
 	else
 		AC_MSG_WARN([cannot find $sdl_config might fail to find SDL!])
+		if test $TARGET_OS = "darwin"
+		then
+			# mac is special...again
+			CFLAGS="$CFLAGS $sdl_mac_cflags"
+			LDFLAGS="$LDFLAGS $sdl_mac_ldflags"
+			SDL_CFLAGS="$sdl_mac_cflags"
+			SDL_LIBS="$sdl_mac_ldflags"
+		fi
 	fi
 
 	#---------------------------------------------------------------------------------------------
@@ -399,15 +438,22 @@ then
 	#---------------------------------------------------------------------------------------------
 	# multiple main functions error for SDL_mixer and SDL_ttf otherwise
 	# problem might be that -L<SDL_dir> might be missing then
-	LDFLAGS=$OLD_LDFLAGS
+	# (no issue at mac)
+	if test $TARGET_OS != "darwin"
+	then
+		LDFLAGS=$OLD_LDFLAGS
+	fi
 
 	AC_CHECK_HEADERS([SDL_mixer.h])
 	if test "$ac_cv_header_SDL_mixer_h" != "yes"
 	then
 		AC_MSG_ERROR([You must have the SDL_mixer development headers])
 	fi
-	AC_CHECK_LIB(SDL_mixer, Mix_OpenAudio, [], AC_MSG_ERROR([You must have SDL_mixer!!!]))
-
+	AC_SEARCH_LIBS([Mix_OpenAudio],[SDL_mixer])
+	if test "$ac_cv_search_Mix_OpenAudio" = "no"
+	then
+		AC_MSG_ERROR([You must have the SDL_mixer development libraries])
+	fi
 	#---------------------------------------------------------------------------------------------
 	# Check for SDL_ttf
 	#---------------------------------------------------------------------------------------------
@@ -417,9 +463,14 @@ then
 	then
 		AC_MSG_ERROR([You must have the SDL_ttf development headers])
 	fi
-	AC_CHECK_LIB(SDL_ttf, TTF_Init, [], AC_MSG_ERROR([You must have SDL_ttf!!!]))
+	AC_SEARCH_LIBS([TTF_Init],[SDL_ttf])
+	if test "$ac_cv_search_TTF_Init" = "no"
+	then
+		AC_MSG_ERROR([You must have the SDL_ttf development libraries])
+	fi
 
 	CPPFLAGS=$OLD_CPPFLAGS
+	CFLAGS=$OLD_CFLAGS
 	LDFLAGS=$OLD_LDFLAGS
 
 	#---------------------------------------------------------------------------------------------
