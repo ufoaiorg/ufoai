@@ -550,6 +550,10 @@ static void AIRFIGHT_ProjectileHits (aircraftProjectile_t *projectile)
 	if (AIR_IsAircraftInBase(target))
 		return;
 
+	/* already destroyed - do nothing */
+	if (target->stats[AIR_STATS_DAMAGE] <= 0)
+		return;
+
 	/* base damage is given by the ammo */
 	damage = csi.ods[projectile->aircraftItemsIdx].craftitem.weaponDamage;
 
@@ -560,8 +564,7 @@ static void AIRFIGHT_ProjectileHits (aircraftProjectile_t *projectile)
 	if (damage > 0) {
 		assert(target->stats[AIR_STATS_DAMAGE] > 0);
 		target->stats[AIR_STATS_DAMAGE] -= damage;
-		if (target->stats[AIR_STATS_DAMAGE] <= 0)
-			AIRFIGHT_ActionsAfterAirfight(projectile->attackingAircraft, target, target->type == AIRCRAFT_UFO);
+		AIRFIGHT_ActionsAfterAirfight(projectile->attackingAircraft, target, target->type == AIRCRAFT_UFO);
 	}
 }
 
