@@ -43,6 +43,8 @@ static const int AIRFIGHT_BASE_CAN_T_FIRE = -1;
 /**
  * @brief Create bullets on geoscape.
  * @param[in] projectile Pointer to the projectile corresponding to this bullet.
+ * @sa AIRFIGHT_DestroyBullets
+ * @sa AIRFIGHT_RunBullets
  */
 static void AIRFIGHT_CreateBullets (aircraftProjectile_t *projectile)
 {
@@ -66,6 +68,7 @@ static void AIRFIGHT_CreateBullets (aircraftProjectile_t *projectile)
 /**
  * @brief Destroy bullets on geoscape.
  * @param[in] projectile Pointer to the projectile corresponding to this bullet.
+ * @sa AIRFIGHT_CreateBullets
  */
 static void AIRFIGHT_DestroyBullets (aircraftProjectile_t *projectile)
 {
@@ -95,6 +98,8 @@ static void AIRFIGHT_DestroyBullets (aircraftProjectile_t *projectile)
  * @param[in] projectile Pointer to the projectile corresponding to this bullet.
  * @param[in] ortogonalVector vector perpendicular to the movement of the projectile.
  * @param[in] movement how much each bullet should move toward its target.
+ * @sa AIRFIGHT_DestroyBullets
+ * @sa AIRFIGHT_CreateBullets
  */
 static void AIRFIGHT_RunBullets (aircraftProjectile_t *projectile, vec3_t ortogonalVector, float movement)
 {
@@ -114,6 +119,7 @@ static void AIRFIGHT_RunBullets (aircraftProjectile_t *projectile, vec3_t ortogo
 /**
  * @brief Remove a projectile from gd.projectiles
  * @param[in] idx of the projectile to remove in array gd.projectiles[]
+ * @sa AIRFIGHT_AddProjectile
  */
 static qboolean AIRFIGHT_RemoveProjectile (aircraftProjectile_t *projectile)
 {
@@ -141,6 +147,8 @@ static qboolean AIRFIGHT_RemoveProjectile (aircraftProjectile_t *projectile)
  * @param[in] target Pointer to the target aircraft
  * @param[in] weaponSlot Pointer to the weapon slot that fires the projectile.
  * @note we already checked in AIRFIGHT_ChooseWeapon that the weapon has still ammo
+ * @sa AIRFIGHT_RemoveProjectile
+ * @sa AIRFIGHT_CreateBullets
  */
 static qboolean AIRFIGHT_AddProjectile (base_t* attackingBase, aircraft_t *attacker, base_t* aimedBase, aircraft_t *target, aircraftSlot_t *weaponSlot)
 {
@@ -178,8 +186,7 @@ static qboolean AIRFIGHT_AddProjectile (base_t* attackingBase, aircraft_t *attac
 	projectile->angle = 0.0f;
 	projectile->bulletIdx = -1;
 
-	/* @todo; improve this test */
-	if (!Q_strncmp(csi.ods[weaponSlot->itemIdx].id, "craft_weapon_shiva", MAX_VAR))
+	if (csi.ods[weaponSlot->itemIdx].craftitem.bullets)
 		AIRFIGHT_CreateBullets(projectile);
 
 	weaponSlot->ammoLeft -= 1;
@@ -192,12 +199,9 @@ static qboolean AIRFIGHT_AddProjectile (base_t* attackingBase, aircraft_t *attac
  * @brief Change destination of projectile to an idle point of the map, close to its former target.
  * @param[in] idx idx of the projectile to update in gd.projectiles[].
  */
-static void AIRFIGHT_MissTarget (int idx)
+static void AIRFIGHT_MissTarget (aircraftProjectile_t *projectile, qboolean returnToBase)
 {
 	aircraft_t *oldTarget;
-	aircraftProjectile_t *projectile;
-
-	projectile = &gd.projectiles[idx];
 	assert(projectile);
 
 	oldTarget = projectile->aimedAircraft;
@@ -208,6 +212,8 @@ static void AIRFIGHT_MissTarget (int idx)
 		VectorSet(projectile->idleTarget, projectile->idleTarget[0] + 10 * frand() - 5, projectile->idleTarget[1] + 10 * frand() - 5, 0);
 		projectile->aimedBase = NULL;
 	}
+	if (returnToBase && projectile->attackingAircraft)
+		AIR_AircraftReturnToBase(projectile->attackingAircraft);
 }
 
 /**
@@ -360,7 +366,7 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 			/* will we miss the target ? */
 			probability = frand();
 			if (probability > AIRFIGHT_ProbabilityToHit(shooter, target, shooter->weapons + slotIdx))
-				AIRFIGHT_MissTarget(gd.numProjectiles - 1);
+				AIRFIGHT_MissTarget(&gd.projectiles[gd.numProjectiles - 1], qfalse);
 		}
 	} else if (slotIdx == AIRFIGHT_SLOT_NO_WEAPON_TO_USE_AT_THE_MOMENT) {
 		/* no ammo to fire atm (too far or reloading), pursue target */
@@ -395,14 +401,14 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 static void AIRFIGHT_RemoveProjectileAimingAircraft (aircraft_t * aircraft)
 {
 	aircraftProjectile_t *projectile;
-	aircraft_t *target;
-	int idx;
+	int idx = 0;
 
-	for (idx = 0, projectile = gd.projectiles; idx < gd.numProjectiles; projectile++, idx++) {
-		target = projectile->aimedAircraft;
+	if (!aircraft)
+		return;
 
-		if (target && target->idx == aircraft->idx)
-			AIRFIGHT_MissTarget(idx);
+	for (projectile = gd.projectiles; idx < gd.numProjectiles; projectile++, idx++) {
+		if (projectile->aimedAircraft == aircraft)
+			AIRFIGHT_MissTarget(projectile, qtrue);
 	}
 }
 
@@ -443,6 +449,7 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 	base_t* base;
 
 	if (phalanxWon) {
+		assert(aircraft);
 		/* get the color value of the map at the crash position */
 		color = MAP_GetColor(aircraft->pos, MAPTYPE_TERRAIN);
 		/* if this color value is not the value for water ...
@@ -457,13 +464,6 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 		AIRFIGHT_RemoveProjectileAimingAircraft(aircraft);
 		/* now update the projectile for the destroyed aircraft, too */
 		AIRFIGHT_UpdateProjectileForDestroyedAircraft(aircraft);
-		/* now remove the ufo from geoscape - the aircraft pointer is no longer
-		 * valid after this call */
-		UFO_RemoveUfoFromGeoscape(aircraft);
-		aircraft = NULL;
-		/* and send our aircraft back to base if it's not destroyed */
-		if (shooter)
-			AIR_AircraftReturnToBase(shooter);
 
 		/* let all the other aircraft return to base that also targetted this
 		 * ufo on the geoscape */
@@ -477,6 +477,11 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 				}
 			}
 		}
+
+		/* now remove the ufo from geoscape - the aircraft pointer is no longer
+		 * valid after this call */
+		UFO_RemoveUfoFromGeoscape(aircraft);
+		aircraft = NULL;
 	} else {
 		/* change destination of other projectiles aiming aircraft */
 		AIRFIGHT_RemoveProjectileAimingAircraft(aircraft);
@@ -545,6 +550,10 @@ static void AIRFIGHT_ProjectileHits (aircraftProjectile_t *projectile)
 	if (AIR_IsAircraftInBase(target))
 		return;
 
+	/* already destroyed - do nothing */
+	if (target->stats[AIR_STATS_DAMAGE] <= 0)
+		return;
+
 	/* base damage is given by the ammo */
 	damage = csi.ods[projectile->aircraftItemsIdx].craftitem.weaponDamage;
 
@@ -553,11 +562,9 @@ static void AIRFIGHT_ProjectileHits (aircraftProjectile_t *projectile)
 
 	/* apply resulting damages */
 	if (damage > 0) {
+		assert(target->stats[AIR_STATS_DAMAGE] > 0);
 		target->stats[AIR_STATS_DAMAGE] -= damage;
-		if (target->stats[AIR_STATS_DAMAGE] <= 0) {
-			AIRFIGHT_ActionsAfterAirfight(projectile->attackingAircraft, target, target->type == AIRCRAFT_UFO);
-			AIRFIGHT_RemoveProjectileAimingAircraft(target);
-		}
+		AIRFIGHT_ActionsAfterAirfight(projectile->attackingAircraft, target, target->type == AIRCRAFT_UFO);
 	}
 }
 
@@ -799,7 +806,7 @@ static void AIRFIGHT_BaseShoot (base_t *base, aircraftSlot_t *slot, int maxSlot,
 					slot[i].delayNextShot = csi.ods[slot[i].ammoIdx].craftitem.weaponDelay;
 					/* will we miss the target ? */
 					if (frand() > AIRFIGHT_ProbabilityToHit(NULL, gd.ufos + targetIdx[i], slot + i))
-						AIRFIGHT_MissTarget(gd.numProjectiles - 1);
+						AIRFIGHT_MissTarget(&gd.projectiles[gd.numProjectiles - 1], qfalse);
 				}
 			}
 		}

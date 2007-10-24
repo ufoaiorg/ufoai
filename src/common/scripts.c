@@ -716,6 +716,7 @@ static const value_t od_vals[] = {
 	{"aircraft", V_BOOL, offsetof(objDef_t, aircraft), MEMBER_SIZEOF(objDef_t, aircraft)},
 
 	{"installationTime", V_INT, offsetof(objDef_t, craftitem.installationTime), MEMBER_SIZEOF(objDef_t, craftitem.installationTime)},
+	{"bullets", V_BOOL, offsetof(objDef_t, craftitem.bullets), MEMBER_SIZEOF(objDef_t, craftitem.bullets)},
 	{"wdamage", V_FLOAT, offsetof(objDef_t, craftitem.weaponDamage), MEMBER_SIZEOF(objDef_t, craftitem.weaponDamage)},
 	{"wspeed", V_FLOAT, offsetof(objDef_t, craftitem.weaponSpeed), MEMBER_SIZEOF(objDef_t, craftitem.weaponSpeed)},
 	{"delay", V_FLOAT, offsetof(objDef_t, craftitem.weaponDelay), MEMBER_SIZEOF(objDef_t, craftitem.weaponDelay)},

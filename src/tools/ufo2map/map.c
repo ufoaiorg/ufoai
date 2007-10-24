@@ -426,7 +426,9 @@ static qboolean MakeBrushWindings (mapbrush_t *ob)
 	return qtrue;
 }
 
-
+/**
+ * @sa FindMiptex
+ */
 static void ParseBrush (entity_t *mapent)
 {
 	mapbrush_t *b;
@@ -503,10 +505,13 @@ static void ParseBrush (entity_t *mapent)
 
 		/* find default flags and values */
 		mt = FindMiptex(td.name);
-		td.surfaceFlags = textureref[mt].surfaceFlags;
-		td.value = textureref[mt].value;
-		side->contentFlags = textureref[mt].contentFlags;
-		side->surfaceFlags = td.surfaceFlags = textureref[mt].surfaceFlags;
+		if (mt >= 0) {
+			td.value = textureref[mt].value;
+			side->contentFlags = textureref[mt].contentFlags;
+			side->surfaceFlags = td.surfaceFlags = textureref[mt].surfaceFlags;
+		} else {
+			side->surfaceFlags = td.surfaceFlags = side->contentFlags = td.value = 0;
+		}
 
 		if (TokenAvailable()) {
 			GetToken(qfalse);

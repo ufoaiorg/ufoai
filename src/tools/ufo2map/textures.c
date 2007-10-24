@@ -28,7 +28,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int nummiptex = 0;
 textureref_t textureref[MAX_MAP_TEXTURES];
 
-
+/**
+ * @brief
+ * @return -1 means that the texture was not found
+ * @sa TexinfoForBrushTexture
+ * @sa ParseBrush
+ */
 int FindMiptex (const char *name)
 {
 	int i;
@@ -78,10 +83,15 @@ int FindMiptex (const char *name)
 			loaded = qtrue;
 		}
 	}
-	nummiptex++;
 
-	if (textureref[i].animname[0])
-		FindMiptex(textureref[i].animname);
+	if (!loaded) {
+		Com_Printf("Could not find texture '%s'\n", name);
+		i = -1;
+	} else {
+		nummiptex++;
+		if (textureref[i].animname[0])
+			FindMiptex(textureref[i].animname);
+	}
 
 	return i;
 }
@@ -223,7 +233,7 @@ skip:;
 
 	/* load the next animation */
 	mt = FindMiptex(bt->name);
-	if (textureref[mt].animname[0]) {
+	if (mt >= 0 && textureref[mt].animname[0]) {
 		anim = *bt;
 		strcpy(anim.name, textureref[mt].animname);
 		tc->nexttexinfo = TexinfoForBrushTexture(plane, &anim, origin, isTerrain);
