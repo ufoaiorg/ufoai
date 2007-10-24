@@ -2266,6 +2266,8 @@ void Com_ParseScripts (void)
 {
 	const char *type, *name, *text;
 
+	Com_Printf("\n----------- parse scripts ----------\n");
+
 	/* reset csi basic info */
 	INVSH_InitCSI(&csi);
 	csi.idRight = csi.idLeft = csi.idExtension = csi.idBackpack = csi.idBelt = csi.idHolster = csi.idArmour = csi.idFloor = csi.idEquip = csi.idHeadgear = NONE;
