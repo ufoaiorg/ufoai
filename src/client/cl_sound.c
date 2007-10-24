@@ -531,6 +531,7 @@ void S_Frame (void)
 static qboolean SND_Init (void)
 {
 	SDL_version version;
+	char drivername[MAX_VAR];
 
 	if (SDL_WasInit(SDL_INIT_EVERYTHING) == 0) {
 		if (SDL_Init(SDL_INIT_AUDIO) == -1) {
@@ -558,6 +559,10 @@ static qboolean SND_Init (void)
 		Cvar_SetValue("snd_rate", audio_rate);
 	if (audio_channels != snd_channels->integer)
 		Cvar_SetValue("snd_channels", audio_channels);
+
+	if (SDL_AudioDriverName(drivername, sizeof(drivername)) == NULL)
+		strncpy(drivername, "(UNKNOWN)", sizeof(drivername) - 1);
+	Com_Printf("...driver: '%s'\n", drivername);
 
 	return qtrue;
 }
