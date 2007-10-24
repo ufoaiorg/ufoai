@@ -526,6 +526,7 @@ menu options_sound
 		mousefx	true
 		click	{ }
 	}
+
 	string music_str
 	{
 		string	"_Music:"
@@ -546,6 +547,54 @@ menu options_sound
 		align	ul
 		mousefx true
 		click	{ }
+	}
+
+	string rate_str
+	{
+		string	"_Sound rate:"
+		pos		"500	 245"
+	}
+	pic rate_test_pic
+	{
+		tooltip	"_Restart sound to change the settings"
+		image	menu/buttons_small
+		pos	"750 245"
+		texl	"32 0"
+		texh	"47 16"
+		mousefx	true
+		click
+		{
+			cmd "snd_restart;"
+		}
+	}
+
+	selectbox rate_box
+	{
+		image	"menu/selectbox_green"
+		pos	"774 245"
+		size	"100 20"
+		color	"0.6 0.6 0.6 0.3"
+		cvar	"*cvar snd_rate"
+		option low_value {
+			label	"11025"
+			value	"11025"
+			action	""
+		}
+		option medium_value {
+			label	"22050"
+			value	"22050"
+			action	""
+		}
+		option normal_value {
+			label	"44100"
+			value	"44100"
+			action	""
+		}
+		option high_value {
+			label	"48000"
+			value	"48000"
+			action	""
+		}
 	}
 
 	func init
