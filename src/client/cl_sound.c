@@ -47,7 +47,6 @@ static qboolean sound_started = qfalse;
 
 static cvar_t *snd_volume;
 static cvar_t *snd_init;
-static cvar_t *snd_bits;
 static cvar_t *snd_channels;
 static cvar_t *snd_rate;
 static cvar_t *snd_music;
@@ -581,7 +580,6 @@ void S_Init (void)
 		return;
 	}
 
-	snd_bits = Cvar_Get("snd_bits", "16", CVAR_ARCHIVE, "Sound bits");
 	snd_channels = Cvar_Get("snd_channels", "2", CVAR_ARCHIVE, "Sound channels");
 	snd_volume = Cvar_Get("snd_volume", "128", CVAR_ARCHIVE, "Sound volume - default is 128");
 	snd_rate = Cvar_Get("snd_rate", "44100", CVAR_ARCHIVE, "Hz value for sound renderer - default is 44100");
