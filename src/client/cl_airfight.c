@@ -212,8 +212,12 @@ static void AIRFIGHT_MissTarget (aircraftProjectile_t *projectile, qboolean retu
 		VectorSet(projectile->idleTarget, projectile->idleTarget[0] + 10 * frand() - 5, projectile->idleTarget[1] + 10 * frand() - 5, 0);
 		projectile->aimedBase = NULL;
 	}
-	if (returnToBase && projectile->attackingAircraft)
-		AIR_AircraftReturnToBase(projectile->attackingAircraft);
+	if (returnToBase && projectile->attackingAircraft) {
+		if (projectile->attackingAircraft->homebase) {
+			assert(projectile->attackingAircraft->ufotype == UFO_MAX);
+			AIR_AircraftReturnToBase(projectile->attackingAircraft);
+		}
+	}
 }
 
 /**
