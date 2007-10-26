@@ -1507,7 +1507,7 @@ int AII_AircraftCanShoot (aircraft_t *aircraft)
  * @return qtrue if the base can shoot, qflase else
  * @sa AII_AircraftCanShoot
  */
-int AII_BaseCanShoot (base_t *base)
+int AII_BaseCanShoot (const base_t *base)
 {
 	int i;
 
