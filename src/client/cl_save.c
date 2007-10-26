@@ -63,6 +63,7 @@ static qboolean SAV_PresaveArraySave (sizebuf_t* sb, void* data)
 	presaveArray[PRE_MAXREC] = MAX_RECOVERIES;	/* #define MAX_RECOVERIES */
 	presaveArray[PRE_MAXTRA] = MAX_TRANSFERS;	/* #define MAX_TRANSFERS */
 	presaveArray[PRE_MAXOBJ] = MAX_OBJDEFS;		/* #define MAX_OBJDEFS */
+	presaveArray[PRE_MAXBUL] = BULLETS_PER_SHOT;/* #define BULLETS_PER_SHOT */
 
 	MSG_WriteByte(sb, PRE_MAX);
 	for (i = 0; i < PRE_MAX; i++) {

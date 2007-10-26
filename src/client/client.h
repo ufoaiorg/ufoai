@@ -341,6 +341,7 @@ typedef enum {
 	PRE_MAXREC,	/* #define MAX_RECOVERIES */
 	PRE_MAXTRA, /* #define MAX_TRANSFERS */
 	PRE_MAXOBJ, /* #define MAX_OBJDEFS */
+	PRE_MAXBUL, /* #define BULLETS_PER_SHOT */
 
 	PRE_MAX
 } presaveType_t;
