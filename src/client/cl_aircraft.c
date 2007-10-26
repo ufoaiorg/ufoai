@@ -1524,13 +1524,13 @@ void AIR_AircraftsNotifyUfoRemoved (const aircraft_t *const ufo)
 		/* Base currently targeting the specified ufo loose their target */
 		for (i = 0; i < base->maxBatteries; i++) {
 			if (base->targetMissileIdx[i] == num)
-				base->targetMissileIdx[i] = -1;
+				base->targetMissileIdx[i] = AIRFIGHT_BASE_CAN_T_FIRE;
 			else if (base->targetMissileIdx[i] > num)
 				base->targetMissileIdx[i]--;
 		}
 		for (i = 0; i < base->maxLasers; i++) {
 			if (base->targetLaserIdx[i] == num)
-				base->targetLaserIdx[i] = -1;
+				base->targetLaserIdx[i] = AIRFIGHT_BASE_CAN_T_FIRE;
 			else if (base->targetLaserIdx[i] > num)
 				base->targetLaserIdx[i]--;
 		}

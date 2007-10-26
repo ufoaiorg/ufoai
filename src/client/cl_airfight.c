@@ -677,21 +677,19 @@ static int AIRFIGHT_BaseChooseTarget (base_t *base, aircraftSlot_t *slot)
 {
 	int ufoIdx;
 	int i;
-	float distance0;
+	float distance0, distance;
 
 	/* check if there is already another weapon firing at a ufo */
 	for (i = 0; i < base->maxBatteries; i++) {
-		/* FIXME: Why not >= 0 - 0 is a valid ufo id, too */
-		if (base->targetMissileIdx[i] > 0) {
-			float distance = MAP_GetDistance(base->pos, gd.ufos[base->targetMissileIdx[i]].pos);
+		if (base->targetMissileIdx[i] >= 0) {
+			distance = MAP_GetDistance(base->pos, gd.ufos[base->targetMissileIdx[i]].pos);
 			if (AIRFIGHT_CheckWeapon(slot, distance) >= 0)
 				return base->targetMissileIdx[i];
 		}
 	}
 	for (i = 0; i < base->maxLasers; i++) {
-		/* FIXME: Why not >= 0 - 0 is a valid ufo id, too */
-		if (base->targetLaserIdx[i] > 0) {
-			float distance = MAP_GetDistance(base->pos, gd.ufos[base->targetLaserIdx[i]].pos);
+		if (base->targetLaserIdx[i] >= 0) {
+			distance = MAP_GetDistance(base->pos, gd.ufos[base->targetLaserIdx[i]].pos);
 			if (AIRFIGHT_CheckWeapon(slot, distance) >= 0)
 				return base->targetLaserIdx[i];
 		}
@@ -702,7 +700,6 @@ static int AIRFIGHT_BaseChooseTarget (base_t *base, aircraftSlot_t *slot)
 	ufoIdx = AIRFIGHT_BASE_CAN_T_FIRE;
 	for (i = 0; i < gd.numUfos; i++) {
 		aircraft_t* ufo = &gd.ufos[i];
-		float distance;
 
 		if (!ufo->visible)
 			continue;
@@ -738,8 +735,7 @@ static void AIRFIGHT_BaseShoot (base_t *base, aircraftSlot_t *slot, int maxSlot,
 			continue;
 
 		/* check if the weapon has already a target */
-		/* FIXME: Why not >= - 0 is a valid base id, too */
-		if (targetIdx[i] > 0) {
+		if (targetIdx[i] >= 0) {
 			float distance;
 			int test;
 
@@ -787,7 +783,6 @@ void AIRFIGHT_CampaignRunBaseDefense (int dt)
 {
 	base_t* base;
 	int idx;
-
 
 	for (base = gd.bases; base < (gd.bases + gd.numBases); base++) {
 		if (!base->founded)

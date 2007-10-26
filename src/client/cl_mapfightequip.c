@@ -451,8 +451,8 @@ void BDEF_InitialiseBaseSlots (base_t *base)
 	for (i = 0; i < MAX_BASE_SLOT; i++) {
 		AII_InitialiseSlot(base->batteries + i, base->idx);
 		AII_InitialiseSlot(base->lasers + i, base->idx);
-		base->targetMissileIdx[i] = -1;
-		base->targetLaserIdx[i] = -1;
+		base->targetMissileIdx[i] = AIRFIGHT_BASE_CAN_T_FIRE;
+		base->targetLaserIdx[i] = AIRFIGHT_BASE_CAN_T_FIRE;
 	}
 }
 
