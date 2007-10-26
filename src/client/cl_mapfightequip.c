@@ -86,7 +86,8 @@ static technology_t **AII_GetCraftitemTechsByType (int type, base_t* base)
 }
 
 /**
- * @brief Check airequipID value
+ * @brief Check airequipID value and set the correct values for aircraft items
+ * and base defense items
  */
 static void AIM_CheckAirequipID (void)
 {
@@ -222,7 +223,7 @@ static aircraftSlot_t *BDEF_SelectBaseSlot (base_t *base)
 }
 
 /**
- * @brief Check if an aircraft item should or not be displayed in airequip menu
+ * @brief Check if an aircraft item should or should not be displayed in airequip menu
  * @param[in] tech Pointer to the technology to test
  * @return qtrue if the aircraft item should be displayed, qfalse else
  */
@@ -240,20 +241,24 @@ static qboolean AIM_SelectableAircraftItem (base_t* base, aircraft_t *aircraft, 
 		return qfalse;
 	}
 
-	/* item is researched */
+	/* item is researched? */
 	if (!RS_IsResearched_ptr(tech))
 		return qfalse;
 
 	itemIdx = AII_GetAircraftItemByID(tech->provides);
+	if (itemIdx == NONE)
+		return qfalse;
 
 	/* you can choose an ammo only if it fits the weapons installed in this slot */
 	if (airequipID >= AC_ITEM_AMMO) {
-		if (itemIdx == NONE || csi.ods[itemIdx].weap_idx[0] != slot->itemIdx)
+		/* FIXME: This only works for ammo that is useable in exactly one weapon
+		 * check the weap_idx array and not only the first value */
+		if (csi.ods[itemIdx].weap_idx[0] != slot->itemIdx)
 			return qfalse;
 	}
 
 	/* you can install an item only if its weight is small enough for the slot */
-	if (itemIdx == NONE || AII_GetItemWeightBySize(&csi.ods[itemIdx]) > slot->size)
+	if (AII_GetItemWeightBySize(&csi.ods[itemIdx]) > slot->size)
 		return qfalse;
 
 	return qtrue;
