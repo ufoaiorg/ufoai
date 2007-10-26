@@ -903,7 +903,7 @@ void CL_CampaignRunAircraft (int dt)
 							break;
 						case AIR_RETURNING:
 							/* aircraft entered in homebase */
-							CL_DropshipReturned(aircraft->homebase, aircraft);
+							CL_AircraftReturnedToHomeBase(aircraft);
 							aircraft->status = AIR_REFUEL;
 							break;
 						case AIR_TRANSFER:
@@ -1459,6 +1459,8 @@ void AIR_ListAircraftSamples_f (void)
  * @brief Reload the weapon of an aircraft
  * @param[in] aircraft Pointer to the aircraft to reload
  * @todo check if there is still ammo in storage, and remove them from it
+ * @todo: this should costs credits
+ * @sa AIRFIGHT_AddProjectile for the basedefense reload code
  */
 void AII_ReloadWeapon (aircraft_t *aircraft)
 {
@@ -1506,7 +1508,7 @@ void AIR_AircraftsNotifyMissionRemoved (const actMis_t *const mission)
 }
 
 /**
- * @brief Notify that an UFO has been removed.
+ * @brief Notify that a UFO has been removed.
  * @param[in] ufo Pointer to UFO that has been removed.
  */
 void AIR_AircraftsNotifyUfoRemoved (const aircraft_t *const ufo)
@@ -1520,13 +1522,13 @@ void AIR_AircraftsNotifyUfoRemoved (const aircraft_t *const ufo)
 		/* Base currently targeting the specified ufo loose their target */
 		for (i = 0; i < base->maxBatteries; i++) {
 			if (base->targetMissileIdx[i] == num)
-				base->targetMissileIdx[i] = -1;
+				base->targetMissileIdx[i] = AIRFIGHT_BASE_CAN_T_FIRE;
 			else if (base->targetMissileIdx[i] > num)
 				base->targetMissileIdx[i]--;
 		}
 		for (i = 0; i < base->maxLasers; i++) {
 			if (base->targetLaserIdx[i] == num)
-				base->targetLaserIdx[i] = -1;
+				base->targetLaserIdx[i] = AIRFIGHT_BASE_CAN_T_FIRE;
 			else if (base->targetLaserIdx[i] > num)
 				base->targetLaserIdx[i]--;
 		}
@@ -1543,8 +1545,8 @@ void AIR_AircraftsNotifyUfoRemoved (const aircraft_t *const ufo)
 }
 
 /**
- * @brief Notify that an ufo disappear from radars.
- * @param[in] ufo Pointer to an UFO that has disappeared.
+ * @brief Notify that a UFO disappear from radars.
+ * @param[in] ufo Pointer to a UFO that has disappeared.
  */
 void AIR_AircraftsUfoDisappear (const aircraft_t *const ufo)
 {
@@ -1561,9 +1563,9 @@ void AIR_AircraftsUfoDisappear (const aircraft_t *const ufo)
 }
 
 /**
- * @brief Make the specified aircraft purchasing an UFO.
- * @param[in] aircraft Pointer to an aircraft which will hunt for an UFO.
- * @param[in] ufo Pointer to an UFO.
+ * @brief Make the specified aircraft purchasing a UFO.
+ * @param[in] aircraft Pointer to an aircraft which will hunt for a UFO.
+ * @param[in] ufo Pointer to a UFO.
  */
 void AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
 {

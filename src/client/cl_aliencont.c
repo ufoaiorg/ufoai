@@ -164,7 +164,7 @@ void AL_CollectingAliens (aircraft_t *aircraft)
 /**
  * @brief Puts alien cargo into Alien Containment.
  * @param[in] aircraft Aircraft transporting cargo to homebase.
- * @sa CL_DropshipReturned
+ * @sa CL_AircraftReturnedToHomeBase
  * @sa AL_FillInContainment
  */
 void AL_AddAliens (aircraft_t *aircraft)
@@ -460,7 +460,7 @@ int AL_GetAlienAmount (int idx, requirementType_t reqtype, base_t *base)
  * @note This should be called whenever you add or remove
  * @note aliens from alien containment.
  * @return amount of all alive aliens stored in containments
- * @sa CL_DropshipReturned
+ * @sa CL_AircraftReturnedToHomeBase
  * @sa AC_Init
  */
 int AL_CountAll (void)

@@ -35,8 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static const int AIRFIGHT_SLOT_NO_WEAPON_TO_USE_AT_THE_MOMENT = -1;
 static const int AIRFIGHT_SLOT_NO_WEAPON_TO_USE_NO_AMMO_LEFT = -2;
 
-static const int AIRFIGHT_BASE_CAN_T_FIRE = -1;
-
 /**
  * @brief Run bullets on geoscape.
  * @param[in] projectile Pointer to the projectile corresponding to this bullet.
@@ -88,6 +86,7 @@ static qboolean AIRFIGHT_RemoveProjectile (aircraftProjectile_t *projectile)
  * @param[in] weaponSlot Pointer to the weapon slot that fires the projectile.
  * @note we already checked in AIRFIGHT_ChooseWeapon that the weapon has still ammo
  * @sa AIRFIGHT_RemoveProjectile
+ * @sa AII_ReloadWeapon for the aircraft item reload code
  */
 static qboolean AIRFIGHT_AddProjectile (base_t* attackingBase, aircraft_t *attacker, base_t* aimedBase, aircraft_t *target, aircraftSlot_t *weaponSlot)
 {
@@ -100,6 +99,13 @@ static qboolean AIRFIGHT_AddProjectile (base_t* attackingBase, aircraft_t *attac
 	}
 
 	projectile = &gd.projectiles[gd.numProjectiles];
+
+	if (weaponSlot->ammoIdx == NONE) {
+		Com_Printf("AIRFIGHT_AddProjectile: Error - no ammo assigned\n");
+		return qfalse;
+	}
+
+	assert(weaponSlot->itemIdx != NONE);
 
 	projectile->idx = gd.numProjectiles;
 	projectile->aircraftItemsIdx = weaponSlot->ammoIdx;
@@ -136,6 +142,13 @@ static qboolean AIRFIGHT_AddProjectile (base_t* attackingBase, aircraft_t *attac
 	}
 
 	weaponSlot->ammoLeft -= 1;
+	if (weaponSlot->ammoLeft <= 0) {
+		if (!attacker) {
+			/* @todo: this should costs credits */
+			weaponSlot->ammoLeft = csi.ods[weaponSlot->ammoIdx].ammo;
+		}
+	}
+
 	gd.numProjectiles++;
 
 	return qtrue;
@@ -181,11 +194,11 @@ static int AIRFIGHT_CheckWeapon (const aircraftSlot_t *slot, float distance)
 	assert(slot);
 
 	/* check if there is a functional weapon in this slot */
-	if (slot->itemIdx < 0 || slot->installationTime != 0)
+	if (slot->itemIdx == NONE || slot->installationTime != 0)
 		return AIRFIGHT_WEAPON_CAN_NOT_SHOOT;
 
 		/* check if there is still ammo in this weapon */
-	if (slot->ammoIdx < 0 || slot->ammoLeft <= 0)
+	if (slot->ammoIdx == NONE || slot->ammoLeft <= 0)
 		return AIRFIGHT_WEAPON_CAN_NOT_SHOOT;
 
 	ammoIdx = slot->ammoIdx;
@@ -257,13 +270,13 @@ static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target,
 	float probability = 0.0f;
 
 	idx = slot->itemIdx;
-	if (idx < 0) {
+	if (idx == NONE) {
 		Com_Printf("AIRFIGHT_ProbabilityToHit: no weapon assigned to attacking aircraft\n");
 		return probability;
 	}
 
 	idx = slot->ammoIdx;
-	if (idx < 0) {
+	if (idx == NONE) {
 		Com_Printf("AIRFIGHT_ProbabilityToHit: no ammo in weapon of attacking aircraft\n");
 		return probability;
 	}
@@ -483,6 +496,31 @@ static qboolean AIRFIGHT_ProjectileReachedTarget (aircraftProjectile_t *projecti
 }
 
 /**
+ * @brief Calculates the damage value for the airfight
+ * @param[in] od The ammo object definition of the craft item
+ * @sa AII_UpdateAircraftStats
+ * @note ECM is handled in AIRFIGHT_ProbabilityToHit
+ */
+static int AIRFIGHT_GetDamage (objDef_t *od, aircraft_t* target)
+{
+	int damage;
+
+	assert(od);
+
+	/* already destroyed - do nothing */
+	if (target->stats[AIR_STATS_DAMAGE] <= 0)
+		return 0;
+
+	/* base damage is given by the ammo */
+	damage = od->craftitem.weaponDamage;
+
+	/* reduce damages with shield target */
+	damage -= target->stats[AIR_STATS_SHIELD];
+
+	return damage;
+}
+
+/**
  * @brief Solve the result of one projectile hitting an aircraft.
  * @param[in] projectile Pointer to the projectile.
  * @note the target loose (base damage - shield of target) hit points
@@ -500,17 +538,11 @@ static void AIRFIGHT_ProjectileHits (aircraftProjectile_t *projectile)
 	if (AIR_IsAircraftInBase(target))
 		return;
 
-	/* already destroyed - do nothing */
-	if (target->stats[AIR_STATS_DAMAGE] <= 0)
-		return;
+	damage = AIRFIGHT_GetDamage(&csi.ods[projectile->aircraftItemsIdx], target);
 
-	/* base damage is given by the ammo */
-	damage = csi.ods[projectile->aircraftItemsIdx].craftitem.weaponDamage;
-
-	/* reduce damages with shield target */
-	damage -= target->stats[AIR_STATS_SHIELD];
-
-	/* apply resulting damages */
+	/* apply resulting damages - but only if damage > 0 - because the target might
+	 * already be destroyed, and we don't want to execute the actions after airfight
+	 * for every projectile */
 	if (damage > 0) {
 		assert(target->stats[AIR_STATS_DAMAGE] > 0);
 		target->stats[AIR_STATS_DAMAGE] -= damage;
@@ -662,21 +694,19 @@ static int AIRFIGHT_BaseChooseTarget (base_t *base, aircraftSlot_t *slot)
 {
 	int ufoIdx;
 	int i;
-	float distance0;
+	float distance0, distance;
 
 	/* check if there is already another weapon firing at a ufo */
 	for (i = 0; i < base->maxBatteries; i++) {
-		/* FIXME: Why not >= 0 - 0 is a valid ufo id, too */
-		if (base->targetMissileIdx[i] > 0) {
-			float distance = MAP_GetDistance(base->pos, gd.ufos[base->targetMissileIdx[i]].pos);
+		if (base->targetMissileIdx[i] >= 0) {
+			distance = MAP_GetDistance(base->pos, gd.ufos[base->targetMissileIdx[i]].pos);
 			if (AIRFIGHT_CheckWeapon(slot, distance) >= 0)
 				return base->targetMissileIdx[i];
 		}
 	}
 	for (i = 0; i < base->maxLasers; i++) {
-		/* FIXME: Why not >= 0 - 0 is a valid ufo id, too */
-		if (base->targetLaserIdx[i] > 0) {
-			float distance = MAP_GetDistance(base->pos, gd.ufos[base->targetLaserIdx[i]].pos);
+		if (base->targetLaserIdx[i] >= 0) {
+			distance = MAP_GetDistance(base->pos, gd.ufos[base->targetLaserIdx[i]].pos);
 			if (AIRFIGHT_CheckWeapon(slot, distance) >= 0)
 				return base->targetLaserIdx[i];
 		}
@@ -687,7 +717,6 @@ static int AIRFIGHT_BaseChooseTarget (base_t *base, aircraftSlot_t *slot)
 	ufoIdx = AIRFIGHT_BASE_CAN_T_FIRE;
 	for (i = 0; i < gd.numUfos; i++) {
 		aircraft_t* ufo = &gd.ufos[i];
-		float distance;
 
 		if (!ufo->visible)
 			continue;
@@ -723,8 +752,7 @@ static void AIRFIGHT_BaseShoot (base_t *base, aircraftSlot_t *slot, int maxSlot,
 			continue;
 
 		/* check if the weapon has already a target */
-		/* FIXME: Why not >= - 0 is a valid base id, too */
-		if (targetIdx[i] > 0) {
+		if (targetIdx[i] >= 0) {
 			float distance;
 			int test;
 
@@ -772,7 +800,6 @@ void AIRFIGHT_CampaignRunBaseDefense (int dt)
 {
 	base_t* base;
 	int idx;
-
 
 	for (base = gd.bases; base < (gd.bases + gd.numBases); base++) {
 		if (!base->founded)

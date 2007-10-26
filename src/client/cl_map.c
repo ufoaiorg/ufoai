@@ -192,7 +192,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 		}
 		break;
 
-	case MULTISELECT_TYPE_UFO : /* Selection of an UFO */
+	case MULTISELECT_TYPE_UFO : /* Selection of a UFO */
 		/* Get the ufo selected */
 		if (id < 0 || id >= gd.numUfos)
 			return;
@@ -232,7 +232,7 @@ static void MAP_MultiSelectNotifyMissionRemoved (const actMis_t* mission)
 }
 
 /**
- * @brief Notify the multi select system that an ufo has been removed
+ * @brief Notify the multi select system that a UFO has been removed
  */
 static void MAP_MultiSelectNotifyUfoRemoved (const aircraft_t* ufo)
 {
@@ -246,7 +246,7 @@ static void MAP_MultiSelectNotifyUfoRemoved (const aircraft_t* ufo)
 }
 
 /**
- * @brief Notify the multi select system that an ufo disapeard on radars
+ * @brief Notify the multi select system that a UFO disapeard on radars
  */
 static void MAP_MultiSelectNotifyUfoDisappeared (const aircraft_t* ufo)
 {
@@ -1457,7 +1457,7 @@ void MAP_NotifyMissionRemoved (const actMis_t* mission)
 }
 
 /**
- * @brief Notify that an ufo has been removed
+ * @brief Notify that a UFO has been removed
  */
 void MAP_NotifyUfoRemoved (const aircraft_t* ufo)
 {
@@ -1812,7 +1812,7 @@ void MAP_Init (void)
 }
 
 /**
- * @brief Notify that an ufo disappears on radars
+ * @brief Notify that a UFO disappears on radars
  */
 void MAP_NotifyUfoDisappear (const aircraft_t* ufo)
 {

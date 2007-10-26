@@ -63,7 +63,7 @@ typedef struct popup_aircarft_s {
 /** FIXME: Save me */
 static popup_aircraft_t popupAircraft; /**< Data about popup_aircraft */
 
-/* popup_intercept display list of aircraft availables to move to a mission or an ufo */
+/* popup_intercept display list of aircraft availables to move to a mission or a UFO */
 
 #define POPUP_INTERCEPT_MAX_AIRCRAFT 64	/**< Max aircrafts in popup list */
 
@@ -118,7 +118,7 @@ void CL_PopupNotifyMissionRemoved (const actMis_t* mission)
 }
 
 /**
- * @brief Notify that an ufo has been removed
+ * @brief Notify that a UFO has been removed
  */
 void CL_PopupNotifyUfoRemoved (const aircraft_t* ufo)
 {
@@ -127,7 +127,7 @@ void CL_PopupNotifyUfoRemoved (const aircraft_t* ufo)
 }
 
 /**
- * @brief Notify popups that an ufo has disappeared on radars
+ * @brief Notify popups that a UFO has disappeared on radars
  */
 void CL_PopupNotifyUfoDisappeared (const aircraft_t* ufo)
 {
@@ -390,7 +390,7 @@ static void CL_PopupInterceptNotifyMissionRemoved (const actMis_t* mission)
 }
 
 /**
- * @brief Notify the popup_intercept system that an ufo has been removed
+ * @brief Notify the popup_intercept system that a UFO has been removed
  */
 static void CL_PopupInterceptNotifyUfoRemoved (const aircraft_t* ufo)
 {
@@ -399,7 +399,7 @@ static void CL_PopupInterceptNotifyUfoRemoved (const aircraft_t* ufo)
 }
 
 /**
- * @brief Notify the popup_intercept system than an ufo has disappeared on radars
+ * @brief Notify the popup_intercept system than a UFO has disappeared on radars
  */
 static void CL_PopupInterceptNotifyUfoDisappeared (const aircraft_t* ufo)
 {

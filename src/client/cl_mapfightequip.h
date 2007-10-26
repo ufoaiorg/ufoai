@@ -48,7 +48,7 @@ void AII_InitialiseSlot(aircraftSlot_t *slot, int aircraftIdx);
 void AII_UpdateAircraftStats(aircraft_t *aircraft);
 int AII_GetSlotItems(aircraftItemType_t type, aircraft_t *aircraft);
 int AII_AircraftCanShoot(aircraft_t *aircraft);
-int AII_BaseCanShoot(base_t *base);
+int AII_BaseCanShoot(const base_t *base);
 
 itemWeight_t AII_GetItemWeightBySize(objDef_t *od);
 
