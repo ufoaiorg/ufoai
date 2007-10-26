@@ -494,6 +494,13 @@ void UP_AircraftItemDescription (int idx)
 	if (idx == NONE) {
 		/* set menu text node content to null */
 		menuText[TEXT_STANDARD] = NULL;
+		Cvar_Set("mn_itemname", "");
+		Cvar_Set("mn_item", "");
+		Cvar_Set("mn_upmodel_top", "");
+		Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
+		Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
+		Cvar_Set("mn_researchedlinkname", "");
+		Cvar_Set("mn_upresearchedlinknametooltip", "");
 		return;
 	}
 

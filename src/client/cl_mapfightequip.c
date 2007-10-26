@@ -293,7 +293,9 @@ static void AIM_UpdateAircraftItemList (base_t* base, aircraft_t* aircraft)
 
 	/* if there is at least one element, select the first one */
 	if (i)
-		Cbuf_AddText("airequip_list_click 0\n");
+		Cmd_ExecuteString("airequip_list_click 0\n");
+	else
+		UP_AircraftItemDescription(NONE);
 }
 
 /**
