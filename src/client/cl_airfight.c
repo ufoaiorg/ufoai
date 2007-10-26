@@ -35,8 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static const int AIRFIGHT_SLOT_NO_WEAPON_TO_USE_AT_THE_MOMENT = -1;
 static const int AIRFIGHT_SLOT_NO_WEAPON_TO_USE_NO_AMMO_LEFT = -2;
 
-static const int AIRFIGHT_BASE_CAN_T_FIRE = -1;
-
 /**
  * @brief Run bullets on geoscape.
  * @param[in] projectile Pointer to the projectile corresponding to this bullet.
