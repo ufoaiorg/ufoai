@@ -1102,7 +1102,7 @@ qboolean AII_AddAmmoToSlot (base_t* base, technology_t *tech, aircraftSlot_t *sl
 		return qfalse;
 	}
 
-	/* the base pointer can be null here - e.g. in case you are equipping an ufo */
+	/* the base pointer can be null here - e.g. in case you are equipping a UFO */
 	if (base) {
 		if (base->storage.num[ammoIdx] <= 0) {
 			Com_Printf("AII_AddAmmoToSlot: No more ammo of this type to equip (%s)\n", csi.ods[ammoIdx].id);
@@ -1114,7 +1114,7 @@ qboolean AII_AddAmmoToSlot (base_t* base, technology_t *tech, aircraftSlot_t *sl
 	AII_RemoveItemFromSlot(base, slot, qtrue);
 	slot->ammoIdx = ammoIdx;
 
-	/* the base pointer can be null here - e.g. in case you are equipping an ufo */
+	/* the base pointer can be null here - e.g. in case you are equipping a UFO */
 	if (base)
 		B_UpdateStorageAndCapacity(base, ammoIdx, -1, qfalse, qfalse);
 
@@ -1135,7 +1135,7 @@ qboolean AII_AddItemToSlot (base_t* base, technology_t *tech, aircraftSlot_t *sl
 
 	itemIdx = AII_GetAircraftItemByID(tech->provides);
 
-	/* the base pointer can be null here - e.g. in case you are equipping an ufo */
+	/* the base pointer can be null here - e.g. in case you are equipping a UFO */
 	if (base) {
 		if (base->storage.num[itemIdx] <= 0) {
 			Com_Printf("AII_AddItemToSlot: No more item of this type to equip (%s)\n", csi.ods[itemIdx].id);
@@ -1146,7 +1146,7 @@ qboolean AII_AddItemToSlot (base_t* base, technology_t *tech, aircraftSlot_t *sl
 	if (slot->size >= AII_GetItemWeightBySize(&csi.ods[slot->itemIdx])) {
 		slot->itemIdx = itemIdx;
 		slot->installationTime = csi.ods[slot->itemIdx].craftitem.installationTime;
-		/* the base pointer can be null here - e.g. in case you are equipping an ufo */
+		/* the base pointer can be null here - e.g. in case you are equipping a UFO */
 		if (base)
 			B_UpdateStorageAndCapacity(base, itemIdx, -1, qfalse, qfalse);
 	} else {
@@ -1384,7 +1384,7 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 		/* modify by electronics (do nothing if the value of stat is 0) */
 		for (i = 0; i < aircraft->maxElectronics; i++) {
 			/* check if the electroincs is operationnal (not in installing or removing process) */
-			if (aircraft->electronics[i].installationTime != 0)
+			if (aircraft->electronics[i].installationTime > 0)
 				continue;
 			item = &csi.ods[aircraft->electronics[i].itemIdx];
 			if (fabs(item->craftitem.stats[currentStat]) > 2.0f)
@@ -1393,8 +1393,8 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 				aircraft->stats[currentStat] *= item->craftitem.stats[currentStat];
 		}
 
-		/* modify by weapons (do nothing if the value of stat is 0) */
-		/* note that stats are not modified by ammos */
+		/* modify by weapons (do nothing if the value of stat is 0)
+		 * note that stats are not modified by ammos */
 		for (i = 0; i < aircraft->maxWeapons; i++) {
 			/* check if the weapon is operationnal (not in installing or removing process) */
 			if (aircraft->weapons[i].installationTime != 0)
@@ -1406,8 +1406,8 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 				aircraft->stats[currentStat] *= item->craftitem.stats[currentStat];
 		}
 
-		/* modify by shield (do nothing if the value of stat is 0) */
-		/* check if the shield is operationnal (not in installing or removing process) */
+		/* modify by shield (do nothing if the value of stat is 0)
+		 * check if the shield is operationnal (not in installing or removing process) */
 		if (aircraft->shield.installationTime == 0) {
 			item = &csi.ods[aircraft->shield.itemIdx];
 			if (fabs(item->craftitem.stats[currentStat]) > 2.0f)

@@ -116,7 +116,7 @@ const char* UFO_TypeToName (ufoType_t type)
 }
 
 /**
- * @brief Give a random destination to an ufo, and make him to move there
+ * @brief Give a random destination to the given UFO, and make him to move there
  * @todo Sometimes the ufos aren't changing the routes - CP_GetRandomPosForAircraft
  * returns correct values, but it seams, that MAP_MapCalcLine is not doing the correct
  * things - set debug_showufos to 1
@@ -344,9 +344,8 @@ static void UFO_ListUfosOnGeoscape_f (void)
 #endif
 
 /**
- * @brief Add an ufo in geoscape
- *
- * @todo: Ufos are not assigned unique idx fields. Could be handy...
+ * @brief Add a UFO to geoscape
+ * @todo: UFOs are not assigned unique idx fields. Could be handy...
  * @sa UFO_RemoveUfoFromGeoscape
  * @sa UFO_RemoveUfoFromGeoscape_f
  */
@@ -434,7 +433,7 @@ void UFO_RemoveUfoFromGeoscape (aircraft_t* ufo)
 }
 
 /**
- * @brief Remove an ufo from the geoscape
+ * @brief Remove a UFO from the geoscape
   */
 static void UFO_RemoveUfoFromGeoscape_f (void)
 {
@@ -632,11 +631,11 @@ static void UFO_DestroyAllUFOsOnGeoscape_f (void)
  */
 void UFO_Reset (void)
 {
-	Cmd_AddCommand("addufo", UFO_NewUfoOnGeoscape_f, "Add a new ufo to geoscape");
-	Cmd_AddCommand("removeufo", UFO_RemoveUfoFromGeoscape_f, "Remove an ufo from geoscape");
+	Cmd_AddCommand("addufo", UFO_NewUfoOnGeoscape_f, "Add a new UFO to geoscape");
+	Cmd_AddCommand("removeufo", UFO_RemoveUfoFromGeoscape_f, "Remove a UFO from geoscape");
 #ifdef DEBUG
-	Cmd_AddCommand("debug_destroyallufos", UFO_DestroyAllUFOsOnGeoscape_f, "Destroy all ufos on geoscape and spawn the crashsite missions (if not over water)");
-	Cmd_AddCommand("debug_listufo", UFO_ListUfosOnGeoscape_f, "Print ufo information to game console");
-	Cvar_Get("debug_showufos", "0", 0, "Show all ufos on geoscape");
+	Cmd_AddCommand("debug_destroyallufos", UFO_DestroyAllUFOsOnGeoscape_f, "Destroy all UFOs on geoscape and spawn the crashsite missions (if not over water)");
+	Cmd_AddCommand("debug_listufo", UFO_ListUfosOnGeoscape_f, "Print UFO information to game console");
+	Cvar_Get("debug_showufos", "0", 0, "Show all UFOs on geoscape");
 #endif
 }

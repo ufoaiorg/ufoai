@@ -195,7 +195,7 @@ typedef struct ufoRecoveries_s {
 typedef struct missionResults_s {
 	int itemtypes;		/**< Types of items gathered from a mission. */
 	int itemamount;		/**< Amount of items (all) gathered from a mission. */
-	qboolean recovery;	/**< Qtrue if player secured an UFO (landed or crashed). */
+	qboolean recovery;	/**< Qtrue if player secured a UFO (landed or crashed). */
 	ufoType_t ufotype;	/**< Type of UFO secured during the mission. */
 	qboolean crashsite;	/**< Qtrue if secured UFO was crashed one. */
 } missionResults_t;
@@ -370,8 +370,8 @@ typedef struct ccs_s {
 typedef enum mapAction_s {
 	MA_NONE,
 	MA_NEWBASE,				/**< build a new base */
-	MA_INTERCEPT,				/**< intercept */
-	MA_BASEATTACK,				/**< base attacking */
+	MA_INTERCEPT,			/**< intercept */
+	MA_BASEATTACK,			/**< base attacking */
 	MA_UFORADAR				/**< ufos are in our radar */
 } mapAction_t;
 
@@ -381,13 +381,13 @@ typedef enum aircraftStatus_s {
 	AIR_REFUEL,				/**< refill fuel */
 	AIR_HOME,				/**< in homebase */
 	AIR_IDLE,				/**< just sit there on geoscape */
-	AIR_TRANSIT,				/**< moving */
-	AIR_MISSION,				/**< moving to a mission */
-	AIR_UFO,				/**< purchasing an ufo - also used for ufos that are purchasing an aircraft */
+	AIR_TRANSIT,			/**< moving */
+	AIR_MISSION,			/**< moving to a mission */
+	AIR_UFO,				/**< purchasing a UFO - also used for ufos that are purchasing an aircraft */
 	AIR_DROP,				/**< ready to drop down */
-	AIR_INTERCEPT,				/**< ready to intercept */
-	AIR_TRANSFER,				/**< being transfered */
-	AIR_RETURNING,				/**< returning to homebase */
+	AIR_INTERCEPT,			/**< ready to intercept */
+	AIR_TRANSFER,			/**< being transfered */
+	AIR_RETURNING,			/**< returning to homebase */
 	AIR_FLEEING				/**< fleeing other aircrafts */
 } aircraftStatus_t;
 

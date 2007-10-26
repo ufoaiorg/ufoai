@@ -78,7 +78,7 @@ void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, vec2_t pos)
 }
 
 /**
- * @brief Add an ufo in the list of sensored ufo
+ * @brief Add a UFO in the list of sensored ufo
  */
 static qboolean RADAR_AddUfo (radar_t* radar, int numUfo)
 {

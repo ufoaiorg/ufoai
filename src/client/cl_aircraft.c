@@ -1510,7 +1510,7 @@ void AIR_AircraftsNotifyMissionRemoved (const actMis_t *const mission)
 }
 
 /**
- * @brief Notify that an UFO has been removed.
+ * @brief Notify that a UFO has been removed.
  * @param[in] ufo Pointer to UFO that has been removed.
  */
 void AIR_AircraftsNotifyUfoRemoved (const aircraft_t *const ufo)
@@ -1547,8 +1547,8 @@ void AIR_AircraftsNotifyUfoRemoved (const aircraft_t *const ufo)
 }
 
 /**
- * @brief Notify that an ufo disappear from radars.
- * @param[in] ufo Pointer to an UFO that has disappeared.
+ * @brief Notify that a UFO disappear from radars.
+ * @param[in] ufo Pointer to a UFO that has disappeared.
  */
 void AIR_AircraftsUfoDisappear (const aircraft_t *const ufo)
 {
@@ -1565,9 +1565,9 @@ void AIR_AircraftsUfoDisappear (const aircraft_t *const ufo)
 }
 
 /**
- * @brief Make the specified aircraft purchasing an UFO.
- * @param[in] aircraft Pointer to an aircraft which will hunt for an UFO.
- * @param[in] ufo Pointer to an UFO.
+ * @brief Make the specified aircraft purchasing a UFO.
+ * @param[in] aircraft Pointer to an aircraft which will hunt for a UFO.
+ * @param[in] ufo Pointer to a UFO.
  */
 void AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
 {

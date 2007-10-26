@@ -89,7 +89,7 @@ typedef enum {
 	B_HANGAR,		/**< this building is a hangar */
 	B_ALIEN_CONTAINMENT,	/**< this building is an alien containment */
 	B_SMALL_HANGAR,		/**< this building is a small hangar */
-	B_UFO_HANGAR,		/**< this building is an UFO hangar */
+	B_UFO_HANGAR,		/**< this building is a UFO hangar */
 	B_UFO_SMALL_HANGAR,	/**< this building is a small UFO hangar */
 	B_POWER,		/**< this building is power plant */
 	B_COMMAND,		/**< this building is command centre */

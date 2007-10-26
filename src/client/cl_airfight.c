@@ -496,6 +496,31 @@ static qboolean AIRFIGHT_ProjectileReachedTarget (aircraftProjectile_t *projecti
 }
 
 /**
+ * @brief Calculates the damage value for the airfight
+ * @param[in] od The ammo object definition of the craft item
+ * @sa AII_UpdateAircraftStats
+ * @note ECM is handled in AIRFIGHT_ProbabilityToHit
+ */
+static int AIRFIGHT_GetDamage (objDef_t *od, aircraft_t* target)
+{
+	int damage;
+
+	assert(od);
+
+	/* already destroyed - do nothing */
+	if (target->stats[AIR_STATS_DAMAGE] <= 0)
+		return 0;
+
+	/* base damage is given by the ammo */
+	damage = od->craftitem.weaponDamage;
+
+	/* reduce damages with shield target */
+	damage -= target->stats[AIR_STATS_SHIELD];
+
+	return damage;
+}
+
+/**
  * @brief Solve the result of one projectile hitting an aircraft.
  * @param[in] projectile Pointer to the projectile.
  * @note the target loose (base damage - shield of target) hit points
@@ -513,17 +538,11 @@ static void AIRFIGHT_ProjectileHits (aircraftProjectile_t *projectile)
 	if (AIR_IsAircraftInBase(target))
 		return;
 
-	/* already destroyed - do nothing */
-	if (target->stats[AIR_STATS_DAMAGE] <= 0)
-		return;
+	damage = AIRFIGHT_GetDamage(&csi.ods[projectile->aircraftItemsIdx], target);
 
-	/* base damage is given by the ammo */
-	damage = csi.ods[projectile->aircraftItemsIdx].craftitem.weaponDamage;
-
-	/* reduce damages with shield target */
-	damage -= target->stats[AIR_STATS_SHIELD];
-
-	/* apply resulting damages */
+	/* apply resulting damages - but only if damage > 0 - because the target might
+	 * already be destroyed, and we don't want to execute the actions after airfight
+	 * for every projectile */
 	if (damage > 0) {
 		assert(target->stats[AIR_STATS_DAMAGE] > 0);
 		target->stats[AIR_STATS_DAMAGE] -= damage;
