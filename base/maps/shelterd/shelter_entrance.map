@@ -4,10 +4,10 @@
 "classname" "worldspawn"
 "maxlevel" "6"
 "maxteams" "4"
-"light" "15"
+"light" "160"
 "_color" "1 0.8 0.8"
 "angles" "0 0"
-"ambient" "0 0 0"
+"ambient" "0.4 0.4 0.4"
 // brush 0
 {
 ( 512 64 0 ) ( 292 64 0 ) ( 292 0 0 ) tex_nature/rock006 0 0 0 0.25 0.25 65280 0 0
