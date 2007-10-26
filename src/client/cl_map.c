@@ -1078,17 +1078,19 @@ static void MAP_SmoothTranslate (void)
 /**
  * @brief Draws on bunch of bullets on the geoscape map
  * @param[in] node Pointer to the node in which you want to draw the bullets.
- * @param[in] bulletIdx idx of the bullet in bulletPos array.
+ * @param[in] projectile Projectile pointer (make sure that this is a bullet projectile)
  * @sa MAP_DrawMap
  */
-static void MAP_DrawBullets (const menuNode_t* node, int bulletIdx)
+static void MAP_DrawBullets (const menuNode_t* node, aircraftProjectile_t *projectile)
 {
 	int k;
 	int x, y;
 	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
 
+	assert(projectile->bullets);
+
 	for (k = 0; k < BULLETS_PER_SHOT; k++) {
-		if (MAP_AllMapToScreen(node, bulletPos[bulletIdx][k], &x, &y, NULL))
+		if (MAP_AllMapToScreen(node, projectile->bulletPos[k], &x, &y, NULL))
 			R_DrawFill(x, y, BULLET_SIZE, BULLET_SIZE, ALIGN_CC, yellow);
 	}
 }
@@ -1149,8 +1151,8 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 
 	/* draws projectiles */
 	for (projectile = gd.projectiles + gd.numProjectiles - 1; projectile >= gd.projectiles; projectile --) {
-		if (projectile->bulletIdx > -1)
-			MAP_DrawBullets(node, projectile->bulletIdx);
+		if (projectile->bullets)
+			MAP_DrawBullets(node, projectile);
 		else
 			MAP_Draw3DMarkerIfVisible(node, projectile->pos, projectile->angle, "missile");
 	}
@@ -1296,6 +1298,7 @@ void MAP_DrawMap (const menuNode_t* node)
 {
 	float q;
 	base_t* base;
+	float distance;
 
 	/* store these values in ccs struct to be able to handle this even in the input code */
 	Vector2Copy(node->pos, ccs.mapPos);
@@ -1363,17 +1366,34 @@ void MAP_DrawMap (const menuNode_t* node)
 
 		menuText[TEXT_STANDARD] = va(_("Location: %s\nType: %s\nObjective: %s\n"), selMis->def->location, selMis->def->type, _(txt));
 	} else if (selectedAircraft) {
-		if (selectedAircraft->status <= AIR_HOME)
+		switch (selectedAircraft->status) {
+		case AIR_HOME:
+		case AIR_REFUEL:
 			MAP_ResetAction();
-		else {
+			break;
+		case AIR_UFO:
+			assert(selectedAircraft->aircraftTarget);
+			distance = MAP_GetDistance(selectedAircraft->pos, selectedAircraft->aircraftTarget->pos);
 			Com_sprintf(text_standard, sizeof(text_standard), va(_("Name:\t%s (%i/%i)\n"), selectedAircraft->name, selectedAircraft->teamSize, selectedAircraft->maxTeamSize));
 			Q_strcat(text_standard, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(selectedAircraft)), sizeof(text_standard));
-			Q_strcat(text_standard, va(_("Speed:\t%i\n"), selectedAircraft->stats[AIR_STATS_SPEED]), sizeof(text_standard));
-			Q_strcat(text_standard, va(_("Fuel:\t%i/%i\n"), selectedAircraft->fuel / 1000, selectedAircraft->stats[AIR_STATS_FUELSIZE] / 1000), sizeof(text_standard));
+			Q_strcat(text_standard, va(_("Distance to target:\t\t%.0f\n"), distance), sizeof(text_standard));
+			Q_strcat(text_standard, va(_("Speed:\t\t%i\n"), selectedAircraft->stats[AIR_STATS_SPEED]), sizeof(text_standard));
+			Q_strcat(text_standard, va(_("Fuel:\t\t%i/%i\n"), selectedAircraft->fuel / 1000, selectedAircraft->stats[AIR_STATS_FUELSIZE] / 1000), sizeof(text_standard));
 			menuText[TEXT_STANDARD] = text_standard;
+			break;
+		default:
+			Com_sprintf(text_standard, sizeof(text_standard), va(_("Name:\t%s (%i/%i)\n"), selectedAircraft->name, selectedAircraft->teamSize, selectedAircraft->maxTeamSize));
+			Q_strcat(text_standard, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(selectedAircraft)), sizeof(text_standard));
+			Q_strcat(text_standard, va(_("Speed:\t\t%i\n"), selectedAircraft->stats[AIR_STATS_SPEED]), sizeof(text_standard));
+			Q_strcat(text_standard, va(_("Fuel:\t\t%i/%i\n"), selectedAircraft->fuel / 1000, selectedAircraft->stats[AIR_STATS_FUELSIZE] / 1000), sizeof(text_standard));
+			menuText[TEXT_STANDARD] = text_standard;
+			break;
 		}
-	} else if (selectedUfo)
-		menuText[TEXT_STANDARD] = va("%s\n", selectedUfo->name);
+	} else if (selectedUfo) {
+		Com_sprintf(text_standard, sizeof(text_standard), va("%s\n", selectedUfo->name));
+		Q_strcat(text_standard, va(_("Speed:\t%i\n"), selectedUfo->stats[AIR_STATS_SPEED]), sizeof(text_standard));
+		menuText[TEXT_STANDARD] = text_standard;
+	}
 }
 
 /**

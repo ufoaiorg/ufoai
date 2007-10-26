@@ -882,6 +882,7 @@ static void PR_UpdateProductionList (base_t* base)
 	} else {
 		for (i = 0; i < numAircraft_samples; i++) {
 			aircraft = &aircraft_samples[i];
+			/* don't allow producing ufos */
 			if (aircraft->ufotype != UFO_MAX)
 				continue;
 			if (!aircraft->tech) {

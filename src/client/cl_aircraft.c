@@ -1895,14 +1895,9 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 			MSG_WriteByte(sb, 2);
 		MSG_WriteShort(sb, gd.projectiles[i].time);
 		MSG_WriteFloat(sb, gd.projectiles[i].angle);
-		MSG_WriteShort(sb, gd.projectiles[i].bulletIdx);
-	}
-
-	/* Save bullets. */
-	MSG_WriteByte(sb, numBullets);
-	for (i = 0; i < numBullets; i++) {
-		for (j = 0; j < BULLETS_PER_SHOT; j++)
-			MSG_Write2Pos(sb, bulletPos[i][j]);
+		MSG_WriteByte(sb, gd.projectiles[i].bullets);
+		for (j = 0; j < presaveArray[PRE_MAXBUL]; j++)
+			MSG_Write2Pos(sb, gd.projectiles[i].bulletPos[j]);
 	}
 
 	/* Save recoveries. */
@@ -2088,20 +2083,11 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 				gd.projectiles[i].aimedAircraft = AIR_AircraftGetFromIdx(MSG_ReadShort(sb));
 			gd.projectiles[i].time = MSG_ReadShort(sb);
 			gd.projectiles[i].angle = MSG_ReadFloat(sb);
-			/* short - might be -1 */
-			gd.projectiles[i].bulletIdx = MSG_ReadShort(sb);
+			gd.projectiles[i].bullets = MSG_ReadByte(sb);
+			for (j = 0; j < presaveArray[PRE_MAXBUL]; j++)
+				MSG_Read2Pos(sb, gd.projectiles[i].bulletPos[j]);
 		} else
 			Sys_Error("AIR_Load()... Could not get technology of projectile %i\n", i);
-	}
-
-	/* Load bullets. */
-	numBullets = MSG_ReadByte(sb);
-	if (numBullets > MAX_BULLETS_ON_GEOSCAPE)
-		Sys_Error("AIR_Load()... Too many bullets on map (%i)\n", numBullets);
-
-	for (i = 0; i < numBullets; i++) {
-		for (j = 0; j < BULLETS_PER_SHOT; j++)
-			MSG_Read2Pos(sb, bulletPos[i][j]);
 	}
 
 	/* Load recoveries. */

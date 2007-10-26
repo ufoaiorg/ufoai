@@ -107,9 +107,10 @@ static void FixWorkingDirectory (const char **argv)
 		printf("Path is too long. Please copy Bundle to a shorter path location \n");
 	} else {
 		/* unfortunately the finder gives the path inclusive the executeable */
-		/* so we only go to length - 3, to remove "ufo" from the path */
+		/* so we only go to length - 18, to remove "Contents/MacOS/ufo" from the path */
+		/* so we end up in UFO.app/ where base/ is to be found */
 		printf("Changing wd to path %s \n",argv[0]);
-		strncpy(newPath,argv[0],(strlen(argv[0])-3));
+		strncpy(newPath,argv[0],(strlen(argv[0])-18));
 		printf("%s = neuer Pfad \n",newPath);
 		chdir(newPath);
 	}

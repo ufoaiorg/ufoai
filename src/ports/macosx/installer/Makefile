@@ -9,7 +9,7 @@ DATADIR=data
 #this is only for arranging the path names and tar the zip files
 #this step is needed - otherwise loki_setup would automatically extract
 #all zip files
-TEMPDIR=UfoApp.app/Contents/MacOS
+TEMPDIR=UFOAI.app/Contents/MacOS
 #get the version of ufo
 VERSION_UC=$(shell grep UFO_VERSION $(ROOTDIR)src/common/common.h | sed -e 's/.*UFO_VERSION\s*\(.*\)/\1/' | sed -e 's/\"//g')
 VERSION_LC=$(shell echo $(VERSION_UC) | sed -e 'y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/;')
@@ -29,4 +29,4 @@ packdata:
 	@cp -u $(ROOTDIR)base/*.$(EXT) $(TEMPDIR)/base
 
 update_installer_data:
-	@sed 's/@VERSION@/$(VERSION_UC)/g' UfoApp.app/Contents/Info.plist.in > UfoApp.app/Contents/Info.plist
+	@sed 's/@VERSION@/$(VERSION_UC)/g' UFOAI.app/Contents/Info.plist.in > UFOAI.app/Contents/Info.plist

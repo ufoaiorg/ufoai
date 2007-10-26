@@ -26,8 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_AIRFIGHT_H
 #define CLIENT_CL_AIRFIGHT_H
 
-#define MAX_BULLETS_ON_GEOSCAPE	32
-#define BULLETS_PER_SHOT	16
+#define BULLETS_PER_SHOT	1
 
 /**
  * @note 0 if the weapon can shoot
@@ -37,9 +36,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define AIRFIGHT_WEAPON_CAN_SHOOT 0
 #define AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT -1
 #define AIRFIGHT_WEAPON_CAN_NOT_SHOOT -2
-
-extern int numBullets;			/**< Number of bunch of bullets on geoscape */
-extern vec2_t bulletPos[MAX_BULLETS_ON_GEOSCAPE][BULLETS_PER_SHOT];	/**< Position of every bullets on geoscape */
 
 /** @brief projectile used during fight between aircrafts */
 typedef struct aircraftProjectile_s {
@@ -56,7 +52,8 @@ typedef struct aircraftProjectile_s {
 									and if aimedBase != NULL */
 	int time;				/**< time since the projectile has been launched */
 	float angle;			/**< angle of the missile on the geoscape */
-	int bulletIdx;			/**< idx of the bullet in bulletPos array (only used if the weapon fires bullets) */
+	qboolean bullets;		/**< projectile has active bullets on geoscape */
+	vec2_t bulletPos[BULLETS_PER_SHOT];	/**< bulletPos array (only used if the weapon fires bullets) */
 } aircraftProjectile_t;
 
 void AIRFIGHT_ExecuteActions(aircraft_t* air, aircraft_t* ufo);
