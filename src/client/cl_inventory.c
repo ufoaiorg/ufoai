@@ -233,7 +233,7 @@ void INV_CollectingItems (int won)
 /**
  * @brief Sell items to the market or add them to base storage.
  * @param[in] aircraft Pointer to an aircraft landing in base.
- * @sa CL_DropshipReturned
+ * @sa CL_AircraftReturnedToHomeBase
  */
 void INV_SellOrAddItems (aircraft_t *aircraft)
 {

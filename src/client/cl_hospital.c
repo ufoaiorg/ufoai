@@ -605,7 +605,7 @@ void HOS_RemoveEmployeesInHospital (aircraft_t *aircraft)
 
 /**
  * @brief Moves soldiers returning from a mission between hospital arrays in base_t.
- * @sa CL_DropshipReturned
+ * @sa CL_AircraftReturnedToHomeBase
  */
 void HOS_ReaddEmployeesInHospital (aircraft_t *aircraft)
 {

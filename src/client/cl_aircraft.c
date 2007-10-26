@@ -905,7 +905,7 @@ void CL_CampaignRunAircraft (int dt)
 							break;
 						case AIR_RETURNING:
 							/* aircraft entered in homebase */
-							CL_DropshipReturned(aircraft->homebase, aircraft);
+							CL_AircraftReturnedToHomeBase(aircraft);
 							aircraft->status = AIR_REFUEL;
 							break;
 						case AIR_TRANSFER:
@@ -1461,6 +1461,8 @@ void AIR_ListAircraftSamples_f (void)
  * @brief Reload the weapon of an aircraft
  * @param[in] aircraft Pointer to the aircraft to reload
  * @todo check if there is still ammo in storage, and remove them from it
+ * @todo: this should costs credits
+ * @sa AIRFIGHT_AddProjectile for the basedefense reload code
  */
 void AII_ReloadWeapon (aircraft_t *aircraft)
 {

@@ -311,7 +311,7 @@ qboolean B_CheckBuildingTypeStatus(const base_t* const base, buildingType_t type
 
 void B_MarkBuildingDestroy(base_t* base, building_t* building);
 qboolean B_BuildingDestroy(base_t* base, building_t* building);
-void CL_DropshipReturned(base_t* base, aircraft_t* aircraft);
+void CL_AircraftReturnedToHomeBase(aircraft_t* aircraft);
 
 void B_UpdateBaseCapacities(baseCapacities_t cap, base_t *base);
 qboolean B_UpdateStorageAndCapacity(base_t* base, int objIDX, int amount, qboolean reset, qboolean ignorecap);

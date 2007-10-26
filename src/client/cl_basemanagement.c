@@ -2755,7 +2755,7 @@ aircraft_t *B_GetAircraftFromBaseByIndex (base_t* base, int index)
  * @note when Drophip returns to base.
  * @sa CL_CampaignRunAircraft
  */
-void CL_DropshipReturned (base_t* base, aircraft_t* aircraft)
+void CL_AircraftReturnedToHomeBase (aircraft_t* aircraft)
 {
 	HOS_ReaddEmployeesInHospital(aircraft);		/**< Try to readd soldiers to hospital. */
 	/* Don't call cargo functions if aircraft is not a transporter. */
@@ -2770,6 +2770,8 @@ void CL_DropshipReturned (base_t* base, aircraft_t* aircraft)
 	memset(aircraft->aliencargo, 0, sizeof(aircraft->aliencargo));
 	memset(aircraft->itemcargo, 0, sizeof(aircraft->itemcargo));
 	aircraft->alientypes = 0;
+
+	AII_ReloadWeapon(aircraft);
 }
 
 /**

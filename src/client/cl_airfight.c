@@ -88,6 +88,7 @@ static qboolean AIRFIGHT_RemoveProjectile (aircraftProjectile_t *projectile)
  * @param[in] weaponSlot Pointer to the weapon slot that fires the projectile.
  * @note we already checked in AIRFIGHT_ChooseWeapon that the weapon has still ammo
  * @sa AIRFIGHT_RemoveProjectile
+ * @sa AII_ReloadWeapon for the aircraft item reload code
  */
 static qboolean AIRFIGHT_AddProjectile (base_t* attackingBase, aircraft_t *attacker, base_t* aimedBase, aircraft_t *target, aircraftSlot_t *weaponSlot)
 {
@@ -100,6 +101,13 @@ static qboolean AIRFIGHT_AddProjectile (base_t* attackingBase, aircraft_t *attac
 	}
 
 	projectile = &gd.projectiles[gd.numProjectiles];
+
+	if (weaponSlot->ammoIdx == NONE) {
+		Com_Printf("AIRFIGHT_AddProjectile: Error - no ammo assigned\n");
+		return qfalse;
+	}
+
+	assert(weaponSlot->itemIdx != NONE);
 
 	projectile->idx = gd.numProjectiles;
 	projectile->aircraftItemsIdx = weaponSlot->ammoIdx;
@@ -136,6 +144,13 @@ static qboolean AIRFIGHT_AddProjectile (base_t* attackingBase, aircraft_t *attac
 	}
 
 	weaponSlot->ammoLeft -= 1;
+	if (weaponSlot->ammoLeft <= 0) {
+		if (!attacker) {
+			/* @todo: this should costs credits */
+			weaponSlot->ammoLeft = csi.ods[weaponSlot->ammoIdx].ammo;
+		}
+	}
+
 	gd.numProjectiles++;
 
 	return qtrue;
@@ -181,11 +196,11 @@ static int AIRFIGHT_CheckWeapon (const aircraftSlot_t *slot, float distance)
 	assert(slot);
 
 	/* check if there is a functional weapon in this slot */
-	if (slot->itemIdx < 0 || slot->installationTime != 0)
+	if (slot->itemIdx == NONE || slot->installationTime != 0)
 		return AIRFIGHT_WEAPON_CAN_NOT_SHOOT;
 
 		/* check if there is still ammo in this weapon */
-	if (slot->ammoIdx < 0 || slot->ammoLeft <= 0)
+	if (slot->ammoIdx == NONE || slot->ammoLeft <= 0)
 		return AIRFIGHT_WEAPON_CAN_NOT_SHOOT;
 
 	ammoIdx = slot->ammoIdx;
@@ -257,13 +272,13 @@ static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target,
 	float probability = 0.0f;
 
 	idx = slot->itemIdx;
-	if (idx < 0) {
+	if (idx == NONE) {
 		Com_Printf("AIRFIGHT_ProbabilityToHit: no weapon assigned to attacking aircraft\n");
 		return probability;
 	}
 
 	idx = slot->ammoIdx;
-	if (idx < 0) {
+	if (idx == NONE) {
 		Com_Printf("AIRFIGHT_ProbabilityToHit: no ammo in weapon of attacking aircraft\n");
 		return probability;
 	}
