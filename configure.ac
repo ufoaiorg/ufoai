@@ -405,22 +405,25 @@ then
 	OLD_CFLAGS=$CFLAGS
 	OLD_LDFLAGS=$LDFLAGS
 
-	AC_CHECK_PROG(HAVE_SDL_CONFIG,$sdl_config,yes)
-	if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
+	if test $TARGET_OS != "darwin"
 	then
-		CPPFLAGS=`$sdl_config --cflags`
-		LDFLAGS=`$sdl_config --libs`
-		AC_SUBST([SDL_CFLAGS],$CPPFLAGS)
-		AC_SUBST([SDL_LIBS],$LDFLAGS)
-	else
-		AC_MSG_WARN([cannot find $sdl_config might fail to find SDL!])
-		if test $TARGET_OS = "darwin"
+		AC_CHECK_PROG(HAVE_SDL_CONFIG,$sdl_config,yes)
+		if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
 		then
-			# mac is special...again
-			CFLAGS="$CFLAGS $sdl_mac_cflags"
-			LDFLAGS="$LDFLAGS $sdl_mac_ldflags"
-			SDL_CFLAGS="$sdl_mac_cflags"
-			SDL_LIBS="$sdl_mac_ldflags"
+			CPPFLAGS=`$sdl_config --cflags`
+			LDFLAGS=`$sdl_config --libs`
+			AC_SUBST([SDL_CFLAGS],$CPPFLAGS)
+			AC_SUBST([SDL_LIBS],$LDFLAGS)
+		else
+			AC_MSG_WARN([cannot find $sdl_config might fail to find SDL!])
+			if test $TARGET_OS = "darwin"
+			then
+				# mac is special...again
+				CFLAGS="$CFLAGS $sdl_mac_cflags"
+				LDFLAGS="$LDFLAGS $sdl_mac_ldflags"
+				SDL_CFLAGS="$sdl_mac_cflags"
+				SDL_LIBS="$sdl_mac_ldflags"
+			fi
 		fi
 	fi
 
