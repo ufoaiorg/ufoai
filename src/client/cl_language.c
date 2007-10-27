@@ -236,7 +236,6 @@ void CL_LanguageInit (void)
 		}
 	}
 
-
 	menu = MN_GetMenu("checkcvars");
 	if (!menu)
 		Sys_Error("Could not find menu checkcvars\n");
@@ -296,7 +295,7 @@ qboolean CL_LanguageTryToSet (const char *localeID)
 	do {
 		Cvar_Set("s_language", mapping->localeMapping);
 #ifdef _WIN32
-		Com_Printf("CL_LanguageTryToSet: %s\n", mapping->localeMapping);
+		Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTryToSet: %s\n", mapping->localeMapping);
 		Q_putenv("LANGUAGE", mapping->localeMapping);
 		Cvar_Set("s_language", language->localeID);
 		s_language->modified = qfalse;
@@ -311,6 +310,7 @@ qboolean CL_LanguageTryToSet (const char *localeID)
 		mapping = mapping->next;
 	} while (mapping);
 #ifndef _WIN32
+	Com_DPrintf(DEBUG_CLIENT, "CL_LanguageTryToSet: Finally try: '%s'\n", localeID);
 	setlocale(LC_MESSAGES, localeID);
 #endif
 	return qfalse;
