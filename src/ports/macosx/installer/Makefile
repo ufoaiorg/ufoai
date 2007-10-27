@@ -25,7 +25,7 @@ build_dmg:
 	@cp -v $(ROOTDIR)base/*.$(EXT) UFOAI.app/base/
 #	for dir in $(ROOTDIR)base/i18n/*; do \
 #		mkdir -p UFOAI.app/base/i18n/$$dir/LC_MESSAGES; \
-#		cp $(ROOTDIR)$$dir/LC_MESSAGES/ufoai.mo UFOAI.app/base/$$dir/LC_MESSAGES/ufoai.mo; \
+#		cp $(ROOTDIR)base/$$dir/LC_MESSAGES/ufoai.mo UFOAI.app/base/$$dir/LC_MESSAGES/ufoai.mo; \
 #	done
 	@cp -r $(ROOTDIR)base/i18n UFOAI.app/base/i18n
 	@perl macfixlibs.pl
