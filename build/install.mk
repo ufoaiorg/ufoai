@@ -29,11 +29,12 @@ linuxinstaller:
 
 macinstaller:
 	$(MAKE) lang
-	$(MAKE) maps
+#	$(MAKE) maps
+	cd base; wget http://mattn.ninex.info/download/0maps.pk3
 	cd base; ./archives.sh
-	cd src/ports/macosx/installer; $(MAKE)
-	scp src/ports/macosx/installer/ufoai-$(VERSION)-macosx.dmg ufo:~/public_html/download
-	scp src/ports/macosx/installer/ufoai-$(VERSION)-macosx.dmg mirror:~/public_html
+	cd src/ports/macosx/installer; $(MAKE) TARGET_CPU=$(TARGET_CPU)
+	scp src/ports/macosx/installer/ufoai-$(VERSION)-macosx-$(TARGET_CPU).dmg ufo:~/public_html/download
+	scp src/ports/macosx/installer/ufoai-$(VERSION)-macosx-$(TARGET_CPU).dmg mirror:~/public_html
 
 #
 # Generate a tar archive of the sources.
