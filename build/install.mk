@@ -29,9 +29,10 @@ linuxinstaller:
 
 macinstaller:
 	$(MAKE) lang
-#	$(MAKE) maps
-	cd base; wget http://mattn.ninex.info/download/0maps.pk3
+	# delete all the maps first - we have to get them precompiled, otherwise multiplayer
+	# won't work due to mismatching checksums
 	cd base; ./archives.sh
+	cd base; wget http://mattn.ninex.info/download/0maps.pk3
 	cd src/ports/macosx/installer; $(MAKE) TARGET_CPU=$(TARGET_CPU)
 	scp src/ports/macosx/installer/ufoai-$(VERSION)-macosx-$(TARGET_CPU).dmg ufo:~/public_html/download
 	scp src/ports/macosx/installer/ufoai-$(VERSION)-macosx-$(TARGET_CPU).dmg mirror:~/public_html
