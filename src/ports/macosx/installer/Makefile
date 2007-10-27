@@ -1,20 +1,14 @@
-all: update_installer_data
+all: update_installer_data build_dmg
 
 EXT=pk3
 ROOTDIR=../../../../
 #relative from root dir
 INSTDIR=src/ports/macosx/installer/
-#everything inside this dir will be compressed to the self extracting archive
-DATADIR=data
-#this is only for arranging the path names and tar the zip files
-#this step is needed - otherwise loki_setup would automatically extract
-#all zip files
-TEMPDIR=UFOAI.app/Contents/MacOS
 #get the version of ufo
 VERSION_UC=$(shell grep UFO_VERSION $(ROOTDIR)src/common/common.h | sed -e 's/.*UFO_VERSION\s*\(.*\)/\1/' | sed -e 's/\"//g')
 VERSION_LC=$(shell echo $(VERSION_UC) | sed -e 'y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/;')
-#get the size of the zip data archives
-SIZE=$(shell LANG=C; du -sch $(TEMPDIR)/base/*.$(EXT) $(BINARIES) | tail -1 | cut -f1;)
+
+PACKAGE_NAME=ufoai-$(VERSION_LC)-macosx-$(TARGET_CPU)
 
 BINARIES = \
 	$(ROOTDIR)ufo \
@@ -22,11 +16,24 @@ BINARIES = \
 	$(ROOTDIR)ufo2map \
 	$(ROOTDIR)base/game.dylib
 
-packdata:
-	@mkdir -p $(TEMPDIR)/base
-	@cd $(ROOTDIR); tar -cvjp -f $(INSTDIR)$(DATADIR)/i18n.tar.bz2 base/i18n/ --exclude .svn --exclude updated*
-	@cd $(ROOTDIR)base; ./archives.sh $(EXT)
-	@cp -u $(ROOTDIR)base/*.$(EXT) $(TEMPDIR)/base
+build_dmg:
+	@mkdir -p UFOAI.app/Contents/MacOS
+	@mkdir -p UFOAI.app/Contents/Frameworks
+	@mkdir -p UFOAI.app/Contents/Libraries
+	@mkdir -p UFOAI.app/base
+	@cp $(BINARIES) UFOAI.app/base
+	@cp -v $(ROOTDIR)base/*.$(EXT) UFOAI.app/base/
+#	for dir in $(ROOTDIR)base/i18n/*; do \
+#		mkdir -p UFOAI.app/base/i18n/$$dir/LC_MESSAGES; \
+#		cp $(ROOTDIR)$$dir/LC_MESSAGES/ufoai.mo UFOAI.app/base/$$dir/LC_MESSAGES/ufoai.mo; \
+#	done
+	@cp -r $(ROOTDIR)base/i18n UFOAI.app/base/i18n
+	@perl macfixlibs.pl
+	@rm -f $(PACKAGE_NAME).dmg
+	@cp $(ROOTDIR)README UFOAI.app
+	@cp $(ROOTDIR)CONTRIBUTORS UFOAI.app
+	@cp $(ROOTDIR)COPYING UFOAI.app
+	@hdiutil create -srcfolder UFOAI.app $(PACKAGE_NAME).dmg
 
 update_installer_data:
 	@sed 's/@VERSION@/$(VERSION_UC)/g' UFOAI.app/Contents/Info.plist.in > UFOAI.app/Contents/Info.plist
