@@ -416,15 +416,13 @@ then
 			AC_SUBST([SDL_LIBS],$LDFLAGS)
 		else
 			AC_MSG_WARN([cannot find $sdl_config might fail to find SDL!])
-			if test $TARGET_OS = "darwin"
-			then
-				# mac is special...again
-				CFLAGS="$CFLAGS $sdl_mac_cflags"
-				LDFLAGS="$LDFLAGS $sdl_mac_ldflags"
-				SDL_CFLAGS="$sdl_mac_cflags"
-				SDL_LIBS="$sdl_mac_ldflags"
-			fi
 		fi
+	else
+		# mac is special...again
+		CFLAGS="$CFLAGS $sdl_mac_cflags"
+		LDFLAGS="$LDFLAGS $sdl_mac_ldflags"
+		SDL_CFLAGS="$sdl_mac_cflags"
+		SDL_LIBS="$sdl_mac_ldflags"
 	fi
 
 	#---------------------------------------------------------------------------------------------

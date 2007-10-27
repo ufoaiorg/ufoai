@@ -8015,15 +8015,13 @@ fi
 		else
 			{ echo "$as_me:$LINENO: WARNING: cannot find $sdl_config might fail to find SDL!" >&5
 echo "$as_me: WARNING: cannot find $sdl_config might fail to find SDL!" >&2;}
-			if test $TARGET_OS = "darwin"
-			then
-				# mac is special...again
-				CFLAGS="$CFLAGS $sdl_mac_cflags"
-				LDFLAGS="$LDFLAGS $sdl_mac_ldflags"
-				SDL_CFLAGS="$sdl_mac_cflags"
-				SDL_LIBS="$sdl_mac_ldflags"
-			fi
 		fi
+	else
+		# mac is special...again
+		CFLAGS="$CFLAGS $sdl_mac_cflags"
+		LDFLAGS="$LDFLAGS $sdl_mac_ldflags"
+		SDL_CFLAGS="$sdl_mac_cflags"
+		SDL_LIBS="$sdl_mac_ldflags"
 	fi
 
 	#---------------------------------------------------------------------------------------------
