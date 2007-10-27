@@ -87,6 +87,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define YAW    1   /* left / right */
 #define ROLL   2   /* fall over */
 
+#define	BASEDIRNAME	"base"
 
 /** @brief Map boundary is +/- 4096 - to get into the positive area we add the
  * possible max negative value and divide by the size of a grid unit field */

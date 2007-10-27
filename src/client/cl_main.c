@@ -2486,7 +2486,7 @@ void CL_Init (void)
 	if (*fs_i18ndir->string)
 		Q_strncpyz(languagePath, fs_i18ndir->string, sizeof(languagePath));
 	else
-		Com_sprintf(languagePath, sizeof(languagePath), "%s/base/i18n/", FS_GetCwd());
+		Com_sprintf(languagePath, sizeof(languagePath), "%s/"BASEDIRNAME"/i18n/", FS_GetCwd());
 	Com_DPrintf(DEBUG_CLIENT, "...using mo files from %s\n", languagePath);
 	bindtextdomain(TEXT_DOMAIN, languagePath);
 	bind_textdomain_codeset(TEXT_DOMAIN, "UTF-8");

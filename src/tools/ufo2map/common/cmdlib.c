@@ -56,7 +56,6 @@ static pack_t *FS_LoadPackFile(const char *packfile);
 #endif
 
 #define	BASEDIR_ID_FILE	".gamedir"	/* This is the name of the "trunk" directory. */
-#define	BASEDIR	"base"	/* This is the directory the game-data is stored. */
 
 #ifdef WIN_ERROR
 #include <windows.h>
@@ -155,8 +154,8 @@ void SetQdirFromPath (char *path)
 			continue;
 		snprintf(temp, sizeof(temp), "%s/%s", c, BASEDIR_ID_FILE);
 		if (FileExists(temp)) {
-			strncpy(gamedir, c, strlen(c)-1);
-			strncat(gamedir, "/"BASEDIR"/", sizeof(gamedir));
+			strncpy(gamedir, c, strlen(c) - 1);
+			strncat(gamedir, "/"BASEDIRNAME"/", sizeof(gamedir));
 			Com_Printf("gamedir: %s\n", gamedir);
 			snprintf(c, sizeof(c) - 1, "%s0pics.pk3", gamedir);
 			pak = FS_LoadPackFile(c);
