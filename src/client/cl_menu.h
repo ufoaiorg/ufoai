@@ -106,7 +106,7 @@ typedef enum {
 } menuDataValues_t;
 
 /* all available select box options - for all menunodes */
-#define MAX_SELECT_BOX_OPTIONS 64
+#define MAX_SELECT_BOX_OPTIONS 128
 #define SELECTBOX_DEFAULT_HEIGHT 20.0f
 #define SELECTBOX_SIDE_WIDTH 7.0f
 #define SELECTBOX_BOTTOM_HEIGHT 4.0f

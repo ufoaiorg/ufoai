@@ -230,7 +230,7 @@ void CL_LanguageInit (void)
 		if (CL_LanguageTest(language->localeID) || (Q_strncmp(language->localeID, "none", 4) == 0)) {
 			selectBoxOption = MN_AddSelectboxOption(languageOptions);
 			if (!selectBoxOption)
-				return;
+				break;
 			Com_sprintf(selectBoxOption->label, sizeof(selectBoxOption->label), language->localeString);
 			Com_sprintf(selectBoxOption->value, sizeof(selectBoxOption->value), language->localeID);
 		}
@@ -252,7 +252,7 @@ void CL_LanguageInit (void)
 		if (CL_LanguageTest(language->localeID) || (Q_strncmp(language->localeID, "none", 4) == 0)) {
 			selectBoxOption = MN_AddSelectboxOption(languageOptions);
 			if (!selectBoxOption)
-				return;
+				break;
 			Com_sprintf(selectBoxOption->label, sizeof(selectBoxOption->label), language->localeString);
 			Com_sprintf(selectBoxOption->value, sizeof(selectBoxOption->value), language->localeID);
 		}
