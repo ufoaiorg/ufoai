@@ -8002,7 +8002,7 @@ echo "${ECHO_T}no" >&6; }
 fi
 
 
-	if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "lulu"
+	if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
 	then
 		CPPFLAGS=`$sdl_config --cflags`
 		LDFLAGS=`$sdl_config --libs`

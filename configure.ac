@@ -406,7 +406,7 @@ then
 	OLD_LDFLAGS=$LDFLAGS
 
 	AC_CHECK_PROG(HAVE_SDL_CONFIG,$sdl_config,yes)
-	if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "lulu"
+	if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
 	then
 		CPPFLAGS=`$sdl_config --cflags`
 		LDFLAGS=`$sdl_config --libs`
