@@ -2532,22 +2532,29 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 		return;
 	level.nextEndRound = level.framenum + 20;
 
-	/* check if all team members are ready (even ai players) */
-	if (!player->ready) {
-		player->ready = qtrue;
-		/* don't send this for alien and civilian teams */
-		if (player->pers.team != TEAM_CIVILIAN
-		 && player->pers.team != TEAM_ALIEN) {
-			gi.AddEvent(PM_ALL, EV_ENDROUNDANNOUNCE | EVENT_INSTANTLY);
-			gi.WriteByte(player->num);
-			gi.WriteByte(player->pers.team);
-			gi.EndEvents();
+	/* only use this for teamplay matches like coopX or 2on2 and above
+	 * also skip this for ai players, this is only called when all ai actors
+	 * have finished their 'thinking' */
+	if (!player->pers.ai && sv_teamplay->integer) {
+		/* check if all team members are ready */
+		if (!player->ready) {
+			player->ready = qtrue;
+			/* don't send this for alien and civilian teams */
+			if (player->pers.team != TEAM_CIVILIAN
+			 && player->pers.team != TEAM_ALIEN) {
+				gi.AddEvent(PM_ALL, EV_ENDROUNDANNOUNCE | EVENT_INSTANTLY);
+				gi.WriteByte(player->num);
+				gi.WriteByte(player->pers.team);
+				gi.EndEvents();
+			}
 		}
+		for (i = 0, p = game.players; i < game.sv_maxplayersperteam * 2; i++, p++)
+			if (p->inuse && p->pers.team == level.activeTeam
+				&& !p->ready && G_PlayerSoldiersCount(p) > 0)
+				return;
+	} else {
+		player->ready = qtrue;
 	}
-	for (i = 0, p = game.players; i < game.sv_maxplayersperteam * 2; i++, p++)
-		if (p->inuse && p->pers.team == level.activeTeam
-			&& !p->ready && G_PlayerSoldiersCount(p) > 0)
-			return;
 
 	/* clear any remaining reaction fire */
 	G_ReactToEndTurn();
