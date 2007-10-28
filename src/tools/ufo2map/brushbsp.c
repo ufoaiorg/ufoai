@@ -246,9 +246,9 @@ static int BoxOnPlaneSide (vec3_t mins, vec3_t maxs, plane_t *plane)
 	/* axial planes are easy */
 	if (plane->type < 3) {
 		side = 0;
-		if (maxs[plane->type] > plane->dist+PLANESIDE_EPSILON)
+		if (maxs[plane->type] > plane->dist + PLANESIDE_EPSILON)
 			side |= PSIDE_FRONT;
-		if (mins[plane->type] < plane->dist-PLANESIDE_EPSILON)
+		if (mins[plane->type] < plane->dist - PLANESIDE_EPSILON)
 			side |= PSIDE_BACK;
 		return side;
 	}

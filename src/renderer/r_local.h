@@ -140,7 +140,6 @@ extern int gl_filter_min, gl_filter_max;
 extern vec3_t vup;
 extern vec3_t vpn;
 extern vec3_t vright;
-extern vec3_t r_origin;
 
 extern cvar_t *r_drawclouds;
 extern cvar_t *r_drawworld;

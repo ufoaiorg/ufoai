@@ -489,6 +489,7 @@ static void CMod_LoadLeafs (lump_t * l, vec3_t shift)
 /**
  * @param[in] shift The shifting vector in case this is a map assemble
  * @sa CM_AddMapTile
+ * @sa R_ModLoadPlanes
  */
 static void CMod_LoadPlanes (lump_t * l, vec3_t shift)
 {

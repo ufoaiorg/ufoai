@@ -46,7 +46,7 @@ static void R_RenderDlight (const dlight_t const* light)
 
 	rad = light->intensity * 0.35;
 
-	VectorSubtract(light->origin, r_origin, v);
+	VectorSubtract(light->origin, refdef.vieworg, v);
 
 	qglBegin(GL_TRIANGLE_FAN);
 	qglColor3f(light->color[0] * 0.2, light->color[1] * 0.2, light->color[2] * 0.2);

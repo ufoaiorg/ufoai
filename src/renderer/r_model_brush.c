@@ -446,7 +446,9 @@ static void R_ModLoadSurfedges (lump_t * l)
 		out[i] = LittleLong(in[i]);
 }
 
-
+/**
+ * @sa CMod_LoadPlanes
+ */
 static void R_ModLoadPlanes (lump_t * l)
 {
 	int i, j;
