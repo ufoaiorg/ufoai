@@ -30,10 +30,10 @@ sub findlibs {
 	return @libs;
 }
 
-my $libdir = 'UFO.app/Contents/Libraries';
-my $fwdir = 'UFO.app/Contents/Frameworks';
-my $binpath = 'UFO.app/Contents/MacOS/ufo';
-my @a = findlibs 'UFO.app/Contents/MacOS/ufo';
+my $libdir = 'UFOAI.app/Contents/Libraries';
+my $fwdir = 'UFOAI.app/Contents/Frameworks';
+my $binpath = 'UFOAI.app/Contents/MacOS/ufo';
+my @a = findlibs 'UFOAI.app/Contents/MacOS/ufo';
 my %alllibs;
 
 sub addtoall {
@@ -74,11 +74,11 @@ sub installlib {
 
 	if($lib =~ /\.dylib$/) {
 		# && instead of || because error is reported as 'true'
-		`cp $lib $libdir/` && die "failed\n"; 
+		`cp $lib $libdir/` && die "failed\n";
 		$newpath = "$libdir/$libname";
 		$fworlib = "Libraries";
 	} else {
-		`cp $nlib $fwdir/` && die "failed\n"; 
+		`cp $nlib $fwdir/` && die "failed\n";
 		$newpath = "$fwdir/$libname";
 		$fworlib = "Frameworks";
 	}
@@ -90,7 +90,7 @@ sub installlib {
 	# change my deps
 	foreach my $i (@libs) {
 		next if $i eq $lib;
-		
+
 		my $fworlib2;
 		my $libname2;
 
@@ -116,7 +116,7 @@ sub installlib {
 }
 
 while ( my ($x,$y) = each %alllibs ) {
-	installlib $x,$y,"yes"; 
+	installlib $x,$y,"yes";
 }
 
 ## and, finally, change for app itself

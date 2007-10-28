@@ -13,7 +13,8 @@ PACKAGE_NAME=ufoai-$(VERSION_LC)-macosx-$(TARGET_CPU)
 BINARIES = \
 	$(ROOTDIR)ufo \
 	$(ROOTDIR)ufoded \
-	$(ROOTDIR)ufo2map \
+	$(ROOTDIR)ufo2map
+BINARIES_BASE = \
 	$(ROOTDIR)base/game.dylib
 
 build_dmg:
@@ -21,7 +22,8 @@ build_dmg:
 	@mkdir -p UFOAI.app/Contents/Frameworks
 	@mkdir -p UFOAI.app/Contents/Libraries
 	@mkdir -p UFOAI.app/base
-	@cp $(BINARIES) UFOAI.app/base
+	@cp $(BINARIES) UFOAI.app/Contents/MacOS
+	@cp $(BINARIES_BASE) UFOAI.app/base
 	@cp -v $(ROOTDIR)base/*.$(EXT) UFOAI.app/base/
 #	for dir in $(ROOTDIR)base/i18n/*; do \
 #		mkdir -p UFOAI.app/base/i18n/$$dir/LC_MESSAGES; \
