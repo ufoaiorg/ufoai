@@ -1482,7 +1482,7 @@ const char *FS_GetCwd (void)
 }
 
 /**
- * @brief Checks whether a file exists (not in virtuel filesystem)
+ * @brief Checks whether a file exists (not in virtual filesystem)
  * @sa FS_CheckFile
  * @param[in] filename Full filesystem path to the file
  */

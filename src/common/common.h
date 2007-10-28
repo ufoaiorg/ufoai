@@ -34,8 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define UFO_VERSION "2.2-dev"
 
-#define	BASEDIRNAME	"base"
-
 #ifdef _WIN32
 #  ifdef DEBUG
 #    define BUILDSTRING "Win32 DEBUG"
@@ -131,13 +129,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  define BUILDSTRING "NON-WIN32"
 #  define CPUSTRING	"NON-WIN32"
 #endif
-
-#ifndef DEFAULT_BASEDIR
-# define DEFAULT_BASEDIR BASEDIRNAME
-#endif							/* DEFAULT_BASEDIR */
-#ifndef DEFAULT_LIBDIR
-# define DEFAULT_LIBDIR DEFAULT_BASEDIR
-#endif							/* DEFAULT_LIBDIR */
 
 #include "common.h"
 

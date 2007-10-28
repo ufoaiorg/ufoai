@@ -37,7 +37,6 @@ packdata:
 	@tar -cvjp -f $(DATADIR)/ufo-x86_64.tar.bz2 $(BINARIES_64)
 	@cd $(ROOTDIR); tar -cvjp -f $(INSTDIR)$(DATADIR)/i18n.tar.bz2 base/i18n/ --exclude .svn --exclude updated*
 	cd $(ROOTDIR); tar -cvjp -f $(INSTDIR)$(DATADIR)/mapsource.tar.bz2 base/maps/ --exclude .svn --exclude *.bsp --exclude *.autosave* --exclude *.bak
-	@cd $(ROOTDIR)base; ./archives.sh $(EXT)
 	@cp -u $(ROOTDIR)base/*.$(EXT) $(TEMPDIR)/base
 	@cd $(TEMPDIR); tar -cvp -f ../$(DATADIR)/data.tar base
 	@cd $(DATADIR); wget -nc $(GTKRADIANT_URL)

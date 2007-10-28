@@ -14,7 +14,7 @@ fast:
 	$(MAKE) all UFO2MAPFLAGS="$(FAST_UFO2MAPFLAGS)"
 
 clean:
-	find $(MAPSDIR) -name '*.bsp' | xargs --no-run-if-empty rm
+	find $(MAPSDIR) -name '*.bsp' | xargs rm
 
 $(BSPS): %.bsp: %.map
 	$(UFO2MAP) $(UFO2MAPFLAGS) $<

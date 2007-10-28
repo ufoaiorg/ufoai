@@ -672,7 +672,8 @@ static void CL_EntPerish (struct dbuffer *msg)
 	}
 
 	/* decrease the count of spotted aliens */
-	if ((le->type == ET_ACTOR || le->type == ET_ACTOR2x2) && !(le->state & STATE_DEAD) && le->team != cls.team && le->team != TEAM_CIVILIAN)
+	if ((le->type == ET_ACTOR || le->type == ET_ACTOR2x2) && !(le->state & STATE_DEAD)
+	 && le->team != cls.team && le->team != TEAM_CIVILIAN)
 		cl.numAliensSpotted--;
 
 	switch (le->type) {
@@ -692,6 +693,11 @@ static void CL_EntPerish (struct dbuffer *msg)
 	case ET_ACTOR2x2:
 		INVSH_DestroyInventory(&le->i);
 		break;
+#ifdef DEBUG
+	case ET_ACTORHIDDEN:
+		Com_DPrintf(DEBUG_CLIENT, "CL_EntPerish: It should not happen that we perish an hidden actor\n");
+		return;
+#endif
 	case ET_BREAKABLE:
 	case ET_DOOR:
 		break;
@@ -891,8 +897,6 @@ static void CL_ActorAppear (struct dbuffer *msg)
 		le = LE_Add(entnum);
 		newActor = qtrue;
 	} else {
-/*		Com_Printf("Actor appearing already visible... overwriting the old one\n"); */
-		le->inuse = qtrue;
 		if (le->type == ET_ACTORHIDDEN)
 			newActor = qtrue;
 		else
@@ -946,6 +950,7 @@ static void CL_ActorAppear (struct dbuffer *msg)
 	if (!(le->state & STATE_DEAD) && newActor && le->team != cls.team && le->team != TEAM_CIVILIAN)
 		cl.numAliensSpotted++;
 
+	/* FIXME: Why do we check cls.state here - events are only executed when a mission is active */
 	if (cls.state == ca_active && !(le->state & STATE_DEAD)) {
 		/* center view (if wanted) */
 		if (cl_centerview->integer > 1 || (cl_centerview->integer == 1 && cl.actTeam != cls.team)) {

@@ -7965,7 +7965,9 @@ echo "$as_me: error: Could not find internationalization library with gettext in
 	OLD_CFLAGS=$CFLAGS
 	OLD_LDFLAGS=$LDFLAGS
 
-	# Extract the first word of "$sdl_config", so it can be a program name with args.
+	if test $TARGET_OS != "darwin"
+	then
+		# Extract the first word of "$sdl_config", so it can be a program name with args.
 set dummy $sdl_config; ac_word=$2
 { echo "$as_me:$LINENO: checking for $ac_word" >&5
 echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6; }
@@ -8002,25 +8004,24 @@ echo "${ECHO_T}no" >&6; }
 fi
 
 
-	if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
-	then
-		CPPFLAGS=`$sdl_config --cflags`
-		LDFLAGS=`$sdl_config --libs`
-		SDL_CFLAGS=$CPPFLAGS
-
-		SDL_LIBS=$LDFLAGS
-
-	else
-		{ echo "$as_me:$LINENO: WARNING: cannot find $sdl_config might fail to find SDL!" >&5
-echo "$as_me: WARNING: cannot find $sdl_config might fail to find SDL!" >&2;}
-		if test $TARGET_OS = "darwin"
+		if test "$ac_cv_prog_HAVE_SDL_CONFIG" = "yes"
 		then
-			# mac is special...again
-			CFLAGS="$CFLAGS $sdl_mac_cflags"
-			LDFLAGS="$LDFLAGS $sdl_mac_ldflags"
-			SDL_CFLAGS="$sdl_mac_cflags"
-			SDL_LIBS="$sdl_mac_ldflags"
+			CPPFLAGS=`$sdl_config --cflags`
+			LDFLAGS=`$sdl_config --libs`
+			SDL_CFLAGS=$CPPFLAGS
+
+			SDL_LIBS=$LDFLAGS
+
+		else
+			{ echo "$as_me:$LINENO: WARNING: cannot find $sdl_config might fail to find SDL!" >&5
+echo "$as_me: WARNING: cannot find $sdl_config might fail to find SDL!" >&2;}
 		fi
+	else
+		# mac is special...again
+		CFLAGS="$CFLAGS $sdl_mac_cflags"
+		LDFLAGS="$LDFLAGS $sdl_mac_ldflags"
+		SDL_CFLAGS="$sdl_mac_cflags"
+		SDL_LIBS="$sdl_mac_ldflags"
 	fi
 
 	#---------------------------------------------------------------------------------------------

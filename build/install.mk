@@ -13,7 +13,7 @@ wininstaller:
 	cd base; ./archives.sh
 	makensis src/ports/windows/installer.nsi
 	md5sum src/ports/windows/ufoai-$(VERSION)-win32.exe > src/ports/windows/ufoai-$(VERSION)-win32.md5
-	scp src/ports/windows/ufoai-$(VERSION)-win32.exe src/ports/windows/ufoai-$(VERSION)-win32.md5 ufo:~/public_html/download
+#	scp src/ports/windows/ufoai-$(VERSION)-win32.exe src/ports/windows/ufoai-$(VERSION)-win32.md5 ufo:~/public_html/download
 	scp src/ports/windows/ufoai-$(VERSION)-win32.exe src/ports/windows/ufoai-$(VERSION)-win32.md5 mirror:~/public_html
 
 linuxarchive:
@@ -24,16 +24,18 @@ linuxinstaller:
 	$(MAKE) maps
 	cd base; ./archives.sh
 	cd src/ports/linux/installer; $(MAKE) packdata; $(MAKE)
-	scp src/ports/linux/installer/ufoai-$(VERSION)-linux.run ufo:~/public_html/download
+#	scp src/ports/linux/installer/ufoai-$(VERSION)-linux.run ufo:~/public_html/download
 	scp src/ports/linux/installer/ufoai-$(VERSION)-linux.run mirror:~/public_html
 
 macinstaller:
 	$(MAKE) lang
-	$(MAKE) maps
+	# delete all the maps first - we have to get them precompiled, otherwise multiplayer
+	# won't work due to mismatching checksums
 	cd base; ./archives.sh
-	cd src/ports/macosx/installer; $(MAKE)
-	scp src/ports/macosx/installer/ufoai-$(VERSION)-macosx.dmg ufo:~/public_html/download
-	scp src/ports/macosx/installer/ufoai-$(VERSION)-macosx.dmg mirror:~/public_html
+	cd base; wget http://mattn.ninex.info/download/0maps.pk3
+	cd src/ports/macosx/installer; $(MAKE) TARGET_CPU=$(TARGET_CPU)
+	scp src/ports/macosx/installer/ufoai-$(VERSION)-macosx-$(TARGET_CPU).dmg ufo:~/public_html/download
+	scp src/ports/macosx/installer/ufoai-$(VERSION)-macosx-$(TARGET_CPU).dmg mirror:~/public_html
 
 #
 # Generate a tar archive of the sources.

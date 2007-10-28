@@ -433,6 +433,14 @@ void LET_StartIdle (le_t * le)
 		Com_Printf("LET_StartIdle: Could not change anim of le: %i, team: %i, pnum: %i\n",
 			le->entnum, le->team, le->pnum);
 
+#ifdef DEBUG
+	/* idle actors don't move */
+	if (le->pathPos != le->pathLength)
+		Com_Printf("LET_StartIdle: Looks like the actor has some steps to do. length: %i, pos: %i\n",
+			le->pathLength, le->pathPos);
+#endif
+	le->pathPos = le->pathLength = 0;
+
 	/* keep this animation until something happens */
 	le->think = NULL;
 }
@@ -1055,10 +1063,10 @@ void LE_List_f (void)
 	int i;
 	le_t *le;
 
-	Com_Printf("number | entnum | type | inuse | invis | pnum | team | size\n");
+	Com_Printf("number | entnum | type | inuse | invis | pnum | team | size |  HP | state\n");
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
-		Com_Printf("#%5i | #%5i | %4i | %5i | %5i | %4i | %4i | %4i\n",
-			i, le->entnum, le->type, le->inuse, le->invis, le->pnum, le->team, le->fieldSize);
+		Com_Printf("#%5i | #%5i | %4i | %5i | %5i | %4i | %4i | %4i | %3i | %5i\n",
+			i, le->entnum, le->type, le->inuse, le->invis, le->pnum, le->team, le->fieldSize, le->HP, le->state);
 	}
 }
 #endif

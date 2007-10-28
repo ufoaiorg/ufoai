@@ -109,7 +109,7 @@ void AL_CollectingAliens (aircraft_t *aircraft)
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
 		if (!le->inuse)
 			continue;
-		if ((le->type == ET_ACTOR || le->type == ET_ACTOR2x2) && le->team == TEAM_ALIEN) {
+		if ((le->type == ET_ACTOR || le->type == ET_ACTORHIDDEN || le->type == ET_ACTOR2x2) && le->team == TEAM_ALIEN) {
 			if (!le->teamDef) {
 				Com_Printf("AL_CollectingAliens: Can't collect alien with no teamDef assigned\n");
 				continue;
