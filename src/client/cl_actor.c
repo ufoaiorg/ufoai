@@ -2385,7 +2385,12 @@ void CL_ActorDoMove (struct dbuffer *msg)
 		return;
 	}
 
+#ifdef DEBUG
 	/* get length/steps */
+	if (le->pathLength || le->pathPos)
+		Com_DPrintf(DEBUG_CLIENT, "CL_ActorDoMove: Looks like the previous movement wasn't finished but a new one was received already\n");
+#endif
+
 	le->pathLength = NET_ReadByte(msg);
 	assert(le->pathLength <= MAX_LE_PATHLENGTH);
 	for (i = 0; i < le->pathLength; i++) {
@@ -2657,6 +2662,7 @@ static qboolean firstShot = qfalse;
  * @sa CL_ActorShoot
  * @sa CL_ActorShootHidden
  * @todo Improve detection of left- or right animation.
+ * @sa EV_ACTOR_SHOOT
  */
 void CL_ActorDoShoot (struct dbuffer *msg)
 {
@@ -2690,10 +2696,8 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 		refdef.rdflags |= RDF_IRGOGGLES;
 
 	/* do actor related stuff */
-	if (!le) {
-		Com_Printf("CL_ActorDoShoot: Could not get LE with id: %i\n", number);
-		return;
-	}
+	if (!le)
+		return; /* maybe hidden or inuse is false? */
 
 	switch (le->type) {
 	case ET_ACTORHIDDEN:
@@ -2807,6 +2811,7 @@ void CL_ActorDoThrow (struct dbuffer *msg)
  * @sa CL_ActorShoot
  * @sa CL_ActorDoShoot
  * @todo Improve detection of left- or right animation.
+ * @sa EV_ACTOR_START_SHOOT
  */
 void CL_ActorStartShoot (struct dbuffer *msg)
 {
