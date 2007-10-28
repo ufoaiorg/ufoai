@@ -21,7 +21,7 @@ build_dmg:
 	@mkdir -p UFOAI.app/Contents/Frameworks
 	@mkdir -p UFOAI.app/Contents/Libraries
 	@mkdir -p UFOAI.app/base
-	@cp $(BINARIES) UFOAI.app/base
+	@cp $(BINARIES) UFOAI.app
 	@cp -v $(ROOTDIR)base/*.$(EXT) UFOAI.app/base/
 #	for dir in $(ROOTDIR)base/i18n/*; do \
 #		mkdir -p UFOAI.app/base/i18n/$$dir/LC_MESSAGES; \
