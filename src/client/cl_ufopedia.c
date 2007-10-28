@@ -566,26 +566,26 @@ void UP_AircraftDescription (technology_t* t)
 	aircraft_t* aircraft;
 	int i;
 
+	/* ensure that the buffer is emptied in every case */
+	upBuffer[0] = '\0';
+
 	if (RS_IsResearched_ptr(t)) {
 		aircraft = AIR_GetAircraft(t->provides);
 		if (!aircraft) {
 			Com_sprintf(upBuffer, sizeof(upBuffer), _("Error - could not find aircraft") );
 		} else {
-			upBuffer[0] = '\0';
 			for (i = 0; i < AIR_STATS_MAX; i++) {
 				switch (i) {
 				case AIR_STATS_SPEED:
 				case AIR_STATS_ACCURACY:
 				case AIR_STATS_FUELSIZE:
-					Q_strcat(upBuffer, va(_("%s:\t%i\n"), CL_AircraftStatToName(i), aircraft->stats[AIR_STATS_FUELSIZE] ), sizeof(upBuffer));
+					Q_strcat(upBuffer, va(_("%s:\t%i\n"), CL_AircraftStatToName(i), aircraft->stats[i]), sizeof(upBuffer));
 					break;
 				default:
 					break;
 				}
 			}
-			if (aircraft->type == AIRCRAFT_TRANSPORTER) {
-				Q_strcat(upBuffer, va(_("Max. soldiers:\t%i\n"), aircraft->maxTeamSize), sizeof(upBuffer));
-			}
+			Q_strcat(upBuffer, va(_("Max. soldiers:\t%i\n"), aircraft->maxTeamSize), sizeof(upBuffer));
 		}
 	} else if (RS_Collected_(t)) {
 		/* @todo Display crippled info and pre-research text here */
