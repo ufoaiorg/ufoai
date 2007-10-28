@@ -51,7 +51,6 @@ transform_t trafo[MAX_ENTITIES];
 vec3_t vup;
 vec3_t vpn;
 vec3_t vright;
-vec3_t r_origin;
 
 float r_world_matrix[16];
 float r_base_world_matrix[16];
@@ -434,7 +433,7 @@ static void R_SetFrustum (void)
 
 		for (i = 0; i < 4; i++) {
 			frustum[i].type = PLANE_ANYZ;
-			frustum[i].dist = DotProduct(r_origin, frustum[i].normal);
+			frustum[i].dist = DotProduct(refdef.vieworg, frustum[i].normal);
 			frustum[i].signbits = SignbitsForPlane(&frustum[i]);
 		}
 		frustum[0].dist -= 10 * refdef.fov_x;
@@ -453,7 +452,7 @@ static void R_SetFrustum (void)
 
 		for (i = 0; i < 4; i++) {
 			frustum[i].type = PLANE_ANYZ;
-			frustum[i].dist = DotProduct(r_origin, frustum[i].normal);
+			frustum[i].dist = DotProduct(refdef.vieworg, frustum[i].normal);
 			frustum[i].signbits = SignbitsForPlane(&frustum[i]);
 		}
 	}
@@ -464,8 +463,6 @@ static void R_SetupFrame (void)
 	r_framecount++;
 
 	/* build the transformation matrix for the given view angles */
-	VectorCopy(refdef.vieworg, r_origin);
-
 	AngleVectors(refdef.viewangles, vpn, vright, vup);
 
 	c_brush_polys = 0;
