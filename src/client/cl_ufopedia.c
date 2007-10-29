@@ -224,7 +224,13 @@ static void UP_DisplayTechTree (technology_t* t)
 				techRequired = RS_GetTechByIDX(required->idx[i]);
 				if (!techRequired)
 					Sys_Error("Could not find the tech for '%s'\n", required->id[i]);
-				Q_strcat(up_techtree, _(techRequired->name), sizeof(up_techtree));
+				
+				/** Only display tech if it isn't a logic-block.
+				 * @todo If it is one (a logic tech) we may want to re-iterate from its requirements? */
+				if (techRequired->type != RS_LOGIC)
+					Q_strcat(up_techtree, _(techRequired->name), sizeof(up_techtree));
+				else
+					continue;
 			}
 			Q_strcat(up_techtree, "\n", sizeof(up_techtree));
 		}
