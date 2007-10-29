@@ -338,11 +338,25 @@ selectBoxOptions_t* MN_AddSelectboxOption (menuNode_t *node)
 	return selectBoxOption;
 }
 
-/*
-==============================================================
-ACTION EXECUTION
-==============================================================
-*/
+/**
+ * @brief Returns the current active menu from the menu stack or NULL if there is none
+ * @return menu_t pointer from menu stack
+ * @sa MN_ActiveMenu
+ */
+static menu_t* inline MN_GetCurrentMenu (void)
+{
+	return (menuStackPos > 0 ? menuStack[menuStackPos - 1] : NULL);
+}
+
+/**
+ * @brief Returns the current active menu from the menu stack or NULL if there is none
+ * @return menu_t pointer from menu stack
+ * @sa MN_GetCurrentMenu
+ */
+menu_t* MN_ActiveMenu (void)
+{
+	return MN_GetCurrentMenu();
+}
 
 /**
  * @brief Searches all menus for the specified one
@@ -356,12 +370,8 @@ menu_t *MN_GetMenu (const char *name)
 	int i;
 
 	/* get the current menu */
-	if (name == NULL) {
-		if (menuStackPos >= 1)
-			return menuStack[menuStackPos-1];
-		else
-			return NULL;
-	}
+	if (name == NULL)
+		return MN_GetCurrentMenu();
 
 	for (i = 0; i < numMenus; i++)
 		if (!Q_strncmp(menus[i].name, name, MAX_VAR))
@@ -378,6 +388,9 @@ menu_t *MN_GetMenu (const char *name)
 menuNode_t *MN_GetNode (const menu_t* const menu, const char *name)
 {
 	menuNode_t *node = NULL;
+
+	if (!menu)
+		return NULL;
 
 	for (node = menu->firstNode; node; node = node->next)
 		if (!Q_strncmp(name, node->name, sizeof(node->name)))
@@ -441,12 +454,11 @@ static qboolean MN_CheckCondition (menuNode_t *node)
  */
 static void MN_ReinitCurrentMenu_f (void)
 {
-	if (menuStackPos > 0) {
-		/* initialize it */
-		if (menuStack[menuStackPos-1]) {
-			MN_ExecuteActions(menuStack[menuStackPos-1], menuStack[menuStackPos-1]->initNode->click);
-			Com_DPrintf(DEBUG_CLIENT, "Reinit %s\n", menuStack[menuStackPos-1]->name);
-		}
+	menu_t* menu = MN_GetCurrentMenu();
+	/* initialize it */
+	if (menu) {
+		MN_ExecuteActions(menu, menu->initNode->click);
+		Com_DPrintf(DEBUG_CLIENT, "Reinit %s\n", menu->name);
 	}
 }
 
@@ -456,8 +468,14 @@ static void MN_ReinitCurrentMenu_f (void)
  */
 menuNode_t* MN_GetNodeFromCurrentMenu (const char *name)
 {
-	return MN_GetNode(menuStack[menuStackPos-1], name);
+	return MN_GetNode(MN_GetCurrentMenu(), name);
 }
+
+/*
+==============================================================
+ACTION EXECUTION
+==============================================================
+*/
 
 /**
  * @sa MN_FocusExecuteActionNode
@@ -2231,9 +2249,9 @@ static menuModel_t *MN_GetMenuModel (const char *menuModel)
 const char *MN_GetFont (const menu_t *m, const menuNode_t *const n)
 {
 	if (!n || n->data[MN_DATA_ANIM_OR_FONT]) {
-		if (!m) {
-			m = menuStack[menuStackPos-1];
-		}
+		if (!m)
+			m = MN_GetCurrentMenu();
+
 		return MN_GetReferenceString(m, n->data[MN_DATA_ANIM_OR_FONT]);
 	}
 	return "f_small";
@@ -3219,18 +3237,6 @@ static void MN_DeleteMenuFromStack (menu_t * menu)
 }
 
 /**
- * @brief Get the current active menu
- * @return menu_t pointer from menu stack
- */
-menu_t* MN_ActiveMenu (void)
-{
-	if (menuStackPos >= 0)
-		return menuStack[menuStackPos-1];
-
-	return NULL;
-}
-
-/**
  * @brief Push a menu onto the menu stack
  * @param[in] name Name of the menu to push onto menu stack
  * @param[in] delete Delete the menu from the menu stack before readd it
@@ -3700,7 +3706,6 @@ static void MN_SetModelTransform_f (void)
 {
 	menuNode_t *node;
 	const char *command, *nodeID;
-	menu_t *current;
 	float x, y ,z;
 	vec3_t value;
 
@@ -3714,12 +3719,8 @@ static void MN_SetModelTransform_f (void)
 		return;
 	}
 
-	current = menuStack[menuStackPos-1];
-
 	command = Cmd_Argv(0);
-
 	nodeID = Cmd_Argv(1);
-
 	x = atof(Cmd_Argv(2));
 	y = atof(Cmd_Argv(3));
 	z = atof(Cmd_Argv(4));
@@ -3727,8 +3728,7 @@ static void MN_SetModelTransform_f (void)
 	VectorSet(value, x, y, z);
 
 	/* search the node */
-	node = MN_GetNode(current, nodeID);
-
+	node = MN_GetNode(MN_GetCurrentMenu(), nodeID);
 	if (!node) {
 		/* didn't find node -> "kill" action and print error */
 		Com_Printf("MN_SetModelTransform_f: node \"%s\" doesn't exist\n", nodeID);
@@ -3796,7 +3796,7 @@ static void MN_PrintMenu_f (void)
 	if (menuStackPos <= 0)
 		return;
 
-	current = menuStack[menuStackPos-1];
+	current = MN_GetCurrentMenu();
 	assert(current);
 	Com_Printf("menu %s {\n", current->name);
 	for (node = current->firstNode; node; node = node->next) {
