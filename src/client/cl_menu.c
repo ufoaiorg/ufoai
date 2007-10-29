@@ -3198,12 +3198,20 @@ GENERIC MENU FUNCTIONS
 ==============================================================
 */
 
-static void MN_DeleteMenu (menu_t * menu)
+/**
+ * @brief Remove the menu from the menu stack
+ * @param[in] menu The menu to remove from the stack
+ * @sa MN_PushMenuDelete
+ */
+static void MN_DeleteMenuFromStack (menu_t * menu)
 {
 	int i;
 
 	for (i = 0; i < menuStackPos; i++)
 		if (menuStack[i] == menu) {
+			/* @todo don't leave the loop even if we found it - there still
+			 * may be other copies around in the stack of the same menu
+			 * @sa MN_PushCopyMenu_f */
 			for (menuStackPos--; i < menuStackPos; i++)
 				menuStack[i] = menuStack[i + 1];
 			return;
@@ -3225,7 +3233,7 @@ menu_t* MN_ActiveMenu (void)
 /**
  * @brief Push a menu onto the menu stack
  * @param[in] name Name of the menu to push onto menu stack
- * @param[in] delete
+ * @param[in] delete Delete the menu from the menu stack before readd it
  * @return pointer to menu_t
  */
 static menu_t* MN_PushMenuDelete (const char *name, qboolean delete)
@@ -3239,7 +3247,7 @@ static menu_t* MN_PushMenuDelete (const char *name, qboolean delete)
 		if (!Q_strncmp(menus[i].name, name, MAX_VAR)) {
 			/* found the correct add it to stack or bring it on top */
 			if (delete)
-				MN_DeleteMenu(&menus[i]);
+				MN_DeleteMenuFromStack(&menus[i]);
 
 			if (menuStackPos < MAX_MENUSTACK)
 				menuStack[menuStackPos++] = &menus[i];
