@@ -68,9 +68,10 @@ static int upDisplay = UFOPEDIA_CHAPTERS;
  */
 static qboolean UP_TechGetsDisplayed (technology_t *tech)
 {
-	return RS_IsResearched_ptr(tech)	/* Is already researched OR ... */
+	return (RS_IsResearched_ptr(tech)	/* Is already researched OR ... */
 	 || RS_Collected_(tech)	/* ... has collected items OR ... */
-	 || (tech->statusResearchable && (tech->pre_description.numDescriptions > 0));
+	 || (tech->statusResearchable && (tech->pre_description.numDescriptions > 0)))
+	 && tech->type != RS_LOGIC;	/* Is no logic block. */
 }
 
 /**
@@ -205,6 +206,8 @@ static const char* CL_AircraftStatToName (int stat)
 /**
  * @brief Diplays the tech tree dependencies in the ufopedia
  * @sa UP_DrawEntry
+ * @todo Add support for "require_AND"
+ * @todo re-iterate trough logic blocks (i.e. append the tech-names it references recursively)
  */
 static void UP_DisplayTechTree (technology_t* t)
 {
@@ -225,12 +228,19 @@ static void UP_DisplayTechTree (technology_t* t)
 				if (!techRequired)
 					Sys_Error("Could not find the tech for '%s'\n", required->id[i]);
 				
-				/** Only display tech if it isn't a logic-block.
+				/** Only display tech if it isn't ok to do so.
 				 * @todo If it is one (a logic tech) we may want to re-iterate from its requirements? */
-				if (techRequired->type != RS_LOGIC)
+				if (UP_TechGetsDisplayed(techRequired)) {
 					Q_strcat(up_techtree, _(techRequired->name), sizeof(up_techtree));
-				else
+				} else {
+					/** @todo
+					if (techRequired->type == RS_LOGIC) {
+						Append strings from techRequired->require_AND etc...
+						Make UP_DisplayTechTree a recursive function?
+					}
+					*/
 					continue;
+				}
 			}
 			Q_strcat(up_techtree, "\n", sizeof(up_techtree));
 		}
@@ -725,6 +735,8 @@ void UP_Article (technology_t* tech)
 	int i;
 
 	assert(tech);
+
+	menuText[TEXT_UFOPEDIA] = menuText[TEXT_LIST] = NULL;
 
 	if (RS_IsResearched_ptr(tech)) {
 		Cvar_Set("mn_uptitle", va("%s *", _(tech->name)));
