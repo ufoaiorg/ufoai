@@ -711,7 +711,7 @@ static void R_RecursiveWorldNode (mBspNode_t * node)
 		return;
 
 	/* if a leaf node, draw stuff */
-	if (node->contents != -1)
+	if (node->contents != LEAFNODE)
 		return;
 
 	/* node is just a decision point, so go down the apropriate sides */
@@ -768,6 +768,8 @@ static void R_RecursiveWorldNode (mBspNode_t * node)
 /**
  * @sa R_RecursiveWorldNode
  * @sa R_DrawLevelBrushes
+ * @todo Batch all the static surfaces from each of the 8 levels in a surface list
+ * and only recurse down when the level changed
  */
 static void R_DrawWorld (mBspNode_t * nodes)
 {

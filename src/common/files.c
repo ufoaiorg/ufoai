@@ -448,15 +448,11 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 	unsigned int i, len, err;
 	packfile_t *newfiles;
 	pack_t *pack;
-	FILE *packhandle;
 	unz_file_info file_info;
 	unzFile uf;
 	unz_global_info gi;
 	char filename_inzip[MAX_QPATH];
 
-	packhandle = fopen(packfile, "rb");
-	if (!packhandle)
-		return NULL;
 	len = strlen(packfile);
 
 	if (!Q_strncmp(packfile + len - 4, ".pk3", 4) || !Q_strncmp(packfile + len - 4, ".zip", 4)) {

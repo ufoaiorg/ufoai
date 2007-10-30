@@ -147,10 +147,8 @@ CENTER PRINTING
 */
 
 static char scr_centerstring[1024];
-static float scr_centertime_start;		/* for slow victory printing */
-static float scr_centertime_off;
+static int scr_centertime_off;
 static int scr_center_lines;
-static int scr_erase_center;
 
 /**
  * @brief Called for important messages that should stay in the center of the screen for a few moments
@@ -162,8 +160,7 @@ void SCR_CenterPrint (const char *str)
 	int i, j, l;
 
 	strncpy(scr_centerstring, str, sizeof(scr_centerstring) - 1);
-	scr_centertime_off = scr_centertime->value;
-	scr_centertime_start = cl.time;
+	scr_centertime_off = scr_centertime->integer;
 
 	/* count the number of lines for centering */
 	scr_center_lines = 1;
@@ -202,6 +199,11 @@ void SCR_CenterPrint (const char *str)
 	Con_ClearNotify();
 }
 
+/**
+ * @brief Draws the center string parsed from svc_centerprint events
+ * @sa SCR_CheckDrawCenterString
+ * @sa SCR_CenterPrint
+ */
 static void SCR_DrawCenterString (void)
 {
 	char *start;
@@ -213,7 +215,6 @@ static void SCR_DrawCenterString (void)
 	/* the finale prints the characters one at a time */
 	remaining = 9999;
 
-	scr_erase_center = 0;
 	start = scr_centerstring;
 
 	if (scr_center_lines <= 4)
@@ -244,6 +245,12 @@ static void SCR_DrawCenterString (void)
 	} while (1);
 }
 
+/**
+ * @brief Checks whether center string is outdated or should still be shown
+ * @sa SCR_DrawCenterString
+ * @sa PF_centerprintf
+ * @sa svc_centerprint
+ */
 static void SCR_CheckDrawCenterString (void)
 {
 	scr_centertime_off -= cls.frametime;
@@ -254,6 +261,9 @@ static void SCR_CheckDrawCenterString (void)
 	SCR_DrawCenterString();
 }
 
+/**
+ * @sa CL_Init
+ */
 void SCR_Init (void)
 {
 	scr_conspeed = Cvar_Get("scr_conspeed", "3", 0, NULL);
@@ -269,7 +279,7 @@ void SCR_Init (void)
 	scr_rspeed = Cvar_Get("r_speeds", "0", 0, NULL);
 
 	/* register our commands */
-	Cmd_AddCommand("timerefresh", SCR_TimeRefresh_f, NULL);
+	Cmd_AddCommand("timerefresh", SCR_TimeRefresh_f, "Run a benchmark");
 
 	SCR_TouchPics();
 
