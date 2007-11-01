@@ -2243,6 +2243,19 @@ base/textures/tex_lights/mtl_l1.tga | GNU General Public License 2.0 | Nexuiz GP
 base/textures/tex_lights/mtl_l1_fx.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_lights/mtl_l1_fx2.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_material/metall006.jpg | Public Domain | Golgotha Public Domain Data
+base/textures/tex_mattn/door001.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/door002.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/door003.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/door004.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/door005.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/fan.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/metal.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/window001.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/window002.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/window003.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/window004.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/window005.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/wood001.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_misc/drkmtl_grlpltmech.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/e8_btrim01.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/e8_btrim01b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
