@@ -110,7 +110,8 @@ static void FixWorkingDirectory (const char **argv)
 		/* so we only go to length - 18, to remove "Contents/MacOS/ufo" from the path */
 		/* so we end up in UFO.app/ where base/ is to be found */
 		printf("Changing wd to path %s \n",argv[0]);
-		strncpy(newPath,argv[0],(strlen(argv[0])-18));
+		strncpy(newPath,argv[0],(strlen(argv[0])-19));
+		newPath[strlen(argv[0])-18]=0; /* terminating zero! */
 		printf("%s = neuer Pfad \n",newPath);
 		chdir(newPath);
 	}
