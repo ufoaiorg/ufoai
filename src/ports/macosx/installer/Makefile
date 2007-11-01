@@ -1,4 +1,5 @@
-all: update_installer_data build_dmg
+#all: update_installer_data build_dmg
+all: create-dmg
 
 EXT=pk3
 ROOTDIR=../../../../
@@ -16,6 +17,35 @@ BINARIES = \
 	$(ROOTDIR)ufo2map
 BINARIES_BASE = \
 	$(ROOTDIR)base/game.dylib
+
+updateversion:
+	@sed 's/@VERSION@/$(VERSION_UC)/g' UFOAI.app/Contents/Info.plist.in > UFOAI.app/Contents/Info.plist
+
+copybinaries:
+	@cp $(BINARIES) UFOAI.app/Contents/MacOS
+	@cp $(BINARIES_BASE) UFOAI.app/base
+
+copydata:
+	@cp -v $(ROOTDIR)base/*.$(EXT) UFOAI.app/base/
+	@cp -r $(ROOTDIR)base/i18n UFOAI.app/base/i18n
+
+copynotes:
+	@mkdir -p $(PACKAGE_NAME)
+	@cp $(ROOTDIR)README $(PACKAGE_NAME)
+	@cp $(ROOTDIR)CONTRIBUTORS $(PACKAGE_NAME)
+	@cp $(ROOTDIR)COPYING $(PACKAGE_NAME)
+
+bundle: copybinaries copydata copynotes
+	@perl macfixlibs.pl
+
+# for testing:
+bundle-nodata: copybinaries copynotes
+	@perl macfixlibs.pl
+
+create-dmg: bundle updateversion
+	@cp -r UFOAI.app $(PACKAGE_NAME)
+	@hdiutil create -srcfolder $(PACKAGE_NAME) $(PACKAGE_NAME).dmg
+
 
 build_dmg:
 	@mkdir -p UFOAI.app/Contents/MacOS
