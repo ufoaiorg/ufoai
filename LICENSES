@@ -2240,7 +2240,13 @@ base/textures/tex_mattn/floor003.jpg | GNU General Public License 2.0 | Martin G
 base/textures/tex_mattn/floor004.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/floor025.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/floor026.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/ground_dirt2.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/gully.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/metal.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/rack.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/sand001.jpg |  | Martin Gerhardy
+base/textures/tex_mattn/street011.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/street012.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall001.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall002.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall003.jpg | GNU General Public License 2.0 | Martin Gerhardy
@@ -2340,16 +2346,10 @@ base/textures/tex_misc/pipes001.jpg |  |  | Public Domain Golgotha
 base/textures/tex_misc/pipes002.jpg |  |  | Public Domain Golgotha
 base/textures/tex_misc/pipes003.jpg |  |  | Public Domain Golgotha
 base/textures/tex_nature/flower.jpg | GPL | Willem "Sitters"
-base/textures/tex_nature/ground_dirt2.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_nature/ice001.jpg |  |  | Public Domain Golgotha
-base/textures/tex_nature/sand001.jpg |  | Martin Gerhardy
 base/textures/tex_pics/redld01.jpg | This work is licensed under a Creative Commons Attribution-Share Alike 3.0 License | Werner Höhrer (hoehrer)
 base/textures/tex_pics/redld02.jpg | This work is licensed under a Creative Commons Attribution-Share Alike 3.0 License | Werner Höhrer (hoehrer)
 base/textures/tex_pics/redld03.jpg | This work is licensed under a Creative Commons Attribution-Share Alike 3.0 License | Werner Höhrer (hoehrer)
-base/textures/tex_streets/gully.tga | GNU General Public License 2.0 | Martin Gerhardy
-base/textures/tex_streets/street011.jpg | GNU General Public License 2.0 | Martin Gerhardy
-base/textures/tex_streets/street012.jpg | GNU General Public License 2.0 | Martin Gerhardy
-base/textures/tex_tech/rack.jpg | GNU General Public License 2.0 | Martin Gerhardy
 src/docs/pathfinding.odg | GNU Free Documentation License | Werner Höhrer (hoehrer)
 src/tools/blender/export_md2_new.py | GNU General Public License 2.0
 src/tools/blender/md2_export.py | GNU General Public License 2.0
