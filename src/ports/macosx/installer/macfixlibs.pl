@@ -1,6 +1,8 @@
 #!/usr/bin/perl -W
 use strict;
 
+my @explicit_libs = ('libcurl');
+
 sub fixframeworkpath {
 	my $old = shift;
 	return $old if $old =~ /\.dylib$/;
@@ -20,11 +22,14 @@ sub findlibs {
 		$l =~ s/^\t*//;
 		if($l =~ /([^\ ]+) \(/) {
 			my $lib = $1;
+			foreach my $extra (@explicit_libs) {
+				goto doit if $lib =~ /$extra/;
+			}
 			### ignore standard mac/darwin system libs and frameworks:
 			next if $lib =~ /\/System\/Library\/Frameworks/;
 			next if $lib =~ /\/usr\/lib/;
 			next if $lib =~ /$target/; #skip self
-			push @libs, $lib;
+			doit: push @libs, $lib;
 		}
 	}
 	return @libs;
