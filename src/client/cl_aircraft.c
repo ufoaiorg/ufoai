@@ -405,7 +405,7 @@ void AIR_NewAircraft_f (void)
 
 /**
  * @brief Restores aircraft cvars after going back from aircraft buy menu.
- * @sa BS_MarketAircraftDescription()
+ * @sa BS_MarketAircraftDescription
  */
 void AIM_ResetAircraftCvars_f (void)
 {
