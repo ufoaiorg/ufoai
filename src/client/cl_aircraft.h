@@ -247,5 +247,6 @@ void AIR_UpdateHangarCapForAll(int base_idx);
 qboolean AIR_AircraftAllowed(void);
 qboolean AIR_ScriptSanityCheck(void);
 int AIR_CalculateHangarStorage(int aircraftID, struct base_s *base, int used);
+int CL_AircraftMenuStatsValues(const int value, const int stat);
 
 #endif

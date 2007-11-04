@@ -1385,7 +1385,8 @@ void MAP_DrawMap (const menuNode_t* node)
 			Com_sprintf(text_standard, sizeof(text_standard), va(_("Name:\t%s (%i/%i)\n"), selectedAircraft->name, selectedAircraft->teamSize, selectedAircraft->maxTeamSize));
 			Q_strcat(text_standard, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(selectedAircraft)), sizeof(text_standard));
 			Q_strcat(text_standard, va(_("Speed:\t\t%i\n"), selectedAircraft->stats[AIR_STATS_SPEED]), sizeof(text_standard));
-			Q_strcat(text_standard, va(_("Fuel:\t\t%i/%i\n"), selectedAircraft->fuel / 1000, selectedAircraft->stats[AIR_STATS_FUELSIZE] / 1000), sizeof(text_standard));
+			Q_strcat(text_standard, va(_("Fuel:\t\t%i/%i\n"), CL_AircraftMenuStatsValues(selectedAircraft->fuel, AIR_STATS_FUELSIZE),
+				CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), sizeof(text_standard));
 			menuText[TEXT_STANDARD] = text_standard;
 			break;
 		}

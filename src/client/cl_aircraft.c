@@ -468,6 +468,21 @@ void AIM_PrevAircraft_f (void)
 }
 
 /**
+ * @brief Some of the aircraft values needs special calculations when they
+ * are shown in the menus
+ * @sa CL_AircraftStatToName
+ */
+int CL_AircraftMenuStatsValues (const int value, const int stat)
+{
+	switch (stat) {
+	case AIR_STATS_FUELSIZE:
+		return value / 1000;
+	default:
+		return value;
+	}
+}
+
+/**
  * @brief check if aircraft has enough fuel to go to destination, and then come back home
  * @param[in] aircraft Pointer to the aircraft
  * @param[in] position Pointer to the position the aircraft should go to

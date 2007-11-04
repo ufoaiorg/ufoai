@@ -169,9 +169,9 @@ static const char* CL_WeaponSkillToName (int weaponSkill)
 
 /**
  * @brief Translate a aircraft stat int to a translated string
- *
  * The aircraft stats were defined in cl_aircraft.h
  * @sa aircraftParams_t
+ * @sa CL_AircraftMenuStatsValues
  */
 static const char* CL_AircraftStatToName (int stat)
 {
@@ -227,7 +227,7 @@ static void UP_DisplayTechTree (technology_t* t)
 				techRequired = RS_GetTechByIDX(required->idx[i]);
 				if (!techRequired)
 					Sys_Error("Could not find the tech for '%s'\n", required->id[i]);
-				
+
 				/** Only display tech if it isn't ok to do so.
 				 * @todo If it is one (a logic tech) we may want to re-iterate from its requirements? */
 				if (UP_TechGetsDisplayed(techRequired)) {
@@ -553,14 +553,15 @@ void UP_AircraftItemDescription (int idx)
 		}
 		/* We write the range of the weapon */
 		if (item->craftitem.stats[AIR_STATS_WRANGE] > UFO_EPSILON)
-			Q_strcat(itemText, va("%s:\t%i\n", CL_AircraftStatToName(AIR_STATS_WRANGE), (int) item->craftitem.stats[AIR_STATS_WRANGE]), sizeof(itemText));
+			Q_strcat(itemText, va("%s:\t%i\n", CL_AircraftStatToName(AIR_STATS_WRANGE),
+				CL_AircraftMenuStatsValues(item->craftitem.stats[AIR_STATS_WRANGE], AIR_STATS_WRANGE)), sizeof(itemText));
 
 		/* we scan all stats except last one which is range */
 		for (i = 0; i < AIR_STATS_WRANGE; i++) {
 			if (item->craftitem.stats[i] > 2.0f)
-				Q_strcat(itemText, va("%s:\t+%i\n", CL_AircraftStatToName(i), (int) item->craftitem.stats[i]), sizeof(itemText));
+				Q_strcat(itemText, va("%s:\t+%i\n", CL_AircraftStatToName(i), CL_AircraftMenuStatsValues(item->craftitem.stats[i], i)), sizeof(itemText));
 			else if (item->craftitem.stats[i] < -2.0f)
-				Q_strcat(itemText, va("%s:\t%i\n", CL_AircraftStatToName(i), (int) item->craftitem.stats[i]),  sizeof(itemText));
+				Q_strcat(itemText, va("%s:\t%i\n", CL_AircraftStatToName(i), CL_AircraftMenuStatsValues(item->craftitem.stats[i], i)),  sizeof(itemText));
 			else if (item->craftitem.stats[i] > 1.0f)
 				Q_strcat(itemText, va(_("%s:\t+%i %%\n"), CL_AircraftStatToName(i), (int) (item->craftitem.stats[i] * 100) - 100),  sizeof(itemText));
 			else if (item->craftitem.stats[i] > UFO_EPSILON)
@@ -595,7 +596,8 @@ void UP_AircraftDescription (technology_t* t)
 				case AIR_STATS_SPEED:
 				case AIR_STATS_ACCURACY:
 				case AIR_STATS_FUELSIZE:
-					Q_strcat(upBuffer, va(_("%s:\t%i\n"), CL_AircraftStatToName(i), aircraft->stats[i]), sizeof(upBuffer));
+					Q_strcat(upBuffer, va(_("%s:\t%i\n"), CL_AircraftStatToName(i),
+						CL_AircraftMenuStatsValues(aircraft->stats[i], i)), sizeof(upBuffer));
 					break;
 				default:
 					break;
