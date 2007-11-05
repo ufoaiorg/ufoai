@@ -170,26 +170,26 @@ void PR_UpdateProductionTime (base_t *base)
 static int PR_RequirementsMet (int amount, requirements_t *req, base_t* base)
 {
 	int a, i;
-	int produceable_amount = 0;
-	qboolean produceable = qfalse;
+	int producible_amount = 0;
+	qboolean producible = qfalse;
 
 	for (a = 0; a < amount; a++) {
-		produceable = qtrue;
+		producible = qtrue;
 		for (i = 0; i < req->numLinks; i++) {
 			if (req->type[i] == RS_LINK_ITEM) {
 				/* The same code is used in "RS_RequirementsMet" */
 				Com_DPrintf(DEBUG_CLIENT, "PR_RequirementsMet: %s / %i\n", req->id[i], req->idx[i]);
 				if (B_ItemInBase(req->idx[i], base) < req->amount[i]) {
-					produceable = qfalse;
+					producible = qfalse;
 				}
 			}
 		}
-		if (produceable)
-			produceable_amount++;
+		if (producible)
+			producible_amount++;
 		else
 			break;
 	}
-	return produceable_amount;
+	return producible_amount;
 }
 
 /**
@@ -296,7 +296,7 @@ static production_t *PR_QueueNew (production_queue_t *queue, signed int objID, s
 			else
 				prod->timeLeft = aircraft->tech->produceTime; /* FIXME: Calculate time here. */
 		} else {
-			/* Don't try to add to queue an item which is not produceable. */
+			/* Don't try to add to queue an item which is not producible. */
 			if (od->tech->produceTime < 0)
 				return NULL;
 			else
@@ -566,7 +566,7 @@ static void PR_ProductionInfo (qboolean disassembly)
 		if (objID >= 0) {
 			od = &csi.ods[objID];
 			assert(od->tech);
-			/* Don't try to display the item which is not produceable. */
+			/* Don't try to display the item which is not producible. */
 			if (od->tech->produceTime < 0) {
 				Com_sprintf(productionInfo, sizeof(productionInfo), _("No item selected"));
 				Cvar_Set("mn_item", "");
@@ -599,7 +599,7 @@ static void PR_ProductionInfo (qboolean disassembly)
 		if (objID >= 0) {
 			od = &csi.ods[objID];
 			assert(od->tech);
-			/* Don't try to display the item which is not produceable. */
+			/* Don't try to display the item which is not producible. */
 			if (od->tech->produceTime < 0) {
 				Com_sprintf(productionInfo, sizeof(productionInfo), _("No disassembly selected"));
 				Cvar_Set("mn_item", "");
@@ -762,7 +762,7 @@ static void PR_ProductionListClick_f (void)
 					/* We can only produce items that fulfill the following conditions... */
 					if (BUYTYPE_MATCH(od->buytype, produceCategory)	/* Item is in the current inventory-category */
 						&& RS_IsResearched_ptr(od->tech)		/* Tech is researched */
-						&& od->tech->produceTime >= 0		/* Item is produceable */
+						&& od->tech->produceTime >= 0		/* Item is producible */
 					) {
 						assert(*od->name);
 						if (j == idx) {
@@ -867,7 +867,7 @@ static void PR_UpdateProductionList (base_t* base)
 	/* then go through all object definitions */
 	if (produceCategory != BUY_AIRCRAFT) {	/* Everything except aircrafts. */
 		for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-			/* we will not show items with producetime = -1 - these are not produceable */
+			/* we will not show items with producetime = -1 - these are not producible */
 			if (*od->id)
 				tech = RS_GetTechByProvided(od->id);
 
@@ -1002,7 +1002,7 @@ static void PR_ProductionSelect_f (void)
 }
 
 /**
- * @brief Will fill the list of produceable items.
+ * @brief Will fill the list of producible items.
  * @note Some of Production Menu related cvars are being set here.
  */
 static void PR_ProductionList_f (void)
@@ -1110,7 +1110,7 @@ void PR_Init (void)
 static void PR_ProductionIncrease_f (void)
 {
 	int amount = 1, amount_temp = 0;
-	int produceable_amount;
+	int producible_amount;
 	production_queue_t *queue = NULL;
 	objDef_t *od = NULL;
 	aircraft_t *aircraft = NULL;
@@ -1172,20 +1172,20 @@ static void PR_ProductionIncrease_f (void)
 			od = &csi.ods[prod->objID];
 
 			if (od->tech)
-				produceable_amount = PR_RequirementsMet(amount, &od->tech->require_for_production, baseCurrent);
+				producible_amount = PR_RequirementsMet(amount, &od->tech->require_for_production, baseCurrent);
 			else
-				produceable_amount = amount;
+				producible_amount = amount;
 
-			if (produceable_amount > 0) {	/* Check if production requirements have been (even partially) met. */
+			if (producible_amount > 0) {	/* Check if production requirements have been (even partially) met. */
 				if (od->tech) {
-					/* Remove the additionally required items (multiplied by 'produceable_amount') from base-storage.*/
+					/* Remove the additionally required items (multiplied by 'producible_amount') from base-storage.*/
 					PR_UpdateRequiredItemsInBasestorage(-amount, &od->tech->require_for_production);
 					prod->items_cached = qtrue;
 				}
 
-				if (produceable_amount < amount) {
+				if (producible_amount < amount) {
 					/* @todo: make the numbers work here. */
-					MN_Popup(_("Not enough material!"), va(_("You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."), amount, produceable_amount));
+					MN_Popup(_("Not enough material!"), va(_("You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."), amount, producible_amount));
 				}
 
 				if (Cvar_VariableInteger("mn_prod_disassembling") == 0) {
@@ -1199,7 +1199,7 @@ static void PR_ProductionIncrease_f (void)
 				/* Now we select the item we just created. */
 				selectedQueueItem = qtrue;
 				selectedIndex = queue->numItems - 1;
-			} else { /* requirements are not met => produceable_amount <= 0 */
+			} else { /* requirements are not met => producible_amount <= 0 */
  				/* @todo: better messages needed */
 				MN_Popup(_("Not enough material!"), _("You don't have enough of the needed material to produce this item."));
 				/* @todo:

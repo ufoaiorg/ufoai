@@ -2141,7 +2141,7 @@ qboolean RS_TechIsResearched (int tech_idx)
 }
 
 /**
- * @brief Returns a list of .ufo items that are produceable when this item has been researched (=provided)
+ * @brief Returns a list of .ufo items that are producible when this item has been researched (=provided)
  * This list also incldues other items that "require" this one (id) and have a reseach_time of 0.
  */
 #if 0
