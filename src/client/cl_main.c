@@ -727,7 +727,7 @@ static void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 	int cnt = 0, n;
 
 	if (!s) {
-		menuText[TEXT_LIST] = NULL;
+		MN_MenuTextReset(TEXT_LIST);
 		Com_DPrintf(DEBUG_CLIENT, "CL_ParseTeamInfoMessage: No teaminfo string\n");
 		return;
 	}
@@ -1107,7 +1107,7 @@ static void CL_ServerListClick_f (void)
 static void CL_SelectTeam_Init_f (void)
 {
 	/* reset menu text */
-	menuText[TEXT_STANDARD] = NULL;
+	MN_MenuTextReset(TEXT_STANDARD);
 
 	NET_OOB_Printf(cls.stream, "teaminfo %i", PROTOCOL_VERSION);
 	menuText[TEXT_STANDARD] = _("Select a free team or your coop team");

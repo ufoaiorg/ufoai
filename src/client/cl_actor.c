@@ -1549,7 +1549,7 @@ void CL_ActorUpdateCVars (void)
 				/* @todo: CHECKME Why do we check for (cl.cmode < M_PEND_MOVE) here? */
 				actorMoveLength = ROUTING_NOT_REACHABLE;
 				Com_sprintf(infoText, sizeof(infoText), _("Armour  %i\tMorale  %i\n"), selActor->AP, selActor->morale);
-				menuText[TEXT_MOUSECURSOR_RIGHT] = NULL;
+				MN_MenuTextReset(TEXT_MOUSECURSOR_RIGHT);
 			}
 			if (cl.cmode != cl.oldcmode || refresh || lastHUDActor != selActor
 						|| lastMoveLength != actorMoveLength || lastTU != selActor->TU) {
@@ -1570,7 +1570,7 @@ void CL_ActorUpdateCVars (void)
 			}
 			time = actorMoveLength;
 		} else {
-			menuText[TEXT_MOUSECURSOR_RIGHT] = NULL;
+			MN_MenuTextReset(TEXT_MOUSECURSOR_RIGHT);
 			/* in multiplayer RS_ItemIsResearched always returns true,
 			 * so we are able to use the aliens weapons */
 			if (selWeapon && !RS_ItemIsResearched(csi.ods[selWeapon->item.t].id)) {
@@ -1601,7 +1601,7 @@ void CL_ActorUpdateCVars (void)
 		/* handle actor in a panic */
 		if (selActor->state & STATE_PANIC) {
 			Com_sprintf(infoText, sizeof(infoText), _("Currently panics!\n"));
-			menuText[TEXT_MOUSECURSOR_RIGHT] = NULL;
+			MN_MenuTextReset(TEXT_MOUSECURSOR_RIGHT);
 		}
 
 		/* Calculate remaining TUs. */

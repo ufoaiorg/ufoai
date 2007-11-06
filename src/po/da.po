@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion CVS\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-10-27 07:52+0200\n"
-"PO-Revision-Date: 2007-10-10 13:31+0100\n"
+"PO-Revision-Date: 2007-11-03 13:31+0100\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -2825,13 +2825,12 @@ msgid "Sound settings"
 msgstr "Lydindstillinger"
 
 #: ../base/ufos/menu_options.ufo:554
-#, fuzzy
 msgid "Sound rate:"
-msgstr "Lyd"
+msgstr "Lydniveau:"
 
 #: ../base/ufos/menu_options.ufo:559
 msgid "Restart sound to change the settings"
-msgstr ""
+msgstr "Genstart lyd for at ændre indstillinger"
 
 #: ../base/ufos/menu_options.ufo:613
 msgid "Show key bindings"
@@ -5192,6 +5191,7 @@ msgstr "Egenskab for snigskytte"
 msgid "Speed Attribute"
 msgstr "Egenskab for fart"
 
+# Kunne også være karantænestation
 #: ../base/ufos/research.ufo:2662
 msgid "b_aliencontainment_txt"
 msgstr "<TODO>"
@@ -6695,14 +6695,13 @@ msgid "Don't forget to equip your soldiers with armour."
 msgstr "Glem ikke at udstyre dine soldater med veste."
 
 #: ../base/ufos/tips.ufo:13
-#, fuzzy
 msgid ""
 "You can use a flashbang to deactivate your opponents Reaction Fire mode or "
 "to take all of his remaining Time Units (TUs) for his next round."
 msgstr ""
 "Du kan anvende en bedøvelsesgranat til at deaktivere din modstanders "
-"reaktionsild eller fjerne alle hans tilbageværende tidsenheder (TE) for den "
-"næste runde."
+"reaktionsild eller fjerne alle hans tilbageværende tidsenheder (TE) for "
+"dennes næste runde."
 
 #: ../base/ufos/tips.ufo:14
 msgid ""
@@ -6723,7 +6722,6 @@ msgstr ""
 "koster tidsenheder (TE)."
 
 #: ../base/ufos/tips.ufo:16
-#, fuzzy
 msgid ""
 "Be sure to hire as many scientists as you can. The earlier you know your "
 "enemy, the easier he is to defeat."
@@ -6853,7 +6851,6 @@ msgstr ""
 "flere skud."
 
 #: ../base/ufos/tips.ufo:32
-#, fuzzy
 msgid ""
 "Keep soldiers close, so that they can support each other (heal each other, "
 "shoot when one runs out of Time Units (TUs)). Keep a wall between them at "
@@ -6861,7 +6858,7 @@ msgid ""
 msgstr ""
 "Hold dine soldater tæt, så de kan støtte hinanden (helbred hinanden, skyd "
 "når en løber tør for tidsenheder (TE)). Hold en væg imellem dem når du "
-"afslutter din runde, så de ikke kan dræbes med en granat."
+"afslutter din runde, så de ikke kan dræbes med én granat."
 
 #: ../base/ufos/tips.ufo:33
 msgid ""
@@ -6939,25 +6936,22 @@ msgid "Be sure to equip your interceptor with weapons before launching it."
 msgstr "Husk at udstyr dit kortrækkende jagerfly med våben før det letter."
 
 #: ../base/ufos/tips.ufo:43
-#, fuzzy
 msgid ""
 "Remember that items will slow an aircraft. To intercept fast UFOs, you may "
 "prefer to send several lightly equipped aircraft."
 msgstr ""
 "Husk at udstyr vil sinke et luftfartøj. For at indhente hurtige ufoer kan "
-"det være en fordel at sende flere luftfartøjer der er let udstyret."
+"det være en fordel at sende flere luftfartøjer, der er let udstyret."
 
 #: ../base/ufos/tips.ufo:44
-#, fuzzy
 msgid ""
 "Your attacked aircraft may flee to one of your bases to avoid being "
 "destroyed by UFOs."
 msgstr ""
 "Dit angrebet luftfartøj kan flygte til en af dine baser for at undgå "
-"ødelæggelse af ufoer."
+"nedskydning."
 
 #: ../base/ufos/tips.ufo:45
-#, fuzzy
 msgid "Build an alien containment to be able to imprison aliens alive."
 msgstr "Byg et rumvæsenopbevaringsrum som fængsel for levende rumvæsener."
 
@@ -6967,6 +6961,9 @@ msgid ""
 "through all spotted enemies. Pressing [t] key will draw a line to each enemy "
 "the selected soldier can see."
 msgstr ""
+"Sete fjender: På en landmission kan du taste [mellemrum] for at veksle "
+"imellem alle sete fjender. Tasten [t] vil tegne en linje til hver enkelt "
+"fjende den valgte soldat kan se."
 
 #: ../base/ufos/tips.ufo:47
 msgid ""
@@ -6974,6 +6971,9 @@ msgid ""
 "or unequip weapons, ammo and armour. This only works in the base equipment, "
 "not in the tactical missions where such an action would cost TUs."
 msgstr ""
+"Du kan bruge den højre museknap i soldatens udstyrsvindue til at vælge eller "
+"fravælge våben, ammo og veste. Dette virker kun i baseudstyringen, ikke under "
+"en taktisk mission hvor sådanne handlinger ville koste tidsenheder."
 
 #: ../base/ufos/weapons.ufo:6
 msgid "Medikit"
@@ -7061,7 +7061,6 @@ msgid "Full-Auto"
 msgstr "Auto"
 
 #: ../base/ufos/weapons_human.ufo:103
-#, fuzzy
 msgid "Aimed shot"
 msgstr "Sigteskud"
 
@@ -7266,15 +7265,13 @@ msgstr "Præcisionsskud"
 
 #: ../base/ufos/weapons_laser.ufo:87 ../base/ufos/weapons_laser.ufo:130
 #: ../base/ufos/weapons_laser.ufo:174
-#, fuzzy
 msgid "Long Wave Beam"
-msgstr "Lang bølge"
+msgstr "Lang bølgestråle"
 
 #: ../base/ufos/weapons_laser.ufo:106 ../base/ufos/weapons_laser.ufo:150
 #: ../base/ufos/weapons_laser.ufo:193
-#, fuzzy
 msgid "Short Wave Pulsed"
-msgstr "Kort bølge"
+msgstr "Kort bølgepuls"
 
 #: ../base/ufos/weapons_melee.ufo:8
 msgid "Combat Knife"
@@ -7599,9 +7596,8 @@ msgid "Your round started!\n"
 msgstr "Din tur er begyndt!\n"
 
 #: client/cl_actor.c:3965
-#, fuzzy
 msgid "Unknown alien race"
-msgstr "Ukendt teknologi kan undersøges"
+msgstr "Ukendt rumvæsenart"
 
 #: client/cl_aircraft.c:278
 msgid ""
@@ -7741,7 +7737,7 @@ msgstr "Tildel et hold til luftfartøj"
 
 #: client/cl_airfight.c:352
 msgid "Our aircraft has no more ammo left - returning to home base now."
-msgstr ""
+msgstr "Vores luftfartøj har ikke mere ammo tilbage - returnerer til base."
 
 #: client/cl_airfight.c:424 client/cl_airfight.c:461 client/cl_campaign.c:551
 #: client/cl_campaign.c:557 client/cl_campaign.c:599 client/cl_campaign.c:603
@@ -8875,17 +8871,17 @@ msgstr "Status:\t%s\n"
 #: client/cl_map.c:1379
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
-msgstr ""
+msgstr "Afstand til mål:\t\t%.0f\n"
 
 #: client/cl_map.c:1380 client/cl_map.c:1387
-#, fuzzy, c-format
+#, c-format
 msgid "Speed:\t\t%i\n"
-msgstr "Fart:\t%i\n"
+msgstr "Fart:\t\t%i\n"
 
 #: client/cl_map.c:1381 client/cl_map.c:1388
-#, fuzzy, c-format
+#, c-format
 msgid "Fuel:\t\t%i/%i\n"
-msgstr "Brændstof:\t%i/%i\n"
+msgstr "Brændstof:\t\t%i/%i\n"
 
 #: client/cl_mapfightequip.c:541
 msgid "No defense of this type in this base\n"
@@ -8933,14 +8929,12 @@ msgid "No ammo assigned to this defense system."
 msgstr "Intet ammo er tildelt dette forsvarssystem."
 
 #: client/cl_mapfightequip.c:650
-#, fuzzy
 msgid "Aircraft item was successfully installed."
-msgstr "Kampagne blev gemt med succes."
+msgstr "Flyudstyr blev med succes installeret."
 
 #: client/cl_mapfightequip.c:652
-#, fuzzy
 msgid "Base defense item was successfully installed."
-msgstr "Kampagne blev gemt med succes."
+msgstr "Baseforsvarsudstyr blev med succes installeret."
 
 #: client/cl_mapfightequip.c:874
 msgid "No item assigned.\n"
@@ -9086,9 +9080,8 @@ msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "Gem HUD'en (tryk ESC for at genaktivere HUD)"
 
 #: client/cl_menu.c:4832
-#, fuzzy
 msgid "all"
-msgstr "Kugle"
+msgstr "alle"
 
 #: client/cl_menu.c:4943
 #, c-format
@@ -9149,9 +9142,8 @@ msgstr ""
 "Intet fly tilgængelig, eller intet taktisk hold tildelt et tilgængelig fly."
 
 #: client/cl_popup.c:307
-#, fuzzy
 msgid "No craft available, no weapon or ammo equipped or target out of reach."
-msgstr "Intet fly tilgængelig, eller ingen våben påført tilgængelig fly."
+msgstr "Intet fly tilgængelig, ingen våben eller ammo er påført eller målet kan ikke nåes."
 
 #: client/cl_popup.c:352
 msgid ""
@@ -9496,17 +9488,16 @@ msgid "The file is a more recent version than is supported"
 msgstr "Filen er en nyere version der ikke understøttes"
 
 #: client/cl_save.c:177
-#, fuzzy
 msgid ""
 "Error in loading a subsystem.\n"
 "\n"
 "See game console for more information."
 msgstr ""
-"Fejl under hentning af et undersystem - se spilkonsolen for yderligere "
-"information"
+"Fejl under hentning af et undersystem.\n"
+"\n"
+"Se spilkonsolen for yderligere information"
 
 #: client/cl_save.c:184
-#, fuzzy
 msgid ""
 "Error in loading a subsystem. Sentinel doesn't match.\n"
 "\n"
@@ -9514,8 +9505,11 @@ msgid ""
 "\n"
 "See game console for more information."
 msgstr ""
-"Fejl under hentning af et undersystem - se spilkonsolen for yderligere "
-"information"
+"Fejl under hentning af et undersystem. Vagt stemmer ikke.\n"
+"\n"
+"Dette kan skyldes et gammelt gemt spil eller en fejl i spillet.\n"
+"\n"
+"Se spilkonsolen for yderligere information"
 
 #: client/cl_save.c:225
 msgid "No campaign active."

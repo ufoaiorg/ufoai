@@ -264,7 +264,19 @@ static menu_t *menuStack[MAX_MENUSTACK];
 static int menuStackPos = -1;
 
 inventory_t *menuInventory = NULL;
+/**
+ * @brief Holds static array of characters to display
+ * @note The array id is given via num in the menuNode definitions
+ * @sa MN_MenuTextReset
+ * @sa menuTextLinkedList
+ */
 const char *menuText[MAX_MENUTEXTS];
+/**
+ * @brief Holds a linked list for displaying in the menu
+ * @note The array id is given via num in the menuNode definitions
+ * @sa MN_MenuTextReset
+ * @sa menuText
+ */
 linkedList_t *menuTextLinkedList[MAX_MENUTEXTS];
 
 static selectBoxOptions_t menuSelectBoxes[MAX_SELECT_BOX_OPTIONS];
@@ -950,6 +962,8 @@ static void MN_InvDrawFree (inventory_t * inv, menuNode_t * node)
 
 /**
  * @brief Popup in geoscape
+ * @note Only use static strings here - or use popupText if you really have to
+ * build the string
  */
 void MN_Popup (const char *title, const char *text)
 {
@@ -3847,6 +3861,42 @@ void MN_UnHideNode (menuNode_t* node)
 }
 
 /**
+ * @brief Resets the menuText pointers and the menuTextLinkedList lists
+ */
+void MN_MenuTextReset (int menuTextID)
+{
+	assert(menuTextID < MAX_MENUTEXTS);
+	assert(menuTextID >= 0);
+
+	menuText[menuTextID] = NULL;
+
+	if (menuTextLinkedList[menuTextID]) {
+		LIST_Delete(menuTextLinkedList[menuTextID]);
+		menuTextLinkedList[menuTextID] = NULL;
+	}
+}
+
+/**
+ * @brief Resets the menuText pointers from a func node
+ * @note You can give this function a parameter to only delete a specific list
+ */
+static void MN_MenuTextReset_f (void)
+{
+	int i;
+
+	if (Cmd_Argc() == 2) {
+		i = atoi(Cmd_Argv(1));
+		if (i >= 0 && i < MAX_MENUTEXTS)
+			MN_MenuTextReset(i);
+		else
+			Com_Printf("%s: invalid menuText ID: %i\n", Cmd_Argv(0), i);
+	} else {
+		for (i = 0; i < MAX_MENUTEXTS; i++)
+			MN_MenuTextReset(i);
+	}
+}
+
+/**
  * @brief Script command to unhide a given menu node
  */
 static void MN_UnHideNode_f (void)
@@ -3893,6 +3943,8 @@ void MN_ResetMenus (void)
 
 	Cmd_AddCommand("mn_hidenode", MN_HideNode_f, "Hides a given menu node");
 	Cmd_AddCommand("mn_unhidenode", MN_UnHideNode_f, "Unhides a given menu node");
+
+	Cmd_AddCommand("mn_textreset", MN_MenuTextReset_f, "Resets the menuText pointers");
 
 	/* print the keybindings to menuText */
 	Cmd_AddCommand("mn_init_keylist", MN_InitKeyList_f, NULL);

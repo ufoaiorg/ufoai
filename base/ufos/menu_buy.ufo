@@ -2311,7 +2311,7 @@ menu buyaircraft
 		pos		"940 686"
 		texl	"0 0"
 		texh	"64 37"
-		click	{ cmd "mn_reset_air;mn_pop;" }
+		click	{ cmd "mn_pop;" }
 	}
 
 	// ==================
@@ -2342,5 +2342,9 @@ menu buyaircraft
 	func init
 	{
 		cmd "buy_type 5;"
+	}
+	func close
+	{
+		cmd "mn_reset_air;mn_pop;"
 	}
 }

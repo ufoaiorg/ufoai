@@ -1115,7 +1115,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	float angle = 0.0f;
 	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
 	qboolean showXVI = qfalse;
-	char buffer[512] = "";
+	static char buffer[512] = "";
 
 	assert(node);
 
@@ -1283,7 +1283,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	if (showXVI)
 		menuText[TEXT_XVI] = buffer;
 	else
-		menuText[TEXT_XVI] = NULL;
+		MN_MenuTextReset(TEXT_XVI);
 }
 
 /** @brief geobackground image for 3d globe */
@@ -1325,7 +1325,7 @@ void MAP_DrawMap (const menuNode_t* node)
 	MAP_DrawMapMarkers(node);
 
 	/* display text */
-	menuText[TEXT_STANDARD] = NULL;
+	MN_MenuTextReset(TEXT_STANDARD);
 	switch (gd.mapAction) {
 	case MA_NEWBASE:
 		for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
@@ -1385,7 +1385,8 @@ void MAP_DrawMap (const menuNode_t* node)
 			Com_sprintf(text_standard, sizeof(text_standard), va(_("Name:\t%s (%i/%i)\n"), selectedAircraft->name, selectedAircraft->teamSize, selectedAircraft->maxTeamSize));
 			Q_strcat(text_standard, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(selectedAircraft)), sizeof(text_standard));
 			Q_strcat(text_standard, va(_("Speed:\t\t%i\n"), selectedAircraft->stats[AIR_STATS_SPEED]), sizeof(text_standard));
-			Q_strcat(text_standard, va(_("Fuel:\t\t%i/%i\n"), selectedAircraft->fuel / 1000, selectedAircraft->stats[AIR_STATS_FUELSIZE] / 1000), sizeof(text_standard));
+			Q_strcat(text_standard, va(_("Fuel:\t\t%i/%i\n"), CL_AircraftMenuStatsValues(selectedAircraft->fuel, AIR_STATS_FUELSIZE),
+				CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), sizeof(text_standard));
 			menuText[TEXT_STANDARD] = text_standard;
 			break;
 		}

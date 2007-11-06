@@ -403,7 +403,7 @@ void AIR_NewAircraft_f (void)
 
 /**
  * @brief Restores aircraft cvars after going back from aircraft buy menu.
- * @sa BS_MarketAircraftDescription()
+ * @sa BS_MarketAircraftDescription
  */
 void AIM_ResetAircraftCvars_f (void)
 {
@@ -463,6 +463,21 @@ void AIM_PrevAircraft_f (void)
 
 	Cvar_SetValue("mn_aircraft_idx",(aircraftID - 1 + baseCurrent->numAircraftInBase) % baseCurrent->numAircraftInBase);
 	AIR_AircraftSelect(NULL);
+}
+
+/**
+ * @brief Some of the aircraft values needs special calculations when they
+ * are shown in the menus
+ * @sa CL_AircraftStatToName
+ */
+int CL_AircraftMenuStatsValues (const int value, const int stat)
+{
+	switch (stat) {
+	case AIR_STATS_FUELSIZE:
+		return value / 1000;
+	default:
+		return value;
+	}
 }
 
 /**
@@ -556,8 +571,10 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	int idx;
 
 	/* calling from console? with no baseCurrent? */
-	if (!baseCurrent || !baseCurrent->numAircraftInBase)
+	if (!baseCurrent || !baseCurrent->numAircraftInBase) {
+		MN_MenuTextReset(TEXT_AIRCRAFT_INFO);
 		return;
+	}
 
 	if (!aircraft) {
 		/**
@@ -591,13 +608,17 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 
 	/* generate aircraft info text */
 	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%i\n"), aircraft->stats[AIR_STATS_SPEED]);
-	Q_strcat(aircraftInfo, va(_("Fuel:\t%i/%i\n"), aircraft->fuel / 1000, aircraft->stats[AIR_STATS_FUELSIZE] / 1000), sizeof(aircraftInfo));
+	Q_strcat(aircraftInfo, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(aircraft->fuel, AIR_STATS_FUELSIZE),
+		CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), sizeof(aircraftInfo));
+	/* FIXME: This shows only the first weapon */
 	idx = aircraft->weapons[0].itemIdx;
 	Q_strcat(aircraftInfo, va(_("Weapons:\t%i on %i\n"), AII_GetSlotItems(AC_ITEM_WEAPON, aircraft), aircraft->maxWeapons), sizeof(aircraftInfo));
 	idx = aircraft->shield.itemIdx;
 	Q_strcat(aircraftInfo, va(_("Armours:\t%i on 1\n"), AII_GetSlotItems(AC_ITEM_SHIELD, aircraft)), sizeof(aircraftInfo));
+	/* FIXME: This shows only the first item in the electronics slot */
 	idx = aircraft->electronics[0].itemIdx;
 	Q_strcat(aircraftInfo, va(_("Electronics:\t%i on %i"), AII_GetSlotItems(AC_ITEM_ELECTRONICS, aircraft), aircraft->maxElectronics), sizeof(aircraftInfo));
+
 	menuText[TEXT_AIRCRAFT_INFO] = aircraftInfo;
 }
 

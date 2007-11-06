@@ -845,7 +845,7 @@ static void CL_ResearchSelect_f (void)
 
 	num = atoi(Cmd_Argv(1));
 	if (num < 0 || num >= researchListLength) {
-		menuText[TEXT_STANDARD] = NULL;
+		MN_MenuTextReset(TEXT_STANDARD);
 		return;
 	}
 
@@ -1294,7 +1294,7 @@ void RS_UpdateData (void)
 		Cvar_Set("mn_researchitem", "");
 		Cvar_Set("mn_researchweapon", "");
 		Cvar_Set("mn_researchammo", "");
-		menuText[TEXT_STANDARD] = NULL;
+		MN_MenuTextReset(TEXT_STANDARD);
 	}
 
 	/* Update the description field/area. */
@@ -2138,7 +2138,7 @@ qboolean RS_TechIsResearched (int tech_idx)
 }
 
 /**
- * @brief Returns a list of .ufo items that are produceable when this item has been researched (=provided)
+ * @brief Returns a list of .ufo items that are producible when this item has been researched (=provided)
  * This list also incldues other items that "require" this one (id) and have a reseach_time of 0.
  */
 #if 0
