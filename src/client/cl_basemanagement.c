@@ -36,6 +36,9 @@ static cvar_t *mn_base_title;
 static cvar_t *mn_base_count;
 static cvar_t *mn_base_id;
 
+/** @brief allocate memory for menuText[TEXT_STANDARD] contained the information about a building */
+static char buildingText[MAX_LIST_CHAR];
+
 static int BuildingConstructionList[MAX_BUILDINGS];
 static int numBuildingConstructionList;
 
