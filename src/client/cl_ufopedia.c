@@ -76,6 +76,7 @@ static qboolean UP_TechGetsDisplayed (technology_t *tech)
 
 /**
  * @brief Modify the global display var
+ * @sa UP_SetMailHeader
  */
 static void UP_ChangeDisplay (int newDisplay)
 {
@@ -110,7 +111,11 @@ static void UP_ChangeDisplay (int newDisplay)
 	}
 
 	/* make sure, that we leave the mail header space */
-	menuText[TEXT_UFOPEDIA_MAILHEADER] = NULL;
+	MN_MenuTextReset(TEXT_UFOPEDIA_MAILHEADER);
+	MN_MenuTextReset(TEXT_UFOPEDIA_MAIL);
+	MN_MenuTextReset(TEXT_LIST);
+	MN_MenuTextReset(TEXT_STANDARD);
+	MN_MenuTextReset(TEXT_UFOPEDIA);
 	Cvar_Set("mn_up_mail", "0"); /* use strings here - no int */
 
 	switch (upDisplay) {
@@ -122,6 +127,7 @@ static void UP_ChangeDisplay (int newDisplay)
 		Cvar_Set("mn_upmodel_big", "");
 		Cvar_Set("mn_upimage_top", "base/empty");
 		currentChapter = -1;
+		upCurrent = NULL;
 		break;
 	case UFOPEDIA_INDEX:
 		Cvar_Set("mn_upmodel_top", "");
@@ -509,7 +515,7 @@ void UP_AircraftItemDescription (int idx)
 	/* no valid item id given */
 	if (idx == NONE) {
 		/* set menu text node content to null */
-		menuText[TEXT_STANDARD] = NULL;
+		MN_MenuTextReset(TEXT_STANDARD);
 		Cvar_Set("mn_itemname", "");
 		Cvar_Set("mn_item", "");
 		Cvar_Set("mn_upmodel_top", "");
@@ -662,6 +668,7 @@ int UP_GetUnreadMails (void)
  * @note if there is a mail header.
  * @param[in] tech The tech to generate a header for.
  * @param[in] type The type of mail (research proposal or finished research)
+ * @sa UP_ChangeDisplay
  */
 static void UP_SetMailHeader (technology_t* tech, techMailType_t type)
 {
@@ -722,7 +729,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type)
 		menuText[TEXT_UFOPEDIA_MAILHEADER] = mailHeader;
 		Cvar_Set("mn_up_mail", "1"); /* use strings here - no int */
 	} else {
-		menuText[TEXT_UFOPEDIA_MAILHEADER] = NULL;
+		MN_MenuTextReset(TEXT_UFOPEDIA_MAILHEADER);
 		Cvar_Set("mn_up_mail", "0"); /* use strings here - no int */
 	}
 }
@@ -738,7 +745,8 @@ void UP_Article (technology_t* tech)
 
 	assert(tech);
 
-	menuText[TEXT_UFOPEDIA] = menuText[TEXT_LIST] = NULL;
+	MN_MenuTextReset(TEXT_UFOPEDIA);
+	MN_MenuTextReset(TEXT_LIST);
 
 	if (RS_IsResearched_ptr(tech)) {
 		Cvar_Set("mn_uptitle", va("%s *", _(tech->name)));
@@ -805,7 +813,7 @@ void UP_Article (technology_t* tech)
 		}
 	} else {
 		Cvar_Set("mn_uptitle", _(tech->name));
-		menuText[TEXT_UFOPEDIA] = NULL;
+		MN_MenuTextReset(TEXT_UFOPEDIA);
 	}
 }
 
@@ -849,8 +857,6 @@ static void UP_DrawEntry (technology_t* tech)
 {
 	if (!tech)
 		return;
-
-	menuText[TEXT_LIST] = menuText[TEXT_STANDARD] = menuText[TEXT_UFOPEDIA] = NULL;
 
 	Cvar_SetValue("mn_uppreavailable", 0);
 	Cvar_Set("mn_upmodel_top", "");
@@ -980,10 +986,7 @@ static void UP_Content_f (void)
 
 	UP_ChangeDisplay(UFOPEDIA_CHAPTERS);
 
-	upCurrent = NULL;
-	menuText[TEXT_STANDARD] = NULL;
 	menuText[TEXT_UFOPEDIA] = upText;
-	menuText[TEXT_LIST] = NULL;
 	Cvar_Set("mn_uptitle", _("UFOpaedia Content"));
 }
 
@@ -1015,9 +1018,6 @@ static void UP_Index_f (void)
 	upIndex = upText;
 	*upIndex = '\0';
 
-	menuText[TEXT_STANDARD] = NULL;
-	menuText[TEXT_UFOPEDIA] = upIndex;
-	menuText[TEXT_LIST] = NULL;
 	Cvar_Set("mn_uptitle", va(_("UFOpaedia Index: %s"), _(gd.upChapters[currentChapter].name)));
 
 	t = &gd.technologies[gd.upChapters[currentChapter].first];

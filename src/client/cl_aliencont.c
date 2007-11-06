@@ -553,7 +553,7 @@ static void AC_SelectAlien_f (void)
 	tech = RS_GetTechByIDX(aliencontCurrent->techIdx);
 
 	if (!tech) {
-		menuText[TEXT_UFOPEDIA] = NULL;
+		MN_MenuTextReset(TEXT_UFOPEDIA);
 		return;
 	}
 
@@ -992,8 +992,8 @@ static void AC_Init (void)
 
 		menuText[TEXT_STANDARD] = aliencontText;
 	} else
-		menuText[TEXT_STANDARD] = NULL;
-	menuText[TEXT_UFOPEDIA] = NULL;
+		MN_MenuTextReset(TEXT_STANDARD);
+	MN_MenuTextReset(TEXT_UFOPEDIA);
 }
 
 /**

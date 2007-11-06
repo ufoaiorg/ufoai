@@ -1652,7 +1652,7 @@ void Irc_Input_Deactivate (void)
 	if (inputLengthBackup) {
 		Cvar_SetValue("mn_inputlength", inputLengthBackup);
 		inputLengthBackup = 0;
-		menuText[TEXT_STANDARD] = NULL;
-		menuText[TEXT_LIST] = NULL;
+		MN_MenuTextReset(TEXT_STANDARD);
+		MN_MenuTextReset(TEXT_LIST);
 	}
 }

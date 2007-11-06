@@ -848,7 +848,7 @@ static void CL_ResearchSelect_f (void)
 
 	num = atoi(Cmd_Argv(1));
 	if (num < 0 || num >= researchListLength) {
-		menuText[TEXT_STANDARD] = NULL;
+		MN_MenuTextReset(TEXT_STANDARD);
 		return;
 	}
 
@@ -1297,7 +1297,7 @@ void RS_UpdateData (void)
 		Cvar_Set("mn_researchitem", "");
 		Cvar_Set("mn_researchweapon", "");
 		Cvar_Set("mn_researchammo", "");
-		menuText[TEXT_STANDARD] = NULL;
+		MN_MenuTextReset(TEXT_STANDARD);
 	}
 
 	/* Update the description field/area. */

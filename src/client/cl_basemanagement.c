@@ -2224,7 +2224,7 @@ static void B_AssembleMap_f (void)
 	}
 
 	/* reset menu text */
-	menuText[TEXT_STANDARD] = NULL;
+	MN_MenuTextReset(TEXT_STANDARD);
 
 	*maps = '\0';
 	*coords = '\0';

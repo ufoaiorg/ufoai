@@ -1115,7 +1115,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	float angle = 0.0f;
 	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
 	qboolean showXVI = qfalse;
-	char buffer[512] = "";
+	static char buffer[512] = "";
 
 	assert(node);
 
@@ -1283,7 +1283,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	if (showXVI)
 		menuText[TEXT_XVI] = buffer;
 	else
-		menuText[TEXT_XVI] = NULL;
+		MN_MenuTextReset(TEXT_XVI);
 }
 
 /** @brief geobackground image for 3d globe */
@@ -1325,7 +1325,7 @@ void MAP_DrawMap (const menuNode_t* node)
 	MAP_DrawMapMarkers(node);
 
 	/* display text */
-	menuText[TEXT_STANDARD] = NULL;
+	MN_MenuTextReset(TEXT_STANDARD);
 	switch (gd.mapAction) {
 	case MA_NEWBASE:
 		for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)

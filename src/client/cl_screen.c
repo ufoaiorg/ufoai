@@ -479,7 +479,7 @@ static void SCR_DrawCursor (void)
 				R_DrawFill(mx + icon_offset_x - 1, my - 33, 20, 128, 0, cursorBG);
 				*/
 				SCR_DrawString(mousePosX + icon_offset_x, mousePosY - 32, menuText[TEXT_MOUSECURSOR_PLAYERNAMES], qfalse);
-				menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = NULL;
+				MN_MenuTextReset(TEXT_MOUSECURSOR_PLAYERNAMES);
 			}
 		}
 	} else {

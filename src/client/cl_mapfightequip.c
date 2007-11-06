@@ -472,11 +472,11 @@ void BDEF_Init_f (void)
 	menuNode_t *node;
 
 	/* don't let old links appear on this menu */
-	menuText[TEXT_BASEDEFENSE_LIST] = NULL;
-	menuText[TEXT_AIREQUIP_1] = NULL;
-	menuText[TEXT_AIREQUIP_2] = NULL;
-	menuText[TEXT_AIREQUIP_3] = NULL;
-	menuText[TEXT_STANDARD] = NULL;
+	MN_MenuTextReset(TEXT_BASEDEFENSE_LIST);
+	MN_MenuTextReset(TEXT_AIREQUIP_1);
+	MN_MenuTextReset(TEXT_AIREQUIP_2);
+	MN_MenuTextReset(TEXT_AIREQUIP_3);
+	MN_MenuTextReset(TEXT_STANDARD);
 
 	if (!baseCurrent)
 		return;
@@ -806,10 +806,10 @@ void AIM_AircraftEquipmenuInit_f (void)
 	aircraftSlot_t *slot;
 
 	/* don't let old links appear on this menu */
-	menuText[TEXT_STANDARD] = NULL;
-	menuText[TEXT_AIREQUIP_1] = NULL;
-	menuText[TEXT_AIREQUIP_2] = NULL;
-	menuText[TEXT_AIREQUIP_3] = NULL;
+	MN_MenuTextReset(TEXT_STANDARD);
+	MN_MenuTextReset(TEXT_AIREQUIP_1);
+	MN_MenuTextReset(TEXT_AIREQUIP_2);
+	MN_MenuTextReset(TEXT_AIREQUIP_3);
 
 	if (Cmd_Argc() != 2 || noparams) {
 		if (airequipID == -1) {
@@ -865,7 +865,7 @@ void AIM_AircraftEquipmenuInit_f (void)
 	AIM_UpdateAircraftItemList(NULL, aircraft);
 
 	/* shield / weapon description */
-	menuText[TEXT_STANDARD] = NULL;
+	MN_MenuTextReset(TEXT_STANDARD);
 	noparams = qfalse;
 
 	/* Fill the texts of each zone */

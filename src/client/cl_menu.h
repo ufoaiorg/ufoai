@@ -297,6 +297,8 @@ void MN_Popup(const char *title, const char *text);
 void MN_ParseTutorials(const char *title, const char **text);
 qboolean MN_ScriptSanityCheck(void);
 
+void MN_MenuTextReset(int menuTextID);
+
 selectBoxOptions_t* MN_AddSelectboxOption(menuNode_t *node);
 
 #endif /* CLIENT_CL_MENU_H */

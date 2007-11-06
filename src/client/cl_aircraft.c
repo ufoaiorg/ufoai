@@ -574,7 +574,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 
 	/* calling from console? with no baseCurrent? */
 	if (!baseCurrent || !baseCurrent->numAircraftInBase) {
-		menuText[TEXT_AIRCRAFT_INFO] = NULL;
+		MN_MenuTextReset(TEXT_AIRCRAFT_INFO);
 		return;
 	}
 

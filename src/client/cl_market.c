@@ -386,7 +386,7 @@ static void BS_BuyType_f (void)
 		/* reset description */
 		Cvar_Set("mn_itemname", "");
 		Cvar_Set("mn_item", "");
-		menuText[TEXT_STANDARD] = NULL;
+		MN_MenuTextReset(TEXT_STANDARD);
 	}
 }
 

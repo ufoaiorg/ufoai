@@ -813,7 +813,7 @@ static void CL_GenerateEquipment_f (void)
 	/* reset description */
 	Cvar_Set("mn_itemname", "");
 	Cvar_Set("mn_item", "");
-	menuText[TEXT_STANDARD] = NULL;
+	MN_MenuTextReset(TEXT_STANDARD);
 
 	/* manage inventory */
 	unused = baseCurrent->storage; /* copied, including arrays inside! */

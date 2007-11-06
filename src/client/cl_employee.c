@@ -130,9 +130,7 @@ static void E_EmployeeList_f (void)
 	employeeListNode->textScroll = 0;
 
 	/* make sure, that we are using the linked list */
-	menuText[TEXT_LIST] = NULL;
-	LIST_Delete(menuTextLinkedList[TEXT_LIST]);
-	menuTextLinkedList[TEXT_LIST] = NULL;
+	MN_MenuTextReset(TEXT_LIST);
 
 	for (j = 0, employee = gd.employees[employeeCategory]; j < gd.numEmployees[employeeCategory]; j++, employee++) {
 		/* don't show employees of other bases */
