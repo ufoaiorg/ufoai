@@ -1017,6 +1017,7 @@ static void UP_Index_f (void)
 
 	upIndex = upText;
 	*upIndex = '\0';
+	menuText[TEXT_UFOPEDIA] = upIndex;
 
 	Cvar_Set("mn_uptitle", va(_("UFOpaedia Index: %s"), _(gd.upChapters[currentChapter].name)));
 
