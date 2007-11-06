@@ -962,6 +962,8 @@ static void MN_InvDrawFree (inventory_t * inv, menuNode_t * node)
 
 /**
  * @brief Popup in geoscape
+ * @note Only use static strings here - or use popupText if you really have to
+ * build the string
  */
 void MN_Popup (const char *title, const char *text)
 {
