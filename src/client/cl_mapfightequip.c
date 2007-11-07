@@ -368,17 +368,16 @@ static void BDEF_AddBattery (int type, base_t* base)
  */
 void BDEF_AddBattery_f (void)
 {
-	int num;
+	int num, baseIdx;
 
-	if (!baseCurrent)
+	if (Cmd_Argc() < 3)
 		return;
-
-	if (Cmd_Argc() < 2)
-		num = rand() % 2;
-	else
+	else {
 		num = atoi(Cmd_Argv(1));
+		baseIdx = atoi(Cmd_Argv(2));
+	}
 
-	BDEF_AddBattery(num, baseCurrent);
+	BDEF_AddBattery(num, gd.bases + baseIdx);
 }
 
 /**
@@ -388,24 +387,24 @@ void BDEF_AddBattery_f (void)
  */
 void BDEF_RemoveBattery (base_t *base, int type, int idx)
 {
-	if (!base)
-		base = baseCurrent;
+	assert(base);
 
+	/* Select the type of base defense system to destroy */
 	switch (type) {
-	case 0:
+	case 0: /* this is a missile battery */
 		if (idx < 0)
 			idx = rand() % base->maxBatteries;
-		if (idx < baseCurrent->maxBatteries - 1)
-			memmove(baseCurrent->batteries + idx, baseCurrent->batteries + idx + 1, sizeof(aircraftSlot_t) * (baseCurrent->maxBatteries - idx - 1));
+		if (idx < base->maxBatteries - 1)
+			memmove(base->batteries + idx, base->batteries + idx + 1, sizeof(aircraftSlot_t) * (base->maxBatteries - idx - 1));
 		base->maxBatteries--;
 		/* just for security */
 		AII_InitialiseSlot(base->batteries + base->maxBatteries, base->idx);
 		break;
-	case 1:
+	case 1: /* this is a laser battery */
 		if (idx < 0)
 			idx = rand() % base->maxLasers;
-		if (idx < baseCurrent->maxLasers - 1)
-			memmove(baseCurrent->lasers + idx, baseCurrent->lasers + idx + 1, sizeof(aircraftSlot_t) * (baseCurrent->maxLasers - idx - 1));
+		if (idx < base->maxLasers - 1)
+			memmove(base->lasers + idx, base->lasers + idx + 1, sizeof(aircraftSlot_t) * (base->maxLasers - idx - 1));
 		base->maxLasers--;
 		/* just for security */
 		AII_InitialiseSlot(base->lasers + base->maxLasers, base->idx);
@@ -417,27 +416,33 @@ void BDEF_RemoveBattery (base_t *base, int type, int idx)
 
 /**
  * @brief Remove a defense system from base.
+ * @note if the first argument is -1, the type of the battery to destroy is randomly selected
  */
 void BDEF_RemoveBattery_f (void)
 {
-	int num;
+	int num, baseIdx;
 
-	assert(baseCurrent);
-
-	if (Cmd_Argc() < 2)
-		num = rand() % 2;
-	else
-		num = atoi(Cmd_Argv(1));
-
-	if (baseCurrent->maxBatteries <= 0 && baseCurrent->maxLasers <= 0) {
-		Com_Printf("No base defense to destroy\n");
+	if (Cmd_Argc() < 3)
 		return;
-	} else if (num == 0 && baseCurrent->maxBatteries <= 0)
-		num = 1;
-	else if (num == 1 && baseCurrent->maxLasers <= 0)
-		num = 0;
+	else {
+		num = atoi(Cmd_Argv(1));
+		baseIdx = atoi(Cmd_Argv(2));
+	}
 
-	BDEF_RemoveBattery(baseCurrent, num, -1);
+	/* Type of base defense to destroy is randomly selected */
+	if (num < 0) {
+		if (gd.bases[baseIdx].maxBatteries <= 0 && gd.bases[baseIdx].maxLasers <= 0) {
+			Com_Printf("No base defense to destroy\n");
+			return;
+		} else if (gd.bases[baseIdx].maxBatteries <= 0)
+			num = 1;
+		else if (gd.bases[baseIdx].maxLasers <= 0)
+			num = 0;
+		else
+			num = rand() % 2;
+	}
+
+	BDEF_RemoveBattery(gd.bases + baseIdx, num, -1);
 }
 
 /**
