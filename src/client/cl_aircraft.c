@@ -1094,10 +1094,10 @@ static void AII_InitialiseAircraftSlots (aircraft_t *aircraft)
 
 	/* initialise weapon slots */
 	for (i = 0; i < MAX_AIRCRAFTSLOT; i++) {
-		AII_InitialiseSlot(aircraft->weapons + i, aircraft->idx);
-		AII_InitialiseSlot(aircraft->electronics + i, aircraft->idx);
+		AII_InitialiseSlot(aircraft->weapons + i, aircraft->idx, AC_ITEM_WEAPON);
+		AII_InitialiseSlot(aircraft->electronics + i, aircraft->idx, AC_ITEM_ELECTRONICS);
 	}
-	AII_InitialiseSlot(&aircraft->shield, aircraft->idx);
+	AII_InitialiseSlot(&aircraft->shield, aircraft->idx, AC_ITEM_SHIELD);
 }
 
 /**

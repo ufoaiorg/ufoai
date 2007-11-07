@@ -178,7 +178,7 @@ static aircraftSlot_t *AII_SelectAircraftSlot (aircraft_t *aircraft)
 		slot = &aircraft->shield;
 		break;
 	case AC_ITEM_ELECTRONICS:
-		slot = aircraft->electronics  + airequipSelectedSlot;
+		slot = aircraft->electronics + airequipSelectedSlot;
 		break;
 	case AC_ITEM_AMMO:
 	case AC_ITEM_WEAPON:
@@ -398,7 +398,7 @@ void BDEF_RemoveBattery (base_t *base, int type, int idx)
 			memmove(base->batteries + idx, base->batteries + idx + 1, sizeof(aircraftSlot_t) * (base->maxBatteries - idx - 1));
 		base->maxBatteries--;
 		/* just for security */
-		AII_InitialiseSlot(base->batteries + base->maxBatteries, base->idx);
+		AII_InitialiseSlot(base->batteries + base->maxBatteries, base->idx, AC_ITEM_BASE_MISSILE);
 		break;
 	case 1: /* this is a laser battery */
 		if (idx < 0)
@@ -407,7 +407,7 @@ void BDEF_RemoveBattery (base_t *base, int type, int idx)
 			memmove(base->lasers + idx, base->lasers + idx + 1, sizeof(aircraftSlot_t) * (base->maxLasers - idx - 1));
 		base->maxLasers--;
 		/* just for security */
-		AII_InitialiseSlot(base->lasers + base->maxLasers, base->idx);
+		AII_InitialiseSlot(base->lasers + base->maxLasers, base->idx, AC_ITEM_BASE_LASER);
 		break;
 	default:
 		Com_Printf("BDEF_RemoveBattery_f: unknown type of base defense system.\n");
@@ -454,8 +454,8 @@ void BDEF_InitialiseBaseSlots (base_t *base)
 	int i;
 
 	for (i = 0; i < MAX_BASE_SLOT; i++) {
-		AII_InitialiseSlot(base->batteries + i, base->idx);
-		AII_InitialiseSlot(base->lasers + i, base->idx);
+		AII_InitialiseSlot(base->batteries + i, base->idx, AC_ITEM_BASE_MISSILE);
+		AII_InitialiseSlot(base->lasers + i, base->idx, AC_ITEM_BASE_LASER);
 		base->targetMissileIdx[i] = AIRFIGHT_BASE_CAN_T_FIRE;
 		base->targetLaserIdx[i] = AIRFIGHT_BASE_CAN_T_FIRE;
 	}
@@ -815,6 +815,7 @@ void AIM_AircraftEquipmenuInit_f (void)
 	MN_MenuTextReset(TEXT_AIREQUIP_1);
 	MN_MenuTextReset(TEXT_AIREQUIP_2);
 	MN_MenuTextReset(TEXT_AIREQUIP_3);
+	MN_MenuTextReset(TEXT_LIST);
 
 	if (Cmd_Argc() != 2 || noparams) {
 		if (airequipID == -1) {
@@ -978,7 +979,7 @@ void AIM_AircraftEquipSlotSelect_f (void)
  */
 void AIM_AircraftEquipzoneSelect_f (void)
 {
-	int num;
+	int zone;
 	aircraft_t *aircraft = NULL;
 	aircraftSlot_t *slot;
 	menu_t *activeMenu = NULL;
@@ -993,7 +994,7 @@ void AIM_AircraftEquipzoneSelect_f (void)
 	activeMenu = MN_ActiveMenu();
 	aircraftMenu = !Q_strncmp(activeMenu->name, "aircraft_equip", 14);
 
-	num = atoi(Cmd_Argv(1));
+	zone = atoi(Cmd_Argv(1));
 
 	if (aircraftMenu) {
 		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
@@ -1009,41 +1010,41 @@ void AIM_AircraftEquipzoneSelect_f (void)
 	/* ammos are only available for weapons */
 	switch (airequipID) {
 	case AC_ITEM_WEAPON:
-		if (num == 3) {
+		if (zone == 3) {
 			if (slot->itemIdx != NONE)
 				airequipID = AC_ITEM_AMMO;
 		}
 		break;
 	case AC_ITEM_BASE_MISSILE:
-		if (num == 3) {
+		if (zone == 3) {
 			if (slot->itemIdx != NONE)
 				airequipID = AC_ITEM_AMMO_MISSILE;
 		}
 		break;
 	case AC_ITEM_BASE_LASER:
-		if (num == 3) {
+		if (zone == 3) {
 			if (slot->itemIdx != NONE)
 				airequipID = AC_ITEM_AMMO_LASER;
 		}
 		break;
 	case AC_ITEM_AMMO:
-		if (num != 3)
+		if (zone != 3)
 			airequipID = AC_ITEM_WEAPON;
 		break;
 	case AC_ITEM_AMMO_MISSILE:
-		if (num != 3)
+		if (zone != 3)
 			airequipID = AC_ITEM_BASE_MISSILE;
 		break;
 	case AC_ITEM_AMMO_LASER:
-		if (num != 3)
+		if (zone != 3)
 			airequipID = AC_ITEM_BASE_LASER;
 		break;
 	default :
 		/* zone 3 is not available for electronics and shields */
-		if (num == 3)
+		if (zone == 3)
 			return;
 	}
-	airequipSelectedZone = num;
+	airequipSelectedZone = zone;
 
 	/* Fill the list of item you can equip your aircraft with */
 	AIM_UpdateAircraftItemList(aircraftMenu ? NULL : baseCurrent, aircraft);
@@ -1056,6 +1057,11 @@ void AIM_AircraftEquipzoneSelect_f (void)
 }
 
 /**
+ * @brief Move the item in the slot (or optionally its ammo only) to the base storage.
+ * @note if there is another item to install after removal, begin this installation.
+ * @param[in] base The base to add the item to.
+ * @param[in] slot The slot to remove the item from.
+ * @param[in] ammo qtrue if we want to remove only ammo. qfalse if the whole item should be removed.
  * @sa AII_AddItemToSlot
  * @sa AII_AddAmmoToSlot
  */
@@ -1091,7 +1097,8 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
 }
 
 /**
- * @brief
+ * @brief Add an ammo to an aircraft weapon slot
+ * @note No check for the _type_ of item is done here, so it must be done before.
  * @sa AII_AddItemToSlot
  */
 qboolean AII_AddAmmoToSlot (base_t* base, technology_t *tech, aircraftSlot_t *slot)
@@ -1128,6 +1135,7 @@ qboolean AII_AddAmmoToSlot (base_t* base, technology_t *tech, aircraftSlot_t *sl
 
 /**
  * @brief Add an item to an aircraft slot
+ * @note No check for the _type_ of item is done here.
  * @sa AII_UpdateOneInstallationDelay
  * @sa AII_AddAmmoToSlot
  */
@@ -1139,6 +1147,22 @@ qboolean AII_AddItemToSlot (base_t* base, technology_t *tech, aircraftSlot_t *sl
 	assert(tech);
 
 	itemIdx = AII_GetAircraftItemByID(tech->provides);
+
+	/* Sanity check : the type of the item should be the same than the slot type */
+	if (slot->type != csi.ods[itemIdx].craftitem.type) {
+		Com_Printf("AII_AddItemToSlot: Type of the item to install (%s -- %i) doesn't match type of the slot (%i)\n", csi.ods[itemIdx].id, csi.ods[itemIdx].craftitem.type, slot->type);
+		return qfalse;
+	}
+
+#ifdef DEBUG
+	/* Sanity check : the type of the item cannot be an ammo */
+	/* note that this should never be reached because a slot type should never be an ammo
+		, so the test just before should be wrong */
+	if (csi.ods[slot->itemIdx].craftitem.type >= AC_ITEM_AMMO) {
+		Com_Printf("AII_AddItemToSlot: Type of the item to install (%s) should be a weapon, a shield, or electronics (no ammo)\n", csi.ods[itemIdx].id);
+		return qfalse;
+	}
+#endif
 
 	/* the base pointer can be null here - e.g. in case you are equipping a UFO */
 	if (base) {
@@ -1165,11 +1189,12 @@ qboolean AII_AddItemToSlot (base_t* base, technology_t *tech, aircraftSlot_t *sl
 
 /**
  * @brief Add selected item to current zone.
- * @note May be called from airequip menu of basedefense menu
+ * @note May be called from airequip menu or basedefense menu
+ * @sa aircraftItemType_t
  */
 void AIM_AircraftEquipAddItem_f (void)
 {
-	int num;
+	int zone;
 	aircraftSlot_t *slot;
 	aircraft_t *aircraft;
 	menu_t *activeMenu = NULL;
@@ -1181,7 +1206,7 @@ void AIM_AircraftEquipAddItem_f (void)
 		return;
 	}
 
-	num = atoi(Cmd_Argv(1));
+	zone = atoi(Cmd_Argv(1));
 
 	/* select menu */
 	activeMenu = MN_ActiveMenu();
@@ -1204,25 +1229,43 @@ void AIM_AircraftEquipAddItem_f (void)
 	}
 
 	/* the clicked button doesn't correspond to the selected zone */
-	if (num != airequipSelectedZone)
+	if (zone != airequipSelectedZone)
 		return;
 
 	/* there's no item in zone 1: you can't use zone 2 */
-	if (num == 2 && slot->itemIdx == NONE)
+	if (zone == 2 && slot->itemIdx == NONE)
+		return;
+
+	/* maximum value of zone is 3 */
+	if (zone > 3)
 		return;
 
 	/* select the slot we are changing */
 	/* update the new item to slot */
-	if (num == 1) {
+
+	switch (zone) {
+	case 1:
+		/* we change the weapon, shield, item, or base defense that is already in the slot */
 		AII_RemoveItemFromSlot(base, slot, qfalse);
 		AII_AddItemToSlot(base, airequipSelectedTechnology, slot);
-	} else if (num == 2)
+		break;
+	case 2:
+		/* we change the weapon, shield, item, or base defense that will be installed AFTER the removal 
+			of the one in the slot atm */
 		slot->nextItemIdx = AII_GetAircraftItemByID(airequipSelectedTechnology->provides);
-	else if (airequipID >= AC_ITEM_AMMO) {
-		AII_AddAmmoToSlot(base, airequipSelectedTechnology, slot);
-		/* reload its ammunition */
-		if (aircraft)
-			AII_ReloadWeapon(aircraft);
+		break;
+	case 3:
+		/* we can change ammo only if the selected item is an ammo (for weapon or base defense system) */
+		if (airequipID >= AC_ITEM_AMMO) {
+			AII_AddAmmoToSlot(base, airequipSelectedTechnology, slot);
+			/* reload its ammunition */
+			if (aircraft)
+				AII_ReloadWeapon(aircraft);
+		}
+		break;
+	default:
+		/* Zone higher than 3 shouldn't exist */
+		return;
 	}
 
 	if (aircraftMenu) {
@@ -1242,7 +1285,7 @@ void AIM_AircraftEquipAddItem_f (void)
  */
 void AIM_AircraftEquipDeleteItem_f (void)
 {
-	int num;
+	int zone;
 	aircraftSlot_t *slot;
 	aircraft_t *aircraft;
 	menu_t *activeMenu = NULL;
@@ -1252,7 +1295,7 @@ void AIM_AircraftEquipDeleteItem_f (void)
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
 		return;
 	}
-	num = atoi(Cmd_Argv(1));
+	zone = atoi(Cmd_Argv(1));
 
 	/* select menu */
 	activeMenu = MN_ActiveMenu();
@@ -1269,7 +1312,10 @@ void AIM_AircraftEquipDeleteItem_f (void)
 
 	/* select the slot we are changing */
 	/* update the new item to slot */
-	if (num == 1) {
+
+	switch (zone) {
+	case 1:
+		/* we change the weapon, shield, item, or base defense that is already in the slot */
 		/* if the item has been installed since less than 1 hour, you don't need time to remove it */
 		if (slot->installationTime < csi.ods[slot->itemIdx].craftitem.installationTime) {
 			slot->installationTime = -csi.ods[slot->itemIdx].craftitem.installationTime;
@@ -1277,10 +1323,21 @@ void AIM_AircraftEquipDeleteItem_f (void)
 		} else {
 			AII_RemoveItemFromSlot(baseCurrent, slot, qfalse);
 		}
-	} else if (num == 2)
+		break;
+	case 2:
+		/* we change the weapon, shield, item, or base defense that will be installed AFTER the removal 
+			of the one in the slot atm */
 		slot->nextItemIdx = NONE;
-	else if (airequipID >= AC_ITEM_AMMO)
-		AII_RemoveItemFromSlot(baseCurrent, slot, qtrue);
+		break;
+	case 3:
+		/* we can change ammo only if the selected item is an ammo (for weapon or base defense system) */
+		if (airequipID >= AC_ITEM_AMMO)
+			AII_RemoveItemFromSlot(baseCurrent, slot, qtrue);
+		break;
+	default:
+		/* Zone higher than 3 shouldn't exist */
+		return;
+	}
 
 	if (aircraftMenu) {
 		/* Update the values of aircraft stats */
@@ -1357,7 +1414,7 @@ void AIM_AircraftEquipmenuClick_f (void)
  * @brief Initialise values of one slot of an aircraft common to all types of items.
  * @param[in] slot Pointer to the slot to initialize.
  */
-void AII_InitialiseSlot (aircraftSlot_t *slot, int aircraftIdx)
+void AII_InitialiseSlot (aircraftSlot_t *slot, int aircraftIdx, aircraftItemType_t type)
 {
 	memset(slot, 0, sizeof(slot)); /* all values to 0 */
 	slot->aircraftIdx = aircraftIdx;
@@ -1365,6 +1422,7 @@ void AII_InitialiseSlot (aircraftSlot_t *slot, int aircraftIdx)
 	slot->ammoIdx = NONE;
 	slot->size = ITEM_HEAVY;
 	slot->nextItemIdx = NONE;
+	slot->type = type;
 }
 
 /**
