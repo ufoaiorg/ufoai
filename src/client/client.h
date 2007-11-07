@@ -357,7 +357,6 @@ void CIN_StopCinematic(void);
 void CIN_PlayCinematic(const char *name);
 void CIN_Shutdown(void);
 void CIN_Init(void);
-void CIN_DrawCinematic(void);
 
 /* cl_tip.c */
 void CL_TipOfTheDayInit(void);

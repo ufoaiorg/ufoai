@@ -76,7 +76,7 @@ typedef struct {
 	int				frameRate;
 	byte *			frameBuffer[2];
 
-	int				frameTime;
+	int				frameTime;	/**< cinematic start timestamp */
 	int				currentFrame;
 
 	byte			data[ROQ_MAX_CHUNK_SIZE + ROQ_CHUNK_HEADER_SIZE];
@@ -437,7 +437,7 @@ static void CIN_DecodeSoundMono (const byte *data)
 	}
 
 	/* Send samples to mixer */
-	S_PlaySoundFromMem(samples, cin.chunk.size, 22050, 1);
+	S_PlaySoundFromMem(samples, cin.chunk.size, 22050, 1, 1000 / cin.frameRate);
 }
 
 /**
@@ -461,12 +461,18 @@ static void CIN_DecodeSoundStereo (const byte *data)
 	}
 
 	/* Send samples to mixer */
-	S_PlaySoundFromMem(samples, cin.chunk.size, 22050, 2);
+	S_PlaySoundFromMem(samples, cin.chunk.size, 22050, 2, 1000 / cin.frameRate);
 }
 
+/**
+ * @sa CIN_RunCinematic
+ */
 static qboolean CIN_DecodeChunk (void)
 {
 	int frame;
+
+	if (cin.frameTime + ((1000 / cin.frameRate) * cin.currentFrame) > cls.realtime)
+		return qtrue;
 
 	frame = cin.currentFrame;
 
@@ -519,31 +525,32 @@ static qboolean CIN_DecodeChunk (void)
 }
 
 /**
- * @sa CL_Frame
- */
-void CIN_RunCinematic (int now, void *data)
-{
-	if (!cls.playingCinematic)
-		return;			/* Not playing */
-
-	/* Decode chunks until the desired frame is reached */
-	if (CIN_DecodeChunk())
-		return;
-
-	/* If we get here, the cinematic has either finished or failed */
-	CIN_StopCinematic();
-}
-
-/**
  * @sa R_DrawImagePixelData
  */
-void CIN_DrawCinematic (void)
+static void CIN_DrawCinematic (void)
 {
 	assert(cls.playingCinematic);
 
 	if (!cin.frameBuffer[1])
 		return;
 	R_DrawImagePixelData("***cinematic***", cin.frameBuffer[1], cin.frameWidth, cin.frameHeight);
+}
+
+/**
+ * @sa CL_Frame
+ */
+void CIN_RunCinematic (void)
+{
+	assert(cls.playingCinematic);
+
+	/* Decode chunks until the desired frame is reached */
+	if (CIN_DecodeChunk()) {
+		CIN_DrawCinematic();
+		return;
+	}
+
+	/* If we get here, the cinematic has either finished or failed */
+	CIN_StopCinematic();
 }
 
 /**
