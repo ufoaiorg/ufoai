@@ -687,7 +687,7 @@ void MAP_MapCalcLine (const vec2_t start, const vec2_t end, mapline_t* line)
 }
 
 /**
- * @brief Draw a path on a menu node (usually the geoscape map)
+ * @brief Draw a path on a menu node (usually the 2D geoscape map)
  * @param[in] node The menu node which will be used for drawing dimensions.
  * This is usually the geoscape menu node.
  * @param[in] line The path which is to be drawn
@@ -723,7 +723,7 @@ static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
 
 			/* first path of the path is drawn, now we begin the second part of the path */
 			/* shift first point, continue drawing */
-			start = i - 1;
+			start = i;
 			pts[0].x = p[-1].x - diff;
 			pts[0].y = p[-1].y;
 			p = pts;

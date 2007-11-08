@@ -681,7 +681,7 @@ void SCR_UpdateScreen (void)
 		MN_SetViewRect(MN_ActiveMenu());
 
 		if (cls.playingCinematic) {
-			CIN_DrawCinematic();
+			CIN_RunCinematic();
 		} else {
 			/* draw scene */
 			V_RenderView();

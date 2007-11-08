@@ -282,10 +282,11 @@ static Mix_Chunk *S_LoadSound (const char *sound)
  * @brief Loads a buffer from memory into the mixer
  * @param[in] mem 16 byte (short) buffer with data
  */
-void S_PlaySoundFromMem (short* mem, size_t size, int rate, int channel)
+void S_PlaySoundFromMem (short* mem, size_t size, int rate, int channel, int ms)
 {
 	SDL_AudioCVT wavecvt;
 	Mix_Chunk sample;
+	static int memChannel = -1;
 	const int samplesize = 2 * channel;
 
 	if (!sound_started)
@@ -314,7 +315,12 @@ void S_PlaySoundFromMem (short* mem, size_t size, int rate, int channel)
 	sample.alen = wavecvt.len_cvt;
 	sample.volume = MIX_MAX_VOLUME;
 
-	Mix_PlayChannel(-1, &sample, 0);
+	if (Mix_Playing(memChannel))
+		Mix_HaltChannel(memChannel);
+
+	/* FIXME: this is a nasty hack - no real mixing is performed and sound quality is still
+	 * very bad with this one */
+	memChannel = Mix_PlayChannelTimed(memChannel, &sample, 1, ms);
 	Mem_Free(sample.abuf);
 }
 
