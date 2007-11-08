@@ -394,7 +394,8 @@ static void BS_BuyType_f (void)
 				UP_AircraftItemDescription(buyList[0]);
 			}
 			break;
-		default:	/** implicitly "if (buyCategory != -1)" */
+		default:
+			assert(buyCategory != -1);
 			/* Select current item or first one. */
 			if (Cvar_VariableInteger("mn_bs_current") > 0)
 				UP_ItemDescription(Cvar_VariableInteger("mn_bs_current"));
