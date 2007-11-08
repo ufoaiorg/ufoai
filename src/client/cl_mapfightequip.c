@@ -377,6 +377,9 @@ void BDEF_AddBattery_f (void)
 		baseIdx = atoi(Cmd_Argv(2));
 	}
 
+	if (baseIdx < 0 || baseIdx >= MAX_BASES)
+		return;
+
 	BDEF_AddBattery(num, gd.bases + baseIdx);
 }
 
@@ -1250,7 +1253,7 @@ void AIM_AircraftEquipAddItem_f (void)
 		AII_AddItemToSlot(base, airequipSelectedTechnology, slot);
 		break;
 	case 2:
-		/* we change the weapon, shield, item, or base defense that will be installed AFTER the removal 
+		/* we change the weapon, shield, item, or base defense that will be installed AFTER the removal
 			of the one in the slot atm */
 		slot->nextItemIdx = AII_GetAircraftItemByID(airequipSelectedTechnology->provides);
 		break;
@@ -1325,7 +1328,7 @@ void AIM_AircraftEquipDeleteItem_f (void)
 		}
 		break;
 	case 2:
-		/* we change the weapon, shield, item, or base defense that will be installed AFTER the removal 
+		/* we change the weapon, shield, item, or base defense that will be installed AFTER the removal
 			of the one in the slot atm */
 		slot->nextItemIdx = NONE;
 		break;
