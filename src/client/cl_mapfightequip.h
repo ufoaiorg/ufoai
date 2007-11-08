@@ -42,11 +42,21 @@ typedef enum {
 	ZONE_MAX
 } zoneaircraftParams_t;
 
+/**
+ * @brief The different possible types of base defense systems.
+ * @sa BDEF_RemoveBattery_f: BASEDEF_LASER must be just after BASEDEF_MISSILE
+ */
+typedef enum {
+	BASEDEF_RANDOM,		/**< The base defense system should be randomly selected. */
+	BASEDEF_MISSILE,	/**< The base defense system is a missile battery. */
+	BASEDEF_LASER,		/**< The base defense system is a laser battery. */
 
+	BASEDEF_MAX
+} basedefenseType_t;
 
 /** Base defense functions. */
 void BDEF_AddBattery_f(void);
-void BDEF_RemoveBattery(base_t *base, int type, int idx);
+void BDEF_RemoveBattery(base_t *base, basedefenseType_t basedefType, int idx);
 void BDEF_RemoveBattery_f(void);
 void BDEF_InitialiseBaseSlots(base_t *base);
 void BDEF_Init_f(void);
