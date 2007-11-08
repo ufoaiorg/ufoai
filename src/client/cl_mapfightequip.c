@@ -30,8 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static int airequipID = -1;				/**< value of aircraftItemType_t that defines what item we are installing. */
 static qboolean noparams = qfalse;			/**< true if AIM_AircraftEquipmenuInit_f or BDEF_Init_f don't need paramters */
-static int airequipSelectedZone = 0;		/**< Selected zone in equip menu */
-static int airequipSelectedSlot = 0;			/**< Selected slot in equip menu */
+static int airequipSelectedZone = ZONE_NONE;		/**< Selected zone in equip menu */
+static int airequipSelectedSlot = ZONE_NONE;			/**< Selected slot in equip menu */
 static technology_t *airequipSelectedTechnology = NULL;		/**< Selected technolgy in equip menu */
 
 /**
@@ -129,7 +129,7 @@ static void AIM_CheckAirequipSelectedZone (aircraftSlot_t *slot)
 {
 	/* You can choose an ammo only if a weapon has already been selected */
 	if (airequipID >= AC_ITEM_AMMO && slot->itemIdx == NONE) {
-		airequipSelectedZone = 1;
+		airequipSelectedZone = ZONE_MAIN;
 		switch (airequipID) {
 		case AC_ITEM_AMMO:
 			airequipID = AC_ITEM_WEAPON;
@@ -147,8 +147,8 @@ static void AIM_CheckAirequipSelectedZone (aircraftSlot_t *slot)
 	}
 
 	/* You can select an item to install after removing only if you're removing an item */
-	if (airequipSelectedZone == 2 && (slot->installationTime >= 0 || slot->itemIdx == NONE)) {
-		airequipSelectedZone = 1;
+	if (airequipSelectedZone == ZONE_NEXT && (slot->installationTime >= 0 || slot->itemIdx == NONE)) {
+		airequipSelectedZone = ZONE_MAIN;
 		switch (airequipID) {
 		case AC_ITEM_AMMO:
 			airequipID = AC_ITEM_WEAPON;
@@ -311,19 +311,19 @@ static void AIM_DrawSelectedZone (void)
 	menuNode_t *node;
 
 	node = MN_GetNodeFromCurrentMenu("airequip_zone_select1");
-	if (airequipSelectedZone == 1)
+	if (airequipSelectedZone == ZONE_MAIN)
 		MN_HideNode(node);
 	else
 		MN_UnHideNode(node);
 
 	node = MN_GetNodeFromCurrentMenu("airequip_zone_select2");
-	if (airequipSelectedZone == 2)
+	if (airequipSelectedZone == ZONE_NEXT)
 		MN_HideNode(node);
 	else
 		MN_UnHideNode(node);
 
 	node = MN_GetNodeFromCurrentMenu("airequip_zone_select3");
-	if (airequipSelectedZone == 3)
+	if (airequipSelectedZone == ZONE_AMMO)
 		MN_HideNode(node);
 	else
 		MN_UnHideNode(node);
@@ -1012,39 +1012,41 @@ void AIM_AircraftEquipzoneSelect_f (void)
 
 	/* ammos are only available for weapons */
 	switch (airequipID) {
+	/* a weapon was selected - select ammo type corresponding to this weapon */
 	case AC_ITEM_WEAPON:
-		if (zone == 3) {
+		if (zone == ZONE_AMMO) {
 			if (slot->itemIdx != NONE)
 				airequipID = AC_ITEM_AMMO;
 		}
 		break;
 	case AC_ITEM_BASE_MISSILE:
-		if (zone == 3) {
+		if (zone == ZONE_AMMO) {
 			if (slot->itemIdx != NONE)
 				airequipID = AC_ITEM_AMMO_MISSILE;
 		}
 		break;
 	case AC_ITEM_BASE_LASER:
-		if (zone == 3) {
+		if (zone == ZONE_AMMO) {
 			if (slot->itemIdx != NONE)
 				airequipID = AC_ITEM_AMMO_LASER;
 		}
 		break;
+	/* an ammo was selected - select weapon type corresponding to this ammo */
 	case AC_ITEM_AMMO:
-		if (zone != 3)
+		if (zone != ZONE_AMMO)
 			airequipID = AC_ITEM_WEAPON;
 		break;
 	case AC_ITEM_AMMO_MISSILE:
-		if (zone != 3)
+		if (zone != ZONE_AMMO)
 			airequipID = AC_ITEM_BASE_MISSILE;
 		break;
 	case AC_ITEM_AMMO_LASER:
-		if (zone != 3)
+		if (zone != ZONE_AMMO)
 			airequipID = AC_ITEM_BASE_LASER;
 		break;
 	default :
-		/* zone 3 is not available for electronics and shields */
-		if (zone == 3)
+		/* ZONE_AMMO is not available for electronics and shields */
+		if (zone == ZONE_AMMO)
 			return;
 	}
 	airequipSelectedZone = zone;
@@ -1235,29 +1237,29 @@ void AIM_AircraftEquipAddItem_f (void)
 	if (zone != airequipSelectedZone)
 		return;
 
-	/* there's no item in zone 1: you can't use zone 2 */
-	if (zone == 2 && slot->itemIdx == NONE)
+	/* there's no item in ZONE_MAIN: you can't use zone ZONE_NEXT */
+	if (zone == ZONE_NEXT && slot->itemIdx == NONE)
 		return;
 
-	/* maximum value of zone is 3 */
-	if (zone > 3)
+	/* check if the zone exists */
+	if (zone >= ZONE_MAX)
 		return;
 
 	/* select the slot we are changing */
 	/* update the new item to slot */
 
 	switch (zone) {
-	case 1:
+	case ZONE_MAIN:
 		/* we change the weapon, shield, item, or base defense that is already in the slot */
 		AII_RemoveItemFromSlot(base, slot, qfalse);
 		AII_AddItemToSlot(base, airequipSelectedTechnology, slot);
 		break;
-	case 2:
+	case ZONE_NEXT:
 		/* we change the weapon, shield, item, or base defense that will be installed AFTER the removal
 			of the one in the slot atm */
 		slot->nextItemIdx = AII_GetAircraftItemByID(airequipSelectedTechnology->provides);
 		break;
-	case 3:
+	case ZONE_AMMO:
 		/* we can change ammo only if the selected item is an ammo (for weapon or base defense system) */
 		if (airequipID >= AC_ITEM_AMMO) {
 			AII_AddAmmoToSlot(base, airequipSelectedTechnology, slot);
@@ -1317,7 +1319,7 @@ void AIM_AircraftEquipDeleteItem_f (void)
 	/* update the new item to slot */
 
 	switch (zone) {
-	case 1:
+	case ZONE_MAIN:
 		/* we change the weapon, shield, item, or base defense that is already in the slot */
 		/* if the item has been installed since less than 1 hour, you don't need time to remove it */
 		if (slot->installationTime < csi.ods[slot->itemIdx].craftitem.installationTime) {
@@ -1327,18 +1329,18 @@ void AIM_AircraftEquipDeleteItem_f (void)
 			AII_RemoveItemFromSlot(baseCurrent, slot, qfalse);
 		}
 		break;
-	case 2:
+	case ZONE_NEXT:
 		/* we change the weapon, shield, item, or base defense that will be installed AFTER the removal
 			of the one in the slot atm */
 		slot->nextItemIdx = NONE;
 		break;
-	case 3:
+	case ZONE_AMMO:
 		/* we can change ammo only if the selected item is an ammo (for weapon or base defense system) */
 		if (airequipID >= AC_ITEM_AMMO)
 			AII_RemoveItemFromSlot(baseCurrent, slot, qtrue);
 		break;
 	default:
-		/* Zone higher than 3 shouldn't exist */
+		/* Zone higher than ZONE_AMMO shouldn't exist */
 		return;
 	}
 
