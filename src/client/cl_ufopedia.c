@@ -509,13 +509,15 @@ static void UP_BuildingDescription (technology_t* t)
 void UP_AircraftItemDescription (int idx)
 {
 	static char itemText[MAX_SMALLMENUTEXTLEN];
-	objDef_t *item;
+	objDef_t *item = NULL;
 	int i;
+
+	/* Set menu text node content to null. */
+	MN_MenuTextReset(TEXT_STANDARD);
 
 	/* no valid item id given */
 	if (idx == NONE) {
-		/* set menu text node content to null */
-		MN_MenuTextReset(TEXT_STANDARD);
+		/* Reset all used menu variables/nodes. TEXT_STANDARD is already reset. */
 		Cvar_Set("mn_itemname", "");
 		Cvar_Set("mn_item", "");
 		Cvar_Set("mn_upmodel_top", "");
