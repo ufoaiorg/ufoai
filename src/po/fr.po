@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-11-07 14:54+0100\n"
-"PO-Revision-Date: 2007-11-07 17:04+0100\n"
+"PO-Revision-Date: 2007-11-08 17:50+0100\n"
 "Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1915,11 +1915,11 @@ msgstr "Pas d'entrepôt dans cette base."
 
 #: ../base/ufos/menu_buy.ufo:2260
 msgid "Buy or sell aircrafts."
-msgstr "Acheter ou vendre un appareil"
+msgstr "Acheter ou vendre un appareil."
 
 #: ../base/ufos/menu_buy.ufo:2263
 msgid "Buy or sell craftitems."
-msgstr "Acheter ou vendre un composant pour appareil."
+msgstr "Acheter ou vendre des équipements pour appareils (armes, armures, ...)."
 
 #: ../base/ufos/menu_buy.ufo:2268
 msgid "Show aircrafts"
@@ -1929,9 +1929,10 @@ msgstr "Montrer les appareils"
 msgid "Show craftitems"
 msgstr "Montrer les objets"
 
+# Ce texte est dans un bouton et doit donc être court.
 #: ../base/ufos/menu_buy.ufo:2303
 msgid "Craftitems"
-msgstr "Composants pour appareils"
+msgstr "Équipements"
 
 #: ../base/ufos/menu_buy.ufo:2308
 #: ../base/ufos/menu_production.ufo:858
@@ -2910,9 +2911,8 @@ msgid "Delete this bookmark"
 msgstr "Effacer ce marque-page"
 
 #: ../base/ufos/menu_multiplayer.ufo:936
-#, fuzzy
 msgid "Day version:"
-msgstr "Version du jeu :\t%s\n"
+msgstr "Version du jeu:"
 
 #: ../base/ufos/menu_multiplayer.ufo:951
 msgid "Make this server public:"
@@ -3237,11 +3237,11 @@ msgstr "Réglages du jeu"
 
 #: ../base/ufos/menu_options.ufo:687
 msgid "Camera Scroll:"
-msgstr "Déplacement de la caméra :"
+msgstr "Déplacement caméra :"
 
 #: ../base/ufos/menu_options.ufo:713
 msgid "Camera Rotation:"
-msgstr "Rotation de la caméra"
+msgstr "Rotation caméra :"
 
 #: ../base/ufos/menu_options.ufo:739
 msgid "Precache models:"
