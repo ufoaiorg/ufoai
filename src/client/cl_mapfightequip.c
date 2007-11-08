@@ -1161,7 +1161,7 @@ qboolean AII_AddItemToSlot (base_t* base, technology_t *tech, aircraftSlot_t *sl
 	/* Sanity check : the type of the item cannot be an ammo */
 	/* note that this should never be reached because a slot type should never be an ammo
 		, so the test just before should be wrong */
-	if (csi.ods[slot->itemIdx].craftitem.type >= AC_ITEM_AMMO) {
+	if (csi.ods[itemIdx].craftitem.type >= AC_ITEM_AMMO) {
 		Com_Printf("AII_AddItemToSlot: Type of the item to install (%s) should be a weapon, a shield, or electronics (no ammo)\n", csi.ods[itemIdx].id);
 		return qfalse;
 	}
