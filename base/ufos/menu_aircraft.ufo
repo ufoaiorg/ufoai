@@ -54,7 +54,7 @@ menu aircraft
 		mousefx true
 		click
 		{
-			cmd "mn_push team"
+			cmd "mn_push team;"
 		}
 		out		{ *txt_squad color "0 0.8 0 1" *button_squad texl "0 0" *button_squad texh "230 64" }
 		in		{ *txt_squad color "1 1 1 1" *button_squad texl "230 0" *button_squad texh "460 64" }
@@ -123,7 +123,7 @@ menu aircraft
 		mousefx true
 		click
 		{
-			cmd "mn_push buyaircraft"
+			cmd "mn_push buyaircraft;"
 		}
 		out		{ *txt_buysell color "0 0.8 0 1" *button_buysell texl "0 0" *button_buysell texh "230 64" }
 		in		{ *txt_buysell color "1 1 1 1" *button_buysell texl "230 0" *button_buysell texh "460 64" }
@@ -304,7 +304,7 @@ menu aircraft
 		pos		"940 720"
 		texl	"0 0"
 		texh	"64 37"
-		click	{ cmd "mn_pop"  }
+		click	{ cmd "mn_pop;"  }
 	}
 
 	pic prev_aircraft
@@ -315,7 +315,7 @@ menu aircraft
 		mousefx true
 		texl	"0 0"
 		texh	"16 16"
-		click	{ cmd "mn_prev_aircraft" }
+		click	{ cmd "mn_prev_aircraft;" }
 	}
 
 	pic next_aircraft
@@ -326,7 +326,7 @@ menu aircraft
 		mousefx	true
 		texl	"16 0"
 		texh	"32 16"
-		click	{ cmd "mn_next_aircraft" }
+		click	{ cmd "mn_next_aircraft;" }
 	}
 
 	pic aircraft_return
@@ -337,7 +337,7 @@ menu aircraft
 		mousefx false
 		texl	"0 32"
 		texh	"16 48"
-		click	{ cmd "aircraft_return" }
+		click	{ cmd "aircraft_return;" }
 		out		{ *aircraft_return texl "0 32" *aircraft_return texh "16 48" }
 		in		{ *aircraft_return texl "16 32" *aircraft_return texh "32 48" }
 	}
@@ -415,20 +415,45 @@ menu aircraft_equip
 	// aircraft model
 	// ==================
 
-	confunc airequip_reset
+	func airequip_reset
 	{
 		*airequip_button_weapons_str		color "1 1 1 0.6"
 		*airequip_button_shields_str		color "1 1 1 0.6"
 		*airequip_button_items_str			color "1 1 1 0.6"
 		*airequip_header3					invis true
 	}
-	confunc airequip_weapons		{ cmd "airequip_init 0;" airequip_reset *airequip_button_weapons_str	color "1 1 1 1" *airequip_header3 invis false }
-	confunc airequip_shields	{ cmd "airequip_init 1;" airequip_reset *airequip_button_shields_str	color "1 1 1 1" }
-	confunc airequip_items		{ cmd "airequip_init 2;" airequip_reset *airequip_button_items_str color "1 1 1 1" }
+	func airequip_weapons
+	{
+		cmd "airequip_init 0;"
+		airequip_reset
+		*airequip_button_weapons_str color "1 1 1 1"
+		*airequip_header3 invis false
+	}
+	func airequip_shields
+	{
+		cmd "airequip_init 1;"
+		airequip_reset
+		*airequip_button_shields_str color "1 1 1 1"
+	}
+	func airequip_items
+	{
+		cmd "airequip_init 2;"
+		airequip_reset
+		*airequip_button_items_str color "1 1 1 1"
+	}
 
-	confunc	airequip_zone1	{ cmd "airequip_zone_select 1;airequip_init;" }
-	confunc	airequip_zone2	{ cmd "airequip_zone_select 2;airequip_init;" }
-	confunc	airequip_zone3	{ cmd "airequip_zone_select 3;airequip_init 3;" }
+	func airequip_zone1
+	{
+		cmd "airequip_zone_select 1;airequip_init;"
+	}
+	func airequip_zone2
+	{
+		cmd "airequip_zone_select 2;airequip_init;"
+	}
+	func airequip_zone3
+	{
+		cmd "airequip_zone_select 3;airequip_init 3;"
+	}
 
 	model aircraftequip
 	{
@@ -448,7 +473,10 @@ menu aircraft_equip
 		texl	"0 37"
 		texh	"64 73"
 		mousefx true
-		click	{ cmd "mn_prev_aircraft;airequip_zone1" }
+		click	{
+			airequip_zone1
+			cmd "mn_prev_aircraft;"
+		}
 	}
 
 	pic bt_next
@@ -459,7 +487,10 @@ menu aircraft_equip
 		texl	"0 0"
 		texh	"64 36"
 		mousefx true
-		click	{ cmd "mn_next_aircraft;airequip_zone1" }
+		click	{
+			airequip_zone1
+			cmd "mn_next_aircraft;"
+		}
 	}
 
 	string airequip_available
