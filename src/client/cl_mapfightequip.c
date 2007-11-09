@@ -1319,7 +1319,7 @@ void AIM_AircraftEquipAddItem_f (void)
 		break;
 	case ZONE_NEXT:
 		/* we change the weapon, shield, item, or base defense that will be installed AFTER the removal
-			of the one in the slot atm */
+		 * of the one in the slot atm */
 		slot->nextItemIdx = AII_GetAircraftItemByID(airequipSelectedTechnology->provides);
 		break;
 	case ZONE_AMMO:
@@ -1394,7 +1394,7 @@ void AIM_AircraftEquipDeleteItem_f (void)
 		break;
 	case ZONE_NEXT:
 		/* we change the weapon, shield, item, or base defense that will be installed AFTER the removal
-			of the one in the slot atm */
+		 * of the one in the slot atm */
 		slot->nextItemIdx = NONE;
 		break;
 	case ZONE_AMMO:
