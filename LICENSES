@@ -449,6 +449,8 @@ base/models/aircraft/craft_arm_plate/plating.md2 | GNU General Public License 2.
 base/models/aircraft/craft_arm_plate/plating.tga | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/craft_arm_poly/polymer.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/craft_arm_poly/polymer.tga | GNU General Public License 2.0 | Willem "Sitters"
+base/models/aircraft/craft_item_antim/antimatter.md2 | GNU General Public License 2.0 | Willem "Sitters"
+base/models/aircraft/craft_item_antim/antimatter.tga | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/craft_item_astro/craft_item_astrogation.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/craft_item_astro/craft_item_astrogation.tga | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/craft_item_det/detection.md2 | GNU General Public License 2.0 | Willem "Sitters"

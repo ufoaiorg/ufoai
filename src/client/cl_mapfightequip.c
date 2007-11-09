@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 
 static int airequipID = -1;				/**< value of aircraftItemType_t that defines what item we are installing. */
-static qboolean noparams = qfalse;			/**< true if AIM_AircraftEquipmenuInit_f or BDEF_Init_f don't need paramters */
+static qboolean noparams = qfalse;			/**< true if AIM_AircraftEquipmenuInit_f or BDEF_ZoneInit_f don't need paramters */
 static int airequipSelectedZone = ZONE_NONE;		/**< Selected zone in equip menu */
 static int airequipSelectedSlot = ZONE_NONE;			/**< Selected slot in equip menu */
 static technology_t *airequipSelectedTechnology = NULL;		/**< Selected technolgy in equip menu */
@@ -197,24 +197,34 @@ static aircraftSlot_t *AII_SelectAircraftSlot (aircraft_t *aircraft)
  * @param[in] base Pointer to the aircraft
  * @return Pointer to the slot corresponding to airequipID
  * @note There is always at least one slot, otherwise you can't enter base defense menu screen.
+ * @sa BDEF_ListClick_f
  */
 static aircraftSlot_t *BDEF_SelectBaseSlot (base_t *base)
 {
 	aircraftSlot_t *slot;
+	menuNode_t *node;
 
 	switch (airequipID) {
 	case AC_ITEM_AMMO_MISSILE:
 	case AC_ITEM_BASE_MISSILE:
 		assert(base->maxBatteries > 0);
-		if (airequipSelectedSlot >= base->maxBatteries)
+		if (airequipSelectedSlot >= base->maxBatteries) {
 			airequipSelectedSlot = 0;
+			/* update position of the arrow in front of the selected base defense */
+			node = MN_GetNodeFromCurrentMenu("basedef_selected_slot");
+			Vector2Set(node->pos, 25, 30);
+		}
 		slot = base->batteries + airequipSelectedSlot;
 		break;
 	case AC_ITEM_AMMO_LASER:
 	case AC_ITEM_BASE_LASER:
 		assert(base->maxLasers > 0);
-		if (airequipSelectedSlot < base->maxLasers)
+		if (airequipSelectedSlot >= base->maxLasers) {
 			airequipSelectedSlot = 0;
+			/* update position of the arrow in front of the selected base defense */
+			node = MN_GetNodeFromCurrentMenu("basedef_selected_slot");
+			Vector2Set(node->pos, 25, 30);
+		}
 		slot = base->lasers + airequipSelectedSlot;
 		break;
 	default:
@@ -500,8 +510,33 @@ void BDEF_InitialiseBaseSlots (base_t *base)
 
 /**
  * @brief Script command to init the base defense menu.
+ * @note this function is only called when the menu launches
  */
-void BDEF_Init_f (void)
+void BDEF_MenuInit_f (void)
+{
+	menuNode_t *node;
+
+	/* initialize selected item */
+	Cvar_Set("basedef_item_name", "main");
+	airequipSelectedTechnology = NULL;
+
+	/* initialize different variables */
+	airequipID = -1;
+	noparams = qfalse;
+	airequipSelectedZone = ZONE_NONE;
+	airequipSelectedSlot = ZONE_NONE;
+
+	/* initialize selected slot */
+	airequipSelectedSlot = 0;
+	/* update position of the arrow in front of the selected base defense */
+	node = MN_GetNodeFromCurrentMenu("basedef_selected_slot");
+	Vector2Set(node->pos, 25, 30);
+}
+
+/**
+ * @brief Script command to init the base defense menu.
+ */
+void BDEF_ZoneInit_f (void)
 {
 	static char defBuffer[1024];
 	static char smallbuffer1[128];
@@ -526,7 +561,7 @@ void BDEF_Init_f (void)
 
 	/* Check that the base has at least 1 battery */
 	if (baseCurrent->maxBatteries + baseCurrent->maxLasers < 1) {
-		Com_Printf("BDEF_Init_f: there is no defense battery in this base: you shouldn't be in this function.\n");
+		Com_Printf("BDEF_ZoneInit_f: there is no defense battery in this base: you shouldn't be in this function.\n");
 		return;
 	}
 
@@ -555,7 +590,7 @@ void BDEF_Init_f (void)
 				airequipID = AC_ITEM_AMMO_LASER;
 			break;
 		default:
-			Com_Printf("BDEF_Init_f: Unvalid type %i.\n", type);
+			Com_Printf("BDEF_ZoneInit_f: Unvalid type %i.\n", type);
 			return;
 		}
 	}
@@ -613,7 +648,7 @@ void BDEF_Init_f (void)
 			}
 		}
 	} else {
-		Com_Printf("BDEF_Init_f: unknown airequipId.\n");
+		Com_Printf("BDEF_ZoneInit_f: unknown airequipId.\n");
 		return;
 	}
 	menuText[TEXT_BASEDEFENSE_LIST] = defBuffer;
@@ -688,7 +723,7 @@ void BDEF_ListClick_f (void)
 	Vector2Set(node->pos, 25, 30 + height * airequipSelectedSlot);
 
 	noparams = qtrue;
-	BDEF_Init_f();
+	BDEF_ZoneInit_f();
 }
 
 /**
@@ -1319,7 +1354,7 @@ void AIM_AircraftEquipAddItem_f (void)
 		break;
 	case ZONE_NEXT:
 		/* we change the weapon, shield, item, or base defense that will be installed AFTER the removal
-			of the one in the slot atm */
+		 * of the one in the slot atm */
 		slot->nextItemIdx = AII_GetAircraftItemByID(airequipSelectedTechnology->provides);
 		break;
 	case ZONE_AMMO:
@@ -1343,8 +1378,8 @@ void AIM_AircraftEquipAddItem_f (void)
 		noparams = qtrue; /* used for AIM_AircraftEquipmenuInit_f */
 		AIM_AircraftEquipmenuInit_f();
 	} else {
-		noparams = qtrue; /* used for BDEF_Init_f */
-		BDEF_Init_f();
+		noparams = qtrue; /* used for BDEF_ZoneInit_f */
+		BDEF_ZoneInit_f();
 	}
 }
 
@@ -1394,7 +1429,7 @@ void AIM_AircraftEquipDeleteItem_f (void)
 		break;
 	case ZONE_NEXT:
 		/* we change the weapon, shield, item, or base defense that will be installed AFTER the removal
-			of the one in the slot atm */
+		 * of the one in the slot atm */
 		slot->nextItemIdx = NONE;
 		break;
 	case ZONE_AMMO:
@@ -1414,8 +1449,8 @@ void AIM_AircraftEquipDeleteItem_f (void)
 		noparams = qtrue; /* used for AIM_AircraftEquipmenuInit_f */
 		AIM_AircraftEquipmenuInit_f();
 	} else {
-		noparams = qtrue; /* used for BDEF_Init_f */
-		BDEF_Init_f();
+		noparams = qtrue; /* used for BDEF_ZoneInit_f */
+		BDEF_ZoneInit_f();
 	}
 }
 

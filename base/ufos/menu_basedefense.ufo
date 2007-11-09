@@ -44,18 +44,47 @@ menu basedefense
 	// buttons
 	// ==================
 
-	confunc basedef_reset
+	func basedef_reset
 	{
 		*basedef_button_missile_str		color "1 1 1 0.6"
 		*basedef_button_laser_str		color "1 1 1 0.6"
-		*basedef_header3					invis true
+		*basedef_header3				invis true
 	}
-	confunc basedef_missile		{ cmd "basedef_init 0;" basedef_reset *basedef_button_missile_str	color "1 1 1 1" *basedef_header3 invis false }
-	confunc basedef_laser	{ cmd "basedef_init 1;" basedef_reset *basedef_button_laser_str	color "1 1 1 1" }
 
-	confunc	basedef_zone1	{ cmd "airequip_zone_select 1;basedef_init;" }
-	confunc	basedef_zone2	{ cmd "airequip_zone_select 2;basedef_init;" }
-	confunc	basedef_zone3	{ cmd "airequip_zone_select 3;basedef_init 2;" }
+	func basedef_initnodevalues
+	{
+		*basedef_button_missile_str		color "1 1 1 1"
+		*basedef_button_laser_str		color "1 1 1 0.6"
+		*basedef_header3				invis false
+	}
+
+	func basedef_missile
+	{
+		cmd "basedef_initzone 0;"
+		basedef_reset
+		*basedef_button_missile_str color "1 1 1 1"
+		*basedef_header3 invis false
+	}
+
+	func basedef_laser
+	{
+		cmd "basedef_initzone 1;"
+		basedef_reset
+		*basedef_button_laser_str color "1 1 1 1"
+	}
+
+	func basedef_zone1
+	{
+		cmd "airequip_zone_select 1;basedef_initzone;"
+	}
+	func basedef_zone2
+	{
+		cmd "airequip_zone_select 2;basedef_initzone;"
+	}
+	func basedef_zone3
+	{
+		cmd "airequip_zone_select 3;basedef_initzone 2;"
+	}
 
 	text basedef_slot_list
 	{
@@ -351,14 +380,13 @@ menu basedefense
 		pos		"940 720"
 		texl	"0 0"
 		texh	"64 37"
-		click	{ cmd "mn_pop"  }
+		click	{ cmd "mn_pop;"  }
 	}
 
 	func init
 	{
-		cmd "basedef_init 0;"
-		cmd basedef_reset *basedef_button_missile_str	color "1 1 1 1" *basedef_header3 invis false
-		cmd "airequip_zone_select 1;"
+		basedef_initnodevalues
+		cmd "basedef_initmenu;basedef_initzone 0;airequip_zone_select 1;"
 	}
 
 	func close

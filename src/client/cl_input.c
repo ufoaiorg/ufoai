@@ -47,6 +47,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_keys.h"
 #include "cl_input.h"
 
+/** @brief Grid position on the map for pending events */
 extern pos3_t mousePendPos;
 extern mouseRepeat_t mouseRepeat;
 

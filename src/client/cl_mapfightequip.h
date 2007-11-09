@@ -59,7 +59,8 @@ void BDEF_AddBattery_f(void);
 void BDEF_RemoveBattery(base_t *base, basedefenseType_t basedefType, int idx);
 void BDEF_RemoveBattery_f(void);
 void BDEF_InitialiseBaseSlots(base_t *base);
-void BDEF_Init_f(void);
+void BDEF_MenuInit_f(void);
+void BDEF_ZoneInit_f(void);
 void BDEF_ListClick_f(void);
 
 void AII_UpdateInstallationDelay(void);
