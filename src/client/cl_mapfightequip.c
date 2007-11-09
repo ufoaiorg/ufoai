@@ -1211,6 +1211,10 @@ qboolean AII_AddItemToSlot (base_t* base, technology_t *tech, aircraftSlot_t *sl
 	assert(tech);
 
 	itemIdx = AII_GetAircraftItemByID(tech->provides);
+	if (itemIdx == NONE) {
+		Com_Printf("AII_AddItemToSlot: Could not add item (%s) to slot\n", tech->provides);
+		return qfalse;
+	}
 
 	/* Sanity check : the type of the item should be the same than the slot type */
 	if (slot->type != csi.ods[itemIdx].craftitem.type) {
@@ -1221,8 +1225,8 @@ qboolean AII_AddItemToSlot (base_t* base, technology_t *tech, aircraftSlot_t *sl
 #ifdef DEBUG
 	/* Sanity check : the type of the item cannot be an ammo */
 	/* note that this should never be reached because a slot type should never be an ammo
-		, so the test just before should be wrong */
-	if (csi.ods[slot->itemIdx].craftitem.type >= AC_ITEM_AMMO) {
+	 * , so the test just before should be wrong */
+	if (csi.ods[itemIdx].craftitem.type >= AC_ITEM_AMMO) {
 		Com_Printf("AII_AddItemToSlot: Type of the item to install (%s) should be a weapon, a shield, or electronics (no ammo)\n", csi.ods[itemIdx].id);
 		return qfalse;
 	}
@@ -1236,9 +1240,9 @@ qboolean AII_AddItemToSlot (base_t* base, technology_t *tech, aircraftSlot_t *sl
 		}
 	}
 
-	if (slot->size >= AII_GetItemWeightBySize(&csi.ods[slot->itemIdx])) {
+	if (slot->size >= AII_GetItemWeightBySize(&csi.ods[itemIdx])) {
 		slot->itemIdx = itemIdx;
-		slot->installationTime = csi.ods[slot->itemIdx].craftitem.installationTime;
+		slot->installationTime = csi.ods[itemIdx].craftitem.installationTime;
 		/* the base pointer can be null here - e.g. in case you are equipping a UFO */
 		if (base)
 			B_UpdateStorageAndCapacity(base, itemIdx, -1, qfalse, qfalse);
