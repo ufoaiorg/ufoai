@@ -2341,7 +2341,7 @@ menu buyaircraft
 
 	func init
 	{
-		cmd "buy_type 5;"
+		abuy_aircrafts
 	}
 	func close
 	{
