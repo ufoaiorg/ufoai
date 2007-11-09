@@ -245,8 +245,8 @@ menu aircraft
 		tooltip	"_Build at least one workshop"
 		image	menu/button
 		pos	"45 450"
-		texl	"0 72"
-		texh	"230 120"
+		texl	"0 64"
+		texh	"230 128"
 		in
 	}
 	string txt_produce
