@@ -4209,7 +4209,7 @@ static const cmdList_t game_commands[] = {
 	{"add_battery", BDEF_AddBattery_f, "Add a new battery to base"},
 	{"remove_battery", BDEF_RemoveBattery_f, "Remove a battery from base"},
 	{"basedef_initmenu", BDEF_MenuInit_f, "Inits base defense menu"},
-	{"basedef_updatemenu", BDEF_ZoneInit_f, "Inits base defense menu"},
+	{"basedef_updatemenu", BDEF_BaseDefenseMenuUpdate_f, "Inits base defense menu"},
 	{"basedef_slot_list_click", BDEF_ListClick_f, "Inits base defense menu"},
 	{"basedef_list_click", AIM_AircraftEquipMenuClick_f, NULL},
 	{"addeventmail", CL_EventAddMail_f, "Add a new mail (event trigger) - e.g. after a mission"},

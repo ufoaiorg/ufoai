@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 
 static int airequipID = -1;				/**< value of aircraftItemType_t that defines what item we are installing. */
-static qboolean noparams = qfalse;			/**< true if AIM_AircraftEquipMenuUpdate_f or BDEF_ZoneInit_f don't need paramters */
+static qboolean noparams = qfalse;			/**< true if AIM_AircraftEquipMenuUpdate_f or BDEF_BaseDefenseMenuUpdate_f don't need paramters */
 static int airequipSelectedZone = ZONE_NONE;		/**< Selected zone in equip menu */
 static int airequipSelectedSlot = ZONE_NONE;			/**< Selected slot in equip menu */
 static technology_t *airequipSelectedTechnology = NULL;		/**< Selected technolgy in equip menu */
@@ -534,9 +534,10 @@ void BDEF_MenuInit_f (void)
 }
 
 /**
- * @brief Script command to init the base defense menu.
+ * @brief Fills the battery list, descriptions, and weapons in slots
+ * of the basedefense equip menu
  */
-void BDEF_ZoneInit_f (void)
+void BDEF_BaseDefenseMenuUpdate_f (void)
 {
 	static char defBuffer[1024];
 	static char smallbuffer1[128];
@@ -561,7 +562,7 @@ void BDEF_ZoneInit_f (void)
 
 	/* Check that the base has at least 1 battery */
 	if (baseCurrent->maxBatteries + baseCurrent->maxLasers < 1) {
-		Com_Printf("BDEF_ZoneInit_f: there is no defense battery in this base: you shouldn't be in this function.\n");
+		Com_Printf("BDEF_BaseDefenseMenuUpdate_f: there is no defense battery in this base: you shouldn't be in this function.\n");
 		return;
 	}
 
@@ -590,7 +591,7 @@ void BDEF_ZoneInit_f (void)
 				airequipID = AC_ITEM_AMMO_LASER;
 			break;
 		default:
-			Com_Printf("BDEF_ZoneInit_f: Unvalid type %i.\n", type);
+			Com_Printf("BDEF_BaseDefenseMenuUpdate_f: Unvalid type %i.\n", type);
 			return;
 		}
 	}
@@ -648,7 +649,7 @@ void BDEF_ZoneInit_f (void)
 			}
 		}
 	} else {
-		Com_Printf("BDEF_ZoneInit_f: unknown airequipId.\n");
+		Com_Printf("BDEF_BaseDefenseMenuUpdate_f: unknown airequipId.\n");
 		return;
 	}
 	menuText[TEXT_BASEDEFENSE_LIST] = defBuffer;
@@ -723,7 +724,7 @@ void BDEF_ListClick_f (void)
 	Vector2Set(node->pos, 25, 30 + height * airequipSelectedSlot);
 
 	noparams = qtrue;
-	BDEF_ZoneInit_f();
+	BDEF_BaseDefenseMenuUpdate_f();
 }
 
 /**
@@ -1378,8 +1379,8 @@ void AIM_AircraftEquipAddItem_f (void)
 		noparams = qtrue; /* used for AIM_AircraftEquipMenuUpdate_f */
 		AIM_AircraftEquipMenuUpdate_f();
 	} else {
-		noparams = qtrue; /* used for BDEF_ZoneInit_f */
-		BDEF_ZoneInit_f();
+		noparams = qtrue; /* used for BDEF_BaseDefenseMenuUpdate_f */
+		BDEF_BaseDefenseMenuUpdate_f();
 	}
 }
 
@@ -1449,8 +1450,8 @@ void AIM_AircraftEquipDeleteItem_f (void)
 		noparams = qtrue; /* used for AIM_AircraftEquipMenuUpdate_f */
 		AIM_AircraftEquipMenuUpdate_f();
 	} else {
-		noparams = qtrue; /* used for BDEF_ZoneInit_f */
-		BDEF_ZoneInit_f();
+		noparams = qtrue; /* used for BDEF_MenuUpdate_f */
+		BDEF_BaseDefenseMenuUpdate_f();
 	}
 }
 
