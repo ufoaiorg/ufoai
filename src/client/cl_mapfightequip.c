@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 
 static int airequipID = -1;				/**< value of aircraftItemType_t that defines what item we are installing. */
-static qboolean noparams = qfalse;			/**< true if AIM_AircraftEquipmenuInit_f or BDEF_ZoneInit_f don't need paramters */
+static qboolean noparams = qfalse;			/**< true if AIM_AircraftEquipMenuUpdate_f or BDEF_ZoneInit_f don't need paramters */
 static int airequipSelectedZone = ZONE_NONE;		/**< Selected zone in equip menu */
 static int airequipSelectedSlot = ZONE_NONE;			/**< Selected slot in equip menu */
 static technology_t *airequipSelectedTechnology = NULL;		/**< Selected technolgy in equip menu */
@@ -702,7 +702,7 @@ void BDEF_ZoneInit_f (void)
 
 /**
  * @brief Click function for base defense menu list.
- * @sa AIM_AircraftEquipmenuInit_f
+ * @sa AIM_AircraftEquipMenuUpdate_f
  */
 void BDEF_ListClick_f (void)
 {
@@ -895,9 +895,9 @@ static void AIM_DrawAircraftSlots (aircraft_t *aircraft)
 
 /**
  * @brief Fills the weapon and shield list of the aircraft equip menu
- * @sa AIM_AircraftEquipmenuClick_f
+ * @sa AIM_AircraftEquipMenuClick_f
  */
-void AIM_AircraftEquipmenuInit_f (void)
+void AIM_AircraftEquipMenuUpdate_f (void)
 {
 	static char smallbuffer1[128];
 	static char smallbuffer2[128];
@@ -946,7 +946,7 @@ void AIM_AircraftEquipmenuInit_f (void)
 
 	/* we are not in the aircraft menu */
 	if (!node) {
-		Com_DPrintf(DEBUG_CLIENT, "AIM_AircraftEquipmenuInit_f: Error - node aircraftequip not found\n");
+		Com_DPrintf(DEBUG_CLIENT, "AIM_AircraftEquipMenuUpdate_f: Error - node aircraftequip not found\n");
 		return;
 	}
 
@@ -1067,14 +1067,14 @@ void AIM_AircraftEquipSlotSelect_f (void)
 	}
 
 	/* Update menu after changing slot */
-	noparams = qtrue; /* used for AIM_AircraftEquipmenuInit_f */
-	AIM_AircraftEquipmenuInit_f();
+	noparams = qtrue; /* used for AIM_AircraftEquipMenuUpdate_f */
+	AIM_AircraftEquipMenuUpdate_f();
 }
 
 /**
  * @brief Select the current zone you want to assign the item to.
  */
-void AIM_AircraftEquipzoneSelect_f (void)
+void AIM_AircraftEquipZoneSelect_f (void)
 {
 	int zone;
 	aircraft_t *aircraft = NULL;
@@ -1375,8 +1375,8 @@ void AIM_AircraftEquipAddItem_f (void)
 		/* Update the values of aircraft stats (just in case an item has an installationTime of 0) */
 		AII_UpdateAircraftStats(aircraft);
 
-		noparams = qtrue; /* used for AIM_AircraftEquipmenuInit_f */
-		AIM_AircraftEquipmenuInit_f();
+		noparams = qtrue; /* used for AIM_AircraftEquipMenuUpdate_f */
+		AIM_AircraftEquipMenuUpdate_f();
 	} else {
 		noparams = qtrue; /* used for BDEF_ZoneInit_f */
 		BDEF_ZoneInit_f();
@@ -1446,8 +1446,8 @@ void AIM_AircraftEquipDeleteItem_f (void)
 		/* Update the values of aircraft stats */
 		AII_UpdateAircraftStats(aircraft);
 
-		noparams = qtrue; /* used for AIM_AircraftEquipmenuInit_f */
-		AIM_AircraftEquipmenuInit_f();
+		noparams = qtrue; /* used for AIM_AircraftEquipMenuUpdate_f */
+		AIM_AircraftEquipMenuUpdate_f();
 	} else {
 		noparams = qtrue; /* used for BDEF_ZoneInit_f */
 		BDEF_ZoneInit_f();
@@ -1456,9 +1456,9 @@ void AIM_AircraftEquipDeleteItem_f (void)
 
 /**
  * @brief Set airequipSelectedTechnology to the technology of current selected aircraft item.
- * @sa AIM_AircraftEquipmenuInit_f
+ * @sa AIM_AircraftEquipMenuUpdate_f
  */
-void AIM_AircraftEquipmenuClick_f (void)
+void AIM_AircraftEquipMenuClick_f (void)
 {
 	aircraft_t *aircraft = NULL;
 	base_t *base = NULL;
@@ -1500,9 +1500,11 @@ void AIM_AircraftEquipmenuClick_f (void)
 			/* found it */
 			if (num <= 0) {
 				airequipSelectedTechnology = *list;
-				/*AIR_AircraftSelect(aircraft);*/
-				/* noparams = qtrue; */ /* used for AIM_AircraftEquipmenuMenuInit_f */
-				/* AIM_AircraftEquipmenuInit_f(); */
+#if 0
+				AIR_AircraftSelect(aircraft);
+				noparams = qtrue; /* used for AIM_AircraftEquipMenuUpdate_f */
+				AIM_AircraftEquipMenuUpdate_f();
+#endif
 				UP_AircraftItemDescription(AII_GetAircraftItemByID(airequipSelectedTechnology->provides));
 				break;
 			}
