@@ -26,9 +26,37 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_MAPFIGHTEQUIP_H
 #define CLIENT_CL_MAPFIGHTEQUIP_H
 
+/**
+ * @brief Zone number in airequip menu or base defense menu.
+ * @note A zone is the rectangular box in the upper right of the screen.
+ * @note A zone is different from a slot or the type of an item.
+ */
+typedef enum {
+	ZONE_NONE,	/**< This is not a zone (used when no zone is selected). */
+	ZONE_MAIN,	/**< This is the upper (1st) zone containing the current item installed in the slot. */
+	ZONE_NEXT,	/**< This is the zone in the middle (2nd) containing the item to install when the item
+				 ** in ZONE_MAIN will be removed (if we ask for removing it). */
+	ZONE_AMMO,	/**< This is the lowest (3rd) zone containing the ammo fitting the weapon in ZONE_MAIN
+				 ** Therefore, this zone should only be used when 1st zone contain an WEAPON. */
+
+	ZONE_MAX
+} zoneaircraftParams_t;
+
+/**
+ * @brief The different possible types of base defense systems.
+ * @sa BDEF_RemoveBattery_f: BASEDEF_LASER must be just after BASEDEF_MISSILE
+ */
+typedef enum {
+	BASEDEF_RANDOM,		/**< The base defense system should be randomly selected. */
+	BASEDEF_MISSILE,	/**< The base defense system is a missile battery. */
+	BASEDEF_LASER,		/**< The base defense system is a laser battery. */
+
+	BASEDEF_MAX
+} basedefenseType_t;
+
 /** Base defense functions. */
 void BDEF_AddBattery_f(void);
-void BDEF_RemoveBattery(base_t *base, int type, int idx);
+void BDEF_RemoveBattery(base_t *base, basedefenseType_t basedefType, int idx);
 void BDEF_RemoveBattery_f(void);
 void BDEF_InitialiseBaseSlots(base_t *base);
 void BDEF_Init_f(void);

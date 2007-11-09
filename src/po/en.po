@@ -4433,7 +4433,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4068
 #: ../base/ufos/research.ufo:4076
 msgid "mail_from_paul_navarre"
-msgstr "Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:128
 #: ../base/ufos/research.ufo:136
@@ -4547,7 +4548,8 @@ msgstr "Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operatio
 #: ../base/ufos/research.ufo:4193
 #: ../base/ufos/research.ufo:4200
 msgid "mail_to_base_commander"
-msgstr "Base Commander, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Base Commander, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:153
 #: ../base/ufos/research.ufo:191
@@ -4668,7 +4670,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4192
 #: ../base/ufos/research.ufo:4199
 msgid "mail_from_dr_connor"
-msgstr "Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:247
 #: ../base/ufos/research.ufo:286
@@ -4936,7 +4939,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:493
 #: ../base/ufos/research.ufo:501
 msgid "mail_from_col_falkland"
-msgstr "Col. Ingrid Falkland, Intelligence Division, PHALANX, Atlantic Operations Command"
+msgstr ""
+"Col. Ingrid Falkland, Intelligence Division, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/research.ufo:482
 #: ../base/ufos/research.ufo:495
@@ -8202,23 +8206,21 @@ msgstr "No pre research info available"
 #: ../base/ufos/research.ufo:3066
 msgid "ufo_scout_txt"
 msgstr ""
-"Commander, my team and I have finished our analysis of the small UFO we captured. It's a real miracle of engineering, and we're all looking forward to getting a chance to sink our own hooks into all this lovely technology.\n"
+"This small UFO is the first type we've observed visually and on radar. Although they don't seem to take part in actual raids, they're no less a threat; so far they've paved the way for every instance of alien activity on Earth.\n"
 "\n"
-"The craft's strange construction has raised a lot of questions for us to answer. Much of the design seems to make little sense when viewed from the ground. However, now that we've managed to look 'under the hood' and test the alien hull materials under laboratory conditions, we have gained a far clearer picture of UFO capabilities. I've made a list of our most important discoveries.\n"
+"We have dubbed this class of UFO the 'Scout', as that seems to be its purpose here on Earth. It makes sense. Every modern military force needs intelligence more than anything.\n"
 "\n"
-"- The alien propulsion system is a type of rocket engine unlike any ever built on Earth. It uses direct matter-antimatter annihilation to generate thrust by injecting protons and antiprotons into the reaction chamber, and then channeling this explosive force out the back of the engine. This gives a UFO extreme power and needs no air or other gases to fuel the reaction, allowing it to burn in hard vacuum. There is a highly-advanced cooling system continuously pumping liquid nitrogen through the engine housing in order to keep it cool and reduce the infrared signature. Engine heat is also used to supply the craft's electricity.\n"
+"Here are the major technical details:\n"
 "\n"
-"- We've found no evidence of landing gear or hover ability in this craft, implying that it isn't meant to land. If it loses both engines, it goes down.\n"
+"-- The craft has only a small fuel tank and few provisions for a crew. It seems designed for little more than coming down from orbit, flying around a bit, and then returning.\n"
 "\n"
-"- The fuel tank is very, very small, measured in fractions of a gramme, but even so I nearly had a heart attack when I found out what was in there. The maximum load -- two tenths of a gramme -- could create a blast yield of more than 8 kilotons. By comparison the bomb at Hiroshima was 13 kilotons. Naturally the tank is armoured and buried as deep as possible within the fuselage, and there are mechanical systems present to jettison the tank in an emergency, but they aren't perfect. A direct hit on the tank or the containment system could still cause an explosion. Much of the blast would be contained by the UFO's tough structure, but any explosion represents an extreme hazard to our interceptors. The only saving grace is that antimatter explosions create little to no radioactive fallout.\n"
+"-- We've found no evidence of landing gear or hover ability in this craft, implying that it isn't meant to land. If it loses both engines, it goes down and won't come back up.\n"
 "\n"
-"- The craft is extremely hard to see with our detection equipment. This is largely due to the hull materials which very effectively absorb all kinds of radiation. We've had the most luck with infrared and gamma ray detection, as the antimatter-based engines produce quite a lot of both.\n"
+"-- We have determined the craft to be unarmed, but it's equipped with what appears to be a large suite of sensors contained in the four protrusions around the cockpit. Curiously, it seems to mount no communications equipment that we can identify, which would defeat the purpose of a scout. Your guess is as good as ours, sir.\n"
 "\n"
-"- The slim design (generating poor lift and being difficult to handle in air) is partly due to the heavy weight of the hull materials. Every gramme of excess matter has been stripped, and the craft moves fast enough to need very little wing surface. The material itself is quite astonishing, part metal and part plastic polymer. It functions as a memory alloy, 'remembering' at least two assigned shapes, shrinking into a more compact form when cold but automatically stretching out and assuming a more comfortable flying shape once it heats up. It's far stronger and tougher than anything we've ever known. More research is definitely required.\n"
+"Beyond that the craft has no particular distinguishing characteristics.\n"
 "\n"
-"- We have determined the craft to be unarmed, but it's equipped with what appears to be a large suite of sensors contained in the four protrusions around the cockpit. Curiously, it seems to mount no communications equipment whatsoever, but that would defeat its apparent role as a scout. Your guess is as good as ours, sir.\n"
-"\n"
-"We have dubbed this class of UFO the 'Scout', as that seems to be its purpose here on Earth. It is used primarily as a reconnaissance unit and vanguard to scout the way for heavier craft. Though unarmed, we should shoot these craft down if we are not otherwise engaged, because anything the aliens are up to is bound to be bad for us.\n"
+"As I said, this UFO type is used primarily as a reconnaissance unit and vanguard to scout the way for heavier craft. Though unarmed, we should shoot these things down whenever we're not otherwise engaged, because anything the aliens are up to is bound to be bad for us.\n"
 "\n"
 "--Cdr. Navarre\n"
 "\n"
@@ -8250,13 +8252,13 @@ msgstr ""
 "\n"
 "The Fighter craft seems to serve the role of escort to alien harvesting expeditions and similar operations. It is frequently deployed as a Harvester UFO's fighter wing, or even as a diversion to mask some other mission somewhere else.\n"
 "\n"
-"Though less manoeuvrable than the Scout craft, it is significantly faster, with a tougher airframe and large claw-like heat exchangers on the side to compensate for the increased power of the antimatter engines. It mounts a single weapons system under the nose of the craft. This weapon, some type of high-energy particle beam, will require thorough research before we will be able to make any conclusions about it. However, it's obvious just from our combat recordings that this weapon is extremely dangerous. It fires a beam of particles at a good fraction of the speed of light, giving it significant range before the atmosphere can slow and/or disperse the particles enough to render them harmless.\n"
+"It's not as manoeuvrable as some UFOs we've observed, but it's certainly fast, with a tough airframe and large claw-like heat exchangers on the side to compensate for the increased heat output of the chunky antimatter engines. It mounts a single weapon system under the nose of the craft. This weapon, some type of high-energy particle beam, will require thorough research before we will be able to make any conclusions about it. However, it's obvious just from our combat recordings that this weapon is extremely dangerous. It fires a beam of particles at a good fraction of the speed of light, giving it significant range before the atmosphere can slow and/or disperse the particles enough to render them harmless.\n"
 "\n"
-"The crew compartment is equipped with 3 duty stations. We have studied these intently and, as near as we can determine, they are designed a pilot, a gunner and an electronics officer. Like the Scout, the Fighter features no discernible communications equipment, nor does it mount landing gear. What it does have is a large targeting computer and holographic HUD to make the craft even more effective. These systems are very interesting. More research might lead us to great improvements in our own avionics.\n"
+"The crew compartment is equipped with 3 duty stations. We have studied these intently and, as near as we can determine, they are designed a pilot, a gunner and an electronics officer. The Fighter features no discernible communications equipment, nor does it mount landing gear. What it does have, however, is a large targeting computer and holographic HUD to make the craft even more effective in air engagements.\n"
 "\n"
-"Our analysis has led us to some new realisations about these smaller classes of UFO. While faster than the Scout, the Fighter is still not very speedy for a craft driven by antimatter rockets. From what we've seen of the alien hull materials, the aliens could definitely build far more powerful engines with their current technology. It seems the limiting factor is fuel volatility.\n"
+"Combined with our work on UFO theory, the analysis of the Fighter has led us to some new conclusions about these smaller classes of UFO. While faster than most things in Earth's sky, the Fighter is still not very speedy for a craft driven by antimatter rockets. From what we've seen of the alien hull materials, they could easily stand more engine stresses if required. The aliens could certainly build more powerful engines with their current technology. It seems the limiting factor is fuel volatility.\n"
 "\n"
-"The antimatter tanks in the Fighter are only slightly larger than those in the Scout, and they are very heavily armoured; obviously the aliens aren't taking any unnecessary risks. The few tenths of a gramme of antimatter that a small UFO can safely carry seem to be just enough to complete a planet mission and return to base. If the UFO does manage to get blown up, the amount of antimatter in its tanks will not be enough to harm any other craft in the formation.\n"
+"The antimatter tanks in the Fighter are very small and very heavily armoured. Obviously the aliens aren't taking any unnecessary risks. The few tenths of a gramme of antimatter that a small UFO can safely carry seem to be just enough to complete a planet mission and return to base. If the UFO does manage to lose containment, the amount of antimatter in its tanks will not be enough to harm other craft in the same formation. This might not be true for larger craft, however.\n"
 "\n"
 "Tactically, the Fighter is a real threat to PHALANX craft. They most often operate in pairs, a lead craft and a wingman, forming a tight, effective formation to protect larger and more vulnerable craft. However, their function is strictly limited, as they aren't equipped to do anything more than armed reconnaissance. The real threat will always be whatever the Fighters are protecting. Fighters should never be a main target unless there is nothing else left to shoot down.\n"
 "\n"
@@ -8292,9 +8294,9 @@ msgstr ""
 "\n"
 "As far as we can determine, this type of UFO is indeed a transporter of some kind, carrying materials in its large cargo hold and up to 12 aliens in a small passenger compartment behind the cockpit. Satellite surveillance has observed these ships landing at alien-held positions and unloading material and passengers. This is strong evidence in support of the 'supply ship' theory, and we're confident that it's correct.\n"
 "\n"
-"We can make several conclusions from the UFO's construction and the cargo we've recovered from the hold. Unlike the UFOs we've recovered previously, the Supply Ship is built for carrying heavy loads rather than surviving combat. It doesn't manoeuvre very well, its engines are less powerful and fine-tuned, and its airframe will break up easily when hit. This is why a Supply Ship is often protected by a large screen of Fighter UFOs, in case it's intercepted.\n"
+"We can make several conclusions from the UFO's construction and the cargo we've recovered from the hold. Unlike other UFOs we've seen, the Supply Ship is built for carrying heavy loads rather than surviving combat. It doesn't manoeuvre very well, its engines are weak by comparison, and its airframe will break up easily when hit. This is why a Supply Ship will often be protected by a large screen of Fighter UFOs, in case of interception.\n"
 "\n"
-"There isn't much that an alien cargo ship could be doing on Earth except reinforcement and resupply. It will be bringing in weapons, spare parts and other supplies from the alien homeworld down here to Earth in support of alien operations on the surface. This should be prevented at all costs -- permanent alien installations on Earth would place the civilian population in the area in extreme danger. A strong alien presence also hampers our operations in many ways, some too subtle to observe directly. The regular operation of Supply Ships in an area may indicate an alien installation under construction or, worse, one that's already operational.\n"
+"There isn't much that an alien cargo ship could be doing on Earth except reinforcement and resupply. It will be bringing in weapons, spare parts and other supplies from the alien homeworld to Earth in support of alien operations on the surface. This should be prevented at all costs -- permanent alien installations on Earth would place the civilian population in the area in extreme danger. A strong alien presence also hampers our operations in many ways, some too subtle to observe directly. The regular operation of Supply Ships in an area may indicate an alien installation under construction or, worse, one that's already operational.\n"
 "\n"
 "On the other hand, if we can prevent any Supply Ships from reaching an existing alien strongpoint, we may be able to starve it out for a while before sending in troops. This may give us a crucial tactical advantage.\n"
 "\n"
@@ -8350,17 +8352,19 @@ msgstr ""
 "\n"
 "This craft -- which we've dubbed the 'Harvester' -- appears designed specifically for landing on a planetary surface and deploying an alien harvesting party. It is equipped with a set of large, sturdy landing legs and a special set of thrusters located in the UFO's belly to give it VTOL (Vertical Take-Off and Landing) capability. Once the landed Harvester's crew has collected enough captives, corpses and other biomass, they return to the UFO and lift off into orbit, quickly disappearing back to wherever it is they came from.\n"
 "\n"
-"The Harvester seems to bear out our theories about fuel capacity being the main limiting factor for UFO speed, as it is both larger and faster than any other we've previously observed. It's able to carry more antimatter fuel and protect it far more effectively, with a tougher hull, thicker armour on the fuel tank, and more effective emergency antimatter-dumping measures. Even if an explosion does occur, most of the blast will be contained by the UFO's extremely strong construction.\n"
+"The Harvester seems to bear out our theories about fuel capacity being the main limiting factor for UFO speed, as it is both larger and faster than any other we've previously observed. It's able to carry more antimatter fuel and protect it far more effectively, with a tougher hull, thicker armour, and more effective emergency antimatter-dumping measures. Even if an explosion does occur, most of the blast will be contained by the UFO's extremely strong construction.\n"
 "\n"
 "The Harvester's fuel tank can take up to 0.6 grammes of antimatter and possesses a potential explosive force of approximately 25 kilotons when full.\n"
 "\n"
 "There are three front-facing weapon mounts arranged in a triangle around the craft's cockpit. Two of these are equipped with the particle beam weapon we've observed in other UFOs, but the remaining mount features an interesting kind of alien missile launcher. The missiles have highly sophisticated homing systems and are propelled by matter-antimatter reaction rockets similar to UFO engines. These missiles are insanely fast, so fast that they don't need explosive warheads to kill their prey, relying solely on kinetic impact and the sympathetic detonation of any remaining fuel. More research into this weapon will be a high priority.\n"
 "\n"
-"In the air, the Harvester is extremely dangerous and should be a high-priority target. Between the twin particle beams and the alien launcher, its firepower is more than a match for anything we can currently field. Its only obvious flaw is a significant drop in manoeuvrability from the Scout and Fighter models. Our interceptors are significantly more agile and we have far more combat experience in Earth atmosphere than the aliens do. This is one of the few advantages we'll have against the Harvester, and it would be wise to upgrade our equipment in order to mitigate some of the aliens' tech superiority.\n"
+"In the air, the Harvester is extremely dangerous and should be a high-priority target. Between the twin particle beams and the alien launcher, its firepower is more than a match for anything we can currently field. Its only obvious drawback is low manoeuvrability compared to smaller UFO types. Our interceptors are significantly more agile and we have far more combat experience in Earth atmosphere than the aliens do. This is one of the few advantages we'll have over the Harvester, and it would be wise to upgrade our equipment in order to mitigate some of the aliens' tech superiority.\n"
 "\n"
-"When encountered, we should concentrate our best pilots on any and all Harvesters in the area and take them out as fast as possible. Only then should we concern ourselves with shooting down any escorts.\n"
+"When encountered, we should concentrate our best pilots and craft on any Harvesters in the area and take them out as fast as possible. Only then should we concern ourselves with shooting down any escorts.\n"
 "\n"
-"Our analysis of the Harvester's increased capabilities over the Scout raises some frightening points. It seems that alien craft will actually grow faster as they become larger and more powerful, and there's no doubt that, if they can build these Harvesters, they can build bigger and nastier UFOs. We should try to adapt the alien antimatter technologies to our own interceptors as soon as possible so that we can get on an even footing with the aliens now and will be able to stand up to more dangerous threats in the future.\n"
+"Our estimates of the Harvester's increased capabilities raise some frightening points. It seems that alien craft will actually grow faster as they become larger and more powerful, and there's no doubt that, if they can build these Harvesters, they can build bigger and nastier UFOs. Without upgrades to our airfleet, we may not be able to stand up to more dangerous threats in the future.\n"
+"\n"
+"Please, do what you can about this when you can, Commander. I'd hate for us to be caught unprepared.\n"
 "\n"
 "--Cdr. Navarre\n"
 "\n"
@@ -8909,27 +8913,97 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3726
 msgid "craft_alien_astrogation_pre_txt"
-msgstr "No pre research info available"
+msgstr ""
+"Commander, the recovery of an intact alien astrogation unit is an important milestone. Although this unit doesn't seem to contain a star chart, it will allow us to decipher alien astronomical notations and upgrade the power of our own astrogation systems by several orders of magnitude. Eventually the work we do here may help us backtrack the aliens to their home planet.\n"
+"\n"
+"Along with Alien Propulsion and Alien Detection, Alien Astrogation is one of the three pillars of UFO design. Understanding it will bring us a big step closer to the ability to build an atmosphere-capable interplanetary defence craft.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3729
 msgid "craft_alien_astrogation_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, we've finished work on the captured alien astrogation unit. Here is a summary of my report.\n"
+"\n"
+"We concluded early on in our survey that this astrogation unit is, at its core, a purpose-built computer of extraordinary power loaded with specialised software -- all intended solely for the purpose of plotting a course from one point in space to another. It uses a new, alien system of astronomical notation which we've decided to adopt in order to make use of this alien hardware.\n"
+"\n"
+"Now that we've figured out its notation system, we can see that the astrogation unit is very good at what it does. Given correct input, the system can plot a course from anywhere to anywhere in seconds, and it can intelligently recompute that course with filters like 'least travel time', 'shortest distance', 'fewest navigational hazards', and so on. These filters can be layered on endlessly until the system spits out the exact course you want. It is even able to take into account faster-than-light capability when plotting a course, which all but verifies the theory that the aliens do indeed have access to some type of FTL technology.\n"
+"\n"
+"The only problem with the unit's plotting method is that it requires a star chart to give accurate courses beyond the UFO's sensor range. We have never found a star chart loaded onto any UFO we've recovered. Perhaps only UFOs with an FTL drive have a chart loaded; they would surely need it for navigation.\n"
+"\n"
+"Instead of the elusive star chart, the astrogation units we've recovered so far contain enormous detail on Earth and the solar system. Surface maps of the outer planets and all their moons (even a previously-undiscovered moon of Pluto), spectrum analyses of every body in the asteroid belt as well as the distant Kuiper belt, and the orbits of every body in the solar system plotted out hundreds of years in advance. We're not sure if this information will be of any use to us, but it will greatly enhance humanity's body of knowledge about our home system -- whenever we're allowed to release it into the public.\n"
+"\n"
+"It's possible to program our own star charts into the astrogation unit, but I can only imagine how primitive and incomplete our charts might be compared to what the aliens have. I wouldn't condone any interstellar travel with these units until we can capture an alien chart. However, in the meantime we could certainly use these units to navigate around the solar system if we could design a PHALANX craft capable of launching into space. They will greatly simplify the whole process of interplanetary travel to the point where we'd be able to launch missions to Saturn or even Pluto at the click of a button.\n"
+"\n"
+"And that is something we should do as soon as humanly possible.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3763
 msgid "craft_alien_propulsion_pre_txt"
-msgstr "No pre research info available"
+msgstr ""
+"Commander, the alien antimatter engines we recovered have been fascinating my team ever since they arrived. With our new understanding of the alien materials, I think we can work out the details and duplication of this technology. Excitingly, it now seems to be within our capabilities to replicate these engines, if we can just figure out the function and creation of the different parts.\n"
+"\n"
+"Along with Alien Astrogation and Alien Detection, Alien Propulsion is one of the three pillars of UFO design. Understanding it will bring us a big step closer to the ability to build an atmosphere-capable interplanetary defence craft.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3766
 msgid "craft_alien_propulsion_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, I'm happy to report the success of our alien propulsion program. We've cracked the mysteries of the alien engine set-up and we finally understand the path of the antimatter from fuel tank to reaction chamber.\n"
+"\n"
+"Quoting from my previous report:\n"
+"\n"
+"(UFO -- Scout)\"The alien propulsion system is a type of rocket engine unlike any ever built on Earth. It uses direct matter-antimatter annihilation to generate thrust by injecting protons and antiprotons into the reaction chamber, and then channeling this explosive force out the back of the engine. This gives a UFO extreme power and needs no air or other gases to fuel the reaction, allowing it to burn in hard vacuum. There is a highly-advanced cooling system continuously pumping liquid nitrogen through the engine housing in order to keep it cool and reduce the infrared signature. Engine heat is also used to supply the craft's electricity.\"\n"
+"\n"
+"With this project we've learned a lot about how these engines are constructed, how to control them, and how we might retrofit them to our current airfleet. We should now be able to replicate these engines and use them for any applications we might come up. I have to warn you, though; they will be extremely expensive to produce. Between the complex use of alien materials, the sensitive electromagnetics and the liquid nitrogen cooling system, this really stretches the limits of our production capacity.\n"
+"\n"
+"Some more research may be required to figure out antimatter storage and control, but the engine upgrades are self-contained units -- basically just an alien engine with adapters on it for human tech. We should be able to start retrofitting as soon as we acquire enough fuel to keep our airfleet in the sky.\n"
+"\n"
+"I've mentioned before, the power disparity between our liquid fuel and these matter-antimatter engines is nothing short of astonishing. When we start using these engines on our planes, our pilots are going to need some serious re-education about the capabilities of their craft. Let me explain.\n"
+"\n"
+"In a regular military jet, giving her a little too much throttle around a tight corner can result in impaired judgment and unconsciousness from the force of acceleration. Pilots have died from over-acceleration.\n"
+"\n"
+"In an antimatter jet, however, these problems are amplified hundred-fold. The engines are so powerful that over-acceleration can easily turn a human body to bloody pulp in its flight chair. Even the craft itself may have trouble coping with the acceleration, and our flight engineers will have to be extremely careful in checking for metal fatigue, hairline fractures and other wear and tear on the airframe. A tiny crack in the structure may result in one of our planes breaking up in mid-flight. Mechanical thrust limiters can only do so much -- most of the G-stresses are incurred during turns.\n"
+"\n"
+"Still, it shouldn't become a problem as long as everyone -- pilots and mechanics alike -- is extremely careful in their assigned tasks. We've done some serious tightening-up of our safety and inspection protocol just for antimatter planes. The retraining of our pilots is the only remaining obstacle to our use of these alien engines.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3799
 msgid "craft_alien_detection_pre_txt"
-msgstr "No pre research info available"
+msgstr ""
+"Commander, the alien sensor suite appears to be a very powerful set of passive and active scanning systems, including radar, lidar, magnetic and UV/infrared reception, and -- most interestingly -- a kind of detection unknown to us, but which seems to have far more success at detecting UFOs than anything we have.\n"
+"\n"
+"If you'll let us take the suite apart, I believe we can find out what everything does and how to operate it, and how to replicate most if not all of the alien detection equipment. It would be an immense boost to our defence efforts on Earth if we can get this technology working for us, and its long-term potential for spacecraft development is vital. There's no way we could build a viable space-capable fighter with human sensors.\n"
+"\n"
+"Along with Alien Propulsion and Alien Astrogation, Alien Detection is one of the three pillars of UFO design. Understanding it will bring us a big step closer to the ability to build an atmosphere-capable interplanetary defence craft.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3802
 msgid "craft_alien_detection_txt"
-msgstr "<TODO>"
+msgstr ""
+"The project on alien detection is complete, Commander. We now have a full understanding of the machinery, its controls, and the modifications needed for human use.\n"
+"\n"
+"Our initial assessment looks to have been correct. The detection suite makes use mostly of standard, reliable detection methods that humanity either uses or knows about. The equipment is more advanced than ours and will be useful, but by and large the aliens apply the same concepts and use the same physics as we do. As I mentioned in my proposal, radar, lidar and other such old reliables are all well-represented in the suite.\n"
+"\n"
+"And then there's the mystery sensor.\n"
+"\n"
+"It had us confounded for a long time, because now that it's here on the Earth's surface, it spits out mostly overpowering background noise. Up in the air, however, the picture is quite different. We think we've now identified the detector and have figured out how it works.\n"
+"\n"
+"In the simplest terms, it's a gravity sensor, scanning for minute changes in a background gravitational field. Everything travelling through a gravity field disturbs the field to some degree based on its size, mass and composition. The sensor can identify these changes as natural or artificial objects based on course, speed and acceleration with 95% accuracy. If there is any doubt about a contact, the system will report it anyway. It seems to be more effective in stronger fields like the one around Earth, but we surmise that it will work to some extent anywhere within the gravity range of a star.\n"
+"\n"
+"All of this detection power is linked into an advanced computer system which automatically puts all results through a series of filters, which can be adjusted at any time to suit the needs of the pilot and crew. This helps alternately sifting out targets from a mess of background noise or increasing sensitivity to search for something stealthy.\n"
+"\n"
+"Interestingly, the detection computer seems to have a direct link to fire control, assisting in anticipating target manoeuvres and point defence control if the craft has that capability.\n"
+"\n"
+"Parts of this technology can be adapted to our existing ground-based installations and aircraft radar. It should extend their detection range and increase resolution across the board, making it a good deal harder for UFOs to hide. However, the biggest practical gains will come from using this tech in creating new aircraft instrumentation to increase the combat survivability of our interceptors.\n"
+"\n"
+"Of course, it's not the immediate uses that are the most important. These detectors are vital for any future PHALANX spacecraft. In space, without the support of ground radar, we're going to need the extra power very badly.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:3833
 msgid "SHIVA Rotary Cannon"
@@ -9245,7 +9319,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:3974
 msgid "craft_weapon_particle_beam_pre_txt"
 msgstr ""
-"Commander, one of the UFOs we've recovered was equipped with a very interesting type of weapon that we'd like to research right away. It seems to fire some kind of high-velocity particle beam; if we can master this technology, or at least adapt it for use on our own aircraft, we could make air engagements with armed alien craft significantly more survivable for our craft and pilots.\n"
+"Commander, the UFO we recovered was equipped with a very interesting type of weapon that we'd like to research right away. It seems to fire some kind of high-velocity particle beam; if we can master this technology, or at least adapt it for use on our own aircraft, we could make air engagements with armed alien craft significantly more survivable for our craft and pilots.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -9258,7 +9332,7 @@ msgstr ""
 "\n"
 "My team could've built a particle accelerator to nearly the same standards, but the focusing array shows us just how far ahead the aliens really are. The accelerator is little more than a high-energy synchrotron, speeding particles round and round in a circle until they've achieved sufficient velocity. The particles are then diverted via a magnetic field into the focusing array, where they are magnetically constricted -- 'pinched' -- into a coherent beam. The level of magnetic control the aliens achieve here is far greater than anything we've managed before. The pinch system is intelligently controlled by the UFO's targeting computer, directing the beam to its target with dead-on accuracy.\n"
 "\n"
-"When active, the weapon is powered directly by the UFO's electrical system, constantly tracking one target of choice. Once the target has been destroyed, the computer will immediately lock on to the next hostile contact in the chain, if any.\n"
+"When active, the weapon is powered directly from the UFO's electrical system, constantly tracking one target of choice. Once the target has been destroyed, the computer will immediately lock on to the next hostile contact in the chain, if any.\n"
 "\n"
 "Defending against this weapon is going to be a challenge, Commander. There is very little that can be done against a particle beam travelling at near the speed of light, carrying enough energy to knock anything we can field right out of the sky. Additional armour for our aircraft will protect against glancing blows, but in the case of a direct hit, it may as well not be there. It seems the only realistic defence against this weapon is to cause it to miss. We should recover and investigate an intact alien ECM unit as soon as we can.\n"
 "\n"
@@ -9365,7 +9439,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:4063
 msgid "alien_materials_pre_txt"
 msgstr ""
-"Commander, as I mentioned in my previous report, the Scout UFO was plated with a highly interesting alloy which blends plastic and metal together into a single material. These materials seem to be used almost universally throughout the alien technology base. It's advanced stuff, massively versatile and with a thousand possible uses.\n"
+"Commander, as I mentioned in my previous report, the UFO we recovered was plated with a highly interesting alloy which blends plastic and metal together into a single material. These materials seem to be used almost universally throughout the alien technology base. It's advanced stuff, massively versatile and with a thousand possible uses.\n"
 "\n"
 "I think it warrants the research to see if we can reproduce this stuff in our Workshops, but even if we can't, it seems likely we'll be getting our hands on large quantities of it with every UFO we salvage. We'll definitely be able to find new, human applications for it that will extend and expand our combat capabilites.\n"
 "\n"
@@ -9803,75 +9877,93 @@ msgstr "<TODO>"
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr "It is the year 2084. Earth, never the most stable of places, enjoys a time of relative peace. The violent beginnings of the 21st century are far away now; distant memories, but not so distant that they've been forgotten. To most of Earth's people, the Second Cold War is a dark shadow from the past, much like the World Wars were to the children of the late 20th."
+msgstr ""
+"It is the year 2084. Earth, never the most stable of places, enjoys a time of relative peace. The violent beginnings of the 21st century are far away now; distant memories, but not so distant that they've been forgotten. To most of Earth's people, the Second Cold War is a dark shadow from the past, much like the World Wars were to the children of the late 20th."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr "Conflicts have gotten rarer near the end of the century as new technology and universal health-care finally became available to the third world. Even the fires of terrorism have cooled in the wake of the Second Cold War, with its horrors and inhumanities still fresh in the minds of the people, from the old United States to the ravaged Indian subcontinent. Class struggles are ascending to the political battlefield now that every nation is guaranteed fair representation in the UN, and the global standard of living is slowly on the rise down to the most impoverished corners of the planet. Countries have solidified, stabilised around a restructured United Nations that successfully polices the world governments. Fragmented clumps of smaller nations, frightened at first by the vast power blocks accumulating around China and the European Union, have banded together into powerful political leagues of their own -- then found themselves with no neighbours they could safely fight. For the first time in the history of mankind, there is law and order across more than three quarters of the world."
+msgstr ""
+"Conflicts have gotten rarer near the end of the century as new technology and universal health-care finally became available to the third world. Even the fires of terrorism have cooled in the wake of the Second Cold War, with its horrors and inhumanities still fresh in the minds of the people, from the old United States to the ravaged Indian subcontinent. Class struggles are ascending to the political battlefield now that every nation is guaranteed fair representation in the UN, and the global standard of living is slowly on the rise down to the most impoverished corners of the planet. Countries have solidified, stabilised around a restructured United Nations that successfully polices the world governments. Fragmented clumps of smaller nations, frightened at first by the vast power blocks accumulating around China and the European Union, have banded together into powerful political leagues of their own -- then found themselves with no neighbours they could safely fight. For the first time in the history of mankind, there is law and order across more than three quarters of the world."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr "To many people on Earth, it seems like things are going all right."
+msgstr ""
+"To many people on Earth, it seems like things are going all right."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr "The first attack hits the city of Mumbai on the 3rd of March, 2084. Six small UFOs appear out of nowhere and come screaming down from orbit, undetected by the vast radar installations covering the skies over Mumbai, and set down in the single most densely-populated city on Earth. They offer no warning, no explanation. Twenty thousand innocent civilians and three battalions of elite troops are massacred over the course of twelve brutal hours before massed Commonwealth soldiers manage to bring the aliens' advance to a standstill. Then, as suddenly as they appeared, they retreat to their craft and vanish back into orbit, leaving only the ravaged streets of Mumbai as evidence."
+msgstr ""
+"The first attack hits the city of Mumbai on the 3rd of March, 2084. Six small UFOs appear out of nowhere and come screaming down from orbit, undetected by the vast radar installations covering the skies over Mumbai, and set down in the single most densely-populated city on Earth. They offer no warning, no explanation. Twenty thousand innocent civilians and three battalions of elite troops are massacred over the course of twelve brutal hours before massed Commonwealth soldiers manage to bring the aliens' advance to a standstill. Then, as suddenly as they appeared, they retreat to their craft and vanish back into orbit, leaving only the ravaged streets of Mumbai as evidence."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr "An emergency meeting of the UN provides no conclusive direction. The incursions continue faster, larger and more savage than before, this time in Bonn, Johannesburg and Bangkok. Some nations attempt diplomacy, sending messages in a thousand different languages to the aliens ravaging across the countryside. Their words are ignored. Within hours, all three cities are emptied of human life. The attack is over by the time the various militaries are given permission to strike back. The aliens leave nothing behind them but concrete and blood. All the UFOs disappear without a trace -- but no one doubts they'll be back."
+msgstr ""
+"An emergency meeting of the UN provides no conclusive direction. The incursions continue faster, larger and more savage than before, this time in Bonn, Johannesburg and Bangkok. Some nations attempt diplomacy, sending messages in a thousand different languages to the aliens ravaging across the countryside. Their words are ignored. Within hours, all three cities are emptied of human life. The attack is over by the time the various militaries are given permission to strike back. The aliens leave nothing behind them but concrete and blood. All the UFOs disappear without a trace -- but no one doubts they'll be back."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr "Eighty-seven hours after the initial attack on Mumbai, Earth declares war. For two weeks, the armies of humanity each try to fend off the mysterious alien attackers to the best of their ability. They score precious few successes."
+msgstr ""
+"Eighty-seven hours after the initial attack on Mumbai, Earth declares war. For two weeks, the armies of humanity each try to fend off the mysterious alien attackers to the best of their ability. They score precious few successes."
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr "Left with only one alternative, the UN takes action. Ancient equipment is dusted off, some of it more than a century old, and the long-defunct anti-extraterrestrial agency of the former United States -- PHALANX -- is resurrected under a new UN banner. Its sworn duty is to combat the alien threat, and to ensure the survival of the human race at all costs."
+msgstr ""
+"Left with only one alternative, the UN takes action. Ancient equipment is dusted off, some of it more than a century old, and the long-defunct anti-extraterrestrial agency of the former United States -- PHALANX -- is resurrected under a new UN banner. Its sworn duty is to combat the alien threat, and to ensure the survival of the human race at all costs."
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr "Funded by all eight of the political powers, and drawing its soldiers from the elite of their armies, PHALANX is the best of the best. It is Earth's first and only line of defence. It can't afford to fail; because if it does, humanity doesn't stand a chance."
+msgstr ""
+"Funded by all eight of the political powers, and drawing its soldiers from the elite of their armies, PHALANX is the best of the best. It is Earth's first and only line of defence. It can't afford to fail; because if it does, humanity doesn't stand a chance."
 
 #: ../base/ufos/seq_intro.ufo:100
 msgid "prolog_sentence1"
-msgstr "TO: Base Commander, PHALANX, Atlantic Operations Command"
+msgstr ""
+"TO: Base Commander, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/seq_intro.ufo:110
 msgid "prolog_sentence2"
-msgstr "FROM: SecGen. Mahouf Serra, United Nations, New York City"
+msgstr ""
+"FROM: SecGen. Mahouf Serra, United Nations, New York City"
 
 #: ../base/ufos/seq_intro.ufo:119
 msgid "prolog_sentence3"
-msgstr "DATE: 21 March 2084"
+msgstr ""
+"DATE: 21 March 2084"
 
 #: ../base/ufos/seq_intro.ufo:128
 msgid "prolog_sentence4"
-msgstr "SUB: Good Luck"
+msgstr ""
+"SUB: Good Luck"
 
 #: ../base/ufos/seq_intro.ufo:137
 msgid "prolog_sentence5"
-msgstr "Welcome to your new post, Commander. You now have full command over the PHALANX Extraterrestrial Response Unit. Your mission is to protect the citizens of Earth and stop the alien threat at all costs. How you accomplish this is up to you; our only requirement is that you succeed."
+msgstr ""
+"Welcome to your new post, Commander. You now have full command over the PHALANX Extraterrestrial Response Unit. Your mission is to protect the citizens of Earth and stop the alien threat at all costs. How you accomplish this is up to you; our only requirement is that you succeed."
 
 #: ../base/ufos/seq_intro.ufo:146
 msgid "prolog_sentence6"
-msgstr "Your first order of business is to set up a headquarters. The UN has access to military bases all over the world, so you may consider any region for your base of operations. Choose the location wisely, because it will have great influence on the success of the PHALANX project."
+msgstr ""
+"Your first order of business is to set up a headquarters. The UN has access to military bases all over the world, so you may consider any region for your base of operations. Choose the location wisely, because it will have great influence on the success of the PHALANX project."
 
 #: ../base/ufos/seq_intro.ufo:155
 msgid "prolog_sentence7"
-msgstr "A recent analysis of the attacks on Mumbai and Bonn reveal that UFO sightings and alien activity seems to focus on the most densely populated regions of Earth, including coastal North- and South-America, Europe, Eastasia, South and Mediterranean Africa, and Australia. You should consider including these territories in your field of operations."
+msgstr ""
+"A recent analysis of the attacks on Mumbai and Bonn reveal that UFO sightings and alien activity seems to focus on the most densely populated regions of Earth, including coastal North- and South-America, Europe, Eastasia, South and Mediterranean Africa, and Australia. You should consider including these territories in your field of operations."
 
 #: ../base/ufos/seq_intro.ufo:164
 msgid "prolog_sentence8"
-msgstr "Once you've established your first base, you must prepare your soldiers. The recruits we have assigned to PHALANX must be stationed on your dropship, then equipped for battle."
+msgstr ""
+"Once you've established your first base, you must prepare your soldiers. The recruits we have assigned to PHALANX must be stationed on your dropship, then equipped for battle."
 
 #: ../base/ufos/seq_intro.ufo:173
 msgid "prolog_sentence9"
-msgstr "Take care of them, Commander. The rest of us are all counting on you, and praying for you."
+msgstr ""
+"Take care of them, Commander. The rest of us are all counting on you, and praying for you."
 
 #: ../base/ufos/seq_intro.ufo:182
 msgid "prolog_sentence10"
-msgstr "That is all. Good luck and good hunting."
+msgstr ""
+"That is all. Good luck and good hunting."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"

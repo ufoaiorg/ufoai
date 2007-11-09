@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-11-07 14:54+0100\n"
-"PO-Revision-Date: 2007-11-07 17:04+0100\n"
+"PO-Revision-Date: 2007-11-08 19:37+0100\n"
 "Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -292,12 +292,12 @@ msgstr "Détection Alienne"
 #: ../base/ufos/aircraftmanagement.ufo:657
 #: ../base/ufos/research.ufo:3625
 msgid "Base defence: TR-20 Rocket Pod"
-msgstr "Défense de base : Lance-Roquettes TR-20"
+msgstr "Défense : Lance-Roquettes TR-20"
 
 #: ../base/ufos/aircraftmanagement.ufo:669
 #: ../base/ufos/research.ufo:3644
 msgid "Base defence: TR-20 Rocket"
-msgstr "Défense de base : Roquette TR-20"
+msgstr "Défense : Roquette TR-20"
 
 #: ../base/ufos/armour.ufo:12
 msgid "normal"
@@ -1915,11 +1915,11 @@ msgstr "Pas d'entrepôt dans cette base."
 
 #: ../base/ufos/menu_buy.ufo:2260
 msgid "Buy or sell aircrafts."
-msgstr "Acheter ou vendre un appareil"
+msgstr "Acheter ou vendre un appareil."
 
 #: ../base/ufos/menu_buy.ufo:2263
 msgid "Buy or sell craftitems."
-msgstr "Acheter ou vendre un composant pour appareil."
+msgstr "Acheter ou vendre des équipements pour appareils (armes, armures, ...)."
 
 #: ../base/ufos/menu_buy.ufo:2268
 msgid "Show aircrafts"
@@ -1929,9 +1929,10 @@ msgstr "Montrer les appareils"
 msgid "Show craftitems"
 msgstr "Montrer les objets"
 
+# Ce texte est dans un bouton et doit donc être court.
 #: ../base/ufos/menu_buy.ufo:2303
 msgid "Craftitems"
-msgstr "Composants pour appareils"
+msgstr "Équipements"
 
 #: ../base/ufos/menu_buy.ufo:2308
 #: ../base/ufos/menu_production.ufo:858
@@ -2910,9 +2911,8 @@ msgid "Delete this bookmark"
 msgstr "Effacer ce marque-page"
 
 #: ../base/ufos/menu_multiplayer.ufo:936
-#, fuzzy
 msgid "Day version:"
-msgstr "Version du jeu :\t%s\n"
+msgstr "Version du jeu:"
 
 #: ../base/ufos/menu_multiplayer.ufo:951
 msgid "Make this server public:"
@@ -3237,11 +3237,11 @@ msgstr "Réglages du jeu"
 
 #: ../base/ufos/menu_options.ufo:687
 msgid "Camera Scroll:"
-msgstr "Déplacement de la caméra :"
+msgstr "Déplacement caméra :"
 
 #: ../base/ufos/menu_options.ufo:713
 msgid "Camera Rotation:"
-msgstr "Rotation de la caméra"
+msgstr "Rotation caméra :"
 
 #: ../base/ufos/menu_options.ufo:739
 msgid "Precache models:"
@@ -4444,7 +4444,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4068
 #: ../base/ufos/research.ufo:4076
 msgid "mail_from_paul_navarre"
-msgstr "Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/research.ufo:128
 #: ../base/ufos/research.ufo:136
@@ -4558,7 +4559,8 @@ msgstr "Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des O
 #: ../base/ufos/research.ufo:4193
 #: ../base/ufos/research.ufo:4200
 msgid "mail_to_base_commander"
-msgstr "Commandant de Base, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Commandant de Base, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/research.ufo:153
 #: ../base/ufos/research.ufo:191
@@ -4679,7 +4681,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:4192
 #: ../base/ufos/research.ufo:4199
 msgid "mail_from_dr_connor"
-msgstr "Dr Connor, R&D: Division Biologie et Confinement, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Dr Connor, R&D: Division Biologie et Confinement, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/research.ufo:247
 #: ../base/ufos/research.ufo:286
@@ -4947,7 +4950,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:493
 #: ../base/ufos/research.ufo:501
 msgid "mail_from_col_falkland"
-msgstr "Col. Ingrid Falkland, Division Renseignements, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Col. Ingrid Falkland, Division Renseignements, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/research.ufo:482
 #: ../base/ufos/research.ufo:495
@@ -8820,27 +8824,97 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3726
 msgid "craft_alien_astrogation_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+msgstr ""
+"Commandant, la récupération d'une unité de navigation alienne intacte est un événement important. Bien que cette unité ne semble pas contenir de carte stellaire, cela nous permettra de déchiffrer la notation astronomique alienne et de mettre à jour la puissance de notre propre système de navigation grâce à plusieurs ordres d'amplitude. Le travail effectué ici peut éventuellement nous aider à retracer le trajet des aliens jusqu'à leur planète mère.\n"
+"\n"
+"La navigation alienne, ainsi que la propulsion et la détection alienne, sont les trois piliers de la conception des OVNI. Ce qui signifie un pas de plus nous rapprochant de l'aptitude à fabriquer un vaisseau de défense interplanétaire.\n"
+"\n"
+"--Cdt. Navarre"
 
 #: ../base/ufos/research.ufo:3729
 msgid "craft_alien_astrogation_txt"
-msgstr "craft_alien_astrogation_txt"
+msgstr ""
+"Commandant, nous avons fini de travailler sur l'unité de navigation alienne récupérée. voici un résumé de mon rapport.\n"
+"\n"
+"Nous avons conclu au début de notre enquête que cette unité de navigation est, à sa base, un ordinateur avec des logiciels spécialisés chargés -- tous destinés uniquement à des fins de tracer une route d'un point dans l'espace à un autre. Il utilise un nouveau système de notation astronomique, que nous avons décidé d'adopter afin de rendre l'utilisation de ce matériel alien possible.\n"
+"\n"
+"Maintenant que nous avons compris son système de notation, nous pouvons voir que l'unité de navigation convient parfaitement à son utilisation. Une fois rentré une entrée correcte, le système peut tracer une route de n'importe où à n'importe où en secondes, et peut, de façon intelligente, recalculer la route avec des filtres comme 'le plus rapide', 'le plus court', 'le moins dangereux', et ainsi de suite. ces filtres peuvent être ordonnés par priorité à l'infini jusqu'à ce que le système donne la route exacte voulue. Il est même capable de prendre en compte le paramètre 'Plus Vite que La Lumière' lors du traçage de la route, ce qui tend à vérifier la théorie selon laquelle les aliens auraient accès à certaines technologie permettant d'atteindre une vitesse supérieure à la vitesse lumière (PVQL).\n"
+"\n"
+"Le seul problème avec la méthode de traçage de ces unités est qu'elle requiert un carte stellaire pour donner de la précision au routes allant au-delà de la fourchette de détection des OVNI. Nous n'avons jamais trouvé de carte stellaire sur les OVNI récupérés. Peut-être que seuls ceux avec un système PVQL ont une carte stellaire chargée; ils auraient sûrement besoin de cela pour naviguer.\n"
+"\n"
+"Au lieu de l'insaisissable carte stellaire, nous avons découvert que l'unité de navigation que nous avons récupéré contient énormément de détails sur la Terre et son système solaire. Les cartes des surfaces des planètes et toutes leurs lunes (même une lune de Pluton précédemment inconnue), le spectre des analyses de tous les corps dans la ceinture d'astéroïde ainsi que de la lointaine ceinture de Kuiper, et les orbites de tous les corps dans le système solaire tracée des centaines d'années à l'avance. Nous ne sommes pas sûr que cette information nous sera d'une quelconque utilité, mais cela renforcerait grandement les connaissance de l'humanité sur notre système -- lorsque nous serons autorisés à le révéler au public.\n"
+"\n"
+"Il est possible de programmer notre propre carte stellaire dans l'unité de navigation, mais je n'imagine combien notre carte serait primitive et incomplète comparée à celle des aliens. Je ne tolérerai aucun voyage interstellaire avec ces unités tant que nous n'aurons pas récupéré de carte stellaire alienne. Toutefois, en attendant, nous pourrions certainement utiliser ces dernières pour naviguer dans le système solaire si nous pouvions concevoir un appareil PHALANX pouvant être lancé dans l'espace. Ils simplifieront grandement l'ensemble du processus de voyage interplanétaire à un tel point que nous serons en mesure de lancer des missions sur Saturne où même Pluton simplement en appuyant sur un bouton.\n"
+"\n"
+"Et c'est quelque chose que nous devrions faire dès que possible.\n"
+"\n"
+"--Cdt. Navarre"
 
 #: ../base/ufos/research.ufo:3763
 msgid "craft_alien_propulsion_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+msgstr ""
+"Commandant, les moteurs antimatière aliens que nous avons récupérés ont facinés mon équipe comme jamais depuis qu'ils sont arrivés. Avec notre nouvelle compréhension des matériaux aliens, je pense que nous pouvons travailler sur les détails et la duplication de cette technologie. Captivant, il semblerait maintenant qu'il soit dans nos capacités de reproduire ces moteurs, si nous pouvions seulement déterminer la fonction et la création des différentes parties.\n"
+"\n"
+"Avec la navigation et la détection alienne, la propulsion alienne est l'un des trois piliers de la conception des OVNI. Ce qui signifie un pas de plus nous rapprochant de l'aptitude à fabriquer un vaisseau de défense interplanétaire.\n"
+"\n"
+"--Cdt. Navarre"
 
 #: ../base/ufos/research.ufo:3766
 msgid "craft_alien_propulsion_txt"
-msgstr "craft_alien_propulsion_txt"
+msgstr ""
+"Commandant, je suis heureux de vous rapporter les succès de notre programme de propulsion alienne. Nous avons persé les mystères des réglages du moteur alien et nous avons finalement compris le cheminement de l'antimatière du réservoir de carburant à la chambre de réaction.\n"
+"\n"
+"Citation de mon précédant rapport:\n"
+"\n"
+"(OVNI -- Scout)\"Le système de propulsion alien est un type de moteur de fusée contraire à tout ce qui a jamais été construit sur Terre. Il utilise directement l'anéantissement de la matière par l'antimatière pour générer une poussée en injectant des protons et des antiprotons à l'intérieur de la chambre de réaction, puis canalise cette force explosive vers l'arrière du moteur. Cela donne aux OVNI une puissance extrême et ne nécessite pas d'air ou autre gaz pour alimenter la réaction, lui permettant de brûler à vide. Il possède également un système de refoidissement très avancé pompant continuellement de l'azote liquide jusqu'à la chambre du moteur en vue de le garder frais et également de réduire la signature infrarouge. La chaleur évacuée du moteur est utilisée pour alimenter en électricité le vaisseau.\"\n"
+"\n"
+"Avec ce projet nous avons beaucoup appris sur la manière dont ces engins sont construits, comment les contrôler, et comment nous pourrions les adapter à notre flotte actuelle. Nous devrions maintenant être en mesure de répliquer ces moteurs et de les utiliser pour n'importe quelle application dont nous aurions besoin à l'avenir (for any applications we might come up). Je dois vous prévenir; Ils seront extrêmement coûteux à produire. Entre l'utilisation complexe des matériaux aliens, la sensibilité électromagnétique et le système de refroidissement à azote liquide, cela limite sérieusement notre capacité de production.\n"
+"\n"
+"Des recherches supplémentaires pourraient s'avérer nécessaires pour déterminer le stockage et le contrôle de l'antimatière, mais les mises à jour du moteur sont des unité autonomes -- fondamentalement, un moteur alien avec des adaptateurs pour la technologie humaine. Nous devrions être en mesure de commencer l'adaptation dès que nous aurons assez de carburant pour maintenir notre flotte dans les airs.\n"
+"\n"
+"J'ai mentionné précédemment, que la disparité de puissance entre notre carburant liquide et ces moteurs matière-antimatière n'a rien d'étonnant. Quand nous commencerons à utiliser ces moteur sur nos vaisseaux, nos pilotes vont avoir besoin de sérieuses ré-éducations sur les capacités de leur embarcations. Je m'explique.\n"
+"\n"
+"Dans un chasseur militaire ordinaire, tirer trop violemment la manette des gaz, peut occasionner une altération du jugement voire une perte de conscience dû à la force d'accélération. Les pilotes peuvent même en mourir.\n"
+"\n"
+"Dans un chasseur antimatière, ces problèmes sont amplifiés par cent. Ces moteurs sont si puissants qu'une sur-accélération peut aisément écraser et réduire en bouillie un corps humain sur son siège de vol. Le vaisseau lui-même pourrait avoir des difficultés à faire face à cette accélération, et nos ingénieurs devront êtres extrêmement prudent sur le contrôle de fatigue du métal, des fractures dues a l'impact de l'air et autres usures de la coque. Une petite fissure dans la structure suffirait à disloquer un de nos appareils en plein vol. Et les limiteurs de poussées ne peuvent pas faire grand-chose -- la plupart des contraintes de G sont sollicitées durant les virages.\n"
+"\n"
+"Pourtant, cela ne devrait pas être un problème tant que tout le monde -- pilotes aussi bien que mécaniciens -- est extrêmement prudent dans les tâches qui lui sont assignées. Nous avons effectués de sérieux renforcements en matière de sécurité et de protocole pour les avions antimatières. Le ré-entraînement de nos pilotes est le seul obstacle restant pour notre utilisation de ces moteurs aliens.\n"
+"\n"
+"--Cdt. Navarre"
 
 #: ../base/ufos/research.ufo:3799
 msgid "craft_alien_detection_pre_txt"
-msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
+msgstr ""
+"Commandant, Le capteur alien semble être un puissant ensemble de systèmes de scanners actifs et passifs, incluant radar, lidar, réception magnétique et UV/infrarouge, et -- le plus intéressant -- une sorte de détection qui nous est inconnue, mais qui semble bien plus performante en matière de détection d'OVNI que tout ce que nous avons.\n"
+"\n"
+"Si vous nous laissiez effectuer la suite des recherche, je crois que nous pourrons trouver tout ce qu'il fait, comment le faire fonctionner, et comment le répliquer en partie, si ce n'est pas totalement. Ce serait un immense élan pour nos efforts de défense de la Terre si nous pouvions faire fonctionner cette technologie pour notre usage, et son potentiel à long terme pour le développement des vaisseaux spatiaux est vital. Nous ne pouvons pas construire de chasseurs spatiaux viables avec des capteur humains.\n"
+"\n"
+"Avec la propulsion et la navigation, la détection alienne est l'un des trois pilier de la conception OVNI. Ce qui signifie que c'est un grand pas nous rapprochant de la capacité de fabrication de vaisseaux de défense interplanétaires.\n"
+"\n"
+"--Cdt. Navarre"
 
 #: ../base/ufos/research.ufo:3802
 msgid "craft_alien_detection_txt"
-msgstr "craft_alien_detection_txt"
+msgstr ""
+"Commandant, le projet sur la détection alienne est terminée. Nous avons maintenant une grande compréhension de la machinerie, des contrôles, et des modifications nécessaires pour une utilisation humaine.\n"
+"\n"
+"Notre évaluation initiale semble avoir été correcte. L'ensemble des détections utilise essentiellement des normes standard, des méthodes de détections fiables que soit l'humanité utilise ou connaît déjà. L'équipement est plus avancé que le nôtre et sera utile, mais dans l'ensemble les aliens appliquent les mêmes concepts et utilisent la même physique que nous. Comme mentionné dans ma proposition, le radar, lidar, et autres vielles et robustes méthodes de détections sont présentes dans cet ensemble.\n"
+"\n"
+"Puis il y a le mystérieux capteur.\n"
+"\n"
+"Il nous a troublé pendant longtemps, parce que maintenant qu'il est ici sur la surface de la Terre, il émet un insupportable bruit de fond. Une fois dans les airs cependant, la situation est très différente. Nous pensons désormais avoir identifié le détecteur et trouvé la façon dont il fonctionne.\n"
+"\n"
+"En termes simples, c'est un capteur de gravité, scannant les changement de fond dans un champ gravitationnel. Toutes choses traversant un champ de gravité, perturbe ce champ de quelque degrés en fonction de sa taille, de sa masse, et de sa composition. Le capteur peut identifier ces changements comme étant des objet naturels ou artificiels en fonction de leur trajectoire, de leur vitesse et de leur accélération avec 95% de précision. Si il y a quelques doutes quant à un contact, le système en fera rapport. Il semble être plus efficace dans des champs gravitationnels plus forts comme celui de la Terre, mais nous supposons que cela fonctionnera n'importe où du moment qu'il reste dans la portée du champ gravitationnel d'une étoile.\n"
+"\n"
+"Tout le pouvoir de cette détection est lié à un système d'ordinateur avancé qui donne tous les résultats au travers d'une série de filtres, qui peuvent être ajustés à tout moment pour correspondre aux besoin du pilote et de l'équipage. Cela permet alternativement l'acquisition d'une cible à partir d'un multitude de bruits de fond ou l'accroissement de la sensibilité pour chercher quelque chose de furtif.\n"
+"\n"
+"Fait intéressant, l'ordinateur de détection semble avoir un lien direct avec le système de mise à feu, assistant l'anticipation des mouvement d'une cible et braquant le système de défense vers cette dernière si le vaisseau en a la capacité.\n"
+"\n"
+"Une partie de cette technologie peut être adaptée à nos installations basées au sol et aux radars d'espace aérien. Cela étendrait leur portée de détection et augmenterait la résolution des écrans de contrôles, rendant la furtivité des OVNI aliens plus difficile. Toutefois, le plus grand avantage pratique proviendra de la création de nouveaux instruments pour les vaisseaux qui augmenteront la survie de nos intercepteurs.\n"
+"\n"
+"Évidemment, ce ne sont pas les application immédiates qui sont le plus important. Ces détecteurs sont vitaux pour tout futur vaisseau spatial PHALANX. Dans l'espace, sans le support de radars au sol, nous allons avoir méchament besoin de puissance supplémentaire.\n"
+"\n"
+"--Cdt. Navarre"
 
 #: ../base/ufos/research.ufo:3833
 msgid "SHIVA Rotary Cannon"
@@ -9716,75 +9790,93 @@ msgstr "seq_alienbase_sentence3"
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr "Nous sommes en 2084. Pour la première fois depuis longtemps, la Terre connaît une période de paix. Les violences du début du XXIème siècle sont passées, mais restent encore ancrées dans la mémoire de chacun. Pour la plupart des habitants de la Terre, la Seconde Guerre Froide est une ombre du passé, comme le furent les guerres mondiales pour les enfants de la fin du XXème siècle."
+msgstr ""
+"Nous sommes en 2084. Pour la première fois depuis longtemps, la Terre connaît une période de paix. Les violences du début du XXIème siècle sont passées, mais restent encore ancrées dans la mémoire de chacun. Pour la plupart des habitants de la Terre, la Seconde Guerre Froide est une ombre du passé, comme le furent les guerres mondiales pour les enfants de la fin du XXème siècle."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr "La fin du siècle a vu les conflits se raréfier avec l'avènement des nouvelles technologies et l'amélioration considérable des conditions de santé dans le tiers monde. Même les violentes actions terroristes ont disparu avec le début de la Deuxième Guerre Froide, laissant un souvenir macabre aux habitants du nord de l'Amérique et à ceux des terres ravagées du continent Indien... La lutte des classes passe désormais au coeur des débats politiques, depuis que chaque nation est équitablement représentée à l'ONU. Partout dans le monde, la qualité de vie s'améliore. Les états se sont renforcés et stabilisés autour des Nations Unies, qui sont parvenues à s'imposer sur les gouvernements du monde entier depuis leur restructuration. Des groupes de petits états, tout d'abord intimidés par la puissance des blocs chinois et européens, se sont réunis pour former une puissante coalition politique. Pour la première fois dans l'histoire de l'humanité, la loi et l'ordre règnent sur plus des trois quarts du globe."
+msgstr ""
+"La fin du siècle a vu les conflits se raréfier avec l'avènement des nouvelles technologies et l'amélioration considérable des conditions de santé dans le tiers monde. Même les violentes actions terroristes ont disparu avec le début de la Deuxième Guerre Froide, laissant un souvenir macabre aux habitants du nord de l'Amérique et à ceux des terres ravagées du continent Indien... La lutte des classes passe désormais au coeur des débats politiques, depuis que chaque nation est équitablement représentée à l'ONU. Partout dans le monde, la qualité de vie s'améliore. Les états se sont renforcés et stabilisés autour des Nations Unies, qui sont parvenues à s'imposer sur les gouvernements du monde entier depuis leur restructuration. Des groupes de petits états, tout d'abord intimidés par la puissance des blocs chinois et européens, se sont réunis pour former une puissante coalition politique. Pour la première fois dans l'histoire de l'humanité, la loi et l'ordre règnent sur plus des trois quarts du globe."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr "Pour la plupart des gens, la vie semble avoir repris son cours."
+msgstr ""
+"Pour la plupart des gens, la vie semble avoir repris son cours."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr "La première attaque touche la ville de Mumbai le 3 mai 2084. Six petits OVNIs sortent du néant et déferlent sur la ville, sans qu'aucune des énormes installations radar couvrant le ciel de Mumbai ne les détecte. Il n'y a ni avertissements, ni explications. Les pertes de la ville la plus peuplée du monde sont colossales : vingt mille civils innocents, et trois bataillons de troupes d'élite sont massacrés en moins d'une douzaine d'heures. C'est à ce prix que les soldats du Commonwealth parviennent à repousser l'avancée des aliens. Puis, aussi soudainement qu'ils étaient apparus, ils retournent à leurs vaisseaux qui s'évanouissent dans le ciel, laissant derrière eux les rues ravagées de Mumbai."
+msgstr ""
+"La première attaque touche la ville de Mumbai le 3 mai 2084. Six petits OVNIs sortent du néant et déferlent sur la ville, sans qu'aucune des énormes installations radar couvrant le ciel de Mumbai ne les détecte. Il n'y a ni avertissements, ni explications. Les pertes de la ville la plus peuplée du monde sont colossales : vingt mille civils innocents, et trois bataillons de troupes d'élite sont massacrés en moins d'une douzaine d'heures. C'est à ce prix que les soldats du Commonwealth parviennent à repousser l'avancée des aliens. Puis, aussi soudainement qu'ils étaient apparus, ils retournent à leurs vaisseaux qui s'évanouissent dans le ciel, laissant derrière eux les rues ravagées de Mumbai."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr "Une réunion d'urgence des Nations Unies ne parvient à aucune conclusion. Les attaques s'enchaînent rapidement, plus importantes et mortelles encore, touchant Bonn, Johannesburg et Bangkok. Quelques nations tentent la voie diplomatique, envoyant des messages en un millier de langues différentes aux aliens qui ravagent le globe. Leurs tentatives sont ignorées. En quelques heures, toute vie humaine est anéantie dans les trois villes. L'attaque est terminée avant que les armées terriennes ne reçoivent l'autorisation de contre-attaquer. Les aliens ne laissent derrière eux que du béton et du sang. Une fois encore, ils disparaissent sans laisser de trace... Mais nul ne doute qu'ils reviendront."
+msgstr ""
+"Une réunion d'urgence des Nations Unies ne parvient à aucune conclusion. Les attaques s'enchaînent rapidement, plus importantes et mortelles encore, touchant Bonn, Johannesburg et Bangkok. Quelques nations tentent la voie diplomatique, envoyant des messages en un millier de langues différentes aux aliens qui ravagent le globe. Leurs tentatives sont ignorées. En quelques heures, toute vie humaine est anéantie dans les trois villes. L'attaque est terminée avant que les armées terriennes ne reçoivent l'autorisation de contre-attaquer. Les aliens ne laissent derrière eux que du béton et du sang. Une fois encore, ils disparaissent sans laisser de trace... Mais nul ne doute qu'ils reviendront."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr "Quatre vingt sept heures après la première attaque sur Mumbai, la Terre entre en guerre. Pendant deux semaines, toutes les armées de l'humanité tentent de repousser les mystérieux assaillants aliens au mieux de leur possibilité. Les succès sont peu nombreux."
+msgstr ""
+"Quatre vingt sept heures après la première attaque sur Mumbai, la Terre entre en guerre. Pendant deux semaines, toutes les armées de l'humanité tentent de repousser les mystérieux assaillants aliens au mieux de leur possibilité. Les succès sont peu nombreux."
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr "Sans autre alternative, les Nations Unies prennent les choses en main. La défunte agence anti-extraterrestre \"PHALANX\" des anciens États Unis est ressuscitée sous la bannière de l'ONU. Son ancien équipement est remis en service, certains éléments datant de plus d'un siècle. Sa mission : combattre la menace extraterrestre et garantir la survie de l'espèce humaine à tout prix."
+msgstr ""
+"Sans autre alternative, les Nations Unies prennent les choses en main. La défunte agence anti-extraterrestre \"PHALANX\" des anciens États Unis est ressuscitée sous la bannière de l'ONU. Son ancien équipement est remis en service, certains éléments datant de plus d'un siècle. Sa mission : combattre la menace extraterrestre et garantir la survie de l'espèce humaine à tout prix."
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr "Financée par les huit puissances politiques mondiales, et recrutant ses soldats parmi les meilleurs de leurs armées, PHALANX est la crème de l'élite. Elle est la première et unique ligne de défense de la Terre. Elle ne peut échouer, car si tel était le cas, l'humanité n'aurait plus aucun espoir."
+msgstr ""
+"Financée par les huit puissances politiques mondiales, et recrutant ses soldats parmi les meilleurs de leurs armées, PHALANX est la crème de l'élite. Elle est la première et unique ligne de défense de la Terre. Elle ne peut échouer, car si tel était le cas, l'humanité n'aurait plus aucun espoir."
 
 #: ../base/ufos/seq_intro.ufo:100
 msgid "prolog_sentence1"
-msgstr "POUR: Commandant de la Base, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"POUR: Commandant de la Base, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/seq_intro.ufo:110
 msgid "prolog_sentence2"
-msgstr "DE: Secrétaire Général Mahouf Serra, Nations Unies, New York"
+msgstr ""
+"DE: Secrétaire Général Mahouf Serra, Nations Unies, New York"
 
 #: ../base/ufos/seq_intro.ufo:119
 msgid "prolog_sentence3"
-msgstr "DATE: 21 Mars 2084"
+msgstr ""
+"DATE: 21 Mars 2084"
 
 #: ../base/ufos/seq_intro.ufo:128
 msgid "prolog_sentence4"
-msgstr "SUJET: Bonne Chance"
+msgstr ""
+"SUJET: Bonne Chance"
 
 #: ../base/ufos/seq_intro.ufo:137
 msgid "prolog_sentence5"
-msgstr "Bienvenu dans vos nouvelles fonctions, Commandant. Vous avez dès maintenant les pleins pouvoirs sur l'Unité de Réaction Extraterrestre PHALANX. Votre mission est de protéger les citoyens de la Terre et de stopper la menace alienne à tout prix. La façon dont vous procéderez nous importe peu, notre seule exigence est votre réussite."
+msgstr ""
+"Bienvenu dans vos nouvelles fonctions, Commandant. Vous avez dès maintenant les pleins pouvoirs sur l'Unité de Réaction Extraterrestre PHALANX. Votre mission est de protéger les citoyens de la Terre et de stopper la menace alienne à tout prix. La façon dont vous procéderez nous importe peu, notre seule exigence est votre réussite."
 
 #: ../base/ufos/seq_intro.ufo:146
 msgid "prolog_sentence6"
-msgstr "Votre première mission est d'aménager votre quartier général. Les Nations Unies ont accès à n'importe quelle base à travers le monde, et vous pouvez par conséquent envisager la totalité du globe pour l'installation de votre centre d'opération. Choisissez cet endroit judicieusement, car il aura beaucoup d'influence sur les chances de succès du projet PHALANX."
+msgstr ""
+"Votre première mission est d'aménager votre quartier général. Les Nations Unies ont accès à n'importe quelle base à travers le monde, et vous pouvez par conséquent envisager la totalité du globe pour l'installation de votre centre d'opération. Choisissez cet endroit judicieusement, car il aura beaucoup d'influence sur les chances de succès du projet PHALANX."
 
 #: ../base/ufos/seq_intro.ufo:155
 msgid "prolog_sentence7"
-msgstr "Une analyse récente des attaques sur Mumbai et Bonn révèle que les observations d'OVNI et d'activités aliennes semblent se concentrer dans les régions les plus densément peuplées du monde. Ceci inclus les zones côtières d'Amérique du nord et du sud, l'Europe, l'Asie de l'est, l'Afrique du sud et l'Afrique méditerranéenne, ainsi que l'Australie. Vous devriez envisager d'inclure ces terres dans votre rayon d'action."
+msgstr ""
+"Une analyse récente des attaques sur Mumbai et Bonn révèle que les observations d'OVNI et d'activités aliennes semblent se concentrer dans les régions les plus densément peuplées du monde. Ceci inclus les zones côtières d'Amérique du nord et du sud, l'Europe, l'Asie de l'est, l'Afrique du sud et l'Afrique méditerranéenne, ainsi que l'Australie. Vous devriez envisager d'inclure ces terres dans votre rayon d'action."
 
 #: ../base/ufos/seq_intro.ufo:164
 msgid "prolog_sentence8"
-msgstr "Une fois votre première base établie, vous devez préparer vos soldats à l'action. Les recrues que nous avons assignées à PHALANX doivent être affectées à un appareil de transport, puis équipées pour le combat."
+msgstr ""
+"Une fois votre première base établie, vous devez préparer vos soldats à l'action. Les recrues que nous avons assignées à PHALANX doivent être affectées à un appareil de transport, puis équipées pour le combat."
 
 #: ../base/ufos/seq_intro.ufo:173
 msgid "prolog_sentence9"
-msgstr "Prenez soin d'elles, Commandant. Nous comptons tous sur vous, et prions pour vous."
+msgstr ""
+"Prenez soin d'elles, Commandant. Nous comptons tous sur vous, et prions pour vous."
 
 #: ../base/ufos/seq_intro.ufo:182
 msgid "prolog_sentence10"
-msgstr "Ce sera tout. Bonne chance, et bonne chasse."
+msgstr ""
+"Ce sera tout. Bonne chance, et bonne chasse."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"

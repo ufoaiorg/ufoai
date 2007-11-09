@@ -145,6 +145,7 @@ static void BS_MarketClick_f (void)
 		break;
 	case BUY_CRAFTITEM:
 		UP_AircraftItemDescription(buyList[num]);
+		Cvar_Set("mn_aircraftname", "");	/** @todo Use craftitem name here? */
 		break;
 	case -1:
 		break;
@@ -271,47 +272,21 @@ static void BS_BuyType_f (void)
 	if (!baseCurrent || buyCategory == -1)
 		return;
 
-	RS_CheckAllCollected(); /* @todo: needed? */
+	RS_CheckAllCollected(); /** @todo: needed? */
 
 	CL_UpdateCredits(ccs.credits);
 
 	*bsMarketNames = *bsMarketStorage = *bsMarketMarket = *bsMarketPrices = '\0';
+	MN_MenuTextReset(TEXT_STANDARD);
 	menuText[TEXT_MARKET_NAMES] = bsMarketNames;
 	menuText[TEXT_MARKET_STORAGE] = bsMarketStorage;
 	menuText[TEXT_MARKET_MARKET] = bsMarketMarket;
 	menuText[TEXT_MARKET_PRICES] = bsMarketPrices;
 
 	/* 'normal' items */
-	if (buyCategory < BUY_AIRCRAFT || buyCategory == BUY_DUMMY) {
-		/* Add autosell button for every entry. */
-		for (j = 0; j < MAX_MARKET_MENU_ENTRIES; j++)
-			Cbuf_AddText(va("buy_autoselld%i\n", j));
-		/* get item list */
-		for (i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-			if (od->notOnMarket)
-				continue;
-			/* Check whether the proper buytype, storage in current base and market. */
-			if (od->tech && BUYTYPE_MATCH(od->buytype, buyCategory) && (baseCurrent->storage.num[i] || ccs.eMarket.num[i])) {
-				BS_AddToList(od->name, baseCurrent->storage.num[i], ccs.eMarket.num[i], ccs.eMarket.ask[i]);
-				/* Set state of Autosell button. */
-				if (j >= buyListScrollPos && j < MAX_MARKET_MENU_ENTRIES) {
-					Cbuf_AddText(va("buy_show%i\n", j - buyListScrollPos));
-					if (gd.autosell[i])
-						Cbuf_AddText(va("buy_autoselle%i\n", j - buyListScrollPos));
-					else
-						Cbuf_AddText(va("buy_autoselld%i\n", j - buyListScrollPos));
-				}
-
-				if (j >= MAX_BUYLIST)
-					Sys_Error("Increase the MAX_BUYLIST value to handle that much items\n");
-				buyList[j] = i;
-				j++;
-			}
-		}
-		buyListLength = j;
-	}
-	/* aircraft */
-	else if (buyCategory == BUY_AIRCRAFT) {
+	switch (buyCategory) {
+	case BUY_AIRCRAFT:	/* Aircraft */
+		{
 		technology_t* tech;
 		BS_UpdateAircraftBSButtons();
 		for (i = 0, j = 0, air_samp = aircraft_samples; i < numAircraft_samples; i++, air_samp++) {
@@ -331,7 +306,9 @@ static void BS_BuyType_f (void)
 			}
 		}
 		buyListLength = j;
-	} else if (buyCategory == BUY_CRAFTITEM) {
+		}
+		break;
+	case BUY_CRAFTITEM:	/* Aircraft items */
 		BS_UpdateAircraftBSButtons();
 		/* get item list */
 		for (i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++) {
@@ -353,10 +330,41 @@ static void BS_BuyType_f (void)
 			}
 		}
 		buyListLength = j;
+		break;
+	default:	/* Normal items */
+		if (buyCategory < BUY_AIRCRAFT || buyCategory == BUY_DUMMY) {
+			/* Add autosell button for every entry. */
+			for (j = 0; j < MAX_MARKET_MENU_ENTRIES; j++)
+				Cbuf_AddText(va("buy_autoselld%i\n", j));
+			/* get item list */
+			for (i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+				if (od->notOnMarket)
+					continue;
+				/* Check whether the proper buytype, storage in current base and market. */
+				if (od->tech && BUYTYPE_MATCH(od->buytype, buyCategory) && (baseCurrent->storage.num[i] || ccs.eMarket.num[i])) {
+					BS_AddToList(od->name, baseCurrent->storage.num[i], ccs.eMarket.num[i], ccs.eMarket.ask[i]);
+					/* Set state of Autosell button. */
+					if (j >= buyListScrollPos && j < MAX_MARKET_MENU_ENTRIES) {
+						Cbuf_AddText(va("buy_show%i\n", j - buyListScrollPos));
+						if (gd.autosell[i])
+							Cbuf_AddText(va("buy_autoselle%i\n", j - buyListScrollPos));
+						else
+							Cbuf_AddText(va("buy_autoselld%i\n", j - buyListScrollPos));
+					}
+
+					if (j >= MAX_BUYLIST)
+						Sys_Error("Increase the MAX_BUYLIST value to handle that much items\n");
+					buyList[j] = i;
+					j++;
+				}
+			}
+			buyListLength = j;
+		}
+		break;
 	}
 
 	for (; j < MAX_MARKET_MENU_ENTRIES; j++) {
-		/* hide the rest of the entries. */
+		/* Hide the rest of the entries. */
 		Cbuf_AddText(va("buy_hide%i\n", j));
 	}
 
@@ -373,14 +381,27 @@ static void BS_BuyType_f (void)
 
 	/* select first item */
 	if (buyListLength) {
-		if (buyCategory == BUY_AIRCRAFT)
+		switch (buyCategory) {	/** @sa BS_MarketClick_f */
+		case BUY_AIRCRAFT:
 			BS_MarketAircraftDescription(buyList[0]);
-		else if (buyCategory != -1) {
+			break;
+		case BUY_CRAFTITEM:
+			Cvar_Set("mn_aircraftname", "");	/** @todo Use craftitem name here? See also BS_MarketClick_f */
+			/* Select current item or first one. */
+			if (Cvar_VariableInteger("mn_bs_current") > 0) {
+				UP_AircraftItemDescription(Cvar_VariableInteger("mn_bs_current"));
+			} else {
+				UP_AircraftItemDescription(buyList[0]);
+			}
+			break;
+		default:
+			assert(buyCategory != -1);
 			/* Select current item or first one. */
 			if (Cvar_VariableInteger("mn_bs_current") > 0)
 				UP_ItemDescription(Cvar_VariableInteger("mn_bs_current"));
 			else
 				UP_ItemDescription(buyList[0]);
+			break;
 		}
 	} else {
 		/* reset description */
