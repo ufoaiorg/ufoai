@@ -4230,8 +4230,8 @@ static const cmdList_t game_commands[] = {
 	{"map_scroll", MAP_Scroll_f, ""},
 	{"add_battery", BDEF_AddBattery_f, "Add a new battery to base"},
 	{"remove_battery", BDEF_RemoveBattery_f, "Remove a battery from base"},
-	{"initialise_basedef_menu", BDEF_Init_Menu_f, "Inits base defense menu"},
-	{"basedef_init", BDEF_Init_f, "Inits base defense menu"},
+	{"basedef_initmenu", BDEF_MenuInit_f, "Inits base defense menu"},
+	{"basedef_initzone", BDEF_ZoneInit_f, "Inits base defense menu"},
 	{"basedef_slot_list_click", BDEF_ListClick_f, "Inits base defense menu"},
 #ifdef DEBUG
 	{"debug_aircraftlist", AIR_ListAircraft_f, "Debug function to list all aircraft in all bases"},

@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 
 static int airequipID = -1;				/**< value of aircraftItemType_t that defines what item we are installing. */
-static qboolean noparams = qfalse;			/**< true if AIM_AircraftEquipmenuInit_f or BDEF_Init_f don't need paramters */
+static qboolean noparams = qfalse;			/**< true if AIM_AircraftEquipmenuInit_f or BDEF_ZoneInit_f don't need paramters */
 static int airequipSelectedZone = ZONE_NONE;		/**< Selected zone in equip menu */
 static int airequipSelectedSlot = ZONE_NONE;			/**< Selected slot in equip menu */
 static technology_t *airequipSelectedTechnology = NULL;		/**< Selected technolgy in equip menu */
@@ -512,7 +512,7 @@ void BDEF_InitialiseBaseSlots (base_t *base)
  * @brief Script command to init the base defense menu.
  * @note this function is only called when the menu launches
  */
-void BDEF_Init_Menu_f (void)
+void BDEF_MenuInit_f (void)
 {
 	menuNode_t *node;
 
@@ -536,7 +536,7 @@ void BDEF_Init_Menu_f (void)
 /**
  * @brief Script command to init the base defense menu.
  */
-void BDEF_Init_f (void)
+void BDEF_ZoneInit_f (void)
 {
 	static char defBuffer[1024];
 	static char smallbuffer1[128];
@@ -561,7 +561,7 @@ void BDEF_Init_f (void)
 
 	/* Check that the base has at least 1 battery */
 	if (baseCurrent->maxBatteries + baseCurrent->maxLasers < 1) {
-		Com_Printf("BDEF_Init_f: there is no defense battery in this base: you shouldn't be in this function.\n");
+		Com_Printf("BDEF_ZoneInit_f: there is no defense battery in this base: you shouldn't be in this function.\n");
 		return;
 	}
 
@@ -590,7 +590,7 @@ void BDEF_Init_f (void)
 				airequipID = AC_ITEM_AMMO_LASER;
 			break;
 		default:
-			Com_Printf("BDEF_Init_f: Unvalid type %i.\n", type);
+			Com_Printf("BDEF_ZoneInit_f: Unvalid type %i.\n", type);
 			return;
 		}
 	}
@@ -648,7 +648,7 @@ void BDEF_Init_f (void)
 			}
 		}
 	} else {
-		Com_Printf("BDEF_Init_f: unknown airequipId.\n");
+		Com_Printf("BDEF_ZoneInit_f: unknown airequipId.\n");
 		return;
 	}
 	menuText[TEXT_BASEDEFENSE_LIST] = defBuffer;
@@ -723,7 +723,7 @@ void BDEF_ListClick_f (void)
 	Vector2Set(node->pos, 25, 30 + height * airequipSelectedSlot);
 
 	noparams = qtrue;
-	BDEF_Init_f();
+	BDEF_ZoneInit_f();
 }
 
 /**
@@ -1378,8 +1378,8 @@ void AIM_AircraftEquipAddItem_f (void)
 		noparams = qtrue; /* used for AIM_AircraftEquipmenuInit_f */
 		AIM_AircraftEquipmenuInit_f();
 	} else {
-		noparams = qtrue; /* used for BDEF_Init_f */
-		BDEF_Init_f();
+		noparams = qtrue; /* used for BDEF_ZoneInit_f */
+		BDEF_ZoneInit_f();
 	}
 }
 
@@ -1449,8 +1449,8 @@ void AIM_AircraftEquipDeleteItem_f (void)
 		noparams = qtrue; /* used for AIM_AircraftEquipmenuInit_f */
 		AIM_AircraftEquipmenuInit_f();
 	} else {
-		noparams = qtrue; /* used for BDEF_Init_f */
-		BDEF_Init_f();
+		noparams = qtrue; /* used for BDEF_ZoneInit_f */
+		BDEF_ZoneInit_f();
 	}
 }
 
