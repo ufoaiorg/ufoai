@@ -60,7 +60,7 @@ menu basedefense
 
 	func basedef_missile
 	{
-		cmd "basedef_initzone 0;"
+		cmd "basedef_updatemenu 0;"
 		basedef_reset
 		*basedef_button_missile_str color "1 1 1 1"
 		*basedef_header3 invis false
@@ -68,22 +68,22 @@ menu basedefense
 
 	func basedef_laser
 	{
-		cmd "basedef_initzone 1;"
+		cmd "basedef_updatemenu 1;"
 		basedef_reset
 		*basedef_button_laser_str color "1 1 1 1"
 	}
 
 	func basedef_zone1
 	{
-		cmd "airequip_zone_select 1;basedef_initzone;"
+		cmd "airequip_zone_select 1;basedef_updatemenu;"
 	}
 	func basedef_zone2
 	{
-		cmd "airequip_zone_select 2;basedef_initzone;"
+		cmd "airequip_zone_select 2;basedef_updatemenu;"
 	}
 	func basedef_zone3
 	{
-		cmd "airequip_zone_select 3;basedef_initzone 2;"
+		cmd "airequip_zone_select 3;basedef_updatemenu 2;"
 	}
 
 	text basedef_slot_list
@@ -192,7 +192,7 @@ menu basedefense
 		align	cc
 	}
 
-	text baseequip_list
+	text basedef_list
 	{
 		pos	"756 480"
 		size	"252 220"
@@ -386,7 +386,7 @@ menu basedefense
 	func init
 	{
 		basedef_initnodevalues
-		cmd "basedef_initmenu;basedef_initzone 0;airequip_zone_select 1;"
+		cmd "basedef_initmenu;basedef_updatemenu 0;airequip_zone_select 1;"
 	}
 
 	func close
