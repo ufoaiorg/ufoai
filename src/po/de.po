@@ -3247,14 +3247,12 @@ msgid "Camera Rotation:"
 msgstr "Kamerarotation:"
 
 #: ../base/ufos/menu_options.ufo:739
-#, fuzzy
 msgid "Precache models:"
-msgstr "Precachen von Bildern und Modellen:"
+msgstr "Modelle vorhalten:"
 
 #: ../base/ufos/menu_options.ufo:747
-#, fuzzy
 msgid "Precache models (faster menus)"
-msgstr "Bilder und Modelle precachen (schnellere Menüs)"
+msgstr "Modelle vorhalten (schnellere Menüs)"
 
 #: ../base/ufos/menu_options.ufo:755
 msgid "Tooltips:"
@@ -3997,9 +3995,8 @@ msgid "New York"
 msgstr "New York"
 
 #: ../base/ufos/missions.ufo:266
-#, fuzzy
 msgid "Somewhere in Amazona"
-msgstr "Irgendwo in der Antarktis"
+msgstr "Irgendwo im Amazonas"
 
 #: ../base/ufos/missions.ufo:283
 msgid "Rzeszow"
@@ -4213,23 +4210,20 @@ msgid "Stop them"
 msgstr "Neutralisieren!"
 
 #: ../base/ufos/missions.ufo:890
-#, fuzzy
 msgid "Somewhere in Siberia"
-msgstr "Irgendwo in der Antarktis"
+msgstr "Irgendwo in Sibirien"
 
 #: ../base/ufos/missions.ufo:904
 msgid "Rocky Mountains"
 msgstr "Rocky Mountains"
 
 #: ../base/ufos/missions.ufo:906
-#, fuzzy
 msgid "Aliens are attacking a shelter. Defend the people inside."
-msgstr "Außerirdische greifen gerade eine unserer Basen an."
+msgstr "Außerirdische greifen eine Bunker an. Verteidige die Bewohner."
 
 #: ../base/ufos/missions.ufo:919
-#, fuzzy
 msgid "TODO"
-msgstr "TODO\n"
+msgstr "TODO"
 
 #: ../base/ufos/missions.ufo:920
 msgid "Infection Attack"
@@ -12781,22 +12775,22 @@ msgstr "Produktionswarteschlange ist leer"
 #: client/cl_produce.c:462
 #, fuzzy, c-format
 msgid "Not enough credits to finish production in base %s.\n"
-msgstr "Nicht genug Kapital um eine neue Basis zu bauen."
+msgstr "Nicht genug Kapital um die Produktion in Basis %s abzuschließen.\n"
 
 #: client/cl_produce.c:452
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough free storage space in base %s. Production paused.\n"
-msgstr "Nicht genug Lagerkapazität in der Basis %s. %s"
+msgstr "Nicht genug Lagerkapazität in der Basis %s. Produktion unterbrochen.\n"
 
 #: client/cl_produce.c:471
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough free hangar space in base %s. Production paused.\n"
-msgstr "Nicht genug Lagerkapazität in der Basis %s. %s"
+msgstr "Nicht genug Hangarkapazität in der Basis %s. Produktion unterbrochen.\n"
 
 #: client/cl_produce.c:482
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough free storage space in base %s. Disassembling paused.\n"
-msgstr "Nicht genug Lagerkapazität in der Basis %s. %s"
+msgstr "Nicht genug Lagerkapazität in der Basis %s. Demontage unterbrochen.\n"
 
 #: client/cl_produce.c:506
 #: client/cl_produce.c:518
@@ -12884,7 +12878,7 @@ msgstr "Nicht genug Material!"
 #: client/cl_produce.c:1188
 #, c-format
 msgid "You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."
-msgstr ""
+msgstr "Wir haben nicht genug Material, um alle (%i) Gegenstände zu produzieren. Die Produktion wird mit der reduzierten Anzahl (%i) fortgesetzt."
 
 #: client/cl_produce.c:1192
 #: client/cl_produce.c:1214
@@ -12976,7 +12970,7 @@ msgstr "Status: Forschung abgeschlossen"
 
 #: client/cl_research.c:822
 msgid "Status: We don't currently have all the materials or background knowledge needed to research this topic."
-msgstr ""
+msgstr "Status: Wir haben noch nicht genügend Materialien oder Hintergrundwissen für dieses Forschungsprojekt.  "
 
 #: client/cl_research.c:824
 msgid "Status: Unknown technology"
