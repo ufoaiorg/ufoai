@@ -192,7 +192,7 @@ menu basedefense
 		align	cc
 	}
 
-	text baseequip_list
+	text basedef_list
 	{
 		pos	"756 480"
 		size	"252 220"
