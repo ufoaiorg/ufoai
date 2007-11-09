@@ -197,24 +197,34 @@ static aircraftSlot_t *AII_SelectAircraftSlot (aircraft_t *aircraft)
  * @param[in] base Pointer to the aircraft
  * @return Pointer to the slot corresponding to airequipID
  * @note There is always at least one slot, otherwise you can't enter base defense menu screen.
+ * @sa BDEF_ListClick_f
  */
 static aircraftSlot_t *BDEF_SelectBaseSlot (base_t *base)
 {
 	aircraftSlot_t *slot;
+	menuNode_t *node;
 
 	switch (airequipID) {
 	case AC_ITEM_AMMO_MISSILE:
 	case AC_ITEM_BASE_MISSILE:
 		assert(base->maxBatteries > 0);
-		if (airequipSelectedSlot >= base->maxBatteries)
+		if (airequipSelectedSlot >= base->maxBatteries) {
 			airequipSelectedSlot = 0;
+			/* update position of the arrow in front of the selected base defense */
+			node = MN_GetNodeFromCurrentMenu("basedef_selected_slot");
+			Vector2Set(node->pos, 25, 30);
+		}
 		slot = base->batteries + airequipSelectedSlot;
 		break;
 	case AC_ITEM_AMMO_LASER:
 	case AC_ITEM_BASE_LASER:
 		assert(base->maxLasers > 0);
-		if (airequipSelectedSlot < base->maxLasers)
+		if (airequipSelectedSlot >= base->maxLasers) {
 			airequipSelectedSlot = 0;
+			/* update position of the arrow in front of the selected base defense */
+			node = MN_GetNodeFromCurrentMenu("basedef_selected_slot");
+			Vector2Set(node->pos, 25, 30);
+		}
 		slot = base->lasers + airequipSelectedSlot;
 		break;
 	default:
@@ -496,6 +506,31 @@ void BDEF_InitialiseBaseSlots (base_t *base)
 		base->targetMissileIdx[i] = AIRFIGHT_BASE_CAN_T_FIRE;
 		base->targetLaserIdx[i] = AIRFIGHT_BASE_CAN_T_FIRE;
 	}
+}
+
+/**
+ * @brief Script command to init the base defense menu.
+ * @note this function is only called when the menu launches
+ */
+void BDEF_Init_Menu_f (void)
+{
+	menuNode_t *node;
+
+	/* initialize selected item */
+	Cvar_Set("basedef_item_name", "main");
+	airequipSelectedTechnology = NULL;
+
+	/* initialize different variables */
+	airequipID = -1;
+	noparams = qfalse;
+	airequipSelectedZone = ZONE_NONE;
+	airequipSelectedSlot = ZONE_NONE;
+
+	/* initialize selected slot */
+	airequipSelectedSlot = 0;
+	/* update position of the arrow in front of the selected base defense */
+	node = MN_GetNodeFromCurrentMenu("basedef_selected_slot");
+	Vector2Set(node->pos, 25, 30);
 }
 
 /**
