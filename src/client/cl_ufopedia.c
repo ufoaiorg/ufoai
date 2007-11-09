@@ -1206,6 +1206,7 @@ static void UP_Click_f (void)
 static void UP_TechTreeClick_f (void)
 {
 	int num;
+	int i;
 	requirements_t *required_AND = NULL;
 	technology_t *techRequired = NULL;
 
@@ -1219,6 +1220,12 @@ static void UP_TechTreeClick_f (void)
 	required_AND = &upCurrent->require_AND;
 	if (num < 0 || num >= required_AND->numLinks)
 		return;
+
+	/* skip every tech which have not been displayed in techtree */
+	for (i = 0; i <= num; i++) {
+		if (required_AND->type[i] != RS_LINK_TECH)
+			num++;
+	}
 
 	if (!Q_strncmp(required_AND->id[num], "nothing", MAX_VAR)
 		|| !Q_strncmp(required_AND->id[num], "initial", MAX_VAR))
