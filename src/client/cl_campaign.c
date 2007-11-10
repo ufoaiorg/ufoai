@@ -3116,23 +3116,23 @@ static void CL_DebugFullCredits_f (void)
  */
 static void CL_DebugNewEmployees_f (void)
 {
-int j;
+	int j;
 
-		for (j = 0; j < 5; j++)
-			/* Create a scientist */
-			E_CreateEmployee(EMPL_SCIENTIST);
+	for (j = 0; j < 5; j++)
+		/* Create a scientist */
+		E_CreateEmployee(EMPL_SCIENTIST);
 
-		for (j = 0; j < 5; j++)
-			/* Create a medic. */
-			E_CreateEmployee(EMPL_MEDIC);
+	for (j = 0; j < 5; j++)
+		/* Create a medic. */
+		E_CreateEmployee(EMPL_MEDIC);
 
-		for (j = 0; j < 5; j++)
-			/* Create a soldier. */
-			E_CreateEmployee(EMPL_SOLDIER);
+	for (j = 0; j < 5; j++)
+		/* Create a soldier. */
+		E_CreateEmployee(EMPL_SOLDIER);
 
-		for (j = 0; j < 5; j++)
-			/* Create a worker. */
-			E_CreateEmployee(EMPL_WORKER);
+	for (j = 0; j < 5; j++)
+		/* Create a worker. */
+		E_CreateEmployee(EMPL_WORKER);
 }
 
 /**
