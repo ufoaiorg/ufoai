@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion Thai v1.0\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-11-07 14:54+0100\n"
+"POT-Creation-Date: 2007-11-10 19:44+0100\n"
 "PO-Revision-Date: 2007-07-30 11:29+0700\n"
 "Last-Translator: Sophon Taechasivalai <mickey@metawire.com>\n"
 "Language-Team: Sophont <mickey@metawire.com>\n"
@@ -61,29 +61,29 @@ msgstr "ยา เขตศูนย์สูตร"
 
 #: ../base/maps/ufocrashd.ump:173 ../base/maps/ufocrashn.ump:173
 #: ../base/ufos/aircraftmanagement.ufo:287 ../base/ufos/otheritems.ufo:60
-#: ../base/ufos/research.ufo:3273 ../base/ufos/research.ufo:3286
-#: ../base/ufos/research.ufo:3294
+#: ../base/ufos/research.ufo:3281 ../base/ufos/research.ufo:3294
+#: ../base/ufos/research.ufo:3302
 msgid "UFO - Harvester"
 msgstr "จานบิน - ยานเก็บเกี่ยว"
 
 #: ../base/maps/ufocrashd.ump:196 ../base/maps/ufocrashn.ump:195
 #: ../base/ufos/aircraftmanagement.ufo:389 ../base/ufos/otheritems.ufo:40
-#: ../base/ufos/research.ufo:3064 ../base/ufos/research.ufo:3077
-#: ../base/ufos/research.ufo:3085
+#: ../base/ufos/research.ufo:3072 ../base/ufos/research.ufo:3085
+#: ../base/ufos/research.ufo:3093
 msgid "UFO - Scout"
 msgstr "จานบินสอดแนม"
 
 #: ../base/maps/ufocrashd.ump:207 ../base/maps/ufocrashn.ump:206
 #: ../base/ufos/aircraftmanagement.ufo:432 ../base/ufos/otheritems.ufo:50
-#: ../base/ufos/research.ufo:3105 ../base/ufos/research.ufo:3118
-#: ../base/ufos/research.ufo:3126
+#: ../base/ufos/research.ufo:3113 ../base/ufos/research.ufo:3126
+#: ../base/ufos/research.ufo:3134
 msgid "UFO - Fighter"
 msgstr "จานบินต่อสู้"
 
 #: ../base/maps/ufocrashd.ump:218 ../base/maps/ufocrashn.ump:217
 #: ../base/ufos/aircraftmanagement.ufo:337 ../base/ufos/otheritems.ufo:88
-#: ../base/ufos/research.ufo:3147 ../base/ufos/research.ufo:3160
-#: ../base/ufos/research.ufo:3168
+#: ../base/ufos/research.ufo:3155 ../base/ufos/research.ufo:3168
+#: ../base/ufos/research.ufo:3176
 msgid "UFO - Supply Ship"
 msgstr ""
 
@@ -153,8 +153,8 @@ msgid "Harvester U"
 msgstr "จานบิน - ยานเก็บเกี่ยว"
 
 #: ../base/ufos/aircraftmanagement.ufo:313 ../base/ufos/otheritems.ufo:79
-#: ../base/ufos/research.ufo:3189 ../base/ufos/research.ufo:3202
-#: ../base/ufos/research.ufo:3210
+#: ../base/ufos/research.ufo:3197 ../base/ufos/research.ufo:3210
+#: ../base/ufos/research.ufo:3218
 #, fuzzy
 msgid "UFO - Carrier"
 msgstr "จานบิน - ยานเก็บเกี่ยว"
@@ -164,8 +164,8 @@ msgid "Supply U"
 msgstr ""
 
 #: ../base/ufos/aircraftmanagement.ufo:360 ../base/ufos/otheritems.ufo:70
-#: ../base/ufos/research.ufo:3231 ../base/ufos/research.ufo:3244
-#: ../base/ufos/research.ufo:3252
+#: ../base/ufos/research.ufo:3239 ../base/ufos/research.ufo:3252
+#: ../base/ufos/research.ufo:3260
 #, fuzzy
 msgid "UFO - Condor"
 msgstr "จานบินสอดแนม"
@@ -187,11 +187,11 @@ msgstr "จ. ต่อสู้"
 msgid "Shiva Rotary Cannon"
 msgstr "SHIVA Rotary Cannon"
 
-#: ../base/ufos/aircraftmanagement.ufo:468 ../base/ufos/research.ufo:3851
+#: ../base/ufos/aircraftmanagement.ufo:468 ../base/ufos/research.ufo:3859
 msgid "SHIVA 20mm API Rounds"
 msgstr "SHIVA 20mm API Rounds"
 
-#: ../base/ufos/aircraftmanagement.ufo:484 ../base/ufos/research.ufo:3872
+#: ../base/ufos/aircraftmanagement.ufo:484 ../base/ufos/research.ufo:3880
 msgid "SHIVA 20mm HEI Rounds"
 msgstr "SHIVA 20mm HEI Rounds"
 
@@ -210,63 +210,61 @@ msgstr "'Sparrowhawk' AA Missile Rack"
 msgid "Sparrowhawk Missile"
 msgstr "'Sparrowhawk' Missile"
 
-#: ../base/ufos/aircraftmanagement.ufo:537 ../base/ufos/research.ufo:3932
+#: ../base/ufos/aircraftmanagement.ufo:537 ../base/ufos/research.ufo:3940
 msgid "TR-20 Rocket Pod"
 msgstr "TR-20 Rocket Pod"
 
-#: ../base/ufos/aircraftmanagement.ufo:549 ../base/ufos/research.ufo:3951
+#: ../base/ufos/aircraftmanagement.ufo:549 ../base/ufos/research.ufo:3959
 msgid "TR-20 Rocket"
 msgstr "TR-20 Rocket"
 
-#: ../base/ufos/aircraftmanagement.ufo:565 ../base/ufos/research.ufo:3972
-#: ../base/ufos/research.ufo:3986 ../base/ufos/research.ufo:3994
+#: ../base/ufos/aircraftmanagement.ufo:565 ../base/ufos/research.ufo:3980
+#: ../base/ufos/research.ufo:3994 ../base/ufos/research.ufo:4002
 msgid "Particle Beam Weapon"
 msgstr "Particle Beam Weapon"
 
-#: ../base/ufos/aircraftmanagement.ufo:579 ../base/ufos/research.ufo:4017
+#: ../base/ufos/aircraftmanagement.ufo:579 ../base/ufos/research.ufo:4025
 msgid "Targeting Computer"
 msgstr "Targeting Computer"
 
-#: ../base/ufos/aircraftmanagement.ufo:590 ../base/ufos/research.ufo:4035
+#: ../base/ufos/aircraftmanagement.ufo:590 ../base/ufos/research.ufo:4043
 msgid "Fuel Pod"
 msgstr "Fuel Pod"
 
-#: ../base/ufos/aircraftmanagement.ufo:602 ../base/ufos/research.ufo:3684
+#: ../base/ufos/aircraftmanagement.ufo:602 ../base/ufos/research.ufo:3692
 msgid "Polymer Aircraft Armour"
 msgstr "Polymer Aircraft Armour"
 
-#: ../base/ufos/aircraftmanagement.ufo:614 ../base/ufos/research.ufo:3702
+#: ../base/ufos/aircraftmanagement.ufo:614 ../base/ufos/research.ufo:3710
 #, fuzzy
 msgid "Alien Aircraft Plating"
 msgstr "พบยานต่างดาว"
 
-#: ../base/ufos/aircraftmanagement.ufo:626 ../base/ufos/research.ufo:3724
-#: ../base/ufos/research.ufo:3735 ../base/ufos/research.ufo:3742
+#: ../base/ufos/aircraftmanagement.ufo:626 ../base/ufos/research.ufo:3732
+#: ../base/ufos/research.ufo:3743 ../base/ufos/research.ufo:3750
 #, fuzzy
 msgid "Alien Astrogation"
 msgstr "Alien Origins"
 
-#: ../base/ufos/aircraftmanagement.ufo:635 ../base/ufos/research.ufo:3761
-#: ../base/ufos/research.ufo:3772 ../base/ufos/research.ufo:3779
+#: ../base/ufos/aircraftmanagement.ufo:635 ../base/ufos/research.ufo:3769
+#: ../base/ufos/research.ufo:3780 ../base/ufos/research.ufo:3787
 #, fuzzy
 msgid "Alien Propulsion"
 msgstr "ประเภทมนุษย์ต่างดาว"
 
-#: ../base/ufos/aircraftmanagement.ufo:644 ../base/ufos/research.ufo:3797
-#: ../base/ufos/research.ufo:3808 ../base/ufos/research.ufo:3815
+#: ../base/ufos/aircraftmanagement.ufo:644 ../base/ufos/research.ufo:3805
+#: ../base/ufos/research.ufo:3816 ../base/ufos/research.ufo:3823
 #, fuzzy
 msgid "Alien Detection"
 msgstr "ประเภทมนุษย์ต่างดาว"
 
-#: ../base/ufos/aircraftmanagement.ufo:657 ../base/ufos/research.ufo:3625
-#, fuzzy
-msgid "Base defence: TR-20 Rocket Pod"
-msgstr "TR-20 Rocket Pod"
+#: ../base/ufos/aircraftmanagement.ufo:657 ../base/ufos/research.ufo:3633
+msgid "AA51 missile launcher"
+msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:669 ../base/ufos/research.ufo:3644
-#, fuzzy
-msgid "Base defence: TR-20 Rocket"
-msgstr "TR-20 Rocket"
+#: ../base/ufos/aircraftmanagement.ufo:669 ../base/ufos/research.ufo:3652
+msgid "AA51 Cicada SAM"
+msgstr ""
 
 #: ../base/ufos/armour.ufo:12
 msgid "normal"
@@ -345,12 +343,12 @@ msgstr "ทางเข้า"
 msgid "Missile Battery"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:122 client/cl_basesummary.c:360
-#: client/cl_basesummary.c:365
+#: ../base/ufos/basemanagement.ufo:122 client/cl_basesummary.c:363
+#: client/cl_basesummary.c:368
 msgid "Storage"
 msgstr "ห้องเก็บของ"
 
-#: ../base/ufos/basemanagement.ufo:140 client/cl_basesummary.c:373
+#: ../base/ufos/basemanagement.ufo:140 client/cl_basesummary.c:376
 msgid "Power Plant"
 msgstr "แหล่งผลิตพลังงาน"
 
@@ -358,27 +356,27 @@ msgstr "แหล่งผลิตพลังงาน"
 msgid "Command Centre"
 msgstr "ศูนย์บัญชาการ"
 
-#: ../base/ufos/basemanagement.ufo:172 client/cl_basesummary.c:358
-#: client/cl_basesummary.c:364
+#: ../base/ufos/basemanagement.ufo:172 client/cl_basesummary.c:361
+#: client/cl_basesummary.c:367
 msgid "Living Quarters"
 msgstr "เขตพักอาศัย"
 
 #: ../base/ufos/basemanagement.ufo:191 ../base/ufos/basemanagement.ufo:212
-#: client/cl_basesummary.c:353 client/cl_basesummary.c:368
+#: client/cl_basesummary.c:356 client/cl_basesummary.c:371
 msgid "Large Hangar"
 msgstr "โรงเก็บเครื่องบินใหญ่"
 
-#: ../base/ufos/basemanagement.ufo:221 client/cl_basesummary.c:352
-#: client/cl_basesummary.c:370
+#: ../base/ufos/basemanagement.ufo:221 client/cl_basesummary.c:355
+#: client/cl_basesummary.c:373
 msgid "Small Hangar"
 msgstr "โรงเก็บเครื่องบินเล็ก"
 
-#: ../base/ufos/basemanagement.ufo:241 client/cl_basesummary.c:372
+#: ../base/ufos/basemanagement.ufo:241 client/cl_basesummary.c:375
 msgid "Small UFO Hangar"
 msgstr "โรงเก็บจานบินเล็ก"
 
 #: ../base/ufos/basemanagement.ufo:257 ../base/ufos/basemanagement.ufo:274
-#: client/cl_basesummary.c:354 client/cl_basesummary.c:371
+#: client/cl_basesummary.c:357 client/cl_basesummary.c:374
 msgid "Large UFO Hangar"
 msgstr "โรงเก็บจานบินใหญ่"
 
@@ -387,7 +385,7 @@ msgid "Team Room"
 msgstr "ห้องทีม"
 
 #: ../base/ufos/basemanagement.ufo:295 ../base/ufos/basemanagement.ufo:315
-#: client/cl_basesummary.c:359 client/cl_basesummary.c:366
+#: client/cl_basesummary.c:362 client/cl_basesummary.c:369
 msgid "Workshop"
 msgstr "ห้องช่าง"
 
@@ -395,17 +393,17 @@ msgstr "ห้องช่าง"
 msgid "Radar"
 msgstr "เรดาร์"
 
-#: ../base/ufos/basemanagement.ufo:341 client/cl_basesummary.c:357
-#: client/cl_basesummary.c:363
+#: ../base/ufos/basemanagement.ufo:341 client/cl_basesummary.c:360
+#: client/cl_basesummary.c:366
 msgid "Laboratory"
 msgstr "ห้องวิจัย"
 
 #: ../base/ufos/basemanagement.ufo:360 ../base/ufos/menu_bases.ufo:406
-#: client/cl_basesummary.c:356 client/cl_basesummary.c:367
+#: client/cl_basesummary.c:359 client/cl_basesummary.c:370
 msgid "Hospital"
 msgstr "โรงพยาบาล"
 
-#: ../base/ufos/basemanagement.ufo:379 client/cl_basesummary.c:375
+#: ../base/ufos/basemanagement.ufo:379 client/cl_basesummary.c:378
 #, fuzzy
 msgid "Antimatter Storage"
 msgstr "Antimatter"
@@ -804,13 +802,13 @@ msgid "Build at least one workshop"
 msgstr "สร้างห้องวิจัยก่อน"
 
 #: ../base/ufos/menu_aircraft.ufo:255 ../base/ufos/menu_aircraft.ufo:264
-#: ../base/ufos/menu_aircraft.ufo:1026
+#: ../base/ufos/menu_aircraft.ufo:1057
 #, fuzzy
 msgid "Produce"
 msgstr "การผลิต"
 
-#: ../base/ufos/menu_aircraft.ufo:301 ../base/ufos/menu_aircraft.ufo:902
-#: ../base/ufos/menu_basedefense.ufo:348 ../base/ufos/menu_hospital.ufo:498
+#: ../base/ufos/menu_aircraft.ufo:301 ../base/ufos/menu_aircraft.ufo:933
+#: ../base/ufos/menu_basedefense.ufo:377 ../base/ufos/menu_hospital.ufo:498
 #: ../base/ufos/menu_hospital.ufo:703 ../base/ufos/menu_team.ufo:988
 #: ../base/ufos/menu_team.ufo:1760
 msgid "Done"
@@ -828,84 +826,84 @@ msgstr "เปลี่ยนไปยานถัดไป"
 msgid "Team Members:"
 msgstr "สมาชิกทีม:"
 
-#: ../base/ufos/menu_aircraft.ufo:445
+#: ../base/ufos/menu_aircraft.ufo:470
 #, fuzzy
 msgid "Previous aircraft"
 msgstr "ซื้อยาน"
 
-#: ../base/ufos/menu_aircraft.ufo:456
+#: ../base/ufos/menu_aircraft.ufo:484
 #, fuzzy
 msgid "Next aircraft"
 msgstr "เลือกยาน"
 
-#: ../base/ufos/menu_aircraft.ufo:467
+#: ../base/ufos/menu_aircraft.ufo:498
 msgid "Available equipment:"
 msgstr "ของที่มีอยู่:"
 
-#: ../base/ufos/menu_aircraft.ufo:503
+#: ../base/ufos/menu_aircraft.ufo:534
 #, fuzzy
 msgid "Selected item:"
 msgstr "เลือกอุปกรณ์"
 
-#: ../base/ufos/menu_aircraft.ufo:511 ../base/ufos/menu_aircraft.ufo:521
+#: ../base/ufos/menu_aircraft.ufo:542 ../base/ufos/menu_aircraft.ufo:552
 msgid "Weapons"
 msgstr "อาวุธ"
 
-#: ../base/ufos/menu_aircraft.ufo:528 ../base/ufos/menu_aircraft.ufo:538
+#: ../base/ufos/menu_aircraft.ufo:559 ../base/ufos/menu_aircraft.ufo:569
 #: ../base/ufos/menu_buy.ufo:1397 ../base/ufos/menu_production.ufo:424
 #: ../base/ufos/menu_team.ufo:1384 client/cl_ufopedia.c:189
 msgid "Armour"
 msgstr "อุปกรณ์/เกราะ"
 
-#: ../base/ufos/menu_aircraft.ufo:545 ../base/ufos/menu_aircraft.ufo:555
+#: ../base/ufos/menu_aircraft.ufo:576 ../base/ufos/menu_aircraft.ufo:586
 #: ../base/ufos/menu_production.ufo:845
 msgid "Items"
 msgstr "อุปกรณ์"
 
-#: ../base/ufos/menu_aircraft.ufo:575 ../base/ufos/menu_aircraft.ufo:597
-#: ../base/ufos/menu_aircraft.ufo:619
+#: ../base/ufos/menu_aircraft.ufo:606 ../base/ufos/menu_aircraft.ufo:628
+#: ../base/ufos/menu_aircraft.ufo:650
 #, fuzzy
 msgid "Add selected item"
 msgstr "เลือกอุปกรณ์"
 
-#: ../base/ufos/menu_aircraft.ufo:586 ../base/ufos/menu_aircraft.ufo:608
-#: ../base/ufos/menu_aircraft.ufo:630
+#: ../base/ufos/menu_aircraft.ufo:617 ../base/ufos/menu_aircraft.ufo:639
+#: ../base/ufos/menu_aircraft.ufo:661
 msgid "Remove item from slot"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:642 ../base/ufos/menu_aircraft.ufo:664
-#: ../base/ufos/menu_aircraft.ufo:686
+#: ../base/ufos/menu_aircraft.ufo:673 ../base/ufos/menu_aircraft.ufo:695
+#: ../base/ufos/menu_aircraft.ufo:717
 #, fuzzy
 msgid "Select this zone"
 msgstr "เลือกอุปกรณ์"
 
-#: ../base/ufos/menu_aircraft.ufo:707
+#: ../base/ufos/menu_aircraft.ufo:738
 #, fuzzy
 msgid "Current item in slot"
 msgstr "ทีมปัจจุบัน: %i"
 
-#: ../base/ufos/menu_aircraft.ufo:716
+#: ../base/ufos/menu_aircraft.ufo:747
 msgid "Item to install after removal"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:725
+#: ../base/ufos/menu_aircraft.ufo:756
 msgid "Ammo fitting this weapon"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:734 ../base/ufos/menu_aircraft.ufo:755
-#: ../base/ufos/menu_aircraft.ufo:776 ../base/ufos/menu_aircraft.ufo:797
-#: ../base/ufos/menu_aircraft.ufo:818 ../base/ufos/menu_aircraft.ufo:839
-#: ../base/ufos/menu_aircraft.ufo:860 ../base/ufos/menu_aircraft.ufo:881
+#: ../base/ufos/menu_aircraft.ufo:765 ../base/ufos/menu_aircraft.ufo:786
+#: ../base/ufos/menu_aircraft.ufo:807 ../base/ufos/menu_aircraft.ufo:828
+#: ../base/ufos/menu_aircraft.ufo:849 ../base/ufos/menu_aircraft.ufo:870
+#: ../base/ufos/menu_aircraft.ufo:891 ../base/ufos/menu_aircraft.ufo:912
 #, fuzzy
 msgid "Select this slot"
 msgstr "เลือกอุปกรณ์"
 
-#: ../base/ufos/menu_aircraft.ufo:955
+#: ../base/ufos/menu_aircraft.ufo:986
 #, fuzzy
 msgid "Action"
 msgstr "ทำงาน:"
 
-#: ../base/ufos/menu_aircraft.ufo:962 ../base/ufos/menu_bases.ufo:656
+#: ../base/ufos/menu_aircraft.ufo:993 ../base/ufos/menu_bases.ufo:656
 #: ../base/ufos/menu_geoscape.ufo:449 ../base/ufos/menu_geoscape.ufo:547
 #: ../base/ufos/menu_geoscape.ufo:648 ../base/ufos/menu_geoscape.ufo:736
 #: ../base/ufos/menu_geoscape.ufo:836 ../base/ufos/menu_geoscape.ufo:886
@@ -916,7 +914,7 @@ msgstr "ทำงาน:"
 msgid "Close this dialogue"
 msgstr "ปิดกรอบนี้"
 
-#: ../base/ufos/menu_aircraft.ufo:975 ../base/ufos/menu_bases.ufo:669
+#: ../base/ufos/menu_aircraft.ufo:1006 ../base/ufos/menu_bases.ufo:669
 #: ../base/ufos/menu_geoscape.ufo:462 ../base/ufos/menu_geoscape.ufo:560
 #: ../base/ufos/menu_geoscape.ufo:661 ../base/ufos/menu_geoscape.ufo:760
 #: ../base/ufos/menu_geoscape.ufo:849 ../base/ufos/menu_geoscape.ufo:899
@@ -926,11 +924,11 @@ msgstr "ปิดกรอบนี้"
 msgid "Cancel"
 msgstr "ยกเลิก"
 
-#: ../base/ufos/menu_aircraft.ufo:983
+#: ../base/ufos/menu_aircraft.ufo:1014
 msgid "You don't have any aircraft in the base - what do you want to do?"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:991 ../base/ufos/menu_buy.ufo:1795
+#: ../base/ufos/menu_aircraft.ufo:1022 ../base/ufos/menu_buy.ufo:1795
 #: ../base/ufos/menu_buy.ufo:1799 ../base/ufos/menu_buy.ufo:1803
 #: ../base/ufos/menu_buy.ufo:1807 ../base/ufos/menu_buy.ufo:1811
 #: ../base/ufos/menu_buy.ufo:1815 ../base/ufos/menu_buy.ufo:1819
@@ -943,11 +941,11 @@ msgstr ""
 msgid "Buy aircraft"
 msgstr "ซื้อยาน"
 
-#: ../base/ufos/menu_aircraft.ufo:1004
+#: ../base/ufos/menu_aircraft.ufo:1035
 msgid "Buy"
 msgstr ""
 
-#: ../base/ufos/menu_aircraft.ufo:1012
+#: ../base/ufos/menu_aircraft.ufo:1043
 #, fuzzy
 msgid "Produce aircraft"
 msgstr "ซื้อยาน"
@@ -962,8 +960,8 @@ msgstr "เครดิต"
 
 #: ../base/ufos/menu_aliencont.ufo:68 ../base/ufos/menu_basesummary.ufo:67
 #: ../base/ufos/menu_buildings.ufo:74 ../base/ufos/menu_buy.ufo:1423
-#: ../base/ufos/menu_hire.ufo:800 ../base/ufos/menu_production.ufo:477
-#: ../base/ufos/menu_research.ufo:1191 ../base/ufos/menu_transfer.ufo:312
+#: ../base/ufos/menu_hire.ufo:820 ../base/ufos/menu_production.ufo:477
+#: ../base/ufos/menu_research.ufo:1191 ../base/ufos/menu_transfer.ufo:332
 msgid "Back to baseview"
 msgstr "กลับไปหน้าฐาน"
 
@@ -1164,75 +1162,75 @@ msgstr "เลือกเพื่อใช้รูปแบบนี้ใน
 msgid "Use Item"
 msgstr "อุปกรณ์"
 
-#: ../base/ufos/menu_basedefense.ufo:75
+#: ../base/ufos/menu_basedefense.ufo:104
 msgid "Your are changing this defense system"
 msgstr ""
 
-#: ../base/ufos/menu_basedefense.ufo:85
+#: ../base/ufos/menu_basedefense.ufo:114
 #, fuzzy
 msgid "Available defense:"
 msgstr "ของที่มีอยู่:"
 
-#: ../base/ufos/menu_basedefense.ufo:121
+#: ../base/ufos/menu_basedefense.ufo:150
 #, fuzzy
 msgid "Selected defense:"
 msgstr "ฐานที่เลือก"
 
-#: ../base/ufos/menu_basedefense.ufo:129
+#: ../base/ufos/menu_basedefense.ufo:158
 msgid "Choose missile battery"
 msgstr ""
 
-#: ../base/ufos/menu_basedefense.ufo:140
+#: ../base/ufos/menu_basedefense.ufo:169
 #, fuzzy
 msgid "Missile"
 msgstr "ภารกิจ"
 
-#: ../base/ufos/menu_basedefense.ufo:148
+#: ../base/ufos/menu_basedefense.ufo:177
 msgid "Choose laser battery"
 msgstr ""
 
-#: ../base/ufos/menu_basedefense.ufo:160
+#: ../base/ufos/menu_basedefense.ufo:189
 #, fuzzy
 msgid "Laser"
 msgstr "เลเซอร์"
 
-#: ../base/ufos/menu_basedefense.ufo:185 ../base/ufos/menu_basedefense.ufo:207
+#: ../base/ufos/menu_basedefense.ufo:214 ../base/ufos/menu_basedefense.ufo:236
 msgid "Install selected defense system"
 msgstr ""
 
-#: ../base/ufos/menu_basedefense.ufo:196 ../base/ufos/menu_basedefense.ufo:218
+#: ../base/ufos/menu_basedefense.ufo:225 ../base/ufos/menu_basedefense.ufo:247
 msgid "Remove this defense system"
 msgstr ""
 
-#: ../base/ufos/menu_basedefense.ufo:229
+#: ../base/ufos/menu_basedefense.ufo:258
 msgid "Equip this defense system with selected ammo"
 msgstr ""
 
-#: ../base/ufos/menu_basedefense.ufo:240
+#: ../base/ufos/menu_basedefense.ufo:269
 msgid "Remove ammo from this defense system"
 msgstr ""
 
-#: ../base/ufos/menu_basedefense.ufo:252
+#: ../base/ufos/menu_basedefense.ufo:281
 msgid "Choose defense system to build"
 msgstr ""
 
-#: ../base/ufos/menu_basedefense.ufo:274
+#: ../base/ufos/menu_basedefense.ufo:303
 msgid "Choose defense system to build after removing current one"
 msgstr ""
 
-#: ../base/ufos/menu_basedefense.ufo:296
+#: ../base/ufos/menu_basedefense.ufo:325
 msgid "Change ammo in the defense system"
 msgstr ""
 
-#: ../base/ufos/menu_basedefense.ufo:317
+#: ../base/ufos/menu_basedefense.ufo:346
 msgid "Current defense system"
 msgstr ""
 
-#: ../base/ufos/menu_basedefense.ufo:326
+#: ../base/ufos/menu_basedefense.ufo:355
 msgid "System to install after removal"
 msgstr ""
 
-#: ../base/ufos/menu_basedefense.ufo:335
+#: ../base/ufos/menu_basedefense.ufo:364
 msgid "Ammo to use with installed system"
 msgstr ""
 
@@ -1263,7 +1261,7 @@ msgstr ""
 
 #: ../base/ufos/menu_bases.ufo:153 ../base/ufos/menu_buy.ufo:2283
 #: ../base/ufos/menu_geoscape.ufo:1019 ../base/ufos/menu_production.ufo:825
-#: ../base/ufos/menu_transfer.ufo:267 ../base/ufos/research.ufo:100
+#: ../base/ufos/menu_transfer.ufo:287 ../base/ufos/research.ufo:100
 #: client/cl_map.c:327
 msgid "Aircraft"
 msgstr "ยานบิน"
@@ -1289,7 +1287,7 @@ msgid "Can't transfer - only one base"
 msgstr "โยกย้ายไม่ได้ - มีฐานเดียว"
 
 #: ../base/ufos/menu_bases.ufo:225 ../base/ufos/menu_geoscape.ufo:681
-#: ../base/ufos/menu_transfer.ufo:108 ../base/ufos/menu_transfer.ufo:307
+#: ../base/ufos/menu_transfer.ufo:108 ../base/ufos/menu_transfer.ufo:327
 msgid "Transfer"
 msgstr "โยกย้าย"
 
@@ -1719,7 +1717,7 @@ msgstr "ฐานนี้ไม่มีโรงเก็บของ\n"
 msgid "No hangars in this base."
 msgstr "ไม่มีที่พักอาศัยในฐานนี้\n"
 
-#: ../base/ufos/menu_buy.ufo:2257 client/cl_market.c:669
+#: ../base/ufos/menu_buy.ufo:2257 client/cl_market.c:690
 #, fuzzy
 msgid "No storage in this base."
 msgstr "ฐานนี้ไม่มีโรงเก็บของ\n"
@@ -1866,7 +1864,7 @@ msgstr "ฐานถูกโจมตี"
 msgid "Select base to transfer to"
 msgstr "เลือกฐานที่จะโอนไป"
 
-#: ../base/ufos/menu_geoscape.ufo:668 ../base/ufos/menu_transfer.ufo:292
+#: ../base/ufos/menu_geoscape.ufo:668 ../base/ufos/menu_transfer.ufo:312
 msgid "Start the transfer"
 msgstr "เริ่มการโยกย้าย"
 
@@ -2015,35 +2013,35 @@ msgstr "เข้าร่วมภารกิจ:"
 msgid "Enemies Killed:"
 msgstr "ฆ่าศัตรู:"
 
-#: ../base/ufos/menu_hire.ufo:720
+#: ../base/ufos/menu_hire.ufo:740
 msgid "Hire soldiers"
 msgstr "จ้างทหาร"
 
-#: ../base/ufos/menu_hire.ufo:735
+#: ../base/ufos/menu_hire.ufo:755
 msgid "Soldiers"
 msgstr "ทหาร"
 
-#: ../base/ufos/menu_hire.ufo:740
+#: ../base/ufos/menu_hire.ufo:760
 msgid "Hire scientists"
 msgstr "จ้างนักวิทยาศาสตร์"
 
-#: ../base/ufos/menu_hire.ufo:755
+#: ../base/ufos/menu_hire.ufo:775
 msgid "Scientists"
 msgstr "นักวิทยาศาสตร์"
 
-#: ../base/ufos/menu_hire.ufo:760
+#: ../base/ufos/menu_hire.ufo:780
 msgid "Hire workers"
 msgstr "จ้างคนงาน"
 
-#: ../base/ufos/menu_hire.ufo:775
+#: ../base/ufos/menu_hire.ufo:795
 msgid "Workers"
 msgstr "คนงาน"
 
-#: ../base/ufos/menu_hire.ufo:780
+#: ../base/ufos/menu_hire.ufo:800
 msgid "Hire medics"
 msgstr "จ้างเสนารักษ์"
 
-#: ../base/ufos/menu_hire.ufo:795 ../base/ufos/menu_hospital.ufo:478
+#: ../base/ufos/menu_hire.ufo:815 ../base/ufos/menu_hospital.ufo:478
 msgid "Medics"
 msgstr "เสนารักษ์"
 
@@ -2852,7 +2850,7 @@ msgstr "แกมม่า:"
 msgid "Low"
 msgstr "โยนสูง"
 
-#: ../base/ufos/menu_options.ufo:360 client/cl_mapfightequip.c:1541
+#: ../base/ufos/menu_options.ufo:360 client/cl_mapfightequip.c:1710
 #, fuzzy
 msgid "Medium"
 msgstr "เสนารักษ์"
@@ -3244,7 +3242,7 @@ msgstr "ภารกิจ"
 msgid "Bases"
 msgstr "ฐาน"
 
-#: ../base/ufos/menu_stats.ufo:97 ../base/ufos/menu_transfer.ufo:227
+#: ../base/ufos/menu_stats.ufo:97 ../base/ufos/menu_transfer.ufo:247
 msgid "Employees"
 msgstr "พนักงาน"
 
@@ -3399,35 +3397,35 @@ msgstr "ข้อมูลฐาน"
 msgid "Cargo onboard"
 msgstr "สินค้าอยู่บนเครื่อง"
 
-#: ../base/ufos/menu_transfer.ufo:192
+#: ../base/ufos/menu_transfer.ufo:212
 msgid "Show only items"
 msgstr "แสดงเฉพาะอุปกรณ์"
 
-#: ../base/ufos/menu_transfer.ufo:207 ../base/ufos/research.ufo:103
+#: ../base/ufos/menu_transfer.ufo:227 ../base/ufos/research.ufo:103
 msgid "Equipment"
 msgstr "อุปกรณ์"
 
-#: ../base/ufos/menu_transfer.ufo:212
+#: ../base/ufos/menu_transfer.ufo:232
 msgid "Show only employees"
 msgstr "แสดงเฉพาะพนักงาน"
 
-#: ../base/ufos/menu_transfer.ufo:232
+#: ../base/ufos/menu_transfer.ufo:252
 msgid "Show only aliens"
 msgstr "แสดงเฉพาะมนุษย์ต่างดาว"
 
-#: ../base/ufos/menu_transfer.ufo:247 client/cl_campaign.c:4476
+#: ../base/ufos/menu_transfer.ufo:267 client/cl_campaign.c:4502
 msgid "Aliens"
 msgstr "มนุษย์ต่างดาว"
 
-#: ../base/ufos/menu_transfer.ufo:252
+#: ../base/ufos/menu_transfer.ufo:272
 msgid "Show only aircraft"
 msgstr "แสดงเฉพาะยานบิน"
 
-#: ../base/ufos/menu_transfer.ufo:272
+#: ../base/ufos/menu_transfer.ufo:292
 msgid "Empty the aircraft storage"
 msgstr "นำของออกจากเครื่องทั้งหมด"
 
-#: ../base/ufos/menu_transfer.ufo:287
+#: ../base/ufos/menu_transfer.ufo:307
 msgid "Unload"
 msgstr "เอาของออก"
 
@@ -3880,9 +3878,9 @@ msgstr "Antimatter"
 msgid "Alien Breathing Apparatus"
 msgstr "Alien Breathing Apparatus"
 
-#: ../base/ufos/otheritems.ufo:26 ../base/ufos/research.ufo:4058
-#: ../base/ufos/research.ufo:4070 ../base/ufos/research.ufo:4078
-#: ../base/ufos/research.ufo:4094
+#: ../base/ufos/otheritems.ufo:26 ../base/ufos/research.ufo:4066
+#: ../base/ufos/research.ufo:4078 ../base/ufos/research.ufo:4086
+#: ../base/ufos/research.ufo:4102
 msgid "Alien Materials"
 msgstr "Alien Materials"
 
@@ -4022,17 +4020,18 @@ msgstr ""
 #: ../base/ufos/research.ufo:2261 ../base/ufos/research.ufo:2269
 #: ../base/ufos/research.ufo:2337 ../base/ufos/research.ufo:2345
 #: ../base/ufos/research.ufo:2373 ../base/ufos/research.ufo:2381
-#: ../base/ufos/research.ufo:3075 ../base/ufos/research.ufo:3083
-#: ../base/ufos/research.ufo:3116 ../base/ufos/research.ufo:3124
-#: ../base/ufos/research.ufo:3158 ../base/ufos/research.ufo:3166
-#: ../base/ufos/research.ufo:3200 ../base/ufos/research.ufo:3208
-#: ../base/ufos/research.ufo:3242 ../base/ufos/research.ufo:3250
-#: ../base/ufos/research.ufo:3284 ../base/ufos/research.ufo:3292
-#: ../base/ufos/research.ufo:3733 ../base/ufos/research.ufo:3740
-#: ../base/ufos/research.ufo:3770 ../base/ufos/research.ufo:3777
-#: ../base/ufos/research.ufo:3806 ../base/ufos/research.ufo:3813
-#: ../base/ufos/research.ufo:3984 ../base/ufos/research.ufo:3992
-#: ../base/ufos/research.ufo:4068 ../base/ufos/research.ufo:4076
+#: ../base/ufos/research.ufo:2957 ../base/ufos/research.ufo:3083
+#: ../base/ufos/research.ufo:3091 ../base/ufos/research.ufo:3124
+#: ../base/ufos/research.ufo:3132 ../base/ufos/research.ufo:3166
+#: ../base/ufos/research.ufo:3174 ../base/ufos/research.ufo:3208
+#: ../base/ufos/research.ufo:3216 ../base/ufos/research.ufo:3250
+#: ../base/ufos/research.ufo:3258 ../base/ufos/research.ufo:3292
+#: ../base/ufos/research.ufo:3300 ../base/ufos/research.ufo:3741
+#: ../base/ufos/research.ufo:3748 ../base/ufos/research.ufo:3778
+#: ../base/ufos/research.ufo:3785 ../base/ufos/research.ufo:3814
+#: ../base/ufos/research.ufo:3821 ../base/ufos/research.ufo:3992
+#: ../base/ufos/research.ufo:4000 ../base/ufos/research.ufo:4076
+#: ../base/ufos/research.ufo:4084
 msgid "mail_from_paul_navarre"
 msgstr ""
 "ผบ. พอล นาวาเร, แผนกวิจัยและพัฒนา: ฝ่ายวิศวกรรม, PHALANX, หน่วยปฏิบัติการแอตแลนติค"
@@ -4076,23 +4075,23 @@ msgstr ""
 #: ../base/ufos/research.ufo:2262 ../base/ufos/research.ufo:2270
 #: ../base/ufos/research.ufo:2338 ../base/ufos/research.ufo:2346
 #: ../base/ufos/research.ufo:2374 ../base/ufos/research.ufo:2382
-#: ../base/ufos/research.ufo:3076 ../base/ufos/research.ufo:3084
-#: ../base/ufos/research.ufo:3117 ../base/ufos/research.ufo:3125
-#: ../base/ufos/research.ufo:3159 ../base/ufos/research.ufo:3167
-#: ../base/ufos/research.ufo:3201 ../base/ufos/research.ufo:3209
-#: ../base/ufos/research.ufo:3243 ../base/ufos/research.ufo:3251
-#: ../base/ufos/research.ufo:3285 ../base/ufos/research.ufo:3293
-#: ../base/ufos/research.ufo:3355 ../base/ufos/research.ufo:3363
-#: ../base/ufos/research.ufo:3413 ../base/ufos/research.ufo:3421
-#: ../base/ufos/research.ufo:3457 ../base/ufos/research.ufo:3465
-#: ../base/ufos/research.ufo:3499 ../base/ufos/research.ufo:3507
-#: ../base/ufos/research.ufo:3734 ../base/ufos/research.ufo:3741
-#: ../base/ufos/research.ufo:3771 ../base/ufos/research.ufo:3778
-#: ../base/ufos/research.ufo:3807 ../base/ufos/research.ufo:3814
-#: ../base/ufos/research.ufo:3985 ../base/ufos/research.ufo:3993
-#: ../base/ufos/research.ufo:4069 ../base/ufos/research.ufo:4077
-#: ../base/ufos/research.ufo:4163 ../base/ufos/research.ufo:4193
-#: ../base/ufos/research.ufo:4200
+#: ../base/ufos/research.ufo:2958 ../base/ufos/research.ufo:3084
+#: ../base/ufos/research.ufo:3092 ../base/ufos/research.ufo:3125
+#: ../base/ufos/research.ufo:3133 ../base/ufos/research.ufo:3167
+#: ../base/ufos/research.ufo:3175 ../base/ufos/research.ufo:3209
+#: ../base/ufos/research.ufo:3217 ../base/ufos/research.ufo:3251
+#: ../base/ufos/research.ufo:3259 ../base/ufos/research.ufo:3293
+#: ../base/ufos/research.ufo:3301 ../base/ufos/research.ufo:3363
+#: ../base/ufos/research.ufo:3371 ../base/ufos/research.ufo:3421
+#: ../base/ufos/research.ufo:3429 ../base/ufos/research.ufo:3465
+#: ../base/ufos/research.ufo:3473 ../base/ufos/research.ufo:3507
+#: ../base/ufos/research.ufo:3515 ../base/ufos/research.ufo:3742
+#: ../base/ufos/research.ufo:3749 ../base/ufos/research.ufo:3779
+#: ../base/ufos/research.ufo:3786 ../base/ufos/research.ufo:3815
+#: ../base/ufos/research.ufo:3822 ../base/ufos/research.ufo:3993
+#: ../base/ufos/research.ufo:4001 ../base/ufos/research.ufo:4077
+#: ../base/ufos/research.ufo:4085 ../base/ufos/research.ufo:4171
+#: ../base/ufos/research.ufo:4201 ../base/ufos/research.ufo:4208
 msgid "mail_to_base_commander"
 msgstr "ผู้บัญชาการฐาน, PHALANX, หน่วยปฏิบัิตการแอตแลนติค"
 
@@ -4290,12 +4289,12 @@ msgstr ""
 #: ../base/ufos/research.ufo:350 ../base/ufos/research.ufo:358
 #: ../base/ufos/research.ufo:386 ../base/ufos/research.ufo:394
 #: ../base/ufos/research.ufo:421 ../base/ufos/research.ufo:429
-#: ../base/ufos/research.ufo:3354 ../base/ufos/research.ufo:3362
-#: ../base/ufos/research.ufo:3412 ../base/ufos/research.ufo:3420
-#: ../base/ufos/research.ufo:3456 ../base/ufos/research.ufo:3464
-#: ../base/ufos/research.ufo:3498 ../base/ufos/research.ufo:3506
-#: ../base/ufos/research.ufo:4162 ../base/ufos/research.ufo:4192
-#: ../base/ufos/research.ufo:4199
+#: ../base/ufos/research.ufo:3362 ../base/ufos/research.ufo:3370
+#: ../base/ufos/research.ufo:3420 ../base/ufos/research.ufo:3428
+#: ../base/ufos/research.ufo:3464 ../base/ufos/research.ufo:3472
+#: ../base/ufos/research.ufo:3506 ../base/ufos/research.ufo:3514
+#: ../base/ufos/research.ufo:4170 ../base/ufos/research.ufo:4200
+#: ../base/ufos/research.ufo:4207
 msgid "mail_from_dr_connor"
 msgstr ""
 "ดร. คอนเนอร์, แผนกวิจัยและพัฒนา: ฝ่ายชีววิทยาและการกักกัน, PHALANX, "
@@ -8672,7 +8671,8 @@ msgstr ""
 "\n"
 "ไม่มี"
 
-#: ../base/ufos/research.ufo:2712
+#: ../base/ufos/research.ufo:2712 ../base/ufos/research.ufo:3636
+#: ../base/ufos/research.ufo:3655
 msgid "b_missile_txt"
 msgstr ""
 "พิมพ์เขียว -- ฐานมิซไซล์\n"
@@ -9602,7 +9602,12 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2966
+#: ../base/ufos/research.ufo:2959
+#, fuzzy
+msgid "Blueprints - Antimatter Storage"
+msgstr "Antimatter"
+
+#: ../base/ufos/research.ufo:2974
 msgid "drop_firebird_txt"
 msgstr ""
 "การประเมินยานบิน -- ยานบรรทุกชั้นไฟร์เบิร์ด\n"
@@ -9688,7 +9693,7 @@ msgstr ""
 "\n"
 "อุปกรณ์: ที่ติดอาวุธขนาดกลาง 1 จุด (ส่วนหัว), ช่องติดอุปกรณ์ 2 ช่อง,ช่องใส่เกราะ 1 แห่ง"
 
-#: ../base/ufos/research.ufo:2983
+#: ../base/ufos/research.ufo:2991
 msgid "inter_stiletto_txt"
 msgstr ""
 "การประเมินยานบิน -- ยานขับไล่ขั้นสติลเลตโต\n"
@@ -9789,7 +9794,7 @@ msgstr ""
 "อุปกรณ์: ที่ติดอาวุธขนาดเล็ก 1 จุด (ส่วนหัว), ที่ติดอาวุธขนาดกลาง 2 ช่อง (ปีก), ช่องติดอุปกรณ์ 2 "
 "ช่อง,ช่องใส่เกราะ 1 แห่ง"
 
-#: ../base/ufos/research.ufo:3000
+#: ../base/ufos/research.ufo:3008
 msgid "inter_saracen_txt"
 msgstr ""
 "การประเมินยานบิน -- ยานขับไล่ชั้นซาราเซน\n"
@@ -9879,7 +9884,7 @@ msgstr ""
 "\n"
 "อุปกรณ์: ที่ติดอาวุธขนาดกลาง 2 จุด (ส่วนท้อง), ช่องติดอุปกรณ์ 2 ช่อง,ช่องใส่เกราะ 1 แห่ง"
 
-#: ../base/ufos/research.ufo:3017
+#: ../base/ufos/research.ufo:3025
 #, fuzzy
 msgid "inter_dragon_txt"
 msgstr ""
@@ -9921,11 +9926,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3020
+#: ../base/ufos/research.ufo:3028
 msgid "inter_dragon_pre_txt"
 msgstr "ไม่มี่ข้อมูลการวิจัยก่อนหน้า"
 
-#: ../base/ufos/research.ufo:3039
+#: ../base/ufos/research.ufo:3047
 #, fuzzy
 msgid "inter_stingray_txt"
 msgstr ""
@@ -10048,11 +10053,11 @@ msgstr ""
 "\n"
 "Weapon capacity: 1 Small hardpoint (nose), 2 Medium hardpoints (wings)"
 
-#: ../base/ufos/research.ufo:3042
+#: ../base/ufos/research.ufo:3050
 msgid "inter_stingray_pre_txt"
 msgstr "ไม่มี่ข้อมูลการวิจัยก่อนหน้า"
 
-#: ../base/ufos/research.ufo:3066
+#: ../base/ufos/research.ufo:3074
 msgid "ufo_scout_txt"
 msgstr ""
 "ท่านผู้บัญชาการ, ทีมของผมทำการวิเคราะห์จานบินเล็กที่เราจับได้เสร็จสิ้น "
@@ -10116,7 +10121,7 @@ msgstr ""
 "\n"
 "อาวุธ: ไม่มี"
 
-#: ../base/ufos/research.ufo:3069
+#: ../base/ufos/research.ufo:3077
 msgid "ufo_scout_pre_txt"
 msgstr ""
 "ท่านผู้บัญชาการ เราเก็บกู้จานบินแบบใหม่ ซึ่งตอนนี้จอดอยู่ในโรงเก็บ และรอการแยกส่วนตรวจสอบ "
@@ -10125,7 +10130,7 @@ msgstr ""
 "\n"
 "--ผบ. นาวาเร"
 
-#: ../base/ufos/research.ufo:3107
+#: ../base/ufos/research.ufo:3115
 msgid "ufo_fighter_txt"
 msgstr ""
 "Commander, my team and I have just finished another UFO report for you. Here "
@@ -10194,7 +10199,7 @@ msgstr ""
 "\n"
 "Weapon capacity: 1 Particle Beam hardpoint"
 
-#: ../base/ufos/research.ufo:3110
+#: ../base/ufos/research.ufo:3118
 msgid "ufo_fighter_pre_txt"
 msgstr ""
 "ท่านผู้บัญชาการ, ผมและทีมงานทำรายงานจานบินเสร็จสิ้น และขอสรุปดังนี้\n"
@@ -10246,7 +10251,7 @@ msgstr ""
 "\n"
 "อาวุธ: จุดต่อลำแสงอนุภาค 1 จุด"
 
-#: ../base/ufos/research.ufo:3149
+#: ../base/ufos/research.ufo:3157
 msgid "ufo_supply_txt"
 msgstr ""
 "ผู้บัญชาการ, ผมและทีมงานทำรายการจานบินเสร็จสิ้น และขอสรุปดังนี้\n"
@@ -10295,7 +10300,7 @@ msgstr ""
 "\n"
 "อาวุธ: ไม่มี"
 
-#: ../base/ufos/research.ufo:3152
+#: ../base/ufos/research.ufo:3160
 msgid "ufo_supply_pre_txt"
 msgstr ""
 "ท่านผู้บัญชาการ เราเก็บกู้จานบินแบบใหม่ ซึ่งตอนนี้จอดอยู่ในโรงเก็บ และรอการแยกส่วนตรวจสอบ "
@@ -10309,7 +10314,7 @@ msgstr ""
 "\n"
 "--ผบ. นาวาเร"
 
-#: ../base/ufos/research.ufo:3191
+#: ../base/ufos/research.ufo:3199
 #, fuzzy
 msgid "ufo_carrier_txt"
 msgstr ""
@@ -10386,11 +10391,11 @@ msgstr ""
 "\n"
 "Weapon capacity: 2 Particle Beam hardpoints, 1 Alien Launcher hardpoint"
 
-#: ../base/ufos/research.ufo:3194
+#: ../base/ufos/research.ufo:3202
 msgid "ufo_carrier_pre_txt"
 msgstr "ไม่มี่ข้อมูลการวิจัยก่อนหน้า"
 
-#: ../base/ufos/research.ufo:3233
+#: ../base/ufos/research.ufo:3241
 #, fuzzy
 msgid "ufo_condor_txt"
 msgstr ""
@@ -10474,11 +10479,11 @@ msgstr ""
 "\n"
 "Weapon capacity: None"
 
-#: ../base/ufos/research.ufo:3236
+#: ../base/ufos/research.ufo:3244
 msgid "ufo_condor_pre_txt"
 msgstr "ไม่มี่ข้อมูลการวิจัยก่อนหน้า"
 
-#: ../base/ufos/research.ufo:3275
+#: ../base/ufos/research.ufo:3283
 msgid "ufo_harvester_txt"
 msgstr ""
 "ท่านผู้บัญชาการ, ทีมของผมทำรายงานจานบินเสร็จสิ้น และขอสรุปดังนี้\n"
@@ -10534,7 +10539,7 @@ msgstr ""
 "\n"
 "อาวุธ: จุดต่อลำแสงอนุภาค 2 จุด, จุดต่อจรวดต่างดาว 1 จุด"
 
-#: ../base/ufos/research.ufo:3278
+#: ../base/ufos/research.ufo:3286
 msgid "ufo_harvester_pre_txt"
 msgstr ""
 "ท่านผู้บัญชาการ เราเก็บกู้จานบินแบบใหม่ ซึ่งตอนนี้จอดอยู่ในโรงเก็บ และรอการแยกส่วนตรวจสอบ "
@@ -10547,11 +10552,11 @@ msgstr ""
 "\n"
 "--ผบ. นาวาเร"
 
-#: ../base/ufos/research.ufo:3321
+#: ../base/ufos/research.ufo:3329
 msgid "Live Specimen - Bloodspider"
 msgstr "ตัวอย่างมีชีวิต - แมงมุมโลหิต"
 
-#: ../base/ufos/research.ufo:3323
+#: ../base/ufos/research.ufo:3331
 msgid "bloodspider_notes_txt"
 msgstr ""
 "ถึง: ผู้บัญชาการฐาน, PHALANX, หน่วยปฏิบัติการแอตแลนติค\n"
@@ -10572,16 +10577,16 @@ msgstr ""
 "\n"
 "ดร. คอนเนอร"
 
-#: ../base/ufos/research.ufo:3326
+#: ../base/ufos/research.ufo:3334
 msgid "bloodspider_notes_pre_txt"
 msgstr "ไม่มี่ข้อมูลการวิจัยก่อนหน้า"
 
-#: ../base/ufos/research.ufo:3343 ../base/ufos/research.ufo:3356
-#: ../base/ufos/research.ufo:3364
+#: ../base/ufos/research.ufo:3351 ../base/ufos/research.ufo:3364
+#: ../base/ufos/research.ufo:3372
 msgid "Alien Autopsy - Bloodspider"
 msgstr "การชันสูตรศพมุนษย์ต่างดาว -แมงมุมโลหิต"
 
-#: ../base/ufos/research.ufo:3345
+#: ../base/ufos/research.ufo:3353
 msgid "bloodspider_autopsy_txt"
 msgstr ""
 "เรียนท่านผู้บัญชาการ,\n"
@@ -10617,7 +10622,7 @@ msgstr ""
 "\n"
 "ดร. คอนเนอร์"
 
-#: ../base/ufos/research.ufo:3348
+#: ../base/ufos/research.ufo:3356
 msgid "bloodspider_autopsy_pre_txt"
 msgstr ""
 "เรียนท่านผู้บัญชการ,\n"
@@ -10628,12 +10633,12 @@ msgstr ""
 "\n"
 "ดร. คอนเนอร์"
 
-#: ../base/ufos/research.ufo:3399 ../base/ufos/research.ufo:3414
-#: ../base/ufos/research.ufo:3422
+#: ../base/ufos/research.ufo:3407 ../base/ufos/research.ufo:3422
+#: ../base/ufos/research.ufo:3430
 msgid "Alien Autopsy - Ortnok"
 msgstr "Alien Autopsy - Ortnok"
 
-#: ../base/ufos/research.ufo:3401
+#: ../base/ufos/research.ufo:3409
 msgid "ortnok_autopsy_txt"
 msgstr ""
 "เรียนท่านผู้บัญชาการ,\n"
@@ -10694,7 +10699,7 @@ msgstr ""
 "\n"
 "ดร. คอนเนอร์"
 
-#: ../base/ufos/research.ufo:3402
+#: ../base/ufos/research.ufo:3410
 msgid "ortnok_autopsy_extra_txt"
 msgstr ""
 "เรียนท่านผู้บัญชาการ,\n"
@@ -10752,7 +10757,7 @@ msgstr ""
 "\n"
 "ดร. คอนเนอร์"
 
-#: ../base/ufos/research.ufo:3405
+#: ../base/ufos/research.ufo:3413
 msgid "ortnok_autopsy_pre_txt"
 msgstr ""
 "เรียนท่านผู้บัญชการ,\n"
@@ -10763,7 +10768,7 @@ msgstr ""
 "\n"
 "ดร. คอนเนอร์"
 
-#: ../base/ufos/research.ufo:3406
+#: ../base/ufos/research.ufo:3414
 msgid "ortnok_autopsy_extra_pre_txt"
 msgstr ""
 "เรียนท่านผู้บัญชการ,\n"
@@ -10774,12 +10779,12 @@ msgstr ""
 "\n"
 "ดร. คอนเนอร์"
 
-#: ../base/ufos/research.ufo:3443 ../base/ufos/research.ufo:3458
-#: ../base/ufos/research.ufo:3466
+#: ../base/ufos/research.ufo:3451 ../base/ufos/research.ufo:3466
+#: ../base/ufos/research.ufo:3474
 msgid "Alien Autopsy - Taman"
 msgstr "Alien Autopsy - Taman"
 
-#: ../base/ufos/research.ufo:3445
+#: ../base/ufos/research.ufo:3453
 msgid "taman_autopsy_txt"
 msgstr ""
 "Commander,\n"
@@ -10874,7 +10879,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:3446
+#: ../base/ufos/research.ufo:3454
 msgid "taman_autopsy_extra_txt"
 msgstr ""
 "เรียนท่านผู้บัญชาการ,\n"
@@ -10944,7 +10949,7 @@ msgstr ""
 "\n"
 "ดร. คอนเนอร์"
 
-#: ../base/ufos/research.ufo:3449
+#: ../base/ufos/research.ufo:3457
 msgid "taman_autopsy_pre_txt"
 msgstr ""
 "เรียนท่านผู้บัญชาการ,\n"
@@ -11017,7 +11022,7 @@ msgstr ""
 "\n"
 "ดร. คอนเนอร์"
 
-#: ../base/ufos/research.ufo:3450
+#: ../base/ufos/research.ufo:3458
 msgid "taman_autopsy_extra_pre_txt"
 msgstr ""
 "เรียนท่านผู้บัญชาการ,\n"
@@ -11028,12 +11033,12 @@ msgstr ""
 "\n"
 "ดร. คอนเนอร์"
 
-#: ../base/ufos/research.ufo:3485 ../base/ufos/research.ufo:3500
-#: ../base/ufos/research.ufo:3508
+#: ../base/ufos/research.ufo:3493 ../base/ufos/research.ufo:3508
+#: ../base/ufos/research.ufo:3516
 msgid "Alien Autopsy - Shevaar"
 msgstr "Alien Autopsy - Shevaar"
 
-#: ../base/ufos/research.ufo:3487
+#: ../base/ufos/research.ufo:3495
 msgid "shevaar_autopsy_txt"
 msgstr ""
 "เรียนท่านผู้บัญชาการ,\n"
@@ -11099,7 +11104,7 @@ msgstr ""
 "\n"
 "ดร. คอนเนอร์"
 
-#: ../base/ufos/research.ufo:3488
+#: ../base/ufos/research.ufo:3496
 msgid "shevaar_autopsy_extra_txt"
 msgstr ""
 "เรียนท่านผู้บัญชาการ,\n"
@@ -11162,7 +11167,7 @@ msgstr ""
 "\n"
 "ดร. คอนเนอร์"
 
-#: ../base/ufos/research.ufo:3491
+#: ../base/ufos/research.ufo:3499
 msgid "shevaar_autopsy_pre_txt"
 msgstr ""
 "เรียนท่านผู้บัญชการ,\n"
@@ -11173,7 +11178,7 @@ msgstr ""
 "\n"
 "ดร. คอนเนอร์"
 
-#: ../base/ufos/research.ufo:3492
+#: ../base/ufos/research.ufo:3500
 msgid "shevaar_autopsy_extra_pre_txt"
 msgstr ""
 "เรียนท่านผู้บัญชการ,\n"
@@ -11184,195 +11189,36 @@ msgstr ""
 "\n"
 "ดร. คอนเนอร์"
 
-#: ../base/ufos/research.ufo:3583
+#: ../base/ufos/research.ufo:3591
 msgid "Phoenix UGV"
 msgstr "Phoenix UGV"
 
-#: ../base/ufos/research.ufo:3585
+#: ../base/ufos/research.ufo:3593
 msgid "ugv_phoenix_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3588
+#: ../base/ufos/research.ufo:3596
 msgid "ugv_phoenix_pre_txt"
 msgstr "ไม่มี่ข้อมูลการวิจัยก่อนหน้า"
 
-#: ../base/ufos/research.ufo:3603
+#: ../base/ufos/research.ufo:3611
 msgid "Ares W (UGV)"
 msgstr ""
 
-#: ../base/ufos/research.ufo:3605
+#: ../base/ufos/research.ufo:3613
 #, fuzzy
 msgid "ugv_ares_w_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:3608
+#: ../base/ufos/research.ufo:3616
 msgid "ugv_ares_w_pre_txt"
 msgstr "ไม่มี่ข้อมูลการวิจัยก่อนหน้า"
 
-#: ../base/ufos/research.ufo:3628
-#, fuzzy
-msgid "base_weapon_tr20_txt"
-msgstr ""
-"Technical Specifications: TR-20 Rocket Pod\n"
-"\n"
-"CLASSIFIED LEVEL BLACK\n"
-"\n"
-"PHALANX Extraterrestrial Response Unit\n"
-"\n"
-"Technical Document, Sigma Clearance -- Commander's Eyes Only\n"
-"\n"
-"Filed: 19 March 2084\n"
-"\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
-"Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"Now that we have aircraft capable of intercepting the attacking UFOs, we "
-"need to equip them with armaments that can actually shoot down these alien "
-"craft. We have evaluated every available weapon on Earth as part of the "
-"Excalibur Program, and we have selected the very best for the defence of our "
-"planet.\n"
-"\n"
-"The TR-20 rocket pod is an interesting departure from conventional air-to-"
-"air weapons, in that it was originally designed for air-to-ground "
-"operations. The pod contains a total of 128 very small, very fast rockets "
-"with depleted uranium tips and powerful pulse detonation engines. No one "
-"considered using the TR-20 for anything other than chewing up ground targets "
-"until an attack helicopter pilot in Africa discovered their potential.\n"
-"\n"
-"At the time, the pilot -- the last surviving member of his flight -- had "
-"been cornered against a mountain by three MiG jets which were closing in for "
-"the kill. With nearly all his weapons expended, the only thing the pilot had "
-"left to fight with was one pod of TR-20 rockets. He made a suicide run with "
-"full afterburners, and managed to swat all three MiGs out of the sky with "
-"rapid fire before he ran out of fuel and had to crash-land. He returned to "
-"his airbase two days later without a scratch on him.\n"
-"\n"
-"Though unguided, TR-20 pods contain such a large number of rockets that they "
-"can be used almost like a rocket machine gun. This is because the rockets "
-"are stacked nose to tail inside their launch tubes, eight to each tube, and "
-"fired electronically in a timed sequence. This system is so fast that all "
-"eight rockets in a tube can be ignited and underway before the first rocket "
-"actually leaves the tube. At its maximum possible rate of fire, the pod can "
-"fire all 128 rockets in 0.2 seconds. However, this is usually throttled back "
-"to approx. 300 rounds per minute due to the low accuracy of any single "
-"volley.\n"
-"\n"
-"The advantages of the TR-20 over the SHIVA cannon are increased range and "
-"greater hitting power. However, the pod's ammo capacity is limited compared "
-"to the SHIVA's large portable magazines, and a single TR-20 pod is unlikely "
-"to last through a full UFO engagement.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"We anticipate the TR-20 will perform nicely against slower or slow-moving "
-"UFOs, especially if their propulsion systems have been damaged somehow. In "
-"these situations, TR-20 rockets perform with flying colours, tearing "
-"mercilessly into a target. However, accuracy drops rapidly against faster "
-"opponents. Damage potential is irrelevant if we can't place a single round "
-"on the target.\n"
-"\n"
-"For this reason, it's recommended we use the TR-20 in moderation and mostly "
-"in situations that play to its strengths, such as when engaging a single UFO "
-"with multiple aircraft. The flight leader can drive the target into his "
-"wingman's killzone with cannons or guided weapons, at which point the "
-"wingman has a clear shot with his rockets. Even so, no more than a single TR-"
-"20 pod should be loaded on any one aircraft for maximum air-to-air "
-"efficiency.\n"
-"\n"
-"If the mission target is stationary or ground-based, these rockets will be "
-"ideal for softening up any defences and defenders before a tactical "
-"mission.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"None."
-
-#: ../base/ufos/research.ufo:3647
-#, fuzzy
-msgid "base_ammo_tr20_txt"
-msgstr ""
-"Technical Specifications: TR-20 Rocket\n"
-"\n"
-"CLASSIFIED LEVEL BLACK\n"
-"\n"
-"PHALANX Extraterrestrial Response Unit\n"
-"\n"
-"Technical Document, Sigma Clearance -- Commander's Eyes Only\n"
-"\n"
-"Filed: 19 March 2084\n"
-"\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
-"Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"This is a TR-20 unguided rocket. It is designed to be loaded into the TR-20 "
-"Rocket Pod.\n"
-"\n"
-"The TR-20 rocket is essentially a very small, very fast plastic dart moulded "
-"around a rod of depleted uranium. It is fin-stabilised and powered by a "
-"cheap solid-fuel rocket engine, a civilian model which is also popular in "
-"amateur rocketry. One of these engines is capable of propelling an amateur "
-"rocket eight kilometres into the sky. It's also capable of propelling a "
-"heavy DU penetrator into a fighter jet and out the other side.\n"
-"\n"
-"Though unguided, TR-20 pods contain such a large number of rockets that they "
-"can be used almost like a rocket machine gun. This is because the rockets "
-"are stacked nose to tail inside their launch tubes, eight to each tube, and "
-"fired electronically in a timed sequence. This system is so fast that all "
-"eight rockets in a tube can be ignited and underway before the first rocket "
-"actually leaves the tube. At its maximum possible rate of fire, the pod can "
-"fire all 128 rockets in 0.2 seconds. However, this is usually throttled back "
-"to approx. 300 rounds per minute due to the low accuracy of any single "
-"volley.\n"
-"\n"
-"Due to its weight, the TR-20 rocket has a maximum effective range of 4 "
-"kilometres, after which the fuel runs out and the rocket rapidly loses "
-"power.\n"
-"\n"
-"The individual rockets weigh approximately 4 kilos. A fully-loaded pod is "
-"approximately 540 kilos.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"We anticipate the TR-20 will perform nicely against slower or slow-moving "
-"UFOs, especially if their propulsion systems have been damaged somehow. In "
-"these situations, TR-20 rockets perform with flying colours, tearing "
-"mercilessly into a target. However, accuracy drops rapidly against faster "
-"opponents. Damage potential is irrelevant if we can't place a single round "
-"on the target.\n"
-"\n"
-"For this reason, it's recommended we use the TR-20 in moderation and mostly "
-"in situations that play to its strengths, such as when engaging a single UFO "
-"with multiple aircraft. The flight leader can drive the target into his "
-"wingman's killzone with cannons or guided weapons, at which point the "
-"wingman has a clear shot with his rockets. Even so, no more than a single TR-"
-"20 pod should be loaded on any one aircraft for maximum air-to-air "
-"efficiency.\n"
-"\n"
-"If the mission target is stationary or ground-based, these rockets will be "
-"ideal for softening up any defences and defenders before a tactical "
-"mission.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"None."
-
-#: ../base/ufos/research.ufo:3666
+#: ../base/ufos/research.ufo:3674
 msgid "'Raven' ECM Unit"
 msgstr "'Raven' ECM Unit"
 
-#: ../base/ufos/research.ufo:3669
+#: ../base/ufos/research.ufo:3677
 msgid "craft_electronics_raven_txt"
 msgstr ""
 "Technical Specifications: \"Raven\" ECM Unit\n"
@@ -11444,7 +11290,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3687
+#: ../base/ufos/research.ufo:3695
 msgid "craft_shield_light_txt"
 msgstr ""
 "Technical Specifications: Polymer Aircraft Armour\n"
@@ -11529,11 +11375,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3704
+#: ../base/ufos/research.ufo:3712
 msgid "craft_shield_plating_pre_txt"
 msgstr "ไม่มี่ข้อมูลการวิจัยก่อนหน้า"
 
-#: ../base/ufos/research.ufo:3707
+#: ../base/ufos/research.ufo:3715
 #, fuzzy
 msgid "craft_shield_plating_txt"
 msgstr ""
@@ -11619,11 +11465,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3726
+#: ../base/ufos/research.ufo:3734
 msgid "craft_alien_astrogation_pre_txt"
 msgstr "ไม่มี่ข้อมูลการวิจัยก่อนหน้า"
 
-#: ../base/ufos/research.ufo:3729
+#: ../base/ufos/research.ufo:3737
 #, fuzzy
 msgid "craft_alien_astrogation_txt"
 msgstr ""
@@ -11688,11 +11534,11 @@ msgstr ""
 "there is no golden rule that will help decide when to deploy the Targeting "
 "Computer. It is ready for use at the Commander's discretion."
 
-#: ../base/ufos/research.ufo:3763
+#: ../base/ufos/research.ufo:3771
 msgid "craft_alien_propulsion_pre_txt"
 msgstr "ไม่มี่ข้อมูลการวิจัยก่อนหน้า"
 
-#: ../base/ufos/research.ufo:3766
+#: ../base/ufos/research.ufo:3774
 #, fuzzy
 msgid "craft_alien_propulsion_txt"
 msgstr ""
@@ -11778,11 +11624,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3799
+#: ../base/ufos/research.ufo:3807
 msgid "craft_alien_detection_pre_txt"
 msgstr "ไม่มี่ข้อมูลการวิจัยก่อนหน้า"
 
-#: ../base/ufos/research.ufo:3802
+#: ../base/ufos/research.ufo:3810
 #, fuzzy
 msgid "craft_alien_detection_txt"
 msgstr ""
@@ -11847,11 +11693,11 @@ msgstr ""
 "there is no golden rule that will help decide when to deploy the Targeting "
 "Computer. It is ready for use at the Commander's discretion."
 
-#: ../base/ufos/research.ufo:3833
+#: ../base/ufos/research.ufo:3841
 msgid "SHIVA Rotary Cannon"
 msgstr "SHIVA Rotary Cannon"
 
-#: ../base/ufos/research.ufo:3836
+#: ../base/ufos/research.ufo:3844
 msgid "craft_weapon_shiva_txt"
 msgstr ""
 "Technical Specifications: SHIVA Rotary Cannon\n"
@@ -11934,7 +11780,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3854
+#: ../base/ufos/research.ufo:3862
 msgid "craft_ammo_shiva_1_txt"
 msgstr ""
 "Technical Specifications: SHIVA 20mm API Rounds\n"
@@ -11993,7 +11839,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3875
+#: ../base/ufos/research.ufo:3883
 msgid "craft_ammo_shiva_2_txt"
 msgstr ""
 "Technical Specifications: SHIVA 20mm HEI Rounds\n"
@@ -12054,11 +11900,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3893
+#: ../base/ufos/research.ufo:3901
 msgid "'Sparrowhawk' AA Missile Rack"
 msgstr "'Sparrowhawk' AA Missile Rack"
 
-#: ../base/ufos/research.ufo:3896
+#: ../base/ufos/research.ufo:3904
 msgid "craft_weapon_sparrowhawk_txt"
 msgstr ""
 "Technical Specifications: \"Sparrowhawk\" AA Missile Rack\n"
@@ -12152,11 +11998,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3911
+#: ../base/ufos/research.ufo:3919
 msgid "'Sparrowhawk' Missile"
 msgstr "'Sparrowhawk' Missile"
 
-#: ../base/ufos/research.ufo:3914
+#: ../base/ufos/research.ufo:3922
 msgid "craft_ammo_sparrowhawk_txt"
 msgstr ""
 "Technical Specifications: \"Sparrowhawk\" Missile\n"
@@ -12232,7 +12078,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3935
+#: ../base/ufos/research.ufo:3943
 msgid "craft_weapon_tr20_txt"
 msgstr ""
 "Technical Specifications: TR-20 Rocket Pod\n"
@@ -12315,7 +12161,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3954
+#: ../base/ufos/research.ufo:3962
 msgid "craft_ammo_tr20_txt"
 msgstr ""
 "Technical Specifications: TR-20 Rocket\n"
@@ -12389,11 +12235,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:3974
+#: ../base/ufos/research.ufo:3982
 msgid "craft_weapon_particle_beam_pre_txt"
 msgstr "ไม่มี่ข้อมูลการวิจัยก่อนหน้า"
 
-#: ../base/ufos/research.ufo:3977
+#: ../base/ufos/research.ufo:3985
 msgid "craft_weapon_particle_beam_txt"
 msgstr ""
 "Our report on the alien PBW (Particle Beam Weapon) is ready for your review, "
@@ -12445,7 +12291,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4020
+#: ../base/ufos/research.ufo:4028
 msgid "craft_electronics_targeting_txt"
 msgstr ""
 "Technical Specifications: Targeting Computer\n"
@@ -12509,7 +12355,7 @@ msgstr ""
 "there is no golden rule that will help decide when to deploy the Targeting "
 "Computer. It is ready for use at the Commander's discretion."
 
-#: ../base/ufos/research.ufo:4038
+#: ../base/ufos/research.ufo:4046
 msgid "craft_electronics_fuelpod_txt"
 msgstr ""
 "Technical Specifications: Fuel Pod\n"
@@ -12569,7 +12415,7 @@ msgstr ""
 "should keep some fuel pod-equipped planes on standby to deal with distant "
 "incidents."
 
-#: ../base/ufos/research.ufo:4060 ../base/ufos/research.ufo:4096
+#: ../base/ufos/research.ufo:4068 ../base/ufos/research.ufo:4104
 msgid "alien_materials_txt"
 msgstr ""
 "ท่านผู้บัญชาการ, ผมคิดว่าเราได้ค้นพบความลับของวัสดุของพวกมนุษย์ต่างดาวแล้ว "
@@ -12603,7 +12449,7 @@ msgstr ""
 "\n"
 "--ผบ. นาวาเร"
 
-#: ../base/ufos/research.ufo:4063
+#: ../base/ufos/research.ufo:4071
 msgid "alien_materials_pre_txt"
 msgstr ""
 "ผู้บัญชาการ, ผมได้เรียนไว้ในรายงานฉบับก่อนแล้วว่า "
@@ -12619,11 +12465,11 @@ msgstr ""
 "\n"
 "--ผบ. นาวาเร"
 
-#: ../base/ufos/research.ufo:4115
+#: ../base/ufos/research.ufo:4123
 msgid "Political Situation Before The Invasion"
 msgstr "Political Situation Before The Invasion"
 
-#: ../base/ufos/research.ufo:4117
+#: ../base/ufos/research.ufo:4125
 msgid "news_initial_political_situation_txt"
 msgstr ""
 "ในปี 2084 โลกนั้นมีสภาวะที่ดีที่สุดในรอบกว่าศตวรรษ "
@@ -12680,11 +12526,11 @@ msgstr ""
 "หลังจากที่ได้พยายามต่อสู้อย่างเต็มที่ และได้ใช้วิธีการจุดไฟเผาพื้นที่เป็นวงกว้าง "
 "ขณะที่กองกำลังต่อต้านได้ผลักดันไปทางด้านมหาสมุทรอินเดีย และนี่คือจุดจบของสงครามเย็นครั้งที่สอง"
 
-#: ../base/ufos/research.ufo:4128
+#: ../base/ufos/research.ufo:4136
 msgid "After The War"
 msgstr "After The War"
 
-#: ../base/ufos/research.ufo:4130
+#: ../base/ufos/research.ufo:4138
 msgid "news_after_the_war_txt"
 msgstr ""
 "สาธารณรัฐเอเชีย:\n"
@@ -12990,11 +12836,11 @@ msgstr ""
 "ยกเว้นสหภาพอเมริกา และทำหน้าที่ด้านการป้องกันตัวเท่านั้น โดยมีอาวุธและการฝึกแบบกลางๆ "
 "อย่างไรก็ตามก็สามารถรับมือเหตุการณ์ฉุกเฉินได้ค่อนข้างรวดเร็ว"
 
-#: ../base/ufos/research.ufo:4141
+#: ../base/ufos/research.ufo:4149
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr "PHALANX And The Mumbai Aftermath"
 
-#: ../base/ufos/research.ufo:4143
+#: ../base/ufos/research.ufo:4151
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr ""
 "\"โครงการ PHALANX\" เริ่มต้นด้วยกระทรวงกลาโหมของสหรัฐในปี 1955 "
@@ -13078,11 +12924,11 @@ msgstr ""
 "\n"
 "สิ่งสุดท้ายที่ยังขาดอยู่ก็คือผุ้นำ"
 
-#: ../base/ufos/research.ufo:4154 ../base/ufos/research.ufo:4164
+#: ../base/ufos/research.ufo:4162 ../base/ufos/research.ufo:4172
 msgid "A New Twist"
 msgstr "A New Twist"
 
-#: ../base/ufos/research.ufo:4156
+#: ../base/ufos/research.ufo:4164
 msgid "news_newtwist_txt"
 msgstr ""
 "Commander,\n"
@@ -13153,12 +12999,12 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4182 ../base/ufos/research.ufo:4194
-#: ../base/ufos/research.ufo:4201
+#: ../base/ufos/research.ufo:4190 ../base/ufos/research.ufo:4202
+#: ../base/ufos/research.ufo:4209
 msgid "The Enemy On Earth"
 msgstr ""
 
-#: ../base/ufos/research.ufo:4184
+#: ../base/ufos/research.ufo:4192
 msgid "enemy_on_earth_txt"
 msgstr ""
 "Commander,\n"
@@ -13216,7 +13062,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4187
+#: ../base/ufos/research.ufo:4195
 msgid "enemy_on_earth_pre_txt"
 msgstr ""
 "Commander,\n"
@@ -14648,11 +14494,11 @@ msgstr ""
 #: client/cl_campaign.c:1398 client/cl_campaign.c:1405
 #: client/cl_campaign.c:1413 client/cl_campaign.c:2778
 #: client/cl_campaign.c:2889 client/cl_campaign.c:2937
-#: client/cl_campaign.c:2939 client/cl_campaign.c:3247
+#: client/cl_campaign.c:2939 client/cl_campaign.c:3271
 #: client/cl_inventory.c:293 client/cl_inventory.c:298
 #: client/cl_inventory.c:544 client/cl_main.c:1027 client/cl_main.c:1273
-#: client/cl_map.c:295 client/cl_mapfightequip.c:650
-#: client/cl_mapfightequip.c:652 client/cl_market.c:655 client/cl_market.c:659
+#: client/cl_map.c:295 client/cl_mapfightequip.c:753
+#: client/cl_mapfightequip.c:755 client/cl_market.c:676 client/cl_market.c:680
 #: client/cl_parse.c:1591 client/cl_popup.c:352 client/cl_produce.c:444
 #: client/cl_produce.c:453 client/cl_produce.c:463 client/cl_produce.c:472
 #: client/cl_produce.c:483 client/cl_research.c:1076 client/cl_research.c:1094
@@ -14900,8 +14746,8 @@ msgid ""
 msgstr "ไม่มียานบินในฐาน - คุณต้องซื้อหรือโยกย้ายยานบินก่อน\n"
 
 #: client/cl_basemanagement.c:2478 client/cl_basemanagement.c:2480
-#: client/cl_campaign.c:2690 client/cl_market.c:637 client/cl_market.c:642
-#: client/cl_market.c:669 client/cl_market.c:744 client/cl_save.c:349
+#: client/cl_campaign.c:2690 client/cl_market.c:658 client/cl_market.c:663
+#: client/cl_market.c:690 client/cl_market.c:765 client/cl_save.c:349
 #: client/cl_team.c:1586
 msgid "Note"
 msgstr "ข้อสังเกต"
@@ -14941,33 +14787,33 @@ msgstr "ค่าเวลา: %i"
 msgid "%s (%i): %i/%i"
 msgstr "%s\t%i / %i\n"
 
-#: client/cl_basesummary.c:146
+#: client/cl_basesummary.c:149
 #, c-format
 msgid "%s:  Qty: %d, Time Left: %d hours"
 msgstr ""
 
-#: client/cl_basesummary.c:173
+#: client/cl_basesummary.c:176
 #, c-format
 msgid "%s - %1.2f%% (%d %s)\n"
 msgstr ""
 
-#: client/cl_basesummary.c:175 client/cl_campaign.c:1318
-#: client/cl_campaign.c:4485
+#: client/cl_basesummary.c:178 client/cl_campaign.c:1318
+#: client/cl_campaign.c:4511
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "นักวิทยาศาสตร์"
 msgstr[1] "นักวิทยาศาสตร์"
 
-#: client/cl_basesummary.c:351 client/cl_basesummary.c:369
+#: client/cl_basesummary.c:354 client/cl_basesummary.c:372
 #, fuzzy
 msgid "Alien Containment"
 msgstr "เขตกักกันถัดไป"
 
-#: client/cl_basesummary.c:362
+#: client/cl_basesummary.c:365
 msgid "Miscellaneous"
 msgstr ""
 
-#: client/cl_basesummary.c:374
+#: client/cl_basesummary.c:377
 #, fuzzy
 msgid "Command Center"
 msgstr "ศูนย์บัญชาการ"
@@ -15151,19 +14997,19 @@ msgid_plural "credits"
 msgstr[0] "เครดิต"
 msgstr[1] "เครดิต"
 
-#: client/cl_campaign.c:1319 client/cl_campaign.c:4487
+#: client/cl_campaign.c:1319 client/cl_campaign.c:4513
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "เสนารักษ์"
 msgstr[1] "เสนารักษ์"
 
-#: client/cl_campaign.c:1320 client/cl_campaign.c:4484
+#: client/cl_campaign.c:1320 client/cl_campaign.c:4510
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "ทหาร"
 msgstr[1] "ทหาร"
 
-#: client/cl_campaign.c:1321 client/cl_campaign.c:4486
+#: client/cl_campaign.c:1321 client/cl_campaign.c:4512
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "คนงาน"
@@ -15214,8 +15060,8 @@ msgstr "จ่าย %i เครดิต เป็นค่าจัดกา�
 msgid "Paid %i credits in interest on your debt."
 msgstr "จ่าย %i เครดิต เป็นค่าดอกเบี้ยเงินกู้"
 
-#: client/cl_campaign.c:1571 client/cl_save.c:273 client/cl_ufopedia.c:687
-#: client/cl_ufopedia.c:693
+#: client/cl_campaign.c:1571 client/cl_save.c:273 client/cl_ufopedia.c:689
+#: client/cl_ufopedia.c:695
 #, c-format
 msgid "%i %s %02i"
 msgstr "%i %s %02i"
@@ -15340,16 +15186,16 @@ msgstr ""
 msgid "Soldier promoted"
 msgstr "ทหารเลื่อนยศ"
 
-#: client/cl_campaign.c:3246
+#: client/cl_campaign.c:3270
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "ป้องกันฐาน: %s สำเร็จ!"
 
-#: client/cl_campaign.c:4474
+#: client/cl_campaign.c:4500
 msgid "Human"
 msgstr "มนุษย์"
 
-#: client/cl_campaign.c:4478
+#: client/cl_campaign.c:4504
 #, fuzzy, c-format
 msgid ""
 "Race: %s\n"
@@ -15366,17 +15212,17 @@ msgstr ""
 "ความลำบาก: %s\n"
 "%s\n"
 
-#: client/cl_campaign.c:4724
+#: client/cl_campaign.c:4750
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to base %s."
 msgstr ""
 
-#: client/cl_campaign.c:4726 client/cl_campaign.c:4859
-#: client/cl_campaign.c:4937
+#: client/cl_campaign.c:4752 client/cl_campaign.c:4885
+#: client/cl_campaign.c:4963
 msgid "UFO Recovery"
 msgstr ""
 
-#: client/cl_campaign.c:4783
+#: client/cl_campaign.c:4809
 #, fuzzy
 msgid ""
 "\n"
@@ -15384,20 +15230,20 @@ msgid ""
 "Selected base:\t\t\t"
 msgstr "ฐานที่เลือก"
 
-#: client/cl_campaign.c:4857
+#: client/cl_campaign.c:4883
 #, c-format
 msgid ""
 "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr ""
 
-#: client/cl_campaign.c:4907
+#: client/cl_campaign.c:4933
 msgid ""
 "\n"
 "\n"
 "Selected nation:\t\t\t"
 msgstr ""
 
-#: client/cl_campaign.c:4935
+#: client/cl_campaign.c:4961
 #, c-format
 msgid "Secured %s was destroyed."
 msgstr ""
@@ -15465,120 +15311,120 @@ msgstr ""
 msgid "Not enough hospital space"
 msgstr "Not enough workshops"
 
-#: client/cl_input.c:1629
+#: client/cl_input.c:1630
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr "เปลี่ยนมุมกล้องในสนามรบแบบทวนเข็มนาฬิกา"
 
-#: client/cl_input.c:1631
+#: client/cl_input.c:1632
 msgid "Rotate battlescape camera clockwise"
 msgstr "เปลี่ยนมุมกล้องในสนามรบตามเข็มนาฬิกา"
 
-#: client/cl_input.c:1633
+#: client/cl_input.c:1634
 msgid "Tilt battlescape camera up"
 msgstr "เอียงมุมกล้องในสนามรบขึ้น"
 
-#: client/cl_input.c:1635
+#: client/cl_input.c:1636
 msgid "Tilt battlescape camera down"
 msgstr "เอียงมุมกล้องในสนามรบลง"
 
-#: client/cl_input.c:1637
+#: client/cl_input.c:1638
 msgid "Move battlescape camera left"
 msgstr "เลื่อนกล้องสนามรบไปทางซ้าย"
 
-#: client/cl_input.c:1639
+#: client/cl_input.c:1640
 msgid "Move battlescape camera right"
 msgstr "เลื่อนกล้องสนามรบไปทางขวา"
 
-#: client/cl_input.c:1641
+#: client/cl_input.c:1642
 msgid "Move battlescape camera forward"
 msgstr "เลื่อนกล้องสนามรบไปข้างหน้า"
 
-#: client/cl_input.c:1643
+#: client/cl_input.c:1644
 msgid "Move battlescape camera backward"
 msgstr "เลื่อนกล้องสนามรบไปข้างหลัง"
 
-#: client/cl_input.c:1645 client/cl_input.c:1679
+#: client/cl_input.c:1646 client/cl_input.c:1680
 msgid "Zoom in"
 msgstr "ซูมเข้า"
 
-#: client/cl_input.c:1647 client/cl_input.c:1680
+#: client/cl_input.c:1648 client/cl_input.c:1681
 msgid "Zoom out"
 msgstr "ซูมออก"
 
-#: client/cl_input.c:1650
+#: client/cl_input.c:1651
 msgid "Left mouse button click (menu)"
 msgstr ""
 
-#: client/cl_input.c:1652
+#: client/cl_input.c:1653
 msgid "Middle mouse button click (menu)"
 msgstr ""
 
-#: client/cl_input.c:1654
+#: client/cl_input.c:1655
 msgid "Right mouse button click (menu)"
 msgstr ""
 
-#: client/cl_input.c:1656
+#: client/cl_input.c:1657
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr "เลือก / เดินไปที่จุด / ในโหมดยิงให้ยิง ฯลฯ"
 
-#: client/cl_input.c:1658
+#: client/cl_input.c:1659
 msgid "Walk to a square/In fire mode, cancel action"
 msgstr "เดินไปที่จุด/ในโหมดยิง ให้ยกเลิกการกระทำ"
 
-#: client/cl_input.c:1660
+#: client/cl_input.c:1661
 msgid "Turn soldier toward mouse pointer"
 msgstr "หันทหารไปยังลูกศร"
 
-#: client/cl_input.c:1662
+#: client/cl_input.c:1663
 msgid "Toggle stand/crounch"
 msgstr "สลับ ยืน/ย่อตัว"
 
-#: client/cl_input.c:1663
+#: client/cl_input.c:1664
 msgid "Toggle reaction fire"
 msgstr "สลับการยิงตอบโต้"
 
-#: client/cl_input.c:1664
+#: client/cl_input.c:1665
 #, fuzzy
 msgid "Toggle the headgear"
 msgstr "เลื่อนไปทหารคนต่อไป"
 
-#: client/cl_input.c:1665
+#: client/cl_input.c:1666
 msgid "Toogle to next alien"
 msgstr "สลับไปมนุษย์ต่างดาวตัวต่อไป"
 
-#: client/cl_input.c:1666
+#: client/cl_input.c:1667
 msgid "Draw a line to each alien visible to the current actor."
 msgstr ""
 
-#: client/cl_input.c:1667
+#: client/cl_input.c:1668
 msgid "Toogle to next alien visible from selected actor."
 msgstr ""
 
-#: client/cl_input.c:1674
+#: client/cl_input.c:1675
 msgid "Reload the weapon in the soldiers left hand"
 msgstr "บรรจุกระสุนอาวุธมือซ้าย"
 
-#: client/cl_input.c:1675
+#: client/cl_input.c:1676
 msgid "Reload the weapon in the soldiers right hand"
 msgstr "บรรจุกระสุนอาวุธมือขวา"
 
-#: client/cl_input.c:1676
+#: client/cl_input.c:1677
 msgid "Ends current round"
 msgstr "จบตา"
 
-#: client/cl_input.c:1677
+#: client/cl_input.c:1678
 msgid "Slice through terrain at a higher level"
 msgstr "มองผ่านพื้นไปขั้นสูงกว่า"
 
-#: client/cl_input.c:1678
+#: client/cl_input.c:1679
 msgid "Slice through terrain at a lower level"
 msgstr "มองผ่านพื้นไปขั้นต่ำกว่า"
 
-#: client/cl_input.c:1681
+#: client/cl_input.c:1682
 msgid "Confirm the current action"
 msgstr "ยืนยันการกระทำ"
 
-#: client/cl_input.c:1690
+#: client/cl_input.c:1691
 msgid "Toggle first-person/third-person camera mode"
 msgstr "เปลี่ยนมุมมอง บุคคลที่หนึ่ง/บุคคลที่สาม"
 
@@ -15876,126 +15722,126 @@ msgstr "ความเร็ว:\t%.0f\n"
 msgid "Fuel:\t\t%i/%i\n"
 msgstr "เชื้อเพลิง:\t%i/%i\n"
 
-#: client/cl_mapfightequip.c:541
+#: client/cl_mapfightequip.c:626 client/cl_mapfightequip.c:640
 #, fuzzy
 msgid "No defense of this type in this base\n"
 msgstr "ฐานนี้ไม่มีเขตกักกัน\n"
 
-#: client/cl_mapfightequip.c:545
+#: client/cl_mapfightequip.c:630 client/cl_mapfightequip.c:644
 #, fuzzy, c-format
 msgid "Slot %i:\tempty\n"
 msgstr "ห้องเก็บของว่างเปล่า\n"
 
-#: client/cl_mapfightequip.c:548
+#: client/cl_mapfightequip.c:633 client/cl_mapfightequip.c:647
 #, fuzzy, c-format
 msgid "Slot %i:\t%s\n"
 msgstr "ทักษะ:\t%s\n"
 
-#: client/cl_mapfightequip.c:557
+#: client/cl_mapfightequip.c:660
 #, fuzzy
 msgid "No defense system assigned.\n"
 msgstr "ไม่ได้จัดอาวุธ"
 
-#: client/cl_mapfightequip.c:564
+#: client/cl_mapfightequip.c:667
 msgid "This defense system is functional.\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:566
+#: client/cl_mapfightequip.c:669
 #, c-format
 msgid "This defense system will be installed in %i hours.\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:568
+#: client/cl_mapfightequip.c:671
 #, c-format
 msgid "This defense system will be removed in %i hours.\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:575
+#: client/cl_mapfightequip.c:678
 #, fuzzy
 msgid "No defense system assigned."
 msgstr "ไม่ได้จัดอาวุธ"
 
-#: client/cl_mapfightequip.c:579
+#: client/cl_mapfightequip.c:682
 #, c-format
 msgid "This defense system will be operational in %i hours.\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:588
+#: client/cl_mapfightequip.c:691
 msgid "No ammo assigned to this defense system."
 msgstr ""
 
-#: client/cl_mapfightequip.c:650
+#: client/cl_mapfightequip.c:753
 msgid "Aircraft item was successfully installed."
 msgstr ""
 
-#: client/cl_mapfightequip.c:652
+#: client/cl_mapfightequip.c:755
 msgid "Base defense item was successfully installed."
 msgstr ""
 
-#: client/cl_mapfightequip.c:874
+#: client/cl_mapfightequip.c:978
 #, fuzzy
 msgid "No item assigned.\n"
 msgstr "ไม่ได้ติดตั้งโล่"
 
-#: client/cl_mapfightequip.c:875
+#: client/cl_mapfightequip.c:979
 #, c-format
 msgid "This slot is for %s or smaller items."
 msgstr ""
 
-#: client/cl_mapfightequip.c:880
+#: client/cl_mapfightequip.c:984
 msgid "This item is functional.\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:882
+#: client/cl_mapfightequip.c:986
 #, c-format
 msgid "This item will be installed in %i hours.\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:884
+#: client/cl_mapfightequip.c:988
 #, c-format
 msgid "This item will be removed in %i hours.\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:891
+#: client/cl_mapfightequip.c:995
 #, fuzzy
 msgid "No item assigned."
 msgstr "ไม่ได้ติดตั้งโล่"
 
-#: client/cl_mapfightequip.c:895
+#: client/cl_mapfightequip.c:999
 #, c-format
 msgid "This item will be operational in %i hours.\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:904
+#: client/cl_mapfightequip.c:1008
 #, fuzzy
 msgid "No ammo assigned to this weapon."
 msgstr "กระสุนถัดไปที่ใช้กับอาวุธนี้"
 
-#: client/cl_mapfightequip.c:1538
+#: client/cl_mapfightequip.c:1707
 #, fuzzy
 msgid "Light"
 msgstr "กลางคืน"
 
-#: client/cl_mapfightequip.c:1544 client/cl_ufopedia.c:159
+#: client/cl_mapfightequip.c:1713 client/cl_ufopedia.c:159
 msgid "Heavy"
 msgstr "หนัก"
 
-#: client/cl_mapfightequip.c:1547
+#: client/cl_mapfightequip.c:1716
 #, fuzzy
 msgid "Unknown weight"
 msgstr "ไม่ทราบทักษะอาวุธ"
 
-#: client/cl_market.c:223
+#: client/cl_market.c:224
 #, fuzzy, c-format
 msgid "%i c\n"
 msgstr "%i c"
 
-#: client/cl_market.c:435 client/cl_market.c:682
+#: client/cl_market.c:456 client/cl_market.c:703
 #, fuzzy
 msgid "Not enough storage space"
 msgstr "Not enough workshops"
 
-#: client/cl_market.c:435 client/cl_market.c:682
+#: client/cl_market.c:456 client/cl_market.c:703
 #, fuzzy
 msgid ""
 "You cannot buy this item.\n"
@@ -16005,18 +15851,18 @@ msgstr ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
 
-#: client/cl_market.c:637
+#: client/cl_market.c:658
 msgid ""
 "No power supplies in this base.\n"
 "Hangars are not functional."
 msgstr ""
 
-#: client/cl_market.c:642
+#: client/cl_market.c:663
 #, fuzzy
 msgid "Build a hangar first."
 msgstr "สร้างโรงเก็บเครื่องบินก่อน"
 
-#: client/cl_market.c:655
+#: client/cl_market.c:676
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
@@ -16024,7 +15870,7 @@ msgstr ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
 
-#: client/cl_market.c:659
+#: client/cl_market.c:680
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough credits.\n"
@@ -16032,7 +15878,7 @@ msgstr ""
 "You cannot buy this aircraft.\n"
 "Not enough credits.\n"
 
-#: client/cl_market.c:744
+#: client/cl_market.c:765
 msgid "You can't sell an aircraft if it still has a team assigned"
 msgstr "ขายเครื่องบินไม่ได้ หากมีทีมประจำบนเครื่อง"
 
@@ -17215,7 +17061,7 @@ msgstr "ดูเนื้อหาจานบินอภิธาน"
 msgid "Skill:\t%s\n"
 msgstr "ทักษะ:\t%s\n"
 
-#: client/cl_ufopedia.c:418 client/cl_ufopedia.c:557
+#: client/cl_ufopedia.c:418 client/cl_ufopedia.c:559
 #, c-format
 msgid "Damage:\t%i\n"
 msgstr "ความเสียหาย:\t%i\n"
@@ -17225,7 +17071,7 @@ msgstr "ความเสียหาย:\t%i\n"
 msgid "Spreads:\t%g\n"
 msgstr "การกระจาย:\t%g\n"
 
-#: client/cl_ufopedia.c:429 client/cl_ufopedia.c:616 client/cl_ufopedia.c:618
+#: client/cl_ufopedia.c:429 client/cl_ufopedia.c:618 client/cl_ufopedia.c:620
 msgid "Unknown - need to research this"
 msgstr "ไม่รู้จัก - ต้องวิจัยก่อน"
 
@@ -17264,54 +17110,54 @@ msgstr "ค่าสร้าง:\t%i c\n"
 msgid "Running costs:\t%i c\n"
 msgstr "ค่าใช้จ่ายในการทำงาน:\t%i c\n"
 
-#: client/cl_ufopedia.c:552
+#: client/cl_ufopedia.c:554
 #, fuzzy, c-format
 msgid "Weight:\t%s\n"
 msgstr "อาวุธ:\t%s\n"
 
-#: client/cl_ufopedia.c:555
+#: client/cl_ufopedia.c:557
 #, fuzzy, c-format
 msgid "Ammo:\t%i\n"
 msgstr "กระสุนสูงสุด:\t%i\n"
 
-#: client/cl_ufopedia.c:558
+#: client/cl_ufopedia.c:560
 #, fuzzy, c-format
 msgid "Reloading time:\t%i\n"
 msgstr "เวลาในรอบ:\t%s\n"
 
-#: client/cl_ufopedia.c:572
+#: client/cl_ufopedia.c:574
 #, fuzzy, c-format
 msgid "%s:\t+%i %%\n"
 msgstr "%s\t%i / %i\n"
 
-#: client/cl_ufopedia.c:574
+#: client/cl_ufopedia.c:576
 #, fuzzy, c-format
 msgid "%s:\t%i %%\n"
 msgstr "%s\t%i / %i\n"
 
-#: client/cl_ufopedia.c:598
+#: client/cl_ufopedia.c:600
 msgid "Error - could not find aircraft"
 msgstr "ผิดพลาด - ไม่พบยานบิน"
 
-#: client/cl_ufopedia.c:605
+#: client/cl_ufopedia.c:607
 #, fuzzy, c-format
 msgid "%s:\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/cl_ufopedia.c:612
+#: client/cl_ufopedia.c:614
 #, fuzzy, c-format
 msgid "Max. soldiers:\t%i\n"
 msgstr "ทหารสูงสุดแต่ละทีม:\t%s\n"
 
-#: client/cl_ufopedia.c:712
+#: client/cl_ufopedia.c:714
 msgid "Proposal: "
 msgstr "นำเสนอโครงการ: "
 
-#: client/cl_ufopedia.c:715
+#: client/cl_ufopedia.c:717
 msgid "Re: "
 msgstr "Re: "
 
-#: client/cl_ufopedia.c:723
+#: client/cl_ufopedia.c:725
 #, c-format
 msgid ""
 "FROM: %s\n"
@@ -17324,46 +17170,46 @@ msgstr ""
 "วันที่: %s\n"
 "หัวข้อ: %s%s\n"
 
-#: client/cl_ufopedia.c:812
+#: client/cl_ufopedia.c:814
 msgid "No pre-research description available."
 msgstr "ไม่มีข้อมูลเกี่ยวกับงานวิจัยก่อนหน้า"
 
-#: client/cl_ufopedia.c:990
+#: client/cl_ufopedia.c:992
 #, fuzzy
 msgid "UFOpaedia Content"
 msgstr "เนื้อหา จานบินอภิธาน"
 
-#: client/cl_ufopedia.c:1022
+#: client/cl_ufopedia.c:1024
 #, fuzzy, c-format
 msgid "UFOpaedia Index: %s"
 msgstr "ดัชนี จานบินอภิธาน: %s"
 
-#: client/cl_ufopedia.c:1428
+#: client/cl_ufopedia.c:1437
 #, fuzzy, c-format
 msgid "^BProposal: %s\t%i %s %02i\n"
 msgstr "^Bเสนอโครงการ: %s (%s)\n"
 
-#: client/cl_ufopedia.c:1434
+#: client/cl_ufopedia.c:1443
 #, fuzzy, c-format
 msgid "Proposal: %s\t%i %s %02i\n"
 msgstr "เสนอโครงการ: %s (%s)\n"
 
-#: client/cl_ufopedia.c:1446
+#: client/cl_ufopedia.c:1455
 #, fuzzy, c-format
 msgid "^BRe: %s\t%i %s %02i\n"
 msgstr "^BRe: %s (%s)\n"
 
-#: client/cl_ufopedia.c:1452
+#: client/cl_ufopedia.c:1461
 #, fuzzy, c-format
 msgid "Re: %s\t%i %s %02i\n"
 msgstr "%i %s %02i"
 
-#: client/cl_ufopedia.c:1463 client/cl_ufopedia.c:1478
+#: client/cl_ufopedia.c:1472 client/cl_ufopedia.c:1487
 #, fuzzy, c-format
 msgid "^B%s\t%i %s %02i\n"
 msgstr "%i %s %02i"
 
-#: client/cl_ufopedia.c:1469 client/cl_ufopedia.c:1484
+#: client/cl_ufopedia.c:1478 client/cl_ufopedia.c:1493
 #, fuzzy, c-format
 msgid "%s\t%i %s %02i\n"
 msgstr "%i %s %02i"
@@ -17516,6 +17362,174 @@ msgstr "ฐานถูกโจมตี"
 #: po/OTHER_STRINGS:14
 msgid "Crashed Alien Ship. Secure the area."
 msgstr ""
+
+#, fuzzy
+#~ msgid "Base defence: TR-20 Rocket Pod"
+#~ msgstr "TR-20 Rocket Pod"
+
+#, fuzzy
+#~ msgid "Base defence: TR-20 Rocket"
+#~ msgstr "TR-20 Rocket"
+
+#, fuzzy
+#~ msgid "base_weapon_tr20_txt"
+#~ msgstr ""
+#~ "Technical Specifications: TR-20 Rocket Pod\n"
+#~ "\n"
+#~ "CLASSIFIED LEVEL BLACK\n"
+#~ "\n"
+#~ "PHALANX Extraterrestrial Response Unit\n"
+#~ "\n"
+#~ "Technical Document, Sigma Clearance -- Commander's Eyes Only\n"
+#~ "\n"
+#~ "Filed: 19 March 2084\n"
+#~ "\n"
+#~ "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
+#~ "Operations Command\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "Overview\n"
+#~ "\n"
+#~ "Now that we have aircraft capable of intercepting the attacking UFOs, we "
+#~ "need to equip them with armaments that can actually shoot down these "
+#~ "alien craft. We have evaluated every available weapon on Earth as part of "
+#~ "the Excalibur Program, and we have selected the very best for the defence "
+#~ "of our planet.\n"
+#~ "\n"
+#~ "The TR-20 rocket pod is an interesting departure from conventional air-to-"
+#~ "air weapons, in that it was originally designed for air-to-ground "
+#~ "operations. The pod contains a total of 128 very small, very fast rockets "
+#~ "with depleted uranium tips and powerful pulse detonation engines. No one "
+#~ "considered using the TR-20 for anything other than chewing up ground "
+#~ "targets until an attack helicopter pilot in Africa discovered their "
+#~ "potential.\n"
+#~ "\n"
+#~ "At the time, the pilot -- the last surviving member of his flight -- had "
+#~ "been cornered against a mountain by three MiG jets which were closing in "
+#~ "for the kill. With nearly all his weapons expended, the only thing the "
+#~ "pilot had left to fight with was one pod of TR-20 rockets. He made a "
+#~ "suicide run with full afterburners, and managed to swat all three MiGs "
+#~ "out of the sky with rapid fire before he ran out of fuel and had to crash-"
+#~ "land. He returned to his airbase two days later without a scratch on "
+#~ "him.\n"
+#~ "\n"
+#~ "Though unguided, TR-20 pods contain such a large number of rockets that "
+#~ "they can be used almost like a rocket machine gun. This is because the "
+#~ "rockets are stacked nose to tail inside their launch tubes, eight to each "
+#~ "tube, and fired electronically in a timed sequence. This system is so "
+#~ "fast that all eight rockets in a tube can be ignited and underway before "
+#~ "the first rocket actually leaves the tube. At its maximum possible rate "
+#~ "of fire, the pod can fire all 128 rockets in 0.2 seconds. However, this "
+#~ "is usually throttled back to approx. 300 rounds per minute due to the low "
+#~ "accuracy of any single volley.\n"
+#~ "\n"
+#~ "The advantages of the TR-20 over the SHIVA cannon are increased range and "
+#~ "greater hitting power. However, the pod's ammo capacity is limited "
+#~ "compared to the SHIVA's large portable magazines, and a single TR-20 pod "
+#~ "is unlikely to last through a full UFO engagement.\n"
+#~ "\n"
+#~ "\n"
+#~ "Recommended Doctrine\n"
+#~ "\n"
+#~ "We anticipate the TR-20 will perform nicely against slower or slow-moving "
+#~ "UFOs, especially if their propulsion systems have been damaged somehow. "
+#~ "In these situations, TR-20 rockets perform with flying colours, tearing "
+#~ "mercilessly into a target. However, accuracy drops rapidly against faster "
+#~ "opponents. Damage potential is irrelevant if we can't place a single "
+#~ "round on the target.\n"
+#~ "\n"
+#~ "For this reason, it's recommended we use the TR-20 in moderation and "
+#~ "mostly in situations that play to its strengths, such as when engaging a "
+#~ "single UFO with multiple aircraft. The flight leader can drive the target "
+#~ "into his wingman's killzone with cannons or guided weapons, at which "
+#~ "point the wingman has a clear shot with his rockets. Even so, no more "
+#~ "than a single TR-20 pod should be loaded on any one aircraft for maximum "
+#~ "air-to-air efficiency.\n"
+#~ "\n"
+#~ "If the mission target is stationary or ground-based, these rockets will "
+#~ "be ideal for softening up any defences and defenders before a tactical "
+#~ "mission.\n"
+#~ "\n"
+#~ "\n"
+#~ "Addenda\n"
+#~ "\n"
+#~ "None."
+
+#, fuzzy
+#~ msgid "base_ammo_tr20_txt"
+#~ msgstr ""
+#~ "Technical Specifications: TR-20 Rocket\n"
+#~ "\n"
+#~ "CLASSIFIED LEVEL BLACK\n"
+#~ "\n"
+#~ "PHALANX Extraterrestrial Response Unit\n"
+#~ "\n"
+#~ "Technical Document, Sigma Clearance -- Commander's Eyes Only\n"
+#~ "\n"
+#~ "Filed: 19 March 2084\n"
+#~ "\n"
+#~ "By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
+#~ "Operations Command\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "Overview\n"
+#~ "\n"
+#~ "This is a TR-20 unguided rocket. It is designed to be loaded into the TR-"
+#~ "20 Rocket Pod.\n"
+#~ "\n"
+#~ "The TR-20 rocket is essentially a very small, very fast plastic dart "
+#~ "moulded around a rod of depleted uranium. It is fin-stabilised and "
+#~ "powered by a cheap solid-fuel rocket engine, a civilian model which is "
+#~ "also popular in amateur rocketry. One of these engines is capable of "
+#~ "propelling an amateur rocket eight kilometres into the sky. It's also "
+#~ "capable of propelling a heavy DU penetrator into a fighter jet and out "
+#~ "the other side.\n"
+#~ "\n"
+#~ "Though unguided, TR-20 pods contain such a large number of rockets that "
+#~ "they can be used almost like a rocket machine gun. This is because the "
+#~ "rockets are stacked nose to tail inside their launch tubes, eight to each "
+#~ "tube, and fired electronically in a timed sequence. This system is so "
+#~ "fast that all eight rockets in a tube can be ignited and underway before "
+#~ "the first rocket actually leaves the tube. At its maximum possible rate "
+#~ "of fire, the pod can fire all 128 rockets in 0.2 seconds. However, this "
+#~ "is usually throttled back to approx. 300 rounds per minute due to the low "
+#~ "accuracy of any single volley.\n"
+#~ "\n"
+#~ "Due to its weight, the TR-20 rocket has a maximum effective range of 4 "
+#~ "kilometres, after which the fuel runs out and the rocket rapidly loses "
+#~ "power.\n"
+#~ "\n"
+#~ "The individual rockets weigh approximately 4 kilos. A fully-loaded pod is "
+#~ "approximately 540 kilos.\n"
+#~ "\n"
+#~ "\n"
+#~ "Recommended Doctrine\n"
+#~ "\n"
+#~ "We anticipate the TR-20 will perform nicely against slower or slow-moving "
+#~ "UFOs, especially if their propulsion systems have been damaged somehow. "
+#~ "In these situations, TR-20 rockets perform with flying colours, tearing "
+#~ "mercilessly into a target. However, accuracy drops rapidly against faster "
+#~ "opponents. Damage potential is irrelevant if we can't place a single "
+#~ "round on the target.\n"
+#~ "\n"
+#~ "For this reason, it's recommended we use the TR-20 in moderation and "
+#~ "mostly in situations that play to its strengths, such as when engaging a "
+#~ "single UFO with multiple aircraft. The flight leader can drive the target "
+#~ "into his wingman's killzone with cannons or guided weapons, at which "
+#~ "point the wingman has a clear shot with his rockets. Even so, no more "
+#~ "than a single TR-20 pod should be loaded on any one aircraft for maximum "
+#~ "air-to-air efficiency.\n"
+#~ "\n"
+#~ "If the mission target is stationary or ground-based, these rockets will "
+#~ "be ideal for softening up any defences and defenders before a tactical "
+#~ "mission.\n"
+#~ "\n"
+#~ "\n"
+#~ "Addenda\n"
+#~ "\n"
+#~ "None."
 
 #~ msgid "Spray"
 #~ msgstr "ยิงกระจาย"
