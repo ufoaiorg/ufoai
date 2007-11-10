@@ -111,17 +111,20 @@ static int BaseSummary_EmployeeCount (employeeType_t employeeType)
 
 /**
  * @brief Sum up all hired employees.
- * @return The number of employees.
+ * @return The number of employees in all bases.
  * @sa BaseSummary_EmployeeCount
  * @sa E_CountHired
  */
 static int BaseSummary_EmployeeTotal (void)
 {
 	int cnt = 0;
+	int baseIdx;
 	employeeType_t type;
 
-	for (type = EMPL_SOLDIER; type < MAX_EMPL; type++) {
-		cnt += E_CountHired(baseCurrent, type);
+	for (baseIdx = 0; baseIdx < gd.numBases; baseIdx++) {
+		for (type = EMPL_SOLDIER; type < MAX_EMPL; type++) {
+			cnt += E_CountHired(gd.bases + baseIdx, type);
+		}
 	}
 
 	return cnt;
