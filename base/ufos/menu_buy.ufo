@@ -2345,6 +2345,6 @@ menu buyaircraft
 	}
 	func close
 	{
-		cmd "mn_reset_air;mn_pop;"
+
 	}
 }
