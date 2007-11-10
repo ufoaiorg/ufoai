@@ -474,8 +474,8 @@ menu aircraft_equip
 		texh	"64 73"
 		mousefx true
 		click	{
-			airequip_zone1
 			cmd "mn_prev_aircraft;"
+			airequip_zone1
 		}
 	}
 
@@ -488,8 +488,8 @@ menu aircraft_equip
 		texh	"64 36"
 		mousefx true
 		click	{
-			airequip_zone1
 			cmd "mn_next_aircraft;"
+			airequip_zone1
 		}
 	}
 
