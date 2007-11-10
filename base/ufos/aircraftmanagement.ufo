@@ -652,9 +652,9 @@ craftitem craft_alien_detection
 // BASE WEAPONS
 // *********************************
 
-craftitem base_weapon_tr20
+craftitem base_AA51_launcher
 {
-	name		"_Base defence: TR-20 Rocket Pod"
+	name		"_AA51 missile launcher"
 	crafttype		base_missile
 	size	90	// medium
 	installationTime	48
@@ -664,11 +664,11 @@ craftitem base_weapon_tr20
 	speed		.9
 }
 
-craftitem base_ammo_tr20
+craftitem base_ammo_AA51
 {
-	name		"_Base defence: TR-20 Rocket"
+	name		"_AA51 Cicada SAM"
 	crafttype		base_ammo_missile
-	craftweapon		base_weapon_tr20
+	craftweapon		base_AA51_launcher
 	price		310
 	buytype		dummy
 
