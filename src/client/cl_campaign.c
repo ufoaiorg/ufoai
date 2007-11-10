@@ -3112,6 +3112,30 @@ static void CL_DebugFullCredits_f (void)
 }
 
 /**
+ * @brief Debug function to add 5 new unhired employees of each type
+ */
+static void CL_DebugNewEmployees_f (void)
+{
+int j;
+
+		for (j = 0; j < 5; j++)
+			/* Create a scientist */
+			E_CreateEmployee(EMPL_SCIENTIST);
+
+		for (j = 0; j < 5; j++)
+			/* Create a medic. */
+			E_CreateEmployee(EMPL_MEDIC);
+
+		for (j = 0; j < 5; j++)
+			/* Create a soldier. */
+			E_CreateEmployee(EMPL_SOLDIER);
+
+		for (j = 0; j < 5; j++)
+			/* Create a worker. */
+			E_CreateEmployee(EMPL_WORKER);
+}
+
+/**
  * @brief Debug function to increase the kills and test the ranks
  */
 static void CL_DebugChangeCharacterStats_f (void)
@@ -4236,6 +4260,7 @@ static const cmdList_t game_commands[] = {
 #ifdef DEBUG
 	{"debug_aircraftlist", AIR_ListAircraft_f, "Debug function to list all aircraft in all bases"},
 	{"debug_fullcredits", CL_DebugFullCredits_f, "Debug function to give the player full credits"},
+	{"debug_newemployees", CL_DebugNewEmployees_f, "Debug function to add 5 new unhired employees of each type"},
 	{"debug_additems", CL_DebugAllItems_f, "Debug function to add one item of every type to base storage and mark related tech collected"},
 	{"debug_showitems", CL_DebugShowItems_f, "Debug function to show all items in base storage"},
 #endif

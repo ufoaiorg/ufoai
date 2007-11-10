@@ -492,6 +492,8 @@ static void Com_DebugHelp_f (void)
 			" * debug_menuprint\n"
 			" * debug_menureload\n"
 			"   reload the menu if you changed it and don't want to restart\n"
+			" * debug_newemployees\n"
+			"   add 5 new unhired employees of each type\n"
 			" * debug_researchall\n"
 			"   mark all techs as researched\n"
 			" * debug_researchableall\n"

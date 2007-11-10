@@ -245,8 +245,8 @@ menu aircraft
 		tooltip	"_Build at least one workshop"
 		image	menu/button
 		pos	"45 450"
-		texl	"0 72"
-		texh	"230 120"
+		texl	"0 64"
+		texh	"230 128"
 		in
 	}
 	string txt_produce
@@ -474,8 +474,8 @@ menu aircraft_equip
 		texh	"64 73"
 		mousefx true
 		click	{
-			airequip_zone1
 			cmd "mn_prev_aircraft;"
+			airequip_zone1
 		}
 	}
 
@@ -488,8 +488,8 @@ menu aircraft_equip
 		texh	"64 36"
 		mousefx true
 		click	{
-			airequip_zone1
 			cmd "mn_next_aircraft;"
+			airequip_zone1
 		}
 	}
 
