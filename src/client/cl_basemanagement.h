@@ -278,6 +278,7 @@ void B_BaseAttack(base_t* const base);
 void B_BaseResetStatus(base_t* const base);
 building_t *B_GetBuildingByIdx(base_t* base, int idx);
 building_t *B_GetBuildingType(const char *buildingName);
+buildingType_t B_GetBuildingTypeByBuildingID(const char *buildingID);
 
 /** Coordinates to place the new base at (long, lat) */
 extern vec3_t newBasePos;
