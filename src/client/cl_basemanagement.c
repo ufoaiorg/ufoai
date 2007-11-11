@@ -2609,7 +2609,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 		}
 	} else {
 		Com_sprintf(popupBuildingText, sizeof(popupBuildingText), va(_("Build a %s first."), building->name));
-			MN_Popup(_("Notice"), popupBuildingText);
+		MN_Popup(_("Notice"), popupBuildingText);
 	}
 }
 
