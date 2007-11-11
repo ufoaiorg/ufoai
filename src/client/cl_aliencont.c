@@ -564,7 +564,7 @@ static void AC_SelectAlien_f (void)
 	Cvar_SetValue("mn_al_killed", AL_CountForMenu(aliencontCurrent->idx, qfalse));
 	Cvar_SetValue("mn_al_alive", AL_CountForMenu(aliencontCurrent->idx, qtrue));
 
-	UP_Article(tech);
+	UP_Article(tech, NULL);
 
 	/* Set state of Research and UFOpedia buttons. */
 	if (tech && RS_IsResearched_idx(tech->idx))

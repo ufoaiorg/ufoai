@@ -218,7 +218,7 @@ extern qboolean RS_ResearchAllowed(void);
 qboolean RS_ScriptSanityCheck(void);
 
 /* ufopedia function - but needs technology_t */
-void UP_Article(technology_t* tech);
+void UP_Article(technology_t* tech, eventMail_t *mail);
 void UP_AircraftDescription(technology_t* t);
 
 #endif /* CLIENT_CL_RESEARCH_H */

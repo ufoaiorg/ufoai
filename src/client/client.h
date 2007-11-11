@@ -817,6 +817,7 @@ typedef enum {
 	MSG_NEWS,
 	MSG_DEATH,
 	MSG_CRASHSITE,
+	MSG_EVENT,
 
 	MSG_MAX
 } messagetype_t;
@@ -829,6 +830,7 @@ typedef struct message_s {
 	char *text;
 	messagetype_t type;
 	technology_t *pedia;		/**< link to ufopedia if a research has finished. */
+	eventMail_t *eventMail;
 	struct message_s *next;
 	int d, m, y, h, min, s;
 } message_t;
@@ -837,7 +839,7 @@ extern char messageBuffer[MAX_MESSAGE_TEXT];
 
 extern message_t *messageStack;
 
-message_t *MN_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, technology_t * pedia);
+message_t *MN_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, technology_t *pedia);
 void MN_RemoveMessage(char *title);
 
 void MN_AddChatMessage(const char *text);

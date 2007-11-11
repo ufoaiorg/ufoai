@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Searches all event mails for a given id
  * @note Might also return NULL - always check the return value
  */
-static eventMail_t* CL_GetEventMail (const char *id)
+eventMail_t* CL_GetEventMail (const char *id)
 {
 	int i;
 
@@ -49,6 +49,8 @@ static const value_t eventMail_vals[] = {
 	{"to", V_TRANSLATION_MANUAL_STRING, offsetof(eventMail_t, to), 0},
 	{"cc", V_TRANSLATION_MANUAL_STRING, offsetof(eventMail_t, cc), 0},
 	{"date", V_TRANSLATION_MANUAL_STRING, offsetof(eventMail_t, date), 0},
+	{"body", V_TRANSLATION_MANUAL_STRING, offsetof(eventMail_t, body), 0},
+	{"icon", V_CLIENT_HUNK_STRING, offsetof(eventMail_t, icon), 0},
 
 	{NULL, 0, 0, 0}
 };
@@ -120,10 +122,17 @@ void CL_ParseEventMails (const char *name, const char **text)
 	} while (*text);
 }
 
+/**
+ * @sa UP_OpenMail_f
+ * @sa MN_AddNewMessage
+ * @sa UP_SetMailHeader
+ * @sa UP_OpenEventMail
+ */
 void CL_EventAddMail_f (void)
 {
 	const char *eventMailId;
 	eventMail_t* eventMail;
+	message_t *m;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <event_mail_id>\n", Cmd_Argv(0));
@@ -138,5 +147,12 @@ void CL_EventAddMail_f (void)
 		return;
 	}
 
-	/* @todo - add mail to message system */
+	/* the subject double %s: see UP_SetMailHeader */
+	m = MN_AddNewMessage(va(_("FROM: %s\nTO: %s\nDATE: %s\nSUBJECT: %s%s\n"),
+		_(eventMail->to), _(eventMail->from), _(eventMail->date), "", _(eventMail->subject)),
+		_(eventMail->body), qfalse, MSG_EVENT, NULL);
+	if (m)
+		m->eventMail = eventMail;
+	else
+		Com_Printf("Could not add message with id: %s\n", eventMailId);
 }

@@ -4924,14 +4924,16 @@ static void CL_ShowMessagesOnStack_f (void)
 /**
  * @brief Adds a new message to message stack
  * @note These are the messages that are displayed at geoscape
- * @param[in] title
- * @param[in] text
- * @param[in] popup
- * @param[in] type
- * @param[in] pedia
+ * @param[in] title Already translated message/mail title
+ * @param[in] text Already translated message/mail body
+ * @param[in] popup Show this as a popup, too?
+ * @param[in] type The message type
+ * @param[in] pedia Pointer to technology (only if needed)
  * @return message_t pointer
+ * @sa UP_OpenMail_f
+ * @sa CL_EventAddMail_f
  */
-message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup, messagetype_t type, technology_t * pedia)
+message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup, messagetype_t type, technology_t *pedia)
 {
 	message_t *mess;
 
@@ -4971,6 +4973,7 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 	case MSG_RESEARCH_PROPOSAL:
 	case MSG_RESEARCH_FINISHED:
 		assert(pedia);
+	case MSG_EVENT:
 	case MSG_NEWS:
 		/* reread the new mails in UP_GetUnreadMails */
 		gd.numUnreadMails = -1;
