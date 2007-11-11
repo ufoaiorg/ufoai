@@ -688,6 +688,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 		from = mail->from;
 		to = mail->to;
 		subject = mail->subject;
+		Q_strncpyz(dateBuf, mail->date, sizeof(dateBuf));
 		mail->read = qtrue;
 	} else {
 		assert(tech);
