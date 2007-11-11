@@ -775,8 +775,11 @@ static void B_UpdateBaseBuildingStatus (building_t* building, base_t* base, buil
 
 	building->buildingStatus = status;
 
+	/* we update the status of the building (we'll call this building building 1 */
 	test = B_CheckUpdateBuilding(building, base);
 
+	/* now, the status of this building may have changed the status of other building.
+	 * We check that, but only for buildings which needed building 1 */
 	if (test) {
 		test = qfalse;
 		for (i = 0; i < gd.numBuildings[base->idx]; i++) {
@@ -786,6 +789,8 @@ static void B_UpdateBaseBuildingStatus (building_t* building, base_t* base, buil
 		}
 	}
 
+	/* and maybe some updated status have changed status of other building.
+	 * So we check again, until nothing changes. (no condition here for check, it's too complex) */
 	while (test) {
 		test = qfalse;
 		for (i = 0; i < gd.numBuildings[base->idx]; i++) {
