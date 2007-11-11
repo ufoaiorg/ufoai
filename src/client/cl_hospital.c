@@ -497,6 +497,38 @@ static void HOS_ListClick_f (void)
 		MN_PushMenu("hospital_employee");
 }
 
+/**
+ * @brief Create a popup to inform player why he can't use hospital.
+ */
+static void HOS_Unavailable_Popup_f (void)
+{
+	int i;
+	int idx;
+
+	if (!baseCurrent) {
+		Com_Printf("HOS_Unavailable_Popup_f: baseCurrent pointer is NULL\n");
+		return;
+	}
+
+	idx = baseCurrent->idx;
+	if (idx < 0 || idx > gd.numBases) {
+		Com_Printf("HOS_Unavailable_Popup_f: unknown idx for baseCurrent\n");
+		return;
+	}
+
+	if (B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_HOSPITAL) > 0) {
+		/* there is an hospital in base, but not working */
+		for (i = 0; i < gd.numBuildings[idx]; i++) {
+			if (gd.buildings[idx][i].buildingType == B_HOSPITAL
+			 && gd.buildings[idx][i].buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
+				MN_Popup(_("Notice"), _("Construction of hospital will be over in a few days.\n Please wait to enter."));
+				return;
+			}
+		}
+	} else
+		MN_Popup(_("Notice"), ("Build an hospital first."));
+}
+
 static char employeeDesc[512];
 
 /**
@@ -696,6 +728,7 @@ void HOS_Reset (void)
 	Cmd_AddCommand("hosp_list_click", HOS_ListClick_f, "Click function for hospital employee list");
 	Cmd_AddCommand("hosp_list_up", HOS_ListUp_f, "Scroll up function for hospital employee list");
 	Cmd_AddCommand("hosp_list_down", HOS_ListDown_f, "Scroll down function for hospital employee list");
+	Cmd_AddCommand("hosp_unavailable_popup", HOS_Unavailable_Popup_f, "Create a popup to inform player why he can't use hospital");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_hosp_hurt_all", HOS_HurtAll_f, "Debug function to hurt all employees in the current base by one");
 	Cmd_AddCommand("debug_hosp_heal_all", HOS_HealAll_f, "Debug function to heal all employees in the current base completly");
@@ -730,7 +763,7 @@ qboolean HOS_Load (sizebuf_t *sb, void* data)
 qboolean HOS_HospitalAllowed (void)
 {
 	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK
-	 && B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_HOSPITAL) > 0) {
+	 && baseCurrent->hasHospital) {
 		return qtrue;
 	} else {
 		return qfalse;
