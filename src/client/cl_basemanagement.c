@@ -1229,34 +1229,6 @@ int B_GetNumberOfBuildingsInBaseByType (int base_idx, buildingType_t type)
 }
 
 /**
- * @brief Get the maximum status of a building.
- *
- * This function is mostly used to check if the construction of a building with a given type is finished.
- * e.g.: "if (B_GetMaximumBuildingStatus(base_idx, B_LAB) >= B_STATUS_CONSTRUCTION_FINISHED) { ... }"
- *
- * @param[in] base_idx Which base
- * @param[in] buildingType Which buildingtype
- * @return The max./highest building status found.
- */
-static buildingStatus_t B_GetMaximumBuildingStatus (int base_idx, buildingType_t buildingType)
-{
-	int i;
-	buildingStatus_t status = B_STATUS_NOT_SET;
-
-	if (base_idx < 0 || base_idx >= gd.numBases) {
-		Com_Printf("B_GetMaximumBuildingStatus: Bad base-index given: %i (numbases %i)\n", base_idx, gd.numBases);
-		return -1;
-	}
-
-	for (i = 0; i < gd.numBuildings[base_idx]; i++) {
-		if (gd.buildings[base_idx][i].buildingType == buildingType)
-			if (gd.buildings[base_idx][i].buildingStatus > status)
-				status = gd.buildings[base_idx][i].buildingStatus;
-	}
-	return status;
-}
-
-/**
  * @brief Update the building-list.
  */
 static void B_BuildingInit (void)
@@ -1294,15 +1266,7 @@ static void B_BuildingInit (void)
 
 			/* if the building is researched add it to the list */
 			if (RS_IsResearched_idx(buildingType->tech)) {
-#if 0
-Do we really want to remove all buildings whose dependance hasn't been built ? Or do we just want to disable their capacities ?
-				if (buildingType->dependsBuilding < 0
-					|| B_GetMaximumBuildingStatus(baseCurrent->idx, buildingType->buildingType) >= B_STATUS_CONSTRUCTION_FINISHED) {
-#endif
-					B_BuildingAddToList(buildingType);
-#if 0
-				}
-#endif
+				B_BuildingAddToList(buildingType);
 			} else {
 				Com_DPrintf(DEBUG_CLIENT, "Building not researched yet %s (tech idx: %i)\n", buildingType->id, buildingType->tech);
 			}
