@@ -1364,7 +1364,7 @@ void MAP_DrawMap (const menuNode_t* node)
 		else
 			txt = selMis->def->missionText;
 
-		menuText[TEXT_STANDARD] = va(_("Location: %s\nType: %s\nObjective: %s\n"), selMis->def->location, selMis->def->type, _(txt));
+		menuText[TEXT_STANDARD] = va(_("Location: %s\nType: %s\nObjective: %s"), selMis->def->location, selMis->def->type, _(txt));
 	} else if (selectedAircraft) {
 		switch (selectedAircraft->status) {
 		case AIR_HOME:

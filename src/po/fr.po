@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-11-10 19:44+0100\n"
-"PO-Revision-Date: 2007-11-10 22:17+0100\n"
+"POT-Creation-Date: 2007-11-11 07:39+0100\n"
+"PO-Revision-Date: 2007-11-11 07:40+0100\n"
 "Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -3900,7 +3900,7 @@ msgstr "Attaque de terreur"
 #: ../base/ufos/missions.ufo:672
 #: ../base/ufos/missions.ufo:689
 msgid "Protect inhabitants."
-msgstr "Protection de population."
+msgstr "Protection de population. je rallonge volontairement ce message à tite de test, vous ne devriez pas pouvoir le lire."
 
 #: ../base/ufos/missions.ufo:56
 msgid "Gwanda"
@@ -12093,11 +12093,11 @@ msgstr "OVNI dans la portée radar\n"
 msgid ""
 "Location: %s\n"
 "Type: %s\n"
-"Objective: %s\n"
+"Objective: %s"
 msgstr ""
 "Emplacement : %s\n"
 "Type : %s\n"
-"Objectif : %s\n"
+"Objectif : %s"
 
 #: client/cl_map.c:1377
 #: client/cl_map.c:1385
