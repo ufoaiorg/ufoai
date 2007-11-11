@@ -401,7 +401,7 @@ menu bases
 		texh	"230 120"
 		click
 		{
-			cmd "hosp_unavailable_popup"
+			cmd "hosp_unavailable_popup;"
 		}
 		in
 	}

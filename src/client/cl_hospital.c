@@ -511,20 +511,20 @@ static void HOS_Unavailable_Popup_f (void)
 	}
 
 	idx = baseCurrent->idx;
-	if (idx < 0 || idx > gd.numBases) {
-		Com_Printf("HOS_Unavailable_Popup_f: unknown idx for baseCurrent\n");
-		return;
-	}
 
 	if (B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_HOSPITAL) > 0) {
 		/* there is an hospital in base, but not working */
 		for (i = 0; i < gd.numBuildings[idx]; i++) {
 			if (gd.buildings[idx][i].buildingType == B_HOSPITAL
 			 && gd.buildings[idx][i].buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
-				MN_Popup(_("Notice"), _("Construction of hospital will be over in a few days.\n Please wait to enter."));
+				/* this is because the construction of the hospital is not over yet */
+				MN_Popup(_("Notice"), _("Construction of hospital will be over in a few days.\nPlease wait to enter."));
 				return;
 			}
 		}
+		if (!baseCurrent->hasPower)
+			/*this is because another building is missing */
+			MN_Popup(_("Notice"), _("You need a power plant to use hospital."));
 	} else
 		MN_Popup(_("Notice"), ("Build an hospital first."));
 }
