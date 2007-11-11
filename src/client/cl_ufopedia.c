@@ -767,6 +767,8 @@ void UP_Article (technology_t* tech, eventMail_t *mail)
 		Cvar_SetValue("mn_updisplay", 0);
 		UP_SetMailHeader(NULL, 0, mail);
 		menuText[TEXT_UFOPEDIA] = _(mail->body);
+		/* This allows us to use the index button in the ufopedia,
+		 * eventMails don't have any chapter to go back to. */
 		upDisplay = UFOPEDIA_INDEX;
 	} else {
 		assert(tech);
