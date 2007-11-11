@@ -97,6 +97,7 @@ qboolean B_CheckBuildingTypeStatus (const base_t* const base, buildingType_t typ
  * @brief Chech that the dependences of a building is built
  * @param[in] base Base to check
  * @param[in] building
+ * @todo When we'll can break savegame, that would be nice to add a hasEntrance variable.
  * @return true if base contains needed dependence
  */
 qboolean B_CheckBuildingDependencesStatus (const base_t* const base, building_t* building)
@@ -111,7 +112,41 @@ qboolean B_CheckBuildingDependencesStatus (const base_t* const base, building_t*
 
 	type = gd.buildingTypes[building->dependsBuilding].buildingType;
 
-	return B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, type) > 0;
+	switch (type) {
+	case B_LAB:
+		return base->hasLab;
+	case B_QUARTERS:
+		return base->hasQuarters;
+	case B_STORAGE:
+		return base->hasStorage;
+	case B_WORKSHOP:
+		return base->hasWorkshop;
+	case B_HOSPITAL:
+		return base->hasHospital;
+	case B_HANGAR:
+		return base->hasHangar;
+	case B_ALIEN_CONTAINMENT:
+		return base->hasAlienCont;
+	case B_SMALL_HANGAR:
+		return base->hasHangarSmall;
+	case B_UFO_HANGAR:
+		return base->hasUFOHangar;
+	case B_UFO_SMALL_HANGAR:
+		return base->hasUFOHangarSmall;
+	case B_POWER:
+		return base->hasPower;
+	case B_COMMAND:
+		return base->hasCommand;
+	case B_ANTIMATTER:
+		return base->hasAmStorage;
+	case B_DEFENSE_MISSILE:
+		return base->hasMissile;
+	case B_DEFENSE_LASER:
+		return base->hasLaser;
+	default:
+		/* B_ENTRANCE and B_MISC */
+		return qtrue;
+	}
 }
 
 /**
