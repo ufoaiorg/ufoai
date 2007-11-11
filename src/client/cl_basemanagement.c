@@ -94,7 +94,7 @@ qboolean B_CheckBuildingTypeStatus (const base_t* const base, buildingType_t typ
 }
 
 /**
- * @brief Chech that the dependences of a building is built
+ * @brief Chech that the dependences of a building is operationnal
  * @param[in] base Base to check
  * @param[in] building
  * @todo When we'll can break savegame, that would be nice to add a hasEntrance variable.
@@ -2607,9 +2607,15 @@ static void B_CheckBuildingStatusForMenu_f (void)
 		}
 		dependenceBuilding = gd.buildingTypes + building->dependsBuilding;
 		if (!B_CheckBuildingDependencesStatus(baseCurrent, dependenceBuilding)) {
-			/* at least one dependence is not operationnal */
-			Com_sprintf(popupBuildingText, sizeof(popupBuildingText), va(_("You need an operational %s to use this building"), dependenceBuilding->name));
-			MN_Popup(_("Notice"), popupBuildingText);
+			if (B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, dependenceBuilding->buildingType) <= 0) {
+				/* at least one dependence is not operationnal */
+				Com_sprintf(popupBuildingText, sizeof(popupBuildingText), va(_("You need an operational %s to use this building"), dependenceBuilding->name));
+				MN_Popup(_("Notice"), popupBuildingText);
+			} else {
+				/* the dependence is built but doesn't work - must be because of their dependendes */
+				Com_sprintf(popupBuildingText, sizeof(popupBuildingText), va(_("Make sure that dependences of %s (%s) are operationnal, so that %s may be used"), dependenceBuilding->name, (gd.buildingTypes + dependenceBuilding->dependsBuilding)->name, building->name));
+				MN_Popup(_("Notice"), popupBuildingText);
+			}
 		}
 	} else {
 		Com_sprintf(popupBuildingText, sizeof(popupBuildingText), va(_("Build a %s first."), building->name));
