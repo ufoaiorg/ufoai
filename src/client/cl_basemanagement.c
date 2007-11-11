@@ -106,7 +106,7 @@ qboolean B_CheckBuildingDependencesStatus (const base_t* const base, building_t*
 	assert(base);
 	assert(building);
 
-	if (building->dependsBuilding == NONE)
+	if (building->dependsBuilding == -1)
 		return qtrue;
 
 	type = gd.buildingTypes[building->dependsBuilding].buildingType;
@@ -1433,7 +1433,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 		building->idx = -1;
 		building->base_idx = -1;
 		building->tech = -1;
-		building->dependsBuilding = NONE;
+		building->dependsBuilding = -1;
 		building->visible = qtrue;
 
 		gd.numBuildingTypes++;
