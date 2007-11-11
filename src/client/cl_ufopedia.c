@@ -1252,14 +1252,6 @@ static void UP_Update_f (void)
 }
 
 /**
- * @brief Shows available ufopedia entries
- * @todo: Implement me
- */
-static void UP_List_f (void)
-{
-}
-
-/**
  * @brief Mailclient click function callback
  * @sa UP_OpenMail_f
  */
@@ -1327,12 +1319,12 @@ static void UP_ResearchedLinkClick_f (void)
 
 	if (!Q_strncmp(csi.ods[i].type, "ammo", 4)) {
 		t = csi.ods[csi.ods[i].weap_idx[up_researchedlink]].tech;
-		if (UP_TechGetsDisplayed (t))
-			UP_OpenWith (t->id);
+		if (UP_TechGetsDisplayed(t))
+			UP_OpenWith(t->id);
 	} else if (csi.ods[i].weapon && csi.ods[i].reload) {
 		t = csi.ods[csi.ods[i].ammo_idx[up_researchedlink]].tech;
-		if (UP_TechGetsDisplayed (t))
-			UP_OpenWith (t->id);
+		if (UP_TechGetsDisplayed(t))
+			UP_OpenWith(t->id);
 	}
 }
 
@@ -1355,7 +1347,7 @@ static void UP_SetMailButtons_f (void)
 
 	num = mailClientListNode->textScroll;
 
-	while (m && (i<MAIL_CLIENT_LINES)) {
+	while (m && (i < MAIL_CLIENT_LINES)) {
 		switch (m->type) {
 		case MSG_RESEARCH_PROPOSAL:
 			if (!m->pedia->mail[TECHMAIL_PRE].from)
@@ -1363,8 +1355,8 @@ static void UP_SetMailButtons_f (void)
 			if (num) {
 				num--;
 			} else {
-				Cvar_Set( va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_PRE].read? "1": "0");
-				Cvar_Set( va("mn_mail_icon%i", i++), m->pedia->mail[TECHMAIL_PRE].icon);
+				Cvar_Set(va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_PRE].read? "1": "0");
+				Cvar_Set(va("mn_mail_icon%i", i++), m->pedia->mail[TECHMAIL_PRE].icon);
 			}
 			break;
 		case MSG_RESEARCH_FINISHED:
@@ -1373,8 +1365,8 @@ static void UP_SetMailButtons_f (void)
 			if (num) {
 				num--;
 			} else {
-				Cvar_Set( va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_RESEARCHED].read? "1": "0");
-				Cvar_Set( va("mn_mail_icon%i", i++), m->pedia->mail[TECHMAIL_RESEARCHED].icon);
+				Cvar_Set(va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_RESEARCHED].read? "1": "0");
+				Cvar_Set(va("mn_mail_icon%i", i++), m->pedia->mail[TECHMAIL_RESEARCHED].icon);
 			}
 			break;
 		case MSG_NEWS:
@@ -1382,15 +1374,15 @@ static void UP_SetMailButtons_f (void)
 				if (num) {
 					num--;
 				} else {
-					Cvar_Set( va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_PRE].read? "1": "0");
-					Cvar_Set( va("mn_mail_icon%i", i++), m->pedia->mail[TECHMAIL_PRE].icon);
+					Cvar_Set(va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_PRE].read? "1": "0");
+					Cvar_Set(va("mn_mail_icon%i", i++), m->pedia->mail[TECHMAIL_PRE].icon);
 				}
 			} else if (m->pedia->mail[TECHMAIL_RESEARCHED].from) {
 				if (num) {
 					num--;
 				} else {
-					Cvar_Set( va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_RESEARCHED].read? "1": "0");
-					Cvar_Set( va("mn_mail_icon%i", i++), m->pedia->mail[TECHMAIL_RESEARCHED].icon);
+					Cvar_Set(va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_RESEARCHED].read? "1": "0");
+					Cvar_Set(va("mn_mail_icon%i", i++), m->pedia->mail[TECHMAIL_RESEARCHED].icon);
 				}
 			}
 			break;
@@ -1399,9 +1391,9 @@ static void UP_SetMailButtons_f (void)
 		}
 		m = m->next;
 	}
-	while ( i<MAIL_CLIENT_LINES) {
-		Cvar_Set( va("mn_mail_read%i", i), "-1");
-		Cvar_Set( va("mn_mail_icon%i", i++), "");
+	while (i < MAIL_CLIENT_LINES) {
+		Cvar_Set(va("mn_mail_read%i", i), "-1");
+		Cvar_Set(va("mn_mail_icon%i", i++), "");
 	}
 }
 
@@ -1663,7 +1655,6 @@ void UP_ResetUfopedia (void)
 	gd.numChapters = 0;
 
 	/* add commands and cvars */
-	Cmd_AddCommand("ufopedialist", UP_List_f, NULL);
 	Cmd_AddCommand("mn_upindex", UP_Index_f, "Shows the UFOpaedia index for the current chapter");
 	Cmd_AddCommand("mn_upcontent", UP_Content_f, "Shows the UFOpaedia chapters");
 	Cmd_AddCommand("mn_upback", UP_Back_f, "Goes back from article to index or from index to chapters");

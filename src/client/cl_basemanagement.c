@@ -589,8 +589,8 @@ static void B_HireForBuilding (base_t* base, building_t * building, int num)
 
 /**
  * @brief Updates base status for particular buildings as well as capacities.
- * @param[in] *building Pointer to building.
- * @param[in] *base Pointer to base with given building.
+ * @param[in] building Pointer to building.
+ * @param[in] base Pointer to base with given building.
  * @param[in] status Enum of buildingStatus_t which is status of given building.
  * @note This function checks whether a building has B_STATUS_WORKING status, and
  * @note then updates base status for particular buildings and base capacities.
@@ -1260,6 +1260,51 @@ static void B_BuildingClick_f (void)
 }
 
 /**
+ * @brief Returns the building type for a given building identified by its building id
+ * from the ufo script files
+ * @sa B_ParseBuildings
+ * @sa B_GetBuildingType
+ * @note Do not use B_GetBuildingType here, this is also used for parsing the types!
+ */
+buildingType_t B_GetBuildingTypeByBuildingID (const char *buildingID)
+{
+	if (!Q_strncmp(buildingID, "lab", MAX_VAR)) {
+		return B_LAB;
+	} else if (!Q_strncmp(buildingID, "hospital", MAX_VAR)) {
+		return B_HOSPITAL;
+	} else if (!Q_strncmp(buildingID, "aliencont", MAX_VAR)) {
+		return B_ALIEN_CONTAINMENT;
+	} else if (!Q_strncmp(buildingID, "workshop", MAX_VAR)) {
+		return B_WORKSHOP;
+	} else if (!Q_strncmp(buildingID, "storage", MAX_VAR)) {
+		return B_STORAGE;
+	} else if (!Q_strncmp(buildingID, "hangar", MAX_VAR)) {
+		return B_HANGAR;
+	} else if (!Q_strncmp(buildingID, "smallhangar", MAX_VAR)) {
+		return B_SMALL_HANGAR;
+	} else if (!Q_strncmp(buildingID, "ufohangar", MAX_VAR)) {
+		return B_UFO_HANGAR;
+	} else if (!Q_strncmp(buildingID, "smallufohangar", MAX_VAR)) {
+		return B_UFO_SMALL_HANGAR;
+	} else if (!Q_strncmp(buildingID, "quarters", MAX_VAR)) {
+		return B_QUARTERS;
+	} else if (!Q_strncmp(buildingID, "workshop", MAX_VAR)) {
+		return B_WORKSHOP;
+	} else if (!Q_strncmp(buildingID, "power", MAX_VAR)) {
+		return B_POWER;
+	} else if (!Q_strncmp(buildingID, "command", MAX_VAR)) {
+		return B_COMMAND;
+	} else if (!Q_strncmp(buildingID, "amstorage", MAX_VAR)) {
+		return B_ANTIMATTER;
+	} else if (!Q_strncmp(buildingID, "entrance", MAX_VAR)) {
+		return B_ENTRANCE;
+	} else if (!Q_strncmp(buildingID, "missile", MAX_VAR)) {
+		return B_DEFENSE_MISSILE;
+	}
+	return B_MISC;
+}
+
+/**
  * @brief Copies an entry from the building description file into the list of building types.
  *
  * Parses one "building" entry in the basemanagement.ufo file and writes it into the next free entry in bmBuildings[0], which is the list of buildings in the first base (building_t).
@@ -1330,39 +1375,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 				if (!*text)
 					return;
 
-				if (!Q_strncmp(token, "lab", MAX_VAR)) {
-					building->buildingType = B_LAB;
-				} else if (!Q_strncmp(token, "hospital", MAX_VAR)) {
-					building->buildingType = B_HOSPITAL;
-				} else if (!Q_strncmp(token, "aliencont", MAX_VAR)) {
-					building->buildingType = B_ALIEN_CONTAINMENT;
-				} else if (!Q_strncmp(token, "workshop", MAX_VAR)) {
-					building->buildingType = B_WORKSHOP;
-				} else if (!Q_strncmp(token, "storage", MAX_VAR)) {
-					building->buildingType = B_STORAGE;
-				} else if (!Q_strncmp(token, "hangar", MAX_VAR)) {
-					building->buildingType = B_HANGAR;
-				} else if (!Q_strncmp(token, "smallhangar", MAX_VAR)) {
-					building->buildingType = B_SMALL_HANGAR;
-				} else if (!Q_strncmp(token, "ufohangar", MAX_VAR)) {
-					building->buildingType = B_UFO_HANGAR;
-				} else if (!Q_strncmp(token, "smallufohangar", MAX_VAR)) {
-					building->buildingType = B_UFO_SMALL_HANGAR;
-				} else if (!Q_strncmp(token, "quarters", MAX_VAR)) {
-					building->buildingType = B_QUARTERS;
-				} else if (!Q_strncmp(token, "workshop", MAX_VAR)) {
-					building->buildingType = B_WORKSHOP;
-				} else if (!Q_strncmp(token, "power", MAX_VAR)) {
-					building->buildingType = B_POWER;
-				} else if (!Q_strncmp(token, "command", MAX_VAR)) {
-					building->buildingType = B_COMMAND;
-				} else if (!Q_strncmp(token, "amstorage", MAX_VAR)) {
-					building->buildingType = B_ANTIMATTER;
-				} else if (!Q_strncmp(token, "entrance", MAX_VAR)) {
-					building->buildingType = B_ENTRANCE;
-				} else if (!Q_strncmp(token, "missile", MAX_VAR)) {
-					building->buildingType = B_DEFENSE_MISSILE;
-				}
+				building->buildingType = B_GetBuildingTypeByBuildingID(token);
 			} else {
 				/* no linking yet */
 				if (!Q_strncmp(token, "depends", MAX_VAR)) {
@@ -2708,7 +2721,7 @@ int B_CheckBuildingConstruction (building_t * building, int base_idx)
 
 /**
  * @brief Update buildings status when we gain or loose power.
- * @param[in] *base Pointer to the base with newly constructed power supply.
+ * @param[in] base Pointer to the base with newly constructed power supply.
  */
 void B_UpdateStatusWithPower (base_t *base)
 {
@@ -2804,7 +2817,7 @@ int B_ItemInBase (int item_idx, base_t *base)
 /**
  * @brief Updates base capacities.
  * @param[in] cap Enum type of baseCapacities_t.
- * @param[in] *base Pointer to the base.
+ * @param[in] base Pointer to the base.
  * @sa B_UpdateBaseBuildingStatus
  * @sa B_BuildingDestroy_f
  */

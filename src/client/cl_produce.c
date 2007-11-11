@@ -52,7 +52,7 @@ static menuNode_t *node1, *node2, *prodlist;
 
 /**
  * @brief Conditions for disassembling.
- * @param[in] *comp Pointer to components definition.
+ * @param[in] comp Pointer to components definition.
  * @return qtrue if disassembling is ready, qfalse otherwise.
  */
 static qboolean PR_ConditionsDisassembly (base_t* base, components_t *comp)
@@ -73,9 +73,9 @@ static qboolean PR_ConditionsDisassembly (base_t* base, components_t *comp)
 
 /**
  * @brief Calculates production time.
- * @param[in] *base Pointer to the base with given production.
- * @param[in] *tech Pointer to the technology for given production.
- * @param[in] *comp Pointer to components definition.
+ * @param[in] base Pointer to the base with given production.
+ * @param[in] tech Pointer to the technology for given production.
+ * @param[in] comp Pointer to components definition.
  * @param[in] disassembly True if calculations for disassembling, false otherwise.
  * @sa PR_UpdateProductionTime
  * @sa PR_QueueNew
@@ -130,7 +130,7 @@ static int PR_CalculateProductionTime (base_t *base, technology_t *tech, compone
 
 /**
  * @brief Updates production time for all items in current queue.
- * @param[in] *base Pointer to the base where we will update production time.
+ * @param[in] base Pointer to the base where we will update production time.
  * @note This should be called whenever workers amount is going to
  * @note change (or base capacity going to update).
  * @sa B_BuildingDestroy_f
@@ -228,7 +228,7 @@ static void PR_UpdateRequiredItemsInBasestorage (base_t* base, int amount, requi
 
 /**
  * @brief Add a new item to the bottom of the production queue.
- * @param[in] *queue
+ * @param[in] queue
  * @param[in] objID Index of object to produce (in csi.ods[]).
  * @param[in] amount Desired amount to produce.
  * @param[in] disassembling True if this is disassembling, false if production.
@@ -310,7 +310,7 @@ static production_t *PR_QueueNew (base_t* base, production_queue_t *queue, signe
 
 /**
  * @brief Delete the selected entry from the queue.
- * @param[in] *queue Pointer to the queue.
+ * @param[in] queue Pointer to the queue.
  * @param[in] index Selected index in queue.
  * @param[in] baseidx Index of base in gd.bases[], where the queue is.
  */
@@ -352,7 +352,7 @@ static void PR_QueueDelete (base_t* base, production_queue_t *queue, int index)
 
 /**
  * @brief Moves the given queue item in the given direction.
- * @param[in] *queue
+ * @param[in] queue
  * @param[in] index
  * @param[in] dir
  */

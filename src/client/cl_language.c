@@ -113,7 +113,7 @@ void CL_ParseLanguages (const char *name, const char **text)
 
 /**
  * @brief Test given language by trying to set locale.
- * @param[in] *localeID language abbreviation.
+ * @param[in] localeID language abbreviation.
  * @return qtrue if setting given language is possible.
  */
 static qboolean CL_LanguageTest (const char *localeID)

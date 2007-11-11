@@ -669,8 +669,8 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 
 /**
  * @brief Reloads weapons and removes "not assigned" ones from containers.
- * @param[in] *aircraft	Pointer to an aircraft for given team.
- * @param[in] *ed equipDef_t pointer to equipment of given character in a team.
+ * @param[in] aircraft	Pointer to an aircraft for given team.
+ * @param[in] ed equipDef_t pointer to equipment of given character in a team.
  * @sa CL_AddWeaponAmmo
  */
 void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
@@ -1058,7 +1058,7 @@ static void CL_NextSoldier_f (void)
 
 /**
  * @brief Updates data about teams in aircrafts.
- * @param[in] *aircraft Pointer to an aircraft for a desired team.
+ * @param[in] aircraft Pointer to an aircraft for a desired team.
  * @todo We already know what team-members are in the aircraft (teamIdxs+types) no need to loop through hired employees i think.
  */
 void CL_UpdateHireVar (aircraft_t *aircraft, employeeType_t employeeType)
@@ -2401,7 +2401,7 @@ static int CL_SkillIncreaseBy (float skill)
 
 /**
  * @brief Updates character skills after a mission.
- * @param[in] *chr Pointer to a character_t.
+ * @param[in] chr Pointer to a character_t.
  * @sa CL_UpdateCharacterStats
  * @sa G_UpdateCharacterScore
  */

@@ -320,7 +320,7 @@ static stage_t *testStage;			/**< Document me. */
 
 /**
  * @brief Checks wheter a stage set exceeded the quota
- * @param[in] *name Stage set name from script file
+ * @param[in] name Stage set name from script file
  * @return qboolean
  */
 static qboolean CL_StageSetDone (char *name)

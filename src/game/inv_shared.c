@@ -1269,7 +1269,7 @@ int CHRSH_abilityValues[MAX_CAMPAIGNS][MAX_TEAMS][MAX_EMPL][2];
 
 /**
  * @brief Fills the min and max values for abilities for the given character
- * @param[in] *chr Pointer to the character, needed for chr->empl_type.
+ * @param[in] chr Pointer to the character, needed for chr->empl_type.
  * @param[in] team Index of team (TEAM_ALIEN, TEAM_CIVILIAN, ...).
  * @param[in] minAbility Pointer to minAbility int value to use for this character.
  * @param[in] maxAbility Pointer to maxAbility int value to use for this character.
@@ -1322,7 +1322,7 @@ static void CHRSH_GetAbility (character_t *chr, int team, int *minAbility, int *
 
 /**
  * @brief Fills the min and max values for skill for the given character
- * @param[in] *chr Pointer to the character, needed for chr->empl_type.
+ * @param[in] chr Pointer to the character, needed for chr->empl_type.
  * @param[in] team Index of team (TEAM_ALIEN, TEAM_CIVILIAN, ...).
  * @param[in] minSkill Pointer to minSkill int value to use for this character.
  * @param[in] maxSkill Pointer to maxSkill int value to use for this character.
@@ -1397,7 +1397,7 @@ void CHRSH_SetGlobalCampaignID (int campaignID)
 
 /**
  * @brief Generates a skill and ability set for any character.
- * @param[in] *chr Pointer to the character, for which we generate skills and abilities.
+ * @param[in] chr Pointer to the character, for which we generate skills and abilities.
  * @param[in] team Index of team (TEAM_ALIEN, TEAM_CIVILIAN, ...).
  * @sa CHRSH_GetAbility
  * @sa CHRSH_GetSkill

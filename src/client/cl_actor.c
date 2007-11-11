@@ -318,7 +318,7 @@ static void CL_ActorGlobalCVars (void)
 
 /**
  * @brief Get state of the reaction-fire button.
- * @param[in] *le Pointer to local entity structure, a soldier.
+ * @param[in] le Pointer to local entity structure, a soldier.
  * @return R_FIRE_MANY when STATE_REACTION_MANY.
  * @return R_FIRE_ONCE when STATE_REACTION_ONCE.
  * @return R_FIRE_OFF when no reaction fiR_
@@ -554,7 +554,7 @@ static void CL_SetReactionFiremode (int actor_idx, int handidx, int obj_idx, int
 
 /**
  * @brief Sets the display for a single weapon/reload HUD button.
- * @param[in] *fd Pointer to the firedefinition/firemode to be displayed.
+ * @param[in] fd Pointer to the firedefinition/firemode to be displayed.
  * @param[in] hand Which list to display: 'l' for left hand list, 'r' for right hand list.
  * @param[in] status Display the firemode clickable/active (1) or inactive (0).
  */
@@ -1359,7 +1359,7 @@ static void CL_RefreshWeaponButtons (int time)
 /**
  * @brief Checks whether an action on hud menu is valid and displays proper message.
  * @param[in] time The amount of TU (of an actor) left.
- * @param[in] *weapon An item in hands.
+ * @param[in] weapon An item in hands.
  * @param[in] mode EV_INV_AMMO in case of fire button, EV_INV_RELOAD in case of reload button
  * @return qfalse when action is not possible, otherwise qtrue
  * @sa CL_FireWeapon_f
