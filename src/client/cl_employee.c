@@ -1200,7 +1200,7 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 qboolean E_HireAllowed (void)
 {
 	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK
-	 && B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_QUARTERS) > 0) {
+	 && baseCurrent->hasQuarters) {
 		return qtrue;
 	} else {
 		return qfalse;

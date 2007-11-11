@@ -2399,7 +2399,7 @@ qboolean RS_Load (sizebuf_t* sb, void* data)
 qboolean RS_ResearchAllowed (void)
 {
 	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK
-	 && B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_LAB) > 0) {
+	 && baseCurrent->hasLab) {
 		return qtrue;
 	} else {
 		return qfalse;

@@ -861,7 +861,7 @@ qboolean BS_Load (sizebuf_t* sb, void* data)
 qboolean BS_BuySellAllowed (void)
 {
 	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK
-	 && B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_STORAGE) > 0) {
+	 && baseCurrent->hasStorage) {
 		return qtrue;
 	} else {
 		return qfalse;

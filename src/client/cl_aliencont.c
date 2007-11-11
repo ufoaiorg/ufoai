@@ -1091,7 +1091,7 @@ qboolean AC_Load (sizebuf_t* sb, void* data)
 qboolean AC_ContainmentAllowed (void)
 {
 	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK
-	 && B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_ALIEN_CONTAINMENT) > 0) {
+	 && baseCurrent->hasAlienCont) {
 		return qtrue;
 	} else {
 		return qfalse;

@@ -183,6 +183,10 @@ menu bases
 		pos	"755 248"
 		texl	"0 72"
 		texh	"230 120"
+		click
+		{
+			cmd "check_building_status building_storage;"
+		}
 		in
 	}
 	string txt_buysell
@@ -255,6 +259,10 @@ menu bases
 		pos	"755 368"
 		texl	"0 72"
 		texh	"230 120"
+		click
+		{
+			cmd "check_building_status building_lab;"
+		}
 		in
 	}
 	string txt_research
@@ -292,6 +300,10 @@ menu bases
 		pos	"755 428"
 		texl	"0 72"
 		texh	"230 120"
+		click
+		{
+			cmd "check_building_status building_workshop;"
+		}
 		in
 	}
 	string txt_production
@@ -329,6 +341,10 @@ menu bases
 		pos	"755 488"
 		texl	"0 72"
 		texh	"230 120"
+		click
+		{
+			cmd "check_building_status building_quarters;"
+		}
 		in
 	}
 	string txt_hire
@@ -364,6 +380,10 @@ menu bases
 		pos	"755 548"
 		texl	"0 72"
 		texh	"230 120"
+		click
+		{
+			cmd "check_building_status building_aliencontainment;"
+		}
 		in
 	}
 	string txt_containment
@@ -401,7 +421,7 @@ menu bases
 		texh	"230 120"
 		click
 		{
-			cmd "hosp_unavailable_popup;"
+			cmd "check_building_status building_hospital;"
 		}
 		in
 	}
