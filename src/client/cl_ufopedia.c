@@ -767,7 +767,7 @@ void UP_Article (technology_t* tech, eventMail_t *mail)
 		Cvar_SetValue("mn_updisplay", 0);
 		UP_SetMailHeader(NULL, 0, mail);
 		menuText[TEXT_UFOPEDIA] = _(mail->body);
-		Com_Printf("%i\n", Cvar_VariableInteger("mn_up_mail"));
+		upDisplay = UFOPEDIA_INDEX;
 	} else {
 		assert(tech);
 
