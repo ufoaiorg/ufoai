@@ -927,7 +927,7 @@ void UFO_Reset(void);
 void UFO_RemoveUfoFromGeoscape(aircraft_t* ufo);
 void UFO_PrepareRecovery(base_t *base);
 void UFO_Recovery(void);
-qboolean UFO_ConditionsForStoring(base_t *base, aircraft_t *ufocraft);
+qboolean UFO_ConditionsForStoring(const base_t *base, const aircraft_t *ufocraft);
 
 /* cl_popup.c */
 void CL_PopupInit(void);

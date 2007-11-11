@@ -330,8 +330,9 @@ update_txt()
 # $1 contains sur h1 section we want to get text from
 # $2 is 1 if we want to display h2 titles, 0 otherwise
 # $3 is the number of h3 title you want to read before stopping
+# $4 is 1 if you want to skip the 4 line header, 0 if you want to keep it
 	set_BEGIN_END "1"
-	$awk_soft -v working_h2=$1 -v display_title=$2 -v h3_nb=$3 'BEGIN {already_written_test=0;exit_test=0;line=0;RS="<p>"}
+	$awk_soft -v working_h2=$1 -v display_title=$2 -v h3_nb=$3 -v skip_header=$4 'BEGIN {already_written_test=0;exit_test=0;line=0;RS="<p>"}
 		h2 == working_h2 && $0 ~ /<h1>/ {exit}
 		$0 ~ /<h2>/ {h2++}
 		h2 < working_h2 {next}
@@ -346,9 +347,10 @@ update_txt()
 		$0 ~ /<h3>/ {h3++;
 			match($0,"<h3>");
 			$0=substr($0,RSTART+RLENGTH,length($0)-RSTART-RLENGTH+1);
-			if (h3 == 1) {$0="\\n\n"$0}
+			if (h3 == 1 && already_written_test) {$0="\\n\n"$0}
 			gsub (/[ \t]*$/,"")
-			$0="\\n\n"$0""}
+			if (already_written_test) {$0="\\n\n"$0""}
+			}
 		h3 > h3_nb {exit}
 		$0 ~ /<h4>/ {
 			match($0,"<h4>");
@@ -362,7 +364,7 @@ update_txt()
 			gsub (/[ \t]*$/,"")
 			$0="\\n\n"$0"\\n\n"}
 		$0 !~ /^[ \t\n]*$/ {
-			if (line < 4 && '$pre_txt'==1) {line++;next}
+			if (line < 4 && skip_header ==1) {line++;next}
 			gsub (/[ \t]*$/,"")
 			if (already_written_test) {printf "\\n\n\\n\n"}
 			printf "%s",$0
@@ -372,7 +374,8 @@ update_txt()
 	' downloaded_page_${language0} |
 	$sed_soft 's/[[:space:]]*<.*>[[:space:]]*//g;/^[[:space:]]*$/d;s/^[ \t]*//g;s/\"/\\\"/g' |
 	$awk_soft '{printf "'$END'i\"%s\"\n",$0}' |
-	$sed_soft 's/\\/\\\\/g'>> sed_commands_${language0}
+	$sed_soft 's/\\/\\\\/g' >> sed_commands_${language0}
+
 	apply_sed $english
 	return $?
 }
@@ -554,7 +557,7 @@ then
 	then
 		clean_html
 		pre_txt=1
-		update_txt 2 0 0
+		update_txt 2 0 0 $pre_txt
 		pre_txt=0
 	fi
 
@@ -669,10 +672,10 @@ do
 				if [[ $pre_txt -eq 1 ]]
 				then
 				# Case of Research with proposal part: only the second part of the text has to be taken
-				update_txt 3 0 0
+				update_txt 3 0 0 1
 
 				english=${english:0:${#english}-4}_pre_txt
-				update_txt 2 0 0
+				update_txt 2 0 0 1
 					if [[ $? -eq 0 ]]
 					then
 						set_BEGIN_END 0
@@ -680,8 +683,12 @@ do
 						apply_sed $english
 						pre_txt=0
 					fi
+				elif [[ "$english" = "b_antimatter_txt" ]]
+				then
+					# Exception: text is in e-mail type, but without pre_txt
+					update_txt 2 0 3 1
 				else
-					update_txt 2 1 3
+					update_txt 2 1 3 0
 				fi
 			elif [[ "$test" -eq 2 ]] && [[ "$elseenglish" -eq 1 ]]
 			then
@@ -692,10 +699,10 @@ do
 				clean_html
 				if [[ $pre_txt -eq 1 ]]
 				then
-				update_txt 3 0 0
+				update_txt 3 0 0 $pre_txt
 
 				english=${english:0:${#english}-4}_pre_txt
-				update_txt 2 0 0
+				update_txt 2 0 0 $pre_txt
 					if [[ $? -eq 0 ]]
 					then
 						set_BEGIN_END 0
@@ -704,7 +711,7 @@ do
 						pre_txt=0
 					fi
 				else
-					update_txt 2 1 3
+					update_txt 2 1 3 $pre_txt
 				fi
 				language=$language0
 			elif [[ "$test" -eq 1 ]] && [[ "$onlyDescription" = "0" ]]

@@ -277,7 +277,6 @@ void B_ParseBases(const char *name, const char **text);
 void B_BaseAttack(base_t* const base);
 void B_BaseResetStatus(base_t* const base);
 building_t *B_GetBuildingByIdx(base_t* base, int idx);
-/*building_t *B_GetBuildingInBase(base_t* base, char* buildingID);*/
 building_t *B_GetBuildingType(const char *buildingName);
 
 /** Coordinates to place the new base at (long, lat) */

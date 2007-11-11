@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion CVS\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-11-07 14:54+0100\n"
+"POT-Creation-Date: 2007-11-11 07:39+0100\n"
 "PO-Revision-Date: 2007-11-03 13:31+0100\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
@@ -68,29 +68,29 @@ msgstr "Tropisk medicin"
 
 #: ../base/maps/ufocrashd.ump:173 ../base/maps/ufocrashn.ump:173
 #: ../base/ufos/aircraftmanagement.ufo:287 ../base/ufos/otheritems.ufo:60
-#: ../base/ufos/research.ufo:3273 ../base/ufos/research.ufo:3286
-#: ../base/ufos/research.ufo:3294
+#: ../base/ufos/research.ufo:3281 ../base/ufos/research.ufo:3294
+#: ../base/ufos/research.ufo:3302
 msgid "UFO - Harvester"
 msgstr "Ufo - høstmaskine"
 
 #: ../base/maps/ufocrashd.ump:196 ../base/maps/ufocrashn.ump:195
 #: ../base/ufos/aircraftmanagement.ufo:389 ../base/ufos/otheritems.ufo:40
-#: ../base/ufos/research.ufo:3064 ../base/ufos/research.ufo:3077
-#: ../base/ufos/research.ufo:3085
+#: ../base/ufos/research.ufo:3072 ../base/ufos/research.ufo:3085
+#: ../base/ufos/research.ufo:3093
 msgid "UFO - Scout"
 msgstr "Ufo - rekognoscering"
 
 #: ../base/maps/ufocrashd.ump:207 ../base/maps/ufocrashn.ump:206
 #: ../base/ufos/aircraftmanagement.ufo:432 ../base/ufos/otheritems.ufo:50
-#: ../base/ufos/research.ufo:3105 ../base/ufos/research.ufo:3118
-#: ../base/ufos/research.ufo:3126
+#: ../base/ufos/research.ufo:3113 ../base/ufos/research.ufo:3126
+#: ../base/ufos/research.ufo:3134
 msgid "UFO - Fighter"
 msgstr "Ufo - Jager"
 
 #: ../base/maps/ufocrashd.ump:218 ../base/maps/ufocrashn.ump:217
 #: ../base/ufos/aircraftmanagement.ufo:337 ../base/ufos/otheritems.ufo:88
-#: ../base/ufos/research.ufo:3147 ../base/ufos/research.ufo:3160
-#: ../base/ufos/research.ufo:3168
+#: ../base/ufos/research.ufo:3155 ../base/ufos/research.ufo:3168
+#: ../base/ufos/research.ufo:3176
 msgid "UFO - Supply Ship"
 msgstr "Ufo - forsyningsskib"
 
@@ -158,8 +158,8 @@ msgid "Harvester U"
 msgstr "Høstmaskine U"
 
 #: ../base/ufos/aircraftmanagement.ufo:313 ../base/ufos/otheritems.ufo:79
-#: ../base/ufos/research.ufo:3189 ../base/ufos/research.ufo:3202
-#: ../base/ufos/research.ufo:3210
+#: ../base/ufos/research.ufo:3197 ../base/ufos/research.ufo:3210
+#: ../base/ufos/research.ufo:3218
 msgid "UFO - Carrier"
 msgstr "Ufo - transport"
 
@@ -168,8 +168,8 @@ msgid "Supply U"
 msgstr "Forsyning U"
 
 #: ../base/ufos/aircraftmanagement.ufo:360 ../base/ufos/otheritems.ufo:70
-#: ../base/ufos/research.ufo:3231 ../base/ufos/research.ufo:3244
-#: ../base/ufos/research.ufo:3252
+#: ../base/ufos/research.ufo:3239 ../base/ufos/research.ufo:3252
+#: ../base/ufos/research.ufo:3260
 msgid "UFO - Condor"
 msgstr "Ufo - Condor"
 
@@ -189,11 +189,11 @@ msgstr "Jager U"
 msgid "Shiva Rotary Cannon"
 msgstr "Shiva roterende kanon"
 
-#: ../base/ufos/aircraftmanagement.ufo:468 ../base/ufos/research.ufo:3851
+#: ../base/ufos/aircraftmanagement.ufo:468 ../base/ufos/research.ufo:3859
 msgid "SHIVA 20mm API Rounds"
 msgstr "SHIVA 20 mm API-runder"
 
-#: ../base/ufos/aircraftmanagement.ufo:484 ../base/ufos/research.ufo:3872
+#: ../base/ufos/aircraftmanagement.ufo:484 ../base/ufos/research.ufo:3880
 msgid "SHIVA 20mm HEI Rounds"
 msgstr "SHIVA 20 mm HEI-runder"
 
@@ -209,57 +209,57 @@ msgstr "Sparrowhawk AA Missilhylde"
 msgid "Sparrowhawk Missile"
 msgstr "Sparrowhawk missil"
 
-#: ../base/ufos/aircraftmanagement.ufo:537 ../base/ufos/research.ufo:3932
+#: ../base/ufos/aircraftmanagement.ufo:537 ../base/ufos/research.ufo:3940
 msgid "TR-20 Rocket Pod"
 msgstr "TR-20 raketholder"
 
-#: ../base/ufos/aircraftmanagement.ufo:549 ../base/ufos/research.ufo:3951
+#: ../base/ufos/aircraftmanagement.ufo:549 ../base/ufos/research.ufo:3959
 msgid "TR-20 Rocket"
 msgstr "TR-20 raket"
 
-#: ../base/ufos/aircraftmanagement.ufo:565 ../base/ufos/research.ufo:3972
-#: ../base/ufos/research.ufo:3986 ../base/ufos/research.ufo:3994
+#: ../base/ufos/aircraftmanagement.ufo:565 ../base/ufos/research.ufo:3980
+#: ../base/ufos/research.ufo:3994 ../base/ufos/research.ufo:4002
 msgid "Particle Beam Weapon"
 msgstr "Lyspartikel våben"
 
-#: ../base/ufos/aircraftmanagement.ufo:579 ../base/ufos/research.ufo:4017
+#: ../base/ufos/aircraftmanagement.ufo:579 ../base/ufos/research.ufo:4025
 msgid "Targeting Computer"
 msgstr "Våbencomputer"
 
-#: ../base/ufos/aircraftmanagement.ufo:590 ../base/ufos/research.ufo:4035
+#: ../base/ufos/aircraftmanagement.ufo:590 ../base/ufos/research.ufo:4043
 msgid "Fuel Pod"
 msgstr "Brændstofsholder"
 
-#: ../base/ufos/aircraftmanagement.ufo:602 ../base/ufos/research.ufo:3684
+#: ../base/ufos/aircraftmanagement.ufo:602 ../base/ufos/research.ufo:3692
 msgid "Polymer Aircraft Armour"
 msgstr "Poplymert luftfartøjsbeskyttelse"
 
-#: ../base/ufos/aircraftmanagement.ufo:614 ../base/ufos/research.ufo:3702
+#: ../base/ufos/aircraftmanagement.ufo:614 ../base/ufos/research.ufo:3710
 msgid "Alien Aircraft Plating"
 msgstr "Rumvæsenluftfartøjsbeklædning"
 
-#: ../base/ufos/aircraftmanagement.ufo:626 ../base/ufos/research.ufo:3724
-#: ../base/ufos/research.ufo:3735 ../base/ufos/research.ufo:3742
+#: ../base/ufos/aircraftmanagement.ufo:626 ../base/ufos/research.ufo:3732
+#: ../base/ufos/research.ufo:3743 ../base/ufos/research.ufo:3750
 msgid "Alien Astrogation"
 msgstr "Rumvæsen rumrejse"
 
-#: ../base/ufos/aircraftmanagement.ufo:635 ../base/ufos/research.ufo:3761
-#: ../base/ufos/research.ufo:3772 ../base/ufos/research.ufo:3779
+#: ../base/ufos/aircraftmanagement.ufo:635 ../base/ufos/research.ufo:3769
+#: ../base/ufos/research.ufo:3780 ../base/ufos/research.ufo:3787
 msgid "Alien Propulsion"
 msgstr "Rumvæsen fremdrift"
 
-#: ../base/ufos/aircraftmanagement.ufo:644 ../base/ufos/research.ufo:3797
-#: ../base/ufos/research.ufo:3808 ../base/ufos/research.ufo:3815
+#: ../base/ufos/aircraftmanagement.ufo:644 ../base/ufos/research.ufo:3805
+#: ../base/ufos/research.ufo:3816 ../base/ufos/research.ufo:3823
 msgid "Alien Detection"
 msgstr "Rumvæsen opdagelse"
 
-#: ../base/ufos/aircraftmanagement.ufo:657 ../base/ufos/research.ufo:3625
-msgid "Base defence: TR-20 Rocket Pod"
-msgstr "Baseforsvar: TR-20 raketholder"
+#: ../base/ufos/aircraftmanagement.ufo:657 ../base/ufos/research.ufo:3633
+msgid "AA51 missile launcher"
+msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:669 ../base/ufos/research.ufo:3644
-msgid "Base defence: TR-20 Rocket"
-msgstr "Baseforsvar: TR-20 raket"
+#: ../base/ufos/aircraftmanagement.ufo:669 ../base/ufos/research.ufo:3652
+msgid "AA51 Cicada SAM"
+msgstr ""
 
 #: ../base/ufos/armour.ufo:12
 msgid "normal"
@@ -336,12 +336,12 @@ msgstr "Indgang"
 msgid "Missile Battery"
 msgstr "Missilbatteri"
 
-#: ../base/ufos/basemanagement.ufo:122 client/cl_basesummary.c:360
-#: client/cl_basesummary.c:365
+#: ../base/ufos/basemanagement.ufo:122 client/cl_basesummary.c:363
+#: client/cl_basesummary.c:368
 msgid "Storage"
 msgstr "Lagerrum"
 
-#: ../base/ufos/basemanagement.ufo:140 client/cl_basesummary.c:373
+#: ../base/ufos/basemanagement.ufo:140 client/cl_basesummary.c:376
 msgid "Power Plant"
 msgstr "Kraftværk"
 
@@ -349,27 +349,27 @@ msgstr "Kraftværk"
 msgid "Command Centre"
 msgstr "Kommandocentral"
 
-#: ../base/ufos/basemanagement.ufo:172 client/cl_basesummary.c:358
-#: client/cl_basesummary.c:364
+#: ../base/ufos/basemanagement.ufo:172 client/cl_basesummary.c:361
+#: client/cl_basesummary.c:367
 msgid "Living Quarters"
 msgstr "Beboelseskvarter"
 
 #: ../base/ufos/basemanagement.ufo:191 ../base/ufos/basemanagement.ufo:212
-#: client/cl_basesummary.c:353 client/cl_basesummary.c:368
+#: client/cl_basesummary.c:356 client/cl_basesummary.c:371
 msgid "Large Hangar"
 msgstr "Stor hangar"
 
-#: ../base/ufos/basemanagement.ufo:221 client/cl_basesummary.c:352
-#: client/cl_basesummary.c:370
+#: ../base/ufos/basemanagement.ufo:221 client/cl_basesummary.c:355
+#: client/cl_basesummary.c:373
 msgid "Small Hangar"
 msgstr "Lille hangar"
 
-#: ../base/ufos/basemanagement.ufo:241 client/cl_basesummary.c:372
+#: ../base/ufos/basemanagement.ufo:241 client/cl_basesummary.c:375
 msgid "Small UFO Hangar"
 msgstr "Lille ufo-hangar"
 
 #: ../base/ufos/basemanagement.ufo:257 ../base/ufos/basemanagement.ufo:274
-#: client/cl_basesummary.c:354 client/cl_basesummary.c:371
+#: client/cl_basesummary.c:357 client/cl_basesummary.c:374
 msgid "Large UFO Hangar"
 msgstr "Stor ufo-hangar"
 
@@ -378,7 +378,7 @@ msgid "Team Room"
 msgstr "Holdrum"
 
 #: ../base/ufos/basemanagement.ufo:295 ../base/ufos/basemanagement.ufo:315
-#: client/cl_basesummary.c:359 client/cl_basesummary.c:366
+#: client/cl_basesummary.c:362 client/cl_basesummary.c:369
 msgid "Workshop"
 msgstr "Arbejdsrum"
 
@@ -386,17 +386,17 @@ msgstr "Arbejdsrum"
 msgid "Radar"
 msgstr "Radar"
 
-#: ../base/ufos/basemanagement.ufo:341 client/cl_basesummary.c:357
-#: client/cl_basesummary.c:363
+#: ../base/ufos/basemanagement.ufo:341 client/cl_basesummary.c:360
+#: client/cl_basesummary.c:366
 msgid "Laboratory"
 msgstr "Laboratorium"
 
 #: ../base/ufos/basemanagement.ufo:360 ../base/ufos/menu_bases.ufo:406
-#: client/cl_basesummary.c:356 client/cl_basesummary.c:367
+#: client/cl_basesummary.c:359 client/cl_basesummary.c:370
 msgid "Hospital"
 msgstr "Hospital"
 
-#: ../base/ufos/basemanagement.ufo:379 client/cl_basesummary.c:375
+#: ../base/ufos/basemanagement.ufo:379 client/cl_basesummary.c:378
 msgid "Antimatter Storage"
 msgstr "Lagerrum til antistof"
 
@@ -801,12 +801,12 @@ msgid "Build at least one workshop"
 msgstr "Byg mindst et værksted"
 
 #: ../base/ufos/menu_aircraft.ufo:255 ../base/ufos/menu_aircraft.ufo:264
-#: ../base/ufos/menu_aircraft.ufo:1026
+#: ../base/ufos/menu_aircraft.ufo:1057
 msgid "Produce"
 msgstr "Byg"
 
-#: ../base/ufos/menu_aircraft.ufo:301 ../base/ufos/menu_aircraft.ufo:902
-#: ../base/ufos/menu_basedefense.ufo:348 ../base/ufos/menu_hospital.ufo:498
+#: ../base/ufos/menu_aircraft.ufo:301 ../base/ufos/menu_aircraft.ufo:933
+#: ../base/ufos/menu_basedefense.ufo:377 ../base/ufos/menu_hospital.ufo:498
 #: ../base/ufos/menu_hospital.ufo:703 ../base/ufos/menu_team.ufo:988
 #: ../base/ufos/menu_team.ufo:1760
 msgid "Done"
@@ -824,77 +824,77 @@ msgstr "Skift til næste luftfartøj"
 msgid "Team Members:"
 msgstr "Holdmedlemmer:"
 
-#: ../base/ufos/menu_aircraft.ufo:445
+#: ../base/ufos/menu_aircraft.ufo:470
 msgid "Previous aircraft"
 msgstr "Tidligere luftfartøj"
 
-#: ../base/ufos/menu_aircraft.ufo:456
+#: ../base/ufos/menu_aircraft.ufo:484
 msgid "Next aircraft"
 msgstr "Næste luftfartøj"
 
-#: ../base/ufos/menu_aircraft.ufo:467
+#: ../base/ufos/menu_aircraft.ufo:498
 msgid "Available equipment:"
 msgstr "Tilgængelig udstyr:"
 
-#: ../base/ufos/menu_aircraft.ufo:503
+#: ../base/ufos/menu_aircraft.ufo:534
 msgid "Selected item:"
 msgstr "Valgt udstyr:"
 
-#: ../base/ufos/menu_aircraft.ufo:511 ../base/ufos/menu_aircraft.ufo:521
+#: ../base/ufos/menu_aircraft.ufo:542 ../base/ufos/menu_aircraft.ufo:552
 msgid "Weapons"
 msgstr "Våben"
 
-#: ../base/ufos/menu_aircraft.ufo:528 ../base/ufos/menu_aircraft.ufo:538
+#: ../base/ufos/menu_aircraft.ufo:559 ../base/ufos/menu_aircraft.ufo:569
 #: ../base/ufos/menu_buy.ufo:1397 ../base/ufos/menu_production.ufo:424
 #: ../base/ufos/menu_team.ufo:1384 client/cl_ufopedia.c:189
 msgid "Armour"
 msgstr "Beskyttelse"
 
-#: ../base/ufos/menu_aircraft.ufo:545 ../base/ufos/menu_aircraft.ufo:555
+#: ../base/ufos/menu_aircraft.ufo:576 ../base/ufos/menu_aircraft.ufo:586
 #: ../base/ufos/menu_production.ufo:845
 msgid "Items"
 msgstr "Udstyr"
 
-#: ../base/ufos/menu_aircraft.ufo:575 ../base/ufos/menu_aircraft.ufo:597
-#: ../base/ufos/menu_aircraft.ufo:619
+#: ../base/ufos/menu_aircraft.ufo:606 ../base/ufos/menu_aircraft.ufo:628
+#: ../base/ufos/menu_aircraft.ufo:650
 msgid "Add selected item"
 msgstr "Tilføj valgt udstyr"
 
-#: ../base/ufos/menu_aircraft.ufo:586 ../base/ufos/menu_aircraft.ufo:608
-#: ../base/ufos/menu_aircraft.ufo:630
+#: ../base/ufos/menu_aircraft.ufo:617 ../base/ufos/menu_aircraft.ufo:639
+#: ../base/ufos/menu_aircraft.ufo:661
 msgid "Remove item from slot"
 msgstr "Fjern udstyr fra pladsen"
 
-#: ../base/ufos/menu_aircraft.ufo:642 ../base/ufos/menu_aircraft.ufo:664
-#: ../base/ufos/menu_aircraft.ufo:686
+#: ../base/ufos/menu_aircraft.ufo:673 ../base/ufos/menu_aircraft.ufo:695
+#: ../base/ufos/menu_aircraft.ufo:717
 msgid "Select this zone"
 msgstr "Vælg denne zone"
 
 # # in game
-#: ../base/ufos/menu_aircraft.ufo:707
+#: ../base/ufos/menu_aircraft.ufo:738
 msgid "Current item in slot"
 msgstr "Nuværende udstyr i holder"
 
-#: ../base/ufos/menu_aircraft.ufo:716
+#: ../base/ufos/menu_aircraft.ufo:747
 msgid "Item to install after removal"
 msgstr "Udstyr til installering efter fjernelse"
 
-#: ../base/ufos/menu_aircraft.ufo:725
+#: ../base/ufos/menu_aircraft.ufo:756
 msgid "Ammo fitting this weapon"
 msgstr "Ammo til dette våben"
 
-#: ../base/ufos/menu_aircraft.ufo:734 ../base/ufos/menu_aircraft.ufo:755
-#: ../base/ufos/menu_aircraft.ufo:776 ../base/ufos/menu_aircraft.ufo:797
-#: ../base/ufos/menu_aircraft.ufo:818 ../base/ufos/menu_aircraft.ufo:839
-#: ../base/ufos/menu_aircraft.ufo:860 ../base/ufos/menu_aircraft.ufo:881
+#: ../base/ufos/menu_aircraft.ufo:765 ../base/ufos/menu_aircraft.ufo:786
+#: ../base/ufos/menu_aircraft.ufo:807 ../base/ufos/menu_aircraft.ufo:828
+#: ../base/ufos/menu_aircraft.ufo:849 ../base/ufos/menu_aircraft.ufo:870
+#: ../base/ufos/menu_aircraft.ufo:891 ../base/ufos/menu_aircraft.ufo:912
 msgid "Select this slot"
 msgstr "Vælg denne plads"
 
-#: ../base/ufos/menu_aircraft.ufo:955
+#: ../base/ufos/menu_aircraft.ufo:986
 msgid "Action"
 msgstr "Aktion"
 
-#: ../base/ufos/menu_aircraft.ufo:962 ../base/ufos/menu_bases.ufo:656
+#: ../base/ufos/menu_aircraft.ufo:993 ../base/ufos/menu_bases.ufo:656
 #: ../base/ufos/menu_geoscape.ufo:449 ../base/ufos/menu_geoscape.ufo:547
 #: ../base/ufos/menu_geoscape.ufo:648 ../base/ufos/menu_geoscape.ufo:736
 #: ../base/ufos/menu_geoscape.ufo:836 ../base/ufos/menu_geoscape.ufo:886
@@ -905,7 +905,7 @@ msgstr "Aktion"
 msgid "Close this dialogue"
 msgstr "Luk denne besked"
 
-#: ../base/ufos/menu_aircraft.ufo:975 ../base/ufos/menu_bases.ufo:669
+#: ../base/ufos/menu_aircraft.ufo:1006 ../base/ufos/menu_bases.ufo:669
 #: ../base/ufos/menu_geoscape.ufo:462 ../base/ufos/menu_geoscape.ufo:560
 #: ../base/ufos/menu_geoscape.ufo:661 ../base/ufos/menu_geoscape.ufo:760
 #: ../base/ufos/menu_geoscape.ufo:849 ../base/ufos/menu_geoscape.ufo:899
@@ -915,11 +915,11 @@ msgstr "Luk denne besked"
 msgid "Cancel"
 msgstr "Afbryd"
 
-#: ../base/ufos/menu_aircraft.ufo:983
+#: ../base/ufos/menu_aircraft.ufo:1014
 msgid "You don't have any aircraft in the base - what do you want to do?"
 msgstr "Du har ingen luftfartøjer på basen - hvad vil du gøre?"
 
-#: ../base/ufos/menu_aircraft.ufo:991 ../base/ufos/menu_buy.ufo:1795
+#: ../base/ufos/menu_aircraft.ufo:1022 ../base/ufos/menu_buy.ufo:1795
 #: ../base/ufos/menu_buy.ufo:1799 ../base/ufos/menu_buy.ufo:1803
 #: ../base/ufos/menu_buy.ufo:1807 ../base/ufos/menu_buy.ufo:1811
 #: ../base/ufos/menu_buy.ufo:1815 ../base/ufos/menu_buy.ufo:1819
@@ -932,11 +932,11 @@ msgstr "Du har ingen luftfartøjer på basen - hvad vil du gøre?"
 msgid "Buy aircraft"
 msgstr "Køb luftfartøj"
 
-#: ../base/ufos/menu_aircraft.ufo:1004
+#: ../base/ufos/menu_aircraft.ufo:1035
 msgid "Buy"
 msgstr "Køb"
 
-#: ../base/ufos/menu_aircraft.ufo:1012
+#: ../base/ufos/menu_aircraft.ufo:1043
 msgid "Produce aircraft"
 msgstr "Producer luftfartøj"
 
@@ -950,8 +950,8 @@ msgstr "FINANSER"
 
 #: ../base/ufos/menu_aliencont.ufo:68 ../base/ufos/menu_basesummary.ufo:67
 #: ../base/ufos/menu_buildings.ufo:74 ../base/ufos/menu_buy.ufo:1423
-#: ../base/ufos/menu_hire.ufo:800 ../base/ufos/menu_production.ufo:477
-#: ../base/ufos/menu_research.ufo:1191 ../base/ufos/menu_transfer.ufo:312
+#: ../base/ufos/menu_hire.ufo:820 ../base/ufos/menu_production.ufo:477
+#: ../base/ufos/menu_research.ufo:1191 ../base/ufos/menu_transfer.ufo:332
 msgid "Back to baseview"
 msgstr "Tilbage til baseoverblik"
 
@@ -1142,72 +1142,72 @@ msgstr "Afkryds for brug af denne metode for reaktionsild."
 msgid "Use Item"
 msgstr "Brug udstyr"
 
-#: ../base/ufos/menu_basedefense.ufo:75
+#: ../base/ufos/menu_basedefense.ufo:104
 msgid "Your are changing this defense system"
 msgstr "Du ændrer dette forsvarssystem"
 
-#: ../base/ufos/menu_basedefense.ufo:85
+#: ../base/ufos/menu_basedefense.ufo:114
 msgid "Available defense:"
 msgstr "Tilgængelig forsvar:"
 
-#: ../base/ufos/menu_basedefense.ufo:121
+#: ../base/ufos/menu_basedefense.ufo:150
 msgid "Selected defense:"
 msgstr "Valgt forsvar:"
 
-#: ../base/ufos/menu_basedefense.ufo:129
+#: ../base/ufos/menu_basedefense.ufo:158
 msgid "Choose missile battery"
 msgstr "Vælg missilbatteri"
 
-#: ../base/ufos/menu_basedefense.ufo:140
+#: ../base/ufos/menu_basedefense.ufo:169
 msgid "Missile"
 msgstr "Missil"
 
-#: ../base/ufos/menu_basedefense.ufo:148
+#: ../base/ufos/menu_basedefense.ufo:177
 msgid "Choose laser battery"
 msgstr "Vælg laserbatteri"
 
-#: ../base/ufos/menu_basedefense.ufo:160
+#: ../base/ufos/menu_basedefense.ufo:189
 msgid "Laser"
 msgstr "Laser"
 
-#: ../base/ufos/menu_basedefense.ufo:185 ../base/ufos/menu_basedefense.ufo:207
+#: ../base/ufos/menu_basedefense.ufo:214 ../base/ufos/menu_basedefense.ufo:236
 msgid "Install selected defense system"
 msgstr "Installere valgt forsvarssystem"
 
-#: ../base/ufos/menu_basedefense.ufo:196 ../base/ufos/menu_basedefense.ufo:218
+#: ../base/ufos/menu_basedefense.ufo:225 ../base/ufos/menu_basedefense.ufo:247
 msgid "Remove this defense system"
 msgstr "Fjerne dette forsvarssystem"
 
-#: ../base/ufos/menu_basedefense.ufo:229
+#: ../base/ufos/menu_basedefense.ufo:258
 msgid "Equip this defense system with selected ammo"
 msgstr "Udstyr dette forsvarssystem med den valgte ammo"
 
-#: ../base/ufos/menu_basedefense.ufo:240
+#: ../base/ufos/menu_basedefense.ufo:269
 msgid "Remove ammo from this defense system"
 msgstr "Fjern ammo fra dette forsvarssystem"
 
-#: ../base/ufos/menu_basedefense.ufo:252
+#: ../base/ufos/menu_basedefense.ufo:281
 msgid "Choose defense system to build"
 msgstr "Vælg hvilket forsvarssystem der skal bygges"
 
-#: ../base/ufos/menu_basedefense.ufo:274
+#: ../base/ufos/menu_basedefense.ufo:303
 msgid "Choose defense system to build after removing current one"
 msgstr "Vælg forsvarssystem der skal bygges efter fjernelse af nuværende"
 
-#: ../base/ufos/menu_basedefense.ufo:296
+#: ../base/ufos/menu_basedefense.ufo:325
 msgid "Change ammo in the defense system"
 msgstr "Ændr ammo i forsvarssystemet"
 
 # # in game
-#: ../base/ufos/menu_basedefense.ufo:317
+#: ../base/ufos/menu_basedefense.ufo:346
 msgid "Current defense system"
 msgstr "Nuværende forsvarssystem"
 
-#: ../base/ufos/menu_basedefense.ufo:326
+#: ../base/ufos/menu_basedefense.ufo:355
 msgid "System to install after removal"
 msgstr "System til brug efter fjernelse"
 
-#: ../base/ufos/menu_basedefense.ufo:335
+#: ../base/ufos/menu_basedefense.ufo:364
 msgid "Ammo to use with installed system"
 msgstr "Ammo til brug for det installerede system"
 
@@ -1237,7 +1237,7 @@ msgstr "Byg mindst en hangar"
 
 #: ../base/ufos/menu_bases.ufo:153 ../base/ufos/menu_buy.ufo:2283
 #: ../base/ufos/menu_geoscape.ufo:1019 ../base/ufos/menu_production.ufo:825
-#: ../base/ufos/menu_transfer.ufo:267 ../base/ufos/research.ufo:100
+#: ../base/ufos/menu_transfer.ufo:287 ../base/ufos/research.ufo:100
 #: client/cl_map.c:327
 msgid "Aircraft"
 msgstr "Luftfartøj"
@@ -1263,7 +1263,7 @@ msgid "Can't transfer - only one base"
 msgstr "Kan ikke overføre - kun en base"
 
 #: ../base/ufos/menu_bases.ufo:225 ../base/ufos/menu_geoscape.ufo:681
-#: ../base/ufos/menu_transfer.ufo:108 ../base/ufos/menu_transfer.ufo:307
+#: ../base/ufos/menu_transfer.ufo:108 ../base/ufos/menu_transfer.ufo:327
 msgid "Transfer"
 msgstr "Overfør"
 
@@ -1669,7 +1669,7 @@ msgstr "Ingen energiforsyning på denne base."
 msgid "No hangars in this base."
 msgstr "Ingen hangarer på denne base."
 
-#: ../base/ufos/menu_buy.ufo:2257 client/cl_market.c:669
+#: ../base/ufos/menu_buy.ufo:2257 client/cl_market.c:690
 msgid "No storage in this base."
 msgstr "Intet lager på denne base."
 
@@ -1811,7 +1811,7 @@ msgstr "Base er under angreb - hvad nu?"
 msgid "Select base to transfer to"
 msgstr "Vælg base der skal overføres til"
 
-#: ../base/ufos/menu_geoscape.ufo:668 ../base/ufos/menu_transfer.ufo:292
+#: ../base/ufos/menu_geoscape.ufo:668 ../base/ufos/menu_transfer.ufo:312
 msgid "Start the transfer"
 msgstr "Begynd overførslen"
 
@@ -1960,35 +1960,35 @@ msgstr "Udførte missioner:"
 msgid "Enemies Killed:"
 msgstr "Fjender dræbt:"
 
-#: ../base/ufos/menu_hire.ufo:720
+#: ../base/ufos/menu_hire.ufo:740
 msgid "Hire soldiers"
 msgstr "Ansæt soldater"
 
-#: ../base/ufos/menu_hire.ufo:735
+#: ../base/ufos/menu_hire.ufo:755
 msgid "Soldiers"
 msgstr "Soldater"
 
-#: ../base/ufos/menu_hire.ufo:740
+#: ../base/ufos/menu_hire.ufo:760
 msgid "Hire scientists"
 msgstr "Ansæt videnskabsmænd"
 
-#: ../base/ufos/menu_hire.ufo:755
+#: ../base/ufos/menu_hire.ufo:775
 msgid "Scientists"
 msgstr "Videnskabsmænd"
 
-#: ../base/ufos/menu_hire.ufo:760
+#: ../base/ufos/menu_hire.ufo:780
 msgid "Hire workers"
 msgstr "Ansæt arbejdere"
 
-#: ../base/ufos/menu_hire.ufo:775
+#: ../base/ufos/menu_hire.ufo:795
 msgid "Workers"
 msgstr "Arbejdere"
 
-#: ../base/ufos/menu_hire.ufo:780
+#: ../base/ufos/menu_hire.ufo:800
 msgid "Hire medics"
 msgstr "Ansæt læger"
 
-#: ../base/ufos/menu_hire.ufo:795 ../base/ufos/menu_hospital.ufo:478
+#: ../base/ufos/menu_hire.ufo:815 ../base/ufos/menu_hospital.ufo:478
 msgid "Medics"
 msgstr "Læger"
 
@@ -2783,7 +2783,7 @@ msgstr "Gamma:"
 msgid "Low"
 msgstr "Lav"
 
-#: ../base/ufos/menu_options.ufo:360 client/cl_mapfightequip.c:1541
+#: ../base/ufos/menu_options.ufo:360 client/cl_mapfightequip.c:1710
 msgid "Medium"
 msgstr "Mellem"
 
@@ -3162,7 +3162,7 @@ msgstr "Missioner"
 msgid "Bases"
 msgstr "Baser"
 
-#: ../base/ufos/menu_stats.ufo:97 ../base/ufos/menu_transfer.ufo:227
+#: ../base/ufos/menu_stats.ufo:97 ../base/ufos/menu_transfer.ufo:247
 msgid "Employees"
 msgstr "Ansatte"
 
@@ -3309,35 +3309,35 @@ msgstr "Baseinfo"
 msgid "Cargo onboard"
 msgstr "Last ombord"
 
-#: ../base/ufos/menu_transfer.ufo:192
+#: ../base/ufos/menu_transfer.ufo:212
 msgid "Show only items"
 msgstr "Vis kun udstyr"
 
-#: ../base/ufos/menu_transfer.ufo:207 ../base/ufos/research.ufo:103
+#: ../base/ufos/menu_transfer.ufo:227 ../base/ufos/research.ufo:103
 msgid "Equipment"
 msgstr "Udstyr"
 
-#: ../base/ufos/menu_transfer.ufo:212
+#: ../base/ufos/menu_transfer.ufo:232
 msgid "Show only employees"
 msgstr "Vis kun ansatte"
 
-#: ../base/ufos/menu_transfer.ufo:232
+#: ../base/ufos/menu_transfer.ufo:252
 msgid "Show only aliens"
 msgstr "Vis kun rumvæsener"
 
-#: ../base/ufos/menu_transfer.ufo:247 client/cl_campaign.c:4476
+#: ../base/ufos/menu_transfer.ufo:267 client/cl_campaign.c:4502
 msgid "Aliens"
 msgstr "Rumvæsener"
 
-#: ../base/ufos/menu_transfer.ufo:252
+#: ../base/ufos/menu_transfer.ufo:272
 msgid "Show only aircraft"
 msgstr "Vis kun luftfartøj"
 
-#: ../base/ufos/menu_transfer.ufo:272
+#: ../base/ufos/menu_transfer.ufo:292
 msgid "Empty the aircraft storage"
 msgstr "Tøm luftfartøjets lager"
 
-#: ../base/ufos/menu_transfer.ufo:287
+#: ../base/ufos/menu_transfer.ufo:307
 msgid "Unload"
 msgstr "Tøm"
 
@@ -3783,9 +3783,9 @@ msgstr "Antistof"
 msgid "Alien Breathing Apparatus"
 msgstr "Rumvæsen-åndedrætapparat"
 
-#: ../base/ufos/otheritems.ufo:26 ../base/ufos/research.ufo:4058
-#: ../base/ufos/research.ufo:4070 ../base/ufos/research.ufo:4078
-#: ../base/ufos/research.ufo:4094
+#: ../base/ufos/otheritems.ufo:26 ../base/ufos/research.ufo:4066
+#: ../base/ufos/research.ufo:4078 ../base/ufos/research.ufo:4086
+#: ../base/ufos/research.ufo:4102
 msgid "Alien Materials"
 msgstr "Rumvæsen-materialer"
 
@@ -3800,7 +3800,7 @@ msgstr "Baggrund"
 
 #: ../base/ufos/research.ufo:101
 msgid "Base Facilities"
-msgstr "Basefaciliteter"
+msgstr "Bygninger"
 
 #: ../base/ufos/research.ufo:102
 msgid "Research Reports"
@@ -3937,17 +3937,18 @@ msgstr ""
 #: ../base/ufos/research.ufo:2261 ../base/ufos/research.ufo:2269
 #: ../base/ufos/research.ufo:2337 ../base/ufos/research.ufo:2345
 #: ../base/ufos/research.ufo:2373 ../base/ufos/research.ufo:2381
-#: ../base/ufos/research.ufo:3075 ../base/ufos/research.ufo:3083
-#: ../base/ufos/research.ufo:3116 ../base/ufos/research.ufo:3124
-#: ../base/ufos/research.ufo:3158 ../base/ufos/research.ufo:3166
-#: ../base/ufos/research.ufo:3200 ../base/ufos/research.ufo:3208
-#: ../base/ufos/research.ufo:3242 ../base/ufos/research.ufo:3250
-#: ../base/ufos/research.ufo:3284 ../base/ufos/research.ufo:3292
-#: ../base/ufos/research.ufo:3733 ../base/ufos/research.ufo:3740
-#: ../base/ufos/research.ufo:3770 ../base/ufos/research.ufo:3777
-#: ../base/ufos/research.ufo:3806 ../base/ufos/research.ufo:3813
-#: ../base/ufos/research.ufo:3984 ../base/ufos/research.ufo:3992
-#: ../base/ufos/research.ufo:4068 ../base/ufos/research.ufo:4076
+#: ../base/ufos/research.ufo:2957 ../base/ufos/research.ufo:3083
+#: ../base/ufos/research.ufo:3091 ../base/ufos/research.ufo:3124
+#: ../base/ufos/research.ufo:3132 ../base/ufos/research.ufo:3166
+#: ../base/ufos/research.ufo:3174 ../base/ufos/research.ufo:3208
+#: ../base/ufos/research.ufo:3216 ../base/ufos/research.ufo:3250
+#: ../base/ufos/research.ufo:3258 ../base/ufos/research.ufo:3292
+#: ../base/ufos/research.ufo:3300 ../base/ufos/research.ufo:3741
+#: ../base/ufos/research.ufo:3748 ../base/ufos/research.ufo:3778
+#: ../base/ufos/research.ufo:3785 ../base/ufos/research.ufo:3814
+#: ../base/ufos/research.ufo:3821 ../base/ufos/research.ufo:3992
+#: ../base/ufos/research.ufo:4000 ../base/ufos/research.ufo:4076
+#: ../base/ufos/research.ufo:4084
 msgid "mail_from_paul_navarre"
 msgstr "e-post_fra_paul_navarre"
 
@@ -3990,23 +3991,23 @@ msgstr "e-post_fra_paul_navarre"
 #: ../base/ufos/research.ufo:2262 ../base/ufos/research.ufo:2270
 #: ../base/ufos/research.ufo:2338 ../base/ufos/research.ufo:2346
 #: ../base/ufos/research.ufo:2374 ../base/ufos/research.ufo:2382
-#: ../base/ufos/research.ufo:3076 ../base/ufos/research.ufo:3084
-#: ../base/ufos/research.ufo:3117 ../base/ufos/research.ufo:3125
-#: ../base/ufos/research.ufo:3159 ../base/ufos/research.ufo:3167
-#: ../base/ufos/research.ufo:3201 ../base/ufos/research.ufo:3209
-#: ../base/ufos/research.ufo:3243 ../base/ufos/research.ufo:3251
-#: ../base/ufos/research.ufo:3285 ../base/ufos/research.ufo:3293
-#: ../base/ufos/research.ufo:3355 ../base/ufos/research.ufo:3363
-#: ../base/ufos/research.ufo:3413 ../base/ufos/research.ufo:3421
-#: ../base/ufos/research.ufo:3457 ../base/ufos/research.ufo:3465
-#: ../base/ufos/research.ufo:3499 ../base/ufos/research.ufo:3507
-#: ../base/ufos/research.ufo:3734 ../base/ufos/research.ufo:3741
-#: ../base/ufos/research.ufo:3771 ../base/ufos/research.ufo:3778
-#: ../base/ufos/research.ufo:3807 ../base/ufos/research.ufo:3814
-#: ../base/ufos/research.ufo:3985 ../base/ufos/research.ufo:3993
-#: ../base/ufos/research.ufo:4069 ../base/ufos/research.ufo:4077
-#: ../base/ufos/research.ufo:4163 ../base/ufos/research.ufo:4193
-#: ../base/ufos/research.ufo:4200
+#: ../base/ufos/research.ufo:2958 ../base/ufos/research.ufo:3084
+#: ../base/ufos/research.ufo:3092 ../base/ufos/research.ufo:3125
+#: ../base/ufos/research.ufo:3133 ../base/ufos/research.ufo:3167
+#: ../base/ufos/research.ufo:3175 ../base/ufos/research.ufo:3209
+#: ../base/ufos/research.ufo:3217 ../base/ufos/research.ufo:3251
+#: ../base/ufos/research.ufo:3259 ../base/ufos/research.ufo:3293
+#: ../base/ufos/research.ufo:3301 ../base/ufos/research.ufo:3363
+#: ../base/ufos/research.ufo:3371 ../base/ufos/research.ufo:3421
+#: ../base/ufos/research.ufo:3429 ../base/ufos/research.ufo:3465
+#: ../base/ufos/research.ufo:3473 ../base/ufos/research.ufo:3507
+#: ../base/ufos/research.ufo:3515 ../base/ufos/research.ufo:3742
+#: ../base/ufos/research.ufo:3749 ../base/ufos/research.ufo:3779
+#: ../base/ufos/research.ufo:3786 ../base/ufos/research.ufo:3815
+#: ../base/ufos/research.ufo:3822 ../base/ufos/research.ufo:3993
+#: ../base/ufos/research.ufo:4001 ../base/ufos/research.ufo:4077
+#: ../base/ufos/research.ufo:4085 ../base/ufos/research.ufo:4171
+#: ../base/ufos/research.ufo:4201 ../base/ufos/research.ufo:4208
 msgid "mail_to_base_commander"
 msgstr "e-post_til_øverstkommanderende"
 
@@ -4176,12 +4177,12 @@ msgstr "Ingen information om tidligere forskning tilgængelig"
 #: ../base/ufos/research.ufo:350 ../base/ufos/research.ufo:358
 #: ../base/ufos/research.ufo:386 ../base/ufos/research.ufo:394
 #: ../base/ufos/research.ufo:421 ../base/ufos/research.ufo:429
-#: ../base/ufos/research.ufo:3354 ../base/ufos/research.ufo:3362
-#: ../base/ufos/research.ufo:3412 ../base/ufos/research.ufo:3420
-#: ../base/ufos/research.ufo:3456 ../base/ufos/research.ufo:3464
-#: ../base/ufos/research.ufo:3498 ../base/ufos/research.ufo:3506
-#: ../base/ufos/research.ufo:4162 ../base/ufos/research.ufo:4192
-#: ../base/ufos/research.ufo:4199
+#: ../base/ufos/research.ufo:3362 ../base/ufos/research.ufo:3370
+#: ../base/ufos/research.ufo:3420 ../base/ufos/research.ufo:3428
+#: ../base/ufos/research.ufo:3464 ../base/ufos/research.ufo:3472
+#: ../base/ufos/research.ufo:3506 ../base/ufos/research.ufo:3514
+#: ../base/ufos/research.ufo:4170 ../base/ufos/research.ufo:4200
+#: ../base/ufos/research.ufo:4207
 msgid "mail_from_dr_connor"
 msgstr "e-post_fra_dr_connor"
 
@@ -5194,369 +5195,1744 @@ msgstr "Egenskab for fart"
 # Kunne også være karantænestation
 #: ../base/ufos/research.ufo:2662
 msgid "b_aliencontainment_txt"
-msgstr "<TODO>"
+msgstr ""
+"Rettesnor -- Rumvæsenopbevaringsrum\n"
+"\n"
+"KLASSIFIKATIONSNIVEAU SORT\n"
+"\n"
+"FALANKS Rumvæsenudrykningsenhed\n"
+"\n"
+"Forskningsdokument, Sigma tilladelse -- Kun for kommandørens øjne\n"
+"\n"
+"Arkiveret: 16. februar 1958\n"
+"\n"
+"Af: Maj. Marcel LeClerc, Basekommandør, FALANKS, Stillehavskommandoen\n"
+"\n"
+"\n"
+"\n"
+"Oversigt\n"
+"\n"
+"Den første prioritet for rumvæsenudrykningsenheden er at klargøre sig til en "
+"tid hvor der er behov for den. FALANKS rumvæsenopbevaringsrum er en vigtig "
+"del af enhver invasionsreaktionsplan. Den indeholder atmosfæriske "
+"beboelseskamre, forhørsmaskiner, fødevarer og alle de andre apparater som vi "
+"har kunnet forudse de er behov for til at holde liv i udenjordisk liv.\n"
+"\n"
+"De lufttætte beboelseskamre udgør et sted at opbevare og holde rumvæsener i "
+"liv i en betydelig tidsperiode. Deres generatorer kan pumpe ethvert kammer "
+"fuld af et ønsket miks af gasser. Dette kan forsyne et rumvæsen med åndbar "
+"luft i flere uger, hvilket er længere tid end den forventede levetid for et "
+"individ i vores forskningsprogram. Indhold som ikke forefindes naturligt på "
+"jorden kan være svære at opdrive, men sandsyndligheden for at dette vil "
+"blive en hindrig for vores forskning er uendelig lille. I det værste "
+"tilfælde er generatorerne designet til at kunne tilsluttes "
+"respiratorudstyr.\n"
+"\n"
+"For det andet er waldo-opereret medicinske apparater og forhørsapparater til "
+"stede i hvert beboelseskammer; disse kan tildele beroligende midler, medicin "
+"eller andre kemiske indsprøjtninger via en pneumatisk pilaffyrer, eller de "
+"kan tildele elektro-chok i forhørsøjemed. Der er også en såkaldt »panikknap« "
+"installeret i hvert kammer og i kontrolrummet er en panikknap for hver blok "
+"af kamre placeret. Panikknappen kan i en nødsituation øjeblikkeligt "
+"destruere indholdet af kammeret.\n"
+"\n"
+"Kamrene og korridorerne i rumvæsenopbevaringsrummet er specielt designet til "
+"at tillade rumvæsener af enhver form og størrelse transport og opbevaring. "
+"Rummet har også en fuldt udstyret cryo-lighus som kan opbevare lig og prøver "
+"til senere obduktion.\n"
+"\n"
+"\n"
+"Anbefalet doktrin\n"
+"\n"
+"I tilfælde af en invasion, bør rumvæsenopbevaringsrummet bruges i vid "
+"udstrækning til både at holde liv i rumvæsener og opbevare døde eksemplarer. "
+"Disse skal bruges til forskning og gør det muligt for os at studere dem i "
+"levende live. Der er ingen større prioritet end at afsløre tankeprocessen "
+"hos rumvæsenerne, at lære om deres motivation og måske finde et kompromis, "
+"en mulighed for at kommunikere, eller en egnet modstrategi som en gang for "
+"alle kan neutralisere fjenden.\n"
+"\n"
+"Hvis en FALANKS base bliver angrebet, bør det straks overvejes at trykke på "
+"panikknappen til hele rumvæsenopbevaringsrummet. Med mindre der er "
+"uerstattelige individer i rummet, kan vi ikke risikere at de angribende "
+"rumvæsener frigiver deres tilfangetagne kammerater. Øjeblikkelig og "
+"fuldstændig bedøvelse er en anden, mere risikofyldt strategi -- jeg skal dog "
+"understrege at vi ikke vinder krigen med halve løsninger.\n"
+"\n"
+"\n"
+"Tilføjelse\n"
+"\n"
+"Til en eventuel fremtidig kommandør: Husk at maskineriet i "
+"rumvæsenopbevaringsrummet, som en stor del af FALANKS udstyr, stadig mangler "
+"at gennemgå en rigtig test mod en udenjordisk styrke. Opgraderinger eller "
+"justeringer vil sikkert være påkrævet, for at den kan udføre sin rolle i "
+"forhold til sit design."
 
 #: ../base/ufos/research.ufo:2680
 msgid "b_command_txt"
-msgstr "<TODO>"
+msgstr ""
+"Blueprints -- Command Centre\n"
+"\n"
+"CLASSIFIED LEVEL BLACK\n"
+"\n"
+"PHALANX Extraterrestrial Response Unit\n"
+"\n"
+"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"\n"
+"Filed: 30 July 2027\n"
+"\n"
+"By: Dr. Richard Strohm, Base Commander, PHALANX, Pacific Operations Command\n"
+"\n"
+"\n"
+"\n"
+"Overview\n"
+"\n"
+"To any noble personages reading this report -- yeah, right -- I should warn "
+"you that I'm somewhat drunk and am dictating the last of my paperwork before "
+"they close the base down forever. And I'll probably be long-dead before "
+"anyone digs up any info about this old project, so I can't get in trouble "
+"for whatever I say here. Just for the record, the bastarding SecDef can get "
+"buggered with a chainsaw. 'Budget cuts' my ass.\n"
+"\n"
+"Anyway, we've made some upgrades to the CC lately, so I've got to submit a "
+"new report.\n"
+"\n"
+"The Command Centre is the nerve centre of any PHALANX base. It coordinates "
+"all base activity from research to engineering, it gathers and interprets "
+"data from our radar installations, it serves as a war room for mission "
+"planning, and it is the C3 (Command/Control/Communications) hub that "
+"launches and directs our air-to-air interceptions. A base can still operate "
+"without a functional Command Centre, but it would be blind, deaf and dumb; "
+"our interceptors couldn't even launch for lack of traffic control.\n"
+"\n"
+"The CC is packed floor to ceiling with a brand new H-9000 mainframe and "
+"state-of-the-art communications gear, all of which is being ripped out by a "
+"gang of jackhammer-equipped thugs even as we speak. This equipment can't "
+"function without a power plant to supply it with enough electricity.\n"
+"\n"
+"In my experience, most of the command staff actually lives in the CC, but "
+"I'm told that lower-ranking individuals do get to see their bunks once every "
+"few days. Speaking for myself, though, that's anecdotal evidence at best.\n"
+"\n"
+"\n"
+"Recommended Doctrine\n"
+"\n"
+"In the unlikely event that this type of installation is ever built again, "
+"keep it supplied with enough power to run it properly, and place it in a "
+"well-protected spot some distance from the entrance and hangars. If a base "
+"does get attacked, defending the CC should be a top priority, because "
+"without it we will be unable to put up any kind of effective fight until it "
+"can be repaired.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"Addendum, Executive Officer Abel S. Howard, 18 March 2084:\n"
+"\n"
+"The old CC blueprints have been updated by our engineers to replace the "
+"ancient H-9000 mainframe and terminals with up-to-date holo-workstations and "
+"a fresh supercomputer installation. All other components are still viable "
+"and effective."
 
 #: ../base/ufos/research.ufo:2698
 msgid "b_entrance_txt"
-msgstr "<TODO>"
+msgstr ""
+"Blueprints -- Entrance\n"
+"\n"
+"CLASSIFIED LEVEL BLACK\n"
+"\n"
+"PHALANX Extraterrestrial Response Unit\n"
+"\n"
+"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"\n"
+"Filed: 26 January 1958\n"
+"\n"
+"By: Maj. Marcel LeClerc, Base Commander, PHALANX, Pacific Operations "
+"Command\n"
+"\n"
+"\n"
+"\n"
+"Overview\n"
+"\n"
+"The Base Entrance is the first structure built at any new PHALANX location. "
+"It is the primary -- and sometimes only -- way for equipment and personnel "
+"to enter the base. It consists of a vehicle ramp and a stairway that allow "
+"easy movement between base and surface. A small, camouflaged gatehouse is "
+"built on top for security and will also hide the entrance from flyovers. "
+"Like all our surface installations, it is coated with radar- and infrared-"
+"absorbing paints to reduce the chance of detection.\n"
+"\n"
+"\n"
+"Recommended Doctrine\n"
+"\n"
+"By its very nature, the Entrance is one of the most vulnerable facilities in "
+"any base. Hostile extraterrestrials will almost certainly attempt to gain "
+"access here. It is one of the focal points for the defence of a base, and "
+"should be placed at a considered distance to the Command Centre so that on-"
+"duty soldiers can respond to an attack with utmost alacrity without putting "
+"the CC at risk.\n"
+"\n"
+"On its own the Entrance facility has little tactical value. It can be "
+"assumed that any EXTs will merely try to hold the Entrance and choose more "
+"tempting targets to actually assault, since the Entrance usually contains "
+"nothing volatile and it has no areas that are particularly sensitive to "
+"destruction. Having no advanced equipment or components, it is also quick "
+"and cheap to repair. If damaged, other structures can temporarily take over "
+"the Entrance's functions without significantly impeding base operation.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"None."
 
-#: ../base/ufos/research.ufo:2712
+#: ../base/ufos/research.ufo:2712 ../base/ufos/research.ufo:3636
+#: ../base/ufos/research.ufo:3655
 msgid "b_missile_txt"
-msgstr "<TODO>"
+msgstr ""
+"Blueprints -- Missile Battery\n"
+"\n"
+"CLASSIFIED LEVEL BLACK\n"
+"\n"
+"PHALANX Extraterrestrial Response Unit\n"
+"\n"
+"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"\n"
+"Filed: 18 March 2084\n"
+"\n"
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
+"Operations Command\n"
+"\n"
+"\n"
+"\n"
+"Overview\n"
+"\n"
+"Missiles have gotten more and more dangerous since World War 2, while "
+"countermeasure technologies have only been becoming effective since the "
+"start of the 21st century. In a contest between attack and defence, the "
+"attacker has always had the advantage. However, this has not deterred the "
+"aliens from developing defences to blow our minds.\n"
+"\n"
+"As an example, GEU forces have engaged alien craft with SAMs (Surface-to-Air "
+"Missiles) in the skies above Bonn. Forty missiles were launched from "
+"batteries across Europe while they had radar lock on two of the alien craft. "
+"Later, nearby infantry units fired between twelve and fifteen shoulder-"
+"mounted anti-air weapons.\n"
+"\n"
+"The number of hits scored? One. Just one. The UFO suffered a minor drop in "
+"acceleration during its landing at Bonn and later took off again without a "
+"hitch.\n"
+"\n"
+"The conclusions are obvious: alien EW (Electronic Warfare) capability is "
+"miles in advance of our own. However, we at PHALANX have made a thorough "
+"study of the sole hit scored, and it was not a matter of luck. What happened "
+"is that the UFO exposed itself at a less stealthy angle while dodging other "
+"incoming munitions, allowing the missile to hold lock all the way to its "
+"target.\n"
+"\n"
+"This proves that the aliens are not invulnerable to our missiles. We simply "
+"need the best ones for the job. These realisations have led us to adapt some "
+"old missile battery plans and reequip them with brand-new launchers. Our "
+"results are promising.\n"
+"\n"
+"The battery consists of 4 launchers that 'pop up' to the surface when "
+"engaging a target. Each launcher carries 20 of the AA51 \"Cicada\" SAM. This "
+"is the most advanced missile on Earth, packing more electronics than an "
+"airliner, designed to knock enemy aircraft right out of the sky regardless "
+"of how fast they're going. There is no better emergency defence weapon on "
+"the planet at the time of this writing.\n"
+"\n"
+"Against alien craft, the \"Cicada\"'s chances to hit will still be low, but "
+"in sufficient numbers it will hurt them. The missile and its electronics "
+"suite are of course highly expensive, well outside our budget range in the "
+"numbers required to succesfully engage incoming UFOs. Fortunately the UN has "
+"agreed to supply us all standard SAMs from its own strategic reserves at no "
+"cost to us.\n"
+"\n"
+"\n"
+"Recommended Doctrine\n"
+"\n"
+"If built at one of our bases, the missile battery can be ordered to engage "
+"any UFO in range or wait until a UFO is identified as preparing to attack "
+"the base in question. This decision is up to the Base Commander. Assisting "
+"our interceptors by 'softening up' a UFO with SAMs would help take some of "
+"the pressure off our pilots and aircraft, but there is simply no way to "
+"completely hide our missile launches despite our best attempts to camouflage "
+"them. Repeated large-scale launches will give away our position sooner or "
+"later.\n"
+"\n"
+"The missile battery will be at moderate risk during a base attack. It is "
+"designed to prevent base attacks; if one has gotten through, it should no "
+"longer matter to the current attackers unless they're paving the way for a "
+"follow-up. It may be a tempting target of opportunity, however, because "
+"while our missiles are well-protected they will detonate if subjected to "
+"enough abuse. An explosion in the missile battery could have disastrous "
+"effects on the facility and the base at large.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"None."
 
 #: ../base/ufos/research.ufo:2730
 msgid "b_large_hangar_txt"
-msgstr "<TODO>"
+msgstr ""
+"Blueprints -- Large Hangar\n"
+"\n"
+"CLASSIFIED LEVEL BLACK\n"
+"\n"
+"PHALANX Extraterrestrial Response Unit\n"
+"\n"
+"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"\n"
+"Filed: 11 August 2008\n"
+"\n"
+"By: Gen. E. Baxter, Base Commander, PHALANX, Pacific Operations Command\n"
+"\n"
+"\n"
+"\n"
+"Overview\n"
+"\n"
+"Due to the recent restructuring of our airfleet, we've had to make a "
+"complete reassessment and redesign of our hangar facilities. The VTOL "
+"(Vertical Take-Off and Landing) requirement for all new PHALANX aircraft has "
+"eliminated our need for runways. This has allowed us to move all hangar "
+"facilities into the actual base to improve security and response times.\n"
+"\n"
+"The Large Hangar provides underground space to store and maintain 1 large "
+"VTOL aircraft. Repairs, rearmament and refuelling can be carried out in "
+"complete obscurity. The aircraft never even sees the light of day until it's "
+"time for launch. During a launch, the hangar roof folds open and the large "
+"hydraulic lift raises the aircraft to a position above the roof where it can "
+"safely take off.\n"
+"\n"
+"For landing procedures, the lift features several tall catchhooks that -- "
+"once engaged by the undercarrige of a hovering pilot -- gently pull the "
+"aircraft down into a landing position. The catchhooks can intelligently "
+"adjust their own grip and even pass the grip from hook to hook to properly "
+"line up the undercarriage for landing. Once the catchhooks have snared the "
+"undercarriage and pulled it down to the landing surface, all the pilot needs "
+"to do is power down his engines. The system is simple and easy to use once a "
+"pilot gets the hang of it.\n"
+"\n"
+"A nearly-identical system has been implemented for the Small Hangar.\n"
+"\n"
+"The Large Hangar cannot house small craft due to incompatible support "
+"equipment such as fuel lines.\n"
+"\n"
+"\n"
+"Recommended Doctrine\n"
+"\n"
+"The primary function of the Large Hangar is to house dropships for rapid "
+"deployment of troops to sites of alien activity. Alternately it can house "
+"and support larger combat craft. Please refer to specific aircraft files to "
+"review their capabilities and deployment strategy.\n"
+"\n"
+"Every PHALANX aircraft requires 1 hangar of appropriate size for storage, "
+"maintenance and deployment.\n"
+"\n"
+"Hangars are a particularly vulnerable installation due to their direct "
+"connection to the surface. They will be a primary point of entrance for any "
+"extraterrestrial attackers. They are an extreme damage risk, filled with "
+"volatiles such as jet fuel and possibly high-explosive aircraft munitions. "
+"Worse, any aircraft left behind at the base will be a highly tempting "
+"target; severe damage to our interceptors -- or even more frightening, the "
+"dropship -- might put us out of action for weeks.\n"
+"\n"
+"If possible, all aircraft should be scrambled before an impending base "
+"attack and moved out of the area until the attack is over. They may be "
+"engaged in the air by an approaching UFO, but at least they will have the "
+"advantage of being able to manoeuvre. Still, this may not always be a viable "
+"tactic. Scrambling our craft within range of a heavily-armed attack ship "
+"could have more disastrous results than leaving them in their hangars, as "
+"tempting a target as that would make them.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"None."
 
 #: ../base/ufos/research.ufo:2748
 msgid "b_hospital_txt"
-msgstr "<TODO>"
+msgstr ""
+"Blueprints -- Hospital\n"
+"\n"
+"CLASSIFIED LEVEL BLACK\n"
+"\n"
+"PHALANX Extraterrestrial Response Unit\n"
+"\n"
+"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"\n"
+"Filed: 19 March 2084\n"
+"\n"
+"By: Surgeon-Captain Helen Floydd, Medical Division, PHALANX, Atlantic "
+"Operations Command\n"
+"\n"
+"\n"
+"\n"
+"Overview\n"
+"\n"
+"This conflict is going to be ugly, Commander. In order to treat the heavily-"
+"injured battlefield casualties we're going to see, we need advanced "
+"facilities with equipment no standard civilian or military hospital has "
+"available. This much is obvious; hundreds died needlessly in Mumbai "
+"hospitals because no proper machinery was available to treat the horrific "
+"bone-deep plasma burns inflicted by the alien weapons. We must be better "
+"prepared than that.\n"
+"\n"
+"The old PHALANX hospital designs are woefully inadequate to deal with the "
+"coming storm. They have never been updated since their creation in 1960 and "
+"contained little to no purpose-designed equipment. In the end we've had to "
+"completely replace them with new plans created by myself, with the help of "
+"Cdr. Navarre and our building experts. How the previous management expected "
+"to deal with battle wounds from unknown alien weaponry I will never know.\n"
+"\n"
+"As it stands, our hospital facilities are now the finest in the world. We "
+"are the leading experts in treating burn trauma, especially the removal and "
+"regeneration of charred tissue. We encourage injured flesh to regrow itself "
+"through intensive therapy which includes a heavy course of drugs, electrical "
+"nerve and muscle stimulation, and nanobot infusions directly into the wound. "
+"Theoretically, we should be able to restore any living human being to full "
+"health in six weeks. This includes psychological evaluation and injury "
+"counselling. Lighter injuries will of course take less time to heal.\n"
+"\n"
+"We also have facilities to carry out amputation and major bionic surgery. "
+"Powerful cybernetic limbs have been made available to us by our military "
+"sources around the world, as well as armoured torso cages, electronic eyes "
+"and other internal machinery. These can be installed into our soldiers at "
+"the Hospital facility to upgrade their combat efficiency if we can afford "
+"the high cost and convalescence time.\n"
+"\n"
+"The Hospital requires a Power Plant to fuel its high and continuous "
+"electricity demand.\n"
+"\n"
+"\n"
+"Recommended Doctrine\n"
+"\n"
+"Every base with armed-response troops should contain a Hospital for "
+"treatment. If there is no PHALANX Hospital available, soldiers will have to "
+"be sent out to standard hospitals where suboptimal treatment could result in "
+"a permanent loss of ability or even death.\n"
+"\n"
+"The advantages of upgrading our soldiers with mechanical parts should be "
+"obvious. These procedures can only be performed on a healthy body; "
+"convalescing troops who have sustained recent physical hardships or surgery "
+"must complete their convalescence before they can become eligible for bionic "
+"upgrades. Keep in mind also that bionic limb or eye replacement may have a "
+"negative impact on the patient's morale.\n"
+"\n"
+"Tactically, the Hospital is a moderate threat area. The aliens may try to "
+"kill our wounded and deprive us of proper medical facilities, but it is "
+"relatively unlikely that any attackers would select the Hospital as their "
+"primary target. Still, if we are attacked, a guard should be posted at the "
+"Hospital immediately.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"None."
 
 #: ../base/ufos/research.ufo:2766
 msgid "b_small_hangar_txt"
-msgstr "<TODO>"
+msgstr ""
+"Blueprints -- Small Hangar\n"
+"\n"
+"CLASSIFIED LEVEL BLACK\n"
+"\n"
+"PHALANX Extraterrestrial Response Unit\n"
+"\n"
+"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"\n"
+"Filed: 11 August 2008\n"
+"\n"
+"By: Gen. E. Baxter, Base Commander, PHALANX, Pacific Operations Command\n"
+"\n"
+"\n"
+"\n"
+"Overview\n"
+"\n"
+"Due to the recent restructuring of our airfleet, we've had to make a "
+"complete reassessment and redesign of our hangar facilities. The VTOL "
+"(Vertical Take-Off and Landing) requirement for all new PHALANX aircraft has "
+"eliminated our need for runways. This has allowed us to move all hangar "
+"facilities into the actual base to improve security and response times.\n"
+"\n"
+"The Small Hangar provides underground space to store and maintain 1 small "
+"VTOL aircraft. Repairs, rearmament and refuelling can be carried out in "
+"complete obscurity. The aircraft never even sees the light of day until it's "
+"time for launch. During a launch, the hangar roof folds open and the large "
+"hydraulic lift raises the aircraft to a position above the roof where it can "
+"safely take off.\n"
+"\n"
+"For landing procedures, the lift features several tall catchhooks that -- "
+"once engaged by the undercarrige of a hovering pilot -- gently pull the "
+"aircraft down into a landing position. The catchhooks can intelligently "
+"adjust their own grip and even pass the grip from hook to hook to properly "
+"line up the undercarriage for landing. Once the catchhooks have snared the "
+"undercarriage and pulled it down to the landing surface, all the pilot needs "
+"to do is power down his engines. The system is simple and easy to use once a "
+"pilot gets the hang of it.\n"
+"\n"
+"A nearly-identical system has been implemented for the Large Hangar.\n"
+"\n"
+"Obviously the Small Hangar cannot house large craft due to size "
+"considerations.\n"
+"\n"
+"\n"
+"Recommended Doctrine\n"
+"\n"
+"The primary function of the Small Hangar is to house interceptors for the "
+"interception of airborne UFOs. Please refer to specific aircraft files to "
+"review their capabilities and deployment strategy.\n"
+"\n"
+"Every PHALANX aircraft requires 1 hangar of appropriate size for storage, "
+"maintenance and deployment.\n"
+"\n"
+"Hangars are a particularly vulnerable installation due to their direct "
+"connection to the surface. They will be a primary point of entrance for any "
+"extraterrestrial attackers. They are an extreme damage risk, filled with "
+"volatiles such as jet fuel and possibly high-explosive aircraft munitions. "
+"Worse, any aircraft left behind at the base will be a highly tempting "
+"target; severe damage to our interceptors -- or even more frightening, the "
+"dropship -- might put us out of action for weeks.\n"
+"\n"
+"If possible, all aircraft should be scrambled before an impending base "
+"attack and moved out of the area until the attack is over. They may be "
+"engaged in the air by an approaching UFO, but at least they will have the "
+"advantage of being able to manoeuvre. Still, this may not always be a viable "
+"tactic. Scrambling our craft within range of a heavily-armed attack ship "
+"could have more disastrous results than leaving them in their hangars, as "
+"tempting a target as that would make them.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"None."
 
 #: ../base/ufos/research.ufo:2784
 msgid "b_lab_txt"
-msgstr "<TODO>"
+msgstr ""
+"Blueprints -- Laboratory\n"
+"\n"
+"CLASSIFIED LEVEL BLACK\n"
+"\n"
+"PHALANX Extraterrestrial Response Unit\n"
+"\n"
+"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"\n"
+"Filed: 02 October 2021\n"
+"\n"
+"By: Dr. Richard Strohm, R&D: Bio & Containment Division, PHALANX, Atlantic "
+"Operations Command\n"
+"\n"
+"\n"
+"\n"
+"Overview\n"
+"\n"
+"There is a reason why PHALANX labs have been considered the best in the US "
+"for the past 50 years. We invented aircraft Stealth technology in the 1960s "
+"with the XD4 stealth interceptor and have remained at the forefront with the "
+"first production of artificial spider silk four years ago. These are the "
+"results of combining the brightest people with the finest equipment "
+"available. By keeping ourselves at the forefront, we ensure readiness "
+"against a possible extraterrestrial threat.\n"
+"\n"
+"Our new laboratories are equipped for any kind of research; biotechnology, "
+"nanotechnology, high-energy lasers, particle physics and more. There is "
+"nothing that can fit inside the laboratory's walls that cannot be properly "
+"studied, dissected or disassembled. It comes standard with growing vats that "
+"can create any organic matter we might need, hologram projectors for testing "
+"and 3D simulation, laser and maser installations, a miniature tokamak fusion "
+"chamber for plasma research, and a powerful particle accelerator.\n"
+"\n"
+"Any one of these installations would cost a fortune for a civilian operation "
+"or military contractor, but due to our experience and efficiency, we can "
+"build and maintain all of them at a fraction of the cost. Project times are "
+"also greatly reduced by having many types of equipment available at a "
+"moment's notice. Our high-level research makes full and continuous use of "
+"all of it.\n"
+"\n"
+"As long as we keep receiving the funding we need, the laboratory will remain "
+"one of the most essential parts of our defence strategy. In order to defeat "
+"any enemy, we must first come to know him, perhaps even understand him. To "
+"do that we'll need the best research facilities humanity can build, and ours "
+"are it.\n"
+"\n"
+"The Laboratory requires a working Power Plant and Command Centre to "
+"function.\n"
+"\n"
+"\n"
+"Recommended Doctrine\n"
+"\n"
+"Our scientists don't need a lab to live in a base, but they can't do their "
+"work without one. We should construct and operate as many labs as may be "
+"needed and/or affordable. All extraterrestrial technology must be analysed "
+"and reverse-engineered (if possible) as soon as we can.\n"
+"\n"
+"As laboratories go, ours are quite cost-effective to build and provide work "
+"space for up to 10 scientists each, working full-time.\n"
+"\n"
+"During a possible base attack, they are a moderate-priority target. If "
+"extraterrestrial attackers are aware enough of our existence to attack our "
+"bases directly, they will most certainly want to shut down our research "
+"programs. There are easier targets that can threaten the survival entire "
+"base -- especially the power plant -- but if presented as a target of "
+"opportunity, the EXTs may very well take the time to set off explosives "
+"inside the lab, which tends to be full of volatile substances. Severe damage "
+"to the base could result if our labs are not adequately protected.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"Addendum, Dr. Dolan Connor, 16 March 2084:\n"
+"\n"
+"Reviewing the files on PHALANX laboratory facilities, I have concluded that "
+"these blueprints were well ahead of their time. The design is still viable "
+"and can be adapted to our use with only minor equipment upgrades."
 
 #: ../base/ufos/research.ufo:2802
 msgid "b_powerplant_txt"
-msgstr "<TODO>"
+msgstr ""
+"Blueprints -- Power Plant\n"
+"\n"
+"CLASSIFIED LEVEL BLACK\n"
+"\n"
+"PHALANX Extraterrestrial Response Unit\n"
+"\n"
+"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"\n"
+"Filed: 16 March 2084\n"
+"\n"
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
+"Operations Command\n"
+"\n"
+"\n"
+"\n"
+"Overview\n"
+"\n"
+"PHALANX has had trouble generating enough power to meet its needs ever since "
+"the organisation was first conceived in 1955. The old bases were forced to "
+"constantly pump in electricity from large, non-emitting sources (like "
+"hydroelectric dams) via many kilometres of wiring. They were completely "
+"dependent on outside power and were paralysed whenever the grid went down. "
+"It has taken the Russian nuclear revolution to enable full electrical "
+"autonomy for our underground bases, even when factoring high-energy "
+"research.\n"
+"\n"
+"Our plant of choice is the German HEFR (High-Energy Fission Reactor), a very "
+"efficient energy amplifier design. It is a subcritical reactor, a reactor "
+"that produces fission without achieving a sustained chain reaction. Instead "
+"it uses an external source of neutrons -- in this case a particle "
+"accelerator -- to stimulate the reaction. This method releases enough power "
+"to keep the particle accelerator running, as well as a power surplus that is "
+"redirected to feed the rest of the base.\n"
+"\n"
+"The HEFR runs on thorium rather than uranium, and most of its waste output "
+"will decay naturally to the radioactive level of coal ash in only 500 years. "
+"By comparison, the half-lives of the isotopes most frequently used in "
+"nuclear weapons and old reactors are 24,110 years for plutonium (Pu-239) and "
+"700 million years for uranium (U-235). The short-lived waste output is "
+"particularly easy to handle for the depleted element postprocessor "
+"integrated into the design. After a full trip through the postprocessor, the "
+"HEFR's reactor waste will take only weeks to decay to human-safe levels of "
+"radioactivity.\n"
+"\n"
+"In our design, the reactor core and operational machinery are built into a "
+"special shell located far deeper than the rest of the base. Only the coolant "
+"tanks and control/service entrances poke up to the base level. This protects "
+"against the possible but minuscule risk of a meltdown in case we completely "
+"lose refrigeration of the core.\n"
+"\n"
+"I admit, I copied half of the specifics verbatim from the various briefs "
+"I've read -- nuclear physics are a touch above my head -- but I understand "
+"the stats well enough. The power output of one plant is enough to fully meet "
+"the needs of a standard base. If a base is equipped with many high-energy "
+"buildings such as laboratories, a second plant may be required, but a "
+"subsequent increase in base defences and security will be required to "
+"properly protect it. We can easily and safely store enough fuel on-site for "
+"a decade of continued operation. A protected container is installed with "
+"every reactor, and it can be refuelled if necessary.\n"
+"\n"
+"\n"
+"Recommended Doctrine\n"
+"\n"
+"Every base needs at least one power plant. Without a power plant, many "
+"facilities -- including the Command Centre -- can't function. Bases with "
+"exceptional power use may need two or more to keep all our facilities "
+"working at top performance.\n"
+"\n"
+"Our base defence strategy should pay particular attention to defending the "
+"power plant. Damage to the coolant tanks could be disastrous; if we lose too "
+"much coolant a meltdown will be hard to avoid. We may consider stepping down "
+"the reactor in anticipation of an attack, but it would take a long time to "
+"get it started up again, during which we wouldn't be able to operate any "
+"energy-intensive equipment. Things like radar, laboratory equipment, even "
+"hangar lifts.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"None."
 
 #: ../base/ufos/research.ufo:2820
 msgid "b_quarters_txt"
-msgstr "<TODO>"
+msgstr ""
+"Blueprints -- Living Quarters\n"
+"\n"
+"CLASSIFIED LEVEL BLACK\n"
+"\n"
+"PHALANX Extraterrestrial Response Unit\n"
+"\n"
+"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"\n"
+"Filed: 22 January 1958\n"
+"\n"
+"By: Maj. Marcel LeClerc, Base Commander, PHALANX, Pacific Operations "
+"Command\n"
+"\n"
+"\n"
+"\n"
+"Overview\n"
+"\n"
+"The Living Quarters facility is the standard habitation unit for PHALANX "
+"personnel. It provides living space and sanitation for up to 20 people and "
+"several necessary ancillary personnel.\n"
+"\n"
+"The facility's lower floor contains a soldiers' barracks, communal showers, "
+"bathrooms, and a common area where troops can spend their off-duty time. "
+"Each soldier receives 1 bunk and 1 locker partition to store their personel "
+"effects such as civilian clothes. It is also intended for storage of "
+"uniforms and other on-duty equipment.\n"
+"\n"
+"The upper floor contains officers' quarters, generally used for any ranking/"
+"important personnel. Each private quarters has its own bed, desk, storage "
+"space and sanitary unit, and the level as a whole sports shared but separate "
+"shower cabins. This level is located above-ground and receives natural "
+"sunlight.\n"
+"\n"
+"In the case of an emergency, the Living Quarters has a special partition "
+"designed to function as a disaster shelter where non-combat personnel can "
+"take refuge until the all clear is given. The shelter provides oxygen and "
+"supplies for up to 12 people for 1 week. The access hatch is made of "
+"tungsten-reinforced titanium and will open for little short of a nuclear "
+"blast.\n"
+"\n"
+"The Living Quarters does not depend upon any other structures to operate.\n"
+"\n"
+"\n"
+"Recommended Doctrine\n"
+"\n"
+"The Living Quarters are an important part of evacuation procedures in the "
+"event of a base attack. All non-combat personnel are to drop their current "
+"tasks immediately and retreat to the nearest shelter or strongpoint, be it "
+"the Command Centre, Living Quarters or other appropriate facility. Seven "
+"minutes after the attack alarm sounds, all disaster shelter doors will close "
+"-- regardless of how many personnel are accounted for -- and afterwards they "
+"will refuse to open except from the inside. Everyone who is not going to "
+"participate in the fight should be inside by that time.\n"
+"\n"
+"The facility is almost worthless from a tactical standpoint, and will most "
+"likely be ignored by any extraterrestrials. It is thoroughly unimportant "
+"during an attack, as well as cheap to build and easy to repair. There is "
+"very little a hostile force could do short of total destruction that can "
+"really inconvenience a Living Quarters.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"None."
 
 #: ../base/ufos/research.ufo:2838
 msgid "b_radar_txt"
-msgstr "<TODO>"
+msgstr ""
+"Blueprints -- Radar\n"
+"\n"
+"CLASSIFIED LEVEL BLACK\n"
+"\n"
+"PHALANX Extraterrestrial Response Unit\n"
+"\n"
+"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"\n"
+"Filed: 18 March 2084\n"
+"\n"
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
+"Operations Command\n"
+"\n"
+"\n"
+"\n"
+"Overview\n"
+"\n"
+"Commander, we've had to make extensive changes to our old Radar facility "
+"designs to bring them up to date. The old report is no longer applicable, so "
+"I've decided to replace it with this one.\n"
+"\n"
+"Our Radar facility is not a large radar array in itself. It's actually a "
+"control centre for a series of camouflaged dishes placed on high ground "
+"around the base. There are between 8 and 12 dishes set up for each "
+"installation, depending on the available space and the dishes' individual "
+"coverage. Each dish is equipped with several means of detection rather than "
+"simply radar, as radar has trouble maintaining a lock on alien contacts. "
+"Supplemental systems include, but are not limited to, infrared and laser "
+"rangefinding.\n"
+"\n"
+"Building more than one Radar installation at a base will suitably increase "
+"the extent of our radar coverage.\n"
+"\n"
+"The facility is manned round-the-clock in 6-hour shifts, reviewing the "
+"processed data after our computers have gathered all discernible information "
+"from a contact. Human operators are absolutely necessary and should be "
+"present to supervise at all times; what the computers might dismiss as a "
+"radar ghost can turn out to be a stealthed alien harvester ready to hit a "
+"mass off civilians. Instinct and experience count just as much as software "
+"intelligence.\n"
+"\n"
+"Our radar is patched directly into the UN aircraft registry and can cross-"
+"reference the transponder data of any civilian aircraft with its flight plan "
+"and cargo manifest. Non-PHALANX military aircraft are also required to log "
+"their routes into our database, but we can't know for certain if the various "
+"militaries will be very conscientious in following that directive.\n"
+"\n"
+"The Radar facility cannot function without a working Power Plant or a "
+"Command Centre to coordinate our radar into our tactical efforts.\n"
+"\n"
+"\n"
+"Recommended Doctrine\n"
+"\n"
+"Since our radar-emitting dishes are not located at the base site, there is "
+"no direct threat of discovery to a base from using active radar. Considering "
+"the number of other military radar sources around, it's unlikely that alien "
+"craft will be able to learn anything from a dedicated backtrace. At most "
+"they'll be able to find the general area of a base.\n"
+"\n"
+"However, any UFOs spotted patrolling the area may be trying to zero in on "
+"our installation, and should not be allowed to complete their mission under "
+"any circumstances.\n"
+"\n"
+"During an attack, the Radar facility will be at high risk. It is our eyes "
+"and ears. Without working radar coverage, we wouldn't be able to see the "
+"UFOs we're supposed to respond to. If any attacking aliens approach the "
+"facility they will almost certainly attempt to damage or destroy it with "
+"explosives. We must not let that happen.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"Addendum, Executive Officer Abel S. Howard, 18 March 2084:\n"
+"\n"
+"We should not consider the Radar facility to be an end-all solution to UFO "
+"detection. Even with supplemental systems our coverage is not fully "
+"reliable, and we should research ways to improve our detection technology if "
+"we're to have any chance of stopping the bastards."
 
 #: ../base/ufos/research.ufo:2856
 msgid "b_storage_txt"
-msgstr "<TODO>"
+msgstr ""
+"Blueprints -- Storage\n"
+"\n"
+"CLASSIFIED LEVEL BLACK\n"
+"\n"
+"PHALANX Extraterrestrial Response Unit\n"
+"\n"
+"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"\n"
+"Filed: 26 January 1958\n"
+"\n"
+"By: Maj. Marcel LeClerc, Base Commander, PHALANX, Pacific Operations "
+"Command\n"
+"\n"
+"\n"
+"\n"
+"Overview\n"
+"\n"
+"The Storage facility is the base's repository for ammunition, weapons, and "
+"other equipment not currently in use. All small-arms, vehicle and aircraft "
+"ammunition that is not earmarked for emergency response resides in the "
+"Storage facility. It also serves as a garage for our battlefield vehicles. "
+"These remain in their bays until mission time, with fully-loaded magazines "
+"in case of a base attack.\n"
+"\n"
+"Cameras and alarms maintain round-the-clock vigilance to ensure no "
+"unauthorised removals are made. All removals must be approved by the officer "
+"on duty before the alarm is deactivated. Live ammunition and other sensitive "
+"equipment such as alien artifacts are kept in locked containers in the "
+"quartermaster's office behind rigorous security; checking anything out of "
+"locked storage requires the presence of the base quartermaster and written "
+"authorisation from the Command Centre.\n"
+"\n"
+"All item requisitions necessary for research, production and aircraft "
+"maintenance are handled by the appropriate officers; no input from the Base "
+"Commander is required. Only mission equipment and battlefield vehicles "
+"require the Commander's direct supervision.\n"
+"\n"
+"The Storage facility can fit a maximum of 50 standard-sized pallets of "
+"equipment. The amount of items in a pallet is relatively unimportant, size "
+"is the main restricting factor with regards to Storage facility space. The "
+"contents of each individual pallet are scrupulously tracked by magnetic "
+"labels and detailed punch-card logs.\n"
+"\n"
+"It does not depend upon any other base facilities to function.\n"
+"\n"
+"\n"
+"Recommended Doctrine\n"
+"\n"
+"In the case of an invasion, we will need all the storage space we can get. "
+"Large stores of ammunition may need to be squared away for long periods of "
+"time. Recovered artifacts will need to be adequately contained and "
+"protected, as anything with nebulous alien capabilities should be kept in "
+"our explosion-proof lockers or be destroyed. If all the lockers are full, we "
+"may have no choice in the matter.\n"
+"\n"
+"During a base attack, the Storage facility would not be more than a target "
+"of opportunity. Any sensitive equipment in the facility will most likely be "
+"protected and require significant effort to destroy. Even the facility "
+"itself is cheap and easy to repair. The only threat comes from stored "
+"explosives and ammunition, which may present a risk due to the possibility "
+"of sympathetic detonation.\n"
+"\n"
+"Still, any extraterrestrials are unlikely to spend the time and effort "
+"getting into our explosion-proof lockers when there are easier targets "
+"nearby.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"None."
 
 #: ../base/ufos/research.ufo:2874
 msgid "b_teamroom_txt"
-msgstr "<TODO>"
+msgstr ""
+"Blueprints -- Team Room\n"
+"\n"
+"CLASSIFIED LEVEL BLACK\n"
+"\n"
+"PHALANX Extraterrestrial Response Unit\n"
+"\n"
+"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"\n"
+"Filed: 11 August 2008\n"
+"\n"
+"By: Gen. E. Baxter, Base Commander, PHALANX, Pacific Operations Command\n"
+"\n"
+"\n"
+"\n"
+"Overview\n"
+"\n"
+"It is painfully clear that soldiers during wartime lead highly stressful "
+"lives. In order to maintain morale they need a place to unwind and interact "
+"in a rank-free environment. We have sought to provide this kind of R&R in "
+"the form of the Team Room facility.\n"
+"\n"
+"It is equipped with a variety of entertainments, from sports tables to high-"
+"tech game consoles. It also features a modest wall-mounted cinema display "
+"for communal movie screenings. There are vending machines with alcoholic and "
+"non-alcoholic beverages, and a separate sitting room for our soldiers to "
+"achieve some amount of privacy from the closeness of base living. To this "
+"end the sitting room can be locked from the inside for up to 30 minutes per "
+"day by each team member. The lock may be overridden from the Control Centre "
+"or by a present Command Centre or medical officer in case of an emergency.\n"
+"\n"
+"All our equipment requires maintenance, and I would argue that our soldiers "
+"require the most maintenance of all. The Team Room is one of the best ways "
+"to keep them mentally healthy and in fighting trim.\n"
+"\n"
+"Unless it has access to an operational Power Plant, the Team Room will be "
+"shut down to avoid non-vital power consumption.\n"
+"\n"
+"\n"
+"Recommended Doctrine\n"
+"\n"
+"The Team Room is an important tool in maintaining good morale amongst our "
+"soldiers and should be built in any base that houses a combat team. It "
+"provides them with various vital means of stress relief, which will ease the "
+"stressful effects of continued combat, life-threatening situations, and the "
+"near-certain death of team members in the field. High morale is essential "
+"for our battlefield performance and must be maintained at all costs.\n"
+"\n"
+"However, I must stress that the Team Room is not a replacement for base "
+"leave. Our soldiers will still need to be allowed off-base from time to time "
+"in order to maintain their connection with the outside world and their "
+"sanity.\n"
+"\n"
+"For the purposes of a base attack, the Team Room is an extremely low-risk "
+"installation with little to no strategic value. If encountered by "
+"extraterrestrial attackers, it will almost certainly be bypassed altogether "
+"in favour of more sensitive installations.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"None."
 
 #: ../base/ufos/research.ufo:2892
 msgid "b_small_ufo_hangar_txt"
-msgstr "<TODO>"
+msgstr ""
+"Blueprints -- Small UFO Hangar\n"
+"\n"
+"CLASSIFIED LEVEL BLACK\n"
+"\n"
+"PHALANX Extraterrestrial Response Unit\n"
+"\n"
+"Research Document, Sigma Clearance -- Commander's Eyes Only\n"
+"\n"
+"Filed: 19 March 2084\n"
+"\n"
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
+"Operations Command\n"
+"\n"
+"\n"
+"\n"
+"Overview\n"
+"\n"
+"These are the finished plans for our new UFO storage hangars. They are "
+"designed to house one recovered UFO for disassembly, and will be marked as "
+"occupied until the craft has been fully broken down into its component parts "
+"and the parts transferred to base Storage. UFOs require significant "
+"disassembly before they will fit inside Storage, so they must be dismantled "
+"before we can begin to store or use the recovered parts. Doing this job on-"
+"site is highly inadvisable. It could be hazardous to the health of our "
+"scientists and engineers, it might attract looters, and it would without "
+"doubt severely compromise the safety and secrecy of our operation.\n"
+"\n"
+"The importance of studying captured UFOs should be more than obvious. It "
+"will give us insight into the workings and vulnerabilities of alien craft, "
+"and it may result in the discovery of new techniques to improve our own "
+"craft's effectiveness. Once a recovered UFO is secured for transport, it is "
+"carried to a PHALANX base by means of transport helicopters. Salvage "
+"operations are handled by local UN forces to relieve pressure on our limited "
+"resources.\n"
+"\n"
+"The Small UFO Hangar can store 1 alien craft of limited size. We will assess "
+"the size of each UFO type as we encounter them and determine what hangar is "
+"required to store them.\n"
+"\n"
+"The Small UFO Hangar requires a Power Plant to feed its high-power machinery "
+"and plasma-based cutting tools. It also requires a Workshop and Storage to "
+"handle the dismantling.\n"
+"\n"
+"\n"
+"Recommended Doctrine\n"
+"\n"
+"All salvaged UFOs should be permanently disabled once delivered into our "
+"hands. Should the base come under attack from alien forces, we can't afford "
+"the extra risk of stored UFOs being reactivated and used against us. Even "
+"without a drive unit, any weapon systems left active would present a grave "
+"threat to our base.\n"
+"\n"
+"If this procedure is followed, the UFO Hangar will be of minor tactical "
+"importance to alien attackers and will most likely be ignored except as a "
+"target of opportunity. Preventing us from dismantling UFOs would be far less "
+"attractive than shutting down our research or production, or destroying our "
+"base outright.\n"
+"\n"
+"We will most likely be needing several of these installations to strip and/"
+"or examine several UFOs at a time. However, if necessary, we can remove a "
+"craft from our hangars and have it destroyed to make room for a new one. In "
+"this scenario all parts already transferred to Storage will be available, "
+"but everything not yet removed from the UFO will be destroyed with it.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"None."
 
 #: ../base/ufos/research.ufo:2910
 msgid "b_large_ufo_hangar_txt"
-msgstr "<TODO>"
+msgstr ""
+"Blueprints -- Large UFO Hangar\n"
+"\n"
+"CLASSIFIED LEVEL BLACK\n"
+"\n"
+"PHALANX Extraterrestrial Response Unit\n"
+"\n"
+"Research Document, Sigma Clearance -- Commander's Eyes Only\n"
+"\n"
+"Filed: 19 March 2084\n"
+"\n"
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
+"Operations Command\n"
+"\n"
+"\n"
+"\n"
+"Overview\n"
+"\n"
+"These are the finished plans for our new UFO storage hangars. They are "
+"designed to house one recovered UFO for disassembly, and will be marked as "
+"occupied until the craft has been fully broken down into its component parts "
+"and the parts transferred to base Storage. UFOs require significant "
+"disassembly before they will fit inside Storage, so they must be dismantled "
+"before we can begin to store or use the recovered parts. Doing this job on-"
+"site is highly inadvisable. It could be hazardous to the health of our "
+"scientists and engineers, it might attract looters, and it would without "
+"doubt severely compromise the safety and secrecy of our operation.\n"
+"\n"
+"The importance of studying captured UFOs should be more than obvious. It "
+"will give us insight into the workings and vulnerabilities of alien craft, "
+"and it may result in the discovery of new techniques to improve our own "
+"craft's effectiveness. Once a recovered UFO is secured for transport, it is "
+"carried to a PHALANX base by means of transport helicopters. Salvage "
+"operations are handled by local UN forces to relieve pressure on our limited "
+"resources.\n"
+"\n"
+"The Large UFO Hangar can store 1 alien craft of significant size. We will "
+"assess the size of each UFO type as we encounter them and determine what "
+"hangar is required to store them.\n"
+"\n"
+"The Large UFO Hangar requires a Power Plant to feed its high-power machinery "
+"and plasma-based cutting tools. It also requires a Workshop and Storage to "
+"handle the dismantling.\n"
+"\n"
+"\n"
+"Recommended Doctrine\n"
+"\n"
+"All salvaged UFOs should be permanently disabled once delivered into our "
+"hands. Should the base come under attack from alien forces, we can't afford "
+"the extra risk of stored UFOs being reactivated and used against us. Even "
+"without a drive unit, any weapon systems left active would present a grave "
+"threat to our base.\n"
+"\n"
+"If this procedure is followed, the UFO Hangar will be of minor tactical "
+"importance to alien attackers and will most likely be ignored except as a "
+"target of opportunity. Preventing us from dismantling UFOs would be far less "
+"attractive than shutting down our research or production, or destroying our "
+"base outright.\n"
+"\n"
+"We will most likely be needing several of these installations to strip and/"
+"or examine several UFOs at a time. However, if necessary, we can remove a "
+"craft from our hangars and have it destroyed to make room for a new one. In "
+"this scenario all parts already transferred to Storage will be available, "
+"but everything not yet removed from the UFO will be destroyed with it.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"None."
 
 #: ../base/ufos/research.ufo:2928
 msgid "b_workshop_txt"
-msgstr "<TODO>"
+msgstr ""
+"Blueprints -- Workshop\n"
+"\n"
+"CLASSIFIED LEVEL BLACK\n"
+"\n"
+"PHALANX Extraterrestrial Response Unit\n"
+"\n"
+"Construction Precis, Sigma Clearance -- Commander's Eyes Only\n"
+"\n"
+"Filed: 28 January 1958\n"
+"\n"
+"By: Maj. Marcel LeClerc, Base Commander, PHALANX, Pacific Operations "
+"Command\n"
+"\n"
+"\n"
+"\n"
+"Overview\n"
+"\n"
+"The PHALANX Workshop is a small-scale production line equipped with the most "
+"high-tech military manufacturing processes available. It is designed for the "
+"production of classified materials and parts for which no other facility on "
+"Earth is equipped; even the replication of extraterrestrial technology.\n"
+"\n"
+"All parts produced by the Workshop are machined by hand with as much robotic "
+"assistance as possible. It requires the most highly-skilled engineers in the "
+"world to operate its advanced machinery, and to install new machines "
+"whenever our researchers devise a new or improved production process. The "
+"Workshop provides working space for up to 10 engineers at once.\n"
+"\n"
+"A Power Plant is required to keep the production line going. Without an "
+"operational plant, all production must be halted until power is restored. "
+"The Workshop also depends upon a Command Centre to coordinate construction "
+"efforts.\n"
+"\n"
+"\n"
+"Recommended Doctrine\n"
+"\n"
+"During a possible EXT war, we will be depending heavily on Workshop "
+"facilities to manufacture the weapons we need. H.G. Wells's War of the "
+"Worlds comes to mind for its frightening depiction of how our present "
+"technology might fare against an invasion force. Even the A-bomb may not be "
+"a sufficient deterrent. In a worst-case scenario we may be forced to resort "
+"to nuclear missiles if we have no other hope of staving off the assault.\n"
+"\n"
+"The Workshop is a high-security area due to its sensitive, often classified "
+"projects. The various hazardous or volatile substances used in production "
+"make it a dangerous place to be, and it will certainly be at risk during any "
+"base attack as a target of opportunity or even a moderate-risk mission "
+"objective. Shutting down our production for any length of time would be a "
+"victory for any extraterrestrial hostiles, especially if they manage to "
+"destroy a large project in progress such as the construction of a new "
+"aircraft.\n"
+"\n"
+"Reproducing interplanetary spacecraft technology will be one of the absolute "
+"necessities if we are ever to take the initiative against an "
+"extraterrestrial force. We cannot sit on Earth maintaining a defensive "
+"posture if we wish to put a definitive end to a military conflict. Our "
+"faithful Workshops and Laboratories are what will arm us against these "
+"nightmare scenarios.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"None."
 
 #: ../base/ufos/research.ufo:2946
 msgid "b_antimatter_txt"
-msgstr "<TODO>"
+msgstr ""
+"Oversigt\n"
+"\n"
+"Lagerrummet til antistof er designet til sikkert at opbevare antistof til "
+"senere anvendelse; i det mindste så sikkert som antistof kan opbevares. "
+"Designet er baseret på en avanceret magnetisk teknologi vi har udledt fra "
+"rumvæsenernes antistofteknologi, som vi kalder den indre skal. Den ydre skal "
+"består af flere luftsluser over hovedpassagen, et stærkt beskyttet "
+"kontrolrum og en række andre sikkerheds og afskærmningsteknikkker - alle "
+"designet til at holde en eventuel forurening inden for den ydre skal.\n"
+"\n"
+"Den ydre skals design låner kraftigt fra det anvendte design hos FN's "
+"atomare ammunitionsdepoter. I tilfælde med problemer med den indre skal, er "
+"der et automatisk sikkerhedssystem som vil lukke lageret ned. Lagerrummet "
+"vil først lukke sikre sikrede døre, så sikres luftkanalerne med xxxx "
+"tungsten locking rods xxxx, fill the outer shell atmosphere with radiation-"
+"retardant gas and inject anti-shock foam behind the walls, and then try to "
+"contain the inevitable blast.\n"
+"\n"
+"Denne procedure giver ikke tid til at et eventuelt personale fanget indenfor "
+"kan nå ud, men det er prisen vi må betale hvis vi skal redde hele basen.\n"
+"\n"
+"To understand how dangerous this facility really is, building an Antimatter "
+"Storage at one of our bases will require us to list that base with the UN "
+"nuclear site register. At full capacity -- 10 grammes of antimatter -- just "
+"one storage facility will be containing the equivalent of nearly half a "
+"megaton of TNT. While this isn't much compared to modern thermonuclear "
+"weapons, it's enough to turn the entire base and everything inside to "
+"cinders in less than a second. It's difficult to 'blow up' antimatter, but "
+"under the wrong circumstances, it can happen.\n"
+"\n"
+"Even if no explosion occurs, a loss of containment would result in the "
+"annihilation of the stored antimatter with the normal matter of the "
+"containment system. If there were any fault or damage in the outer shell at "
+"this point, then the ensuing blast of gamma radiation and high-speed "
+"particles would escape and strip the area clean of life. The base would be "
+"poisoned and rendered uninhabitable for centuries to come.\n"
+"\n"
+"\n"
+"Anbefalet doktrin\n"
+"\n"
+"I believe I've already stressed that this facility must be the most heavily-"
+"defended building in any PHALANX base, taking priority even over the Command "
+"Centre. Losing the CC would be a blow, but it can be rebuilt. The cost would "
+"be a trifle compared to the kind of armageddon that can result from a mishap "
+"at the Antimatter Storage.\n"
+"\n"
+"Although this facility will be essential to our continued success in this "
+"war, it's going to be very expensive to build and operate due to the "
+"advanced tech and materials required. It may be necessary to hold off on "
+"building one until we're sure our budget can stretch that far.\n"
+"\n"
+"Having said that, until we manage to build one of these facilities, we'll be "
+"completely unable to store or use any recovered antimatter. We can't just "
+"build up a pile of unstable, alien, possibly-damaged tanks of nuclear-level "
+"explosive. Everything we find will have to be destroyed for safety.\n"
+"\n"
+"Med tanke på at vi ikke selv kan skabe stoffet, har vi behov for at kunne få "
+"fingre i selv det mindste gram.\n"
+"\n"
+"\n"
+"Tilføjelse\n"
+"\n"
+"Ingen."
 
-#: ../base/ufos/research.ufo:2966
+#: ../base/ufos/research.ufo:2959
+#, fuzzy
+msgid "Blueprints - Antimatter Storage"
+msgstr "Lagerrum til antistof"
+
+#: ../base/ufos/research.ufo:2974
 msgid "drop_firebird_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2983
+#: ../base/ufos/research.ufo:2991
 msgid "inter_stiletto_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3000
+#: ../base/ufos/research.ufo:3008
 msgid "inter_saracen_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3017
+#: ../base/ufos/research.ufo:3025
 msgid "inter_dragon_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3020
+#: ../base/ufos/research.ufo:3028
 msgid "inter_dragon_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
-#: ../base/ufos/research.ufo:3039
+#: ../base/ufos/research.ufo:3047
 msgid "inter_stingray_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3042
+#: ../base/ufos/research.ufo:3050
 msgid "inter_stingray_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
-#: ../base/ufos/research.ufo:3066
+#: ../base/ufos/research.ufo:3074
 msgid "ufo_scout_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3069
+#: ../base/ufos/research.ufo:3077
 msgid "ufo_scout_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
-#: ../base/ufos/research.ufo:3107
+#: ../base/ufos/research.ufo:3115
 msgid "ufo_fighter_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3110
+#: ../base/ufos/research.ufo:3118
 msgid "ufo_fighter_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
-#: ../base/ufos/research.ufo:3149
+#: ../base/ufos/research.ufo:3157
 msgid "ufo_supply_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3152
+#: ../base/ufos/research.ufo:3160
 msgid "ufo_supply_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
-#: ../base/ufos/research.ufo:3191
+#: ../base/ufos/research.ufo:3199
 msgid "ufo_carrier_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3194
+#: ../base/ufos/research.ufo:3202
 msgid "ufo_carrier_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
-#: ../base/ufos/research.ufo:3233
+#: ../base/ufos/research.ufo:3241
 msgid "ufo_condor_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3236
+#: ../base/ufos/research.ufo:3244
 msgid "ufo_condor_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
-#: ../base/ufos/research.ufo:3275
+#: ../base/ufos/research.ufo:3283
 msgid "ufo_harvester_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3278
+#: ../base/ufos/research.ufo:3286
 msgid "ufo_harvester_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
-#: ../base/ufos/research.ufo:3321
+#: ../base/ufos/research.ufo:3329
 msgid "Live Specimen - Bloodspider"
 msgstr "Levende eksemplar - blodedderkop"
 
-#: ../base/ufos/research.ufo:3323
+#: ../base/ufos/research.ufo:3331
 msgid "bloodspider_notes_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3326
+#: ../base/ufos/research.ufo:3334
 msgid "bloodspider_notes_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
-#: ../base/ufos/research.ufo:3343 ../base/ufos/research.ufo:3356
-#: ../base/ufos/research.ufo:3364
+#: ../base/ufos/research.ufo:3351 ../base/ufos/research.ufo:3364
+#: ../base/ufos/research.ufo:3372
 msgid "Alien Autopsy - Bloodspider"
 msgstr "Rumvæsenobduktion - blodedderkop"
 
-#: ../base/ufos/research.ufo:3345
+#: ../base/ufos/research.ufo:3353
 msgid "bloodspider_autopsy_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3348
+#: ../base/ufos/research.ufo:3356
 msgid "bloodspider_autopsy_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
-#: ../base/ufos/research.ufo:3399 ../base/ufos/research.ufo:3414
-#: ../base/ufos/research.ufo:3422
+#: ../base/ufos/research.ufo:3407 ../base/ufos/research.ufo:3422
+#: ../base/ufos/research.ufo:3430
 msgid "Alien Autopsy - Ortnok"
 msgstr "Rumvæsenobduktion - ortnok"
 
-#: ../base/ufos/research.ufo:3401
+#: ../base/ufos/research.ufo:3409
 msgid "ortnok_autopsy_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3402
+#: ../base/ufos/research.ufo:3410
 msgid "ortnok_autopsy_extra_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3405
+#: ../base/ufos/research.ufo:3413
 msgid "ortnok_autopsy_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
-#: ../base/ufos/research.ufo:3406
+#: ../base/ufos/research.ufo:3414
 msgid "ortnok_autopsy_extra_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
-#: ../base/ufos/research.ufo:3443 ../base/ufos/research.ufo:3458
-#: ../base/ufos/research.ufo:3466
+#: ../base/ufos/research.ufo:3451 ../base/ufos/research.ufo:3466
+#: ../base/ufos/research.ufo:3474
 msgid "Alien Autopsy - Taman"
 msgstr "Rumvæsenobduktion - taman"
 
-#: ../base/ufos/research.ufo:3445
+#: ../base/ufos/research.ufo:3453
 msgid "taman_autopsy_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3446
+#: ../base/ufos/research.ufo:3454
 msgid "taman_autopsy_extra_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3449
+#: ../base/ufos/research.ufo:3457
 msgid "taman_autopsy_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
-#: ../base/ufos/research.ufo:3450
+#: ../base/ufos/research.ufo:3458
 msgid "taman_autopsy_extra_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
-#: ../base/ufos/research.ufo:3485 ../base/ufos/research.ufo:3500
-#: ../base/ufos/research.ufo:3508
+#: ../base/ufos/research.ufo:3493 ../base/ufos/research.ufo:3508
+#: ../base/ufos/research.ufo:3516
 msgid "Alien Autopsy - Shevaar"
 msgstr "Rumvæsenobduktion - shevaar"
 
-#: ../base/ufos/research.ufo:3487
+#: ../base/ufos/research.ufo:3495
 msgid "shevaar_autopsy_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3488
+#: ../base/ufos/research.ufo:3496
 msgid "shevaar_autopsy_extra_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3491
+#: ../base/ufos/research.ufo:3499
 msgid "shevaar_autopsy_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
-#: ../base/ufos/research.ufo:3492
+#: ../base/ufos/research.ufo:3500
 msgid "shevaar_autopsy_extra_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
-#: ../base/ufos/research.ufo:3583
+#: ../base/ufos/research.ufo:3591
 msgid "Phoenix UGV"
 msgstr "Føniks UGV"
 
-#: ../base/ufos/research.ufo:3585
+#: ../base/ufos/research.ufo:3593
 msgid "ugv_phoenix_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3588
+#: ../base/ufos/research.ufo:3596
 msgid "ugv_phoenix_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
-#: ../base/ufos/research.ufo:3603
+#: ../base/ufos/research.ufo:3611
 msgid "Ares W (UGV)"
 msgstr "Ares W (UGV)"
 
-#: ../base/ufos/research.ufo:3605
+#: ../base/ufos/research.ufo:3613
 msgid "ugv_ares_w_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3608
+#: ../base/ufos/research.ufo:3616
 msgid "ugv_ares_w_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
-#: ../base/ufos/research.ufo:3628
-msgid "base_weapon_tr20_txt"
-msgstr "<TODO>"
-
-#: ../base/ufos/research.ufo:3647
-msgid "base_ammo_tr20_txt"
-msgstr "<TODO>"
-
-#: ../base/ufos/research.ufo:3666
+#: ../base/ufos/research.ufo:3674
 msgid "'Raven' ECM Unit"
 msgstr "»Raven« ECM-enhed"
 
-#: ../base/ufos/research.ufo:3669
+#: ../base/ufos/research.ufo:3677
 msgid "craft_electronics_raven_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3687
+#: ../base/ufos/research.ufo:3695
 msgid "craft_shield_light_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3704
+#: ../base/ufos/research.ufo:3712
 msgid "craft_shield_plating_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
-#: ../base/ufos/research.ufo:3707
+#: ../base/ufos/research.ufo:3715
 msgid "craft_shield_plating_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3726
+#: ../base/ufos/research.ufo:3734
 msgid "craft_alien_astrogation_pre_txt"
-msgstr "Ingen information om tidligere forskning tilgængelig"
+msgstr ""
+"Commander, the recovery of an intact alien astrogation unit is an important "
+"milestone. Although this unit doesn't seem to contain a star chart, it will "
+"allow us to decipher alien astronomical notations and upgrade the power of "
+"our own astrogation systems by several orders of magnitude. Eventually the "
+"work we do here may help us backtrack the aliens to their home planet.\n"
+"\n"
+"Along with Alien Propulsion and Alien Detection, Alien Astrogation is one of "
+"the three pillars of UFO design. Understanding it will bring us a big step "
+"closer to the ability to build an atmosphere-capable interplanetary defence "
+"craft.\n"
+"\n"
+"--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3729
+#: ../base/ufos/research.ufo:3737
 msgid "craft_alien_astrogation_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, we've finished work on the captured alien astrogation unit. Here "
+"is a summary of my report.\n"
+"\n"
+"We concluded early on in our survey that this astrogation unit is, at its "
+"core, a purpose-built computer of extraordinary power loaded with "
+"specialised software -- all intended solely for the purpose of plotting a "
+"course from one point in space to another. It uses a new, alien system of "
+"astronomical notation which we've decided to adopt in order to make use of "
+"this alien hardware.\n"
+"\n"
+"Now that we've figured out its notation system, we can see that the "
+"astrogation unit is very good at what it does. Given correct input, the "
+"system can plot a course from anywhere to anywhere in seconds, and it can "
+"intelligently recompute that course with filters like 'least travel time', "
+"'shortest distance', 'fewest navigational hazards', and so on. These filters "
+"can be layered on endlessly until the system spits out the exact course you "
+"want. It is even able to take into account faster-than-light capability when "
+"plotting a course, which all but verifies the theory that the aliens do "
+"indeed have access to some type of FTL technology.\n"
+"\n"
+"The only problem with the unit's plotting method is that it requires a star "
+"chart to give accurate courses beyond the UFO's sensor range. We have never "
+"found a star chart loaded onto any UFO we've recovered. Perhaps only UFOs "
+"with an FTL drive have a chart loaded; they would surely need it for "
+"navigation.\n"
+"\n"
+"Instead of the elusive star chart, the astrogation units we've recovered so "
+"far contain enormous detail on Earth and the solar system. Surface maps of "
+"the outer planets and all their moons (even a previously-undiscovered moon "
+"of Pluto), spectrum analyses of every body in the asteroid belt as well as "
+"the distant Kuiper belt, and the orbits of every body in the solar system "
+"plotted out hundreds of years in advance. We're not sure if this information "
+"will be of any use to us, but it will greatly enhance humanity's body of "
+"knowledge about our home system -- whenever we're allowed to release it into "
+"the public.\n"
+"\n"
+"It's possible to program our own star charts into the astrogation unit, but "
+"I can only imagine how primitive and incomplete our charts might be compared "
+"to what the aliens have. I wouldn't condone any interstellar travel with "
+"these units until we can capture an alien chart. However, in the meantime we "
+"could certainly use these units to navigate around the solar system if we "
+"could design a PHALANX craft capable of launching into space. They will "
+"greatly simplify the whole process of interplanetary travel to the point "
+"where we'd be able to launch missions to Saturn or even Pluto at the click "
+"of a button.\n"
+"\n"
+"And that is something we should do as soon as humanly possible.\n"
+"\n"
+"--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3763
+#: ../base/ufos/research.ufo:3771
 msgid "craft_alien_propulsion_pre_txt"
-msgstr "Ingen information om tidligere forskning tilgængelig"
+msgstr ""
+"Commander, the alien antimatter engines we recovered have been fascinating "
+"my team ever since they arrived. With our new understanding of the alien "
+"materials, I think we can work out the details and duplication of this "
+"technology. Excitingly, it now seems to be within our capabilities to "
+"replicate these engines, if we can just figure out the function and creation "
+"of the different parts.\n"
+"\n"
+"Along with Alien Astrogation and Alien Detection, Alien Propulsion is one of "
+"the three pillars of UFO design. Understanding it will bring us a big step "
+"closer to the ability to build an atmosphere-capable interplanetary defence "
+"craft.\n"
+"\n"
+"--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3766
+#: ../base/ufos/research.ufo:3774
 msgid "craft_alien_propulsion_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander, I'm happy to report the success of our alien propulsion program. "
+"We've cracked the mysteries of the alien engine set-up and we finally "
+"understand the path of the antimatter from fuel tank to reaction chamber.\n"
+"\n"
+"Quoting from my previous report:\n"
+"\n"
+"(UFO -- Scout)\"The alien propulsion system is a type of rocket engine "
+"unlike any ever built on Earth. It uses direct matter-antimatter "
+"annihilation to generate thrust by injecting protons and antiprotons into "
+"the reaction chamber, and then channeling this explosive force out the back "
+"of the engine. This gives a UFO extreme power and needs no air or other "
+"gases to fuel the reaction, allowing it to burn in hard vacuum. There is a "
+"highly-advanced cooling system continuously pumping liquid nitrogen through "
+"the engine housing in order to keep it cool and reduce the infrared "
+"signature. Engine heat is also used to supply the craft's electricity.\"\n"
+"\n"
+"With this project we've learned a lot about how these engines are "
+"constructed, how to control them, and how we might retrofit them to our "
+"current airfleet. We should now be able to replicate these engines and use "
+"them for any applications we might come up. I have to warn you, though; they "
+"will be extremely expensive to produce. Between the complex use of alien "
+"materials, the sensitive electromagnetics and the liquid nitrogen cooling "
+"system, this really stretches the limits of our production capacity.\n"
+"\n"
+"Some more research may be required to figure out antimatter storage and "
+"control, but the engine upgrades are self-contained units -- basically just "
+"an alien engine with adapters on it for human tech. We should be able to "
+"start retrofitting as soon as we acquire enough fuel to keep our airfleet in "
+"the sky.\n"
+"\n"
+"I've mentioned before, the power disparity between our liquid fuel and these "
+"matter-antimatter engines is nothing short of astonishing. When we start "
+"using these engines on our planes, our pilots are going to need some serious "
+"re-education about the capabilities of their craft. Let me explain.\n"
+"\n"
+"In a regular military jet, giving her a little too much throttle around a "
+"tight corner can result in impaired judgment and unconsciousness from the "
+"force of acceleration. Pilots have died from over-acceleration.\n"
+"\n"
+"In an antimatter jet, however, these problems are amplified hundred-fold. "
+"The engines are so powerful that over-acceleration can easily turn a human "
+"body to bloody pulp in its flight chair. Even the craft itself may have "
+"trouble coping with the acceleration, and our flight engineers will have to "
+"be extremely careful in checking for metal fatigue, hairline fractures and "
+"other wear and tear on the airframe. A tiny crack in the structure may "
+"result in one of our planes breaking up in mid-flight. Mechanical thrust "
+"limiters can only do so much -- most of the G-stresses are incurred during "
+"turns.\n"
+"\n"
+"Still, it shouldn't become a problem as long as everyone -- pilots and "
+"mechanics alike -- is extremely careful in their assigned tasks. We've done "
+"some serious tightening-up of our safety and inspection protocol just for "
+"antimatter planes. The retraining of our pilots is the only remaining "
+"obstacle to our use of these alien engines.\n"
+"\n"
+"--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3799
+#: ../base/ufos/research.ufo:3807
 msgid "craft_alien_detection_pre_txt"
-msgstr "Ingen information om tidligere forskning tilgængelig"
+msgstr ""
+"Commander, the alien sensor suite appears to be a very powerful set of "
+"passive and active scanning systems, including radar, lidar, magnetic and UV/"
+"infrared reception, and -- most interestingly -- a kind of detection unknown "
+"to us, but which seems to have far more success at detecting UFOs than "
+"anything we have.\n"
+"\n"
+"If you'll let us take the suite apart, I believe we can find out what "
+"everything does and how to operate it, and how to replicate most if not all "
+"of the alien detection equipment. It would be an immense boost to our "
+"defence efforts on Earth if we can get this technology working for us, and "
+"its long-term potential for spacecraft development is vital. There's no way "
+"we could build a viable space-capable fighter with human sensors.\n"
+"\n"
+"Along with Alien Propulsion and Alien Astrogation, Alien Detection is one of "
+"the three pillars of UFO design. Understanding it will bring us a big step "
+"closer to the ability to build an atmosphere-capable interplanetary defence "
+"craft.\n"
+"\n"
+"--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3802
+#: ../base/ufos/research.ufo:3810
 msgid "craft_alien_detection_txt"
-msgstr "<TODO>"
+msgstr ""
+"The project on alien detection is complete, Commander. We now have a full "
+"understanding of the machinery, its controls, and the modifications needed "
+"for human use.\n"
+"\n"
+"Our initial assessment looks to have been correct. The detection suite makes "
+"use mostly of standard, reliable detection methods that humanity either uses "
+"or knows about. The equipment is more advanced than ours and will be useful, "
+"but by and large the aliens apply the same concepts and use the same physics "
+"as we do. As I mentioned in my proposal, radar, lidar and other such old "
+"reliables are all well-represented in the suite.\n"
+"\n"
+"And then there's the mystery sensor.\n"
+"\n"
+"It had us confounded for a long time, because now that it's here on the "
+"Earth's surface, it spits out mostly overpowering background noise. Up in "
+"the air, however, the picture is quite different. We think we've now "
+"identified the detector and have figured out how it works.\n"
+"\n"
+"In the simplest terms, it's a gravity sensor, scanning for minute changes in "
+"a background gravitational field. Everything travelling through a gravity "
+"field disturbs the field to some degree based on its size, mass and "
+"composition. The sensor can identify these changes as natural or artificial "
+"objects based on course, speed and acceleration with 95% accuracy. If there "
+"is any doubt about a contact, the system will report it anyway. It seems to "
+"be more effective in stronger fields like the one around Earth, but we "
+"surmise that it will work to some extent anywhere within the gravity range "
+"of a star.\n"
+"\n"
+"All of this detection power is linked into an advanced computer system which "
+"automatically puts all results through a series of filters, which can be "
+"adjusted at any time to suit the needs of the pilot and crew. This helps "
+"alternately sifting out targets from a mess of background noise or "
+"increasing sensitivity to search for something stealthy.\n"
+"\n"
+"Interestingly, the detection computer seems to have a direct link to fire "
+"control, assisting in anticipating target manoeuvres and point defence "
+"control if the craft has that capability.\n"
+"\n"
+"Parts of this technology can be adapted to our existing ground-based "
+"installations and aircraft radar. It should extend their detection range and "
+"increase resolution across the board, making it a good deal harder for UFOs "
+"to hide. However, the biggest practical gains will come from using this tech "
+"in creating new aircraft instrumentation to increase the combat "
+"survivability of our interceptors.\n"
+"\n"
+"Of course, it's not the immediate uses that are the most important. These "
+"detectors are vital for any future PHALANX spacecraft. In space, without the "
+"support of ground radar, we're going to need the extra power very badly.\n"
+"\n"
+"--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:3833
+#: ../base/ufos/research.ufo:3841
 msgid "SHIVA Rotary Cannon"
 msgstr "SHIVA roterende kanon"
 
-#: ../base/ufos/research.ufo:3836
+#: ../base/ufos/research.ufo:3844
 msgid "craft_weapon_shiva_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3854
+#: ../base/ufos/research.ufo:3862
 msgid "craft_ammo_shiva_1_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3875
+#: ../base/ufos/research.ufo:3883
 msgid "craft_ammo_shiva_2_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3893
+#: ../base/ufos/research.ufo:3901
 msgid "'Sparrowhawk' AA Missile Rack"
 msgstr "»Spurvehøg« AA missilstativ"
 
-#: ../base/ufos/research.ufo:3896
+#: ../base/ufos/research.ufo:3904
 msgid "craft_weapon_sparrowhawk_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3911
+#: ../base/ufos/research.ufo:3919
 msgid "'Sparrowhawk' Missile"
 msgstr "»Spurvehøg« missil"
 
-#: ../base/ufos/research.ufo:3914
+#: ../base/ufos/research.ufo:3922
 msgid "craft_ammo_sparrowhawk_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3935
+#: ../base/ufos/research.ufo:3943
 msgid "craft_weapon_tr20_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3954
+#: ../base/ufos/research.ufo:3962
 msgid "craft_ammo_tr20_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3974
+#: ../base/ufos/research.ufo:3982
 msgid "craft_weapon_particle_beam_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
-#: ../base/ufos/research.ufo:3977
+#: ../base/ufos/research.ufo:3985
 msgid "craft_weapon_particle_beam_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4020
+#: ../base/ufos/research.ufo:4028
 msgid "craft_electronics_targeting_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4038
+#: ../base/ufos/research.ufo:4046
 msgid "craft_electronics_fuelpod_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4060 ../base/ufos/research.ufo:4096
+#: ../base/ufos/research.ufo:4068 ../base/ufos/research.ufo:4104
 msgid "alien_materials_txt"
 msgstr ""
 "Commander, I think we've uncovered the secret to the alien materials. After "
@@ -5595,14 +6971,14 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4063
+#: ../base/ufos/research.ufo:4071
 msgid "alien_materials_pre_txt"
 msgstr ""
-"Commander, as I mentioned in my previous report, the Scout UFO was plated "
-"with a highly interesting alloy which blends plastic and metal together into "
-"a single material. These materials seem to be used almost universally "
-"throughout the alien technology base. It's advanced stuff, massively "
-"versatile and with a thousand possible uses.\n"
+"Commander, as I mentioned in my previous report, the UFO we recovered was "
+"plated with a highly interesting alloy which blends plastic and metal "
+"together into a single material. These materials seem to be used almost "
+"universally throughout the alien technology base. It's advanced stuff, "
+"massively versatile and with a thousand possible uses.\n"
 "\n"
 "I think it warrants the research to see if we can reproduce this stuff in "
 "our Workshops, but even if we can't, it seems likely we'll be getting our "
@@ -5612,11 +6988,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4115
+#: ../base/ufos/research.ufo:4123
 msgid "Political Situation Before The Invasion"
 msgstr "Den politiske situation før invasionen"
 
-#: ../base/ufos/research.ufo:4117
+#: ../base/ufos/research.ufo:4125
 msgid "news_initial_political_situation_txt"
 msgstr ""
 "I året 2084 er jorden i bedre form end den har været i et århundrede. For "
@@ -5677,11 +7053,11 @@ msgstr ""
 "oprørerne langsomt tvang dem ud i Det Indiske Ocean. Dette blev den "
 "officielle afslutning på den 2. kolde krig."
 
-#: ../base/ufos/research.ufo:4128
+#: ../base/ufos/research.ufo:4136
 msgid "After The War"
 msgstr "Efter krigen"
 
-#: ../base/ufos/research.ufo:4130
+#: ../base/ufos/research.ufo:4138
 msgid "news_after_the_war_txt"
 msgstr ""
 "Asiatiske Republik:\n"
@@ -6053,11 +7429,11 @@ msgstr ""
 "only in a defensive capacity, with average training and equipment. However, "
 "it can respond fairly quickly in emergency situations."
 
-#: ../base/ufos/research.ufo:4141
+#: ../base/ufos/research.ufo:4149
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr "FALANKS og efterdønningerne af Mumbai"
 
-#: ../base/ufos/research.ufo:4143
+#: ../base/ufos/research.ufo:4151
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr ""
 "\"Projekt FALANKS\" blev først udtænkt af USA's forsvarsministerium i 1955, "
@@ -6158,24 +7534,24 @@ msgstr ""
 "\n"
 "Alt hvad projektet manglede var en leder."
 
-#: ../base/ufos/research.ufo:4154 ../base/ufos/research.ufo:4164
+#: ../base/ufos/research.ufo:4162 ../base/ufos/research.ufo:4172
 msgid "A New Twist"
 msgstr "En ny konflikt"
 
-#: ../base/ufos/research.ufo:4156
+#: ../base/ufos/research.ufo:4164
 msgid "news_newtwist_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4182 ../base/ufos/research.ufo:4194
-#: ../base/ufos/research.ufo:4201
+#: ../base/ufos/research.ufo:4190 ../base/ufos/research.ufo:4202
+#: ../base/ufos/research.ufo:4209
 msgid "The Enemy On Earth"
 msgstr "Fjenden på jorden"
 
-#: ../base/ufos/research.ufo:4184
+#: ../base/ufos/research.ufo:4192
 msgid "enemy_on_earth_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:4187
+#: ../base/ufos/research.ufo:4195
 msgid "enemy_on_earth_pre_txt"
 msgstr "Ingen information om tidligere forskning tilgængelig"
 
@@ -7623,11 +8999,11 @@ msgstr ""
 #: client/cl_campaign.c:1398 client/cl_campaign.c:1405
 #: client/cl_campaign.c:1413 client/cl_campaign.c:2778
 #: client/cl_campaign.c:2889 client/cl_campaign.c:2937
-#: client/cl_campaign.c:2939 client/cl_campaign.c:3247
+#: client/cl_campaign.c:2939 client/cl_campaign.c:3271
 #: client/cl_inventory.c:293 client/cl_inventory.c:298
 #: client/cl_inventory.c:544 client/cl_main.c:1027 client/cl_main.c:1273
-#: client/cl_map.c:295 client/cl_mapfightequip.c:650
-#: client/cl_mapfightequip.c:652 client/cl_market.c:655 client/cl_market.c:659
+#: client/cl_map.c:295 client/cl_mapfightequip.c:753
+#: client/cl_mapfightequip.c:755 client/cl_market.c:676 client/cl_market.c:680
 #: client/cl_parse.c:1591 client/cl_popup.c:352 client/cl_produce.c:444
 #: client/cl_produce.c:453 client/cl_produce.c:463 client/cl_produce.c:472
 #: client/cl_produce.c:483 client/cl_research.c:1076 client/cl_research.c:1094
@@ -7878,8 +9254,8 @@ msgstr ""
 "luftfartøj\n"
 
 #: client/cl_basemanagement.c:2478 client/cl_basemanagement.c:2480
-#: client/cl_campaign.c:2690 client/cl_market.c:637 client/cl_market.c:642
-#: client/cl_market.c:669 client/cl_market.c:744 client/cl_save.c:349
+#: client/cl_campaign.c:2690 client/cl_market.c:658 client/cl_market.c:663
+#: client/cl_market.c:690 client/cl_market.c:765 client/cl_save.c:349
 #: client/cl_team.c:1586
 msgid "Note"
 msgstr "Bemærk"
@@ -7918,33 +9294,33 @@ msgstr "%s: %i"
 msgid "%s (%i): %i/%i"
 msgstr "%s (%i): %i/%i"
 
-#: client/cl_basesummary.c:146
+#: client/cl_basesummary.c:149
 #, c-format
 msgid "%s:  Qty: %d, Time Left: %d hours"
 msgstr "%s:  M: %d, tid tilbage: %d timer"
 
-#: client/cl_basesummary.c:173
+#: client/cl_basesummary.c:176
 #, c-format
 msgid "%s - %1.2f%% (%d %s)\n"
 msgstr "%s - %1.2f%% (%d %s)\n"
 
-#: client/cl_basesummary.c:175 client/cl_campaign.c:1318
-#: client/cl_campaign.c:4485
+#: client/cl_basesummary.c:178 client/cl_campaign.c:1318
+#: client/cl_campaign.c:4511
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "videnskabsmand"
 msgstr[1] "videnskabsmænd"
 
 # Rumvæsenopbevaringsrum er for langt til menuen.
-#: client/cl_basesummary.c:351 client/cl_basesummary.c:369
+#: client/cl_basesummary.c:354 client/cl_basesummary.c:372
 msgid "Alien Containment"
 msgstr "Rumvæsenopb.rum"
 
-#: client/cl_basesummary.c:362
+#: client/cl_basesummary.c:365
 msgid "Miscellaneous"
 msgstr "Forskelligt"
 
-#: client/cl_basesummary.c:374
+#: client/cl_basesummary.c:377
 msgid "Command Center"
 msgstr "Kommandocentral"
 
@@ -8142,19 +9518,19 @@ msgid_plural "credits"
 msgstr[0] "beløb"
 msgstr[1] "beløb"
 
-#: client/cl_campaign.c:1319 client/cl_campaign.c:4487
+#: client/cl_campaign.c:1319 client/cl_campaign.c:4513
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "læge"
 msgstr[1] "læger"
 
-#: client/cl_campaign.c:1320 client/cl_campaign.c:4484
+#: client/cl_campaign.c:1320 client/cl_campaign.c:4510
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "soldat"
 msgstr[1] "soldater"
 
-#: client/cl_campaign.c:1321 client/cl_campaign.c:4486
+#: client/cl_campaign.c:1321 client/cl_campaign.c:4512
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "arbejder"
@@ -8205,8 +9581,8 @@ msgstr "Betalte %i kr for administrative omk."
 msgid "Paid %i credits in interest on your debt."
 msgstr "Betalte %i kr i rente for gælden."
 
-#: client/cl_campaign.c:1571 client/cl_save.c:273 client/cl_ufopedia.c:687
-#: client/cl_ufopedia.c:693
+#: client/cl_campaign.c:1571 client/cl_save.c:273 client/cl_ufopedia.c:689
+#: client/cl_ufopedia.c:695
 #, c-format
 msgid "%i %s %02i"
 msgstr "%i %s %02i"
@@ -8333,16 +9709,16 @@ msgstr ""
 msgid "Soldier promoted"
 msgstr "Soldat forfremmet"
 
-#: client/cl_campaign.c:3246
+#: client/cl_campaign.c:3270
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "Baseforsvar: %s succesfuld!"
 
-#: client/cl_campaign.c:4474
+#: client/cl_campaign.c:4500
 msgid "Human"
 msgstr "Menneske"
 
-#: client/cl_campaign.c:4478
+#: client/cl_campaign.c:4504
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -8361,17 +9737,17 @@ msgstr ""
 "Maks tilladt gæld: %i kr\n"
 "%s\n"
 
-#: client/cl_campaign.c:4724
+#: client/cl_campaign.c:4750
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to base %s."
 msgstr "Fandt %s på slagmarken. Ufo transporteres til base %s"
 
-#: client/cl_campaign.c:4726 client/cl_campaign.c:4859
-#: client/cl_campaign.c:4937
+#: client/cl_campaign.c:4752 client/cl_campaign.c:4885
+#: client/cl_campaign.c:4963
 msgid "UFO Recovery"
 msgstr "Ufo indsamling"
 
-#: client/cl_campaign.c:4783
+#: client/cl_campaign.c:4809
 msgid ""
 "\n"
 "\n"
@@ -8381,13 +9757,13 @@ msgstr ""
 "\n"
 "Valgt base:\t\t\t"
 
-#: client/cl_campaign.c:4857
+#: client/cl_campaign.c:4883
 #, c-format
 msgid ""
 "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr "Fandt %s på slagmarken. Ufo solgt til nation %s, opnåede %i kr."
 
-#: client/cl_campaign.c:4907
+#: client/cl_campaign.c:4933
 msgid ""
 "\n"
 "\n"
@@ -8397,7 +9773,7 @@ msgstr ""
 "\n"
 "Valgt nation:\t\t\t"
 
-#: client/cl_campaign.c:4935
+#: client/cl_campaign.c:4961
 #, c-format
 msgid "Secured %s was destroyed."
 msgstr "Sikret %s blev ødelagt."
@@ -8470,119 +9846,119 @@ msgstr ""
 msgid "Not enough hospital space"
 msgstr "Ikke nok hospitalssenge"
 
-#: client/cl_input.c:1629
+#: client/cl_input.c:1630
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr "Roter kampscenens kamera mod uret"
 
-#: client/cl_input.c:1631
+#: client/cl_input.c:1632
 msgid "Rotate battlescape camera clockwise"
 msgstr "Roter kampscenens kamera med uret"
 
-#: client/cl_input.c:1633
+#: client/cl_input.c:1634
 msgid "Tilt battlescape camera up"
 msgstr "Ryk kampscenens kamera op"
 
-#: client/cl_input.c:1635
+#: client/cl_input.c:1636
 msgid "Tilt battlescape camera down"
 msgstr "Ryk kampscenens kamera ned"
 
-#: client/cl_input.c:1637
+#: client/cl_input.c:1638
 msgid "Move battlescape camera left"
 msgstr "Flyt kampscenens kamera mod venstre"
 
-#: client/cl_input.c:1639
+#: client/cl_input.c:1640
 msgid "Move battlescape camera right"
 msgstr "Flyt kampscenens kamera mod højre"
 
-#: client/cl_input.c:1641
+#: client/cl_input.c:1642
 msgid "Move battlescape camera forward"
 msgstr "Flyt kampscenens kamera fremad"
 
-#: client/cl_input.c:1643
+#: client/cl_input.c:1644
 msgid "Move battlescape camera backward"
 msgstr "Flyt kampscenens kamera tilbage"
 
-#: client/cl_input.c:1645 client/cl_input.c:1679
+#: client/cl_input.c:1646 client/cl_input.c:1680
 msgid "Zoom in"
 msgstr "Zoom ind"
 
-#: client/cl_input.c:1647 client/cl_input.c:1680
+#: client/cl_input.c:1648 client/cl_input.c:1681
 msgid "Zoom out"
 msgstr "Zoom ud"
 
-#: client/cl_input.c:1650
+#: client/cl_input.c:1651
 msgid "Left mouse button click (menu)"
 msgstr "Venstre museknapklik (menu)"
 
-#: client/cl_input.c:1652
+#: client/cl_input.c:1653
 msgid "Middle mouse button click (menu)"
 msgstr "Midt museknapklik (menu)"
 
-#: client/cl_input.c:1654
+#: client/cl_input.c:1655
 msgid "Right mouse button click (menu)"
 msgstr "Højre museknapklik (menu)"
 
-#: client/cl_input.c:1656
+#: client/cl_input.c:1657
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr "Vælg objekter/Gå til en firkant/I ildindstilling, ild etc."
 
-#: client/cl_input.c:1658
+#: client/cl_input.c:1659
 msgid "Walk to a square/In fire mode, cancel action"
 msgstr "Gå til en firkant/I ildindstilling, afbryd aktion"
 
-#: client/cl_input.c:1660
+#: client/cl_input.c:1661
 msgid "Turn soldier toward mouse pointer"
 msgstr "Vend soldat mod musen"
 
-#: client/cl_input.c:1662
+#: client/cl_input.c:1663
 msgid "Toggle stand/crounch"
 msgstr "Skift stå/knæl"
 
-#: client/cl_input.c:1663
+#: client/cl_input.c:1664
 msgid "Toggle reaction fire"
 msgstr "Skift reaktionsild"
 
-#: client/cl_input.c:1664
+#: client/cl_input.c:1665
 msgid "Toggle the headgear"
 msgstr "Skift hovedtøj"
 
-#: client/cl_input.c:1665
+#: client/cl_input.c:1666
 msgid "Toogle to next alien"
 msgstr "Skift til næste rumvæsen"
 
-#: client/cl_input.c:1666
+#: client/cl_input.c:1667
 msgid "Draw a line to each alien visible to the current actor."
 msgstr "Tegn en linje til alle synlige rumvæsener for nuværende soldat."
 
-#: client/cl_input.c:1667
+#: client/cl_input.c:1668
 msgid "Toogle to next alien visible from selected actor."
 msgstr "Skift til næste synlig rumvæsen fra valgt soldat."
 
-#: client/cl_input.c:1674
+#: client/cl_input.c:1675
 msgid "Reload the weapon in the soldiers left hand"
 msgstr "Genlad våbenet i soldatens venstre hånd"
 
-#: client/cl_input.c:1675
+#: client/cl_input.c:1676
 msgid "Reload the weapon in the soldiers right hand"
 msgstr "Genlad våbenet i soldatens højre hånd"
 
-#: client/cl_input.c:1676
+#: client/cl_input.c:1677
 msgid "Ends current round"
 msgstr "Afslutter nuværende runde"
 
-#: client/cl_input.c:1677
+#: client/cl_input.c:1678
 msgid "Slice through terrain at a higher level"
 msgstr "Glid igennem terræn på et højere niveau"
 
-#: client/cl_input.c:1678
+#: client/cl_input.c:1679
 msgid "Slice through terrain at a lower level"
 msgstr "Glid igennem terræn på et lavere niveau"
 
-#: client/cl_input.c:1681
+#: client/cl_input.c:1682
 msgid "Confirm the current action"
 msgstr "Bekræft den nuværende aktion"
 
-#: client/cl_input.c:1690
+#: client/cl_input.c:1691
 msgid "Toggle first-person/third-person camera mode"
 msgstr "Skift mellem person/tredjemand kamera"
 
@@ -8848,11 +10224,11 @@ msgid "UFO in radar range\n"
 msgstr "Ufo indenfor rangerafstand\n"
 
 #: client/cl_map.c:1367
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Location: %s\n"
 "Type: %s\n"
-"Objective: %s\n"
+"Objective: %s"
 msgstr ""
 "Placering: %s\n"
 "Type: %s\n"
@@ -8883,117 +10259,117 @@ msgstr "Fart:\t\t%i\n"
 msgid "Fuel:\t\t%i/%i\n"
 msgstr "Brændstof:\t\t%i/%i\n"
 
-#: client/cl_mapfightequip.c:541
+#: client/cl_mapfightequip.c:626 client/cl_mapfightequip.c:640
 msgid "No defense of this type in this base\n"
 msgstr "Intet forsvar af denne type på denne base\n"
 
-#: client/cl_mapfightequip.c:545
+#: client/cl_mapfightequip.c:630 client/cl_mapfightequip.c:644
 #, c-format
 msgid "Slot %i:\tempty\n"
 msgstr "Plads %i:\tempty\n"
 
-#: client/cl_mapfightequip.c:548
+#: client/cl_mapfightequip.c:633 client/cl_mapfightequip.c:647
 #, c-format
 msgid "Slot %i:\t%s\n"
 msgstr "Plads %i:\t%s\n"
 
-#: client/cl_mapfightequip.c:557
+#: client/cl_mapfightequip.c:660
 msgid "No defense system assigned.\n"
 msgstr "Intet forsvarssystem tildelt.\n"
 
-#: client/cl_mapfightequip.c:564
+#: client/cl_mapfightequip.c:667
 msgid "This defense system is functional.\n"
 msgstr "Dette forsvarssystem er funktionsdygtigt.\n"
 
-#: client/cl_mapfightequip.c:566
+#: client/cl_mapfightequip.c:669
 #, c-format
 msgid "This defense system will be installed in %i hours.\n"
 msgstr "Dette forsvarssystem vil blive installeret om %i timer.\n"
 
-#: client/cl_mapfightequip.c:568
+#: client/cl_mapfightequip.c:671
 #, c-format
 msgid "This defense system will be removed in %i hours.\n"
 msgstr "Dette forsvarssystem vil blive fjernet om %i timer.\n"
 
-#: client/cl_mapfightequip.c:575
+#: client/cl_mapfightequip.c:678
 msgid "No defense system assigned."
 msgstr "Intet forsvarssystem er valgt."
 
-#: client/cl_mapfightequip.c:579
+#: client/cl_mapfightequip.c:682
 #, c-format
 msgid "This defense system will be operational in %i hours.\n"
 msgstr "Dette forsvarssystem vil være operationelt om %i timer.\n"
 
-#: client/cl_mapfightequip.c:588
+#: client/cl_mapfightequip.c:691
 msgid "No ammo assigned to this defense system."
 msgstr "Intet ammo er tildelt dette forsvarssystem."
 
-#: client/cl_mapfightequip.c:650
+#: client/cl_mapfightequip.c:753
 msgid "Aircraft item was successfully installed."
 msgstr "Flyudstyr blev med succes installeret."
 
-#: client/cl_mapfightequip.c:652
+#: client/cl_mapfightequip.c:755
 msgid "Base defense item was successfully installed."
 msgstr "Baseforsvarsudstyr blev med succes installeret."
 
-#: client/cl_mapfightequip.c:874
+#: client/cl_mapfightequip.c:978
 msgid "No item assigned.\n"
 msgstr "Intet udstyr er tildelt.\n"
 
-#: client/cl_mapfightequip.c:875
+#: client/cl_mapfightequip.c:979
 #, c-format
 msgid "This slot is for %s or smaller items."
 msgstr "Denne plads er til %s eller mindre udstyr."
 
-#: client/cl_mapfightequip.c:880
+#: client/cl_mapfightequip.c:984
 msgid "This item is functional.\n"
 msgstr "Dette udstyr er funktionelt.\n"
 
-#: client/cl_mapfightequip.c:882
+#: client/cl_mapfightequip.c:986
 #, c-format
 msgid "This item will be installed in %i hours.\n"
 msgstr "Dette udstyr vil være installeret om %i timer.\n"
 
-#: client/cl_mapfightequip.c:884
+#: client/cl_mapfightequip.c:988
 #, c-format
 msgid "This item will be removed in %i hours.\n"
 msgstr "Dette udstyr vil blive fjernet om %i timer.\n"
 
-#: client/cl_mapfightequip.c:891
+#: client/cl_mapfightequip.c:995
 msgid "No item assigned."
 msgstr "Intet udstyr tildelt."
 
-#: client/cl_mapfightequip.c:895
+#: client/cl_mapfightequip.c:999
 #, c-format
 msgid "This item will be operational in %i hours.\n"
 msgstr "Dette udstyr vil være operationelt om %i timer.\n"
 
-#: client/cl_mapfightequip.c:904
+#: client/cl_mapfightequip.c:1008
 msgid "No ammo assigned to this weapon."
 msgstr "Intet ammo tildelt dette våben."
 
-#: client/cl_mapfightequip.c:1538
+#: client/cl_mapfightequip.c:1707
 msgid "Light"
 msgstr "Let"
 
-#: client/cl_mapfightequip.c:1544 client/cl_ufopedia.c:159
+#: client/cl_mapfightequip.c:1713 client/cl_ufopedia.c:159
 msgid "Heavy"
 msgstr "Tung"
 
-#: client/cl_mapfightequip.c:1547
+#: client/cl_mapfightequip.c:1716
 msgid "Unknown weight"
 msgstr "Ukendt vægt"
 
-#: client/cl_market.c:223
+#: client/cl_market.c:224
 #, c-format
 msgid "%i c\n"
 msgstr "%i kr\n"
 
-#: client/cl_market.c:435 client/cl_market.c:682
+#: client/cl_market.c:456 client/cl_market.c:703
 msgid "Not enough storage space"
 msgstr "Ikke nok lagerkapacitet"
 
-#: client/cl_market.c:435 client/cl_market.c:682
+#: client/cl_market.c:456 client/cl_market.c:703
 msgid ""
 "You cannot buy this item.\n"
 "Not enough space in storage.\n"
@@ -9003,7 +10379,7 @@ msgstr ""
 "Ikke nok lagerkapacitet.\n"
 "Byg flere lagerrum."
 
-#: client/cl_market.c:637
+#: client/cl_market.c:658
 msgid ""
 "No power supplies in this base.\n"
 "Hangars are not functional."
@@ -9011,11 +10387,11 @@ msgstr ""
 "Ingen energiforsyning på denne base.\n"
 "Hangarer er ikke funktionsdygtige."
 
-#: client/cl_market.c:642
+#: client/cl_market.c:663
 msgid "Build a hangar first."
 msgstr "Byg en hangar først."
 
-#: client/cl_market.c:655
+#: client/cl_market.c:676
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
@@ -9023,7 +10399,7 @@ msgstr ""
 "Du kan ikke købe dette luftfartøj.\n"
 "Ikke nok plads i hangarerne.\n"
 
-#: client/cl_market.c:659
+#: client/cl_market.c:680
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough credits.\n"
@@ -9031,7 +10407,7 @@ msgstr ""
 "Du kan ikke købe dette luftfartøj.\n"
 "Ikke nok penge.\n"
 
-#: client/cl_market.c:744
+#: client/cl_market.c:765
 msgid "You can't sell an aircraft if it still has a team assigned"
 msgstr "Du kan ikke sælge et luftfartøj hvis det stadig har et hold tildelt"
 
@@ -10218,7 +11594,7 @@ msgstr "Gå til »%s« Ufopædi artikel"
 msgid "Skill:\t%s\n"
 msgstr "Evne:\t%s\n"
 
-#: client/cl_ufopedia.c:418 client/cl_ufopedia.c:557
+#: client/cl_ufopedia.c:418 client/cl_ufopedia.c:559
 #, c-format
 msgid "Damage:\t%i\n"
 msgstr "Skade:\t%i\n"
@@ -10228,7 +11604,7 @@ msgstr "Skade:\t%i\n"
 msgid "Spreads:\t%g\n"
 msgstr "Spredning:\t%g\n"
 
-#: client/cl_ufopedia.c:429 client/cl_ufopedia.c:616 client/cl_ufopedia.c:618
+#: client/cl_ufopedia.c:429 client/cl_ufopedia.c:618 client/cl_ufopedia.c:620
 msgid "Unknown - need to research this"
 msgstr "Ukendt - du må forske på dette"
 
@@ -10267,54 +11643,54 @@ msgstr "Fasteomk.:\t%i kr\n"
 msgid "Running costs:\t%i c\n"
 msgstr "Løbende omk.:\t%i kr\n"
 
-#: client/cl_ufopedia.c:552
+#: client/cl_ufopedia.c:554
 #, c-format
 msgid "Weight:\t%s\n"
 msgstr "Vægt:\t%s\n"
 
-#: client/cl_ufopedia.c:555
+#: client/cl_ufopedia.c:557
 #, c-format
 msgid "Ammo:\t%i\n"
 msgstr "Ammo:\t%i\n"
 
-#: client/cl_ufopedia.c:558
+#: client/cl_ufopedia.c:560
 #, c-format
 msgid "Reloading time:\t%i\n"
 msgstr "Indlæs fra tid:\t%i\n"
 
-#: client/cl_ufopedia.c:572
+#: client/cl_ufopedia.c:574
 #, c-format
 msgid "%s:\t+%i %%\n"
 msgstr "%s:\t+%i %%\n"
 
-#: client/cl_ufopedia.c:574
+#: client/cl_ufopedia.c:576
 #, c-format
 msgid "%s:\t%i %%\n"
 msgstr "%s:\t%i %%\n"
 
-#: client/cl_ufopedia.c:598
+#: client/cl_ufopedia.c:600
 msgid "Error - could not find aircraft"
 msgstr "Fejl - kunne ikke finde luftfartøj"
 
-#: client/cl_ufopedia.c:605
+#: client/cl_ufopedia.c:607
 #, c-format
 msgid "%s:\t%i\n"
 msgstr "%s:\t%i\n"
 
-#: client/cl_ufopedia.c:612
+#: client/cl_ufopedia.c:614
 #, c-format
 msgid "Max. soldiers:\t%i\n"
 msgstr "Maks soldater::\t%i\n"
 
-#: client/cl_ufopedia.c:712
+#: client/cl_ufopedia.c:714
 msgid "Proposal: "
 msgstr "Forslag: "
 
-#: client/cl_ufopedia.c:715
+#: client/cl_ufopedia.c:717
 msgid "Re: "
 msgstr "Ref.: "
 
-#: client/cl_ufopedia.c:723
+#: client/cl_ufopedia.c:725
 #, c-format
 msgid ""
 "FROM: %s\n"
@@ -10327,47 +11703,47 @@ msgstr ""
 "DATO: %s\n"
 "ANG.: %s%s\n"
 
-#: client/cl_ufopedia.c:812
+#: client/cl_ufopedia.c:814
 msgid "No pre-research description available."
 msgstr "Ingen tidligere forskningsbeskrivelse tilgængelig."
 
 # #ufopedia
-#: client/cl_ufopedia.c:990
+#: client/cl_ufopedia.c:992
 msgid "UFOpaedia Content"
 msgstr "Ufopædi indhold"
 
 # #ufopedia
-#: client/cl_ufopedia.c:1022
+#: client/cl_ufopedia.c:1024
 #, c-format
 msgid "UFOpaedia Index: %s"
 msgstr "Ufopædi Indeks: %s"
 
-#: client/cl_ufopedia.c:1428
+#: client/cl_ufopedia.c:1437
 #, c-format
 msgid "^BProposal: %s\t%i %s %02i\n"
 msgstr "^BForslag: %s\t%i %s %02i\n"
 
-#: client/cl_ufopedia.c:1434
+#: client/cl_ufopedia.c:1443
 #, c-format
 msgid "Proposal: %s\t%i %s %02i\n"
 msgstr "Forslag: %s\t%i %s %02i\n"
 
-#: client/cl_ufopedia.c:1446
+#: client/cl_ufopedia.c:1455
 #, c-format
 msgid "^BRe: %s\t%i %s %02i\n"
 msgstr "^BAng.: %s\t%i %s %02i\n"
 
-#: client/cl_ufopedia.c:1452
+#: client/cl_ufopedia.c:1461
 #, c-format
 msgid "Re: %s\t%i %s %02i\n"
 msgstr "Ang.: %s\t%i %s %02i\n"
 
-#: client/cl_ufopedia.c:1463 client/cl_ufopedia.c:1478
+#: client/cl_ufopedia.c:1472 client/cl_ufopedia.c:1487
 #, c-format
 msgid "^B%s\t%i %s %02i\n"
 msgstr "^B%s\t%i %s %02i\n"
 
-#: client/cl_ufopedia.c:1469 client/cl_ufopedia.c:1484
+#: client/cl_ufopedia.c:1478 client/cl_ufopedia.c:1493
 #, c-format
 msgid "%s\t%i %s %02i\n"
 msgstr "%s\t%i %s %02i\n"
@@ -10520,6 +11896,18 @@ msgstr "Base er under angreb."
 #: po/OTHER_STRINGS:14
 msgid "Crashed Alien Ship. Secure the area."
 msgstr "Nedstyrtet rumvæsenfly. Gør området sikkert."
+
+#~ msgid "Base defence: TR-20 Rocket Pod"
+#~ msgstr "Baseforsvar: TR-20 raketholder"
+
+#~ msgid "Base defence: TR-20 Rocket"
+#~ msgstr "Baseforsvar: TR-20 raket"
+
+#~ msgid "base_weapon_tr20_txt"
+#~ msgstr "<TODO>"
+
+#~ msgid "base_ammo_tr20_txt"
+#~ msgstr "<TODO>"
 
 #~ msgid "Spray"
 #~ msgstr "Spray"

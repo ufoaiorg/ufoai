@@ -2952,6 +2952,14 @@ tech rs_building_antimatter
 		tech rs_antimatter
 	}
 
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Blueprints - Antimatter Storage"
+		icon	icons/alien
+	}
+
 	provides	building_amstorage
 	time		0
 }
@@ -3618,41 +3626,41 @@ tech rs_ugv_ares_w
 // Base Weapons
 //========================
 
-tech rs_base_weapon_tr20
+tech rs_base_AA51_launcher
 {
 	type		tech
 	up_chapter	tech
-	name		"_Base defence: TR-20 Rocket Pod"
-	// pre_description	"_base_weapon_tr20_pre_txt"
+	name		"_AA51 missile launcher"
+	// pre_description	"_b_missile_pre_txt"
 	description {
-		default "_base_weapon_tr20_txt"
+		default "_b_missile_txt"
 	}
 
-	provides	base_weapon_tr20
+	provides	base_AA51_launcher
 	require_AND { tech nothing }
 	time		0
 	producetime	200
 
-	image_top	"techs/base_weapon_tr20"
+	image_top	"techs/base_AA51_launcher"
 }
 
-tech rs_base_ammo_tr20
+tech rs_base_ammo_AA51
 
 {
 	type		tech
 	up_chapter	tech
-	name		"_Base defence: TR-20 Rocket"
-	// pre_description	"_base_ammo_tr20_pre_txt"
+	name		"_AA51 Cicada SAM"
+	// pre_description	"_b_missile_pre_txt"
 	description {
-		default "_base_ammo_tr20_txt"
+		default "_b_missile_txt"
 	}
 
-	provides	base_ammo_tr20
+	provides	base_ammo_AA51
 	require_AND { tech nothing }
 	time		0
 	producetime	12
 
-	image_top	"techs/base_ammo_tr20"
+	image_top	"techs/base_ammo_AA51"
 }
 
 //========================

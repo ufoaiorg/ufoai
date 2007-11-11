@@ -536,10 +536,10 @@ void UFO_PrepareRecovery (base_t *base)
 	recovery->event = event;
 
 	/* Update base capacity. */
-	gd.bases[recovery->baseID].capacities[CAP_UFOHANGARS].cur += ufocraft->weight;
+	base->capacities[CAP_UFOHANGARS].cur += ufocraft->weight;
 
 	Com_DPrintf(DEBUG_CLIENT, "UFO_PrepareRecovery()... the recovery entry in global array is done; base: %s, ufotype: %i, date: %i\n",
-	gd.bases[recovery->baseID].name, recovery->ufotype, recovery->event.day);
+	base->name, recovery->ufotype, recovery->event.day);
 }
 
 /**
@@ -585,11 +585,11 @@ void UFO_Recovery (void)
 
 /**
  * @brief Checks conditions for storing given ufo in given base.
- * @param[in] *base Pointer to the base, where we are going to store UFO.
- * @param[in] *ufocraft Pointer to ufocraft which we are goint to store.
+ * @param[in] base Pointer to the base, where we are going to store UFO.
+ * @param[in] ufocraft Pointer to ufocraft which we are going to store.
  * @return qtrue if given base can store given ufo.
  */
-qboolean UFO_ConditionsForStoring (base_t *base, aircraft_t *ufocraft)
+qboolean UFO_ConditionsForStoring (const base_t *base, const aircraft_t *ufocraft)
 {
 	assert(base && ufocraft);
 
