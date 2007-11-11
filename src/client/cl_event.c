@@ -133,6 +133,7 @@ void CL_EventAddMail_f (void)
 	const char *eventMailId;
 	eventMail_t* eventMail;
 	message_t *m;
+	char dateBuf[MAX_VAR] = "";
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <event_mail_id>\n", Cmd_Argv(0));
@@ -147,10 +148,21 @@ void CL_EventAddMail_f (void)
 		return;
 	}
 
+	if (!eventMail->from || !eventMail->to || !eventMail->subject || !eventMail->body) {
+		Com_Printf("CL_EventAddMail_f: mail with id '%s' has incomplete data\n", eventMailId);
+		return;
+	}
+
+	if (!eventMail->date) {
+		int day, month;
+		CL_DateConvert(&ccs.date, &day, &month);
+		Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"),
+			ccs.date.day / DAYS_PER_YEAR, CL_DateGetMonthName(month), day);
+		eventMail->date = Mem_PoolStrDup(dateBuf, cl_localPool, 0);
+	}
+
 	/* the subject double %s: see UP_SetMailHeader */
-	m = MN_AddNewMessage(va(_("FROM: %s\nTO: %s\nDATE: %s\nSUBJECT: %s%s\n"),
-		_(eventMail->to), _(eventMail->from), _(eventMail->date), "", _(eventMail->subject)),
-		_(eventMail->body), qfalse, MSG_EVENT, NULL);
+	m = MN_AddNewMessage(_(eventMail->subject), _(eventMail->body), qfalse, MSG_EVENT, NULL);
 	if (m)
 		m->eventMail = eventMail;
 	else
