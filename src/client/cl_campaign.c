@@ -3267,7 +3267,7 @@ static void CL_GameResults_f (void)
 
 	/* handle base attack mission */
 	if (selMis->def->missionType == MIS_BASEATTACK) {
-		base = selMis->def->data;
+		base = (base_t*)selMis->def->data;
 		assert(base);
 		if (won) {
 			Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Defense of base: %s successful!"), base->name);
