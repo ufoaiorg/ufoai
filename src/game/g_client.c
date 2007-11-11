@@ -790,7 +790,7 @@ static edict_t *G_GetFloorItemsFromPos (pos3_t pos)
 
 /**
  * @brief Prepares a list of items on the floor at given entity position.
- * @param[in] *ent Pointer to an entity being an actor.
+ * @param[in] ent Pointer to an entity being an actor.
  * @return pointer to edict_t being a floor (with items).
  * @note This function is somehow broken - it returns NULL in some cases of items on the floor.
  */
@@ -1041,7 +1041,7 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 /*#define ADJACENT*/
 /**
  * @brief Move the whole given inventory to the floor and destroy the items that do not fit there.
- * @param[in] *ent Pointer to an edict_t being an actor.
+ * @param[in] ent Pointer to an edict_t being an actor.
  * @sa G_ActorDie
  */
 static void G_InventoryToFloor (edict_t * ent)

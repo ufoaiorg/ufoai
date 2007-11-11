@@ -217,9 +217,9 @@ static void G_UpdateShotMock (shot_mock_t *mock, edict_t *shooter, edict_t *stru
 
 /**
  * @brief Update character stats after succesful shoot.
- * @param[in] *attacker Pointer to attacker.
- * @param[in] *fd Pointer to fireDef_t used in shoot.
- * @param[in] *target Pointer to target.
+ * @param[in] attacker Pointer to attacker.
+ * @param[in] fd Pointer to fireDef_t used in shoot.
+ * @param[in] target Pointer to target.
  * @note chr.chrscore is being sent to client in CL_ParseCharacterData()
  * @sa CL_UpdateCharacterSkills
  */

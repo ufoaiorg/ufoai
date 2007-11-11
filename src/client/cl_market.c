@@ -158,7 +158,7 @@ static void BS_MarketClick_f (void)
 
 /**
  * @brief Calculates amount of aircrafts in base and on the market.
- * @param[in] *airCharId Aircraft id (type).
+ * @param[in] airCharId Aircraft id (type).
  * @param[in] inbase True if function has to return storage, false - when supply (market).
  * @return Amount of aircrafts in base or amount of aircrafts on the market.
  */

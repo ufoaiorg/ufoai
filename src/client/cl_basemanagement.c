@@ -589,8 +589,8 @@ static void B_HireForBuilding (base_t* base, building_t * building, int num)
 
 /**
  * @brief Updates base status for particular buildings as well as capacities.
- * @param[in] *building Pointer to building.
- * @param[in] *base Pointer to base with given building.
+ * @param[in] building Pointer to building.
+ * @param[in] base Pointer to base with given building.
  * @param[in] status Enum of buildingStatus_t which is status of given building.
  * @note This function checks whether a building has B_STATUS_WORKING status, and
  * @note then updates base status for particular buildings and base capacities.
@@ -2708,7 +2708,7 @@ int B_CheckBuildingConstruction (building_t * building, int base_idx)
 
 /**
  * @brief Update buildings status when we gain or loose power.
- * @param[in] *base Pointer to the base with newly constructed power supply.
+ * @param[in] base Pointer to the base with newly constructed power supply.
  */
 void B_UpdateStatusWithPower (base_t *base)
 {
@@ -2804,7 +2804,7 @@ int B_ItemInBase (int item_idx, base_t *base)
 /**
  * @brief Updates base capacities.
  * @param[in] cap Enum type of baseCapacities_t.
- * @param[in] *base Pointer to the base.
+ * @param[in] base Pointer to the base.
  * @sa B_UpdateBaseBuildingStatus
  * @sa B_BuildingDestroy_f
  */
