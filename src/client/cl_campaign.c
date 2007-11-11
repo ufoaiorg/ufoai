@@ -4680,7 +4680,7 @@ static void CP_UFORecovered_f (void)
 	Cvar_SetValue("mission_uforecoverydone", 0);	/* This is used in menus to block UFO Recovery nodes. */
 	Cvar_SetValue("mission_ufotype", UFOtype);
 	Cvar_SetValue("mission_recoverynation", -1);
-        Cvar_SetValue("mission_recoverybase", -1);
+	Cvar_SetValue("mission_recoverybase", -1);
 	/* @todo block Sell button if no nation with requirements */
 	if (!store) {
 		/* Block store option if storing not possible. */
@@ -4725,6 +4725,9 @@ static void CP_UfoRecoveryBaseSelectPopup_f (void)
 	}
 
 	num = atoi(Cmd_Argv(1));
+	if (num < 0 || num >= MAX_BASES || UFObases[num] == -1)
+		return;
+
 	base = &gd.bases[UFObases[num]];
 
 	assert(base);
@@ -4743,8 +4746,14 @@ static void CP_UfoRecoveryBaseSelectPopup_f (void)
 static void CP_UFORecoveredStart_f (void)
 {
 	base_t *base;
+	int i;
 
-	base = &gd.bases[Cvar_VariableInteger("mission_recoverybase")];
+	i = Cvar_VariableInteger("mission_recoverybase");
+
+	if (i < 0 || i > MAX_BASES)
+		return;
+
+	base = &gd.bases[i];
 	assert(base);
 	Com_sprintf(messageBuffer, sizeof(messageBuffer),
 		_("Recovered %s from the battlefield. UFO is being transported to base %s."),
@@ -4762,7 +4771,7 @@ static void CP_UFORecoveredStart_f (void)
  */
 static void CP_UFORecoveredStore_f (void)
 {
-	int i, j = 0, hasufohangar = 0;
+	int i, baseHasUFOHangarCount = 0, recoveryBase = -1;
 	base_t *base = NULL;
 	aircraft_t *ufocraft = NULL;
 	static char recoveryBaseSelectPopup[512];
@@ -4799,40 +4808,42 @@ static void CP_UFORecoveredStore_f (void)
 			continue;
 		base = &gd.bases[i];
 		if (UFO_ConditionsForStoring(base, ufocraft)) {
-			hasufohangar++;
 			Q_strcat(recoveryBaseSelectPopup, gd.bases[i].name, sizeof(recoveryBaseSelectPopup));
 			Q_strcat(recoveryBaseSelectPopup, "\n", sizeof(recoveryBaseSelectPopup));
-			UFObases[j] = i;
-			j++;
+			UFObases[baseHasUFOHangarCount++] = i;
 		}
 	}
-	Q_strcat(recoveryBaseSelectPopup, _("\n\nSelected base:\t\t\t"), sizeof(recoveryBaseSelectPopup));
-	if (Cvar_VariableInteger("mission_recoverybase") != -1) {
-		for (i = 0; i < MAX_BASES; i++) {
-			if (UFObases[i] == Cvar_VariableInteger("mission_recoverybase")) {
-				Q_strcat(recoveryBaseSelectPopup, gd.bases[UFObases[i]].name, sizeof(recoveryBaseSelectPopup));
-				break;
-			}
-		}
-	}
+
 	/* Do nothing without any base. */
 	if (!base)
 		return;
+
 	/* If only one base with UFO hangars, the recovery will be done in this base. */
-	if (hasufohangar < 1) {
+	switch (baseHasUFOHangarCount) {
+	case 0:
 		/* No UFO base with proper conditions, do nothing. */
 		return;
-	} else if (hasufohangar == 1) {
-		/* Base is already selected above. */
-		Cvar_SetValue("mission_recoverybase", base->idx);
+	case 1:
+		/* there should only be one entry in UFObases - so use that one. */
+		Cvar_SetValue("mission_recoverybase", UFObases[0]);
 		CP_UFORecoveredStart_f();
-	} else {
+		break;
+	default:
+		recoveryBase = Cvar_VariableInteger("mission_recoverybase");
+		Q_strcat(recoveryBaseSelectPopup, _("\n\nSelected base:\t\t\t"), sizeof(recoveryBaseSelectPopup));
+		if (recoveryBase > 0 && recoveryBase < MAX_BASES) {
+			for (i = 0; i < baseHasUFOHangarCount; i++) {
+				if (UFObases[i] == recoveryBase) {
+					Q_strcat(recoveryBaseSelectPopup, gd.bases[UFObases[i]].name, sizeof(recoveryBaseSelectPopup));
+					break;
+				}
+			}
+		}
 		/* If more than one - popup with list to select base. */
 		menuText[TEXT_LIST] = recoveryBaseSelectPopup;
 		MN_PushMenu("popup_recoverybaselist");
-		base = &gd.bases[Cvar_VariableInteger("mission_recoverybase")];
+		break;
 	}
-	assert(base);
 }
 
 /** @brief Array of prices proposed by nation. */
