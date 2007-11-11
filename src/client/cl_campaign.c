@@ -1054,7 +1054,7 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 /**
  * @brief Deletes employees from a base along with all base equipment.
  * Called when invading forces overrun a base after a base-attack mission
- * @param[in] *base base_t base to be ransacked
+ * @param[in] base base_t base to be ransacked
  */
 static void CL_BaseRansacked (base_t *base)
 {
@@ -3165,6 +3165,7 @@ static void CL_GameResults_f (void)
 	int civilians_killed;
 	int aliens_killed;
 	int i;
+	base_t *base;
 	employee_t* employee;
 	int numberofsoldiers = 0; /* DEBUG */
 	character_t *chr = NULL;
@@ -3266,13 +3267,15 @@ static void CL_GameResults_f (void)
 
 	/* handle base attack mission */
 	if (selMis->def->missionType == MIS_BASEATTACK) {
+		base = selMis->def->data;
+		assert(base);
 		if (won) {
-			Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Defense of base: %s successful!"), baseCurrent->name);
+			Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Defense of base: %s successful!"), base->name);
 			MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
-			baseCurrent->baseStatus = BASE_WORKING;
+			base->baseStatus = BASE_WORKING;
 			/* @todo: @sa AIRFIGHT_ProjectileHitsBase notes */
 		} else
-			CL_BaseRansacked(baseCurrent);
+			CL_BaseRansacked(base);
 	}
 
 	/* remove mission from list */
