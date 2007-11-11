@@ -151,7 +151,7 @@ mail new_base_ready
 	to "_mail_to_base_commander"
 	from "_mail_from_xo"
 	// base name
-	subject "_New Base Read -- %sy"
+	subject "_New Base Ready -- %s"
 	body "_mail_new_base_ready"
 	icon icons/tech
 }
