@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-11-11 07:39+0100\n"
-"PO-Revision-Date: 2007-11-11 07:40+0100\n"
+"PO-Revision-Date: 2007-11-11 09:00+0100\n"
 "Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -2057,7 +2057,7 @@ msgstr "Termine automatiquement la mission"
 #: ../base/ufos/menu_geoscape.ufo:504
 #: ../base/ufos/menu_geoscape.ufo:600
 msgid "Auto mission"
-msgstr "Mission automatique"
+msgstr "Mission auto."
 
 #: ../base/ufos/menu_geoscape.ufo:534
 #: client/cl_basemanagement.c:1791
