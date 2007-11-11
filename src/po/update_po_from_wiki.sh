@@ -531,10 +531,10 @@ then
 
 	update_sentences $base_sentence
 
-	base_sentence="prolog_sentence"
-	i=1
-	english=$base_sentence$i
-	update_sentences $base_sentence
+#	base_sentence="prolog_sentence"
+#	i=1
+#	english=$base_sentence$i
+#	update_sentences $base_sentence
 
 	if [[ "$debug" = "1" ]]
 	then
