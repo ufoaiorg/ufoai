@@ -5312,6 +5312,9 @@ static void MS_MessageSave (sizebuf_t * sb, message_t * message)
 	MSG_WriteString(sb, message->title);
 	MSG_WriteString(sb, message->text);
 	MSG_WriteByte(sb, message->type);
+	/* store script id of event mail */
+	if (message->type == MSG_EVENT)
+		MSG_WriteString(sb, message->eventMail->id);
 	MSG_WriteLong(sb, idx);
 	MSG_WriteLong(sb, message->d);
 	MSG_WriteLong(sb, message->m);
@@ -5321,6 +5324,11 @@ static void MS_MessageSave (sizebuf_t * sb, message_t * message)
 	MSG_WriteLong(sb, message->s);
 }
 
+/**
+ * @sa MS_Load
+ * @sa MN_AddNewMessage
+ * @sa MS_MessageSave
+ */
 qboolean MS_Save (sizebuf_t* sb, void* data)
 {
 	int i = 0;
@@ -5337,6 +5345,10 @@ qboolean MS_Save (sizebuf_t* sb, void* data)
 	return qtrue;
 }
 
+/**
+ * @sa MS_Save
+ * @sa MN_AddNewMessage
+ */
 qboolean MS_Load (sizebuf_t* sb, void* data)
 {
 	int i, mtype, idx;
@@ -5353,6 +5365,14 @@ qboolean MS_Load (sizebuf_t* sb, void* data)
 		idx = MSG_ReadLong(sb);
 		if (mtype != MSG_DEBUG || developer->integer == 1) {
 			mess = MN_AddNewMessage(title, text, qfalse, mtype, RS_GetTechByIDX(idx));
+			if (mtype == MSG_EVENT) {
+				const char *s = MSG_ReadString(sb);
+				mess->eventMail = CL_GetEventMail(s);
+				if (!mess->eventMail) {
+					Com_Printf("Could not find eventMail with id: %s\n", s);
+					return qfalse;
+				}
+			}
 			mess->d = MSG_ReadLong(sb);
 			mess->m = MSG_ReadLong(sb);
 			mess->y = MSG_ReadLong(sb);
