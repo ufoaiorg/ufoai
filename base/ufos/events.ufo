@@ -62,7 +62,7 @@ mail prolog
 	date "_2084 March 21"
 	subject "_Good Luck"
 	body "_mail_prolog"
-	icon icons/tech
+	icon icons/un
 }
 
 // FIXME: Use these and remove the MN_AddNewMessage stuff for these
@@ -123,7 +123,7 @@ mail transfer_received
 	// base name
 	subject "_Transfer Received -- %s"
 	body "_mail_transfer_received"
-	icon icons/tech
+	icon icons/world
 }
 
 mail equipment_order_received
@@ -133,7 +133,7 @@ mail equipment_order_received
 	// base name
 	subject "_Equipment Order Received -- %s"
 	body "_mail_equipment_order_received"
-	icon icons/tech
+	icon icons/world
 }
 
 mail construction_finished
@@ -143,7 +143,7 @@ mail construction_finished
 	// facility name
 	subject "_Construction Finished -- %s"
 	body "_mail_construction_finished"
-	icon icons/tech
+	icon icons/world
 }
 
 mail new_base_ready
@@ -153,7 +153,7 @@ mail new_base_ready
 	// base name
 	subject "_New Base Ready -- %s"
 	body "_mail_new_base_ready"
-	icon icons/tech
+	icon icons/world
 }
 
 mail base_attack_report
@@ -163,7 +163,7 @@ mail base_attack_report
 	// base name
 	subject "_Base Attack Report -- %s"
 	body "_mail_base_attack_report"
-	icon icons/tech
+	icon icons/world
 }
 
 mail mission_summary
@@ -173,7 +173,7 @@ mail mission_summary
 	// location name
 	subject "_Mission Summary -- %s"
 	body "_mail_mission_summary"
-	icon icons/tech
+	icon icons/world
 }
 
 mail alien_base_discovered
@@ -183,7 +183,7 @@ mail alien_base_discovered
 	// location name
 	subject "_Alien Base Discovered -- %s"
 	body "_mail_alien_base_discovered"
-	icon icons/tech
+	icon icons/world
 }
 
 mail lost_radar_tracking
@@ -193,7 +193,7 @@ mail lost_radar_tracking
 	// target name
 	subject "_Lost Radar Tracking -- %s"
 	body "_mail_lost_radar_tracking"
-	icon icons/tech
+	icon icons/world
 }
 
 mail new_radar_contact
@@ -203,7 +203,7 @@ mail new_radar_contact
 	// target name
 	subject "_New Radar Contact -- %s"
 	body "_mail_new_radar_contact"
-	icon icons/tech
+	icon icons/world
 }
 
 mail response_too_late
@@ -213,7 +213,7 @@ mail response_too_late
 	// location name
 	subject "_Response Too Late -- %s"
 	body "_mail_response_too_late"
-	icon icons/tech
+	icon icons/intelligence
 }
 
 mail ufo_shot_down
@@ -223,7 +223,7 @@ mail ufo_shot_down
 	// target name
 	subject "_UFO Shot Down -- %s"
 	body "_mail_ufo_shot_down"
-	icon icons/tech
+	icon icons/intelligence
 }
 
 mail alien_activity_reported
@@ -233,7 +233,7 @@ mail alien_activity_reported
 	// location name
 	subject "_Alien Activity Reported -- %s"
 	body "_mail_alien_activity_reported"
-	icon icons/tech
+	icon icons/intelligence
 }
 
 mail new_aircraft_arrived
