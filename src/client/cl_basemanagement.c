@@ -2573,7 +2573,6 @@ static void B_CheckBuildingStatusForMenu_f (void)
 	int baseIdx;
 	const char *buildingID;
 	building_t *building, *dependenceBuilding;
-	static char popupBuildingText[MAX_SMALLMENUTEXTLEN];
 
 	if (Cmd_Argc() != 2) {
 		Com_Printf("usage: %s buildingID\n", Cmd_Argv(0));
@@ -2600,8 +2599,8 @@ static void B_CheckBuildingStatusForMenu_f (void)
 			if (gd.buildings[baseIdx][i].buildingType == building->buildingType
 			 && gd.buildings[baseIdx][i].buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
 				/* this is because the construction of the building is not over yet */
-				Com_sprintf(popupBuildingText, sizeof(popupBuildingText), va(_("Construction of building will be over in %i days.\nPlease wait to enter."), gd.buildings[baseIdx][i].buildTime - (ccs.date.day - gd.buildings[baseIdx][i].timeStart)));
-				MN_Popup(_("Notice"), popupBuildingText);
+				Com_sprintf(popupText, sizeof(popupText), va(_("Construction of building will be over in %i days.\nPlease wait to enter."), gd.buildings[baseIdx][i].buildTime - (ccs.date.day - gd.buildings[baseIdx][i].timeStart)));
+				MN_Popup(_("Notice"), popupText);
 				return;
 			}
 		}
@@ -2609,17 +2608,17 @@ static void B_CheckBuildingStatusForMenu_f (void)
 		if (!B_CheckBuildingDependencesStatus(baseCurrent, dependenceBuilding)) {
 			if (B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, dependenceBuilding->buildingType) <= 0) {
 				/* at least one dependence is not operationnal */
-				Com_sprintf(popupBuildingText, sizeof(popupBuildingText), va(_("You need an operational %s to use this building"), dependenceBuilding->name));
-				MN_Popup(_("Notice"), popupBuildingText);
+				Com_sprintf(popupText, sizeof(popupText), va(_("You need an operational %s to use this building"), dependenceBuilding->name));
+				MN_Popup(_("Notice"), popupText);
 			} else {
 				/* the dependence is built but doesn't work - must be because of their dependendes */
-				Com_sprintf(popupBuildingText, sizeof(popupBuildingText), va(_("Make sure that dependences of %s (%s) are operationnal, so that %s may be used"), dependenceBuilding->name, (gd.buildingTypes + dependenceBuilding->dependsBuilding)->name, building->name));
-				MN_Popup(_("Notice"), popupBuildingText);
+				Com_sprintf(popupText, sizeof(popupText), va(_("Make sure that dependences of %s (%s) are operationnal, so that %s may be used"), dependenceBuilding->name, (gd.buildingTypes + dependenceBuilding->dependsBuilding)->name, building->name));
+				MN_Popup(_("Notice"), popupText);
 			}
 		}
 	} else {
-		Com_sprintf(popupBuildingText, sizeof(popupBuildingText), va(_("Build a %s first."), building->name));
-		MN_Popup(_("Notice"), popupBuildingText);
+		Com_sprintf(popupText, sizeof(popupText), va(_("Build a %s first."), building->name));
+		MN_Popup(_("Notice"), popupText);
 	}
 }
 
