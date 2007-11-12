@@ -2608,16 +2608,16 @@ static void B_CheckBuildingStatusForMenu_f (void)
 		if (!B_CheckBuildingDependencesStatus(baseCurrent, dependenceBuilding)) {
 			if (B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, dependenceBuilding->buildingType) <= 0) {
 				/* at least one dependence is not operationnal */
-				Com_sprintf(popupText, sizeof(popupText), va(_("You need an operational %s to use this building"), dependenceBuilding->name));
+				Com_sprintf(popupText, sizeof(popupText), va(_("You need an operational %s to use this building"), _(dependenceBuilding->name)));
 				MN_Popup(_("Notice"), popupText);
 			} else {
 				/* the dependence is built but doesn't work - must be because of their dependendes */
-				Com_sprintf(popupText, sizeof(popupText), va(_("Make sure that dependences of %s (%s) are operationnal, so that %s may be used"), dependenceBuilding->name, (gd.buildingTypes + dependenceBuilding->dependsBuilding)->name, building->name));
+				Com_sprintf(popupText, sizeof(popupText), va(_("Make sure that dependences of building %s (%s) are operationnal, so that building %s may be used"), _(dependenceBuilding->name), _((gd.buildingTypes + dependenceBuilding->dependsBuilding)->name), _(building->name)));
 				MN_Popup(_("Notice"), popupText);
 			}
 		}
 	} else {
-		Com_sprintf(popupText, sizeof(popupText), va(_("Build a %s first."), building->name));
+		Com_sprintf(popupText, sizeof(popupText), va(_("Build a %s first."), _(building->name)));
 		MN_Popup(_("Notice"), popupText);
 	}
 }
