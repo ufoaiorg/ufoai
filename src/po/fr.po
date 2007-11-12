@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-11-11 07:39+0100\n"
-"PO-Revision-Date: 2007-11-11 09:00+0100\n"
+"POT-Creation-Date: 2007-11-12 19:13+0100\n"
+"PO-Revision-Date: 2007-11-12 20:58+0100\n"
 "Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -444,7 +444,7 @@ msgid "Laboratory"
 msgstr "Laboratoire"
 
 #: ../base/ufos/basemanagement.ufo:360
-#: ../base/ufos/menu_bases.ufo:406
+#: ../base/ufos/menu_bases.ufo:430
 #: client/cl_basesummary.c:359
 #: client/cl_basesummary.c:370
 msgid "Hospital"
@@ -558,6 +558,473 @@ msgstr "Attaque de terreur alien dévastatrice sur Mumbai"
 #: ../base/ufos/events.ufo:29
 msgid "Alien aircraft spotted"
 msgstr "Vaisseau alien repéré"
+
+#: ../base/ufos/events.ufo:60
+msgid "mail_from_un"
+msgstr "Secrétaire Général Mahouf Serra, Nations Unies, New York"
+
+#: ../base/ufos/events.ufo:61
+#: ../base/ufos/events.ufo:71
+#: ../base/ufos/events.ufo:81
+#: ../base/ufos/events.ufo:91
+#: ../base/ufos/events.ufo:101
+#: ../base/ufos/events.ufo:111
+#: ../base/ufos/events.ufo:121
+#: ../base/ufos/events.ufo:131
+#: ../base/ufos/events.ufo:141
+#: ../base/ufos/events.ufo:151
+#: ../base/ufos/events.ufo:161
+#: ../base/ufos/events.ufo:171
+#: ../base/ufos/events.ufo:181
+#: ../base/ufos/events.ufo:191
+#: ../base/ufos/events.ufo:201
+#: ../base/ufos/events.ufo:211
+#: ../base/ufos/events.ufo:221
+#: ../base/ufos/events.ufo:231
+#: ../base/ufos/events.ufo:241
+#: ../base/ufos/events.ufo:251
+#: ../base/ufos/events.ufo:261
+#: ../base/ufos/events.ufo:271
+#: ../base/ufos/events.ufo:281
+#: ../base/ufos/research.ufo:128
+#: ../base/ufos/research.ufo:136
+#: ../base/ufos/research.ufo:164
+#: ../base/ufos/research.ufo:172
+#: ../base/ufos/research.ufo:218
+#: ../base/ufos/research.ufo:226
+#: ../base/ufos/research.ufo:256
+#: ../base/ufos/research.ufo:264
+#: ../base/ufos/research.ufo:315
+#: ../base/ufos/research.ufo:323
+#: ../base/ufos/research.ufo:351
+#: ../base/ufos/research.ufo:359
+#: ../base/ufos/research.ufo:387
+#: ../base/ufos/research.ufo:395
+#: ../base/ufos/research.ufo:422
+#: ../base/ufos/research.ufo:430
+#: ../base/ufos/research.ufo:457
+#: ../base/ufos/research.ufo:465
+#: ../base/ufos/research.ufo:494
+#: ../base/ufos/research.ufo:502
+#: ../base/ufos/research.ufo:833
+#: ../base/ufos/research.ufo:841
+#: ../base/ufos/research.ufo:870
+#: ../base/ufos/research.ufo:878
+#: ../base/ufos/research.ufo:926
+#: ../base/ufos/research.ufo:934
+#: ../base/ufos/research.ufo:1135
+#: ../base/ufos/research.ufo:1143
+#: ../base/ufos/research.ufo:1176
+#: ../base/ufos/research.ufo:1184
+#: ../base/ufos/research.ufo:1215
+#: ../base/ufos/research.ufo:1223
+#: ../base/ufos/research.ufo:1273
+#: ../base/ufos/research.ufo:1281
+#: ../base/ufos/research.ufo:1311
+#: ../base/ufos/research.ufo:1319
+#: ../base/ufos/research.ufo:1348
+#: ../base/ufos/research.ufo:1356
+#: ../base/ufos/research.ufo:1404
+#: ../base/ufos/research.ufo:1412
+#: ../base/ufos/research.ufo:1444
+#: ../base/ufos/research.ufo:1452
+#: ../base/ufos/research.ufo:1481
+#: ../base/ufos/research.ufo:1489
+#: ../base/ufos/research.ufo:1519
+#: ../base/ufos/research.ufo:1527
+#: ../base/ufos/research.ufo:1556
+#: ../base/ufos/research.ufo:1564
+#: ../base/ufos/research.ufo:1594
+#: ../base/ufos/research.ufo:1602
+#: ../base/ufos/research.ufo:1632
+#: ../base/ufos/research.ufo:1640
+#: ../base/ufos/research.ufo:1672
+#: ../base/ufos/research.ufo:1680
+#: ../base/ufos/research.ufo:1888
+#: ../base/ufos/research.ufo:1896
+#: ../base/ufos/research.ufo:1934
+#: ../base/ufos/research.ufo:1942
+#: ../base/ufos/research.ufo:1973
+#: ../base/ufos/research.ufo:1981
+#: ../base/ufos/research.ufo:2011
+#: ../base/ufos/research.ufo:2019
+#: ../base/ufos/research.ufo:2049
+#: ../base/ufos/research.ufo:2057
+#: ../base/ufos/research.ufo:2088
+#: ../base/ufos/research.ufo:2096
+#: ../base/ufos/research.ufo:2126
+#: ../base/ufos/research.ufo:2134
+#: ../base/ufos/research.ufo:2164
+#: ../base/ufos/research.ufo:2172
+#: ../base/ufos/research.ufo:2204
+#: ../base/ufos/research.ufo:2212
+#: ../base/ufos/research.ufo:2262
+#: ../base/ufos/research.ufo:2270
+#: ../base/ufos/research.ufo:2338
+#: ../base/ufos/research.ufo:2346
+#: ../base/ufos/research.ufo:2374
+#: ../base/ufos/research.ufo:2382
+#: ../base/ufos/research.ufo:2958
+#: ../base/ufos/research.ufo:3084
+#: ../base/ufos/research.ufo:3092
+#: ../base/ufos/research.ufo:3125
+#: ../base/ufos/research.ufo:3133
+#: ../base/ufos/research.ufo:3167
+#: ../base/ufos/research.ufo:3175
+#: ../base/ufos/research.ufo:3209
+#: ../base/ufos/research.ufo:3217
+#: ../base/ufos/research.ufo:3251
+#: ../base/ufos/research.ufo:3259
+#: ../base/ufos/research.ufo:3293
+#: ../base/ufos/research.ufo:3301
+#: ../base/ufos/research.ufo:3363
+#: ../base/ufos/research.ufo:3371
+#: ../base/ufos/research.ufo:3421
+#: ../base/ufos/research.ufo:3429
+#: ../base/ufos/research.ufo:3465
+#: ../base/ufos/research.ufo:3473
+#: ../base/ufos/research.ufo:3507
+#: ../base/ufos/research.ufo:3515
+#: ../base/ufos/research.ufo:3742
+#: ../base/ufos/research.ufo:3749
+#: ../base/ufos/research.ufo:3779
+#: ../base/ufos/research.ufo:3786
+#: ../base/ufos/research.ufo:3815
+#: ../base/ufos/research.ufo:3822
+#: ../base/ufos/research.ufo:3993
+#: ../base/ufos/research.ufo:4001
+#: ../base/ufos/research.ufo:4077
+#: ../base/ufos/research.ufo:4085
+#: ../base/ufos/research.ufo:4171
+#: ../base/ufos/research.ufo:4201
+#: ../base/ufos/research.ufo:4208
+msgid "mail_to_base_commander"
+msgstr "Commandant de Base, PHALANX, Commandement des Opérations Atlantique"
+
+#: ../base/ufos/events.ufo:62
+msgid "2084 March 21"
+msgstr "21 Mars 2084"
+
+#: ../base/ufos/events.ufo:63
+msgid "Good Luck"
+msgstr "Bonne chance"
+
+#: ../base/ufos/events.ufo:64
+msgid "mail_prolog"
+msgstr ""
+"Bienvenu dans vos nouvelles fonctions, Commandant. Vous avez dès maintenant les pleins pouvoirs sur l'Unité de Réaction Extraterrestre PHALANX. Votre mission est de protéger les citoyens de la Terre et de stopper la menace alienne à tout prix. La façon dont vous procéderez nous importe peu, notre seule exigence est votre réussite.\n"
+"\n"
+"Votre première mission est d'aménager votre quartier général. Les Nations Unies ont accès à n'importe quelle base à travers le monde, et vous pouvez par conséquent envisager la totalité du globe pour l'installation de votre centre d'opération. Choisissez cet endroit judicieusement, car il aura beaucoup d'influence sur les chances de succès du projet PHALANX.\n"
+"\n"
+"Une analyse récente des attaques sur Mumbai et Bonn révèle que les observations d'OVNI et d'activités aliennes semblent se concentrer dans les régions les plus densément peuplées du monde. Ceci inclus les zones côtières d'Amérique du nord et du sud, l'Europe, l'Asie de l'est, l'Afrique du sud et l'Afrique méditerranéenne, ainsi que l'Australie. Vous devriez envisager d'inclure ces terres dans votre rayon d'action.\n"
+"\n"
+"Une fois votre première base établie, vous devez préparer vos soldats à l'action. Les recrues que nous avons assignées à PHALANX doivent être affectées à un appareil de transport, puis équipées pour le combat.\n"
+"\n"
+"Prenez soin d'elles, Commandant. Nous comptons tous sur vous, et prions pour vous.\n"
+"\n"
+"Ce sera tout. Bonne chance, et bonne chasse."
+
+#: ../base/ufos/events.ufo:72
+#: ../base/ufos/events.ufo:82
+#: ../base/ufos/events.ufo:92
+#: ../base/ufos/events.ufo:112
+#: ../base/ufos/research.ufo:127
+#: ../base/ufos/research.ufo:135
+#: ../base/ufos/research.ufo:163
+#: ../base/ufos/research.ufo:171
+#: ../base/ufos/research.ufo:832
+#: ../base/ufos/research.ufo:840
+#: ../base/ufos/research.ufo:869
+#: ../base/ufos/research.ufo:877
+#: ../base/ufos/research.ufo:925
+#: ../base/ufos/research.ufo:933
+#: ../base/ufos/research.ufo:1134
+#: ../base/ufos/research.ufo:1142
+#: ../base/ufos/research.ufo:1175
+#: ../base/ufos/research.ufo:1183
+#: ../base/ufos/research.ufo:1214
+#: ../base/ufos/research.ufo:1222
+#: ../base/ufos/research.ufo:1272
+#: ../base/ufos/research.ufo:1280
+#: ../base/ufos/research.ufo:1310
+#: ../base/ufos/research.ufo:1318
+#: ../base/ufos/research.ufo:1347
+#: ../base/ufos/research.ufo:1355
+#: ../base/ufos/research.ufo:1403
+#: ../base/ufos/research.ufo:1411
+#: ../base/ufos/research.ufo:1443
+#: ../base/ufos/research.ufo:1451
+#: ../base/ufos/research.ufo:1480
+#: ../base/ufos/research.ufo:1488
+#: ../base/ufos/research.ufo:1518
+#: ../base/ufos/research.ufo:1526
+#: ../base/ufos/research.ufo:1555
+#: ../base/ufos/research.ufo:1563
+#: ../base/ufos/research.ufo:1593
+#: ../base/ufos/research.ufo:1601
+#: ../base/ufos/research.ufo:1631
+#: ../base/ufos/research.ufo:1639
+#: ../base/ufos/research.ufo:1671
+#: ../base/ufos/research.ufo:1679
+#: ../base/ufos/research.ufo:1887
+#: ../base/ufos/research.ufo:1895
+#: ../base/ufos/research.ufo:1933
+#: ../base/ufos/research.ufo:1941
+#: ../base/ufos/research.ufo:1972
+#: ../base/ufos/research.ufo:1980
+#: ../base/ufos/research.ufo:2010
+#: ../base/ufos/research.ufo:2018
+#: ../base/ufos/research.ufo:2048
+#: ../base/ufos/research.ufo:2056
+#: ../base/ufos/research.ufo:2087
+#: ../base/ufos/research.ufo:2095
+#: ../base/ufos/research.ufo:2125
+#: ../base/ufos/research.ufo:2133
+#: ../base/ufos/research.ufo:2163
+#: ../base/ufos/research.ufo:2171
+#: ../base/ufos/research.ufo:2203
+#: ../base/ufos/research.ufo:2211
+#: ../base/ufos/research.ufo:2261
+#: ../base/ufos/research.ufo:2269
+#: ../base/ufos/research.ufo:2337
+#: ../base/ufos/research.ufo:2345
+#: ../base/ufos/research.ufo:2373
+#: ../base/ufos/research.ufo:2381
+#: ../base/ufos/research.ufo:2957
+#: ../base/ufos/research.ufo:3083
+#: ../base/ufos/research.ufo:3091
+#: ../base/ufos/research.ufo:3124
+#: ../base/ufos/research.ufo:3132
+#: ../base/ufos/research.ufo:3166
+#: ../base/ufos/research.ufo:3174
+#: ../base/ufos/research.ufo:3208
+#: ../base/ufos/research.ufo:3216
+#: ../base/ufos/research.ufo:3250
+#: ../base/ufos/research.ufo:3258
+#: ../base/ufos/research.ufo:3292
+#: ../base/ufos/research.ufo:3300
+#: ../base/ufos/research.ufo:3741
+#: ../base/ufos/research.ufo:3748
+#: ../base/ufos/research.ufo:3778
+#: ../base/ufos/research.ufo:3785
+#: ../base/ufos/research.ufo:3814
+#: ../base/ufos/research.ufo:3821
+#: ../base/ufos/research.ufo:3992
+#: ../base/ufos/research.ufo:4000
+#: ../base/ufos/research.ufo:4076
+#: ../base/ufos/research.ufo:4084
+msgid "mail_from_paul_navarre"
+msgstr "Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique"
+
+#: ../base/ufos/events.ufo:74
+msgid "Not Enough Money -- %s"
+msgstr "Pas assez d'agent -- %s"
+
+#: ../base/ufos/events.ufo:75
+msgid "mail_not_enough_money"
+msgstr "mail_not_enough_money"
+
+#: ../base/ufos/events.ufo:84
+msgid "Not Enough Resources -- %s"
+msgstr "Pas assez de ressources -- %s"
+
+#: ../base/ufos/events.ufo:85
+msgid "mail_not_enough_ressources"
+msgstr "mail_not_enough_ressources"
+
+#: ../base/ufos/events.ufo:94
+msgid "Production Finished -- %s"
+msgstr "Production terminée -- %s"
+
+#: ../base/ufos/events.ufo:95
+msgid "mail_production_finished"
+msgstr "mail_production_finished"
+
+#: ../base/ufos/events.ufo:102
+#: ../base/ufos/events.ufo:122
+#: ../base/ufos/events.ufo:132
+#: ../base/ufos/events.ufo:142
+#: ../base/ufos/events.ufo:152
+#: ../base/ufos/events.ufo:162
+#: ../base/ufos/events.ufo:172
+#: ../base/ufos/events.ufo:182
+#: ../base/ufos/events.ufo:192
+#: ../base/ufos/events.ufo:202
+msgid "mail_from_xo"
+msgstr "C2 Abel S. Howard, Contrôle et Commandement, PHALANX, Commandement des Opérations Atlantique"
+
+#: ../base/ufos/events.ufo:104
+msgid "Monthly Report -- %s"
+msgstr "Rapport mensuel -- %s"
+
+#: ../base/ufos/events.ufo:105
+msgid "mail_monthly_report"
+msgstr "mail_monthly_report"
+
+#: ../base/ufos/events.ufo:114
+msgid "UFO Stored In Hangar -- %s"
+msgstr "OVNI conservés au hangar -- %s"
+
+#: ../base/ufos/events.ufo:115
+msgid "mail_ufo_in_hangar"
+msgstr "mail_ufo_in_hangar"
+
+#: ../base/ufos/events.ufo:124
+msgid "Transfer Received -- %s"
+msgstr "Transfert terminé -- %s"
+
+#: ../base/ufos/events.ufo:125
+msgid "mail_transfer_received"
+msgstr "mail_transfer_received"
+
+#: ../base/ufos/events.ufo:134
+msgid "Equipment Order Received -- %s"
+msgstr "Ordre d'équipement reçu -- %s"
+
+#: ../base/ufos/events.ufo:135
+msgid "mail_equipment_order_received"
+msgstr "mail_equipment_order_received"
+
+#: ../base/ufos/events.ufo:144
+msgid "Construction Finished -- %s"
+msgstr "Construction terminée -- %s"
+
+#: ../base/ufos/events.ufo:145
+msgid "mail_construction_finished"
+msgstr "mail_construction_finished"
+
+#: ../base/ufos/events.ufo:154
+msgid "New Base Ready -- %s"
+msgstr "Nouvelle base prête -- %s"
+
+#: ../base/ufos/events.ufo:155
+msgid "mail_new_base_ready"
+msgstr "mail_new_base_ready"
+
+#: ../base/ufos/events.ufo:164
+msgid "Base Attack Report -- %s"
+msgstr "Rappoprt d'attaque de base -- %s"
+
+#: ../base/ufos/events.ufo:165
+msgid "mail_base_attack_report"
+msgstr "mail_base_attack_report"
+
+#: ../base/ufos/events.ufo:174
+msgid "Mission Summary -- %s"
+msgstr "Rapport de mission -- %s"
+
+#: ../base/ufos/events.ufo:175
+msgid "mail_mission_summary"
+msgstr "mail_mission_summary"
+
+#: ../base/ufos/events.ufo:184
+msgid "Alien Base Discovered -- %s"
+msgstr "Base alienne découverte -- %s"
+
+#: ../base/ufos/events.ufo:185
+msgid "mail_alien_base_discovered"
+msgstr "mail_alien_base_discovered"
+
+#: ../base/ufos/events.ufo:194
+msgid "Lost Radar Tracking -- %s"
+msgstr "Trace radar perdue -- %s"
+
+#: ../base/ufos/events.ufo:195
+msgid "mail_lost_radar_tracking"
+msgstr "mail_lost_radar_tracking"
+
+#: ../base/ufos/events.ufo:204
+msgid "New Radar Contact -- %s"
+msgstr "Nouveau contact radar -- %s"
+
+#: ../base/ufos/events.ufo:205
+msgid "mail_new_radar_contact"
+msgstr "mail_new_radar_contact"
+
+#: ../base/ufos/events.ufo:212
+#: ../base/ufos/events.ufo:222
+#: ../base/ufos/events.ufo:232
+#: ../base/ufos/research.ufo:456
+#: ../base/ufos/research.ufo:464
+#: ../base/ufos/research.ufo:493
+#: ../base/ufos/research.ufo:501
+msgid "mail_from_col_falkland"
+msgstr "Col. Ingrid Falkland, Division Renseignements, PHALANX, Commandement des Opérations Atlantique"
+
+#: ../base/ufos/events.ufo:214
+msgid "Response Too Late -- %s"
+msgstr "Réponse trop tardive -- %s"
+
+#: ../base/ufos/events.ufo:215
+msgid "mail_response_too_late"
+msgstr "mail_response_too_late"
+
+#: ../base/ufos/events.ufo:224
+msgid "UFO Shot Down -- %s"
+msgstr "OVNI descendu -- %s"
+
+#: ../base/ufos/events.ufo:225
+msgid "mail_ufo_shot_down"
+msgstr "mail_ufo_shot_down"
+
+#: ../base/ufos/events.ufo:234
+msgid "Alien Activity Reported -- %s"
+msgstr "Rapport d'activité alienne -- %s"
+
+#: ../base/ufos/events.ufo:235
+msgid "mail_alien_activity_reported"
+msgstr "mail_alien_activity_reported"
+
+#: ../base/ufos/events.ufo:242
+#: ../base/ufos/events.ufo:252
+#: ../base/ufos/events.ufo:262
+#: ../base/ufos/events.ufo:272
+#: ../base/ufos/events.ufo:282
+msgid "mail_from_air_cdr"
+msgstr "Cdt (Aérien) Subakh al-Kuhar, Aéronavale, PHALANX, Commandement des Opérations Atlantique"
+
+#: ../base/ufos/events.ufo:244
+msgid "New Aircraft Arrived -- %s"
+msgstr "Nouvel appareil arrivé -- %s"
+
+#: ../base/ufos/events.ufo:245
+msgid "mail_new_aircraft_arrived"
+msgstr "mail_new_aircraft_arrived"
+
+#: ../base/ufos/events.ufo:254
+msgid "Aircraft Lost Target -- %s"
+msgstr "Cible perdue -- %s"
+
+#: ../base/ufos/events.ufo:255
+msgid "mail_aircraft_lost_target"
+msgstr "mail_aircraft_lost_target"
+
+#: ../base/ufos/events.ufo:264
+msgid "Aircraft Ready -- %s"
+msgstr "Appareil prêt -- %s"
+
+#: ../base/ufos/events.ufo:265
+msgid "mail_aircraft_ready"
+msgstr "mail_aircraft_ready"
+
+#: ../base/ufos/events.ufo:274
+msgid "Aircraft Bingo Fuel -- %s"
+msgstr "Manque de carburant -- %s"
+
+#: ../base/ufos/events.ufo:275
+msgid "mail_aircraft_bingo_fuel"
+msgstr "mail_aircraft_bingo_fuel"
+
+#: ../base/ufos/events.ufo:284
+msgid "Aircraft Landed -- %s"
+msgstr "Appareil arrivé -- %s"
+
+#: ../base/ufos/events.ufo:285
+msgid "mail_aircraft_landed"
+msgstr ""
+"Commander, {aircraft} has landed at {base}. It is now being {refuelled/refuelled and rearmed/repaired, refuelled and rearmed}. Estimated work time on this craft before she can be launched again is %s hours.\n"
+"\n"
+"-- COMAIR"
 
 #: ../base/ufos/fonts.ufo:15
 #: ../base/ufos/fonts.ufo:22
@@ -896,7 +1363,7 @@ msgstr "Armes"
 #: ../base/ufos/menu_buy.ufo:1397
 #: ../base/ufos/menu_production.ufo:424
 #: ../base/ufos/menu_team.ufo:1384
-#: client/cl_ufopedia.c:189
+#: client/cl_ufopedia.c:185
 msgid "Armour"
 msgstr "Armure"
 
@@ -952,7 +1419,7 @@ msgid "Action"
 msgstr "Action"
 
 #: ../base/ufos/menu_aircraft.ufo:993
-#: ../base/ufos/menu_bases.ufo:656
+#: ../base/ufos/menu_bases.ufo:680
 #: ../base/ufos/menu_geoscape.ufo:449
 #: ../base/ufos/menu_geoscape.ufo:547
 #: ../base/ufos/menu_geoscape.ufo:648
@@ -971,7 +1438,7 @@ msgid "Close this dialogue"
 msgstr "Fermer cette boite de dialogue"
 
 #: ../base/ufos/menu_aircraft.ufo:1006
-#: ../base/ufos/menu_bases.ufo:669
+#: ../base/ufos/menu_bases.ufo:693
 #: ../base/ufos/menu_geoscape.ufo:462
 #: ../base/ufos/menu_geoscape.ufo:560
 #: ../base/ufos/menu_geoscape.ufo:661
@@ -1023,7 +1490,7 @@ msgid "Produce aircraft"
 msgstr "Produire un appareil"
 
 #: ../base/ufos/menu_aliencont.ufo:48
-#: ../base/ufos/menu_bases.ufo:444
+#: ../base/ufos/menu_bases.ufo:468
 #: ../base/ufos/menu_basesummary.ufo:48
 #: ../base/ufos/menu_buildings.ufo:100
 #: ../base/ufos/menu_buy.ufo:1176
@@ -1381,123 +1848,123 @@ msgid "Build at least one Storage"
 msgstr "Construisez au moins un entrepôt"
 
 # Ce texte est dans un bouton et doit donc être court (pas de Acheter/Vendre)
-#: ../base/ufos/menu_bases.ufo:190
+#: ../base/ufos/menu_bases.ufo:194
 msgid "Buy/Sell Equipment"
 msgstr "Équipement"
 
-#: ../base/ufos/menu_bases.ufo:200
+#: ../base/ufos/menu_bases.ufo:204
 msgid "Transfer equipment or personnel"
 msgstr "Transférer de l'équipement ou du personnel vers une autre base"
 
-#: ../base/ufos/menu_bases.ufo:216
+#: ../base/ufos/menu_bases.ufo:220
 msgid "Can't transfer - only one base"
 msgstr "Transfert impossible - Une seule base construite"
 
-#: ../base/ufos/menu_bases.ufo:225
+#: ../base/ufos/menu_bases.ufo:229
 #: ../base/ufos/menu_geoscape.ufo:681
 #: ../base/ufos/menu_transfer.ufo:108
 #: ../base/ufos/menu_transfer.ufo:327
 msgid "Transfer"
 msgstr "Transférer"
 
-#: ../base/ufos/menu_bases.ufo:236
+#: ../base/ufos/menu_bases.ufo:240
 msgid "Research new technology"
 msgstr "Rechercher de nouvelles technologies"
 
-#: ../base/ufos/menu_bases.ufo:253
+#: ../base/ufos/menu_bases.ufo:257
 msgid "Build at least one Laboratory"
 msgstr "Construisez d'abord un laboratoire"
 
-#: ../base/ufos/menu_bases.ufo:262
+#: ../base/ufos/menu_bases.ufo:270
 #: ../base/ufos/menu_basesummary.ufo:354
 msgid "Research"
 msgstr "Recherche"
 
-#: ../base/ufos/menu_bases.ufo:273
+#: ../base/ufos/menu_bases.ufo:281
 msgid "Produce new equipment"
 msgstr "Fabriquer un nouvel équipement"
 
-#: ../base/ufos/menu_bases.ufo:290
+#: ../base/ufos/menu_bases.ufo:298
 msgid "Workshop not operational"
 msgstr "Atelier non opérationnel"
 
-#: ../base/ufos/menu_bases.ufo:299
+#: ../base/ufos/menu_bases.ufo:311
 #: ../base/ufos/menu_basesummary.ufo:339
 msgid "Production"
 msgstr "Production"
 
-#: ../base/ufos/menu_bases.ufo:310
-#: ../base/ufos/menu_bases.ufo:336
+#: ../base/ufos/menu_bases.ufo:322
+#: ../base/ufos/menu_bases.ufo:352
 msgid "Hire employees"
 msgstr "Recruter personnel"
 
-#: ../base/ufos/menu_bases.ufo:327
+#: ../base/ufos/menu_bases.ufo:339
 msgid "Build at least one Living Quarter"
 msgstr "Construisez au moins un centre de commandement"
 
-#: ../base/ufos/menu_bases.ufo:346
+#: ../base/ufos/menu_bases.ufo:362
 msgid "Deal with Aliens in Alien Containment"
 msgstr "Superviser les aliens en détention"
 
-#: ../base/ufos/menu_bases.ufo:362
+#: ../base/ufos/menu_bases.ufo:378
 msgid "Build at least one Alien Containment"
 msgstr "Construisez d'abord une unité de détention"
 
-#: ../base/ufos/menu_bases.ufo:371
+#: ../base/ufos/menu_bases.ufo:391
 msgid "Containment"
 msgstr "Unité de détention"
 
-#: ../base/ufos/menu_bases.ufo:381
+#: ../base/ufos/menu_bases.ufo:401
 msgid "Medical and Surgery operations"
 msgstr "Opérations médicales et de chirurgie"
 
-#: ../base/ufos/menu_bases.ufo:397
+#: ../base/ufos/menu_bases.ufo:417
 msgid "Build at least one Hospital"
 msgstr "Construisez au moins un hôpital"
 
-#: ../base/ufos/menu_bases.ufo:415
+#: ../base/ufos/menu_bases.ufo:439
 msgid "Base Information"
 msgstr "Informations récapitulatives sur la base"
 
-#: ../base/ufos/menu_bases.ufo:431
+#: ../base/ufos/menu_bases.ufo:455
 msgid "Base Summary"
 msgstr "Vue d'ensemble"
 
-#: ../base/ufos/menu_bases.ufo:452
+#: ../base/ufos/menu_bases.ufo:476
 #: ../base/ufos/menu_geoscape.ufo:115
 msgid "Organisation capital"
 msgstr "Capital de l'organisation"
 
-#: ../base/ufos/menu_bases.ufo:461
+#: ../base/ufos/menu_bases.ufo:485
 #: ../base/ufos/menu_buildings.ufo:62
 msgid "Name of this base"
 msgstr "Nom de cette base"
 
-#: ../base/ufos/menu_bases.ufo:475
+#: ../base/ufos/menu_bases.ufo:499
 msgid "Rename your base"
 msgstr "Changer le nom de la base"
 
-#: ../base/ufos/menu_bases.ufo:489
+#: ../base/ufos/menu_bases.ufo:513
 msgid "Switch to the previous base"
 msgstr "Base précédente"
 
-#: ../base/ufos/menu_bases.ufo:500
+#: ../base/ufos/menu_bases.ufo:524
 msgid "Switch to the next base"
 msgstr "Base suivante"
 
-#: ../base/ufos/menu_bases.ufo:640
+#: ../base/ufos/menu_bases.ufo:664
 msgid "Destroy building"
 msgstr "Détruire un bâtiment"
 
-#: ../base/ufos/menu_bases.ufo:649
+#: ../base/ufos/menu_bases.ufo:673
 msgid "Are you sure you want to destroy this building?"
 msgstr "Êtes-vous certain de vouloir détruire ce bâtiment ?"
 
-#: ../base/ufos/menu_bases.ufo:676
+#: ../base/ufos/menu_bases.ufo:700
 msgid "Destroy the building"
 msgstr "Détruire le bâtiment"
 
-#: ../base/ufos/menu_bases.ufo:689
+#: ../base/ufos/menu_bases.ufo:713
 msgid "Destroy"
 msgstr "Détruire"
 
@@ -2060,7 +2527,7 @@ msgid "Auto mission"
 msgstr "Mission auto."
 
 #: ../base/ufos/menu_geoscape.ufo:534
-#: client/cl_basemanagement.c:1791
+#: client/cl_basemanagement.c:1920
 msgid "Base is under attack"
 msgstr "La base est attaquée"
 
@@ -3561,7 +4028,6 @@ msgstr "Vous avez perdu la partie"
 #: ../base/ufos/seq_ingame.ufo:42
 #: ../base/ufos/seq_ingame.ufo:80
 #: ../base/ufos/seq_intro.ufo:73
-#: ../base/ufos/seq_intro.ufo:192
 msgid "Click to continue"
 msgstr "Retour au contenu"
 
@@ -3794,7 +4260,7 @@ msgid "Show only aliens"
 msgstr "Ne montrer que les aliens"
 
 #: ../base/ufos/menu_transfer.ufo:267
-#: client/cl_campaign.c:4502
+#: client/cl_campaign.c:4507
 msgid "Aliens"
 msgstr "Aliens"
 
@@ -3900,7 +4366,7 @@ msgstr "Attaque de terreur"
 #: ../base/ufos/missions.ufo:672
 #: ../base/ufos/missions.ufo:689
 msgid "Protect inhabitants."
-msgstr "Protection de population. je rallonge volontairement ce message à tite de test, vous ne devriez pas pouvoir le lire."
+msgstr "Protection de population."
 
 #: ../base/ufos/missions.ufo:56
 msgid "Gwanda"
@@ -4358,209 +4824,6 @@ msgstr ""
 "\n"
 "--Cdt Navarre"
 
-#: ../base/ufos/research.ufo:127
-#: ../base/ufos/research.ufo:135
-#: ../base/ufos/research.ufo:163
-#: ../base/ufos/research.ufo:171
-#: ../base/ufos/research.ufo:832
-#: ../base/ufos/research.ufo:840
-#: ../base/ufos/research.ufo:869
-#: ../base/ufos/research.ufo:877
-#: ../base/ufos/research.ufo:925
-#: ../base/ufos/research.ufo:933
-#: ../base/ufos/research.ufo:1134
-#: ../base/ufos/research.ufo:1142
-#: ../base/ufos/research.ufo:1175
-#: ../base/ufos/research.ufo:1183
-#: ../base/ufos/research.ufo:1214
-#: ../base/ufos/research.ufo:1222
-#: ../base/ufos/research.ufo:1272
-#: ../base/ufos/research.ufo:1280
-#: ../base/ufos/research.ufo:1310
-#: ../base/ufos/research.ufo:1318
-#: ../base/ufos/research.ufo:1347
-#: ../base/ufos/research.ufo:1355
-#: ../base/ufos/research.ufo:1403
-#: ../base/ufos/research.ufo:1411
-#: ../base/ufos/research.ufo:1443
-#: ../base/ufos/research.ufo:1451
-#: ../base/ufos/research.ufo:1480
-#: ../base/ufos/research.ufo:1488
-#: ../base/ufos/research.ufo:1518
-#: ../base/ufos/research.ufo:1526
-#: ../base/ufos/research.ufo:1555
-#: ../base/ufos/research.ufo:1563
-#: ../base/ufos/research.ufo:1593
-#: ../base/ufos/research.ufo:1601
-#: ../base/ufos/research.ufo:1631
-#: ../base/ufos/research.ufo:1639
-#: ../base/ufos/research.ufo:1671
-#: ../base/ufos/research.ufo:1679
-#: ../base/ufos/research.ufo:1887
-#: ../base/ufos/research.ufo:1895
-#: ../base/ufos/research.ufo:1933
-#: ../base/ufos/research.ufo:1941
-#: ../base/ufos/research.ufo:1972
-#: ../base/ufos/research.ufo:1980
-#: ../base/ufos/research.ufo:2010
-#: ../base/ufos/research.ufo:2018
-#: ../base/ufos/research.ufo:2048
-#: ../base/ufos/research.ufo:2056
-#: ../base/ufos/research.ufo:2087
-#: ../base/ufos/research.ufo:2095
-#: ../base/ufos/research.ufo:2125
-#: ../base/ufos/research.ufo:2133
-#: ../base/ufos/research.ufo:2163
-#: ../base/ufos/research.ufo:2171
-#: ../base/ufos/research.ufo:2203
-#: ../base/ufos/research.ufo:2211
-#: ../base/ufos/research.ufo:2261
-#: ../base/ufos/research.ufo:2269
-#: ../base/ufos/research.ufo:2337
-#: ../base/ufos/research.ufo:2345
-#: ../base/ufos/research.ufo:2373
-#: ../base/ufos/research.ufo:2381
-#: ../base/ufos/research.ufo:2957
-#: ../base/ufos/research.ufo:3083
-#: ../base/ufos/research.ufo:3091
-#: ../base/ufos/research.ufo:3124
-#: ../base/ufos/research.ufo:3132
-#: ../base/ufos/research.ufo:3166
-#: ../base/ufos/research.ufo:3174
-#: ../base/ufos/research.ufo:3208
-#: ../base/ufos/research.ufo:3216
-#: ../base/ufos/research.ufo:3250
-#: ../base/ufos/research.ufo:3258
-#: ../base/ufos/research.ufo:3292
-#: ../base/ufos/research.ufo:3300
-#: ../base/ufos/research.ufo:3741
-#: ../base/ufos/research.ufo:3748
-#: ../base/ufos/research.ufo:3778
-#: ../base/ufos/research.ufo:3785
-#: ../base/ufos/research.ufo:3814
-#: ../base/ufos/research.ufo:3821
-#: ../base/ufos/research.ufo:3992
-#: ../base/ufos/research.ufo:4000
-#: ../base/ufos/research.ufo:4076
-#: ../base/ufos/research.ufo:4084
-msgid "mail_from_paul_navarre"
-msgstr "Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique"
-
-#: ../base/ufos/research.ufo:128
-#: ../base/ufos/research.ufo:136
-#: ../base/ufos/research.ufo:164
-#: ../base/ufos/research.ufo:172
-#: ../base/ufos/research.ufo:218
-#: ../base/ufos/research.ufo:226
-#: ../base/ufos/research.ufo:256
-#: ../base/ufos/research.ufo:264
-#: ../base/ufos/research.ufo:315
-#: ../base/ufos/research.ufo:323
-#: ../base/ufos/research.ufo:351
-#: ../base/ufos/research.ufo:359
-#: ../base/ufos/research.ufo:387
-#: ../base/ufos/research.ufo:395
-#: ../base/ufos/research.ufo:422
-#: ../base/ufos/research.ufo:430
-#: ../base/ufos/research.ufo:457
-#: ../base/ufos/research.ufo:465
-#: ../base/ufos/research.ufo:494
-#: ../base/ufos/research.ufo:502
-#: ../base/ufos/research.ufo:833
-#: ../base/ufos/research.ufo:841
-#: ../base/ufos/research.ufo:870
-#: ../base/ufos/research.ufo:878
-#: ../base/ufos/research.ufo:926
-#: ../base/ufos/research.ufo:934
-#: ../base/ufos/research.ufo:1135
-#: ../base/ufos/research.ufo:1143
-#: ../base/ufos/research.ufo:1176
-#: ../base/ufos/research.ufo:1184
-#: ../base/ufos/research.ufo:1215
-#: ../base/ufos/research.ufo:1223
-#: ../base/ufos/research.ufo:1273
-#: ../base/ufos/research.ufo:1281
-#: ../base/ufos/research.ufo:1311
-#: ../base/ufos/research.ufo:1319
-#: ../base/ufos/research.ufo:1348
-#: ../base/ufos/research.ufo:1356
-#: ../base/ufos/research.ufo:1404
-#: ../base/ufos/research.ufo:1412
-#: ../base/ufos/research.ufo:1444
-#: ../base/ufos/research.ufo:1452
-#: ../base/ufos/research.ufo:1481
-#: ../base/ufos/research.ufo:1489
-#: ../base/ufos/research.ufo:1519
-#: ../base/ufos/research.ufo:1527
-#: ../base/ufos/research.ufo:1556
-#: ../base/ufos/research.ufo:1564
-#: ../base/ufos/research.ufo:1594
-#: ../base/ufos/research.ufo:1602
-#: ../base/ufos/research.ufo:1632
-#: ../base/ufos/research.ufo:1640
-#: ../base/ufos/research.ufo:1672
-#: ../base/ufos/research.ufo:1680
-#: ../base/ufos/research.ufo:1888
-#: ../base/ufos/research.ufo:1896
-#: ../base/ufos/research.ufo:1934
-#: ../base/ufos/research.ufo:1942
-#: ../base/ufos/research.ufo:1973
-#: ../base/ufos/research.ufo:1981
-#: ../base/ufos/research.ufo:2011
-#: ../base/ufos/research.ufo:2019
-#: ../base/ufos/research.ufo:2049
-#: ../base/ufos/research.ufo:2057
-#: ../base/ufos/research.ufo:2088
-#: ../base/ufos/research.ufo:2096
-#: ../base/ufos/research.ufo:2126
-#: ../base/ufos/research.ufo:2134
-#: ../base/ufos/research.ufo:2164
-#: ../base/ufos/research.ufo:2172
-#: ../base/ufos/research.ufo:2204
-#: ../base/ufos/research.ufo:2212
-#: ../base/ufos/research.ufo:2262
-#: ../base/ufos/research.ufo:2270
-#: ../base/ufos/research.ufo:2338
-#: ../base/ufos/research.ufo:2346
-#: ../base/ufos/research.ufo:2374
-#: ../base/ufos/research.ufo:2382
-#: ../base/ufos/research.ufo:2958
-#: ../base/ufos/research.ufo:3084
-#: ../base/ufos/research.ufo:3092
-#: ../base/ufos/research.ufo:3125
-#: ../base/ufos/research.ufo:3133
-#: ../base/ufos/research.ufo:3167
-#: ../base/ufos/research.ufo:3175
-#: ../base/ufos/research.ufo:3209
-#: ../base/ufos/research.ufo:3217
-#: ../base/ufos/research.ufo:3251
-#: ../base/ufos/research.ufo:3259
-#: ../base/ufos/research.ufo:3293
-#: ../base/ufos/research.ufo:3301
-#: ../base/ufos/research.ufo:3363
-#: ../base/ufos/research.ufo:3371
-#: ../base/ufos/research.ufo:3421
-#: ../base/ufos/research.ufo:3429
-#: ../base/ufos/research.ufo:3465
-#: ../base/ufos/research.ufo:3473
-#: ../base/ufos/research.ufo:3507
-#: ../base/ufos/research.ufo:3515
-#: ../base/ufos/research.ufo:3742
-#: ../base/ufos/research.ufo:3749
-#: ../base/ufos/research.ufo:3779
-#: ../base/ufos/research.ufo:3786
-#: ../base/ufos/research.ufo:3815
-#: ../base/ufos/research.ufo:3822
-#: ../base/ufos/research.ufo:3993
-#: ../base/ufos/research.ufo:4001
-#: ../base/ufos/research.ufo:4077
-#: ../base/ufos/research.ufo:4085
-#: ../base/ufos/research.ufo:4171
-#: ../base/ufos/research.ufo:4201
-#: ../base/ufos/research.ufo:4208
-msgid "mail_to_base_commander"
-msgstr "Commandant de Base, PHALANX, Commandement des Opérations Atlantique"
-
 #: ../base/ufos/research.ufo:153
 #: ../base/ufos/research.ufo:191
 msgid "antimatter_txt"
@@ -4942,13 +5205,6 @@ msgstr ""
 "Amicalement,\n"
 "\n"
 "Col. Falkland"
-
-#: ../base/ufos/research.ufo:456
-#: ../base/ufos/research.ufo:464
-#: ../base/ufos/research.ufo:493
-#: ../base/ufos/research.ufo:501
-msgid "mail_from_col_falkland"
-msgstr "Col. Ingrid Falkland, Division Renseignements, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/research.ufo:482
 #: ../base/ufos/research.ufo:495
@@ -9803,46 +10059,6 @@ msgstr "Sans autre alternative, les Nations Unies prennent les choses en main. L
 msgid "intro_sentence8"
 msgstr "Financée par les huit puissances politiques mondiales, et recrutant ses soldats parmi les meilleurs de leurs armées, PHALANX est la crème de l'élite. Elle est la première et unique ligne de défense de la Terre. Elle ne peut échouer, car si tel était le cas, l'humanité n'aurait plus aucun espoir."
 
-#: ../base/ufos/seq_intro.ufo:100
-msgid "prolog_sentence1"
-msgstr "POUR: Commandant de la Base, PHALANX, Commandement des Opérations Atlantique"
-
-#: ../base/ufos/seq_intro.ufo:110
-msgid "prolog_sentence2"
-msgstr "DE: Secrétaire Général Mahouf Serra, Nations Unies, New York"
-
-#: ../base/ufos/seq_intro.ufo:119
-msgid "prolog_sentence3"
-msgstr "DATE: 21 Mars 2084"
-
-#: ../base/ufos/seq_intro.ufo:128
-msgid "prolog_sentence4"
-msgstr "SUJET: Bonne Chance"
-
-#: ../base/ufos/seq_intro.ufo:137
-msgid "prolog_sentence5"
-msgstr "Bienvenu dans vos nouvelles fonctions, Commandant. Vous avez dès maintenant les pleins pouvoirs sur l'Unité de Réaction Extraterrestre PHALANX. Votre mission est de protéger les citoyens de la Terre et de stopper la menace alienne à tout prix. La façon dont vous procéderez nous importe peu, notre seule exigence est votre réussite."
-
-#: ../base/ufos/seq_intro.ufo:146
-msgid "prolog_sentence6"
-msgstr "Votre première mission est d'aménager votre quartier général. Les Nations Unies ont accès à n'importe quelle base à travers le monde, et vous pouvez par conséquent envisager la totalité du globe pour l'installation de votre centre d'opération. Choisissez cet endroit judicieusement, car il aura beaucoup d'influence sur les chances de succès du projet PHALANX."
-
-#: ../base/ufos/seq_intro.ufo:155
-msgid "prolog_sentence7"
-msgstr "Une analyse récente des attaques sur Mumbai et Bonn révèle que les observations d'OVNI et d'activités aliennes semblent se concentrer dans les régions les plus densément peuplées du monde. Ceci inclus les zones côtières d'Amérique du nord et du sud, l'Europe, l'Asie de l'est, l'Afrique du sud et l'Afrique méditerranéenne, ainsi que l'Australie. Vous devriez envisager d'inclure ces terres dans votre rayon d'action."
-
-#: ../base/ufos/seq_intro.ufo:164
-msgid "prolog_sentence8"
-msgstr "Une fois votre première base établie, vous devez préparer vos soldats à l'action. Les recrues que nous avons assignées à PHALANX doivent être affectées à un appareil de transport, puis équipées pour le combat."
-
-#: ../base/ufos/seq_intro.ufo:173
-msgid "prolog_sentence9"
-msgstr "Prenez soin d'elles, Commandant. Nous comptons tous sur vous, et prions pour vous."
-
-#: ../base/ufos/seq_intro.ufo:182
-msgid "prolog_sentence10"
-msgstr "Ce sera tout. Bonne chance, et bonne chasse."
-
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"
 msgstr "Gérer son équipe"
@@ -10842,27 +11058,31 @@ msgstr ""
 #: client/cl_aliencont.c:213
 #: client/cl_aliencont.c:226
 #: client/cl_aliencont.c:239
-#: client/cl_basemanagement.c:905
-#: client/cl_basemanagement.c:2419
+#: client/cl_basemanagement.c:1052
+#: client/cl_basemanagement.c:2548
+#: client/cl_basemanagement.c:2603
+#: client/cl_basemanagement.c:2612
+#: client/cl_basemanagement.c:2616
+#: client/cl_basemanagement.c:2621
 #: client/cl_campaign.c:298
-#: client/cl_campaign.c:1084
-#: client/cl_campaign.c:1142
-#: client/cl_campaign.c:1157
-#: client/cl_campaign.c:1323
-#: client/cl_campaign.c:1334
-#: client/cl_campaign.c:1344
-#: client/cl_campaign.c:1354
-#: client/cl_campaign.c:1364
-#: client/cl_campaign.c:1375
-#: client/cl_campaign.c:1388
-#: client/cl_campaign.c:1398
-#: client/cl_campaign.c:1405
-#: client/cl_campaign.c:1413
-#: client/cl_campaign.c:2778
-#: client/cl_campaign.c:2889
-#: client/cl_campaign.c:2937
-#: client/cl_campaign.c:2939
-#: client/cl_campaign.c:3271
+#: client/cl_campaign.c:1085
+#: client/cl_campaign.c:1143
+#: client/cl_campaign.c:1158
+#: client/cl_campaign.c:1324
+#: client/cl_campaign.c:1335
+#: client/cl_campaign.c:1345
+#: client/cl_campaign.c:1355
+#: client/cl_campaign.c:1365
+#: client/cl_campaign.c:1376
+#: client/cl_campaign.c:1389
+#: client/cl_campaign.c:1399
+#: client/cl_campaign.c:1406
+#: client/cl_campaign.c:1414
+#: client/cl_campaign.c:2779
+#: client/cl_campaign.c:2890
+#: client/cl_campaign.c:2938
+#: client/cl_campaign.c:2940
+#: client/cl_campaign.c:3275
 #: client/cl_inventory.c:293
 #: client/cl_inventory.c:298
 #: client/cl_inventory.c:544
@@ -10875,11 +11095,11 @@ msgstr ""
 #: client/cl_market.c:680
 #: client/cl_parse.c:1591
 #: client/cl_popup.c:352
-#: client/cl_produce.c:444
-#: client/cl_produce.c:453
-#: client/cl_produce.c:463
-#: client/cl_produce.c:472
-#: client/cl_produce.c:483
+#: client/cl_produce.c:442
+#: client/cl_produce.c:451
+#: client/cl_produce.c:461
+#: client/cl_produce.c:470
+#: client/cl_produce.c:481
 #: client/cl_research.c:1076
 #: client/cl_research.c:1094
 #: client/cl_research.c:1100
@@ -11005,7 +11225,7 @@ msgid "UFO interception successful -- UFO lost to sea."
 msgstr "Interception OVNI réussie -- l'OVNI s'est écrasé en mer"
 
 #: client/cl_airfight.c:461
-#: client/cl_campaign.c:2939
+#: client/cl_campaign.c:2940
 msgid "You've lost the battle"
 msgstr "Vous avez perdu la bataille"
 
@@ -11048,93 +11268,117 @@ msgstr "Vous avez capturé de nouveaux aliens."
 msgid "Needs autopsy!"
 msgstr "Nécessite une autopsie !"
 
-#: client/cl_basemanagement.c:503
+#: client/cl_basemanagement.c:559
 msgid "Not set"
 msgstr "Pas encore construit"
 
-#: client/cl_basemanagement.c:509
+#: client/cl_basemanagement.c:565
 #, c-format
 msgid "Already %i in base"
 msgstr "Déjà %i dans la base"
 
-#: client/cl_basemanagement.c:515
+#: client/cl_basemanagement.c:571
 msgid "Construction finished"
 msgstr "Construction terminée"
 
-#: client/cl_basemanagement.c:518
+#: client/cl_basemanagement.c:574
 msgid "Working 100%"
 msgstr "Fonctionne 100%"
 
-#: client/cl_basemanagement.c:521
+#: client/cl_basemanagement.c:577
 msgid "Down"
 msgstr "En panne"
 
-#: client/cl_basemanagement.c:905
+#: client/cl_basemanagement.c:1052
 msgid "Not enough credits to build this\n"
 msgstr "Pas assez de crédits pour construire ceci\n"
 
-#: client/cl_basemanagement.c:1029
+#: client/cl_basemanagement.c:1176
 #, c-format
 msgid "Costs:\t%i c\n"
 msgstr "Coûts :\t%i c\n"
 
-#: client/cl_basemanagement.c:1032
+#: client/cl_basemanagement.c:1179
 #, c-format
 msgid "%i Day to build\n"
 msgid_plural "%i Days to build\n"
 msgstr[0] "%i Jour de construction\n"
 msgstr[1] "%i Jours de construction\n"
 
-#: client/cl_basemanagement.c:1035
+#: client/cl_basemanagement.c:1182
 #, c-format
 msgid "Running Costs:\t%i c\n"
 msgstr ""
 "Coûts de\n"
 "fonctionnement : \t%i c\n"
 
-#: client/cl_basemanagement.c:1658
+#: client/cl_basemanagement.c:1787
 #, c-format
 msgid "%i day left"
 msgid_plural "%i days left"
 msgstr[0] "%i jour restant"
 msgstr[1] "%i jours restant"
 
-#: client/cl_basemanagement.c:1987
+#: client/cl_basemanagement.c:2116
 #: client/cl_team.c:1538
 #: client/cl_team.c:1747
 msgid "NewTeam"
 msgstr "Nouvelle équipe"
 
-#: client/cl_basemanagement.c:2092
+#: client/cl_basemanagement.c:2221
 #, c-format
 msgid "A new base has been built: %s (nation: %s)"
 msgstr "Une nouvelle base a été construite : %s (nation: %s)."
 
-#: client/cl_basemanagement.c:2094
+#: client/cl_basemanagement.c:2223
 #, c-format
 msgid "A new base has been built: %s"
 msgstr "Une nouvelle base a été construite : %s."
 
-#: client/cl_basemanagement.c:2095
-#: client/cl_basemanagement.c:2110
+#: client/cl_basemanagement.c:2224
+#: client/cl_basemanagement.c:2239
 msgid "Base built"
 msgstr "Base construite"
 
-#: client/cl_basemanagement.c:2109
+#: client/cl_basemanagement.c:2238
 msgid "Not enough credits to set up a new base."
 msgstr "Pas assez de crédits pour construire une nouvelle base"
 
-#: client/cl_basemanagement.c:2419
+#: client/cl_basemanagement.c:2548
 msgid "You've reached the base limit."
 msgstr "Vous avez atteint la limite de base."
 
-#: client/cl_basemanagement.c:2478
+#: client/cl_basemanagement.c:2602
+#, c-format
+msgid ""
+"Construction of building will be over in %i days.\n"
+"Please wait to enter."
+msgstr ""
+"La construction du bâtiment sera terminée dans %i jours.\n"
+"Veuillez attendre pour entrer."
+
+#: client/cl_basemanagement.c:2611
+#, c-format
+msgid "You need an operational %s to use this building"
+msgstr "Vous devez disposer d'un %s opérationnel pour utiliser ce bâtiment."
+
+#: client/cl_basemanagement.c:2615
+#, c-format
+msgid "Make sure that dependences of %s (%s) are operationnal, so that %s may be used"
+msgstr "Vérifiez que les dépendances de %s (%s) sont bien opérationnelles, afin de pouvoir utiliser %s"
+
+#: client/cl_basemanagement.c:2620
+#, c-format
+msgid "Build a %s first."
+msgstr "Construisez un %s d'abord."
+
+#: client/cl_basemanagement.c:2665
 msgid "No aircraft in this base - You first have to purchase or transfer an aircraft\n"
 msgstr "Aucun appareil dans cette base - Vous devez d'abord acheter ou transférer un appareil\n"
 
-#: client/cl_basemanagement.c:2478
-#: client/cl_basemanagement.c:2480
-#: client/cl_campaign.c:2690
+#: client/cl_basemanagement.c:2665
+#: client/cl_basemanagement.c:2667
+#: client/cl_campaign.c:2691
 #: client/cl_market.c:658
 #: client/cl_market.c:663
 #: client/cl_market.c:690
@@ -11144,16 +11388,16 @@ msgstr "Aucun appareil dans cette base - Vous devez d'abord acheter ou transfér
 msgid "Note"
 msgstr "Note"
 
-#: client/cl_basemanagement.c:2480
+#: client/cl_basemanagement.c:2667
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "Aucun appareil dans cette base - Vous devez d'abord acheter un appareil\n"
 
-#: client/cl_basemanagement.c:2661
+#: client/cl_basemanagement.c:2849
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr "Construction du bâtiment %s terminée dans la base %s."
 
-#: client/cl_basemanagement.c:2662
+#: client/cl_basemanagement.c:2850
 msgid "Building finished"
 msgstr "Construction terminée"
 
@@ -11189,8 +11433,8 @@ msgid "%s - %1.2f%% (%d %s)\n"
 msgstr "%s - %1.2f%% (%d %s)\n"
 
 #: client/cl_basesummary.c:178
-#: client/cl_campaign.c:1318
-#: client/cl_campaign.c:4511
+#: client/cl_campaign.c:1319
+#: client/cl_campaign.c:4516
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "scientifique"
@@ -11221,12 +11465,12 @@ msgid "UFO interception successful -- UFO lost."
 msgstr "Interception OVNI réussie -- OVNI perdu."
 
 #: client/cl_campaign.c:575
-#: client/cl_campaign.c:2249
+#: client/cl_campaign.c:2250
 msgid "UFO crash site"
 msgstr "Site de crash OVNI"
 
 #: client/cl_campaign.c:580
-#: client/cl_campaign.c:2254
+#: client/cl_campaign.c:2255
 msgid "No nation"
 msgstr "Pas de nation"
 
@@ -11255,213 +11499,214 @@ msgstr "Vous être trop endetté."
 msgid "You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory."
 msgstr "Vous avez failli dans votre mission de protection de la terre. Nos maisons et nos gens sont tombés sous l'infection alienne. Seule une poignée de personnes sur Terre reste humaine, mais n'ont plus aucun chance de repousser l'assaut. Vous perdez votre commandement, PHALANX n'est plus capable d'opérer en tant qu'unité fonctionnelle. Plus personne ne s'interpose entre les aliens et leur victoire totale."
 
-#: client/cl_campaign.c:1083
+#: client/cl_campaign.c:1084
 #, c-format
 msgid "Your base: %s has been ransacked! All employees killed and all equipment destroyed."
 msgstr "Votre base : %s a été mise à sac ! Tous les employés ont été tués et l'équipement a été détruit."
 
-#: client/cl_campaign.c:1141
+#: client/cl_campaign.c:1142
 #, c-format
 msgid "The mission %s expired and %i civilian died."
 msgid_plural "The mission %s expired and %i civilians died."
 msgstr[0] "La mission %s est arrivée à terme et %i civil est mort."
 msgstr[1] "La mission %s est arrivée à terme et %i civils sont morts."
 
-#: client/cl_campaign.c:1156
+#: client/cl_campaign.c:1157
 #, c-format
 msgid "The aliens had enough time to kill %i civilian at %s."
 msgid_plural "The aliens had enough time to kill %i civilians at %s."
 msgstr[0] "Les aliens sont restés suffisamment longtemps pour tuer %i civil à %s."
 msgstr[1] "Les aliens sont restés suffisamment longtemps pour tuer %i civils à %s."
 
-#: client/cl_campaign.c:1206
+#: client/cl_campaign.c:1207
 msgid "Jan"
 msgstr "Jan"
 
-#: client/cl_campaign.c:1208
+#: client/cl_campaign.c:1209
 msgid "Feb"
 msgstr "Fév"
 
-#: client/cl_campaign.c:1210
+#: client/cl_campaign.c:1211
 msgid "Mar"
 msgstr "Mar"
 
-#: client/cl_campaign.c:1212
+#: client/cl_campaign.c:1213
 msgid "Apr"
 msgstr "Avr"
 
-#: client/cl_campaign.c:1214
+#: client/cl_campaign.c:1215
 msgid "May"
 msgstr "Mai"
 
-#: client/cl_campaign.c:1216
+#: client/cl_campaign.c:1217
 msgid "Jun"
 msgstr "Jun"
 
-#: client/cl_campaign.c:1218
+#: client/cl_campaign.c:1219
 msgid "Jul"
 msgstr "Jui"
 
-#: client/cl_campaign.c:1220
+#: client/cl_campaign.c:1221
 msgid "Aug"
 msgstr "Aoû"
 
-#: client/cl_campaign.c:1222
+#: client/cl_campaign.c:1223
 msgid "Sep"
 msgstr "Sep"
 
-#: client/cl_campaign.c:1224
+#: client/cl_campaign.c:1225
 msgid "Oct"
 msgstr "Oct"
 
-#: client/cl_campaign.c:1226
+#: client/cl_campaign.c:1227
 msgid "Nov"
 msgstr "Nov"
 
-#: client/cl_campaign.c:1228
+#: client/cl_campaign.c:1229
 msgid "Dec"
 msgstr "Déc"
 
-#: client/cl_campaign.c:1242
+#: client/cl_campaign.c:1243
 msgid "Giving up"
 msgstr "Démotivé"
 
-#: client/cl_campaign.c:1244
+#: client/cl_campaign.c:1245
 msgid "Furious"
 msgstr "Furieux"
 
-#: client/cl_campaign.c:1246
+#: client/cl_campaign.c:1247
 msgid "Angry"
 msgstr "En colère"
 
-#: client/cl_campaign.c:1248
+#: client/cl_campaign.c:1249
 msgid "Mad"
 msgstr "Fou"
 
-#: client/cl_campaign.c:1250
+#: client/cl_campaign.c:1251
 msgid "Upset"
 msgstr "Énervé"
 
-#: client/cl_campaign.c:1252
+#: client/cl_campaign.c:1253
 msgid "Tolerant"
 msgstr "Tolérant"
 
-#: client/cl_campaign.c:1254
+#: client/cl_campaign.c:1255
 msgid "Neutral"
 msgstr "Neutre"
 
-#: client/cl_campaign.c:1256
+#: client/cl_campaign.c:1257
 msgid "Content"
 msgstr "Satisfait"
 
-#: client/cl_campaign.c:1258
+#: client/cl_campaign.c:1259
 msgid "Pleased"
 msgstr "Content"
 
-#: client/cl_campaign.c:1260
+#: client/cl_campaign.c:1261
 msgid "Happy"
 msgstr "Ravi"
 
-#: client/cl_campaign.c:1262
+#: client/cl_campaign.c:1263
 msgid "Exuberant"
 msgstr "Exubérant"
 
-#: client/cl_campaign.c:1316
+#: client/cl_campaign.c:1317
 #, c-format
 msgid "Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
 msgstr "%i %s, %i %s, %i %s, %i %s et %i %s vous sont offerts par la nation %s (%s)"
 
-#: client/cl_campaign.c:1317
+#: client/cl_campaign.c:1318
 msgid "credit"
 msgid_plural "credits"
 msgstr[0] "crédit"
 msgstr[1] "crédits"
 
-#: client/cl_campaign.c:1319
-#: client/cl_campaign.c:4513
+#: client/cl_campaign.c:1320
+#: client/cl_campaign.c:4518
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "médecin"
 msgstr[1] "médecins"
 
-#: client/cl_campaign.c:1320
-#: client/cl_campaign.c:4510
+#: client/cl_campaign.c:1321
+#: client/cl_campaign.c:4515
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "soldat"
 msgstr[1] "soldats"
 
-#: client/cl_campaign.c:1321
-#: client/cl_campaign.c:4512
+#: client/cl_campaign.c:1322
+#: client/cl_campaign.c:4517
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "technicien"
 msgstr[1] "techniciens"
 
-#: client/cl_campaign.c:1332
+#: client/cl_campaign.c:1333
 #, c-format
 msgid "Paid %i credits to soldiers"
 msgstr "Vous avez dépensé %i crédits pour vos soldats"
 
-#: client/cl_campaign.c:1342
+#: client/cl_campaign.c:1343
 #, c-format
 msgid "Paid %i credits to workers"
 msgstr "Vous avez dépensé %i crédits pour vos techniciens"
 
-#: client/cl_campaign.c:1352
+#: client/cl_campaign.c:1353
 #, c-format
 msgid "Paid %i credits to scientists"
 msgstr "Vous avez dépensé %i crédits pour vos scientifiques"
 
-#: client/cl_campaign.c:1362
+#: client/cl_campaign.c:1363
 #, c-format
 msgid "Paid %i credits to medics"
 msgstr "Vous avez dépensé %i crédits pour vos médecins"
 
-#: client/cl_campaign.c:1373
+#: client/cl_campaign.c:1374
 #, c-format
 msgid "Paid %i credits for robots"
 msgstr "Vous avez dépensé %i crédits pour vos robots"
 
-#: client/cl_campaign.c:1386
+#: client/cl_campaign.c:1387
 #, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "Vous avez dépensé %i crédits pour vos appareils"
 
-#: client/cl_campaign.c:1397
+#: client/cl_campaign.c:1398
 #, c-format
 msgid "Paid %i credits for upkeep of base %s"
 msgstr "Vous avez dépensé %i crédits pour l'entretien de la base %s"
 
-#: client/cl_campaign.c:1403
+#: client/cl_campaign.c:1404
 #, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "Vous avez dépensé %i crédits en frais administratifs."
 
-#: client/cl_campaign.c:1411
+#: client/cl_campaign.c:1412
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr "Vous avez dépensé %i crédits en intérêts de vos emprunts."
 
-#: client/cl_campaign.c:1571
+#: client/cl_campaign.c:1572
+#: client/cl_event.c:159
 #: client/cl_save.c:273
-#: client/cl_ufopedia.c:689
-#: client/cl_ufopedia.c:695
+#: client/cl_ufopedia.c:706
+#: client/cl_ufopedia.c:712
 #, c-format
 msgid "%i %s %02i"
 msgstr "%i %s %02i"
 
-#: client/cl_campaign.c:1573
+#: client/cl_campaign.c:1574
 #, c-format
 msgid "%02i:%02i"
 msgstr "%02i:%02i"
 
-#: client/cl_campaign.c:1668
+#: client/cl_campaign.c:1669
 #, c-format
 msgid "%i c"
 msgstr "%i c"
 
-#: client/cl_campaign.c:1709
+#: client/cl_campaign.c:1710
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -11472,7 +11717,7 @@ msgstr ""
 "Perdues :\t%i\n"
 "\n"
 
-#: client/cl_campaign.c:1714
+#: client/cl_campaign.c:1715
 #, c-format
 msgid ""
 "Built:\t%i\n"
@@ -11483,43 +11728,44 @@ msgstr ""
 "Actives :\t%i\n"
 "Attaquées :\t%i\n"
 
-#: client/cl_campaign.c:1721
+#: client/cl_campaign.c:1722
+#: client/cl_ufopedia.c:1560
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/cl_campaign.c:1760
-#: client/cl_ufopedia.c:314
+#: client/cl_campaign.c:1761
+#: client/cl_ufopedia.c:310
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/cl_campaign.c:1766
+#: client/cl_campaign.c:1767
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "Employés :\t%i c\n"
 
-#: client/cl_campaign.c:1775
+#: client/cl_campaign.c:1776
 #, c-format
 msgid "Aircrafts:\t%i c\n"
 msgstr "Appareils :\t%i c\n"
 
-#: client/cl_campaign.c:1783
+#: client/cl_campaign.c:1784
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "Base (%s) :\t%i c\n"
 
-#: client/cl_campaign.c:1788
+#: client/cl_campaign.c:1789
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "Coûts administratifs :\t%i c\n"
 
-#: client/cl_campaign.c:1795
+#: client/cl_campaign.c:1796
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "Emprunt :\t%i c\n"
 
-#: client/cl_campaign.c:1798
+#: client/cl_campaign.c:1799
 #, c-format
 msgid ""
 "\n"
@@ -11530,12 +11776,12 @@ msgstr ""
 "\t-------\n"
 "Somme :\t%i c\n"
 
-#: client/cl_campaign.c:1803
+#: client/cl_campaign.c:1804
 #, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr "Dette max. autorisée : %ic\n"
 
-#: client/cl_campaign.c:1808
+#: client/cl_campaign.c:1809
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
@@ -11544,42 +11790,42 @@ msgstr ""
 "Infection Virale eXtraterrestre max. : %i%%\n"
 "Infection Virale eXtraterrestre actuelle : %i%%"
 
-#: client/cl_campaign.c:2690
+#: client/cl_campaign.c:2691
 msgid "Assemble or load a team"
 msgstr "Assembler ou charger une équipe"
 
-#: client/cl_campaign.c:2889
+#: client/cl_campaign.c:2890
 msgid "Your dropship is not near the landing zone"
 msgstr "Votre transport n'est pas près de la zone d'atterrissage"
 
-#: client/cl_campaign.c:2937
+#: client/cl_campaign.c:2938
 msgid "You've won the battle"
 msgstr "Vous avez gagné la bataille"
 
-#: client/cl_campaign.c:3024
+#: client/cl_campaign.c:3025
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s a été promu(e) au grade de %s.\n"
 
-#: client/cl_campaign.c:3026
+#: client/cl_campaign.c:3027
 #, c-format
 msgid "%s has been awarded the posthumous rank of %s\\for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr "%s a été promu(e) au grade de %s\\à titre posthume pour son courage exemplaire\\ dans les situations les plus dangereuses.\n"
 
-#: client/cl_campaign.c:3027
+#: client/cl_campaign.c:3028
 msgid "Soldier promoted"
 msgstr "Soldat promu"
 
-#: client/cl_campaign.c:3270
+#: client/cl_campaign.c:3274
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "Défense de la base : %s succès !"
 
-#: client/cl_campaign.c:4500
+#: client/cl_campaign.c:4505
 msgid "Human"
 msgstr "Humain"
 
-#: client/cl_campaign.c:4504
+#: client/cl_campaign.c:4509
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -11598,18 +11844,18 @@ msgstr ""
 "Dette max. autorisée : %ic\n"
 "%s\n"
 
-#: client/cl_campaign.c:4750
+#: client/cl_campaign.c:4764
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to base %s."
 msgstr "%s a été rapatrié du champ de bataille. L'OVNI est transporté à la base %s."
 
-#: client/cl_campaign.c:4752
-#: client/cl_campaign.c:4885
-#: client/cl_campaign.c:4963
+#: client/cl_campaign.c:4766
+#: client/cl_campaign.c:4901
+#: client/cl_campaign.c:4979
 msgid "UFO Recovery"
 msgstr "Rapatriement des OVNI"
 
-#: client/cl_campaign.c:4809
+#: client/cl_campaign.c:4838
 msgid ""
 "\n"
 "\n"
@@ -11619,12 +11865,12 @@ msgstr ""
 "\n"
 "Base sélectionnée :\t\t\t"
 
-#: client/cl_campaign.c:4883
+#: client/cl_campaign.c:4899
 #, c-format
 msgid "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr "%s a été rapatrié du champ de bataille. L'OVNI a été vendu à la nation %s pour %i crédits."
 
-#: client/cl_campaign.c:4933
+#: client/cl_campaign.c:4949
 msgid ""
 "\n"
 "\n"
@@ -11634,7 +11880,7 @@ msgstr ""
 "\n"
 "Nation sélectionnée :\t\t\t"
 
-#: client/cl_campaign.c:4961
+#: client/cl_campaign.c:4977
 #, c-format
 msgid "Secured %s was destroyed."
 msgstr "L'OVNI %s a été détruit."
@@ -12225,7 +12471,7 @@ msgid "Light"
 msgstr "Léger"
 
 #: client/cl_mapfightequip.c:1713
-#: client/cl_ufopedia.c:159
+#: client/cl_ufopedia.c:155
 msgid "Heavy"
 msgstr "Lourd"
 
@@ -12335,7 +12581,7 @@ msgstr "Cacher le HUD (Appuyer sur ESC pour réactiver le HUD)"
 msgid "all"
 msgstr "tout"
 
-#: client/cl_menu.c:5003
+#: client/cl_menu.c:5006
 #, c-format
 msgid "%i %s %02i, %02i:%02i: "
 msgstr "%i %s %02i, %02i:%02i: "
@@ -12423,11 +12669,11 @@ msgstr ""
 "\n"
 "Recrutez des techniciens."
 
-#: client/cl_produce.c:255
+#: client/cl_produce.c:254
 msgid "Not enough workshops"
 msgstr "Pas assez d'ateliers"
 
-#: client/cl_produce.c:255
+#: client/cl_produce.c:254
 msgid ""
 "You cannot queue more items.\n"
 "Build more workshops.\n"
@@ -12435,17 +12681,17 @@ msgstr ""
 "Vous ne pouvez plus ajouter d'objets à la liste.\n"
 "Construisez d'avantage d'ateliers.\n"
 
-#: client/cl_produce.c:270
-#: client/cl_produce.c:273
-#: client/cl_produce.c:277
-#: client/cl_produce.c:1134
+#: client/cl_produce.c:269
+#: client/cl_produce.c:272
+#: client/cl_produce.c:276
+#: client/cl_produce.c:1145
 #: client/cl_transfer.c:190
 #: client/cl_transfer.c:193
 #: client/cl_transfer.c:196
 msgid "Hangars not ready"
 msgstr "Les hangars ne sont pas prêts"
 
-#: client/cl_produce.c:270
+#: client/cl_produce.c:269
 msgid ""
 "You cannot queue aircraft.\n"
 "No command centre in this base.\n"
@@ -12453,7 +12699,7 @@ msgstr ""
 "Vous ne pouvez pas acheter cet appareil.\n"
 "Il n'y a pas de centre de commandement dans cette base.\n"
 
-#: client/cl_produce.c:273
+#: client/cl_produce.c:272
 msgid ""
 "You cannot queue aircraft.\n"
 "No hangars in this base.\n"
@@ -12461,8 +12707,8 @@ msgstr ""
 "Vous ne pouvez pas acheter cet appareil.\n"
 "Il n'y a plus de hangar dans cette base.\n"
 
-#: client/cl_produce.c:277
-#: client/cl_produce.c:1134
+#: client/cl_produce.c:276
+#: client/cl_produce.c:1145
 msgid ""
 "You cannot queue aircraft.\n"
 "No free space in hangars.\n"
@@ -12470,142 +12716,142 @@ msgstr ""
 "Vous ne pouvez pas acheter cet appareil.\n"
 "Il n'y a plus assez de place dans vos hangars.\n"
 
-#: client/cl_produce.c:398
+#: client/cl_produce.c:396
 #, c-format
 msgid "Production queue for base %s is empty"
 msgstr "La liste de production de la base %s est vide"
 
-#: client/cl_produce.c:399
+#: client/cl_produce.c:397
 msgid "Production queue empty"
 msgstr "Liste de production vide"
 
-#: client/cl_produce.c:443
-#: client/cl_produce.c:462
+#: client/cl_produce.c:441
+#: client/cl_produce.c:460
 #, c-format
 msgid "Not enough credits to finish production in base %s.\n"
 msgstr "Pas assez de crédits pour terminer la production dans la base %s.\n"
 
-#: client/cl_produce.c:452
+#: client/cl_produce.c:450
 #, c-format
 msgid "Not enough free storage space in base %s. Production paused.\n"
 msgstr "Plus assez de place dans les entrepôts de la base %s. La production est stoppée.\n"
 
-#: client/cl_produce.c:471
+#: client/cl_produce.c:469
 #, c-format
 msgid "Not enough free hangar space in base %s. Production paused.\n"
 msgstr "Plus assez de place dans les hangars de la base %s. La production est stoppée.\n"
 
-#: client/cl_produce.c:482
+#: client/cl_produce.c:480
 #, c-format
 msgid "Not enough free storage space in base %s. Disassembling paused.\n"
 msgstr "Plus assez de place dans les entrepôts de la base %s. Le désassemblage est stoppé.\n"
 
-#: client/cl_produce.c:506
-#: client/cl_produce.c:518
+#: client/cl_produce.c:504
+#: client/cl_produce.c:516
 #, c-format
 msgid "The production of %s has finished."
 msgstr "La production de %s est terminée"
 
-#: client/cl_produce.c:507
-#: client/cl_produce.c:519
-#: client/cl_produce.c:535
+#: client/cl_produce.c:505
+#: client/cl_produce.c:517
+#: client/cl_produce.c:533
 msgid "Production finished"
 msgstr "Production terminée"
 
-#: client/cl_produce.c:534
+#: client/cl_produce.c:532
 #, c-format
 msgid "The disassembling of %s has finished."
 msgstr "Le démontage de %s est terminé."
 
-#: client/cl_produce.c:571
-#: client/cl_produce.c:587
+#: client/cl_produce.c:569
+#: client/cl_produce.c:585
 msgid "No item selected"
 msgstr "Pas d'objet sélectionné"
 
-#: client/cl_produce.c:580
+#: client/cl_produce.c:578
 #, c-format
 msgid "Costs per item\t%i c\n"
 msgstr "Coût par objet\t%i c\n"
 
-#: client/cl_produce.c:582
-#: client/cl_produce.c:646
+#: client/cl_produce.c:580
+#: client/cl_produce.c:644
 #, c-format
 msgid "Productiontime\t%ih\n"
 msgstr "Durée de Production\t%ih\n"
 
-#: client/cl_produce.c:583
+#: client/cl_produce.c:581
 #, c-format
 msgid "Item size\t%i\n"
 msgstr "Taille de l'objet\t%i\n"
 
-#: client/cl_produce.c:604
+#: client/cl_produce.c:602
 msgid "No disassembly selected"
 msgstr "Pas de démontage sélectionné"
 
-#: client/cl_produce.c:612
+#: client/cl_produce.c:610
 #, c-format
 msgid "%s - disassembly\n"
 msgstr "%s - démontage\n"
 
-#: client/cl_produce.c:613
+#: client/cl_produce.c:611
 msgid "Components: "
 msgstr "Composants :"
 
-#: client/cl_produce.c:620
+#: client/cl_produce.c:618
 #, c-format
 msgid "%s (%i) "
 msgstr "%s (%i) "
 
-#: client/cl_produce.c:624
+#: client/cl_produce.c:622
 #, c-format
 msgid "Disassembly time\t%ih\n"
 msgstr "Durée du démontage\t%ih\n"
 
-#: client/cl_produce.c:644
+#: client/cl_produce.c:642
 #, c-format
 msgid "Production costs\t%i c\n"
 msgstr "Coûts de Production\t%i c\n"
 
-#: client/cl_produce.c:648
+#: client/cl_produce.c:646
 msgid "No aircraft selected."
 msgstr "Aucun appareil n'est sélectionné."
 
-#: client/cl_produce.c:1166
+#: client/cl_produce.c:1177
 msgid "Queue full!"
 msgstr "Liste pleine !"
 
-#: client/cl_produce.c:1166
+#: client/cl_produce.c:1177
 msgid "You cannot queue any more items!"
 msgstr "Vous ne pouvez plus ajouter d'objets à la liste !"
 
-#: client/cl_produce.c:1188
-#: client/cl_produce.c:1204
+#: client/cl_produce.c:1199
+#: client/cl_produce.c:1215
 msgid "Not enough material!"
 msgstr "Pas assez de matières premières !"
 
-#: client/cl_produce.c:1188
+#: client/cl_produce.c:1199
 #, c-format
 msgid "You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."
 msgstr "Vous n'avez pas assez de matière première pour construire tous les équipements (%i). La production continue pour une quantité plus faible (%i)."
 
-#: client/cl_produce.c:1192
-#: client/cl_produce.c:1214
+#: client/cl_produce.c:1203
+#: client/cl_produce.c:1225
 #, c-format
 msgid "Production of %s started"
 msgstr "Production de %s commencée"
 
-#: client/cl_produce.c:1193
-#: client/cl_produce.c:1196
-#: client/cl_produce.c:1215
+#: client/cl_produce.c:1204
+#: client/cl_produce.c:1207
+#: client/cl_produce.c:1226
 msgid "Production started"
 msgstr "Production commencée"
 
-#: client/cl_produce.c:1195
+#: client/cl_produce.c:1206
 #, c-format
 msgid "Disassembling of %s started"
 msgstr "Démontage de %s commencé"
 
-#: client/cl_produce.c:1204
+#: client/cl_produce.c:1215
 msgid "You don't have enough of the needed material to produce this item."
 msgstr "Les matériaux nécessaire à la production de cet objet sont insuffisants."
 
@@ -13374,165 +13620,165 @@ msgstr "Nos radars ont détecté un nouvel OVNI"
 msgid "Our radar has lost the tracking on a UFO"
 msgstr "Nos radars ont perdu la trace d'un OVNI"
 
-#: client/cl_ufopedia.c:156
+#: client/cl_ufopedia.c:152
 msgid "Close"
 msgstr "Rapproché"
 
-#: client/cl_ufopedia.c:162
+#: client/cl_ufopedia.c:158
 msgid "Assault"
 msgstr "Assaut"
 
-#: client/cl_ufopedia.c:165
+#: client/cl_ufopedia.c:161
 msgid "Sniper"
 msgstr "Fusil de précision"
 
-#: client/cl_ufopedia.c:168
+#: client/cl_ufopedia.c:164
 msgid "Explosive"
 msgstr "Explosif"
 
-#: client/cl_ufopedia.c:171
-#: client/cl_ufopedia.c:207
+#: client/cl_ufopedia.c:167
+#: client/cl_ufopedia.c:203
 msgid "Unknown weapon skill"
 msgstr "Compétence d'arme inconnue"
 
-#: client/cl_ufopedia.c:186
+#: client/cl_ufopedia.c:182
 msgid "Speed"
 msgstr "Vitesse"
 
-#: client/cl_ufopedia.c:192
+#: client/cl_ufopedia.c:188
 msgid "ECM"
 msgstr "CME"
 
-#: client/cl_ufopedia.c:195
+#: client/cl_ufopedia.c:191
 msgid "Aircraft damage"
 msgstr "Résistance appareil"
 
-#: client/cl_ufopedia.c:198
+#: client/cl_ufopedia.c:194
 msgid "Accuracy"
 msgstr "Précision"
 
-#: client/cl_ufopedia.c:201
+#: client/cl_ufopedia.c:197
 msgid "Fuel size"
 msgstr "Capacité en fuel"
 
-#: client/cl_ufopedia.c:204
+#: client/cl_ufopedia.c:200
 msgid "Weapon range"
 msgstr "Portée de l'arme"
 
-#: client/cl_ufopedia.c:230
+#: client/cl_ufopedia.c:226
 msgid "No requirements"
 msgstr "Aucune condition"
 
-#: client/cl_ufopedia.c:307
-#: client/cl_ufopedia.c:318
-#: client/cl_ufopedia.c:323
-#: client/cl_ufopedia.c:329
-#: client/cl_ufopedia.c:337
-#: client/cl_ufopedia.c:460
+#: client/cl_ufopedia.c:303
+#: client/cl_ufopedia.c:314
+#: client/cl_ufopedia.c:319
+#: client/cl_ufopedia.c:325
+#: client/cl_ufopedia.c:333
+#: client/cl_ufopedia.c:456
 #, c-format
 msgid "Size:\t%i\n"
 msgstr "Taille :\t%i\n"
 
-#: client/cl_ufopedia.c:310
+#: client/cl_ufopedia.c:306
 msgid "Type:\tProtection:\n"
 msgstr "Type :\tProtection:\n"
 
-#: client/cl_ufopedia.c:321
+#: client/cl_ufopedia.c:317
 #, c-format
 msgid "%s weapon with\n"
 msgstr "Arme à %s\n"
 
-#: client/cl_ufopedia.c:321
-#: client/cl_ufopedia.c:327
-#: client/cl_ufopedia.c:335
+#: client/cl_ufopedia.c:317
+#: client/cl_ufopedia.c:323
+#: client/cl_ufopedia.c:331
 msgid "One-handed"
 msgstr "une main"
 
-#: client/cl_ufopedia.c:321
-#: client/cl_ufopedia.c:327
-#: client/cl_ufopedia.c:335
+#: client/cl_ufopedia.c:317
+#: client/cl_ufopedia.c:323
+#: client/cl_ufopedia.c:331
 msgid "Two-handed"
 msgstr "deux mains"
 
-#: client/cl_ufopedia.c:324
+#: client/cl_ufopedia.c:320
 #, c-format
 msgid "Max ammo:\t%i\n"
 msgstr "Munitions max. :\t%i\n"
 
-#: client/cl_ufopedia.c:327
+#: client/cl_ufopedia.c:323
 #, c-format
 msgid "%s ammo-less weapon with\n"
 msgstr "Arme à %s sans munition\n"
 
-#: client/cl_ufopedia.c:335
+#: client/cl_ufopedia.c:331
 #, c-format
 msgid "%s auxiliary equipment with\n"
 msgstr "Équipement auxiliaire à %s\n"
 
-#: client/cl_ufopedia.c:338
+#: client/cl_ufopedia.c:334
 #, c-format
 msgid "Action:\t%s\n"
 msgstr "Action :\t%s\n"
 
-#: client/cl_ufopedia.c:339
-#: client/cl_ufopedia.c:421
+#: client/cl_ufopedia.c:335
+#: client/cl_ufopedia.c:417
 #, c-format
 msgid "Time units:\t%i\n"
 msgstr "UT :\t%i\n"
 
-#: client/cl_ufopedia.c:340
-#: client/cl_ufopedia.c:422
+#: client/cl_ufopedia.c:336
+#: client/cl_ufopedia.c:418
 #, c-format
 msgid "Range:\t%g\n"
 msgstr "Portée :\t%g\n"
 
-#: client/cl_ufopedia.c:368
-#: client/cl_ufopedia.c:397
+#: client/cl_ufopedia.c:364
+#: client/cl_ufopedia.c:393
 #, c-format
 msgid "Go to '%s' UFOpaedia entry"
 msgstr "Aller à l'article '%s' de l'OVNIpédia"
 
-#: client/cl_ufopedia.c:417
+#: client/cl_ufopedia.c:413
 #, c-format
 msgid "Skill:\t%s\n"
 msgstr "Compétence :\t%s\n"
 
-#: client/cl_ufopedia.c:418
-#: client/cl_ufopedia.c:559
+#: client/cl_ufopedia.c:414
+#: client/cl_ufopedia.c:555
 #, c-format
 msgid "Damage:\t%i\n"
 msgstr "Dégâts :\t%i\n"
 
-#: client/cl_ufopedia.c:423
+#: client/cl_ufopedia.c:419
 #, c-format
 msgid "Spreads:\t%g\n"
 msgstr "Dispersion :\t%g\n"
 
-#: client/cl_ufopedia.c:429
-#: client/cl_ufopedia.c:618
-#: client/cl_ufopedia.c:620
+#: client/cl_ufopedia.c:425
+#: client/cl_ufopedia.c:614
+#: client/cl_ufopedia.c:616
 msgid "Unknown - need to research this"
 msgstr "Inconnu - Nécessite une recherche"
 
-#: client/cl_ufopedia.c:465
+#: client/cl_ufopedia.c:461
 #, c-format
 msgid "%s:\tProtection: %i\n"
 msgstr "%s :\tProtection : %i\n"
 
-#: client/cl_ufopedia.c:490
+#: client/cl_ufopedia.c:486
 msgid "Error - could not find building"
 msgstr "Erreur - ne peut pas trouver le bâtiment"
 
-#: client/cl_ufopedia.c:492
+#: client/cl_ufopedia.c:488
 #, c-format
 msgid "Depends:\t%s\n"
 msgstr "Dépendances :\t%s\n"
 
-#: client/cl_ufopedia.c:492
+#: client/cl_ufopedia.c:488
 msgid "None"
 msgstr "Aucun(e)"
 
-#: client/cl_ufopedia.c:493
+#: client/cl_ufopedia.c:489
 #, c-format
 msgid "Buildtime:\t%i day\n"
 msgid_plural "Buildtime:\t%i days\n"
@@ -13543,68 +13789,68 @@ msgstr[1] ""
 "Durée de\n"
 "construction :\t%i jours\n"
 
-#: client/cl_ufopedia.c:494
+#: client/cl_ufopedia.c:490
 #, c-format
 msgid "Fixcosts:\t%i c\n"
 msgstr ""
 "Coût de\n"
 "production :\t%i c\n"
 
-#: client/cl_ufopedia.c:495
+#: client/cl_ufopedia.c:491
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr ""
 "Coûts de\n"
 "fonctionnement :\t%i c\n"
 
-#: client/cl_ufopedia.c:554
+#: client/cl_ufopedia.c:550
 #, c-format
 msgid "Weight:\t%s\n"
 msgstr "Poids:\t%s\n"
 
-#: client/cl_ufopedia.c:557
+#: client/cl_ufopedia.c:553
 #, c-format
 msgid "Ammo:\t%i\n"
 msgstr "Munitions :\t%i\n"
 
-#: client/cl_ufopedia.c:560
+#: client/cl_ufopedia.c:556
 #, c-format
 msgid "Reloading time:\t%i\n"
 msgstr "Temps chargement :\t%i\n"
 
-#: client/cl_ufopedia.c:574
+#: client/cl_ufopedia.c:570
 #, c-format
 msgid "%s:\t+%i %%\n"
 msgstr "%s:\t+%i %%\n"
 
-#: client/cl_ufopedia.c:576
+#: client/cl_ufopedia.c:572
 #, c-format
 msgid "%s:\t%i %%\n"
 msgstr "%s:\t%i %%\n"
 
-#: client/cl_ufopedia.c:600
+#: client/cl_ufopedia.c:596
 msgid "Error - could not find aircraft"
 msgstr "Erreur - impossible de trouver l'appareil"
 
-#: client/cl_ufopedia.c:607
+#: client/cl_ufopedia.c:603
 #, c-format
 msgid "%s:\t%i\n"
 msgstr "%s:\t%i\n"
 
-#: client/cl_ufopedia.c:614
+#: client/cl_ufopedia.c:610
 #, c-format
 msgid "Max. soldiers:\t%i\n"
 msgstr "Max. soldats :\t%i\n"
 
-#: client/cl_ufopedia.c:714
+#: client/cl_ufopedia.c:731
 msgid "Proposal: "
 msgstr "Proposition :"
 
-#: client/cl_ufopedia.c:717
+#: client/cl_ufopedia.c:734
 msgid "Re: "
 msgstr "Re :"
 
-#: client/cl_ufopedia.c:725
+#: client/cl_ufopedia.c:746
 #, c-format
 msgid ""
 "FROM: %s\n"
@@ -13617,50 +13863,55 @@ msgstr ""
 "DATE : %s\n"
 "SUJET : %s%s\n"
 
-#: client/cl_ufopedia.c:814
+#: client/cl_ufopedia.c:836
 msgid "No pre-research description available."
 msgstr "Pas de description disponible."
 
-#: client/cl_ufopedia.c:992
+#: client/cl_ufopedia.c:1031
 msgid "UFOpaedia Content"
 msgstr "Contenu OVNIpédia"
 
-#: client/cl_ufopedia.c:1024
+#: client/cl_ufopedia.c:1063
 #, c-format
 msgid "UFOpaedia Index: %s"
 msgstr "Index OVNIpédia : %s"
 
-#: client/cl_ufopedia.c:1437
+#: client/cl_ufopedia.c:1487
 #, c-format
 msgid "^BProposal: %s\t%i %s %02i\n"
 msgstr "^BProposition : %s\t%i %s %02i\n"
 
-#: client/cl_ufopedia.c:1443
+#: client/cl_ufopedia.c:1493
 #, c-format
 msgid "Proposal: %s\t%i %s %02i\n"
 msgstr "Proposition : %s\t%i %s %02i\n"
 
-#: client/cl_ufopedia.c:1455
+#: client/cl_ufopedia.c:1505
 #, c-format
 msgid "^BRe: %s\t%i %s %02i\n"
 msgstr "^BRe : %s\t%i %s %02i\n"
 
-#: client/cl_ufopedia.c:1461
+#: client/cl_ufopedia.c:1511
 #, c-format
 msgid "Re: %s\t%i %s %02i\n"
 msgstr "Re: %s\t%i %s %02i\n"
 
-#: client/cl_ufopedia.c:1472
-#: client/cl_ufopedia.c:1487
+#: client/cl_ufopedia.c:1522
+#: client/cl_ufopedia.c:1537
 #, c-format
 msgid "^B%s\t%i %s %02i\n"
 msgstr "^B%s\t%i %s %02i\n"
 
-#: client/cl_ufopedia.c:1478
-#: client/cl_ufopedia.c:1493
+#: client/cl_ufopedia.c:1528
+#: client/cl_ufopedia.c:1543
 #, c-format
 msgid "%s\t%i %s %02i\n"
 msgstr "%s\t%i %s %02i\n"
+
+#: client/cl_ufopedia.c:1557
+#, c-format
+msgid "^B%s\t%s\n"
+msgstr "^B%s\t%s\n"
 
 #: client/cl_view.c:364
 #: client/cl_view.c:393
@@ -13810,6 +14061,49 @@ msgstr "La base est attaquée."
 msgid "Crashed Alien Ship. Secure the area."
 msgstr "Vaisseau alien écrasé. Sécurisez la zone."
 
+#~ msgid "prolog_sentence1"
+#~ msgstr ""
+#~ "POUR: Commandant de la Base, PHALANX, Commandement des Opérations "
+#~ "Atlantique"
+#~ msgid "prolog_sentence2"
+#~ msgstr "DE: Secrétaire Général Mahouf Serra, Nations Unies, New York"
+#~ msgid "prolog_sentence3"
+#~ msgstr "DATE: 21 Mars 2084"
+#~ msgid "prolog_sentence4"
+#~ msgstr "SUJET: Bonne Chance"
+#~ msgid "prolog_sentence5"
+#~ msgstr ""
+#~ "Bienvenu dans vos nouvelles fonctions, Commandant. Vous avez dès "
+#~ "maintenant les pleins pouvoirs sur l'Unité de Réaction Extraterrestre "
+#~ "PHALANX. Votre mission est de protéger les citoyens de la Terre et de "
+#~ "stopper la menace alienne à tout prix. La façon dont vous procéderez nous "
+#~ "importe peu, notre seule exigence est votre réussite."
+#~ msgid "prolog_sentence6"
+#~ msgstr ""
+#~ "Votre première mission est d'aménager votre quartier général. Les Nations "
+#~ "Unies ont accès à n'importe quelle base à travers le monde, et vous "
+#~ "pouvez par conséquent envisager la totalité du globe pour l'installation "
+#~ "de votre centre d'opération. Choisissez cet endroit judicieusement, car "
+#~ "il aura beaucoup d'influence sur les chances de succès du projet PHALANX."
+#~ msgid "prolog_sentence7"
+#~ msgstr ""
+#~ "Une analyse récente des attaques sur Mumbai et Bonn révèle que les "
+#~ "observations d'OVNI et d'activités aliennes semblent se concentrer dans "
+#~ "les régions les plus densément peuplées du monde. Ceci inclus les zones "
+#~ "côtières d'Amérique du nord et du sud, l'Europe, l'Asie de l'est, "
+#~ "l'Afrique du sud et l'Afrique méditerranéenne, ainsi que l'Australie. "
+#~ "Vous devriez envisager d'inclure ces terres dans votre rayon d'action."
+#~ msgid "prolog_sentence8"
+#~ msgstr ""
+#~ "Une fois votre première base établie, vous devez préparer vos soldats à "
+#~ "l'action. Les recrues que nous avons assignées à PHALANX doivent être "
+#~ "affectées à un appareil de transport, puis équipées pour le combat."
+#~ msgid "prolog_sentence9"
+#~ msgstr ""
+#~ "Prenez soin d'elles, Commandant. Nous comptons tous sur vous, et prions "
+#~ "pour vous."
+#~ msgid "prolog_sentence10"
+#~ msgstr "Ce sera tout. Bonne chance, et bonne chasse."
 #~ msgid "Base defence: TR-20 Rocket Pod"
 #~ msgstr "Défense : Lance-Roquettes TR-20"
 #~ msgid "Base defence: TR-20 Rocket"
@@ -14030,8 +14324,6 @@ msgstr "Vaisseau alien écrasé. Sécurisez la zone."
 #~ msgstr "Espèce alienne :"
 #~ msgid "Selected aircraft"
 #~ msgstr "Appareil sélectionné"
-#~ msgid "Base Attack"
-#~ msgstr "Base Attaquée"
 #~ msgid "Aliens attacked one of our bases"
 #~ msgstr "Les aliens attaquent une de nos bases"
 #~ msgid "Transportmission"
@@ -14434,8 +14726,6 @@ msgstr "Vaisseau alien écrasé. Sécurisez la zone."
 #~ msgstr "Lamentable"
 #~ msgid "Very Poor"
 #~ msgstr "Très faible"
-#~ msgid "Good"
-#~ msgstr "Bon"
 #~ msgid "Amazing"
 #~ msgstr "Incroyable"
 #~ msgid "Godlike"
