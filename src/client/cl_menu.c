@@ -5354,6 +5354,7 @@ qboolean MS_Load (sizebuf_t* sb, void* data)
 	int i, mtype, idx;
 	char title[MAX_VAR], text[MAX_MESSAGE_TEXT];
 	message_t *mess;
+	const char *s = NULL;
 
 	/* how many message items */
 	i = MSG_ReadLong(sb);
@@ -5362,11 +5363,14 @@ qboolean MS_Load (sizebuf_t* sb, void* data)
 		Q_strncpyz(title, MSG_ReadStringRaw(sb), sizeof(title));
 		Q_strncpyz(text, MSG_ReadStringRaw(sb), sizeof(text));
 		mtype = MSG_ReadByte(sb);
+		if (mtype == MSG_EVENT)
+			s = MSG_ReadString(sb);
+		else
+			s = NULL;
 		idx = MSG_ReadLong(sb);
 		if (mtype != MSG_DEBUG || developer->integer == 1) {
 			mess = MN_AddNewMessage(title, text, qfalse, mtype, RS_GetTechByIDX(idx));
-			if (mtype == MSG_EVENT) {
-				const char *s = MSG_ReadString(sb);
+			if (s) {
 				mess->eventMail = CL_GetEventMail(s);
 				if (!mess->eventMail) {
 					Com_Printf("Could not find eventMail with id: %s\n", s);
