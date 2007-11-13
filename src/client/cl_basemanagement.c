@@ -98,21 +98,14 @@ qboolean B_CheckBuildingTypeStatus (const base_t* const base, buildingType_t typ
  * @param[in] base Base to check
  * @param[in] building
  * @todo When we'll can break savegame, that would be nice to add a hasEntrance variable.
- * @return true if base contains needed dependence
+ * @return true if the building is functional
  */
-qboolean B_CheckBuildingDependencesStatus (const base_t* const base, building_t* building)
+qboolean B_CheckBuildingOperational (const base_t* const base, building_t* building)
 {
-	int type;
-
 	assert(base);
 	assert(building);
 
-	if (building->dependsBuilding == -1)
-		return qtrue;
-
-	type = gd.buildingTypes[building->dependsBuilding].buildingType;
-
-	switch (type) {
+	switch (building->buildingType) {
 	case B_LAB:
 		return base->hasLab;
 	case B_QUARTERS:
@@ -147,6 +140,27 @@ qboolean B_CheckBuildingDependencesStatus (const base_t* const base, building_t*
 		/* B_ENTRANCE and B_MISC */
 		return qtrue;
 	}
+}
+
+/**
+ * @brief Chech that the dependences of a building is operationnal
+ * @param[in] base Base to check
+ * @param[in] building
+ * @return true if base contains needed dependence for entering building
+ */
+qboolean B_CheckBuildingDependencesStatus (const base_t* const base, building_t* building)
+{
+	building_t *dependsBuilding;
+
+	assert(base);
+	assert(building);
+
+	if (building->dependsBuilding == -1)
+		return qtrue;
+
+	dependsBuilding = gd.buildingTypes + building->dependsBuilding;
+
+	return B_CheckBuildingOperational(base, dependsBuilding);
 }
 
 /**
@@ -2605,14 +2619,26 @@ static void B_CheckBuildingStatusForMenu_f (void)
 			}
 		}
 		dependenceBuilding = gd.buildingTypes + building->dependsBuilding;
+		Com_Printf("statut de %s : %i\n", dependenceBuilding->name, dependenceBuilding->buildingStatus);
 		if (!B_CheckBuildingDependencesStatus(baseCurrent, dependenceBuilding)) {
 			if (B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, dependenceBuilding->buildingType) <= 0) {
-				/* at least one dependence is not operationnal */
-				Com_sprintf(popupText, sizeof(popupText), va(_("You need an operational %s to use this building"), _(dependenceBuilding->name)));
+				/* the dependence of the building is not built */
+				Com_sprintf(popupText, sizeof(popupText), va(_("You need a building %s to make building %s functional."), _(dependenceBuilding->name), _(building->name)));
 				MN_Popup(_("Notice"), popupText);
 			} else {
+				/* maybe the dependence of the building is under construction
+				 * note that we can't use B_STATUS_UNDER_CONSTRUCTION here, because this value
+				 * is not use for every building (for exemple Command Centre) */
+				for (i = 0; i < gd.numBuildings[baseIdx]; i++) {
+					if (gd.buildings[baseIdx][i].buildingType == dependenceBuilding->buildingType
+					 && gd.buildings[baseIdx][i].buildTime > (ccs.date.day - gd.buildings[baseIdx][i].timeStart)) {
+						Com_sprintf(popupText, sizeof(popupText), va(_("Building %s is not finished yet, and is needed to use building %s."), _(dependenceBuilding->name), _(building->name)));
+						MN_Popup(_("Notice"), popupText);
+						return;
+					}
+				}
 				/* the dependence is built but doesn't work - must be because of their dependendes */
-				Com_sprintf(popupText, sizeof(popupText), va(_("Make sure that dependences of building %s (%s) are operationnal, so that building %s may be used"), _(dependenceBuilding->name), _((gd.buildingTypes + dependenceBuilding->dependsBuilding)->name), _(building->name)));
+				Com_sprintf(popupText, sizeof(popupText), va(_("Make sure that dependences of building %s (%s) are operationnal, so that building %s may be used."), _(dependenceBuilding->name), _((gd.buildingTypes + dependenceBuilding->dependsBuilding)->name), _(building->name)));
 				MN_Popup(_("Notice"), popupText);
 			}
 		}
@@ -2628,7 +2654,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 static void B_BuildingOpen_f (void)
 {
 	if (baseCurrent && baseCurrent->buildingCurrent) {
-		if (baseCurrent->buildingCurrent->buildingStatus != B_STATUS_WORKING) {
+		if (!B_CheckBuildingOperational(baseCurrent, baseCurrent->buildingCurrent)) {
 			UP_OpenWith(baseCurrent->buildingCurrent->pedia);
 		} else {
 			/* FIXME: Some buildings are even allowed to be opened when base is under attack */
