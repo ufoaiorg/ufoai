@@ -118,10 +118,6 @@ static void UP_ChangeDisplay (int newDisplay)
 	MN_MenuTextReset(TEXT_UFOPEDIA);
 
 	Cvar_Set("mn_up_mail", "0"); /* use strings here - no int */
-	Cvar_Set("mn_upmodel_top", "");
-	Cvar_Set("mn_upmodel_bottom", "");
-	Cvar_Set("mn_upmodel_big", "");
-	Cvar_Set("mn_upimage_top", "base/empty");
 
 	switch (upDisplay) {
 	case UFOPEDIA_CHAPTERS:
@@ -129,8 +125,17 @@ static void UP_ChangeDisplay (int newDisplay)
 		Cbuf_AddText("mn_upfbig\n");
 		currentChapter = -1;
 		upCurrentTech = NULL;
+		Cvar_Set("mn_upmodel_top", "");
+		Cvar_Set("mn_upmodel_bottom", "");
+		Cvar_Set("mn_upmodel_big", "");
+		Cvar_Set("mn_upimage_top", "base/empty");
 		break;
 	case UFOPEDIA_INDEX:
+		Cvar_Set("mn_upmodel_top", "");
+		Cvar_Set("mn_upmodel_bottom", "");
+		Cvar_Set("mn_upmodel_big", "");
+		Cvar_Set("mn_upimage_top", "base/empty");
+		/* no break here */
 	case UFOPEDIA_ARTICLE:
 		/* confunc */
 		Cbuf_AddText("mn_upfsmall\n");
