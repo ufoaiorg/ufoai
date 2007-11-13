@@ -2622,7 +2622,6 @@ static void B_CheckBuildingStatusForMenu_f (void)
 			}
 		}
 		dependenceBuilding = gd.buildingTypes + building->dependsBuilding;
-		Com_Printf("statut de %s : %i\n", dependenceBuilding->name, dependenceBuilding->buildingStatus);
 		if (!B_CheckBuildingDependencesStatus(baseCurrent, dependenceBuilding)) {
 			if (B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, dependenceBuilding->buildingType) <= 0) {
 				/* the dependence of the building is not built */
