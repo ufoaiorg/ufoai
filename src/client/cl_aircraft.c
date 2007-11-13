@@ -2141,8 +2141,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 qboolean AIR_AircraftAllowed (void)
 {
 	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK
-	 && (B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_HANGAR) > 0
-		|| B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_SMALL_HANGAR) > 0)) {
+	 && (baseCurrent->hasHangar || baseCurrent->hasHangarSmall)) {
 		return qtrue;
 	} else {
 		return qfalse;

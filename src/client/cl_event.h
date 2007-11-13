@@ -41,13 +41,16 @@ typedef struct eventMail_s {
 	char *to;			/**< recipient (_mail_to_base_commander) */
 	char *cc;			/**< copy recipient (_mail_to_base_commander) */
 	char *subject;		/**< mail subject line - if mail and mail_pre are available
-								 * this will be filled with Proposal: (mail_pre) and Re: (mail)
-								 * automatically */
+						 * this will be filled with Proposal: (mail_pre) and Re: (mail)
+						 * automatically */
 	char *date;			/**< date string, if empty use the date of research */
-	qboolean read;				/**< already read the mail? */
+	char *body;			/**< the body of the event mail */
+	char *icon;			/**< icon in the mailclient */
+	qboolean read;		/**< already read the mail? */
 } eventMail_t;
 
-extern void CL_EventAddMail_f(void);
-extern void CL_ParseEventMails(const char *name, const char **text);
+void CL_EventAddMail_f(void);
+void CL_ParseEventMails(const char *name, const char **text);
+eventMail_t* CL_GetEventMail(const char *id);
 
 #endif /* CLIENT_CL_EVENT */

@@ -1041,6 +1041,7 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 
 		/* ensure 0 - 100 */
 		if (ccs.XVISpreadActivated) {
+			/* @todo: Send mails about critical rates */
 			nation->XVIRate += XVISpread;
 			nation->XVIRate %= 100;
 		}
@@ -4441,6 +4442,7 @@ static void CL_GameNew_f (void)
 	Cmd_ExecuteString("mn_select_base -1");
 
 	CL_GameInit(qfalse);
+	Cmd_ExecuteString("addeventmail prolog");
 
 	CL_CampaignRunMarket();
 }

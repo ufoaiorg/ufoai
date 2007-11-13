@@ -16,8 +16,8 @@
 language=$1
 url="http://ufoai.ninex.info/"
 wiki_url="wiki/index.php/List_of_msgid/"
-chapters="Research Armour Equipment Buildings Aircraft Aircraft_Equipment Aliens Campaigns Story Mail_Headers"
-headers="mail_to_base_commander mail_from_paul_navarre mail_from_col_falkland mail_from_dr_connor mail_from_air_cdr mail_from_xo mail_from_surgeon"
+chapters="Research Armour Equipment Buildings Aircraft Aircraft_Equipment Aliens Campaigns Story Mail_Headers Mail_Bodies"
+headers="mail_to_base_commander mail_from_paul_navarre mail_from_col_falkland mail_from_dr_connor mail_from_air_cdr mail_from_xo mail_from_surgeon mail_from_un"
 index="List_of_msgid_"${language}
 input_file=$language".po"
 output_file=updated_${language}.po
@@ -531,10 +531,10 @@ then
 
 	update_sentences $base_sentence
 
-	base_sentence="prolog_sentence"
-	i=1
-	english=$base_sentence$i
-	update_sentences $base_sentence
+#	base_sentence="prolog_sentence"
+#	i=1
+#	english=$base_sentence$i
+#	update_sentences $base_sentence
 
 	if [[ "$debug" = "1" ]]
 	then
@@ -580,6 +580,22 @@ then
 	if [[ "$debug" = "1" ]]
 	then
 		echo "Checking campaign descriptions : done." >> $log_file
+	fi
+fi
+
+english="mail_aircraft_landed"
+download_description $english
+if [[ $? -eq 0 ]]
+then
+	clean_html
+
+	for english in "mail_aircraft_landed" "mail_aircraft_bingo_fuel" "mail_aircraft_ready" "mail_aircraft_lost_target" "mail_aircraft_new_at_base" "mail_aircraft_lost_target" "mail_alien_activity_reported" "mail_alien_ufo_downed" "mail_alien_response_too_late" "mail_alien_new_radar_contact" "mail_alien_lost_radar_contact" "mail_alien_base_discovered" "mail_general_mission_summary" "mail_general_base_attack_report" "mail_general_new_base" "mail_general_construction_finished" "mail_general_equipment_received" "mail_general_transfer_received" "mail_general_ufo_in_hangar" "mail_general_monthly_report" "mail_production_finished" "mail_production_not_enough_resources" "mail_production_not_enough_money" "mail_prolog"
+	do
+		update_one_sentence "1"
+	done
+	if [[ "$debug" = "1" ]]
+	then
+		echo "Checking mail bodies : done." >> $log_file
 	fi
 fi
 

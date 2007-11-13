@@ -43,5 +43,6 @@ void UP_OpenCopyWith(const char *name);
 void UP_ItemDescription(int item);
 void UP_AircraftItemDescription(int item);
 int UP_GetUnreadMails(void);
+void UP_OpenEventMail(const char *eventMailID);
 
 #endif /* CLIENT_CL_UFOPEDIA_H */

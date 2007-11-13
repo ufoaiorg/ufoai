@@ -279,7 +279,7 @@ menu map
 		texh	"32 32"
 		pos		"300 32"
 		mousefx true
-		click	{ cmd "mn_push ufopedia_mail" }
+		click	{ cmd "mn_push ufopedia_mail;" }
 	}
 
 	pic bt_mailclient_nomail
@@ -291,7 +291,7 @@ menu map
 		texh	"64 32"
 		pos		"300 32"
 		mousefx true
-		click	{ cmd "mn_push ufopedia_mail" }
+		click	{ cmd "mn_push ufopedia_mail;" }
 	}
 
 	pic bt_stats

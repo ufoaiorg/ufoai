@@ -32,7 +32,7 @@ static cvar_t *mn_uppreavailable = NULL;
 static pediaChapter_t	*upChapters_displaylist[MAX_PEDIACHAPTERS];
 static int numChapters_displaylist;
 
-static technology_t	*upCurrent;
+static technology_t	*upCurrentTech;
 static int currentChapter = -1;
 
 #define MAX_UPTEXT 4096
@@ -116,25 +116,21 @@ static void UP_ChangeDisplay (int newDisplay)
 	MN_MenuTextReset(TEXT_LIST);
 	MN_MenuTextReset(TEXT_STANDARD);
 	MN_MenuTextReset(TEXT_UFOPEDIA);
+
 	Cvar_Set("mn_up_mail", "0"); /* use strings here - no int */
+	Cvar_Set("mn_upmodel_top", "");
+	Cvar_Set("mn_upmodel_bottom", "");
+	Cvar_Set("mn_upmodel_big", "");
+	Cvar_Set("mn_upimage_top", "base/empty");
 
 	switch (upDisplay) {
 	case UFOPEDIA_CHAPTERS:
 		/* confunc */
 		Cbuf_AddText("mn_upfbig\n");
-		Cvar_Set("mn_upmodel_top", "");
-		Cvar_Set("mn_upmodel_bottom", "");
-		Cvar_Set("mn_upmodel_big", "");
-		Cvar_Set("mn_upimage_top", "base/empty");
 		currentChapter = -1;
-		upCurrent = NULL;
+		upCurrentTech = NULL;
 		break;
 	case UFOPEDIA_INDEX:
-		Cvar_Set("mn_upmodel_top", "");
-		Cvar_Set("mn_upmodel_bottom", "");
-		Cvar_Set("mn_upmodel_big", "");
-		Cvar_Set("mn_upimage_top", "base/empty");
-		/* no break here */
 	case UFOPEDIA_ARTICLE:
 		/* confunc */
 		Cbuf_AddText("mn_upfsmall\n");
@@ -341,8 +337,8 @@ void UP_ItemDescription (int item)
 		}
 
 		if (!Q_strncmp(od->type, "ammo", 4) || (od->weapon && !od->reload)) {
-			/* We store the current technology in upCurrent (needed for changing firemodes while in equip menu) */
-			upCurrent = od->tech;
+			/* We store the current technology in upCurrentTech (needed for changing firemodes while in equip menu) */
+			upCurrentTech = od->tech;
 
 			/* We display the pre/next buttons for changing weapon only if there are at least 2 researched weapons */
 			/* up_numresearchedlink contains the number of researched weapons useable with this ammo */
@@ -369,8 +365,8 @@ void UP_ItemDescription (int item)
 			}
 		} else if (od->weapon) {
 			/* We have a weapon that uses ammos */
-			/* We store the current technology in upCurrent (needed for changing firemodes while in equip menu) */
-			upCurrent = od->tech;
+			/* We store the current technology in upCurrentTech (needed for changing firemodes while in equip menu) */
+			upCurrentTech = od->tech;
 
 			/* We display the pre/next buttons for changing ammo only if there are at least 2 researched ammo */
 			/* up_numresearchedlink contains the number of researched ammos useable with this weapon */
@@ -641,17 +637,25 @@ int UP_GetUnreadMails (void)
 	while (m) {
 		switch (m->type) {
 		case MSG_RESEARCH_PROPOSAL:
+			assert(m->pedia);
 			if (m->pedia->mail[TECHMAIL_PRE].from && m->pedia->mail[TECHMAIL_PRE].read == qfalse)
 				gd.numUnreadMails++;
 			break;
 		case MSG_RESEARCH_FINISHED:
+			assert(m->pedia);
 			if (m->pedia->mail[TECHMAIL_RESEARCHED].from && RS_IsResearched_ptr(m->pedia) && m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
 				gd.numUnreadMails++;
 			break;
 		case MSG_NEWS:
+			assert(m->pedia);
 			if (m->pedia->mail[TECHMAIL_PRE].from && m->pedia->mail[TECHMAIL_PRE].read == qfalse)
 				gd.numUnreadMails++;
 			if (m->pedia->mail[TECHMAIL_RESEARCHED].from && m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
+				gd.numUnreadMails++;
+			break;
+		case MSG_EVENT:
+			assert(m->eventMail);
+			if (!m->eventMail->read)
 				gd.numUnreadMails++;
 			break;
 		default:
@@ -671,69 +675,78 @@ int UP_GetUnreadMails (void)
  * @param[in] tech The tech to generate a header for.
  * @param[in] type The type of mail (research proposal or finished research)
  * @sa UP_ChangeDisplay
+ * @sa CL_EventAddMail_f
  */
-static void UP_SetMailHeader (technology_t* tech, techMailType_t type)
+static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail_t* mail)
 {
 	static char mailHeader[8 * MAX_VAR] = ""; /* bigger as techMail_t (utf8) */
 	char dateBuf[MAX_VAR] = "";
-	const char *subjectType = NULL;
+	const char *subjectType = "";
+	const char *from, *to, *subject;
 
-	assert(tech);
-	assert(type < TECHMAIL_MAX);
-
-	if (tech->mail[type].date) {
-		Q_strncpyz(dateBuf, tech->mail[type].date, sizeof(dateBuf));
+	if (mail) {
+		from = mail->from;
+		to = mail->to;
+		subject = mail->subject;
+		Q_strncpyz(dateBuf, mail->date, sizeof(dateBuf));
+		mail->read = qtrue;
 	} else {
-		switch (type) {
-		case TECHMAIL_PRE:
-			Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"),
-				tech->preResearchedDateYear,
-				CL_DateGetMonthName(tech->preResearchedDateMonth),
-				tech->preResearchedDateDay);
-			break;
-		case TECHMAIL_RESEARCHED:
-			Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"),
-				tech->researchedDateYear,
-				CL_DateGetMonthName(tech->researchedDateMonth),
-				tech->researchedDateDay);
-				break;
-		default:
-			Sys_Error("UP_SetMailHeader: unhandled techMailType_t %i for date.\n", type);
-		}
-	}
-	if (tech->mail[type].from) {
-		if (!tech->mail[type].read) {
-			tech->mail[type].read = qtrue;
-			/* reread the unread mails in UP_GetUnreadMails */
-			gd.numUnreadMails = -1;
-		}
-		/* only if mail and mail_pre are available */
-		if (tech->numTechMails == TECHMAIL_MAX) {
+		assert(tech);
+		assert(type < TECHMAIL_MAX);
+
+		from = tech->mail[type].from;
+		to = tech->mail[type].to;
+		subject = tech->mail[type].subject;
+
+		if (tech->mail[type].date) {
+			Q_strncpyz(dateBuf, tech->mail[type].date, sizeof(dateBuf));
+		} else {
 			switch (type) {
 			case TECHMAIL_PRE:
-				subjectType = _("Proposal: ");
+				Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"),
+					tech->preResearchedDateYear,
+					CL_DateGetMonthName(tech->preResearchedDateMonth),
+					tech->preResearchedDateDay);
 				break;
 			case TECHMAIL_RESEARCHED:
-				subjectType = _("Re: ");
-				break;
+				Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"),
+					tech->researchedDateYear,
+					CL_DateGetMonthName(tech->researchedDateMonth),
+					tech->researchedDateDay);
+					break;
 			default:
-				Sys_Error("UP_SetMailHeader: unhandled techMailType_t %i for subject.\n", type);
+				Sys_Error("UP_SetMailHeader: unhandled techMailType_t %i for date.\n", type);
+			}
+		}
+		if (tech->mail[type].from) {
+			if (!tech->mail[type].read) {
+				tech->mail[type].read = qtrue;
+				/* reread the unread mails in UP_GetUnreadMails */
+				gd.numUnreadMails = -1;
+			}
+			/* only if mail and mail_pre are available */
+			if (tech->numTechMails == TECHMAIL_MAX) {
+				switch (type) {
+				case TECHMAIL_PRE:
+					subjectType = _("Proposal: ");
+					break;
+				case TECHMAIL_RESEARCHED:
+					subjectType = _("Re: ");
+					break;
+				default:
+					Sys_Error("UP_SetMailHeader: unhandled techMailType_t %i for subject.\n", type);
+				}
 			}
 		} else {
-			subjectType = "";
+			MN_MenuTextReset(TEXT_UFOPEDIA_MAILHEADER);
+			Cvar_Set("mn_up_mail", "0"); /* use strings here - no int */
+			return;
 		}
-		Com_sprintf(mailHeader, sizeof(mailHeader), _("FROM: %s\nTO: %s\nDATE: %s\nSUBJECT: %s%s\n"),
-			_(tech->mail[type].from),
-			_(tech->mail[type].to),
-			dateBuf,
-			subjectType,
-			_(tech->mail[type].subject));
-		menuText[TEXT_UFOPEDIA_MAILHEADER] = mailHeader;
-		Cvar_Set("mn_up_mail", "1"); /* use strings here - no int */
-	} else {
-		MN_MenuTextReset(TEXT_UFOPEDIA_MAILHEADER);
-		Cvar_Set("mn_up_mail", "0"); /* use strings here - no int */
 	}
+	Com_sprintf(mailHeader, sizeof(mailHeader), _("FROM: %s\nTO: %s\nDATE: %s\nSUBJECT: %s%s\n"),
+		_(from), _(to), dateBuf, subjectType, _(subject));
+	menuText[TEXT_UFOPEDIA_MAILHEADER] = mailHeader;
+	Cvar_Set("mn_up_mail", "1"); /* use strings here - no int */
 }
 
 /**
@@ -741,81 +754,91 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type)
  * @param[in] tech The technology_t pointer to print the ufopedia article for
  * @sa UP_DrawEntry
  */
-void UP_Article (technology_t* tech)
+void UP_Article (technology_t* tech, eventMail_t *mail)
 {
 	int i;
-
-	assert(tech);
 
 	MN_MenuTextReset(TEXT_UFOPEDIA);
 	MN_MenuTextReset(TEXT_LIST);
 
-	if (RS_IsResearched_ptr(tech)) {
-		Cvar_Set("mn_uptitle", va("%s *", _(tech->name)));
-		/* If researched -> display research text */
-		menuText[TEXT_UFOPEDIA] = _(RS_GetDescription(&tech->description));
-		if (tech->pre_description.numDescriptions > 0) {
-			/* Display pre-research text and the buttons if a pre-research text is available. */
-			if (mn_uppretext->integer) {
-				menuText[TEXT_UFOPEDIA] = _(RS_GetDescription(&tech->pre_description));
-				UP_SetMailHeader(tech, TECHMAIL_PRE);
-			} else {
-				UP_SetMailHeader(tech, TECHMAIL_RESEARCHED);
-			}
-			Cvar_SetValue("mn_uppreavailable", 1);
-		} else {
-			/* Do not display the pre-research-text button if none is available (no need to even bother clicking there). */
-			Cvar_SetValue("mn_uppreavailable", 0);
-			Cvar_SetValue("mn_updisplay", 0);
-			UP_SetMailHeader(tech, TECHMAIL_RESEARCHED);
-			Cvar_SetValue("mn_updisplay", 0);
-		}
-
-		if (upCurrent) {
-			switch (tech->type) {
-			case RS_ARMOUR:
-				UP_ArmourDescription(tech);
-				break;
-			case RS_WEAPON:
-				for (i = 0; i < csi.numODs; i++) {
-					if (!Q_strncmp(tech->provides, csi.ods[i].id, MAX_VAR)) {
-						UP_ItemDescription(i);
-						UP_DisplayTechTree(tech);
-						break;
-					}
-				}
-				break;
-			case RS_TECH:
-				UP_TechDescription(tech);
-				break;
-			case RS_CRAFT:
-				UP_AircraftDescription(tech);
-				break;
-			case RS_CRAFTITEM:
-				i = AII_GetAircraftItemByID(tech->provides);
-				UP_AircraftItemDescription(i);
-				break;
-			case RS_BUILDING:
-				UP_BuildingDescription(tech);
-				break;
-			default:
-				break;
-			}
-		}
-	/* see also UP_TechGetsDisplayed */
-	} else if (RS_Collected_(tech) || (tech->statusResearchable && (tech->pre_description.numDescriptions > 0))) {
-		/* This tech has something collected or has a research proposal. (i.e. pre-research text) */
-		Cvar_Set("mn_uptitle", _(tech->name));
-		/* Not researched but some items collected -> display pre-research text if available. */
-		if (tech->pre_description.numDescriptions > 0) {
-			menuText[TEXT_UFOPEDIA] = _(RS_GetDescription(&tech->pre_description));
-			UP_SetMailHeader(tech, TECHMAIL_PRE);
-		} else {
-			menuText[TEXT_UFOPEDIA] = _("No pre-research description available.");
-		}
+	if (mail) {
+		/* event mail */
+		Cvar_SetValue("mn_uppreavailable", 0);
+		Cvar_SetValue("mn_updisplay", 0);
+		UP_SetMailHeader(NULL, 0, mail);
+		menuText[TEXT_UFOPEDIA] = _(mail->body);
+		/* This allows us to use the index button in the ufopedia,
+		 * eventMails don't have any chapter to go back to. */
+		upDisplay = UFOPEDIA_INDEX;
 	} else {
-		Cvar_Set("mn_uptitle", _(tech->name));
-		MN_MenuTextReset(TEXT_UFOPEDIA);
+		assert(tech);
+
+		if (RS_IsResearched_ptr(tech)) {
+			Cvar_Set("mn_uptitle", va("%s *", _(tech->name)));
+			/* If researched -> display research text */
+			menuText[TEXT_UFOPEDIA] = _(RS_GetDescription(&tech->description));
+			if (tech->pre_description.numDescriptions > 0) {
+				/* Display pre-research text and the buttons if a pre-research text is available. */
+				if (mn_uppretext->integer) {
+					menuText[TEXT_UFOPEDIA] = _(RS_GetDescription(&tech->pre_description));
+					UP_SetMailHeader(tech, TECHMAIL_PRE, NULL);
+				} else {
+					UP_SetMailHeader(tech, TECHMAIL_RESEARCHED, NULL);
+				}
+				Cvar_SetValue("mn_uppreavailable", 1);
+			} else {
+				/* Do not display the pre-research-text button if none is available (no need to even bother clicking there). */
+				Cvar_SetValue("mn_uppreavailable", 0);
+				Cvar_SetValue("mn_updisplay", 0);
+				UP_SetMailHeader(tech, TECHMAIL_RESEARCHED, NULL);
+			}
+
+			if (upCurrentTech) {
+				switch (tech->type) {
+				case RS_ARMOUR:
+					UP_ArmourDescription(tech);
+					break;
+				case RS_WEAPON:
+					for (i = 0; i < csi.numODs; i++) {
+						if (!Q_strncmp(tech->provides, csi.ods[i].id, MAX_VAR)) {
+							UP_ItemDescription(i);
+							UP_DisplayTechTree(tech);
+							break;
+						}
+					}
+					break;
+				case RS_TECH:
+					UP_TechDescription(tech);
+					break;
+				case RS_CRAFT:
+					UP_AircraftDescription(tech);
+					break;
+				case RS_CRAFTITEM:
+					i = AII_GetAircraftItemByID(tech->provides);
+					UP_AircraftItemDescription(i);
+					break;
+				case RS_BUILDING:
+					UP_BuildingDescription(tech);
+					break;
+				default:
+					break;
+				}
+			}
+		/* see also UP_TechGetsDisplayed */
+		} else if (RS_Collected_(tech) || (tech->statusResearchable && (tech->pre_description.numDescriptions > 0))) {
+			/* This tech has something collected or has a research proposal. (i.e. pre-research text) */
+			Cvar_Set("mn_uptitle", _(tech->name));
+			/* Not researched but some items collected -> display pre-research text if available. */
+			if (tech->pre_description.numDescriptions > 0) {
+				menuText[TEXT_UFOPEDIA] = _(RS_GetDescription(&tech->pre_description));
+				UP_SetMailHeader(tech, TECHMAIL_PRE, NULL);
+			} else {
+				menuText[TEXT_UFOPEDIA] = _("No pre-research description available.");
+			}
+		} else {
+			Cvar_Set("mn_uptitle", _(tech->name));
+			MN_MenuTextReset(TEXT_UFOPEDIA);
+		}
 	}
 }
 
@@ -855,29 +878,45 @@ static void UP_DrawAssociatedAmmo (technology_t* tech)
  * @sa UP_ArmourDescription
  * @sa UP_ItemDescription
  */
-static void UP_DrawEntry (technology_t* tech)
+static void UP_DrawEntry (technology_t* tech, eventMail_t* mail)
 {
-	if (!tech)
-		return;
-
-	Cvar_SetValue("mn_uppreavailable", 0);
 	Cvar_Set("mn_upmodel_top", "");
 	Cvar_Set("mn_upmodel_bottom", "");
 	Cvar_Set("mn_upimage_top", "base/empty");
-	if (tech->mdl_top)
-		Cvar_Set("mn_upmodel_top", tech->mdl_top);
-	if (tech->type == RS_WEAPON)
-		UP_DrawAssociatedAmmo(tech);
-	if (!tech->mdl_top && tech->image_top)
-		Cvar_Set("mn_upimage_top", tech->image_top);
-	up_firemode = 0;
-	up_researchedlink = 0;	/*@todo: if the first weapon of the firemode of an ammo is unresearched, its dommages,... will still be displayed*/
 
-	currentChapter = tech->up_chapter;
+	if (tech) {
+		if (tech->mdl_top)
+			Cvar_Set("mn_upmodel_top", tech->mdl_top);
+		if (tech->type == RS_WEAPON)
+			UP_DrawAssociatedAmmo(tech);
+		if (!tech->mdl_top && tech->image_top)
+			Cvar_Set("mn_upimage_top", tech->image_top);
+		up_firemode = 0;
+		up_researchedlink = 0;	/*@todo: if the first weapon of the firemode of an ammo is unresearched, its dommages,... will still be displayed*/
+
+		currentChapter = tech->up_chapter;
+	} else if (!mail)
+		return;
 
 	UP_ChangeDisplay(UFOPEDIA_ARTICLE);
 
-	UP_Article(tech);
+	UP_Article(tech, mail);
+}
+
+/**
+ * @brief
+ * @sa CL_EventAddMail_f
+ */
+void UP_OpenEventMail (const char *eventMailID)
+{
+	eventMail_t* mail;
+	mail = CL_GetEventMail(eventMailID);
+	if (!mail)
+		return;
+
+	Cbuf_AddText("mn_push ufopedia\n");
+	Cbuf_Execute(); /* we have to execute the init node of the ufopedia menu here, too */
+	UP_DrawEntry(NULL, mail);
 }
 
 /**
@@ -890,7 +929,7 @@ void UP_OpenWith (const char *name)
 	if (!name)
 		return;
 	Cbuf_AddText("mn_push ufopedia\n");
-	Cbuf_Execute();
+	Cbuf_Execute(); /* we have to execute the init node of the ufopedia menu here, too */
 	Cbuf_AddText(va("ufopedia %s\n", name));
 }
 
@@ -923,7 +962,7 @@ static void UP_FindEntry_f (void)
 		return;
 	}
 
-	/*what are we searching for? */
+	/* what are we searching for? */
 	id = Cmd_Argv(1);
 
 	/* maybe we get a call like ufopedia "" */
@@ -937,8 +976,8 @@ static void UP_FindEntry_f (void)
 	tech = RS_GetTechByID(id);
 
 	if (tech) {
-		upCurrent = tech;
-		UP_DrawEntry(upCurrent);
+		upCurrentTech = tech;
+		UP_DrawEntry(upCurrentTech, NULL);
 		return;
 	}
 
@@ -964,18 +1003,18 @@ static void UP_Content_f (void)
 	for (i = 0; i < gd.numChapters; i++) {
 		/* Check if there are any researched or collected items in this chapter ... */
 		researched_entries = qfalse;
-		upCurrent = &gd.technologies[gd.upChapters[i].first];
+		upCurrentTech = &gd.technologies[gd.upChapters[i].first];
 		do {
-			if (UP_TechGetsDisplayed(upCurrent)) {
+			if (UP_TechGetsDisplayed(upCurrentTech)) {
 				researched_entries = qtrue;
 				break;
 			}
-			if (upCurrent->idx != upCurrent->next && upCurrent->next >= 0 )
-				upCurrent = &gd.technologies[upCurrent->next];
+			if (upCurrentTech->idx != upCurrentTech->next && upCurrentTech->next >= 0)
+				upCurrentTech = &gd.technologies[upCurrentTech->next];
 			else {
-				upCurrent = NULL;
+				upCurrentTech = NULL;
 			}
-		} while (upCurrent);
+		} while (upCurrentTech);
 
 		/* .. and if so add them to the displaylist of chapters. */
 		if (researched_entries) {
@@ -1067,10 +1106,10 @@ static void UP_Prev_f (void)
 {
 	technology_t *t = NULL;
 
-	if (!upCurrent) /* if called from console */
+	if (!upCurrentTech) /* if called from console */
 		return;
 
-	t = upCurrent;
+	t = upCurrentTech;
 
 	/* get previous entry */
 	if (t->prev >= 0) {
@@ -1083,8 +1122,8 @@ static void UP_Prev_f (void)
 		} while (t->prev >= 0 && !UP_TechGetsDisplayed(t));
 
 		if (UP_TechGetsDisplayed(t)) {
-			upCurrent = t;
-			UP_DrawEntry(t);
+			upCurrentTech = t;
+			UP_DrawEntry(t, NULL);
 			return;
 		}
 	}
@@ -1101,24 +1140,24 @@ static void UP_Next_f (void)
 {
 	technology_t *t = NULL;
 
-	if (!upCurrent) /* if called from console */
+	if (!upCurrentTech) /* if called from console */
 		return;
 
-	t = upCurrent;
+	t = upCurrentTech;
 
 	/* get next entry */
 	if (t && (t->next >= 0)) {
 		/* Check if the next entry is researched already otherwise go to the next entry. */
 		do {
 			t = &gd.technologies[t->next];
-			assert(upCurrent);
+			assert(upCurrentTech);
 			if (t->idx == t->next)
 				Sys_Error("UP_Next_f: The 'next':%d entry equals to 'idx' entry for '%s'.\n", t->next, t->id);
 		} while (t->next >= 0 && !UP_TechGetsDisplayed(t));
 
 		if (UP_TechGetsDisplayed(t)) {
-			upCurrent = t;
-			UP_DrawEntry(t);
+			upCurrentTech = t;
+			UP_DrawEntry(t, NULL);
 			return;
 		}
 	}
@@ -1157,14 +1196,14 @@ static void UP_Click_f (void)
 	switch (upDisplay) {
 	case UFOPEDIA_CHAPTERS:
 		if (num < numChapters_displaylist && upChapters_displaylist[num]->first) {
-			upCurrent = &gd.technologies[upChapters_displaylist[num]->first];
+			upCurrentTech = &gd.technologies[upChapters_displaylist[num]->first];
 			do {
-				if (UP_TechGetsDisplayed(upCurrent)) {
-					Cbuf_AddText(va("mn_upindex %i;", upCurrent->up_chapter));
+				if (UP_TechGetsDisplayed(upCurrentTech)) {
+					Cbuf_AddText(va("mn_upindex %i;", upCurrentTech->up_chapter));
 					return;
 				}
-				upCurrent = &gd.technologies[upCurrent->next];
-			} while (upCurrent);
+				upCurrentTech = &gd.technologies[upCurrentTech->next];
+			} while (upCurrentTech);
 		}
 		break;
 	case UFOPEDIA_INDEX:
@@ -1185,9 +1224,9 @@ static void UP_Click_f (void)
 			else
 				t = NULL;
 		}
-		upCurrent = t;
-		if (upCurrent)
-			UP_DrawEntry(upCurrent);
+		upCurrentTech = t;
+		if (upCurrentTech)
+			UP_DrawEntry(upCurrentTech, NULL);
 		break;
 	case UFOPEDIA_ARTICLE:
 		/* we don't want the click function parameter in our index function */
@@ -1214,10 +1253,10 @@ static void UP_TechTreeClick_f (void)
 		return;
 	num = atoi(Cmd_Argv(1));
 
-	if (!upCurrent)
+	if (!upCurrentTech)
 		return;
 
-	required_AND = &upCurrent->require_AND;
+	required_AND = &upCurrentTech->require_AND;
 	if (num < 0 || num >= required_AND->numLinks)
 		return;
 
@@ -1247,8 +1286,8 @@ static void UP_TechTreeClick_f (void)
  */
 static void UP_Update_f (void)
 {
-	if (upCurrent)
-		UP_DrawEntry(upCurrent);
+	if (upCurrentTech)
+		UP_DrawEntry(upCurrentTech, NULL);
 }
 
 /**
@@ -1296,6 +1335,13 @@ static void UP_MailClientClick_f (void)
 				}
 			}
 			break;
+		case MSG_EVENT:
+			cnt++;
+			if (cnt >= num) {
+				UP_OpenEventMail(m->eventMail->id);
+				return;
+			}
+			break;
 		default:
 			break;
 		}
@@ -1310,10 +1356,10 @@ static void UP_ResearchedLinkClick_f (void)
 {
 	technology_t *t = NULL;
 	int i;
-	if (!upCurrent) /* if called from console */
+	if (!upCurrentTech) /* if called from console */
 		return;
 
-	t = upCurrent;
+	t = upCurrentTech;
 	i = INVSH_GetItemByID(t->provides);
 	assert(i != NONE);
 
@@ -1355,7 +1401,7 @@ static void UP_SetMailButtons_f (void)
 			if (num) {
 				num--;
 			} else {
-				Cvar_Set(va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_PRE].read? "1": "0");
+				Cvar_Set(va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_PRE].read ? "1": "0");
 				Cvar_Set(va("mn_mail_icon%i", i++), m->pedia->mail[TECHMAIL_PRE].icon);
 			}
 			break;
@@ -1365,7 +1411,7 @@ static void UP_SetMailButtons_f (void)
 			if (num) {
 				num--;
 			} else {
-				Cvar_Set(va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_RESEARCHED].read? "1": "0");
+				Cvar_Set(va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_RESEARCHED].read ? "1": "0");
 				Cvar_Set(va("mn_mail_icon%i", i++), m->pedia->mail[TECHMAIL_RESEARCHED].icon);
 			}
 			break;
@@ -1374,15 +1420,25 @@ static void UP_SetMailButtons_f (void)
 				if (num) {
 					num--;
 				} else {
-					Cvar_Set(va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_PRE].read? "1": "0");
+					Cvar_Set(va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_PRE].read ? "1": "0");
 					Cvar_Set(va("mn_mail_icon%i", i++), m->pedia->mail[TECHMAIL_PRE].icon);
 				}
 			} else if (m->pedia->mail[TECHMAIL_RESEARCHED].from) {
 				if (num) {
 					num--;
 				} else {
-					Cvar_Set(va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_RESEARCHED].read? "1": "0");
+					Cvar_Set(va("mn_mail_read%i", i), m->pedia->mail[TECHMAIL_RESEARCHED].read ? "1": "0");
 					Cvar_Set(va("mn_mail_icon%i", i++), m->pedia->mail[TECHMAIL_RESEARCHED].icon);
+				}
+			}
+			break;
+		case MSG_EVENT:
+			if (m->eventMail->from) {
+				if (num) {
+					num--;
+				} else {
+					Cvar_Set(va("mn_mail_read%i", i), m->eventMail->read ? "1": "0");
+					Cvar_Set(va("mn_mail_icon%i", i++), m->eventMail->icon ? m->eventMail->icon : "");
 				}
 			}
 			break;
@@ -1402,6 +1458,8 @@ static void UP_SetMailButtons_f (void)
  * @sa UP_MailClientClick_f
  * @note use TEXT_UFOPEDIA_MAIL in menuText array (33)
  * @sa CP_GetUnreadMails
+ * @sa CL_EventAddMail_f
+ * @sa MN_AddNewMessage
  */
 static void UP_OpenMail_f (void)
 {
@@ -1490,6 +1548,19 @@ static void UP_OpenMail_f (void)
 				Q_strcat(mailBuffer, tempBuf, sizeof(mailBuffer));
 			}
 			break;
+		case MSG_EVENT:
+			assert(m->eventMail);
+			if (!m->eventMail->from)
+				break;
+			if (m->eventMail->read == qfalse)
+				Com_sprintf(tempBuf, sizeof(tempBuf), _("^B%s\t%s\n"),
+					_(m->eventMail->subject), _(m->eventMail->date));
+			else
+				Com_sprintf(tempBuf, sizeof(tempBuf), _("%s\t%s\n"),
+					_(m->eventMail->subject), _(m->eventMail->date));
+			CHECK_MAIL_EOL
+			Q_strcat(mailBuffer, tempBuf, sizeof(mailBuffer));
+			break;
 		default:
 			break;
 		}
@@ -1514,10 +1585,10 @@ static void UP_IncreaseWeapon_f (void)
 	int up_researchedlink_temp;
 	int i;
 
-	if (!upCurrent) /* if called from console */
+	if (!upCurrentTech) /* if called from console */
 		return;
 
-	t = upCurrent;
+	t = upCurrentTech;
 
 	/* select item */
 	i = INVSH_GetItemByID(t->provides);
@@ -1564,10 +1635,10 @@ static void UP_DecreaseWeapon_f (void)
 	int up_researchedlink_temp;
 	int i;
 
-	if (!upCurrent) /* if called from console */
+	if (!upCurrentTech) /* if called from console */
 		return;
 
-	t = upCurrent;
+	t = upCurrentTech;
 
 	/* select item */
 	i = INVSH_GetItemByID(t->provides);
@@ -1613,10 +1684,10 @@ static void UP_IncreaseFiremode_f (void)
 	technology_t *t = NULL;
 	int i;
 
-	if (!upCurrent) /* if called from console */
+	if (!upCurrentTech) /* if called from console */
 		return;
 
-	t = upCurrent;
+	t = upCurrentTech;
 
 	up_firemode++;
 
@@ -1634,10 +1705,10 @@ static void UP_DecreaseFiremode_f (void)
 	technology_t *t = NULL;
 	int i;
 
-	if (!upCurrent) /* if called from console */
+	if (!upCurrentTech) /* if called from console */
 		return;
 
-	t = upCurrent;
+	t = upCurrentTech;
 
 	up_firemode--;
 

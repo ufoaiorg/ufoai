@@ -564,7 +564,7 @@ static void AC_SelectAlien_f (void)
 	Cvar_SetValue("mn_al_killed", AL_CountForMenu(aliencontCurrent->idx, qfalse));
 	Cvar_SetValue("mn_al_alive", AL_CountForMenu(aliencontCurrent->idx, qtrue));
 
-	UP_Article(tech);
+	UP_Article(tech, NULL);
 
 	/* Set state of Research and UFOpedia buttons. */
 	if (tech && RS_IsResearched_idx(tech->idx))
@@ -1091,7 +1091,7 @@ qboolean AC_Load (sizebuf_t* sb, void* data)
 qboolean AC_ContainmentAllowed (void)
 {
 	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK
-	 && B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_ALIEN_CONTAINMENT) > 0) {
+	 && baseCurrent->hasAlienCont) {
 		return qtrue;
 	} else {
 		return qfalse;

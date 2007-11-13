@@ -4924,14 +4924,16 @@ static void CL_ShowMessagesOnStack_f (void)
 /**
  * @brief Adds a new message to message stack
  * @note These are the messages that are displayed at geoscape
- * @param[in] title
- * @param[in] text
- * @param[in] popup
- * @param[in] type
- * @param[in] pedia
+ * @param[in] title Already translated message/mail title
+ * @param[in] text Already translated message/mail body
+ * @param[in] popup Show this as a popup, too?
+ * @param[in] type The message type
+ * @param[in] pedia Pointer to technology (only if needed)
  * @return message_t pointer
+ * @sa UP_OpenMail_f
+ * @sa CL_EventAddMail_f
  */
-message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup, messagetype_t type, technology_t * pedia)
+message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup, messagetype_t type, technology_t *pedia)
 {
 	message_t *mess;
 
@@ -4971,6 +4973,7 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 	case MSG_RESEARCH_PROPOSAL:
 	case MSG_RESEARCH_FINISHED:
 		assert(pedia);
+	case MSG_EVENT:
 	case MSG_NEWS:
 		/* reread the new mails in UP_GetUnreadMails */
 		gd.numUnreadMails = -1;
@@ -5309,6 +5312,9 @@ static void MS_MessageSave (sizebuf_t * sb, message_t * message)
 	MSG_WriteString(sb, message->title);
 	MSG_WriteString(sb, message->text);
 	MSG_WriteByte(sb, message->type);
+	/* store script id of event mail */
+	if (message->type == MSG_EVENT)
+		MSG_WriteString(sb, message->eventMail->id);
 	MSG_WriteLong(sb, idx);
 	MSG_WriteLong(sb, message->d);
 	MSG_WriteLong(sb, message->m);
@@ -5318,6 +5324,11 @@ static void MS_MessageSave (sizebuf_t * sb, message_t * message)
 	MSG_WriteLong(sb, message->s);
 }
 
+/**
+ * @sa MS_Load
+ * @sa MN_AddNewMessage
+ * @sa MS_MessageSave
+ */
 qboolean MS_Save (sizebuf_t* sb, void* data)
 {
 	int i = 0;
@@ -5334,11 +5345,16 @@ qboolean MS_Save (sizebuf_t* sb, void* data)
 	return qtrue;
 }
 
+/**
+ * @sa MS_Save
+ * @sa MN_AddNewMessage
+ */
 qboolean MS_Load (sizebuf_t* sb, void* data)
 {
 	int i, mtype, idx;
 	char title[MAX_VAR], text[MAX_MESSAGE_TEXT];
 	message_t *mess;
+	const char *s = NULL;
 
 	/* how many message items */
 	i = MSG_ReadLong(sb);
@@ -5347,9 +5363,20 @@ qboolean MS_Load (sizebuf_t* sb, void* data)
 		Q_strncpyz(title, MSG_ReadStringRaw(sb), sizeof(title));
 		Q_strncpyz(text, MSG_ReadStringRaw(sb), sizeof(text));
 		mtype = MSG_ReadByte(sb);
+		if (mtype == MSG_EVENT)
+			s = MSG_ReadString(sb);
+		else
+			s = NULL;
 		idx = MSG_ReadLong(sb);
 		if (mtype != MSG_DEBUG || developer->integer == 1) {
 			mess = MN_AddNewMessage(title, text, qfalse, mtype, RS_GetTechByIDX(idx));
+			if (s) {
+				mess->eventMail = CL_GetEventMail(s);
+				if (!mess->eventMail) {
+					Com_Printf("Could not find eventMail with id: %s\n", s);
+					return qfalse;
+				}
+			}
 			mess->d = MSG_ReadLong(sb);
 			mess->m = MSG_ReadLong(sb);
 			mess->y = MSG_ReadLong(sb);
