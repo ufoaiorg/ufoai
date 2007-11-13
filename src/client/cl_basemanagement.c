@@ -1195,6 +1195,9 @@ static void B_DrawBuilding (base_t* base, building_t* building)
 	if (building->varCosts)
 		Q_strcat(buildingText, va(_("Running Costs:\t%i c\n"), building->varCosts), sizeof(buildingText));
 
+	if (building->dependsBuilding >= 0)
+		Q_strcat(buildingText, va(_("Needs:\t%s\n"), _(gd.buildingTypes[building->dependsBuilding].name)), sizeof(buildingText));
+
 	if (building->name)
 		Cvar_Set("mn_building_name", _(building->name));
 

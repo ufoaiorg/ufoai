@@ -139,11 +139,11 @@ menu buildings
 	text buildinginfo
 	{
 		pos		"30 600"
-		size	"220 220"
+		size	"300 140"
 		mousefx false
 		format	"20 140"
 		num		4
-		height	"11"
+		height	"7"
 	}
 
 	func init
