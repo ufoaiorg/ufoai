@@ -243,7 +243,7 @@ mail new_aircraft_arrived
 	// base name
 	subject "_New Aircraft Arrived -- %s"
 	body "_mail_new_aircraft_arrived"
-	icon icons/tech
+	icon icons/air
 }
 
 mail aircraft_lost_target
@@ -253,7 +253,7 @@ mail aircraft_lost_target
 	// aircraft name
 	subject "_Aircraft Lost Target -- %s"
 	body "_mail_aircraft_lost_target"
-	icon icons/tech
+	icon icons/air
 }
 
 mail aircraft_ready
@@ -263,7 +263,7 @@ mail aircraft_ready
 	// aircraft name
 	subject "_Aircraft Ready -- %s"
 	body "_mail_aircraft_ready"
-	icon icons/tech
+	icon icons/air
 }
 
 mail aircraft_bingo_fuel
@@ -273,7 +273,7 @@ mail aircraft_bingo_fuel
 	// aircraft name
 	subject "_Aircraft Bingo Fuel -- %s"
 	body "_mail_aircraft_bingo_fuel"
-	icon icons/tech
+	icon icons/air
 }
 
 mail aircraft_landed
@@ -283,5 +283,5 @@ mail aircraft_landed
 	// aircraft name
 	subject "_Aircraft Landed -- %s"
 	body "_mail_aircraft_landed"
-	icon icons/tech
+	icon icons/air
 }

@@ -1489,16 +1489,19 @@ base/pics/base/workshop2.tga | GNU General Public License v2.0 | Martin Gerhardy
 base/pics/baseattack.tga | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
 base/pics/hud/checkbox.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/hud/firemode.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/pics/icons/alien.tga | GNU General Public License 2.0
-base/pics/icons/artifact.tga | GNU General Public License 2.0
-base/pics/icons/healing.tga | GNU General Public License 2.0
-base/pics/icons/health_critical.tga | GNU General Public License 2.0
-base/pics/icons/health_medium.tga | GNU General Public License 2.0
-base/pics/icons/health_normal.tga | GNU General Public License 2.0
-base/pics/icons/health_unused.tga | GNU General Public License 2.0
-base/pics/icons/intelligence.tga | GNU General Public License 2.0
-base/pics/icons/surgery.tga | GNU General Public License 2.0
-base/pics/icons/tech.tga | GNU General Public License 2.0
+base/pics/icons/air.tga | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/alien.tga | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/artifact.tga | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/event.tga | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/healing.tga | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/health_critical.tga | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/health_medium.tga | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/health_normal.tga | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/health_unused.tga | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/intelligence.tga | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/surgery.tga | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/tech.tga | GNU General Public License 2.0 | Gerd Heisse
+base/pics/icons/un.tga | GNU General Public License 2.0 | Gerd Heisse
 base/pics/maps/loading/README | GPL | Martin Gerhardy
 base/pics/maps/loading/africa04.jpg | GNU General Public License v2.0 | Martin Gerhardy
 base/pics/maps/loading/bridge01.jpg | GNU General Public License v2.0 | Martin Gerhardy
@@ -1914,166 +1917,6 @@ base/textures/tex_buildings/wizwood1_2.jpg | GNU General Public License 2.0 | Ne
 base/textures/tex_buildings/wizwood1_4.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/wizwood1_5.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/wood1_1.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/textures/tex_carpets/carpet001.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet002.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet003.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet004.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet005.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet006.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet007.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet008.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet009.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet010.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet011.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet012.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet013.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet014.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet015.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet016.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet017.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet018.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet019.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet020.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet021.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet022.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet023.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet024.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet025.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet026.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet027.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet028.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet029.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet030.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet031.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet032.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet033.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet034.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet035.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet036.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet037.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet038.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet039.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet040.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet041.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet042.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet043.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet044.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet045.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet046.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet047.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet048.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet049.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet050.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet051.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet052.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet053.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet054.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet055.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet056.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet057.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet058.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet059.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet060.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet061.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet062.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet063.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet064.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet065.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet066.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet067.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet068.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet069.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet070.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet071.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet072.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet073.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet074.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet075.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet076.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet077.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet078.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet079.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet080.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet081.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet082.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet083.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet084.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet085.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet086.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet087.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet088.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet089.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet090.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet091.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet092.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet093.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet094.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet095.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet096.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet097.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet098.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet099.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet100.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet101.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet102.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet103.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet104.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet105.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet106.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet107.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet108.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet109.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet110.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet111.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet112.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet113.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet114.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet115.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet116.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet117.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet118.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet119.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet120.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet121.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet122.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet123.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet124.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet125.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet126.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet127.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet128.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet129.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet130.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet131.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet132.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet133.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet134.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet135.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet136.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet137.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet138.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet139.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet140.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet141.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet142.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet143.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet144.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet145.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet146.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet147.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet148.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet149.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet150.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet151.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet152.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet153.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet154.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet155.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet156.jpg |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet157.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet158.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet159.tga |  | iks83 (http://sourceforge.net/users/iks83)
-base/textures/tex_carpets/carpet160.tga |  | iks83 (http://sourceforge.net/users/iks83)
 base/textures/tex_ctp1/asphalt_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/bark_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/bricks_b_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
@@ -2238,6 +2081,7 @@ base/textures/tex_mattn/door021.jpg | GNU General Public License 2.0 | Martin Ge
 base/textures/tex_mattn/door022.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/door023.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/door024.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/door025.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/fan.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/floor001.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/floor002.jpg | GNU General Public License 2.0 | Martin Gerhardy
