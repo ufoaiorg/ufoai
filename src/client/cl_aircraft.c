@@ -706,14 +706,16 @@ void AIR_NewAircraft (base_t *base, const char *name)
 		base->numAircraftInBase++;	/**< Increase the number of aircraft in the base. */
 		/* Update base capacities. */
 		Com_DPrintf(DEBUG_CLIENT, "idx_sample: %i name: %s weight: %i\n", aircraft->idx_sample, aircraft->id, aircraft->weight);
-		aircraft->hangar = AIR_UpdateHangarCapForOne(aircraft->idx_sample, base);
-		if (aircraft->hangar == AIRCRAFT_HANGAR_ERROR)
-			Com_Printf("AIR_NewAircraft()... ERROR, new aircraft but no free space in hangars!\n");
 		Com_DPrintf(DEBUG_CLIENT, "Adding new aircraft %s with IDX %i for base %s\n", aircraft->name, aircraft->idx, base->name);
-		/* Now update the aircraft list - maybe there is a popup active */
-		Cmd_ExecuteString("aircraft_list");
-		/* also update the base menu buttons */
-		Cmd_ExecuteString("base_init");
+		if (ccs.singleplayer) {
+			aircraft->hangar = AIR_UpdateHangarCapForOne(aircraft->idx_sample, base);
+			if (aircraft->hangar == AIRCRAFT_HANGAR_ERROR)
+				Com_Printf("AIR_NewAircraft()... ERROR, new aircraft but no free space in hangars!\n");
+			/* Now update the aircraft list - maybe there is a popup active */
+			Cmd_ExecuteString("aircraft_list");
+			/* also update the base menu buttons */
+			Cmd_ExecuteString("base_init");
+		}
 	}
 }
 
