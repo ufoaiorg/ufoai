@@ -1384,7 +1384,8 @@ void CL_CheckResearchStatus (void)
 	for (i = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
 		if (tech->statusResearch == RS_RUNNING) {
-			if ((tech->time > 0) && (tech->scientists >= 0)) {
+			/* the test hasLab is needed to make sure that labs are active (their dependences are OK) */
+			if ((tech->time > 0) && (tech->scientists >= 0) && gd.bases[tech->base_idx].hasLab) {
 				Com_DPrintf(DEBUG_CLIENT, "timebefore %.2f\n", tech->time);
 				Com_DPrintf(DEBUG_CLIENT, "timedelta %.2f\n", tech->scientists * 0.8);
 				/* @todo: Just for testing, better formular may be needed. */

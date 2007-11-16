@@ -426,6 +426,10 @@ void PR_ProductionRun (void)
 		if (gd.productions[i].numItems <= 0)
 			continue;
 
+		/* Workshop is disabled because their dependences are disabled */
+		if (!gd.bases[i].hasWorkshop)
+			continue;
+
 		prod = &gd.productions[i].items[0];
 		assert(prod->objID >= 0);
 		if (!prod->aircraft)
@@ -1064,10 +1068,9 @@ static void PR_ProductionList_f (void)
  */
 qboolean PR_ProductionAllowed (void)
 {
-	int workShopCount = B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_WORKSHOP);
 	int hiredWorkerCount = E_CountHired(baseCurrent, EMPL_WORKER);
 
-	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK && workShopCount > 0 && hiredWorkerCount > 0) {
+	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK && baseCurrent->hasWorkshop && hiredWorkerCount > 0) {
 		Cbuf_AddText("set_prod_enabled;");
 		return qtrue;
 	} else {

@@ -94,18 +94,52 @@ qboolean B_CheckBuildingTypeStatus (const base_t* const base, buildingType_t typ
 }
 
 /**
- * @brief Chech that the dependences of a building is operationnal
- * @param[in] base Base to check
+ * @brief Get the capacity associated to a building type
+ * @param[in] type The type of the building
+ * @return capacity (baseCapacities_t), or MAX_CAP if capacity has not b
+ */
+static baseCapacities_t B_GetCapacityFromBuildingType (buildingType_t type)
+{
+	switch (type) {
+	case B_LAB:
+		return CAP_LABSPACE;
+	case B_QUARTERS:
+		return CAP_EMPLOYEES;
+	case B_STORAGE:
+		return CAP_ITEMS;
+	case B_WORKSHOP:
+		return CAP_WORKSPACE;
+	case B_HOSPITAL:
+		return CAP_HOSPSPACE;
+	case B_HANGAR:
+		return CAP_AIRCRAFTS_BIG;
+	case B_ALIEN_CONTAINMENT:
+		return CAP_ALIENS;
+	case B_SMALL_HANGAR:
+		return CAP_AIRCRAFTS_SMALL;
+	case B_UFO_HANGAR:
+		return CAP_UFOHANGARS;
+	case B_UFO_SMALL_HANGAR:
+		return CAP_UFOHANGARS;
+	case B_ANTIMATTER:
+		return CAP_ANTIMATTER;
+	default:
+		return MAX_CAP;
+	}
+}
+
+/**
+ * @brief Get the status associated to a building
+ * @param[in] type value of building->buildingType
  * @param[in] building
  * @todo When we'll can break savegame, that would be nice to add a hasEntrance variable.
  * @return true if the building is functional
  */
-qboolean B_CheckBuildingOperational (const base_t* const base, building_t* building)
+qboolean B_GetBuildingStatus (const base_t* const base, buildingType_t type)
 {
 	assert(base);
-	assert(building);
 
-	switch (building->buildingType) {
+	switch (type) {
 	case B_LAB:
 		return base->hasLab;
 	case B_QUARTERS:
@@ -142,6 +176,70 @@ qboolean B_CheckBuildingOperational (const base_t* const base, building_t* build
 	}
 }
 
+
+/**
+ * @brief Set status associated to a building
+ * @param[in] base Base to check
+ * @param[in] type value of building->buildingType
+ * @param[in] newStatus New value of the status
+ * @todo When we'll can break savegame, that would be nice to add a hasEntrance variable.
+ */
+void B_SetBuildingStatus (base_t* const base, buildingType_t type, qboolean newStatus)
+{
+	assert(base);
+
+	switch (type) {
+	case B_LAB:
+		base->hasLab = newStatus;
+		break;
+	case B_QUARTERS:
+		base->hasQuarters = newStatus;
+		break;
+	case B_STORAGE:
+		base->hasStorage = newStatus;
+		break;
+	case B_WORKSHOP:
+		base->hasWorkshop = newStatus;
+		break;
+	case B_HOSPITAL:
+		base->hasHospital = newStatus;
+		break;
+	case B_HANGAR:
+		base->hasHangar = newStatus;
+		break;
+	case B_ALIEN_CONTAINMENT:
+		base->hasAlienCont = newStatus;
+		break;
+	case B_SMALL_HANGAR:
+		base->hasHangarSmall = newStatus;
+		break;
+	case B_UFO_HANGAR:
+		base->hasUFOHangar = newStatus;
+		break;
+	case B_UFO_SMALL_HANGAR:
+		base->hasUFOHangarSmall = newStatus;
+		break;
+	case B_POWER:
+		base->hasPower = newStatus;
+		break;
+	case B_COMMAND:
+		base->hasCommand = newStatus;
+		break;
+	case B_ANTIMATTER:
+		base->hasAmStorage = newStatus;
+		break;
+	case B_DEFENSE_MISSILE:
+		base->hasMissile = newStatus;
+		break;
+	case B_DEFENSE_LASER:
+		base->hasLaser = newStatus;
+		break;
+	default:
+		/* B_ENTRANCE and B_MISC */
+		Com_Printf("B_SetBuildingStatus: No status is associated to type of building %i\n", type);
+	}
+}
+
 /**
  * @brief Chech that the dependences of a building is operationnal
  * @param[in] base Base to check
@@ -160,7 +258,7 @@ qboolean B_CheckBuildingDependencesStatus (const base_t* const base, building_t*
 
 	dependsBuilding = gd.buildingTypes + building->dependsBuilding;
 
-	return B_CheckBuildingOperational(base, dependsBuilding);
+	return B_GetBuildingStatus(base, dependsBuilding->buildingType);
 }
 
 /**
@@ -322,7 +420,13 @@ static void B_BaseInit_f (void)
 		Cvar_SetValue("mn_base_research_allowed", qfalse);
 		Cmd_ExecuteString("set_research_disabled");
 	}
-	Cvar_SetValue("mn_base_prod_allowed", PR_ProductionAllowed());
+	if (PR_ProductionAllowed()) {
+		Cvar_SetValue("mn_base_prod_allowed", qtrue);
+		Cmd_ExecuteString("set_prod_enabled");
+	} else {
+		Cvar_SetValue("mn_base_prod_allowed", qfalse);
+		Cmd_ExecuteString("set_prod_disabled");
+	}
 	if (E_HireAllowed()) {
 		Cvar_SetValue("mn_base_hire_allowed", qtrue);
 		Cmd_ExecuteString("set_hire_enabled");
@@ -347,6 +451,101 @@ static void B_BaseInit_f (void)
 }
 
 /**
+ * @brief Check base status for particular buildings as well as capacities.
+ * @param[in] building Pointer to building.
+ * @param[in] base Pointer to base with given building.
+ * @note This function checks  base status for particular buildings and base capacities.
+ * @return qtrue if a base status has been modified (but do not check capacities)
+ */
+static qboolean B_CheckUpdateBuilding (building_t* building, base_t* base)
+{
+	qboolean oldValue;
+
+	assert(base);
+	assert(building);
+
+	/* status of Entrance and Miscellenious buildings cannot change */
+	if (building->buildingType == B_ENTRANCE || building->buildingType == B_MISC)
+		return qfalse;
+
+	oldValue = B_GetBuildingStatus(base, building->buildingType);
+	if ((building->buildingStatus == B_STATUS_WORKING) && (B_CheckBuildingDependencesStatus(base, building)))
+		B_SetBuildingStatus(base, building->buildingType, qtrue);
+	else
+		B_SetBuildingStatus(base, building->buildingType, qfalse);
+
+	if (B_GetBuildingStatus(base, building->buildingType) != oldValue) {
+		Com_DPrintf(DEBUG_CLIENT, "Status of building %s is changed to %i.\n", building->name, B_GetBuildingStatus(base, building->buildingType));
+		return qtrue;
+	}
+
+	return qfalse;
+}
+
+/**
+ * @brief Actions to perform when a type of buildings may have changed its status.
+ * @note This function is not only called when a building is enabled for the first time in base
+ * @note but also when one of its dependencies is destroyed and then rebuilt
+ * @param[in] type Type of building that has been modified from qfalse to qtrue
+ * @param[in] base Pointer to base with given building.
+ */
+static void B_UpdateOneBaseBuildingStatus (buildingType_t type, base_t* base)
+{
+	switch (type) {
+	case B_WORKSHOP:
+		/* Update production times in queue. */
+		PR_UpdateProductionTime(base);
+	default:
+		break;
+	}
+}
+
+/**
+ * @brief Actions to perform when a type of buildings goes from qfalse to qtrue.
+ * @note This function is not only called when a building is enabled for the first time in base
+ * @note but also when one of its dependencies is destroyed and then rebuilt
+ * @param[in] type Type of building that has been modified from qfalse to qtrue
+ * @param[in] base Pointer to base with given building.
+ */
+static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* base)
+{
+	switch (type) {
+	case B_HOSPITAL:
+		/* Reset all arrays . */
+		memset(base->hospitalList, -1, sizeof(base->hospitalList));
+		memset(base->hospitalListCount, 0, sizeof(base->hospitalListCount));
+		memset(base->hospitalMissionList, -1, sizeof(base->hospitalMissionList));
+		base->hospitalMissionListCount = 0;
+		break;
+	case B_WORKSHOP:
+		/* Update production times in queue. */
+		PR_UpdateProductionTime(base);
+	case B_POWER:
+		B_UpdateStatusWithPower(base);
+	default:
+		break;
+	}
+}
+
+/**
+ * @brief Actions to perform when a type of buildings goes from qtrue to qfalse.
+ * @param[in] type Type of building that has been modified from qtrue to qfalse
+ * @param[in] base Pointer to base with given building.
+ */
+static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t* base)
+{
+	switch (type) {
+	case B_WORKSHOP:
+		/* Update production times in queue. */
+		PR_UpdateProductionTime(base);
+	case B_POWER:
+		B_UpdateStatusWithPower(base);
+	default:
+		break;
+	}
+}
+
+/**
  * @brief Removes a building from the given base
  * @param[in] base Base to remove the building in
  * @param[in] building The building to remove
@@ -358,6 +557,8 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	buildingType_t type = building->buildingType;
 	baseCapacities_t cap = MAX_CAP; /* init but don't set to first value of enum */
 	char onDestroy[MAX_VAR];
+	qboolean test;
+	int i, buildingType;
 
 	/* Don't allow to destroy an entrance. */
 	if (type == B_ENTRANCE)
@@ -410,63 +611,44 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	}
 	/* don't use the building pointer after this point - it's zeroed or points to a wrong entry now */
 
+	test = qfalse;
+
 	switch (type) {
 	case B_WORKSHOP:
-		cap = CAP_WORKSPACE;
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0)
-			base->hasWorkshop = qfalse;
-		break;
 	case B_STORAGE:
-		cap = CAP_ITEMS;
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0)
-			base->hasStorage = qfalse;
-		break;
 	case B_ALIEN_CONTAINMENT:
-		cap = CAP_ALIENS;
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0)
-			base->hasAlienCont = qfalse;
-		break;
 	case B_LAB:
-		cap = CAP_LABSPACE;
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0)
-			base->hasLab = qfalse;
-		break;
 	case B_HOSPITAL:
-		cap = CAP_HOSPSPACE;
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0)
-			base->hasHospital = qfalse;
-		break;
 	case B_HANGAR: /* the Dropship Hangar */
-		cap = CAP_AIRCRAFTS_BIG;
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0)
-			base->hasHangar = qfalse;
-		break;
 	case B_QUARTERS:
-		cap = CAP_EMPLOYEES;
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0)
-			base->hasQuarters = qfalse;
-		break;
 	case B_SMALL_HANGAR:
-		cap = CAP_AIRCRAFTS_SMALL;
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0)
-			base->hasHangarSmall = qfalse;
+	case B_COMMAND:
+	case B_DEFENSE_MISSILE:
+	case B_DEFENSE_LASER:
+		cap = B_GetCapacityFromBuildingType(type);
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0) {
+			B_SetBuildingStatus(base, type, qfalse);
+			test = qtrue;
+		}
 		break;
 	case B_UFO_HANGAR:
 	case B_UFO_SMALL_HANGAR:
 		cap = CAP_UFOHANGARS;
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, B_UFO_HANGAR) <= 0)
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, B_UFO_HANGAR) <= 0) {
 			base->hasUFOHangar = qfalse;
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, B_UFO_SMALL_HANGAR) <= 0)
+			test = qtrue;
+		}
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, B_UFO_SMALL_HANGAR) <= 0) {
 			base->hasUFOHangarSmall = qfalse;
+			test = qtrue;
+		}
 		break;
 	case B_POWER:
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0)
+		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0) {
 			base->hasPower = qfalse;
+			test = qtrue;
+		}
 		B_UpdateStatusWithPower(base);
-		break;
-	case B_COMMAND:
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0)
-			base->hasCommand = qfalse;
 		break;
 	case B_ANTIMATTER:
 		cap = CAP_ANTIMATTER;
@@ -474,21 +656,50 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 			base->hasAmStorage = qfalse;
 			/* Remove antimatter. */
 			INV_ManageAntimatter(base, 0, qfalse);
+			test = qtrue;
 		}
-		break;
-	case B_DEFENSE_MISSILE:
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0)
-			base->hasMissile = qfalse;
-		break;
-	case B_DEFENSE_LASER:
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0)
-			base->hasLaser = qfalse;
 		break;
 	case B_MISC:
 		break;
 	default:
 		Com_Printf("B_BuildingDestroy: Unknown building type: %i.\n", type);
 		break;
+	}
+
+	/* now, the destruction of this building may have changed the status of other building.
+	 * We check that, but only for buildings which needed destroyed building */
+	if (test) {
+		test = qfalse;
+		for (i = 0; i < gd.numBuildings[base->idx]; i++) {
+			buildingType = gd.buildings[base->idx][i].dependsBuilding;
+			if (type == gd.buildingTypes[buildingType].buildingType &&
+			 B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
+				B_UpdateOneBaseBuildingStatusOnDisable(buildingType, base);
+				test = qtrue;
+			} else
+				B_UpdateOneBaseBuildingStatus(buildingType, base);
+		}
+		/* and maybe some updated status have changed status of other building.
+		 * So we check again, until nothing changes. (no condition here for check, it's too complex) */
+		while (test) {
+			test = qfalse;
+			for (i = 0; i < gd.numBuildings[base->idx]; i++) {
+				buildingType = gd.buildings[base->idx][i].dependsBuilding;
+				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
+					B_UpdateOneBaseBuildingStatusOnDisable(buildingType, base);
+					test = qtrue;
+				} else
+					B_UpdateOneBaseBuildingStatus(buildingType, base);
+			}
+		}
+		/* we may have changed status of several building: update all capacities */
+		B_UpdateBaseCapacities(MAX_CAP, base);
+	} else {
+		/* no other status than status of destroyed building has been modified
+		 * update only status of destroyed building */
+		cap = B_GetCapacityFromBuildingType(building->buildingType);
+		if (cap != MAX_CAP)
+			B_UpdateBaseCapacities(cap, base);
 	}
 
 	/* call ondestroy trigger */
@@ -498,10 +709,6 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	}
 
 	B_BaseInit_f();
-
-	/* Update capacities - but don't update all */
-	if (cap != MAX_CAP)
-		B_UpdateBaseCapacities(cap, base);
 
 	/* Update production times in queue if we destroyed B_WORKSHOP. */
 	if (type == B_WORKSHOP) {
@@ -658,154 +865,6 @@ static void B_HireForBuilding (base_t* base, building_t * building, int num)
 }
 
 /**
- * @brief Check base status for particular buildings as well as capacities.
- * @param[in] building Pointer to building.
- * @param[in] base Pointer to base with given building.
- * @note This function checks  base status for particular buildings and base capacities.
- * @return qtrue if a base status has been modified (but do not check capacities)
- */
-static qboolean B_CheckUpdateBuilding (building_t* building, base_t* base)
-{
-	qboolean oldValue;
-
-	assert(base);
-	assert(building);
-
-	switch (building->buildingType) {
-	case B_ALIEN_CONTAINMENT:
-		oldValue = base->hasAlienCont;
-		if ((building->buildingStatus == B_STATUS_WORKING) && (B_CheckBuildingDependencesStatus(base, building)))
-			base->hasAlienCont = qtrue;
-		B_UpdateBaseCapacities(CAP_ALIENS, base);
-		if (base->hasAlienCont != oldValue)
-			return qtrue;
-		break;
-	case B_QUARTERS:
-		oldValue = base->hasQuarters;
-		if ((building->buildingStatus == B_STATUS_WORKING) && (B_CheckBuildingDependencesStatus(base, building)))
-			base->hasQuarters = qtrue;
-		B_UpdateBaseCapacities(CAP_EMPLOYEES, base);
-		if (base->hasQuarters != oldValue)
-			return qtrue;
-		break;
-	case B_STORAGE:
-		oldValue = base->hasStorage;
-		if ((building->buildingStatus == B_STATUS_WORKING) && (B_CheckBuildingDependencesStatus(base, building)))
-			base->hasStorage = qtrue;
-		B_UpdateBaseCapacities(CAP_ITEMS, base);
-		if (base->hasStorage != oldValue)
-			return qtrue;
-		break;
-	case B_LAB:
-		oldValue = base->hasLab;
-		if ((building->buildingStatus == B_STATUS_WORKING) && (B_CheckBuildingDependencesStatus(base, building)))
-			base->hasLab = qtrue;
-		B_UpdateBaseCapacities(CAP_LABSPACE, base);
-		if (base->hasLab != oldValue)
-			return qtrue;
-		break;
-	case B_WORKSHOP:
-		oldValue = base->hasWorkshop;
-		if ((building->buildingStatus == B_STATUS_WORKING) && (B_CheckBuildingDependencesStatus(base, building)))
-			base->hasWorkshop = qtrue;
-		B_UpdateBaseCapacities(CAP_WORKSPACE, base);
-		/* Update production times in queue. */
-		PR_UpdateProductionTime(base);
-		if (base->hasWorkshop != oldValue)
-			return qtrue;
-		break;
-	case B_HOSPITAL:
-		oldValue = base->hasHospital;
-		if ((building->buildingStatus == B_STATUS_WORKING) && (B_CheckBuildingDependencesStatus(base, building))) {
-			/* If this is first hospital in base, setup relevant arrays. */
-			if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) == 1) {
-				memset(base->hospitalList, -1, sizeof(base->hospitalList));
-				memset(base->hospitalListCount, 0, sizeof(base->hospitalListCount));
-				memset(base->hospitalMissionList, -1, sizeof(base->hospitalMissionList));
-				base->hospitalMissionListCount = 0;
-			}
-			base->hasHospital = qtrue;
-		}
-		B_UpdateBaseCapacities(CAP_HOSPSPACE, base);
-		if (base->hasHospital != oldValue)
-			return qtrue;
-		break;
-	case B_HANGAR:
-		oldValue = base->hasHangar;
-		if ((building->buildingStatus == B_STATUS_WORKING) && (B_CheckBuildingDependencesStatus(base, building)))
-			base->hasHangar = qtrue;
-		B_UpdateBaseCapacities(CAP_AIRCRAFTS_BIG, base);
-		if (base->hasHangar != oldValue)
-			return qtrue;
-		break;
-	case B_SMALL_HANGAR:
-		oldValue = base->hasHangarSmall;
-		if ((building->buildingStatus == B_STATUS_WORKING) && (B_CheckBuildingDependencesStatus(base, building)))
-			base->hasHangarSmall = qtrue;
-		B_UpdateBaseCapacities(CAP_AIRCRAFTS_SMALL, base);
-		if (base->hasHangarSmall != oldValue)
-			return qtrue;
-		break;
-	case B_UFO_HANGAR:
-		oldValue = base->hasUFOHangar;
-		if ((building->buildingStatus == B_STATUS_WORKING) && (B_CheckBuildingDependencesStatus(base, building)))
-			base->hasUFOHangar = qtrue;
-		B_UpdateBaseCapacities(CAP_UFOHANGARS, base);
-		if (base->hasUFOHangar != oldValue)
-			return qtrue;
-		break;
-	case B_UFO_SMALL_HANGAR:
-		oldValue = base->hasUFOHangarSmall;
-		if ((building->buildingStatus == B_STATUS_WORKING) && (B_CheckBuildingDependencesStatus(base, building)))
-			base->hasUFOHangarSmall = qtrue;
-		B_UpdateBaseCapacities(CAP_UFOHANGARS, base);
-		if (base->hasUFOHangarSmall != oldValue)
-			return qtrue;
-		break;
-	case B_POWER:
-		oldValue = base->hasPower;
-		if ((building->buildingStatus == B_STATUS_WORKING) && (B_CheckBuildingDependencesStatus(base, building)))
-			base->hasPower = qtrue;
-		B_UpdateStatusWithPower(base);
-		if (base->hasPower != oldValue)
-			return qtrue;
-		break;
-	case B_COMMAND:
-		oldValue = base->hasCommand;
-		if ((building->buildingStatus == B_STATUS_WORKING) && (B_CheckBuildingDependencesStatus(base, building)))
-			base->hasCommand = qtrue;
-		if (base->hasCommand != oldValue)
-			return qtrue;
-		break;
-	case B_ANTIMATTER:
-		oldValue = base->hasAmStorage;
-		if ((building->buildingStatus == B_STATUS_WORKING) && (B_CheckBuildingDependencesStatus(base, building)))
-			base->hasAmStorage = qtrue;
-		if (base->hasAmStorage != oldValue)
-			return qtrue;
-		break;
-	case B_DEFENSE_MISSILE:
-		oldValue = base->hasMissile;
-		if ((building->buildingStatus == B_STATUS_WORKING) && (B_CheckBuildingDependencesStatus(base, building)))
-			base->hasMissile = qtrue;
-		if (base->hasMissile != oldValue)
-			return qtrue;
-		break;
-	case B_DEFENSE_LASER:
-		oldValue = base->hasLaser;
-		if ((building->buildingStatus == B_STATUS_WORKING) && (B_CheckBuildingDependencesStatus(base, building)))
-			base->hasLaser = qtrue;
-		if (base->hasLaser != oldValue)
-			return qtrue;
-		break;
-	default:
-		break;
-	}
-
-	return qfalse;
-}
-
-/**
  * @brief Updates base status for particular buildings as well as capacities.
  * @param[in] building Pointer to building.
  * @param[in] base Pointer to base with given building.
@@ -813,11 +872,11 @@ static qboolean B_CheckUpdateBuilding (building_t* building, base_t* base)
  * @note This function checks whether a building has B_STATUS_WORKING status, and
  * @note then updates base status for particular buildings and base capacities.
  */
-static void B_UpdateBaseBuildingStatus (building_t* building, base_t* base, buildingStatus_t status)
+static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, buildingStatus_t status)
 {
 	qboolean test;
 	int i;
-	int buildingType;
+	int buildingType, cap;
 
 	assert(base);
 	assert(building);
@@ -826,6 +885,10 @@ static void B_UpdateBaseBuildingStatus (building_t* building, base_t* base, buil
 
 	/* we update the status of the building (we'll call this building building 1 */
 	test = B_CheckUpdateBuilding(building, base);
+	if (test)
+		B_UpdateOneBaseBuildingStatusOnEnable(building->buildingType, base);
+	else
+		B_UpdateOneBaseBuildingStatus(building->buildingType, base);
 
 	/* now, the status of this building may have changed the status of other building.
 	 * We check that, but only for buildings which needed building 1 */
@@ -833,19 +896,34 @@ static void B_UpdateBaseBuildingStatus (building_t* building, base_t* base, buil
 		test = qfalse;
 		for (i = 0; i < gd.numBuildings[base->idx]; i++) {
 			buildingType = gd.buildings[base->idx][i].dependsBuilding;
-			if (building->buildingType == gd.buildingTypes[buildingType].buildingType)
-				test = test || B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base);
+			if (building->buildingType == gd.buildingTypes[buildingType].buildingType &&
+			 B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
+				B_UpdateOneBaseBuildingStatusOnEnable(buildingType, base);
+				test = qtrue;
+			} else
+				B_UpdateOneBaseBuildingStatus(buildingType, base);
 		}
-	}
-
-	/* and maybe some updated status have changed status of other building.
-	 * So we check again, until nothing changes. (no condition here for check, it's too complex) */
-	while (test) {
-		test = qfalse;
-		for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-			buildingType = gd.buildings[base->idx][i].dependsBuilding;
-			test = test || B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base);
+		/* and maybe some updated status have changed status of other building.
+		 * So we check again, until nothing changes. (no condition here for check, it's too complex) */
+		while (test) {
+			test = qfalse;
+			for (i = 0; i < gd.numBuildings[base->idx]; i++) {
+				buildingType = gd.buildings[base->idx][i].dependsBuilding;
+				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
+					B_UpdateOneBaseBuildingStatusOnEnable(buildingType, base);
+					test = qtrue;
+				} else
+					B_UpdateOneBaseBuildingStatus(buildingType, base);
+			}
 		}
+		/* we may have changed status of several building: update all capacities */
+		B_UpdateBaseCapacities(MAX_CAP, base);
+	} else {
+		/* no other status than status of building 1 has been modified
+		 * update only status of building 1 */
+		cap = B_GetCapacityFromBuildingType(building->buildingType);
+		if (cap != MAX_CAP)
+			B_UpdateBaseCapacities(cap, base);
 	}
 
 	/* @todo: this should be an user option defined in Game Options. */
@@ -894,7 +972,7 @@ void B_SetUpBase (base_t* base)
 			base->buildingCurrent = building;
 			/* fake a click to basemap */
 			B_SetBuildingByClick((int) building->pos[0], (int) building->pos[1]);
-			B_UpdateBaseBuildingStatus(building, base, B_STATUS_WORKING);
+			B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
 			/* Now buy two first aircrafts if it is our first base. */
 			if (gd.numBases == 1 && building->buildingType == B_HANGAR) {
 				Cbuf_AddText("aircraft_new craft_drop_firebird\n");
@@ -1018,7 +1096,7 @@ static qboolean B_ConstructBuilding (base_t* base)
 		base->buildingCurrent->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
 		base->buildingCurrent->timeStart = ccs.date.day;
 	} else {
-		B_UpdateBaseBuildingStatus(base->buildingCurrent, base, B_STATUS_WORKING);
+		B_UpdateAllBaseBuildingStatus(base->buildingCurrent, base, B_STATUS_WORKING);
 	}
 
 	CL_UpdateCredits(ccs.credits - base->buildingCurrent->fixCosts);
@@ -2622,7 +2700,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 			}
 		}
 		dependenceBuilding = gd.buildingTypes + building->dependsBuilding;
-		if (!B_CheckBuildingDependencesStatus(baseCurrent, dependenceBuilding)) {
+		if (!B_CheckBuildingDependencesStatus(baseCurrent, building)) {
 			if (B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, dependenceBuilding->buildingType) <= 0) {
 				/* the dependence of the building is not built */
 				Com_sprintf(popupText, sizeof(popupText), va(_("You need a building %s to make building %s functional."), _(dependenceBuilding->name), _(building->name)));
@@ -2658,7 +2736,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 static void B_BuildingOpen_f (void)
 {
 	if (baseCurrent && baseCurrent->buildingCurrent) {
-		if (!B_CheckBuildingOperational(baseCurrent, baseCurrent->buildingCurrent)) {
+		if (!B_GetBuildingStatus(baseCurrent, baseCurrent->buildingCurrent->buildingType)) {
 			UP_OpenWith(baseCurrent->buildingCurrent->pedia);
 		} else {
 			/* FIXME: Some buildings are even allowed to be opened when base is under attack */
@@ -2906,7 +2984,7 @@ int B_CheckBuildingConstruction (building_t * building, int base_idx)
 
 	if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
 		if (building->timeStart && (building->timeStart + building->buildTime) <= ccs.date.day) {
-			B_UpdateBaseBuildingStatus(building, &gd.bases[base_idx], B_STATUS_WORKING);
+			B_UpdateAllBaseBuildingStatus(building, &gd.bases[base_idx], B_STATUS_WORKING);
 
 			if (*building->onConstruct) {
 				gd.bases[base_idx].buildingCurrent = building;
@@ -2937,7 +3015,7 @@ void B_UpdateStatusWithPower (base_t *base)
 		if (gd.buildings[base->idx][i].buildingType == B_POWER)
 			continue;
 		if (gd.buildings[base->idx][i].buildingStatus == B_STATUS_WORKING)
-			B_UpdateBaseBuildingStatus(&gd.buildings[base->idx][i], &gd.bases[base->idx], B_STATUS_WORKING);
+			B_UpdateAllBaseBuildingStatus(&gd.buildings[base->idx][i], &gd.bases[base->idx], B_STATUS_WORKING);
 	}
 }
 
@@ -3023,7 +3101,7 @@ int B_ItemInBase (int item_idx, base_t *base)
  * @brief Updates base capacities.
  * @param[in] cap Enum type of baseCapacities_t.
  * @param[in] base Pointer to the base.
- * @sa B_UpdateBaseBuildingStatus
+ * @sa B_UpdateAllBaseBuildingStatus
  * @sa B_BuildingDestroy_f
  */
 void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
