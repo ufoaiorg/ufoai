@@ -1839,6 +1839,10 @@ base/sound/weapons/riotshotgun.wav | GNU General Public License v2.0 | Alex Park
 base/sound/weapons/smg2.wav | GNU General Public License v2.0 | Alex Parker
 base/sound/weapons/smokeexplosion.wav | GNU General Public License v2.0 | Alex Parker
 base/sound/weapons/sniperrifle.wav | GNU General Public License v2.0 | Alex Parker
+base/textures/exterior/ext_helipad1.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/exterior/ext_helipad2.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/exterior/ext_helipad3.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/exterior/ext_helipad4.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/9hangwires01b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/9basetrim01.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/9darktrim02b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
@@ -2215,6 +2219,13 @@ base/textures/tex_nature/ice001.jpg |  |  | Public Domain Golgotha
 base/textures/tex_pics/redld01.jpg | This work is licensed under a Creative Commons Attribution-Share Alike 3.0 License | Werner Höhrer (hoehrer)
 base/textures/tex_pics/redld02.jpg | This work is licensed under a Creative Commons Attribution-Share Alike 3.0 License | Werner Höhrer (hoehrer)
 base/textures/tex_pics/redld03.jpg | This work is licensed under a Creative Commons Attribution-Share Alike 3.0 License | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street004.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street005.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street010.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street11.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 src/docs/pathfinding.odg | GNU Free Documentation License | Werner Höhrer (hoehrer)
 src/tools/blender/export_md2_new.py | GNU General Public License 2.0
 src/tools/blender/md2_export.py | GNU General Public License 2.0
