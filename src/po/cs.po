@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-11-16 12:05+0100\n"
+"POT-Creation-Date: 2007-11-16 16:19+0100\n"
 "PO-Revision-Date: 2007-11-15 23:43+0100\n"
 "Last-Translator: Lubomír Bláha <tritol@trilogic.cz>\n"
 "Language-Team: čeština <cs@li.org>\n"
@@ -17138,6 +17138,10 @@ msgstr "Kampaň načtena"
 #: client/cl_save.c:579
 msgid "Quicksave campaign was successfully loaded."
 msgstr "Rychle uložená kampaň byla úspěšně načtena."
+
+#: client/cl_save.c:627
+msgid "Saves to the quick save slot"
+msgstr ""
 
 #: client/cl_screen.c:370
 #, c-format
