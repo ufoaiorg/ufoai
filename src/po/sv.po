@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-11-16 12:05+0100\n"
+"POT-Creation-Date: 2007-11-16 16:19+0100\n"
 "PO-Revision-Date: 2007-09-07 20:54+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -17447,6 +17447,10 @@ msgstr "Kampanj inläst"
 #, fuzzy
 msgid "Quicksave campaign was successfully loaded."
 msgstr "Kampanjen har sparats."
+
+#: client/cl_save.c:627
+msgid "Saves to the quick save slot"
+msgstr ""
 
 #: client/cl_screen.c:370
 #, fuzzy, c-format

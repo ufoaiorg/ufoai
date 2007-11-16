@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion CVS\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-11-16 12:05+0100\n"
+"POT-Creation-Date: 2007-11-16 16:19+0100\n"
 "PO-Revision-Date: 2007-11-03 13:31+0100\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
@@ -11232,6 +11232,10 @@ msgstr "Kampagne hentet"
 #, fuzzy
 msgid "Quicksave campaign was successfully loaded."
 msgstr "Kampagne blev gemt med succes."
+
+#: client/cl_save.c:627
+msgid "Saves to the quick save slot"
+msgstr ""
 
 #: client/cl_screen.c:370
 #, c-format

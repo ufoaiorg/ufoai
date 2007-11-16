@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ufoai\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-11-16 12:05+0100\n"
+"POT-Creation-Date: 2007-11-16 16:19+0100\n"
 "PO-Revision-Date: 2007-05-09 19:10+0300\n"
 "Last-Translator: Niklas Laxstrom\n"
 "Language-Team: Finnish\n"
@@ -8403,6 +8403,10 @@ msgstr "Kampanjat"
 
 #: client/cl_save.c:579
 msgid "Quicksave campaign was successfully loaded."
+msgstr ""
+
+#: client/cl_save.c:627
+msgid "Saves to the quick save slot"
 msgstr ""
 
 #: client/cl_screen.c:370

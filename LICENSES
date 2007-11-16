@@ -1840,6 +1840,10 @@ base/sound/weapons/smg2.wav | GNU General Public License v2.0 | Alex Parker
 base/sound/weapons/smokeexplosion.wav | GNU General Public License v2.0 | Alex Parker
 base/sound/weapons/sniperrifle.wav | GNU General Public License v2.0 | Alex Parker
 base/textures/tex_base/9hangwires01b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_base/helipad1.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/helipad2.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/helipad3.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/helipad4.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/9basetrim01.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/9darktrim02b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/9floorbasic01b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
@@ -2081,20 +2085,28 @@ base/textures/tex_mattn/door022.jpg | GNU General Public License 2.0 | Martin Ge
 base/textures/tex_mattn/door023.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/door024.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/door025.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/door026.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/door027.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/door028.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/door029.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/door030.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/door031.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/fan.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/floor001.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/floor002.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/floor003.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/floor004.jpg | GNU General Public License 2.0 | Martin Gerhardy
-base/textures/tex_mattn/floor005.jpg | GNU General Public License 2.0 | Marin Gerhardy
+base/textures/tex_mattn/floor005.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/floor025.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/floor026.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/ground_dirt2.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/gully.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/metal.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/metal2.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/rack.jpg | GNU General Public License 2.0 | Martin Gerhardy
-base/textures/tex_mattn/sand001.jpg |  | Martin Gerhardy
-base/textures/tex_mattn/sign001.jpg | GNU General Public License 2.0 | Marin Gerhardy
+base/textures/tex_mattn/sand001.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/sign001.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/street010.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/street011.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/street012.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall001.jpg | GNU General Public License 2.0 | Martin Gerhardy
@@ -2103,6 +2115,11 @@ base/textures/tex_mattn/wall003.jpg | GNU General Public License 2.0 | Martin Ge
 base/textures/tex_mattn/wall004.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall005.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall006.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/wall007.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/wall008.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/wall009.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/wall010.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/wall011.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall042.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall043.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall044.jpg | GNU General Public License 2.0 | Martin Gerhardy
@@ -2202,6 +2219,13 @@ base/textures/tex_nature/ice001.jpg |  |  | Public Domain Golgotha
 base/textures/tex_pics/redld01.jpg | This work is licensed under a Creative Commons Attribution-Share Alike 3.0 License | Werner Höhrer (hoehrer)
 base/textures/tex_pics/redld02.jpg | This work is licensed under a Creative Commons Attribution-Share Alike 3.0 License | Werner Höhrer (hoehrer)
 base/textures/tex_pics/redld03.jpg | This work is licensed under a Creative Commons Attribution-Share Alike 3.0 License | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street004.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street005.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street010.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_streets/street11.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 src/docs/pathfinding.odg | GNU Free Documentation License | Werner Höhrer (hoehrer)
 src/tools/blender/export_md2_new.py | GNU General Public License 2.0
 src/tools/blender/md2_export.py | GNU General Public License 2.0

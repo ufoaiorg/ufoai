@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion Thai v1.0\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-11-16 12:05+0100\n"
+"POT-Creation-Date: 2007-11-16 16:19+0100\n"
 "PO-Revision-Date: 2007-07-30 11:29+0700\n"
 "Last-Translator: Sophon Taechasivalai <mickey@metawire.com>\n"
 "Language-Team: Sophont <mickey@metawire.com>\n"
@@ -16688,6 +16688,10 @@ msgstr "เนื้อเรื่อง"
 
 #: client/cl_save.c:579
 msgid "Quicksave campaign was successfully loaded."
+msgstr ""
+
+#: client/cl_save.c:627
+msgid "Saves to the quick save slot"
 msgstr ""
 
 #: client/cl_screen.c:370
