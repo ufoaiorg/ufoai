@@ -2634,13 +2634,15 @@ static void B_CheckBuildingStatusForMenu_f (void)
 				for (i = 0; i < gd.numBuildings[baseIdx]; i++) {
 					if (gd.buildings[baseIdx][i].buildingType == dependenceBuilding->buildingType
 					 && gd.buildings[baseIdx][i].buildTime > (ccs.date.day - gd.buildings[baseIdx][i].timeStart)) {
-						Com_sprintf(popupText, sizeof(popupText), va(_("Building %s is not finished yet, and is needed to use building %s."), _(dependenceBuilding->name), _(building->name)));
+						Com_sprintf(popupText, sizeof(popupText), va(_("Building %s is not finished yet, and is needed to use building %s."),
+							_(dependenceBuilding->name), _(building->name)));
 						MN_Popup(_("Notice"), popupText);
 						return;
 					}
 				}
 				/* the dependence is built but doesn't work - must be because of their dependendes */
-				Com_sprintf(popupText, sizeof(popupText), va(_("Make sure that dependences of building %s (%s) are operationnal, so that building %s may be used."), _(dependenceBuilding->name), _((gd.buildingTypes + dependenceBuilding->dependsBuilding)->name), _(building->name)));
+				Com_sprintf(popupText, sizeof(popupText), va(_("Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."),
+					_(dependenceBuilding->name), _((gd.buildingTypes + dependenceBuilding->dependsBuilding)->name), _(building->name)));
 				MN_Popup(_("Notice"), popupText);
 			}
 		}
