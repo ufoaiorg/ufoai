@@ -99,7 +99,7 @@ char* HTTP_GetURL (const char *url)
 	dl.curl = curl_easy_init();
 
 	Com_sprintf(dl.URL, sizeof(dl.URL), url);
-
+	curl_easy_setopt(dl.curl, CURLOPT_CONNECTTIMEOUT, http_timeout->integer);
 	curl_easy_setopt(dl.curl, CURLOPT_ENCODING, "");
 	curl_easy_setopt(dl.curl, CURLOPT_NOPROGRESS, 1);
 	curl_easy_setopt(dl.curl, CURLOPT_WRITEDATA, &dl);
