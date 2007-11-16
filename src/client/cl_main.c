@@ -903,8 +903,9 @@ static void CL_ServerInfoCallback (struct net_stream *s)
 
 /**
  * @sa CL_PingServers_f
+ * @todo Not yet thread-safe
  */
-static void CL_QueryMasterServer (void)
+static int CL_QueryMasterServer (void *data)
 {
 	char *responseBuf;
 	const char *serverList;
@@ -915,7 +916,7 @@ static void CL_QueryMasterServer (void)
 	responseBuf = HTTP_GetURL(va("%s/ufo/masterserver.php?query", masterserver_url->string));
 	if (!responseBuf) {
 		Com_Printf("Could not query masterserver\n");
-		return;
+		return 1;
 	}
 
 	serverList = responseBuf;
@@ -947,6 +948,8 @@ static void CL_QueryMasterServer (void)
 	}
 
 	Mem_Free(responseBuf);
+
+	return 0;
 }
 
 /**
@@ -1188,7 +1191,8 @@ static void CL_PingServers_f (void)
 	/* query master server? */
 	if (Cmd_Argc() == 2 && Q_strcmp(Cmd_Argv(1), "local")) {
 		Com_DPrintf(DEBUG_CLIENT, "Query masterserver\n");
-		CL_QueryMasterServer();
+		/*SDL_CreateThread(CL_QueryMasterServer, NULL);*/
+		CL_QueryMasterServer(NULL);
 	}
 }
 
