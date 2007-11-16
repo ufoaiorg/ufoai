@@ -746,17 +746,21 @@ static void MAP_3DMapDrawLine (const menuNode_t* node, const mapline_t* line)
 {
 	const vec4_t color = {1, 0.5, 0.5, 1};
 	screenPoint_t pts[LINE_MAXPTS];
-	int i, numPoints;
+	int i, numPoints, start;
+
+	start = 0;
 
 	/* draw only when the point of the path is visible*/
 	R_Color(color);
 	for (i = 0, numPoints = 0; i < line->numPoints; i++) {
 		if (MAP_3DMapToScreen(node, line->point[i], &pts[i].x, &pts[i].y, NULL)) {
 			numPoints++;
-		}
+		} else if (!numPoints)
+			/* the point which is not drawn is at the begining of the path */
+			start++;
 	}
 
-	R_DrawLineStrip(numPoints, (int*)(&pts));
+	R_DrawLineStrip(numPoints, (int*)(&pts[start]));
 	R_Color(NULL);
 }
 
