@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-11-16 11:47+0100\n"
-"PO-Revision-Date: 2007-11-16 12:03+0100\n"
+"POT-Creation-Date: 2007-11-16 12:05+0100\n"
+"PO-Revision-Date: 2007-11-16 12:06+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -11326,9 +11326,9 @@ msgstr ""
 #: client/cl_basemanagement.c:2565
 #: client/cl_basemanagement.c:2620
 #: client/cl_basemanagement.c:2629
-#: client/cl_basemanagement.c:2638
-#: client/cl_basemanagement.c:2644
-#: client/cl_basemanagement.c:2649
+#: client/cl_basemanagement.c:2639
+#: client/cl_basemanagement.c:2646
+#: client/cl_basemanagement.c:2651
 #: client/cl_campaign.c:298
 #: client/cl_campaign.c:1085
 #: client/cl_campaign.c:1143
@@ -11641,22 +11641,22 @@ msgstr "Sie brauchen das Gebäude %s um das Gebäude %s einsatzbereit zu machen.
 msgid "Building %s is not finished yet, and is needed to use building %s."
 msgstr "Das Gebäude %s ist nicht fertiggestellt und wird benötigt um das Gebäude %s zu betreiben."
 
-#: client/cl_basemanagement.c:2643
+#: client/cl_basemanagement.c:2644
 #, c-format
-msgid "Make sure that dependences of building %s (%s) are operationnal, so that building %s may be used."
+msgid "Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."
 msgstr "Stellen Sie sicher, dass alle Abhängigkeiten für das Gebäude %s (%s) einsatzbereit sind. Andernfalls kann das Gebäude %s nicht benutzt werden."
 
-#: client/cl_basemanagement.c:2648
+#: client/cl_basemanagement.c:2650
 #, c-format
 msgid "Build a %s first."
 msgstr "Zuerst muss ein %s gebaut werden."
 
-#: client/cl_basemanagement.c:2693
+#: client/cl_basemanagement.c:2695
 msgid "No aircraft in this base - You first have to purchase or transfer an aircraft\n"
 msgstr "Kein Flugzeug in dieser Basis - Sie sollten erst eines kaufen oder transferieren\n"
 
-#: client/cl_basemanagement.c:2693
 #: client/cl_basemanagement.c:2695
+#: client/cl_basemanagement.c:2697
 #: client/cl_campaign.c:2691
 #: client/cl_market.c:658
 #: client/cl_market.c:663
@@ -11667,16 +11667,16 @@ msgstr "Kein Flugzeug in dieser Basis - Sie sollten erst eines kaufen oder trans
 msgid "Note"
 msgstr "Hinweis"
 
-#: client/cl_basemanagement.c:2695
+#: client/cl_basemanagement.c:2697
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "Kein Flugzeug in dieser Basis - Sie sollten erst eines kaufen\n"
 
-#: client/cl_basemanagement.c:2877
+#: client/cl_basemanagement.c:2879
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr "Konstruktion von %s in Basis %s abgeschlossen."
 
-#: client/cl_basemanagement.c:2878
+#: client/cl_basemanagement.c:2880
 msgid "Building finished"
 msgstr "Konstruktion abgeschlossen"
 
