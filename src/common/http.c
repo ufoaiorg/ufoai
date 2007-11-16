@@ -92,14 +92,21 @@ size_t HTTP_Recv (void *ptr, size_t size, size_t nmemb, void *stream)
  */
 char* HTTP_GetURL (const char *url)
 {
+	static qboolean downloading = qfalse;
 	dlhandle_t dl;
+
+	if (downloading) {
+		Com_Printf("Warning: There is still another download running: '%s'", dl.URL);
+		return NULL;
+	}
 
 	memset(&dl, 0, sizeof(dl));
 
+	downloading = qtrue;
 	dl.curl = curl_easy_init();
 
 	Com_sprintf(dl.URL, sizeof(dl.URL), url);
-
+	curl_easy_setopt(dl.curl, CURLOPT_CONNECTTIMEOUT, http_timeout->integer);
 	curl_easy_setopt(dl.curl, CURLOPT_ENCODING, "");
 	curl_easy_setopt(dl.curl, CURLOPT_NOPROGRESS, 1);
 	curl_easy_setopt(dl.curl, CURLOPT_WRITEDATA, &dl);
@@ -117,6 +124,8 @@ char* HTTP_GetURL (const char *url)
 
 	/* clean up */
 	curl_easy_cleanup(dl.curl);
+
+	downloading = qfalse;
 
 	return dl.tempBuffer;
 }

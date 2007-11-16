@@ -2616,7 +2616,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 			if (gd.buildings[baseIdx][i].buildingType == building->buildingType
 			 && gd.buildings[baseIdx][i].buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
 				/* this is because the construction of the building is not over yet */
-				Com_sprintf(popupText, sizeof(popupText), va(_("Construction of building will be over in %i days.\nPlease wait to enter."), gd.buildings[baseIdx][i].buildTime - (ccs.date.day - gd.buildings[baseIdx][i].timeStart)));
+				Com_sprintf(popupText, sizeof(popupText), va(ngettext("Construction of building will be over in %i day.\nPlease wait to enter.", "Construction of building will be over in %i days.\nPlease wait to enter.", gd.buildings[baseIdx][i].buildTime - (ccs.date.day - gd.buildings[baseIdx][i].timeStart)), gd.buildings[baseIdx][i].buildTime - (ccs.date.day - gd.buildings[baseIdx][i].timeStart)));
 				MN_Popup(_("Notice"), popupText);
 				return;
 			}

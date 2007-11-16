@@ -41,6 +41,7 @@ cvar_t *s_sleep;
 cvar_t *s_language;
 cvar_t *developer;
 cvar_t *http_proxy;
+cvar_t *http_timeout;
 cvar_t *logfile_active;			/* 1 = buffer log, 2 = flush after each print */
 cvar_t *sv_dedicated;
 cvar_t *cl_maxfps;
@@ -686,7 +687,8 @@ void Qcommon_Init (int argc, const char **argv)
 	developer = Cvar_Get("developer", "0", 0, "Activate developer output to logfile and gameconsole");
 	logfile_active = Cvar_Get("logfile", "1", 0, "0 = deacticate logfile, 1 = write normal logfile, 2 = flush on every new line");
 	gametype = Cvar_Get("gametype", "1on1", CVAR_ARCHIVE | CVAR_SERVERINFO, "Sets the multiplayer gametype - see gametypelist command for a list of all gametypes");
-	http_proxy = Cvar_Get("http_proxy", "", 0, NULL);
+	http_proxy = Cvar_Get("http_proxy", "", CVAR_ARCHIVE, "Use this proxy for http transfers");
+	http_timeout = Cvar_Get("http_timeout", "3", CVAR_ARCHIVE, "Http connection timeout");
 	port = Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL);
 	masterserver_url = Cvar_Get("masterserver_url", MASTER_SERVER, CVAR_ARCHIVE, "URL of UFO:AI masterserver");
 #ifdef DEDICATED_ONLY
