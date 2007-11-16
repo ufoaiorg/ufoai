@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-11-15 23:43+0100\n"
+"POT-Creation-Date: 2007-11-16 12:05+0100\n"
 "PO-Revision-Date: 2007-11-15 23:43+0100\n"
 "Last-Translator: Lubomír Bláha <tritol@trilogic.cz>\n"
 "Language-Team: čeština <cs@li.org>\n"
@@ -3181,7 +3181,7 @@ msgid "Medium"
 msgstr "Střední"
 
 #: ../base/ufos/menu_options.ufo:365 ../base/ufos/menu_ptleditor.ufo:74
-#: client/cl_main.c:2243
+#: client/cl_main.c:2247
 msgid "Normal"
 msgstr "Normální"
 
@@ -14339,8 +14339,9 @@ msgstr ""
 "granáty, oslepujícími granáty a lékárničkami."
 
 #: ../base/ufos/tips.ufo:29
+#, fuzzy
 msgid ""
-"Build a hospital to be able to faster heal your soldiers for the next "
+"Build a hospital to be able to heal your soldiers faster for their next "
 "mission."
 msgstr ""
 "Postavte nemocnici abyste byli schopni rychleji léčit vojáky pro další misi."
@@ -14487,6 +14488,12 @@ msgstr ""
 "V obrazovce vybavení vojáka můžete použít pravé tlačítko myši k přidání nebo "
 "odebrání zbraní, munice a zbroje. Funguje to pouze při vybavování na "
 "základně, nikoliv během taktické mise, kde by tyto akce stály ČJ."
+
+#: ../base/ufos/tips.ufo:48
+msgid ""
+"You should ensure that not too many civilians lose their lives. Otherwise "
+"you might lose the game sooner than you'd expect."
+msgstr ""
 
 #: ../base/ufos/weapons.ufo:6
 msgid "Medikit"
@@ -15121,13 +15128,13 @@ msgstr ""
 "Letoun nemůže odstartovat.\n"
 
 #: client/cl_aircraft.c:278 client/cl_aircraft.c:291 client/cl_aircraft.c:515
-#: client/cl_aircraft.c:700 client/cl_aircraft.c:953 client/cl_aircraft.c:1050
+#: client/cl_aircraft.c:700 client/cl_aircraft.c:955 client/cl_aircraft.c:1052
 #: client/cl_airfight.c:352 client/cl_aliencont.c:185
 #: client/cl_aliencont.c:213 client/cl_aliencont.c:226
 #: client/cl_aliencont.c:239 client/cl_basemanagement.c:1066
 #: client/cl_basemanagement.c:2565 client/cl_basemanagement.c:2620
-#: client/cl_basemanagement.c:2629 client/cl_basemanagement.c:2638
-#: client/cl_basemanagement.c:2644 client/cl_basemanagement.c:2649
+#: client/cl_basemanagement.c:2629 client/cl_basemanagement.c:2639
+#: client/cl_basemanagement.c:2646 client/cl_basemanagement.c:2651
 #: client/cl_campaign.c:298 client/cl_campaign.c:1085
 #: client/cl_campaign.c:1143 client/cl_campaign.c:1158
 #: client/cl_campaign.c:1324 client/cl_campaign.c:1335
@@ -15138,8 +15145,8 @@ msgstr ""
 #: client/cl_campaign.c:2779 client/cl_campaign.c:2890
 #: client/cl_campaign.c:2938 client/cl_campaign.c:2940
 #: client/cl_campaign.c:3275 client/cl_inventory.c:293
-#: client/cl_inventory.c:298 client/cl_inventory.c:544 client/cl_main.c:1027
-#: client/cl_main.c:1273 client/cl_map.c:295 client/cl_mapfightequip.c:753
+#: client/cl_inventory.c:298 client/cl_inventory.c:544 client/cl_main.c:1030
+#: client/cl_main.c:1277 client/cl_map.c:295 client/cl_mapfightequip.c:753
 #: client/cl_mapfightequip.c:755 client/cl_market.c:676 client/cl_market.c:680
 #: client/cl_parse.c:1591 client/cl_popup.c:352 client/cl_produce.c:442
 #: client/cl_produce.c:451 client/cl_produce.c:461 client/cl_produce.c:470
@@ -15241,11 +15248,11 @@ msgstr "Elektronika:\t%i on %i"
 msgid "You've got a new aircraft (a %s) in base %s"
 msgstr "Máte nový letoun (%s) na základně %s."
 
-#: client/cl_aircraft.c:953
+#: client/cl_aircraft.c:955
 msgid "Your dropship is low on fuel and returns to base"
 msgstr "Transportér má málo paliva a vrací se na základnu"
 
-#: client/cl_aircraft.c:1050
+#: client/cl_aircraft.c:1052
 msgid "Assign a team to aircraft"
 msgstr "Přidělit tým k letounu"
 
@@ -15420,44 +15427,44 @@ msgstr "Potřebujete budovu %s ke zprovoznění budovy %s."
 msgid "Building %s is not finished yet, and is needed to use building %s."
 msgstr "Ještě není dokončena budova %s, která je potřeba pro budovu %s."
 
-#: client/cl_basemanagement.c:2643
-#, c-format
+#: client/cl_basemanagement.c:2644
+#, fuzzy, c-format
 msgid ""
-"Make sure that dependences of building %s (%s) are operationnal, so that "
+"Make sure that the dependencies of building %s (%s) are operational, so that "
 "building %s may be used."
 msgstr ""
 "Ujistěte se, že závislost budovy %s (%s) je v provozu, takže budova %s může "
 "být používána."
 
-#: client/cl_basemanagement.c:2648
+#: client/cl_basemanagement.c:2650
 #, c-format
 msgid "Build a %s first."
 msgstr "Nejprve postavte budovu %s."
 
-#: client/cl_basemanagement.c:2693
+#: client/cl_basemanagement.c:2695
 msgid ""
 "No aircraft in this base - You first have to purchase or transfer an "
 "aircraft\n"
 msgstr ""
 "Na této základně není letoun - Musíte nejdříve nějaký koupit nebo přepravit\n"
 
-#: client/cl_basemanagement.c:2693 client/cl_basemanagement.c:2695
+#: client/cl_basemanagement.c:2695 client/cl_basemanagement.c:2697
 #: client/cl_campaign.c:2691 client/cl_market.c:658 client/cl_market.c:663
 #: client/cl_market.c:690 client/cl_market.c:765 client/cl_save.c:349
 #: client/cl_team.c:1586
 msgid "Note"
 msgstr "Poznámka"
 
-#: client/cl_basemanagement.c:2695
+#: client/cl_basemanagement.c:2697
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "Na této základně není letoun - Musíte nejdříve nějaký koupit\n"
 
-#: client/cl_basemanagement.c:2877
+#: client/cl_basemanagement.c:2879
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr "Dokončena stavba budovy %s na základně %s."
 
-#: client/cl_basemanagement.c:2878
+#: client/cl_basemanagement.c:2880
 msgid "Building finished"
 msgstr "Stavba dokončena"
 
@@ -16188,13 +16195,13 @@ msgid ""
 "got removed."
 msgstr "Základna %s nemá sklad antihnoty. %i jednotek antihmoty bylo odebráno."
 
-#: client/cl_main.c:343 client/cl_main.c:984
+#: client/cl_main.c:343 client/cl_main.c:987
 msgid "Assemble a team first"
 msgstr "Nejprve sestavte tým"
 
-#: client/cl_main.c:343 client/cl_main.c:708 client/cl_main.c:984
-#: client/cl_main.c:1491 client/cl_main.c:1496 client/cl_main.c:1502
-#: client/cl_main.c:1510 client/cl_save.c:413 client/cl_save.c:436
+#: client/cl_main.c:343 client/cl_main.c:708 client/cl_main.c:987
+#: client/cl_main.c:1495 client/cl_main.c:1500 client/cl_main.c:1506
+#: client/cl_main.c:1514 client/cl_save.c:413 client/cl_save.c:436
 #: client/cl_save.c:577
 msgid "Error"
 msgstr "Chyba"
@@ -16297,7 +16304,7 @@ msgid "Password protected:\t%s\n"
 msgstr "Chráněno heslem:\t%s\n"
 
 # doladit
-#: client/cl_main.c:1027
+#: client/cl_main.c:1030
 msgid ""
 "All bookmark slots are used - please removed unused entries and repeat this "
 "step"
@@ -16305,79 +16312,79 @@ msgstr ""
 "Není místo pro další oblíbené - smažte prosím nepoužívané položky a zkuste "
 "to znovu"
 
-#: client/cl_main.c:1113
+#: client/cl_main.c:1116
 msgid "Select a free team or your coop team"
 msgstr "Zvolte volný tým nebo tým pro spolupráci"
 
-#: client/cl_main.c:1334 client/cl_main.c:1348
+#: client/cl_main.c:1338 client/cl_main.c:1352
 #, c-format
 msgid "Current team: %i"
 msgstr "Nynější tým: %i"
 
-#: client/cl_main.c:1338 client/cl_main.c:1352
+#: client/cl_main.c:1342 client/cl_main.c:1356
 msgid "Team is already in use"
 msgstr "Tým je již používán"
 
-#: client/cl_main.c:1362 client/cl_main.c:1400
+#: client/cl_main.c:1366 client/cl_main.c:1404
 msgid "Invalid or full team"
 msgstr "Neplatný nebo plný tým"
 
-#: client/cl_main.c:1490
+#: client/cl_main.c:1494
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr "Vaše verze hry (%s) se liší od té na serveru"
 
-#: client/cl_main.c:1496
+#: client/cl_main.c:1500
 msgid "Local map version differs from server"
 msgstr "Vaše verze mapy se liší od té na serveru"
 
-#: client/cl_main.c:1502
+#: client/cl_main.c:1506
 msgid "Script files are not the same"
 msgstr "Skriptové soubory nejsou shodné"
 
-#: client/cl_main.c:1509
+#: client/cl_main.c:1513
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr "Vaše verze hry (%s) se liší od té na serveru (%s)"
 
 # doladit
-#: client/cl_main.c:2102
+#: client/cl_main.c:2106
 msgid "Target your shot to the ground"
 msgstr "Zamířit výstřel k zemi"
 
-#: client/cl_main.c:2103
+#: client/cl_main.c:2107
 msgid "Open the actors inventory while we are in tactical mission"
 msgstr "Vstoupit do inventáře postavy (během bojové mise)"
 
-#: client/cl_main.c:2218 client/cl_view.c:422
+#: client/cl_main.c:2222 client/cl_view.c:422
 msgid "Awaiting game start"
 msgstr "Očekávám start hry"
 
-#: client/cl_main.c:2236
+#: client/cl_main.c:2240
 msgid "Chicken-hearted"
 msgstr "Pro sraby"
 
-#: client/cl_main.c:2238
+#: client/cl_main.c:2242
 msgid "Very Easy"
 msgstr "Velice snadné"
 
-#: client/cl_main.c:2241
+#: client/cl_main.c:2245
 msgid "Easy"
 msgstr "Snadné"
 
-#: client/cl_main.c:2246
+#: client/cl_main.c:2250
 msgid "Hard"
 msgstr "Těžké"
 
-#: client/cl_main.c:2248
+#: client/cl_main.c:2252
 msgid "Very Hard"
 msgstr "Velice těžké"
 
-#: client/cl_main.c:2250
+#: client/cl_main.c:2254
 msgid "Insane"
 msgstr "Nemožné"
 
-#: client/cl_main.c:2302
+#: client/cl_main.c:2306
 msgid "Custom"
 msgstr "Uživatelský"
 
