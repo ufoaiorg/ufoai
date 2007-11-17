@@ -2690,7 +2690,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 
 	if (building->buildingType == B_HANGAR) {
 		/* this is an exception because you must have a small or large hangar to enter aircraft menu */
-		Com_sprintf(popupText, sizeof(popupText), _("You need at least one Hangar (and its dependences) to use aircrafts."));
+		Com_sprintf(popupText, sizeof(popupText), _("You need at least one Hangar (and its dependencies) to use aircrafts."));
 		MN_Popup(_("Notice"), popupText);
 		return;
 	}
