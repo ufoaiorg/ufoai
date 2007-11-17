@@ -495,6 +495,7 @@ static void B_UpdateOneBaseBuildingStatus (buildingType_t type, base_t* base)
 	case B_WORKSHOP:
 		/* Update production times in queue. */
 		PR_UpdateProductionTime(base);
+		break;
 	default:
 		break;
 	}
@@ -520,8 +521,10 @@ static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* 
 	case B_WORKSHOP:
 		/* Update production times in queue. */
 		PR_UpdateProductionTime(base);
+		break;
 	case B_POWER:
 		B_UpdateStatusWithPower(base);
+		break;
 	default:
 		break;
 	}
@@ -538,8 +541,14 @@ static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t*
 	case B_WORKSHOP:
 		/* Update production times in queue. */
 		PR_UpdateProductionTime(base);
+		break;
 	case B_POWER:
 		B_UpdateStatusWithPower(base);
+		break;
+	case B_ALIEN_CONTAINMENT:
+		/* if there an alien containment is not functional, aliens dies... */
+		AC_KillAll(base);
+		break;
 	default:
 		break;
 	}
