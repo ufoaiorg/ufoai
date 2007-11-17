@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-11-17 14:00+0100\n"
-"PO-Revision-Date: 2007-11-15 23:43+0100\n"
+"POT-Creation-Date: 2007-11-17 20:11+0100\n"
+"PO-Revision-Date: 2007-11-17 20:07+0100\n"
 "Last-Translator: Lubomír Bláha <tritol@trilogic.cz>\n"
 "Language-Team: čeština <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -447,11 +447,11 @@ msgstr ""
 "Tato volba představuje neskutečnou obtížnost a je doporučena masochistům, "
 "kteří vyhráli Náročnou kampaň a stále nemají dost."
 
-#: ../base/ufos/campaign.ufo:179
+#: ../base/ufos/campaign.ufo:180
 msgid "Hard Campaign"
 msgstr "Náročná kampaň"
 
-#: ../base/ufos/campaign.ufo:180
+#: ../base/ufos/campaign.ufo:181
 msgid "txt_hard_campaign"
 msgstr ""
 "Složitější varianta Standardní kampaně. Dostanete méně vojáků, dělníků a "
@@ -460,11 +460,11 @@ msgstr ""
 "\n"
 "Tato volba představuje velkou obtížnost a je doporučena zkušeným hráčům."
 
-#: ../base/ufos/campaign.ufo:212
+#: ../base/ufos/campaign.ufo:213
 msgid "Standard Campaign"
 msgstr "Standardní kampaň"
 
-#: ../base/ufos/campaign.ufo:213 ../base/ufos/campaign.ufo:368
+#: ../base/ufos/campaign.ufo:214 ../base/ufos/campaign.ufo:369
 msgid "txt_standard_campaign"
 msgstr ""
 "Válečně založený scénář o invazi pro jednoho hráče. Ten převezme velení nad "
@@ -475,11 +475,11 @@ msgstr ""
 "Kampaň je dostupná v několika úrovních obtížnosti. Tato volba představuje "
 "standardní obtížnost a je doporučena pro nováčky kteří mají rádi výzvu."
 
-#: ../base/ufos/campaign.ufo:264
+#: ../base/ufos/campaign.ufo:265
 msgid "Easy Campaign"
 msgstr "Snadná kampaň"
 
-#: ../base/ufos/campaign.ufo:265
+#: ../base/ufos/campaign.ufo:266
 msgid "txt_easy_campaign"
 msgstr ""
 "Shovívavější varianta Standardní kampaně. Cizáci budou méně houževnatí, "
@@ -488,11 +488,11 @@ msgstr ""
 "Tato volba představuje snadnou obtížnost a je určena pro hráče kteří dávají "
 "přednost méně trnité cestě než jim může nabídnout Standardní kampaň."
 
-#: ../base/ufos/campaign.ufo:297
+#: ../base/ufos/campaign.ufo:298
 msgid "Very Easy Campaign"
 msgstr "Velice snadná kampaň"
 
-#: ../base/ufos/campaign.ufo:298
+#: ../base/ufos/campaign.ufo:299
 msgid "txt_veryeasy_campaign"
 msgstr ""
 "Toto je velice shovívavá varianta Standardní kampaně. Vaše jednotky budou "
@@ -501,11 +501,11 @@ msgstr ""
 "Tato volba představuje velice snadnou obtížnost a je určena pro nováčky "
 "kteří pronikají do tajů UFO: AI."
 
-#: ../base/ufos/campaign.ufo:346
+#: ../base/ufos/campaign.ufo:347
 msgid "Play the aliens"
 msgstr "Hrát za cizáky"
 
-#: ../base/ufos/campaign.ufo:347
+#: ../base/ufos/campaign.ufo:348
 msgid "txt_alien_campaign"
 msgstr ""
 "Na překladu se pracuje. Více informací na\n"
@@ -595,7 +595,6 @@ msgid "mail_to_base_commander"
 msgstr "Velitel základny, PHALANX, Velení tichomořských operací"
 
 #: ../base/ufos/events.ufo:62
-#, fuzzy
 msgid "2084 Mar 21"
 msgstr "2084 Bře 21"
 
@@ -1366,7 +1365,7 @@ msgstr "Předchozí komplex cizáckých cel"
 
 #: ../base/ufos/menu_aliencont.ufo:95
 msgid "Click to do autopsy"
-msgstr "Klikni pro pitvu"
+msgstr "Klik pro pitvu"
 
 #: ../base/ufos/menu_aliencont.ufo:108
 msgid "Check UFOpaedia entry"
@@ -1634,9 +1633,8 @@ msgid "Buy or produce a new aircraft"
 msgstr "Koupit nebo vyrobit nový letoun"
 
 #: ../base/ufos/menu_bases.ufo:144
-#, fuzzy
 msgid "Build at least one functional Hangar (click for more info)"
-msgstr "Vybudujte alespoň jednen hangár"
+msgstr "Vybudujte alespoň jednen funkční hangár (klik pro více informací)"
 
 #: ../base/ufos/menu_bases.ufo:157 ../base/ufos/menu_buy.ufo:2283
 #: ../base/ufos/menu_geoscape.ufo:1019 ../base/ufos/menu_production.ufo:825
@@ -1650,9 +1648,8 @@ msgid "Buy/Sell equipment"
 msgstr "Koupit/prodat vybavení"
 
 #: ../base/ufos/menu_bases.ufo:185
-#, fuzzy
 msgid "Build at least one functional Storage (click for more info)"
-msgstr "Vybudujte alespoň jeden sklad"
+msgstr "Vybudujte alespoň jeden funkční sklad (klik pro více informací)"
 
 #: ../base/ufos/menu_bases.ufo:198
 msgid "Buy/Sell Equipment"
@@ -1676,9 +1673,8 @@ msgid "Research new technology"
 msgstr "Zkoumat novou technologii"
 
 #: ../base/ufos/menu_bases.ufo:261
-#, fuzzy
 msgid "Build at least one functional Laboratory (click for more info)"
-msgstr "Vybudujte alespoň jednu laboratoř"
+msgstr "Vybudujte alespoň jednu funkční laboratoř (klik pro více informací)"
 
 #: ../base/ufos/menu_bases.ufo:274 ../base/ufos/menu_basesummary.ufo:354
 msgid "Research"
@@ -1690,7 +1686,7 @@ msgstr "Vyrobit nové vybavení"
 
 #: ../base/ufos/menu_bases.ufo:302
 msgid "Build at least one functional Workshop (click for more info)"
-msgstr ""
+msgstr "Vybudujte alespoň jednu funkční dílnu (klik pro více informací)"
 
 #: ../base/ufos/menu_bases.ufo:315 ../base/ufos/menu_basesummary.ufo:339
 msgid "Production"
@@ -1702,18 +1698,18 @@ msgid "Hire employees"
 msgstr "Najmout zaměst."
 
 #: ../base/ufos/menu_bases.ufo:343
-#, fuzzy
 msgid "Build at least one functional Living Quarter (click for more info)"
-msgstr "Vybudujte alespoň jednu ubikaci"
+msgstr "Vybudujte alespoň jednu funkční ubikaci (klik pro více informací)"
 
 #: ../base/ufos/menu_bases.ufo:366
 msgid "Deal with Aliens in Alien Containment"
 msgstr "Vypořádat se s cizáky v komplexu cizáckých cel"
 
 #: ../base/ufos/menu_bases.ufo:382
-#, fuzzy
 msgid "Build at least one functional Alien Containment (click for more info)"
-msgstr "Vybudujte alespoň jeden komplex cizáckých cel"
+msgstr ""
+"Vybudujte alespoň jeden funkční komplex cizáckých cel (klik pro více "
+"informací)"
 
 #: ../base/ufos/menu_bases.ufo:395
 msgid "Containment"
@@ -1724,9 +1720,8 @@ msgid "Medical and Surgery operations"
 msgstr "Lékařské a chirurgické zákroky"
 
 #: ../base/ufos/menu_bases.ufo:421
-#, fuzzy
 msgid "Build at least one functional Hospital (click for more info)"
-msgstr "Vybudujte alespoň jednu nemocnici"
+msgstr "Vybudujte alespoň jednu funkční nemocnici (klik pro více informací)"
 
 #: ../base/ufos/menu_bases.ufo:443
 msgid "Base Information"
@@ -2880,11 +2875,11 @@ msgstr "Připojit se"
 
 #: ../base/ufos/menu_multiplayer.ufo:537
 msgid "Leave Serverbrowser"
-msgstr "Opustit prohlížeč serverů"
+msgstr "Návrat k seznamu serverů"
 
 #: ../base/ufos/menu_multiplayer.ufo:562
 msgid "Bookmark"
-msgstr "Přidat k oblíbeným"
+msgstr "Oblíbený"
 
 #: ../base/ufos/menu_multiplayer.ufo:585
 msgid "Serverfilter:"
@@ -2892,7 +2887,7 @@ msgstr "Filtr serverů:"
 
 #: ../base/ufos/menu_multiplayer.ufo:638 ../base/ufos/menu_multiplayer.ufo:848
 msgid "Serverbrowser"
-msgstr "Prohlížeč serverů"
+msgstr "Zjištěné servery"
 
 #: ../base/ufos/menu_multiplayer.ufo:664 ../base/ufos/menu_multiplayer.ufo:856
 #: ../base/ufos/menu_multiplayer.ufo:865
@@ -3018,10 +3013,9 @@ msgstr "Maximum hráčů na tým"
 msgid "Max. teams for this map"
 msgstr "Maximum týmů pro tuto mapu"
 
-# FIXME - kde je tenhle text?
 #: ../base/ufos/menu_multiplayer.ufo:1512
 msgid "Team preference:"
-msgstr "Priorita týmu:"
+msgstr "Zvolený tým:"
 
 #: ../base/ufos/menu_multiplayer.ufo:1523
 msgid "Next free team"
@@ -14346,12 +14340,12 @@ msgstr ""
 "granáty, oslepujícími granáty a lékárničkami."
 
 #: ../base/ufos/tips.ufo:29
-#, fuzzy
 msgid ""
 "Build a hospital to be able to heal your soldiers faster for their next "
 "mission."
 msgstr ""
-"Postavte nemocnici abyste byli schopni rychleji léčit vojáky pro další misi."
+"Postavte nemocnici abyste byli schopni rychleji léčit vojáky pro jejich "
+"další misi."
 
 #: ../base/ufos/tips.ufo:30
 msgid ""
@@ -14501,6 +14495,8 @@ msgid ""
 "You should ensure that not too many civilians lose their lives. Otherwise "
 "you might lose the game sooner than you'd expect."
 msgstr ""
+"Měl byste zajistit aby nepřišlo o život příliš mnoho civilistů. Jinak byste "
+"mohl prohrát hru dříve než se nadějete."
 
 #: ../base/ufos/weapons.ufo:6
 msgid "Medikit"
@@ -15139,22 +15135,22 @@ msgstr ""
 #: client/cl_airfight.c:352 client/cl_aliencont.c:185
 #: client/cl_aliencont.c:213 client/cl_aliencont.c:226
 #: client/cl_aliencont.c:239 client/cl_basemanagement.c:1153
-#: client/cl_basemanagement.c:2652 client/cl_basemanagement.c:2703
-#: client/cl_basemanagement.c:2714 client/cl_basemanagement.c:2723
-#: client/cl_basemanagement.c:2733 client/cl_basemanagement.c:2740
-#: client/cl_basemanagement.c:2745 client/cl_campaign.c:298
-#: client/cl_campaign.c:1085 client/cl_campaign.c:1143
-#: client/cl_campaign.c:1158 client/cl_campaign.c:1324
-#: client/cl_campaign.c:1335 client/cl_campaign.c:1345
-#: client/cl_campaign.c:1355 client/cl_campaign.c:1365
-#: client/cl_campaign.c:1376 client/cl_campaign.c:1389
-#: client/cl_campaign.c:1399 client/cl_campaign.c:1406
-#: client/cl_campaign.c:1414 client/cl_campaign.c:2781
-#: client/cl_campaign.c:2892 client/cl_campaign.c:2940
-#: client/cl_campaign.c:2942 client/cl_campaign.c:3277
-#: client/cl_inventory.c:293 client/cl_inventory.c:298
-#: client/cl_inventory.c:544 client/cl_main.c:1030 client/cl_main.c:1277
-#: client/cl_map.c:295 client/cl_mapfightequip.c:756
+#: client/cl_basemanagement.c:2343 client/cl_basemanagement.c:2652
+#: client/cl_basemanagement.c:2703 client/cl_basemanagement.c:2714
+#: client/cl_basemanagement.c:2723 client/cl_basemanagement.c:2733
+#: client/cl_basemanagement.c:2740 client/cl_basemanagement.c:2745
+#: client/cl_campaign.c:298 client/cl_campaign.c:1085
+#: client/cl_campaign.c:1143 client/cl_campaign.c:1158
+#: client/cl_campaign.c:1324 client/cl_campaign.c:1335
+#: client/cl_campaign.c:1345 client/cl_campaign.c:1355
+#: client/cl_campaign.c:1365 client/cl_campaign.c:1376
+#: client/cl_campaign.c:1389 client/cl_campaign.c:1399
+#: client/cl_campaign.c:1406 client/cl_campaign.c:1414
+#: client/cl_campaign.c:2781 client/cl_campaign.c:2892
+#: client/cl_campaign.c:2940 client/cl_campaign.c:2942
+#: client/cl_campaign.c:3277 client/cl_inventory.c:293
+#: client/cl_inventory.c:298 client/cl_inventory.c:544 client/cl_main.c:1030
+#: client/cl_main.c:1277 client/cl_map.c:295 client/cl_mapfightequip.c:756
 #: client/cl_mapfightequip.c:758 client/cl_market.c:676 client/cl_market.c:680
 #: client/cl_parse.c:1591 client/cl_popup.c:354 client/cl_produce.c:446
 #: client/cl_produce.c:455 client/cl_produce.c:465 client/cl_produce.c:474
@@ -15393,7 +15389,7 @@ msgstr "Byla vybudována nová základna: %s (stát: %s)"
 msgid "A new base has been built: %s"
 msgstr "Byla vybudována nová základna: %s"
 
-#: client/cl_basemanagement.c:2328 client/cl_basemanagement.c:2343
+#: client/cl_basemanagement.c:2328
 msgid "Base built"
 msgstr "Základna vybudována"
 
@@ -15408,6 +15404,7 @@ msgstr "Dosáhl jste maximálního počtu základen."
 #: client/cl_basemanagement.c:2702
 msgid "You need at least one Hangar (and its dependencies) to use aircraft."
 msgstr ""
+"Pro použití letounu potřebujete alespoň jeden hangár (a jeho závislosti)."
 
 #: client/cl_basemanagement.c:2713
 #, c-format
@@ -15440,13 +15437,13 @@ msgid "Building %s is not finished yet, and is needed to use building %s."
 msgstr "Ještě není dokončena budova %s, která je potřeba pro budovu %s."
 
 #: client/cl_basemanagement.c:2738
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Make sure that the dependencies of building %s (%s) are operational, so that "
 "building %s may be used."
 msgstr ""
-"Ujistěte se, že závislost budovy %s (%s) je v provozu, takže budova %s může "
-"být používána."
+"Ujistěte se, že závislosti budovy %s (%s) jsou v provozu, takže budova %s "
+"může být používána."
 
 #: client/cl_basemanagement.c:2744
 #, c-format
@@ -16293,7 +16290,7 @@ msgstr "Maximum hráčů na tým:\t%s\n"
 #: client/cl_main.c:856
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
-msgstr "Maximum týmů povolených v této mapě:\t%s\n"
+msgstr "Maximum týmů v této mapě:\t%s\n"
 
 #: client/cl_main.c:857
 #, c-format
@@ -16321,7 +16318,7 @@ msgid ""
 "All bookmark slots are used - please removed unused entries and repeat this "
 "step"
 msgstr ""
-"Není místo pro další oblíbené - smažte prosím nepoužívané položky a zkuste "
+"Není místo pro další oblíbené - smažte prosím nepoužívané záznamy a zkuste "
 "to znovu"
 
 #: client/cl_main.c:1116
@@ -17153,7 +17150,7 @@ msgstr "Rychle uložená kampaň byla úspěšně načtena."
 
 #: client/cl_save.c:627
 msgid "Saves to the quick save slot"
-msgstr ""
+msgstr "Uložit do pozice rychlého uložení"
 
 #: client/cl_screen.c:370
 #, c-format
@@ -17672,12 +17669,10 @@ msgid "No Antimatter Storage in this base.\n"
 msgstr "Na této základně není sklad antihmoty.\n"
 
 #: client/cl_transfer.c:937
-#, fuzzy
 msgid "You can transfer aircraft - this base has a Hangar.\n"
 msgstr "Můžete přepravit letoun - tato základna má hangár.\n"
 
 #: client/cl_transfer.c:939
-#, fuzzy
 msgid ""
 "Aircraft transfer not possible - this base does not have a Command Centre.\n"
 msgstr "Přeprava letounu není možná - tato základna nemá řídící středisko.\n"
