@@ -1683,6 +1683,8 @@ static void CP_NationStatsClick_f (void)
 
 	/* Which entry in the list? */
 	num = atoi(Cmd_Argv(1));
+	if (num < 0 || num >= gd.numNations)
+		return;
 
 	MN_PushMenu("nations");
 	Cbuf_AddText(va("nation_select %i;", num));
@@ -4489,6 +4491,8 @@ static void CP_CampaignsClick_f (void)
 
 	/*which building? */
 	num = atoi(Cmd_Argv(1));
+	if (num < 0 || num >= numCampaigns)
+		return;
 
 	/* jump over all invisible campaigns */
 	while (!campaigns[num].visible) {
@@ -4496,9 +4500,6 @@ static void CP_CampaignsClick_f (void)
 		if (num >= numCampaigns)
 			return;
 	}
-
-	if (num >= numCampaigns || num < 0)
-		return;
 
 	Cvar_Set("campaign", campaigns[num].id);
 	if (!Q_strncmp(campaigns[num].team, "human", 5))
