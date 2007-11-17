@@ -2688,6 +2688,13 @@ static void B_CheckBuildingStatusForMenu_f (void)
 
 	baseIdx = baseCurrent->idx;
 
+	if (building->buildingType == B_HANGAR) {
+		/* this is an exception because you must have a small or large hangar to enter aircraft menu */
+		Com_sprintf(popupText, sizeof(popupText), _("You need at least one Hangar (and its dependences) to use aircrafts."));
+		MN_Popup(_("Notice"), popupText);
+		return;
+	}
+
 	if (B_GetNumberOfBuildingsInBaseByType(baseIdx, building->buildingType) > 0) {
 		/* there is a building of this type in base, but not working */
 		for (i = 0; i < gd.numBuildings[baseIdx]; i++) {
