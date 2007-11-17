@@ -982,7 +982,7 @@ void B_SetUpBase (base_t* base)
 			/* fake a click to basemap */
 			B_SetBuildingByClick((int) building->pos[0], (int) building->pos[1]);
 			B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
-			/* Now buy two first aircrafts if it is our first base. */
+			/* Now buy two first aircraft if it is our first base. */
 			if (gd.numBases == 1 && building->buildingType == B_HANGAR) {
 				Cbuf_AddText("aircraft_new craft_drop_firebird\n");
 				aircraft = AIR_GetAircraft("craft_drop_firebird");
@@ -2699,7 +2699,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 
 	if (building->buildingType == B_HANGAR) {
 		/* this is an exception because you must have a small or large hangar to enter aircraft menu */
-		Com_sprintf(popupText, sizeof(popupText), _("You need at least one Hangar (and its dependencies) to use aircrafts."));
+		Com_sprintf(popupText, sizeof(popupText), _("You need at least one Hangar (and its dependencies) to use aircraft."));
 		MN_Popup(_("Notice"), popupText);
 		return;
 	}
@@ -3057,7 +3057,7 @@ aircraft_t *B_GetAircraftFromBaseByIndex (base_t* base, int index)
 	if (index < base->numAircraftInBase) {
 		return &base->aircraft[index];
 	} else {
-		Com_DPrintf(DEBUG_CLIENT, "B_GetAircraftFromBaseByIndex: error: index bigger then number of aircrafts in this base\n");
+		Com_DPrintf(DEBUG_CLIENT, "B_GetAircraftFromBaseByIndex: error: index bigger than number of aircraft in this base\n");
 		return NULL;
 	}
 }
@@ -3135,8 +3135,8 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 	case CAP_WORKSPACE:		/**< Update workshop space capacity in base. */
 	case CAP_HOSPSPACE:		/**< Update hospital space capacity in base. */
 	case CAP_ITEMS:			/**< Update items capacity in base. */
-	case CAP_AIRCRAFTS_SMALL:	/**< Update aircrafts capacity in base. */
-	case CAP_AIRCRAFTS_BIG:		/**< Update aircrafts capacity in base. */
+	case CAP_AIRCRAFTS_SMALL:	/**< Update aircraft capacity in base. */
+	case CAP_AIRCRAFTS_BIG:		/**< Update aircraft capacity in base. */
 	case CAP_ANTIMATTER:		/**< Update antimatter capacity in base. */
 		/* Reset given capacity in current base. */
 		base->capacities[cap].max = 0;
