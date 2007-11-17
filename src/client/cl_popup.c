@@ -187,8 +187,9 @@ static void CL_PopupAircraftClick_f (void)
 	/* Get num of item selected in list */
 	if (Cmd_Argc() < 2)
 		return;
+
 	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num > popupAircraft.nbItems++)
+	if (num < 0 || num >= popupAircraft.nbItems)
 		return;
 
 	MN_PopMenu(qfalse); /* Close popup */
@@ -325,6 +326,7 @@ static aircraft_t* CL_PopupInterceptGetAircraft (void)
 	num = atoi(Cmd_Argv(1));
 	if (num < 0 || num >= popupIntercept.numAircraft)
 		return NULL;
+
 	MN_PopMenu(qfalse);
 	if (popupIntercept.idBaseAircraft[num] >= gd.numBases
 		|| popupIntercept.idInBaseAircraft[num] >= gd.bases[popupIntercept.idBaseAircraft[num]].numAircraftInBase)
