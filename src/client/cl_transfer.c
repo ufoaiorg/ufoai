@@ -765,6 +765,8 @@ static void TR_TransferListSelect_f (void)
 	}
 
 	num = atoi(Cmd_Argv(1));
+	if (num < 0 || num >= csi.numODs)
+		return;
 
 	switch (transferType) {
 	case TRANS_TYPE_INVALID:	/**< No list was inited before you call this. */
@@ -1046,6 +1048,8 @@ static void TR_CargoListSelect_f (void)
 		return;
 
 	num = atoi(Cmd_Argv(1));
+	if (num < 0 || num >= MAX_CARGO)
+		return;
 
 	switch (cargo[num].type) {
 	case CARGO_TYPE_ITEM:
