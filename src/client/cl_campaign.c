@@ -4629,7 +4629,7 @@ static void CP_UFORecovered_f (void)
 {
 	int i;
 	ufoType_t UFOtype;
-	base_t *base  = NULL;
+	base_t *base = NULL;
 	aircraft_t *ufocraft = NULL;
 	qboolean store = qfalse, ufofound = qfalse;
 
