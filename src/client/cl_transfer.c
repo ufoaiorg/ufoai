@@ -899,10 +899,8 @@ static void TR_TransferBaseSelect (base_t *base)
 	static char baseInfo[1024];
 	qboolean powercomm = qfalse;
 
-	if (!baseCurrent)
+	if (!base)
 		return;
-
-	assert(base);
 
 	Com_sprintf(baseInfo, sizeof(baseInfo), "%s\n\n", base->name);
 
@@ -936,9 +934,9 @@ static void TR_TransferBaseSelect (base_t *base)
 		Q_strcat(baseInfo, _("No power supplies in this base.\n"), sizeof(baseInfo));
 	}
 	if (base->hasHangar || base->hasHangarSmall) {
-		Q_strcat(baseInfo, _("You can transfer aircraft - this base has Hangar.\n"), sizeof(baseInfo));
+		Q_strcat(baseInfo, _("You can transfer aircraft - this base has a Hangar.\n"), sizeof(baseInfo));
 	} else if (!base->hasCommand) {
-		Q_strcat(baseInfo, _("Aircraft transfer not possible - this base does not have Command Centre.\n"), sizeof(baseInfo));
+		Q_strcat(baseInfo, _("Aircraft transfer not possible - this base does not have a Command Centre.\n"), sizeof(baseInfo));
 	} else if (base->hasPower) {
 		Q_strcat(baseInfo, _("No Hangar in this base.\n"), sizeof(baseInfo));
 	} else if (!powercomm) {
