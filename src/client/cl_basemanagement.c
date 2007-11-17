@@ -2339,8 +2339,8 @@ static void B_BuildBase_f (void)
 			return;
 		}
 	} else {
-		Q_strncpyz(messageBuffer, _("Not enough credits to set up a new base."), sizeof(messageBuffer));
-		MN_AddNewMessage(_("Base built"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
+		Com_sprintf(popupText, sizeof(popupText), _("Not enough credits to set up a new base."));
+		MN_Popup(_("Notice"), popupText);
 	}
 }
 
