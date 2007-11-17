@@ -26,7 +26,7 @@ tips tiplist {
 	"_If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
 	"_Use the first-person view (toggle with [v]) to check if moving one square to the left will make that shoot-through-the-building shot possible."
 	"_Use a fast soldier with pistols, one handed melee weapons, grenades, flashbangs and medikits."
-	"_Build a hospital to be able to faster heal your soldiers for the next mission."
+	"_Build a hospital to be able to heal your soldiers faster for their next mission."
 	"_Plasma grenades do the most damage, but frag grenades can be useful, as they can be thrown slightly further."
 	"_Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
 	"_Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with one grenade."
@@ -45,4 +45,5 @@ tips tiplist {
 	"_Build an alien containment to be able to imprison aliens alive."
 	"_Spotted enemies: While on a ground mission you can press [Space] to cycle through all spotted enemies. Pressing [t] key will draw a line to each enemy the selected soldier can see."
 	"_You can use the right mouse button in the soldier equipment screen to equip or unequip weapons, ammo and armour. This only works in the base equipment, not in the tactical missions where such an action would cost TUs."
+	"_You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
 }

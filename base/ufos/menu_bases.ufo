@@ -141,11 +141,15 @@ menu bases
 	{
 		// only if base can't handle aircraft
 		if "mn_base_num_aircraft == -1"
-		tooltip	"_Build at least one Hangar"
+		tooltip	"_Build at least one functional Hangar (click for more info)"
 		image	menu/button
 		pos	"755 188"
 		texl	"0 72"
 		texh	"230 120"
+		click
+		{
+			cmd "check_building_status building_hangar;"
+		}
 		in
 	}
 	string txt_aircraft
@@ -178,7 +182,7 @@ menu bases
 	{
 		// only if base is under attack don't have a storage
 		if "mn_base_buysell_allowed != 1"
-		tooltip	"_Build at least one Storage"
+		tooltip	"_Build at least one functional Storage (click for more info)"
 		image	menu/button
 		pos	"755 248"
 		texl	"0 72"
@@ -254,7 +258,7 @@ menu bases
 	{
 		// only if base is not under attack
 		if "mn_base_research_allowed != 1"
-		tooltip	"_Build at least one Laboratory"
+		tooltip	"_Build at least one functional Laboratory (click for more info)"
 		image	menu/button
 		pos	"755 368"
 		texl	"0 72"
@@ -295,7 +299,7 @@ menu bases
 	{
 		// only if base is unable to produce items
 		if "mn_base_prod_allowed == 0"
-		tooltip	"_Workshop not operational"
+		tooltip	"_Build at least one functional Workshop (click for more info)"
 		image	menu/button
 		pos	"755 428"
 		texl	"0 72"
@@ -336,7 +340,7 @@ menu bases
 	{
 		// only if base is not under attack
 		if "mn_base_hire_allowed != 1"
-		tooltip	"_Build at least one Living Quarter"
+		tooltip	"_Build at least one functional Living Quarter (click for more info)"
 		image	menu/button
 		pos	"755 488"
 		texl	"0 72"
@@ -375,7 +379,7 @@ menu bases
 	pic containment_na
 	{
 		if "mn_base_containment_allowed != 1"
-		tooltip	"_Build at least one Alien Containment"
+		tooltip	"_Build at least one functional Alien Containment (click for more info)"
 		image	menu/button
 		pos	"755 548"
 		texl	"0 72"
@@ -414,7 +418,7 @@ menu bases
 	pic hospital_na
 	{
 		if "mn_base_hospital_allowed != 1"
-		tooltip	"_Build at least one Hospital"
+		tooltip	"_Build at least one functional Hospital (click for more info)"
 		image	menu/button
 		pos	"755 608"
 		texl	"0 72"

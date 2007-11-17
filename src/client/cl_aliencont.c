@@ -746,20 +746,20 @@ static void AC_OpenUFOpedia_f (void)
 }
 
 /**
- * @brief Kill all aliens in current base.
+ * @brief Kill all aliens in given base.
+ * @param[in] base The base in which you want to kill all aliens
+ * @sa AC_KillAll_f
  */
-static void AC_KillAll_f (void)
+void AC_KillAll (base_t *base)
 {
 	int i;
 	qboolean aliens = qfalse;
 
-	/* Can be called from everywhere. */
-	if (!baseCurrent ||!curCampaign)
-		return;
+	assert(base);
 
 	/* Are there aliens here at all? */
 	for (i = 0; i < gd.numAliensTD; i++) {
-		if (baseCurrent->alienscont[i].amount_alive > 0) {
+		if (base->alienscont[i].amount_alive > 0) {
 			aliens = qtrue;
 			break;
 		}
@@ -769,11 +769,24 @@ static void AC_KillAll_f (void)
 	if (!aliens)
 		return;
 
-	AL_RemoveAliens(baseCurrent, NULL, 0, AL_KILL);
+	AL_RemoveAliens(base, NULL, 0, AL_KILL);
 
 	/* Reinit menu to display proper values. */
 	AC_SelectAlien_f();
 	Cbuf_AddText("aliencont_init\n");
+}
+
+/**
+ * @brief Kill all aliens in current base.
+ * @sa AC_KillAll
+ */
+static void AC_KillAll_f (void)
+{
+	/* Can be called from everywhere. */
+	if (!baseCurrent ||!curCampaign)
+		return;
+
+	AC_KillAll(baseCurrent);
 }
 
 /**

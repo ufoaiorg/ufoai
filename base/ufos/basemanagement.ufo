@@ -62,6 +62,7 @@ building building_aliencontainment
 	name		"_Alien Containment Facility"
 	image		base/aliencont2
 	fixcosts	92000
+	depends		building_powerplant
 	type		aliencont
 	build_time	10
 	varcosts	1000
