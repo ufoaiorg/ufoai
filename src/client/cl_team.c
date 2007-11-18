@@ -943,6 +943,7 @@ static void CL_Select_f (void)
 	int num;
 	selectSoldierModes_t mode;
 	employeeType_t employeeType;
+	menu_t *activeMenu = NULL;
 
 	/* check syntax */
 	if (Cmd_Argc() < 2) {
@@ -1019,12 +1020,23 @@ static void CL_Select_f (void)
 	}
 
 	if (mode == SELECT_MODE_SOLDIER) {
-		/* HACK */
-		/* deselect current selected soldier and select the new one - these are confuncs */
-		Cmd_ExecuteString(va("teamdeselect%i", cl_selected->integer));
-		Cmd_ExecuteString(va("teamselect%i", num));
-		Cmd_ExecuteString(va("equipdeselect%i", cl_selected->integer));
-		Cmd_ExecuteString(va("equipselect%i", num));
+		activeMenu = MN_ActiveMenu();
+		if (!Q_strncmp(activeMenu->name, "employees", 9)) {
+			/* this is hire menu: we can select soldiers, worker, medics, or researcher */
+			if (num < employeesInCurrentList) {
+				Cmd_ExecuteString(va("employee_list_click %i", num));
+				Cmd_ExecuteString(va("employee_select +%i", num));
+			} else
+				/* there's no employee corresponding to this num, skip */
+				return;
+		} else {
+			/* HACK */
+			/* deselect current selected soldier and select the new one - these are confuncs */
+			Cmd_ExecuteString(va("teamdeselect%i", cl_selected->integer));
+			Cmd_ExecuteString(va("teamselect%i", num));
+			Cmd_ExecuteString(va("equipdeselect%i", cl_selected->integer));
+			Cmd_ExecuteString(va("equipselect%i", num));
+		}
 	} else {
 		/* deselect current selected soldier and select the new one - these are confuncs */
 		Cmd_ExecuteString(va("%sdeselect%i", command, cl_selected->integer));

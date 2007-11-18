@@ -55,6 +55,9 @@ typedef struct employee_s {
 	employeeType_t type;		/**< back link to employee type in gd.employees */
 } employee_t;
 
+/* how many employees in current list (changes on every catergory change, too) */
+extern int employeesInCurrentList;
+
 void E_ResetEmployees(void);
 employee_t* E_CreateEmployee(employeeType_t type);
 qboolean E_DeleteEmployee(employee_t *employee, employeeType_t type);

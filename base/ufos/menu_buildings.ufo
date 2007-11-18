@@ -23,6 +23,12 @@ menu buildings
 		click
 		rclick
 		mclick
+		excluderect
+		{
+			// building description
+			pos		"0 560"
+			size	"526 60"
+		}
 	}
 
 	pic back_ul
