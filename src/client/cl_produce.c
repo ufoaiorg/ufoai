@@ -112,9 +112,10 @@ static int PR_CalculateProductionTime (base_t *base, technology_t *tech, compone
 	} else {
 		/* Calculate the real time used for our amount of workers. */
 		/* NOTE: I changed algorithm for a more realistic one -- Kracken 2007/11/18
-		 * now, production time is divided by 4 each time you double the number of worker */
-		time = timeDefault * (float) PRODUCE_WORKERS / maxworkers;
-		time = (int) time * PRODUCE_WORKERS / maxworkers;
+		 * now, production time is divided by 4 each time you double the number of worker
+		 * the "+1" is to avoid bug is you have no worker (maxworkers = 0) */
+		time = timeDefault * (float) (PRODUCE_WORKERS + 1) / (maxworkers + 1);
+		time = (int) time * (PRODUCE_WORKERS + 1) / (maxworkers + 1);
 		Com_DPrintf(DEBUG_CLIENT, "PR_CalculateProductionTime()... workers: %i, tech: %s, time: %i\n",
 		maxworkers, tech->id, time);
 		/* Don't allow to return less time than 1 hour. */
