@@ -2071,6 +2071,7 @@ base/textures/tex_lights/drkmtlsupport_light_glow.tga | GNU General Public Licen
 base/textures/tex_lights/mtl_l1.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_lights/mtl_l1_fx.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_lights/mtl_l1_fx2.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_material/circle_gray.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_material/metall006.jpg | Public Domain | Golgotha Public Domain Data
 base/textures/tex_mattn/brick03.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/brick03a.jpg | GNU General Public License 2.0 | Martin Gerhardy
