@@ -2274,6 +2274,30 @@ base/textures/tex_streets/street004.jpg | GNU General Public License 2.0 | Werne
 base/textures/tex_streets/street005.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_streets/street010.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_streets/street11.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_ufo/ufo1_01.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
+base/textures/tex_ufo/ufo1_02.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
+base/textures/tex_ufo/ufo1_03.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
+base/textures/tex_ufo/ufo1_04.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
+base/textures/tex_ufo/ufo1_05.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
+base/textures/tex_ufo/ufo2_01.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
+base/textures/tex_ufo/ufo2_02.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
+base/textures/tex_ufo/ufo2_03.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
+base/textures/tex_ufo/ufo2_04.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
+base/textures/tex_ufo/ufo2_05.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
+base/textures/tex_ufo/ufo2_06.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
+base/textures/tex_ufo/ufo2_07.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
+base/textures/tex_ufo/ufo2_08.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
+base/textures/tex_ufo/ufo2_09.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
+base/textures/tex_ufo/ufo2_10.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
+base/textures/tex_ufo/ufo2_11.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
+base/textures/tex_ufo/ufo2_12.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
+base/textures/tex_ufo/ufo2_13.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
+base/textures/tex_ufo/ufo2_14.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
+base/textures/tex_ufo/ufo2_15.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
+base/textures/tex_ufo/ufo2_16.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
+base/textures/tex_ufo/ufo2_17.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
+base/textures/tex_ufo/ufo2_medic01.jpg |  | "Sparx" Beyeler
+base/textures/tex_ufo/ufo2_medic02.jpg |  | "Sparx" Beyeler
 src/docs/pathfinding.odg | GNU Free Documentation License | Werner Höhrer (hoehrer)
 src/tools/blender/export_md2_new.py | GNU General Public License 2.0
 src/tools/blender/md2_export.py | GNU General Public License 2.0
