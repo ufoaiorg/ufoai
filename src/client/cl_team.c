@@ -944,6 +944,8 @@ static void CL_Select_f (void)
 	selectSoldierModes_t mode;
 	employeeType_t employeeType;
 
+	Com_Printf("Enter function\n");
+
 	/* check syntax */
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
@@ -970,6 +972,8 @@ static void CL_Select_f (void)
 	else
 		return;
 
+	Com_Printf("mode: %i\n", mode);
+
 	switch (mode) {
 	case SELECT_MODE_SOLDIER:
 		/* check whether we are connected (tactical mission) */
@@ -977,6 +981,7 @@ static void CL_Select_f (void)
 			CL_ActorSelectList(num);
 			return;
 		}
+		Com_Printf("this is menu to choose soldier\n");
 		/* we are still in the menu - so fall through */
 	case SELECT_MODE_EQUIP:
 		/* no base or no aircraft selected */
