@@ -230,6 +230,14 @@ language th {
 	}
 }
 
+language ja {
+	"_Japanese"
+	{
+		ja_JP.UTF-8
+		ja_JP.utf8
+	}
+}
+
 language none {
 	"_No language"
 	{
