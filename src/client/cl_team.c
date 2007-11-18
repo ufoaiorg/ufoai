@@ -917,7 +917,6 @@ static void CL_EquipType_f (void)
 	if (num < 0 && num >= BUY_MULTI_AMMO)
 		return;
 
-
 	/* display new items */
 	baseCurrent->equipType = num;
 	if (menuInventory) {

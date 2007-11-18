@@ -59,7 +59,7 @@ mail prolog
 {
 	from "_mail_from_un"
 	to "_mail_to_base_commander"
-	date "_2084 March 21"
+	date "_2084 Mar 21"
 	subject "_Good Luck"
 	body "_mail_prolog"
 	icon icons/un

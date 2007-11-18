@@ -704,7 +704,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 		subject = tech->mail[type].subject;
 
 		if (tech->mail[type].date) {
-			Q_strncpyz(dateBuf, tech->mail[type].date, sizeof(dateBuf));
+			Q_strncpyz(dateBuf, _(tech->mail[type].date), sizeof(dateBuf));
 		} else {
 			switch (type) {
 			case TECHMAIL_PRE:

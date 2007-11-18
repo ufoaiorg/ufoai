@@ -912,7 +912,7 @@ int E_CountUnassigned (const base_t* const base, employeeType_t type)
  * @brief Find an hired or free employee by the menu index
  * @param[in] num The index from the hire menu screen.
  */
-employee_t* E_GetEmployeeByMenuIndex(int num)
+employee_t* E_GetEmployeeByMenuIndex (int num)
 {
 	int i, j;
 	employee_t* employee;
@@ -1009,9 +1009,9 @@ static void E_EmployeeSelect_f (void)
 		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 		return;
 	}
-	num = atoi(Cmd_Argv(1));
 
-	if (num >= gd.numEmployees[employeeCategory])
+	num = atoi(Cmd_Argv(1));
+	if (num < 0 || num >= gd.numEmployees[employeeCategory])
 		return;
 
 	employee = E_GetEmployeeByMenuIndex(num);

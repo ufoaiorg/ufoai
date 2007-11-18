@@ -710,6 +710,9 @@ void BDEF_ListClick_f (void)
 	int num, height;
 	menuNode_t *node;
 
+	if (!baseCurrent)
+		return;
+
 	if (Cmd_Argc() < 2)
 		return;
 	num = atoi(Cmd_Argv(1));
@@ -908,6 +911,9 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 	aircraft_t *aircraft;
 	aircraftSlot_t *slot;
 
+	if (!baseCurrent)
+		return;
+
 	/* don't let old links appear on this menu */
 	MN_MenuTextReset(TEXT_STANDARD);
 	MN_MenuTextReset(TEXT_AIREQUIP_1);
@@ -1028,6 +1034,9 @@ void AIM_AircraftEquipSlotSelect_f (void)
 	int i, pos;
 	aircraft_t *aircraft;
 
+	if (!baseCurrent)
+		return;
+
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
 		return;
@@ -1082,6 +1091,9 @@ void AIM_AircraftEquipZoneSelect_f (void)
 	aircraftSlot_t *slot;
 	menu_t *activeMenu = NULL;
 	qboolean aircraftMenu;
+
+	if (!baseCurrent)
+		return;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
@@ -1305,6 +1317,9 @@ void AIM_AircraftEquipAddItem_f (void)
 	qboolean aircraftMenu;
 	base_t* base;
 
+	if (!baseCurrent)
+		return;
+
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
 		return;
@@ -1394,6 +1409,9 @@ void AIM_AircraftEquipDeleteItem_f (void)
 	aircraft_t *aircraft;
 	menu_t *activeMenu = NULL;
 	qboolean aircraftMenu;
+
+	if (!baseCurrent)
+		return;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));

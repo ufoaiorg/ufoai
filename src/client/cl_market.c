@@ -726,8 +726,6 @@ static void BS_SellAircraft_f (void)
 	if (!baseCurrent)
 		return;
 
-	assert(baseCurrent);
-
 	num = atoi(Cmd_Argv(1));
 	if (num < 0 || num >= buyListLength)
 		return;
