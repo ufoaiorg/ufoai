@@ -29,8 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* holds the current active employee category */
 static int employeeCategory = 0;
-/* how many employees in current list (changes on every catergory change, too) */
-static int employeesInCurrentList = 0;
 /* the menu node of the employee list */
 static menuNode_t *employeeListNode;
 
