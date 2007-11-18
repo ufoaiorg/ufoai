@@ -2075,6 +2075,7 @@ base/textures/tex_material/metall006.jpg | Public Domain | Golgotha Public Domai
 base/textures/tex_mattn/brick03.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/brick03a.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/brick03g.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/dirt001.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/door.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/door001.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/door002.jpg | GNU General Public License 2.0 | Martin Gerhardy
@@ -2120,6 +2121,7 @@ base/textures/tex_mattn/rust.jpg | GNU General Public License 2.0 | Martin Gerha
 base/textures/tex_mattn/rust2.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/sand001.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/sign001.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/straw.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/street010.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/street011.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/street012.jpg | GNU General Public License 2.0 | Martin Gerhardy
@@ -2143,6 +2145,7 @@ base/textures/tex_mattn/wall016.jpg | GNU General Public License 2.0 | Martin Ge
 base/textures/tex_mattn/wall017.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall018.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall019.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/wall020.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall042.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall043.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall044.jpg | GNU General Public License 2.0 | Martin Gerhardy
