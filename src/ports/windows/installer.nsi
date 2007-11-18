@@ -120,6 +120,8 @@ SectionGroup /e "Game" SECGROUP01
     File "..\..\..\base\i18n\fr\LC_MESSAGES\*.mo"
     SetOutPath "$INSTDIR\base\i18n\it\LC_MESSAGES"
     File "..\..\..\base\i18n\it\LC_MESSAGES\*.mo"
+    SetOutPath "$INSTDIR\base\i18n\ja\LC_MESSAGES"
+    File "..\..\..\base\i18n\ja\LC_MESSAGES\*.mo"
     SetOutPath "$INSTDIR\base\i18n\pl\LC_MESSAGES"
     File "..\..\..\base\i18n\pl\LC_MESSAGES\*.mo"
     SetOutPath "$INSTDIR\base\i18n\pt_BR\LC_MESSAGES"
