@@ -56,7 +56,7 @@ typedef struct employee_s {
 } employee_t;
 
 /* how many employees in current list (changes on every catergory change, too) */
-int employeesInCurrentList;
+extern int employeesInCurrentList;
 
 void E_ResetEmployees(void);
 employee_t* E_CreateEmployee(employeeType_t type);

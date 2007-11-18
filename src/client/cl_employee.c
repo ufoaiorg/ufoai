@@ -32,6 +32,9 @@ static int employeeCategory = 0;
 /* the menu node of the employee list */
 static menuNode_t *employeeListNode;
 
+/* how many employees in current list (changes on every catergory change, too) */
+int employeesInCurrentList = 0;
+
 /*****************************************************
 VISUAL/GUI STUFF
 *****************************************************/
