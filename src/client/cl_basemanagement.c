@@ -1793,8 +1793,10 @@ void B_DrawBase (menuNode_t * node)
 	char image[MAX_QPATH];
 	building_t *building = NULL, *secondBuilding = NULL, *hoverBuilding = NULL;
 
-	if (!baseCurrent)
+	if (!baseCurrent) {
 		MN_PopMenu(qfalse);
+		return;
+	}
 
 	width = node->size[0] / BASE_SIZE;
 	height = (node->size[1] + BASE_SIZE * 20) / BASE_SIZE;
