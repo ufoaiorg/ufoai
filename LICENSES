@@ -1844,9 +1844,6 @@ base/sound/weapons/riotshotgun.wav | GNU General Public License v2.0 | Alex Park
 base/sound/weapons/smg2.wav | GNU General Public License v2.0 | Alex Parker
 base/sound/weapons/smokeexplosion.wav | GNU General Public License v2.0 | Alex Parker
 base/sound/weapons/sniperrifle.wav | GNU General Public License v2.0 | Alex Parker
-base/textures/exterior/ext_conc02.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/exterior/ext_conc12.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/exterior/ext_conc13.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/9hangwires01b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/grid2_alpha.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_base/helipad1.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
@@ -1864,6 +1861,9 @@ base/textures/tex_buildings/9techwall03b.jpg | GNU General Public License 2.0 | 
 base/textures/tex_buildings/9techwall05b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/9techwall06.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/9techwall07.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/concrete012.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/concrete013.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/convrete002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/e8_mtlwall1.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/e8_mtlwall1b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/e8_mtlwall2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
