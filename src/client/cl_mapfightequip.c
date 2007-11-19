@@ -666,9 +666,9 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 		if (!slot->installationTime)
 			Q_strcat(smallbuffer1, _("This defense system is functional.\n"), sizeof(smallbuffer1));
 		else if (slot->installationTime > 0)
-			Q_strcat(smallbuffer1, va(_("This defense system will be installed in %i hours.\n"),slot->installationTime), sizeof(smallbuffer1));
+			Q_strcat(smallbuffer1, va(_("This defense system will be installed in %i hours.\n"), slot->installationTime), sizeof(smallbuffer1));
 		else
-			Q_strcat(smallbuffer1, va(_("This defense system will be removed in %i hours.\n"),-slot->installationTime), sizeof(smallbuffer1));
+			Q_strcat(smallbuffer1, va(_("This defense system will be removed in %i hours.\n"), -slot->installationTime), sizeof(smallbuffer1));
 	}
 	menuText[TEXT_AIREQUIP_1] = smallbuffer1;
 
@@ -1722,13 +1722,13 @@ const char* AII_WeightToName (itemWeight_t weight)
 {
 	switch (weight) {
 	case ITEM_LIGHT:
-		return _("Light");
+		return _("Light weight");
 		break;
 	case ITEM_MEDIUM:
-		return _("Medium");
+		return _("Medium weight");
 		break;
 	case ITEM_HEAVY:
-		return _("Heavy");
+		return _("Heavy weight");
 		break;
 	default:
 		return _("Unknown weight");

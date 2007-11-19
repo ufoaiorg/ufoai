@@ -351,7 +351,7 @@ menu map
 
 	pic bt_menu
 	{
-		tooltip	"_Options"
+		tooltip	"_Go to Options"
 		image	menu/button_mapmen_options2
 		pos	"950 10"
 		texl	"0 0"
