@@ -53,8 +53,6 @@ Use this fader to adjust effects volume to your neighbours ears.
 Use this fader to adjust music volume once you got bored of your private music collection.
 \subsubsection*{Mixing rate}
 I am not realy familiar with sound engeniering, so i guess it is "the more the merrier"...
-\subsubsection*{Sound renderer}
-Here you may selsect the sound renderer UFO:AI uses. Options are SDL, wapi and DirectX[tm] (win32 only). Unless you know what you are doing or sound is not working properly you may be ok with the presets.
 
 \subsection{Game}
 Besides having the chance to change your "playername" the game options also offer more practical opportunities.
@@ -71,28 +69,15 @@ Depending on your setting here the HUD will focus on the selected soldier if you
 \subsubsection*{Cursor tooltips}
 Turn on/off cursor tooltips, indicating the function of various UI elements.
 \subsubsection*{Camera scroll}
-Adjust camera scroll  speed.
+Adjust camera scroll speed.
 \subsubsection*{Camera rotation}
 Adjust camera rotation speed.
 
 \section{Troubleshooting}
 This section tries to address some known problems and possible workaround. Nevertheless your first and most up-to-date reference should be the projects homepage.
 
-\subsection{Usefull commands}
-There are some quite helpful commands to be entered on UFO:AI console that may help you to work around problems or help getting debugging information for better diagnostics.
-\subsubsection{Changing drivers used}
-maybe not all of the following option may be valid for you, depending on your systems config.
-
-\paragraph*{Linux}
-+ref\_gl [glx|sdl] $\Longrightarrow$ for grafic drivers with valid driver options given in brackets.
-+ref\_snd [sdl|oss|arts|alsa] $\Longrightarrow$ for sound drivers with valid driver options given in brackets 																						again.
-\paragraph*{Windows}
-+ref\_gl [gl] $\Longrightarrow$ for grafic drivers with valid driver options given in brackets.
-+ref\_snd [sdl|wapi|dx] $\Longrightarrow$ for sound drivers with valid driver options given in brackets 																						again.
-
 \subsection{Turning off sound completly}
 Even if this is not an elegant way to solve problems, it at least helps to norrow things sometimes to switch off any sound. While just turning the volmue to zero still loads the drivers +set snd\_init 0 (needs to be entered within the shell / command line on windows) disables them completly. If this solves your problem, please send us an bugreport to help improving the game.
-
 
 \section{Things to come}
 Because UFO:AI is always work in progress we will include a small list of features we all would love to have but cant tell you when, if ever, they are to come. So we are glad for any suggestions and feedback but please check if someone had the same idea before you.
