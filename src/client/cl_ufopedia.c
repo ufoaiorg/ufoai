@@ -488,9 +488,9 @@ static void UP_BuildingDescription (technology_t* t)
 	building_t* b = B_GetBuildingType(t->provides);
 
 	if (!b) {
-		Com_sprintf(upBuffer, sizeof(upBuffer), _("Error - could not find building") );
+		Com_sprintf(upBuffer, sizeof(upBuffer), _("Error - could not find building"));
 	} else {
-		Com_sprintf(upBuffer, sizeof(upBuffer), _("Depends:\t%s\n"), b->dependsBuilding >= 0 ? gd.buildingTypes[b->dependsBuilding].name : _("None") );
+		Com_sprintf(upBuffer, sizeof(upBuffer), _("Depends:\t%s\n"), b->dependsBuilding >= 0 ? gd.buildingTypes[b->dependsBuilding].name : _("None"));
 		Q_strcat(upBuffer, va(ngettext("Buildtime:\t%i day\n", "Buildtime:\t%i days\n", b->buildTime), b->buildTime), sizeof(upBuffer));
 		Q_strcat(upBuffer, va(_("Fixcosts:\t%i c\n"), b->fixCosts), sizeof(upBuffer));
 		Q_strcat(upBuffer, va(_("Running costs:\t%i c\n"), b->varCosts), sizeof(upBuffer));
@@ -558,7 +558,7 @@ void UP_AircraftItemDescription (int idx)
 			Q_strcat(itemText, va(_("Ammo:\t%i\n"), item->ammo), sizeof(itemText));
 			if (item->craftitem.weaponDamage > UFO_EPSILON)
 				Q_strcat(itemText, va(_("Damage:\t%i\n"), (int) item->craftitem.weaponDamage), sizeof(itemText));
-			Q_strcat(itemText, va(_("Reloading time:\t%i\n"),  (int) item->craftitem.weaponDelay),  sizeof(itemText));
+			Q_strcat(itemText, va(_("Reloading time:\t%i\n"),  (int) item->craftitem.weaponDelay), sizeof(itemText));
 		}
 		/* We write the range of the weapon */
 		if (item->craftitem.stats[AIR_STATS_WRANGE] > UFO_EPSILON)
@@ -572,9 +572,9 @@ void UP_AircraftItemDescription (int idx)
 			else if (item->craftitem.stats[i] < -2.0f)
 				Q_strcat(itemText, va("%s:\t%i\n", CL_AircraftStatToName(i), CL_AircraftMenuStatsValues(item->craftitem.stats[i], i)),  sizeof(itemText));
 			else if (item->craftitem.stats[i] > 1.0f)
-				Q_strcat(itemText, va(_("%s:\t+%i %%\n"), CL_AircraftStatToName(i), (int) (item->craftitem.stats[i] * 100) - 100),  sizeof(itemText));
+				Q_strcat(itemText, va(_("%s:\t+%i %%\n"), CL_AircraftStatToName(i), (int) (item->craftitem.stats[i] * 100) - 100), sizeof(itemText));
 			else if (item->craftitem.stats[i] > UFO_EPSILON)
-				Q_strcat(itemText, va(_("%s:\t%i %%\n"), CL_AircraftStatToName(i), (int) (item->craftitem.stats[i] * 100) - 100),  sizeof(itemText));
+				Q_strcat(itemText, va(_("%s:\t%i %%\n"), CL_AircraftStatToName(i), (int) (item->craftitem.stats[i] * 100) - 100), sizeof(itemText));
 		}
 	}
 
@@ -598,7 +598,7 @@ void UP_AircraftDescription (technology_t* t)
 	if (RS_IsResearched_ptr(t)) {
 		aircraft = AIR_GetAircraft(t->provides);
 		if (!aircraft) {
-			Com_sprintf(upBuffer, sizeof(upBuffer), _("Error - could not find aircraft") );
+			Com_sprintf(upBuffer, sizeof(upBuffer), _("Error - could not find aircraft"));
 		} else {
 			for (i = 0; i < AIR_STATS_MAX; i++) {
 				switch (i) {
@@ -987,7 +987,7 @@ static void UP_FindEntry_f (void)
 	}
 
 	/* if we can not find it */
-	Com_DPrintf(DEBUG_CLIENT, "UP_FindEntry_f: No PediaEntry found for %s\n", id );
+	Com_DPrintf(DEBUG_CLIENT, "UP_FindEntry_f: No PediaEntry found for %s\n", id);
 }
 
 /**
