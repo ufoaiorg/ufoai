@@ -41,7 +41,8 @@ typedef struct production_s
 {
 	signed int objID;	/**< Item index in global csi.ods struct for items, aircraft index in aircraft_samples array for aircrafts. */
 	signed int amount;	/**< How much are we producing. */
-	int timeLeft;		/**< Get this from tech. */
+	float percentDone;		/**< Fraction of the item which is already produced.
+							 * 0 if production is not started, 1 if production is over */
 	/**int workers;		Amount of workers assigned to the production. @todo unused? */
 	qboolean spacemessage;	/**< Used in No Free Space message adding. */
 	qboolean creditmessage;	/**< Used in No Credits message adding. */
@@ -67,6 +68,5 @@ void PR_ProductionRun(void);
 void PR_ProductionInit(void);
 qboolean PR_ProductionAllowed(void);
 void PR_Init(void);
-void PR_UpdateProductionTime(struct base_s *base);
 
 #endif /* CLIENT_CL_PROOUCE */

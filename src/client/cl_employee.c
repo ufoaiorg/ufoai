@@ -516,9 +516,6 @@ qboolean E_HireEmployee (base_t* base, employee_t* employee)
 		/* Now uses quarter space. */
 		employee->hired = qtrue;
 		employee->baseIDHired = base->idx;
-		/* If we hired EMPL_WORKER update production times in production queue. */
-		if (employee->type == EMPL_WORKER)
-			PR_UpdateProductionTime(base);
 		/* Update capacity. */
 		base->capacities[CAP_EMPLOYEES].cur++;
 		return qtrue;
@@ -579,7 +576,6 @@ qboolean E_UnhireEmployee (employee_t* employee)
 			/* Update current capacity and production times if worker is being counted there. */
 			if (E_CountHired(base, EMPL_WORKER) == base->capacities[CAP_WORKSPACE].cur) {
 				base->capacities[CAP_WORKSPACE].cur--;
-				PR_UpdateProductionTime(base);
 			}
 			break;
 		case EMPL_SCIENTIST:
