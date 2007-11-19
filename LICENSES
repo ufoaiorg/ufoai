@@ -1864,6 +1864,10 @@ base/textures/tex_buildings/9techwall07.jpg | GNU General Public License 2.0 | N
 base/textures/tex_buildings/concrete012.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/concrete013.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/concrete014.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/concrete015.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/concrete016.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/concrete017.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/concrete018.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/e8_mtlwall1.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/e8_mtlwall1b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/e8_mtlwall2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
@@ -2326,6 +2330,16 @@ base/textures/tex_ufo/ufo2_17.jpg | GNU General Public License 2.0 | "Sparx" Bey
 base/textures/tex_ufo/ufo2_medic01.jpg |  | "Sparx" Beyeler
 base/textures/tex_ufo/ufo2_medic02.jpg |  | "Sparx" Beyeler
 src/docs/pathfinding.odg | GNU Free Documentation License | Werner Höhrer (hoehrer)
+src/docs/tex/chapters/appendix.tex | GNU General Public License 2.0 | Eric Goller
+src/docs/tex/chapters/end.tex | GNU General Public License 2.0 | Eric Goller
+src/docs/tex/chapters/geoscape.tex | GNU General Public License 2.0 | Eric Goller
+src/docs/tex/chapters/intro.tex | GNU General Public License 2.0 | Eric Goller
+src/docs/tex/chapters/multiplayer.tex | GNU General Public License 2.0 | Eric Goller
+src/docs/tex/chapters/tactical.tex | GNU General Public License 2.0 | Eric Goller
+src/docs/tex/header.tex | GNU General Public License 2.0 | Eric Goller
+src/docs/tex/licenses/GFDL_preamble.tex | GNU General Public License 2.0 | Eric Goller
+src/docs/tex/licenses/fdl.tex | GNU General Public License 2.0 | Eric Goller
+src/docs/tex/ufo-manual_EN.tex | GNU General Public License 2.0 | Eric Goller
 src/tools/blender/export_md2_new.py | GNU General Public License 2.0
 src/tools/blender/md2_export.py | GNU General Public License 2.0
 src/tools/blender/md2_import.py | GNU General Public License 2.0
