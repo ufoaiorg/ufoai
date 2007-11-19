@@ -72,18 +72,20 @@ static qboolean PR_ConditionsDisassembly (base_t* base, components_t *comp)
 }
 
 /**
- * @brief Calculates production time.
+ * @brief Calculates the fraction (percentage) of production of an item in 1 hour.
  * @param[in] base Pointer to the base with given production.
  * @param[in] tech Pointer to the technology for given production.
  * @param[in] comp Pointer to components definition.
  * @param[in] disassembly True if calculations for disassembling, false otherwise.
- * @sa PR_UpdateProductionTime
- * @sa PR_QueueNew
+ * @sa PR_ProductionRun
+ * @sa PR_ProductionInfo
+ * @return 0 if the production does not make any progress, 1 if the whole item is built in 1 hour
  */
-static int PR_CalculateProductionTime (base_t *base, technology_t *tech, components_t *comp, qboolean disassembly)
+static float PR_CalculateProductionPercentDone (base_t *base, technology_t *tech, components_t *comp, qboolean disassembly)
 {
 	signed int allworkers = 0, maxworkers = 0;
-	signed int timeDefault = 0, time = 0;
+	signed int timeDefault = 0;
+	float fraction = 0;
 	assert(base);
 	assert(tech);
 
@@ -104,58 +106,25 @@ static int PR_CalculateProductionTime (base_t *base, technology_t *tech, compone
 		timeDefault = comp->time;		/* This is the default disassembly time for 10 workers. */
 	}
 
-	if (maxworkers == 10) {
-		/* Return default time because we can use only 10 workers. */
-		Com_DPrintf(DEBUG_CLIENT, "PR_CalculateProductionTime()... workers: %i, tech: %s, time: %i\n",
-		maxworkers, tech->id, timeDefault);
-		return timeDefault;
+	if (maxworkers == PRODUCE_WORKERS) {
+		/* No need to calculate: timeDefault is for PRODUCE_WORKERS workers. */
+		fraction = 1.0f / timeDefault;
+		Com_DPrintf(DEBUG_CLIENT, "PR_CalculatePercentDone()... workers: %i, tech: %s, percent: %f\n",
+		maxworkers, tech->id, fraction);
+		return fraction;
 	} else {
-		/* Calculate the real time used for our amount of workers. */
-		/* NOTE: I changed algorithm for a more realistic one -- Kracken 2007/11/18
-		 * now, production time is divided by 4 each time you double the number of worker
-		 * the "+1" is to avoid bug is you have no worker (maxworkers = 0) */
-		time = timeDefault * (float) (PRODUCE_WORKERS + 1) / (maxworkers + 1);
-		time = (int) time * (PRODUCE_WORKERS + 1) / (maxworkers + 1);
-		Com_DPrintf(DEBUG_CLIENT, "PR_CalculateProductionTime()... workers: %i, tech: %s, time: %i\n",
-		maxworkers, tech->id, time);
-		/* Don't allow to return less time than 1 hour. */
-		if (time < 1)
+		/* Calculate the fraction of item produced for our amount of workers. */
+		/* NOTE: I changed algorithm for a more realistic one, variing like maxworkers^2 -- Kracken 2007/11/18
+		 * now, production time is divided by 4 each time you double the number of worker */
+		fraction = (float) maxworkers / (PRODUCE_WORKERS * timeDefault);
+		fraction = fraction * maxworkers / PRODUCE_WORKERS;
+		Com_DPrintf(DEBUG_CLIENT, "PR_CalculatePercentDone()... workers: %i, tech: %s, percent: %f\n",
+		maxworkers, tech->id, fraction);
+		/* Don't allow to return fraction greater than 1 (you still need at least 1 hour to produce an item). */
+		if (fraction > 1.0f)
 			return 1;
 		else
-			return time;
-	}
-}
-
-/**
- * @brief Updates production time for all items in current queue.
- * @param[in] base Pointer to the base where we will update production time.
- * @note This should be called whenever workers amount is going to
- * @note change (or base capacity going to update).
- * @sa B_BuildingDestroy_f
- * @sa B_UpdateBaseBuildingStatus
- */
-void PR_UpdateProductionTime (base_t *base)
-{
-	technology_t *tech = NULL;
-	int i, time = 0, timeTemp = 0;
-
-	assert(base);
-
-	/* Loop through all productions in queue and adjust production time. */
-	if (gd.productions[base->idx].numItems > 0) {
-		/* Don't change anything for first (current) item in queue. (that's why i = 1)*/
-		for (i = 1; i < gd.productions[base->idx].numItems; i++) {
-			timeTemp = gd.productions[base->idx].items[i].timeLeft;
-			if (!gd.productions[base->idx].items[i].aircraft)
-				tech = RS_GetTechByProvided(csi.ods[gd.productions[base->idx].items[i].objID].id);
-			else
-				tech = aircraft_samples[gd.productions[base->idx].items[i].objID].tech;
-			assert(tech);
-			time = PR_CalculateProductionTime(base, tech, NULL, qfalse);
-			gd.productions[base->idx].items[i].timeLeft = time;
-			Com_DPrintf(DEBUG_CLIENT, "PR_UpdateProductionTime()... updating production time for %s. Original time: %i, new time: %i\n",
-			csi.ods[gd.productions[base->idx].items[i].objID].id, timeTemp, gd.productions[base->idx].items[i].timeLeft);
-		}
+			return fraction;
 	}
 }
 
@@ -283,7 +252,7 @@ static production_t *PR_QueueNew (base_t* base, production_queue_t *queue, signe
 		/* We have to remove amount of items being disassembled from base storage. */
 		base->storage.num[objID] -= amount;
 		/* Now find related components definition. */
-		prod->timeLeft = PR_CalculateProductionTime(base, od->tech, INV_GetComponentsByItemIdx(prod->objID), qtrue);
+		prod->percentDone = 0.0f;
 	} else {	/* Production. */
 		prod->production = qtrue;
 		if (produceCategory == BUY_AIRCRAFT) {
@@ -291,13 +260,13 @@ static production_t *PR_QueueNew (base_t* base, production_queue_t *queue, signe
 			if (aircraft->tech->produceTime < 0)
 				return NULL;
 			else
-				prod->timeLeft = aircraft->tech->produceTime; /* FIXME: Calculate time here. */
+				prod->percentDone = 0.0f;
 		} else {
 			/* Don't try to add to queue an item which is not producible. */
 			if (od->tech->produceTime < 0)
 				return NULL;
 			else
-				prod->timeLeft = PR_CalculateProductionTime(base, od->tech, NULL, qfalse);
+				prod->percentDone = 0.0f;
 		}
 	}
 
@@ -413,7 +382,7 @@ void PR_ProductionRun (void)
 	aircraft_t *ufocraft;
 
 	/* Loop through all founded bases. Then check productions
-	 * in global data array. Then decrease timeLeft and check
+	 * in global data array. Then increase prod->percentDone and check
 	 * wheter an item is produced. Then add to base storage. */
 
 	for (i = 0; i < MAX_BASES; i++) {
@@ -491,12 +460,19 @@ void PR_ProductionRun (void)
 		if (!prod->aircraft && !od->tech)
 			Sys_Error("PR_ProductionRun: No tech pointer for object id %i ('%s')\n", prod->objID, od->id);
 #endif
-		prod->timeLeft--;
-		if (prod->timeLeft <= 0) {
+		if (prod->production) {	/* This is production, not disassembling. */
+			if (!prod->aircraft)
+				prod->percentDone += PR_CalculateProductionPercentDone(&gd.bases[i], od->tech, NULL, qfalse);
+			else
+				prod->percentDone += PR_CalculateProductionPercentDone(&gd.bases[i], aircraft->tech, NULL, qfalse);
+		} else /* This is disassembling. */
+			prod->percentDone += PR_CalculateProductionPercentDone(&gd.bases[i], od->tech, INV_GetComponentsByItemIdx(prod->objID), qtrue);
+
+		if (prod->percentDone >= 1.0f) {
 			if (prod->production) {	/* This is production, not disassembling. */
 				if (!prod->aircraft) {
 					CL_UpdateCredits(ccs.credits - (od->price * PRODUCE_FACTOR / PRODUCE_DIVISOR));
-					prod->timeLeft = PR_CalculateProductionTime(&gd.bases[i], od->tech, NULL, qfalse);
+					prod->percentDone = 0.0f;
 					prod->amount--;
 					/* Now add it to equipment and update capacity. */
 					B_UpdateStorageAndCapacity(&gd.bases[i], prod->objID, 1, qfalse, qfalse);
@@ -509,7 +485,7 @@ void PR_ProductionRun (void)
 					}
 				} else {
 					CL_UpdateCredits(ccs.credits - (aircraft->price * PRODUCE_FACTOR / PRODUCE_DIVISOR));
-					prod->timeLeft = PR_CalculateProductionTime(&gd.bases[i], aircraft->tech, NULL, qfalse);
+					prod->percentDone = 0.0f;
 					prod->amount--;
 					/* Now add new aircraft. */
 					AIR_NewAircraft(&gd.bases[i], aircraft->id);
@@ -522,7 +498,7 @@ void PR_ProductionRun (void)
 				}
 			} else {	/* This is disassembling. */
 				gd.bases[i].capacities[CAP_ITEMS].cur += INV_DisassemblyItem(&gd.bases[i], INV_GetComponentsByItemIdx(prod->objID), qfalse);
-				prod->timeLeft = PR_CalculateProductionTime(&gd.bases[i], od->tech, INV_GetComponentsByItemIdx(prod->objID), qtrue);
+				prod->percentDone = 0.0f;
 				prod->amount--;
 				/* If this is aircraft dummy item, update UFO hangars capacity. */
 				if (od->aircraft) {
@@ -552,6 +528,7 @@ static void PR_ProductionInfo (qboolean disassembly)
 	int objID;
 	int time, i, j;
 	components_t *comp = NULL;
+	float prodPerHour;
 
 	assert(baseCurrent);
 
@@ -571,11 +548,14 @@ static void PR_ProductionInfo (qboolean disassembly)
 				Com_sprintf(productionInfo, sizeof(productionInfo), _("No item selected"));
 				Cvar_Set("mn_item", "");
 			} else {
-				/* If item is first in queue, use timeLeft as time, otherwise calculate. */
+				/* If item is first in queue, take percentDone into account. */
+				prodPerHour = PR_CalculateProductionPercentDone(baseCurrent, od->tech, NULL, qfalse);
+				/* If you entered production menu, that means that prodPerHour > 0 (must not divide by 0) */
+				assert(prodPerHour > 0);
 				if (objID == gd.productions[baseCurrent->idx].items[0].objID)
-					time = gd.productions[baseCurrent->idx].items[0].timeLeft;
+					time = ceil((1.0f - gd.productions[baseCurrent->idx].items[0].percentDone) / prodPerHour);
 				else
-					time = PR_CalculateProductionTime(baseCurrent, od->tech, NULL, qfalse);
+					time = ceil(1.0f / prodPerHour);
 				Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", od->name);
 				Q_strcat(productionInfo, va(_("Costs per item\t%i c\n"), (od->price*PRODUCE_FACTOR/PRODUCE_DIVISOR)),
 					sizeof(productionInfo));
@@ -604,11 +584,14 @@ static void PR_ProductionInfo (qboolean disassembly)
 				Com_sprintf(productionInfo, sizeof(productionInfo), _("No disassembly selected"));
 				Cvar_Set("mn_item", "");
 			} else {
-				/* If item is first in queue, use timeLeft as time, otherwise calculate. */
+				/* If item is first in queue, take percentDone into account. */
+				prodPerHour = PR_CalculateProductionPercentDone(baseCurrent, od->tech, comp, qtrue);
+				/* If you entered production menu, that means that prodPerHour > 0 (must not divide by 0) */
+				assert(prodPerHour > 0);
 				if (objID == gd.productions[baseCurrent->idx].items[0].objID)
-					time = gd.productions[baseCurrent->idx].items[0].timeLeft;
+					time = ceil((1.0f - gd.productions[baseCurrent->idx].items[0].percentDone) / prodPerHour);
 				else
-					time = PR_CalculateProductionTime(baseCurrent, od->tech, comp, qtrue);
+					time = ceil(1.0f / prodPerHour);
 				Com_sprintf(productionInfo, sizeof(productionInfo), _("%s - disassembly\n"), od->name);
 				Q_strcat(productionInfo, _("Components: "), sizeof(productionInfo));
 				/* Print components. */
@@ -1402,7 +1385,7 @@ qboolean PR_Save (sizebuf_t* sb, void* data)
 		for (j = 0; j < pq->numItems; j++) {
 			MSG_WriteString(sb, csi.ods[pq->items[j].objID].id);
 			MSG_WriteLong(sb, pq->items[j].amount);
-			MSG_WriteLong(sb, pq->items[j].timeLeft);
+			MSG_WriteFloat(sb, pq->items[j].percentDone);
 			MSG_WriteByte(sb, pq->items[j].production);
 			MSG_WriteByte(sb, pq->items[j].aircraft);
 			MSG_WriteByte(sb, pq->items[j].items_cached);
@@ -1431,14 +1414,14 @@ qboolean PR_Load (sizebuf_t* sb, void* data)
 			if (k == NONE || k >= MAX_OBJDEFS) {
 				Com_Printf("PR_Load: Could not find item '%s'\n", s);
 				MSG_ReadLong(sb); /* amount */
-				MSG_ReadLong(sb); /* timeLeft */
+				MSG_ReadFloat(sb); /* percentDone */
 				MSG_ReadByte(sb); /* production */
 				MSG_ReadByte(sb); /* aircraft */
 				MSG_ReadByte(sb); /* items_cached */
 			} else {
 				pq->items[j].objID = k;
 				pq->items[j].amount = MSG_ReadLong(sb);
-				pq->items[j].timeLeft = MSG_ReadLong(sb);
+				pq->items[j].percentDone = MSG_ReadFloat(sb);
 				pq->items[j].production = MSG_ReadByte(sb);
 				pq->items[j].aircraft = MSG_ReadByte(sb);
 				pq->items[j].items_cached = MSG_ReadByte(sb);

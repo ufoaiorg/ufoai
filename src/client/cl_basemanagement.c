@@ -491,14 +491,6 @@ static qboolean B_CheckUpdateBuilding (building_t* building, base_t* base)
  */
 static void B_UpdateOneBaseBuildingStatus (buildingType_t type, base_t* base)
 {
-	switch (type) {
-	case B_WORKSHOP:
-		/* Update production times in queue. */
-		PR_UpdateProductionTime(base);
-		break;
-	default:
-		break;
-	}
 }
 
 /**
@@ -518,10 +510,6 @@ static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* 
 		memset(base->hospitalMissionList, -1, sizeof(base->hospitalMissionList));
 		base->hospitalMissionListCount = 0;
 		break;
-	case B_WORKSHOP:
-		/* Update production times in queue. */
-		PR_UpdateProductionTime(base);
-		break;
 	case B_POWER:
 		B_UpdateStatusWithPower(base);
 		break;
@@ -538,10 +526,6 @@ static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* 
 static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t* base)
 {
 	switch (type) {
-	case B_WORKSHOP:
-		/* Update production times in queue. */
-		PR_UpdateProductionTime(base);
-		break;
 	case B_POWER:
 		B_UpdateStatusWithPower(base);
 		break;
@@ -719,10 +703,6 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 
 	B_BaseInit_f();
 
-	/* Update production times in queue if we destroyed B_WORKSHOP. */
-	if (type == B_WORKSHOP) {
-		PR_UpdateProductionTime(base);
-	}
 	/* Remove aliens if needed. */
 	if (type == B_ALIEN_CONTAINMENT) {
 		if (!base->hasAlienCont) {	/* Just clean containment. */
