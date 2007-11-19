@@ -166,7 +166,7 @@ static inline void Sys_FreeAddrInfo (struct addrinfo *res)
 	} else {
 		/* need to dynamicly get the function adress otherwise binary
 		 * won't start under w2k and previous */
-		if(!netLib);
+		if (!netLib);
 			netLib = LoadLibrary("ws2_32.dll");
 		if (!FreeAddrInfo)
 			FreeAddrInfo = (PFreeAddrInfo)GetProcAddress(netLib, "freeaddrinfo");
@@ -254,7 +254,7 @@ static inline int Sys_GetAddrInfo (const char *node, const char *service,
 			Saddr_in.sin_port = strtoul(service, &endpt, 10);
 			if (endpt == NULL) /* should never happen */
 				return EAI_FAIL;
-			else if((*endpt == '\0') && (Saddr_in.sin_port != 0))
+			else if ((*endpt == '\0') && (Saddr_in.sin_port != 0))
 				Saddr_in.sin_port = htons(Saddr_in.sin_port);
 			else { /* service is a name */
 				struct servent * servinfopt = NULL;
@@ -334,7 +334,7 @@ static inline int Sys_GetNameInfo (const struct sockaddr *sa, socklen_t salen,
 				phostinfo = gethostbyaddr((const char*) &(ptsock->sin_addr),
 					sizeof(struct in_addr), AF_INET);
 				if (phostinfo != NULL) {
-					if(strlen(phostinfo->h_name)>= hostlen) {
+					if (strlen(phostinfo->h_name)>= hostlen) {
 						Com_Printf("Sys_GetNameInfo: host string too small\n");
 						return WSANO_RECOVERY;
 					}
@@ -355,7 +355,7 @@ static inline int Sys_GetNameInfo (const struct sockaddr *sa, socklen_t salen,
 		if (serv != NULL) {/* otherwise nothing to do */
 			if (flags & NI_NUMERICSERV){
 				/* we need to fill port number in serv string */
-				if(servlen < 6) {/* too small */
+				if (servlen < 6) {/* too small */
 					Com_Printf("Sys_GetNameInfo: service string too small\n");
 					return WSANO_RECOVERY;
 				}
