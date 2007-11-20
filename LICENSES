@@ -1844,6 +1844,10 @@ base/sound/weapons/riotshotgun.wav | GNU General Public License v2.0 | Alex Park
 base/sound/weapons/smg2.wav | GNU General Public License v2.0 | Alex Parker
 base/sound/weapons/smokeexplosion.wav | GNU General Public License v2.0 | Alex Parker
 base/sound/weapons/sniperrifle.wav | GNU General Public License v2.0 | Alex Parker
+base/textures/exterior/ext_conc03a.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/exterior/ext_conc03b.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/exterior/ext_conc03c.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/exterior/ext_conc10.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/9hangwires01b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/grid2_alpha.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_base/helipad1.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
