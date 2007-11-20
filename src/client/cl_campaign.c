@@ -4774,6 +4774,7 @@ static void CP_UFORecoveredStart_f (void)
 /**
  * @brief Function to store recovered UFO in desired base.
  * @note Command to call this: cp_uforecoverystore.
+ * @sa UFO_ConditionsForStoring
  */
 static void CP_UFORecoveredStore_f (void)
 {

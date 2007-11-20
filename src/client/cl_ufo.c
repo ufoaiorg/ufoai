@@ -490,6 +490,7 @@ void UFO_CampaignCheckEvents (void)
 /**
  * @brief Prepares UFO recovery in global recoveries array.
  * @param[in] base Pointer to the base, where the UFO recovery will be made.
+ * @sa UFO_Recovery
  */
 void UFO_PrepareRecovery (base_t *base)
 {
@@ -544,6 +545,8 @@ void UFO_PrepareRecovery (base_t *base)
 
 /**
  * @brief Function to process active recoveries.
+ * @sa CL_CampaignRun
+ * @sa UFO_PrepareRecovery
  */
 void UFO_Recovery (void)
 {
