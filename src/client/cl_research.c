@@ -2399,8 +2399,10 @@ qboolean RS_Load (sizebuf_t* sb, void* data)
  */
 qboolean RS_ResearchAllowed (void)
 {
+	int hiredScientistCount = E_CountHired(baseCurrent, EMPL_SCIENTIST);
+
 	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK
-	 && baseCurrent->hasLab) {
+	 && baseCurrent->hasLab && hiredScientistCount > 0) {
 		return qtrue;
 	} else {
 		return qfalse;

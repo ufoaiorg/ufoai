@@ -729,8 +729,10 @@ qboolean HOS_Load (sizebuf_t *sb, void* data)
  */
 qboolean HOS_HospitalAllowed (void)
 {
+	int hiredMedicCount = E_CountHired(baseCurrent, EMPL_MEDIC);
+
 	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK
-	 && baseCurrent->hasHospital) {
+	 && baseCurrent->hasHospital && hiredMedicCount > 0) {
 		return qtrue;
 	} else {
 		return qfalse;

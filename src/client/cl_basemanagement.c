@@ -2703,6 +2703,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 				/* the dependence of the building is not built */
 				Com_sprintf(popupText, sizeof(popupText), va(_("You need a building %s to make building %s functional."), _(dependenceBuilding->name), _(building->name)));
 				MN_Popup(_("Notice"), popupText);
+				return;
 			} else {
 				/* maybe the dependence of the building is under construction
 				 * note that we can't use B_STATUS_UNDER_CONSTRUCTION here, because this value
@@ -2720,11 +2721,30 @@ static void B_CheckBuildingStatusForMenu_f (void)
 				Com_sprintf(popupText, sizeof(popupText), va(_("Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."),
 					_(dependenceBuilding->name), _((gd.buildingTypes + dependenceBuilding->dependsBuilding)->name), _(building->name)));
 				MN_Popup(_("Notice"), popupText);
+				return;
 			}
+		}
+		/* all buildings are OK: employees must be missing */
+		if ((building->buildingType == B_WORKSHOP) && (E_CountHired(baseCurrent, EMPL_WORKER) <= 0)) {
+			Com_sprintf(popupText, sizeof(popupText), va(_("You need to recruit %s to use building %s."),
+				E_GetEmployeeString(EMPL_WORKER), _(building->name)));
+			MN_Popup(_("Notice"), popupText);
+			return;
+		} else if ((building->buildingType == B_HOSPITAL) && (E_CountHired(baseCurrent, EMPL_MEDIC) <= 0)) {
+			Com_sprintf(popupText, sizeof(popupText), va(_("You need to recruit %s to use building %s."),
+				E_GetEmployeeString(EMPL_MEDIC), _(building->name)));
+			MN_Popup(_("Notice"), popupText);
+			return;
+		} else if ((building->buildingType == B_LAB) && (E_CountHired(baseCurrent, EMPL_SCIENTIST) <= 0)) {
+			Com_sprintf(popupText, sizeof(popupText), va(_("You need to recruit %s to use building %s."),
+				E_GetEmployeeString(EMPL_SCIENTIST), _(building->name)));
+			MN_Popup(_("Notice"), popupText);
+			return;
 		}
 	} else {
 		Com_sprintf(popupText, sizeof(popupText), va(_("Build a %s first."), _(building->name)));
 		MN_Popup(_("Notice"), popupText);
+		return;
 	}
 }
 
