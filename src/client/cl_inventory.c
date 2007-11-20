@@ -262,9 +262,8 @@ void INV_SellOrAddItems (aircraft_t *aircraft)
 			if (cargo[i].amount > 0)
 				RS_MarkCollected(tech);
 			continue;
-		}
-		/* If the related technology is researched, check the autosell option. */
-		if (RS_IsResearched_ptr(tech)) {
+		} else {
+			/* If the related technology is researched, check the autosell option. */
 			if (gd.autosell[cargo[i].idx]) { /* Sell items if autosell is enabled. */
 				ccs.eMarket.num[cargo[i].idx] += cargo[i].amount;
 				eTempCredits += (csi.ods[cargo[i].idx].price * cargo[i].amount);
