@@ -5026,7 +5026,7 @@ static void CP_UFOCrashed_f (void)
 
 	/* Do nothing without UFO of this type. */
 	if (!ufofound) {
-		Com_Printf("CP_UFORecovered()... UFOType: %i does not have valid craft definition!\n", atoi(Cmd_Argv(1)));
+		Com_Printf("CP_UFOCrashed_f()... UFOType: %i does not have valid craft definition!\n", atoi(Cmd_Argv(1)));
 		return;
 	}
 
@@ -5046,6 +5046,7 @@ static void CP_UFOCrashed_f (void)
 				break;
 		}
 		assert(compod);
+		Com_DPrintf(DEBUG_CLIENT, "CP_UFOCrashed_f()... Collected %i of %s\n", comp->item_amount2[i], comp->item_id[i]);
 		/* Add items to cargo, increase itemtypes. */
 		cargo[aircraft->itemtypes].idx = j;
 		cargo[aircraft->itemtypes].amount = comp->item_amount2[i];
