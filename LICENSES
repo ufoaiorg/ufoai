@@ -2337,8 +2337,6 @@ src/docs/tex/chapters/intro.tex | GNU General Public License 2.0 | Eric Goller
 src/docs/tex/chapters/multiplayer.tex | GNU General Public License 2.0 | Eric Goller
 src/docs/tex/chapters/tactical.tex | GNU General Public License 2.0 | Eric Goller
 src/docs/tex/header.tex | GNU General Public License 2.0 | Eric Goller
-src/docs/tex/licenses/GFDL_preamble.tex | GNU General Public License 2.0 | Eric Goller
-src/docs/tex/licenses/fdl.tex | GNU General Public License 2.0 | Eric Goller
 src/docs/tex/ufo-manual_EN.tex | GNU General Public License 2.0 | Eric Goller
 src/tools/blender/export_md2_new.py | GNU General Public License 2.0
 src/tools/blender/md2_export.py | GNU General Public License 2.0
