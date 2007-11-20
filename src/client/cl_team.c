@@ -2226,7 +2226,7 @@ void CL_ParseResults (struct dbuffer *msg)
 			Q_strncpyz(popupText, _("The game was a draw!\n\nNo survivors left on any side."), sizeof(popupText));
 			MN_Popup(_("Game Drawn!"), popupText);
 		} else {
-			Q_strncpyz(popupText, _("You lost the game"), sizeof(popupText));
+			Q_strncpyz(popupText, _("You've lost the game"), sizeof(popupText));
 			Q_strcat(popupText, resultText, sizeof(popupText));
 			MN_Popup(_("Better luck next time"), popupText);
 		}
