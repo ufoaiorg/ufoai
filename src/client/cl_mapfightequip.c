@@ -274,11 +274,10 @@ static qboolean AIM_SelectableAircraftItem (base_t* base, aircraft_t *aircraft, 
 	if (AII_GetItemWeightBySize(&csi.ods[itemIdx]) > slot->size)
 		return qfalse;
 
-	/* you can't install an item that you does not possess
+	/* you can't install an item that you don't possess
 	 * missiles does not need to be possessed */
-	if (!base)
-		if (base->storage.num[itemIdx])
-			return qfalse;
+	if (base && base->storage.num[itemIdx])
+		return qfalse;
 
 	return qtrue;
 }
@@ -362,7 +361,7 @@ static void BDEF_AddBattery (basedefenseType_t basedefType, base_t* base)
 			return;
 		}
 		/* if this slot is a new slot, give it 20 missiles
-		 * we use < 0 here, and not <= 0, because we don't want to give new missiles to someone 
+		 * we use < 0 here, and not <= 0, because we don't want to give new missiles to someone
 		 * who would have already fired all its missile */
 		if (base->batteries[base->maxBatteries].ammoLeft < 0)
 		base->batteries[base->maxBatteries].ammoLeft = 20;
@@ -1251,7 +1250,7 @@ qboolean AII_AddAmmoToSlot (base_t* base, technology_t *tech, aircraftSlot_t *sl
 		return qfalse;
 	}
 
-	/* the base pointer can be null here - e.g. in case you are equipping a UFO 
+	/* the base pointer can be null here - e.g. in case you are equipping a UFO
 	 * and base ammo defense are not stored in storage */
 	if (base && csi.ods[ammoIdx].craftitem.type <= AC_ITEM_AMMO) {
 		if (base->storage.num[ammoIdx] <= 0) {
