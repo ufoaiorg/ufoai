@@ -209,7 +209,6 @@ Section "Source Code" SEC03
   File "..\..\..\build\*.bmp"
   SetOutPath "$INSTDIR\build\projects"
   File "..\..\..\build\projects\*.cbp"
-  File "..\..\..\build\projects\*.dev"
   File "..\..\..\build\projects\*.ico"
   File "..\..\..\build\projects\*.workspace"
   SetOutPath "$INSTDIR\src\client"
