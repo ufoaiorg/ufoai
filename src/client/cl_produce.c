@@ -795,7 +795,6 @@ static void PR_ProductionListClick_f (void)
 				}
 				j++;
 			}
-			Com_Printf("gd.numComponents: %i\n", gd.numComponents);
 		}
 	}
 #ifdef DEBUG
