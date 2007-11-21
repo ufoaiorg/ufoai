@@ -681,6 +681,7 @@ int UP_GetUnreadMails (void)
  * @param[in] type The type of mail (research proposal or finished research)
  * @sa UP_ChangeDisplay
  * @sa CL_EventAddMail_f
+ * @sa CL_GetEventMail
  */
 static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail_t* mail)
 {
@@ -915,7 +916,7 @@ static void UP_DrawEntry (technology_t* tech, eventMail_t* mail)
 void UP_OpenEventMail (const char *eventMailID)
 {
 	eventMail_t* mail;
-	mail = CL_GetEventMail(eventMailID);
+	mail = CL_GetEventMail(eventMailID, qfalse);
 	if (!mail)
 		return;
 
