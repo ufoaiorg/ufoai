@@ -66,6 +66,16 @@ mail prolog
 }
 
 // FIXME: Use these and remove the MN_AddNewMessage stuff for these
+mail ufo_crashed_report
+{
+	to "_mail_to_base_commander"
+	from "_mail_from_paul_navarre"
+	// base name where you send the recovery stuffs
+	subject "_Recovery Report -- %s"
+	body "_%s is too damaged to be recovered.\nSome items were collectable from the wreckage, and will arrive in %s with your dropship:\n%s"
+	icon icons/tech
+}
+
 mail not_enough_money
 {
 	to "_mail_to_base_commander"
