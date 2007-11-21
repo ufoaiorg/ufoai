@@ -78,6 +78,7 @@ eventMail_t* CL_GetEventMail (const char *id, qboolean createCopy)
 		if (!newEventMail)
 			return NULL;
 
+		/* don't !! free the original pointers here */
 		memcpy(newEventMail, eventMail, sizeof(eventMail_t));
 		LIST_AddPointer(&eventMails, newEventMail);
 		/* make sure, that you set a unique eventmail->id and eventmail->body now */
