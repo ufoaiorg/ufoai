@@ -581,35 +581,30 @@ static void PR_ProductionInfo (const base_t* base, qboolean disassembly)
 		if (objID >= 0) {
 			od = &csi.ods[objID];
 			assert(od->tech);
-			/* Don't try to display the item which is not producible. */
-			if (od->tech->produceTime < 0) {
-				Com_sprintf(productionInfo, sizeof(productionInfo), _("No disassembly selected"));
-				Cvar_Set("mn_item", "");
-			} else {
-				/* If item is first in queue, take percentDone into account. */
-				prodPerHour = PR_CalculateProductionPercentDone(base, od->tech, comp, qtrue);
-				/* If you entered production menu, that means that prodPerHour > 0 (must not divide by 0) */
-				assert(prodPerHour > 0);
-				if (objID == gd.productions[base->idx].items[0].objID)
-					time = ceil((1.0f - gd.productions[base->idx].items[0].percentDone) / prodPerHour);
-				else
-					time = ceil(1.0f / prodPerHour);
-				Com_sprintf(productionInfo, sizeof(productionInfo), _("%s - disassembly\n"), od->name);
-				Q_strcat(productionInfo, _("Components: "), sizeof(productionInfo));
-				/* Print components. */
-				for (i = 0; i < comp->numItemtypes; i++) {
-					for (j = 0, compod = csi.ods; j < csi.numODs; j++, compod++) {
-						if (!Q_strncmp(compod->id, comp->item_id[i], MAX_VAR))
-							break;
-					}
-					Q_strcat(productionInfo, va(_("%s (%i) "), compod->name, comp->item_amount[i]),
-						sizeof(productionInfo));
+
+			/* If item is first in queue, take percentDone into account. */
+			prodPerHour = PR_CalculateProductionPercentDone(base, od->tech, comp, qtrue);
+			/* If you entered production menu, that means that prodPerHour > 0 (must not divide by 0) */
+			assert(prodPerHour > 0);
+			if (objID == gd.productions[base->idx].items[0].objID)
+				time = ceil((1.0f - gd.productions[base->idx].items[0].percentDone) / prodPerHour);
+			else
+				time = ceil(1.0f / prodPerHour);
+			Com_sprintf(productionInfo, sizeof(productionInfo), _("%s - disassembly\n"), od->name);
+			Q_strcat(productionInfo, _("Components: "), sizeof(productionInfo));
+			/* Print components. */
+			for (i = 0; i < comp->numItemtypes; i++) {
+				for (j = 0, compod = csi.ods; j < csi.numODs; j++, compod++) {
+					if (!Q_strncmp(compod->id, comp->item_id[i], MAX_VAR))
+						break;
 				}
-				Q_strcat(productionInfo, "\n", sizeof(productionInfo));
-				Q_strcat(productionInfo, va(_("Disassembly time\t%ih\n"), time),
+				Q_strcat(productionInfo, va(_("%s (%i) "), compod->name, comp->item_amount[i]),
 					sizeof(productionInfo));
-				UP_ItemDescription(objID);
 			}
+			Q_strcat(productionInfo, "\n", sizeof(productionInfo));
+			Q_strcat(productionInfo, va(_("Disassembly time\t%ih\n"), time),
+				sizeof(productionInfo));
+			UP_ItemDescription(objID);
 		}
 	}
 	menuText[TEXT_PRODUCTION_INFO] = productionInfo;
