@@ -48,6 +48,8 @@ static const int QUEUE_SPACERS = 2;
 static cvar_t* mn_production_limit;		/**< Maximum items in queue. */
 static cvar_t* mn_production_workers;		/**< Amount of hired workers in base. */
 
+static qboolean production_disassembling;	/**< are in disassembling state? */
+
 static menuNode_t *node1, *node2, *prodlist;
 
 /**
@@ -738,7 +740,7 @@ static void PR_ProductionListClick_f (void)
 	} else if (num >= queue->numItems + QUEUE_SPACERS) {
 		/* Clicked in the item list. */
 		idx = num - queue->numItems - QUEUE_SPACERS;
-		if (Cvar_VariableInteger("mn_prod_disassembling") == 0) {
+		if (!production_disassembling) {
 			if (produceCategory != BUY_AIRCRAFT) {	/* Everything except aircrafts. */
 				for (j = 0, i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 #ifdef DEBUG
@@ -816,7 +818,7 @@ static void PR_UpdateProductionList (base_t* base)
 
 	assert(base);
 
-	Cvar_SetValue("mn_prod_disassembling", 0);
+	production_disassembling = qfalse;
 
 	productionAmount[0] = productionList[0] = productionQueued[0] = '\0';
 	queue = &gd.productions[base->idx];
@@ -921,7 +923,7 @@ static void PR_UpdateDisassemblingList_f (void)
 		return;
 
 	base = baseCurrent;
-	Cvar_SetValue("mn_prod_disassembling", 1);
+	production_disassembling = qtrue;
 
 	productionAmount[0] = productionList[0] = productionQueued[0] = '\0';
 	queue = &gd.productions[base->idx];
@@ -955,7 +957,7 @@ static void PR_UpdateDisassemblingList_f (void)
 	}
 
 	/* Enable disassembly cvar. */
-	Cvar_SetValue("mn_prod_disassembling", 1);
+	production_disassembling = qtrue;
 	/* bind the menu text to our static char array */
 	menuText[TEXT_PRODUCTION_LIST] = productionList;
 	/* bind the amount of available items */
@@ -986,7 +988,7 @@ static void PR_ProductionSelect_f (void)
 		return;
 
 	/* Enable disassembly cvar. */
-	Cvar_SetValue("mn_prod_disassembling", 0);
+	production_disassembling = qfalse;
 
 	/* reset scroll values */
 	node1->textScroll = node2->textScroll = prodlist->textScroll = 0;
@@ -1145,7 +1147,7 @@ static void PR_ProductionIncrease_f (void)
 	} else {
 		if (selectedIndex == NONE)
 			return;
-		if (Cvar_VariableInteger("mn_prod_disassembling") == 0) {
+		if (!production_disassembling) {
 			prod = PR_QueueNew(base, queue, selectedIndex, amount, qfalse);	/* Production. */
 		} else {
 			/* We can disassembly only as many items as we have in base storage. */
@@ -1183,7 +1185,7 @@ static void PR_ProductionIncrease_f (void)
 					MN_Popup(_("Not enough material!"), va(_("You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."), amount, producible_amount));
 				}
 
-				if (Cvar_VariableInteger("mn_prod_disassembling") == 0) {
+				if (!production_disassembling) {
 					Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Production of %s started"), csi.ods[selectedIndex].name);
 					MN_AddNewMessage(_("Production started"), messageBuffer, qfalse, MSG_PRODUCTION, csi.ods[selectedIndex].tech);
 				} else {
@@ -1214,7 +1216,7 @@ static void PR_ProductionIncrease_f (void)
 		}
 	}
 
-	if (Cvar_VariableInteger("mn_prod_disassembling") == 0) {	/* Production. */
+	if (!production_disassembling) {	/* Production. */
 		if (produceCategory != BUY_AIRCRAFT)
 			PR_ProductionInfo(qfalse);
 		else
