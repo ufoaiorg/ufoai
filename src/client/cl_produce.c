@@ -1048,12 +1048,12 @@ static void PR_ProductionList_f (void)
 
 /**
  * @brief Returns true if the current base is able to produce items
+ * @sa B_BaseInit_f
  */
 qboolean PR_ProductionAllowed (void)
 {
-	int hiredWorkerCount = E_CountHired(baseCurrent, EMPL_WORKER);
-
-	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK && baseCurrent->hasWorkshop && hiredWorkerCount > 0) {
+	assert(baseCurrent);
+	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK && baseCurrent->hasWorkshop && E_CountHired(baseCurrent, EMPL_WORKER) > 0) {
 		Cbuf_AddText("set_prod_enabled;");
 		return qtrue;
 	} else {
