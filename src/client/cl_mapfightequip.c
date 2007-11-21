@@ -279,10 +279,8 @@ static qboolean AIM_SelectableAircraftItem (base_t* base, aircraft_t *aircraft, 
 	if (aircraft) {
 		if (aircraft->homebase->storage.num[itemIdx] <= 0)
 			return qfalse;
-	} else {
-		if (base->storage.num[itemIdx] <= 0 && !csi.ods[itemIdx].notOnMarket)
+	} else if (base->storage.num[itemIdx] <= 0 && !csi.ods[itemIdx].notOnMarket)
 			return qfalse;
-	}
 
 	return qtrue;
 }
