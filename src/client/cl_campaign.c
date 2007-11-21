@@ -1548,6 +1548,7 @@ void CL_CampaignRun (void)
 			/* every day */
 			B_UpdateBaseData();
 			HOS_HospitalRun();
+			BDEF_ReloadBattery();
 		}
 
 		/* check for campaign events */

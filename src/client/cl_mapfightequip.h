@@ -62,6 +62,7 @@ void BDEF_InitialiseBaseSlots(base_t *base);
 void BDEF_MenuInit_f(void);
 void BDEF_BaseDefenseMenuUpdate_f(void);
 void BDEF_ListClick_f(void);
+void BDEF_ReloadBattery(void);
 
 void AII_UpdateInstallationDelay(void);
 void AIM_AircraftEquipMenuUpdate_f(void);

@@ -1063,6 +1063,10 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 				}
 				if (i == MAX_ACITEMS)
 					Com_Printf("AII_ParseAircraftItem: \"%s\" unknown craftitem type: \"%s\" - ignored.\n", name, token);
+				if (od->craftitem.type > AC_ITEM_AMMO) {
+					/* this is an ammo for base defense: you can't buy it */
+					od->notOnMarket = qtrue;
+				}
 			} else
 				Com_Printf("Com_ParseItem: unknown token \"%s\" ignored (weapon %s)\n", token, name);
 		}
