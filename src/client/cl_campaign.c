@@ -4672,6 +4672,7 @@ static void CP_UFOSendMail (aircraft_t *ufocraft, base_t *base)
 
 	} else {
 		/* @todo: recovery */
+		return;
 	}
 	assert(mail);
 	/* Add the mail to unread mail */
