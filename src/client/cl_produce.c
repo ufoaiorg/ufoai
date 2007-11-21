@@ -83,7 +83,7 @@ static qboolean PR_ConditionsDisassembly (base_t* base, components_t *comp)
  * @sa PR_ProductionInfo
  * @return 0 if the production does not make any progress, 1 if the whole item is built in 1 hour
  */
-static float PR_CalculateProductionPercentDone (base_t *base, technology_t *tech, components_t *comp, qboolean disassembly)
+static float PR_CalculateProductionPercentDone (const base_t *base, technology_t *tech, components_t *comp, qboolean disassembly)
 {
 	signed int allworkers = 0, maxworkers = 0;
 	signed int timeDefault = 0;
@@ -523,7 +523,7 @@ void PR_ProductionRun (void)
  * @param[in] disassembly True, if we are trying to display disassembly info.
  * @note -1 for objID means that there is no production in this base.
  */
-static void PR_ProductionInfo (qboolean disassembly)
+static void PR_ProductionInfo (const base_t* base, qboolean disassembly)
 {
 	static char productionInfo[512];
 	objDef_t *od, *compod;
@@ -532,11 +532,11 @@ static void PR_ProductionInfo (qboolean disassembly)
 	components_t *comp = NULL;
 	float prodPerHour;
 
-	assert(baseCurrent);
+	assert(base);
 
 	if (selectedQueueItem) {
 		assert(selectedIndex != NONE);
-		objID = gd.productions[baseCurrent->idx].items[selectedIndex].objID;
+		objID = gd.productions[base->idx].items[selectedIndex].objID;
 	} else {
 		objID = selectedIndex;
 	}
@@ -551,15 +551,15 @@ static void PR_ProductionInfo (qboolean disassembly)
 				Cvar_Set("mn_item", "");
 			} else {
 				/* If item is first in queue, take percentDone into account. */
-				prodPerHour = PR_CalculateProductionPercentDone(baseCurrent, od->tech, NULL, qfalse);
+				prodPerHour = PR_CalculateProductionPercentDone(base, od->tech, NULL, qfalse);
 				/* If you entered production menu, that means that prodPerHour > 0 (must not divide by 0) */
 				assert(prodPerHour > 0);
-				if (objID == gd.productions[baseCurrent->idx].items[0].objID)
-					time = ceil((1.0f - gd.productions[baseCurrent->idx].items[0].percentDone) / prodPerHour);
+				if (objID == gd.productions[base->idx].items[0].objID)
+					time = ceil((1.0f - gd.productions[base->idx].items[0].percentDone) / prodPerHour);
 				else
 					time = ceil(1.0f / prodPerHour);
 				Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", od->name);
-				Q_strcat(productionInfo, va(_("Costs per item\t%i c\n"), (od->price*PRODUCE_FACTOR/PRODUCE_DIVISOR)),
+				Q_strcat(productionInfo, va(_("Costs per item\t%i c\n"), (od->price * PRODUCE_FACTOR / PRODUCE_DIVISOR)),
 					sizeof(productionInfo));
 				Q_strcat(productionInfo, va(_("Productiontime\t%ih\n"), time), sizeof(productionInfo));
 				Q_strcat(productionInfo, va(_("Item size\t%i\n"), od->size), sizeof(productionInfo));
@@ -587,11 +587,11 @@ static void PR_ProductionInfo (qboolean disassembly)
 				Cvar_Set("mn_item", "");
 			} else {
 				/* If item is first in queue, take percentDone into account. */
-				prodPerHour = PR_CalculateProductionPercentDone(baseCurrent, od->tech, comp, qtrue);
+				prodPerHour = PR_CalculateProductionPercentDone(base, od->tech, comp, qtrue);
 				/* If you entered production menu, that means that prodPerHour > 0 (must not divide by 0) */
 				assert(prodPerHour > 0);
-				if (objID == gd.productions[baseCurrent->idx].items[0].objID)
-					time = ceil((1.0f - gd.productions[baseCurrent->idx].items[0].percentDone) / prodPerHour);
+				if (objID == gd.productions[base->idx].items[0].objID)
+					time = ceil((1.0f - gd.productions[base->idx].items[0].percentDone) / prodPerHour);
 				else
 					time = ceil(1.0f / prodPerHour);
 				Com_sprintf(productionInfo, sizeof(productionInfo), _("%s - disassembly\n"), od->name);
@@ -711,7 +711,7 @@ static void PR_ProductionListClick_f (void)
 #if 0 /* FIXME: not a concern any more ... */
 	/* there is already a running production - stop it first */
 	if (gd.productions[base->idx].amount > 0 ) {
-		PR_ProductionInfo(qfalse);
+		PR_ProductionInfo(base, qfalse);
 		return;
 	}
 #endif
@@ -734,9 +734,9 @@ static void PR_ProductionListClick_f (void)
 			if (prod->aircraft)
 				PR_AircraftInfo();
 			else
-				PR_ProductionInfo(qfalse);
+				PR_ProductionInfo(base, qfalse);
 		} else
-			PR_ProductionInfo(qtrue);
+			PR_ProductionInfo(base, qtrue);
 	} else if (num >= queue->numItems + QUEUE_SPACERS) {
 		/* Clicked in the item list. */
 		idx = num - queue->numItems - QUEUE_SPACERS;
@@ -762,13 +762,13 @@ static void PR_ProductionListClick_f (void)
 #endif
 							selectedQueueItem = qfalse;
 							selectedIndex = i;
-							PR_ProductionInfo(qfalse);
+							PR_ProductionInfo(base, qfalse);
 							return;
 						}
 						j++;
 					}
 				}
-			} else {	/* Aircrafts. */
+			} else {	/* Aircraft. */
 				for (j = 0, i = 0; i < numAircraft_samples; i++) {
 					aircraft = &aircraft_samples[j];
 					if ((aircraft->tech->produceTime >= 0) && RS_IsResearched_ptr(aircraft->tech)) {
@@ -790,11 +790,12 @@ static void PR_ProductionListClick_f (void)
 				if (j == idx) {
 					selectedQueueItem = qfalse;
 					selectedIndex = gd.components[i].assembly_idx;
-					PR_ProductionInfo(qtrue);
+					PR_ProductionInfo(base, qtrue);
 					return;
 				}
 				j++;
 			}
+			Com_Printf("gd.numComponents: %i\n", gd.numComponents);
 		}
 	}
 #ifdef DEBUG
@@ -900,7 +901,7 @@ static void PR_UpdateProductionList (base_t* base)
 
 #if 0 /* FIXME: needed now? */
 	/* now print the information about the current item in production */
-	PR_ProductionInfo(qfalse);
+	PR_ProductionInfo(base, qfalse);
 #endif
 }
 
@@ -1021,7 +1022,7 @@ static void PR_ProductionList_f (void)
 	else
 		return;
 
-	PR_ProductionInfo(qfalse);
+	PR_ProductionInfo(baseCurrent, qfalse);
 
 	numWorkshops = B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_WORKSHOP);
 	numWorkshops = (numWorkshops >= 0) ? numWorkshops : 0;
@@ -1218,12 +1219,12 @@ static void PR_ProductionIncrease_f (void)
 
 	if (!production_disassembling) {	/* Production. */
 		if (produceCategory != BUY_AIRCRAFT)
-			PR_ProductionInfo(qfalse);
+			PR_ProductionInfo(base, qfalse);
 		else
 			PR_AircraftInfo();
 		PR_UpdateProductionList(base);
 	} else {							/* Disassembling. */
-		PR_ProductionInfo(qtrue);
+		PR_ProductionInfo(base, qtrue);
 		PR_UpdateDisassemblingList_f();
 	}
 }
@@ -1251,13 +1252,13 @@ static void PR_ProductionStop_f (void)
 	if (queue->numItems == 0) {
 		selectedQueueItem = qfalse;
 		selectedIndex = NONE;
-		PR_ProductionInfo(qfalse);
+		PR_ProductionInfo(base, qfalse);
 	} else if (selectedIndex >= queue->numItems) {
 		selectedIndex = queue->numItems - 1;
 		if (!queue->items[selectedIndex].production)
-			PR_ProductionInfo(qtrue);
+			PR_ProductionInfo(base, qtrue);
 		else
-			PR_ProductionInfo(qfalse);
+			PR_ProductionInfo(base, qfalse);
 	}
 
 	PR_UpdateDisassemblingList_f();
@@ -1299,10 +1300,10 @@ static void PR_ProductionDecrease_f (void)
 		PR_ProductionStop_f();
 	} else {
 		if (prod->production) {
-			PR_ProductionInfo(qfalse);
+			PR_ProductionInfo(base, qfalse);
 			PR_UpdateProductionList(base);
 		} else {
-			PR_ProductionInfo(qtrue);
+			PR_ProductionInfo(base, qtrue);
 			PR_UpdateDisassemblingList_f();
 		}
  	}
