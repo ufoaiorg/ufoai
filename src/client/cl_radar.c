@@ -49,7 +49,7 @@ void RADAR_DrawCoverage (const menuNode_t* node, const radar_t* radar, vec2_t po
  */
 void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, vec2_t pos)
 {
-	int x, y;
+	int x, y, z;
 	int i;
 	const vec4_t color = {0, 1, 0, 1};
 	screenPoint_t pts[2];
@@ -64,11 +64,11 @@ void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, vec2_t pos)
 	R_Color(color);
 
 	/* Draw lines from radar to ufos sensored */
-	MAP_AllMapToScreen(node, pos, &x, &y, NULL);
+	MAP_AllMapToScreen(node, pos, &x, &y, &z);
 	pts[0].x = x;
 	pts[0].y = y;
 	for (i = radar->numUfos - 1; i >= 0; i--)
-		if (MAP_AllMapToScreen(node, (gd.ufos + radar->ufos[i])->pos, &x, &y, NULL)) {
+		if (MAP_AllMapToScreen(node, (gd.ufos + radar->ufos[i])->pos, &x, &y, NULL) && z > 0) {
 			pts[1].x = x;
 			pts[1].y = y;
 			R_DrawLineStrip(2, (int*)pts); /* FIXME */

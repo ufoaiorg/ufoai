@@ -51,8 +51,10 @@ static void R_DrawSphere (void)
 
 		/* build the sphere display list */
 		spherelist = qglGenLists(1);
+		R_CheckError();
 
 		qglNewList(spherelist, GL_COMPILE);
+		R_CheckError();
 
 		qglEnable(GL_NORMALIZE);
 
@@ -76,12 +78,14 @@ static void R_DrawSphere (void)
 			}
 
 			qglEnd();
+			R_CheckError();
 		}
 
 		qglDisable(GL_NORMALIZE);
 
 		qglEndList();
 	}
+	R_CheckError();
 }
 
 /**
@@ -106,17 +110,17 @@ static void R_InitGlobeChain (void)
 
 	for (i = 0; i < GLOBE_TRIS; i++) {
 		float rho = (float) i * drho;
-		float srho = (float) (sin (rho));
-		float crho = (float) (cos (rho));
-		float srhodrho = (float) (sin (rho + drho));
-		float crhodrho = (float) (cos (rho + drho));
+		float srho = (float) (sin(rho));
+		float crho = (float) (cos(rho));
+		float srhodrho = (float) (sin(rho + drho));
+		float crhodrho = (float) (cos(rho + drho));
 
 		s = 0.0f;
 
 		for (j = 0; j <= GLOBE_TRIS; j++) {
 			float theta = (j == GLOBE_TRIS) ? 0.0f : j * dtheta;
-			float stheta = (float) (-sin( theta));
-			float ctheta = (float) (cos (theta));
+			float stheta = (float) (-sin(theta));
+			float ctheta = (float) (cos(theta));
 
 			globetexes[texespos++] = s;
 			globetexes[texespos++] = (t - dt);
@@ -150,7 +154,7 @@ void R_DrawInitLocal (void)
 		Com_Printf("Could not find shadow image in game pics/sfx directory!\n");
 	blood = R_FindImage("pics/sfx/blood", it_pic);
 	if (!blood)
-		Com_Printf("Could not find shadow image in game pics/sfx directory!\n");
+		Com_Printf("Could not find blood image in game pics/sfx directory!\n");
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	R_CheckError();
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
