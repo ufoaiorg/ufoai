@@ -9,14 +9,14 @@ for i in `find base/textures/ -name '*.jpg' -print`;
 	do svn proplist -R -v $i | awk '{
 		k++;
 		{
-			if (k == 1 && $1~/Properties/) {
+			if (k == 1 && $1 ~ /Properties/) {
 				printf $NF" ";
 				count=1
 			}
 		};
 		{
-			if (k > 1 && $1~/svn:license/) {
-				if ($0~/GNU/ || $0~/GPL/) {
+			if (k > 1 && $1 ~ /svn:license/) {
+				if ($0 ~ /GNU/ || $0 ~ /GPL/) {
 					print "license OK!";
 					count=0
 				} else {
@@ -26,7 +26,7 @@ for i in `find base/textures/ -name '*.jpg' -print`;
 			}
 		}
 		{
-			if (k > 1 && count) {
+			if (k > 1 && count && $0 !~ /svn:source/) {
 				print "NO LICENSE!"
 			}
 		}
