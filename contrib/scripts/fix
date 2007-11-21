@@ -1,0 +1,41 @@
+#! /bin/sh
+
+DIR=.
+
+if [ $# -eq 1 ]
+then
+    echo "Use $1"
+    DIR=$1
+fi
+
+EXT="ac am c h cpp m pl po py qe4 rc sh tex txt ufo ump py"
+
+for i in $EXT; do
+        find $DIR -name "*.$i" -exec ./eol {} \;
+done
+
+find $DIR -name ".cvsignore" -exec svn rm {} \;
+
+mime () {
+        find $DIR -name "*.$1" -exec svn ps svn:mime-type $2 {} \;
+}
+
+
+mime bmp image/bmp
+mime jpg image/jpeg
+mime ogg application/ogg
+mime blend application/x-blender
+mime exe application/x-executable
+mime png image/png
+mime tga image/x-tga
+mime wav audio/x-wav
+mime xcf image/x-xcf
+mime xbm image/x-xbitmap
+mime xpm image/x-xpixmap
+mime 3ds application/x-3ds
+mime psd image/psd
+mime dll application/x-msdownload
+mime pdf application/pdf
+mime doc application/msword
+mime zip application/zip
+mime ico image/x-icon
