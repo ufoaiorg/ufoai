@@ -222,8 +222,6 @@ Section "Source Code" SEC03
   File "..\..\docs\tex\chapters\*.tex"
   SetOutPath "$INSTDIR\src\docs\tex\images"
   File "..\..\docs\tex\images\*.jpg"
-  SetOutPath "$INSTDIR\src\docs\tex\licenses"
-  File "..\..\docs\tex\licenses\*.tex"
   SetOutPath "$INSTDIR\src\game"
   File "..\..\game\*.def"
   File "..\..\game\*.c"
