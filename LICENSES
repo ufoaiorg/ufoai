@@ -2234,3 +2234,7 @@ src/tools/blender/md2_import.py | GNU General Public License 2.0
 src/tools/blender/md2tag_export.py | GNU General Public License 2.0 | Werner (hoehrer) Höhrer
 src/tools/blender/md2tag_test.blend |  | Werner (hoehrer) Höhrer
 src/tools/blender/test_matrix.py | GNU General Public License 2.0 | Werner (hoehrer) Höhrer
+src/tools/findrep.pl | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+src/tools/map2obj.pl | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+src/tools/md2.pl | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+src/tools/md2_tag.pl | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
