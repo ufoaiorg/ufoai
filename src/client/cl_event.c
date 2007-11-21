@@ -97,7 +97,6 @@ eventMail_t* CL_NewEventMail (const char *id, const char *newID, const char *bod
 
 	assert(id);
 	assert(newID);
-	assert(body);
 
 	mail = CL_GetEventMail(id, qtrue);
 	if (!mail)
@@ -105,7 +104,10 @@ eventMail_t* CL_NewEventMail (const char *id, const char *newID, const char *bod
 
 	/* cl_localPool is freed with every new game in CL_ResetSinglePlayerData */
 	mail->id = Mem_PoolStrDup(newID, cl_localPool, CL_TAG_NONE);
-	mail->body = Mem_PoolStrDup(body, cl_localPool, CL_TAG_NONE);
+
+	/* maybe we want to use the old body */
+	if (body)
+		mail->body = Mem_PoolStrDup(body, cl_localPool, CL_TAG_NONE);
 
 	return mail;
 }
