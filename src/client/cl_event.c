@@ -87,6 +87,18 @@ eventMail_t* CL_GetEventMail (const char *id, qboolean createCopy)
 }
 
 /**
+ * @brief Make sure, that the linked list is freed with every new game
+ * @sa CL_ResetSinglePlayerData
+ */
+void CL_FreeDynamicEventMail (void)
+{
+	/* the pointers are not freed, this is done with the
+	 * pool clear in CL_ResetSinglePlayerData */
+	LIST_Delete(eventMails);
+	eventMails = NULL;
+}
+
+/**
  * @brief Use this function to create new eventmails with dynamic body content
  * @sa CL_GetEventMail
  * @note The pointers in the original eventmail are not freed - we still need this memory later!!

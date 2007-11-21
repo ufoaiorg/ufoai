@@ -4539,6 +4539,9 @@ void CL_ResetSinglePlayerData (void)
 	memset(&invList, 0, sizeof(invList));
 	messageStack = NULL;
 
+	/* cleanup dynamic mails */
+	CL_FreeDynamicEventMail();
+
 	Mem_FreePool(cl_localPool);
 
 	/* called to flood the hash list - because the parse tech function
