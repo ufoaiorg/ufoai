@@ -322,6 +322,8 @@ menu production
 		format	"20 260"
 		num 17
 		height	"4"
+		wheel
+		scrollbar true
 	}
 
 	// ==================
@@ -480,7 +482,7 @@ menu production
 		pos		"940 686"
 		texl	"0 0"
 		texh	"64 37"
-		click	{ cmd mn_pop }
+		click	{ cmd "mn_pop;" }
 	}
 
 	// ==================
