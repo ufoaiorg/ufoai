@@ -26,21 +26,104 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
+static linkedList_t *eventMails = NULL;
+
 /**
  * @brief Searches all event mails for a given id
  * @note Might also return NULL - always check the return value
+ * @note If you want to create mails that base on a script defintion but have differnet
+ * body messages, set createCopy to true
+ * @param[in] id The id from the script files
+ * @param[in] createCopy Don't return the link to gd.eventMails but allocate memory
+ * and copy the gd.eventMail memory over to the newly allocated. Don't use createCopy on
+ * dynamic mails
+ * @sa UP_SetMailHeader
+ * @sa CL_NewEventMail
  */
-eventMail_t* CL_GetEventMail (const char *id)
+eventMail_t* CL_GetEventMail (const char *id, qboolean createCopy)
 {
 	int i;
+	linkedList_t* list;
+	eventMail_t* listMail;
 
-	for (i = 0; i < gd.numEventMails; i++)
-		if (!Q_strcmp(gd.eventMails[i].id, id))
-			return &gd.eventMails[i];
+	if (!createCopy) {
+		for (i = 0; i < gd.numEventMails; i++)
+			if (!Q_strcmp(gd.eventMails[i].id, id))
+				return &gd.eventMails[i];
 
-	return NULL;
+		list = eventMails;
+		while (list) {
+			listMail = (eventMail_t *)list->data;
+			if (!Q_strcmp(listMail->id, id))
+				return listMail;
+			list = list->next;
+		}
+
+		return NULL;
+	} else {
+		/* create a copy of the static eventmails */
+		eventMail_t *eventMail, *newEventMail;
+
+		/* search the static mails - and only the static ones! */
+		for (i = 0; i < gd.numEventMails; i++)
+			if (!Q_strcmp(gd.eventMails[i].id, id)) {
+				eventMail = &gd.eventMails[i];
+				break;
+			}
+
+		if (!eventMail)
+			return NULL;
+
+		newEventMail = Mem_PoolAlloc(sizeof(eventMail_t), cl_localPool, CL_TAG_NONE);
+		if (!newEventMail)
+			return NULL;
+
+		/* don't !! free the original pointers here */
+		memcpy(newEventMail, eventMail, sizeof(eventMail_t));
+		LIST_AddPointer(&eventMails, newEventMail);
+		/* make sure, that you set a unique eventmail->id and eventmail->body now */
+		return newEventMail;
+	}
 }
 
+/**
+ * @brief Make sure, that the linked list is freed with every new game
+ * @sa CL_ResetSinglePlayerData
+ */
+void CL_FreeDynamicEventMail (void)
+{
+	/* the pointers are not freed, this is done with the
+	 * pool clear in CL_ResetSinglePlayerData */
+	LIST_Delete(eventMails);
+	eventMails = NULL;
+}
+
+/**
+ * @brief Use this function to create new eventmails with dynamic body content
+ * @sa CL_GetEventMail
+ * @note The pointers in the original eventmail are not freed - we still need this memory later!!
+ * @sa CL_ResetSinglePlayerData
+ */
+eventMail_t* CL_NewEventMail (const char *id, const char *newID, const char *body)
+{
+	eventMail_t* mail;
+
+	assert(id);
+	assert(newID);
+
+	mail = CL_GetEventMail(id, qtrue);
+	if (!mail)
+		return NULL;
+
+	/* cl_localPool is freed with every new game in CL_ResetSinglePlayerData */
+	mail->id = Mem_PoolStrDup(newID, cl_localPool, CL_TAG_NONE);
+
+	/* maybe we want to use the old body */
+	if (body)
+		mail->body = Mem_PoolStrDup(body, cl_localPool, CL_TAG_NONE);
+
+	return mail;
+}
 
 /** @brief Valid event mail parameters */
 static const value_t eventMail_vals[] = {
@@ -142,7 +225,7 @@ void CL_EventAddMail_f (void)
 
 	eventMailId = Cmd_Argv(1);
 
-	eventMail = CL_GetEventMail(eventMailId);
+	eventMail = CL_GetEventMail(eventMailId, qfalse);
 	if (!eventMail) {
 		Com_Printf("CL_EventAddMail_f: Could not find eventmail with id '%s'\n", eventMailId);
 		return;

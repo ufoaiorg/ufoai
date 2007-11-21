@@ -51,6 +51,8 @@ typedef struct eventMail_s {
 
 void CL_EventAddMail_f(void);
 void CL_ParseEventMails(const char *name, const char **text);
-eventMail_t* CL_GetEventMail(const char *id);
+eventMail_t* CL_GetEventMail(const char *id, qboolean createCopy);
+eventMail_t* CL_NewEventMail(const char *id, const char *newID, const char *body);
+void CL_FreeDynamicEventMail(void);
 
 #endif /* CLIENT_CL_EVENT */

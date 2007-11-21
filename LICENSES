@@ -1870,6 +1870,7 @@ base/textures/tex_buildings/concrete017.jpg | GNU General Public License 2.0 | W
 base/textures/tex_buildings/concrete018.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/concrete019.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/concrete020.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/concrete021.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/e8_mtlwall1.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/e8_mtlwall1b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/e8_mtlwall2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
@@ -2233,3 +2234,7 @@ src/tools/blender/md2_import.py | GNU General Public License 2.0
 src/tools/blender/md2tag_export.py | GNU General Public License 2.0 | Werner (hoehrer) Höhrer
 src/tools/blender/md2tag_test.blend |  | Werner (hoehrer) Höhrer
 src/tools/blender/test_matrix.py | GNU General Public License 2.0 | Werner (hoehrer) Höhrer
+src/tools/findrep.pl | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+src/tools/map2obj.pl | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+src/tools/md2.pl | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+src/tools/md2_tag.pl | GNU General Public License 2.0 | Werner Höhrer (hoehrer)

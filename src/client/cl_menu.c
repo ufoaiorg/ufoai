@@ -5371,9 +5371,9 @@ qboolean MS_Load (sizebuf_t* sb, void* data)
 		if (mtype != MSG_DEBUG || developer->integer == 1) {
 			mess = MN_AddNewMessage(title, text, qfalse, mtype, RS_GetTechByIDX(idx));
 			if (s) {
-				mess->eventMail = CL_GetEventMail(s);
+				mess->eventMail = CL_GetEventMail(s, qfalse);
 				if (!mess->eventMail) {
-					Com_Printf("Could not find eventMail with id: %s\n", s);
+					Com_DPrintf(DEBUG_CLIENT, "Could not find eventMail with id: %s (ok for dynamic mails)\n", s);
 					return qfalse;
 				}
 			}
