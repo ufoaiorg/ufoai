@@ -5354,42 +5354,38 @@ qboolean MS_Load (sizebuf_t* sb, void* data)
 	int i, mtype, idx;
 	char title[MAX_VAR], text[MAX_MESSAGE_TEXT];
 	message_t *mess;
-	const char *s = NULL;
+	eventMail_t *mail;
 
 	/* how many message items */
 	i = MSG_ReadLong(sb);
 	for (; i--;) {
+		mail = NULL;
 		/* can contain high bits due to utf8 */
 		Q_strncpyz(title, MSG_ReadStringRaw(sb), sizeof(title));
 		Q_strncpyz(text, MSG_ReadStringRaw(sb), sizeof(text));
 		mtype = MSG_ReadByte(sb);
 		if (mtype == MSG_EVENT)
-			s = MSG_ReadString(sb);
+			mail = CL_GetEventMail(MSG_ReadString(sb), qfalse);
 		else
-			s = NULL;
+			mail = NULL;
 		idx = MSG_ReadLong(sb);
-		if (mtype != MSG_DEBUG || developer->integer == 1) {
+		/* event and not mail means, dynamic mail - we don't save or load them */
+		if ((mtype == MSG_EVENT && !mail) || (mtype == MSG_DEBUG && developer->integer != 1)) {
+			MSG_ReadLong(sb);
+			MSG_ReadLong(sb);
+			MSG_ReadLong(sb);
+			MSG_ReadLong(sb);
+			MSG_ReadLong(sb);
+			MSG_ReadLong(sb);
+		} else {
 			mess = MN_AddNewMessage(title, text, qfalse, mtype, RS_GetTechByIDX(idx));
-			if (s) {
-				mess->eventMail = CL_GetEventMail(s, qfalse);
-				if (!mess->eventMail) {
-					Com_DPrintf(DEBUG_CLIENT, "Could not find eventMail with id: %s (ok for dynamic mails)\n", s);
-					return qfalse;
-				}
-			}
+			mess->eventMail = mail;
 			mess->d = MSG_ReadLong(sb);
 			mess->m = MSG_ReadLong(sb);
 			mess->y = MSG_ReadLong(sb);
 			mess->h = MSG_ReadLong(sb);
 			mess->min = MSG_ReadLong(sb);
 			mess->s = MSG_ReadLong(sb);
-		} else {
-			MSG_ReadLong(sb);
-			MSG_ReadLong(sb);
-			MSG_ReadLong(sb);
-			MSG_ReadLong(sb);
-			MSG_ReadLong(sb);
-			MSG_ReadLong(sb);
 		}
 	}
 	return qtrue;
