@@ -589,7 +589,7 @@ if [[ $? -eq 0 ]]
 then
 	clean_html
 
-	for english in "mail_aircraft_landed" "mail_aircraft_bingo_fuel" "mail_aircraft_ready" "mail_aircraft_lost_target" "mail_aircraft_new_at_base" "mail_aircraft_lost_target" "mail_alien_activity_reported" "mail_alien_ufo_downed" "mail_alien_response_too_late" "mail_alien_new_radar_contact" "mail_alien_lost_radar_contact" "mail_alien_base_discovered" "mail_general_mission_summary" "mail_general_base_attack_report" "mail_general_new_base" "mail_general_construction_finished" "mail_general_equipment_received" "mail_general_transfer_received" "mail_general_ufo_in_hangar" "mail_general_monthly_report" "mail_production_finished" "mail_production_not_enough_resources" "mail_production_not_enough_money" "mail_prolog"
+	for english in "mail_ufo_crashed_report" "mail_ufo_recovery_report" "mail_aircraft_landed" "mail_aircraft_bingo_fuel" "mail_aircraft_ready" "mail_aircraft_lost_target" "mail_aircraft_new_at_base" "mail_aircraft_lost_target" "mail_alien_activity_reported" "mail_alien_ufo_downed" "mail_alien_response_too_late" "mail_alien_new_radar_contact" "mail_alien_lost_radar_contact" "mail_alien_base_discovered" "mail_general_mission_summary" "mail_general_base_attack_report" "mail_general_new_base" "mail_general_construction_finished" "mail_general_equipment_received" "mail_general_transfer_received" "mail_general_ufo_in_hangar" "mail_general_monthly_report" "mail_production_finished" "mail_production_not_enough_resources" "mail_production_not_enough_money" "mail_prolog"
 	do
 		update_one_sentence "1"
 	done
