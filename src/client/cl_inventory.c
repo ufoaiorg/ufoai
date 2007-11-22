@@ -500,8 +500,8 @@ int INV_DisassemblyItem (base_t *base, components_t *comp, qboolean calculate)
 	objDef_t *compod;
 
 	assert(comp);
-	if (!calculate)	/* We need base only if this is real disassembling. */
-		assert(base);
+	if (!calculate && !base)	/* We need base only if this is real disassembling. */
+		Sys_Error("INV_DisassemblyItem: No base given");
 
 	for (i = 0; i < comp->numItemtypes; i++) {
 		for (j = 0, compod = csi.ods; j < csi.numODs; j++, compod++) {
