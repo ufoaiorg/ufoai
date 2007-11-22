@@ -4627,6 +4627,7 @@ static void CP_CampaignStats_f (void)
 /**
  * @brief Send an email to list all recovered item.
  * @sa CL_EventAddMail_f
+ * @sa CL_NewEventMail
  */
 void CP_UFOSendMail (aircraft_t *ufocraft, base_t *base)
 {
@@ -4689,11 +4690,11 @@ void CP_UFOSendMail (aircraft_t *ufocraft, base_t *base)
 	assert(mail);
 
 	/* don't free the old mail body here - it's the string of the source mail */
-	mail->body = Mem_PoolStrDup(va(mail->body, UFO_TypeToName(missionresults.ufotype), base->name, body), cl_localPool, CL_TAG_NONE);
+	mail->body = Mem_PoolStrDup(va(_(mail->body), UFO_TypeToName(missionresults.ufotype), base->name, body), cl_localPool, CL_TAG_NONE);
 
 	/* update subject */
 	/* Insert name of the mission in the template */
-	mail->subject = Mem_PoolStrDup(va(mail->subject, base->name), cl_localPool, CL_TAG_NONE);
+	mail->subject = Mem_PoolStrDup(va(_(mail->subject), base->name), cl_localPool, CL_TAG_NONE);
 
 	/* Add the mail to unread mail */
 	Cmd_ExecuteString(va("addeventmail %s", mail->id));

@@ -66,6 +66,26 @@ mail prolog
 }
 
 // FIXME: Use these and remove the MN_AddNewMessage stuff for these
+mail ufo_crashed_report
+{
+	to "_mail_to_base_commander"
+	from "_mail_from_paul_navarre"
+	// base name where you send the recovery stuffs
+	subject "_Recovery Report -- %s"
+	body "_mail_ufo_crashed_report"
+	icon icons/tech
+}
+
+mail ufo_recovery_report
+{
+	to "_mail_to_base_commander"
+	from "_mail_from_paul_navarre"
+	// base name where you send the recovery stuffs
+	subject "_Recovery Report -- %s"
+	body "_mail_ufo_recovery_report"
+	icon icons/tech
+}
+
 mail not_enough_money
 {
 	to "_mail_to_base_commander"
