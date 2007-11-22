@@ -5379,6 +5379,7 @@ qboolean MS_Load (sizebuf_t* sb, void* data)
 			MSG_ReadLong(sb);
 		} else {
 			mess = MN_AddNewMessage(title, text, qfalse, mtype, RS_GetTechByIDX(idx));
+			mess->eventMail = mail;
 			mess->d = MSG_ReadLong(sb);
 			mess->m = MSG_ReadLong(sb);
 			mess->y = MSG_ReadLong(sb);
