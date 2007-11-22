@@ -4628,7 +4628,7 @@ static void CP_CampaignStats_f (void)
  * @brief Send an email to list all recovered item.
  * @sa CL_EventAddMail_f
  */
-static void CP_UFOSendMail (aircraft_t *ufocraft, base_t *base)
+void CP_UFOSendMail (aircraft_t *ufocraft, base_t *base)
 {
 	int i, j;
 	components_t *comp = NULL;
@@ -4662,19 +4662,39 @@ static void CP_UFOSendMail (aircraft_t *ufocraft, base_t *base)
 			if (comp->item_amount2[i] > 0)
 				Q_strcat(body, va(_("  * %i x\t%s\n"), comp->item_amount2[i], compod->name), sizeof(body));
 		}
-
-		/* don't free the old mail body here - it's the string of the source mail */
-		mail->body = Mem_PoolStrDup(va(mail->body, UFO_TypeToName(missionresults.ufotype), base->name, body), cl_localPool, CL_TAG_NONE);
-
-		/* update subject */
-		/* Insert name of the mission in the template */
-		mail->subject = Mem_PoolStrDup(va(mail->subject, base->name), cl_localPool, CL_TAG_NONE);
-
 	} else {
-		/* @todo: recovery */
-		return;
+		/* take the source mail and create a copy of it */
+		mail = CL_NewEventMail("ufo_recovery_report", va("ufo_recovery_report%i", ccs.date.sec), NULL);
+		if (!mail)
+			Sys_Error("CP_UFOSendMail: ufo_recovery_report wasn't found");
+		/* we need the source mail body here - this may not be NULL */
+		if (!mail->body)
+			Sys_Error("CP_UFOSendMail: ufo_recovery_report has no mail body");
+
+		/* Find components definition. */
+		comp = INV_GetComponentsByItemIdx(INVSH_GetItemByID(ufocraft->id));
+		assert(comp);
+
+		/* List all components of crashed UFO. */
+		for (i = 0; i < comp->numItemtypes; i++) {
+			for (j = 0, compod = csi.ods; j < csi.numODs; j++, compod++) {
+				if (!Q_strncmp(compod->id, comp->item_id[i], MAX_VAR))
+					break;
+			}
+			assert(compod);
+			if (comp->item_amount[i] > 0)
+				Q_strcat(body, va(_("  * %s\n"), compod->name), sizeof(body));
+		}
 	}
 	assert(mail);
+
+	/* don't free the old mail body here - it's the string of the source mail */
+	mail->body = Mem_PoolStrDup(va(mail->body, UFO_TypeToName(missionresults.ufotype), base->name, body), cl_localPool, CL_TAG_NONE);
+
+	/* update subject */
+	/* Insert name of the mission in the template */
+	mail->subject = Mem_PoolStrDup(va(mail->subject, base->name), cl_localPool, CL_TAG_NONE);
+
 	/* Add the mail to unread mail */
 	Cmd_ExecuteString(va("addeventmail %s", mail->id));
 }

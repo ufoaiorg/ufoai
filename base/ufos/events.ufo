@@ -76,6 +76,16 @@ mail ufo_crashed_report
 	icon icons/tech
 }
 
+mail ufo_recovery_report
+{
+	to "_mail_to_base_commander"
+	from "_mail_from_paul_navarre"
+	// base name where you send the recovery stuffs
+	subject "_Recovery Report -- %s"
+	body "_We managed to recover an intact %s, Commander. \nIt will be convoyed to base %s, and will arrive in two days.\nYou will need to dissassemble it if you want to use some parts. You may collect after dissassembling:\n%s"
+	icon icons/tech
+}
+
 mail not_enough_money
 {
 	to "_mail_to_base_commander"
