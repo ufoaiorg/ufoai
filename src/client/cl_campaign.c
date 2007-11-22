@@ -5077,7 +5077,7 @@ static void CP_UFOCrashed_f (void)
 	objDef_t *compod;
 	itemsTmp_t *cargo;
 
-	if (!baseCurrent || gd.interceptAircraft == AIRCRAFT_INVALID)
+	if (!baseCurrent || gd.interceptAircraft == -1)
 		return;
 
 	if (Cmd_Argc() < 2) {
