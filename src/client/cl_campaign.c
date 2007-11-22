@@ -4627,6 +4627,7 @@ static void CP_CampaignStats_f (void)
 /**
  * @brief Send an email to list all recovered item.
  * @sa CL_EventAddMail_f
+ * @sa CL_NewEventMail
  */
 void CP_UFOSendMail (aircraft_t *ufocraft, base_t *base)
 {
