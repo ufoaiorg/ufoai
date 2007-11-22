@@ -142,12 +142,6 @@ static qboolean AIRFIGHT_AddProjectile (base_t* attackingBase, aircraft_t *attac
 	}
 
 	weaponSlot->ammoLeft -= 1;
-	if (weaponSlot->ammoLeft <= 0) {
-		if (!attacker) {
-			/* @todo: this should costs credits */
-			weaponSlot->ammoLeft = csi.ods[weaponSlot->ammoIdx].ammo;
-		}
-	}
 
 	gd.numProjectiles++;
 

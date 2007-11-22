@@ -1548,6 +1548,7 @@ void CL_CampaignRun (void)
 			/* every day */
 			B_UpdateBaseData();
 			HOS_HospitalRun();
+			BDEF_ReloadBattery();
 		}
 
 		/* check for campaign events */
@@ -1568,7 +1569,7 @@ void CL_CampaignRun (void)
 		} else if (day > 1)
 			gd.fund = qtrue;
 
-		Cvar_SetValue("mn_unreadmails", UP_GetUnreadMails());
+		UP_GetUnreadMails();
 		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("%i %s %02i"), ccs.date.day / DAYS_PER_YEAR, CL_DateGetMonthName(month), day);
 		Cvar_Set("mn_mapdate", messageBuffer);
 		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("%02i:%02i"), ccs.date.sec / 3600, ((ccs.date.sec % 3600) / 60));
@@ -4624,6 +4625,81 @@ static void CP_CampaignStats_f (void)
 /* ======================== */
 
 /**
+ * @brief Send an email to list all recovered item.
+ * @sa CL_EventAddMail_f
+ */
+void CP_UFOSendMail (aircraft_t *ufocraft, base_t *base)
+{
+	int i, j;
+	components_t *comp = NULL;
+	objDef_t *compod;
+	eventMail_t *mail;
+	char body[512] = "";
+
+	assert(ufocraft);
+	assert(base);
+
+	if (missionresults.crashsite) {
+		/* take the source mail and create a copy of it */
+		mail = CL_NewEventMail("ufo_crashed_report", va("ufo_crashed_report%i", ccs.date.sec), NULL);
+		if (!mail)
+			Sys_Error("CP_UFOSendMail: ufo_crashed_report wasn't found");
+		/* we need the source mail body here - this may not be NULL */
+		if (!mail->body)
+			Sys_Error("CP_UFOSendMail: ufo_crashed_report has no mail body");
+
+		/* Find components definition. */
+		comp = INV_GetComponentsByItemIdx(INVSH_GetItemByID(ufocraft->id));
+		assert(comp);
+
+		/* List all components of crashed UFO. */
+		for (i = 0; i < comp->numItemtypes; i++) {
+			for (j = 0, compod = csi.ods; j < csi.numODs; j++, compod++) {
+				if (!Q_strncmp(compod->id, comp->item_id[i], MAX_VAR))
+					break;
+			}
+			assert(compod);
+			if (comp->item_amount2[i] > 0)
+				Q_strcat(body, va(_("  * %i x\t%s\n"), comp->item_amount2[i], compod->name), sizeof(body));
+		}
+	} else {
+		/* take the source mail and create a copy of it */
+		mail = CL_NewEventMail("ufo_recovery_report", va("ufo_recovery_report%i", ccs.date.sec), NULL);
+		if (!mail)
+			Sys_Error("CP_UFOSendMail: ufo_recovery_report wasn't found");
+		/* we need the source mail body here - this may not be NULL */
+		if (!mail->body)
+			Sys_Error("CP_UFOSendMail: ufo_recovery_report has no mail body");
+
+		/* Find components definition. */
+		comp = INV_GetComponentsByItemIdx(INVSH_GetItemByID(ufocraft->id));
+		assert(comp);
+
+		/* List all components of crashed UFO. */
+		for (i = 0; i < comp->numItemtypes; i++) {
+			for (j = 0, compod = csi.ods; j < csi.numODs; j++, compod++) {
+				if (!Q_strncmp(compod->id, comp->item_id[i], MAX_VAR))
+					break;
+			}
+			assert(compod);
+			if (comp->item_amount[i] > 0)
+				Q_strcat(body, va(_("  * %s\n"), compod->name), sizeof(body));
+		}
+	}
+	assert(mail);
+
+	/* don't free the old mail body here - it's the string of the source mail */
+	mail->body = Mem_PoolStrDup(va(mail->body, UFO_TypeToName(missionresults.ufotype), base->name, body), cl_localPool, CL_TAG_NONE);
+
+	/* update subject */
+	/* Insert name of the mission in the template */
+	mail->subject = Mem_PoolStrDup(va(mail->subject, base->name), cl_localPool, CL_TAG_NONE);
+
+	/* Add the mail to unread mail */
+	Cmd_ExecuteString(va("addeventmail %s", mail->id));
+}
+
+/**
  * @brief Function to trigger UFO Recovered event.
  * @note This function prepares related cvars for won menu.
  * @note Command to call this: cp_uforecovery.
@@ -5001,6 +5077,9 @@ static void CP_UFOCrashed_f (void)
 	objDef_t *compod;
 	itemsTmp_t *cargo;
 
+	if (!baseCurrent || gd.interceptAircraft == AIRCRAFT_INVALID)
+		return;
+
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <UFOType>\n", Cmd_Argv(0));
 		return;
@@ -5059,6 +5138,9 @@ static void CP_UFOCrashed_f (void)
 	missionresults.recovery = qtrue;
 	missionresults.crashsite = qtrue;
 	missionresults.ufotype = ufocraft->ufotype;
+
+	/* send mail */
+	CP_UFOSendMail(ufocraft, aircraft->homebase);
 }
 
 /**

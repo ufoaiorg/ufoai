@@ -140,7 +140,10 @@ skipwhite:
 		data++;
 		while (1) {
 			c = *data++;
-			if (c == '\"' || !c) {
+			if (c == '\\' && data[0] == 'n') {
+				c = '\n';
+				data++;
+			} else if (c == '\"' || !c) {
 				com_token[len] = 0;
 				*data_p = data;
 				return com_token;
@@ -156,6 +159,10 @@ skipwhite:
 
 	/* parse a regular word */
 	do {
+		if (c == '\\' && data[1] == 'n') {
+			c = '\n';
+			data++;
+		}
 		if (len < sizeof(com_token)) {
 			com_token[len] = c;
 			len++;

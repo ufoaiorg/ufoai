@@ -69,7 +69,7 @@ static technology_t **AII_GetCraftitemTechsByType (int type, base_t* base)
 
 	for (i = 0; i < csi.numODs; i++) {
 		aircraftitem = &csi.ods[i];
-		if (aircraftitem->craftitem.type == type && base->storage.num[i]) {
+		if (aircraftitem->craftitem.type == type) {
 			assert(j < MAX_TECHNOLOGIES);
 			techList[j] = aircraftitem->tech;
 			j++;
@@ -274,6 +274,14 @@ static qboolean AIM_SelectableAircraftItem (base_t* base, aircraft_t *aircraft, 
 	if (AII_GetItemWeightBySize(&csi.ods[itemIdx]) > slot->size)
 		return qfalse;
 
+	/* you can't install an item that you don't possess
+	 * missiles does not need to be possessed */
+	if (aircraft) {
+		if (aircraft->homebase->storage.num[itemIdx] <= 0)
+			return qfalse;
+	} else if (base->storage.num[itemIdx] <= 0 && !csi.ods[itemIdx].notOnMarket)
+			return qfalse;
+
 	return qtrue;
 }
 
@@ -355,9 +363,11 @@ static void BDEF_AddBattery (basedefenseType_t basedefType, base_t* base)
 			Com_Printf("BDEF_AddBattery: too many missile batteries in base\n");
 			return;
 		}
-		/* slots has a lot of ammo for now */
-		/* FIXME: ammo should be taken in base storage when buying base defense ammos will be implemented */
-		base->batteries[base->maxBatteries].ammoLeft = 9999;
+		/* if this slot is a new slot, give it 20 missiles
+		 * we use < 0 here, and not <= 0, because we don't want to give new missiles to someone
+		 * who would have already fired all its missile */
+		if (base->batteries[base->maxBatteries].ammoLeft < 0)
+		base->batteries[base->maxBatteries].ammoLeft = 20;
 
 		base->maxBatteries++;
 		break;
@@ -367,13 +377,30 @@ static void BDEF_AddBattery (basedefenseType_t basedefType, base_t* base)
 			return;
 		}
 		/* slots has a lot of ammo for now */
-		/* FIXME: ammo should be taken in base storage when buying base defense ammos will be implemented */
-		base->batteries[base->maxBatteries].ammoLeft = 9999;
+		/* FIXME: it should be unlimited, no ? check that when we'll know how laser battery work */
+		base->lasers[base->maxLasers].ammoLeft = 9999;
 
-		base->maxBatteries++;
+		base->maxLasers++;
 		break;
 	default:
 		Com_Printf("BDEF_AddBattery: unknown type of base defense system.\n");
+	}
+}
+
+/**
+ * @brief Reload the battery of every bases
+ * @todo we should define the number of ammo to reload and the period of reloading in the .ufo file
+ */
+void BDEF_ReloadBattery (void)
+{
+	int i, j;
+
+	/* Reload all ammos of aircraft */
+	for (i = 0; i < gd.numBases; i++) {
+		for (j = 0; j < gd.bases[i].maxBatteries; j++) {
+			if (gd.bases[i].batteries[j].ammoLeft >= 0 && gd.bases[i].batteries[j].ammoLeft < 20)
+				gd.bases[i].batteries[j].ammoLeft++;
+		}
 	}
 }
 
@@ -1226,8 +1253,9 @@ qboolean AII_AddAmmoToSlot (base_t* base, technology_t *tech, aircraftSlot_t *sl
 		return qfalse;
 	}
 
-	/* the base pointer can be null here - e.g. in case you are equipping a UFO */
-	if (base) {
+	/* the base pointer can be null here - e.g. in case you are equipping a UFO
+	 * and base ammo defense are not stored in storage */
+	if (base && csi.ods[ammoIdx].craftitem.type <= AC_ITEM_AMMO) {
 		if (base->storage.num[ammoIdx] <= 0) {
 			Com_Printf("AII_AddAmmoToSlot: No more ammo of this type to equip (%s)\n", csi.ods[ammoIdx].id);
 			return qfalse;
@@ -1239,7 +1267,7 @@ qboolean AII_AddAmmoToSlot (base_t* base, technology_t *tech, aircraftSlot_t *sl
 	slot->ammoIdx = ammoIdx;
 
 	/* the base pointer can be null here - e.g. in case you are equipping a UFO */
-	if (base)
+	if (base && csi.ods[ammoIdx].craftitem.type <= AC_ITEM_AMMO)
 		B_UpdateStorageAndCapacity(base, ammoIdx, -1, qfalse, qfalse);
 
 	return qtrue;
@@ -1547,6 +1575,7 @@ void AII_InitialiseSlot (aircraftSlot_t *slot, int aircraftIdx, aircraftItemType
 	slot->size = ITEM_HEAVY;
 	slot->nextItemIdx = NONE;
 	slot->type = type;
+	slot->ammoLeft = -1; /* sa BDEF_AddBattery: it needs to be -1 and not 0 */
 }
 
 /**

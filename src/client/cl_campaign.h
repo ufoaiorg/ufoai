@@ -435,6 +435,7 @@ void AIR_AircraftsNotifyMissionRemoved(const actMis_t * mission);
 base_t *CP_GetMissionBase(void);
 qboolean CP_SpawnBaseAttackMission(base_t* base, mission_t* mis, setState_t *cause);
 qboolean CP_SpawnCrashSiteMission(aircraft_t* aircraft);
+void CP_UFOSendMail(aircraft_t *ufocraft, base_t *base);
 
 technology_t *CP_IsXVIResearched(void);
 
