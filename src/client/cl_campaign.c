@@ -4918,7 +4918,7 @@ static void CP_UFORecoveredStore_f (void)
 	default:
 		recoveryBase = Cvar_VariableInteger("mission_recoverybase");
 		Q_strcat(recoveryBaseSelectPopup, _("\n\nSelected base:\t\t\t"), sizeof(recoveryBaseSelectPopup));
-		if (recoveryBase > 0 && recoveryBase < MAX_BASES) {
+		if (recoveryBase >= 0 && recoveryBase < MAX_BASES) {
 			for (i = 0; i < baseHasUFOHangarCount; i++) {
 				if (UFObases[i] == recoveryBase) {
 					Q_strcat(recoveryBaseSelectPopup, gd.bases[UFObases[i]].name, sizeof(recoveryBaseSelectPopup));
