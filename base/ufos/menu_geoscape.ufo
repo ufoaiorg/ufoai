@@ -273,7 +273,7 @@ menu map
 	pic bt_mailclient
 	{
 		if "mn_upunreadmail != 0"
-		tooltip	"_INBOX"
+		tooltip	"_INBOX (with unread mails)"
 		image	menu/mailclient
 		texl	"0 0"
 		texh	"32 32"
