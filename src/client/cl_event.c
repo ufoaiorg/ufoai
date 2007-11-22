@@ -245,7 +245,7 @@ void CL_EventAddMail_f (void)
 	}
 
 	/* the subject double %s: see UP_SetMailHeader */
-	m = MN_AddNewMessage(_(eventMail->subject), _(eventMail->body), qfalse, MSG_EVENT, NULL);
+	m = MN_AddNewMessage("", va(_("You've got a new mail: %s"), _(eventMail->subject)), qfalse, MSG_EVENT, NULL);
 	if (m)
 		m->eventMail = eventMail;
 	else
