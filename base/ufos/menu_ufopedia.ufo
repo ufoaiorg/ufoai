@@ -129,7 +129,7 @@ menu ufopedia
 		pos		"40 85"
 		size	"670 368"
 		num		2
-		format	"23 0"
+		format	"23 100"
 		click rclick wheel
 //		bgcolor " 0.5 1 0.5 0.3"
 		height	"16"
@@ -142,7 +142,7 @@ menu ufopedia
 		pos		"50 208"
 		size	"660 240"
 		num		2
-		format	"24 0"
+		format	"24 100"
 		click rclick wheel
 //		bgcolor " 0.5 1 0.5 0.3"
 		height	"10"

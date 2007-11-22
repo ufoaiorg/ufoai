@@ -4660,7 +4660,7 @@ static void CP_UFOSendMail (aircraft_t *ufocraft, base_t *base)
 			}
 			assert(compod);
 			if (comp->item_amount2[i] > 0)
-				Q_strcat(body, va(_("  * %i %s\n"), comp->item_amount2[i], compod->name), sizeof(body));
+				Q_strcat(body, va(_("  * %i x\t%s\n"), comp->item_amount2[i], compod->name), sizeof(body));
 		}
 
 		/* don't free the old mail body here - it's the string of the source mail */
