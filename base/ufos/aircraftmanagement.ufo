@@ -294,6 +294,24 @@ aircraft craft_ufo_harvester
 	building	building_big_ufo_hangar
 	price		3000000
 	image		air_ufo
+	slot {
+		type		weapon
+		size		heavy
+		contains	rs_craft_weapon_sparrowhawk
+		ammo		rs_craft_ammo_sparrowhawk
+	}
+	slot {
+		type		weapon
+		size		heavy
+		contains	rs_craft_weapon_sparrowhawk
+		ammo		rs_craft_ammo_sparrowhawk
+	}
+	slot {
+		type		weapon
+		size		heavy
+		contains	rs_craft_weapon_sparrowhawk
+		ammo		rs_craft_ammo_sparrowhawk
+	}
 }
 
 // The carrier UFO does not normally appear on the geoscape. It's used to carry
@@ -396,27 +414,6 @@ aircraft craft_ufo_scout
 	building	building_small_ufo_hangar
 	price		3000000
 	image		air_ufo
-	slot {
-		type		weapon
-		size		light
-		contains	rs_craft_weapon_sparrowhawk
-		ammo		rs_craft_ammo_sparrowhawk
-	}
-	slot {
-		type		weapon
-		size		medium
-	}
-	slot {
-		type		weapon
-		size		medium
-	}
-	slot {
-		type		electronics
-		contains	rs_craft_el_fuelpod
-	}
-	slot {
-		type		electronics
-	}
 }
 
 aircraft craft_ufo_fighter
@@ -442,7 +439,7 @@ aircraft craft_ufo_fighter
 	image		air_ufo
 	slot {
 		type		weapon
-		size		light
+		size		heavy
 		contains	rs_craft_weapon_sparrowhawk
 		ammo		rs_craft_ammo_sparrowhawk
 	}
