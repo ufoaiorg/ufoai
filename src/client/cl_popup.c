@@ -277,12 +277,12 @@ void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 			if (ufo) {
 				/* use twice the ufo pos here, the weapon range says nothing about
 				 * the aircraft range */
-				if (AIRFIGHT_ChooseWeapon(air->weapons, air->maxWeapons, air->pos, air->pos) < 0) {
+				if (AIRFIGHT_ChooseWeapon(air->weapons, air->maxWeapons, air->pos, air->pos) == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT) {
 					Com_DPrintf(DEBUG_CLIENT, "CL_DisplayPopupIntercept: No useable weapon found in craft '%s' (%i)\n", air->id, air->maxWeapons);
 					continue;
 				}
 				/* now check the aircraft range */
-				if (MAP_GetDistance(ufo->pos, air->pos) > air->stats[AIR_STATS_SPEED] * air->fuel / 3600.0f) {
+				if (!AIR_AircraftHasEnoughFuel(air, ufo->pos)) {
 					Com_DPrintf(DEBUG_CLIENT, "CL_DisplayPopupIntercept: Target out of reach for craft '%s'\n", air->id);
 					continue;
 				}
