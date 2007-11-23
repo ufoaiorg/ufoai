@@ -1723,12 +1723,10 @@ void AIR_AddToAircraftTeam (aircraft_t *aircraft, int employee_idx, employeeType
 }
 
 /**
- * @brief Removes given employee to given aircraft.
+ * @brief Removes given employee from given aircraft team.
  * @param[in] aircraft Pointer to an aircraft, from which we will remove employee.
  * @param[in] employee_idx Index of an employee in global array (?)
- * @todo FIXME: is this responsible for removing soldiers from a team in dropship?
- * 	ANSWER: yes it seems to be.
- * @todo  do we need to update aircraft->teamSize here as well?
+ * @note This is responsible for removing soldiers from a team in dropship
  */
 void AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, int employee_idx, employeeType_t employeeType)
 {
