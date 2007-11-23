@@ -1638,8 +1638,14 @@ qboolean AIR_SendUfoPurchasingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 
 	/* check whether the ufo can shoot the aircraft - if not, don't try it even */
 	slotIdx = AIRFIGHT_ChooseWeapon(ufo->weapons, ufo->maxWeapons, ufo->pos, aircraft->pos);
-	if (slotIdx != AIRFIGHT_WEAPON_CAN_SHOOT)
+	if (slotIdx == AIRFIGHT_WEAPON_CAN_NOT_SHOOT) {
+		/* no ammo left: should flee ! */
+		UFO_FleePhalanxAircraft(ufo, aircraft->pos);
 		return qfalse;
+	} else if (slotIdx < AIRFIGHT_WEAPON_CAN_SHOOT) {
+		/* Don't flee: can't fire atm, but maybe we'll be able to attack later */
+		return qfalse;
+	}
 
 	MAP_MapCalcLine(ufo->pos, aircraft->pos, &(ufo->route));
 	ufo->status = AIR_UFO;
