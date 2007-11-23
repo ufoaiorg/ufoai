@@ -1646,6 +1646,7 @@ void AIR_SendUfoPurchasingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 	ufo->baseTarget = NULL;
 }
 
+#ifdef UFO_ATTACK_BASES
 /**
  * @brief Make the specified UFO attack a base.
  * @param[in] ufo Pointer to the UFO.
@@ -1671,6 +1672,7 @@ void AIR_SendUfoPurchasingBase (aircraft_t* ufo, base_t* base)
 	ufo->time = 0;
 	ufo->point = 0;
 }
+#endif
 
 /*============================================
 Aircraft functions related to team handling.

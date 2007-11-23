@@ -28,6 +28,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define BULLETS_PER_SHOT	1
 
+/* Remove attack of base by ufo for 2.2: doesn't match storyline. */
+/* #define UFO_ATTACK_BASES */
+
 /**
  * @note 0 if the weapon can shoot
  * @note -1 if it can't shoot atm

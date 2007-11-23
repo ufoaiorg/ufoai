@@ -240,7 +240,9 @@ void AIR_AircraftReturnToBase(aircraft_t *aircraft);
 qboolean AIR_SendAircraftToMission(aircraft_t* aircraft, struct actMis_s* mission);
 void AIR_SendAircraftPurchasingUfo(aircraft_t* aircraft, aircraft_t* ufo);
 void AIR_SendUfoPurchasingAircraft(aircraft_t* ufo, aircraft_t* aircraft);
+#ifdef UFO_ATTACK_BASES
 void AIR_SendUfoPurchasingBase(aircraft_t* ufo, struct base_s *base);
+#endif
 void AIR_AircraftsNotifyUfoRemoved(const aircraft_t *const ufo);
 void AIR_AircraftsUfoDisappear(const aircraft_t *const ufo);
 void AIR_UpdateHangarCapForAll(int base_idx);

@@ -247,9 +247,9 @@ static void UFO_SearchTarget (aircraft_t *ufo)
 				ufo->aircraftTarget = NULL;
 		} else {
 			ufo->status = AIR_TRANSIT;
+			/* reverse order - because bases can be destroyed in here */
 			for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
-#if 0
-Remove attack of base by ufo for 2.2: doesn't match storyline.
+#ifdef UFO_ATTACK_BASES
 				/* check if the ufo can attack a base (if it's not too far) */
 				if (base->isDiscovered && (MAP_GetDistance(ufo->pos, base->pos) < max_detecting_range)) {
 					AIR_SendUfoPurchasingBase(ufo, base);
@@ -258,7 +258,8 @@ Remove attack of base by ufo for 2.2: doesn't match storyline.
 				}
 #endif
 
-				/* check if the ufo can attack an aircraft */
+				/* check if the ufo can attack an aircraft
+				 * reverse order - because aircraft can be destroyed in here */
 				for (phalanxAircraft = base->aircraft + base->numAircraftInBase - 1; phalanxAircraft >= base->aircraft; phalanxAircraft--) {
 					/* check that aircraft is flying */
 					if (phalanxAircraft->status > AIR_HOME) {
