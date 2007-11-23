@@ -29,13 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 
 /**
- * @note -1 if no weapon to use atm
- * @note -2 if no weapon to use at all (no ammo left)
- */
-static const int AIRFIGHT_SLOT_NO_WEAPON_TO_USE_AT_THE_MOMENT = -1;
-static const int AIRFIGHT_SLOT_NO_WEAPON_TO_USE_NO_AMMO_LEFT = -2;
-
-/**
  * @brief Run bullets on geoscape.
  * @param[in] projectile Pointer to the projectile corresponding to this bullet.
  * @param[in] ortogonalVector vector perpendicular to the movement of the projectile.
@@ -179,7 +172,7 @@ static void AIRFIGHT_MissTarget (aircraftProjectile_t *projectile, qboolean retu
  * @param[in] distance distance between the weapon and the target.
  * @return 0 AIRFIGHT_WEAPON_CAN_SHOOT if the weapon can shoot,
  * -1 AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT if it can't shoot atm,
- * -2 AIRFIGHT_WEAPON_CAN_NOT_SHOOT if it will never be able to shoot.
+ * -2 AIRFIGHT_WEAPON_CAN_NEVER_SHOOT if it will never be able to shoot.
  */
 static int AIRFIGHT_CheckWeapon (const aircraftSlot_t *slot, float distance)
 {
@@ -189,11 +182,11 @@ static int AIRFIGHT_CheckWeapon (const aircraftSlot_t *slot, float distance)
 
 	/* check if there is a functional weapon in this slot */
 	if (slot->itemIdx == NONE || slot->installationTime != 0)
-		return AIRFIGHT_WEAPON_CAN_NOT_SHOOT;
+		return AIRFIGHT_WEAPON_CAN_NEVER_SHOOT;
 
 		/* check if there is still ammo in this weapon */
 	if (slot->ammoIdx == NONE || slot->ammoLeft <= 0)
-		return AIRFIGHT_WEAPON_CAN_NOT_SHOOT;
+		return AIRFIGHT_WEAPON_CAN_NEVER_SHOOT;
 
 	ammoIdx = slot->ammoIdx;
 	/* check if the target is within range of this weapon */
@@ -215,12 +208,12 @@ static int AIRFIGHT_CheckWeapon (const aircraftSlot_t *slot, float distance)
  * @param[in] targetpos Pointer to the aimed aircraft.
  * @return indice of the slot to use (in array weapons[]),
  * -1 AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT no weapon to use atm,
- * -2 AIRFIGHT_SLOT_NO_WEAPON_TO_USE_NO_AMMO_LEFT if no weapon to use at all.
+ * -2 AIRFIGHT_WEAPON_CAN_NEVER_SHOOT if no weapon to use at all.
  * @sa AIRFIGHT_CheckWeapon
  */
 int AIRFIGHT_ChooseWeapon (aircraftSlot_t *slot, int maxSlot, vec3_t pos, vec3_t targetPos)
 {
-	int slotIdx = AIRFIGHT_SLOT_NO_WEAPON_TO_USE_NO_AMMO_LEFT;
+	int slotIdx = AIRFIGHT_WEAPON_CAN_NEVER_SHOOT;
 	int i, weapon_status;
 	float distance0 = 99999.9f;
 	float distance = MAP_GetDistance(pos, targetPos);
@@ -325,7 +318,7 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 			if (probability > AIRFIGHT_ProbabilityToHit(shooter, target, shooter->weapons + slotIdx))
 				AIRFIGHT_MissTarget(&gd.projectiles[gd.numProjectiles - 1], qfalse);
 		}
-	} else if (slotIdx == AIRFIGHT_SLOT_NO_WEAPON_TO_USE_AT_THE_MOMENT) {
+	} else if (slotIdx == AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT) {
 		/* no ammo to fire atm (too far or reloading), pursue target */
 		if (shooter->type == AIRCRAFT_UFO) {
 			if (!shooter->baseTarget)
@@ -757,7 +750,7 @@ static void AIRFIGHT_BaseShoot (base_t *base, aircraftSlot_t *slot, int maxSlot,
 			distance = MAP_GetDistance(base->pos, gd.ufos[targetIdx[i]].pos);
 			test = AIRFIGHT_CheckWeapon(slot + i, distance);
 			/* weapon unable to shoot */
-			if (test == AIRFIGHT_WEAPON_CAN_NOT_SHOOT)
+			if (test == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT)
 				continue;
 			/* we can't shoot with this weapon atm */
 			else if (test == AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT)
