@@ -291,10 +291,12 @@ void UFO_CampaignRunUfos (int dt)
 
 	/* now the ufos are flying around, too - cycle backward - ufo might be destroyed */
 	for (ufo = gd.ufos + gd.numUfos - 1; ufo >= gd.ufos; ufo--) {
+#ifdef UFO_ATTACK_BASES
 		/* Check if the UFO found a new base */
 		UFO_FoundNewBase(ufo, dt);
+#endif
 
-		/* reached target and not following a ufo? then we need a new target */
+		/* reached target and not following a phalanx aircraft? then we need a new target */
 		if (AIR_AircraftMakeMove(dt, ufo) && ufo->status != AIR_UFO)
 			UFO_SetUfoRandomDest(ufo);
 
