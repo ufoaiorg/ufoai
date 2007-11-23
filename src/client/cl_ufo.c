@@ -529,6 +529,8 @@ void UFO_PrepareRecovery (base_t *base)
 
 	/* Prepare date of the recovery event - always two days after mission. */
 	event = ccs.date;
+	/* if you change these 2 days to something other you
+	 * have to review all translations, too */
 	event.day += 2;
 	/* Prepare recovery. */
 	recovery->active = qtrue;
@@ -540,7 +542,7 @@ void UFO_PrepareRecovery (base_t *base)
 	base->capacities[CAP_UFOHANGARS].cur += ufocraft->weight;
 
 	Com_DPrintf(DEBUG_CLIENT, "UFO_PrepareRecovery()... the recovery entry in global array is done; base: %s, ufotype: %i, date: %i\n",
-	base->name, recovery->ufotype, recovery->event.day);
+		base->name, recovery->ufotype, recovery->event.day);
 
 	/* Send an email */
 	CP_UFOSendMail(ufocraft, base);

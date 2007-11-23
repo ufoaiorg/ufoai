@@ -630,11 +630,18 @@ menu popup_transferbaselist
 		font	f_big
 	}
 
+
+	string info
+	{
+		string	"_Choose a base to recover alien bodies:"
+		pos	"290 320"
+	}
+
 	text trans_baselist
 	{
 		num 1
-		pos	"290 320"
-		size "440 112"
+		pos	"290 336"
+		size "450 144"
 //		bgcolor "1 1 1 0.5"
 		format	"16 100"
 		height 7

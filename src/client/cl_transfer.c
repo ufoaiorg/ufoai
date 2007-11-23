@@ -617,7 +617,8 @@ void TR_TransferAircraftMenu (aircraft_t* aircraft)
 	for (i = 0; i < gd.numBases; i++) {
 		if (!gd.bases[i].founded)
 			continue;
-		Q_strcat(transferBaseSelectPopup, gd.bases[i].name, sizeof(transferBaseSelectPopup));
+		Q_strcat(transferBaseSelectPopup, va("  %s\n",gd.bases[i].name), sizeof(transferBaseSelectPopup));
+
 	}
 	menuText[TEXT_LIST] = transferBaseSelectPopup;
 	MN_PushMenu("popup_transferbaselist");

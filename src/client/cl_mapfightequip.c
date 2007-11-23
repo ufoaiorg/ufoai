@@ -299,8 +299,10 @@ static void AIM_UpdateAircraftItemList (base_t* base, aircraft_t* aircraft)
 
 	assert(base || aircraft);
 
-	if (airequipID == -1)
+	if (airequipID == -1) {
+		Com_Printf("AIM_UpdateAircraftItemList: airequipID is -1\n");
 		return;
+	}
 
 	/* Add all items corresponding to airequipID to list */
 	list = AII_GetCraftitemTechsByType(airequipID, base ? base : baseCurrent);
@@ -308,10 +310,11 @@ static void AIM_UpdateAircraftItemList (base_t* base, aircraft_t* aircraft)
 	/* Copy only those which are researched to buffer */
 	i = 0;
 	while (*list) {
-		if (AIM_SelectableAircraftItem(base, aircraft, *list))
+		if (AIM_SelectableAircraftItem(base, aircraft, *list)) {
 			Q_strcat(buffer, va("%s\n", _((*list)->name)), sizeof(buffer));
+			i++;
+		}
 		list++;
-		i++;
 	}
 
 	/* copy buffer to menuText to display it on screen */
@@ -538,6 +541,7 @@ void BDEF_InitialiseBaseSlots (base_t *base)
 /**
  * @brief Script command to init the base defense menu.
  * @note this function is only called when the menu launches
+ * @sa BDEF_BaseDefenseMenuUpdate_f
  */
 void BDEF_MenuInit_f (void)
 {
@@ -563,6 +567,7 @@ void BDEF_MenuInit_f (void)
 /**
  * @brief Fills the battery list, descriptions, and weapons in slots
  * of the basedefense equip menu
+ * @sa BDEF_MenuInit_f
  */
 void BDEF_BaseDefenseMenuUpdate_f (void)
 {
@@ -648,7 +653,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 	defBuffer[0] = '\0';
 
 	if (airequipID == AC_ITEM_BASE_MISSILE || airequipID == AC_ITEM_AMMO_MISSILE) {
-	/* we are in the base defense menu for missile */
+		/* we are in the base defense menu for missile */
 		if (baseCurrent->maxBatteries == 0)
 			Q_strcat(defBuffer, _("No defense of this type in this base\n"), sizeof(defBuffer));
 		else {
@@ -662,7 +667,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 			}
 		}
 	} else if (airequipID == AC_ITEM_BASE_LASER || airequipID == AC_ITEM_AMMO_LASER) {
-	/* we are in the base defense menu for laser */
+		/* we are in the base defense menu for laser */
 		if (baseCurrent->maxLasers == 0)
 			Q_strcat(defBuffer, _("No defense of this type in this base\n"), sizeof(defBuffer));
 		else {
