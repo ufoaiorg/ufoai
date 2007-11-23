@@ -304,7 +304,7 @@ void AIM_AircraftStart_f (void)
  * @note Called in: CL_AircraftList_f(), AIR_ListAircraft_f(), AIR_AircraftSelect(),
  * @note MAP_DrawMap(), CL_DisplayPopupIntercept()
  */
-const char *AIR_AircraftStatusToName (aircraft_t * aircraft)
+const char *AIR_AircraftStatusToName (const aircraft_t * aircraft)
 {
 	assert(aircraft);
 
@@ -349,7 +349,7 @@ const char *AIR_AircraftStatusToName (aircraft_t * aircraft)
  * @return qfalse if given aircraft is not in its homebase.
  * @todo Add check for AIR_REARM when aircraft items will be implemented.
  */
-qboolean AIR_IsAircraftInBase (aircraft_t * aircraft)
+qboolean AIR_IsAircraftInBase (const aircraft_t * aircraft)
 {
 	if (aircraft->status == AIR_HOME || aircraft->status == AIR_REFUEL)
 		return qtrue;
@@ -415,6 +415,7 @@ void AIM_ResetAircraftCvars_f (void)
 /**
  * @brief Switch to next aircraft in base.
  * @sa AIR_AircraftSelect
+ * @sa AIM_PrevAircraft_f
  */
 void AIM_NextAircraft_f (void)
 {
@@ -443,6 +444,7 @@ void AIM_NextAircraft_f (void)
 /**
  * @brief Switch to previous aircraft in base.
  * @sa AIR_AircraftSelect
+ * @sa AIM_NextAircraft_f
  */
 void AIM_PrevAircraft_f (void)
 {
@@ -489,7 +491,7 @@ int CL_AircraftMenuStatsValues (const int value, const int stat)
  * @sa MAP_MapCalcLine
  * @return qtrue if the aircraft can go to the position, qfalse else
  */
-qboolean AIR_AircraftHasEnoughFuel (aircraft_t *aircraft, const vec2_t destination)
+qboolean AIR_AircraftHasEnoughFuel (const aircraft_t *aircraft, const vec2_t destination)
 {
 	base_t *base;
 	float distance = 0;
@@ -542,7 +544,7 @@ void AIR_AircraftReturnToBase (aircraft_t *aircraft)
 
 /**
  * @brief Script function for AIR_AircraftReturnToBase
- * @note Sends the current aircraft back to homebase.
+ * @note Sends the current aircraft back to homebase (called from aircraft menu).
  * @note This function updates some cvars for current aircraft.
  * @sa CL_GameAutoGo_f
  * @sa CL_GameResults_f
@@ -1653,7 +1655,7 @@ void AIR_SendUfoPurchasingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
  * @param[in] base Pointer to the target base.
  * @sa AIR_SendAircraftPurchasingUfo
  */
-void AIR_SendUfoPurchasingBase (aircraft_t* ufo, base_t* base)
+qboolean AIR_SendUfoPurchasingBase (aircraft_t* ufo, base_t* base)
 {
 	int slotIdx;
 
@@ -1663,7 +1665,7 @@ void AIR_SendUfoPurchasingBase (aircraft_t* ufo, base_t* base)
 	/* check whether the ufo can shoot the base - if not, don't try it even */
 	slotIdx = AIRFIGHT_ChooseWeapon(ufo->weapons, ufo->maxWeapons, ufo->pos, base->pos);
 	if (slotIdx != AIRFIGHT_WEAPON_CAN_SHOOT)
-		return;
+		return qfalse;
 
 	MAP_MapCalcLine(ufo->pos, base->pos, &(ufo->route));
 	ufo->baseTarget = base;
@@ -1671,6 +1673,7 @@ void AIR_SendUfoPurchasingBase (aircraft_t* ufo, base_t* base)
 	ufo->status = AIR_UFO; /* FIXME: Might crash in cl_map.c MAP_DrawMapMarkers */
 	ufo->time = 0;
 	ufo->point = 0;
+	return qtrue;
 }
 #endif
 
