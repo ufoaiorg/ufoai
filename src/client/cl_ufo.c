@@ -156,6 +156,7 @@ void UFO_FleePhalanxAircraft (aircraft_t *ufo, vec2_t v)
 	ufo->status = AIR_FLEEING;
 }
 
+#ifdef UFO_ATTACK_BASES
 /**
  * @brief Check if a UFO is the target of a base
  * @param[in] num idx of the ufos in gd.ufos[]
@@ -224,6 +225,7 @@ static void UFO_FoundNewBase (aircraft_t *ufo, int dt)
 		}
 	}
 }
+#endif
 
 /**
  * @brief Check if the ufo can shoot at something
