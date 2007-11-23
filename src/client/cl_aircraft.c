@@ -1594,12 +1594,12 @@ void AIR_AircraftsUfoDisappear (const aircraft_t *const ufo)
  * @param[in] aircraft Pointer to an aircraft which will hunt for a UFO.
  * @param[in] ufo Pointer to a UFO.
  */
-void AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
+qboolean AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
 {
 	int num = ufo - gd.ufos;
 
 	if (num < 0 || num >= gd.numUfos || ! aircraft || ! ufo)
-		return;
+		return qfalse;
 
 	/* if aircraft was in base */
 	if (aircraft->status == AIR_REFUEL || aircraft->status == AIR_HOME) {
@@ -1612,7 +1612,7 @@ void AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
 	/* check if the aircraft has enough fuel to go to the ufo and then come back */
 	/* @todo if you have enough fuel to go where the ufo is atm, that doesn't mean that you'll have enough to pursue it ! */
 	if (!AIR_AircraftHasEnoughFuel(aircraft, ufo->pos))
-		return;
+		return qfalse;
 
 	MAP_MapCalcLine(aircraft->pos, ufo->pos, &(aircraft->route));
 	aircraft->status = AIR_UFO;
@@ -1620,6 +1620,7 @@ void AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
 	aircraft->point = 0;
 	aircraft->aircraftTarget = ufo;
 	aircraft->baseTarget = NULL;
+	return qtrue;
 }
 
 /**
@@ -1628,7 +1629,7 @@ void AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
  * @param[in] aircraft Pointer to the target aircraft.
  * @sa AIR_SendUfoPurchasingBase
  */
-void AIR_SendUfoPurchasingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
+qboolean AIR_SendUfoPurchasingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 {
 	int slotIdx;
 
@@ -1638,7 +1639,7 @@ void AIR_SendUfoPurchasingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 	/* check whether the ufo can shoot the aircraft - if not, don't try it even */
 	slotIdx = AIRFIGHT_ChooseWeapon(ufo->weapons, ufo->maxWeapons, ufo->pos, aircraft->pos);
 	if (slotIdx != AIRFIGHT_WEAPON_CAN_SHOOT)
-		return;
+		return qfalse;
 
 	MAP_MapCalcLine(ufo->pos, aircraft->pos, &(ufo->route));
 	ufo->status = AIR_UFO;
@@ -1646,6 +1647,7 @@ void AIR_SendUfoPurchasingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 	ufo->point = 0;
 	ufo->aircraftTarget = aircraft;
 	ufo->baseTarget = NULL;
+	return qtrue;
 }
 
 #ifdef UFO_ATTACK_BASES

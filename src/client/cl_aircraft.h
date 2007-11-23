@@ -238,8 +238,8 @@ void AII_ReloadWeapon(aircraft_t *aircraft);
 qboolean AIR_AircraftHasEnoughFuel(const aircraft_t *aircraft, const vec2_t destination);
 void AIR_AircraftReturnToBase(aircraft_t *aircraft);
 qboolean AIR_SendAircraftToMission(aircraft_t* aircraft, struct actMis_s* mission);
-void AIR_SendAircraftPurchasingUfo(aircraft_t* aircraft, aircraft_t* ufo);
-void AIR_SendUfoPurchasingAircraft(aircraft_t* ufo, aircraft_t* aircraft);
+qboolean AIR_SendAircraftPurchasingUfo(aircraft_t* aircraft, aircraft_t* ufo);
+qboolean AIR_SendUfoPurchasingAircraft(aircraft_t* ufo, aircraft_t* aircraft);
 #ifdef UFO_ATTACK_BASES
 qboolean AIR_SendUfoPurchasingBase(aircraft_t* ufo, struct base_s *base);
 #endif
