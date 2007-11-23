@@ -4917,8 +4917,13 @@ static void CP_UFORecoveredStore_f (void)
 		break;
 	default:
 		recoveryBase = Cvar_VariableInteger("mission_recoverybase");
+		if (recoveryBase < 0) {
+			/* default selection: make sure you select one base before leaving popup window */
+			Cvar_SetValue("mission_recoverybase", UFObases[0]);
+			recoveryBase = UFObases[0];
+		}
 		Q_strcat(recoveryBaseSelectPopup, _("\n\nSelected base:\t\t\t"), sizeof(recoveryBaseSelectPopup));
-		if (recoveryBase > 0 && recoveryBase < MAX_BASES) {
+		if (recoveryBase >= 0 && recoveryBase < MAX_BASES) {
 			for (i = 0; i < baseHasUFOHangarCount; i++) {
 				if (UFObases[i] == recoveryBase) {
 					Q_strcat(recoveryBaseSelectPopup, gd.bases[UFObases[i]].name, sizeof(recoveryBaseSelectPopup));
