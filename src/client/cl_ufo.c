@@ -150,6 +150,8 @@ void UFO_FleePhalanxAircraft (aircraft_t *ufo, const vec2_t v)
 
 	VecToPolar(dest, pos);
 
+	ufo->time = 0;
+	ufo->point = 0;
 	MAP_MapCalcLine(ufo->pos, pos, &(ufo->route));
 	ufo->aircraftTarget = NULL;
 	ufo->baseTarget = NULL;
@@ -299,8 +301,12 @@ void UFO_CampaignRunUfos (int dt)
 #endif
 
 		/* reached target and not following a phalanx aircraft? then we need a new target */
-		if (AIR_AircraftMakeMove(dt, ufo) && ufo->status != AIR_UFO)
+		if (AIR_AircraftMakeMove(dt, ufo) && ufo->status != AIR_UFO) {
+			float *end;
+			end = ufo->route.point[ufo->route.numPoints - 1];
+			Vector2Copy(end, ufo->pos);
 			UFO_SetUfoRandomDest(ufo);
+		}
 
 		/* is there a PHALANX aircraft to shoot ? */
 		UFO_SearchTarget(ufo);
