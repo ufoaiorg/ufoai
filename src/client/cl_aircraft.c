@@ -361,7 +361,7 @@ qboolean AIR_IsAircraftInBase (const aircraft_t * aircraft)
  * @returns 1 if no aircraft in base else 2 if no soldiers
  * available otherwise 3
  */
-static int CL_EquipSoldierState (aircraft_t * aircraft)
+static int CL_EquipSoldierState (const aircraft_t * aircraft)
 {
 	if (!AIR_IsAircraftInBase(aircraft)) {
 		return 1;

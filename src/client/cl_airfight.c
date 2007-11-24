@@ -81,7 +81,7 @@ static qboolean AIRFIGHT_RemoveProjectile (aircraftProjectile_t *projectile)
  * @sa AIRFIGHT_RemoveProjectile
  * @sa AII_ReloadWeapon for the aircraft item reload code
  */
-static qboolean AIRFIGHT_AddProjectile (base_t* attackingBase, aircraft_t *attacker, base_t* aimedBase, aircraft_t *target, aircraftSlot_t *weaponSlot)
+static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, aircraft_t *attacker, base_t* aimedBase, aircraft_t *target, aircraftSlot_t *weaponSlot)
 {
 	aircraftProjectile_t *projectile;
 	int i;
@@ -251,7 +251,7 @@ int AIRFIGHT_ChooseWeapon (aircraftSlot_t *slot, int maxSlot, vec3_t pos, vec3_t
  * @pre slotIdx must have a weapon installed, with ammo available (see AIRFIGHT_ChooseWeapon)
  * @todo This probability should also depend on the pilot skills, when they will be implemented.
  */
-static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target, aircraftSlot_t *slot)
+static float AIRFIGHT_ProbabilityToHit (const aircraft_t *shooter, const aircraft_t *target, const aircraftSlot_t *slot)
 {
 	int idx;
 	float probability = 0.0f;
@@ -367,7 +367,7 @@ static void AIRFIGHT_RemoveProjectileAimingAircraft (aircraft_t * aircraft)
  * @param[in] aircraft Pointer to the destroyed aircraft.
  * @note This function is called when @c aircraft is destroyed.
  */
-static void AIRFIGHT_UpdateProjectileForDestroyedAircraft (aircraft_t * aircraft)
+static void AIRFIGHT_UpdateProjectileForDestroyedAircraft (const aircraft_t * aircraft)
 {
 	aircraftProjectile_t *projectile;
 	aircraft_t *attacker;
@@ -456,7 +456,7 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
  * @param[in] movement distance that the projectile will do up to next draw of geoscape
  * @sa AIRFIGHT_CampaignRunProjectiles
  */
-static qboolean AIRFIGHT_ProjectileReachedTarget (aircraftProjectile_t *projectile, float movement)
+static qboolean AIRFIGHT_ProjectileReachedTarget (const aircraftProjectile_t *projectile, float movement)
 {
 	float distance;
 
@@ -488,7 +488,7 @@ static qboolean AIRFIGHT_ProjectileReachedTarget (aircraftProjectile_t *projecti
  * @sa AII_UpdateAircraftStats
  * @note ECM is handled in AIRFIGHT_ProbabilityToHit
  */
-static int AIRFIGHT_GetDamage (objDef_t *od, aircraft_t* target)
+static int AIRFIGHT_GetDamage (const objDef_t *od, const aircraft_t* target)
 {
 	int damage;
 
@@ -541,6 +541,7 @@ static void AIRFIGHT_ProjectileHits (aircraftProjectile_t *projectile)
  * @brief Solve the result of one projectile hitting a base.
  * @param[in] projectile Pointer to the projectile.
  * @sa B_UpdateBaseData
+ * @note Not possible without UFO_ATTACK_BASES set
  */
 static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 {
@@ -677,7 +678,7 @@ void AIRFIGHT_CampaignRunProjectiles (int dt)
  * @param[in] slot Pointer to the firing slot.
  * @return idx of the ufo to shoot, -1 (AIRFIGHT_BASE_CAN_T_FIRE) if base can't fire
  */
-static int AIRFIGHT_BaseChooseTarget (base_t *base, aircraftSlot_t *slot)
+static int AIRFIGHT_BaseChooseTarget (const base_t *base, const aircraftSlot_t *slot)
 {
 	int ufoIdx;
 	int i;
@@ -725,7 +726,7 @@ static int AIRFIGHT_BaseChooseTarget (base_t *base, aircraftSlot_t *slot)
  * @param[in] maxSlot number of slot of this type in base.
  * @param[in] targetIdx Pointer to the array of target idx of this defense system.
  */
-static void AIRFIGHT_BaseShoot (base_t *base, aircraftSlot_t *slot, int maxSlot, int *targetIdx)
+static void AIRFIGHT_BaseShoot (const base_t *base, aircraftSlot_t *slot, int maxSlot, int *targetIdx)
 {
 	int i;
 
