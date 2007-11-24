@@ -333,8 +333,9 @@ building building_radar
 	firstbase	true
 	pos	"1 4"
 	more_than_one	true
-	onconstruct	"inc_sensor 30"
-	ondestroy	"dec_sensor 30"
+	type		radar
+	onconstruct	"update_sensor"
+	ondestroy	"update_sensor"
 }
 
 building building_lab

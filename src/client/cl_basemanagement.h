@@ -93,7 +93,8 @@ typedef enum {
 	B_ANTIMATTER,		/**< this building is antimatter storage */
 	B_ENTRANCE,		/**< this building is an entrance */
 	B_DEFENSE_MISSILE,		/**< this building is a missile rack */
-	B_DEFENSE_LASER
+	B_DEFENSE_LASER,		/**< this building is a laser battery */
+	B_RADAR			/**< this building is a radar */
 } buildingType_t;
 
 /** @brief All possible capacities in base. */
@@ -203,6 +204,7 @@ typedef struct base_s {
 	qboolean hasAmStorage;      /**< B_ANTIMATTER (Antimatter Storage) */
 	qboolean hasMissile;        /**< B_DEFENSE_MISSILE (Missile Battery) */
 	qboolean hasLaser;          /**< B_DEFENSE_LASER (Laser defense) */
+	qboolean hasRadar;          /**< B_RADAR (Radar) */
 
 	/** this is here to allocate the needed memory for the buildinglist */
 	char allBuildingsList[MAX_LIST_CHAR];

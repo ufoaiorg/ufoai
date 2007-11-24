@@ -170,6 +170,8 @@ qboolean B_GetBuildingStatus (const base_t* const base, buildingType_t type)
 		return base->hasMissile;
 	case B_DEFENSE_LASER:
 		return base->hasLaser;
+	case B_RADAR:
+		return base->hasRadar;
 	default:
 		/* B_ENTRANCE and B_MISC */
 		return qtrue;
@@ -233,6 +235,9 @@ void B_SetBuildingStatus (base_t* const base, buildingType_t type, qboolean newS
 		break;
 	case B_DEFENSE_LASER:
 		base->hasLaser = newStatus;
+		break;
+	case B_RADAR:
+		base->hasRadar = newStatus;
 		break;
 	default:
 		/* B_ENTRANCE and B_MISC */
@@ -513,6 +518,9 @@ static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* 
 	case B_POWER:
 		B_UpdateStatusWithPower(base);
 		break;
+	case B_RADAR:
+		Cmd_ExecuteString(va("update_sensor %i", base->idx));
+		break;
 	default:
 		break;
 	}
@@ -532,6 +540,9 @@ static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t*
 	case B_ALIEN_CONTAINMENT:
 		/* if there an alien containment is not functional, aliens dies... */
 		AC_KillAll(base);
+		break;
+	case B_RADAR:
+		Cmd_ExecuteString(va("update_sensor %i", base->idx));
 		break;
 	default:
 		break;
@@ -667,10 +678,10 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 			buildingType = gd.buildings[base->idx][i].dependsBuilding;
 			if (type == gd.buildingTypes[buildingType].buildingType &&
 			 B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
-				B_UpdateOneBaseBuildingStatusOnDisable(buildingType, base);
+				B_UpdateOneBaseBuildingStatusOnDisable(gd.buildings[base->idx][i].buildingType, base);
 				test = qtrue;
 			} else
-				B_UpdateOneBaseBuildingStatus(buildingType, base);
+				B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
 		}
 		/* and maybe some updated status have changed status of other building.
 		 * So we check again, until nothing changes. (no condition here for check, it's too complex) */
@@ -679,10 +690,10 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 			for (i = 0; i < gd.numBuildings[base->idx]; i++) {
 				buildingType = gd.buildings[base->idx][i].dependsBuilding;
 				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
-					B_UpdateOneBaseBuildingStatusOnDisable(buildingType, base);
+					B_UpdateOneBaseBuildingStatusOnDisable(gd.buildings[base->idx][i].buildingType, base);
 					test = qtrue;
 				} else
-					B_UpdateOneBaseBuildingStatus(buildingType, base);
+					B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
 			}
 		}
 		/* we may have changed status of several building: update all capacities */
@@ -887,10 +898,10 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, b
 			buildingType = gd.buildings[base->idx][i].dependsBuilding;
 			if (building->buildingType == gd.buildingTypes[buildingType].buildingType &&
 			 B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
-				B_UpdateOneBaseBuildingStatusOnEnable(buildingType, base);
+				B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][i].buildingType, base);
 				test = qtrue;
 			} else
-				B_UpdateOneBaseBuildingStatus(buildingType, base);
+				B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
 		}
 		/* and maybe some updated status have changed status of other building.
 		 * So we check again, until nothing changes. (no condition here for check, it's too complex) */
@@ -899,10 +910,10 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, b
 			for (i = 0; i < gd.numBuildings[base->idx]; i++) {
 				buildingType = gd.buildings[base->idx][i].dependsBuilding;
 				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
-					B_UpdateOneBaseBuildingStatusOnEnable(buildingType, base);
+					B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][i].buildingType, base);
 					test = qtrue;
 				} else
-					B_UpdateOneBaseBuildingStatus(buildingType, base);
+					B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
 			}
 		}
 		/* we may have changed status of several building: update all capacities */
@@ -1500,6 +1511,8 @@ buildingType_t B_GetBuildingTypeByBuildingID (const char *buildingID)
 		return B_ENTRANCE;
 	} else if (!Q_strncmp(buildingID, "missile", MAX_VAR)) {
 		return B_DEFENSE_MISSILE;
+	} else if (!Q_strncmp(buildingID, "radar", MAX_VAR)) {
+		return B_RADAR;
 	}
 	return B_MISC;
 }
@@ -3282,6 +3295,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 		MSG_WriteByte(sb, b->hasPower);
 		MSG_WriteByte(sb, b->hasCommand);
 		MSG_WriteByte(sb, b->hasAmStorage);
+		MSG_WriteByte(sb, b->hasRadar);
 		for (k = 0; k < presaveArray[PRE_BASESI]; k++)
 			for (l = 0; l < presaveArray[PRE_BASESI]; l++) {
 				MSG_WriteShort(sb, b->map[k][l]);
@@ -3510,6 +3524,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		b->hasPower = MSG_ReadByte(sb);
 		b->hasCommand = MSG_ReadByte(sb);
 		b->hasAmStorage = MSG_ReadByte(sb);
+		b->hasRadar = MSG_ReadByte(sb);
 		for (k = 0; k < presaveArray[PRE_BASESI]; k++)
 			for (l = 0; l < presaveArray[PRE_BASESI]; l++) {
 				b->map[k][l] = MSG_ReadShort(sb);
