@@ -723,6 +723,9 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _("No ammo assigned to this defense system."));
 		else
 			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _(csi.ods[slot->ammoIdx].tech->name));
+		/* show remaining missile in battery for missiles */
+		if ((airequipID == AC_ITEM_AMMO_MISSILE) || (airequipID == AC_ITEM_BASE_MISSILE))
+			Q_strcat(smallbuffer3, va(ngettext(" (%i missile left)", " (%i missiles left)", slot->ammoLeft), slot->ammoLeft), sizeof(smallbuffer3));
 	} else
 		*smallbuffer3 = '\0';
 	menuText[TEXT_AIREQUIP_3] = smallbuffer3;
