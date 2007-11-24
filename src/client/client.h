@@ -922,7 +922,7 @@ enum {
 ufoType_t UFO_ShortNameToID(const char *token);
 const char* UFO_TypeToShortName(ufoType_t type);
 const char* UFO_TypeToName(ufoType_t type);
-void UFO_FleePhalanxAircraft(aircraft_t *ufo, vec2_t v);
+void UFO_FleePhalanxAircraft(aircraft_t *ufo, const vec2_t v);
 void UFO_CampaignRunUfos(int dt);
 void UFO_CampaignCheckEvents(void);
 void UFO_Reset(void);
@@ -930,6 +930,7 @@ void UFO_RemoveUfoFromGeoscape(aircraft_t* ufo);
 void UFO_PrepareRecovery(base_t *base);
 void UFO_Recovery(void);
 qboolean UFO_ConditionsForStoring(const base_t *base, const aircraft_t *ufocraft);
+qboolean UFO_UFOCanShoot(const aircraft_t *ufo);
 
 /* cl_popup.c */
 void CL_PopupInit(void);

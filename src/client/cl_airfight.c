@@ -724,6 +724,10 @@ static void AIRFIGHT_BaseShoot (const base_t *base, aircraftSlot_t *slot, int ma
 			/* will we miss the target ? */
 			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, gd.ufos + targetIdx[i], slot + i))
 				AIRFIGHT_MissTarget(&gd.projectiles[gd.numProjectiles - 1], qfalse);
+
+			/* Check if UFO flees */
+			if (!UFO_UFOCanShoot(gd.ufos + targetIdx[i]))
+				UFO_FleePhalanxAircraft(gd.ufos + targetIdx[i], base->pos);
 		}
 	}
 }
