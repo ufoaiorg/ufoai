@@ -275,8 +275,7 @@ void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 			/* don't show aircraft with no weapons or no ammo, or crafts that
 			 * can't even reach the target */
 			if (ufo) {
-				/* use twice the ufo pos here, the weapon range says nothing about
-				 * the aircraft range */
+				/* Does the aircraft has weapons and ammo ? */
 				if (AIRFIGHT_ChooseWeapon(air->weapons, air->maxWeapons, air->pos, air->pos) == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT) {
 					Com_DPrintf(DEBUG_CLIENT, "CL_DisplayPopupIntercept: No useable weapon found in craft '%s' (%i)\n", air->id, air->maxWeapons);
 					continue;
