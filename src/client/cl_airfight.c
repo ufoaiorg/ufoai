@@ -673,54 +673,7 @@ void AIRFIGHT_CampaignRunProjectiles (int dt)
 }
 
 /**
- * @brief Choose a new target for base.
- * @param[in] base Pointer to the firing base.
- * @param[in] slot Pointer to the firing slot.
- * @return idx of the ufo to shoot, -1 (AIRFIGHT_BASE_CAN_T_FIRE) if base can't fire
- */
-static int AIRFIGHT_BaseChooseTarget (const base_t *base, const aircraftSlot_t *slot)
-{
-	int ufoIdx;
-	int i;
-	float distance0, distance;
-
-	/* check if there is already another weapon firing at a ufo */
-	for (i = 0; i < base->maxBatteries; i++) {
-		if (base->targetMissileIdx[i] >= 0) {
-			distance = MAP_GetDistance(base->pos, gd.ufos[base->targetMissileIdx[i]].pos);
-			if (AIRFIGHT_CheckWeapon(slot, distance) >= 0)
-				return base->targetMissileIdx[i];
-		}
-	}
-	for (i = 0; i < base->maxLasers; i++) {
-		if (base->targetLaserIdx[i] >= 0) {
-			distance = MAP_GetDistance(base->pos, gd.ufos[base->targetLaserIdx[i]].pos);
-			if (AIRFIGHT_CheckWeapon(slot, distance) >= 0)
-				return base->targetLaserIdx[i];
-		}
-	}
-
-	/* otherwise, choose the closest visible ufo in range */
-	distance0 = csi.ods[slot->ammoIdx].craftitem.stats[AIR_STATS_WRANGE];
-	ufoIdx = AIRFIGHT_BASE_CAN_T_FIRE;
-	for (i = 0; i < gd.numUfos; i++) {
-		aircraft_t* ufo = &gd.ufos[i];
-
-		if (!ufo->visible)
-			continue;
-
-		distance = MAP_GetDistance(base->pos, ufo->pos);
-		if (distance < distance0) {
-			distance0 = distance;
-			ufoIdx = i;
-		}
-	}
-
-	return ufoIdx;
-}
-
-/**
- * @brief Choose a new target for base.
+ * @brief Check if one type of battery (missile or laser) can shoot now.
  * @param[in] base Pointer to the firing base.
  * @param[in] slot Pointer to the first weapon slot of the base to use.
  * @param[in] maxSlot number of slot of this type in base.
@@ -728,54 +681,49 @@ static int AIRFIGHT_BaseChooseTarget (const base_t *base, const aircraftSlot_t *
  */
 static void AIRFIGHT_BaseShoot (const base_t *base, aircraftSlot_t *slot, int maxSlot, int *targetIdx)
 {
-	int i;
+	int i, test;
+	float distance;
 
 	for (i = 0; i < maxSlot; i++) {
-		/* check if we are allowed to fire with this weapon */
-		if (targetIdx[i] == -2 || slot[i].installationTime > 0)
+		/* if no target, can't shoot */
+		if (targetIdx[i] == AIRFIGHT_NO_TARGET)
+			continue;
+
+		/* if the weapon is not ready in base, can't shoot */
+		if (slot[i].installationTime > 0)
 			continue;
 
 		/* if weapon is reloading, can't shoot */
 		if (slot[i].delayNextShot > 0)
 			continue;
 
-		/* check if the weapon has already a target */
-		if (targetIdx[i] >= 0) {
-			float distance;
-			int test;
-
-			/* check that the ufo is still visible */
-			if (!gd.ufos[targetIdx[i]].visible)
-				targetIdx[i] = AIRFIGHT_BASE_CAN_T_FIRE;
-			/* check if we can still fire on this target */
-			distance = MAP_GetDistance(base->pos, gd.ufos[targetIdx[i]].pos);
-			test = AIRFIGHT_CheckWeapon(slot + i, distance);
-			/* weapon unable to shoot */
-			if (test == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT)
-				continue;
-			/* we can't shoot with this weapon atm */
-			else if (test == AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT)
-				continue;
-			/* target is too far, reset target */
-			else if (distance > csi.ods[slot[i].ammoIdx].craftitem.stats[AIR_STATS_WRANGE])
-				targetIdx[i] = AIRFIGHT_BASE_CAN_T_FIRE;
+		/* check that the ufo is still visible */
+		if (!gd.ufos[targetIdx[i]].visible) {
+			targetIdx[i] = AIRFIGHT_NO_TARGET;
+			continue;
 		}
 
-		/* no target atm, choose a target */
-		if (targetIdx[i] == AIRFIGHT_BASE_CAN_T_FIRE)
-			targetIdx[i] = AIRFIGHT_BaseChooseTarget(base, slot + i);
+		/* check if we can still fire on this target */
+		distance = MAP_GetDistance(base->pos, gd.ufos[targetIdx[i]].pos);
+		test = AIRFIGHT_CheckWeapon(slot + i, distance);
+		/* weapon unable to shoot, reset target */
+		if (test == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT) {
+			targetIdx[i] = AIRFIGHT_NO_TARGET;
+			continue;
+		}
+		/* we can't shoot with this weapon atm, wait to see if UFO comes closer */
+		else if (test == AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT)
+			continue;
+		/* target is too far, wait to see if UFO comes closer */
+		else if (distance > csi.ods[slot[i].ammoIdx].craftitem.stats[AIR_STATS_WRANGE])
+			continue;
 
-		/* try to shoot - if a valid base id */
-		if (targetIdx[i] != AIRFIGHT_BASE_CAN_T_FIRE) {
-			float distance = MAP_GetDistance(base->pos, gd.ufos[targetIdx[i]].pos);
-			if (AIRFIGHT_CheckWeapon(slot + i, distance) > -1) {
-				if (AIRFIGHT_AddProjectile(base, NULL, NULL, gd.ufos + targetIdx[i], slot + i)) {
-					slot[i].delayNextShot = csi.ods[slot[i].ammoIdx].craftitem.weaponDelay;
-					/* will we miss the target ? */
-					if (frand() > AIRFIGHT_ProbabilityToHit(NULL, gd.ufos + targetIdx[i], slot + i))
-						AIRFIGHT_MissTarget(&gd.projectiles[gd.numProjectiles - 1], qfalse);
-				}
-			}
+		/* shoot */
+		if (AIRFIGHT_AddProjectile(base, NULL, NULL, gd.ufos + targetIdx[i], slot + i)) {
+			slot[i].delayNextShot = csi.ods[slot[i].ammoIdx].craftitem.weaponDelay;
+			/* will we miss the target ? */
+			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, gd.ufos + targetIdx[i], slot + i))
+				AIRFIGHT_MissTarget(&gd.projectiles[gd.numProjectiles - 1], qfalse);
 		}
 	}
 }
@@ -805,8 +753,10 @@ void AIRFIGHT_CampaignRunBaseDefense (int dt)
 		}
 
 		if (AII_BaseCanShoot(base)) {
-			AIRFIGHT_BaseShoot(base, base->batteries, base->maxBatteries, base->targetMissileIdx);
-			AIRFIGHT_BaseShoot(base, base->lasers, base->maxLasers, base->targetLaserIdx);
+			if (base->hasMissile)
+				AIRFIGHT_BaseShoot(base, base->batteries, base->maxBatteries, base->targetMissileIdx);
+			if (base->hasLaser)
+				AIRFIGHT_BaseShoot(base, base->lasers, base->maxLasers, base->targetLaserIdx);
 		}
 	}
 }

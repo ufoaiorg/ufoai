@@ -73,7 +73,7 @@ static void MAP_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos);
 /* static variables */
 static cvar_t* cl_showCoords;
 static aircraft_t *selectedAircraft;	/**< Currently selected aircraft */
-static aircraft_t *selectedUfo;			/**< Currently selected UFO */
+aircraft_t *selectedUfo;			/**< Currently selected UFO */
 static char text_standard[2048];		/**< Buffer to display standard text in geoscape */
 static int centerOnEventIdx = 0;		/**< Current Event centered on 3D geoscape */
 static vec3_t finalGlobeAngle = {0, GLOBE_ROTATE, 0};	/**< value of finale ccs.angles for a smooth change of angle (see MAP_CenterOnPoint)*/

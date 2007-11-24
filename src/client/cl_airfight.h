@@ -42,6 +42,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define AIRFIGHT_BASE_CAN_T_FIRE -1
 
+#define AIRFIGHT_NO_TARGET -1
+
 /** @brief projectile used during fight between aircrafts */
 typedef struct aircraftProjectile_s {
 	int aircraftItemsIdx;	/**< idx of the corresponding ammo in the array csi.ods[] */
@@ -66,5 +68,6 @@ void AIRFIGHT_ActionsAfterAirfight(aircraft_t* shooter, aircraft_t* aircraft, qb
 void AIRFIGHT_CampaignRunProjectiles(int dt);
 void AIRFIGHT_CampaignRunBaseDefense(int dt);
 int AIRFIGHT_ChooseWeapon(aircraftSlot_t *slot, int maxSlot, vec3_t pos, vec3_t targetPos);
+qboolean AIRFIGHT_BaseCanTargetUFO(const struct base_s *base, const aircraft_t *ufo);
 
 #endif /* CLIENT_CL_AIRFIGHT_H */

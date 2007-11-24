@@ -799,10 +799,29 @@ menu popup_intercept
 		pos		"116 186"
 	}
 
+	pic vertical_bar
+	{
+		if "mn_displaybaselist == 1"
+		mousefx	true
+		pos		"610 186"
+		image	menu/vertical_bar
+		texl	"0 0"
+		texh	"2 512"
+	}
+
 	string title
 	{
 		string	"_Select aircraft"
-		pos	"512 210"
+		pos	"370 210"
+		font	f_big
+		align	uc
+	}
+
+	string title2
+	{
+		if "mn_displaybaselist == 1"
+		string	"_Select base"
+		pos	"750 210"
 		font	f_big
 		align	uc
 	}
@@ -816,22 +835,43 @@ menu popup_intercept
 	string status_label
 	{
 		string	"_Status:"
-		pos	"400 240"
+		pos	"300 240"
 	}
 
 	string base_label
 	{
 		string	"_Base:"
-		pos	"650 240"
+		pos	"450 240"
+	}
+
+	string base2_label
+	{
+		if "mn_displaybaselist == 1"
+		string	"_Base:"
+		pos	"625 240"
 	}
 
 	text ships
 	{
 		pos             "150 266"
-		size    "726 260"
-		format  "20 250"
+		size    "460 260"
+		format  "20 150"
 		mousefx true
 		num	9
+		wheel
+		height	"13"
+		click { }
+		rclick { }
+	}
+
+	text bases
+	{
+		if "mn_displaybaselist == 1"
+		pos		"625 266"
+		size	"250 260"
+		format	"20 175"
+		mousefx	true
+		num		27
 		wheel
 		height	"13"
 		click { }
