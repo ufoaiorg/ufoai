@@ -27,8 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 
 /* public vars */
-static mission_t missions[MAX_MISSIONS];	/**< Document me. */
-static int numMissions;				/**< Number of mission parsed in mission.ufo
+static mission_t missions[MAX_MISSIONS];	/**< Missions parsed in missions.ufo (sa ccs.mission for active missions) */
+static int numMissions;				/**< Number of mission parsed in missions.ufo
 									 * numMissions is not increased when adding dynamical missions (crashed ufo) */
 actMis_t *selMis;				/**< Currently selected mission on geoscape */
 
