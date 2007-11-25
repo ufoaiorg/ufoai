@@ -27,6 +27,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
+#define TR_NO_BASE	-1
+
+/** @brief Current selected aircraft for transfer (if transfer started from mission). */
+static aircraft_t *transferStartAircraft = NULL;
+
 /** @brief Current selected base for transfer. */
 static base_t *transferBase = NULL;
 
@@ -500,24 +505,28 @@ static void TR_TransferListClear_f (void)
  * @brief Unloads transfer cargo when finishing the transfer or destroys it when no buildings/base.
  * @param[in] transfer Pointer to transfer in gd.alltransfers.
  * @param[in] success True if the transfer reaches dest base, false if the base got destroyed.
+ * @note transfer->srcBase may be TR_NO_BASE if transfer comes from a mission (alien body recovery)
  * @sa TR_TransferEnd
  */
 void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 {
 	int i, j;
 	base_t *destination = NULL;
-	base_t *source = NULL;
 	employee_t *employee;
 	aircraft_t *aircraft;
 	char message[256];
+
+	if (transfer->srcBase != TR_NO_BASE) {
+		base_t *source = NULL;
+		source = &gd.bases[transfer->srcBase];
+		assert(source);
+	}
 
 	assert(transfer);
 	if (success) {
 		destination = &gd.bases[transfer->destBase];
 		assert(destination);
 	}
-	source = &gd.bases[transfer->srcBase];
-	assert(source);
 
 	if (transfer->hasItems && success) {	/* Items. */
 		if (!destination->hasStorage) {
@@ -536,7 +545,7 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 		}
 	}
 
-	if (transfer->hasEmployees) {	/* Employees. */
+	if (transfer->hasEmployees && transfer->srcBase != TR_NO_BASE) {	/* Employees. (cannot come from a mission) */
 		if (!destination->hasQuarters || !success) {	/* Employees will be unhired. */
 			if (success) {
 				Com_sprintf(message, sizeof(message), _("Base %s does not have Living Quarters, employees got unhired!"), destination->name);
@@ -604,21 +613,149 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 }
 
 /**
+ * @brief Starts alien bodies transfer between mission and base.
+ * @param[in] transferBase Pointer to the base to send the alien bodies.
+ * @sa TR_TransferBaseListClick_f
+ * @sa TR_TransferStart_f
+ */
+static void TR_TransferAlienAfterMissionStart (base_t *transferBase)
+{
+	int i, j;
+	transfer_t *transfer = NULL;
+	float time;
+	char message[256];
+
+	if (!transferBase) {
+		Com_Printf("TR_TransferAlienAfterMissionStart_f: No base selected!\n");
+		return;
+	}
+
+	/* Find free transfer slot. */
+	for (i = 0; i < MAX_TRANSFERS; i++) {
+		if (!gd.alltransfers[i].active) {
+			/* Make sure it is empty here. */
+			memset(&gd.alltransfers[i], 0, sizeof(gd.alltransfers[i]));
+			memset(gd.alltransfers[i].employeesArray, TRANS_LIST_EMPTY_SLOT, sizeof(gd.alltransfers[i].employeesArray));
+			memset(gd.alltransfers[i].aircraftArray, TRANS_LIST_EMPTY_SLOT, sizeof(gd.alltransfers[i].aircraftArray));
+			transfer = &gd.alltransfers[i];
+			break;
+		}
+ 	}
+
+	if (!transfer)
+		return;
+
+	/* Initialize transfer. */
+	 /* calculate time to go from 1 base to another : 1 day for one quarter of the globe*/
+	time = MAP_GetDistance(transferBase->pos, transferStartAircraft->pos) / 90.0f;
+	transfer->event.day = ccs.date.day + floor(time);	/* add day */
+	time = (time - floor(time)) * 3600 * 24;	/* convert remaining time in second */
+	transfer->event.sec = ccs.date.sec + round(time);
+	/* check if event is not the followinf day */
+	if (transfer->event.sec > 3600 * 24) {
+		transfer->event.sec -= 3600 * 24;
+		transfer->event.day++;
+	}
+	transfer->destBase = transferBase->idx; /* Destination base index. */
+	transfer->srcBase = TR_NO_BASE;	/* Source base index. */
+	transfer->active = qtrue;
+
+	for (i = 0; i < transferStartAircraft->alientypes; i++) {		/* Aliens. */
+		if (transferStartAircraft->aliencargo[i].amount_alive > 0) {
+			for (j = 0; j < gd.numAliensTD; j++) {
+				if (!csi.teamDef[j].alien)
+					continue;
+				if (Q_strncmp(transferBase->alienscont[j].alientype, transferStartAircraft->aliencargo[i].alientype, MAX_VAR) == 0) {
+					transfer->hasAliens = qtrue;
+					transfer->alienAmount[j][TRANS_ALIEN_ALIVE] = transferStartAircraft->aliencargo[i].amount_alive;
+					transferStartAircraft->aliencargo[j].amount_alive = 0;
+					break;
+				}
+			}
+		}
+		if (transferStartAircraft->aliencargo[i].amount_dead > 0) {
+			for (j = 0; j < gd.numAliensTD; j++) {
+				if (!csi.teamDef[j].alien)
+					continue;
+				if (Q_strncmp(transferBase->alienscont[j].alientype, transferStartAircraft->aliencargo[i].alientype, MAX_VAR) == 0) {
+					transfer->hasAliens = qtrue;
+					transfer->alienAmount[j][TRANS_ALIEN_DEAD] = transferStartAircraft->aliencargo[i].amount_dead;
+					transferStartAircraft->aliencargo[j].amount_dead = 0;
+					break;
+				}
+			}
+		}
+	}
+
+	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to base %s"), gd.bases[transfer->destBase].name);
+	MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
+	Cbuf_AddText("mn_pop\n");
+}
+
+/**
+ * @brief Action to realize when clicking on Transfer Menu.
+ * @note This menu is used when a dropship ending a mission collected alien bodies, but there's no alien cont. in home base
+ * @param[in] transferBase Pointer to the base to send the alien bodies.
+ * @sa TR_TransferAircraftMenu
+ */
+static void TR_TransferBaseListClick_f (void)
+{
+	int num, baseIdx;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
+		return;
+	}
+
+	num = atoi(Cmd_Argv(1));
+
+	/* skip base not displayed (see TR_TransferAircraftMenu) */
+	for (baseIdx = 0; baseIdx < gd.numBases; baseIdx++) {
+		if (!gd.bases[baseIdx].founded)
+			continue;
+
+		if (!gd.bases[baseIdx].hasAlienCont)
+			continue;
+
+		num--;
+		if (num <= 0)
+			break;
+	}
+
+	if (baseIdx < 0 || baseIdx >= gd.numBases) {
+		Com_Printf("TR_TransferBaseListClick_f()... baseIdx %i doesn't exist.\n", baseIdx);
+		return;
+	}
+
+	TR_TransferAlienAfterMissionStart(&(gd.bases[baseIdx]));
+}
+
+/**
  * @brief Shows available bases in transfer menu.
  * @param[in] aircraft Pointer to aircraft used in transfer.
+ * @sa TR_TransferBaseListClick_f
  */
 void TR_TransferAircraftMenu (aircraft_t* aircraft)
 {
-	int i;
+	int i, num;
 	static char transferBaseSelectPopup[512];
 
 	transferBaseSelectPopup[0] = '\0';
 
+	/* store the aircraft to be able to remove alien bodies */
+	transferStartAircraft = aircraft;
+
+	/* make sure that all tests here are the same than in TR_TransferBaseListClick_f */
 	for (i = 0; i < gd.numBases; i++) {
 		if (!gd.bases[i].founded)
 			continue;
-		Q_strcat(transferBaseSelectPopup, va("  %s\n",gd.bases[i].name), sizeof(transferBaseSelectPopup));
+		/* don't display bases without Alien Containment */
+		if (!gd.bases[i].hasAlienCont)
+			continue;
 
+		num = (gd.bases[i].capacities[CAP_ALIENS].max - gd.bases[i].capacities[CAP_ALIENS].cur);
+		Q_strcat(transferBaseSelectPopup, va("  %s ", gd.bases[i].name), sizeof(transferBaseSelectPopup));
+		Q_strcat(transferBaseSelectPopup, va(ngettext("(can host %i alive alien)\n", "(can host %i alive aliens)\n", num), num), sizeof(transferBaseSelectPopup));
 	}
 	menuText[TEXT_LIST] = transferBaseSelectPopup;
 	MN_PushMenu("popup_transferbaselist");
@@ -1379,4 +1516,5 @@ void TR_Reset (void)
 	Cmd_AddCommand("trans_close", TR_TransferClose_f, "Callback for closing Transfer Menu");
 	Cmd_AddCommand("trans_nextbase", TR_NextBase_f, "Callback for selecting next base");
 	Cmd_AddCommand("trans_prevbase", TR_PrevBase_f, "Callback for selecting previous base");
+	Cmd_AddCommand("trans_baselist_click", TR_TransferBaseListClick_f, "Callback for choosing base while recovering alien after mission");
 }

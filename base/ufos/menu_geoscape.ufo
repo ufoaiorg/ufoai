@@ -633,8 +633,8 @@ menu popup_transferbaselist
 
 	string info
 	{
-		string	"_Choose a base to recover alien bodies:"
-		pos	"290 320"
+		string	"_Choose a base to host alien bodies:"
+		pos	"290 316"
 	}
 
 	text trans_baselist

@@ -329,7 +329,7 @@ void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 		if (somethingWritten)
 			menuText[TEXT_BASE_LIST] = baseListText;
 		else
-			menuText[TEXT_BASE_LIST] = _("No defense system operational, no weapon or ammo equipped or not in radar range.");
+			menuText[TEXT_BASE_LIST] = _("No defense system operational or no weapon or ammo equipped.");
 		/* Display base list in popup */
 		Cvar_Set("mn_displaybaselist", "1");
 	} else
