@@ -3282,9 +3282,8 @@ static void CL_GameResults_f (void)
 
 			/* @todo: Is this really needed? At the beginning of CL_GameResults_f we already have this status (if I read this correctly). */
 			baseCurrent->aircraft[baseCurrent->aircraftCurrent].homebase = baseCurrent;
-
-			AIR_AircraftReturnToBase_f();
 		}
+		AIR_AircraftReturnToBase_f();
 
 		/* campaign effects */
 		selMis->cause->done++;
