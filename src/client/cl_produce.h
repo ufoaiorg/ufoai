@@ -66,7 +66,6 @@ typedef struct production_queue_s
 void PR_ResetProduction(void);
 void PR_ProductionRun(void);
 void PR_ProductionInit(void);
-qboolean PR_ProductionAllowed(void);
 void PR_Init(void);
 
 #endif /* CLIENT_CL_PROOUCE */

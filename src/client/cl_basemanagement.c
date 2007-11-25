@@ -399,14 +399,14 @@ static void B_BaseInit_f (void)
 	CL_UpdateCredits(ccs.credits);
 
 	/* activate or deactivate the aircraft button */
-	if (AIR_AircraftAllowed()) {
+	if (AIR_AircraftAllowed(baseCurrent)) {
 		Cvar_SetValue("mn_base_num_aircraft", baseCurrent->numAircraftInBase);
 		Cmd_ExecuteString("set_aircraft_enabled");
 	} else {
 		Cvar_SetValue("mn_base_num_aircraft", -1);
 		Cmd_ExecuteString("set_aircraft_disabled");
 	}
-	if (BS_BuySellAllowed()) {
+	if (BS_BuySellAllowed(baseCurrent)) {
 		Cvar_SetValue("mn_base_buysell_allowed", qtrue);
 		Cmd_ExecuteString("set_buysell_enabled");
 	} else {
@@ -418,35 +418,35 @@ static void B_BaseInit_f (void)
 	} else {
 		Cmd_ExecuteString("set_transfer_disabled");
 	}
-	if (RS_ResearchAllowed()) {
+	if (RS_ResearchAllowed(baseCurrent)) {
 		Cvar_SetValue("mn_base_research_allowed", qtrue);
 		Cmd_ExecuteString("set_research_enabled");
 	} else {
 		Cvar_SetValue("mn_base_research_allowed", qfalse);
 		Cmd_ExecuteString("set_research_disabled");
 	}
-	if (PR_ProductionAllowed()) {
+	if (PR_ProductionAllowed(baseCurrent)) {
 		Cvar_SetValue("mn_base_prod_allowed", qtrue);
 		Cmd_ExecuteString("set_prod_enabled");
 	} else {
 		Cvar_SetValue("mn_base_prod_allowed", qfalse);
 		Cmd_ExecuteString("set_prod_disabled");
 	}
-	if (E_HireAllowed()) {
+	if (E_HireAllowed(baseCurrent)) {
 		Cvar_SetValue("mn_base_hire_allowed", qtrue);
 		Cmd_ExecuteString("set_hire_enabled");
 	} else {
 		Cvar_SetValue("mn_base_hire_allowed", qfalse);
 		Cmd_ExecuteString("set_hire_disabled");
 	}
-	if (AC_ContainmentAllowed()) {
+	if (AC_ContainmentAllowed(baseCurrent)) {
 		Cvar_SetValue("mn_base_containment_allowed", qtrue);
 		Cmd_ExecuteString("set_containment_enabled");
 	} else {
 		Cvar_SetValue("mn_base_containment_allowed", qfalse);
 		Cmd_ExecuteString("set_containment_disabled");
 	}
-	if (HOS_HospitalAllowed()) {
+	if (HOS_HospitalAllowed(baseCurrent)) {
 		Cvar_SetValue("mn_base_hospital_allowed", qtrue);
 		Cmd_ExecuteString("set_hospital_enabled");
 	} else {

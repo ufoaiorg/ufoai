@@ -2153,10 +2153,10 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
  * @sa B_BaseInit_f
  * @todo if base is under attack, if there is no command center, if there is no power ?
  */
-qboolean AIR_AircraftAllowed (void)
+qboolean AIR_AircraftAllowed (const base_t* base)
 {
-	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK
-	 && (baseCurrent->hasHangar || baseCurrent->hasHangarSmall)) {
+	if (base->baseStatus != BASE_UNDER_ATTACK
+	 && (base->hasHangar || base->hasHangarSmall)) {
 		return qtrue;
 	} else {
 		return qfalse;

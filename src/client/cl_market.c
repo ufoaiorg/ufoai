@@ -856,10 +856,10 @@ qboolean BS_Load (sizebuf_t* sb, void* data)
  * @brief Returns true if you can buy or sell equipment
  * @sa B_BaseInit_f
  */
-qboolean BS_BuySellAllowed (void)
+qboolean BS_BuySellAllowed (const base_t* base)
 {
-	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK
-	 && baseCurrent->hasStorage) {
+	if (base->baseStatus != BASE_UNDER_ATTACK
+	 && base->hasStorage) {
 		return qtrue;
 	} else {
 		return qfalse;

@@ -23,15 +23,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-extern qboolean HOS_RemoveFromList(employee_t *employee, base_t *base);
-extern void HOS_Reset(void);
-extern qboolean HOS_HealCharacter(character_t* chr, qboolean hospital);
-extern qboolean HOS_HealEmployee(employee_t* employee);
-extern void HOS_HealAll(const base_t* const base);
-extern void HOS_HospitalRun(void);
-extern void HOS_RemoveEmployeesInHospital(aircraft_t *aircraft);
-extern void HOS_ReaddEmployeesInHospital(aircraft_t *aircraft);
+qboolean HOS_RemoveFromList(employee_t *employee, base_t *base);
+void HOS_Reset(void);
+qboolean HOS_HealCharacter(character_t* chr, qboolean hospital);
+qboolean HOS_HealEmployee(employee_t* employee);
+void HOS_HealAll(const base_t* const base);
+void HOS_HospitalRun(void);
+void HOS_RemoveEmployeesInHospital(aircraft_t *aircraft);
+void HOS_ReaddEmployeesInHospital(aircraft_t *aircraft);
 void HOS_RemoveDeadEmployeeFromLists (employee_t *employee);
-extern qboolean HOS_Save(sizebuf_t *sb, void* data);
-extern qboolean HOS_Load(sizebuf_t *sb, void* data);
-extern qboolean HOS_HospitalAllowed(void);
+qboolean HOS_Save(sizebuf_t *sb, void* data);
+qboolean HOS_Load(sizebuf_t *sb, void* data);

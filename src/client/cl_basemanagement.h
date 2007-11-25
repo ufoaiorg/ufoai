@@ -320,4 +320,13 @@ qboolean B_UpdateStorageAndCapacity(base_t* base, int objIDX, int amount, qboole
 
 qboolean B_ScriptSanityCheck(void);
 
+/* menu functions that checks whether the buttons in the base menu are useable */
+qboolean BS_BuySellAllowed(const base_t* base);
+qboolean AIR_AircraftAllowed(const base_t* base);
+qboolean RS_ResearchAllowed(const base_t* base);
+qboolean PR_ProductionAllowed(const base_t* base);
+qboolean E_HireAllowed(const base_t* base);
+qboolean AC_ContainmentAllowed(const base_t* base);
+qboolean HOS_HospitalAllowed(const base_t* base);
+
 #endif /* CLIENT_CL_BASEMANGEMENT_H */
