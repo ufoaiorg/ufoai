@@ -2918,6 +2918,14 @@ void CL_GameAutoGo (actMis_t *mission)
 
 	/* collect all aliens as dead ones */
 	cargo = aircraft->aliencargo;
+
+	/* Make sure dropship aliencargo is empty. */
+	memset(aircraft->aliencargo, 0, sizeof(aircraft->aliencargo));
+
+	/* @todo: Check whether there are already aliens */
+	/*if (aircraft->alientypes) {
+	}*/
+
 	aircraft->alientypes = mis->numAlienTeams;
 	for (i = 0; i < aircraft->alientypes; i++) {
 		Q_strncpyz(cargo[i].alientype, mis->alienTeams[i]->id, sizeof(cargo[i].alientype));
