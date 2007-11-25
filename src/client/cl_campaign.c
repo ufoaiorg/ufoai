@@ -2916,26 +2916,6 @@ void CL_GameAutoGo (actMis_t *mission)
 
 	MN_PopMenu(qfalse);
 
-	/* collect all aliens as dead ones */
-	cargo = aircraft->aliencargo;
-
-	/* Make sure dropship aliencargo is empty. */
-	memset(aircraft->aliencargo, 0, sizeof(aircraft->aliencargo));
-
-	/* @todo: Check whether there are already aliens */
-	/*if (aircraft->alientypes) {
-	}*/
-
-	aircraft->alientypes = mis->numAlienTeams;
-	for (i = 0; i < aircraft->alientypes; i++) {
-		Q_strncpyz(cargo[i].alientype, mis->alienTeams[i]->id, sizeof(cargo[i].alientype));
-		/* FIXME: This could lead to more aliens in their sum */
-		cargo[i].amount_dead = rand() % mis->aliens;
-		amount += cargo[i].amount_dead;
-	}
-	if (amount)
-		MN_AddNewMessage(_("Notice"), va(_("Collected %i dead alien bodies"), amount), qfalse, MSG_STANDARD, NULL);
-
 	/* update nation opinions */
 	if (won) {
 		CL_HandleNationData(!won, mis->civilians, 0, 0, mis->aliens, selMis);
@@ -2954,7 +2934,29 @@ void CL_GameAutoGo (actMis_t *mission)
 			selMis->cause->active = qfalse;
 			CL_CampaignExecute(selMis->cause);
 		}
-		AIR_AircraftReturnToBase_f();
+
+		/* collect all aliens as dead ones */
+		cargo = aircraft->aliencargo;
+
+		/* Make sure dropship aliencargo is empty. */
+		memset(aircraft->aliencargo, 0, sizeof(aircraft->aliencargo));
+
+		/* @todo: Check whether there are already aliens
+		* @sa AL_CollectingAliens */
+		/*if (aircraft->alientypes) {
+		}*/
+
+		aircraft->alientypes = mis->numAlienTeams;
+		for (i = 0; i < aircraft->alientypes; i++) {
+			Q_strncpyz(cargo[i].alientype, mis->alienTeams[i]->name, sizeof(cargo[i].alientype));
+			/* FIXME: This could lead to more aliens in their sum */
+			cargo[i].amount_dead = rand() % mis->aliens;
+			amount += cargo[i].amount_dead;
+		}
+		if (amount)
+			MN_AddNewMessage(_("Notice"), va(_("Collected %i dead alien bodies"), amount), qfalse, MSG_STANDARD, NULL);
+
+		AIR_AircraftReturnToBase(aircraft);
 	}
 
 	/* onwin and onlose triggers */
