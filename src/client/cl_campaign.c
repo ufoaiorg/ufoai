@@ -28,7 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* public vars */
 static mission_t missions[MAX_MISSIONS];	/**< Document me. */
-static int numMissions;				/**< Document me. */
+static int numMissions;				/**< Number of mission parsed in mission.ufo
+									 * numMissions is not increased when adding dynamical missions (crashed ufo) */
 actMis_t *selMis;				/**< Currently selected mission on geoscape */
 
 static campaign_t campaigns[MAX_CAMPAIGNS];	/**< Document me. */
@@ -508,7 +509,10 @@ static void CP_MissionList_f (void)
 			Com_Printf("| %-*s | ", DETAILSWIDTH, tmp);
 			Q_strncpyz(tmp, missions[i].mapDef->map, sizeof(tmp));
 			Com_Printf("%-*s | ", DETAILSWIDTH, tmp);
-			Q_strncpyz(tmp, missions[i].mapDef->param, sizeof(tmp));
+			if (missions[i].mapDef->param)
+				Q_strncpyz(tmp, missions[i].mapDef->param, sizeof(tmp));
+			else
+				tmp[0] = '\0';
 			Com_Printf("%-*s | ", DETAILSWIDTH, tmp);
 			for (j = 0; j < missions[i].numAlienTeams; j++)
 				Q_strncpyz(tmp, missions[i].alienTeams[j]->id, sizeof(tmp));
@@ -820,7 +824,6 @@ static void CL_CampaignAddMission (setState_t * set)
  * @sa CL_CampaignAddMission
  * @note Missions that are removed should already have the onGeoscape set to true
  * and thus won't be respawned on geoscape
- * @sa CL_CampaignAddMission
  */
 static void CL_CampaignRemoveMission (actMis_t * mis)
 {
