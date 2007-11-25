@@ -267,6 +267,14 @@ void AL_AddAliens (aircraft_t *aircraft)
 			Com_DPrintf(DEBUG_CLIENT, "AL_AddAliens bodies: %s amount: %i\n", tobase->alienscont[i].alientype, tobase->alienscont[i].amount_dead);
 #endif
 	}
+
+#if 0 /* @todo active this - and fix the ac functions */
+	/* make sure, that they are not added a second time
+	 * keep in mind that a dropship with collected aliens
+	 * can maybe enter a second mission without returning
+	 * to homebase before */
+	aircraft->alientypes = 0;
+#endif
 }
 
 /**

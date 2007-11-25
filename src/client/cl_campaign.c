@@ -2875,7 +2875,7 @@ void CL_GameAutoGo (actMis_t *mission)
 	qboolean won;
 	aircraft_t *aircraft;
 	mission_t *mis;
-	int i;
+	int i, amount = 0;
 	int civiliansKilled = 0; /* @todo: fill this for the case you won the game */
 	aliensTmp_t *cargo = NULL;
 
@@ -2931,7 +2931,10 @@ void CL_GameAutoGo (actMis_t *mission)
 		Q_strncpyz(cargo[i].alientype, mis->alienTeams[i]->id, sizeof(cargo[i].alientype));
 		/* FIXME: This could lead to more aliens in their sum */
 		cargo[i].amount_dead = rand() % mis->aliens;
+		amount += cargo[i].amount_dead;
 	}
+	if (amount)
+		MN_AddNewMessage(_("Notice"), va(_("Collected %i dead alien bodies"), amount), qfalse, MSG_STANDARD, NULL);
 
 	/* update nation opinions */
 	if (won) {
