@@ -653,6 +653,7 @@ static void TR_TransferStart_f (void)
 	employee_t *employee;
 	aircraft_t *aircraft;
 	transfer_t *transfer = NULL;
+	float time;
 	char message[256];
 
 	if (transferType == TRANS_TYPE_INVALID) {
@@ -681,8 +682,16 @@ static void TR_TransferStart_f (void)
 		return;
 
 	/* Initialize transfer. */
-	transfer->event.day = ccs.date.day + 1;	/* @todo: instead of +1 day calculate distance */
-	transfer->event.sec = ccs.date.sec;
+	 /* calculate time to go from 1 base to another : 1 day for one quarter of the globe*/
+	time = MAP_GetDistance(transferBase->pos, baseCurrent->pos) / 90.0f;
+	transfer->event.day = ccs.date.day + floor(time);	/* add day */
+	time = (time - floor(time)) * 3600 * 24;	/* convert remaining time in second */
+	transfer->event.sec = ccs.date.sec + round(time);
+	/* check if event is not the followinf day */
+	if (transfer->event.sec > 3600 * 24) {
+		transfer->event.sec -= 3600 * 24;
+		transfer->event.day++;
+	}
 	transfer->destBase = transferBase->idx; /* Destination base index. */
 	transfer->srcBase = baseCurrent->idx;	/* Source base index. */
 	transfer->active = qtrue;
@@ -1201,7 +1210,7 @@ void TR_TransferCheck (void)
 
 	for (i = 0; i < MAX_TRANSFERS; i++) {
 		transfer = &gd.alltransfers[i];
-		if (transfer->event.day == ccs.date.day) {	/* @todo make it checking hour also, not only day */
+		if (transfer->event.day == ccs.date.day && ccs.date.sec >= transfer->event.sec) {
 			base = &gd.bases[transfer->destBase];
 			if (!base->founded) {
 				TR_EmptyTransferCargo(transfer, qfalse);
