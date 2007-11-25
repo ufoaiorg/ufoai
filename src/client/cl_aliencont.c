@@ -93,12 +93,16 @@ const char *AL_AlienTypeToName (int teamDefIdx)
  * @brief Collecting stunned aliens and alien bodies after the mission.
  * @param[in] aircraft Pointer to the aircraft with cargo.
  * @sa CL_ParseResults
+ * @sa CL_GameAutoGo
  */
 void AL_CollectingAliens (aircraft_t *aircraft)
 {
 	int i, j;
 	le_t *le = NULL;
 	aliensTmp_t *cargo = NULL;
+
+	/* @todo: Check whether there are already aliens and add the new
+	 * ones without removing the old ones*/
 
 	/* Make sure dropship aliencargo is empty. */
 	memset(aircraft->aliencargo, 0, sizeof(aircraft->aliencargo));
@@ -135,7 +139,7 @@ void AL_CollectingAliens (aircraft_t *aircraft)
 				}
 				if (j == aircraft->alientypes) {
 					/* otherwise add new alien type */
-					Q_strncpyz(cargo[j].alientype, le->teamDef->name, MAX_VAR);
+					Q_strncpyz(cargo[j].alientype, le->teamDef->name, sizeof(cargo[j].alientype));
 					/* Search stunned first. */
 					if ((le->state & STATE_STUN) & ~STATE_DEAD) {
 						/* alive alien */
@@ -240,6 +244,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 						messageAlreadySet = qtrue;
 					}
 				}
+				break;
 			}
 		}
 	}
@@ -1101,10 +1106,9 @@ qboolean AC_Load (sizebuf_t* sb, void* data)
  * @brief Returns true if the current base is able to handle captured aliens
  * @sa B_BaseInit_f
  */
-qboolean AC_ContainmentAllowed (void)
+qboolean AC_ContainmentAllowed (const base_t* base)
 {
-	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK
-	 && baseCurrent->hasAlienCont) {
+	if (base->baseStatus != BASE_UNDER_ATTACK && base->hasAlienCont) {
 		return qtrue;
 	} else {
 		return qfalse;

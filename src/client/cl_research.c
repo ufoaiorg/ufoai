@@ -2394,12 +2394,12 @@ qboolean RS_Load (sizebuf_t* sb, void* data)
  * @brief Returns true if the current base is able to handle research
  * @sa B_BaseInit_f
  */
-qboolean RS_ResearchAllowed (void)
+qboolean RS_ResearchAllowed (const base_t* base)
 {
-	int hiredScientistCount = E_CountHired(baseCurrent, EMPL_SCIENTIST);
+	int hiredScientistCount = E_CountHired(base, EMPL_SCIENTIST);
 
-	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK
-	 && baseCurrent->hasLab && hiredScientistCount > 0) {
+	if (base->baseStatus != BASE_UNDER_ATTACK
+	 && base->hasLab && hiredScientistCount > 0) {
 		return qtrue;
 	} else {
 		return qfalse;

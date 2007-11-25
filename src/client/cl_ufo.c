@@ -136,7 +136,7 @@ static void UFO_SetUfoRandomDest (aircraft_t* ufo)
  * @brief Set new route to UFO so that it can flee
  * @todo Make aircraft flee in the direction opposite of v rather than choosing a random direction
  */
-void UFO_FleePhalanxAircraft (aircraft_t *ufo, vec2_t v)
+void UFO_FleePhalanxAircraft (aircraft_t *ufo, const vec2_t v)
 {
 	vec2_t pos;
 	vec3_t initialVector, rotationAxis, dest;
@@ -150,29 +150,32 @@ void UFO_FleePhalanxAircraft (aircraft_t *ufo, vec2_t v)
 
 	VecToPolar(dest, pos);
 
+	ufo->time = 0;
+	ufo->point = 0;
 	MAP_MapCalcLine(ufo->pos, pos, &(ufo->route));
 	ufo->aircraftTarget = NULL;
 	ufo->baseTarget = NULL;
 	ufo->status = AIR_FLEEING;
 }
 
+#ifdef UFO_ATTACK_BASES
 /**
  * @brief Check if a UFO is the target of a base
- * @param[in] num idx of the ufos in gd.ufos[]
+ * @param[in] ufoIdx idx of the ufo in gd.ufos[]
  * @param[in] base Pointer to the base
  * @return 0 if ufo is not a target, 1 if target of a missile, 2 if target of a laser
  */
-static int UFO_IsTargetOfBase (int num, base_t *base)
+static int UFO_IsTargetOfBase (int ufoIdx, base_t *base)
 {
 	int i;
 
 	for (i = 0; i < base->maxBatteries; i++) {
-		if (base->targetMissileIdx[i] == num)
+		if (base->targetMissileIdx[i] == ufoIdx)
 			return UFO_IS_TARGET_OF_MISSILE;
 	}
 
 	for (i = 0; i < base->maxLasers; i++) {
-		if (base->targetLaserIdx[i] == num)
+		if (base->targetLaserIdx[i] == ufoIdx)
 			return UFO_IS_TARGET_OF_LASER;
 	}
 
@@ -224,6 +227,7 @@ static void UFO_FoundNewBase (aircraft_t *ufo, int dt)
 		}
 	}
 }
+#endif
 
 /**
  * @brief Check if the ufo can shoot at something
@@ -247,15 +251,19 @@ static void UFO_SearchTarget (aircraft_t *ufo)
 				ufo->aircraftTarget = NULL;
 		} else {
 			ufo->status = AIR_TRANSIT;
+			/* reverse order - because bases can be destroyed in here */
 			for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
+#ifdef UFO_ATTACK_BASES
 				/* check if the ufo can attack a base (if it's not too far) */
 				if (base->isDiscovered && (MAP_GetDistance(ufo->pos, base->pos) < max_detecting_range)) {
-					AIR_SendUfoPurchasingBase(ufo, base);
-					/* don't check for aircraft if we can destroy a base */
-					continue;
+					if (AIR_SendUfoPurchasingBase(ufo, base))
+						/* don't check for aircraft if we can destroy a base */
+						continue;
 				}
+#endif
 
-				/* check if the ufo can attack an aircraft */
+				/* check if the ufo can attack an aircraft
+				 * reverse order - because aircraft can be destroyed in here */
 				for (phalanxAircraft = base->aircraft + base->numAircraftInBase - 1; phalanxAircraft >= base->aircraft; phalanxAircraft--) {
 					/* check that aircraft is flying */
 					if (phalanxAircraft->status > AIR_HOME) {
@@ -287,13 +295,20 @@ void UFO_CampaignRunUfos (int dt)
 
 	/* now the ufos are flying around, too - cycle backward - ufo might be destroyed */
 	for (ufo = gd.ufos + gd.numUfos - 1; ufo >= gd.ufos; ufo--) {
+#ifdef UFO_ATTACK_BASES
 		/* Check if the UFO found a new base */
 		UFO_FoundNewBase(ufo, dt);
+#endif
 
-		/* reached target and not following a ufo? then we need a new target */
-		if (AIR_AircraftMakeMove(dt, ufo) && ufo->status != AIR_UFO)
+		/* reached target and not following a phalanx aircraft? then we need a new target */
+		if (AIR_AircraftMakeMove(dt, ufo) && ufo->status != AIR_UFO) {
+			float *end;
+			end = ufo->route.point[ufo->route.numPoints - 1];
+			Vector2Copy(end, ufo->pos);
 			UFO_SetUfoRandomDest(ufo);
+		}
 
+		/* is there a PHALANX aircraft to shoot ? */
 		UFO_SearchTarget(ufo);
 
 		/* antimatter tanks */
@@ -306,6 +321,23 @@ void UFO_CampaignRunUfos (int dt)
 				ufo->weapons[k].delayNextShot -= dt;
 		}
 	}
+}
+
+/**
+ * @brief Check if a UFO has weapons and ammo to shoot
+ * @param[in] ufo Pointer to the UFO
+ * @param[in] base Pointer to the base shooting at the UFO
+ */
+qboolean UFO_UFOCanShoot (const aircraft_t *ufo)
+{
+	int i;
+
+	for (i = 0; i < ufo->maxWeapons; i++) {
+		if (ufo->weapons[i].itemIdx != NONE && ufo->weapons[i].ammoIdx != NONE  && ufo->weapons[i].ammoLeft > 0)
+			return qtrue;
+	}
+
+	return qfalse;
 }
 
 #ifdef DEBUG

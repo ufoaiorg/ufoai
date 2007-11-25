@@ -27,8 +27,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 
 /* public vars */
-static mission_t missions[MAX_MISSIONS];	/**< Document me. */
-static int numMissions;				/**< Document me. */
+static mission_t missions[MAX_MISSIONS];	/**< Missions parsed in missions.ufo (sa ccs.mission for active missions) */
+static int numMissions;				/**< Number of mission parsed in missions.ufo
+									 * numMissions is not increased when adding dynamical missions (crashed ufo) */
 actMis_t *selMis;				/**< Currently selected mission on geoscape */
 
 static campaign_t campaigns[MAX_CAMPAIGNS];	/**< Document me. */
@@ -508,7 +509,10 @@ static void CP_MissionList_f (void)
 			Com_Printf("| %-*s | ", DETAILSWIDTH, tmp);
 			Q_strncpyz(tmp, missions[i].mapDef->map, sizeof(tmp));
 			Com_Printf("%-*s | ", DETAILSWIDTH, tmp);
-			Q_strncpyz(tmp, missions[i].mapDef->param, sizeof(tmp));
+			if (missions[i].mapDef->param)
+				Q_strncpyz(tmp, missions[i].mapDef->param, sizeof(tmp));
+			else
+				tmp[0] = '\0';
 			Com_Printf("%-*s | ", DETAILSWIDTH, tmp);
 			for (j = 0; j < missions[i].numAlienTeams; j++)
 				Q_strncpyz(tmp, missions[i].alienTeams[j]->id, sizeof(tmp));
@@ -820,7 +824,6 @@ static void CL_CampaignAddMission (setState_t * set)
  * @sa CL_CampaignAddMission
  * @note Missions that are removed should already have the onGeoscape set to true
  * and thus won't be respawned on geoscape
- * @sa CL_CampaignAddMission
  */
 static void CL_CampaignRemoveMission (actMis_t * mis)
 {
@@ -2865,13 +2868,16 @@ static void CL_GameAutoCheck_f (void)
  * failed to assembly
  * @sa CL_GameAutoGo_f
  * @sa CL_Drop
+ * @sa AL_CollectingAliens
  */
 void CL_GameAutoGo (actMis_t *mission)
 {
 	qboolean won;
 	aircraft_t *aircraft;
 	mission_t *mis;
+	int i, amount = 0;
 	int civiliansKilled = 0; /* @todo: fill this for the case you won the game */
+	aliensTmp_t *cargo = NULL;
 
 	assert(mission);
 	mis = mission->def;
@@ -2928,7 +2934,29 @@ void CL_GameAutoGo (actMis_t *mission)
 			selMis->cause->active = qfalse;
 			CL_CampaignExecute(selMis->cause);
 		}
-		AIR_AircraftReturnToBase_f();
+
+		/* collect all aliens as dead ones */
+		cargo = aircraft->aliencargo;
+
+		/* Make sure dropship aliencargo is empty. */
+		memset(aircraft->aliencargo, 0, sizeof(aircraft->aliencargo));
+
+		/* @todo: Check whether there are already aliens
+		* @sa AL_CollectingAliens */
+		/*if (aircraft->alientypes) {
+		}*/
+
+		aircraft->alientypes = mis->numAlienTeams;
+		for (i = 0; i < aircraft->alientypes; i++) {
+			Q_strncpyz(cargo[i].alientype, mis->alienTeams[i]->name, sizeof(cargo[i].alientype));
+			/* FIXME: This could lead to more aliens in their sum */
+			cargo[i].amount_dead = rand() % mis->aliens;
+			amount += cargo[i].amount_dead;
+		}
+		if (amount)
+			MN_AddNewMessage(_("Notice"), va(_("Collected %i dead alien bodies"), amount), qfalse, MSG_STANDARD, NULL);
+
+		AIR_AircraftReturnToBase(aircraft);
 	}
 
 	/* onwin and onlose triggers */
@@ -4258,8 +4286,9 @@ static const cmdList_t game_commands[] = {
 	{"game_timestop", CL_GameTimeStop, NULL},
 	{"game_timeslow", CL_GameTimeSlow, NULL},
 	{"game_timefast", CL_GameTimeFast, NULL},
-	{"inc_sensor", B_SetSensor_f, "Increase the radar range"},
+	{"update_sensor", RADAR_UpdateRange_f, "Increase the radar range"},
 	{"dec_sensor", B_SetSensor_f, "Decrease the radar range"},
+	{"dec_sensor", B_SetSensor_f, "Update radar range"},
 	{"mn_mapaction_reset", MAP_ResetAction, NULL},
 	{"map_center", MAP_CenterOnPoint_f, "Centers the geoscape view on items on the geoscape - and cycle through them"},
 	{"map_zoom", MAP_Zoom_f, ""},

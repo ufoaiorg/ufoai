@@ -210,8 +210,8 @@ void AIM_NextAircraft_f(void);
 void AIM_PrevAircraft_f(void);
 void AIR_AircraftReturnToBase_f(void);
 
-const char *AIR_AircraftStatusToName(aircraft_t *aircraft);
-qboolean AIR_IsAircraftInBase(aircraft_t *aircraft);
+const char *AIR_AircraftStatusToName(const aircraft_t *aircraft);
+qboolean AIR_IsAircraftInBase(const aircraft_t *aircraft);
 void AIR_AircraftSelect(aircraft_t *aircraft);
 void AIR_AircraftSelect_f(void);
 
@@ -232,16 +232,17 @@ void CP_GetRandomPosForAircraft(float *pos);
 qboolean AIR_AircraftMakeMove(int dt, aircraft_t* aircraft);
 void AIR_ParseAircraft(const char *name, const char **text, qboolean assignAircraftItems);
 void AII_ReloadWeapon(aircraft_t *aircraft);
-qboolean AIR_AircraftHasEnoughFuel(aircraft_t *aircraft, const vec2_t destination);
+qboolean AIR_AircraftHasEnoughFuel(const aircraft_t *aircraft, const vec2_t destination);
 void AIR_AircraftReturnToBase(aircraft_t *aircraft);
 qboolean AIR_SendAircraftToMission(aircraft_t* aircraft, struct actMis_s* mission);
-void AIR_SendAircraftPurchasingUfo(aircraft_t* aircraft, aircraft_t* ufo);
-void AIR_SendUfoPurchasingAircraft(aircraft_t* ufo, aircraft_t* aircraft);
-void AIR_SendUfoPurchasingBase(aircraft_t* ufo, struct base_s *base);
+qboolean AIR_SendAircraftPurchasingUfo(aircraft_t* aircraft, aircraft_t* ufo);
+qboolean AIR_SendUfoPurchasingAircraft(aircraft_t* ufo, aircraft_t* aircraft);
+#ifdef UFO_ATTACK_BASES
+qboolean AIR_SendUfoPurchasingBase(aircraft_t* ufo, struct base_s *base);
+#endif
 void AIR_AircraftsNotifyUfoRemoved(const aircraft_t *const ufo);
 void AIR_AircraftsUfoDisappear(const aircraft_t *const ufo);
 void AIR_UpdateHangarCapForAll(int base_idx);
-qboolean AIR_AircraftAllowed(void);
 qboolean AIR_ScriptSanityCheck(void);
 int AIR_CalculateHangarStorage(int aircraftID, struct base_s *base, int used);
 int CL_AircraftMenuStatsValues(const int value, const int stat);

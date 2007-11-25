@@ -87,6 +87,7 @@ extern void CL_DisplayPopupIntercept(struct actMis_s* mission, aircraft_t* ufo);
 static aircraft_t* CL_PopupInterceptGetAircraft(void);
 static void CL_PopupInterceptClick_f(void);
 static void CL_PopupInterceptRClick_f(void);
+static void CL_PopupInterceptBaseClick_f(void);
 static void CL_PopupInterceptNotifyMissionRemoved(const actMis_t* mission);
 static void CL_PopupInterceptNotifyUfoRemoved(const aircraft_t* ufo);
 static void CL_PopupInterceptNotifyUfoDisappeared(const aircraft_t* ufo);
@@ -102,6 +103,7 @@ void CL_PopupInit (void)
 	/* popup_intercept commands */
 	Cmd_AddCommand("ships_click", CL_PopupInterceptClick_f, NULL);
 	Cmd_AddCommand("ships_rclick", CL_PopupInterceptRClick_f, NULL);
+	Cmd_AddCommand("bases_click", CL_PopupInterceptBaseClick_f, NULL);
 
 	memset(&popupIntercept, 0, sizeof(popup_intercept_t));
 	memset(&popupAircraft, 0, sizeof(popup_aircraft_t));
@@ -249,9 +251,11 @@ POPUP_INTERCEPT
 void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 {
 	static char aircraftListText[1024];
+	static char baseListText[1024];
 	char *s;
 	int i, j;
 	aircraft_t *air;
+	qboolean somethingWritten;
 
 	/* One parameter must be specified, mission or ufo */
 	if (!mission && !ufo)
@@ -275,14 +279,13 @@ void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 			/* don't show aircraft with no weapons or no ammo, or crafts that
 			 * can't even reach the target */
 			if (ufo) {
-				/* use twice the ufo pos here, the weapon range says nothing about
-				 * the aircraft range */
-				if (AIRFIGHT_ChooseWeapon(air->weapons, air->maxWeapons, air->pos, air->pos) < 0) {
+				/* Does the aircraft has weapons and ammo ? */
+				if (AIRFIGHT_ChooseWeapon(air->weapons, air->maxWeapons, air->pos, air->pos) == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT) {
 					Com_DPrintf(DEBUG_CLIENT, "CL_DisplayPopupIntercept: No useable weapon found in craft '%s' (%i)\n", air->id, air->maxWeapons);
 					continue;
 				}
 				/* now check the aircraft range */
-				if (MAP_GetDistance(ufo->pos, air->pos) > air->stats[AIR_STATS_SPEED] * air->fuel / 3600.0f) {
+				if (!AIR_AircraftHasEnoughFuel(air, ufo->pos)) {
 					Com_DPrintf(DEBUG_CLIENT, "CL_DisplayPopupIntercept: Target out of reach for craft '%s'\n", air->id);
 					continue;
 				}
@@ -306,6 +309,32 @@ void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 		menuText[TEXT_AIRCRAFT_LIST] = _("No craft available, or no tactical teams assigned to available craft.");
 	else if (ufo)
 		menuText[TEXT_AIRCRAFT_LIST] = _("No craft available, no weapon or ammo equipped or target out of reach.");
+
+	if (ufo) {
+		somethingWritten = qfalse;
+		memset(baseListText, 0, sizeof(baseListText));
+		/* Create the list of base, and write the text to display in popup
+		 * don't use the same loop than above, to avoid leaving the loop if popupIntercept.numAircraft >= POPUP_INTERCEPT_MAX_AIRCRAFT */
+		for (j = 0; j < gd.numBases; j++) {
+			if (!gd.bases[j].founded)
+				continue;
+
+			/* Check if the base should be displayed in base list
+			 * don't check range because maybe UFO will get closer */
+			if (AII_BaseCanShoot(gd.bases + j)) {
+				Q_strcat(baseListText, va("%s\n", gd.bases[j].name), sizeof(baseListText));
+				somethingWritten = qtrue;
+			}
+		}
+		if (somethingWritten)
+			menuText[TEXT_BASE_LIST] = baseListText;
+		else
+			menuText[TEXT_BASE_LIST] = _("No defense system operational, no weapon or ammo equipped or not in radar range.");
+		/* Display base list in popup */
+		Cvar_Set("mn_displaybaselist", "1");
+	} else
+		/* Don't display base list in popup */
+		Cvar_Set("mn_displaybaselist", "0");
 
 	/* Display the popup */
 	MN_PushMenu("popup_intercept");
@@ -380,6 +409,49 @@ static void CL_PopupInterceptRClick_f (void)
 	MAP_ResetAction();
 	Cmd_ExecuteString(va("mn_select_base %i", aircraft->homebase->idx));
 	MN_PushMenu("aircraft");
+}
+
+/**
+ * @brief User select a base in the popup_aircraft
+ * Make the base attack the corresponding UFO
+ */
+static void CL_PopupInterceptBaseClick_f (void)
+{
+	int num, baseIdx, i;
+
+	MN_PopMenu(qfalse);
+
+	/* If popup is opened, that means that ufo is selected on geoscape */
+	assert(selectedUfo);
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <num>\tnum=num in base list\n", Cmd_Argv(0));
+		return;
+	}
+
+	num = atoi(Cmd_Argv(1));
+
+	for (baseIdx = 0; baseIdx < gd.numBases; baseIdx++) {
+		if (!gd.bases[baseIdx].founded)
+			continue;
+
+		/* Check if the base should be displayed in base list */
+		if (AII_BaseCanShoot(gd.bases + baseIdx)) {
+			num--;
+		if (num <= 0)
+			break;
+		}
+	}
+
+	if (num > 0) {
+		Com_Printf("CL_PopupInterceptBaseClick_f()... Number given in argument (%i) is bigger than number of base in list.\n", num);
+		return;
+	}
+
+	for (i = 0; i < gd.bases[baseIdx].maxBatteries; i++)
+		gd.bases[baseIdx].targetMissileIdx[i] = selectedUfo - gd.ufos;
+	for (i = 0; i < gd.bases[baseIdx].maxLasers; i++)
+		gd.bases[baseIdx].targetLaserIdx[i] = selectedUfo - gd.ufos;
 }
 
 /**

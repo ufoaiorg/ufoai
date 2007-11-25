@@ -302,7 +302,7 @@ void AIM_AircraftStart_f (void)
  * @note Called in: CL_AircraftList_f(), AIR_ListAircraft_f(), AIR_AircraftSelect(),
  * @note MAP_DrawMap(), CL_DisplayPopupIntercept()
  */
-const char *AIR_AircraftStatusToName (aircraft_t * aircraft)
+const char *AIR_AircraftStatusToName (const aircraft_t * aircraft)
 {
 	assert(aircraft);
 
@@ -347,7 +347,7 @@ const char *AIR_AircraftStatusToName (aircraft_t * aircraft)
  * @return qfalse if given aircraft is not in its homebase.
  * @todo Add check for AIR_REARM when aircraft items will be implemented.
  */
-qboolean AIR_IsAircraftInBase (aircraft_t * aircraft)
+qboolean AIR_IsAircraftInBase (const aircraft_t * aircraft)
 {
 	if (aircraft->status == AIR_HOME || aircraft->status == AIR_REFUEL)
 		return qtrue;
@@ -359,7 +359,7 @@ qboolean AIR_IsAircraftInBase (aircraft_t * aircraft)
  * @returns 1 if no aircraft in base else 2 if no soldiers
  * available otherwise 3
  */
-static int CL_EquipSoldierState (aircraft_t * aircraft)
+static int CL_EquipSoldierState (const aircraft_t * aircraft)
 {
 	if (!AIR_IsAircraftInBase(aircraft)) {
 		return 1;
@@ -413,6 +413,7 @@ void AIM_ResetAircraftCvars_f (void)
 /**
  * @brief Switch to next aircraft in base.
  * @sa AIR_AircraftSelect
+ * @sa AIM_PrevAircraft_f
  */
 void AIM_NextAircraft_f (void)
 {
@@ -441,6 +442,7 @@ void AIM_NextAircraft_f (void)
 /**
  * @brief Switch to previous aircraft in base.
  * @sa AIR_AircraftSelect
+ * @sa AIM_NextAircraft_f
  */
 void AIM_PrevAircraft_f (void)
 {
@@ -487,7 +489,7 @@ int CL_AircraftMenuStatsValues (const int value, const int stat)
  * @sa MAP_MapCalcLine
  * @return qtrue if the aircraft can go to the position, qfalse else
  */
-qboolean AIR_AircraftHasEnoughFuel (aircraft_t *aircraft, const vec2_t destination)
+qboolean AIR_AircraftHasEnoughFuel (const aircraft_t *aircraft, const vec2_t destination)
 {
 	base_t *base;
 	float distance = 0;
@@ -540,7 +542,7 @@ void AIR_AircraftReturnToBase (aircraft_t *aircraft)
 
 /**
  * @brief Script function for AIR_AircraftReturnToBase
- * @note Sends the current aircraft back to homebase.
+ * @note Sends the current aircraft back to homebase (called from aircraft menu).
  * @note This function updates some cvars for current aircraft.
  * @sa CL_GameAutoGo_f
  * @sa CL_GameResults_f
@@ -1590,12 +1592,12 @@ void AIR_AircraftsUfoDisappear (const aircraft_t *const ufo)
  * @param[in] aircraft Pointer to an aircraft which will hunt for a UFO.
  * @param[in] ufo Pointer to a UFO.
  */
-void AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
+qboolean AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
 {
 	int num = ufo - gd.ufos;
 
 	if (num < 0 || num >= gd.numUfos || ! aircraft || ! ufo)
-		return;
+		return qfalse;
 
 	/* if aircraft was in base */
 	if (aircraft->status == AIR_REFUEL || aircraft->status == AIR_HOME) {
@@ -1608,7 +1610,7 @@ void AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
 	/* check if the aircraft has enough fuel to go to the ufo and then come back */
 	/* @todo if you have enough fuel to go where the ufo is atm, that doesn't mean that you'll have enough to pursue it ! */
 	if (!AIR_AircraftHasEnoughFuel(aircraft, ufo->pos))
-		return;
+		return qfalse;
 
 	MAP_MapCalcLine(aircraft->pos, ufo->pos, &(aircraft->route));
 	aircraft->status = AIR_UFO;
@@ -1616,6 +1618,7 @@ void AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
 	aircraft->point = 0;
 	aircraft->aircraftTarget = ufo;
 	aircraft->baseTarget = NULL;
+	return qtrue;
 }
 
 /**
@@ -1624,7 +1627,7 @@ void AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
  * @param[in] aircraft Pointer to the target aircraft.
  * @sa AIR_SendUfoPurchasingBase
  */
-void AIR_SendUfoPurchasingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
+qboolean AIR_SendUfoPurchasingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 {
 	int slotIdx;
 
@@ -1633,8 +1636,14 @@ void AIR_SendUfoPurchasingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 
 	/* check whether the ufo can shoot the aircraft - if not, don't try it even */
 	slotIdx = AIRFIGHT_ChooseWeapon(ufo->weapons, ufo->maxWeapons, ufo->pos, aircraft->pos);
-	if (slotIdx != AIRFIGHT_WEAPON_CAN_SHOOT)
-		return;
+	if (slotIdx == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT) {
+		/* no ammo left: should flee ! */
+		UFO_FleePhalanxAircraft(ufo, aircraft->pos);
+		return qfalse;
+	} else if (slotIdx < AIRFIGHT_WEAPON_CAN_SHOOT) {
+		/* Don't flee: can't fire atm, but maybe we'll be able to attack later */
+		return qfalse;
+	}
 
 	MAP_MapCalcLine(ufo->pos, aircraft->pos, &(ufo->route));
 	ufo->status = AIR_UFO;
@@ -1642,15 +1651,17 @@ void AIR_SendUfoPurchasingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 	ufo->point = 0;
 	ufo->aircraftTarget = aircraft;
 	ufo->baseTarget = NULL;
+	return qtrue;
 }
 
+#ifdef UFO_ATTACK_BASES
 /**
  * @brief Make the specified UFO attack a base.
  * @param[in] ufo Pointer to the UFO.
  * @param[in] base Pointer to the target base.
  * @sa AIR_SendAircraftPurchasingUfo
  */
-void AIR_SendUfoPurchasingBase (aircraft_t* ufo, base_t* base)
+qboolean AIR_SendUfoPurchasingBase (aircraft_t* ufo, base_t* base)
 {
 	int slotIdx;
 
@@ -1660,7 +1671,7 @@ void AIR_SendUfoPurchasingBase (aircraft_t* ufo, base_t* base)
 	/* check whether the ufo can shoot the base - if not, don't try it even */
 	slotIdx = AIRFIGHT_ChooseWeapon(ufo->weapons, ufo->maxWeapons, ufo->pos, base->pos);
 	if (slotIdx != AIRFIGHT_WEAPON_CAN_SHOOT)
-		return;
+		return qfalse;
 
 	MAP_MapCalcLine(ufo->pos, base->pos, &(ufo->route));
 	ufo->baseTarget = base;
@@ -1668,7 +1679,9 @@ void AIR_SendUfoPurchasingBase (aircraft_t* ufo, base_t* base)
 	ufo->status = AIR_UFO; /* FIXME: Might crash in cl_map.c MAP_DrawMapMarkers */
 	ufo->time = 0;
 	ufo->point = 0;
+	return qtrue;
 }
+#endif
 
 /*============================================
 Aircraft functions related to team handling.
@@ -1719,12 +1732,10 @@ void AIR_AddToAircraftTeam (aircraft_t *aircraft, int employee_idx, employeeType
 }
 
 /**
- * @brief Removes given employee to given aircraft.
+ * @brief Removes given employee from given aircraft team.
  * @param[in] aircraft Pointer to an aircraft, from which we will remove employee.
  * @param[in] employee_idx Index of an employee in global array (?)
- * @todo FIXME: is this responsible for removing soldiers from a team in dropship?
- * 	ANSWER: yes it seems to be.
- * @todo  do we need to update aircraft->teamSize here as well?
+ * @note This is responsible for removing soldiers from a team in dropship
  */
 void AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, int employee_idx, employeeType_t employeeType)
 {
@@ -2140,10 +2151,10 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
  * @sa B_BaseInit_f
  * @todo if base is under attack, if there is no command center, if there is no power ?
  */
-qboolean AIR_AircraftAllowed (void)
+qboolean AIR_AircraftAllowed (const base_t* base)
 {
-	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK
-	 && (baseCurrent->hasHangar || baseCurrent->hasHangarSmall)) {
+	if (base->baseStatus != BASE_UNDER_ATTACK
+	 && (base->hasHangar || base->hasHangarSmall)) {
 		return qtrue;
 	} else {
 		return qfalse;

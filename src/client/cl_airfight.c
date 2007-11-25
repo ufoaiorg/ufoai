@@ -29,13 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 
 /**
- * @note -1 if no weapon to use atm
- * @note -2 if no weapon to use at all (no ammo left)
- */
-static const int AIRFIGHT_SLOT_NO_WEAPON_TO_USE_AT_THE_MOMENT = -1;
-static const int AIRFIGHT_SLOT_NO_WEAPON_TO_USE_NO_AMMO_LEFT = -2;
-
-/**
  * @brief Run bullets on geoscape.
  * @param[in] projectile Pointer to the projectile corresponding to this bullet.
  * @param[in] ortogonalVector vector perpendicular to the movement of the projectile.
@@ -88,7 +81,7 @@ static qboolean AIRFIGHT_RemoveProjectile (aircraftProjectile_t *projectile)
  * @sa AIRFIGHT_RemoveProjectile
  * @sa AII_ReloadWeapon for the aircraft item reload code
  */
-static qboolean AIRFIGHT_AddProjectile (base_t* attackingBase, aircraft_t *attacker, base_t* aimedBase, aircraft_t *target, aircraftSlot_t *weaponSlot)
+static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, aircraft_t *attacker, base_t* aimedBase, aircraft_t *target, aircraftSlot_t *weaponSlot)
 {
 	aircraftProjectile_t *projectile;
 	int i;
@@ -179,7 +172,7 @@ static void AIRFIGHT_MissTarget (aircraftProjectile_t *projectile, qboolean retu
  * @param[in] distance distance between the weapon and the target.
  * @return 0 AIRFIGHT_WEAPON_CAN_SHOOT if the weapon can shoot,
  * -1 AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT if it can't shoot atm,
- * -2 AIRFIGHT_WEAPON_CAN_NOT_SHOOT if it will never be able to shoot.
+ * -2 AIRFIGHT_WEAPON_CAN_NEVER_SHOOT if it will never be able to shoot.
  */
 static int AIRFIGHT_CheckWeapon (const aircraftSlot_t *slot, float distance)
 {
@@ -189,11 +182,11 @@ static int AIRFIGHT_CheckWeapon (const aircraftSlot_t *slot, float distance)
 
 	/* check if there is a functional weapon in this slot */
 	if (slot->itemIdx == NONE || slot->installationTime != 0)
-		return AIRFIGHT_WEAPON_CAN_NOT_SHOOT;
+		return AIRFIGHT_WEAPON_CAN_NEVER_SHOOT;
 
 		/* check if there is still ammo in this weapon */
 	if (slot->ammoIdx == NONE || slot->ammoLeft <= 0)
-		return AIRFIGHT_WEAPON_CAN_NOT_SHOOT;
+		return AIRFIGHT_WEAPON_CAN_NEVER_SHOOT;
 
 	ammoIdx = slot->ammoIdx;
 	/* check if the target is within range of this weapon */
@@ -215,12 +208,12 @@ static int AIRFIGHT_CheckWeapon (const aircraftSlot_t *slot, float distance)
  * @param[in] targetpos Pointer to the aimed aircraft.
  * @return indice of the slot to use (in array weapons[]),
  * -1 AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT no weapon to use atm,
- * -2 AIRFIGHT_SLOT_NO_WEAPON_TO_USE_NO_AMMO_LEFT if no weapon to use at all.
+ * -2 AIRFIGHT_WEAPON_CAN_NEVER_SHOOT if no weapon to use at all.
  * @sa AIRFIGHT_CheckWeapon
  */
 int AIRFIGHT_ChooseWeapon (aircraftSlot_t *slot, int maxSlot, vec3_t pos, vec3_t targetPos)
 {
-	int slotIdx = AIRFIGHT_SLOT_NO_WEAPON_TO_USE_NO_AMMO_LEFT;
+	int slotIdx = AIRFIGHT_WEAPON_CAN_NEVER_SHOOT;
 	int i, weapon_status;
 	float distance0 = 99999.9f;
 	float distance = MAP_GetDistance(pos, targetPos);
@@ -258,7 +251,7 @@ int AIRFIGHT_ChooseWeapon (aircraftSlot_t *slot, int maxSlot, vec3_t pos, vec3_t
  * @pre slotIdx must have a weapon installed, with ammo available (see AIRFIGHT_ChooseWeapon)
  * @todo This probability should also depend on the pilot skills, when they will be implemented.
  */
-static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target, aircraftSlot_t *slot)
+static float AIRFIGHT_ProbabilityToHit (const aircraft_t *shooter, const aircraft_t *target, const aircraftSlot_t *slot)
 {
 	int idx;
 	float probability = 0.0f;
@@ -325,7 +318,7 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 			if (probability > AIRFIGHT_ProbabilityToHit(shooter, target, shooter->weapons + slotIdx))
 				AIRFIGHT_MissTarget(&gd.projectiles[gd.numProjectiles - 1], qfalse);
 		}
-	} else if (slotIdx == AIRFIGHT_SLOT_NO_WEAPON_TO_USE_AT_THE_MOMENT) {
+	} else if (slotIdx == AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT) {
 		/* no ammo to fire atm (too far or reloading), pursue target */
 		if (shooter->type == AIRCRAFT_UFO) {
 			if (!shooter->baseTarget)
@@ -374,7 +367,7 @@ static void AIRFIGHT_RemoveProjectileAimingAircraft (aircraft_t * aircraft)
  * @param[in] aircraft Pointer to the destroyed aircraft.
  * @note This function is called when @c aircraft is destroyed.
  */
-static void AIRFIGHT_UpdateProjectileForDestroyedAircraft (aircraft_t * aircraft)
+static void AIRFIGHT_UpdateProjectileForDestroyedAircraft (const aircraft_t * aircraft)
 {
 	aircraftProjectile_t *projectile;
 	aircraft_t *attacker;
@@ -463,7 +456,7 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
  * @param[in] movement distance that the projectile will do up to next draw of geoscape
  * @sa AIRFIGHT_CampaignRunProjectiles
  */
-static qboolean AIRFIGHT_ProjectileReachedTarget (aircraftProjectile_t *projectile, float movement)
+static qboolean AIRFIGHT_ProjectileReachedTarget (const aircraftProjectile_t *projectile, float movement)
 {
 	float distance;
 
@@ -495,7 +488,7 @@ static qboolean AIRFIGHT_ProjectileReachedTarget (aircraftProjectile_t *projecti
  * @sa AII_UpdateAircraftStats
  * @note ECM is handled in AIRFIGHT_ProbabilityToHit
  */
-static int AIRFIGHT_GetDamage (objDef_t *od, aircraft_t* target)
+static int AIRFIGHT_GetDamage (const objDef_t *od, const aircraft_t* target)
 {
 	int damage;
 
@@ -548,6 +541,7 @@ static void AIRFIGHT_ProjectileHits (aircraftProjectile_t *projectile)
  * @brief Solve the result of one projectile hitting a base.
  * @param[in] projectile Pointer to the projectile.
  * @sa B_UpdateBaseData
+ * @note Not possible without UFO_ATTACK_BASES set
  */
 static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 {
@@ -679,109 +673,61 @@ void AIRFIGHT_CampaignRunProjectiles (int dt)
 }
 
 /**
- * @brief Choose a new target for base.
- * @param[in] base Pointer to the firing base.
- * @param[in] slot Pointer to the firing slot.
- * @return idx of the ufo to shoot, -1 (AIRFIGHT_BASE_CAN_T_FIRE) if base can't fire
- */
-static int AIRFIGHT_BaseChooseTarget (base_t *base, aircraftSlot_t *slot)
-{
-	int ufoIdx;
-	int i;
-	float distance0, distance;
-
-	/* check if there is already another weapon firing at a ufo */
-	for (i = 0; i < base->maxBatteries; i++) {
-		if (base->targetMissileIdx[i] >= 0) {
-			distance = MAP_GetDistance(base->pos, gd.ufos[base->targetMissileIdx[i]].pos);
-			if (AIRFIGHT_CheckWeapon(slot, distance) >= 0)
-				return base->targetMissileIdx[i];
-		}
-	}
-	for (i = 0; i < base->maxLasers; i++) {
-		if (base->targetLaserIdx[i] >= 0) {
-			distance = MAP_GetDistance(base->pos, gd.ufos[base->targetLaserIdx[i]].pos);
-			if (AIRFIGHT_CheckWeapon(slot, distance) >= 0)
-				return base->targetLaserIdx[i];
-		}
-	}
-
-	/* otherwise, choose the closest visible ufo in range */
-	distance0 = csi.ods[slot->ammoIdx].craftitem.stats[AIR_STATS_WRANGE];
-	ufoIdx = AIRFIGHT_BASE_CAN_T_FIRE;
-	for (i = 0; i < gd.numUfos; i++) {
-		aircraft_t* ufo = &gd.ufos[i];
-
-		if (!ufo->visible)
-			continue;
-
-		distance = MAP_GetDistance(base->pos, ufo->pos);
-		if (distance < distance0) {
-			distance0 = distance;
-			ufoIdx = i;
-		}
-	}
-
-	return ufoIdx;
-}
-
-/**
- * @brief Choose a new target for base.
+ * @brief Check if one type of battery (missile or laser) can shoot now.
  * @param[in] base Pointer to the firing base.
  * @param[in] slot Pointer to the first weapon slot of the base to use.
  * @param[in] maxSlot number of slot of this type in base.
  * @param[in] targetIdx Pointer to the array of target idx of this defense system.
  */
-static void AIRFIGHT_BaseShoot (base_t *base, aircraftSlot_t *slot, int maxSlot, int *targetIdx)
+static void AIRFIGHT_BaseShoot (const base_t *base, aircraftSlot_t *slot, int maxSlot, int *targetIdx)
 {
-	int i;
+	int i, test;
+	float distance;
 
 	for (i = 0; i < maxSlot; i++) {
-		/* check if we are allowed to fire with this weapon */
-		if (targetIdx[i] == -2 || slot[i].installationTime > 0)
+		/* if no target, can't shoot */
+		if (targetIdx[i] == AIRFIGHT_NO_TARGET)
+			continue;
+
+		/* if the weapon is not ready in base, can't shoot */
+		if (slot[i].installationTime > 0)
 			continue;
 
 		/* if weapon is reloading, can't shoot */
 		if (slot[i].delayNextShot > 0)
 			continue;
 
-		/* check if the weapon has already a target */
-		if (targetIdx[i] >= 0) {
-			float distance;
-			int test;
-
-			/* check that the ufo is still visible */
-			if (!gd.ufos[targetIdx[i]].visible)
-				targetIdx[i] = AIRFIGHT_BASE_CAN_T_FIRE;
-			/* check if we can still fire on this target */
-			distance = MAP_GetDistance(base->pos, gd.ufos[targetIdx[i]].pos);
-			test = AIRFIGHT_CheckWeapon(slot + i, distance);
-			/* weapon unable to shoot */
-			if (test == AIRFIGHT_WEAPON_CAN_NOT_SHOOT)
-				continue;
-			/* we can't shoot with this weapon atm */
-			else if (test == AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT)
-				continue;
-			/* target is too far, reset target */
-			else if (distance > csi.ods[slot[i].ammoIdx].craftitem.stats[AIR_STATS_WRANGE])
-				targetIdx[i] = AIRFIGHT_BASE_CAN_T_FIRE;
+		/* check that the ufo is still visible */
+		if (!gd.ufos[targetIdx[i]].visible) {
+			targetIdx[i] = AIRFIGHT_NO_TARGET;
+			continue;
 		}
 
-		/* no target atm, choose a target */
-		if (targetIdx[i] == AIRFIGHT_BASE_CAN_T_FIRE)
-			targetIdx[i] = AIRFIGHT_BaseChooseTarget(base, slot + i);
+		/* check if we can still fire on this target */
+		distance = MAP_GetDistance(base->pos, gd.ufos[targetIdx[i]].pos);
+		test = AIRFIGHT_CheckWeapon(slot + i, distance);
+		/* weapon unable to shoot, reset target */
+		if (test == AIRFIGHT_WEAPON_CAN_NEVER_SHOOT) {
+			targetIdx[i] = AIRFIGHT_NO_TARGET;
+			continue;
+		}
+		/* we can't shoot with this weapon atm, wait to see if UFO comes closer */
+		else if (test == AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT)
+			continue;
+		/* target is too far, wait to see if UFO comes closer */
+		else if (distance > csi.ods[slot[i].ammoIdx].craftitem.stats[AIR_STATS_WRANGE])
+			continue;
 
-		/* try to shoot - if a valid base id */
-		if (targetIdx[i] != AIRFIGHT_BASE_CAN_T_FIRE) {
-			float distance = MAP_GetDistance(base->pos, gd.ufos[targetIdx[i]].pos);
-			if (AIRFIGHT_CheckWeapon(slot + i, distance) > -1) {
-				if (AIRFIGHT_AddProjectile(base, NULL, NULL, gd.ufos + targetIdx[i], slot + i)) {
-					slot[i].delayNextShot = csi.ods[slot[i].ammoIdx].craftitem.weaponDelay;
-					/* will we miss the target ? */
-					if (frand() > AIRFIGHT_ProbabilityToHit(NULL, gd.ufos + targetIdx[i], slot + i))
-						AIRFIGHT_MissTarget(&gd.projectiles[gd.numProjectiles - 1], qfalse);
-				}
-			}
+		/* shoot */
+		if (AIRFIGHT_AddProjectile(base, NULL, NULL, gd.ufos + targetIdx[i], slot + i)) {
+			slot[i].delayNextShot = csi.ods[slot[i].ammoIdx].craftitem.weaponDelay;
+			/* will we miss the target ? */
+			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, gd.ufos + targetIdx[i], slot + i))
+				AIRFIGHT_MissTarget(&gd.projectiles[gd.numProjectiles - 1], qfalse);
+
+			/* Check if UFO flees */
+			if (gd.ufos[targetIdx[i]].status != AIR_FLEEING && !UFO_UFOCanShoot(gd.ufos + targetIdx[i]))
+				UFO_FleePhalanxAircraft(gd.ufos + targetIdx[i], base->pos);
 		}
 	}
 }
@@ -811,8 +757,10 @@ void AIRFIGHT_CampaignRunBaseDefense (int dt)
 		}
 
 		if (AII_BaseCanShoot(base)) {
-			AIRFIGHT_BaseShoot(base, base->batteries, base->maxBatteries, base->targetMissileIdx);
-			AIRFIGHT_BaseShoot(base, base->lasers, base->maxLasers, base->targetLaserIdx);
+			if (base->hasMissile)
+				AIRFIGHT_BaseShoot(base, base->batteries, base->maxBatteries, base->targetMissileIdx);
+			if (base->hasLaser)
+				AIRFIGHT_BaseShoot(base, base->lasers, base->maxLasers, base->targetLaserIdx);
 		}
 	}
 }

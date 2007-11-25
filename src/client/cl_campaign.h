@@ -85,9 +85,9 @@ typedef enum mapType_s {
 
 /** possible mission types */
 typedef enum missionType_s {
-	MIS_TERRORATTACK, /* default */
-	MIS_BASEATTACK,
-	MIS_CRASHSITE,
+	MIS_TERRORATTACK,	/* default: for every mission parsed in missions.ufo (not linked with type entry in missions.ufo) */
+	MIS_BASEATTACK,		/* for base attack missions */
+	MIS_CRASHSITE,		/* for dynamical crash sites (not for crash sites in missions.ufo) */
 
 	MIS_MAX
 } missionType_t;

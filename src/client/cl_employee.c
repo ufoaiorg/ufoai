@@ -1194,10 +1194,9 @@ qboolean E_Load (sizebuf_t* sb, void* data)
  * @brief Returns true if the current base is able to handle employees
  * @sa B_BaseInit_f
  */
-qboolean E_HireAllowed (void)
+qboolean E_HireAllowed (const base_t* base)
 {
-	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK
-	 && baseCurrent->hasQuarters) {
+	if (base->baseStatus != BASE_UNDER_ATTACK && base->hasQuarters) {
 		return qtrue;
 	} else {
 		return qfalse;

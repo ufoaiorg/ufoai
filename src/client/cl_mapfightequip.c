@@ -723,6 +723,9 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _("No ammo assigned to this defense system."));
 		else
 			Com_sprintf(smallbuffer3, sizeof(smallbuffer3), _(csi.ods[slot->ammoIdx].tech->name));
+		/* show remaining missile in battery for missiles */
+		if ((airequipID == AC_ITEM_AMMO_MISSILE) || (airequipID == AC_ITEM_BASE_MISSILE))
+			Q_strcat(smallbuffer3, va(ngettext(" (%i missile left)", " (%i missiles left)", slot->ammoLeft), slot->ammoLeft), sizeof(smallbuffer3));
 	} else
 		*smallbuffer3 = '\0';
 	menuText[TEXT_AIREQUIP_3] = smallbuffer3;
@@ -1734,15 +1737,21 @@ int AII_BaseCanShoot (const base_t *base)
 
 	assert(base);
 
-	for (i = 0; i < base->maxBatteries; i++)
-		if (base->batteries[i].itemIdx != NONE
-		 && base->batteries[i].ammoIdx != NONE && base->batteries[i].ammoLeft > 0)
-			return qtrue;
+	if (base->hasMissile) {
+	/* base has missile battery and any needed building */
+		for (i = 0; i < base->maxBatteries; i++)
+			if (base->batteries[i].itemIdx != NONE
+			 && base->batteries[i].ammoIdx != NONE && base->batteries[i].ammoLeft > 0)
+				return qtrue;
+	}
 
-	for (i = 0; i < base->maxLasers; i++)
-		if (base->lasers[i].itemIdx != NONE
-		 && base->lasers[i].ammoIdx != NONE && base->lasers[i].ammoLeft > 0)
-			return qtrue;
+	if (base->hasLaser) {
+	/* base has laser battery and any needed building */
+		for (i = 0; i < base->maxLasers; i++)
+			if (base->lasers[i].itemIdx != NONE
+			 && base->lasers[i].ammoIdx != NONE && base->lasers[i].ammoLeft > 0)
+				return qtrue;
+	}
 
 	return qfalse;
 }

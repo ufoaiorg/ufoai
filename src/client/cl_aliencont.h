@@ -86,6 +86,4 @@ void AC_Reset(void);
 
 void AC_KillAll(struct base_s *base);
 
-extern qboolean AC_ContainmentAllowed(void);
-
 #endif /* CLIENT_CL_ALIENCONT_H */

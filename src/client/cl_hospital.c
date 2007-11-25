@@ -727,12 +727,12 @@ qboolean HOS_Load (sizebuf_t *sb, void* data)
  * @brief Returns true if you can enter in the hospital
  * @sa B_BaseInit_f
  */
-qboolean HOS_HospitalAllowed (void)
+qboolean HOS_HospitalAllowed (const base_t* base)
 {
-	int hiredMedicCount = E_CountHired(baseCurrent, EMPL_MEDIC);
+	int hiredMedicCount = E_CountHired(base, EMPL_MEDIC);
 
-	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK
-	 && baseCurrent->hasHospital && hiredMedicCount > 0) {
+	if (base->baseStatus != BASE_UNDER_ATTACK
+	 && base->hasHospital && hiredMedicCount > 0) {
 		return qtrue;
 	} else {
 		return qfalse;

@@ -93,7 +93,8 @@ typedef enum {
 	B_ANTIMATTER,		/**< this building is antimatter storage */
 	B_ENTRANCE,		/**< this building is an entrance */
 	B_DEFENSE_MISSILE,		/**< this building is a missile rack */
-	B_DEFENSE_LASER
+	B_DEFENSE_LASER,		/**< this building is a laser battery */
+	B_RADAR			/**< this building is a radar */
 } buildingType_t;
 
 /** @brief All possible capacities in base. */
@@ -203,6 +204,7 @@ typedef struct base_s {
 	qboolean hasAmStorage;      /**< B_ANTIMATTER (Antimatter Storage) */
 	qboolean hasMissile;        /**< B_DEFENSE_MISSILE (Missile Battery) */
 	qboolean hasLaser;          /**< B_DEFENSE_LASER (Laser defense) */
+	qboolean hasRadar;          /**< B_RADAR (Radar) */
 
 	/** this is here to allocate the needed memory for the buildinglist */
 	char allBuildingsList[MAX_LIST_CHAR];
@@ -317,5 +319,14 @@ void B_UpdateBaseCapacities(baseCapacities_t cap, base_t *base);
 qboolean B_UpdateStorageAndCapacity(base_t* base, int objIDX, int amount, qboolean reset, qboolean ignorecap);
 
 qboolean B_ScriptSanityCheck(void);
+
+/* menu functions that checks whether the buttons in the base menu are useable */
+qboolean BS_BuySellAllowed(const base_t* base);
+qboolean AIR_AircraftAllowed(const base_t* base);
+qboolean RS_ResearchAllowed(const base_t* base);
+qboolean PR_ProductionAllowed(const base_t* base);
+qboolean E_HireAllowed(const base_t* base);
+qboolean AC_ContainmentAllowed(const base_t* base);
+qboolean HOS_HospitalAllowed(const base_t* base);
 
 #endif /* CLIENT_CL_BASEMANGEMENT_H */

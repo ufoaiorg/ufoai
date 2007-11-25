@@ -146,6 +146,37 @@ void RADAR_ChangeRange (radar_t* radar, int change)
 }
 
 /**
+ * @brief Update range of radar in one base
+ * @param[in] base Pointer to the base
+ * @note This function can be called on console with 'update_sensor'
+ */
+void RADAR_UpdateRange_f (void)
+{
+	int baseIdx, i;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <baseID>\n", Cmd_Argv(0));
+		return;
+	}
+
+	baseIdx = atoi(Cmd_Argv(1));
+	if (baseIdx >= gd.numBases) {
+		Com_Printf("invalid baseID (%s)\n", Cmd_Argv(1));
+		return;
+	}
+
+	gd.bases[baseIdx].radar.range = 0;
+
+	if (!gd.bases[baseIdx].hasRadar)
+		return;
+
+	for (i = 0; i < gd.numBuildings[baseIdx]; i++) {
+		if (gd.buildings[baseIdx][i].buildingType == B_RADAR)
+			gd.bases[baseIdx].radar.range += 30;
+	}
+}
+
+/**
  * @brief Initialise radar
  */
 void Radar_Initialise (radar_t* radar, int range)

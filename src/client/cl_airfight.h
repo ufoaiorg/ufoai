@@ -28,6 +28,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define BULLETS_PER_SHOT	1
 
+/* Remove attack of base by ufo for 2.2: doesn't match storyline. */
+/* #define UFO_ATTACK_BASES */
+
 /**
  * @note 0 if the weapon can shoot
  * @note -1 if it can't shoot atm
@@ -35,9 +38,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 #define AIRFIGHT_WEAPON_CAN_SHOOT 0
 #define AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT -1
-#define AIRFIGHT_WEAPON_CAN_NOT_SHOOT -2
+#define AIRFIGHT_WEAPON_CAN_NEVER_SHOOT -2
 
 #define AIRFIGHT_BASE_CAN_T_FIRE -1
+
+#define AIRFIGHT_NO_TARGET -1
 
 /** @brief projectile used during fight between aircrafts */
 typedef struct aircraftProjectile_s {
@@ -63,5 +68,6 @@ void AIRFIGHT_ActionsAfterAirfight(aircraft_t* shooter, aircraft_t* aircraft, qb
 void AIRFIGHT_CampaignRunProjectiles(int dt);
 void AIRFIGHT_CampaignRunBaseDefense(int dt);
 int AIRFIGHT_ChooseWeapon(aircraftSlot_t *slot, int maxSlot, vec3_t pos, vec3_t targetPos);
+qboolean AIRFIGHT_BaseCanTargetUFO(const struct base_s *base, const aircraft_t *ufo);
 
 #endif /* CLIENT_CL_AIRFIGHT_H */
