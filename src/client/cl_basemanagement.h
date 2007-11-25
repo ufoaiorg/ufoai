@@ -100,8 +100,8 @@ typedef enum {
 /** @brief All possible capacities in base. */
 typedef enum {
 	CAP_ALIENS,		/**< Alive aliens stored in base. */
-	CAP_AIRCRAFTS_SMALL,	/**< Small aircrafts in base. */
-	CAP_AIRCRAFTS_BIG,	/**< Big aircrafts in base. */
+	CAP_AIRCRAFTS_SMALL,	/**< Small aircraft in base. */
+	CAP_AIRCRAFTS_BIG,	/**< Big aircraft in base. */
 	CAP_EMPLOYEES,		/**< Personel in base. */
 	CAP_ITEMS,		/**< Items in base. */
 	CAP_LABSPACE,		/**< Space for scientists in laboratory. */

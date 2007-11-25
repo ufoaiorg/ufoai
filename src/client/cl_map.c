@@ -320,7 +320,7 @@ void MAP_MapClick (const menuNode_t* node, int x, int y)
 		if (MAP_IsMapPositionSelected(node, gd.bases[i].pos, x, y))
 			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_BASE, i, _("Base"), gd.bases[i].name);
 
-		/* Get selected aircrafts wich belong to the base */
+		/* Get selected aircraft wich belong to the base */
 		aircraft = gd.bases[i].aircraft + gd.bases[i].numAircraftInBase - 1;
 		for (; aircraft >= gd.bases[i].aircraft; aircraft--)
 			if (aircraft->status > AIR_HOME && aircraft->fuel > 0 && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
@@ -947,7 +947,7 @@ static void MAP_GetGeoscapeAngle (float *Vector)
 	}
 	counter += gd.numBases;
 
-	/* Cycle through aircrafts (only those present on geoscape) */
+	/* Cycle through aircraft (only those present on geoscape) */
 	for (base = gd.bases + gd.numBases - 1; base >= gd.bases ; base--) {
 		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
 			if (aircraft->status > AIR_HOME) {
@@ -1187,7 +1187,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		if (MAP_AllMapToScreen(node, base->pos, &x, &y, NULL))
 			R_FontDrawString(font, ALIGN_UL, x, y + 10, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], base->name, 0, 0, NULL, qfalse);
 
-		/* draw aircrafts of base */
+		/* draw all aircraft of base */
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--)
 			if (aircraft->status > AIR_HOME) {
 

@@ -32,7 +32,7 @@ static void UFO_RemoveUfoFromGeoscape_f(void);
 extern void UFO_CampaignCheckEvents(void);
 extern void UFO_Reset(void);
 
-static const float max_detecting_range = 60.0f; /**< range to detect and fire at phalanx aircrafts */
+static const float max_detecting_range = 60.0f; /**< range to detect and fire at phalanx aircraft */
 
 typedef struct ufoTypeList_s {
 	const char *id;		/**< script id string */
@@ -400,7 +400,7 @@ static void UFO_NewUfoOnGeoscape_f (void)
 	if (newUfoNum >= numAircraft_samples)
 		newUfoNum = -1;
 
-	/* Get next type of ufo in aircrafts list */
+	/* Get next type of ufo in aircraft list */
 	while (++newUfoNum < numAircraft_samples)
 		if (aircraft_samples[newUfoNum].type == AIRCRAFT_UFO
 		 && !aircraft_samples[newUfoNum].notOnGeoscape)
@@ -450,7 +450,7 @@ void UFO_RemoveUfoFromGeoscape (aircraft_t* ufo)
 	memcpy(gd.ufos + num, gd.ufos + num + 1, (gd.numUfos - num - 1) * sizeof(aircraft_t));
 	gd.numUfos--;
 
-	/* Remove ufo from bases and aircrafts radars */
+	/* Remove ufo from bases and aircraft radars */
 	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
 		Radar_NotifyUfoRemoved(&(base->radar), ufo);
 
@@ -495,7 +495,7 @@ void UFO_CampaignCheckEvents (void)
 			ufo->visible |= RADAR_CheckUfoSensored(&(base->radar), base->pos, ufo, visible);
 		}
 
-		/* Check for ufo tracking by aircrafts */
+		/* Check for ufo tracking by aircraft */
 		if (visible || ufo->visible)
 			for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
 				for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--)

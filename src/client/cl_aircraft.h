@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define LINE_DPHI	(M_PI/LINE_MAXSEG)
 
 #define AIRCRAFT_INVALID -1		/**< Invalid aircraft index (global index). */
-#define AIRCRAFT_INBASE_INVALID -1	/**< Invalid aircraft index in base-list of aircrafts. */
+#define AIRCRAFT_INBASE_INVALID -1	/**< Invalid aircraft index in base-list of aircraft. */
 
 /** @brief A path on the map described by 2D points */
 typedef struct mapline_s {

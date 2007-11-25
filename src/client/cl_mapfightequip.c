@@ -1,6 +1,6 @@
 /**
  * @file cl_mapfightequip.c
- * @brief contains everything related to equiping slots of aircrafts or base
+ * @brief contains everything related to equiping slots of aircraft or base
  * @note Base defense functions prefix: BDEF_
  * @note Aircraft items slots functions prefix: AIM_
  */

@@ -1075,8 +1075,8 @@ static void CL_BaseRansacked (base_t *base)
 		/* reset storage and capacity */
 		B_UpdateStorageAndCapacity(base, item, 0, qtrue, qfalse);
 
-	/* Remove all aircrafts from the base. */
-	for (ac = base->numAircraftInBase-1; ac >= 0; ac--)
+	/* Remove all aircraft from the base. */
+	for (ac = base->numAircraftInBase - 1; ac >= 0; ac--)
 		AIR_DeleteAircraft(&base->aircraft[ac]);
 
 	/* @todo: Maybe reset research in progress. ... needs playbalance
@@ -1779,7 +1779,7 @@ static void CL_StatsUpdate_f (void)
 			costs += gd.bases[i].aircraft[j].price * SALARY_AIRCRAFT_FACTOR / SALARY_AIRCRAFT_DIVISOR;
 		}
 	}
-	Q_strcat(pos, va(_("Aircrafts:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
+	Q_strcat(pos, va(_("Aircraft:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	sum += costs;
 
 	for (i = 0; i < gd.numBases; i++) {

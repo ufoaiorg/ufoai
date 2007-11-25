@@ -736,7 +736,7 @@ static void PR_ProductionListClick_f (void)
 		/* Clicked in the item list. */
 		idx = num - queue->numItems - QUEUE_SPACERS;
 		if (!production_disassembling) {
-			if (produceCategory != BUY_AIRCRAFT) {	/* Everything except aircrafts. */
+			if (produceCategory != BUY_AIRCRAFT) {	/* Everything except aircraft. */
 				for (j = 0, i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 #ifdef DEBUG
 					if (!od->tech)
@@ -848,7 +848,7 @@ static void PR_UpdateProductionList (base_t* base)
 	}
 
 	/* then go through all object definitions */
-	if (produceCategory != BUY_AIRCRAFT) {	/* Everything except aircrafts. */
+	if (produceCategory != BUY_AIRCRAFT) {	/* Everything except aircraft. */
 		for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 			/* we will not show items with producetime = -1 - these are not producible */
 			if (*od->id)
@@ -1121,7 +1121,7 @@ static void PR_ProductionIncrease_f (void)
 		prod = &queue->items[selectedIndex];
 		if (prod->production) {		/* Production. */
 			if (prod->aircraft) {
-				/* Don't allow to queue more aircrafts if there is no free space. */
+				/* Don't allow to queue more aircraft if there is no free space. */
 				if (AIR_CalculateHangarStorage(prod->objID, base, 0) <= 0) {
 					MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo free space in hangars.\n"));
 					return;
