@@ -93,6 +93,7 @@ const char *AL_AlienTypeToName (int teamDefIdx)
  * @brief Collecting stunned aliens and alien bodies after the mission.
  * @param[in] aircraft Pointer to the aircraft with cargo.
  * @sa CL_ParseResults
+ * @sa CL_GameAutoGo
  */
 void AL_CollectingAliens (aircraft_t *aircraft)
 {
@@ -135,7 +136,7 @@ void AL_CollectingAliens (aircraft_t *aircraft)
 				}
 				if (j == aircraft->alientypes) {
 					/* otherwise add new alien type */
-					Q_strncpyz(cargo[j].alientype, le->teamDef->name, MAX_VAR);
+					Q_strncpyz(cargo[j].alientype, le->teamDef->name, sizeof(cargo[j].alientype));
 					/* Search stunned first. */
 					if ((le->state & STATE_STUN) & ~STATE_DEAD) {
 						/* alive alien */

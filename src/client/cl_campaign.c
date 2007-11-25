@@ -2868,13 +2868,16 @@ static void CL_GameAutoCheck_f (void)
  * failed to assembly
  * @sa CL_GameAutoGo_f
  * @sa CL_Drop
+ * @sa AL_CollectingAliens
  */
 void CL_GameAutoGo (actMis_t *mission)
 {
 	qboolean won;
 	aircraft_t *aircraft;
 	mission_t *mis;
+	int i;
 	int civiliansKilled = 0; /* @todo: fill this for the case you won the game */
+	aliensTmp_t *cargo = NULL;
 
 	assert(mission);
 	mis = mission->def;
@@ -2912,6 +2915,15 @@ void CL_GameAutoGo (actMis_t *mission)
 	}
 
 	MN_PopMenu(qfalse);
+
+	/* collect all aliens as dead ones */
+	cargo = aircraft->aliencargo;
+	aircraft->alientypes = mis->numAlienTeams;
+	for (i = 0; i < aircraft->alientypes; i++) {
+		Q_strncpyz(cargo[i].alientype, mis->alienTeams[i]->id, sizeof(cargo[i].alientype));
+		/* FIXME: This could lead to more aliens in their sum */
+		cargo[i].amount_dead = rand() % mis->aliens;
+	}
 
 	/* update nation opinions */
 	if (won) {
