@@ -65,12 +65,12 @@ static popup_aircraft_t popupAircraft; /**< Data about popup_aircraft */
 
 /* popup_intercept display list of aircraft availables to move to a mission or a UFO */
 
-#define POPUP_INTERCEPT_MAX_AIRCRAFT 64	/**< Max aircrafts in popup list */
+#define POPUP_INTERCEPT_MAX_AIRCRAFT 64	/**< Max aircraft in popup list */
 
 typedef struct popup_intercept_s {
-	int numAircraft;	/**< Count of aircrafts displayed in list */
-	int idBaseAircraft[POPUP_INTERCEPT_MAX_AIRCRAFT];	/**< Base ID of aircrafts in list */
-	int idInBaseAircraft[POPUP_INTERCEPT_MAX_AIRCRAFT];	/**< ID in base of aircrafts in list */
+	int numAircraft;	/**< Count of aircraft displayed in list */
+	int idBaseAircraft[POPUP_INTERCEPT_MAX_AIRCRAFT];	/**< Base ID of aircraft in list */
+	int idInBaseAircraft[POPUP_INTERCEPT_MAX_AIRCRAFT];	/**< ID in base of aircraft in list */
 	actMis_t* mission;	/**< Mission the selected aircraft have to move to */
 	aircraft_t* ufo;		/**< UFO the selected aircraft have to move to */
 } popup_intercept_t;
@@ -263,7 +263,7 @@ void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 	popupIntercept.mission = mission;
 	popupIntercept.ufo = mission ? NULL : ufo;
 
-	/* Create the list of aircrafts, and write the text to display in popup */
+	/* Create the list of aircraft, and write the text to display in popup */
 	popupIntercept.numAircraft = 0;
 	memset(aircraftListText, 0, sizeof(aircraftListText));
 	for (j = 0; j < gd.numBases; j++) {

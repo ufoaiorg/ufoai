@@ -164,8 +164,8 @@ void AIR_UpdateHangarCapForAll (int base_idx)
 
 #ifdef DEBUG
 /**
- * @brief Debug function which lists all aircrafts in all bases.
- * @note Use with baseID as a parameter to display aircrafts in given base.
+ * @brief Debug function which lists all aircraft in all bases.
+ * @note Use with baseID as a parameter to display all aircraft in given base.
  */
 void AIR_ListAircraft_f (void)
 {
@@ -184,7 +184,7 @@ void AIR_ListAircraft_f (void)
 		if (baseid != -1 && baseid != base->idx)
 			continue;
 
-		Com_Printf("Aircrafts in base %s: %i\n", base->name, base->numAircraftInBase);
+		Com_Printf("Aircraft in base %s: %i\n", base->name, base->numAircraftInBase);
 		for (i = 0; i < base->numAircraftInBase; i++) {
 			aircraft = &base->aircraft[i];
 			Com_Printf("Aircraft %s\n", aircraft->name);
@@ -273,7 +273,7 @@ void AIM_AircraftStart_f (void)
 
 	/* Aircraft cannot start without Command Centre operational. */
 	if (!baseCurrent->hasCommand) {
-		MN_Popup(_("Notice"), _("No Command Centre operational in this base.\n\nAircrafts cannot start.\n"));
+		MN_Popup(_("Notice"), _("No Command Centre operational in this base.\n\nAircraft can not start.\n"));
 		return;
 	}
 
@@ -760,7 +760,7 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 		CL_RemoveSoldiersFromAircraft(aircraft->idx, base);
 
 	for (i = aircraft->idx; i < gd.numAircraft; i++) {
-		/* Decrease the global index of aircrafts that have a higher index than the deleted one. */
+		/* Decrease the global index of aircraft that have a higher index than the deleted one. */
 		aircraft_temp = AIR_AircraftGetFromIdx(i);
 		if (aircraft_temp) {
 			aircraft_temp->idx--;
@@ -1460,7 +1460,7 @@ void AIR_ListAircraftSamples_f (void)
 	const value_t *vp;
 	aircraft_t *air_samp;
 
-	Com_Printf("%i aircrafts\n", max);
+	Com_Printf("%i aircraft\n", max);
 	if (Cmd_Argc() == 2) {
 		max = atoi(Cmd_Argv(1));
 		if (max >= numAircraft_samples || max < 0)
@@ -1516,7 +1516,7 @@ void AIR_AircraftsNotifyMissionRemoved (const actMis_t *const mission)
 	base_t* base;
 	aircraft_t* aircraft;
 
-	/* Aircrafts currently moving to the mission will be redirect to base */
+	/* Aircraft currently moving to the mission will be redirect to base */
 	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1;
 			aircraft >= base->aircraft; aircraft--) {
@@ -1558,7 +1558,7 @@ void AIR_AircraftsNotifyUfoRemoved (const aircraft_t *const ufo)
 				base->targetLaserIdx[i]--;
 		}
 
-		/* Aircrafts currently purchasing the specified ufo will be redirect to base */
+		/* Aircraft currently purchasing the specified ufo will be redirect to base */
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1;
 			aircraft >= base->aircraft; aircraft--)
 			if (aircraft->status == AIR_UFO) {
@@ -1578,7 +1578,7 @@ void AIR_AircraftsUfoDisappear (const aircraft_t *const ufo)
 	base_t* base;
 	aircraft_t* aircraft;
 
-	/* Aircrafts currently pursuing the specified ufo will be redirect to base */
+	/* Aircraft currently pursuing the specified ufo will be redirect to base */
 	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1;
 			aircraft >= base->aircraft; aircraft--)
@@ -2147,7 +2147,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 }
 
 /**
- * @brief Returns true if the current base is able to handle aircrafts
+ * @brief Returns true if the current base is able to handle aircraft
  * @sa B_BaseInit_f
  * @todo if base is under attack, if there is no command center, if there is no power ?
  */
@@ -2251,7 +2251,7 @@ int AIR_CalculateHangarStorage (int aircraftID, base_t *base, int used)
 		if (aircraftSize <= freespace) {
 			return freespace;
 		} else {
-			/* Small aircrafts (size < 8) can be stored in big hangars as well. */
+			/* Small aircraft (size < 8) can be stored in big hangars as well. */
 			freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur - used;
 			Com_DPrintf(DEBUG_CLIENT, "AIR_CalculateHangarStorage()... freespace (small in big): %i aircraft weight: %i (max: %i, cur: %i)\n", freespace, aircraftSize,
 				base->capacities[CAP_AIRCRAFTS_BIG].max, base->capacities[CAP_AIRCRAFTS_BIG].cur);

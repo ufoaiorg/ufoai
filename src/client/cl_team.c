@@ -390,7 +390,7 @@ void CL_ResetCharacters (base_t* const base)
 		E_UnhireAllEmployees(base, i);
 	}
 
-	/* Purge all team-info from the aircrafts (even in multiplayer - we use a dummy craft there) */
+	/* Purge all team-info from the aircraft (even in multiplayer - we use a dummy craft there) */
 	for (i = 0; i < base->numAircraftInBase; i++) {
 		AIR_ResetAircraftTeam(B_GetAircraftFromBaseByIndex(base, i));
 	}
@@ -1068,7 +1068,7 @@ static void CL_NextSoldier_f (void)
 
 
 /**
- * @brief Updates data about teams in aircrafts.
+ * @brief Updates data about teams in aircraft.
  * @param[in] aircraft Pointer to an aircraft for a desired team.
  * @todo We already know what team-members are in the aircraft (teamIdxs+types) no need to loop through hired employees i think.
  */
@@ -1197,7 +1197,7 @@ static void CL_MarkTeam_f (void)
 		if (!gd.employees[employeeType][i].hired || gd.employees[employeeType][i].baseIDHired != baseCurrent->idx)
 			continue;
 
-		/* search all aircrafts except the current one */
+		/* search all aircraft except the current one */
 		for (j = 0; j < gd.numAircraft; j++) {
 			if (j == aircraft->idx)
 				continue;
@@ -1308,7 +1308,7 @@ qboolean CL_SoldierAwayFromBase (employee_t *employee)
 	if (employee->baseIDHired < 0)
 		return qfalse;
 
-	/* for now only soldiers can be assigned to aircrafts */
+	/* for now only soldiers can be assigned to aircraft */
 	/* @todo add pilots and 2x2 units */
 	if (employee->type != EMPL_SOLDIER && employee->type != EMPL_ROBOT)
 		return qfalse;

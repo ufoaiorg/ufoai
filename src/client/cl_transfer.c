@@ -42,10 +42,10 @@ static int trItemsTmp[MAX_OBJDEFS];
 /** @brief Current alien cargo. [0] alive [1] dead */
 static int trAliensTmp[MAX_TEAMDEFS][TRANS_ALIEN_MAX];
 
-/** @brief Current personel cargo. */
+/** @brief Current personnel cargo. */
 static int trEmployeesTmp[MAX_EMPL][MAX_EMPLOYEES];
 
-/** @brief Current aircrafts for transfer. */
+/** @brief Current aircraft for transfer. */
 static int trAircraftsTmp[MAX_AIRCRAFT];
 
 /**
@@ -177,7 +177,7 @@ static qboolean TR_CheckAircraft (aircraft_t *aircraft, base_t *srcbase, base_t 
 	aircraft_t *aircraftOnList = NULL;
 	assert(aircraft && srcbase && destbase);
 
-	/* Count weight of all aircrafts already on the transfer list. */
+	/* Count weight of all aircraft already on the transfer list. */
 	for (i = 0; i < MAX_AIRCRAFT; i++) {
 		if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
 			aircraftOnList = AIR_AircraftGetFromIdx(i);
@@ -289,7 +289,7 @@ static void TR_CargoList (void)
 		}
 	}
 
-	/* Show aircrafts. */
+	/* Show all aircraft. */
 	for (i = 0; i < MAX_AIRCRAFT; i++) {
 		if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
 			aircraft = AIR_AircraftGetFromIdx(trAircraftsTmp[i]);
@@ -307,7 +307,7 @@ static void TR_CargoList (void)
 
 /**
  * @brief Fills the items-in-base list with stuff available for transfer.
- * @note Filling the transfer list with proper stuff (items/employees/aliens/aircrafts) is being done here.
+ * @note Filling the transfer list with proper stuff (items/employees/aliens/aircraft) is being done here.
  * @sa TR_TransferStart_f
  * @sa TR_TransferInit_f
  */
@@ -443,7 +443,7 @@ static void TR_TransferSelect_f (void)
 				}
 			}
 			if (!cnt)
-				Q_strncpyz(transferList, _("No aircrafts available for transfer.\n"), sizeof(transferList));
+				Q_strncpyz(transferList, _("No aircraft available for transfer.\n"), sizeof(transferList));
 		} else {
 			Q_strcat(transferList, _("Transfer is not possible - the base doesn't hangar functional."), sizeof(transferList));
 		}
@@ -582,9 +582,9 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 		}
 	}
 
-	if (transfer->hasAircrafts && success) {	/* Aircrafts. */
+	if (transfer->hasAircraft && success) {	/* Aircraft. */
 		for (i = 0; i < MAX_AIRCRAFT; i++) {
-			if (transfer->aircraftsArray[i] > TRANS_LIST_EMPTY_SLOT) {
+			if (transfer->aircraftArray[i] > TRANS_LIST_EMPTY_SLOT) {
 				aircraft = AIR_AircraftGetFromIdx(i);
 				assert (aircraft);
 				if (AIR_CalculateHangarStorage(aircraft->idx_sample, destination, 0) > 0) {
@@ -653,6 +653,7 @@ static void TR_TransferStart_f (void)
 	employee_t *employee;
 	aircraft_t *aircraft;
 	transfer_t *transfer = NULL;
+	float time;
 	char message[256];
 
 	if (transferType == TRANS_TYPE_INVALID) {
@@ -671,7 +672,7 @@ static void TR_TransferStart_f (void)
 			/* Make sure it is empty here. */
 			memset(&gd.alltransfers[i], 0, sizeof(gd.alltransfers[i]));
 			memset(gd.alltransfers[i].employeesArray, TRANS_LIST_EMPTY_SLOT, sizeof(gd.alltransfers[i].employeesArray));
-			memset(gd.alltransfers[i].aircraftsArray, TRANS_LIST_EMPTY_SLOT, sizeof(gd.alltransfers[i].aircraftsArray));
+			memset(gd.alltransfers[i].aircraftArray, TRANS_LIST_EMPTY_SLOT, sizeof(gd.alltransfers[i].aircraftArray));
 			transfer = &gd.alltransfers[i];
 			break;
 		}
@@ -681,8 +682,16 @@ static void TR_TransferStart_f (void)
 		return;
 
 	/* Initialize transfer. */
-	transfer->event.day = ccs.date.day + 1;	/* @todo: instead of +1 day calculate distance */
-	transfer->event.sec = ccs.date.sec;
+	 /* calculate time to go from 1 base to another : 1 day for one quarter of the globe*/
+	time = MAP_GetDistance(transferBase->pos, baseCurrent->pos) / 90.0f;
+	transfer->event.day = ccs.date.day + floor(time);	/* add day */
+	time = (time - floor(time)) * 3600 * 24;	/* convert remaining time in second */
+	transfer->event.sec = ccs.date.sec + round(time);
+	/* check if event is not the followinf day */
+	if (transfer->event.sec > 3600 * 24) {
+		transfer->event.sec -= 3600 * 24;
+		transfer->event.day++;
+	}
 	transfer->destBase = transferBase->idx; /* Destination base index. */
 	transfer->srcBase = baseCurrent->idx;	/* Source base index. */
 	transfer->active = qtrue;
@@ -725,8 +734,8 @@ static void TR_TransferStart_f (void)
 			aircraft = AIR_AircraftGetFromIdx(i);
 			aircraft->status = AIR_TRANSFER;
 			CL_RemoveSoldiersFromAircraft(aircraft->idx, baseCurrent);
-			transfer->hasAircrafts = qtrue;
-			transfer->aircraftsArray[i] = i;
+			transfer->hasAircraft = qtrue;
+			transfer->aircraftArray[i] = i;
 		}
 	}
 
@@ -1201,7 +1210,7 @@ void TR_TransferCheck (void)
 
 	for (i = 0; i < MAX_TRANSFERS; i++) {
 		transfer = &gd.alltransfers[i];
-		if (transfer->event.day == ccs.date.day) {	/* @todo make it checking hour also, not only day */
+		if (transfer->event.day == ccs.date.day && ccs.date.sec >= transfer->event.sec) {
 			base = &gd.bases[transfer->destBase];
 			if (!base->founded) {
 				TR_EmptyTransferCargo(transfer, qfalse);
@@ -1236,7 +1245,7 @@ static void TR_Init_f (void)
 	/* Clear employees temp array. */
 	memset(trEmployeesTmp, TRANS_LIST_EMPTY_SLOT, sizeof(trEmployeesTmp));
 
-	/* Clear aircrafts temp array. */
+	/* Clear aircraft temp array. */
 	memset(trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(trAircraftsTmp));
 
 	/* Select first available item. */
@@ -1303,14 +1312,14 @@ qboolean TR_Save (sizebuf_t* sb, void* data)
 				MSG_WriteShort(sb, transfer->employeesArray[j][k]);
 		}
 		for (j = 0; j < presaveArray[PRE_MAXAIR]; j++)
-			MSG_WriteShort(sb, transfer->aircraftsArray[j]);
+			MSG_WriteShort(sb, transfer->aircraftArray[j]);
 		MSG_WriteByte(sb, transfer->destBase);
 		MSG_WriteByte(sb, transfer->srcBase);
 		MSG_WriteByte(sb, transfer->active);
 		MSG_WriteByte(sb, transfer->hasItems);
 		MSG_WriteByte(sb, transfer->hasEmployees);
 		MSG_WriteByte(sb, transfer->hasAliens);
-		MSG_WriteByte(sb, transfer->hasAircrafts);
+		MSG_WriteByte(sb, transfer->hasAircraft);
 		MSG_WriteLong(sb, transfer->event.day);
 		MSG_WriteLong(sb, transfer->event.sec);
 	}
@@ -1340,14 +1349,14 @@ qboolean TR_Load (sizebuf_t* sb, void* data)
 				transfer->employeesArray[j][k] = MSG_ReadShort(sb);
 		}
 		for (j = 0; j < presaveArray[PRE_MAXAIR]; j++)
-			transfer->aircraftsArray[j] = MSG_ReadShort(sb);
+			transfer->aircraftArray[j] = MSG_ReadShort(sb);
 		transfer->destBase = MSG_ReadByte(sb);
 		transfer->srcBase = MSG_ReadByte(sb);
 		transfer->active = MSG_ReadByte(sb);
 		transfer->hasItems = MSG_ReadByte(sb);
 		transfer->hasEmployees = MSG_ReadByte(sb);
 		transfer->hasAliens = MSG_ReadByte(sb);
-		transfer->hasAircrafts = MSG_ReadByte(sb);
+		transfer->hasAircraft = MSG_ReadByte(sb);
 		transfer->event.day = MSG_ReadLong(sb);
 		transfer->event.sec = MSG_ReadLong(sb);
 	}
