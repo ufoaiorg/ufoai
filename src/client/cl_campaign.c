@@ -27,9 +27,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 
 /* public vars */
-static mission_t missions[MAX_MISSIONS];	/**< Missions parsed in missions.ufo (sa ccs.mission for active missions) */
-static int numMissions;				/**< Number of mission parsed in missions.ufo
-									 * numMissions is not increased when adding dynamical missions (crashed ufo) */
+static mission_t missions[MAX_MISSIONS];	/**< Missions parsed in missions.ufo AND missions created during game (crash site, ...)
+											 * (sa ccs.mission for active missions drawn on geoscape) */
+static int numMissions;				/**< Number of mission parsed in missions.ufo PLUS nb of mission created during game (crash site, ...)
+									 * (sa ccs.numMissions for number of active missions drawn on geoscape) */
 actMis_t *selMis;				/**< Currently selected mission on geoscape */
 
 static campaign_t campaigns[MAX_CAMPAIGNS];	/**< Document me. */

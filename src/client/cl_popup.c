@@ -274,7 +274,7 @@ void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 			air = &gd.bases[j].aircraft[i];
 
 			/* if aircraft is empty we can't send it on a ground mission */
-			if (mission && (air->teamSize <= 0 || air->type != AIRCRAFT_TRANSPORTER))
+			if (mission && (air->teamSize <= 0))
 				continue;
 			/* don't show aircraft with no weapons or no ammo, or crafts that
 			 * can't even reach the target */
