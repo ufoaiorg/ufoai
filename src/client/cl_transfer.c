@@ -516,14 +516,16 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 	aircraft_t *aircraft;
 	char message[256];
 
+	assert(transfer);
+
 	if (transfer->srcBase != TR_NO_BASE) {
-		base_t *source = NULL;
-		source = &gd.bases[transfer->srcBase];
-		assert(source);
+		assert(transfer->srcBase >= 0);
+		assert(transfer->srcBase < gd.numBases);
 	}
 
-	assert(transfer);
 	if (success) {
+		assert(transfer->destBase >= 0);
+		assert(transfer->destBase < gd.numBases);
 		destination = &gd.bases[transfer->destBase];
 		assert(destination);
 	}
@@ -595,7 +597,7 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 		for (i = 0; i < MAX_AIRCRAFT; i++) {
 			if (transfer->aircraftArray[i] > TRANS_LIST_EMPTY_SLOT) {
 				aircraft = AIR_AircraftGetFromIdx(i);
-				assert (aircraft);
+				assert(aircraft);
 				if (AIR_CalculateHangarStorage(aircraft->idx_sample, destination, 0) > 0) {
 					/* Aircraft relocated to new base, just add new one. */
 					AIR_NewAircraft(destination, aircraft->id);
@@ -645,8 +647,8 @@ static void TR_TransferAlienAfterMissionStart (base_t *transferBase)
 	if (!transfer)
 		return;
 
-	/* Initialize transfer. */
-	 /* calculate time to go from 1 base to another : 1 day for one quarter of the globe*/
+	/* Initialize transfer.
+	 * calculate time to go from 1 base to another : 1 day for one quarter of the globe*/
 	time = MAP_GetDistance(transferBase->pos, transferStartAircraft->pos) / 90.0f;
 	transfer->event.day = ccs.date.day + floor(time);	/* add day */
 	time = (time - floor(time)) * 3600 * 24;	/* convert remaining time in second */

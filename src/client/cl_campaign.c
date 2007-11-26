@@ -2956,6 +2956,11 @@ void CL_GameAutoGo (actMis_t *mission)
 		if (amount)
 			MN_AddNewMessage(_("Notice"), va(_("Collected %i dead alien bodies"), amount), qfalse, MSG_STANDARD, NULL);
 
+		if (aircraft->alientypes && !(aircraft->homebase->hasAlienCont)) {
+			/* We have captured/killed aliens, but the homebase of this aircraft does not have alien containment. Popup aircraft transer dialog. */
+			TR_TransferAircraftMenu(aircraft);
+		}
+
 		AIR_AircraftReturnToBase(aircraft);
 	}
 
