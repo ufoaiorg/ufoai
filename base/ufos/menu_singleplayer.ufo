@@ -91,10 +91,34 @@ menu singleplayer
 		align	cc
 	}
 
+	pic button_save_na
+	{
+		// only if we have no game started yet
+		if "mn_main ne singleplayerInGame"
+		tooltip	"_No game to save"
+		pos	"640 310"
+		image	menu/button_big
+		texl	"0 128"
+		texh	"256 192"
+		mousefx	true
+	}
+	string string_save_na
+	{
+		// only if we have no game started yet
+		if "mn_main ne singleplayerInGame"
+		font	f_menubig
+		color	"0.5 0.5 0.5 1"
+		string	"_Save"
+		pos	"768 342"
+		align	cc
+	}
+
 	pic button_save
 	{
+		// only if we already have a game started
+		if "mn_main eq singleplayerInGame"
 		pos	"640 310"
-		click	{ cmd "mn_push save" }
+		click	{ cmd "mn_push save;" }
 		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"
@@ -104,6 +128,8 @@ menu singleplayer
 	}
 	string string_save
 	{
+		// only if we already have a game started
+		if "mn_main eq singleplayerInGame"
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Save"

@@ -419,37 +419,58 @@ menuNode_t *MN_GetNode (const menu_t* const menu, const char *name)
  */
 static qboolean MN_CheckCondition (menuNode_t *node)
 {
-	if (*node->depends.var) {
-		const char* cond;
+	if (node->depends.var) {
+		if (!node->depends.cvar || Q_strcmp(node->depends.cvar->name, node->depends.var))
+			node->depends.cvar = Cvar_Get(node->depends.var, node->depends.value ? node->depends.value : "", 0, "Menu if condition cvar");
+		assert(node->depends.cvar);
+
 		/* menuIfCondition_t */
 		switch (node->depends.cond) {
 		case IF_EQ:
-			if (atof(node->depends.value) != Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value)
+			assert(node->depends.value);
+			if (atof(node->depends.value) != node->depends.cvar->value)
 				return qfalse;
 			break;
 		case IF_LE:
-			if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value > atof(node->depends.value))
+			assert(node->depends.value);
+			if (node->depends.cvar->value > atof(node->depends.value))
 				return qfalse;
 			break;
 		case IF_GE:
-			if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value < atof(node->depends.value))
+			assert(node->depends.value);
+			if (node->depends.cvar->value < atof(node->depends.value))
 				return qfalse;
 			break;
 		case IF_GT:
-			if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value <= atof(node->depends.value))
+			assert(node->depends.value);
+			if (node->depends.cvar->value <= atof(node->depends.value))
 				return qfalse;
 			break;
 		case IF_LT:
-			if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value >= atof(node->depends.value))
+			assert(node->depends.value);
+			if (node->depends.cvar->value >= atof(node->depends.value))
 				return qfalse;
 			break;
 		case IF_NE:
-			if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value == atof(node->depends.value))
+			assert(node->depends.value);
+			if (node->depends.cvar->value == atof(node->depends.value))
 				return qfalse;
 			break;
 		case IF_EXISTS:
-			cond = Cvar_VariableString(node->depends.var);
-			if (!*cond)
+			assert(node->depends.cvar->string);
+			if (!*node->depends.cvar->string)
+				return qfalse;
+			break;
+		case IF_STR_EQ:
+			assert(node->depends.value);
+			assert(node->depends.cvar->string);
+			if (Q_strncmp(node->depends.cvar->string, node->depends.value, MAX_VAR))
+				return qfalse;
+			break;
+		case IF_STR_NE:
+			assert(node->depends.value);
+			assert(node->depends.cvar->string);
+			if (!Q_strncmp(node->depends.cvar->string, node->depends.value, MAX_VAR))
 				return qfalse;
 			break;
 		default:

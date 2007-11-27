@@ -23,23 +23,31 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-/** conditions for V_IF */
+/**
+ * @brief conditions for V_IF
+ */
 typedef enum menuIfCondition_s {
-	IF_EQ, /**< == */
+	/** float compares */
+	IF_EQ = 0, /**< == */
 	IF_LE, /**< <= */
 	IF_GE, /**< >= */
 	IF_GT, /**< > */
 	IF_LT, /**< < */
-	IF_NE, /**< != */
-	IF_EXISTS, /**< only cvar give - check for existence */
+	IF_NE = 5, /**< != */
+	IF_EXISTS, /**< only cvar given - check for existence */
+
+	/** string compares */
+	IF_STR_EQ,	/**< eq */
+	IF_STR_NE,	/**< ne */
 
 	IF_SIZE
 } menuIfCondition_t;
 
 /** @sa menuIfCondition_t */
 typedef struct menuDepends_s {
-	char var[MAX_VAR];
-	char value[MAX_VAR];
+	char *var;
+	char *value;
+	cvar_t *cvar;
 	int cond;
 } menuDepends_t;
 
