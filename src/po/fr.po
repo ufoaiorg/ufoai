@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-11-25 17:06+0100\n"
-"PO-Revision-Date: 2007-11-25 19:43+0100\n"
+"PO-Revision-Date: 2007-11-27 19:22+0100\n"
 "Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -933,7 +933,7 @@ msgstr "mail_new_base_ready"
 
 #: ../base/ufos/events.ufo:184
 msgid "Base Attack Report -- %s"
-msgstr "Rappoprt d'attaque de base -- %s"
+msgstr "Rapport d'attaque de base -- %s"
 
 #: ../base/ufos/events.ufo:185
 msgid "mail_base_attack_report"
