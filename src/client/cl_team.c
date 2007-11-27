@@ -398,6 +398,7 @@ void CL_ResetCharacters (base_t* const base)
 
 /**
  * @brief Change the name of the selected actor.
+ * @sa CL_MessageMenu_f
  */
 static void CL_ChangeName_f (void)
 {
@@ -412,7 +413,8 @@ static void CL_ChangeName_f (void)
 		Q_strncpyz(gd.employees[type][sel].chr.name, Cvar_VariableString("mn_name"), MAX_VAR);
 
 	/* Update mn_employee_namechange so refreshing the list will select current employee. */
-	Cvar_SetValue("mn_employee_namechange", 1);
+	mn_employee_namechange = qtrue;
+
 	/* Now refresh the list. */
 	Cbuf_AddText(va("employee_init %i;", type));
 }

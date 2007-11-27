@@ -1749,13 +1749,16 @@ void MN_Click (int x, int y)
 
 /**
  * @brief Calls script function on cvar change
- *
- * This is for inline editing of cvar values
- * The cvarname_changed function are called,
+ * @note This is for inline editing of cvar values
+ * The cvarname_changed and cvarname_aborted function are called,
  * the editing is activated and ended here
- *
+ * @note If you want to differ between a changed value of a cvar and
+ * the abort of a cvar value change (e.g. for singleplayer savegames
+ * you don't want to save the game when the player hits esc) you can
+ * define the cvarname_aborted confunc to handle this case, too.
  * Done by the script command msgmenu [?|!|:][cvarname]
  * @sa Key_Message
+ * @sa CL_ChangeName_f
  */
 static void CL_MessageMenu_f (void)
 {
@@ -1764,7 +1767,7 @@ static void CL_MessageMenu_f (void)
 	const char *msg;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <msg>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <msg>[cvarname]: msg is a cvarname prefix - one of [?|!|:]\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -1789,11 +1792,12 @@ static void CL_MessageMenu_f (void)
 			break;
 		/* cancel */
 		Cvar_ForceSet(cvarName, nameBackup);
-		/* hack for actor renaming */
-		/* FIXME: this will produce a lot of cvars */
-		Cvar_ForceSet(va("%s%i", cvarName, cl_selected->integer), nameBackup);
 		/* call trigger function */
-		Cbuf_AddText(va("%s_changed\n", cvarName));
+		if (Cmd_Exists(va("%s_aborted", cvarName))) {
+			Cbuf_AddText(va("%s_aborted\n", cvarName));
+		} else {
+			Cbuf_AddText(va("%s_changed\n", cvarName));
+		}
 		/* don't restore this the next time */
 		nameBackup[0] = cvarName[0] = '\0';
 		break;
@@ -1802,9 +1806,6 @@ static void CL_MessageMenu_f (void)
 			break;
 		/* end */
 		Cvar_ForceSet(cvarName, msg + 1);
-		/* hack for employee name */
-		/* FIXME: this will produce a lot of cvars */
-		Cvar_ForceSet(va("%s%i", cvarName, cl_selected->integer), msg + 1);
 		/* call trigger function */
 		Cbuf_AddText(va("%s_changed\n", cvarName));
 		nameBackup[0] = cvarName[0] = '\0';
@@ -1814,7 +1815,6 @@ static void CL_MessageMenu_f (void)
 			break;
 		/* continue */
 		Cvar_ForceSet(cvarName, msg);
-		Cvar_ForceSet(va("%s%i", cvarName, cl_selected->integer), msg);
 		break;
 	}
 }
