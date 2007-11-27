@@ -1122,6 +1122,10 @@ static void SV_SpawnServer (const char *server, const char *param)
 	Com_sprintf(sv.configstrings[CS_VERSION], sizeof(sv.configstrings[CS_VERSION]), UFO_VERSION);
 
 	Com_sprintf(sv.configstrings[CS_MAPTITLE], sizeof(sv.configstrings[CS_MAPTITLE]), "%s", SV_GetMapTitle(server));
+	if (!Q_strncmp(sv.configstrings[CS_MAPTITLE], "b/", 2)) {
+		/* For base attack, cl.configstrings[CS_MAPTITLE] contains too many chars */
+		Com_sprintf(sv.configstrings[CS_MAPTITLE], sizeof(sv.configstrings[CS_MAPTITLE]), "Base attack");
+	}
 
 	/* clear physics interaction links */
 	SV_ClearWorld();
