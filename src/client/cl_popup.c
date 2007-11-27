@@ -336,6 +336,9 @@ void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 		/* Don't display base list in popup */
 		Cvar_Set("mn_displaybaselist", "0");
 
+	/* Stop time */
+	CL_GameTimeStop();
+
 	/* Display the popup */
 	MN_PushMenu("popup_intercept");
 }
