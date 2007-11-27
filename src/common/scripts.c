@@ -76,6 +76,7 @@ const char *fade_names[FADE_LAST] = {
 	"none", "in", "out", "sin", "saw", "blend"
 };
 
+#ifndef DEDICATED_ONLY
 const static char *if_strings[IF_SIZE] = {
 	"==",
 	"<=",
@@ -88,7 +89,6 @@ const static char *if_strings[IF_SIZE] = {
 	"ne"
 };
 
-#ifndef DEDICATED_ONLY
 /**
  * @brief Translate the condition string to menuIfCondition_t enum value
  * @param[in] conditionString The string from scriptfiles (see if_strings)
