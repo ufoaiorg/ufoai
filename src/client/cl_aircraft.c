@@ -1653,6 +1653,15 @@ qboolean AIR_SendUfoPurchasingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 	ufo->point = 0;
 	ufo->aircraftTarget = aircraft;
 	ufo->baseTarget = NULL;
+
+	/* Stop Time */
+	CL_GameTimeStop();
+
+	/* Send a message to player to warn him */
+	MN_AddNewMessage(_("Notice"), va(_("A UFO is shooting at %s"), aircraft->name), qfalse, MSG_STANDARD, NULL);
+
+	/* @todo: present a popup with possible orders like: return to base, attack the ufo, try to flee the rockets */
+
 	return qtrue;
 }
 
