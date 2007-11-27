@@ -358,7 +358,7 @@ static void SAV_GameSave_f (void)
  * @sa SAV_GameLoad
  * @sa SAV_GameSaveNameCleanup_f
  */
-static void SAV_GameSaveNames_f (void)
+static void SAV_GameReadGameComments_f (void)
 {
 	char comment[MAX_VAR];
 	FILE *f;
@@ -367,7 +367,7 @@ static void SAV_GameSaveNames_f (void)
 
 	if (Cmd_Argc() == 2) {
 		/* checks whether we plan to save without a running game */
-		if (!Q_strncmp(Cmd_Argv(1), "save", 4) && !curCampaign) {
+		if (!curCampaign && !Q_strncmp(Cmd_Argv(1), "save", 4)) {
 			MN_PopMenu(qfalse);
 			return;
 		}
@@ -466,7 +466,7 @@ static qboolean SAV_AddSubsystem (saveSubsystems_t *subsystem)
 /**
  * @brief Set the mn_slotX cvar to the comment (remove the date string) for clean
  * editing of the save comment
- * @sa SAV_GameSaveNames_f
+ * @sa SAV_GameReadGameComments_f
  */
 static void SAV_GameSaveNameCleanup_f (void)
 {
@@ -628,7 +628,7 @@ void SAV_Init (void)
 	Cmd_AddCommand("game_quickload", SAV_GameQuickLoad_f, "Loads the quick save slot");
 	Cmd_AddCommand("game_save", SAV_GameSave_f, "Saves to a given filename");
 	Cmd_AddCommand("game_load", SAV_GameLoad_f, "Loads a given filename");
-	Cmd_AddCommand("game_comments", SAV_GameSaveNames_f, "Loads the savegame names");
+	Cmd_AddCommand("game_comments", SAV_GameReadGameComments_f, "Loads the savegame names");
 	Cmd_AddCommand("game_continue", SAV_GameContinue_f, "Continue with the last saved game");
 	Cmd_AddCommand("game_savenamecleanup", SAV_GameSaveNameCleanup_f, "Remove the date string from mn_slotX cvars");
 	save_compressed = Cvar_Get("save_compressed", "1", CVAR_ARCHIVE, "Save the savefiles compressed if set to 1");

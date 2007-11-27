@@ -35,6 +35,8 @@ static menuNode_t *employeeListNode;
 /* how many employees in current list (changes on every catergory change, too) */
 int employeesInCurrentList = 0;
 
+qboolean mn_employee_namechange;
+
 /*****************************************************
 VISUAL/GUI STUFF
 *****************************************************/
@@ -176,12 +178,12 @@ static void E_EmployeeList_f (void)
 		Cbuf_AddText(va("employeedisable%i\n", i));
 	}
 	/* Select the current employee if name was changed or first one. */
-	if (Cvar_VariableInteger("mn_employee_namechange") == 0)
+	if (!mn_employee_namechange)
 		Cbuf_AddText("employee_select 0\n");
 	else
 		Cbuf_AddText(va("employee_select %i;", Cvar_VariableInteger("mn_employee_idx")));
 	/* And finally reset mn_employee_namechange. */
-	Cvar_SetValue("mn_employee_namechange", 0);
+	mn_employee_namechange = qfalse;
 }
 
 
@@ -1034,6 +1036,8 @@ void E_Reset (void)
 	Cmd_AddCommand("employee_select", E_EmployeeSelect_f, NULL);
 	Cmd_AddCommand("employee_scroll", E_EmployeeListScroll_f, "Scroll callback for employee list");
 	Cmd_AddCommand("employee_list_click", E_EmployeeListClick_f, "Callback for employee_list click function");
+
+	mn_employee_namechange = qfalse;
 }
 
 /**

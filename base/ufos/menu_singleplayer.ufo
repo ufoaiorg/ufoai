@@ -91,10 +91,34 @@ menu singleplayer
 		align	cc
 	}
 
+	pic button_save_na
+	{
+		// only if we have no game started yet
+		if "mn_main ne singleplayerInGame"
+		tooltip	"_No game to save"
+		pos	"640 310"
+		image	menu/button_big
+		texl	"0 128"
+		texh	"256 192"
+		mousefx	true
+	}
+	string string_save_na
+	{
+		// only if we have no game started yet
+		if "mn_main ne singleplayerInGame"
+		font	f_menubig
+		color	"0.5 0.5 0.5 1"
+		string	"_Save"
+		pos	"768 342"
+		align	cc
+	}
+
 	pic button_save
 	{
+		// only if we already have a game started
+		if "mn_main eq singleplayerInGame"
 		pos	"640 310"
-		click	{ cmd "mn_push save" }
+		click	{ cmd "mn_push save;" }
 		image	menu/button_big
 		texl	"0 0"
 		texh	"256 64"
@@ -104,6 +128,8 @@ menu singleplayer
 	}
 	string string_save
 	{
+		// only if we already have a game started
+		if "mn_main eq singleplayerInGame"
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Save"
@@ -771,14 +797,23 @@ menu save
 	string txt_slot6 { font "f_verysmall" string "*cvar mn_slot6" pos "650 420" color "0 .78 0 1" }
 	string txt_slot7 { font "f_verysmall" string "*cvar mn_slot7" pos "650 455" color "0 .78 0 1" }
 
-	confunc mn_slot0_changed { *txt_slot0 color "0 .78 0 1" *txt_slot0 mousefx false cmd "game_save slot0 *mn_slot0; game_comments" }
-	confunc mn_slot1_changed { *txt_slot1 color "0 .78 0 1" *txt_slot1 mousefx false cmd "game_save slot1 *mn_slot1; game_comments" }
-	confunc mn_slot2_changed { *txt_slot2 color "0 .78 0 1" *txt_slot2 mousefx false cmd "game_save slot2 *mn_slot2; game_comments" }
-	confunc mn_slot3_changed { *txt_slot3 color "0 .78 0 1" *txt_slot3 mousefx false cmd "game_save slot3 *mn_slot3; game_comments" }
-	confunc mn_slot4_changed { *txt_slot4 color "0 .78 0 1" *txt_slot4 mousefx false cmd "game_save slot4 *mn_slot4; game_comments" }
-	confunc mn_slot5_changed { *txt_slot5 color "0 .78 0 1" *txt_slot5 mousefx false cmd "game_save slot5 *mn_slot5; game_comments" }
-	confunc mn_slot6_changed { *txt_slot6 color "0 .78 0 1" *txt_slot6 mousefx false cmd "game_save slot6 *mn_slot6; game_comments" }
-	confunc mn_slot7_changed { *txt_slot7 color "0 .78 0 1" *txt_slot7 mousefx false cmd "game_save slot7 *mn_slot7; game_comments" }
+	confunc mn_slot0_changed { *txt_slot0 color "0 .78 0 1" *txt_slot0 mousefx false cmd "game_save slot0 *mn_slot0; game_comments;" }
+	confunc mn_slot1_changed { *txt_slot1 color "0 .78 0 1" *txt_slot1 mousefx false cmd "game_save slot1 *mn_slot1; game_comments;" }
+	confunc mn_slot2_changed { *txt_slot2 color "0 .78 0 1" *txt_slot2 mousefx false cmd "game_save slot2 *mn_slot2; game_comments;" }
+	confunc mn_slot3_changed { *txt_slot3 color "0 .78 0 1" *txt_slot3 mousefx false cmd "game_save slot3 *mn_slot3; game_comments;" }
+	confunc mn_slot4_changed { *txt_slot4 color "0 .78 0 1" *txt_slot4 mousefx false cmd "game_save slot4 *mn_slot4; game_comments;" }
+	confunc mn_slot5_changed { *txt_slot5 color "0 .78 0 1" *txt_slot5 mousefx false cmd "game_save slot5 *mn_slot5; game_comments;" }
+	confunc mn_slot6_changed { *txt_slot6 color "0 .78 0 1" *txt_slot6 mousefx false cmd "game_save slot6 *mn_slot6; game_comments;" }
+	confunc mn_slot7_changed { *txt_slot7 color "0 .78 0 1" *txt_slot7 mousefx false cmd "game_save slot7 *mn_slot7; game_comments;" }
+
+	confunc mn_slot0_aborted { *txt_slot0 color "0 .78 0 1" *txt_slot0 mousefx false cmd "game_comments;" }
+	confunc mn_slot1_aborted { *txt_slot1 color "0 .78 0 1" *txt_slot1 mousefx false cmd "game_comments;" }
+	confunc mn_slot2_aborted { *txt_slot2 color "0 .78 0 1" *txt_slot2 mousefx false cmd "game_comments;" }
+	confunc mn_slot3_aborted { *txt_slot3 color "0 .78 0 1" *txt_slot3 mousefx false cmd "game_comments;" }
+	confunc mn_slot4_aborted { *txt_slot4 color "0 .78 0 1" *txt_slot4 mousefx false cmd "game_comments;" }
+	confunc mn_slot5_aborted { *txt_slot5 color "0 .78 0 1" *txt_slot5 mousefx false cmd "game_comments;" }
+	confunc mn_slot6_aborted { *txt_slot6 color "0 .78 0 1" *txt_slot6 mousefx false cmd "game_comments;" }
+	confunc mn_slot7_aborted { *txt_slot7 color "0 .78 0 1" *txt_slot7 mousefx false cmd "game_comments;" }
 
 	// ==================
 	// buttons

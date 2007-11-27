@@ -77,16 +77,18 @@ const char *fade_names[FADE_LAST] = {
 };
 
 const static char *if_strings[IF_SIZE] = {
-	""
 	"==",
 	"<=",
 	">=",
 	">",
 	"<",
 	"!=",
-	""
+	"",
+	"eq",
+	"ne"
 };
 
+#ifndef DEDICATED_ONLY
 /**
  * @brief Translate the condition string to menuIfCondition_t enum value
  * @param[in] conditionString The string from scriptfiles (see if_strings)
@@ -96,8 +98,8 @@ const static char *if_strings[IF_SIZE] = {
  */
 static int Com_ParseConditionType (const char* conditionString, const char *token)
 {
-	int i = IF_SIZE;
-	for (; i--;) {
+	int i;
+	for (i = 0; i < IF_SIZE; i++) {
 		if (!Q_strncmp(if_strings[i], conditionString, 2)) {
 			return i;
 		}
@@ -105,6 +107,7 @@ static int Com_ParseConditionType (const char* conditionString, const char *toke
 	Sys_Error("Invalid if statement with condition '%s' token: '%s'\n", conditionString, token);
 	return -1;
 }
+#endif
 
 /** @brief target sizes for buffer */
 static const size_t vt_sizes[V_NUM_TYPES] = {
@@ -152,9 +155,11 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 #endif
 {
 	byte *b;
+#ifndef DEDICATED_ONLY
 	char string[MAX_VAR];
 	char string2[MAX_VAR];
 	char condition[MAX_VAR];
+#endif
 	int x, y, w, h;
 	byte num;
 
@@ -349,18 +354,20 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		return ALIGN(sizeof(date_t));
 
 	case V_IF:
+#ifndef DEDICATED_ONLY
 		if (!strstr(token, " ")) {
 			/* cvar exists? (not null) */
-			Q_strncpyz(((menuDepends_t *) b)->var, token, MAX_VAR);
+			Mem_PoolStrDupTo(token, (char**) &((menuDepends_t *) b)->var, cl_menuSysPool, CL_TAG_MENU);
 			((menuDepends_t *) b)->cond = IF_EXISTS;
 		} else if (strstr(strstr(token, " "), " ")) {
 			sscanf(token, "%s %s %s", string, condition, string2);
 
-			Q_strncpyz(((menuDepends_t *) b)->var, string, MAX_VAR);
-			Q_strncpyz(((menuDepends_t *) b)->value, string2, MAX_VAR);
+			Mem_PoolStrDupTo(string, (char**) &((menuDepends_t *) b)->var, cl_menuSysPool, CL_TAG_MENU);
+			Mem_PoolStrDupTo(string2, (char**) &((menuDepends_t *) b)->value, cl_menuSysPool, CL_TAG_MENU);
 			((menuDepends_t *) b)->cond = Com_ParseConditionType(condition, token);
 		} else
 			Sys_Error("Com_ParseValue: Illegal if statement '%s'\n", token);
+#endif
 
 		return ALIGN(sizeof(menuDepends_t));
 
