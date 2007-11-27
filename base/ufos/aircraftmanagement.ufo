@@ -471,7 +471,7 @@ craftitem craft_ammo_shiva_API
 	ammo		20
 	wdamage		15
 	accuracy	0.3
-	wrange		20
+	wrange		13
 	wspeed		500
 	delay		10
 }
@@ -487,7 +487,7 @@ craftitem craft_ammo_shiva_HEI
 	ammo		20
 	wdamage		22
 	accuracy	0.2
-	wrange		25
+	wrange		18
 	wspeed		500
 	delay		10
 }
@@ -524,7 +524,7 @@ craftitem craft_ammo_sparrowhawk
 	ammo		8
 	wdamage		20
 	accuracy	0.5
-	wrange		50
+	wrange		40
 	wspeed		200
 	delay		200
 }
@@ -553,7 +553,7 @@ craftitem craft_ammo_tr20
 	wdamage		28
 	accuracy	0.4
 	wrange		20
-	wspeed		20
+	wspeed		150
 	delay		40
 }
 
@@ -568,7 +568,7 @@ craftitem craft_weapon_particle_beam
 
 	wdamage		35
 	speed		0.8
-	wrange		70
+	wrange		55
 }
 
 craftitem craft_el_targeting
@@ -658,7 +658,6 @@ craftitem base_AA51_launcher
 	price		7000
 	buytype		dummy
 
-	speed		.9
 }
 
 craftitem base_ammo_AA51
@@ -669,9 +668,9 @@ craftitem base_ammo_AA51
 	price		310
 	buytype		dummy
 
-	ammo		24
-	wdamage		28
-	accuracy	0.4
+	ammo		20
+	wdamage		80
+	accuracy	0.3
 	wrange		30
 	wspeed		200
 	delay		500
