@@ -83,7 +83,7 @@ menu basesummary
 		pos	"730 692"
 		texl	"0 0"
 		texh	"32 64"
-		click	{ cmd basesummary_prevbase }
+		click	{ cmd "basesummary_prevbase;" }
 	}
 
 	confunc basesummary_nextbb { *bt_basesummary_nextbase image menu/button_aliencont1 }
@@ -96,7 +96,7 @@ menu basesummary
 		pos	"770 692"
 		texl	"32 0"
 		texh	"64 64"
-		click	{ cmd basesummary_nextbase }
+		click	{ cmd "basesummary_nextbase;" }
 	}
 
 	// ==================
@@ -239,7 +239,7 @@ menu basesummary
 
 	string txt_basesummary_capacity_aliens
 	{
-		string "*cvar mn_basesummary_capacity_aliens"
+		string "*cvar mn_bs_cap_building_aliencont"
 		pos "50 265"
 		color "0 .78 0 1"
 	}
@@ -253,91 +253,98 @@ menu basesummary
 
 	string txt_basesummary_capacity_hangarsmall
 	{
-		string "*cvar mn_basesummary_capacity_hangarsmall"
+		string "*cvar mn_bs_cap_building_intercept"
 		pos "70 295"
 		color "0 .78 0 1"
 	}
 
 	string txt_basesummary_capacity_hangarlarge
 	{
-		string "*cvar mn_basesummary_capacity_hangarlarge"
+		string "*cvar mn_bs_cap_building_hangar"
 		pos "70 310"
 		color "0 .78 0 1"
 	}
 
 	string txt_basesummary_capacity_hangarufo
 	{
-		string "*cvar mn_basesummary_capacity_hangarufo"
+		string "*cvar mn_bs_cap_building_large_ufo_hangar"
 		pos "70 325"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_capacity_hangarufo_small
+	{
+		string "*cvar mn_bs_cap_building_small_ufo_hangar"
+		pos "70 340"
 		color "0 .78 0 1"
 	}
 
 	string txt_basesummary_capacity_hospital
 	{
-		string "*cvar mn_basesummary_capacity_hospital"
-		pos "50 340"
+		string "*cvar mn_bs_cap_building_hospital"
+		pos "50 355"
 		color "0 .78 0 1"
 	}
 
 	string txt_basesummary_capacity_labs
 	{
-		string "*cvar mn_basesummary_capacity_labs"
-		pos "50 355"
+		string "*cvar mn_bs_cap_building_lab"
+		pos "50 370"
 		color "0 .78 0 1"
 	}
 
 	string txt_basesummary_capacity_quarters
 	{
-		string "*cvar mn_basesummary_capacity_quarters"
-		pos "50 370"
+		string "*cvar mn_bs_cap_building_quarters"
+		pos "50 385"
 		color "0 .78 0 1"
 	}
 
 	string txt_basesummary_capacity_storage
 	{
-		string "*cvar mn_basesummary_capacity_storage"
-		pos "50 385"
+		string "*cvar mn_bs_cap_building_storage"
+		pos "50 400"
 		color "0 .78 0 1"
 	}
 
 	string txt_basesummary_capacity_workshops
 	{
-		string "*cvar mn_basesummary_capacity_workshops"
-		pos "50 400"
+		string "*cvar mn_bs_cap_building_workshop"
+		pos "50 415"
 		color "0 .78 0 1"
 	}
 
 	string txt_basesummary_construction
 	{
 		string "_Construction"
-		pos "30 425"
+		pos "30 440"
 	}
 
 	string txt_basesummary_construction0
 	{
 		string "*cvar mn_basesummary_construction0"
-		pos "50 440"
+		pos "50 455"
 		color "0 .78 0 1"
 	}
 
 	string txt_basesummary_construction1
 	{
 		string "*cvar mn_basesummary_construction1"
-		pos "50 455"
+		pos "50 470"
 		color "0 .78 0 1"
 	}
 
 	string txt_basesummary_construction2
 	{
 		string "*cvar mn_basesummary_construction2"
-		pos "50 470"
+		pos "50 485"
 		color "0 .78 0 1"
 	}
 
 	string txt_basesummary_production
 	{
 		string "_Production"
-		pos "30 495"
+		pos "30 510"
 		//color "0 .78 0 1"
 		//size "275 16"
 	}
@@ -345,14 +352,14 @@ menu basesummary
 	string txt_basesummary_productioncurrent
 	{
 		string "*cvar mn_basesummary_productioncurrent"
-		pos "50 510"
+		pos "50 525"
 		color "0 .78 0 1"
 	}
 
 	string txt_basesummary_research
 	{
 		string "_Research"
-		pos "30 535"
+		pos "30 550"
 		//color "0 .78 0 1"
 		//size "275 16"
 	}
@@ -360,35 +367,35 @@ menu basesummary
 	string txt_basesummary_researchcurrent0
 	{
 		string "*cvar mn_basesummary_researchcurrent0"
-		pos "50 550"
+		pos "50 565"
 		color "0 .78 0 1"
 	}
 
 	string txt_basesummary_researchcurrent1
 	{
 		string "*cvar mn_basesummary_researchcurrent1"
-		pos "50 565"
+		pos "50 580"
 		color "0 .78 0 1"
 	}
 
 	string txt_basesummary_researchcurrent2
 	{
 		string "*cvar mn_basesummary_researchcurrent2"
-		pos "50 580"
+		pos "50 595"
 		color "0 .78 0 1"
 	}
 
 	string txt_basesummary_researchcurrent3
 	{
 		string "*cvar mn_basesummary_researchcurrent3"
-		pos "50 595"
+		pos "50 610"
 		color "0 .78 0 1"
 	}
 
 	string txt_basesummary_researchcurrent4
 	{
 		string "*cvar mn_basesummary_researchcurrent4"
-		pos "50 610"
+		pos "50 625"
 		color "0 .78 0 1"
 	}
 
@@ -446,19 +453,19 @@ menu basesummary
 	// ==================
 	func init
 	{
-		cmd basesummary_init;
+		cmd "basesummary_init;"
 	}
 	func close
 	{
 		cmd "del mn_basesummary_name;del mn_basesummary_interceptorcount;del mn_basesummary_transportercount;"
 		cmd "del mn_basesummary_soldiercount;del mn_basesummary_scientistcount;del mn_basesummary_workercount;"
-		cmd "del mn_basesummary_mediccount;del mn_basesummary_robotcount;del mn_basesummary_capacity_aliens;"
-		cmd "del mn_basesummary_capacity_hangarsmall;del mn_basesummary_capacity_hangarlarge;del mn_basesummary_capacity_hangarufo;"
-		cmd "del mn_basesummary_capacity_hospital;del mn_basesummary_capacity_labs;del mn_basesummary_capacity_quarters;"
-		cmd "del mn_basesummary_capacity_storage;del mn_basesummary_capacity_workshops;del mn_basesummary_construction0;"
-		cmd "del mn_basesummary_construction1;del mn_basesummary_construction2;del mn_basesummary_productioncurrent;"
+		cmd "del mn_basesummary_mediccount;del mn_basesummary_robotcount;del mn_bs_cap_building_aliencont;"
+		cmd "del mn_bs_cap_building_intercept;del mn_bs_cap_building_hangar;del mn_bs_cap_building_large_ufo_hangar;"
+		cmd "del mn_bs_cap_building_hospital;del mn_bs_cap_building_lab;del mn_bs_cap_building_quarters;"
+		cmd "del mn_bs_cap_building_storage;del mn_bs_cap_building_workshop;del mn_bs_cap_building_small_ufo_hangar;"
+		cmd "del del mn_basesummary_construction0; mn_basesummary_construction1;del mn_basesummary_construction2;"
 		cmd "del mn_basesummary_researchcurrent0;del mn_basesummary_researchcurrent1;del mn_basesummary_researchcurrent2;"
 		cmd "del mn_basesummary_researchcurrent3; del mn_basesummary_researchcurrent4; del mn_basesummary_totals_basecount;"
-		cmd "del mn_basesummary_totals_personnel;del mn_basesummary_totals_aircraft;"
+		cmd "del mn_basesummary_totals_personnel;del mn_basesummary_totals_aircraft;del mn_basesummary_productioncurrent;"
 	}
 }
