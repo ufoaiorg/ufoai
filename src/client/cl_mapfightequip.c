@@ -1405,6 +1405,24 @@ void AIM_AircraftEquipAddItem_f (void)
 		/* we change the weapon, shield, item, or base defense that is already in the slot */
 		AII_RemoveItemFromSlot(base, slot, qfalse);
 		AII_AddItemToSlot(base, airequipSelectedTechnology, slot);
+		/* if the item is a weapon, add first ammo to ammo slot (otherwise player forget to put ammos)
+		 * (only if we have some in storage) */
+		if (airequipID == AC_ITEM_WEAPON) {
+			int itemIdx;
+			technology_t *ammo_tech;
+
+			/* Get idx of the weapon */
+			itemIdx = AII_GetAircraftItemByID(airequipSelectedTechnology->provides);
+			if (itemIdx != NONE) {
+				/* Get idx of the ammo (first one if weapon may use several) */
+				itemIdx = csi.ods[itemIdx].ammo_idx[0];
+				if (itemIdx != NONE) {
+					ammo_tech = csi.ods[itemIdx].tech;
+					if (ammo_tech && AIM_SelectableAircraftItem(base, aircraft, ammo_tech))
+						AII_AddAmmoToSlot(base, ammo_tech, slot);
+				}
+			}
+		}
 		break;
 	case ZONE_NEXT:
 		/* we change the weapon, shield, item, or base defense that will be installed AFTER the removal
