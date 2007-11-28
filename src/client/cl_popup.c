@@ -421,8 +421,7 @@ static void CL_PopupInterceptRClick_f (void)
 static void CL_PopupInterceptBaseClick_f (void)
 {
 	int num, baseIdx, i;
-
-	MN_PopMenu(qfalse);
+	qboolean atLeastOneBase =  qfalse;
 
 	/* If popup is opened, that means that ufo is selected on geoscape */
 	assert(selectedUfo);
@@ -441,12 +440,18 @@ static void CL_PopupInterceptBaseClick_f (void)
 		/* Check if the base should be displayed in base list */
 		if (AII_BaseCanShoot(gd.bases + baseIdx)) {
 			num--;
-		if (num <= 0)
-			break;
+			atLeastOneBase = qtrue;
+			if (num < 0)
+				break;
 		}
 	}
 
-	if (num > 0) {
+	if (!atLeastOneBase && !num) {
+		/* no base in list: no error message
+		 * note that num should always be 0 if we enter this loop, unless this function is called from console
+		 * so 2nd part of the test should be useless in most case */
+		return;
+	} else if (num >= 0) {
 		Com_Printf("CL_PopupInterceptBaseClick_f()... Number given in argument (%i) is bigger than number of base in list.\n", num);
 		return;
 	}
@@ -455,6 +460,8 @@ static void CL_PopupInterceptBaseClick_f (void)
 		gd.bases[baseIdx].targetMissileIdx[i] = selectedUfo - gd.ufos;
 	for (i = 0; i < gd.bases[baseIdx].maxLasers; i++)
 		gd.bases[baseIdx].targetLaserIdx[i] = selectedUfo - gd.ufos;
+
+	MN_PopMenu(qfalse);
 }
 
 /**
