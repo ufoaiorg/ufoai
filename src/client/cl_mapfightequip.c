@@ -1607,8 +1607,11 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 
 		/* modify by electronics (do nothing if the value of stat is 0) */
 		for (i = 0; i < aircraft->maxElectronics; i++) {
-			/* check if the electroincs is operationnal (not in installing or removing process) */
-			if (aircraft->electronics[i].installationTime > 0)
+			/* Check that slot is not empty */
+			if (aircraft->electronics[i].itemIdx == NONE)
+				continue;
+			/* check if the electronics is operationnal (not in installing or removing process) */
+			if (aircraft->electronics[i].installationTime != 0)
 				continue;
 			item = &csi.ods[aircraft->electronics[i].itemIdx];
 			if (fabs(item->craftitem.stats[currentStat]) > 2.0f)
@@ -1620,6 +1623,9 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 		/* modify by weapons (do nothing if the value of stat is 0)
 		 * note that stats are not modified by ammos */
 		for (i = 0; i < aircraft->maxWeapons; i++) {
+			/* Check that slot is not empty */
+			if (aircraft->weapons[i].itemIdx == NONE)
+				continue;
 			/* check if the weapon is operationnal (not in installing or removing process) */
 			if (aircraft->weapons[i].installationTime != 0)
 				continue;
@@ -1633,17 +1639,23 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 		/* modify by shield (do nothing if the value of stat is 0)
 		 * check if the shield is operationnal (not in installing or removing process) */
 		if (aircraft->shield.installationTime == 0) {
-			item = &csi.ods[aircraft->shield.itemIdx];
-			if (fabs(item->craftitem.stats[currentStat]) > 2.0f)
-				aircraft->stats[currentStat] += item->craftitem.stats[currentStat];
-			else if (item->craftitem.stats[currentStat] > UFO_EPSILON)
-				aircraft->stats[currentStat] *= item->craftitem.stats[currentStat];
+			/* Check that slot is not empty */
+			if (aircraft->shield.itemIdx != NONE) {
+				item = &csi.ods[aircraft->shield.itemIdx];
+				if (fabs(item->craftitem.stats[currentStat]) > 2.0f)
+					aircraft->stats[currentStat] += item->craftitem.stats[currentStat];
+				else if (item->craftitem.stats[currentStat] > UFO_EPSILON)
+					aircraft->stats[currentStat] *= item->craftitem.stats[currentStat];
+			}
 		}
 	}
 
 	/* now we update AIR_STATS_WRANGE (this one is the biggest value of every ammo) */
 	aircraft->stats[AIR_STATS_WRANGE] = 0;
 	for (i = 0; i < aircraft->maxWeapons; i++) {
+		/* Check that slot is not empty */
+		if (aircraft->weapons[i].itemIdx == NONE)
+			continue;
 		/* check if the weapon is operationnal (not in installing or removing process) */
 		if (aircraft->weapons[i].installationTime != 0)
 			continue;
