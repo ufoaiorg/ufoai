@@ -1865,8 +1865,13 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 		for (j = 0; j < gd.ufos[i].route.numPoints; j++)
 			MSG_Write2Pos(sb, gd.ufos[i].route.point[j]);
 		MSG_WritePos(sb, gd.ufos[i].direction);
-		for (j = 0; j < presaveArray[PRE_AIRSTA]; j++)
+		for (j = 0; j < presaveArray[PRE_AIRSTA]; j++) {
+#ifdef DEBUG
+			if (gd.ufos[i].stats[j] < 0)
+				Com_Printf("Warning: ufo '%s' stats %i is smaller than 0\n", gd.ufos[i].id, gd.ufos[i].stats[j]);
+#endif
 			MSG_WriteLong(sb, gd.ufos[i].stats[j]);
+		}
 		/* Save target of the ufo */
 		if (gd.ufos[i].baseTarget)
 			MSG_WriteShort(sb, gd.ufos[i].baseTarget->idx);
