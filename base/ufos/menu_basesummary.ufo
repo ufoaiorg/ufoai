@@ -239,7 +239,7 @@ menu basesummary
 
 	string txt_basesummary_capacity_aliens
 	{
-		string "*cvar mn_bs_cap_building_aliencont"
+		string "*cvar mn_bs_cap_building_aliencontainment"
 		pos "50 265"
 		color "0 .78 0 1"
 	}
