@@ -62,7 +62,7 @@ eventMail_t* CL_GetEventMail (const char *id, qboolean createCopy)
 		return NULL;
 	} else {
 		/* create a copy of the static eventmails */
-		eventMail_t *eventMail, *newEventMail;
+		eventMail_t *eventMail = NULL, *newEventMail;
 
 		/* search the static mails - and only the static ones! */
 		for (i = 0; i < gd.numEventMails; i++)
