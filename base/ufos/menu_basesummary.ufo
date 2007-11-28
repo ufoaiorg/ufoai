@@ -70,7 +70,7 @@ menu basesummary
 		pos	"920 630"
 		texl	"0 0"
 		texh	"64 37"
-		click	{ cmd mn_pop }
+		click	{ cmd "mn_pop;" }
 	}
 
 	confunc basesummary_prevbb { *bt_basesummary_prevbase image menu/button_aliencont1 }
