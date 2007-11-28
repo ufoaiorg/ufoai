@@ -697,6 +697,8 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 		subject = mail->subject;
 		Q_strncpyz(dateBuf, _(mail->date), sizeof(dateBuf));
 		mail->read = qtrue;
+		/* reread the unread mails in UP_GetUnreadMails */
+		gd.numUnreadMails = -1;
 	} else {
 		assert(tech);
 		assert(type < TECHMAIL_MAX);
