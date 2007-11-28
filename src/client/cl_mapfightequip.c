@@ -1741,7 +1741,8 @@ int AII_BaseCanShoot (const base_t *base)
 	/* base has missile battery and any needed building */
 		for (i = 0; i < base->maxBatteries; i++)
 			if (base->batteries[i].itemIdx != NONE
-			 && base->batteries[i].ammoIdx != NONE && base->batteries[i].ammoLeft > 0)
+			 && base->batteries[i].ammoIdx != NONE && base->batteries[i].ammoLeft > 0
+			 && base->batteries[i].installationTime == 0)
 				return qtrue;
 	}
 
@@ -1749,7 +1750,8 @@ int AII_BaseCanShoot (const base_t *base)
 	/* base has laser battery and any needed building */
 		for (i = 0; i < base->maxLasers; i++)
 			if (base->lasers[i].itemIdx != NONE
-			 && base->lasers[i].ammoIdx != NONE && base->lasers[i].ammoLeft > 0)
+			 && base->lasers[i].ammoIdx != NONE && base->lasers[i].ammoLeft > 0
+			 && base->lasers[i].installationTime == 0)
 				return qtrue;
 	}
 

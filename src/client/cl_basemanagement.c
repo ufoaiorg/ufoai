@@ -3402,8 +3402,13 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 				break;
 			}
 			MSG_WritePos(sb, aircraft->direction);
-			for (l = 0; l < presaveArray[PRE_AIRSTA]; l++)
+			for (l = 0; l < presaveArray[PRE_AIRSTA]; l++) {
+#ifdef DEBUG
+				if (aircraft->stats[l] < 0)
+					Com_Printf("Warning: aircraft '%s' stats %i is smaller than 0\n", aircraft->id, aircraft->stats[l]);
+#endif
 				MSG_WriteLong(sb, aircraft->stats[l]);
+			}
 		}
 		MSG_WriteByte(sb, b->equipType);
 
