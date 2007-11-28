@@ -1421,7 +1421,7 @@ void AIM_AircraftEquipAddItem_f (void)
 		}
 		break;
 	default:
-		/* Zone higher than 3 shouldn't exist */
+		/* Zone higher than ZONE_AMMO shouldn't exist */
 		return;
 	}
 
