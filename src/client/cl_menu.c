@@ -5390,9 +5390,9 @@ qboolean MS_Load (sizebuf_t* sb, void* data)
 		mtype = MSG_ReadByte(sb);
 		if (mtype == MSG_EVENT) {
 			mail = CL_GetEventMail(MSG_ReadString(sb), qfalse);
-/*			read = MSG_WriteByte(sb, message->eventMail->read);
+			read = MSG_ReadByte(sb);
 			if (mail)
-				mail->read = read;*/
+				mail->read = read;
 		} else
 			mail = NULL;
 		idx = MSG_ReadLong(sb);
