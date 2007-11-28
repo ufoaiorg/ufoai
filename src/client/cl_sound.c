@@ -631,6 +631,7 @@ void S_Shutdown (void)
 		for (sfx = sfx_hash[i]; sfx; sfx = sfx->hash_next) {
 			Mix_FreeChunk(sfx->data);
 		}
+	S_Music_Stop();
 
 	Mix_CloseAudio();
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);

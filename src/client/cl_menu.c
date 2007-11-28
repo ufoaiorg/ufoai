@@ -5334,8 +5334,10 @@ static void MS_MessageSave (sizebuf_t * sb, message_t * message)
 	MSG_WriteString(sb, message->text);
 	MSG_WriteByte(sb, message->type);
 	/* store script id of event mail */
-	if (message->type == MSG_EVENT)
+	if (message->type == MSG_EVENT) {
 		MSG_WriteString(sb, message->eventMail->id);
+		MSG_WriteByte(sb, message->eventMail->read);
+	}
 	MSG_WriteLong(sb, idx);
 	MSG_WriteLong(sb, message->d);
 	MSG_WriteLong(sb, message->m);
@@ -5376,6 +5378,7 @@ qboolean MS_Load (sizebuf_t* sb, void* data)
 	char title[MAX_VAR], text[MAX_MESSAGE_TEXT];
 	message_t *mess;
 	eventMail_t *mail;
+	qboolean read;
 
 	/* how many message items */
 	i = MSG_ReadLong(sb);
@@ -5385,9 +5388,12 @@ qboolean MS_Load (sizebuf_t* sb, void* data)
 		Q_strncpyz(title, MSG_ReadStringRaw(sb), sizeof(title));
 		Q_strncpyz(text, MSG_ReadStringRaw(sb), sizeof(text));
 		mtype = MSG_ReadByte(sb);
-		if (mtype == MSG_EVENT)
+		if (mtype == MSG_EVENT) {
 			mail = CL_GetEventMail(MSG_ReadString(sb), qfalse);
-		else
+			read = MSG_ReadByte(sb);
+			if (mail)
+				mail->read = read;
+		} else
 			mail = NULL;
 		idx = MSG_ReadLong(sb);
 		/* event and not mail means, dynamic mail - we don't save or load them */

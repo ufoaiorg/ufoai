@@ -265,7 +265,7 @@ item machinegun_ammo
 		firedef
 		{
 			name	"_Short Burst"
-			skill	assault
+			skill	heavy
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
@@ -286,7 +286,7 @@ item machinegun_ammo
 		firedef
 		{
 			name	"_Full-Auto"
-			skill	assault
+			skill	heavy
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
@@ -649,7 +649,7 @@ item smg_ammo
 //		firedef
 //		{
 //			name	"_Snap Shot"
-//			skill	assault
+//			skill	close
 //			projtl	bullet
 //			impact	bulletImpact
 //			hitbody null
@@ -668,7 +668,7 @@ item smg_ammo
 		firedef
 		{
 			name	"_5-Round Burst"
-			skill	assault
+			skill	close
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
@@ -688,7 +688,7 @@ item smg_ammo
 		firedef
 		{
 			name	"_Full-Auto"
-			skill	assault
+			skill	close
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
@@ -750,7 +750,7 @@ item shotgun2_slug_ammo
 		firedef
 		{
 			name	"_Single Shot"
-			skill	assault
+			skill	close
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
@@ -772,7 +772,7 @@ item shotgun2_slug_ammo
 		firedef
 		{
 			name	"_3-Round Burst"
-			skill	assault
+			skill	close
 			projtl	bullet
 			impact	bulletImpact
 			hitbody null
@@ -794,7 +794,7 @@ item shotgun2_slug_ammo
 //		firedef
 //		{
 //			name	"_Full-Auto"
-//			skill	assault
+//			skill	close
 //			projtl	bullet
 //			impact	bulletImpact
 //			hitbody null

@@ -119,7 +119,7 @@ item pbeamrifle_ammo
 		firedef
 		{
 			name	"_Snap Shot"
-			skill	close
+			skill	assault
 			projtl	pbeamBeam
 			impact	pbeamImpact
 			hitbody pbeamImpact
@@ -157,8 +157,8 @@ item pbeamrifle_ammo
 		}
 		firedef
 		{
-			name	"_Rapid Shots"
-			skill	sniper
+			name	"_Repeat Fire"
+			skill	assault
 			projtl	pbeamMiniBeam
 			impact	pbeamImpact
 			hitbody pbeamImpact
@@ -259,7 +259,7 @@ item pbeamcannon_ammo
 		}
 		firedef
 		{
-			name	"_Charged Blast"
+			name	"_Unrestricted Blast"
 			skill	explosive
 			projtl	pbeamBigBeam
 			impact	pbeamBigImpact

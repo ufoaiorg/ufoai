@@ -84,7 +84,7 @@ item laserrifle_ammo
 	{
 		firedef
 		{
-			name	"_Long Wave Beam"
+			name	"_Wave Fire"
 			skill 	close
 			projtl	laserPulse
 			impact	laserImpact
@@ -103,7 +103,7 @@ item laserrifle_ammo
 		}
 		firedef
 		{
-			name	"_Short Wave Pulsed"
+			name	"_Pulsed Fire"
 			skill 	close
 			projtl	laserPulse
 			impact	laserImpact
@@ -127,7 +127,7 @@ item laserrifle_ammo
 	{
 		firedef
 		{
-			name	"_Long Wave Beam"
+			name	"_Wave Fire"
 			skill 	assault
 			projtl	laserPulse
 			impact	laserImpact
@@ -147,7 +147,7 @@ item laserrifle_ammo
 		}
 		firedef
 		{
-			name	"_Short Wave Pulsed"
+			name	"_Pulsed Fire"
 			skill 	assault
 			projtl	laserPulse
 			impact	laserImpact
@@ -171,7 +171,7 @@ item laserrifle_ammo
 	{
 		firedef
 		{
-			name	"_Long Wave Beam"
+			name	"_Wave Fire"
 			skill	heavy
 			projtl	laserOverload
 			impact	laserImpact
@@ -190,7 +190,7 @@ item laserrifle_ammo
 		}
 		firedef
 		{
-			name	"_Short Wave Pulsed"
+			name	"_Pulsed Fire"
 			skill	heavy
 			projtl	laserPulse
 			impact	laserImpact

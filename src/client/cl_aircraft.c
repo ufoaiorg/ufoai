@@ -358,6 +358,8 @@ qboolean AIR_IsAircraftInBase (const aircraft_t * aircraft)
  * @brief Determines the state of the equip soldier menu button:
  * @returns 1 if no aircraft in base else 2 if no soldiers
  * available otherwise 3
+ * @todo use defined constants - no magic numbers
+ * @todo Use aircraft->homebase - not baseCurrent, @sa todo in AIR_AircraftSelect
  */
 static int CL_EquipSoldierState (const aircraft_t * aircraft)
 {
@@ -564,6 +566,8 @@ void AIR_AircraftReturnToBase_f (void)
  * @note If param[in] is NULL, it uses mn_aircraft_idx to determine aircraft.
  * @note If either pointer is NULL or no aircraft in mn_aircraft_idx, it takes
  * @note first aircraft in base (if there is any).
+ * @todo If the assert about homebase and baseCurrent isn't hit, we should not
+ * use baseCurrent but aircraft->homebase
  */
 void AIR_AircraftSelect (aircraft_t* aircraft)
 {
@@ -600,6 +604,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	baseCurrent->aircraftCurrent = aircraftID;
 
 	assert(aircraft);
+	assert(aircraft->homebase == baseCurrent);
 	CL_UpdateHireVar(aircraft, EMPL_SOLDIER);
 
 	Cvar_SetValue("mn_equipsoldierstate", CL_EquipSoldierState(aircraft));
@@ -1651,6 +1656,15 @@ qboolean AIR_SendUfoPurchasingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 	ufo->point = 0;
 	ufo->aircraftTarget = aircraft;
 	ufo->baseTarget = NULL;
+
+	/* Stop Time */
+	CL_GameTimeStop();
+
+	/* Send a message to player to warn him */
+	MN_AddNewMessage(_("Notice"), va(_("A UFO is shooting at %s"), aircraft->name), qfalse, MSG_STANDARD, NULL);
+
+	/* @todo: present a popup with possible orders like: return to base, attack the ufo, try to flee the rockets */
+
 	return qtrue;
 }
 

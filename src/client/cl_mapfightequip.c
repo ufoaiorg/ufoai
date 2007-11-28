@@ -322,9 +322,12 @@ static void AIM_UpdateAircraftItemList (base_t* base, aircraft_t* aircraft)
 
 	/* if there is at least one element, select the first one */
 	if (i)
-		Cmd_ExecuteString("airequip_list_click 0\n");
-	else
+		Cmd_ExecuteString("airequip_list_click 0");
+	else {
+		/* no element in list, no tech selected */
+		airequipSelectedTechnology = NULL;
 		UP_AircraftItemDescription(NONE);
+	}
 }
 
 /**
@@ -984,6 +987,9 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 		}
 	}
 
+	/* Reset value of noparams */
+	noparams = qfalse;
+
 	node = MN_GetNodeFromCurrentMenu("aircraftequip");
 
 	/* we are not in the aircraft menu */
@@ -1008,10 +1014,6 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 
 	/* Fill the list of item you can equip your aircraft with */
 	AIM_UpdateAircraftItemList(NULL, aircraft);
-
-	/* shield / weapon description */
-	MN_MenuTextReset(TEXT_STANDARD);
-	noparams = qfalse;
 
 	/* Fill the texts of each zone */
 	/* First slot: item currently assigned */
@@ -1547,6 +1549,9 @@ void AIM_AircraftEquipMenuClick_f (void)
 	/* Which entry in the list? */
 	num = atoi(Cmd_Argv(1));
 
+	/* make sure that airequipSelectedTechnology is NULL if no tech is found */
+	airequipSelectedTechnology = NULL;
+
 	/* build the list of all aircraft items of type airequipID - null terminated */
 	list = AII_GetCraftitemTechsByType(airequipID, base ? base : baseCurrent);
 	/* to prevent overflows we go through the list instead of address it directly */
@@ -1555,11 +1560,6 @@ void AIM_AircraftEquipMenuClick_f (void)
 			/* found it */
 			if (num <= 0) {
 				airequipSelectedTechnology = *list;
-#if 0
-				AIR_AircraftSelect(aircraft);
-				noparams = qtrue; /* used for AIM_AircraftEquipMenuUpdate_f */
-				AIM_AircraftEquipMenuUpdate_f();
-#endif
 				UP_AircraftItemDescription(AII_GetAircraftItemByID(airequipSelectedTechnology->provides));
 				break;
 			}
