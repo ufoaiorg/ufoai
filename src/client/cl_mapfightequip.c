@@ -857,7 +857,7 @@ void AII_UpdateInstallationDelay (void)
  * @note airequipSelectedSlot concerns only weapons and electronics
  * @sa aircraft Pointer to the aircraft
  */
-static void AIM_CheckAirequipSelectedSlot (aircraft_t *aircraft)
+static void AIM_CheckAirequipSelectedSlot (const aircraft_t *aircraft)
 {
 	switch (airequipID) {
 	case AC_ITEM_AMMO:
@@ -880,11 +880,11 @@ static void AIM_CheckAirequipSelectedSlot (aircraft_t *aircraft)
  * @brief Draw only slots existing for this aircraft, and emphases selected one
  * @return[out] aircraft Pointer to the aircraft
  */
-static void AIM_DrawAircraftSlots (aircraft_t *aircraft)
+static void AIM_DrawAircraftSlots (const aircraft_t *aircraft)
 {
 	menuNode_t *node;
 	int i, j;
-	aircraftSlot_t *slot;
+	const aircraftSlot_t *slot;
 	int max;
 
 	/* initialise models Cvar */
@@ -1250,7 +1250,7 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
  * @note No check for the _type_ of item is done here, so it must be done before.
  * @sa AII_AddItemToSlot
  */
-qboolean AII_AddAmmoToSlot (base_t* base, technology_t *tech, aircraftSlot_t *slot)
+qboolean AII_AddAmmoToSlot (base_t* base, const technology_t *tech, aircraftSlot_t *slot)
 {
 	int ammoIdx;
 
@@ -1289,7 +1289,7 @@ qboolean AII_AddAmmoToSlot (base_t* base, technology_t *tech, aircraftSlot_t *sl
  * @sa AII_UpdateOneInstallationDelay
  * @sa AII_AddAmmoToSlot
  */
-qboolean AII_AddItemToSlot (base_t* base, technology_t *tech, aircraftSlot_t *slot)
+qboolean AII_AddItemToSlot (base_t* base, const technology_t *tech, aircraftSlot_t *slot)
 {
 	int itemIdx;
 
@@ -1671,10 +1671,10 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
  * @param[in] aircraft The aircraft to count the items for (may not be NULL)
  * @return The amount of assigned items for the given slot
  */
-int AII_GetSlotItems (aircraftItemType_t type, aircraft_t *aircraft)
+int AII_GetSlotItems (aircraftItemType_t type, const aircraft_t *aircraft)
 {
 	int i, max, cnt = 0;
-	aircraftSlot_t *slot;
+	const aircraftSlot_t *slot;
 
 	assert(aircraft);
 
@@ -1711,7 +1711,7 @@ int AII_GetSlotItems (aircraftItemType_t type, aircraft_t *aircraft)
  * @return qtrue if the aircraft can fight, qflase else
  * @sa AII_BaseCanShoot
  */
-int AII_AircraftCanShoot (aircraft_t *aircraft)
+int AII_AircraftCanShoot (const aircraft_t *aircraft)
 {
 	int i;
 
