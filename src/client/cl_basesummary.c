@@ -26,22 +26,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
-static int BaseSummary_AircraftCount (aircraftType_t aircraftType)
+static int BaseSummary_AircraftCount (const base_t* base, aircraftType_t aircraftType)
 {
 	int i, count = 0;
-	for (i = 0; i < baseCurrent->numAircraftInBase; i++) {
-		if (baseCurrent->aircraft[i].type == aircraftType)
+
+	assert(base);
+
+	for (i = 0; i < base->numAircraftInBase; i++) {
+		if (base->aircraft[i].type == aircraftType)
 			count++;
 	}
 
 	return count;
 }
 
-static void BaseSummary_BuildingConstruction (const char* cvarNameBase)
+static void BaseSummary_BuildingConstruction (const base_t* base)
 {
 	int i, cvarIndex, daysLeft;
 	char buffer[128], cvarName[128];
-	building_t building;
+	building_t *building;
 
 	cvarIndex = 0;
 
@@ -49,20 +52,21 @@ static void BaseSummary_BuildingConstruction (const char* cvarNameBase)
 
 	/* Reset all construction-related cvars: */
 	for (i = 0; i < BASESUMMARY_MAX_CVARS_CONSTRUCTION; i++) {
-		Com_sprintf(cvarName, sizeof(cvarName), "%s%d", cvarNameBase, i);
+		Com_sprintf(cvarName, sizeof(cvarName), "mn_basesummary_construction%d", i);
 		Cvar_Set(cvarName, buffer);
 	}
 
-	for (i = 0; i < gd.numBuildings[baseCurrent->idx]; i++) {
-		building = gd.buildings[baseCurrent->idx][i];
+	assert(base);
+	for (i = 0; i < gd.numBuildings[base->idx]; i++) {
+		building = &gd.buildings[base->idx][i];
 
-		daysLeft = building.timeStart + building.buildTime - ccs.date.day;
+		daysLeft = building->timeStart + building->buildTime - ccs.date.day;
 
-		if (building.buildingStatus == B_STATUS_UNDER_CONSTRUCTION && daysLeft > 0) {
+		if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION && daysLeft > 0) {
 			Com_sprintf(buffer, sizeof(buffer), _("%s - %i %s\n"),
-				_(building.name), daysLeft, ngettext("day", "days", daysLeft));
+				_(building->name), daysLeft, ngettext("day", "days", daysLeft));
 
-			Com_sprintf(cvarName, sizeof(cvarName), "%s%d", cvarNameBase, cvarIndex++);
+			Com_sprintf(cvarName, sizeof(cvarName), "mn_basesummary_construction%d", cvarIndex++);
 			Cvar_Set(cvarName, buffer);
 		}
 
@@ -71,42 +75,44 @@ static void BaseSummary_BuildingConstruction (const char* cvarNameBase)
 	}
 }
 
-static void BaseSummary_BuildingCount (const char* cvarName, const char* desc, buildingType_t buildingType)
+/**
+ * @sa BaseSummary_BuildingUsage
+ */
+static void BaseSummary_BuildingCount (const base_t* base)
 {
 	char buffer[128];
-	int num = B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, buildingType);
+	int i;
+	building_t* b;
 
-	Com_sprintf(buffer, sizeof(buffer), _("%s: %i"),
-		desc,
-		(num >= 0) ? num : 0);	/* Use 0 if an error occured. */
-
-	Cvar_Set(cvarName, buffer);
-}
-
-static void BaseSummary_BuildingUsage (const char* cvarName, const char* desc, baseCapacities_t baseCapacity, buildingType_t buildingType)
-{
-	char buffer[128];
-	int num = B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, buildingType);
-
-	Com_sprintf(buffer, sizeof(buffer), _("%s (%i): %i/%i"),
-		desc,
-		(num >= 0) ? num : 0,	/* Use 0 if an error occured. */
-		baseCurrent->capacities[baseCapacity].cur,
-		baseCurrent->capacities[baseCapacity].max);
-
-	Cvar_Set(cvarName, buffer);
+	for (i = 0; i < gd.numBuildingTypes; i++) {
+		b = &gd.buildingTypes[i];
+		Com_sprintf(buffer, sizeof(buffer), _("%s: %i"), _(b->name),
+			B_GetNumberOfBuildingsInBaseByType(base->idx, b->buildingType));
+		Cvar_Set(va("mn_bs_bcount_%s", b->id), buffer);
+	}
 }
 
 /**
- * @brief Sum up all hired employees of a given type.
- * @param[in] employeeType The type of employees to count.
- * @return The number of employees.
- * @sa BaseSummary_EmployeeTotal
- * @sa E_CountHired
+ * @sa BaseSummary_BuildingCount
  */
-static int BaseSummary_EmployeeCount (employeeType_t employeeType)
+static void BaseSummary_BuildingUsage (const base_t* base)
 {
-	return E_CountHired(baseCurrent,employeeType);
+	char buffer[128];
+	int i;
+	baseCapacities_t cap;
+	building_t* b;
+
+	for (i = 0; i < gd.numBuildingTypes; i++) {
+		b = &gd.buildingTypes[i];
+		cap = B_GetCapacityFromBuildingType(b->buildingType);
+		if (cap == MAX_CAP)
+			continue;
+
+		Com_sprintf(buffer, sizeof(buffer), _("%s: %i/%i"), _(b->name),
+			base->capacities[cap].cur,
+			base->capacities[cap].max);
+		Cvar_Set(va("mn_bs_cap_%s", b->id), buffer);
+	}
 }
 
 /**
@@ -130,34 +136,35 @@ static int BaseSummary_EmployeeTotal (void)
 	return cnt;
 }
 
-static void BaseSummary_ProductionCurrent (const char* cvarName)
+static void BaseSummary_ProductionCurrent (const base_t* base)
 {
-	production_queue_t queue;
-	production_t production;
-	objDef_t objDef;
+	production_queue_t *queue;
+	production_t *production;
+	objDef_t *objDef;
 	char buffer[128];
 
 	memset(buffer, 0, sizeof(buffer));
 	Cvar_Set("mn_basesummary_productioncurrent", buffer);
 
-	queue = gd.productions[baseCurrent->idx];
-	if (queue.numItems > 0) {
-		production=queue.items[0];
+	assert(base);
+	queue = &gd.productions[base->idx];
+	if (queue->numItems > 0) {
+		production = &queue->items[0];
 
-		objDef = csi.ods[production.objID];
+		objDef = &csi.ods[production->objID];
 
-		Com_sprintf(buffer, sizeof(buffer), _("%s:  Qty: %d, Already produced: %f %%"),
-			objDef.name, production.amount, production.percentDone);
+		Com_sprintf(buffer, sizeof(buffer), _("%s:  Qty: %d, Already produced: %.2f %%"),
+			objDef->name, production->amount, production->percentDone);
 
 		Cvar_Set("mn_basesummary_productioncurrent", buffer);
 	}
 }
 
-static void BaseSummary_ResearchCurrent (const char* cvarNameBase)
+static void BaseSummary_ResearchCurrent (const base_t* base)
 {
-	int i,cvarIndex;
+	int i, cvarIndex;
 	char buffer[128], cvarName[128];
-	technology_t tech;
+	technology_t *tech;
 
 	cvarIndex = 0;
 
@@ -165,19 +172,19 @@ static void BaseSummary_ResearchCurrent (const char* cvarNameBase)
 
 	/* Reset all research-related cvars: */
 	for (i = 0; i < BASESUMMARY_MAX_CVARS_RESEARCH; i++) {
-		Com_sprintf(cvarName, sizeof(cvarName), "%s%d", cvarNameBase, i);
+		Com_sprintf(cvarName, sizeof(cvarName), "mn_basesummary_researchcurrent%d", i);
 		Cvar_Set(cvarName, buffer);
 	}
-
+	assert(base);
 	for (i = 0; i < gd.numTechnologies; i++) {
-		tech = gd.technologies[i];
-		if (tech.base_idx == baseCurrent->idx && (tech.statusResearch == RS_RUNNING ||
-			tech.statusResearch == RS_PAUSED)) {
+		tech = &gd.technologies[i];
+		if (tech->base_idx == base->idx && (tech->statusResearch == RS_RUNNING ||
+			tech->statusResearch == RS_PAUSED)) {
 			Com_sprintf(buffer, sizeof(buffer), _("%s - %1.2f%% (%d %s)\n"),
-				tech.name, (1 - tech.time / tech.overalltime) * 100,
-				tech.scientists, ngettext("scientist", "scientists", tech.scientists));
+				tech->name, (1 - tech->time / tech->overalltime) * 100,
+				tech->scientists, ngettext("scientist", "scientists", tech->scientists));
 
-			Com_sprintf(cvarName, sizeof(cvarName), "%s%d", cvarNameBase, cvarIndex++);
+			Com_sprintf(cvarName, sizeof(cvarName), "mn_basesummary_researchcurrent%d", cvarIndex++);
 			Cvar_Set(cvarName, buffer);
 		}
 
@@ -342,44 +349,20 @@ static void BaseSummary_Init (void)
 		/* Current base: */
 		Cvar_Set("mn_basesummary_name", baseCurrent->name);
 
-		Cvar_SetValue("mn_basesummary_interceptorcount", BaseSummary_AircraftCount(AIRCRAFT_INTERCEPTOR));
-		Cvar_SetValue("mn_basesummary_transportercount", BaseSummary_AircraftCount(AIRCRAFT_TRANSPORTER));
+		Cvar_SetValue("mn_basesummary_interceptorcount", BaseSummary_AircraftCount(baseCurrent, AIRCRAFT_INTERCEPTOR));
+		Cvar_SetValue("mn_basesummary_transportercount", BaseSummary_AircraftCount(baseCurrent, AIRCRAFT_TRANSPORTER));
 
-		Cvar_SetValue("mn_basesummary_soldiercount", BaseSummary_EmployeeCount(EMPL_SOLDIER));
-		Cvar_SetValue("mn_basesummary_scientistcount", BaseSummary_EmployeeCount(EMPL_SCIENTIST));
-		Cvar_SetValue("mn_basesummary_workercount", BaseSummary_EmployeeCount(EMPL_WORKER));
-		Cvar_SetValue("mn_basesummary_mediccount", BaseSummary_EmployeeCount(EMPL_MEDIC));
-		Cvar_SetValue("mn_basesummary_robotcount", BaseSummary_EmployeeCount(EMPL_ROBOT));
+		Cvar_SetValue("mn_basesummary_soldiercount", E_CountHired(baseCurrent, EMPL_SOLDIER));
+		Cvar_SetValue("mn_basesummary_scientistcount", E_CountHired(baseCurrent, EMPL_SCIENTIST));
+		Cvar_SetValue("mn_basesummary_workercount", E_CountHired(baseCurrent, EMPL_WORKER));
+		Cvar_SetValue("mn_basesummary_mediccount", E_CountHired(baseCurrent, EMPL_MEDIC));
+		Cvar_SetValue("mn_basesummary_robotcount", E_CountHired(baseCurrent, EMPL_ROBOT));
 
-		BaseSummary_BuildingUsage("mn_basesummary_capacity_aliens", _("Alien Containment"), CAP_ALIENS, B_ALIEN_CONTAINMENT);
-		BaseSummary_BuildingUsage("mn_basesummary_capacity_hangarsmall", _("Small Hangar"), CAP_AIRCRAFTS_SMALL, B_SMALL_HANGAR);
-		BaseSummary_BuildingUsage("mn_basesummary_capacity_hangarlarge", _("Large Hangar"), CAP_AIRCRAFTS_BIG, B_HANGAR);
-		BaseSummary_BuildingUsage("mn_basesummary_capacity_hangarufo", _("Large UFO Hangar"), CAP_UFOHANGARS, B_UFO_HANGAR);
-		/** @todo UFO Small Hangar? */
-		BaseSummary_BuildingUsage("mn_basesummary_capacity_hospital", _("Hospital"), CAP_HOSPSPACE, B_HOSPITAL);
-		BaseSummary_BuildingUsage("mn_basesummary_capacity_labs", _("Laboratory"), CAP_LABSPACE, B_LAB);
-		BaseSummary_BuildingUsage("mn_basesummary_capacity_quarters", _("Living Quarters"), CAP_EMPLOYEES, B_QUARTERS);
-		BaseSummary_BuildingUsage("mn_basesummary_capacity_workshops", _("Workshop"), CAP_WORKSPACE, B_WORKSHOP);
-		BaseSummary_BuildingUsage("mn_basesummary_capacity_storage", _("Storage"), CAP_ITEMS, B_STORAGE);
-
-		BaseSummary_BuildingCount("mn_basesummary_buildingcount_misc", _("Miscellaneous"), B_MISC);
-		BaseSummary_BuildingCount("mn_basesummary_buildingcount_lab", _("Laboratory"), B_LAB);
-		BaseSummary_BuildingCount("mn_basesummary_buildingcount_quarters", _("Living Quarters"), B_QUARTERS);
-		BaseSummary_BuildingCount("mn_basesummary_buildingcount_storage", _("Storage"), B_STORAGE);
-		BaseSummary_BuildingCount("mn_basesummary_buildingcount_workshop", _("Workshop"), B_WORKSHOP);
-		BaseSummary_BuildingCount("mn_basesummary_buildingcount_hospital", _("Hospital"), B_HOSPITAL);
-		BaseSummary_BuildingCount("mn_basesummary_buildingcount_hangarlarge", _("Large Hangar"), B_HANGAR);
-		BaseSummary_BuildingCount("mn_basesummary_buildingcount_aliens", _("Alien Containment"), B_ALIEN_CONTAINMENT);
-		BaseSummary_BuildingCount("mn_basesummary_buildingcount_hangarsmall", _("Small Hangar"), B_SMALL_HANGAR);
-		BaseSummary_BuildingCount("mn_basesummary_buildingcount_hangarlargeufo", _("Large UFO Hangar"), B_UFO_HANGAR);
-		BaseSummary_BuildingCount("mn_basesummary_buildingcount_hangarsmallufo", _("Small UFO Hangar"), B_UFO_SMALL_HANGAR);
-		BaseSummary_BuildingCount("mn_basesummary_buildingcount_power", _("Power Plant"), B_POWER);
-		BaseSummary_BuildingCount("mn_basesummary_buildingcount_command", _("Command Center"), B_COMMAND);
-		BaseSummary_BuildingCount("mn_basesummary_buildingcount_antimatter", _("Antimatter Storage"), B_ANTIMATTER);
-
-		BaseSummary_BuildingConstruction("mn_basesummary_construction");
-		BaseSummary_ProductionCurrent("mn_basesummary_productioncurrent");
-		BaseSummary_ResearchCurrent("mn_basesummary_researchcurrent");
+		BaseSummary_BuildingUsage(baseCurrent);
+		BaseSummary_BuildingCount(baseCurrent);
+		BaseSummary_BuildingConstruction(baseCurrent);
+		BaseSummary_ProductionCurrent(baseCurrent);
+		BaseSummary_ResearchCurrent(baseCurrent);
 
 		/* Totals: */
 		Cvar_SetValue("mn_basesummary_totals_basecount", gd.numBases);

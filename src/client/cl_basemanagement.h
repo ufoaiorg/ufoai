@@ -94,7 +94,9 @@ typedef enum {
 	B_ENTRANCE,		/**< this building is an entrance */
 	B_DEFENSE_MISSILE,		/**< this building is a missile rack */
 	B_DEFENSE_LASER,		/**< this building is a laser battery */
-	B_RADAR			/**< this building is a radar */
+	B_RADAR,			/**< this building is a radar */
+
+	MAX_BUILDING_TYPE
 } buildingType_t;
 
 /** @brief All possible capacities in base. */
@@ -317,6 +319,7 @@ void CL_AircraftReturnedToHomeBase(aircraft_t* aircraft);
 
 void B_UpdateBaseCapacities(baseCapacities_t cap, base_t *base);
 qboolean B_UpdateStorageAndCapacity(base_t* base, int objIDX, int amount, qboolean reset, qboolean ignorecap);
+baseCapacities_t B_GetCapacityFromBuildingType(buildingType_t type);
 
 qboolean B_ScriptSanityCheck(void);
 

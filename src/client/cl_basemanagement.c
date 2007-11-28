@@ -98,7 +98,7 @@ qboolean B_CheckBuildingTypeStatus (const base_t* const base, buildingType_t typ
  * @param[in] type The type of the building
  * @return capacity (baseCapacities_t), or MAX_CAP if capacity has not b
  */
-static baseCapacities_t B_GetCapacityFromBuildingType (buildingType_t type)
+baseCapacities_t B_GetCapacityFromBuildingType (buildingType_t type)
 {
 	switch (type) {
 	case B_LAB:
