@@ -872,6 +872,6 @@ menu air_production
 
 	func init
 	{
-		cmd "prod_init 1;prod_crafts"
+		cmd "prod_init 1;prod_crafts;"
 	}
 }
