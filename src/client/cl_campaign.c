@@ -2874,7 +2874,7 @@ static void CL_GameAutoCheck_f (void)
 void CL_GameAutoGo (actMis_t *mission)
 {
 	qboolean won;
-	aircraft_t *aircraft;
+	aircraft_t *aircraft = NULL;
 	mission_t *mis;
 	int i, amount = 0;
 	int civiliansKilled = 0; /* @todo: fill this for the case you won the game */
@@ -2927,6 +2927,7 @@ void CL_GameAutoGo (actMis_t *mission)
 	}
 
 	if (mis->missionType != MIS_BASEATTACK) {
+		assert(aircraft);
 		/* campaign effects */
 		selMis->cause->done++;
 		if ((selMis->cause->def->quota && selMis->cause->done >= selMis->cause->def->quota)
