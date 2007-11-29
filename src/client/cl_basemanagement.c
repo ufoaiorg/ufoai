@@ -3337,7 +3337,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			if (aircraft->aircraftTarget)
 				MSG_WriteShort(sb, aircraft->aircraftTarget - gd.ufos);
 			else
-				MSG_WriteShort(sb, -1); /** @todo use AIRCRAFT_INVALID here? */
+				MSG_WriteShort(sb, AIRFIGHT_NO_TARGET);
 			/* save weapon slots */
 			MSG_WriteByte(sb, aircraft->maxWeapons);
 			B_SaveItemSlots(aircraft->weapons, aircraft->maxWeapons, NULL, sb);
@@ -3496,7 +3496,7 @@ static void B_LoadItemSlots (base_t* base, aircraftSlot_t* slot, int num, int* t
  */
 qboolean B_Load (sizebuf_t* sb, void* data)
 {
-	int i, bases, k, l, m, amount;
+	int i, bases, k, l, m, amount, ufoIdx;
 	base_t *b;
 	const char *s;
 	aircraft_t *aircraft;
@@ -3579,11 +3579,11 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			aircraft->point = MSG_ReadShort(sb);
 			aircraft->hangar = MSG_ReadByte(sb);
 			/* load aircraft target */
-			amount = MSG_ReadShort(sb);
-			if (amount == -1) /** @todo use AIRCRAFT_INVALID here? Isn't "amount" the wrong name for this? */
+			ufoIdx = MSG_ReadShort(sb);
+			if (ufoIdx == AIRFIGHT_NO_TARGET)
 				aircraft->aircraftTarget = NULL;
 			else
-				aircraft->aircraftTarget = gd.ufos + amount;
+				aircraft->aircraftTarget = gd.ufos + ufoIdx;
 			/* read weapon slot */
 			amount = MSG_ReadByte(sb);
 			/* only read aircraft->maxWeapons here - skip the rest in the following loop */
