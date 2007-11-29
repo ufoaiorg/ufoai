@@ -775,6 +775,13 @@ base/models/objects/city/trafficsign/sign2.png | GPL | Willem "Sitters"
 base/models/objects/city/trafficsign/sign2_1.png | GPL | Willem "Sitters"
 base/models/objects/city/trafficsign/sign3.png | GPL | Willem "Sitters"
 base/models/objects/city/trafficsign/sign4.png | GPL | Willem "Sitters"
+base/models/objects/city/waste/bag.jpg | GNU General Public License 2.0 | Willem "Sitters"
+base/models/objects/city/waste/bag.md2 | GNU General Public License 2.0 | Willem "Sitters"
+base/models/objects/city/waste/container1.jpg | GNU General Public License 2.0 | Willem "Sitters"
+base/models/objects/city/waste/container2.jpg | GNU General Public License 2.0 | Willem "Sitters"
+base/models/objects/city/waste/container3.jpg | GNU General Public License 2.0 | Willem "Sitters"
+base/models/objects/city/waste/container_closed.md2 | GNU General Public License 2.0 | Willem "Sitters"
+base/models/objects/city/waste/container_opened.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/city/watertower/watertower.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/watertower/watertower.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/watertower/watertower1.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
