@@ -369,11 +369,12 @@ static void BDEF_AddBattery (basedefenseType_t basedefType, base_t* base)
 			Com_Printf("BDEF_AddBattery: too many missile batteries in base\n");
 			return;
 		}
+
 		/* if this slot is a new slot, give it 20 missiles
 		 * we use < 0 here, and not <= 0, because we don't want to give new missiles to someone
 		 * who would have already fired all its missile */
 		if (base->batteries[base->maxBatteries].ammoLeft < 0)
-		base->batteries[base->maxBatteries].ammoLeft = 20;
+			base->batteries[base->maxBatteries].ammoLeft = 20;
 
 		base->maxBatteries++;
 		break;
@@ -1208,7 +1209,7 @@ void AIM_AircraftEquipZoneSelect_f (void)
 /**
  * @brief Move the item in the slot (or optionally its ammo only) to the base storage.
  * @note if there is another item to install after removal, begin this installation.
- * @param[in] base The base to add the item to.
+ * @param[in] base The base to add the item to (may be NULL if item shouldn't be removed from any base).
  * @param[in] slot The slot to remove the item from.
  * @param[in] ammo qtrue if we want to remove only ammo. qfalse if the whole item should be removed.
  * @sa AII_AddItemToSlot
@@ -1216,17 +1217,18 @@ void AIM_AircraftEquipZoneSelect_f (void)
  */
 void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
 {
-	assert(base);
 	assert(slot);
 
 	if (ammo) {
 		/* only remove the ammo */
 		if (slot->ammoIdx != NONE) {
-			B_UpdateStorageAndCapacity(base, slot->ammoIdx, 1, qfalse, qfalse);
+			if (base)
+				B_UpdateStorageAndCapacity(base, slot->ammoIdx, 1, qfalse, qfalse);
 			slot->ammoIdx = NONE;
 		}
 	} else if (slot->itemIdx != NONE) {
-		B_UpdateStorageAndCapacity(base, slot->itemIdx, 1, qfalse, qfalse);
+		if (base)
+			B_UpdateStorageAndCapacity(base, slot->itemIdx, 1, qfalse, qfalse);
 		/* the removal is over */
 		if (slot->nextItemIdx != NONE) {
 			/* there is anoter item to install after this one */
@@ -1239,7 +1241,8 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
 		}
 		/* also remove ammo */
 		if (slot->ammoIdx != NONE) {
-			B_UpdateStorageAndCapacity(base, slot->ammoIdx, 1, qfalse, qfalse);
+			if (base)
+				B_UpdateStorageAndCapacity(base, slot->ammoIdx, 1, qfalse, qfalse);
 			slot->ammoIdx = NONE;
 		}
 	}
@@ -1248,6 +1251,9 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
 /**
  * @brief Add an ammo to an aircraft weapon slot
  * @note No check for the _type_ of item is done here, so it must be done before.
+ * @param[in] base Pointer to the base which provides items (NULL if items shouldn't be removed of storage)
+ * @param[in] tech Pointer to the tech to add to slot
+ * @param[in] slot Pointer to the slot where you want to add ammos
  * @sa AII_AddItemToSlot
  */
 qboolean AII_AddAmmoToSlot (base_t* base, const technology_t *tech, aircraftSlot_t *slot)
@@ -1405,9 +1411,9 @@ void AIM_AircraftEquipAddItem_f (void)
 		/* we change the weapon, shield, item, or base defense that is already in the slot */
 		AII_RemoveItemFromSlot(base, slot, qfalse);
 		AII_AddItemToSlot(base, airequipSelectedTechnology, slot);
-		/* if the item is a weapon, add at the same time ammos to ammo slot (otherwise player forget to put ammos)
+		/* if the item is a weapon, or base defense, add at the same time ammos to ammo slot (otherwise player forget to put ammos)
 		 * (only if we have some in storage) */
-		if (airequipID == AC_ITEM_WEAPON) {
+		if (airequipID <= AC_ITEM_WEAPON) {
 			int k, itemIdx, ammoIdx;
 			technology_t *ammo_tech;
 
@@ -1420,7 +1426,7 @@ void AIM_AircraftEquipAddItem_f (void)
 					if (ammoIdx != NONE) {
 						ammo_tech = csi.ods[ammoIdx].tech;
 						if (ammo_tech && AIM_SelectableAircraftItem(base, aircraft, ammo_tech)) {
-							AII_AddAmmoToSlot(base, ammo_tech, slot);
+							AII_AddAmmoToSlot(csi.ods[ammoIdx].notOnMarket ? NULL : base, ammo_tech, slot);
 							break;
 						}
 					}

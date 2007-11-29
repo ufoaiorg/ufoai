@@ -667,6 +667,7 @@ craftitem base_ammo_AA51
 	craftweapon		base_AA51_launcher
 	price		310
 	buytype		dummy
+	notonmarket	true
 
 	ammo		20
 	wdamage		80
