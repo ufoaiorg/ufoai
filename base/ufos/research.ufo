@@ -3629,7 +3629,7 @@ tech rs_ugv_ares_w
 tech rs_base_AA51_launcher
 {
 	type		tech
-	up_chapter	tech
+	up_chapter	equipment
 	name		"_AA51 missile launcher"
 	// pre_description	"_b_missile_pre_txt"
 	description {
@@ -3648,7 +3648,7 @@ tech rs_base_ammo_AA51
 
 {
 	type		tech
-	up_chapter	tech
+	up_chapter	equipment
 	name		"_AA51 Cicada SAM"
 	// pre_description	"_b_missile_pre_txt"
 	description {
