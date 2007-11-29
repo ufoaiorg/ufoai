@@ -3562,7 +3562,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			const aircraft_t *const model = AIR_GetAircraft(MSG_ReadString(sb));
 			if (!model)
 				return qfalse;
-			/* copy from global aircraft list to base aircraft list */
+			/* copy generic aircraft description to individal aircraft in base */
 			aircraft = &b->aircraft[k];
 			*aircraft = *model;
 			aircraft->idx = MSG_ReadShort(sb);

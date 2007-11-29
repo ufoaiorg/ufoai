@@ -684,7 +684,7 @@ void AIR_NewAircraft (base_t *base, const char *name)
 
 	aircraft = AIR_GetAircraft(name);
 	if (aircraft && base->numAircraftInBase < MAX_AIRCRAFT) {
-		/* copy from global aircraft list to base aircraft list */
+		/* copy generic aircraft description to individal aircraft in base */
 		/* we do this because every aircraft can have its own parameters */
 		base->aircraft[base->numAircraftInBase] = *aircraft;
 		/* now lets use the aircraft array for the base to set some parameters */
