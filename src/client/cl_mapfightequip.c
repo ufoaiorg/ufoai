@@ -370,12 +370,6 @@ static void BDEF_AddBattery (basedefenseType_t basedefType, base_t* base)
 			return;
 		}
 
-		/* if this slot is a new slot, give it 20 missiles
-		 * we use < 0 here, and not <= 0, because we don't want to give new missiles to someone
-		 * who would have already fired all its missile */
-		if (base->batteries[base->maxBatteries].ammoLeft < 0)
-			base->batteries[base->maxBatteries].ammoLeft = 20;
-
 		base->maxBatteries++;
 		break;
 	case BASEDEF_LASER:
@@ -1427,6 +1421,13 @@ void AIM_AircraftEquipAddItem_f (void)
 						ammo_tech = csi.ods[ammoIdx].tech;
 						if (ammo_tech && AIM_SelectableAircraftItem(base, aircraft, ammo_tech)) {
 							AII_AddAmmoToSlot(csi.ods[ammoIdx].notOnMarket ? NULL : base, ammo_tech, slot);
+							/* base missile are free, you have 20 when you build a new base defense */
+							if (airequipID == AC_ITEM_BASE_MISSILE && (slot->ammoLeft < 0)) {
+								/* we use < 0 here, and not <= 0, because we give missiles only on first build
+								 * (not when player removes base defense and re-add it)
+								 * sa AII_InitialiseSlot: ammoLeft is initialized to -1 */
+								slot->ammoLeft = 20;
+							}
 							break;
 						}
 					}

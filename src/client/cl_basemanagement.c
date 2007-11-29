@@ -3230,6 +3230,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
  * @brief Saves an item slot
  * @sa B_LoadItemSlots
  * @sa B_Save
+ * @sa AII_InitialiseSlot
  */
 static void B_SaveItemSlots (aircraftSlot_t* slot, int num, int* targets, sizebuf_t* sb)
 {
@@ -3247,7 +3248,7 @@ static void B_SaveItemSlots (aircraftSlot_t* slot, int num, int* targets, sizebu
 			MSG_WriteString(sb, ammoIdx != NONE ? csi.ods[ammoIdx].id : "");
 		} else {
 			MSG_WriteString(sb, "");
-			MSG_WriteShort(sb, 0);
+			MSG_WriteShort(sb, -1);	/* must be the same value as in AII_InitialiseSlot */
 			MSG_WriteShort(sb, 0);
 			MSG_WriteShort(sb, 0);
 			/* if there is no ammo MSG_WriteString will write an empty string */
