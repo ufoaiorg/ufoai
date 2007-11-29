@@ -3566,6 +3566,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			aircraft = AIR_GetAircraft(MSG_ReadString(sb));
 			if (!aircraft)
 				return qfalse;
+			/* copy from global aircraft list to base aircraft list */
 			b->aircraft[k] = *aircraft;
 			aircraft = &b->aircraft[k];
 			aircraft->idx = MSG_ReadShort(sb);
