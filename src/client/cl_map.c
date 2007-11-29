@@ -1546,7 +1546,7 @@ const char* MAP_GetPopulationTypeByPos (const vec2_t pos)
  * @note never may return a null pointer or an empty string
  * @note Make sure, that there are textures with the same name in base/textures/tex_terrain
  */
-const char* MAP_GetTerrainType (byte* color)
+const char* MAP_GetTerrainType(const byte* const color)
 {
 	if (MapIsDesert(color))
 		return "desert";
