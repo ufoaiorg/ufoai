@@ -1490,7 +1490,7 @@ qboolean TR_Load (sizebuf_t* sb, void* data)
 		for (j = 0; j < presaveArray[PRE_MAXAIR]; j++)
 			transfer->aircraftArray[j] = MSG_ReadShort(sb);
 		transfer->destBase = MSG_ReadByte(sb);
-		transfer->srcBase = MSG_ReadByte(sb);
+		transfer->srcBase = MSG_ReadShort(sb);
 		transfer->active = MSG_ReadByte(sb);
 		transfer->hasItems = MSG_ReadByte(sb);
 		transfer->hasEmployees = MSG_ReadByte(sb);
