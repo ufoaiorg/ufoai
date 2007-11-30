@@ -716,10 +716,10 @@ base/models/objects/base/minicrane/minicrane.jpg | Creative Commons Attribution-
 base/models/objects/base/minicrane/minicrane.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/boat/canoe.md2 | GPL | Willem "Sitters"
 base/models/objects/boat/canoe.tga | GPL | Willem "Sitters"
-base/models/objects/cars/4x4/4x4.jpg |  | Olivier "Kracken" Alloschery
-base/models/objects/cars/4x4/4x4.md2 |  | Olivier "Kracken" Alloschery
-base/models/objects/cars/4x4/4x4_t.md2 |  | Olivier "Kracken" Alloschery
-base/models/objects/cars/4x4/cars_tires.jpg |  | Olivier "Kracken" Alloschery
+base/models/objects/cars/4x4/4x4.jpg | GNU General Public License 2.0 | Olivier "Kracken" Alloschery
+base/models/objects/cars/4x4/4x4.md2 | GNU General Public License 2.0 | Olivier "Kracken" Alloschery
+base/models/objects/cars/4x4/4x4_t.md2 | GNU General Public License 2.0 | Olivier "Kracken" Alloschery
+base/models/objects/cars/4x4/cars_tires.jpg | GNU General Public License 2.0 | Olivier "Kracken" Alloschery
 base/models/objects/cars/car4/Readme.txt | GPL | Willem "Sitters"
 base/models/objects/cars/car4/car.md2 | GPL | Willem "Sitters"
 base/models/objects/cars/car4/car.png | GPL | Willem "Sitters"
