@@ -712,6 +712,8 @@ base/models/geoscape/ufo_scout.md2 | GNU General Public License 2.0 | Willem Sit
 base/models/geoscape/ufo_scout.tga | GNU General Public License 2.0 | Willem Sitters | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
 base/models/geoscape/ufo_supply.md2 | GNU General Public License 2.0 | Willem Sitters | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
 base/models/geoscape/ufo_supply.tga | GNU General Public License 2.0 | Willem Sitters | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
+base/models/objects/aircraft/heli2/heli2.jpg | GNU General Public License 2.0 | Olivier "Kracken" Alloschery
+base/models/objects/aircraft/heli2/heli2.md2 | GNU General Public License 2.0 and Creative Commons attribution share-alike | Ingo Ruhnke <grumbel@gmx.de>
 base/models/objects/base/minicrane/minicrane.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/base/minicrane/minicrane.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/boat/canoe.md2 | GPL | Willem "Sitters"
