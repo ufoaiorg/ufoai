@@ -21,6 +21,9 @@
 #####################################################################
 # TODO
 # * implement "non-recursive"
+#
+# Changelog
+#	2007-11-30	Added correct support of -p parameter.
 #####################################################################
 
 use strict;
@@ -67,13 +70,7 @@ sub replace_in_files {
 
 	if (not $file =~ m/$file_regex/) { return; }
 	
-	# Print filename only if defined by user
-	if ($print) {
-		print "File found: $file\n";
-		return;
-	}
-
-	print "Processing $file - " unless $quiet; # string continued below.
+	print "Processing $file - " unless $quiet || $print; # string continued below.
 
 	open(FH, $file) || die "Cannot open file: $file";
 	my @lines = <FH>;
@@ -82,9 +79,24 @@ sub replace_in_files {
 	my $match = 0;
 
 	foreach my $line (@lines){
-		if($line =~ s/$search/$replace/g){
-			$match = 1;
+		if ($print) {
+			# Count if phrase was found only
+			if ($line =~ m/$search/) {
+				$match += 1;
+			}
+		} else {
+			# Replace & Count
+			if($line =~ s/$search/$replace/g){
+				$match += 1;
+			}
 		}
+	}
+	
+	if ($print) {
+		if ($match) {
+			print $file, " - ", $match, " matching line(s) found.\n";
+		}
+		return;
 	}
 
 	if($match){
@@ -116,6 +128,14 @@ B<findrep> will scan the current directory recursively and find files
 matching your pattern.
 It'll then replace the given string with the new one.
 
+The following command replaces the text "searchpattern" with "replacepattern" in all files ending with .txt:
+
+=over 8
+
+findrep .*\.txt$ "searchpattern" "replacepattern"
+
+=back
+
 =head1 OPTIONS
 
 =item B<-N>, B<--non-recursive>
@@ -130,8 +150,15 @@ file is examined, giving the name of the file.
 
 =item B<-p>, B<--print>
 
-UNTESTED
-Do not change anything. Instead, print the name of every file that was found. (i.e. a simple search)
+Do not change anything. Instead, print the name of every file the "search-pattern" that was found in. (i.e. a simple search)
+
+Example:
+
+=over 8
+
+findrep .*\.txt$ "searchpattern" -p
+
+=back
 
 =item B<-?>, B<-h>, B<--help>
 
