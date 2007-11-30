@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-11-27 19:55+0100\n"
+"POT-Creation-Date: 2007-11-30 19:34+0100\n"
 "PO-Revision-Date: 2007-09-07 20:54+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -336,12 +336,11 @@ msgstr "Ingång"
 msgid "Missile Battery"
 msgstr "Missilbatteri"
 
-#: ../base/ufos/basemanagement.ufo:123 client/cl_basesummary.c:363
-#: client/cl_basesummary.c:368
+#: ../base/ufos/basemanagement.ufo:123
 msgid "Storage"
 msgstr "Lager"
 
-#: ../base/ufos/basemanagement.ufo:141 client/cl_basesummary.c:376
+#: ../base/ufos/basemanagement.ufo:141
 msgid "Power Plant"
 msgstr "Kraftverk"
 
@@ -349,27 +348,23 @@ msgstr "Kraftverk"
 msgid "Command Centre"
 msgstr "Kommandocentral"
 
-#: ../base/ufos/basemanagement.ufo:173 client/cl_basesummary.c:361
-#: client/cl_basesummary.c:367
+#: ../base/ufos/basemanagement.ufo:173
 msgid "Living Quarters"
 msgstr "Bostäder"
 
 #: ../base/ufos/basemanagement.ufo:192 ../base/ufos/basemanagement.ufo:213
-#: client/cl_basesummary.c:356 client/cl_basesummary.c:371
 msgid "Large Hangar"
 msgstr "Stor hangar"
 
-#: ../base/ufos/basemanagement.ufo:222 client/cl_basesummary.c:355
-#: client/cl_basesummary.c:373
+#: ../base/ufos/basemanagement.ufo:222
 msgid "Small Hangar"
 msgstr "Liten hangar"
 
-#: ../base/ufos/basemanagement.ufo:242 client/cl_basesummary.c:375
+#: ../base/ufos/basemanagement.ufo:242
 msgid "Small UFO Hangar"
 msgstr "Liten UFO-hangar"
 
 #: ../base/ufos/basemanagement.ufo:258 ../base/ufos/basemanagement.ufo:275
-#: client/cl_basesummary.c:357 client/cl_basesummary.c:374
 msgid "Large UFO Hangar"
 msgstr "Stor UFO-hangar"
 
@@ -378,7 +373,6 @@ msgid "Team Room"
 msgstr "Samlingssal"
 
 #: ../base/ufos/basemanagement.ufo:296 ../base/ufos/basemanagement.ufo:316
-#: client/cl_basesummary.c:362 client/cl_basesummary.c:369
 msgid "Workshop"
 msgstr "Verkstad"
 
@@ -386,17 +380,15 @@ msgstr "Verkstad"
 msgid "Radar"
 msgstr "Radar"
 
-#: ../base/ufos/basemanagement.ufo:343 client/cl_basesummary.c:360
-#: client/cl_basesummary.c:366
+#: ../base/ufos/basemanagement.ufo:343
 msgid "Laboratory"
 msgstr "Laboratorium"
 
 #: ../base/ufos/basemanagement.ufo:362 ../base/ufos/menu_bases.ufo:434
-#: client/cl_basesummary.c:359 client/cl_basesummary.c:370
 msgid "Hospital"
 msgstr "Sjukhus"
 
-#: ../base/ufos/basemanagement.ufo:381 client/cl_basesummary.c:378
+#: ../base/ufos/basemanagement.ufo:381
 msgid "Antimatter Storage"
 msgstr "Lagring av antimateria"
 
@@ -674,13 +666,14 @@ msgid "Recovery Report -- %s"
 msgstr "Utomjordisk aktivitet har rapporterats: \"%s\""
 
 #: ../base/ufos/events.ufo:75
-msgid "mail_ufo_crashed_report"
-msgstr ""
+#, fuzzy
+msgid "mail_alien_ufo_crashed"
+msgstr "Baskommendör, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:85
 #, fuzzy
-msgid "mail_ufo_recovery_report"
-msgstr "Utomjordisk aktivitet har rapporterats: \"%s\""
+msgid "mail_alien_ufo_recovered"
+msgstr "Baskommendör, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/events.ufo:94
 #, fuzzy
@@ -1731,7 +1724,7 @@ msgstr "Forska fram ny teknologi"
 msgid "Build at least one functional Laboratory (click for more info)"
 msgstr "Bygg åtminstone ett laboratorium"
 
-#: ../base/ufos/menu_bases.ufo:274 ../base/ufos/menu_basesummary.ufo:354
+#: ../base/ufos/menu_bases.ufo:274 ../base/ufos/menu_basesummary.ufo:361
 msgid "Research"
 msgstr "Forskning"
 
@@ -1743,7 +1736,7 @@ msgstr "Producera ny utrustning"
 msgid "Build at least one functional Workshop (click for more info)"
 msgstr ""
 
-#: ../base/ufos/menu_bases.ufo:315 ../base/ufos/menu_basesummary.ufo:339
+#: ../base/ufos/menu_bases.ufo:315 ../base/ufos/menu_basesummary.ufo:346
 msgid "Production"
 msgstr "Produktion"
 
@@ -1837,7 +1830,7 @@ msgstr "Nästa bas"
 msgid "Name:"
 msgstr "Namn:"
 
-#: ../base/ufos/menu_basesummary.ufo:122 ../base/ufos/menu_basesummary.ufo:433
+#: ../base/ufos/menu_basesummary.ufo:122 ../base/ufos/menu_basesummary.ufo:440
 msgid "Aircraft:"
 msgstr "Farkost:"
 
@@ -1881,19 +1874,19 @@ msgstr "Faciliteter  (använda/tillgängliga)"
 msgid "Hangars:"
 msgstr "Hangarer:"
 
-#: ../base/ufos/menu_basesummary.ufo:312
+#: ../base/ufos/menu_basesummary.ufo:319
 msgid "Construction"
 msgstr "Konstruktion"
 
-#: ../base/ufos/menu_basesummary.ufo:401
+#: ../base/ufos/menu_basesummary.ufo:408
 msgid "Totals"
 msgstr "Totalt"
 
-#: ../base/ufos/menu_basesummary.ufo:407
+#: ../base/ufos/menu_basesummary.ufo:414
 msgid "Bases:"
 msgstr "Baser:"
 
-#: ../base/ufos/menu_basesummary.ufo:420
+#: ../base/ufos/menu_basesummary.ufo:427
 msgid "Personnel:"
 msgstr "Personal:"
 
@@ -3807,7 +3800,7 @@ msgstr "Visa endast anställda"
 msgid "Show only aliens"
 msgstr "Visa endast utomjordingar"
 
-#: ../base/ufos/menu_transfer.ufo:267 client/cl_campaign.c:4543
+#: ../base/ufos/menu_transfer.ufo:267 client/cl_campaign.c:4544
 msgid "Aliens"
 msgstr "Utomjordingar"
 
@@ -15160,15 +15153,13 @@ msgstr "Precisionsskott"
 
 #: ../base/ufos/weapons_laser.ufo:87 ../base/ufos/weapons_laser.ufo:130
 #: ../base/ufos/weapons_laser.ufo:174
-#, fuzzy
-msgid "Long Wave Beam"
-msgstr "Långvåg"
+msgid "Wave Fire"
+msgstr ""
 
 #: ../base/ufos/weapons_laser.ufo:106 ../base/ufos/weapons_laser.ufo:150
 #: ../base/ufos/weapons_laser.ufo:193
-#, fuzzy
-msgid "Short Wave Pulsed"
-msgstr "Kortvåg"
+msgid "Pulsed Fire"
+msgstr ""
 
 #: ../base/ufos/weapons_melee.ufo:8
 msgid "Combat Knife"
@@ -15210,8 +15201,7 @@ msgstr "Partikelstrålpistol"
 msgid "Pistol Particle Accelerator"
 msgstr ""
 
-#: ../base/ufos/weapons_particle.ufo:60 ../base/ufos/weapons_particle.ufo:160
-#: ../base/ufos/weapons_particle.ufo:242
+#: ../base/ufos/weapons_particle.ufo:60 ../base/ufos/weapons_particle.ufo:242
 msgid "Rapid Shots"
 msgstr "Snabba skott"
 
@@ -15223,6 +15213,10 @@ msgstr "Partikelstrålgevär"
 msgid "Rifle Particle Accelerator"
 msgstr ""
 
+#: ../base/ufos/weapons_particle.ufo:160
+msgid "Repeat Fire"
+msgstr ""
+
 #: ../base/ufos/weapons_particle.ufo:187
 msgid "Particle Beam Cannon"
 msgstr "Partikelstrålkanon"
@@ -15232,7 +15226,7 @@ msgid "Cannon Particle Accelerator"
 msgstr ""
 
 #: ../base/ufos/weapons_particle.ufo:262
-msgid "Charged Blast"
+msgid "Unrestricted Blast"
 msgstr ""
 
 #: ../base/ufos/weapons_plasma.ufo:6
@@ -15505,9 +15499,9 @@ msgstr ""
 "\n"
 "Farkoster kan inte starta.\n"
 
-#: client/cl_aircraft.c:278 client/cl_aircraft.c:291 client/cl_aircraft.c:517
-#: client/cl_aircraft.c:702 client/cl_aircraft.c:957 client/cl_aircraft.c:1054
-#: client/cl_aircraft.c:1661 client/cl_airfight.c:339
+#: client/cl_aircraft.c:278 client/cl_aircraft.c:291 client/cl_aircraft.c:519
+#: client/cl_aircraft.c:707 client/cl_aircraft.c:962 client/cl_aircraft.c:1059
+#: client/cl_aircraft.c:1666 client/cl_airfight.c:339
 #: client/cl_aliencont.c:189 client/cl_aliencont.c:217
 #: client/cl_aliencont.c:230 client/cl_aliencont.c:243
 #: client/cl_basemanagement.c:1144 client/cl_basemanagement.c:2338
@@ -15524,12 +15518,12 @@ msgstr ""
 #: client/cl_campaign.c:1393 client/cl_campaign.c:1403
 #: client/cl_campaign.c:1410 client/cl_campaign.c:1418
 #: client/cl_campaign.c:2786 client/cl_campaign.c:2900
-#: client/cl_campaign.c:2958 client/cl_campaign.c:2975
-#: client/cl_campaign.c:2977 client/cl_campaign.c:3311
+#: client/cl_campaign.c:2959 client/cl_campaign.c:2976
+#: client/cl_campaign.c:2978 client/cl_campaign.c:3312
 #: client/cl_inventory.c:292 client/cl_inventory.c:297
 #: client/cl_inventory.c:543 client/cl_main.c:1030 client/cl_main.c:1277
-#: client/cl_map.c:295 client/cl_mapfightequip.c:794
-#: client/cl_mapfightequip.c:796 client/cl_market.c:676 client/cl_market.c:680
+#: client/cl_map.c:295 client/cl_mapfightequip.c:789
+#: client/cl_mapfightequip.c:791 client/cl_market.c:676 client/cl_market.c:680
 #: client/cl_parse.c:1591 client/cl_popup.c:386 client/cl_produce.c:415
 #: client/cl_produce.c:424 client/cl_produce.c:434 client/cl_produce.c:443
 #: client/cl_produce.c:454 client/cl_research.c:1076 client/cl_research.c:1094
@@ -15591,7 +15585,7 @@ msgstr "Överförs"
 msgid "Back to base"
 msgstr "På väg tillbaka till basen"
 
-#: client/cl_aircraft.c:517
+#: client/cl_aircraft.c:519
 #, fuzzy
 msgid ""
 "Your aircraft doesn't have enough fuel to go there and then come back to its "
@@ -15600,46 +15594,46 @@ msgstr ""
 "Din farkost har inte tillräckligt mycket bränsle att flyga dit och tillbaka "
 "till sin hembas"
 
-#: client/cl_aircraft.c:614 client/cl_map.c:1399
+#: client/cl_aircraft.c:619 client/cl_map.c:1399
 #, c-format
 msgid "Speed:\t%i\n"
 msgstr "Hastighet:\t%i\n"
 
-#: client/cl_aircraft.c:615
+#: client/cl_aircraft.c:620
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "Bränsle:\t%i/%i\n"
 
-#: client/cl_aircraft.c:619
+#: client/cl_aircraft.c:624
 #, c-format
 msgid "Weapons:\t%i on %i\n"
 msgstr "Vapen:\t%i på %i\n"
 
-#: client/cl_aircraft.c:621
+#: client/cl_aircraft.c:626
 #, c-format
 msgid "Armours:\t%i on 1\n"
 msgstr "Skydd:\t%i på 1\n"
 
 # Bör testas
-#: client/cl_aircraft.c:624
+#: client/cl_aircraft.c:629
 #, c-format
 msgid "Electronics:\t%i on %i"
 msgstr "Elektronik:\t%i på %i"
 
-#: client/cl_aircraft.c:701
+#: client/cl_aircraft.c:706
 #, c-format
 msgid "You've got a new aircraft (a %s) in base %s"
 msgstr "Du har fått en ny farkost (en %s) i basen %s"
 
-#: client/cl_aircraft.c:957
+#: client/cl_aircraft.c:962
 msgid "Your dropship is low on fuel and returns to base"
 msgstr "Din landare har dåligt med bränsle och återvänder till basen"
 
-#: client/cl_aircraft.c:1054
+#: client/cl_aircraft.c:1059
 msgid "Assign a team to aircraft"
 msgstr "Tilldela ett lag till farkosten"
 
-#: client/cl_aircraft.c:1661
+#: client/cl_aircraft.c:1666
 #, c-format
 msgid "A UFO is shooting at %s"
 msgstr ""
@@ -15658,7 +15652,7 @@ msgstr "Jagar"
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "UFO-jakt lyckades -- UFO:t förlorat till havs."
 
-#: client/cl_airfight.c:448 client/cl_campaign.c:2977
+#: client/cl_airfight.c:448 client/cl_campaign.c:2978
 msgid "You've lost the battle"
 msgstr "Du har förlorat slaget"
 
@@ -15856,55 +15850,43 @@ msgstr "Konstruktion av %s är färdig i basen %s."
 msgid "Building finished"
 msgstr "Byggnaden är färdig"
 
-#: client/cl_basesummary.c:62
+#: client/cl_basesummary.c:66
 #, c-format
 msgid "%s - %i %s\n"
 msgstr "%s - %i %s\n"
 
-#: client/cl_basesummary.c:63
+#: client/cl_basesummary.c:67
 msgid "day"
 msgid_plural "days"
 msgstr[0] "dygn"
 msgstr[1] "dygn"
 
-#: client/cl_basesummary.c:79
+#: client/cl_basesummary.c:89
 #, c-format
 msgid "%s: %i"
 msgstr "%s: %i"
 
-#: client/cl_basesummary.c:91
-#, c-format
-msgid "%s (%i): %i/%i"
-msgstr "%s (%i): %i/%i"
-
-#: client/cl_basesummary.c:149
+#: client/cl_basesummary.c:111
 #, fuzzy, c-format
-msgid "%s:  Qty: %d, Already produced: %f %%"
+msgid "%s: %i/%i"
+msgstr "%s: %i"
+
+#: client/cl_basesummary.c:156
+#, fuzzy, c-format
+msgid "%s:  Qty: %d, Already produced: %.2f %%"
 msgstr "%s:  Antal: %d, Tid kvar: %d timmar"
 
-#: client/cl_basesummary.c:176
+#: client/cl_basesummary.c:183
 #, c-format
 msgid "%s - %1.2f%% (%d %s)\n"
 msgstr "%s - %1.2f%% (%d %s)\n"
 
-#: client/cl_basesummary.c:178 client/cl_campaign.c:1323
-#: client/cl_campaign.c:4552
+#: client/cl_basesummary.c:185 client/cl_campaign.c:1323
+#: client/cl_campaign.c:4553
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "forskare"
 msgstr[1] "forskare"
-
-#: client/cl_basesummary.c:354 client/cl_basesummary.c:372
-msgid "Alien Containment"
-msgstr "Utomjordisk förvaring"
-
-#: client/cl_basesummary.c:365
-msgid "Miscellaneous"
-msgstr "Diverse"
-
-#: client/cl_basesummary.c:377
-msgid "Command Center"
-msgstr "Kommandocentral"
 
 #: client/cl_campaign.c:300 client/cl_map.c:295
 msgid "Could not set up your base at this location"
@@ -16100,19 +16082,19 @@ msgid_plural "credits"
 msgstr[0] "peng"
 msgstr[1] "pengar"
 
-#: client/cl_campaign.c:1324 client/cl_campaign.c:4554
+#: client/cl_campaign.c:1324 client/cl_campaign.c:4555
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "sjukvårdare"
 msgstr[1] "sjukvårdare"
 
-#: client/cl_campaign.c:1325 client/cl_campaign.c:4551
+#: client/cl_campaign.c:1325 client/cl_campaign.c:4552
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "soldat"
 msgstr[1] "soldater"
 
-#: client/cl_campaign.c:1326 client/cl_campaign.c:4553
+#: client/cl_campaign.c:1326 client/cl_campaign.c:4554
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "arbetare"
@@ -16164,7 +16146,7 @@ msgid "Paid %i credits in interest on your debt."
 msgstr "Betalade %i pengar i skuldränta."
 
 #: client/cl_campaign.c:1577 client/cl_event.c:248 client/cl_save.c:273
-#: client/cl_ufopedia.c:713 client/cl_ufopedia.c:719
+#: client/cl_ufopedia.c:715 client/cl_ufopedia.c:721
 #, c-format
 msgid "%i %s %02i"
 msgstr "%i %s %02i"
@@ -16201,7 +16183,7 @@ msgstr ""
 "Aktiva:\t%i\n"
 "Attackerade:\t%i\n"
 
-#: client/cl_campaign.c:1729 client/cl_ufopedia.c:1567
+#: client/cl_campaign.c:1729 client/cl_ufopedia.c:1569
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
@@ -16269,21 +16251,21 @@ msgstr "Sätt samman eller läs in ett lag"
 msgid "Your dropship is not near the landing zone"
 msgstr "Ditt landsättningsskepp är inte nära landningszonen"
 
-#: client/cl_campaign.c:2958
+#: client/cl_campaign.c:2959
 #, c-format
 msgid "Collected %i dead alien bodies"
 msgstr ""
 
-#: client/cl_campaign.c:2975
+#: client/cl_campaign.c:2976
 msgid "You've won the battle"
 msgstr "Du har vunnit slaget"
 
-#: client/cl_campaign.c:3062
+#: client/cl_campaign.c:3063
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s har blivit befordrad till %s.\n"
 
-#: client/cl_campaign.c:3064
+#: client/cl_campaign.c:3065
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\\for inspirational gallantry "
@@ -16292,20 +16274,20 @@ msgstr ""
 "%s har tilldelats den postuma graden %s\\för inspirationsgivande tapperhet i "
 "strid.\n"
 
-#: client/cl_campaign.c:3065
+#: client/cl_campaign.c:3066
 msgid "Soldier promoted"
 msgstr "Soldat befordrad"
 
-#: client/cl_campaign.c:3310
+#: client/cl_campaign.c:3311
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "Försvar av basen %s lyckades!"
 
-#: client/cl_campaign.c:4541
+#: client/cl_campaign.c:4542
 msgid "Human"
 msgstr "Mänsklig"
 
-#: client/cl_campaign.c:4545
+#: client/cl_campaign.c:4546
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -16324,28 +16306,28 @@ msgstr ""
 "Max tillåten skuld: %ic\n"
 "%s\n"
 
-#: client/cl_campaign.c:4698
+#: client/cl_campaign.c:4699
 #, fuzzy, c-format
 msgid "  * %i x\t%s\n"
 msgstr "%s - %i %s\n"
 
-#: client/cl_campaign.c:4721
+#: client/cl_campaign.c:4722
 #, fuzzy, c-format
 msgid "  * %s\n"
 msgstr "%s - %i %s\n"
 
-#: client/cl_campaign.c:4879
+#: client/cl_campaign.c:4880
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to base %s."
 msgstr ""
 "Bärgade UFO av typen %s från slagfältet. UFO:t transporteras till basen %s."
 
-#: client/cl_campaign.c:4881 client/cl_campaign.c:5022
-#: client/cl_campaign.c:5100
+#: client/cl_campaign.c:4882 client/cl_campaign.c:5023
+#: client/cl_campaign.c:5101
 msgid "UFO Recovery"
 msgstr "Bärgning av UFO"
 
-#: client/cl_campaign.c:4959
+#: client/cl_campaign.c:4960
 #, fuzzy
 msgid ""
 "\n"
@@ -16353,7 +16335,7 @@ msgid ""
 "Selected base:\t\t\t"
 msgstr "Vald bas"
 
-#: client/cl_campaign.c:5020
+#: client/cl_campaign.c:5021
 #, c-format
 msgid ""
 "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
@@ -16361,7 +16343,7 @@ msgstr ""
 "Bärgade UFO av typen %s från slagfältet. UFO:t såldes till nationen %s för %"
 "i pengar."
 
-#: client/cl_campaign.c:5070
+#: client/cl_campaign.c:5071
 msgid ""
 "\n"
 "\n"
@@ -16371,7 +16353,7 @@ msgstr ""
 "\n"
 "Vald nation:\t\t\t"
 
-#: client/cl_campaign.c:5098
+#: client/cl_campaign.c:5099
 #, c-format
 msgid "Secured %s was destroyed."
 msgstr "Säkrat UFO av typen %s förstördes."
@@ -16862,119 +16844,119 @@ msgstr "Hastighet:\t%i\n"
 msgid "Fuel:\t\t%i/%i\n"
 msgstr "Bränsle:\t%i/%i\n"
 
-#: client/cl_mapfightequip.c:661 client/cl_mapfightequip.c:675
+#: client/cl_mapfightequip.c:656 client/cl_mapfightequip.c:670
 msgid "No defense of this type in this base\n"
 msgstr "Inget försvar av den här typen i den här basen\n"
 
-#: client/cl_mapfightequip.c:665 client/cl_mapfightequip.c:679
+#: client/cl_mapfightequip.c:660 client/cl_mapfightequip.c:674
 #, c-format
 msgid "Slot %i:\tempty\n"
 msgstr "Plats %i:\ttom\n"
 
-#: client/cl_mapfightequip.c:668 client/cl_mapfightequip.c:682
+#: client/cl_mapfightequip.c:663 client/cl_mapfightequip.c:677
 #, c-format
 msgid "Slot %i:\t%s\n"
 msgstr "Plats %i:\t%s\n"
 
-#: client/cl_mapfightequip.c:695
+#: client/cl_mapfightequip.c:690
 msgid "No defense system assigned.\n"
 msgstr "Inget försvarssystem tilldelat.\n"
 
-#: client/cl_mapfightequip.c:702
+#: client/cl_mapfightequip.c:697
 msgid "This defense system is functional.\n"
 msgstr "Det här försvarssystemet fungerar.\n"
 
-#: client/cl_mapfightequip.c:704
+#: client/cl_mapfightequip.c:699
 #, c-format
 msgid "This defense system will be installed in %i hours.\n"
 msgstr "Det här försvarssystemet kommer att vara installerat om %i timmar.\n"
 
-#: client/cl_mapfightequip.c:706
+#: client/cl_mapfightequip.c:701
 #, c-format
 msgid "This defense system will be removed in %i hours.\n"
 msgstr "Det här försvarssystemet kommer att vara borttaget om %i timmar.\n"
 
-#: client/cl_mapfightequip.c:713
+#: client/cl_mapfightequip.c:708
 msgid "No defense system assigned."
 msgstr "Inget försvarssystem tilldelat."
 
-#: client/cl_mapfightequip.c:717
+#: client/cl_mapfightequip.c:712
 #, c-format
 msgid "This defense system will be operational in %i hours.\n"
 msgstr "Det här försvarssystemet kommer att vara operationellt om %i timmar.\n"
 
-#: client/cl_mapfightequip.c:726
+#: client/cl_mapfightequip.c:721
 msgid "No ammo assigned to this defense system."
 msgstr "Ingen ammunition har tilldelats det här försvarssystemet."
 
-#: client/cl_mapfightequip.c:731
+#: client/cl_mapfightequip.c:726
 #, c-format
 msgid " (%i missile left)"
 msgid_plural " (%i missiles left)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: client/cl_mapfightequip.c:794
+#: client/cl_mapfightequip.c:789
 #, fuzzy
 msgid "Aircraft item was successfully installed."
 msgstr "Kampanjen har sparats."
 
-#: client/cl_mapfightequip.c:796
+#: client/cl_mapfightequip.c:791
 #, fuzzy
 msgid "Base defense item was successfully installed."
 msgstr "Kampanjen har sparats."
 
-#: client/cl_mapfightequip.c:1021
+#: client/cl_mapfightequip.c:1016
 msgid "No item assigned.\n"
 msgstr "Inget objekt tilldelat.\n"
 
-#: client/cl_mapfightequip.c:1022
+#: client/cl_mapfightequip.c:1017
 #, c-format
 msgid "This slot is for %s or smaller items."
 msgstr "Den här platsen är för %s eller mindre objekt."
 
-#: client/cl_mapfightequip.c:1027
+#: client/cl_mapfightequip.c:1022
 msgid "This item is functional.\n"
 msgstr "Det här objektet fungerar.\n"
 
-#: client/cl_mapfightequip.c:1029
+#: client/cl_mapfightequip.c:1024
 #, c-format
 msgid "This item will be installed in %i hours.\n"
 msgstr "Det här objektet kommer att vara installerat om %i timmar.\n"
 
-#: client/cl_mapfightequip.c:1031
+#: client/cl_mapfightequip.c:1026
 #, c-format
 msgid "This item will be removed in %i hours.\n"
 msgstr "Det här objektet kommer att vara borttaget om %i timmar.\n"
 
-#: client/cl_mapfightequip.c:1038
+#: client/cl_mapfightequip.c:1033
 msgid "No item assigned."
 msgstr "Inget objekt tilldelat."
 
-#: client/cl_mapfightequip.c:1042
+#: client/cl_mapfightequip.c:1037
 #, c-format
 msgid "This item will be operational in %i hours.\n"
 msgstr "Det här objektet kommer att vara operationellt om %i timmar.\n"
 
-#: client/cl_mapfightequip.c:1051
+#: client/cl_mapfightequip.c:1046
 msgid "No ammo assigned to this weapon."
 msgstr "Ingen ammunition har tilldelats det här vapnet."
 
-#: client/cl_mapfightequip.c:1768
+#: client/cl_mapfightequip.c:1811
 msgid "Light weight"
 msgstr ""
 
-#: client/cl_mapfightequip.c:1771
+#: client/cl_mapfightequip.c:1814
 #, fuzzy
 msgid "Medium weight"
 msgstr "Medel"
 
-#: client/cl_mapfightequip.c:1774
+#: client/cl_mapfightequip.c:1817
 #, fuzzy
 msgid "Heavy weight"
 msgstr "Tung laser"
 
-#: client/cl_mapfightequip.c:1777
+#: client/cl_mapfightequip.c:1820
 msgid "Unknown weight"
 msgstr "Okänd vikt"
 
@@ -18310,15 +18292,15 @@ msgstr "%s\t%i\n"
 msgid "Max. soldiers:\t%i\n"
 msgstr "Max. soldater per lag:\t%s\n"
 
-#: client/cl_ufopedia.c:738
+#: client/cl_ufopedia.c:740
 msgid "Proposal: "
 msgstr "Förslag: "
 
-#: client/cl_ufopedia.c:741
+#: client/cl_ufopedia.c:743
 msgid "Re: "
 msgstr "Sv: "
 
-#: client/cl_ufopedia.c:753
+#: client/cl_ufopedia.c:755
 #, c-format
 msgid ""
 "FROM: %s\n"
@@ -18331,50 +18313,50 @@ msgstr ""
 "DATUM: %s\n"
 "ÄMNE: %s%s\n"
 
-#: client/cl_ufopedia.c:843
+#: client/cl_ufopedia.c:845
 msgid "No pre-research description available."
 msgstr "Ingen beskrivning av tidigare forskning tillgänglig."
 
-#: client/cl_ufopedia.c:1038
+#: client/cl_ufopedia.c:1040
 msgid "UFOpaedia Content"
 msgstr "Innehåll i Ufopedia"
 
-#: client/cl_ufopedia.c:1070
+#: client/cl_ufopedia.c:1072
 #, c-format
 msgid "UFOpaedia Index: %s"
 msgstr "Index för Ufopedia: %s"
 
-#: client/cl_ufopedia.c:1494
+#: client/cl_ufopedia.c:1496
 #, c-format
 msgid "^BProposal: %s\t%i %s %02i\n"
 msgstr "^BFörslag: %s\t%i %s %02i\n"
 
-#: client/cl_ufopedia.c:1500
+#: client/cl_ufopedia.c:1502
 #, c-format
 msgid "Proposal: %s\t%i %s %02i\n"
 msgstr "Förslag: %s\t%i %s %02i\n"
 
-#: client/cl_ufopedia.c:1512
+#: client/cl_ufopedia.c:1514
 #, c-format
 msgid "^BRe: %s\t%i %s %02i\n"
 msgstr "^BSv: %s\t%i %s %02i\n"
 
-#: client/cl_ufopedia.c:1518
+#: client/cl_ufopedia.c:1520
 #, c-format
 msgid "Re: %s\t%i %s %02i\n"
 msgstr "Sv: %s\t%i %s %02i\n"
 
-#: client/cl_ufopedia.c:1529 client/cl_ufopedia.c:1544
+#: client/cl_ufopedia.c:1531 client/cl_ufopedia.c:1546
 #, c-format
 msgid "^B%s\t%i %s %02i\n"
 msgstr "^B%s\t%i %s %02i\n"
 
-#: client/cl_ufopedia.c:1535 client/cl_ufopedia.c:1550
+#: client/cl_ufopedia.c:1537 client/cl_ufopedia.c:1552
 #, c-format
 msgid "%s\t%i %s %02i\n"
 msgstr "%s\t%i %s %02i\n"
 
-#: client/cl_ufopedia.c:1564
+#: client/cl_ufopedia.c:1566
 #, fuzzy, c-format
 msgid "^B%s\t%s\n"
 msgstr "%s\t%s\n"
@@ -18417,11 +18399,11 @@ msgid "Can't perform action - no control over allied actors!\n"
 msgstr ""
 "Kan inte genomföra handlingen - ingen kontroll över allierade soldater!\n"
 
-#: game/g_client.c:899
+#: game/g_client.c:903
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "Kan inte genomföra handling - inte tillräckligt med TE!\n"
 
-#: game/g_client.c:902
+#: game/g_client.c:906
 msgid ""
 "Can't perform action - weapon already fully loaded with the same "
 "ammunition!\n"
@@ -18429,60 +18411,60 @@ msgstr ""
 "Kan inte genomföra handlingen - vapnet är redan fullt laddat med samma "
 "ammunition!\n"
 
-#: game/g_client.c:1540
+#: game/g_client.c:1548
 msgid "Currently shaken, won't let their guard down.\n"
 msgstr "Skakad men fortfarande på alerten.\n"
 
-#: game/g_client.c:1646
+#: game/g_client.c:1654
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s får panik!\n"
 
-#: game/g_client.c:1706
+#: game/g_client.c:1714
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s rusar omkring i raseri.\n"
 
-#: game/g_client.c:1708
+#: game/g_client.c:1716
 #, c-format
 msgid "%s is consumed by mad rage!\n"
 msgstr "%s är full av raseri!\n"
 
-#: game/g_client.c:1769
+#: game/g_client.c:1777
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s är skakig.\n"
 
-#: game/g_client.c:2255 game/g_svcmds.c:353
+#: game/g_client.c:2263 game/g_svcmds.c:353
 #, c-format
 msgid "Team %i (%s) will get the first turn.\n"
 msgstr "Lag %i (%s) får den första omgången.\n"
 
-#: game/g_client.c:2482
+#: game/g_client.c:2490
 msgid "4 minutes left until forced round end\n"
 msgstr "4 minuter kvar tills omgången avslutas\n"
 
-#: game/g_client.c:2485
+#: game/g_client.c:2493
 msgid "3 minutes left until forced round end\n"
 msgstr "3 minuter kvar tills omgången avslutas\n"
 
-#: game/g_client.c:2488
+#: game/g_client.c:2496
 msgid "2 minutes left until forced round end\n"
 msgstr "2 minuter kvar tills omgången avslutas\n"
 
-#: game/g_client.c:2491
+#: game/g_client.c:2499
 msgid "1 minute left until forced round end\n"
 msgstr "1 minut kvar tills omgången avslutas\n"
 
-#: game/g_client.c:2494
+#: game/g_client.c:2502
 msgid "30 seconds left until forced round end\n"
 msgstr "30 sekunder kvar tills omgången avslutas\n"
 
-#: game/g_client.c:2497
+#: game/g_client.c:2505
 msgid "15 seconds left until forced round end\n"
 msgstr "15 sekunder kvar tills omgången avslutas\n"
 
-#: game/g_client.c:2505
+#: game/g_client.c:2513
 msgid "Current active team hit the max round time\n"
 msgstr "För närvarande aktivt lag nådde maximal tid för omgång\n"
 
@@ -18530,6 +18512,30 @@ msgstr "Basen är under attack"
 #: po/OTHER_STRINGS:14
 msgid "Crashed Alien Ship. Secure the area."
 msgstr ""
+
+#, fuzzy
+#~ msgid "mail_ufo_recovery_report"
+#~ msgstr "Utomjordisk aktivitet har rapporterats: \"%s\""
+
+#, fuzzy
+#~ msgid "Long Wave Beam"
+#~ msgstr "Långvåg"
+
+#, fuzzy
+#~ msgid "Short Wave Pulsed"
+#~ msgstr "Kortvåg"
+
+#~ msgid "%s (%i): %i/%i"
+#~ msgstr "%s (%i): %i/%i"
+
+#~ msgid "Alien Containment"
+#~ msgstr "Utomjordisk förvaring"
+
+#~ msgid "Miscellaneous"
+#~ msgstr "Diverse"
+
+#~ msgid "Command Center"
+#~ msgstr "Kommandocentral"
 
 #~ msgid "No disassembly selected"
 #~ msgstr "Ingen nedmontering vald"

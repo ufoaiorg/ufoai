@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion Thai v1.0\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-11-27 19:55+0100\n"
+"POT-Creation-Date: 2007-11-30 19:34+0100\n"
 "PO-Revision-Date: 2007-07-30 11:29+0700\n"
 "Last-Translator: Sophon Taechasivalai <mickey@metawire.com>\n"
 "Language-Team: Sophont <mickey@metawire.com>\n"
@@ -343,12 +343,11 @@ msgstr "ทางเข้า"
 msgid "Missile Battery"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:123 client/cl_basesummary.c:363
-#: client/cl_basesummary.c:368
+#: ../base/ufos/basemanagement.ufo:123
 msgid "Storage"
 msgstr "ห้องเก็บของ"
 
-#: ../base/ufos/basemanagement.ufo:141 client/cl_basesummary.c:376
+#: ../base/ufos/basemanagement.ufo:141
 msgid "Power Plant"
 msgstr "แหล่งผลิตพลังงาน"
 
@@ -356,27 +355,23 @@ msgstr "แหล่งผลิตพลังงาน"
 msgid "Command Centre"
 msgstr "ศูนย์บัญชาการ"
 
-#: ../base/ufos/basemanagement.ufo:173 client/cl_basesummary.c:361
-#: client/cl_basesummary.c:367
+#: ../base/ufos/basemanagement.ufo:173
 msgid "Living Quarters"
 msgstr "เขตพักอาศัย"
 
 #: ../base/ufos/basemanagement.ufo:192 ../base/ufos/basemanagement.ufo:213
-#: client/cl_basesummary.c:356 client/cl_basesummary.c:371
 msgid "Large Hangar"
 msgstr "โรงเก็บเครื่องบินใหญ่"
 
-#: ../base/ufos/basemanagement.ufo:222 client/cl_basesummary.c:355
-#: client/cl_basesummary.c:373
+#: ../base/ufos/basemanagement.ufo:222
 msgid "Small Hangar"
 msgstr "โรงเก็บเครื่องบินเล็ก"
 
-#: ../base/ufos/basemanagement.ufo:242 client/cl_basesummary.c:375
+#: ../base/ufos/basemanagement.ufo:242
 msgid "Small UFO Hangar"
 msgstr "โรงเก็บจานบินเล็ก"
 
 #: ../base/ufos/basemanagement.ufo:258 ../base/ufos/basemanagement.ufo:275
-#: client/cl_basesummary.c:357 client/cl_basesummary.c:374
 msgid "Large UFO Hangar"
 msgstr "โรงเก็บจานบินใหญ่"
 
@@ -385,7 +380,6 @@ msgid "Team Room"
 msgstr "ห้องทีม"
 
 #: ../base/ufos/basemanagement.ufo:296 ../base/ufos/basemanagement.ufo:316
-#: client/cl_basesummary.c:362 client/cl_basesummary.c:369
 msgid "Workshop"
 msgstr "ห้องช่าง"
 
@@ -393,17 +387,15 @@ msgstr "ห้องช่าง"
 msgid "Radar"
 msgstr "เรดาร์"
 
-#: ../base/ufos/basemanagement.ufo:343 client/cl_basesummary.c:360
-#: client/cl_basesummary.c:366
+#: ../base/ufos/basemanagement.ufo:343
 msgid "Laboratory"
 msgstr "ห้องวิจัย"
 
 #: ../base/ufos/basemanagement.ufo:362 ../base/ufos/menu_bases.ufo:434
-#: client/cl_basesummary.c:359 client/cl_basesummary.c:370
 msgid "Hospital"
 msgstr "โรงพยาบาล"
 
-#: ../base/ufos/basemanagement.ufo:381 client/cl_basesummary.c:378
+#: ../base/ufos/basemanagement.ufo:381
 #, fuzzy
 msgid "Antimatter Storage"
 msgstr "Antimatter"
@@ -665,13 +657,14 @@ msgid "Recovery Report -- %s"
 msgstr "พบการปฏิบัติการของมนุษย์ต่างดาว: '%s'"
 
 #: ../base/ufos/events.ufo:75
-msgid "mail_ufo_crashed_report"
-msgstr ""
+#, fuzzy
+msgid "mail_alien_ufo_crashed"
+msgstr "ผู้บัญชาการฐาน, PHALANX, หน่วยปฏิบัิตการแอตแลนติค"
 
 #: ../base/ufos/events.ufo:85
 #, fuzzy
-msgid "mail_ufo_recovery_report"
-msgstr "พบการปฏิบัติการของมนุษย์ต่างดาว: '%s'"
+msgid "mail_alien_ufo_recovered"
+msgstr "ผู้บัญชาการฐาน, PHALANX, หน่วยปฏิบัิตการแอตแลนติค"
 
 #: ../base/ufos/events.ufo:94
 #, fuzzy
@@ -1734,7 +1727,7 @@ msgstr "วิจัยวิทยาการใหม่"
 msgid "Build at least one functional Laboratory (click for more info)"
 msgstr "สร้างห้องวิจัยก่อน"
 
-#: ../base/ufos/menu_bases.ufo:274 ../base/ufos/menu_basesummary.ufo:354
+#: ../base/ufos/menu_bases.ufo:274 ../base/ufos/menu_basesummary.ufo:361
 msgid "Research"
 msgstr "วิจัย"
 
@@ -1746,7 +1739,7 @@ msgstr "ผลิตอุปกรณ์ใหม่"
 msgid "Build at least one functional Workshop (click for more info)"
 msgstr ""
 
-#: ../base/ufos/menu_bases.ufo:315 ../base/ufos/menu_basesummary.ufo:339
+#: ../base/ufos/menu_bases.ufo:315 ../base/ufos/menu_basesummary.ufo:346
 msgid "Production"
 msgstr "การผลิต"
 
@@ -1844,7 +1837,7 @@ msgstr "ฐานใหม่"
 msgid "Name:"
 msgstr "ชื่อ:"
 
-#: ../base/ufos/menu_basesummary.ufo:122 ../base/ufos/menu_basesummary.ufo:433
+#: ../base/ufos/menu_basesummary.ufo:122 ../base/ufos/menu_basesummary.ufo:440
 #, fuzzy
 msgid "Aircraft:"
 msgstr "เครื่องบิน"
@@ -1898,22 +1891,22 @@ msgstr "%s มีชีวิตอยู่ (มีทั้งหมด %i )\n
 msgid "Hangars:"
 msgstr "โรงเก็บเครื่องบินใหญ่"
 
-#: ../base/ufos/menu_basesummary.ufo:312
+#: ../base/ufos/menu_basesummary.ufo:319
 #, fuzzy
 msgid "Construction"
 msgstr "ก่อสร้างเสร็จสิ้น"
 
-#: ../base/ufos/menu_basesummary.ufo:401
+#: ../base/ufos/menu_basesummary.ufo:408
 #, fuzzy
 msgid "Totals"
 msgstr "ฝึกเล่น"
 
-#: ../base/ufos/menu_basesummary.ufo:407
+#: ../base/ufos/menu_basesummary.ufo:414
 #, fuzzy
 msgid "Bases:"
 msgstr "ฐาน:"
 
-#: ../base/ufos/menu_basesummary.ufo:420
+#: ../base/ufos/menu_basesummary.ufo:427
 msgid "Personnel:"
 msgstr ""
 
@@ -3868,7 +3861,7 @@ msgstr "แสดงเฉพาะพนักงาน"
 msgid "Show only aliens"
 msgstr "แสดงเฉพาะมนุษย์ต่างดาว"
 
-#: ../base/ufos/menu_transfer.ufo:267 client/cl_campaign.c:4543
+#: ../base/ufos/menu_transfer.ufo:267 client/cl_campaign.c:4544
 msgid "Aliens"
 msgstr "มนุษย์ต่างดาว"
 
@@ -14434,15 +14427,13 @@ msgstr "Precision Shot"
 
 #: ../base/ufos/weapons_laser.ufo:87 ../base/ufos/weapons_laser.ufo:130
 #: ../base/ufos/weapons_laser.ufo:174
-#, fuzzy
-msgid "Long Wave Beam"
-msgstr "คลื่นยาว"
+msgid "Wave Fire"
+msgstr ""
 
 #: ../base/ufos/weapons_laser.ufo:106 ../base/ufos/weapons_laser.ufo:150
 #: ../base/ufos/weapons_laser.ufo:193
-#, fuzzy
-msgid "Short Wave Pulsed"
-msgstr "คลื่นสั้น"
+msgid "Pulsed Fire"
+msgstr ""
 
 #: ../base/ufos/weapons_melee.ufo:8
 msgid "Combat Knife"
@@ -14484,8 +14475,7 @@ msgstr "ปืนพกลำแสงอนุภาค"
 msgid "Pistol Particle Accelerator"
 msgstr "เครื่องเร่งอนุภาคปืนพก"
 
-#: ../base/ufos/weapons_particle.ufo:60 ../base/ufos/weapons_particle.ufo:160
-#: ../base/ufos/weapons_particle.ufo:242
+#: ../base/ufos/weapons_particle.ufo:60 ../base/ufos/weapons_particle.ufo:242
 msgid "Rapid Shots"
 msgstr "ยิงอย่างรวดเร็ว"
 
@@ -14497,6 +14487,10 @@ msgstr "ไรเฟิลอนุถาคแสง"
 msgid "Rifle Particle Accelerator"
 msgstr "เครื่องเร่งอนุภาคไรเฟิล"
 
+#: ../base/ufos/weapons_particle.ufo:160
+msgid "Repeat Fire"
+msgstr ""
+
 #: ../base/ufos/weapons_particle.ufo:187
 msgid "Particle Beam Cannon"
 msgstr "ปืนใหญ่ลำแสงอนุภาค"
@@ -14506,8 +14500,8 @@ msgid "Cannon Particle Accelerator"
 msgstr "เครื่องเร่งอนุภาคปืนใหญ่"
 
 #: ../base/ufos/weapons_particle.ufo:262
-msgid "Charged Blast"
-msgstr "ยิงแบบรวมพลัง"
+msgid "Unrestricted Blast"
+msgstr ""
 
 #: ../base/ufos/weapons_plasma.ufo:6
 msgid "Plasma Pistol"
@@ -14777,9 +14771,9 @@ msgid ""
 "Aircraft can not start.\n"
 msgstr ""
 
-#: client/cl_aircraft.c:278 client/cl_aircraft.c:291 client/cl_aircraft.c:517
-#: client/cl_aircraft.c:702 client/cl_aircraft.c:957 client/cl_aircraft.c:1054
-#: client/cl_aircraft.c:1661 client/cl_airfight.c:339
+#: client/cl_aircraft.c:278 client/cl_aircraft.c:291 client/cl_aircraft.c:519
+#: client/cl_aircraft.c:707 client/cl_aircraft.c:962 client/cl_aircraft.c:1059
+#: client/cl_aircraft.c:1666 client/cl_airfight.c:339
 #: client/cl_aliencont.c:189 client/cl_aliencont.c:217
 #: client/cl_aliencont.c:230 client/cl_aliencont.c:243
 #: client/cl_basemanagement.c:1144 client/cl_basemanagement.c:2338
@@ -14796,12 +14790,12 @@ msgstr ""
 #: client/cl_campaign.c:1393 client/cl_campaign.c:1403
 #: client/cl_campaign.c:1410 client/cl_campaign.c:1418
 #: client/cl_campaign.c:2786 client/cl_campaign.c:2900
-#: client/cl_campaign.c:2958 client/cl_campaign.c:2975
-#: client/cl_campaign.c:2977 client/cl_campaign.c:3311
+#: client/cl_campaign.c:2959 client/cl_campaign.c:2976
+#: client/cl_campaign.c:2978 client/cl_campaign.c:3312
 #: client/cl_inventory.c:292 client/cl_inventory.c:297
 #: client/cl_inventory.c:543 client/cl_main.c:1030 client/cl_main.c:1277
-#: client/cl_map.c:295 client/cl_mapfightequip.c:794
-#: client/cl_mapfightequip.c:796 client/cl_market.c:676 client/cl_market.c:680
+#: client/cl_map.c:295 client/cl_mapfightequip.c:789
+#: client/cl_mapfightequip.c:791 client/cl_market.c:676 client/cl_market.c:680
 #: client/cl_parse.c:1591 client/cl_popup.c:386 client/cl_produce.c:415
 #: client/cl_produce.c:424 client/cl_produce.c:434 client/cl_produce.c:443
 #: client/cl_produce.c:454 client/cl_research.c:1076 client/cl_research.c:1094
@@ -14863,51 +14857,51 @@ msgstr ""
 msgid "Back to base"
 msgstr "กลับฐาน"
 
-#: client/cl_aircraft.c:517
+#: client/cl_aircraft.c:519
 msgid ""
 "Your aircraft doesn't have enough fuel to go there and then come back to its "
 "home base."
 msgstr ""
 
-#: client/cl_aircraft.c:614 client/cl_map.c:1399
+#: client/cl_aircraft.c:619 client/cl_map.c:1399
 #, fuzzy, c-format
 msgid "Speed:\t%i\n"
 msgstr "ความเร็ว:\t%.0f\n"
 
-#: client/cl_aircraft.c:615
+#: client/cl_aircraft.c:620
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "เชื้อเพลิง:\t%i/%i\n"
 
-#: client/cl_aircraft.c:619
+#: client/cl_aircraft.c:624
 #, fuzzy, c-format
 msgid "Weapons:\t%i on %i\n"
 msgstr "อาวุธ:\t%s\n"
 
-#: client/cl_aircraft.c:621
+#: client/cl_aircraft.c:626
 #, fuzzy, c-format
 msgid "Armours:\t%i on 1\n"
 msgstr "เครื่องบิน:\t%i c\n"
 
-#: client/cl_aircraft.c:624
+#: client/cl_aircraft.c:629
 #, c-format
 msgid "Electronics:\t%i on %i"
 msgstr ""
 
-#: client/cl_aircraft.c:701
+#: client/cl_aircraft.c:706
 #, c-format
 msgid "You've got a new aircraft (a %s) in base %s"
 msgstr "มีเครื่องบินใหม่ ( %s) ในฐาน %s"
 
-#: client/cl_aircraft.c:957
+#: client/cl_aircraft.c:962
 msgid "Your dropship is low on fuel and returns to base"
 msgstr "เครื่องบินเหลือเชื้อเพลิงน้อยและกำลังกลับฐาน"
 
-#: client/cl_aircraft.c:1054
+#: client/cl_aircraft.c:1059
 msgid "Assign a team to aircraft"
 msgstr "จัดทีมในเครื่อง"
 
-#: client/cl_aircraft.c:1661
+#: client/cl_aircraft.c:1666
 #, c-format
 msgid "A UFO is shooting at %s"
 msgstr ""
@@ -14925,7 +14919,7 @@ msgstr "ดักจับ"
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr ""
 
-#: client/cl_airfight.c:448 client/cl_campaign.c:2977
+#: client/cl_airfight.c:448 client/cl_campaign.c:2978
 msgid "You've lost the battle"
 msgstr "คุณรบแพ้"
 
@@ -15121,58 +15115,44 @@ msgstr "การสร้างสิ่งก่อสร้าง %s เส�
 msgid "Building finished"
 msgstr "สิ่งก่อสร้างเสร็จ"
 
-#: client/cl_basesummary.c:62
+#: client/cl_basesummary.c:66
 #, fuzzy, c-format
 msgid "%s - %i %s\n"
 msgstr "%s\t%i / %i\n"
 
-#: client/cl_basesummary.c:63
+#: client/cl_basesummary.c:67
 #, fuzzy
 msgid "day"
 msgid_plural "days"
 msgstr[0] "1 วัน"
 msgstr[1] "1 วัน"
 
-#: client/cl_basesummary.c:79
+#: client/cl_basesummary.c:89
 #, fuzzy, c-format
 msgid "%s: %i"
 msgstr "ค่าเวลา: %i"
 
-#: client/cl_basesummary.c:91
+#: client/cl_basesummary.c:111
 #, fuzzy, c-format
-msgid "%s (%i): %i/%i"
-msgstr "%s\t%i / %i\n"
+msgid "%s: %i/%i"
+msgstr "ค่าเวลา: %i"
 
-#: client/cl_basesummary.c:149
+#: client/cl_basesummary.c:156
 #, c-format
-msgid "%s:  Qty: %d, Already produced: %f %%"
+msgid "%s:  Qty: %d, Already produced: %.2f %%"
 msgstr ""
 
-#: client/cl_basesummary.c:176
+#: client/cl_basesummary.c:183
 #, c-format
 msgid "%s - %1.2f%% (%d %s)\n"
 msgstr ""
 
-#: client/cl_basesummary.c:178 client/cl_campaign.c:1323
-#: client/cl_campaign.c:4552
+#: client/cl_basesummary.c:185 client/cl_campaign.c:1323
+#: client/cl_campaign.c:4553
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "นักวิทยาศาสตร์"
 msgstr[1] "นักวิทยาศาสตร์"
-
-#: client/cl_basesummary.c:354 client/cl_basesummary.c:372
-#, fuzzy
-msgid "Alien Containment"
-msgstr "เขตกักกันถัดไป"
-
-#: client/cl_basesummary.c:365
-msgid "Miscellaneous"
-msgstr ""
-
-#: client/cl_basesummary.c:377
-#, fuzzy
-msgid "Command Center"
-msgstr "ศูนย์บัญชาการ"
 
 #: client/cl_campaign.c:300 client/cl_map.c:295
 msgid "Could not set up your base at this location"
@@ -15353,19 +15333,19 @@ msgid_plural "credits"
 msgstr[0] "เครดิต"
 msgstr[1] "เครดิต"
 
-#: client/cl_campaign.c:1324 client/cl_campaign.c:4554
+#: client/cl_campaign.c:1324 client/cl_campaign.c:4555
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "เสนารักษ์"
 msgstr[1] "เสนารักษ์"
 
-#: client/cl_campaign.c:1325 client/cl_campaign.c:4551
+#: client/cl_campaign.c:1325 client/cl_campaign.c:4552
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "ทหาร"
 msgstr[1] "ทหาร"
 
-#: client/cl_campaign.c:1326 client/cl_campaign.c:4553
+#: client/cl_campaign.c:1326 client/cl_campaign.c:4554
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "คนงาน"
@@ -15417,7 +15397,7 @@ msgid "Paid %i credits in interest on your debt."
 msgstr "จ่าย %i เครดิต เป็นค่าดอกเบี้ยเงินกู้"
 
 #: client/cl_campaign.c:1577 client/cl_event.c:248 client/cl_save.c:273
-#: client/cl_ufopedia.c:713 client/cl_ufopedia.c:719
+#: client/cl_ufopedia.c:715 client/cl_ufopedia.c:721
 #, c-format
 msgid "%i %s %02i"
 msgstr "%i %s %02i"
@@ -15454,7 +15434,7 @@ msgstr ""
 "คงอยู่:\t%i\n"
 "ถูกโจมตี:\t%i\n"
 
-#: client/cl_campaign.c:1729 client/cl_ufopedia.c:1567
+#: client/cl_campaign.c:1729 client/cl_ufopedia.c:1569
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
@@ -15520,21 +15500,21 @@ msgstr "รวมพล หรือจัดขึ้นเครื่อง"
 msgid "Your dropship is not near the landing zone"
 msgstr "เครื่องไม่ได้อยู่ใกล้กลับบริเวณลงจอด"
 
-#: client/cl_campaign.c:2958
+#: client/cl_campaign.c:2959
 #, c-format
 msgid "Collected %i dead alien bodies"
 msgstr ""
 
-#: client/cl_campaign.c:2975
+#: client/cl_campaign.c:2976
 msgid "You've won the battle"
 msgstr "คุณรบชนะ"
 
-#: client/cl_campaign.c:3062
+#: client/cl_campaign.c:3063
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s ได้เลื่อนยศเป็น %s.\n"
 
-#: client/cl_campaign.c:3064
+#: client/cl_campaign.c:3065
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\\for inspirational gallantry "
@@ -15543,20 +15523,20 @@ msgstr ""
 "%s ได้รับการเลื่อนยศเป็น %s\\ หลังการเสียชีวิต "
 "เนื่องจากได้ต่อสู้อย่างสมเกียรติในสงครามที่ไม่มีโอกาสรอด\n"
 
-#: client/cl_campaign.c:3065
+#: client/cl_campaign.c:3066
 msgid "Soldier promoted"
 msgstr "ทหารเลื่อนยศ"
 
-#: client/cl_campaign.c:3310
+#: client/cl_campaign.c:3311
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "ป้องกันฐาน: %s สำเร็จ!"
 
-#: client/cl_campaign.c:4541
+#: client/cl_campaign.c:4542
 msgid "Human"
 msgstr "มนุษย์"
 
-#: client/cl_campaign.c:4545
+#: client/cl_campaign.c:4546
 #, fuzzy, c-format
 msgid ""
 "Race: %s\n"
@@ -15573,27 +15553,27 @@ msgstr ""
 "ความลำบาก: %s\n"
 "%s\n"
 
-#: client/cl_campaign.c:4698
+#: client/cl_campaign.c:4699
 #, fuzzy, c-format
 msgid "  * %i x\t%s\n"
 msgstr "%s\t%i / %i\n"
 
-#: client/cl_campaign.c:4721
+#: client/cl_campaign.c:4722
 #, fuzzy, c-format
 msgid "  * %s\n"
 msgstr "%s\t%i / %i\n"
 
-#: client/cl_campaign.c:4879
+#: client/cl_campaign.c:4880
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to base %s."
 msgstr ""
 
-#: client/cl_campaign.c:4881 client/cl_campaign.c:5022
-#: client/cl_campaign.c:5100
+#: client/cl_campaign.c:4882 client/cl_campaign.c:5023
+#: client/cl_campaign.c:5101
 msgid "UFO Recovery"
 msgstr ""
 
-#: client/cl_campaign.c:4959
+#: client/cl_campaign.c:4960
 #, fuzzy
 msgid ""
 "\n"
@@ -15601,20 +15581,20 @@ msgid ""
 "Selected base:\t\t\t"
 msgstr "ฐานที่เลือก"
 
-#: client/cl_campaign.c:5020
+#: client/cl_campaign.c:5021
 #, c-format
 msgid ""
 "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr ""
 
-#: client/cl_campaign.c:5070
+#: client/cl_campaign.c:5071
 msgid ""
 "\n"
 "\n"
 "Selected nation:\t\t\t"
 msgstr ""
 
-#: client/cl_campaign.c:5098
+#: client/cl_campaign.c:5099
 #, c-format
 msgid "Secured %s was destroyed."
 msgstr ""
@@ -16098,123 +16078,123 @@ msgstr "ความเร็ว:\t%.0f\n"
 msgid "Fuel:\t\t%i/%i\n"
 msgstr "เชื้อเพลิง:\t%i/%i\n"
 
-#: client/cl_mapfightequip.c:661 client/cl_mapfightequip.c:675
+#: client/cl_mapfightequip.c:656 client/cl_mapfightequip.c:670
 #, fuzzy
 msgid "No defense of this type in this base\n"
 msgstr "ฐานนี้ไม่มีเขตกักกัน\n"
 
-#: client/cl_mapfightequip.c:665 client/cl_mapfightequip.c:679
+#: client/cl_mapfightequip.c:660 client/cl_mapfightequip.c:674
 #, fuzzy, c-format
 msgid "Slot %i:\tempty\n"
 msgstr "ห้องเก็บของว่างเปล่า\n"
 
-#: client/cl_mapfightequip.c:668 client/cl_mapfightequip.c:682
+#: client/cl_mapfightequip.c:663 client/cl_mapfightequip.c:677
 #, fuzzy, c-format
 msgid "Slot %i:\t%s\n"
 msgstr "ทักษะ:\t%s\n"
 
-#: client/cl_mapfightequip.c:695
+#: client/cl_mapfightequip.c:690
 #, fuzzy
 msgid "No defense system assigned.\n"
 msgstr "ไม่ได้จัดอาวุธ"
 
-#: client/cl_mapfightequip.c:702
+#: client/cl_mapfightequip.c:697
 msgid "This defense system is functional.\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:704
+#: client/cl_mapfightequip.c:699
 #, c-format
 msgid "This defense system will be installed in %i hours.\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:706
+#: client/cl_mapfightequip.c:701
 #, c-format
 msgid "This defense system will be removed in %i hours.\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:713
+#: client/cl_mapfightequip.c:708
 #, fuzzy
 msgid "No defense system assigned."
 msgstr "ไม่ได้จัดอาวุธ"
 
-#: client/cl_mapfightequip.c:717
+#: client/cl_mapfightequip.c:712
 #, c-format
 msgid "This defense system will be operational in %i hours.\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:726
+#: client/cl_mapfightequip.c:721
 msgid "No ammo assigned to this defense system."
 msgstr ""
 
-#: client/cl_mapfightequip.c:731
+#: client/cl_mapfightequip.c:726
 #, c-format
 msgid " (%i missile left)"
 msgid_plural " (%i missiles left)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: client/cl_mapfightequip.c:794
+#: client/cl_mapfightequip.c:789
 msgid "Aircraft item was successfully installed."
 msgstr ""
 
-#: client/cl_mapfightequip.c:796
+#: client/cl_mapfightequip.c:791
 msgid "Base defense item was successfully installed."
 msgstr ""
 
-#: client/cl_mapfightequip.c:1021
+#: client/cl_mapfightequip.c:1016
 #, fuzzy
 msgid "No item assigned.\n"
 msgstr "ไม่ได้ติดตั้งโล่"
 
-#: client/cl_mapfightequip.c:1022
+#: client/cl_mapfightequip.c:1017
 #, c-format
 msgid "This slot is for %s or smaller items."
 msgstr ""
 
-#: client/cl_mapfightequip.c:1027
+#: client/cl_mapfightequip.c:1022
 msgid "This item is functional.\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:1029
+#: client/cl_mapfightequip.c:1024
 #, c-format
 msgid "This item will be installed in %i hours.\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:1031
+#: client/cl_mapfightequip.c:1026
 #, c-format
 msgid "This item will be removed in %i hours.\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:1038
+#: client/cl_mapfightequip.c:1033
 #, fuzzy
 msgid "No item assigned."
 msgstr "ไม่ได้ติดตั้งโล่"
 
-#: client/cl_mapfightequip.c:1042
+#: client/cl_mapfightequip.c:1037
 #, c-format
 msgid "This item will be operational in %i hours.\n"
 msgstr ""
 
-#: client/cl_mapfightequip.c:1051
+#: client/cl_mapfightequip.c:1046
 #, fuzzy
 msgid "No ammo assigned to this weapon."
 msgstr "กระสุนถัดไปที่ใช้กับอาวุธนี้"
 
-#: client/cl_mapfightequip.c:1768
+#: client/cl_mapfightequip.c:1811
 msgid "Light weight"
 msgstr ""
 
-#: client/cl_mapfightequip.c:1771
+#: client/cl_mapfightequip.c:1814
 #, fuzzy
 msgid "Medium weight"
 msgstr "เสนารักษ์"
 
-#: client/cl_mapfightequip.c:1774
+#: client/cl_mapfightequip.c:1817
 #, fuzzy
 msgid "Heavy weight"
 msgstr "Heavy Laser"
 
-#: client/cl_mapfightequip.c:1777
+#: client/cl_mapfightequip.c:1820
 #, fuzzy
 msgid "Unknown weight"
 msgstr "ไม่ทราบทักษะอาวุธ"
@@ -17547,15 +17527,15 @@ msgstr "%s\t%i\n"
 msgid "Max. soldiers:\t%i\n"
 msgstr "ทหารสูงสุดแต่ละทีม:\t%s\n"
 
-#: client/cl_ufopedia.c:738
+#: client/cl_ufopedia.c:740
 msgid "Proposal: "
 msgstr "นำเสนอโครงการ: "
 
-#: client/cl_ufopedia.c:741
+#: client/cl_ufopedia.c:743
 msgid "Re: "
 msgstr "Re: "
 
-#: client/cl_ufopedia.c:753
+#: client/cl_ufopedia.c:755
 #, c-format
 msgid ""
 "FROM: %s\n"
@@ -17568,51 +17548,51 @@ msgstr ""
 "วันที่: %s\n"
 "หัวข้อ: %s%s\n"
 
-#: client/cl_ufopedia.c:843
+#: client/cl_ufopedia.c:845
 msgid "No pre-research description available."
 msgstr "ไม่มีข้อมูลเกี่ยวกับงานวิจัยก่อนหน้า"
 
-#: client/cl_ufopedia.c:1038
+#: client/cl_ufopedia.c:1040
 #, fuzzy
 msgid "UFOpaedia Content"
 msgstr "เนื้อหา จานบินอภิธาน"
 
-#: client/cl_ufopedia.c:1070
+#: client/cl_ufopedia.c:1072
 #, fuzzy, c-format
 msgid "UFOpaedia Index: %s"
 msgstr "ดัชนี จานบินอภิธาน: %s"
 
-#: client/cl_ufopedia.c:1494
+#: client/cl_ufopedia.c:1496
 #, fuzzy, c-format
 msgid "^BProposal: %s\t%i %s %02i\n"
 msgstr "^Bเสนอโครงการ: %s (%s)\n"
 
-#: client/cl_ufopedia.c:1500
+#: client/cl_ufopedia.c:1502
 #, fuzzy, c-format
 msgid "Proposal: %s\t%i %s %02i\n"
 msgstr "เสนอโครงการ: %s (%s)\n"
 
-#: client/cl_ufopedia.c:1512
+#: client/cl_ufopedia.c:1514
 #, fuzzy, c-format
 msgid "^BRe: %s\t%i %s %02i\n"
 msgstr "^BRe: %s (%s)\n"
 
-#: client/cl_ufopedia.c:1518
+#: client/cl_ufopedia.c:1520
 #, fuzzy, c-format
 msgid "Re: %s\t%i %s %02i\n"
 msgstr "%i %s %02i"
 
-#: client/cl_ufopedia.c:1529 client/cl_ufopedia.c:1544
+#: client/cl_ufopedia.c:1531 client/cl_ufopedia.c:1546
 #, fuzzy, c-format
 msgid "^B%s\t%i %s %02i\n"
 msgstr "%i %s %02i"
 
-#: client/cl_ufopedia.c:1535 client/cl_ufopedia.c:1550
+#: client/cl_ufopedia.c:1537 client/cl_ufopedia.c:1552
 #, fuzzy, c-format
 msgid "%s\t%i %s %02i\n"
 msgstr "%i %s %02i"
 
-#: client/cl_ufopedia.c:1564
+#: client/cl_ufopedia.c:1566
 #, fuzzy, c-format
 msgid "^B%s\t%s\n"
 msgstr "%s\t%s\n"
@@ -17654,70 +17634,70 @@ msgstr "ทำไม่ได้ - ไม่ใช่ทีมเดียวก
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr "ทำไม่ได้ - ควบคุมพันธมิตรที่ทำไม่ได้!\n"
 
-#: game/g_client.c:899
+#: game/g_client.c:903
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "ทำไม่ได้ - ค่าเวลาไม่พอ!\n"
 
-#: game/g_client.c:902
+#: game/g_client.c:906
 msgid ""
 "Can't perform action - weapon already fully loaded with the same "
 "ammunition!\n"
 msgstr "ทำไม่ได้ - อาวุธมีกระสุนแบบเดียวกันเต็มอยู่แล้ว!\n"
 
-#: game/g_client.c:1540
+#: game/g_client.c:1548
 msgid "Currently shaken, won't let their guard down.\n"
 msgstr "กำลังหวั่นไหว, ไม่ยอมเลิกป้องกันตัว\n"
 
-#: game/g_client.c:1646
+#: game/g_client.c:1654
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s ตื่นตระหนก!\n"
 
-#: game/g_client.c:1706
+#: game/g_client.c:1714
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s กำลังคลั่ง\n"
 
-#: game/g_client.c:1708
+#: game/g_client.c:1716
 #, c-format
 msgid "%s is consumed by mad rage!\n"
 msgstr "%s กำลังโมโหอย่างมาก!\n"
 
-#: game/g_client.c:1769
+#: game/g_client.c:1777
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s กำลังหวั่นไหว\n"
 
-#: game/g_client.c:2255 game/g_svcmds.c:353
+#: game/g_client.c:2263 game/g_svcmds.c:353
 #, c-format
 msgid "Team %i (%s) will get the first turn.\n"
 msgstr "ทีม %i (%s) จะได้เริ่มก่อน\n"
 
-#: game/g_client.c:2482
+#: game/g_client.c:2490
 msgid "4 minutes left until forced round end\n"
 msgstr "4 นาทีก่อนบังคับให้จบตา\n"
 
-#: game/g_client.c:2485
+#: game/g_client.c:2493
 msgid "3 minutes left until forced round end\n"
 msgstr "3 นาทีก่อนบังคับให้จบตา\n"
 
-#: game/g_client.c:2488
+#: game/g_client.c:2496
 msgid "2 minutes left until forced round end\n"
 msgstr "2 นาทีก่อนบังคับให้จบตา\n"
 
-#: game/g_client.c:2491
+#: game/g_client.c:2499
 msgid "1 minute left until forced round end\n"
 msgstr "1 นาทีก่อนบังคับให้จบตา\n"
 
-#: game/g_client.c:2494
+#: game/g_client.c:2502
 msgid "30 seconds left until forced round end\n"
 msgstr "30 วินาทีก่อนบังคับให้จบตา\n"
 
-#: game/g_client.c:2497
+#: game/g_client.c:2505
 msgid "15 seconds left until forced round end\n"
 msgstr "15 วินาทีก่อนบังคับให้จบตา\n"
 
-#: game/g_client.c:2505
+#: game/g_client.c:2513
 msgid "Current active team hit the max round time\n"
 msgstr "ทีมที่เดินอยู่ได้ใช้เวลาจนหมดแล้ว\n"
 
@@ -17765,6 +17745,33 @@ msgstr "ฐานถูกโจมตี"
 #: po/OTHER_STRINGS:14
 msgid "Crashed Alien Ship. Secure the area."
 msgstr ""
+
+#, fuzzy
+#~ msgid "mail_ufo_recovery_report"
+#~ msgstr "พบการปฏิบัติการของมนุษย์ต่างดาว: '%s'"
+
+#, fuzzy
+#~ msgid "Long Wave Beam"
+#~ msgstr "คลื่นยาว"
+
+#, fuzzy
+#~ msgid "Short Wave Pulsed"
+#~ msgstr "คลื่นสั้น"
+
+#~ msgid "Charged Blast"
+#~ msgstr "ยิงแบบรวมพลัง"
+
+#, fuzzy
+#~ msgid "%s (%i): %i/%i"
+#~ msgstr "%s\t%i / %i\n"
+
+#, fuzzy
+#~ msgid "Alien Containment"
+#~ msgstr "เขตกักกันถัดไป"
+
+#, fuzzy
+#~ msgid "Command Center"
+#~ msgstr "ศูนย์บัญชาการ"
 
 #, fuzzy
 #~ msgid "No disassembly selected"
