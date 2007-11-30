@@ -1453,7 +1453,7 @@ qboolean TR_Save (sizebuf_t* sb, void* data)
 		for (j = 0; j < presaveArray[PRE_MAXAIR]; j++)
 			MSG_WriteShort(sb, transfer->aircraftArray[j]);
 		MSG_WriteByte(sb, transfer->destBase);
-		MSG_WriteByte(sb, transfer->srcBase);
+		MSG_WriteShort(sb, transfer->srcBase); /* might be < 0 */
 		MSG_WriteByte(sb, transfer->active);
 		MSG_WriteByte(sb, transfer->hasItems);
 		MSG_WriteByte(sb, transfer->hasEmployees);
