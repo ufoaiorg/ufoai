@@ -94,7 +94,7 @@ sub replace_in_files {
 	
 	if ($print) {
 		if ($match) {
-			print $file, " - ", $match, " match(es) found.\n";
+			print $file, " - ", $match, " matching line(s) found.\n";
 		}
 		return;
 	}
