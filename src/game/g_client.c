@@ -830,11 +830,11 @@ static void G_PrintFloorToConsole (pos3_t pos)
  * @input[in] player The player the edict/soldier belongs to.
  * @param[in] num The edict number of the selected/used edict/soldier.
  * @param[in] from The container (-id) the item should be moved from.
- * @param[in] fx
- * @param[in] fy
+ * @param[in] fx x position of the item you want to move in the source container
+ * @param[in] fy y position of the item you want to move in the source container
  * @param[in] to The container (-id) the item should be moved to.
- * @param[in] tx
- * @param[in] ty
+ * @param[in] tx x position where you want the item to go in the destination container
+ * @param[in] ty y position where you want the item to go in the destination container
  * @param[in] checkaction Set this to qtrue if you want to check for TUs, otherwise qfalse.
  * @param[in] quiet Set this to qfalse to prevent message-flooding.
  * @sa event PA_INVMOVE
@@ -849,9 +849,13 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 	int mask;
 	inventory_action_t ia;
 	int msglevel;
+	const invList_t* invList;
 
 	ent = g_edicts + num;
 	msglevel = quiet ? PRINT_NONE : PRINT_CONSOLE;
+
+	/* store the location of 'from' BEFORE actually moving items with Com_MoveInInventory */
+	invList = Com_SearchInInventory(&ent->i, from, fx, fy);
 
 	/* check if action is possible */
 	if (checkaction && !G_ActionCheck(player, ent, 1, quiet))
@@ -970,13 +974,17 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 			gi.EndEvents();
 			return;
 		} else { /* ia == IA_RELOAD_SWAP */
+			if (!invList) {
+				Com_Printf("G_ClientInvMove()... Didn't found invList of the item you're moving\n");
+				gi.EndEvents();
+				return;
+			}
+			item = invList->item;
 			to = from;
 			tx = fx;
 			ty = fy;
-			item = Com_SearchInInventory(&ent->i, from, fx, fy)->item;
 		}
 	}
-
 
 	/* add it */
 	if (to == gi.csi->idFloor) {

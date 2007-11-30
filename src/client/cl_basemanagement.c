@@ -3230,6 +3230,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
  * @brief Saves an item slot
  * @sa B_LoadItemSlots
  * @sa B_Save
+ * @sa AII_InitialiseSlot
  */
 static void B_SaveItemSlots (aircraftSlot_t* slot, int num, int* targets, sizebuf_t* sb)
 {
@@ -3247,7 +3248,7 @@ static void B_SaveItemSlots (aircraftSlot_t* slot, int num, int* targets, sizebu
 			MSG_WriteString(sb, ammoIdx != NONE ? csi.ods[ammoIdx].id : "");
 		} else {
 			MSG_WriteString(sb, "");
-			MSG_WriteShort(sb, 0);
+			MSG_WriteShort(sb, -1);	/* must be the same value as in AII_InitialiseSlot */
 			MSG_WriteShort(sb, 0);
 			MSG_WriteShort(sb, 0);
 			/* if there is no ammo MSG_WriteString will write an empty string */
@@ -3336,7 +3337,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			if (aircraft->aircraftTarget)
 				MSG_WriteShort(sb, aircraft->aircraftTarget - gd.ufos);
 			else
-				MSG_WriteShort(sb, -1);
+				MSG_WriteShort(sb, AIRFIGHT_NO_TARGET);
 			/* save weapon slots */
 			MSG_WriteByte(sb, aircraft->maxWeapons);
 			B_SaveItemSlots(aircraft->weapons, aircraft->maxWeapons, NULL, sb);
@@ -3495,22 +3496,16 @@ static void B_LoadItemSlots (base_t* base, aircraftSlot_t* slot, int num, int* t
  */
 qboolean B_Load (sizebuf_t* sb, void* data)
 {
-	int i, bases, k, l, m, amount;
-	base_t *b;
-	const char *s;
-	aircraft_t *aircraft;
-	building_t *building;
-	technology_t *tech;
-	byte *color;
+	int i, bases, k, l, m, amount, ufoIdx;
 
 	gd.numAircraft = MSG_ReadShort(sb);
 	bases = MSG_ReadByte(sb);
 	for (i = 0; i < bases; i++) {
-		b = &gd.bases[i];
+		base_t *const b = &gd.bases[i];
 		Q_strncpyz(b->name, MSG_ReadStringRaw(sb), sizeof(b->name));
 		MSG_ReadPos(sb, b->pos);
 		if (b->founded) {
-			color = MAP_GetColor(b->pos, MAPTYPE_TERRAIN);
+			const byte *const color = MAP_GetColor(b->pos, MAPTYPE_TERRAIN);
 			b->mapZone = MAP_GetTerrainType(color);
 		}
 		b->founded = MSG_ReadByte(sb);
@@ -3537,7 +3532,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 				b->posY[k][l] = MSG_ReadShort(sb);
 			}
 		for (k = 0; k < presaveArray[PRE_MAXBUI]; k++) {
-			building = &gd.buildings[i][k];
+			building_t *const building = &gd.buildings[i][k];
 			*building = gd.buildingTypes[MSG_ReadByte(sb)];
 			building->idx = k;
 			building->base_idx = i;
@@ -3562,11 +3557,14 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		b->aircraftCurrent = MSG_ReadShort(sb);
 		b->numAircraftInBase = MSG_ReadByte(sb);
 		for (k = 0; k < b->numAircraftInBase; k++) {
-			aircraft = AIR_GetAircraft(MSG_ReadString(sb));
-			if (!aircraft)
+			aircraft_t *aircraft;
+
+			const aircraft_t *const model = AIR_GetAircraft(MSG_ReadString(sb));
+			if (!model)
 				return qfalse;
-			b->aircraft[k] = *aircraft;
+			/* copy generic aircraft description to individal aircraft in base */
 			aircraft = &b->aircraft[k];
+			*aircraft = *model;
 			aircraft->idx = MSG_ReadShort(sb);
 			aircraft->homebase = b;
 			/* this is the aircraft array id in current base */
@@ -3578,11 +3576,11 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			aircraft->point = MSG_ReadShort(sb);
 			aircraft->hangar = MSG_ReadByte(sb);
 			/* load aircraft target */
-			amount = MSG_ReadShort(sb);
-			if (amount == -1)
+			ufoIdx = MSG_ReadShort(sb);
+			if (ufoIdx == AIRFIGHT_NO_TARGET)
 				aircraft->aircraftTarget = NULL;
 			else
-				aircraft->aircraftTarget = gd.ufos + amount;
+				aircraft->aircraftTarget = gd.ufos + ufoIdx;
 			/* read weapon slot */
 			amount = MSG_ReadByte(sb);
 			/* only read aircraft->maxWeapons here - skip the rest in the following loop */
@@ -3600,7 +3598,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			 * isn't worth it */
 			amount = MSG_ReadByte(sb);
 			for (l = 0; l < amount; l++) {
-				tech = RS_GetTechByProvided(MSG_ReadString(sb));
+				const technology_t *const tech = RS_GetTechByProvided(MSG_ReadString(sb));
 				if (tech)
 					AII_AddItemToSlot(NULL, tech, &aircraft->shield);
 				aircraft->shield.installationTime = MSG_ReadShort(sb);
@@ -3610,7 +3608,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			for (l = 0; l < amount; l++) {
 				/* check that there are enough slots in this aircraft */
 				if (l < aircraft->maxElectronics) {
-					tech = RS_GetTechByProvided(MSG_ReadString(sb));
+					const technology_t *const tech = RS_GetTechByProvided(MSG_ReadString(sb));
 					if (tech)
 						AII_AddItemToSlot(NULL, tech, aircraft->electronics + l);
 					aircraft->electronics[l].installationTime = MSG_ReadShort(sb);
@@ -3650,7 +3648,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 				}
 				/* itemcargo */
 				for (l = 0; l < aircraft->itemtypes; l++) {
-					s = MSG_ReadString(sb);
+					const char *const s = MSG_ReadString(sb);
 					m = INVSH_GetItemByID(s);
 					if (m == NONE || m >= MAX_OBJDEFS) {
 						Com_Printf("B_Load: Could not find item '%s'\n", s);
@@ -3673,7 +3671,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 
 		/* read equipment */
 		for (k = 0; k < presaveArray[PRE_NUMODS]; k++) {
-			s = MSG_ReadString(sb);
+			const char *const s = MSG_ReadString(sb);
 			l = INVSH_GetItemByID(s);
 			if (l == NONE || l >= MAX_OBJDEFS) {
 				Com_Printf("B_Load: Could not find item '%s'\n", s);
@@ -3690,7 +3688,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		/* Alien Containment. */
 		AL_FillInContainment(b);	/* Fill Alien Containment with default values. */
 		for (k = 0; k < presaveArray[PRE_NUMALI]; k++) {
-			s = MSG_ReadString(sb);
+			const char *const s = MSG_ReadString(sb);
 			for (l = 0; l < csi.numTeamDefs; l++) {
 				if (!csi.teamDef[l].alien)
 					continue;

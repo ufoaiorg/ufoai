@@ -1051,10 +1051,8 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 			} else if (!Q_strcmp(token, "craftweapon")) {
 				/* parse a value */
 				token = COM_EParse(text, errhead, name);
-
-				od->weap_idx[0] = INVSH_GetItemByID(token);
-				if (od->weap_idx[0] == NONE)
-					Sys_Error("Com_ParseItem: could not find craft weapon useable for this ammo: %s (ammo: %s)\n", token, od->id);
+				Q_strncpyz(od->weap_id[od->numWeapons], token, sizeof(od->weap_id[od->numWeapons]));
+				od->numWeapons++;
 			} else if (!Q_strcmp(token, "crafttype")) {
 				/* Craftitem type definition. */
 				token = COM_EParse(text, errhead, name);
@@ -1070,10 +1068,6 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 				}
 				if (i == MAX_ACITEMS)
 					Com_Printf("AII_ParseAircraftItem: \"%s\" unknown craftitem type: \"%s\" - ignored.\n", name, token);
-				if (od->craftitem.type > AC_ITEM_AMMO) {
-					/* this is an ammo for base defense: you can't buy it */
-					od->notOnMarket = qtrue;
-				}
 			} else
 				Com_Printf("Com_ParseItem: unknown token \"%s\" ignored (weapon %s)\n", token, name);
 		}
@@ -2138,7 +2132,8 @@ void Com_AddObjectLinks (void)
 	/* Add links to ammos */
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 		od->numAmmos = 0;	/* Default value */
-		if (od->weapon && od->numWeapons == 0) {
+		if (od->numWeapons == 0 && (od->weapon || od->craftitem.type <= AC_ITEM_WEAPON)) {
+			/* this is a weapon, an aircraft weapon, or a base defense system */
 			for (n = 0; n < csi.numODs; n++) {
 				for (m = 0; m < csi.ods[n].numWeapons; m++) {
 					if (csi.ods[n].weap_idx[m] == i) {

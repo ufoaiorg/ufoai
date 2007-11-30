@@ -775,6 +775,13 @@ base/models/objects/city/trafficsign/sign2.png | GPL | Willem "Sitters"
 base/models/objects/city/trafficsign/sign2_1.png | GPL | Willem "Sitters"
 base/models/objects/city/trafficsign/sign3.png | GPL | Willem "Sitters"
 base/models/objects/city/trafficsign/sign4.png | GPL | Willem "Sitters"
+base/models/objects/city/waste/bag.jpg | GNU General Public License 2.0 | Willem "Sitters"
+base/models/objects/city/waste/bag.md2 | GNU General Public License 2.0 | Willem "Sitters"
+base/models/objects/city/waste/container1.jpg | GNU General Public License 2.0 | Willem "Sitters"
+base/models/objects/city/waste/container2.jpg | GNU General Public License 2.0 | Willem "Sitters"
+base/models/objects/city/waste/container3.jpg | GNU General Public License 2.0 | Willem "Sitters"
+base/models/objects/city/waste/container_closed.md2 | GNU General Public License 2.0 | Willem "Sitters"
+base/models/objects/city/waste/container_opened.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/city/watertower/watertower.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/watertower/watertower.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/watertower/watertower1.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
@@ -2070,6 +2077,8 @@ base/textures/tex_ctp1/woodb_5.jpg | GNU General Public License 2.0 |  | http://
 base/textures/tex_doors/door013.jpg | GNU General Public License v2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_doors/door014.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_doors/door015.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_doors/door016.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_doors/door017.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_lights/drkmtlsupport_light.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_lights/drkmtlsupport_light_glow.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_lights/mtl_l1.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
@@ -2244,8 +2253,12 @@ base/textures/tex_misc/rstbounce.jpg | GNU General Public License 2.0 | Nexuiz G
 base/textures/tex_misc/rstbouncefan.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_nature/flower.jpg | GPL | Willem "Sitters"
 base/textures/tex_nature/ice001.jpg |  |  | Public Domain Golgotha
+base/textures/tex_nature/soil001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_nature/soil002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_nature/tree_bark_001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_nature/tree_bark_002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_nature/wood_chips01.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_nature/wood_chips02.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_streets/pavement001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_streets/street001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_streets/street002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)

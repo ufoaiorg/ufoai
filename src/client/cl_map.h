@@ -52,7 +52,7 @@ void MAP_NotifyMissionRemoved(const actMis_t* mission);
 void MAP_NotifyUfoRemoved(const aircraft_t* ufo);
 void MAP_NotifyUfoDisappear(const aircraft_t* ufo);
 void MAP_GameInit(void);
-const char* MAP_GetTerrainType(byte* color);
+const char* MAP_GetTerrainType(const byte* color);
 const char* MAP_GetCultureType(byte* color);
 const char* MAP_GetPopulationType(byte* color);
 float MAP_GetDistance(const vec2_t pos1, const vec2_t pos2);

@@ -158,10 +158,10 @@ typedef struct aircraft_s {
 	employeeType_t teamTypes[MAX_ACTIVETEAM];	/**< Array of team member types on board (=employee type). */
 
 	aircraftSlot_t weapons[MAX_AIRCRAFTSLOT];	/**< Weapons assigned to aircraft */
-	int maxWeapons;					/**< Total number of weapon slots aboard this aircraft */
+	int maxWeapons;					/**< Total number of weapon slots aboard this aircraft (empty or not) */
 	aircraftSlot_t shield;			/**< Armour assigned to aircraft (1 maximum) */
 	aircraftSlot_t electronics[MAX_AIRCRAFTSLOT];		/**< Electronics assigned to aircraft */
-	int maxElectronics;				/**< Total number of electronics slots aboard this aircraft */
+	int maxElectronics;				/**< Total number of electronics slots aboard this aircraft  (empty or not) */
 
 	mapline_t route;
 	struct base_s *homebase;		/**< Pointer to homebase for faster access. */

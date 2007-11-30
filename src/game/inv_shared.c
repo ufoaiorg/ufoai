@@ -218,11 +218,11 @@ static qboolean Com_CompareItem (item_t *item1, item_t *item2)
 }
 
 /**
- * @brief Searches a suitable place in given inventory with given container.
+ * @brief Searches if there is an item at location (x,y) in a container.
  * @param[in] i Pointer to the inventory where we will search.
  * @param[in] container Container index.
- * @param[in] x
- * @param[in] y
+ * @param[in] x x position that you want to check
+ * @param[in] y y position that you want to check
  * @return invList_t Pointer to the container in given inventory, where we can place new item.
  */
 invList_t *Com_SearchInInventory (const inventory_t* const i, int container, int x, int y)
