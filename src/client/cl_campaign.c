@@ -352,7 +352,7 @@ static qboolean CL_StageSetDone (char *name)
 static void CL_CampaignActivateStageSets (const stage_t *stage)
 {
 	setState_t *set;
-	int i;
+	int i, nat;
 
 	activeStage = stage;
 #ifdef PARANOID
@@ -381,6 +381,12 @@ static void CL_CampaignActivateStageSets (const stage_t *stage)
 			/* XVI spreading has started */
 			if (set->def->activateXVI) {
 				ccs.XVISpreadActivated = qtrue;
+				/* at first, 5% of the population is infected
+				 * (must be > 0, otherwise it will never increase, as to change its value we only multiply it) */
+				for (nat = 0; nat < gd.numNations; nat++) {
+					if (gd.nations[nat].stats[0].xvi_infection < 0.05f)
+						gd.nations[nat].stats[0].xvi_infection = 0.05f;
+				}
 				/* Mark prequesite of "rs_alien_xvi" as met. */
 				RS_ResearchFinish(RS_GetTechByID("rs_alien_xvi_event"));
 			}
