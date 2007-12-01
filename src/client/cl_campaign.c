@@ -996,12 +996,15 @@ static void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int 
 	}
 }
 
+/* Initial fraction of the population in the country where a mission has been lost / won */
+#define XVI_LOST_START_PERCENTAGE	0.20f
+#define XVI_WON_START_PERCENTAGE	0.05f
+
 /**
  * @brief Updates each nation's happiness and mission win/loss stats.
  * Should be called at the completion or expiration of every mission.
  * The nation where the mission took place will be most affected,
  * surrounding nations will be less affected.
- * @todo: nations react way too much; independently, an asymptotic reaction near 0.0 and 1.0 would be nice; high alienFriendly factor seems to increase happiness, instead of decreasing it.
  */
 static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civiliansKilled, int aliensSurvived, int aliensKilled, actMis_t * mis)
 {
@@ -1010,8 +1013,9 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 	float civilianRatio = civilianSum ? (float)civiliansSurvived / (float)civilianSum : 0.;
 	int alienSum = aliensKilled + aliensSurvived;
 	float alienRatio = alienSum ? (float)aliensKilled / (float)alienSum : 0.;
-	float performance = 0.5 + civilianRatio * 0.25 + alienRatio * 0.25;
-	int XVISpread;
+	float performance = civilianRatio * 0.5 + alienRatio * 0.5;
+	float happiness_factor;
+	float xvi_infection_factor;
 
 	if (lost) {
 		stats.missionsLost++;
@@ -1021,43 +1025,60 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 
 	for (i = 0; i < gd.numNations; i++) {
 		nation_t *nation = &gd.nations[i];
-		float alienHostile = 1.0 - (float) nation->stats[0].alienFriendly;
-		float happiness = nation->stats[0].happiness;
+		float alienHostile = 1.0f - nation->stats[0].alienFriendly;
+		happiness_factor = 1.0f;
+		xvi_infection_factor = 1.0f;
 
 		if (lost) {
 			if (!Q_strcmp(nation->id, mis->def->nation)) {
-				/* Strong negative reaction */
-				happiness *= performance * alienHostile;
+				/* Strong negative reaction (happiness_factor must be < 1) */
+				happiness_factor = 1.0f - (1.0f - performance) * nation->stats[0].alienFriendly;
 				is_on_Earth++;
+				if (ccs.XVISpreadActivated) {
+					/* if there wasn't any XVI infection in this country (or small infection), start it */
+					if (nation->stats[0].xvi_infection < XVI_LOST_START_PERCENTAGE)
+						nation->stats[0].xvi_infection = XVI_LOST_START_PERCENTAGE;
+					else
+						/* increase infection by 50% */
+						xvi_infection_factor = 1.50f;
+				}
 			} else {
-				/* Minor negative reaction */
-				happiness *= 1.0 - pow(1.0 - performance * alienHostile, 5.0);
+				/* Minor negative reaction (10 times lower than if the failed mission were in the nation) */
+				happiness_factor = 1.0f - 0.1f * (1.0f - performance) * nation->stats[0].alienFriendly;
+				/* increase infection by 10% for country already infected */
+				xvi_infection_factor = 1.10f;
 			}
-			XVISpread = 1.10;
 		} else {
 			if (!Q_strcmp(nation->id, mis->def->nation)) {
-				/* Strong positive reaction */
-				happiness += performance * alienHostile / 5.0;
+				/* Strong positive reaction (happiness_factor must be > 1) */
+				happiness_factor = 1.0f + performance * alienHostile;
 				is_on_Earth++;
+				if (ccs.XVISpreadActivated) {
+					/* if there wasn't any XVI infection in this country, start it */
+					if (nation->stats[0].xvi_infection < XVI_WON_START_PERCENTAGE)
+						nation->stats[0].xvi_infection = XVI_WON_START_PERCENTAGE;
+					else
+						/* increase infection by 10% */
+						xvi_infection_factor = 1.10f;
+				}
 			} else {
-				/* Minor positive reaction */
-				happiness += performance * alienHostile / 50.0;
+				/* Minor positive reaction (10 times lower than if the mission were in the nation) */
+				happiness_factor = 1.0f + 0.1f * performance * alienHostile;
+				/* No spreading of XVI infection in other nations */
 			}
-			if (nation->stats[0].happiness > 1.0) {
-				/* Can't be more than 100% happy with you. */
-				happiness = 1.0;
-			}
-			XVISpread = 1.02;
 		}
-		nation->stats[0].happiness = nation->stats[0].happiness * 0.40 + happiness * 0.60;
+
+		/* update happiness */
+		nation->stats[0].happiness *= happiness_factor;
 		/* Nation happiness cannot be greater than 1 */
 		if (nation->stats[0].happiness > 1.0f)
 			nation->stats[0].happiness = 1.0f;
 
-		/* ensure 0 - 100 */
+		/* update xvi_infection value (note that there will be an effect only 
+		 * on nations where at least one mission already took place (for others, nation->stats[0].xvi_infection = 0) */
 		if (ccs.XVISpreadActivated) {
 			/* @todo: Send mails about critical rates */
-			nation->stats[0].xvi_infection *= XVISpread;
+			nation->stats[0].xvi_infection *= xvi_infection_factor;
 			if (nation->stats[0].xvi_infection > 1.0f)
 				nation->stats[0].xvi_infection = 1.0f;
 		}
@@ -1172,6 +1193,16 @@ static void CP_CheckEvents (void)
 				date_t date = {7, 0};
 				Q_strncpyz(messageBuffer, va(ngettext("The aliens had enough time to kill %i civilian at %s.", "The aliens had enough time to kill %i civilians at %s.", mis->def->civilians), mis->def->civilians, mis->def->location), MAX_MESSAGE_TEXT);
 				MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+
+				/* nation's happiness decreases */
+				for (j = 0; j < gd.numNations; j++) {
+					nation_t *nation = &gd.nations[j];
+					if (!Q_strcmp(nation->id, mis->def->nation)) {
+						nation->stats[0].happiness *= .85f;
+						break;
+					}
+				}
+
 				/* FIXME use set->def->expire */
 				mis->expire = Date_Add(ccs.date, Date_Random_Middle(date));
 				CL_GameTimeStop();
@@ -5046,6 +5077,7 @@ static void CP_UfoRecoveryNationSelectPopup_f (void)
 static void CP_UFOSellStart_f (void)
 {
 	nation_t *nation;
+	int i;
 
 	nation = &gd.nations[Cvar_VariableInteger("mission_recoverynation")];
 	assert(nation);
@@ -5053,6 +5085,19 @@ static void CP_UFOSellStart_f (void)
 	UFO_TypeToName(Cvar_VariableInteger("mission_ufotype")), _(nation->name), UFOprices[Cvar_VariableInteger("mission_recoverynation")]);
 	MN_AddNewMessage(_("UFO Recovery"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 	CL_UpdateCredits(ccs.credits + UFOprices[Cvar_VariableInteger("mission_recoverynation")]);
+
+	/* update nation happiness */
+	for (i = 0; i < gd.numNations; i++) {
+		if (gd.nations + i == nation) {
+			/* nation is happy because it got the UFO */
+			gd.nations[i].stats[0].happiness *= 1.2f;
+			/* Nation happiness cannot be greater than 1 */
+			if (nation->stats[0].happiness > 1.0f)
+				nation->stats[0].happiness = 1.0f;
+		} else
+			/* nation is unhappy because it wanted the UFO */
+			gd.nations[i].stats[0].happiness *= .95f;
+	}
 
 	/* UFO recovery process is done, disable buttons. */
 	CP_UFORecoveryDone();
