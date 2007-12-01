@@ -4691,7 +4691,7 @@ static void CP_CampaignStats_f (void)
  * @sa CL_EventAddMail_f
  * @sa CL_NewEventMail
  */
-void CP_UFOSendMail (aircraft_t *ufocraft, base_t *base)
+void CP_UFOSendMail (const aircraft_t *ufocraft, const base_t *base)
 {
 	int i, j;
 	components_t *comp = NULL;
@@ -5247,7 +5247,7 @@ base_t *CP_GetMissionBase (void)
  * @note The function is nondeterministic when RASTER is set to a value > 1. The amount of possible alternatives is exactly defined by RASTER. I.e. if RASTER is set to 3, there are 3 different lists from which the random positions are chosen. The list is then chosen randomly.
  * @sa CP_GetRandomPosForAircraft
  */
-qboolean CP_GetRandomPosOnGeoscape (vec2_t pos, linkedList_t* terrainTypes, linkedList_t* cultureTypes, linkedList_t* populationTypes, linkedList_t* nations)
+qboolean CP_GetRandomPosOnGeoscape (vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations)
 {
 	float x, y;
 	int num;

@@ -1759,7 +1759,7 @@ byte *MAP_GetColor (const vec2_t pos, mapType_t type)
  * @return true if a location was found, otherwise false
  * @note The name TCPNTypes comes from terrain, culture, population, nation types
  */
-qboolean MAP_PositionFitsTCPNTypes (vec2_t pos, linkedList_t* terrainTypes, linkedList_t* cultureTypes, linkedList_t* populationTypes, linkedList_t* nations)
+qboolean MAP_PositionFitsTCPNTypes (vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations)
 {
 	if (LIST_ContainsString(terrainTypes,MAP_GetTerrainTypeByPos(pos)) || LIST_ContainsString(terrainTypes,"Any")) {
 		if (LIST_ContainsString(cultureTypes,MAP_GetCultureTypeByPos(pos)) || LIST_ContainsString(cultureTypes,"Any")) {
