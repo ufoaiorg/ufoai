@@ -2402,14 +2402,24 @@ void CL_ParseUGVs (const char *name, const char **text)
  * @brief Ensures skills increase quickly at first and then slows down as they near 100.
  * @note (number of calls to this function/skill increase range)
  * 5/20-40 6/40-50 8/50-60 11/60-70 15/80-90 24/90-100
+ * @note we calculate the increase and not the new value because this way we can use skills bigger than MAX_SKILL
+ * thanks to implants (but skills won't then be increased)
  * @param[in] skill The current value of the skill to be increased.
  * @return The amount to be added to the skill
  */
 static int CL_SkillIncreaseBy (float skill)
 {
+	float delta;
+
 	if (skill >= MAX_SKILL)
 		return 0;
-	return (int)(2.3f - 0.02f * skill + (2.0f - 0.01f * skill) * frand());
+
+	delta = 2.3f - 0.02f * skill + (2.0f - 0.01f * skill) * frand();
+
+	if (skill + delta < MAX_SKILL)
+		return (int) delta;
+	else
+		return MAX_SKILL - round(skill);
 }
 
 /**
