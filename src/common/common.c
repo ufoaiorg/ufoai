@@ -1003,7 +1003,7 @@ linkedList_t* LIST_Add (linkedList_t** listDest, const byte* data, size_t length
  * @note if string is NULL, the function returns false
  * @sa LIST_AddString
  */
-qboolean LIST_ContainsString (linkedList_t* list, const char* string)
+qboolean LIST_ContainsString (const linkedList_t* list, const char* string)
 {
 	assert(list);
 

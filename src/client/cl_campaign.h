@@ -309,7 +309,6 @@ typedef struct nation_s {
 
 	vec4_t color;		/**< The color this nation uses int he color-coded earth-map */
 	vec2_t pos;		/**< Nation name position on geoscape. */
-	int XVIRate;	/**< 0 - 100 - the rate of infection for this nation - starts at 0 */
 
 	nationInfo_t stats[MONTHS_PER_YEAR];	/**< Detailed information about the history of this nations relationship toward PHALANX and the aliens.
 									 * The first entry [0] is the current month - all following entries are stored older months.
@@ -423,7 +422,7 @@ void CL_ParseResearchableCampaignStates(const char *name, const char **text, qbo
 void CP_ExecuteMissionTrigger(mission_t * m, qboolean won);
 actMis_t* CL_CampaignAddGroundMission(mission_t* mis);
 
-qboolean CP_GetRandomPosOnGeoscape(vec2_t pos, linkedList_t* terrainTypes, linkedList_t* cultureTypes, linkedList_t* populationTypes, linkedList_t* nations);
+qboolean CP_GetRandomPosOnGeoscape(vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations);
 
 campaign_t* CL_GetCampaign(const char* name);
 void CL_GameExit(void);
@@ -435,7 +434,7 @@ void AIR_AircraftsNotifyMissionRemoved(const actMis_t * mission);
 base_t *CP_GetMissionBase(void);
 qboolean CP_SpawnBaseAttackMission(base_t* base, mission_t* mis, setState_t *cause);
 qboolean CP_SpawnCrashSiteMission(aircraft_t* aircraft);
-void CP_UFOSendMail(aircraft_t *ufocraft, base_t *base);
+void CP_UFOSendMail(const aircraft_t *ufocraft, const base_t *base);
 
 technology_t *CP_IsXVIResearched(void);
 

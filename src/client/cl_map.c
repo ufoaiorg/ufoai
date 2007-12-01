@@ -1281,7 +1281,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		if (MAP_AllMapToScreen(node, gd.nations[i].pos, &x, &y, NULL))
 			R_FontDrawString("f_verysmall", ALIGN_UC, x , y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], _(gd.nations[i].name), 0, 0, NULL, qfalse);
 		if (showXVI) {
-			Q_strcat(buffer, va(_("%s\t%i%%\n"), _(gd.nations[i].name), gd.nations[i].XVIRate), sizeof(buffer));
+			Q_strcat(buffer, va(_("%s\t%0.2f%%\n"), _(gd.nations[i].name), gd.nations[i].stats[0].xvi_infection), sizeof(buffer));
 		}
 	}
 	if (showXVI)
@@ -1759,7 +1759,7 @@ byte *MAP_GetColor (const vec2_t pos, mapType_t type)
  * @return true if a location was found, otherwise false
  * @note The name TCPNTypes comes from terrain, culture, population, nation types
  */
-qboolean MAP_PositionFitsTCPNTypes (vec2_t pos, linkedList_t* terrainTypes, linkedList_t* cultureTypes, linkedList_t* populationTypes, linkedList_t* nations)
+qboolean MAP_PositionFitsTCPNTypes (vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations)
 {
 	if (LIST_ContainsString(terrainTypes,MAP_GetTerrainTypeByPos(pos)) || LIST_ContainsString(terrainTypes,"Any")) {
 		if (LIST_ContainsString(cultureTypes,MAP_GetCultureTypeByPos(pos)) || LIST_ContainsString(cultureTypes,"Any")) {

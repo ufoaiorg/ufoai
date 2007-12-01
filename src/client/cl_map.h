@@ -60,6 +60,6 @@ qboolean MAP_IsNight(vec2_t pos);
 qboolean MAP_MaskFind(byte * color, vec2_t polar);
 byte *MAP_GetColor(const vec2_t pos, mapType_t type);
 void MAP_Init(void);
-qboolean MAP_PositionFitsTCPNTypes(vec2_t posT, linkedList_t* terrainTypes, linkedList_t* cultureTypes, linkedList_t* populationTypes, linkedList_t* nations);
+qboolean MAP_PositionFitsTCPNTypes(vec2_t posT, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations);
 
 #endif /* CLIENT_CL_MAP_H */
