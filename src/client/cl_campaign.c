@@ -926,20 +926,23 @@ static void CP_EndCampaign (qboolean won)
 /**
  * @brief Return the average XVI rate
  * @note XVI = eXtraterrestial Viral Infection
+ * @return value between 0 and 100 (and not between 0.00 and 1.00)
  */
 static int CP_GetAverageXVIRate (void)
 {
-	int XVIRate = 0, i;
+	float XVIRate = 0;
+	int i;
 	nation_t* nation;
 
 	assert(gd.numNations);
 
 	/* check for XVI infection rate */
 	for (i = 0, nation = gd.nations; i < gd.numNations; i++, nation++) {
-		XVIRate += nation->XVIRate;
+		XVIRate += nation->stats[0].xvi_infection;
 	}
 	XVIRate /= gd.numNations;
-	return XVIRate;
+	XVIRate *= 100;
+	return (int) XVIRate;
 }
 
 /**
@@ -1030,7 +1033,7 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 				/* Minor negative reaction */
 				happiness *= 1.0 - pow(1.0 - performance * alienHostile, 5.0);
 			}
-			XVISpread = 5;
+			XVISpread = 1.10;
 		} else {
 			if (!Q_strcmp(nation->id, mis->def->nation)) {
 				/* Strong positive reaction */
@@ -1044,7 +1047,7 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 				/* Can't be more than 100% happy with you. */
 				happiness = 1.0;
 			}
-			XVISpread = 1;
+			XVISpread = 1.02;
 		}
 		nation->stats[0].happiness = nation->stats[0].happiness * 0.40 + happiness * 0.60;
 		/* Nation happiness cannot be greater than 1 */
@@ -1054,8 +1057,9 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 		/* ensure 0 - 100 */
 		if (ccs.XVISpreadActivated) {
 			/* @todo: Send mails about critical rates */
-			nation->XVIRate += XVISpread;
-			nation->XVIRate %= 100;
+			nation->stats[0].xvi_infection *= XVISpread;
+			if (nation->stats[0].xvi_infection > 1.0f)
+				nation->stats[0].xvi_infection = 1.0f;
 		}
 	}
 	if (!is_on_Earth)
