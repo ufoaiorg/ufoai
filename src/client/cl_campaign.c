@@ -1018,7 +1018,7 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 
 	for (i = 0; i < gd.numNations; i++) {
 		nation_t *nation = &gd.nations[i];
-		float alienHostile = 1.0 - (float) nation->stats[0].alienFriendly / 100.0;
+		float alienHostile = 1.0 - (float) nation->stats[0].alienFriendly;
 		float happiness = nation->stats[0].happiness;
 
 		if (lost) {
@@ -2532,8 +2532,8 @@ qboolean NA_Save (sizebuf_t* sb, void* data)
 		for (j = 0; j < MONTHS_PER_YEAR; j++) {
 			MSG_WriteByte(sb, gd.nations[i].stats[j].inuse);
 			MSG_WriteFloat(sb, gd.nations[i].stats[j].happiness);
-			MSG_WriteFloat(sb, gd.nations[i].XVIRate / 100.0f);
-			MSG_WriteFloat(sb, gd.nations[i].stats[j].alienFriendly / 100.0f);
+			MSG_WriteFloat(sb, gd.nations[i].stats[j].xvi_infection);
+			MSG_WriteFloat(sb, gd.nations[i].stats[j].alienFriendly);
 		}
 	}
 	return qtrue;
@@ -2550,6 +2550,7 @@ qboolean NA_Load (sizebuf_t* sb, void* data)
 		for (j = 0; j < MONTHS_PER_YEAR; j++) {
 			gd.nations[i].stats[j].inuse = MSG_ReadByte(sb);
 			gd.nations[i].stats[j].happiness = MSG_ReadFloat(sb);
+			gd.nations[i].stats[j].xvi_infection = MSG_ReadFloat(sb);
 			gd.nations[i].stats[j].alienFriendly = MSG_ReadFloat(sb);
 		}
 	}
