@@ -1275,6 +1275,7 @@ static const char* CL_GetNationHappinessString (nation_t* nation)
  * @param[in] nation Pointer to the nation
  * @param[in] month idx of the month -- 0 for current month (sa nation_t)
  * @return actual funding of a nation
+ * @sa CL_NationsMaxFunding
  */
 static int CL_GetNationFunding (const nation_t* const nation, int month)
 {
@@ -1842,7 +1843,7 @@ static int usedColPtslists = 0;
 
 static screenPoint_t coordAxesPts[3];	/* Space for 2 lines (3 points) */
 
-const vec4_t graphColors[MAX_NATIONS] = {
+static const vec4_t graphColors[MAX_NATIONS] = {
 	{1.0, 0.5, 0.5, 1.0},
 	{0.5, 1.0, 0.5, 1.0},
 	{0.5, 0.5, 1.0, 1.0},
@@ -1859,6 +1860,7 @@ static const vec4_t graphColorSelected = {1, 1, 1, 1};
  * @note nation->maxFunding is _not_ the real funding value.
  * @return The maximum funding value.
  * @todo Extend to other values?
+ * @sa CL_GetNationFunding
  */
 static int CL_NationsMaxFunding (void)
 {
@@ -1957,7 +1959,7 @@ static int selectedNation = 0;
  * @brief Shows the current nation list + statistics.
  * @note See menu_stats.ufo
  */
-static void CL_NationStatsUpdate_f(void)
+static void CL_NationStatsUpdate_f (void)
 {
 	int i;
 	int funding, maxFunding;
