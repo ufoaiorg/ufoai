@@ -290,7 +290,7 @@ typedef struct nationInfo_s {
 	qboolean	inuse;	/**< Is this entry used? */
 
 	/* Relationship */
-	float happiness;
+	float happiness;	/** percentage (0.00 - 1.00) of happiness. 1.00 is the maximum hapiness */
 /**	float xvi_infection;	@todo How much (percentage 0-100) of the population in this nation is infected. */
 	float alienFriendly;	/**< How friendly is this nation towards the aliens. (percentage 0-100)
 				 * @todo Check if this is still needed after XVI factors are in.

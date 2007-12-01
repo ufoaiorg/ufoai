@@ -1042,6 +1042,9 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 			XVISpread = 1;
 		}
 		nation->stats[0].happiness = nation->stats[0].happiness * 0.40 + happiness * 0.60;
+		/* Nation happiness cannot be greater than 1 */
+		if (nation->stats[0].happiness > 1.0f)
+			nation->stats[0].happiness = 1.0f;
 
 		/* ensure 0 - 100 */
 		if (ccs.XVISpreadActivated) {
@@ -2782,6 +2785,10 @@ static void CP_ChangeNationHappiness_f (void)
 	assert(nation);
 
 	nation->stats[0].happiness = nation->stats[0].happiness * multiplier;
+
+	/* Nation happiness cannot be greater than 1 */
+	if (nation->stats[0].happiness > 1.0f)
+		nation->stats[0].happiness = 1.0f;
 }
 
 /**
