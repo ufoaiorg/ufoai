@@ -317,8 +317,11 @@ qboolean CL_NewBase (base_t* base, vec2_t pos)
 	return qtrue;
 }
 
-
-static stage_t *testStage;			/**< Document me. */
+/**
+ * @brief The active stage in the current campaign
+ * @sa CL_StageSetDone
+ */
+static const stage_t *activeStage = NULL;
 
 /**
  * @brief Checks wheter a stage set exceeded the quota
@@ -330,7 +333,9 @@ static qboolean CL_StageSetDone (char *name)
 	setState_t *set;
 	int i;
 
-	for (i = 0, set = &ccs.set[testStage->first]; i < testStage->num; i++, set++)
+	assert(activeStage);
+
+	for (i = 0, set = &ccs.set[activeStage->first]; i < activeStage->num; i++, set++)
 		if (!Q_strncmp(name, set->def->name, MAX_VAR)) {
 			if (set->def->number && set->num >= set->def->number)
 				return qtrue;
@@ -344,12 +349,12 @@ static qboolean CL_StageSetDone (char *name)
 /**
  * @sa CL_CampaignExecute
  */
-static void CL_CampaignActivateStageSets (stage_t *stage)
+static void CL_CampaignActivateStageSets (const stage_t *stage)
 {
 	setState_t *set;
 	int i;
 
-	testStage = stage;
+	activeStage = stage;
 #ifdef PARANOID
 	if (stage->first + stage->num >= MAX_STAGESETS)
 		Sys_Error("CL_CampaignActivateStageSets '%s' (first: %i, num: %i)\n", stage->name, stage->first, stage->num);
@@ -473,7 +478,7 @@ static void CL_CampaignExecute (setState_t * set)
 }
 
 /**
- * @brief Returns the alien XVI tech is the tech was already researched
+ * @brief Returns the alien XVI tech if the tech was already researched
  */
 technology_t *CP_IsXVIResearched (void)
 {
@@ -4633,8 +4638,8 @@ static void CP_CampaignStats_f (void)
 	Com_Printf("..equipment: %s\n", curCampaign->equipment);
 	Com_Printf("..team: %s\n", curCampaign->team);
 
-	Com_Printf("..active stage: %s\n", testStage->name);
-	for (i = 0, set = &ccs.set[testStage->first]; i < testStage->num; i++, set++) {
+	Com_Printf("..active stage: %s\n", activeStage->name);
+	for (i = 0, set = &ccs.set[activeStage->first]; i < activeStage->num; i++, set++) {
 		Com_Printf("....name: %s\n", set->def->name);
 		Com_Printf("......needed: %s\n", set->def->needed);
 		Com_Printf("......quota: %i\n", set->def->quota);
