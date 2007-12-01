@@ -290,9 +290,9 @@ typedef struct nationInfo_s {
 	qboolean	inuse;	/**< Is this entry used? */
 
 	/* Relationship */
-	float happiness;
-/**	float xvi_infection;	@todo How much (percentage 0-100) of the population in this nation is infected. */
-	float alienFriendly;	/**< How friendly is this nation towards the aliens. (percentage 0-100)
+	float happiness;	/** percentage (0.00 - 1.00) of how the nation appreciates PHALANX. 1.00 is the maximum happiness */
+	float xvi_infection;	/** How much (percentage 0.00 - 1.00) of the population in this nation is infected. */
+	float alienFriendly;	/**< How friendly is this nation towards the aliens. (percentage 0.00 - 1.00)
 				 * @todo Check if this is still needed after XVI factors are in.
 				 * Pro: People can be alien-frienldy without being affected after all.
 				 * Con: ?
@@ -311,7 +311,7 @@ typedef struct nation_s {
 	vec2_t pos;		/**< Nation name position on geoscape. */
 	int XVIRate;	/**< 0 - 100 - the rate of infection for this nation - starts at 0 */
 
-	nationInfo_t stats[MONTHS_PER_YEAR];	/**< Detailed information about teh history of this nations relationship toward PHALANX and the aliens.
+	nationInfo_t stats[MONTHS_PER_YEAR];	/**< Detailed information about the history of this nations relationship toward PHALANX and the aliens.
 									 * The first entry [0] is the current month - all following entries are stored older months.
 									 * Combined with the funding info below we can generate an overview over time.
 									 */

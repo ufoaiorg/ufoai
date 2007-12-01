@@ -2254,6 +2254,17 @@ base/textures/tex_misc/pipes003.jpg |  |  | Public Domain Golgotha
 base/textures/tex_misc/rstbounce.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/rstbouncefan.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_nature/flower.jpg | GPL | Willem "Sitters"
+base/textures/tex_nature/grass003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_nature/grass003_way_d2r.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_nature/grass003_way_hor.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_nature/grass003_way_l2d.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_nature/grass003_way_l2u.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_nature/grass003_way_start_h.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_nature/grass003_way_start_v.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_nature/grass003_way_t_fork.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_nature/grass003_way_u2r.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_nature/grass003_way_vert.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_nature/grass003_way_x_fork.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_nature/ice001.jpg |  |  | Public Domain Golgotha
 base/textures/tex_nature/soil001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_nature/soil002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)

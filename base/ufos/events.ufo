@@ -72,7 +72,7 @@ mail ufo_crashed_report
 	from "_mail_from_paul_navarre"
 	// base name where you send the recovery stuffs
 	subject "_Recovery Report -- %s"
-	body "_mail_ufo_crashed_report"
+	body "_mail_alien_ufo_crashed"
 	icon icons/tech
 }
 
@@ -82,7 +82,7 @@ mail ufo_recovery_report
 	from "_mail_from_paul_navarre"
 	// base name where you send the recovery stuffs
 	subject "_Recovery Report -- %s"
-	body "_mail_ufo_recovery_report"
+	body "_mail_alien_ufo_recovered"
 	icon icons/tech
 }
 

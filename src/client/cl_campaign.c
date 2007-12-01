@@ -317,8 +317,11 @@ qboolean CL_NewBase (base_t* base, vec2_t pos)
 	return qtrue;
 }
 
-
-static stage_t *testStage;			/**< Document me. */
+/**
+ * @brief The active stage in the current campaign
+ * @sa CL_StageSetDone
+ */
+static const stage_t *activeStage = NULL;
 
 /**
  * @brief Checks wheter a stage set exceeded the quota
@@ -330,7 +333,9 @@ static qboolean CL_StageSetDone (char *name)
 	setState_t *set;
 	int i;
 
-	for (i = 0, set = &ccs.set[testStage->first]; i < testStage->num; i++, set++)
+	assert(activeStage);
+
+	for (i = 0, set = &ccs.set[activeStage->first]; i < activeStage->num; i++, set++)
 		if (!Q_strncmp(name, set->def->name, MAX_VAR)) {
 			if (set->def->number && set->num >= set->def->number)
 				return qtrue;
@@ -344,12 +349,12 @@ static qboolean CL_StageSetDone (char *name)
 /**
  * @sa CL_CampaignExecute
  */
-static void CL_CampaignActivateStageSets (stage_t *stage)
+static void CL_CampaignActivateStageSets (const stage_t *stage)
 {
 	setState_t *set;
 	int i;
 
-	testStage = stage;
+	activeStage = stage;
 #ifdef PARANOID
 	if (stage->first + stage->num >= MAX_STAGESETS)
 		Sys_Error("CL_CampaignActivateStageSets '%s' (first: %i, num: %i)\n", stage->name, stage->first, stage->num);
@@ -473,7 +478,7 @@ static void CL_CampaignExecute (setState_t * set)
 }
 
 /**
- * @brief Returns the alien XVI tech is the tech was already researched
+ * @brief Returns the alien XVI tech if the tech was already researched
  */
 technology_t *CP_IsXVIResearched (void)
 {
@@ -941,7 +946,7 @@ static int CP_GetAverageXVIRate (void)
  * @brief Checks whether the player has lost the campaign
  * @note
  */
-static void CP_CheckLostCondition (qboolean lost, mission_t* mission, int civiliansKilled)
+static void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int civiliansKilled)
 {
 	qboolean endCampaign = qfalse;
 
@@ -1042,6 +1047,9 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 			XVISpread = 1;
 		}
 		nation->stats[0].happiness = nation->stats[0].happiness * 0.40 + happiness * 0.60;
+		/* Nation happiness cannot be greater than 1 */
+		if (nation->stats[0].happiness > 1.0f)
+			nation->stats[0].happiness = 1.0f;
 
 		/* ensure 0 - 100 */
 		if (ccs.XVISpreadActivated) {
@@ -1241,7 +1249,7 @@ const char *CL_DateGetMonthName (int month)
  * @param[in] nation
  * @return Translated happiness string
  */
-static const char* CL_GetNationHappinessString (nation_t* nation)
+static const char* CL_GetNationHappinessString (const nation_t* nation)
 {
 	if (nation->stats[0].happiness < 0.015)
 		return _("Giving up");
@@ -1268,6 +1276,18 @@ static const char* CL_GetNationHappinessString (nation_t* nation)
 }
 
 /**
+ * @brief Get the actual funding of a nation
+ * @param[in] nation Pointer to the nation
+ * @param[in] month idx of the month -- 0 for current month (sa nation_t)
+ * @return actual funding of a nation
+ * @sa CL_NationsMaxFunding
+ */
+static int CL_GetNationFunding (const nation_t* const nation, int month)
+{
+	return nation->maxFunding * nation->stats[month].happiness;
+}
+
+/**
  * @brief Update the nation data from all parsed nation each month
  * @note give us nation support by:
  * * credits
@@ -1289,7 +1309,7 @@ static void CL_HandleBudget (void)
 
 	for (i = 0; i < gd.numNations; i++) {
 		nation = &gd.nations[i];
-		funding = nation->maxFunding * nation->stats[0].happiness;
+		funding = CL_GetNationFunding(nation, 0);
 		CL_UpdateCredits(ccs.credits + funding);
 
 		new_scientists = new_medics = new_soldiers = new_workers = 0;
@@ -1828,7 +1848,7 @@ static int usedColPtslists = 0;
 
 static screenPoint_t coordAxesPts[3];	/* Space for 2 lines (3 points) */
 
-const vec4_t graphColors[MAX_NATIONS] = {
+static const vec4_t graphColors[MAX_NATIONS] = {
 	{1.0, 0.5, 0.5, 1.0},
 	{0.5, 1.0, 0.5, 1.0},
 	{0.5, 0.5, 1.0, 1.0},
@@ -1845,6 +1865,7 @@ static const vec4_t graphColorSelected = {1, 1, 1, 1};
  * @note nation->maxFunding is _not_ the real funding value.
  * @return The maximum funding value.
  * @todo Extend to other values?
+ * @sa CL_GetNationFunding
  */
 static int CL_NationsMaxFunding (void)
 {
@@ -1858,7 +1879,7 @@ static int CL_NationsMaxFunding (void)
 		for (m = 0; m < MONTHS_PER_YEAR; m++) {
 			if (nation->stats[m].inuse) {
 				/** nation->stats[m].happiness = sqrt((float)m / 12.0);  @todo  DEBUG */
-				funding = nation->maxFunding * nation->stats[m].happiness;
+				funding = CL_GetNationFunding(nation, m);
 				if (max < funding)
 					max = funding;
 			} else {
@@ -1904,7 +1925,7 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node, int maxFundi
 	/** @todo Sort this in reverse? -> Having current month on the right side? */
 	for (m = 0; m < MONTHS_PER_YEAR; m++) {
 		if (nation->stats[m].inuse) {
-			funding = nation->maxFunding * nation->stats[m].happiness;
+			funding = CL_GetNationFunding(nation, m);
 			fundingPts[usedFundPtslist][m].x = x + (m * dx);
 			fundingPts[usedFundPtslist][m].y = y - height * (funding - minFunding) / (maxFunding - minFunding);
 			ptsNumber++;
@@ -1943,7 +1964,7 @@ static int selectedNation = 0;
  * @brief Shows the current nation list + statistics.
  * @note See menu_stats.ufo
  */
-static void CL_NationStatsUpdate_f(void)
+static void CL_NationStatsUpdate_f (void)
 {
 	int i;
 	int funding, maxFunding;
@@ -1961,7 +1982,7 @@ static void CL_NationStatsUpdate_f(void)
 	}
 
 	for (i = 0; i < gd.numNations; i++) {
-		funding = gd.nations[i].maxFunding * gd.nations[i].stats[0].happiness;
+		funding = CL_GetNationFunding(&(gd.nations[i]), 0);
 
 		if (selectedNation == i) {
 			Cbuf_AddText(va("nation_marksel%i;",i));
@@ -2511,7 +2532,8 @@ qboolean NA_Save (sizebuf_t* sb, void* data)
 		for (j = 0; j < MONTHS_PER_YEAR; j++) {
 			MSG_WriteByte(sb, gd.nations[i].stats[j].inuse);
 			MSG_WriteFloat(sb, gd.nations[i].stats[j].happiness);
-			MSG_WriteFloat(sb, gd.nations[i].stats[j].alienFriendly);
+			MSG_WriteFloat(sb, gd.nations[i].XVIRate / 100.0f);
+			MSG_WriteFloat(sb, gd.nations[i].stats[j].alienFriendly / 100.0f);
 		}
 	}
 	return qtrue;
@@ -2771,6 +2793,10 @@ static void CP_ChangeNationHappiness_f (void)
 	assert(nation);
 
 	nation->stats[0].happiness = nation->stats[0].happiness * multiplier;
+
+	/* Nation happiness cannot be greater than 1 */
+	if (nation->stats[0].happiness > 1.0f)
+		nation->stats[0].happiness = 1.0f;
 }
 
 /**
@@ -4612,8 +4638,8 @@ static void CP_CampaignStats_f (void)
 	Com_Printf("..equipment: %s\n", curCampaign->equipment);
 	Com_Printf("..team: %s\n", curCampaign->team);
 
-	Com_Printf("..active stage: %s\n", testStage->name);
-	for (i = 0, set = &ccs.set[testStage->first]; i < testStage->num; i++, set++) {
+	Com_Printf("..active stage: %s\n", activeStage->name);
+	for (i = 0, set = &ccs.set[activeStage->first]; i < activeStage->num; i++, set++) {
 		Com_Printf("....name: %s\n", set->def->name);
 		Com_Printf("......needed: %s\n", set->def->needed);
 		Com_Printf("......quota: %i\n", set->def->quota);
