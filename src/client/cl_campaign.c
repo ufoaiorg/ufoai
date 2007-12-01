@@ -2527,7 +2527,8 @@ qboolean NA_Save (sizebuf_t* sb, void* data)
 		for (j = 0; j < MONTHS_PER_YEAR; j++) {
 			MSG_WriteByte(sb, gd.nations[i].stats[j].inuse);
 			MSG_WriteFloat(sb, gd.nations[i].stats[j].happiness);
-			MSG_WriteFloat(sb, gd.nations[i].stats[j].alienFriendly);
+			MSG_WriteFloat(sb, gd.nations[i].XVIRate / 100.0f);
+			MSG_WriteFloat(sb, gd.nations[i].stats[j].alienFriendly / 100.0f);
 		}
 	}
 	return qtrue;
