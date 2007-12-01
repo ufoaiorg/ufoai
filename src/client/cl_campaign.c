@@ -941,7 +941,7 @@ static int CP_GetAverageXVIRate (void)
  * @brief Checks whether the player has lost the campaign
  * @note
  */
-static void CP_CheckLostCondition (qboolean lost, mission_t* mission, int civiliansKilled)
+static void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int civiliansKilled)
 {
 	qboolean endCampaign = qfalse;
 
@@ -1244,7 +1244,7 @@ const char *CL_DateGetMonthName (int month)
  * @param[in] nation
  * @return Translated happiness string
  */
-static const char* CL_GetNationHappinessString (nation_t* nation)
+static const char* CL_GetNationHappinessString (const nation_t* nation)
 {
 	if (nation->stats[0].happiness < 0.015)
 		return _("Giving up");
