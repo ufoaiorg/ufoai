@@ -5067,6 +5067,7 @@ static void CP_UfoRecoveryNationSelectPopup_f (void)
 static void CP_UFOSellStart_f (void)
 {
 	nation_t *nation;
+	int i;
 
 	nation = &gd.nations[Cvar_VariableInteger("mission_recoverynation")];
 	assert(nation);
@@ -5074,6 +5075,19 @@ static void CP_UFOSellStart_f (void)
 	UFO_TypeToName(Cvar_VariableInteger("mission_ufotype")), _(nation->name), UFOprices[Cvar_VariableInteger("mission_recoverynation")]);
 	MN_AddNewMessage(_("UFO Recovery"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 	CL_UpdateCredits(ccs.credits + UFOprices[Cvar_VariableInteger("mission_recoverynation")]);
+
+	/* update nation happiness */
+	for (i = 0; i < gd.numNations; i++) {
+		if (gd.nations + i == nation) {
+			/* nation is happy because it got the UFO */
+			gd.nations[i].stats[0].happiness *= 1.2f;
+			/* Nation happiness cannot be greater than 1 */
+			if (nation->stats[0].happiness > 1.0f)
+				nation->stats[0].happiness = 1.0f;
+		} else
+			/* nation is unhappy because it wanted the UFO */
+			gd.nations[i].stats[0].happiness *= .95f;
+	}
 
 	/* UFO recovery process is done, disable buttons. */
 	CP_UFORecoveryDone();
