@@ -2416,10 +2416,12 @@ static int CL_SkillIncreaseBy (float skill)
 
 	delta = 2.3f - 0.02f * skill + (2.0f - 0.01f * skill) * frand();
 
-	if (skill + delta < MAX_SKILL)
-		return (int) delta;
+	/* to avoid skill increasing to fast, you can not gain more than 1 point if your skill is bigger than 95
+	 * This allow to be sure at the same time than skill is never bigger than MAX_SKILL (because delta < 4.3) */
+	if (delta > 1.0f && skill >= 0.95 * MAX_SKILL)
+		return 1;
 	else
-		return MAX_SKILL - round(skill);
+		return (int) delta;
 }
 
 /**
