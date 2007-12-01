@@ -928,14 +928,12 @@ msgstr "Pelin lataaminen ei onnistunut."
 
 #: ../base/ufos/maps.ufo:387
 msgid ""
-"A farmhouse surrounded by fields and sheds. A UFO has landed in one of the "
-"fields."
+"A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
 msgstr ""
 
 #: ../base/ufos/maps.ufo:934
 msgid ""
-"A shelter that was built to house people in times of major disasters. Some "
-"internal blast doors may have been closed."
+"A shelter that was built to house people in times of major disasters. Some internal blast doors may have been closed."
 msgstr ""
 
 #: ../base/ufos/medals.ufo:3
@@ -3505,8 +3503,7 @@ msgstr "Vaikea kampanja"
 
 #: ../base/ufos/menu_singleplayer.ufo:439
 msgid ""
-"Are you sure that you really want to reload the last automatically saved "
-"campaign state?"
+"Are you sure that you really want to reload the last automatically saved campaign state?"
 msgstr ""
 
 #: ../base/ufos/menu_singleplayer.ufo:468
@@ -3852,8 +3849,7 @@ msgstr ""
 
 #: ../base/ufos/missions.ufo:126
 msgid ""
-"There are rumors of a mine being overrun by aliens. Although this source of "
-"information is doubtful, you'll need to investigate."
+"There are rumors of a mine being overrun by aliens. Although this source of information is doubtful, you'll need to investigate."
 msgstr ""
 
 #: ../base/ufos/missions.ufo:142
@@ -3902,8 +3898,7 @@ msgstr ""
 #: ../base/ufos/missions.ufo:598 ../base/ufos/missions.ufo:615
 #: ../base/ufos/missions.ufo:707 ../base/ufos/missions.ufo:827
 msgid ""
-"Damn it, you've let some of them get away again! Reequip your squad and get "
-"after them!"
+"Damn it, you've let some of them get away again! Reequip your squad and get after them!"
 msgstr ""
 
 #: ../base/ufos/missions.ufo:249 ../base/ufos/missions.ufo:429
@@ -3977,8 +3972,7 @@ msgstr ""
 
 #: ../base/ufos/missions.ufo:492
 msgid ""
-"Because convoy was not secured, happiness of United America falls "
-"dramaticaly."
+"Because convoy was not secured, happiness of United America falls dramaticaly."
 msgstr ""
 
 #: ../base/ufos/missions.ufo:504
@@ -4005,8 +3999,7 @@ msgstr ""
 
 #: ../base/ufos/missions.ufo:546
 msgid ""
-"There is a construction site being attacked by aliens. Protect workers and "
-"their equipment."
+"There is a construction site being attacked by aliens. Protect workers and their equipment."
 msgstr ""
 
 #: ../base/ufos/missions.ufo:562
@@ -4141,8 +4134,7 @@ msgstr ""
 
 #: ../base/ufos/missions.ufo:921
 msgid ""
-"The aliens are trying to spread their XVI virus amongst the populace. "
-"Prevent them from succeeding at all costs!"
+"The aliens are trying to spread their XVI virus amongst the populace. Prevent them from succeeding at all costs!"
 msgstr ""
 
 #: ../base/ufos/nations.ufo:29
@@ -5653,40 +5645,32 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:5
 msgid ""
-"Use the [Shift] key to align your targeting height - useful to shoot a "
-"rocketlauncher in front of an alien group, for example."
+"Use the [Shift] key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:6
 msgid ""
-"Assemble and save different teams for multiplayer matches - 4 player teams, "
-"8 player teams and so on. This way you can quickly load the right one for a "
-"fast match."
+"Assemble and save different teams for multiplayer matches - 4 player teams, 8 player teams and so on. This way you can quickly load the right one for a fast match."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:7
 msgid ""
-"With multiplayer teams, make sure your best soldiers are at the top of the "
-"team list. When the soldier limit is lower than the amount of soldiers in "
-"your team, the soldiers at the top of the list will be used for the game."
+"With multiplayer teams, make sure your best soldiers are at the top of the team list. When the soldier limit is lower than the amount of soldiers in your team, the soldiers at the top of the list will be used for the game."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:8
 msgid ""
-"Always make sure that you have enough Time Units (TUs) left to hide after "
-"you shoot."
+"Always make sure that you have enough Time Units (TUs) left to hide after you shoot."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:9
 msgid ""
-"When using Reaction Fire, remember that you can set which fire mode to use "
-"by enabling the corresponding check box on the fire mode panel."
+"When using Reaction Fire, remember that you can set which fire mode to use by enabling the corresponding check box on the fire mode panel."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:10
 msgid ""
-"Remember to give your soldiers a varying array of weapons, you never know "
-"when a certain weapon may come in handy."
+"Remember to give your soldiers a varying array of weapons, you never know when a certain weapon may come in handy."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:11
@@ -5699,58 +5683,47 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:13
 msgid ""
-"You can use a flashbang to deactivate your opponents Reaction Fire mode or "
-"to take all of his remaining Time Units (TUs) for his next round."
+"You can use a flashbang to deactivate your opponents Reaction Fire mode or to take all of his remaining Time Units (TUs) for his next round."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:14
 msgid ""
-"In multiplayer, you can chat by pressing [k] (to all), [l] (team members "
-"only), or by pressing the chat buttons on the HUD."
+"In multiplayer, you can chat by pressing [k] (to all), [l] (team members only), or by pressing the chat buttons on the HUD."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:15
 msgid ""
-"To make a soldier look into a certain direction (i.e. to turn him/her) place "
-"the cursor and press the right mouse button or the [Ctrl] key. This will "
-"cost you Time Units (TUs)."
+"To make a soldier look into a certain direction (i.e. to turn him/her) place the cursor and press the right mouse button or the [Ctrl] key. This will cost you Time Units (TUs)."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:16
 msgid ""
-"Be sure to hire as many scientists as you can. The earlier you know your "
-"enemy, the easier he is to defeat."
+"Be sure to hire as many scientists as you can. The earlier you know your enemy, the easier he is to defeat."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:17
 msgid ""
-"Be sure to hire as many engineers as you can. The faster your production "
-"lines, the sooner you can get access to better equipment and resupplies."
+"Be sure to hire as many engineers as you can. The faster your production lines, the sooner you can get access to better equipment and resupplies."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:18
 msgid ""
-"Be sure to visit our website, http://ufoai.sf.net/ and drop by our community "
-"channel. You can do so by going to the Multiplayer menu and clicking on the "
-"Lobby button."
+"Be sure to visit our website, http://ufoai.sf.net/ and drop by our community channel. You can do so by going to the Multiplayer menu and clicking on the Lobby button."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:19
 msgid ""
-"Remember that you need an active Command Centre in order to launch "
-"interceptors."
+"Remember that you need an active Command Centre in order to launch interceptors."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:20
 msgid ""
-"Never pass up an opportunity to capture a live alien, even one you have "
-"already researched."
+"Never pass up an opportunity to capture a live alien, even one you have already researched."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:21
 msgid ""
-"Watch your back! Your soldiers can only see enemies in an arc in front of "
-"them."
+"Watch your back! Your soldiers can only see enemies in an arc in front of them."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:22
@@ -5759,71 +5732,57 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:23
 msgid ""
-"You can make soldiers crouch to better protect them from enemy fire. But "
-"remember that crouching and standing up cost Time Units (TUs), and moving "
-"while crouched costs more TUs than walking normally."
+"You can make soldiers crouch to better protect them from enemy fire. But remember that crouching and standing up cost Time Units (TUs), and moving while crouched costs more TUs than walking normally."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:24
 msgid ""
-"Watch out for Reaction Fire! A soldier can fall under Reaction Fire even if "
-"another soldier is moving."
+"Watch out for Reaction Fire! A soldier can fall under Reaction Fire even if another soldier is moving."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:25
 msgid ""
-"Use [c] to toggle crouching. Crouching makes some weapons considerably more "
-"precise. It also makes your soldier a smaller target."
+"Use [c] to toggle crouching. Crouching makes some weapons considerably more precise. It also makes your soldier a smaller target."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:26
 msgid ""
-"If you are short of Time Units (TUs) and have dangerous enemies, using a "
-"flashbang to incapacitate them until the start of your next round may be the "
-"best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
+"If you are short of Time Units (TUs) and have dangerous enemies, using a flashbang to incapacitate them until the start of your next round may be the best option. 2 TU (retrieve from holster) + 12 TU (throw) = 14TU."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:27
 msgid ""
-"Use the first-person view (toggle with [v]) to check if moving one square to "
-"the left will make that shoot-through-the-building shot possible."
+"Use the first-person view (toggle with [v]) to check if moving one square to the left will make that shoot-through-the-building shot possible."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:28
 msgid ""
-"Use a fast soldier with pistols, one handed melee weapons, grenades, "
-"flashbangs and medikits."
+"Use a fast soldier with pistols, one handed melee weapons, grenades, flashbangs and medikits."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:29
 msgid ""
-"Build a hospital to be able to heal your soldiers faster for their next "
-"mission."
+"Build a hospital to be able to heal your soldiers faster for their next mission."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:30
 msgid ""
-"Plasma grenades do the most damage, but frag grenades can be useful, as they "
-"can be thrown slightly further."
+"Plasma grenades do the most damage, but frag grenades can be useful, as they can be thrown slightly further."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:31
 msgid ""
-"Use [x] to cycle through the Reaction Fire settings: none, one shot, "
-"multiple shots."
+"Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shots."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:32
 msgid ""
-"Keep soldiers close, so that they can support each other (heal each other, "
-"shoot when one runs out of Time Units (TUs)). Keep a wall between them at "
-"the end of your turn, so that they can't be killed with one grenade."
+"Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of Time Units (TUs)). Keep a wall between them at the end of your turn, so that they can't be killed with one grenade."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:33
 msgid ""
-"Always have a disposable soldier or two, so you don't have to put your "
-"primary units into very risky situations."
+"Always have a disposable soldier or two, so you don't have to put your primary units into very risky situations."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:34
@@ -5832,35 +5791,27 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:35
 msgid ""
-"Reaction Fire can drain your Time Units (TUs) to 0. If you turn off Reaction "
-"Fire, you cannot turn it back on without enough Time Units (TU). You can, "
-"however, leave it on. Try not to adjust zeroed units until you're sure."
+"Reaction Fire can drain your Time Units (TUs) to 0. If you turn off Reaction Fire, you cannot turn it back on without enough Time Units (TU). You can, however, leave it on. Try not to adjust zeroed units until you're sure."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:36
 msgid ""
-"Air Burst from the Grenade Launcher lets you explode those grenades in a "
-"specific place. Very useful when targetting something near the edge of the "
-"map, or on a ledge."
+"Air Burst from the Grenade Launcher lets you explode those grenades in a specific place. Very useful when targetting something near the edge of the map, or on a ledge."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:37
 msgid ""
-"When throwing grenades, try to avoid straight throws along the grid. With at "
-"least a little bit of an angle, the chances of bouncing it back at yourself "
-"becomes much less on a 'missed' throw."
+"When throwing grenades, try to avoid straight throws along the grid. With at least a little bit of an angle, the chances of bouncing it back at yourself becomes much less on a 'missed' throw."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:38
 msgid ""
-"Before throwing a grenade, look closely at the shape of the land. A slight "
-"slope will affect the direction that the grenade bounces."
+"Before throwing a grenade, look closely at the shape of the land. A slight slope will affect the direction that the grenade bounces."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:39
 msgid ""
-"You can include your own maps for multiplayer games or create your own "
-"campaigns. Just have a look at our wiki to read about content creation."
+"You can include your own maps for multiplayer games or create your own campaigns. Just have a look at our wiki to read about content creation."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:40
@@ -5869,8 +5820,7 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:41
 msgid ""
-"You can also accelerate/decelerate time on geoscape by using mouse wheel on "
-"the time buttons, or [m], [n]."
+"You can also accelerate/decelerate time on geoscape by using mouse wheel on the time buttons, or [m], [n]."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:42
@@ -5879,14 +5829,12 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:43
 msgid ""
-"Remember that items will slow an aircraft. To intercept fast UFOs, you may "
-"prefer to send several lightly equipped aircraft."
+"Remember that items will slow an aircraft. To intercept fast UFOs, you may prefer to send several lightly equipped aircraft."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:44
 msgid ""
-"Your attacked aircraft may flee to one of your bases to avoid being "
-"destroyed by UFOs."
+"Your attacked aircraft may flee to one of your bases to avoid being destroyed by UFOs."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:45
@@ -5895,22 +5843,17 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:46
 msgid ""
-"Spotted enemies: While on a ground mission you can press [Space] to cycle "
-"through all spotted enemies. Pressing [t] key will draw a line to each enemy "
-"the selected soldier can see."
+"Spotted enemies: While on a ground mission you can press [Space] to cycle through all spotted enemies. Pressing [t] key will draw a line to each enemy the selected soldier can see."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:47
 msgid ""
-"You can use the right mouse button in the soldier equipment screen to equip "
-"or unequip weapons, ammo and armour. This only works in the base equipment, "
-"not in the tactical missions where such an action would cost TUs."
+"You can use the right mouse button in the soldier equipment screen to equip or unequip weapons, ammo and armour. This only works in the base equipment, not in the tactical missions where such an action would cost TUs."
 msgstr ""
 
 #: ../base/ufos/tips.ufo:48
 msgid ""
-"You should ensure that not too many civilians lose their lives. Otherwise "
-"you might lose the game sooner than you'd expect."
+"You should ensure that not too many civilians lose their lives. Otherwise you might lose the game sooner than you'd expect."
 msgstr ""
 
 #: ../base/ufos/weapons.ufo:6
@@ -6617,8 +6560,7 @@ msgstr ""
 
 #: client/cl_aircraft.c:519
 msgid ""
-"Your aircraft doesn't have enough fuel to go there and then come back to its "
-"home base."
+"Your aircraft doesn't have enough fuel to go there and then come back to its home base."
 msgstr ""
 
 #: client/cl_aircraft.c:619 client/cl_map.c:1399
@@ -6829,8 +6771,7 @@ msgstr ""
 #: client/cl_basemanagement.c:2734
 #, c-format
 msgid ""
-"Make sure that the dependencies of building %s (%s) are operational, so that "
-"building %s may be used."
+"Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."
 msgstr ""
 
 #: client/cl_basemanagement.c:2742 client/cl_basemanagement.c:2747
@@ -6846,8 +6787,7 @@ msgstr "Laboratorio pitää rakentaa ensin"
 
 #: client/cl_basemanagement.c:2804
 msgid ""
-"No aircraft in this base - You first have to purchase or transfer an "
-"aircraft\n"
+"No aircraft in this base - You first have to purchase or transfer an aircraft\n"
 msgstr ""
 
 #: client/cl_basemanagement.c:2804 client/cl_basemanagement.c:2806
@@ -6941,13 +6881,7 @@ msgstr ""
 
 #: client/cl_campaign.c:954
 msgid ""
-"Under your command, PHALANX operations have consistently failed to protect "
-"innocent civilians. Dozens have lost their lives through your inability to "
-"handle the alien threat. The UN, highly unsatisfied with your performance, "
-"has decided to remove you from command and subsequently disbands the PHALANX "
-"project as an effective task force. No further attempts at global "
-"cooperation are made. Earth's nations each try to stand alone against the "
-"aliens, and eventually fall one by one."
+"Under your command, PHALANX operations have consistently failed to protect innocent civilians. Dozens have lost their lives through your inability to handle the alien threat. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
 msgstr ""
 
 #: client/cl_campaign.c:967
@@ -6956,18 +6890,13 @@ msgstr ""
 
 #: client/cl_campaign.c:973
 msgid ""
-"You have failed in your charter to protect Earth. Our home and our people "
-"have fallen to the alien infection. Only a handful of people on Earth remain "
-"human, and the remaining few no longer have a chance to stem the tide. Your "
-"command is no more; PHALANX is no longer able to operate as a functioning "
-"unit. Nothing stands between the aliens and total victory."
+"You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory."
 msgstr ""
 
 #: client/cl_campaign.c:1088
 #, c-format
 msgid ""
-"Your base: %s has been ransacked! All employees killed and all equipment "
-"destroyed."
+"Your base: %s has been ransacked! All employees killed and all equipment destroyed."
 msgstr ""
 
 #: client/cl_campaign.c:1146
@@ -7271,8 +7200,7 @@ msgstr ""
 #: client/cl_campaign.c:3065
 #, c-format
 msgid ""
-"%s has been awarded the posthumous rank of %s\\for inspirational gallantry "
-"in the face of overwhelming odds.\n"
+"%s has been awarded the posthumous rank of %s\\for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr ""
 
 #: client/cl_campaign.c:3066
@@ -7375,8 +7303,7 @@ msgstr "Ei tarpeeksi asuinhuoneistoja"
 #: client/cl_employee.c:504
 #, c-format
 msgid ""
-"You don't have enough living quarters to house all of your personnel. You "
-"need to fire %i personnel until more living space becomes available."
+"You don't have enough living quarters to house all of your personnel. You need to fire %i personnel until more living space becomes available."
 msgstr ""
 
 #: client/cl_employee.c:508
@@ -7561,8 +7488,7 @@ msgstr[1] ""
 #: client/cl_inventory.c:541
 #, c-format
 msgid ""
-"Base %s does not have Antimatter Storage Facility. %i units of Antimatter "
-"got removed."
+"Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."
 msgstr ""
 
 #: client/cl_main.c:343 client/cl_main.c:987
@@ -7673,8 +7599,7 @@ msgstr ""
 
 #: client/cl_main.c:1030
 msgid ""
-"All bookmark slots are used - please removed unused entries and repeat this "
-"step"
+"All bookmark slots are used - please removed unused entries and repeat this step"
 msgstr ""
 
 #: client/cl_main.c:1116
@@ -8262,8 +8187,7 @@ msgstr "Ei tarpeeksi asuinhuoneistoja"
 #: client/cl_produce.c:1180
 #, c-format
 msgid ""
-"You don't have enough material to produce all (%i) items. Production will "
-"continue with a reduced (%i) number."
+"You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."
 msgstr ""
 
 #: client/cl_produce.c:1184 client/cl_produce.c:1206
@@ -8353,8 +8277,7 @@ msgstr "Tila: tutkimus valmis"
 
 #: client/cl_research.c:822
 msgid ""
-"Status: We don't currently have all the materials or background knowledge "
-"needed to research this topic."
+"Status: We don't currently have all the materials or background knowledge needed to research this topic."
 msgstr ""
 
 #: client/cl_research.c:824
@@ -8989,8 +8912,7 @@ msgstr "Tukikohdan nimi"
 
 #: client/cl_transfer.c:1356
 msgid ""
-"The destination base no longer exists! Transfer cargo are lost, personel got "
-"unhired."
+"The destination base no longer exists! Transfer cargo are lost, personel got unhired."
 msgstr ""
 
 #: client/cl_ufo.c:508
@@ -9321,8 +9243,7 @@ msgstr ""
 
 #: game/g_client.c:906
 msgid ""
-"Can't perform action - weapon already fully loaded with the same "
-"ammunition!\n"
+"Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr ""
 
 #: game/g_client.c:1548
