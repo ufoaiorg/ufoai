@@ -1268,6 +1268,17 @@ static const char* CL_GetNationHappinessString (nation_t* nation)
 }
 
 /**
+ * @brief Get the actual funding of a nation
+ * @param[in] nation Pointer to the nation
+ * @param[in] month idx of the month -- 0 for current month (sa nation_t)
+ * @return actual funding of a nation
+ */
+static int CL_GetNationFunding (const nation_t* const nation, int month)
+{
+	return nation->maxFunding * nation->stats[month].happiness;
+}
+
+/**
  * @brief Update the nation data from all parsed nation each month
  * @note give us nation support by:
  * * credits
@@ -1289,7 +1300,7 @@ static void CL_HandleBudget (void)
 
 	for (i = 0; i < gd.numNations; i++) {
 		nation = &gd.nations[i];
-		funding = nation->maxFunding * nation->stats[0].happiness;
+		funding = CL_GetNationFunding(nation, 0);
 		CL_UpdateCredits(ccs.credits + funding);
 
 		new_scientists = new_medics = new_soldiers = new_workers = 0;
@@ -1858,7 +1869,7 @@ static int CL_NationsMaxFunding (void)
 		for (m = 0; m < MONTHS_PER_YEAR; m++) {
 			if (nation->stats[m].inuse) {
 				/** nation->stats[m].happiness = sqrt((float)m / 12.0);  @todo  DEBUG */
-				funding = nation->maxFunding * nation->stats[m].happiness;
+				funding = CL_GetNationFunding(nation, m);
 				if (max < funding)
 					max = funding;
 			} else {
@@ -1904,7 +1915,7 @@ static void CL_NationDrawStats (nation_t *nation, menuNode_t *node, int maxFundi
 	/** @todo Sort this in reverse? -> Having current month on the right side? */
 	for (m = 0; m < MONTHS_PER_YEAR; m++) {
 		if (nation->stats[m].inuse) {
-			funding = nation->maxFunding * nation->stats[m].happiness;
+			funding = CL_GetNationFunding(nation, m);
 			fundingPts[usedFundPtslist][m].x = x + (m * dx);
 			fundingPts[usedFundPtslist][m].y = y - height * (funding - minFunding) / (maxFunding - minFunding);
 			ptsNumber++;
@@ -1961,7 +1972,7 @@ static void CL_NationStatsUpdate_f(void)
 	}
 
 	for (i = 0; i < gd.numNations; i++) {
-		funding = gd.nations[i].maxFunding * gd.nations[i].stats[0].happiness;
+		funding = CL_GetNationFunding(&(gd.nations[i]), 0);
 
 		if (selectedNation == i) {
 			Cbuf_AddText(va("nation_marksel%i;",i));
