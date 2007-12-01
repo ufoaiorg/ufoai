@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-11-30 19:34+0100\n"
-"PO-Revision-Date: 2007-12-01 13:01+0100\n"
+"PO-Revision-Date: 2007-12-01 14:22+0100\n"
 "Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -4115,7 +4115,7 @@ msgstr "Nation"
 
 #: ../base/ufos/menu_stats.ufo:275
 msgid "Current Funding"
-msgstr "Finances actuelles"
+msgstr "Fin. actuel"
 
 #: ../base/ufos/menu_stats.ufo:301
 msgid "Month (Relative to current)"
@@ -4123,7 +4123,7 @@ msgstr "Mois (Relatif à l'actuel)"
 
 #: ../base/ufos/menu_stats.ufo:357
 msgid "Funding"
-msgstr "Fincances"
+msgstr "Financement"
 
 #: ../base/ufos/menu_stats.ufo:367
 msgid "max"

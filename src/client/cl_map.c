@@ -122,6 +122,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 {
 	int selected, id;
 	aircraft_t* aircraft;
+	qboolean multiSelection = qfalse;
 
 	if (Cmd_Argc() < 2) {
 		/* Direct call from code, not from a popup menu */
@@ -130,6 +131,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 		/* Call from a geoscape popup menu (popup_multi_selection) */
 		MN_PopMenu(qfalse);
 		selected = atoi(Cmd_Argv(1));
+		multiSelection = qtrue;
 	}
 
 	if (selected < 0 || selected >= multiSelect.nbSelect)
@@ -172,6 +174,11 @@ static void MAP_MultiSelectExecuteAction_f (void)
 		} else {
 			Com_DPrintf(DEBUG_CLIENT, "Select mission: %s at %.0f:%.0f\n", selMis->def->name, selMis->realPos[0], selMis->realPos[1]);
 			gd.mapAction = MA_INTERCEPT;
+			if (multiSelection) {
+				/* if we come from a multiSelection menu, no need to open twice this popup to go to mission */
+				CL_DisplayPopupIntercept(selMis, NULL);
+				return;
+			}
 		}
 		break;
 
@@ -189,6 +196,9 @@ static void MAP_MultiSelectExecuteAction_f (void)
 			/* Selection of an unselected aircraft */
 			MAP_ResetAction();
 			selectedAircraft = aircraft;
+			if (multiSelection)
+				/* if we come from a multiSelection menu, no need to open twice this popup to choose an action */
+				CL_DisplayPopupAircraft(aircraft);
 		}
 		break;
 
@@ -205,6 +215,9 @@ static void MAP_MultiSelectExecuteAction_f (void)
 			/* Selection of an unselected ufo */
 			MAP_ResetAction();
 			selectedUfo = aircraft;
+			if (multiSelection)
+				/* if we come from a multiSelection menu, no need to open twice this popup to choose an action */
+				CL_DisplayPopupIntercept(NULL, selectedUfo);
 		}
 		break;
 
@@ -415,7 +428,7 @@ static qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int
 	 * (which are relative to the upper left side of the screen) */
 	*x = (int) (mid[0] - radius * v[1]);
 	*y = (int) (mid[1] - radius * v[0]);
-	/* FIXME: I'm not sure of what z should contain (normalized value ? sign ?) */
+
 	if (z) {
 		*z = (int) (- radius * v[2]);
 	}
