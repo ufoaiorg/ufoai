@@ -428,7 +428,7 @@ static qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int
 	 * (which are relative to the upper left side of the screen) */
 	*x = (int) (mid[0] - radius * v[1]);
 	*y = (int) (mid[1] - radius * v[0]);
-	/* FIXME: I'm not sure of what z should contain (normalized value ? sign ?) */
+
 	if (z) {
 		*z = (int) (- radius * v[2]);
 	}
