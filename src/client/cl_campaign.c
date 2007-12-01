@@ -1005,7 +1005,6 @@ static void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int 
  * Should be called at the completion or expiration of every mission.
  * The nation where the mission took place will be most affected,
  * surrounding nations will be less affected.
- * @todo: nations react way too much; independently, an asymptotic reaction near 0.0 and 1.0 would be nice; high alienFriendly factor seems to increase happiness, instead of decreasing it.
  */
 static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civiliansKilled, int aliensSurvived, int aliensKilled, actMis_t * mis)
 {
@@ -1014,8 +1013,9 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 	float civilianRatio = civilianSum ? (float)civiliansSurvived / (float)civilianSum : 0.;
 	int alienSum = aliensKilled + aliensSurvived;
 	float alienRatio = alienSum ? (float)aliensKilled / (float)alienSum : 0.;
-	float performance = 0.5 + civilianRatio * 0.25 + alienRatio * 0.25;
-	float XVISpread;
+	float performance = civilianRatio * 0.5 + alienRatio * 0.5;
+	float happiness_factor;
+	float xvi_infection_factor;
 
 	if (lost) {
 		stats.missionsLost++;
@@ -1025,14 +1025,14 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 
 	for (i = 0; i < gd.numNations; i++) {
 		nation_t *nation = &gd.nations[i];
-		float alienHostile = 1.0 - nation->stats[0].alienFriendly;
-		float happiness = nation->stats[0].happiness;
-		XVISpread = 1.0f;
+		float alienHostile = 1.0f - nation->stats[0].alienFriendly;
+		happiness_factor = 1.0f;
+		xvi_infection_factor = 1.0f;
 
 		if (lost) {
 			if (!Q_strcmp(nation->id, mis->def->nation)) {
-				/* Strong negative reaction */
-				happiness *= performance * alienHostile;
+				/* Strong negative reaction (happiness_factor must be < 1) */
+				happiness_factor = 1.0f - (1.0f - performance) * nation->stats[0].alienFriendly;
 				is_on_Earth++;
 				if (ccs.XVISpreadActivated) {
 					/* if there wasn't any XVI infection in this country (or small infection), start it */
@@ -1040,18 +1040,18 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 						nation->stats[0].xvi_infection = XVI_LOST_START_PERCENTAGE;
 					else
 						/* increase infection by 50% */
-						XVISpread = 1.50f;
+						xvi_infection_factor = 1.50f;
 				}
 			} else {
-				/* Minor negative reaction */
-				happiness *= 1.0 - pow(1.0 - performance * alienHostile, 5.0);
+				/* Minor negative reaction (10 times lower than if the failed mission were in the nation) */
+				happiness_factor = 1.0f - 0.1f * (1.0f - performance) * nation->stats[0].alienFriendly;
 				/* increase infection by 10% for country already infected */
-				XVISpread = 1.10f;
+				xvi_infection_factor = 1.10f;
 			}
 		} else {
 			if (!Q_strcmp(nation->id, mis->def->nation)) {
-				/* Strong positive reaction */
-				happiness += 0.05f * performance * alienHostile;
+				/* Strong positive reaction (happiness_factor must be > 1) */
+				happiness_factor = 1.0f + performance * alienHostile;
 				is_on_Earth++;
 				if (ccs.XVISpreadActivated) {
 					/* if there wasn't any XVI infection in this country, start it */
@@ -1059,30 +1059,26 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 						nation->stats[0].xvi_infection = XVI_WON_START_PERCENTAGE;
 					else
 						/* increase infection by 10% */
-						XVISpread = 1.10f;
+						xvi_infection_factor = 1.10f;
 				}
 			} else {
-				/* Minor positive reaction */
-				happiness += 0.50f * performance * alienHostile;
+				/* Minor positive reaction (10 times lower than if the mission were in the nation) */
+				happiness_factor = 1.0f + 0.1f * performance * alienHostile;
 				/* No spreading of XVI infection in other nations */
 			}
-			if (nation->stats[0].happiness > 1.0) {
-				/* Can't be more than 100% happy with you. */
-				happiness = 1.0;
-			}
 		}
-		/* make an average of 40% of previous value and 60% of new value */
-		nation->stats[0].happiness = nation->stats[0].happiness * 0.40 + happiness * 0.60;
+
+		/* update happiness */
+		nation->stats[0].happiness *= happiness_factor;
 		/* Nation happiness cannot be greater than 1 */
 		if (nation->stats[0].happiness > 1.0f)
 			nation->stats[0].happiness = 1.0f;
 
 		/* update xvi_infection value (note that there will be an effect only 
-		 * on nations where at least one mission already took place (otherwise nation->stats[0].xvi_infection = 0) */
+		 * on nations where at least one mission already took place (for others, nation->stats[0].xvi_infection = 0) */
 		if (ccs.XVISpreadActivated) {
 			/* @todo: Send mails about critical rates */
-			/* @todo: this should depends on the difficulty of the game */
-			nation->stats[0].xvi_infection *= XVISpread;
+			nation->stats[0].xvi_infection *= xvi_infection_factor;
 			if (nation->stats[0].xvi_infection > 1.0f)
 				nation->stats[0].xvi_infection = 1.0f;
 		}
