@@ -1193,6 +1193,16 @@ static void CP_CheckEvents (void)
 				date_t date = {7, 0};
 				Q_strncpyz(messageBuffer, va(ngettext("The aliens had enough time to kill %i civilian at %s.", "The aliens had enough time to kill %i civilians at %s.", mis->def->civilians), mis->def->civilians, mis->def->location), MAX_MESSAGE_TEXT);
 				MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+
+				/* nation's happiness decreases */
+				for (j = 0; j < gd.numNations; j++) {
+					nation_t *nation = &gd.nations[j];
+					if (!Q_strcmp(nation->id, mis->def->nation)) {
+						nation->stats[0].happiness *= .85f;
+						break;
+					}
+				}
+
 				/* FIXME use set->def->expire */
 				mis->expire = Date_Add(ccs.date, Date_Random_Middle(date));
 				CL_GameTimeStop();
