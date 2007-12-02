@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/bin/bash
+
 
 # Script to search all invalid licenses in base/textures
 # Written by Zenerka
