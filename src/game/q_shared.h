@@ -463,7 +463,6 @@ typedef struct {
 #define RF_MEMBER           0x00000020	/**< actor in the same team */
 #define RF_ALLIED           0x00000040	/**< actor in an allied team (controlled by another player) */
 #define RF_LIGHTFIXED       0x00000080	/**< @sa LMF_LIGHTFIXED */
-#define RF_NOSMOOTH         0x00000100	/**< @sa LMF_NOSMOOTH */
 #define RF_HIGHLIGHT        0x00000200  /**< hightlight the actor with a marker */
 
 /* player_state_t->refdef bit flags */
