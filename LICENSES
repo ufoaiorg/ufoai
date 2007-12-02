@@ -1334,18 +1334,18 @@ base/models/weapons/assault/assault.jpg | GNU General Public License 2.0 | Lukas
 base/models/weapons/assault/assault.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/assault/assault_clip.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/assault/assault_clip.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/binocs/binocs.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/models/weapons/binocs/binocs.md2 | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/models/weapons/binocs/binocs.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/weapons/binocs/binocs.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/bolterrifle/bolterrifle.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/bolterrifle/bolterrifle.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/bolterrifle/bolterrifle_clip.jpg | GNU General Public License 2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | clip model based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
 base/models/weapons/bolterrifle/bolterrifle_clip.md2 | GNU General Public License 2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | clip model based on old version by Lukas Beyeler (Rasta), see old/ subdirectory
-base/models/weapons/chaingun/chaingun.jpg | Creative Commons Attribution-ShareAlike 3.0 | Nathan : INC (Kaeau)
-base/models/weapons/chaingun/chaingun.md2 | Creative Commons Attribution-ShareAlike 3.0 | Nathan : INC (Kaeau)
-base/models/weapons/chaingun/chaingun_ammo.jpg | Creative Commons Attribution-ShareAlike 3.0 | Nathan : INC (Kaeau)
-base/models/weapons/chaingun/chaingun_ammo.md2 | Creative Commons Attribution-ShareAlike 3.0 | Nathan : INC (Kaeau)
-base/models/weapons/electrolaser/electrolaser.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/models/weapons/electrolaser/electrolaser.md2 | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/models/weapons/chaingun/chaingun.jpg | Creative Commons Attribution-Share Alike 3.0 | Nathan : INC (Kaeau)
+base/models/weapons/chaingun/chaingun.md2 | Creative Commons Attribution-Share Alike 3.0 | Nathan : INC (Kaeau)
+base/models/weapons/chaingun/chaingun_ammo.jpg | Creative Commons Attribution-Share Alike 3.0 | Nathan : INC (Kaeau)
+base/models/weapons/chaingun/chaingun_ammo.md2 | Creative Commons Attribution-Share Alike 3.0 | Nathan : INC (Kaeau)
+base/models/weapons/electrolaser/electrolaser.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/weapons/electrolaser/electrolaser.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/flamer/flamer.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/flamer/flamer.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/flamer/flamer_ammo.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
@@ -1374,8 +1374,8 @@ base/models/weapons/grenl/grenl_plasma_clip.md2 | GNU General Public License 2.0
 base/models/weapons/incgren/incgren.md2 | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/incgren/incgren.obj | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
 base/models/weapons/incgren/incgren.tga | GNU General Public License 2.0 | Denis (De_Nis / tdtv / Денис)
-base/models/weapons/irgoggles/irgoggles.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/models/weapons/irgoggles/irgoggles.md2 | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/models/weapons/irgoggles/irgoggles.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/models/weapons/irgoggles/irgoggles.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/weapons/kerrblade/kerrblade.3DS | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/kerrblade/kerrblade.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/kerrblade/kerrblade.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
@@ -1394,9 +1394,9 @@ base/models/weapons/laserrifle/laserrifle.jpg | GNU General Public License 2.0 |
 base/models/weapons/laserrifle/laserrifle.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/laserrifle/laserrifle_clip.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/laserrifle/laserrifle_clip.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/machinegun/machinegun.jpg | Creative Commons Attribution-ShareAlike 3.0 | Daniel Holden (Yoshiboy)
-base/models/weapons/machinegun/machinegun.md2 | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
-base/models/weapons/machinegun/machinegun_clip.md2 | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
+base/models/weapons/machinegun/machinegun.jpg | Creative Commons Attribution-Share Alike 3.0 | Daniel Holden (Yoshiboy)
+base/models/weapons/machinegun/machinegun.md2 | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
+base/models/weapons/machinegun/machinegun_clip.md2 | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - model, Daniel Holden (Yoshiboy) - uvmap + texture
 base/models/weapons/medikit/medikit.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/medikit/medikit.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/pbeamcannon/pbeamcannon.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
@@ -1463,17 +1463,17 @@ base/models/weapons/shotgun/shotgun_clip.jpg | GNU General Public License 2.0 | 
 base/models/weapons/shotgun/shotgun_clip.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/shotgun/shotgun_clip_green.jpg | GNU General Public License 2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on shotgun_clip by Lukas Beyeler (Rasta)
 base/models/weapons/shotgun/shotgun_clip_green.md2 | GNU General Public License 2.0 | Werner Hoehrer (hoehrer), Lukas Beyeler (Rasta) | model and texture based on shotgun_clip by Lukas Beyeler (Rasta)
-base/models/weapons/shotgun2/shotgun.jpg | Creative Commons Attribution-ShareAlike 3.0 | Nathan : INC (Kaeau)
-base/models/weapons/shotgun2/shotgun.md2 | Creative Commons Attribution-ShareAlike 3.0 | Nathan : INC (Kaeau)
-base/models/weapons/shotgun2/shotgun_clip.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Hoehrer (hoehrer) | model based on microshotgun clip model by Werner Hoehrer and Ryan Span, see base/models/weapons/shotgunmicro/
-base/models/weapons/shotgun2/shotgun_clip.md2 | Creative Commons Attribution-ShareAlike 3.0 | Werner Hoehrer (hoehrer) | model based on microshotgun clip model by Werner Hoehrer and Ryan Span, see base/models/weapons/shotgunmicro/
-base/models/weapons/shotgunmicro/old/pistolshotgun.mtl | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
-base/models/weapons/shotgunmicro/old/pistolshotgun.obj | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
-base/models/weapons/shotgunmicro/old/pistolshotgun.wings | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
-base/models/weapons/shotgunmicro/shotgunmicro.jpg | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
-base/models/weapons/shotgunmicro/shotgunmicro.md2 | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
-base/models/weapons/shotgunmicro/shotgunmicro_clip.jpg | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
-base/models/weapons/shotgunmicro/shotgunmicro_clip.md2 | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
+base/models/weapons/shotgun2/shotgun.jpg | Creative Commons Attribution-Share Alike 3.0 | Nathan : INC (Kaeau)
+base/models/weapons/shotgun2/shotgun.md2 | Creative Commons Attribution-Share Alike 3.0 | Nathan : INC (Kaeau)
+base/models/weapons/shotgun2/shotgun_clip.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer) | model based on microshotgun clip model by Werner Hoehrer and Ryan Span, see base/models/weapons/shotgunmicro/
+base/models/weapons/shotgun2/shotgun_clip.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer) | model based on microshotgun clip model by Werner Hoehrer and Ryan Span, see base/models/weapons/shotgunmicro/
+base/models/weapons/shotgunmicro/old/pistolshotgun.mtl | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
+base/models/weapons/shotgunmicro/old/pistolshotgun.obj | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
+base/models/weapons/shotgunmicro/old/pistolshotgun.wings | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
+base/models/weapons/shotgunmicro/shotgunmicro.jpg | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
+base/models/weapons/shotgunmicro/shotgunmicro.md2 | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
+base/models/weapons/shotgunmicro/shotgunmicro_clip.jpg | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
+base/models/weapons/shotgunmicro/shotgunmicro_clip.md2 | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some fixes by Werner Hoehrer (hoehrer)
 base/models/weapons/smg/smg.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/smg/smg.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/smg/smg_clip.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
@@ -1487,19 +1487,19 @@ base/models/weapons/sniper/sniper.jpg | GNU General Public License 2.0 | Lukas B
 base/models/weapons/sniper/sniper.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/sniper/sniper_clip.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/weapons/sniper/sniper_clip.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
-base/models/weapons/stungren/old/canister2.mtl | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter)
-base/models/weapons/stungren/old/canister2.obj | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter)
-base/models/weapons/stungren/old/canister2.wings | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter)
-base/models/weapons/stungren/stungren.jpg | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter), texture modified by Werner Hoehrer (hoehrer)
-base/models/weapons/stungren/stungren.md2 | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter)
-base/models/weapons/stunrod/old/stunrod.wings | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter)
-base/models/weapons/stunrod/old/stunrodskin.png | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter)
-base/models/weapons/stunrod/stunrod.jpg | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some minor fixes made by Werner Höhrer (hoehrer)
-base/models/weapons/stunrod/stunrod.md2 | Creative Commons Attribution-ShareAlike 3.0 | Ryan Span (Winter) - with some minor fixes made by Werner Höhrer (hoehrer)
+base/models/weapons/stungren/old/canister2.mtl | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter)
+base/models/weapons/stungren/old/canister2.obj | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter)
+base/models/weapons/stungren/old/canister2.wings | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter)
+base/models/weapons/stungren/stungren.jpg | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter), texture modified by Werner Hoehrer (hoehrer)
+base/models/weapons/stungren/stungren.md2 | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter)
+base/models/weapons/stunrod/old/stunrod.wings | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter)
+base/models/weapons/stunrod/old/stunrodskin.png | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter)
+base/models/weapons/stunrod/stunrod.jpg | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some minor fixes made by Werner Höhrer (hoehrer)
+base/models/weapons/stunrod/stunrod.md2 | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some minor fixes made by Werner Höhrer (hoehrer)
 base/music/AlexFightmare.ogg | GNU General Public License 2.0 | Alex Parker
 base/music/AlexForest.ogg | Creative Commons Sampling Plus 1.0 License | Alex Parker | contains sounds sourced from thefreesoundproject.com and released under the creative commons sampling plus license (1.0).   These sounds and their authors are:   Odayam sounds (night time).wav - "genghis attenborough"   winter woods junkyard.wav - "offthesky (www.offthesky.com)"
 base/music/AlexSullencity.ogg | Creative Commons Sampling Plus 1.0 License | Alex Parker | background sounds taken from The Free Sound Project, under the Creative Commons Sampling Plus License 1.0; contributors:   RHumphries: 2523_RHumphries_rbh_thunder_storm.wav   Acutescream: 24716_acutescream_file0084edit_LANightAlarm.wav
-base/music/David01.ogg | Creative Commons Attribution-NonCommercial-ShareAlike 3.0 | David Reeves (Destructavator)
+base/music/David01.ogg | Creative Commons Attribution-Share Alike 3.0 | David Reeves (Destructavator)
 base/music/PsymongN1.ogg | GNU General Public License 2.0 | Simon Green (Psymong)
 base/music/PsymongN2.ogg | GNU General Public License 2.0 | Simon Green (Psymong)
 base/music/PsymongN3.ogg | GNU General Public License 2.0 | Simon Green (Psymong)
@@ -1530,14 +1530,14 @@ base/music/van_mission2.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethi
 base/music/van_mission3.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethian" Marino (www.manuelmarino.com)
 base/music/van_mission4.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethian" Marino (www.manuelmarino.com)
 base/music/van_theme.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethian" Marino (www.manuelmarino.com)
-base/pics/air_dropship.tga | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/pics/air_interceptor.tga | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/pics/air_ufo.tga | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/pics/air_dropship.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/air_interceptor.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/air_ufo.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/altmenu/temp_field_back.png | Creative Commons Attribution 3.0 | Ray West (RaXaR), raxarATmeccanineDOTcom or MSN:raxar_sxsAThotmailDOTcom
 base/pics/altmenu/temp_metal_corner_pieces.png | Creative Commons Attribution 3.0 | Ray West (RaXaR), raxarATmeccanineDOTcom or MSN:raxar_sxsAThotmailDOTcom
 base/pics/altmenu/temp_metal_straight_pieces.png | Creative Commons Attribution 3.0 | Ray West (RaXaR), raxarATmeccanineDOTcom or MSN:raxar_sxsAThotmailDOTcom
 base/pics/altmenu/ufo_logo.png | Creative Commons Attribution 3.0 | Ray West (RaXaR), raxarATmeccanineDOTcom or MSN:raxar_sxsAThotmailDOTcom
-base/pics/base.tga | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/pics/base.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/base/adrop.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/base/adropl1.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/base/adropl2.tga | GNU General Public License 2.0 | Martin Gerhardy
@@ -1563,7 +1563,7 @@ base/pics/base/storage.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/base/teamroom.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/base/workshop1.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/base/workshop2.tga | GNU General Public License 2.0 | Martin Gerhardy
-base/pics/baseattack.tga | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/pics/baseattack.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/hud/checkbox.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/hud/firemode.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/icons/air.tga | GNU General Public License 2.0 | Gerd Heisse
@@ -1743,27 +1743,27 @@ base/pics/menu/map_earth_clouds.jpg |  |  | Blue Marble Next generation - NASA's
 base/pics/menu/map_earth_day.jpg |  |  | Blue Marble Next generation - NASA's Earth Obervatory (See http://www.iac.ethz.ch/staff/stockli/bmng/#acknowledgements and http://www.nasa.gov/vision/earth/features/blue_marble.html)
 base/pics/menu/map_earth_night.jpg |  |  | Blue Marble Next generation - NASA's Earth Obervatory (See http://www.iac.ethz.ch/staff/stockli/bmng/#acknowledgements and http://www.nasa.gov/vision/earth/features/blue_marble.html)
 base/pics/menu/panel.tga | GNU General Public License 2.0 | Martin Gerhardy
-base/pics/phalanx_badge.png | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/pics/phalanx_badge_big.png | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_01.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_02.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_03.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_04.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_05.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_06.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_07.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_08.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_09.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_10.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_11.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_12.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_medic.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_pc.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_scientist.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/rank_worker.jpg | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/pics/ranks/ranks.blend | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/pics/reactionfire.tga | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
-base/pics/reactionfiremany.tga | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
+base/pics/phalanx_badge.png | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/phalanx_badge_big.png | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_01.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_02.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_03.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_04.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_05.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_06.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_07.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_08.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_09.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_10.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_11.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_12.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_medic.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_pc.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_scientist.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/rank_worker.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/ranks/ranks.blend | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/reactionfire.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
+base/pics/reactionfiremany.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/sfx/bubble.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/sfx/exhaust.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/sfx/explosions1.jpg |  |  | Public Domain Golgotha
@@ -1786,13 +1786,13 @@ base/pics/sfx/smoke_puff2.jpg |  |  | Public Domain Golgotha
 base/pics/sfx/smoke_puff3.jpg |  |  | Public Domain Golgotha
 base/pics/sfx/smoke_puff4.jpg |  |  | Public Domain Golgotha
 base/pics/sfx/smoke_puff5.jpg |  |  | Public Domain Golgotha
-base/pics/techs/alien_breathing.jpg | Creative Commons Attribution-ShareAlike 3.0 | Michal Bilinski (Blywulf)
-base/pics/techs/antimatter.jpg | Creative Commons Attribution-ShareAlike 3.0 | Michal Bilinski (Blywulf)
+base/pics/techs/alien_breathing.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
+base/pics/techs/antimatter.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/techs/laser.blend | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | Scientist model by Lukas Beyeler (Rasta) - GPL2
 base/pics/techs/laser.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/pics/techs/ortnok.jpg | Creative Commons Attribution-ShareAlike 3.0 | Michal Bilinski (Blywulf)
-base/pics/techs/taman.jpg | Creative Commons Attribution-ShareAlike 3.0 | Michal Bilinski (Blywulf)
-base/pics/techs/taman_autopsy.jpg | Creative Commons Attribution-ShareAlike 3.0 | Michal Bilinski (Blywulf)
+base/pics/techs/ortnok.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
+base/pics/techs/taman.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
+base/pics/techs/taman_autopsy.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/sound/aliens/aliendeath1.wav | Creative Commons Sampling Plus 1.0 License | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
 base/sound/aliens/aliendeath2.wav | Creative Commons Sampling Plus 1.0 License | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
 base/sound/aliens/aliendeath3.wav | Creative Commons Sampling Plus 1.0 License | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
