@@ -1869,9 +1869,16 @@ base/textures/tex_base/helipad1.jpg | GNU General Public License 2.0 | Werner H�
 base/textures/tex_base/helipad2.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/helipad3.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/helipad4.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/lab_wall001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/lab_wall002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/lab_wall003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/steptop_mtl.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/steptop_mtl2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/trim_drkmtl.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_base/wall001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/wall002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/wall003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/wall004.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/9basetrim01.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/9darktrim02b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/9floorbasic01b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
