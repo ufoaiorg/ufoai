@@ -45,7 +45,7 @@ function checkmaps {
 }
 
 function usage {
-	echo "Usage $(0) [-checkmaps]"
+	echo "Usage ${0} [-checkmaps]"
 	echo " checkmaps      - checks whether the textures that don't"
 	echo "                  have a license set are used in the maps"
 	echo " extension      - the files to check"
