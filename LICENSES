@@ -230,32 +230,38 @@ base/maps/oriental05d.map | GPL version 2 | Martin Gerhardy
 base/maps/oriental05n.map | GPL version 2 | Martin Gerhardy
 base/maps/oriental06d.map | GPL version 2 | 'SparX' Beyeler
 base/maps/oriental06n.map | GPL version 2 | 'SparX' Beyeler
-base/maps/orientald/or_drop.map | GPL version 2
-base/maps/orientald/or_h01.map | GPL version 2
-base/maps/orientald/or_h02.map | GPL version 2
-base/maps/orientald/or_h03.map | GPL version 2
-base/maps/orientald/or_h04.map | GPL version 2
-base/maps/orientald/or_h05.map | GPL version 2
-base/maps/orientald/or_h06.map | GPL version 2
-base/maps/orientald/or_h07.map | GPL version 2
-base/maps/orientald/or_h08.map | GPL version 2
-base/maps/orientald/or_h09.map | GPL version 2
-base/maps/orientald/or_h10.map | GPL version 2
-base/maps/orientald/or_h11.map | GPL version 2
-base/maps/orientald/or_h12.map | GPL version 2
-base/maps/orientaln/or_drop.map | GPL version 2
-base/maps/orientaln/or_h01.map | GPL version 2
-base/maps/orientaln/or_h02.map | GPL version 2
-base/maps/orientaln/or_h03.map | GPL version 2
-base/maps/orientaln/or_h04.map | GPL version 2
-base/maps/orientaln/or_h05.map | GPL version 2
-base/maps/orientaln/or_h06.map | GPL version 2
-base/maps/orientaln/or_h07.map | GPL version 2
-base/maps/orientaln/or_h08.map | GPL version 2
-base/maps/orientaln/or_h09.map | GPL version 2
-base/maps/orientaln/or_h10.map | GPL version 2
-base/maps/orientaln/or_h11.map | GPL version 2
-base/maps/orientaln/or_h12.map | GPL version 2
+base/maps/orientald/or_drop.map | GNU General Public License 2.0
+base/maps/orientald/or_h01.map | GNU General Public License 2.0
+base/maps/orientald/or_h02.map | GNU General Public License 2.0
+base/maps/orientald/or_h03.map | GNU General Public License 2.0
+base/maps/orientald/or_h04.map | GNU General Public License 2.0
+base/maps/orientald/or_h05.map | GNU General Public License 2.0
+base/maps/orientald/or_h06.map | GNU General Public License 2.0
+base/maps/orientald/or_h07.map | GNU General Public License 2.0
+base/maps/orientald/or_h08.map | GNU General Public License 2.0
+base/maps/orientald/or_h09.map | GNU General Public License 2.0
+base/maps/orientald/or_h10.map | GNU General Public License 2.0
+base/maps/orientald/or_h11.map | GNU General Public License 2.0
+base/maps/orientald/or_h12.map | GNU General Public License 2.0
+base/maps/orientald/or_h13.map | GNU General Public License 2.0
+base/maps/orientald/or_h14.map | GNU General Public License 2.0
+base/maps/orientald/or_h15.map | GNU General Public License 2.0
+base/maps/orientaln/or_drop.map | GNU General Public License 2.0
+base/maps/orientaln/or_h01.map | GNU General Public License 2.0
+base/maps/orientaln/or_h02.map | GNU General Public License 2.0
+base/maps/orientaln/or_h03.map | GNU General Public License 2.0
+base/maps/orientaln/or_h04.map | GNU General Public License 2.0
+base/maps/orientaln/or_h05.map | GNU General Public License 2.0
+base/maps/orientaln/or_h06.map | GNU General Public License 2.0
+base/maps/orientaln/or_h07.map | GNU General Public License 2.0
+base/maps/orientaln/or_h08.map | GNU General Public License 2.0
+base/maps/orientaln/or_h09.map | GNU General Public License 2.0
+base/maps/orientaln/or_h10.map | GNU General Public License 2.0
+base/maps/orientaln/or_h11.map | GNU General Public License 2.0
+base/maps/orientaln/or_h12.map | GNU General Public License 2.0
+base/maps/orientaln/or_h13.map | GNU General Public License 2.0
+base/maps/orientaln/or_h14.map | GNU General Public License 2.0
+base/maps/orientaln/or_h15.map | GNU General Public License 2.0
 base/maps/pdi08d.map | GPL version 2 | 'SparX' Beyeler
 base/maps/pdi08n.map | GPL version 2 | 'SparX' Beyeler
 base/maps/pipes_const01d.map | GPL version 2 | Martin Gerhardy
@@ -310,7 +316,8 @@ base/maps/stadium06d.map | GPL version 2 | 'SparX' Beyeler
 base/maps/stadium06n.map | GPL version 2 | 'SparX' Beyeler
 base/maps/subway07d.map | GPL version 2 | 'SparX' Beyeler
 base/maps/subway07n.map | GPL version 2 | 'SparX' Beyeler
-base/maps/terrain02d.map | GPL version 2 | Martin Gerhardy
+base/maps/terrain02d.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/terrain02n.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/terrain08d.map | GPL version 2
 base/maps/terrain08n.map | GPL version 2
 base/maps/test_particles.map | GPL version 2
@@ -511,6 +518,7 @@ base/models/aircraft/ufo_scout/ufo_scout_hull.jpg | GNU General Public License v
 base/models/aircraft/ufo_scout/ufo_scout_hull.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/ufo_scout/ufo_scout_upper.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/ufo_scout/ufo_scout_upper.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/ufo_scout/ufo_scout_upper2.md2 | GNU General Public License 2.0 | Martin Gerhardy | ufo_scout_upper.md2
 base/models/aircraft/ufo_supply/ufo_supply.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/ufo_supply/ufo_supply.md2 | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/ufo_supply/ufo_supply_body.jpg | GNU General Public License v2.0 | Lukas Beyeler (Rasta)
@@ -589,10 +597,9 @@ base/models/aliens/tamanmedium/body01.md2 | GPL version 2 | Lukas "rastaman_bey"
 base/models/aliens/tamanmedium/body01.tag | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/tamanmedium/head01.jpg | GPL version 2 | Lukas "rastaman_bey" Beyeler
 base/models/aliens/tamanmedium/head01.md2 | GPL version 2 | Lukas "rastaman_bey" Beyeler
-base/models/animals/crocodile/Readme.txt | GPL | Willem "Sitters"
-base/models/animals/crocodile/croc.jpg | GPL | Willem "Sitters"
-base/models/animals/crocodile/croc.md2 | GPL | Willem "Sitters"
-base/models/animals/crocodile/croc.tga | GPL | Willem "Sitters"
+base/models/animals/crocodile/croc.jpg | GNU General Public License 2.0 | Willem "Sitters"
+base/models/animals/crocodile/croc.md2 | GNU General Public License 2.0 | Willem "Sitters"
+base/models/animals/crocodile/croc.tga | GNU General Public License 2.0 | Willem "Sitters"
 base/models/animals/rat/rat.jpg | GPL | Willen "sitters"
 base/models/animals/rat/rat.md2 | GPL | Willen "sitters"
 base/models/animals/rat/rat.mtl | GPL | Willen "sitters"
