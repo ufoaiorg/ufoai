@@ -413,7 +413,7 @@ static void B_BaseInit_f (void)
 		Cvar_SetValue("mn_base_buysell_allowed", qfalse);
 		Cmd_ExecuteString("set_buysell_disabled");
 	}
-	if (gd.numBases > 1) {
+	if (gd.numBases > 1 && baseCurrent->baseStatus != BASE_UNDER_ATTACK) {
 		Cmd_ExecuteString("set_transfer_enabled");
 	} else {
 		Cmd_ExecuteString("set_transfer_disabled");
@@ -2687,6 +2687,13 @@ static void B_CheckBuildingStatusForMenu_f (void)
 
 	if (!baseCurrent) {
 		Com_Printf("B_CheckBuildingStatusForMenu_f: baseCurrent pointer is NULL\n");
+		return;
+	}
+
+	/* Maybe base is under attack ? */
+	if (baseCurrent->baseStatus == BASE_UNDER_ATTACK) {
+		Com_sprintf(popupText, sizeof(popupText), _("Base is under attack, you can't access this building !"));
+		MN_Popup(_("Notice"), popupText);
 		return;
 	}
 
