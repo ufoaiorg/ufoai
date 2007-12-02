@@ -505,8 +505,8 @@ base/models/aircraft/inter_stiletto/stiletto_glass.md2 | GNU General Public Lice
 base/models/aircraft/inter_stingray/stingray.jpg | GNU General Public License 2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/stingray_flying.md2 | GNU General Public License 2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/stingray_landed.md2 | GNU General Public License 2.0 | David Townsend (Psawhn)
-base/models/aircraft/ufo_carrier/ufo_carrier.jpg | GNU General Public License 2.0
-base/models/aircraft/ufo_carrier/ufo_carrier.md2 | Ryan A. Span
+base/models/aircraft/ufo_carrier/ufo_carrier.jpg | GNU General Public License 2.0 | Ryan A. Span
+base/models/aircraft/ufo_carrier/ufo_carrier.md2 | GNU General Public License 2.0 | Ryan A. Span
 base/models/aircraft/ufo_condor/ufo_condor.jpg | GNU General Public License 2.0 | Werner Hoehrer (hoehrer) | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
 base/models/aircraft/ufo_condor/ufo_condor.md2 | GNU General Public License 2.0 | Werner Hoehrer (hoehrer) | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
 base/models/aircraft/ufo_fighter/ufo_fighter_closed.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
