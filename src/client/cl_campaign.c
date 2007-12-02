@@ -1014,7 +1014,7 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 	int alienSum = aliensKilled + aliensSurvived;
 	float alienRatio = alienSum ? (float)aliensKilled / (float)alienSum : 0.;
 	float performance = civilianRatio * 0.5 + alienRatio * 0.5;
-	float happiness_factor;
+	float delta_happiness;
 	float xvi_infection_factor;
 
 	if (lost) {
@@ -1026,13 +1026,13 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 	for (i = 0; i < gd.numNations; i++) {
 		nation_t *nation = &gd.nations[i];
 		float alienHostile = 1.0f - nation->stats[0].alienFriendly;
-		happiness_factor = 1.0f;
+		delta_happiness = 0.0f;
 		xvi_infection_factor = 1.0f;
 
 		if (lost) {
 			if (!Q_strcmp(nation->id, mis->def->nation)) {
 				/* Strong negative reaction (happiness_factor must be < 1) */
-				happiness_factor = 1.0f - (1.0f - performance) * nation->stats[0].alienFriendly;
+				delta_happiness = - (1.0f - performance) * nation->stats[0].alienFriendly * nation->stats[0].happiness;
 				is_on_Earth++;
 				if (ccs.XVISpreadActivated) {
 					/* if there wasn't any XVI infection in this country (or small infection), start it */
@@ -1044,14 +1044,14 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 				}
 			} else {
 				/* Minor negative reaction (10 times lower than if the failed mission were in the nation) */
-				happiness_factor = 1.0f - 0.1f * (1.0f - performance) * nation->stats[0].alienFriendly;
+				delta_happiness = - 0.1f * (1.0f - performance) * nation->stats[0].alienFriendly * nation->stats[0].happiness;
 				/* increase infection by 10% for country already infected */
 				xvi_infection_factor = 1.10f;
 			}
 		} else {
 			if (!Q_strcmp(nation->id, mis->def->nation)) {
 				/* Strong positive reaction (happiness_factor must be > 1) */
-				happiness_factor = 1.0f + performance * alienHostile;
+				delta_happiness = performance * alienHostile * (1.0f - nation->stats[0].happiness);
 				is_on_Earth++;
 				if (ccs.XVISpreadActivated) {
 					/* if there wasn't any XVI infection in this country, start it */
@@ -1063,16 +1063,18 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 				}
 			} else {
 				/* Minor positive reaction (10 times lower than if the mission were in the nation) */
-				happiness_factor = 1.0f + 0.1f * performance * alienHostile;
+				delta_happiness = 0.1f * performance * alienHostile * (1.0f - nation->stats[0].happiness);
 				/* No spreading of XVI infection in other nations */
 			}
 		}
 
 		/* update happiness */
-		nation->stats[0].happiness *= happiness_factor;
-		/* Nation happiness cannot be greater than 1 */
+		nation->stats[0].happiness += delta_happiness;
+		/* Nation happiness is between 0 and 1 */
 		if (nation->stats[0].happiness > 1.0f)
 			nation->stats[0].happiness = 1.0f;
+		else if (nation->stats[0].happiness < 0.0f)
+			nation->stats[0].happiness = 0.0f;
 
 		/* update xvi_infection value (note that there will be an effect only 
 		 * on nations where at least one mission already took place (for others, nation->stats[0].xvi_infection = 0) */
@@ -5090,7 +5092,7 @@ static void CP_UFOSellStart_f (void)
 	for (i = 0; i < gd.numNations; i++) {
 		if (gd.nations + i == nation) {
 			/* nation is happy because it got the UFO */
-			gd.nations[i].stats[0].happiness *= 1.2f;
+			gd.nations[i].stats[0].happiness += 0.3f * (1.0f - gd.nations[i].stats[0].happiness);
 			/* Nation happiness cannot be greater than 1 */
 			if (nation->stats[0].happiness > 1.0f)
 				nation->stats[0].happiness = 1.0f;
