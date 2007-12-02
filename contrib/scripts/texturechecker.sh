@@ -27,7 +27,6 @@ FIXNAMES=$DIR"fixed.txt"
 SearchFiles() {
 	directory="$1"
 	extension="$2"
-	echo $extenstion
 	for i in `find $directory -name $extension -print`;
 		do svn proplist -R -v $i | awk '{
 			k++;
@@ -151,7 +150,8 @@ else
 			if [ $# -eq 2 ]
 			then
 				echo "Building texture list...";
-				SearchFiles base/textures/ '*.jpg'
+				ext="*.${2}"
+				SearchFiles base/textures/ $ext
 			else
 				Usage
 			fi
