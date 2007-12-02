@@ -47,7 +47,6 @@ vrect_t scr_vrect;				/* position of render window on screen */
 static cvar_t *scr_conspeed;
 static cvar_t *scr_consize;
 static cvar_t *scr_centertime;
-static cvar_t *scr_showpause;
 
 static cvar_t *scr_timegraph;
 static cvar_t *scr_debuggraph;
@@ -268,8 +267,6 @@ void SCR_Init (void)
 {
 	scr_conspeed = Cvar_Get("scr_conspeed", "3", 0, NULL);
 	scr_consize = Cvar_Get("scr_consize", "1.0", 0, NULL);
-	scr_showpause = Cvar_Get("scr_showpause", "1", 0, "Show pause image when server is in paused mode"
-		" set to 0 to deactivate it, useful for screenshots");
 	scr_centertime = Cvar_Get("scr_centertime", "2.5", 0, NULL);
 	scr_timegraph = Cvar_Get("timegraph", "0", 0, NULL);
 	scr_debuggraph = Cvar_Get("debuggraph", "0", 0, NULL);
