@@ -465,8 +465,8 @@ base/models/aircraft/craft_item_target/craft_item_target.md2 | GNU General Publi
 base/models/aircraft/craft_item_target/craft_item_target.tga | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/craft_weapon_particle/pbw.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
 base/models/aircraft/craft_weapon_particle/pbw.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
-base/models/aircraft/craft_weapon_shiva/shiva.jpg | Creative Commons License 3.0 Attribution-ShareAlike | Werner Hoehrer (hoehrer) | Shiva Rotary Cannon model based on chaingun model by kaeau, see base/models/weapons/chaingun
-base/models/aircraft/craft_weapon_shiva/shiva.md2 | Creative Commons License 3.0 Attribution-ShareAlike | Werner Hoehrer (hoehrer) | Shiva Rotary Cannon model based on chaingun model by kaeau, see base/models/weapons/chaingun
+base/models/aircraft/craft_weapon_shiva/shiva.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer) | Shiva Rotary Cannon model based on chaingun model by kaeau, see base/models/weapons/chaingun
+base/models/aircraft/craft_weapon_shiva/shiva.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer) | Shiva Rotary Cannon model based on chaingun model by kaeau, see base/models/weapons/chaingun
 base/models/aircraft/craft_weapon_sparrow/sparrowhawk.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
 base/models/aircraft/craft_weapon_sparrow/sparrowhawk.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
 base/models/aircraft/craft_weapon_sparrow/sparrowhawk_rack.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
@@ -1451,12 +1451,12 @@ base/music/PsymongR2.ogg | GNU General Public License v2.0 | Simon Green (Psymon
 base/music/PsymongR3.ogg | GNU General Public License v2.0 | Simon Green (Psymong)
 base/music/PsymongR4.ogg | GNU General Public License v2.0 | Simon Green (Psymong)
 base/music/PsymongR5.ogg | GNU General Public License v2.0 | Simon Green (Psymong)
-base/music/alBasrahM.ogg | Public domain | Golgotha
+base/music/alBasrahM.ogg | Public Domain | Golgotha
 base/music/dawn.ogg | GNU General Public License v2.0 | Draikon
 base/music/dbsea.ogg | GNU General Public License v2.0 | Draikon
-base/music/greecei.ogg | Public domain | Golgotha
+base/music/greecei.ogg | Public Domain | Golgotha
 base/music/space.ogg | GNU General Public License v2.0 | Draikon
-base/music/turinItalyM.ogg | Public domain | Golgotha
+base/music/turinItalyM.ogg | Public Domain | Golgotha
 base/music/ufo1.ogg | GNU General Public License v2.0 | Paul Bee
 base/music/ufo2.ogg | GNU General Public License v2.0 | Paul Bee
 base/music/van_geoscape.ogg | Creative Commons Attribution 3.0 | Manuel "Vanethian" Marino (www.manuelmarino.com)
