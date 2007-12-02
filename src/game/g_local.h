@@ -127,7 +127,6 @@ typedef struct {
 	int distance;
 	int height;
 	char *noise;
-	float pausetime;
 	char *item;
 	char *gravity;
 
