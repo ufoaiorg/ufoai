@@ -468,6 +468,8 @@ base/models/aircraft/craft_item_det/detection.md2 | GNU General Public License 2
 base/models/aircraft/craft_item_det/detection.tga | GNU General Public License 2.0 | Willem "Sitters" | High res version in data_source/models/sittes/craft_item_detection
 base/models/aircraft/craft_item_fuel/fuel.md2 | GNU General Public License v2.0 | David Townsend (Psawhn)
 base/models/aircraft/craft_item_fuel/fuel.tga | GNU General Public License v2.0 | David Townsend (Psawhn)
+base/models/aircraft/craft_item_raven_ecm/ecm.md2 | GNU General Public License 2.0 | Willem "Sitters"
+base/models/aircraft/craft_item_raven_ecm/ecm.tga | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/craft_item_target/craft_item_target.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/craft_item_target/craft_item_target.tga | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/craft_weapon_particle/pbw.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Hoehrer (hoehrer)
