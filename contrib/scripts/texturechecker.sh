@@ -110,13 +110,13 @@ CheckInMaps() {
 		fi
 		for j in `find $MAPS -name '*.map' -print`; do
 			grep $i $j > $ISTHERE;
-			THEREIS=`wc -l $ISTHERE|awk '{print $1}`
+			THEREIS=`wc -l $ISTHERE|awk '{print $1}'`
 			if [ "$THEREIS" -ne 0 ];
 			then
 				echo $j >> $MAPFILE;
 			fi
 		done;
-		THEREIS=`wc -l $MAPFILE|awk '{print $1}`
+		THEREIS=`wc -l $MAPFILE|awk '{print $1}'`
 		if [ "$THEREIS" -eq 0 ];
 		then
 			echo -n "Texture ";
