@@ -877,10 +877,9 @@ base/models/objects/industrial/valve/valve.md2 | Creative Commons License 3.0 At
 base/models/objects/industrial/valve/valve.tga | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
 base/models/objects/rubbish/gravel/gravel.md2 | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
 base/models/objects/rubbish/gravel/gravel.tga | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
-base/models/objects/snowman/Readme.txt | GPL | Willem "Sitters"
-base/models/objects/snowman/snowman.jpg | GPL | Willem "Sitters"
-base/models/objects/snowman/snowman.md2 | GPL | Willem "Sitters"
-base/models/objects/snowman/snowman.obj | GPL | Willem "Sitters"
+base/models/objects/snowman/snowman.jpg | GNU General Public License 2.0 | Willem "Sitters"
+base/models/objects/snowman/snowman.md2 | GNU General Public License 2.0 | Willem "Sitters"
+base/models/objects/snowman/snowman.obj | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/tanker/small_pipes.md2 | GPL | Willem "Sitters"
 base/models/objects/tanker/tanker.jpg | GPL | Willem "Sitters"
 base/models/objects/tanker/tanker.tga | GPL | Willem "Sitters"
