@@ -413,7 +413,7 @@ static void B_BaseInit_f (void)
 		Cvar_SetValue("mn_base_buysell_allowed", qfalse);
 		Cmd_ExecuteString("set_buysell_disabled");
 	}
-	if (gd.numBases > 1) {
+	if (gd.numBases > 1 && baseCurrent->baseStatus != BASE_UNDER_ATTACK) {
 		Cmd_ExecuteString("set_transfer_enabled");
 	} else {
 		Cmd_ExecuteString("set_transfer_disabled");
@@ -2690,6 +2690,13 @@ static void B_CheckBuildingStatusForMenu_f (void)
 		return;
 	}
 
+	/* Maybe base is under attack ? */
+	if (baseCurrent->baseStatus == BASE_UNDER_ATTACK) {
+		Com_sprintf(popupText, sizeof(popupText), _("Base is under attack, you can't access this building !"));
+		MN_Popup(_("Notice"), popupText);
+		return;
+	}
+
 	baseIdx = baseCurrent->idx;
 
 	if (building->buildingType == B_HANGAR) {
@@ -2770,24 +2777,36 @@ static void B_BuildingOpen_f (void)
 		if (!B_GetBuildingStatus(baseCurrent, baseCurrent->buildingCurrent->buildingType)) {
 			UP_OpenWith(baseCurrent->buildingCurrent->pedia);
 		} else {
-			/* FIXME: Some buildings are even allowed to be opened when base is under attack */
-			if (baseCurrent->baseStatus == BASE_UNDER_ATTACK)
-				return;
 			switch (baseCurrent->buildingCurrent->buildingType) {
 			case B_LAB:
-				MN_PushMenu("research");
+				if (RS_ResearchAllowed(baseCurrent))
+					MN_PushMenu("research");
+				else
+					UP_OpenWith(baseCurrent->buildingCurrent->pedia);
 				break;
 			case B_HOSPITAL:
-				MN_PushMenu("hospital");
+				if (HOS_HospitalAllowed(baseCurrent))
+					MN_PushMenu("hospital");
+				else
+					UP_OpenWith(baseCurrent->buildingCurrent->pedia);
 				break;
 			case B_ALIEN_CONTAINMENT:
-				MN_PushMenu("aliencont");
+				if (AC_ContainmentAllowed(baseCurrent))
+					MN_PushMenu("aliencont");
+				else
+					UP_OpenWith(baseCurrent->buildingCurrent->pedia);
 				break;
 			case B_QUARTERS:
-				MN_PushMenu("employees");
+				if (E_HireAllowed(baseCurrent))
+					MN_PushMenu("employees");
+				else
+					UP_OpenWith(baseCurrent->buildingCurrent->pedia);
 				break;
 			case B_WORKSHOP:
-				MN_PushMenu("production");
+				if (PR_ProductionAllowed(baseCurrent))
+					MN_PushMenu("production");
+				else
+					UP_OpenWith(baseCurrent->buildingCurrent->pedia);
 				break;
 			case B_DEFENSE_LASER:
 			case B_DEFENSE_MISSILE:
@@ -2795,6 +2814,10 @@ static void B_BuildingOpen_f (void)
 				break;
 			case B_HANGAR:
 			case B_SMALL_HANGAR:
+				if (!AIR_AircraftAllowed(baseCurrent)) {
+					UP_OpenWith(baseCurrent->buildingCurrent->pedia);
+					break;
+				}
 				if (baseCurrent->numAircraftInBase)
 					MN_PushMenu("aircraft");
 				else {
@@ -2808,7 +2831,10 @@ static void B_BuildingOpen_f (void)
 				break;
 			case B_STORAGE:
 			case B_ANTIMATTER:
-				MN_PushMenu("buy");
+				if (BS_BuySellAllowed(baseCurrent))
+					MN_PushMenu("buy");
+				else
+					UP_OpenWith(baseCurrent->buildingCurrent->pedia);
 				break;
 			default:
 				UP_OpenWith(baseCurrent->buildingCurrent->pedia);

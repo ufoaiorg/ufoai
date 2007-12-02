@@ -259,7 +259,6 @@ base/maps/orientaln/or_h12.map | GPL version 2
 base/maps/pdi08d.map | GPL version 2 | 'SparX' Beyeler
 base/maps/pdi08n.map | GPL version 2 | 'SparX' Beyeler
 base/maps/pipes_const01d.map | GPL version 2 | Martin Gerhardy
-base/maps/powerplant01d.map | GPL version 2 | Stefan "Tantalus" Gratz
 base/maps/prefab_drop_firebird.map | GPL version 2
 base/maps/prefab_household.map | GPL version 2
 base/maps/prefab_inter_saracen.map | GPL version 2
@@ -360,9 +359,11 @@ base/maps/tropicn/tr_r04.map | GPL version 2
 base/maps/tropicn/tr_r05.map | GPL version 2
 base/maps/tutorial01.map | GPL version 2
 base/maps/tutorial02.map | GPL version 2
+base/maps/ucd/uc_drop_firebird.map | GNU General Public License 2.0
+base/maps/ucd/uc_h01.map | GNU General Public License 2.0
 base/maps/ucd/uc_h02.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/ucd/uc_h03.map | GNU General Public License 2.0 | Martin Gerhardy | Based on city04 house
-base/maps/ucd/uc_ufo_fighter.map | Martin Gerhardy | GNU General Public License 2.0
+base/maps/ucd/uc_ufo_fighter.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/ucd/uc_ufo_harvester.map | GNU General Public License 2.0 | Martin Gerhardy | harverstercrash map by SparX
 base/maps/ucd/uc_ufo_scout.map | GNU General Public License 2.0 | Martin Gerhardy | prefab_ufo_scout
 base/maps/ucd/uc_ufo_supply.map | GNU General Public License 2.0 | Martin Gerhardy | prefab_ufo_supply and terrain08
@@ -1700,7 +1701,7 @@ base/pics/ranks/ranks.blend | Creative Commons Attribution-ShareAlike 3.0 | Wern
 base/pics/reactionfire.tga | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
 base/pics/reactionfiremany.tga | Creative Commons Attribution-ShareAlike 3.0 | Werner Höhrer (hoehrer)
 base/pics/sfx/bubble.tga | GNU General Public License 2.0 | Martin Gerhardy
-base/pics/sfx/exhaust.tga | This work is licensed under a Creative Commons Attribution-Share Alike 3.0 License | Werner Höhrer (hoehrer)
+base/pics/sfx/exhaust.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/sfx/explosions1.jpg |  |  | Public Domain Golgotha
 base/pics/sfx/explosions2.jpg |  |  | Public Domain Golgotha
 base/pics/sfx/explosions3.jpg |  |  | Public Domain Golgotha
@@ -1870,9 +1871,16 @@ base/textures/tex_base/helipad1.jpg | GNU General Public License 2.0 | Werner H�
 base/textures/tex_base/helipad2.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/helipad3.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/helipad4.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/lab_wall001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/lab_wall002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/lab_wall003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/steptop_mtl.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/steptop_mtl2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/trim_drkmtl.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_base/wall001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/wall002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/wall003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/wall004.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/9basetrim01.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/9darktrim02b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/9floorbasic01b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
@@ -2076,7 +2084,7 @@ base/textures/tex_ctp1/wood_b_8.jpg | GNU General Public License 2.0 |  | http:/
 base/textures/tex_ctp1/wood_b_9.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/wood_g_1.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ctp1/woodb_5.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
-base/textures/tex_doors/door013.jpg | GNU General Public License v2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_doors/door013.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_doors/door014.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_doors/door015.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_doors/door016.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
@@ -2253,7 +2261,9 @@ base/textures/tex_misc/pipes002.jpg |  |  | Public Domain Golgotha
 base/textures/tex_misc/pipes003.jpg |  |  | Public Domain Golgotha
 base/textures/tex_misc/rstbounce.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/rstbouncefan.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
-base/textures/tex_nature/flower.jpg | GPL | Willem "Sitters"
+base/textures/tex_misc/straw.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2'ed photo by Martin Gerhardy (mattn)
+base/textures/tex_misc/straw_zyl.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2'ed photo by Martin Gerhardy (mattn)
+base/textures/tex_nature/flower.jpg | GNU General Public License 2.0 | Willem "Sitters"
 base/textures/tex_nature/grass003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_nature/grass003_way_d2r.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_nature/grass003_way_hor.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
@@ -2281,7 +2291,6 @@ base/textures/tex_streets/street005.jpg | GNU General Public License 2.0 | Werne
 base/textures/tex_streets/street010.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_streets/street11.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_tech/spec_analyser.jpg | GNU General Public License 2.0 | Martin Gerhardy
-base/textures/tex_tech/spec_analyser2.jpg |  | Werner Hoehrer
 base/textures/tex_ufo/ufo1_01.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
 base/textures/tex_ufo/ufo1_02.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
 base/textures/tex_ufo/ufo1_03.jpg | GNU General Public License 2.0 | "Sparx" Beyeler

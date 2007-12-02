@@ -86,8 +86,6 @@ void LM_AddToScene (void)
 			R_AnimRun(&lm->as, ent.model, cls.frametime * 1000);
 		}
 
-		if (lm->flags & LMF_NOSMOOTH)
-			ent.flags |= RF_NOSMOOTH;
 		if (lm->flags & LMF_LIGHTFIXED) {
 			ent.flags |= RF_LIGHTFIXED;
 			ent.lightparam = lm->lightorigin;

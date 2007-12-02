@@ -3391,7 +3391,7 @@ ACTOR GRAPHICS
 /**
  * @brief Adds an actor.
  * @param[in] le The local entity to get the values from
- * @param[in] ent The body entity
+ * @param[in] ent The body entity used in the renderer
  * @sa CL_AddUGV
  * @sa LE_AddToScene
  */

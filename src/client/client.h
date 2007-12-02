@@ -500,7 +500,6 @@ typedef struct le_s {
 #define MAX_MAPPARTICLES	1024
 
 #define LMF_LIGHTFIXED		1
-#define LMF_NOSMOOTH		2
 
 /** @brief local models */
 typedef struct lm_s {
