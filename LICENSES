@@ -812,9 +812,8 @@ base/models/objects/furniture/curtains/curtain.md2 | Creative Commons Attributio
 base/models/objects/furniture/curtains/curtain_long.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/curtains/curtains.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/curtains/curtains.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/furniture/deerhead/deerhead.jpg | GNU GPL - see License.txt for details | Werner Höhrer (hoehrer) | photo by Heinz Seehagel (22.9.2004) http://species.wikimedia.org/wiki/Image:Rothirsch.jpg, model by grumbel http://undone.clanlib.org/~grumbel/mediarepo/show.cgi?md5=c14eb42d4d1f0be06277a7221bf6db62. See License.txt for details
-base/models/objects/furniture/deerhead/deerhead.md2 | GNU GPL - see License.txt for details | Werner Höhrer (hoehrer) | photo by Heinz Seehagel (22.9.2004) http://species.wikimedia.org/wiki/Image:Rothirsch.jpg, model by grumbel http://undone.clanlib.org/~grumbel/mediarepo/show.cgi?md5=c14eb42d4d1f0be06277a7221bf6db62. See License.txt for details
-base/models/objects/furniture/deerhead/license.txt | GNU GPL - see License.txt for details | Werner Höhrer (hoehrer) | photo by Heinz Seehagel (22.9.2004) http://species.wikimedia.org/wiki/Image:Rothirsch.jpg, model by grumbel http://undone.clanlib.org/~grumbel/mediarepo/show.cgi?md5=c14eb42d4d1f0be06277a7221bf6db62. See License.txt for details
+base/models/objects/furniture/deerhead/deerhead.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | http://species.wikimedia.org/wiki/Image:Rothirsch.jpg
+base/models/objects/furniture/deerhead/deerhead.md2 | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | http://undone.clanlib.org/~grumbel/mediarepo/show.cgi?md5=c14eb42d4d1f0be06277a7221bf6db62   This file comes from the Worldforge Media Repository, for details check out: http://www.worldforge.org/media/
 base/models/objects/furniture/desk/desk.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/desk/desk.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/furniture/desklamp/desklamp.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
