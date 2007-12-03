@@ -536,7 +536,7 @@ void INV_ManageAntimatter (base_t *base, int amount, qboolean add)
 
 	assert(base);
 
-	if (!base->hasAmStorage && add) {
+	if (!base->hasBuilding[B_ANTIMATTER] && add) {
 		Com_sprintf(messageBuffer, sizeof(messageBuffer),
 			_("Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."),
 			base->name, amount);

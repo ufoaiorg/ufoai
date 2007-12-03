@@ -382,7 +382,7 @@ static void CL_PopupInterceptClick_f (void)
 
 	/* Aircraft can start if only Command Centre in base is operational. */
 	base = aircraft->homebase;
-	if (!base->hasCommand) {
+	if (!base->hasBuilding[B_COMMAND]) {
 		MN_Popup(_("Notice"), _("No Command Centre operational in homebase\nof this aircraft.\n\nAircraft cannot start.\n"));
 		return;
 	}

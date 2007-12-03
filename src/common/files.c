@@ -1471,7 +1471,7 @@ int FS_WriteFile (const void *buffer, size_t len, const char *filename)
  */
 const char *FS_GetCwd (void)
 {
-	static char buf[MAX_QPATH];
+	static char buf[MAX_OSPATH];
 	Q_strncpyz(buf, Sys_Cwd(), sizeof(buf));
 	FS_NormPath(buf);
 	return buf;

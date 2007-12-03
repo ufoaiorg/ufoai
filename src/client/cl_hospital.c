@@ -45,7 +45,7 @@ static int hospitalNumEntries;
  * @param[in] base Pointer to the base where the employee is hired.
  * @return qtrue if the removal is OK, qfalse if it is not
  */
-qboolean HOS_RemoveFromList (employee_t *employee, base_t *base)
+qboolean HOS_RemoveFromList (const employee_t *employee, base_t *base)
 {
 	int i = 0, j = 0;
 	qboolean test = qfalse;
@@ -73,7 +73,7 @@ qboolean HOS_RemoveFromList (employee_t *employee, base_t *base)
  * @param[in] employee Pointer to the employee to remove.
  * @param[in] base Pointer to the base where the employee is hired.
  */
-static qboolean HOS_RemoveFromMissionList (employee_t *employee, base_t *base)
+static qboolean HOS_RemoveFromMissionList (const employee_t *employee, base_t *base)
 {
 	int i = 0, j = 0;
 	qboolean test = qfalse;
@@ -109,7 +109,7 @@ static void HOS_CheckRemovalFromEmployeeList (employee_t *employee)
 
 	if (base->hospitalListCount[employee->type] <= 0)
 		return;
-	if (!base->hasHospital)
+	if (!base->hasBuilding[B_HOSPITAL])
 		return;
 
 	if (employee->chr.HP >= employee->chr.maxHP) {
@@ -133,7 +133,7 @@ static void HOS_CheckRemovalFromEmployeeList (employee_t *employee)
  * @param[in] base Pointer to the base with hospital, where the given employee will be healed.
  * @param[in] employee Pointer to the employee being added to hospital.
  */
-static qboolean HOS_AddToEmployeeList (employee_t* employee, base_t *base)
+static qboolean HOS_AddToEmployeeList (const employee_t* employee, base_t *base)
 {
 	int i;
 	/* Already in our list? */
@@ -158,13 +158,13 @@ static qboolean HOS_AddToEmployeeList (employee_t* employee, base_t *base)
  * @param[in] employee Pointer to the employee to add.
  * @param[in] base Pointer to the base where we will add given employee.
  */
-static qboolean HOS_AddToInMissionEmployeeList (employee_t* employee, base_t *base)
+static qboolean HOS_AddToInMissionEmployeeList (const employee_t* employee, base_t *base)
 {
 	int i;
 
 	assert(base);
 	/* Do nothing if the base does not have hospital. */
-	if (!base->hasHospital)
+	if (!base->hasBuilding[B_HOSPITAL])
 		return qfalse;
 
 	/* Already in our list? */
@@ -369,7 +369,7 @@ static void HOS_Init_f (void)
 	if (!baseCurrent)
 		return;
 
-	if (!baseCurrent->hasHospital) {
+	if (!baseCurrent->hasBuilding[B_HOSPITAL]) {
 		MN_PopMenu(qfalse);
 		return;
 	}
@@ -566,7 +566,7 @@ static void HOS_StartHealing_f (void)
  * @sa AIR_SendAircraftToMission
  * @todo Soldiers should also be removed from base->hospitalList during transfers
  */
-void HOS_RemoveEmployeesInHospital (aircraft_t *aircraft)
+void HOS_RemoveEmployeesInHospital (const aircraft_t *aircraft)
 {
 	int i;
 	int j;
@@ -578,7 +578,7 @@ void HOS_RemoveEmployeesInHospital (aircraft_t *aircraft)
 	assert(base);
 
 	/* Do nothing if the base does not have hospital. */
-	if (!base->hasHospital)
+	if (!base->hasBuilding[B_HOSPITAL])
 		return;
 	/* First of all, make sure that relevant array is empty. */
 /*	memset(base->hospitalMissionList, -1, sizeof(base->hospitalMissionList));
@@ -606,7 +606,7 @@ void HOS_RemoveEmployeesInHospital (aircraft_t *aircraft)
  * @brief Moves soldiers returning from a mission between hospital arrays in base_t.
  * @sa CL_AircraftReturnedToHomeBase
  */
-void HOS_ReaddEmployeesInHospital (aircraft_t *aircraft)
+void HOS_ReaddEmployeesInHospital (const aircraft_t *aircraft)
 {
 	int i;
 	int j;
@@ -618,7 +618,7 @@ void HOS_ReaddEmployeesInHospital (aircraft_t *aircraft)
 	assert(base);
 
 	/* Do nothing if the base does not have hospital. */
-	if (!base->hasHospital)
+	if (!base->hasBuilding[B_HOSPITAL])
 		return;
 
 	for (i = 0; i < aircraft->maxTeamSize; i++) {
@@ -656,7 +656,7 @@ void HOS_RemoveDeadEmployeeFromLists (employee_t *employee)
 	assert(base);
 
 	/* Do nothing if the base does not have hospital. */
-	if (!base->hasHospital)
+	if (!base->hasBuilding[B_HOSPITAL])
 		return;
 
 	/* update hospitalList. */
@@ -732,7 +732,7 @@ qboolean HOS_HospitalAllowed (const base_t* base)
 	int hiredMedicCount = E_CountHired(base, EMPL_MEDIC);
 
 	if (base->baseStatus != BASE_UNDER_ATTACK
-	 && base->hasHospital && hiredMedicCount > 0) {
+	 && base->hasBuilding[B_HOSPITAL] && hiredMedicCount > 0) {
 		return qtrue;
 	} else {
 		return qfalse;

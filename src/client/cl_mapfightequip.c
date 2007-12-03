@@ -1778,7 +1778,7 @@ int AII_BaseCanShoot (const base_t *base)
 
 	assert(base);
 
-	if (base->hasMissile) {
+	if (base->hasBuilding[B_DEFENSE_MISSILE]) {
 	/* base has missile battery and any needed building */
 		for (i = 0; i < base->maxBatteries; i++)
 			if (base->batteries[i].itemIdx != NONE
@@ -1787,7 +1787,7 @@ int AII_BaseCanShoot (const base_t *base)
 				return qtrue;
 	}
 
-	if (base->hasLaser) {
+	if (base->hasBuilding[B_DEFENSE_LASER]) {
 	/* base has laser battery and any needed building */
 		for (i = 0; i < base->maxLasers; i++)
 			if (base->lasers[i].itemIdx != NONE

@@ -75,9 +75,10 @@ typedef enum {
 	B_STATUS_DOWN				/**< totally damaged */
 } buildingStatus_t;
 
-/** @brief All different building types. */
+/** @brief All different building types.
+ * @note if you change the order, you'll load values of hasBuilding in wrong indice */
 typedef enum {
-	B_MISC,			/**< this building is nothing with a special function */
+	B_MISC,			/**< this building is nothing with a special function (used when a building appears twice in .ufo file) */
 	B_LAB,			/**< this building is a lab */
 	B_QUARTERS,		/**< this building is a quarter */
 	B_STORAGE,		/**< this building is a storage */
@@ -192,6 +193,8 @@ typedef struct base_s {
 	 * base or there is not. They are true only if such buildings are operational
 	 * (for example, in some cases, if they are provided with power).
 	 */
+	qboolean hasBuilding[MAX_BUILDING_TYPE];
+
 	qboolean hasHangar;         /**< B_HANGAR (Large Hangar) */
 	qboolean hasLab;            /**< B_LAB (Laboratory) */
 	qboolean hasHospital;       /**< B_HOSPITAL (Hospital) */

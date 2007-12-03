@@ -1043,7 +1043,7 @@ static void RS_ResearchStart_f (void)
 		return;
 
 	/* Check if laboratory is available. */
-	if (!baseCurrent->hasLab)
+	if (!baseCurrent->hasBuilding[B_LAB])
 		return;
 
 	/* get the currently selected research-item */
@@ -1114,7 +1114,7 @@ static void RS_ResearchStop_f (void)
 		return;
 
 	/* Check if laboratory is available. */
-	if (!baseCurrent->hasLab)
+	if (!baseCurrent->hasBuilding[B_LAB])
 		return;
 
 	/* get the currently selected research-item */
@@ -1318,7 +1318,7 @@ static void CL_ResearchType_f (void)
 		MN_PopMenu(qfalse);
 		if (!researchListLength)
 			MN_Popup(_("Notice"), _("Nothing to research"));
-	} else if (baseCurrent && !baseCurrent->hasLab) {
+	} else if (baseCurrent && !baseCurrent->hasBuilding[B_LAB]) {
 		MN_PopMenu(qfalse);
 		MN_Popup(_("Notice"), _("Build a laboratory first"));
 	}
@@ -1381,8 +1381,8 @@ void CL_CheckResearchStatus (void)
 	for (i = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
 		if (tech->statusResearch == RS_RUNNING) {
-			/* the test hasLab is needed to make sure that labs are active (their dependences are OK) */
-			if ((tech->time > 0) && (tech->scientists >= 0) && gd.bases[tech->base_idx].hasLab) {
+			/* the test hasBuilding[B_LAB] is needed to make sure that labs are active (their dependences are OK) */
+			if ((tech->time > 0) && (tech->scientists >= 0) && gd.bases[tech->base_idx].hasBuilding[B_LAB]) {
 				Com_DPrintf(DEBUG_CLIENT, "timebefore %.2f\n", tech->time);
 				Com_DPrintf(DEBUG_CLIENT, "timedelta %.2f\n", tech->scientists * 0.8);
 				/* @todo: Just for testing, better formular may be needed. */
@@ -2399,7 +2399,7 @@ qboolean RS_ResearchAllowed (const base_t* base)
 	int hiredScientistCount = E_CountHired(base, EMPL_SCIENTIST);
 
 	if (base->baseStatus != BASE_UNDER_ATTACK
-	 && base->hasLab && hiredScientistCount > 0) {
+	 && base->hasBuilding[B_LAB] && hiredScientistCount > 0) {
 		return qtrue;
 	} else {
 		return qfalse;

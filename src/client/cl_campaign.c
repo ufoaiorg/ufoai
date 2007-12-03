@@ -1076,7 +1076,7 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 		else if (nation->stats[0].happiness < 0.0f)
 			nation->stats[0].happiness = 0.0f;
 
-		/* update xvi_infection value (note that there will be an effect only 
+		/* update xvi_infection value (note that there will be an effect only
 		 * on nations where at least one mission already took place (for others, nation->stats[0].xvi_infection = 0) */
 		if (ccs.XVISpreadActivated) {
 			/* @todo: Send mails about critical rates */
@@ -1096,7 +1096,7 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
  * Called when invading forces overrun a base after a base-attack mission
  * @param[in] base base_t base to be ransacked
  */
-static void CL_BaseRansacked (base_t *base)
+void CL_BaseRansacked (base_t *base)
 {
 	int item, ac;
 
@@ -3022,7 +3022,7 @@ void CL_GameAutoGo (actMis_t *mission)
 		if (amount)
 			MN_AddNewMessage(_("Notice"), va(_("Collected %i dead alien bodies"), amount), qfalse, MSG_STANDARD, NULL);
 
-		if (aircraft->alientypes && !(aircraft->homebase->hasAlienCont)) {
+		if (aircraft->alientypes && !(aircraft->homebase->hasBuilding[B_ALIEN_CONTAINMENT])) {
 			/* We have captured/killed aliens, but the homebase of this aircraft does not have alien containment. Popup aircraft transer dialog. */
 			TR_TransferAircraftMenu(aircraft);
 		}
@@ -3345,7 +3345,7 @@ static void CL_GameResults_f (void)
 	/* no transfer or campaign effects for base attack missions */
 	if (selMis->def->missionType != MIS_BASEATTACK) {
 		/* Check for alien containment in aircraft homebase. */
-		if (baseCurrent->aircraft[baseCurrent->aircraftCurrent].alientypes && !baseCurrent->hasAlienCont) {
+		if (baseCurrent->aircraft[baseCurrent->aircraftCurrent].alientypes && !baseCurrent->hasBuilding[B_ALIEN_CONTAINMENT]) {
 			/* We have captured/killed aliens, but the homebase of this aircraft does not have alien containment. Popup aircraft transer dialog. */
 			TR_TransferAircraftMenu(&(baseCurrent->aircraft[baseCurrent->aircraftCurrent]));
 		} else {

@@ -234,10 +234,10 @@ static production_t *PR_QueueNew (base_t* base, production_queue_t *queue, signe
 
 	/* We cannot queue new aircraft if no free hangar space. */
 	if (produceCategory == BUY_AIRCRAFT) {
-		if (!base->hasCommand) {
+		if (!base->hasBuilding[B_COMMAND]) {
 			MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo command centre in this base.\n"));
 			return NULL;
-		} else if (!base->hasHangar && !base->hasHangarSmall) {
+		} else if (!base->hasBuilding[B_HANGAR] && !base->hasBuilding[B_SMALL_HANGAR]) {
 			MN_Popup(_("Hangars not ready"), _("You cannot queue aircraft.\nNo hangars in this base.\n"));
 			return NULL;
 		}
@@ -396,7 +396,7 @@ void PR_ProductionRun (void)
 			continue;
 
 		/* Workshop is disabled because their dependences are disabled */
-		if (!gd.bases[i].hasWorkshop)
+		if (!gd.bases[i].hasBuilding[B_WORKSHOP])
 			continue;
 
 		prod = &gd.productions[i].items[0];
@@ -1048,7 +1048,7 @@ static void PR_ProductionList_f (void)
 qboolean PR_ProductionAllowed (const base_t* base)
 {
 	assert(base);
-	if (base->baseStatus != BASE_UNDER_ATTACK && base->hasWorkshop && E_CountHired(base, EMPL_WORKER) > 0) {
+	if (base->baseStatus != BASE_UNDER_ATTACK && base->hasBuilding[B_WORKSHOP] && E_CountHired(base, EMPL_WORKER) > 0) {
 		Cbuf_AddText("set_prod_enabled;");
 		return qtrue;
 	} else {

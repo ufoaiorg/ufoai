@@ -167,7 +167,7 @@ void RADAR_UpdateRange_f (void)
 
 	gd.bases[baseIdx].radar.range = 0;
 
-	if (!gd.bases[baseIdx].hasRadar)
+	if (!gd.bases[baseIdx].hasBuilding[B_RADAR])
 		return;
 
 	for (i = 0; i < gd.numBuildings[baseIdx]; i++) {

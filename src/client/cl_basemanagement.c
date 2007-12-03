@@ -68,8 +68,7 @@ int B_GetEmployeeCount (const base_t* const base)
  * count of that type with the status you are searching - might also be NULL
  * if you are not interested in this value
  * @note If you are searching for a quarter (e.g.) you should perform a
- * <code>if (base->hasQuarters)</code> check - this is not available for all
- * building types but should speed things up a lot
+ * <code>if (hasBuilding[B_QUARTERS])</code> check - this should speed things up a lot
  * @return true if building with status was found
  */
 qboolean B_CheckBuildingTypeStatus (const base_t* const base, buildingType_t type, buildingStatus_t status, int *cnt)
@@ -118,7 +117,6 @@ baseCapacities_t B_GetCapacityFromBuildingType (buildingType_t type)
 	case B_SMALL_HANGAR:
 		return CAP_AIRCRAFTS_SMALL;
 	case B_UFO_HANGAR:
-		return CAP_UFOHANGARS;
 	case B_UFO_SMALL_HANGAR:
 		return CAP_UFOHANGARS;
 	case B_ANTIMATTER:
@@ -132,49 +130,19 @@ baseCapacities_t B_GetCapacityFromBuildingType (buildingType_t type)
  * @brief Get the status associated to a building
  * @param[in] type value of building->buildingType
  * @param[in] building
- * @todo When we'll can break savegame, that would be nice to add a hasEntrance variable.
  * @return true if the building is functional
  */
 qboolean B_GetBuildingStatus (const base_t* const base, buildingType_t type)
 {
 	assert(base);
 
-	switch (type) {
-	case B_LAB:
-		return base->hasLab;
-	case B_QUARTERS:
-		return base->hasQuarters;
-	case B_STORAGE:
-		return base->hasStorage;
-	case B_WORKSHOP:
-		return base->hasWorkshop;
-	case B_HOSPITAL:
-		return base->hasHospital;
-	case B_HANGAR:
-		return base->hasHangar;
-	case B_ALIEN_CONTAINMENT:
-		return base->hasAlienCont;
-	case B_SMALL_HANGAR:
-		return base->hasHangarSmall;
-	case B_UFO_HANGAR:
-		return base->hasUFOHangar;
-	case B_UFO_SMALL_HANGAR:
-		return base->hasUFOHangarSmall;
-	case B_POWER:
-		return base->hasPower;
-	case B_COMMAND:
-		return base->hasCommand;
-	case B_ANTIMATTER:
-		return base->hasAmStorage;
-	case B_DEFENSE_MISSILE:
-		return base->hasMissile;
-	case B_DEFENSE_LASER:
-		return base->hasLaser;
-	case B_RADAR:
-		return base->hasRadar;
-	default:
-		/* B_ENTRANCE and B_MISC */
+	if (type == B_MISC)
 		return qtrue;
+	else if (type < MAX_BUILDING_TYPE)
+		return base->hasBuilding[type];
+	else {
+		Com_Printf("B_GetBuildingStatus()... Type %i does not exists.\n", type);
+		return qfalse;
 	}
 }
 
@@ -184,65 +152,17 @@ qboolean B_GetBuildingStatus (const base_t* const base, buildingType_t type)
  * @param[in] base Base to check
  * @param[in] type value of building->buildingType
  * @param[in] newStatus New value of the status
- * @todo When we'll can break savegame, that would be nice to add a hasEntrance variable.
  */
 void B_SetBuildingStatus (base_t* const base, buildingType_t type, qboolean newStatus)
 {
 	assert(base);
 
-	switch (type) {
-	case B_LAB:
-		base->hasLab = newStatus;
-		break;
-	case B_QUARTERS:
-		base->hasQuarters = newStatus;
-		break;
-	case B_STORAGE:
-		base->hasStorage = newStatus;
-		break;
-	case B_WORKSHOP:
-		base->hasWorkshop = newStatus;
-		break;
-	case B_HOSPITAL:
-		base->hasHospital = newStatus;
-		break;
-	case B_HANGAR:
-		base->hasHangar = newStatus;
-		break;
-	case B_ALIEN_CONTAINMENT:
-		base->hasAlienCont = newStatus;
-		break;
-	case B_SMALL_HANGAR:
-		base->hasHangarSmall = newStatus;
-		break;
-	case B_UFO_HANGAR:
-		base->hasUFOHangar = newStatus;
-		break;
-	case B_UFO_SMALL_HANGAR:
-		base->hasUFOHangarSmall = newStatus;
-		break;
-	case B_POWER:
-		base->hasPower = newStatus;
-		break;
-	case B_COMMAND:
-		base->hasCommand = newStatus;
-		break;
-	case B_ANTIMATTER:
-		base->hasAmStorage = newStatus;
-		break;
-	case B_DEFENSE_MISSILE:
-		base->hasMissile = newStatus;
-		break;
-	case B_DEFENSE_LASER:
-		base->hasLaser = newStatus;
-		break;
-	case B_RADAR:
-		base->hasRadar = newStatus;
-		break;
-	default:
-		/* B_ENTRANCE and B_MISC */
-		Com_Printf("B_SetBuildingStatus: No status is associated to type of building %i\n", type);
-	}
+	if (type == B_MISC)
+		Com_Printf("B_SetBuildingStatus: No status is associated to B_MISC type of building.\n");
+	else if (type < MAX_BUILDING_TYPE)
+		base->hasBuilding[type] = newStatus;
+	else
+		Com_Printf("B_SetBuildingStatus()... Type of building %i does not exists\n", type);
 }
 
 /**
@@ -275,7 +195,7 @@ int B_GetAvailableQuarterSpace (const base_t* const base)
 {
 	int cnt = 0, i;
 
-	if (base->hasQuarters)
+	if (base->hasBuilding[B_QUARTERS])
 		for (i = 0; i < gd.numBuildings[base->idx]; i++) {
 			if (gd.buildings[base->idx][i].buildingType == B_QUARTERS
 			&& gd.buildings[base->idx][i].buildingStatus != B_STATUS_NOT_SET)
@@ -470,7 +390,7 @@ static qboolean B_CheckUpdateBuilding (building_t* building, base_t* base)
 	assert(building);
 
 	/* status of Entrance and Miscellenious buildings cannot change */
-	if (building->buildingType == B_ENTRANCE || building->buildingType == B_MISC)
+	if (building->buildingType == B_ENTRANCE && building->buildingType == B_MISC)
 		return qfalse;
 
 	oldValue = B_GetBuildingStatus(base, building->buildingType);
@@ -515,9 +435,6 @@ static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* 
 		memset(base->hospitalMissionList, -1, sizeof(base->hospitalMissionList));
 		base->hospitalMissionListCount = 0;
 		break;
-	case B_POWER:
-		B_UpdateStatusWithPower(base);
-		break;
 	case B_RADAR:
 		Cmd_ExecuteString(va("update_sensor %i", base->idx));
 		break;
@@ -534,9 +451,6 @@ static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* 
 static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t* base)
 {
 	switch (type) {
-	case B_POWER:
-		B_UpdateStatusWithPower(base);
-		break;
 	case B_ALIEN_CONTAINMENT:
 		/* if there an alien containment is not functional, aliens dies... */
 		AC_KillAll(base);
@@ -555,7 +469,6 @@ static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t*
  * @param[in] building The building that has been built / removed
  * @param[in] onBuilt qtrue if building has been built, qfalse else
  * @return qtrue if at least one building status has been modified
- * @todo This may not work for construction of building with buildingType B_MISC
  */
 static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t type, qboolean onBuilt)
 {
@@ -618,7 +531,7 @@ static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t type, qbool
  * @brief Removes a building from the given base
  * @param[in] base Base to remove the building in
  * @param[in] building The building to remove
- * @note Also updates capacities and sets the has* values in base_t
+ * @note Also updates capacities and sets the hasBuilding[] values in base_t
  * @sa B_BuildingDestroy_f
  */
 qboolean B_BuildingDestroy (base_t* base, building_t* building)
@@ -682,46 +595,35 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	test = qfalse;
 
 	switch (type) {
+	/* building has a capacity */
 	case B_WORKSHOP:
 	case B_STORAGE:
 	case B_ALIEN_CONTAINMENT:
 	case B_LAB:
 	case B_HOSPITAL:
 	case B_HANGAR: /* the Dropship Hangar */
-	case B_QUARTERS:
 	case B_SMALL_HANGAR:
 	case B_COMMAND:
+	case B_UFO_HANGAR:
+	case B_UFO_SMALL_HANGAR:
+		cap = B_GetCapacityFromBuildingType(type);
+		/* no break, we want to update status below */
+	/* building has no capacity */
+	case B_ENTRANCE:
+	case B_POWER:
+	case B_TEAMROOM:
+	case B_QUARTERS:
 	case B_DEFENSE_MISSILE:
 	case B_DEFENSE_LASER:
-		cap = B_GetCapacityFromBuildingType(type);
 		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0) {
 			B_SetBuildingStatus(base, type, qfalse);
 			test = qtrue;
 		}
 		break;
-	case B_UFO_HANGAR:
-	case B_UFO_SMALL_HANGAR:
-		cap = CAP_UFOHANGARS;
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, B_UFO_HANGAR) <= 0) {
-			base->hasUFOHangar = qfalse;
-			test = qtrue;
-		}
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, B_UFO_SMALL_HANGAR) <= 0) {
-			base->hasUFOHangarSmall = qfalse;
-			test = qtrue;
-		}
-		break;
-	case B_POWER:
-		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0) {
-			base->hasPower = qfalse;
-			test = qtrue;
-		}
-		B_UpdateStatusWithPower(base);
-		break;
 	case B_ANTIMATTER:
 		cap = CAP_ANTIMATTER;
 		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0) {
-			base->hasAmStorage = qfalse;
+			base->hasBuilding[B_ANTIMATTER] = qfalse;
 			/* Remove antimatter. */
 			INV_ManageAntimatter(base, 0, qfalse);
 			test = qtrue;
@@ -757,7 +659,7 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 
 	/* Remove aliens if needed. */
 	if (type == B_ALIEN_CONTAINMENT) {
-		if (!base->hasAlienCont) {	/* Just clean containment. */
+		if (!base->hasBuilding[B_ALIEN_CONTAINMENT]) {	/* Just clean containment. */
 			AL_FillInContainment(base);
 		} else {	/* Check capacities and remove needed amount. */
 			if (base->capacities[CAP_ALIENS].cur - base->capacities[CAP_ALIENS].max > 0)
@@ -1547,7 +1449,7 @@ buildingType_t B_GetBuildingTypeByBuildingID (const char *buildingID)
 	} else if (!Q_strncmp(buildingID, "entrance", MAX_VAR)) {
 		return B_ENTRANCE;
 	}
-	return B_MISC;
+	return MAX_BUILDING_TYPE;
 }
 
 /**
@@ -1622,6 +1524,8 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 					return;
 
 				building->buildingType = B_GetBuildingTypeByBuildingID(token);
+				if (building->buildingType == MAX_BUILDING_TYPE)
+					Com_Printf("didn't find buildingType '%s'\n", token);
 			} else {
 				/* no linking yet */
 				if (!Q_strncmp(token, "depends", MAX_VAR)) {
@@ -2407,17 +2311,24 @@ void B_BaseAttack (base_t* const base)
 		return;
 	}
 
-	ms = CL_AddMission(va("baseattack%i:%i", (int)base->pos[0], (int)base->pos[1]));
-	if (!ms) {
-		Com_DPrintf(DEBUG_CLIENT, "B_BaseAttack: Could not set base %s under attack\n", base->name);
-		return;
-	}
+	/* we always need at least one command centre in the base - because the
+	 * phalanx soldiers have their starting positions here
+	 * @note There should also always be an entrace - the aliens start there */
+	if (B_GetNumberOfBuildingsInBaseByType(base->idx, B_COMMAND)) {
+		ms = CL_AddMission(va("baseattack%i:%i", (int)base->pos[0], (int)base->pos[1]));
+		if (!ms) {
+			Com_DPrintf(DEBUG_CLIENT, "B_BaseAttack: Could not set base %s under attack\n", base->name);
+			return;
+		}
 
-	if (CP_SpawnBaseAttackMission(base, ms, NULL)) {
-		base->baseStatus = BASE_UNDER_ATTACK;
+		if (CP_SpawnBaseAttackMission(base, ms, NULL)) {
+			base->baseStatus = BASE_UNDER_ATTACK;
+			stats.basesAttacked++;
+		}
+	} else {
+		CL_BaseRansacked(base);
 		stats.basesAttacked++;
 	}
-
 #if 0							/*@todo: run eventhandler for each building in base */
 	if (b->onAttack)
 		Cbuf_AddText(va("%s %i", b->onAttack, b->id));
@@ -2921,7 +2832,7 @@ static buildingType_t B_GetBuildingTypeByCapacity (baseCapacities_t cap)
 	case CAP_ANTIMATTER:
 		return B_ANTIMATTER;
 	default:
-		return B_MISC;
+		return MAX_BUILDING_TYPE;
 	}
 }
 
@@ -2948,16 +2859,20 @@ static void B_PrintCapacities_f (void)
 	base = gd.bases + i;
 	for (i = 0; i < MAX_CAP; i++) {
 		building = B_GetBuildingTypeByCapacity(i);
-		for (j = 0; j < gd.numBuildingTypes; j++) {
-			if (gd.buildingTypes[j].buildingType == building)
-				break;
+		if (building == MAX_BUILDING_TYPE)
+			Com_Printf("B_PrintCapacities_f()... Could not find building associated with capacity %i\n", i);
+		else {
+			for (j = 0; j < gd.numBuildingTypes; j++) {
+				if (gd.buildingTypes[j].buildingType == building)
+					break;
+			}
+			if (i == CAP_UFOHANGARS)
+				Com_Printf("Building: UFO Hangars, capacity max: %i, capacity cur: %i\n",
+				base->capacities[i].max, base->capacities[i].cur);
+			else
+				Com_Printf("Building: %s, capacity max: %i, capacity cur: %i\n",
+				gd.buildingTypes[j].id, base->capacities[i].max, base->capacities[i].cur);
 		}
-		if (i == CAP_UFOHANGARS)
-			Com_Printf("Building: UFO Hangars, capacity max: %i, capacity cur: %i\n",
-			base->capacities[i].max, base->capacities[i].cur);
-		else
-			Com_Printf("Building: %s, capacity max: %i, capacity cur: %i\n",
-			gd.buildingTypes[j].id, base->capacities[i].max, base->capacities[i].cur);
 	}
 }
 #endif
@@ -3090,23 +3005,6 @@ int B_CheckBuildingConstruction (building_t * building, base_t* base)
 		B_BuildingInit(base);
 
 	return newBuilding;
-}
-
-/**
- * @brief Update buildings status when we gain or loose power.
- * @param[in] base Pointer to the base with newly constructed power supply.
- */
-void B_UpdateStatusWithPower (base_t *base)
-{
-	int i;
-
-	assert(base);
-	for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-		if (gd.buildings[base->idx][i].buildingType == B_POWER)
-			continue;
-		if (gd.buildings[base->idx][i].buildingStatus == B_STATUS_WORKING)
-			B_UpdateAllBaseBuildingStatus(&gd.buildings[base->idx][i], &gd.bases[base->idx], B_STATUS_WORKING);
-	}
 }
 
 /**
@@ -3256,7 +3154,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 			}
 		}
 		/* Now check if base has B_UFO_SMALL_HANGAR and update capacity as well. */
-		if (base->hasUFOHangarSmall) {
+		if (base->hasBuilding[B_UFO_SMALL_HANGAR]) {
 			for (i = 0; i < gd.numBuildingTypes; i++) {
 				if (gd.buildingTypes[i].buildingType == B_UFO_SMALL_HANGAR) {
 					capacity = gd.buildingTypes[i].capacity;
@@ -3340,22 +3238,8 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 		MSG_WriteString(sb, b->name);
 		MSG_WritePos(sb, b->pos);
 		MSG_WriteByte(sb, b->founded);
-		MSG_WriteByte(sb, b->hasHangar);
-		MSG_WriteByte(sb, b->hasLab);
-		MSG_WriteByte(sb, b->hasHospital);
-		MSG_WriteByte(sb, b->hasMissile);
-		MSG_WriteByte(sb, b->hasLaser);
-		MSG_WriteByte(sb, b->hasAlienCont);
-		MSG_WriteByte(sb, b->hasStorage);
-		MSG_WriteByte(sb, b->hasQuarters);
-		MSG_WriteByte(sb, b->hasWorkshop);
-		MSG_WriteByte(sb, b->hasHangarSmall);
-		MSG_WriteByte(sb, b->hasUFOHangar);
-		MSG_WriteByte(sb, b->hasUFOHangarSmall);
-		MSG_WriteByte(sb, b->hasPower);
-		MSG_WriteByte(sb, b->hasCommand);
-		MSG_WriteByte(sb, b->hasAmStorage);
-		MSG_WriteByte(sb, b->hasRadar);
+		for (k = 0; k < presaveArray[PRE_MBUITY]; k++)
+			MSG_WriteByte(sb, b->hasBuilding[k]);
 		for (k = 0; k < presaveArray[PRE_BASESI]; k++)
 			for (l = 0; l < presaveArray[PRE_BASESI]; l++) {
 				MSG_WriteShort(sb, b->map[k][l]);
@@ -3568,22 +3452,29 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			b->mapZone = MAP_GetTerrainType(color);
 		}
 		b->founded = MSG_ReadByte(sb);
-		b->hasHangar = MSG_ReadByte(sb);
-		b->hasLab = MSG_ReadByte(sb);
-		b->hasHospital = MSG_ReadByte(sb);
-		b->hasMissile = MSG_ReadByte(sb);
-		b->hasLaser = MSG_ReadByte(sb);
-		b->hasAlienCont = MSG_ReadByte(sb);
-		b->hasStorage = MSG_ReadByte(sb);
-		b->hasQuarters = MSG_ReadByte(sb);
-		b->hasWorkshop = MSG_ReadByte(sb);
-		b->hasHangarSmall = MSG_ReadByte(sb);
-		b->hasUFOHangar = MSG_ReadByte(sb);
-		b->hasUFOHangarSmall = MSG_ReadByte(sb);
-		b->hasPower = MSG_ReadByte(sb);
-		b->hasCommand = MSG_ReadByte(sb);
-		b->hasAmStorage = MSG_ReadByte(sb);
-		b->hasRadar = MSG_ReadByte(sb);
+#if 0
+		Will be added in next commit
+		for (k = 0; k < presaveArray[PRE_MBUITY]; k++)
+			b->hasBuilding[k] = MSG_ReadByte(sb);
+#endif
+		/* the 16 next lines will be removed in next commit */
+		b->hasBuilding[B_UFO_HANGAR] = MSG_ReadByte(sb);
+		b->hasBuilding[B_LAB] = MSG_ReadByte(sb);
+		b->hasBuilding[B_HOSPITAL] = MSG_ReadByte(sb);
+		b->hasBuilding[B_DEFENSE_MISSILE] = MSG_ReadByte(sb);
+		b->hasBuilding[B_DEFENSE_LASER] = MSG_ReadByte(sb);
+		b->hasBuilding[B_ALIEN_CONTAINMENT] = MSG_ReadByte(sb);
+		b->hasBuilding[B_STORAGE] = MSG_ReadByte(sb);
+		b->hasBuilding[B_QUARTERS] = MSG_ReadByte(sb);
+		b->hasBuilding[B_WORKSHOP] = MSG_ReadByte(sb);
+		b->hasBuilding[B_SMALL_HANGAR] = MSG_ReadByte(sb);
+		b->hasBuilding[B_UFO_HANGAR] = MSG_ReadByte(sb);
+		b->hasBuilding[B_UFO_SMALL_HANGAR] = MSG_ReadByte(sb);
+		b->hasBuilding[B_POWER] = MSG_ReadByte(sb);
+		b->hasBuilding[B_COMMAND] = MSG_ReadByte(sb);
+		b->hasBuilding[B_ANTIMATTER] = MSG_ReadByte(sb);
+		b->hasBuilding[B_RADAR] = MSG_ReadByte(sb);
+
 		for (k = 0; k < presaveArray[PRE_BASESI]; k++)
 			for (l = 0; l < presaveArray[PRE_BASESI]; l++) {
 				b->map[k][l] = MSG_ReadShort(sb);

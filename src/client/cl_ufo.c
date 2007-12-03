@@ -489,7 +489,7 @@ void UFO_CampaignCheckEvents (void)
 
 		/* Check for ufo detection by bases */
 		for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
-			if (!base->founded || !base->hasPower)
+			if (!base->founded || !base->hasBuilding[B_POWER])
 				continue;
 			/* maybe the ufo is already visible, don't reset it */
 			ufo->visible |= RADAR_CheckUfoSensored(&(base->radar), base->pos, ufo, visible);
@@ -633,7 +633,7 @@ qboolean UFO_ConditionsForStoring (const base_t *base, const aircraft_t *ufocraf
 {
 	assert(base && ufocraft);
 
-	if (!base->hasUFOHangar && !base->hasUFOHangarSmall)
+	if (!base->hasBuilding[B_UFO_HANGAR] && !base->hasBuilding[B_UFO_SMALL_HANGAR])
 		return qfalse;
 
 	if (base->capacities[CAP_UFOHANGARS].max - base->capacities[CAP_UFOHANGARS].cur < ufocraft->weight)
