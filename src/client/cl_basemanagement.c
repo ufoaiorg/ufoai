@@ -688,6 +688,7 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 		while (test) {
 			test = qfalse;
 			for (i = 0; i < gd.numBuildings[base->idx]; i++) {
+				/* FIXME: This var is not used in this loop - but should it be used? */
 				buildingType = gd.buildings[base->idx][i].dependsBuilding;
 				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
 					B_UpdateOneBaseBuildingStatusOnDisable(gd.buildings[base->idx][i].buildingType, base);
