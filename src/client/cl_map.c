@@ -162,15 +162,20 @@ static void MAP_MultiSelectExecuteAction_f (void)
 
 		if (selMis->def->missionType == MIS_BASEATTACK) {
 			base_t* base;
-			/* we need no dropship in our base */
-			selMis->def->active = qtrue;
-			gd.mapAction = MA_BASEATTACK;
-			Com_DPrintf(DEBUG_CLIENT, "Base attack: %s at %.0f:%.0f\n", selMis->def->name, selMis->realPos[0], selMis->realPos[1]);
 			base = (base_t*)selMis->def->data;
 			assert(base);
-			cls.missionaircraft = &base->aircraft[0]; /* FIXME */
-			assert(cls.missionaircraft);
-			assert(cls.missionaircraft->homebase == base);
+			/* @sa B_BaseAttack */
+			if (!B_GetNumberOfBuildingsInBaseByType(base->idx, B_COMMAND)) {
+				CL_BaseRansacked(base);
+			} else {
+				/* we need no dropship in our base */
+				selMis->def->active = qtrue;
+				gd.mapAction = MA_BASEATTACK;
+				Com_DPrintf(DEBUG_CLIENT, "Base attack: %s at %.0f:%.0f\n", selMis->def->name, selMis->realPos[0], selMis->realPos[1]);
+				cls.missionaircraft = &base->aircraft[0]; /* FIXME */
+				assert(cls.missionaircraft);
+				assert(cls.missionaircraft->homebase == base);
+			}
 		} else {
 			Com_DPrintf(DEBUG_CLIENT, "Select mission: %s at %.0f:%.0f\n", selMis->def->name, selMis->realPos[0], selMis->realPos[1]);
 			gd.mapAction = MA_INTERCEPT;
