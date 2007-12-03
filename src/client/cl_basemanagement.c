@@ -550,6 +550,64 @@ static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t*
 }
 
 /**
+ * @brief Update status of every building when a building has been built/destroyed
+ * @param[in] base
+ * @param[in] building The building that has been built / removed
+ * @param[in] onBuilt qtrue if building has been built, qfalse else
+ */
+static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t type, qboolean onBuilt)
+{
+	test = qfalse;
+
+	/* Construction / destruction may have changed the statud of other building
+	 * We check that, but only for buildings which needed building */
+	for (i = 0; i < gd.numBuildings[base->idx]; i++) {
+		buildingType = gd.buildings[base->idx][i].dependsBuilding;
+		if (type == gd.buildingTypes[buildingType].buildingType &&
+		 B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
+			B_UpdateOneBaseBuildingStatusOnDisable(gd.buildings[base->idx][i].buildingType, base);
+			test = qtrue;
+		} else
+			B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
+	}
+	/* and maybe some updated status have changed status of other building.
+	 * So we check again, until nothing changes. (no condition here for check, it's too complex) */
+	while (test) {
+		test = qfalse;
+		for (i = 0; i < gd.numBuildings[base->idx]; i++) {
+			if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
+				B_UpdateOneBaseBuildingStatusOnDisable(gd.buildings[base->idx][i].buildingType, base);
+				test = qtrue;
+			} else
+				B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
+		}
+	}
+
+		test = qfalse;
+		for (i = 0; i < gd.numBuildings[base->idx]; i++) {
+			buildingType = gd.buildings[base->idx][i].dependsBuilding;
+			if (building->buildingType == gd.buildingTypes[buildingType].buildingType &&
+			 B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
+				B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][i].buildingType, base);
+				test = qtrue;
+			} else
+				B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
+		}
+		/* and maybe some updated status have changed status of other building.
+		 * So we check again, until nothing changes. (no condition here for check, it's too complex) */
+		while (test) {
+			test = qfalse;
+			for (i = 0; i < gd.numBuildings[base->idx]; i++) {
+				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
+					B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][i].buildingType, base);
+					test = qtrue;
+				} else
+					B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
+			}
+		}
+}
+
+/**
  * @brief Removes a building from the given base
  * @param[in] base Base to remove the building in
  * @param[in] building The building to remove
@@ -670,33 +728,9 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 		break;
 	}
 
-	/* now, the destruction of this building may have changed the status of other building.
-	 * We check that, but only for buildings which needed destroyed building */
+	/* now, the destruction of this building may have changed the status of other building. */
 	if (test) {
-		test = qfalse;
-		for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-			buildingType = gd.buildings[base->idx][i].dependsBuilding;
-			if (type == gd.buildingTypes[buildingType].buildingType &&
-			 B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
-				B_UpdateOneBaseBuildingStatusOnDisable(gd.buildings[base->idx][i].buildingType, base);
-				test = qtrue;
-			} else
-				B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
-		}
-		/* and maybe some updated status have changed status of other building.
-		 * So we check again, until nothing changes. (no condition here for check, it's too complex) */
-		while (test) {
-			test = qfalse;
-			for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-				/* FIXME: This var is not used in this loop - but should it be used? */
-				buildingType = gd.buildings[base->idx][i].dependsBuilding;
-				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
-					B_UpdateOneBaseBuildingStatusOnDisable(gd.buildings[base->idx][i].buildingType, base);
-					test = qtrue;
-				} else
-					B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
-			}
-		}
+		B_UpdateStatusBuilding(base, type, qfalse);
 		/* we may have changed status of several building: update all capacities */
 		B_UpdateBaseCapacities(MAX_CAP, base);
 	} else {
@@ -894,29 +928,7 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, b
 	/* now, the status of this building may have changed the status of other building.
 	 * We check that, but only for buildings which needed building 1 */
 	if (test) {
-		test = qfalse;
-		for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-			buildingType = gd.buildings[base->idx][i].dependsBuilding;
-			if (building->buildingType == gd.buildingTypes[buildingType].buildingType &&
-			 B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
-				B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][i].buildingType, base);
-				test = qtrue;
-			} else
-				B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
-		}
-		/* and maybe some updated status have changed status of other building.
-		 * So we check again, until nothing changes. (no condition here for check, it's too complex) */
-		while (test) {
-			test = qfalse;
-			for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-				buildingType = gd.buildings[base->idx][i].dependsBuilding;
-				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
-					B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][i].buildingType, base);
-					test = qtrue;
-				} else
-					B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
-			}
-		}
+		B_UpdateStatusBuilding(base, building->buildingType, qtrue);
 		/* we may have changed status of several building: update all capacities */
 		B_UpdateBaseCapacities(MAX_CAP, base);
 	} else {
