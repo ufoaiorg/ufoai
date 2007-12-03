@@ -98,6 +98,7 @@ building building_entrance
 	firstbase	true
 	pos			"2 4"
 	autobuild	true
+	type		entrance
 	visible		false
 }
 
@@ -288,6 +289,7 @@ building building_teamroom
 	build_time	3
 	varcosts	140
 	map_name	"teamroom"
+	type		teamroom
 	pedia		rs_building_teamroom
 }
 
