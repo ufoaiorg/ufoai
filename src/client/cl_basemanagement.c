@@ -1446,8 +1446,6 @@ buildingType_t B_GetBuildingTypeByBuildingID (const char *buildingID)
 		return B_RADAR;
 	} else if (!Q_strncmp(buildingID, "teamroom", MAX_VAR)) {
 		return B_TEAMROOM;
-	} else if (!Q_strncmp(buildingID, "entrance", MAX_VAR)) {
-		return B_ENTRANCE;
 	}
 	return MAX_BUILDING_TYPE;
 }
