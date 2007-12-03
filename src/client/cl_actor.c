@@ -3437,10 +3437,12 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 	memset(&add, 0, sizeof(entity_t));
 
 	/* the actor is hearing a sound */
-	if (le->hearTime && le->hearTime - cls.realtime > 3000) {
-		le->hearTime = 0;
-	} else {
-		add.flags |= RF_HIGHLIGHT;
+	if (le->hearTime) {
+		if (cls.realtime - le->hearTime > 3000) {
+			le->hearTime = 0;
+		} else {
+			add.flags |= RF_HIGHLIGHT;
+		}
 	}
 
 	add.lightparam = &le->sunfrac;

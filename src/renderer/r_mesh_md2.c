@@ -246,6 +246,7 @@ static qboolean R_CullAliasMD2Model (vec4_t bbox[8], entity_t * e)
 	return qfalse;
 }
 
+#define HIGHLIGHT_START_Z 22
 /**
  * @sa R_DrawAliasMD2Model
  */
@@ -385,7 +386,31 @@ void R_DrawAliasMD2Model (entity_t * e)
 
 	/* draw a highlight icon over this entity */
 	if (e->flags & RF_HIGHLIGHT) {
+		qglDisable(GL_TEXTURE_2D);
+		Vector4Set(color, 1, 1, 1, 1);
+		R_Color(color);
+		qglBegin(GL_TRIANGLES);
+		qglVertex3f(4, 4, HIGHLIGHT_START_Z + 0);
+		qglVertex3f(0, 0, HIGHLIGHT_START_Z + 16);
+		qglVertex3f(8, 0, HIGHLIGHT_START_Z + 16);
+		qglVertex3f(4, 4, HIGHLIGHT_START_Z + 0);
+		qglVertex3f(0, 0, HIGHLIGHT_START_Z + 16);
+		qglVertex3f(0, 8, HIGHLIGHT_START_Z + 16);
+		qglVertex3f(4, 4, HIGHLIGHT_START_Z + 0);
+		qglVertex3f(0, 8, HIGHLIGHT_START_Z + 16);
+		qglVertex3f(8, 8, HIGHLIGHT_START_Z + 16);
+		qglVertex3f(4, 4, HIGHLIGHT_START_Z + 0);
+		qglVertex3f(8, 8, HIGHLIGHT_START_Z + 16);
+		qglVertex3f(8, 0, HIGHLIGHT_START_Z + 16);
+		qglVertex3f(0, 0, HIGHLIGHT_START_Z + 16);
+		qglVertex3f(0, 8, HIGHLIGHT_START_Z + 16);
+		qglVertex3f(8, 0, HIGHLIGHT_START_Z + 16);
+		qglVertex3f(0, 8, HIGHLIGHT_START_Z + 16);
+		qglVertex3f(8, 0, HIGHLIGHT_START_Z + 16);
+		qglVertex3f(8, 8, HIGHLIGHT_START_Z + 16);
 
+		qglEnd();
+		qglEnable(GL_TEXTURE_2D);
 	}
 
 	/* draw the circles for team-members and allied troops */

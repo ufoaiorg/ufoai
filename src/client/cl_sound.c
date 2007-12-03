@@ -385,6 +385,7 @@ void S_StartSound (const vec3_t origin, sfx_t* sfx, float relVolume, float atten
 	}
 #endif
 
+	/* @todo: Make display the RF_HIGHLIGHT effect for all actors that are in hear range */
 	if (origin) {
 		le_t* le = LE_GetClosestActor(origin);
 		if (le) {

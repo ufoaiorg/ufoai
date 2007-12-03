@@ -505,8 +505,8 @@ base/models/aircraft/inter_stiletto/stiletto_glass.md2 | GNU General Public Lice
 base/models/aircraft/inter_stingray/stingray.jpg | GNU General Public License 2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/stingray_flying.md2 | GNU General Public License 2.0 | David Townsend (Psawhn)
 base/models/aircraft/inter_stingray/stingray_landed.md2 | GNU General Public License 2.0 | David Townsend (Psawhn)
-base/models/aircraft/ufo_carrier/ufo_carrier.jpg | GNU General Public License 2.0
-base/models/aircraft/ufo_carrier/ufo_carrier.md2 | Ryan A. Span
+base/models/aircraft/ufo_carrier/ufo_carrier.jpg | GNU General Public License 2.0 | Ryan A. Span
+base/models/aircraft/ufo_carrier/ufo_carrier.md2 | GNU General Public License 2.0 | Ryan A. Span
 base/models/aircraft/ufo_condor/ufo_condor.jpg | GNU General Public License 2.0 | Werner Hoehrer (hoehrer) | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
 base/models/aircraft/ufo_condor/ufo_condor.md2 | GNU General Public License 2.0 | Werner Hoehrer (hoehrer) | Model based on the condor04.map made by SparX Beyeler, see base/maps/condor04.map
 base/models/aircraft/ufo_fighter/ufo_fighter_closed.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
@@ -785,9 +785,9 @@ base/models/objects/cars/van3/van.obj | GNU General Public License 2.0 | Willem 
 base/models/objects/cars/van3/van.tga | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/city/arch/arch.jpg | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/models/objects/city/arch/arch.md2 | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
-base/models/objects/city/bench/bench.tga | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
-base/models/objects/city/bench/bench_l.md2 | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
-base/models/objects/city/bench/bench_s.md2 | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
+base/models/objects/city/bench/bench.tga | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
+base/models/objects/city/bench/bench_l.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
+base/models/objects/city/bench/bench_s.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/city/fountain/fountain1.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/city/fountain/fountain1.tga | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/city/fountain/fountain2.md2 | GNU General Public License 2.0 | Willem "Sitters"
@@ -894,10 +894,10 @@ base/models/objects/hovercraft/hover_down.obj | GNU General Public License 2.0 |
 base/models/objects/hovercraft/hover_up.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/hovercraft/hover_up.obj | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/hovercraft/hovercraft.tga | GNU General Public License 2.0 | Willem "Sitters"
-base/models/objects/industrial/lamp/lamp.md2 | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
-base/models/objects/industrial/lamp/lamp.tga | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
-base/models/objects/industrial/valve/valve.md2 | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
-base/models/objects/industrial/valve/valve.tga | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
+base/models/objects/industrial/lamp/lamp.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
+base/models/objects/industrial/lamp/lamp.tga | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
+base/models/objects/industrial/valve/valve.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
+base/models/objects/industrial/valve/valve.tga | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/lorry/lorry.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/lorry/lorry.png | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/rubbish/barrel.md2 |  | Yoshiboy
@@ -914,8 +914,8 @@ base/models/objects/rubbish/container_grey.jpg |  | Yoshiboy
 base/models/objects/rubbish/container_red.jpg |  | Yoshiboy
 base/models/objects/rubbish/fence.md2 |  | Yoshiboy
 base/models/objects/rubbish/fence.tga |  | Yoshiboy
-base/models/objects/rubbish/gravel/gravel.md2 | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
-base/models/objects/rubbish/gravel/gravel.tga | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
+base/models/objects/rubbish/gravel/gravel.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
+base/models/objects/rubbish/gravel/gravel.tga | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/rubbish/green_barrel.jpg |  | Yoshiboy
 base/models/objects/rubbish/grey_barrel.jpg |  | Yoshiboy
 base/models/objects/rubbish/grey_car.jpg |  | Yoshiboy
@@ -971,12 +971,12 @@ base/models/objects/vegi/fern/fern.tga | GNU General Public License 2.0 | Willem
 base/models/objects/vegi/fir/Readme.txt | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/vegi/fir/fir.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/vegi/fir/fir.tga | GNU General Public License 2.0 | Willem "Sitters"
-base/models/objects/vegi/palm_v1/palm_v1.md2 | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
-base/models/objects/vegi/palm_v1/palm_v1.tga | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
-base/models/objects/vegi/palm_v2/palm_v2.md2 | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
-base/models/objects/vegi/palm_v2/palm_v2.tga | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
-base/models/objects/vegi/palm_v3/palm_v3.md2 | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
-base/models/objects/vegi/palm_v3/palm_v3.tga | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
+base/models/objects/vegi/palm_v1/palm_v1.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
+base/models/objects/vegi/palm_v1/palm_v1.tga | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
+base/models/objects/vegi/palm_v2/palm_v2.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
+base/models/objects/vegi/palm_v2/palm_v2.tga | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
+base/models/objects/vegi/palm_v3/palm_v3.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
+base/models/objects/vegi/palm_v3/palm_v3.tga | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/vegi/plant/Readme.txt | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/vegi/plant/plant.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/vegi/plant/plant.tga | GNU General Public License 2.0 | Willem "Sitters"
@@ -986,8 +986,8 @@ base/models/objects/vegi/plant_hang/plant1.md2 | GNU General Public License 2.0 
 base/models/objects/vegi/plant_hang/plant2.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/vegi/plant_hang/plant2.png | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/vegi/plant_hang/plant_hang.png | GNU General Public License 2.0 | Willem "Sitters"
-base/models/objects/vegi/plant_v1/plant_v1.md2 | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
-base/models/objects/vegi/plant_v1/plant_v1.tga | Creative Commons License 3.0 Attribution + Sharealike | Mateusz "velo|gfx" Górecki
+base/models/objects/vegi/plant_v1/plant_v1.md2 | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
+base/models/objects/vegi/plant_v1/plant_v1.tga | Creative Commons Attribution-Share Alike 3.0 | Mateusz "velo|gfx" Górecki
 base/models/objects/vegi/tree03/tree03.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/vegi/tree03/tree03.png | GNU General Public License 2.0 | Willem "Sitters"
 base/models/objects/vehicles/bicycle/Readme.txt | GNU General Public License 2.0 | Willem "Sitters"
@@ -1497,8 +1497,8 @@ base/models/weapons/stunrod/old/stunrodskin.png | Creative Commons Attribution-S
 base/models/weapons/stunrod/stunrod.jpg | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some minor fixes made by Werner Höhrer (hoehrer)
 base/models/weapons/stunrod/stunrod.md2 | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some minor fixes made by Werner Höhrer (hoehrer)
 base/music/AlexFightmare.ogg | GNU General Public License 2.0 | Alex Parker
-base/music/AlexForest.ogg | Creative Commons Sampling Plus 1.0 License | Alex Parker | contains sounds sourced from thefreesoundproject.com and released under the creative commons sampling plus license (1.0).   These sounds and their authors are:   Odayam sounds (night time).wav - "genghis attenborough"   winter woods junkyard.wav - "offthesky (www.offthesky.com)"
-base/music/AlexSullencity.ogg | Creative Commons Sampling Plus 1.0 License | Alex Parker | background sounds taken from The Free Sound Project, under the Creative Commons Sampling Plus License 1.0; contributors:   RHumphries: 2523_RHumphries_rbh_thunder_storm.wav   Acutescream: 24716_acutescream_file0084edit_LANightAlarm.wav
+base/music/AlexForest.ogg | Creative Commons Sampling Plus 1.0 | Alex Parker | contains sounds sourced from thefreesoundproject.com and released under the creative commons sampling plus license (1.0).   These sounds and their authors are:   Odayam sounds (night time).wav - "genghis attenborough"   winter woods junkyard.wav - "offthesky (www.offthesky.com)"
+base/music/AlexSullencity.ogg | Creative Commons Sampling Plus 1.0 | Alex Parker | background sounds taken from The Free Sound Project, under the Creative Commons Sampling Plus License 1.0; contributors:   RHumphries: 2523_RHumphries_rbh_thunder_storm.wav   Acutescream: 24716_acutescream_file0084edit_LANightAlarm.wav
 base/music/David01.ogg | Creative Commons Attribution-Share Alike 3.0 | David Reeves (Destructavator)
 base/music/PsymongN1.ogg | GNU General Public License 2.0 | Simon Green (Psymong)
 base/music/PsymongN2.ogg | GNU General Public License 2.0 | Simon Green (Psymong)
@@ -1537,11 +1537,18 @@ base/pics/altmenu/temp_field_back.png | Creative Commons Attribution 3.0 | Ray W
 base/pics/altmenu/temp_metal_corner_pieces.png | Creative Commons Attribution 3.0 | Ray West (RaXaR), raxarATmeccanineDOTcom or MSN:raxar_sxsAThotmailDOTcom
 base/pics/altmenu/temp_metal_straight_pieces.png | Creative Commons Attribution 3.0 | Ray West (RaXaR), raxarATmeccanineDOTcom or MSN:raxar_sxsAThotmailDOTcom
 base/pics/altmenu/ufo_logo.png | Creative Commons Attribution 3.0 | Ray West (RaXaR), raxarATmeccanineDOTcom or MSN:raxar_sxsAThotmailDOTcom
+base/pics/armour/light.tga | GNU General Public License 2.0
+base/pics/armour/medium.tga | GNU General Public License 2.0
+base/pics/armour/ortnok_light.tga | GNU General Public License 2.0
+base/pics/armour/ortnok_medium.tga | GNU General Public License 2.0
+base/pics/armour/taman_light.tga | GNU General Public License 2.0
+base/pics/armour/taman_medium.tga | GNU General Public License 2.0
 base/pics/base.tga | Creative Commons Attribution-Share Alike 3.0 | Werner Höhrer (hoehrer)
 base/pics/base/adrop.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/base/adropl1.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/base/adropl2.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/base/aliencont1.tga | GNU General Public License 2.0 | Martin Gerhardy
+base/pics/base/aliencont2.tga | GNU General Public License 2.0
 base/pics/base/antimatter.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/base/commando.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/pics/base/drop1.tga | GNU General Public License 2.0 | Martin Gerhardy
@@ -1793,12 +1800,12 @@ base/pics/techs/laser.jpg | GNU General Public License 2.0 | Werner Höhrer (hoe
 base/pics/techs/ortnok.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/techs/taman.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/techs/taman_autopsy.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
-base/sound/aliens/aliendeath1.wav | Creative Commons Sampling Plus 1.0 License | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath2.wav | Creative Commons Sampling Plus 1.0 License | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath3.wav | Creative Commons Sampling Plus 1.0 License | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath4.wav | Creative Commons Sampling Plus 1.0 License | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath5.wav | Creative Commons Sampling Plus 1.0 License | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath6.wav | Creative Commons Sampling Plus 1.0 License | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath1.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath2.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath3.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath4.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath5.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath6.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
 base/sound/aliens/aliendeath7.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
 base/sound/aliens/big_angry.wav | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/aliens/big_angry2.wav | GNU General Public License 2.0 | Karen Rei Pease
@@ -1820,7 +1827,7 @@ base/sound/aliens/shevaar.wav | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/aliens/slithering.wav | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/aliens/strange_chat.wav | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/ambience/alien_engine.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/ambience/bird01.wav | Creative Commons Sampling Plus 1.0 License | dobroide | Taken from Free Sound Project, see http://freesound.iua.upf.edu/samplesViewSingle.php?id=17517
+base/sound/ambience/bird01.wav | Creative Commons Sampling Plus 1.0 | dobroide | Taken from Free Sound Project, see http://freesound.iua.upf.edu/samplesViewSingle.php?id=17517
 base/sound/ambience/creak.wav | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/ambience/droning_long.wav | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/ambience/droning_short.wav | GNU General Public License 2.0 | Karen Rei Pease
@@ -1829,8 +1836,8 @@ base/sound/ambience/jingle2.wav | GNU General Public License 2.0 | Karen Rei Pea
 base/sound/ambience/sparks.wav | GNU General Public License 2.0 |  | Nexuiz's GPLed data
 base/sound/ambience/water.wav | GNU General Public License 2.0 |  | Nexuiz's GPLed data
 base/sound/ambience/windloop.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/civilians/female_scream.ogg | Creative Commons Sampling Plus 1.0 License |  | http://freesound.iua.upf.edu/samplesViewSingle.php?id=35716
-base/sound/civilians/male_ah.ogg | Creative Commons Sampling Plus 1.0 License |  | http://freesound.iua.upf.edu/data/37/sounds/37553__mw_1984__ah.mp3
+base/sound/civilians/female_scream.ogg | Creative Commons Sampling Plus 1.0 |  | http://freesound.iua.upf.edu/samplesViewSingle.php?id=35716
+base/sound/civilians/male_ah.ogg | Creative Commons Sampling Plus 1.0 |  | http://freesound.iua.upf.edu/data/37/sounds/37553__mw_1984__ah.mp3
 base/sound/civilians/male_ah2.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
 base/sound/civilians/male_ah3.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
 base/sound/civilians/male_ah4.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
@@ -1842,7 +1849,7 @@ base/sound/footsteps/flesh2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sa
 base/sound/footsteps/flesh3.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/flesh4.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/grass.wav | GNU General Public License 2.0 |  | Worldforge media repository (Footsteps_on_grass_sasquatch.wav)
-base/sound/footsteps/grass2.wav | Creative Commons Sampling Plus 1.0 License
+base/sound/footsteps/grass2.wav | Creative Commons Sampling Plus 1.0
 base/sound/footsteps/hitground2.wav | GNU General Public License 2.0 |  | Nexuiz's GPLed data
 base/sound/footsteps/hitground3.wav | GNU General Public License 2.0 |  | Nexuiz's GPLed data
 base/sound/footsteps/hitground4.wav | GNU General Public License 2.0 |  | Nexuiz's GPLed data
@@ -1857,7 +1864,7 @@ base/sound/footsteps/metal3.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sa
 base/sound/footsteps/metal4.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/sand.wav | GNU General Public License 2.0 | Al Riddoch | Worldforge media repository
 base/sound/footsteps/sand2.wav | GNU General Public License 2.0 |  | sand.wav by Al Riddoch (Worldforge media repository)
-base/sound/footsteps/snow1.ogg | Creative Commons Sampling Plus 1.0 License | Spandau   Martin Gerhardy | http://freesound.iua.upf.edu/samplesViewSingle.php?id=30833
+base/sound/footsteps/snow1.ogg | Creative Commons Sampling Plus 1.0 | Spandau   Martin Gerhardy | http://freesound.iua.upf.edu/samplesViewSingle.php?id=30833
 base/sound/footsteps/softrug1.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/softrug2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/softrug3.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
@@ -1866,21 +1873,21 @@ base/sound/footsteps/splash1.ogg | Creative Commons Attribution 2.5 | (c) 2006 S
 base/sound/footsteps/splash2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/splash3.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/splash4.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/footsteps/squeak_2.wav | Creative Commons Sampling Plus 1.0 License | Corsica_S | http://freesound.iua.upf.edu
-base/sound/footsteps/squeak_3.wav | Creative Commons Sampling Plus 1.0 License | Corsica_S | http://freesound.iua.upf.edu
-base/sound/footsteps/squeak_4.wav | Creative Commons Sampling Plus 1.0 License | Corsica_S | http://freesound.iua.upf.edu
-base/sound/footsteps/step_1.wav | Creative Commons Sampling Plus 1.0 License | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_10.wav | Creative Commons Sampling Plus 1.0 License | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_11.wav | Creative Commons Sampling Plus 1.0 License | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_12.wav | Creative Commons Sampling Plus 1.0 License | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_2.wav | Creative Commons Sampling Plus 1.0 License | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_3.wav | Creative Commons Sampling Plus 1.0 License | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_4.wav | Creative Commons Sampling Plus 1.0 License | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_5.wav | Creative Commons Sampling Plus 1.0 License | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_6.wav | Creative Commons Sampling Plus 1.0 License | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_7.wav | Creative Commons Sampling Plus 1.0 License | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_8.wav | Creative Commons Sampling Plus 1.0 License | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_9.wav | Creative Commons Sampling Plus 1.0 License | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/squeak_2.wav | Creative Commons Sampling Plus 1.0 | Corsica_S | http://freesound.iua.upf.edu
+base/sound/footsteps/squeak_3.wav | Creative Commons Sampling Plus 1.0 | Corsica_S | http://freesound.iua.upf.edu
+base/sound/footsteps/squeak_4.wav | Creative Commons Sampling Plus 1.0 | Corsica_S | http://freesound.iua.upf.edu
+base/sound/footsteps/step_1.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_10.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_11.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_12.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_2.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_3.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_4.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_5.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_6.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_7.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_8.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_9.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
 base/sound/footsteps/stone1.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/stone2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/stone3.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
@@ -1888,7 +1895,7 @@ base/sound/footsteps/stone4.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sa
 base/sound/footsteps/water_in.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/water_out.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/water_under.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/footsteps/wood1.wav | Creative Commons Sampling Plus 1.0 License | swuing | http://freesound.iua.upf.edu/samplesViewSingle.php?id=38876
+base/sound/footsteps/wood1.wav | Creative Commons Sampling Plus 1.0 | swuing | http://freesound.iua.upf.edu/samplesViewSingle.php?id=38876
 base/sound/misc/geoscape_attack.wav | GNU General Public License 2.0 | BlakeD
 base/sound/misc/geoscape_info.wav | GNU General Public License 2.0 | BlakeD
 base/sound/misc/geoscape_standard.wav | GNU General Public License 2.0 | BlakeD
@@ -1903,7 +1910,7 @@ base/sound/weapons/bloodspider.wav | GNU General Public License 2.0 |  | Nexuiz'
 base/sound/weapons/bolter2.wav | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/boltercannonade.wav | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/deepexplosion.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/electrolaser.wav | Creative Commons Sampling Plus 1.0 License | BlakeD | Sine Wave 1 - Self Created via sine waves   12506__Koops__NEWLazerLOOP - Licensed under Creative Commons Sampling Plus 1.0 License. (http://freesound.iua.upf.edu/samplesViewSingle.php?id=12506)   30935__aust_paul__possiblelazer - Licensed under Creative Commons Sampling Plus 1.0 License.  (http://freesound.iua.upf.edu/samplesViewSingle.php?id=30935)   36990__Sea_Fury__M1_Abrams_Tank_Gun_Shot - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=36990)   19483__Halleck__JacobsLadderLong2 - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=19483)   19486__Halleck__JacobsLadderSingle1 - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=19486)   19484__Halleck__JacobsLadderShort1 - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=19484)   19487__Halleck__JacobsLadderSingle2 - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=19487)
+base/sound/weapons/electrolaser.wav | Creative Commons Sampling Plus 1.0 | BlakeD | Sine Wave 1 - Self Created via sine waves   12506__Koops__NEWLazerLOOP - Licensed under Creative Commons Sampling Plus 1.0 License. (http://freesound.iua.upf.edu/samplesViewSingle.php?id=12506)   30935__aust_paul__possiblelazer - Licensed under Creative Commons Sampling Plus 1.0 License.  (http://freesound.iua.upf.edu/samplesViewSingle.php?id=30935)   36990__Sea_Fury__M1_Abrams_Tank_Gun_Shot - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=36990)   19483__Halleck__JacobsLadderLong2 - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=19483)   19486__Halleck__JacobsLadderSingle1 - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=19486)   19484__Halleck__JacobsLadderShort1 - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=19484)   19487__Halleck__JacobsLadderSingle2 - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=19487)
 base/sound/weapons/fireexplosion.wav | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/grenade.wav | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/grenl_fle_3shot.wav |  |  | shotgun.wav file
@@ -1937,6 +1944,7 @@ base/textures/tex_base/helipad1.jpg | GNU General Public License 2.0 | Werner H�
 base/textures/tex_base/helipad2.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/helipad3.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/helipad4.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/lab_floor002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2 photo by Martin Gerhardy
 base/textures/tex_base/lab_wall001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/lab_wall002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/lab_wall003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
@@ -1958,6 +1966,9 @@ base/textures/tex_buildings/9techwall03b.jpg | GNU General Public License 2.0 | 
 base/textures/tex_buildings/9techwall05b.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/9techwall06.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/9techwall07.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/concrete003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/concrete004.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_buildings/concrete005.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/concrete012.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/concrete013.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_buildings/concrete014.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
@@ -2163,9 +2174,12 @@ base/textures/tex_material/circle_gray.tga | GNU General Public License 2.0 | Ma
 base/textures/tex_material/metall006.jpg | Public Domain | Golgotha Public Domain Data
 base/textures/tex_mattn/art001.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/automat.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/bark001.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/bark002.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/brick03.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/brick03a.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/brick03g.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/concrete001.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/dirt001.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/door001.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/door002.jpg | GNU General Public License 2.0 | Martin Gerhardy
@@ -2203,6 +2217,10 @@ base/textures/tex_mattn/door042.tga | GNU General Public License 2.0 | Martin Ge
 base/textures/tex_mattn/door043.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/door044.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/door045.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/door046.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/door047.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/door048.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/door049.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/drawer.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/dung.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/dung2.jpg | GNU General Public License 2.0 | Martin Gerhardy
@@ -2217,6 +2235,7 @@ base/textures/tex_mattn/floor005.jpg | GNU General Public License 2.0 | Martin G
 base/textures/tex_mattn/floor006.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/floor007.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/floor008.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/floor009.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/floor024.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/floor025.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/floor026.jpg | GNU General Public License 2.0 | Martin Gerhardy
@@ -2228,6 +2247,8 @@ base/textures/tex_mattn/ground_grass.jpg | GNU General Public License 2.0 | Mart
 base/textures/tex_mattn/gully.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/hay.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/hay2.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/market001.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/marmor.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/metal.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/metal2.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/metal3.jpg | GNU General Public License 2.0 | Martin Gerhardy
@@ -2236,6 +2257,7 @@ base/textures/tex_mattn/metal_rust.jpg | GNU General Public License 2.0 | Martin
 base/textures/tex_mattn/newspaper.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/plate.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/rack.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/roof001.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/rust.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/rust2.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/sand001.jpg | GNU General Public License 2.0 | Martin Gerhardy
@@ -2282,6 +2304,9 @@ base/textures/tex_mattn/wall028.jpg | GNU General Public License 2.0 | Martin Ge
 base/textures/tex_mattn/wall029.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall030.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall031.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/wall032.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/wall033.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/wall034.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall035.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall036.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall037.jpg | GNU General Public License 2.0 | Martin Gerhardy
@@ -2294,7 +2319,12 @@ base/textures/tex_mattn/wall043.jpg | GNU General Public License 2.0 | Martin Ge
 base/textures/tex_mattn/wall044.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall045.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall046.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/wall047.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/wall048.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/wall049.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/wall050.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall_bricks001.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/wall_grates.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/warning.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/window001.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/window002.jpg | GNU General Public License 2.0 | Martin Gerhardy
@@ -2311,6 +2341,9 @@ base/textures/tex_mattn/wood005.jpg | GNU General Public License 2.0 | Martin Ge
 base/textures/tex_mattn/wood006.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wood007a.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wood007b.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/wood008.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/wood009.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/wood010.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_misc/d_tech_dw2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/d_tech_dw2gb.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/drkmtl_grlpltmech.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data

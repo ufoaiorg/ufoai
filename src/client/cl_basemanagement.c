@@ -42,7 +42,7 @@ static char buildingText[MAX_LIST_CHAR];
 static int BuildingConstructionList[MAX_BUILDINGS];
 static int numBuildingConstructionList;
 
-static void B_BuildingInit(void);
+static void B_BuildingInit(base_t* base);
 
 /**
  * @brief Count all employees (hired) in the given base
@@ -550,6 +550,71 @@ static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t*
 }
 
 /**
+ * @brief Update status of every building when a building has been built/destroyed
+ * @param[in] base
+ * @param[in] building The building that has been built / removed
+ * @param[in] onBuilt qtrue if building has been built, qfalse else
+ * @return qtrue if at least one building status has been modified
+ * @todo This may not work for construction of building with buildingType B_MISC
+ */
+static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t type, qboolean onBuilt)
+{
+	qboolean test = qfalse;
+	qboolean returnValue = qfalse;
+	int i, buildingType;
+
+	/* Construction / destruction may have changed the status of other building
+	 * We check that, but only for buildings which needed building */
+	for (i = 0; i < gd.numBuildings[base->idx]; i++) {
+		buildingType = gd.buildings[base->idx][i].dependsBuilding;
+		if (type == gd.buildingTypes[buildingType].buildingType) {
+			/* gd.buildings[base->idx][i] needs built/removed building */
+			if (onBuilt && !B_GetBuildingStatus(base, gd.buildings[base->idx][i].buildingType)) {
+				/* we can only activate a non operationnal building */
+				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
+					B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][i].buildingType, base);
+					test = qtrue;
+					returnValue = qtrue;
+				} else
+					B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
+			} else if (!onBuilt && B_GetBuildingStatus(base, gd.buildings[base->idx][i].buildingType)) {
+				/* we can only deactivate an operationnal building */
+				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
+					B_UpdateOneBaseBuildingStatusOnDisable(gd.buildings[base->idx][i].buildingType, base);
+					test = qtrue;
+					returnValue = qtrue;
+				} else
+					B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
+			}
+		}
+	}
+	/* and maybe some updated status have changed status of other building.
+	 * So we check again, until nothing changes. (no condition here for check, it's too complex) */
+	while (test) {
+		test = qfalse;
+		for (i = 0; i < gd.numBuildings[base->idx]; i++) {
+			if (onBuilt && !B_GetBuildingStatus(base, gd.buildings[base->idx][i].buildingType)) {
+				/* we can only activate a non operationnal building */
+				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
+					B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][i].buildingType, base);
+					test = qtrue;
+				} else
+					B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
+			} else if (!onBuilt && B_GetBuildingStatus(base, gd.buildings[base->idx][i].buildingType)) {
+				/* we can only deactivate an operationnal building */
+				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
+					B_UpdateOneBaseBuildingStatusOnDisable(gd.buildings[base->idx][i].buildingType, base);
+					test = qtrue;
+				} else
+					B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
+			}
+		}
+	}
+
+	return returnValue;
+}
+
+/**
  * @brief Removes a building from the given base
  * @param[in] base Base to remove the building in
  * @param[in] building The building to remove
@@ -562,7 +627,6 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	baseCapacities_t cap = MAX_CAP; /* init but don't set to first value of enum */
 	char onDestroy[MAX_VAR];
 	qboolean test;
-	int i, buildingType;
 
 	/* Don't allow to destroy an entrance. */
 	if (type == B_ENTRANCE)
@@ -670,32 +734,9 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 		break;
 	}
 
-	/* now, the destruction of this building may have changed the status of other building.
-	 * We check that, but only for buildings which needed destroyed building */
+	/* now, the destruction of this building may have changed the status of other building. */
 	if (test) {
-		test = qfalse;
-		for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-			buildingType = gd.buildings[base->idx][i].dependsBuilding;
-			if (type == gd.buildingTypes[buildingType].buildingType &&
-			 B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
-				B_UpdateOneBaseBuildingStatusOnDisable(gd.buildings[base->idx][i].buildingType, base);
-				test = qtrue;
-			} else
-				B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
-		}
-		/* and maybe some updated status have changed status of other building.
-		 * So we check again, until nothing changes. (no condition here for check, it's too complex) */
-		while (test) {
-			test = qfalse;
-			for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-				buildingType = gd.buildings[base->idx][i].dependsBuilding;
-				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
-					B_UpdateOneBaseBuildingStatusOnDisable(gd.buildings[base->idx][i].buildingType, base);
-					test = qtrue;
-				} else
-					B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
-			}
-		}
+		B_UpdateStatusBuilding(base, type, qfalse);
 		/* we may have changed status of several building: update all capacities */
 		B_UpdateBaseCapacities(MAX_CAP, base);
 	} else {
@@ -875,8 +916,7 @@ static void B_HireForBuilding (base_t* base, building_t * building, int num)
 static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, buildingStatus_t status)
 {
 	qboolean test;
-	int i;
-	int buildingType, cap;
+	int cap;
 
 	assert(base);
 	assert(building);
@@ -893,29 +933,7 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, b
 	/* now, the status of this building may have changed the status of other building.
 	 * We check that, but only for buildings which needed building 1 */
 	if (test) {
-		test = qfalse;
-		for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-			buildingType = gd.buildings[base->idx][i].dependsBuilding;
-			if (building->buildingType == gd.buildingTypes[buildingType].buildingType &&
-			 B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
-				B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][i].buildingType, base);
-				test = qtrue;
-			} else
-				B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
-		}
-		/* and maybe some updated status have changed status of other building.
-		 * So we check again, until nothing changes. (no condition here for check, it's too complex) */
-		while (test) {
-			test = qfalse;
-			for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-				buildingType = gd.buildings[base->idx][i].dependsBuilding;
-				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
-					B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][i].buildingType, base);
-					test = qtrue;
-				} else
-					B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
-			}
-		}
+		B_UpdateStatusBuilding(base, building->buildingType, qtrue);
 		/* we may have changed status of several building: update all capacities */
 		B_UpdateBaseCapacities(MAX_CAP, base);
 	} else {
@@ -946,7 +964,7 @@ void B_SetUpBase (base_t* base)
 		base->capacities[i].cur = 0;
 
 	/* update the building-list */
-	B_BuildingInit();
+	B_BuildingInit(base);
 	Com_DPrintf(DEBUG_CLIENT, "Set up for %i\n", base->idx);
 
 	/* this cvar is used for disabling the base build button on geoscape if MAX_BASES (8) was reached */
@@ -993,7 +1011,7 @@ void B_SetUpBase (base_t* base)
 			}
 
 			/* update the building-list */
-			B_BuildingInit();
+			B_BuildingInit(base);
 
 			if (cl_start_employees->integer)
 				B_HireForBuilding(base, building, -1);
@@ -1200,7 +1218,7 @@ void B_SetBuildingByClick (int row, int col)
 			baseCurrent->buildingCurrent->pos[1] = col;
 
 			B_ResetBuildingCurrent(baseCurrent);
-			B_BuildingInit();	/* update the building-list */
+			B_BuildingInit(baseCurrent);	/* update the building-list */
 			break;
 		case BASE_INVALID_SPACE:
 			Com_DPrintf(DEBUG_CLIENT, "This base field is marked as invalid - you can't bulid here\n");
@@ -1365,23 +1383,24 @@ int B_GetNumberOfBuildingsInBaseByType (int base_idx, buildingType_t type)
 
 /**
  * @brief Update the building-list.
+ * @sa B_BuildingInit_f
  */
-static void B_BuildingInit (void)
+static void B_BuildingInit (base_t* base)
 {
 	int i;
 	int numSameBuildings;
 	building_t *buildingType = NULL;
 
 	/* maybe someone call this command before the bases are parsed?? */
-	if (!baseCurrent)
+	if (!base)
 		return;
 
-	Com_DPrintf(DEBUG_CLIENT, "B_BuildingInit: Updating b-list for '%s' (%i)\n", baseCurrent->name, baseCurrent->idx);
-	Com_DPrintf(DEBUG_CLIENT, "B_BuildingInit: Buildings in base: %i\n", gd.numBuildings[baseCurrent->idx]);
+	Com_DPrintf(DEBUG_CLIENT, "B_BuildingInit: Updating b-list for '%s' (%i)\n", base->name, base->idx);
+	Com_DPrintf(DEBUG_CLIENT, "B_BuildingInit: Buildings in base: %i\n", gd.numBuildings[base->idx]);
 
 	/* initialising the vars used in B_BuildingAddToList */
-	memset(baseCurrent->allBuildingsList, 0, sizeof(baseCurrent->allBuildingsList));
-	menuText[TEXT_BUILDINGS] = baseCurrent->allBuildingsList;
+	memset(base->allBuildingsList, 0, sizeof(base->allBuildingsList));
+	menuText[TEXT_BUILDINGS] = base->allBuildingsList;
 	numBuildingConstructionList = 0;
 
 	for (i = 0; i < gd.numBuildingTypes; i++) {
@@ -1389,7 +1408,7 @@ static void B_BuildingInit (void)
 		/*make an entry in list for this building */
 
 		if (buildingType->visible) {
-			numSameBuildings = B_GetNumberOfBuildingsInBaseByTypeIDX(baseCurrent->idx, buildingType->type_idx);
+			numSameBuildings = B_GetNumberOfBuildingsInBaseByTypeIDX(base->idx, buildingType->type_idx);
 
 			if (buildingType->moreThanOne) {
 				/* skip if limit of BASE_SIZE*BASE_SIZE exceeded */
@@ -1407,8 +1426,18 @@ static void B_BuildingInit (void)
 			}
 		}
 	}
-	if (baseCurrent->buildingCurrent)
-		B_DrawBuilding(baseCurrent, baseCurrent->buildingCurrent);
+	if (base->buildingCurrent)
+		B_DrawBuilding(base, base->buildingCurrent);
+}
+
+/**
+ * @brief Script command binding for B_BuildingInit
+ */
+static void B_BuildingInit_f (void)
+{
+	if (!baseCurrent)
+		return;
+	B_BuildingInit(baseCurrent);
 }
 
 /**
@@ -2953,7 +2982,7 @@ void B_ResetBaseManagement (void)
 	Cmd_AddCommand("base_assemble", B_AssembleMap_f, "Called to assemble the current selected base");
 	Cmd_AddCommand("base_assemble_rand", B_AssembleRandomBase_f, NULL);
 	Cmd_AddCommand("building_open", B_BuildingOpen_f, NULL);
-	Cmd_AddCommand("building_init", B_BuildingInit, NULL);
+	Cmd_AddCommand("building_init", B_BuildingInit_f, NULL);
 	Cmd_AddCommand("building_status", B_BuildingStatus_f, NULL);
 	Cmd_AddCommand("building_destroy", B_BuildingDestroy_f, "Function to destroy a buliding (select via right click in baseview first)");
 	Cmd_AddCommand("buildinginfo_click", B_BuildingInfoClick_f, NULL);
@@ -3008,7 +3037,7 @@ void B_UpdateBaseData (void)
 			b = &gd.buildings[i][j];
 			if (!b)
 				continue;
-			new = B_CheckBuildingConstruction(b, i);
+			new = B_CheckBuildingConstruction(b, &gd.bases[i]);
 			newBuilding += new;
 			if (new) {
 				Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Construction of %s building finished in base %s."), _(b->name), gd.bases[i].name);
@@ -3035,18 +3064,18 @@ void B_UpdateBaseData (void)
  *
  * Calls the onConstruct functions and assign workers, too.
  */
-int B_CheckBuildingConstruction (building_t * building, int base_idx)
+int B_CheckBuildingConstruction (building_t * building, base_t* base)
 {
 	int newBuilding = 0;
 
 	if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION) {
 		if (building->timeStart && (building->timeStart + building->buildTime) <= ccs.date.day) {
-			B_UpdateAllBaseBuildingStatus(building, &gd.bases[base_idx], B_STATUS_WORKING);
+			B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
 
 			if (*building->onConstruct) {
-				gd.bases[base_idx].buildingCurrent = building;
-				Com_DPrintf(DEBUG_CLIENT, "B_CheckBuildingConstruction: %s %i;\n", building->onConstruct, base_idx);
-				Cbuf_AddText(va("%s %i;", building->onConstruct, base_idx));
+				base->buildingCurrent = building;
+				Com_DPrintf(DEBUG_CLIENT, "B_CheckBuildingConstruction: %s %i;\n", building->onConstruct, base->idx);
+				Cbuf_AddText(va("%s %i;", building->onConstruct, base->idx));
 			}
 
 			newBuilding++;
@@ -3054,7 +3083,7 @@ int B_CheckBuildingConstruction (building_t * building, int base_idx)
 	}
 	if (newBuilding)
 		/*update the building-list */
-		B_BuildingInit();
+		B_BuildingInit(base);
 
 	return newBuilding;
 }

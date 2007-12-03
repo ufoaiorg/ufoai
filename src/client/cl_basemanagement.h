@@ -95,6 +95,7 @@ typedef enum {
 	B_DEFENSE_MISSILE,		/**< this building is a missile rack */
 	B_DEFENSE_LASER,		/**< this building is a laser battery */
 	B_RADAR,			/**< this building is a radar */
+	B_TEAMROOM,			/**< this building is a Team Room */
 
 	MAX_BUILDING_TYPE
 } buildingType_t;
@@ -272,7 +273,7 @@ void B_SetSensor_f(void);
 
 void B_UpdateBaseData(void);
 void B_UpdateStatusWithPower(base_t *base);
-int B_CheckBuildingConstruction(building_t *b, int baseID);
+int B_CheckBuildingConstruction(building_t *b, base_t* base);
 int B_GetNumOnTeam(aircraft_t *aircraft);
 building_t *B_GetLabBuildingFromBase(int base_id);
 void B_ClearBuilding(building_t *building);
