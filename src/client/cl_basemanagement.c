@@ -609,7 +609,6 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 		cap = B_GetCapacityFromBuildingType(type);
 		/* no break, we want to update status below */
 	/* building has no capacity */
-	case B_ENTRANCE:
 	case B_POWER:
 	case B_TEAMROOM:
 	case B_QUARTERS:
@@ -931,6 +930,14 @@ void B_SetUpBase (base_t* base)
 		/* set this field to invalid if there is no building yet */
 		if (*mapPtr == BASE_FREESLOT)
 			*mapPtr = BASE_INVALID_SPACE;
+	}
+
+	if (B_GetNumberOfBuildingsInBaseByType(base->idx, B_ENTRANCE)) {
+		/* Set hasBuilding[B_ENTRANCE] to correct value, because it can't be updated afterwards.*/
+		base->hasBuilding[B_ENTRANCE] = qtrue;
+	} else {
+		/* base can't start without an entrance, because this is where the alien will arrive during base attack */
+		Com_Printf("B_SetUpBase()... A new base should have an entrance.\n");
 	}
 
 	/* a new base is not discovered (yet) */
