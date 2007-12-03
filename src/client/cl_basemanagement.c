@@ -554,57 +554,64 @@ static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t*
  * @param[in] base
  * @param[in] building The building that has been built / removed
  * @param[in] onBuilt qtrue if building has been built, qfalse else
+ * @return qtrue if at least one building status has been modified
+ * @todo This may not work for construction of building with buildingType B_MISC
  */
 static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t type, qboolean onBuilt)
 {
-	test = qfalse;
+	qboolean test = qfalse;
+	qboolean returnValue = qfalse;
+	int i, buildingType;
 
-	/* Construction / destruction may have changed the statud of other building
+	/* Construction / destruction may have changed the status of other building
 	 * We check that, but only for buildings which needed building */
 	for (i = 0; i < gd.numBuildings[base->idx]; i++) {
 		buildingType = gd.buildings[base->idx][i].dependsBuilding;
-		if (type == gd.buildingTypes[buildingType].buildingType &&
-		 B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
-			B_UpdateOneBaseBuildingStatusOnDisable(gd.buildings[base->idx][i].buildingType, base);
-			test = qtrue;
-		} else
-			B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
+		if (type == gd.buildingTypes[buildingType].buildingType) {
+			/* gd.buildings[base->idx][i] needs built/removed building */
+			if (onBuilt && !B_GetBuildingStatus(base, gd.buildings[base->idx][i].buildingType)) {
+				/* we can only activate a non operationnal building */
+				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
+					B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][i].buildingType, base);
+					test = qtrue;
+					returnValue = qtrue;
+				} else
+					B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
+			} else if (!onBuilt && B_GetBuildingStatus(base, gd.buildings[base->idx][i].buildingType)) {
+				/* we can only deactivate an operationnal building */
+				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
+					B_UpdateOneBaseBuildingStatusOnDisable(gd.buildings[base->idx][i].buildingType, base);
+					test = qtrue;
+					returnValue = qtrue;
+				} else
+					B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
+			}
+		}
 	}
 	/* and maybe some updated status have changed status of other building.
 	 * So we check again, until nothing changes. (no condition here for check, it's too complex) */
 	while (test) {
 		test = qfalse;
 		for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-			if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
-				B_UpdateOneBaseBuildingStatusOnDisable(gd.buildings[base->idx][i].buildingType, base);
-				test = qtrue;
-			} else
-				B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
-		}
-	}
-
-		test = qfalse;
-		for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-			buildingType = gd.buildings[base->idx][i].dependsBuilding;
-			if (building->buildingType == gd.buildingTypes[buildingType].buildingType &&
-			 B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
-				B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][i].buildingType, base);
-				test = qtrue;
-			} else
-				B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
-		}
-		/* and maybe some updated status have changed status of other building.
-		 * So we check again, until nothing changes. (no condition here for check, it's too complex) */
-		while (test) {
-			test = qfalse;
-			for (i = 0; i < gd.numBuildings[base->idx]; i++) {
+			if (onBuilt && !B_GetBuildingStatus(base, gd.buildings[base->idx][i].buildingType)) {
+				/* we can only activate a non operationnal building */
 				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
 					B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][i].buildingType, base);
 					test = qtrue;
 				} else
 					B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
+			} else if (!onBuilt && B_GetBuildingStatus(base, gd.buildings[base->idx][i].buildingType)) {
+				/* we can only deactivate an operationnal building */
+				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
+					B_UpdateOneBaseBuildingStatusOnDisable(gd.buildings[base->idx][i].buildingType, base);
+					test = qtrue;
+				} else
+					B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][i].buildingType, base);
 			}
 		}
+	}
+
+	return returnValue;
 }
 
 /**
@@ -620,7 +627,6 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	baseCapacities_t cap = MAX_CAP; /* init but don't set to first value of enum */
 	char onDestroy[MAX_VAR];
 	qboolean test;
-	int i, buildingType;
 
 	/* Don't allow to destroy an entrance. */
 	if (type == B_ENTRANCE)
@@ -910,8 +916,7 @@ static void B_HireForBuilding (base_t* base, building_t * building, int num)
 static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, buildingStatus_t status)
 {
 	qboolean test;
-	int i;
-	int buildingType, cap;
+	int cap;
 
 	assert(base);
 	assert(building);

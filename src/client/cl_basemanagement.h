@@ -95,7 +95,7 @@ typedef enum {
 	B_DEFENSE_MISSILE,		/**< this building is a missile rack */
 	B_DEFENSE_LASER,		/**< this building is a laser battery */
 	B_RADAR,			/**< this building is a radar */
-	B_TEAMROOM			/**< this building is a Team Room */
+	B_TEAMROOM,			/**< this building is a Team Room */
 
 	MAX_BUILDING_TYPE
 } buildingType_t;
