@@ -1103,7 +1103,7 @@ static void MAP_SmoothTranslate (void)
  * @param[in] projectile Projectile pointer (make sure that this is a bullet projectile)
  * @sa MAP_DrawMap
  */
-static void MAP_DrawBullets (const menuNode_t* node, aircraftProjectile_t *projectile)
+static void MAP_DrawBullets (const menuNode_t* node, const aircraftProjectile_t *projectile)
 {
 	int k;
 	int x, y;
