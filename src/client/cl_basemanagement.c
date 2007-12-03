@@ -1446,8 +1446,6 @@ buildingType_t B_GetBuildingTypeByBuildingID (const char *buildingID)
 		return B_RADAR;
 	} else if (!Q_strncmp(buildingID, "teamroom", MAX_VAR)) {
 		return B_TEAMROOM;
-	} else if (!Q_strncmp(buildingID, "entrance", MAX_VAR)) {
-		return B_ENTRANCE;
 	}
 	return MAX_BUILDING_TYPE;
 }
@@ -3452,29 +3450,8 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			b->mapZone = MAP_GetTerrainType(color);
 		}
 		b->founded = MSG_ReadByte(sb);
-#if 0
-		Will be added in next commit
 		for (k = 0; k < presaveArray[PRE_MBUITY]; k++)
 			b->hasBuilding[k] = MSG_ReadByte(sb);
-#endif
-		/* the 16 next lines will be removed in next commit */
-		b->hasBuilding[B_UFO_HANGAR] = MSG_ReadByte(sb);
-		b->hasBuilding[B_LAB] = MSG_ReadByte(sb);
-		b->hasBuilding[B_HOSPITAL] = MSG_ReadByte(sb);
-		b->hasBuilding[B_DEFENSE_MISSILE] = MSG_ReadByte(sb);
-		b->hasBuilding[B_DEFENSE_LASER] = MSG_ReadByte(sb);
-		b->hasBuilding[B_ALIEN_CONTAINMENT] = MSG_ReadByte(sb);
-		b->hasBuilding[B_STORAGE] = MSG_ReadByte(sb);
-		b->hasBuilding[B_QUARTERS] = MSG_ReadByte(sb);
-		b->hasBuilding[B_WORKSHOP] = MSG_ReadByte(sb);
-		b->hasBuilding[B_SMALL_HANGAR] = MSG_ReadByte(sb);
-		b->hasBuilding[B_UFO_HANGAR] = MSG_ReadByte(sb);
-		b->hasBuilding[B_UFO_SMALL_HANGAR] = MSG_ReadByte(sb);
-		b->hasBuilding[B_POWER] = MSG_ReadByte(sb);
-		b->hasBuilding[B_COMMAND] = MSG_ReadByte(sb);
-		b->hasBuilding[B_ANTIMATTER] = MSG_ReadByte(sb);
-		b->hasBuilding[B_RADAR] = MSG_ReadByte(sb);
-
 		for (k = 0; k < presaveArray[PRE_BASESI]; k++)
 			for (l = 0; l < presaveArray[PRE_BASESI]; l++) {
 				b->map[k][l] = MSG_ReadShort(sb);
