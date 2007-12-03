@@ -3022,7 +3022,7 @@ void CL_GameAutoGo (actMis_t *mission)
 		if (amount)
 			MN_AddNewMessage(_("Notice"), va(_("Collected %i dead alien bodies"), amount), qfalse, MSG_STANDARD, NULL);
 
-		if (aircraft->alientypes && !(aircraft->homebase->hasAlienCont)) {
+		if (aircraft->alientypes && !(aircraft->homebase->hasBuilding[B_ALIEN_CONTAINMENT])) {
 			/* We have captured/killed aliens, but the homebase of this aircraft does not have alien containment. Popup aircraft transer dialog. */
 			TR_TransferAircraftMenu(aircraft);
 		}
@@ -3345,7 +3345,7 @@ static void CL_GameResults_f (void)
 	/* no transfer or campaign effects for base attack missions */
 	if (selMis->def->missionType != MIS_BASEATTACK) {
 		/* Check for alien containment in aircraft homebase. */
-		if (baseCurrent->aircraft[baseCurrent->aircraftCurrent].alientypes && !baseCurrent->hasAlienCont) {
+		if (baseCurrent->aircraft[baseCurrent->aircraftCurrent].alientypes && !baseCurrent->hasBuilding[B_ALIEN_CONTAINMENT]) {
 			/* We have captured/killed aliens, but the homebase of this aircraft does not have alien containment. Popup aircraft transer dialog. */
 			TR_TransferAircraftMenu(&(baseCurrent->aircraft[baseCurrent->aircraftCurrent]));
 		} else {

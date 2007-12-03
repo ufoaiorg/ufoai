@@ -79,10 +79,10 @@ static qboolean TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase)
 	/* Is this antimatter and destination base has enough space in Antimatter Storage? */
 	if (!Q_strncmp(od->id, "antimatter", 10)) {
 		/* Give some meaningful feedback to the player if the player clicks on an a.m. item but base doesn't have am storage. */
-		if (!destbase->hasAmStorage && destbase->hasStorage) {
+		if (!destbase->hasBuilding[B_ANTIMATTER] && destbase->hasBuilding[B_STORAGE]) {
 			MN_Popup(_("Missing storage"), _("Destination base does not have an Antimatter Storage.\n"));
 			return qfalse;
-		} else if (!destbase->hasAmStorage) {	/* Return if the target base doesn't have antimatter storage or power. */
+		} else if (!destbase->hasBuilding[B_ANTIMATTER]) {	/* Return if the target base doesn't have antimatter storage or power. */
 			return qfalse;
 		}
 		if (destbase->capacities[CAP_ANTIMATTER].max - destbase->capacities[CAP_ANTIMATTER].cur - amtransfer < ANTIMATTER_SIZE) {
@@ -90,7 +90,7 @@ static qboolean TR_CheckItem (objDef_t *od, base_t *srcbase, base_t *destbase)
 			return qfalse;
 		}
 	} else {	/*This is not antimatter*/
-		if (!transferBase->hasStorage)	/* Return if the target base doesn't have storage or power. */
+		if (!transferBase->hasBuilding[B_STORAGE])	/* Return if the target base doesn't have storage or power. */
 			return qfalse;
 	}
 
@@ -191,13 +191,13 @@ static qboolean TR_CheckAircraft (aircraft_t *aircraft, base_t *srcbase, base_t 
 	}
 
 	/* Hangars in destbase functional? */
-	if (!destbase->hasPower) {
+	if (!destbase->hasBuilding[B_POWER]) {
 		MN_Popup(_("Hangars not ready"), _("Destination base does not have hangars ready.\nProvide power supplies.\n"));
 		return qfalse;
-	} else if (!destbase->hasCommand) {
+	} else if (!destbase->hasBuilding[B_COMMAND]) {
 		MN_Popup(_("Hangars not ready"), _("Destination base does not have command centre.\nHangars not functional.\n"));
 		return qfalse;
-	} else if (!destbase->hasHangar && !destbase->hasHangarSmall) {
+	} else if (!destbase->hasBuilding[B_HANGAR] && !destbase->hasBuilding[B_SMALL_HANGAR]) {
 		MN_Popup(_("Hangars not ready"), _("Destination base does not have any hangar."));
 		return qfalse;
 	}
@@ -347,7 +347,7 @@ static void TR_TransferSelect_f (void)
 
 	switch (type) {
 	case TRANS_TYPE_ITEM:
-		if (transferBase->hasStorage) {
+		if (transferBase->hasBuilding[B_STORAGE]) {
 			for (i = 0; i < csi.numODs; i++)
 				if (baseCurrent->storage.num[i]) {
 					if (trItemsTmp[i] > 0)
@@ -359,14 +359,14 @@ static void TR_TransferSelect_f (void)
 				}
 			if (!cnt)
 				Q_strncpyz(transferList, _("Storage is empty.\n"), sizeof(transferList));
-		} else if (transferBase->hasPower) {
+		} else if (transferBase->hasBuilding[B_POWER]) {
 			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have a Storage."), sizeof(transferList));
 		} else {
 			Q_strcat(transferList, _("Transfer is not possible - the base does not have power supplies."), sizeof(transferList));
 		}
 		break;
 	case TRANS_TYPE_EMPLOYEE:
-		if (transferBase->hasQuarters) {
+		if (transferBase->hasBuilding[B_QUARTERS]) {
 			for (empltype = 0; empltype < MAX_EMPL; empltype++) {
 				for (i = 0; i < gd.numEmployees[empltype]; i++) {
 					employee = &gd.employees[empltype][i];
@@ -400,7 +400,7 @@ static void TR_TransferSelect_f (void)
 			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have Living Quarters."), sizeof(transferList));
 		break;
 	case TRANS_TYPE_ALIEN:
-		if (transferBase->hasAlienCont) {
+		if (transferBase->hasBuilding[B_ALIEN_CONTAINMENT]) {
 			for (i = 0; i < gd.numAliensTD; i++) {
 				if (*baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_dead > 0) {
 					if (trAliensTmp[i][TRANS_ALIEN_DEAD] > 0)
@@ -427,14 +427,14 @@ static void TR_TransferSelect_f (void)
 			}
 			if (!cnt)
 				Q_strncpyz(transferList, _("Alien Containment is empty.\n"), sizeof(transferList));
-		} else if (transferBase->hasPower) {
+		} else if (transferBase->hasBuilding[B_POWER]) {
 			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have an Alien Containment."), sizeof(transferList));
 		} else {
 			Q_strcat(transferList, _("Transfer is not possible - the base does not have power supplies."), sizeof(transferList));
 		}
 		break;
 	case TRANS_TYPE_AIRCRAFT:
-		if (transferBase->hasHangar || transferBase->hasHangarSmall) {
+		if (transferBase->hasBuilding[B_HANGAR] || transferBase->hasBuilding[B_SMALL_HANGAR]) {
 			for (i = 0; i < MAX_AIRCRAFT; i++) {
 				if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT)	/* Already on transfer list. */
 					continue;
@@ -531,7 +531,7 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 	}
 
 	if (transfer->hasItems && success) {	/* Items. */
-		if (!destination->hasStorage) {
+		if (!destination->hasBuilding[B_STORAGE]) {
 			Com_sprintf(message, sizeof(message), _("Base %s does not have Storage, items are removed!"), destination->name);
 			MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
 			/* Items cargo is not unloaded, will be destroyed in TR_TransferCheck(). */
@@ -548,7 +548,7 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 	}
 
 	if (transfer->hasEmployees && transfer->srcBase != TR_NO_BASE) {	/* Employees. (cannot come from a mission) */
-		if (!destination->hasQuarters || !success) {	/* Employees will be unhired. */
+		if (!destination->hasBuilding[B_QUARTERS] || !success) {	/* Employees will be unhired. */
 			if (success) {
 				Com_sprintf(message, sizeof(message), _("Base %s does not have Living Quarters, employees got unhired!"), destination->name);
 				MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
@@ -577,7 +577,7 @@ void TR_EmptyTransferCargo (transfer_t *transfer, qboolean success)
 	}
 
 	if (transfer->hasAliens && success) {	/* Aliens. */
-		if (!destination->hasAlienCont) {
+		if (!destination->hasBuilding[B_ALIEN_CONTAINMENT]) {
 			Com_sprintf(message, sizeof(message), _("Base %s does not have Alien Containment, Aliens are removed!"), destination->name);
 			MN_AddNewMessage(_("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
 			/* Aliens cargo is not unloaded, will be destroyed in TR_TransferCheck(). */
@@ -716,7 +716,7 @@ static void TR_TransferBaseListClick_f (void)
 		if (!gd.bases[baseIdx].founded)
 			continue;
 
-		if (!gd.bases[baseIdx].hasAlienCont)
+		if (!gd.bases[baseIdx].hasBuilding[B_ALIEN_CONTAINMENT])
 			continue;
 
 		num--;
@@ -752,7 +752,7 @@ void TR_TransferAircraftMenu (aircraft_t* aircraft)
 		if (!gd.bases[i].founded)
 			continue;
 		/* don't display bases without Alien Containment */
-		if (!gd.bases[i].hasAlienCont)
+		if (!gd.bases[i].hasBuilding[B_ALIEN_CONTAINMENT])
 			continue;
 
 		num = (gd.bases[i].capacities[CAP_ALIENS].max - gd.bases[i].capacities[CAP_ALIENS].cur);
@@ -981,7 +981,7 @@ static void TR_TransferListSelect_f (void)
 		}
 		break;
 	case TRANS_TYPE_ALIEN:
-		if (!transferBase->hasAlienCont)
+		if (!transferBase->hasBuilding[B_ALIEN_CONTAINMENT])
 			return;
 		for (i = 0; i < gd.numAliensTD; i++) {
 			if (*baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_dead > 0) {
@@ -1009,7 +1009,7 @@ static void TR_TransferListSelect_f (void)
 		}
 		break;
 	case TRANS_TYPE_AIRCRAFT:
-		if (!transferBase->hasHangar && !transferBase->hasHangarSmall)
+		if (!transferBase->hasBuilding[B_HANGAR] && !transferBase->hasBuilding[B_SMALL_HANGAR])
 			return;
 		for (i = 0; i < MAX_AIRCRAFT; i++) {
 			aircraft = AIR_AircraftGetFromIdx(i);
@@ -1053,40 +1053,40 @@ static void TR_TransferBaseSelect (base_t *base)
 
 	Com_sprintf(baseInfo, sizeof(baseInfo), "%s\n\n", base->name);
 
-	if (base->hasStorage) {
+	if (base->hasBuilding[B_STORAGE]) {
 		Q_strcat(baseInfo, _("You can transfer equipment - this base has a Storage.\n"), sizeof(baseInfo));
-	} else if (base->hasPower) {
+	} else if (base->hasBuilding[B_POWER]) {
 		Q_strcat(baseInfo, _("No Storage in this base.\n"), sizeof(baseInfo));
 	} else {
 		powercomm = qtrue;
 		Q_strcat(baseInfo, _("No power supplies in this base.\n"), sizeof(baseInfo));
 	}
-	if (base->hasQuarters) {
+	if (base->hasBuilding[B_QUARTERS]) {
 		Q_strcat(baseInfo, _("You can transfer employees - this base has Living Quarters.\n"), sizeof(baseInfo));
 	} else {
 		Q_strcat(baseInfo, _("No Living Quarters in this base.\n"), sizeof(baseInfo));
 	}
-	if (base->hasAlienCont) {
+	if (base->hasBuilding[B_ALIEN_CONTAINMENT]) {
 		Q_strcat(baseInfo, _("You can transfer Aliens - this base has an Alien Containment.\n"), sizeof(baseInfo));
-	} else if (base->hasPower) {
+	} else if (base->hasBuilding[B_POWER]) {
 		Q_strcat(baseInfo, _("No Alien Containment in this base.\n"), sizeof(baseInfo));
 	} else if (!powercomm) {
 		powercomm = qtrue;
 		Q_strcat(baseInfo, _("No power supplies in this base.\n"), sizeof(baseInfo));
 	}
-	if (base->hasAmStorage) {
+	if (base->hasBuilding[B_ANTIMATTER]) {
 		Q_strcat(baseInfo, _("You can transfer antimatter - this base has an Antimatter Storage.\n"), sizeof(baseInfo));
-	} else if (base->hasPower) {
+	} else if (base->hasBuilding[B_POWER]) {
 		Q_strcat(baseInfo, _("No Antimatter Storage in this base.\n"), sizeof(baseInfo));
 	} else if (!powercomm) {
 		powercomm = qtrue;
 		Q_strcat(baseInfo, _("No power supplies in this base.\n"), sizeof(baseInfo));
 	}
-	if (base->hasHangar || base->hasHangarSmall) {
+	if (base->hasBuilding[B_HANGAR] || base->hasBuilding[B_SMALL_HANGAR]) {
 		Q_strcat(baseInfo, _("You can transfer aircraft - this base has a Hangar.\n"), sizeof(baseInfo));
-	} else if (!base->hasCommand) {
+	} else if (!base->hasBuilding[B_COMMAND]) {
 		Q_strcat(baseInfo, _("Aircraft transfer not possible - this base does not have a Command Centre.\n"), sizeof(baseInfo));
-	} else if (base->hasPower) {
+	} else if (base->hasBuilding[B_POWER]) {
 		Q_strcat(baseInfo, _("No Hangar in this base.\n"), sizeof(baseInfo));
 	} else if (!powercomm) {
 		powercomm = qtrue;

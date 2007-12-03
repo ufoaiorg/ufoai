@@ -342,6 +342,7 @@ typedef enum {
 	PRE_MAXTRA, /* #define MAX_TRANSFERS */
 	PRE_MAXOBJ, /* #define MAX_OBJDEFS */
 	PRE_MAXBUL, /* #define BULLETS_PER_SHOT */
+	PRE_MBUITY, /* MAX_BUILDING_TYPE in buildingType_t */
 
 	PRE_MAX
 } presaveType_t;

@@ -185,7 +185,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 	tobase = aircraft->homebase;
 	assert(tobase);
 
-	if (!tobase->hasAlienCont) {
+	if (!tobase->hasBuilding[B_ALIEN_CONTAINMENT]) {
 		MN_AddNewMessage(_("Notice"), _("You cannot process aliens yet. Alien Containment not ready in this base."), qfalse, MSG_STANDARD, NULL);
 		return;
 	}
@@ -477,7 +477,7 @@ int AL_CountAll (void)
 	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
 		if (!base->founded)
 			continue;
-		if (!base->hasAlienCont)
+		if (!base->hasBuilding[B_ALIEN_CONTAINMENT])
 			continue;
 		for (j = 0; j < gd.numAliensTD; j++) {
 			if (*base->alienscont[j].alientype)
@@ -507,7 +507,7 @@ int AL_CountInBase (void)
 #endif
 		return -1;
 	}
-	if (!base->hasAlienCont)
+	if (!base->hasBuilding[B_ALIEN_CONTAINMENT])
 		return 0;
 	for (j = 0; j < gd.numAliensTD; j++) {
 		if (*base->alienscont[j].alientype)
@@ -533,7 +533,7 @@ static int AL_CountForMenu (int alienidx, qboolean alive)
 	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
 		if (!base->founded)
 			continue;
-		if (!base->hasAlienCont)
+		if (!base->hasBuilding[B_ALIEN_CONTAINMENT])
 			continue;
 		if (*base->alienscont[alienidx].alientype) {
 			if (alive == qfalse)
@@ -601,7 +601,7 @@ static qboolean AC_NextAC (void)
 		i = 0; /* i -= gd.numBases - but 0 should work, too */
 
 	for (; i < gd.numBases; i++) {
-		if (!gd.bases[i].hasAlienCont)
+		if (!gd.bases[i].hasBuilding[B_ALIEN_CONTAINMENT])
 			continue;
 		if (B_CheckBuildingTypeStatus(&gd.bases[i], B_ALIEN_CONTAINMENT, B_STATUS_WORKING, NULL)) {
 			baseID = i;
@@ -640,7 +640,7 @@ static void AC_NextAC_f (void)
 		i = 0; /* i -= gd.numBases - but 0 should work, too */
 
 	for (; i < gd.numBases; i++) {
-		if (!gd.bases[i].founded || !gd.bases[i].hasAlienCont)
+		if (!gd.bases[i].founded || !gd.bases[i].hasBuilding[B_ALIEN_CONTAINMENT])
 			continue;
 		if (B_CheckBuildingTypeStatus(&gd.bases[i], B_ALIEN_CONTAINMENT, B_STATUS_WORKING, NULL)) {
 			baseID = i;
@@ -676,7 +676,7 @@ static qboolean AC_PrevAC (void)
 	baseID = baseCurrent->idx;
 
 	for (i = (baseID - 1) & (MAX_BASES - 1); i >= 0; i--) {
-		if (!gd.bases[i].founded || !gd.bases[i].hasAlienCont)
+		if (!gd.bases[i].founded || !gd.bases[i].hasBuilding[B_ALIEN_CONTAINMENT])
 			continue;
 		if (B_CheckBuildingTypeStatus(&gd.bases[i], B_ALIEN_CONTAINMENT, B_STATUS_WORKING, NULL)) {
 			baseID = i;
@@ -709,7 +709,7 @@ static void AC_PrevAC_f (void)
 	baseID = baseCurrent->idx;
 
 	for (i = (baseID - 1) & (MAX_BASES - 1); i >= 0; i--) {
-		if (!gd.bases[i].hasAlienCont)
+		if (!gd.bases[i].hasBuilding[B_ALIEN_CONTAINMENT])
 			continue;
 		if (B_CheckBuildingTypeStatus(&gd.bases[i], B_ALIEN_CONTAINMENT, B_STATUS_WORKING, NULL)) {
 			baseID = i;
@@ -821,7 +821,7 @@ static void AC_KillOne_f (void)
 		return;
 	}
 
-	if (baseCurrent->hasAlienCont) {
+	if (baseCurrent->hasBuilding[B_ALIEN_CONTAINMENT]) {
 		containment = baseCurrent->alienscont;
 		for (i = 0, step = 0; i < gd.numAliensTD; i++) {
 			if (!containment[i].amount_alive && !containment[i].amount_dead)
@@ -874,7 +874,7 @@ static void AC_AddOne_f (void)
 	}
 
 	/* update alien counter*/
-	if (baseCurrent->hasAlienCont) {
+	if (baseCurrent->hasBuilding[B_ALIEN_CONTAINMENT]) {
 		containment = baseCurrent->alienscont;
 	} else {
 		return;
@@ -940,7 +940,7 @@ static void AC_Init (void)
 	Cvar_Set("mn_al_killed", "");
 	Cvar_Set("mn_al_alive", "");
 
-	if (baseCurrent->hasAlienCont) {
+	if (baseCurrent->hasBuilding[B_ALIEN_CONTAINMENT]) {
 		containment = baseCurrent->alienscont;
 		for (i = 0; i < gd.numAliensTD; i++) {
 			if (*containment[i].alientype) {
@@ -1038,7 +1038,7 @@ static void AC_AlienListClick_f (void)
 		return;
 	}
 
-	if (baseCurrent->hasAlienCont) {
+	if (baseCurrent->hasBuilding[B_ALIEN_CONTAINMENT]) {
 		containment = baseCurrent->alienscont;
 
 		for (i = 0, step = 0; i < gd.numAliensTD; i++) {
@@ -1108,7 +1108,7 @@ qboolean AC_Load (sizebuf_t* sb, void* data)
  */
 qboolean AC_ContainmentAllowed (const base_t* base)
 {
-	if (base->baseStatus != BASE_UNDER_ATTACK && base->hasAlienCont) {
+	if (base->baseStatus != BASE_UNDER_ATTACK && base->hasBuilding[B_ALIEN_CONTAINMENT]) {
 		return qtrue;
 	} else {
 		return qfalse;

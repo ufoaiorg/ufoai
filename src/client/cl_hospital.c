@@ -109,7 +109,7 @@ static void HOS_CheckRemovalFromEmployeeList (employee_t *employee)
 
 	if (base->hospitalListCount[employee->type] <= 0)
 		return;
-	if (!base->hasHospital)
+	if (!base->hasBuilding[B_HOSPITAL])
 		return;
 
 	if (employee->chr.HP >= employee->chr.maxHP) {
@@ -164,7 +164,7 @@ static qboolean HOS_AddToInMissionEmployeeList (const employee_t* employee, base
 
 	assert(base);
 	/* Do nothing if the base does not have hospital. */
-	if (!base->hasHospital)
+	if (!base->hasBuilding[B_HOSPITAL])
 		return qfalse;
 
 	/* Already in our list? */
@@ -369,7 +369,7 @@ static void HOS_Init_f (void)
 	if (!baseCurrent)
 		return;
 
-	if (!baseCurrent->hasHospital) {
+	if (!baseCurrent->hasBuilding[B_HOSPITAL]) {
 		MN_PopMenu(qfalse);
 		return;
 	}
@@ -578,7 +578,7 @@ void HOS_RemoveEmployeesInHospital (const aircraft_t *aircraft)
 	assert(base);
 
 	/* Do nothing if the base does not have hospital. */
-	if (!base->hasHospital)
+	if (!base->hasBuilding[B_HOSPITAL])
 		return;
 	/* First of all, make sure that relevant array is empty. */
 /*	memset(base->hospitalMissionList, -1, sizeof(base->hospitalMissionList));
@@ -618,7 +618,7 @@ void HOS_ReaddEmployeesInHospital (const aircraft_t *aircraft)
 	assert(base);
 
 	/* Do nothing if the base does not have hospital. */
-	if (!base->hasHospital)
+	if (!base->hasBuilding[B_HOSPITAL])
 		return;
 
 	for (i = 0; i < aircraft->maxTeamSize; i++) {
@@ -656,7 +656,7 @@ void HOS_RemoveDeadEmployeeFromLists (employee_t *employee)
 	assert(base);
 
 	/* Do nothing if the base does not have hospital. */
-	if (!base->hasHospital)
+	if (!base->hasBuilding[B_HOSPITAL])
 		return;
 
 	/* update hospitalList. */
@@ -732,7 +732,7 @@ qboolean HOS_HospitalAllowed (const base_t* base)
 	int hiredMedicCount = E_CountHired(base, EMPL_MEDIC);
 
 	if (base->baseStatus != BASE_UNDER_ATTACK
-	 && base->hasHospital && hiredMedicCount > 0) {
+	 && base->hasBuilding[B_HOSPITAL] && hiredMedicCount > 0) {
 		return qtrue;
 	} else {
 		return qfalse;

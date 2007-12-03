@@ -1200,7 +1200,7 @@ qboolean E_Load (sizebuf_t* sb, void* data)
  */
 qboolean E_HireAllowed (const base_t* base)
 {
-	if (base->baseStatus != BASE_UNDER_ATTACK && base->hasQuarters) {
+	if (base->baseStatus != BASE_UNDER_ATTACK && base->hasBuilding[B_QUARTERS]) {
 		return qtrue;
 	} else {
 		return qfalse;

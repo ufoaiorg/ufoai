@@ -72,13 +72,13 @@ static int AIR_UpdateHangarCapForOne (int aircraftID, base_t *base)
 		return AIRCRAFT_HANGAR_ERROR;
 	}
 	assert(base);
-	if (!base->hasHangar && !base->hasHangarSmall) {
+	if (!base->hasBuilding[B_HANGAR] && !base->hasBuilding[B_SMALL_HANGAR]) {
 		Com_Printf("AIR_UpdateHangarCapForOne()... base does not have any hangar - error!\n");
 		return AIRCRAFT_HANGAR_ERROR;
 	}
 
 	if (aircraftSize >= AIRCRAFT_SIZE_FOR_BIG_HANGAR) {
-		if (!base->hasHangar) {
+		if (!base->hasBuilding[B_HANGAR]) {
 			Com_Printf("AIR_UpdateHangarCapForOne()... base does not have big hangar - error!\n");
 			return AIRCRAFT_HANGAR_ERROR;
 		}
@@ -94,13 +94,13 @@ static int AIR_UpdateHangarCapForOne (int aircraftID, base_t *base)
 	} else {
 		/* First we are trying to put small aircraft into small hangar.
 		 * If that fails, we will put it into big hangar. */
-		if (base->hasHangarSmall) {
+		if (base->hasBuilding[B_SMALL_HANGAR]) {
 			freespace = base->capacities[CAP_AIRCRAFTS_SMALL].max - base->capacities[CAP_AIRCRAFTS_SMALL].cur;
 			if (freespace >= aircraftSize) {
 				base->capacities[CAP_AIRCRAFTS_SMALL].cur += aircraftSize;
 				return AIRCRAFT_HANGAR_SMALL;
 			} else {
-				if (!base->hasHangar) {
+				if (!base->hasBuilding[B_HANGAR]) {
 					Com_Printf("AIR_UpdateHangarCapForOne()... base does not have big hangar - error!\n");
 					return AIRCRAFT_HANGAR_ERROR;
 				}
@@ -274,7 +274,7 @@ void AIM_AircraftStart_f (void)
 	}
 
 	/* Aircraft cannot start without Command Centre operational. */
-	if (!baseCurrent->hasCommand) {
+	if (!baseCurrent->hasBuilding[B_COMMAND]) {
 		MN_Popup(_("Notice"), _("No Command Centre operational in this base.\n\nAircraft can not start.\n"));
 		return;
 	}
@@ -637,7 +637,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 void AIR_AircraftSelect_f (void)
 {
 	/* calling from console? with no baseCurrent? */
-	if (!baseCurrent || !baseCurrent->numAircraftInBase || (!baseCurrent->hasHangar && !baseCurrent->hasHangarSmall)) {
+	if (!baseCurrent || !baseCurrent->numAircraftInBase || (!baseCurrent->hasBuilding[B_HANGAR] && !baseCurrent->hasBuilding[B_SMALL_HANGAR])) {
 		MN_PopMenu(qfalse);
 		return;
 	}
@@ -2175,7 +2175,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 qboolean AIR_AircraftAllowed (const base_t* base)
 {
 	if (base->baseStatus != BASE_UNDER_ATTACK
-	 && (base->hasHangar || base->hasHangarSmall)) {
+	 && (base->hasBuilding[B_HANGAR] || base->hasBuilding[B_SMALL_HANGAR])) {
 		return qtrue;
 	} else {
 		return qfalse;
