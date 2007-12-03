@@ -149,6 +149,7 @@ void RADAR_ChangeRange (radar_t* radar, int change)
  * @brief Update range of radar in one base
  * @param[in] base Pointer to the base
  * @note This function can be called on console with 'update_sensor'
+ * @todo code should be simpler if we decide to keep radar range independant of number of radar - Kracken 03/12/07
  */
 void RADAR_UpdateRange_f (void)
 {
@@ -165,15 +166,8 @@ void RADAR_UpdateRange_f (void)
 		return;
 	}
 
-	gd.bases[baseIdx].radar.range = 0;
-
-	if (!gd.bases[baseIdx].hasBuilding[B_RADAR])
-		return;
-
-	for (i = 0; i < gd.numBuildings[baseIdx]; i++) {
-		if (gd.buildings[baseIdx][i].buildingType == B_RADAR)
-			gd.bases[baseIdx].radar.range += 30;
-	}
+	if (gd.bases[baseIdx].hasBuilding[B_RADAR])
+		gd.bases[baseIdx].radar.range = 30;
 }
 
 /**
