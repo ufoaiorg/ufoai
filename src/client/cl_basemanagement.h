@@ -77,7 +77,7 @@ typedef enum {
 
 /** @brief All different building types. */
 typedef enum {
-	B_MISC,			/**< this building is nothing with a special function */
+	B_MISC,			/**< this building is nothing with a special function (used when a building appears twice in .ufo file) */
 	B_LAB,			/**< this building is a lab */
 	B_QUARTERS,		/**< this building is a quarter */
 	B_STORAGE,		/**< this building is a storage */
