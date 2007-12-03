@@ -1497,8 +1497,8 @@ base/models/weapons/stunrod/old/stunrodskin.png | Creative Commons Attribution-S
 base/models/weapons/stunrod/stunrod.jpg | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some minor fixes made by Werner Höhrer (hoehrer)
 base/models/weapons/stunrod/stunrod.md2 | Creative Commons Attribution-Share Alike 3.0 | Ryan Span (Winter) - with some minor fixes made by Werner Höhrer (hoehrer)
 base/music/AlexFightmare.ogg | GNU General Public License 2.0 | Alex Parker
-base/music/AlexForest.ogg | Creative Commons Sampling Plus 1.0 License | Alex Parker | contains sounds sourced from thefreesoundproject.com and released under the creative commons sampling plus license (1.0).   These sounds and their authors are:   Odayam sounds (night time).wav - "genghis attenborough"   winter woods junkyard.wav - "offthesky (www.offthesky.com)"
-base/music/AlexSullencity.ogg | Creative Commons Sampling Plus 1.0 License | Alex Parker | background sounds taken from The Free Sound Project, under the Creative Commons Sampling Plus License 1.0; contributors:   RHumphries: 2523_RHumphries_rbh_thunder_storm.wav   Acutescream: 24716_acutescream_file0084edit_LANightAlarm.wav
+base/music/AlexForest.ogg | Creative Commons Sampling Plus 1.0 | Alex Parker | contains sounds sourced from thefreesoundproject.com and released under the creative commons sampling plus license (1.0).   These sounds and their authors are:   Odayam sounds (night time).wav - "genghis attenborough"   winter woods junkyard.wav - "offthesky (www.offthesky.com)"
+base/music/AlexSullencity.ogg | Creative Commons Sampling Plus 1.0 | Alex Parker | background sounds taken from The Free Sound Project, under the Creative Commons Sampling Plus License 1.0; contributors:   RHumphries: 2523_RHumphries_rbh_thunder_storm.wav   Acutescream: 24716_acutescream_file0084edit_LANightAlarm.wav
 base/music/David01.ogg | Creative Commons Attribution-Share Alike 3.0 | David Reeves (Destructavator)
 base/music/PsymongN1.ogg | GNU General Public License 2.0 | Simon Green (Psymong)
 base/music/PsymongN2.ogg | GNU General Public License 2.0 | Simon Green (Psymong)
@@ -1801,12 +1801,12 @@ base/pics/techs/laser.jpg | GNU General Public License 2.0 | Werner Höhrer (hoe
 base/pics/techs/ortnok.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/techs/taman.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
 base/pics/techs/taman_autopsy.jpg | Creative Commons Attribution-Share Alike 3.0 | Michal Bilinski (Blywulf)
-base/sound/aliens/aliendeath1.wav | Creative Commons Sampling Plus 1.0 License | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath2.wav | Creative Commons Sampling Plus 1.0 License | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath3.wav | Creative Commons Sampling Plus 1.0 License | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath4.wav | Creative Commons Sampling Plus 1.0 License | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath5.wav | Creative Commons Sampling Plus 1.0 License | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
-base/sound/aliens/aliendeath6.wav | Creative Commons Sampling Plus 1.0 License | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath1.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath2.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath3.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath4.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath5.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
+base/sound/aliens/aliendeath6.wav | Creative Commons Sampling Plus 1.0 | Alex Parker | The original (and disturbing) Pig Death recording from which these samples are derived was taken by Dobroide at the Free Sound Project
 base/sound/aliens/aliendeath7.wav | Creative Commons Sampling Plus 1.0 | Thomas "Berf" Rogers
 base/sound/aliens/big_angry.wav | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/aliens/big_angry2.wav | GNU General Public License 2.0 | Karen Rei Pease
@@ -1828,7 +1828,7 @@ base/sound/aliens/shevaar.wav | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/aliens/slithering.wav | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/aliens/strange_chat.wav | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/ambience/alien_engine.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/sound/ambience/bird01.wav | Creative Commons Sampling Plus 1.0 License | dobroide | Taken from Free Sound Project, see http://freesound.iua.upf.edu/samplesViewSingle.php?id=17517
+base/sound/ambience/bird01.wav | Creative Commons Sampling Plus 1.0 | dobroide | Taken from Free Sound Project, see http://freesound.iua.upf.edu/samplesViewSingle.php?id=17517
 base/sound/ambience/creak.wav | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/ambience/droning_long.wav | GNU General Public License 2.0 | Karen Rei Pease
 base/sound/ambience/droning_short.wav | GNU General Public License 2.0 | Karen Rei Pease
@@ -1837,8 +1837,8 @@ base/sound/ambience/jingle2.wav | GNU General Public License 2.0 | Karen Rei Pea
 base/sound/ambience/sparks.wav | GNU General Public License 2.0 |  | Nexuiz's GPLed data
 base/sound/ambience/water.wav | GNU General Public License 2.0 |  | Nexuiz's GPLed data
 base/sound/ambience/windloop.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/civilians/female_scream.ogg | Creative Commons Sampling Plus 1.0 License |  | http://freesound.iua.upf.edu/samplesViewSingle.php?id=35716
-base/sound/civilians/male_ah.ogg | Creative Commons Sampling Plus 1.0 License |  | http://freesound.iua.upf.edu/data/37/sounds/37553__mw_1984__ah.mp3
+base/sound/civilians/female_scream.ogg | Creative Commons Sampling Plus 1.0 |  | http://freesound.iua.upf.edu/samplesViewSingle.php?id=35716
+base/sound/civilians/male_ah.ogg | Creative Commons Sampling Plus 1.0 |  | http://freesound.iua.upf.edu/data/37/sounds/37553__mw_1984__ah.mp3
 base/sound/civilians/male_ah2.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
 base/sound/civilians/male_ah3.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
 base/sound/civilians/male_ah4.ogg | GNU General Public License 2.0 |  | OpenQuartz GPLed game content
@@ -1850,7 +1850,7 @@ base/sound/footsteps/flesh2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sa
 base/sound/footsteps/flesh3.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/flesh4.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/grass.wav | GNU General Public License 2.0 |  | Worldforge media repository (Footsteps_on_grass_sasquatch.wav)
-base/sound/footsteps/grass2.wav | Creative Commons Sampling Plus 1.0 License
+base/sound/footsteps/grass2.wav | Creative Commons Sampling Plus 1.0
 base/sound/footsteps/hitground2.wav | GNU General Public License 2.0 |  | Nexuiz's GPLed data
 base/sound/footsteps/hitground3.wav | GNU General Public License 2.0 |  | Nexuiz's GPLed data
 base/sound/footsteps/hitground4.wav | GNU General Public License 2.0 |  | Nexuiz's GPLed data
@@ -1865,7 +1865,7 @@ base/sound/footsteps/metal3.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sa
 base/sound/footsteps/metal4.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/sand.wav | GNU General Public License 2.0 | Al Riddoch | Worldforge media repository
 base/sound/footsteps/sand2.wav | GNU General Public License 2.0 |  | sand.wav by Al Riddoch (Worldforge media repository)
-base/sound/footsteps/snow1.ogg | Creative Commons Sampling Plus 1.0 License | Spandau   Martin Gerhardy | http://freesound.iua.upf.edu/samplesViewSingle.php?id=30833
+base/sound/footsteps/snow1.ogg | Creative Commons Sampling Plus 1.0 | Spandau   Martin Gerhardy | http://freesound.iua.upf.edu/samplesViewSingle.php?id=30833
 base/sound/footsteps/softrug1.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/softrug2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/softrug3.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
@@ -1874,21 +1874,21 @@ base/sound/footsteps/splash1.ogg | Creative Commons Attribution 2.5 | (c) 2006 S
 base/sound/footsteps/splash2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/splash3.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/splash4.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/footsteps/squeak_2.wav | Creative Commons Sampling Plus 1.0 License | Corsica_S | http://freesound.iua.upf.edu
-base/sound/footsteps/squeak_3.wav | Creative Commons Sampling Plus 1.0 License | Corsica_S | http://freesound.iua.upf.edu
-base/sound/footsteps/squeak_4.wav | Creative Commons Sampling Plus 1.0 License | Corsica_S | http://freesound.iua.upf.edu
-base/sound/footsteps/step_1.wav | Creative Commons Sampling Plus 1.0 License | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_10.wav | Creative Commons Sampling Plus 1.0 License | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_11.wav | Creative Commons Sampling Plus 1.0 License | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_12.wav | Creative Commons Sampling Plus 1.0 License | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_2.wav | Creative Commons Sampling Plus 1.0 License | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_3.wav | Creative Commons Sampling Plus 1.0 License | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_4.wav | Creative Commons Sampling Plus 1.0 License | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_5.wav | Creative Commons Sampling Plus 1.0 License | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_6.wav | Creative Commons Sampling Plus 1.0 License | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_7.wav | Creative Commons Sampling Plus 1.0 License | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_8.wav | Creative Commons Sampling Plus 1.0 License | carrigsound | http://freesound.iua.upf.edu
-base/sound/footsteps/step_9.wav | Creative Commons Sampling Plus 1.0 License | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/squeak_2.wav | Creative Commons Sampling Plus 1.0 | Corsica_S | http://freesound.iua.upf.edu
+base/sound/footsteps/squeak_3.wav | Creative Commons Sampling Plus 1.0 | Corsica_S | http://freesound.iua.upf.edu
+base/sound/footsteps/squeak_4.wav | Creative Commons Sampling Plus 1.0 | Corsica_S | http://freesound.iua.upf.edu
+base/sound/footsteps/step_1.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_10.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_11.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_12.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_2.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_3.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_4.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_5.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_6.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_7.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_8.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
+base/sound/footsteps/step_9.wav | Creative Commons Sampling Plus 1.0 | carrigsound | http://freesound.iua.upf.edu
 base/sound/footsteps/stone1.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/stone2.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/stone3.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
@@ -1896,7 +1896,7 @@ base/sound/footsteps/stone4.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sa
 base/sound/footsteps/water_in.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/water_out.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
 base/sound/footsteps/water_under.ogg | Creative Commons Attribution 2.5 | (c) 2006 Sapphire Scar Team
-base/sound/footsteps/wood1.wav | Creative Commons Sampling Plus 1.0 License | swuing | http://freesound.iua.upf.edu/samplesViewSingle.php?id=38876
+base/sound/footsteps/wood1.wav | Creative Commons Sampling Plus 1.0 | swuing | http://freesound.iua.upf.edu/samplesViewSingle.php?id=38876
 base/sound/misc/geoscape_attack.wav | GNU General Public License 2.0 | BlakeD
 base/sound/misc/geoscape_info.wav | GNU General Public License 2.0 | BlakeD
 base/sound/misc/geoscape_standard.wav | GNU General Public License 2.0 | BlakeD
@@ -1911,7 +1911,7 @@ base/sound/weapons/bloodspider.wav | GNU General Public License 2.0 |  | Nexuiz'
 base/sound/weapons/bolter2.wav | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/boltercannonade.wav | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/deepexplosion.wav | GNU General Public License 2.0 | Alex Parker
-base/sound/weapons/electrolaser.wav | Creative Commons Sampling Plus 1.0 License | BlakeD | Sine Wave 1 - Self Created via sine waves   12506__Koops__NEWLazerLOOP - Licensed under Creative Commons Sampling Plus 1.0 License. (http://freesound.iua.upf.edu/samplesViewSingle.php?id=12506)   30935__aust_paul__possiblelazer - Licensed under Creative Commons Sampling Plus 1.0 License.  (http://freesound.iua.upf.edu/samplesViewSingle.php?id=30935)   36990__Sea_Fury__M1_Abrams_Tank_Gun_Shot - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=36990)   19483__Halleck__JacobsLadderLong2 - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=19483)   19486__Halleck__JacobsLadderSingle1 - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=19486)   19484__Halleck__JacobsLadderShort1 - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=19484)   19487__Halleck__JacobsLadderSingle2 - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=19487)
+base/sound/weapons/electrolaser.wav | Creative Commons Sampling Plus 1.0 | BlakeD | Sine Wave 1 - Self Created via sine waves   12506__Koops__NEWLazerLOOP - Licensed under Creative Commons Sampling Plus 1.0 License. (http://freesound.iua.upf.edu/samplesViewSingle.php?id=12506)   30935__aust_paul__possiblelazer - Licensed under Creative Commons Sampling Plus 1.0 License.  (http://freesound.iua.upf.edu/samplesViewSingle.php?id=30935)   36990__Sea_Fury__M1_Abrams_Tank_Gun_Shot - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=36990)   19483__Halleck__JacobsLadderLong2 - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=19483)   19486__Halleck__JacobsLadderSingle1 - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=19486)   19484__Halleck__JacobsLadderShort1 - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=19484)   19487__Halleck__JacobsLadderSingle2 - Creative Commons Sampling Plus 1.0 License - (http://freesound.iua.upf.edu/samplesViewSingle.php?id=19487)
 base/sound/weapons/fireexplosion.wav | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/grenade.wav | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/grenl_fle_3shot.wav |  |  | shotgun.wav file
