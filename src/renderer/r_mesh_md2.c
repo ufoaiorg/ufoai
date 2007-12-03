@@ -387,9 +387,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 	/* draw a highlight icon over this entity */
 	if (e->flags & RF_HIGHLIGHT) {
 		qglDisable(GL_TEXTURE_2D);
-		qglEnable(GL_LINE_SMOOTH);
-		RSTATE_ENABLE_BLEND
-		Vector4Set(color, 1, 1, 1, 0.6);
+		Vector4Set(color, 1, 1, 1, 1);
 		R_Color(color);
 		qglBegin(GL_TRIANGLES);
 		qglVertex3f(4, 4, HIGHLIGHT_START_Z + 0);
@@ -412,8 +410,6 @@ void R_DrawAliasMD2Model (entity_t * e)
 		qglVertex3f(8, 8, HIGHLIGHT_START_Z + 16);
 
 		qglEnd();
-		RSTATE_DISABLE_BLEND
-		qglDisable(GL_LINE_SMOOTH);
 		qglEnable(GL_TEXTURE_2D);
 	}
 
