@@ -1076,7 +1076,7 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 		else if (nation->stats[0].happiness < 0.0f)
 			nation->stats[0].happiness = 0.0f;
 
-		/* update xvi_infection value (note that there will be an effect only 
+		/* update xvi_infection value (note that there will be an effect only
 		 * on nations where at least one mission already took place (for others, nation->stats[0].xvi_infection = 0) */
 		if (ccs.XVISpreadActivated) {
 			/* @todo: Send mails about critical rates */
@@ -1096,7 +1096,7 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
  * Called when invading forces overrun a base after a base-attack mission
  * @param[in] base base_t base to be ransacked
  */
-static void CL_BaseRansacked (base_t *base)
+void CL_BaseRansacked (base_t *base)
 {
 	int item, ac;
 

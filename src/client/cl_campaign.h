@@ -421,6 +421,7 @@ void CL_ParseResearchedCampaignItems(const char *name, const char **text);
 void CL_ParseResearchableCampaignStates(const char *name, const char **text, qboolean researchable);
 void CP_ExecuteMissionTrigger(mission_t * m, qboolean won);
 actMis_t* CL_CampaignAddGroundMission(mission_t* mis);
+void CL_BaseRansacked(base_t *base);
 
 qboolean CP_GetRandomPosOnGeoscape(vec2_t pos, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations);
 

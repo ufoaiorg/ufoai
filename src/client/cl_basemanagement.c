@@ -2390,17 +2390,24 @@ void B_BaseAttack (base_t* const base)
 		return;
 	}
 
-	ms = CL_AddMission(va("baseattack%i:%i", (int)base->pos[0], (int)base->pos[1]));
-	if (!ms) {
-		Com_DPrintf(DEBUG_CLIENT, "B_BaseAttack: Could not set base %s under attack\n", base->name);
-		return;
-	}
+	/* we always need at least one command centre in the base - because the
+	 * phalanx soldiers have their starting positions here
+	 * @note There should also always be an entrace - the aliens start there */
+	if (B_GetNumberOfBuildingsInBaseByType(base->idx, B_COMMAND)) {
+		ms = CL_AddMission(va("baseattack%i:%i", (int)base->pos[0], (int)base->pos[1]));
+		if (!ms) {
+			Com_DPrintf(DEBUG_CLIENT, "B_BaseAttack: Could not set base %s under attack\n", base->name);
+			return;
+		}
 
-	if (CP_SpawnBaseAttackMission(base, ms, NULL)) {
-		base->baseStatus = BASE_UNDER_ATTACK;
+		if (CP_SpawnBaseAttackMission(base, ms, NULL)) {
+			base->baseStatus = BASE_UNDER_ATTACK;
+			stats.basesAttacked++;
+		}
+	} else {
+		CL_BaseRansacked(base);
 		stats.basesAttacked++;
 	}
-
 #if 0							/*@todo: run eventhandler for each building in base */
 	if (b->onAttack)
 		Cbuf_AddText(va("%s %i", b->onAttack, b->id));
