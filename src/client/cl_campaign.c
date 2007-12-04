@@ -4356,7 +4356,6 @@ static const cmdList_t game_commands[] = {
 	{"game_timestop", CL_GameTimeStop, NULL},
 	{"game_timeslow", CL_GameTimeSlow, NULL},
 	{"game_timefast", CL_GameTimeFast, NULL},
-	{"update_sensor", RADAR_UpdateRange_f, "Increase the radar range"},
 	{"dec_sensor", B_SetSensor_f, "Decrease the radar range"},
 	{"dec_sensor", B_SetSensor_f, "Update radar range"},
 	{"mn_mapaction_reset", MAP_ResetAction, NULL},

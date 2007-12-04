@@ -260,7 +260,7 @@ void B_SetSensor_f(void);
 void B_UpdateBaseData(void);
 void B_UpdateStatusWithPower(base_t *base);
 int B_CheckBuildingConstruction(building_t *b, base_t* base);
-int B_GetNumOnTeam(aircraft_t *aircraft);
+int B_GetNumOnTeam(const aircraft_t *aircraft);
 building_t *B_GetLabBuildingFromBase(int base_id);
 void B_ClearBuilding(building_t *building);
 void B_ParseBuildings(const char *name, const char **text, qboolean link);

@@ -424,6 +424,7 @@ static void B_UpdateOneBaseBuildingStatus (buildingType_t type, base_t* base)
  * @note but also when one of its dependencies is destroyed and then rebuilt
  * @param[in] type Type of building that has been modified from qfalse to qtrue
  * @param[in] base Pointer to base with given building.
+ * @sa B_UpdateOneBaseBuildingStatusOnDisable
  */
 static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* base)
 {
@@ -436,7 +437,7 @@ static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* 
 		base->hospitalMissionListCount = 0;
 		break;
 	case B_RADAR:
-		Cmd_ExecuteString(va("update_sensor %i", base->idx));
+		RADAR_ChangeRange(&base->radar, 30);
 		break;
 	default:
 		break;
@@ -447,6 +448,7 @@ static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* 
  * @brief Actions to perform when a type of buildings goes from qtrue to qfalse.
  * @param[in] type Type of building that has been modified from qtrue to qfalse
  * @param[in] base Pointer to base with given building.
+ * @sa B_UpdateOneBaseBuildingStatusOnEnable
  */
 static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t* base)
 {
@@ -456,7 +458,8 @@ static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t*
 		AC_KillAll(base);
 		break;
 	case B_RADAR:
-		Cmd_ExecuteString(va("update_sensor %i", base->idx));
+		if (!base->hasBuilding[type])
+			RADAR_ChangeRange(&base->radar, 0);
 		break;
 	default:
 		break;
@@ -893,15 +896,16 @@ void B_SetUpBase (base_t* base)
 			B_SetBuildingByClick((int) building->pos[0], (int) building->pos[1]);
 			B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
 			/* Now buy two first aircraft if it is our first base. */
-			if (gd.numBases == 1 && building->buildingType == B_HANGAR) {
-				Cbuf_AddText("aircraft_new craft_drop_firebird\n");
-				aircraft = AIR_GetAircraft("craft_drop_firebird");
-				CL_UpdateCredits(ccs.credits - aircraft->price);
-			}
-			if (gd.numBases == 1 && building->buildingType == B_SMALL_HANGAR) {
-				Cbuf_AddText("aircraft_new craft_inter_stiletto\n");
-				aircraft = AIR_GetAircraft("craft_inter_stiletto");
-				CL_UpdateCredits(ccs.credits - aircraft->price);
+			if (gd.numBases == 1) {
+				if (building->buildingType == B_HANGAR) {
+					Cbuf_AddText("aircraft_new craft_drop_firebird\n");
+					aircraft = AIR_GetAircraft("craft_drop_firebird");
+					CL_UpdateCredits(ccs.credits - aircraft->price);
+				} else if (building->buildingType == B_SMALL_HANGAR) {
+					Cbuf_AddText("aircraft_new craft_inter_stiletto\n");
+					aircraft = AIR_GetAircraft("craft_inter_stiletto");
+					CL_UpdateCredits(ccs.credits - aircraft->price);
+				}
 			}
 
 			/* now call the onconstruct trigger */
@@ -3006,7 +3010,7 @@ int B_CheckBuildingConstruction (building_t * building, base_t* base)
 		}
 	}
 	if (newBuilding)
-		/*update the building-list */
+		/* update the building-list */
 		B_BuildingInit(base);
 
 	return newBuilding;
@@ -3017,7 +3021,7 @@ int B_CheckBuildingConstruction (building_t * building, base_t* base)
  * @param[in] aircraft Pointer to the aircraft, for which we return the amount of soldiers.
  * @return Amount of soldiers.
  */
-int B_GetNumOnTeam (aircraft_t *aircraft)
+int B_GetNumOnTeam (const aircraft_t *aircraft)
 {
 	assert(aircraft);
 	return aircraft->teamSize;

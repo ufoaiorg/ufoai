@@ -719,7 +719,6 @@ void RADAR_RemoveUfo(radar_t* radar, const struct aircraft_s* ufo);
 void Radar_NotifyUfoRemoved(radar_t* radar, const struct aircraft_s* ufo);
 void RADAR_ChangeRange(radar_t* radar, int change);
 void Radar_Initialise(radar_t* radar, int range);
-void RADAR_UpdateRange_f(void);
 qboolean RADAR_CheckUfoSensored(radar_t* radar, vec2_t posRadar,
 	const struct aircraft_s* ufo, qboolean wasUfoSensored);
 
