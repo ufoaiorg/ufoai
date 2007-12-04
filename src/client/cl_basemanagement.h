@@ -255,8 +255,6 @@ typedef struct base_s {
 /** Currently displayed/accessed base. */
 extern base_t *baseCurrent;
 
-void B_SetSensor_f(void);
-
 void B_UpdateBaseData(void);
 void B_UpdateStatusWithPower(base_t *base);
 int B_CheckBuildingConstruction(building_t *b, base_t* base);

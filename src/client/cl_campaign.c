@@ -4356,8 +4356,6 @@ static const cmdList_t game_commands[] = {
 	{"game_timestop", CL_GameTimeStop, NULL},
 	{"game_timeslow", CL_GameTimeSlow, NULL},
 	{"game_timefast", CL_GameTimeFast, NULL},
-	{"dec_sensor", B_SetSensor_f, "Decrease the radar range"},
-	{"dec_sensor", B_SetSensor_f, "Update radar range"},
 	{"mn_mapaction_reset", MAP_ResetAction, NULL},
 	{"map_center", MAP_CenterOnPoint_f, "Centers the geoscape view on items on the geoscape - and cycle through them"},
 	{"map_zoom", MAP_Zoom_f, ""},

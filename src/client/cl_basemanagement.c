@@ -267,37 +267,6 @@ static const value_t valid_building_vars[] = {
 };
 
 /**
- * @brief Sets a sensor.
- *
- * inc_sensor and dec_sensor are script commands that increase the amount
- * of the radar width for a given base
- */
-void B_SetSensor_f (void)
-{
-	int i = 0;
-	int amount = 0;
-	base_t* base;
-
-	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <amount> <baseID>\n", Cmd_Argv(0));
-		return;
-	}
-
-	i = atoi(Cmd_Argv(2));
-	if (i >= gd.numBases) {
-		Com_Printf("invalid baseID (%s)\n", Cmd_Argv(2));
-		return;
-	}
-	amount = atoi(Cmd_Argv(1));
-	base = gd.bases + i;
-
-	if (!Q_strncmp(Cmd_Argv(0), "inc", 3))
-		RADAR_ChangeRange(&(base->radar), amount);	/* inc_sensor */
-	else if (!Q_strncmp(Cmd_Argv(0), "dec", 3))
-		RADAR_ChangeRange(&(base->radar), -amount);	/* dec_sensor */
-}
-
-/**
  * @brief Initialises base.
  * @note This command is executed in the init node of the base menu.
  * It is called everytime the base menu pops up and sets the cvars.
