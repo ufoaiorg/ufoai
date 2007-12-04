@@ -1941,10 +1941,12 @@ base/textures/tex_base/ecrate_drty2.jpg | GNU General Public License 2.0 | Nexui
 base/textures/tex_base/ecrate_drty3ow.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/ecrate_dunno.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/grid2_alpha.tga | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_base/grid_alpha.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_base/helipad1.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/helipad2.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/helipad3.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/helipad4.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/lab_floor001.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_base/lab_floor002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2 photo by Martin Gerhardy
 base/textures/tex_base/lab_wall001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/lab_wall002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
