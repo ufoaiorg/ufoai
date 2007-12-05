@@ -101,6 +101,7 @@ static void R_DrawAliasMD3FrameLerp (mAliasModel_t *paliashdr, mAliasMesh_t mesh
 
 /**
  * @sa R_DrawAliasMD2Model
+ * @todo Implement the md2 renderer effect (e.g. RF_HIGHLIGHT)
  */
 void R_DrawAliasMD3Model (entity_t *e)
 {

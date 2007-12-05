@@ -147,6 +147,10 @@ static void R_InitGlobeChain (void)
 /* console font */
 image_t *draw_chars[2];
 
+/**
+ * @brief Loads some textures and init the 3d globe
+ * @sa R_Init
+ */
 void R_DrawInitLocal (void)
 {
 	shadow = R_FindImage("pics/sfx/shadow", it_pic);
@@ -956,4 +960,105 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 	qglMatrixMode(GL_TEXTURE);
 	qglLoadIdentity();
 	qglMatrixMode(GL_MODELVIEW);
+}
+
+#define HIGHLIGHT_START_Z 22
+#define HIGHTLIGHT_SIZE 18
+static const vec3_t r_highlightVertices[HIGHTLIGHT_SIZE] = {
+	{4, 4, HIGHLIGHT_START_Z + 0},
+	{0, 0, HIGHLIGHT_START_Z + 16},
+	{8, 0, HIGHLIGHT_START_Z + 16},
+	{4, 4, HIGHLIGHT_START_Z + 0},
+	{0, 0, HIGHLIGHT_START_Z + 16},
+	{0, 8, HIGHLIGHT_START_Z + 16},
+	{4, 4, HIGHLIGHT_START_Z + 0},
+	{0, 8, HIGHLIGHT_START_Z + 16},
+	{8, 8, HIGHLIGHT_START_Z + 16},
+	{4, 4, HIGHLIGHT_START_Z + 0},
+	{8, 8, HIGHLIGHT_START_Z + 16},
+	{8, 0, HIGHLIGHT_START_Z + 16},
+	{0, 0, HIGHLIGHT_START_Z + 16},
+	{0, 8, HIGHLIGHT_START_Z + 16},
+	{8, 0, HIGHLIGHT_START_Z + 16},
+	{0, 8, HIGHLIGHT_START_Z + 16},
+	{8, 0, HIGHLIGHT_START_Z + 16},
+	{8, 8, HIGHLIGHT_START_Z + 16},
+};
+/**
+ * @brief Used to draw actor highlights over the actors
+ */
+void R_DrawHighlight (const entity_t * e)
+{
+	const vec4_t color = {1, 1, 1, 1};
+
+	qglEnableClientState(GL_VERTEX_ARRAY);
+	qglDisable(GL_TEXTURE_2D);
+	R_Color(color);
+	qglVertexPointer(3, GL_FLOAT, 0, r_highlightVertices);
+	/* draw */
+	qglDrawArrays(GL_TRIANGLES, 0, HIGHTLIGHT_SIZE);
+	qglEnable(GL_TEXTURE_2D);
+	qglDisableClientState(GL_VERTEX_ARRAY);
+}
+
+/**
+ * @brief Draws the field marker entity is specified in cl_actor.c CL_AddTargeting
+ * @sa CL_AddTargeting
+ */
+void R_DrawBox (const entity_t * e)
+{
+	vec3_t upper, lower;
+	float dx, dy;
+	const vec4_t color = {e->angles[0], e->angles[1], e->angles[2], e->alpha};
+
+/*	if (R_CullBox(e->origin, e->oldorigin)) */
+/*		return; */
+
+	qglDepthMask(GL_FALSE);
+	RSTATE_ENABLE_BLEND
+	qglDisable(GL_CULL_FACE);
+	qglDisable(GL_TEXTURE_2D);
+	if (!r_wire->integer)
+		qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	qglEnable(GL_LINE_SMOOTH);
+
+	R_Color(color);
+
+	VectorCopy(e->origin, lower);
+	VectorCopy(e->origin, upper);
+	upper[2] = e->oldorigin[2];
+
+	dx = e->oldorigin[0] - e->origin[0];
+	dy = e->oldorigin[1] - e->origin[1];
+
+	qglBegin(GL_QUAD_STRIP);
+
+	qglVertex3fv(lower);
+	qglVertex3fv(upper);
+	lower[0] += dx;
+	upper[0] += dx;
+	qglVertex3fv(lower);
+	qglVertex3fv(upper);
+	lower[1] += dy;
+	upper[1] += dy;
+	qglVertex3fv(lower);
+	qglVertex3fv(upper);
+	lower[0] -= dx;
+	upper[0] -= dx;
+	qglVertex3fv(lower);
+	qglVertex3fv(upper);
+	lower[1] -= dy;
+	upper[1] -= dy;
+	qglVertex3fv(lower);
+	qglVertex3fv(upper);
+
+	qglEnd();
+
+	qglDisable(GL_LINE_SMOOTH);
+	if (!r_wire->integer)
+		qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	qglEnable(GL_TEXTURE_2D);
+	qglEnable(GL_CULL_FACE);
+	RSTATE_DISABLE_BLEND
+	qglDepthMask(GL_TRUE);
 }
