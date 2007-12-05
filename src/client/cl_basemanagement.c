@@ -1574,19 +1574,24 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 }
 
 /**
- * @brief Gets a lab in the given base
- * @note You can run more than one research in a lab
- * @param[in] base_id The number/id of the base to search in.
- * @return The lab or NULL if base has no lab
+ * @brief Gets a building of a given type in the given base
+ * @param[in] base The base to search the building in
+ * @return The building or NULL if base has no building of that type
  */
-building_t *B_GetLabBuildingFromBase (int base_idx)
+building_t *B_GetBuildingInBaseByType (const base_t* base, buildingType_t type, qboolean onlyWorking)
 {
 	int i;
 	building_t *building = NULL;
 
-	for (i = 0; i < gd.numBuildings[base_idx]; i++) {
-		building = &gd.buildings[base_idx][i];
-		if (building->buildingType == B_LAB)
+	/* we maybe only want to get the working building (e.g. it might the
+	 * case that we don't have a powerplant and thus the searched building
+	 * is not functional) */
+	if (onlyWorking && !base->hasBuilding[type])
+		return NULL;
+
+	for (i = 0; i < gd.numBuildings[base->idx]; i++) {
+		building = &gd.buildings[base->idx][i];
+		if (building->buildingType == type)
 			return building;
 	}
 	return NULL;

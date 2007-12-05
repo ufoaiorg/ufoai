@@ -1940,11 +1940,14 @@ base/textures/tex_base/ecrate_drty2.jpg | GNU General Public License 2.0 | Nexui
 base/textures/tex_base/ecrate_drty3ow.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/ecrate_dunno.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/grid2_alpha.tga | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_base/grid_alpha.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_base/helipad1.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/helipad2.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/helipad3.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/helipad4.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/lab_floor001.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_base/lab_floor002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2 photo by Martin Gerhardy
+base/textures/tex_base/lab_floor003.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_base/lab_wall001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/lab_wall002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/lab_wall003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
@@ -2180,6 +2183,8 @@ base/textures/tex_mattn/brick03.jpg | GNU General Public License 2.0 | Martin Ge
 base/textures/tex_mattn/brick03a.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/brick03g.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/concrete001.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/concrete002.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/concrete003.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/dirt001.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/door001.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/door002.jpg | GNU General Public License 2.0 | Martin Gerhardy
@@ -2221,6 +2226,8 @@ base/textures/tex_mattn/door046.jpg | GNU General Public License 2.0 | Martin Ge
 base/textures/tex_mattn/door047.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/door048.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/door049.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/door050.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/door051.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/drawer.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/dung.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/dung2.jpg | GNU General Public License 2.0 | Martin Gerhardy
@@ -2236,15 +2243,20 @@ base/textures/tex_mattn/floor006.jpg | GNU General Public License 2.0 | Martin G
 base/textures/tex_mattn/floor007.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/floor008.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/floor009.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/floor010.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/floor011.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/floor024.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/floor025.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/floor026.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/grass001.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/grass002.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/grass003.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/grate.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/grate1.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/grate2.tga | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/ground_dirt2.jpg | GNU General Public License 2.0 | Martin Gerhardy
-base/textures/tex_mattn/ground_grass.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/gully.tga | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/gully2.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/hay.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/hay2.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/market001.jpg | GNU General Public License 2.0 | Martin Gerhardy
@@ -2258,6 +2270,8 @@ base/textures/tex_mattn/newspaper.tga | GNU General Public License 2.0 | Martin 
 base/textures/tex_mattn/plate.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/rack.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/roof001.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/roof002.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/roof003.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/rust.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/rust2.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/sand001.jpg | GNU General Public License 2.0 | Martin Gerhardy
@@ -2323,6 +2337,13 @@ base/textures/tex_mattn/wall047.jpg | GNU General Public License 2.0 | Martin Ge
 base/textures/tex_mattn/wall048.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall049.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall050.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/wall051.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/wall052.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/wall053.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/wall054.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/wall055.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/wall056.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/wall057.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall_bricks001.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wall_grates.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/warning.jpg | GNU General Public License 2.0 | Martin Gerhardy
@@ -2333,6 +2354,7 @@ base/textures/tex_mattn/window004.jpg | GNU General Public License 2.0 | Martin 
 base/textures/tex_mattn/window005.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/window006.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/window007.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/window008.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wood001.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wood002.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wood003.jpg | GNU General Public License 2.0 | Martin Gerhardy
@@ -2344,6 +2366,7 @@ base/textures/tex_mattn/wood007b.jpg | GNU General Public License 2.0 | Martin G
 base/textures/tex_mattn/wood008.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wood009.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/wood010.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_mattn/wood011.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_misc/d_tech_dw2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/d_tech_dw2gb.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/drkmtl_grlpltmech.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data

@@ -887,7 +887,7 @@ void RS_AssignScientist (technology_t* tech)
 
 	if (tech->statusResearchable) {
 		/* Get a free lab from the base. */
-		building = B_GetLabBuildingFromBase(base->idx);
+		building = B_GetBuildingInBaseByType(base, B_LAB, qtrue);
 		if (building) {
 			/* Check the capacity. */
 			if (base->capacities[CAP_LABSPACE].max > base->capacities[CAP_LABSPACE].cur) {
