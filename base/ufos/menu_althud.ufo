@@ -807,12 +807,6 @@ menu althud
 		pos		"958 369"
 		align	uc
 	}
-	string str_ap
-	{
-		string	"*cvar mn_ap"
-		pos		"988 369"
-		align	uc
-	}
 
 	string str_floor
 	{

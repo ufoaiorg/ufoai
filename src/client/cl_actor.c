@@ -300,8 +300,6 @@ static void CL_ActorGlobalCVars (void)
 			Cvar_Set(va("mn_moralemax%i",i), str);
 			Com_sprintf(str, MAX_VAR, "%i", le->STUN);
 			Cvar_Set(va("mn_stun%i", i), str);
-			Com_sprintf(str, MAX_VAR, "%i", le->AP);
-			Cvar_Set(va("mn_ap%i", i), str);
 		} else {
 			Cvar_Set(va("mn_head%i", i), "");
 			Cvar_Set(va("mn_hp%i", i), "0");
@@ -311,7 +309,6 @@ static void CL_ActorGlobalCVars (void)
 			Cvar_Set(va("mn_morale%i",i), "0");
 			Cvar_Set(va("mn_moralemax%i",i), "1");
 			Cvar_Set(va("mn_stun%i", i), "0");
-			Cvar_Set(va("mn_ap%i", i), "0");
 		}
 	}
 }
@@ -1469,7 +1466,6 @@ void CL_ActorUpdateCVars (void)
 		Cvar_Set("mn_hp", va("%i", selActor->HP));
 		Cvar_Set("mn_hpmax", va("%i", selActor->maxHP));
 		Cvar_Set("mn_stun", va("%i", selActor->STUN));
-		Cvar_Set("mn_ap", va("%i", selActor->AP));
 
 		/* animation and weapons */
 		name = R_AnimGetName(&selActor->as, selActor->model1);
@@ -1548,14 +1544,14 @@ void CL_ActorUpdateCVars (void)
 			if ((mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE) || actorMoveLength == ROUTING_NOT_REACHABLE) {
 				/* @todo: CHECKME Why do we check for (cl.cmode < M_PEND_MOVE) here? */
 				actorMoveLength = ROUTING_NOT_REACHABLE;
-				Com_sprintf(infoText, sizeof(infoText), _("Armour  %i\tMorale  %i\n"), selActor->AP, selActor->morale);
+				Com_sprintf(infoText, sizeof(infoText), _("Morale  %i\n"), selActor->morale);
 				MN_MenuTextReset(TEXT_MOUSECURSOR_RIGHT);
 			}
 			if (cl.cmode != cl.oldcmode || refresh || lastHUDActor != selActor
 						|| lastMoveLength != actorMoveLength || lastTU != selActor->TU) {
 				if (actorMoveLength != ROUTING_NOT_REACHABLE) {
 					CL_RefreshWeaponButtons(selActor->TU - actorMoveLength);
-					Com_sprintf(infoText, sizeof(infoText), _("Armour  %i\tMorale  %i\nMove %i (%i TU left)\n"), selActor->AP, selActor->morale, actorMoveLength, selActor->TU - actorMoveLength);
+					Com_sprintf(infoText, sizeof(infoText), _("Morale  %i\nMove %i (%i TU left)\n"), selActor->morale, actorMoveLength, selActor->TU - actorMoveLength);
 					if (actorMoveLength <= selActor->TU)
 						Com_sprintf(mouseText, sizeof(mouseText), "%i (%i)\n", actorMoveLength, selActor->TU);
 					else
@@ -1662,7 +1658,6 @@ void CL_ActorUpdateCVars (void)
 			Cvar_Set("mn_ammoright", "");
 			Cvar_Set("mn_ammoleft", "");
 			Cvar_Set("mn_stun", "0");
-			Cvar_Set("mn_ap", "0");
 			*/
 			if (refresh)
 				Cbuf_AddText("deselstand\n");
@@ -1683,7 +1678,6 @@ void CL_ActorUpdateCVars (void)
 		Cvar_SetValue("mn_hp", 0);
 		Cvar_SetValue("mn_hpmax", 100);
 		Cvar_SetValue("mn_stun", 0);
-		Cvar_SetValue("mn_ap", 100);
 	}
 
 	/* mode */
