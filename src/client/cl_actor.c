@@ -2932,14 +2932,12 @@ void CL_ActorDie (struct dbuffer *msg)
 	if (le->team == cls.team) {
 		chr = CL_GetActorChr(le);
 		if (chr && ((le->state & STATE_STUN) & ~STATE_DEAD)) {
-			Com_sprintf(tmpbuf, sizeof(tmpbuf), "%s %s %s\n",
-			chr->rank >= 0 ? gd.ranks[chr->rank].shortname : "",
-			chr->name, _("was stunned.\n"));
+			Com_sprintf(tmpbuf, sizeof(tmpbuf), _("%s %s was stunned\n"),
+			chr->rank >= 0 ? gd.ranks[chr->rank].shortname : "", chr->name);
 			CL_DisplayHudMessage(tmpbuf, 2000);
 		} else if (chr) {
-			Com_sprintf(tmpbuf, sizeof(tmpbuf), "%s %s %s\n",
-			chr->rank >= 0 ? gd.ranks[chr->rank].shortname : "",
-			chr->name, _("was killed.\n"));
+			Com_sprintf(tmpbuf, sizeof(tmpbuf), _("%s %s was killed\n"),
+			chr->rank >= 0 ? gd.ranks[chr->rank].shortname : "", chr->name);
 			CL_DisplayHudMessage(tmpbuf, 2000);
 		}
 	} else {
@@ -2954,12 +2952,10 @@ void CL_ActorDie (struct dbuffer *msg)
 			if (le->teamDef) {
 				if (RS_IsResearched_idx(RS_GetTechIdxByName(le->teamDef->tech))) {
 					if ((le->state & STATE_STUN) & ~STATE_DEAD) {
-						Com_sprintf(tmpbuf, sizeof(tmpbuf), "%s %s.\n",
-						_("An alien was stunned:"), _(le->teamDef->name));
+						Com_sprintf(tmpbuf, sizeof(tmpbuf), _("An alien was stunned: %s\n"), _(le->teamDef->name));
 						CL_DisplayHudMessage(tmpbuf, 2000);
 					} else {
-						Com_sprintf(tmpbuf, sizeof(tmpbuf), "%s %s.\n",
-						_("An alien was killed:"), _(le->teamDef->name));
+						Com_sprintf(tmpbuf, sizeof(tmpbuf), _("An alien was killed: %s\n"), _(le->teamDef->name));
 						CL_DisplayHudMessage(tmpbuf, 2000);
 					}
 				} else {
