@@ -541,7 +541,7 @@ void CIN_SetParameters (int x, int y, int w, int h, int cinStatus)
 	cin.y = y * viddef.ry;
 	cin.w = w * viddef.rx;
 	cin.h = h * viddef.ry;
-	if (cinStatus >= 0)
+	if (cinStatus > CIN_STATUS_NONE)
 		cls.playingCinematic = cinStatus;
 }
 
