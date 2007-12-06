@@ -217,7 +217,15 @@ void R_DrawChar (int x, int y, int num)
 	qglEnd();
 }
 
-void R_DrawImagePixelData (const char *name, byte *frame, int width, int height)
+/**
+ * @brief Uploads image data
+ * @param[in] name The name of the texture to use for this data
+ * @param[in] frame The frame data that is uploaded
+ * @param[in] width The width of the texture
+ * @param[in] height The height of the texture
+ * @return the texture number of the uploaded images
+ */
+int R_DrawImagePixelData (const char *name, byte *frame, int width, int height)
 {
 	image_t *img;
 
@@ -233,7 +241,7 @@ void R_DrawImagePixelData (const char *name, byte *frame, int width, int height)
 		/* Reallocate the texture */
 		img->width = width;
 		img->height = height;
-		qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, frame);
+		qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img->width, img->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, frame);
 	}
 	R_CheckError();
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -241,18 +249,7 @@ void R_DrawImagePixelData (const char *name, byte *frame, int width, int height)
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	R_CheckError();
 
-	R_Color(NULL);
-	qglBegin(GL_QUADS);
-	qglTexCoord2f(0, 0);
-	qglVertex2f(0, 0);
-	qglTexCoord2f(1, 0);
-	qglVertex2f(viddef.width, 0);
-	qglTexCoord2f(1, 1);
-	qglVertex2f(viddef.width, viddef.height);
-	qglTexCoord2f(0, 1);
-	qglVertex2f(0, viddef.height);
-	qglEnd();
-	R_CheckError();
+	return img->texnum;
 }
 
 /**
@@ -299,6 +296,29 @@ void R_DrawGetPicSize (int *w, int *h, const char *pic)
 	}
 	*w = gl->width;
 	*h = gl->height;
+}
+
+/**
+ * @brief Bind and draw a texture
+ * @param[in] texnum The texture id (already uploaded of course)
+ * @param[in] x normalized x value on the screen
+ * @param[in] y normalized y value on the screen
+ * @param[in] w normalized width value
+ * @param[in] h normalized height value
+ */
+void R_DrawTexture (int texnum, int x, int y, int w, int h)
+{
+	R_Bind(texnum);
+	qglBegin(GL_QUADS);
+	qglTexCoord2f(0, 0);
+	qglVertex2f(x, y);
+	qglTexCoord2f(1, 0);
+	qglVertex2f(x + w, y);
+	qglTexCoord2f(1, 1);
+	qglVertex2f(x + w, y + h);
+	qglTexCoord2f(0, 1);
+	qglVertex2f(x, y + h);
+	qglEnd();
 }
 
 /**
@@ -422,17 +442,7 @@ void R_DrawPic (int x, int y, const char *pic)
 	if (gl->shader)
 		SH_UseShader(gl->shader, qfalse);
 #endif
-	R_Bind(gl->texnum);
-	qglBegin(GL_QUADS);
-	qglTexCoord2f(0, 0);
-	qglVertex2f(x, y);
-	qglTexCoord2f(1, 0);
-	qglVertex2f(x + gl->width, y);
-	qglTexCoord2f(1, 1);
-	qglVertex2f(x + gl->width, y + gl->height);
-	qglTexCoord2f(0, 1);
-	qglVertex2f(x, y + gl->height);
-	qglEnd();
+	R_DrawTexture(gl->texnum, x, y, gl->width, gl->height);
 #ifdef HAVE_SHADERS
 	if (gl->shader)
 		SH_UseShader(gl->shader, qtrue);
@@ -834,13 +844,23 @@ void R_Draw3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char 
 
 /**
  * @brief responsible for drawing the 3d globe on geoscape
+ * @param[in] x menu node x position
+ * @param[in] y menu node y position
+ * @param[in] w menu node widht
+ * @param[in] h menu node height
+ * @param[in] p
+ * @param[in] q
+ * @param[in] rotate the rotate angle of the globe
+ * @param[in] zoom the current globe zoon
+ * @param[in] map the prefix of the map to use (image must be at base/pics/menu/<map>_[day|night])
  */
 void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, float zoom, const char *map)
 {
 	/* globe scaling */
-	float fullscale = zoom / 4.0f;
+	const float fullscale = zoom / 4.0f;
 	vec4_t lightPos = {0.0f, 0.0f, 0.0f, 0.0f};
-	vec4_t lightColor = {1.0f, 1.0f, 1.0f, 1.0f};
+	const vec4_t diffuseLightColor = {1.0f, 1.0f, 1.0f, 1.0f};
+	const vec4_t ambientLightColor = {0.2f, 0.2f, 0.2f, 0.2f};
 	float a;
 
 	image_t* gl = NULL;
@@ -878,8 +898,8 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 	}
 
 	/* globe texture scaling */
-	/* previous releases made a tiled version of the globe texture.  here i just shrink it using the */
-	/* texture matrix, for much the same effect */
+	/* previous releases made a tiled version of the globe texture. here i just shrink it using the
+	 * texture matrix, for much the same effect */
 	qglMatrixMode(GL_TEXTURE);
 	qglLoadIdentity();
 	/* scale the texture */
@@ -891,7 +911,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 	qglPushMatrix();
 
 	/* center it */
-	qglTranslatef((nx+nw)/2, (ny+nh)/2, 0);
+	qglTranslatef((nx + nw) / 2, (ny + nh) / 2, 0);
 	R_CheckError();
 
 	/* flatten the sphere */
@@ -922,9 +942,9 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 
 	qglLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 	R_CheckError();
-	qglLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor);
+	qglLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLightColor);
 	R_CheckError();
-	qglLightfv(GL_LIGHT0, GL_AMBIENT, lightColor);
+	qglLightfv(GL_LIGHT0, GL_AMBIENT, ambientLightColor);
 	R_CheckError();
 
 	/* enable the lighting */

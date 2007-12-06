@@ -65,7 +65,12 @@ typedef struct {
 } yuvTable_t;
 
 typedef struct {
-	char			name[MAX_OSPATH];
+	char			name[MAX_QPATH];	/**< virtuell filesystem path with file suffix */
+
+	qboolean		replay;	/**< autmatically replay in endless loop */
+
+	qboolean		inMenu;	/**< is this cinematic shown in a menu node? */
+	int				x, y, w, h; /**< for drawing in the menu maybe */
 
 	qFILE			file;
 	int				size;
@@ -491,6 +496,7 @@ static qboolean CIN_DecodeChunk (void)
 
 		if (cin.chunk.id == ROQ_IDENT || cin.chunk.size > ROQ_MAX_CHUNK_SIZE) {
 			Com_Printf("Invalid chunk\n");
+			cin.replay = qfalse;
 			return qfalse;	/* Invalid chunk */
 		}
 
@@ -525,15 +531,33 @@ static qboolean CIN_DecodeChunk (void)
 }
 
 /**
+ * @sa MN_DrawMenus
+ * @note Coordinates should be relative to VID_NORM_WIDTH and VID_NORM_HEIGHT
+ * they are normalized inside this function
+ */
+void CIN_SetParameters (int x, int y, int w, int h, int cinStatus)
+{
+	cin.x = x * viddef.rx;
+	cin.y = y * viddef.ry;
+	cin.w = w * viddef.rx;
+	cin.h = h * viddef.ry;
+	if (cinStatus >= 0)
+		cls.playingCinematic = cinStatus;
+}
+
+/**
  * @sa R_DrawImagePixelData
  */
 static void CIN_DrawCinematic (void)
 {
-	assert(cls.playingCinematic);
+	int texnum;
+
+	assert(cls.playingCinematic != CIN_STATUS_NONE);
 
 	if (!cin.frameBuffer[1])
 		return;
-	R_DrawImagePixelData("***cinematic***", cin.frameBuffer[1], cin.frameWidth, cin.frameHeight);
+	texnum = R_DrawImagePixelData("***cinematic***", cin.frameBuffer[1], cin.frameWidth, cin.frameHeight);
+	R_DrawTexture(texnum, cin.x, cin.y, cin.w, cin.h);
 }
 
 /**
@@ -541,7 +565,7 @@ static void CIN_DrawCinematic (void)
  */
 void CIN_RunCinematic (void)
 {
-	assert(cls.playingCinematic);
+	assert(cls.playingCinematic != CIN_STATUS_NONE);
 
 	/* Decode chunks until the desired frame is reached */
 	if (CIN_DecodeChunk()) {
@@ -550,7 +574,14 @@ void CIN_RunCinematic (void)
 	}
 
 	/* If we get here, the cinematic has either finished or failed */
-	CIN_StopCinematic();
+	if (cin.replay) {
+		char name[MAX_QPATH];
+		Q_strncpyz(name, cin.name, sizeof(name));
+		CIN_PlayCinematic(name);
+		cin.replay = qtrue;
+	} else {
+		CIN_StopCinematic();
+	}
 }
 
 /**
@@ -562,10 +593,12 @@ void CIN_PlayCinematic (const char *name)
 	int size;
 	byte header[ROQ_CHUNK_HEADER_SIZE];
 
-	/* Make sure sounds aren't playing */
-	S_StopAllSounds();
-	/* also stop the background music */
-	S_Music_Stop();
+	if (cls.playingCinematic <= CIN_STATUS_FULLSCREEN) {
+		/* Make sure sounds aren't playing */
+		S_StopAllSounds();
+		/* also stop the background music */
+		S_Music_Stop();
+	}
 
 	/* If already playing a cinematic, stop it */
 	CIN_StopCinematic();
@@ -589,11 +622,11 @@ void CIN_PlayCinematic (const char *name)
 		Com_Error(ERR_DROP, "CIN_PlayCinematic: invalid RoQ header");
 	}
 
-	/* Play the cinematic */
-	cls.playingCinematic = qtrue;
-
 	/* Fill it in */
 	Q_strncpyz(cin.name, name, sizeof(cin.name));
+
+	/* Set to play the cinematic in fullscreen mode */
+	CIN_SetParameters(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, CIN_STATUS_FULLSCREEN);
 
 	cin.size = size;
 	cin.offset = sizeof(header);
@@ -619,8 +652,9 @@ void CIN_PlayCinematic (const char *name)
 
 	cin.header = cin.data;
 
-	/* Force console off */
-	Con_Close();
+	/* Force console off in fullscreen mode - not neccessary in menu playback mode */
+	if (cls.playingCinematic == CIN_STATUS_FULLSCREEN)
+		Con_Close();
 }
 
 /**
@@ -628,10 +662,10 @@ void CIN_PlayCinematic (const char *name)
  */
 void CIN_StopCinematic (void)
 {
-	if (!cls.playingCinematic)
+	if (cls.playingCinematic == CIN_STATUS_NONE)
 		return;			/* Not playing */
 
-	cls.playingCinematic = qfalse;
+	cls.playingCinematic = CIN_STATUS_NONE;
 
 	if (cin.file.f || cin.file.z)
 		FS_FCloseFile(&cin.file);
@@ -665,7 +699,6 @@ static void CIN_Cinematic_f (void)
 	/* If connected to a server, disconnect */
 	CL_Disconnect();
 
-	/* Play the cinematic */
 	CIN_PlayCinematic(name);
 }
 
@@ -674,7 +707,7 @@ static void CIN_Cinematic_f (void)
  */
 static void CIN_CinematicStop_f (void)
 {
-	if (!cls.playingCinematic) {
+	if (cls.playingCinematic == CIN_STATUS_NONE) {
 		Com_Printf("No cinematic active\n");
 		return;			/* Not playing */
 	}
