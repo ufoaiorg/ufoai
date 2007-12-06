@@ -1066,6 +1066,8 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
 				delta_happiness = 0.1f * performance * alienHostile * (1.0f - nation->stats[0].happiness);
 				/* No spreading of XVI infection in other nations */
 			}
+				/* the happiness you can gain depends on the difficulty of the campaign */
+				delta_happiness *= (0.2f + pow(4.0f - difficulty->integer, 2) / 32.0f);
 		}
 
 		/* update happiness */

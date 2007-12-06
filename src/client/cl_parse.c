@@ -1025,7 +1025,7 @@ static void CL_ActorStats (struct dbuffer *msg)
 	if (le == selActor)
 		selActorTU = selActor->TU;
 
-	NET_ReadFormat(msg, ev_format[EV_ACTOR_STATS], &le->TU, &le->HP, &le->STUN, &le->AP, &le->morale);
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_STATS], &le->TU, &le->HP, &le->STUN, &le->morale);
 
 	if (le->TU > le->maxTU)
 		le->maxTU = le->TU;

@@ -439,7 +439,6 @@ typedef struct le_s {
 	int morale, maxMorale;		/**< morale value - used for soldier panic and the like */
 	int HP, maxHP;				/**< health points */
 	int STUN;					/**< if stunned - state STATE_STUN */
-	int AP;						/**< armour points */
 	int state;					/**< rf states, dead, crouched and so on */
 	int reaction_minhit;
 

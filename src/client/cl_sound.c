@@ -402,14 +402,6 @@ void S_StartSound (const vec3_t origin, sfx_t* sfx, float relVolume, float atten
 					 * because it's farer than SOUND_FULLVOLUME */
 					volume *= dist;
 					le->hearTime = cls.realtime;
-#if 0
-					/* center view (if wanted) */
-					if (cl_centerview->integer) {
-						pos3_t from;
-						VecToPos(cl.cam.reforg, from);
-						CL_CameraRoute(from, le->pos);
-					}
-#endif
 				}
 				Com_DPrintf(DEBUG_SOUND, "S_StartSound: dist: %.2f\n", dist);
 			}
