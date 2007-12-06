@@ -127,7 +127,6 @@ extern int spherelist;	/**< the gl list of the 3d globe */
 extern image_t *shadow;	/**< draw this when actor is alive */
 extern image_t *blood; /**< draw this when actor is dead */
 extern image_t *r_notexture;
-extern image_t *r_particletexture;
 extern image_t *DaN;
 
 extern entity_t *currententity;

@@ -33,7 +33,6 @@ rconfig_t r_config;
 rstate_t r_state;
 
 image_t *r_notexture;			/* use for bad textures */
-image_t *r_particletexture;		/* little dot for particles */
 
 entity_t *currententity;
 model_t *currentmodel;
