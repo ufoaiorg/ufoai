@@ -79,6 +79,7 @@ CLIENT_SRCS = \
 	renderer/r_font.c \
 	renderer/r_image.c \
 	renderer/r_light.c \
+	renderer/r_material.c \
 	renderer/r_mesh.c \
 	renderer/r_mesh_md2.c \
 	renderer/r_mesh_md3.c \

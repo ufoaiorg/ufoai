@@ -103,7 +103,13 @@ void R_WriteTGA(FILE *f, byte *buffer, int width, int height);
 
 /*=================================================================== */
 
+/*=================================================================== */
+
 #include "r_model.h"
+
+/* r_material.c */
+void R_DrawMaterialSurface(mBspSurface_t *surf, materialStage_t *stage);
+void R_UpdateMaterial(material_t *m);
 
 int RecursiveLightPoint(model_t* mapTile, mBspNode_t * node, vec3_t start, vec3_t end);
 

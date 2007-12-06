@@ -183,6 +183,18 @@ static void R_ModLoadTexinfo (lump_t * l)
 		if (!out->image) {
 			Com_Printf("Couldn't load %s\n", name);
 			out->image = r_notexture;
+		} else if (out->image->shader) {
+			if (out->image->shader->material) {
+				materialStage_t* stage = out->image->shader->material->stages;
+				while (stage) {
+					stage->texture = R_FindImage(stage->textureName, it_wall);
+					if (!stage->texture) {
+						Com_Printf("Couldn't load stage texture %s\n", name);
+						stage->texture = r_notexture;
+					}
+					stage = stage->next;
+				}
+			}
 		}
 	}
 

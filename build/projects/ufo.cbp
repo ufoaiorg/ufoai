@@ -413,6 +413,9 @@
 		<Unit filename="..\..\src\renderer\r_main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\renderer\r_material.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\renderer\r_mesh.c">
 			<Option compilerVar="CC" />
 		</Unit>

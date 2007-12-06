@@ -66,15 +66,11 @@ typedef struct entity_s {
 	vec3_t origin;
 	vec3_t oldorigin;
 
-	/*
-	 ** tag positioning
-	 */
+	/* tag positioning */
 	struct entity_s *tagent;	/**< pointer to the parent entity */
 	const char *tagname;				/**< name of the tag */
 
-	/*
-	 ** misc
-	 */
+	/* misc */
 	int skinnum;
 
 	float *lightcolor;			/**< color for fixed light */
@@ -91,6 +87,37 @@ typedef struct entity_s {
 } entity_t;
 
 /*============================================================================= */
+
+typedef struct terrain_s {
+	float floor, ceil;
+	float height;
+} terrain_t;
+
+typedef struct rotate_s {
+	float hz, dhz;
+	float dsin, dcos;
+} rotate_t;
+
+typedef struct materialStage_s {
+	unsigned flags;
+	blend_t blend;
+	struct image_s *texture;
+	const char *textureName;
+	vec3_t color;
+	terrain_t terrain;
+	rotate_t rotate;
+	struct materialStage_s *next;
+} materialStage_t;
+
+typedef struct material_s {
+	unsigned flags;
+	float time;
+	materialStage_t *stages;
+	int num_stages;
+} material_t;
+
+#define STAGE_TERRAIN		(1 << 0)
+#define STAGE_ROTATE		(1 << 1)
 
 #define MAX_SHADERS 64
 typedef struct shader_s {
@@ -122,6 +149,8 @@ typedef struct shader_s {
 
 	/* vpid and fpid are vertexpid and fragmentpid for binding */
 	int vpid, fpid, glslpid;
+
+	material_t *material;
 } shader_t;
 
 typedef struct {

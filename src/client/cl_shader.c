@@ -1,6 +1,6 @@
 /**
  * @file cl_shader.c
- * @brief Parses and loads shaders from files and passes them to the renderer.
+ * @brief Parses and loads shaders and materials from files and passes them to the renderer.
  *
  *
  * Reads in a shader program from a file, puts it in a struct and tell the renderer about the location of this struct.
@@ -56,6 +56,23 @@ static const value_t shader_values[] = {
 	{"blur", V_BOOL, offsetof(shader_t, blur), MEMBER_SIZEOF(shader_t, blur)},
 	{"light", V_BOOL, offsetof(shader_t, light), MEMBER_SIZEOF(shader_t, light)},
 	{"edge", V_BOOL, offsetof(shader_t, edge), MEMBER_SIZEOF(shader_t, edge)},
+
+	{NULL, 0, 0, 0}
+};
+
+/** @brief Valid terrain material parameter definitions from script files. */
+static const value_t terrain_param_vals[] = {
+	{"ceil", V_FLOAT, offsetof(materialStage_t, terrain.ceil), MEMBER_SIZEOF(terrain_t, ceil)},
+	{"floor", V_FLOAT, offsetof(materialStage_t, terrain.floor), MEMBER_SIZEOF(terrain_t, floor)},
+	{"blend", V_BLEND, offsetof(materialStage_t, blend), MEMBER_SIZEOF(materialStage_t, blend)},
+
+	{NULL, 0, 0, 0}
+};
+
+/** @brief Valid rotate material parameter definitions from script files. */
+static const value_t rotate_param_vals[] = {
+	{"hz", V_FLOAT, offsetof(materialStage_t, rotate.hz), MEMBER_SIZEOF(rotate_t, hz)},
+	{"blend", V_BLEND, offsetof(materialStage_t, blend), MEMBER_SIZEOF(materialStage_t, blend)},
 
 	{NULL, 0, 0, 0}
 };
@@ -129,8 +146,75 @@ void CL_ParseShaders (const char *name, const char **text)
 				break;
 			}
 
-		if (!v->string)
-			Com_Printf("CL_ParseShaders: unknown token \"%s\" ignored (entry %s)\n", token, name);
+		if (!v->string) {
+			materialStage_t *stage, *stageLoop;
+			char textureName[MAX_QPATH];
+			int flag;
+			if (!Q_strcmp(token, "terrain")) {
+				flag = STAGE_TERRAIN;
+				v = terrain_param_vals;
+			} else if (!Q_strcmp(token, "rotate")) {
+				flag = STAGE_ROTATE;
+				v = rotate_param_vals;
+			} else {
+				Com_Printf("CL_ParseShaders: unknown token \"%s\" ignored (entry %s)\n", token, name);
+				continue;
+			}
+
+			assert(v);
+			token = COM_EParse(text, errhead, name);
+			Q_strncpyz(textureName, token, sizeof(textureName));
+
+			token = COM_EParse(text, errhead, name);
+			if (!*text || *token != '{') {
+				Com_Printf("CL_ParseShaders: Invalid param value for shader: %s\n", name);
+				return;
+			}
+
+			if (!entry->material)
+				entry->material = Mem_PoolAlloc(sizeof(material_t), cl_genericPool, CL_TAG_NONE);
+
+			stage = Mem_PoolAlloc(sizeof(materialStage_t), cl_genericPool, CL_TAG_NONE);
+			stage->textureName = Mem_PoolStrDup(textureName, cl_genericPool, CL_TAG_NONE);
+			stage->next = NULL;
+			stage->flags |= flag;
+
+			assert(entry->material);
+			entry->material->num_stages++;
+			if (entry->material->stages) {
+				stageLoop = entry->material->stages;
+				while (stageLoop) {
+					if (!stageLoop->next) {
+						stageLoop->next = stage;
+						break;
+					}
+					stageLoop = stageLoop->next;
+				}
+			} else {
+				entry->material->stages = stage;
+			}
+			do {
+				token = COM_EParse(text, errhead, name);
+				if (!*text)
+					break;
+				if (*token == '}')
+					break;
+				for (; v->string; v++)
+					if (!Q_strcmp(token, v->string)) {
+						/* found a definition */
+						token = COM_EParse(text, errhead, name);
+						if (!*text)
+							return;
+						Com_ParseValue(stage, token, v->type, v->ofs, v->size);
+						break;
+					}
+				if (!v->string)
+					Com_Printf("CL_ParseShaders: Ignoring unknown param value '%s'\n", token);
+			} while (*text); /* dummy condition */
+
+			if (stage->flags & STAGE_TERRAIN)
+				stage->terrain.height = stage->terrain.ceil - stage->terrain.floor;
+		}
 
 	} while (*text);
 }
@@ -155,6 +239,18 @@ void CL_ShaderList_f (void)
 		Com_Printf("..light blur %i\n", (int) r_shaders[i].light);
 		Com_Printf("..edge %i\n", (int) r_shaders[i].edge);
 		Com_Printf("..glMode '%s'\n", Com_ValueToStr(&r_shaders[i], V_BLEND, offsetof( shader_t, glMode)));
+		if (r_shaders[i].material) {
+			materialStage_t *stage = r_shaders[i].material->stages;
+			Com_Printf("..num_stages %i\n", r_shaders[i].material->num_stages);
+			while (stage) {
+				Com_Printf("..terrain texture: '%s'\n", stage->textureName);
+				Com_Printf("..terrain ceil: '%.2f'\n", stage->terrain.ceil);
+				Com_Printf("..terrain floor: '%.2f'\n", stage->terrain.floor);
+				Com_Printf("..terrain height: '%.2f'\n", stage->terrain.height);
+				Com_Printf("..rotate hz: '%.2f'\n", stage->rotate.hz);
+				stage = stage->next;
+			}
+		}
 		Com_Printf("\n");
 	}
 }

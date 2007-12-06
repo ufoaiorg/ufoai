@@ -543,6 +543,18 @@ static void R_DrawSurface (mBspSurface_t * surf)
 		R_DrawPolyChain(surf, 0.0f);
 	}
 
+	if (image->shader && image->shader->material) {
+		materialStage_t* stage = image->shader->material->stages;
+		RSTATE_ENABLE_BLEND
+		qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		R_UpdateMaterial(image->shader->material);
+		while (stage) {
+			R_DrawMaterialSurface(surf, stage);
+			stage = stage->next;
+		}
+		RSTATE_DISABLE_BLEND
+	}
+
 	RSTATE_DISABLE_ALPHATEST
 }
 
@@ -568,10 +580,6 @@ static void R_DrawInlineBModel (void)
 		R_ColorBlend(color);
 		R_TexEnv(GL_MODULATE);
 	}
-
-	/* set r_alpha_surfaces = NULL to ensure psurf->texturechain terminates */
-	/* FIXME: needed? if we do this, transparent surfaces may be skipped */
-	/*r_alpha_surfaces = NULL;*/
 
 	/* draw texture */
 	for (i = 0; i < currentmodel->bsp.nummodelsurfaces; i++, psurf++) {
@@ -742,8 +750,8 @@ static void R_RecursiveWorldNode (mBspNode_t * node)
 		if ((surf->flags & SURF_PLANEBACK) != sidebit)
 			continue;			/* wrong side */
 
-		/* add to the translucent chain */
 		if (surf->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66)) {
+			/* add to the translucent chain */
 			surf->texturechain = r_alpha_surfaces;
 			r_alpha_surfaces = surf;
 		} else {
