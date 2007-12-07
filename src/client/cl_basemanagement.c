@@ -440,6 +440,8 @@ static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t*
  * @param[in] base
  * @param[in] building The building that has been built / removed
  * @param[in] onBuilt qtrue if building has been built, qfalse else
+ * @sa B_BuildingDestroy
+ * @sa B_UpdateAllBaseBuildingStatus
  * @return qtrue if at least one building status has been modified
  */
 static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t type, qboolean onBuilt)
@@ -498,6 +500,44 @@ static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t type, qbool
 
 	return returnValue;
 }
+
+#ifdef DEBUG
+/**
+ * @brief Update status and capacities of all bases from zero
+ * @note This is supposed to be a debug function, but could also be used to avoid to save base->hasBuilding[]
+ * @note (in last case, it would need to remove the call to B_UpdateOneBaseBuildingStatusOnEnable
+ */
+static void B_ResetAllStatusAndCapacities_f (void)
+{
+	int baseIdx, buildingIdx, i;
+	base_t *base;
+	qboolean test = qtrue;
+
+	for (baseIdx = 0; baseIdx < gd.numBases; baseIdx++){
+		base = gd.bases + baseIdx;
+		assert(base);
+		Com_DPrintf(DEBUG_CLIENT, "Reseting base %s:\n", base->name);
+
+		/* reset all values of hasBuilding[] */
+		for (i = 0; i < MAX_BUILDING_TYPE; i++)
+			base->hasBuilding[i] = qfalse;
+
+		/* activate all buildings that needs to be activated */
+		while (test) {
+			test = qfalse;
+			for (buildingIdx = 0; buildingIdx < gd.numBuildings[baseIdx]; buildingIdx++) {
+				if (!base->hasBuilding[gd.buildings[base->idx][buildingIdx].buildingType] && B_CheckUpdateBuilding(&gd.buildings[baseIdx][buildingIdx], base)) {
+					B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][buildingIdx].buildingType, base);
+					test = qtrue;
+				}
+			}
+		}
+
+		/* Update all capacities of base */
+		B_UpdateBaseCapacities(MAX_CAP, base);
+	}
+}
+#endif
 
 /**
  * @brief Removes a building from the given base
@@ -2545,7 +2585,10 @@ static void B_BaseList_f (void)
 		Com_Printf("Base numLaserBattery %i\n", base->maxLasers);
 		Com_Printf("Base sensorWidth %i\n", base->radar.range);
 		Com_Printf("Base numSensoredAircraft %i\n", base->radar.numUfos);
-		Com_Printf("Base aircraft %i\n", base->numAircraftInBase);
+		Com_Printf("Base hasBuilding[]: ");
+		for (j = 0; j < MAX_BUILDING_TYPE; j++)
+			Com_Printf("%i ", base->hasBuilding[j]);
+		Com_Printf("\nBase aircraft %i\n", base->numAircraftInBase);
 		for (j = 0; j < base->numAircraftInBase; j++) {
 			Com_Printf("Base aircraft-team %i\n", base->aircraft[j].teamSize);
 		}
@@ -2897,6 +2940,7 @@ void B_ResetBaseManagement (void)
 	Cmd_AddCommand("debug_baselist", B_BaseList_f, "Print base information to the game console");
 	Cmd_AddCommand("debug_buildinglist", B_BuildingList_f, "Print building information to the game console");
 	Cmd_AddCommand("debug_capacities", B_PrintCapacities_f, "Debug function to show all capacities in given base");
+	Cmd_AddCommand("debug_basereset", B_ResetAllStatusAndCapacities_f, "Reset building status and capacities of all bases");
 #endif
 
 	mn_base_count = Cvar_Get("mn_base_count", "0", 0, "Current amount of build bases");
