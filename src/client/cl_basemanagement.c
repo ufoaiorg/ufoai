@@ -3151,7 +3151,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 		/* Finally update capacity. */
 		for (j = 0; j < gd.numBuildings[base->idx]; j++) {
 			if ((gd.buildings[base->idx][j].buildingType == building)
-			&& (gd.buildings[base->idx][j].buildingStatus != B_STATUS_NOT_SET)) {
+			&& (gd.buildings[base->idx][j].buildingStatus >= B_STATUS_CONSTRUCTION_FINISHED)) {
 				base->capacities[cap].max += capacity;
 			}
 		}
@@ -3176,7 +3176,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 		/* Add capacity of B_UFO_HANGAR. */
 		for (j = 0; j < gd.numBuildings[base->idx]; j++) {
 			if ((gd.buildings[base->idx][j].buildingType == building)
-			&& (gd.buildings[base->idx][j].buildingStatus != B_STATUS_NOT_SET)) {
+			&& (gd.buildings[base->idx][j].buildingStatus >= B_STATUS_CONSTRUCTION_FINISHED)) {
 				base->capacities[cap].max += capacity;
 			}
 		}
@@ -3191,7 +3191,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 			}
 			for (j = 0; j < gd.numBuildings[base->idx]; j++) {
 				if ((gd.buildings[base->idx][j].buildingType == B_UFO_SMALL_HANGAR)
-				&& (gd.buildings[base->idx][j].buildingStatus != B_STATUS_NOT_SET)) {
+				&& (gd.buildings[base->idx][j].buildingStatus >= B_STATUS_CONSTRUCTION_FINISHED)) {
 					base->capacities[cap].max += capacity;
 				}
 			}
