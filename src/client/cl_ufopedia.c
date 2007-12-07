@@ -329,6 +329,11 @@ void UP_ItemDescription (int item)
 			if (Q_strncmp(activeMenu->name, "equipment", 9))
 				Q_strcat(itemText, va(_("Size:\t%i\n"), od->size), sizeof(itemText));
 			/* more will be written below */
+		} else if (od->craftitem.type <= AC_ITEM_BASE_LASER) {
+			/* This is a weapon for base, can be displayed in equip menu */
+			Com_sprintf(itemText, sizeof(itemText), _("Weapon for base defense system\n"));
+		} else if (od->craftitem.type != AIR_STATS_MAX) {
+			/* This is an item for aircraft or ammos for bases -- do nothing */
 		} else {
 			/* just an item */
 			/* only primary definition */
