@@ -1211,7 +1211,7 @@ static void B_DrawBuilding (base_t* base, building_t* building)
 		Q_strcat(buildingText, va(ngettext("%i Day to build\n", "%i Days to build\n", building->buildTime), building->buildTime), sizeof(buildingText));
 
 	if (building->varCosts)
-		Q_strcat(buildingText, va(_("Running Costs:\t%i c\n"), building->varCosts), sizeof(buildingText));
+		Q_strcat(buildingText, va(_("Running costs:\t%i c\n"), building->varCosts), sizeof(buildingText));
 
 	if (building->dependsBuilding >= 0)
 		Q_strcat(buildingText, va(_("Needs:\t%s\n"), _(gd.buildingTypes[building->dependsBuilding].name)), sizeof(buildingText));

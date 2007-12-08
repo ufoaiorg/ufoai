@@ -561,7 +561,7 @@ static void PR_ProductionInfo (const base_t* base, qboolean disassembly)
 				Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", od->name);
 				Q_strcat(productionInfo, va(_("Costs per item\t%i c\n"), (od->price * PRODUCE_FACTOR / PRODUCE_DIVISOR)),
 					sizeof(productionInfo));
-				Q_strcat(productionInfo, va(_("Productiontime\t%ih\n"), time), sizeof(productionInfo));
+				Q_strcat(productionInfo, va(_("Production time\t%ih\n"), time), sizeof(productionInfo));
 				Q_strcat(productionInfo, va(_("Item size\t%i\n"), od->size), sizeof(productionInfo));
 				UP_ItemDescription(objID);
 			}
@@ -623,7 +623,7 @@ static void PR_AircraftInfo (void)
 		Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", _(aircraft->name));
 		Q_strcat(productionInfo, va(_("Production costs\t%i c\n"), (aircraft->price * PRODUCE_FACTOR / PRODUCE_DIVISOR)),
 			sizeof(productionInfo));
-		Q_strcat(productionInfo, va(_("Productiontime\t%ih\n"), aircraft->tech->produceTime), sizeof(productionInfo));
+		Q_strcat(productionInfo, va(_("Production time\t%ih\n"), aircraft->tech->produceTime), sizeof(productionInfo));
 	} else {
 		Com_sprintf(productionInfo, sizeof(productionInfo), _("No aircraft selected."));
 	}
