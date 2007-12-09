@@ -475,6 +475,8 @@ static void Com_DebugHelp_f (void)
 			" * debug_additems\n"
 			" * debug_aircraftlist\n"
 			" * debug_baselist\n"
+			" * debug_basereset\n"
+			"   reset building status and capacities of every base\n"
 			" * debug_buildinglist\n"
 			" * debug_campaignstats\n"
 			" * debug_configstrings\n"

@@ -153,6 +153,7 @@ static void BaseSummary_ProductionCurrent (const base_t* base)
 
 		objDef = &csi.ods[production->objID];
 
+		/* FIXME: use the same method as we do in PR_ProductionInfo */
 		Com_sprintf(buffer, sizeof(buffer), _("%s:  Qty: %d, Already produced: %.2f %%"),
 			objDef->name, production->amount, production->percentDone);
 
@@ -180,7 +181,7 @@ static void BaseSummary_ResearchCurrent (const base_t* base)
 		tech = &gd.technologies[i];
 		if (tech->base_idx == base->idx && (tech->statusResearch == RS_RUNNING ||
 			tech->statusResearch == RS_PAUSED)) {
-			Com_sprintf(buffer, sizeof(buffer), _("%s - %1.2f%% (%d %s)\n"),
+			Com_sprintf(buffer, sizeof(buffer), _("%s: %1.2f%% (%d %s)\n"),
 				tech->name, (1 - tech->time / tech->overalltime) * 100,
 				tech->scientists, ngettext("scientist", "scientists", tech->scientists));
 

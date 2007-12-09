@@ -329,6 +329,11 @@ void UP_ItemDescription (int item)
 			if (Q_strncmp(activeMenu->name, "equipment", 9))
 				Q_strcat(itemText, va(_("Size:\t%i\n"), od->size), sizeof(itemText));
 			/* more will be written below */
+		} else if (od->craftitem.type <= AC_ITEM_BASE_LASER) {
+			/* This is a weapon for base, can be displayed in equip menu */
+			Com_sprintf(itemText, sizeof(itemText), _("Weapon for base defense system\n"));
+		} else if (od->craftitem.type != AIR_STATS_MAX) {
+			/* This is an item for aircraft or ammos for bases -- do nothing */
 		} else {
 			/* just an item */
 			/* only primary definition */
@@ -490,9 +495,9 @@ static void UP_BuildingDescription (technology_t* t)
 	if (!b) {
 		Com_sprintf(upBuffer, sizeof(upBuffer), _("Error - could not find building"));
 	} else {
-		Com_sprintf(upBuffer, sizeof(upBuffer), _("Depends:\t%s\n"), b->dependsBuilding >= 0 ? gd.buildingTypes[b->dependsBuilding].name : _("None"));
-		Q_strcat(upBuffer, va(ngettext("Buildtime:\t%i day\n", "Buildtime:\t%i days\n", b->buildTime), b->buildTime), sizeof(upBuffer));
-		Q_strcat(upBuffer, va(_("Fixcosts:\t%i c\n"), b->fixCosts), sizeof(upBuffer));
+		Com_sprintf(upBuffer, sizeof(upBuffer), _("Needs:\t%s\n"), b->dependsBuilding >= 0 ? gd.buildingTypes[b->dependsBuilding].name : _("None"));
+		Q_strcat(upBuffer, va(ngettext("Construction time:\t%i day\n", "Construction time:\t%i days\n", b->buildTime), b->buildTime), sizeof(upBuffer));
+		Q_strcat(upBuffer, va(_("Cost:\t%i c\n"), b->fixCosts), sizeof(upBuffer));
 		Q_strcat(upBuffer, va(_("Running costs:\t%i c\n"), b->varCosts), sizeof(upBuffer));
 	}
 	menuText[TEXT_STANDARD] = upBuffer;

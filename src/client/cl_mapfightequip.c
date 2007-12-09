@@ -477,6 +477,7 @@ void BDEF_RemoveBattery (base_t *base, basedefenseType_t basedefType, int idx)
  * @note 1st argument is the basedefense system type to destroy (sa basedefenseType_t).
  * @note 2nd argument is the idx of the base in which you want the battery to be destroyed.
  * @note if the first argument is BASEDEF_RANDOM, the type of the battery to destroy is randomly selected
+ * @note the building must already be removed from gd.buildings[baseIdx][]
  */
 void BDEF_RemoveBattery_f (void)
 {
@@ -495,14 +496,8 @@ void BDEF_RemoveBattery_f (void)
 		return;
 	}
 
-	/* Check that the basedefType exists */
-	if (basedefType < BASEDEF_RANDOM || basedefType >= BASEDEF_MAX) {
-		Com_Printf("BDEF_RemoveBattery_f: base defense type %i doesn't exists.\n", basedefType);
-		return;
-	}
-
-	/* Type of base defense to destroy is randomly selected */
 	if (basedefType == BASEDEF_RANDOM) {
+		/* Type of base defense to destroy is randomly selected */
 		if (gd.bases[baseIdx].maxBatteries <= 0 && gd.bases[baseIdx].maxLasers <= 0) {
 			Com_Printf("No base defense to destroy\n");
 			return;
@@ -515,6 +510,41 @@ void BDEF_RemoveBattery_f (void)
 		else
 			/* both type are possible, choose one randomly */
 			basedefType = rand() % 2 + BASEDEF_MISSILE;
+	} else {
+		/* Check if the removed building was under construction */
+		int i, type, max;
+		int workingNum = 0;
+		
+		switch (basedefType) {
+		case BASEDEF_MISSILE:
+			type = B_DEFENSE_MISSILE;
+			max = gd.bases[baseIdx].maxBatteries;
+			break;
+		case BASEDEF_LASER:
+			type = B_DEFENSE_MISSILE;
+			max = gd.bases[baseIdx].maxLasers;
+			break;
+		default:
+			Com_Printf("BDEF_RemoveBattery_f: base defense type %i doesn't exists.\n", basedefType);
+			return;
+		}
+
+		for (i = 0; i < gd.numBuildings[baseIdx]; i++) {
+			if (gd.buildings[baseIdx][i].buildingType == type
+				&& gd.buildings[baseIdx][i].buildingStatus == B_STATUS_WORKING)
+				workingNum++;
+		}
+
+		if (workingNum == max) {
+			/* Removed building was under construction, do nothing */
+			return;
+		} else if ((workingNum != max - 1)) {
+			/* Should never happen, we only remove building one by one */
+			Com_Printf("BDEF_RemoveBattery_f: Error while checking number of batteries (%i instead of %i).\n", workingNum, max);
+			return;
+		}
+
+		/* If we reached this point, that means we are removing a working building: continue */
 	}
 
 	BDEF_RemoveBattery(gd.bases + baseIdx, basedefType, -1);
