@@ -212,6 +212,9 @@ static production_t *PR_QueueNew (base_t* base, production_queue_t *queue, signe
 
 	assert(base);
 
+	if (queue->numItems >= MAX_PRODUCTIONS)
+		return NULL;
+
 	if (E_CountHired(base, EMPL_WORKER) <= 0) {
 		MN_Popup(_("Not enough workers"), _("You cannot queue productions without workers hired in this base.\n\nHire workers."));
 		return NULL;
@@ -226,6 +229,7 @@ static production_t *PR_QueueNew (base_t* base, production_queue_t *queue, signe
 
 	/* initialize */
 	prod = &queue->items[queue->numItems];
+	memset(prod, 0, sizeof(production_t));
 	if (produceCategory != BUY_AIRCRAFT) {
 		od = &csi.ods[objID];
 		assert(od->tech);
