@@ -1009,6 +1009,17 @@ static void R_InitExtension (void)
 	}
 }
 
+/**
+ * @brief Checks whether we have hardware acceleration
+ */
+static inline void R_VerifyDriver (void)
+{
+#ifdef _WIN32
+	if (!Q_stricmp((const char*)qglGetString(GL_RENDERER), "gdi generic"))
+		Com_Error(ERR_FATAL, "No hardware acceleration detected");
+#endif
+}
+
 qboolean R_Init (void)
 {
 	int j;
@@ -1038,6 +1049,8 @@ qboolean R_Init (void)
 	Com_Printf("GL_VERSION: %s\n", r_config.version_string);
 	r_config.extensions_string = (const char *)qglGetString(GL_EXTENSIONS);
 	Com_Printf("GL_EXTENSIONS: %s\n", r_config.extensions_string);
+
+	R_VerifyDriver();
 
 	R_InitExtension();
 	R_SetDefaultState();
