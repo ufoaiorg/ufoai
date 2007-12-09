@@ -153,6 +153,7 @@ static void BaseSummary_ProductionCurrent (const base_t* base)
 
 		objDef = &csi.ods[production->objID];
 
+		/* FIXME: use the same method as we do in PR_ProductionInfo */
 		Com_sprintf(buffer, sizeof(buffer), _("%s:  Qty: %d, Already produced: %.2f %%"),
 			objDef->name, production->amount, production->percentDone);
 

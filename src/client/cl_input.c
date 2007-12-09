@@ -83,7 +83,6 @@ float crouchHt = 0;
 static qboolean cameraRoute = qfalse;
 static vec3_t routeFrom, routeDelta;
 static float routeDist;
-static int routeLevelStart, routeLevelEnd;
 
 /*
 ===============================================================================
@@ -1119,8 +1118,6 @@ void CL_CameraRoute (pos3_t from, pos3_t target)
 	routeDist = VectorLength(routeDelta);
 	VectorNormalize(routeDelta);
 
-	routeLevelStart = from[2];
-	routeLevelEnd = target[2];
 	VectorCopy(routeFrom, cl.cam.reforg);
 	Cvar_SetValue("cl_worldlevel", target[2]);
 
