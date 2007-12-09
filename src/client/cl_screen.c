@@ -432,7 +432,7 @@ static void SCR_DrawCursor (void)
 	int icon_offset_y = 16;	/* Offset of the first icon on the y-axis. */
 	int icon_spacing = 2;	/* the space between different icons. */
 
-	if (!cursor->integer || cls.playingCinematic)
+	if (!cursor->integer || cls.playingCinematic == CIN_STATUS_FULLSCREEN)
 		return;
 
 	if (cursor->modified) {
@@ -677,7 +677,7 @@ void SCR_UpdateScreen (void)
 	else {
 		MN_SetViewRect(MN_ActiveMenu());
 
-		if (cls.playingCinematic) {
+		if (cls.playingCinematic == CIN_STATUS_FULLSCREEN) {
 			CIN_RunCinematic();
 		} else {
 			/* draw scene */

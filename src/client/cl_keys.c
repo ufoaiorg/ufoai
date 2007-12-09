@@ -951,7 +951,7 @@ void Key_Event (int key, qboolean down, unsigned time)
 		if (!down)
 			return;
 
-		if (cls.playingCinematic)
+		if (cls.playingCinematic == CIN_STATUS_FULLSCREEN)
 			CIN_StopCinematic();
 
 		switch (cls.key_dest) {

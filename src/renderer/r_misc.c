@@ -25,17 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 #include "r_error.h"
 
-static const byte dottexture[8][8] = {
-	{0, 0, 0, 0, 0, 0, 0, 0},
-	{0, 0, 1, 1, 0, 0, 0, 0},
-	{0, 1, 1, 1, 1, 0, 0, 0},
-	{0, 1, 1, 1, 1, 0, 0, 0},
-	{0, 0, 1, 1, 0, 0, 0, 0},
-	{0, 0, 0, 0, 0, 0, 0, 0},
-	{0, 0, 0, 0, 0, 0, 0, 0},
-	{0, 0, 0, 0, 0, 0, 0, 0},
-};
-
 static const byte gridtexture[8][8] = {
 	{1, 1, 1, 1, 1, 1, 1, 1},
 	{1, 0, 0, 0, 0, 0, 0, 1},
@@ -51,17 +40,6 @@ void R_InitMiscTexture (void)
 {
 	int x, y;
 	byte data[8][8][4];
-
-	/* particle texture */
-	for (x = 0; x < 8; x++) {
-		for (y = 0; y < 8; y++) {
-			data[y][x][0] = 255;
-			data[y][x][1] = 255;
-			data[y][x][2] = 255;
-			data[y][x][3] = dottexture[x][y] * 255;
-		}
-	}
-	r_particletexture = R_LoadPic("***particle***", (byte *) data, 8, 8, it_sprite, 32);
 
 	/* also use this for bad textures, but without alpha */
 	for (x = 0; x < 8; x++) {

@@ -36,6 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_screen.h"
 #include "cl_input.h"
 #include "cl_keys.h"
+#include "cl_cinematic.h"
 #include "cl_console.h"
 #include "cl_market.h"
 #include "cl_event.h"
@@ -193,7 +194,7 @@ typedef struct client_static_s {
 	float loadingPercent;
 	char loadingMessages[96];
 
-	qboolean playingCinematic;	/**< Set to true when playing a cinematic */
+	int playingCinematic;	/**< Set to cinematic playing flags or 0 when not playing */
 
 	char downloadName[MAX_OSPATH];
 	size_t downloadPosition;
@@ -352,12 +353,6 @@ typedef enum {
  * @note Needs to be loaded first, values from here should be used in every loops.
  */
 extern int presaveArray[MAX_ARRAYINDEXES];
-
-/* cl_cinematic.c */
-void CIN_StopCinematic(void);
-void CIN_PlayCinematic(const char *name);
-void CIN_Shutdown(void);
-void CIN_Init(void);
 
 /* cl_tip.c */
 void CL_TipOfTheDayInit(void);

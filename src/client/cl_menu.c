@@ -147,6 +147,7 @@ static const value_t nps[] = {
 	/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
 	{"tooltip", V_STRING, -5, 0},	/* translated in MN_Tooltip */
 	{"image", V_STRING, 0, 0},
+	{"roq", V_STRING, 0, 0},
 	{"md2", V_STRING, 0, 0},
 	{"anim", V_STRING, -1, 0},
 	{"tag", V_STRING, -2, 0},
@@ -217,6 +218,7 @@ typedef enum mn_s {
 	MN_CHECKBOX,
 	MN_SELECTBOX,
 	MN_LINESTRIP,
+	MN_CINEMATIC, /**< every menu can only have one cinematic */
 
 	MN_NUM_NODETYPE
 } mn_t;
@@ -239,7 +241,8 @@ static const char *nt_strings[MN_NUM_NODETYPE] = {
 	"basemap",
 	"checkbox",
 	"selectbox",
-	"linestrip"
+	"linestrip",
+	"cinematic"
 };
 
 
@@ -3201,6 +3204,19 @@ void MN_DrawMenus (void)
 				case MN_BASEMAP:
 					B_DrawBase(node);
 					break;
+
+				case MN_CINEMATIC:
+					if (node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]) {
+						assert(cls.playingCinematic != CIN_STATUS_FULLSCREEN);
+						if (cls.playingCinematic == CIN_STATUS_NONE)
+							CIN_PlayCinematic(node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]);
+						if (cls.playingCinematic) {
+							/* only set replay to true if video was found and is running */
+							CIN_SetParameters(node->pos[0], node->pos[1], node->size[0], node->size[1], CIN_STATUS_MENU);
+							CIN_RunCinematic();
+						}
+					}
+					break;
 				}	/* switch */
 
 				/* mouseover? */
@@ -3442,6 +3458,10 @@ void MN_PopMenu (qboolean all)
 	}
 
 	Key_SetDest(key_game);
+
+	/* when we leave a menu and a menu cinematic is running... we should stop it */
+	if (cls.playingCinematic == CIN_STATUS_MENU)
+		CIN_StopCinematic();
 }
 
 /**
