@@ -274,8 +274,7 @@ void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 	for (maps = 0; maps < MAXLIGHTMAPS && surf->styles[maps] != 255; maps++) {
 		bl = s_blocklights;
 
-		for (i = 0; i < 3; i++)
-			scale[i] = r_modulate->value * refdef.lightstyles[surf->styles[maps]].rgb[i];
+		VectorScale(refdef.lightstyles[surf->styles[maps]].rgb, r_modulate->value, scale);
 
 		for (i = 0; i < size; i++, bl += RGB_PIXELSIZE) {
 			if (maps > 0) {
