@@ -32,27 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "unzip.h"
 
 /*========================================================================
-PCX files are used for as many images as possible
-========================================================================*/
-
-typedef struct {
-	char manufacturer;
-	char version;
-	char encoding;
-	char bits_per_pixel;
-	unsigned short xmin, ymin, xmax, ymax;
-	unsigned short hres, vres;
-	unsigned char palette[48];
-	char reserved;
-	char color_planes;
-	unsigned short bytes_per_line;
-	unsigned short palette_type;
-	char filler[58];
-	unsigned char data;			/**< unbounded */
-} pcx_t;
-
-
-/*========================================================================
 .MD2 triangle model file format
 ========================================================================*/
 
@@ -277,7 +256,7 @@ typedef struct {
 typedef struct {
 	int width, height;
 	int origin_x, origin_y;		/**< raster coordinates inside pic */
-	char name[SPRITE_MAX_SKINNAME];	/**< name of pcx file */
+	char name[SPRITE_MAX_SKINNAME];	/**< name of texture file */
 } dsprframe_t;
 
 typedef struct {
@@ -288,7 +267,7 @@ typedef struct {
 } dsprite_t;
 
 /*==============================================================================
-.WAL texture file format
+texture file format
 ==============================================================================*/
 
 #define	MIPLEVELS	4
@@ -417,7 +396,7 @@ typedef struct texinfo_s {
 	float vecs[2][4];			/**< [s/t][xyz offset] */
 	int surfaceFlags;			/**< miptex flags + overrides */
 	int value;					/**< light emission, etc */
-	char texture[32];			/**< texture name (textures\*.wal) */
+	char texture[32];			/**< texture name */
 	int nexttexinfo;			/**< for animations, -1 = end of chain */
 } texinfo_t;
 
