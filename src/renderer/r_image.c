@@ -39,8 +39,6 @@ static int numgltextures;
 
 static byte intensitytable[256];
 
-static qboolean R_UploadTexture(unsigned *data, int width, int height, qboolean mipmap, qboolean clamp, imagetype_t type, image_t* image);
-
 int gl_solid_format = GL_RGB;
 int gl_alpha_format = GL_RGBA;
 
@@ -54,7 +52,7 @@ int gl_filter_max = GL_LINEAR;
 /**
  * @brief Set the anisotropic value for textures
  * @note not used atm
- * @sa R_ResampleTexture
+ * @sa R_ScaleTexture
  */
 void R_UpdateAnisotropy (void)
 {
@@ -1031,7 +1029,7 @@ void R_WriteJPG (FILE *f, byte *buffer, int width, int height, int quality)
 	jpeg_destroy_compress(&cinfo);
 }
 
-static void R_ResampleTexture (unsigned *in, int inwidth, int inheight, unsigned *out, int outwidth, int outheight)
+static void R_ScaleTexture (unsigned *in, int inwidth, int inheight, unsigned *out, int outwidth, int outheight)
 {
 	int i, j;
 	unsigned *inrow, *inrow2;
@@ -1067,26 +1065,6 @@ static void R_ResampleTexture (unsigned *in, int inwidth, int inheight, unsigned
 			((byte *) (out + j))[3] = (pix1[3] + pix2[3] + pix3[3] + pix4[3]) >> 2;
 		}
 	}
-}
-
-/**
- * @brief Operates in place, quartering the size of the texture
- */
-static void R_MipMap (byte * in, int width, int height)
-{
-	int i, j;
-	byte *out;
-
-	width <<= 2;
-	height >>= 1;
-	out = in;
-	for (i = 0; i < height; i++, in += width)
-		for (j = 0; j < width; j += 8, out += 4, in += 8) {
-			out[0] = (in[0] + in[4] + in[width + 0] + in[width + 4]) >> 2;
-			out[1] = (in[1] + in[5] + in[width + 1] + in[width + 5]) >> 2;
-			out[2] = (in[2] + in[6] + in[width + 2] + in[width + 6]) >> 2;
-			out[3] = (in[3] + in[7] + in[width + 3] + in[width + 7]) >> 2;
-		}
 }
 
 #define FILTER_SIZE	5
@@ -1296,39 +1274,21 @@ static void R_FilterTexture (int filterindex, unsigned int *data, int width, int
 	VID_MemFree(temp);
 }
 
-static int upload_width, upload_height;
-static unsigned scaled_buffer[1024 * 1024];
-
 /**
- * @return has_alpha
+ * @brief Uploads the opengl texture to the server
  */
-static qboolean R_UploadTexture (unsigned *data, int width, int height, qboolean mipmap, qboolean clamp, imagetype_t type, image_t* image)
+static void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 {
 	unsigned *scaled;
 	int samples;
 	int scaled_width, scaled_height;
 	int i, c;
-	int size;
 	byte *scan;
+	qboolean mipmap = (image->type != it_pic);
+	qboolean clamp = (image->type == it_pic);
 
 	for (scaled_width = 1; scaled_width < width; scaled_width <<= 1);
-	if (r_round_down->integer && scaled_width > width && mipmap)
-		scaled_width >>= 1;
 	for (scaled_height = 1; scaled_height < height; scaled_height <<= 1);
-	if (r_round_down->integer && scaled_height > height && mipmap)
-		scaled_height >>= 1;
-
-	/* let people sample down the world textures for speed */
-	if (mipmap) {
-		scaled_width >>= r_picmip->integer;
-		scaled_height >>= r_picmip->integer;
-	}
-
-	/* don't ever bother with > 2048*2048 textures */
-	if (scaled_width > 2048)
-		scaled_width = 2048;
-	if (scaled_height > 2048)
-		scaled_height = 2048;
 
 	while (scaled_width > r_maxtexres->integer || scaled_height > r_maxtexres->integer) {
 		scaled_width >>= 1;
@@ -1340,12 +1300,16 @@ static qboolean R_UploadTexture (unsigned *data, int width, int height, qboolean
 	if (scaled_height < 1)
 		scaled_height = 1;
 
-	upload_width = scaled_width;
-	upload_height = scaled_height;
+	scaled = data;
+
+	if (scaled_width != width || scaled_height != height) {  /* whereas others need to be scaled */
+		scaled = (unsigned *)VID_TagAlloc(vid_imagePool, scaled_width * scaled_height * sizeof(unsigned), 0);
+		R_ScaleTexture(data, width, height, scaled, scaled_width, scaled_height);
+	}
 
 	/* scan the texture for any non-255 alpha */
-	c = width * height;
-	scan = ((byte *) data) + 3;
+	c = scaled_width * scaled_height;
+	scan = ((byte *) scaled) + 3;
 	samples = gl_compressed_solid_format ? gl_compressed_solid_format : gl_solid_format;
 	for (i = 0; i < c; i++, scan += 4) {
 		if (*scan != 255) {
@@ -1354,43 +1318,28 @@ static qboolean R_UploadTexture (unsigned *data, int width, int height, qboolean
 		}
 	}
 
-	/* emboss filter */
-	if (r_imagefilter->integer && image && image->shader) {
+	image->has_alpha = (samples == gl_alpha_format || samples == gl_compressed_alpha_format);
+	image->upload_width = scaled_width;	/* after power of 2 and scales */
+	image->upload_height = scaled_height;
+
+	if (r_imagefilter->integer && image->shader) {
 		Com_DPrintf(DEBUG_RENDERER, "Using image filter %s\n", image->shader->name);
+		/* emboss filter */
 		if (image->shader->emboss)
-			R_FilterTexture(EMBOSS_FILTER, data, width, height, 1, 128, qtrue, image->shader->glMode);
-		if (image->shader->emboss2)
-			R_FilterTexture(EMBOSS_FILTER_2, data, width, height, 1, 128, qtrue, image->shader->glMode);
-		if (image->shader->embossHigh)
-			R_FilterTexture(EMBOSS_FILTER_HIGH, data, width, height, 1, 128, qtrue, image->shader->glMode);
-		if (image->shader->embossLow)
-			R_FilterTexture(EMBOSS_FILTER_LOW, data, width, height, 1, 128, qtrue, image->shader->glMode);
+			R_FilterTexture(EMBOSS_FILTER, scaled, scaled_width, scaled_height, 1, 128, qtrue, image->shader->glMode);
+		else if (image->shader->emboss2)
+			R_FilterTexture(EMBOSS_FILTER_2, scaled, scaled_width, scaled_height, 1, 128, qtrue, image->shader->glMode);
+		else if (image->shader->embossHigh)
+			R_FilterTexture(EMBOSS_FILTER_HIGH, scaled, scaled_width, scaled_height, 1, 128, qtrue, image->shader->glMode);
+		else if (image->shader->embossLow)
+			R_FilterTexture(EMBOSS_FILTER_LOW, scaled, scaled_width, scaled_height, 1, 128, qtrue, image->shader->glMode);
+
 		if (image->shader->blur)
-			R_FilterTexture(BLUR_FILTER, data, width, height, 1, 128, qtrue, image->shader->glMode);
+			R_FilterTexture(BLUR_FILTER, scaled, scaled_width, scaled_height, 1, 128, qtrue, image->shader->glMode);
 		if (image->shader->light)
-			R_FilterTexture(LIGHT_BLUR, data, width, height, 1, 128, qtrue, image->shader->glMode);
+			R_FilterTexture(LIGHT_BLUR, scaled, scaled_width, scaled_height, 1, 128, qtrue, image->shader->glMode);
 		if (image->shader->edge)
-			R_FilterTexture(EDGE_FILTER, data, width, height, 1, 128, qtrue, image->shader->glMode);
-	}
-
-	if (scaled_width == width && scaled_height == height) {
-		if (!mipmap) {
-			qglTexImage2D(GL_TEXTURE_2D, 0, samples, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-			R_CheckError();
-			goto done;
-		}
-		/* directly use the incoming data */
-		scaled = data;
-		size = 0;
-	} else {
-		/* allocate memory for scaled texture */
-		scaled = scaled_buffer;
-		while (scaled_width > 1024)
-			scaled_width >>= 1;
-		while (scaled_height > 1024)
-			scaled_height >>= 1;
-
-		R_ResampleTexture(data, width, height, scaled, scaled_width, scaled_height);
+			R_FilterTexture(EDGE_FILTER, scaled, scaled_width, scaled_height, 1, 128, qtrue, image->shader->glMode);
 	}
 
 	if (mipmap) {
@@ -1404,31 +1353,15 @@ static qboolean R_UploadTexture (unsigned *data, int width, int height, qboolean
 		}
 	}
 
-	qglTexImage2D(GL_TEXTURE_2D, 0, samples, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
-	R_CheckError();
-
+	/* and mipmapped */
 	if (mipmap) {
-		int miplevel;
-
-		miplevel = 0;
-		while (scaled_width > 1 || scaled_height > 1) {
-			R_MipMap((byte *) scaled, scaled_width, scaled_height);
-			scaled_width >>= 1;
-			scaled_height >>= 1;
-			if (scaled_width < 1)
-				scaled_width = 1;
-			if (scaled_height < 1)
-				scaled_height = 1;
-			miplevel++;
-			qglTexImage2D(GL_TEXTURE_2D, miplevel, samples, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
-			R_CheckError();
-		}
+		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_min);
+		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
+		qglTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
+	} else {
+		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_max);
+		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
 	}
-  done:;
-
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, (mipmap) ? gl_filter_min : gl_filter_max);
-	R_CheckError();
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
 	R_CheckError();
 
 	if (clamp) {
@@ -1438,16 +1371,11 @@ static qboolean R_UploadTexture (unsigned *data, int width, int height, qboolean
 		R_CheckError();
 	}
 
-	if (r_anisotropic->integer && r_state.anisotropic) {
-		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_anisotropic->value);
-		R_CheckError();
-	}
-	if (r_texture_lod->integer && r_state.lod_bias) {
-		qglTexEnvf(GL_TEXTURE_FILTER_CONTROL_EXT, GL_TEXTURE_LOD_BIAS_EXT, r_texture_lod->value);
-		R_CheckError();
-	}
+	qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
+	R_CheckError();
 
-	return (samples == gl_alpha_format || samples == gl_compressed_alpha_format);
+	if (scaled != data)
+		VID_MemFree(scaled);
 }
 
 /**
@@ -1611,10 +1539,7 @@ image_t *R_LoadPic (const char *name, byte * pic, int width, int height, imagety
 	image->texnum = TEXNUM_IMAGES + (image - gltextures);
 	if (pic) {
 		R_Bind(image->texnum);
-		image->has_alpha = R_UploadTexture((unsigned *) pic, width, height,
-			(image->type != it_pic), (image->type == it_pic), image->type, image);
-		image->upload_width = upload_width;	/* after power of 2 and scales */
-		image->upload_height = upload_height;
+		R_UploadTexture((unsigned *) pic, width, height, image);
 	}
 	return image;
 }

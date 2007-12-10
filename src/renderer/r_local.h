@@ -182,8 +182,6 @@ extern cvar_t *r_stencil_two_side;
 
 extern cvar_t *r_dynamic;
 extern cvar_t *r_soften;
-extern cvar_t *r_round_down;
-extern cvar_t *r_picmip;
 extern cvar_t *r_maxtexres;
 extern cvar_t *r_showtris;
 extern cvar_t *r_flashblend;

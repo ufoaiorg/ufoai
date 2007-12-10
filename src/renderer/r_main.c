@@ -91,8 +91,6 @@ cvar_t *r_imagefilter;
 cvar_t *r_dynamic;
 cvar_t *r_soften;
 cvar_t *r_modulate;
-cvar_t *r_round_down;
-cvar_t *r_picmip;
 cvar_t *r_maxtexres;
 cvar_t *r_showtris;
 cvar_t *r_flashblend;
@@ -692,8 +690,6 @@ static void R_Register (void)
 	r_imagefilter = Cvar_Get("r_imagefilter", "1", CVAR_ARCHIVE, NULL);
 	r_dynamic = Cvar_Get("r_dynamic", "1", 0, "Render dynamic lightmaps");
 	r_soften = Cvar_Get("r_soften", "1", 0, "Apply blur to lightmap");
-	r_round_down = Cvar_Get("r_round_down", "1", 0, NULL);
-	r_picmip = Cvar_Get("r_picmip", "0", 0, NULL);
 	r_maxtexres = Cvar_Get("r_maxtexres", "2048", CVAR_ARCHIVE, NULL);
 	r_showtris = Cvar_Get("r_showtris", "0", 0, NULL);
 	r_flashblend = Cvar_Get("r_flashblend", "0", 0, "Controls the way dynamic lights are drawn");
@@ -996,7 +992,8 @@ static void R_InitExtension (void)
 			r_config.maxTextureSize = 0;
 
 		if ((err = qglGetError()) != GL_NO_ERROR) {
-			Com_Printf("cannot detect!\n");
+			Com_Printf("cannot detect - using 1024!\n");
+			Cvar_SetValue("r_maxtexres", 1024);
 		} else {
 			Com_Printf("detected %d\n", size);
 			if (r_maxtexres->integer > size) {
