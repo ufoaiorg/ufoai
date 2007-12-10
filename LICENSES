@@ -466,6 +466,8 @@ base/models/aircraft/craft_item_det/detection.md2 | GNU General Public License 2
 base/models/aircraft/craft_item_det/detection.tga | GNU General Public License 2.0 | Willem "Sitters" | High res version in data_source/models/sittes/craft_item_detection
 base/models/aircraft/craft_item_fuel/fuel.md2 | GNU General Public License 2.0 | David Townsend (Psawhn)
 base/models/aircraft/craft_item_fuel/fuel.tga | GNU General Public License 2.0 | David Townsend (Psawhn)
+base/models/aircraft/craft_item_prop/propulsion.jpg | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
+base/models/aircraft/craft_item_prop/propulsion.md2 | GNU General Public License 2.0 | Lukas Beyeler (Rasta)
 base/models/aircraft/craft_item_raven_ecm/ecm.md2 | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/craft_item_raven_ecm/ecm.tga | GNU General Public License 2.0 | Willem "Sitters"
 base/models/aircraft/craft_item_target/craft_item_target.md2 | GNU General Public License 2.0 | Willem "Sitters"
