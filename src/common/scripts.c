@@ -764,7 +764,6 @@ static const value_t fdps[] = {
 	{"bncfac", V_FLOAT, offsetof(fireDef_t, bounceFac), MEMBER_SIZEOF(fireDef_t, bounceFac)},
 	{"speed", V_FLOAT, offsetof(fireDef_t, speed), MEMBER_SIZEOF(fireDef_t, speed)},
 	{"spread", V_POS, offsetof(fireDef_t, spread), MEMBER_SIZEOF(fireDef_t, spread)},
-	{"modif", V_FLOAT, offsetof(fireDef_t, modif), MEMBER_SIZEOF(fireDef_t, modif)},
 	{"crouch", V_FLOAT, offsetof(fireDef_t, crouch), MEMBER_SIZEOF(fireDef_t, crouch)},
 /*	{"range", V_FLOAT, offsetof(fireDef_t, range), MEMBER_SIZEOF(fireDef_t, range)},*/
 	{"shots", V_INT, offsetof(fireDef_t, shots), MEMBER_SIZEOF(fireDef_t, shots)},

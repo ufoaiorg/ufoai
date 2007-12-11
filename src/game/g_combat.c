@@ -623,8 +623,8 @@ static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd,
 
 	VecToAngles(startV, angles);
 	/* @todo Remove the 2.0f and use gaussian random number instead of crand() */
-	angles[PITCH] += crand() * 2.0f * (weaponBalance * fd->spread[0] + skillBalance * acc * (1 + fd->modif));
-	angles[YAW] += crand() * 2.0f * (weaponBalance * fd->spread[1] + skillBalance * acc * (1 + fd->modif));
+	angles[PITCH] += crand() * 2.0f * (weaponBalance * fd->spread[0] + skillBalance * acc);
+	angles[YAW] += crand() * 2.0f * (weaponBalance * fd->spread[1] + skillBalance * acc);
 	AngleVectors(angles, startV, NULL, NULL);
 	VectorScale(startV, speed, startV);
 
@@ -805,11 +805,11 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 
 	/* Modify the angles with the accuracy modifier as a randomizer-range. If the attacker is crouched this modifier is included as well.  */
 	if ((ent->state & STATE_CROUCHED) && fd->crouch) {
-		angles[PITCH] += gauss1 * (weaponBalance * fd->spread[0] + skillBalance * acc * (1 + fd->modif)) * fd->crouch;
-		angles[YAW] += gauss2 * (weaponBalance * fd->spread[1] + skillBalance * acc * (1 + fd->modif)) * fd->crouch;
+		angles[PITCH] += gauss1 * (weaponBalance * fd->spread[0] + skillBalance * acc) * fd->crouch;
+		angles[YAW] += gauss2 * (weaponBalance * fd->spread[1] + skillBalance * acc) * fd->crouch;
 	} else {
-		angles[PITCH] += gauss1 * (weaponBalance * fd->spread[0] + skillBalance * acc * (1 + fd->modif));
-		angles[YAW] += gauss2 * (weaponBalance * fd->spread[1] + skillBalance * acc * (1 + fd->modif));
+		angles[PITCH] += gauss1 * (weaponBalance * fd->spread[0] + skillBalance * acc);
+		angles[YAW] += gauss2 * (weaponBalance * fd->spread[1] + skillBalance * acc);
 	}
 	/* Convert changed angles into new direction. */
 	AngleVectors(angles, dir, NULL, NULL);
