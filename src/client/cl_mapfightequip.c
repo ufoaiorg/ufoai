@@ -1457,7 +1457,8 @@ void AIM_AircraftEquipAddItem_f (void)
 								 * (not when player removes base defense and re-add it)
 								 * sa AII_InitialiseSlot: ammoLeft is initialized to -1 */
 								slot->ammoLeft = 20;
-							}
+							} else if (aircraft)
+								AII_ReloadWeapon(aircraft);
 							break;
 						}
 					}
