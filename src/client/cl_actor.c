@@ -3640,8 +3640,8 @@ static float CL_TargetingToHit (pos3_t toPos)
 	crouch = ((selActor->state & STATE_CROUCHED) && selFD->crouch) ? selFD->crouch : 1;
 
 	commonfactor = 0.5f * crouch * torad * distance;
-	stdevupdown = (selFD->spread[0] + acc * (1 + selFD->modif)) * commonfactor;
-	stdevleftright = (selFD->spread[1] + acc * (1 + selFD->modif)) * commonfactor;
+	stdevupdown = (selFD->spread[0] + acc) * commonfactor;
+	stdevleftright = (selFD->spread[1] + acc) * commonfactor;
 
 	hitchance = (stdevupdown > LOOKUP_EPSILON ? lookup_erf(height * 0.3536f / stdevupdown) : 1.0f)
 			  * (stdevleftright > LOOKUP_EPSILON ? lookup_erf(width * 0.3536f / stdevleftright) : 1.0f);
