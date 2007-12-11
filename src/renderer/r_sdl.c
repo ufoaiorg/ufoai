@@ -155,25 +155,33 @@ qboolean R_InitGraphics (void)
 		SDL_FreeSurface(r_surface);
 
 	switch (r_bitdepth->integer) {
+	case 4:
+	case 8:
+		break;
+	default:
+		Sys_Error("Invalid r_colordepth value - use 4 or 8");
+	}
+
+	switch (r_bitdepth->integer) {
 	case 0:
 	case 24:
 	case 32:
-		SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
-		SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
-		SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
-		SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 1);
-		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+		SDL_GL_SetAttribute(SDL_GL_RED_SIZE, r_colordepth->integer);
+		SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, r_colordepth->integer);
+		SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, r_colordepth->integer);
+		SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, r_stencilsize->integer);
+		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, r_bitdepth->integer);
 		break;
 	case 15:
 	case 16:
-		SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
-		SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 5);
-		SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
-		SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 0);
-		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
+		SDL_GL_SetAttribute(SDL_GL_RED_SIZE, r_colordepth->integer);
+		SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, r_colordepth->integer);
+		SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, r_colordepth->integer);
+		SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, r_stencilsize->integer);
+		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, r_bitdepth->integer);
 		break;
 	default:
-		Sys_Error("Invalid r_bitdepth value");
+		Sys_Error("Invalid r_bitdepth value - use 16 or 24");
 	}
 
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
@@ -186,7 +194,7 @@ qboolean R_InitGraphics (void)
 
 	if ((r_surface = SDL_SetVideoMode(viddef.width, viddef.height, 0, flags)) == NULL) {
 		const char *error = SDL_GetError();
-		Com_Printf("SDL SetVideoMode failed: %s - try to reduce the r_bitdepth value\n", error);
+		Com_Printf("SDL SetVideoMode failed: %s - try to change the r_bitdepth, r_colordepth and r_stencilsize value\n", error);
 		return qfalse;
 	}
 
