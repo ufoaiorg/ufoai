@@ -154,7 +154,7 @@ qboolean R_InitGraphics (void)
 	if (r_surface)
 		SDL_FreeSurface(r_surface);
 
-	switch (r_bitdepth->integer) {
+	switch (r_colordepth->integer) {
 	case 4:
 	case 8:
 		break;

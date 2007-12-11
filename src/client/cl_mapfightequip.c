@@ -282,6 +282,11 @@ static qboolean AIM_SelectableAircraftItem (base_t* base, aircraft_t *aircraft, 
 	} else if (base->storage.num[itemIdx] <= 0 && !csi.ods[itemIdx].notOnMarket)
 			return qfalse;
 
+	/* you can't install an item that does not have an installation time (alien item)
+	 * except for ammo which does not have installation time */
+	if (csi.ods[itemIdx].craftitem.installationTime == -1 && airequipID < AC_ITEM_AMMO)
+		return qfalse;
+
 	return qtrue;
 }
 
@@ -1457,7 +1462,8 @@ void AIM_AircraftEquipAddItem_f (void)
 								 * (not when player removes base defense and re-add it)
 								 * sa AII_InitialiseSlot: ammoLeft is initialized to -1 */
 								slot->ammoLeft = 20;
-							}
+							} else if (aircraft)
+								AII_ReloadWeapon(aircraft);
 							break;
 						}
 					}

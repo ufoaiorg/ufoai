@@ -157,7 +157,7 @@ aircraft craft_inter_saracen
 		shield		0
 		ecm		100
 		damage		40
-		accuracy	100
+		accuracy	70
 		fuelsize	60000
 	}
 	name		"_Saracen-class Interceptor"
@@ -196,7 +196,7 @@ aircraft craft_inter_dragon
 		shield		0
 		ecm		100
 		damage		40
-		accuracy	100
+		accuracy	80
 		fuelsize	60000
 	}
 	name		"_Dragon Interceptor"
@@ -235,7 +235,7 @@ aircraft craft_inter_stingray
 		shield		3
 		ecm		100
 		damage		70
-		accuracy	110
+		accuracy	100
 		fuelsize	60000
 	}
 	name		"_Stingray Interceptor"
@@ -281,7 +281,7 @@ aircraft craft_ufo_harvester
 		shield		3
 		ecm		100
 		damage		40
-		accuracy	80
+		accuracy	100
 		fuelsize	100000
 	}
 	name		"_UFO - Harvester"
@@ -349,7 +349,7 @@ aircraft craft_ufo_supply
 		shield		5
 		ecm		100
 		damage		50
-		accuracy	70
+		accuracy	50
 		fuelsize	100000
 	}
 	name		"_UFO - Supply Ship"
@@ -372,7 +372,7 @@ aircraft craft_ufo_condor
 		shield		0
 		ecm			100
 		damage		40
-		accuracy	100
+		accuracy	80
 		fuelsize	100000
 	}
 	name		"_UFO - Condor"
@@ -401,7 +401,7 @@ aircraft craft_ufo_scout
 		shield		0
 		ecm		100
 		damage		30
-		accuracy	100
+		accuracy	50
 		fuelsize	100000
 	}
 	name		"_UFO - Scout"
@@ -423,7 +423,7 @@ aircraft craft_ufo_fighter
 		shield		0
 		ecm		100
 		damage		80
-		accuracy	120
+		accuracy	80
 		fuelsize	1000000
 	}
 	name		"_UFO - Fighter"
@@ -469,9 +469,9 @@ craftitem craft_ammo_shiva_API
 	buytype		craftitem
 
 	ammo		20
-	wdamage		15
+	wdamage		10
 	accuracy	0.3
-	wrange		13
+	wrange		4
 	wspeed		500
 	delay		10
 }
@@ -485,9 +485,9 @@ craftitem craft_ammo_shiva_HEI
 	buytype		craftitem
 
 	ammo		20
-	wdamage		22
+	wdamage		14
 	accuracy	0.2
-	wrange		18
+	wrange		5
 	wspeed		500
 	delay		10
 }
@@ -524,7 +524,7 @@ craftitem craft_ammo_sparrowhawk
 	ammo		8
 	wdamage		20
 	accuracy	0.5
-	wrange		40
+	wrange		10
 	wspeed		200
 	delay		200
 }
@@ -550,9 +550,9 @@ craftitem craft_ammo_tr20
 	buytype		craftitem
 
 	ammo		12
-	wdamage		28
+	wdamage		18
 	accuracy	0.4
-	wrange		20
+	wrange		6
 	wspeed		150
 	delay		40
 }
@@ -566,9 +566,9 @@ craftitem craft_weapon_particle_beam
 	price		11400
 	buytype		craftitem
 
-	wdamage		35
+	wdamage		25
 	speed		0.8
-	wrange		55
+	wrange		12
 }
 
 craftitem craft_el_targeting
@@ -670,9 +670,9 @@ craftitem base_ammo_AA51
 	notonmarket	true
 
 	ammo		20
-	wdamage		80
+	wdamage		50
 	accuracy	0.3
-	wrange		30
+	wrange		9
 	wspeed		200
 	delay		500
 }

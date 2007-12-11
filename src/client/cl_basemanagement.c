@@ -501,40 +501,54 @@ static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t type, qbool
 	return returnValue;
 }
 
+/**
+ * @brief Update status and capacities of all bases from zero
+ * @param[in] base Pointer to the base where status and capacities must be reset
+ * @param[in] firstEnable qtrue if this is the first time the function is called for this base
+ * @sa B_UpdateOneBaseBuildingStatusOnEnable
+ */
+static void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
+{
+	int buildingIdx, i;
+	qboolean test = qtrue;
+
+	assert(base);
+
+	Com_DPrintf(DEBUG_CLIENT, "Reseting base %s:\n", base->name);
+
+	/* reset all values of hasBuilding[] */
+	for (i = 0; i < MAX_BUILDING_TYPE; i++)
+		base->hasBuilding[i] = qfalse;
+
+	/* activate all buildings that needs to be activated */
+	while (test) {
+		test = qfalse;
+		for (buildingIdx = 0; buildingIdx < gd.numBuildings[base->idx]; buildingIdx++) {
+			if (!base->hasBuilding[gd.buildings[base->idx][buildingIdx].buildingType] && B_CheckUpdateBuilding(&gd.buildings[base->idx][buildingIdx], base)) {
+				if (firstEnable)
+					B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][buildingIdx].buildingType, base);
+				test = qtrue;
+			}
+		}
+	}
+
+	/* Update all capacities of base */
+	B_UpdateBaseCapacities(MAX_CAP, base);
+}
+
 #ifdef DEBUG
 /**
  * @brief Update status and capacities of all bases from zero
- * @note This is supposed to be a debug function, but could also be used to avoid to save base->hasBuilding[]
- * @note (in last case, it would need to remove the call to B_UpdateOneBaseBuildingStatusOnEnable
+ * @note function called with debug_basereset
  */
 static void B_ResetAllStatusAndCapacities_f (void)
 {
-	int baseIdx, buildingIdx, i;
+	int baseIdx;
 	base_t *base;
-	qboolean test = qtrue;
 
 	for (baseIdx = 0; baseIdx < gd.numBases; baseIdx++){
 		base = gd.bases + baseIdx;
-		assert(base);
-		Com_DPrintf(DEBUG_CLIENT, "Reseting base %s:\n", base->name);
-
-		/* reset all values of hasBuilding[] */
-		for (i = 0; i < MAX_BUILDING_TYPE; i++)
-			base->hasBuilding[i] = qfalse;
-
-		/* activate all buildings that needs to be activated */
-		while (test) {
-			test = qfalse;
-			for (buildingIdx = 0; buildingIdx < gd.numBuildings[baseIdx]; buildingIdx++) {
-				if (!base->hasBuilding[gd.buildings[base->idx][buildingIdx].buildingType] && B_CheckUpdateBuilding(&gd.buildings[baseIdx][buildingIdx], base)) {
-					B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][buildingIdx].buildingType, base);
-					test = qtrue;
-				}
-			}
-		}
-
-		/* Update all capacities of base */
-		B_UpdateBaseCapacities(MAX_CAP, base);
+		B_ResetAllStatusAndCapacities(base, qtrue);
 	}
 }
 #endif
@@ -2282,6 +2296,7 @@ static void B_BuildBase_f (void)
 				Com_sprintf(messageBuffer, sizeof(messageBuffer), _("A new base has been built: %s"), mn_base_title->string);
 			MN_AddNewMessage(_("Base built"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 			Radar_Initialise(&(baseCurrent->radar), 0);
+			B_ResetAllStatusAndCapacities(baseCurrent, qtrue);
 			AL_FillInContainment(baseCurrent);
 
 			/* initial base equipment */
