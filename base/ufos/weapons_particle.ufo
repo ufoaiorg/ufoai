@@ -145,7 +145,6 @@ item pbeamrifle_ammo
 			firesnd	weapons/pbeamrifle
 			speed	0
 			spread	"2 2"
-			modif	0.4
 			crouch	0.7
 			range	150
 			shots	1

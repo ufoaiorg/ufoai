@@ -46,7 +46,6 @@ item assault_ammo
 			firesnd	weapons/assaultrifle
 			speed	0
 			spread	"3.5 3.5"
-			modif	0.7
 			crouch	0.7
 			range	70
 			shots	1
@@ -66,7 +65,6 @@ item assault_ammo
 			firesnd	weapons/assaultrifle
 			speed	0
 			spread	"3.5 3.5"
-			modif	0.7
 			crouch	0.7
 			range	70
 			shots	3
@@ -87,7 +85,6 @@ item assault_ammo
 			firesnd	weapons/assaultrifle
 			speed	0
 			spread	"5 5"
-			modif	0.7
 			crouch	0.6
 			range	70
 			shots	8
@@ -108,7 +105,6 @@ item assault_ammo
 			firesnd	weapons/assaultrifle
 			speed	0
 			spread	"2 2"
-			modif	0.7
 			crouch	0.7
 			range	70
 			shots	1
@@ -272,7 +268,6 @@ item machinegun_ammo
 			firesnd	weapons/machinegun
 			speed	0
 			spread	"4 4"
-			modif	0.7
 			crouch	0.9
 			range	70
 			shots	6
@@ -293,7 +288,6 @@ item machinegun_ammo
 			firesnd	weapons/machinegun
 			speed	0
 			spread	"4 4"
-			modif	0.7
 			crouch	0.9
 			range	70
 			shots	14
@@ -355,7 +349,6 @@ item sniper_ammo
 			firesnd	weapons/sniperrifle
 			speed	0
 			spread	"3 3"
-			modif	1.7
 			crouch	0.3
 			range	250
 			shots	1
@@ -375,7 +368,6 @@ item sniper_ammo
 			firesnd	weapons/sniperrifle
 			speed	0
 			spread	"1.8 1.8"
-			modif	1.7
 			crouch	0.3
 			range	250
 			shots	1
@@ -394,7 +386,6 @@ item sniper_ammo
 			firesnd	weapons/sniperrifle
 			speed	0
 			spread	"1.8 1.8"
-			modif	1.7
 			crouch	0.3
 			range	250
 			shots	1
@@ -494,7 +485,6 @@ item pistol_ammo
 			firesnd	weapons/pistol2
 			speed	0
 			spread	"2 2"
-			modif	0.7
 			crouch	0.9
 			range	40
 			shots	1
@@ -695,7 +685,6 @@ item smg_ammo
 			firesnd	weapons/smg2
 			speed	0
 			spread	"3.6 3.6"
-			modif	0.1
 			crouch	0.7
 			range	45
 			shots	15
