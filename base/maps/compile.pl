@@ -38,10 +38,14 @@ sub compile
 	my $found = 0;
 	my $stat1;
 	my $stat2;
+	my $map_path;		# Path to the "source" file of the map (i.e. the *.map file)
+	my $compile_path;	# Path to the compiled map (i.e. the *.bsp file)
 
 	print "...entering $dir\n";
 	foreach ( readDir( $dir ) )
 	{
+		# The foreach/readDir combination sets "$_" to the next file or directory in $dir
+
 		next if $_ =~ /^\./;
 		if ( -d "$dir/$_" )
 		{
@@ -51,21 +55,26 @@ sub compile
 			next;
 		}
 		next unless $_ =~ /\.map$/;
-		next if $_ =~ /^(tutorial)|(prefab)|(autosave)/i;
-		$_ =~ s/\.map$//;
+		$map_path = $_;
+		next if $map_path =~ /^(tutorial)|(prefab)|(autosave)/i;
 
-		if (-e "$dir/$_.bsp")
+		$map_path = "$dir/$map_path";		# results in something like "$dir/xxx.map"
+		$compile_path = $map_path;
+		$compile_path =~ s/\.map$/.bsp/;	# results in something like "$dir/xxx.bsp"
+
+		# print "DEBUG: ", $compile_path; #DEBUG
+		if (-e $compile_path)
 		{
-			$stat1 = stat("$dir/$_.map");
-			$stat2 = stat("$dir/$_.bsp");
+			$stat1 = stat($map_path);
+			$stat2 = stat($compile_path);
 
 			if ($stat1->mtime > $stat2->mtime)
 			{
-				unlink("$dir/$_.bsp");
+				unlink($compile_path);
 			}
 		}
 
-		unless ( -e "$dir/$_.bsp" )
+		unless ( -e $compile_path )
 		{
 			print "..found $dir/$_\n";
 			if (system("$ufo2map $extra $dir/$_") != 0)
