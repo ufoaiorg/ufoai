@@ -36,6 +36,11 @@ static void G_ReactToPostFire(edict_t *target);
 
 int reactionTUs[MAX_EDICTS][REACT_MAX];	/* Defined in g_local.h. See there for more. */
 
+/** @brief Balance between weapon and skill when shooting
+ */
+const float weaponBalance = 0.5f;
+const float skillBalance = 0.5f;
+
 typedef enum {
 	ML_WOUND,
 	ML_DEATH
@@ -617,8 +622,9 @@ static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd,
 	acc = GET_ACC(ent->chr.skills[ABILITY_ACCURACY], fd->weaponSkill ? ent->chr.skills[fd->weaponSkill] : 0);
 
 	VecToAngles(startV, angles);
-	angles[PITCH] += crand() * (fd->spread[0] + acc*(1+fd->modif));
-	angles[YAW] += crand() * (fd->spread[1] + acc*(1+fd->modif));
+	/* @todo Remove the 2.0f and use gaussian random number instead of crand() */
+	angles[PITCH] += crand() * 2.0f * (weaponBalance * fd->spread[0] + skillBalance * acc * (1 + fd->modif));
+	angles[YAW] += crand() * 2.0f * (weaponBalance * fd->spread[1] + skillBalance * acc * (1 + fd->modif));
 	AngleVectors(angles, startV, NULL, NULL);
 	VectorScale(startV, speed, startV);
 
@@ -748,7 +754,6 @@ static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd,
 	}
 }
 
-
 /**
  * @brief Fires straight shots.
  * @param[in] ent The attacker.
@@ -800,11 +805,11 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 
 	/* Modify the angles with the accuracy modifier as a randomizer-range. If the attacker is crouched this modifier is included as well.  */
 	if ((ent->state & STATE_CROUCHED) && fd->crouch) {
-		angles[PITCH] += gauss1 * 0.5 * (fd->spread[0] + acc * (1+fd->modif)) * fd->crouch;
-		angles[YAW] += gauss2 * 0.5 * (fd->spread[1] + acc * (1+fd->modif)) * fd->crouch;
+		angles[PITCH] += gauss1 * (weaponBalance * fd->spread[0] + skillBalance * acc * (1 + fd->modif)) * fd->crouch;
+		angles[YAW] += gauss2 * (weaponBalance * fd->spread[1] + skillBalance * acc * (1 + fd->modif)) * fd->crouch;
 	} else {
-		angles[PITCH] += gauss1 * 0.5 * (fd->spread[0] + acc * (1+fd->modif));
-		angles[YAW] += gauss2 * 0.5 * (fd->spread[1] + acc * (1+fd->modif));
+		angles[PITCH] += gauss1 * (weaponBalance * fd->spread[0] + skillBalance * acc * (1 + fd->modif));
+		angles[YAW] += gauss2 * (weaponBalance * fd->spread[1] + skillBalance * acc * (1 + fd->modif));
 	}
 	/* Convert changed angles into new direction. */
 	AngleVectors(angles, dir, NULL, NULL);
