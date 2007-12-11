@@ -82,7 +82,6 @@ typedef struct fireDef_s {
 	float speed;
 	vec2_t shotOrg;
 	vec2_t spread;
-	float modif;
 	int delay;
 	int bounce;				/**< Is this item bouncing? e.g. grenades */
 	float bounceFac;
