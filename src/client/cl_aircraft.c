@@ -201,7 +201,10 @@ void AIR_ListAircraft_f (void)
 					else
 						Com_Printf(" (%i hours before removing is finished)\n",aircraft->weapons[k].installationTime);
 					if (aircraft->weapons[k].ammoIdx != NONE)
-						Com_Printf("......this weapon is loaded with ammo %s\n", csi.ods[aircraft->weapons[k].ammoIdx].id);
+						if (aircraft->weapons[k].ammoLeft > 1)
+							Com_Printf("......this weapon is loaded with ammo %s\n", csi.ods[aircraft->weapons[k].ammoIdx].id);
+						else
+							Com_Printf("......no more ammo (%s)\n", csi.ods[aircraft->weapons[k].ammoIdx].id);
 					else
 						Com_Printf("......this weapon isn't loaded with ammo\n");
 				}
