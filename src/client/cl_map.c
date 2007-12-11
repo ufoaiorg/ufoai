@@ -540,13 +540,11 @@ qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, fl
 
 			angles[1] = 180 - asin((v[0] * costheta + v[1] * sintheta) / radius) * todeg;
 			angles[2] = + asin((v[0] * sintheta - v[1] * costheta) / radius) * todeg;
-
-			/* Set zoom */
-			zoom = 0.2f + ccs.zoom * (float) z / radius / 6.0f;
 		} else {
 			VectorSet(angles, theta, 180, 0);
-			zoom = 0.2f + ccs.zoom / 6.0f;
 		}
+		/* Set zoom */
+		zoom = 0.4f;
 
 		/* Draw */
 		R_Draw3DMapMarkers(angles, zoom, screenPos, model);
