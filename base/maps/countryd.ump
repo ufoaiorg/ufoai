@@ -509,6 +509,49 @@ acdrst  +a       +a       acdopq
 }
 //--
 
+// ---------------------------------
+// farm 1
+// ---------------------------------
+tile +h04
+{
+4 4
+
+0      abdlmn     abdlmn     0
+acdrst     +a      +a      acdopq
+acdrst     +a      +a      acdopq
+0      abdijk     abdijk     0
+}
+//--
+
+// ---------------------------------
+// farm 2
+// ---------------------------------
+tile +h05
+{
+3 4
+
+0      abdlmn     0
+acdrst     +a     acdopq
+acdrst     +a     acdopq
+0      abdijk     0
+}
+//--
+
+// ---------------------------------
+// farm 3
+// ---------------------------------
+tile +h06
+{
+5 5
+
+0      abdlmn     abdlmn     abdlmn    0
+acdrst     +a      +a      +a    acdopq
+acdrst     +a      +a      +a    acdopq
+acdrst     +a      +a       0    acdopq
+0      abdijk     abdijk     abdlmn    0
+}
+//--
+
 //--------------------------------------------------
 // STREETS
 //--------------------------------------------------
