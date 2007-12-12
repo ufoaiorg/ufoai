@@ -35,6 +35,7 @@ item assault_ammo
 	dmgtype normal
 
 	weapon_mod assault
+	{
 		firedef
 		{
 			name	"_Snap Shot"
