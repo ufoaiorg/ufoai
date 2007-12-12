@@ -35,6 +35,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_AMMOS_PER_OBJDEF 4
 #define MAX_FIREDEFS_PER_WEAPON 8
 #define MAX_DAMAGETYPES 64
+#define WEAPON_BALANCE 0.5f
+#define SKILL_BALANCE 1.0f
+#define SKILL_BALANCE_MINIMUM 0.5f
 
 /** @brief Possible inventory actions for moving items between containers */
 typedef enum {
