@@ -374,6 +374,9 @@ base/maps/ucd/uc_drop_firebird.map | GNU General Public License 2.0
 base/maps/ucd/uc_h01.map | GNU General Public License 2.0
 base/maps/ucd/uc_h02.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/ucd/uc_h03.map | GNU General Public License 2.0 | Martin Gerhardy | Based on city04 house
+base/maps/ucd/uc_h04.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/ucd/uc_h05.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/ucd/uc_h06.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/ucd/uc_ufo_fighter.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/ucd/uc_ufo_harvester.map | GNU General Public License 2.0 | Martin Gerhardy | harverstercrash map by SparX
 base/maps/ucd/uc_ufo_scout.map | GNU General Public License 2.0 | Martin Gerhardy | prefab_ufo_scout
@@ -382,6 +385,9 @@ base/maps/ucn/uc_drop_firebird.map | GNU General Public License 2.0 | Martin Ger
 base/maps/ucn/uc_h01.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/ucn/uc_h02.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/ucn/uc_h03.map | GNU General Public License 2.0 | Martin Gerhardy | Based on city04 house
+base/maps/ucn/uc_h04.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/ucn/uc_h05.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/ucn/uc_h06.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/ucn/uc_ufo_fighter.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/ucn/uc_ufo_harvester.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/ucn/uc_ufo_scout.map | GNU General Public License 2.0 | Martin Gerhardy | prefab_ufo_scout
