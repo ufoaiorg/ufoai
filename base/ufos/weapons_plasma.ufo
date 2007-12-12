@@ -45,7 +45,7 @@ item plaspistol_ammo
 			hitbody	plasmaImpactCharged
 			firesnd	weapons/plasma_s
 			speed	1800
-			spread	"2.2 2.2"
+			spread	"1.1 1.1"
 			crouch	0.8
 			range	15
 			shots	1
@@ -65,7 +65,7 @@ item plaspistol_ammo
 			hitbody	plasmaImpactCharged
 			firesnd	weapons/plasma_s
 			speed	1800
-			spread	"2.8 2.8"
+			spread	"1.4 1.4"
 			crouch	0.8
 			range	15
 			shots	3
@@ -147,7 +147,7 @@ item plasrifle_ammo
 			hitbody	plasmaImpactCharged
 			firesnd	weapons/plasma_s
 			speed	1700
-			spread	"3.4 3.4"
+			spread	"1.7 1.7"
 			crouch	0.7
 			range	22
 			shots	1
@@ -167,7 +167,7 @@ item plasrifle_ammo
 			hitbody	plasmaImpactCharged
 			firesnd	weapons/plasma_s
 			speed	1700
-			spread	"2 2"
+			spread	"1 1"
 			crouch	0.7
 			range	22
 			shots	1
@@ -187,7 +187,7 @@ item plasrifle_ammo
 			hitbody	plasmaImpactCharged
 			firesnd	weapons/plasma_s
 			speed	1700
-			spread	"3.4 3.4"
+			spread	"1.7 1.7"
 			crouch	0.7
 			range	22
 			shots	3
@@ -271,7 +271,7 @@ item plasblaster_ammo
 			firesnd	weapons/plasma_big
 			sndonce true
 			speed	0
-			spread	"4.3 4.3"
+			spread	"2.2 2.2"
 			crouch	0.6
 			range	40
 			shots	1
@@ -291,7 +291,7 @@ item plasblaster_ammo
 			hitbody	plasmaBigImpact
 			firesnd	weapons/plasma_s
 			speed	2000
-			spread	"4 4"
+			spread	"2 2"
 			crouch 	0.6
 			range	90
 			shots	1
@@ -314,7 +314,7 @@ item plasblaster_ammo
 			firesnd	weapons/plasma_big
 			sndonce true
 			speed	0
-			spread	"6 6"
+			spread	"3 3"
 			crouch	0.6
 			range	30
 			shots	5

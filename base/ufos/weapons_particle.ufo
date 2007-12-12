@@ -45,7 +45,7 @@ item pbeampistol_ammo
 			hitbody	pbeamImpact
 			firesnd	weapons/pbeampistol
 			speed	0
-			spread	"2 2"
+			spread	"1 1"
 			crouch	0.9
 			range	30
 			shots	1
@@ -64,7 +64,7 @@ item pbeampistol_ammo
 			hitbody	pbeamImpact
 			firesnd	weapons/pbeampistol
 			speed	0
-			spread	"3.5 3.5"
+			spread	"1.8 1.8"
 			crouch	0.9
 			range	30
 			shots	3
@@ -125,7 +125,7 @@ item pbeamrifle_ammo
 			hitbody pbeamImpact
 			firesnd	weapons/pbeamrifle
 			speed	0
-			spread	"3 3"
+			spread	"1.5 1.5"
 			crouch	0.7
 			range	150
 			shots	1
@@ -144,7 +144,7 @@ item pbeamrifle_ammo
 			hitbody pbeamImpact
 			firesnd	weapons/pbeamrifle
 			speed	0
-			spread	"2 2"
+			spread	"1 1"
 			crouch	0.7
 			range	150
 			shots	1
@@ -163,7 +163,7 @@ item pbeamrifle_ammo
 			hitbody pbeamImpact
 			firesnd	weapons/pbeamrifle
 			speed	0
-			spread	"4 4"
+			spread	"2 2"
 			crouch	0.7
 			range	90
 			shots	3
@@ -225,7 +225,7 @@ item pbeamcannon_ammo
 			hitbody pbeamImpact
 			firesnd	weapons/pbeamcannon
 			speed	0
-			spread	"3.5 3.5"
+			spread	"1.8 1.8"
 			crouch	0.6
 			range	50
 			shots	1
@@ -245,7 +245,7 @@ item pbeamcannon_ammo
 			hitbody pbeamImpact
 			firesnd	weapons/pbeamcannon
 			speed	0
-			spread	"5 5"
+			spread	"2.5 2.5"
 			crouch	0.6
 			range	50
 			shots	4
@@ -265,7 +265,7 @@ item pbeamcannon_ammo
 			hitbody pbeamBigImpact
 			firesnd	weapons/pbeamcannon_explosive
 			speed	0
-			spread	"3 3"
+			spread	"1.5 1.5"
 			crouch	0.8
 			range	100
 			shots	1
