@@ -2472,6 +2472,7 @@ base/textures/tex_ufo/ufo2_16.jpg | GNU General Public License 2.0 | "Sparx" Bey
 base/textures/tex_ufo/ufo2_17.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
 base/textures/tex_ufo/ufo2_medic01.jpg |  | "Sparx" Beyeler
 base/textures/tex_ufo/ufo2_medic02.jpg |  | "Sparx" Beyeler
+base/textures/tex_vehicles/train_a.jpg | GNU General Public License 2.0 | Martin Gerhardy | data_source/images/train_a.xcf
 base/ufos/aircraftmanagement.ufo | GNU General Public License 2.0
 base/ufos/armour.ufo | GNU General Public License 2.0
 base/ufos/basemanagement.ufo | GNU General Public License 2.0
