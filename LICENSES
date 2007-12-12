@@ -1954,11 +1954,17 @@ base/textures/tex_base/lab_wall001.jpg | GNU General Public License 2.0 | Werner
 base/textures/tex_base/lab_wall002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/lab_wall003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/lasertable.jpg | GNU General Public License 2.0 | gthf http://sourceforge.net/users/gthf/ | data-soource/images/lasertable/
+base/textures/tex_base/sign03.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/sign04.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/sign05.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/sign07.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/sign08.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_base/sign09.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/steptop_mtl.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/steptop_mtl2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/trim_drkmtl.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/vent002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
-base/textures/tex_base/vent003.jpg |  | Werner Höhrer (hoehrer)
+base/textures/tex_base/vent003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/vent004.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/vent005.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/vent006.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
@@ -2387,6 +2393,10 @@ base/textures/tex_misc/box005.jpg | GNU General Public License 2.0 | Werner Höh
 base/textures/tex_misc/box005a.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/box008.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/box008a.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box009.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box010.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box011.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box012.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/box013.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/box014.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/box015.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
@@ -2398,6 +2408,9 @@ base/textures/tex_misc/box016b.jpg | GNU General Public License 2.0 | Werner Hö
 base/textures/tex_misc/box017.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/box017a.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/box017b.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/box018.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/crate001.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/textures/tex_misc/crate001a.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_misc/d_tech_dw2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/d_tech_dw2gb.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_misc/drkmtl_grlpltmech.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
@@ -2467,6 +2480,7 @@ base/textures/tex_ufo/ufo2_16.jpg | GNU General Public License 2.0 | "Sparx" Bey
 base/textures/tex_ufo/ufo2_17.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
 base/textures/tex_ufo/ufo2_medic01.jpg |  | "Sparx" Beyeler
 base/textures/tex_ufo/ufo2_medic02.jpg |  | "Sparx" Beyeler
+base/textures/tex_vehicles/train_a.jpg | GNU General Public License 2.0 | Martin Gerhardy | data_source/images/train_a.xcf
 base/ufos/aircraftmanagement.ufo | GNU General Public License 2.0
 base/ufos/armour.ufo | GNU General Public License 2.0
 base/ufos/basemanagement.ufo | GNU General Public License 2.0
