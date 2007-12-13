@@ -3627,7 +3627,7 @@ static float CL_TargetingToHit (pos3_t toPos)
 	distx = fabs(shooter[0] - target[0]);
 	disty = fabs(shooter[1] - target[1]);
 	distance = sqrt(distx * distx + disty * disty);
-	if (distx * distx > disty * disty)
+	if (distx > disty)
 		pseudosin = distance / distx;
 	else
 		pseudosin = distance / disty;
