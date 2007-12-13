@@ -1263,222 +1263,212 @@ int Com_StringToTeamNum (const char* teamString)
 	return -1;
 }
 
-/* min and max values for all teams can be defined via campaign script */
-int CHRSH_skillValues[MAX_CAMPAIGNS][MAX_TEAMS][MAX_EMPL][2];
-int CHRSH_abilityValues[MAX_CAMPAIGNS][MAX_TEAMS][MAX_EMPL][2];
-
 /**
- * @brief Fills the min and max values for abilities for the given character
- * @param[in] chr Pointer to the character, needed for chr->empl_type.
- * @param[in] team Index of team (TEAM_ALIEN, TEAM_CIVILIAN, ...).
- * @param[in] minAbility Pointer to minAbility int value to use for this character.
- * @param[in] maxAbility Pointer to maxAbility int value to use for this character.
- * @sa CHRSH_CharGenAbilitySkills
+ * @brief Templates for the different unit types. Each element of the array is a tuple that
+ * indicates the minimum and the maximum value for the relevant ability or skill.
  */
-static void CHRSH_GetAbility (character_t *chr, int team, int *minAbility, int *maxAbility, int campaignID)
-{
-	*minAbility = *maxAbility = 0;
-	/* some default values */
-	switch (chr->empl_type) {
-	case EMPL_SOLDIER:
-		*minAbility = 15;
-		*maxAbility = 75;
-		break;
-	case EMPL_MEDIC:
-		*minAbility = 15;
-		*maxAbility = 75;
-		break;
-	case EMPL_SCIENTIST:
-		*minAbility = 15;
-		*maxAbility = 75;
-		break;
-	case EMPL_WORKER:
-		*minAbility = 15;
-		*maxAbility = 50;
-		break;
-	case EMPL_ROBOT:
-		*minAbility = 80;
-		*maxAbility = 80;
-		break;
-	default:
-		Sys_Error("CHRSH_GetAbility: Unknown employee type: %i\n", chr->empl_type);
-	}
-	if (team == TEAM_ALIEN) {
-		*minAbility = 0;
-		*maxAbility = 100;
-	} else if (team == TEAM_CIVILIAN) {
-		*minAbility = 0;
-		*maxAbility = 20;
-	}
-	/* we always need both values - min and max - otherwise it was already a Sys_Error at parsing time */
-	if (campaignID >= 0 && CHRSH_abilityValues[campaignID][team][chr->empl_type][0] >= 0) {
-		*minAbility = CHRSH_abilityValues[campaignID][team][chr->empl_type][0];
-		*maxAbility = CHRSH_abilityValues[campaignID][team][chr->empl_type][1];
-	}
-#ifdef PARANOID
-	Com_DPrintf(DEBUG_SHARED, "CHRSH_GetAbility: use minAbility %i and maxAbility %i for team %i and empl_type %i\n", *minAbility, *maxAbility, team, chr->empl_type);
-#endif
-}
+static const int commonSoldier[][2] =
+	{{15, 25}, /* Strength */
+	 {15, 25}, /* Speed */
+	 {20, 30}, /* Accuracy */
+	 {20, 35}, /* Mind */
+	 {15, 25}, /* Close */
+	 {15, 25}, /* Heavy */
+	 {15, 25}, /* Assault */
+	 {15, 25}, /* Sniper */
+	 {15, 25}, /* Explosives */
+	 {80, 110}}; /* Health */
 
-/**
- * @brief Fills the min and max values for skill for the given character
- * @param[in] chr Pointer to the character, needed for chr->empl_type.
- * @param[in] team Index of team (TEAM_ALIEN, TEAM_CIVILIAN, ...).
- * @param[in] minSkill Pointer to minSkill int value to use for this character.
- * @param[in] maxSkill Pointer to maxSkill int value to use for this character.
- * @sa CHRSH_CharGenAbilitySkills
- */
-static void CHRSH_GetSkill (character_t *chr, int team, int *minSkill, int *maxSkill, int campaignID)
-{
-	*minSkill = *maxSkill = 0;
-	/* some default values */
-	switch (chr->empl_type) {
-	case EMPL_SOLDIER:
-		*minSkill = 15;
-		*maxSkill = 75;
-		break;
-	case EMPL_MEDIC:
-		*minSkill = 15;
-		*maxSkill = 75;
-		break;
-	case EMPL_SCIENTIST:
-		*minSkill = 15;
-		*maxSkill = 75;
-		break;
-	case EMPL_WORKER:
-		*minSkill = 15;
-		*maxSkill = 50;
-		break;
-	case EMPL_ROBOT:
-		*minSkill = 80;
-		*maxSkill = 80;
-		break;
-	default:
-		Sys_Error("CHRSH_GetSkill: Unknown employee type: %i\n", chr->empl_type);
-	}
-	if (team == TEAM_ALIEN) {
-		*minSkill = 0;
-		*maxSkill = 100;
-	} else if (team == TEAM_CIVILIAN) {
-		*minSkill = 0;
-		*maxSkill = 20;
-	}
-	/* we always need both values - min and max - otherwise it was already a Sys_Error at parsing time */
-	if (campaignID >= 0 && CHRSH_skillValues[campaignID][team][chr->empl_type][0] >= 0) {
-		*minSkill = CHRSH_skillValues[campaignID][team][chr->empl_type][0];
-		*maxSkill = CHRSH_skillValues[campaignID][team][chr->empl_type][1];
-	}
-#ifdef PARANOID
-	Com_DPrintf(DEBUG_SHARED, "CHRSH_GetSkill: use minSkill %i and maxSkill %i for team %i and empl_type %i\n", *minSkill, *maxSkill, team, chr->empl_type);
-#endif
-}
+static const int closeSoldier[][2] =
+	{{15, 25}, /* Strength */
+	 {15, 25}, /* Speed */
+	 {20, 30}, /* Accuracy */
+	 {20, 35}, /* Mind */
+	 {25, 40}, /* Close */
+	 {13, 23}, /* Heavy */
+	 {13, 23}, /* Assault */
+	 {13, 23}, /* Sniper */
+	 {13, 23}, /* Explosives */
+	 {80, 110}}; /* Health */
 
-/* this is used to access the skill and ability arrays for the current campaign */
-static int globalCampaignID = -1;
+static const int heavySoldier[][2] =
+	{{15, 25}, /* Strength */
+	 {15, 25}, /* Speed */
+	 {20, 30}, /* Accuracy */
+	 {20, 35}, /* Mind */
+	 {13, 23}, /* Close */
+	 {25, 40}, /* Heavy */
+	 {13, 23}, /* Assault */
+	 {13, 23}, /* Sniper */
+	 {13, 23}, /* Explosives */
+	 {80, 110}}; /* Health */
 
-/**
- * @brief Sets the current active campaign id (see curCampaign pointer).
- * @note Used to access the right values from CHRSH_skillValues and CHRSH_abilityValues.
- * @sa CL_GameInit
- * @todo not CL_GameInit anymore, document me
- */
-void CHRSH_SetGlobalCampaignID (int campaignID)
-{
-	globalCampaignID = campaignID;
-}
+static const int assaultSoldier[][2] =
+	{{15, 25}, /* Strength */
+	 {15, 25}, /* Speed */
+	 {20, 30}, /* Accuracy */
+	 {20, 35}, /* Mind */
+	 {13, 23}, /* Close */
+	 {13, 23}, /* Heavy */
+	 {25, 40}, /* Assault */
+	 {13, 23}, /* Sniper */
+	 {13, 23}, /* Explosives */
+	 {80, 110}}; /* Health */
 
-/**
- * TRAINING_SCALAR defines how much or little a characters skill set influences
- * their abilities using a basic mapping of skills to abilities. Higher numbers
- * results in less influence of natural ability on skill stats. Zero means
- * natural abilities do not influence skill numbers.
- */
-#define TRAINING_SCALAR	3
+static const int sniperSoldier[][2] =
+	{{15, 25}, /* Strength */
+	 {15, 25}, /* Speed */
+	 {20, 30}, /* Accuracy */
+	 {20, 35}, /* Mind */
+	 {13, 23}, /* Close */
+	 {13, 23}, /* Heavy */
+	 {13, 23}, /* Assault */
+	 {25, 40}, /* Sniper */
+	 {13, 23}, /* Explosives */
+	 {80, 110}}; /* Health */
+
+static const int blastSoldier[][2] =
+	{{15, 25}, /* Strength */
+	 {15, 25}, /* Speed */
+	 {20, 30}, /* Accuracy */
+	 {20, 35}, /* Mind */
+	 {13, 23}, /* Close */
+	 {13, 23}, /* Heavy */
+	 {13, 23}, /* Assault */
+	 {13, 23}, /* Sniper */
+	 {25, 40}, /* Explosives */
+	 {80, 110}}; /* Health */
+
+static const int eliteSoldier[][2] =
+	{{25, 35}, /* Strength */
+	 {25, 35}, /* Speed */
+	 {30, 40}, /* Accuracy */
+	 {30, 45}, /* Mind */
+	 {25, 40}, /* Close */
+	 {25, 40}, /* Heavy */
+	 {25, 40}, /* Assault */
+	 {25, 40}, /* Sniper */
+	 {25, 40}, /* Explosives */
+	 {100, 130}}; /* Health */
+
+static const int civilSoldier[][2] =
+	{{5, 10}, /* Strength */
+	 {5, 10}, /* Speed */
+	 {10, 15}, /* Accuracy */
+	 {10, 15}, /* Mind */
+	 {5, 10}, /* Close */
+	 {5, 10}, /* Heavy */
+	 {5, 10}, /* Assault */
+	 {5, 10}, /* Sniper */
+	 {5, 10}, /* Explosives */
+	 {5, 10}}; /* Health */
+
+static const int alienSoldier[][2] =
+	{{25, 35}, /* Strength */
+	 {25, 35}, /* Speed */
+	 {30, 40}, /* Accuracy */
+	 {30, 45}, /* Mind */
+	 {25, 40}, /* Close */
+	 {25, 40}, /* Heavy */
+	 {25, 40}, /* Assault */
+	 {25, 40}, /* Sniper */
+	 {25, 40}, /* Explosives */
+	 {100, 130}}; /* Health */
+
+static const int robotSoldier[][2] =
+	{{55, 55}, /* Strength */
+	 {40, 40}, /* Speed */
+	 {50, 50}, /* Accuracy */
+	 {0, 0}, /* Mind */
+	 {50, 50}, /* Close */
+	 {50, 50}, /* Heavy */
+	 {50, 50}, /* Assault */
+	 {50, 50}, /* Sniper */
+	 {50, 50}, /* Explosives */
+	 {200, 200}}; /* Health */
+
+/** @brief For multiplayer characters ONLY! */
+static const int MPSoldier[][2] =
+	{{25, 75}, /* Strength */
+	 {25, 35}, /* Speed */
+	 {20, 75}, /* Accuracy */
+	 {30, 75}, /* Mind */
+	 {20, 75}, /* Close */
+	 {20, 75}, /* Heavy */
+	 {20, 75}, /* Assault */
+	 {20, 75}, /* Sniper */
+	 {20, 75}, /* Explosives */
+	 {80, 130}}; /* Health */
 
 /**
  * @brief Generates a skill and ability set for any character.
- * @param[in] chr Pointer to the character, for which we generate skills and abilities.
+ * @param[in] chr Pointer to the character, for which we generate stats.
  * @param[in] team Index of team (TEAM_ALIEN, TEAM_CIVILIAN, ...).
- * @sa CHRSH_GetAbility
- * @sa CHRSH_GetSkill
- * @sa CHRSH_SetGlobalCampaignID
+ * @param[in] type This is the employee type you want to generate the skills for
+ * @param[in] multiplayer If this is true we use the skill values from MPSoldier
+ * mulitplayer is a special case here
  */
-void CHRSH_CharGenAbilitySkills (character_t * chr, int team)
+void CHRSH_CharGenAbilitySkills (character_t * chr, int team, employeeType_t type, qboolean multiplayer)
 {
-	int i, skillWindow, abilityWindow, training, ability1, ability2;
-	float windowScalar;
-	int minAbility = 0, maxAbility = 0, minSkill = 0, maxSkill = 0;
-
-	/* Note that character stats are intended to be based on definitions in campaign.ufo,  */
-	/* resulting in more difficult campaigns yielding stronger aliens (and more feeble     */
-	/* soldiers.) Skills (CLOSE, HEAVY, ASSAULT, SNIPER, EXPLOSIVE) are further influenced */
-	/* by the characters natural abilities (POWER, SPEED, ACCURACY, MIND).                 */
+	int i, abilityWindow;
+	const int (*soldierTemplate)[2] = MPSoldier;
 
 	assert(chr);
 
-	/**
-	 * Build the acceptable ranges for skills / abilities for this character on this team
-	 * as appropriate for this campaign
-	 */
-	CHRSH_GetAbility(chr, team, &minAbility, &maxAbility, globalCampaignID);
-	CHRSH_GetSkill(chr, team, &minSkill, &maxSkill, globalCampaignID);
-
-	/* Abilities -- random within the range */
-	abilityWindow = maxAbility - minAbility;
-	for (i = 0; i < ABILITY_NUM_TYPES; i++) {
-		chr->skills[i] = (frand() * abilityWindow) + minAbility;	/* Reminder: In case if abilityWindow==0 the ability will get set to minAbility. */
-	}
-
-	/* Skills -- random within the range then scaled (or not) based on natural ability */
-	skillWindow = maxSkill - minSkill;
-	for (i = ABILITY_NUM_TYPES; i < SKILL_NUM_TYPES; i++) {
-
-		/* training is the base for where they fall within the range. */
-		training = (frand() * skillWindow) + minSkill;	/* Reminder: In case if skillWindow==0 the skill will get set to minSkill. */
-
-		if (TRAINING_SCALAR > 0) {
-			switch (i) {
-			case SKILL_CLOSE:
-				ability1 = chr->skills[ABILITY_POWER];
-				ability2 = chr->skills[ABILITY_SPEED];
-				break;
-			case SKILL_HEAVY:
-				ability1 = chr->skills[ABILITY_POWER];
-				ability2 = chr->skills[ABILITY_ACCURACY];
-				break;
-			case SKILL_ASSAULT:
-				ability1 = chr->skills[ABILITY_ACCURACY];
-				ability2 = chr->skills[ABILITY_SPEED];
-				break;
-			case SKILL_SNIPER:
-				ability1 = chr->skills[ABILITY_MIND];
-				ability2 = chr->skills[ABILITY_ACCURACY];
-				break;
-			case SKILL_EXPLOSIVE:
-				ability1 = chr->skills[ABILITY_MIND];
-				ability2 = chr->skills[ABILITY_SPEED];
-				break;
-			default:
-				ability1 = training;
-				ability2 = training;
-			}
-
-			/* scale the abilitiy window to the skill window. */
-			if (abilityWindow > 0 && skillWindow > 0) {
-				windowScalar = skillWindow / abilityWindow;
-
-				/* scale the ability numbers to their place in the skill range. */
-				ability1 = ((ability1 - minAbility) * windowScalar) + minSkill;
-				ability2 = ((ability2 - minAbility) * windowScalar) + minSkill;
-			}
-
-			/* influence the skills, for better or worse, based on the character's natural ability. */
-			chr->skills[i] = ((TRAINING_SCALAR * training) + ability1 + ability2) / (TRAINING_SCALAR + 2);
-		} else {
-			chr->skills[i] = training;
+	if (team == TEAM_ALIEN) {
+		/* Aliens get special treatment. */
+		soldierTemplate = alienSoldier;
+		/* Add modifiers for difficulty setting here! */
+	} else if (!multiplayer) {
+		float soldierRoll;
+		/* Determine which soldier template to use.
+		 * 25% of the soldiers will be specialists (5% chance each).
+		 * 1% of the soldiers will be elite.
+		 * 74% of the soldiers will be commmon. */
+		switch (type) {
+		case EMPL_SOLDIER:
+			soldierRoll = frand();
+			if (soldierRoll <= 0.01f)
+				soldierTemplate = eliteSoldier;
+			else if (soldierRoll <= 0.06)
+				soldierTemplate = closeSoldier;
+			else if (soldierRoll <= 0.11)
+				soldierTemplate = heavySoldier;
+			else if (soldierRoll <= 0.16)
+				soldierTemplate = assaultSoldier;
+			else if (soldierRoll <= 0.22)
+				soldierTemplate = sniperSoldier;
+			else if (soldierRoll <= 0.26)
+				soldierTemplate = blastSoldier;
+			else
+				soldierTemplate = commonSoldier;
+			break;
+		case EMPL_MEDIC:
+		case EMPL_SCIENTIST:
+		case EMPL_WORKER:
+			soldierTemplate = civilSoldier;
+			break;
+		case EMPL_ROBOT:
+			soldierTemplate = robotSoldier;
+			break;
+		default:
+			soldierTemplate = commonSoldier;
+			break;
 		}
 	}
 
+	assert(soldierTemplate);
+
+	/* Abilities and skills -- random within the range */
+	for (i = 0; i < SKILL_NUM_TYPES; i++) {
+		abilityWindow = soldierTemplate[i][1] - soldierTemplate[i][0];
+		/* Reminder: In case if abilityWindow==0 the ability will get set to the lower limit. */
+		chr->skills[i] = (frand() * abilityWindow) + soldierTemplate[i][0];
+	}
+
+	/* Health. */
+	abilityWindow = soldierTemplate[i][1] - soldierTemplate[i][0];
+	chr->HP = (frand() * abilityWindow) + soldierTemplate[i][0];
 }
 
 /** @brief Used in CHRSH_CharGetHead and CHRSH_CharGetBody to generate the model path. */

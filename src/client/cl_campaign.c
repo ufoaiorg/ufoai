@@ -2144,9 +2144,6 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 
 	CL_GameInit(qtrue);
 
-	/* character creation needs the campaign id */
-	CHRSH_SetGlobalCampaignID(curCampaign->idx);
-
 	Com_sprintf(val, sizeof(val), "%i", curCampaign->difficulty);
 	Cvar_ForceSet("difficulty", val);
 
@@ -3929,78 +3926,6 @@ static void CL_ParseSalary (const char *name, const char **text, int campaignID)
 
 /* =========================================================== */
 
-/**
- * @brief Parse the character ability and skill values from script
- * @param[in] name Name or ID of the found character skill and ability definition
- * @param[in] text The text of the nation node
- * @param[in] campaignID Current campaign id (idx)
- * @note Example:
- * <code>character_data {
- *  TEAM_ALIEN skill 15 75
- *  TEAM_ALIEN ability 15 95
- * }</code>
- */
-static void CL_ParseCharacterValues (const char *name, const char **text, int campaignID)
-{
-	const char *errhead = "CL_ParseCharacterValues: unexpected end of file (character_data ";
-	const char *token;
-	int team = 0, i, empl_type = 0;
-
-	Com_DPrintf(DEBUG_CLIENT, "...found character value %s\n", name);
-
-	/* get it's body */
-	token = COM_Parse(text);
-
-	if (!*text || *token != '{') {
-		Com_Printf("CL_ParseCharacterValues: character_data def \"%s\" without body ignored\n", name);
-		return;
-	}
-
-	do {
-		token = COM_EParse(text, errhead, name);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-
-		team = Com_StringToTeamNum(token);
-		/* >= MAX_TEAMS is impossible atm - but who knows */
-		if (team < 0 || team >= MAX_TEAMS)
-			Sys_Error("CL_ParseCharacterValues: Unknown teamString\n");
-		/* now let's check whether we want parse skill or abilitie values */
-		token = COM_EParse(text, errhead, name);
-		if (!*text)
-			Sys_Error("CL_ParseCharacterValues: invalid character_data entry for team %i\n", team);
-		empl_type = E_GetEmployeeType(token);
-		token = COM_EParse(text, errhead, name);
-		if (!*text)
-			Sys_Error("CL_ParseCharacterValues: invalid character_data entry for team %i\n", team);
-
-		/* found a definition */
-		if (!Q_strcmp(token, "skill")) {
-			for (i = 0; i < 2; i++) {
-				token = COM_EParse(text, errhead, name);
-				if (!*text)
-					Sys_Error("CL_ParseCharacterValues: invalid skill entry for team %i\n", team);
-				if (!isdigit(*token))
-					Sys_Error("CL_ParseCharacterValues: invalid skill entry for team %i\n", team);
-				CHRSH_skillValues[campaignID][team][empl_type][i] = atoi(token);
-			}
-		} else if (!Q_strcmp(token, "ability")) {
-			for (i = 0; i < 2; i++) {
-				token = COM_EParse(text, errhead, name);
-				if (!*text)
-					Sys_Error("CL_ParseCharacterValues: invalid ability entry for team %i\n", team);
-				if (!isdigit(*token))
-					Sys_Error("CL_ParseCharacterValues: invalid skill entry for team %i\n", team);
-				CHRSH_abilityValues[campaignID][team][empl_type][i] = atoi(token);
-			}
-		}
-	} while (*text);
-}
-
-/* =========================================================== */
-
 static const value_t campaign_vals[] = {
 	{"team", V_STRING, offsetof(campaign_t, team), 0},
 	{"soldiers", V_INT, offsetof(campaign_t, soldiers), MEMBER_SIZEOF(campaign_t, soldiers)},
@@ -4059,9 +3984,6 @@ void CL_ParseCampaign (const char *name, const char **text)
 	cp->idx = numCampaigns-1;
 	Q_strncpyz(cp->id, name, sizeof(cp->id));
 
-	memset(CHRSH_skillValues[cp->idx], -1, sizeof(CHRSH_skillValues[cp->idx]));
-	memset(CHRSH_abilityValues[cp->idx], -1, sizeof(CHRSH_abilityValues[cp->idx]));
-
 	/* some default values */
 	Q_strncpyz(cp->team, "human", sizeof(cp->team));
 	Q_strncpyz(cp->researched, "researched_human", sizeof(cp->researched));
@@ -4117,9 +4039,7 @@ void CL_ParseCampaign (const char *name, const char **text)
 				Com_ParseValue(cp, token, vp->type, vp->ofs, vp->size);
 				break;
 			}
-		if (!Q_strncmp(token, "character_data", MAX_VAR)) {
-			CL_ParseCharacterValues(token, text, cp->idx);
-		} else if (!Q_strncmp(token, "salary", MAX_VAR)) {
+		if (!Q_strncmp(token, "salary", MAX_VAR)) {
 			CL_ParseSalary(token, text, cp->idx);
 		} else if (!vp->string) {
 			Com_Printf("CL_ParseCampaign: unknown token \"%s\" ignored (campaign %s)\n", token, name);
@@ -4508,10 +4428,6 @@ static void CL_GameNew_f (void)
 	/* base setup */
 	gd.numBases = 0;
 	gd.numAircraft = 0;
-
-	/* Moved out from CL_GameInit to happen before B_NewBases() is called.
-	 * character creation needs the campaign id */
-	CHRSH_SetGlobalCampaignID(curCampaign->idx);
 
 	B_NewBases();
 	PR_ProductionInit();

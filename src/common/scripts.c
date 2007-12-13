@@ -840,6 +840,8 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 				Com_Printf("Com_ParseFire: unknown token \"%s\" ignored (weapon %s)\n", token, name);
 		}
 	} while (*text);
+	if (fd->weaponSkill < ABILITY_NUM_TYPES)
+		Com_Printf("Com_ParseFire: firedef for weapon \"%s\" doesn't have a skill set\n", name);
 }
 
 

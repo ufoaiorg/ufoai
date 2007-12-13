@@ -37,7 +37,7 @@ aircraft_t aircraft_samples[MAX_AIRCRAFT];		/**< Available aircraft types. */
  */
 int numAircraft_samples = 0;
 
-static const int AIRCRAFT_RADAR_RANGE = 20;
+static const int AIRCRAFT_RADAR_RANGE = 7;
 static const int DISTANCE = 15;
 static const int AIRCRAFT_SIZE_FOR_BIG_HANGAR = 8;
 

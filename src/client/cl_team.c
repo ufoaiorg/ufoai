@@ -281,6 +281,7 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 	character_t *chr = NULL;
 	char teamDefName[MAX_VAR];
 	int teamValue = TEAM_CIVILIAN;
+	qboolean multiplayer = (sv_maxclients->integer >= 2);
 
 	if (!employee)
 		return;
@@ -312,31 +313,31 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 	case EMPL_SOLDIER:
 		chr->rank = CL_GetRank("rifleman");
 		/* Create attributes. */
-		CHRSH_CharGenAbilitySkills(chr, teamValue);
+		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, multiplayer);
 		Q_strncpyz(teamDefName, team, sizeof(teamDefName));
 		break;
 	case EMPL_SCIENTIST:
 		chr->rank = CL_GetRank("scientist");
 		/* Create attributes. */
-		CHRSH_CharGenAbilitySkills(chr, teamValue);
+		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, multiplayer);
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_scientist", team);
 		break;
 	case EMPL_MEDIC:
 		chr->rank = CL_GetRank("medic");
 		/* Create attributes. */
-		CHRSH_CharGenAbilitySkills(chr, teamValue);
+		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, multiplayer);
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_medic", team);
 		break;
 	case EMPL_WORKER:
 		chr->rank = CL_GetRank("worker");
 		/* Create attributes. */
-		CHRSH_CharGenAbilitySkills(chr, teamValue);
+		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, multiplayer);
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_worker", team);
 		break;
 	case EMPL_ROBOT:
 		chr->rank = CL_GetRank("ugv");
 		/* Create attributes. */
-		CHRSH_CharGenAbilitySkills(chr, teamValue);
+		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, multiplayer);
 
 		/**
 		 * generate 50/50 Phoenix/Ares UGVs
@@ -352,7 +353,7 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 		break;
 	}
 	chr->skin = Com_GetCharacterValues(teamDefName, chr);
-	chr->HP = GET_HP(chr->skills[ABILITY_POWER]);
+	/* chr->HP = GET_HP(chr->skills[ABILITY_POWER]); */
 	chr->maxHP = chr->HP;
 	chr->morale = GET_MORALE(chr->skills[ABILITY_MIND]);
 	if (chr->morale >= MAX_SKILL)
