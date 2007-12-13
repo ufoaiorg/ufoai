@@ -306,8 +306,7 @@ char *R_AnimGetName(animState_t * as, struct model_s *mod);
 struct model_s *R_RegisterModelShort(const char *name);
 struct image_s *R_RegisterPic(const char *name);
 
-void R_DrawPic(int x, int y, const char *name);
-void R_DrawNormPic(float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, const char *name);
+int R_DrawNormPic(float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, const char *name);
 void R_DrawChar(int x, int y, int c);
 void R_DrawFill(int x, int y, int w, int h, int align, const vec4_t color);
 void R_Color(const float *rgba);
