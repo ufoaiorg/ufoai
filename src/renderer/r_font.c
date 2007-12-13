@@ -86,7 +86,7 @@ static font_t *R_FontAnalyze (const char *name, const char *path, int renderStyl
 	memset(f, 0, sizeof(f));
 
 	/* copy fontname */
-	Q_strncpyz(f->name, name, sizeof(f->name));
+	f->name = name;
 
 	ttfSize = FS_LoadFile(path, &f->buffer);
 

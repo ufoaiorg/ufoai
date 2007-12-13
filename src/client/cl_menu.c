@@ -2421,6 +2421,8 @@ static void MN_DrawTextNode (const char *text, const linkedList_t* list, const c
 			const char *token;
 			cur += 4;
 			token = COM_Parse((const char **)&cur);
+			/* @todo once font_t from r_font.h is known everywhere we should scale the height here, too
+			 * @todo once image_t is known everywhere we should fix this, too */
 			x1 += R_DrawNormPic(x1, y1, 0, 0, 0, 0, 0, 0, node->align, node->blend, token);
 		}
 

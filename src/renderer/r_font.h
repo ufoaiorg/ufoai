@@ -7,7 +7,7 @@
 #define	MAX_FONTNAME		32
 
 typedef struct font_s {
-	char name[MAX_FONTNAME];
+	const char *name;
 	TTF_Font *font;
 	SDL_RWops *rw;				/**< ttf font reading structure for SDL_RWops */
 	byte *buffer;				/**< loaded file */
