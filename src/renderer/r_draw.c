@@ -337,8 +337,9 @@ void R_DrawTexture (int texnum, int x, int y, int w, int h)
  * @sa R_RegisterPic
  * @note All these parameter are normalized to VID_NORM_WIDTH and VID_NORM_HEIGHT
  * they are adjusted in this function
+ * @todo: Return the image_t pointer (gl) once image_t is known everywhere
  */
-void R_DrawNormPic (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, const char *name)
+int R_DrawNormPic (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, const char *name)
 {
 	float nx, ny, nw = 0.0, nh = 0.0;
 	image_t *gl;
@@ -346,7 +347,7 @@ void R_DrawNormPic (float x, float y, float w, float h, float sh, float th, floa
 	gl = R_RegisterPic(name);
 	if (!gl) {
 		Com_Printf("Can't find pic: %s\n", name);
-		return;
+		return 0;
 	}
 
 	/* normalize */
@@ -425,28 +426,7 @@ void R_DrawNormPic (float x, float y, float w, float h, float sh, float th, floa
 	if (gl->shader)
 		SH_UseShader(gl->shader, qtrue);
 #endif
-}
-
-
-void R_DrawPic (int x, int y, const char *pic)
-{
-	image_t *gl;
-
-	gl = R_RegisterPic(pic);
-	if (!gl) {
-		Com_Printf("Can't find pic: %s\n", pic);
-		return;
-	}
-
-#ifdef HAVE_SHADERS
-	if (gl->shader)
-		SH_UseShader(gl->shader, qfalse);
-#endif
-	R_DrawTexture(gl->texnum, x, y, gl->width, gl->height);
-#ifdef HAVE_SHADERS
-	if (gl->shader)
-		SH_UseShader(gl->shader, qtrue);
-#endif
+	return nw;
 }
 
 /**
