@@ -548,13 +548,8 @@ typedef enum {
 /*  CHARACTER GENERATING FUNCTIONS  */
 /* ================================ */
 
-/* These are min and max values for all teams can be defined via campaign script. */
-extern int CHRSH_skillValues[MAX_CAMPAIGNS][MAX_TEAMS][MAX_EMPL][2];
-extern int CHRSH_abilityValues[MAX_CAMPAIGNS][MAX_TEAMS][MAX_EMPL][2];
-
-void CHRSH_SetGlobalCampaignID(int campaignID);
 int Com_StringToTeamNum(const char* teamString) __attribute__((nonnull));
-void CHRSH_CharGenAbilitySkills(character_t * chr, int team) __attribute__((nonnull));
+void CHRSH_CharGenAbilitySkills (character_t * chr, int team, employeeType_t type, qboolean multiplayer) __attribute__((nonnull));
 char *CHRSH_CharGetBody(character_t* const chr) __attribute__((nonnull));
 char *CHRSH_CharGetHead(character_t* const chr) __attribute__((nonnull));
 

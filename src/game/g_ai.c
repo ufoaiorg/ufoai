@@ -679,7 +679,7 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 			gi.linkentity(ent);
 
 			/* skills; @todo: more power to Ortnoks, more mind to Tamans */
-			CHRSH_CharGenAbilitySkills(&ent->chr, team);
+			CHRSH_CharGenAbilitySkills(&ent->chr, team, EMPL_SOLDIER, sv_maxclients->integer >= 2);
 			ent->chr.skills[ABILITY_MIND] += 100;
 			if (ent->chr.skills[ABILITY_MIND] >= MAX_SKILL)
 				ent->chr.skills[ABILITY_MIND] = MAX_SKILL;
@@ -707,7 +707,7 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 			ent->head = gi.modelindex(CHRSH_CharGetHead(&ent->chr));
 			ent->skin = ent->chr.skin;
 		} else {
-			CHRSH_CharGenAbilitySkills(&ent->chr, team);
+			CHRSH_CharGenAbilitySkills(&ent->chr, team, EMPL_SOLDIER, sv_maxclients->integer >= 2);
 			ent->chr.HP = GET_HP(ent->chr.skills[ABILITY_POWER]) / 2;
 			ent->HP = ent->chr.HP;
 			ent->chr.morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);
