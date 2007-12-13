@@ -45,7 +45,7 @@ item assault_ammo
 			hitbody null
 			firesnd	weapons/assaultrifle
 			speed	0
-			spread	"3.5 3.5"
+			spread	"1.8 1.8"
 			crouch	0.7
 			range	70
 			shots	1
@@ -64,7 +64,7 @@ item assault_ammo
 			hitbody null
 			firesnd	weapons/assaultrifle
 			speed	0
-			spread	"3.5 3.5"
+			spread	"1.8 1.8"
 			crouch	0.7
 			range	70
 			shots	3
@@ -84,7 +84,7 @@ item assault_ammo
 			hitbody null
 			firesnd	weapons/assaultrifle
 			speed	0
-			spread	"5 5"
+			spread	"2.5 2.5"
 			crouch	0.6
 			range	70
 			shots	8
@@ -104,7 +104,7 @@ item assault_ammo
 			hitbody null
 			firesnd	weapons/assaultrifle
 			speed	0
-			spread	"2 2"
+			spread	"1 1"
 			crouch	0.7
 			range	70
 			shots	1
@@ -166,7 +166,7 @@ item chaingun_ammo
 			hitbody null
 			firesnd	weapons/chaingun
 			speed	0
-			spread	"1 4"
+			spread	"0.5 2"
 			crouch	1.3
 			range	60
 			shots	5
@@ -186,7 +186,7 @@ item chaingun_ammo
 			hitbody null
 			firesnd	weapons/chaingun
 			speed	0
-			spread	"3 6"
+			spread	"1.5 3"
 			crouch	1.3
 			range	60
 			shots	40
@@ -206,7 +206,7 @@ item chaingun_ammo
 			hitbody null
 			firesnd	weapons/chaingun
 			speed	0
-			spread	"3 15"
+			spread	"1.5 7.5"
 			crouch	1.3
 			range	60
 			shots	40
@@ -267,7 +267,7 @@ item machinegun_ammo
 			hitbody null
 			firesnd	weapons/machinegun
 			speed	0
-			spread	"4 4"
+			spread	"2 2"
 			crouch	0.9
 			range	70
 			shots	6
@@ -287,7 +287,7 @@ item machinegun_ammo
 			hitbody null
 			firesnd	weapons/machinegun
 			speed	0
-			spread	"4 4"
+			spread	"2 2"
 			crouch	0.9
 			range	70
 			shots	14
@@ -348,7 +348,7 @@ item sniper_ammo
 			hitbody null
 			firesnd	weapons/sniperrifle
 			speed	0
-			spread	"3 3"
+			spread	"1.5 1.5"
 			crouch	0.3
 			range	250
 			shots	1
@@ -367,7 +367,7 @@ item sniper_ammo
 			hitbody null
 			firesnd	weapons/sniperrifle
 			speed	0
-			spread	"1.8 1.8"
+			spread	"0.9 0.9"
 			crouch	0.3
 			range	250
 			shots	1
@@ -385,7 +385,7 @@ item sniper_ammo
 			hitbody null
 			firesnd	weapons/sniperrifle
 			speed	0
-			spread	"1.8 1.8"
+			spread	"0.9 0.9"
 			crouch	0.3
 			range	250
 			shots	1
@@ -445,7 +445,7 @@ item pistol_ammo
 			hitbody null
 			firesnd	weapons/pistol2
 			speed	0
-			spread	"2.2 2.2"
+			spread	"1.1 1.1"
 			crouch	0.9
 			range	40
 			shots	1
@@ -464,7 +464,7 @@ item pistol_ammo
 			hitbody null
 			firesnd	weapons/pistol2
 			speed	0
-			spread	"2.6 2.6"
+			spread	"1.3 1.3"
 			crouch	0.9
 			range	40
 			shots	3
@@ -484,7 +484,7 @@ item pistol_ammo
 			hitbody null
 			firesnd	weapons/pistol2
 			speed	0
-			spread	"2 2"
+			spread	"1 1"
 			crouch	0.9
 			range	40
 			shots	1
@@ -544,7 +544,7 @@ item pistol2_ammo
 			hitbody null
 			firesnd	weapons/machinepistol
 			speed	0
-			spread	"3 3"
+			spread	"1.5 1.5"
 			crouch	0.9
 			range	40
 			shots	1
@@ -563,7 +563,7 @@ item pistol2_ammo
 			hitbody null
 			firesnd	weapons/machinepistol
 			speed	0
-			spread	"3.2 3.2"
+			spread	"1.6 1.6"
 			crouch	0.9
 			range	40
 			shots	3
@@ -583,7 +583,7 @@ item pistol2_ammo
 			hitbody null
 			firesnd	weapons/machinepistol
 			speed	0
-			spread	"3.4 3.4"
+			spread	"1.7 1.7"
 			crouch	0.9
 			range	40
 			shots	8
@@ -645,7 +645,7 @@ item smg_ammo
 //			hitbody null
 //			firesnd	weapons/smg2
 //			speed	0
-//			spread	"3 3"
+//			spread	"1.5 1.5"
 //			crouch	0.7
 //			range	45
 //			shots	1
@@ -664,7 +664,7 @@ item smg_ammo
 			hitbody null
 			firesnd	weapons/smg2
 			speed	0
-			spread	"3.3 3.3"
+			spread	"1.7 1.7"
 			crouch	0.7
 			range	45
 			shots	5
@@ -684,7 +684,7 @@ item smg_ammo
 			hitbody null
 			firesnd	weapons/smg2
 			speed	0
-			spread	"3.6 3.6"
+			spread	"1.8 1.8"
 			crouch	0.7
 			range	45
 			shots	15
@@ -746,7 +746,7 @@ item shotgun2_slug_ammo
 			firesnd	weapons/riotshotgun
 			sndonce true
 			speed	0
-			spread	"3 3"
+			spread	"1.5 1.5"
 			crouch	0.8
 			range	30
 			shots	1
@@ -768,7 +768,7 @@ item shotgun2_slug_ammo
 			firesnd	weapons/riotshotgun
 			sndonce false
 			speed	0
-			spread	"5 5"
+			spread	"2.5 2.5"
 			crouch	0.8
 			range	30
 			shots	3
@@ -790,7 +790,7 @@ item shotgun2_slug_ammo
 //			firesnd	weapons/riotshotgun
 //			sndonce false
 //			speed	0
-//			spread	"6 6"
+//			spread	"3 3"
 //			crouch	1.0
 //			range	15
 //			shots	7
@@ -853,7 +853,7 @@ item shotgun_ammo
 			firesnd	weapons/riotshotgun
 			sndonce true
 			speed	0
-			spread	"3.6 3.6"
+			spread	"1.8 1.8"
 			crouch	1.0
 			range	60
 			shots	10
@@ -875,7 +875,7 @@ item shotgun_ammo
 			firesnd	weapons/riotshotgun
 			sndonce true
 			speed	0
-			spread	"5.5 5.5"
+			spread	"2.8 2.8"
 			crouch	1.0
 			range	60
 			shots	20
@@ -939,7 +939,7 @@ item shotgun_micro_ammo
 			firesnd	weapons/microshotgun2
 			sndonce true
 			speed	0
-			spread	"2.5 2.5"
+			spread	"1.3 1.3"
 			crouch	0.9
 			range	10
 			shots	7
@@ -961,7 +961,7 @@ item shotgun_micro_ammo
 			firesnd	weapons/microshotgun2
 			sndonce false
 			speed	0
-			spread	"5.5 5.5"
+			spread	"2.8 2.8"
 			crouch	0.9
 			range	10
 			shots	21
@@ -986,7 +986,7 @@ item shotgun_micro_ammo
 			firesnd	weapons/riotshotgun
 			sndonce true
 			speed	0
-			spread	"3.6 3.6"
+			spread	"1.8 1.8"
 			crouch	1.0
 			range	15
 			shots	8
@@ -1008,7 +1008,7 @@ item shotgun_micro_ammo
 			firesnd	weapons/riotshotgun
 			sndonce false
 			speed	0
-			spread	"5.5 5.5"
+			spread	"2.8 2.8"
 			crouch	1.0
 			range	15
 			shots	24
@@ -1030,7 +1030,7 @@ item shotgun_micro_ammo
 			firesnd	weapons/riotshotgun
 			sndonce false
 			speed	0
-			spread	"6.0 6.0"
+			spread	"3 3"
 			crouch	1.0
 			range	15
 			shots	56
@@ -1092,7 +1092,7 @@ item flamer_ammo
 			firesnd	weapons/flamer_s
 			sndonce true
 			speed	400
-			spread	"3 1"
+			spread	"1.5 0.5"
 			crouch  1.0
 			range	8
 			shots	30
@@ -1113,7 +1113,7 @@ item flamer_ammo
 			firesnd	weapons/flamer_l
 			sndonce true
 			speed	400
-			spread	"4 1"
+			spread	"2 0.5"
 			crouch  1.0
 			range	8
 			shots	60
@@ -1134,7 +1134,7 @@ item flamer_ammo
 			firesnd	weapons/flamer_l
 			sndonce true
 			speed	400
-			spread	"1 27"
+			spread	"1 10"
 			crouch  1.0
 			range	8
 			shots	60
@@ -1308,7 +1308,7 @@ item grenl_ammo
 			impactvolume 1.0
 			gravity	true
 			launched true
-			spread	"0 3"
+			spread	"0 1.5"
 			range	15
 			shots	1
 			ammo	1
@@ -1335,7 +1335,7 @@ item grenl_ammo
 			impactvolume 1.0
 			gravity	true
 			launched true
-			spread	"0 1"
+			spread	"0 0.5"
 			range	15
 			shots	1
 			ammo	1
@@ -1361,7 +1361,7 @@ item grenl_ammo
 			impactvolume 1.0
 			gravity	true
 			launched true
-			spread	"0 6"
+			spread	"0 3"
 			range	15
 			shots	3
 			ammo	3
@@ -1390,7 +1390,7 @@ item grenl_ammo
 			delay	1
 			bounce	10
 			bncfac	0.5
-			spread	"0 3"
+			spread	"0 1.5"
 			range	15
 			shots	1
 			ammo	1
@@ -1418,7 +1418,7 @@ item grenl_ammo
 			delay	1
 			bounce	10
 			bncfac	0.5
-			spread	"0 1"
+			spread	"0 0.5"
 			range	15
 			shots	1
 			ammo	1
@@ -1446,7 +1446,7 @@ item grenl_ammo
 			delay	1
 			bounce	10
 			bncfac	0.5
-			spread	"0 6"
+			spread	"0 3"
 			range	15
 			shots	3
 			ammo	3
@@ -1489,7 +1489,7 @@ item grenl_incendiary_ammo
 			impactvolume 1.0
 			gravity	true
 			launched true
-			spread	"0 3"
+			spread	"0 1.5"
 			range	15
 			shots	1
 			ammo	1
@@ -1517,7 +1517,7 @@ item grenl_incendiary_ammo
 			impactvolume 1.0
 			gravity	true
 			launched true
-			spread	"0 1"
+			spread	"0 0.5"
 			range	15
 			shots	1
 			ammo	1
@@ -1543,7 +1543,7 @@ item grenl_incendiary_ammo
 			impactvolume 1.0
 			gravity	true
 			launched true
-			spread	"0 6"
+			spread	"0 3"
 			range	15
 			shots	3
 			ammo	3
@@ -1572,7 +1572,7 @@ item grenl_incendiary_ammo
 			delay	1
 			bounce	10
 			bncfac	0.5
-			spread	"0 3"
+			spread	"0 1.5"
 			range	15
 			shots	1
 			ammo	1
@@ -1600,7 +1600,7 @@ item grenl_incendiary_ammo
 			delay	1
 			bounce	10
 			bncfac	0.5
-			spread	"0 1"
+			spread	"0 0.5"
 			range	15
 			shots	1
 			ammo	1
@@ -1628,7 +1628,7 @@ item grenl_incendiary_ammo
 			delay	1
 			bounce	10
 			bncfac	0.5
-			spread	"0 6"
+			spread	"0 3"
 			range	15
 			shots	3
 			ammo	3
@@ -1667,7 +1667,7 @@ item grenl_fle_ammo
 			firesnd	weapons/shotgun
 			sndonce true
 			speed   0
-			spread	"8 9"
+			spread	"4 4.5"
 			range	10
 			shots	24
 			ammo	1
@@ -1688,7 +1688,7 @@ item grenl_fle_ammo
 			firesnd	weapons/gren_fle_3shot
 			sndonce true
 			speed   0
-			spread	"10 2"
+			spread	"5 5.5"
 			range	10
 			shots	72
 			ammo	3
@@ -1731,7 +1731,7 @@ item grenl_plasma_ammo
 			impactvolume 1.0
 			gravity	true
 			launched true
-			spread	"0 3"
+			spread	"0 1.5"
 			range	15
 			shots	1
 			ammo	1
@@ -1758,7 +1758,7 @@ item grenl_plasma_ammo
 			impactvolume 1.0
 			gravity	true
 			launched true
-			spread	"0 1"
+			spread	"0 0.5"
 			range	15
 			shots	1
 			ammo	1
@@ -1784,7 +1784,7 @@ item grenl_plasma_ammo
 			impactvolume 1.0
 			gravity	true
 			launched true
-			spread	"0 6"
+			spread	"0 3"
 			range	15
 			shots	3
 			ammo	3
@@ -1813,7 +1813,7 @@ item grenl_plasma_ammo
 			delay	1
 			bounce	10
 			bncfac	0.5
-			spread	"0 3"
+			spread	"0 1.5"
 			range	15
 			shots	1
 			ammo	1
@@ -1841,7 +1841,7 @@ item grenl_plasma_ammo
 			delay	1
 			bounce	10
 			bncfac	0.5
-			spread	"0 1"
+			spread	"0 0.5"
 			range	15
 			shots	1
 			ammo	1
@@ -1869,7 +1869,7 @@ item grenl_plasma_ammo
 			delay	1
 			bounce	10
 			bncfac	0.5
-			spread	"0 6"
+			spread	"0 3"
 			range	15
 			shots	3
 			ammo	3
@@ -1930,7 +1930,7 @@ item bolterrifle_ammo
 			hitbody null
 			firesnd weapons/bolter2
 			speed   0
-			spread  "0 2"
+			spread  "1.7 1.7"
 			crouch  0.8
 			range	250
 			shots   1
@@ -1950,7 +1950,7 @@ item bolterrifle_ammo
 			hitbody null
 			firesnd weapons/boltercannonade
 			speed   0
-			spread  "3 2"
+			spread  "2.1 2.1"
 			crouch  0.8
 			range	250
 			shots   3
@@ -1970,7 +1970,7 @@ item bolterrifle_ammo
 			hitbody null
 			firesnd weapons/bolter2
 			speed   0
-			spread  "0 1"
+			spread  "1.2 1.2"
 			crouch  0.5
 			range	250
 			shots   1

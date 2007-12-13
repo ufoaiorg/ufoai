@@ -169,11 +169,11 @@ equipment campaign_market_aliens
 
 equipment multiplayer
 {
-	assault				1
-	assault_ammo		3
-	machinegun			1
+	assault				2
+	assault_ammo		6
+	machinegun			2
 	machinegun_ammo		2
-	sniper				1
+	sniper				2
 	sniper_ammo			3
 	pistol				2
 	pistol_ammo			5
@@ -181,35 +181,35 @@ equipment multiplayer
 	smg_ammo			5
 	shotgun				2
 	shotgun_ammo		5
-	shotgun2			1
+	shotgun2			2
 	shotgun2_slug_ammo	20
 	shotgun_micro		4
 	shotgun_micro_ammo	20
-	chaingun			1
+	chaingun			2
 	chaingun_ammo		5
-	flamer				1
+	flamer				2
 	flamer_ammo			3
-	rpg					1
+	rpg					2
 	rpg_ammo			3
 	rpg_incendiary_ammo	3
 //	rpg_particle_ammo	3
-	grenl				1
+	grenl				2
 	grenl_ammo			5
 	grenl_fle_ammo			4
 	grenl_plasma_ammo	3
-	bolterrifle			1
+	bolterrifle			2
 	bolterrifle_ammo	3
 	laserpistol			2
 //	laserpistol_ammo	5
-	laserrifle			1
+	laserrifle			2
 	laserrifle_ammo		11
-	heavylaser			1
+	heavylaser			2
 //	heavylaser_ammo		3
 	plaspistol			2
 	plaspistol_ammo		5
-	plasrifle			1
+	plasrifle			2
 	plasrifle_ammo		3
-	plasblaster			1
+	plasblaster			2
 	plasblaster_ammo	3
 	pbeampistol		2
 	pbeampistol_ammo	5
@@ -220,9 +220,9 @@ equipment multiplayer
 	fraggrenade			3
 	smokegrenade		2
 	flashbang			8
-	knife				1
+	knife				2
 	knifemono			3
-	irgoggles			1
+	irgoggles			2
 	medikit				3
 	incgrenade		3
 	plasmagrenade		3
