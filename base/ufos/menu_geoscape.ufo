@@ -1110,7 +1110,7 @@ menu popup
 	{
 		image	hud/close
 		pos	"722 284"
-		click	{ cmd "mn_pop" }
+		click	{ cmd "mn_pop;" }
 	}
 
 	text title

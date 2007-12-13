@@ -1629,7 +1629,8 @@ void Irc_Input_Activate (void)
 		Key_SetDest(key_input);
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "Irc_Input_Activate: Warning - IRC not connected\n");
-		Cbuf_AddText("mn_pop;");
+		MN_PopMenu(qfalse);
+		MN_PushMenu("irc_popup");
 		/* cancel any active editing */
 		return;
 	}
