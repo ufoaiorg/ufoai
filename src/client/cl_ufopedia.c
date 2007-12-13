@@ -1006,13 +1006,11 @@ static void UP_FindEntry_f (void)
  */
 static void UP_Content_f (void)
 {
-	char *cp = NULL;
 	int i;
 	qboolean researched_entries = qfalse;	/* Are there any researched or collected items in this chapter? */
 	numChapters_displaylist = 0;
 
-	cp = upText;
-	*cp = '\0';
+	upText[0] = 0;
 
 	for (i = 0; i < gd.numChapters; i++) {
 		/* Check if there are any researched or collected items in this chapter ... */
@@ -1034,8 +1032,7 @@ static void UP_Content_f (void)
 		if (researched_entries) {
 			assert(numChapters_displaylist<MAX_PEDIACHAPTERS);
 			upChapters_displaylist[numChapters_displaylist++] = &gd.upChapters[i];
-			Q_strcat(cp, _(gd.upChapters[i].name), sizeof(upText));
-			Q_strcat(cp, "\n", sizeof(upText));
+			Q_strcat(upText, va("img:menu/ufopedia_%s %s\n", gd.upChapters[i].id, _(gd.upChapters[i].name)), sizeof(upText));
 		}
 	}
 

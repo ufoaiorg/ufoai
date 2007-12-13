@@ -2417,6 +2417,11 @@ static void MN_DrawTextNode (const char *text, const linkedList_t* list, const c
 				cur += 2; /* don't print the format string */
 				break;
 			}
+		} else if (!Q_strncmp(cur, "img:", 4)) {
+			const char *token;
+			cur += 4;
+			token = COM_Parse((const char **)&cur);
+			x1 += R_DrawNormPic(x1, y1, 0, 0, 0, 0, 0, 0, node->align, node->blend, token);
 		}
 
 		/* get the position of the next newline - otherwise end will be null */
