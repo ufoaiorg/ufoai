@@ -60,6 +60,7 @@ CLIENT_SRCS = \
 	common/net.c \
 	common/netpack.c \
 	common/dbuffer.c \
+	common/pqueue.c \
 	common/scripts.c \
 	\
 	server/sv_ccmds.c \

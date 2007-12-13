@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "common.h"
+#include "pqueue.h"
 #define	ON_EPSILON	0.1
 #define QUANT	4
 #define GRENADE_ALPHAFAC	0.7
@@ -235,18 +236,6 @@ static int trace_contents;
 static qboolean trace_ispoint;			/* optimized case */
 static tnode_t *tnode_p;
 
-/**
- * @note (WIP)
- * An entry in tfList[][][] can have 3 values 0 (00b), 1 (01b) and 2 (10b)
- * Neither "tf" nor "stf" (stf depends on "tf" value) will be set to anything else than 1 (01b) or 2 (10b).
- * If an x,y,z entry in "tfList" (or rather in the "routing_t") is calculated for pathfinding the tfList value is set to 0.
- * These 0-entries will never be checked again because tf (which they are checked against) can never become 0.
- *
- * @todo Find out why there even is a 1 _and_ a 2 for tf and stf.
- */
-static byte tfList[HEIGHT][WIDTH][WIDTH];
-static byte tf;		/**< test flag */
-static byte stf;	/**< (guess: swapped test flag?) */
 static pos3_t exclude_from_forbiddenlist;
 
 
@@ -2499,18 +2488,18 @@ static int poslistNew[4][2];
 
 /**
  * @param[in|out] map Pointer to client or server side routing table (clMap, svMap)
- * @param[in] x Current x location in the map.
- * @param[in] y Current y location in the map.
- * @param[in] z Current z location in the map.
+ * @param[in] pos Current location in the map.
  * @param[in] dir Direction vector index (see DIRECTIONS and dvecs)
- * @param[in] h	The R_HEIGHT value for x,y,z. Do not confuse with z-level.
- * @param[in] ol The R_AREA value for x,y,z. (Guess: the "old length" i.e. the TUs used so far)
  * @param[in] actor_size Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
+ * @param[in|out] pqueue Priority queue (heap) to insert the now reached tiles for reconsidering
  * @sa Grid_CheckForbidden
  * @todo Add height/fall checks for actor size (2x2).
  */
-static void Grid_MoveMark (struct routing_s *map, int x, int y, pos_t z, int dir, int h, byte ol, int actor_size)
+static void Grid_MoveMark (struct routing_s *map, pos3_t pos, int dir, int actor_size, PQUEUE *pqueue)
 {
+	byte x, y, z;
+	int h;
+	byte ol;
 	int nx, ny;
 	pos_t sh;
 	int dx, dy;
@@ -2518,16 +2507,26 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, pos_t z, int dir
 	pos_t l;
 	pos3_t poslist[4];	/**< All positions of a 2x2 unit (at the original location). @sa poslistNew */
 
+	x = pos[0];
+	y = pos[1];
+	z = pos[2];
+	h = R_HEIGHT(map, x, y, z);
+	ol = R_AREA(map, x, y, z);
+
+	if (ol >= 250)
+		return;
+
 #ifdef PARANOID
 	if (z >= HEIGHT) {
 		Com_DPrintf(DEBUG_ENGINE, "Grid_MoveMark: WARNING z = %i(>= HEIGHT %i)\n", z, HEIGHT);
 		return;
 	}
-
+	/*
 	if ((l + TU_MOVE_STRAIGHT) >= MAX_MOVELENGTH)) {
 		Com_DPrintf(DEBUG_ENGINE, "Grid_MoveMark: maximum movelength reached %i (max %i)\n", l, MAX_MOVELENGTH);
 		return;
 	}
+	*/
 #endif
 
 	l = dir > 3	/**< Add TUs to old length/TUs depending on straight or diagonal move. */
@@ -2672,7 +2671,7 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, pos_t z, int dir
 	z = Grid_Fall(map, dummy, actor_size);
 
 	/* Can it be better than ever? */
-	if (R_AREA(map, nx, ny, z) < l)
+	if (R_AREA(map, nx, ny, z) <= l)
 		return;
 
 	/* Test for forbidden (by other entities) areas. */
@@ -2693,49 +2692,9 @@ static void Grid_MoveMark (struct routing_s *map, int x, int y, pos_t z, int dir
 	}
 
 	/* Store move. */
-	R_AREA(map, nx, ny, z) = l;	/**< Store TUs for this square. */
-	tfList[z][ny][nx] = stf;
-}
-
-
-/**
- * @param[in|out] map Pointer to client or server side routing table (clMap, svMap)
- * @param[in] xl (Guess: Lower x limit?)
- * @param[in] yl (Guess: Lower y limit?)
- * @param[in] xh (Guess: Higher/upper x limit?)
- * @param[in] yh (Guess: Higher/upper y limit?)
- * @param[in] actor_size Give the field size of the actor (e.g. for 2x2 units) to check linked fields as well.
- * @sa Grid_MoveMark
- */
-static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, int yh, int actor_size)
-{
-	int x, y;
-	int dir;	/**< Direction vector index */
-	pos_t l, z, h;
-
-	for (z = 0; z < HEIGHT; z++)
-		for (y = yl; y <= yh; y++)
-			for (x = xl; x <= xh; x++)
-				if (tfList[z][y][x] == tf) {
-					tfList[z][y][x] = 0;	/* Reset test flags (Guess: Never test again?) */
-					l = R_AREA(map, x, y, z);	/**< Get TUs for this square. */
-					h = R_HEIGHT(map, x, y, z);
-
-					/* check for end */
-					if (l + TU_MOVE_DIAGONAL >= MAX_MOVELENGTH)
-						continue;
-
-					/* test the next connections */
-					for (dir = 0; dir < DIRECTIONS; dir++) {
-#if 0
-						if ((actor_size == ACTOR_SIZE_2x2)
-						 && (dir > 3))
-							/* Ignore diagonal move for 2x2 and other units */
-							break;
-#endif
-						Grid_MoveMark(map, x, y, z, dir, h, l, actor_size);
-					}
-				}
+	R_AREA(map, nx, ny, z) = l;	/* *< Store TUs for this square. */
+	VectorSet(dummy, nx, ny, z);
+	PQueuePush(pqueue, dummy, l); /* TODO add heuristic for A* algorithm */
 }
 
 /**
@@ -2743,78 +2702,56 @@ static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, i
  * @param[in] from The position to start the calculation from.
  * @param[in] actor_size The size of thing to calc the move for (e.g. size=2 means 2x2).
  * The plan is to have the 'origin' in 2x2 units in the upper-left (towards the lower coordinates) corner of the 2x2 square.
- * @param[in] distance (Guess: the maximal distance [i.e. sqaures in all directions] to calculate move-information for.)
+ * @param[in] distance to calculate move-information for - currently unused
  * @param[in] fb_list Forbidden list (entities are standing at those points)
  * @param[in] fb_length Length of forbidden list
- * @sa Grid_MoveMarkRoute
+ * @sa Grid_MoveMark
  * @sa G_MoveCalc (g_client.c)
  * @sa CL_ConditionalMoveCalc (cl_actor.c)
  */
 void Grid_MoveCalc (struct routing_s *map, pos3_t from, int actor_size, int distance, byte ** fb_list, int fb_length)
 {
-	int xl, xh, yl, yh;	/* Guess: _h_igh/upper and _l_ow end of the extending rectangle - see below. */
-	int i;			/* Distance counter */
-
+	int dir;
+	int count;
+	PQUEUE pqueue;
+	pos3_t pos;
 	/* reset move data */
 	/* ROUTING_NOT_REACHABLE means, not reachable */
 	memset(map->area, ROUTING_NOT_REACHABLE, WIDTH * WIDTH * HEIGHT);
-	memset(tfList, 0, WIDTH * WIDTH * HEIGHT);
 	map->fblist = fb_list;
 	map->fblength = fb_length;
 
-	VectorCopy(from, exclude_from_forbiddenlist); /**< Prepare exclusion of starting-location (i.e. this should be ent-pos or le-pos) in Grid_CheckForbidden */
-
-	xl = xh = from[0];	/**< Guess: set minimum and maximum x value to start value? See Grid_MoveMarkRoute. */
-	yl = yh = from[1];	/**< Guess: set minimum and maximum y value to start value? See Grid_MoveMarkRoute. */
 
 	if (distance > MAX_ROUTE)
 		distance = MAX_ROUTE;
 
-	/* first step */
-	tf = 1;
-	stf = 2;
-	R_AREA(map, xl, yl, from[2]) = 0;	/**< This position does not need any TUs to move there. */
-	switch (actor_size) {
-		case ACTOR_SIZE_NORMAL:
-			tfList[from[2]][yl][xl] = 1;	/* (Guess: check this field in any case - because it's now the same value as "tf") */
-			break;
-		case ACTOR_SIZE_2x2:
-			tfList[from[2]][yl][xl] = 1;
-#if 1
-			/**  @todo 2x2 support really needed? */
-			tfList[from[2]][yl+1][xl] = 1;
-			tfList[from[2]][yl][xl+1] = 1;
-			tfList[from[2]][yl+1][xl+1] = 1;
-#endif
-			break;
-		default:
-			Com_Error(ERR_DROP, "Grid_MoveCalc: unknown actor-size: %i", actor_size);
-			break;
+	VectorCopy(from, exclude_from_forbiddenlist); /**< Prepare exclusion of starting-location (i.e. this should be ent-pos or le-pos) in Grid_CheckForbidden */
+
+	PQueueInitialise(&pqueue, 1024);
+	PQueuePush(&pqueue, from, 0);
+	R_AREA(map, from[0], from[1], from[2]) = 0;
+
+	count = 0;
+	while (!PQueueIsEmpty(&pqueue)) {
+		PQueuePop(&pqueue, pos);
+		count++;
+
+		/* for A*
+		if pos = goal
+			return pos
+		*/
+		for (dir = 0; dir < DIRECTIONS; dir++) {
+			if ((actor_size == ACTOR_SIZE_2x2) && (dir > 3)) {
+				/* Ignore diagonal move for 2x2 and other units */
+				break;
+			}
+			Grid_MoveMark(map, pos, dir, actor_size, &pqueue);
+		}
+
 	}
-
-	for (i = 0; i < distance; i++) {
-		/* Go on checking */
-		/**
-		 * Guess: extend the rectangle/area to check around the starting location (e.g. 1x1 will become 3x3 - unless it reaches a border)
-		 * If that is the case we need to set xl, xh, yl and yh differently for 2x2 units.
-		 */
-		if (xl > 0)
-			xl--;
-		if (yl > 0)
-			yl--;
-		if (xh < WIDTH - 1)
-			xh++;
-		if (yh < WIDTH - 1)
-			yh++;
-
-		Grid_MoveMarkRoute(map, xl, yl, xh, yh, actor_size);
-
-		/* swap test flag */
-		stf = tf;	/* (Guess: buffer value?) */
-		tf ^= 3;	/* Swap value from 1 to 2 or vice versa */
-	}
+	/* Com_Printf("Loop: %i", count); */
+	PQueueFree(&pqueue);
 }
-
 
 /**
  * @brief Caches the calculated move

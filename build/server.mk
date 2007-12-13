@@ -16,6 +16,7 @@ SERVER_SRCS += \
 	common/dbuffer.c \
 	common/net.c \
 	common/netpack.c \
+	common/pqueue.c \
 	common/scripts.c \
 	\
 	server/sv_ccmds.c \
