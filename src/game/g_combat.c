@@ -618,8 +618,8 @@ static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd,
 
 	VecToAngles(startV, angles);
 	/* @todo Remove the 2.0f and use gaussian random number instead of crand() */
-	angles[PITCH] += crand() * 2.0f * (WEAPON_BALANCE * fd->spread[0] * (SKILL_BALANCE_MINIMUM + SKILL_BALANCE * acc));
-	angles[YAW] += crand() * 2.0f * (WEAPON_BALANCE * fd->spread[1] * (SKILL_BALANCE_MINIMUM + SKILL_BALANCE * acc));
+	angles[PITCH] += crand() * 2.0f * (fd->spread[0] * (WEAPON_BALANCE + SKILL_BALANCE * acc));
+	angles[YAW] += crand() * 2.0f * (fd->spread[1] * (WEAPON_BALANCE + SKILL_BALANCE * acc));
 	AngleVectors(angles, startV, NULL, NULL);
 	VectorScale(startV, speed, startV);
 
@@ -802,11 +802,11 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 	/* Base spread multiplier comes from the firedef's spread values. Soldier skills further modify the spread.
 	 * A good soldier will tighten the spread, a bad one will widen it, for skillBalanceMinimum values between 0 and 1.*/
 	if ((ent->state & STATE_CROUCHED) && fd->crouch) {
-		angles[PITCH] += gauss1 * (WEAPON_BALANCE * fd->spread[0] * (SKILL_BALANCE_MINIMUM + SKILL_BALANCE * acc)) * fd->crouch;
-		angles[YAW] += gauss2 * (WEAPON_BALANCE * fd->spread[1] * (SKILL_BALANCE_MINIMUM + SKILL_BALANCE * acc)) * fd->crouch;
+		angles[PITCH] += gauss1 * (fd->spread[0] * (WEAPON_BALANCE + SKILL_BALANCE * acc)) * fd->crouch;
+		angles[YAW] += gauss2 * (fd->spread[1] * (WEAPON_BALANCE + SKILL_BALANCE * acc)) * fd->crouch;
 	} else {
-		angles[PITCH] += gauss1 * (WEAPON_BALANCE * fd->spread[0] * (SKILL_BALANCE_MINIMUM + SKILL_BALANCE * acc));
-		angles[YAW] += gauss2 * (WEAPON_BALANCE * fd->spread[1] * (SKILL_BALANCE_MINIMUM + SKILL_BALANCE * acc));
+		angles[PITCH] += gauss1 * (fd->spread[0] * (WEAPON_BALANCE + SKILL_BALANCE * acc));
+		angles[YAW] += gauss2 * (fd->spread[1] * (WEAPON_BALANCE + SKILL_BALANCE * acc));
 	}
 	/* Convert changed angles into new direction. */
 	AngleVectors(angles, dir, NULL, NULL);
