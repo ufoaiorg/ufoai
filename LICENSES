@@ -774,6 +774,8 @@ base/models/objects/alien/ion_condenser/ion_condenser.jpg | GNU General Public L
 base/models/objects/alien/ion_condenser/ion_condenser.md2 | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
 base/models/objects/alien/ion_condenser/ion_condenser.mtl | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
 base/models/objects/alien/ion_condenser/ion_condenser.png | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
+base/models/objects/alien/panel/panel.jpg | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
+base/models/objects/alien/panel/panel_uvw.jpg | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
 base/models/objects/alien/ufo_crashed/acrash_engine.jpg | GNU General Public License 2.0
 base/models/objects/alien/ufo_crashed/acrash_engine.md2 | GNU General Public License 2.0
 base/models/objects/alien/ufo_crashed/acrash_hull.jpg | GNU General Public License 2.0
