@@ -26,6 +26,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
+/* Define radar range */
+const float baseRadarRange = 30.0f;
+const float aircraftRadarRange = 7.0f;
+/* outer circle radar is bigger than inner circle radar by 100 * outerCircleRatio percent */
+static const float outerCircleRatio = 0.1f;
+
 /**
  * @brief Show Radar coverage
  * @sa MAP_MapDrawEquidistantPoints
@@ -38,7 +44,7 @@ void RADAR_DrawCoverage (const menuNode_t* node, const radar_t* radar, vec2_t po
 	/* Set color */
 	R_Color(color);
 
-	rangeTracking = 1.1f * radar->range;
+	rangeTracking = (1.0f + outerCircleRatio) * radar->range;
 
 	MAP_MapDrawEquidistantPoints(node, pos, radar->range, color);
 	MAP_MapDrawEquidistantPoints(node, pos, rangeTracking, color);
@@ -174,7 +180,7 @@ qboolean RADAR_CheckUfoSensored (radar_t* radar, vec2_t posRadar,
 	numAircraftSensored = RADAR_IsUfoSensored(radar, num);	/* indice of ufo in radar list */
 	dist = MAP_GetDistance(posRadar, ufo->pos);	/* Distance from radar to ufo */
 
-	if (radar->range + (wasUfoSensored ? radar->range / 10 : 0) > dist) {
+	if (radar->range + (wasUfoSensored ? radar->range * outerCircleRatio : 0) > dist) {
 		/* Ufo is inside the radar range */
 		if (numAircraftSensored < 0) {
 			/* Ufo was not sensored by the radar */

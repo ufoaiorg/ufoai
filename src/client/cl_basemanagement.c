@@ -406,7 +406,7 @@ static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* 
 		base->hospitalMissionListCount = 0;
 		break;
 	case B_RADAR:
-		RADAR_ChangeRange(&base->radar, 30);
+		RADAR_ChangeRange(&base->radar, baseRadarRange);
 		break;
 	default:
 		break;
