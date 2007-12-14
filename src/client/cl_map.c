@@ -935,6 +935,16 @@ static void MAP_GetGeoscapeAngle (float *Vector)
 			maxEventIdx++;
 		}
 	}
+
+	/* if there's nothing to center the view on, just go to 0,0 pos */
+	if (maxEventIdx < 0) {
+		if (cl_3dmap->integer)
+			VectorSet(Vector, 0, 0, 0);
+		else
+			Vector2Set(Vector, 0, 0);
+		return;
+	}
+
 	/* check centerOnEventIdx is within the bounds */
 	if (centerOnEventIdx < 0)
 		centerOnEventIdx = maxEventIdx;
