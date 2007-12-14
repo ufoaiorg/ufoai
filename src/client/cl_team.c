@@ -1594,6 +1594,11 @@ static void CL_SaveTeamMultiplayerSlot_f (void)
 {
 	char filename[MAX_OSPATH];
 
+	if (!baseCurrent || !E_CountHired(baseCurrent, EMPL_SOLDIER)) {
+		MN_Popup(_("Note"), _("Error saving team. Nothing to save yet."));
+		return;
+	}
+
 	/* save */
 	Com_sprintf(filename, sizeof(filename), "%s/save/team%s.mpt", FS_Gamedir(), Cvar_VariableString("mn_slot"));
 	if (!CL_SaveTeamMultiplayer(filename))
