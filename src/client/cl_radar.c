@@ -32,7 +32,7 @@ const float aircraftRadarRange = 7.0f;
 /* outer circle radar is bigger than inner circle radar by 100 * outerCircleRatio percent */
 static const float outerCircleRatio = 0.41f;
 /* this is the multiplier applied to the radar range when the radar levels up */
-const float radarUpgradeMultiplier = 1.3f;
+static const float radarUpgradeMultiplier = 1.3f;
 
 /**
  * @brief Show Radar coverage
