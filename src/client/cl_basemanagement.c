@@ -565,7 +565,8 @@ static void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 				if (firstEnable)
 					B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][buildingIdx].buildingType, base);
 				test = qtrue;
-			}
+			} else
+				B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][buildingIdx].buildingType, base);
 		}
 	}
 
