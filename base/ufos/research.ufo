@@ -2849,6 +2849,25 @@ tech rs_building_radar
 	time	0
 }
 
+tech rs_building_radar_adv
+{
+	type	building
+	description {
+		default "_b_radar_txt"
+	}
+	// pre_description	"_b_radar_pre_txt"
+	up_chapter	buildings
+
+	require_AND
+	{
+		tech rs_building_powerplant
+		tech rs_craft_alien_astrogation
+	}
+
+	provides	building_radar_adv
+	time	0
+}
+
 tech rs_building_storage
 {
 	type	building
