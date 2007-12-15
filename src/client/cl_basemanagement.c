@@ -409,6 +409,16 @@ static qboolean B_CheckUpdateBuilding (building_t* building, base_t* base)
  */
 static void B_UpdateOneBaseBuildingStatus (buildingType_t type, base_t* base)
 {
+	float level;
+
+	switch (type) {
+	case B_RADAR:
+		level = B_GetMaxBuildingLevel(base, B_RADAR);
+		Radar_Initialise(&base->radar, baseRadarRange, level);
+		break;
+	default:
+		break;
+	}
 }
 
 /**
