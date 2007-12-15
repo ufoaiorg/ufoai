@@ -359,7 +359,7 @@ static float B_GetMaxBuildingLevel (base_t* base, buildingType_t type)
 
 	if (base->hasBuilding[type]) {
 		for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-			if (gd.buildings[base->idx][i].buildingType == type) {
+			if (gd.buildings[base->idx][i].buildingType == type && gd.buildings[base->idx][i].buildingStatus == B_STATUS_WORKING) {
 				max = max(gd.buildings[base->idx][i].level, max);
 			}
 		}
