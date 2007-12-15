@@ -166,6 +166,7 @@ extern cvar_t *r_ext_combine;
 extern cvar_t *r_ext_lockarrays;
 extern cvar_t *r_ext_texture_compression;
 extern cvar_t *r_ext_s3tc_compression;
+extern cvar_t *r_intel_hack;
 
 extern cvar_t *r_checkerror;
 extern cvar_t *r_lightmap;
