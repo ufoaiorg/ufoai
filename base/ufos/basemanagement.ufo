@@ -349,8 +349,7 @@ building building_radar_adv
 	varcosts	2600
 	map_name	"radar_adv"
 	pedia		rs_building_radar_adv
-	firstbase	true
-	pos	"1 4"
+	firstbase	false
 	more_than_one	true
 	type		radar
 	level		2.0
