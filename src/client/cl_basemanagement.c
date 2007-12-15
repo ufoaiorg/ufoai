@@ -678,10 +678,12 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	case B_QUARTERS:
 	case B_DEFENSE_MISSILE:
 	case B_DEFENSE_LASER:
+	case B_RADAR:
 		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0) {
 			B_SetBuildingStatus(base, type, qfalse);
 			test = qtrue;
 		}
+		B_UpdateOneBaseBuildingStatus(type, base);
 		break;
 	case B_ANTIMATTER:
 		cap = CAP_ANTIMATTER;
