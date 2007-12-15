@@ -346,6 +346,29 @@ static void B_BaseInit_f (void)
 }
 
 /**
+ * @brief Get the maximum level of a building type in a base.
+ * @param[in] base Pointer to base.
+ * @param[in] Building type to get the maximum level for.
+ * @note This function checks base status for particular buildings.
+ * @return 0.0f if there is no (operational) building of the requested type in the base, otherwise the maximum level.
+ */
+static float B_GetMaxBuildingLevel (base_t* base, buildingType_t type)
+{
+	int i;
+	float max = 0.0f;
+
+	if (base->hasBuilding[type]) {
+		for (i = 0; i < gd.numBuildings[base->idx]; i++) {
+			if (gd.buildings[base->idx][i].buildingType == type) {
+				max = max(gd.buildings[base->idx][i].level, max);
+			}
+		}
+	}
+
+	return max;
+}
+
+/**
  * @brief Check base status for particular buildings as well as capacities.
  * @param[in] building Pointer to building.
  * @param[in] base Pointer to base with given building.
@@ -398,6 +421,8 @@ static void B_UpdateOneBaseBuildingStatus (buildingType_t type, base_t* base)
  */
 static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* base)
 {
+	float level;
+
 	switch (type) {
 	case B_HOSPITAL:
 		/* Reset all arrays . */
@@ -407,7 +432,8 @@ static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* 
 		base->hospitalMissionListCount = 0;
 		break;
 	case B_RADAR:
-		RADAR_ChangeRange(&base->radar, baseRadarRange);
+		level = B_GetMaxBuildingLevel(base, B_RADAR);
+		Radar_Initialise(&base->radar, baseRadarRange, level);
 		break;
 	default:
 		break;
@@ -429,7 +455,7 @@ static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t*
 		break;
 	case B_RADAR:
 		if (!base->hasBuilding[type])
-			RADAR_ChangeRange(&base->radar, 0);
+			Radar_Initialise(&base->radar, 0.0f, 0.0f);
 		break;
 	default:
 		break;
@@ -2296,7 +2322,7 @@ static void B_BuildBase_f (void)
 			else
 				Com_sprintf(messageBuffer, sizeof(messageBuffer), _("A new base has been built: %s"), mn_base_title->string);
 			MN_AddNewMessage(_("Base built"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
-			Radar_Initialise(&(baseCurrent->radar), 0);
+			Radar_Initialise(&(baseCurrent->radar), 0.0f, 1.0f);
 			B_ResetAllStatusAndCapacities(baseCurrent, qtrue);
 			AL_FillInContainment(baseCurrent);
 
