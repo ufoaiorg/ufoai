@@ -37,6 +37,8 @@ base/maps/convoy01d.map | GNU General Public License 2.0 | Martin Gerhardy   Mac
 base/maps/convoy01n.map | GNU General Public License 2.0 | Martin Gerhardy   Maciej Wierzbicki
 base/maps/corrupt04.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/corrupt_city04d.map | GNU General Public License 2.0 | Martin Gerhardy | Map parts taken from SparX's maps
+base/maps/corrupt_city04n.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryd.ump | GNU General Public License 2.0
 base/maps/countryd/c_c01.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryd/c_c02.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryd/c_d01.map | GNU General Public License 2.0 | Martin Gerhardy
@@ -91,6 +93,7 @@ base/maps/countryd/c_ufo_fighter.map | GNU General Public License 2.0 | Martin G
 base/maps/countryd/c_ufo_harvester.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryd/c_v01.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryd/c_v01_2.map | GNU General Public License 2.0 | Martin Gerhardy
+base/maps/countryn.ump | GNU General Public License 2.0
 base/maps/countryn/c_c01.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryn/c_c02.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/countryn/c_d01.map | GNU General Public License 2.0 | Martin Gerhardy
@@ -155,6 +158,7 @@ base/maps/excavation06d.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/excavation06n.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/farm08d.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/farm08n.map | GNU General Public License 2.0 | 'SparX' Beyeler
+base/maps/frozend.ump | GNU General Public License 2.0
 base/maps/frozend/st_drop.map | GNU General Public License 2.0
 base/maps/frozend/st_h01.map | GNU General Public License 2.0
 base/maps/frozend/st_h02.map | GNU General Public License 2.0
@@ -175,6 +179,7 @@ base/maps/frozend/st_n03.map | GNU General Public License 2.0
 base/maps/frozend/st_n04.map | GNU General Public License 2.0
 base/maps/frozend/st_n05.map | GNU General Public License 2.0
 base/maps/frozend/st_ufofighter.map | GNU General Public License 2.0
+base/maps/frozenn.ump | GNU General Public License 2.0
 base/maps/frozenn/st_drop.map | GNU General Public License 2.0
 base/maps/frozenn/st_h01.map | GNU General Public License 2.0
 base/maps/frozenn/st_h02.map | GNU General Public License 2.0
@@ -202,11 +207,13 @@ base/maps/harbor07n.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/harvester05.map | GNU General Public License 2.0
 base/maps/harvestercrash04d.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/harvestercrash04n.map | GNU General Public License 2.0 | 'SparX' Beyeler
+base/maps/iced.ump | GNU General Public License 2.0
 base/maps/iced/ice_drop.map | GNU General Public License 2.0
 base/maps/iced/ice_r01.map | GNU General Public License 2.0
 base/maps/iced/ice_r02.map | GNU General Public License 2.0
 base/maps/iced/ice_r03.map | GNU General Public License 2.0
 base/maps/iced/ice_r04.map | GNU General Public License 2.0
+base/maps/icen.ump | GNU General Public License 2.0
 base/maps/icen/ice_drop.map | GNU General Public License 2.0
 base/maps/icen/ice_r01.map | GNU General Public License 2.0
 base/maps/icen/ice_r02.map | GNU General Public License 2.0
@@ -234,6 +241,7 @@ base/maps/oriental05d.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/oriental05n.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/oriental06d.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/oriental06n.map | GNU General Public License 2.0 | 'SparX' Beyeler
+base/maps/orientald.ump | GNU General Public License 2.0
 base/maps/orientald/or_drop.map | GNU General Public License 2.0
 base/maps/orientald/or_h01.map | GNU General Public License 2.0
 base/maps/orientald/or_h02.map | GNU General Public License 2.0
@@ -250,6 +258,7 @@ base/maps/orientald/or_h12.map | GNU General Public License 2.0
 base/maps/orientald/or_h13.map | GNU General Public License 2.0
 base/maps/orientald/or_h14.map | GNU General Public License 2.0
 base/maps/orientald/or_h15.map | GNU General Public License 2.0
+base/maps/orientaln.ump | GNU General Public License 2.0
 base/maps/orientaln/or_drop.map | GNU General Public License 2.0
 base/maps/orientaln/or_h01.map | GNU General Public License 2.0
 base/maps/orientaln/or_h02.map | GNU General Public License 2.0
@@ -300,6 +309,7 @@ base/maps/shelterd/shelter_room_n_b.map | GNU General Public License 2.0 | Bas F
 base/maps/shelterd/shelter_room_w_a.map | GNU General Public License 2.0 | Bas Fournier
 base/maps/shelterd/shelter_room_w_b.map | GNU General Public License 2.0 | Bas Fournier
 base/maps/shelterd/shelter_solid.map | GNU General Public License 2.0 | Bas Fournier
+base/maps/sheltern.ump | GNU General Public License 2.0
 base/maps/sheltern/shelter_corridor_ne.map | GNU General Public License 2.0 | Bas Fournier
 base/maps/sheltern/shelter_corridor_nw.map | GNU General Public License 2.0 | Bas Fournier
 base/maps/sheltern/shelter_entrance.map | GNU General Public License 2.0 | Bas Fournier
@@ -325,11 +335,13 @@ base/maps/terrain02n.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/terrain08d.map | GNU General Public License 2.0
 base/maps/terrain08n.map | GNU General Public License 2.0
 base/maps/test_particles.map | GNU General Public License 2.0
+base/maps/test_surflight.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/test_waypoints.map | GNU General Public License 2.0
 base/maps/tower06d.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/tower06n.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/transport06d.map | GNU General Public License 2.0
 base/maps/transport06n.map | GNU General Public License 2.0
+base/maps/tropicd.ump | GNU General Public License 2.0
 base/maps/tropicd/tr_drop.map | GNU General Public License 2.0
 base/maps/tropicd/tr_f01.map | GNU General Public License 2.0
 base/maps/tropicd/tr_f02.map | GNU General Public License 2.0
@@ -349,6 +361,7 @@ base/maps/tropicd/tr_r02.map | GNU General Public License 2.0
 base/maps/tropicd/tr_r03.map | GNU General Public License 2.0
 base/maps/tropicd/tr_r04.map | GNU General Public License 2.0
 base/maps/tropicd/tr_r05.map | GNU General Public License 2.0
+base/maps/tropicn.ump | GNU General Public License 2.0
 base/maps/tropicn/tr_drop.map | GNU General Public License 2.0
 base/maps/tropicn/tr_f01.map | GNU General Public License 2.0
 base/maps/tropicn/tr_f02.map | GNU General Public License 2.0
@@ -392,8 +405,11 @@ base/maps/ucn/uc_ufo_fighter.map | GNU General Public License 2.0 | Martin Gerha
 base/maps/ucn/uc_ufo_harvester.map | GNU General Public License 2.0 | Martin Gerhardy
 base/maps/ucn/uc_ufo_scout.map | GNU General Public License 2.0 | Martin Gerhardy | prefab_ufo_scout
 base/maps/ucn/uc_ufo_supply.map | GNU General Public License 2.0 | Martin Gerhardy | prefab_ufo_supply and terrain08
+base/maps/ufocrashd.ump | GNU General Public License 2.0
+base/maps/ufocrashn.ump | GNU General Public License 2.0
 base/maps/village07d.map | GNU General Public License 2.0 | 'SparX' Beyeler
 base/maps/village07n.map | GNU General Public License 2.0 | 'SparX' Beyeler
+base/maps/villaged.ump | GNU General Public License 2.0
 base/maps/villaged/vil_c01.map | GNU General Public License 2.0
 base/maps/villaged/vil_c02.map | GNU General Public License 2.0
 base/maps/villaged/vil_c03.map | GNU General Public License 2.0
@@ -428,6 +444,7 @@ base/maps/villaged/vil_s12.map | GNU General Public License 2.0
 base/maps/villaged/vil_s13.map | GNU General Public License 2.0
 base/maps/villaged/vil_s14.map | GNU General Public License 2.0
 base/maps/villaged/vil_s15.map | GNU General Public License 2.0
+base/maps/villagen.ump | GNU General Public License 2.0
 base/maps/villagen/vil_c01.map | GNU General Public License 2.0
 base/maps/villagen/vil_c02.map | GNU General Public License 2.0
 base/maps/villagen/vil_c03.map | GNU General Public License 2.0
@@ -745,6 +762,10 @@ base/models/geoscape/ufo_scout.md2 | GNU General Public License 2.0 | Willem Sit
 base/models/geoscape/ufo_scout.tga | GNU General Public License 2.0 | Willem Sitters | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
 base/models/geoscape/ufo_supply.md2 | GNU General Public License 2.0 | Willem Sitters | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
 base/models/geoscape/ufo_supply.tga | GNU General Public License 2.0 | Willem Sitters | Based on original model created by Lukas Beyeler (Rasta), see base/models/aircrafts/
+base/models/objects/aircraft/heli/heli.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/models/objects/aircraft/heli/heli.md2 | GNU General Public License 2.0 | Ingo Ruhnke <grumbel@gmx.de> with modifications by Werner Höhrer | 'heli_parented.blend' by Ingo Ruhnke <grumbel@gmx.de> released under the GPL and CC-by-sa
+base/models/objects/aircraft/heli/heli_uvw.tga | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
+base/models/objects/aircraft/heli/license.txt | GNU General Public License 2.0
 base/models/objects/aircraft/heli2/heli2.jpg | GNU General Public License 2.0 | Olivier "Kracken" Alloschery
 base/models/objects/aircraft/heli2/heli2.md2 | GNU General Public License 2.0 and Creative Commons attribution share-alike | Ingo Ruhnke <grumbel@gmx.de>
 base/models/objects/alien/disassembled/ufo_fighter.jpg | GNU General Public License 2.0
@@ -753,6 +774,12 @@ base/models/objects/alien/disassembled/ufo_harvester.jpg | GNU General Public Li
 base/models/objects/alien/disassembled/ufo_harvester.md2 | GNU General Public License 2.0
 base/models/objects/alien/disassembled/ufo_scout.jpg | GNU General Public License 2.0
 base/models/objects/alien/disassembled/ufo_scout.md2 | GNU General Public License 2.0
+base/models/objects/alien/ion_condenser/ion_condenser.jpg | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
+base/models/objects/alien/ion_condenser/ion_condenser.md2 | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
+base/models/objects/alien/ion_condenser/ion_condenser.mtl | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
+base/models/objects/alien/ion_condenser/ion_condenser.png | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
+base/models/objects/alien/panel/panel.jpg | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
+base/models/objects/alien/panel/panel_uvw.jpg | GNU General Public License 2.0 | Jake Gustafson (ProtoArmor)
 base/models/objects/alien/ufo_crashed/acrash_engine.jpg | GNU General Public License 2.0
 base/models/objects/alien/ufo_crashed/acrash_engine.md2 | GNU General Public License 2.0
 base/models/objects/alien/ufo_crashed/acrash_hull.jpg | GNU General Public License 2.0
@@ -2192,7 +2219,10 @@ base/textures/tex_material/c_yellow.jpg | GNU General Public License 2.0 | Werne
 base/textures/tex_material/c_yellow2.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_material/c_yellow3.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_material/circle_gray.tga | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_material/metal002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2 photo by Martin Gerhardy
 base/textures/tex_material/metall006.jpg | Public Domain | Golgotha Public Domain Data
+base/textures/tex_material/metall007.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2 photo by Martin Gerhardy
+base/textures/tex_material/metall009.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer) | GPL2 photo by Martin Gerhardy
 base/textures/tex_mattn/art001.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/automat.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_mattn/bark001.jpg | GNU General Public License 2.0 | Martin Gerhardy

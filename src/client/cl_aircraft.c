@@ -37,7 +37,6 @@ aircraft_t aircraft_samples[MAX_AIRCRAFT];		/**< Available aircraft types. */
  */
 int numAircraft_samples = 0;
 
-static const int AIRCRAFT_RADAR_RANGE = 7;
 static const int DISTANCE = 15;
 static const int AIRCRAFT_SIZE_FOR_BIG_HANGAR = 8;
 
@@ -708,7 +707,7 @@ void AIR_NewAircraft (base_t *base, const char *name)
 		MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 		Com_DPrintf(DEBUG_CLIENT, "Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
 		Vector2Copy(base->pos, aircraft->pos);
-		Radar_Initialise(&(aircraft->radar), AIRCRAFT_RADAR_RANGE);
+		Radar_Initialise(&(aircraft->radar), aircraftRadarRange);
 
 		gd.numAircraft++;		/**< Increase the global number of aircraft. */
 		base->numAircraftInBase++;	/**< Increase the number of aircraft in the base. */
