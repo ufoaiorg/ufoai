@@ -5,10 +5,10 @@ EXT=pk3
 echo "generating archives"
 echo
 echo "pics and textures..."
-(find pics -type f -print; find textures -type f -print) | egrep -v '(\/\.svn\/)' | awk '/\.jpg$/||/\.tga$/||/\.pcx$/||/\.bmp$/||/\.png$/ {print}' | xargs zip -u9@ 0pics.${EXT}
+(find pics -type f -print; find textures -type f -print) | egrep -v '(\/\.svn\/)' | awk '/\.jpg$/||/\.tga$/||/\.png$/ {print}' | xargs zip -u9@ 0pics.${EXT}
 #zip -ru9 0pics.zip pics textures -i \*.jpg \*.tga \*.png \*.bmp \*.pcx
 echo "models..."
-find models -type f -print | awk '{if ($0 !~ /\.svn/) {if ($0 !~ /\/misc_source_files\//) {print}}}' | awk '/\.md2$/||/\.jpg$/||/\.png$/||/\.tga$/||/\.anm$/||/\.txt$/||/\.tag$/ {print}' | xargs zip -u9@ 0models.${EXT}
+find models -type f -print | awk '{if ($0 !~ /\.svn/) {print}' | awk '/\.md2$/||/\.md3$/||/\.jpg$/||/\.png$/||/\.tga$/||/\.anm$/||/\.txt$/||/\.tag$/ {print}' | xargs zip -u9@ 0models.${EXT}
 #zip -ru9 0models.zip models -i \*.md2 \*.jpg \*.tga \*.png \*.txt \*.anm \*.tag
 echo "sound..."
 (find sound -type f -print) | egrep -v '(\/\.svn\/)' | awk '/\.txt$/||/\.wav$/ {print}' | xargs zip -u9@ 0snd.${EXT}
