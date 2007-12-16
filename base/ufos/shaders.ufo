@@ -1,7 +1,7 @@
 //
 // valid flags:
 // filename (only when frag or vertex are true): filename to shader file
-// frag, vertex, emboss (emboss_2, emboss_low, emboss_high), blur, light, edge : boolean
+// frag, vertex: boolean
 // glmode replace, blend, add, filter (default), invfilter
 //
 // TODO: To bind one shader to more than one image we should introduce an image variable that

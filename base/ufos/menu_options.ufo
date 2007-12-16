@@ -273,18 +273,6 @@ menu options_video
 		align	ur
 	}
 
-	string imagefilter_str
-	{
-		string	"_Image Filter:"
-		pos		"500 315"
-	}
-	checkbox imagefilter
-	{
-		cvar	"*cvar r_imagefilter"
-		pos		"840 315"
-		align	ur
-	}
-
 	string isomode_str
 	{
 		string	"_Isometric Mode:"
