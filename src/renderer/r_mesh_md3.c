@@ -189,6 +189,8 @@ void R_DrawAliasMD3Model (entity_t *e)
 		R_DrawAliasMD3FrameLerp(paliashdr, paliashdr->meshes[i], e->as.backlerp);
 	}
 
+	qglDisable(GL_LIGHTING);
+
 	if (e->flags & RF_TRANSLUCENT)
 		RSTATE_DISABLE_BLEND
 
