@@ -85,40 +85,6 @@ static image_t *R_TextureAnimation (mBspTexInfo_t * tex)
 	return tex->image;
 }
 
-void R_DrawTriangleOutlines (void)
-{
-	int i, j;
-	mBspPoly_t *p;
-
-	if (!r_showtris->integer)
-		return;
-
-	qglDisable(GL_TEXTURE_2D);
-	qglDisable(GL_DEPTH_TEST);
-	R_Color(NULL);
-
-	for (i = 0; i < MAX_LIGHTMAPS; i++) {
-		mBspSurface_t *surf;
-
-		for (surf = gl_lms.lightmap_surfaces[i]; surf != 0; surf = surf->lightmapchain) {
-			p = surf->polys;
-			for (; p; p = p->chain) {
-				for (j = 2; j < p->numverts; j++) {
-					qglBegin(GL_LINE_STRIP);
-					qglVertex3fv(p->verts[0]);
-					qglVertex3fv(p->verts[j - 1]);
-					qglVertex3fv(p->verts[j]);
-					qglVertex3fv(p->verts[0]);
-					qglEnd();
-				}
-			}
-		}
-	}
-
-	qglEnable(GL_DEPTH_TEST);
-	qglEnable(GL_TEXTURE_2D);
-}
-
 /**
  * @param[in] scroll != 0 for SURF_FLOWING
  */
@@ -197,13 +163,9 @@ static void R_BlendLightmaps (void)
 	/* don't bother writing Z */
 	qglDepthMask(GL_FALSE);
 
-	/* set the appropriate blending mode unless we're only looking at the
-	 * lightmaps. */
-	if (!r_lightmap->integer) {
-		RSTATE_ENABLE_BLEND
-
-		qglBlendFunc(GL_ZERO, GL_SRC_COLOR);
-	}
+	/* set the appropriate blending mode for the lightmaps */
+	RSTATE_ENABLE_BLEND
+	qglBlendFunc(GL_ZERO, GL_SRC_COLOR);
 
 	if (currentmodel == rTiles[0])
 		c_visible_lightmaps = 0;
@@ -572,12 +534,11 @@ static void R_DrawInlineBrushModel (void)
 	mBspSurface_t *psurf, *s;
 	dlight_t *lt;
 	qboolean duplicate = qfalse;
+
 	/* calculate dynamic lighting for bmodel */
-	if (!r_flashblend->integer) {
-		lt = refdef.dlights;
-		for (k = 0; k < refdef.num_dlights; k++, lt++)
-			R_MarkLights(lt, 1 << k, currentmodel->bsp.nodes + currentmodel->bsp.firstnode);
-	}
+	lt = refdef.dlights;
+	for (k = 0; k < refdef.num_dlights; k++, lt++)
+		R_MarkLights(lt, 1 << k, currentmodel->bsp.nodes + currentmodel->bsp.firstnode);
 
 	psurf = &currentmodel->bsp.surfaces[currentmodel->bsp.firstmodelsurface];
 

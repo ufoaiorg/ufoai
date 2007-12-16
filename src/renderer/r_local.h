@@ -79,7 +79,6 @@ extern cvar_t *r_drawclouds;
 extern cvar_t *r_drawworld;
 extern cvar_t *r_nocull;
 extern cvar_t *r_isometric;
-extern cvar_t *r_lerpmodels;
 
 extern cvar_t *r_anisotropic;
 extern cvar_t *r_texture_lod;   /* lod_bias */
@@ -97,7 +96,6 @@ extern cvar_t *r_ext_s3tc_compression;
 extern cvar_t *r_intel_hack;
 
 extern cvar_t *r_checkerror;
-extern cvar_t *r_lightmap;
 
 extern cvar_t *r_showbox;
 
@@ -108,8 +106,6 @@ extern cvar_t *r_shadows;
 extern cvar_t *r_dynamic;
 extern cvar_t *r_soften;
 extern cvar_t *r_maxtexres;
-extern cvar_t *r_showtris;
-extern cvar_t *r_flashblend;
 extern cvar_t *r_modulate;
 extern cvar_t *r_drawbuffer;
 extern cvar_t *r_driver;
@@ -153,7 +149,6 @@ void R_DrawBrushModel(entity_t * e);
 void R_DrawBox(const entity_t * e);
 void R_DrawHighlight(const entity_t * e);
 void R_DrawLevelBrushes(void);
-void R_RenderDlights(void);
 void R_DrawAlphaSurfaces(void);
 void R_InitMiscTexture(void);
 void R_DrawInitLocal(void);
@@ -162,7 +157,6 @@ qboolean R_CullBox(vec3_t mins, vec3_t maxs);
 void R_RotateForEntity(entity_t * e);
 
 void R_DrawTurbSurface(mBspSurface_t * fa);
-void R_DrawTriangleOutlines(void);
 void R_MarkLights(dlight_t * light, int bit, mBspNode_t * node);
 
 void R_DrawPtls(void);

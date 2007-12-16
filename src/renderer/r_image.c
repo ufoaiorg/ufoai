@@ -70,7 +70,7 @@ void R_UpdateTextures (int min, int max)
 		if (glt->type != it_pic) {
 			R_Bind(glt->texnum);
 			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, value);
-
+			R_CheckError();
 			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_min);
 			R_CheckError();
 			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);

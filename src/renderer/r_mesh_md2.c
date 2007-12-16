@@ -273,9 +273,6 @@ void R_DrawAliasMD2Model (entity_t * e)
 		e->as.oldframe = 0;
 	}
 
-	if (!r_lerpmodels->integer)
-		e->as.backlerp = 0;
-
 	/* select skin */
 	if (e->skin)
 		skin = e->skin;			/* custom player skin */
@@ -510,9 +507,6 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 		mi->oldframe = 0;
 	}
 
-	if (!r_lerpmodels->integer)
-		mi->backlerp = 0;
-
 	/* select skin */
 	if (mi->skin >= 0 && mi->skin < paliashdr->num_skins)
 		skin = mi->model->alias.skins_img[mi->skin];
@@ -627,9 +621,6 @@ void R_DrawModelParticle (modelInfo_t * mi)
 		Com_Printf("R_DrawModelParticle %s: no such oldframe %d\n", mi->model->name, mi->oldframe);
 		mi->oldframe = 0;
 	}
-
-	if (!r_lerpmodels->integer)
-		mi->backlerp = 0;
 
 	/* select skin */
 	if (mi->skin >= paliashdr->num_skins) {

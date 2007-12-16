@@ -78,7 +78,6 @@ cvar_t *r_3dmapradius;
 cvar_t *r_checkerror;
 cvar_t *r_drawbuffer;
 cvar_t *r_driver;
-cvar_t *r_lightmap;
 cvar_t *r_shadows;
 cvar_t *r_bitdepth;
 cvar_t *r_stencilsize;
@@ -89,8 +88,6 @@ cvar_t *r_dynamic;
 cvar_t *r_soften;
 cvar_t *r_modulate;
 cvar_t *r_maxtexres;
-cvar_t *r_showtris;
-cvar_t *r_flashblend;
 cvar_t *r_swapinterval;
 cvar_t *r_acceleratedvisuals;
 cvar_t *r_texturemode;
@@ -367,7 +364,7 @@ static void R_DrawEntitiesOnList (void)
 	qglDepthMask(1);			/* back to writing */
 }
 
-static int SignbitsForPlane (cBspPlane_t * out)
+static inline int SignbitsForPlane (cBspPlane_t * out)
 {
 	int bits, j;
 
@@ -448,15 +445,6 @@ static void R_Clear (void)
 
 	qglDepthRange(0, 1);
 	R_CheckError();
-
-	if (r_shadows->integer == 2) {
-		/* set the reference stencil value */
-		qglClearStencil(1);
-		R_CheckError();
-		/* reset stencil buffer */
-		qglClear(GL_STENCIL_BUFFER_BIT);
-		R_CheckError();
-	}
 }
 
 static void R_RenderView (void)
@@ -485,7 +473,6 @@ static void R_RenderView (void)
 
 	/* draw brushes on current worldlevel */
 	R_DrawLevelBrushes();
-	R_DrawTriangleOutlines();
 
 	R_TransformEntitiesOnList();
 	R_DrawEntitiesOnList();
@@ -496,8 +483,6 @@ static void R_RenderView (void)
 	R_DrawAlphaSurfaces();
 
 	R_DrawPtls();
-
-	R_RenderDlights();
 }
 
 /**
@@ -615,7 +600,6 @@ static void R_Register (void)
 	r_drawentities = Cvar_Get("r_drawentities", "1", 0, NULL);
 	r_drawworld = Cvar_Get("r_drawworld", "1", 0, NULL);
 	r_isometric = Cvar_Get("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
-	r_lerpmodels = Cvar_Get("r_lerpmodels", "1", 0, NULL);
 	r_nocull = Cvar_Get("r_nocull", "0", 0, NULL);
 	r_speeds = Cvar_Get("r_speeds", "0", 0, NULL);
 	r_anisotropic = Cvar_Get("r_anisotropic", "1", CVAR_ARCHIVE, NULL);
@@ -631,14 +615,11 @@ static void R_Register (void)
 
 	r_modulate = Cvar_Get("r_modulate", "1", CVAR_ARCHIVE, NULL);
 	r_checkerror = Cvar_Get("r_checkerror", "0", CVAR_ARCHIVE, "Check for opengl errors");
-	r_lightmap = Cvar_Get("r_lightmap", "0", 0, NULL);
-	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, NULL);
+	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, "Activate or deactivate shadows");
 	r_drawclouds = Cvar_Get("r_drawclouds", "0", CVAR_ARCHIVE, NULL);
 	r_dynamic = Cvar_Get("r_dynamic", "1", 0, "Render dynamic lightmaps");
 	r_soften = Cvar_Get("r_soften", "1", 0, "Apply blur to lightmap");
 	r_maxtexres = Cvar_Get("r_maxtexres", "2048", CVAR_ARCHIVE, NULL);
-	r_showtris = Cvar_Get("r_showtris", "0", 0, NULL);
-	r_flashblend = Cvar_Get("r_flashblend", "0", 0, "Controls the way dynamic lights are drawn");
 	r_driver = Cvar_Get("r_driver", "", CVAR_ARCHIVE, "You can define the opengl driver you want to use - empty if you want to use the system default");
 	r_texturemode = Cvar_Get("r_texturemode", "GL_LINEAR_MIPMAP_NEAREST", CVAR_ARCHIVE, NULL);
 	r_texturealphamode = Cvar_Get("r_texturealphamode", "default", CVAR_ARCHIVE, NULL);

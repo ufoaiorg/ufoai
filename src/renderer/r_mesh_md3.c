@@ -143,9 +143,6 @@ void R_DrawAliasMD3Model (entity_t *e)
 		e->as.oldframe = 0;
 	}
 
-	if (!r_lerpmodels->integer)
-		e->as.backlerp = 0;
-
 	if (r_shadows->integer && (e->flags & (RF_SHADOW | RF_BLOOD))) {
 		if (!(e->flags & RF_TRANSLUCENT))
 			qglDepthMask(GL_FALSE);
