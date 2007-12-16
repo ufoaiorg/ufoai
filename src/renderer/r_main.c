@@ -1021,10 +1021,11 @@ static inline void R_VerifyDriver (void)
 	if (!Q_stricmp((const char*)qglGetString(GL_RENDERER), "gdi generic"))
 		Com_Error(ERR_FATAL, "No hardware acceleration detected");
 #endif
-	if (strstr(r_config.vendor_string, "Intel") && r_intel_hack->integer) {
+	if (r_intel_hack->integer && strstr(r_config.vendor_string, "Intel")) {
 		/* HACK: */
 		Com_Printf("Activate texture compression for Intel chips\n");
 		Cvar_Set("r_ext_texture_compression", "1");
+		r_ext_texture_compression->modified = qfalse;
 	}
 }
 
