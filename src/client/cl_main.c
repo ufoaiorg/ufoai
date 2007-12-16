@@ -66,6 +66,7 @@ cvar_t *cl_connecttimeout; /* multiplayer connection timeout value (ms) */
 cvar_t *confirm_actions;
 
 static cvar_t *cl_precache;
+static cvar_t *cl_introshown;
 
 /* userinfo */
 static cvar_t *info_password;
@@ -1640,6 +1641,11 @@ void CL_InitAfter (void)
 	/* now make sure that all the precached models are stored until we quit the game
 	 * otherwise they would be freed with every map change */
 	R_SwitchModelMemPoolTag();
+
+	if (!cl_introshown->integer) {
+		Cbuf_AddText("cinematic intro;");
+		Cvar_Set("cl_introshown", "1");
+	}
 }
 
 /**
@@ -2047,6 +2053,7 @@ static void CL_InitLocal (void)
 	cl_mapzoommax = Cvar_Get("cl_mapzoommax", "6.0", CVAR_ARCHIVE, "Maximum geoscape zooming value");
 	cl_mapzoommin = Cvar_Get("cl_mapzoommin", "1.0", CVAR_ARCHIVE, "Minimum geoscape zooming value");
 	cl_precache = Cvar_Get("cl_precache", "1", CVAR_ARCHIVE, "Precache character models at startup - more memory usage but smaller loading times in the game");
+	cl_introshown = Cvar_Get("cl_introshown", "0", CVAR_ARCHIVE, "Only show the intro once at the initial start");
 	cl_particleWeather = Cvar_Get("cl_particleweather", "0", CVAR_ARCHIVE | CVAR_LATCH, "Switch the weather particles on or off");
 	cl_fps = Cvar_Get("cl_fps", "0", CVAR_ARCHIVE, "Show frames per second");
 	cl_shownet = Cvar_Get("cl_shownet", "0", CVAR_ARCHIVE, NULL);
