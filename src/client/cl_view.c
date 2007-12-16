@@ -483,10 +483,10 @@ void V_UpdateRefDef (void)
 
 	refdef.sun = &map_sun;
 	if (cls.state == ca_sequence || cls.state == ca_ptledit)
-		refdef.num_lights = 0;
+		refdef.num_mapdlights = 0;
 	else {
-		refdef.ll = map_lights;
-		refdef.num_lights = map_numlights;
+		refdef.mapdlights = map_lights;
+		refdef.num_mapdlights = map_numlights;
 	}
 }
 
@@ -531,7 +531,7 @@ void V_RenderView (void)
 	/* render the frame */
 	R_RenderFrame();
 	if (cl_stats->integer)
-		Com_Printf("ent:%i  lt:%i\n", r_numentities, r_numdlights);
+		Com_Printf("ent:%4i  lights:%i\n", r_numentities, r_numdlights);
 
 	if (cls.state == ca_sequence)
 		CL_Sequence2D();

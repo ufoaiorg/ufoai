@@ -155,7 +155,7 @@ typedef struct {
 	void (IMPORT *linkentity) (edict_t * ent);
 	void (IMPORT *unlinkentity) (edict_t * ent);	/* call before removing an interactive edict */
 
-	int (IMPORT *TestLine) (vec3_t start, vec3_t stop);
+	qboolean (IMPORT *TestLine) (vec3_t start, vec3_t stop);
 	float (IMPORT *GrenadeTarget) (vec3_t from, vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0);
 
 	void (IMPORT *MoveCalc) (struct routing_s * map, pos3_t from, int size, int distance, pos_t ** fb_list, int fb_length);

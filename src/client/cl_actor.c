@@ -3305,12 +3305,6 @@ void CL_ActorMouseTrace (void)
 	VectorCopy(pA, pB);
 	pA[2] += UNIT_HEIGHT;
 	pB[2] -= UNIT_HEIGHT;
-	/* FIXME: The next three lines are not endian safe - the min call returns
-	 * 0 (restingLevel is correct here after the first Grid_Fall call) and thus
-	 * the cursor is invisible on every other level than 1
-	 * This bug is most likly related to the see-through-walls bug - so maybe
-	 * some of the trace functions are the not endian safe and the result is
-	 * seen here */
 	/* FIXME: Shouldn't we check the return value of CM_TestLineDM here - maybe
 	 * we don't have to do the second Grid_Fall call at all and can safe a lot
 	 * of traces */

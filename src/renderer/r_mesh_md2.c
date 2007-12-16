@@ -251,7 +251,6 @@ static qboolean R_CullAliasMD2Model (vec4_t bbox[8], entity_t * e)
  */
 void R_DrawAliasMD2Model (entity_t * e)
 {
-	qboolean lightfixed;
 	vec4_t bbox[8];
 	mdl_md2_t *paliashdr;
 	image_t *skin;
@@ -304,11 +303,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 	c_alias_polys += paliashdr->num_tris;
 
 	/* set-up lighting */
-	lightfixed = e->flags & RF_LIGHTFIXED ? qtrue : qfalse;
-	if (lightfixed)
-		R_EnableLights(lightfixed, e->lightcolor, e->lightparam, e->lightambient);
-	else
-		R_EnableLights(lightfixed, trafo[e - refdef.entities].matrix, e->lightparam, NULL);
+	R_ModEnableLights(e);
 
 	/* FIXME: Does not work */
 	/* IR goggles override color */

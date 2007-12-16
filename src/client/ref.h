@@ -281,8 +281,8 @@ typedef struct {
 	ptlArt_t *ptl_art;
 
 	sun_t *sun;
-	int num_lights;
-	dlight_t *ll;
+	int num_mapdlights;	/**< amount of lights parsed from map file */
+	dlight_t *mapdlights;	/**< dynamic lights parsed from map file */
 
 	float fog;
 	float *fogColor;
