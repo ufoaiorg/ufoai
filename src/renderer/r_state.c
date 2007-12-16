@@ -335,3 +335,34 @@ void R_Color (const float *rgba)
 		R_CheckError();
 	}
 }
+
+typedef struct {
+	const char *name;
+	int minimize, maximize;
+} glTextureMode_t;
+
+static const glTextureMode_t gl_texture_modes[] = {
+	{"GL_NEAREST", GL_NEAREST, GL_NEAREST},
+	{"GL_LINEAR", GL_LINEAR, GL_LINEAR},
+	{"GL_NEAREST_MIPMAP_NEAREST", GL_NEAREST_MIPMAP_NEAREST, GL_NEAREST},
+	{"GL_LINEAR_MIPMAP_NEAREST", GL_LINEAR_MIPMAP_NEAREST, GL_LINEAR},
+	{"GL_NEAREST_MIPMAP_LINEAR", GL_NEAREST_MIPMAP_LINEAR, GL_NEAREST},
+	{"GL_LINEAR_MIPMAP_LINEAR", GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR}
+};
+#define NUM_R_MODES (sizeof(gl_texture_modes) / sizeof(glTextureMode_t))
+
+void R_TextureMode (const char *string)
+{
+	int i;
+
+	for (i = 0; i < NUM_R_MODES; i++) {
+		if (!Q_stricmp(gl_texture_modes[i].name, string))
+			break;
+	}
+
+	if (i == NUM_R_MODES) {
+		Com_Printf("bad filter name\n");
+		return;
+	}
+	R_UpdateTextures(gl_texture_modes[i].minimize, gl_texture_modes[i].maximize);
+}

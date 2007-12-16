@@ -48,17 +48,18 @@ int gl_compressed_alpha_format = 0;
 static int gl_filter_min = GL_LINEAR_MIPMAP_NEAREST;
 static int gl_filter_max = GL_LINEAR;
 
-#if 0
 /**
- * @brief Set the anisotropic value for textures
- * @note not used atm
+ * @brief Set the anisotropic and texture mode values for textures
  * @sa R_ScaleTexture
  */
-void R_UpdateAnisotropy (void)
+void R_UpdateTextures (int min, int max)
 {
 	int		i;
 	image_t	*glt;
 	float	value;
+
+	gl_filter_min = min;
+	gl_filter_max = max;
 
 	if (!r_state.anisotropic)
 		value = 0;
@@ -69,49 +70,7 @@ void R_UpdateAnisotropy (void)
 		if (glt->type != it_pic) {
 			R_Bind(glt->texnum);
 			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, value);
-			R_CheckError();
-		}
-	}
-}
-#endif
 
-typedef struct {
-	const char *name;
-	int minimize, maximize;
-} glTextureMode_t;
-
-static const glTextureMode_t gl_texture_modes[] = {
-	{"GL_NEAREST", GL_NEAREST, GL_NEAREST},
-	{"GL_LINEAR", GL_LINEAR, GL_LINEAR},
-	{"GL_NEAREST_MIPMAP_NEAREST", GL_NEAREST_MIPMAP_NEAREST, GL_NEAREST},
-	{"GL_LINEAR_MIPMAP_NEAREST", GL_LINEAR_MIPMAP_NEAREST, GL_LINEAR},
-	{"GL_NEAREST_MIPMAP_LINEAR", GL_NEAREST_MIPMAP_LINEAR, GL_NEAREST},
-	{"GL_LINEAR_MIPMAP_LINEAR", GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR}
-};
-#define NUM_R_MODES (sizeof(gl_texture_modes) / sizeof(glTextureMode_t))
-
-void R_TextureMode (const char *string)
-{
-	int i;
-	image_t *glt;
-
-	for (i = 0; i < NUM_R_MODES; i++) {
-		if (!Q_stricmp(gl_texture_modes[i].name, string))
-			break;
-	}
-
-	if (i == NUM_R_MODES) {
-		Com_Printf("bad filter name\n");
-		return;
-	}
-
-	gl_filter_min = gl_texture_modes[i].minimize;
-	gl_filter_max = gl_texture_modes[i].maximize;
-
-	/* change all the existing mipmap texture objects */
-	for (i = 0, glt = gltextures; i < numgltextures; i++, glt++) {
-		if (glt->type != it_pic) {
-			R_Bind(glt->texnum);
 			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_min);
 			R_CheckError();
 			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);

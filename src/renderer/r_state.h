@@ -77,6 +77,6 @@ void R_MBind(GLenum target, int texnum);
 void R_TexEnv(GLenum value);
 void R_TextureAlphaMode(const char *string);
 void R_TextureSolidMode(const char *string);
-
+void R_TextureMode(const char *string);
 
 #endif

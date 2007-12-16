@@ -71,4 +71,22 @@ void R_WritePNG(FILE *f, byte *buffer, int width, int height);
 void R_WriteJPG(FILE *f, byte *buffer, int width, int height, int quality);
 void R_WriteTGA(FILE *f, byte *buffer, int width, int height);
 
+void R_SoftenTexture(byte *in, int width, int height, int bpp);
+
+void R_ImageList_f(void);
+void R_InitImages(void);
+void R_ShutdownImages(void);
+void R_FreeUnusedImages(void);
+
+void R_UpdateTextures(int min, int max);
+
+image_t *R_LoadPic(const char *name, byte * pic, int width, int height, imagetype_t type, int bits);
+#ifdef DEBUG
+image_t *R_FindImageDebug(const char *pname, imagetype_t type, const char *file, int line);
+#define R_FindImage(pname,type) R_FindImageDebug(pname, type, __FILE__, __LINE__ )
+#else
+image_t *R_FindImage(const char *pname, imagetype_t type);
+#endif
+image_t *R_FindImageForShader(const char *name);
+
 #endif

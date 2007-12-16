@@ -377,7 +377,7 @@ static vec3_t pointcolor;
 static cBspPlane_t *lightplane;			/* used as shadow plane */
 static vec3_t lightspot;
 
-int RecursiveLightPoint (model_t* mapTile, mBspNode_t * node, vec3_t start, vec3_t end)
+static int RecursiveLightPoint (model_t* mapTile, mBspNode_t * node, vec3_t start, vec3_t end)
 {
 	float front, back, frac;
 	int side;

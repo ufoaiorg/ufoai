@@ -43,10 +43,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_image.h"
 #include "r_model.h"
 #include "r_material.h"
+#include "r_font.h"
 
 /*=================================================================== */
-
-int RecursiveLightPoint(model_t* mapTile, mBspNode_t * node, vec3_t start, vec3_t end);
 
 /** @brief entity transform */
 typedef struct {
@@ -133,9 +132,7 @@ extern int gl_compressed_alpha_format;
 
 extern float r_world_matrix[16];
 
-/*void R_UpdateAnisotropy(void);*/
 void R_CalcDayAndNight(float q);
-
 void R_LightPoint(vec3_t p, vec3_t color);
 
 /*==================================================================== */
@@ -167,26 +164,6 @@ void R_RotateForEntity(entity_t * e);
 void R_DrawTurbSurface(mBspSurface_t * fa);
 void R_DrawTriangleOutlines(void);
 void R_MarkLights(dlight_t * light, int bit, mBspNode_t * node);
-
-#include "r_font.h"
-
-void R_SoftenTexture(byte *in, int width, int height, int bpp);
-
-image_t *R_LoadPic(const char *name, byte * pic, int width, int height, imagetype_t type, int bits);
-#ifdef DEBUG
-image_t *R_FindImageDebug(const char *pname, imagetype_t type, const char *file, int line);
-#define R_FindImage(pname,type) R_FindImageDebug(pname, type, __FILE__, __LINE__ )
-#else
-image_t *R_FindImage(const char *pname, imagetype_t type);
-#endif
-image_t *R_FindImageForShader(const char *name);
-void R_TextureMode(const char *string);
-void R_ImageList_f(void);
-
-void R_InitImages(void);
-void R_ShutdownImages(void);
-void R_ShutdownModels(void);
-void R_FreeUnusedImages(void);
 
 void R_DrawPtls(void);
 
