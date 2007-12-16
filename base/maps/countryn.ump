@@ -544,11 +544,11 @@ tile +h06
 {
 5 5
 
-0      abdlmn     abdlmn     abdlmn    0
-acdrst     +a      +a      +a    acdopq
-acdrst     +a      +a      +a    acdopq
-acdrst     +a      +a       0    acdopq
-0      abdijk     abdijk     abdlmn    0
+0       abdlmn  abdlmn  abdlmn    0
+acdrst  +a      +a      +a      acdopq
+acdrst  +a      +a      +a      acdopq
+acdrst  +a      ad      abdijk  0
+0       abdijk  0       0       0
 }
 //--
 
@@ -737,6 +737,9 @@ size "7 7"
 +h01 "0 2"
 +h02 "0 5"
 +h03 "0 2"
++h04 "0 1"
++h05 "0 1"
++h06 "0 1"
 +r01 "0 2"
 +r02 "0 2"
 +r03 "0 2"
