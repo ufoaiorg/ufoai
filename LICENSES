@@ -1969,6 +1969,7 @@ base/textures/tex_base/lab_wall001.jpg | GNU General Public License 2.0 | Werner
 base/textures/tex_base/lab_wall002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/lab_wall003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/lasertable.jpg | GNU General Public License 2.0 | gthf http://sourceforge.net/users/gthf/ | data-soource/images/lasertable/
+base/textures/tex_base/screenp001.jpg | GNU General Public License 2.0 | Martin Gerhardy
 base/textures/tex_base/sign03.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/sign04.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/sign05.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
@@ -1977,7 +1978,10 @@ base/textures/tex_base/sign08.jpg | GNU General Public License 2.0 | Werner Höh
 base/textures/tex_base/sign09.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/steptop_mtl.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/steptop_mtl2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_base/trim001.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data | trim_cem_grt.jpg
+base/textures/tex_base/trim003.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data | trim_cementwall2.jpg
 base/textures/tex_base/trim_drkmtl.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_base/vent001.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data | d_drkmtl_mpanelgrt.jpg
 base/textures/tex_base/vent002.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/vent003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_base/vent004.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
