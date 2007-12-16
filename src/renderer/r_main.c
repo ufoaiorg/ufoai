@@ -72,6 +72,7 @@ cvar_t *r_ext_combine;
 cvar_t *r_ext_lockarrays;
 cvar_t *r_ext_texture_compression;
 cvar_t *r_ext_s3tc_compression;
+cvar_t *r_intel_hack;
 
 cvar_t *r_3dmapradius;
 
@@ -711,6 +712,7 @@ static void R_Register (void)
 	r_ext_lockarrays = Cvar_Get("r_ext_lockarrays", "0", CVAR_ARCHIVE, NULL);
 	r_ext_texture_compression = Cvar_Get("r_ext_texture_compression", "0", CVAR_ARCHIVE, NULL);
 	r_ext_s3tc_compression = Cvar_Get("r_ext_s3tc_compression", "1", CVAR_ARCHIVE, NULL);
+	r_intel_hack = Cvar_Get("r_intel_hack", "1", CVAR_ARCHIVE, "Intel cards have activated texture compression until this is set to 0");
 
 	r_drawbuffer = Cvar_Get("r_drawbuffer", "GL_BACK", 0, NULL);
 	r_swapinterval = Cvar_Get("r_swapinterval", "1", CVAR_ARCHIVE, NULL);
@@ -1019,6 +1021,11 @@ static inline void R_VerifyDriver (void)
 	if (!Q_stricmp((const char*)qglGetString(GL_RENDERER), "gdi generic"))
 		Com_Error(ERR_FATAL, "No hardware acceleration detected");
 #endif
+	if (strstr(r_config.vendor_string, "Intel") && r_intel_hack->integer) {
+		/* HACK: */
+		Com_Printf("Activate texture compression for Intel chips\n");
+		Cvar_Set("r_ext_texture_compression", "1");
+	}
 }
 
 qboolean R_Init (void)
