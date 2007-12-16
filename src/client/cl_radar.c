@@ -30,7 +30,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 const float baseRadarRange = 30.0f;
 const float aircraftRadarRange = 7.0f;
 /* outer circle radar is bigger than inner circle radar by 100 * outerCircleRatio percent */
-static const float outerCircleRatio = 0.1f;
+static const float outerCircleRatio = 0.41f;
+/* this is the multiplier applied to the radar range when the radar levels up */
+static const float radarUpgradeMultiplier = 0.3f;
 
 /**
  * @brief Show Radar coverage
@@ -142,22 +144,16 @@ void Radar_NotifyUfoRemoved (radar_t* radar, const aircraft_t* ufo)
 }
 
 /**
- * @brief Change to radar range
- */
-void RADAR_ChangeRange (radar_t* radar, int change)
-{
-	radar->range += change;
-	if (radar->range < 0)
-		radar->range = 0;
-}
-
-/**
  * @brief Initialise radar
  */
-void Radar_Initialise (radar_t* radar, int range)
+void Radar_Initialise (radar_t* radar, float range, float level)
 {
-	radar->range = range;
-	radar->numUfos = 0;
+	if (!level)
+		radar->range = 0.0f;
+	else
+		radar->range = range * (1 + (level - 1) * radarUpgradeMultiplier);
+	if (!radar->numUfos)
+		radar->numUfos = 0;
 }
 
 /**

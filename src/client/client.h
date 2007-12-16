@@ -713,8 +713,7 @@ void RADAR_DrawCoverage(const struct menuNode_s* node, const radar_t* radar, vec
 void RADAR_DrawInMap(const struct menuNode_s* node, const radar_t* radar, vec2_t pos);
 void RADAR_RemoveUfo(radar_t* radar, const struct aircraft_s* ufo);
 void Radar_NotifyUfoRemoved(radar_t* radar, const struct aircraft_s* ufo);
-void RADAR_ChangeRange(radar_t* radar, int change);
-void Radar_Initialise(radar_t* radar, int range);
+void Radar_Initialise (radar_t* radar, float range, float level);
 qboolean RADAR_CheckUfoSensored(radar_t* radar, vec2_t posRadar,
 	const struct aircraft_s* ufo, qboolean wasUfoSensored);
 

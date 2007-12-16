@@ -136,6 +136,12 @@ typedef struct building_s {
 	char *needs;		/**< if the buildign has a second part */
 	int fixCosts, varCosts;
 
+	/**
+	 * level of the building.
+	 * @note This value depends on the implementation of the affected building
+	 * might e.g. be an factor */
+	float level;
+
 	int timeStart, buildTime;
 
 	buildingStatus_t buildingStatus;	/**< [BASE_SIZE*BASE_SIZE]; */

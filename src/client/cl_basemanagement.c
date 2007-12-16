@@ -241,6 +241,7 @@ static void B_ResetBuildingCurrent_f (void)
 static const value_t valid_building_vars[] = {
 	{"map_name", V_CLIENT_HUNK_STRING, offsetof(building_t, mapPart), 0},	/**< Name of the map file for generating basemap. */
 	{"more_than_one", V_BOOL, offsetof(building_t, moreThanOne), MEMBER_SIZEOF(building_t, moreThanOne)},	/**< Is the building allowed to be build more the one time? */
+	{"level", V_FLOAT, offsetof(building_t, level), MEMBER_SIZEOF(building_t, level)},	/**< building level */
 	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(building_t, name), 0},	/**< The displayed building name. */
 	{"pedia", V_CLIENT_HUNK_STRING, offsetof(building_t, pedia), 0},	/**< The pedia-id string for the associated pedia entry. */
 	{"status", V_INT, offsetof(building_t, buildingStatus), MEMBER_SIZEOF(building_t, buildingStatus)},	/**< The current status of the building. */
@@ -345,6 +346,29 @@ static void B_BaseInit_f (void)
 }
 
 /**
+ * @brief Get the maximum level of a building type in a base.
+ * @param[in] base Pointer to base.
+ * @param[in] Building type to get the maximum level for.
+ * @note This function checks base status for particular buildings.
+ * @return 0.0f if there is no (operational) building of the requested type in the base, otherwise the maximum level.
+ */
+static float B_GetMaxBuildingLevel (base_t* base, buildingType_t type)
+{
+	int i;
+	float max = 0.0f;
+
+	if (base->hasBuilding[type]) {
+		for (i = 0; i < gd.numBuildings[base->idx]; i++) {
+			if (gd.buildings[base->idx][i].buildingType == type && gd.buildings[base->idx][i].buildingStatus == B_STATUS_WORKING) {
+				max = max(gd.buildings[base->idx][i].level, max);
+			}
+		}
+	}
+
+	return max;
+}
+
+/**
  * @brief Check base status for particular buildings as well as capacities.
  * @param[in] building Pointer to building.
  * @param[in] base Pointer to base with given building.
@@ -385,6 +409,16 @@ static qboolean B_CheckUpdateBuilding (building_t* building, base_t* base)
  */
 static void B_UpdateOneBaseBuildingStatus (buildingType_t type, base_t* base)
 {
+	float level;
+
+	switch (type) {
+	case B_RADAR:
+		level = B_GetMaxBuildingLevel(base, B_RADAR);
+		Radar_Initialise(&base->radar, baseRadarRange, level);
+		break;
+	default:
+		break;
+	}
 }
 
 /**
@@ -397,6 +431,8 @@ static void B_UpdateOneBaseBuildingStatus (buildingType_t type, base_t* base)
  */
 static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* base)
 {
+	float level;
+
 	switch (type) {
 	case B_HOSPITAL:
 		/* Reset all arrays . */
@@ -406,7 +442,8 @@ static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* 
 		base->hospitalMissionListCount = 0;
 		break;
 	case B_RADAR:
-		RADAR_ChangeRange(&base->radar, baseRadarRange);
+		level = B_GetMaxBuildingLevel(base, B_RADAR);
+		Radar_Initialise(&base->radar, baseRadarRange, level);
 		break;
 	default:
 		break;
@@ -428,7 +465,7 @@ static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t*
 		break;
 	case B_RADAR:
 		if (!base->hasBuilding[type])
-			RADAR_ChangeRange(&base->radar, 0);
+			Radar_Initialise(&base->radar, 0.0f, 0.0f);
 		break;
 	default:
 		break;
@@ -528,7 +565,8 @@ static void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 				if (firstEnable)
 					B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][buildingIdx].buildingType, base);
 				test = qtrue;
-			}
+			} else
+				B_UpdateOneBaseBuildingStatus(gd.buildings[base->idx][buildingIdx].buildingType, base);
 		}
 	}
 
@@ -640,10 +678,12 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	case B_QUARTERS:
 	case B_DEFENSE_MISSILE:
 	case B_DEFENSE_LASER:
+	case B_RADAR:
 		if (B_GetNumberOfBuildingsInBaseByType(base->idx, type) <= 0) {
 			B_SetBuildingStatus(base, type, qfalse);
 			test = qtrue;
 		}
+		B_UpdateOneBaseBuildingStatus(type, base);
 		break;
 	case B_ANTIMATTER:
 		cap = CAP_ANTIMATTER;
@@ -2295,7 +2335,7 @@ static void B_BuildBase_f (void)
 			else
 				Com_sprintf(messageBuffer, sizeof(messageBuffer), _("A new base has been built: %s"), mn_base_title->string);
 			MN_AddNewMessage(_("Base built"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
-			Radar_Initialise(&(baseCurrent->radar), 0);
+			Radar_Initialise(&(baseCurrent->radar), 0.0f, 1.0f);
 			B_ResetAllStatusAndCapacities(baseCurrent, qtrue);
 			AL_FillInContainment(baseCurrent);
 

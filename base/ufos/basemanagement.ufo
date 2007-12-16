@@ -336,6 +336,7 @@ building building_radar
 	pos	"1 4"
 	more_than_one	true
 	type		radar
+	level		1.0
 }
 
 building building_lab
