@@ -55,6 +55,7 @@ typedef struct {
 	qboolean lod_bias;
 	qboolean arb_fragment_program;
 	qboolean glsl_program;
+	qboolean lighting;
 } rstate_t;
 
 extern rstate_t r_state;
@@ -64,6 +65,9 @@ extern rstate_t r_state;
 
 #define RSTATE_DISABLE_BLEND       if (r_state.blend) { qglDisable(GL_BLEND); r_state.blend=qfalse; }
 #define RSTATE_ENABLE_BLEND        if (!r_state.blend) { qglEnable(GL_BLEND); r_state.blend=qtrue; }
+
+#define RSTATE_DISABLE_LIGHTING   if (r_state.lighting) { qglDisable(GL_LIGHTING); r_state.lighting=qfalse; }
+#define RSTATE_ENABLE_LIGHTING    if (!r_state.lighting) { qglEnable(GL_LIGHTING); qglEnable(GL_LIGHT0); r_state.lighting=qtrue; }
 
 void R_SetDefaultState(void);
 void R_SetupGL2D(void);

@@ -928,10 +928,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 	R_CheckError();
 
 	/* enable the lighting */
-	qglEnable(GL_LIGHTING);
-	R_CheckError();
-	qglEnable(GL_LIGHT0);
-	R_CheckError();
+	RSTATE_ENABLE_LIGHTING
 
 	/* draw the sphere */
 	qglCallList(spherelist);
@@ -952,8 +949,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 	}
 
 	/* disable 3d geoscape lightning */
-	qglDisable(GL_LIGHTING);
-	R_CheckError();
+	RSTATE_DISABLE_LIGHTING
 
 	/* restore the previous matrix */
 	qglPopMatrix();

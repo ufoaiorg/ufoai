@@ -336,7 +336,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 	R_DrawAliasFrameLerp(paliashdr, e->as.backlerp, e->as.frame, e->as.oldframe);
 
 	R_TexEnv(GL_REPLACE);
-	qglDisable(GL_LIGHTING);
+	RSTATE_DISABLE_LIGHTING
 
 	if ((e->flags & RF_TRANSLUCENT) || (skin && skin->has_alpha))
 		RSTATE_DISABLE_BLEND
