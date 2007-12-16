@@ -39,6 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "qgl.h"
 
 #include "r_shader.h"
+#include "r_state.h"
 
 /*
 skins will be outline flood filled and mip mapped
@@ -112,8 +113,6 @@ void R_DrawMaterialSurface(mBspSurface_t *surf, materialStage_t *stage);
 void R_UpdateMaterial(material_t *m);
 
 int RecursiveLightPoint(model_t* mapTile, mBspNode_t * node, vec3_t start, vec3_t end);
-
-void R_SetDefaultState(void);
 
 #define BACKFACE_EPSILON    0.01
 
@@ -211,12 +210,7 @@ extern int gl_compressed_alpha_format;
 
 extern float r_world_matrix[16];
 
-void R_Bind(int texnum);
-void R_MBind(GLenum target, int texnum);
-void R_TexEnv(GLenum value);
 /*void R_UpdateAnisotropy(void);*/
-void R_EnableMultitexture(qboolean enable);
-void R_SelectTexture(GLenum);
 void R_CalcDayAndNight(float q);
 
 void R_LightPoint(vec3_t p, vec3_t color);
@@ -273,9 +267,6 @@ void R_ShutdownImages(void);
 void R_ShutdownModels(void);
 void R_FreeUnusedImages(void);
 
-void R_TextureAlphaMode(const char *string);
-void R_TextureSolidMode(const char *string);
-
 void R_DrawPtls(void);
 
 /*
@@ -291,42 +282,7 @@ typedef struct {
 	GLenum envCombine;
 } rconfig_t;
 
-typedef struct {
-	float inverse_intensity;
-	int displayrefresh;
-	qboolean fullscreen;
-
-	int lightmap_texnum;
-
-	vec4_t color;
-
-	int currenttextures[2];
-	int currenttmu;
-
-	int maxAnisotropic;
-
-	qboolean hwgamma;
-	qboolean stencil_two_side;
-	qboolean ati_separate_stencil;
-	qboolean blend;
-	qboolean alpha_test;
-	qboolean fog_coord;
-	qboolean multitexture;
-	qboolean stencil_wrap;
-	qboolean anisotropic;
-	qboolean lod_bias;
-	qboolean arb_fragment_program;
-	qboolean glsl_program;
-} rstate_t;
-
 extern rconfig_t r_config;
-extern rstate_t r_state;
-
-#define RSTATE_DISABLE_ALPHATEST   if (r_state.alpha_test) { qglDisable(GL_ALPHA_TEST); r_state.alpha_test=qfalse; }
-#define RSTATE_ENABLE_ALPHATEST    if (!r_state.alpha_test) { qglEnable(GL_ALPHA_TEST); r_state.alpha_test=qtrue; }
-
-#define RSTATE_DISABLE_BLEND       if (r_state.blend) { qglDisable(GL_BLEND); r_state.blend=qfalse; }
-#define RSTATE_ENABLE_BLEND        if (!r_state.blend) { qglEnable(GL_BLEND); r_state.blend=qtrue; }
 
 /*
 ====================================================================
@@ -339,8 +295,5 @@ void Rimp_Shutdown(void);
 qboolean R_InitGraphics(void);
 
 void R_BuildLightMap(mBspSurface_t * surf, byte * dest, int stride);
-
-void R_SetupGL2D(void);
-void R_SetupGL3D(void);
 
 #endif /* R_LOCAL_H */
