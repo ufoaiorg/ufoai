@@ -1,10 +1,13 @@
-#ifndef _R_FONTS
-#define _R_FONTS
+#ifndef R_FONTS_H
+#define R_FONTS_H
 
 #define MAX_HASH_STRING		128
 #define MAX_FONT_CACHE		1024
 #define MAX_FONTS		16
 #define	MAX_FONTNAME		32
+
+/* starting offset for font texture numbers (used in font-cache) */
+#define TEXNUM_FONTS        TEXNUM_IMAGES + MAX_GLTEXTURES
 
 typedef struct font_s {
 	const char *name;
@@ -38,4 +41,4 @@ void R_FontShutdown(void);
 void R_FontInit(void);
 void R_FontListCache_f(void);
 
-#endif	/* _R_FONTS */
+#endif

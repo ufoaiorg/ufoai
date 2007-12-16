@@ -89,15 +89,12 @@ CLIENT_SRCS = \
 	renderer/r_model_brush.c \
 	renderer/r_model_md2.c \
 	renderer/r_model_md3.c \
-	renderer/r_model_obj.c \
-	renderer/r_model_sp2.c \
 	renderer/r_main.c \
 	renderer/r_misc.c \
 	renderer/r_surf.c \
 	renderer/r_state.c \
 	renderer/r_warp.c \
 	renderer/r_particle.c \
-	renderer/r_shadows.c \
 	renderer/qgl.c \
 	renderer/r_sdl.c \
 	\

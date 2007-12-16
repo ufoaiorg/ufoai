@@ -69,7 +69,6 @@ cvar_t *r_screenshot_jpeg_quality;
 
 cvar_t *r_ext_multitexture;
 cvar_t *r_ext_combine;
-cvar_t *r_ext_lockarrays;
 cvar_t *r_ext_texture_compression;
 cvar_t *r_ext_s3tc_compression;
 cvar_t *r_intel_hack;
@@ -81,16 +80,11 @@ cvar_t *r_drawbuffer;
 cvar_t *r_driver;
 cvar_t *r_lightmap;
 cvar_t *r_shadows;
-cvar_t *r_shadow_debug_volume;
-cvar_t *r_shadow_debug_shade;
-cvar_t *r_ati_separate_stencil;
-cvar_t *r_stencil_two_side;
 cvar_t *r_bitdepth;
 cvar_t *r_stencilsize;
 cvar_t *r_colordepth;
 
 cvar_t *r_drawclouds;
-cvar_t *r_imagefilter;
 cvar_t *r_dynamic;
 cvar_t *r_soften;
 cvar_t *r_modulate;
@@ -118,32 +112,6 @@ static void R_Strings_f (void)
 	Com_Printf("MODE: %i, %d x %d FULLSCREEN: %i\n", vid_mode->integer, viddef.width, viddef.height, vid_fullscreen->integer);
 	Com_Printf("GL_EXTENSIONS: %s\n", r_config.extensions_string);
 	Com_Printf("GL_MAX_TEXTURE_SIZE: %d\n", r_config.maxTextureSize);
-}
-
-/**
- * @sa R_DrawShadowVolume
- * @sa R_DrawShadow
- */
-static void R_CastShadow (void)
-{
-	int i;
-
-	/* no shadows at all */
-	if (!r_shadows->integer)
-		return;
-
-	for (i = 0; i < refdef.num_entities; i++) {
-		if (!refdef.entities[i].model)
-			continue;
-		if (refdef.entities[i].model->type != mod_alias_md2
-		 && refdef.entities[i].model->type != mod_alias_md3)
-			continue;
-
-		if (r_shadows->integer == 2)
-			R_DrawShadowVolume(&refdef.entities[i]);
-		else if (r_shadows->integer == 1)
-			R_DrawShadow(&refdef.entities[i]);
-	}
 }
 
 /**
@@ -355,12 +323,6 @@ static void R_DrawEntitiesOnList (void)
 				/* draw things like func_breakable */
 				R_DrawBrushModel(currententity);
 				break;
-			case mod_sprite:
-				R_DrawSpriteModel(currententity);
-				break;
-			case mod_obj:
-				R_DrawOBJModel(currententity);
-				break;
 			default:
 				Sys_Error("Bad %s modeltype: %i", currentmodel->name, currentmodel->type);
 				break;
@@ -395,9 +357,6 @@ static void R_DrawEntitiesOnList (void)
 				break;
 			case mod_brush:
 				R_DrawBrushModel(currententity);
-				break;
-			case mod_sprite:
-				R_DrawSpriteModel(currententity);
 				break;
 			default:
 				Sys_Error("Bad %s modeltype: %i", currentmodel->name, currentmodel->type);
@@ -500,11 +459,6 @@ static void R_Clear (void)
 	}
 }
 
-static void R_Flash (void)
-{
-	R_ShadowBlend();
-}
-
 static void R_RenderView (void)
 {
 	if (r_norefresh->integer)
@@ -536,22 +490,14 @@ static void R_RenderView (void)
 	R_TransformEntitiesOnList();
 	R_DrawEntitiesOnList();
 
-	if (r_shadows->integer == 2)
-		R_CastShadow();
-
 	if (r_wire->integer)
 		qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	R_DrawAlphaSurfaces();
 
-	if (r_shadows->integer == 1)
-		R_CastShadow();
-
 	R_DrawPtls();
 
 	R_RenderDlights();
-
-	R_Flash();
 }
 
 /**
@@ -687,12 +633,7 @@ static void R_Register (void)
 	r_checkerror = Cvar_Get("r_checkerror", "0", CVAR_ARCHIVE, "Check for opengl errors");
 	r_lightmap = Cvar_Get("r_lightmap", "0", 0, NULL);
 	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, NULL);
-	r_shadow_debug_volume = Cvar_Get("r_shadow_debug_volume", "0", CVAR_ARCHIVE, NULL);
-	r_shadow_debug_shade = Cvar_Get("r_shadow_debug_shade", "0", CVAR_ARCHIVE, NULL);
-	r_ati_separate_stencil = Cvar_Get("r_ati_separate_stencil", "1", CVAR_ARCHIVE, NULL);
-	r_stencil_two_side = Cvar_Get("r_stencil_two_side", "1", CVAR_ARCHIVE, NULL);
 	r_drawclouds = Cvar_Get("r_drawclouds", "0", CVAR_ARCHIVE, NULL);
-	r_imagefilter = Cvar_Get("r_imagefilter", "1", CVAR_ARCHIVE, NULL);
 	r_dynamic = Cvar_Get("r_dynamic", "1", 0, "Render dynamic lightmaps");
 	r_soften = Cvar_Get("r_soften", "1", 0, "Apply blur to lightmap");
 	r_maxtexres = Cvar_Get("r_maxtexres", "2048", CVAR_ARCHIVE, NULL);
@@ -709,7 +650,6 @@ static void R_Register (void)
 
 	r_ext_multitexture = Cvar_Get("r_ext_multitexture", "1", CVAR_ARCHIVE, NULL);
 	r_ext_combine = Cvar_Get("r_ext_combine", "1", CVAR_ARCHIVE, NULL);
-	r_ext_lockarrays = Cvar_Get("r_ext_lockarrays", "0", CVAR_ARCHIVE, NULL);
 	r_ext_texture_compression = Cvar_Get("r_ext_texture_compression", "0", CVAR_ARCHIVE, NULL);
 	r_ext_s3tc_compression = Cvar_Get("r_ext_s3tc_compression", "1", CVAR_ARCHIVE, NULL);
 	r_intel_hack = Cvar_Get("r_intel_hack", "1", CVAR_ARCHIVE, "Intel cards have activated texture compression until this is set to 0");
@@ -774,17 +714,6 @@ static void R_InitExtension (void)
 	int aniso_level, max_aniso;
 	int size;
 	GLenum err;
-
-	/* grab extensions */
-	if (strstr(r_config.extensions_string, "GL_EXT_compiled_vertex_array") || strstr(r_config.extensions_string, "GL_SGI_compiled_vertex_array")) {
-		if (r_ext_lockarrays->integer) {
-			Com_Printf("enabling GL_EXT_LockArrays\n");
-			qglLockArraysEXT = SDL_GL_GetProcAddress("glLockArraysEXT");
-			qglUnlockArraysEXT = SDL_GL_GetProcAddress("glUnlockArraysEXT");
-		} else
-			Com_Printf("ignoring GL_EXT_LockArrays\n");
-	} else
-		Com_Printf("GL_EXT_compiled_vertex_array not found\n");
 
 	if (strstr(r_config.extensions_string, "GL_ARB_multitexture")) {
 		if (r_ext_multitexture->integer) {
@@ -886,14 +815,6 @@ static void R_InitExtension (void)
 		r_state.lod_bias = qfalse;
 	}
 
-	if (strstr(r_config.extensions_string, "GL_EXT_stencil_wrap")) {
-		Com_Printf("using GL_EXT_stencil_wrap\n");
-		r_state.stencil_wrap = qtrue;
-	} else {
-		Com_Printf("GL_EXT_stencil_wrap not found\n");
-		r_state.stencil_wrap = qfalse;
-	}
-
 	if (strstr(r_config.extensions_string, "GL_EXT_fog_coord")) {
 		Com_Printf("using GL_EXT_fog_coord\n");
 		r_state.fog_coord = qtrue;
@@ -953,39 +874,6 @@ static void R_InitExtension (void)
 		r_state.glsl_program = qfalse;
 	}
 #endif	/* HAVE_SHADERS */
-
-	r_state.ati_separate_stencil = qfalse;
-	if (strstr(r_config.extensions_string, "GL_ATI_separate_stencil")) {
-		if (!r_ati_separate_stencil->integer) {
-			Com_Printf("ignoring GL_ATI_separate_stencil\n");
-			r_state.ati_separate_stencil = qfalse;
-		} else {
-			Com_Printf("using GL_ATI_separate_stencil\n");
-			r_state.ati_separate_stencil = qtrue;
-			qglStencilOpSeparateATI = SDL_GL_GetProcAddress("glStencilOpSeparateATI");
-			qglStencilFuncSeparateATI = SDL_GL_GetProcAddress("glStencilFuncSeparateATI");
-		}
-	} else {
-		Com_Printf("GL_ATI_separate_stencil not found\n");
-		r_state.ati_separate_stencil = qfalse;
-		Cvar_Set("r_ati_separate_stencil", "0");
-	}
-
-	r_state.stencil_two_side = qfalse;
-	if (strstr(r_config.extensions_string, "GL_EXT_stencil_two_side")) {
-		if (!r_stencil_two_side->integer) {
-			Com_Printf("ignoring GL_EXT_stencil_two_side\n");
-			r_state.stencil_two_side = qfalse;
-		} else {
-			Com_Printf("using GL_EXT_stencil_two_side\n");
-			r_state.stencil_two_side = qtrue;
-			qglActiveStencilFaceEXT = SDL_GL_GetProcAddress("glActiveStencilFaceEXT");
-		}
-	} else {
-		Com_Printf("GL_EXT_stencil_two_side not found\n");
-		r_state.stencil_two_side = qfalse;
-		Cvar_Set("r_stencil_two_side", "0");
-	}
 
 	{
 		Com_Printf("max texture size: ");

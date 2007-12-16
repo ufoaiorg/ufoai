@@ -73,11 +73,6 @@ typedef	struct mAliasMesh_s {
 	mAliasSkin_t	*skins;
 } mAliasMesh_t;
 
-/** @brief Only for obj */
-typedef struct mAliasNormals_s {
-	vec3_t ijk;
-} mAliasNormals_t;
-
 #define MAX_ANIMS		128
 #define MAX_ANIMNAME	16
 
@@ -99,9 +94,6 @@ typedef	struct	mAliasModel_s {
 
 	int		num_skins;
 	mAliasSkin_t	*skins;
-
-	int num_normals;			/**< number of normal vectors */
-	mAliasNormals_t	*normals;
 
 	/** animation data */
 	char animname[MAX_QPATH];

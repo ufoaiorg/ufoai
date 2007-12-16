@@ -558,6 +558,8 @@ static void R_DrawSurface (mBspSurface_t * surf)
 	RSTATE_DISABLE_ALPHATEST
 }
 
+#define BACKFACE_EPSILON    0.01
+
 /**
  * @brief
  * @sa R_DrawBrushModel

@@ -341,7 +341,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 	if ((e->flags & RF_TRANSLUCENT) || (skin && skin->has_alpha))
 		RSTATE_DISABLE_BLEND
 
-	if (r_shadows->integer == 1 && (e->flags & (RF_SHADOW | RF_BLOOD))) {
+	if (r_shadows->integer && (e->flags & (RF_SHADOW | RF_BLOOD))) {
 		if (!(e->flags & RF_TRANSLUCENT))
 			qglDepthMask(GL_FALSE);
 		RSTATE_ENABLE_BLEND
@@ -368,8 +368,6 @@ void R_DrawAliasMD2Model (entity_t * e)
 		RSTATE_DISABLE_BLEND
 		if (!(e->flags & RF_TRANSLUCENT))
 			qglDepthMask(GL_TRUE);
-	} else if (r_shadows->integer == 2 && (e->flags & (RF_SHADOW | RF_BLOOD))) {
-		R_DrawShadowVolume(e);
 	}
 
 	if (r_fog->integer && refdef.fog)

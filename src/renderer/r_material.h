@@ -1,9 +1,12 @@
 /**
- * @file r_model_sp2.h
- * @brief sprite model loading
+ * @file r_material.h
+ * @brief
  */
 
 /*
+All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
+
+Original file from Quake 2 v3.21: quake2-2.31/ref_gl/gl_local.h
 Copyright (C) 1997-2001 Id Software, Inc.
 
 This program is free software; you can redistribute it and/or
@@ -23,5 +26,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-void R_ModLoadSpriteModel(struct model_s *mod, void *buffer, int bufSize);
-void R_DrawSpriteModel(entity_t * e);
+#ifndef R_MATERIAL_H
+#define R_MATERIAL_H
+
+void R_DrawMaterialSurface(mBspSurface_t *surf, materialStage_t *stage);
+void R_UpdateMaterial(material_t *m);
+
+#endif

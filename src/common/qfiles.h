@@ -3,7 +3,7 @@
  * @note This file must be identical in the quake and utils directories
  * @brief Header for various formats like pak, and model formats as well as bsp format
  * @note The .pk3 files are just zip files
- * @note quake file formats: md2, md3, pak, pk3, bsp, sp2, wal
+ * @note quake file formats: md2, md3, pk3, bsp
  */
 
 /*
@@ -242,29 +242,6 @@ typedef struct {
 	int ofs_meshes;
 	int ofs_end;
 } dmd3_t;
-
-/*========================================================================
-.SP2 sprite file format
-========================================================================*/
-
-/** little-endian "IDS2" */
-#define IDSPRITEHEADER	(('2'<<24)+('S'<<16)+('D'<<8)+'I')
-#define SPRITE_VERSION	2
-#define SPRITE_MAX_SKINNAME	64
-#define SPRITE_MAX_FRAMES	MD2_MAX_SKINS
-
-typedef struct {
-	int width, height;
-	int origin_x, origin_y;		/**< raster coordinates inside pic */
-	char name[SPRITE_MAX_SKINNAME];	/**< name of texture file */
-} dsprframe_t;
-
-typedef struct {
-	int ident;					/**< @sa IDSPRITEHEADER*/
-	int version;				/**< version is 2 - @sa SPRITE_VERSION */
-	int numframes;
-	dsprframe_t frames[1];		/**< variable sized */
-} dsprite_t;
 
 /*==============================================================================
 texture file format

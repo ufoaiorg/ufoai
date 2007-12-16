@@ -49,13 +49,6 @@ static const value_t shader_values[] = {
 	{"vertex", V_BOOL, offsetof(shader_t, vertex), MEMBER_SIZEOF(shader_t, vertex)},
 	{"glsl", V_BOOL, offsetof(shader_t, glsl), MEMBER_SIZEOF(shader_t, glsl)},
 	{"glmode", V_BLEND, offsetof(shader_t, glMode), MEMBER_SIZEOF(shader_t, glMode)},
-	{"emboss", V_BOOL, offsetof(shader_t, emboss), MEMBER_SIZEOF(shader_t, emboss)},
-	{"emboss_high", V_BOOL, offsetof(shader_t, embossHigh), MEMBER_SIZEOF(shader_t, embossHigh)},
-	{"emboss_low", V_BOOL, offsetof(shader_t, embossLow), MEMBER_SIZEOF(shader_t, embossLow)},
-	{"emboss_2", V_BOOL, offsetof(shader_t, emboss2), MEMBER_SIZEOF(shader_t, emboss2)},
-	{"blur", V_BOOL, offsetof(shader_t, blur), MEMBER_SIZEOF(shader_t, blur)},
-	{"light", V_BOOL, offsetof(shader_t, light), MEMBER_SIZEOF(shader_t, light)},
-	{"edge", V_BOOL, offsetof(shader_t, edge), MEMBER_SIZEOF(shader_t, edge)},
 
 	{NULL, 0, 0, 0}
 };
@@ -231,26 +224,7 @@ void CL_ShaderList_f (void)
 		Com_Printf("..filename: %s\n", r_shaders[i].filename);
 		Com_Printf("..frag %i\n", (int) r_shaders[i].frag);
 		Com_Printf("..vertex %i\n", (int) r_shaders[i].vertex);
-		Com_Printf("..emboss %i\n", (int) r_shaders[i].emboss);
-		Com_Printf("..emboss low %i\n", (int) r_shaders[i].embossLow);
-		Com_Printf("..emboss high %i\n", (int) r_shaders[i].embossHigh);
-		Com_Printf("..emboss #2 %i\n", (int) r_shaders[i].emboss2);
-		Com_Printf("..blur %i\n", (int) r_shaders[i].blur);
-		Com_Printf("..light blur %i\n", (int) r_shaders[i].light);
-		Com_Printf("..edge %i\n", (int) r_shaders[i].edge);
 		Com_Printf("..glMode '%s'\n", Com_ValueToStr(&r_shaders[i], V_BLEND, offsetof( shader_t, glMode)));
-		if (r_shaders[i].material) {
-			materialStage_t *stage = r_shaders[i].material->stages;
-			Com_Printf("..num_stages %i\n", r_shaders[i].material->num_stages);
-			while (stage) {
-				Com_Printf("..terrain texture: '%s'\n", stage->textureName);
-				Com_Printf("..terrain ceil: '%.2f'\n", stage->terrain.ceil);
-				Com_Printf("..terrain floor: '%.2f'\n", stage->terrain.floor);
-				Com_Printf("..terrain height: '%.2f'\n", stage->terrain.height);
-				Com_Printf("..rotate hz: '%.2f'\n", stage->rotate.hz);
-				stage = stage->next;
-			}
-		}
 		Com_Printf("\n");
 	}
 }

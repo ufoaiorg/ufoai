@@ -58,12 +58,6 @@ void R_ModModellist_f (void)
 		case mod_alias_md2:
 			Com_Printf("MD2");
 			break;
-		case mod_sprite:
-			Com_Printf("SP2");
-			break;
-		case mod_obj:
-			Com_Printf("OBJ");
-			break;
 		default:
 			Com_Printf("%3i", mod->type);
 			break;
@@ -141,17 +135,12 @@ static model_t *R_ModForName (const char *name, qboolean crash)
 		R_ModLoadAliasMD3Model(mod, buf, modfilelen);
 		break;
 
-	case IDSPRITEHEADER:
-		R_ModLoadSpriteModel(mod, buf, modfilelen);
-		break;
-
 	case IDBSPHEADER:
 		Sys_Error("R_ModForName: don't load BSPs with this function");
 		break;
 
 	default:
-		if (!R_ModLoadOBJModel(mod, buf, modfilelen))
-			Sys_Error("R_ModForName: unknown fileid for %s", mod->name);
+		Sys_Error("R_ModForName: unknown fileid for %s", mod->name);
 		break;
 	}
 
@@ -169,7 +158,6 @@ static model_t *R_RegisterModel (const char *name)
 {
 	model_t *mod;
 	int i;
-	dsprite_t *sprout;
 	mdl_md2_t *pheader;
 	mAliasModel_t *pheader3;
 
@@ -177,11 +165,6 @@ static model_t *R_RegisterModel (const char *name)
 	if (mod) {
 		/* register any images used by the models */
 		switch (mod->type) {
-		case mod_sprite:
-			sprout = (dsprite_t *) mod->alias.extraData;
-			for (i = 0; i < sprout->numframes; i++)
-				mod->alias.skins_img[i] = R_FindImage(sprout->frames[i].name, it_sprite);
-			break;
 		case mod_alias_md2:
 			{
 			char path[MAX_QPATH];
@@ -214,9 +197,6 @@ static model_t *R_RegisterModel (const char *name)
 			for (i = 0; i < mod->bsp.numtexinfo; i++)
 				mod->bsp.texinfo[i].image->registration_sequence = registration_sequence;
 			break;
-		case mod_obj:
-			/* @todo: */
-			break;
 		default:
 			break;
 		}
@@ -229,7 +209,7 @@ static model_t *R_RegisterModel (const char *name)
  * @sa modtype_t
  */
 static const char *mod_extensions[] = {
-	"md2", "md3", "obj", NULL
+	"md2", "md3", NULL
 };
 
 /**

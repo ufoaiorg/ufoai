@@ -44,13 +44,10 @@ typedef struct {
 	int maxAnisotropic;
 
 	qboolean hwgamma;
-	qboolean stencil_two_side;
-	qboolean ati_separate_stencil;
 	qboolean blend;
 	qboolean alpha_test;
 	qboolean fog_coord;
 	qboolean multitexture;
-	qboolean stencil_wrap;
 	qboolean anisotropic;
 	qboolean lod_bias;
 	qboolean arb_fragment_program;

@@ -446,12 +446,6 @@
 		<Unit filename="..\..\src\renderer\r_model_md3.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\r_model_obj.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\renderer\r_model_sp2.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\renderer\r_particle.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -459,9 +453,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\renderer\r_shader.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\renderer\r_shadows.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\renderer\r_state.c">

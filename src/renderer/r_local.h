@@ -40,81 +40,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_shader.h"
 #include "r_state.h"
-
-/*
-skins will be outline flood filled and mip mapped
-pics and sprites with alpha will be outline flood filled
-pic won't be mip mapped
-
-model skin
-sprite frame
-wall texture
-pic
-*/
-
-typedef enum {
-	it_skin,
-	it_sprite,
-	it_wall,
-	it_pic,
-	it_wrappic,
-	it_static
-} imagetype_t;
-
-typedef struct image_s {
-	char name[MAX_QPATH];				/**< game path, including extension, must be first */
-	imagetype_t type;
-	int width, height;					/**< source image dimensions */
-	int upload_width, upload_height;	/**< dimensions after power of two and picmip */
-	int registration_sequence;			/**< 0 = free */
-	struct mBspSurface_s *texturechain;	/**< for sort-by-texture world drawing */
-	GLuint texnum;						/**< gl texture binding */
-	qboolean has_alpha;
-	shader_t *shader;					/**< pointer to shader from refdef_t */
-} image_t;
-
-#define TEXNUM_LIGHTMAPS    1024
-#define TEXNUM_IMAGES       1281
-
-#define MAX_GLERRORTEX      4096
-#define MAX_GLTEXTURES      1024
-
-/* starting offset for font texture numbers (used in font-cache) */
-#define TEXNUM_FONTS        TEXNUM_IMAGES + MAX_GLTEXTURES
-
-/*=================================================================== */
-
-typedef struct {
-	int width;
-	int height;
-	byte *captureBuffer;
-	byte *encodeBuffer;
-	qboolean motionJpeg;
-} videoFrameCommand_t;
-
-size_t R_SaveJPGToBuffer(byte * buffer, int quality, int image_width, int image_height, byte * image_buffer);
-void RE_TakeVideoFrame(int width, int height, byte * captureBuffer, byte * encodeBuffer, qboolean motionJpeg);
-const void *RB_TakeVideoFrameCmd(const void *data);
-
-/*=================================================================== */
-
-void R_WritePNG(FILE *f, byte *buffer, int width, int height);
-void R_WriteJPG(FILE *f, byte *buffer, int width, int height, int quality);
-void R_WriteTGA(FILE *f, byte *buffer, int width, int height);
-
-/*=================================================================== */
-
-/*=================================================================== */
-
+#include "r_image.h"
 #include "r_model.h"
+#include "r_material.h"
 
-/* r_material.c */
-void R_DrawMaterialSurface(mBspSurface_t *surf, materialStage_t *stage);
-void R_UpdateMaterial(material_t *m);
+/*=================================================================== */
 
 int RecursiveLightPoint(model_t* mapTile, mBspNode_t * node, vec3_t start, vec3_t end);
-
-#define BACKFACE_EPSILON    0.01
 
 /** @brief entity transform */
 typedef struct {
@@ -138,7 +70,6 @@ extern entity_t *currententity;
 extern model_t *currentmodel;
 extern int r_framecount;
 extern cBspPlane_t frustum[4];
-extern int gl_filter_min, gl_filter_max;
 
 /* view origin */
 extern vec3_t vup;
@@ -162,7 +93,6 @@ extern cvar_t *r_screenshot_jpeg_quality;
 
 extern cvar_t *r_ext_multitexture;
 extern cvar_t *r_ext_combine;
-extern cvar_t *r_ext_lockarrays;
 extern cvar_t *r_ext_texture_compression;
 extern cvar_t *r_ext_s3tc_compression;
 extern cvar_t *r_intel_hack;
@@ -173,14 +103,8 @@ extern cvar_t *r_lightmap;
 extern cvar_t *r_showbox;
 
 /* shadow stuff */
-void R_ShadowBlend(void);
-void R_DrawShadowVolume(entity_t * e);
-void R_DrawShadow(entity_t * e);
+
 extern cvar_t *r_shadows;
-extern cvar_t *r_shadow_debug_shade;
-extern cvar_t *r_shadow_debug_volume;
-extern cvar_t *r_ati_separate_stencil;
-extern cvar_t *r_stencil_two_side;
 
 extern cvar_t *r_dynamic;
 extern cvar_t *r_soften;
@@ -198,7 +122,6 @@ extern cvar_t *r_texturesolidmode;
 extern cvar_t *r_wire;
 extern cvar_t *r_fog;
 extern cvar_t *r_intensity;
-extern cvar_t *r_imagefilter;
 
 extern image_t *draw_chars[2];
 
@@ -233,8 +156,6 @@ void R_DrawBrushModel(entity_t * e);
 void R_DrawBox(const entity_t * e);
 void R_DrawHighlight(const entity_t * e);
 void R_DrawLevelBrushes(void);
-void R_DrawOBJModel(entity_t *e);
-int R_ModLoadOBJModel(model_t* mod, void* buffer, int bufSize);
 void R_RenderDlights(void);
 void R_DrawAlphaSurfaces(void);
 void R_InitMiscTexture(void);
