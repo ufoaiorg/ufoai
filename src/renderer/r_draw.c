@@ -985,11 +985,9 @@ static const vec3_t r_highlightVertices[HIGHTLIGHT_SIZE] = {
  */
 void R_DrawHighlight (const entity_t * e)
 {
-	const vec4_t color = {1, 1, 1, 1};
-
 	qglEnableClientState(GL_VERTEX_ARRAY);
 	qglDisable(GL_TEXTURE_2D);
-	R_Color(color);
+	R_Color(color_white);
 	qglVertexPointer(3, GL_FLOAT, 0, r_highlightVertices);
 	/* draw */
 	qglDrawArrays(GL_TRIANGLES, 0, HIGHTLIGHT_SIZE);

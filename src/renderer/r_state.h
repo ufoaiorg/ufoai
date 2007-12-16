@@ -59,6 +59,7 @@ typedef struct {
 } rstate_t;
 
 extern rstate_t r_state;
+extern const vec4_t color_white;
 
 #define RSTATE_DISABLE_ALPHATEST   if (r_state.alpha_test) { qglDisable(GL_ALPHA_TEST); r_state.alpha_test=qfalse; }
 #define RSTATE_ENABLE_ALPHATEST    if (!r_state.alpha_test) { qglEnable(GL_ALPHA_TEST); r_state.alpha_test=qtrue; }

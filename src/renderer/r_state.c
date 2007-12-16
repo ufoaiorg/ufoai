@@ -294,7 +294,7 @@ void R_TextureSolidMode (const char *string)
 	gl_solid_format = gl_solid_modes[i].mode;
 }
 
-static const vec4_t color_white = {1, 1, 1, 1};
+const vec4_t color_white = {1, 1, 1, 1};
 
 /**
  * @brief Change the color to given value
