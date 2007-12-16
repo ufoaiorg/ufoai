@@ -73,6 +73,8 @@ void R_ModModellist_f(void);
 void R_ModDrawModelBBox(vec4_t bbox[8], entity_t *e);
 void R_ModDrawNullModel(entity_t* e);
 
+void R_ModEnableLights(const entity_t* e);
+
 extern model_t mod_known[MAX_MOD_KNOWN];
 extern int mod_numknown;
 

@@ -546,7 +546,11 @@ static void R_DrawSurface (mBspSurface_t * surf)
 	RSTATE_DISABLE_ALPHATEST
 }
 
-static void R_DrawInlineBModel (void)
+/**
+ * @brief
+ * @sa R_DrawBrushModel
+ */
+static void R_DrawInlineBrushModel (void)
 {
 	int i, k;
 	cBspPlane_t *pplane;
@@ -679,7 +683,7 @@ void R_DrawBrushModel (entity_t * e)
 	R_SelectTexture(gl_texture1);
 	R_TexEnv(GL_MODULATE);
 
-	R_DrawInlineBModel();
+	R_DrawInlineBrushModel();
 	R_EnableMultitexture(qfalse);
 
 	qglPopMatrix();

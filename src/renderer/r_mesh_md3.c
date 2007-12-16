@@ -108,18 +108,13 @@ void R_DrawAliasMD3Model (entity_t *e)
 	mAliasModel_t	*paliashdr;
 	image_t		*skin;
 	int	i;
-	qboolean lightfixed;
 
 	assert(e->model->type == mod_alias_md3);
 
 	paliashdr = (mAliasModel_t *)e->model->alias.extraData;
 
 	/* set-up lighting */
-	lightfixed = e->flags & RF_LIGHTFIXED ? qtrue : qfalse;
-	if (lightfixed)
-		R_EnableLights(lightfixed, e->lightcolor, e->lightparam, e->lightambient);
-	else
-		R_EnableLights(lightfixed, trafo[e - refdef.entities].matrix, e->lightparam, NULL);
+	R_ModEnableLights(e);
 
 	for (i = 0; i < paliashdr->num_meshes; i++) {
 		c_alias_polys += paliashdr->meshes[i].num_tris;

@@ -2389,8 +2389,9 @@ static int TestLineDist_r (int node, vec3_t start, vec3_t stop)
  * @param[in] stop The position where the trace ends.
  * @sa TestLine_r
  * @sa CL_TargetingToHit
+ * @return qfalse if not blocked
  */
-int CM_TestLine (vec3_t start, vec3_t stop)
+qboolean CM_TestLine (vec3_t start, vec3_t stop)
 {
 	int tile, i;
 
@@ -2398,10 +2399,10 @@ int CM_TestLine (vec3_t start, vec3_t stop)
 		curTile = &mapTiles[tile];
 		for (i = 0; i < curTile->numtheads; i++) {
 			if (TestLine_r(curTile->thead[i], start, stop))
-				return 1;
+				return qtrue;
 		}
 	}
-	return 0;
+	return qfalse;
 }
 
 /**
@@ -2411,9 +2412,9 @@ int CM_TestLine (vec3_t start, vec3_t stop)
  * @param[out] end The position where the trace hits a object or the stop position if nothing is in the line.
  * @sa CM_TestLine
  * @sa CL_ActorMouseTrace
- * @return 0 if no connection between start and stop - 1 otherwise
+ * @return qfalse if no connection between start and stop - 1 otherwise
  */
-int CM_TestLineDM (vec3_t start, vec3_t stop, vec3_t end)
+qboolean CM_TestLineDM (vec3_t start, vec3_t stop, vec3_t end)
 {
 	int tile, i;
 
@@ -2429,9 +2430,9 @@ int CM_TestLineDM (vec3_t start, vec3_t stop, vec3_t end)
 	}
 
 	if (VectorCompare(end, stop))
-		return 0;
+		return qfalse;
 	else
-		return 1;
+		return qtrue;
 }
 
 /*

@@ -249,7 +249,6 @@ void R_RotateForEntity(entity_t * e);
 void R_DrawTurbSurface(mBspSurface_t * fa);
 void R_DrawTriangleOutlines(void);
 void R_MarkLights(dlight_t * light, int bit, mBspNode_t * node);
-void R_EnableLights(qboolean fixed, float *matrix, float *lightparam, float *lightambient);
 
 #include "r_font.h"
 

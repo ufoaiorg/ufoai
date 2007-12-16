@@ -26,6 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_sound.h"
 
+#define SUN_HEIGHT 512 /* 8 levels * 64 */
+
 localModel_t LMs[MAX_LOCALMODELS];
 int numLMs;
 
@@ -236,10 +238,9 @@ void LM_Explode (struct dbuffer *msg)
 void CL_RegisterLocalModels (void)
 {
 	localModel_t *lm;
-	vec3_t sunDir, sunOrigin;
+	vec3_t sunOrigin;
 	int i;
-
-	VectorCopy(map_sun.dir, sunDir);
+	trace_t tr;
 
 	for (i = 0, lm = LMs; i < numLMs; i++, lm++) {
 		/* register the model and recalculate routing info */
@@ -252,11 +253,13 @@ void CL_RegisterLocalModels (void)
 		}
 
 		/* calculate sun lighting and register model if not yet done */
-		VectorMA(lm->origin, 512, sunDir, sunOrigin);
-		if (!CM_TestLine(lm->origin, sunOrigin))
-			lm->sunfrac = 1.0f;
-		else
+		VectorMA(lm->origin, SUN_HEIGHT, map_sun.dir, sunOrigin);
+		tr = CM_CompleteBoxTrace(sunOrigin, lm->origin, vec3_origin, vec3_origin, 0, MASK_VISIBILILITY);
+		/*Com_Printf("tr.fraction (%s): %f (%s)\n", lm->name, tr.fraction, tr.surface->name);*/
+		if (tr.fraction < 0.9)
 			lm->sunfrac = 0.0f;
+		else
+			lm->sunfrac = 1.0f;
 	}
 }
 
@@ -967,17 +970,19 @@ void LE_AddToScene (void)
 	int i;
 
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
-		if (le->inuse && !le->invis && le->pos[2] <= cl_worldlevel->value) {
+		if (le->inuse && !le->invis && le->pos[2] <= cl_worldlevel->integer) {
 			memset(&ent, 0, sizeof(entity_t));
 
+			/* FIXME: Not every le needs sunfraction */
 			/* calculate sun lighting */
 			if (!VectorCompare(le->origin, le->oldOrigin)) {
 				VectorCopy(le->origin, le->oldOrigin);
-				VectorMA(le->origin, 512, map_sun.dir, sunOrigin);
-				if (!CM_TestLine(le->origin, sunOrigin))
-					le->sunfrac = 1.0f;
-				else
+				VectorMA(le->origin, SUN_HEIGHT, map_sun.dir, sunOrigin);
+				/* check whether the direct connection is blocked */
+				if (CM_TestLine(le->origin, sunOrigin))
 					le->sunfrac = 0.0f;
+				else
+					le->sunfrac = 1.0f;
 			}
 			ent.lightparam = &le->sunfrac;
 			ent.alpha = le->alpha;
