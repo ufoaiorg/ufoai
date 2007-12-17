@@ -683,7 +683,6 @@ WINDRES
 HAVE_SDL_CONFIG
 SDL_CFLAGS
 SDL_LIBS
-HAVE_SHADERS
 HAVE_CURSES
 BUILD_CLIENT
 BUILD_DEDICATED
@@ -1297,7 +1296,6 @@ Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
   --with-sdl-config=FILE  using the given sdl-config [default=sdl-config]
-  --with-shaders          with OpenGL shader support [default=check]
   --with-curses           compile with curses console support [default=check]
   --with-opengl-framework compile with given opengl framework
                           [default=/System/Library/Frameworks/OpenGL.framework]
@@ -1936,15 +1934,6 @@ if test "${with_sdl_config+set}" = set; then
   withval=$with_sdl_config;
 else
   with_sdl_config=sdl-config
-fi
-
-
-
-# Check whether --with-shaders was given.
-if test "${with_shaders+set}" = set; then
-  withval=$with_shaders;
-else
-  with_shaders=check
 fi
 
 
@@ -9193,20 +9182,6 @@ _ACEOF
 	fi
 
 	#---------------------------------------------------------------------------------------------
-	# Check for shaders
-	#---------------------------------------------------------------------------------------------
-	if test "$with_shaders" = "yes"
-	then
-		HAVE_SHADERS=1
-
-		{ echo "$as_me:$LINENO: With shader support" >&5
-echo "$as_me: With shader support" >&6;}
-	else
-		{ echo "$as_me:$LINENO: Without shader support" >&5
-echo "$as_me: Without shader support" >&6;}
-	fi
-
-	#---------------------------------------------------------------------------------------------
 	# Set the client clags and libs - the rest are shared libs
 	#---------------------------------------------------------------------------------------------
 	CLIENT_LIBS="$CLIENT_LIBS $LIBS"
@@ -10143,7 +10118,6 @@ WINDRES!$WINDRES$ac_delim
 HAVE_SDL_CONFIG!$HAVE_SDL_CONFIG$ac_delim
 SDL_CFLAGS!$SDL_CFLAGS$ac_delim
 SDL_LIBS!$SDL_LIBS$ac_delim
-HAVE_SHADERS!$HAVE_SHADERS$ac_delim
 HAVE_CURSES!$HAVE_CURSES$ac_delim
 BUILD_CLIENT!$BUILD_CLIENT$ac_delim
 BUILD_DEDICATED!$BUILD_DEDICATED$ac_delim
@@ -10163,7 +10137,7 @@ LIBOBJS!$LIBOBJS$ac_delim
 LTLIBOBJS!$LTLIBOBJS$ac_delim
 _ACEOF
 
-  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 88; then
+  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 87; then
     break
   elif $ac_last_try; then
     { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5

@@ -33,26 +33,8 @@
 /* Define to 1 if you have the <libintl.h> header file. */
 #undef HAVE_LIBINTL_H
 
-/* Define to 1 if you have the `ogg' library (-logg). */
-#undef HAVE_LIBOGG
-
 /* Define to 1 if you have the `png' library (-lpng). */
 #undef HAVE_LIBPNG
-
-/* Define to 1 if you have the `SDL' library (-lSDL). */
-#undef HAVE_LIBSDL
-
-/* Define to 1 if you have the `SDL_mixer' library (-lSDL_mixer). */
-#undef HAVE_LIBSDL_MIXER
-
-/* Define to 1 if you have the `SDL_ttf' library (-lSDL_ttf). */
-#undef HAVE_LIBSDL_TTF
-
-/* Define to 1 if you have the `vorbis' library (-lvorbis). */
-#undef HAVE_LIBVORBIS
-
-/* Define to 1 if you have the `vorbisfile' library (-lvorbisfile). */
-#undef HAVE_LIBVORBISFILE
 
 /* Define to 1 if you have the `ws2_32' library (-lws2_32). */
 #undef HAVE_LIBWS2_32

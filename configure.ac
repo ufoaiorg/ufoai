@@ -37,10 +37,6 @@ AC_ARG_WITH(sdl_config,
 	[AC_HELP_STRING([--with-sdl-config=FILE], [using the given sdl-config @<:@default=sdl-config@:>@])],
 	[], [with_sdl_config=sdl-config])
 
-AC_ARG_WITH(shaders,
-	[AS_HELP_STRING([--with-shaders], [with OpenGL shader support @<:@default=check@:>@])],
-	[], [with_shaders=check])
-
 AC_ARG_WITH(curses,
 	[AS_HELP_STRING([--with-curses], [compile with curses console support @<:@default=check@:>@])],
 	[], [with_curses=check])
@@ -499,17 +495,6 @@ then
 		else
 			AC_DEFINE([GL_H_WITHOUT_GL_DIR],[1],[OpenGL header path])
 		fi
-	fi
-
-	#---------------------------------------------------------------------------------------------
-	# Check for shaders
-	#---------------------------------------------------------------------------------------------
-	if test "$with_shaders" = "yes"
-	then
-		AC_SUBST([HAVE_SHADERS],1)
-		AC_MSG_NOTICE([With shader support])
-	else
-		AC_MSG_NOTICE([Without shader support])
 	fi
 
 	#---------------------------------------------------------------------------------------------

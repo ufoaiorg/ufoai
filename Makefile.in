@@ -31,8 +31,6 @@ BUILD_DEDICATED=@BUILD_DEDICATED@
 BUILD_UFO2MAP=@BUILD_UFO2MAP@
 BUILD_DEBUG=@BUILD_DEBUG@
 
-HAVE_SHADERS=@HAVE_SHADERS@
-
 # assign parameters from configure
 prefix=@prefix@
 exec_prefix=@exec_prefix@
