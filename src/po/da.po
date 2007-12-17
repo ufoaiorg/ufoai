@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion CVS\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-12-06 11:17+0100\n"
-"PO-Revision-Date: 2007-11-03 13:31+0100\n"
+"PO-Revision-Date: 2007-12-16 13:31+0100\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -255,11 +255,11 @@ msgstr "Rumvæsen opdagelse"
 
 #: ../base/ufos/aircraftmanagement.ufo:654 ../base/ufos/research.ufo:3633
 msgid "AA51 missile launcher"
-msgstr ""
+msgstr "AA51 missilrampe"
 
 #: ../base/ufos/aircraftmanagement.ufo:665 ../base/ufos/research.ufo:3652
 msgid "AA51 Cicada SAM"
-msgstr ""
+msgstr "AA51 Cicada JTL-missil"
 
 #: ../base/ufos/armour.ufo:12
 msgid "normal"
@@ -374,7 +374,7 @@ msgstr "Holdrum"
 
 #: ../base/ufos/basemanagement.ufo:298 ../base/ufos/basemanagement.ufo:318
 msgid "Workshop"
-msgstr "Arbejdsrum"
+msgstr "Værksted"
 
 #: ../base/ufos/basemanagement.ufo:327
 msgid "Radar"
@@ -517,9 +517,8 @@ msgid "Alien aircraft spotted"
 msgstr "Rumvæsenfly observeret"
 
 #: ../base/ufos/events.ufo:60
-#, fuzzy
 msgid "mail_from_un"
-msgstr "e-post_fra_dr_connor"
+msgstr "e-post_fra_fn"
 
 #: ../base/ufos/events.ufo:61 ../base/ufos/events.ufo:71
 #: ../base/ufos/events.ufo:81 ../base/ufos/events.ufo:91
@@ -595,15 +594,15 @@ msgstr "e-post_til_øverstkommanderende"
 
 #: ../base/ufos/events.ufo:62
 msgid "2084 Mar 21"
-msgstr ""
+msgstr "21. marts 2084"
 
 #: ../base/ufos/events.ufo:63
 msgid "Good Luck"
-msgstr ""
+msgstr "Held og lykke"
 
 #: ../base/ufos/events.ufo:64
 msgid "mail_prolog"
-msgstr ""
+msgstr "e-post_prolog"
 
 #: ../base/ufos/events.ufo:72 ../base/ufos/events.ufo:82
 #: ../base/ufos/events.ufo:92 ../base/ufos/events.ufo:102
@@ -655,218 +654,136 @@ msgid "mail_from_paul_navarre"
 msgstr "e-post_fra_paul_navarre"
 
 #: ../base/ufos/events.ufo:74 ../base/ufos/events.ufo:84
-#, fuzzy
 msgid "Recovery Report -- %s"
-msgstr "Rumvæsenaktivitet er blevet rapporteret: »%s«"
+msgstr "Indbringningsrapport -- %s"
 
 #: ../base/ufos/events.ufo:75
-#, fuzzy
 msgid "mail_alien_ufo_crashed"
-msgstr "e-post_til_øverstkommanderende"
+msgstr "e-post_rumvæsenufo_styrtet_ned"
 
 #: ../base/ufos/events.ufo:85
-#, fuzzy
 msgid "mail_alien_ufo_recovered"
-msgstr "e-post_til_øverstkommanderende"
+msgstr "e-post_rumvæsenufo_indbragt"
 
 #: ../base/ufos/events.ufo:94
-#, fuzzy
 msgid "Not Enough Money -- %s"
-msgstr "Ikke nok arbejdere"
+msgstr "Ikke nok penge -- %s"
 
 #: ../base/ufos/events.ufo:95
 msgid "mail_not_enough_money"
-msgstr ""
+msgstr "e-post_ikke_nok_penge"
 
 #: ../base/ufos/events.ufo:104
-#, fuzzy
 msgid "Not Enough Resources -- %s"
-msgstr "Ikke nok lagerkapacitet"
+msgstr "Ikke nok ressourcer -- %s"
 
 #: ../base/ufos/events.ufo:105
 msgid "mail_not_enough_ressources"
-msgstr ""
+msgstr "e-post_ikke_nok_ressourcer"
 
 #: ../base/ufos/events.ufo:114
-#, fuzzy
 msgid "Production Finished -- %s"
-msgstr "Produktion færdig"
+msgstr "Produktion færdig -- %s"
 
 #: ../base/ufos/events.ufo:115
-#, fuzzy
 msgid "mail_production_finished"
-msgstr "Produktion færdig"
+msgstr "e-post_produktion_færdig"
 
 #: ../base/ufos/events.ufo:122 ../base/ufos/events.ufo:142
 #: ../base/ufos/events.ufo:152 ../base/ufos/events.ufo:162
 #: ../base/ufos/events.ufo:172 ../base/ufos/events.ufo:182
 #: ../base/ufos/events.ufo:192 ../base/ufos/events.ufo:202
 #: ../base/ufos/events.ufo:212 ../base/ufos/events.ufo:222
-#, fuzzy
 msgid "mail_from_xo"
-msgstr "e-post_fra_dr_connor"
+msgstr "e-post_fra_xo"
 
 #: ../base/ufos/events.ufo:124
 msgid "Monthly Report -- %s"
-msgstr ""
+msgstr "Månedlig rapport -- %s"
 
 #: ../base/ufos/events.ufo:125
 msgid "mail_monthly_report"
-msgstr ""
+msgstr "e-post_månedlig_rapport"
 
 #: ../base/ufos/events.ufo:134
 msgid "UFO Stored In Hangar -- %s"
-msgstr ""
+msgstr "Ufo placeret i hangar -- %s"
 
 #: ../base/ufos/events.ufo:135
-#, fuzzy
 msgid "mail_ufo_in_hangar"
-msgstr ""
-"Blueprints -- Small UFO Hangar\n"
-"\n"
-"CLASSIFIED LEVEL BLACK\n"
-"\n"
-"PHALANX Extraterrestrial Response Unit\n"
-"\n"
-"Research Document, Sigma Clearance -- Commander's Eyes Only\n"
-"\n"
-"Filed: 19 March 2084\n"
-"\n"
-"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic "
-"Operations Command\n"
-"\n"
-"\n"
-"\n"
-"Overview\n"
-"\n"
-"These are the finished plans for our new UFO storage hangars. They are "
-"designed to house one recovered UFO for disassembly, and will be marked as "
-"occupied until the craft has been fully broken down into its component parts "
-"and the parts transferred to base Storage. UFOs require significant "
-"disassembly before they will fit inside Storage, so they must be dismantled "
-"before we can begin to store or use the recovered parts. Doing this job on-"
-"site is highly inadvisable. It could be hazardous to the health of our "
-"scientists and engineers, it might attract looters, and it would without "
-"doubt severely compromise the safety and secrecy of our operation.\n"
-"\n"
-"The importance of studying captured UFOs should be more than obvious. It "
-"will give us insight into the workings and vulnerabilities of alien craft, "
-"and it may result in the discovery of new techniques to improve our own "
-"craft's effectiveness. Once a recovered UFO is secured for transport, it is "
-"carried to a PHALANX base by means of transport helicopters. Salvage "
-"operations are handled by local UN forces to relieve pressure on our limited "
-"resources.\n"
-"\n"
-"The Small UFO Hangar can store 1 alien craft of limited size. We will assess "
-"the size of each UFO type as we encounter them and determine what hangar is "
-"required to store them.\n"
-"\n"
-"The Small UFO Hangar requires a Power Plant to feed its high-power machinery "
-"and plasma-based cutting tools. It also requires a Workshop and Storage to "
-"handle the dismantling.\n"
-"\n"
-"\n"
-"Recommended Doctrine\n"
-"\n"
-"All salvaged UFOs should be permanently disabled once delivered into our "
-"hands. Should the base come under attack from alien forces, we can't afford "
-"the extra risk of stored UFOs being reactivated and used against us. Even "
-"without a drive unit, any weapon systems left active would present a grave "
-"threat to our base.\n"
-"\n"
-"If this procedure is followed, the UFO Hangar will be of minor tactical "
-"importance to alien attackers and will most likely be ignored except as a "
-"target of opportunity. Preventing us from dismantling UFOs would be far less "
-"attractive than shutting down our research or production, or destroying our "
-"base outright.\n"
-"\n"
-"We will most likely be needing several of these installations to strip and/"
-"or examine several UFOs at a time. However, if necessary, we can remove a "
-"craft from our hangars and have it destroyed to make room for a new one. In "
-"this scenario all parts already transferred to Storage will be available, "
-"but everything not yet removed from the UFO will be destroyed with it.\n"
-"\n"
-"\n"
-"Addenda\n"
-"\n"
-"None."
+msgstr "e-post_ufo_i_hangar"
 
 #: ../base/ufos/events.ufo:144
 msgid "Transfer Received -- %s"
-msgstr ""
+msgstr "Overførsel modtaget -- %s"
 
 #: ../base/ufos/events.ufo:145
 msgid "mail_transfer_received"
-msgstr ""
+msgstr "e-post_overførsel_modtaget"
 
 #: ../base/ufos/events.ufo:154
 msgid "Equipment Order Received -- %s"
-msgstr ""
+msgstr "Ordre på udstyr modtaget -- %s"
 
 #: ../base/ufos/events.ufo:155
 msgid "mail_equipment_order_received"
-msgstr ""
+msgstr "e-post_ordre_på_udstyr_modtaget"
 
 #: ../base/ufos/events.ufo:164
-#, fuzzy
 msgid "Construction Finished -- %s"
-msgstr "Bygning færdig"
+msgstr "Bygning færdig -- %s"
 
 #: ../base/ufos/events.ufo:165
-#, fuzzy
 msgid "mail_construction_finished"
-msgstr "Bygning færdig"
+msgstr "e-post_bygning_færdig"
 
 #: ../base/ufos/events.ufo:174
 msgid "New Base Ready -- %s"
-msgstr ""
+msgstr "Ny base klar -- %s"
 
 #: ../base/ufos/events.ufo:175
-#, fuzzy
 msgid "mail_new_base_ready"
-msgstr "e-post_til_øverstkommanderende"
+msgstr "e-post_ny_base_klar"
 
 #: ../base/ufos/events.ufo:184
-#, fuzzy
 msgid "Base Attack Report -- %s"
-msgstr "Forskningsrapporter"
+msgstr "Baseangrebsrapport -- %s"
 
 #: ../base/ufos/events.ufo:185
 msgid "mail_base_attack_report"
-msgstr ""
+msgstr "e-post_baseangrebsrapport"
 
 #: ../base/ufos/events.ufo:194
 msgid "Mission Summary -- %s"
-msgstr ""
+msgstr "Missionsresumé -- %s"
 
 #: ../base/ufos/events.ufo:195
 msgid "mail_mission_summary"
-msgstr ""
+msgstr "e-post_missionsresumé"
 
 #: ../base/ufos/events.ufo:204
 msgid "Alien Base Discovered -- %s"
-msgstr ""
+msgstr "Rumvæsenbase opdaget -- %s"
 
 #: ../base/ufos/events.ufo:205
-#, fuzzy
 msgid "mail_alien_base_discovered"
-msgstr "e-post_til_øverstkommanderende"
+msgstr "e-post_rumvæsenbase_opdaget"
 
 #: ../base/ufos/events.ufo:214
 msgid "Lost Radar Tracking -- %s"
-msgstr ""
+msgstr "Mistet radarsporing -- %s"
 
 #: ../base/ufos/events.ufo:215
 msgid "mail_lost_radar_tracking"
-msgstr ""
+msgstr "e-post_mistet_radarsporing"
 
 #: ../base/ufos/events.ufo:224
 msgid "New Radar Contact -- %s"
-msgstr ""
+msgstr "Ny radarkontakt -- %s"
 
 #: ../base/ufos/events.ufo:225
 msgid "mail_new_radar_contact"
-msgstr ""
+msgstr "e-post_ny_radarkontakt"
 
 #: ../base/ufos/events.ufo:232 ../base/ufos/events.ufo:242
 #: ../base/ufos/events.ufo:252 ../base/ufos/research.ufo:456
@@ -877,79 +794,73 @@ msgstr "e-post_fra_oberst_falkland"
 
 #: ../base/ufos/events.ufo:234
 msgid "Response Too Late -- %s"
-msgstr ""
+msgstr "For sent reaktion -- %s"
 
 #: ../base/ufos/events.ufo:235
 msgid "mail_response_too_late"
-msgstr ""
+msgstr "e-post_for_sent_reaktion"
 
 #: ../base/ufos/events.ufo:244
 msgid "UFO Shot Down -- %s"
-msgstr ""
+msgstr "Ufo skudt ned -- %s"
 
 #: ../base/ufos/events.ufo:245
 msgid "mail_ufo_shot_down"
-msgstr ""
+msgstr "e-post_ufo_skudt_ned"
 
 #: ../base/ufos/events.ufo:254
-#, fuzzy
 msgid "Alien Activity Reported -- %s"
-msgstr "Rumvæsenaktivitet er blevet rapporteret: »%s«"
+msgstr "Rumvæsenaktivitet rapporteret -- %s"
 
 #: ../base/ufos/events.ufo:255
-#, fuzzy
 msgid "mail_alien_activity_reported"
-msgstr "Rumvæsenaktivitet er blevet rapporteret: »%s«"
+msgstr "e-post_rumvæsenaktivitet_rapporteret"
 
 #: ../base/ufos/events.ufo:262 ../base/ufos/events.ufo:272
 #: ../base/ufos/events.ufo:282 ../base/ufos/events.ufo:292
 #: ../base/ufos/events.ufo:302
-#, fuzzy
 msgid "mail_from_air_cdr"
-msgstr "e-post_fra_dr_connor"
+msgstr "e-post_fra_air_cdr"
 
 #: ../base/ufos/events.ufo:264
 msgid "New Aircraft Arrived -- %s"
-msgstr ""
+msgstr "Nyt luftfartøj ankommet -- %s"
 
 #: ../base/ufos/events.ufo:265
 msgid "mail_new_aircraft_arrived"
-msgstr ""
+msgstr "e-post_nyt_luftfartøj_ankommet"
 
 #: ../base/ufos/events.ufo:274
-#, fuzzy
 msgid "Aircraft Lost Target -- %s"
-msgstr "Luftfartøj lettet"
+msgstr "Luftfartøj mistede målet -- %s"
 
 #: ../base/ufos/events.ufo:275
 msgid "mail_aircraft_lost_target"
-msgstr ""
+msgstr "e-post_luftfartøj_mistede_målet"
 
 #: ../base/ufos/events.ufo:284
-#, fuzzy
 msgid "Aircraft Ready -- %s"
-msgstr "Luftfartøj %s\n"
+msgstr "Luftfartøj klar -- %s"
 
 #: ../base/ufos/events.ufo:285
 msgid "mail_aircraft_ready"
-msgstr ""
+msgstr "e-post_luftfartøj_klar"
 
 #: ../base/ufos/events.ufo:294
 msgid "Aircraft Bingo Fuel -- %s"
-msgstr ""
+msgstr "Luftfartøj bingobrændstof -- %s"
 
 #: ../base/ufos/events.ufo:295
 msgid "mail_aircraft_bingo_fuel"
-msgstr ""
+msgstr "e-post_luftfartøj_bingobrændstof"
 
 #: ../base/ufos/events.ufo:304
-#, fuzzy
 msgid "Aircraft Landed -- %s"
-msgstr "Luftfartøj %s\n"
+msgstr "Luftfartøj landet -- %s"
 
 #: ../base/ufos/events.ufo:305
 msgid "mail_aircraft_landed"
-msgstr ""
+msgstr "e-post_luftfartøj_landet"
 
 #: ../base/ufos/fonts.ufo:15 ../base/ufos/fonts.ufo:22
 #: ../base/ufos/fonts.ufo:28 ../base/ufos/fonts.ufo:35
@@ -1025,7 +936,7 @@ msgstr "Thailandsk"
 
 #: ../base/ufos/language.ufo:234
 msgid "Japanese"
-msgstr ""
+msgstr "Japansk"
 
 #: ../base/ufos/language.ufo:242
 msgid "No language"
@@ -1663,9 +1574,8 @@ msgid "Buy or produce a new aircraft"
 msgstr "Køb eller producer et nyt luftfartøj"
 
 #: ../base/ufos/menu_bases.ufo:144
-#, fuzzy
 msgid "Build at least one functional Hangar (click for more info)"
-msgstr "Byg mindst en hangar"
+msgstr "Byg mindst en operationsdygtig hangar (klik for yderligere info)"
 
 #: ../base/ufos/menu_bases.ufo:157 ../base/ufos/menu_buy.ufo:2283
 #: ../base/ufos/menu_geoscape.ufo:1046 ../base/ufos/menu_production.ufo:827
@@ -1679,9 +1589,8 @@ msgid "Buy/Sell equipment"
 msgstr "Køb/sælg udstyr"
 
 #: ../base/ufos/menu_bases.ufo:185
-#, fuzzy
 msgid "Build at least one functional Storage (click for more info)"
-msgstr "Byg mindst et lagerrum"
+msgstr "Byg mindst et funktionsdygtigt lagerrum (klik for yderligere info)"
 
 #: ../base/ufos/menu_bases.ufo:198
 msgid "Buy/Sell Equipment"
@@ -1705,9 +1614,8 @@ msgid "Research new technology"
 msgstr "Forsk i ny teknologi"
 
 #: ../base/ufos/menu_bases.ufo:261
-#, fuzzy
 msgid "Build at least one functional Laboratory (click for more info)"
-msgstr "Byg mindst et laboratorium"
+msgstr "Byg mindst et funktionsdygtigt laboratorium (klik for yderligere info)"
 
 #: ../base/ufos/menu_bases.ufo:274 ../base/ufos/menu_basesummary.ufo:361
 msgid "Research"
@@ -1719,7 +1627,7 @@ msgstr "Byg nyt udstyr"
 
 #: ../base/ufos/menu_bases.ufo:302
 msgid "Build at least one functional Workshop (click for more info)"
-msgstr ""
+msgstr "Byg mindst et funktionsdygtigt værksted (klik for yderligere info)"
 
 #: ../base/ufos/menu_bases.ufo:315 ../base/ufos/menu_basesummary.ufo:346
 msgid "Production"
@@ -1730,18 +1638,16 @@ msgid "Hire employees"
 msgstr "Ansæt personale"
 
 #: ../base/ufos/menu_bases.ufo:343
-#, fuzzy
 msgid "Build at least one functional Living Quarter (click for more info)"
-msgstr "Byg mindst et beboelseskvarter"
+msgstr "Byg mindst et funktionsdygtigt beboelseskvarter (klik for yderligere info)"
 
 #: ../base/ufos/menu_bases.ufo:366
 msgid "Deal with Aliens in Alien Containment"
 msgstr "Håndter rumvæsener i opbevaringsrum"
 
 #: ../base/ufos/menu_bases.ufo:382
-#, fuzzy
 msgid "Build at least one functional Alien Containment (click for more info)"
-msgstr "Byg mindst et rumvæsenopbevaringsrum"
+msgstr "Byg mindst et funktionsdygtigt rumvæsenopbevaringsrum (klik for yderligere info)"
 
 # #ufopedia
 # rumvæsenopbevaringsbeholder
@@ -1754,9 +1660,8 @@ msgid "Medical and Surgery operations"
 msgstr "Medicin og kirurgi operationer"
 
 #: ../base/ufos/menu_bases.ufo:421
-#, fuzzy
 msgid "Build at least one functional Hospital (click for more info)"
-msgstr "Byg mindst et hospital"
+msgstr "Byg mindst et funktionsdygtigt hospital (klik for yderligere info)"
 
 #: ../base/ufos/menu_bases.ufo:443
 msgid "Base Information"
@@ -2184,7 +2089,7 @@ msgstr "Øg hastigheden"
 
 #: ../base/ufos/menu_geoscape.ufo:276
 msgid "INBOX (with unread mails)"
-msgstr ""
+msgstr "INDBAKKE (med ulæst e-post)"
 
 #: ../base/ufos/menu_geoscape.ufo:288
 msgid "INBOX"
@@ -2204,9 +2109,8 @@ msgid "Create base"
 msgstr "Opret base"
 
 #: ../base/ufos/menu_geoscape.ufo:354
-#, fuzzy
 msgid "Go to Options"
-msgstr "Indstillnger"
+msgstr "Gå til indstillinger"
 
 #: ../base/ufos/menu_geoscape.ufo:373
 msgid "Open up messages"
@@ -2252,7 +2156,7 @@ msgstr "Vælg base der skal overføres til"
 
 #: ../base/ufos/menu_geoscape.ufo:636
 msgid "Choose a base to host alien bodies:"
-msgstr ""
+msgstr "Vælg en base hvor rumvæsenkroppe skal opbevares:"
 
 #: ../base/ufos/menu_geoscape.ufo:691
 msgid "New base"
@@ -2279,9 +2183,8 @@ msgid "Select aircraft"
 msgstr "Vælg luftfartøj"
 
 #: ../base/ufos/menu_geoscape.ufo:803
-#, fuzzy
 msgid "Select base"
-msgstr "Valgt base"
+msgstr "Vælg base"
 
 #: ../base/ufos/menu_geoscape.ufo:817
 msgid "Status:"
@@ -2631,7 +2534,7 @@ msgstr "Helbredsstatus for denne soldat"
 
 #: ../base/ufos/menu_hud.ufo:727 ../base/ufos/seq_tutorials.ufo:518
 msgid "Inventory"
-msgstr "Lager"
+msgstr "Udstyr"
 
 #: ../base/ufos/menu_inventory.ufo:21 ../base/ufos/menu_team.ufo:1039
 msgid "Backpack"
@@ -3541,9 +3444,8 @@ msgid "New game"
 msgstr "Nyt spil"
 
 #: ../base/ufos/menu_singleplayer.ufo:98
-#, fuzzy
 msgid "No game to save"
-msgstr "Intet at gemme endnu."
+msgstr "Intet spil at gemme"
 
 #: ../base/ufos/menu_singleplayer.ufo:149
 msgid "Load last saved game or continue playing"
@@ -6784,9 +6686,8 @@ msgstr ""
 "Ingen."
 
 #: ../base/ufos/research.ufo:2959
-#, fuzzy
 msgid "Blueprints - Antimatter Storage"
-msgstr "Lagerrum til antistof"
+msgstr "Tegninger - Antistoflagerrum"
 
 #: ../base/ufos/research.ufo:2974
 msgid "drop_firebird_txt"
@@ -8434,7 +8335,7 @@ msgstr ""
 
 #: ../base/ufos/tips.ufo:22
 msgid "Build a workshop and UFO hangars to be able to disassemble UFOs."
-msgstr "Byg et arbejdsrum og ufo-hangarer for at kunne skille ufoer ad."
+msgstr "Byg et værksted og ufo-hangarer for at kunne skille ufoer ad."
 
 #: ../base/ufos/tips.ufo:23
 msgid ""
@@ -8489,13 +8390,12 @@ msgstr ""
 "bedøvelsesgranater og førstehjælpskasser."
 
 #: ../base/ufos/tips.ufo:29
-#, fuzzy
 msgid ""
 "Build a hospital to be able to heal your soldiers faster for their next "
 "mission."
 msgstr ""
-"Byg et hospital for hurtigere at kunne behandle dine soldater før næste "
-"mission."
+"Byg et hospital for hurtigere at kunne behandle dine soldater før deres "
+"næste mission."
 
 #: ../base/ufos/tips.ufo:30
 msgid ""
@@ -8643,6 +8543,8 @@ msgid ""
 "You should ensure that not too many civilians lose their lives. Otherwise "
 "you might lose the game sooner than you'd expect."
 msgstr ""
+"Du bør sikre dig at der ikke er for mange civile tab. Ellers kan du tabe "
+"spillet hurtigere end du tror."
 
 #: ../base/ufos/weapons.ufo:6
 msgid "Medikit"
@@ -8935,12 +8837,12 @@ msgstr "Præcisionsskud"
 #: ../base/ufos/weapons_laser.ufo:87 ../base/ufos/weapons_laser.ufo:130
 #: ../base/ufos/weapons_laser.ufo:174
 msgid "Wave Fire"
-msgstr ""
+msgstr "Bølgeild"
 
 #: ../base/ufos/weapons_laser.ufo:106 ../base/ufos/weapons_laser.ufo:150
 #: ../base/ufos/weapons_laser.ufo:193
 msgid "Pulsed Fire"
-msgstr ""
+msgstr "Pulsild"
 
 #: ../base/ufos/weapons_melee.ufo:8
 msgid "Combat Knife"
@@ -8996,7 +8898,7 @@ msgstr "Partikelriffelaccelerator"
 
 #: ../base/ufos/weapons_particle.ufo:160
 msgid "Repeat Fire"
-msgstr ""
+msgstr "Repeterild"
 
 #: ../base/ufos/weapons_particle.ufo:187
 msgid "Particle Beam Cannon"
@@ -9008,7 +8910,7 @@ msgstr "Kanonpartikelaccelerator"
 
 #: ../base/ufos/weapons_particle.ufo:262
 msgid "Unrestricted Blast"
-msgstr ""
+msgstr "Ukontrolleret eksplosion"
 
 #: ../base/ufos/weapons_plasma.ufo:6
 msgid "Plasma Pistol"
@@ -9161,17 +9063,17 @@ msgstr ""
 "ammo ikke tilgængelig.\n"
 
 #: client/cl_actor.c:1547
-#, fuzzy, c-format
+#, c-format
 msgid "Morale  %i\n"
-msgstr "Vest  %i\tMoral  %i\n"
+msgstr "Moral  %i\n"
 
 #: client/cl_actor.c:1554
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Morale  %i\n"
 "Move %i (%i TU left)\n"
 msgstr ""
-"Vest  %i\tMoral  %i\n"
+"Moral  %i\n"
 "Flyt %i (%i TE tilb.)\n"
 
 #: client/cl_actor.c:1573
@@ -9213,14 +9115,14 @@ msgstr ""
 "Du må forske i det og dets ammunition først.\n"
 
 #: client/cl_actor.c:2935
-#, fuzzy, c-format
+#, c-format
 msgid "%s %s was stunned\n"
-msgstr "blev bedøvet.\n"
+msgstr "%s %s blev bedøvet\n"
 
 #: client/cl_actor.c:2939
-#, fuzzy, c-format
+#, c-format
 msgid "%s %s was killed\n"
-msgstr "blev dræbt.\n"
+msgstr "%s %s blev dræbt\n"
 
 #: client/cl_actor.c:2947
 msgid "A civilian was stunned.\n"
@@ -9231,14 +9133,14 @@ msgid "A civilian was killed.\n"
 msgstr "En civil blev dræbt.\n"
 
 #: client/cl_actor.c:2955
-#, fuzzy, c-format
+#, c-format
 msgid "An alien was stunned: %s\n"
-msgstr "Et rumvæsen blev bedøvet:"
+msgstr "Et rumvæsen blev bedøvet: %s\n"
 
 #: client/cl_actor.c:2958
-#, fuzzy, c-format
+#, c-format
 msgid "An alien was killed: %s\n"
-msgstr "Et rumvæsen blev dræbt:"
+msgstr "Et rumvæsen blev dræbt: %s\n"
 
 #: client/cl_actor.c:2963 client/cl_actor.c:2969
 msgid "An alien was stunned.\n"
@@ -9276,7 +9178,6 @@ msgid "Unknown alien race"
 msgstr "Ukendt rumvæsenart"
 
 #: client/cl_aircraft.c:278
-#, fuzzy
 msgid ""
 "No Command Centre operational in this base.\n"
 "\n"
@@ -9284,7 +9185,7 @@ msgid ""
 msgstr ""
 "Ingen kommandocentral er funktionsdygtig på denne base.\n"
 "\n"
-"Luftfartøjer kan ikke lette.\n"
+"Luftfartøj kan ikke lette.\n"
 
 #: client/cl_aircraft.c:278 client/cl_aircraft.c:291 client/cl_aircraft.c:519
 #: client/cl_aircraft.c:707 client/cl_aircraft.c:962 client/cl_aircraft.c:1059
@@ -9421,7 +9322,7 @@ msgstr "Tildel et hold til luftfartøj"
 #: client/cl_aircraft.c:1666
 #, c-format
 msgid "A UFO is shooting at %s"
-msgstr ""
+msgstr "En ufo skyder på %s"
 
 #: client/cl_airfight.c:339
 msgid "Our aircraft has no more ammo left - returning to home base now."
@@ -9525,9 +9426,9 @@ msgid "Running Costs:\t%i c\n"
 msgstr "Løbende omk.:\t%i kr\n"
 
 #: client/cl_basemanagement.c:1177
-#, fuzzy, c-format
+#, c-format
 msgid "Needs:\t%s\n"
-msgstr "Afhænger:\t%s\n"
+msgstr "Behov:\t%s\n"
 
 #: client/cl_basemanagement.c:1806
 #, c-format
@@ -9563,34 +9464,35 @@ msgid "You've reached the base limit."
 msgstr "Du har nået basebegrænsningen."
 
 #: client/cl_basemanagement.c:2622
-#, fuzzy
 msgid "Base is under attack, you can't access this building !"
-msgstr "Base er under angreb - hvad nu?"
+msgstr "Base er under angreb, du kan ikke tilgå denne bygning !"
 
 #: client/cl_basemanagement.c:2631
 msgid "You need at least one Hangar (and its dependencies) to use aircraft."
-msgstr ""
+msgstr "Du skal bruge mindst en hangar (og dens afhængigheder) for at anvende "
+"luftfartøjer."
 
 #: client/cl_basemanagement.c:2642
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Construction of building will be over in %i day.\n"
 "Please wait to enter."
 msgid_plural ""
 "Construction of building will be over in %i days.\n"
 "Please wait to enter."
-msgstr[0] "Konstruktion af %s bygning er færdig på base %s."
-msgstr[1] "Konstruktion af %s bygning er færdig på base %s."
+msgstr[0] "Konstruktion af bygning er færdig om %i dag."
+msgstr[1] "Konstruktion af bygning er færdig om %i dage."
 
 #: client/cl_basemanagement.c:2651
 #, c-format
 msgid "You need a building %s to make building %s functional."
-msgstr ""
+msgstr "Du skal bruge bygning %s for at gøre bygning %s funktionsdygtig."
 
 #: client/cl_basemanagement.c:2661
 #, c-format
 msgid "Building %s is not finished yet, and is needed to use building %s."
-msgstr ""
+msgstr "Byging %s er ikke færdig endnu, og er nødvendig for at kunne "
+"bruge bygning %s."
 
 #: client/cl_basemanagement.c:2668
 #, c-format
@@ -9598,17 +9500,19 @@ msgid ""
 "Make sure that the dependencies of building %s (%s) are operational, so that "
 "building %s may be used."
 msgstr ""
+"Vær sikker på at afhængighederne for bygning %s (%s) er funktionsdygtige, så "
+"at bygning %s kan anvendes."
 
 #: client/cl_basemanagement.c:2676 client/cl_basemanagement.c:2681
 #: client/cl_basemanagement.c:2686
 #, c-format
 msgid "You need to recruit %s to use building %s."
-msgstr ""
+msgstr "Du skal rekruttere %s for at bruge bygning %s."
 
 #: client/cl_basemanagement.c:2692
-#, fuzzy, c-format
+#, c-format
 msgid "Build a %s first."
-msgstr "Byg en hangar først."
+msgstr "Byg en %s først."
 
 #: client/cl_basemanagement.c:2754
 msgid ""
@@ -9655,14 +9559,14 @@ msgid "%s: %i"
 msgstr "%s: %i"
 
 #: client/cl_basesummary.c:111
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %i/%i"
-msgstr "%s: %i"
+msgstr "%s: %i/%i"
 
 #: client/cl_basesummary.c:156
-#, fuzzy, c-format
+#, c-format
 msgid "%s:  Qty: %d, Already produced: %.2f %%"
-msgstr "%s:  M: %d, tid tilbage: %d timer"
+msgstr "%s:  M: %d, allerede produceret: %.2f %%"
 
 #: client/cl_basesummary.c:183
 #, c-format
@@ -9987,9 +9891,9 @@ msgid "Employees:\t%i c\n"
 msgstr "Arbejdere:\t%i kr\n"
 
 #: client/cl_campaign.c:1842
-#, fuzzy, c-format
+#, c-format
 msgid "Aircraft:\t%i c\n"
-msgstr "Luftfartøjer:\t%i kr\n"
+msgstr "Luftfartøj:\t%i kr\n"
 
 #: client/cl_campaign.c:1850
 #, c-format
@@ -10042,7 +9946,7 @@ msgstr "Dit landingsfly er ikke nær landingszonen"
 #: client/cl_campaign.c:3025
 #, c-format
 msgid "Collected %i dead alien bodies"
-msgstr ""
+msgstr "Indsamlede %i døde rumvæsenkroppe"
 
 #: client/cl_campaign.c:3042
 msgid "You've won the battle"
@@ -10095,14 +9999,14 @@ msgstr ""
 "%s\n"
 
 #: client/cl_campaign.c:4762
-#, fuzzy, c-format
+#, c-format
 msgid "  * %i x\t%s\n"
-msgstr "%s - %i %s\n"
+msgstr "  * %i x\t%s\n"
 
 #: client/cl_campaign.c:4785
-#, fuzzy, c-format
+#, c-format
 msgid "  * %s\n"
-msgstr "%s - %i %s\n"
+msgstr "  * %s\n"
 
 #: client/cl_campaign.c:4943
 #, c-format
@@ -10187,9 +10091,9 @@ msgstr ""
 "Byg flere rum."
 
 #: client/cl_event.c:254
-#, fuzzy, c-format
+#, c-format
 msgid "You've got a new mail: %s"
-msgstr "Du har mistet en basefacilitet (%s)."
+msgstr "Du har ny e-post: %s"
 
 #: client/cl_hospital.c:119
 #, c-format
@@ -10575,9 +10479,9 @@ msgid "Night"
 msgstr "Nat"
 
 #: client/cl_map.c:1302
-#, fuzzy, c-format
+#, c-format
 msgid "%s\t%0.2f%%\n"
-msgstr "%s\t%i%%\n"
+msgstr "%s\t%0.2f%%\n"
 
 #: client/cl_map.c:1357
 msgid "Select the desired location of the new base on the map.\n"
@@ -10596,7 +10500,7 @@ msgid "UFO in radar range\n"
 msgstr "Ufo indenfor rangerafstand\n"
 
 #: client/cl_map.c:1389
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Location: %s\n"
 "Type: %s\n"
@@ -10604,7 +10508,7 @@ msgid ""
 msgstr ""
 "Placering: %s\n"
 "Type: %s\n"
-"Mål: %s\n"
+"Mål: %s"
 
 #: client/cl_map.c:1399 client/cl_map.c:1407
 #, c-format
@@ -10680,8 +10584,8 @@ msgstr "Intet ammo er tildelt dette forsvarssystem."
 #, c-format
 msgid " (%i missile left)"
 msgid_plural " (%i missiles left)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " (%i missil tilbage)"
+msgstr[1] " (%i missiler tilbage)"
 
 #: client/cl_mapfightequip.c:789
 msgid "Aircraft item was successfully installed."
@@ -10729,17 +10633,15 @@ msgstr "Intet ammo tildelt dette våben."
 
 #: client/cl_mapfightequip.c:1811
 msgid "Light weight"
-msgstr ""
+msgstr "Let vægt"
 
 #: client/cl_mapfightequip.c:1814
-#, fuzzy
 msgid "Medium weight"
-msgstr "Mellem"
+msgstr "Mellem vægt"
 
 #: client/cl_mapfightequip.c:1817
-#, fuzzy
 msgid "Heavy weight"
-msgstr "Tung laser"
+msgstr "Tung vægt"
 
 #: client/cl_mapfightequip.c:1820
 msgid "Unknown weight"
@@ -10909,11 +10811,8 @@ msgstr ""
 "nåes."
 
 #: client/cl_popup.c:332
-#, fuzzy
 msgid "No defense system operational or no weapon or ammo equipped."
-msgstr ""
-"Intet fly tilgængelig, ingen våben eller ammo er påført eller målet kan ikke "
-"nåes."
+msgstr "Intet forsvarssytem tilgængelig eller ingen våben eller ammo på udstyr."
 
 #: client/cl_popup.c:386
 msgid ""
@@ -11319,13 +11218,12 @@ msgid "Campaign loaded"
 msgstr "Kampagne hentet"
 
 #: client/cl_save.c:580
-#, fuzzy
 msgid "Quicksave campaign was successfully loaded."
-msgstr "Kampagne blev gemt med succes."
+msgstr "Hurtiggem kampagne blev indlæst med succes."
 
 #: client/cl_save.c:628
 msgid "Saves to the quick save slot"
-msgstr ""
+msgstr "Gemmer via hurtiggem"
 
 #: client/cl_screen.c:367
 #, c-format
@@ -11749,9 +11647,8 @@ msgid "Transfer is not possible - the base doesn't have an Alien Containment."
 msgstr "Overførsel er ikke mulig - basen har ikke et rumvæsenopbevaringsrum."
 
 #: client/cl_transfer.c:451
-#, fuzzy
 msgid "No aircraft available for transfer.\n"
-msgstr "Ingen luftfartøjer tilgængelig for overførsel.\n"
+msgstr "Intet luftfartøj tilgængelig for overførsel.\n"
 
 #: client/cl_transfer.c:453
 msgid "Transfer is not possible - the base doesn't hangar functional."
@@ -11792,8 +11689,8 @@ msgstr "Transportmission påbegyndt, last transporteres til base %s"
 #, c-format
 msgid "(can host %i alive alien)\n"
 msgid_plural "(can host %i alive aliens)\n"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "(kan opbevare %i levende rumvæsen)\n"
+msgstr[1] "(kan opbevare %i levende rumvæsener)\n"
 
 #: client/cl_transfer.c:780
 #, c-format
@@ -11848,12 +11745,10 @@ msgid "No Antimatter Storage in this base.\n"
 msgstr "Intet lagerrum til antistof på denne base.\n"
 
 #: client/cl_transfer.c:1086
-#, fuzzy
 msgid "You can transfer aircraft - this base has a Hangar.\n"
-msgstr "Du kan overføre luftfartøjer - denne base har en hangar.\n"
+msgstr "Du kan overføre luftfartøj - denne base har en hangar.\n"
 
 #: client/cl_transfer.c:1088
-#, fuzzy
 msgid ""
 "Aircraft transfer not possible - this base does not have a Command Centre.\n"
 msgstr ""
@@ -12151,9 +12046,9 @@ msgid "%s\t%i %s %02i\n"
 msgstr "%s\t%i %s %02i\n"
 
 #: client/cl_ufopedia.c:1566
-#, fuzzy, c-format
+#, c-format
 msgid "^B%s\t%s\n"
-msgstr "%s\t%s\n"
+msgstr "^B%s\t%s\n"
 
 #: client/cl_view.c:364 client/cl_view.c:393
 #, c-format
@@ -12304,7 +12199,6 @@ msgstr "Base er under angreb."
 msgid "Crashed Alien Ship. Secure the area."
 msgstr "Nedstyrtet rumvæsenfly. Gør området sikkert."
 
-#, fuzzy
 #~ msgid "mail_ufo_recovery_report"
 #~ msgstr "Rumvæsenaktivitet er blevet rapporteret: »%s«"
 
@@ -12338,9 +12232,6 @@ msgstr "Nedstyrtet rumvæsenfly. Gør området sikkert."
 
 #~ msgid "Light"
 #~ msgstr "Let"
-
-#~ msgid "Workshop not operational"
-#~ msgstr "Arbejdsrum ikke funktionsdygtigt"
 
 #~ msgid "prolog_sentence1"
 #~ msgstr "TIL: Øverstbefalende, FALANKS, Atlanterhavskommandoen"
