@@ -89,7 +89,6 @@ typedef struct mBspSurface_s {
 	short extents[2];
 
 	int light_s, light_t;		/**< gl lightmap coordinates */
-	int dlight_s, dlight_t;		/**< gl lightmap coordinates for dynamic lightmaps */
 	byte lquant;
 
 	mBspPoly_t *polys;			/* multiple if warped */
@@ -99,13 +98,8 @@ typedef struct mBspSurface_s {
 
 	mBspTexInfo_t *texinfo;
 
-	/* lighting info */
-	int dlightframe;
-	int dlightbits;
-
 	int lightmaptexturenum;
 	byte styles[MAXLIGHTMAPS];
-	float cached_light[MAXLIGHTMAPS];	/**< values currently used in lightmap */
 	byte *samples;				/**< [numstyles*surfsize] */
 } mBspSurface_t;
 

@@ -430,9 +430,7 @@ static void CL_ParseConfigString (struct dbuffer *msg)
 	}
 
 	/* do something apropriate */
-	if (i >= CS_LIGHTS && i < CS_LIGHTS + MAX_LIGHTSTYLES)
-		CL_SetLightstyle(i - CS_LIGHTS);
-	else if (i >= CS_MODELS && i < CS_MODELS + MAX_MODELS) {
+	if (i >= CS_MODELS && i < CS_MODELS + MAX_MODELS) {
 		if (cl.refresh_prepped) {
 			cl.model_draw[i-CS_MODELS] = R_RegisterModelShort(cl.configstrings[i]);
 			if (cl.configstrings[i][0] == '*')

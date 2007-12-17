@@ -39,16 +39,8 @@ sun_t map_sun;
 /* static vars */
 static cvar_t *cl_stats;
 
-static int r_numdlights;
-static dlight_t r_dlights[MAX_DLIGHTS];
-
 static int r_numentities;
 static entity_t r_entities[MAX_ENTITIES];
-
-static lightstyle_t r_lightstyles[MAX_LIGHTSTYLES];
-
-static dlight_t map_lights[MAX_MAP_LIGHTS];
-static int map_numlights;
 
 static float map_fog;
 static vec4_t map_fogColor;
@@ -58,7 +50,6 @@ static vec4_t map_fogColor;
  */
 static void V_ClearScene (void)
 {
-	r_numdlights = 0;
 	r_numentities = 0;
 }
 
@@ -81,40 +72,6 @@ void V_AddEntity (entity_t * ent)
 		return;
 
 	r_entities[r_numentities++] = *ent;
-}
-
-
-/**
- * @param[in] intensity The radius of the light
- */
-void V_AddLight (vec3_t org, float intensity, vec3_t color)
-{
-	dlight_t *dl;
-
-	if (r_numdlights >= MAX_DLIGHTS)
-		return;
-	dl = &r_dlights[r_numdlights++];
-	VectorCopy(org, dl->origin);
-	dl->intensity = intensity;
-	VectorCopy(color, dl->color);
-}
-
-
-/**
- * @sa CL_AddLightStyles
- */
-void V_AddLightStyle (int style, float r, float g, float b)
-{
-	lightstyle_t *ls;
-
-	if (style < 0 || style > MAX_LIGHTSTYLES)
-		Com_Error(ERR_DROP, "Bad light style %i", style);
-	ls = &r_lightstyles[style];
-
-	ls->white = r + g + b;
-	ls->rgb[0] = r;
-	ls->rgb[1] = g;
-	ls->rgb[2] = b;
 }
 
 static void CL_ParseEntitystring (const char *es)
@@ -145,7 +102,6 @@ static void CL_ParseEntitystring (const char *es)
 	if (map_maxlevel_base >= 1) {
 		map_maxlevel = maxlevel = map_maxlevel_base;
 	}
-	map_numlights = 0;
 	map_fog = 0.0;
 	entnum = 0;
 	numLMs = 0;
@@ -272,17 +228,6 @@ static void CL_ParseEntitystring (const char *es)
 				Cvar_SetValue("teamnum", DEFAULT_TEAMNUM);
 				Com_Printf("Set teamnum to %i\n", teamnum->integer);
 			}
-		} else if (!Q_strcmp(classname, "light") && light) {
-			dlight_t *newlight;
-
-			/* add light to list */
-			if (map_numlights >= MAX_MAP_LIGHTS)
-				Com_Error(ERR_DROP, "Too many lights...");
-
-			newlight = &(map_lights[map_numlights++]);
-			VectorCopy(origin, newlight->origin);
-			VectorNormalize2(color, newlight->color);
-			newlight->intensity = light;
 		} else if (!Q_strcmp(classname, "misc_model")) {
 			localModel_t *lm;
 
@@ -471,9 +416,6 @@ void V_UpdateRefDef (void)
 	refdef.entities = r_entities;
 	refdef.num_shaders = r_numshaders;
 	refdef.shaders = r_shaders;
-	refdef.num_dlights = r_numdlights;
-	refdef.dlights = r_dlights;
-	refdef.lightstyles = r_lightstyles;
 	refdef.fog = map_fog;
 	refdef.fogColor = map_fogColor;
 
@@ -482,12 +424,6 @@ void V_UpdateRefDef (void)
 	refdef.ptl_art = ptlArt;
 
 	refdef.sun = &map_sun;
-	if (cls.state == ca_sequence || cls.state == ca_ptledit)
-		refdef.num_mapdlights = 0;
-	else {
-		refdef.mapdlights = map_lights;
-		refdef.num_mapdlights = map_numlights;
-	}
 }
 
 /**
@@ -521,7 +457,6 @@ void V_RenderView (void)
 		LM_AddToScene();
 		LE_AddToScene();
 		CL_AddTargeting();
-		CL_AddLightStyles();
 		break;
 	}
 
@@ -531,7 +466,7 @@ void V_RenderView (void)
 	/* render the frame */
 	R_RenderFrame();
 	if (cl_stats->integer)
-		Com_Printf("ent:%4i  lights:%i\n", r_numentities, r_numdlights);
+		Com_Printf("ent:%4i\n", r_numentities);
 
 	if (cls.state == ca_sequence)
 		CL_Sequence2D();

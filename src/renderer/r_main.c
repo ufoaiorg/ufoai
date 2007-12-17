@@ -39,8 +39,6 @@ model_t *currentmodel;
 
 cBspPlane_t frustum[4];
 
-int r_framecount;				/* used for dlight push checking */
-
 int c_brush_polys, c_alias_polys;
 
 /* entity transform */
@@ -74,7 +72,6 @@ cvar_t *r_ext_s3tc_compression;
 cvar_t *r_intel_hack;
 cvar_t *r_materials;
 cvar_t *r_3dmapradius;
-
 cvar_t *r_checkerror;
 cvar_t *r_drawbuffer;
 cvar_t *r_driver;
@@ -82,9 +79,7 @@ cvar_t *r_shadows;
 cvar_t *r_bitdepth;
 cvar_t *r_stencilsize;
 cvar_t *r_colordepth;
-
 cvar_t *r_drawclouds;
-cvar_t *r_dynamic;
 cvar_t *r_soften;
 cvar_t *r_modulate;
 cvar_t *r_maxtexres;
@@ -417,8 +412,6 @@ static void R_SetFrustum (void)
 
 static void R_SetupFrame (void)
 {
-	r_framecount++;
-
 	/* build the transformation matrix for the given view angles */
 	AngleVectors(refdef.viewangles, vpn, vright, vup);
 
@@ -617,7 +610,6 @@ static void R_Register (void)
 	r_checkerror = Cvar_Get("r_checkerror", "0", CVAR_ARCHIVE, "Check for opengl errors");
 	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, "Activate or deactivate shadows");
 	r_drawclouds = Cvar_Get("r_drawclouds", "0", CVAR_ARCHIVE, NULL);
-	r_dynamic = Cvar_Get("r_dynamic", "1", 0, "Render dynamic lightmaps");
 	r_soften = Cvar_Get("r_soften", "1", 0, "Apply blur to lightmap");
 	r_maxtexres = Cvar_Get("r_maxtexres", "2048", CVAR_ARCHIVE, NULL);
 	r_driver = Cvar_Get("r_driver", "", CVAR_ARCHIVE, "You can define the opengl driver you want to use - empty if you want to use the system default");

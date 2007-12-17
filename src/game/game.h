@@ -121,10 +121,9 @@ typedef struct {
 
 	void (IMPORT *PositionedSound) (int mask, vec3_t origin, edict_t *ent, const char *sound, int channel, float volume, float attenuation);
 
-	/* config strings hold all the index strings, the lightstyles, */
-	/* and misc data like the cdtrack. */
-	/* All of the current configstrings are sent to clients when */
-	/* they connect, and changes are sent to all connected clients. */
+	/** configstrings hold all the index strings.
+	 * All of the current configstrings are sent to clients when
+	 * they connect, and changes are sent to all connected clients. */
 	void (IMPORT *configstring) (int num, const char *string);
 
 	void (IMPORT *error) (const char *fmt, ...) __attribute__((noreturn, format(printf, 1, 2)));

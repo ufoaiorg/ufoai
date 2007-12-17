@@ -43,7 +43,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define	MAX_DLIGHTS		32
 #define	MAX_ENTITIES	512
-#define	MAX_LIGHTSTYLES	256
 #define MAX_PTL_ART		512
 #define MAX_PTLS		2048
 
@@ -124,13 +123,6 @@ typedef struct {
 } sun_t;
 
 typedef struct {
-	vec3_t origin;
-	vec3_t color;
-	float intensity;
-	vec3_t direction;   /**< used by MD3 */
-} dlight_t;
-
-typedef struct {
 	struct model_s *model;
 	char *name;				/**< model path */
 
@@ -197,7 +189,6 @@ typedef struct ptl_s {
 	vec3_t a;	/**< acceleration vector */
 	vec3_t v;	/**< velocity vector */
 	vec3_t omega;	/**< the rotation vector for the particle (newAngles = oldAngles + frametime * omega) */
-	int light;		/**< specifies light intensity of dlight (dynamic light) (see also the color vector to define the light color) */
 	qboolean physics;	/**< basic physics */
 	qboolean autohide;	/**< only draw the particle if the current position is
 						 * not higher than the current level (useful for weather
@@ -224,13 +215,8 @@ typedef struct {
 	int rdflags;				/**< RDF_NOWORLDMODEL, etc */
 	int worldlevel;
 
-	lightstyle_t *lightstyles;	/**< [MAX_LIGHTSTYLES] */
-
 	int num_entities;
 	entity_t *entities;
-
-	int num_dlights;
-	dlight_t *dlights;
 
 	int num_shaders;
 	shader_t *shaders;
@@ -240,8 +226,6 @@ typedef struct {
 	ptlArt_t *ptl_art;
 
 	sun_t *sun;
-	int num_mapdlights;	/**< amount of lights parsed from map file */
-	dlight_t *mapdlights;	/**< dynamic lights parsed from map file */
 
 	float fog;
 	float *fogColor;

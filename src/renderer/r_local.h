@@ -74,7 +74,6 @@ extern image_t *DaN;
 
 extern entity_t *currententity;
 extern model_t *currentmodel;
-extern int r_framecount;
 extern cBspPlane_t frustum[4];
 
 /* view origin */
@@ -101,16 +100,9 @@ extern cvar_t *r_ext_combine;
 extern cvar_t *r_ext_texture_compression;
 extern cvar_t *r_ext_s3tc_compression;
 extern cvar_t *r_intel_hack;
-
 extern cvar_t *r_checkerror;
-
 extern cvar_t *r_showbox;
-
-/* shadow stuff */
-
 extern cvar_t *r_shadows;
-
-extern cvar_t *r_dynamic;
 extern cvar_t *r_soften;
 extern cvar_t *r_maxtexres;
 extern cvar_t *r_modulate;
@@ -136,7 +128,6 @@ extern int gl_compressed_alpha_format;
 extern float r_world_matrix[16];
 
 void R_CalcDayAndNight(float q);
-void R_LightPoint(vec3_t p, vec3_t color);
 
 /*==================================================================== */
 
@@ -162,10 +153,7 @@ void R_DrawInitLocal(void);
 void R_SubdivideSurface(mBspSurface_t * fa);
 qboolean R_CullBox(vec3_t mins, vec3_t maxs);
 void R_RotateForEntity(entity_t * e);
-
 void R_DrawTurbSurface(mBspSurface_t * fa);
-void R_MarkLights(dlight_t * light, int bit, mBspNode_t * node);
-
 void R_DrawParticles(void);
 
 /*

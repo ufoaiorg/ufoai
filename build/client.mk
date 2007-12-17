@@ -12,7 +12,6 @@ CLIENT_SRCS = \
 	client/cl_console.c \
 	client/cl_event.c \
 	client/cl_employee.c \
-	client/cl_fx.c \
 	client/cl_hospital.c \
 	client/cl_http.c \
 	client/cl_inventory.c \
@@ -81,7 +80,6 @@ CLIENT_SRCS = \
 	renderer/r_image.c \
 	renderer/r_light.c \
 	renderer/r_material.c \
-	renderer/r_mesh.c \
 	renderer/r_mesh_md2.c \
 	renderer/r_mesh_md3.c \
 	renderer/r_model.c \

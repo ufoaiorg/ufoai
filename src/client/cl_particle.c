@@ -144,7 +144,6 @@ static const value_t pps[] = {
 	{"fps", V_FLOAT, offsetof(ptl_t, fps), MEMBER_SIZEOF(ptl_t, fps)},
 	{"lastframe", V_FLOAT, offsetof(ptl_t, lastFrame), MEMBER_SIZEOF(ptl_t, lastFrame)},
 	{"levelflags", V_INT, offsetof(ptl_t, levelFlags), MEMBER_SIZEOF(ptl_t, levelFlags)},
-	{"light", V_INT, offsetof(ptl_t, light), MEMBER_SIZEOF(ptl_t, light)},
 	{"physics", V_BOOL, offsetof(ptl_t, physics), MEMBER_SIZEOF(ptl_t, physics)},
 	{"autohide", V_BOOL, offsetof(ptl_t, autohide), MEMBER_SIZEOF(ptl_t, autohide)},
 	{"stayalive", V_BOOL, offsetof(ptl_t, stayalive), MEMBER_SIZEOF(ptl_t, stayalive)},
@@ -1040,9 +1039,6 @@ static void CL_ParticleRun2 (ptl_t *p)
 		CL_ParticleFunction(p, p->ctrl->think);
 		p->lastThink -= 1.0 / p->tps;
 	}
-
-	if (p->light)
-		V_AddLight(p->s, p->light, p->color);
 
 	/* animate */
 	while (p->fps && p->lastFrame * p->fps >= 1) {

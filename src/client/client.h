@@ -300,13 +300,6 @@ void CL_ParseShaders(const char *name, const char **text);
 extern int r_numshaders;
 extern shader_t r_shaders[MAX_SHADERS];
 
-/* ================================================= */
-
-void CL_ClearEffects(void);
-void CL_SetLightstyle(int i);
-void CL_RunLightStyles(void);
-void CL_AddLightStyles(void);
-
 /*================================================= */
 
 void CL_LoadMedia(void);
@@ -892,8 +885,6 @@ void V_Init(void);
 void V_RenderView(void);
 void V_UpdateRefDef(void);
 void V_AddEntity(entity_t * ent);
-void V_AddLight(vec3_t org, float intensity, vec3_t color);
-void V_AddLightStyle(int style, float r, float g, float b);
 entity_t *V_GetEntity(void);
 void V_CenterView(pos3_t pos);
 void V_CalcFovX(void);

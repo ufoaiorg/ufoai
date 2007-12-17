@@ -128,7 +128,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_TEAMS           8
 #define MAX_CLIENTS         256 /* absolute limit */
 #define MAX_EDICTS          1024    /* must change protocol to increase more */
-#define MAX_LIGHTSTYLES     256
 #define MAX_MODELS          256 /* these are sent over the net as bytes */
 #define MAX_GENERAL         (MAX_CLIENTS*2) /* general config strings */
 
@@ -669,8 +668,7 @@ typedef enum {
 #define CS_TILES			16
 #define CS_POSITIONS		(CS_TILES+MAX_TILESTRINGS)
 #define CS_MODELS			(CS_POSITIONS+MAX_TILESTRINGS)
-#define CS_LIGHTS			(CS_MODELS+MAX_MODELS)
-#define CS_PLAYERNAMES		(CS_LIGHTS+MAX_LIGHTSTYLES)
+#define CS_PLAYERNAMES		(CS_MODELS+MAX_MODELS)
 #define CS_GENERAL			(CS_PLAYERNAMES+MAX_CLIENTS)
 #define MAX_CONFIGSTRINGS	(CS_GENERAL+MAX_GENERAL)
 

@@ -147,9 +147,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_event.h" />
-		<Unit filename="..\..\src\client\cl_fx.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\client\cl_hospital.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -416,9 +413,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\renderer\r_material.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\renderer\r_mesh.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\renderer\r_mesh_md2.c">

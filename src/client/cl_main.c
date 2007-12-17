@@ -400,8 +400,6 @@ static void CL_Rcon_f (void)
  */
 void CL_ClearState (void)
 {
-	CL_ClearEffects();
-
 	/* wipe the entire cl structure */
 	memset(&cl, 0, sizeof(cl));
 	cl.cam.zoom = 1.0;
@@ -2404,7 +2402,6 @@ void CL_Frame (int now, void *data)
 	SCR_UpdateScreen();
 
 	/* advance local effects for next frame */
-	CL_RunLightStyles();
 	SCR_RunConsole();
 
 	/* LE updates */
