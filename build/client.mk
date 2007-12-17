@@ -91,7 +91,7 @@ CLIENT_SRCS = \
 	renderer/r_model_md3.c \
 	renderer/r_main.c \
 	renderer/r_misc.c \
-	renderer/r_surf.c \
+	renderer/r_surface.c \
 	renderer/r_state.c \
 	renderer/r_warp.c \
 	renderer/r_particle.c \

@@ -1135,21 +1135,6 @@ image_t *R_LoadPic (const char *name, byte * pic, int width, int height, imagety
 }
 
 /**
- * @brief Finds an image for a shader
- */
-image_t *R_FindImageForShader (const char *name)
-{
-	int i;
-	image_t *image;
-
-	/* look for it */
-	for (i = 0, image = gltextures; i < numgltextures; i++, image++)
-		if (!Q_strncmp(name, image->name, MAX_VAR))
-			return image;
-	return NULL;
-}
-
-/**
  * @brief Finds or loads the given image
  * @sa R_RegisterPic
  * @param pname Image name

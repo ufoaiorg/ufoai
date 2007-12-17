@@ -89,6 +89,5 @@ image_t *R_FindImageDebug(const char *pname, imagetype_t type, const char *file,
 #else
 image_t *R_FindImage(const char *pname, imagetype_t type);
 #endif
-image_t *R_FindImageForShader(const char *name);
 
 #endif
