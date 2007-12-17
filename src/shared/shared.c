@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Returns just the filename from a given path
  * @sa COM_StripExtension
  */
-const char *COM_SkipPath (char *pathname)
+const char *COM_SkipPath (const char *pathname)
 {
 	const char *last;
 

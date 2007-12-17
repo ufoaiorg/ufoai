@@ -108,7 +108,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 	v[2] =  (int)p[2]        * UNIT_HEIGHT + UNIT_HEIGHT / 2  \
 )
 
-const char *COM_SkipPath(char *pathname);
+const char *COM_SkipPath(const char *pathname);
 void COM_StripExtension(const char *in, char *out, size_t size);
 void COM_FilePath(const char *in, char *out);
 
