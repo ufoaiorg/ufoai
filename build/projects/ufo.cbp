@@ -406,7 +406,7 @@
 		<Unit filename="..\..\src\renderer\r_image.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\r_light.c">
+		<Unit filename="..\..\src\renderer\r_lightmap.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\renderer\r_main.c">
