@@ -108,11 +108,11 @@ tile +h04
 {
 5 5
 
-0      ab     ab     ab    0
-ac     +a      +a      +a    ac
-ac     +a      +a      +a    ac
-ac     +a      +a       a    ac
-0      ab     ab     ab    0
+0      ab      ab     ab    0
+ac     +a      +a     +a    ac
+ac     +a      +a     +a    ac
+ac     +a      a      ab    0
+0      ab      0      0     0
 }
 
 // ---------------------------------
@@ -136,8 +136,8 @@ tile +h06
 4 4
 
 0      ab     ab     0
-ac     +a      +a      ac
-ac     +a      +a      ac
+ac     +a     +a     ac
+ac     +a     +a     ac
 0      ab     ab     0
 }
 
@@ -152,12 +152,12 @@ tile +ufo_harvester
 {
 8 6
 
-0      ab     ab     ab     ab     ab     ab     0
-ac     0      +a      +a     +a      +a     +a      z
-ac     +a     +a      +a     +a      +a     +a      z
-ac     0      0       0      +a      +a     +a      z
-ac     0      0       0      +a      +a     +a      z
-0      ab     ab     ab     ab     ab     ab     0
+0      0      ab     ab     ab     ab     ab     0
+0      a      +a     +a     +a     +a     +a     z
+ac     +a     +a     +a     +a     +a     +a     z
+0      ab     ab     a      +a     +a     +a     z
+0      0      0      ac     +a     +a     +a     z
+0      0      0      0      ab     ab     ab     0
 }
 
 // ---------------------------------
@@ -167,11 +167,11 @@ tile +ufo_fighter
 {
 7 5
 
-0      ab     ab     ab     ab     ab     0
-ac     0      0       +a     +a      +a     ac
-ac     +a     +a      +a     +a      +a     ac
-ac     +a     +a      +a     0       0      ac
-0      ab     ab     ab     ab     ab     0
+0      0      0     ab    ab    ab    0
+0      ab     a     +a    +a    +a    ac
+ac     +a     +a    +a    +a    +a    ac
+ac     +a     +a    +a    a     ab    0
+0      ab     ab    ab    0     0     0
 }
 
 // ---------------------------------
@@ -182,9 +182,9 @@ tile +ufo_scout
 4 5
 
 0      ab     ab     0
-ac     +a     +a      ac
-ac     +a     +a      ac
-ac     +a     +a      ac
+ac     +a     +a     ac
+ac     +a     +a     ac
+ac     +a     +a     ac
 0      ab     ab     0
 }
 
@@ -195,13 +195,13 @@ tile +ufo_supply
 {
 6 7
 
-0      ab     ab     ab     ab     0
-ac     +a     +a      0      0       ac
-ac     +a     +a      +a     0       ac
-ac     +a     +a      +a     0       ac
-ac     +a     +a      +a     +a      ac
-ac     +a     +a      +a     0       ac
-0      ab     ab     ab     ab     0
+0      ab     ab     0      0     0
+ac     +a     +a     a      0     0
+ac     +a     +a     +a     ac    0
+ac     +a     +a     +a     a     0
+ac     +a     +a     +a     +a    ac
+ac     +a     +a     +a     a     0
+0      ab     ab     ab     0     0
 }
 
 // *********************************
@@ -215,6 +215,9 @@ size "7 5"
 +h01 "0 10"
 +h02 "0 10"
 +h03 "0 10"
++h04 "0 1"
++h05 "0 2"
++h06 "0 2"
 +ufo_harvester "1 1"
 *rm_dropship +drop_firebird "1 1"
 }
@@ -237,6 +240,9 @@ size "7 5"
 +h01 "0 10"
 +h02 "0 10"
 +h03 "0 10"
++h04 "0 1"
++h05 "0 2"
++h06 "0 2"
 +ufo_scout "1 1"
 *rm_dropship +drop_firebird "1 1"
 }
@@ -248,6 +254,9 @@ size "7 5"
 +h01 "0 10"
 +h02 "0 10"
 +h03 "0 10"
++h04 "0 1"
++h05 "0 2"
++h06 "0 2"
 +ufo_fighter "1 1"
 *rm_dropship +drop_firebird "1 1"
 }
@@ -259,6 +268,9 @@ size "7 5"
 +h01 "0 10"
 +h02 "0 10"
 +h03 "0 10"
++h04 "0 1"
++h05 "0 2"
++h06 "0 2"
 +ufo_supply "1 1"
 *rm_dropship +drop_firebird "1 1"
 }
