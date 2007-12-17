@@ -1126,10 +1126,6 @@ image_t *R_LoadPic (const char *name, byte * pic, int width, int height, imagety
 	if (image->type == it_pic && strstr(image->name, "_noclamp"))
 		image->type = it_wrappic;
 
-	image->shader = R_GetShaderForImage(image->name);
-	if (image->shader)
-		Com_DPrintf(DEBUG_RENDERER, "R_LoadPic: Shader found: '%s'\n", image->name);
-
 	image->texnum = TEXNUM_IMAGES + (image - gltextures);
 	if (pic) {
 		R_Bind(image->texnum);

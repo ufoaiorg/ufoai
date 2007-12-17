@@ -59,10 +59,10 @@ void R_ShaderInit (void)
 
 /**
  * @brief Compares the shader titles with the image name
- * @param[in] image Image name
- * @return shader_t pointer if image name and shader title match otherwise NULL
+ * @param[in] name Shader name
+ * @return shader_t pointer or NULL if not found
  */
-shader_t* R_GetShaderForImage (const char* image)
+shader_t* R_GetShader (const char* name)
 {
 	int i = 0;
 	shader_t *s;
@@ -70,8 +70,8 @@ shader_t* R_GetShaderForImage (const char* image)
 	/* search for shader title and check whether it matches an image name */
 	for (i = 0; i < refdef.num_shaders; i++) {
 		s = &refdef.shaders[i];
-		if (!Q_strcmp(s->name, image)) {
-			Com_DPrintf(DEBUG_RENDERER, "shader for '%s' found\n", image);
+		if (!Q_strcmp(s->name, name)) {
+			Com_DPrintf(DEBUG_RENDERER, "shader '%s' found\n", name);
 			return s;
 		}
 	}

@@ -20,7 +20,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __GL_ARB_SHADER_H__
 #define __GL_ARB_SHADER_H__
 
-shader_t* R_GetShaderForImage(const char* image);
+shader_t* R_GetShader(const char* name);
 void R_ShutdownShaders(void);
 void R_ShaderInit(void);
 void SH_UseShader(shader_t * shader, qboolean deactivate);
