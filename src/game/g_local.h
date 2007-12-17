@@ -576,7 +576,6 @@ struct edict_s {
 	float wait;		/**< time to wait before platform moves to the next point on its path */
 	float delay;	/**< time between triggering switch and effect activating */
 	float random;	/**< used to add a bit of time variation of func_timer */
-	int style;		/**< type of entities */
 	edictMaterial_t material;	/**< material value (e.g. for func_breakable) */
 	int count;		/**< general purpose 'amount' variable - set via mapeditor often */
 	int sounds;		/**< type of sounds to play - e.g. doors */

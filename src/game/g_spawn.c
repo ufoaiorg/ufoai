@@ -106,7 +106,6 @@ static const field_t fields[] = {
 	{"wait", offsetof(edict_t, wait), F_FLOAT, 0},
 	{"delay", offsetof(edict_t, delay), F_FLOAT, 0},
 	{"random", offsetof(edict_t, random), F_FLOAT, 0},
-	{"style", offsetof(edict_t, style), F_INT, 0},
 	{"count", offsetof(edict_t, count), F_INT, 0},
 	{"health", offsetof(edict_t, HP), F_INT, 0},
 	{"sounds", offsetof(edict_t, sounds), F_INT, 0},

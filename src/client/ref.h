@@ -112,11 +112,6 @@ typedef struct shader_s {
 } shader_t;
 
 typedef struct {
-	float rgb[3];				/**< 0.0 - 2.0 */
-	float white;				/**< highest of rgb */
-} lightstyle_t;
-
-typedef struct {
 	vec3_t dir;
 	vec4_t color;
 	vec4_t ambient;

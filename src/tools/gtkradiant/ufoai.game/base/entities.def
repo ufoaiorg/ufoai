@@ -58,7 +58,6 @@ Wait times are of the format "a b". It spawns particles in random intervals rang
 
 /*QUAKED light (0 1 0) (-8 -8 -8) (8 8 8) linear
 Non-displayed light.
-"style"		"1-32"
 "_color"	Color for the light RGB
 "light"		intensity 0-255
 "target"	entity target name (info_null)
@@ -69,7 +68,6 @@ Non-displayed light.
 
 /*QUAKED light_spot (0 1 0) (-8 -8 -8) (8 8 8) linear
 Non-displayed light.
-"style"		"1-32"
 "_color"	Color for the light RGB
 "light"		intensity 0-255
 "_cone"
