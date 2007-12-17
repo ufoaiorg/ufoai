@@ -482,7 +482,7 @@ static void R_RenderView (void)
 
 	R_DrawAlphaSurfaces();
 
-	R_DrawPtls();
+	R_DrawParticles();
 }
 
 /**

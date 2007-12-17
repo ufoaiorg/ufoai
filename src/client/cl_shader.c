@@ -53,23 +53,6 @@ static const value_t shader_values[] = {
 	{NULL, 0, 0, 0}
 };
 
-/** @brief Valid terrain material parameter definitions from script files. */
-static const value_t terrain_param_vals[] = {
-	{"ceil", V_FLOAT, offsetof(materialStage_t, terrain.ceil), MEMBER_SIZEOF(terrain_t, ceil)},
-	{"floor", V_FLOAT, offsetof(materialStage_t, terrain.floor), MEMBER_SIZEOF(terrain_t, floor)},
-	{"blend", V_BLEND, offsetof(materialStage_t, blend), MEMBER_SIZEOF(materialStage_t, blend)},
-
-	{NULL, 0, 0, 0}
-};
-
-/** @brief Valid rotate material parameter definitions from script files. */
-static const value_t rotate_param_vals[] = {
-	{"hz", V_FLOAT, offsetof(materialStage_t, rotate.hz), MEMBER_SIZEOF(rotate_t, hz)},
-	{"blend", V_BLEND, offsetof(materialStage_t, blend), MEMBER_SIZEOF(materialStage_t, blend)},
-
-	{NULL, 0, 0, 0}
-};
-
 /**
  * @brief Parses all shader script from ufo script files
  * @note Called from CL_ParseClientData
@@ -139,76 +122,8 @@ void CL_ParseShaders (const char *name, const char **text)
 				break;
 			}
 
-		if (!v->string) {
-			materialStage_t *stage, *stageLoop;
-			char textureName[MAX_QPATH];
-			int flag;
-			if (!Q_strcmp(token, "terrain")) {
-				flag = STAGE_TERRAIN;
-				v = terrain_param_vals;
-			} else if (!Q_strcmp(token, "rotate")) {
-				flag = STAGE_ROTATE;
-				v = rotate_param_vals;
-			} else {
-				Com_Printf("CL_ParseShaders: unknown token \"%s\" ignored (entry %s)\n", token, name);
-				continue;
-			}
-
-			assert(v);
-			token = COM_EParse(text, errhead, name);
-			Q_strncpyz(textureName, token, sizeof(textureName));
-
-			token = COM_EParse(text, errhead, name);
-			if (!*text || *token != '{') {
-				Com_Printf("CL_ParseShaders: Invalid param value for shader: %s\n", name);
-				return;
-			}
-
-			if (!entry->material)
-				entry->material = Mem_PoolAlloc(sizeof(material_t), cl_genericPool, CL_TAG_NONE);
-
-			stage = Mem_PoolAlloc(sizeof(materialStage_t), cl_genericPool, CL_TAG_NONE);
-			stage->textureName = Mem_PoolStrDup(textureName, cl_genericPool, CL_TAG_NONE);
-			stage->next = NULL;
-			stage->flags |= flag;
-
-			assert(entry->material);
-			entry->material->num_stages++;
-			if (entry->material->stages) {
-				stageLoop = entry->material->stages;
-				while (stageLoop) {
-					if (!stageLoop->next) {
-						stageLoop->next = stage;
-						break;
-					}
-					stageLoop = stageLoop->next;
-				}
-			} else {
-				entry->material->stages = stage;
-			}
-			do {
-				token = COM_EParse(text, errhead, name);
-				if (!*text)
-					break;
-				if (*token == '}')
-					break;
-				for (; v->string; v++)
-					if (!Q_strcmp(token, v->string)) {
-						/* found a definition */
-						token = COM_EParse(text, errhead, name);
-						if (!*text)
-							return;
-						Com_ParseValue(stage, token, v->type, v->ofs, v->size);
-						break;
-					}
-				if (!v->string)
-					Com_Printf("CL_ParseShaders: Ignoring unknown param value '%s'\n", token);
-			} while (*text); /* dummy condition */
-
-			if (stage->flags & STAGE_TERRAIN)
-				stage->terrain.height = stage->terrain.ceil - stage->terrain.floor;
-		}
-
+		if (!v->string)
+			Com_Printf("CL_ParseShaders: Ignoring unknown param value '%s'\n", token);
 	} while (*text);
 }
 

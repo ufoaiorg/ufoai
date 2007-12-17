@@ -505,11 +505,11 @@ static void R_DrawSurface (mBspSurface_t * surf)
 		R_DrawPolyChain(surf, 0.0f);
 	}
 
-	if (image->shader && image->shader->material) {
-		materialStage_t* stage = image->shader->material->stages;
+	if (image->material.flags & STAGE_RENDER) {
+		materialStage_t* stage = image->material.stages;
 		RSTATE_ENABLE_BLEND
 		qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		R_UpdateMaterial(image->shader->material);
+		R_UpdateMaterial(&image->material);
 		while (stage) {
 			R_DrawMaterialSurface(surf, stage);
 			stage = stage->next;

@@ -40,10 +40,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_shader.h"
 #include "r_state.h"
+#include "r_material.h"
 #include "r_image.h"
 #include "r_model.h"
-#include "r_material.h"
 #include "r_font.h"
+
+void R_DrawMaterialSurface(mBspSurface_t *surf, materialStage_t *stage);
+void R_UpdateMaterial(material_t *m);
 
 /*=================================================================== */
 
@@ -159,7 +162,7 @@ void R_RotateForEntity(entity_t * e);
 void R_DrawTurbSurface(mBspSurface_t * fa);
 void R_MarkLights(dlight_t * light, int bit, mBspNode_t * node);
 
-void R_DrawPtls(void);
+void R_DrawParticles(void);
 
 /*
 ** GL config stuff

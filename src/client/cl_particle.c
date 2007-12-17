@@ -801,7 +801,7 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
  * @param[in] a acceleration vector
  * @sa CL_ParticleFree
  * @sa V_UpdateRefDef
- * @sa R_DrawPtls
+ * @sa R_DrawParticles
  */
 ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a)
 {

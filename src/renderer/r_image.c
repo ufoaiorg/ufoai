@@ -49,6 +49,32 @@ static int gl_filter_min = GL_LINEAR_MIPMAP_NEAREST;
 static int gl_filter_max = GL_LINEAR;
 
 /**
+ * @brief Free previously loaded materials and their stages
+ * @sa R_LoadMaterials
+ */
+void R_ImageClearMaterials (void)
+{
+	material_t *m;
+	materialStage_t *s, *ss;
+	image_t *image;
+	int i;
+
+	/* clear previously loaded materials */
+	for (i = 0, image = gltextures; i < numgltextures; i++, image++) {
+		m = &image->material;
+		s = m->stages;
+
+		while (s) {  /* free the stages chain */
+			ss = s->next;
+			VID_MemFree(s);
+			s = ss;
+		}
+
+		memset(m, 0, sizeof(material_t));
+	}
+}
+
+/**
  * @brief Set the anisotropic and texture mode values for textures
  * @sa R_ScaleTexture
  */

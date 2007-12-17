@@ -42,11 +42,12 @@ pic
 
 typedef enum {
 	it_skin,
- it_sprite,
- it_wall,
- it_pic,
- it_wrappic,
- it_static
+	it_sprite,
+	it_wall,
+	it_material,
+	it_pic,
+	it_wrappic,
+	it_static
 } imagetype_t;
 
 typedef struct image_s {
@@ -59,6 +60,7 @@ typedef struct image_s {
 	GLuint texnum;						/**< gl texture binding */
 	qboolean has_alpha;
 	shader_t *shader;					/**< pointer to shader from refdef_t */
+	material_t material;
 } image_t;
 
 #define TEXNUM_LIGHTMAPS    1024
@@ -77,7 +79,7 @@ void R_ImageList_f(void);
 void R_InitImages(void);
 void R_ShutdownImages(void);
 void R_FreeUnusedImages(void);
-
+void R_ImageClearMaterials(void);
 void R_UpdateTextures(int min, int max);
 
 image_t *R_LoadPic(const char *name, byte * pic, int width, int height, imagetype_t type, int bits);

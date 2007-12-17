@@ -85,7 +85,7 @@ void R_DrawMaterialSurface (mBspSurface_t *surf, materialStage_t *stage)
 	vec2_t st;
 
 	nv = surf->polys->numverts;
-	R_Bind(stage->texture->texnum);
+	R_Bind(stage->image->texnum);
 	qglBegin(GL_POLYGON);
 	for (i = 0, v = surf->polys->verts[0]; i < nv; i++, v += VERTEXSIZE) {
 		if (stage->flags & STAGE_TERRAIN) {
@@ -100,3 +100,347 @@ void R_DrawMaterialSurface (mBspSurface_t *surf, materialStage_t *stage)
 	R_CheckError();
 }
 
+/**
+ * @brief Translate string into glmode
+ */
+static GLenum R_ConstByName (const char *c)
+{
+	if (!strcmp(c, "GL_ONE"))
+		return GL_ONE;
+	if (!strcmp(c, "GL_SRC_ALPHA"))
+		return GL_SRC_ALPHA;
+	if (!strcmp(c, "GL_ONE_MINUS_SRC_ALPHA"))
+		return GL_ONE_MINUS_SRC_ALPHA;
+
+	Com_Printf("R_ConstByName: Failed to resolve: %s\n", c);
+	return GL_ZERO;
+}
+
+/**
+ * @brief Material stage parser
+ * @sa R_LoadMaterials
+ */
+static int R_ParseStage (materialStage_t *s, const char **buffer)
+{
+	const char *c;
+	int i;
+
+	while (qtrue) {
+		c = COM_Parse(buffer);
+
+		if (!strlen(c))
+			break;
+
+		if (!strcmp(c, "texture")) {
+			c = COM_Parse(buffer);
+			s->image = R_FindImage(va("textures/%s", c), it_material);
+
+			if (s->image == r_notexture) {
+				Com_Printf("R_ParseStage: Failed to resolve texture: %s\n", c);
+				return -1;
+			}
+
+			s->flags |= STAGE_TEXTURE;
+			continue;
+		}
+
+#if 0
+		if (!strcmp(c, "envmap")) {
+			c = COM_Parse(buffer);
+			i = atoi(c);
+
+			if (i > -1 && i < NUM_ENVMAPTEXTURES)
+				s->image = r_envmaptextures[i];
+			else
+				s->image = R_FindImage(va("envmaps/%s", c), it_material);
+
+			if (s->image == r_notexture) {
+				Com_Printf("R_ParseStage: Failed to resolve envmap: %s\n", c);
+				return -1;
+			}
+
+			s->flags |= STAGE_ENVMAP;
+			continue;
+		}
+#endif
+
+		if (!strcmp(c, "blend")) {
+			c = COM_Parse(buffer);
+			s->blend.src = R_ConstByName(c);
+
+			if (s->blend.src == -1) {
+				Com_Printf("R_ParseStage: Failed to resolve blend src: %s\n", c);
+				return -1;
+			}
+
+			c = COM_Parse(buffer);
+			s->blend.dest = R_ConstByName(c);
+
+			if (s->blend.dest == -1) {
+				Com_Printf("R_ParseStage: Failed to resolve blend dest: %s\n", c);
+				return -1;
+			}
+
+			s->flags |= STAGE_BLEND;
+			continue;
+		}
+
+		if (!strcmp(c, "color")) {
+			for (i = 0; i < 3; i++) {
+				c = COM_Parse(buffer);
+				s->color[i] = atof(c);
+
+				if (s->color[i] < 0.0 || s->color[i] > 1.0) {
+					Com_Printf("R_ParseStage: Failed to resolve color: %s\n", c);
+					return -1;
+				}
+			}
+
+			s->flags |= STAGE_COLOR;
+			continue;
+		}
+
+		if (!strcmp(c, "pulse")) {
+			c = COM_Parse(buffer);
+			s->pulse.hz = atof(c);
+
+			if (s->pulse.hz < 0) {
+				Com_Printf("R_ParseStage: Failed to resolve frequency: %s\n", c);
+				return -1;
+			}
+
+			s->flags |= STAGE_PULSE;
+			continue;
+		}
+
+		if (!strcmp(c, "stretch")) {
+			c = COM_Parse(buffer);
+			s->stretch.amp = atof(c);
+
+			if (s->stretch.amp < 0) {
+				Com_Printf("R_ParseStage: Failed to resolve amplitude: %s\n", c);
+				return -1;
+			}
+
+			c = COM_Parse(buffer);
+			s->stretch.hz = atof(c);
+
+			if (s->stretch.hz < 0) {
+				Com_Printf("R_ParseStage: Failed to resolve frequency: %s\n", c);
+				return -1;
+			}
+
+			s->flags |= STAGE_STRETCH;
+			continue;
+		}
+
+		if (!strcmp(c, "rotate")) {
+			c = COM_Parse(buffer);
+			s->rotate.hz = atof(c);
+
+			if (s->rotate.hz < 0) {
+				Com_Printf("R_ParseStage: Failed to resolve rotate: %s\n", c);
+				return -1;
+			}
+
+			s->flags |= STAGE_ROTATE;
+			continue;
+		}
+
+		if (!strcmp(c, "scroll.s")) {
+			c = COM_Parse(buffer);
+			s->scroll.s = atof(c);
+
+			s->flags |= STAGE_SCROLL_S;
+			continue;
+		}
+
+		if (!strcmp(c, "scroll.t")) {
+			c = COM_Parse(buffer);
+			s->scroll.t = atof(c);
+
+			s->flags |= STAGE_SCROLL_T;
+			continue;
+		}
+
+		if (!strcmp(c, "scale.s")) {
+			c = COM_Parse(buffer);
+			s->scale.s = atof(c);
+
+			s->flags |= STAGE_SCALE_S;
+			continue;
+		}
+
+		if (!strcmp(c, "scale.t")) {
+			c = COM_Parse(buffer);
+			s->scale.t = atof(c);
+
+			s->flags |= STAGE_SCALE_T;
+			continue;
+		}
+
+		if (!strcmp(c, "terrain")) {
+			c = COM_Parse(buffer);
+			s->terrain.floor = atof(c);
+
+			c = COM_Parse(buffer);
+			s->terrain.ceil = atof(c);
+
+			s->terrain.height = s->terrain.ceil - s->terrain.floor;
+
+			if (s->terrain.height == 0){
+				Com_Printf("R_ParseStage: Zero height terrain specified for %s\n",
+					(s->image ? s->image->name : NULL));
+				return -1;
+			}
+
+			s->flags |= STAGE_TERRAIN;
+		}
+
+#if 0
+		if (!strcmp(c, "flare")) {
+			c = COM_Parse(buffer);
+			i = atoi(c);
+
+			if (i > -1 && i < NUM_FLARETEXTURES)
+				s->image = r_flaretextures[i];
+			else
+				s->image = R_FindImage(va("flares/%s", c), it_material);
+
+			if (s->image == r_notexture) {
+				Com_Warn("R_ParseStage: Failed to resolve flare: %s\n", c);
+				return -1;
+			}
+
+			s->flags |= STAGE_FLARE;
+			continue;
+		}
+#endif
+
+		if (*c == '}') {
+			Com_DPrintf(DEBUG_RENDERER, "Parsed stage\n"
+					"  flags: %d\n"
+					"  image: %s\n"
+					"  blend: %d %d\n"
+					"  color: %3f %3f %3f\n"
+					"  pulse: %3f\n"
+					"  stretch: %3f %3f\n"
+					"  rotate: %3f\n"
+					"  scroll.s: %3f\n"
+					"  scroll.t: %3f\n"
+					"  scale.s: %3f\n"
+					"  scale.t: %3f\n"
+					"  terrain.floor: %5f\n"
+					"  terrain.ceil: %5f\n",
+					s->flags, (s->image ? s->image->name : "null"),
+					s->blend.src, s->blend.dest,
+					s->color[0], s->color[1], s->color[2],
+					s->pulse.hz, s->stretch.amp, s->stretch.hz,
+					s->rotate.hz, s->scroll.s, s->scroll.t,
+					s->scale.s, s->scale.t, s->terrain.floor, s->terrain.ceil);
+
+			/* a texture or envmap means render it */
+			if (s->flags & (STAGE_TEXTURE | STAGE_ENVMAP))
+				s->flags |= STAGE_RENDER;
+
+			return 0;
+		}
+	}
+
+	Com_Printf("R_ParseStage: Malformed stage\n");
+	return -1;
+}
+
+/**
+ * @brief Load material definitions for each map that has one
+ * @param[in] map the base name of the map to load the material for
+ */
+void R_LoadMaterials (const char *map)
+{
+	char path[MAX_QPATH];
+	const char *c;
+	byte *fileBuffer;
+	const char *buffer;
+	qboolean inmaterial;
+	image_t *image;
+	material_t *m;
+	materialStage_t *s, *ss;
+	int i;
+
+	/* clear previously loaded materials */
+	R_ImageClearMaterials();
+
+	/* load the materials file for parsing */
+	Com_sprintf(path, sizeof(path), "materials/%s.mat", COM_SkipPath(map));
+
+	if ((i = FS_LoadFile(path, &fileBuffer)) < 1){
+		Com_DPrintf(DEBUG_RENDERER, "Couldn't load %s\n", path);
+		return;
+	}
+
+	buffer = (const char *)fileBuffer;
+
+	inmaterial = qfalse;
+	image = NULL;
+	m = NULL;
+
+	while (qtrue) {
+		c = COM_Parse(&buffer);
+
+		if (!strlen(c))
+			break;
+
+		if (*c == '{' && !inmaterial) {
+			inmaterial = qtrue;
+			continue;
+		}
+
+		if (!strcmp(c, "material")) {
+			c = COM_Parse(&buffer);
+			image = R_FindImage(va("textures/%s", c), it_wall);
+
+			if (image == r_notexture){
+				Com_Printf("R_LoadMaterials: Failed to resolve texture: %s\n", c);
+				image = NULL;
+			}
+
+			continue;
+		}
+
+		if (!image)
+			continue;
+
+		m = &image->material;
+
+		if (*c == '{' && inmaterial) {
+			s = (materialStage_t *)VID_TagAlloc(vid_imagePool, sizeof(materialStage_t), 0);
+
+			if (R_ParseStage(s, &buffer) == -1) {
+				VID_MemFree(s);
+				continue;
+			}
+
+			/* append the stage to the chain */
+			if (!m->stages)
+				m->stages = s;
+			else {
+				ss = m->stages;
+				while (ss->next)
+					ss = ss->next;
+				ss->next = s;
+			}
+
+			m->flags |= s->flags;
+			m->num_stages++;
+			continue;
+		}
+
+		if (*c == '}' && inmaterial) {
+			Com_DPrintf(DEBUG_RENDERER, "Parsed material %s with %d stages\n", image->name, m->num_stages);
+			inmaterial = qfalse;
+			image = NULL;
+		}
+	}
+
+	FS_FreeFile(fileBuffer);
+}

@@ -183,18 +183,6 @@ static void R_ModLoadTexinfo (lump_t * l)
 		if (!out->image) {
 			Com_Printf("Couldn't load %s\n", name);
 			out->image = r_notexture;
-		} else if (out->image->shader) {
-			if (out->image->shader->material) {
-				materialStage_t* stage = out->image->shader->material->stages;
-				while (stage) {
-					stage->texture = R_FindImage(stage->textureName, it_wall);
-					if (!stage->texture) {
-						Com_Printf("Couldn't load stage texture %s\n", name);
-						stage->texture = r_notexture;
-					}
-					stage = stage->next;
-				}
-			}
 		}
 	}
 
@@ -382,8 +370,6 @@ static void R_ModLoadLeafs (lump_t * l)
 	dleaf_t *in;
 	mBspLeaf_t *out;
 	int i, j, count, p;
-
-/*	mBspPoly_t	*poly; */
 
 	in = (void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
@@ -575,9 +561,9 @@ static void R_ModAddMapTile (const char *name, int sX, int sY, int sZ)
 	/* regular and alternate animation */
 	loadmodel->numframes = 2;
 
-	/* set up the submodels, the first 255 submodels */
-	/* are the models of the different levels, don't */
-	/* care about them */
+	/* set up the submodels, the first 255 submodels
+	 * are the models of the different levels, don't
+	 * care about them */
 	for (i = LEVEL_TRACING - 1; i < loadmodel->bsp.numsubmodels; i++) {
 		model_t *starmod;
 
@@ -648,6 +634,8 @@ void R_ModBeginLoading (const char *tiles, const char *pos)
 			Com_sprintf(name, MAX_VAR, "%s%s", base, token + 1);
 		else
 			Q_strncpyz(name, token, sizeof(name));
+
+		R_LoadMaterials(name);
 
 		if (pos && pos[0]) {
 			/* get position and add a tile */
