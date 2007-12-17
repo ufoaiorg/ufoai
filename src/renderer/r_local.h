@@ -45,8 +45,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_model.h"
 #include "r_font.h"
 
-void R_DrawMaterialSurface(mBspSurface_t *surf, materialStage_t *stage);
+void R_DrawMaterialSurfaces(mBspSurface_t *surfs);
 void R_UpdateMaterial(material_t *m);
+
+/* surface chains */
+extern mBspSurface_t *r_alpha_surfaces;
+extern mBspSurface_t *r_material_surfaces;
 
 /*=================================================================== */
 
@@ -88,7 +92,7 @@ extern cvar_t *r_texture_lod;   /* lod_bias */
 extern cvar_t *r_bitdepth;
 extern cvar_t *r_stencilsize;
 extern cvar_t *r_colordepth;
-
+extern cvar_t *r_materials;
 extern cvar_t *r_screenshot;
 extern cvar_t *r_screenshot_jpeg_quality;
 
@@ -152,7 +156,7 @@ void R_DrawBrushModel(entity_t * e);
 void R_DrawBox(const entity_t * e);
 void R_DrawHighlight(const entity_t * e);
 void R_DrawLevelBrushes(void);
-void R_DrawAlphaSurfaces(void);
+void R_DrawAlphaSurfaces(mBspSurface_t *list);
 void R_InitMiscTexture(void);
 void R_DrawInitLocal(void);
 void R_SubdivideSurface(mBspSurface_t * fa);

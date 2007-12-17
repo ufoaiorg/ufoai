@@ -37,6 +37,7 @@ typedef struct {
 	int lightmap_texnum;
 
 	vec4_t color;
+	GLenum blend_src, blend_dest;  /* blend function */
 
 	int currenttextures[2];
 	int currenttmu;
@@ -78,5 +79,6 @@ void R_TexEnv(GLenum value);
 void R_TextureAlphaMode(const char *string);
 void R_TextureSolidMode(const char *string);
 void R_TextureMode(const char *string);
+void R_BlendFunc(GLenum src, GLenum dest);
 
 #endif

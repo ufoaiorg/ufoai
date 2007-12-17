@@ -77,7 +77,7 @@ static void R_StageTexcoord (const materialStage_t *stage, vec3_t v, vec2_t st)
 	}
 }
 
-void R_DrawMaterialSurface (mBspSurface_t *surf, materialStage_t *stage)
+static void R_DrawMaterialSurface (mBspSurface_t *surf, materialStage_t *stage)
 {
 	int i, nv;
 	float *v;
@@ -98,6 +98,68 @@ void R_DrawMaterialSurface (mBspSurface_t *surf, materialStage_t *stage)
 	}
 	qglEnd();
 	R_CheckError();
+}
+
+void R_DrawMaterialSurfaces (mBspSurface_t *surfs)
+{
+	mBspSurface_t *surf;
+	material_t *m;
+	materialStage_t *s;
+	vec4_t color;
+	int i;
+
+	if (!r_materials->integer || r_wire->integer)
+		return;
+
+	if (!surfs)
+		return;
+
+	qglEnable(GL_POLYGON_OFFSET_FILL);  /* all stages use depth offset */
+
+	for (surf = surfs; surf; surf = surf->material_next) {
+		m = &surf->texinfo->image->material;
+
+		R_UpdateMaterial(m);
+
+		i = -1;
+		for (s = m->stages; s; s = s->next, i--) {
+			if (!(s->flags & STAGE_RENDER))
+				continue;
+
+			qglPolygonOffset(0, i);  /* increase depth offset for each stage */
+
+			R_Bind(s->image->texnum);
+
+			if (s->flags & STAGE_BLEND)
+				R_BlendFunc(s->blend.src, s->blend.dest);
+			else
+				R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+			VectorSet(color, 1.0, 1.0, 1.0);
+
+			if (s->flags & STAGE_COLOR)
+				VectorCopy(s->color, color);
+#if 0
+			else if (s->flags & STAGE_ENVMAP)
+				VectorCopy(surf->color, color);
+#endif
+
+			if (s->flags & STAGE_PULSE)
+				color[3] = s->pulse.dhz;
+			else
+				color[3] = 1.0;
+
+			R_Color(color);
+
+			R_DrawMaterialSurface(surf, s);
+		}
+	}
+
+	R_Color(color_white);
+
+	qglDisable(GL_POLYGON_OFFSET_FILL);
+
+	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 /**

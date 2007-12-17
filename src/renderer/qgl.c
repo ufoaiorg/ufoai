@@ -397,7 +397,6 @@ void (APIENTRY * qglActiveStencilFaceEXT) (GLenum face);
 void (APIENTRY * qglStencilOpSeparateATI) (GLenum face, GLenum sfail, GLenum dpfail, GLenum dppass);
 void (APIENTRY * qglStencilFuncSeparateATI) (GLenum frontfunc, GLenum backfunc, GLint red, GLuint mask);
 
-#ifdef HAVE_SHADERS
 /* arb shader stuff */
 void (APIENTRY * qglProgramStringARB)  (GLenum, GLenum, GLsizei, const GLvoid *);
 void (APIENTRY * qglBindProgramARB)  (GLenum, GLuint);
@@ -433,8 +432,6 @@ void (APIENTRY * qglLinkProgram)  (GLuint program);
 void (APIENTRY * qglUseProgram)  (GLuint program);
 void (APIENTRY * qglDeleteShader)  (GLuint id);
 void (APIENTRY * qglDeleteProgram)  (GLuint id);
-
-#endif /* HAVE_SHADERS */
 
 /**
  * @brief Reset all pointers to null
@@ -779,7 +776,6 @@ void QR_UnLink (void)
 	qglActiveStencilFaceEXT      = NULL;
 	qglStencilOpSeparateATI      = NULL;
 	qglStencilFuncSeparateATI    = NULL;
-#ifdef HAVE_SHADERS
 	qglProgramStringARB          = NULL;
 	qglBindProgramARB            = NULL;
 	qglDeleteProgramsARB         = NULL;
@@ -813,7 +809,6 @@ void QR_UnLink (void)
 	qglUseProgram    = NULL;
 	qglDeleteShader  = NULL;
 	qglDeleteProgram = NULL;
-#endif
 }
 
 /**
@@ -1170,7 +1165,6 @@ void QR_Link (void)
 	qglStencilOpSeparateATI      = NULL;
 	qglStencilFuncSeparateATI    = NULL;
 
-#ifdef HAVE_SHADERS
 	qglProgramStringARB          = NULL;
 	qglBindProgramARB            = NULL;
 	qglDeleteProgramsARB         = NULL;
@@ -1204,5 +1198,4 @@ void QR_Link (void)
 	qglUseProgram    = NULL;
 	qglDeleteShader  = NULL;
 	qglDeleteProgram = NULL;
-#endif
 }

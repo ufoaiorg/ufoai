@@ -16,10 +16,6 @@ ifeq ($(MMX),1)
 	CFLAGS+= -DUFO_MMX_ENABLED
 endif
 
-ifeq ($(HAVE_SHADERS),1)
-	CFLAGS+= -DHAVE_SHADERS
-endif
-
 ifeq ($(HAVE_OPENAL),1)
 	CFLAGS+= -DHAVE_OPENAL
 endif

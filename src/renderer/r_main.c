@@ -72,7 +72,7 @@ cvar_t *r_ext_combine;
 cvar_t *r_ext_texture_compression;
 cvar_t *r_ext_s3tc_compression;
 cvar_t *r_intel_hack;
-
+cvar_t *r_materials;
 cvar_t *r_3dmapradius;
 
 cvar_t *r_checkerror;
@@ -480,7 +480,7 @@ static void R_RenderView (void)
 	if (r_wire->integer)
 		qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	R_DrawAlphaSurfaces();
+	R_DrawAlphaSurfaces(r_alpha_surfaces);
 
 	R_DrawParticles();
 }
@@ -612,7 +612,7 @@ static void R_Register (void)
 	r_screenshot_jpeg_quality = Cvar_Get("r_screenshot_jpeg_quality", "75", CVAR_ARCHIVE, "jpeg quality in percent for jpeg screenshots");
 
 	r_3dmapradius = Cvar_Get("r_3dmapradius", "8192.0", CVAR_NOSET, "3D geoscape radius");
-
+	r_materials = Cvar_Get("r_materials", "1", CVAR_ARCHIVE, "Activate material subsystem");
 	r_modulate = Cvar_Get("r_modulate", "1", CVAR_ARCHIVE, NULL);
 	r_checkerror = Cvar_Get("r_checkerror", "0", CVAR_ARCHIVE, "Check for opengl errors");
 	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, "Activate or deactivate shadows");
@@ -806,7 +806,6 @@ static void R_InitExtension (void)
 
 	r_state.glsl_program = qfalse;
 	r_state.arb_fragment_program = qfalse;
-#ifdef HAVE_SHADERS
 	if (strstr(r_config.extensions_string, "GL_ARB_fragment_program")) {
 		Com_Printf("using GL_ARB_fragment_program\n");
 		r_state.arb_fragment_program = qtrue;
@@ -854,7 +853,6 @@ static void R_InitExtension (void)
 		Com_Printf("GL_ARB_shading_language_100 not found\n");
 		r_state.glsl_program = qfalse;
 	}
-#endif	/* HAVE_SHADERS */
 
 	{
 		Com_Printf("max texture size: ");
@@ -932,9 +930,7 @@ qboolean R_Init (void)
 
 	R_InitExtension();
 	R_SetDefaultState();
-#ifdef HAVE_SHADERS
 	R_ShaderInit();
-#endif
 	R_InitImages();
 	R_InitMiscTexture();
 	R_DrawInitLocal();
@@ -963,9 +959,7 @@ void R_Shutdown (void)
 	R_ShutdownModels();
 	R_ShutdownImages();
 
-#ifdef HAVE_SHADERS
 	R_ShutdownShaders();
-#endif
 	R_FontShutdown();
 
 	/* shut down OS specific OpenGL stuff like contexts, etc. */

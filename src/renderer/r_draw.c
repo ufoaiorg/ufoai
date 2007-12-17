@@ -402,11 +402,6 @@ int R_DrawNormPic (float x, float y, float w, float h, float sh, float th, float
 	if (blend)
 		RSTATE_ENABLE_BLEND
 
-#ifdef HAVE_SHADERS
-	if (gl->shader)
-		SH_UseShader(gl->shader, qfalse);
-#endif
-
 	R_Bind(gl->texnum);
 	qglBegin(GL_QUADS);
 	qglTexCoord2f(sl, tl);
@@ -422,10 +417,6 @@ int R_DrawNormPic (float x, float y, float w, float h, float sh, float th, float
 	if (blend)
 		RSTATE_DISABLE_BLEND
 
-#ifdef HAVE_SHADERS
-	if (gl->shader)
-		SH_UseShader(gl->shader, qtrue);
-#endif
 	return nw;
 }
 
@@ -497,11 +488,6 @@ void R_DrawDayAndNight (int x, int y, int w, int h, float p, float q, float cx, 
 	/* load day image */
 	gl = R_FindImage(va("pics/menu/%s_day", map), it_wrappic);
 
-#ifdef HAVE_SHADERS
-	if (gl->shader)
-		SH_UseShader(gl->shader, qfalse);
-#endif
-
 	/* draw day image */
 	R_Bind(gl->texnum);
 	qglBegin(GL_QUADS);
@@ -515,10 +501,6 @@ void R_DrawDayAndNight (int x, int y, int w, int h, float p, float q, float cx, 
 	qglVertex2f(nx, ny + nh);
 	qglEnd();
 
-#ifdef HAVE_SHADERS
-	if (gl->shader)
-		SH_UseShader(gl->shader, qtrue);
-#endif
 	/* test for multitexture and env_combine support */
 	if (!qglSelectTextureSGIS && !qglActiveTextureARB)
 		return;
@@ -528,10 +510,6 @@ void R_DrawDayAndNight (int x, int y, int w, int h, float p, float q, float cx, 
 	if (!gl)
 		return;
 
-#ifdef HAVE_SHADERS
-	if (gl->shader)
-		SH_UseShader(gl->shader, qfalse);
-#endif
 	/* init combiner */
 	RSTATE_ENABLE_BLEND
 
@@ -565,11 +543,6 @@ void R_DrawDayAndNight (int x, int y, int w, int h, float p, float q, float cx, 
 	qglVertex2f(nx, ny + nh);
 	qglEnd();
 
-#ifdef HAVE_SHADERS
-	if (gl->shader)
-		SH_UseShader(gl->shader, qtrue);
-#endif
-
 	/* reset mode */
 	qglDisable(GL_TEXTURE_2D);
 	R_SelectTexture(gl_texture0);
@@ -599,13 +572,9 @@ void R_DrawClouds (int x, int y, int w, int h, float p, float q, float cx, float
 	nw = w * viddef.rx;
 	nh = h * viddef.ry;
 
-#ifdef HAVE_SHADERS
-	if (gl->shader)
-		SH_UseShader(gl->shader, qfalse);
-#endif
 	/* init combiner */
 	RSTATE_ENABLE_BLEND
-	qglBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_COLOR);
+	R_BlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_COLOR);
 
 	qglEnable(GL_TEXTURE_2D);
 
@@ -622,15 +591,11 @@ void R_DrawClouds (int x, int y, int w, int h, float p, float q, float cx, float
 	qglVertex2f(nx, ny + nh);
 	qglEnd();
 
-#ifdef HAVE_SHADERS
-	if (gl->shader)
-		SH_UseShader(gl->shader, qtrue);
-#endif
 	/* reset mode */
 	qglDisable(GL_TEXTURE_2D);
 
 	RSTATE_DISABLE_BLEND
-	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 /**
@@ -859,14 +824,9 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 		return;
 	}
 
-#ifdef HAVE_SHADERS
-	if (gl->shader)
-		SH_UseShader(gl->shader, qfalse);
-#endif
-
-	/* turn on fogging. fog looks good on the skies - it gives them a more */
-	/* "airy" far-away look, and has the knock-on effect of preventing the */
-	/* old "texture distortion at the poles" problem. */
+	/* turn on fogging. fog looks good on the skies - it gives them a more
+	 * "airy" far-away look, and has the knock-on effect of preventing the
+	 * old "texture distortion at the poles" problem. */
 	if (r_fog->integer) {
 		qglFogi(GL_FOG_MODE, GL_LINEAR);
 		qglFogfv(GL_FOG_COLOR, globe_fog);
@@ -933,11 +893,6 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 	/* draw the sphere */
 	qglCallList(spherelist);
 	R_CheckError();
-
-#ifdef HAVE_SHADERS
-	if (gl->shader)
-		SH_UseShader(gl->shader, qfalse);
-#endif
 
 	qglDisable(GL_CULL_FACE);
 	/* revert the cullface mode */

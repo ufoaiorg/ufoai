@@ -388,7 +388,6 @@ extern void (APIENTRY * qglClientActiveTextureARB) (GLenum);
 extern void (APIENTRY * qglMultiTexCoord3fARB) (GLenum, GLfloat, GLfloat, GLfloat);
 extern void (APIENTRY * qglMultiTexCoord3fvARB) (GLenum, GLfloat *);
 
-#ifdef HAVE_SHADERS
 /* arb shader stuff */
 extern void (APIENTRY * qglProgramStringARB) (GLenum, GLenum, GLsizei, const GLvoid *);
 extern void (APIENTRY * qglBindProgramARB) (GLenum, GLuint);
@@ -424,8 +423,6 @@ extern void (APIENTRY * qglLinkProgram) (GLuint program);
 extern void (APIENTRY * qglUseProgram) (GLuint program);
 extern void (APIENTRY * qglDeleteShader) (GLuint id);
 extern void (APIENTRY * qglDeleteProgram) (GLuint id);
-
-#endif							/* HAVE_SHADERS */
 
 extern void (APIENTRY * qglActiveStencilFaceEXT) (GLenum face);
 extern void (APIENTRY * qglStencilOpSeparateATI) (GLenum face, GLenum sfail, GLenum dpfail, GLenum dppass);

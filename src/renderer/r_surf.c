@@ -28,7 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static vec3_t modelorg;			/* relative to viewpoint */
 
-static mBspSurface_t *r_alpha_surfaces;
+mBspSurface_t *r_alpha_surfaces;
+mBspSurface_t *r_material_surfaces;
 
 #define LIGHTMAP_BYTES 4
 
@@ -165,7 +166,7 @@ static void R_BlendLightmaps (void)
 
 	/* set the appropriate blending mode for the lightmaps */
 	RSTATE_ENABLE_BLEND
-	qglBlendFunc(GL_ZERO, GL_SRC_COLOR);
+	R_BlendFunc(GL_ZERO, GL_SRC_COLOR);
 
 	if (currentmodel == rTiles[0])
 		c_visible_lightmaps = 0;
@@ -249,7 +250,7 @@ static void R_BlendLightmaps (void)
 
 	/* restore state */
 	RSTATE_DISABLE_BLEND
-	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	qglDepthMask(GL_TRUE);
 }
 
@@ -274,11 +275,6 @@ static void R_RenderBrushPoly (mBspSurface_t * fa)
 	c_brush_polys++;
 
 	image = R_TextureAnimation(fa->texinfo);
-
-#ifdef HAVE_SHADERS
-	if (image->shader)
-		SH_UseShader(image->shader, qfalse);
-#endif
 
 	if (fa->flags & SURF_DRAWTURB) {
 		vec4_t color = {r_state.inverse_intensity, r_state.inverse_intensity, r_state.inverse_intensity, 1.0f};
@@ -345,11 +341,6 @@ static void R_RenderBrushPoly (mBspSurface_t * fa)
 		fa->lightmapchain = gl_lms.lightmap_surfaces[fa->lightmaptexturenum];
 		gl_lms.lightmap_surfaces[fa->lightmaptexturenum] = fa;
 	}
-
-#ifdef HAVE_SHADERS
-	if (image->shader)
-		SH_UseShader(image->shader, qtrue);
-#endif
 }
 
 
@@ -358,7 +349,7 @@ static void R_RenderBrushPoly (mBspSurface_t * fa)
  * The BSP tree is waled front to back, so unwinding the chain
  * of alpha_surfaces will draw back to front, giving proper ordering.
  */
-void R_DrawAlphaSurfaces (void)
+void R_DrawAlphaSurfaces (mBspSurface_t *list)
 {
 	mBspSurface_t *s;
 	float intens;
@@ -371,15 +362,11 @@ void R_DrawAlphaSurfaces (void)
 	qglDepthMask(GL_FALSE); /* disable depth writing */
 	R_TexEnv(GL_MODULATE);
 
-	/* the textures are prescaled up for a better lighting range, */
-	/* so scale it back down */
+	/* the textures are prescaled up for a better lighting range,
+	 * so scale it back down */
 	intens = r_state.inverse_intensity;
 
-	for (s = r_alpha_surfaces; s; s = s->texturechain) {
-#ifdef HAVE_SHADERS
-		if (s->texinfo->image->shader)
-			SH_UseShader(s->texinfo->image->shader, qfalse);
-#endif
+	for (s = list; s; s = s->texturechain) {
 		R_Bind(s->texinfo->image->texnum);
 		c_brush_polys++;
 
@@ -402,18 +389,11 @@ void R_DrawAlphaSurfaces (void)
 			R_DrawPoly(s, scroll);
 		} else
 			R_DrawPoly(s, 0.0f);
-
-#ifdef HAVE_SHADERS
-		if (s->texinfo->image->shader)
-			SH_UseShader(s->texinfo->image->shader, qtrue);
-#endif
 	}
 
 	R_TexEnv(GL_REPLACE);
 	qglDepthMask(GL_TRUE); /* reenable depth writing */
 	R_ColorBlend(NULL);
-
-	r_alpha_surfaces = NULL;
 }
 
 /**
@@ -503,18 +483,6 @@ static void R_DrawSurface (mBspSurface_t * surf)
 		R_DrawPolyChain(surf, scroll);
 	} else {
 		R_DrawPolyChain(surf, 0.0f);
-	}
-
-	if (image->material.flags & STAGE_RENDER) {
-		materialStage_t* stage = image->material.stages;
-		RSTATE_ENABLE_BLEND
-		qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		R_UpdateMaterial(&image->material);
-		while (stage) {
-			R_DrawMaterialSurface(surf, stage);
-			stage = stage->next;
-		}
-		RSTATE_DISABLE_BLEND
 	}
 
 	RSTATE_DISABLE_ALPHATEST
@@ -733,6 +701,11 @@ static void R_RecursiveWorldNode (mBspNode_t * node)
 				image->texturechain = surf;
 			}
 		}
+		/* add to the material chain if appropriate */
+		if (surf->texinfo->image->material.flags & STAGE_RENDER) {
+			surf->material_next = r_material_surfaces;
+			r_material_surfaces = surf;
+		}
 	}
 
 	/* recurse down the back side */
@@ -815,6 +788,9 @@ void R_DrawLevelBrushes (void)
 
 	if (!r_drawworld->integer)
 		return;
+
+	r_alpha_surfaces = NULL;
+	r_material_surfaces = NULL;
 
 	memset(&ent, 0, sizeof(ent));
 	currententity = &ent;

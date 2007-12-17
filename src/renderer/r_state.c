@@ -39,9 +39,20 @@ void R_SetDefaultState (void)
 
 	qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	RSTATE_DISABLE_ALPHATEST
+}
+
+void R_BlendFunc (GLenum src, GLenum dest)
+{
+	if (r_state.blend_src == src && r_state.blend_dest == dest)
+		return;
+
+	r_state.blend_src = src;
+	r_state.blend_dest = dest;
+
+	qglBlendFunc(src, dest);
 }
 
 /**
@@ -138,7 +149,7 @@ void R_SetupGL2D (void)
 	qglDisable(GL_CULL_FACE);
 	qglDisable(GL_FOG);
 	RSTATE_ENABLE_ALPHATEST
-	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	R_TexEnv(GL_MODULATE);
 	R_Color(NULL);
 	R_CheckError();

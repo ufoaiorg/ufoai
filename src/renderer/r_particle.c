@@ -233,19 +233,19 @@ static void R_SetBlendMode (int mode)
 			break;
 		case BLEND_BLEND:
 			R_TexEnv(GL_MODULATE);
-			qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			break;
 		case BLEND_ADD:
 			R_TexEnv(GL_MODULATE);
-			qglBlendFunc(GL_ONE, GL_ONE);
+			R_BlendFunc(GL_ONE, GL_ONE);
 			break;
 		case BLEND_FILTER:
 			R_TexEnv(GL_MODULATE);
-			qglBlendFunc(GL_ZERO, GL_SRC_COLOR);
+			R_BlendFunc(GL_ZERO, GL_SRC_COLOR);
 			break;
 		case BLEND_INVFILTER:
 			R_TexEnv(GL_MODULATE);
-			qglBlendFunc(GL_ZERO, GL_ONE_MINUS_SRC_COLOR);
+			R_BlendFunc(GL_ZERO, GL_ONE_MINUS_SRC_COLOR);
 			break;
 		default:
 			Com_Error(ERR_DROP, "unknown blend mode");
@@ -300,8 +300,7 @@ void R_DrawParticles (void)
 		}
 
 	RSTATE_DISABLE_BLEND
-/*	RSTATE_DISABLE_ALPHATEST*/
-	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	qglEnable(GL_CULL_FACE);
 	qglDepthMask(GL_TRUE);
 	if (r_fog->integer && refdef.fog)

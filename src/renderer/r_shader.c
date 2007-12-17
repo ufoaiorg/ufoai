@@ -1,7 +1,6 @@
 /**
  * @file r_arb_shader.c
  * @brief Shader and image filter stuff
- * @note This code is only active if HAVE_SHADERS is true
  */
 
 /*
@@ -26,7 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_local.h"
 
-#ifdef HAVE_SHADERS
 #include "r_error.h"
 static int SH_LoadProgram_ARB_FP(const char *path);
 static int SH_LoadProgram_ARB_VP(const char *path);
@@ -58,7 +56,6 @@ void R_ShaderInit (void)
 	}
 	shaderInited = qtrue;
 }
-#endif
 
 /**
  * @brief Compares the shader titles with the image name
@@ -81,7 +78,6 @@ shader_t* R_GetShaderForImage (const char* image)
 	return NULL;
 }
 
-#ifdef HAVE_SHADERS
 /**
  * @brief Delete all ARB shader programs at shutdown
  * R_ShaderInit
@@ -128,10 +124,12 @@ int SH_LoadProgram_ARB_FP (const char *path)
 {
 	char *fbuf;
 	int size;
-
 	const unsigned char *errors;
 	int error_pos;
 	unsigned int fpid;
+
+	if (!r_state.arb_fragment_program)
+		return -1;
 
 	size = FS_LoadFile(path, (byte **) &fbuf);
 
@@ -174,6 +172,9 @@ int SH_LoadProgram_ARB_VP (const char *path)
 {
 	char *fbuf;
 	int size, vpid;
+
+	if (!r_state.arb_fragment_program)
+		return -1;
 
 	size = FS_LoadFile(path, (byte **) &fbuf);
 
@@ -220,6 +221,9 @@ int SH_LoadProgram_GLSL (shader_t* s)
 {
 	char *fbuf;
 	int size;
+
+	if (!r_state.glsl_program)
+		return -1;
 
 	size = FS_LoadFile(s->filename, (byte **) &fbuf);
 
@@ -295,8 +299,8 @@ void SH_UseShader (shader_t * shader, qboolean deactivate)
 {
 	image_t *gl = NULL, *normal, *distort;
 
-	/* no shaders supported */
-	if (r_state.arb_fragment_program == qfalse)
+	/* no shaders supported - @todo glsl */
+	if (!r_state.arb_fragment_program)
 		return;
 
 	assert(shader);
@@ -365,5 +369,3 @@ void SH_UseShader (shader_t * shader, qboolean deactivate)
 		return;
 	}
 }
-
-#endif /* HAVE_SHADERS */
