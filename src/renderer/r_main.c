@@ -73,7 +73,6 @@ cvar_t *r_shadows;
 cvar_t *r_bitdepth;
 cvar_t *r_stencilsize;
 cvar_t *r_colordepth;
-cvar_t *r_drawclouds;
 cvar_t *r_soften;
 cvar_t *r_modulate;
 cvar_t *r_maxtexres;
@@ -605,7 +604,6 @@ static void R_Register (void)
 	r_modulate = Cvar_Get("r_modulate", "1", CVAR_ARCHIVE, NULL);
 	r_checkerror = Cvar_Get("r_checkerror", "0", CVAR_ARCHIVE, "Check for opengl errors");
 	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, "Activate or deactivate shadows");
-	r_drawclouds = Cvar_Get("r_drawclouds", "0", CVAR_ARCHIVE, NULL);
 	r_soften = Cvar_Get("r_soften", "1", 0, "Apply blur to lightmap");
 	r_maxtexres = Cvar_Get("r_maxtexres", "2048", CVAR_ARCHIVE, NULL);
 	r_driver = Cvar_Get("r_driver", "", CVAR_ARCHIVE, "You can define the opengl driver you want to use - empty if you want to use the system default");

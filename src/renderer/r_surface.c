@@ -85,9 +85,10 @@ static void R_RenderBrushPoly (mBspSurface_t *surf)
 {
 	c_brush_polys++;
 
+	R_Bind(surf->texinfo->image->texnum);
+
 	if (surf->flags & SURF_DRAWTURB) {
 		vec4_t color = {r_state.inverse_intensity, r_state.inverse_intensity, r_state.inverse_intensity, 1.0f};
-		R_Bind(surf->texinfo->image->texnum);
 
 		/* warp texture, no lightmaps */
 		R_TexEnv(GL_MODULATE);
@@ -95,9 +96,6 @@ static void R_RenderBrushPoly (mBspSurface_t *surf)
 		R_DrawTurbSurface(surf);
 		R_TexEnv(GL_REPLACE);
 		return;
-	} else {
-		R_Bind(surf->texinfo->image->texnum);
-		R_TexEnv(GL_REPLACE);
 	}
 
 	if (surf->texinfo->flags & SURF_FLOWING) {

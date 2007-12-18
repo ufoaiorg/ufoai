@@ -79,7 +79,6 @@ extern vec3_t vup;
 extern vec3_t vpn;
 extern vec3_t vright;
 
-extern cvar_t *r_drawclouds;
 extern cvar_t *r_drawworld;
 extern cvar_t *r_nocull;
 extern cvar_t *r_isometric;

@@ -474,7 +474,7 @@ static float lastQ;
  * @brief Draw the day and night images of a flat geoscape
  * multitexture feature is used to blend the images
  */
-void R_DrawDayAndNight (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map)
+void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map)
 {
 	image_t *gl;
 	float nx, ny, nw, nh;
@@ -544,54 +544,6 @@ void R_DrawDayAndNight (int x, int y, int w, int h, float p, float q, float cx, 
 	R_SelectTexture(GL_TEXTURE0_ARB);
 
 	RSTATE_DISABLE_BLEND
-	if (r_drawclouds->integer)
-		R_DrawClouds(x, y, w, h, p, q, cx, cy, iz, map);
-}
-
-/**
- * @brief Draw the clouds for flat geoscape
- */
-void R_DrawClouds (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map)
-{
-	image_t *gl;
-	float nx, ny, nw, nh;
-
-	/* load clouds image */
-	gl = R_FindImage(va("pics/menu/%s_clouds", map), it_wrappic);
-	/* maybe the campaign map doesn't have a clouds image */
-	if (!gl)
-		return;
-
-	/* normalize */
-	nx = x * viddef.rx;
-	ny = y * viddef.ry;
-	nw = w * viddef.rx;
-	nh = h * viddef.ry;
-
-	/* init combiner */
-	RSTATE_ENABLE_BLEND
-	R_BlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_COLOR);
-
-	qglEnable(GL_TEXTURE_2D);
-
-	/* draw day image */
-	R_Bind(gl->texnum);
-	qglBegin(GL_QUADS);
-	qglTexCoord2f(q-p + cx - iz, cy - iz);
-	qglVertex2f(nx, ny);
-	qglTexCoord2f(q-p + cx + iz, cy - iz);
-	qglVertex2f(nx + nw, ny);
-	qglTexCoord2f(q-p + cx + iz, cy + iz);
-	qglVertex2f(nx + nw, ny + nh);
-	qglTexCoord2f(q-p + cx - iz, cy + iz);
-	qglVertex2f(nx, ny + nh);
-	qglEnd();
-
-	/* reset mode */
-	qglDisable(GL_TEXTURE_2D);
-
-	RSTATE_DISABLE_BLEND
-	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 /**
