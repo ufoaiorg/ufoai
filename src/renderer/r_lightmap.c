@@ -277,7 +277,7 @@ static void R_DrawLightmapPolyChain (const mBspPoly_t *p)
  * blends them into the framebuffer.
  * @note Only used when no multitexturing is supported
  */
-void R_BlendLightmaps (void)
+void R_BlendLightmaps (const model_t* mod)
 {
 	int i;
 	mBspSurface_t *surf;
@@ -292,13 +292,13 @@ void R_BlendLightmaps (void)
 	RSTATE_ENABLE_BLEND
 	R_BlendFunc(GL_ZERO, GL_SRC_COLOR);
 
-	if (currentmodel == rTiles[0])
+	if (mod == rTiles[0])
 		c_visible_lightmaps = 0;
 
 	/* render static lightmaps */
 	for (i = 1; i < MAX_LIGHTMAPS; i++) {
 		if (gl_lms.lightmap_surfaces[i]) {
-			if (currentmodel == rTiles[0])
+			if (mod == rTiles[0])
 				c_visible_lightmaps++;
 			R_Bind(r_state.lightmap_texnum + i);
 

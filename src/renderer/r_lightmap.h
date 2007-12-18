@@ -50,7 +50,7 @@ typedef struct {
 
 extern gllightmapstate_t gl_lms;
 
-void R_BlendLightmaps(void);
+void R_BlendLightmaps(const model_t* mod);
 void R_CreateSurfaceLightmap(mBspSurface_t * surf);
 
 #endif

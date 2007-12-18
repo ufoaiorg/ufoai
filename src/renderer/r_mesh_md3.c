@@ -28,10 +28,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 #include "r_error.h"
 
-static void R_DrawAliasMD3FrameLerp (mAliasModel_t *paliashdr, mAliasMesh_t mesh, float backlerp)
+static void R_DrawAliasMD3FrameLerp (entity_t* e, mAliasModel_t *paliashdr, mAliasMesh_t mesh)
 {
-	int i,j;
-	/*int k;*/
+	int i, j;
 	mAliasFrame_t	*frame, *oldframe;
 	vec3_t	move, delta, vectors[3];
 	mAliasVertex_t	*v, *ov;
@@ -46,18 +45,18 @@ static void R_DrawAliasMD3FrameLerp (mAliasModel_t *paliashdr, mAliasMesh_t mesh
 	color2[0] = color2[1] = color2[2] = 0;
 	color3[0] = color3[1] = color3[2] = 0;
 
-	frontlerp = 1.0 - backlerp;
+	frontlerp = 1.0 - e->as.backlerp;
 
-	if (currententity->flags & RF_TRANSLUCENT)
-		alpha = currententity->alpha;
+	if (e->flags & RF_TRANSLUCENT)
+		alpha = e->alpha;
 	else
 		alpha = 1.0;
 
-	frame = paliashdr->frames + currententity->as.frame;
-	oldframe = paliashdr->frames + currententity->as.oldframe;
+	frame = paliashdr->frames + e->as.frame;
+	oldframe = paliashdr->frames + e->as.oldframe;
 
-	VectorSubtract(currententity->oldorigin, currententity->origin, delta);
-	VectorCopy(currententity->angles, tempangle);
+	VectorSubtract(e->oldorigin, e->origin, delta);
+	VectorCopy(e->angles, tempangle);
 	tempangle[YAW] = tempangle[YAW] - 90;
 	AngleVectors(tempangle, vectors[0], vectors[1], vectors[2]);
 
@@ -68,20 +67,20 @@ static void R_DrawAliasMD3FrameLerp (mAliasModel_t *paliashdr, mAliasMesh_t mesh
 	VectorAdd(move, oldframe->translate, move);
 
 	for (i = 0; i < 3; i++) {
-		move[i] = backlerp * move[i] + frontlerp * frame->translate[i];
+		move[i] = e->as.backlerp * move[i] + frontlerp * frame->translate[i];
 	}
 
-	v = mesh.vertexes + currententity->as.frame * mesh.num_verts;
-	ov = mesh.vertexes + currententity->as.oldframe * mesh.num_verts;
+	v = mesh.vertexes + e->as.frame * mesh.num_verts;
+	ov = mesh.vertexes + e->as.oldframe * mesh.num_verts;
 	for (i = 0; i < mesh.num_verts; i++, v++, ov++) {
 		VectorSet(tempNormalsArray[i],
-				v->normal[0] + (ov->normal[0] - v->normal[0]) * backlerp,
-				v->normal[1] + (ov->normal[1] - v->normal[1]) * backlerp,
-				v->normal[2] + (ov->normal[2] - v->normal[2]) * backlerp);
+				v->normal[0] + (ov->normal[0] - v->normal[0]) * e->as.backlerp,
+				v->normal[1] + (ov->normal[1] - v->normal[1]) * e->as.backlerp,
+				v->normal[2] + (ov->normal[2] - v->normal[2]) * e->as.backlerp);
 		VectorSet(tempVertexArray[i],
-				move[0] + ov->point[0] * backlerp + v->point[0] * frontlerp,
-				move[1] + ov->point[1] * backlerp + v->point[1] * frontlerp,
-				move[2] + ov->point[2] * backlerp + v->point[2] * frontlerp);
+				move[0] + ov->point[0] * e->as.backlerp + v->point[0] * frontlerp,
+				move[1] + ov->point[1] * e->as.backlerp + v->point[1] * frontlerp,
+				move[2] + ov->point[2] * e->as.backlerp + v->point[2] * frontlerp);
 	}
 	qglBegin(GL_TRIANGLES);
 
@@ -181,7 +180,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 		R_Bind(skin->texnum);
 		/* locate the proper data */
 		c_alias_polys += paliashdr->meshes[i].num_tris;
-		R_DrawAliasMD3FrameLerp(paliashdr, paliashdr->meshes[i], e->as.backlerp);
+		R_DrawAliasMD3FrameLerp(e, paliashdr, paliashdr->meshes[i]);
 	}
 
 	RSTATE_DISABLE_LIGHTING

@@ -34,9 +34,6 @@ rstate_t r_state;
 
 image_t *r_notexture;			/* use for bad textures */
 
-entity_t *currententity;
-model_t *currentmodel;
-
 cBspPlane_t frustum[4];
 
 int c_brush_polys, c_alias_polys;
@@ -281,6 +278,8 @@ static void R_TransformEntitiesOnList (void)
 static void R_DrawEntitiesOnList (void)
 {
 	int i;
+	entity_t *e;
+	model_t *mod;
 
 	if (!r_drawentities->integer)
 		return;
@@ -288,35 +287,35 @@ static void R_DrawEntitiesOnList (void)
 	/* draw non-transparent first */
 
 	for (i = 0; i < refdef.num_entities; i++) {
-		currententity = &refdef.entities[i];
+		e = &refdef.entities[i];
 
 		/* find out if and how an entity should be drawn */
-		if (currententity->flags & RF_TRANSLUCENT)
+		if (e->flags & RF_TRANSLUCENT)
 			continue;			/* solid */
 
-		if (currententity->flags & RF_BOX)
-			R_DrawBox(currententity);
+		if (e->flags & RF_BOX)
+			R_DrawBox(e);
 		else {
-			currentmodel = currententity->model;
-			if (!currentmodel) {
-				R_ModDrawNullModel(currententity);
+			mod = e->model;
+			if (!mod) {
+				R_ModDrawNullModel(e);
 				continue;
 			}
-			switch (currentmodel->type) {
+			switch (mod->type) {
 			case mod_alias_md2:
 				/* MD2 model */
-				R_DrawAliasMD2Model(currententity);
+				R_DrawAliasMD2Model(e);
 				break;
 			case mod_alias_md3:
 				/* MD3 model */
-				R_DrawAliasMD3Model(currententity);
+				R_DrawAliasMD3Model(e);
 				break;
 			case mod_brush:
 				/* draw things like func_breakable */
-				R_DrawBrushModel(currententity);
+				R_DrawBrushModel(e);
 				break;
 			default:
-				Sys_Error("Bad %s modeltype: %i", currentmodel->name, currentmodel->type);
+				Sys_Error("Bad %s modeltype: %i", mod->name, mod->type);
 				break;
 			}
 		}
@@ -324,39 +323,39 @@ static void R_DrawEntitiesOnList (void)
 
 	/* draw transparent entities */
 	/* we could sort these if it ever becomes a problem... */
-	qglDepthMask(0);			/* no z writes */
+	qglDepthMask(GL_FALSE);			/* no z writes */
 	for (i = 0; i < refdef.num_entities; i++) {
-		currententity = &refdef.entities[i];
-		if (!(currententity->flags & RF_TRANSLUCENT))
+		e = &refdef.entities[i];
+		if (!(e->flags & RF_TRANSLUCENT))
 			continue;			/* solid */
 
-		if (currententity->flags & RF_BOX)
-			R_DrawBox(currententity);
+		if (e->flags & RF_BOX)
+			R_DrawBox(e);
 		else {
-			currentmodel = currententity->model;
-			if (!currentmodel) {
-				R_ModDrawNullModel(currententity);
+			mod = e->model;
+			if (!mod) {
+				R_ModDrawNullModel(e);
 				continue;
 			}
-			switch (currentmodel->type) {
+			switch (mod->type) {
 			case mod_alias_md2:
 				/* MD2 model */
-				R_DrawAliasMD2Model(currententity);
+				R_DrawAliasMD2Model(e);
 				break;
 			case mod_alias_md3:
 				/* MD3 model */
-				R_DrawAliasMD3Model(currententity);
+				R_DrawAliasMD3Model(e);
 				break;
 			case mod_brush:
-				R_DrawBrushModel(currententity);
+				R_DrawBrushModel(e);
 				break;
 			default:
-				Sys_Error("Bad %s modeltype: %i", currentmodel->name, currentmodel->type);
+				Sys_Error("Bad %s modeltype: %i", mod->name, mod->type);
 				break;
 			}
 		}
 	}
-	qglDepthMask(1);			/* back to writing */
+	qglDepthMask(GL_TRUE);			/* back to writing */
 }
 
 static inline int SignbitsForPlane (cBspPlane_t * out)

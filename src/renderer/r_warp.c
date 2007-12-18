@@ -146,7 +146,7 @@ static void SubdividePolygon (int numverts, float *verts)
  * @brief Breaks a polygon up along axial 64 unit boundaries so that turbulent
  * can be done reasonably.
  */
-void R_SubdivideSurface (mBspSurface_t * fa)
+void R_SubdivideSurface (mBspSurface_t * fa, model_t *mod)
 {
 	vec3_t verts[64];
 	int numverts;
@@ -159,12 +159,12 @@ void R_SubdivideSurface (mBspSurface_t * fa)
 	/* convert edges back to a normal polygon */
 	numverts = 0;
 	for (i = 0; i < fa->numedges; i++) {
-		lindex = loadmodel->bsp.surfedges[fa->firstedge + i];
+		lindex = mod->bsp.surfedges[fa->firstedge + i];
 
 		if (lindex > 0)
-			vec = loadmodel->bsp.vertexes[loadmodel->bsp.edges[lindex].v[0]].position;
+			vec = mod->bsp.vertexes[mod->bsp.edges[lindex].v[0]].position;
 		else
-			vec = loadmodel->bsp.vertexes[loadmodel->bsp.edges[-lindex].v[1]].position;
+			vec = mod->bsp.vertexes[mod->bsp.edges[-lindex].v[1]].position;
 		VectorCopy(vec, verts[numverts]);
 		numverts++;
 	}

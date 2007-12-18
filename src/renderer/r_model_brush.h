@@ -176,7 +176,6 @@ typedef struct mBspModel_s {
 	byte *lightdata;
 } mBspModel_t;
 
-void R_BuildPolygonFromSurface(mBspSurface_t * fa, int shift[3]);
 void R_CreateSurfaceLightmap(mBspSurface_t * surf);
 void R_EndBuildingLightmaps(void);
 void R_BeginBuildingLightmaps(void);

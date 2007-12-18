@@ -77,13 +77,12 @@ void R_ModDrawNullModel(entity_t* e);
 
 void R_ModEnableLights(const entity_t* e);
 void R_ShutdownModels(void);
+void R_BuildPolygonFromSurface(mBspSurface_t * fa, int shift[3], model_t *mod);
 
 extern model_t mod_known[MAX_MOD_KNOWN];
 extern int mod_numknown;
 
 extern model_t mod_inline[MAX_MOD_KNOWN];
 extern int numInline;
-
-extern model_t *loadmodel;
 
 #endif

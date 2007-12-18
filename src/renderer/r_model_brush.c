@@ -35,7 +35,7 @@ BRUSHMODEL LOADING
 static byte *mod_base;
 static int shift[3];
 typedef model_t *model_p;
-model_t *loadmodel;
+static model_t *loadmodel;
 
 /**
  * @brief FIXME
@@ -199,7 +199,7 @@ static void R_ModLoadTexinfo (lump_t * l)
 /**
  * @brief Fills in s->texturemins[] and s->extents[]
  */
-static void CalcSurfaceExtents (mBspSurface_t * s)
+static void CalcSurfaceExtents (mBspSurface_t * s, model_t* mod)
 {
 	float mins[2], maxs[2], val;
 
@@ -215,11 +215,11 @@ static void CalcSurfaceExtents (mBspSurface_t * s)
 	tex = s->texinfo;
 
 	for (i = 0; i < s->numedges; i++) {
-		e = loadmodel->bsp.surfedges[s->firstedge + i];
+		e = mod->bsp.surfedges[s->firstedge + i];
 		if (e >= 0)
-			v = &loadmodel->bsp.vertexes[loadmodel->bsp.edges[e].v[0]];
+			v = &mod->bsp.vertexes[mod->bsp.edges[e].v[0]];
 		else
-			v = &loadmodel->bsp.vertexes[loadmodel->bsp.edges[-e].v[1]];
+			v = &mod->bsp.vertexes[mod->bsp.edges[-e].v[1]];
 
 		for (j = 0; j < 2; j++) {
 			val = v->position[0] * tex->vecs[j][0] + v->position[1] * tex->vecs[j][1] + v->position[2] * tex->vecs[j][2] + tex->vecs[j][3];
@@ -258,8 +258,6 @@ static void R_ModLoadFaces (lump_t * l)
 	loadmodel->bsp.surfaces = out;
 	loadmodel->bsp.numsurfaces = count;
 
-	currentmodel = loadmodel;
-
 	for (surfnum = 0; surfnum < count; surfnum++, in++, out++) {
 		out->firstedge = LittleLong(in->firstedge);
 		out->numedges = LittleShort(in->numedges);
@@ -279,7 +277,7 @@ static void R_ModLoadFaces (lump_t * l)
 		out->texinfo = loadmodel->bsp.texinfo + ti;
 
 		out->lquant = loadmodel->bsp.lightquant;
-		CalcSurfaceExtents(out);
+		CalcSurfaceExtents(out, loadmodel);
 
 		/* lighting info */
 		for (i = 0; i < MAXLIGHTMAPS; i++)
@@ -298,7 +296,7 @@ static void R_ModLoadFaces (lump_t * l)
 				out->texturemins[i] = -8192;
 			}
 			/* cut up polygon for warps */
-			R_SubdivideSurface(out);
+			R_SubdivideSurface(out, loadmodel);
 		}
 
 		/* create lightmaps and polygons */
@@ -306,7 +304,7 @@ static void R_ModLoadFaces (lump_t * l)
 			R_CreateSurfaceLightmap(out);
 
 		if (!(out->texinfo->flags & SURF_WARP))
-			R_BuildPolygonFromSurface(out, shift);
+			R_BuildPolygonFromSurface(out, shift, loadmodel);
 	}
 }
 

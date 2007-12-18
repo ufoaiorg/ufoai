@@ -121,8 +121,6 @@ static model_t *R_ModForName (const char *name, qboolean crash)
 		return NULL;
 	}
 
-	loadmodel = mod;
-
 	/* call the apropriate loader */
 	switch (LittleLong(*(unsigned *) buf)) {
 	case IDALIASHEADER:

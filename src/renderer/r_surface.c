@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_error.h"
 
 static vec3_t modelorg;			/* relative to viewpoint */
+static model_t *currentmodel;
 
 mBspSurface_t *r_alpha_surfaces;
 mBspSurface_t *r_material_surfaces;
@@ -216,7 +217,7 @@ static void R_DrawSurface (mBspSurface_t * surf)
  * @brief
  * @sa R_DrawBrushModel
  */
-static void R_DrawInlineBrushModel (void)
+static void R_DrawInlineBrushModel (entity_t *e, model_t *mod)
 {
 	int i;
 	cBspPlane_t *pplane;
@@ -224,16 +225,16 @@ static void R_DrawInlineBrushModel (void)
 	mBspSurface_t *psurf, *s;
 	qboolean duplicate = qfalse;
 
-	psurf = &currentmodel->bsp.surfaces[currentmodel->bsp.firstmodelsurface];
+	psurf = &mod->bsp.surfaces[mod->bsp.firstmodelsurface];
 
-	if (currententity->flags & RF_TRANSLUCENT) {
+	if (e->flags & RF_TRANSLUCENT) {
 		vec4_t color = {1, 1, 1, 0.25};
 		R_ColorBlend(color);
 		R_TexEnv(GL_MODULATE);
 	}
 
 	/* draw texture */
-	for (i = 0; i < currentmodel->bsp.nummodelsurfaces; i++, psurf++) {
+	for (i = 0; i < mod->bsp.nummodelsurfaces; i++, psurf++) {
 		/* find which side of the node we are on */
 		pplane = psurf->plane;
 
@@ -268,9 +269,9 @@ static void R_DrawInlineBrushModel (void)
 		}
 	}
 
-	if (!(currententity->flags & RF_TRANSLUCENT)) {
+	if (!(e->flags & RF_TRANSLUCENT)) {
 		if (!qglMultiTexCoord2fARB)
-			R_BlendLightmaps();
+			R_BlendLightmaps(mod);
 	} else {
 		R_ColorBlend(NULL);
 		R_TexEnv(GL_REPLACE);
@@ -287,12 +288,9 @@ void R_DrawBrushModel (entity_t * e)
 	int i;
 	qboolean rotated;
 
-/*	Com_DPrintf(DEBUG_RENDERER, "Brush model %i!\n", currentmodel->bsp.nummodelsurfaces);*/
-
 	if (currentmodel->bsp.nummodelsurfaces == 0)
 		return;
 
-	currententity = e;
 	r_state.currenttextures[0] = r_state.currenttextures[1] = -1;
 
 	if (e->angles[0] || e->angles[1] || e->angles[2]) {
@@ -338,7 +336,7 @@ void R_DrawBrushModel (entity_t * e)
 	R_SelectTexture(gl_texture1);
 	R_TexEnv(GL_MODULATE);
 
-	R_DrawInlineBrushModel();
+	R_DrawInlineBrushModel(e, currentmodel);
 	R_EnableMultitexture(qfalse);
 
 	qglPopMatrix();
@@ -372,8 +370,8 @@ static void R_RecursiveWorldNode (mBspNode_t * node)
 	if (node->contents != LEAFNODE)
 		return;
 
-	/* node is just a decision point, so go down the apropriate sides */
-	/* find which side of the node we are on */
+	/* node is just a decision point, so go down the apropriate sides
+	 * find which side of the node we are on */
 	plane = node->plane;
 
 	if (r_isometric->integer) {
@@ -428,14 +426,7 @@ static void R_RecursiveWorldNode (mBspNode_t * node)
  */
 static void R_DrawWorld (mBspNode_t * nodes)
 {
-	entity_t ent;
-
 	VectorCopy(refdef.vieworg, modelorg);
-
-	/* auto cycle the world frame for texture animation */
-	memset(&ent, 0, sizeof(ent));
-	ent.as.frame = (int) (refdef.time * 2);
-	currententity = &ent;
 
 	r_state.currenttextures[0] = r_state.currenttextures[1] = -1;
 
@@ -460,7 +451,7 @@ static void R_DrawWorld (mBspNode_t * nodes)
 		R_EnableMultitexture(qfalse);
 	} else {
 		R_RecursiveWorldNode(nodes);
-		R_BlendLightmaps();
+		R_BlendLightmaps(currentmodel);
 	}
 }
 
@@ -486,7 +477,6 @@ static void R_FindModelNodes_r (mBspNode_t * node)
  */
 void R_DrawLevelBrushes (void)
 {
-	entity_t ent;
 	int i, tile, mask;
 
 	if (refdef.rdflags & RDF_NOWORLDMODEL)
@@ -497,9 +487,6 @@ void R_DrawLevelBrushes (void)
 
 	r_alpha_surfaces = NULL;
 	r_material_surfaces = NULL;
-
-	memset(&ent, 0, sizeof(ent));
-	currententity = &ent;
 
 	mask = 1 << refdef.worldlevel;
 
@@ -521,7 +508,7 @@ void R_DrawLevelBrushes (void)
 	}
 }
 
-void R_BuildPolygonFromSurface (mBspSurface_t * fa, int shift[3])
+void R_BuildPolygonFromSurface (mBspSurface_t *fa, int shift[3], model_t *mod)
 {
 	int i, lindex, lnumverts;
 	mBspEdge_t *pedges, *r_pedge;
@@ -532,7 +519,7 @@ void R_BuildPolygonFromSurface (mBspSurface_t * fa, int shift[3])
 	vec3_t total;
 
 	/* reconstruct the polygon */
-	pedges = currentmodel->bsp.edges;
+	pedges = mod->bsp.edges;
 	lnumverts = fa->numedges;
 	vertpage = 0;
 
@@ -545,14 +532,14 @@ void R_BuildPolygonFromSurface (mBspSurface_t * fa, int shift[3])
 	poly->numverts = lnumverts;
 
 	for (i = 0; i < lnumverts; i++) {
-		lindex = currentmodel->bsp.surfedges[fa->firstedge + i];
+		lindex = mod->bsp.surfedges[fa->firstedge + i];
 
 		if (lindex > 0) {
 			r_pedge = &pedges[lindex];
-			vec = currentmodel->bsp.vertexes[r_pedge->v[0]].position;
+			vec = mod->bsp.vertexes[r_pedge->v[0]].position;
 		} else {
 			r_pedge = &pedges[-lindex];
-			vec = currentmodel->bsp.vertexes[r_pedge->v[1]].position;
+			vec = mod->bsp.vertexes[r_pedge->v[1]].position;
 		}
 		s = DotProduct(vec, fa->texinfo->vecs[0]) + fa->texinfo->vecs[0][3];
 		s /= fa->texinfo->image->width;
