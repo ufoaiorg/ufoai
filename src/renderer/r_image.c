@@ -1273,8 +1273,6 @@ void R_FreeUnusedImages (void)
 
 void R_InitImages (void)
 {
-	int i, j;
-
 	registration_sequence = 1;
 	numgltextures = 0;
 	glerrortex[0] = 0;
@@ -1283,8 +1281,6 @@ void R_InitImages (void)
 
 	if (r_intensity->value <= 1)
 		Cvar_Set("r_intensity", "1");
-
-	r_state.inverse_intensity = 1 / r_intensity->value;
 }
 
 /**

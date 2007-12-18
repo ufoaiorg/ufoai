@@ -219,38 +219,34 @@ GENERIC PARTICLE FUNCTIONS
 =============================================================
 */
 
-static int blend_mode;
 /**
  * @sa R_DrawParticles
  */
 static void R_SetBlendMode (int mode)
 {
-	if (blend_mode != mode) {
-		blend_mode = mode;
-		switch (mode) {
-		case BLEND_REPLACE:
-			R_TexEnv(GL_REPLACE);
-			break;
-		case BLEND_BLEND:
-			R_TexEnv(GL_MODULATE);
-			R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			break;
-		case BLEND_ADD:
-			R_TexEnv(GL_MODULATE);
-			R_BlendFunc(GL_ONE, GL_ONE);
-			break;
-		case BLEND_FILTER:
-			R_TexEnv(GL_MODULATE);
-			R_BlendFunc(GL_ZERO, GL_SRC_COLOR);
-			break;
-		case BLEND_INVFILTER:
-			R_TexEnv(GL_MODULATE);
-			R_BlendFunc(GL_ZERO, GL_ONE_MINUS_SRC_COLOR);
-			break;
-		default:
-			Com_Error(ERR_DROP, "unknown blend mode");
-			break;
-		}
+	switch (mode) {
+	case BLEND_REPLACE:
+		R_TexEnv(GL_REPLACE);
+		break;
+	case BLEND_BLEND:
+		R_TexEnv(GL_MODULATE);
+		R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		break;
+	case BLEND_ADD:
+		R_TexEnv(GL_MODULATE);
+		R_BlendFunc(GL_ONE, GL_ONE);
+		break;
+	case BLEND_FILTER:
+		R_TexEnv(GL_MODULATE);
+		R_BlendFunc(GL_ZERO, GL_SRC_COLOR);
+		break;
+	case BLEND_INVFILTER:
+		R_TexEnv(GL_MODULATE);
+		R_BlendFunc(GL_ZERO, GL_ONE_MINUS_SRC_COLOR);
+		break;
+	default:
+		Com_Error(ERR_DROP, "unknown blend mode");
+		break;
 	}
 }
 
@@ -270,8 +266,6 @@ void R_DrawParticles (void)
 	qglDepthMask(GL_FALSE);
 	qglDisable(GL_CULL_FACE);
 	RSTATE_ENABLE_BLEND
-/*	RSTATE_ENABLE_ALPHATEST*/
-	blend_mode = BLEND_REPLACE;
 
 	for (i = 0, p = refdef.ptls; i < refdef.num_ptls; i++, p++)
 		if (p->inuse && !p->invis) {
@@ -295,7 +289,6 @@ void R_DrawParticles (void)
 				qglEnable(GL_CULL_FACE);
 				R_DrawPtlModel(p);
 				qglDisable(GL_CULL_FACE);
-				blend_mode = -1;
 			}
 		}
 

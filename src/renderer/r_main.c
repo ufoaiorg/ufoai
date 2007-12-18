@@ -251,12 +251,12 @@ static float *R_CalcTransform (entity_t * e)
 }
 
 
-static void R_TransformEntitiesOnList (void)
+/**
+ * @sa R_DrawEntities
+ */
+static inline void R_TransformEntitiesOnList (void)
 {
 	int i;
-
-	if (!r_drawentities->integer)
-		return;
 
 	/* clear flags */
 	for (i = 0; i < refdef.num_entities; i++) {
@@ -270,8 +270,10 @@ static void R_TransformEntitiesOnList (void)
 		R_CalcTransform(&refdef.entities[i]);
 }
 
-
-static void R_DrawEntitiesOnList (void)
+/**
+ * @sa R_TransformEntitiesOnList
+ */
+static void R_DrawEntities (void)
 {
 	int i;
 	entity_t *e;
@@ -280,8 +282,9 @@ static void R_DrawEntitiesOnList (void)
 	if (!r_drawentities->integer)
 		return;
 
-	/* draw non-transparent first */
+	R_TransformEntitiesOnList();
 
+	/* draw non-transparent first */
 	for (i = 0; i < refdef.num_entities; i++) {
 		e = &refdef.entities[i];
 
@@ -435,44 +438,6 @@ static void R_Clear (void)
 	R_CheckError();
 }
 
-static void R_RenderView (void)
-{
-	if (r_norefresh->integer)
-		return;
-
-#if 0
-	if (!r_worldmodel && !(refdef.rdflags & RDF_NOWORLDMODEL))
-		Sys_Error("R_RenderView: NULL worldmodel");
-#endif
-
-	if (r_speeds->integer) {
-		c_brush_polys = 0;
-		c_alias_polys = 0;
-	}
-
-	R_SetupFrame();
-
-	R_SetFrustum();
-
-	R_SetupGL3D();
-
-	if (r_wire->integer)
-		qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-	/* draw brushes on current worldlevel */
-	R_DrawLevelBrushes();
-
-	R_TransformEntitiesOnList();
-	R_DrawEntitiesOnList();
-
-	if (r_wire->integer)
-		qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-	R_DrawAlphaSurfaces(r_alpha_surfaces);
-
-	R_DrawParticles();
-}
-
 /**
  * @sa R_RenderFrame
  * @sa R_EndFrame
@@ -539,8 +504,37 @@ void R_BeginFrame (void)
  */
 void R_RenderFrame (void)
 {
-	/* render the view in 3d mode */
-	R_RenderView();
+	if (r_norefresh->integer)
+		return;
+
+	if (r_speeds->integer) {
+		c_brush_polys = 0;
+		c_alias_polys = 0;
+	}
+
+	R_SetupFrame();
+
+	R_SetFrustum();
+
+	R_SetupGL3D();
+
+	/* activate wire mode */
+	if (r_wire->integer)
+		qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	/* draw brushes on current worldlevel */
+	R_DrawLevelBrushes();
+
+	/* draw entities like cursor box and models */
+	R_DrawEntities();
+
+	R_DrawAlphaSurfaces(r_alpha_surfaces);
+
+	/* leave wire mode again */
+	if (r_wire->integer)
+		qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	R_DrawParticles();
 
 	/* go back into 2D mode for hud and the like */
 	R_SetupGL2D();
@@ -601,7 +595,7 @@ static void R_Register (void)
 
 	r_3dmapradius = Cvar_Get("r_3dmapradius", "8192.0", CVAR_NOSET, "3D geoscape radius");
 	r_materials = Cvar_Get("r_materials", "1", CVAR_ARCHIVE, "Activate material subsystem");
-	r_modulate = Cvar_Get("r_modulate", "1", CVAR_ARCHIVE, NULL);
+	r_modulate = Cvar_Get("r_modulate", "1", CVAR_ARCHIVE, "Scale lightmap values");
 	r_checkerror = Cvar_Get("r_checkerror", "0", CVAR_ARCHIVE, "Check for opengl errors");
 	r_shadows = Cvar_Get("r_shadows", "1", CVAR_ARCHIVE, "Activate or deactivate shadows");
 	r_soften = Cvar_Get("r_soften", "1", 0, "Apply blur to lightmap");
@@ -687,11 +681,11 @@ static void R_InitExtension (void)
 			r_config.envCombine = GL_COMBINE_EXT;
 		} else {
 			Com_Printf("ignoring EXT_texture_env_combine\n");
-			r_config.envCombine = 0;
+			r_config.envCombine = GL_MODULATE;
 		}
 	} else {
 		Com_Printf("GL_EXT_texture_env_combine not found\n");
-		r_config.envCombine = 0;
+		r_config.envCombine = GL_MODULATE;
 	}
 
 	if (strstr(r_config.extensions_string, "GL_ARB_texture_compression")) {

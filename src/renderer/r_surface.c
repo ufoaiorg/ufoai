@@ -88,11 +88,8 @@ static void R_RenderBrushPoly (mBspSurface_t *surf)
 	R_Bind(surf->texinfo->image->texnum);
 
 	if (surf->flags & SURF_DRAWTURB) {
-		vec4_t color = {r_state.inverse_intensity, r_state.inverse_intensity, r_state.inverse_intensity, 1.0f};
-
 		/* warp texture, no lightmaps */
 		R_TexEnv(GL_MODULATE);
-		R_Color(color);
 		R_DrawTurbSurface(surf);
 		R_TexEnv(GL_REPLACE);
 		return;
@@ -117,7 +114,6 @@ static void R_RenderBrushPoly (mBspSurface_t *surf)
 void R_DrawAlphaSurfaces (mBspSurface_t *list)
 {
 	mBspSurface_t *surf;
-	float intens;
 	vec4_t color = {1, 1, 1, 1};
 
 	/* go back to the world matrix */
@@ -126,10 +122,6 @@ void R_DrawAlphaSurfaces (mBspSurface_t *list)
 	RSTATE_ENABLE_BLEND
 	qglDepthMask(GL_FALSE); /* disable depth writing */
 	R_TexEnv(GL_MODULATE);
-
-	/* the textures are prescaled up for a better lighting range,
-	 * so scale it back down */
-	intens = r_state.inverse_intensity;
 
 	for (surf = list; surf; surf = surf->texturechain) {
 		R_Bind(surf->texinfo->image->texnum);
@@ -419,12 +411,7 @@ static void R_DrawWorld (mBspNode_t * nodes)
 	R_TexEnv(GL_REPLACE);
 	R_SelectTexture(GL_TEXTURE1_ARB);
 
-	if (r_config.envCombine) {
-		R_TexEnv(r_config.envCombine);
-		qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, r_intensity->value);
-	} else {
-		R_TexEnv(GL_MODULATE);
-	}
+	R_TexEnv(r_config.envCombine);
 
 	R_RecursiveWorldNode(nodes);
 	R_EnableMultitexture(qfalse);

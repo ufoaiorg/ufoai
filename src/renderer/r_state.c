@@ -203,6 +203,8 @@ void R_TexEnv (GLenum mode)
 		qglTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
 		R_CheckError();
 		lastmodes[r_state.currenttmu] = mode;
+		if (mode == GL_COMBINE_EXT)
+			qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, r_intensity->value);
 	}
 }
 

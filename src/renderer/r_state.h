@@ -30,8 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define R_STATE_H
 
 typedef struct {
-	float inverse_intensity;
-	int displayrefresh;
 	qboolean fullscreen;
 
 	int lightmap_texnum;

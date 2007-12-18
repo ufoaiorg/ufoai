@@ -317,12 +317,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 	/* draw it */
 	R_Bind(skin->texnum);
 
-	if (r_config.envCombine) {
-		R_TexEnv(r_config.envCombine);
-		qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, r_intensity->value);
-	} else {
-		R_TexEnv(GL_MODULATE);
-	}
+	R_TexEnv(r_config.envCombine);
 
 	if ((e->flags & RF_TRANSLUCENT))
 		RSTATE_ENABLE_BLEND
@@ -576,12 +571,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	qglEnable(GL_DEPTH_TEST);
 	qglEnable(GL_CULL_FACE);
 
-	if (r_config.envCombine) {
-		R_TexEnv(r_config.envCombine);
-		qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, r_intensity->value);
-	} else {
-		R_TexEnv(GL_MODULATE);
-	}
+	R_TexEnv(r_config.envCombine);
 
 	if ((mi->color[3] && mi->color[3] < 1.0f) || (skin && skin->has_alpha))
 		RSTATE_ENABLE_BLEND
@@ -654,12 +644,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	qglEnable(GL_DEPTH_TEST);
 	qglEnable(GL_CULL_FACE);
 
-	if (r_config.envCombine) {
-		R_TexEnv(r_config.envCombine);
-		qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, r_intensity->value);
-	} else {
-		R_TexEnv(GL_MODULATE);
-	}
+	R_TexEnv(r_config.envCombine);
 
 	if ((mi->color[3] && mi->color[3] < 1.0f) || (skin && skin->has_alpha))
 		RSTATE_ENABLE_BLEND
