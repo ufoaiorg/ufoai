@@ -73,11 +73,11 @@ typedef struct model_s {
 void R_ModClearAll(void);
 void R_ModModellist_f(void);
 void R_ModDrawModelBBox(vec4_t bbox[8], entity_t *e);
-void R_ModDrawNullModel(entity_t* e);
+void R_ModDrawNullModel(entity_t *e);
 
-void R_ModEnableLights(const entity_t* e);
+void R_ModEnableLights(const entity_t *e);
 void R_ShutdownModels(void);
-void R_BuildPolygonFromSurface(mBspSurface_t * fa, int shift[3], model_t *mod);
+void R_BuildPolygonFromSurface(mBspSurface_t *surf, int shift[3], model_t *mod);
 
 extern model_t mod_known[MAX_MOD_KNOWN];
 extern int mod_numknown;

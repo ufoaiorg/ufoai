@@ -508,7 +508,7 @@ void R_DrawLevelBrushes (void)
 	}
 }
 
-void R_BuildPolygonFromSurface (mBspSurface_t *fa, int shift[3], model_t *mod)
+void R_BuildPolygonFromSurface (mBspSurface_t *surf, int shift[3], model_t *mod)
 {
 	int i, lindex, lnumverts;
 	mBspEdge_t *pedges, *r_pedge;
@@ -520,19 +520,19 @@ void R_BuildPolygonFromSurface (mBspSurface_t *fa, int shift[3], model_t *mod)
 
 	/* reconstruct the polygon */
 	pedges = mod->bsp.edges;
-	lnumverts = fa->numedges;
+	lnumverts = surf->numedges;
 	vertpage = 0;
 
 	VectorClear(total);
 
 	/* draw texture */
 	poly = VID_TagAlloc(vid_modelPool, sizeof(mBspPoly_t) + (lnumverts - 4) * VERTEXSIZE * sizeof(float), 0);
-	poly->next = fa->polys;
-	fa->polys = poly;
+	poly->next = surf->polys;
+	surf->polys = poly;
 	poly->numverts = lnumverts;
 
 	for (i = 0; i < lnumverts; i++) {
-		lindex = mod->bsp.surfedges[fa->firstedge + i];
+		lindex = mod->bsp.surfedges[surf->firstedge + i];
 
 		if (lindex > 0) {
 			r_pedge = &pedges[lindex];
@@ -541,11 +541,11 @@ void R_BuildPolygonFromSurface (mBspSurface_t *fa, int shift[3], model_t *mod)
 			r_pedge = &pedges[-lindex];
 			vec = mod->bsp.vertexes[r_pedge->v[1]].position;
 		}
-		s = DotProduct(vec, fa->texinfo->vecs[0]) + fa->texinfo->vecs[0][3];
-		s /= fa->texinfo->image->width;
+		s = DotProduct(vec, surf->texinfo->vecs[0]) + surf->texinfo->vecs[0][3];
+		s /= surf->texinfo->image->width;
 
-		t = DotProduct(vec, fa->texinfo->vecs[1]) + fa->texinfo->vecs[1][3];
-		t /= fa->texinfo->image->height;
+		t = DotProduct(vec, surf->texinfo->vecs[1]) + surf->texinfo->vecs[1][3];
+		t /= surf->texinfo->image->height;
 
 		VectorAdd(total, vec, total);
 		VectorAdd(vec, shift, poly->verts[i]);
@@ -553,17 +553,17 @@ void R_BuildPolygonFromSurface (mBspSurface_t *fa, int shift[3], model_t *mod)
 		poly->verts[i][4] = t;
 
 		/* lightmap texture coordinates */
-		s = DotProduct(vec, fa->texinfo->vecs[0]) + fa->texinfo->vecs[0][3];
-		s -= fa->texturemins[0];
-		s += fa->light_s << fa->lquant;
-		s += 1 << (fa->lquant - 1);
-		s /= BLOCK_WIDTH << fa->lquant;
+		s = DotProduct(vec, surf->texinfo->vecs[0]) + surf->texinfo->vecs[0][3];
+		s -= surf->texturemins[0];
+		s += surf->light_s << surf->lquant;
+		s += 1 << (surf->lquant - 1);
+		s /= BLOCK_WIDTH << surf->lquant;
 
-		t = DotProduct(vec, fa->texinfo->vecs[1]) + fa->texinfo->vecs[1][3];
-		t -= fa->texturemins[1];
-		t += fa->light_t << fa->lquant;
-		t += 1 << (fa->lquant - 1);
-		t /= BLOCK_HEIGHT << fa->lquant;
+		t = DotProduct(vec, surf->texinfo->vecs[1]) + surf->texinfo->vecs[1][3];
+		t -= surf->texturemins[1];
+		t += surf->light_t << surf->lquant;
+		t += 1 << (surf->lquant - 1);
+		t /= BLOCK_HEIGHT << surf->lquant;
 
 		poly->verts[i][5] = s;
 		poly->verts[i][6] = t;

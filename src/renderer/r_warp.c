@@ -25,8 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_local.h"
 
-static mBspSurface_t *warpface;
-
 #define	SUBDIVIDE_SIZE	64
 /*#define	SUBDIVIDE_SIZE	1024 */
 
@@ -47,7 +45,7 @@ static void BoundPoly (int numverts, float *verts, vec3_t mins, vec3_t maxs)
 		}
 }
 
-static void SubdividePolygon (int numverts, float *verts)
+static void SubdividePolygon (mBspSurface_t *surf, int numverts, float *verts)
 {
 	int i, j, k;
 	vec3_t mins, maxs;
@@ -108,23 +106,23 @@ static void SubdividePolygon (int numverts, float *verts)
 			}
 		}
 
-		SubdividePolygon(f, front[0]);
-		SubdividePolygon(b, back[0]);
+		SubdividePolygon(surf, f, front[0]);
+		SubdividePolygon(surf, b, back[0]);
 		return;
 	}
 
 	/* add a point in the center to help keep warp valid */
 	poly = VID_TagAlloc(vid_modelPool, sizeof(mBspPoly_t) + ((numverts - 4) + 2) * VERTEXSIZE * sizeof(float), 0);
-	poly->next = warpface->polys;
-	warpface->polys = poly;
+	poly->next = surf->polys;
+	surf->polys = poly;
 	poly->numverts = numverts + 2;
 	VectorClear(total);
 	total_s = 0;
 	total_t = 0;
 	for (i = 0; i < numverts; i++, verts += 3) {
 		VectorCopy(verts, poly->verts[i + 1]);
-		s = DotProduct(verts, warpface->texinfo->vecs[0]);
-		t = DotProduct(verts, warpface->texinfo->vecs[1]);
+		s = DotProduct(verts, surf->texinfo->vecs[0]);
+		t = DotProduct(verts, surf->texinfo->vecs[1]);
 
 		total_s += s;
 		total_t += t;
@@ -146,7 +144,7 @@ static void SubdividePolygon (int numverts, float *verts)
  * @brief Breaks a polygon up along axial 64 unit boundaries so that turbulent
  * can be done reasonably.
  */
-void R_SubdivideSurface (mBspSurface_t * fa, model_t *mod)
+void R_SubdivideSurface (mBspSurface_t *surf, model_t *mod)
 {
 	vec3_t verts[64];
 	int numverts;
@@ -154,12 +152,10 @@ void R_SubdivideSurface (mBspSurface_t * fa, model_t *mod)
 	int lindex;
 	float *vec;
 
-	warpface = fa;
-
 	/* convert edges back to a normal polygon */
 	numverts = 0;
-	for (i = 0; i < fa->numedges; i++) {
-		lindex = mod->bsp.surfedges[fa->firstedge + i];
+	for (i = 0; i < surf->numedges; i++) {
+		lindex = mod->bsp.surfedges[surf->firstedge + i];
 
 		if (lindex > 0)
 			vec = mod->bsp.vertexes[mod->bsp.edges[lindex].v[0]].position;
@@ -169,7 +165,7 @@ void R_SubdivideSurface (mBspSurface_t * fa, model_t *mod)
 		numverts++;
 	}
 
-	SubdividePolygon(numverts, verts[0]);
+	SubdividePolygon(surf, numverts, verts[0]);
 }
 
 
