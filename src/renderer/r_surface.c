@@ -42,11 +42,11 @@ BRUSH MODELS
 /**
  * @param[in] scroll != 0 for SURF_FLOWING
  */
-static void R_DrawPoly (const mBspSurface_t * fa, const float scroll)
+static void R_DrawPoly (const mBspSurface_t *surf, const float scroll)
 {
 	int i;
 	float *v;
-	mBspPoly_t *p = fa->polys;
+	mBspPoly_t *p = surf->polys;
 
 	qglBegin(GL_POLYGON);
 	v = p->verts[0];
@@ -81,38 +81,38 @@ static void R_DrawPolyChain (const mBspSurface_t *surf, const float scroll)
 	}
 }
 
-static void R_RenderBrushPoly (mBspSurface_t * fa)
+static void R_RenderBrushPoly (mBspSurface_t *surf)
 {
 	c_brush_polys++;
 
-	if (fa->flags & SURF_DRAWTURB) {
+	if (surf->flags & SURF_DRAWTURB) {
 		vec4_t color = {r_state.inverse_intensity, r_state.inverse_intensity, r_state.inverse_intensity, 1.0f};
-		R_Bind(fa->texinfo->image->texnum);
+		R_Bind(surf->texinfo->image->texnum);
 
 		/* warp texture, no lightmaps */
 		R_TexEnv(GL_MODULATE);
 		R_Color(color);
-		R_DrawTurbSurface(fa);
+		R_DrawTurbSurface(surf);
 		R_TexEnv(GL_REPLACE);
 		return;
 	} else {
-		R_Bind(fa->texinfo->image->texnum);
+		R_Bind(surf->texinfo->image->texnum);
 		R_TexEnv(GL_REPLACE);
 	}
 
-	if (fa->texinfo->flags & SURF_FLOWING) {
+	if (surf->texinfo->flags & SURF_FLOWING) {
 		float scroll;
 		scroll = -64 * ((refdef.time / 40.0) - (int) (refdef.time / 40.0));
 		if (scroll == 0.0)
 			scroll = -64.0;
-		R_DrawPoly(fa, scroll);
+		R_DrawPoly(surf, scroll);
 	} else
-		R_DrawPoly(fa, 0.0f);
+		R_DrawPoly(surf, 0.0f);
 
 	if (!qglMultiTexCoord2fARB) {
 		/* link the lightmap surfaces only when we have to blend them without multitexturing */
-		fa->lightmapchain = gl_lms.lightmap_surfaces[fa->lightmaptexturenum];
-		gl_lms.lightmap_surfaces[fa->lightmaptexturenum] = fa;
+		surf->lightmapchain = gl_lms.lightmap_surfaces[surf->lightmaptexturenum];
+		gl_lms.lightmap_surfaces[surf->lightmaptexturenum] = surf;
 	}
 }
 
@@ -124,7 +124,7 @@ static void R_RenderBrushPoly (mBspSurface_t * fa)
  */
 void R_DrawAlphaSurfaces (mBspSurface_t *list)
 {
-	mBspSurface_t *s;
+	mBspSurface_t *surf;
 	float intens;
 	vec4_t color = {1, 1, 1, 1};
 
@@ -139,29 +139,29 @@ void R_DrawAlphaSurfaces (mBspSurface_t *list)
 	 * so scale it back down */
 	intens = r_state.inverse_intensity;
 
-	for (s = list; s; s = s->texturechain) {
-		R_Bind(s->texinfo->image->texnum);
+	for (surf = list; surf; surf = surf->texturechain) {
+		R_Bind(surf->texinfo->image->texnum);
 		c_brush_polys++;
 
-		if (s->texinfo->flags & SURF_TRANS33)
+		if (surf->texinfo->flags & SURF_TRANS33)
 			color[3] = 0.33;
-		else if (s->texinfo->flags & SURF_TRANS66)
+		else if (surf->texinfo->flags & SURF_TRANS66)
 			color[3] = 0.66;
 		else
 			color[3] = 1.0;
 
 		R_Color(color);
 
-		if (s->flags & SURF_DRAWTURB)
-			R_DrawTurbSurface(s);
-		else if (s->texinfo->flags & SURF_FLOWING) {
+		if (surf->flags & SURF_DRAWTURB)
+			R_DrawTurbSurface(surf);
+		else if (surf->texinfo->flags & SURF_FLOWING) {
 			float scroll;
 			scroll = -64 * ((refdef.time / 40.0) - (int) (refdef.time / 40.0));
 			if (scroll == 0.0)
 				scroll = -64.0;
-			R_DrawPoly(s, scroll);
+			R_DrawPoly(surf, scroll);
 		} else
-			R_DrawPoly(s, 0.0f);
+			R_DrawPoly(surf, 0.0f);
 	}
 
 	R_TexEnv(GL_REPLACE);
@@ -177,7 +177,7 @@ void R_DrawAlphaSurfaces (mBspSurface_t *list)
  * @sa R_DrawPolyChain
  * @sa R_DrawWorld
  */
-static void R_DrawSurface (mBspSurface_t * surf)
+static void R_DrawSurface (mBspSurface_t *surf)
 {
 	unsigned lmtex = surf->lightmaptexturenum;
 

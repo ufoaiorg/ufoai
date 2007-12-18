@@ -184,7 +184,7 @@ float r_turbsin[] = {
 /**
  * @brief Does a water warp on the pre-fragmented mBspPoly_t chain
  */
-void R_DrawTurbSurface (mBspSurface_t * fa)
+void R_DrawTurbSurface (mBspSurface_t *surf)
 {
 	mBspPoly_t *p, *bp;
 	float *v;
@@ -193,11 +193,11 @@ void R_DrawTurbSurface (mBspSurface_t * fa)
 	float scroll;
 	float rdt = refdef.time;
 
-	if (fa->texinfo->flags & SURF_FLOWING)
+	if (surf->texinfo->flags & SURF_FLOWING)
 		scroll = -64 * ((refdef.time * 0.5) - (int) (refdef.time * 0.5));
 	else
 		scroll = 0;
-	for (bp = fa->polys; bp; bp = bp->next) {
+	for (bp = surf->polys; bp; bp = bp->next) {
 		p = bp;
 
 		qglBegin(GL_TRIANGLE_FAN);
