@@ -70,9 +70,8 @@ typedef struct patch_s {
 	int			numtransfers;
 	transfer_t	*transfers;
 
-	int			cluster;			/* for pvs checking */
 	vec3_t		origin;
-	dplane_t	*plane;
+	dBspPlane_t	*plane;
 
 	vec3_t		totallight;			/* accumulated by radiosity */
 									/* does NOT include light */
@@ -105,9 +104,9 @@ void CloseTNodes(void);
 int TestLine(const vec3_t start, const vec3_t stop);
 void CreateDirectLights(void);
 
-dleaf_t *Rad_PointInLeaf(vec3_t point);
+dBspLeaf_t *Rad_PointInLeaf(vec3_t point);
 
-extern dplane_t backplanes[MAX_MAP_PLANES];
+extern dBspPlane_t backplanes[MAX_MAP_PLANES];
 extern int fakeplanes;					/* created planes for origin offset  */
 
 void MakePatches(void);

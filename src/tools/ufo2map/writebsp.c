@@ -69,7 +69,7 @@ static int planeused[MAX_MAP_PLANES];
 void EmitPlanes (void)
 {
 	int i;
-	dplane_t *dp;
+	dBspPlane_t *dp;
 	plane_t *mp;
 	int planetranslate[MAX_MAP_PLANES];
 
@@ -84,45 +84,10 @@ void EmitPlanes (void)
 	}
 }
 
-
-static void EmitMarkFace (dleaf_t *leaf_p, face_t *f)
-{
-	int i, facenum;
-
-	while (f->merged)
-		f = f->merged;
-
-	if (f->split[0]) {
-		EmitMarkFace(leaf_p, f->split[0]);
-		EmitMarkFace(leaf_p, f->split[1]);
-		return;
-	}
-
-	facenum = f->outputnumber;
-	if (facenum == -1)
-		return;	/* degenerate face */
-
-	if (facenum < 0 || facenum >= numfaces)
-		Sys_Error("Bad leafface");
-	for (i = leaf_p->firstleafface; i < numleaffaces; i++)
-		if (dleaffaces[i] == facenum)
-			break;		/* merged out face */
-	if (i == numleaffaces) {
-		if (numleaffaces >= MAX_MAP_LEAFFACES)
-			Sys_Error("MAX_MAP_LEAFFACES (%i)", numleaffaces);
-
-		dleaffaces[numleaffaces] =  facenum;
-		numleaffaces++;
-	}
-}
-
-
 static void EmitLeaf (node_t *node)
 {
-	dleaf_t *leaf_p;
-	portal_t *p;
-	int			s, i, brushnum;
-	face_t *f;
+	dBspLeaf_t *leaf_p;
+	int i, brushnum;
 	bspbrush_t *b;
 
 	/* emit a leaf */
@@ -133,7 +98,6 @@ static void EmitLeaf (node_t *node)
 	numleafs++;
 
 	leaf_p->contentFlags = node->contentFlags;
-	leaf_p->cluster = node->cluster;
 	leaf_p->area = node->area;
 
 	/* write bounding box info */
@@ -156,23 +120,6 @@ static void EmitLeaf (node_t *node)
 		}
 	}
 	leaf_p->numleafbrushes = numleafbrushes - leaf_p->firstleafbrush;
-
-	/* write the leaffaces */
-	if (leaf_p->contentFlags & CONTENTS_SOLID)
-		return;		/* no leaffaces in solids */
-
-	leaf_p->firstleafface = numleaffaces;
-
-	for (p = node->portals; p; p = p->next[s]) {
-		s = (p->nodes[1] == node);
-		f = p->face[s];
-		if (!f)
-			continue;	/* not a visible portal */
-
-		EmitMarkFace(leaf_p, f);
-	}
-
-	leaf_p->numleaffaces = numleaffaces - leaf_p->firstleafface;
 }
 
 
@@ -182,10 +129,8 @@ static void EmitLeaf (node_t *node)
  */
 static void EmitFace (face_t *f)
 {
-	dface_t *df;
+	dBspFace_t *df;
 	int i, e;
-
-	f->outputnumber = -1;
 
 	if (f->numpoints < 3) {
 		return;		/* degenerated */
@@ -193,9 +138,6 @@ static void EmitFace (face_t *f)
 	if (f->merged || f->split[0] || f->split[1]) {
 		return;		/* not a final face */
 	}
-
-	/* save output number so leaffaces can use */
-	f->outputnumber = numfaces;
 
 	if (numfaces >= MAX_MAP_FACES)
 		Sys_Error("numfaces >= MAX_MAP_FACES (%i)", numfaces);
@@ -220,7 +162,7 @@ static void EmitFace (face_t *f)
 
 static int EmitDrawNode_r (node_t *node)
 {
-	dnode_t *n;
+	dBspNode_t *n;
 	face_t *f;
 	int i;
 
@@ -349,9 +291,9 @@ void SetLightStyles (void)
 static void EmitBrushes (void)
 {
 	int i, j, bnum, s, x;
-	dbrush_t *db;
+	dBspBrush_t *db;
 	mapbrush_t *b;
-	dbrushside_t *cp;
+	dBspBrushSide_t *cp;
 	vec3_t normal;
 	vec_t dist;
 	int planenum;
@@ -414,7 +356,6 @@ void BeginBSPFile (void)
 	numfaces = 0;
 	numbrushsides = 0;
 	numvertexes = 0;
-	numleaffaces = 0;
 	numleafbrushes = 0;
 	numsurfedges = 0;
 	numnodes = 0;
@@ -456,7 +397,7 @@ extern int firstmodelface;
  */
 void BeginModel (int entityNum)
 {
-	dmodel_t *mod;
+	dBspModel_t *mod;
 	int start, end;
 	mapbrush_t *b;
 	int j;
@@ -497,7 +438,7 @@ void BeginModel (int entityNum)
  */
 void EndModel (void)
 {
-	dmodel_t *mod;
+	dBspModel_t *mod;
 
 	mod = &dmodels[nummodels];
 	mod->numfaces = numfaces - mod->firstface;

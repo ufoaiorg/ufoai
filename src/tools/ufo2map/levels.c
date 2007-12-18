@@ -30,12 +30,11 @@ int brush_start, brush_end;
 
 vec3_t worldMins, worldMaxs;
 
-static int oldleafs, oldleaffaces, oldleafbrushes, oldplanes, oldvertexes, oldnodes, oldtexinfo, oldfaces, oldedges, oldsurfedges;
+static int oldleafs, oldleafbrushes, oldplanes, oldvertexes, oldnodes, oldtexinfo, oldfaces, oldedges, oldsurfedges;
 
 void PushInfo (void)
 {
 	oldleafs = numleafs;
-	oldleaffaces = numleaffaces;
 	oldleafbrushes = numleafbrushes;
 	oldplanes = numplanes;
 	oldvertexes = numvertexes;
@@ -49,7 +48,6 @@ void PushInfo (void)
 void PopInfo (void)
 {
 	numleafs = oldleafs;
-	numleaffaces = oldleaffaces;
 	numleafbrushes = oldleafbrushes;
 	numplanes = oldplanes;
 	numvertexes = oldvertexes;
@@ -66,7 +64,7 @@ static int BuildNodeChildren (vec3_t mins, vec3_t maxs, int n[3])
 	int node = -1, i;
 
 	for (i = 0; i < 3; i++) {
-		dnode_t	 *newnode;
+		dBspNode_t	 *newnode;
 		vec3_t newmins, newmaxs, addvec;
 
 		if (n[i] == -1)
@@ -226,7 +224,7 @@ static int ConstructLevelNodes_r (int levelnum, vec3_t cmins, vec3_t cmaxs)
 void ProcessLevel (unsigned int levelnum)
 {
 	vec3_t mins, maxs;
-	dmodel_t *dm;
+	dBspModel_t *dm;
 
 	/* get maxs */
 	mins[0] = (config.block_xl) * 512.0 + 1.0;
@@ -240,7 +238,7 @@ void ProcessLevel (unsigned int levelnum)
 	Sys_FPrintf(SYS_VRB, "Process levelnum %i (nummodels: %i)\n", levelnum, nummodels);
 
 	dm = &dmodels[levelnum];
-	memset(dm, 0, sizeof(dmodel_t));
+	memset(dm, 0, sizeof(dBspModel_t));
 
 	/* back copy backup brush sides structure */
 	/* to reset all the changed values (especialy "finished") */

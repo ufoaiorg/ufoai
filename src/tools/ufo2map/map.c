@@ -719,8 +719,6 @@ static qboolean ParseMapEntity (void)
 	memset(mapent, 0, sizeof(*mapent));
 	mapent->firstbrush = nummapbrushes;
 	mapent->numbrushes = 0;
-/*	mapent->portalareas[0] = -1; */
-/*	mapent->portalareas[1] = -1; */
 
 	do {
 		if (!GetToken(qtrue))

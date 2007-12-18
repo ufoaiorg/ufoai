@@ -481,7 +481,6 @@ static void MarkVisibleSides_r (node_t *node)
 		if (p->side)
 			p->side->visible = qtrue;
 	}
-
 }
 
 void MarkVisibleSides (tree_t *tree, int startbrush, int endbrush)

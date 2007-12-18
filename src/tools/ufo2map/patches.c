@@ -115,10 +115,10 @@ MAKE FACES
 =======================================================================
 */
 
-static winding_t *WindingFromFace (dface_t *f)
+static winding_t *WindingFromFace (dBspFace_t *f)
 {
 	int i, se, v;
-	dvertex_t *dv;
+	dBspVertex_t *dv;
 	winding_t *w;
 
 	w = AllocWinding(f->numedges);
@@ -145,9 +145,9 @@ static winding_t *WindingFromFace (dface_t *f)
  * @note Surface lights
  * @sa TexinfoForBrushTexture
  */
-static void BaseLightForFace (dface_t *f, vec3_t color)
+static void BaseLightForFace (dBspFace_t *f, vec3_t color)
 {
-	texinfo_t *tx;
+	dBspTexinfo_t *tx;
 
 	/* check for light emited by texture */
 	tx = &texinfo[f->texinfo];
@@ -165,13 +165,13 @@ static float totalarea;
 
 static void MakePatchForFace (int fn, winding_t *w)
 {
-	dface_t *f;
+	dBspFace_t *f;
 	float area;
 	patch_t *patch;
-	dplane_t *pl;
+	dBspPlane_t *pl;
 	int i;
 	vec3_t color;
-	dleaf_t *leaf;
+	dBspLeaf_t *leaf;
 
 	f = &dfaces[fn];
 
@@ -205,9 +205,6 @@ static void MakePatchForFace (int fn, winding_t *w)
 	WindingCenter(w, patch->origin);
 	VectorAdd(patch->origin, patch->plane->normal, patch->origin);
 	leaf = Rad_PointInLeaf(patch->origin);
-	patch->cluster = leaf->cluster;
-	if (patch->cluster == -1)
-		Sys_FPrintf(SYS_VRB, "patch->cluster == -1\n");
 
 	patch->area = area;
 	if (patch->area <= 1)
@@ -249,10 +246,10 @@ static entity_t *EntityForModel (int modnum)
 void MakePatches (void)
 {
 	int i, j, k;
-	dface_t *f;
+	dBspFace_t *f;
 	int fn;
 	winding_t *w;
-	dmodel_t *mod;
+	dBspModel_t *mod;
 	vec3_t origin;
 	entity_t *ent;
 
@@ -287,7 +284,7 @@ SUBDIVIDE
 
 static void FinishSplit (patch_t *patch, patch_t *newp)
 {
-	dleaf_t *leaf;
+	dBspLeaf_t *leaf;
 
 	VectorCopy(patch->baselight, newp->baselight);
 	VectorCopy(patch->totallight, newp->totallight);
@@ -305,16 +302,10 @@ static void FinishSplit (patch_t *patch, patch_t *newp)
 	WindingCenter(patch->winding, patch->origin);
 	VectorAdd(patch->origin, patch->plane->normal, patch->origin);
 	leaf = Rad_PointInLeaf(patch->origin);
-	patch->cluster = leaf->cluster;
-	if (patch->cluster == -1)
-		Sys_FPrintf(SYS_VRB, "patch->cluster == -1\n");
 
 	WindingCenter(newp->winding, newp->origin);
 	VectorAdd(newp->origin, newp->plane->normal, newp->origin);
 	leaf = Rad_PointInLeaf(newp->origin);
-	newp->cluster = leaf->cluster;
-	if (newp->cluster == -1)
-		Sys_FPrintf(SYS_VRB, "patch->cluster == -1\n");
 }
 
 /**

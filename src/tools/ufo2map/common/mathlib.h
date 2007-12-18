@@ -36,11 +36,6 @@ typedef float vec_t;
 #endif
 typedef vec_t vec3_t[3];
 
-#define	SIDE_FRONT		0
-#define	SIDE_ON			2
-#define	SIDE_BACK		1
-#define	SIDE_CROSS		-2
-
 extern const vec3_t vec3_origin;
 
 #define	EQUAL_EPSILON	0.001

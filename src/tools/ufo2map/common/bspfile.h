@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../common/qfiles.h"
 
 extern	int			nummodels;
-extern	dmodel_t	dmodels[MAX_MAP_MODELS];
+extern	dBspModel_t	dmodels[MAX_MAP_MODELS];
 
 extern	int			routedatasize;
 extern	byte		droutedata[MAX_MAP_ROUTING];
@@ -37,28 +37,25 @@ extern	int			lightdatasize;
 extern	byte		dlightdata[MAX_MAP_LIGHTING];
 
 extern	int			numleafs;
-extern	dleaf_t		dleafs[MAX_MAP_LEAFS];
+extern	dBspLeaf_t		dleafs[MAX_MAP_LEAFS];
 
 extern	int			numplanes;
-extern	dplane_t	dplanes[MAX_MAP_PLANES];
+extern	dBspPlane_t	dplanes[MAX_MAP_PLANES];
 
 extern	int			numvertexes;
-extern	dvertex_t	dvertexes[MAX_MAP_VERTS];
+extern	dBspVertex_t	dvertexes[MAX_MAP_VERTS];
 
 extern	int			numnodes;
-extern	dnode_t		dnodes[MAX_MAP_NODES];
+extern	dBspNode_t		dnodes[MAX_MAP_NODES];
 
 extern	int			numtexinfo;
-extern	texinfo_t	texinfo[MAX_MAP_TEXINFO];
+extern	dBspTexinfo_t	texinfo[MAX_MAP_TEXINFO];
 
 extern	int			numfaces;
-extern	dface_t		dfaces[MAX_MAP_FACES];
+extern	dBspFace_t		dfaces[MAX_MAP_FACES];
 
 extern	int			numedges;
-extern	dedge_t		dedges[MAX_MAP_EDGES];
-
-extern	int			numleaffaces;
-extern	unsigned short	dleaffaces[MAX_MAP_LEAFFACES];
+extern	dBspEdge_t		dedges[MAX_MAP_EDGES];
 
 extern	int			numleafbrushes;
 extern	unsigned short	dleafbrushes[MAX_MAP_LEAFBRUSHES];
@@ -67,10 +64,10 @@ extern	int			numsurfedges;
 extern	int			dsurfedges[MAX_MAP_SURFEDGES];
 
 extern	int			numbrushes;
-extern	dbrush_t	dbrushes[MAX_MAP_BRUSHES];
+extern	dBspBrush_t	dbrushes[MAX_MAP_BRUSHES];
 
 extern	int			numbrushsides;
-extern	dbrushside_t	dbrushsides[MAX_MAP_BRUSHSIDES];
+extern	dBspBrushSide_t	dbrushsides[MAX_MAP_BRUSHSIDES];
 
 void LoadBSPFile(const char *filename);
 void WriteBSPFile(const char *filename);

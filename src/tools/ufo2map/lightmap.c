@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	MAX_LSTYLES	256
 
 typedef struct {
-	dface_t		*faces[2];
+	dBspFace_t		*faces[2];
 	qboolean	coplanar;
 } edgeshare_t;
 
@@ -42,7 +42,7 @@ static int planelinks[2][MAX_MAP_PLANES];
 void LinkPlaneFaces (void)
 {
 	int i;
-	dface_t *f;
+	dBspFace_t *f;
 
 	f = dfaces;
 	for (i = 0; i < numfaces; i++, f++) {
@@ -54,7 +54,7 @@ void LinkPlaneFaces (void)
 void PairEdges (void)
 {
 	int i, j, k;
-	dface_t *f;
+	dBspFace_t *f;
 	edgeshare_t *e;
 
 	f = dfaces;
@@ -103,14 +103,14 @@ typedef struct {
 	int			numpoints;
 	int			numedges;
 	int			numtris;
-	dplane_t	*plane;
+	dBspPlane_t	*plane;
 	triedge_t	*edgematrix[MAX_TRI_POINTS][MAX_TRI_POINTS];
 	patch_t		*points[MAX_TRI_POINTS];
 	triedge_t	edges[MAX_TRI_EDGES];
 	triangle_t	tris[MAX_TRI_TRIS];
 } triangulation_t;
 
-static triangulation_t *AllocTriangulation (dplane_t *plane)
+static triangulation_t *AllocTriangulation (dBspPlane_t *plane)
 {
 	triangulation_t *t;
 
@@ -419,7 +419,7 @@ typedef struct {
 
 	int		texmins[2], texsize[2];
 	int		surfnum;
-	dface_t	*face;
+	dBspFace_t	*face;
 } lightinfo_t;
 
 
@@ -428,11 +428,11 @@ typedef struct {
  */
 static void CalcFaceExtents (lightinfo_t *l)
 {
-	dface_t *s;
+	dBspFace_t *s;
 	vec_t mins[2], maxs[2], val;
 	int i, j, e;
-	dvertex_t *v;
-	texinfo_t *tex;
+	dBspVertex_t *v;
+	dBspTexinfo_t *tex;
 	vec3_t vt;
 
 	s = l->face;
@@ -480,7 +480,7 @@ static void CalcFaceExtents (lightinfo_t *l)
  */
 static void CalcFaceVectors (lightinfo_t *l)
 {
-	texinfo_t *tex;
+	dBspTexinfo_t *tex;
 	int i, j, w, h;
 	vec3_t texnormal;
 	vec_t distscale, dist, len;
@@ -550,7 +550,7 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 	vec_t starts, startt, us, ut, mids, midt;
 	vec_t *surf;
 	vec3_t facemid;
-	dleaf_t *leaf;
+	dBspLeaf_t *leaf;
 
 	/* fill in surforg
 	 * the points are biased towards the center of the surfaces
@@ -658,7 +658,7 @@ void CreateDirectLights (void)
 	int i;
 	patch_t *p;
 	directlight_t *dl;
-	dleaf_t *leaf;
+	dBspLeaf_t *leaf;
 	entity_t *e, *e2;
 	const char *name;
 	const char *target;
@@ -931,7 +931,7 @@ static const float sampleofs[MAX_SAMPLES][2] = { {0,0}, {-0.4, -0.4}, {0.4, -0.4
 
 void BuildFacelights (unsigned int facenum)
 {
-	dface_t *f;
+	dBspFace_t *f;
 	lightinfo_t *l;
 	float *styletable[MAX_LSTYLES];
 	int i, j, numsamples;
@@ -1033,7 +1033,7 @@ void BuildFacelights (unsigned int facenum)
  */
 void FinalLightFace (unsigned int facenum)
 {
-	dface_t *f;
+	dBspFace_t *f;
 	int i, j, k, st, pfacenum;
 	patch_t *patch;
 	triangulation_t *trian = NULL;

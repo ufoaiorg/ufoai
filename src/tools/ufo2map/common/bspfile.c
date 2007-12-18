@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void GetLeafNums (void);
 
 int nummodels;
-dmodel_t dmodels[MAX_MAP_MODELS];
+dBspModel_t dmodels[MAX_MAP_MODELS];
 
 int routedatasize;
 byte droutedata[MAX_MAP_ROUTING];
@@ -44,28 +44,25 @@ static int entdatasize;
 static char dentdata[MAX_MAP_ENTSTRING];
 
 int numleafs;
-dleaf_t dleafs[MAX_MAP_LEAFS];
+dBspLeaf_t dleafs[MAX_MAP_LEAFS];
 
 int numplanes;
-dplane_t dplanes[MAX_MAP_PLANES];
+dBspPlane_t dplanes[MAX_MAP_PLANES];
 
 int numvertexes;
-dvertex_t dvertexes[MAX_MAP_VERTS];
+dBspVertex_t dvertexes[MAX_MAP_VERTS];
 
 int numnodes;
-dnode_t dnodes[MAX_MAP_NODES];
+dBspNode_t dnodes[MAX_MAP_NODES];
 
 int numtexinfo;
-texinfo_t texinfo[MAX_MAP_TEXINFO];
+dBspTexinfo_t texinfo[MAX_MAP_TEXINFO];
 
 int numfaces;
-dface_t dfaces[MAX_MAP_FACES];
+dBspFace_t dfaces[MAX_MAP_FACES];
 
 int numedges;
-dedge_t dedges[MAX_MAP_EDGES];
-
-int numleaffaces;
-unsigned short dleaffaces[MAX_MAP_LEAFFACES];
+dBspEdge_t dedges[MAX_MAP_EDGES];
 
 int numleafbrushes;
 unsigned short dleafbrushes[MAX_MAP_LEAFBRUSHES];
@@ -74,10 +71,10 @@ int numsurfedges;
 int dsurfedges[MAX_MAP_SURFEDGES];
 
 int numbrushes;
-dbrush_t dbrushes[MAX_MAP_BRUSHES];
+dBspBrush_t dbrushes[MAX_MAP_BRUSHES];
 
 int numbrushsides;
-dbrushside_t dbrushsides[MAX_MAP_BRUSHSIDES];
+dBspBrushSide_t dbrushsides[MAX_MAP_BRUSHSIDES];
 
 /**
  * @brief Compress the routing data of a map
@@ -132,7 +129,7 @@ byte *CompressRouting (byte *dataStart, byte *destStart, int l)
 static void SwapBSPFile (void)
 {
 	int i, j;
-	dmodel_t *d;
+	dBspModel_t *d;
 
 	/* models	 */
 	for (i = 0; i < nummodels; i++) {
@@ -198,22 +195,15 @@ static void SwapBSPFile (void)
 	/* leafs */
 	for (i = 0; i < numleafs; i++) {
 		dleafs[i].contentFlags = LittleLong(dleafs[i].contentFlags);
-		dleafs[i].cluster = LittleShort(dleafs[i].cluster);
 		dleafs[i].area = LittleShort(dleafs[i].area);
 		for (j = 0; j < 3; j++) {
 			dleafs[i].mins[j] = LittleShort(dleafs[i].mins[j]);
 			dleafs[i].maxs[j] = LittleShort(dleafs[i].maxs[j]);
 		}
 
-		dleafs[i].firstleafface = LittleShort(dleafs[i].firstleafface);
-		dleafs[i].numleaffaces = LittleShort(dleafs[i].numleaffaces);
 		dleafs[i].firstleafbrush = LittleShort(dleafs[i].firstleafbrush);
 		dleafs[i].numleafbrushes = LittleShort(dleafs[i].numleafbrushes);
 	}
-
-	/* leaffaces */
-	for (i = 0; i < numleaffaces; i++)
-		dleaffaces[i] = LittleShort(dleaffaces[i]);
 
 	/* leafbrushes */
 	for (i = 0; i < numleafbrushes; i++)
@@ -244,7 +234,7 @@ static void SwapBSPFile (void)
 }
 
 
-static dheader_t *header;
+static dBspHeader_t *header;
 
 /**
  * @brief
@@ -277,7 +267,7 @@ void LoadBSPFile (const char *filename)
 	LoadFile(filename, (void **)&header);
 
 	/* swap the header */
-	for (i = 0; i < sizeof(dheader_t) / 4; i++)
+	for (i = 0; i < sizeof(dBspHeader_t) / 4; i++)
 		((int *)header)[i] = LittleLong(((int *)header)[i]);
 
 	if (header->ident != IDBSPHEADER)
@@ -285,19 +275,18 @@ void LoadBSPFile (const char *filename)
 	if (header->version != BSPVERSION)
 		Sys_Error("%s is version %i, not %i", filename, header->version, BSPVERSION);
 
-	nummodels = CopyLump(LUMP_MODELS, dmodels, sizeof(dmodel_t));
-	numvertexes = CopyLump(LUMP_VERTEXES, dvertexes, sizeof(dvertex_t));
-	numplanes = CopyLump(LUMP_PLANES, dplanes, sizeof(dplane_t));
-	numleafs = CopyLump(LUMP_LEAFS, dleafs, sizeof(dleaf_t));
-	numnodes = CopyLump(LUMP_NODES, dnodes, sizeof(dnode_t));
-	numtexinfo = CopyLump(LUMP_TEXINFO, texinfo, sizeof(texinfo_t));
-	numfaces = CopyLump(LUMP_FACES, dfaces, sizeof(dface_t));
-	numleaffaces = CopyLump(LUMP_LEAFFACES, dleaffaces, sizeof(dleaffaces[0]));
+	nummodels = CopyLump(LUMP_MODELS, dmodels, sizeof(dBspModel_t));
+	numvertexes = CopyLump(LUMP_VERTEXES, dvertexes, sizeof(dBspVertex_t));
+	numplanes = CopyLump(LUMP_PLANES, dplanes, sizeof(dBspPlane_t));
+	numleafs = CopyLump(LUMP_LEAFS, dleafs, sizeof(dBspLeaf_t));
+	numnodes = CopyLump(LUMP_NODES, dnodes, sizeof(dBspNode_t));
+	numtexinfo = CopyLump(LUMP_TEXINFO, texinfo, sizeof(dBspTexinfo_t));
+	numfaces = CopyLump(LUMP_FACES, dfaces, sizeof(dBspFace_t));
 	numleafbrushes = CopyLump(LUMP_LEAFBRUSHES, dleafbrushes, sizeof(dleafbrushes[0]));
 	numsurfedges = CopyLump(LUMP_SURFEDGES, dsurfedges, sizeof(dsurfedges[0]));
-	numedges = CopyLump(LUMP_EDGES, dedges, sizeof(dedge_t));
-	numbrushes = CopyLump(LUMP_BRUSHES, dbrushes, sizeof(dbrush_t));
-	numbrushsides = CopyLump(LUMP_BRUSHSIDES, dbrushsides, sizeof(dbrushside_t));
+	numedges = CopyLump(LUMP_EDGES, dedges, sizeof(dBspEdge_t));
+	numbrushes = CopyLump(LUMP_BRUSHES, dbrushes, sizeof(dBspBrush_t));
+	numbrushsides = CopyLump(LUMP_BRUSHSIDES, dbrushsides, sizeof(dBspBrushSide_t));
 
 	routedatasize = CopyLump(LUMP_ROUTING, droutedata, 1);
 	lightdatasize = CopyLump(LUMP_LIGHTING, dlightdata, 1);
@@ -310,7 +299,7 @@ void LoadBSPFile (const char *filename)
 }
 
 static qFILE bspfile;
-static dheader_t outheader;
+static dBspHeader_t outheader;
 
 /**
  * @brief
@@ -334,7 +323,7 @@ static void AddLump (int lumpnum, void *data, int len)
 void WriteBSPFile (const char *filename)
 {
 	header = &outheader;
-	memset(header, 0, sizeof(dheader_t));
+	memset(header, 0, sizeof(dBspHeader_t));
 
 	SwapBSPFile();
 
@@ -343,21 +332,20 @@ void WriteBSPFile (const char *filename)
 
 	memset(&bspfile, 0, sizeof(qFILE));
 	SafeOpenWrite(filename, &bspfile);
-	SafeWrite(&bspfile, header, sizeof(dheader_t));	/* overwritten later */
+	SafeWrite(&bspfile, header, sizeof(dBspHeader_t));	/* overwritten later */
 
-	AddLump(LUMP_PLANES, dplanes, numplanes*sizeof(dplane_t));
-	AddLump(LUMP_LEAFS, dleafs, numleafs*sizeof(dleaf_t));
-	AddLump(LUMP_VERTEXES, dvertexes, numvertexes*sizeof(dvertex_t));
-	AddLump(LUMP_NODES, dnodes, numnodes*sizeof(dnode_t));
-	AddLump(LUMP_TEXINFO, texinfo, numtexinfo*sizeof(texinfo_t));
-	AddLump(LUMP_FACES, dfaces, numfaces*sizeof(dface_t));
-	AddLump(LUMP_BRUSHES, dbrushes, numbrushes*sizeof(dbrush_t));
-	AddLump(LUMP_BRUSHSIDES, dbrushsides, numbrushsides*sizeof(dbrushside_t));
-	AddLump(LUMP_LEAFFACES, dleaffaces, numleaffaces*sizeof(dleaffaces[0]));
-	AddLump(LUMP_LEAFBRUSHES, dleafbrushes, numleafbrushes*sizeof(dleafbrushes[0]));
-	AddLump(LUMP_SURFEDGES, dsurfedges, numsurfedges*sizeof(dsurfedges[0]));
-	AddLump(LUMP_EDGES, dedges, numedges*sizeof(dedge_t));
-	AddLump(LUMP_MODELS, dmodels, nummodels*sizeof(dmodel_t));
+	AddLump(LUMP_PLANES, dplanes, numplanes * sizeof(dBspPlane_t));
+	AddLump(LUMP_LEAFS, dleafs, numleafs * sizeof(dBspLeaf_t));
+	AddLump(LUMP_VERTEXES, dvertexes, numvertexes * sizeof(dBspVertex_t));
+	AddLump(LUMP_NODES, dnodes, numnodes * sizeof(dBspNode_t));
+	AddLump(LUMP_TEXINFO, texinfo, numtexinfo * sizeof(dBspTexinfo_t));
+	AddLump(LUMP_FACES, dfaces, numfaces * sizeof(dBspFace_t));
+	AddLump(LUMP_BRUSHES, dbrushes, numbrushes * sizeof(dBspBrush_t));
+	AddLump(LUMP_BRUSHSIDES, dbrushsides, numbrushsides * sizeof(dBspBrushSide_t));
+	AddLump(LUMP_LEAFBRUSHES, dleafbrushes, numleafbrushes * sizeof(dleafbrushes[0]));
+	AddLump(LUMP_SURFEDGES, dsurfedges, numsurfedges * sizeof(dsurfedges[0]));
+	AddLump(LUMP_EDGES, dedges, numedges * sizeof(dBspEdge_t));
+	AddLump(LUMP_MODELS, dmodels, nummodels * sizeof(dBspModel_t));
 
 	AddLump(LUMP_LIGHTING, dlightdata, lightdatasize);
 	/* removed LUMP_VISIBILITY and use LUMP_ROUTING */
@@ -373,7 +361,6 @@ void WriteBSPFile (const char *filename)
 	Com_Printf("numfaces: %i\n", numfaces);
 	Com_Printf("numbrushes: %i\n", numbrushes);
 	Com_Printf("numbrushsides: %i\n", numbrushsides);
-	Com_Printf("numleaffaces: %i\n", numleaffaces);
 	Com_Printf("numleafbrushes: %i\n", numleafbrushes);
 	Com_Printf("numsurfedges: %i\n", numsurfedges);
 	Com_Printf("numedges: %i\n", numedges);
@@ -384,7 +371,7 @@ void WriteBSPFile (const char *filename)
 #endif
 
 	fseek(bspfile.f, 0, SEEK_SET);
-	SafeWrite(&bspfile, header, sizeof(dheader_t));
+	SafeWrite(&bspfile, header, sizeof(dBspHeader_t));
 	CloseFile(&bspfile);
 	SwapBSPFile();
 }
@@ -399,35 +386,33 @@ void PrintBSPFileSizes (void)
 		ParseEntities();
 
 	Com_Printf("%5i models       %7i\n"
-		,nummodels, (int)(nummodels*sizeof(dmodel_t)));
+		,nummodels, (int)(nummodels * sizeof(dBspModel_t)));
 	Com_Printf("%5i brushes      %7i\n"
-		,numbrushes, (int)(numbrushes*sizeof(dbrush_t)));
+		,numbrushes, (int)(numbrushes * sizeof(dBspBrush_t)));
 	Com_Printf("%5i brushsides   %7i\n"
-		,numbrushsides, (int)(numbrushsides*sizeof(dbrushside_t)));
+		,numbrushsides, (int)(numbrushsides * sizeof(dBspBrushSide_t)));
 	Com_Printf("%5i planes       %7i\n"
-		,numplanes, (int)(numplanes*sizeof(dplane_t)));
+		,numplanes, (int)(numplanes * sizeof(dBspPlane_t)));
 	Com_Printf("%5i texinfo      %7i\n"
-		,numtexinfo, (int)(numtexinfo*sizeof(texinfo_t)));
+		,numtexinfo, (int)(numtexinfo * sizeof(dBspTexinfo_t)));
 	Com_Printf("%5i entdata      %7i\n", num_entities, entdatasize);
 
 	Com_Printf("\n");
 
 	Com_Printf("%5i vertexes     %7i\n"
-		,numvertexes, (int)(numvertexes*sizeof(dvertex_t)));
+		,numvertexes, (int)(numvertexes * sizeof(dBspVertex_t)));
 	Com_Printf("%5i nodes        %7i\n"
-		,numnodes, (int)(numnodes*sizeof(dnode_t)));
+		,numnodes, (int)(numnodes * sizeof(dBspNode_t)));
 	Com_Printf("%5i faces        %7i\n"
-		,numfaces, (int)(numfaces*sizeof(dface_t)));
+		,numfaces, (int)(numfaces * sizeof(dBspFace_t)));
 	Com_Printf("%5i leafs        %7i\n"
-		,numleafs, (int)(numleafs*sizeof(dleaf_t)));
-	Com_Printf("%5i leaffaces    %7i\n"
-		,numleaffaces, (int)(numleaffaces*sizeof(dleaffaces[0])));
+		,numleafs, (int)(numleafs * sizeof(dBspLeaf_t)));
 	Com_Printf("%5i leafbrushes  %7i\n"
-		,numleafbrushes, (int)(numleafbrushes*sizeof(dleafbrushes[0])));
+		,numleafbrushes, (int)(numleafbrushes * sizeof(dleafbrushes[0])));
 	Com_Printf("%5i surfedges    %7i\n"
-		,numsurfedges, (int)(numsurfedges*sizeof(dsurfedges[0])));
+		,numsurfedges, (int)(numsurfedges * sizeof(dsurfedges[0])));
 	Com_Printf("%5i edges        %7i\n"
-		,numedges, (int)(numedges*sizeof(dedge_t)));
+		,numedges, (int)(numedges * sizeof(dBspEdge_t)));
 	Com_Printf("      lightdata    %7i\n", lightdatasize);
 	Com_Printf("      routedata    %7i\n", routedatasize);
 }

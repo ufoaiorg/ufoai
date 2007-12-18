@@ -326,7 +326,6 @@ static void FixFaceEdges (node_t *node, face_t *f)
 			break;
 	}
 	if (i == f->numpoints) {
-		f->badstartvert = qtrue;
 		c_badstartverts++;
 		base = 0;
 	} else {
@@ -425,7 +424,7 @@ void FreeFace (face_t *f)
  */
 int GetEdge (int v1, int v2, face_t *f)
 {
-	dedge_t *edge;
+	dBspEdge_t *edge;
 	int i;
 
 	c_tryedges++;
@@ -632,7 +631,7 @@ static void SubdivideFace (node_t *node, face_t *f)
 	float mins, maxs;
 	vec_t v;
 	int axis, i;
-	texinfo_t *tex;
+	dBspTexinfo_t *tex;
 	vec3_t temp;
 	vec_t dist;
 	winding_t *w, *frontw, *backw;

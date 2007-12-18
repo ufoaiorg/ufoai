@@ -34,7 +34,7 @@ vec3_t		radiosity[MAX_PATCHES];		/* light leaving a patch */
 vec3_t		illumination[MAX_PATCHES];	/* light arriving at a patch */
 
 vec3_t		face_offset[MAX_MAP_FACES];		/* for rotating bmodels */
-dplane_t	backplanes[MAX_MAP_PLANES];
+dBspPlane_t	backplanes[MAX_MAP_PLANES];
 
 int			fakeplanes;					/* created planes for origin offset */
 
@@ -66,7 +66,7 @@ static void CalcVertexNormals (unsigned int vnum)
 {
 	qboolean	found;
 	int		i, k;
-	dface_t	*face;
+	dBspFace_t	*face;
 	int		*se;
 	int		v;
 	vec3_t	normal;
@@ -119,8 +119,8 @@ static int PointInLeafnum (vec3_t point)
 {
 	int nodenum;
 	vec_t dist;
-	dnode_t *node;
-	dplane_t *plane;
+	dBspNode_t *node;
+	dBspPlane_t *plane;
 
 	nodenum = 0;
 	while (nodenum >= 0) {
@@ -137,11 +137,11 @@ static int PointInLeafnum (vec3_t point)
 }
 
 
-dleaf_t *Rad_PointInLeaf (vec3_t point)
+dBspLeaf_t *Rad_PointInLeaf (vec3_t point)
 {
 	int num;
 
-	num = PointInLeafnum (point);
+	num = PointInLeafnum(point);
 	return &dleafs[num];
 }
 
@@ -156,7 +156,7 @@ static void MakeTransfers (unsigned int i)
 	int			itrans;
 	patch_t		*patch, *patch2;
 	float		total;
-	dplane_t	plane;
+	dBspPlane_t	plane;
 	vec3_t		origin;
 	float		transfers[MAX_PATCHES], *all_transfers;
 	int			s;

@@ -53,7 +53,7 @@ static void R_ModLoadLighting (lump_t * l)
 
 static void R_ModLoadVertexes (lump_t * l)
 {
-	dvertex_t *in;
+	dBspVertex_t *in;
 	mBspVertex_t *out;
 	int i, count;
 
@@ -91,7 +91,7 @@ static float RadiusFromBounds (vec3_t mins, vec3_t maxs)
  */
 static void R_ModLoadSubmodels (lump_t * l)
 {
-	dmodel_t *in;
+	dBspModel_t *in;
 	mBspHeader_t *out;
 	int i, j, count;
 
@@ -121,7 +121,7 @@ static void R_ModLoadSubmodels (lump_t * l)
 
 static void R_ModLoadEdges (lump_t * l)
 {
-	dedge_t *in;
+	dBspEdge_t *in;
 	mBspEdge_t *out;
 	int i, count;
 
@@ -146,7 +146,7 @@ static void R_ModLoadEdges (lump_t * l)
  */
 static void R_ModLoadTexinfo (lump_t * l)
 {
-	texinfo_t *in;
+	dBspTexinfo_t *in;
 	mBspTexInfo_t *out, *step;
 	int i, j, count;
 	char name[MAX_QPATH];
@@ -242,7 +242,7 @@ static void CalcSurfaceExtents (mBspSurface_t * s, model_t* mod)
 
 static void R_ModLoadFaces (lump_t * l)
 {
-	dface_t *in;
+	dBspFace_t *in;
 	mBspSurface_t *out;
 	int i, count, surfnum;
 	int planenum, side;
@@ -321,7 +321,7 @@ static void R_ModSetParent (mBspNode_t * node, mBspNode_t * parent)
 static void R_ModLoadNodes (lump_t * l)
 {
 	int i, j, count, p;
-	dnode_t *in;
+	dBspNode_t *in;
 	mBspNode_t *out;
 
 	in = (void *) (mod_base + l->fileofs);
@@ -366,7 +366,7 @@ static void R_ModLoadNodes (lump_t * l)
 
 static void R_ModLoadLeafs (lump_t * l)
 {
-	dleaf_t *in;
+	dBspLeaf_t *in;
 	mBspLeaf_t *out;
 	int i, j, count, p;
 
@@ -389,35 +389,7 @@ static void R_ModLoadLeafs (lump_t * l)
 		p = LittleLong(in->contentFlags);
 		out->contents = p;
 
-		out->cluster = LittleShort(in->cluster);
 		out->area = LittleShort(in->area);
-
-		out->firstmarksurface = loadmodel->bsp.marksurfaces + LittleShort(in->firstleafface);
-		out->nummarksurfaces = LittleShort(in->numleaffaces);
-	}
-}
-
-static void R_ModLoadMarksurfaces (lump_t * l)
-{
-	int i, j, count;
-	short *in;
-	mBspSurface_t **out;
-
-	in = (void *) (mod_base + l->fileofs);
-	if (l->filelen % sizeof(*in))
-		Sys_Error("R_ModLoadMarksurfaces: funny lump size in %s", loadmodel->name);
-	count = l->filelen / sizeof(*in);
-	out = VID_TagAlloc(vid_modelPool, count * sizeof(*out), 0);
-	Com_DPrintf(DEBUG_RENDERER, "...marksurfaces: %i\n", count);
-
-	loadmodel->bsp.marksurfaces = out;
-	loadmodel->bsp.nummarksurfaces = count;
-
-	for (i = 0; i < count; i++) {
-		j = LittleShort(in[i]);
-		if (j < 0 || j >= loadmodel->bsp.numsurfaces)
-			Sys_Error("R_ModParseMarksurfaces: bad surface number");
-		out[i] = loadmodel->bsp.surfaces + j;
 	}
 }
 
@@ -450,7 +422,7 @@ static void R_ModLoadPlanes (lump_t * l)
 {
 	int i, j;
 	cBspPlane_t *out;
-	dplane_t *in;
+	dBspPlane_t *in;
 	int count;
 	int bits;
 
@@ -505,7 +477,7 @@ static void R_ModAddMapTile (const char *name, int sX, int sY, int sZ)
 {
 	int i;
 	unsigned *buffer;
-	dheader_t *header;
+	dBspHeader_t *header;
 	mBspHeader_t *bm;
 
 	/* get new model */
@@ -533,7 +505,7 @@ static void R_ModAddMapTile (const char *name, int sX, int sY, int sZ)
 	VectorSet(shift, sX * UNIT_SIZE, sY * UNIT_SIZE, sZ * UNIT_SIZE);
 
 	/* test version */
-	header = (dheader_t *) buffer;
+	header = (dBspHeader_t *) buffer;
 	i = LittleLong(header->version);
 	if (i != BSPVERSION)
 		Sys_Error("R_ModAddMapTile: %s has wrong version number (%i should be %i)", loadmodel->name, i, BSPVERSION);
@@ -541,7 +513,7 @@ static void R_ModAddMapTile (const char *name, int sX, int sY, int sZ)
 	/* swap all the lumps */
 	mod_base = (byte *) header;
 
-	for (i = 0; i < (int)sizeof(dheader_t) / 4; i++)
+	for (i = 0; i < (int)sizeof(dBspHeader_t) / 4; i++)
 		((int *) header)[i] = LittleLong(((int *) header)[i]);
 
 	/* load into heap */
@@ -553,7 +525,6 @@ static void R_ModAddMapTile (const char *name, int sX, int sY, int sZ)
 	R_ModLoadTexinfo(&header->lumps[LUMP_TEXINFO]);
 	R_ModLoadFaces(&header->lumps[LUMP_FACES]);
 	R_ModShiftTile();
-	R_ModLoadMarksurfaces(&header->lumps[LUMP_LEAFFACES]);
 	R_ModLoadLeafs(&header->lumps[LUMP_LEAFS]);
 	R_ModLoadNodes(&header->lumps[LUMP_NODES]);
 	R_ModLoadSubmodels(&header->lumps[LUMP_MODELS]);

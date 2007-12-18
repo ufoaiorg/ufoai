@@ -259,7 +259,7 @@ MAP LOADING
  */
 static void CMod_LoadSubmodels (lump_t * l, vec3_t shift)
 {
-	dmodel_t *in;
+	dBspModel_t *in;
 	cBspModel_t *out;
 	int i, j, count;
 
@@ -267,9 +267,9 @@ static void CMod_LoadSubmodels (lump_t * l, vec3_t shift)
 		Com_Error(ERR_DROP, "CMod_LoadSubmodels: No lump given");
 
 	in = (void *) (cmod_base + l->fileofs);
-	if (l->filelen % sizeof(dmodel_t))
-		Com_Error(ERR_DROP, "CMod_LoadSubmodels: funny lump size (%i => "UFO_SIZE_T")", l->filelen, sizeof(dmodel_t));
-	count = l->filelen / sizeof(dmodel_t);
+	if (l->filelen % sizeof(dBspModel_t))
+		Com_Error(ERR_DROP, "CMod_LoadSubmodels: funny lump size (%i => "UFO_SIZE_T")", l->filelen, sizeof(dBspModel_t));
+	count = l->filelen / sizeof(dBspModel_t);
 	Com_DPrintf(DEBUG_ENGINE, "%c...submodels: %i\n", 1, count);
 
 	if (count < 1)
@@ -305,7 +305,7 @@ static void CMod_LoadSubmodels (lump_t * l, vec3_t shift)
  */
 static void CMod_LoadSurfaces (lump_t * l, vec3_t shift)
 {
-	texinfo_t *in;
+	dBspTexinfo_t *in;
 	cBspSurface_t *out;
 	int i, count;
 
@@ -313,9 +313,9 @@ static void CMod_LoadSurfaces (lump_t * l, vec3_t shift)
 		Com_Error(ERR_DROP, "CMod_LoadSurfaces: No lump given");
 
 	in = (void *) (cmod_base + l->fileofs);
-	if (l->filelen % sizeof(texinfo_t))
+	if (l->filelen % sizeof(dBspTexinfo_t))
 		Com_Error(ERR_DROP, "CMod_LoadSurfaces: funny lump size: %i", l->filelen);
-	count = l->filelen / sizeof(texinfo_t);
+	count = l->filelen / sizeof(dBspTexinfo_t);
 	Com_DPrintf(DEBUG_ENGINE, "%c...surfaces: %i\n", 1, count);
 
 	if (count < 1)
@@ -342,7 +342,7 @@ static void CMod_LoadSurfaces (lump_t * l, vec3_t shift)
  */
 static void CMod_LoadNodes (lump_t * l, vec3_t shift)
 {
-	dnode_t *in;
+	dBspNode_t *in;
 	int child;
 	cBspNode_t *out;
 	int i, j, count;
@@ -351,9 +351,9 @@ static void CMod_LoadNodes (lump_t * l, vec3_t shift)
 		Com_Error(ERR_DROP, "CMod_LoadNodes: No lump given");
 
 	in = (void *) (cmod_base + l->fileofs);
-	if (l->filelen % sizeof(dnode_t))
+	if (l->filelen % sizeof(dBspNode_t))
 		Com_Error(ERR_DROP, "CMod_LoadNodes: funny lump size: %i", l->filelen);
-	count = l->filelen / sizeof(dnode_t);
+	count = l->filelen / sizeof(dBspNode_t);
 	Com_DPrintf(DEBUG_ENGINE, "%c...nodes: %i\n", 1, count);
 
 	if (count < 1)
@@ -394,7 +394,7 @@ static void CMod_LoadNodes (lump_t * l, vec3_t shift)
  */
 static void CMod_LoadBrushes (lump_t * l, vec3_t shift)
 {
-	dbrush_t *in;
+	dBspBrush_t *in;
 	cBspBrush_t *out;
 	int i, count;
 
@@ -402,9 +402,9 @@ static void CMod_LoadBrushes (lump_t * l, vec3_t shift)
 		Com_Error(ERR_DROP, "CMod_LoadBrushes: No lump given");
 
 	in = (void *) (cmod_base + l->fileofs);
-	if (l->filelen % sizeof(dbrush_t))
+	if (l->filelen % sizeof(dBspBrush_t))
 		Com_Error(ERR_DROP, "CMod_LoadBrushes: funny lump size: %i", l->filelen);
-	count = l->filelen / sizeof(dbrush_t);
+	count = l->filelen / sizeof(dBspBrush_t);
 	Com_DPrintf(DEBUG_ENGINE, "%c...brushes: %i\n", 1, count);
 
 	if (count > MAX_MAP_BRUSHES)
@@ -431,16 +431,16 @@ static void CMod_LoadLeafs (lump_t * l, vec3_t shift)
 {
 	int i;
 	cBspLeaf_t *out;
-	dleaf_t *in;
+	dBspLeaf_t *in;
 	int count;
 
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadLeafs: No lump given");
 
 	in = (void *) (cmod_base + l->fileofs);
-	if (l->filelen % sizeof(dleaf_t))
+	if (l->filelen % sizeof(dBspLeaf_t))
 		Com_Error(ERR_DROP, "CMod_LoadLeafs: funny lump size: %i", l->filelen);
-	count = l->filelen / sizeof(dleaf_t);
+	count = l->filelen / sizeof(dBspLeaf_t);
 	Com_DPrintf(DEBUG_ENGINE, "%c...leafs: %i\n", 1, count);
 
 	if (count < 1)
@@ -484,7 +484,7 @@ static void CMod_LoadPlanes (lump_t * l, vec3_t shift)
 {
 	int i, j;
 	cBspPlane_t *out;
-	dplane_t *in;
+	dBspPlane_t *in;
 	int count;
 	int bits;
 
@@ -492,9 +492,9 @@ static void CMod_LoadPlanes (lump_t * l, vec3_t shift)
 		Com_Error(ERR_DROP, "CMod_LoadPlanes: No lump given");
 
 	in = (void *) (cmod_base + l->fileofs);
-	if (l->filelen % sizeof(dplane_t))
+	if (l->filelen % sizeof(dBspPlane_t))
 		Com_Error(ERR_DROP, "CMod_LoadPlanes: funny lump size: %i", l->filelen);
-	count = l->filelen / sizeof(dplane_t);
+	count = l->filelen / sizeof(dBspPlane_t);
 	Com_DPrintf(DEBUG_ENGINE, "%c...planes: %i\n", 1, count);
 
 	if (count < 1)
@@ -571,7 +571,7 @@ static void CMod_LoadBrushSides (lump_t * l, vec3_t shift)
 {
 	int i, j;
 	cBspBrushSide_t *out;
-	dbrushside_t *in;
+	dBspBrushSide_t *in;
 	int count;
 	int num;
 
@@ -579,9 +579,9 @@ static void CMod_LoadBrushSides (lump_t * l, vec3_t shift)
 		Com_Error(ERR_DROP, "CMod_LoadBrushSides: No lump given");
 
 	in = (void *) (cmod_base + l->fileofs);
-	if (l->filelen % sizeof(dbrushside_t))
+	if (l->filelen % sizeof(dBspBrushSide_t))
 		Com_Error(ERR_DROP, "CMod_LoadBrushSides: funny lump size: %i", l->filelen);
-	count = l->filelen / sizeof(dbrushside_t);
+	count = l->filelen / sizeof(dBspBrushSide_t);
 	Com_DPrintf(DEBUG_ENGINE, "%c...brushsides: %i\n", 1, count);
 
 	/* need to save space for box planes */
@@ -1232,7 +1232,7 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
 	unsigned *buf;
 	unsigned int i;
 	int length;
-	dheader_t header;
+	dBspHeader_t header;
 	/* use for random map assembly for shifting origins and so on */
 	vec3_t shift = {0.0f, 0.0f, 0.0f};
 
@@ -1251,8 +1251,8 @@ static unsigned CM_AddMapTile (const char *name, int sX, int sY, byte sZ)
 
 	checksum = LittleLong(Com_BlockChecksum(buf, length));
 
-	header = *(dheader_t *) buf;
-	for (i = 0; i < sizeof(dheader_t) / 4; i++)
+	header = *(dBspHeader_t *) buf;
+	for (i = 0; i < sizeof(dBspHeader_t) / 4; i++)
 		((int *) &header)[i] = LittleLong(((int *) &header)[i]);
 
 	if (header.version != BSPVERSION)

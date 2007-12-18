@@ -265,11 +265,11 @@ typedef struct miptex_s {
 /** little-endian "IBSP" */
 #define IDBSPHEADER	(('P'<<24)+('S'<<16)+('B'<<8)+'I')
 
-#define BSPVERSION	71
+#define BSPVERSION	72
 
 
 /** upper design bounds
- * leaffaces, leafbrushes, planes, and verts are still bounded by
+ * leafbrushes, planes, and verts are still bounded by
  * 16 bit short limits
  */
 #define MAX_MAP_MODELS		1024
@@ -284,7 +284,6 @@ typedef struct miptex_s {
 #define MAX_MAP_LEAFS		65536
 #define MAX_MAP_VERTS		65536
 #define MAX_MAP_FACES		65536
-#define MAX_MAP_LEAFFACES	65536
 #define MAX_MAP_LEAFBRUSHES 65536
 #define MAX_MAP_PORTALS		65536
 #define MAX_MAP_EDGES		128000
@@ -313,32 +312,34 @@ typedef struct {
 #define LUMP_FACES			6
 #define LUMP_LIGHTING		7
 #define LUMP_LEAFS			8
-#define LUMP_LEAFFACES		9
-#define LUMP_LEAFBRUSHES	10
-#define LUMP_EDGES			11
-#define LUMP_SURFEDGES		12
-#define LUMP_MODELS			13
-#define LUMP_BRUSHES		14
-#define LUMP_BRUSHSIDES		15
-#define HEADER_LUMPS		19
+#define LUMP_LEAFBRUSHES	9
+#define LUMP_EDGES			10
+#define LUMP_SURFEDGES		11
+#define LUMP_MODELS			12
+#define LUMP_BRUSHES		13
+#define LUMP_BRUSHSIDES		14
+#define HEADER_LUMPS		16
 
 typedef struct {
 	int ident;
 	int version;
 	lump_t lumps[HEADER_LUMPS];
-} dheader_t;
+} dBspHeader_t;
 
 typedef struct {
 	float mins[3], maxs[3];
 	float origin[3];			/**< for sounds or lights */
 	int headnode;
 	int firstface, numfaces;	/**< submodels just draw faces without walking the bsp tree */
-} dmodel_t;
+} dBspModel_t;
 
 typedef struct {
 	float point[3];
-} dvertex_t;
+} dBspVertex_t;
 
+#define	SIDE_FRONT		0
+#define	SIDE_ON			2
+#define	SIDE_BACK		1
 
 /** 0-2 are axial planes */
 #define PLANE_X			0
@@ -357,7 +358,7 @@ typedef struct {
 	float normal[3];
 	float dist;
 	int type;		/**< PLANE_X - PLANE_ANYZ ?remove? trivial to regenerate */
-} dplane_t;
+} dBspPlane_t;
 
 typedef struct {
 	int planenum;
@@ -366,7 +367,7 @@ typedef struct {
 	short maxs[3];
 	unsigned short firstface;
 	unsigned short numfaces;	/**< counting both sides */
-} dnode_t;
+} dBspNode_t;
 
 
 typedef struct texinfo_s {
@@ -375,7 +376,7 @@ typedef struct texinfo_s {
 	int value;					/**< light emission, etc */
 	char texture[32];			/**< texture name */
 	int nexttexinfo;			/**< for animations, -1 = end of chain */
-} texinfo_t;
+} dBspTexinfo_t;
 
 
 /**
@@ -384,7 +385,7 @@ typedef struct texinfo_s {
  */
 typedef struct {
 	unsigned short v[2];		/**< vertex numbers */
-} dedge_t;
+} dBspEdge_t;
 
 #define	MAXLIGHTMAPS	4
 typedef struct {
@@ -398,34 +399,30 @@ typedef struct {
 	/** lighting info */
 	byte styles[MAXLIGHTMAPS];
 	int lightofs;				/**< start of [numstyles*surfsize] samples */
-} dface_t;
+} dBspFace_t;
 
 typedef struct {
 	int contentFlags;				/**< OR of all brushes */
 
-	short cluster;
 	short area;
 
 	short mins[3];				/**< for frustum culling */
 	short maxs[3];
 
-	unsigned short firstleafface;
-	unsigned short numleaffaces;
-
 	unsigned short firstleafbrush;
 	unsigned short numleafbrushes;
-} dleaf_t;
+} dBspLeaf_t;
 
 typedef struct {
 	unsigned short planenum;	/**< facing out of the leaf */
 	short texinfo;
-} dbrushside_t;
+} dBspBrushSide_t;
 
 typedef struct {
 	int firstside;
 	int numsides;
 	int contentFlags;				/**< OR of all brushes */
-} dbrush_t;
+} dBspBrush_t;
 
 #define ANGLE_UP	-1
 #define ANGLE_DOWN	-2

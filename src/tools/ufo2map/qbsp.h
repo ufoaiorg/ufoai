@@ -104,10 +104,8 @@ typedef struct face_s {
 	int				texinfo;
 	int				planenum;
 	int				contentFlags;	/**< faces in different contents can't merge */
-	int				outputnumber;
 	winding_t		*w;
 	int				numpoints;
-	qboolean		badstartvert;	/**< tjunctions cannot be fixed without a midpoint vertex */
 	int				vertexnums[MAXEDGES];
 } face_t;
 
@@ -137,9 +135,6 @@ typedef struct node_s {
 	/** leafs only */
 	bspbrush_t		*brushlist;	/**< fragments of all brushes in this leaf */
 	int				contentFlags;	/**< OR of all brush contents */
-	int				occupied;	/**< 1 or greater can reach entity */
-	entity_t		*occupant;	/**< for leak file testing */
-	int				cluster;	/**< for portalfile writing */
 	int				area;		/**< for areaportals */
 	struct portal_s	*portals;	/**< also on nodes during construction */
 } node_t;

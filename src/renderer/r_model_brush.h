@@ -47,18 +47,11 @@ typedef struct mBspHeader_s {
 	int firstface, numfaces;
 } mBspHeader_t;
 
-
-#define	SIDE_FRONT	0
-#define	SIDE_BACK	1
-#define	SIDE_ON		2
-
-
 #define	SURF_PLANEBACK		2
 #define SURF_DRAWTURB		0x10
 
 typedef struct mBspEdge_s {
 	unsigned short v[2];
-	unsigned int cachededgeoffset;
 } mBspEdge_t;
 
 typedef struct mBspTexInfo_s {
@@ -129,11 +122,7 @@ typedef struct mBspLeaf_s {
 	struct mnode_s *parent;
 
 	/** leaf specific */
-	int cluster;
 	int area;
-
-	mBspSurface_t **firstmarksurface;
-	int nummarksurfaces;
 } mBspLeaf_t;
 
 /** @brief brush model */
@@ -168,9 +157,6 @@ typedef struct mBspModel_s {
 
 	int numsurfedges;
 	int *surfedges;
-
-	int nummarksurfaces;
-	mBspSurface_t **marksurfaces;
 
 	byte lightquant;
 	byte *lightdata;

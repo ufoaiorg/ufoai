@@ -57,9 +57,9 @@ static vec3_t tr_end;
 static void MakeTnode (int nodenum)
 {
 	tnode_t *t;
-	dplane_t *plane;
+	dBspPlane_t *plane;
 	int i, contentFlags;
-	dnode_t *node;
+	dBspNode_t *node;
 
 	t = tnode_p++;
 
@@ -92,7 +92,7 @@ static void BuildTnode_r (int node)
 {
 	assert(node < numnodes);
 	if (dnodes[node].planenum == -1) {
-		dnode_t *n;
+		dBspNode_t *n;
 		tnode_t *t;
 		vec3_t c0maxs, c1mins;
 		int i;

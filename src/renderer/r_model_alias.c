@@ -138,7 +138,7 @@ void R_ModBuildTriangleNeighbors (mAliasNeighbors_t *neighbors, dtriangle_t *tri
 
 	/* generate edges information (for shadow volumes) */
 	/* NOTE: We do this with the original vertices not the reordered onces since reordering them
-	* duplicates vertices and we only compare indices */
+	 * duplicates vertices and we only compare indices */
 	for (i = 0; i < numtris; i++) {
 		for (j = 0; j < 3; j++) {
 			if (neighbors[i].n[j] == -1)
