@@ -116,7 +116,7 @@ void R_DrawMaterialSurfaces (mBspSurface_t *surfs)
 
 	qglEnable(GL_POLYGON_OFFSET_FILL);  /* all stages use depth offset */
 
-	for (surf = surfs; surf; surf = surf->material_next) {
+	for (surf = surfs; surf; surf = surf->materialchain) {
 		m = &surf->texinfo->image->material;
 
 		R_UpdateMaterial(m);

@@ -275,11 +275,12 @@ static void R_DrawLightmapPolyChain (const mBspPoly_t *p)
 /**
  * @brief This routine takes all the given light mapped surfaces in the world and
  * blends them into the framebuffer.
- * Only used for inline bmodels or used when no multitexturing is supported
+ * @note Only used when no multitexturing is supported
  */
 void R_BlendLightmaps (void)
 {
 	int i;
+	mBspSurface_t *surf;
 
 	if (!rTiles[0]->bsp.lightdata)
 		return;
@@ -297,7 +298,6 @@ void R_BlendLightmaps (void)
 	/* render static lightmaps */
 	for (i = 1; i < MAX_LIGHTMAPS; i++) {
 		if (gl_lms.lightmap_surfaces[i]) {
-			mBspSurface_t *surf;
 			if (currentmodel == rTiles[0])
 				c_visible_lightmaps++;
 			R_Bind(r_state.lightmap_texnum + i);

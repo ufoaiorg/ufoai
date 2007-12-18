@@ -93,8 +93,8 @@ typedef struct mBspSurface_s {
 
 	mBspPoly_t *polys;			/* multiple if warped */
 	struct mBspSurface_s *texturechain;
-	struct mBspSurface_s *lightmapchain;
-	struct mBspSurface_s *material_next;
+	struct mBspSurface_s *lightmapchain;	/**< only used when multitexturing is not supported */
+	struct mBspSurface_s *materialchain;	/**< material surface chain */
 
 	mBspTexInfo_t *texinfo;
 

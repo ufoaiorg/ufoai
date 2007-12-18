@@ -108,8 +108,11 @@ static void R_RenderBrushPoly (mBspSurface_t * fa)
 	} else
 		R_DrawPoly(fa, 0.0f);
 
-	fa->lightmapchain = gl_lms.lightmap_surfaces[fa->lightmaptexturenum];
-	gl_lms.lightmap_surfaces[fa->lightmaptexturenum] = fa;
+	if (!qglMultiTexCoord2fARB) {
+		/* link the lightmap surfaces only when we have to blend them without multitexturing */
+		fa->lightmapchain = gl_lms.lightmap_surfaces[fa->lightmaptexturenum];
+		gl_lms.lightmap_surfaces[fa->lightmaptexturenum] = fa;
+	}
 }
 
 
@@ -407,7 +410,7 @@ static void R_RecursiveWorldNode (mBspNode_t * node)
 		}
 		/* add to the material chain if appropriate */
 		if (surf->texinfo->image->material.flags & STAGE_RENDER) {
-			surf->material_next = r_material_surfaces;
+			surf->materialchain = r_material_surfaces;
 			r_material_surfaces = surf;
 		}
 	}
