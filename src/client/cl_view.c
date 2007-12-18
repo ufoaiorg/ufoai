@@ -37,8 +37,6 @@ int map_maxlevel_base = 0;
 sun_t map_sun;
 
 /* static vars */
-static cvar_t *cl_stats;
-
 static int r_numentities;
 static entity_t r_entities[MAX_ENTITIES];
 
@@ -465,8 +463,6 @@ void V_RenderView (void)
 
 	/* render the frame */
 	R_RenderFrame();
-	if (cl_stats->integer)
-		Com_Printf("ent:%4i\n", r_numentities);
 
 	if (cls.state == ca_sequence)
 		CL_Sequence2D();
@@ -500,6 +496,4 @@ void V_Init (void)
 	Cmd_AddCommand("shaderlist", CL_ShaderList_f, NULL);
 
 	cursor = Cvar_Get("cursor", "1", CVAR_ARCHIVE, "Which cursor should be shown - 0-9");
-
-	cl_stats = Cvar_Get("cl_stats", "0", 0, NULL);
 }
