@@ -37,8 +37,6 @@ static char *glerrortexend;
 static image_t gltextures[MAX_GLTEXTURES];
 static int numgltextures;
 
-static byte intensitytable[256];
-
 int gl_solid_format = GL_RGB;
 int gl_alpha_format = GL_RGBA;
 
@@ -1287,13 +1285,6 @@ void R_InitImages (void)
 		Cvar_Set("r_intensity", "1");
 
 	r_state.inverse_intensity = 1 / r_intensity->value;
-
-	for (i = 0; i < 256; i++) {
-		j = i * r_intensity->value;
-		if (j > 255)
-			j = 255;
-		intensitytable[i] = j;
-	}
 }
 
 /**
