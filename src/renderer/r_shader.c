@@ -113,6 +113,7 @@ void R_ShutdownShaders (void)
 		}
 		s->fpid = s->vpid = -1;
 	}
+	R_CheckError();
 }
 
 /**
@@ -160,6 +161,7 @@ int SH_LoadProgram_ARB_FP (const char *path)
 	}
 	FS_FreeFile(fbuf);
 	Com_DPrintf(DEBUG_RENDERER, "...loaded fragment shader %s (pid: %i)\n", path, fpid);
+	R_CheckError();
 	return fpid;
 }
 
@@ -209,6 +211,7 @@ int SH_LoadProgram_ARB_VP (const char *path)
 	}
 	FS_FreeFile(fbuf);
 	Com_DPrintf(DEBUG_RENDERER, "...loaded vertex shader %s (pid: %i)\n", path, vpid);
+	R_CheckError();
 	return vpid;
 }
 
@@ -256,6 +259,7 @@ int SH_LoadProgram_GLSL (shader_t* s)
 
 	FS_FreeFile(fbuf);
 	Com_DPrintf(DEBUG_RENDERER, "...loaded glsl shader %s (pid: %i)\n", s->filename, s->glslpid);
+	R_CheckError();
 	return s->glslpid;
 }
 
@@ -272,6 +276,7 @@ static void SH_UseProgram_ARB_FP (int fpid)
 	} else {
 		qglDisable(GL_FRAGMENT_PROGRAM_ARB);
 	}
+	R_CheckError();
 }
 
 /**
@@ -287,6 +292,7 @@ static void SH_UseProgram_ARB_VP (int vpid)
 	} else {
 		qglDisable(GL_VERTEX_PROGRAM_ARB);
 	}
+	R_CheckError();
 }
 
 /**
@@ -298,16 +304,11 @@ static void SH_UseProgram_ARB_VP (int vpid)
  */
 void SH_UseShader (shader_t * shader, qboolean deactivate)
 {
-	image_t *gl = NULL, *normal, *distort;
-
 	/* no shaders supported - @todo glsl */
 	if (!r_state.arb_fragment_program)
 		return;
 
 	assert(shader);
-
-	if (!deactivate)
-		gl = NULL; /* FIXME */
 
 	if (shader->glslpid > 0) {
 		if (deactivate)
@@ -317,56 +318,14 @@ void SH_UseShader (shader_t * shader, qboolean deactivate)
 	} else if (shader->fpid > 0) {
 		if (deactivate) {
 			SH_UseProgram_ARB_FP(0);
-			if (shader->distort) {
-				qglActiveTextureARB(GL_TEXTURE1_ARB);
-				qglDisable(GL_TEXTURE_2D);
-				qglActiveTextureARB(GL_TEXTURE0_ARB);
-			}
 		} else {
-			assert(gl);
-			qglActiveTextureARB(GL_TEXTURE0_ARB);
-			qglBindTexture(GL_TEXTURE_2D, gl->texnum);
-			R_CheckError();
-			if (shader->distort) {
-				distort = R_FindImage(shader->distort, it_pic);
-				qglActiveTextureARB(GL_TEXTURE1_ARB);
-				qglBindTexture(GL_TEXTURE_2D, distort->texnum);
-				R_CheckError();
-				qglEnable(GL_TEXTURE_2D);
-			}
-			if (shader->normal) {
-				normal = R_FindImage(shader->normal, it_pic);
-			}
 			SH_UseProgram_ARB_FP(shader->fpid);
 		}
 	} else if (shader->vpid > 0) {
 		if (deactivate) {
 			SH_UseProgram_ARB_VP(0);
-			if (shader->distort) {
-				qglActiveTextureARB(GL_TEXTURE1_ARB);
-				qglDisable(GL_TEXTURE_2D);
-				qglActiveTextureARB(GL_TEXTURE0_ARB);
-			}
 		} else {
-			assert(gl);
-			qglActiveTextureARB(GL_TEXTURE0_ARB);
-			qglBindTexture(GL_TEXTURE_2D, gl->texnum);
-			R_CheckError();
-			if (shader->distort) {
-				distort = R_FindImage(shader->distort, it_pic);
-				if (distort) {
-					qglActiveTextureARB(GL_TEXTURE1_ARB);
-					qglBindTexture(GL_TEXTURE_2D, distort->texnum);
-					R_CheckError();
-					qglEnable(GL_TEXTURE_2D);
-				}
-			}
-			if (shader->normal) {
-				normal = R_FindImage(shader->normal, it_pic);
-			}
 			SH_UseProgram_ARB_VP(shader->vpid);
 		}
-	} else {
-		return;
 	}
 }

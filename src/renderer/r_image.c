@@ -139,9 +139,8 @@ void R_ImageList_f (void)
 			break;
 		}
 
-		Com_Printf(" %3i %3i RGB: %s - shader: %s\n",
-				image->upload_width, image->upload_height, image->name,
-				(image->shader ? image->shader->name : "NONE"));
+		Com_Printf(" %3i %3i RGB: %s\n",
+				image->upload_width, image->upload_height, image->name);
 	}
 	Com_Printf("Total textures: %i (max textures: %i)\n", numgltextures, MAX_GLTEXTURES);
 	Com_Printf("Total texel count (not counting mipmaps): %i\n", texels);

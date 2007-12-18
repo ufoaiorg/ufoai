@@ -471,8 +471,8 @@ void R_DrawFill (int x, int y, int w, int h, int align, const vec4_t color)
 
 static float lastQ;
 /**
- * @brief Draw the day and night images of a flat geoscape - multitexture feature is used to blend the images
- * @note If no multitexture is available only the day map is drawn
+ * @brief Draw the day and night images of a flat geoscape
+ * multitexture feature is used to blend the images
  */
 void R_DrawDayAndNight (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map)
 {
@@ -501,10 +501,6 @@ void R_DrawDayAndNight (int x, int y, int w, int h, float p, float q, float cx, 
 	qglVertex2f(nx, ny + nh);
 	qglEnd();
 
-	/* test for multitexture and env_combine support */
-	if (!qglSelectTextureSGIS && !qglActiveTextureARB)
-		return;
-
 	gl = R_FindImage(va("pics/menu/%s_night", map), it_wrappic);
 	/* maybe the campaign map doesn't have a night image */
 	if (!gl)
@@ -513,10 +509,10 @@ void R_DrawDayAndNight (int x, int y, int w, int h, float p, float q, float cx, 
 	/* init combiner */
 	RSTATE_ENABLE_BLEND
 
-	R_SelectTexture(gl_texture0);
+	R_SelectTexture(GL_TEXTURE0_ARB);
 	R_Bind(gl->texnum);
 
-	R_SelectTexture(gl_texture1);
+	R_SelectTexture(GL_TEXTURE1_ARB);
 	if (!DaN || lastQ != q) {
 		R_CalcDayAndNight(q);
 		lastQ = q;
@@ -529,23 +525,23 @@ void R_DrawDayAndNight (int x, int y, int w, int h, float p, float q, float cx, 
 
 	/* draw night image */
 	qglBegin(GL_QUADS);
-	qglMultiTexCoord2fARB(gl_texture0, cx - iz, cy - iz);
-	qglMultiTexCoord2fARB(gl_texture1, p + cx - iz, cy - iz);
+	qglMultiTexCoord2f(GL_TEXTURE0_ARB, cx - iz, cy - iz);
+	qglMultiTexCoord2f(GL_TEXTURE1_ARB, p + cx - iz, cy - iz);
 	qglVertex2f(nx, ny);
-	qglMultiTexCoord2fARB(gl_texture0, cx + iz, cy - iz);
-	qglMultiTexCoord2fARB(gl_texture1, p + cx + iz, cy - iz);
+	qglMultiTexCoord2f(GL_TEXTURE0_ARB, cx + iz, cy - iz);
+	qglMultiTexCoord2f(GL_TEXTURE1_ARB, p + cx + iz, cy - iz);
 	qglVertex2f(nx + nw, ny);
-	qglMultiTexCoord2fARB(gl_texture0, cx + iz, cy + iz);
-	qglMultiTexCoord2fARB(gl_texture1, p + cx + iz, cy + iz);
+	qglMultiTexCoord2f(GL_TEXTURE0_ARB, cx + iz, cy + iz);
+	qglMultiTexCoord2f(GL_TEXTURE1_ARB, p + cx + iz, cy + iz);
 	qglVertex2f(nx + nw, ny + nh);
-	qglMultiTexCoord2fARB(gl_texture0, cx - iz, cy + iz);
-	qglMultiTexCoord2fARB(gl_texture1, p + cx - iz, cy + iz);
+	qglMultiTexCoord2f(GL_TEXTURE0_ARB, cx - iz, cy + iz);
+	qglMultiTexCoord2f(GL_TEXTURE1_ARB, p + cx - iz, cy + iz);
 	qglVertex2f(nx, ny + nh);
 	qglEnd();
 
 	/* reset mode */
 	qglDisable(GL_TEXTURE_2D);
-	R_SelectTexture(gl_texture0);
+	R_SelectTexture(GL_TEXTURE0_ARB);
 
 	RSTATE_DISABLE_BLEND
 	if (r_drawclouds->integer)

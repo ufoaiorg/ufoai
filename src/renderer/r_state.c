@@ -157,24 +157,21 @@ void R_SetupGL2D (void)
 
 void R_EnableMultitexture (qboolean enable)
 {
-	if (!qglSelectTextureSGIS && !qglActiveTextureARB)
-		return;
-
 	if (enable == r_state.multitexture)
 		return;
 
 	r_state.multitexture = enable;
 
 	if (enable) {
-		R_SelectTexture(gl_texture1);
+		R_SelectTexture(GL_TEXTURE1_ARB);
 		qglEnable(GL_TEXTURE_2D);
 		R_TexEnv(GL_REPLACE);
 	} else {
-		R_SelectTexture(gl_texture1);
+		R_SelectTexture(GL_TEXTURE1_ARB);
 		qglDisable(GL_TEXTURE_2D);
 		R_TexEnv(GL_REPLACE);
 	}
-	R_SelectTexture(gl_texture0);
+	R_SelectTexture(GL_TEXTURE0_ARB);
 	R_TexEnv(GL_REPLACE);
 }
 
@@ -182,10 +179,7 @@ void R_SelectTexture (GLenum texture)
 {
 	int tmu;
 
-	if (!qglSelectTextureSGIS && !qglActiveTextureARB)
-		return;
-
-	if (texture == gl_texture0)
+	if (texture == GL_TEXTURE0_ARB)
 		tmu = 0;
 	else
 		tmu = 1;
@@ -195,15 +189,10 @@ void R_SelectTexture (GLenum texture)
 
 	r_state.currenttmu = tmu;
 
-	if (qglSelectTextureSGIS) {
-		qglSelectTextureSGIS(texture);
-		R_CheckError();
-	} else if (qglActiveTextureARB) {
-		qglActiveTextureARB(texture);
-		R_CheckError();
-		qglClientActiveTextureARB(texture);
-		R_CheckError();
-	}
+	qglActiveTexture(texture);
+	R_CheckError();
+	qglClientActiveTexture(texture);
+	R_CheckError();
 }
 
 void R_TexEnv (GLenum mode)
@@ -229,7 +218,7 @@ void R_Bind (int texnum)
 void R_MBind (GLenum target, int texnum)
 {
 	R_SelectTexture(target);
-	if (target == gl_texture0) {
+	if (target == GL_TEXTURE0_ARB) {
 		if (r_state.currenttextures[0] == texnum)
 			return;
 	} else {

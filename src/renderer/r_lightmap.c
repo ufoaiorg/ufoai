@@ -26,8 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_error.h"
 #include "r_lightmap.h"
 
-static int c_visible_lightmaps;
-
 gllightmapstate_t gl_lms;
 
 static float s_blocklights[BLOCK_WIDTH * BLOCK_HEIGHT * LIGHTMAP_BYTES];
@@ -253,70 +251,6 @@ void R_CreateSurfaceLightmap (mBspSurface_t * surf)
 }
 
 /**
- * @brief Function to blend the lightmap without multitexturing
- * @sa R_DrawPolyChain
- */
-static void R_DrawLightmapPolyChain (const mBspPoly_t *p)
-{
-	for (; p != 0; p = p->chain) {
-		const float *v;
-		int j;
-
-		qglBegin(GL_POLYGON);
-		v = p->verts[0];
-		for (j = 0; j < p->numverts; j++, v += VERTEXSIZE) {
-			qglTexCoord2f(v[5], v[6]);
-			qglVertex3fv(v);
-		}
-		qglEnd();
-	}
-}
-
-/**
- * @brief This routine takes all the given light mapped surfaces in the world and
- * blends them into the framebuffer.
- * @note Only used when no multitexturing is supported
- */
-void R_BlendLightmaps (const model_t* mod)
-{
-	int i;
-	mBspSurface_t *surf;
-
-	if (!rTiles[0]->bsp.lightdata)
-		return;
-
-	/* don't bother writing Z */
-	qglDepthMask(GL_FALSE);
-
-	/* set the appropriate blending mode for the lightmaps */
-	RSTATE_ENABLE_BLEND
-	R_BlendFunc(GL_ZERO, GL_SRC_COLOR);
-
-	if (mod == rTiles[0])
-		c_visible_lightmaps = 0;
-
-	/* render static lightmaps */
-	for (i = 1; i < MAX_LIGHTMAPS; i++) {
-		if (gl_lms.lightmap_surfaces[i]) {
-			if (mod == rTiles[0])
-				c_visible_lightmaps++;
-			R_Bind(r_state.lightmap_texnum + i);
-
-			for (surf = gl_lms.lightmap_surfaces[i]; surf; surf = surf->lightmapchain) {
-				if (surf->polys)
-					R_DrawLightmapPolyChain(surf->polys);
-			}
-		}
-	}
-
-	/* restore state */
-	RSTATE_DISABLE_BLEND
-	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	qglDepthMask(GL_TRUE);
-}
-
-
-/**
  * @sa R_ModBeginLoading
  * @sa R_EndBuildingLightmaps
  */
@@ -327,7 +261,7 @@ void R_BeginBuildingLightmaps (void)
 	memset(gl_lms.allocated, 0, sizeof(gl_lms.allocated));
 
 	R_EnableMultitexture(qtrue);
-	R_SelectTexture(gl_texture1);
+	R_SelectTexture(GL_TEXTURE1_ARB);
 
 	if (!r_state.lightmap_texnum)
 		r_state.lightmap_texnum = TEXNUM_LIGHTMAPS;

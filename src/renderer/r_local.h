@@ -93,7 +93,6 @@ extern cvar_t *r_materials;
 extern cvar_t *r_screenshot;
 extern cvar_t *r_screenshot_jpeg_quality;
 
-extern cvar_t *r_ext_multitexture;
 extern cvar_t *r_ext_combine;
 extern cvar_t *r_ext_texture_compression;
 extern cvar_t *r_ext_s3tc_compression;

@@ -73,8 +73,8 @@ static void R_DrawPolyChain (const mBspSurface_t *surf, const float scroll)
 		v = p->verts[0];
 		qglBegin(GL_POLYGON);
 		for (i = 0; i < nv; i++, v += VERTEXSIZE) {
-			qglMultiTexCoord2fARB(gl_texture0, (v[3] + scroll), v[4]);
-			qglMultiTexCoord2fARB(gl_texture1, v[5], v[6]);
+			qglMultiTexCoord2f(GL_TEXTURE0_ARB, (v[3] + scroll), v[4]);
+			qglMultiTexCoord2f(GL_TEXTURE1_ARB, v[5], v[6]);
 			qglVertex3fv(v);
 		}
 		qglEnd();
@@ -108,12 +108,6 @@ static void R_RenderBrushPoly (mBspSurface_t *surf)
 		R_DrawPoly(surf, scroll);
 	} else
 		R_DrawPoly(surf, 0.0f);
-
-	if (!qglMultiTexCoord2fARB) {
-		/* link the lightmap surfaces only when we have to blend them without multitexturing */
-		surf->lightmapchain = gl_lms.lightmap_surfaces[surf->lightmaptexturenum];
-		gl_lms.lightmap_surfaces[surf->lightmaptexturenum] = surf;
-	}
 }
 
 
@@ -171,8 +165,6 @@ void R_DrawAlphaSurfaces (mBspSurface_t *list)
 
 /**
  * @brief Draw the lightmapped surface
- * @note If multitexturing is not supported this function will only draw the
- * surface without any lightmap
  * @sa R_RenderBrushPoly
  * @sa R_DrawPolyChain
  * @sa R_DrawWorld
@@ -181,20 +173,13 @@ static void R_DrawSurface (mBspSurface_t *surf)
 {
 	unsigned lmtex = surf->lightmaptexturenum;
 
-	/* no multitexturing supported - draw the poly now and blend the lightmap
-	 * later in R_DrawWorld */
-	if (!qglMultiTexCoord2fARB) {
-		R_RenderBrushPoly(surf);
-		return;
-	}
-
 	if (surf->texinfo->flags & SURF_ALPHATEST)
 		RSTATE_ENABLE_ALPHATEST
 
 	c_brush_polys++;
 
-	R_MBind(gl_texture0, surf->texinfo->image->texnum);
-	R_MBind(gl_texture1, r_state.lightmap_texnum + lmtex);
+	R_MBind(GL_TEXTURE0_ARB, surf->texinfo->image->texnum);
+	R_MBind(GL_TEXTURE1_ARB, r_state.lightmap_texnum + lmtex);
 
 	if (surf->texinfo->flags & SURF_FLOWING) {
 		float scroll;
@@ -269,10 +254,7 @@ static void R_DrawInlineBrushModel (entity_t *e, model_t *mod)
 		}
 	}
 
-	if (!(e->flags & RF_TRANSLUCENT)) {
-		if (!qglMultiTexCoord2fARB)
-			R_BlendLightmaps(mod);
-	} else {
+	if (e->flags & RF_TRANSLUCENT) {
 		R_ColorBlend(NULL);
 		R_TexEnv(GL_REPLACE);
 	}
@@ -331,9 +313,9 @@ void R_DrawBrushModel (entity_t * e)
 	e->angles[2] = -e->angles[2];	/* stupid quake bug */
 
 	R_EnableMultitexture(qtrue);
-	R_SelectTexture(gl_texture0);
+	R_SelectTexture(GL_TEXTURE0_ARB);
 	R_TexEnv(GL_REPLACE);
-	R_SelectTexture(gl_texture1);
+	R_SelectTexture(GL_TEXTURE1_ARB);
 	R_TexEnv(GL_MODULATE);
 
 	R_DrawInlineBrushModel(e, currentmodel);
@@ -433,26 +415,21 @@ static void R_DrawWorld (mBspNode_t * nodes)
 	R_Color(NULL);
 	memset(gl_lms.lightmap_surfaces, 0, sizeof(gl_lms.lightmap_surfaces));
 
-	if (qglMultiTexCoord2fARB) {
-		R_EnableMultitexture(qtrue);
+	R_EnableMultitexture(qtrue);
 
-		R_SelectTexture(gl_texture0);
-		R_TexEnv(GL_REPLACE);
-		R_SelectTexture(gl_texture1);
+	R_SelectTexture(GL_TEXTURE0_ARB);
+	R_TexEnv(GL_REPLACE);
+	R_SelectTexture(GL_TEXTURE1_ARB);
 
-		if (r_config.envCombine) {
-			R_TexEnv(r_config.envCombine);
-			qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, r_intensity->value);
-		} else {
-			R_TexEnv(GL_MODULATE);
-		}
-
-		R_RecursiveWorldNode(nodes);
-		R_EnableMultitexture(qfalse);
+	if (r_config.envCombine) {
+		R_TexEnv(r_config.envCombine);
+		qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, r_intensity->value);
 	} else {
-		R_RecursiveWorldNode(nodes);
-		R_BlendLightmaps(currentmodel);
+		R_TexEnv(GL_MODULATE);
 	}
+
+	R_RecursiveWorldNode(nodes);
+	R_EnableMultitexture(qfalse);
 }
 
 

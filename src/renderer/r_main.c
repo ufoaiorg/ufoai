@@ -25,8 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 #include "r_error.h"
 
-GLenum gl_texture0, gl_texture1, gl_texture2, gl_texture3;
-
 refdef_t refdef;
 
 rconfig_t r_config;
@@ -62,7 +60,6 @@ cvar_t *r_texture_lod;			/* lod_bias */
 cvar_t *r_screenshot;
 cvar_t *r_screenshot_jpeg_quality;
 
-cvar_t *r_ext_multitexture;
 cvar_t *r_ext_combine;
 cvar_t *r_ext_texture_compression;
 cvar_t *r_ext_s3tc_compression;
@@ -620,7 +617,6 @@ static void R_Register (void)
 	r_showbox = Cvar_Get("r_showbox", "0", CVAR_ARCHIVE, "Shows model bounding box");
 	r_intensity = Cvar_Get("r_intensity", "2", CVAR_ARCHIVE, NULL);
 
-	r_ext_multitexture = Cvar_Get("r_ext_multitexture", "1", CVAR_ARCHIVE, NULL);
 	r_ext_combine = Cvar_Get("r_ext_combine", "1", CVAR_ARCHIVE, NULL);
 	r_ext_texture_compression = Cvar_Get("r_ext_texture_compression", "0", CVAR_ARCHIVE, NULL);
 	r_ext_s3tc_compression = Cvar_Get("r_ext_s3tc_compression", "1", CVAR_ARCHIVE, NULL);
@@ -687,21 +683,6 @@ static void R_InitExtension (void)
 	int size;
 	GLenum err;
 
-	if (strstr(r_config.extensions_string, "GL_ARB_multitexture")) {
-		if (r_ext_multitexture->integer) {
-			Com_Printf("using GL_ARB_multitexture\n");
-			qglMultiTexCoord2fARB = SDL_GL_GetProcAddress("glMultiTexCoord2fARB");
-			qglActiveTextureARB = SDL_GL_GetProcAddress("glActiveTextureARB");
-			qglClientActiveTextureARB = SDL_GL_GetProcAddress("glClientActiveTextureARB");
-			gl_texture0 = GL_TEXTURE0_ARB;
-			gl_texture1 = GL_TEXTURE1_ARB;
-			gl_texture2 = GL_TEXTURE2_ARB;
-			gl_texture3 = GL_TEXTURE3_ARB;
-		} else
-			Com_Printf("ignoring GL_ARB_multitexture\n");
-	} else
-		Com_Printf("GL_ARB_multitexture not found\n");
-
 	if (strstr(r_config.extensions_string, "GL_EXT_texture_env_combine") || strstr(r_config.extensions_string, "GL_ARB_texture_env_combine")) {
 		if (r_ext_combine->integer) {
 			Com_Printf("using GL_EXT_texture_env_combine\n");
@@ -714,22 +695,6 @@ static void R_InitExtension (void)
 		Com_Printf("GL_EXT_texture_env_combine not found\n");
 		r_config.envCombine = 0;
 	}
-
-	if (strstr(r_config.extensions_string, "GL_SGIS_multitexture")) {
-		if (qglActiveTextureARB)
-			Com_Printf("GL_SGIS_multitexture deprecated in favor of ARB_multitexture\n");
-		else if (r_ext_multitexture->integer) {
-			Com_Printf("using GL_SGIS_multitexture\n");
-			qglMultiTexCoord2fARB = SDL_GL_GetProcAddress("glMTexCoord2fSGIS");
-			qglSelectTextureSGIS = SDL_GL_GetProcAddress("glSelectTextureSGIS");
-			gl_texture0 = GL_TEXTURE0_SGIS;
-			gl_texture1 = GL_TEXTURE1_SGIS;
-			gl_texture2 = GL_TEXTURE2_SGIS;
-			gl_texture3 = GL_TEXTURE3_SGIS;
-		} else
-			Com_Printf("ignoring GL_SGIS_multitexture\n");
-	} else
-		Com_Printf("GL_SGIS_multitexture not found\n");
 
 	if (strstr(r_config.extensions_string, "GL_ARB_texture_compression")) {
 		if (r_ext_texture_compression->integer) {

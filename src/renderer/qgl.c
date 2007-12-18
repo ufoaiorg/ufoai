@@ -386,12 +386,11 @@ void (APIENTRY * qglUnlockArraysEXT) (void);
 void (APIENTRY * qglPointParameterfEXT) (GLenum param, GLfloat value);
 void (APIENTRY * qglPointParameterfvEXT) (GLenum param, const GLfloat *value);
 void (APIENTRY * qglColorTableEXT)(int, int, int, int, int, const void *);
-void (APIENTRY * qglSelectTextureSGIS) (GLenum);
-void (APIENTRY * qglMultiTexCoord2fARB) (GLenum, GLfloat, GLfloat);
-void (APIENTRY * qglActiveTextureARB) (GLenum);
-void (APIENTRY * qglClientActiveTextureARB) (GLenum);
-void (APIENTRY * qglMultiTexCoord3fARB) (GLenum, GLfloat, GLfloat, GLfloat);
-void (APIENTRY * qglMultiTexCoord3fvARB) (GLenum, GLfloat *);
+void (APIENTRY * qglMultiTexCoord2f) (GLenum, GLfloat, GLfloat);
+void (APIENTRY * qglActiveTexture) (GLenum);
+void (APIENTRY * qglClientActiveTexture) (GLenum);
+void (APIENTRY * qglMultiTexCoord3f) (GLenum, GLfloat, GLfloat, GLfloat);
+void (APIENTRY * qglMultiTexCoord3fv) (GLenum, GLfloat *);
 
 void (APIENTRY * qglActiveStencilFaceEXT) (GLenum face);
 void (APIENTRY * qglStencilOpSeparateATI) (GLenum face, GLenum sfail, GLenum dpfail, GLenum dppass);
@@ -1151,16 +1150,15 @@ void QR_Link (void)
 	qglVertex4sv                 = SDL_GL_GetProcAddress("glVertex4sv");
 	qglVertexPointer             = SDL_GL_GetProcAddress("glVertexPointer");
 	qglViewport                  = SDL_GL_GetProcAddress("glViewport");
+	qglMultiTexCoord2f           = SDL_GL_GetProcAddress("glMultiTexCoord2f");
+	qglActiveTexture             = SDL_GL_GetProcAddress("glActiveTexture");
+	qglClientActiveTexture       = SDL_GL_GetProcAddress("glClientActiveTexture");
+
 	qglLockArraysEXT             = NULL;
 	qglUnlockArraysEXT           = NULL;
 	qglPointParameterfEXT        = NULL;
 	qglPointParameterfvEXT       = NULL;
-	qglSelectTextureSGIS         = NULL;
-	qglMultiTexCoord2fARB         = NULL;
-	qglActiveTextureARB          = NULL;
-	qglMultiTexCoord3fARB        = NULL;
-	qglMultiTexCoord3fvARB       = NULL;
-	qglClientActiveTextureARB    = NULL;
+
 	qglActiveStencilFaceEXT      = NULL;
 	qglStencilOpSeparateATI      = NULL;
 	qglStencilFuncSeparateATI    = NULL;

@@ -59,7 +59,6 @@ typedef struct image_s {
 	struct mBspSurface_s *texturechain;	/**< for sort-by-texture world drawing */
 	GLuint texnum;						/**< gl texture binding */
 	qboolean has_alpha;
-	shader_t *shader;					/**< pointer to shader from refdef_t */
 	material_t material;
 } image_t;
 

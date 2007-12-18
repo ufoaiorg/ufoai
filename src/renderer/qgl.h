@@ -380,13 +380,11 @@ extern void (APIENTRY * qglPointParameterfvEXT) (GLenum param, const GLfloat * v
 extern void (APIENTRY * qglLockArraysEXT) (int, int);
 extern void (APIENTRY * qglUnlockArraysEXT) (void);
 
-extern void (APIENTRY * qglSelectTextureSGIS) (GLenum);
-
-extern void (APIENTRY * qglMultiTexCoord2fARB) (GLenum, GLfloat, GLfloat);
-extern void (APIENTRY * qglActiveTextureARB) (GLenum);
-extern void (APIENTRY * qglClientActiveTextureARB) (GLenum);
-extern void (APIENTRY * qglMultiTexCoord3fARB) (GLenum, GLfloat, GLfloat, GLfloat);
-extern void (APIENTRY * qglMultiTexCoord3fvARB) (GLenum, GLfloat *);
+extern void (APIENTRY * qglMultiTexCoord2f) (GLenum, GLfloat, GLfloat);
+extern void (APIENTRY * qglActiveTexture) (GLenum);
+extern void (APIENTRY * qglClientActiveTexture) (GLenum);
+extern void (APIENTRY * qglMultiTexCoord3f) (GLenum, GLfloat, GLfloat, GLfloat);
+extern void (APIENTRY * qglMultiTexCoord3fv) (GLenum, GLfloat *);
 
 /* arb shader stuff */
 extern void (APIENTRY * qglProgramStringARB) (GLenum, GLenum, GLsizei, const GLvoid *);
@@ -427,14 +425,5 @@ extern void (APIENTRY * qglDeleteProgram) (GLuint id);
 extern void (APIENTRY * qglActiveStencilFaceEXT) (GLenum face);
 extern void (APIENTRY * qglStencilOpSeparateATI) (GLenum face, GLenum sfail, GLenum dpfail, GLenum dppass);
 extern void (APIENTRY * qglStencilFuncSeparateATI) (GLenum frontfunc, GLenum backfunc, GLint red, GLuint mask);
-
-/* extension constants */
-
-extern GLenum gl_texture0, gl_texture1, gl_texture2, gl_texture3;
-
-#define GL_TEXTURE0_SGIS					0x835E
-#define GL_TEXTURE1_SGIS					0x835F
-#define GL_TEXTURE2_SGIS					0x8360
-#define GL_TEXTURE3_SGIS					0x8361
 
 #endif							/* __QR_H__ */
