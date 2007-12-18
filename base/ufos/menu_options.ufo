@@ -285,18 +285,6 @@ menu options_video
 		align	ur
 	}
 
-	string multitex_str
-	{
-		string	"_Multitexturing:"
-		pos		"500 365"
-	}
-	checkbox multitex
-	{
-		cvar	"*cvar r_ext_multitexture"
-		pos		"840 365"
-		align	ur
-	}
-
 	string ptlweather_str
 	{
 		string	"_Weather effects:"
