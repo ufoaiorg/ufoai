@@ -871,6 +871,34 @@ static void R_InitExtension (void)
 }
 
 /**
+ * @brief We need at least opengl version 1.2.1
+ */
+static inline void R_EnforceVersion (void)
+{
+	int maj, min, rel;
+
+	sscanf(r_config.version_string, "%d.%d.%d ", &maj, &min, &rel);
+
+	if (maj > 1)
+		return;
+
+	if (maj < 1)
+		Com_Error(ERR_FATAL, "OpenGL version %s is less than 1.2.1", r_config.version_string);
+
+	if (min > 2)
+		return;
+
+	if (min < 2)
+		Com_Error(ERR_FATAL, "OpenGL Version %s is less than 1.2.1", r_config.version_string);
+
+	if (rel > 1)
+		return;
+
+	if (rel < 1)
+		Com_Error(ERR_FATAL, "OpenGL version %s is less than 1.2.1", r_config.version_string);
+}
+
+/**
  * @brief Checks whether we have hardware acceleration
  */
 static inline void R_VerifyDriver (void)
@@ -918,6 +946,7 @@ qboolean R_Init (void)
 	Com_Printf("GL_EXTENSIONS: %s\n", r_config.extensions_string);
 
 	R_VerifyDriver();
+	R_EnforceVersion();
 
 	R_InitExtension();
 	R_SetDefaultState();

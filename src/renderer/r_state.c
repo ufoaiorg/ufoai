@@ -239,8 +239,6 @@ void R_MBind (GLenum target, int texnum)
 	R_Bind(texnum);
 }
 
-/*============================================================================*/
-
 typedef struct {
 	const char *name;
 	int mode;
