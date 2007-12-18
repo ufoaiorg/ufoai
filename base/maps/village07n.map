@@ -19056,6 +19056,7 @@
 "classname" "misc_model"
 "origin" "288 -688 19.5"
 "model" "models/objects/city/trash/trash.md2"
+"spawnflags" "255"
 }
 // entity 228
 {
