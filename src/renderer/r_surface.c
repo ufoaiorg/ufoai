@@ -24,37 +24,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "r_local.h"
+#include "r_lightmap.h"
 #include "r_error.h"
 
 static vec3_t modelorg;			/* relative to viewpoint */
 
 mBspSurface_t *r_alpha_surfaces;
 mBspSurface_t *r_material_surfaces;
-
-#define LIGHTMAP_BYTES 4
-
-#define	BLOCK_WIDTH		256
-#define	BLOCK_HEIGHT	256
-
-#define	MAX_LIGHTMAPS	256
-
-static int c_visible_lightmaps;
-
-#define GL_LIGHTMAP_FORMAT GL_RGBA
-
-typedef struct {
-	int current_lightmap_texture;
-
-	mBspSurface_t *lightmap_surfaces[MAX_LIGHTMAPS];
-
-	int allocated[BLOCK_WIDTH];
-
-	/* the lightmap texture data needs to be kept in */
-	/* main memory so texsubimage can update properly */
-	byte lightmap_buffer[LIGHTMAP_BYTES * BLOCK_WIDTH * BLOCK_HEIGHT];
-} gllightmapstate_t;
-
-static gllightmapstate_t gl_lms;
 
 /*
 =============================================================
@@ -84,7 +60,6 @@ static void R_DrawPoly (const mBspSurface_t * fa, const float scroll)
  * @brief Used for flowing and non-flowing surfaces
  * @param[in] scroll != 0 for SURF_FLOWING
  * @sa R_DrawSurface
- * @sa R_DrawPolyChainOffset
  */
 static void R_DrawPolyChain (const mBspSurface_t *surf, const float scroll)
 {
@@ -103,68 +78,6 @@ static void R_DrawPolyChain (const mBspSurface_t *surf, const float scroll)
 		}
 		qglEnd();
 	}
-}
-
-/**
- * @sa R_DrawPolyChain
- */
-static void R_DrawPolyChainOffset (const mBspPoly_t * p, const float soffset, const float toffset)
-{
-	for (; p != 0; p = p->chain) {
-		const float *v;
-		int j;
-
-		qglBegin(GL_POLYGON);
-		v = p->verts[0];
-		for (j = 0; j < p->numverts; j++, v += VERTEXSIZE) {
-			qglTexCoord2f(v[5] - soffset, v[6] - toffset);
-			qglVertex3fv(v);
-		}
-		qglEnd();
-	}
-}
-
-/**
- * @brief This routine takes all the given light mapped surfaces in the world and
- * blends them into the framebuffer.
- * Only used for inline bmodels or used when no multitexturing is supported
- */
-static void R_BlendLightmaps (void)
-{
-	int i;
-
-	if (!rTiles[0]->bsp.lightdata)
-		return;
-
-	/* don't bother writing Z */
-	qglDepthMask(GL_FALSE);
-
-	/* set the appropriate blending mode for the lightmaps */
-	RSTATE_ENABLE_BLEND
-	R_BlendFunc(GL_ZERO, GL_SRC_COLOR);
-
-	if (currentmodel == rTiles[0])
-		c_visible_lightmaps = 0;
-
-	/* render static lightmaps */
-	for (i = 1; i < MAX_LIGHTMAPS; i++) {
-		if (gl_lms.lightmap_surfaces[i]) {
-			mBspSurface_t *surf;
-			if (currentmodel == rTiles[0])
-				c_visible_lightmaps++;
-			R_Bind(r_state.lightmap_texnum + i);
-
-			for (surf = gl_lms.lightmap_surfaces[i]; surf; surf = surf->lightmapchain) {
-				if (surf->polys)
-					R_DrawPolyChainOffset(surf->polys, 0, 0);
-			}
-		}
-	}
-
-	/* restore state */
-	RSTATE_DISABLE_BLEND
-	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	qglDepthMask(GL_TRUE);
 }
 
 static void R_RenderBrushPoly (mBspSurface_t * fa)
@@ -426,6 +339,7 @@ void R_DrawBrushModel (entity_t * e)
 	R_EnableMultitexture(qfalse);
 
 	qglPopMatrix();
+	R_CheckError();
 }
 
 
@@ -540,7 +454,6 @@ static void R_DrawWorld (mBspNode_t * nodes)
 		}
 
 		R_RecursiveWorldNode(nodes);
-
 		R_EnableMultitexture(qfalse);
 	} else {
 		R_RecursiveWorldNode(nodes);
@@ -605,68 +518,6 @@ void R_DrawLevelBrushes (void)
 	}
 }
 
-
-
-/*
-=============================================================================
-LIGHTMAP ALLOCATION
-=============================================================================
-*/
-
-static void LM_InitBlock (void)
-{
-	memset(gl_lms.allocated, 0, sizeof(gl_lms.allocated));
-}
-
-static void LM_UploadBlock (void)
-{
-	R_Bind(r_state.lightmap_texnum + gl_lms.current_lightmap_texture);
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	R_CheckError();
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	R_CheckError();
-
-	qglTexImage2D(GL_TEXTURE_2D, 0, gl_solid_format, BLOCK_WIDTH, BLOCK_HEIGHT, 0, GL_LIGHTMAP_FORMAT, GL_UNSIGNED_BYTE, gl_lms.lightmap_buffer);
-	R_CheckError();
-	if (++gl_lms.current_lightmap_texture == MAX_LIGHTMAPS)
-		Com_Error(ERR_DROP, "LM_UploadBlock() - MAX_LIGHTMAPS exceeded\n");
-}
-
-/**
- * @brief returns a texture number and the position inside it
- */
-static qboolean LM_AllocBlock (int w, int h, int *x, int *y)
-{
-	int i, j;
-	int best, best2;
-
-	best = BLOCK_HEIGHT;
-
-	for (i = 0; i < BLOCK_WIDTH - w; i++) {
-		best2 = 0;
-
-		for (j = 0; j < w; j++) {
-			if (gl_lms.allocated[i + j] >= best)
-				break;
-			if (gl_lms.allocated[i + j] > best2)
-				best2 = gl_lms.allocated[i + j];
-		}
-		/* this is a valid spot */
-		if (j == w) {
-			*x = i;
-			*y = best = best2;
-		}
-	}
-
-	if (best + h > BLOCK_HEIGHT)
-		return qfalse;
-
-	for (i = 0; i < w; i++)
-		gl_lms.allocated[*x + i] = best + h;
-
-	return qtrue;
-}
-
 void R_BuildPolygonFromSurface (mBspSurface_t * fa, int shift[3])
 {
 	int i, lindex, lnumverts;
@@ -729,73 +580,4 @@ void R_BuildPolygonFromSurface (mBspSurface_t * fa, int shift[3])
 	}
 
 	poly->numverts = lnumverts;
-}
-
-/**
- * @sa R_ModLoadFaces
- */
-void R_CreateSurfaceLightmap (mBspSurface_t * surf)
-{
-	int smax, tmax;
-	byte *base;
-
-	if (surf->flags & SURF_DRAWTURB)
-		return;
-
-	smax = (surf->extents[0] >> surf->lquant) + 1;
-	tmax = (surf->extents[1] >> surf->lquant) + 1;
-
-	if (!LM_AllocBlock(smax, tmax, &surf->light_s, &surf->light_t)) {
-		LM_UploadBlock();
-		LM_InitBlock();
-		if (!LM_AllocBlock(smax, tmax, &surf->light_s, &surf->light_t))
-			Sys_Error("Consecutive calls to LM_AllocBlock(%d,%d) failed (lquant: %i)\n", smax, tmax, surf->lquant);
-	}
-
-	surf->lightmaptexturenum = gl_lms.current_lightmap_texture;
-
-	base = gl_lms.lightmap_buffer;
-	base += (surf->light_t * BLOCK_WIDTH + surf->light_s) * LIGHTMAP_BYTES;
-
-	R_BuildLightMap(surf, base, BLOCK_WIDTH * LIGHTMAP_BYTES);
-}
-
-
-/**
- * @sa R_ModBeginLoading
- * @sa R_EndBuildingLightmaps
- */
-void R_BeginBuildingLightmaps (void)
-{
-	unsigned dummy[BLOCK_WIDTH * BLOCK_HEIGHT];
-
-	memset(gl_lms.allocated, 0, sizeof(gl_lms.allocated));
-
-	R_EnableMultitexture(qtrue);
-	R_SelectTexture(gl_texture1);
-
-	if (!r_state.lightmap_texnum)
-		r_state.lightmap_texnum = TEXNUM_LIGHTMAPS;
-
-	gl_lms.current_lightmap_texture = 1;
-
-	/* initialize the dynamic lightmap texture */
-	R_Bind(r_state.lightmap_texnum + 0);
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	R_CheckError();
-	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	R_CheckError();
-	qglTexImage2D(GL_TEXTURE_2D, 0, gl_solid_format, BLOCK_WIDTH, BLOCK_HEIGHT, 0, GL_LIGHTMAP_FORMAT, GL_UNSIGNED_BYTE, dummy);
-	R_CheckError();
-}
-
-/**
- * @sa R_BeginBuildingLightmaps
- * @sa R_ModBeginLoading
- */
-void R_EndBuildingLightmaps (void)
-{
-	LM_UploadBlock();
-	R_EnableMultitexture(qfalse);
-/*	Com_Printf("lightmaps: %i\n", gl_lms.current_lightmap_texture); */
 }
