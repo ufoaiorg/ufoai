@@ -397,6 +397,9 @@
 		<Unit filename="..\..\src\renderer\r_anim.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\renderer\r_bsp.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\renderer\r_draw.c">
 			<Option compilerVar="CC" />
 		</Unit>

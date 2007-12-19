@@ -36,21 +36,32 @@ static const byte gridtexture[8][8] = {
 	{1, 1, 1, 1, 1, 1, 1, 1},
 };
 
+#define MISC_TEXTURE_SIZE 16
 void R_InitMiscTexture (void)
 {
 	int x, y;
-	byte data[8][8][4];
+	byte data[MISC_TEXTURE_SIZE][MISC_TEXTURE_SIZE][4];
 
 	/* also use this for bad textures, but without alpha */
-	for (x = 0; x < 8; x++) {
-		for (y = 0; y < 8; y++) {
+	for (x = 0; x < MISC_TEXTURE_SIZE/2; x++) {
+		for (y = 0; y < MISC_TEXTURE_SIZE/2; y++) {
 			data[y][x][0] = gridtexture[x][y] * 255;
 			data[y][x][1] = 0;
 			data[y][x][2] = 0;
 			data[y][x][3] = 255;
 		}
 	}
-	r_notexture = R_LoadPic("***r_notexture***", (byte *) data, 8, 8, it_wall, 32);
+	r_notexture = R_LoadPic("***r_notexture***", (byte *) data, MISC_TEXTURE_SIZE/2, MISC_TEXTURE_SIZE/2, it_wall, 32);
+
+	for (x = 0; x < MISC_TEXTURE_SIZE; x++) {
+		for (y = 0; y < MISC_TEXTURE_SIZE; y++) {
+			data[y][x][0] = rand() % 255;
+			data[y][x][1] = rand() % 255;
+			data[y][x][2] = rand() % 48;
+			data[y][x][3] = rand() % 48;
+		}
+	}
+	r_warptexture = R_LoadPic("***r_warptexture***", (byte *)data, MISC_TEXTURE_SIZE, MISC_TEXTURE_SIZE, it_pic, 32);
 
 	/* empty pic in the texture chain for cinematic frames */
 	R_LoadPic("***cinematic***", NULL, VID_NORM_WIDTH, VID_NORM_HEIGHT, it_pic, 32);

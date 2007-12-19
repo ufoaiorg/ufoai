@@ -31,6 +31,7 @@ rconfig_t r_config;
 rstate_t r_state;
 
 image_t *r_notexture;			/* use for bad textures */
+image_t *r_warptexture;
 
 cBspPlane_t frustum[4];
 
@@ -56,10 +57,10 @@ cvar_t *r_isometric;
 cvar_t *r_lerpmodels;
 cvar_t *r_anisotropic;
 cvar_t *r_texture_lod;			/* lod_bias */
-
+cvar_t *r_shader;
 cvar_t *r_screenshot;
 cvar_t *r_screenshot_jpeg_quality;
-
+cvar_t *r_lightmap;
 cvar_t *r_ext_combine;
 cvar_t *r_ext_texture_compression;
 cvar_t *r_ext_s3tc_compression;
@@ -192,7 +193,7 @@ static float *R_CalcTransform (entity_t * e)
 		/* tag trafo */
 		if (e->tagent->model && e->tagent->model->alias.tagdata) {
 			dtag_t *taghdr;
-			char *name;
+			const char *name;
 			float *tag;
 			float interpolated[16];
 
@@ -419,7 +420,6 @@ static void R_SetupFrame (void)
 	if (refdef.rdflags & RDF_NOWORLDMODEL) {
 		qglEnable(GL_SCISSOR_TEST);
 		qglScissor(refdef.x, viddef.height - refdef.height - refdef.y, refdef.width, refdef.height);
-		R_CheckError();
 		qglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		R_CheckError();
 		qglDisable(GL_SCISSOR_TEST);
@@ -524,10 +524,22 @@ void R_RenderFrame (void)
 	/* draw brushes on current worldlevel */
 	R_DrawLevelBrushes();
 
+	R_DrawOpaqueSurfaces(r_opaque_surfaces);
+
+	R_DrawOpaqueWarpSurfaces(r_opaque_warp_surfaces);
+
 	/* draw entities like cursor box and models */
 	R_DrawEntities();
 
+	R_EnableBlend(qtrue);
+
 	R_DrawAlphaSurfaces(r_alpha_surfaces);
+
+	R_DrawAlphaWarpSurfaces(r_alpha_warp_surfaces);
+
+	R_DrawMaterialSurfaces(r_material_surfaces);
+
+	R_EnableBlend(qfalse);
 
 	/* leave wire mode again */
 	if (r_wire->integer)
@@ -588,7 +600,7 @@ static void R_Register (void)
 	r_bitdepth = Cvar_Get("r_bitdepth", "24", CVAR_ARCHIVE, "16 or 24 - bitdepth of the display");
 	r_stencilsize = Cvar_Get("r_stencilsize", "1", CVAR_ARCHIVE, NULL);
 	r_colordepth = Cvar_Get("r_colordepth", "8", CVAR_ARCHIVE, "8 for 24 bit display depth - 4 for 16 bit");
-
+	r_shader = Cvar_Get("r_shader", "1", CVAR_ARCHIVE, "Activates or deactivates shaders");
 	r_screenshot = Cvar_Get("r_screenshot", "jpg", CVAR_ARCHIVE, "png, jpg or tga are valid screenshot formats");
 	r_screenshot_jpeg_quality = Cvar_Get("r_screenshot_jpeg_quality", "75", CVAR_ARCHIVE, "jpeg quality in percent for jpeg screenshots");
 
@@ -606,7 +618,7 @@ static void R_Register (void)
 	r_wire = Cvar_Get("r_wire", "0", 0, "Draw the scene in wireframe mode");
 	r_showbox = Cvar_Get("r_showbox", "0", CVAR_ARCHIVE, "Shows model bounding box");
 	r_intensity = Cvar_Get("r_intensity", "2", CVAR_ARCHIVE, NULL);
-
+	r_lightmap = Cvar_Get("r_lightmap", "0", 0, "Draw only the lightmap");
 	r_ext_combine = Cvar_Get("r_ext_combine", "1", CVAR_ARCHIVE, NULL);
 	r_ext_texture_compression = Cvar_Get("r_ext_texture_compression", "0", CVAR_ARCHIVE, NULL);
 	r_ext_s3tc_compression = Cvar_Get("r_ext_s3tc_compression", "1", CVAR_ARCHIVE, NULL);
@@ -897,7 +909,6 @@ qboolean R_Init (void)
 
 	R_InitExtension();
 	R_SetDefaultState();
-	R_ShaderInit();
 	R_InitImages();
 	R_InitMiscTexture();
 	R_DrawInitLocal();

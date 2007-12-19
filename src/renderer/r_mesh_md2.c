@@ -35,9 +35,8 @@ static float r_avertexnormals[NUMVERTEXNORMALS][3] = {
 };
 
 static vec4_t s_lerped[MD2_MAX_VERTS];
-static float normalArray[MD2_MAX_VERTS * 3];
 
-static void R_LerpVerts (int nverts, dtrivertx_t * v, dtrivertx_t * ov, float *lerp, float move[3], float frontv[3], float backv[3])
+static inline void R_LerpVerts (int nverts, dtrivertx_t * v, dtrivertx_t * ov, float *lerp, float move[3], float frontv[3], float backv[3])
 {
 	int i;
 
@@ -50,7 +49,6 @@ static void R_LerpVerts (int nverts, dtrivertx_t * v, dtrivertx_t * ov, float *l
 
 /**
  * @brief interpolates between two frames and origins
- * FIXME: batch lerp all vertexes
  */
 static void R_DrawAliasFrameLerp (mdl_md2_t * paliashdr, float backlerp, int framenum, int oldframenum)
 {
@@ -61,9 +59,7 @@ static void R_DrawAliasFrameLerp (mdl_md2_t * paliashdr, float backlerp, int fra
 	float frontlerp;
 	vec3_t move;
 	vec3_t frontv, backv;
-	int i;
-	float *lerp;
-	float *na;
+	int i, j, mode, index_xyz;
 	float *oldNormal, *newNormal;
 
 	frame = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + framenum * paliashdr->framesize);
@@ -84,71 +80,59 @@ static void R_DrawAliasFrameLerp (mdl_md2_t * paliashdr, float backlerp, int fra
 		backv[i] = backlerp * oldframe->scale[i];
 	}
 
-	lerp = s_lerped[0];
+	R_LerpVerts(paliashdr->num_xyz, v, ov, s_lerped[0], move, frontv, backv);
 
-	R_LerpVerts(paliashdr->num_xyz, v, ov, lerp, move, frontv, backv);
-
-	/* setup vertex array */
-	qglEnableClientState(GL_VERTEX_ARRAY);
-	R_CheckError();
-	qglVertexPointer(3, GL_FLOAT, 16, s_lerped);	/* padded for SIMD */
-	R_CheckError();
-
-	/* setup normal array */
-	qglEnableClientState(GL_NORMAL_ARRAY);
-	R_CheckError();
-	qglNormalPointer(GL_FLOAT, 0, normalArray);
-	R_CheckError();
-
-	na = normalArray;
 	if (backlerp == 0.0) {
 		for (i = 0; i < paliashdr->num_xyz; v++, i++) {
-			/* get current normals */
-			newNormal = r_avertexnormals[v->lightnormalindex];
-
-			*na++ = newNormal[0];
-			*na++ = newNormal[1];
-			*na++ = newNormal[2];
+			j = i * 3;
+			memcpy(&r_state.normal_array[j], r_avertexnormals[v->lightnormalindex], sizeof(vec3_t));
 		}
 	} else {
 		for (i = 0; i < paliashdr->num_xyz; v++, ov++, i++) {
-			/* normalize interpolated normals? */
-			/* no: probably too much to compute */
+			j = i * 3;
+
 			oldNormal = r_avertexnormals[ov->lightnormalindex];
 			newNormal = r_avertexnormals[v->lightnormalindex];
 
-			*na++ = backlerp * oldNormal[0] + frontlerp * newNormal[0];
-			*na++ = backlerp * oldNormal[1] + frontlerp * newNormal[1];
-			*na++ = backlerp * oldNormal[2] + frontlerp * newNormal[2];
+			VectorScale(oldNormal, backlerp, oldNormal);
+			VectorScale(newNormal, backlerp, newNormal);
+			VectorAdd(oldNormal, newNormal, newNormal);
+
+			memcpy(&r_state.normal_array[j], newNormal, sizeof(vec3_t));
 		}
 	}
 
-	while (1) {
+	i = j = 0;
+	while (qtrue) {
 		/* get the vertex count and primitive type */
 		count = *order++;
 		if (!count)
 			break;				/* done */
 		if (count < 0) {
 			count = -count;
-			qglBegin(GL_TRIANGLE_FAN);
+			mode = GL_TRIANGLE_FAN;
 		} else {
-			qglBegin(GL_TRIANGLE_STRIP);
+			mode = GL_TRIANGLE_STRIP;
 		}
 		do {
 			/* texture coordinates come from the draw list */
-			qglTexCoord2f(((float *) order)[0], ((float *) order)[1]);
-			order += 2;
+			memcpy(&r_state.texture_texunit.texcoords[j], order, sizeof(vec2_t));
+			j += 2;
 
-			qglArrayElement(*order++);
+			index_xyz = order[2];
+			order += 3;
+
+			/* verts */
+			memcpy(&r_state.vertex_array_3d[i], s_lerped[index_xyz], sizeof(vec3_t));
+			i += 3;
 		} while (--count);
 
-		qglEnd();
+		qglDrawArrays(mode, 0, i / 3);
+		i = j = 0;
 		R_CheckError();
 	}
 
-	qglDisableClientState(GL_VERTEX_ARRAY);
-	R_CheckError();
-	qglDisableClientState(GL_NORMAL_ARRAY);
+	R_Color(NULL);
 	R_CheckError();
 }
 
@@ -247,91 +231,11 @@ static qboolean R_CullAliasMD2Model (vec4_t bbox[8], entity_t * e)
 }
 
 /**
- * @sa R_DrawAliasMD2Model
+ * @brief Draws shadow and highlight effects for the entities (actors)
  */
-void R_DrawAliasMD2Model (entity_t * e)
+static void R_ModDrawModelEffects (const entity_t *e)
 {
-	vec4_t bbox[8];
-	mdl_md2_t *paliashdr;
-	image_t *skin;
 	vec4_t color = {1, 1, 1, 1};
-
-	/* check if model is out of fov */
-	if (R_CullAliasMD2Model(bbox, e))
-		return;
-
-	assert(e->model->type == mod_alias_md2);
-	paliashdr = (mdl_md2_t *) e->model->alias.extraData;
-
-	/* check animations */
-	if ((e->as.frame >= paliashdr->num_frames) || (e->as.frame < 0)) {
-		Com_Printf("R_DrawAliasMD2Model %s: no such frame %d\n", e->model->name, e->as.frame);
-		e->as.frame = 0;
-	}
-	if ((e->as.oldframe >= paliashdr->num_frames) || (e->as.oldframe < 0)) {
-		Com_Printf("R_DrawAliasMD2Model %s: no such oldframe %d\n", e->model->name, e->as.oldframe);
-		e->as.oldframe = 0;
-	}
-
-	/* select skin */
-	if (e->skin)
-		skin = e->skin;			/* custom player skin */
-	else {
-		if (e->skinnum >= MD2_MAX_SKINS)
-			skin = e->model->alias.skins_img[0];
-		else {
-			skin = e->model->alias.skins_img[e->skinnum];
-			if (!skin)
-				skin = e->model->alias.skins_img[0];
-		}
-	}
-	if (!skin)
-		skin = r_notexture;		/* fallback... */
-	else if (skin->has_alpha && !(e->flags & RF_TRANSLUCENT)) {
-		/* it will be drawn in the next entity render pass
-		 * for the translucent entities */
-		e->flags |= RF_TRANSLUCENT;
-		if (!e->alpha)
-			e->alpha = 1.0;
-		return;
-	}
-
-	/* locate the proper data */
-	c_alias_polys += paliashdr->num_tris;
-
-	/* set-up lighting */
-	R_ModEnableLights(e);
-
-	/* FIXME: Does not work */
-	/* IR goggles override color */
-	if (refdef.rdflags & RDF_IRGOGGLES)
-		color[1] = color[2] = 0.0;
-
-	color[3] = e->alpha;
-	R_Color(color);
-
-	qglPushMatrix();
-
-	qglMultMatrixf(trafo[e - r_entities].matrix);
-
-	/* draw it */
-	R_Bind(skin->texnum);
-
-	R_TexEnv(r_config.envCombine);
-
-	if ((e->flags & RF_TRANSLUCENT))
-		R_EnableBlend(qtrue);
-
-	qglEnable(GL_CULL_FACE);
-	qglEnable(GL_DEPTH_TEST);
-
-	R_DrawAliasFrameLerp(paliashdr, e->as.backlerp, e->as.frame, e->as.oldframe);
-
-	R_TexEnv(GL_REPLACE);
-	R_EnableLighting(qfalse);
-
-	if ((e->flags & RF_TRANSLUCENT) || (skin && skin->has_alpha))
-		R_EnableBlend(qfalse);
 
 	if (r_shadows->integer && (e->flags & (RF_SHADOW | RF_BLOOD))) {
 		R_EnableBlend(qtrue);
@@ -402,18 +306,104 @@ void R_DrawAliasMD2Model (entity_t * e)
 		qglEnd();
 		R_CheckError();
 
-		R_EnableBlend(qfalse);
 		qglDisable(GL_LINE_SMOOTH);
 		qglEnable(GL_TEXTURE_2D);
 	}
+}
+
+/**
+ * @sa R_DrawAliasMD2Model
+ */
+void R_DrawAliasMD2Model (entity_t * e)
+{
+	mdl_md2_t *paliashdr;
+	image_t *skin;
+	vec4_t color = {1, 1, 1, 1};
+	vec4_t bbox[8];
+
+	/* check if model is out of fov */
+	if (R_CullAliasMD2Model(bbox, e))
+		return;
+
+	assert(e->model->type == mod_alias_md2);
+	paliashdr = (mdl_md2_t *) e->model->alias.extraData;
+
+	/* check animations */
+	if ((e->as.frame >= paliashdr->num_frames) || (e->as.frame < 0)) {
+		Com_Printf("R_DrawAliasMD2Model %s: no such frame %d\n", e->model->name, e->as.frame);
+		e->as.frame = 0;
+	}
+	if ((e->as.oldframe >= paliashdr->num_frames) || (e->as.oldframe < 0)) {
+		Com_Printf("R_DrawAliasMD2Model %s: no such oldframe %d\n", e->model->name, e->as.oldframe);
+		e->as.oldframe = 0;
+	}
+
+	/* select skin */
+	if (e->skin)
+		skin = e->skin;			/* custom player skin */
+	else {
+		if (e->skinnum >= MD2_MAX_SKINS)
+			skin = e->model->alias.skins_img[0];
+		else {
+			skin = e->model->alias.skins_img[e->skinnum];
+			if (!skin)
+				skin = e->model->alias.skins_img[0];
+		}
+	}
+	if (!skin)
+		skin = r_notexture;		/* fallback... */
+	else if (skin->has_alpha && !(e->flags & RF_TRANSLUCENT)) {
+		/* it will be drawn in the next entity render pass
+		 * for the translucent entities */
+		e->flags |= RF_TRANSLUCENT;
+		if (!e->alpha)
+			e->alpha = 1.0;
+		return;
+	}
+
+	/* locate the proper data */
+	c_alias_polys += paliashdr->num_tris;
+
+	/* set-up lighting */
+	R_ModEnableLights(e);
+
+	qglPushMatrix();
+
+	qglMultMatrixf(trafo[e - r_entities].matrix);
+
+	/* FIXME: Does not work */
+	/* IR goggles override color */
+	if (refdef.rdflags & RDF_IRGOGGLES)
+		color[1] = color[2] = 0.0;
+
+	color[3] = e->alpha;
+	R_Color(color);
+
+	/* draw it */
+	R_Bind(skin->texnum);
+
+	R_TexEnv(r_config.envCombine);
+
+	if (e->flags & RF_TRANSLUCENT)
+		R_EnableBlend(qtrue);
 
 	qglEnable(GL_DEPTH_TEST);
 	qglEnable(GL_CULL_FACE);
 
-	qglPopMatrix();
+	R_DrawAliasFrameLerp(paliashdr, e->as.backlerp, e->as.frame, e->as.oldframe);
+
+	R_TexEnv(GL_REPLACE);
+	R_EnableLighting(qfalse);
+
+	R_ModDrawModelEffects(e);
+
+	if (e->flags & RF_TRANSLUCENT)
+		R_EnableBlend(qfalse);
 
 	/* show model bounding box */
 	R_ModDrawModelBBox(bbox, e);
+
+	qglPopMatrix();
 
 	R_Color(NULL);
 }

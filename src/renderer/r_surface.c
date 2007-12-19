@@ -27,446 +27,170 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_lightmap.h"
 #include "r_error.h"
 
-static vec3_t modelorg;			/* relative to viewpoint */
-static model_t *currentmodel;
+mBspSurface_t *r_opaque_surfaces;
+mBspSurface_t *r_opaque_warp_surfaces;
 
 mBspSurface_t *r_alpha_surfaces;
+mBspSurface_t *r_alpha_warp_surfaces;
+
 mBspSurface_t *r_material_surfaces;
 
-/*
-=============================================================
-BRUSH MODELS
-=============================================================
-*/
-
-/**
- * @param[in] scroll != 0 for SURF_FLOWING
- */
-static void R_DrawPoly (const mBspSurface_t *surf, const float scroll)
-{
-	int i;
-	float *v;
-	mBspPoly_t *p = surf->polys;
-
-	qglBegin(GL_POLYGON);
-	v = p->verts[0];
-	for (i = 0; i < p->numverts; i++, v += VERTEXSIZE) {
-		qglTexCoord2f(v[3] + scroll, v[4]);
-		qglVertex3fv(v);
-	}
-	qglEnd();
-}
-
-/**
- * @brief Used for flowing and non-flowing surfaces
- * @param[in] scroll != 0 for SURF_FLOWING
- * @sa R_DrawSurface
- */
-static void R_DrawPolyChain (const mBspSurface_t *surf, const float scroll)
-{
-	int i, nv = surf->polys->numverts;
-	float *v;
-	mBspPoly_t *p;
-
-	assert(surf->polys);
-	for (p = surf->polys; p; p = p->chain) {
-		v = p->verts[0];
-		qglBegin(GL_POLYGON);
-		for (i = 0; i < nv; i++, v += VERTEXSIZE) {
-			qglMultiTexCoord2f(GL_TEXTURE0_ARB, (v[3] + scroll), v[4]);
-			qglMultiTexCoord2f(GL_TEXTURE1_ARB, v[5], v[6]);
-			qglVertex3fv(v);
-		}
-		qglEnd();
-	}
-}
-
-static void R_RenderBrushPoly (mBspSurface_t *surf)
-{
-	c_brush_polys++;
-
-	R_Bind(surf->texinfo->image->texnum);
-
-	if (surf->flags & SURF_WARP) {
-		/* warp texture, no lightmaps */
-		R_TexEnv(GL_MODULATE);
-		R_DrawTurbSurface(surf);
-		R_TexEnv(GL_REPLACE);
-		return;
-	}
-
-	if (surf->texinfo->flags & SURF_FLOWING) {
-		float scroll;
-		scroll = -64 * ((refdef.time / 40.0) - (int) (refdef.time / 40.0));
-		if (scroll == 0.0)
-			scroll = -64.0;
-		R_DrawPoly(surf, scroll);
-	} else
-		R_DrawPoly(surf, 0.0f);
-}
-
-
-/**
- * @brief Draw water surfaces and windows.
- * The BSP tree is waled front to back, so unwinding the chain
- * of alpha_surfaces will draw back to front, giving proper ordering.
- */
-void R_DrawAlphaSurfaces (mBspSurface_t *list)
-{
-	mBspSurface_t *surf;
-	vec4_t color = {1, 1, 1, 1};
-
-	/* go back to the world matrix */
-	qglLoadMatrixf(r_world_matrix);
-
-	R_EnableBlend(qtrue);
-	R_TexEnv(GL_MODULATE);
-
-	for (surf = list; surf; surf = surf->texturechain) {
-		R_Bind(surf->texinfo->image->texnum);
-		c_brush_polys++;
-
-		if (surf->texinfo->flags & SURF_TRANS33)
-			color[3] = 0.33;
-		else if (surf->texinfo->flags & SURF_TRANS66)
-			color[3] = 0.66;
-		else
-			color[3] = 1.0;
-
-		R_Color(color);
-
-		if (surf->flags & SURF_WARP)
-			R_DrawTurbSurface(surf);
-		else if (surf->texinfo->flags & SURF_FLOWING) {
-			float scroll;
-			scroll = -64 * ((refdef.time / 40.0) - (int) (refdef.time / 40.0));
-			if (scroll == 0.0)
-				scroll = -64.0;
-			R_DrawPoly(surf, scroll);
-		} else
-			R_DrawPoly(surf, 0.0f);
-	}
-
-	R_TexEnv(GL_REPLACE);
-	qglDepthMask(GL_TRUE); /* reenable depth writing */
-	R_ColorBlend(NULL);
-}
-
-/**
- * @brief Draw the lightmapped surface
- * @sa R_RenderBrushPoly
- * @sa R_DrawPolyChain
- * @sa R_DrawWorld
- */
-static void R_DrawSurface (mBspSurface_t *surf)
-{
-	unsigned lmtex = surf->lightmaptexturenum;
-
-	if (surf->texinfo->flags & SURF_ALPHATEST)
-		R_EnableAlphaTest(qtrue);
-
-	c_brush_polys++;
-
-	R_BindMultitexture(GL_TEXTURE0_ARB, surf->texinfo->image->texnum,
-		GL_TEXTURE1_ARB, r_state.lightmap_texnum + lmtex);
-
-	if (surf->texinfo->flags & SURF_FLOWING) {
-		float scroll;
-
-		scroll = -64 * ((refdef.time / 40.0) - (int) (refdef.time / 40.0));
-		if (scroll == 0.0)
-			scroll = -64.0;
-
-		R_DrawPolyChain(surf, scroll);
-	} else {
-		R_DrawPolyChain(surf, 0.0f);
-	}
-
-	R_EnableAlphaTest(qfalse);
-}
-
-#define BACKFACE_EPSILON    0.01
+static float surface_warp, surface_flow;
 
 /**
  * @brief
- * @sa R_DrawBrushModel
  */
-static void R_DrawInlineBrushModel (entity_t *e, model_t *mod)
+static void R_SetSurfaceState (const mBspSurface_t *surf)
 {
-	int i;
-	cBspPlane_t *pplane;
-	float dot;
-	mBspSurface_t *psurf, *s;
-	qboolean duplicate = qfalse;
+	image_t *image;
 
-	psurf = &mod->bsp.surfaces[mod->bsp.firstmodelsurface];
-
-	if (e->flags & RF_TRANSLUCENT) {
-		vec4_t color = {1, 1, 1, 0.25};
-		R_ColorBlend(color);
-		R_TexEnv(GL_MODULATE);
-	}
-
-	/* draw texture */
-	for (i = 0; i < mod->bsp.nummodelsurfaces; i++, psurf++) {
-		/* find which side of the node we are on */
-		pplane = psurf->plane;
-
-		if (r_isometric->integer)
-			dot = -DotProduct(vpn, pplane->normal);
-		else
-			dot = DotProduct(modelorg, pplane->normal) - pplane->dist;
-
-		/* draw the polygon */
-		if (((psurf->flags & SURF_PLANEBACK) && (dot < -BACKFACE_EPSILON)) || (!(psurf->flags & SURF_PLANEBACK) && (dot > BACKFACE_EPSILON))) {
-			/* add to the translucent chain */
-			if (psurf->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66)) {
-				/* if bmodel is used by multiple entities, adding surface
-				 * to linked list more than once would result in an infinite loop */
-				for (s = r_alpha_surfaces; s; s = s->texturechain)
-					if (s == psurf) {
-						duplicate = qtrue;
-						break;
-					}
-				/* Don't allow surface to be added twice (fixes hang) */
-				if (!duplicate) {
-					psurf->texturechain = r_alpha_surfaces;
-					r_alpha_surfaces = psurf;
-				}
-			} else if (!(psurf->flags & SURF_WARP)) {
-				R_DrawSurface(psurf);
-			} else {
-				R_EnableMultitexture(qfalse);
-				R_RenderBrushPoly(psurf);
-				R_EnableMultitexture(qtrue);
-			}
+	if (r_state.blend_enabled) {  /* alpha blend */
+		float a;
+		switch (surf->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66)) {
+		case SURF_TRANS33:
+			a = 0.25;
+			break;
+		case SURF_TRANS66:
+			a = 0.50;
+			break;
+		default:  /* both flags mean use the texture's alpha channel */
+			a = 1.0;
+			break;
 		}
+
+		qglColor4f(1.0, 1.0, 1.0, a);
 	}
 
-	if (e->flags & RF_TRANSLUCENT) {
-		R_ColorBlend(NULL);
-		R_TexEnv(GL_REPLACE);
+	if (surf->texinfo->flags & SURF_ALPHATEST) {  /* alpha test */
+		R_EnableAlphaTest(qtrue);
+	} else {
+		R_EnableAlphaTest(qfalse);
+	}
+
+	surface_warp = 0;
+	if (surf->texinfo->flags & SURF_WARP) {  /* warping */
+		surface_warp = refdef.time / 8.0;
+	}
+
+	surface_flow = 0;
+	if (surf->texinfo->flags & SURF_FLOWING) {  /* flowing */
+		surface_flow = refdef.time / -4.0;
+		surface_warp = surface_warp / 2.0;
+	}
+
+	image = surf->texinfo->image;
+
+	if (r_state.multitexture_enabled) {  /* bind diffuse and lightmap */
+		R_BindMultitexture(&r_state.texture_texunit, image->texnum,
+			&r_state.lightmap_texunit, r_state.lightmap_texnum + surf->lightmaptexturenum);
+	} else {  /* just bind diffuse */
+		R_Bind(image->texnum);
 	}
 }
 
-/**
- * @brief Draws a brush model
- * @note E.g. a func_breakable or func_door
- */
-void R_DrawBrushModel (entity_t * e)
+static void R_DrawSurface (const mBspSurface_t *surf)
 {
-	vec3_t mins, maxs;
-	int i;
-	qboolean rotated;
+	int i, j, k, nv;
+	float *v;
+	vec3_t norm;
 
-	if (currentmodel->bsp.nummodelsurfaces == 0)
-		return;
+	nv = surf->polys->numverts;
+	for (i = 0, v = surf->polys->verts[0]; i < nv; i++, v += VERTEXSIZE) {
+		j = i * 2;
+		k = i * 3;
 
-	r_state.currenttextures[0] = r_state.currenttextures[1] = -1;
+		/* diffuse coords */
+		r_state.texture_texunit.texcoords[j + 0] = v[3] + surface_flow;
+		r_state.texture_texunit.texcoords[j + 1] = v[4];
 
-	if (e->angles[0] || e->angles[1] || e->angles[2]) {
-		rotated = qtrue;
-		for (i = 0; i < 3; i++) {
-			mins[i] = e->origin[i] - currentmodel->radius;
-			maxs[i] = e->origin[i] + currentmodel->radius;
+		if (r_state.warp_enabled) {  /* warp coords */
+			r_state.lightmap_texunit.texcoords[j + 0] = v[3] + surface_flow + surface_warp;
+			r_state.lightmap_texunit.texcoords[j + 1] = v[4] + surface_warp;
+		} else if (r_state.multitexture_enabled) {  /* lightmap coords */
+			r_state.lightmap_texunit.texcoords[j + 0] = v[5];
+			r_state.lightmap_texunit.texcoords[j + 1] = v[6];
 		}
-	} else {
-		rotated = qfalse;
-		VectorAdd(e->origin, currentmodel->mins, mins);
-		VectorAdd(e->origin, currentmodel->maxs, maxs);
+
+		/* vertex */
+		memcpy(&r_state.vertex_array_3d[k], v, sizeof(vec3_t));
+
+		if (r_state.lighting_enabled) {  /* normal vector for lights */
+			if (surf->flags & SURF_PLANEBACK)
+				VectorNegate(surf->plane->normal, norm);
+			else
+				VectorCopy(surf->plane->normal, norm);
+
+			memcpy(&r_state.normal_array[k], norm, sizeof(vec3_t));
+		}
 	}
 
-	if (R_CullBox(mins, maxs))
-		return;
-
-	R_Color(NULL);
-	memset(gl_lms.lightmap_surfaces, 0, sizeof(gl_lms.lightmap_surfaces));
-
-	VectorSubtract(refdef.vieworg, e->origin, modelorg);
-	if (rotated) {
-		vec3_t temp;
-		vec3_t forward, right, up;
-
-		VectorCopy(modelorg, temp);
-		AngleVectors(e->angles, forward, right, up);
-		modelorg[0] = DotProduct(temp, forward);
-		modelorg[1] = -DotProduct(temp, right);
-		modelorg[2] = DotProduct(temp, up);
-	}
-
-	qglPushMatrix();
-	e->angles[0] = -e->angles[0];	/* stupid quake bug */
-	e->angles[2] = -e->angles[2];	/* stupid quake bug */
-	R_RotateForEntity(e);
-	e->angles[0] = -e->angles[0];	/* stupid quake bug */
-	e->angles[2] = -e->angles[2];	/* stupid quake bug */
-
-	R_EnableMultitexture(qtrue);
-	R_SelectTexture(GL_TEXTURE0_ARB);
-	R_TexEnv(GL_REPLACE);
-	R_SelectTexture(GL_TEXTURE1_ARB);
-	R_TexEnv(GL_MODULATE);
-
-	R_DrawInlineBrushModel(e, currentmodel);
-	R_EnableMultitexture(qfalse);
-
-	qglPopMatrix();
+	qglDrawArrays(GL_POLYGON, 0, i);
 	R_CheckError();
+
+	c_brush_polys++;
 }
 
-
-/*
-=============================================================
-WORLD MODEL
-=============================================================
-*/
-
 /**
- * @sa R_DrawWorld
+ * @brief
  */
-static void R_RecursiveWorldNode (mBspNode_t * node)
+static void R_DrawSurfaces (const mBspSurface_t *surfs)
 {
-	int c, side, sidebit;
-	cBspPlane_t *plane;
-	mBspSurface_t *surf;
-	float dot;
+	const mBspSurface_t *surf;
 
-	if (node->contents == CONTENTS_SOLID)
-		return;					/* solid */
-
-	if (R_CullBox(node->minmaxs, node->minmaxs + 3))
-		return;
-
-	/* if a leaf node, draw stuff */
-	if (node->contents != LEAFNODE)
-		return;
-
-	/* node is just a decision point, so go down the apropriate sides
-	 * find which side of the node we are on */
-	plane = node->plane;
-
-	if (r_isometric->integer) {
-		dot = -DotProduct(vpn, plane->normal);
-	} else if (plane->type >= 3) {
-		dot = DotProduct(modelorg, plane->normal) - plane->dist;
-	} else {
-		dot = modelorg[plane->type] - plane->dist;
+	for (surf = surfs; surf; surf = surf->next) {
+		R_SetSurfaceState(surf);
+		R_DrawSurface(surf);
 	}
 
-	if (dot >= 0) {
-		side = 0;
-		sidebit = 0;
-	} else {
-		side = 1;
-		sidebit = SURF_PLANEBACK;
-	}
-
-	/* recurse down the children, front side first */
-	R_RecursiveWorldNode(node->children[side]);
-
-	/* draw stuff */
-	for (c = node->numsurfaces, surf = currentmodel->bsp.surfaces + node->firstsurface; c; c--, surf++) {
-		if ((surf->flags & SURF_PLANEBACK) != sidebit)
-			continue;			/* wrong side */
-
-		if (surf->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66)) {
-			/* add to the translucent chain */
-			surf->texturechain = r_alpha_surfaces;
-			r_alpha_surfaces = surf;
-		} else {
-			if (!(surf->flags & SURF_WARP))
-				R_DrawSurface(surf);
-		}
-		/* add to the material chain if appropriate */
-		if (surf->texinfo->image->material.flags & STAGE_RENDER) {
-			surf->materialchain = r_material_surfaces;
-			r_material_surfaces = surf;
-		}
-	}
-
-	/* recurse down the back side */
-	R_RecursiveWorldNode(node->children[!side]);
+	R_Color(color_white);
 }
 
+/**
+ * @brief
+ */
+void R_DrawAlphaSurfaces (const mBspSurface_t *surfs)
+{
+	if (!surfs)
+		return;
+
+	R_DrawSurfaces(surfs);
+}
 
 /**
- * @sa R_RecursiveWorldNode
- * @sa R_DrawLevelBrushes
- * @todo Batch all the static surfaces from each of the 8 levels in a surface list
- * and only recurse down when the level changed
+ * @brief
  */
-static void R_DrawWorld (mBspNode_t * nodes)
+void R_DrawOpaqueSurfaces (const mBspSurface_t *surfs)
 {
-	VectorCopy(refdef.vieworg, modelorg);
-
-	r_state.currenttextures[0] = r_state.currenttextures[1] = -1;
-
-	R_Color(NULL);
-	memset(gl_lms.lightmap_surfaces, 0, sizeof(gl_lms.lightmap_surfaces));
+	if (!surfs)
+		return;
 
 	R_EnableMultitexture(qtrue);
 
-	R_SelectTexture(GL_TEXTURE0_ARB);
-	R_TexEnv(GL_REPLACE);
-	R_SelectTexture(GL_TEXTURE1_ARB);
+	R_EnableLighting(qtrue);
+	R_DrawSurfaces(surfs);
+	R_EnableLighting(qfalse);
 
-	R_TexEnv(r_config.envCombine);
-
-	R_RecursiveWorldNode(nodes);
 	R_EnableMultitexture(qfalse);
 }
 
-
-/**
- * @sa R_DrawLevelBrushes
- */
-static void R_FindModelNodes_r (mBspNode_t * node)
+void R_DrawOpaqueWarpSurfaces (mBspSurface_t *surfs)
 {
-	if (!node->plane) {
-		R_FindModelNodes_r(node->children[0]);
-		R_FindModelNodes_r(node->children[1]);
-	} else {
-		R_DrawWorld(node);
-	}
+	if (!surfs)
+		return;
+
+	R_EnableWarp(qtrue);
+	R_DrawSurfaces(surfs);
+	R_EnableWarp(qfalse);
 }
 
-
-/**
- * @brief Draws the brushes for the current worldlevel and hide other levels
- * @sa cvar cl_worldlevel
- * @sa R_FindModelNodes_r
- */
-void R_DrawLevelBrushes (void)
+void R_DrawAlphaWarpSurfaces (mBspSurface_t *surfs)
 {
-	int i, tile, mask;
-
-	if (refdef.rdflags & RDF_NOWORLDMODEL)
+	if (!surfs)
 		return;
 
-	if (!r_drawworld->integer)
-		return;
-
-	r_alpha_surfaces = NULL;
-	r_material_surfaces = NULL;
-
-	mask = 1 << refdef.worldlevel;
-
-	for (tile = 0; tile < rNumTiles; tile++) {
-		currentmodel = rTiles[tile];
-
-		/* don't draw weapon-, actorclip and stepon */
-		/* @note Change this to 258 to see the actorclip brushes in-game */
-		for (i = 0; i <= LEVEL_LASTVISIBLE; i++) {
-			/* check the worldlevel flags */
-			if (i && !(i & mask))
-				continue;
-
-			if (!currentmodel->bsp.submodels[i].numfaces)
-				continue;
-
-			R_FindModelNodes_r(currentmodel->bsp.nodes + currentmodel->bsp.submodels[i].headnode);
-		}
-	}
+	R_EnableWarp(qtrue);
+	R_DrawSurfaces(surfs);
+	R_EnableWarp(qfalse);
 }
 
 void R_BuildPolygonFromSurface (mBspSurface_t *surf, int shift[3], model_t *mod)
@@ -515,13 +239,13 @@ void R_BuildPolygonFromSurface (mBspSurface_t *surf, int shift[3], model_t *mod)
 
 		/* lightmap texture coordinates */
 		s = DotProduct(vec, surf->texinfo->vecs[0]) + surf->texinfo->vecs[0][3];
-		s -= surf->texturemins[0];
+		s -= surf->stmins[0];
 		s += surf->light_s << surf->lquant;
 		s += 1 << (surf->lquant - 1);
 		s /= BLOCK_WIDTH << surf->lquant;
 
 		t = DotProduct(vec, surf->texinfo->vecs[1]) + surf->texinfo->vecs[1][3];
-		t -= surf->texturemins[1];
+		t -= surf->stmins[1];
 		t += surf->light_t << surf->lquant;
 		t += 1 << (surf->lquant - 1);
 		t /= BLOCK_HEIGHT << surf->lquant;

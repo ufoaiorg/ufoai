@@ -77,14 +77,17 @@ typedef struct mBspSurface_s {
 	int firstedge;				/**< look up in model->surfedges[], negative numbers */
 	int numedges;				/**< are backwards edges */
 
-	short texturemins[2];
-	short extents[2];
+	short stmins[2];		/**< st min coordinates */
+	short stmaxs[2];			/**< st max coordinates */
+
+	vec3_t center;
+	vec3_t color;
 
 	int light_s, light_t;		/**< gl lightmap coordinates */
 	byte lquant;
 
 	mBspPoly_t *polys;			/* multiple if warped */
-	struct mBspSurface_s *texturechain;
+	struct mBspSurface_s *next;
 	struct mBspSurface_s *materialchain;	/**< material surface chain */
 
 	mBspTexInfo_t *texinfo;

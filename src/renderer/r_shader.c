@@ -309,7 +309,7 @@ static void SH_UseProgram_ARB_VP (int vpid)
 void SH_UseShader (shader_t * shader, qboolean deactivate)
 {
 	/* no shaders supported - @todo glsl */
-	if (!r_state.arb_fragment_program || !shader)
+	if (!r_shader->integer || !r_state.arb_fragment_program || !shader)
 		return;
 
 	assert(shader);

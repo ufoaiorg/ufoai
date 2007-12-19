@@ -507,10 +507,10 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 	/* init combiner */
 	R_EnableBlend(qtrue);
 
-	R_SelectTexture(GL_TEXTURE0_ARB);
+	R_SelectTexture(&r_state.texture_texunit);
 	R_Bind(gl->texnum);
 
-	R_SelectTexture(GL_TEXTURE1_ARB);
+	R_SelectTexture(&r_state.lightmap_texunit);
 	if (!DaN || lastQ != q) {
 		R_CalcDayAndNight(q);
 		lastQ = q;
@@ -539,7 +539,7 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 
 	/* reset mode */
 	qglDisable(GL_TEXTURE_2D);
-	R_SelectTexture(GL_TEXTURE0_ARB);
+	R_SelectTexture(&r_state.texture_texunit);
 
 	R_EnableBlend(qfalse);
 }
@@ -608,29 +608,24 @@ void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness)
  */
 void R_DrawLineStrip (int points, int *verts)
 {
-	static int vs[MAX_LINEVERTS * 2];
 	int i;
 
 	/* fit it on screen */
 	if (points > MAX_LINEVERTS * 2)
 		points = MAX_LINEVERTS * 2;
 
+	/* set vertex array pointer */
+	qglVertexPointer(2, GL_SHORT, 0, r_state.vertex_array_2d);
+
 	for (i = 0; i < points * 2; i += 2) {
-		vs[i] = verts[i] * viddef.rx;
-		vs[i + 1] = verts[i + 1] * viddef.ry;
+		r_state.vertex_array_2d[i] = verts[i] * viddef.rx;
+		r_state.vertex_array_2d[i + 1] = verts[i + 1] * viddef.ry;
 	}
 
-	/* init vertex array */
 	qglDisable(GL_TEXTURE_2D);
-	qglEnableClientState(GL_VERTEX_ARRAY);
-	qglVertexPointer(2, GL_INT, 0, vs);
-
-	/* draw */
 	qglDrawArrays(GL_LINE_STRIP, 0, points);
-
-	/* reset state */
-	qglDisableClientState(GL_VERTEX_ARRAY);
 	qglEnable(GL_TEXTURE_2D);
+	qglVertexPointer(3, GL_FLOAT, 0, r_state.vertex_array_3d);
 }
 
 /**
@@ -639,29 +634,25 @@ void R_DrawLineStrip (int points, int *verts)
  */
 void R_DrawLineLoop (int points, int *verts)
 {
-	static int vs[MAX_LINEVERTS * 2];
 	int i;
 
 	/* fit it on screen */
 	if (points > MAX_LINEVERTS * 2)
 		points = MAX_LINEVERTS * 2;
 
+	/* set vertex array pointer */
+	qglVertexPointer(2, GL_SHORT, 0, r_state.vertex_array_2d);
+
 	for (i = 0; i < points * 2; i += 2) {
-		vs[i] = verts[i] * viddef.rx;
-		vs[i + 1] = verts[i + 1] * viddef.ry;
+		r_state.vertex_array_2d[i] = verts[i] * viddef.rx;
+		r_state.vertex_array_2d[i + 1] = verts[i + 1] * viddef.ry;
 	}
 
 	/* init vertex array */
 	qglDisable(GL_TEXTURE_2D);
-	qglEnableClientState(GL_VERTEX_ARRAY);
-	qglVertexPointer(2, GL_INT, 0, vs);
-
-	/* draw */
 	qglDrawArrays(GL_LINE_LOOP, 0, points);
-
-	/* reset state */
-	qglDisableClientState(GL_VERTEX_ARRAY);
 	qglEnable(GL_TEXTURE_2D);
+	qglVertexPointer(3, GL_FLOAT, 0, r_state.vertex_array_3d);
 }
 
 
@@ -672,29 +663,25 @@ void R_DrawLineLoop (int points, int *verts)
  */
 void R_DrawPolygon (int points, int *verts)
 {
-	static int vs[MAX_LINEVERTS * 2];
 	int i;
 
 	/* fit it on screen */
 	if (points > MAX_LINEVERTS * 2)
 		points = MAX_LINEVERTS * 2;
 
+	/* set vertex array pointer */
+	qglVertexPointer(2, GL_SHORT, 0, r_state.vertex_array_2d);
+
 	for (i = 0; i < points * 2; i += 2) {
-		vs[i] = verts[i] * viddef.rx;
-		vs[i + 1] = verts[i + 1] * viddef.ry;
+		r_state.vertex_array_2d[i] = verts[i] * viddef.rx;
+		r_state.vertex_array_2d[i + 1] = verts[i + 1] * viddef.ry;
 	}
 
 	/* init vertex array */
 	qglDisable(GL_TEXTURE_2D);
-	qglEnableClientState(GL_VERTEX_ARRAY);
-	qglVertexPointer(2, GL_INT, 0, vs);
-
-	/* draw */
 	qglDrawArrays(GL_POLYGON, 0, points);
-
-	/* reset state */
-	qglDisableClientState(GL_VERTEX_ARRAY);
 	qglEnable(GL_TEXTURE_2D);
+	qglVertexPointer(3, GL_FLOAT, 0, r_state.vertex_array_3d);
 }
 
 #define MARKER_SIZE 60.0
@@ -817,6 +804,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 
 	/* enable the lighting */
 	R_EnableLighting(qtrue);
+	qglEnable(GL_LIGHT0);
 
 	/* draw the sphere */
 	qglCallList(spherelist);
@@ -863,14 +851,11 @@ static const vec3_t r_highlightVertices[HIGHTLIGHT_SIZE] = {
  */
 void R_DrawHighlight (const entity_t * e)
 {
-	qglEnableClientState(GL_VERTEX_ARRAY);
 	qglDisable(GL_TEXTURE_2D);
 	R_Color(color_white);
-	qglVertexPointer(3, GL_FLOAT, 0, r_highlightVertices);
-	/* draw */
+	memcpy(r_state.vertex_array_3d, r_highlightVertices, sizeof(r_highlightVertices));
 	qglDrawArrays(GL_TRIANGLES, 0, HIGHTLIGHT_SIZE);
 	qglEnable(GL_TEXTURE_2D);
-	qglDisableClientState(GL_VERTEX_ARRAY);
 }
 
 /**

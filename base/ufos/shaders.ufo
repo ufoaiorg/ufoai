@@ -24,3 +24,15 @@
 		hz 12
 	}
 }*/
+
+/*shader lightning
+{
+	filename "shaders/lightning.fp"
+	frag true
+}*/
+
+shader warp
+{
+	filename "shaders/warp.fp"
+	frag true
+}

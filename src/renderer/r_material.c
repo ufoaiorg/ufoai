@@ -27,23 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_error.h"
 
 
-static void R_MaterialStageVertexColor (const materialStage_t *stage, const vec3_t v, vec4_t color)
-{
-	float a;
-
-	VectorSet(color, 1.0, 1.0, 1.0);
-
-	/* resolve alpha for vert based on z axis height */
-	if (v[2] < stage->terrain.floor)
-		a = 0.0;
-	else if (v[2] > stage->terrain.ceil)
-		a = 1.0;
-	else
-		a = (v[2] - stage->terrain.floor) / stage->terrain.height;
-
-	color[3] = a;
-}
-
 #define UPDATE_THRESHOLD 0.02
 void R_UpdateMaterial (material_t *m)
 {
@@ -60,6 +43,37 @@ void R_UpdateMaterial (material_t *m)
 			s->rotate.dsin = sin(s->rotate.dhz);
 			s->rotate.dcos = cos(s->rotate.dhz);
 		}
+	}
+}
+
+static void R_StageVertexColor (const materialStage_t *stage, const vec3_t v, vec4_t color)
+{
+	float a;
+
+	VectorSet(color, 1.0, 1.0, 1.0);
+
+	/* resolve alpha for vert based on z axis height */
+	if (v[2] < stage->terrain.floor)
+		a = 0.0;
+	else if (v[2] > stage->terrain.ceil)
+		a = 1.0;
+	else
+		a = (v[2] - stage->terrain.floor) / stage->terrain.height;
+
+	color[3] = a;
+}
+
+static void R_StageVertex (const mBspSurface_t *surf, const materialStage_t *stage, const vec3_t in, vec3_t out)
+{
+	vec3_t tmp;
+
+	/* translate from surface center */
+	if (stage->flags & STAGE_STRETCH) {
+		VectorSubtract(in, surf->center, tmp);
+		VectorScale(tmp, stage->stretch.damp, tmp);
+		VectorAdd(in, tmp, out);
+	} else {  /* or simply copy */
+		VectorCopy(in, out);
 	}
 }
 
@@ -81,22 +95,25 @@ static void R_DrawMaterialSurface (mBspSurface_t *surf, materialStage_t *stage)
 {
 	int i, nv;
 	float *v;
-	vec4_t color;
-	vec2_t st;
+
+	if (stage->flags & STAGE_TERRAIN)
+		R_EnableColorArray(qtrue);
 
 	nv = surf->polys->numverts;
 	R_Bind(stage->image->texnum);
-	qglBegin(GL_POLYGON);
+
 	for (i = 0, v = surf->polys->verts[0]; i < nv; i++, v += VERTEXSIZE) {
-		if (stage->flags & STAGE_TERRAIN) {
-			R_MaterialStageVertexColor(stage, v, color);
-			qglColor4fv(color);
-		}
-		R_StageTexcoord(stage, v, st);
-		qglTexCoord2f(st[0], st[1]);
-		qglVertex3fv(v);
+		R_StageTexcoord(stage, v, &r_state.texture_texunit.texcoords[i * 2]);
+		R_StageVertex(surf, stage, v, &r_state.vertex_array_3d[i * 3]);
+		if (stage->flags & STAGE_TERRAIN)
+			R_StageVertexColor(stage, v, &r_state.color_array[i * 4]);
 	}
-	qglEnd();
+
+	qglDrawArrays(GL_POLYGON, 0, i);
+
+	if (stage->flags & STAGE_TERRAIN)
+		R_EnableColorArray(qfalse);
+
 	R_CheckError();
 }
 

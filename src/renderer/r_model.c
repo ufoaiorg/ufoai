@@ -308,6 +308,7 @@ void R_ModEnableLights (const entity_t* e)
 
 	/* enable the lighting */
 	R_EnableLighting(qtrue);
+	qglEnable(GL_LIGHT0);
 }
 
 /**

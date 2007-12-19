@@ -52,12 +52,12 @@ void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 	if (surf->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66 | SURF_WARP))
 		Com_Error(ERR_DROP, "R_BuildLightMap called for non-lit surface");
 
-	smax = (surf->extents[0] >> surf->lquant) + 1;
-	tmax = (surf->extents[1] >> surf->lquant) + 1;
+	smax = (surf->stmaxs[0] >> surf->lquant) + 1;
+	tmax = (surf->stmaxs[1] >> surf->lquant) + 1;
 	size = smax * tmax;
 	if (size > (sizeof(s_blocklights) >> surf->lquant)) {
-		Com_Error(ERR_DROP, "Bad s_blocklights size (%i) - should be "UFO_SIZE_T" (lquant: %i) (smax: %i, extents[0]: %i, tmax: %i, extents[1]: %i)\n",
-			size, (sizeof(s_blocklights) >> surf->lquant), surf->lquant, smax, surf->extents[0], tmax, surf->extents[1]);
+		Com_Error(ERR_DROP, "Bad s_blocklights size (%i) - should be "UFO_SIZE_T" (lquant: %i) (smax: %i, stmaxs[0]: %i, tmax: %i, stmaxs[1]: %i)\n",
+			size, (sizeof(s_blocklights) >> surf->lquant), surf->lquant, smax, surf->stmaxs[0], tmax, surf->stmaxs[1]);
 	}
 
 	lightmap = surf->samples;
@@ -230,8 +230,8 @@ void R_CreateSurfaceLightmap (mBspSurface_t * surf)
 	if (surf->flags & SURF_WARP)
 		return;
 
-	smax = (surf->extents[0] >> surf->lquant) + 1;
-	tmax = (surf->extents[1] >> surf->lquant) + 1;
+	smax = (surf->stmaxs[0] >> surf->lquant) + 1;
+	tmax = (surf->stmaxs[1] >> surf->lquant) + 1;
 
 	if (!LM_AllocBlock(smax, tmax, &surf->light_s, &surf->light_t)) {
 		LM_UploadBlock();
@@ -259,7 +259,7 @@ void R_BeginBuildingLightmaps (void)
 	memset(gl_lms.allocated, 0, sizeof(gl_lms.allocated));
 
 	R_EnableMultitexture(qtrue);
-	R_SelectTexture(GL_TEXTURE1_ARB);
+	R_SelectTexture(&r_state.lightmap_texunit);
 
 	if (!r_state.lightmap_texnum)
 		r_state.lightmap_texnum = TEXNUM_LIGHTMAPS;

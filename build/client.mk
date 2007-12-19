@@ -74,6 +74,7 @@ CLIENT_SRCS = \
 	game/inv_shared.c \
 	\
 	renderer/r_anim.c \
+	renderer/r_bsp.c \
 	renderer/r_shader.c \
 	renderer/r_draw.c \
 	renderer/r_font.c \

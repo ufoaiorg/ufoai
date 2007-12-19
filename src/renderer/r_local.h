@@ -45,11 +45,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_model.h"
 #include "r_font.h"
 
+void R_DrawAlphaSurfaces(const mBspSurface_t *list);
+void R_DrawOpaqueSurfaces(const mBspSurface_t *surfs);
+void R_DrawOpaqueWarpSurfaces(mBspSurface_t *surfs);
+void R_DrawAlphaWarpSurfaces(mBspSurface_t *surfs);
 void R_DrawMaterialSurfaces(mBspSurface_t *surfs);
 void R_UpdateMaterial(material_t *m);
 
 /* surface chains */
+extern mBspSurface_t *r_opaque_surfaces;
+extern mBspSurface_t *r_opaque_warp_surfaces;
+
 extern mBspSurface_t *r_alpha_surfaces;
+extern mBspSurface_t *r_alpha_warp_surfaces;
+
 extern mBspSurface_t *r_material_surfaces;
 
 /*=================================================================== */
@@ -70,6 +79,7 @@ extern int spherelist;	/**< the gl list of the 3d globe */
 extern image_t *shadow;	/**< draw this when actor is alive */
 extern image_t *blood; /**< draw this when actor is dead */
 extern image_t *r_notexture;
+extern image_t *r_warptexture;
 extern image_t *DaN;
 
 extern cBspPlane_t frustum[4];
@@ -82,7 +92,7 @@ extern vec3_t vright;
 extern cvar_t *r_drawworld;
 extern cvar_t *r_nocull;
 extern cvar_t *r_isometric;
-
+extern cvar_t *r_shader;
 extern cvar_t *r_anisotropic;
 extern cvar_t *r_texture_lod;   /* lod_bias */
 extern cvar_t *r_bitdepth;
@@ -91,7 +101,7 @@ extern cvar_t *r_colordepth;
 extern cvar_t *r_materials;
 extern cvar_t *r_screenshot;
 extern cvar_t *r_screenshot_jpeg_quality;
-
+extern cvar_t *r_lightmap;
 extern cvar_t *r_ext_combine;
 extern cvar_t *r_ext_texture_compression;
 extern cvar_t *r_ext_s3tc_compression;
@@ -142,7 +152,6 @@ void R_DrawBrushModel(entity_t *e);
 void R_DrawBox(const entity_t *e);
 void R_DrawHighlight(const entity_t *e);
 void R_DrawLevelBrushes(void);
-void R_DrawAlphaSurfaces(mBspSurface_t *list);
 void R_InitMiscTexture(void);
 void R_DrawInitLocal(void);
 void R_SubdivideSurface(mBspSurface_t *surf, model_t *mod);

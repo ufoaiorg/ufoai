@@ -197,9 +197,9 @@ static void R_ModLoadTexinfo (lump_t * l)
 }
 
 /**
- * @brief Fills in s->texturemins[] and s->extents[]
+ * @brief Fills in s->stmins[] and s->stmaxs[]
  */
-static void CalcSurfaceExtents (mBspSurface_t * s, model_t* mod)
+static void R_CalcSurfaceExtents (mBspSurface_t *surf, model_t* mod)
 {
 	float mins[2], maxs[2], val;
 
@@ -212,10 +212,10 @@ static void CalcSurfaceExtents (mBspSurface_t * s, model_t* mod)
 	mins[0] = mins[1] = 999999;
 	maxs[0] = maxs[1] = -99999;
 
-	tex = s->texinfo;
+	tex = surf->texinfo;
 
-	for (i = 0; i < s->numedges; i++) {
-		e = mod->bsp.surfedges[s->firstedge + i];
+	for (i = 0; i < surf->numedges; i++) {
+		e = mod->bsp.surfedges[surf->firstedge + i];
 		if (e >= 0)
 			v = &mod->bsp.vertexes[mod->bsp.edges[e].v[0]];
 		else
@@ -230,13 +230,16 @@ static void CalcSurfaceExtents (mBspSurface_t * s, model_t* mod)
 		}
 	}
 
+	for (i = 0; i < 3; i++)
+		surf->center[i] = (mins[i] + maxs[i]) / 2;
+
 	for (i = 0; i < 2; i++) {
 		/* tiny rounding hack, not sure if it works */
-		bmins[i] = floor(mins[i] / (1 << s->lquant));
-		bmaxs[i] = ceil(maxs[i] / (1 << s->lquant));
+		bmins[i] = floor(mins[i] / (1 << surf->lquant));
+		bmaxs[i] = ceil(maxs[i] / (1 << surf->lquant));
 
-		s->texturemins[i] = bmins[i] << s->lquant;
-		s->extents[i] = (bmaxs[i] - bmins[i]) << s->lquant;
+		surf->stmins[i] = bmins[i] << surf->lquant;
+		surf->stmaxs[i] = (bmaxs[i] - bmins[i]) << surf->lquant;
 	}
 }
 
@@ -277,7 +280,7 @@ static void R_ModLoadFaces (lump_t * l)
 		out->texinfo = loadmodel->bsp.texinfo + ti;
 
 		out->lquant = loadmodel->bsp.lightquant;
-		CalcSurfaceExtents(out, loadmodel);
+		R_CalcSurfaceExtents(out, loadmodel);
 
 		/* lighting info */
 		for (i = 0; i < MAXLIGHTMAPS; i++)
@@ -292,8 +295,8 @@ static void R_ModLoadFaces (lump_t * l)
 		if (out->texinfo->flags & SURF_WARP) {
 			out->flags |= SURF_WARP;
 			for (i = 0; i < 2; i++) {
-				out->extents[i] = 16384;
-				out->texturemins[i] = -8192;
+				out->stmins[i] = -8192;
+				out->stmaxs[i] = 16384;
 			}
 			/* cut up polygon for warps */
 			R_SubdivideSurface(out, loadmodel);

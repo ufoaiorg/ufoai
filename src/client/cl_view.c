@@ -398,7 +398,8 @@ void V_UpdateRefDef (void)
 	refdef.y = scr_vrect.y;
 	refdef.width = scr_vrect.width;
 	refdef.height = scr_vrect.height;
-	refdef.time = cl.time * 0.001;	refdef.worldlevel = cl_worldlevel->integer;
+	refdef.time = cl.time * 0.001;
+	refdef.worldlevel = cl_worldlevel->integer;
 
 	refdef.sun = &map_sun;
 }

@@ -238,9 +238,7 @@ static void R_FontCacheGLSurface (fontCache_t *cache, SDL_Surface *pixel)
 	cache->texPos = TEXNUM_FONTS + numInCache;
 	R_Bind(cache->texPos);
 	qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pixel->w, pixel->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, pixel->pixels);
-	R_CheckError();
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	R_CheckError();
 	qglTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	R_CheckError();
 }
@@ -428,7 +426,6 @@ static char *R_FontGetLineWrap (font_t * f, char *buffer, int maxWidth, int *wid
  * @param[in] s SDL surface pointer which holds the image/text
  * @param[in] x x coordinate on screen to draw the text to
  * @param[in] y y coordinate on screen to draw the text to
- * @param[in] absX This is the absolute x coodinate (e.g. of a node)
  * @param[in] absY This is the absolute y coodinate (e.g. of a node)
  * y coordinates will change for each linebreak - whereas the absY will be fix
  * @param[in] width The max width of the text
@@ -436,15 +433,15 @@ static char *R_FontGetLineWrap (font_t * f, char *buffer, int maxWidth, int *wid
  * @return -1 for scrolling down (@todo)
  * @return +1 for scrolling up (@todo)
  */
-static int R_FontGenerateGLSurface (fontCache_t *cache, int x, int y, int absX, int absY, int width, int height)
+static int R_FontGenerateGLSurface (fontCache_t *cache, int x, int y, int absY, int width, int height)
 {
-	int h = cache->size[1];
-	int tw = cache->texsize[0];
-	int th = cache->texsize[1];
-	vec2_t start = {0.0f, 0.0f}, end = {1.0f, 1.0f};
+	float nx = x * viddef.rx;
+	float ny = y * viddef.ry;
+	float nw = cache->texsize[0] * viddef.rx;
+	float nh = cache->texsize[1] * viddef.ry;
 
 	/* if height is too much we should be able to scroll down */
-	if (height > 0 && y + h > absY + height)
+	if (height > 0 && y + cache->size[1] > absY + height)
 		return 1;
 
 	R_Bind(cache->texPos);
@@ -452,16 +449,24 @@ static int R_FontGenerateGLSurface (fontCache_t *cache, int x, int y, int absX, 
 	/* draw it */
 	R_EnableBlend(qtrue);
 
-	qglBegin(GL_TRIANGLE_STRIP);
-	qglTexCoord2f(start[0], start[1]);
-	qglVertex2f(x * viddef.rx, y * viddef.ry);
-	qglTexCoord2f(end[0], start[1]);
-	qglVertex2f((x + tw) * viddef.rx, y * viddef.ry);
-	qglTexCoord2f(start[0] * viddef.rx, end[1]);
-	qglVertex2f(x * viddef.rx, (y + th) * viddef.ry);
-	qglTexCoord2f(end[0], end[1]);
-	qglVertex2f((x + tw) * viddef.rx, (y + th) * viddef.ry);
-	qglEnd();
+	qglVertexPointer(2, GL_SHORT, 0, r_state.vertex_array_2d);
+
+	memcpy(&r_state.texture_texunit.texcoords, default_texcoords, sizeof(float) * 8);
+
+	r_state.vertex_array_2d[0] = nx;
+	r_state.vertex_array_2d[1] = ny;
+	r_state.vertex_array_2d[2] = nx + nw;
+	r_state.vertex_array_2d[3] = ny;
+
+	r_state.vertex_array_2d[4] = nx;
+	r_state.vertex_array_2d[5] = ny + nh;
+	r_state.vertex_array_2d[6] = nx + nw;
+	r_state.vertex_array_2d[7] = ny + nh;
+
+	qglDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+	/* set back to standard 3d pointer */
+	qglVertexPointer(3, GL_FLOAT, 0, r_state.vertex_array_3d);
 
 	R_EnableBlend(qfalse);
 
@@ -544,7 +549,7 @@ int R_FontDrawString (const char *fontID, int align, int x, int y, int absX, int
 			}
 		}
 
-		R_FontGenerateGLSurface(cache, x, fy, absX, absY, maxWidth, maxHeight);
+		R_FontGenerateGLSurface(cache, x, fy, absY, maxWidth, maxHeight);
 		return lineHeight;
 	}
 
@@ -633,7 +638,7 @@ int R_FontDrawString (const char *fontID, int align, int x, int y, int absX, int
 			if (!cache)
 				Sys_Error("...could not generate font surface '%s'\n", buffer);
 
-			R_FontGenerateGLSurface(cache, x, fy, absX, absY, maxWidth, maxHeight);
+			R_FontGenerateGLSurface(cache, x, fy, absY, maxWidth, maxHeight);
 			fy += fh;
 			returnHeight += (texh0 > 0) ? texh0 : h;
 		}

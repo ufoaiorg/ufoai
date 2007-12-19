@@ -29,8 +29,30 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_STATE_H
 #define R_STATE_H
 
+#define MAX_GL_ARRAY_LENGTH 32768
+
+typedef struct gltexunit_s {
+	GLenum texture;  /* e.g. GL_TEXTURE0_ARB */
+	GLint texnum;  /* e.g 123 */
+	GLenum texenv;  /* e.g. GL_MODULATE */
+	float texcoords[MAX_GL_ARRAY_LENGTH * 2];  /* vertex array */
+} gltexunit_t;
+
 typedef struct {
 	qboolean fullscreen;
+
+	/* vertex arrays */
+	float vertex_array_3d[MAX_GL_ARRAY_LENGTH * 3];
+	short vertex_array_2d[MAX_GL_ARRAY_LENGTH * 2];
+	float color_array[MAX_GL_ARRAY_LENGTH * 4];
+	float normal_array[MAX_GL_ARRAY_LENGTH * 3];
+
+	/* multitexture texunits */
+	gltexunit_t texture_texunit;
+	gltexunit_t lightmap_texunit;
+
+	/* texunit in use */
+	gltexunit_t *active_texunit;
 
 	int lightmap_texnum;
 
@@ -39,9 +61,6 @@ typedef struct {
 	/* blend function */
 	GLenum blend_src, blend_dest;
 
-	int currenttextures[2];
-	int currenttmu;
-
 	int maxAnisotropic;
 
 	/* states */
@@ -49,6 +68,8 @@ typedef struct {
 	qboolean alpha_test_enabled;
 	qboolean multitexture_enabled;
 	qboolean lighting_enabled;
+	qboolean color_array_enabled;
+	qboolean warp_enabled;
 
 	qboolean hwgamma;
 	qboolean anisotropic;
@@ -59,14 +80,15 @@ typedef struct {
 
 extern rstate_t r_state;
 extern const vec4_t color_white;
+extern const float default_texcoords[];
 
 void R_SetDefaultState(void);
 void R_SetupGL2D(void);
 void R_SetupGL3D(void);
 void R_EnableMultitexture(qboolean enable);
-void R_SelectTexture(GLenum);
+void R_SelectTexture(gltexunit_t *texunit);
 void R_Bind(int texnum);
-void R_BindMultitexture(GLenum target0, int texnum0, GLenum target1, int texnum1);
+void R_BindMultitexture(gltexunit_t *texunit0, int texnum0, gltexunit_t *texunit1, int texnum1);
 void R_TexEnv(GLenum value);
 void R_TextureAlphaMode(const char *string);
 void R_TextureSolidMode(const char *string);
@@ -75,5 +97,7 @@ void R_BlendFunc(GLenum src, GLenum dest);
 void R_EnableBlend(qboolean enable);
 void R_EnableAlphaTest(qboolean enable);
 void R_EnableLighting(qboolean enable);
+void R_EnableColorArray(qboolean enable);
+void R_EnableWarp(qboolean enable);
 
 #endif
