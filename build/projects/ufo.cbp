@@ -457,9 +457,6 @@
 		<Unit filename="..\..\src\renderer\r_surface.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\renderer\r_warp.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\server\server.h" />
 		<Unit filename="..\..\src\server\sv_ccmds.c">
 			<Option compilerVar="CC" />
