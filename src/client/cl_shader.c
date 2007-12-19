@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 
 /* extern in client.h */
-int r_numshaders;
+int r_numShaders;
 
 /* shader_t is in client/ref.h */
 /* r_shaders is external and is linked to refdef.shaders in cl_view.c V_RenderView */
@@ -66,14 +66,14 @@ void CL_ParseShaders (const char *name, const char **text)
 	const char *token;
 	int i;
 
-	for (i = 0; i < r_numshaders; i++) {
+	for (i = 0; i < r_numShaders; i++) {
 		if (!Q_strcmp(r_shaders[i].name, name)) {
 			Com_Printf("CL_ParseShaders: Second shader with same name found (%s) - second ignored\n", name);
 			return;
 		}
 	}
 
-	if (r_numshaders >= MAX_SHADERS) {
+	if (r_numShaders >= MAX_SHADERS) {
 		Com_Printf("CL_ParseShaders: shader \"%s\" ignored - too many shaders\n", name);
 		return;
 	}
@@ -86,7 +86,7 @@ void CL_ParseShaders (const char *name, const char **text)
 	}
 
 	/* new entry */
-	entry = &r_shaders[r_numshaders++];
+	entry = &r_shaders[r_numShaders++];
 	memset(entry, 0, sizeof(shader_t));
 
 	/* default value */
@@ -134,7 +134,7 @@ void CL_ShaderList_f (void)
 {
 	int i;
 
-	for (i = 0; i < r_numshaders; i++) {
+	for (i = 0; i < r_numShaders; i++) {
 		Com_Printf("Shader %s\n", r_shaders[i].name);
 		Com_Printf("..filename: %s\n", r_shaders[i].filename);
 		Com_Printf("..frag %i\n", (int) r_shaders[i].frag);

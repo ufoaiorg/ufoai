@@ -224,7 +224,7 @@ static qboolean R_CullAliasMD2Model (vec4_t bbox[8], entity_t * e)
 		vec4_t tmp;
 
 		Vector4Copy(bbox[i], tmp);
-		GLVectorTransform(trafo[e - refdef.entities].matrix, tmp, bbox[i]);
+		GLVectorTransform(trafo[e - r_entities].matrix, tmp, bbox[i]);
 	}
 
 	/* cull */
@@ -312,7 +312,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 
 	qglPushMatrix();
 
-	qglMultMatrixf(trafo[e - refdef.entities].matrix);
+	qglMultMatrixf(trafo[e - r_entities].matrix);
 
 	/* draw it */
 	R_Bind(skin->texnum);

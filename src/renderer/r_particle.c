@@ -79,7 +79,7 @@ static void R_DrawSprite (ptl_t * p)
 	vec3_t pos;
 
 	/* load texture set up coordinates */
-	R_Bind(((image_t *) refdef.ptl_art[p->pic].art)->texnum);
+	R_Bind(((image_t *) r_particlesArt[p->pic].art)->texnum);
 
 	/* calculate main position and normalised up and right vectors */
 	q = p->parent ? p->parent : p;
@@ -144,7 +144,7 @@ static void R_DrawPtlModel (ptl_t * p)
 	mi.color = p->color;
 	mi.origin = p->s;
 	mi.angles = p->angles;
-	mi.model = (model_t *) refdef.ptl_art[p->model].art;
+	mi.model = (model_t *) r_particlesArt[p->model].art;
 	mi.skin = p->skin;
 
 	/* draw it */
@@ -265,7 +265,7 @@ void R_DrawParticles (void)
 	qglDisable(GL_CULL_FACE);
 	RSTATE_ENABLE_BLEND
 
-	for (i = 0, p = refdef.ptls; i < refdef.num_ptls; i++, p++)
+	for (i = 0, p = r_particles; i < r_numParticles; i++, p++)
 		if (p->inuse && !p->invis) {
 			/* test for visibility */
 			if (p->levelFlags && !((1 << refdef.worldlevel) & p->levelFlags))

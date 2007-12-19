@@ -275,8 +275,6 @@ shader stuff
 
 void CL_ShaderList_f(void);
 void CL_ParseShaders(const char *name, const char **text);
-extern int r_numshaders;
-extern shader_t r_shaders[MAX_SHADERS];
 
 /*================================================= */
 
@@ -805,10 +803,6 @@ void CL_InitParticles(void);
 ptl_t *CL_ParticleSpawn(const char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a);
 void PE_RenderParticles(void);
 void CL_ParticleVisible(ptl_t *p, qboolean hide);
-extern ptlArt_t ptlArt[MAX_PTL_ART];
-extern ptl_t ptl[MAX_PTLS];
-extern int numPtlArt;
-extern int numPtls;
 
 /* cl_parse.c */
 extern const char *ev_format[128];

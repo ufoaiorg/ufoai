@@ -36,16 +36,15 @@ int map_maxlevel;
 int map_maxlevel_base = 0;
 sun_t map_sun;
 
-/* static vars */
-static int r_numentities;
-static entity_t r_entities[MAX_ENTITIES];
+int r_numEntities;
+entity_t r_entities[MAX_ENTITIES];
 
 /**
  * @sa V_RenderView
  */
 static void V_ClearScene (void)
 {
-	r_numentities = 0;
+	r_numEntities = 0;
 }
 
 /**
@@ -55,7 +54,7 @@ static void V_ClearScene (void)
  */
 entity_t *V_GetEntity (void)
 {
-	return r_entities + r_numentities;
+	return r_entities + r_numEntities;
 }
 
 /**
@@ -63,10 +62,10 @@ entity_t *V_GetEntity (void)
  */
 void V_AddEntity (entity_t * ent)
 {
-	if (r_numentities >= MAX_ENTITIES)
+	if (r_numEntities >= MAX_ENTITIES)
 		return;
 
-	r_entities[r_numentities++] = *ent;
+	r_entities[r_numEntities++] = *ent;
 }
 
 static void CL_ParseEntitystring (const char *es)
@@ -400,14 +399,6 @@ void V_UpdateRefDef (void)
 	refdef.width = scr_vrect.width;
 	refdef.height = scr_vrect.height;
 	refdef.time = cl.time * 0.001;	refdef.worldlevel = cl_worldlevel->integer;
-	refdef.num_entities = r_numentities;
-	refdef.entities = r_entities;
-	refdef.num_shaders = r_numshaders;
-	refdef.shaders = r_shaders;
-
-	refdef.num_ptls = numPtls;
-	refdef.ptls = ptl;
-	refdef.ptl_art = ptlArt;
 
 	refdef.sun = &map_sun;
 }

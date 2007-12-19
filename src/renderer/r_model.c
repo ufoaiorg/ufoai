@@ -273,7 +273,7 @@ void R_ModEnableLights (const entity_t* e)
 		VectorClear(sumColor);
 		VectorClear(sumDelta);
 		sumDelta[3] = 1.0;
-		GLVectorTransform(trafo[e - refdef.entities].matrix, sumDelta, trorigin);
+		GLVectorTransform(trafo[e - r_entities].matrix, sumDelta, trorigin);
 
 		if (*e->lightparam != 0.0) {
 			VectorScale(refdef.sun->dir, 1.0, sumDelta);
@@ -362,7 +362,7 @@ void R_ModDrawNullModel (entity_t* e)
 
 	qglPushMatrix();
 
-	qglMultMatrixf(trafo[e - refdef.entities].matrix);
+	qglMultMatrixf(trafo[e - r_entities].matrix);
 
 	qglDisable(GL_TEXTURE_2D);
 

@@ -182,11 +182,11 @@ static byte cmdStack[MAX_STACK_DATA];
 static void *stackPtr[MAX_STACK_DEPTH];
 static byte stackType[MAX_STACK_DEPTH];
 
-ptlArt_t ptlArt[MAX_PTL_ART];
-ptl_t ptl[MAX_PTLS];
+ptlArt_t r_particlesArt[MAX_PTL_ART];
+ptl_t r_particles[MAX_PTLS];
 
-int numPtlArt;
-int numPtls;
+int r_numParticlesArt;
+int r_numParticles;
 
 static void CL_ParticleRun2(ptl_t *p);
 
@@ -229,7 +229,7 @@ void CL_ParticleRegisterArt (void)
 	ptlArt_t *a;
 	int i;
 
-	for (i = 0, a = ptlArt; i < numPtlArt; i++, a++) {
+	for (i = 0, a = r_particlesArt; i < r_numParticlesArt; i++, a++) {
 		/* register the art */
 		switch (a->type) {
 		case ART_PIC:
@@ -258,11 +258,11 @@ static int CL_ParticleGetArt (const char *name, int frame, char type)
 	int i;
 
 	/* search for the pic in the list */
-	for (i = 0, a = ptlArt; i < numPtlArt; i++, a++)
+	for (i = 0, a = r_particlesArt; i < r_numParticlesArt; i++, a++)
 		if (a->type == type && !Q_strncmp(name, a->name, MAX_VAR) && a->frame == frame)
 			break;
 
-	if (i < numPtlArt)
+	if (i < r_numParticlesArt)
 		return i;
 
 	if (i >= MAX_PTL_ART)
@@ -291,9 +291,9 @@ static int CL_ParticleGetArt (const char *name, int frame, char type)
 	a->type = type;
 	a->frame = (type == ART_PIC) ? frame : 0;
 	Q_strncpyz(a->name, name, sizeof(a->name));
-	numPtlArt++;
+	r_numParticlesArt++;
 
-	return numPtlArt - 1;
+	return r_numParticlesArt - 1;
 }
 
 /*==============================================================================
@@ -382,9 +382,9 @@ static void PE_LoadParticle_f (void)
 	ptledit_ptl = NULL;
 
 	/* free any active particle (some don't have a kill function) */
-	for (i = 0; i < numPtls; i++)
-		ptl[i].inuse = qfalse;
-	numPtls = 0;
+	for (i = 0; i < r_numParticles; i++)
+		r_particles[i].inuse = qfalse;
+	r_numParticles = 0;
 
 	activeParticle = -1;
 	for (i = 0; i < numPtlDefs; i++)
@@ -504,11 +504,11 @@ static void CL_ParticleEditor_f (void)
  */
 void CL_ResetParticles (void)
 {
-	numPtls = 0;
+	r_numParticles = 0;
 	numPtlCmds = 0;
 	numPtlDefs = 0;
 
-	numPtlArt = 0;
+	r_numParticlesArt = 0;
 	pcmdPos = 0;
 
 	Cmd_AddCommand("particle_editor_open", CL_ParticleEditor_f, "Open the particle editor");
@@ -824,13 +824,13 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
 	pd = &ptlDef[i];
 
 	/* add the particle */
-	for (i = 0; i < numPtls; i++)
-		if (!ptl[i].inuse)
+	for (i = 0; i < r_numParticles; i++)
+		if (!r_particles[i].inuse)
 			break;
 
-	if (i == numPtls) {
-		if (numPtls < MAX_PTLS)
-			numPtls++;
+	if (i == r_numParticles) {
+		if (r_numParticles < MAX_PTLS)
+			r_numParticles++;
 		else {
 			Com_Printf("Too many particles (don't add %s) - exceeded %i\n", name, MAX_PTLS);
 			return NULL;
@@ -838,7 +838,7 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
 	}
 
 	/* allocate particle */
-	p = &ptl[i];
+	p = &r_particles[i];
 	memset(p, 0, sizeof(ptl_t));
 
 	/* set basic values */
@@ -980,7 +980,7 @@ void CL_ParticleCheckRounds (void)
 	ptl_t *p;
 	int i;
 
-	for (i = 0, p = ptl; i < numPtls; i++, p++)
+	for (i = 0, p = r_particles; i < r_numParticles; i++, p++)
 		if (p->inuse) {
 			/* run round function */
 			CL_ParticleFunction(p, p->ctrl->round);
@@ -1049,7 +1049,7 @@ static void CL_ParticleRun2 (ptl_t *p)
 		p->lastFrame -= 1.0 / p->fps;
 
 		/* load next frame */
-		p->pic = CL_ParticleGetArt(ptlArt[p->pic].name, p->frame, ART_PIC);
+		p->pic = CL_ParticleGetArt(r_particlesArt[p->pic].name, p->frame, ART_PIC);
 	}
 
 	/* fading */
@@ -1114,7 +1114,7 @@ void CL_ParticleRun (void)
 	if (cls.state != ca_active)
 		return;
 
-	for (i = 0, p = ptl; i < numPtls; i++, p++)
+	for (i = 0, p = r_particles; i < r_numParticles; i++, p++)
 		if (p->inuse)
 			CL_ParticleRun2(p);
 }

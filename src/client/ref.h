@@ -210,24 +210,10 @@ typedef struct {
 	int rdflags;				/**< RDF_NOWORLDMODEL, etc */
 	int worldlevel;
 
-	int num_entities;
-	entity_t *entities;
-
-	int num_shaders;
-	shader_t *shaders;
-
-	int num_ptls;
-	ptl_t *ptls;
-	ptlArt_t *ptl_art;
-
 	sun_t *sun;
 
 	const char *mapZone;	/**< used to replace textures in base assembly */
 } refdef_t;
-
-extern refdef_t refdef;
-
-extern int c_brush_polys, c_alias_polys;
 
 void R_BeginFrame(void);
 void R_EndFrame(void);
@@ -275,5 +261,20 @@ void R_Shutdown(void);
 
 extern SDL_Surface *r_surface;
 extern cvar_t *r_3dmapradius;
+
+extern int r_numShaders;
+extern shader_t r_shaders[MAX_SHADERS];
+
+extern ptlArt_t r_particlesArt[MAX_PTL_ART];
+extern ptl_t r_particles[MAX_PTLS];
+extern int r_numParticlesArt;
+extern int r_numParticles;
+
+extern int r_numEntities;
+extern entity_t r_entities[MAX_ENTITIES];
+
+extern refdef_t refdef;
+
+extern int c_brush_polys, c_alias_polys;
 
 #endif /* CLIENT_REF_H */

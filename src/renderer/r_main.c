@@ -172,7 +172,7 @@ static float *R_CalcTransform (entity_t * e)
 	int i;
 
 	/* check if this entity is already transformed */
-	t = &trafo[e - refdef.entities];
+	t = &trafo[e - r_entities];
 
 	if (t->processing)
 		Sys_Error("Ring in entity transformations!\n");
@@ -258,15 +258,15 @@ static inline void R_TransformEntitiesOnList (void)
 	int i;
 
 	/* clear flags */
-	for (i = 0; i < refdef.num_entities; i++) {
+	for (i = 0; i < r_numEntities; i++) {
 		trafo[i].done = qfalse;
 		trafo[i].processing = qfalse;
 	}
 
 	/* calculate all transformations */
 	/* possibly recursive */
-	for (i = 0; i < refdef.num_entities; i++)
-		R_CalcTransform(&refdef.entities[i]);
+	for (i = 0; i < r_numEntities; i++)
+		R_CalcTransform(&r_entities[i]);
 }
 
 /**
@@ -284,8 +284,8 @@ static void R_DrawEntities (void)
 	R_TransformEntitiesOnList();
 
 	/* draw non-transparent first */
-	for (i = 0; i < refdef.num_entities; i++) {
-		e = &refdef.entities[i];
+	for (i = 0; i < r_numEntities; i++) {
+		e = &r_entities[i];
 
 		/* find out if and how an entity should be drawn */
 		if (e->flags & RF_TRANSLUCENT)
@@ -322,8 +322,8 @@ static void R_DrawEntities (void)
 	/* draw transparent entities */
 	/* we could sort these if it ever becomes a problem... */
 	qglDepthMask(GL_FALSE);			/* no z writes */
-	for (i = 0; i < refdef.num_entities; i++) {
-		e = &refdef.entities[i];
+	for (i = 0; i < r_numEntities; i++) {
+		e = &r_entities[i];
 		if (!(e->flags & RF_TRANSLUCENT))
 			continue;			/* solid */
 

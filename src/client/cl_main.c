@@ -408,7 +408,7 @@ void CL_ClearState (void)
 	numLEs = 0;
 	numLMs = 0;
 	numMPs = 0;
-	numPtls = 0;
+	r_numParticles = 0;
 }
 
 /**
