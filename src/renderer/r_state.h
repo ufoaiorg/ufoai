@@ -66,7 +66,7 @@ void R_SetupGL3D(void);
 void R_EnableMultitexture(qboolean enable);
 void R_SelectTexture(GLenum);
 void R_Bind(int texnum);
-void R_MBind(GLenum target, int texnum);
+void R_BindMultitexture(GLenum target0, int texnum0, GLenum target1, int texnum1);
 void R_TexEnv(GLenum value);
 void R_TextureAlphaMode(const char *string);
 void R_TextureSolidMode(const char *string);

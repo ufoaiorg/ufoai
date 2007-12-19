@@ -167,8 +167,8 @@ static void R_DrawSurface (mBspSurface_t *surf)
 
 	c_brush_polys++;
 
-	R_MBind(GL_TEXTURE0_ARB, surf->texinfo->image->texnum);
-	R_MBind(GL_TEXTURE1_ARB, r_state.lightmap_texnum + lmtex);
+	R_BindMultitexture(GL_TEXTURE0_ARB, surf->texinfo->image->texnum,
+		GL_TEXTURE1_ARB, r_state.lightmap_texnum + lmtex);
 
 	if (surf->texinfo->flags & SURF_FLOWING) {
 		float scroll;

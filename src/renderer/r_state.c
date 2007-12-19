@@ -240,17 +240,12 @@ void R_Bind (int texnum)
 	R_CheckError();
 }
 
-void R_MBind (GLenum target, int texnum)
+void R_BindMultitexture (GLenum target0, int texnum0, GLenum target1, int texnum1)
 {
-	R_SelectTexture(target);
-	if (target == GL_TEXTURE0_ARB) {
-		if (r_state.currenttextures[0] == texnum)
-			return;
-	} else {
-		if (r_state.currenttextures[1] == texnum)
-			return;
-	}
-	R_Bind(texnum);
+	R_SelectTexture(target0);
+	R_Bind(texnum0);
+	R_SelectTexture(target1);
+	R_Bind(texnum1);
 }
 
 typedef struct {
