@@ -167,7 +167,7 @@ LIGHTMAP ALLOCATION
 =============================================================================
 */
 
-static void LM_InitBlock (void)
+static inline void LM_InitBlock (void)
 {
 	memset(gl_lms.allocated, 0, sizeof(gl_lms.allocated));
 }
@@ -176,9 +176,7 @@ static void LM_UploadBlock (void)
 {
 	R_Bind(r_state.lightmap_texnum + gl_lms.current_lightmap_texture);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	R_CheckError();
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	R_CheckError();
 
 	qglTexImage2D(GL_TEXTURE_2D, 0, gl_solid_format, BLOCK_WIDTH, BLOCK_HEIGHT, 0, GL_LIGHTMAP_FORMAT, GL_UNSIGNED_BYTE, gl_lms.lightmap_buffer);
 	R_CheckError();
@@ -271,9 +269,7 @@ void R_BeginBuildingLightmaps (void)
 	/* initialize the dynamic lightmap texture */
 	R_Bind(r_state.lightmap_texnum + 0);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	R_CheckError();
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	R_CheckError();
 	qglTexImage2D(GL_TEXTURE_2D, 0, gl_solid_format, BLOCK_WIDTH, BLOCK_HEIGHT, 0, GL_LIGHTMAP_FORMAT, GL_UNSIGNED_BYTE, dummy);
 	R_CheckError();
 }
@@ -286,5 +282,5 @@ void R_EndBuildingLightmaps (void)
 {
 	LM_UploadBlock();
 	R_EnableMultitexture(qfalse);
-/*	Com_Printf("lightmaps: %i\n", gl_lms.current_lightmap_texture); */
+	Com_DPrintf(DEBUG_RENDERER, "lightmaps: %i\n", gl_lms.current_lightmap_texture);
 }

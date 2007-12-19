@@ -4408,8 +4408,6 @@ static void CL_GameNew_f (void)
 	/* initialise date */
 	ccs.date = curCampaign->date;
 
-	memset(&gd, 0, sizeof(gd));
-	memset(&stats, 0, sizeof(stats));
 	CL_ReadSinglePlayerData();
 
 	Cvar_Set("team", curCampaign->team);
@@ -4546,6 +4544,9 @@ static void CP_CampaignsClick_f (void)
 void CL_ResetSinglePlayerData (void)
 {
 	int i;
+
+	memset(&gd, 0, sizeof(gd));
+	memset(&stats, 0, sizeof(stats));
 
 	numStageSets = numStages = numMissions = 0;
 	memset(missions, 0, sizeof(mission_t) * MAX_MISSIONS);

@@ -168,7 +168,6 @@ static qboolean SAV_GameLoad (const char *filename, char **error)
 
 	CL_StartSingleplayer(qtrue);
 
-	memset(&gd, 0, sizeof(gd));
 	CL_ReadSinglePlayerData();
 
 	Com_Printf("Load '%s'\n", filename);
