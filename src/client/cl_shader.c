@@ -34,7 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 
-/* extern in client.h */
 int r_numShaders;
 
 /* shader_t is in client/ref.h */
@@ -139,7 +138,7 @@ void CL_ShaderList_f (void)
 		Com_Printf("..filename: %s\n", r_shaders[i].filename);
 		Com_Printf("..frag %i\n", (int) r_shaders[i].frag);
 		Com_Printf("..vertex %i\n", (int) r_shaders[i].vertex);
-		Com_Printf("..glMode '%s'\n", Com_ValueToStr(&r_shaders[i], V_BLEND, offsetof( shader_t, glMode)));
+		Com_Printf("..glMode '%s'\n", Com_ValueToStr(&r_shaders[i], V_BLEND, offsetof(shader_t, glMode)));
 		Com_Printf("\n");
 	}
 }

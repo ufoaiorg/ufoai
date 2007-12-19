@@ -54,6 +54,7 @@ void R_ShaderInit (void)
 		}
 	}
 	shaderInited = qtrue;
+	Com_Printf("...uploaded %i shaders\n", r_numShaders);
 }
 
 /**

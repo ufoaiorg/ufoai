@@ -183,9 +183,9 @@ static void *stackPtr[MAX_STACK_DEPTH];
 static byte stackType[MAX_STACK_DEPTH];
 
 ptlArt_t r_particlesArt[MAX_PTL_ART];
-ptl_t r_particles[MAX_PTLS];
-
 int r_numParticlesArt;
+
+ptl_t r_particles[MAX_PTLS];
 int r_numParticles;
 
 static void CL_ParticleRun2(ptl_t *p);
