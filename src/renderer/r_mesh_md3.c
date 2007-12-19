@@ -176,7 +176,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 		R_DrawAliasMD3FrameLerp(e, paliashdr, paliashdr->meshes[i]);
 	}
 
-	RSTATE_DISABLE_LIGHTING
+	R_EnableLighting(qfalse);
 
 	if (e->flags & RF_TRANSLUCENT)
 		R_EnableBlend(qfalse);

@@ -307,7 +307,7 @@ void R_ModEnableLights (const entity_t* e)
 	}
 
 	/* enable the lighting */
-	RSTATE_ENABLE_LIGHTING
+	R_EnableLighting(qtrue);
 }
 
 /**

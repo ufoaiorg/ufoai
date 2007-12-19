@@ -35,19 +35,22 @@ typedef struct {
 	int lightmap_texnum;
 
 	vec4_t color;
-	GLenum blend_src, blend_dest;  /* blend function */
+
+	/* blend function */
+	GLenum blend_src, blend_dest;
 
 	int currenttextures[2];
 	int currenttmu;
 
 	int maxAnisotropic;
 
-	qboolean hwgamma;
+	/* states */
 	qboolean blend_enabled;
 	qboolean alpha_test_enabled;
 	qboolean multitexture_enabled;
 	qboolean lighting_enabled;
 
+	qboolean hwgamma;
 	qboolean anisotropic;
 	qboolean lod_bias;
 	qboolean arb_fragment_program;
@@ -56,9 +59,6 @@ typedef struct {
 
 extern rstate_t r_state;
 extern const vec4_t color_white;
-
-#define RSTATE_DISABLE_LIGHTING   if (r_state.lighting_enabled) { qglDisable(GL_LIGHTING); r_state.lighting_enabled=qfalse; }
-#define RSTATE_ENABLE_LIGHTING    if (!r_state.lighting_enabled) { qglEnable(GL_LIGHTING); qglEnable(GL_LIGHT0); r_state.lighting_enabled=qtrue; }
 
 void R_SetDefaultState(void);
 void R_SetupGL2D(void);
@@ -74,4 +74,6 @@ void R_TextureMode(const char *string);
 void R_BlendFunc(GLenum src, GLenum dest);
 void R_EnableBlend(qboolean enable);
 void R_EnableAlphaTest(qboolean enable);
+void R_EnableLighting(qboolean enable);
+
 #endif

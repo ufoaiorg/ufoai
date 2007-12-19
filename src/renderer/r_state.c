@@ -182,6 +182,21 @@ void R_SetupGL2D (void)
 	R_CheckError();
 }
 
+void R_EnableLighting (qboolean enable)
+{
+	if (r_state.lighting_enabled == enable)
+		return;
+
+	r_state.lighting_enabled = enable;
+
+	if (enable) {
+		qglEnable(GL_LIGHTING);
+		qglEnable(GL_LIGHT0);
+	} else {
+		qglDisable(GL_LIGHTING);
+	}
+}
+
 void R_EnableMultitexture (qboolean enable)
 {
 	if (enable == r_state.multitexture_enabled)
