@@ -608,6 +608,10 @@ void UP_AircraftDescription (technology_t* t)
 			for (i = 0; i < AIR_STATS_MAX; i++) {
 				switch (i) {
 				case AIR_STATS_SPEED:
+					/* speed may be converted to km/h : multiply by pi / 180 * earth_radius */
+					Q_strcat(upBuffer, va(_("%s:\t%i km/h\n"), CL_AircraftStatToName(i),
+						(int) 111.2 * CL_AircraftMenuStatsValues(aircraft->stats[i], i)), sizeof(upBuffer));
+					break;
 				case AIR_STATS_ACCURACY:
 				case AIR_STATS_FUELSIZE:
 					Q_strcat(upBuffer, va(_("%s:\t%i\n"), CL_AircraftStatToName(i),

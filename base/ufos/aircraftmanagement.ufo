@@ -13,6 +13,7 @@
 //
 //	--vv-- Parameters which can get influenced by craft equipement ("craftitem"). --vv--
 //	speed - The speed of the aircraft, which tells how fast the aircraft is.
+//		to convert in km/h, multiply speed by pi / 180 * radius_of_earth = 111
 //	shield - The parameter of aircraft shield, which tells aircraft's protection.
 //	ecm - The parameter of electronic level at aircraft, the bigger, the lower possibility to hit by enemy (in percent).
 //	damage - The parameter of aircraft hit points, which tells how much damage aircraft can suffer.
