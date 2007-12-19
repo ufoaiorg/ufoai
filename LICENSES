@@ -2483,6 +2483,8 @@ base/textures/tex_nature/desert001.jpg | GNU General Public License 2.0 |  | htt
 base/textures/tex_nature/desert003.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_nature/desert004.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_nature/desert006.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_nature/desert007.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
+base/textures/tex_nature/desert008.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_nature/flower.jpg | GNU General Public License 2.0 | Willem "Sitters"
 base/textures/tex_nature/grass003.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_nature/grass003_way_d2r.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
@@ -2511,6 +2513,7 @@ base/textures/tex_streets/street005.jpg | GNU General Public License 2.0 | Werne
 base/textures/tex_streets/street010.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_streets/street11.jpg | GNU General Public License 2.0 | Werner Höhrer (hoehrer)
 base/textures/tex_tech/spec_analyser.jpg | GNU General Public License 2.0 | Martin Gerhardy
+base/textures/tex_terrain/desert.jpg | GNU General Public License 2.0 |  | http://dplogin.com/forums/index.php?topic=7836.0
 base/textures/tex_ufo/ufo1_01.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
 base/textures/tex_ufo/ufo1_02.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
 base/textures/tex_ufo/ufo1_03.jpg | GNU General Public License 2.0 | "Sparx" Beyeler
