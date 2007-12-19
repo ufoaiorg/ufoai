@@ -539,13 +539,13 @@ void R_RenderFrame (void)
 
 	R_DrawMaterialSurfaces(r_material_surfaces);
 
+	R_DrawParticles();
+
 	R_EnableBlend(qfalse);
 
 	/* leave wire mode again */
 	if (r_wire->integer)
 		qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-	R_DrawParticles();
 
 	/* go back into 2D mode for hud and the like */
 	R_SetupGL2D();

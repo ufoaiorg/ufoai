@@ -364,9 +364,6 @@ void R_DrawAliasMD2Model (entity_t * e)
 	/* locate the proper data */
 	c_alias_polys += paliashdr->num_tris;
 
-	/* set-up lighting */
-	R_ModEnableLights(e);
-
 	qglPushMatrix();
 
 	qglMultMatrixf(trafo[e - r_entities].matrix);
@@ -389,6 +386,10 @@ void R_DrawAliasMD2Model (entity_t * e)
 
 	qglEnable(GL_DEPTH_TEST);
 	qglEnable(GL_CULL_FACE);
+
+	/* set-up lighting */
+	R_EnableLighting(qtrue);
+	R_ModEnableLights(e);
 
 	R_DrawAliasFrameLerp(paliashdr, e->as.backlerp, e->as.frame, e->as.oldframe);
 

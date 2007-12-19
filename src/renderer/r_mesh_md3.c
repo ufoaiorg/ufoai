@@ -112,9 +112,6 @@ void R_DrawAliasMD3Model (entity_t *e)
 
 	paliashdr = (mAliasModel_t *)e->model->alias.extraData;
 
-	/* set-up lighting */
-	R_ModEnableLights(e);
-
 	for (i = 0; i < paliashdr->num_meshes; i++) {
 		c_alias_polys += paliashdr->meshes[i].num_tris;
 	}
@@ -165,6 +162,10 @@ void R_DrawAliasMD3Model (entity_t *e)
 
 		R_EnableBlend(qfalse);
 	}
+
+	/* set-up lighting */
+	R_EnableLighting(qtrue);
+	R_ModEnableLights(e);
 
 	for (i = 0; i < paliashdr->num_meshes; i++) {
 		skin = e->model->alias.skins_img[e->skinnum];

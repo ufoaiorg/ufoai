@@ -292,11 +292,9 @@ static void R_ModLoadFaces (lump_t * l)
 			out->samples = loadmodel->bsp.lightdata + i;
 
 		/* create lightmaps and polygons */
-		if (!(out->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66 | SURF_WARP)))
-			R_CreateSurfaceLightmap(out);
+		R_CreateSurfaceLightmap(out);
 
-		if (!(out->texinfo->flags & SURF_WARP))
-			R_BuildPolygonFromSurface(out, shift, loadmodel);
+		R_CreateSurfacePoly(out, shift, loadmodel);
 	}
 }
 

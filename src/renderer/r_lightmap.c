@@ -49,7 +49,7 @@ void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 		return;
 	}
 
-	if (surf->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66 | SURF_WARP))
+	if ((surf->texinfo->flags & SURF_WARP))
 		Com_Error(ERR_DROP, "R_BuildLightMap called for non-lit surface");
 
 	smax = (surf->stmaxs[0] >> surf->lquant) + 1;
@@ -227,7 +227,7 @@ void R_CreateSurfaceLightmap (mBspSurface_t * surf)
 	int smax, tmax;
 	byte *base;
 
-	if (surf->flags & SURF_WARP)
+	if (surf->texinfo->flags & SURF_WARP)
 		return;
 
 	smax = (surf->stmaxs[0] >> surf->lquant) + 1;

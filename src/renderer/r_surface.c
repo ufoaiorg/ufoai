@@ -193,7 +193,7 @@ void R_DrawAlphaWarpSurfaces (mBspSurface_t *surfs)
 	R_EnableWarp(qfalse);
 }
 
-void R_BuildPolygonFromSurface (mBspSurface_t *surf, int shift[3], model_t *mod)
+void R_CreateSurfacePoly (mBspSurface_t *surf, int shift[3], model_t *mod)
 {
 	int i, lindex, lnumverts;
 	mBspEdge_t *pedges, *r_pedge;
