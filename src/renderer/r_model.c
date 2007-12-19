@@ -261,6 +261,9 @@ void R_ModEndLoading (void)
  */
 void R_ModEnableLights (const entity_t* e)
 {
+	/* enable the lighting */
+	qglEnable(GL_LIGHT0);
+
 	if (e->flags & RF_LIGHTFIXED) {
 		/* add the fixed light */
 		qglLightfv(GL_LIGHT0, GL_POSITION, e->lightparam);
@@ -305,10 +308,6 @@ void R_ModEnableLights (const entity_t* e)
 		qglLightfv(GL_LIGHT0, GL_DIFFUSE, sumColor);
 		qglLightfv(GL_LIGHT0, GL_AMBIENT, refdef.sun->ambient);
 	}
-
-	/* enable the lighting */
-	R_EnableLighting(qtrue);
-	qglEnable(GL_LIGHT0);
 }
 
 /**
@@ -342,7 +341,7 @@ void R_ModDrawModelBBox (vec4_t bbox[8], entity_t *e)
 	qglVertex3fv(bbox[0]);
 	qglEnd();
 
-  	/* Draw bottom */
+	/* Draw bottom */
 	qglBegin(GL_TRIANGLE_STRIP);
 	qglVertex3fv(bbox[4]);
 	qglVertex3fv(bbox[6]);
