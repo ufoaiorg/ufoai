@@ -145,9 +145,11 @@ int SH_LoadProgram_ARB_FP (const char *path)
 		return -1;
 	}
 
+	qglEnable(GL_FRAGMENT_PROGRAM_ARB);
 	qglGenProgramsARB(1, &fpid);
 	qglBindProgramARB(GL_FRAGMENT_PROGRAM_ARB, fpid);
 	qglProgramStringARB(GL_FRAGMENT_PROGRAM_ARB, GL_PROGRAM_FORMAT_ASCII_ARB, size, fbuf);
+	qglDisable(GL_FRAGMENT_PROGRAM_ARB);
 
 	errors = qglGetString(GL_PROGRAM_ERROR_STRING_ARB);
 
@@ -174,6 +176,8 @@ int SH_LoadProgram_ARB_VP (const char *path)
 {
 	char *fbuf;
 	int size, vpid;
+	const unsigned char *errors;
+	int error_pos;
 
 	if (!r_state.arb_fragment_program)
 		return -1;
@@ -191,24 +195,24 @@ int SH_LoadProgram_ARB_VP (const char *path)
 		return -1;
 	}
 
+	qglEnable(GL_VERTEX_PROGRAM_ARB);
 	qglGenProgramsARB(1, (unsigned int*)&vpid);
 	qglBindProgramARB(GL_VERTEX_PROGRAM_ARB, vpid);
 	qglProgramStringARB(GL_VERTEX_PROGRAM_ARB, GL_PROGRAM_FORMAT_ASCII_ARB, size, fbuf);
+	qglDisable(GL_VERTEX_PROGRAM_ARB);
 
-	{
-		const unsigned char *errors = qglGetString(GL_PROGRAM_ERROR_STRING_ARB);
-		int error_pos;
+	errors = qglGetString(GL_PROGRAM_ERROR_STRING_ARB);
 
-		qglGetIntegerv(GL_PROGRAM_ERROR_POSITION_ARB, &error_pos);
-		if (error_pos != -1) {
-			Com_Printf("!! VP error at position %d in %s\n", error_pos, path);
-			Com_Printf("!! Error: %s\n", errors);
+	qglGetIntegerv(GL_PROGRAM_ERROR_POSITION_ARB, &error_pos);
+	if (error_pos != -1) {
+		Com_Printf("!! VP error at position %d in %s\n", error_pos, path);
+		Com_Printf("!! Error: %s\n", errors);
 
-			qglDeleteProgramsARB(1, (unsigned int*)&vpid);
-			FS_FreeFile(fbuf);
-			return 0;
-		}
+		qglDeleteProgramsARB(1, (unsigned int*)&vpid);
+		FS_FreeFile(fbuf);
+		return 0;
 	}
+
 	FS_FreeFile(fbuf);
 	Com_DPrintf(DEBUG_RENDERER, "...loaded vertex shader %s (pid: %i)\n", path, vpid);
 	R_CheckError();
@@ -305,7 +309,7 @@ static void SH_UseProgram_ARB_VP (int vpid)
 void SH_UseShader (shader_t * shader, qboolean deactivate)
 {
 	/* no shaders supported - @todo glsl */
-	if (!r_state.arb_fragment_program)
+	if (!r_state.arb_fragment_program || !shader)
 		return;
 
 	assert(shader);
