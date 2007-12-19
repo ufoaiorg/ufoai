@@ -995,7 +995,7 @@ void B_SetUpBase (base_t* base)
 	if (base->idx > 0) {
 		j = (int) (frand() * 3 + 1.5f);
 		for (i=0; i < j; i++) {
-			int *mapPtr = &base->map[rand() % BASE_SIZE][rand() % BASE_SIZE];
+			int *mapPtr = &base->map[rand() % BASE_SIZE][rand() % (BASE_SIZE - 1)];
 			/* set this field to invalid if there is no building yet */
 			if (*mapPtr == BASE_FREESLOT)
 				*mapPtr = BASE_INVALID_SPACE;
