@@ -223,12 +223,14 @@ void R_EnableLighting (qboolean enable)
 		qglEnableClientState(GL_NORMAL_ARRAY);
 		qglNormalPointer(GL_FLOAT, 0, r_state.normal_array);
 
-		SH_UseShader(lightning_shader, qtrue);
+		if (!(refdef.rdflags & RDF_NOWORLDMODEL))
+			SH_UseShader(lightning_shader, qtrue);
 	} else {
 		qglDisable(GL_LIGHTING);
 		qglDisableClientState(GL_NORMAL_ARRAY);
 
-		SH_UseShader(lightning_shader, qfalse);
+		if (!(refdef.rdflags & RDF_NOWORLDMODEL))
+			SH_UseShader(lightning_shader, qfalse);
 	}
 }
 

@@ -238,7 +238,7 @@ void CL_SequenceRender (void)
 	entity_t ent;
 	seqCmd_t *sc;
 	seqEnt_t *se;
-	float sunfrac;
+	float sunfrac = 1.0;
 	int i;
 
 	/* run script */
@@ -272,8 +272,6 @@ void CL_SequenceRender (void)
 			ent.skinnum = se->skin;
 			ent.as = se->as;
 			ent.alpha = se->alpha;
-
-			sunfrac = 1.0;
 			ent.lightparam = &sunfrac;
 
 			VectorCopy(se->origin, ent.origin);
