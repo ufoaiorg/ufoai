@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-12-06 11:17+0100\n"
-"PO-Revision-Date: 2007-12-07 08:33+0100\n"
+"PO-Revision-Date: 2007-12-19 19:16+0100\n"
 "Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -3816,9 +3816,10 @@ msgstr "Oui"
 msgid "No"
 msgstr "Non"
 
+# Texte dans un bouton: pas plus de 16 chars
 #: ../base/ufos/menu_options.ufo:978
 msgid "Only for moving"
-msgstr "Uniquement pour le déplacement"
+msgstr "Déplacement seul"
 
 #: ../base/ufos/menu_production.ufo:69
 #: ../base/ufos/menu_production.ufo:566
