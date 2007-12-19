@@ -921,7 +921,7 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, b
  */
 void B_SetUpBase (base_t* base)
 {
-	int i;
+	int i, j;
 	building_t *building = NULL;
 	aircraft_t *aircraft = NULL;
 
@@ -993,10 +993,13 @@ void B_SetUpBase (base_t* base)
 	base->buyfactor = 1;
 	/* the first base never has invalid fields */
 	if (base->idx > 0) {
-		int *mapPtr = &base->map[rand() % BASE_SIZE][rand() % BASE_SIZE];
-		/* set this field to invalid if there is no building yet */
-		if (*mapPtr == BASE_FREESLOT)
-			*mapPtr = BASE_INVALID_SPACE;
+		j = (int) (frand() * 3 + 1.5f);
+		for (i=0; i < j; i++) {
+			int *mapPtr = &base->map[rand() % BASE_SIZE][rand() % BASE_SIZE];
+			/* set this field to invalid if there is no building yet */
+			if (*mapPtr == BASE_FREESLOT)
+				*mapPtr = BASE_INVALID_SPACE;
+		}
 	}
 
 	if (B_GetNumberOfBuildingsInBaseByType(base->idx, B_ENTRANCE)) {
