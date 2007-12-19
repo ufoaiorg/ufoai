@@ -792,11 +792,6 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 	qglScalef(fullscale * viddef.rx, fullscale * viddef.ry, fullscale);
 	R_CheckError();
 
-#if 0
-	/* call this to rescale the normal vectors */
-	qglEnable(GL_RESCALE_NORMAL);
-#endif
-
 	/* rotate the globe as given in ccs.angles */
 	qglRotatef(rotate[YAW], 1, 0, 0);
 	qglRotatef(rotate[ROLL], 0, 1, 0);
@@ -887,9 +882,6 @@ void R_DrawBox (const entity_t * e)
 	vec3_t upper, lower;
 	float dx, dy;
 	const vec4_t color = {e->angles[0], e->angles[1], e->angles[2], e->alpha};
-
-/*	if (R_CullBox(e->origin, e->oldorigin)) */
-/*		return; */
 
 	qglDepthMask(GL_FALSE);
 	R_EnableBlend(qtrue);

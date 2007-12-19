@@ -324,7 +324,7 @@ void R_ModDrawModelBBox (vec4_t bbox[8], entity_t *e)
 
 	/* Draw top and sides */
 	qglBegin(GL_TRIANGLE_STRIP);
-	qglVertex3fv(bbox[2] );
+	qglVertex3fv(bbox[2]);
 	qglVertex3fv(bbox[1]);
 	qglVertex3fv(bbox[0]);
 	qglVertex3fv(bbox[1]);
