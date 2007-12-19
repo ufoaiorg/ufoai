@@ -260,8 +260,6 @@ void R_DrawParticles (void)
 	ptl_t *p;
 	int i;
 
-	if (r_fog->integer && refdef.fog)
-		qglDisable(GL_FOG);
 	/* no z buffering */
 	qglDepthMask(GL_FALSE);
 	qglDisable(GL_CULL_FACE);
@@ -296,6 +294,4 @@ void R_DrawParticles (void)
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	qglEnable(GL_CULL_FACE);
 	qglDepthMask(GL_TRUE);
-	if (r_fog->integer && refdef.fog)
-		qglEnable(GL_FOG);
 }

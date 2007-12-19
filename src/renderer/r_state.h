@@ -45,7 +45,6 @@ typedef struct {
 	qboolean hwgamma;
 	qboolean blend;
 	qboolean alpha_test;
-	qboolean fog_coord;
 	qboolean multitexture;
 	qboolean anisotropic;
 	qboolean lod_bias;

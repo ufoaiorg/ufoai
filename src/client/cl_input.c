@@ -63,6 +63,8 @@ struct {
 static int keyq_head = 0;
 static int keyq_tail = 0;
 
+camera_mode_t camera_mode;
+
 static cvar_t *in_debug;
 
 static unsigned in_frametime;

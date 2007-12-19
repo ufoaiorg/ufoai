@@ -38,6 +38,7 @@ const char* SCR_SetLoadingBackground(const char *mapString);
 void SCR_DebugGraph(float value, int color);
 void SCR_TouchPics(void);
 void SCR_RunConsole(void);
+void SCR_DrawPrecacheScreen(qboolean string);
 
 extern int sb_lines;
 extern cvar_t *cursor;

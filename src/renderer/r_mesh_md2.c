@@ -362,9 +362,6 @@ void R_DrawAliasMD2Model (entity_t * e)
 			qglDepthMask(GL_TRUE);
 	}
 
-	if (r_fog->integer && refdef.fog)
-		qglDisable(GL_FOG);
-
 	qglDisable(GL_CULL_FACE);
 	qglDisable(GL_DEPTH_TEST);
 
@@ -421,9 +418,6 @@ void R_DrawAliasMD2Model (entity_t * e)
 
 	/* show model bounding box */
 	R_ModDrawModelBBox(bbox, e);
-
-	if (r_fog->integer && refdef.fog)
-		qglEnable(GL_FOG);
 
 	R_Color(NULL);
 }

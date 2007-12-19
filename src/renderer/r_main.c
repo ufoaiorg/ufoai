@@ -82,7 +82,6 @@ cvar_t *r_texturemode;
 cvar_t *r_texturealphamode;
 cvar_t *r_texturesolidmode;
 cvar_t *r_wire;
-cvar_t *r_fog;
 cvar_t *r_showbox;
 cvar_t *r_intensity;
 
@@ -605,7 +604,6 @@ static void R_Register (void)
 	r_texturealphamode = Cvar_Get("r_texturealphamode", "default", CVAR_ARCHIVE, NULL);
 	r_texturesolidmode = Cvar_Get("r_texturesolidmode", "default", CVAR_ARCHIVE, NULL);
 	r_wire = Cvar_Get("r_wire", "0", 0, "Draw the scene in wireframe mode");
-	r_fog = Cvar_Get("r_fog", "1", CVAR_ARCHIVE, NULL);
 	r_showbox = Cvar_Get("r_showbox", "0", CVAR_ARCHIVE, "Shows model bounding box");
 	r_intensity = Cvar_Get("r_intensity", "2", CVAR_ARCHIVE, NULL);
 
@@ -742,14 +740,6 @@ static void R_InitExtension (void)
 	} else {
 		Com_Printf("GL_EXT_texture_lod_bias not found\n");
 		r_state.lod_bias = qfalse;
-	}
-
-	if (strstr(r_config.extensions_string, "GL_EXT_fog_coord")) {
-		Com_Printf("using GL_EXT_fog_coord\n");
-		r_state.fog_coord = qtrue;
-	} else {
-		Com_Printf("GL_EXT_fog_coord not found\n");
-		r_state.fog_coord = qfalse;
 	}
 
 	r_state.glsl_program = qfalse;

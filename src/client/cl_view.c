@@ -40,9 +40,6 @@ sun_t map_sun;
 static int r_numentities;
 static entity_t r_entities[MAX_ENTITIES];
 
-static float map_fog;
-static vec4_t map_fogColor;
-
 /**
  * @sa V_RenderView
  */
@@ -94,13 +91,10 @@ static void CL_ParseEntitystring (const char *es)
 	float volume = 255.0f;
 	float attenuation = SOUND_DEFAULTATTENUATE;
 
-	VectorSet(map_fogColor, 0.5f, 0.5f, 0.5f);
-	map_fogColor[3] = 1.0f;
 	map_maxlevel = 8;
 	if (map_maxlevel_base >= 1) {
 		map_maxlevel = maxlevel = map_maxlevel_base;
 	}
-	map_fog = 0.0;
 	entnum = 0;
 	numLMs = 0;
 	numMPs = 0;
@@ -190,10 +184,6 @@ static void CL_ParseEntitystring (const char *es)
 				maxlevel = atoi(entity_token);
 			else if (!Q_strcmp(keyname, "maxteams"))
 				maxmultiplayerteams = atoi(entity_token);
-			else if (!Q_strcmp(keyname, "fog"))
-				map_fog = atof(entity_token);
-			else if (!Q_strcmp(keyname, "fogcolor"))
-				Com_ParseValue(map_fogColor, entity_token, V_VECTOR, 0, sizeof(vec3_t));
 			else if (!Q_strcmp(keyname, "skin"))
 				skin = atoi(entity_token);
 		}
@@ -414,8 +404,6 @@ void V_UpdateRefDef (void)
 	refdef.entities = r_entities;
 	refdef.num_shaders = r_numshaders;
 	refdef.shaders = r_shaders;
-	refdef.fog = map_fog;
-	refdef.fogColor = map_fogColor;
 
 	refdef.num_ptls = numPtls;
 	refdef.ptls = ptl;

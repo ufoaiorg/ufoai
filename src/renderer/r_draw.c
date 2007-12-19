@@ -28,8 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 image_t *shadow;
 image_t *blood;
 
-/* FIXME set this */
-static float globe_fog[4];
 int spherelist = -1;
 #define GLOBE_TRIS 60
 #define GLOBE_TEXES (GLOBE_TRIS+1)*(GLOBE_TRIS+1)*4
@@ -772,19 +770,6 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 		return;
 	}
 
-	/* turn on fogging. fog looks good on the skies - it gives them a more
-	 * "airy" far-away look, and has the knock-on effect of preventing the
-	 * old "texture distortion at the poles" problem. */
-	if (r_fog->integer) {
-		qglFogi(GL_FOG_MODE, GL_LINEAR);
-		qglFogfv(GL_FOG_COLOR, globe_fog);
-		qglFogf(GL_FOG_START, 5.0);
-
-		/* must tweak the fog end too!!! */
-		qglFogf(GL_FOG_END, refdef.fog);
-		qglEnable(GL_FOG);
-	}
-
 	/* globe texture scaling */
 	/* previous releases made a tiled version of the globe texture. here i just shrink it using the
 	 * texture matrix, for much the same effect */
@@ -845,11 +830,6 @@ void R_Draw3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate,
 	qglDisable(GL_CULL_FACE);
 	/* revert the cullface mode */
 	qglCullFace(GL_FRONT);
-
-	if (r_fog->integer) {
-		/* turn off fog */
-		qglDisable(GL_FOG);
-	}
 
 	/* disable 3d geoscape lightning */
 	RSTATE_DISABLE_LIGHTING

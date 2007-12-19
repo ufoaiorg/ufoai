@@ -170,9 +170,6 @@ void R_DrawAliasMD3Model (entity_t *e)
 			qglDepthMask(GL_TRUE);
 	}
 
-	if (r_fog->integer && refdef.fog)
-		qglDisable(GL_FOG);
-
 	for (i = 0; i < paliashdr->num_meshes; i++) {
 		skin = e->model->alias.skins_img[e->skinnum];
 		if (!skin)
@@ -189,9 +186,6 @@ void R_DrawAliasMD3Model (entity_t *e)
 		RSTATE_DISABLE_BLEND
 
 	qglPopMatrix();
-
-	if (r_fog->integer && refdef.fog)
-		qglEnable(GL_FOG);
 
 	R_Color(NULL);
 }

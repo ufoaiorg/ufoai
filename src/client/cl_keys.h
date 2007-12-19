@@ -185,5 +185,6 @@ void Key_Event(int key, qboolean down, unsigned time);
 void Key_Init(void);
 void Key_WriteBindings(const char* path);
 const char* Key_GetBinding(const char *binding, keyBindSpace_t space);
+const char *Key_KeynumToString(int keynum);
 
 #endif /* CLIENT_KEY_H */

@@ -60,28 +60,6 @@ typedef struct {
 	char cinfo[MAX_QPATH];
 } clientinfo_t;
 
-#define FOV				75.0
-#define FOV_FPS			90.0
-#define CAMERA_START_DIST   600
-#define CAMERA_START_HEIGHT UNIT_HEIGHT*1.5
-#define CAMERA_LEVEL_HEIGHT UNIT_HEIGHT
-
-typedef struct {
-	vec3_t reforg;		/**< the reference origin used for rotating around */
-	vec3_t camorg;		/**< origin of the camera */
-	vec3_t speed;		/**< speed of camera movement */
-	vec3_t angles;		/**< current camera angle */
-	vec3_t omega;		/**< speed of rotation */
-	vec3_t axis[3];		/**< set when refdef.angles is set */
-
-	float lerplevel;	/**< linear interpolation */
-	float zoom;			/**< the current zoom level (see MIN_ZOOM and MAX_ZOOM) */
-} camera_t;
-
-typedef enum { CAMERA_MODE_REMOTE, CAMERA_MODE_FIRSTPERSON } camera_mode_t;
-
-camera_mode_t camera_mode;
-
 typedef enum {
 	M_MOVE,		/**< We are currently in move-mode (destination selection). */
 	M_FIRE_R,	/**< We are currently in fire-mode for the right weapon (target selection). */
@@ -371,40 +349,7 @@ void CL_UpdateCharacterSkills(character_t *chr);	/* cl_team.c */
 const char* CL_ToDifficultyName(int difficulty);
 void CL_ScriptSanityCheck(void);
 
-void SCR_DrawPrecacheScreen(qboolean string);
-
-/* cl_input */
-typedef struct {
-	int down[2];				/**< key nums holding it down */
-	unsigned downtime;			/**< msec timestamp */
-	unsigned msec;				/**< msec down this frame */
-	int state;
-} kbutton_t;
-
-typedef enum {
-	MS_NULL,
-	MS_MENU,	/**< we are over some menu node */
-	MS_DRAG,	/**< we are dragging some stuff / equipment */
-	MS_ROTATE,	/**< we are rotating models (ufopedia) */
-	MS_LHOLD,		/**< we are holding left mouse button */
-	MS_SHIFTMAP,	/**< we move the geoscape map */
-	MS_ZOOMMAP,		/**< we zoom the geoscape map (also possible via mousewheels)*/
-	MS_SHIFT3DMAP,	/**< we rotate the 3d globe */
-	MS_WORLD		/**< we are in tactical mode */
-} mouseSpace_t;
-
-extern int mouseSpace;
-extern int mousePosX, mousePosY;
-extern int dragFrom, dragFromX, dragFromY;
-extern item_t dragItem;
-extern float *rotateAngles;
-extern const float MIN_ZOOM, MAX_ZOOM;
-
 void CL_ClearState(void);
-
-const char *Key_KeynumToString(int keynum);
-
-void CL_CameraModeChange(camera_mode_t newcameramode);
 
 /* cl_le.c */
 #define MAX_LE_PATHLENGTH 32

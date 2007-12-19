@@ -222,9 +222,6 @@ typedef struct {
 
 	sun_t *sun;
 
-	float fog;
-	float *fogColor;
-
 	const char *mapZone;	/**< used to replace textures in base assembly */
 } refdef_t;
 

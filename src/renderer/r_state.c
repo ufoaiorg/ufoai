@@ -119,16 +119,6 @@ void R_SetupGL3D (void)
 	RSTATE_DISABLE_BLEND
 	RSTATE_DISABLE_ALPHATEST
 	qglEnable(GL_DEPTH_TEST);
-
-	if (r_fog->integer && refdef.fog && r_state.fog_coord) {
-		qglEnable(GL_FOG);
-		qglFogi(GL_FOG_MODE, GL_EXP2);
-		qglFogf(GL_FOG_START, 0.1 * refdef.fog);
-		qglFogf(GL_FOG_END, refdef.fog);
-		qglHint(GL_FOG_HINT, GL_DONT_CARE);
-		qglFogf(GL_FOG_DENSITY, 0.005 * refdef.fog);
-		qglFogfv(GL_FOG_COLOR, refdef.fogColor);
-	}
 }
 
 /**
@@ -147,7 +137,6 @@ void R_SetupGL2D (void)
 	qglLoadIdentity();
 	qglDisable(GL_DEPTH_TEST);
 	qglDisable(GL_CULL_FACE);
-	qglDisable(GL_FOG);
 	RSTATE_ENABLE_ALPHATEST
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	R_TexEnv(GL_MODULATE);
