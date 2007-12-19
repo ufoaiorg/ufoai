@@ -262,12 +262,12 @@ static void R_ModDrawModelEffects (const entity_t *e)
 		R_EnableBlend(qfalse);
 	}
 
-	qglDisable(GL_CULL_FACE);
-	qglDisable(GL_DEPTH_TEST);
-
 	/* draw a highlight icon over this entity */
 	if (e->flags & RF_HIGHLIGHT)
 		R_DrawHighlight(e);
+
+	qglDisable(GL_CULL_FACE);
+	qglDisable(GL_DEPTH_TEST);
 
 	/* draw the circles for team-members and allied troops */
 	if (e->flags & (RF_SELECTED | RF_ALLIED | RF_MEMBER)) {
@@ -392,9 +392,9 @@ void R_DrawAliasMD2Model (entity_t * e)
 
 	R_DrawAliasFrameLerp(paliashdr, e->as.backlerp, e->as.frame, e->as.oldframe);
 
-	R_TexEnv(GL_REPLACE);
 	R_EnableLighting(qfalse);
 
+	/* depth test and cull face are deactivated here */
 	R_ModDrawModelEffects(e);
 
 	if (e->flags & RF_TRANSLUCENT)
@@ -621,18 +621,17 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	/* draw it */
 	R_Bind(skin->texnum);
 
-	qglEnable(GL_DEPTH_TEST);
-	qglEnable(GL_CULL_FACE);
-
 	R_TexEnv(r_config.envCombine);
 
 	if ((mi->color[3] && mi->color[3] < 1.0f) || (skin && skin->has_alpha))
 		R_EnableBlend(qtrue);
 
+	qglEnable(GL_DEPTH_TEST);
+	qglEnable(GL_CULL_FACE);
+
 	/* draw the model */
 	R_DrawAliasFrameLerp(paliashdr, mi->backlerp, mi->frame, mi->oldframe);
 
-	R_TexEnv(GL_REPLACE);
 	qglDisable(GL_CULL_FACE);
 	qglDisable(GL_DEPTH_TEST);
 

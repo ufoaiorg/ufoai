@@ -154,10 +154,8 @@ void R_DrawHighlight(const entity_t *e);
 void R_DrawLevelBrushes(void);
 void R_InitMiscTexture(void);
 void R_DrawInitLocal(void);
-void R_SubdivideSurface(mBspSurface_t *surf, model_t *mod);
 qboolean R_CullBox(vec3_t mins, vec3_t maxs);
 void R_RotateForEntity(entity_t *e);
-void R_DrawTurbSurface(mBspSurface_t *surf);
 void R_DrawParticles(void);
 
 /*

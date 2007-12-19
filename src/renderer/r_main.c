@@ -617,7 +617,7 @@ static void R_Register (void)
 	r_texturesolidmode = Cvar_Get("r_texturesolidmode", "default", CVAR_ARCHIVE, NULL);
 	r_wire = Cvar_Get("r_wire", "0", 0, "Draw the scene in wireframe mode");
 	r_showbox = Cvar_Get("r_showbox", "0", CVAR_ARCHIVE, "Shows model bounding box");
-	r_intensity = Cvar_Get("r_intensity", "2", CVAR_ARCHIVE, NULL);
+	r_intensity = Cvar_Get("r_intensity", "1", 0, "Brighten the models and the lightmap");
 	r_lightmap = Cvar_Get("r_lightmap", "0", 0, "Draw only the lightmap");
 	r_ext_combine = Cvar_Get("r_ext_combine", "1", CVAR_ARCHIVE, NULL);
 	r_ext_texture_compression = Cvar_Get("r_ext_texture_compression", "0", CVAR_ARCHIVE, NULL);
@@ -876,12 +876,6 @@ static inline void R_VerifyDriver (void)
 
 qboolean R_Init (void)
 {
-	int j;
-	extern float r_turbsin[256];
-
-	for (j = 0; j < 256; j++)
-		r_turbsin[j] *= 0.5;
-
 	R_Register();
 
 	/* set our "safe" modes */

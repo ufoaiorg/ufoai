@@ -291,17 +291,6 @@ static void R_ModLoadFaces (lump_t * l)
 		else
 			out->samples = loadmodel->bsp.lightdata + i;
 
-		/* set the drawing flags */
-		if (out->texinfo->flags & SURF_WARP) {
-			out->flags |= SURF_WARP;
-			for (i = 0; i < 2; i++) {
-				out->stmins[i] = -8192;
-				out->stmaxs[i] = 16384;
-			}
-			/* cut up polygon for warps */
-			R_SubdivideSurface(out, loadmodel);
-		}
-
 		/* create lightmaps and polygons */
 		if (!(out->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66 | SURF_WARP)))
 			R_CreateSurfaceLightmap(out);
