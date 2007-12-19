@@ -319,12 +319,11 @@ void R_DrawAliasMD2Model (entity_t * e)
 
 	R_TexEnv(r_config.envCombine);
 
-	qglEnable(GL_DEPTH_TEST);
-
 	if ((e->flags & RF_TRANSLUCENT))
 		R_EnableBlend(qtrue);
 
 	qglEnable(GL_CULL_FACE);
+	qglEnable(GL_DEPTH_TEST);
 
 	R_DrawAliasFrameLerp(paliashdr, e->as.backlerp, e->as.frame, e->as.oldframe);
 
@@ -408,8 +407,8 @@ void R_DrawAliasMD2Model (entity_t * e)
 		qglEnable(GL_TEXTURE_2D);
 	}
 
-	qglEnable(GL_CULL_FACE);
 	qglEnable(GL_DEPTH_TEST);
+	qglEnable(GL_CULL_FACE);
 
 	qglPopMatrix();
 

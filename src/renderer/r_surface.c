@@ -120,7 +120,6 @@ void R_DrawAlphaSurfaces (mBspSurface_t *list)
 	qglLoadMatrixf(r_world_matrix);
 
 	R_EnableBlend(qtrue);
-	qglDepthMask(GL_FALSE); /* disable depth writing */
 	R_TexEnv(GL_MODULATE);
 
 	for (surf = list; surf; surf = surf->texturechain) {

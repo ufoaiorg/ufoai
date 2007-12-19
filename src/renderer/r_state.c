@@ -148,6 +148,8 @@ void R_SetupGL3D (void)
 	R_EnableBlend(qfalse);
 	R_EnableAlphaTest(qfalse);
 
+	qglEnable(GL_DEPTH_TEST);
+
 	R_CheckError();
 }
 
