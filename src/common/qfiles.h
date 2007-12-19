@@ -168,7 +168,7 @@ typedef struct {
 #define	MD3_XYZ_SCALE		(1.0/64)
 
 typedef struct {
-	float st[2];
+	vec2_t st;
 } dmd3coord_t;
 
 typedef struct {
@@ -177,21 +177,21 @@ typedef struct {
 } dmd3vertex_t;
 
 typedef struct {
-	float point[3];
-	float normal[3];
+	vec3_t point;
+	vec3_t normal;
 } admd3vertex_t;
 
 typedef struct {
-	float mins[3];
-	float maxs[3];
-	float translate[3];
+	vec3_t mins;
+	vec3_t maxs;
+	vec3_t translate;
 	float radius;
 	char creator[16];
 } dmd3frame_t;
 
 typedef struct {
-	float origin[3];
-	float axis[3][3];
+	vec3_t origin;
+	vec3_t axis[3];
 } dorientation_t;
 
 typedef struct {
