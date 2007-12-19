@@ -1708,7 +1708,8 @@ void B_ClearBase (base_t *const base)
 	if (!curCampaign)
 		return;
 
-	/* setup team */
+	/* setup team
+	 * FIXME: I think this should be made only once per game, not once per base, no ? -- Kracken 19/12/07 */
 	if (!E_CountUnhired(EMPL_SOLDIER)) {
 		/* should be multiplayer (campaignmode @todo) or singleplayer */
 		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i soldiers\n", curCampaign->soldiers);
